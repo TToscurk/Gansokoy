@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "jinja",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5602", "--directory", "D:/神社/shrine"],
+      "port": 5602
+    }
+  ]
+}

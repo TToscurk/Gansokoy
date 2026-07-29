@@ -1,0 +1,160 @@
+# 博麗神社 — Hakurei Shrine (walkable 3D)
+
+可自由走動的博麗神社場景，第三人稱操作，境內有 34 位住民可以對話。
+純 three.js，材質與角色全部用程式生成，**沒有任何外部素材、離線可跑**。
+
+同人創作，非官方（fan-made, unofficial）。
+
+## 啟動
+
+```bash
+node shrine/tools/dev-server.mjs shrine 5603
+```
+
+然後開 http://localhost:5603 。也可以用 `.claude/launch.json` 裡的 `jinja` 設定。
+
+> **不要用 `python -m http.server` 開發。** 它會讓瀏覽器快取 ES module：
+> 你改了 `src/` 底下的檔案、重新整理，`main.js` 會拿到**舊版**的模組跑，
+> 而且完全不報錯 —— 症狀是「明明改了卻沒效果」或莫名其妙的 TypeError。
+> `dev-server.mjs` 每個回應都送 `no-store`，重整一定拿到新的。
+
+> 需要用 http 開啟，不能直接雙擊 `index.html`（ES module + importmap 會被 file:// 擋掉）。
+
+## 操作
+
+| 鍵 | 動作 |
+|---|---|
+| 點擊畫面 | 鎖定滑鼠、開始遊玩 |
+| `W A S D` / 方向鍵 | 移動 |
+| 滑鼠 | 轉視角 |
+| `Shift` | 跑步 |
+| `Space` | 跳 |
+| `F` | 飛行（會飛的角色）　`Ctrl` / `C` 下降 |
+| `E` | 對話 / 互動（賽錢箱、NPC） |
+| `J` | 任務日誌 |
+| `T` | 時間快轉 3 小時　`Shift+T` 暫停時間 |
+| `Y` | 切換天氣：晴 → 雨 → 雪 → 霧 |
+| `G` | 切換畫質：高 → 低 → 中 |
+| `Esc` | 對話中＝關閉對話，否則放開滑鼠 |
+
+## 場景內容
+
+- 石階參道、兩座鳥居（附注連繩與紙垂）、玉垣
+- 拜殿：高床、迴廊、障子牆、賽錢箱、鈴與鈴緒、御札、內部神鏡與燭台
+- 屋頂為切妻造，附千木・鰹木
+- 手水舍、繪馬掛、石燈籠 ×8、狛犬 ×2
+- 周圍山林、遠方妖怪之山剪影、飄浮的陰陽玉
+
+## 角色・對話・任務
+
+從 `D:\CODE\gensokyo-3d` 移植過來。原專案有 17 張地圖，這裡只有神社一張，
+所以有幾個地方是靠一層轉接活著的：
+
+- **角色選擇**（`PLAYABLE`，7 位）。選好的角色**不會同時以 NPC 出現在境內** ——
+  `spawnAllNPCs` 會把他撤場（`setPlayerCharacter`）。換角色時前一位會回場。
+- **對話框**（`src/ui/dialogue.js`）：逐字顯示，`E` 推進。對話進行中會凍結玩家、
+  吃掉其他熱鍵，`E` 也不會穿透到賽錢箱。
+- **任務引擎**（`src/quests/manager.js`）：分支任務樹，進度存 localStorage。
+  `isNight` 分支接的是下面的連續時鐘。
+
+### onEnter 的地區別名
+
+任務資料裡的 `onEnter` 指向舊世界的**地圖** id（`shrine` / `moriya` / `myouren` / `sdm`）。
+這個版本沒有那些地圖，所以 `src/world/zones.js` 用同一組 id 在神社境內圈出區域，
+任務引擎照樣收得到 `onEnter('moriya')`，**`quests/data.js` 一個字都沒改**。
+境內的 `moriya` / `myouren` 是兩座真的立在那裡的摂社（神社境內的小社），
+`sdm` 暫時掛在外鳥居（「走出去＝啟程前往紅魔館」）。
+
+> 之後真正的地圖接回來時，把 `zones.js` 換成實際的地圖切換即可，任務資料不用動。
+
+四個任務都實測跑得完：主線一章 6 節點、香油錢的巡禮（原本結構上不可能完成）、
+被抹去的記錄（含日夜分支，同一動作白天走 `talked_yoriichi_day`、夜晚走 `_night`）、
+不翼而飛的貨物。
+
+## 時間與天氣
+
+一天 24 小時的**連續**循環（`src/world/daycycle.js`），不是幾個預設硬切：
+太陽依時角升落、天空／霧／環境光在關鍵時刻之間內插、燈籠日落前一小時自己亮、
+星空只在夜裡淡入。預設遊戲內 1 小時 = 60 秒（一天 24 分鐘）。
+
+天氣（`src/world/weather.js`）四種：晴 / 雨 / 雪 / 霧。天氣**不自己決定顏色**，
+只給一組乘算係數（太陽、環境光、霧、飽和、曝光）疊在當下時刻上 ——
+所以雨天的黃昏還是黃昏的顏色，只是更悶。雨絲和雪點是程式生成的貼圖，
+粒子關在一個跟著玩家跑的盒子裡，走到哪都下得到雨。
+
+> **兩個要小心的成本**：`applyTime` 每幀都會跑，但天空 IBL 重烘（PMREM）
+> 與陰影貼圖重畫都有節流（各自 0.2 / 0.1 遊戲小時才做一次）。
+> 早期版本忘了節流陰影，「高」畫質直接從 ~14ms 回到 ~27ms。
+> 實測 600 幀只重畫 2 次陰影。
+
+## 光影
+
+不是 UE5，但把 UE5 那個「感覺」拆成可以做的幾件事：
+
+| 做法 | 效果 |
+|---|---|
+| **天空 IBL**（`PMREMGenerator.fromScene`） | 把天空球預先過濾成環境貼圖，所有材質都吃得到天光與粗糙反射 —— 最接近 Lumen 天光的替代品。切換時刻會重新烘一次 |
+| **GTAO** 環境遮蔽 | 角落、樑下、階梯縫的接觸陰影，陰影貼圖解析度抓不到的地方靠它 |
+| **UnrealBloomPass** | 高門檻（1.15），只有燈籠、蠟燭、神鏡會發光，天空不會糊掉 |
+| **ACES tone mapping + 分級** | 對比、飽和、暗部冷色偏移、暈影，都在 `gradePass` 裡 |
+| **半球光當作地面反彈光** | 補上 IBL 沒有的暖色地面反彈，不然背光面會整片死藍 |
+| **SMAA** | 後製鏈末端的抗鋸齒（開了後製就不能用 MSAA） |
+
+### 踩過的坑
+
+1. **天空是 `ShaderMaterial`**，原本沒有經過 tone mapping，等於直接把 sRGB 值寫進 framebuffer。加了 `OutputPass` 之後整條鏈才被正確色彩管理，天空顏色因此整個變淡 —— 三組天空色都是在新管線下重新調過的，不要拿舊的 hex 值回填。
+2. **陰影貼圖原本每幀重畫**（太陽跟著玩家跑）。改成錨在世界原點 + `shadow.autoUpdate = false`，只在切換時刻時更新一次，`高` 從 27.4ms 掉到 13.7ms（Intel Iris Xe，約 73fps）。
+3. **`depthTest:false` 的 sprite 不能進後製鏈。** NPC 名牌本來加在主場景，經過 GTAOPass 之後整片變成純黑方塊 —— 因為名牌不寫深度緩衝，GTAO 的法線預渲染在那些像素算出垃圾遮蔽值。名牌現在住在獨立的 `labelScene`，由 `renderFrame()` 在 `composer.render()` 之後單獨畫。**任何之後要加的 UI sprite（血條、任務標記、傷害數字）都要走同一條路。**
+
+畫質三檔（`G` 切換），偵測到掉幀會自動降一檔：
+
+| 檔位 | 內容 |
+|---|---|
+| 高 | AO + Bloom + 分級 + SMAA、4096 陰影、DPR 1.5 |
+| 中 | Bloom + 分級 + SMAA、2048 陰影、DPR 1.25 |
+| 低 | 無後製、1024 陰影、DPR 1.0 |
+
+加入 34 位住民後，境內一格從 ~12ms 變成 ~31ms（Intel Iris Xe）。
+角色的描邊佔很大一塊：門檻原本是 70 公尺，等於全境都開，
+光描邊就是 242 個 mesh、27 萬個三角形；收到 20 公尺後
+draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
+
+> 這些數字是在開發用的瀏覽器面板裡量的，面板常處於背景會被 GPU 節流，
+> 絕對值抖動很大（同一組設定量到過 35ms 也量到過 440ms）。
+> 拿來比較相對差異可以，不要當成真機幀率。
+
+## 檔案
+
+| 檔案 | 用途 |
+|---|---|
+| `index.html` | 外殼、HUD、開場畫面 |
+| `main.js` | 全部場景：材質生成、建物、地形、控制、渲染迴圈 |
+| `vendor/` | three.js r180 本地副本（`npm i three` 複製過來的） |
+| `vendor/jsm/` | 後製用的 addons（EffectComposer / GTAO / Bloom / SMAA / OutputPass） |
+| `src/entities/` | 角色建模、NPC 管理、名冊、神社站位 |
+| `src/player/controller.js` | 第三人稱控制器（**換角色務必呼叫 `dispose()`**） |
+| `src/ui/` | 對話框、任務日誌 |
+| `src/quests/` | 任務資料（原封不動）與分支引擎 |
+| `src/world/` | 高度場、區域偵測、晝夜循環、天氣 |
+| `src/combat/` | **目前無人使用** —— 只搬了 forms/motion，`combat.js` 與 `mobs.js` 沒搬過來 |
+| `tools/dev-server.mjs` | 開發用靜態伺服器（`no-store`，避免 ES module 快取） |
+| `tools/capture-server.mjs` | 開發用：接收頁面截圖並存到 `shots/` |
+| `shots/` | 開發過程的截圖 |
+
+## 開發小抄
+
+頁面上有 `window.__shrine` 可用：
+
+```js
+__shrine.tp(0, 27, 0)   // 傳送到 (x, z)，yaw 0 = 面向神社
+__shrine.step(60)       // 前進模擬 60 個 frame（配合 __shrine.keys）
+__shrine.frame()        // 手動渲染一格
+```
+
+要抓截圖時，另開一個終端跑 `node tools/capture-server.mjs shots`，
+然後在頁面 console：
+
+```js
+const url = __shrine.renderer.domElement.toDataURL('image/png');
+fetch('http://localhost:5600/save?name=test', { method: 'POST', body: url });
+```
