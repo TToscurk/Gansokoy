@@ -1526,7 +1526,7 @@ function interact() {
   const dT = Math.hypot(ctrl.pos.x - OBJ.trailGate.x, ctrl.pos.z - OBJ.trailGate.z);
   if (dT < 3.8) {
     HUD.showLoading('獸道 讀取中');
-    location.href = 'trail.html';
+    location.href = 'maps/trail/';
   }
 }
 

@@ -11,19 +11,19 @@
 // 戰鬥系統也接上共用的 combat/hud 綁定，有 combat 旗標的角色到這裡照樣能出招。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from './src/world/terrain.js';
-import { WORLD } from './src/config.js';
-import { buildCharacter } from './src/entities/model.js';
-import { PLAYABLE } from './src/entities/roster.js';
-import { PlayerController } from './src/player/controller.js';
-import { Environment } from './src/world/environment.js';
-import { makePortalGlow } from './src/world/portal.js';
-import { Combat } from './src/combat/combat.js';
-import { FairyMobs } from './src/combat/mobs.js';
-import { SlashFX, SlashAudio } from './src/fx/slash.js';
-import { combatHUD, bindCombatInput } from './src/combat/hud.js';
-import { Progression, progressMobs } from './src/player/progression.js';
-import { installHUD, bindEscMenu } from './src/ui/hud.js';
+import { setGroundHeightFn } from '../../src/world/terrain.js';
+import { WORLD } from '../../src/config.js';
+import { buildCharacter } from '../../src/entities/model.js';
+import { PLAYABLE } from '../../src/entities/roster.js';
+import { PlayerController } from '../../src/player/controller.js';
+import { Environment } from '../../src/world/environment.js';
+import { makePortalGlow } from '../../src/world/portal.js';
+import { Combat } from '../../src/combat/combat.js';
+import { FairyMobs } from '../../src/combat/mobs.js';
+import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
+import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
+import { Progression, progressMobs } from '../../src/player/progression.js';
+import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -437,7 +437,7 @@ const escMenu = bindEscMenu({
   getCtrl: () => ctrl,
   onBackToSelect() {
     HUD.showLoading('博麗神社 讀取中');
-    location.href = 'index.html';
+    location.href = '../../index.html';
   },
 });
 
@@ -446,8 +446,8 @@ const nearVillage = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - VILLAGE_END) < 4.2
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
-  if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = 'index.html?from=trail'; return; }
-  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = 'village.html'; }
+  if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = '../../index.html?from=trail'; return; }
+  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */

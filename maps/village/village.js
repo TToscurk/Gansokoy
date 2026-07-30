@@ -14,21 +14,21 @@
 // 戰鬥（有 combat 旗標的角色到哪張圖都能出招）、角色/技能等級。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from './src/world/terrain.js';
-import { WORLD } from './src/config.js';
-import { buildCharacter } from './src/entities/model.js';
-import { PLAYABLE } from './src/entities/roster.js';
-import { PlayerController } from './src/player/controller.js';
-import { Environment } from './src/world/environment.js';
-import { makePortalGlow } from './src/world/portal.js';
-import { Combat } from './src/combat/combat.js';
-import { SlashFX, SlashAudio } from './src/fx/slash.js';
-import { combatHUD, bindCombatInput } from './src/combat/hud.js';
-import { Progression } from './src/player/progression.js';
-import { installHUD, bindEscMenu } from './src/ui/hud.js';
-import { VillagerCrowd } from './src/entities/villagers.js';
-import { spawnAllNPCs } from './src/entities/shrine-spawn.js';
-import { SceneEditor } from './src/ui/scene-editor.js';
+import { setGroundHeightFn } from '../../src/world/terrain.js';
+import { WORLD } from '../../src/config.js';
+import { buildCharacter } from '../../src/entities/model.js';
+import { PLAYABLE } from '../../src/entities/roster.js';
+import { PlayerController } from '../../src/player/controller.js';
+import { Environment } from '../../src/world/environment.js';
+import { makePortalGlow } from '../../src/world/portal.js';
+import { Combat } from '../../src/combat/combat.js';
+import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
+import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
+import { Progression } from '../../src/player/progression.js';
+import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { VillagerCrowd } from '../../src/entities/villagers.js';
+import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
+import { SceneEditor } from '../../src/ui/scene-editor.js';
 
 const HUD = installHUD({
   title: '人間之里',
@@ -536,7 +536,7 @@ const escMenu = bindEscMenu({
   isBusy: () => sceneEditor.isOpen,
   onBackToSelect() {
     HUD.showLoading('博麗神社 讀取中');
-    location.href = 'index.html';
+    location.href = '../../index.html';
   },
 });
 bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen || sceneEditor.isOpen);
@@ -550,7 +550,7 @@ window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
   if (sceneEditor.isOpen || escMenu.isOpen) return;
   if (e.code !== 'KeyE' || !ctrl.locked) return;
-  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = 'trail.html?from=village'; }
+  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
