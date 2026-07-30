@@ -22,6 +22,7 @@ import { PlayerController } from './src/player/controller.js';
 import { Dialogue } from './src/ui/dialogue.js';
 import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
+import { SceneEditor } from './src/ui/scene-editor.js';
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -317,6 +318,13 @@ function cyl(rt, rb, h, mat, x, y, z, seg = 14, parent = world) {
 /* Two levels: forecourt at y=0, shrine plateau at y=PLATEAU, joined by stairs. */
 const PLATEAU = 3.2;
 const STAIR_FAR = 21, STAIR_NEAR = 14;    // z range of the staircase
+const STAIR_HALF_W = 5.6;                 // half-width of the physical stone steps (11 wide) + margin
+// Retaining wall flanking the stairs: runs the full ramp z-depth and out past the
+// player's movement bound (ctrl.bounds.hx=78), so there's no way to walk around
+// the stairs through open ground beside/beyond the wall. Shared with the tree
+// scatter below so trees don't get planted inside the (now wider) wall footprint.
+const WALL_INNER_X = 6, WALL_OUTER_X = 92;
+const RAMP_CZ = (STAIR_NEAR + STAIR_FAR) / 2, RAMP_SZ = (STAIR_FAR - STAIR_NEAR) + 4;
 const FLOOR_Y = PLATEAU + 1.35;           // shrine building floor
 const B = { minX: -8.6, maxX: 8.6, minZ: -16, maxZ: -2.2 };   // building footprint
 
@@ -324,8 +332,15 @@ function heightAt(x, z) {
   let h;
   if (z >= STAIR_FAR) h = 0;
   else if (z > STAIR_NEAR) {
-    const t = (STAIR_FAR - z) / (STAIR_FAR - STAIR_NEAR);
-    h = Math.round(t * 11) / 11 * PLATEAU;   // stepped, matches the visible steps
+    // Only the physical staircase (|x| <= STAIR_HALF_W) climbs — elsewhere in this
+    // z-band there are no visible steps, so the ground stays at forecourt level and
+    // the retaining wall below blocks walking around the stairs to skip them.
+    if (Math.abs(x) <= STAIR_HALF_W) {
+      const t = (STAIR_FAR - z) / (STAIR_FAR - STAIR_NEAR);
+      h = Math.round(t * 11) / 11 * PLATEAU;   // stepped, matches the visible steps
+    } else {
+      h = 0;
+    }
   } else h = PLATEAU;
 
   // shrine floor + its front step
@@ -354,10 +369,11 @@ function heightAt(x, z) {
   world.add(upper);
 
   // stone retaining wall holding up the plateau, split to leave the staircase gap
+  const wallW = WALL_OUTER_X - WALL_INNER_X, wallCx = (WALL_INNER_X + WALL_OUTER_X) / 2;
   for (const s of [-1, 1]) {
-    box(60, PLATEAU + 4, 2.4, MAT.stoneBig, s * 36, PLATEAU / 2 - 2, STAIR_NEAR + 1.0);
-    box(60, 0.5, 3.0, MAT.stone, s * 36, PLATEAU + 0.2, STAIR_NEAR + 1.0);     // coping
-    block(s * 36, STAIR_NEAR + 1.0, 60, 2.6, PLATEAU);
+    box(wallW, PLATEAU + 4, RAMP_SZ, MAT.stoneBig, s * wallCx, PLATEAU / 2 - 2, RAMP_CZ);
+    box(wallW, 0.5, RAMP_SZ + 0.4, MAT.stone, s * wallCx, PLATEAU + 0.2, RAMP_CZ);     // coping
+    block(s * wallCx, RAMP_CZ, wallW, RAMP_SZ, PLATEAU);
   }
 
   // stone staircase
@@ -889,6 +905,9 @@ for (let i = 0; i < 70; i++) {
   if (Math.abs(x) < 34 && z > 16 && z < 52) continue;          // NPC 展列區
   // 兩座摂社（x=±22, z=2）與參拜空間
   if (Math.abs(Math.abs(x) - 22) < 9 && z > -6 && z < 12) continue;
+  // 加寬後的階梯擋土牆（見 heightAt 旁的 WALL_INNER_X/OUTER_X），避免樹幹穿模
+  if (Math.abs(x) >= WALL_INNER_X - 2 && Math.abs(x) <= WALL_OUTER_X + 2 &&
+      z > RAMP_CZ - RAMP_SZ / 2 - 2 && z < RAMP_CZ + RAMP_SZ / 2 + 2) continue;
   const onPlateau = z < STAIR_NEAR;
   tree(x, onPlateau ? PLATEAU : 0, z, 0.75 + Math.random() * 0.8, leafMats[Math.random() * leafMats.length | 0]);
 }
@@ -965,6 +984,15 @@ setGroundHeightFn(heightAt);
 /* NPC 名牌住在這個 overlay 場景，在後製鏈之後才畫 —— 見 NPCManager 的註解 */
 const labelScene = new THREE.Scene();
 const npcSystem = spawnAllNPCs(scene, heightAt, labelScene);
+
+/* 角色場景編輯器：拖曳把未上場的角色放進場景，或搬移／收回已上場的角色。
+ * getPlayerId/getCtrl 用 getter 是因為 chosenSpec/ctrl 是下面才宣告、
+ * 換角色時會重新賦值的頂層變數 —— 用 closure 讀取才不會抓到舊值。 */
+const sceneEditor = new SceneEditor({
+  scene, camera, renderer, world, heightAt, npcSystem,
+  getPlayerId: () => chosenSpec.id,
+  getCtrl: () => ctrl,
+});
 
 /* ─────────────────────────────────────────────── 對話框與任務引擎 ── */
 const dialogue = new Dialogue();
@@ -1243,8 +1271,17 @@ function initPlayer(keepPos = false) {
 /** 全域熱鍵。只在模組載入時註冊一次。 */
 function bindHotkeys() {
   window.addEventListener('keydown', (e) => {
-    // ESC 先處理：對話中按 ESC 是「關掉對話」，不是放開滑鼠
-    if (e.code === 'Escape' && dialogue.active) { dialogue.close(); return; }
+    // ESC 先處理：對話中／編輯器開啟時，ESC 是「關掉它」，不是放開滑鼠
+    if (e.code === 'Escape') {
+      if (dialogue.active) { dialogue.close(); return; }
+      if (sceneEditor.isOpen) { sceneEditor.close(); return; }
+      return;
+    }
+    // P：開關角色場景編輯器。故意放在鎖定判斷之前 —— 開啟編輯器會主動解除
+    // 滑鼠鎖定（sceneEditor.open() 呼叫 exitPointerLock），放在判斷之後的話
+    // 面板只能開、按第二次 P 會因為已經沒鎖定而被 `!ctrl?.locked` 擋掉。
+    if (e.code === 'KeyP' && !dialogue.active) { sceneEditor.toggle(); e.preventDefault(); return; }
+    if (sceneEditor.isOpen) return;   // 編輯器開著時，其餘熱鍵一律不處理，避免衝突
     if (!ctrl?.locked) return;
 
     if (e.code === 'KeyE') { interact(); e.preventDefault(); return; }

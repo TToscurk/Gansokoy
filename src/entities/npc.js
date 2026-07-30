@@ -67,6 +67,7 @@ export class NPCManager {
 
     const root = buildCharacter(spec);
     root.rotation.y = spec.face ?? 0;
+    root.userData.npcId = spec.id;   // 場景編輯器用來反查 raycast 命中的是哪位角色
     const plate = nameplate(spec.zh, spec.en);
     const outlines = [];
     root.traverse(o => { if (o.name === 'outline') outlines.push(o); });

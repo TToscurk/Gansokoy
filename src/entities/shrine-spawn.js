@@ -1,14 +1,22 @@
-// 神社專用：把所有角色排排站到參道上，繞過地區座標系統。
+// 神社專用：把角色放到參道上，繞過地區座標系統。
 //
 // gensokyo-3d 的角色原本散佈在整個幻想鄉地圖上；
 // shrine 只有一張神社圖，所以這裡為每位角色計算一個展列用的位置。
+//
+// 角色是否上場由「擺放狀態表」（placements.js）決定：預設只有繼國緣一
+// 站在場上，其餘角色收在角色場景編輯器（src/ui/scene-editor.js）的面板
+// 裡，之後由玩家自己拖曳出來放置。擺放只在本次遊玩期間有效。
 import { ROSTER } from './roster.js';
 import { NPCManager, TALK_RANGE } from './npc.js';
+import { getPlacements, setPlacement, removePlacement } from './placements.js';
 
 /**
  * 站位。原本是 10 欄方陣排在參道上，看起來像角色選單而不是神社 ——
  * 改成沿著境內幾個「會有人待著」的地點分群：拜殿前、手水舍、繪馬掛、
  * 石階兩側、樹下。每個點給一個半徑，同群的人繞著散開並各自轉向。
+ *
+ * 現在只用來算繼國緣一的預設站位（見下方 seedDefaultPlacement），
+ * 其餘角色的位置全部交給編輯器。
  *
  * 參道中線（|x| < 3.2）永遠留空，不然玩家一路上都在撞人。
  */
@@ -54,14 +62,11 @@ function spotPos(index, heightFn) {
   return { x, y, z, face };
 }
 
+const YORIICHI_ID = 'yoriichi';
+
 /**
- * 生出所有角色，放到神社場景裡。
+ * 生出目前有擺放記錄的角色，放到神社場景裡。
  *
- * @param {THREE.Scene} scene
- * @param {(x:number,z:number)=>number} heightFn  神社自己的 heightAt
- * @returns {{ mgr: NPCManager, update, talk, nearestId, nearestDist }}
- */
-/**
  * @param {THREE.Scene} scene
  * @param {(x:number,z:number)=>number} heightFn  神社自己的 heightAt
  * @param {THREE.Scene} [labelScene] 名牌用的 overlay 場景
@@ -69,28 +74,47 @@ function spotPos(index, heightFn) {
  */
 export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
   const mgr = new NPCManager(scene, labelScene);
+  const byId = new Map(ROSTER.map(s => [s.id, s]));
 
-  // 你正在扮演的人不該同時站在境內。原本 17 張圖時大家分散在各地不容易撞見，
-  // 全部擠進同一個院子之後，「走過去跟自己講話」就變成一眼就看到的破綻。
-  const cast = ROSTER.filter(s => s.id !== excludeId);
+  // 預設只有繼國緣一站在場上，其餘角色收進編輯器的面板裡，之後由玩家
+  // 自己拖曳出來放置。這裡只在還沒有任何擺放記錄時（模組剛載入）補上他的
+  // 預設站位 —— 沿用原本 spotPos 的站位邏輯，用他在 ROSTER 裡的固定索引，
+  // 這樣不管 excludeId 是誰，預設站位都一樣。
+  if (!(YORIICHI_ID in getPlacements())) {
+    const idx = ROSTER.findIndex(s => s.id === YORIICHI_ID);
+    if (idx !== -1) {
+      const seed = spotPos(idx, heightFn);
+      setPlacement(YORIICHI_ID, seed.x, seed.z, seed.face);
+    }
+  }
 
-  for (let i = 0; i < cast.length; i++) {
-    const spec = cast[i];
-    const pos = spotPos(i, heightFn);
-    const y = pos.y + (spec.float ? (spec.floatY ?? 0.8) : 0);
+  /** 把一筆擺放記錄實際套用到（快取的）角色物件上，需要的話上場 */
+  function spawnPlaced(id, entry) {
+    const spec = byId.get(id);
+    if (!spec) return;              // 擺放表裡有、roster 裡沒有：忽略
+    if (id === excludeId) return;   // 玩家正在扮演這位，不要同時上場
+
+    const ground = heightFn(entry.x, entry.z);
+    const y = ground + (spec.float ? (spec.floatY ?? 0.8) : 0);
 
     const rec = mgr._ensure(spec);
-    rec.root.position.set(pos.x, y, pos.z);
-    rec.plate.position.set(pos.x, y + 2.35, pos.z);
-    rec.pos.set(pos.x, y, pos.z);
+    rec.root.position.set(entry.x, y, entry.z);
+    rec.plate.position.set(entry.x, y + 2.35, entry.z);
+    rec.pos.set(entry.x, y, entry.z);
+    rec.baseYaw = entry.face ?? 0;
+    rec.root.rotation.y = rec.baseYaw;
     rec.root.visible = true;
     rec.plate.visible = false;
-    rec.baseYaw = pos.face;
-    rec.root.rotation.y = rec.baseYaw;
 
-    scene.add(rec.root);
-    mgr.labelScene.add(rec.plate);
-    mgr.npcs.push(rec);
+    if (!mgr.npcs.includes(rec)) {
+      scene.add(rec.root);
+      mgr.labelScene.add(rec.plate);
+      mgr.npcs.push(rec);
+    }
+  }
+
+  for (const [id, entry] of Object.entries(getPlacements())) {
+    spawnPlaced(id, entry);
   }
 
   // ---- 對話狀態機 ----
@@ -103,7 +127,7 @@ export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
 
     /**
      * 選完角色後呼叫：把玩家扮演的那位從境內撤掉，並讓上一位回場。
-     * 34 位角色是在載入時就建好的（很貴），所以這裡只做上下場，不重建。
+     * 角色是在載入時就建好的（很貴），所以這裡只做上下場，不重建。
      */
     setPlayerCharacter(id) {
       // 先讓前一位回場
@@ -125,6 +149,37 @@ export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
       this._benched = rec;
     },
     _benched: null,
+
+    /**
+     * 角色場景編輯器用：把一位角色放到（或搬到）場上的某個座標。
+     * 對已經在場上的角色再呼叫一次 = 搬移。
+     */
+    place(id, x, z, face = 0) {
+      if (!byId.has(id)) return false;
+      if (this._benched && this._benched.spec.id === id) return false;   // 玩家自己扮演中
+      setPlacement(id, x, z, face);
+      spawnPlaced(id, { x, z, face });
+      return true;
+    },
+
+    /** 角色場景編輯器用：把一位角色從場上收回面板 */
+    unplace(id) {
+      removePlacement(id);
+      const i = mgr.npcs.findIndex(n => n.spec.id === id);
+      if (i === -1) return false;
+      const rec = mgr.npcs[i];
+      scene.remove(rec.root);
+      mgr.labelScene.remove(rec.plate);
+      rec.plate.visible = false;
+      mgr.npcs.splice(i, 1);
+      if (mgr.nearest === rec) mgr.nearest = null;
+      return true;
+    },
+
+    /** 角色場景編輯器用：目前的擺放記錄 { [id]: {x,z,face} } */
+    getPlacements() {
+      return getPlacements();
+    },
 
     /** 每幀呼叫 */
     update(t, playerPos, camera) {
