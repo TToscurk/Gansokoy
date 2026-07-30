@@ -12,6 +12,7 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { spawnAllNPCs } from './src/entities/shrine-spawn.js';
 import { setGroundHeightFn } from './src/world/terrain.js';
+import { WORLD } from './src/config.js';
 import { ZoneTracker } from './src/world/zones.js';
 import { clockLabel, isNightAt } from './src/world/daycycle.js';
 import { WEATHERS } from './src/world/weather.js';
@@ -28,6 +29,7 @@ import { SceneEditor } from './src/ui/scene-editor.js';
 import { Combat } from './src/combat/combat.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
+import { Progression } from './src/player/progression.js';
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -313,25 +315,33 @@ const STAIR_HALF_W = 5.6;                 // half-width of the physical stone st
 // scatter below so trees don't get planted inside the (now wider) wall footprint.
 const WALL_INNER_X = 6, WALL_OUTER_X = 92;
 const RAMP_CZ = (STAIR_NEAR + STAIR_FAR) / 2, RAMP_SZ = (STAIR_FAR - STAIR_NEAR) + 4;
-// 境外延伸：前庭南端再一段石階下到低地（神社蓋在高處，獸道在山下）。
-const OUT_NEAR = 58, OUT_FAR = 66;        // 第二段石階的 z 範圍
-const OUTER_DROP = 3.4;                   // 低地比前庭低多少
+// 境外延伸：前庭南端一條「長長的」下山石階（神社蓋在山上，獸道在山腳）。
+// 石階兩側是連續的山坡地形（heightAt 直接算），視覺網格照同一個高度場
+// 生成 —— 走到哪裡腳下都有地，不會出現懸空或穿模。
+const OUT_NEAR = 58, OUT_FAR = 98;        // 下山石階的 z 範圍（40m 長）
+const OUTER_DROP = 14;                    // 山腳比前庭低多少
+const OUT_STEPS = 36;                     // 石階級數
+const HILL_FADE = 30;                     // 過了石階底之後，兩側山坡再走多遠攤平
+
+/** 南側下山段的高度（z > OUT_NEAR 都走這裡） */
+function southHeight(x, z) {
+  const t = Math.min(1, (z - OUT_NEAR) / (OUT_FAR - OUT_NEAR));
+  const stepped = -Math.round(t * OUT_STEPS) / OUT_STEPS * OUTER_DROP;
+  const ax = Math.abs(x);
+  if (ax <= STAIR_HALF_W && z <= OUT_FAR) return stepped;
+  // 石階兩側的山坡：從階梯高度往上收，最多收回前庭高度（0）。
+  // 過了石階底部（z > OUT_FAR）山坡逐漸攤平，讓山腳展開成低地。
+  const fade = Math.max(0, 1 - Math.max(0, z - OUT_FAR) / HILL_FADE);
+  const side = Math.max(0, ax - STAIR_HALF_W);   // 石階中線帶（含階底之後的土徑）不抬升
+  const rise = side * side * 0.09 * fade;
+  return Math.min(0, stepped + rise);
+}
 const FLOOR_Y = PLATEAU + 1.35;           // shrine building floor
 const B = { minX: -8.6, maxX: 8.6, minZ: -16, maxZ: -2.2 };   // building footprint
 
 function heightAt(x, z) {
   let h;
-  if (z >= OUT_FAR) h = -OUTER_DROP;
-  else if (z > OUT_NEAR) {
-    // 前庭下低地的第二段石階：同樣只有石階實寬內才有階面，
-    // 寬度外維持前庭高度（下方擋土牆的碰撞盒擋住橫向繞行）。
-    if (Math.abs(x) <= STAIR_HALF_W) {
-      const t = (z - OUT_NEAR) / (OUT_FAR - OUT_NEAR);
-      h = -Math.round(t * 8) / 8 * OUTER_DROP;
-    } else {
-      h = 0;
-    }
-  }
+  if (z > OUT_NEAR) h = southHeight(x, z);
   else if (z >= STAIR_FAR) h = 0;
   else if (z > STAIR_NEAR) {
     // Only the physical staircase (|x| <= STAIR_HALF_W) climbs — elsewhere in this
@@ -356,19 +366,30 @@ function heightAt(x, z) {
 }
 
 (function terrain() {
-  // lower forecourt（到 OUT_FAR 為止，再往南是更低一層的山下低地）
-  const lower = new THREE.Mesh(new THREE.PlaneGeometry(220, 116), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 16), roughness: 1 }));
+  // lower forecourt（平的部份到 OUT_NEAR 為止，再往南是下山的山坡）
+  const lower = new THREE.Mesh(new THREE.PlaneGeometry(220, 108), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 15), roughness: 1 }));
   lower.rotation.x = -Math.PI / 2;
-  lower.position.set(0, 0, OUT_FAR - 58);
+  lower.position.set(0, 0, OUT_NEAR - 54);
   lower.receiveShadow = true;
   world.add(lower);
 
-  // 山下低地：獸道從這裡開始
-  const field = new THREE.Mesh(new THREE.PlaneGeometry(220, 110), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 15), roughness: 1 }));
-  field.rotation.x = -Math.PI / 2;
-  field.position.set(0, -OUTER_DROP, OUT_FAR + 55);
-  field.receiveShadow = true;
-  world.add(field);
+  // 南側下山段 + 山腳低地：頂點直接取 heightAt 的高度場，
+  // 視覺地面與腳下高度是同一份資料 —— 不會有懸空或穿進土裡。
+  {
+    const D0 = OUT_NEAR - 2, D1 = 150;               // z 範圍（56~150，與平地小幅重疊）
+    const geo = new THREE.PlaneGeometry(220, D1 - D0, 72, 60);
+    geo.rotateX(-Math.PI / 2);
+    const p = geo.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const wx = p.getX(i), wz = p.getZ(i) + (D0 + D1) / 2;
+      p.setY(i, Math.min(0, heightAt(wx, wz)) - 0.02);   // 貼在可走高度下方一點點
+    }
+    geo.computeVertexNormals();
+    const hill = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: TEX.ground(30, 13), roughness: 1 }));
+    hill.position.z = (D0 + D1) / 2;
+    hill.receiveShadow = true;
+    world.add(hill);
+  }
 
   // upper plateau
   const upper = new THREE.Mesh(new THREE.PlaneGeometry(150, 90), new THREE.MeshStandardMaterial({ map: TEX.ground(22, 14), roughness: 1 }));
@@ -409,26 +430,25 @@ function heightAt(x, z) {
   const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1 }));
   path2.rotation.x = -Math.PI / 2; path2.position.set(0, PLATEAU + 0.02, 3.5); path2.receiveShadow = true; world.add(path2);
 
-  /* ---- 境外延伸：前庭南端下山的第二段石階 + 低地土徑 ----
-   * 神社蓋在高處，參道盡頭要再下一段石階才到山腳的獸道 —— 跟第一段
-   * 石階同一套做法：階面只有實寬內有效（heightAt 的 OUT_NEAR/OUT_FAR
-   * 分支），兩側用擋土牆的碰撞盒擋住繞行。 */
-  const oSteps = 8;
-  for (let i = 0; i < oSteps; i++) {
-    const zz = OUT_NEAR + ((OUT_FAR - OUT_NEAR) / oSteps) * (i + 0.5);
-    const yy = -(OUTER_DROP / oSteps) * (i + 1);
-    box(11, 0.34, (OUT_FAR - OUT_NEAR) / oSteps + 0.16, MAT.stone, 0, yy + 0.24, zz);
+  /* ---- 境外延伸：一條長長的下山石階（參道 → 山腳） ----
+   * 高度場（southHeight）與階面一一對應：每一級一塊石板。兩側是連續
+   * 山坡，不設擋土牆也不會懸空 —— 想爬旁邊的坡也行，那是真的地形。 */
+  const stepD = (OUT_FAR - OUT_NEAR) / OUT_STEPS;
+  for (let i = 0; i < OUT_STEPS; i++) {
+    const zz = OUT_NEAR + stepD * (i + 0.5);
+    const yy = -(OUTER_DROP / OUT_STEPS) * (i + 1);
+    box(11, 0.42, stepD + 0.14, MAT.stone, 0, yy + 0.26, zz);
   }
-  const OUT_CZ = (OUT_NEAR + OUT_FAR) / 2, OUT_SZ = (OUT_FAR - OUT_NEAR) + 4;
-  const oWallW = WALL_OUTER_X - WALL_INNER_X, oWallCx = (WALL_INNER_X + WALL_OUTER_X) / 2;
+  // 石階兩側的低石緣（純視覺，貼著坡度走）
+  const curbA = Math.atan2(OUTER_DROP, OUT_FAR - OUT_NEAR);
+  const curbLen = Math.hypot(OUTER_DROP, OUT_FAR - OUT_NEAR) + 1.5;
   for (const s of [-1, 1]) {
-    box(oWallW, OUTER_DROP + 3, OUT_SZ, MAT.stoneBig, s * oWallCx, -OUTER_DROP / 2 - 1.4, OUT_CZ);
-    box(oWallW, 0.5, OUT_SZ + 0.4, MAT.stone, s * oWallCx, 0.2, OUT_CZ);   // coping
-    block(s * oWallCx, OUT_CZ, oWallW, OUT_SZ, 0, -99, true);   // 邊界級：防止繞過石階爬回前庭
+    const curb = box(0.7, 0.6, curbLen, MAT.stone, s * 5.85, -OUTER_DROP / 2 + 0.2, (OUT_NEAR + OUT_FAR) / 2);
+    curb.rotation.x = curbA;
   }
-  // 石階下延續的土徑，一路通到獸道的光點
-  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 26), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 7), roughness: 1 }));
-  path3.rotation.x = -Math.PI / 2; path3.position.set(0, -OUTER_DROP + 0.02, OUT_FAR + 13); path3.receiveShadow = true; world.add(path3);
+  // 山腳延續的土徑，一路通到獸道的光點
+  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 30), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 8), roughness: 1 }));
+  path3.rotation.x = -Math.PI / 2; path3.position.set(0, -OUTER_DROP + 0.04, OUT_FAR + 17); path3.receiveShadow = true; world.add(path3);
 })();
 
 /* ────────────────────────────────────────────────────────────── torii ── */
@@ -1018,8 +1038,8 @@ for (let i = 0; i < 70; i++) {
 }
 for (let i = 0; i < 40; i++) {
   const x = (Math.random() - 0.5) * 110;
-  const z = 24 + Math.random() * 96;
-  if (Math.abs(x) < 10 && z < 84) continue;                    // keep the approach + 下山土徑 clear
+  const z = 24 + Math.random() * 118;
+  if (Math.abs(x) < 10 && z < 120) continue;                   // keep the approach + 下山石階/土徑 clear
   if (Math.abs(x) < 34 && z < 52) continue;                    // NPC 展列區
   // 低地的樹要落在低地高度上（heightAt 在 OUT_FAR 之後回 -OUTER_DROP）
   tree(x, heightAt(x, z), z, 0.8 + Math.random() * 0.9, leafMats[Math.random() * leafMats.length | 0]);
@@ -1027,8 +1047,8 @@ for (let i = 0; i < 40; i++) {
 
 // 獸道入口 —— 山腳低地土徑盡頭的一個發光提示點（楓之谷式），
 // 依需求不做鳥居/告示牌等任何裝飾。按 E 前往獸道（trail.html）。
-const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 12);
-OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 12);
+const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 14);
+OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 14);
 
 // distant mountains (Youkai Mountain silhouettes)
 for (let i = 0; i < 16; i++) {
@@ -1039,7 +1059,9 @@ for (let i = 0; i < 16; i++) {
     new THREE.ConeGeometry(30 + Math.random() * 34, h, 5),
     new THREE.MeshStandardMaterial({ color: '#2c3346', roughness: 1, flatShading: true, fog: true })
   );
-  m.position.set(Math.cos(a) * r, h / 2 - 8, Math.sin(a) * r);
+  // 南邊的山要壓低到山腳低地的高度，不然山底會浮在低地上空
+  const mz = Math.sin(a) * r;
+  m.position.set(Math.cos(a) * r, h / 2 - 8 + (mz > 60 ? -OUTER_DROP : 0), mz);
   m.rotation.y = Math.random() * 3;
   world.add(m);
 }
@@ -1091,6 +1113,9 @@ scene.add(stars);
 /* ───────────────────────────────────────────────────────── NPC 系統 ── */
 // 把 shrine 的高度場接上 NPC 模組，這樣角色才會站在地面上
 setGroundHeightFn(heightAt);
+// 這張圖沒有水域：水面高度壓到夠低，否則 controller 會把腳下的地板
+// 鉗在舊開放世界的湖面（0）—— 山腳低地（-14）會變成踩在空氣上。
+WORLD.waterLevel = -999;
 
 /* NPC 名牌住在這個 overlay 場景，在後製鏈之後才畫 —— 見 NPCManager 的註解 */
 const labelScene = new THREE.Scene();
@@ -1113,6 +1138,9 @@ const slashFX = new SlashFX(scene);
 const slashAudio = new SlashAudio();
 const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
 let combat = null;
+// 角色/技能等級（localStorage，跟獸道共用同一份資料）。神社境內沒有怪，
+// 這裡只負責顯示徽章；打怪練級去獸道。
+const progression = new Progression({ onLevelUp: (msg) => toast(msg) });
 
 /* ─────────────────────────────────────────────── 對話框與任務引擎 ── */
 const dialogue = new Dialogue();
@@ -1327,7 +1355,7 @@ function initPlayer(keepPos = false) {
   ctrl.airJumpV = chosenSpec.airJump ?? 8.4;
   ctrl.sprintMul = chosenSpec.sprintMul ?? 1.85;
   ctrl.speedMul = chosenSpec.speed ?? 1.0;
-  ctrl.bounds = { hx: 78, hz: 88 };     // 神社場地邊界（南端含山腳低地）
+  ctrl.bounds = { hx: 78, hz: 124 };    // 神社場地邊界（南端含下山石階與山腳低地）
 
   // 你扮演的人不該同時站在境內
   npcSystem.setPlayerCharacter(chosenSpec.id);
@@ -1341,6 +1369,11 @@ function initPlayer(keepPos = false) {
     ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
     : null;
   combatHUD.reset();
+  // 戰鬥相關的操作提示只給有技能的角色看
+  const combatHelp = document.getElementById('combatHelp');
+  if (combatHelp) combatHelp.style.display = combat ? '' : 'none';
+  // 等級徽章（成長資料在 localStorage，跟獸道那邊同一份）
+  progression.renderBadge(chosenSpec.combat ? 'hinokami' : null, '日之呼吸');
 
   if (keepPos && prev) { ctrl.teleport(prev.x, prev.z); ctrl.yaw = prev.yaw; }
   else ctrl.teleport(0, 46);

@@ -12,14 +12,17 @@
 
 import * as THREE from 'three';
 import { setGroundHeightFn } from './src/world/terrain.js';
+import { WORLD } from './src/config.js';
 import { buildCharacter } from './src/entities/model.js';
 import { PLAYABLE } from './src/entities/roster.js';
 import { PlayerController } from './src/player/controller.js';
 import { Environment } from './src/world/environment.js';
 import { makePortalGlow } from './src/world/portal.js';
 import { Combat } from './src/combat/combat.js';
+import { FairyMobs } from './src/combat/mobs.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
+import { Progression, progressMobs } from './src/player/progression.js';
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,7 +44,7 @@ camera.rotation.order = 'YXZ';
 // 長條地圖：太陽跟著玩家走（followSun），陰影相機不用蓋住整條 260m 的路。
 // 密林的霧比神社濃（fogMul），其他一律用共用的日循環調色。
 const env = new Environment(scene, renderer, {
-  fogMul: 2.4,
+  fogMul: 1.6,          // 比神社霧一點（密林），但別濃到吞掉北端的神社遠景
   shadowArea: 52,
   followSun: true,
 });
@@ -60,6 +63,9 @@ function heightAt(x, z) {
   return roll + slope + wob;
 }
 setGroundHeightFn(heightAt);
+// 這張圖沒有水域（見 main.js 同名註解）：谷道低點在 -2 以下，
+// 不壓低水面高度的話 controller 會把玩家鉗在半空。
+WORLD.waterLevel = -999;
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -220,6 +226,86 @@ const VILLAGE_END = TRAIL_LEN - 10;    // z = +120：人間之里端
 // 神社端：發光提示點（回博麗神社）—— 依需求不做鳥居等裝飾
 const shrinePortal = makePortalGlow(world, 0, heightAt(0, SHRINE_END), SHRINE_END);
 
+/* ─────────────────── 北端遠景：山上的博麗神社全貌 ──────────────────
+ * 站在獸道朝神社方向望，要看得到整座神社蓋在山頭上：
+ * 山體 + 一條長石階爬上山面 + 台地上的紅鳥居、拜殿、玉垣剪影。
+ * 純遠景裝飾（在邊界外，走不到），尺寸放大讓 70m 外也讀得清楚。 */
+(function shrineVista() {
+  const g = new THREE.Group();
+  const VZ = SHRINE_END - 72;               // 約 z=-192，玩家最近可在 -130 處眺望
+  g.position.set(0, -4, VZ);
+  world.add(g);
+
+  // 山體：平頂的截錐（台地跟山是一體的，不會像飛碟浮在山尖上）
+  const green = new THREE.MeshStandardMaterial({ color: '#3d5030', roughness: 1, flatShading: true });
+  const hill = new THREE.Mesh(new THREE.CylinderGeometry(24, 58, 50, 9), green);
+  hill.position.set(0, 25, -40);
+  hill.rotation.y = 0.35;
+  g.add(hill);
+  // 山腳緩坡
+  const foot = new THREE.Mesh(new THREE.CylinderGeometry(52, 86, 16, 9), new THREE.MeshStandardMaterial({ color: '#44582f', roughness: 1, flatShading: true }));
+  foot.position.set(4, 6, -42);
+  g.add(foot);
+
+  // 山面上的長石階（一條亮色斜帶，遠遠就看得出是那條下山參道）
+  const run = 34, riseH = 50;               // 底部前緣 z≈-6，頂部邊緣 z≈-16 上方
+  const stairs = new THREE.Mesh(new THREE.PlaneGeometry(4.5, Math.hypot(run, riseH)), new THREE.MeshStandardMaterial({ color: '#b9b4a4', roughness: 1 }));
+  stairs.position.set(0, riseH / 2, -16 + run / 2);
+  stairs.rotation.x = -Math.PI / 2 + Math.atan2(riseH, run);
+  g.add(stairs);
+
+  const red = new THREE.MeshStandardMaterial({ color: '#c8402e', roughness: 0.6 });
+  const dark = new THREE.MeshStandardMaterial({ color: '#4a3a30', roughness: 0.9 });
+  const roof = new THREE.MeshStandardMaterial({ color: '#cdd8d2', roughness: 0.8 });
+
+  // 台地上的紅鳥居（石階頂端、山頂前緣）
+  {
+    const t = new THREE.Group();
+    t.position.set(0, 50, -18);
+    g.add(t);
+    for (const s of [-1, 1]) {
+      const p = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.65, 9, 8), red);
+      p.position.set(s * 4, 4.5, 0);
+      t.add(p);
+    }
+    const beam = new THREE.Mesh(new THREE.BoxGeometry(11.6, 1.0, 1.0), red);
+    beam.position.y = 9.2;
+    t.add(beam);
+    const beam2 = new THREE.Mesh(new THREE.BoxGeometry(9.4, 0.7, 0.8), red);
+    beam2.position.y = 7.6;
+    t.add(beam2);
+  }
+
+  // 拜殿剪影：屋身 + 兩片大屋頂 + 正脊（山頂中後方）
+  {
+    const s = new THREE.Group();
+    s.position.set(0, 50, -40);
+    g.add(s);
+    const body = new THREE.Mesh(new THREE.BoxGeometry(20, 6.5, 13), dark);
+    body.position.y = 3.25;
+    s.add(body);
+    for (const d of [-1, 1]) {
+      const slope = new THREE.Mesh(new THREE.BoxGeometry(24, 0.7, 9.4), roof);
+      slope.position.set(0, 9.4, d * 4);
+      slope.rotation.x = d * 0.62;
+      s.add(slope);
+    }
+    const ridge = new THREE.Mesh(new THREE.BoxGeometry(24.6, 1.2, 1.8), roof);
+    ridge.position.y = 12;
+    s.add(ridge);
+  }
+
+  // 玉垣（台地邊的一圈淺色矮欄）
+  const fence = new THREE.Mesh(
+    new THREE.CylinderGeometry(22, 22, 1.0, 12, 1, true),
+    new THREE.MeshStandardMaterial({ color: '#d8d2c0', roughness: 1, side: THREE.DoubleSide })
+  );
+  fence.position.set(0, 50.7, -36);
+  g.add(fence);
+
+  g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
+})();
+
 // 人間之里端：素木冠木門（尚未開放）
 (function villageGate() {
   const y = heightAt(0, VILLAGE_END);
@@ -273,15 +359,32 @@ ctrl.teleport(0, SHRINE_END + 5);      // 從神社走進來，出生在光點�
 ctrl.yaw = 0;                          // 面向人間之里（+z）
 ctrl.camYaw = Math.PI;
 
-/* ─────────────────────────────── 戰鬥（有 combat 旗標的角色） ── */
+/* ───────────────────── 怪物區 + 成長系統 + 戰鬥 ── */
+// 獸道中段是「有怪物的地區」：路旁四窩妖精。擊殺餵角色經驗、
+// 命中餵技能練度（src/player/progression.js，localStorage 跨地圖保留）。
+const prog = new Progression({ onLevelUp: (msg) => toast(msg) });
+const NESTS = [
+  { x: -9, z: -52, r: 12 },
+  { x: 10, z: -8, r: 13 },
+  { x: -10, z: 40, r: 12 },
+  { x: 9, z: 82, r: 12 },
+];
+const fairies = new FairyMobs(scene, NESTS);
+const mobs = progressMobs(fairies, prog, 'hinokami', '日之呼吸');
+
 const slashFX = new SlashFX(scene);
 const slashAudio = new SlashAudio();
-const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
 const combat = spec.combat
-  ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
+  ? new Combat(ctrl, mobs, slashFX, slashAudio, combatHUD)
   : null;
+prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 combatHUD.reset();
 bindCombatInput(() => combat, () => ctrl);
+// 戰鬥相關的操作提示只給有技能的角色看
+{
+  const combatHelp = document.getElementById('combatHelp');
+  if (combatHelp) combatHelp.style.display = combat ? '' : 'none';
+}
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
 const promptEl = document.getElementById('prompt');
@@ -306,8 +409,9 @@ window.addEventListener('keydown', (e) => {
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
 const clock = new THREE.Clock();
 let t = 0;
-function animate() {
-  const rawDt = Math.min(clock.getDelta(), 0.05);
+
+/** 一幀的遊戲邏輯（animate 與除錯用的 __trail.step 共用） */
+function tick(rawDt) {
   let dt = rawDt;
   if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
   t += dt;
@@ -316,6 +420,7 @@ function animate() {
   // 戰鬥姿勢要在 ctrl.update（走路動畫）之後套才壓得過去
   combat?.update(dt, rawDt);
   slashFX.update(dt);
+  fairies.update(dt, t, ctrl.pos);
 
   env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
   shrinePortal.userData.update(t);
@@ -330,7 +435,10 @@ function animate() {
   } else {
     promptEl.classList.remove('on');
   }
+}
 
+function animate() {
+  tick(Math.min(clock.getDelta(), 0.05));
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
@@ -349,7 +457,7 @@ window.__trail = {
   renderer, scene, camera, ctrl, THREE, heightAt, env, get combat() { return combat; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) { t += dt; ctrl.update(dt, t); }
+    for (let i = 0; i < n; i++) tick(dt);
     return ctrl.pos.toArray().map(v => +v.toFixed(2));
   },
 };

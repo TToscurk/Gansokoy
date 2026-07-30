@@ -42,7 +42,9 @@ export class Environment {
     this.renderer = renderer;
     this.opts = opts;
 
-    this.timeScale = opts.timeScale ?? 60;
+    // 預設 1 遊戲小時 = 3 分鐘（一天 72 分鐘）。之前 24 分鐘一天太快，
+    // 在兩張地圖間走一趟天色就翻頁，看起來像時間不同步。
+    this.timeScale = opts.timeScale ?? 180;
     this.timeFlowing = true;
     this.hour = opts.startHour ?? 18.3;
     this.persist = opts.persist !== false;
@@ -190,6 +192,13 @@ export class Environment {
     if (this.followSun && camPos) this.sunPivot.set(camPos.x, 2, camPos.z);
     if (this.timeFlowing || this.weather.blend < 1 || this.followSun) this.applyTime(this.hour);
     this.sky.position.copy(camPos ?? this.sky.position);
+
+    // 每幾秒存一次時刻/天氣 —— 只靠 beforeunload 的話，瀏覽器閃退或
+    // 行動裝置直接殺分頁就會掉狀態，跨地圖的天色就對不上了。
+    if (this.persist) {
+      this._saveAcc = (this._saveAcc ?? 0) + dt;
+      if (this._saveAcc > 4) { this._saveAcc = 0; this._save(); }
+    }
   }
 
   /** 測試/熱鍵用：直接設時刻並停住時間 */
