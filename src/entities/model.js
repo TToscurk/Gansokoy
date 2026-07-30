@@ -387,6 +387,23 @@ function buildHat(kind, pal, head, group) {
       head.add(part(new THREE.TorusGeometry(0.05, 0.014, 6, 12), snake, -0.16, HEAD_R * 0.6, 0.12));
       break;
     }
+    case 'horns': {         // 萃香的鬼角 —— 額前斜上兩根長角，各綁一圈緞帶
+      const horn = toon(0xe8d8c0);
+      for (const sx of [-1, 1]) {
+        const g = tapered(0.022, 0.062, 0.52, 8);
+        const h = part(g, horn, sx * 0.14, HEAD_R * 1.05, 0.1);
+        h.rotation.z = sx * 0.5;
+        h.rotation.x = -0.55;
+        head.add(h);
+        // 角上的緞帶結（左紅右紫）
+        const rb = part(new THREE.TorusGeometry(0.045, 0.018, 6, 12),
+          toon(sx < 0 ? 0xd84048 : 0x7a5abf), sx * 0.205, HEAD_R * 1.05 + 0.17, 0.21);
+        rb.rotation.z = sx * 0.5;
+        rb.rotation.x = Math.PI / 2 - 0.55;
+        head.add(rb);
+      }
+      break;
+    }
   }
 }
 
@@ -557,6 +574,20 @@ function buildProp(kind, pal) {
       const canopy = part(new THREE.ConeGeometry(0.46, 0.3, 12, 1, true), toon(0xd0263a), 0, 0.62, 0);
       canopy.material.side = THREE.DoubleSide;
       g.add(canopy);
+      break;
+    }
+    case 'gourd': {         // 萃香的「伊吹瓢」—— 喝不完的酒葫蘆
+      const purple = toon(0x6a4a8a);
+      const lower = part(new THREE.SphereGeometry(0.16, 12, 10), purple, 0, -0.05, 0);
+      lower.scale.set(1, 1.1, 1);
+      g.add(lower);
+      const upper = part(new THREE.SphereGeometry(0.105, 12, 10), purple, 0, 0.17, 0);
+      g.add(upper);
+      g.add(part(new THREE.CylinderGeometry(0.03, 0.035, 0.09, 8), toon(0x8a6a3a), 0, 0.3, 0));   // 木栓
+      // 綁在腰間的紅繩結
+      const knot = part(new THREE.TorusGeometry(0.05, 0.016, 6, 12), toon(0xc23a3a), 0, 0.07, 0);
+      knot.rotation.x = Math.PI / 2;
+      g.add(knot);
       break;
     }
     default: return null;

@@ -88,6 +88,12 @@ export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
     }
   }
 
+  // 萃香也預設在場 —— 睡在拜殿裡靈夢房間的客用被褥上（座標對齊 main.js
+  // 的 reimuRoom()；她的 spec.sleep 讓 npc.js 以睡姿呈現）。
+  if (!('suika' in getPlacements())) {
+    setPlacement('suika', -4.55, -12.1, Math.PI);
+  }
+
   /** 把一筆擺放記錄實際套用到（快取的）角色物件上，需要的話上場 */
   function spawnPlaced(id, entry) {
     const spec = byId.get(id);
@@ -95,7 +101,7 @@ export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
     if (id === excludeId) return;   // 玩家正在扮演這位，不要同時上場
 
     const ground = heightFn(entry.x, entry.z);
-    const y = ground + (spec.float ? (spec.floatY ?? 0.8) : 0);
+    const y = ground + (spec.float ? (spec.floatY ?? 0.8) : 0) + (spec.sleep ? 0.3 : 0);
 
     const rec = mgr._ensure(spec);
     rec.root.position.set(entry.x, y, entry.z);

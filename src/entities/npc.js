@@ -172,6 +172,22 @@ export class NPCManager {
       }
       if (!visible) continue;
 
+      // 睡著的人（萃香）：整個人放平在被褥上，呼吸放慢，也不會轉頭看玩家
+      if (n.spec.sleep) {
+        animateCharacter(n.root, t * 0.35, 0);
+        n.root.rotation.x = -Math.PI / 2;
+        const wantOutline2 = d < 20;
+        if (n.outlineOn !== wantOutline2) {
+          n.outlineOn = wantOutline2;
+          for (const o of n.outlines) o.visible = wantOutline2;
+        }
+        const vis2 = n === labelled ? 1 - Math.min(1, Math.max(0, (d - 6) / 6)) : 0;
+        n.plate.material.opacity += (vis2 - n.plate.material.opacity) * 0.16;
+        n.plate.visible = n.plate.material.opacity > 0.01;
+        if (d < bestD) { bestD = d; best = n; }
+        continue;
+      }
+
       animateCharacter(n.root, t, 0);
 
       // 遠處關掉描邊：省下的 draw call 比看得出來的差異多得多。

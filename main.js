@@ -23,6 +23,8 @@ import { Dialogue } from './src/ui/dialogue.js';
 import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
+import { Combat } from './src/combat/combat.js';
+import { SlashFX, SlashAudio } from './src/fx/slash.js';
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -118,6 +120,21 @@ const TEX = {
       g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 7, 0, 7); g.fill();
     }
     noise(g, s, 26);
+  }, rx, ry),
+
+  /* 榻榻米：藺草編織的細橫紋 + 每張蓆的黑色緣（へり） */
+  tatami: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+    g.fillStyle = '#8a9a5b'; g.fillRect(0, 0, s, s);
+    for (let y = 0; y < s; y += 2) {
+      g.strokeStyle = `rgba(${110 + Math.random() * 30},${125 + Math.random() * 30},${70 + Math.random() * 20},.45)`;
+      g.lineWidth = 1;
+      g.beginPath(); g.moveTo(0, y + Math.random()); g.lineTo(s, y + Math.random()); g.stroke();
+    }
+    // 蓆緣：畫面左右兩側的深色帶（貼圖重複時就是一張張蓆的分界）
+    g.fillStyle = '#2a2a30';
+    g.fillRect(0, 0, 7, s);
+    g.fillRect(s - 7, 0, 7, s);
+    noise(g, s, 10);
   }, rx, ry),
 
   gravel: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
@@ -267,9 +284,16 @@ scene.environmentIntensity = 0.55;
 const world = new THREE.Group();
 scene.add(world);
 
-/** Axis-aligned blockers the player can't walk through. */
+/** Axis-aligned blockers the player can't walk through.
+ *
+ * 依使用者要求：除了「邊界」以外，其他物件一律不設空氣牆 —— 裝飾物
+ * （樹、燈籠、鳥居柱、狛犬、欄杆……）碰到不該把角色推來推去。因此
+ * block() 預設是 no-op，只有帶 solid=true 的呼叫（台地擋土牆，防止
+ * 從石階以外的地方翻上參拜台）才真的註冊碰撞盒；外圍邊界另由
+ * ctrl.bounds 處理，跟這份清單無關。 */
 const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
+function block(x, z, sx, sz, top, bottom = -99, solid = false) {
+  if (!solid) return;
   colliders.push({ minX: x - sx / 2, maxX: x + sx / 2, minZ: z - sz / 2, maxZ: z + sz / 2, top, bottom });
 }
 
@@ -292,6 +316,10 @@ function mats() {
   MAT.ofuda = new THREE.MeshStandardMaterial({ map: TEX.ofuda(), roughness: 0.85, side: THREE.DoubleSide });
   MAT.rope = new THREE.MeshStandardMaterial({ color: '#d9cfa8', roughness: 1 });
   MAT.gold = new THREE.MeshStandardMaterial({ color: '#c9a227', roughness: 0.35, metalness: 0.8 });
+  MAT.tatami = new THREE.MeshStandardMaterial({ map: TEX.tatami(3, 2), roughness: 0.95, color: '#dfe6c8' });
+  MAT.futonRed = new THREE.MeshStandardMaterial({ color: '#c0453f', roughness: 0.9 });
+  MAT.futonPlum = new THREE.MeshStandardMaterial({ color: '#8a5aa8', roughness: 0.9 });
+  MAT.futonWhite = new THREE.MeshStandardMaterial({ color: '#f2ecdc', roughness: 0.95 });
   MAT.bark = new THREE.MeshStandardMaterial({ color: '#5b4534', roughness: 1 });
   MAT.leafGreen = new THREE.MeshStandardMaterial({ color: '#4a6b33', roughness: 1, flatShading: true });
   MAT.leafRed = new THREE.MeshStandardMaterial({ color: '#a83c2c', roughness: 1, flatShading: true });
@@ -373,7 +401,7 @@ function heightAt(x, z) {
   for (const s of [-1, 1]) {
     box(wallW, PLATEAU + 4, RAMP_SZ, MAT.stoneBig, s * wallCx, PLATEAU / 2 - 2, RAMP_CZ);
     box(wallW, 0.5, RAMP_SZ + 0.4, MAT.stone, s * wallCx, PLATEAU + 0.2, RAMP_CZ);     // coping
-    block(s * wallCx, RAMP_CZ, wallW, RAMP_SZ, PLATEAU);
+    block(s * wallCx, RAMP_CZ, wallW, RAMP_SZ, PLATEAU, -99, true);   // 邊界級：防止繞過石階翻上台地
   }
 
   // stone staircase
@@ -542,6 +570,81 @@ function shrine() {
   const inner = new THREE.PointLight('#ffcf9a', 34, 30, 2);
   inner.position.set(0, FLOOR_Y + 3.2, cz + 4.5);
   g.add(inner);
+
+  /* ---- 靈夢的寢室（拜殿西側的和室） -------------------------------
+   * 參考傳統和室：榻榻米直接鋪地、被褥（布團）晚上鋪出來、押入收納、
+   * 矮桌（卓袱台）擺中間。房裡常年多鋪一組客用被褥 —— 因為萃香
+   * 三天兩頭跑來睡（她的預設出生點就在那組被褥上，見 shrine-spawn.js）。
+   * 依「不設空氣牆」的原則，隔間與家具都沒有碰撞盒。 */
+  (function reimuRoom() {
+    const RX0 = -8.2, RX1 = -2.6;              // 房間 x 範圍（拜殿西側）
+    const RZ0 = -14.8, RZ1 = -8.0;             // 房間 z 範圍
+    const rcx = (RX0 + RX1) / 2, rcz = (RZ0 + RZ1) / 2;
+    const rw = RX1 - RX0, rd = RZ1 - RZ0;
+
+    // 榻榻米地板（略高於木地板一層）
+    const tat = box(rw, 0.1, rd, MAT.tatami, rcx, FLOOR_Y + 0.06, rcz, g);
+    tat.receiveShadow = true;
+
+    // 隔間：東側紙門牆（留南端開口當入口）、南側半牆
+    box(0.14, 3.2, rd - 1.8, MAT.shoji, RX1, FLOOR_Y + 1.66, rcz - 0.9, g);
+    box(0.18, 3.2, 0.18, MAT.darkWood, RX1, FLOOR_Y + 1.66, RZ0 + 0.1, g);   // 門框柱
+    box(0.18, 3.2, 0.18, MAT.darkWood, RX1, FLOOR_Y + 1.66, RZ1 - 1.7, g);
+    box(rw - 1.9, 0.5, 0.12, MAT.darkWood, rcx - 0.95, FLOOR_Y + 3.0, RZ1, g); // 南側楣
+    box(2.2, 3.2, 0.12, MAT.shoji, RX0 + 1.1, FLOOR_Y + 1.66, RZ1, g);         // 南側半牆
+
+    // 押入（壁櫥）：靠北牆，上下兩段拉門
+    box(2.6, 2.5, 0.7, MAT.wood, RX0 + 1.5, FLOOR_Y + 1.3, RZ0 + 0.45, g);
+    box(1.24, 1.1, 0.06, MAT.shoji, RX0 + 0.85, FLOOR_Y + 1.85, RZ0 + 0.82, g);
+    box(1.24, 1.1, 0.06, MAT.shoji, RX0 + 2.15, FLOOR_Y + 0.72, RZ0 + 0.82, g);
+
+    // 靈夢的被褥：敷布團（白）＋ 掀開一角的紅色棉被 ＋ 枕頭
+    const fu = (x, z, quilt, rot = 0) => {
+      const fg = new THREE.Group();
+      fg.position.set(x, FLOOR_Y + 0.11, z);
+      fg.rotation.y = rot;
+      g.add(fg);
+      box(1.15, 0.1, 2.15, MAT.futonWhite, 0, 0.05, 0, fg);                 // 敷布團
+      const q = box(1.25, 0.14, 1.62, quilt, 0, 0.16, 0.24, fg);            // 棉被（蓋腳側）
+      q.rotation.x = 0.035;
+      box(0.52, 0.14, 0.3, MAT.futonPlum, 0, 0.14, -0.86, fg);              // 枕頭
+      return fg;
+    };
+    fu(-6.9, -12.2, MAT.futonRed, 0.04);          // 靈夢自己的
+    fu(-4.55, -12.1, MAT.futonWhite, -0.06);      // 客用 —— 萃香常年霸佔（她睡這）
+
+    // 卓袱台（矮圓桌）＋ 兩個座墊 ＋ 茶壺
+    cyl(0.75, 0.75, 0.1, MAT.darkWood, rcx + 0.4, FLOOR_Y + 0.42, rcz + 1.9, 16, g);
+    cyl(0.09, 0.12, 0.36, MAT.darkWood, rcx + 0.4, FLOOR_Y + 0.2, rcz + 1.9, 8, g);
+    box(0.62, 0.09, 0.62, MAT.futonRed, rcx - 0.5, FLOOR_Y + 0.11, rcz + 1.9, g);   // 座墊
+    box(0.62, 0.09, 0.62, MAT.futonPlum, rcx + 1.3, FLOOR_Y + 0.11, rcz + 1.9, g);
+    const pot = new THREE.Mesh(new THREE.SphereGeometry(0.14, 10, 8), MAT.darkWood);
+    pot.position.set(rcx + 0.4, FLOOR_Y + 0.56, rcz + 1.9);
+    pot.scale.y = 0.75;
+    g.add(pot);
+
+    // 萃香的酒葫蘆與空酒碗滾在被褥邊 —— 有人昨晚又喝掛了
+    const gourd = new THREE.Group();
+    gourd.position.set(-3.6, FLOOR_Y + 0.16, -11.2);
+    gourd.rotation.z = Math.PI / 2 - 0.2;
+    g.add(gourd);
+    const gpm = new THREE.MeshStandardMaterial({ color: '#6a4a8a', roughness: 0.6 });
+    const gl = new THREE.Mesh(new THREE.SphereGeometry(0.17, 10, 8), gpm); gl.scale.y = 1.1; gourd.add(gl);
+    const gu = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 8), gpm); gu.position.y = 0.23; gourd.add(gu);
+    cyl(0.06, 0.05, 0.05, MAT.gold, -3.25, FLOOR_Y + 0.14, -11.55, 10, g);   // 倒扣的酒碗
+
+    // 牆上的御札與燈
+    for (let i = 0; i < 3; i++) {
+      const o = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.84), MAT.ofuda);
+      o.position.set(RX0 + 0.12, FLOOR_Y + 2.3 - i * 0.1, rcz - 1.6 + i * 1.3);
+      o.rotation.y = Math.PI / 2;
+      o.rotation.z = (i - 1) * 0.05;
+      g.add(o);
+    }
+    const rl = new THREE.PointLight('#ffcf9a', 14, 12, 2);
+    rl.position.set(rcx, FLOOR_Y + 2.6, rcz);
+    g.add(rl);
+  })();
 
   // plank ceiling, so you see timber overhead rather than the roof tiles
   box(w - 0.6, 0.18, d - 0.8, MAT.darkWood, cx, FLOOR_Y + PH + 0.3, cz, g);
@@ -919,6 +1022,31 @@ for (let i = 0; i < 40; i++) {
   tree(x, 0, z, 0.8 + Math.random() * 0.9, leafMats[Math.random() * leafMats.length | 0]);
 }
 
+// 獸道入口 —— 參道南端的小木鳥居 + 指路牌。按 E 前往獸道（trail.html）。
+(function trailGate() {
+  const g = new THREE.Group();
+  g.position.set(0, 0, 54);
+  world.add(g);
+  // 小型素木鳥居
+  for (const s of [-1, 1]) cyl(0.22, 0.26, 3.4, MAT.darkWood, s * 2.1, 1.7, 0, 10, g);
+  box(5.4, 0.3, 0.34, MAT.darkWood, 0, 3.35, 0, g);
+  box(4.6, 0.22, 0.28, MAT.darkWood, 0, 2.75, 0, g);
+  // 匾額
+  const plaque = box(1.15, 0.5, 0.08, MAT.wood, 0, 3.0, 0.06, g);
+  plaque.rotation.x = -0.06;
+  // 指路牌（斜插的木牌）
+  const post = cyl(0.07, 0.09, 1.5, MAT.darkWood, 2.9, 0.75, 0.6, 8, g);
+  post.rotation.z = -0.08;
+  const sign = box(1.3, 0.42, 0.06, MAT.wood, 2.95, 1.35, 0.6, g);
+  sign.rotation.y = -0.35;
+  // 兩盞小石燈
+  for (const s of [-1, 1]) {
+    cyl(0.16, 0.2, 0.8, MAT.stone, s * 3.4, 0.4, -0.4, 8, g);
+    box(0.42, 0.36, 0.42, MAT.stone, s * 3.4, 0.95, -0.4, g);
+  }
+  OBJ.trailGate = new THREE.Vector3(0, 0, 54);
+})();
+
 // distant mountains (Youkai Mountain silhouettes)
 for (let i = 0; i < 16; i++) {
   const a = (i / 16) * Math.PI * 2 + 0.2;
@@ -993,6 +1121,45 @@ const sceneEditor = new SceneEditor({
   getPlayerId: () => chosenSpec.id,
   getCtrl: () => ctrl,
 });
+
+/* ───────────────────────────────────────── 戰鬥（繼國緣一限定） ── */
+// 從 gensokoy3d 移植的日之呼吸十三型。依使用者要求只給緣一用 ——
+// 其他角色沒有戰鬥控制器（combat 保持 null），左鍵/R 都不會有反應。
+// 神社境內沒有敵人，所以命中判定接一個空樁：招式純粹是演出。
+const slashFX = new SlashFX(scene);
+const slashAudio = new SlashAudio();
+const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
+let combat = null;
+
+const combatUI = {
+  formBanner(name) {
+    const el = document.getElementById('formBanner');
+    if (!el) return;
+    el.textContent = name;
+    el.classList.remove('on');
+    void el.offsetWidth;          // 重播 CSS 動畫
+    el.classList.add('on');
+  },
+  charge(r) {
+    const el = document.getElementById('charge');
+    if (!el) return;
+    el.classList.toggle('on', r > 0.06);
+    el.classList.toggle('full', r >= 1);
+    const fill = el.querySelector('.f');
+    if (fill) fill.style.width = (r * 100).toFixed(1) + '%';
+  },
+  combo(n) {
+    const el = document.getElementById('combo');
+    if (!el) return;
+    el.classList.toggle('on', n >= 2);
+    if (n >= 2) {
+      el.querySelector('.n').textContent = n;
+      el.classList.remove('tick');
+      void el.offsetWidth;
+      el.classList.add('tick');
+    }
+  },
+};
 
 /* ─────────────────────────────────────────────── 對話框與任務引擎 ── */
 const dialogue = new Dialogue();
@@ -1263,6 +1430,17 @@ function initPlayer(keepPos = false) {
   // 你扮演的人不該同時站在境內
   npcSystem.setPlayerCharacter(chosenSpec.id);
 
+  // 記住這次選的角色 —— 前往獸道（trail.html）之後回來還是同一位
+  try { sessionStorage.setItem('gansokoy:char', chosenSpec.id); } catch { /* 私隱模式 */ }
+
+  // 戰鬥控制器只綁緣一（換角時重建，其他角色維持 null = 沒有招式）
+  combat = chosenSpec.id === 'yoriichi'
+    ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatUI)
+    : null;
+  combatUI.charge(0);
+  const comboEl = document.getElementById('combo');
+  if (comboEl) comboEl.classList.remove('on');
+
   if (keepPos && prev) { ctrl.teleport(prev.x, prev.z); ctrl.yaw = prev.yaw; }
   else ctrl.teleport(0, 46);
   charModel.visible = true;
@@ -1289,6 +1467,7 @@ function bindHotkeys() {
     if (dialogue.active) return;
 
     if (e.code === 'KeyJ') questLog.toggle();
+    if (e.code === 'KeyR' && combat) combat.toggleSheath();
     if (e.code === 'KeyG') { applyQuality((qualityIdx + 1) % QUALITY.length); autoTuned = true; toast(`畫質：${QUALITY[qualityIdx].name}`); }
 
     // T：時間快轉 3 小時。Shift+T：暫停／恢復時間流動。
@@ -1310,8 +1489,32 @@ function bindHotkeys() {
       toast(`天氣：${next.zh}`);
     }
   });
+
+  // 左鍵：出招（點一下）／蓄力大招（按住）。只有緣一有 combat。
+  window.addEventListener('mousedown', (e) => {
+    if (e.button !== 0 || !combat) return;
+    if (!ctrl?.locked || dialogue.active || sceneEditor.isOpen) return;
+    combat.tryAttack();
+    combat.holdStart();
+  });
+  const endHold = () => combat?.holdEnd();
+  window.addEventListener('mouseup', (e) => { if (e.button === 0) endHold(); });
+  window.addEventListener('blur', endHold);
 }
 bindHotkeys();
+
+/* 從獸道走回來：跳過角色選單，用剛才那位角色，出生在獸道入口的鳥居前 */
+if (new URLSearchParams(location.search).get('from') === 'trail') {
+  let saved = null;
+  try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
+  chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? PLAYER_SPECS[0];
+  startGame();
+  if (ctrl) {
+    ctrl.teleport(0, 50.5);
+    ctrl.yaw = Math.PI;      // 面向神社
+    ctrl.camYaw = 0;
+  }
+}
 
 let toastTimer;
 function toast(msg, dur = 2200) {
@@ -1359,6 +1562,13 @@ function interact() {
     yenEl.textContent = yen;
     bellSwing = 1;
     toast(PRAYERS[Math.random() * PRAYERS.length | 0]);
+    return;
+  }
+
+  // 3) 獸道入口：切換到獸道場景（獨立頁面）
+  const dT = Math.hypot(ctrl.pos.x - OBJ.trailGate.x, ctrl.pos.z - OBJ.trailGate.z);
+  if (dT < 3.8) {
+    location.href = 'trail.html';
   }
 }
 
@@ -1367,9 +1577,14 @@ function interact() {
 
 const clock = new THREE.Clock();
 
-function update(dt) {
+function update(dt, rawDt = dt) {
   if (!ctrl) return;
   ctrl.update(dt, t);
+
+  // 戰鬥姿勢一定要在 ctrl.update（裡面跑走路動畫）之後套，才壓得過去。
+  // rawDt 給 hitstop 自己倒數 —— 用壓慢後的 dt 倒數會永遠出不了頓挫。
+  combat?.update(dt, rawDt);
+  slashFX.update(dt);
 
   sky.position.copy(camera.position);
 
@@ -1393,8 +1608,12 @@ function update(dt) {
     promptEl.classList.add('on');
   } else {
     const dS = Math.hypot(ctrl.pos.x - OBJ.saisen.x, ctrl.pos.z - OBJ.saisen.z);
+    const dT = Math.hypot(ctrl.pos.x - OBJ.trailGate.x, ctrl.pos.z - OBJ.trailGate.z);
     if (dS < 3.4 && ctrl.pos.y > PLATEAU) {
       promptEl.textContent = '[ E ]  投賽錢・參拜';
+      promptEl.classList.add('on');
+    } else if (dT < 3.8) {
+      promptEl.textContent = '[ E ]  前往獸道（往人間之里）';
       promptEl.classList.add('on');
     } else {
       promptEl.classList.remove('on');
@@ -1405,7 +1624,9 @@ function update(dt) {
 /* ─────────────────────────────────────────────────────────── render ── */
 let t = 0;
 function animate() {
-  const dt = Math.min(clock.getDelta(), 0.05);
+  const rawDt = Math.min(clock.getDelta(), 0.05);
+  let dt = rawDt;
+  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫：時間短暫變慢
   t += dt;
 
   // the canvas can start at 0×0 in a background/hidden pane — re-sync on the fly
@@ -1432,7 +1653,7 @@ function animate() {
     }
   }
 
-  update(dt);
+  update(dt, rawDt);
 
   // orbs bob and spin
   for (const o of orbs) {

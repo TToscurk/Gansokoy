@@ -129,7 +129,7 @@ export class SceneEditor {
       if (!p) return;
       const { rec } = this._drag;
       const spec = rec.spec;
-      const y = this.heightAt(p.x, p.z) + (spec.float ? (spec.floatY ?? 0.8) : 0);
+      const y = this.heightAt(p.x, p.z) + (spec.float ? (spec.floatY ?? 0.8) : 0) + (spec.sleep ? 0.3 : 0);
       rec.root.position.set(p.x, y, p.z);
       rec.plate.position.set(p.x, y + 2.35, p.z);
       rec.pos.set(p.x, y, p.z);

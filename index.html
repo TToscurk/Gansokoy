@@ -97,6 +97,39 @@
     border-top:1px solid rgba(255,255,255,.08); padding-top:10px; }
   #questLog .qdone { font-size:10.5px; color:#6f6478; line-height:1.9; }
 
+  /* 戰鬥 HUD（繼國緣一限定）：型名橫幅、連擊數、大招蓄力條 */
+  #formBanner{position:fixed;top:22%;left:50%;transform:translateX(-50%);z-index:55;
+    font-size:30px;font-weight:800;letter-spacing:.22em;pointer-events:none;opacity:0;
+    color:#ffb050;text-shadow:0 0 18px rgba(255,122,26,.85),0 0 40px rgba(58,122,255,.5),0 2px 6px rgba(0,0,0,.7)}
+  #formBanner.on{animation:formFlash .9s cubic-bezier(.2,.8,.3,1) forwards}
+  @keyframes formFlash{
+    0%{opacity:0;transform:translateX(-50%) scale(1.35)}
+    14%{opacity:1;transform:translateX(-50%) scale(1)}
+    70%{opacity:1}
+    100%{opacity:0;transform:translateX(-50%) scale(.96)}}
+  #combo{position:fixed;top:26%;right:5%;z-index:55;pointer-events:none;opacity:0;
+    transition:opacity .35s;text-align:right;color:#ffd9a0;
+    text-shadow:0 0 14px rgba(255,122,26,.7),0 2px 5px rgba(0,0,0,.7)}
+  #combo.on{opacity:1}
+  #combo .n{display:block;font-size:44px;font-weight:800;line-height:1}
+  #combo .u{display:block;font-size:12px;letter-spacing:.4em;margin-top:4px;color:#c9a2c8}
+  #combo.tick .n{animation:comboTick .22s ease-out}
+  @keyframes comboTick{0%{transform:scale(1.28)}100%{transform:scale(1)}}
+  #charge{position:fixed;bottom:16%;left:50%;transform:translateX(-50%);z-index:55;
+    width:220px;height:5px;border-radius:3px;pointer-events:none;opacity:0;
+    background:rgba(12,10,16,.62);box-shadow:0 0 0 1px rgba(255,176,80,.28);
+    transition:opacity .18s}
+  #charge.on{opacity:1}
+  #charge .f{height:100%;width:0;border-radius:3px;
+    background:linear-gradient(90deg,#ff7a1a,#3a7aff);
+    box-shadow:0 0 12px rgba(255,122,26,.8)}
+  #charge .lb{position:absolute;top:-20px;left:0;width:100%;text-align:center;
+    font-size:11px;letter-spacing:.34em;color:#ffc689;opacity:0;
+    text-shadow:0 0 10px rgba(255,122,26,.8)}
+  #charge.full .lb{opacity:1}
+  #charge.full .f{animation:chargeFull .5s ease-out infinite alternate}
+  @keyframes chargeFull{0%{filter:brightness(1)}100%{filter:brightness(1.9)}}
+
   /* 角色場景編輯器 */
   #sceneEditor { position:fixed; right:18px; top:76px; width:250px; z-index:37;
     background:linear-gradient(180deg,rgba(24,18,28,.94),rgba(14,10,18,.96));
@@ -175,6 +208,7 @@
     <div><b>WASD / 方向鍵</b> 移動</div>
     <div><b>滑鼠</b> 轉視角　<b>滾輪</b> 縮放　<b>Shift</b> 衝刺　<b>Space</b> 跳躍</div>
     <div><b>F</b> 飛行　<b>Ctrl/C</b> 下降　<b>E</b> 互動　<b>J</b> 任務　<b>P</b> 場景編輯</div>
+    <div><b>左鍵</b> 出招（緣一）　<b>長按左鍵</b> 日之呼吸・全型　<b>R</b> 拔刀/納刀</div>
     <div><b>T</b> 快轉3小時　<b>Shift+T</b> 暫停時間　<b>Y</b> 天氣　<b>G</b> 畫質　<b>ESC</b> 放開滑鼠</div>
   </div>
 </div>
@@ -191,6 +225,10 @@
   <h3>任 務</h3>
   <div class="body"></div>
 </div>
+
+<div id="formBanner"></div>
+<div id="combo"><span class="n">0</span><span class="u">連擊</span></div>
+<div id="charge"><div class="lb">日之呼吸・全型</div><div class="f"></div></div>
 
 <div id="sceneEditor">
   <h3>場景編輯</h3>
