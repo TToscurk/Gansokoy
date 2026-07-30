@@ -26,10 +26,26 @@ import { Dialogue } from './src/ui/dialogue.js';
 import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
+import { installHUD, bindEscMenu } from './src/ui/hud.js';
 import { Combat } from './src/combat/combat.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 import { Progression } from './src/player/progression.js';
+
+/* ─────────────────────────────────────────────────────────────── HUD ── */
+// 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
+// 要在任何 getElementById 之前裝好。
+const HUD = installHUD({
+  title: '博麗神社',
+  subtitle: 'HAKUREI SHRINE',
+  keys: [
+    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+    ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
+    ['E', '互動'], ['J', '任務'], ['P', '場景編輯'],
+    ['T', '快轉3小時'], ['Shift+T', '暫停時間'], ['Y', '天氣'], ['G', '畫質'], ['ESC', '選單'],
+  ],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+});
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -248,14 +264,13 @@ scene.add(world);
 
 /** Axis-aligned blockers the player can't walk through.
  *
- * 依使用者要求：除了「邊界」以外，其他物件一律不設空氣牆 —— 裝飾物
- * （樹、燈籠、鳥居柱、狛犬、欄杆……）碰到不該把角色推來推去。因此
- * block() 預設是 no-op，只有帶 solid=true 的呼叫（台地擋土牆，防止
- * 從石階以外的地方翻上參拜台）才真的註冊碰撞盒；外圍邊界另由
- * ctrl.bounds 處理，跟這份清單無關。 */
+ * 場上的實體物件（樹、鳥居柱、燈籠、狛犬、欄杆、岩石、建物牆柱……）
+ * 都要有碰撞，走過去會被實實在在擋住。之前碰到會「被推移」是控制器的
+ * 問題（推開位置卻沒清掉往牆裡的速度，於是每幀擠進去又被彈出來），
+ * 已在 PlayerController._killInward 修好 —— 所以這裡可以放心設實心。
+ * 碰撞盒請貼合實際模型尺寸，不要外擴成看不見的空氣牆。 */
 const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99, solid = false) {
-  if (!solid) return;
+function block(x, z, sx, sz, top, bottom = -99) {
   colliders.push({ minX: x - sx / 2, maxX: x + sx / 2, minZ: z - sz / 2, maxZ: z + sz / 2, top, bottom });
 }
 
@@ -403,7 +418,7 @@ function heightAt(x, z) {
   for (const s of [-1, 1]) {
     box(wallW, PLATEAU + 4, RAMP_SZ, MAT.stoneBig, s * wallCx, PLATEAU / 2 - 2, RAMP_CZ);
     box(wallW, 0.5, RAMP_SZ + 0.4, MAT.stone, s * wallCx, PLATEAU + 0.2, RAMP_CZ);     // coping
-    block(s * wallCx, RAMP_CZ, wallW, RAMP_SZ, PLATEAU, -99, true);   // 邊界級：防止繞過石階翻上台地
+    block(s * wallCx, RAMP_CZ, wallW, RAMP_SZ, PLATEAU);   // 防止繞過石階翻上台地
   }
 
   // stone staircase
@@ -420,7 +435,7 @@ function heightAt(x, z) {
   for (const s of [-1, 1]) {
     const rail = box(0.85, 2.4, slopeLen, MAT.stone, s * 5.9, PLATEAU / 2 + 0.45, (STAIR_FAR + STAIR_NEAR) / 2);
     rail.rotation.x = slopeA;
-    block(s * 5.9, (STAIR_FAR + STAIR_NEAR) / 2, 1.0, slopeLen, PLATEAU + 1);
+    block(s * 5.9, (STAIR_FAR + STAIR_NEAR) / 2, 0.85, slopeLen, PLATEAU + 1);   // 貼合欄杆實寬
   }
 
   // gravel approach path (lower) and plateau path
@@ -1383,12 +1398,14 @@ function initPlayer(keepPos = false) {
 /** 全域熱鍵。只在模組載入時註冊一次。 */
 function bindHotkeys() {
   window.addEventListener('keydown', (e) => {
-    // ESC 先處理：對話中／編輯器開啟時，ESC 是「關掉它」，不是放開滑鼠
+    // ESC 先處理：對話中／編輯器開啟時，ESC 是「關掉它」；其餘情況交給
+    // 共用的 ESC 選單（bindEscMenu，見下方）。
     if (e.code === 'Escape') {
       if (dialogue.active) { dialogue.close(); return; }
       if (sceneEditor.isOpen) { sceneEditor.close(); return; }
       return;
     }
+    if (escMenu.isOpen) return;       // 選單開著時不吃其他熱鍵
     // P：開關角色場景編輯器。故意放在鎖定判斷之前 —— 開啟編輯器會主動解除
     // 滑鼠鎖定（sceneEditor.open() 呼叫 exitPointerLock），放在判斷之後的話
     // 面板只能開、按第二次 P 會因為已經沒鎖定而被 `!ctrl?.locked` 擋掉。
@@ -1424,12 +1441,31 @@ function bindHotkeys() {
   });
 
   // 左鍵出招/蓄力、R 拔刀納刀 —— 共用綁定（src/combat/hud.js）
-  bindCombatInput(() => combat, () => ctrl, () => dialogue.active || sceneEditor.isOpen);
+  bindCombatInput(() => combat, () => ctrl,
+    () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen);
 }
 bindHotkeys();
 
-/* 從獸道走回來：跳過角色選單，用剛才那位角色，出生在獸道入口的鳥居前 */
+/* ESC 選單（全地圖共用）。「回到選角畫面」把面紗放回來重選人。 */
+const escMenu = bindEscMenu({
+  getCtrl: () => ctrl,
+  isBusy: () => dialogue.active || sceneEditor.isOpen,
+  onBackToSelect() {
+    veil.classList.remove('hide');
+    if (ctrl) { ctrl.enabled = false; ctrl.dispose(); ctrl = null; }
+    if (charModel) { scene.remove(charModel); charModel = null; }
+    combat = null;
+    combatHUD.reset();
+    HUD.showCombatKeys(false);
+    HUD.prompt(null);
+  },
+});
+
+/* 從獸道走回來：不要閃過選角畫面，直接蓋上「博麗神社 讀取中」，
+ * 用剛才那位角色出生在山腳的獸道入口旁。 */
 if (new URLSearchParams(location.search).get('from') === 'trail') {
+  HUD.showLoading('博麗神社 讀取中');
+  veil.classList.add('hide');
   let saved = null;
   try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
   chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? PLAYER_SPECS[0];
@@ -1439,15 +1475,11 @@ if (new URLSearchParams(location.search).get('from') === 'trail') {
     ctrl.yaw = Math.PI;      // 面向神社
     ctrl.camYaw = 0;
   }
+  // 等第一幀真的畫出來再收掉讀取畫面，避免看到半成品
+  requestAnimationFrame(() => requestAnimationFrame(() => HUD.hideLoading()));
 }
 
-let toastTimer;
-function toast(msg, dur = 2200) {
-  toastEl.textContent = msg;
-  toastEl.classList.add('on');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('on'), dur);
-}
+const toast = (msg, dur = 2200) => HUD.toast(msg, dur);   // 共用 HUD 的短訊
 
 const PRAYERS = [
   '靈夢：「喔，有香客耶。難得。」',
@@ -1493,6 +1525,7 @@ function interact() {
   // 3) 獸道入口：切換到獸道場景（獨立頁面）
   const dT = Math.hypot(ctrl.pos.x - OBJ.trailGate.x, ctrl.pos.z - OBJ.trailGate.z);
   if (dT < 3.8) {
+    HUD.showLoading('獸道 讀取中');
     location.href = 'trail.html';
   }
 }
@@ -1651,7 +1684,7 @@ window.__shrine = {
     renderFrame();
   },
   composer, applyQuality, QUALITY,
-  quests, questLog, dialogue, zones, weather,
+  quests, questLog, dialogue, zones, weather, sceneEditor,
   /** 測試用：直接設定時刻（小時，0–24），並停住時間 */
   setHour(h) { return env.setHour(h); },
   getHour() { return env.hour; },

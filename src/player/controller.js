@@ -166,6 +166,19 @@ export class PlayerController {
     if (this.pos.z < -hz) { this.pos.z = -hz; if (this.vel.z < 0) this.vel.z = 0; }
   }
 
+  /**
+   * 撞到東西之後，把「往牆裡」的那份速度吃掉，只留下沿著牆面滑動的分量。
+   *
+   * 不做這件事的話：位置每幀被推回表面，速度卻還指著牆內，下一幀又擠進去、
+   * 又被推出來 —— 那正是「碰到物件角色會移位／抖動」的成因。清掉法線方向的
+   * 速度後，貼著樹或牆走就只是單純地被擋住，手感是實心的。
+   * @param {number} nx @param {number} nz 單位法線（由物體指向玩家）
+   */
+  _killInward(nx, nz) {
+    const into = this.vel.x * nx + this.vel.z * nz;
+    if (into < 0) { this.vel.x -= into * nx; this.vel.z -= into * nz; }
+  }
+
   _resolveCollisions() {
     const p = this.pos;
     for (const c of this.colliders) {
@@ -183,6 +196,7 @@ export class PlayerController {
           const k = (min - d) / d;
           p.x += dx * k;
           p.z += dz * k;
+          this._killInward(dx / d, dz / d);
         }
       } else {
         // 方盒（可帶 Y 軸旋轉）
@@ -197,11 +211,13 @@ export class PlayerController {
           const px = ex - Math.abs(lx);
           const pz = ez - Math.abs(lz);
           let nlx = lx, nlz = lz;
-          if (px < pz) nlx = Math.sign(lx || 1) * ex;
-          else nlz = Math.sign(lz || 1) * ez;
+          let nx = 0, nz = 0;                       // 被推開的方向（世界座標法線）
+          if (px < pz) { nlx = Math.sign(lx || 1) * ex; nx = Math.sign(lx || 1); }
+          else { nlz = Math.sign(lz || 1) * ez; nz = Math.sign(lz || 1); }
           const cs2 = Math.cos(rot), sn2 = Math.sin(rot);
           p.x = c.x + (nlx * cs2 - nlz * sn2);
           p.z = c.z + (nlx * sn2 + nlz * cs2);
+          this._killInward(nx * cs2 - nz * sn2, nx * sn2 + nz * cs2);
         }
       }
     }

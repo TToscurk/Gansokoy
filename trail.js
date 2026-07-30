@@ -23,6 +23,19 @@ import { FairyMobs } from './src/combat/mobs.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 import { Progression, progressMobs } from './src/player/progression.js';
+import { installHUD, bindEscMenu } from './src/ui/hud.js';
+
+/* 共用 HUD —— 與神社、人間之里完全同一套版面 */
+const HUD = installHUD({
+  title: '獸　道',
+  subtitle: 'BEAST TRAIL · 博麗神社 ⇄ 人間之里',
+  keys: [
+    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+    ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
+    ['E', '互動'], ['ESC', '選單'],
+  ],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+});
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -113,6 +126,16 @@ const MAT = {
 const world = new THREE.Group();
 scene.add(world);
 
+/* 場上實體物件的碰撞盒。每張地圖都照這個規則：樹幹、岩石、倒木、
+ * 建物柱牆這些看得見的實體都要能擋人，尺寸貼合模型本身。 */
+const colliders = [];
+function block(x, z, sx, sz, top, bottom = -99) {
+  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
+}
+function post(x, z, r, top, bottom = -99) {
+  colliders.push({ x, z, y: bottom, h: top - bottom, r });
+}
+
 function box(sx, sy, sz, mat, x, y, z, parent = world) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
   m.position.set(x, y, z);
@@ -158,6 +181,7 @@ function tree(x, z, s, leaf) {
   world.add(g);
   const h = (3.2 + Math.random() * 2.6) * s;
   cyl(0.16 * s, 0.24 * s, h, MAT.bark, 0, h / 2, 0, 7, g);
+  post(x, z, 0.26 * s, y + h);                 // 樹幹擋人（貼合樹幹半徑）
   const layers = 2 + (Math.random() * 2 | 0);
   for (let i = 0; i < layers; i++) {
     const r = (1.5 - i * 0.36) * s * (0.85 + Math.random() * 0.4);
@@ -186,6 +210,7 @@ for (let i = 0; i < 26; i++) {
   rock.rotation.set(Math.random() * 3, Math.random() * 3, 0);
   rock.castShadow = rock.receiveShadow = true;
   world.add(rock);
+  if (r > 0.45) post(x, z, r * 0.85, heightAt(x, z) + r);   // 大一點的岩石才擋人
 }
 for (let i = 0; i < 7; i++) {
   const z = -TRAIL_LEN + 20 + Math.random() * (TRAIL_LEN * 2 - 40);
@@ -193,6 +218,7 @@ for (let i = 0; i < 7; i++) {
   const log = cyl(0.22, 0.28, 2.6 + Math.random() * 1.6, MAT.bark, x, heightAt(x, z) + 0.25, z, 7);
   log.rotation.z = Math.PI / 2;
   log.rotation.y = Math.random() * Math.PI;
+  post(x, z, 0.5, heightAt(x, z) + 0.55);      // 倒木
 }
 
 // 彼岸花叢 —— 獸道的路標。紅點成叢，霧裡也看得見。
@@ -215,6 +241,7 @@ for (const z of [-88, -30, 42, 96]) {
   const x = s * 3.6;
   const y = heightAt(x, z);
   box(0.5, 1.0, 0.34, MAT.stone, x, y + 0.5, z);
+  block(x, z, 0.7, 0.54, y + 1.1);             // 道祖神石碑
   box(0.66, 0.16, 0.5, MAT.stone, x, y + 1.06, z);
   box(0.7, 0.12, 0.54, MAT.stone, x, y + 0.05, z);
 }
@@ -306,19 +333,29 @@ const shrinePortal = makePortalGlow(world, 0, heightAt(0, SHRINE_END), SHRINE_EN
   g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
 
-// 人間之里端：素木冠木門（尚未開放）
-(function villageGate() {
-  const y = heightAt(0, VILLAGE_END);
+// 人間之里端：發光提示點（依需求不做拱門裝飾）
+const villagePortal = makePortalGlow(world, 0, heightAt(0, VILLAGE_END), VILLAGE_END);
+
+// 人間之里端的遠景：里的燈火與屋頂剪影（在邊界外，走不到）
+(function villageVista() {
   const g = new THREE.Group();
-  g.position.set(0, y, VILLAGE_END);
+  g.position.set(0, heightAt(0, VILLAGE_END) - 1, VILLAGE_END + 42);
   world.add(g);
-  for (const s of [-1, 1]) cyl(0.3, 0.34, 4.4, MAT.darkWood, s * 3.0, 2.2, 0, 10, g);
-  box(7.6, 0.44, 0.5, MAT.darkWood, 0, 4.35, 0, g);
-  box(6.6, 0.3, 0.36, MAT.wood, 0, 3.7, 0, g);
-  // 門後的木柵欄（示意里門未開）
-  for (let i = -2; i <= 2; i++) box(0.16, 2.2, 0.16, MAT.wood, i * 1.2, 1.1, 0.4, g);
-  box(6.2, 0.18, 0.14, MAT.wood, 0, 1.7, 0.4, g);
-  box(6.2, 0.18, 0.14, MAT.wood, 0, 0.7, 0.4, g);
+  const wall = new THREE.MeshStandardMaterial({ color: '#c9bfa4', roughness: 1 });
+  const tile = new THREE.MeshStandardMaterial({ color: '#4c5560', roughness: 1, flatShading: true });
+  for (let i = 0; i < 9; i++) {
+    const hx = (i - 4) * 11 + (Math.random() - 0.5) * 4;
+    const hz = -Math.random() * 26;
+    const w = 7 + Math.random() * 5, h = 4 + Math.random() * 2;
+    const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 7), wall);
+    b.position.set(hx, h / 2, hz);
+    g.add(b);
+    const r = new THREE.Mesh(new THREE.ConeGeometry(w * 0.82, 2.6, 4), tile);
+    r.position.set(hx, h + 1.3, hz);
+    r.rotation.y = Math.PI / 4;
+    g.add(r);
+  }
+  g.traverse(o => { if (o.isMesh) o.castShadow = false; });
 })();
 
 /* ─────────────────────────────────────────────── 光斑與飛螢 ── */
@@ -347,7 +384,7 @@ const spec = PLAYABLE.find(p => p.id === saved) ?? PLAYABLE[0];
 
 const model = buildCharacter(spec);
 scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, []);
+const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
 ctrl.canFly = spec.canFly ?? true;
 ctrl.maxAirJumps = spec.airJumps ?? 0;
 ctrl.jumpV = spec.jump ?? 9.2;
@@ -355,9 +392,16 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: BOUND_X, hz: TRAIL_LEN + 4 };
-ctrl.teleport(0, SHRINE_END + 5);      // 從神社走進來，出生在光點內側
-ctrl.yaw = 0;                          // 面向人間之里（+z）
-ctrl.camYaw = Math.PI;
+// 從哪一端走進來，就從那一端出生
+if (new URLSearchParams(location.search).get('from') === 'village') {
+  ctrl.teleport(0, VILLAGE_END - 5);
+  ctrl.yaw = Math.PI;                  // 面向博麗神社（-z）
+  ctrl.camYaw = 0;
+} else {
+  ctrl.teleport(0, SHRINE_END + 5);    // 從神社走進來，出生在光點內側
+  ctrl.yaw = 0;                        // 面向人間之里（+z）
+  ctrl.camYaw = Math.PI;
+}
 
 /* ───────────────────── 怪物區 + 成長系統 + 戰鬥 ── */
 // 獸道中段是「有怪物的地區」：路旁四窩妖精。擊殺餵角色經驗、
@@ -379,31 +423,31 @@ const combat = spec.combat
   : null;
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 combatHUD.reset();
-bindCombatInput(() => combat, () => ctrl);
+bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
 // 戰鬥相關的操作提示只給有技能的角色看
 {
-  const combatHelp = document.getElementById('combatHelp');
-  if (combatHelp) combatHelp.style.display = combat ? '' : 'none';
+  HUD.showCombatKeys(!!combat);
 }
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
-const promptEl = document.getElementById('prompt');
-const toastEl = document.getElementById('toast');
-let toastTimer;
-function toast(msg, dur = 2600) {
-  toastEl.textContent = msg;
-  toastEl.classList.add('on');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('on'), dur);
-}
+const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
+
+/* ESC 選單（與其他地圖同一套）。回選角畫面＝回神社的選人流程。 */
+const escMenu = bindEscMenu({
+  getCtrl: () => ctrl,
+  onBackToSelect() {
+    HUD.showLoading('博麗神社 讀取中');
+    location.href = 'index.html';
+  },
+});
 
 const nearShrine = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - SHRINE_END) < 4.2;
 const nearVillage = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - VILLAGE_END) < 4.2;
 
 window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || !ctrl.locked) return;
-  if (nearShrine()) { location.href = 'index.html?from=trail'; return; }
-  if (nearVillage()) toast('人間之里的里門還沒開 —— 這一段路之後再修。');
+  if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
+  if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = 'index.html?from=trail'; return; }
+  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = 'village.html'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -424,17 +468,12 @@ function tick(rawDt) {
 
   env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
   shrinePortal.userData.update(t);
+  villagePortal.userData.update(t);
   motes.position.z = ctrl.pos.z * 0.2;
 
-  if (nearShrine()) {
-    promptEl.textContent = '[ E ]  返回博麗神社';
-    promptEl.classList.add('on');
-  } else if (nearVillage()) {
-    promptEl.textContent = '[ E ]  人間之里（尚未開放）';
-    promptEl.classList.add('on');
-  } else {
-    promptEl.classList.remove('on');
-  }
+  if (nearShrine()) HUD.prompt('[ E ]  返回博麗神社');
+  else if (nearVillage()) HUD.prompt('[ E ]  前往人間之里');
+  else HUD.prompt(null);
 }
 
 function animate() {

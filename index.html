@@ -10,36 +10,7 @@
     font-family: "Noto Sans TC","Yu Gothic","Meiryo",system-ui,sans-serif; }
   canvas { display:block; }
 
-  #hud { position:fixed; inset:0; pointer-events:none; z-index:10; }
-
-  #cross { position:absolute; left:50%; top:50%; width:18px; height:18px;
-    transform:translate(-50%,-50%); opacity:.55; }
-  #cross:before, #cross:after { content:""; position:absolute; background:#fff;
-    box-shadow:0 0 3px rgba(0,0,0,.8); }
-  #cross:before { left:50%; top:0; width:1.5px; height:100%; transform:translateX(-50%); }
-  #cross:after { top:50%; left:0; height:1.5px; width:100%; transform:translateY(-50%); }
-
-  #help { position:absolute; left:16px; bottom:14px; color:#fff; font-size:12.5px;
-    line-height:1.75; text-shadow:0 1px 4px rgba(0,0,0,.9); opacity:.85; }
-  #help b { display:inline-block; min-width:74px; color:#ffd9a0; font-weight:600; }
-
-  #place { position:absolute; right:18px; top:16px; text-align:right; color:#fff;
-    text-shadow:0 2px 8px rgba(0,0,0,.9); }
-  #place .jp { font-size:26px; letter-spacing:.32em; font-weight:600; }
-  #place .sub { font-size:11px; letter-spacing:.22em; opacity:.7; margin-top:2px; }
-  #place .tod { font-size:11px; letter-spacing:.14em; opacity:.6; margin-top:6px; }
-
-  #prompt { position:absolute; left:50%; top:58%; transform:translateX(-50%);
-    color:#fff; font-size:14px; letter-spacing:.06em; padding:7px 16px;
-    background:rgba(20,14,24,.62); border:1px solid rgba(255,255,255,.22);
-    border-radius:3px; text-shadow:0 1px 3px #000; opacity:0; transition:opacity .18s; }
-  #prompt.on { opacity:1; }
-
-  #toast { position:absolute; left:50%; top:66%; transform:translateX(-50%);
-    color:#ffe9c9; font-size:13px; letter-spacing:.08em; opacity:0;
-    text-shadow:0 1px 6px #000; transition:opacity .4s; white-space:nowrap; }
-  #toast.on { opacity:1; }
-
+  /* cross/help/place/prompt/toast 的樣式在 src/ui/hud.js（全地圖共用） */
   #saisen { position:absolute; right:20px; bottom:16px; color:#ffd9a0; font-size:12px;
     letter-spacing:.1em; text-shadow:0 1px 4px #000; opacity:.8; }
 
@@ -97,39 +68,6 @@
     border-top:1px solid rgba(255,255,255,.08); padding-top:10px; }
   #questLog .qdone { font-size:10.5px; color:#6f6478; line-height:1.9; }
 
-  /* 戰鬥 HUD（繼國緣一限定）：型名橫幅、連擊數、大招蓄力條 */
-  #formBanner{position:fixed;top:22%;left:50%;transform:translateX(-50%);z-index:55;
-    font-size:30px;font-weight:800;letter-spacing:.22em;pointer-events:none;opacity:0;
-    color:#ffb050;text-shadow:0 0 18px rgba(255,122,26,.85),0 0 40px rgba(58,122,255,.5),0 2px 6px rgba(0,0,0,.7)}
-  #formBanner.on{animation:formFlash .9s cubic-bezier(.2,.8,.3,1) forwards}
-  @keyframes formFlash{
-    0%{opacity:0;transform:translateX(-50%) scale(1.35)}
-    14%{opacity:1;transform:translateX(-50%) scale(1)}
-    70%{opacity:1}
-    100%{opacity:0;transform:translateX(-50%) scale(.96)}}
-  #combo{position:fixed;top:26%;right:5%;z-index:55;pointer-events:none;opacity:0;
-    transition:opacity .35s;text-align:right;color:#ffd9a0;
-    text-shadow:0 0 14px rgba(255,122,26,.7),0 2px 5px rgba(0,0,0,.7)}
-  #combo.on{opacity:1}
-  #combo .n{display:block;font-size:44px;font-weight:800;line-height:1}
-  #combo .u{display:block;font-size:12px;letter-spacing:.4em;margin-top:4px;color:#c9a2c8}
-  #combo.tick .n{animation:comboTick .22s ease-out}
-  @keyframes comboTick{0%{transform:scale(1.28)}100%{transform:scale(1)}}
-  #charge{position:fixed;bottom:16%;left:50%;transform:translateX(-50%);z-index:55;
-    width:220px;height:5px;border-radius:3px;pointer-events:none;opacity:0;
-    background:rgba(12,10,16,.62);box-shadow:0 0 0 1px rgba(255,176,80,.28);
-    transition:opacity .18s}
-  #charge.on{opacity:1}
-  #charge .f{height:100%;width:0;border-radius:3px;
-    background:linear-gradient(90deg,#ff7a1a,#3a7aff);
-    box-shadow:0 0 12px rgba(255,122,26,.8)}
-  #charge .lb{position:absolute;top:-20px;left:0;width:100%;text-align:center;
-    font-size:11px;letter-spacing:.34em;color:#ffc689;opacity:0;
-    text-shadow:0 0 10px rgba(255,122,26,.8)}
-  #charge.full .lb{opacity:1}
-  #charge.full .f{animation:chargeFull .5s ease-out infinite alternate}
-  @keyframes chargeFull{0%{filter:brightness(1)}100%{filter:brightness(1.9)}}
-
   /* 角色場景編輯器 */
   #sceneEditor { position:fixed; right:18px; top:76px; width:250px; z-index:37;
     background:linear-gradient(180deg,rgba(24,18,28,.94),rgba(14,10,18,.96));
@@ -141,6 +79,7 @@
   #sceneEditor h3 { font-size:12px; letter-spacing:.28em; color:#d9b26a;
     margin-bottom:8px; font-weight:700; }
   #sceneEditor .ehint { font-size:10px; color:#a99cb0; line-height:1.6; margin-bottom:12px; }
+  #sceneEditor .esel { color:#d9b26a; }
   #sceneEditor .eempty { font-size:11px; color:#8d7f94; line-height:1.9; }
   #sceneEditor .epalette { display:flex; flex-wrap:wrap; gap:8px; }
   .ecard { width:64px; padding:8px 4px 7px; border:1px solid rgba(255,255,255,.18);
@@ -192,27 +131,9 @@
 <body>
 <div id="loading">建立中…</div>
 
-<div id="hud">
-  <div id="cross"></div>
-  <div id="place">
-    <div class="jp">博麗神社</div>
-    <div class="sub">HAKUREI SHRINE</div>
-    <div class="tod" id="todLabel">黃昏</div>
-    <div class="tod" id="qualLabel">畫質：高</div>
-    <div class="tod" id="lvlBadge"></div>
-  </div>
-  <div id="prompt"></div>
-  <div id="toast"></div>
-  <div id="questToasts"></div>
-  <div id="saisen">賽錢 ¥<span id="yen">0</span></div>
-  <div id="help">
-    <div><b>WASD / 方向鍵</b> 移動</div>
-    <div><b>滑鼠</b> 轉視角　<b>滾輪</b> 縮放　<b>Shift</b> 衝刺　<b>Space</b> 跳躍</div>
-    <div><b>F</b> 飛行　<b>Ctrl/C</b> 下降　<b>E</b> 互動　<b>J</b> 任務　<b>P</b> 場景編輯</div>
-    <div id="combatHelp" style="display:none"><b>左鍵</b> 出招　<b>長按左鍵</b> 日之呼吸・全型　<b>R</b> 拔刀/納刀</div>
-    <div><b>T</b> 快轉3小時　<b>Shift+T</b> 暫停時間　<b>Y</b> 天氣　<b>G</b> 畫質　<b>ESC</b> 放開滑鼠</div>
-  </div>
-</div>
+<!-- 共用 HUD（cross/place/prompt/toast/help/戰鬥/ESC/讀取）由 src/ui/hud.js 注入 -->
+<div id="questToasts"></div>
+<div id="saisen">賽錢 ¥<span id="yen">0</span></div>
 
 <div id="talk">
   <div class="box">
@@ -227,13 +148,11 @@
   <div class="body"></div>
 </div>
 
-<div id="formBanner"></div>
-<div id="combo"><span class="n">0</span><span class="u">連擊</span></div>
-<div id="charge"><div class="lb">日之呼吸・全型</div><div class="f"></div></div>
 
 <div id="sceneEditor">
   <h3>場景編輯</h3>
   <div class="ehint">拖曳角色到場景中放置；把已放置的角色拖回這裡收回。</div>
+  <div class="ehint esel">點一下場上的角色即可選取並旋轉</div>
   <div class="epalette"></div>
 </div>
 

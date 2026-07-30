@@ -37,7 +37,8 @@ export class SceneEditor {
     this.isOpen = false;
     this._raycaster = new THREE.Raycaster();
     this._dragPlane = new THREE.Plane();
-    this._drag = null;   // { id, rec }
+    this._drag = null;      // { id, rec }
+    this._selected = null;  // 目前選取的角色（可用 Q/E 或滾輪轉向）
 
     this._bind();
   }
@@ -69,6 +70,14 @@ export class SceneEditor {
     const placements = this.npcSystem.getPlacements();
     const playerId = this.getPlayerId();
     const unplaced = ROSTER.filter(s => !(s.id in placements) && s.id !== playerId);
+
+    // 目前選取誰（可以轉向）——顯示在面板上，免得不知道 Q/E 會轉到誰
+    const selEl = this.el.querySelector('.esel');
+    if (selEl) {
+      selEl.textContent = this._selected
+        ? `已選取：${this._selected.spec.zh}　Q/E 旋轉（Shift 微調）`
+        : '點一下場上的角色即可選取並旋轉';
+    }
 
     if (!unplaced.length) {
       this.palette.innerHTML = '<div class="eempty">角色都已經在場上了。</div>';
@@ -118,10 +127,30 @@ export class SceneEditor {
       const rec = this._pickNPC(e.clientX, e.clientY);
       if (!rec) return;
       e.preventDefault();
-      this._drag = { id: rec.spec.id, rec };
+      this._drag = { id: rec.spec.id, rec, moved: false };
+      this._selected = rec;                     // 點到誰就選誰，之後可以轉他
       this._dragPlane.setFromNormalAndCoplanarPoint(UP, rec.pos);
       dom.style.cursor = 'grabbing';
+      this._renderPalette();
     });
+
+    // ---- 3D 旋轉：選取角色後用 Q/E（或按住 Shift 滾輪）轉向 ----
+    window.addEventListener('keydown', (e) => {
+      if (!this.isOpen || !this._selected) return;
+      let d = 0;
+      if (e.code === 'KeyQ') d = -1;
+      else if (e.code === 'KeyE') d = 1;
+      else if (e.code === 'BracketLeft') d = -0.25;
+      else if (e.code === 'BracketRight') d = 0.25;
+      else return;
+      e.preventDefault();
+      this._rotate(this._selected, d * (e.shiftKey ? 0.06 : 0.20));
+    });
+    dom.addEventListener('wheel', (e) => {
+      if (!this.isOpen || !this._selected || !e.shiftKey) return;
+      e.preventDefault();
+      this._rotate(this._selected, Math.sign(e.deltaY) * 0.12);
+    }, { passive: false });
 
     window.addEventListener('pointermove', (e) => {
       if (!this._drag) return;
@@ -146,10 +175,25 @@ export class SceneEditor {
     });
   }
 
+  /**
+   * 轉一位已放置的角色（3D 旋轉），並立刻寫回擺放記錄。
+   * NPCManager 每幀會把朝向拉回 baseYaw，所以要一起改 baseYaw，
+   * 不然放開手角色就自己轉回去了。
+   */
+  _rotate(rec, delta) {
+    rec.baseYaw = (rec.baseYaw ?? 0) + delta;
+    rec.root.rotation.y = rec.baseYaw;
+    this.npcSystem.place(rec.spec.id, rec.pos.x, rec.pos.z, rec.baseYaw);
+  }
+
   /** 拖曳結束：落在面板上 = 收回，否則 = 在目前位置定案 */
   _commitDrag({ id, rec }, overPanel) {
-    if (overPanel) this.npcSystem.unplace(id);
-    else this.npcSystem.place(id, rec.pos.x, rec.pos.z, rec.baseYaw ?? 0);
+    if (overPanel) {
+      this.npcSystem.unplace(id);
+      if (this._selected === rec) this._selected = null;
+    } else {
+      this.npcSystem.place(id, rec.pos.x, rec.pos.z, rec.baseYaw ?? 0);
+    }
     this._renderPalette();
   }
 
