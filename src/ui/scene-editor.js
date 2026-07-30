@@ -10,6 +10,61 @@ import { ROSTER } from '../entities/roster.js';
 const UP = new THREE.Vector3(0, 1, 0);
 const hex = (n) => '#' + n.toString(16).padStart(6, '0');
 
+// 面板的樣式與結構由這裡注入 —— 跟共用 HUD 同一個原則：每張地圖的
+// 編輯器長得一樣，新地圖不用在自己的 HTML 裡再抄一份。
+const CSS = `
+#sceneEditor { position:fixed; right:18px; top:76px; width:250px; z-index:37;
+  background:linear-gradient(180deg,rgba(24,18,28,.94),rgba(14,10,18,.96));
+  border:1px solid rgba(217,178,106,.34); border-radius:4px; padding:14px 16px;
+  opacity:0; pointer-events:none; transform:translateX(12px);
+  transition:opacity .2s ease, transform .2s ease;
+  max-height:70vh; overflow-y:auto; }
+#sceneEditor.on { opacity:1; pointer-events:auto; transform:translateX(0); }
+#sceneEditor h3 { font-size:12px; letter-spacing:.28em; color:#d9b26a;
+  margin-bottom:8px; font-weight:700; }
+#sceneEditor .ehint { font-size:10px; color:#a99cb0; line-height:1.6; margin-bottom:12px; }
+#sceneEditor .esel { color:#d9b26a; }
+#sceneEditor .eempty { font-size:11px; color:#8d7f94; line-height:1.9; }
+#sceneEditor .epalette { display:flex; flex-wrap:wrap; gap:8px; }
+#sceneEditor .etoggles { display:flex; flex-direction:column; gap:6px; margin-bottom:12px;
+  padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,.1); }
+#sceneEditor .etoggle { display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:7px 10px; font-family:inherit; font-size:11.5px; letter-spacing:.06em;
+  cursor:pointer; color:#f3ece4; background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.18); border-radius:3px; transition:.15s; }
+#sceneEditor .etoggle:hover { border-color:#c2382f; background:rgba(194,56,47,.18); }
+#sceneEditor .etoggle .st { font-size:10px; letter-spacing:.1em; color:#8d7f94; }
+#sceneEditor .etoggle.on .st { color:#7fd08a; }
+#sceneEditor .etoggle.off .st { color:#c2705f; }
+.ecard { width:64px; padding:8px 4px 7px; border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.04); cursor:grab; text-align:center; border-radius:3px;
+  transition:.15s; }
+.ecard:hover { background:rgba(194,56,47,.2); border-color:#c2382f; }
+.ecard:active { cursor:grabbing; }
+.ecard .eswatch { width:26px; height:26px; border-radius:50%; margin:0 auto 6px;
+  border:2px solid rgba(255,255,255,.3); }
+.ecard .enm { font-size:10.5px; font-weight:700; color:#f3ece4; letter-spacing:.02em;
+  line-height:1.3; pointer-events:none; }
+`;
+
+function ensurePanel() {
+  let el = document.getElementById('sceneEditor');
+  if (el) return el;
+  const style = document.createElement('style');
+  style.textContent = CSS;
+  document.head.appendChild(style);
+  el = document.createElement('div');
+  el.id = 'sceneEditor';
+  el.innerHTML = `
+    <h3>場景編輯</h3>
+    <div class="ehint">拖曳角色到場景中放置；把已放置的角色拖回這裡收回。</div>
+    <div class="ehint esel">點一下場上的角色即可選取並旋轉</div>
+    <div class="etoggles"></div>
+    <div class="epalette"></div>`;
+  document.body.appendChild(el);
+  return el;
+}
+
 export class SceneEditor {
   /**
    * @param {object} deps
@@ -21,8 +76,10 @@ export class SceneEditor {
    * @param {ReturnType<import('../entities/shrine-spawn.js').spawnAllNPCs>} deps.npcSystem
    * @param {() => string} deps.getPlayerId    目前玩家扮演的角色 id（會隨換角色改變，故用 getter）
    * @param {() => import('../player/controller.js').PlayerController|null} deps.getCtrl
+   * @param {Array<{label:string, get:()=>boolean, set:(v:boolean)=>void}>} [deps.toggles]
+   *        面板上的開關（例：人間之里的「路人」顯示／隱藏）
    */
-  constructor({ scene, camera, renderer, world, heightAt, npcSystem, getPlayerId, getCtrl }) {
+  constructor({ scene, camera, renderer, world, heightAt, npcSystem, getPlayerId, getCtrl, toggles = [] }) {
     this.camera = camera;
     this.renderer = renderer;
     this.world = world;
@@ -30,9 +87,11 @@ export class SceneEditor {
     this.npcSystem = npcSystem;
     this.getPlayerId = getPlayerId;
     this.getCtrl = getCtrl;
+    this.toggles = toggles;
 
-    this.el = document.getElementById('sceneEditor');
+    this.el = ensurePanel();
     this.palette = this.el.querySelector('.epalette');
+    this._renderToggles();
 
     this.isOpen = false;
     this._raycaster = new THREE.Raycaster();
@@ -49,6 +108,7 @@ export class SceneEditor {
     const ctrl = this.getCtrl();
     if (ctrl) ctrl.enabled = false;
     if (document.pointerLockElement) document.exitPointerLock();
+    this._renderToggles();
     this._renderPalette();
   }
 
@@ -63,6 +123,27 @@ export class SceneEditor {
   toggle() {
     if (this.isOpen) this.close();
     else this.open();
+  }
+
+  /** 面板上方的開關列（路人顯示/隱藏之類的場景選項） */
+  _renderToggles() {
+    const host = this.el.querySelector('.etoggles');
+    if (!host) return;
+    if (!this.toggles.length) { host.style.display = 'none'; return; }
+    host.innerHTML = '';
+    for (const t of this.toggles) {
+      const btn = document.createElement('button');
+      btn.className = 'etoggle';
+      const sync = () => {
+        const on = !!t.get();
+        btn.classList.toggle('on', on);
+        btn.classList.toggle('off', !on);
+        btn.innerHTML = `<span>${t.label}</span><span class="st">${on ? '顯示中' : '已隱藏'}</span>`;
+      };
+      btn.addEventListener('click', () => { t.set(!t.get()); sync(); });
+      sync();
+      host.appendChild(btn);
+    }
   }
 
   /** 未上場清單：ROSTER 減去已有擺放的、減去玩家目前扮演的角色 */

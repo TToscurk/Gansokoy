@@ -26,6 +26,9 @@ import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 import { Progression } from './src/player/progression.js';
 import { installHUD, bindEscMenu } from './src/ui/hud.js';
+import { VillagerCrowd } from './src/entities/villagers.js';
+import { spawnAllNPCs } from './src/entities/shrine-spawn.js';
+import { SceneEditor } from './src/ui/scene-editor.js';
 
 const HUD = installHUD({
   title: '人間之里',
@@ -33,7 +36,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
-    ['E', '互動'], ['ESC', '選單'],
+    ['E', '互動'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
 });
@@ -433,6 +436,48 @@ for (let i = 0; i < 18; i++) {
 /* ───────────────────────────────── 傳送點（往獸道 → 神社） ── */
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
 
+/* ─────────────────────────────────────────── 里民路人 ── */
+// 街道的路點圖：主街兩側各一條人行動線 + 橫街一條，交叉口互通，
+// 再從主街拉幾條支線到店門口（讓路人會走到店家前面停下來）。
+const CROWD_GRAPH = (() => {
+  const nodes = [];
+  const links = [];
+  const add = (x, z) => (nodes.push([x, z]), nodes.length - 1);
+  const chain = (ids) => { for (let i = 0; i < ids.length - 1; i++) links.push([ids[i], ids[i + 1]]); };
+
+  const zs = [-52, -42, -32, -22, -12, -2, 8, 18, 28, 38, 48];
+  const west = zs.map(z => add(-3.0, z));      // 主街西側動線
+  const east = zs.map(z => add(3.0, z));       // 主街東側動線
+  chain(west); chain(east);
+
+  const xs = [-32, -24, -16, -8, 8, 16, 24, 32];
+  const cross = xs.map(x => add(x, 8));        // 橫街
+  chain(cross);
+
+  // 交叉口：把橫街接上主街（zs 裡 z=8 的索引是 6）
+  const wMid = west[6], eMid = east[6];
+  links.push([wMid, eMid]);
+  links.push([cross[3], wMid]);                // x=-8 接西側
+  links.push([cross[4], eMid]);                // x=+8 接東側
+
+  // 店門口支線：站到店前一點的位置，會有人在那邊逗留
+  for (const s of SHOPS) {
+    const sideX = Math.sign(s.x) * 6.2;
+    const doorZ = s.z + (s.rot === 0 ? -(s.d / 2 + 1.6) : (s.d / 2 + 1.6));
+    const door = add(sideX, doorZ);
+    // 接到主街上最近的節點
+    const lane = s.x < 0 ? west : east;
+    let best = lane[0], bd = Infinity;
+    for (const n of lane) {
+      const d = Math.abs(nodes[n][1] - doorZ);
+      if (d < bd) { bd = d; best = n; }
+    }
+    links.push([door, best]);
+  }
+  return { nodes, links };
+})();
+const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 38);
+
 /* ─────────────────────────────────────────────────────── 玩家 ── */
 let saved = null;
 try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
@@ -451,6 +496,19 @@ ctrl.bounds = { hx: 96, hz: 96 };
 ctrl.teleport(0, GATE_Z + 9);     // 從里門走進來
 ctrl.yaw = 0;
 ctrl.camYaw = Math.PI;
+
+/* ───────────────────── 名冊角色（預設沒有人，全交給場景編輯器） ── */
+const labelScene = new THREE.Scene();
+const npcSystem = spawnAllNPCs(scene, heightAt, labelScene, spec.id, { seed: false });
+
+const sceneEditor = new SceneEditor({
+  scene, camera, renderer, world, heightAt, npcSystem,
+  getPlayerId: () => spec.id,
+  getCtrl: () => ctrl,
+  toggles: [
+    { label: '路人', get: () => crowd.visible, set: (v) => crowd.setVisible(v) },
+  ],
+});
 
 /* ────────────────────────────────── 戰鬥（里內和平，無怪） ── */
 const prog = new Progression({ onLevelUp: (msg) => HUD.toast(msg) });
@@ -475,17 +533,23 @@ env.applyTime(env.hour, true);
 /* ────────────────────────────────────────────── 互動與選單 ── */
 const escMenu = bindEscMenu({
   getCtrl: () => ctrl,
+  isBusy: () => sceneEditor.isOpen,
   onBackToSelect() {
     HUD.showLoading('博麗神社 讀取中');
     location.href = 'index.html';
   },
 });
-bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
+bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen || sceneEditor.isOpen);
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
 
 window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
+  // ESC 在編輯器開著時是「關掉編輯器」（bindEscMenu 的 isBusy 已讓過）
+  if (e.code === 'Escape' && sceneEditor.isOpen) { sceneEditor.close(); return; }
+  // P：開關場景編輯器。放在鎖定判斷之前 —— 開啟時會解除滑鼠鎖定。
+  if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
+  if (sceneEditor.isOpen || escMenu.isOpen) return;
+  if (e.code !== 'KeyE' || !ctrl.locked) return;
   if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = 'trail.html?from=village'; }
 });
 
@@ -500,6 +564,8 @@ function tick(rawDt) {
   ctrl.update(dt, t);
   combat?.update(dt, rawDt);
   slashFX.update(dt);
+  crowd.update(dt, t, ctrl.pos);
+  npcSystem.update(t, ctrl.pos, camera);
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
   HUD.prompt(nearPortal() ? '[ E ]  前往獸道（往博麗神社）' : null);
@@ -508,6 +574,13 @@ function tick(rawDt) {
 function animate() {
   tick(Math.min(clock.getDelta(), 0.05));
   renderer.render(scene, camera);
+  // 名牌是 depthTest:false 的 sprite，跟神社一樣在主畫面之後單獨畫
+  if (labelScene.children.length) {
+    const prev = renderer.autoClear;
+    renderer.autoClear = false;
+    renderer.render(labelScene, camera);
+    renderer.autoClear = prev;
+  }
   requestAnimationFrame(animate);
 }
 
@@ -522,6 +595,7 @@ animate();
 
 window.__village = {
   renderer, scene, camera, ctrl, THREE, heightAt, env, colliders,
+  crowd, npcs: npcSystem, sceneEditor,
   get combat() { return combat; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {

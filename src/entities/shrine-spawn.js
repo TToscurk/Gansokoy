@@ -71,26 +71,30 @@ const YORIICHI_ID = 'yoriichi';
  * @param {(x:number,z:number)=>number} heightFn  神社自己的 heightAt
  * @param {THREE.Scene} [labelScene] 名牌用的 overlay 場景
  * @param {string} [excludeId] 玩家正在扮演的角色 id —— 不要同時放一個 NPC
+ * @param {object} [opts]
+ * @param {boolean} [opts.seed=true] 是否補上預設站位（緣一、萃香）。
+ *        其他地圖（人間之里…）用 false：一開始沒有人，全部交給場景編輯器擺。
  */
-export function spawnAllNPCs(scene, heightFn, labelScene, excludeId) {
+export function spawnAllNPCs(scene, heightFn, labelScene, excludeId, opts = {}) {
   const mgr = new NPCManager(scene, labelScene);
   const byId = new Map(ROSTER.map(s => [s.id, s]));
+  const seed = opts.seed !== false;
 
   // 預設只有繼國緣一站在場上，其餘角色收進編輯器的面板裡，之後由玩家
   // 自己拖曳出來放置。這裡只在還沒有任何擺放記錄時（模組剛載入）補上他的
   // 預設站位 —— 沿用原本 spotPos 的站位邏輯，用他在 ROSTER 裡的固定索引，
   // 這樣不管 excludeId 是誰，預設站位都一樣。
-  if (!(YORIICHI_ID in getPlacements())) {
+  if (seed && !(YORIICHI_ID in getPlacements())) {
     const idx = ROSTER.findIndex(s => s.id === YORIICHI_ID);
     if (idx !== -1) {
-      const seed = spotPos(idx, heightFn);
-      setPlacement(YORIICHI_ID, seed.x, seed.z, seed.face);
+      const spot = spotPos(idx, heightFn);
+      setPlacement(YORIICHI_ID, spot.x, spot.z, spot.face);
     }
   }
 
   // 萃香也預設在場 —— 睡在拜殿裡靈夢房間的客用被褥上（座標對齊 main.js
   // 的 reimuRoom()；她的 spec.sleep 讓 npc.js 以睡姿呈現）。
-  if (!('suika' in getPlacements())) {
+  if (seed && !('suika' in getPlacements())) {
     setPlacement('suika', -4.55, -12.1, Math.PI);
   }
 
