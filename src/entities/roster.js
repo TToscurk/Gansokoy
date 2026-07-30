@@ -979,6 +979,9 @@ export const PLAYABLE = [
   {
     id: 'yoriichi', zh: '繼國緣一', en: 'YORIICHI TSUGIKUNI',
     desc: '從被抹去的時代走來的劍士。不會飛，但躍起可及兩層樓，疾走快得像在飛。',
+    // combat: 這位角色有戰鬥系統（src/combat/），每張地圖都能出招。
+    // 之後為其他角色設計技能時，同樣加上這個旗標即可。
+    combat: true,
     canFly: false, airJumps: 1,
     // 他本來就不是正常人：一段 2.8m + 二段 3.0m ≈ 兩層樓；
     // 疾走 5.4×2.78 = 15 m/s，剛好等於飛行的基礎速度

@@ -7,12 +7,19 @@
 //
 // 場景刻意比神社簡單：沒有後製鏈、沒有任務、沒有 NPC 名冊 ——
 // 它是一條「路」，重點是走起來的氣氛：密林、霧、光斑、獸徑的土路。
+// 晝夜與天氣走共用的 Environment（跟神社同一套，時刻/天氣跨頁面延續），
+// 戰鬥系統也接上共用的 combat/hud 綁定，有 combat 旗標的角色到這裡照樣能出招。
 
 import * as THREE from 'three';
 import { setGroundHeightFn } from './src/world/terrain.js';
 import { buildCharacter } from './src/entities/model.js';
 import { PLAYABLE } from './src/entities/roster.js';
 import { PlayerController } from './src/player/controller.js';
+import { Environment } from './src/world/environment.js';
+import { makePortalGlow } from './src/world/portal.js';
+import { Combat } from './src/combat/combat.js';
+import { SlashFX, SlashAudio } from './src/fx/slash.js';
+import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -26,24 +33,18 @@ renderer.toneMappingExposure = 1.05;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-// 密林深處：背景與霧同色，樹冠外看不到盡頭
-scene.background = new THREE.Color('#20301c');
-scene.fog = new THREE.Fog('#20301c', 26, 95);
 
 const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.1, 400);
 camera.rotation.order = 'YXZ';
 
-/* ───────────────────────────────────────────────────────── 燈光 ── */
-scene.add(new THREE.HemisphereLight('#cfe4b8', '#2a3520', 0.85));
-const sun = new THREE.DirectionalLight('#ffe9b8', 1.6);
-sun.position.set(18, 42, -12);
-sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.left = -60; sun.shadow.camera.right = 60;
-sun.shadow.camera.top = 140; sun.shadow.camera.bottom = -140;
-sun.shadow.camera.far = 160;
-scene.add(sun);
-scene.add(sun.target);
+/* ─────────────────────────────────── 晝夜 + 天氣（共用 Environment） ── */
+// 長條地圖：太陽跟著玩家走（followSun），陰影相機不用蓋住整條 260m 的路。
+// 密林的霧比神社濃（fogMul），其他一律用共用的日循環調色。
+const env = new Environment(scene, renderer, {
+  fogMul: 2.4,
+  shadowArea: 52,
+  followSun: true,
+});
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 一條南北向的谷道：路面在中央緩緩起伏，離開路面往兩側爬升成坡，
@@ -216,23 +217,8 @@ for (const z of [-88, -30, 42, 96]) {
 const SHRINE_END = -TRAIL_LEN + 10;    // z = -120：神社端
 const VILLAGE_END = TRAIL_LEN - 10;    // z = +120：人間之里端
 
-// 神社端：紅鳥居（回博麗神社）
-(function shrineGate() {
-  const y = heightAt(0, SHRINE_END);
-  const g = new THREE.Group();
-  g.position.set(0, y, SHRINE_END);
-  world.add(g);
-  for (const s of [-1, 1]) cyl(0.3, 0.36, 5.2, MAT.red, s * 2.8, 2.6, 0, 12, g);
-  const top = box(8.2, 0.5, 0.55, MAT.red, 0, 5.35, 0, g);
-  top.rotation.z = 0;
-  box(6.6, 0.34, 0.4, MAT.red, 0, 4.35, 0, g);
-  cyl(0.14, 0.14, 1.0, MAT.red, 0, 4.85, 0, 8, g);
-  // 兩盞石燈
-  for (const s of [-1, 1]) {
-    cyl(0.2, 0.26, 1.1, MAT.stone, s * 4.2, 0.55, 0.8, 8, g);
-    box(0.5, 0.44, 0.5, MAT.stone, s * 4.2, 1.3, 0.8, g);
-  }
-})();
+// 神社端：發光提示點（回博麗神社）—— 依需求不做鳥居等裝飾
+const shrinePortal = makePortalGlow(world, 0, heightAt(0, SHRINE_END), SHRINE_END);
 
 // 人間之里端：素木冠木門（尚未開放）
 (function villageGate() {
@@ -283,9 +269,19 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: BOUND_X, hz: TRAIL_LEN + 4 };
-ctrl.teleport(0, SHRINE_END + 5);      // 從神社走進來，出生在紅鳥居內側
+ctrl.teleport(0, SHRINE_END + 5);      // 從神社走進來，出生在光點內側
 ctrl.yaw = 0;                          // 面向人間之里（+z）
 ctrl.camYaw = Math.PI;
+
+/* ─────────────────────────────── 戰鬥（有 combat 旗標的角色） ── */
+const slashFX = new SlashFX(scene);
+const slashAudio = new SlashAudio();
+const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
+const combat = spec.combat
+  ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
+  : null;
+combatHUD.reset();
+bindCombatInput(() => combat, () => ctrl);
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
 const promptEl = document.getElementById('prompt');
@@ -311,12 +307,18 @@ window.addEventListener('keydown', (e) => {
 const clock = new THREE.Clock();
 let t = 0;
 function animate() {
-  const dt = Math.min(clock.getDelta(), 0.05);
+  const rawDt = Math.min(clock.getDelta(), 0.05);
+  let dt = rawDt;
+  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
   t += dt;
   ctrl.update(dt, t);
 
-  sun.target.position.set(ctrl.pos.x, 0, ctrl.pos.z);
-  sun.position.set(ctrl.pos.x + 18, 42, ctrl.pos.z - 12);
+  // 戰鬥姿勢要在 ctrl.update（走路動畫）之後套才壓得過去
+  combat?.update(dt, rawDt);
+  slashFX.update(dt);
+
+  env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
+  shrinePortal.userData.update(t);
   motes.position.z = ctrl.pos.z * 0.2;
 
   if (nearShrine()) {
@@ -344,7 +346,7 @@ animate();
 
 // debug handle（跟 index 的 __shrine 同一套測試口徑）
 window.__trail = {
-  renderer, scene, camera, ctrl, THREE, heightAt,
+  renderer, scene, camera, ctrl, THREE, heightAt, env, get combat() { return combat; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
     for (let i = 0; i < n; i++) { t += dt; ctrl.update(dt, t); }

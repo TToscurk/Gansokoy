@@ -13,8 +13,10 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { spawnAllNPCs } from './src/entities/shrine-spawn.js';
 import { setGroundHeightFn } from './src/world/terrain.js';
 import { ZoneTracker } from './src/world/zones.js';
-import { sample as sampleDay, clockLabel, isNightAt } from './src/world/daycycle.js';
-import { Weather, WEATHERS, mixHex } from './src/world/weather.js';
+import { clockLabel, isNightAt } from './src/world/daycycle.js';
+import { WEATHERS } from './src/world/weather.js';
+import { Environment } from './src/world/environment.js';
+import { makePortalGlow } from './src/world/portal.js';
 import { buildCharacter } from './src/entities/model.js';
 import { PLAYABLE } from './src/entities/roster.js';
 import { TALK_RANGE as TALK_REACH } from './src/entities/npc.js';
@@ -25,6 +27,7 @@ import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
 import { Combat } from './src/combat/combat.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
+import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -211,57 +214,14 @@ document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 800);
 
-/* Sky dome — vertical gradient driven by uniforms so time-of-day can animate. */
-const skyUniforms = {
-  top: { value: new THREE.Color('#1d2450') },
-  mid: { value: new THREE.Color('#d9663f') },
-  bot: { value: new THREE.Color('#f0b070') },
-};
-const sky = new THREE.Mesh(
-  new THREE.SphereGeometry(400, 32, 20),
-  new THREE.ShaderMaterial({
-    side: THREE.BackSide, depthWrite: false, uniforms: skyUniforms,
-    vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
-    fragmentShader: `
-      uniform vec3 top, mid, bot; varying vec3 vP;
-      void main(){
-        float h = clamp(vP.y/400.0*0.5+0.5, 0.0, 1.0);
-        vec3 c = h < 0.5 ? mix(bot, mid, smoothstep(0.34,0.5,h))
-                         : mix(mid, top, smoothstep(0.5,0.95,h));
-        gl_FragColor = vec4(c,1.0);
-      }`,
-  })
-);
-sky.frustumCulled = false;
-scene.add(sky);
-
-const hemi = new THREE.HemisphereLight('#ffd9b0', '#3a3a2a', 1.0);
-scene.add(hemi);
-
-const sun = new THREE.DirectionalLight('#ffb066', 2.3);
-sun.position.set(-46, 40, 44);
-sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.near = 1;
-sun.shadow.camera.far = 190;
-/* The shadow camera covers the whole grounds and never moves, so the shadow
- * map only has to be rendered when the light changes — not every frame. */
-const S = 78;
-Object.assign(sun.shadow.camera, { left: -S, right: S, top: S, bottom: -S });
-sun.shadow.camera.near = 1;
-sun.shadow.camera.far = 260;
-sun.shadow.camera.updateProjectionMatrix();
-sun.shadow.bias = -0.0007;
-sun.shadow.normalBias = 0.04;
-sun.shadow.autoUpdate = false;
-const SUN_PIVOT = new THREE.Vector3(0, 2, -2);
-scene.add(sun, sun.target);
-
-const fill = new THREE.DirectionalLight('#8fb2ff', 0.35);
-fill.position.set(30, 18, -40);
-scene.add(fill);
-
-scene.fog = new THREE.FogExp2('#c9825c', 0.0075);
+/* 晝夜 + 天氣：共用的環境系統（src/world/environment.js）。
+ * 神社自己的追加調色（燈籠、星空、bloom、IBL 重烘）之後在
+ * applyTime 的 onApply/onEnvBake 回呼裡接上（見下方 env.opts 設定）。 */
+const env = new Environment(scene, renderer, {
+  shadowArea: 78,
+  sunPivot: new THREE.Vector3(0, 2, -2),
+});
+const sky = env.sky, sun = env.sun, hemi = env.hemi;
 
 /* ───────────────────────────────────── image-based lighting from the sky ──
  * The closest stand-in for a Lumen-style sky light: prefilter the sky dome
@@ -353,12 +313,26 @@ const STAIR_HALF_W = 5.6;                 // half-width of the physical stone st
 // scatter below so trees don't get planted inside the (now wider) wall footprint.
 const WALL_INNER_X = 6, WALL_OUTER_X = 92;
 const RAMP_CZ = (STAIR_NEAR + STAIR_FAR) / 2, RAMP_SZ = (STAIR_FAR - STAIR_NEAR) + 4;
+// 境外延伸：前庭南端再一段石階下到低地（神社蓋在高處，獸道在山下）。
+const OUT_NEAR = 58, OUT_FAR = 66;        // 第二段石階的 z 範圍
+const OUTER_DROP = 3.4;                   // 低地比前庭低多少
 const FLOOR_Y = PLATEAU + 1.35;           // shrine building floor
 const B = { minX: -8.6, maxX: 8.6, minZ: -16, maxZ: -2.2 };   // building footprint
 
 function heightAt(x, z) {
   let h;
-  if (z >= STAIR_FAR) h = 0;
+  if (z >= OUT_FAR) h = -OUTER_DROP;
+  else if (z > OUT_NEAR) {
+    // 前庭下低地的第二段石階：同樣只有石階實寬內才有階面，
+    // 寬度外維持前庭高度（下方擋土牆的碰撞盒擋住橫向繞行）。
+    if (Math.abs(x) <= STAIR_HALF_W) {
+      const t = (z - OUT_NEAR) / (OUT_FAR - OUT_NEAR);
+      h = -Math.round(t * 8) / 8 * OUTER_DROP;
+    } else {
+      h = 0;
+    }
+  }
+  else if (z >= STAIR_FAR) h = 0;
   else if (z > STAIR_NEAR) {
     // Only the physical staircase (|x| <= STAIR_HALF_W) climbs — elsewhere in this
     // z-band there are no visible steps, so the ground stays at forecourt level and
@@ -382,12 +356,19 @@ function heightAt(x, z) {
 }
 
 (function terrain() {
-  // lower forecourt
-  const lower = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 30), roughness: 1 }));
+  // lower forecourt（到 OUT_FAR 為止，再往南是更低一層的山下低地）
+  const lower = new THREE.Mesh(new THREE.PlaneGeometry(220, 116), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 16), roughness: 1 }));
   lower.rotation.x = -Math.PI / 2;
-  lower.position.set(0, 0, 60);
+  lower.position.set(0, 0, OUT_FAR - 58);
   lower.receiveShadow = true;
   world.add(lower);
+
+  // 山下低地：獸道從這裡開始
+  const field = new THREE.Mesh(new THREE.PlaneGeometry(220, 110), new THREE.MeshStandardMaterial({ map: TEX.ground(30, 15), roughness: 1 }));
+  field.rotation.x = -Math.PI / 2;
+  field.position.set(0, -OUTER_DROP, OUT_FAR + 55);
+  field.receiveShadow = true;
+  world.add(field);
 
   // upper plateau
   const upper = new THREE.Mesh(new THREE.PlaneGeometry(150, 90), new THREE.MeshStandardMaterial({ map: TEX.ground(22, 14), roughness: 1 }));
@@ -427,6 +408,27 @@ function heightAt(x, z) {
 
   const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1 }));
   path2.rotation.x = -Math.PI / 2; path2.position.set(0, PLATEAU + 0.02, 3.5); path2.receiveShadow = true; world.add(path2);
+
+  /* ---- 境外延伸：前庭南端下山的第二段石階 + 低地土徑 ----
+   * 神社蓋在高處，參道盡頭要再下一段石階才到山腳的獸道 —— 跟第一段
+   * 石階同一套做法：階面只有實寬內有效（heightAt 的 OUT_NEAR/OUT_FAR
+   * 分支），兩側用擋土牆的碰撞盒擋住繞行。 */
+  const oSteps = 8;
+  for (let i = 0; i < oSteps; i++) {
+    const zz = OUT_NEAR + ((OUT_FAR - OUT_NEAR) / oSteps) * (i + 0.5);
+    const yy = -(OUTER_DROP / oSteps) * (i + 1);
+    box(11, 0.34, (OUT_FAR - OUT_NEAR) / oSteps + 0.16, MAT.stone, 0, yy + 0.24, zz);
+  }
+  const OUT_CZ = (OUT_NEAR + OUT_FAR) / 2, OUT_SZ = (OUT_FAR - OUT_NEAR) + 4;
+  const oWallW = WALL_OUTER_X - WALL_INNER_X, oWallCx = (WALL_INNER_X + WALL_OUTER_X) / 2;
+  for (const s of [-1, 1]) {
+    box(oWallW, OUTER_DROP + 3, OUT_SZ, MAT.stoneBig, s * oWallCx, -OUTER_DROP / 2 - 1.4, OUT_CZ);
+    box(oWallW, 0.5, OUT_SZ + 0.4, MAT.stone, s * oWallCx, 0.2, OUT_CZ);   // coping
+    block(s * oWallCx, OUT_CZ, oWallW, OUT_SZ, 0, -99, true);   // 邊界級：防止繞過石階爬回前庭
+  }
+  // 石階下延續的土徑，一路通到獸道的光點
+  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 26), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 7), roughness: 1 }));
+  path3.rotation.x = -Math.PI / 2; path3.position.set(0, -OUTER_DROP + 0.02, OUT_FAR + 13); path3.receiveShadow = true; world.add(path3);
 })();
 
 /* ────────────────────────────────────────────────────────────── torii ── */
@@ -1016,36 +1018,17 @@ for (let i = 0; i < 70; i++) {
 }
 for (let i = 0; i < 40; i++) {
   const x = (Math.random() - 0.5) * 110;
-  const z = 24 + Math.random() * 60;
-  if (Math.abs(x) < 10 && z < 56) continue;                    // keep the approach clear
+  const z = 24 + Math.random() * 96;
+  if (Math.abs(x) < 10 && z < 84) continue;                    // keep the approach + 下山土徑 clear
   if (Math.abs(x) < 34 && z < 52) continue;                    // NPC 展列區
-  tree(x, 0, z, 0.8 + Math.random() * 0.9, leafMats[Math.random() * leafMats.length | 0]);
+  // 低地的樹要落在低地高度上（heightAt 在 OUT_FAR 之後回 -OUTER_DROP）
+  tree(x, heightAt(x, z), z, 0.8 + Math.random() * 0.9, leafMats[Math.random() * leafMats.length | 0]);
 }
 
-// 獸道入口 —— 參道南端的小木鳥居 + 指路牌。按 E 前往獸道（trail.html）。
-(function trailGate() {
-  const g = new THREE.Group();
-  g.position.set(0, 0, 54);
-  world.add(g);
-  // 小型素木鳥居
-  for (const s of [-1, 1]) cyl(0.22, 0.26, 3.4, MAT.darkWood, s * 2.1, 1.7, 0, 10, g);
-  box(5.4, 0.3, 0.34, MAT.darkWood, 0, 3.35, 0, g);
-  box(4.6, 0.22, 0.28, MAT.darkWood, 0, 2.75, 0, g);
-  // 匾額
-  const plaque = box(1.15, 0.5, 0.08, MAT.wood, 0, 3.0, 0.06, g);
-  plaque.rotation.x = -0.06;
-  // 指路牌（斜插的木牌）
-  const post = cyl(0.07, 0.09, 1.5, MAT.darkWood, 2.9, 0.75, 0.6, 8, g);
-  post.rotation.z = -0.08;
-  const sign = box(1.3, 0.42, 0.06, MAT.wood, 2.95, 1.35, 0.6, g);
-  sign.rotation.y = -0.35;
-  // 兩盞小石燈
-  for (const s of [-1, 1]) {
-    cyl(0.16, 0.2, 0.8, MAT.stone, s * 3.4, 0.4, -0.4, 8, g);
-    box(0.42, 0.36, 0.42, MAT.stone, s * 3.4, 0.95, -0.4, g);
-  }
-  OBJ.trailGate = new THREE.Vector3(0, 0, 54);
-})();
+// 獸道入口 —— 山腳低地土徑盡頭的一個發光提示點（楓之谷式），
+// 依需求不做鳥居/告示牌等任何裝飾。按 E 前往獸道（trail.html）。
+const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 12);
+OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 12);
 
 // distant mountains (Youkai Mountain silhouettes)
 for (let i = 0; i < 16; i++) {
@@ -1131,40 +1114,10 @@ const slashAudio = new SlashAudio();
 const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
 let combat = null;
 
-const combatUI = {
-  formBanner(name) {
-    const el = document.getElementById('formBanner');
-    if (!el) return;
-    el.textContent = name;
-    el.classList.remove('on');
-    void el.offsetWidth;          // 重播 CSS 動畫
-    el.classList.add('on');
-  },
-  charge(r) {
-    const el = document.getElementById('charge');
-    if (!el) return;
-    el.classList.toggle('on', r > 0.06);
-    el.classList.toggle('full', r >= 1);
-    const fill = el.querySelector('.f');
-    if (fill) fill.style.width = (r * 100).toFixed(1) + '%';
-  },
-  combo(n) {
-    const el = document.getElementById('combo');
-    if (!el) return;
-    el.classList.toggle('on', n >= 2);
-    if (n >= 2) {
-      el.querySelector('.n').textContent = n;
-      el.classList.remove('tick');
-      void el.offsetWidth;
-      el.classList.add('tick');
-    }
-  },
-};
-
 /* ─────────────────────────────────────────────── 對話框與任務引擎 ── */
 const dialogue = new Dialogue();
 // isNight 給任務的 branch 用（erased_records 的日夜分支）。讀連續時鐘。
-const quests = new QuestManager({ isNight: () => isNightAt(hour) });
+const quests = new QuestManager({ isNight: () => isNightAt(env.hour) });
 const questLog = new QuestLog(quests);
 
 /* 區域偵測 —— 任務的 onEnter 觸發。境內的區域對應到舊世界的地圖 id，
@@ -1256,79 +1209,28 @@ function applyQuality(i) {
 }
 
 /* ────────────────────────────────────────── 連續晝夜循環 + 天氣 ── */
-const weather = new Weather(scene);
-
-let hour = 18.3;                 // 開場在黃昏
-let timeScale = 60;              // 遊戲內 60 秒 = 1 小時（一天 24 分鐘）
-let timeFlowing = true;
-
-/**
- * 天空 IBL 重烘一次不便宜（PMREM），每幀跑會直接吃掉幀率。
- * 天色是連續變化的，但每 12 分鐘（遊戲內）重烘一次肉眼看不出階梯。
- */
-let lastEnvBakeHour = -99;
-const ENV_BAKE_STEP = 0.2;
-
-/* 陰影貼圖同理：太陽每轉 0.1 小時（1.5 度）才重畫一次就夠了 */
-let lastShadowHour = -99;
-const SHADOW_STEP = 0.1;
-
+// 通用的部份（天空、太陽、霧、時刻、天氣偏移）都在 Environment 裡；
+// 這裡只接上神社「自己的」追加調色：後製、燈籠、星空、IBL 重烘。
+const weather = env.weather;
 const todLabel = document.getElementById('todLabel');
 
-function applyTime(h, forceEnvBake = false) {
-  const t = sampleDay(h);
-  const wx = weather.sampleMods();
-
-  // 天氣是「在當下時刻的基礎上偏移」，不是自己決定顏色 ——
-  // 這樣雨天的黃昏還是黃昏的顏色，只是更悶。
-  // 天空往陰天灰混：越靠近地平線混得越多，天頂保留一點原本的天色，
-  // 這樣陰天仍看得出是白天還是傍晚。
-  const g = wx.skyGrey, mix = wx.skyMix;
-  skyUniforms.top.value.set(mixHex(t.sky[0], g, mix * 0.75));
-  skyUniforms.mid.value.set(mixHex(t.sky[1], g, mix));
-  skyUniforms.bot.value.set(mixHex(t.sky[2], g, mix * 0.9));
-
-  scene.fog.color.set(mixHex(t.fog, g, mix * 0.6));
-  scene.fog.density = t.fogD * wx.fogMul;
-
-  sun.color.set(t.sun);
-  sun.intensity = t.sunI * wx.sunMul;
-  const d = t.sunDir;
-  sun.position.set(d.x, d.y, d.z).normalize().multiplyScalar(120).add(SUN_PIVOT);
-  sun.target.position.copy(SUN_PIVOT);
-  sun.target.updateMatrixWorld();
-
-  // 陰影貼圖只在太陽真的轉了一段角度之後才重畫。每幀重畫會讓「高」畫質
-  // 從 ~14ms 回到 ~27ms —— 這正是先前特地優化掉的成本。
-  if (forceEnvBake || Math.abs(h - lastShadowHour) >= SHADOW_STEP) {
-    sun.shadow.needsUpdate = true;
-    lastShadowHour = h;
-  }
-
-  hemi.color.set(t.hemiS);
-  hemi.groundColor.set(t.hemiG);
-  hemi.intensity = t.hemiI;
-
-  renderer.toneMappingExposure = t.exposure + wx.exposureAdd;
-  scene.environmentIntensity = t.env * wx.envMul;
+env.opts.onApply = (t, wx) => {
   bloom.strength = t.bloom;
   gradePass.uniforms.saturation.value = t.sat * wx.satMul;
-
   lanternLights.forEach((l) => (l.intensity = t.lantern * 5));
   lanternGlows.forEach((m) => (m.material.opacity = t.lantern > 0.05 ? 0.95 : 0.35));
   motes.material.opacity = (0.35 + t.stars * 0.5) * 0.8;
   stars.material.opacity = t.stars * 0.9;
+};
+env.opts.onEnvBake = () => updateEnvironment();
+env.opts.onLabel = (text) => { if (todLabel) todLabel.textContent = text; };
 
-  if (forceEnvBake || Math.abs(h - lastEnvBakeHour) >= ENV_BAKE_STEP) {
-    updateEnvironment();
-    lastEnvBakeHour = h;
-  }
-
-  if (todLabel) todLabel.textContent = `${clockLabel(h)}・${weather.label}`;
+function applyTime(h = env.hour, forceEnvBake = false) {
+  env.applyTime(h, forceEnvBake);
 }
 
 applyQuality(qualityIdx);
-applyTime(hour, true);
+applyTime(env.hour, true);
 
 /* ───────────────────────────────────────────────────────── controls ── */
 // --- 把 shrine 的 AABB 碰撞盒轉成 PlayerController 認識的格式 ---
@@ -1425,7 +1327,7 @@ function initPlayer(keepPos = false) {
   ctrl.airJumpV = chosenSpec.airJump ?? 8.4;
   ctrl.sprintMul = chosenSpec.sprintMul ?? 1.85;
   ctrl.speedMul = chosenSpec.speed ?? 1.0;
-  ctrl.bounds = { hx: 78, hz: 58 };     // 神社場地邊界
+  ctrl.bounds = { hx: 78, hz: 88 };     // 神社場地邊界（南端含山腳低地）
 
   // 你扮演的人不該同時站在境內
   npcSystem.setPlayerCharacter(chosenSpec.id);
@@ -1433,13 +1335,12 @@ function initPlayer(keepPos = false) {
   // 記住這次選的角色 —— 前往獸道（trail.html）之後回來還是同一位
   try { sessionStorage.setItem('gansokoy:char', chosenSpec.id); } catch { /* 私隱模式 */ }
 
-  // 戰鬥控制器只綁緣一（換角時重建，其他角色維持 null = 沒有招式）
-  combat = chosenSpec.id === 'yoriichi'
-    ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatUI)
+  // 戰鬥控制器只給有 combat 旗標的角色（目前是緣一；之後其他角色設計好
+  // 技能後，在 roster 的 PLAYABLE 加上 combat: true 就會自動接上）
+  combat = chosenSpec.combat
+    ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
     : null;
-  combatUI.charge(0);
-  const comboEl = document.getElementById('combo');
-  if (comboEl) comboEl.classList.remove('on');
+  combatHUD.reset();
 
   if (keepPos && prev) { ctrl.teleport(prev.x, prev.z); ctrl.yaw = prev.yaw; }
   else ctrl.teleport(0, 46);
@@ -1467,18 +1368,17 @@ function bindHotkeys() {
     if (dialogue.active) return;
 
     if (e.code === 'KeyJ') questLog.toggle();
-    if (e.code === 'KeyR' && combat) combat.toggleSheath();
     if (e.code === 'KeyG') { applyQuality((qualityIdx + 1) % QUALITY.length); autoTuned = true; toast(`畫質：${QUALITY[qualityIdx].name}`); }
 
     // T：時間快轉 3 小時。Shift+T：暫停／恢復時間流動。
     if (e.code === 'KeyT') {
       if (e.shiftKey) {
-        timeFlowing = !timeFlowing;
-        toast(timeFlowing ? '時間繼續流動' : '時間已暫停');
+        env.timeFlowing = !env.timeFlowing;
+        toast(env.timeFlowing ? '時間繼續流動' : '時間已暫停');
       } else {
-        hour = (hour + 3) % 24;
-        applyTime(hour, true);
-        toast(`時刻：${clockLabel(hour)}`);
+        env.hour = (env.hour + 3) % 24;
+        applyTime(env.hour, true);
+        toast(`時刻：${clockLabel(env.hour)}`);
       }
     }
     // Y：切換天氣
@@ -1490,16 +1390,8 @@ function bindHotkeys() {
     }
   });
 
-  // 左鍵：出招（點一下）／蓄力大招（按住）。只有緣一有 combat。
-  window.addEventListener('mousedown', (e) => {
-    if (e.button !== 0 || !combat) return;
-    if (!ctrl?.locked || dialogue.active || sceneEditor.isOpen) return;
-    combat.tryAttack();
-    combat.holdStart();
-  });
-  const endHold = () => combat?.holdEnd();
-  window.addEventListener('mouseup', (e) => { if (e.button === 0) endHold(); });
-  window.addEventListener('blur', endHold);
+  // 左鍵出招/蓄力、R 拔刀納刀 —— 共用綁定（src/combat/hud.js）
+  bindCombatInput(() => combat, () => ctrl, () => dialogue.active || sceneEditor.isOpen);
 }
 bindHotkeys();
 
@@ -1510,7 +1402,7 @@ if (new URLSearchParams(location.search).get('from') === 'trail') {
   chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? PLAYER_SPECS[0];
   startGame();
   if (ctrl) {
-    ctrl.teleport(0, 50.5);
+    ctrl.teleport(0, OBJ.trailGate.z - 3);
     ctrl.yaw = Math.PI;      // 面向神社
     ctrl.camYaw = 0;
   }
@@ -1586,17 +1478,13 @@ function update(dt, rawDt = dt) {
   combat?.update(dt, rawDt);
   slashFX.update(dt);
 
-  sky.position.copy(camera.position);
-
   // NPC 更新
   npcSystem.update(t, ctrl.pos, camera);
 
   zones.update(ctrl.pos.x, ctrl.pos.z);   // 任務的 onEnter
 
-  // 時間流動與天氣。天氣過渡中也要重套光照，否則調光係數不會生效。
-  if (timeFlowing) hour = (hour + dt / timeScale) % 24;
-  weather.update(dt, camera.position);
-  if (timeFlowing || weather.blend < 1) applyTime(hour);
+  // 時間流動與天氣（天空跟隨、天氣過渡、重套光照都在 Environment 裡）
+  env.update(dt, camera.position);
 
   dialogue.update(dt);          // 逐字顯示
   if (dialogue.active) { promptEl.classList.remove('on'); return; }
@@ -1656,6 +1544,7 @@ function animate() {
   update(dt, rawDt);
 
   // orbs bob and spin
+  trailPortal.userData.update(t);
   for (const o of orbs) {
     o.rotation.y += dt * 0.8;
     o.rotation.z = Math.sin(t * 0.7 + o.userData.phase) * 0.25;
@@ -1731,10 +1620,11 @@ window.__shrine = {
   composer, applyQuality, QUALITY,
   quests, questLog, dialogue, zones, weather,
   /** 測試用：直接設定時刻（小時，0–24），並停住時間 */
-  setHour(h) { hour = ((h % 24) + 24) % 24; timeFlowing = false; applyTime(hour, true); return clockLabel(hour); },
-  getHour() { return hour; },
-  setTimeFlowing(v) { timeFlowing = v; },
-  setWeather(id, dur = 0.01) { weather.set(id, dur); weather.update(dur, camera.position); applyTime(hour, true); return weather.label; },
+  setHour(h) { return env.setHour(h); },
+  getHour() { return env.hour; },
+  setTimeFlowing(v) { env.timeFlowing = v; },
+  setWeather(id, dur = 0.01) { weather.set(id, dur); weather.update(dur, camera.position); applyTime(env.hour, true); return weather.label; },
+  env,
   /** 測試用：走到指定 NPC 面前並跟他講完整段話，回傳每一句 */
   say(npcId) {
     const npc = npcSystem.mgr.npcs.find(n => n.spec.id === npcId);
