@@ -31,6 +31,7 @@ import { Combat } from './src/combat/combat.js';
 import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 import { Progression } from './src/player/progression.js';
+import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
 
 /* ─────────────────────────────────────────────────────────────── HUD ── */
 // 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
@@ -40,10 +41,10 @@ const HUD = installHUD({
   subtitle: 'HAKUREI SHRINE',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
-    ['E', '互動'], ['J', '任務'], ['P', '場景編輯'],
-    ['T', '快轉3小時'], ['Shift+T', '暫停時間'], ['Y', '天氣'], ['G', '畫質'], ['ESC', '選單'],
+    ['Shift', '衝刺'], ['Space', '跳躍'],
+    ['E', '互動'], ['J', '任務'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
+  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
 });
 
@@ -1230,9 +1231,10 @@ const QUALITY = [
   { name: '中', dpr: 1.25, shadow: 2048, gtao: false, bloom: true, smaa: true, grade: true },
   { name: '高', dpr: 1.5, shadow: 4096, gtao: true, bloom: true, smaa: true, grade: true },
 ];
-let qualityIdx = 2;
+let qualityIdx = loadQualityIdx(2);   // 跨地圖共用的畫質檔（localStorage）
 function applyQuality(i) {
   qualityIdx = i;
+  saveQualityIdx(i);
   const q = QUALITY[i];
   renderer.setPixelRatio(Math.min(devicePixelRatio, q.dpr));
   renderer.setSize(innerWidth, innerHeight);
@@ -1384,9 +1386,10 @@ function initPlayer(keepPos = false) {
     ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
     : null;
   combatHUD.reset();
-  // 戰鬥相關的操作提示只給有技能的角色看
+  // 戰鬥相關的操作提示只給有技能的角色看；飛行提示只給會飛的角色看
   const combatHelp = document.getElementById('combatHelp');
   if (combatHelp) combatHelp.style.display = combat ? '' : 'none';
+  HUD.showFlyKeys(chosenSpec.canFly !== false);
   // 等級徽章（成長資料在 localStorage，跟獸道那邊同一份）
   progression.renderBadge(chosenSpec.combat ? 'hinokami' : null, '日之呼吸');
 
@@ -1450,6 +1453,15 @@ bindHotkeys();
 const escMenu = bindEscMenu({
   getCtrl: () => ctrl,
   isBusy: () => dialogue.active || sceneEditor.isOpen,
+  env,
+  quality: {
+    get: () => QUALITY[qualityIdx].name,
+    cycle() {
+      applyQuality((qualityIdx + 1) % QUALITY.length);
+      autoTuned = true;
+      return QUALITY[qualityIdx].name;
+    },
+  },
   onBackToSelect() {
     veil.classList.remove('hide');
     if (ctrl) { ctrl.enabled = false; ctrl.dispose(); ctrl = null; }

@@ -95,6 +95,13 @@ const CSS = `
   border:1px solid rgba(255,255,255,.2); border-radius:3px; transition:.15s; }
 #escMenu button:hover { background:rgba(194,56,47,.28); border-color:#c2382f; }
 #escMenu .hintline { margin-top:14px; font-size:10.5px; letter-spacing:.12em; color:#8d7f94; }
+#escMenu .settings { margin-top:16px; padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.12); }
+#escMenu .srow { display:flex; align-items:center; gap:8px; margin:7px 0; }
+#escMenu .srow .lb { flex:0 0 52px; text-align:left; font-size:11.5px;
+  letter-spacing:.18em; color:#a99cb0; }
+#escMenu .srow button { flex:1; margin:0; padding:8px 10px; font-size:12px;
+  letter-spacing:.1em; }
 
 /* 換地圖時的讀取畫面 */
 #mapLoading { position:fixed; inset:0; z-index:80; display:none;
@@ -111,10 +118,11 @@ const CSS = `
  * @param {string} opts.title    右上角地名（例：博麗神社）
  * @param {string} opts.subtitle 地名下的英文（例：HAKUREI SHRINE）
  * @param {Array<[string,string]>} [opts.keys] 操作提示 [鍵, 說明]
+ * @param {Array<[string,string]>} [opts.flyKeys] 飛行相關提示（角色會飛才顯示）
  * @param {Array<[string,string]>} [opts.combatKeys] 戰鬥操作提示（有技能才顯示）
  * @returns {object} 常用元素與 toast/prompt 工具
  */
-export function installHUD({ title, subtitle, keys = [], combatKeys = [] }) {
+export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKeys = [] }) {
   const style = document.createElement('style');
   style.textContent = CSS;
   document.head.appendChild(style);
@@ -135,7 +143,7 @@ export function installHUD({ title, subtitle, keys = [], combatKeys = [] }) {
       <div id="prompt"></div>
       <div id="toast"></div>
       <div id="help">
-        <div>${keyHtml(keys)}</div>
+        <div>${keyHtml(keys)}<span id="flyHelp">${keyHtml(flyKeys)}</span></div>
         <div id="combatHelp" style="display:none">${keyHtml(combatKeys)}</div>
       </div>
     </div>
@@ -147,6 +155,11 @@ export function installHUD({ title, subtitle, keys = [], combatKeys = [] }) {
         <h3>選 單</h3>
         <button id="escResume">繼續遊戲</button>
         <button id="escChar">回到選角畫面</button>
+        <div class="settings">
+          <div class="srow"><span class="lb">畫質</span><button id="escQuality">—</button></div>
+          <div class="srow"><span class="lb">天氣</span><button id="escWeather">切換天氣</button></div>
+          <div class="srow"><span class="lb">時刻</span><button id="escTime">快轉 3 小時</button><button id="escFlow">—</button></div>
+        </div>
         <div class="hintline">ESC 關閉選單</div>
       </div>
     </div>
@@ -178,6 +191,11 @@ export function installHUD({ title, subtitle, keys = [], combatKeys = [] }) {
       const el = document.getElementById('combatHelp');
       if (el) el.style.display = on ? '' : 'none';
     },
+    /** 飛行提示只給會飛的角色看（緣一不會飛，就別給他看 F 飛行） */
+    showFlyKeys(on) {
+      const el = document.getElementById('flyHelp');
+      if (el) el.style.display = on ? '' : 'none';
+    },
     /** 換地圖前蓋上讀取畫面（避免看到別張圖的選角畫面閃過） */
     showLoading(text) {
       const el = document.getElementById('mapLoading');
@@ -192,19 +210,44 @@ export function installHUD({ title, subtitle, keys = [], combatKeys = [] }) {
 }
 
 /**
- * ESC 選單：開關 + 「回到選角畫面」。每張地圖都掛這個，行為一致。
+ * ESC 選單：開關 + 「回到選角畫面」+ 畫質/天氣/時刻設定。
+ * 每張地圖都掛這個，行為與版面一致 —— 之後的新圖也一樣。
  * @param {object} opts
  * @param {() => object|null} opts.getCtrl
  * @param {() => boolean} [opts.isBusy] 對話中/編輯器開著時 ESC 另有用途
  * @param {() => void} opts.onBackToSelect 回選角畫面要做什麼（各圖不同）
+ * @param {import('../world/environment.js').Environment} [opts.env] 天氣/時刻鈕接這裡
+ * @param {{get:()=>string, cycle:()=>string}} [opts.quality]
+ *        畫質鈕：get 回目前檔名、cycle 切下一檔並回新檔名。
+ *        神社接自己的後製 QUALITY，其他圖接 src/world/quality.js 的 basic 檔。
  */
-export function bindEscMenu({ getCtrl, isBusy = () => false, onBackToSelect }) {
+export function bindEscMenu({ getCtrl, isBusy = () => false, onBackToSelect, env, quality }) {
   const menu = document.getElementById('escMenu');
   if (!menu) return { get isOpen() { return false; }, close() {} };
+
+  // --- 設定列 ---
+  const qBtn = document.getElementById('escQuality');
+  const wBtn = document.getElementById('escWeather');
+  const tBtn = document.getElementById('escTime');
+  const fBtn = document.getElementById('escFlow');
+  const syncSettings = () => {
+    if (qBtn) qBtn.textContent = quality ? `畫質：${quality.get()}` : '—';
+    if (wBtn && env) wBtn.textContent = `切換天氣（現在：${env.weather.label}）`;
+    if (fBtn && env) fBtn.textContent = env.timeFlowing ? '暫停時間' : '恢復流動';
+  };
+  if (quality && qBtn) qBtn.addEventListener('click', () => { quality.cycle(); syncSettings(); });
+  else if (qBtn) qBtn.closest('.srow').style.display = 'none';
+  if (env && wBtn) wBtn.addEventListener('click', () => { env.cycleWeather(); syncSettings(); });
+  else if (wBtn) wBtn.closest('.srow').style.display = 'none';
+  if (env && tBtn) {
+    tBtn.addEventListener('click', () => { env.skipHours(3); syncSettings(); });
+    fBtn?.addEventListener('click', () => { env.timeFlowing = !env.timeFlowing; syncSettings(); });
+  } else if (tBtn) tBtn.closest('.srow').style.display = 'none';
 
   const state = { isOpen: false };
   const open = () => {
     state.isOpen = true;
+    syncSettings();
     menu.classList.add('on');
     const c = getCtrl();
     if (c) c.enabled = false;

@@ -24,6 +24,7 @@ import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
 import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -31,9 +32,10 @@ const HUD = installHUD({
   subtitle: 'BEAST TRAIL · 博麗神社 ⇄ 人間之里',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
+    ['Shift', '衝刺'], ['Space', '跳躍'],
     ['E', '互動'], ['ESC', '選單'],
   ],
+  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
 });
 
@@ -61,6 +63,15 @@ const env = new Environment(scene, renderer, {
   shadowArea: 52,
   followSun: true,
 });
+
+/* 畫質（跨地圖共用的三檔，localStorage）：這張圖沒有後製鏈，
+ * 套解析度 + 陰影貼圖的 basic 檔。 */
+let qualityIdx = loadQualityIdx(2);
+const syncQuality = () => {
+  applyBasicQuality(renderer, env.sun, qualityIdx);
+  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
+};
+syncQuality();
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 一條南北向的谷道：路面在中央緩緩起伏，離開路面往兩側爬升成坡，
@@ -427,6 +438,7 @@ bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
 // 戰鬥相關的操作提示只給有技能的角色看
 {
   HUD.showCombatKeys(!!combat);
+HUD.showFlyKeys(spec.canFly !== false);
 }
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
@@ -435,6 +447,16 @@ const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
 /* ESC 選單（與其他地圖同一套）。回選角畫面＝回神社的選人流程。 */
 const escMenu = bindEscMenu({
   getCtrl: () => ctrl,
+  env,
+  quality: {
+    get: () => QUALITY_NAMES[qualityIdx],
+    cycle() {
+      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
+      saveQualityIdx(qualityIdx);
+      syncQuality();
+      return QUALITY_NAMES[qualityIdx];
+    },
+  },
   onBackToSelect() {
     HUD.showLoading('博麗神社 讀取中');
     location.href = '../../index.html';

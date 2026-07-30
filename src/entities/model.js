@@ -387,6 +387,14 @@ function buildHat(kind, pal, head, group) {
       head.add(part(new THREE.TorusGeometry(0.05, 0.014, 6, 12), snake, -0.16, HEAD_R * 0.6, 0.12));
       break;
     }
+    case 'kasa': {          // 斗笠 —— 里民、旅人的稻草寬簷帽
+      const straw = toon(0xc8b070);
+      const brim = part(new THREE.ConeGeometry(0.42, 0.16, 12), straw, 0, HEAD_R * 1.02, 0);
+      brim.castShadow = true;
+      head.add(brim);
+      head.add(part(new THREE.ConeGeometry(0.16, 0.12, 10), toon(0xb09858), 0, HEAD_R * 1.02 + 0.1, 0));
+      break;
+    }
     case 'horns': {         // 萃香的鬼角 —— 額前斜上兩根長角，各綁一圈緞帶
       const horn = toon(0xe8d8c0);
       for (const sx of [-1, 1]) {

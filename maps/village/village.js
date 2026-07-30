@@ -26,6 +26,7 @@ import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
 import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression } from '../../src/player/progression.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { VillagerCrowd } from '../../src/entities/villagers.js';
 import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
@@ -35,9 +36,10 @@ const HUD = installHUD({
   subtitle: 'HUMAN VILLAGE',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'], ['F', '飛行'], ['Ctrl/C', '下降'],
+    ['Shift', '衝刺'], ['Space', '跳躍'],
     ['E', '互動'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
+  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
 });
 
@@ -57,6 +59,15 @@ camera.rotation.order = 'YXZ';
 
 // 里是開闊的盆地：霧比獸道淡，看得到街尾與遠山
 const env = new Environment(scene, renderer, { fogMul: 0.75, shadowArea: 70 });
+
+/* 畫質（跨地圖共用的三檔，localStorage）：這張圖沒有後製鏈，
+ * 套解析度 + 陰影貼圖的 basic 檔。 */
+let qualityIdx = loadQualityIdx(2);
+const syncQuality = () => {
+  applyBasicQuality(renderer, env.sun, qualityIdx);
+  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
+};
+syncQuality();
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 里蓋在平坦的盆地上：主街完全水平，外圍緩緩抬起成田埂與矮丘。
@@ -130,6 +141,8 @@ const MAT = {
   plaster: new THREE.MeshStandardMaterial({ map: plasterTex, roughness: 0.95, color: '#f2ead6' }),
   wood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.9, color: '#c8a880' }),
   darkWood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.95, color: '#6a5038' }),
+  kura: new THREE.MeshStandardMaterial({ color: '#f4f0e2', roughness: 0.9 }),           // 土藏的白漆喰
+  namako: new THREE.MeshStandardMaterial({ color: '#3a3f46', roughness: 0.85 }),        // 海鼠壁
   roofTile: new THREE.MeshStandardMaterial({ color: '#4c5560', roughness: 0.8, flatShading: true }),
   roofThatch: new THREE.MeshStandardMaterial({ color: '#8a7448', roughness: 1, flatShading: true }),
   stone: new THREE.MeshStandardMaterial({ color: '#918a7e', roughness: 1 }),
@@ -179,56 +192,91 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 10, parent = world) {
   m.receiveShadow = true;
   world.add(m);
 
-  // 主街（南北）與橫街（東西）：石板路
-  const main = new THREE.Mesh(new THREE.PlaneGeometry(9, 124), MAT.road);
-  main.rotation.x = -Math.PI / 2; main.position.set(0, 0.03, 0); main.receiveShadow = true; world.add(main);
+  // 主街（南北）與兩條橫街（東西）：石板路。主街往南延伸到新街廓。
+  const main = new THREE.Mesh(new THREE.PlaneGeometry(9, 158), MAT.road);
+  main.rotation.x = -Math.PI / 2; main.position.set(0, 0.03, 11); main.receiveShadow = true; world.add(main);
   const cross = new THREE.Mesh(new THREE.PlaneGeometry(74, 7), MAT.road);
   cross.rotation.x = -Math.PI / 2; cross.position.set(0, 0.03, 8); cross.receiveShadow = true; world.add(cross);
+  const cross2 = new THREE.Mesh(new THREE.PlaneGeometry(58, 6), MAT.road);
+  cross2.rotation.x = -Math.PI / 2; cross2.position.set(0, 0.03, 56); cross2.receiveShadow = true; world.add(cross2);
 })();
 
 /* ─────────────────────────────────────────────────────── 建物 ── */
 /**
- * 一棟明治風的町家：土牆屋身 + 木格柵 + 屋頂（瓦或茅草）+ 暖簾與招牌。
- * @param {object} o {x,z,w,d,h,rot,roof,sign,signColor,noren}
+ * 一棟明治風的建物。style 決定型式：
+ *   'machiya'（預設）平房町家：土牆 + 木格柵 + 暖簾
+ *   'two'     二層樓（旅籠、湯屋）：一樓同町家，上面再一層退縮的樓身 + 欄杆
+ *   'kura'    土藏（倉庫）：白漆喰厚牆、海鼠壁裙、高窗、厚重的門，沒有格柵
+ * @param {object} o {x,z,w,d,h,rot,roof,style,sign,signColor,noren}
  */
-function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', sign = '', signColor = 0x6a5038, noren = null }) {
+function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'machiya', sign = '', signColor = 0x6a5038, noren = null }) {
   const g = new THREE.Group();
   g.position.set(x, heightAt(x, z), z);
   g.rotation.y = rot;
   world.add(g);
 
-  // 石基
-  box(w + 0.5, 0.35, d + 0.5, MAT.stone, 0, 0.17, 0, g);
-  // 屋身
-  box(w, h, d, MAT.plaster, 0, h / 2 + 0.3, 0, g);
-  // 一樓正面的木格柵與門
-  box(w * 0.94, 2.2, 0.16, MAT.darkWood, 0, 1.4, d / 2 + 0.04, g);
-  box(w * 0.3, 2.1, 0.1, MAT.paper, 0, 1.35, d / 2 + 0.13, g);      // 紙門
-  for (let i = -3; i <= 3; i++) {
-    box(0.1, 2.1, 0.06, MAT.darkWood, i * (w * 0.12), 1.35, d / 2 + 0.19, g);
+  const kura = style === 'kura';
+  const two = style === 'two';
+
+  // 石基（土藏的基座高一點）
+  box(w + 0.5, kura ? 0.7 : 0.35, d + 0.5, MAT.stone, 0, kura ? 0.35 : 0.17, 0, g);
+  // 一樓屋身
+  box(w, h, d, kura ? MAT.kura : MAT.plaster, 0, h / 2 + 0.3, 0, g);
+
+  if (kura) {
+    // 海鼠壁（下半截的深色格紋裙牆）+ 厚門 + 高窗
+    box(w + 0.08, h * 0.42, d + 0.08, MAT.namako, 0, h * 0.21 + 0.4, 0, g);
+    box(1.7, 2.2, 0.2, MAT.darkWood, 0, 1.5, d / 2 + 0.08, g);
+    box(0.9, 0.7, 0.14, MAT.namako, w * 0.26, h - 0.5, d / 2 + 0.06, g);
+  } else {
+    // 一樓正面的木格柵與門
+    box(w * 0.94, 2.2, 0.16, MAT.darkWood, 0, 1.4, d / 2 + 0.04, g);
+    box(w * 0.3, 2.1, 0.1, MAT.paper, 0, 1.35, d / 2 + 0.13, g);      // 紙門
+    for (let i = -3; i <= 3; i++) {
+      box(0.1, 2.1, 0.06, MAT.darkWood, i * (w * 0.12), 1.35, d / 2 + 0.19, g);
+    }
+    // 角柱
+    for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+      box(0.28, h + 0.3, 0.28, MAT.darkWood, sx * (w / 2 - 0.14), (h + 0.3) / 2, sz * (d / 2 - 0.14), g);
+    }
   }
-  // 角柱
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-    box(0.28, h + 0.3, 0.28, MAT.darkWood, sx * (w / 2 - 0.14), (h + 0.3) / 2, sz * (d / 2 - 0.14), g);
+
+  // 二樓（退縮的樓身 + 高欄 + 格子窗）
+  let topY = h + 0.3;                 // 屋頂的起算高度
+  if (two) {
+    const w2 = w * 0.9, d2 = d * 0.86, h2 = 3.0;
+    box(w2, h2, d2, MAT.plaster, 0, h + 0.3 + h2 / 2, -(d - d2) / 2 * 0.4, g);
+    // 二樓正面的連子窗
+    for (let i = -2; i <= 2; i++) {
+      box(w2 * 0.14, 1.1, 0.1, MAT.darkWood, i * w2 * 0.17, h + 0.3 + h2 * 0.52, d2 / 2 - (d - d2) / 2 * 0.4 + 0.06, g);
+    }
+    // 一樓簷（下屋）壓在一二樓之間
+    const pent = box(w + 1.6, 0.24, d * 0.6, MAT.roofTile, 0, h + 0.42, d * 0.28, g);
+    pent.rotation.x = 0.42;
+    // 欄杆
+    box(w2 * 0.96, 0.1, 0.1, MAT.darkWood, 0, h + 1.35, d2 / 2 - (d - d2) / 2 * 0.4 + 0.22, g);
+    topY = h + 0.3 + h2;
   }
 
   // 屋頂
   const rm = roof === 'thatch' ? MAT.roofThatch : MAT.roofTile;
   const rh = roof === 'thatch' ? 2.8 : 1.9;
   const eave = roof === 'thatch' ? 1.5 : 1.1;
+  const rw = two ? w * 0.98 : w;
+  const rd = two ? d * 0.92 : d;
   for (const s of [-1, 1]) {
-    const len = Math.hypot(d / 2 + eave, rh);
-    const slope = box(w + eave * 1.4, 0.34, len, rm, 0, h + 0.3 + rh / 2, s * (d / 4 + eave / 2), g);
-    slope.rotation.x = s * Math.atan2(rh, d / 2 + eave);
+    const len = Math.hypot(rd / 2 + eave, rh);
+    const slope = box(rw + eave * 1.4, 0.34, len, rm, 0, topY + rh / 2, s * (rd / 4 + eave / 2), g);
+    slope.rotation.x = s * Math.atan2(rh, rd / 2 + eave);
   }
-  box(w + eave * 1.5, 0.42, 0.7, rm, 0, h + 0.3 + rh, 0, g);        // 正脊
+  box(rw + eave * 1.5, 0.42, 0.7, rm, 0, topY + rh, 0, g);        // 正脊
   // 山牆
   for (const s of [-1, 1]) {
     const shape = new THREE.Shape();
-    const hd = d / 2 + eave * 0.6;
+    const hd = rd / 2 + eave * 0.6;
     shape.moveTo(-hd, 0); shape.lineTo(hd, 0); shape.lineTo(0, rh);
-    const tri = new THREE.Mesh(new THREE.ShapeGeometry(shape), MAT.plaster);
-    tri.position.set(s * (w / 2 + 0.02), h + 0.3, 0);
+    const tri = new THREE.Mesh(new THREE.ShapeGeometry(shape), kura ? MAT.kura : MAT.plaster);
+    tri.position.set(s * (rw / 2 + 0.02), topY, 0);
     tri.rotation.y = s * Math.PI / 2;
     g.add(tri);
   }
@@ -250,13 +298,15 @@ function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', sign = '',
     g.userData.signName = sign;
   }
 
-  // 碰撞：屋身（旋轉過的建物也要跟著轉）
+  // 碰撞：屋身（旋轉過的建物也要跟著轉；高度取到最高一層）
   const cs = Math.abs(Math.cos(rot)), sn = Math.abs(Math.sin(rot));
-  block(x, z, w * cs + d * sn, w * sn + d * cs, heightAt(x, z) + h);
+  block(x, z, w * cs + d * sn, w * sn + d * cs, heightAt(x, z) + topY);
   return g;
 }
 
 // --- 主街兩側的店家（考據自 Touhou Wiki 的里內設施） ---
+// 型式混搭：平房町家、二層樓的旅籠與湯屋、白牆土藏，屋頂瓦與茅草交錯，
+// 街景才不會一整排長一樣。
 const SHOPS = [
   { x: -11, z: -30, w: 10, d: 8, rot: Math.PI, sign: '寺子屋', roof: 'tile', signColor: 0x4a5a7a },   // 慧音的私塾
   { x: 12, z: -28, w: 9, d: 7, rot: Math.PI, sign: '豆腐', noren: 'blue' },
@@ -266,8 +316,30 @@ const SHOPS = [
   { x: 12.5, z: 20, w: 10, d: 7.5, rot: 0, sign: '居酒屋', noren: 'red', roof: 'thatch' },
   { x: -13, z: 38, w: 9, d: 7, rot: 0, sign: '米', },
   { x: 13, z: 36, w: 8.5, d: 7, rot: 0, sign: '鍛冶', roof: 'thatch' },
+  // ---- 南側新街廓 ----
+  { x: -12, z: 50, w: 10, d: 7.5, rot: 0, sign: '旅籠', style: 'two', noren: 'blue' },                 // 二層樓的旅店
+  { x: 12.5, z: 52, w: 9, d: 7, rot: 0, sign: '茶屋', noren: 'red' },
+  { x: -12.5, z: 66, w: 9.5, d: 7.5, rot: 0, sign: '湯屋', style: 'two', roof: 'tile' },               // 錢湯
+  { x: 12, z: 66, w: 9, d: 7, rot: 0, sign: '蕎麥', noren: 'blue', roof: 'thatch' },
+  { x: -11.5, z: 80, w: 8.5, d: 7, rot: 0, sign: '織', },
+  { x: 12.5, z: 80, w: 9, d: 7, rot: 0, sign: '甘味', noren: 'red' },
 ];
 for (const s of SHOPS) house(s);
+
+// 二排的民家與土藏：主街後面也要有人住，里才有厚度
+const BACK_BUILDINGS = [
+  { x: -26, z: -28, w: 8, d: 6.5, rot: Math.PI * 0.5, roof: 'thatch' },
+  { x: 27, z: -22, w: 8.5, d: 6.5, rot: -Math.PI * 0.5 },
+  { x: 27, z: -38, w: 7, d: 6, rot: -Math.PI * 0.5, style: 'kura' },                                   // 土藏
+  { x: -27, z: 30, w: 8, d: 6.5, rot: Math.PI * 0.5, roof: 'thatch' },
+  { x: 28, z: 32, w: 8, d: 6.5, rot: -Math.PI * 0.5 },
+  { x: 26, z: 48, w: 7, d: 6, rot: -Math.PI * 0.5, style: 'kura' },                                    // 土藏
+  { x: -26, z: 56, w: 8.5, d: 7, rot: Math.PI * 0.5, style: 'two' },                                   // 二層樓民家
+  { x: -27, z: 74, w: 8, d: 6.5, rot: Math.PI * 0.5, roof: 'thatch' },
+  { x: 27, z: 74, w: 8, d: 6.5, rot: -Math.PI * 0.5 },
+  { x: 0, z: 92, w: 9, d: 7, rot: 0, roof: 'thatch' },                                                 // 街尾的農家
+];
+for (const b of BACK_BUILDINGS) house(b);
 
 // 稗田邸：里內最大的宅子，退到街廓後方，帶院牆
 (function hiedaManor() {
@@ -324,7 +396,7 @@ function streetLantern(x, z) {
   lanternGlows.push({ lamp, light: l });
   post(x, z, 0.38, y + 2.6);
 }
-for (let i = -4; i <= 4; i++) {
+for (let i = -4; i <= 7; i++) {
   if (i === 0) continue;
   streetLantern(-5.6, i * 12);
   streetLantern(5.6, i * 12 + 6);
@@ -353,6 +425,8 @@ function stall(x, z, rot, cloth) {
 stall(-6.5, 4, 0.1, MAT.cloth);
 stall(6.5, 12, -0.1, MAT.clothBlue);
 stall(-6.5, 16, 0.05, MAT.clothBlue);
+stall(6.5, 58, 0.08, MAT.cloth);
+stall(-6.5, 60, -0.06, MAT.cloth);
 
 // 里的樹（櫻花與雜木），連樹幹一起擋人
 function tree(x, z, s, leafMat) {
@@ -371,11 +445,13 @@ function tree(x, z, s, leafMat) {
 // 廣場邊兩株櫻，其餘散在屋後與里外
 tree(-4.5, 14, 1.15, MAT.leafPink);
 tree(4.5, 2, 1.1, MAT.leafPink);
+tree(-4.5, 62, 1.1, MAT.leafPink);
+tree(4.6, 50, 1.05, MAT.leafPink);
 for (let i = 0; i < 60; i++) {
   const a = Math.random() * Math.PI * 2;
-  const r = 34 + Math.random() * 46;
-  const x = Math.cos(a) * r, z = Math.sin(a) * r * 1.25;
-  if (Math.abs(x) < 20 && Math.abs(z) < 62) continue;         // 街廓與主街留空
+  const r = 36 + Math.random() * 52;
+  const x = Math.cos(a) * r, z = Math.sin(a) * r * 1.4;
+  if (Math.abs(x) < 20 && z > -62 && z < 98) continue;        // 街廓與主街留空（含南側新街廓）
   tree(x, z, 0.85 + Math.random() * 0.8, MAT.leaf);
 }
 
@@ -445,7 +521,7 @@ const CROWD_GRAPH = (() => {
   const add = (x, z) => (nodes.push([x, z]), nodes.length - 1);
   const chain = (ids) => { for (let i = 0; i < ids.length - 1; i++) links.push([ids[i], ids[i + 1]]); };
 
-  const zs = [-52, -42, -32, -22, -12, -2, 8, 18, 28, 38, 48];
+  const zs = [-52, -42, -32, -22, -12, -2, 8, 18, 28, 38, 48, 56, 64, 72, 80];
   const west = zs.map(z => add(-3.0, z));      // 主街西側動線
   const east = zs.map(z => add(3.0, z));       // 主街東側動線
   chain(west); chain(east);
@@ -453,12 +529,19 @@ const CROWD_GRAPH = (() => {
   const xs = [-32, -24, -16, -8, 8, 16, 24, 32];
   const cross = xs.map(x => add(x, 8));        // 橫街
   chain(cross);
+  const xs2 = [-24, -16, -8, 8, 16, 24];
+  const cross2 = xs2.map(x => add(x, 56));     // 南側橫街
+  chain(cross2);
 
-  // 交叉口：把橫街接上主街（zs 裡 z=8 的索引是 6）
+  // 交叉口：把橫街接上主街（zs 裡 z=8 的索引是 6、z=56 的索引是 11）
   const wMid = west[6], eMid = east[6];
   links.push([wMid, eMid]);
   links.push([cross[3], wMid]);                // x=-8 接西側
   links.push([cross[4], eMid]);                // x=+8 接東側
+  const wMid2 = west[11], eMid2 = east[11];
+  links.push([wMid2, eMid2]);
+  links.push([cross2[2], wMid2]);
+  links.push([cross2[3], eMid2]);
 
   // 店門口支線：站到店前一點的位置，會有人在那邊逗留
   for (const s of SHOPS) {
@@ -476,7 +559,7 @@ const CROWD_GRAPH = (() => {
   }
   return { nodes, links };
 })();
-const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 38);
+const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 52);
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
 let saved = null;
@@ -492,7 +575,7 @@ ctrl.jumpV = spec.jump ?? 9.2;
 ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: 96, hz: 96 };
+ctrl.bounds = { hx: 96, hz: 108 };
 ctrl.teleport(0, GATE_Z + 9);     // 從里門走進來
 ctrl.yaw = 0;
 ctrl.camYaw = Math.PI;
@@ -518,6 +601,7 @@ const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => fals
 const combat = spec.combat ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD) : null;
 combatHUD.reset();
 HUD.showCombatKeys(!!combat);
+HUD.showFlyKeys(spec.canFly !== false);
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ─────────────────────────────────────── 夜燈與環境回呼 ── */
@@ -533,6 +617,16 @@ env.applyTime(env.hour, true);
 /* ────────────────────────────────────────────── 互動與選單 ── */
 const escMenu = bindEscMenu({
   getCtrl: () => ctrl,
+  env,
+  quality: {
+    get: () => QUALITY_NAMES[qualityIdx],
+    cycle() {
+      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
+      saveQualityIdx(qualityIdx);
+      syncQuality();
+      return QUALITY_NAMES[qualityIdx];
+    },
+  },
   isBusy: () => sceneEditor.isOpen,
   onBackToSelect() {
     HUD.showLoading('博麗神社 讀取中');

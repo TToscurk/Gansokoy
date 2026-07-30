@@ -14,7 +14,7 @@
 
 import * as THREE from 'three';
 import { sample as sampleDay, clockLabel } from './daycycle.js';
-import { Weather, mixHex } from './weather.js';
+import { Weather, WEATHERS, mixHex } from './weather.js';
 
 const HOUR_KEY = 'gansokoy:hour';
 const WX_KEY = 'gansokoy:weather';
@@ -212,5 +212,21 @@ export class Environment {
   setWeather(id, dur = 3) {
     this.weather.set(id, dur);
     this._save();
+  }
+
+  /** 循環切到下一種天氣（ESC 選單的天氣鈕用），回傳新天氣的名字 */
+  cycleWeather(dur = 3) {
+    const i = WEATHERS.findIndex(w => w.id === this.weather.target.id);
+    const next = WEATHERS[(i + 1) % WEATHERS.length];
+    this.setWeather(next.id, dur);
+    return next.zh;
+  }
+
+  /** 快轉幾小時（ESC 選單的時刻鈕用），回傳時鐘字串 */
+  skipHours(h = 3) {
+    this.hour = (this.hour + h) % 24;
+    this.applyTime(this.hour, true);
+    this._save();
+    return clockLabel(this.hour);
   }
 }

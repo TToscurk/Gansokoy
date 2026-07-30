@@ -69,6 +69,41 @@
   #questLog .qdone { font-size:10.5px; color:#6f6478; line-height:1.9; }
 
   /* 角色場景編輯器的樣式在 src/ui/scene-editor.js（全地圖共用） */
+
+  /* 任務通知 */
+  #questToasts { position:fixed; right:18px; top:96px; z-index:36;
+    display:flex; flex-direction:column; gap:7px; align-items:flex-end; }
+  .qtoast { font-size:12px; letter-spacing:.07em; padding:8px 15px; border-radius:3px;
+    background:rgba(20,14,24,.92); border-left:2px solid #8d7f94; color:#eadfe6;
+    opacity:0; transform:translateX(14px); transition:opacity .3s ease, transform .3s ease;
+    white-space:nowrap; box-shadow:0 8px 26px rgba(0,0,0,.6); }
+  .qtoast.on { opacity:1; transform:translateX(0); }
+  .qtoast.start { border-left-color:#d9b26a; }
+  .qtoast.done { border-left-color:#7fc08a; }
+  .qtoast.update { border-left-color:#e0725a; }
+
+  /* 角色選擇卡片 */
+  #charCards { display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    margin-top:22px; max-width:760px; }
+  .ccard { width:104px; padding:12px 8px 12px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.04); cursor:pointer; text-align:center;
+    border-radius:3px; transition:.18s; }
+  .ccard:hover, .ccard:focus-visible { background:rgba(194,56,47,.25); border-color:#c2382f;
+    transform:translateY(-3px); outline:none; }
+  .cswatch { width:40px; height:40px; border-radius:50%; margin:0 auto 9px;
+    border:2px solid rgba(255,255,255,.3); }
+  .cnm { font-size:13px; font-weight:700; letter-spacing:.04em; color:#f3ece4; }
+  .crm { font-size:8px; letter-spacing:.1em; color:#8d7f94; margin-top:3px; }
+  .cds { font-size:9px; color:#a99cb0; margin-top:7px; line-height:1.55; min-height:42px; }
+  /* 數值列：移動力長條 + 能力標籤 */
+  .cbar { height:3px; background:rgba(255,255,255,.14); border-radius:2px;
+    margin:9px 4px 6px; overflow:hidden; }
+  .cbar i { display:block; height:100%; background:#e0725a; }
+  .ctags { display:flex; gap:4px; justify-content:center; flex-wrap:wrap; }
+  .ctag { font-size:8px; letter-spacing:.06em; padding:2px 5px; border-radius:2px;
+    background:rgba(255,255,255,.09); color:#c9bcd0; }
+  .ctag.fly { background:rgba(110,160,235,.22); color:#bcd4f5; }
+  .ctag.jump { background:rgba(226,168,90,.2); color:#f0d3a4; }
 </style>
 </head>
 <body>
