@@ -115,6 +115,39 @@ const CSS = `
   text-shadow:0 0 26px rgba(216,69,47,.7)}
 #deathVeil .s{margin-top:14px;font-size:12px;letter-spacing:.34em;color:#b0a0a4}
 
+/* 技能列。右下四格，冷卻用由下往上的遮罩掃過去。 */
+#skills{position:fixed;right:22px;bottom:96px;z-index:56;display:flex;gap:8px;
+  pointer-events:none;opacity:0;transition:opacity .3s}
+#skills.on{opacity:1}
+#skills .s{position:relative;width:52px;height:52px;border-radius:4px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(30,22,34,.9),rgba(16,12,20,.94));
+  box-shadow:0 0 0 1px rgba(217,178,106,.3);text-align:center}
+#skills .s .k{position:absolute;top:3px;left:0;width:100%;font-size:10px;
+  letter-spacing:.1em;color:#d9b26a}
+#skills .s .n{position:absolute;bottom:5px;left:0;width:100%;font-size:9px;
+  letter-spacing:.06em;color:#e8dcc8;line-height:1.15;padding:0 2px}
+/* 冷卻遮罩：高度 = 剩餘比例，由下往上退掉 */
+#skills .s .cd{position:absolute;left:0;bottom:0;width:100%;height:0;
+  background:rgba(6,4,10,.74)}
+#skills .s .cdn{position:absolute;top:50%;left:0;width:100%;transform:translateY(-50%);
+  font-size:15px;font-weight:700;color:#fff;opacity:0;
+  text-shadow:0 2px 6px rgba(0,0,0,.9)}
+#skills .s.cooling .cdn{opacity:1}
+#skills .s.locked{filter:grayscale(1) brightness(.5)}
+#skills .s.locked .n::after{content:attr(data-lv);display:block;color:#a08a6a}
+#skills .s.ready{box-shadow:0 0 0 1px rgba(255,176,80,.75),0 0 14px rgba(255,122,26,.4)}
+#skills .s.buffed{animation:skBuff .7s ease-in-out infinite alternate}
+@keyframes skBuff{0%{box-shadow:0 0 0 1px rgba(120,200,255,.7)}
+  100%{box-shadow:0 0 0 1px rgba(120,200,255,.9),0 0 20px rgba(120,200,255,.6)}}
+
+/* 看穿要害 */
+#critMark{position:fixed;top:38%;left:50%;transform:translateX(-50%);z-index:57;
+  font-size:22px;letter-spacing:.5em;color:#bfe6ff;pointer-events:none;opacity:0;
+  text-shadow:0 0 20px rgba(120,200,255,.9)}
+#critMark.on{animation:critFx .5s ease-out}
+@keyframes critFx{0%{opacity:1;transform:translateX(-50%) scale(1.3)}
+  100%{opacity:0;transform:translateX(-50%) scale(1)}}
+
 /* ESC 選單 */
 #escMenu { position:fixed; inset:0; z-index:70; display:none;
   align-items:center; justify-content:center;
@@ -188,6 +221,8 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
       <div class="bar"><div class="ghost"></div><div class="f"></div></div>
       <div class="n"><span class="hp">0</span> / <span class="mx">0</span></div>
     </div>
+    <div id="skills"></div>
+    <div id="critMark">看　穿</div>
     <div id="hurtFlash"></div>
     <div id="deathVeil"><div class="k">絶　命</div><div class="s">復 活 中 …</div></div>
     <div id="formBanner"></div>
@@ -250,6 +285,37 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
         const fl = document.getElementById('hurtFlash');
         if (fl) { fl.classList.remove('on'); void fl.offsetWidth; fl.classList.add('on'); }
       }
+    },
+    /**
+     * 技能列。傳 SkillSystem.hudState() 的結果。
+     * 第一次呼叫時建 DOM，之後只改 class 與樣式 —— 這是每幀都會跑的。
+     * @param {{slot:string,zh:string,en:string,locked:boolean,unlock:number,
+     *          cd:number,cdMax:number,active:number}[]} list
+     */
+    skills(list) {
+      const el = document.getElementById('skills');
+      if (!el) return;
+      if (el.children.length !== list.length) {
+        el.innerHTML = list.map(s => `
+          <div class="s"><div class="cd"></div>
+            <div class="k">${s.slot}</div>
+            <div class="cdn"></div>
+            <div class="n"></div></div>`).join('');
+      }
+      el.classList.add('on');
+      list.forEach((s, i) => {
+        const d = el.children[i];
+        const cooling = s.cd > 0.05;
+        d.classList.toggle('locked', s.locked);
+        d.classList.toggle('cooling', cooling && !s.locked);
+        d.classList.toggle('ready', !s.locked && !cooling);
+        d.classList.toggle('buffed', s.active > 0);
+        // 技能名太長，取「・」後面那一段當短名（火車、輪迴…）
+        const short = s.zh.includes('・') ? s.zh.split('・').pop() : s.zh;
+        d.querySelector('.n').textContent = s.locked ? `Lv.${s.unlock}` : short;
+        d.querySelector('.cd').style.height = cooling ? `${(s.cd / s.cdMax) * 100}%` : '0';
+        d.querySelector('.cdn').textContent = cooling ? Math.ceil(s.cd) : '';
+      });
     },
     /** 死亡黑幕（復活時再呼叫 false 收掉） */
     deathVeil(on) {

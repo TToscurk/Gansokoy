@@ -30,6 +30,7 @@ import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
 import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
 import { Vitals } from '../../src/player/vitals.js';
+import { SkillSystem, SKILLS } from '../../src/combat/skills.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
@@ -44,7 +45,7 @@ const HUD = installHUD({
     ['E', '互動'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
 });
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
@@ -643,7 +644,9 @@ ctrl.camYaw = Math.PI;
 
 /* ───────────────────── 妖怪兔 + 成長系統 + 戰鬥 ── */
 // 竹林是「有怪的地區」：五個兔窩沿路散布，越往南越多。
-const prog = new Progression({ onLevelUp: (msg) => toast(msg) });
+const prog = new Progression({
+  onLevelUp: (msg) => { toast(msg); skills?.onLevelUp(); },
+});
 // 越往南（越靠近永遠亭）窩越密 —— 走進去要有「越來越難回頭」的壓力。
 // 全部走 InstancedMesh，九十幾隻同屏也只有兩個 draw call。
 const NESTS = [
@@ -694,6 +697,20 @@ const slashAudio = new SlashAudio();
 const combat = spec.combat
   ? new Combat(ctrl, mobs, slashFX, slashAudio, combatHUD)
   : null;
+/* 技能系統：主動技（1~4）、被動與小技能。掛上去之後 Combat 每一擊
+ * 會問它要傷害倍率（拔刀術、斑紋、看穿要害…）。沒有戰鬥能力的角色
+ * 不建，行為跟以前完全一樣。 */
+let skills = null;
+if (combat) {
+  skills = new SkillSystem({
+    combat, vitals, prog, ctrl,
+    ui: {
+      skills: (list) => HUD.skills(list),
+      banner: (name) => combatHUD.formBanner(name),
+      toast: (msg) => toast(msg),
+    },
+  });
+}
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 combatHUD.reset();
 HUD.vitals(vitals.hp, vitals.max);
@@ -726,6 +743,15 @@ bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
 const nearNorth = () => Math.hypot(ctrl.pos.x - pathX(NORTH_END), ctrl.pos.z - NORTH_END) < 4.6;
 const nearSouth = () => Math.hypot(ctrl.pos.x - pathX(SOUTH_END), ctrl.pos.z - (SOUTH_END - 3)) < 4.6;
 
+// 技能鍵 1~4
+window.addEventListener('keydown', (e) => {
+  if (!skills || !ctrl.locked || escMenu.isOpen) return;
+  if (SKILLS.some(s => s.key === e.code)) {
+    e.preventDefault();
+    skills.pressKey(e.code);
+  }
+});
+
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
   if (nearNorth()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/?from=bamboo'; return; }
@@ -747,6 +773,7 @@ function tick(rawDt) {
   slashFX.update(dt);
   rabbits.update(dt, t, ctrl.pos);
   vitals.update(dt);
+  skills?.update(dt);
 
   env.update(dt, camera.position);
   northPortal.userData.update(t);
@@ -775,6 +802,7 @@ animate();
 // debug handle（跟其他地圖同一套測試口徑）
 window.__bamboo = {
   renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, vitals,
+  get skills() { return skills; }, prog,
   get combat() { return combat; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {

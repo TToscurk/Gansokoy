@@ -45,8 +45,10 @@ export class RabbitMobs {
 
     // 身體：橢圓的一坨。兔子是實體生物，用吃光的 StandardMaterial
     // （妖精是自己會發光的小東西才用 BasicMaterial）。
-    const bodyGeo = new THREE.SphereGeometry(0.3, 10, 8);
-    bodyGeo.scale(1, 0.82, 1.25);
+    // 身體要小一點、耳朵要長一點 —— 不然遠看只是一顆蛋。
+    // 兔子的辨識度幾乎全靠剪影上那兩隻耳朵。
+    const bodyGeo = new THREE.SphereGeometry(0.25, 10, 8);
+    bodyGeo.scale(1, 0.8, 1.3);
     const bodyMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.92 });
     this.bodies = new THREE.InstancedMesh(bodyGeo, bodyMat, total);
     this.bodies.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(total * 3), 3);
@@ -54,7 +56,7 @@ export class RabbitMobs {
     this.bodies.frustumCulled = false;
 
     // 耳朵：細長的膠囊，每隻兩片
-    const earGeo = new THREE.CapsuleGeometry(0.052, 0.34, 3, 6);
+    const earGeo = new THREE.CapsuleGeometry(0.045, 0.46, 3, 6);
     this.ears = new THREE.InstancedMesh(earGeo, bodyMat, total * 2);
     this.ears.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(total * 2 * 3), 3);
     this.ears.castShadow = true;
@@ -228,16 +230,16 @@ export class RabbitMobs {
       // 耳朵：跳起來時往後倒，落地時立起來
       for (let w = 0; w < 2; w++) {
         const side = w ? 1 : -1;
-        const ex = -0.35 - lean * 1.2;
+        const ex = -0.22 - lean * 1.2;   // 立得直一點，剪影才讀得出是耳朵
         e.set(ex, m.yaw, side * 0.22);
         q.setFromEuler(e);
         s.setScalar(sc);
         // 耳朵長在頭上、略偏後
         const hx = Math.sin(m.yaw), hz = Math.cos(m.yaw);
         _v.set(
-          m.pos.x + hx * 0.12 + Math.cos(m.yaw) * side * 0.11,
-          y + 0.3,
-          m.pos.z + hz * 0.12 - Math.sin(m.yaw) * side * 0.11
+          m.pos.x + hx * 0.1 + Math.cos(m.yaw) * side * 0.09,
+          y + 0.34,
+          m.pos.z + hz * 0.1 - Math.sin(m.yaw) * side * 0.09
         );
         m4.compose(_v, q, s);
         this.ears.setMatrixAt(m.i * 2 + w, m4);
