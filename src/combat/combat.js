@@ -80,6 +80,11 @@ export class Combat {
 
     this.stats = { swings: 0, hits: 0, kills: 0 };
 
+    // 技能系統（src/combat/skills.js）掛上來的修正器。沒掛就是純粹的
+    // 十三型連段，行為跟以前一模一樣 —— 沒有技能的角色不受影響。
+    // 介面：{ dmgMul(ctx) → number, onHit(ctx), onSwing(ctx) }
+    this.mods = null;
+
     // 前臂/手掌是靜態節點，矩陣只需要算一次
     const rig = player.model.userData.rig;
     rig?.foreR?.updateMatrix();
@@ -134,10 +139,12 @@ export class Combat {
    * 實際使出一型 —— 轉向、突進、特效、命中、動作、UI。
    * 普通攻擊與大招的每一段都走這裡，兩邊的手感才不會分岔。
    */
-  _execForm(form) {
+  _execForm(form, dmgMul = 1) {
     const p = this.player;
+    const wasSheathed = !this.drawn;      // 拔刀術的被動要知道這一刀是不是拔刀斬
     this.idleT = 0;
     this.stats.swings++;
+    this.mods?.onSwing?.({ form, wasSheathed });
 
     // 朝向：相機水平前方（跟 WASD 的「前」同一套定義）
     const fx = -Math.sin(p.camYaw), fz = -Math.cos(p.camYaw);
@@ -154,12 +161,16 @@ export class Combat {
     else this.fx.slash(p.pos, p.yaw, form);
     this.audio.swing(form);          // 整個型丟給音效層自己判斷輕重與火焰強度
 
-    // 命中判定
+    // 命中判定。傷害 = 型的基礎值 × 技能倍率 × 被動修正（爆擊、斑紋…）。
+    // 修正器每一擊只問一次，所以同一刀砍中的每一隻吃到的倍率一致 ——
+    // 不然一群怪裡會有幾隻莫名其妙特別痛。
+    const mod = this.mods?.dmgMul?.({ form, wasSheathed }) ?? { mul: 1, crit: false };
+    const total = form.dmg * dmgMul * (mod.mul ?? 1);
     const hits = this.mobs.inSector(p.pos, p.yaw, form.range, form.arc);
     for (const m of hits) {
       const dx = m.pos.x - p.pos.x, dz = m.pos.z - p.pos.z;
       const d = Math.hypot(dx, dz) || 1;
-      const killed = this.mobs.damage(m, form.dmg, dx / d, dz / d);
+      const killed = this.mobs.damage(m, total, dx / d, dz / d);
       this.fx.hit(m.pos);
       if (killed) {
         this.fx.burst(m.pos);
@@ -169,10 +180,12 @@ export class Combat {
       this.comboN++;
     }
     if (hits.length) {
+      this.mods?.onHit?.({ form, crit: mod.crit, count: hits.length });
+      if (mod.crit) this.ui.crit?.();
       this.comboTimer = 3;
       this.ui.combo(this.comboN);
-      if (form.heavy || form.finisher || this.comboN % 10 === 0) {
-        this.hitstop = form.finisher ? 0.14 : 0.07;
+      if (form.heavy || form.finisher || mod.crit || this.comboN % 10 === 0) {
+        this.hitstop = form.finisher ? 0.14 : (mod.crit ? 0.1 : 0.07);
       }
     }
 
@@ -241,6 +254,21 @@ export class Combat {
     this._execForm(FORMS[this.ult.i++]);
     // 大招結束後，普通攻擊從壹之型重新輪
     if (this.ult && this.ult.i >= FORMS.length) this.formIndex = 0;
+  }
+
+  /**
+   * 指定使出某一型 —— 技能系統的入口。
+   * 跟普通攻擊走同一條 _execForm，手感與動畫才不會分岔。
+   * @param {number} formIndex forms.js 的索引
+   * @param {number} [dmgMul=1] 這一招的傷害倍率
+   * @returns {boolean} 有沒有真的出招（上一招還沒演完就出不了）
+   */
+  useForm(formIndex, dmgMul = 1) {
+    if (this.busy || this.ult || !this.player.enabled) return false;
+    const form = FORMS[formIndex];
+    if (!form) return false;
+    this._execForm(form, dmgMul);
+    return true;
   }
 
   /** @param dt 受頓挫壓慢的時間；@param rawDt 真實時間（只給 hitstop 自己倒數用） */

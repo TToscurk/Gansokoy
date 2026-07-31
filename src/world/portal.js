@@ -13,6 +13,8 @@ import * as THREE from 'three';
 export function makePortalGlow(parent, x, y, z, color = 0x8be8ff) {
   const g = new THREE.Group();
   g.position.set(x, y, z);
+  // 整組都在呼吸／旋轉，靜態合併必須跳過（見 src/core/optimize.js）
+  g.userData.noMerge = true;
   parent.add(g);
 
   const noOutline = (m) => { m.userData.noOutline = true; return m; };

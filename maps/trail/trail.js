@@ -1,9 +1,20 @@
-// 獸道 —— 連接博麗神社與人間之里的山間獸徑。
+// 獸道 —— 幻想鄉的路口。連接博麗神社、人間之里與迷途竹林。
 //
-// 依「單獨建造」的要求做成獨立頁面：自己的一套地形、燈光與界域，
-// 只共用 src/ 底下的角色模型與 PlayerController。兩端各有一個界域：
-//   北端（z 負向）＝ 博麗神社，按 E 回 index.html
-//   南端（z 正向）＝ 人間之里的木門，尚未開放（先立牌告知）
+// 這張圖是三張圖的樞紐：從神社下山之後，一路蜿蜒往南，中途分岔 ——
+// 往西南是人間之里，往東南是迷途竹林。里本身不再直接通竹林，
+// 要去竹林一定得走回獸道，這條路才有存在感。
+//
+//        博麗神社（北）
+//             │
+//             │  主道（蜿蜒）
+//             ▼
+//          ┌ 分岔 ┐
+//          │      │
+//     人間之里   迷途竹林
+//      （西南）  （東南）
+//
+// 蜿蜒 + 分岔之後，「離路多遠」不再有封閉解，而地形高度、路面幾何、
+// 樹木佈點全都要問這個問題 —— 所以改用 src/world/pathnet.js 的路網。
 //
 // 場景刻意比神社簡單：沒有後製鏈、沒有任務、沒有 NPC 名冊 ——
 // 它是一條「路」，重點是走起來的氣氛：密林、霧、光斑、獸徑的土路。
@@ -18,25 +29,25 @@ import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { Combat } from '../../src/combat/combat.js';
 import { FairyMobs } from '../../src/combat/mobs.js';
-import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
-import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
+import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
+import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
   title: '獸　道',
-  subtitle: 'BEAST TRAIL · 博麗神社 ⇄ 人間之里',
+  subtitle: 'BEAST TRAIL · 博麗神社 ⇄ 人間之里 ⇄ 迷途竹林',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
 });
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
@@ -52,7 +63,8 @@ document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.1, 400);
+// near 拉到 0.2（見 main.js 同名註解）：換來深度精度，鋪地物件不閃。
+const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.2, 700);
 camera.rotation.order = 'YXZ';
 
 /* ─────────────────────────────────── 晝夜 + 天氣（共用 Environment） ── */
@@ -60,7 +72,7 @@ camera.rotation.order = 'YXZ';
 // 密林的霧比神社濃（fogMul），其他一律用共用的日循環調色。
 const env = new Environment(scene, renderer, {
   fogMul: 1.6,          // 比神社霧一點（密林），但別濃到吞掉北端的神社遠景
-  shadowArea: 52,
+  shadowArea: 60,
   followSun: true,
 });
 
@@ -74,21 +86,63 @@ const syncQuality = () => {
 syncQuality();
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
-// 一條南北向的谷道：路面在中央緩緩起伏，離開路面往兩側爬升成坡，
+// 一張 Y 字形的谷地：路面沿著中心線走，離開路面往兩側爬升成谷壁，
 // 玩家自然會被地形「勸回」路上（沒有任何空氣牆）。
-const TRAIL_LEN = 130;      // z ∈ [-130, 130]
-const BOUND_X = 30;
+//
+// 三個端點與分岔點的座標定在這裡，路面、傳送點、出生點、地形全部
+// 從同一組數字長出來 —— 改路線只要動這幾個點。
+const SHRINE_END = { x: 0, z: -300 };      // 北端：博麗神社
+const FORK = { x: 26, z: 40 };             // 分岔點
+const VILLAGE_END = { x: -150, z: 250 };   // 西南：人間之里
+const BAMBOO_END = { x: 190, z: 250 };     // 東南：迷途竹林
+
+const ROAD_W = 7.5;        // 路面寬（也是地形不抬升的帶寬）
+const MAP_R = 340;         // 地圖半徑（超過就是邊界山壁）
+
+/** 三段路徑的控制點。中間刻意錯開，走起來才是蜿蜒而不是直線。 */
+const SEGMENTS = [
+  {
+    id: 'main', width: ROAD_W,
+    pts: [
+      [SHRINE_END.x, SHRINE_END.z],
+      [-22, -246], [18, -196], [-14, -142], [-30, -92],
+      [4, -44], [30, -6], [FORK.x, FORK.z],
+    ],
+  },
+  {
+    id: 'toVillage', width: ROAD_W * 0.92,
+    pts: [
+      [FORK.x, FORK.z], [-2, 74], [-44, 108], [-88, 146],
+      [-118, 190], [VILLAGE_END.x, VILLAGE_END.z],
+    ],
+  },
+  {
+    id: 'toBamboo', width: ROAD_W * 0.92,
+    pts: [
+      [FORK.x, FORK.z], [62, 78], [96, 112], [128, 152],
+      [162, 198], [BAMBOO_END.x, BAMBOO_END.z],
+    ],
+  },
+];
+const PATHS = new PathNet(SEGMENTS, { step: 3, cell: 14 });
 
 function heightAt(x, z) {
-  const roll = Math.sin(z * 0.045) * 0.9 + Math.sin(z * 0.013 + 1.7) * 1.4;   // 沿途起伏
-  const ax = Math.abs(x);
-  const slope = ax < 7 ? 0 : (ax - 7) * (ax - 7) * 0.05;                      // 兩側谷壁
-  const wob = Math.sin(x * 0.7 + z * 0.33) * 0.12;                            // 土路的顛簸
-  return roll + slope + wob;
+  const roll = Math.sin(z * 0.021) * 1.1 + Math.sin(x * 0.026 + 1.7) * 0.9;   // 沿途起伏
+  const wob = Math.sin(x * 0.55 + z * 0.31) * 0.11;                           // 土路的顛簸
+
+  // 谷壁：離路越遠爬得越高，但要封頂 —— 不封的話二次式在地圖邊緣會
+  // 衝到幾百公尺，遠看是一圈白色巨牆（竹林踩過這個坑）。
+  const d = PATHS.edgeDist(x, z, 2);
+  const valley = d === Infinity ? 26 : Math.min(26, d * d * 0.02);
+
+  // 地圖邊界：再往外就是爬不上去的山
+  const r = Math.hypot(x, z);
+  const rim = r < MAP_R ? 0 : Math.min(40, (r - MAP_R) * (r - MAP_R) * 0.05);
+
+  return roll + wob + valley + rim;
 }
 setGroundHeightFn(heightAt);
-// 這張圖沒有水域（見 main.js 同名註解）：谷道低點在 -2 以下，
-// 不壓低水面高度的話 controller 會把玩家鉗在半空。
+// 這張圖沒有水域（見 main.js 同名註解）
 WORLD.waterLevel = -999;
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
@@ -121,7 +175,12 @@ const grassTex = canvasTex(256, (g, s) => {
 }, 12, 44);
 
 const MAT = {
-  dirt: new THREE.MeshStandardMaterial({ map: dirtTex, roughness: 1 }),
+  // 獸徑鋪在草坡上（makeStrip 已讓它貼著高度場），polygonOffset 讓它
+  // 在深度測試上穩定贏過草地，邊緣不會閃
+  dirt: new THREE.MeshStandardMaterial({
+    map: dirtTex, roughness: 1,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  }),
   grass: new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1 }),
   bark: new THREE.MeshStandardMaterial({ color: '#4a3828', roughness: 1 }),
   leafA: new THREE.MeshStandardMaterial({ color: '#3d5c2a', roughness: 1, flatShading: true }),
@@ -163,25 +222,52 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
 }
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
-// 兩層：整片草坡（跟著高度場起伏的網格）＋ 中央一條土路
 (function ground() {
-  const W = 90, L = TRAIL_LEN * 2 + 60, SEG_X = 36, SEG_Z = 150;
-  const makeStrip = (mat, halfW, yOff) => {
-    const geo = new THREE.PlaneGeometry(halfW * 2, L, SEG_X, SEG_Z);
-    geo.rotateX(-Math.PI / 2);
-    const p = geo.attributes.position;
-    for (let i = 0; i < p.count; i++) {
-      p.setY(i, heightAt(p.getX(i), p.getZ(i)) + yOff);
-    }
-    geo.computeVertexNormals();
-    const m = new THREE.Mesh(geo, mat);
-    m.receiveShadow = true;
-    world.add(m);
-    return m;
-  };
-  makeStrip(MAT.grass, W / 2, 0);
-  makeStrip(MAT.dirt, 3.1, 0.04);        // 獸徑：中央被踩實的土路
+  const S = MAP_R * 2 + 120, SEG = 190;
+  const geo = new THREE.PlaneGeometry(S, S, SEG, SEG);
+  geo.rotateX(-Math.PI / 2);
+  const p = geo.attributes.position;
+  for (let i = 0; i < p.count; i++) p.setY(i, heightAt(p.getX(i), p.getZ(i)));
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, MAT.grass);
+  m.receiveShadow = true;
+  world.add(m);
 })();
+
+/* 路面。沿著每一段的中心線鋪一條帶子，每個頂點各自貼著地形抬 4 公分
+ * （固定高度的平面會被地形吃掉 —— 人間之里踩過這個坑）。 */
+function ribbon(pts, halfW, mat, lift = 0.04) {
+  const dense = catmullRom(pts, 2.5);
+  const pos = [], uv = [], idx = [];
+  for (let i = 0; i < dense.length; i++) {
+    const [cx, cz] = dense[i];
+    // 切線 → 左右偏移方向（否則轉彎處路寬會被壓縮）
+    const a = dense[Math.max(0, i - 1)], b = dense[Math.min(dense.length - 1, i + 1)];
+    const tx = b[0] - a[0], tz = b[1] - a[1];
+    const tl = Math.hypot(tx, tz) || 1;
+    const nx = tz / tl, nz = -tx / tl;
+    for (const sgn of [-1, 1]) {
+      const x = cx + nx * halfW * sgn, z = cz + nz * halfW * sgn;
+      pos.push(x, heightAt(x, z) + lift, z);
+      uv.push(sgn > 0 ? 1 : 0, i * 0.16);
+    }
+    if (i < dense.length - 1) {
+      const k = i * 2;
+      // 繞向決定面朝上還是朝下 —— 反了整條路會被背面剔除（竹林踩過）
+      idx.push(k, k + 2, k + 1, k + 1, k + 2, k + 3);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, mat);
+  m.receiveShadow = true;
+  world.add(m);
+  return m;
+}
+for (const seg of SEGMENTS) ribbon(seg.pts, seg.width / 2, MAT.dirt);
 
 /* ───────────────────────────────────────────────────────── 樹林 ── */
 function tree(x, z, s, leaf) {
@@ -203,18 +289,35 @@ function tree(x, z, s, leaf) {
   }
 }
 const leaves = [MAT.leafA, MAT.leafA, MAT.leafB, MAT.leafC];
-for (let i = 0; i < 240; i++) {
-  const z = -TRAIL_LEN - 15 + Math.random() * (TRAIL_LEN * 2 + 30);
-  const side = Math.random() < 0.5 ? -1 : 1;
-  const x = side * (5.5 + Math.random() * 26);
-  if (Math.abs(z) > TRAIL_LEN - 8 && Math.abs(x) < 8) continue;   // 兩端門口留空
+
+/**
+ * 沿著路網撒點：先隨機挑一個路上的取樣點，再往側邊推開 minD~maxD。
+ *
+ * 不能在整張圖亂撒再篩 —— 地圖半徑 340 公尺、路兩側只要 40 公尺的帶，
+ * 亂撒的命中率不到一成，撒一千次只長得出稀稀落落幾棵樹。
+ * @returns {[number,number,number]} [x, z, 離最近的路多遠]
+ */
+function pickNearPath(minD, maxD) {
+  const sm = PATHS.samples[(Math.random() * PATHS.samples.length) | 0];
+  const a = Math.random() * Math.PI * 2;
+  const d = minD + Math.random() * (maxD - minD);
+  const x = sm.x + Math.cos(a) * d, z = sm.z + Math.sin(a) * d;
+  // 實際距離可能更近（附近有別的路段），所以要重新問一次
+  return [x, z, PATHS.edgeDist(x, z, 3)];
+}
+
+// 樹：離路 3~44 公尺的帶狀範圍內，越遠越密（近處疏一點，看得到路）
+for (let i = 0; i < 2600; i++) {
+  const [x, z, d] = pickNearPath(3, 44);
+  if (d < 2.6) continue;
+  if (Math.random() > Math.min(1, (d - 2.6) / 14) * 0.8) continue;
   tree(x, z, 0.8 + Math.random() * 1.1, leaves[Math.random() * leaves.length | 0]);
 }
 
-// 路邊的岩石與倒木
-for (let i = 0; i < 26; i++) {
-  const z = -TRAIL_LEN + Math.random() * TRAIL_LEN * 2;
-  const x = (Math.random() < 0.5 ? -1 : 1) * (3.4 + Math.random() * 4);
+// 路邊的岩石
+for (let i = 0; i < 150; i++) {
+  const [x, z, d] = pickNearPath(0.5, 9);
+  if (d < 0.5) continue;
   const r = 0.3 + Math.random() * 0.7;
   const rock = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), MAT.stone);
   rock.position.set(x, heightAt(x, z) + r * 0.4, z);
@@ -223,19 +326,21 @@ for (let i = 0; i < 26; i++) {
   world.add(rock);
   if (r > 0.45) post(x, z, r * 0.85, heightAt(x, z) + r);   // 大一點的岩石才擋人
 }
-for (let i = 0; i < 7; i++) {
-  const z = -TRAIL_LEN + 20 + Math.random() * (TRAIL_LEN * 2 - 40);
-  const x = (Math.random() < 0.5 ? -1 : 1) * (4 + Math.random() * 3);
+
+// 倒木
+for (let i = 0; i < 34; i++) {
+  const [x, z, d] = pickNearPath(1.5, 11);
+  if (d < 1.2) continue;
   const log = cyl(0.22, 0.28, 2.6 + Math.random() * 1.6, MAT.bark, x, heightAt(x, z) + 0.25, z, 7);
   log.rotation.z = Math.PI / 2;
   log.rotation.y = Math.random() * Math.PI;
-  post(x, z, 0.5, heightAt(x, z) + 0.55);      // 倒木
+  post(x, z, 0.5, heightAt(x, z) + 0.55);
 }
 
 // 彼岸花叢 —— 獸道的路標。紅點成叢，霧裡也看得見。
-for (let i = 0; i < 30; i++) {
-  const z = -TRAIL_LEN + Math.random() * TRAIL_LEN * 2;
-  const x = (Math.random() < 0.5 ? -1 : 1) * (2.6 + Math.random() * 2.2);
+for (let i = 0; i < 130; i++) {
+  const [x, z, d] = pickNearPath(0.3, 4);
+  if (d < 0.25) continue;
   const y = heightAt(x, z);
   for (let k = 0; k < 4; k++) {
     const fx = x + (Math.random() - 0.5) * 0.9, fz = z + (Math.random() - 0.5) * 0.9;
@@ -246,48 +351,83 @@ for (let i = 0; i < 30; i++) {
   }
 }
 
-// 石道祖神（路旁的小石碑，獸徑常見的守路神）
-for (const z of [-88, -30, 42, 96]) {
-  const s = Math.random() < 0.5 ? -1 : 1;
-  const x = s * 3.6;
+/** 石道祖神 —— 路旁的小石碑，獸徑常見的守路神。也當作路口的地標。 */
+function doso(x, z) {
   const y = heightAt(x, z);
   box(0.5, 1.0, 0.34, MAT.stone, x, y + 0.5, z);
-  block(x, z, 0.7, 0.54, y + 1.1);             // 道祖神石碑
+  block(x, z, 0.7, 0.54, y + 1.1);
   box(0.66, 0.16, 0.5, MAT.stone, x, y + 1.06, z);
   box(0.7, 0.12, 0.54, MAT.stone, x, y + 0.05, z);
 }
+// 沿主道每隔一段立一尊，讓長路上有節奏
+{
+  const dense = catmullRom(SEGMENTS[0].pts, 3);
+  for (let i = 14; i < dense.length - 6; i += 26) {
+    const [cx, cz] = dense[i];
+    const a = Math.random() < 0.5 ? -1 : 1;
+    doso(cx + a * 5.6, cz + (Math.random() - 0.5) * 3);
+  }
+}
 
-/* ─────────────────────────────────────────── 兩端的門與界域 ── */
-const SHRINE_END = -TRAIL_LEN + 10;    // z = -120：神社端
-const VILLAGE_END = TRAIL_LEN - 10;    // z = +120：人間之里端
+/* ───────────────────────────────── 分岔口的道標 ── */
+// Y 字路口要一眼看得懂往哪走 —— 立一支木製指路標，兩塊箭頭板各指一方。
+(function signpost() {
+  const y = heightAt(FORK.x, FORK.z);
+  const g = new THREE.Group();
+  g.position.set(FORK.x, y, FORK.z);
+  world.add(g);
+  cyl(0.13, 0.16, 3.2, MAT.darkWood, 0, 1.6, 0, 8, g);
+  post(FORK.x, FORK.z, 0.24, y + 3.2);
+  // 兩塊指路板：朝向各自的支線
+  const arm = (label, ang, h) => {
+    void label;
+    const b = box(1.9, 0.34, 0.09, MAT.wood, 0, h, 0, g);
+    b.position.set(Math.sin(ang) * 0.85, h, Math.cos(ang) * 0.85);
+    b.rotation.y = ang;
+  };
+  arm('village', Math.atan2(VILLAGE_END.x - FORK.x, VILLAGE_END.z - FORK.z), 2.55);
+  arm('bamboo', Math.atan2(BAMBOO_END.x - FORK.x, BAMBOO_END.z - FORK.z), 2.05);
+  // 頂上的小屋簷，讓它讀起來像個路標而不是一根棍子
+  for (const sd of [-1, 1]) {
+    const sl = box(0.9, 0.08, 0.5, MAT.stone, 0, 3.3, sd * 0.17, g);
+    sl.rotation.x = sd * 0.5;
+  }
+  // 三尊道祖神圍著路口
+  for (let i = 0; i < 3; i++) {
+    const a = i * 2.1 + 0.6;
+    doso(FORK.x + Math.cos(a) * 6.5, FORK.z + Math.sin(a) * 6.5);
+  }
+})();
 
-// 神社端：發光提示點（回博麗神社）—— 依需求不做鳥居等裝飾
-const shrinePortal = makePortalGlow(world, 0, heightAt(0, SHRINE_END), SHRINE_END);
+/* ───────────────────────────────────── 三個端點的界域 ── */
+// 三端各一個傳送光點，顏色分開才好認：神社青、里金、竹林綠。
+const shrinePortal = makePortalGlow(world, SHRINE_END.x, heightAt(SHRINE_END.x, SHRINE_END.z), SHRINE_END.z, 0x8be8ff);
+const villagePortal = makePortalGlow(world, VILLAGE_END.x, heightAt(VILLAGE_END.x, VILLAGE_END.z), VILLAGE_END.z, 0xf0d89a);
+const bambooPortal = makePortalGlow(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END.z, 0xd8f0a0);
 
 /* ─────────────────── 北端遠景：山上的博麗神社全貌 ──────────────────
  * 站在獸道朝神社方向望，要看得到整座神社蓋在山頭上：
  * 山體 + 一條長石階爬上山面 + 台地上的紅鳥居、拜殿、玉垣剪影。
- * 純遠景裝飾（在邊界外，走不到），尺寸放大讓 70m 外也讀得清楚。 */
+ * 純遠景裝飾（在邊界外，走不到），尺寸放大讓遠處也讀得清楚。 */
 (function shrineVista() {
   const g = new THREE.Group();
-  const VZ = SHRINE_END - 72;               // 約 z=-192，玩家最近可在 -130 處眺望
-  g.position.set(0, -4, VZ);
+  g.position.set(SHRINE_END.x, heightAt(SHRINE_END.x, SHRINE_END.z) - 4, SHRINE_END.z - 78);
   world.add(g);
 
-  // 山體：平頂的截錐（台地跟山是一體的，不會像飛碟浮在山尖上）
   const green = new THREE.MeshStandardMaterial({ color: '#3d5030', roughness: 1, flatShading: true });
   const hill = new THREE.Mesh(new THREE.CylinderGeometry(24, 58, 50, 9), green);
   hill.position.set(0, 25, -40);
   hill.rotation.y = 0.35;
   g.add(hill);
-  // 山腳緩坡
-  const foot = new THREE.Mesh(new THREE.CylinderGeometry(52, 86, 16, 9), new THREE.MeshStandardMaterial({ color: '#44582f', roughness: 1, flatShading: true }));
+  const foot = new THREE.Mesh(new THREE.CylinderGeometry(52, 86, 16, 9),
+    new THREE.MeshStandardMaterial({ color: '#44582f', roughness: 1, flatShading: true }));
   foot.position.set(4, 6, -42);
   g.add(foot);
 
   // 山面上的長石階（一條亮色斜帶，遠遠就看得出是那條下山參道）
-  const run = 34, riseH = 50;               // 底部前緣 z≈-6，頂部邊緣 z≈-16 上方
-  const stairs = new THREE.Mesh(new THREE.PlaneGeometry(4.5, Math.hypot(run, riseH)), new THREE.MeshStandardMaterial({ color: '#b9b4a4', roughness: 1 }));
+  const run = 34, riseH = 50;
+  const stairs = new THREE.Mesh(new THREE.PlaneGeometry(4.5, Math.hypot(run, riseH)),
+    new THREE.MeshStandardMaterial({ color: '#b9b4a4', roughness: 1 }));
   stairs.position.set(0, riseH / 2, -16 + run / 2);
   stairs.rotation.x = -Math.PI / 2 + Math.atan2(riseH, run);
   g.add(stairs);
@@ -296,78 +436,88 @@ const shrinePortal = makePortalGlow(world, 0, heightAt(0, SHRINE_END), SHRINE_EN
   const dark = new THREE.MeshStandardMaterial({ color: '#4a3a30', roughness: 0.9 });
   const roof = new THREE.MeshStandardMaterial({ color: '#cdd8d2', roughness: 0.8 });
 
-  // 台地上的紅鳥居（石階頂端、山頂前緣）
-  {
+  {   // 台地上的紅鳥居
     const t = new THREE.Group();
     t.position.set(0, 50, -18);
     g.add(t);
-    for (const s of [-1, 1]) {
-      const p = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.65, 9, 8), red);
-      p.position.set(s * 4, 4.5, 0);
-      t.add(p);
+    for (const sd of [-1, 1]) {
+      const q = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.65, 9, 8), red);
+      q.position.set(sd * 4, 4.5, 0);
+      t.add(q);
     }
     const beam = new THREE.Mesh(new THREE.BoxGeometry(11.6, 1.0, 1.0), red);
-    beam.position.y = 9.2;
-    t.add(beam);
+    beam.position.y = 9.2; t.add(beam);
     const beam2 = new THREE.Mesh(new THREE.BoxGeometry(9.4, 0.7, 0.8), red);
-    beam2.position.y = 7.6;
-    t.add(beam2);
+    beam2.position.y = 7.6; t.add(beam2);
   }
-
-  // 拜殿剪影：屋身 + 兩片大屋頂 + 正脊（山頂中後方）
-  {
-    const s = new THREE.Group();
-    s.position.set(0, 50, -40);
-    g.add(s);
+  {   // 拜殿剪影
+    const q = new THREE.Group();
+    q.position.set(0, 50, -40);
+    g.add(q);
     const body = new THREE.Mesh(new THREE.BoxGeometry(20, 6.5, 13), dark);
-    body.position.y = 3.25;
-    s.add(body);
+    body.position.y = 3.25; q.add(body);
     for (const d of [-1, 1]) {
       const slope = new THREE.Mesh(new THREE.BoxGeometry(24, 0.7, 9.4), roof);
       slope.position.set(0, 9.4, d * 4);
       slope.rotation.x = d * 0.62;
-      s.add(slope);
+      q.add(slope);
     }
     const ridge = new THREE.Mesh(new THREE.BoxGeometry(24.6, 1.2, 1.8), roof);
-    ridge.position.y = 12;
-    s.add(ridge);
+    ridge.position.y = 12; q.add(ridge);
   }
-
-  // 玉垣（台地邊的一圈淺色矮欄）
-  const fence = new THREE.Mesh(
-    new THREE.CylinderGeometry(22, 22, 1.0, 12, 1, true),
-    new THREE.MeshStandardMaterial({ color: '#d8d2c0', roughness: 1, side: THREE.DoubleSide })
-  );
+  const fence = new THREE.Mesh(new THREE.CylinderGeometry(22, 22, 1.0, 12, 1, true),
+    new THREE.MeshStandardMaterial({ color: '#d8d2c0', roughness: 1, side: THREE.DoubleSide }));
   fence.position.set(0, 50.7, -36);
   g.add(fence);
-
   g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
 
-// 人間之里端：發光提示點（依需求不做拱門裝飾）
-const villagePortal = makePortalGlow(world, 0, heightAt(0, VILLAGE_END), VILLAGE_END);
-
-// 人間之里端的遠景：里的燈火與屋頂剪影（在邊界外，走不到）
+/* 西南端的遠景：人間之里的屋頂剪影（在邊界外，走不到） */
 (function villageVista() {
   const g = new THREE.Group();
-  g.position.set(0, heightAt(0, VILLAGE_END) - 1, VILLAGE_END + 42);
+  g.position.set(VILLAGE_END.x - 16, heightAt(VILLAGE_END.x, VILLAGE_END.z) - 1, VILLAGE_END.z + 40);
+  g.rotation.y = 0.5;
   world.add(g);
   const wall = new THREE.MeshStandardMaterial({ color: '#c9bfa4', roughness: 1 });
   const tile = new THREE.MeshStandardMaterial({ color: '#4c5560', roughness: 1, flatShading: true });
-  for (let i = 0; i < 9; i++) {
-    const hx = (i - 4) * 11 + (Math.random() - 0.5) * 4;
+  for (let i = 0; i < 11; i++) {
+    const hx = (i - 5) * 11 + (Math.random() - 0.5) * 4;
     const hz = -Math.random() * 26;
     const w = 7 + Math.random() * 5, h = 4 + Math.random() * 2;
     const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 7), wall);
-    b.position.set(hx, h / 2, hz);
-    g.add(b);
+    b.position.set(hx, h / 2, hz); g.add(b);
     const r = new THREE.Mesh(new THREE.ConeGeometry(w * 0.82, 2.6, 4), tile);
-    r.position.set(hx, h + 1.3, hz);
-    r.rotation.y = Math.PI / 4;
-    g.add(r);
+    r.position.set(hx, h + 1.3, hz); r.rotation.y = Math.PI / 4; g.add(r);
   }
   g.traverse(o => { if (o.isMesh) o.castShadow = false; });
 })();
+
+/* 東南端的遠景：竹林的邊界 —— 一整片比樹高得多的竹梢 */
+(function bambooVista() {
+  const g = new THREE.Group();
+  g.position.set(BAMBOO_END.x + 10, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END.z + 34);
+  world.add(g);
+  const culm = new THREE.MeshStandardMaterial({ color: '#8a9a4e', roughness: 0.8 });
+  const leaf = new THREE.MeshStandardMaterial({ color: '#54702e', roughness: 1, flatShading: true });
+  for (let i = 0; i < 90; i++) {
+    const x = (Math.random() - 0.5) * 120, z = -Math.random() * 46;
+    const h = 9 + Math.random() * 6;
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.14, h, 5), culm);
+    c.position.set(x, h / 2, z); g.add(c);
+    const tuft = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1 + Math.random() * 0.5, 0), leaf);
+    tuft.position.set(x, h * 0.94, z); g.add(tuft);
+  }
+  g.traverse(o => { if (o.isMesh) o.castShadow = false; });
+})();
+
+/* ──────────────────────────────────────────── 靜態幾何合併 ── */
+// 樹、石頭、彼岸花、道祖神、三端的遠景全部不會動 ——
+// 依「材質 × 空間格子」合併。地圖是 Y 字形的一大片，格子切 55 公尺，
+// 讓身後與另一條支線整塊被視錐裁掉。
+{
+  const st = mergeStaticByMaterial(world, { cell: 55 });
+  console.info(`[optimize] 獸道靜態合併：${st.before} → ${st.after} 個網格（合併成 ${st.merged}，保留 ${st.kept}）`);
+}
 
 /* ─────────────────────────────────────────────── 光斑與飛螢 ── */
 const motes = (() => {
@@ -402,44 +552,55 @@ ctrl.jumpV = spec.jump ?? 9.2;
 ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: BOUND_X, hz: TRAIL_LEN + 4 };
+ctrl.bounds = { hx: MAP_R + 30, hz: MAP_R + 30 };
 // 從哪一端走進來，就從那一端出生
-if (new URLSearchParams(location.search).get('from') === 'village') {
-  ctrl.teleport(0, VILLAGE_END - 5);
-  ctrl.yaw = Math.PI;                  // 面向博麗神社（-z）
-  ctrl.camYaw = 0;
-} else {
-  ctrl.teleport(0, SHRINE_END + 5);    // 從神社走進來，出生在光點內側
-  ctrl.yaw = 0;                        // 面向人間之里（+z）
-  ctrl.camYaw = Math.PI;
+const from = new URLSearchParams(location.search).get('from');
+{
+  const spawn = from === 'village' ? VILLAGE_END
+    : from === 'bamboo' ? BAMBOO_END
+    : SHRINE_END;
+  // 往路口方向退幾步，才不會一出生就站在光點上又被傳回去
+  const inward = from === 'shrine' || !from ? FORK : FORK;
+  const dx = inward.x - spawn.x, dz = inward.z - spawn.z;
+  const dl = Math.hypot(dx, dz) || 1;
+  ctrl.teleport(spawn.x + dx / dl * 7, spawn.z + dz / dl * 7);
+  ctrl.yaw = Math.atan2(dx, dz);
+  ctrl.camYaw = ctrl.yaw + Math.PI;
 }
 
 /* ───────────────────── 怪物區 + 成長系統 + 戰鬥 ── */
 // 獸道中段是「有怪物的地區」：路旁四窩妖精。擊殺餵角色經驗、
 // 命中餵技能練度（src/player/progression.js，localStorage 跨地圖保留）。
-const prog = new Progression({ onLevelUp: (msg) => toast(msg) });
-const NESTS = [
-  { x: -9, z: -52, r: 12 },
-  { x: 10, z: -8, r: 13 },
-  { x: -10, z: 40, r: 12 },
-  { x: 9, z: 82, r: 12 },
-];
+const prog = new Progression({
+  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
+});
+// 妖精窩沿著三段路散布 —— 路變長了，窩也要跟著鋪開，
+// 不然走幾百公尺只會遇到四窩。
+const NESTS = (() => {
+  const out = [];
+  SEGMENTS.forEach((seg, si) => {
+    const dense = catmullRom(seg.pts, 3);
+    const n = si === 0 ? 6 : 3;
+    for (let i = 1; i <= n; i++) {
+      const [cx, cz] = dense[Math.floor(dense.length * i / (n + 1))];
+      const a = Math.random() * Math.PI * 2;
+      out.push({ x: cx + Math.cos(a) * 13, z: cz + Math.sin(a) * 13, r: 11 });
+    }
+  });
+  return out;
+})();
 const fairies = new FairyMobs(scene, NESTS);
 const mobs = progressMobs(fairies, prog, 'hinokami', '日之呼吸');
 
-const slashFX = new SlashFX(scene);
-const slashAudio = new SlashAudio();
-const combat = spec.combat
-  ? new Combat(ctrl, mobs, slashFX, slashAudio, combatHUD)
-  : null;
+/* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
+ * 每張圖都掛同一份 —— 見 src/player/loadout.js。
+ * 妖精是無害的，所以這張圖不接 onAttack，血量只會自己回。 */
+const kit = installLoadout({
+  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
+  isBlocked: () => escMenu.isOpen,
+  onDeath: () => ctrl.teleport(SHRINE_END.x, SHRINE_END.z + 8),
+});
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
-combatHUD.reset();
-bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
-// 戰鬥相關的操作提示只給有技能的角色看
-{
-  HUD.showCombatKeys(!!combat);
-HUD.showFlyKeys(spec.canFly !== false);
-}
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
 const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
@@ -463,13 +624,16 @@ const escMenu = bindEscMenu({
   },
 });
 
-const nearShrine = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - SHRINE_END) < 4.2;
-const nearVillage = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - VILLAGE_END) < 4.2;
+const near = (p) => Math.hypot(ctrl.pos.x - p.x, ctrl.pos.z - p.z) < 4.6;
+const nearShrine = () => near(SHRINE_END);
+const nearVillage = () => near(VILLAGE_END);
+const nearBamboo = () => near(BAMBOO_END);
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
   if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = '../../index.html?from=trail'; return; }
-  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; }
+  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; return; }
+  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=trail'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -479,22 +643,23 @@ let t = 0;
 /** 一幀的遊戲邏輯（animate 與除錯用的 __trail.step 共用） */
 function tick(rawDt) {
   let dt = rawDt;
-  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
+  if (kit.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
   t += dt;
   ctrl.update(dt, t);
 
   // 戰鬥姿勢要在 ctrl.update（走路動畫）之後套才壓得過去
-  combat?.update(dt, rawDt);
-  slashFX.update(dt);
+  kit.update(dt, rawDt);
   fairies.update(dt, t, ctrl.pos);
 
   env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
   shrinePortal.userData.update(t);
   villagePortal.userData.update(t);
+  bambooPortal.userData.update(t);
   motes.position.z = ctrl.pos.z * 0.2;
 
-  if (nearShrine()) HUD.prompt('[ E ]  返回博麗神社');
+  if (nearShrine()) HUD.prompt('[ E ]  前往博麗神社');
   else if (nearVillage()) HUD.prompt('[ E ]  前往人間之里');
+  else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林');
   else HUD.prompt(null);
 }
 
@@ -515,10 +680,17 @@ animate();
 
 // debug handle（跟 index 的 __shrine 同一套測試口徑）
 window.__trail = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, get combat() { return combat; },
+  renderer, scene, camera, ctrl, THREE, heightAt, env, prog, fairies, PATHS,
+  SHRINE_END, VILLAGE_END, BAMBOO_END, FORK,
+  get kit() { return kit; }, get combat() { return kit.combat; },
+  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
     for (let i = 0; i < n; i++) tick(dt);
     return ctrl.pos.toArray().map(v => +v.toFixed(2));
   },
+  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑） */
+  frame() { renderer.render(scene, camera); },
+  setHour(h) { return env.setHour(h); },
+  setTimeFlowing(v) { env.timeFlowing = v; },
 };

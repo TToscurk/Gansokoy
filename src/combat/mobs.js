@@ -10,8 +10,10 @@
 
 import * as THREE from 'three';
 import { groundHeight } from '../world/terrain.js';
+import { sectorHits, countAlive } from './mobcore.js';
 
 const MOB_R = 0.55;        // 命中判定半徑
+const DEAD = 2;            // state 2 = 消散中（mobcore 用它跳過已死的）
 const RESPAWN = 12;        // 重生秒數
 const HP = 40;
 
@@ -85,23 +87,9 @@ export class FairyMobs {
     this.kills = 0;
   }
 
-  /** 扇形判定：回傳被打中的存活 mob 陣列。
-   *  origin 玩家位置、yaw 攻擊朝向、arc>=2π 視為全周。 */
+  /** 扇形判定：回傳被打中的存活 mob 陣列（共用 mobcore） */
   inSector(origin, yaw, range, arc) {
-    const hit = [];
-    const fx = Math.sin(yaw), fz = Math.cos(yaw);
-    for (const m of this.mobs) {
-      if (m.state === 2) continue;
-      const dx = m.pos.x - origin.x, dz = m.pos.z - origin.z;
-      const d = Math.hypot(dx, dz);
-      if (d > range + MOB_R) continue;
-      if (arc < Math.PI * 1.99 && d > 1e-4) {
-        const dot = (dx * fx + dz * fz) / d;
-        if (dot < Math.cos(arc / 2)) continue;
-      }
-      hit.push(m);
-    }
-    return hit;
+    return sectorHits(this.mobs, origin, yaw, range, arc, MOB_R, DEAD);
   }
 
   /** 造成傷害 + 擊飛。回傳是否擊殺。 */
@@ -203,12 +191,7 @@ export class FairyMobs {
   }
 
   aliveNear(pos, r) {
-    let n = 0;
-    for (const m of this.mobs) {
-      if (m.state === 2) continue;
-      if (Math.hypot(m.pos.x - pos.x, m.pos.z - pos.z) < r) n++;
-    }
-    return n;
+    return countAlive(this.mobs, pos, r, DEAD);
   }
 }
 

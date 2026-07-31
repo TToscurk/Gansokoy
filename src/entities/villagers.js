@@ -9,7 +9,8 @@
 // 全部落在街道上，他們不會走進建築物裡 —— 不需要另外做避障。
 
 import * as THREE from 'three';
-import { buildCharacter, animateCharacter } from './model.js';
+import { buildCharacter, animateCharacter, setCharacterFar } from './model.js';
+import { CHAR_LOD } from '../config.js';
 
 // 村民的衣著配色（樸素的和服色系，跟主要角色的鮮豔配色區隔開）。
 // 加了藍染（縕袍）、柿澀、鶯、江戶紫這些傳統色，讓街上不會一片土黃。
@@ -74,8 +75,9 @@ export class VillagerCrowd {
    * @param {(x:number,z:number)=>number} heightFn
    * @param {object} graph 路點圖 { nodes:[[x,z],...], links:[[a,b],...] }
    * @param {number} [count=22]
+   * @param {number} [warm=12] 建構時先做幾位；其餘每幀補一位（見 update）
    */
-  constructor(scene, heightFn, graph, count = 22) {
+  constructor(scene, heightFn, graph, count = 22, warm = 12) {
     this.scene = scene;
     this.heightFn = heightFn;
     this.nodes = graph.nodes.map(([x, z]) => new THREE.Vector2(x, z));
@@ -88,27 +90,36 @@ export class VillagerCrowd {
     this.visible = true;
     this.people = [];
 
-    for (let i = 0; i < count; i++) {
-      const spec = villagerSpec(i);
-      const model = buildCharacter(spec);
-      const outlines = [];
-      model.traverse(o => { if (o.name === 'outline') outlines.push(o); });
-      this.root.add(model);
+    // 一位路人的程序化建模不便宜（建幾何 → 合併 → 生描邊外殼），
+    // 五十幾位一次做完會讓進圖卡好幾秒。所以只先做 warm 位，
+    // 其餘每幀補一位 —— 玩家走進里的頭幾秒街上會陸續多出人來，
+    // 比盯著讀取畫面等五秒好得多。
+    this.total = count;
+    this._pending = 0;
+    for (let i = 0; i < Math.min(warm, count); i++) this._spawn(i);
+    this._pending = Math.min(warm, count);
+  }
 
-      // 起點：隨機一個路點，目標：它的隨機鄰居
-      const from = (rnd(i * 2.3) * this.nodes.length) | 0;
-      const to = this._nextFrom(from, -1, rnd(i * 4.1));
-      const p = this.nodes[from].clone();
-      this.people.push({
-        model, outlines, from, to,
-        pos: p,
-        speed: spec.walkSpeed,
-        role: spec.role,
-        phase: rnd(i * 6.4) * 10,
-        idle: rnd(i * 9.2) * 6,        // 一開始各自錯開，不會整群同步
-        outlineOn: null,
-      });
-    }
+  /** 生第 i 位路人 */
+  _spawn(i) {
+    const spec = villagerSpec(i);
+    const model = buildCharacter(spec);
+    const outlines = [];
+    model.traverse(o => { if (o.name === 'outline') outlines.push(o); });
+    this.root.add(model);
+
+    // 起點：隨機一個路點，目標：它的隨機鄰居
+    const from = (rnd(i * 2.3) * this.nodes.length) | 0;
+    const to = this._nextFrom(from, -1, rnd(i * 4.1));
+    this.people.push({
+      model, outlines, from, to,
+      pos: this.nodes[from].clone(),
+      speed: spec.walkSpeed,
+      role: spec.role,
+      phase: rnd(i * 6.4) * 10,
+      idle: rnd(i * 9.2) * 6,        // 一開始各自錯開，不會整群同步
+      outlineOn: null,
+    });
   }
 
   _nextFrom(node, avoid, r) {
@@ -129,14 +140,23 @@ export class VillagerCrowd {
   update(dt, t, playerPos) {
     if (!this.visible) return;
 
+    // 每幀補一位還沒生出來的路人（見建構式的說明）
+    if (this._pending < this.total) {
+      this._spawn(this._pending);
+      this._pending++;
+    }
+
     for (const p of this.people) {
+      // 細節層級要在動畫之前決定 —— 遠景的人整隻是一個烘死姿勢的網格，
+      // 再去算手腳擺動只是白花 CPU
+      const far = this._lod(p, playerPos);
+
       // 停下來發呆（站直、放掉前傾）
       if (p.idle > 0) {
         p.idle -= dt;
         p.model.position.y = this.heightFn(p.pos.x, p.pos.y);
         p.model.rotation.x = p.role === 'elder' ? 0.05 : 0;
-        animateCharacter(p.model, t + p.phase, 0);
-        this._cull(p, playerPos);
+        if (!far) animateCharacter(p.model, t + p.phase, 0);
         continue;
       }
 
@@ -168,19 +188,24 @@ export class VillagerCrowd {
       p.model.position.set(p.pos.x, this.heightFn(p.pos.x, p.pos.y) + bob, p.pos.y);
       p.model.rotation.y = Math.atan2(dx, dz);
       p.model.rotation.x = 0.045 * w + (p.role === 'elder' ? 0.06 : 0);   // 前傾；老人家再駝一點
-      animateCharacter(p.model, t + p.phase, animSpeed);
-      this._cull(p, playerPos);
+      if (!far) animateCharacter(p.model, t + p.phase, animSpeed);
     }
   }
 
-  /** 遠處關描邊 —— 跟 NPCManager 同一套省 draw call 的做法 */
-  _cull(p, playerPos) {
-    if (!playerPos) return;
+  /**
+   * 依距離挑細節層級 —— 跟 NPCManager 同一組門檻（config.js 的 CHAR_LOD）。
+   * @returns {boolean} 是否已切到遠景單網格（呼叫端據此跳過動畫）
+   */
+  _lod(p, playerPos) {
+    if (!playerPos) return false;
     const d = Math.hypot(p.pos.x - playerPos.x, p.pos.y - playerPos.z);
-    const want = d < 18;
-    if (p.outlineOn !== want) {
-      p.outlineOn = want;
-      for (const o of p.outlines) o.visible = want;
+
+    const wantOutline = d < CHAR_LOD.outline;
+    if (p.outlineOn !== wantOutline) {
+      p.outlineOn = wantOutline;
+      for (const o of p.outlines) o.visible = wantOutline;
     }
+
+    return setCharacterFar(p.model, d >= CHAR_LOD.far);
   }
 }

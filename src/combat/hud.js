@@ -35,6 +35,14 @@ export const combatHUD = {
       el.classList.add('tick');
     }
   },
+  /** 看穿要害（爆擊）的瞬間提示 */
+  crit() {
+    const el = document.getElementById('critMark');
+    if (!el) return;
+    el.classList.remove('on');
+    void el.offsetWidth;          // 重播 CSS 動畫
+    el.classList.add('on');
+  },
   /** 換角色/換圖時歸零殘留的 HUD 狀態 */
   reset() {
     this.charge(0);

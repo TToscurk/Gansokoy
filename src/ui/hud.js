@@ -79,6 +79,81 @@ const CSS = `
 #charge.full .f{animation:chargeFull .5s ease-out infinite alternate}
 @keyframes chargeFull{0%{filter:brightness(1)}100%{filter:brightness(1.9)}}
 
+/* 玩家血量。左下角，橫條 + 數字。受擊時整條閃一下白。 */
+#vitals{position:fixed;left:22px;bottom:96px;z-index:56;width:240px;
+  pointer-events:none;opacity:0;transition:opacity .3s}
+#vitals.on{opacity:1}
+#vitals .lb{font-size:10.5px;letter-spacing:.32em;color:#e8b0a0;margin-bottom:5px;
+  text-shadow:0 2px 5px rgba(0,0,0,.8)}
+#vitals .bar{position:relative;height:9px;border-radius:5px;overflow:hidden;
+  background:rgba(12,8,10,.7);box-shadow:0 0 0 1px rgba(230,120,100,.32)}
+/* 掉血的殘影條：先掉一小段紅底，主條再追上來，打到多重才讀得出來 */
+#vitals .ghost{position:absolute;inset:0;width:100%;border-radius:5px;
+  background:rgba(210,70,60,.5);transition:width .5s ease-out .18s}
+#vitals .f{position:absolute;inset:0;width:100%;border-radius:5px;
+  background:linear-gradient(90deg,#d8452f,#f08a4a);
+  box-shadow:0 0 12px rgba(216,69,47,.7);transition:width .16s ease-out}
+#vitals.low .f{animation:hpLow .8s ease-in-out infinite alternate}
+@keyframes hpLow{0%{filter:brightness(1)}100%{filter:brightness(1.75)}}
+#vitals .mbar{position:relative;height:6px;border-radius:4px;overflow:hidden;margin-top:5px;
+  background:rgba(8,10,16,.7);box-shadow:0 0 0 1px rgba(110,170,220,.3)}
+#vitals .mf{position:absolute;inset:0;width:100%;border-radius:4px;
+  background:linear-gradient(90deg,#2f6fbf,#5fb6e8);
+  box-shadow:0 0 10px rgba(70,150,220,.6);transition:width .16s ease-out}
+#vitals .n{margin-top:4px;font-size:11px;letter-spacing:.16em;color:#f0cdbc;
+  text-shadow:0 2px 5px rgba(0,0,0,.8)}
+#vitals .n .mp{color:#9fd0f0;margin-left:10px}
+#vitals.hurt .bar{animation:hpHurt .22s ease-out}
+@keyframes hpHurt{0%{transform:translateX(-4px)}50%{transform:translateX(4px)}100%{transform:translateX(0)}}
+
+/* 受擊紅屏 */
+#hurtFlash{position:fixed;inset:0;z-index:58;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at center,rgba(180,20,10,0) 42%,rgba(180,20,10,.62) 100%)}
+#hurtFlash.on{animation:hurtFx .42s ease-out}
+@keyframes hurtFx{0%{opacity:1}100%{opacity:0}}
+
+/* 死亡黑幕 */
+#deathVeil{position:fixed;inset:0;z-index:72;display:none;flex-direction:column;
+  align-items:center;justify-content:center;background:rgba(8,4,6,.9);
+  backdrop-filter:blur(2px)}
+#deathVeil.on{display:flex}
+#deathVeil .k{font-size:38px;letter-spacing:.5em;color:#d8452f;
+  text-shadow:0 0 26px rgba(216,69,47,.7)}
+#deathVeil .s{margin-top:14px;font-size:12px;letter-spacing:.34em;color:#b0a0a4}
+
+/* 技能列。右下四格，冷卻用由下往上的遮罩掃過去。 */
+#skills{position:fixed;right:22px;bottom:96px;z-index:56;display:flex;gap:8px;
+  pointer-events:none;opacity:0;transition:opacity .3s}
+#skills.on{opacity:1}
+#skills .s{position:relative;width:52px;height:52px;border-radius:4px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(30,22,34,.9),rgba(16,12,20,.94));
+  box-shadow:0 0 0 1px rgba(217,178,106,.3);text-align:center}
+#skills .s .k{position:absolute;top:3px;left:0;width:100%;font-size:10px;
+  letter-spacing:.1em;color:#d9b26a}
+#skills .s .n{position:absolute;bottom:5px;left:0;width:100%;font-size:9px;
+  letter-spacing:.06em;color:#e8dcc8;line-height:1.15;padding:0 2px}
+/* 冷卻遮罩：高度 = 剩餘比例，由下往上退掉 */
+#skills .s .cd{position:absolute;left:0;bottom:0;width:100%;height:0;
+  background:rgba(6,4,10,.74)}
+#skills .s .cdn{position:absolute;top:50%;left:0;width:100%;transform:translateY(-50%);
+  font-size:15px;font-weight:700;color:#fff;opacity:0;
+  text-shadow:0 2px 6px rgba(0,0,0,.9)}
+#skills .s.cooling .cdn{opacity:1}
+#skills .s.locked{filter:grayscale(1) brightness(.5)}
+#skills .s.locked .n::after{content:attr(data-lv);display:block;color:#a08a6a}
+#skills .s.ready{box-shadow:0 0 0 1px rgba(255,176,80,.75),0 0 14px rgba(255,122,26,.4)}
+#skills .s.buffed{animation:skBuff .7s ease-in-out infinite alternate}
+@keyframes skBuff{0%{box-shadow:0 0 0 1px rgba(120,200,255,.7)}
+  100%{box-shadow:0 0 0 1px rgba(120,200,255,.9),0 0 20px rgba(120,200,255,.6)}}
+
+/* 看穿要害 */
+#critMark{position:fixed;top:38%;left:50%;transform:translateX(-50%);z-index:57;
+  font-size:22px;letter-spacing:.5em;color:#bfe6ff;pointer-events:none;opacity:0;
+  text-shadow:0 0 20px rgba(120,200,255,.9)}
+#critMark.on{animation:critFx .5s ease-out}
+@keyframes critFx{0%{opacity:1;transform:translateX(-50%) scale(1.3)}
+  100%{opacity:0;transform:translateX(-50%) scale(1)}}
+
 /* ESC 選單 */
 #escMenu { position:fixed; inset:0; z-index:70; display:none;
   align-items:center; justify-content:center;
@@ -147,6 +222,16 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
         <div id="combatHelp" style="display:none">${keyHtml(combatKeys)}</div>
       </div>
     </div>
+    <div id="vitals">
+      <div class="lb">血　量</div>
+      <div class="bar"><div class="ghost"></div><div class="f"></div></div>
+      <div class="mbar"><div class="mf"></div></div>
+      <div class="n"><span class="hp">0</span> / <span class="mx">0</span><span class="mp">氣 <span class="mpv">0</span> / <span class="mpmx">0</span></span></div>
+    </div>
+    <div id="skills"></div>
+    <div id="critMark">看　穿</div>
+    <div id="hurtFlash"></div>
+    <div id="deathVeil"><div class="k">絶　命</div><div class="s">復 活 中 …</div></div>
     <div id="formBanner"></div>
     <div id="combo"><span class="n">0</span><span class="u">連擊</span></div>
     <div id="charge"><div class="lb">日之呼吸・全型</div><div class="f"></div></div>
@@ -185,6 +270,68 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
     prompt(text) {
       if (text) { promptEl.textContent = text; promptEl.classList.add('on'); }
       else promptEl.classList.remove('on');
+    },
+    /**
+     * 更新血量／氣力條。
+     * @param {import('../player/vitals.js').Vitals} v
+     * @param {boolean} [hurt] 這次是不是受擊造成的（接紅屏與震動）
+     */
+    vitals(v, hurt = false) {
+      const el = document.getElementById('vitals');
+      if (!el || !v) return;
+      el.classList.add('on');
+      const r = Math.max(0, Math.min(1, v.hp / v.max));
+      const mr = Math.max(0, Math.min(1, v.mp / v.maxMp));
+      el.querySelector('.f').style.width = (r * 100).toFixed(1) + '%';
+      el.querySelector('.ghost').style.width = (r * 100).toFixed(1) + '%';
+      el.querySelector('.mf').style.width = (mr * 100).toFixed(1) + '%';
+      el.querySelector('.hp').textContent = Math.ceil(v.hp);
+      el.querySelector('.mx').textContent = Math.round(v.max);
+      el.querySelector('.mpv').textContent = Math.floor(v.mp);
+      el.querySelector('.mpmx').textContent = Math.round(v.maxMp);
+      el.classList.toggle('low', r < 0.3);
+      if (hurt) {
+        el.classList.remove('hurt');
+        void el.offsetWidth;              // 重播 CSS 動畫
+        el.classList.add('hurt');
+        const fl = document.getElementById('hurtFlash');
+        if (fl) { fl.classList.remove('on'); void fl.offsetWidth; fl.classList.add('on'); }
+      }
+    },
+    /**
+     * 技能列。傳 SkillSystem.hudState() 的結果。
+     * 第一次呼叫時建 DOM，之後只改 class 與樣式 —— 這是每幀都會跑的。
+     * @param {{slot:string,zh:string,en:string,locked:boolean,unlock:number,
+     *          cd:number,cdMax:number,active:number}[]} list
+     */
+    skills(list) {
+      const el = document.getElementById('skills');
+      if (!el) return;
+      if (el.children.length !== list.length) {
+        el.innerHTML = list.map(s => `
+          <div class="s"><div class="cd"></div>
+            <div class="k">${s.slot}</div>
+            <div class="cdn"></div>
+            <div class="n"></div></div>`).join('');
+      }
+      el.classList.add('on');
+      list.forEach((s, i) => {
+        const d = el.children[i];
+        const cooling = s.cd > 0.05;
+        d.classList.toggle('locked', s.locked);
+        d.classList.toggle('cooling', cooling && !s.locked);
+        d.classList.toggle('ready', !s.locked && !cooling);
+        d.classList.toggle('buffed', s.active > 0);
+        // 技能名太長，取「・」後面那一段當短名（火車、輪迴…）
+        const short = s.zh.includes('・') ? s.zh.split('・').pop() : s.zh;
+        d.querySelector('.n').textContent = s.locked ? `Lv.${s.unlock}` : short;
+        d.querySelector('.cd').style.height = cooling ? `${(s.cd / s.cdMax) * 100}%` : '0';
+        d.querySelector('.cdn').textContent = cooling ? Math.ceil(s.cd) : '';
+      });
+    },
+    /** 死亡黑幕（復活時再呼叫 false 收掉） */
+    deathVeil(on) {
+      document.getElementById('deathVeil')?.classList.toggle('on', on);
     },
     /** 戰鬥提示只給有技能的角色看 */
     showCombatKeys(on) {

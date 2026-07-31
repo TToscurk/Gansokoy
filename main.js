@@ -27,11 +27,10 @@ import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
 import { installHUD, bindEscMenu } from './src/ui/hud.js';
-import { Combat } from './src/combat/combat.js';
-import { SlashFX, SlashAudio } from './src/fx/slash.js';
-import { combatHUD, bindCombatInput } from './src/combat/hud.js';
+import { installLoadout } from './src/player/loadout.js';
 import { Progression } from './src/player/progression.js';
 import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
+import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 
 /* ─────────────────────────────────────────────────────────────── HUD ── */
 // 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
@@ -231,7 +230,9 @@ renderer.toneMappingExposure = 1.05;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 800);
+// near 拉到 0.2：深度緩衝精度幾乎全由 near/far 比值決定。第三人稱相機
+// 離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），不會被切到。
+const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.2, 800);
 
 /* 晝夜 + 天氣：共用的環境系統（src/world/environment.js）。
  * 神社自己的追加調色（燈籠、星空、bloom、IBL 重烘）之後在
@@ -274,6 +275,9 @@ const colliders = [];
 function block(x, z, sx, sz, top, bottom = -99) {
   colliders.push({ minX: x - sx / 2, maxX: x + sx / 2, minZ: z - sz / 2, maxZ: z + sz / 2, top, bottom });
 }
+
+/** 鋪在地面上的薄層（參道、土徑）共用的材質設定 —— 見 path/path2/path3 */
+const DECAL = { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 };
 
 const MAT = {};
 function mats() {
@@ -440,10 +444,12 @@ function heightAt(x, z) {
   }
 
   // gravel approach path (lower) and plateau path
-  const path = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 34), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 9), roughness: 1 }));
+  // 參道是鋪在地面上的薄薄一層，深度值跟地面極接近 —— polygonOffset 把它
+  // 往鏡頭方向偏一點，地面永遠搶不贏它，路緣才不會閃。
+  const path = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 34), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 9), roughness: 1, ...DECAL }));
   path.rotation.x = -Math.PI / 2; path.position.set(0, 0.02, 39); path.receiveShadow = true; world.add(path);
 
-  const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1 }));
+  const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1, ...DECAL }));
   path2.rotation.x = -Math.PI / 2; path2.position.set(0, PLATEAU + 0.02, 3.5); path2.receiveShadow = true; world.add(path2);
 
   /* ---- 境外延伸：一條長長的下山石階（參道 → 山腳） ----
@@ -463,7 +469,7 @@ function heightAt(x, z) {
     curb.rotation.x = curbA;
   }
   // 山腳延續的土徑，一路通到獸道的光點
-  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 30), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 8), roughness: 1 }));
+  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 30), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 8), roughness: 1, ...DECAL }));
   path3.rotation.x = -Math.PI / 2; path3.position.set(0, -OUTER_DROP + 0.04, OUT_FAR + 17); path3.receiveShadow = true; world.add(path3);
 })();
 
@@ -758,6 +764,9 @@ function shrine() {
   }
   cyl(0.13, 0.09, 0.34, ropeMatB, 0, -0.42 - 9 * 0.32, 0, 10, bellRope);   // tassel
   g.add(bellRope);
+  // 鈴與鈴緒會在投賽錢後搖 —— 不能被靜態合併走（合併會把當下的姿態烘死）
+  keepDynamic(bellRope);
+  keepDynamic(bell);
   OBJ.bellRope = bellRope;
   OBJ.bell = bell;
 
@@ -928,7 +937,7 @@ function yinYang(x, y, z) {
   g.rotation.z = 0.22;
   g.add(red, white);
   red.castShadow = white.castShadow = true;
-  g.userData = { base: y, phase: Math.random() * 6.28 };
+  g.userData = { base: y, phase: Math.random() * 6.28, noMerge: true };  // 會浮會轉
   orbs.push(g);
   return g;
 }
@@ -1067,14 +1076,14 @@ const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 14);
 OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 14);
 
 // distant mountains (Youkai Mountain silhouettes)
+// 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
+// 16 座山就永遠是 16 個 draw call。
+const mountainMat = new THREE.MeshStandardMaterial({ color: '#2c3346', roughness: 1, flatShading: true, fog: true });
 for (let i = 0; i < 16; i++) {
   const a = (i / 16) * Math.PI * 2 + 0.2;
   const r = 150 + Math.random() * 60;
   const h = 40 + Math.random() * 55;
-  const m = new THREE.Mesh(
-    new THREE.ConeGeometry(30 + Math.random() * 34, h, 5),
-    new THREE.MeshStandardMaterial({ color: '#2c3346', roughness: 1, flatShading: true, fog: true })
-  );
+  const m = new THREE.Mesh(new THREE.ConeGeometry(30 + Math.random() * 34, h, 5), mountainMat);
   // 南邊的山要壓低到山腳低地的高度，不然山底會浮在低地上空
   const mz = Math.sin(a) * r;
   m.position.set(Math.cos(a) * r, h / 2 - 8 + (mz > 60 ? -OUTER_DROP : 0), mz);
@@ -1126,6 +1135,15 @@ const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
 stars.frustumCulled = false;
 scene.add(stars);
 
+/* ──────────────────────────────────────────────── 靜態幾何合併 ── */
+// 境內的建物、鳥居、石燈籠、樹全部不會動，可以按「材質 × 空間格子」
+// 合成幾顆大網格 —— draw call 是這種場景真正的瓶頸，不是三角形數。
+// 必須排在所有 world.add 之後、任何會動的東西掛上 noMerge 之後。
+// NPC、玩家、天氣粒子都掛在 scene 而非 world，不受影響。
+const mergeStats = mergeStaticByMaterial(world, { cell: 55 });
+console.info(`[optimize] 神社靜態合併：${mergeStats.before} → ${mergeStats.after} 個網格`
+  + `（合併成 ${mergeStats.merged}，保留 ${mergeStats.kept}）`);
+
 /* ───────────────────────────────────────────────────────── NPC 系統 ── */
 // 把 shrine 的高度場接上 NPC 模組，這樣角色才會站在地面上
 setGroundHeightFn(heightAt);
@@ -1150,10 +1168,11 @@ const sceneEditor = new SceneEditor({
 // 從 gensokoy3d 移植的日之呼吸十三型。依使用者要求只給緣一用 ——
 // 其他角色沒有戰鬥控制器（combat 保持 null），左鍵/R 都不會有反應。
 // 神社境內沒有敵人，所以命中判定接一個空樁：招式純粹是演出。
-const slashFX = new SlashFX(scene);
-const slashAudio = new SlashAudio();
-const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
-let combat = null;
+/* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
+ * 境內沒有敵人（結界擋著），所以不傳 mobs —— 招式照出，只是砍不到東西。
+ * 技能是角色內建的，不該因為「這張圖沒有怪」就消失。
+ * 神社可以中途換角色，換完呼叫 kit.rebuild()。 */
+let kit = null;
 // 角色/技能等級（localStorage，跟獸道共用同一份資料）。神社境內沒有怪，
 // 這裡只負責顯示徽章；打怪練級去獸道。
 const progression = new Progression({ onLevelUp: (msg) => toast(msg) });
@@ -1391,14 +1410,7 @@ function initPlayer(keepPos = false) {
 
   // 戰鬥控制器只給有 combat 旗標的角色（目前是緣一；之後其他角色設計好
   // 技能後，在 roster 的 PLAYABLE 加上 combat: true 就會自動接上）
-  combat = chosenSpec.combat
-    ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD)
-    : null;
-  combatHUD.reset();
-  // 戰鬥相關的操作提示只給有技能的角色看；飛行提示只給會飛的角色看
-  const combatHelp = document.getElementById('combatHelp');
-  if (combatHelp) combatHelp.style.display = combat ? '' : 'none';
-  HUD.showFlyKeys(chosenSpec.canFly !== false);
+  kit.rebuild();
   // 等級徽章（成長資料在 localStorage，跟獸道那邊同一份）
   progression.renderBadge(chosenSpec.combat ? 'hinokami' : null, '日之呼吸');
 
@@ -1452,9 +1464,6 @@ function bindHotkeys() {
     }
   });
 
-  // 左鍵出招/蓄力、R 拔刀納刀 —— 共用綁定（src/combat/hud.js）
-  bindCombatInput(() => combat, () => ctrl,
-    () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen);
 }
 bindHotkeys();
 
@@ -1475,11 +1484,19 @@ const escMenu = bindEscMenu({
     veil.classList.remove('hide');
     if (ctrl) { ctrl.enabled = false; ctrl.dispose(); ctrl = null; }
     if (charModel) { scene.remove(charModel); charModel = null; }
-    combat = null;
-    combatHUD.reset();
-    HUD.showCombatKeys(false);
+    kit.rebuild();          // ctrl 沒了 → combat/skills 收掉、HUD 歸零
     HUD.prompt(null);
   },
+});
+
+/* 角色的隨身裝備。要排在 escMenu / dialogue / sceneEditor 之後 ——
+ * isBlocked 會讀到它們。境內沒有敵人，所以不傳 mobs。 */
+kit = installLoadout({
+  getSpec: () => chosenSpec,
+  getCtrl: () => ctrl,
+  scene, HUD, prog: progression,
+  isBlocked: () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen,
+  onDeath: () => ctrl?.teleport(0, 30),
 });
 
 /* 從獸道走回來：不要閃過選角畫面，直接蓋上「博麗神社 讀取中」，
@@ -1562,8 +1579,7 @@ function update(dt, rawDt = dt) {
 
   // 戰鬥姿勢一定要在 ctrl.update（裡面跑走路動畫）之後套，才壓得過去。
   // rawDt 給 hitstop 自己倒數 —— 用壓慢後的 dt 倒數會永遠出不了頓挫。
-  combat?.update(dt, rawDt);
-  slashFX.update(dt);
+  kit.update(dt, rawDt);
 
   // NPC 更新
   npcSystem.update(t, ctrl.pos, camera);
@@ -1601,7 +1617,7 @@ let t = 0;
 function animate() {
   const rawDt = Math.min(clock.getDelta(), 0.05);
   let dt = rawDt;
-  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫：時間短暫變慢
+  if (kit?.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫：時間短暫變慢
   t += dt;
 
   // the canvas can start at 0×0 in a background/hidden pane — re-sync on the fly
@@ -1706,7 +1722,8 @@ window.__shrine = {
   },
   composer, applyQuality, QUALITY,
   quests, questLog, dialogue, zones, weather, sceneEditor,
-  get combat() { return combat; },
+  get kit() { return kit; }, get combat() { return kit?.combat; },
+  get vitals() { return kit?.vitals; }, get skills() { return kit?.skills; },
   /** 測試用：直接設定時刻（小時，0–24），並停住時間 */
   setHour(h) { return env.setHour(h); },
   getHour() { return env.hour; },

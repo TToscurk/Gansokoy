@@ -1,14 +1,14 @@
 import * as THREE from 'three';
-import { buildCharacter, animateCharacter } from './model.js';
+import { buildCharacter, animateCharacter, setCharacterFar } from './model.js';
 import { ROSTER } from './roster.js';
-import { REGION_BY_ID, WORLD } from '../config.js';
+import { REGION_BY_ID, WORLD, CHAR_LOD } from '../config.js';
 import { groundHeight } from '../world/terrain.js';
 
 /** 可以對話的距離。main.js 與 shrine-spawn.js 都用這個值，不要各自寫死。 */
 export const TALK_RANGE = 4.2;
 // 26 位住民散布全圖，不可能同時入鏡 —— 超過這個距離整隻隱藏、
 // 連待機動畫都不跑，同屏負擔跟 16 位的時代一樣。
-const CULL_DIST = 260;
+const CULL_DIST = CHAR_LOD.hide;
 // 名牌的顯示半徑（只有最近的一位會拿到名牌，見 update）
 const LABEL_RANGE = 12;
 
@@ -172,11 +172,15 @@ export class NPCManager {
       }
       if (!visible) continue;
 
+      // 遠處換成單網格（見 model.js 的 setCharacterFar）：十來個 draw call
+      // 變一個，動畫也不用算。門檻跟里民路人共用 config.js 的 CHAR_LOD。
+      const far = setCharacterFar(n.root, d >= CHAR_LOD.far);
+
       // 睡著的人（萃香）：整個人放平在被褥上，呼吸放慢，也不會轉頭看玩家
       if (n.spec.sleep) {
-        animateCharacter(n.root, t * 0.35, 0);
+        if (!far) animateCharacter(n.root, t * 0.35, 0);
         n.root.rotation.x = -Math.PI / 2;
-        const wantOutline2 = d < 20;
+        const wantOutline2 = d < CHAR_LOD.outline;
         if (n.outlineOn !== wantOutline2) {
           n.outlineOn = wantOutline2;
           for (const o of n.outlines) o.visible = wantOutline2;
@@ -188,12 +192,12 @@ export class NPCManager {
         continue;
       }
 
-      animateCharacter(n.root, t, 0);
+      if (!far) animateCharacter(n.root, t, 0);
 
       // 遠處關掉描邊：省下的 draw call 比看得出來的差異多得多。
       // 70 公尺等於「境內所有人都開」—— 34 位角色的描邊就是 242 個 mesh、
-      // 27 萬個三角形、約 13ms。收到 20 公尺，只有真的走近的人有描邊。
-      const wantOutline = d < 20;
+      // 27 萬個三角形、約 13ms。收到 18 公尺，只有真的走近的人有描邊。
+      const wantOutline = d < CHAR_LOD.outline;
       if (n.outlineOn !== wantOutline) {
         n.outlineOn = wantOutline;
         for (const o of n.outlines) o.visible = wantOutline;

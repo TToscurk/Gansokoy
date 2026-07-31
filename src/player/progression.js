@@ -9,6 +9,8 @@
 // 等級的作用：加傷害。dmgMul() 給 combat 的命中傷害乘上去 ——
 // 角色等級每級 +8%、技能等級每級 +12%。
 
+import { LEVEL_CAP } from '../config.js';
+
 const KEY = 'gansokoy:progress:v1';
 
 function load() {
@@ -60,11 +62,16 @@ export class Progression {
     this.state.charXp += 14;
     const s = this._skill(skillId);
     s.xp += 6;
-    while (this.state.charXp >= charXpNeed(this.state.charLv)) {
+    // 等級上限（config.js 的 LEVEL_CAP）。目前鎖在 1 —— 技能全開，
+    // 先把手感調好再做成長曲線。到頂之後經驗就不再累積，免得解開上限
+    // 的那一刻瞬間連升十級。
+    while (this.state.charLv < LEVEL_CAP
+           && this.state.charXp >= charXpNeed(this.state.charLv)) {
       this.state.charXp -= charXpNeed(this.state.charLv);
       this.state.charLv++;
       this.hooks.onLevelUp?.(`等級提升！Lv.${this.state.charLv}`);
     }
+    if (this.state.charLv >= LEVEL_CAP) this.state.charXp = 0;
     this._checkSkill(s, skillName);
     this._save();
   }
