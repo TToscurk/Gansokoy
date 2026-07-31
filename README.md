@@ -266,7 +266,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `main.js` | 博麗神社場景：材質生成、建物、地形、控制、渲染迴圈 |
 | `maps/trail/` | 獸道（Y 字形谷道，神社 ⇄ 人間之里 ⇄ 迷途竹林 的樞紐） |
 | `maps/village/` | 人間之里（網格街廓、稗田邸、龍神像、河與石橋。只有北門通獸道） |
-| `maps/bamboo/` | 迷途竹林（孟宗竹林，妖怪兔。北口接獸道，南端是永遠亭的門） |
+| `maps/bamboo/` | 迷途竹林（300×600 公尺的孟宗竹林，佈局隨機生成。北口接獸道，南端是永遠亭的門） |
 | `vendor/` | three.js r180 本地副本（`npm i three` 複製過來的） |
 | `vendor/jsm/` | 後製用的 addons（EffectComposer / GTAO / Bloom / SMAA / OutputPass） |
 | `src/entities/` | 角色建模、NPC 管理、名冊、神社站位、擺放狀態、路人 |
