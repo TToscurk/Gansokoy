@@ -45,8 +45,10 @@ update() {
     echo "[略過更新] 這個資料夾不是 git 儲存庫，直接用現有的檔案啟動。"
     return
   fi
-  # 有沒有還沒存的本機修改？有的話不要硬蓋掉玩家的東西
-  if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  # 有沒有改到「已追蹤的檔案」？有的話不要硬蓋掉玩家的修改。
+  # --untracked-files=no 是關鍵：你隨手在資料夾裡放一個筆記或截圖
+  # 不該讓自動更新從此停擺，而 --ff-only 本來就不會動到未追蹤的檔案。
+  if [ -n "$(git status --porcelain --untracked-files=no 2>/dev/null)" ]; then
     echo "[注意] 你有還沒提交的本機修改，這次不自動更新。"
     echo "       要保留修改就先 git stash 或 git commit，再重跑一次。"
     return

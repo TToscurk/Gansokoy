@@ -50,8 +50,10 @@ if not exist ".git" (
   goto :serve
 )
 
-REM 有沒有還沒存的本機修改？有的話不要硬蓋掉玩家的東西
-for /f %%i in ('git status --porcelain 2^>nul') do set DIRTY=1
+REM 有沒有改到「已追蹤的檔案」？有的話不要硬蓋掉玩家的修改。
+REM --untracked-files=no 是關鍵：你隨手在資料夾裡放一個筆記或截圖
+REM 不該讓自動更新從此停擺，而 --ff-only 本來就不會動到未追蹤的檔案。
+for /f %%i in ('git status --porcelain --untracked-files^=no 2^>nul') do set DIRTY=1
 if defined DIRTY (
   echo [注意] 你有還沒提交的本機修改，這次不自動更新。
   echo        要保留修改就先 git stash 或 git commit，再重跑一次。
