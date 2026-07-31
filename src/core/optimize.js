@@ -8,10 +8,17 @@ import * as BGU from 'three/addons/utils/BufferGeometryUtils.js';
 
 const KEEP_ATTRS = ['position', 'normal', 'uv'];
 
-function normalize(geo) {
+/**
+ * 統一屬性後的幾何複本。合併的前提是每個來源的屬性組完全一致 ——
+ * 少一個 uv、多一個 tangent，mergeGeometries 就回 null。
+ * @param {THREE.BufferGeometry} geo
+ * @param {boolean} [keepColor] 保留既有的頂點色（遠景 LOD 要靠它帶配色）
+ */
+function normalize(geo, keepColor = false) {
   let g = geo.index ? geo.toNonIndexed() : geo.clone();
+  const keep = keepColor ? [...KEEP_ATTRS, 'color'] : KEEP_ATTRS;
   for (const k of Object.keys(g.attributes)) {
-    if (!KEEP_ATTRS.includes(k)) g.deleteAttribute(k);
+    if (!keep.includes(k)) g.deleteAttribute(k);
   }
   if (!g.attributes.normal) g.computeVertexNormals();
   if (!g.attributes.uv) {
@@ -136,6 +143,94 @@ export function mergeStaticByMaterial(root, opts = {}) {
   root.traverse(o => { if (o.isMesh && o.name !== 'merged') kept++; });
 
   return { before, after: merged + kept, merged, kept };
+}
+
+/**
+ * 把幾何瘦身：丟掉用不到的 uv、法線壓成 Int8。
+ *
+ * 遠景網格是「額外多出來的一份幾何」，一位路人就是 5 千多個三角形，
+ * 一條街五十位就是三十幾 MB —— 內顯的顯存是跟系統記憶體共用的，這種
+ * 純複製品該壓就壓。共用材質是 MeshToonMaterial + vertexColors，
+ * 沒有任何貼圖，uv 完全用不到；法線只拿來算 NdotL 再去查三階漸層圖，
+ * Int8（1/127 的精度）綽綽有餘。位置與頂點色維持原精度。
+ */
+function shrinkAttributes(geo) {
+  geo.deleteAttribute('uv');
+  const n = geo.attributes.normal;
+  if (n && n.array instanceof Float32Array) {
+    const q = new Int8Array(n.count * 3);
+    for (let i = 0; i < q.length; i++) {
+      q[i] = Math.max(-127, Math.min(127, Math.round(n.array[i] * 127)));
+    }
+    geo.setAttribute('normal', new THREE.BufferAttribute(q, 3, true));
+  }
+}
+
+/**
+ * 把整隻角色（現在的姿勢）壓成單一網格 —— 遠景 LOD 用。
+ *
+ * optimizeRig 已經把角色壓到「每個動畫節點一個網格」，約 10 個 draw call。
+ * 但一條街上五十位路人就是五百個 draw call，而三十公尺外的人只有十幾個
+ * 像素高，關節在不在動根本看不出來。這個函式把整隻角色連同姿勢烘成一個
+ * 網格，遠景時整組動畫節點關掉、只畫這一個 —— 10 個 draw call 變 1 個，
+ * 而且完全不用每幀算動畫。
+ *
+ * 顏色靠頂點色攜帶（跟 mergeAnimNode 同一招），所以遠景網格也共用
+ * 同一份材質，不會多佔 GPU 狀態。
+ *
+ * @param {THREE.Object3D} root      角色根節點
+ * @param {THREE.Material} sharedMat 共用材質（需 vertexColors:true）
+ * @param {string[]} [skipNames]     這些名字的子樹不烘（預設跳過描邊外殼）
+ * @returns {THREE.Mesh|null}
+ */
+export function mergeRigSnapshot(root, sharedMat, skipNames = ['outline', 'farLod']) {
+  const geos = [];
+  const tmp = new THREE.Color();
+
+  const walk = (obj, matrix) => {
+    for (const child of obj.children) {
+      if (skipNames.includes(child.name)) continue;
+      child.updateMatrix();
+      const m = matrix.clone().multiply(child.matrix);
+
+      if (child.isMesh && !child.isInstancedMesh) {
+        const mat = child.material;
+        // 半透明的部件（妖夢的半靈之類）在遠景省掉，混合排序不值得為它留
+        if (!Array.isArray(mat) && !mat.transparent) {
+          const g = normalize(child.geometry, true);
+          g.applyMatrix4(m);
+          const cnt = g.attributes.position.count;
+          // 已經帶頂點色的（optimizeRig 合併過的部位）沿用原色，
+          // 其餘用材質色烘一份 —— 兩種來源合併後才不會有一半變白。
+          if (!g.attributes.color) {
+            const col = new Float32Array(cnt * 3);
+            if (mat.color) tmp.copy(mat.color); else tmp.setHex(0xffffff);
+            for (let i = 0; i < cnt; i++) {
+              col[i * 3] = tmp.r; col[i * 3 + 1] = tmp.g; col[i * 3 + 2] = tmp.b;
+            }
+            g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+          }
+          geos.push(g);
+        }
+      }
+      walk(child, m);
+    }
+  };
+
+  root.updateMatrix();
+  walk(root, new THREE.Matrix4());
+  if (!geos.length) return null;
+
+  const merged = geos.length === 1 ? geos[0] : BGU.mergeGeometries(geos, false);
+  geos.forEach(g => { if (g !== merged) g.dispose(); });
+  if (merged) shrinkAttributes(merged);
+  if (!merged) return null;
+
+  const mesh = new THREE.Mesh(merged, sharedMat);
+  mesh.castShadow = true;
+  mesh.receiveShadow = false;
+  mesh.name = 'farLod';
+  return mesh;
 }
 
 /**

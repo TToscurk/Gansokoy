@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import * as BGU from 'three/addons/utils/BufferGeometryUtils.js';
-import { mergeAnimNode, shellGeometry } from '../core/optimize.js';
+import { mergeAnimNode, shellGeometry, mergeRigSnapshot } from '../core/optimize.js';
 
 // ---------------------------------------------------------------------------
 // 角色建模：全部用基本體組出來，卡通著色 + 反向外殼描邊。
@@ -1000,6 +1000,47 @@ export function buildCharacter(spec) {
   root.userData.spec = spec;
 
   return root;
+}
+
+// ---------------------------------------------------------------------------
+// 遠景 LOD
+//
+// optimizeRig 之後一位角色仍是十來個網格（每個動畫節點各一個 + 描邊）。
+// 一條街上五十位路人 = 五百多個 draw call，而三十公尺外的人只有十幾個
+// 像素高。setCharacterFar() 把整隻換成一個烘死姿勢的合併網格：
+// draw call 十個變一個，呼叫端也可以順便跳過該幀的動畫計算。
+//
+// 遠景網格是第一次真的走遠時才建（lazy）—— 玩家永遠不會遠離自己，
+// 走不到的角落裡的 NPC 也不必先付這份記憶體。
+// ---------------------------------------------------------------------------
+
+/**
+ * 切換一位角色的細節層級。
+ * @param {THREE.Object3D} root 角色根節點（buildCharacter 的回傳值）
+ * @param {boolean} far true = 遠景單網格，false = 完整骨架
+ * @returns {boolean} 目前是否處於遠景狀態（建不出遠景網格時回 false）
+ */
+export function setCharacterFar(root, far) {
+  const u = root.userData;
+  if (!!u.farOn === !!far) return !!u.farOn;
+
+  if (far) {
+    if (u.farLod === undefined) {
+      // 建之前先把姿勢歸零，否則會把「當下剛好抬起的手腳」烘死在裡面
+      animateCharacter(root, 0, 0);
+      root.updateMatrixWorld(true);
+      u.farLod = mergeRigSnapshot(root, TOON_VC);
+      if (u.farLod) root.add(u.farLod);
+    }
+    if (!u.farLod) return false;          // 烘不出來（例如整隻都是半透明）就維持完整骨架
+  }
+
+  for (const c of root.children) {
+    if (c === u.farLod) c.visible = !!far;
+    else c.visible = !far;
+  }
+  u.farOn = !!far;
+  return u.farOn;
 }
 
 /** 每幀更新一個角色的待機／行走動作 */

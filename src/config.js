@@ -8,6 +8,26 @@ export const WORLD = {
   gravity: -26,
 };
 
+/**
+ * 角色的細節層級門檻（公尺）。NPC、里民路人、之後任何一群角色都走這一組，
+ * 想整體調鬆調緊只改這裡。
+ *
+ *   outline 以內：完整骨架 + 描邊
+ *   far 以內：    完整骨架，不畫描邊
+ *   far 以外：    整隻換成一個烘死姿勢的合併網格（見 model.js 的 setCharacterFar），
+ *                 動畫也跳過不算
+ *   hide 以外：   整隻關掉
+ *
+ * far 選 34 是量出來的：人間之里主街最壞視角（52 位路人幾乎全在畫面內）
+ * 從 570 個 draw call 降到 300 上下，而 34 公尺外的人只有二十來個像素高，
+ * 手腳擺不擺看不出來。
+ */
+export const CHAR_LOD = {
+  outline: 18,
+  far: 34,
+  hide: 260,
+};
+
 export const COMPASS = [
   { a: 0,           zh: '北', en: 'N' },
   { a: Math.PI / 4, zh: '東北', en: 'NE' },

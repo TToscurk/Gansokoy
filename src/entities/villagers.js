@@ -9,7 +9,8 @@
 // 全部落在街道上，他們不會走進建築物裡 —— 不需要另外做避障。
 
 import * as THREE from 'three';
-import { buildCharacter, animateCharacter } from './model.js';
+import { buildCharacter, animateCharacter, setCharacterFar } from './model.js';
+import { CHAR_LOD } from '../config.js';
 
 // 村民的衣著配色（樸素的和服色系，跟主要角色的鮮豔配色區隔開）。
 // 加了藍染（縕袍）、柿澀、鶯、江戶紫這些傳統色，讓街上不會一片土黃。
@@ -130,13 +131,16 @@ export class VillagerCrowd {
     if (!this.visible) return;
 
     for (const p of this.people) {
+      // 細節層級要在動畫之前決定 —— 遠景的人整隻是一個烘死姿勢的網格，
+      // 再去算手腳擺動只是白花 CPU
+      const far = this._lod(p, playerPos);
+
       // 停下來發呆（站直、放掉前傾）
       if (p.idle > 0) {
         p.idle -= dt;
         p.model.position.y = this.heightFn(p.pos.x, p.pos.y);
         p.model.rotation.x = p.role === 'elder' ? 0.05 : 0;
-        animateCharacter(p.model, t + p.phase, 0);
-        this._cull(p, playerPos);
+        if (!far) animateCharacter(p.model, t + p.phase, 0);
         continue;
       }
 
@@ -168,19 +172,24 @@ export class VillagerCrowd {
       p.model.position.set(p.pos.x, this.heightFn(p.pos.x, p.pos.y) + bob, p.pos.y);
       p.model.rotation.y = Math.atan2(dx, dz);
       p.model.rotation.x = 0.045 * w + (p.role === 'elder' ? 0.06 : 0);   // 前傾；老人家再駝一點
-      animateCharacter(p.model, t + p.phase, animSpeed);
-      this._cull(p, playerPos);
+      if (!far) animateCharacter(p.model, t + p.phase, animSpeed);
     }
   }
 
-  /** 遠處關描邊 —— 跟 NPCManager 同一套省 draw call 的做法 */
-  _cull(p, playerPos) {
-    if (!playerPos) return;
+  /**
+   * 依距離挑細節層級 —— 跟 NPCManager 同一組門檻（config.js 的 CHAR_LOD）。
+   * @returns {boolean} 是否已切到遠景單網格（呼叫端據此跳過動畫）
+   */
+  _lod(p, playerPos) {
+    if (!playerPos) return false;
     const d = Math.hypot(p.pos.x - playerPos.x, p.pos.y - playerPos.z);
-    const want = d < 18;
-    if (p.outlineOn !== want) {
-      p.outlineOn = want;
-      for (const o of p.outlines) o.visible = want;
+
+    const wantOutline = d < CHAR_LOD.outline;
+    if (p.outlineOn !== wantOutline) {
+      p.outlineOn = wantOutline;
+      for (const o of p.outlines) o.visible = wantOutline;
     }
+
+    return setCharacterFar(p.model, d >= CHAR_LOD.far);
   }
 }
