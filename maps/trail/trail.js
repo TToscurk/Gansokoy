@@ -4,14 +4,14 @@
 // 往西南是人間之里，往東南是迷途竹林。里本身不再直接通竹林，
 // 要去竹林一定得走回獸道，這條路才有存在感。
 //
-//        博麗神社（北）
-//             │
-//             │  主道（蜿蜒）
-//             ▼
-//          ┌ 分岔 ┐
-//          │      │
-//     人間之里   迷途竹林
-//      （西南）  （東南）
+//            博麗神社（北）
+//                 │
+//                 │  主道（蜿蜒）
+//                 ▼
+//      ┌───── 十字分岔 ─────┐
+//      │        │           │
+//  人間之里  迷途竹林   太陽花田
+//  （西南）  （東南）   （東北 —— 環線的閉合臂）
 //
 // 蜿蜒 + 分岔之後，「離路多遠」不再有封閉解，而地形高度、路面幾何、
 // 樹木佈點全都要問這個問題 —— 所以改用 src/world/pathnet.js 的路網。
@@ -42,7 +42,7 @@ import { scatterGrass } from '../../src/world/flora.js';
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
   title: '獸　道',
-  subtitle: 'BEAST TRAIL · 博麗神社 ⇄ 人間之里 ⇄ 迷途竹林',
+  subtitle: 'BEAST TRAIL · 幻想鄉的十字路口',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
@@ -97,6 +97,7 @@ const SHRINE_END = { x: 0, z: -300 };      // 北端：博麗神社
 const FORK = { x: 26, z: 40 };             // 分岔點
 const VILLAGE_END = { x: -150, z: 250 };   // 西南：人間之里
 const BAMBOO_END = { x: 190, z: 250 };     // 東南：迷途竹林
+const SUNFLOWER_END = { x: 246, z: -122 }; // 東北：太陽花田（環線閉合臂）
 
 const ROAD_W = 7.5;        // 路面寬（也是地形不抬升的帶寬）
 const MAP_R = 340;         // 地圖半徑（超過就是邊界山壁）
@@ -123,6 +124,13 @@ const SEGMENTS = [
     pts: [
       [FORK.x, FORK.z], [62, 78], [96, 112], [128, 152],
       [162, 198], [BAMBOO_END.x, BAMBOO_END.z],
+    ],
+  },
+  {
+    id: 'toSunflower', width: ROAD_W * 0.88,
+    pts: [
+      [FORK.x, FORK.z], [72, 22], [112, -6], [148, -42],
+      [190, -78], [SUNFLOWER_END.x, SUNFLOWER_END.z],
     ],
   },
 ];
@@ -392,6 +400,7 @@ function doso(x, z) {
 const shrinePortal = makePortalGlow(world, SHRINE_END.x, heightAt(SHRINE_END.x, SHRINE_END.z), SHRINE_END.z, 0x8be8ff);
 const villagePortal = makePortalGlow(world, VILLAGE_END.x, heightAt(VILLAGE_END.x, VILLAGE_END.z), VILLAGE_END.z, 0xf0d89a);
 const bambooPortal = makePortalGlow(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END.z, 0xd8f0a0);
+const sunflowerPortal = makePortalGlow(world, SUNFLOWER_END.x, heightAt(SUNFLOWER_END.x, SUNFLOWER_END.z), SUNFLOWER_END.z, 0xf2c832);
 
 /* ─────────────────── 北端遠景：山上的博麗神社全貌 ──────────────────
  * 站在獸道朝神社方向望，要看得到整座神社蓋在山頭上：
@@ -496,6 +505,48 @@ const bambooPortal = makePortalGlow(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, 
     tuft.position.set(x, h * 0.94, z); g.add(tuft);
   }
   g.traverse(o => { if (o.isMesh) o.castShadow = false; });
+})();
+
+/* 東北端的遠景：太陽花田 —— 一整片向日葵與幽香的陽傘（在邊界外，走不到） */
+(function sunflowerVista() {
+  const g = new THREE.Group();
+  g.position.set(SUNFLOWER_END.x + 14, heightAt(SUNFLOWER_END.x, SUNFLOWER_END.z), SUNFLOWER_END.z - 30);
+  g.rotation.y = -0.4;
+  world.add(g);
+  const stemM = new THREE.MeshStandardMaterial({ color: '#4e7030', roughness: 1 });
+  const petalM = new THREE.MeshStandardMaterial({ color: '#f2c832', roughness: 0.85, side: THREE.DoubleSide });
+  const coreM = new THREE.MeshStandardMaterial({ color: '#6a4a22', roughness: 1 });
+  // 向日葵全部走 InstancedMesh：莖、花盤、花心各一個
+  const N = 240;
+  const stems = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.05, 0.07, 1, 5), stemM, N);
+  const heads = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.42, 0.42, 0.06, 10), petalM, N);
+  const cores = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 8), coreM, N);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
+  const v = new THREE.Vector3(), sc = new THREE.Vector3();
+  for (let i = 0; i < N; i++) {
+    const x = (Math.random() - 0.5) * 110, z = -Math.random() * 60;
+    const h = 1.5 + Math.random() * 0.8;
+    q.identity(); sc.set(1, h, 1);
+    m4.compose(v.set(x, h / 2, z), q, sc);
+    stems.setMatrixAt(i, m4);
+    // 花盤朝南面向獸道（向日葵向陽，也剛好向著玩家）
+    e.set(Math.PI / 2 - 0.4, 0, 0); q.setFromEuler(e); sc.set(1, 1, 1);
+    m4.compose(v.set(x, h, z + 0.1), q, sc);
+    heads.setMatrixAt(i, m4);
+    m4.compose(v.set(x, h, z + 0.14), q, sc);
+    cores.setMatrixAt(i, m4);
+  }
+  for (const im of [stems, heads, cores]) { im.castShadow = false; im.frustumCulled = true; g.add(im); }
+  // 幽香的陽傘地標 —— 花海深處一把粉紫大傘
+  const umb = new THREE.Group();
+  umb.position.set(8, 0, -40);
+  g.add(umb);
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 3.4, 6),
+    new THREE.MeshStandardMaterial({ color: '#5a4a3a', roughness: 0.9 }));
+  pole.position.y = 1.7; umb.add(pole);
+  const canopy = new THREE.Mesh(new THREE.ConeGeometry(2.6, 1.1, 10),
+    new THREE.MeshStandardMaterial({ color: '#d8a8c8', roughness: 0.8 }));
+  canopy.position.y = 3.5; umb.add(canopy);
 })();
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
@@ -617,12 +668,14 @@ const near = (p) => Math.hypot(ctrl.pos.x - p.x, ctrl.pos.z - p.z) < 4.6;
 const nearShrine = () => near(SHRINE_END);
 const nearVillage = () => near(VILLAGE_END);
 const nearBamboo = () => near(BAMBOO_END);
+const nearSunflower = () => near(SUNFLOWER_END);
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
   if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = '../../index.html?from=trail'; return; }
   if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; return; }
-  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=trail'; }
+  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=trail'; return; }
+  if (nearSunflower()) toast('花田的方向瀰漫著花香 —— 這條路還沒開。');
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -644,11 +697,13 @@ function tick(rawDt) {
   shrinePortal.userData.update(t);
   villagePortal.userData.update(t);
   bambooPortal.userData.update(t);
+  sunflowerPortal.userData.update(t);
   motes.position.z = ctrl.pos.z * 0.2;
 
   if (nearShrine()) HUD.prompt('[ E ]  前往博麗神社');
   else if (nearVillage()) HUD.prompt('[ E ]  前往人間之里');
   else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林');
+  else if (nearSunflower()) HUD.prompt('[ E ]  太陽花田（尚未開放）');
   else HUD.prompt(null);
 }
 
@@ -670,7 +725,7 @@ animate();
 // debug handle（跟 index 的 __shrine 同一套測試口徑）
 window.__trail = {
   renderer, scene, camera, ctrl, THREE, heightAt, env, prog, fairies, PATHS,
-  SHRINE_END, VILLAGE_END, BAMBOO_END, FORK,
+  SHRINE_END, VILLAGE_END, BAMBOO_END, SUNFLOWER_END, FORK,
   get kit() { return kit; }, get combat() { return kit.combat; },
   get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },

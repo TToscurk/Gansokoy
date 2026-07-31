@@ -114,6 +114,12 @@ export const REGIONS = [
     fog: 0x8fae86, accent: 0xa8c96a,
   },
 
+  {
+    id: 'eientei', zh: '永遠亭', en: 'EIENTEI', dir: '南',
+    x: -50, z: 980, elev: 17, radius: 90, rough: 1.0,
+    fog: 0xd8d0c2, accent: 0xc8a8e8,
+  },
+
   // ---- 東南 ----
   {
     id: 'namelessHill', zh: '無名之丘', en: 'NAMELESS HILL', dir: '東南',
