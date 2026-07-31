@@ -53,7 +53,8 @@ document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.1, 400);
+// near 拉到 0.2（見 main.js 同名註解）：換來深度精度，鋪地物件不閃。
+const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.2, 400);
 camera.rotation.order = 'YXZ';
 
 /* ─────────────────────────────────── 晝夜 + 天氣（共用 Environment） ── */
@@ -122,7 +123,12 @@ const grassTex = canvasTex(256, (g, s) => {
 }, 12, 44);
 
 const MAT = {
-  dirt: new THREE.MeshStandardMaterial({ map: dirtTex, roughness: 1 }),
+  // 獸徑鋪在草坡上（makeStrip 已讓它貼著高度場），polygonOffset 讓它
+  // 在深度測試上穩定贏過草地，邊緣不會閃
+  dirt: new THREE.MeshStandardMaterial({
+    map: dirtTex, roughness: 1,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  }),
   grass: new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1 }),
   bark: new THREE.MeshStandardMaterial({ color: '#4a3828', roughness: 1 }),
   leafA: new THREE.MeshStandardMaterial({ color: '#3d5c2a', roughness: 1, flatShading: true }),

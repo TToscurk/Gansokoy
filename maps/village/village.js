@@ -55,7 +55,11 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.08, 600);
+// near 拉到 0.2：深度緩衝的精度幾乎全由 near/far 的比值決定，0.08→0.2
+// 等於把整條深度範圍的精度拉高 2.5 倍，鋪地物件與共面幾何就不容易閃。
+// 第三人稱相機離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），
+// 不會有東西近到被 near 切掉。
+const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.2, 600);
 camera.rotation.order = 'YXZ';
 
 // 里是開闊的盆地：霧比獸道淡，看得到街尾與遠山
@@ -138,7 +142,12 @@ const woodTex = canvasTex(128, (g, s) => {
 
 const MAT = {
   ground: new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1 }),
-  road: new THREE.MeshStandardMaterial({ map: stoneRoadTex, roughness: 1 }),
+  // polygonOffset：石板路是鋪在地面上的薄薄一層，深度值跟地面非常接近。
+  // 把它往鏡頭方向偏一點，地面就永遠搶不贏它，路草交界不會閃。
+  road: new THREE.MeshStandardMaterial({
+    map: stoneRoadTex, roughness: 1,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  }),
   plaster: new THREE.MeshStandardMaterial({ map: plasterTex, roughness: 0.95, color: '#f2ead6' }),
   wood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.9, color: '#c8a880' }),
   darkWood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.95, color: '#6a5038' }),
@@ -183,7 +192,40 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 10, parent = world) {
 }
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
+/**
+ * 鋪在地面上的東西（石板路、田埂）。
+ *
+ * 用一片固定高度的平面會同時得到兩個病：地形起伏高過那個高度時草會穿出來，
+ * 兩者高度接近時整片閃爍（z-fighting）。解法是把平面細分，每個頂點各自抬到
+ * 「該點的地面高度 + lift」，於是它跟地面永遠保持固定的薄薄一層距離；
+ * 材質再開 polygonOffset，深度測試上穩定贏過地面，連邊緣都不會閃。
+ *
+ * @param {number} w  東西向寬
+ * @param {number} d  南北向長
+ * @param {number} x @param {number} z  中心
+ * @param {THREE.Material} mat
+ * @param {number} [lift=0.04] 離地高度（公尺）
+ */
+function groundDecal(w, d, x, z, mat, lift = 0.04) {
+  // 每 2 公尺一段就夠了 —— 里內地形的起伏波長約 50 公尺，非常平緩
+  const geo = new THREE.PlaneGeometry(w, d, Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(d / 2)));
+  geo.rotateX(-Math.PI / 2);
+  const p = geo.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    p.setY(i, heightAt(p.getX(i) + x, p.getZ(i) + z) + lift);
+  }
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(x, 0, z);
+  m.receiveShadow = true;
+  world.add(m);
+  return m;
+}
+
 (function ground() {
+  // 90 格（3.3 公尺一格）就夠：里內地形是波長約 50 公尺的緩起伏，
+  // 地面的線性內插跟真實曲面最多差 1 公釐，遠小於路面 4 公分的抬升。
+  // 再細下去只是白花三角形（150 格要多兩萬八千個）。
   const geo = new THREE.PlaneGeometry(300, 300, 90, 90);
   geo.rotateX(-Math.PI / 2);
   const p = geo.attributes.position;
@@ -194,12 +236,9 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 10, parent = world) {
   world.add(m);
 
   // 主街（南北）與兩條橫街（東西）：石板路。主街往南延伸到新街廓。
-  const main = new THREE.Mesh(new THREE.PlaneGeometry(9, 158), MAT.road);
-  main.rotation.x = -Math.PI / 2; main.position.set(0, 0.03, 11); main.receiveShadow = true; world.add(main);
-  const cross = new THREE.Mesh(new THREE.PlaneGeometry(74, 7), MAT.road);
-  cross.rotation.x = -Math.PI / 2; cross.position.set(0, 0.03, 8); cross.receiveShadow = true; world.add(cross);
-  const cross2 = new THREE.Mesh(new THREE.PlaneGeometry(58, 6), MAT.road);
-  cross2.rotation.x = -Math.PI / 2; cross2.position.set(0, 0.03, 56); cross2.receiveShadow = true; world.add(cross2);
+  groundDecal(9, 158, 0, 11, MAT.road);
+  groundDecal(74, 7, 0, 8, MAT.road);
+  groundDecal(58, 6, 0, 56, MAT.road);
 })();
 
 /* ─────────────────────────────────────────────────────── 建物 ── */
@@ -236,9 +275,12 @@ function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'm
     for (let i = -3; i <= 3; i++) {
       box(0.1, 2.1, 0.06, MAT.darkWood, i * (w * 0.12), 1.35, d / 2 + 0.19, g);
     }
-    // 角柱
+    // 角柱。外側面要「凸出牆面」而不是「切齊牆面」——
+    // 切齊（sx * (w/2 - 0.14)）會讓柱子的側面與土牆完全共面，
+    // 兩個面搶同一個深度值，遠看就是沿著建物邊緣一路閃。
+    // 凸出 4 公分之後不但不閃，柱子也才真的讀得出是柱子。
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-      box(0.28, h + 0.3, 0.28, MAT.darkWood, sx * (w / 2 - 0.14), (h + 0.3) / 2, sz * (d / 2 - 0.14), g);
+      box(0.28, h + 0.3, 0.28, MAT.darkWood, sx * (w / 2 - 0.10), (h + 0.3) / 2, sz * (d / 2 - 0.10), g);
     }
   }
 
@@ -456,16 +498,18 @@ for (let i = 0; i < 60; i++) {
   tree(x, z, 0.85 + Math.random() * 0.8, MAT.leaf);
 }
 
-// 田埂（里外的水田格子，純視覺）
+// 田埂（里外的水田格子，純視覺）。材質共用一份 —— 每格各自 new 一個的話，
+// 靜態合併只能按材質分組，14 格就是 14 個 draw call。
+const PADDY_MAT = new THREE.MeshStandardMaterial({
+  color: '#6f7f42', roughness: 1,
+  polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+});
 for (let i = 0; i < 14; i++) {
   const side = i % 2 ? 1 : -1;
   const x = side * (40 + (i % 5) * 9);
   const z = -40 + (i * 11) % 92;
-  const paddy = new THREE.Mesh(new THREE.PlaneGeometry(14, 9), new THREE.MeshStandardMaterial({ color: '#6f7f42', roughness: 1 }));
-  paddy.rotation.x = -Math.PI / 2;
-  paddy.position.set(x, heightAt(x, z) + 0.04, z);
-  paddy.receiveShadow = true;
-  world.add(paddy);
+  // 水田在里外的斜坡上，起伏比里內大得多 —— 一定要貼著地形，否則整片浮空或埋進土裡
+  groundDecal(14, 9, x, z, PADDY_MAT, 0.05);
 }
 
 /* ───────────────────────────────────────── 里門（北端，通獸道） ── */

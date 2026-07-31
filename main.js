@@ -232,7 +232,9 @@ renderer.toneMappingExposure = 1.05;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 800);
+// near 拉到 0.2：深度緩衝精度幾乎全由 near/far 比值決定。第三人稱相機
+// 離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），不會被切到。
+const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.2, 800);
 
 /* 晝夜 + 天氣：共用的環境系統（src/world/environment.js）。
  * 神社自己的追加調色（燈籠、星空、bloom、IBL 重烘）之後在
@@ -275,6 +277,9 @@ const colliders = [];
 function block(x, z, sx, sz, top, bottom = -99) {
   colliders.push({ minX: x - sx / 2, maxX: x + sx / 2, minZ: z - sz / 2, maxZ: z + sz / 2, top, bottom });
 }
+
+/** 鋪在地面上的薄層（參道、土徑）共用的材質設定 —— 見 path/path2/path3 */
+const DECAL = { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 };
 
 const MAT = {};
 function mats() {
@@ -441,10 +446,12 @@ function heightAt(x, z) {
   }
 
   // gravel approach path (lower) and plateau path
-  const path = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 34), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 9), roughness: 1 }));
+  // 參道是鋪在地面上的薄薄一層，深度值跟地面極接近 —— polygonOffset 把它
+  // 往鏡頭方向偏一點，地面永遠搶不贏它，路緣才不會閃。
+  const path = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 34), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 9), roughness: 1, ...DECAL }));
   path.rotation.x = -Math.PI / 2; path.position.set(0, 0.02, 39); path.receiveShadow = true; world.add(path);
 
-  const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1 }));
+  const path2 = new THREE.Mesh(new THREE.PlaneGeometry(8.5, 22), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 6), roughness: 1, ...DECAL }));
   path2.rotation.x = -Math.PI / 2; path2.position.set(0, PLATEAU + 0.02, 3.5); path2.receiveShadow = true; world.add(path2);
 
   /* ---- 境外延伸：一條長長的下山石階（參道 → 山腳） ----
@@ -464,7 +471,7 @@ function heightAt(x, z) {
     curb.rotation.x = curbA;
   }
   // 山腳延續的土徑，一路通到獸道的光點
-  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 30), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 8), roughness: 1 }));
+  const path3 = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 30), new THREE.MeshStandardMaterial({ map: TEX.gravel(2, 8), roughness: 1, ...DECAL }));
   path3.rotation.x = -Math.PI / 2; path3.position.set(0, -OUTER_DROP + 0.04, OUT_FAR + 17); path3.receiveShadow = true; world.add(path3);
 })();
 
