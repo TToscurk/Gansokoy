@@ -3,8 +3,9 @@
 // 設定考據（Touhou Wiki）：迷いの竹林是人間之里南方的一大片孟宗竹林，
 // 竹子長得又高又密、地貌到處長一樣，走進去的人幾乎出不來 —— 名字就是
 // 這麼來的。林中住著大量妖怪兔（因幡てゐ的手下），深處是永遠亭。
-// 世界座標上人間之里在 (-80, 150)、竹林在 (-60, 840)，正南方，
-// 所以這張圖從里的南端接進來，南端再接永遠亭（尚未開放）。
+// 這張圖從獸道的東南分岔接進來，南端再接永遠亭（尚未開放）。
+// 里跟竹林之間沒有直達的路 —— 要來這裡一定得走回獸道，
+// 那條分岔才有存在感。
 //
 // 這張圖的技術重點是「竹子」：一千多根重複的竹竿如果各自一個 Mesh，
 // 光是 draw call 就先死了。這裡全部走 InstancedMesh，而且依空間格子
@@ -34,7 +35,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 /* 共用 HUD —— 與其他三張圖完全同一套版面 */
 const HUD = installHUD({
   title: '迷途竹林',
-  subtitle: 'BAMBOO FOREST OF THE LOST · 人間之里 ⇄ 永遠亭',
+  subtitle: 'BAMBOO FOREST OF THE LOST · 獸道 ⇄ 永遠亭',
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
@@ -81,7 +82,7 @@ syncQuality();
 // 兩側超過邊界才抬升成坡，把玩家收在林子裡（沒有空氣牆）。
 const LEN = 150;            // z ∈ [-150, 150]
 const HALF_W = 62;          // x ∈ [-62, 62]
-const NORTH_END = -138;     // 通往人間之里
+const NORTH_END = -138;     // 通往獸道（再往北才是人間之里與神社）
 const SOUTH_END = 138;      // 通往永遠亭（尚未開放）
 
 /** 蜿蜒的小徑中心線 —— 看不到盡頭才像迷路 */
@@ -698,7 +699,7 @@ const nearSouth = () => Math.hypot(ctrl.pos.x - pathX(SOUTH_END), ctrl.pos.z - (
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
-  if (nearNorth()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/?from=bamboo'; return; }
+  if (nearNorth()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=bamboo'; return; }
   if (nearSouth()) toast('永遠亭的門深鎖著 —— 這條路還沒開。');
 });
 
@@ -720,7 +721,7 @@ function tick(rawDt) {
   northPortal.userData.update(t);
   southPortal.userData.update(t);
 
-  if (nearNorth()) HUD.prompt('[ E ]  返回人間之里');
+  if (nearNorth()) HUD.prompt('[ E ]  返回獸道');
   else if (nearSouth()) HUD.prompt('[ E ]  永遠亭（尚未開放）');
   else HUD.prompt(null);
 }

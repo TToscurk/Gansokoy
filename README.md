@@ -209,15 +209,28 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 
 ## 地圖與串接
 
-四張圖串成一條線，走到端點按 `E` 換圖。方位依 `src/config.js` 的世界座標
-（+Z = 南）：神社在東邊 (855, -175)、里在中央 (-80, 150)、竹林在正南 (-60, 840)。
+獸道是三張圖的樞紐 —— 從神社下山之後一路蜿蜒往南，中途分岔：
+往西南是人間之里，往東南是迷途竹林。**里跟竹林之間沒有直達的路**，
+要去竹林一定得走回獸道，那條分岔才有存在感。
 
 ```
-博麗神社 ──獸道── 人間之里 ──迷途竹林── 永遠亭（尚未開放）
-  index.html    maps/trail/  maps/village/  maps/bamboo/
+        博麗神社            index.html
+             │
+             │  獸道主道（蜿蜒）   maps/trail/
+             ▼
+          ┌ 分岔 ┐
+          │      │
+     人間之里   迷途竹林 ── 永遠亭（尚未開放）
+  maps/village/  maps/bamboo/
 ```
 
-換圖時時刻、天氣、角色等級、任務進度都會延續（見「跨地圖狀態」）。
+走到端點按 `E` 換圖。換圖時時刻、天氣、HP/MP、角色等級、任務進度都會延續。
+
+> 蜿蜒 + 分岔之後，「離路多遠」不再有封閉解 —— 而地形高度、路面幾何、
+> 樹木佈點全都要問這個問題。獸道因此改用 `src/world/pathnet.js` 的路網：
+> 中心線一次取樣好塞進格線，之後每次查詢只看鄰近九宮格。
+> 撒樹木也要沿著路網撒而不是整張圖亂撒再篩 —— 地圖半徑 340 公尺、
+> 路兩側只要 40 公尺的帶，亂撒的命中率不到一成。
 
 ## 檔案
 
@@ -228,18 +241,19 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 |---|---|
 | `index.html` | 外殼、選角畫面 —— 遊戲唯一的進入點 |
 | `main.js` | 博麗神社場景：材質生成、建物、地形、控制、渲染迴圈 |
-| `maps/trail/` | 獸道（山間小徑，連接神社與人間之里） |
-| `maps/village/` | 人間之里（明治風聚落，路人、店家。北門通獸道、南門通竹林） |
-| `maps/bamboo/` | 迷途竹林（孟宗竹林，妖怪兔，南端是永遠亭的門） |
+| `maps/trail/` | 獸道（Y 字形谷道，神社 ⇄ 人間之里 ⇄ 迷途竹林 的樞紐） |
+| `maps/village/` | 人間之里（明治風聚落，路人、店家。只有北門通獸道） |
+| `maps/bamboo/` | 迷途竹林（孟宗竹林，妖怪兔。北口接獸道，南端是永遠亭的門） |
 | `vendor/` | three.js r180 本地副本（`npm i three` 複製過來的） |
 | `vendor/jsm/` | 後製用的 addons（EffectComposer / GTAO / Bloom / SMAA / OutputPass） |
 | `src/entities/` | 角色建模、NPC 管理、名冊、神社站位、擺放狀態、路人 |
 | `src/player/controller.js` | 第三人稱控制器（**換角色務必呼叫 `dispose()`**） |
 | `src/player/progression.js` | 角色等級／技能練度（localStorage，跨地圖共用） |
-| `src/player/vitals.js` | 玩家血量、無敵幀、自然回血、死亡與復活 |
+| `src/player/vitals.js` | 玩家 HP/MP、無敵幀、自然回復、死亡與復活 |
+| `src/player/loadout.js` | 角色隨身裝備（HP/MP + 戰鬥 + 技能 + K 視窗），每張圖一行掛上 |
 | `src/ui/` | 對話框、任務日誌、共用 HUD（`hud.js`）、角色場景編輯器 |
 | `src/quests/` | 任務資料（原封不動）與分支引擎 |
-| `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`） |
+| `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`）、路網（`pathnet.js`） |
 | `src/combat/` | 戰鬥引擎（`combat.js`/`hud.js`）、技能系統（`skills.js`）、怪物（`mobcore.js` 共用判定 + `mobs.js` 妖精 + `rabbits.js` 妖怪兔）、招式資料（`forms.js`/`motion.js`），跨地圖共用 |
 | `src/fx/` | 特效（刀光、粒子） |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |

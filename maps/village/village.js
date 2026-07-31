@@ -561,9 +561,11 @@ for (let i = 0; i < 18; i++) {
   world.add(m);
 }
 
-/* ─────────────────────────── 傳送點（北往獸道、南往竹林） ── */
+/* ─────────────────────────────── 傳送點（只有北端通獸道） ── */
+// 里只有一個對外的出口：北門的獸道。要去迷途竹林得走回獸道再往東南岔 ——
+// 里跟竹林之間沒有直達的路，那條分岔才有存在感。
+// 南門保留成建築（里的南界），但不是傳送點。
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
-const bambooPortal = makePortalGlow(world, 0, heightAt(0, SOUTH_GATE_Z + 6), SOUTH_GATE_Z + 6, 0xd8f0a0);
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 里是三張圖裡最重的一張（近 1800 個網格）：房舍、圍牆、街燈、水田、遠山
@@ -639,16 +641,9 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: 96, hz: 108 };
-// 從哪一端走進來，就從那一端出生
-if (new URLSearchParams(location.search).get('from') === 'bamboo') {
-  ctrl.teleport(0, SOUTH_GATE_Z - 9);
-  ctrl.yaw = Math.PI;             // 面向北（往里內／獸道）
-  ctrl.camYaw = 0;
-} else {
-  ctrl.teleport(0, GATE_Z + 9);   // 從北邊的里門走進來
-  ctrl.yaw = 0;
-  ctrl.camYaw = Math.PI;
-}
+ctrl.teleport(0, GATE_Z + 9);   // 里只有北門一個入口
+ctrl.yaw = 0;
+ctrl.camYaw = Math.PI;
 
 /* ───────────────────── 名冊角色（預設沒有人，全交給場景編輯器） ── */
 const labelScene = new THREE.Scene();
@@ -709,7 +704,6 @@ const escMenu = bindEscMenu({
 });
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
-const nearBamboo = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (SOUTH_GATE_Z + 6)) < 4.2;
 
 window.addEventListener('keydown', (e) => {
   // ESC 在編輯器開著時是「關掉編輯器」（bindEscMenu 的 isBusy 已讓過）
@@ -718,8 +712,7 @@ window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
   if (sceneEditor.isOpen || escMenu.isOpen) return;
   if (e.code !== 'KeyE' || !ctrl.locked) return;
-  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; return; }
-  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/'; }
+  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -736,10 +729,7 @@ function tick(rawDt) {
   npcSystem.update(t, ctrl.pos, camera);
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
-  bambooPortal.userData.update(t);
-  if (nearPortal()) HUD.prompt('[ E ]  前往獸道（往博麗神社）');
-  else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林（往永遠亭）');
-  else HUD.prompt(null);
+  HUD.prompt(nearPortal() ? '[ E ]  前往獸道（往博麗神社・迷途竹林）' : null);
 }
 
 function animate() {
