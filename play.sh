@@ -16,7 +16,7 @@ set -u
 cd "$(dirname "$0")"
 
 # 想玩別的分支就改這一行
-BRANCH="claude/project-status-analysis-rffxia"
+BRANCH="main"
 PORT=5603
 
 echo

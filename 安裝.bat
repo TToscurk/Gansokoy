@@ -17,7 +17,7 @@ REM ============================================================
 cd /d "%~dp0"
 
 set REPO=https://github.com/TToscurk/Gansokoy.git
-set BRANCH=claude/project-status-analysis-rffxia
+set BRANCH=main
 
 echo.
 echo ============================================

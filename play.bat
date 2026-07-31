@@ -15,7 +15,7 @@ REM ============================================================
 cd /d "%~dp0"
 
 REM 想玩別的分支就改這一行
-set BRANCH=claude/project-status-analysis-rffxia
+set BRANCH=main
 
 echo.
 echo ============================================
