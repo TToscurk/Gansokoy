@@ -21,35 +21,87 @@ function normalize(geo) {
   return g;
 }
 
+/** 會動、或不能被合併走的東西 —— 掛上這個就整棵子樹跳過 */
+export function keepDynamic(obj) {
+  obj.userData.noMerge = true;
+  return obj;
+}
+
+/** 這個網格能不能被合併走 */
+function mergeable(o) {
+  if (!o.isMesh) return false;
+  if (o.isInstancedMesh || o.isSkinnedMesh || o.isBatchedMesh) return false;
+  if (Array.isArray(o.material)) return false;          // 多材質網格
+  if (o.geometry?.morphAttributes &&
+      Object.keys(o.geometry.morphAttributes).length) return false;
+  const m = o.material;
+  if (!m) return false;
+  // 半透明／不寫深度的東西靠「逐物件由遠到近排序」才畫得對，
+  // 合成一顆大網格之後排序單位就沒了 —— 光柱、光環、水面留著各自畫。
+  if (m.transparent || m.depthWrite === false) return false;
+  return true;
+}
+
 /**
- * 把 root 底下的靜態網格依材質合併。
+ * 把 root 底下的靜態網格依「材質 × 空間格子 × 陰影旗標」合併。
+ *
+ * 為什麼要分格子：全圖同材質合成一顆網格的話，draw call 會降到最低，
+ * 但那顆網格的包圍盒涵蓋整張地圖 —— 視錐裁剪永遠命中，玩家站在神社
+ * 也得把山腳的樹一起送進 GPU。切成 cell 公尺見方的格子，鏡頭後面的
+ * 格子就整塊被裁掉，兩邊的好處都拿得到。cell = 0 代表不分格。
+ *
+ * 為什麼要分陰影旗標：castShadow 是逐物件的。地面、遠山本來就設成
+ * 不投影，跟會投影的建築合在一起就會被迫一起進 shadow pass。
+ *
  * @param {THREE.Object3D} root
- * @param {string[]} skipNames  這些名字（含其子樹）保持獨立，通常是會動的東西
- * @returns {{before:number, after:number}}
+ * @param {object} [opts]
+ * @param {string[]} [opts.skipNames]  這些名字（含其子樹）保持獨立
+ * @param {number}   [opts.cell=60]    空間格子邊長（公尺），0 = 不分格
+ * @returns {{before:number, after:number, merged:number, kept:number}}
  */
-export function mergeStaticByMaterial(root, skipNames = []) {
+export function mergeStaticByMaterial(root, opts = {}) {
+  // 舊呼叫法 mergeStaticByMaterial(root, ['name']) 仍然可用
+  const { skipNames = [], cell = 60 } = Array.isArray(opts) ? { skipNames: opts } : opts;
+
   root.updateMatrixWorld(true);
 
-  const byMat = new Map();
+  const groups = new Map();     // key → { mat, cast, receive, geos: [] }
   const victims = [];
   let before = 0;
+  const box = new THREE.Box3();
+  const mid = new THREE.Vector3();
+  const matIds = new Map();
+  const matId = (m) => {
+    if (!matIds.has(m)) matIds.set(m, matIds.size);
+    return matIds.get(m);
+  };
 
   root.traverse(o => {
-    if (!o.isMesh || o.isInstancedMesh) return;
+    if (!o.isMesh) return;
     before++;
 
-    // 若位於保留子樹內，跳過
+    // 位於保留子樹內就跳過（名字或 userData.noMerge，含自己）
     for (let p = o; p && p !== root.parent; p = p.parent) {
-      if (skipNames.includes(p.name)) return;
+      if (p.userData?.noMerge || skipNames.includes(p.name)) return;
     }
-    // 多材質網格不處理
-    if (Array.isArray(o.material)) return;
+    if (!mergeable(o)) return;
 
     const g = normalize(o.geometry);
     g.applyMatrix4(o.matrixWorld);
 
-    if (!byMat.has(o.material)) byMat.set(o.material, []);
-    byMat.get(o.material).push(g);
+    // 用世界座標的包圍盒中心決定落在哪個格子
+    let cx = 0, cz = 0;
+    if (cell > 0) {
+      g.computeBoundingBox();
+      box.copy(g.boundingBox).getCenter(mid);
+      cx = Math.floor(mid.x / cell);
+      cz = Math.floor(mid.z / cell);
+    }
+
+    const cast = o.castShadow, receive = o.receiveShadow;
+    const key = `${matId(o.material)}|${cx}|${cz}|${cast ? 1 : 0}${receive ? 1 : 0}`;
+    if (!groups.has(key)) groups.set(key, { mat: o.material, cast, receive, geos: [] });
+    groups.get(key).geos.push(g);
     victims.push(o);
   });
 
@@ -59,26 +111,31 @@ export function mergeStaticByMaterial(root, skipNames = []) {
     o.geometry.dispose();
   }
 
-  let after = 0;
-  for (const [mat, geos] of byMat) {
+  let merged = 0;
+  for (const { mat, cast, receive, geos } of groups.values()) {
     if (!geos.length) continue;
-    const merged = geos.length === 1 ? geos[0] : BGU.mergeGeometries(geos, false);
-    if (!merged) continue;               // 屬性不相容時 mergeGeometries 回傳 null
-    geos.forEach(g => { if (g !== merged) g.dispose(); });
+    const geo = geos.length === 1 ? geos[0] : BGU.mergeGeometries(geos, false);
+    if (!geo) {                         // 屬性不相容時 mergeGeometries 回傳 null
+      geos.forEach(g => g.dispose());
+      continue;
+    }
+    geos.forEach(g => { if (g !== geo) g.dispose(); });
 
-    const mesh = new THREE.Mesh(merged, mat);
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    mesh.matrixAutoUpdate = false;
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = cast;
+    mesh.receiveShadow = receive;
+    mesh.matrixAutoUpdate = false;      // 靜態，省掉每幀的矩陣合成
+    mesh.updateMatrix();
     mesh.name = 'merged';
     root.add(mesh);
-    after++;
+    merged++;
   }
 
-  // 保留下來、仍需獨立存在的網格
-  root.traverse(o => { if (o.isMesh && o.name !== 'merged') after++; });
+  // 沒被合併、仍各自存在的網格
+  let kept = 0;
+  root.traverse(o => { if (o.isMesh && o.name !== 'merged') kept++; });
 
-  return { before, after };
+  return { before, after: merged + kept, merged, kept };
 }
 
 /**

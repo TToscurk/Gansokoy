@@ -32,6 +32,7 @@ import { SlashFX, SlashAudio } from './src/fx/slash.js';
 import { combatHUD, bindCombatInput } from './src/combat/hud.js';
 import { Progression } from './src/player/progression.js';
 import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
+import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 
 /* ─────────────────────────────────────────────────────────────── HUD ── */
 // 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
@@ -758,6 +759,9 @@ function shrine() {
   }
   cyl(0.13, 0.09, 0.34, ropeMatB, 0, -0.42 - 9 * 0.32, 0, 10, bellRope);   // tassel
   g.add(bellRope);
+  // 鈴與鈴緒會在投賽錢後搖 —— 不能被靜態合併走（合併會把當下的姿態烘死）
+  keepDynamic(bellRope);
+  keepDynamic(bell);
   OBJ.bellRope = bellRope;
   OBJ.bell = bell;
 
@@ -928,7 +932,7 @@ function yinYang(x, y, z) {
   g.rotation.z = 0.22;
   g.add(red, white);
   red.castShadow = white.castShadow = true;
-  g.userData = { base: y, phase: Math.random() * 6.28 };
+  g.userData = { base: y, phase: Math.random() * 6.28, noMerge: true };  // 會浮會轉
   orbs.push(g);
   return g;
 }
@@ -1067,14 +1071,14 @@ const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 14);
 OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 14);
 
 // distant mountains (Youkai Mountain silhouettes)
+// 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
+// 16 座山就永遠是 16 個 draw call。
+const mountainMat = new THREE.MeshStandardMaterial({ color: '#2c3346', roughness: 1, flatShading: true, fog: true });
 for (let i = 0; i < 16; i++) {
   const a = (i / 16) * Math.PI * 2 + 0.2;
   const r = 150 + Math.random() * 60;
   const h = 40 + Math.random() * 55;
-  const m = new THREE.Mesh(
-    new THREE.ConeGeometry(30 + Math.random() * 34, h, 5),
-    new THREE.MeshStandardMaterial({ color: '#2c3346', roughness: 1, flatShading: true, fog: true })
-  );
+  const m = new THREE.Mesh(new THREE.ConeGeometry(30 + Math.random() * 34, h, 5), mountainMat);
   // 南邊的山要壓低到山腳低地的高度，不然山底會浮在低地上空
   const mz = Math.sin(a) * r;
   m.position.set(Math.cos(a) * r, h / 2 - 8 + (mz > 60 ? -OUTER_DROP : 0), mz);
@@ -1125,6 +1129,15 @@ const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
 }));
 stars.frustumCulled = false;
 scene.add(stars);
+
+/* ──────────────────────────────────────────────── 靜態幾何合併 ── */
+// 境內的建物、鳥居、石燈籠、樹全部不會動，可以按「材質 × 空間格子」
+// 合成幾顆大網格 —— draw call 是這種場景真正的瓶頸，不是三角形數。
+// 必須排在所有 world.add 之後、任何會動的東西掛上 noMerge 之後。
+// NPC、玩家、天氣粒子都掛在 scene 而非 world，不受影響。
+const mergeStats = mergeStaticByMaterial(world, { cell: 55 });
+console.info(`[optimize] 神社靜態合併：${mergeStats.before} → ${mergeStats.after} 個網格`
+  + `（合併成 ${mergeStats.merged}，保留 ${mergeStats.kept}）`);
 
 /* ───────────────────────────────────────────────────────── NPC 系統 ── */
 // 把 shrine 的高度場接上 NPC 模組，這樣角色才會站在地面上

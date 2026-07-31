@@ -25,6 +25,7 @@ import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
+import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -369,6 +370,15 @@ const villagePortal = makePortalGlow(world, 0, heightAt(0, VILLAGE_END), VILLAGE
   g.traverse(o => { if (o.isMesh) o.castShadow = false; });
 })();
 
+/* ──────────────────────────────────────────── 靜態幾何合併 ── */
+// 樹、石頭、彼岸花、兩端的遠景全部不會動 —— 依「材質 × 空間格子」合併。
+// 獸道是一條 260 公尺的長廊，格子切小一點（40）讓身後的路段整塊被視錐裁掉。
+// 兩個傳送光點會呼吸，已在 portal.js 標記 noMerge；玩家、妖精、光斑都在 scene。
+{
+  const s = mergeStaticByMaterial(world, { cell: 40 });
+  console.info(`[optimize] 獸道靜態合併：${s.before} → ${s.after} 個網格（合併成 ${s.merged}，保留 ${s.kept}）`);
+}
+
 /* ─────────────────────────────────────────────── 光斑與飛螢 ── */
 const motes = (() => {
   const N = 260;
@@ -521,4 +531,8 @@ window.__trail = {
     for (let i = 0; i < n; i++) tick(dt);
     return ctrl.pos.toArray().map(v => +v.toFixed(2));
   },
+  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑） */
+  frame() { renderer.render(scene, camera); },
+  setHour(h) { return env.setHour(h); },
+  setTimeFlowing(v) { env.timeFlowing = v; },
 };

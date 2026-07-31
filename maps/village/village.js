@@ -30,6 +30,7 @@ import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from
 import { VillagerCrowd } from '../../src/entities/villagers.js';
 import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
+import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 
 const HUD = installHUD({
   title: '人間之里',
@@ -496,14 +497,14 @@ for (let i = 0; i < 14; i++) {
 })();
 
 // 遠山（讓盆地有邊界感）
+// 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
+// 18 座山就永遠是 18 個 draw call。
+const MOUNTAIN_MAT = new THREE.MeshStandardMaterial({ color: '#3a4450', roughness: 1, flatShading: true });
 for (let i = 0; i < 18; i++) {
   const a = (i / 18) * Math.PI * 2 + 0.3;
   const r = 165 + Math.random() * 55;
   const h = 34 + Math.random() * 46;
-  const m = new THREE.Mesh(
-    new THREE.ConeGeometry(28 + Math.random() * 30, h, 5),
-    new THREE.MeshStandardMaterial({ color: '#3a4450', roughness: 1, flatShading: true })
-  );
+  const m = new THREE.Mesh(new THREE.ConeGeometry(28 + Math.random() * 30, h, 5), MOUNTAIN_MAT);
   m.position.set(Math.cos(a) * r, h / 2 - 4, Math.sin(a) * r);
   m.rotation.y = Math.random() * 3;
   world.add(m);
@@ -511,6 +512,16 @@ for (let i = 0; i < 18; i++) {
 
 /* ───────────────────────────────── 傳送點（往獸道 → 神社） ── */
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
+
+/* ──────────────────────────────────────────── 靜態幾何合併 ── */
+// 里是三張圖裡最重的一張（近 1800 個網格）：房舍、圍牆、街燈、水田、遠山
+// 全部不會動，依「材質 × 空間格子」合併。里是南北向的長條聚落，
+// 格子 50 公尺讓走在主街時，街尾的房子整塊被視錐裁掉。
+// 路人與 NPC 掛在 scene、傳送光點已標記 noMerge，都不受影響。
+{
+  const s = mergeStaticByMaterial(world, { cell: 50 });
+  console.info(`[optimize] 人間之里靜態合併：${s.before} → ${s.after} 個網格（合併成 ${s.merged}，保留 ${s.kept}）`);
+}
 
 /* ─────────────────────────────────────────── 里民路人 ── */
 // 街道的路點圖：主街兩側各一條人行動線 + 橫街一條，交叉口互通，
@@ -696,4 +707,8 @@ window.__village = {
     for (let i = 0; i < n; i++) tick(dt);
     return ctrl.pos.toArray().map(v => +v.toFixed(2));
   },
+  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑） */
+  frame() { renderer.render(scene, camera); },
+  setHour(h) { return env.setHour(h); },
+  setTimeFlowing(v) { env.timeFlowing = v; },
 };
