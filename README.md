@@ -13,7 +13,7 @@
 |---|---|
 | Windows | 點兩下 `play.bat` |
 | macOS / Linux | 終端機執行 `./play.sh`（第一次要先 `chmod +x play.sh`） |
-| 完全還沒下載過（Windows） | 把 `安裝.bat` 放進一個空資料夾執行，它會自動 clone 再開始玩 |
+| 完全還沒下載過（Windows） | 把 `安裝.bat` 放進**你想要安裝的資料夾**再執行（例如 `D:\神社\shrine`）。檔案會直接落在那個資料夾，不會再多包一層 |
 
 腳本會依序做：從 GitHub 拉最新的程式碼 → 啟動 `dev-server.mjs` → 開瀏覽器。
 **有還沒提交的本機修改時會跳過更新**，不會蓋掉你改的東西。
@@ -294,7 +294,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/fx/` | 特效（刀光、粒子） |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
 | `play.bat` / `play.sh` | 一鍵更新 + 啟動（Windows / macOS・Linux） |
-| `安裝.bat` | 全新安裝（自動 clone 再啟動，給還沒下載過的電腦） |
+| `安裝.bat` | 就地安裝（把專案裝進它自己所在的資料夾，不多包一層），裝完直接啟動 |
 | `tools/dev-server.mjs` | 開發用靜態伺服器（`no-store`，避免 ES module 快取；支援資料夾內的 `index.html`） |
 | `tools/capture-server.mjs` | 開發用：接收頁面截圖並存到 `shots/` |
 | `shots/` | 開發過程的截圖 |
