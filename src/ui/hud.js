@@ -154,7 +154,7 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
       <div class="panel">
         <h3>選 單</h3>
         <button id="escResume">繼續遊戲</button>
-        <button id="escChar">回到選角畫面</button>
+        <button id="escChar">回到標題畫面</button>
         <div class="settings">
           <div class="srow"><span class="lb">畫質</span><button id="escQuality">—</button></div>
           <div class="srow"><span class="lb">天氣</span><button id="escWeather">切換天氣</button></div>

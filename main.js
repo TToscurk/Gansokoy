@@ -19,7 +19,7 @@ import { WEATHERS } from './src/world/weather.js';
 import { Environment } from './src/world/environment.js';
 import { makePortalGlow } from './src/world/portal.js';
 import { buildCharacter } from './src/entities/model.js';
-import { PLAYABLE } from './src/entities/roster.js';
+import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from './src/entities/roster.js';
 import { TALK_RANGE as TALK_REACH } from './src/entities/npc.js';
 import { PlayerController } from './src/player/controller.js';
 import { Dialogue } from './src/ui/dialogue.js';
@@ -1294,10 +1294,11 @@ const toastEl = document.getElementById('toast');
 const yenEl = document.getElementById('yen');
 let yen = 0;
 
-// --- 角色選擇：在 veil 裡放可操作角色的卡片 ---
+// --- 可操作角色：目前只開繼國緣一（見 roster.js 的 ACTIVE_PLAYER_IDS）---
+// 只有一位可操作時不畫選角卡片，標題畫面直接點一下就開始，介面乾淨。
 const charCards = document.getElementById('charCards');
-const PLAYER_SPECS = PLAYABLE;
-let chosenSpec = PLAYER_SPECS[0];   // 預設靈夢
+const PLAYER_SPECS = ACTIVE_PLAYABLE;
+let chosenSpec = DEFAULT_PLAYER;
 
 const hex = (n) => '#' + n.toString(16).padStart(6, '0');
 
@@ -1330,14 +1331,22 @@ function buildCharCard(spec) {
   d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') pick(e); });
   charCards.appendChild(d);
 }
-for (const spec of PLAYER_SPECS) buildCharCard(spec);
+if (PLAYER_SPECS.length > 1) {
+  for (const spec of PLAYER_SPECS) buildCharCard(spec);
+} else {
+  // 單一角色：標題畫面只留一行「點擊畫面 開始參拜」與角色名
+  charCards.remove();
+  const go = document.querySelector('#card .go');
+  if (go) go.innerHTML = `點擊畫面 <span>開始參拜</span>`;
+  const who = document.createElement('div');
+  who.className = 'crm';
+  who.style.marginTop = '14px';
+  who.textContent = `${chosenSpec.zh}　${chosenSpec.en}`;
+  go?.after(who);
+}
 
-// 點擊 veil 任意處 = 用預設角色（靈夢）開始
-veil.addEventListener('click', (e) => {
-  if (e.target === veil || e.target.id === 'card' || e.target.classList.contains('kanji') || e.target.classList.contains('rom') || e.target.classList.contains('go') || e.target.classList.contains('rule')) {
-    startGame();
-  }
-});
+// 點擊 veil 任意處＝開始遊戲
+veil.addEventListener('click', () => startGame());
 
 // --- 啟動遊戲（選完角色後） ---
 let ctrl = null;
@@ -1480,7 +1489,7 @@ if (new URLSearchParams(location.search).get('from') === 'trail') {
   veil.classList.add('hide');
   let saved = null;
   try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-  chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? PLAYER_SPECS[0];
+  chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? DEFAULT_PLAYER;
   startGame();
   if (ctrl) {
     ctrl.teleport(0, OBJ.trailGate.z - 3);
@@ -1697,6 +1706,7 @@ window.__shrine = {
   },
   composer, applyQuality, QUALITY,
   quests, questLog, dialogue, zones, weather, sceneEditor,
+  get combat() { return combat; },
   /** 測試用：直接設定時刻（小時，0–24），並停住時間 */
   setHour(h) { return env.setHour(h); },
   getHour() { return env.hour; },

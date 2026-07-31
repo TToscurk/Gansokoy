@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import { setGroundHeightFn } from '../../src/world/terrain.js';
 import { WORLD } from '../../src/config.js';
 import { buildCharacter } from '../../src/entities/model.js';
-import { PLAYABLE } from '../../src/entities/roster.js';
+import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
@@ -564,7 +564,7 @@ const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 52);
 /* ─────────────────────────────────────────────────────── 玩家 ── */
 let saved = null;
 try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = PLAYABLE.find(p => p.id === saved) ?? PLAYABLE[0];
+const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
 
 const model = buildCharacter(spec);
 scene.add(model);

@@ -1027,3 +1027,14 @@ export const PLAYABLE = [
     speed: 1.05,
   },
 ];
+
+/**
+ * 目前開放操作的角色。
+ *
+ * 現階段只開繼國緣一 —— 介面乾淨，也不必為了每位角色各做一套技能。
+ * 之後要再開放誰，把 id 加回 ACTIVE_PLAYER_IDS 就好：選角畫面、
+ * 各地圖的載入、除錯用的 switchChar 全部吃這一份清單。
+ */
+export const ACTIVE_PLAYER_IDS = ['yoriichi'];
+export const ACTIVE_PLAYABLE = PLAYABLE.filter(p => ACTIVE_PLAYER_IDS.includes(p.id));
+export const DEFAULT_PLAYER = ACTIVE_PLAYABLE[0] ?? PLAYABLE[0];
