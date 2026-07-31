@@ -36,6 +36,8 @@ import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
+import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
+import { scatterGrass } from '../../src/world/flora.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -130,10 +132,17 @@ function heightAt(x, z) {
   const roll = Math.sin(z * 0.021) * 1.1 + Math.sin(x * 0.026 + 1.7) * 0.9;   // 沿途起伏
   const wob = Math.sin(x * 0.55 + z * 0.31) * 0.11;                           // 土路的顛簸
 
-  // 谷壁：離路越遠爬得越高，但要封頂 —— 不封的話二次式在地圖邊緣會
-  // 衝到幾百公尺，遠看是一圈白色巨牆（竹林踩過這個坑）。
+  // 谷壁 —— 不規則的山稜，不是把路「包起來」的均勻邊坡。
+  // 兩組不同頻率的正弦把振幅與峰高都調變掉，天際線才會鋸齒起伏；
+  // 冪次 2.35 讓山腳到十來公尺外就陡得爬不上去（配 controller 的
+  // maxGrade 坡度阻擋）。上限一樣要封 —— 二次式不封頂在地圖邊緣
+  // 會衝到幾百公尺（竹林踩過這個坑）。
+  const n1 = Math.sin(x * 0.037 + z * 0.026);
+  const n2 = Math.sin(x * 0.011 - z * 0.043 + 2.1);
+  const amp = Math.max(0.5, 0.85 + 0.35 * n1 + 0.25 * n2);
+  const cap = Math.max(14, 26 + 9 * n2 + 5 * n1);
   const d = PATHS.edgeDist(x, z, 2);
-  const valley = d === Infinity ? 26 : Math.min(26, d * d * 0.02);
+  const valley = d === Infinity ? cap : Math.min(cap, Math.pow(d * 0.17, 2.35) * amp);
 
   // 地圖邊界：再往外就是爬不上去的山
   const r = Math.hypot(x, z);
@@ -222,52 +231,20 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
 }
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
-(function ground() {
-  const S = MAP_R * 2 + 120, SEG = 190;
-  const geo = new THREE.PlaneGeometry(S, S, SEG, SEG);
-  geo.rotateX(-Math.PI / 2);
-  const p = geo.attributes.position;
-  for (let i = 0; i < p.count; i++) p.setY(i, heightAt(p.getX(i), p.getZ(i)));
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, MAT.grass);
+/* 地面網格 + 貼地查詢。路面（ribbonOnGrid）的每個頂點都會問 GRID
+ * 「地面實際渲染的高度」——見 src/world/groundmesh.js 檔頭，
+ * 這是路草交界不再閃爍的根治。 */
+const GRID = new GroundGrid({ size: MAP_R * 2 + 120, seg: 210, heightAt });
+const gSample = (x, z) => GRID.sample(x, z);
+{
+  const m = new THREE.Mesh(GRID.buildGeometry(), MAT.grass);
   m.receiveShadow = true;
   world.add(m);
-})();
-
-/* 路面。沿著每一段的中心線鋪一條帶子，每個頂點各自貼著地形抬 4 公分
- * （固定高度的平面會被地形吃掉 —— 人間之里踩過這個坑）。 */
-function ribbon(pts, halfW, mat, lift = 0.04) {
-  const dense = catmullRom(pts, 2.5);
-  const pos = [], uv = [], idx = [];
-  for (let i = 0; i < dense.length; i++) {
-    const [cx, cz] = dense[i];
-    // 切線 → 左右偏移方向（否則轉彎處路寬會被壓縮）
-    const a = dense[Math.max(0, i - 1)], b = dense[Math.min(dense.length - 1, i + 1)];
-    const tx = b[0] - a[0], tz = b[1] - a[1];
-    const tl = Math.hypot(tx, tz) || 1;
-    const nx = tz / tl, nz = -tx / tl;
-    for (const sgn of [-1, 1]) {
-      const x = cx + nx * halfW * sgn, z = cz + nz * halfW * sgn;
-      pos.push(x, heightAt(x, z) + lift, z);
-      uv.push(sgn > 0 ? 1 : 0, i * 0.16);
-    }
-    if (i < dense.length - 1) {
-      const k = i * 2;
-      // 繞向決定面朝上還是朝下 —— 反了整條路會被背面剔除（竹林踩過）
-      idx.push(k, k + 2, k + 1, k + 1, k + 2, k + 3);
-    }
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-  geo.setIndex(idx);
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, mat);
-  m.receiveShadow = true;
-  world.add(m);
-  return m;
 }
-for (const seg of SEGMENTS) ribbon(seg.pts, seg.width / 2, MAT.dirt);
+
+for (const seg of SEGMENTS) {
+  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.dirt, gSample);
+}
 
 /* ───────────────────────────────────────────────────────── 樹林 ── */
 function tree(x, z, s, leaf) {
@@ -306,13 +283,24 @@ function pickNearPath(minD, maxD) {
   return [x, z, PATHS.edgeDist(x, z, 3)];
 }
 
-// 樹：離路 3~44 公尺的帶狀範圍內，越遠越密（近處疏一點，看得到路）
-for (let i = 0; i < 2600; i++) {
-  const [x, z, d] = pickNearPath(3, 44);
+// 樹：離路 3~64 公尺的帶狀範圍內，越遠越密（近處疏一點，看得到路）。
+// 帶子拉寬到 64 讓山坡上也有樹 —— 邊坡光禿禿的就只是一道綠牆。
+for (let i = 0; i < 3400; i++) {
+  const [x, z, d] = pickNearPath(3, 64);
   if (d < 2.6) continue;
   if (Math.random() > Math.min(1, (d - 2.6) / 14) * 0.8) continue;
   tree(x, z, 0.8 + Math.random() * 1.1, leaves[Math.random() * leaves.length | 0]);
 }
+
+// 草叢與雜草：路肩到山腳的帶狀範圍，靠路密、遠處疏
+scatterGrass(world, {
+  count: 4200, heightAt,
+  place: () => {
+    const [x, z, d] = pickNearPath(0.8, 30);
+    return d < 0.6 ? null : [x, z];
+  },
+  baseColor: 0x4e7030,
+});
 
 // 路邊的岩石
 for (let i = 0; i < 150; i++) {
@@ -553,6 +541,7 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: MAP_R + 30, hz: MAP_R + 30 };
+ctrl.maxGrade = 1.05;   // 邊坡是山，爬不上去（見 controller 的坡度阻擋）
 // 從哪一端走進來，就從那一端出生
 const from = new URLSearchParams(location.search).get('from');
 {

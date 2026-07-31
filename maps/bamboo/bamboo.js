@@ -32,6 +32,8 @@ import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
+import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
+import { scatterGrass } from '../../src/world/flora.js';
 
 /* 共用 HUD —— 與其他三張圖完全同一套版面 */
 const HUD = installHUD({
@@ -236,50 +238,18 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
 }
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
-(function ground() {
-  const S = Math.max(HALF_W, LEN) * 2 + 120;
-  const geo = new THREE.PlaneGeometry(S, S, 150, 150);
-  geo.rotateX(-Math.PI / 2);
-  const p = geo.attributes.position;
-  for (let i = 0; i < p.count; i++) p.setY(i, heightAt(p.getX(i), p.getZ(i)));
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, MAT.soil);
-  m.receiveShadow = true;
-  world.add(m);
-})();
-
-/* 小徑。每段沿著自己的中心線鋪一條帶子，每個頂點各自貼著地形抬 4 公分
- * （固定高度的平面會被地形吃掉 —— 人間之里踩過這個坑）。 */
-function ribbon(pts, halfW, mat, lift = 0.04) {
-  const dense = catmullRom(pts, 2.5);
-  const pos = [], uv = [], idx = [];
-  for (let i = 0; i < dense.length; i++) {
-    const [cx, cz] = dense[i];
-    const a = dense[Math.max(0, i - 1)], b = dense[Math.min(dense.length - 1, i + 1)];
-    const tx = b[0] - a[0], tz = b[1] - a[1];
-    const tl = Math.hypot(tx, tz) || 1;
-    const nx = tz / tl, nz = -tx / tl;
-    for (const sgn of [-1, 1]) {
-      const x = cx + nx * halfW * sgn, z = cz + nz * halfW * sgn;
-      pos.push(x, heightAt(x, z) + lift, z);
-      uv.push(sgn > 0 ? 1 : 0, i * 0.16);
-    }
-    if (i < dense.length - 1) {
-      // 繞向決定面朝上還是朝下 —— 反了整條路會被背面剔除
-      const k = i * 2;
-      idx.push(k, k + 2, k + 1, k + 1, k + 2, k + 3);
-    }
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-  geo.setIndex(idx);
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, mat);
+/* 地面網格 + 貼地查詢（見 src/world/groundmesh.js —— 路草不閃的根治） */
+const GRID = new GroundGrid({ size: Math.max(HALF_W, LEN) * 2 + 120, seg: 170, heightAt });
+const gSample = (x, z) => GRID.sample(x, z);
+{
+  const m = new THREE.Mesh(GRID.buildGeometry(), MAT.soil);
   m.receiveShadow = true;
   world.add(m);
 }
-for (const seg of TRAIL_SEGMENTS) ribbon(seg.pts, seg.width / 2, MAT.trail);
+
+for (const seg of TRAIL_SEGMENTS) {
+  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.trail, gSample);
+}
 
 /* ─────────────────────────────────────────────────────── 竹林 ── */
 /**
@@ -695,6 +665,103 @@ eienteiGate(SOUTH_END.x, SOUTH_END.z);
 const northPortal = makePortalGlow(world, NORTH_END.x, heightAt(NORTH_END.x, NORTH_END.z), NORTH_END.z, 0xd8f0a0);
 const southPortal = makePortalGlow(world, SOUTH_END.x, heightAt(SOUTH_END.x, SOUTH_END.z - 5), SOUTH_END.z - 5, 0xc0a8ff);
 
+/* ─────────────────────────────── 草叢與雜草（小徑沿線） ── */
+scatterGrass(world, {
+  count: 2600, heightAt,
+  place: () => {
+    const sm = PATHS.samples[(Math.random() * PATHS.samples.length) | 0];
+    const a = Math.random() * Math.PI * 2, d = 1 + Math.random() * 18;
+    const x = sm.x + Math.cos(a) * d, z = sm.z + Math.sin(a) * d;
+    if (pathDist(x, z) < 0.7) return null;
+    if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) return null;
+    return [x, z];
+  },
+  baseColor: 0x5a7a34,
+});
+
+/* ────────────────── 北口遠景：獸道的森林谷地（傳送點看得到下一張圖） ── */
+(function trailVista() {
+  const g = new THREE.Group();
+  g.position.set(NORTH_END.x, heightAt(NORTH_END.x, NORTH_END.z), NORTH_END.z - 14);
+  world.add(g);
+  const bark = new THREE.MeshStandardMaterial({ color: '#4a3828', roughness: 1 });
+  const leafs = [
+    new THREE.MeshStandardMaterial({ color: '#3d5c2a', roughness: 1, flatShading: true }),
+    new THREE.MeshStandardMaterial({ color: '#557436', roughness: 1, flatShading: true }),
+    new THREE.MeshStandardMaterial({ color: '#8f6a2c', roughness: 1, flatShading: true }),
+  ];
+  // 一條土徑穿出去、闊葉樹夾道 —— 跟獸道同一種樹，一眼認得出目的地
+  for (let i = 0; i < 46; i++) {
+    const z = -6 - Math.random() * 60;
+    const x = (Math.random() < 0.5 ? -1 : 1) * (4 + Math.random() * 26);
+    const h = 3.4 + Math.random() * 2.6;
+    const t = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.25, h, 7), bark);
+    t.position.set(x, h / 2, z); g.add(t);
+    for (let k = 0; k < 2; k++) {
+      const r = 1.6 - k * 0.4;
+      const c = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0),
+        leafs[(Math.random() * leafs.length) | 0]);
+      c.position.set(x + (Math.random() - 0.5) * 0.8, h + k * 0.8 - 0.2, z + (Math.random() - 0.5) * 0.8);
+      g.add(c);
+    }
+  }
+  // 遠處的山稜（獸道的谷壁剪影）
+  const ridgeMat = new THREE.MeshStandardMaterial({ color: '#39543a', roughness: 1, flatShading: true });
+  for (let i = 0; i < 7; i++) {
+    const m = new THREE.Mesh(new THREE.ConeGeometry(16 + Math.random() * 14, 24 + Math.random() * 18, 5), ridgeMat);
+    m.position.set((i - 3) * 24 + (Math.random() - 0.5) * 10, 8, -66 - Math.random() * 22);
+    m.rotation.y = Math.random() * 3;
+    g.add(m);
+  }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
+})();
+
+/* ──────── 南門後的永遠亭剪影（門雖未開放，先看得到深處的宅院） ── */
+(function eienteiVista() {
+  const g = new THREE.Group();
+  // 放在南端圍坡「上面」——圍坡在 z≈292 之後抬 13 公尺，宅院要是放在
+  // 門口的低地高度，整棟會被坡埋掉、從門口什麼都看不到。
+  const vz = SOUTH_END.z + 24;
+  g.position.set(SOUTH_END.x, heightAt(SOUTH_END.x, vz) + 0.5, vz);
+  world.add(g);
+  const wallM = new THREE.MeshStandardMaterial({ color: '#e8dcc2', roughness: 0.95 });
+  const woodM = new THREE.MeshStandardMaterial({ color: '#4e3a2a', roughness: 0.95 });
+  const tileM = new THREE.MeshStandardMaterial({ color: '#3e4650', roughness: 0.85, flatShading: true });
+  // 大宅：長屋身 + 兩層大屋頂 + 側翼 —— 竹叢縫隙間讀得出「深處有一座宅院」
+  const body = new THREE.Mesh(new THREE.BoxGeometry(34, 6, 12), wallM);
+  body.position.set(0, 3, 0); g.add(body);
+  for (const sd of [-1, 1]) {
+    const slope = new THREE.Mesh(new THREE.BoxGeometry(38, 0.8, 8.4), tileM);
+    slope.position.set(0, 7.6, sd * 3.4);
+    slope.rotation.x = sd * 0.58;
+    g.add(slope);
+  }
+  const ridge = new THREE.Mesh(new THREE.BoxGeometry(38.8, 1.1, 1.6), tileM);
+  ridge.position.y = 9.4; g.add(ridge);
+  for (const sd of [-1, 1]) {
+    const wing = new THREE.Mesh(new THREE.BoxGeometry(9, 4.6, 16), wallM);
+    wing.position.set(sd * 19, 2.3, 4); g.add(wing);
+    const wr = new THREE.Mesh(new THREE.ConeGeometry(8.4, 3.4, 4), tileM);
+    wr.position.set(sd * 19, 6.4, 4); wr.rotation.y = Math.PI / 4; g.add(wr);
+  }
+  // 簷下一排暖光燈籠 —— 夜裡也看得到深處有人家
+  const paperM = new THREE.MeshStandardMaterial({
+    color: '#ffefc8', emissive: '#a8742a', emissiveIntensity: 0.55, roughness: 0.9,
+  });
+  for (let i = -3; i <= 3; i++) {
+    const l = new THREE.Mesh(new THREE.SphereGeometry(0.42, 8, 6), paperM);
+    l.position.set(i * 4.6, 5.4, -6.4);
+    g.add(l);
+  }
+  // 宅前竹垣
+  for (let i = 0; i < 16; i++) {
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.1, 2.2, 5), woodM);
+    c.position.set(-19 + i * 2.5, 1.1, -8.5);
+    g.add(c);
+  }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
+})();
+
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 建築、地藏、石頭、竹筍全部不會動 —— 依「材質 × 空間格子」合併。
 // 竹子是 InstancedMesh，合併會自動跳過（見 optimize.js 的 mergeable）。
@@ -718,6 +785,7 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: HALF_W + 8, hz: LEN + 10 };
+ctrl.maxGrade = 1.05;   // 圍坡是山，爬不上去（見 controller 的坡度阻擋）
 // 從獸道走進來 = 出生在北口
 ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
 ctrl.yaw = 0;              // 面向南（往永遠亭）

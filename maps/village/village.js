@@ -29,6 +29,8 @@ import { VillagerCrowd } from '../../src/entities/villagers.js';
 import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
+import { scatterGrass } from '../../src/world/flora.js';
 
 const HUD = installHUD({
   title: '人間之里',
@@ -220,35 +222,20 @@ function cyl(r1, r2, h, mat, x, y, z, seg = 10, parent = world) {
  * @param {THREE.Material} mat
  * @param {number} [lift=0.04] 離地高度（公尺）
  */
-function groundDecal(w, d, x, z, mat, lift = 0.04) {
-  // 每 2 公尺一段就夠了 —— 里內地形的起伏波長約 50 公尺，非常平緩
-  const geo = new THREE.PlaneGeometry(w, d, Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(d / 2)));
-  geo.rotateX(-Math.PI / 2);
-  const p = geo.attributes.position;
-  for (let i = 0; i < p.count; i++) {
-    p.setY(i, heightAt(p.getX(i) + x, p.getZ(i) + z) + lift);
-  }
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, mat);
-  m.position.set(x, 0, z);
-  m.receiveShadow = true;
-  world.add(m);
-  return m;
+/** 鋪地物件（路、田）。實作見 src/world/groundmesh.js —— 每個頂點都
+ * 取「地面網格實際渲染的高度」再抬 lift，這是路草交界不閃的根治。 */
+function groundDecal(w, d, x, z, mat, lift = 0.05) {
+  return decalOnGrid(world, w, d, x, z, mat, gSample, lift);
 }
 
-(function ground() {
-  // 里放大到半徑 175 之後，地面也要跟著大。90 格（4.4m 一格）維持原本的
-  // 精度取捨：里內起伏平緩，線性內插與真實曲面的差遠小於路面 4 公分的抬升。
-  const S = 460;
-  const geo = new THREE.PlaneGeometry(S, S, 110, 110);
-  geo.rotateX(-Math.PI / 2);
-  const p = geo.attributes.position;
-  for (let i = 0; i < p.count; i++) p.setY(i, heightAt(p.getX(i), p.getZ(i)));
-  geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, MAT.ground);
+/* 地面網格 + 貼地查詢（見 src/world/groundmesh.js） */
+const GRID = new GroundGrid({ size: 460, seg: 120, heightAt });
+const gSample = (x, z) => GRID.sample(x, z);
+{
+  const m = new THREE.Mesh(GRID.buildGeometry(), MAT.ground);
   m.receiveShadow = true;
   world.add(m);
-})();
+}
 
 /* ───────────────────────────────────────── 街道（網格） ── */
 // 參考圖的重點是「網格狀街廓」而不是一條主街：主街貫穿南北，
@@ -498,6 +485,91 @@ const BLOCK_KEEP_OUT = [
       }
     }
   }
+})();
+
+/* 小巷側的第二排民家 —— 使用者回報里還是很空曠。街廓原本只有南北
+ * 兩列面朝橫街的屋子，東西向（面朝小巷）是空的；補上這一排之後
+ * 街廓才是「四邊都有房子、中間是後院」的完整形。 */
+(function laneHouses() {
+  const clearOf = (x, z) => BLOCK_KEEP_OUT.every(k => Math.hypot(x - k.x, z - k.z) > k.r);
+  for (const lx of LANE_X) {
+    for (const side of [-1, 1]) {
+      const hx = lx + side * 9.5;
+      for (let zi = 0; zi < CROSS_Z.length - 1; zi++) {
+        const z0 = CROSS_Z[zi] + 14, z1 = CROSS_Z[zi + 1] - 14;
+        if (z1 - z0 < 14) continue;
+        const n = Math.max(1, Math.floor((z1 - z0) / 15));
+        for (let k = 0; k < n; k++) {
+          const z = z0 + (k + 0.5) * ((z1 - z0) / n) + (Math.random() - 0.5) * 2;
+          if (!clearOf(hx, z)) continue;
+          if (Math.abs(hx - riverX(z)) < 14) continue;
+          if (Math.abs(hx) < 19) continue;
+          if (Math.random() < 0.3) continue;            // 留些空隙當菜園
+          const r = Math.random();
+          house({
+            x: hx, z, w: 7 + Math.random() * 2, d: 5.5 + Math.random() * 1.5,
+            rot: -side * Math.PI / 2 + (Math.random() - 0.5) * 0.05,
+            roof: r < 0.4 ? 'thatch' : 'tile',
+            style: r > 0.92 ? 'kura' : (r > 0.82 ? 'two' : 'machiya'),
+          });
+        }
+      }
+    }
+  }
+})();
+
+/* 河畔的倉庫與船板 —— 河岸不該只有樹 */
+(function riverSheds() {
+  for (let i = 0; i < 6; i++) {
+    const z = -150 + i * 62 + (Math.random() - 0.5) * 16;
+    const x = riverX(z) - 13;
+    house({
+      x, z, w: 6 + Math.random() * 1.5, d: 5, h: 3.2,
+      rot: Math.PI / 2, roof: 'thatch', style: 'machiya',
+    });
+    // 河邊的小板橋（純視覺，不能走）
+    const plank = box(1.6, 0.14, 4.2, MAT.wood, riverX(z) - 3.5, -0.3, z + 6);
+    plank.rotation.z = 0.06;
+  }
+})();
+
+/* 火の見櫓 —— 參考圖裡那座高塔。四腳收分、上有平台小屋頂與吊鐘，
+ * 全里最高的建物，走在街上抬頭就能定位廣場。 */
+(function watchtower() {
+  const TX = 22, TZ = -34, y = heightAt(TX, TZ);
+  const g = new THREE.Group();
+  g.position.set(TX, y, TZ);
+  world.add(g);
+  const H = 14;
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    const leg = cyl(0.16, 0.24, H, MAT.darkWood, sx * 1.5, H / 2, sz * 1.5, 7, g);
+    leg.rotation.z = -sx * 0.075;
+    leg.rotation.x = sz * 0.075;
+  }
+  // 橫撐三層
+  for (const hy of [3.5, 7, 10.5]) {
+    const w = 3.4 - hy * 0.12;
+    box(w, 0.16, 0.16, MAT.darkWood, 0, hy, w / 2, g);
+    box(w, 0.16, 0.16, MAT.darkWood, 0, hy, -w / 2, g);
+    box(0.16, 0.16, w, MAT.darkWood, w / 2, hy, 0, g);
+    box(0.16, 0.16, w, MAT.darkWood, -w / 2, hy, 0, g);
+  }
+  // 平台 + 欄杆 + 小屋頂
+  box(3.2, 0.22, 3.2, MAT.wood, 0, H, 0, g);
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    cyl(0.06, 0.06, 0.9, MAT.darkWood, sx * 1.4, H + 0.45, sz * 1.4, 6, g);
+  }
+  box(3.0, 0.08, 0.08, MAT.darkWood, 0, H + 0.9, 1.4, g);
+  box(3.0, 0.08, 0.08, MAT.darkWood, 0, H + 0.9, -1.4, g);
+  box(0.08, 0.08, 3.0, MAT.darkWood, 1.4, H + 0.9, 0, g);
+  box(0.08, 0.08, 3.0, MAT.darkWood, -1.4, H + 0.9, 0, g);
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(2.6, 1.6, 4), MAT.roofTile);
+  roof.position.y = H + 2.1; roof.rotation.y = Math.PI / 4;
+  roof.castShadow = true; g.add(roof);
+  // 吊鐘
+  const bell = new THREE.Mesh(new THREE.SphereGeometry(0.34, 10, 8, 0, Math.PI * 2, 0, Math.PI * 0.72), MAT.stone);
+  bell.position.y = H + 1.1; bell.castShadow = true; g.add(bell);
+  block(TX, TZ, 3.6, 3.6, y + H + 2.6);
 })();
 
 /* ────────────────────────────────────────────── 稗田邸 ── */
@@ -829,6 +901,53 @@ for (let i = 0; i < 18; i++) {
 // 南門保留成建築（里的南界），但不是傳送點。
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
 
+/* ─────────────────────────────── 草叢與雜草（街廓後院、河岸、里外） ── */
+scatterGrass(world, {
+  count: 3200, heightAt,
+  place: () => {
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.sqrt(Math.random()) * 215;
+    const x = Math.cos(a) * r, z = Math.sin(a) * r * 1.3;
+    if (Math.abs(x) < 7) return null;                                   // 主街
+    if (CROSS_Z.some(cz => Math.abs(z - cz) < 5.5) && Math.abs(x) < 102) return null;  // 橫街
+    if (LANE_X.some(lx => Math.abs(x - lx) < 4.5) && z > -165 && z < 205) return null; // 小巷
+    if (Math.abs(x - riverX(z)) < 9.5) return null;                     // 河道
+    // 建物腳下不長（快篩：只掃矩形碰撞盒）
+    for (const c of colliders) {
+      if (c.hw != null && Math.abs(x - c.x) < c.hw + 0.3 && Math.abs(z - c.z) < c.hd + 0.3) return null;
+    }
+    return [x, z];
+  },
+  baseColor: 0x5e7a38,
+});
+
+/* ────────────── 北門外的獸道遠景（傳送點看得到下一張圖） ── */
+(function trailVista() {
+  const g = new THREE.Group();
+  world.add(g);
+  // 土徑從門口一路蜿蜒進林子
+  const pathMat = new THREE.MeshStandardMaterial({
+    map: woodTex, color: '#8a7554', roughness: 1,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  });
+  groundDecal(6, 56, 3, GATE_Z - 34, pathMat, 0.06);
+  // 夾道的闊葉樹（跟獸道同款）
+  for (let i = 0; i < 40; i++) {
+    const z = GATE_Z - 12 - Math.random() * 50;
+    const x = (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 30);
+    tree(x + 3, z, 0.9 + Math.random() * 0.8, MAT.leaf);
+  }
+  // 更遠處的谷壁山稜剪影
+  const ridgeMat = new THREE.MeshStandardMaterial({ color: '#37503a', roughness: 1, flatShading: true });
+  for (let i = 0; i < 8; i++) {
+    const m = new THREE.Mesh(new THREE.ConeGeometry(18 + Math.random() * 16, 26 + Math.random() * 20, 5), ridgeMat);
+    m.position.set((i - 4) * 26 + (Math.random() - 0.5) * 12, 9, GATE_Z - 78 - Math.random() * 26);
+    m.rotation.y = Math.random() * 3;
+    m.castShadow = false;
+    g.add(m);
+  }
+})();
+
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 里是三張圖裡最重的一張（近 1800 個網格）：房舍、圍牆、街燈、水田、遠山
 // 全部不會動，依「材質 × 空間格子」合併。里是南北向的長條聚落，
@@ -913,6 +1032,30 @@ const CROWD_GRAPH = (() => {
 
   return { nodes, links };
 })();
+/* 路點推離碰撞盒 —— 修「路人穿模」。
+ * 主街動線在 x=±3.6，龍神像的基壇卻是 11×11（半寬 5.5）——
+ * 動線整條從石壇中間穿過去，路人看起來就是走進雕像裡。
+ * 不能直接刪掉被擋住的路點（動線會斷、路人過不了廣場），
+ * 改成把落在碰撞盒裡的路點沿較淺的軸推出去 —— 動線自然繞開障礙。 */
+for (const nd of CROWD_GRAPH.nodes) {
+  for (let iter = 0; iter < 4; iter++) {
+    const c = colliders.find(c => c.hw != null
+      ? Math.abs(nd[0] - c.x) < c.hw + 0.5 && Math.abs(nd[1] - c.z) < c.hd + 0.5
+      : Math.hypot(nd[0] - c.x, nd[1] - c.z) < (c.r ?? 0) + 0.5);
+    if (!c) break;
+    if (c.hw != null) {
+      const pushX = (c.hw + 0.7) - Math.abs(nd[0] - c.x);
+      const pushZ = (c.hd + 0.7) - Math.abs(nd[1] - c.z);
+      if (pushX <= pushZ) nd[0] = c.x + Math.sign(nd[0] - c.x || 1) * (c.hw + 0.7);
+      else nd[1] = c.z + Math.sign(nd[1] - c.z || 1) * (c.hd + 0.7);
+    } else {
+      const a = Math.atan2(nd[1] - c.z, nd[0] - c.x);
+      nd[0] = c.x + Math.cos(a) * ((c.r ?? 0) + 0.7);
+      nd[1] = c.z + Math.sin(a) * ((c.r ?? 0) + 0.7);
+    }
+  }
+}
+
 const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10);
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */

@@ -52,6 +52,10 @@ export class PlayerController {
     this.jumpV = 9.2;
     this.airJumpV = 8.4;
     this.sprintMul = 1.85;
+    // 坡度阻擋：地面每公尺水平位移最多能升多少（1.0 ≈ 45°）。
+    // null = 不限制（神社的階梯高度場是瞬間跳變，套這個會把樓梯當牆）。
+    // 谷道類地圖（獸道、竹林）設 ~1.05，玩家就爬不上邊坡的山稜。
+    this.maxGrade = null;
 
     this._listeners = [];
     this._bind();
@@ -293,7 +297,31 @@ export class PlayerController {
     }
 
     // --- 積分 ---
+    const prevX = this.pos.x, prevZ = this.pos.z;
     this.pos.addScaledVector(this.vel, dt);
+
+    // --- 坡度阻擋 ---
+    // 往移動方向探 1.1 公尺，坡度超過 maxGrade 就把那個軸的位移取消
+    // （分軸滑行：斜著撞山會貼著山腳滑，不是整個人定住）。
+    // 用「探一段距離」而不是「這一幀的高差」——每幀高差在緩坡上永遠很小，
+    // 擋不住持續爬坡；探 1.1m 才量得到真正的坡度。
+    if (this.maxGrade != null && !this.flying) {
+      const PROBE = 1.1;
+      const g0 = groundHeight(prevX, prevZ);
+      const steep = (dx, dz) => {
+        const d = Math.hypot(dx, dz);
+        if (d < 1e-6) return false;
+        const px = prevX + (dx / d) * PROBE, pz = prevZ + (dz / d) * PROBE;
+        return (groundHeight(px, pz) - g0) / PROBE > this.maxGrade;
+      };
+      const mx = this.pos.x - prevX, mz = this.pos.z - prevZ;
+      if (steep(mx, mz)) {
+        if (!steep(mx, 0)) { this.pos.z = prevZ; this.vel.z = 0; }
+        else if (!steep(0, mz)) { this.pos.x = prevX; this.vel.x = 0; }
+        else { this.pos.x = prevX; this.pos.z = prevZ; this.vel.x = this.vel.z = 0; }
+      }
+    }
+
     this._clampToBounds();
     this._resolveCollisions();
 

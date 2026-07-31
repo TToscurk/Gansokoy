@@ -31,6 +31,7 @@ import { installLoadout } from './src/player/loadout.js';
 import { Progression } from './src/player/progression.js';
 import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
 import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
+import { scatterGrass } from './src/world/flora.js';
 
 /* ─────────────────────────────────────────────────────────────── HUD ── */
 // 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
@@ -1134,6 +1135,52 @@ const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
 }));
 stars.frustumCulled = false;
 scene.add(stars);
+
+/* ─────────────────────────────── 草叢與雜草（前庭外圍與山腳低地） ── */
+scatterGrass(world, {
+  count: 1600, heightAt,
+  place: () => {
+    const x = (Math.random() - 0.5) * 150;
+    const z = 12 + Math.random() * (OUT_FAR + 26 - 12);
+    if (Math.abs(x) < 6.5) return null;                 // 參道與石階
+    if (Math.abs(x) < 34 && z > 16 && z < 52) return null;  // NPC 展列區
+    return [x, z];
+  },
+  baseColor: 0x567234,
+});
+
+/* ─────────── 獸道入口的遠景（傳送點看得到下一張圖的谷道） ── */
+(function trailVista() {
+  const g = new THREE.Group();
+  world.add(g);
+  const y = -OUTER_DROP;
+  // 土徑越過光點繼續往南蜿蜒，消失在林子裡
+  const pathMat = new THREE.MeshStandardMaterial({
+    map: TEX.gravel(2, 10), roughness: 1, ...DECAL,
+  });
+  const strip = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 60), pathMat);
+  strip.rotation.x = -Math.PI / 2;
+  strip.rotation.z = 0.12;
+  strip.position.set(2, y + 0.05, OUT_FAR + 46);
+  strip.receiveShadow = true;
+  g.add(strip);
+  // 夾道樹牆越遠越密
+  for (let i = 0; i < 46; i++) {
+    const z = OUT_FAR + 26 + Math.random() * 52;
+    const x = (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 34);
+    tree(x + 2, y, z, 0.9 + Math.random() * 0.9,
+      [MAT.leafGreen, MAT.leafGreen, MAT.leafRed][Math.random() * 3 | 0]);
+  }
+  // 獸道的谷壁山稜剪影
+  const ridgeMat = new THREE.MeshStandardMaterial({ color: '#36503a', roughness: 1, flatShading: true });
+  for (let i = 0; i < 8; i++) {
+    const m = new THREE.Mesh(new THREE.ConeGeometry(16 + Math.random() * 14, 24 + Math.random() * 18, 5), ridgeMat);
+    m.position.set((i - 4) * 24 + (Math.random() - 0.5) * 10, y + 8, OUT_FAR + 92 + Math.random() * 20);
+    m.rotation.y = Math.random() * 3;
+    m.castShadow = false;
+    g.add(m);
+  }
+})();
 
 /* ──────────────────────────────────────────────── 靜態幾何合併 ── */
 // 境內的建物、鳥居、石燈籠、樹全部不會動，可以按「材質 × 空間格子」
