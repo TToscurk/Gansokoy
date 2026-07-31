@@ -45,11 +45,13 @@ const MAP_INFO = {
     entry: 'maps/bamboo/',
   },
 
-  // ---- 待建（第二期起逐張補 built: true） ----
   eientei: {
-    built: false, safe: true, playSize: [200, 180], mobTheme: null,
+    built: true, safe: true, playSize: [200, 180], mobTheme: null,
     connections: ['bamboo'],
+    entry: 'maps/eientei/',
   },
+
+  // ---- 待建（第二期起逐張補 built: true） ----
   namelessHill: {
     built: false, safe: false, playSize: [220, 220], mobTheme: 'hazard',   // 花海毒區，無實體怪
     connections: ['bamboo', 'sunflower'],

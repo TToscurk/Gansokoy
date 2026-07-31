@@ -341,7 +341,8 @@ export const ROSTER = [
   // ---------------------------------------------------------------- 迷途竹林
   {
     id: 'reisen', zh: '鈴仙·優曇華院·因幡', en: 'REISEN UDONGEIN INABA', title: '狂氣的月兔',
-    region: 'bamboo', offset: [4, -6], face: 0,
+    // offset = 永遠亭圖的局部座標（中庭迎客，面向表門）
+    region: 'eientei', offset: [5, -8], face: Math.PI,
     hair: 'bunny', hat: 'bunnyEars', wings: 'none', prop: 'none', float: false,
     palette: {
       hair: 0xc0aee8, outfit: 0x24304a, outfit2: 0xe0507a, accent: 0xc0aee8,
@@ -425,7 +426,8 @@ export const ROSTER = [
   // ------------------------------------------------------ 異世界來客
   {
     id: 'kaguya', zh: '蓬萊山輝夜', en: 'KAGUYA HOURAISAN', title: '永遠與須臾的罪人',
-    region: 'bamboo', offset: [3, -14], face: Math.PI * 0.1,
+    // offset = 永遠亭圖的局部座標（母屋簷廊前，踏石旁）
+    region: 'eientei', offset: [-3.5, 13.5], face: Math.PI * 0.95,
     hair: 'hime', hat: 'none', wings: 'none', prop: 'none', float: false,
     palette: {
       hair: 0x1e1a22, outfit: 0xe8a0b0, outfit2: 0x8a2038, accent: 0xd8b26a,
@@ -450,7 +452,8 @@ export const ROSTER = [
   },
   {
     id: 'eirin', zh: '八意永琳', en: 'EIRIN YAGOKORO', title: '月之頭腦',
-    region: 'bamboo', offset: [-6, -20], face: Math.PI * 0.3,
+    // offset = 永遠亭圖的局部座標（診療間門口）
+    region: 'eientei', offset: [30.5, 15.5], face: Math.PI * 0.9,
     hair: 'braid', hat: 'nurseCap', wings: 'none', prop: 'none', float: false,
     palette: {
       hair: 0xe0e4ea, outfit: 0x3a4a8a, outfit2: 0xb03a48, accent: 0x3a4a8a,

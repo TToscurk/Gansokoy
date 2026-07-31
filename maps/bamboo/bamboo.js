@@ -3,7 +3,7 @@
 // 設定考據（Touhou Wiki）：迷いの竹林是人間之里南方的一大片孟宗竹林，
 // 竹子長得又高又密、地貌到處長一樣，走進去的人幾乎出不來 —— 名字就是
 // 這麼來的。林中住著大量妖怪兔（因幡てゐ的手下），深處是永遠亭。
-// 這張圖從獸道的東南分岔接進來，南端再接永遠亭（尚未開放）。
+// 這張圖從獸道的東南分岔接進來，南端接永遠亭（maps/eientei/）。
 // 里跟竹林之間沒有直達的路 —— 要來這裡一定得走回獸道，
 // 那條分岔才有存在感。
 //
@@ -19,9 +19,11 @@
 import * as THREE from 'three';
 import * as BGU from 'three/addons/utils/BufferGeometryUtils.js';
 import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD } from '../../src/config.js';
+import { WORLD, REGION_BY_ID } from '../../src/config.js';
 import { buildCharacter } from '../../src/entities/model.js';
 import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
+import { NPCManager, TALK_RANGE } from '../../src/entities/npc.js';
+import { Dialogue } from '../../src/ui/dialogue.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
@@ -786,10 +788,43 @@ ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: HALF_W + 8, hz: LEN + 10 };
 ctrl.maxGrade = 1.05;   // 圍坡是山，爬不上去（見 controller 的坡度阻擋）
-// 從獸道走進來 = 出生在北口
-ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
-ctrl.yaw = 0;              // 面向南（往永遠亭）
-ctrl.camYaw = Math.PI;
+// 出生點依來向分流：從永遠亭回來 = 南門；其他（獸道）= 北口
+const FROM = new URLSearchParams(location.search).get('from');
+if (FROM === 'eientei') {
+  ctrl.teleport(SOUTH_END.x, SOUTH_END.z - 10);
+  ctrl.yaw = Math.PI;        // 面向北（回獸道的方向）
+  ctrl.camYaw = 0;
+} else {
+  ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
+  ctrl.yaw = 0;              // 面向南（往永遠亭）
+  ctrl.camYaw = Math.PI;
+}
+
+/* ─────────────────── 妹紅：竹林的嚮導（對話後可帶路去永遠亭） ── */
+// 迷いの竹林的設定：妹紅住在林中，常替迷路的人（與去永遠亭求醫的人）
+// 帶路。她站在主徑中段的路旁 —— 主徑是決定性隨機生成的，所以不能用
+// roster 的固定 offset，得直接取路上的點。
+const npcMgr = new NPCManager(scene);
+npcMgr.setRoster(['mokou'], REGION_BY_ID.bamboo, 340);
+{
+  const main = catmullRom(TRAIL_SEGMENTS[0].pts, 2.5);
+  const i = Math.floor(main.length * 0.56);
+  const [px, pz] = main[i], [qx, qz] = main[i + 1];
+  const len = Math.hypot(qx - px, qz - pz) || 1;
+  const nx = -(qz - pz) / len, nz = (qx - px) / len;      // 路的側向
+  const mx = px + nx * 2.4, mz = pz + nz * 2.4;
+  const rec = npcMgr.npcs[0];
+  if (rec) {
+    const my = heightAt(mx, mz);
+    rec.root.position.set(mx, my, mz);
+    rec.plate.position.set(mx, my + 2.35, mz);
+    rec.pos.set(mx, my, mz);
+    rec.baseYaw = Math.atan2(px - qx, pz - qz);           // 面向北邊的來向
+    rec.root.rotation.y = rec.baseYaw;
+  }
+}
+const dialogue = new Dialogue();
+let guideOffer = 0;   // >0 = 妹紅的帶路邀請還有效（秒）
 
 /* ───────────────────── 妖怪兔 + 成長系統 + 戰鬥 ── */
 const prog = new Progression({
@@ -819,7 +854,7 @@ const mobs = progressMobs(rabbits, prog, 'hinokami', '日之呼吸');
  * 這一整套是角色內建的，每張圖都掛同一份 —— 見 src/player/loadout.js。 */
 const kit = installLoadout({
   getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
-  isBlocked: () => escMenu.isOpen,
+  isBlocked: () => escMenu.isOpen || dialogue.active,
   onDeath: () => {
     ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
     HUD.toast('你在竹林裡倒下了 —— 有人把你拖回了林口。');
@@ -852,9 +887,32 @@ const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_END.x, ctrl.pos.z - NORTH_
 const nearSouth = () => Math.hypot(ctrl.pos.x - SOUTH_END.x, ctrl.pos.z - (SOUTH_END.z - 5)) < 4.8;
 
 window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
+  if (e.code !== 'KeyE' || escMenu.isOpen) return;
+  // 對話進行中：E 只推進，不落到下面的互動判定
+  if (dialogue.active) { dialogue.advance(); return; }
+  if (!ctrl.locked) return;
+
+  // 妹紅：先對話；講完後的幾秒內再按 E = 讓她帶路去永遠亭
+  const npc = npcMgr.nearest;
+  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
+    if (guideOffer > 0) {
+      guideOffer = 0;
+      ctrl.teleport(SOUTH_END.x, SOUTH_END.z - 12);
+      ctrl.yaw = 0;
+      ctrl.camYaw = Math.PI;
+      toast('妹紅領著你在竹影裡左拐右繞 —— 回過神來，永遠亭的門就在眼前。', 3600);
+      return;
+    }
+    ctrl.enabled = false;
+    dialogue.open(npc.spec, npcMgr.nextTalk(npc), () => {
+      ctrl.enabled = true;
+      guideOffer = 8;
+    });
+    return;
+  }
+
   if (nearNorth()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=bamboo'; return; }
-  if (nearSouth()) toast('永遠亭的門深鎖著 —— 這條路還沒開。');
+  if (nearSouth()) { HUD.showLoading('永遠亭 讀取中'); location.href = '../eientei/?from=bamboo'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -870,13 +928,20 @@ function tick(rawDt) {
 
   kit.update(dt, rawDt);
   rabbits.update(dt, t, ctrl.pos);
+  npcMgr.update(t, ctrl.pos, camera);
+  dialogue.update(dt);
+  guideOffer = Math.max(0, guideOffer - dt);
 
   env.update(dt, camera.position);
   northPortal.userData.update(t);
   southPortal.userData.update(t);
 
-  if (nearNorth()) HUD.prompt('[ E ]  返回獸道');
-  else if (nearSouth()) HUD.prompt('[ E ]  永遠亭（尚未開放）');
+  if (dialogue.active) { HUD.prompt(null); return; }
+  const npc = npcMgr.nearest;
+  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
+    HUD.prompt(guideOffer > 0 ? '[ E ]  跟妹紅走（去永遠亭）' : '[ E ]  與 藤原妹紅 對話');
+  } else if (nearNorth()) HUD.prompt('[ E ]  返回獸道');
+  else if (nearSouth()) HUD.prompt('[ E ]  進入永遠亭');
   else HUD.prompt(null);
 }
 
@@ -897,7 +962,7 @@ animate();
 
 // debug handle（跟其他地圖同一套測試口徑）
 window.__bamboo = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, prog,
+  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, prog, npcMgr, dialogue,
   get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
   get combat() { return kit.combat; }, get panel() { return kit.panel; },
   get kit() { return kit; },
