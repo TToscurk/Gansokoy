@@ -77,7 +77,8 @@ syncQuality();
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 里蓋在平坦的盆地上：主街完全水平，外圍緩緩抬起成田埂與矮丘。
 const VILLAGE_R = 62;      // 里的半徑（超過這裡開始爬坡）
-const GATE_Z = -58;        // 北端里門（通獸道）
+const GATE_Z = -58;        // 北端里門（通獸道 → 博麗神社）
+const SOUTH_GATE_Z = 96;   // 南端里門（通迷途竹林 → 永遠亭）
 
 function heightAt(x, z) {
   const d = Math.hypot(x * 0.85, z * 0.6);        // 橢圓形的里
@@ -236,7 +237,7 @@ function groundDecal(w, d, x, z, mat, lift = 0.04) {
   world.add(m);
 
   // 主街（南北）與兩條橫街（東西）：石板路。主街往南延伸到新街廓。
-  groundDecal(9, 158, 0, 11, MAT.road);
+  groundDecal(9, 176, 0, 20, MAT.road);   // 北門外 ~-68 一路鋪到南門外 ~108
   groundDecal(74, 7, 0, 8, MAT.road);
   groundDecal(58, 6, 0, 56, MAT.road);
 })();
@@ -512,33 +513,41 @@ for (let i = 0; i < 14; i++) {
   groundDecal(14, 9, x, z, PADDY_MAT, 0.05);
 }
 
-/* ───────────────────────────────────────── 里門（北端，通獸道） ── */
-(function villageGate() {
-  const y = heightAt(0, GATE_Z);
+/* ───────────────────────────── 里門（南北兩座，通獸道與竹林） ── */
+/**
+ * 冠木門 + 兩側土牆。南北兩座長一樣，只有朝向相反。
+ * @param {number} gz 門的 z 座標
+ * @param {number} inward 里的內側方向（北門 +1，南門 -1）——
+ *        結界柱要立在門的內側才對得上「進里前先過結界」。
+ */
+function villageGate(gz, inward) {
+  const y = heightAt(0, gz);
   // 冠木門：兩根柱 + 橫樑 + 小屋頂
   for (const s of [-1, 1]) {
-    cyl(0.42, 0.48, 6.2, MAT.darkWood, s * 4.4, y + 3.1, GATE_Z, 10);
-    post(s * 4.4, GATE_Z, 0.55, y + 6.2);
+    cyl(0.42, 0.48, 6.2, MAT.darkWood, s * 4.4, y + 3.1, gz, 10);
+    post(s * 4.4, gz, 0.55, y + 6.2);
   }
-  box(11, 0.7, 0.8, MAT.darkWood, 0, y + 6.0, GATE_Z);
-  box(9.4, 0.45, 0.6, MAT.darkWood, 0, y + 5.0, GATE_Z);
+  box(11, 0.7, 0.8, MAT.darkWood, 0, y + 6.0, gz);
+  box(9.4, 0.45, 0.6, MAT.darkWood, 0, y + 5.0, gz);
   for (const s of [-1, 1]) {
-    const slope = box(12, 0.3, 2.2, MAT.roofTile, 0, y + 6.7, GATE_Z + s * 0.9);
+    const slope = box(12, 0.3, 2.2, MAT.roofTile, 0, y + 6.7, gz + s * 0.9);
     slope.rotation.x = s * 0.5;
   }
   // 門旁的土牆（里的外圍），中間留門口
   for (const s of [-1, 1]) {
     const wx = s * 17;
-    box(20, 2.4, 0.7, MAT.plaster, wx, y + 1.2, GATE_Z);
-    box(20.4, 0.25, 1.0, MAT.roofTile, wx, y + 2.45, GATE_Z);
-    block(wx, GATE_Z, 20, 0.7, y + 2.45);
+    box(20, 2.4, 0.7, MAT.plaster, wx, y + 1.2, gz);
+    box(20.4, 0.25, 1.0, MAT.roofTile, wx, y + 2.45, gz);
+    block(wx, gz, 20, 0.7, y + 2.45);
   }
   // 門前的注連繩結界柱
   for (const s of [-1, 1]) {
-    cyl(0.16, 0.18, 1.6, MAT.stone, s * 6.4, y + 0.8, GATE_Z + 2.6, 8);
-    post(s * 6.4, GATE_Z + 2.6, 0.22, y + 1.6);
+    cyl(0.16, 0.18, 1.6, MAT.stone, s * 6.4, y + 0.8, gz + 2.6 * inward, 8);
+    post(s * 6.4, gz + 2.6 * inward, 0.22, y + 1.6);
   }
-})();
+}
+villageGate(GATE_Z, 1);          // 北端：通獸道 → 博麗神社
+villageGate(SOUTH_GATE_Z, -1);   // 南端：通迷途竹林 → 永遠亭
 
 // 遠山（讓盆地有邊界感）
 // 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
@@ -554,8 +563,9 @@ for (let i = 0; i < 18; i++) {
   world.add(m);
 }
 
-/* ───────────────────────────────── 傳送點（往獸道 → 神社） ── */
+/* ─────────────────────────── 傳送點（北往獸道、南往竹林） ── */
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
+const bambooPortal = makePortalGlow(world, 0, heightAt(0, SOUTH_GATE_Z + 6), SOUTH_GATE_Z + 6, 0xd8f0a0);
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 里是三張圖裡最重的一張（近 1800 個網格）：房舍、圍牆、街燈、水田、遠山
@@ -631,9 +641,16 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: 96, hz: 108 };
-ctrl.teleport(0, GATE_Z + 9);     // 從里門走進來
-ctrl.yaw = 0;
-ctrl.camYaw = Math.PI;
+// 從哪一端走進來，就從那一端出生
+if (new URLSearchParams(location.search).get('from') === 'bamboo') {
+  ctrl.teleport(0, SOUTH_GATE_Z - 9);
+  ctrl.yaw = Math.PI;             // 面向北（往里內／獸道）
+  ctrl.camYaw = 0;
+} else {
+  ctrl.teleport(0, GATE_Z + 9);   // 從北邊的里門走進來
+  ctrl.yaw = 0;
+  ctrl.camYaw = Math.PI;
+}
 
 /* ───────────────────── 名冊角色（預設沒有人，全交給場景編輯器） ── */
 const labelScene = new THREE.Scene();
@@ -691,6 +708,7 @@ const escMenu = bindEscMenu({
 bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen || sceneEditor.isOpen);
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
+const nearBamboo = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (SOUTH_GATE_Z + 6)) < 4.2;
 
 window.addEventListener('keydown', (e) => {
   // ESC 在編輯器開著時是「關掉編輯器」（bindEscMenu 的 isBusy 已讓過）
@@ -699,7 +717,8 @@ window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
   if (sceneEditor.isOpen || escMenu.isOpen) return;
   if (e.code !== 'KeyE' || !ctrl.locked) return;
-  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; }
+  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; return; }
+  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -717,7 +736,10 @@ function tick(rawDt) {
   npcSystem.update(t, ctrl.pos, camera);
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
-  HUD.prompt(nearPortal() ? '[ E ]  前往獸道（往博麗神社）' : null);
+  bambooPortal.userData.update(t);
+  if (nearPortal()) HUD.prompt('[ E ]  前往獸道（往博麗神社）');
+  else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林（往永遠亭）');
+  else HUD.prompt(null);
 }
 
 function animate() {

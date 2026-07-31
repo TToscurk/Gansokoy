@@ -167,6 +167,18 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 > 神社目前預設只上場一位 NPC，所以角色 LOD 在那張圖看不太出來；
 > 人間之里那 52 位路人才是它真正發揮的地方。
 
+## 地圖與串接
+
+四張圖串成一條線，走到端點按 `E` 換圖。方位依 `src/config.js` 的世界座標
+（+Z = 南）：神社在東邊 (855, -175)、里在中央 (-80, 150)、竹林在正南 (-60, 840)。
+
+```
+博麗神社 ──獸道── 人間之里 ──迷途竹林── 永遠亭（尚未開放）
+  index.html    maps/trail/  maps/village/  maps/bamboo/
+```
+
+換圖時時刻、天氣、角色等級、任務進度都會延續（見「跨地圖狀態」）。
+
 ## 檔案
 
 根目錄只留博麗神社這個「開啟遊戲」的入口；其餘每張地圖都收在
@@ -177,7 +189,8 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `index.html` | 外殼、選角畫面 —— 遊戲唯一的進入點 |
 | `main.js` | 博麗神社場景：材質生成、建物、地形、控制、渲染迴圈 |
 | `maps/trail/` | 獸道（山間小徑，連接神社與人間之里） |
-| `maps/village/` | 人間之里（明治風聚落，路人、店家） |
+| `maps/village/` | 人間之里（明治風聚落，路人、店家。北門通獸道、南門通竹林） |
+| `maps/bamboo/` | 迷途竹林（孟宗竹林，妖怪兔，南端是永遠亭的門） |
 | `vendor/` | three.js r180 本地副本（`npm i three` 複製過來的） |
 | `vendor/jsm/` | 後製用的 addons（EffectComposer / GTAO / Bloom / SMAA / OutputPass） |
 | `src/entities/` | 角色建模、NPC 管理、名冊、神社站位、擺放狀態、路人 |
@@ -186,7 +199,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/ui/` | 對話框、任務日誌、共用 HUD（`hud.js`）、角色場景編輯器 |
 | `src/quests/` | 任務資料（原封不動）與分支引擎 |
 | `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`） |
-| `src/combat/` | 戰鬥引擎（`combat.js`/`mobs.js`/`hud.js`）+ 招式資料（`forms.js`/`motion.js`），跨地圖共用 |
+| `src/combat/` | 戰鬥引擎（`combat.js`/`hud.js`）、怪物（`mobcore.js` 共用判定 + `mobs.js` 妖精 + `rabbits.js` 妖怪兔）、招式資料（`forms.js`/`motion.js`），跨地圖共用 |
 | `src/fx/` | 特效（刀光、粒子） |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
 | `tools/dev-server.mjs` | 開發用靜態伺服器（`no-store`，避免 ES module 快取；支援資料夾內的 `index.html`） |
