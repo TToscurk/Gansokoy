@@ -95,8 +95,14 @@ const CSS = `
   box-shadow:0 0 12px rgba(216,69,47,.7);transition:width .16s ease-out}
 #vitals.low .f{animation:hpLow .8s ease-in-out infinite alternate}
 @keyframes hpLow{0%{filter:brightness(1)}100%{filter:brightness(1.75)}}
+#vitals .mbar{position:relative;height:6px;border-radius:4px;overflow:hidden;margin-top:5px;
+  background:rgba(8,10,16,.7);box-shadow:0 0 0 1px rgba(110,170,220,.3)}
+#vitals .mf{position:absolute;inset:0;width:100%;border-radius:4px;
+  background:linear-gradient(90deg,#2f6fbf,#5fb6e8);
+  box-shadow:0 0 10px rgba(70,150,220,.6);transition:width .16s ease-out}
 #vitals .n{margin-top:4px;font-size:11px;letter-spacing:.16em;color:#f0cdbc;
   text-shadow:0 2px 5px rgba(0,0,0,.8)}
+#vitals .n .mp{color:#9fd0f0;margin-left:10px}
 #vitals.hurt .bar{animation:hpHurt .22s ease-out}
 @keyframes hpHurt{0%{transform:translateX(-4px)}50%{transform:translateX(4px)}100%{transform:translateX(0)}}
 
@@ -219,7 +225,8 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
     <div id="vitals">
       <div class="lb">血　量</div>
       <div class="bar"><div class="ghost"></div><div class="f"></div></div>
-      <div class="n"><span class="hp">0</span> / <span class="mx">0</span></div>
+      <div class="mbar"><div class="mf"></div></div>
+      <div class="n"><span class="hp">0</span> / <span class="mx">0</span><span class="mp">氣 <span class="mpv">0</span> / <span class="mpmx">0</span></span></div>
     </div>
     <div id="skills"></div>
     <div id="critMark">看　穿</div>
@@ -265,18 +272,23 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
       else promptEl.classList.remove('on');
     },
     /**
-     * 更新血條。沒有怪的地圖（神社、里）不呼叫，血條就不會出現。
-     * @param {number} hp @param {number} max @param {boolean} [hurt] 這次是不是受擊造成的
+     * 更新血量／氣力條。
+     * @param {import('../player/vitals.js').Vitals} v
+     * @param {boolean} [hurt] 這次是不是受擊造成的（接紅屏與震動）
      */
-    vitals(hp, max, hurt = false) {
+    vitals(v, hurt = false) {
       const el = document.getElementById('vitals');
-      if (!el) return;
+      if (!el || !v) return;
       el.classList.add('on');
-      const r = Math.max(0, Math.min(1, hp / max));
+      const r = Math.max(0, Math.min(1, v.hp / v.max));
+      const mr = Math.max(0, Math.min(1, v.mp / v.maxMp));
       el.querySelector('.f').style.width = (r * 100).toFixed(1) + '%';
       el.querySelector('.ghost').style.width = (r * 100).toFixed(1) + '%';
-      el.querySelector('.hp').textContent = Math.ceil(hp);
-      el.querySelector('.mx').textContent = Math.round(max);
+      el.querySelector('.mf').style.width = (mr * 100).toFixed(1) + '%';
+      el.querySelector('.hp').textContent = Math.ceil(v.hp);
+      el.querySelector('.mx').textContent = Math.round(v.max);
+      el.querySelector('.mpv').textContent = Math.floor(v.mp);
+      el.querySelector('.mpmx').textContent = Math.round(v.maxMp);
       el.classList.toggle('low', r < 0.3);
       if (hurt) {
         el.classList.remove('hurt');

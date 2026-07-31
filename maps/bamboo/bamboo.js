@@ -24,13 +24,9 @@ import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { Combat } from '../../src/combat/combat.js';
 import { RabbitMobs } from '../../src/combat/rabbits.js';
-import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
-import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
-import { Vitals } from '../../src/player/vitals.js';
-import { SkillSystem, SKILLS } from '../../src/combat/skills.js';
+import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
@@ -42,7 +38,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -643,9 +639,8 @@ ctrl.yaw = 0;              // 面向南（往永遠亭）
 ctrl.camYaw = Math.PI;
 
 /* ───────────────────── 妖怪兔 + 成長系統 + 戰鬥 ── */
-// 竹林是「有怪的地區」：五個兔窩沿路散布，越往南越多。
 const prog = new Progression({
-  onLevelUp: (msg) => { toast(msg); skills?.onLevelUp(); },
+  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
 });
 // 越往南（越靠近永遠亭）窩越密 —— 走進去要有「越來越難回頭」的壓力。
 // 全部走 InstancedMesh，九十幾隻同屏也只有兩個 draw call。
@@ -659,63 +654,23 @@ const NESTS = [
   { x: pathX(88) - 10, z: 88, r: 8 },
   { x: pathX(118) + 8, z: 118, r: 8 },
 ];
-/* 玩家血量。這是這個專案第一張「會還手」的圖 —— 妖怪兔撲中就扣血，
- * 扣到零在北口重生。受擊有 0.75 秒無敵，不然被一群兔子圍住會瞬間蒸發。 */
-const vitals = new Vitals({
-  max: 120,
-  hooks: {
-    onChange: (hp, max) => HUD.vitals(hp, max),
-    onHurt: (dmg) => {
-      HUD.vitals(vitals.hp, vitals.max, true);
-      // 被撲中會往後踉蹌一下，手感上要讀得到「被打到了」
-      const a = ctrl.yaw + Math.PI;
-      ctrl.vel.x += Math.sin(a) * 3.4;
-      ctrl.vel.z += Math.cos(a) * 3.4;
-      void dmg;
-    },
-    onDeath: () => {
-      HUD.deathVeil(true);
-      setTimeout(() => {
-        ctrl.teleport(pathX(NORTH_END + 6), NORTH_END + 6);
-        ctrl.vel.set(0, 0, 0);
-        vitals.revive();
-        HUD.deathVeil(false);
-        toast('你在竹林裡倒下了 —— 有人把你拖回了林口。');
-      }, 1900);
-    },
-  },
-});
-
 const rabbits = new RabbitMobs(scene, NESTS, 12, {
   damage: 7,
-  onAttack: (dmg) => vitals.damage(dmg),
+  onAttack: (dmg) => kit.vitals.damage(dmg),
 });
 const mobs = progressMobs(rabbits, prog, 'hinokami', '日之呼吸');
 
-const slashFX = new SlashFX(scene);
-const slashAudio = new SlashAudio();
-const combat = spec.combat
-  ? new Combat(ctrl, mobs, slashFX, slashAudio, combatHUD)
-  : null;
-/* 技能系統：主動技（1~4）、被動與小技能。掛上去之後 Combat 每一擊
- * 會問它要傷害倍率（拔刀術、斑紋、看穿要害…）。沒有戰鬥能力的角色
- * 不建，行為跟以前完全一樣。 */
-let skills = null;
-if (combat) {
-  skills = new SkillSystem({
-    combat, vitals, prog, ctrl,
-    ui: {
-      skills: (list) => HUD.skills(list),
-      banner: (name) => combatHUD.formBanner(name),
-      toast: (msg) => toast(msg),
-    },
-  });
-}
+/* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
+ * 這一整套是角色內建的，每張圖都掛同一份 —— 見 src/player/loadout.js。 */
+const kit = installLoadout({
+  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
+  isBlocked: () => escMenu.isOpen,
+  onDeath: () => {
+    ctrl.teleport(pathX(NORTH_END + 6), NORTH_END + 6);
+    HUD.toast('你在竹林裡倒下了 —— 有人把你拖回了林口。');
+  },
+});
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
-combatHUD.reset();
-HUD.vitals(vitals.hp, vitals.max);
-HUD.showCombatKeys(!!combat);
-HUD.showFlyKeys(spec.canFly !== false);
 
 /* ───────────────────────────────────────────── 互動與提示 ── */
 const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
@@ -737,20 +692,9 @@ const escMenu = bindEscMenu({
     location.href = '../../index.html';
   },
 });
-// 出招的輸入綁定要在 escMenu 之後 —— 它得知道選單開著時不要吃左鍵
-bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
 
 const nearNorth = () => Math.hypot(ctrl.pos.x - pathX(NORTH_END), ctrl.pos.z - NORTH_END) < 4.6;
 const nearSouth = () => Math.hypot(ctrl.pos.x - pathX(SOUTH_END), ctrl.pos.z - (SOUTH_END - 3)) < 4.6;
-
-// 技能鍵 1~4
-window.addEventListener('keydown', (e) => {
-  if (!skills || !ctrl.locked || escMenu.isOpen) return;
-  if (SKILLS.some(s => s.key === e.code)) {
-    e.preventDefault();
-    skills.pressKey(e.code);
-  }
-});
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
@@ -765,15 +709,12 @@ let t = 0;
 /** 一幀的遊戲邏輯（animate 與除錯用的 __bamboo.step 共用） */
 function tick(rawDt) {
   let dt = rawDt;
-  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
+  if (kit.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
   t += dt;
   ctrl.update(dt, t);
 
-  combat?.update(dt, rawDt);
-  slashFX.update(dt);
+  kit.update(dt, rawDt);
   rabbits.update(dt, t, ctrl.pos);
-  vitals.update(dt);
-  skills?.update(dt);
 
   env.update(dt, camera.position);
   northPortal.userData.update(t);
@@ -801,9 +742,10 @@ animate();
 
 // debug handle（跟其他地圖同一套測試口徑）
 window.__bamboo = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, vitals,
-  get skills() { return skills; }, prog,
-  get combat() { return combat; },
+  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, prog,
+  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
+  get combat() { return kit.combat; }, get panel() { return kit.panel; },
+  get kit() { return kit; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
     for (let i = 0; i < n; i++) tick(dt);

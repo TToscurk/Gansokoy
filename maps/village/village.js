@@ -21,10 +21,8 @@ import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { Combat } from '../../src/combat/combat.js';
-import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
-import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression } from '../../src/player/progression.js';
+import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { VillagerCrowd } from '../../src/entities/villagers.js';
@@ -38,10 +36,10 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['P', '場景編輯'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
 });
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
@@ -666,14 +664,18 @@ const sceneEditor = new SceneEditor({
 });
 
 /* ────────────────────────────────── 戰鬥（里內和平，無怪） ── */
-const prog = new Progression({ onLevelUp: (msg) => HUD.toast(msg) });
-const slashFX = new SlashFX(scene);
-const slashAudio = new SlashAudio();
-const NO_MOBS = { inSector: () => [], damage: () => false, aliveNear: () => false, update() {} };
-const combat = spec.combat ? new Combat(ctrl, NO_MOBS, slashFX, slashAudio, combatHUD) : null;
-combatHUD.reset();
-HUD.showCombatKeys(!!combat);
-HUD.showFlyKeys(spec.canFly !== false);
+const prog = new Progression({
+  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
+});
+
+/* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
+ * 里內沒有怪（結界擋著），所以不傳 mobs —— 招式照出，只是砍不到東西。
+ * 技能是角色內建的，不該因為「這張圖沒有怪」就消失。 */
+const kit = installLoadout({
+  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog,
+  isBlocked: () => escMenu.isOpen || sceneEditor.isOpen,
+  onDeath: () => ctrl.teleport(0, GATE_Z + 9),
+});
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ─────────────────────────────────────── 夜燈與環境回呼 ── */
@@ -705,7 +707,6 @@ const escMenu = bindEscMenu({
     location.href = '../../index.html';
   },
 });
-bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen || sceneEditor.isOpen);
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
 const nearBamboo = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (SOUTH_GATE_Z + 6)) < 4.2;
@@ -727,11 +728,10 @@ let t = 0;
 
 function tick(rawDt) {
   let dt = rawDt;
-  if (combat?.hitstop > 0) dt *= 0.12;
+  if (kit.combat?.hitstop > 0) dt *= 0.12;
   t += dt;
   ctrl.update(dt, t);
-  combat?.update(dt, rawDt);
-  slashFX.update(dt);
+  kit.update(dt, rawDt);
   crowd.update(dt, t, ctrl.pos);
   npcSystem.update(t, ctrl.pos, camera);
   env.update(dt, camera.position);
@@ -767,7 +767,8 @@ animate();
 window.__village = {
   renderer, scene, camera, ctrl, THREE, heightAt, env, colliders,
   crowd, npcs: npcSystem, sceneEditor,
-  get combat() { return combat; },
+  get kit() { return kit; }, get combat() { return kit.combat; },
+  get vitals() { return kit.vitals; }, get skills() { return kit.skills; }, prog,
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
     for (let i = 0; i < n; i++) tick(dt);

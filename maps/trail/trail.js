@@ -18,11 +18,9 @@ import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
 import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { Combat } from '../../src/combat/combat.js';
 import { FairyMobs } from '../../src/combat/mobs.js';
-import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
-import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
+import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
@@ -34,10 +32,10 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
 });
 
 /* ─────────────────────────────────────────────── renderer / scene ── */
@@ -433,7 +431,9 @@ if (new URLSearchParams(location.search).get('from') === 'village') {
 /* ───────────────────── 怪物區 + 成長系統 + 戰鬥 ── */
 // 獸道中段是「有怪物的地區」：路旁四窩妖精。擊殺餵角色經驗、
 // 命中餵技能練度（src/player/progression.js，localStorage 跨地圖保留）。
-const prog = new Progression({ onLevelUp: (msg) => toast(msg) });
+const prog = new Progression({
+  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
+});
 const NESTS = [
   { x: -9, z: -52, r: 12 },
   { x: 10, z: -8, r: 13 },
@@ -443,19 +443,15 @@ const NESTS = [
 const fairies = new FairyMobs(scene, NESTS);
 const mobs = progressMobs(fairies, prog, 'hinokami', '日之呼吸');
 
-const slashFX = new SlashFX(scene);
-const slashAudio = new SlashAudio();
-const combat = spec.combat
-  ? new Combat(ctrl, mobs, slashFX, slashAudio, combatHUD)
-  : null;
+/* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
+ * 每張圖都掛同一份 —— 見 src/player/loadout.js。
+ * 妖精是無害的，所以這張圖不接 onAttack，血量只會自己回。 */
+const kit = installLoadout({
+  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
+  isBlocked: () => escMenu.isOpen,
+  onDeath: () => ctrl.teleport(0, SHRINE_END + 5),
+});
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
-combatHUD.reset();
-bindCombatInput(() => combat, () => ctrl, () => escMenu.isOpen);
-// 戰鬥相關的操作提示只給有技能的角色看
-{
-  HUD.showCombatKeys(!!combat);
-HUD.showFlyKeys(spec.canFly !== false);
-}
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
 const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
@@ -495,13 +491,12 @@ let t = 0;
 /** 一幀的遊戲邏輯（animate 與除錯用的 __trail.step 共用） */
 function tick(rawDt) {
   let dt = rawDt;
-  if (combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
+  if (kit.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
   t += dt;
   ctrl.update(dt, t);
 
   // 戰鬥姿勢要在 ctrl.update（走路動畫）之後套才壓得過去
-  combat?.update(dt, rawDt);
-  slashFX.update(dt);
+  kit.update(dt, rawDt);
   fairies.update(dt, t, ctrl.pos);
 
   env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
@@ -531,7 +526,9 @@ animate();
 
 // debug handle（跟 index 的 __shrine 同一套測試口徑）
 window.__trail = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, get combat() { return combat; },
+  renderer, scene, camera, ctrl, THREE, heightAt, env, prog, fairies,
+  get kit() { return kit; }, get combat() { return kit.combat; },
+  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
     for (let i = 0; i < n; i++) tick(dt);

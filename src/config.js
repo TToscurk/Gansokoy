@@ -28,6 +28,16 @@ export const CHAR_LOD = {
   hide: 260,
 };
 
+/**
+ * 角色等級上限。
+ *
+ * 目前刻意鎖在 1：技能與被動全部一開始就給，先把「技能好不好用、
+ * 手感對不對」調到滿意，再回頭做成長曲線。解開時把這裡調大即可 ——
+ * skills.js 的每個技能都留著 unlock 欄位，progression.js 的升級邏輯
+ * 也還在，只是升不上去。
+ */
+export const LEVEL_CAP = 1;
+
 export const COMPASS = [
   { a: 0,           zh: '北', en: 'N' },
   { a: Math.PI / 4, zh: '東北', en: 'NE' },
