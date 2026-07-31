@@ -34,11 +34,13 @@ export class RabbitMobs {
    * @param {{x:number,z:number,r:number}[]} nests 巢穴（絕對座標 + 半徑）
    * @param {number} [perNest=6] 每窩幾隻
    * @param {object} [hooks]
-   * @param {(dmg:number)=>void} [hooks.onAttack] 撲中玩家時呼叫（還沒接玩家血量前可省略）
+   * @param {(dmg:number, mob:object)=>void} [hooks.onAttack] 撲中玩家時呼叫
+   * @param {number} [hooks.damage=7] 一次撲擊的傷害
    */
   constructor(scene, nests, perNest = 6, hooks = {}) {
     this.scene = scene;
     this.hooks = hooks;
+    this.attackDamage = hooks.damage ?? 7;
     const total = nests.length * perNest;
 
     // 身體：橢圓的一坨。兔子是實體生物，用吃光的 StandardMaterial
@@ -168,10 +170,10 @@ export class RabbitMobs {
               m.pos.z += Math.cos(m.yaw) * SPEED * dt;
               m.hop += dt * 9;
             } else if (m.cooldown <= 0) {
-              // 撲擊。玩家血量還沒接上時 onAttack 不存在，就只是撲個空
+              // 撲擊。撲完有 1.6 秒冷卻，一群兔子才不會黏在臉上連續撲
               m.cooldown = 1.6;
               m.hop = Math.PI * 0.5;      // 跳到最高點，看起來像撲上來
-              this.hooks.onAttack?.(this.attackDamage ?? 6, m);
+              this.hooks.onAttack?.(this.attackDamage, m);
             }
           }
 

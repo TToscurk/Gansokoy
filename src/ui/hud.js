@@ -79,6 +79,42 @@ const CSS = `
 #charge.full .f{animation:chargeFull .5s ease-out infinite alternate}
 @keyframes chargeFull{0%{filter:brightness(1)}100%{filter:brightness(1.9)}}
 
+/* 玩家血量。左下角，橫條 + 數字。受擊時整條閃一下白。 */
+#vitals{position:fixed;left:22px;bottom:96px;z-index:56;width:240px;
+  pointer-events:none;opacity:0;transition:opacity .3s}
+#vitals.on{opacity:1}
+#vitals .lb{font-size:10.5px;letter-spacing:.32em;color:#e8b0a0;margin-bottom:5px;
+  text-shadow:0 2px 5px rgba(0,0,0,.8)}
+#vitals .bar{position:relative;height:9px;border-radius:5px;overflow:hidden;
+  background:rgba(12,8,10,.7);box-shadow:0 0 0 1px rgba(230,120,100,.32)}
+/* 掉血的殘影條：先掉一小段紅底，主條再追上來，打到多重才讀得出來 */
+#vitals .ghost{position:absolute;inset:0;width:100%;border-radius:5px;
+  background:rgba(210,70,60,.5);transition:width .5s ease-out .18s}
+#vitals .f{position:absolute;inset:0;width:100%;border-radius:5px;
+  background:linear-gradient(90deg,#d8452f,#f08a4a);
+  box-shadow:0 0 12px rgba(216,69,47,.7);transition:width .16s ease-out}
+#vitals.low .f{animation:hpLow .8s ease-in-out infinite alternate}
+@keyframes hpLow{0%{filter:brightness(1)}100%{filter:brightness(1.75)}}
+#vitals .n{margin-top:4px;font-size:11px;letter-spacing:.16em;color:#f0cdbc;
+  text-shadow:0 2px 5px rgba(0,0,0,.8)}
+#vitals.hurt .bar{animation:hpHurt .22s ease-out}
+@keyframes hpHurt{0%{transform:translateX(-4px)}50%{transform:translateX(4px)}100%{transform:translateX(0)}}
+
+/* 受擊紅屏 */
+#hurtFlash{position:fixed;inset:0;z-index:58;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at center,rgba(180,20,10,0) 42%,rgba(180,20,10,.62) 100%)}
+#hurtFlash.on{animation:hurtFx .42s ease-out}
+@keyframes hurtFx{0%{opacity:1}100%{opacity:0}}
+
+/* 死亡黑幕 */
+#deathVeil{position:fixed;inset:0;z-index:72;display:none;flex-direction:column;
+  align-items:center;justify-content:center;background:rgba(8,4,6,.9);
+  backdrop-filter:blur(2px)}
+#deathVeil.on{display:flex}
+#deathVeil .k{font-size:38px;letter-spacing:.5em;color:#d8452f;
+  text-shadow:0 0 26px rgba(216,69,47,.7)}
+#deathVeil .s{margin-top:14px;font-size:12px;letter-spacing:.34em;color:#b0a0a4}
+
 /* ESC 選單 */
 #escMenu { position:fixed; inset:0; z-index:70; display:none;
   align-items:center; justify-content:center;
@@ -147,6 +183,13 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
         <div id="combatHelp" style="display:none">${keyHtml(combatKeys)}</div>
       </div>
     </div>
+    <div id="vitals">
+      <div class="lb">血　量</div>
+      <div class="bar"><div class="ghost"></div><div class="f"></div></div>
+      <div class="n"><span class="hp">0</span> / <span class="mx">0</span></div>
+    </div>
+    <div id="hurtFlash"></div>
+    <div id="deathVeil"><div class="k">絶　命</div><div class="s">復 活 中 …</div></div>
     <div id="formBanner"></div>
     <div id="combo"><span class="n">0</span><span class="u">連擊</span></div>
     <div id="charge"><div class="lb">日之呼吸・全型</div><div class="f"></div></div>
@@ -185,6 +228,32 @@ export function installHUD({ title, subtitle, keys = [], flyKeys = [], combatKey
     prompt(text) {
       if (text) { promptEl.textContent = text; promptEl.classList.add('on'); }
       else promptEl.classList.remove('on');
+    },
+    /**
+     * 更新血條。沒有怪的地圖（神社、里）不呼叫，血條就不會出現。
+     * @param {number} hp @param {number} max @param {boolean} [hurt] 這次是不是受擊造成的
+     */
+    vitals(hp, max, hurt = false) {
+      const el = document.getElementById('vitals');
+      if (!el) return;
+      el.classList.add('on');
+      const r = Math.max(0, Math.min(1, hp / max));
+      el.querySelector('.f').style.width = (r * 100).toFixed(1) + '%';
+      el.querySelector('.ghost').style.width = (r * 100).toFixed(1) + '%';
+      el.querySelector('.hp').textContent = Math.ceil(hp);
+      el.querySelector('.mx').textContent = Math.round(max);
+      el.classList.toggle('low', r < 0.3);
+      if (hurt) {
+        el.classList.remove('hurt');
+        void el.offsetWidth;              // 重播 CSS 動畫
+        el.classList.add('hurt');
+        const fl = document.getElementById('hurtFlash');
+        if (fl) { fl.classList.remove('on'); void fl.offsetWidth; fl.classList.add('on'); }
+      }
+    },
+    /** 死亡黑幕（復活時再呼叫 false 收掉） */
+    deathVeil(on) {
+      document.getElementById('deathVeil')?.classList.toggle('on', on);
     },
     /** 戰鬥提示只給有技能的角色看 */
     showCombatKeys(on) {

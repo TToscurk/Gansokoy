@@ -29,6 +29,7 @@ import { RabbitMobs } from '../../src/combat/rabbits.js';
 import { SlashFX, SlashAudio } from '../../src/fx/slash.js';
 import { combatHUD, bindCombatInput } from '../../src/combat/hud.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
+import { Vitals } from '../../src/player/vitals.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
@@ -643,15 +644,49 @@ ctrl.camYaw = Math.PI;
 /* ───────────────────── 妖怪兔 + 成長系統 + 戰鬥 ── */
 // 竹林是「有怪的地區」：五個兔窩沿路散布，越往南越多。
 const prog = new Progression({ onLevelUp: (msg) => toast(msg) });
+// 越往南（越靠近永遠亭）窩越密 —— 走進去要有「越來越難回頭」的壓力。
+// 全部走 InstancedMesh，九十幾隻同屏也只有兩個 draw call。
 const NESTS = [
   { x: pathX(-70) + 10, z: -70, r: 6 },
-  { x: pathX(-18) - 11, z: -18, r: 6 },
-  { x: pathX(30) + 9, z: 30, r: 7 },
-  { x: pathX(52) + 8, z: 52, r: 8 },     // 兔祠附近最多
-  { x: pathX(88) - 10, z: 88, r: 7 },
-  { x: pathX(118) + 8, z: 118, r: 7 },
+  { x: pathX(-46) - 9, z: -46, r: 6 },
+  { x: pathX(-18) - 11, z: -18, r: 7 },
+  { x: pathX(12) + 10, z: 12, r: 7 },
+  { x: pathX(30) + 9, z: 30, r: 8 },
+  { x: pathX(52) + 8, z: 52, r: 9 },     // 兔祠附近最多
+  { x: pathX(88) - 10, z: 88, r: 8 },
+  { x: pathX(118) + 8, z: 118, r: 8 },
 ];
-const rabbits = new RabbitMobs(scene, NESTS, 7);
+/* 玩家血量。這是這個專案第一張「會還手」的圖 —— 妖怪兔撲中就扣血，
+ * 扣到零在北口重生。受擊有 0.75 秒無敵，不然被一群兔子圍住會瞬間蒸發。 */
+const vitals = new Vitals({
+  max: 120,
+  hooks: {
+    onChange: (hp, max) => HUD.vitals(hp, max),
+    onHurt: (dmg) => {
+      HUD.vitals(vitals.hp, vitals.max, true);
+      // 被撲中會往後踉蹌一下，手感上要讀得到「被打到了」
+      const a = ctrl.yaw + Math.PI;
+      ctrl.vel.x += Math.sin(a) * 3.4;
+      ctrl.vel.z += Math.cos(a) * 3.4;
+      void dmg;
+    },
+    onDeath: () => {
+      HUD.deathVeil(true);
+      setTimeout(() => {
+        ctrl.teleport(pathX(NORTH_END + 6), NORTH_END + 6);
+        ctrl.vel.set(0, 0, 0);
+        vitals.revive();
+        HUD.deathVeil(false);
+        toast('你在竹林裡倒下了 —— 有人把你拖回了林口。');
+      }, 1900);
+    },
+  },
+});
+
+const rabbits = new RabbitMobs(scene, NESTS, 12, {
+  damage: 7,
+  onAttack: (dmg) => vitals.damage(dmg),
+});
 const mobs = progressMobs(rabbits, prog, 'hinokami', '日之呼吸');
 
 const slashFX = new SlashFX(scene);
@@ -661,6 +696,7 @@ const combat = spec.combat
   : null;
 prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 combatHUD.reset();
+HUD.vitals(vitals.hp, vitals.max);
 HUD.showCombatKeys(!!combat);
 HUD.showFlyKeys(spec.canFly !== false);
 
@@ -710,6 +746,7 @@ function tick(rawDt) {
   combat?.update(dt, rawDt);
   slashFX.update(dt);
   rabbits.update(dt, t, ctrl.pos);
+  vitals.update(dt);
 
   env.update(dt, camera.position);
   northPortal.userData.update(t);
@@ -737,7 +774,7 @@ animate();
 
 // debug handle（跟其他地圖同一套測試口徑）
 window.__bamboo = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits,
+  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, vitals,
   get combat() { return combat; },
   tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
   step(n = 1, dt = 0.016) {
