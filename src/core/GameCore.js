@@ -62,7 +62,7 @@ import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from
  */
 export function bootMap({
   hud, camera: camOpts = {}, exposure = 1.06, env: envOpts, postFX = 'basic',
-  renderer: rendererOpts = {}, clock = false,
+  renderer: rendererOpts = {}, clock = false, tickWhen = null,
 }) {
   const HUD = installHUD(hud);
 
@@ -164,7 +164,9 @@ export function bootMap({
       applyBasicQuality(renderer, env.sun, qualityIdx);
     }
     HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
+    for (const fn of _qualityListeners) fn(qualityIdx, QUALITY_NAMES[qualityIdx]);
   };
+  const _qualityListeners = [];
   syncQuality();
 
   const world = new THREE.Group();
@@ -231,7 +233,7 @@ export function bootMap({
     spec: null, model: null, ctrl: null, prog: null, kit: null,
     escMenu: null, worldMap: null, minimap: null,
     hazards: null,
-    _updates: [], _lateUpdates: [], _postUpdates: [],
+    _updates: [], _lateUpdates: [], _postUpdates: [], _preTicks: [],
     heightAt: null,
     _t: 0,
     _clock: new THREE.Clock(),
@@ -267,28 +269,9 @@ export function bootMap({
      *   spawn 拿到 ?from= 的值與 ctrl，自行 teleport 與轉向。
      */
     spawnPlayer({ bounds, maxGrade, spawn }) {
-      let saved = null;
-      try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-      const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-      const model = buildCharacter(spec);
-      scene.add(model);
-      const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-      ctrl.canFly = spec.canFly ?? true;
-      ctrl.maxAirJumps = spec.airJumps ?? 0;
-      ctrl.jumpV = spec.jump ?? 9.2;
-      ctrl.airJumpV = spec.airJump ?? 8.4;
-      ctrl.sprintMul = spec.sprintMul ?? 1.85;
-      ctrl.speedMul = spec.speed ?? 1.0;
-      if (bounds) ctrl.bounds = bounds;
-      if (maxGrade != null) ctrl.maxGrade = maxGrade;
-
-      spawn(new URLSearchParams(location.search).get('from'), ctrl);
-
-      core.spec = spec;
-      core.model = model;
-      core.ctrl = ctrl;
-      return { spec, model, ctrl };
+      const r = core.createPlayer({ bounds, maxGrade });
+      spawn(new URLSearchParams(location.search).get('from'), r.ctrl);
+      return r;
     },
 
     /* ─────────────────────────────────── 成長 + 隨身裝備 ── */
@@ -310,19 +293,85 @@ export function bootMap({
       return core.kit;
     },
 
+    /* ─────────────────────────── 畫質控制面（G15） ── */
+    /** 神社的 G 鍵、FPS 自動降檔、ESC 選單三個地方都要能「指定索引」並帶
+     *  自己的副作用（autoTuned 旗標、toast 檔位名）。原本 qualityIdx 是
+     *  bootMap 的閉包私有，只有 escMenu 的 cycle 摸得到。 */
+    quality: {
+      get idx() { return qualityIdx; },
+      get name() { return QUALITY_NAMES[qualityIdx]; },
+      names: QUALITY_NAMES,
+      set(i) {
+        qualityIdx = Math.max(0, Math.min(QUALITY_NAMES.length - 1, i));
+        saveQualityIdx(qualityIdx);
+        syncQuality();
+        return QUALITY_NAMES[qualityIdx];
+      },
+      cycle() { return core.quality.set((qualityIdx + 1) % QUALITY_NAMES.length); },
+    },
+    onQualityChange(fn) { _qualityListeners.push(fn); },
+
+    /* ─────────────────────── 玩家生命週期（G14） ── */
+    /**
+     * 建立（或重建）玩家。神社是唯一一張「選角之前沒有玩家、之後還能中途
+     * 換角」的圖 —— 重複呼叫時先 dispose 舊的 controller 並把舊 model 移出
+     * 場景，不然舊的 DOM 監聽器會繼續吃輸入。
+     * @param {object} o { spec, bounds, maxGrade, keepPos }
+     *   spec 省略＝照 sessionStorage 挑；keepPos＝沿用舊玩家的座標與朝向。
+     */
+    createPlayer({ spec = null, bounds = null, maxGrade = null, keepPos = false } = {}) {
+      const prev = core.ctrl;
+      const prevPos = prev ? prev.pos.clone() : null;
+      const prevYaw = prev ? prev.yaw : 0;
+      const prevCamYaw = prev ? prev.camYaw : Math.PI;
+      if (prev) {
+        prev.dispose?.();
+        if (core.model) scene.remove(core.model);
+      }
+
+      let use = spec;
+      if (!use) {
+        let saved = null;
+        try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
+        use = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
+      }
+
+      const model = buildCharacter(use);
+      scene.add(model);
+      const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
+      ctrl.canFly = use.canFly ?? true;
+      ctrl.maxAirJumps = use.airJumps ?? 0;
+      ctrl.jumpV = use.jump ?? 9.2;
+      ctrl.airJumpV = use.airJump ?? 8.4;
+      ctrl.sprintMul = use.sprintMul ?? 1.85;
+      ctrl.speedMul = use.speed ?? 1.0;
+      if (bounds) ctrl.bounds = bounds;
+      if (maxGrade != null) ctrl.maxGrade = maxGrade;
+      if (keepPos && prevPos) {
+        ctrl.teleport(prevPos.x, prevPos.z);
+        ctrl.yaw = prevYaw;
+        ctrl.camYaw = prevCamYaw;
+      }
+
+      core.spec = use;
+      core.model = model;
+      core.ctrl = ctrl;
+      return { spec: use, model, ctrl };
+    },
+
+    /** 記住選了誰（換角/重整之後回到同一位） */
+    setSavedChar(id) {
+      try { sessionStorage.setItem('gansokoy:char', id); } catch { /* 私隱模式 */ }
+    },
+
     /* ───────────────────────────────────────── ESC 選單 ── */
-    bindEsc({ isBusy, onBackToSelect } = {}) {
+    bindEsc({ isBusy, onBackToSelect, quality } = {}) {
       core.escMenu = bindEscMenu({
         getCtrl: () => core.ctrl,
         env,
-        quality: {
-          get: () => QUALITY_NAMES[qualityIdx],
-          cycle() {
-            qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-            saveQualityIdx(qualityIdx);
-            syncQuality();
-            return QUALITY_NAMES[qualityIdx];
-          },
+        quality: quality ?? {
+          get: () => core.quality.name,
+          cycle: () => core.quality.cycle(),
         },
         isBusy,
         onBackToSelect: onBackToSelect ?? (() => {
@@ -421,6 +470,11 @@ export function bootMap({
     /* ─────────────────────────────────────────── 主迴圈 ── */
     onUpdate(fn) { core._updates.push(fn); },
     onLateUpdate(fn) { core._lateUpdates.push(fn); },
+    /** 每個 rAF、core.tick 的子系統跑之前（G12）。神社的 canvas 0×0 重同步
+     *  與 FPS 自動降檔住這裡 —— 它們在原本的 animate 裡就排在 update() 之前，
+     *  塞進 onUpdate 會變成 ctrl.update 之後，晚了一格。
+     *  簽名 (dt, rawDt, t)：dt 已套過 hitstop、t 已推進，與原本逐字相同。 */
+    onPreTick(fn) { core._preTicks.push(fn); },
     /** minimap.update() **之後**的掛勾（G1）。神社的陰陽玉/鈴緒/光塵三段
      *  動畫原本就排在小地圖之後 —— 實務影響大概是零（minimap 只讀
      *  ctrl.pos/yaw），但「相對位置」就是行為，給地圖一個逐字保序的選項。 */
@@ -432,11 +486,20 @@ export function bootMap({
       if (core.kit?.combat?.hitstop > 0) dt *= 0.12;
       core._t += dt;
       const t = core._t;
-      core.ctrl?.update(dt, t);
-      core.kit?.update(dt, rawDt);
-      for (const fn of core._updates) fn(dt, rawDt, t);
-      env.update(dt, camera.position);
-      for (const fn of core._lateUpdates) fn(dt, rawDt, t);
+      for (const fn of core._preTicks) fn(dt, rawDt, t);
+      // tickWhen（G13）：神社在選角之前 ctrl 是 null，原本的 update() 第一行
+      // 就 return —— 連 env.update 都不跑，所以標題畫面上時刻是**凍結**的
+      // （而 Environment 會把時刻寫進 localStorage，不凍結就會偷偷流掉）。
+      // 閘門的範圍刻意跟原本的 update() 一致：ctrl / kit / onUpdate / env /
+      // onLateUpdate 被擋，minimap 與 onPostUpdate 照跑（原本它們在 animate
+      // 裡、在 update() 外面）。
+      if (!tickWhen || tickWhen()) {
+        core.ctrl?.update(dt, t);
+        core.kit?.update(dt, rawDt);
+        for (const fn of core._updates) fn(dt, rawDt, t);
+        env.update(dt, camera.position);
+        for (const fn of core._lateUpdates) fn(dt, rawDt, t);
+      }
       core.minimap?.update();
       for (const fn of core._postUpdates) fn(dt, rawDt, t);
     },

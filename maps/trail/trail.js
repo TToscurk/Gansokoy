@@ -20,76 +20,52 @@
 // 它是一條「路」，重點是走起來的氣氛：密林、霧、光斑、獸徑的土路。
 // 晝夜與天氣走共用的 Environment（跟神社同一套，時刻/天氣跨頁面延續），
 // 戰鬥系統也接上共用的 combat/hud 綁定，有 combat 旗標的角色到這裡照樣能出招。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    畫質 / 玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用執行層提供，
+//    這個檔案只剩獸道獨有的東西（整合書・階段 D）。行為與遷移前逐幀相同。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD, REGION_BY_ID } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
+import { REGION_BY_ID } from '../../src/config.js';
 import { makePortalGlow } from '../../src/world/portal.js';
 import { FairyMobs } from '../../src/combat/mobs.js';
-import { Progression, progressMobs } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
+import { progressMobs } from '../../src/player/progression.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward, portalMist } from '../../src/world/vista.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-/* 共用 HUD —— 與神社、人間之里完全同一套版面 */
-const HUD = installHUD({
-  title: '獸　道',
-  subtitle: 'BEAST TRAIL · 幻想鄉的十字路口',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+/* 共用 HUD / renderer / scene / Environment / 畫質 —— 與神社、人間之里
+ * 完全同一套版面（全部由 GameCore 組裝）。 */
+const core = bootMap({
+  hud: {
+    title: '獸　道',
+    subtitle: 'BEAST TRAIL · 幻想鄉的十字路口',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  // fov 66（比預設窄一點）；near 拉到 0.2（見 main.js 同名註解）：
+  // 換來深度精度，鋪地物件不閃。
+  camera: { fov: 66, near: 0.2, far: 700 },
+  exposure: 1.05,
+  // 長條地圖：太陽跟著玩家走（followSun），陰影相機不用蓋住整條 260m 的路。
+  // 密林的霧比神社濃（fogMul），其他一律用共用的日循環調色。
+  env: {
+    fogMul: 1.6,          // 比神社霧一點（密林），但別濃到吞掉北端的神社遠景
+    shadowArea: 60,
+    followSun: true,
+  },
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-
-// near 拉到 0.2（見 main.js 同名註解）：換來深度精度，鋪地物件不閃。
-const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, 0.2, 700);
-camera.rotation.order = 'YXZ';
-
-/* ─────────────────────────────────── 晝夜 + 天氣（共用 Environment） ── */
-// 長條地圖：太陽跟著玩家走（followSun），陰影相機不用蓋住整條 260m 的路。
-// 密林的霧比神社濃（fogMul），其他一律用共用的日循環調色。
-const env = new Environment(scene, renderer, {
-  fogMul: 1.6,          // 比神社霧一點（密林），但別濃到吞掉北端的神社遠景
-  shadowArea: 60,
-  followSun: true,
-});
-
-/* 畫質（跨地圖共用的三檔，localStorage）：這張圖沒有後製鏈，
- * 套解析度 + 陰影貼圖的 basic 檔。 */
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { scene, world } = core;
+const { box, cyl, post, block } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 一張 Y 字形的谷地：路面沿著中心線走，離開路面往兩側爬升成谷壁，
@@ -162,9 +138,9 @@ function heightAt(x, z) {
 
   return roll + wob + valley + rim;
 }
-setGroundHeightFn(heightAt);
-// 這張圖沒有水域（見 main.js 同名註解）
-WORLD.waterLevel = -999;
+// heightAt 反向依賴 PathNet（要 PATHS.edgeDist），所以登記時機在這裡，
+// 不能提前到 bootMap。waterLevel 預設 -999 = 這張圖沒有水域。
+core.setTerrain(heightAt);
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -213,34 +189,6 @@ const MAT = {
   red: new THREE.MeshStandardMaterial({ color: '#c8402e', roughness: 0.55 }),
   lily: new THREE.MeshStandardMaterial({ color: '#d8302a', roughness: 0.8, emissive: '#5a0e0a' }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-/* 場上實體物件的碰撞盒。每張地圖都照這個規則：樹幹、岩石、倒木、
- * 建物柱牆這些看得見的實體都要能擋人，尺寸貼合模型本身。 */
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 /* 地面網格 + 貼地查詢。路面（ribbonOnGrid）的每個頂點都會問 GRID
@@ -625,42 +573,29 @@ const motes = (() => {
 })();
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: MAP_R + 30, hz: MAP_R + 30 };
-ctrl.maxGrade = 1.05;   // 邊坡是山，爬不上去（見 controller 的坡度阻擋）
-// 從哪一端走進來，就從那一端出生
-const from = new URLSearchParams(location.search).get('from');
-{
-  const spawn = from === 'village' ? VILLAGE_END
-    : from === 'bamboo' ? BAMBOO_END
-    : from === 'sunflower' ? SUNFLOWER_END
-    : SHRINE_END;
-  // 四臂都通向分岔點：往分岔點退幾步，才不會一出生就站在光點上又被傳回去
-  const dx = FORK.x - spawn.x, dz = FORK.z - spawn.z;
-  const dl = Math.hypot(dx, dz) || 1;
-  ctrl.teleport(spawn.x + dx / dl * 7, spawn.z + dz / dl * 7);
-  ctrl.yaw = Math.atan2(dx, dz);
-  ctrl.camYaw = ctrl.yaw + Math.PI;
-}
+core.spawnPlayer({
+  bounds: { hx: MAP_R + 30, hz: MAP_R + 30 },
+  maxGrade: 1.05,   // 邊坡是山，爬不上去（見 controller 的坡度阻擋）
+  // 從哪一端走進來，就從那一端出生
+  spawn(from, ctrl) {
+    const spawn = from === 'village' ? VILLAGE_END
+      : from === 'bamboo' ? BAMBOO_END
+      : from === 'sunflower' ? SUNFLOWER_END
+      : SHRINE_END;
+    // 四臂都通向分岔點：往分岔點退幾步，才不會一出生就站在光點上又被傳回去
+    const dx = FORK.x - spawn.x, dz = FORK.z - spawn.z;
+    const dl = Math.hypot(dx, dz) || 1;
+    ctrl.teleport(spawn.x + dx / dl * 7, spawn.z + dz / dl * 7);
+    ctrl.yaw = Math.atan2(dx, dz);
+    ctrl.camYaw = ctrl.yaw + Math.PI;
+  },
+});
+const ctrl = core.ctrl;
 
 /* ───────────────────── 怪物區 + 成長系統 + 戰鬥 ── */
 // 獸道中段是「有怪物的地區」：路旁四窩妖精。擊殺餵角色經驗、
 // 命中餵技能練度（src/player/progression.js，localStorage 跨地圖保留）。
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
+const prog = core.createProgression();
 // 妖精窩沿著三段路散布 —— 路變長了，窩也要跟著鋪開，
 // 不然走幾百公尺只會遇到四窩。
 const NESTS = (() => {
@@ -682,48 +617,30 @@ const mobs = progressMobs(fairies, prog, 'hinokami', '日之呼吸');
 /* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
  * 每張圖都掛同一份 —— 見 src/player/loadout.js。
  * 妖精是無害的，所以這張圖不接 onAttack，血量只會自己回。 */
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
-  isBlocked: () => escMenu.isOpen,
+core.installKit({
+  mobs,
+  isBlocked: () => core.escMenu.isOpen,
   onDeath: () => ctrl.teleport(SHRINE_END.x, SHRINE_END.z + 8),
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ───────────────────────────────────────────────── 互動與提示 ── */
-const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
-
 /* ESC 選單（與其他地圖同一套）。回選角畫面＝回神社的選人流程。 */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
+core.bindEsc();
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({ current: 'trail', isBlocked: () => escMenu.isOpen });
-const minimap = installMinimap({
-  bounds: { minX: -180, maxX: 276, minZ: -320, maxZ: 275 },
-  paths: PATHS,
-  portals: [
-    { x: SHRINE_END.x, z: SHRINE_END.z, label: '博麗神社', color: '#8be8ff' },
-    { x: VILLAGE_END.x, z: VILLAGE_END.z, label: '人間之里', color: '#f0d89a' },
-    { x: BAMBOO_END.x, z: BAMBOO_END.z, label: '迷途竹林', color: '#d8f0a0' },
-    { x: SUNFLOWER_END.x, z: SUNFLOWER_END.z, label: '太陽花田', color: '#f2c832' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
+core.installMapUI({
+  current: 'trail',
+  isBlocked: () => core.escMenu.isOpen,
+  minimap: {
+    bounds: { minX: -180, maxX: 276, minZ: -320, maxZ: 275 },
+    paths: PATHS,
+    portals: [
+      { x: SHRINE_END.x, z: SHRINE_END.z, label: '博麗神社', color: '#8be8ff' },
+      { x: VILLAGE_END.x, z: VILLAGE_END.z, label: '人間之里', color: '#f0d89a' },
+      { x: BAMBOO_END.x, z: BAMBOO_END.z, label: '迷途竹林', color: '#d8f0a0' },
+      { x: SUNFLOWER_END.x, z: SUNFLOWER_END.z, label: '太陽花田', color: '#f2c832' },
+    ],
+  },
 });
 
 const near = (p) => Math.hypot(ctrl.pos.x - p.x, ctrl.pos.z - p.z) < 4.6;
@@ -732,72 +649,43 @@ const nearVillage = () => near(VILLAGE_END);
 const nearBamboo = () => near(BAMBOO_END);
 const nearSunflower = () => near(SUNFLOWER_END);
 
-window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
-  if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = '../../index.html?from=trail'; return; }
-  if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; return; }
-  if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=trail'; return; }
-  if (nearSunflower()) { HUD.showLoading('太陽花田 讀取中'); location.href = '../sunflower/?from=trail'; }
+// 這張圖沒有 NPC、沒有 Dialogue —— installTalk 只負責四個出口，
+// 判定順序（神社 → 里 → 竹林 → 花田）與提示是同一份清單。
+const updatePrompt = core.installTalk({
+  exits: [
+    { near: nearShrine, prompt: '[ E ]  前往博麗神社', loading: '博麗神社 讀取中', href: '../../index.html?from=trail' },
+    { near: nearVillage, prompt: '[ E ]  前往人間之里', loading: '人間之里 讀取中', href: '../village/' },
+    { near: nearBamboo, prompt: '[ E ]  前往迷途竹林', loading: '迷途竹林 讀取中', href: '../bamboo/?from=trail' },
+    { near: nearSunflower, prompt: '[ E ]  前往太陽花田', loading: '太陽花田 讀取中', href: '../sunflower/?from=trail' },
+  ],
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-/** 一幀的遊戲邏輯（animate 與除錯用的 __trail.step 共用） */
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
-  t += dt;
-  ctrl.update(dt, t);
-
-  // 戰鬥姿勢要在 ctrl.update（走路動畫）之後套才壓得過去
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：妖精的 AI（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   fairies.update(dt, t, ctrl.pos);
+});
 
-  env.update(dt, camera.position);       // 晝夜推進 + 天氣 + 天空跟隨
+// env 之後、小地圖之前：四端傳送點的呼吸動畫
+core.onLateUpdate((dt, rawDt, t) => {
   shrinePortal.userData.update(t);
   villagePortal.userData.update(t);
   bambooPortal.userData.update(t);
   sunflowerPortal.userData.update(t);
-  minimap.update();
-  motes.position.z = ctrl.pos.z * 0.2;
-
-  if (nearShrine()) HUD.prompt('[ E ]  前往博麗神社');
-  else if (nearVillage()) HUD.prompt('[ E ]  前往人間之里');
-  else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林');
-  else if (nearSunflower()) HUD.prompt('[ E ]  前往太陽花田');
-  else HUD.prompt(null);
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+// 小地圖**之後**：光塵跟著玩家推移，再更新出口提示
+//（原本就排在 minimap.update() 後面，而且 motes 那行在提示之前）
+core.onPostUpdate(() => {
+  motes.position.z = ctrl.pos.z * 0.2;
+  updatePrompt();
+});
+
+core.start();
 
 // debug handle（跟 index 的 __shrine 同一套測試口徑）
-window.__trail = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, prog, fairies, PATHS,
+// 原本的 handle 沒有 colliders 也沒有 panel —— 用 omit 保持鍵集合一致。
+window.__trail = core.debugHandle({
+  fairies, PATHS,
   SHRINE_END, VILLAGE_END, BAMBOO_END, SUNFLOWER_END, FORK,
-  get kit() { return kit; }, get combat() { return kit.combat; },
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑） */
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
-};
+}, { omit: ['colliders', 'panel'] });

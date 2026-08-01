@@ -15,76 +15,51 @@
 // 系統一律走共用模組：HUD、晝夜天氣（Environment）、傳送光點、戰鬥、
 // 成長、靜態幾何合併。怪物是新的妖怪兔（src/combat/rabbits.js）——
 // 這個專案第一種會主動追玩家的怪。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用層提供，這個檔案
+//    只剩竹林獨有的東西（整合書・階段 D）。行為與遷移前逐字相同 ——
+//    包含 LCG（seed 20240731）的消費順序，動一下整片林子就換樣。
 
 import * as THREE from 'three';
 import * as BGU from 'three/addons/utils/BufferGeometryUtils.js';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD, REGION_BY_ID } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
+import { REGION_BY_ID } from '../../src/config.js';
 import { NPCManager, TALK_RANGE } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
 import { RabbitMobs } from '../../src/combat/rabbits.js';
-import { Progression, progressMobs } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-/* 共用 HUD —— 與其他三張圖完全同一套版面 */
-const HUD = installHUD({
-  title: '迷途竹林',
-  subtitle: 'BAMBOO FOREST OF THE LOST · 獸道 ⇄ 永遠亭',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
-});
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.06;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-// near 0.2：深度精度（見 main.js 同名註解）
-const camera = new THREE.PerspectiveCamera(68, innerWidth / innerHeight, 0.2, 560);
-camera.rotation.order = 'YXZ';
-
-/* ─────────────────────────────── 晝夜 + 天氣（共用 Environment） ── */
+/* 共用 HUD / renderer / scene / Environment —— 與其他圖完全同一套版面 */
 // 竹林的霧是這張圖的主角：看不遠才會迷路。太陽跟著玩家走（長條地圖），
 // 陰影相機不用蓋住整片林子。
-const env = new Environment(scene, renderer, {
-  fogMul: 2.1,
-  shadowArea: 48,
-  followSun: true,
+const core = bootMap({
+  hud: {
+    title: '迷途竹林',
+    subtitle: 'BAMBOO FOREST OF THE LOST · 獸道 ⇄ 永遠亭',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  // near 0.2：深度精度（見 main.js 同名註解）。far 560（不是預設的 700）——
+  // 竹林看不遠，霧本來就吃掉遠處。
+  camera: { fov: 68, near: 0.2, far: 560 },
+  exposure: 1.06,
+  env: { fogMul: 2.1, shadowArea: 48, followSun: true },
 });
-
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { HUD, scene, camera, world, colliders } = core;
+const { box, cyl, post, block } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 竹林長在平地上：地面只有很緩的起伏，迷宮感靠竹子的密度而不是地形。
@@ -173,8 +148,8 @@ function heightAt(x, z) {
   const wob = Math.sin(x * 0.6 + z * 0.29) * 0.08;
   return roll + slope + wob;
 }
-setGroundHeightFn(heightAt);
-WORLD.waterLevel = -999;   // 這張圖沒有水域（見 main.js 同名註解）
+// waterLevel 維持 -999：這張圖沒有水域（見 main.js 同名註解）
+core.setTerrain(heightAt);
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -235,33 +210,6 @@ const MAT = {
   }),
   cloth: new THREE.MeshStandardMaterial({ color: '#c9503c', roughness: 0.95, side: THREE.DoubleSide }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-/* 碰撞盒 —— 看得見的實體都要能擋人，尺寸貼合模型 */
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 /* 地面網格 + 貼地查詢（見 src/world/groundmesh.js —— 路草不閃的根治） */
@@ -849,36 +797,27 @@ ridgeRing(world, {
 }
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: HALF_W + 8, hz: LEN + 10 };
-ctrl.maxGrade = 1.05;   // 圍坡是山，爬不上去（見 controller 的坡度阻擋）
-// 出生點依來向分流：從永遠亭回來 = 南門；其他（獸道）= 北口
-const FROM = new URLSearchParams(location.search).get('from');
-if (FROM === 'eientei') {
-  ctrl.teleport(SOUTH_END.x, SOUTH_END.z - 10);
-  ctrl.yaw = Math.PI;        // 面向北（回獸道的方向）
-  ctrl.camYaw = 0;
-} else if (FROM === 'namelessHill') {
-  ctrl.teleport(EAST_END.x - 8, EAST_END.z);
-  ctrl.yaw = -Math.PI / 2;   // 面向西（往竹林深處）
-  ctrl.camYaw = Math.PI / 2;
-} else {
-  ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
-  ctrl.yaw = 0;              // 面向南（往永遠亭）
-  ctrl.camYaw = Math.PI;
-}
+core.spawnPlayer({
+  bounds: { hx: HALF_W + 8, hz: LEN + 10 },
+  maxGrade: 1.05,   // 圍坡是山，爬不上去（見 controller 的坡度阻擋）
+  // 出生點依來向分流：從永遠亭回來 = 南門；其他（獸道）= 北口
+  spawn(from, ctrl) {
+    if (from === 'eientei') {
+      ctrl.teleport(SOUTH_END.x, SOUTH_END.z - 10);
+      ctrl.yaw = Math.PI;        // 面向北（回獸道的方向）
+      ctrl.camYaw = 0;
+    } else if (from === 'namelessHill') {
+      ctrl.teleport(EAST_END.x - 8, EAST_END.z);
+      ctrl.yaw = -Math.PI / 2;   // 面向西（往竹林深處）
+      ctrl.camYaw = Math.PI / 2;
+    } else {
+      ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
+      ctrl.yaw = 0;              // 面向南（往永遠亭）
+      ctrl.camYaw = Math.PI;
+    }
+  },
+});
+const ctrl = core.ctrl;
 
 /* ─────────────────── 妹紅：竹林的嚮導（對話後可帶路去永遠亭） ── */
 // 迷いの竹林的設定：妹紅住在林中，常替迷路的人（與去永遠亭求醫的人）
@@ -907,9 +846,7 @@ const dialogue = new Dialogue();
 let guideOffer = 0;   // >0 = 妹紅的帶路邀請還有效（秒）
 
 /* ───────────────────── 妖怪兔 + 成長系統 + 戰鬥 ── */
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
+const prog = core.createProgression();
 // 越往南（越靠近永遠亭）窩越密 —— 走進去要有「越來越難回頭」的壓力。
 // 全部走 InstancedMesh，九十幾隻同屏也只有兩個 draw call。
 // 兔窩沿著小徑網撒，越往南越密 —— 走向永遠亭要有「越來越難回頭」的壓力。
@@ -932,58 +869,41 @@ const mobs = progressMobs(rabbits, prog, 'hinokami', '日之呼吸');
 
 /* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
  * 這一整套是角色內建的，每張圖都掛同一份 —— 見 src/player/loadout.js。 */
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
+const kit = core.installKit({
+  mobs,
   isBlocked: () => escMenu.isOpen || dialogue.active,
   onDeath: () => {
     ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
     HUD.toast('你在竹林裡倒下了 —— 有人把你拖回了林口。');
   },
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ───────────────────────────────────────────── 互動與提示 ── */
 const toast = (msg, dur = 2600) => HUD.toast(msg, dur);
 
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
+const escMenu = core.bindEsc();
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
+core.installMapUI({
   current: 'bamboo',
   isBlocked: () => dialogue.active || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -155, maxX: 155, minZ: -300, maxZ: 300 },
-  paths: PATHS,
-  portals: [
-    { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#d8f0a0' },
-    { x: SOUTH_END.x, z: SOUTH_END.z, label: '永遠亭', color: '#c0a8ff' },
-    { x: EAST_END.x, z: EAST_END.z, label: '無名之丘', color: '#d8e8a0' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
+  minimap: {
+    bounds: { minX: -155, maxX: 155, minZ: -300, maxZ: 300 },
+    paths: PATHS,
+    portals: [
+      { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#d8f0a0' },
+      { x: SOUTH_END.x, z: SOUTH_END.z, label: '永遠亭', color: '#c0a8ff' },
+      { x: EAST_END.x, z: EAST_END.z, label: '無名之丘', color: '#d8e8a0' },
+    ],
+  },
 });
 
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_END.x, ctrl.pos.z - NORTH_END.z) < 4.8;
 const nearSouth = () => Math.hypot(ctrl.pos.x - SOUTH_END.x, ctrl.pos.z - (SOUTH_END.z - 5)) < 4.8;
 const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.2;
 
+// ※ 這段刻意不走 core.installTalk：妹紅的互動是兩段式的（對話 → 8 秒內
+//   再按 E 就跟她走），installTalk 的「NPC 對話恆為最優先」表達不了。
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || escMenu.isOpen) return;
   // 對話進行中：E 只推進，不落到下面的互動判定
@@ -1015,28 +935,23 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-/** 一幀的遊戲邏輯（animate 與除錯用的 __bamboo.step 共用） */
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫
-  t += dt;
-  ctrl.update(dt, t);
-
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：妖怪兔、NPC、對話、帶路邀請倒數（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   rabbits.update(dt, t, ctrl.pos);
   npcMgr.update(t, ctrl.pos, camera);
   dialogue.update(dt);
   guideOffer = Math.max(0, guideOffer - dt);
+});
 
-  env.update(dt, camera.position);
+// env 之後、minimap 之前：三個傳送點的呼吸動畫
+core.onLateUpdate((dt, rawDt, t) => {
   northPortal.userData.update(t);
   southPortal.userData.update(t);
   eastPortal.userData.update(t);
-  minimap.update();
+});
 
+// minimap.update() 之後：HUD 提示（原本就排在小地圖後面）
+core.onPostUpdate(() => {
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;
   if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
@@ -1045,36 +960,12 @@ function tick(rawDt) {
   else if (nearSouth()) HUD.prompt('[ E ]  進入永遠亭');
   else if (nearEast()) HUD.prompt('[ E ]  往無名之丘');
   else HUD.prompt(null);
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+core.start();
 
 // debug handle（跟其他地圖同一套測試口徑）
-window.__bamboo = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, rabbits, prog, npcMgr, dialogue,
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  get combat() { return kit.combat; }, get panel() { return kit.panel; },
-  get kit() { return kit; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
+window.__bamboo = core.debugHandle({
+  rabbits, npcMgr, dialogue,
   PATHS, CLEARINGS, NORTH_END, SOUTH_END, EAST_END,
-};
+});

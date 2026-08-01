@@ -12,70 +12,50 @@
 //
 // 系統全部走共用模組：HUD、晝夜天氣（Environment）、傳送光點、
 // 戰鬥（有 combat 旗標的角色到哪張圖都能出招）、角色/技能等級。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    畫質 / 玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用層提供，
+//    這個檔案只剩人里獨有的東西（整合書・階段 D）。行為與遷移前逐字相同
+//    —— 包含「名牌住獨立場景、主畫面之後單獨畫」與客製的 keydown。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { Progression } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { VillagerCrowd } from '../../src/entities/villagers.js';
 import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-const HUD = installHUD({
-  title: '人間之里',
-  subtitle: 'HUMAN VILLAGE',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+const core = bootMap({
+  hud: {
+    title: '人間之里',
+    subtitle: 'HUMAN VILLAGE',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  // fov 70（不是預設的 68）、far 900（不是 700）：里是開闊的盆地，看得到街尾。
+  // near 拉到 0.2：深度緩衝的精度幾乎全由 near/far 的比值決定，0.08→0.2
+  // 等於把整條深度範圍的精度拉高 2.5 倍，鋪地物件與共面幾何就不容易閃。
+  // 第三人稱相機離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），
+  // 不會有東西近到被 near 切掉。
+  camera: { fov: 70, near: 0.2, far: 900 },
+  // 這張圖原本沒有指定 toneMappingExposure ＝ three 的預設 1（不是 GameCore
+  // 的 1.06）—— 顯式傳 1 才是「行為完全不變」。
+  exposure: 1,
+  // 里是開闊的盆地：霧比獸道淡，看得到街尾與遠山
+  env: { fogMul: 0.75, shadowArea: 78, followSun: true },
+  // postFX 維持 basic（無 composer），畫質走 applyBasicQuality 的三檔。
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-// near 拉到 0.2：深度緩衝的精度幾乎全由 near/far 的比值決定，0.08→0.2
-// 等於把整條深度範圍的精度拉高 2.5 倍，鋪地物件與共面幾何就不容易閃。
-// 第三人稱相機離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），
-// 不會有東西近到被 near 切掉。
-const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.2, 900);
-camera.rotation.order = 'YXZ';
-
-// 里是開闊的盆地：霧比獸道淡，看得到街尾與遠山
-const env = new Environment(scene, renderer, { fogMul: 0.75, shadowArea: 78, followSun: true });
-
-/* 畫質（跨地圖共用的三檔，localStorage）：這張圖沒有後製鏈，
- * 套解析度 + 陰影貼圖的 basic 檔。 */
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { HUD, renderer, scene, camera, world, colliders } = core;
+const { box, cyl, post, block, walkBlock } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 里蓋在平坦的盆地上：主街完全水平，外圍緩緩抬起成田埂與矮丘。
@@ -107,8 +87,8 @@ function heightAt(x, z) {
   // 外圍矮丘要封頂 —— 二次式不封的話在地面網格邊緣會衝到幾百公尺
   return Math.min(30, out * out * 0.012) + river;
 }
-setGroundHeightFn(heightAt);
-WORLD.waterLevel = -999;   // 這張圖沒有水域（見 main.js 同名註解）
+// waterLevel 省略 ＝ -999：這張圖沒有水域（見 main.js 同名註解）
+core.setTerrain(heightAt);
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -186,36 +166,10 @@ const MAT = {
   leafPink: new THREE.MeshStandardMaterial({ color: '#e0a8bc', roughness: 1, flatShading: true }),
 };
 
-const world = new THREE.Group();
-scene.add(world);
-
-/* 碰撞盒 —— 所有看得見的實體都要能擋人，尺寸貼合模型 */
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-/** 可站上去的平台（橋面、攤位桌、像座）。跳上去就站著，不會被推開。 */
-function walkBlock(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2, walk: true });
-}
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 10, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
+/* world / colliders / block / walkBlock / post / box / cyl 全部由 GameCore
+ * 提供（見檔頭的解構）。碰撞盒 —— 所有看得見的實體都要能擋人，尺寸貼合模型；
+ * walkBlock 是可站上去的平台（橋面、攤位桌、像座），跳上去就站著不會被推開。
+ * ※ 本檔所有 cyl 呼叫都顯式帶 seg，不吃預設值。 */
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 /**
@@ -1360,33 +1314,27 @@ for (const nd of CROWD_GRAPH.nodes) {
 const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10, colliders);
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: 240, hz: 300 };
-// 出生點依來向分流：從香霖堂回來就站在西南門內，其餘（獸道／直接開頁）站北門內
-if (new URLSearchParams(location.search).get('from') === 'kourindou') {
-  ctrl.teleport(SW_GATE.x + 9, SW_GATE.z);
-  ctrl.yaw = Math.PI / 2;        // 面向東（往里內）
-  ctrl.camYaw = -Math.PI / 2;
-} else {
-  ctrl.teleport(0, GATE_Z + 9);
-  ctrl.yaw = 0;
-  ctrl.camYaw = Math.PI;
-}
+const { spec, ctrl } = core.spawnPlayer({
+  bounds: { hx: 240, hz: 300 },
+  // 出生點依來向分流：從香霖堂回來就站在西南門內，其餘（獸道／直接開頁）站北門內
+  spawn(from, c) {
+    if (from === 'kourindou') {
+      c.teleport(SW_GATE.x + 9, SW_GATE.z);
+      c.yaw = Math.PI / 2;        // 面向東（往里內）
+      c.camYaw = -Math.PI / 2;
+    } else {
+      c.teleport(0, GATE_Z + 9);
+      c.yaw = 0;
+      c.camYaw = Math.PI;
+    }
+  },
+});
 
 /* ───────────────────── 名冊角色（預設沒有人，全交給場景編輯器） ── */
-const labelScene = new THREE.Scene();
+// 名牌是 depthTest:false 的 sprite，住 GameCore 的獨立 overlay 場景
+// （core.labelScene）—— 這張圖是 basic，core.plateScene 會回主場景，
+// 用它就會把「主畫面之後單獨畫」這個原本的行為弄丟。
+const labelScene = core.labelScene;
 const npcSystem = spawnAllNPCs(scene, heightAt, labelScene, spec.id, { seed: false });
 
 const sceneEditor = new SceneEditor({
@@ -1399,77 +1347,59 @@ const sceneEditor = new SceneEditor({
 });
 
 /* ────────────────────────────────── 戰鬥（里內和平，無怪） ── */
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
+core.createProgression();
 
 /* 角色的隨身裝備：HP/MP、戰鬥、技能、技能視窗（K）。
  * 里內沒有怪（結界擋著），所以不傳 mobs —— 招式照出，只是砍不到東西。
- * 技能是角色內建的，不該因為「這張圖沒有怪」就消失。 */
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog,
-  isBlocked: () => escMenu.isOpen || sceneEditor.isOpen,
+ * 技能是角色內建的，不該因為「這張圖沒有怪」就消失。
+ * （renderBadge 由 core.installKit 代打，跟原本同一句。） */
+core.installKit({
+  isBlocked: () => core.escMenu.isOpen || sceneEditor.isOpen,
   onDeath: () => ctrl.teleport(0, GATE_Z + 9),
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ─────────────────────────────────────── 夜燈與環境回呼 ── */
-env.opts.onApply = (t) => {
+core.onEnvApply((t) => {
   for (const { lamp, light } of lanternGlows) {
     light.intensity = t.lantern * 4.5;
     lamp.material.emissiveIntensity = t.lantern > 0.05 ? 0.9 : 0.2;
   }
-};
-env.opts.onLabel = (text) => { HUD.todLabel.textContent = text; };
-env.applyTime(env.hour, true);
+});
+core.onEnvLabel((text) => { HUD.todLabel.textContent = text; });
+core.applyEnvNow();
 
 /* ────────────────────────────────────────────── 互動與選單 ── */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  isBusy: () => sceneEditor.isOpen,
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
+// 畫質與「回選角」都跟 GameCore 的預設逐字相同；isBusy 是這張圖獨有的
+// （場景編輯器開著時 ESC 要留給編輯器）。
+const escMenu = core.bindEsc({ isBusy: () => sceneEditor.isOpen });
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
+core.installMapUI({
   current: 'village',
   isBlocked: () => sceneEditor.isOpen || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -160, maxX: 160, minZ: -195, maxZ: 265 },
-  lines: [
-    [[0, GATE_Z], [0, SOUTH_GATE_Z]],                                  // 主街
-    ...CROSS_Z.map(cz => [[-102, cz], [102, cz]]),                     // 橫街
-    ...LANE_X.map(lx => [[lx, -160], [lx, 200]]),                      // 小巷
-    [[-98, 100], [SW_GATE.x, 100]],                                    // 西南門引道
-  ],
-  portals: [
-    { x: 0, z: GATE_Z - 6, label: '獸道', color: '#8be8ff' },
-    { x: KOURIN_PORTAL.x, z: KOURIN_PORTAL.z, label: '香霖堂', color: '#e0c88a' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
+  minimap: {
+    bounds: { minX: -160, maxX: 160, minZ: -195, maxZ: 265 },
+    lines: [
+      [[0, GATE_Z], [0, SOUTH_GATE_Z]],                                  // 主街
+      ...CROSS_Z.map(cz => [[-102, cz], [102, cz]]),                     // 橫街
+      ...LANE_X.map(lx => [[lx, -160], [lx, 200]]),                      // 小巷
+      [[-98, 100], [SW_GATE.x, 100]],                                    // 西南門引道
+    ],
+    portals: [
+      { x: 0, z: GATE_Z - 6, label: '獸道', color: '#8be8ff' },
+      { x: KOURIN_PORTAL.x, z: KOURIN_PORTAL.z, label: '香霖堂', color: '#e0c88a' },
+    ],
+  },
 });
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
 const nearKourindou = () =>
   Math.hypot(ctrl.pos.x - KOURIN_PORTAL.x, ctrl.pos.z - KOURIN_PORTAL.z) < 4.6;
 
+// 這張圖的 keydown 是客製的（ESC 關編輯器 / P 開關編輯器 / E 兩個出口），
+// 判定鏈跟 core.installTalk 的樣板不同 —— 原樣保留。
 window.addEventListener('keydown', (e) => {
-  // ESC 在編輯器開著時是「關掉編輯器」（bindEscMenu 的 isBusy 已讓過）
+  // ESC 在編輯器開著時是「關掉編輯器」（core.bindEsc 的 isBusy 已讓過）
   if (e.code === 'Escape' && sceneEditor.isOpen) { sceneEditor.close(); return; }
   // P：開關場景編輯器。放在鎖定判斷之前 —— 開啟時會解除滑鼠鎖定。
   if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
@@ -1480,63 +1410,34 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;
-  t += dt;
-  ctrl.update(dt, t);
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：路人、名冊角色、水車（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   crowd.update(dt, t, ctrl.pos);
   npcSystem.update(t, ctrl.pos, camera);
   // 水車：里外唯一會動的建築，慢慢轉（河水推的，不用很快）
   for (const w of waterWheels) w.rotation.x += dt * 0.55;
-  env.update(dt, camera.position);
+});
+
+// env 之後、minimap 之前：兩個傳送點的呼吸動畫
+core.onLateUpdate((dt, rawDt, t) => {
   trailPortal.userData.update(t);
   kourinPortal.userData.update(t);
-  minimap.update();
+});
+
+// minimap.update() 之後：HUD 提示（原本就排在小地圖後面）
+core.onPostUpdate(() => {
   if (nearPortal()) HUD.prompt('[ E ]  前往獸道（往博麗神社・迷途竹林）');
   else if (nearKourindou()) HUD.prompt('[ E ]  前往香霖堂（往魔法之森）');
   else HUD.prompt(null);
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  // 名牌是 depthTest:false 的 sprite，跟神社一樣在主畫面之後單獨畫
-  if (labelScene.children.length) {
-    const prev = renderer.autoClear;
-    renderer.autoClear = false;
-    renderer.render(labelScene, camera);
-    renderer.autoClear = prev;
-  }
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+core.start();
 
-window.__village = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders,
+// debug handle（跟其他地圖同一套測試口徑）。原本沒有 panel 這個鍵 → omit。
+window.__village = core.debugHandle({
   crowd, npcs: npcSystem, sceneEditor,
-  get kit() { return kit; }, get combat() { return kit.combat; },
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; }, prog,
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑） */
+  /** 手動渲染一格（量 renderer.info 用，跟 __shrine.frame 同口徑）。
+   *  原本刻意只畫主場景、不畫名牌 —— 覆寫掉 core.renderFrame 版本。 */
   frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
   GATE_Z, SOUTH_GATE_Z, SW_GATE, KOURIN_PORTAL,
-};
+}, { omit: ['panel'] });
