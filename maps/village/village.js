@@ -81,6 +81,9 @@ syncQuality();
 const VILLAGE_R = 175;     // 里的半徑（超過這裡開始爬坡）
 const GATE_Z = -168;       // 北端里門（通獸道 → 博麗神社）
 const SOUTH_GATE_Z = 250;  // 南端里門（里的南界，不是出口）
+// 西南門：橫街 z=100 往西的延伸，通香霖堂 → 魔法之森。
+// 位置挑在里的平坦帶內（heightAt 的橢圓 d<175），門外才不會卡在爬坡上。
+const SW_GATE = { x: -126, z: 100 };
 const RIVER_X = 118;       // 東側的河（穿過里的東緣）
 
 /** 河道中心線 —— 蜿蜒穿過里的東側 */
@@ -1067,6 +1070,43 @@ function villageGate(gz, inward) {
 villageGate(GATE_Z, 1);          // 北端：通獸道 → 博麗神社
 villageGate(SOUTH_GATE_Z, -1);   // 南端：通迷途竹林 → 永遠亭
 
+/**
+ * 西南門：跟南北兩座同一款冠木門，只是轉九十度（門面朝 ±x）。
+ * 沒有把 villageGate 改成吃軸向 —— 那會動到已經蓋好、已經驗過的兩座門。
+ * @param {number} gx @param {number} gz 門的位置
+ */
+function westGate(gx, gz) {
+  const y = heightAt(gx, gz);
+  for (const s of [-1, 1]) {
+    cyl(0.42, 0.48, 6.2, MAT.darkWood, gx, y + 3.1, gz + s * 4.4, 10);
+    post(gx, gz + s * 4.4, 0.55, y + 6.2);
+  }
+  box(0.8, 0.7, 11, MAT.darkWood, gx, y + 6.0, gz);
+  box(0.6, 0.45, 9.4, MAT.darkWood, gx, y + 5.0, gz);
+  for (const s of [-1, 1]) {
+    const slope = box(2.2, 0.3, 12, MAT.roofTile, gx + s * 0.9, y + 6.7, gz);
+    slope.rotation.z = s * 0.5;
+  }
+  // 門兩側的土牆（往南北兩邊各拉三段，門口才不是空的）
+  for (const sd of [-1, 1]) {
+    for (let k = 0; k < 3; k++) {
+      const wz = gz + sd * (17 + k * 20);
+      box(0.7, 2.4, 20, MAT.plaster, gx, y + 1.2, wz);
+      box(1.0, 0.25, 20.4, MAT.roofTile, gx, y + 2.45, wz);
+      block(gx, wz, 0.7, 20, y + 2.45);
+    }
+  }
+  // 門內側的注連繩結界柱（內側 = +x，往里的方向）
+  for (const s of [-1, 1]) {
+    cyl(0.16, 0.18, 1.6, MAT.stone, gx + 2.6, y + 0.8, gz + s * 6.4, 8);
+    post(gx + 2.6, gz + s * 6.4, 0.22, y + 1.6);
+  }
+}
+westGate(SW_GATE.x, SW_GATE.z);
+
+// 橫街 z=100 往西接到西南門的一段土路（橫街本身只鋪到 |x|≈98）
+groundDecal(34, 7, (SW_GATE.x + 3 - 98) / 2, SW_GATE.z, MAT.road, 0.062);
+
 // 遠山（讓盆地有邊界感）
 // 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
 // 18 座山就永遠是 18 個 draw call。
@@ -1081,11 +1121,15 @@ for (let i = 0; i < 18; i++) {
   world.add(m);
 }
 
-/* ─────────────────────────────── 傳送點（只有北端通獸道） ── */
-// 里只有一個對外的出口：北門的獸道。要去迷途竹林得走回獸道再往東南岔 ——
-// 里跟竹林之間沒有直達的路，那條分岔才有存在感。
+/* ─────────────────────────────── 傳送點（北端獸道、西南香霖堂） ── */
+// 里對外有兩個出口：北門的獸道，西南門的香霖堂。要去迷途竹林仍得走回
+// 獸道再往東南岔 —— 里跟竹林之間沒有直達的路，那條分岔才有存在感。
 // 南門保留成建築（里的南界），但不是傳送點。
 const trailPortal = makePortalGlow(world, 0, heightAt(0, GATE_Z - 6), GATE_Z - 6);
+const KOURIN_PORTAL = { x: SW_GATE.x - 6, z: SW_GATE.z };
+const kourinPortal = makePortalGlow(
+  world, KOURIN_PORTAL.x, heightAt(KOURIN_PORTAL.x, KOURIN_PORTAL.z), KOURIN_PORTAL.z, 0xe0c88a,
+);
 
 /* ─────────────────────────────── 草叢與雜草（街廓後院、河岸、里外） ── */
 scatterGrass(world, {
@@ -1134,6 +1178,50 @@ scatterGrass(world, {
     m.castShadow = false;
     g.add(m);
   }
+})();
+
+/* ────────────── 西南門外的香霖堂遠景（傳送點看得到下一張圖） ── */
+(function kourindouVista() {
+  const g = new THREE.Group();
+  world.add(g);
+  const gy = heightAt(SW_GATE.x, SW_GATE.z);
+  // 出門的土路先往西鋪一段（跟門內那段各差 1.2 公分，重疊處不會閃）
+  groundDecal(48, 6, SW_GATE.x - 28, SW_GATE.z + 2, MAT.road, 0.074);
+  // 夾道的樹：愈往西愈密、愈暗（香霖堂在林緣，再過去就是魔法之森）
+  for (let i = 0; i < 46; i++) {
+    const x = SW_GATE.x - 8 - Math.random() * 54;
+    const z = SW_GATE.z + (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 26);
+    tree(x, z, 0.9 + Math.random() * 0.9, MAT.leaf);
+  }
+  // 那間屋頂歪歪的舊道具店：陡屋頂 + 煙囪，一眼就跟里的和瓦分得開
+  const shopWall = new THREE.MeshStandardMaterial({ color: '#6b533a', roughness: 0.95 });
+  const shopRoof = new THREE.MeshStandardMaterial({ color: '#41474e', roughness: 0.8, flatShading: true });
+  const brick = new THREE.MeshStandardMaterial({ color: '#7a4038', roughness: 1 });
+  const sx = SW_GATE.x - 74, sz = SW_GATE.z + 6;
+  const body = new THREE.Mesh(new THREE.BoxGeometry(17, 3.6, 11), shopWall);
+  body.position.set(sx, gy + 1.8, sz);
+  g.add(body);
+  for (const s of [-1, 1]) {
+    const slope = new THREE.Mesh(new THREE.BoxGeometry(19, 0.34, 7.4), shopRoof);
+    slope.position.set(sx, gy + 5.5, sz + s * 2.4);
+    slope.rotation.x = s * 0.84;
+    g.add(slope);
+  }
+  const ridge = new THREE.Mesh(new THREE.BoxGeometry(19.4, 0.36, 0.9), shopRoof);
+  ridge.position.set(sx, gy + 7.0, sz);
+  g.add(ridge);
+  const chim = new THREE.Mesh(new THREE.BoxGeometry(1.2, 4.4, 1.2), brick);
+  chim.position.set(sx - 6, gy + 6.0, sz - 1.6);
+  g.add(chim);
+  // 再遠處是魔法之森的暗樹牆
+  const wallMat = new THREE.MeshStandardMaterial({ color: '#263a26', roughness: 1, flatShading: true });
+  for (let i = 0; i < 16; i++) {
+    const m = new THREE.Mesh(new THREE.ConeGeometry(11 + Math.random() * 9, 24 + Math.random() * 16, 5), wallMat);
+    m.position.set(SW_GATE.x - 104 - Math.random() * 30, gy + 8, SW_GATE.z + (i - 8) * 17);
+    m.rotation.y = Math.random() * 3;
+    g.add(m);
+  }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
@@ -1263,9 +1351,16 @@ ctrl.airJumpV = spec.airJump ?? 8.4;
 ctrl.sprintMul = spec.sprintMul ?? 1.85;
 ctrl.speedMul = spec.speed ?? 1.0;
 ctrl.bounds = { hx: 240, hz: 300 };
-ctrl.teleport(0, GATE_Z + 9);   // 里只有北門一個入口
-ctrl.yaw = 0;
-ctrl.camYaw = Math.PI;
+// 出生點依來向分流：從香霖堂回來就站在西南門內，其餘（獸道／直接開頁）站北門內
+if (new URLSearchParams(location.search).get('from') === 'kourindou') {
+  ctrl.teleport(SW_GATE.x + 9, SW_GATE.z);
+  ctrl.yaw = Math.PI / 2;        // 面向東（往里內）
+  ctrl.camYaw = -Math.PI / 2;
+} else {
+  ctrl.teleport(0, GATE_Z + 9);
+  ctrl.yaw = 0;
+  ctrl.camYaw = Math.PI;
+}
 
 /* ───────────────────── 名冊角色（預設沒有人，全交給場景編輯器） ── */
 const labelScene = new THREE.Scene();
@@ -1326,6 +1421,8 @@ const escMenu = bindEscMenu({
 });
 
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
+const nearKourindou = () =>
+  Math.hypot(ctrl.pos.x - KOURIN_PORTAL.x, ctrl.pos.z - KOURIN_PORTAL.z) < 4.6;
 
 window.addEventListener('keydown', (e) => {
   // ESC 在編輯器開著時是「關掉編輯器」（bindEscMenu 的 isBusy 已讓過）
@@ -1334,7 +1431,8 @@ window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyP') { sceneEditor.toggle(); e.preventDefault(); return; }
   if (sceneEditor.isOpen || escMenu.isOpen) return;
   if (e.code !== 'KeyE' || !ctrl.locked) return;
-  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; }
+  if (nearPortal()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=village'; return; }
+  if (nearKourindou()) { HUD.showLoading('香霖堂 讀取中'); location.href = '../kourindou/?from=village'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -1353,7 +1451,10 @@ function tick(rawDt) {
   for (const w of waterWheels) w.rotation.x += dt * 0.55;
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
-  HUD.prompt(nearPortal() ? '[ E ]  前往獸道（往博麗神社・迷途竹林）' : null);
+  kourinPortal.userData.update(t);
+  if (nearPortal()) HUD.prompt('[ E ]  前往獸道（往博麗神社・迷途竹林）');
+  else if (nearKourindou()) HUD.prompt('[ E ]  前往香霖堂（往魔法之森）');
+  else HUD.prompt(null);
 }
 
 function animate() {
@@ -1392,4 +1493,5 @@ window.__village = {
   frame() { renderer.render(scene, camera); },
   setHour(h) { return env.setHour(h); },
   setTimeFlowing(v) { env.timeFlowing = v; },
+  GATE_Z, SOUTH_GATE_Z, SW_GATE, KOURIN_PORTAL,
 };

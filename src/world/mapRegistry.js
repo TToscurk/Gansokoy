@@ -63,8 +63,9 @@ const MAP_INFO = {
     entry: 'maps/sunflower/',
   },
   kourindou: {
-    built: false, safe: true, playSize: [140, 140], mobTheme: null,
+    built: true, safe: true, playSize: [140, 140], mobTheme: null,
     connections: ['village', 'forest'],
+    entry: 'maps/kourindou/',
   },
   forest: {
     built: false, safe: false, playSize: [450, 450], mobTheme: 'beast',    // + 孢子毒區

@@ -262,9 +262,11 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
    人間之里         迷途竹林 ──東口──> 無名之丘 │
  maps/village/    maps/bamboo/    maps/namelessHill/
         │              │                      │
-   （西南門           永遠亭                  ▼
-    待建：香霖堂）  maps/eientei/         太陽花田 ──┘
-                                      maps/sunflower/   （閉合回獸道）
+   （西南門）         永遠亭                  ▼
+        │         maps/eientei/          太陽花田 ──┘
+        ▼                              maps/sunflower/   （閉合回獸道）
+    香霖堂 ──> （待建：魔法之森）
+ maps/kourindou/
 ```
 
 走到端點按 `E` 換圖。換圖時時刻、天氣、HP/MP、角色等級、任務進度都會延續。
@@ -299,6 +301,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `maps/trail/` | 獸道（Y 字形谷道，神社 ⇄ 人間之里 ⇄ 迷途竹林 的樞紐） |
 | `maps/village/` | 人間之里（網格街廓、稗田邸、龍神像、河與石橋。只有北門通獸道） |
 | `maps/bamboo/` | 迷途竹林（300×600 公尺的孟宗竹林，佈局隨機生成。北口接獸道，南端是永遠亭的門） |
+| `maps/kourindou/` | 香霖堂（140×140 的林緣過場圖。霖之助的舊道具店，和洋混合。東口接人里西南門，西口的魔法之森還沒蓋） |
 | `vendor/` | three.js r180 本地副本（`npm i three` 複製過來的） |
 | `vendor/jsm/` | 後製用的 addons（EffectComposer / GTAO / Bloom / SMAA / OutputPass） |
 | `src/entities/` | 角色建模、NPC 管理、名冊、神社站位、擺放狀態、路人 |
