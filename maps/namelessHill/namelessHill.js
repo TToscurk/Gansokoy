@@ -11,69 +11,40 @@
 // 美術上刻意不鋪石磚：使用者要求「不如就不要把石磚路做出來就維持草地」，
 // 所以這裡的路是**踏出來的土痕**（低對比土色 ribbon）＋兩側草叢變密，
 // 靠植被的疏密引導方向，而不是靠一條突兀的石板。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用層提供，這個檔案
+//    只剩無名之丘獨有的東西（整合書・階段 D）。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { HazardZones } from '../../src/world/hazard.js';
-import { Progression } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-const HUD = installHUD({
-  title: '無名之丘',
-  subtitle: 'NAMELESS HILL · 迷途竹林 ⇄ 太陽花田',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+const core = bootMap({
+  hud: {
+    title: '無名之丘',
+    subtitle: 'NAMELESS HILL · 迷途竹林 ⇄ 太陽花田',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  camera: { far: 620 },
+  exposure: 1.08,
+  // 丘陵是開闊地形：霧要淡，看得到遠處的起伏才有「丘」的感覺
+  env: { fogMul: 0.62, shadowArea: 60, followSun: true },
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.08;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(68, innerWidth / innerHeight, 0.2, 620);
-camera.rotation.order = 'YXZ';
-
-// 丘陵是開闊地形：霧要淡，看得到遠處的起伏才有「丘」的感覺
-const env = new Environment(scene, renderer, {
-  fogMul: 0.62,
-  shadowArea: 60,
-  followSun: true,
-});
-
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { HUD, world } = core;
+const { box, cyl, post } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 220×220，真的是「丘」：三座圓丘疊在一片緩坡上，中間有谷。
@@ -109,8 +80,7 @@ function heightAt(x, z) {
   if (d > 0) h += Math.min(16, d * d * 0.07);
   return h + Math.sin(x * 0.42 + z * 0.29) * 0.06;
 }
-setGroundHeightFn(heightAt);
-WORLD.waterLevel = -999;
+core.setTerrain(heightAt);
 
 /* ───────────────────── 草徑：繞過三座丘的谷地（安全路線） ── */
 // 這條路是「沒有鈴蘭的地方」—— 玩家沿著它可以零傷害橫越，
@@ -189,28 +159,6 @@ const MAT = {
   stem: new THREE.MeshStandardMaterial({ color: '#4a6b32', roughness: 1 }),
   cloth: new THREE.MeshStandardMaterial({ color: '#b8442f', roughness: 0.95, side: THREE.DoubleSide }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-const colliders = [];
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 const GRID = new GroundGrid({ size: HALF * 2 + 120, seg: 160, heightAt });
@@ -500,161 +448,106 @@ ridgeRing(world, {
 }
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: HALF + 6, hz: HALF + 6 };
-// 丘身是走得上去的（翻丘抄近路是這張圖的選擇之一），只有邊界圍坡擋人。
-// 圍坡最陡處約 1.5，丘頂最陡約 0.42 —— 門檻取中間。
-ctrl.maxGrade = 0.95;
-
-const FROM = new URLSearchParams(location.search).get('from');
-if (FROM === 'sunflower') {
-  ctrl.teleport(EAST_END.x - 6, EAST_END.z);
-  ctrl.yaw = -Math.PI / 2;
-  ctrl.camYaw = Math.PI / 2;
-} else {
-  ctrl.teleport(WEST_END.x + 6, WEST_END.z);
-  ctrl.yaw = Math.PI / 2;          // 面向東
-  ctrl.camYaw = -Math.PI / 2;
-}
+core.spawnPlayer({
+  bounds: { hx: HALF + 6, hz: HALF + 6 },
+  // 丘身是走得上去的（翻丘抄近路是這張圖的選擇之一），只有邊界圍坡擋人。
+  // 圍坡最陡處約 1.5，丘頂最陡約 0.42 —— 門檻取中間。
+  maxGrade: 0.95,
+  spawn(from, ctrl) {
+    if (from === 'sunflower') {
+      ctrl.teleport(EAST_END.x - 6, EAST_END.z);
+      ctrl.yaw = -Math.PI / 2;
+      ctrl.camYaw = Math.PI / 2;
+    } else {
+      ctrl.teleport(WEST_END.x + 6, WEST_END.z);
+      ctrl.yaw = Math.PI / 2;          // 面向東
+      ctrl.camYaw = -Math.PI / 2;
+    }
+  },
+});
+const ctrl = core.ctrl;
 
 /* ─────────────────────── 成長 + 角色隨身裝備（無實體怪） ── */
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog,
-  isBlocked: () => escMenu.isOpen,
+core.createProgression();
+core.installKit({
+  isBlocked: () => core.escMenu.isOpen,
   onDeath: () => {
     ctrl.teleport(WEST_END.x + 6, WEST_END.z);
     HUD.toast('鈴蘭的毒讓你倒在丘上 —— 醒來時已經回到林口。');
   },
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ────────────────────────── 毒：鈴蘭花海（地形即敵人） ── */
-const hazards = new HazardZones(kit.vitals);
-for (const f of FIELDS) {
-  // 8 dps：從丘的一側硬闖到另一側大約 12 秒，掉四分之一血 ——
-  // 走得過去，但你會很清楚地知道自己不該這樣走。
-  //
-  // safe 用的是**跟種花完全同一個判斷式**（離草徑 3.5 公尺內不長花）。
-  // 少了這一條，路穿過花海圓的那幾段就會「看不到花卻在掉血」。
-  hazards.addCircle(f.x, f.z, f.r, 8, {
-    color: '210,235,180',
-    safe: (x, z) => pathDist(x, z) < 3.5,
-  });
-}
+const hazards = core.installHazards((hz) => {
+  for (const f of FIELDS) {
+    // 8 dps：從丘的一側硬闖到另一側大約 12 秒，掉四分之一血 ——
+    // 走得過去，但你會很清楚地知道自己不該這樣走。
+    //
+    // safe 用的是**跟種花完全同一個判斷式**（離草徑 3.5 公尺內不長花）。
+    // 少了這一條，路穿過花海圓的那幾段就會「看不到花卻在掉血」。
+    hz.addCircle(f.x, f.z, f.r, 8, {
+      color: '210,235,180',
+      safe: (x, z) => pathDist(x, z) < 3.5,
+    });
+  }
+});
 let poisonWarned = false;
 
-/* ───────────────────────────────────────────── 互動與提示 ── */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
-
-/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({ current: 'namelessHill', isBlocked: () => escMenu.isOpen });
-const minimap = installMinimap({
-  bounds: { minX: -112, maxX: 112, minZ: -112, maxZ: 112 },
-  paths: PATHS,
-  portals: [
-    { x: WEST_END.x, z: WEST_END.z, label: '迷途竹林', color: '#a8c96a' },
-    { x: EAST_END.x, z: EAST_END.z, label: '太陽花田', color: '#f2c832' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
-});
-
-const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.2;
-const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.2;
-
-window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || !ctrl.locked || escMenu.isOpen) return;
-  if (nearWest()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=namelessHill'; return; }
-  if (nearEast()) { HUD.showLoading('太陽花田 讀取中'); location.href = '../sunflower/?from=namelessHill'; }
-});
-
-/* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;
-  t += dt;
-  ctrl.update(dt, t);
-  kit.update(dt, rawDt);
-  hazards.update(dt, ctrl.pos);
-
+// hazards.update 由 installHazards 掛在 onUpdate 的最前面；首次進區的提示
+// 緊接在它後面 —— 原本就是「先扣血、再說明原因」，順序顛倒就變成
+// 「先跳提示才扣血」。
+core.onUpdate(() => {
   // 第一次踏進花海時說一次原因 —— 不然玩家只知道在掉血，不知道為什麼
   if (!poisonWarned && inField(ctrl.pos.x, ctrl.pos.z)) {
     poisonWarned = true;
     HUD.toast('鈴蘭全株有毒 —— 花海裡待久了會撐不住。沿著草徑走。', 4200);
   }
-
-  env.update(dt, camera.position);
-  westPortal.userData.update(t);
-  eastPortal.userData.update(t);
-  minimap.update();
-
-  if (nearWest()) HUD.prompt('[ E ]  返回迷途竹林');
-  else if (nearEast()) HUD.prompt('[ E ]  往太陽花田');
-  else HUD.prompt(null);
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+/* ───────────────────────────────────────────── 互動與提示 ── */
+core.bindEsc();
+
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+core.installMapUI({
+  current: 'namelessHill',
+  isBlocked: () => core.escMenu.isOpen,
+  minimap: {
+    bounds: { minX: -112, maxX: 112, minZ: -112, maxZ: 112 },
+    paths: PATHS,
+    portals: [
+      { x: WEST_END.x, z: WEST_END.z, label: '迷途竹林', color: '#a8c96a' },
+      { x: EAST_END.x, z: EAST_END.z, label: '太陽花田', color: '#f2c832' },
+    ],
+  },
+});
+
+const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.2;
+const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.2;
+
+// 這張圖沒有 NPC、沒有 Dialogue —— installTalk 只負責兩個出口。
+const updatePrompt = core.installTalk({
+  exits: [
+    { near: nearWest, prompt: '[ E ]  返回迷途竹林', loading: '迷途竹林 讀取中', href: '../bamboo/?from=namelessHill' },
+    { near: nearEast, prompt: '[ E ]  往太陽花田', loading: '太陽花田 讀取中', href: '../sunflower/?from=namelessHill' },
+  ],
+});
+
+/* ─────────────────────────────────────────────────── 主迴圈 ── */
+// env 之後、小地圖之前：傳送點的呼吸動畫
+core.onLateUpdate((dt, rawDt, t) => {
+  westPortal.userData.update(t);
+  eastPortal.userData.update(t);
+});
+
+// 小地圖**之後**：出口提示（原本就排在 minimap.update() 後面）
+core.onPostUpdate(() => {
+  updatePrompt();
+});
+
+core.start();
 
 // debug handle（跟其他地圖同一套測試口徑）
-window.__hill = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, prog, hazards,
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  get combat() { return kit.combat; }, get panel() { return kit.panel; },
-  get kit() { return kit; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
+window.__hill = core.debugHandle({
+  hazards,
   PATHS, FIELDS, KNOLLS, WEST_END, EAST_END, inField,
-};
+});

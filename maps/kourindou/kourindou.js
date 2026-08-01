@@ -12,21 +12,16 @@
 // 美術主題是「和洋混合」：和式的木造屋身、暖簾、木格子窗，配上洋式的
 // 陡屋頂、磚砌煙囪、玻璃窗與街燈。店外那堆看不出用途的雜物（鐵桶、
 // 車輪、洋傘、木箱）才是這張圖真正的主角。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    畫質 / 玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用執行層提供，
+//    這個檔案只剩香霖堂獨有的東西（整合書・階段 D）。行為與遷移前逐幀相同。
 
 import * as THREE from 'three';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD, REGION_BY_ID } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
+import { REGION_BY_ID } from '../../src/config.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { NPCManager, TALK_RANGE } from '../../src/entities/npc.js';
+import { NPCManager } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
-import { Progression } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
@@ -34,50 +29,29 @@ import { scatterGrass } from '../../src/world/flora.js';
 import { MAP_REGISTRY } from '../../src/world/mapRegistry.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-const HUD = installHUD({
-  title: '香霖堂',
-  subtitle: 'KOURINDOU · 人間之里 ⇄ 魔法之森',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+const core = bootMap({
+  hud: {
+    title: '香霖堂',
+    subtitle: 'KOURINDOU · 人間之里 ⇄ 魔法之森',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  // 過場小圖：140×140，遠平面不必拉到 700
+  camera: { far: 420 },
+  exposure: 1.05,
+  // 林緣：霧比開闊地濃一點（西邊那片森林要糊掉才有「更深處還有東西」的感覺），
+  // 但不能濃到看不見店 —— 這張圖只有 140 公尺見方。
+  env: { fogMul: 1.25, shadowArea: 46, followSun: true },
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(68, innerWidth / innerHeight, 0.2, 420);
-camera.rotation.order = 'YXZ';
-
-// 林緣：霧比開闊地濃一點（西邊那片森林要糊掉才有「更深處還有東西」的感覺），
-// 但不能濃到看不見店 —— 這張圖只有 140 公尺見方。
-const env = new Environment(scene, renderer, {
-  fogMul: 1.25,
-  shadowArea: 46,
-  followSun: true,
-});
-
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { scene, camera, world, colliders } = core;
+const { box, cyl, post, block } = core;
 
 /* ───────────────────────────────────────────── 尺寸與出入口 ── */
 const HALF = 70;                          // 140×140（mapRegistry 的 playSize）
@@ -131,8 +105,9 @@ function heightAt(x, z) {
   if (d > 0) h += Math.min(13, d * d * 0.07);
   return h + Math.sin(x * 0.46 + z * 0.33) * 0.05;
 }
-setGroundHeightFn(heightAt);
-WORLD.waterLevel = -999;
+// heightAt 反向依賴 PathNet（要 PATHS.edgeDist），所以登記時機在這裡，
+// 不能提前到 bootMap —— 這也是 setTerrain 做成方法而非參數的原因。
+core.setTerrain(heightAt);
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -211,7 +186,7 @@ const MAT = {
   cloth: new THREE.MeshStandardMaterial({ color: '#3f5f52', roughness: 1, side: THREE.DoubleSide }),
   stone: new THREE.MeshStandardMaterial({ color: '#8a8880', roughness: 1 }),
   mossStone: new THREE.MeshStandardMaterial({ color: '#74806a', roughness: 1 }),
-  // 玻璃窗：夜裡由 env.opts.onApply 把自發光推上去（店裡有人）
+  // 玻璃窗：夜裡由 core.onEnvApply 把自發光推上去（店裡有人）
   glass: new THREE.MeshStandardMaterial({
     color: '#cfe0dc', roughness: 0.18, metalness: 0.1,
     emissive: '#8a6a24', emissiveIntensity: 0.25,
@@ -219,31 +194,6 @@ const MAT = {
   bark: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95 }),
   leaf: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 const GRID = new GroundGrid({ size: HALF * 2 + 100, seg: 120, heightAt });
@@ -621,33 +571,23 @@ ridgeRing(world, {
 }
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: HALF + 6, hz: HALF + 6 };
-ctrl.maxGrade = 1.0;                 // 邊界圍坡爬不上去，店庭的緩坡走得動
-
-const FROM = new URLSearchParams(location.search).get('from');
-if (FROM === 'forest') {
-  ctrl.teleport(WEST_END.x + 6, WEST_END.z);
-  ctrl.yaw = Math.PI / 2;            // 面向東（往店）
-  ctrl.camYaw = -Math.PI / 2;
-} else {
-  // 預設（含 from=village）：從東邊的里道走進來
-  ctrl.teleport(EAST_END.x - 6, EAST_END.z);
-  ctrl.yaw = -Math.PI / 2;           // 面向西（往店）
-  ctrl.camYaw = Math.PI / 2;
-}
+core.spawnPlayer({
+  bounds: { hx: HALF + 6, hz: HALF + 6 },
+  maxGrade: 1.0,                       // 邊界圍坡爬不上去，店庭的緩坡走得動
+  spawn(from, ctrl) {
+    if (from === 'forest') {
+      ctrl.teleport(WEST_END.x + 6, WEST_END.z);
+      ctrl.yaw = Math.PI / 2;          // 面向東（往店）
+      ctrl.camYaw = -Math.PI / 2;
+    } else {
+      // 預設（含 from=village）：從東邊的里道走進來
+      ctrl.teleport(EAST_END.x - 6, EAST_END.z);
+      ctrl.yaw = -Math.PI / 2;         // 面向西（往店）
+      ctrl.camYaw = Math.PI / 2;
+    }
+  },
+});
+const ctrl = core.ctrl;
 
 /* ────────────────────────────────── 住民：霖之助（對話） ── */
 const npcMgr = new NPCManager(scene);
@@ -656,140 +596,77 @@ npcMgr.setRoster(['rinnosuke'], REGION_BY_ID.kourindou, 90);
 const dialogue = new Dialogue();
 
 /* 夜裡店裡的玻璃窗與街燈亮起來（合併後共用同一份 MAT.glass，改一份就全亮） */
-env.opts.onApply = (tt) => {
+core.onEnvApply((tt) => {
   MAT.glass.emissiveIntensity = 0.2 + tt.lantern * 1.7;
-};
+});
 
 /* ─────────────────────────────── 成長 + 角色隨身裝備 ── */
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
+core.createProgression();
 /* 香霖堂是安全區（safe: true）—— 不傳 mobs，招式照出。 */
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog,
-  isBlocked: () => escMenu.isOpen || dialogue.active,
+core.installKit({
+  isBlocked: () => core.escMenu.isOpen || dialogue.active,
   onDeath: () => ctrl.teleport(EAST_END.x - 6, EAST_END.z),
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ───────────────────────────────────────────── 互動與提示 ── */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
+core.bindEsc();
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
+core.installMapUI({
   current: 'kourindou',
-  isBlocked: () => dialogue.active || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -72, maxX: 72, minZ: -72, maxZ: 72 },
-  paths: PATHS,
-  portals: [
-    { x: EAST_END.x, z: EAST_END.z, label: '人間之里', color: '#e0c88a' },
-    { x: WEST_END.x, z: WEST_END.z, label: '魔法之森', color: '#7dd88a' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
+  isBlocked: () => dialogue.active || core.escMenu.isOpen,
+  minimap: {
+    bounds: { minX: -72, maxX: 72, minZ: -72, maxZ: 72 },
+    paths: PATHS,
+    portals: [
+      { x: EAST_END.x, z: EAST_END.z, label: '人間之里', color: '#e0c88a' },
+      { x: WEST_END.x, z: WEST_END.z, label: '魔法之森', color: '#7dd88a' },
+    ],
+  },
 });
 
 const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.0;
 const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.0;
 
-window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || escMenu.isOpen) return;
-  if (dialogue.active) { dialogue.advance(); return; }
-  if (!ctrl.locked) return;
-
-  const npc = npcMgr.nearest;
-  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
-    ctrl.enabled = false;
-    dialogue.open(npc.spec, npcMgr.nextTalk(npc), () => { ctrl.enabled = true; });
-    return;
-  }
-  if (nearEast()) {
-    HUD.showLoading('人間之里 讀取中');
-    location.href = '../village/?from=kourindou';
-    return;
-  }
-  if (nearWest() && FOREST_OPEN) {
-    HUD.showLoading('魔法之森 讀取中');
-    location.href = '../forest/?from=kourindou';
-  }
+// 西口是條件出口：forest 還沒蓋的時候有提示、按 E 不傳送（href 省略）
+const updatePrompt = core.installTalk({
+  npcMgr, dialogue,
+  exits: [
+    {
+      near: nearEast,
+      prompt: '[ E ]  返回人間之里',
+      loading: '人間之里 讀取中',
+      href: '../village/?from=kourindou',
+    },
+    {
+      near: nearWest,
+      prompt: FOREST_OPEN ? '[ E ]  往魔法之森' : '魔法之森 —— 林子太密，還走不進去',
+      loading: '魔法之森 讀取中',
+      ...(FOREST_OPEN ? { href: '../forest/?from=kourindou' } : {}),
+    },
+  ],
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;
-  t += dt;
-  ctrl.update(dt, t);
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：NPC 與對話（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   npcMgr.update(t, ctrl.pos, camera);
   dialogue.update(dt);
-  env.update(dt, camera.position);
-  eastPortal.userData.update(t);
-  westPortal?.userData.update(t);
-  minimap.update();
-
-  if (dialogue.active) { HUD.prompt(null); return; }
-  const npc = npcMgr.nearest;
-  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
-    HUD.prompt(`[ E ]  與 ${npc.spec.zh} 對話`);
-  } else if (nearEast()) {
-    HUD.prompt('[ E ]  返回人間之里');
-  } else if (nearWest()) {
-    HUD.prompt(FOREST_OPEN ? '[ E ]  往魔法之森' : '魔法之森 —— 林子太密，還走不進去');
-  } else {
-    HUD.prompt(null);
-  }
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+// env 之後、小地圖之前：傳送點的呼吸動畫（西口未開放時是 null）
+core.onLateUpdate((dt, rawDt, t) => {
+  eastPortal.userData.update(t);
+  westPortal?.userData.update(t);
+});
+
+// 小地圖之後：HUD 提示（原本就排在 minimap.update() 後面）
+core.onPostUpdate(() => { updatePrompt(); });
+
+core.start();
 
 // debug handle（跟其他地圖同一套測試口徑）
-window.__kourindou = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, prog, npcMgr, dialogue,
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  get combat() { return kit.combat; }, get panel() { return kit.panel; },
-  get kit() { return kit; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
+window.__kourindou = core.debugHandle({
+  npcMgr, dialogue,
   PATHS, EAST_END, WEST_END, SHOP, YARD, FOREST_OPEN,
-};
+});

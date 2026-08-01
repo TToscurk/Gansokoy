@@ -11,70 +11,43 @@
 // 布局：北門進來（接迷途竹林南門），白灰圍牆圈出宅院；院內是
 // 母屋（大屋頂＋簷廊）、渡り廊下接東側的診療間、西側月見台、
 // 石燈籠與小池。牆外一圈竹林把宅子藏起來。
+//
+// ※ 已改用 GameCore（src/core/GameCore.js）：renderer / Environment /
+//    玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用層提供，這個檔案
+//    只剩永遠亭獨有的東西（整合書・階段 D）。行為與遷移前逐字相同。
 
 import * as THREE from 'three';
 import * as BGU from 'three/addons/utils/BufferGeometryUtils.js';
-import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD, REGION_BY_ID } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
+import { REGION_BY_ID } from '../../src/config.js';
 import { makePortalGlow } from '../../src/world/portal.js';
-import { NPCManager, TALK_RANGE } from '../../src/entities/npc.js';
+import { NPCManager } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
-import { Progression } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-/* 共用 HUD */
-const HUD = installHUD({
-  title: '永遠亭',
-  subtitle: 'EIENTEI · 迷途竹林深處',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+const core = bootMap({
+  hud: {
+    title: '永遠亭',
+    subtitle: 'EIENTEI · 迷途竹林深處',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  // 竹林裡的宅院看不遠：far 460（不是預設的 700）
+  camera: { fov: 68, near: 0.2, far: 460 },
+  exposure: 1.06,
+  env: { fogMul: 1.55, shadowArea: 52, followSun: true },
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.06;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(68, innerWidth / innerHeight, 0.2, 460);
-camera.rotation.order = 'YXZ';
-
-const env = new Environment(scene, renderer, {
-  fogMul: 1.55,
-  shadowArea: 52,
-  followSun: true,
-});
-
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { scene, camera, world, colliders } = core;
+const { box, cyl, post, block } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 // 200×180 的小圖：院內刻意壓平（宅院是整過地的），院外緩起伏，
@@ -102,8 +75,7 @@ function heightAt(x, z) {
   const slope = d <= 0 ? 0 : Math.min(12, d * d * 0.06);
   return roll + slope + Math.sin(x * 0.5 + z * 0.31) * 0.05;
 }
-setGroundHeightFn(heightAt);
-WORLD.waterLevel = -999;
+core.setTerrain(heightAt);
 
 /* ───────────────────────────────────────────────────────── 材質 ── */
 function canvasTex(size, draw, rx = 1, ry = 1) {
@@ -174,31 +146,6 @@ const MAT = {
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 const GRID = new GroundGrid({ size: Math.max(HALF_X, HALF_Z) * 2 + 120, seg: 130, heightAt });
@@ -450,6 +397,8 @@ pine(-32, -14, 5.5); pine(30, -20, 4.8); pine(-16, 46, 5.2); pine(42, 40, 4.5);
     box(0.1, 0.07, 5.4, MAT.darkWood, cx + s * 2.6, y + 1.25, cz);
   }
   // 月見台是可以站上去的（跳上去賞月，不是一堵矮牆）
+  // ※ 這行刻意不走 core.walkBlock：bottom 要是地面高度 y（walkBlock 預設 -99），
+  //   換掉的話跳上跳下的判定就變了。
   colliders.push({ x: cx, z: cz, y, h: 0.62, hw: 3.1, hd: 3.1, walk: true });
 })();
 
@@ -587,27 +536,20 @@ makeSignpost(world, NORTH_GATE.x + 2.4, heightAt(NORTH_GATE.x + 2.4, NORTH_GATE.
 }
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: HALF_X + 8, hz: HALF_Z + 8 };
-ctrl.maxGrade = 1.05;
-// 從竹林南門走進來 = 出生在北門
-ctrl.teleport(NORTH_GATE.x, NORTH_GATE.z + 6);
-ctrl.yaw = 0;              // 面向南（往宅院）
-ctrl.camYaw = Math.PI;
+core.spawnPlayer({
+  bounds: { hx: HALF_X + 8, hz: HALF_Z + 8 },
+  maxGrade: 1.05,
+  spawn(from, ctrl) {
+    // 從竹林南門走進來 = 出生在北門
+    ctrl.teleport(NORTH_GATE.x, NORTH_GATE.z + 6);
+    ctrl.yaw = 0;              // 面向南（往宅院）
+    ctrl.camYaw = Math.PI;
+  },
+});
+const ctrl = core.ctrl;
 
 /* ────────────────────────── 住民：輝夜・永琳・鈴仙（對話） ── */
+// postFX 維持 basic，名牌照舊直接畫進主場景（不傳第二參數）
 const npcMgr = new NPCManager(scene);
 // roster 裡三位的 region 都是 eientei，origin 傳同一筆 REGION → offset 即局部座標
 npcMgr.setRoster(['kaguya', 'eirin', 'reisen'], REGION_BY_ID.eientei, 140);
@@ -615,131 +557,64 @@ const dialogue = new Dialogue();
 
 /* ─────────────────────────────── 成長 + 角色隨身裝備 ── */
 /* 夜裡整排紙窗與燈籠亮起來 —— 合併後的網格共用 MAT.paper，改一份就全亮 */
-env.opts.onApply = (tt) => {
+core.onEnvApply((tt) => {
   MAT.paper.emissiveIntensity = 0.3 + tt.lantern * 1.5;
-};
-
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
 });
+
+core.createProgression();
 /* 永遠亭是安全區（永琳的地盤沒有怪敢鬧事）—— 不傳 mobs，招式照出。 */
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog,
-  isBlocked: () => escMenu.isOpen || dialogue.active,
+core.installKit({
+  isBlocked: () => core.escMenu.isOpen || dialogue.active,
   onDeath: () => ctrl.teleport(NORTH_GATE.x, NORTH_GATE.z + 6),
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
 
 /* ───────────────────────────────────────────── 互動與提示 ── */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
+core.bindEsc();
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
+core.installMapUI({
   current: 'eientei',
-  isBlocked: () => dialogue.active || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -102, maxX: 102, minZ: -92, maxZ: 92 },
-  lines: [
-    [[NORTH_GATE.x, NORTH_GATE.z], [0, WALL.z0], [0, 13.6]],           // 参道→中庭
-    [[WALL.x0, WALL.z0], [WALL.x1, WALL.z0], [WALL.x1, WALL.z1], [WALL.x0, WALL.z1], [WALL.x0, WALL.z0]],  // 圍牆
-  ],
-  portals: [{ x: NORTH_GATE.x, z: NORTH_GATE.z, label: '迷途竹林', color: '#a8c96a' }],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
+  isBlocked: () => dialogue.active || core.escMenu.isOpen,
+  minimap: {
+    bounds: { minX: -102, maxX: 102, minZ: -92, maxZ: 92 },
+    lines: [
+      [[NORTH_GATE.x, NORTH_GATE.z], [0, WALL.z0], [0, 13.6]],           // 参道→中庭
+      [[WALL.x0, WALL.z0], [WALL.x1, WALL.z0], [WALL.x1, WALL.z1], [WALL.x0, WALL.z1], [WALL.x0, WALL.z0]],  // 圍牆
+    ],
+    portals: [{ x: NORTH_GATE.x, z: NORTH_GATE.z, label: '迷途竹林', color: '#a8c96a' }],
+  },
 });
 
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_GATE.x, ctrl.pos.z - NORTH_GATE.z) < 4.8;
 
-window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || escMenu.isOpen) return;
-  // 對話進行中：E 只推進，不落到下面的互動判定
-  if (dialogue.active) { dialogue.advance(); return; }
-  if (!ctrl.locked) return;
-
-  const npc = npcMgr.nearest;
-  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
-    ctrl.enabled = false;
-    dialogue.open(npc.spec, npcMgr.nextTalk(npc), () => { ctrl.enabled = true; });
-    return;
-  }
-  if (nearNorth()) {
-    HUD.showLoading('迷途竹林 讀取中');
-    location.href = '../bamboo/?from=eientei';
-  }
+const updatePrompt = core.installTalk({
+  npcMgr, dialogue,
+  exits: [{
+    near: nearNorth,
+    prompt: '[ E ]  返回迷途竹林',
+    loading: '迷途竹林 讀取中',
+    href: '../bamboo/?from=eientei',
+  }],
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
-
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;
-  t += dt;
-  ctrl.update(dt, t);
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：NPC 與對話（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   npcMgr.update(t, ctrl.pos, camera);
   dialogue.update(dt);
-  env.update(dt, camera.position);
-  northPortal.userData.update(t);
-  minimap.update();
-
-  if (dialogue.active) { HUD.prompt(null); return; }
-  const npc = npcMgr.nearest;
-  if (npc && npc.pos.distanceTo(ctrl.pos) <= TALK_RANGE) {
-    HUD.prompt(`[ E ]  與 ${npc.spec.zh} 對話`);
-  } else if (nearNorth()) {
-    HUD.prompt('[ E ]  返回迷途竹林');
-  } else {
-    HUD.prompt(null);
-  }
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+// env 之後、minimap 之前：傳送點呼吸動畫
+core.onLateUpdate((dt, rawDt, t) => {
+  northPortal.userData.update(t);
+});
+
+// minimap.update() 之後：HUD 提示（原本就排在小地圖後面）
+core.onPostUpdate(() => { updatePrompt(); });
+
+core.start();
 
 // debug handle（跟其他地圖同一套測試口徑）
-window.__eientei = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, prog, npcMgr, dialogue,
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  get combat() { return kit.combat; }, get panel() { return kit.panel; },
-  get kit() { return kit; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
-  NORTH_GATE, WALL, HALL, CLINIC,
-};
+window.__eientei = core.debugHandle({
+  npcMgr, dialogue, NORTH_GATE, WALL, HALL, CLINIC,
+});
