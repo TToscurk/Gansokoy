@@ -81,6 +81,7 @@ const CSS = `
 
 /* 玩家血量。左下角，橫條 + 數字。受擊時整條閃一下白。 */
 #vitals{position:fixed;left:22px;bottom:96px;z-index:56;width:240px;
+  transition:opacity .25s ease;
   pointer-events:none;opacity:0;transition:opacity .3s}
 #vitals.on{opacity:1}
 #vitals .lb{font-size:10.5px;letter-spacing:.32em;color:#e8b0a0;margin-bottom:5px;
@@ -123,6 +124,7 @@ const CSS = `
 
 /* 技能列。右下四格，冷卻用由下往上的遮罩掃過去。 */
 #skills{position:fixed;right:22px;bottom:96px;z-index:56;display:flex;gap:8px;
+  transition:opacity .25s ease;
   pointer-events:none;opacity:0;transition:opacity .3s}
 #skills.on{opacity:1}
 #skills .s{position:relative;width:52px;height:52px;border-radius:4px;overflow:hidden;
@@ -154,6 +156,12 @@ const CSS = `
 @keyframes critFx{0%{opacity:1;transform:translateX(-50%) scale(1.3)}
   100%{opacity:0;transform:translateX(-50%) scale(1)}}
 
+/* 對話中收起戰鬥 HUD —— 窄視窗（1024）下血條與技能鍵會疊在對話框上，
+   而對話中本來就出不了招（isBlocked 擋掉了），顯示著只是干擾。
+   #cross/#prompt 的同款規則在各圖的 index.html（dialogue.js 依賴的那組）。 */
+body.talking #vitals, body.talking #skills, body.talking #questToasts {
+  opacity:0 !important; pointer-events:none; }
+
 /* ESC 選單 */
 #escMenu { position:fixed; inset:0; z-index:70; display:none;
   align-items:center; justify-content:center;
@@ -176,7 +184,7 @@ const CSS = `
 #escMenu .srow .lb { flex:0 0 52px; text-align:left; font-size:11.5px;
   letter-spacing:.18em; color:#a99cb0; }
 #escMenu .srow button { flex:1; margin:0; padding:8px 10px; font-size:12px;
-  letter-spacing:.1em; }
+  letter-spacing:.1em; white-space:nowrap; }
 
 /* 換地圖時的讀取畫面 */
 #mapLoading { position:fixed; inset:0; z-index:80; display:none;

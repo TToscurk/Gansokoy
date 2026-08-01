@@ -13,7 +13,12 @@ const CSS = `
   align-items:center;justify-content:center;
   background:rgba(8,6,12,.72);backdrop-filter:blur(3px)}
 #skillPanel.on{display:flex}
-#skillPanel .win{width:min(760px,92vw);max-height:86vh;overflow:auto;
+#skillPanel .win{width:min(760px,92vw);max-height:86vh;overflow:auto;}
+/* 預設白色捲軸在墨色面板上像貼了一條 OK 繃 —— 調成同色系（UI 審查 B2） */
+#skillPanel .win::-webkit-scrollbar{width:8px}
+#skillPanel .win::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+#skillPanel .win::-webkit-scrollbar-thumb{background:rgba(217,178,106,.35);border-radius:4px}
+#skillPanel .win{scrollbar-width:thin;scrollbar-color:rgba(217,178,106,.35) rgba(255,255,255,.04);
   background:linear-gradient(180deg,rgba(28,22,32,.97),rgba(14,10,18,.99));
   border:1px solid rgba(217,178,106,.36);border-radius:6px;
   padding:22px 26px 24px}

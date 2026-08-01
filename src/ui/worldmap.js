@@ -126,6 +126,13 @@ export function installWorldMap({ current, isBlocked = () => false }) {
     g.setLineDash([]);
 
     // --- 節點 ---
+    // 西北角三張山系圖擠在一起（世界座標本來就近），標籤各自往外撥
+    // （UI 審查 B1）。偏移是「相對預設位置」的 [dx, dy]。
+    const LABEL_OFF = {
+      moriya: [58, 14],          // 守矢神社 → 右側
+      tenguVillage: [-6, 32],    // 天狗聚落 → 下方
+      lake: [36, 22],            // 霧之湖 → 右下
+    };
     g.textAlign = 'center';
     for (const n of nodes) {
       const [x, y] = pt[n.id];
@@ -153,15 +160,16 @@ export function installWorldMap({ current, isBlocked = () => false }) {
       }
       // 名字：建成 = 墨色；未建 = 淡墨＋（未開放）；事件圖 = 再淡一階
       const faded = !n.built || eventOnly;
+      const [odx, ody] = LABEL_OFF[n.id] ?? [0, 0];
       g.fillStyle = isCur ? RED : (faded ? FADE : INK);
       g.font = `${isCur ? 700 : 500} 13px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
-      g.fillText(n.zh, x, y - 13);
+      g.fillText(n.zh, x + odx, y - 13 + ody);
       if (!n.built) {
         g.font = '400 9px "Noto Sans TC","Microsoft JhengHei",sans-serif';
-        g.fillText(eventOnly ? '（事件）' : '（未開放）', x, y + 21);
+        g.fillText(eventOnly ? '（事件）' : '（未開放）', x + odx, y + 21 + ody * 0.6);
       } else if (isCur) {
         g.font = '700 9px "Noto Sans TC","Microsoft JhengHei",sans-serif';
-        g.fillText('現在地', x, y + 22);
+        g.fillText('現在地', x + odx, y + 22);
       }
     }
 
