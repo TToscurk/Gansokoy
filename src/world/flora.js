@@ -25,20 +25,25 @@ export function scatterGrass(parent, {
   count, place, heightAt,
   cell = 48, baseColor = 0x557a36, scale = [0.7, 1.45],
 }) {
-  // --- 一叢草的幾何：五片窄葉，繞中心展開、微傾 ---
+  // --- 一叢草的幾何：七片窄葉，繞中心展開、往外翻 ---
+  // 葉片要細長。0.14 寬的版本在畫面上是一塊深綠色的楔形，不像草像楔子；
+  // 收到 0.075 並加高、加片數之後才讀得出「一叢細草」。
   const blades = [];
-  for (let i = 0; i < 5; i++) {
-    const g = new THREE.PlaneGeometry(0.14, 0.5);
-    g.translate(0, 0.24, 0);                       // 根部在原點
-    g.rotateX(0.14 + (i % 2) * 0.1);               // 微傾，不是筆直一排
-    g.rotateY((i / 5) * Math.PI + i * 0.35);
+  for (let i = 0; i < 7; i++) {
+    const g = new THREE.PlaneGeometry(0.075, 0.62);
+    g.translate(0, 0.3, 0);                        // 根部在原點
+    g.rotateX(0.2 + (i % 3) * 0.13);               // 往外翻，不是筆直一排
+    g.rotateY((i / 7) * Math.PI * 2 + i * 0.31);
     blades.push(g);
   }
   const tuftGeo = BGU.mergeGeometries(blades, false);
   blades.forEach(g => { if (g !== tuftGeo) g.dispose(); });
 
+  // 薄面片背面朝光時會全黑（一叢草總有一半的葉子背對太陽）。
+  // 給一點自發光把背面拉回草色 —— 不加的話整片草地看起來像撒了一地炭。
   const mat = new THREE.MeshStandardMaterial({
     color: 0xffffff, roughness: 1, side: THREE.DoubleSide, flatShading: true,
+    emissive: 0x2a3a1a, emissiveIntensity: 0.55,
   });
 
   // --- 撒點，按格子分桶 ---

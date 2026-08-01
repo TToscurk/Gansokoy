@@ -1142,7 +1142,7 @@ scatterGrass(world, {
   place: () => {
     const x = (Math.random() - 0.5) * 150;
     const z = 12 + Math.random() * (OUT_FAR + 26 - 12);
-    if (Math.abs(x) < 6.5) return null;                 // 參道與石階
+    if (Math.abs(x) < 7.7) return null;                 // 參道與石階（多留 1.2 公尺路緣）
     if (Math.abs(x) < 34 && z > 16 && z < 52) return null;  // NPC 展列區
     return [x, z];
   },

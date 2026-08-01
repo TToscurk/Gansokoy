@@ -76,10 +76,15 @@ export class VillagerCrowd {
    * @param {object} graph 路點圖 { nodes:[[x,z],...], links:[[a,b],...] }
    * @param {number} [count=22]
    * @param {number} [warm=12] 建構時先做幾位；其餘每幀補一位（見 update）
+   * @param {object[]} [colliders] 地圖的碰撞盒。給了就會把路人推出建築 ——
+   *   路點圖是手繪的，難免有幾條連線從屋角切過去，走到那裡的人會半個身體
+   *   插在牆裡。這裡不改圖，直接在位置上把人推出去（見 _unstick）。
    */
-  constructor(scene, heightFn, graph, count = 22, warm = 12) {
+  constructor(scene, heightFn, graph, count = 22, warm = 12, colliders = null) {
     this.scene = scene;
     this.heightFn = heightFn;
+    // 只留擋人的那些（有 hw 的矩形、有 r 的柱），並預先算好篩選半徑
+    this.colliders = (colliders ?? []).filter(c => c.hw != null || c.r != null);
     this.nodes = graph.nodes.map(([x, z]) => new THREE.Vector2(x, z));
     // 相鄰表：雙向
     this.adj = this.nodes.map(() => []);
@@ -189,6 +194,105 @@ export class VillagerCrowd {
       p.model.rotation.y = Math.atan2(dx, dz);
       p.model.rotation.x = 0.045 * w + (p.role === 'elder' ? 0.06 : 0);   // 前傾；老人家再駝一點
       if (!far) animateCharacter(p.model, t + p.phase, animSpeed);
+    }
+
+    // 兩回合：推開彼此 → 推出牆壁 → 再推一次。
+    // 只做一回合的話，「推出牆壁」那一步可能把人推進旁邊的人身上，
+    // 兩種穿模輪流出現。第二回合把互推的殘量收掉，牆壁那一步最後生效
+    // ——寧可兩個人擦肩，也不要有人半個身體在牆裡。
+    this._separate();
+    this._unstick();
+    this._separate();
+    this._unstick();
+
+    // 推完之後才把模型的水平位置補上（y 留給上面算好的彈跳）
+    for (const p of this.people) {
+      p.model.position.x = p.pos.x;
+      p.model.position.z = p.pos.y;
+    }
+  }
+
+  /**
+   * 互相推開 —— 路人不該從彼此身上穿過去。
+   *
+   * 大家走在同一組路點之間，遲早會有兩個人同時佔住同一段路（迎面、
+   * 或後面的追上前面的）。沒有這一步的話兩個人會直接重疊成一個
+   * 四手四腳的東西，是最顯眼的穿模。
+   *
+   * 做法是最便宜的那種：位置直接對推，不動速度也不做真的物理 ——
+   * 路人只要「看起來會讓路」就夠了。空間格切成 R 見方的桶，
+   * 只比對相鄰桶，六十幾個人也不會變成 O(n²)。
+   */
+  _separate() {
+    const R = 0.62;                       // 兩個人的肩寬和
+    const buckets = new Map();
+    const key = (x, z) => `${Math.floor(x / R)},${Math.floor(z / R)}`;
+    for (const p of this.people) {
+      const k = key(p.pos.x, p.pos.y);
+      let b = buckets.get(k);
+      if (!b) buckets.set(k, (b = []));
+      b.push(p);
+    }
+
+    for (const p of this.people) {
+      const bx = Math.floor(p.pos.x / R), bz = Math.floor(p.pos.y / R);
+      for (let ox = -1; ox <= 1; ox++) {
+        for (let oz = -1; oz <= 1; oz++) {
+          const b = buckets.get(`${bx + ox},${bz + oz}`);
+          if (!b) continue;
+          for (const q of b) {
+            if (q === p) continue;
+            let dx = q.pos.x - p.pos.x, dz = q.pos.y - p.pos.y;
+            let d = Math.hypot(dx, dz);
+            if (d >= R) continue;
+            if (d < 1e-4) {              // 完全重合：隨便挑個方向推開
+              dx = Math.cos(p.phase); dz = Math.sin(p.phase); d = 1;
+            }
+            // 各退一半，總和剛好把兩人分到 R
+            const push = (R - d) * 0.5;
+            p.pos.x -= (dx / d) * push;
+            p.pos.y -= (dz / d) * push;
+            q.pos.x += (dx / d) * push;
+            q.pos.y += (dz / d) * push;
+          }
+        }
+      }
+    }
+
+  }
+
+  /**
+   * 把插在建築裡的路人推出來。
+   *
+   * 路點圖是手繪的，總有幾條連線從屋角或神像基座切過去；再加上上面
+   * 的互推可能把人擠進牆裡。玩家看到的就是半個身體埋在牆中 —— 這是
+   * 最刺眼的穿模。
+   *
+   * 推的方向取「離哪一面牆最近就往哪一面推」（矩形）或徑向（柱）：
+   * 沿最短路徑出來，人不會被彈飛到街的另一邊。
+   */
+  _unstick() {
+    const PAD = 0.3;                 // 身體半徑：貼著牆走可以，插進去不行
+    for (const p of this.people) {
+      for (const c of this.colliders) {
+        if (c.hw != null) {
+          const dx = p.pos.x - c.x, dz = p.pos.y - c.z;
+          const ox = c.hw + PAD - Math.abs(dx);
+          const oz = c.hd + PAD - Math.abs(dz);
+          if (ox <= 0 || oz <= 0) continue;          // 沒有重疊
+          // 推出重疊較淺的那一軸
+          if (ox < oz) p.pos.x = c.x + Math.sign(dx || 1) * (c.hw + PAD);
+          else p.pos.y = c.z + Math.sign(dz || 1) * (c.hd + PAD);
+        } else {
+          const dx = p.pos.x - c.x, dz = p.pos.y - c.z;
+          const d = Math.hypot(dx, dz);
+          const need = c.r + PAD;
+          if (d >= need) continue;
+          if (d < 1e-4) { p.pos.x = c.x + need; continue; }
+          p.pos.x = c.x + (dx / d) * need;
+          p.pos.y = c.z + (dz / d) * need;
+        }
+      }
     }
   }
 

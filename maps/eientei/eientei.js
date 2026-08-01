@@ -211,10 +211,12 @@ decalOnGrid(world, WALL.x1 - WALL.x0, WALL.z1 - WALL.z0,
   (WALL.x0 + WALL.x1) / 2, (WALL.z0 + WALL.z1) / 2, MAT.gravel, gSample, 0.04);
 
 /* 小徑：北門 → 表門的林間土徑；院內的飛石道（石板路） */
+// 三段路首尾相接（参道→中庭→往診療間），接點必然重疊 ——
+// lift 各差 1.2 公分，兩層路面才不會共面互閃。
 const APPROACH = [[NORTH_GATE.x, NORTH_GATE.z], [1.5, -66], [-1.5, -52], [0.5, -40], [0, WALL.z0]];
 ribbonOnGrid(world, catmullRom(APPROACH, 2.2), 1.9, MAT.stonePath, gSample, 0.06);
-ribbonOnGrid(world, catmullRom([[0, WALL.z0], [0, -18], [0, 13.6]], 2), 1.35, MAT.stonePath, gSample, 0.07);
-ribbonOnGrid(world, catmullRom([[0.8, 0], [10, 8], [20, 13], [30, 16]], 2), 1.1, MAT.stonePath, gSample, 0.07);
+ribbonOnGrid(world, catmullRom([[0, WALL.z0], [0, -18], [0, 13.6]], 2), 1.35, MAT.stonePath, gSample, 0.072);
+ribbonOnGrid(world, catmullRom([[0.8, 0], [10, 8], [20, 13], [30, 16]], 2), 1.1, MAT.stonePath, gSample, 0.084);
 
 /* ─────────────────────────────────────────────── 圍牆與表門 ── */
 /** 白灰牆一段（沿 x 或 z 軸）。基座石 + 白灰身 + 瓦頂帽。 */

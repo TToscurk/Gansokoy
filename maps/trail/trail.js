@@ -250,9 +250,15 @@ const gSample = (x, z) => GRID.sample(x, z);
   world.add(m);
 }
 
-for (const seg of SEGMENTS) {
-  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.dirt, gSample);
-}
+// 每條路臂的 lift 各差 1.2 公分。
+//
+// 四條臂全部從分岔點出發 —— 也就是說分岔點附近有四層路面**疊在一起**。
+// 用同一個 lift 的話這四層完全共面，深度緩衝分不出誰在前，鏡頭一動
+// 就整片交替閃爍（GroundGrid 治好的是「路 vs 地面」，治不了「路 vs 路」）。
+// 錯開之後每一層都有明確的前後，1.2 公分在畫面上看不出高低差。
+SEGMENTS.forEach((seg, i) => {
+  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.dirt, gSample, 0.05 + i * 0.012);
+});
 
 /* ───────────────────────────────────────────────────────── 樹林 ── */
 function tree(x, z, s, leaf) {
@@ -301,11 +307,15 @@ for (let i = 0; i < 3400; i++) {
 }
 
 // 草叢與雜草：路肩到山腳的帶狀範圍，靠路密、遠處疏
+//
+// 離路緣的安全距離是 1.2 公尺，不是貼著路緣種：一叢草放大後半徑約 0.5 公尺，
+// 只留 0.6 公尺的話葉尖會蓋到路面上，看起來就是「草長到路上了」。
+const GRASS_MARGIN = 1.2;
 scatterGrass(world, {
   count: 4200, heightAt,
   place: () => {
-    const [x, z, d] = pickNearPath(0.8, 30);
-    return d < 0.6 ? null : [x, z];
+    const [x, z, d] = pickNearPath(1.4, 30);
+    return d < GRASS_MARGIN ? null : [x, z];
   },
   baseColor: 0x4e7030,
 });
@@ -598,10 +608,10 @@ const from = new URLSearchParams(location.search).get('from');
 {
   const spawn = from === 'village' ? VILLAGE_END
     : from === 'bamboo' ? BAMBOO_END
+    : from === 'sunflower' ? SUNFLOWER_END
     : SHRINE_END;
-  // 往路口方向退幾步，才不會一出生就站在光點上又被傳回去
-  const inward = from === 'shrine' || !from ? FORK : FORK;
-  const dx = inward.x - spawn.x, dz = inward.z - spawn.z;
+  // 四臂都通向分岔點：往分岔點退幾步，才不會一出生就站在光點上又被傳回去
+  const dx = FORK.x - spawn.x, dz = FORK.z - spawn.z;
   const dl = Math.hypot(dx, dz) || 1;
   ctrl.teleport(spawn.x + dx / dl * 7, spawn.z + dz / dl * 7);
   ctrl.yaw = Math.atan2(dx, dz);
@@ -675,7 +685,7 @@ window.addEventListener('keydown', (e) => {
   if (nearShrine()) { HUD.showLoading('博麗神社 讀取中'); location.href = '../../index.html?from=trail'; return; }
   if (nearVillage()) { HUD.showLoading('人間之里 讀取中'); location.href = '../village/'; return; }
   if (nearBamboo()) { HUD.showLoading('迷途竹林 讀取中'); location.href = '../bamboo/?from=trail'; return; }
-  if (nearSunflower()) toast('花田的方向瀰漫著花香 —— 這條路還沒開。');
+  if (nearSunflower()) { HUD.showLoading('太陽花田 讀取中'); location.href = '../sunflower/?from=trail'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -703,7 +713,7 @@ function tick(rawDt) {
   if (nearShrine()) HUD.prompt('[ E ]  前往博麗神社');
   else if (nearVillage()) HUD.prompt('[ E ]  前往人間之里');
   else if (nearBamboo()) HUD.prompt('[ E ]  前往迷途竹林');
-  else if (nearSunflower()) HUD.prompt('[ E ]  太陽花田（尚未開放）');
+  else if (nearSunflower()) HUD.prompt('[ E ]  前往太陽花田');
   else HUD.prompt(null);
 }
 

@@ -842,6 +842,192 @@ for (let i = 0; i < 44; i++) {
   groundDecal(17, 11, x, z, PADDY_MAT, 0.05);
 }
 
+/* ─────────────────────────────────────── 里外的農家聚落 ── */
+/**
+ * 里的東西兩側（|x| 120~170）原本只有貼地的水田 —— 一片平的色塊，
+ * 站在里的邊緣往外看就是「什麼都沒有」。這裡補上真正立起來的東西：
+ * 農家、納屋、稻架、土藏、水車小屋、里外的小墓地。
+ *
+ * 全部沿用里內的材質，靜態合併時會跟里內的建築併進同一批。
+ */
+
+/** 農家：茅葺主屋 + 納屋 + 曬穀場 + 竹垣 */
+function farmstead(cx, cz, rot = 0) {
+  const y = heightAt(cx, cz);
+  const g = new THREE.Group();
+  g.position.set(cx, y, cz);
+  g.rotation.y = rot;
+  world.add(g);
+
+  // 主屋：入母屋造的茅葺屋頂，比里內的町家矮胖
+  const W = 10, D = 7.5, H = 3.4;
+  box(W + 1, 0.4, D + 1, MAT.stone, 0, 0.2, 0, g);
+  box(W, H, D, MAT.plaster, 0, 0.4 + H / 2, 0, g);
+  for (const s of [-1, 1]) {
+    const slope = box(W + 3.4, 0.4, D * 0.72, MAT.roofThatch, 0, 0.4 + H + 1.5, s * D * 0.24, g);
+    slope.rotation.x = s * 0.62;
+  }
+  box(W + 3.8, 0.55, 1.3, MAT.roofThatch, 0, 0.4 + H + 2.7, 0, g);
+  // 正面：格子門 + 一扇紙窗
+  box(2.0, 2.2, 0.1, MAT.darkWood, -1.4, 1.5, D / 2 + 0.02, g);
+  box(1.8, 1.4, 0.08, MAT.paper, 1.9, 2.0, D / 2 + 0.02, g);
+  block(cx, cz, W + 0.6, D + 0.6, y + H + 3);
+
+  // 納屋：矮一截的板倉，開口朝主屋
+  const nx = W / 2 + 5.5;
+  box(6.5, 2.8, 5, MAT.wood, nx, 1.4, -2, g);
+  for (const s of [-1, 1]) {
+    const sl = box(7.6, 0.28, 3.4, MAT.roofThatch, nx, 3.3, -2 + s * 1.5, g);
+    sl.rotation.x = s * 0.55;
+  }
+  box(7.8, 0.32, 0.36, MAT.roofThatch, nx, 3.72, -2, g);
+  box(2.2, 2.2, 0.08, MAT.darkWood, nx, 1.1, 0.52, g);
+  // 納屋的碰撞盒要用旋轉後的外接框（跟廢屋同一套近似）
+  {
+    const cs = Math.abs(Math.cos(rot)), sn = Math.abs(Math.sin(rot));
+    const lx = cx + nx * Math.cos(rot) + -2 * Math.sin(rot);
+    const lz = cz - nx * Math.sin(rot) + -2 * Math.cos(rot);
+    block(lx, lz, 7 * cs + 5.4 * sn, 7 * sn + 5.4 * cs, y + 3.8);
+  }
+
+  // 稻架（はさ）：曬稻穀的木架，兩根柱撐一根橫桿，上面掛滿稻束
+  for (let k = 0; k < 2; k++) {
+    const hz = 6.5 + k * 3.2;
+    for (const s of [-1, 1]) {
+      cyl(0.09, 0.11, 2.4, MAT.darkWood, s * 3.6, 1.2, hz, 6, g);
+    }
+    const bar = cyl(0.07, 0.07, 7.6, MAT.darkWood, 0, 2.2, hz, 6, g);
+    bar.rotation.z = Math.PI / 2;
+    for (let i = -3; i <= 3; i++) {
+      const sheaf = cyl(0.16, 0.1, 1.1, MAT.roofThatch, i * 1.05, 1.62, hz, 5, g);
+      sheaf.rotation.z = (i % 2) * 0.06;
+    }
+    post(cx + Math.cos(rot) * 3.6 + Math.sin(rot) * hz,
+         cz - Math.sin(rot) * 3.6 + Math.cos(rot) * hz, 0.2, y + 2.4);
+  }
+
+  // 竹垣：圍住院子的三面
+  for (let i = 0; i < 12; i++) {
+    cyl(0.055, 0.065, 1.3, MAT.wood, -W / 2 - 1.5, 0.65, -3 + i * 1.25, 5, g);
+  }
+}
+
+/** 土藏：白漆喰 + 海鼠壁，村裡最耐火的建築，糧倉用 */
+function kura(cx, cz, rot = 0) {
+  const y = heightAt(cx, cz);
+  const g = new THREE.Group();
+  g.position.set(cx, y, cz);
+  g.rotation.y = rot;
+  world.add(g);
+  box(6.4, 0.5, 5.4, MAT.stone, 0, 0.25, 0, g);
+  box(5.8, 4.6, 4.8, MAT.kura, 0, 2.8, 0, g);
+  box(5.9, 1.3, 4.9, MAT.namako, 0, 1.15, 0, g);        // 下半的海鼠壁
+  for (const s of [-1, 1]) {
+    const sl = box(7.2, 0.3, 3.3, MAT.roofTile, 0, 5.6, s * 1.5, g);
+    sl.rotation.x = s * 0.56;
+  }
+  box(7.4, 0.36, 0.42, MAT.roofTile, 0, 6.05, 0, g);
+  box(1.5, 2.1, 0.14, MAT.darkWood, 0, 1.6, 2.45, g);   // 厚重的土戸
+  const cs = Math.abs(Math.cos(rot)), sn = Math.abs(Math.sin(rot));
+  block(cx, cz, 6.4 * cs + 5.4 * sn, 6.4 * sn + 5.4 * cs, y + 6.1);
+}
+
+/** 水車小屋：架在東河上的碾米小屋，水輪會轉 */
+const waterWheels = [];
+function waterMill(z) {
+  const rx = riverX(z);
+  const cx = rx - 8.5;
+  const y = heightAt(cx, z);
+  const g = new THREE.Group();
+  g.position.set(cx, y, z);
+  world.add(g);
+  box(5.6, 3.2, 5, MAT.wood, 0, 1.6, 0, g);
+  for (const s of [-1, 1]) {
+    const sl = box(6.8, 0.3, 3.4, MAT.roofThatch, 0, 3.75, s * 1.5, g);
+    sl.rotation.x = s * 0.56;
+  }
+  box(7, 0.36, 0.4, MAT.roofThatch, 0, 4.2, 0, g);
+  box(1.4, 2, 0.08, MAT.darkWood, -2.83, 1.2, 0, g);
+  block(cx, z, 5.8, 5.2, y + 4.2);
+
+  // 水輪：立在靠河的那一側，每幀轉。userData.noMerge 讓它躲過靜態合併。
+  const wheel = new THREE.Group();
+  wheel.position.set(3.6, 1.5, 0);
+  wheel.userData.noMerge = true;
+  g.add(wheel);
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 1.2, 8), MAT.darkWood);
+  hub.rotation.z = Math.PI / 2;
+  wheel.add(hub);
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2;
+    const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.9, 0.1), MAT.darkWood);
+    spoke.position.set(0, 0, 0);
+    spoke.rotation.x = a;
+    wheel.add(spoke);
+    const paddle = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.7, 0.09), MAT.wood);
+    paddle.position.set(0, Math.cos(a) * 1.5, Math.sin(a) * 1.5);
+    paddle.rotation.x = a;
+    paddle.castShadow = true;
+    wheel.add(paddle);
+  }
+  for (const s of [-1, 1]) {
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.07, 5, 14), MAT.darkWood);
+    rim.position.x = s * 0.5;
+    rim.rotation.y = Math.PI / 2;
+    wheel.add(rim);
+  }
+  waterWheels.push(wheel);
+  post(cx + 3.6, z, 1.7, y + 3.2);
+}
+
+/** 里外的小墓地：一排無名的石塔 */
+function graveyard(cx, cz) {
+  const y0 = heightAt(cx, cz);
+  for (let i = 0; i < 16; i++) {
+    const x = cx + ((i % 4) - 1.5) * 2.6;
+    const z = cz + (Math.floor(i / 4) - 1.5) * 2.8;
+    const y = heightAt(x, z);
+    const h = 0.75 + (i % 3) * 0.22;
+    const st = box(0.32, h, 0.2, MAT.stone, x, y + h / 2, z);
+    st.rotation.y = (i % 5) * 0.08;
+    box(0.56, 0.14, 0.4, MAT.stone, x, y + 0.07, z);
+    post(x, z, 0.3, y + h);
+  }
+  // 入口的地藏
+  const gy = heightAt(cx, cz - 6);
+  cyl(0.3, 0.36, 0.2, MAT.stone, cx, gy + 0.1, cz - 6, 8);
+  cyl(0.18, 0.22, 0.66, MAT.stone, cx, gy + 0.53, cz - 6, 8);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.17, 10, 8), MAT.stone);
+  head.position.set(cx, gy + 0.97, cz - 6);
+  head.castShadow = true;
+  world.add(head);
+  const bib = box(0.3, 0.26, 0.04, MAT.cloth, cx, gy + 0.72, cz - 5.82);
+  bib.rotation.x = 0.12;
+  post(cx, cz - 6, 0.36, gy + 1.1);
+  void y0;
+}
+
+// 西側農家聚落（空曠度分析裡最空的一帶：x ≈ -160 ~ -125）
+farmstead(-146, -30, Math.PI * 0.52);
+farmstead(-140, 30, Math.PI * 0.48);
+farmstead(-152, 96, Math.PI * 0.55);
+farmstead(-134, -104, Math.PI * 0.45);
+kura(-124, -62, Math.PI * 0.5);
+kura(-130, 132, Math.PI * 0.5);
+graveyard(-158, -140);
+
+// 東側（x ≈ 120 ~ 165）
+farmstead(148, -34, -Math.PI * 0.5);
+farmstead(140, 46, -Math.PI * 0.46);
+farmstead(152, -112, -Math.PI * 0.54);
+farmstead(134, 122, -Math.PI * 0.5);
+kura(126, 4, -Math.PI * 0.5);
+kura(144, -74, -Math.PI * 0.5);
+
+// 東河上的水車小屋（河在東側，riverX 決定位置）
+waterMill(-46);
+waterMill(118);
+
 /* ───────────────────────────── 里門（南北兩座，通獸道與竹林） ── */
 /**
  * 冠木門 + 兩側土牆。南北兩座長一樣，只有朝向相反。
@@ -908,13 +1094,15 @@ scatterGrass(world, {
     const a = Math.random() * Math.PI * 2;
     const r = Math.sqrt(Math.random()) * 215;
     const x = Math.cos(a) * r, z = Math.sin(a) * r * 1.3;
-    if (Math.abs(x) < 7) return null;                                   // 主街
-    if (CROSS_Z.some(cz => Math.abs(z - cz) < 5.5) && Math.abs(x) < 102) return null;  // 橫街
-    if (LANE_X.some(lx => Math.abs(x - lx) < 4.5) && z > -165 && z < 205) return null; // 小巷
-    if (Math.abs(x - riverX(z)) < 9.5) return null;                     // 河道
+    // 每條路的排除半寬都比路面本身多留 1.2 公尺：一叢草放大後半徑約
+    // 0.5 公尺，貼著路緣種的話葉尖會蓋到路面上 —— 那正是「草地蓋到路」。
+    if (Math.abs(x) < 8.2) return null;                                 // 主街
+    if (CROSS_Z.some(cz => Math.abs(z - cz) < 6.7) && Math.abs(x) < 102) return null;  // 橫街
+    if (LANE_X.some(lx => Math.abs(x - lx) < 5.7) && z > -165 && z < 205) return null; // 小巷
+    if (Math.abs(x - riverX(z)) < 10.7) return null;                    // 河道
     // 建物腳下不長（快篩：只掃矩形碰撞盒）
     for (const c of colliders) {
-      if (c.hw != null && Math.abs(x - c.x) < c.hw + 0.3 && Math.abs(z - c.z) < c.hd + 0.3) return null;
+      if (c.hw != null && Math.abs(x - c.x) < c.hw + 0.9 && Math.abs(z - c.z) < c.hd + 0.9) return null;
     }
     return [x, z];
   },
@@ -1056,7 +1244,9 @@ for (const nd of CROWD_GRAPH.nodes) {
   }
 }
 
-const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10);
+// 傳 colliders：路點圖難免有幾條連線從屋角切過，路人走到那裡會插進牆裡。
+// VillagerCrowd 收到碰撞盒之後會每幀把人推出來（見 _unstick）。
+const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10, colliders);
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
 let saved = null;
@@ -1159,6 +1349,8 @@ function tick(rawDt) {
   kit.update(dt, rawDt);
   crowd.update(dt, t, ctrl.pos);
   npcSystem.update(t, ctrl.pos, camera);
+  // 水車：里外唯一會動的建築，慢慢轉（河水推的，不用很快）
+  for (const w of waterWheels) w.rotation.x += dt * 0.55;
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
   HUD.prompt(nearPortal() ? '[ E ]  前往獸道（往博麗神社・迷途竹林）' : null);

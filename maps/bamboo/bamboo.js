@@ -132,9 +132,29 @@ const TRAIL_SEGMENTS = (() => {
     }
     segs.push({ id: `branch${i}`, width: 4.6, pts });
   }
+
+  // 東徑：第二期開的東口，通往無名之丘。從主徑北段岔出一路向東爬出竹海。
+  {
+    const k = Math.floor(main.length * 0.32);
+    const from = main[Math.max(1, Math.min(main.length - 2, k))];
+    const pts = [from.slice()];
+    let x = from[0], z = from[1];
+    while (x < 118) {
+      x += rr(24, 38);
+      z += rr(-16, 16);
+      pts.push([Math.min(130, x), Math.max(-240, Math.min(240, z))]);
+    }
+    pts.push([138, pts[pts.length - 1][1]]);
+    segs.push({ id: 'east', width: 5.2, pts });
+  }
   return segs;
 })();
 const PATHS = new PathNet(TRAIL_SEGMENTS, { step: 3, cell: 14 });
+/** 東口（通往無名之丘）＝東徑的終點 */
+const EAST_END = (() => {
+  const e = TRAIL_SEGMENTS.find(s => s.id === 'east').pts.at(-1);
+  return { x: e[0], z: e[1] };
+})();
 
 /** 離最近的小徑多遠（扣掉路寬） */
 const pathDist = (x, z) => PATHS.edgeDist(x, z, 2);
@@ -249,9 +269,11 @@ const gSample = (x, z) => GRID.sample(x, z);
   world.add(m);
 }
 
-for (const seg of TRAIL_SEGMENTS) {
-  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.trail, gSample);
-}
+// 支徑都是從主徑上岔出去的，起點那一段跟主徑完全重疊 —— 兩層路面共面
+// 就會互閃。每條徑的 lift 差 1.2 公分，分出前後（見獸道的同一段註解）。
+TRAIL_SEGMENTS.forEach((seg, i) => {
+  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.trail, gSample, 0.05 + i * 0.012);
+});
 
 /* ─────────────────────────────────────────────────────── 竹林 ── */
 /**
@@ -265,10 +287,11 @@ const CLEARINGS = (() => {
   const out = [
     { x: NORTH_END.x, z: NORTH_END.z, r: 13, kind: 'gate' },
     { x: SOUTH_END.x, z: SOUTH_END.z, r: 15, kind: 'gate' },
+    { x: EAST_END.x, z: EAST_END.z, r: 12, kind: 'gate' },
   ];
-  // 支徑末端 = 一塊林中空地
+  // 支徑末端 = 一塊林中空地（東徑是出口不是空地，不算）
   const KINDS = ['jizo', 'hut', 'shrine', 'torii', 'bridge'];
-  TRAIL_SEGMENTS.slice(1).forEach((seg, i) => {
+  TRAIL_SEGMENTS.filter(s => s.id.startsWith('branch')).forEach((seg, i) => {
     const end = seg.pts[seg.pts.length - 1];
     out.push({ x: end[0], z: end[1], r: 11 + rand() * 4, kind: KINDS[i % KINDS.length] });
   });
@@ -666,6 +689,7 @@ eienteiGate(SOUTH_END.x, SOUTH_END.z);
 /* ───────────────────────────────────────────── 傳送點 ── */
 const northPortal = makePortalGlow(world, NORTH_END.x, heightAt(NORTH_END.x, NORTH_END.z), NORTH_END.z, 0xd8f0a0);
 const southPortal = makePortalGlow(world, SOUTH_END.x, heightAt(SOUTH_END.x, SOUTH_END.z - 5), SOUTH_END.z - 5, 0xc0a8ff);
+const eastPortal = makePortalGlow(world, EAST_END.x, heightAt(EAST_END.x, EAST_END.z), EAST_END.z, 0xd8e8a0);
 
 /* ─────────────────────────────── 草叢與雜草（小徑沿線） ── */
 scatterGrass(world, {
@@ -674,7 +698,8 @@ scatterGrass(world, {
     const sm = PATHS.samples[(Math.random() * PATHS.samples.length) | 0];
     const a = Math.random() * Math.PI * 2, d = 1 + Math.random() * 18;
     const x = sm.x + Math.cos(a) * d, z = sm.z + Math.sin(a) * d;
-    if (pathDist(x, z) < 0.7) return null;
+    // 1.2 公尺的路緣留白：一叢草半徑約 0.5 公尺，貼著路緣種葉尖會蓋到路上
+    if (pathDist(x, z) < 1.2) return null;
     if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) return null;
     return [x, z];
   },
@@ -715,6 +740,35 @@ scatterGrass(world, {
     m.rotation.y = Math.random() * 3;
     g.add(m);
   }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
+})();
+
+/* ────────── 東口遠景：無名之丘的鈴蘭花海（傳送點看得到下一張圖） ── */
+(function hillVista() {
+  const g = new THREE.Group();
+  const vx = EAST_END.x + 16;
+  g.position.set(vx, heightAt(EAST_END.x, EAST_END.z), EAST_END.z);
+  world.add(g);
+  // 竹子在東緣戛然而止，露出一片開闊的草丘 —— 一眼就知道「出去是別的地形」
+  const hillM = new THREE.MeshStandardMaterial({ color: '#8fa860', roughness: 1, flatShading: true });
+  for (let i = 0; i < 9; i++) {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(14 + Math.random() * 12, 8, 5), hillM);
+    m.position.set(8 + Math.random() * 40, -4 - Math.random() * 5, (i - 4) * 22 + (Math.random() - 0.5) * 12);
+    m.scale.y = 0.42;
+    g.add(m);
+  }
+  // 丘上的鈴蘭：白色小點成片（無名之丘的毒花海）
+  const bellM = new THREE.MeshStandardMaterial({
+    color: '#f0f4e8', roughness: 0.85, emissive: '#4a5a3a', emissiveIntensity: 0.15,
+  });
+  const bellGeo = new THREE.SphereGeometry(0.32, 5, 4);
+  const bells = new THREE.InstancedMesh(bellGeo, bellM, 300);
+  const m4 = new THREE.Matrix4(), v = new THREE.Vector3();
+  for (let i = 0; i < 300; i++) {
+    m4.makeTranslation(v.set(10 + Math.random() * 38, 1.5 + Math.random() * 2.5, (Math.random() - 0.5) * 190));
+    bells.setMatrixAt(i, m4);
+  }
+  g.add(bells);
   g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
 
@@ -794,6 +848,10 @@ if (FROM === 'eientei') {
   ctrl.teleport(SOUTH_END.x, SOUTH_END.z - 10);
   ctrl.yaw = Math.PI;        // 面向北（回獸道的方向）
   ctrl.camYaw = 0;
+} else if (FROM === 'namelessHill') {
+  ctrl.teleport(EAST_END.x - 8, EAST_END.z);
+  ctrl.yaw = -Math.PI / 2;   // 面向西（往竹林深處）
+  ctrl.camYaw = Math.PI / 2;
 } else {
   ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
   ctrl.yaw = 0;              // 面向南（往永遠亭）
@@ -885,6 +943,7 @@ const escMenu = bindEscMenu({
 
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_END.x, ctrl.pos.z - NORTH_END.z) < 4.8;
 const nearSouth = () => Math.hypot(ctrl.pos.x - SOUTH_END.x, ctrl.pos.z - (SOUTH_END.z - 5)) < 4.8;
+const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.2;
 
 window.addEventListener('keydown', (e) => {
   if (e.code !== 'KeyE' || escMenu.isOpen) return;
@@ -912,7 +971,8 @@ window.addEventListener('keydown', (e) => {
   }
 
   if (nearNorth()) { HUD.showLoading('獸道 讀取中'); location.href = '../trail/?from=bamboo'; return; }
-  if (nearSouth()) { HUD.showLoading('永遠亭 讀取中'); location.href = '../eientei/?from=bamboo'; }
+  if (nearSouth()) { HUD.showLoading('永遠亭 讀取中'); location.href = '../eientei/?from=bamboo'; return; }
+  if (nearEast()) { HUD.showLoading('無名之丘 讀取中'); location.href = '../namelessHill/?from=bamboo'; }
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
@@ -935,6 +995,7 @@ function tick(rawDt) {
   env.update(dt, camera.position);
   northPortal.userData.update(t);
   southPortal.userData.update(t);
+  eastPortal.userData.update(t);
 
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;
@@ -942,6 +1003,7 @@ function tick(rawDt) {
     HUD.prompt(guideOffer > 0 ? '[ E ]  跟妹紅走（去永遠亭）' : '[ E ]  與 藤原妹紅 對話');
   } else if (nearNorth()) HUD.prompt('[ E ]  返回獸道');
   else if (nearSouth()) HUD.prompt('[ E ]  進入永遠亭');
+  else if (nearEast()) HUD.prompt('[ E ]  往無名之丘');
   else HUD.prompt(null);
 }
 
@@ -974,5 +1036,5 @@ window.__bamboo = {
   frame() { renderer.render(scene, camera); },
   setHour(h) { return env.setHour(h); },
   setTimeFlowing(v) { env.timeFlowing = v; },
-  PATHS, CLEARINGS, NORTH_END, SOUTH_END,
+  PATHS, CLEARINGS, NORTH_END, SOUTH_END, EAST_END,
 };

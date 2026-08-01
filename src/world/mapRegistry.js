@@ -44,6 +44,11 @@ const MAP_INFO = {
     connections: ['trail', 'eientei', 'namelessHill'],
     entry: 'maps/bamboo/',
   },
+  namelessHill: {
+    built: true, safe: false, playSize: [220, 220], mobTheme: 'hazard',   // 花海毒區，無實體怪
+    connections: ['bamboo', 'sunflower'],
+    entry: 'maps/namelessHill/',
+  },
 
   eientei: {
     built: true, safe: true, playSize: [200, 180], mobTheme: null,
@@ -52,13 +57,10 @@ const MAP_INFO = {
   },
 
   // ---- 待建（第二期起逐張補 built: true） ----
-  namelessHill: {
-    built: false, safe: false, playSize: [220, 220], mobTheme: 'hazard',   // 花海毒區，無實體怪
-    connections: ['bamboo', 'sunflower'],
-  },
   sunflower: {
-    built: false, safe: false, playSize: [360, 360], mobTheme: 'flowerFairy',
+    built: true, safe: false, playSize: [360, 360], mobTheme: 'flowerFairy',
     connections: ['namelessHill', 'trail'],
+    entry: 'maps/sunflower/',
   },
   kourindou: {
     built: false, safe: true, playSize: [140, 140], mobTheme: null,

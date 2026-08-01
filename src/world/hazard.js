@@ -30,22 +30,27 @@ export class HazardZones {
    * 圓形毒區。
    * @param {number} x @param {number} z @param {number} r
    * @param {number} dps 每秒傷害（實際節拍由無敵幀決定）
-   * @param {object} [o] { color:'r,g,b' 邊緣色調 }
+   * @param {object} [o]
+   * @param {string} [o.color] 邊緣色調 'r,g,b'
+   * @param {(x:number,z:number)=>boolean} [o.safe] 回 true 的地方挖空不算毒區。
+   *   毒區的形狀是粗的（一個圓），但路是細的曲線 —— 用同一個判斷式同時
+   *   決定「哪裡不長花」與「哪裡不中毒」，畫面上看到的和身上扣的才會一致。
    */
   addCircle(x, z, r, dps, o = {}) {
-    this.zones.push({ kind: 'circle', x, z, r, dps, color: o.color });
+    this.zones.push({ kind: 'circle', x, z, r, dps, color: o.color, safe: o.safe });
     return this;
   }
 
   /**
-   * 多邊形毒區（頂點 [x,z][]，射線法判內外）。
+   * 多邊形毒區（頂點 [x,z][]，射線法判內外）。o 同 addCircle。
    */
   addPolygon(pts, dps, o = {}) {
-    this.zones.push({ kind: 'poly', pts, dps, color: o.color });
+    this.zones.push({ kind: 'poly', pts, dps, color: o.color, safe: o.safe });
     return this;
   }
 
   _inside(zone, x, z) {
+    if (zone.safe && zone.safe(x, z)) return false;
     if (zone.kind === 'circle') {
       return Math.hypot(x - zone.x, z - zone.z) < zone.r;
     }
