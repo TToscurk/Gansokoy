@@ -39,9 +39,13 @@ import { buildCharacter } from '../entities/model.js';
 import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../entities/roster.js';
 import { PlayerController } from '../player/controller.js';
 import { Environment } from '../world/environment.js';
+import { setGroundHeightFn } from '../world/terrain.js';
+import { WORLD } from '../config.js';
+import { HazardZones } from '../world/hazard.js';
 import { Progression } from '../player/progression.js';
 import { installLoadout } from '../player/loadout.js';
 import { installHUD, bindEscMenu } from '../ui/hud.js';
+import { TALK_RANGE } from '../entities/npc.js';
 import { installWorldMap } from '../ui/worldmap.js';
 import { installMinimap } from '../ui/minimap.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../world/quality.js';
@@ -56,10 +60,15 @@ import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from
  * @param {number} [o.exposure=1.06]  toneMappingExposure
  * @param {object} o.env  Environment 的參數（fogMul/shadowArea/followSun…）
  */
-export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOpts, postFX = 'basic' }) {
+export function bootMap({
+  hud, camera: camOpts = {}, exposure = 1.06, env: envOpts, postFX = 'basic',
+  renderer: rendererOpts = {}, clock = false,
+}) {
   const HUD = installHUD(hud);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  // 神社是 antialias:false + powerPreference:'high-performance'（走 composer 時
+  // MSAA 對主畫面無效，只有直接畫上 canvas 的名牌吃得到）—— 可覆寫。
+  const renderer = new THREE.WebGLRenderer({ antialias: true, ...rendererOpts });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
@@ -166,25 +175,64 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
   // 塗成黑方塊，README 踩坑 #3）。名牌一律住這個場景，主畫面畫完再疊。
   const labelScene = new THREE.Scene();
 
-  // env.opts.onApply 是單一插槽 —— 後製鏈要接（bloom 強度/飽和跟時刻走），
-  // 圖自己也常要接（燈籠、紙窗）。改成清單制，兩邊都用 onEnvApply 掛。
-  const _envApply = [];
+  // Environment 的三個回呼插槽（onApply / onEnvBake / onLabel）本來都是
+  // 「後面指派的把前面蓋掉」的單一插槽。後製鏈要接 onApply（bloom 強度與
+  // 飽和跟時刻走），圖自己也常要接（燈籠、紙窗、星空）—— 兩邊直接指派
+  // 就會互相吃掉，而且**當下完全看不出錯**：basic 圖的清單本來就是空的，
+  // 等到哪天升成 postFX:'full' 才會發現後製那份被靜默吃了。
+  // 三個一律改成清單制，地圖端用 core.onEnvApply / onEnvBake / onEnvLabel。
+  const _envApply = [], _envBake = [], _envLabel = [];
   env.opts.onApply = (t, wx) => { for (const fn of _envApply) fn(t, wx); };
+  env.opts.onEnvBake = (h) => { for (const fn of _envBake) fn(h); };
+  env.opts.onLabel = (text) => { for (const fn of _envLabel) fn(text); };
   if (fx) {
     _envApply.push((t, wx) => {
       fx.bloom.strength = t.bloom;
       fx.gradePass.uniforms.saturation.value = t.sat * wx.satMul;
     });
   }
+  // 右上角時刻顯示：整合書階段 C 表列的孤島之一（原本只有神社與人里有）。
+  // HUD 本來就有 #todLabel 這個空位，接上去就是全圖標配 —— 但**開啟它是加
+  // 功能，不是重構**，所以預設關閉。遷移期一律不傳；等七張圖都遷完，
+  // 再用一個獨立 commit 把預設改成 true（那時才是階段 C 的孤島修補）。
+  if (clock) _envLabel.push((text) => { if (HUD.todLabel) HUD.todLabel.textContent = text; });
 
   const core = {
     THREE, HUD, renderer, scene, camera, env, world, colliders,
     composer, fx, labelScene,
     onEnvApply(fn) { _envApply.push(fn); },
+    onEnvBake(fn) { _envBake.push(fn); },
+    onEnvLabel(fn) { _envLabel.push(fn); },
+
+    /** 名牌該住哪個場景：有後製鏈才需要 overlay（GTAO 會把 depthTest:false
+     *  的 sprite 塗黑）。圖一律寫 new NPCManager(scene, core.plateScene)，
+     *  之後切 postFX 不必回頭改地圖。 */
+    get plateScene() { return composer ? labelScene : scene; },
+
+    /**
+     * 登記地形高度場（G3）。**刻意做成方法而不是 bootMap 參數** ——
+     * kourindou / trail 的 heightAt 反向依賴 PathNet，登記時機得由地圖決定。
+     */
+    setTerrain(heightAt, { waterLevel = -999 } = {}) {
+      core.heightAt = heightAt;
+      setGroundHeightFn(heightAt);
+      WORLD.waterLevel = waterLevel;
+      return heightAt;
+    },
+
+    /**
+     * 立刻套一次天色（G8）。Environment 的建構子不呼叫 applyTime，而
+     * onEnvBake 只在 force 或太陽轉夠角度時才觸發 —— 需要 IBL 或
+     * 「第 0 幀燈籠就該是對的」的圖必須顯式呼叫，且要排在所有
+     * onEnvApply / onEnvBake / onEnvLabel 註冊**之後**。
+     */
+    applyEnvNow(force = true) { env.applyTime(env.hour, force); },
     // 之後各階段逐一填上
     spec: null, model: null, ctrl: null, prog: null, kit: null,
     escMenu: null, worldMap: null, minimap: null,
-    _updates: [], _lateUpdates: [],
+    hazards: null,
+    _updates: [], _lateUpdates: [], _postUpdates: [],
+    heightAt: null,
     _t: 0,
     _clock: new THREE.Clock(),
 
@@ -285,6 +333,78 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
       return core.escMenu;
     },
 
+    /**
+     * 環境傷害區（G11）。**排序就是行為**：hazards.update 必須排在
+     * kit.update 之後（vitals 要先結算完無敵幀）、env.update 之前，
+     * 而且要早於地圖自己的 onUpdate —— 順序顛倒就變成「先跳提示才扣血」。
+     * 由這裡代註冊，之後 forest 上線不必再抄一次順序。
+     */
+    installHazards(build) {
+      const hz = new HazardZones(core.kit.vitals);
+      build?.(hz);
+      core.onUpdate((dt) => hz.update(dt, core.ctrl.pos));
+      core.hazards = hz;
+      return hz;
+    },
+
+    /* ──────────────────────── E 鍵互動 + 出口提示（樣板收攏） ── */
+    /**
+     * 每張圖都有的那三十行：E 鍵先讓 ESC 選單、對話中只推進、沒鎖定不理，
+     * 再依序試「附近有 NPC 就對話」→「站在某個出口就換圖」；
+     * 而 HUD 提示是同一組判定的鏡像。兩段判定順序必須一致 —— 分開寫
+     * 遲早會漂移（提示說能按 E，按下去卻沒反應），所以由這裡一起產出。
+     *
+     * **回傳 updatePrompt()，由地圖自己決定在 onLateUpdate 的哪一格呼叫** ——
+     * 沒有自動註冊。原因：提示區塊在各圖原本的相對位置不同（多半在
+     * 傳送點呼吸動畫之後），自動註冊就等於偷偷改順序，而順序就是行為。
+     *
+     * @param {object} o
+     * @param {object} [o.npcMgr]   有 NPC 的圖才傳
+     * @param {object} [o.dialogue]
+     * @param {{near:()=>boolean, prompt:string, href?:string, loading?:string}[]} o.exits
+     *        href 省略 = 只顯示提示、按 E 不傳送（例：還沒蓋的魔法之森）
+     * @param {(...)=>boolean} [o.onInteract] 額外的 E 互動（賽錢箱之類）。
+     *        回傳 true 表示已處理，後面的出口判定就不跑。
+     */
+    installTalk({ npcMgr = null, dialogue = null, exits = [], onInteract = null } = {}) {
+      const nearNpc = () => {
+        if (!npcMgr) return null;
+        const npc = npcMgr.nearest;
+        return (npc && npc.pos.distanceTo(core.ctrl.pos) <= TALK_RANGE) ? npc : null;
+      };
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code !== 'KeyE' || core.escMenu?.isOpen) return;
+        if (dialogue?.active) { dialogue.advance(); return; }
+        if (!core.ctrl?.locked) return;
+
+        const npc = nearNpc();
+        if (npc) {
+          core.ctrl.enabled = false;
+          dialogue.open(npc.spec, npcMgr.nextTalk(npc), () => { core.ctrl.enabled = true; });
+          return;
+        }
+        if (onInteract?.()) return;
+        for (const ex of exits) {
+          if (!ex.near()) continue;
+          if (!ex.href) return;                 // 有提示、沒有路（未開放的出口）
+          HUD.showLoading(ex.loading ?? '讀取中');
+          location.href = ex.href;
+          return;
+        }
+      });
+
+      return function updatePrompt() {
+        if (dialogue?.active) { HUD.prompt(null); return; }
+        const npc = nearNpc();
+        if (npc) { HUD.prompt(`[ E ]  與 ${npc.spec.zh} 對話`); return; }
+        for (const ex of exits) {
+          if (ex.near()) { HUD.prompt(ex.prompt); return; }
+        }
+        HUD.prompt(null);
+      };
+    },
+
     /* ─────────────────────────── 大地圖 + 小地圖（升級5） ── */
     installMapUI({ current, isBlocked, minimap }) {
       core.worldMap = installWorldMap({ current, isBlocked });
@@ -301,6 +421,10 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
     /* ─────────────────────────────────────────── 主迴圈 ── */
     onUpdate(fn) { core._updates.push(fn); },
     onLateUpdate(fn) { core._lateUpdates.push(fn); },
+    /** minimap.update() **之後**的掛勾（G1）。神社的陰陽玉/鈴緒/光塵三段
+     *  動畫原本就排在小地圖之後 —— 實務影響大概是零（minimap 只讀
+     *  ctrl.pos/yaw），但「相對位置」就是行為，給地圖一個逐字保序的選項。 */
+    onPostUpdate(fn) { core._postUpdates.push(fn); },
 
     /** 一格模擬（debug handle 的 step 也走這裡 —— 測試與遊戲同一條路徑） */
     tick(rawDt) {
@@ -314,6 +438,7 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
       env.update(dt, camera.position);
       for (const fn of core._lateUpdates) fn(dt, rawDt, t);
       core.minimap?.update();
+      for (const fn of core._postUpdates) fn(dt, rawDt, t);
     },
 
     /** 一幀：後製鏈（有的話）＋名牌 overlay。 */
@@ -347,9 +472,16 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
     },
 
     /* ─────────────────────────── debug handle（測試口徑統一） ── */
-    debugHandle(extra = {}) {
-      return {
+    /**
+     * @param {object} extra 圖專屬欄位。**展開在最後，所以可以覆寫
+     *   tp / step / frame** —— 神社的三個都跟 GameCore 版語意不同，
+     *   遷移時記得覆寫回去。
+     * @param {{omit?:string[]}} [o] omit：拿掉指定的鍵（例：原本沒有 composer）
+     */
+    debugHandle(extra = {}, { omit = [] } = {}) {
+      const h = {
         renderer, scene, camera, THREE, env, colliders,
+        ...(core.heightAt ? { heightAt: core.heightAt } : {}),
         get ctrl() { return core.ctrl; },
         get prog() { return core.prog; },
         get vitals() { return core.kit?.vitals; },
@@ -363,11 +495,15 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
           return core.ctrl.pos.toArray().map(v => +v.toFixed(2));
         },
         frame() { core.renderFrame(); },
-        composer,
-        setHour(h) { return env.setHour(h); },
+        // basic 圖原本沒有 composer 這個 key —— 值是 null 就不要放進去，
+        // 免得 Object.keys / `in` 的快照比對出現假差異。
+        ...(composer ? { composer } : {}),
+        setHour(hh) { return env.setHour(hh); },
         setTimeFlowing(v) { env.timeFlowing = v; },
         ...extra,
       };
+      for (const k of omit) delete h[k];
+      return h;
     },
   };
 
