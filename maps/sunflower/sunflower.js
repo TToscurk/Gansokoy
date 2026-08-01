@@ -50,6 +50,9 @@ const core = bootMap({
   exposure: 1.1,
   // 花田是開闊的：霧要很淡，「望不到邊的黃」是這張圖的第一印象
   env: { fogMul: 0.5, shadowArea: 58, followSun: true },
+  // 完整後製鏈（整合書階段 B）：畫質雙標到此為止 —— 高檔有 GTAO 的
+  // 接觸陰影與 Bloom，跟神社同一套；低檔自動全關，跟原本一樣輕。
+  postFX: 'full',
 });
 const { HUD, renderer, scene, camera, env, world, colliders } = core;
 const { box, cyl, post, block } = core;
@@ -534,7 +537,8 @@ core.spawnPlayer({
 const ctrl = core.ctrl;
 
 /* ─────────────────────────────── 幽香（對話） ── */
-const npcMgr = new NPCManager(scene);
+// 名牌住 labelScene：depthTest:false 的 sprite 進 GTAO 會變黑方塊
+const npcMgr = new NPCManager(scene, core.labelScene);
 npcMgr.setRoster(['yuuka'], REGION_BY_ID.sunflower, 300);
 const dialogue = new Dialogue();
 

@@ -28,6 +28,13 @@
 // env 之前跑，一個掛勾包不住原本的順序。
 
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { SMAAPass } from 'three/addons/postprocessing/SMAAPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { buildCharacter } from '../entities/model.js';
 import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../entities/roster.js';
 import { PlayerController } from '../player/controller.js';
@@ -49,7 +56,7 @@ import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from
  * @param {number} [o.exposure=1.06]  toneMappingExposure
  * @param {object} o.env  Environment 的參數（fogMul/shadowArea/followSun…）
  */
-export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOpts }) {
+export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOpts, postFX = 'basic' }) {
   const HUD = installHUD(hud);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -70,9 +77,83 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
 
   const env = new Environment(scene, renderer, envOpts);
 
+  /* ─────────────────────── 後製鏈（postFX: 'full'，整合書階段 B） ──
+   * 神社的那一套：Render → GTAO → Bloom → OutputPass（色調映射）→
+   * 分級（對比/飽和/暗部冷偏/暈影）→ SMAA。參數照抄 main.js ——
+   * 這是「消除畫質雙標」，不是調一套新的看起來的樣子。
+   * 檔位對映也照神社：低＝全關（只剩 Render+Output）、中＝Bloom+分級
+   * +SMAA、高＝再加 GTAO。'basic' 圖維持 applyBasicQuality（無 composer）。 */
+  let composer = null, fx = null;
+  if (postFX === 'full') {
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    const gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
+    gtao.output = GTAOPass.OUTPUT.Default;
+    gtao.updateGtaoMaterial({
+      radius: 1.6, distanceExponent: 1.2, thickness: 1.5, scale: 1.2,
+      samples: 16, distanceFallOff: 1, screenSpaceRadius: false,
+    });
+    gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 4, rings: 2, samples: 16 });
+    composer.addPass(gtao);
+    const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.34, 0.45, 1.15);
+    composer.addPass(bloom);
+    composer.addPass(new OutputPass());
+    const gradePass = new ShaderPass({
+      uniforms: {
+        tDiffuse: { value: null },
+        contrast: { value: 1.11 },
+        saturation: { value: 1.12 },
+        vignette: { value: 0.45 },
+        tint: { value: new THREE.Color('#2a1c3a') },
+      },
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }',
+      fragmentShader: `
+        uniform sampler2D tDiffuse; uniform float contrast, saturation, vignette;
+        uniform vec3 tint; varying vec2 vUv;
+        void main(){
+          vec4 src = texture2D(tDiffuse, vUv);
+          vec3 c = src.rgb;
+          c = (c - 0.5) * contrast + 0.5;
+          float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+          c = mix(vec3(l), c, saturation);
+          c = mix(c, tint, (1.0 - l) * 0.09);
+          float v = smoothstep(0.95, 0.28, length(vUv - 0.5));
+          c *= mix(1.0, v, vignette);
+          gl_FragColor = vec4(clamp(c, 0.0, 1.0), src.a);
+        }`,
+    });
+    composer.addPass(gradePass);
+    const smaa = new SMAAPass();
+    composer.addPass(smaa);
+    fx = { gtao, bloom, gradePass, smaa };
+  }
+  const FULL_QUALITY = [
+    { dpr: 1.0, shadow: 1024, gtao: false, bloom: false, smaa: false, grade: false },
+    { dpr: 1.25, shadow: 2048, gtao: false, bloom: true, smaa: true, grade: true },
+    { dpr: 1.5, shadow: 4096, gtao: true, bloom: true, smaa: true, grade: true },
+  ];
+
   let qualityIdx = loadQualityIdx(2);
   const syncQuality = () => {
-    applyBasicQuality(renderer, env.sun, qualityIdx);
+    if (fx) {
+      const q = FULL_QUALITY[qualityIdx] ?? FULL_QUALITY[2];
+      renderer.setPixelRatio(Math.min(devicePixelRatio, q.dpr));
+      renderer.setSize(innerWidth, innerHeight);
+      composer.setSize(innerWidth, innerHeight);
+      fx.gtao.enabled = q.gtao;
+      fx.bloom.enabled = q.bloom;
+      fx.smaa.enabled = q.smaa;
+      fx.gradePass.enabled = q.grade;
+      const sun = env.sun;
+      if (sun && sun.shadow.mapSize.x !== q.shadow) {
+        sun.shadow.mapSize.set(q.shadow, q.shadow);
+        sun.shadow.map?.dispose();
+        sun.shadow.map = null;
+        sun.shadow.needsUpdate = true;
+      }
+    } else {
+      applyBasicQuality(renderer, env.sun, qualityIdx);
+    }
     HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
   };
   syncQuality();
@@ -81,8 +162,25 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
   scene.add(world);
   const colliders = [];
 
+  // 名牌 overlay：depthTest:false 的 sprite 不能進後製鏈（GTAO 會把它
+  // 塗成黑方塊，README 踩坑 #3）。名牌一律住這個場景，主畫面畫完再疊。
+  const labelScene = new THREE.Scene();
+
+  // env.opts.onApply 是單一插槽 —— 後製鏈要接（bloom 強度/飽和跟時刻走），
+  // 圖自己也常要接（燈籠、紙窗）。改成清單制，兩邊都用 onEnvApply 掛。
+  const _envApply = [];
+  env.opts.onApply = (t, wx) => { for (const fn of _envApply) fn(t, wx); };
+  if (fx) {
+    _envApply.push((t, wx) => {
+      fx.bloom.strength = t.bloom;
+      fx.gradePass.uniforms.saturation.value = t.sat * wx.satMul;
+    });
+  }
+
   const core = {
     THREE, HUD, renderer, scene, camera, env, world, colliders,
+    composer, fx, labelScene,
+    onEnvApply(fn) { _envApply.push(fn); },
     // 之後各階段逐一填上
     spec: null, model: null, ctrl: null, prog: null, kit: null,
     escMenu: null, worldMap: null, minimap: null,
@@ -218,17 +316,31 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
       core.minimap?.update();
     },
 
+    /** 一幀：後製鏈（有的話）＋名牌 overlay。 */
+    renderFrame() {
+      if (composer) composer.render();
+      else renderer.render(scene, camera);
+      if (labelScene.children.length) {
+        const prev = renderer.autoClear;
+        renderer.autoClear = false;          // 別把剛畫好的畫面清掉
+        renderer.setRenderTarget(null);
+        renderer.render(labelScene, camera);
+        renderer.autoClear = prev;
+      }
+    },
+
     start() {
       addEventListener('resize', () => {
         camera.aspect = innerWidth / innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(innerWidth, innerHeight);
+        composer?.setSize(innerWidth, innerHeight);
       });
       const loading = document.getElementById('loading');
       if (loading) loading.style.display = 'none';
       const animate = () => {
         core.tick(Math.min(core._clock.getDelta(), 0.05));
-        renderer.render(scene, camera);
+        core.renderFrame();
         requestAnimationFrame(animate);
       };
       animate();
@@ -250,7 +362,8 @@ export function bootMap({ hud, camera: camOpts = {}, exposure = 1.06, env: envOp
           for (let i = 0; i < n; i++) core.tick(dt);
           return core.ctrl.pos.toArray().map(v => +v.toFixed(2));
         },
-        frame() { renderer.render(scene, camera); },
+        frame() { core.renderFrame(); },
+        composer,
         setHour(h) { return env.setHour(h); },
         setTimeFlowing(v) { env.timeFlowing = v; },
         ...extra,
