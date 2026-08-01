@@ -26,6 +26,9 @@ import { Dialogue } from '../../src/ui/dialogue.js';
 import { Progression } from '../../src/player/progression.js';
 import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { catmullRom } from '../../src/world/pathnet.js';
@@ -39,7 +42,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['ESC', '選單'],
+    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -573,6 +576,9 @@ scatterGrass(world, {
 /* ───────────────────────────────────────────── 傳送點 ── */
 const northPortal = makePortalGlow(world, NORTH_GATE.x, heightAt(NORTH_GATE.x, NORTH_GATE.z), NORTH_GATE.z, 0xa8c96a);
 
+/* 道標（升級5）：北門旁，牌面朝宅院（回程時讀得到） */
+makeSignpost(world, NORTH_GATE.x + 2.4, heightAt(NORTH_GATE.x + 2.4, NORTH_GATE.z + 2), NORTH_GATE.z + 2, '往 迷途竹林', 0);
+
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 {
   const s = mergeStaticByMaterial(world, { cell: 45 });
@@ -642,6 +648,22 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({
+  current: 'eientei',
+  isBlocked: () => dialogue.active || escMenu.isOpen,
+});
+const minimap = installMinimap({
+  bounds: { minX: -102, maxX: 102, minZ: -92, maxZ: 92 },
+  lines: [
+    [[NORTH_GATE.x, NORTH_GATE.z], [0, WALL.z0], [0, 13.6]],           // 参道→中庭
+    [[WALL.x0, WALL.z0], [WALL.x1, WALL.z0], [WALL.x1, WALL.z1], [WALL.x0, WALL.z1], [WALL.x0, WALL.z0]],  // 圍牆
+  ],
+  portals: [{ x: NORTH_GATE.x, z: NORTH_GATE.z, label: '迷途竹林', color: '#a8c96a' }],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_GATE.x, ctrl.pos.z - NORTH_GATE.z) < 4.8;
 
 window.addEventListener('keydown', (e) => {
@@ -676,6 +698,7 @@ function tick(rawDt) {
   dialogue.update(dt);
   env.update(dt, camera.position);
   northPortal.userData.update(t);
+  minimap.update();
 
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;

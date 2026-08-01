@@ -33,6 +33,9 @@ import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { MAP_REGISTRY } from '../../src/world/mapRegistry.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 
 const HUD = installHUD({
   title: '香霖堂',
@@ -40,7 +43,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['ESC', '選單'],
+    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -594,6 +597,10 @@ const westPortal = FOREST_OPEN
   ? makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0x7dd88a)
   : null;
 
+/* 道標（升級5）：兩端各一塊，牌面朝店的方向 */
+makeSignpost(world, EAST_END.x - 2.2, heightAt(EAST_END.x - 2.2, EAST_END.z + 2.6), EAST_END.z + 2.6, '往 人間之里', -Math.PI / 2);
+makeSignpost(world, WEST_END.x + 2.2, heightAt(WEST_END.x + 2.2, WEST_END.z + 2.6), WEST_END.z + 2.6, '往 魔法之森', Math.PI / 2);
+
 /* ─────────────── 邊界圍坡之外的遠景（升級1：遠景延伸） ── */
 // 林緣小圖：外圈是層層退遠的樹冠稜線，東西兩口留缺
 // （那兩個方向已有里的屋頂與魔法之森的樹牆遠景）。
@@ -683,6 +690,22 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({
+  current: 'kourindou',
+  isBlocked: () => dialogue.active || escMenu.isOpen,
+});
+const minimap = installMinimap({
+  bounds: { minX: -72, maxX: 72, minZ: -72, maxZ: 72 },
+  paths: PATHS,
+  portals: [
+    { x: EAST_END.x, z: EAST_END.z, label: '人間之里', color: '#e0c88a' },
+    { x: WEST_END.x, z: WEST_END.z, label: '魔法之森', color: '#7dd88a' },
+  ],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.0;
 const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.0;
 
@@ -723,6 +746,7 @@ function tick(rawDt) {
   env.update(dt, camera.position);
   eastPortal.userData.update(t);
   westPortal?.userData.update(t);
+  minimap.update();
 
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;

@@ -24,6 +24,9 @@ import { HazardZones } from '../../src/world/hazard.js';
 import { Progression } from '../../src/player/progression.js';
 import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
@@ -37,7 +40,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -474,6 +477,10 @@ scatterGrass(world, {
 const westPortal = makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0xa8c96a);
 const eastPortal = makePortalGlow(world, EAST_END.x, heightAt(EAST_END.x, EAST_END.z), EAST_END.z, 0xf2c832);
 
+/* 道標（升級5）：兩端各一塊，牌面朝丘內 */
+makeSignpost(world, WEST_END.x + 2.2, heightAt(WEST_END.x + 2.2, WEST_END.z + 2.6), WEST_END.z + 2.6, '往 迷途竹林', Math.PI / 2);
+makeSignpost(world, EAST_END.x - 2.2, heightAt(EAST_END.x - 2.2, EAST_END.z + 2.6), EAST_END.z + 2.6, '往 太陽花田', -Math.PI / 2);
+
 /* ─────────────── 邊界圍坡之外的遠丘（升級1：遠景延伸） ── */
 // 無名之丘是丘陵地 —— 圖外應該是更多層層退遠的丘，不是天空直接切斷。
 // 顏色比場內的草丘灰一階，罩在霧裡剛好讀成「遠方的丘陵」。
@@ -570,6 +577,19 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({ current: 'namelessHill', isBlocked: () => escMenu.isOpen });
+const minimap = installMinimap({
+  bounds: { minX: -112, maxX: 112, minZ: -112, maxZ: 112 },
+  paths: PATHS,
+  portals: [
+    { x: WEST_END.x, z: WEST_END.z, label: '迷途竹林', color: '#a8c96a' },
+    { x: EAST_END.x, z: EAST_END.z, label: '太陽花田', color: '#f2c832' },
+  ],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.2;
 const nearEast = () => Math.hypot(ctrl.pos.x - EAST_END.x, ctrl.pos.z - EAST_END.z) < 5.2;
 
@@ -600,6 +620,7 @@ function tick(rawDt) {
   env.update(dt, camera.position);
   westPortal.userData.update(t);
   eastPortal.userData.update(t);
+  minimap.update();
 
   if (nearWest()) HUD.prompt('[ E ]  返回迷途竹林');
   else if (nearEast()) HUD.prompt('[ E ]  往太陽花田');

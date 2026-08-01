@@ -28,6 +28,9 @@ import { FlowerFairies } from '../../src/combat/flowerfairies.js';
 import { Progression, progressMobs } from '../../src/player/progression.js';
 import { installLoadout } from '../../src/player/loadout.js';
 import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
@@ -41,7 +44,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['ESC', '選單'],
+    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -540,6 +543,10 @@ scatterGrass(world, {
 const westPortal = makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0xd8e8a0);
 const northPortal = makePortalGlow(world, NORTH_END.x, heightAt(NORTH_END.x, NORTH_END.z), NORTH_END.z, 0x9fd8a0);
 
+/* 道標（升級5）：兩端各一塊，牌面朝花田內 */
+makeSignpost(world, WEST_END.x + 2.4, heightAt(WEST_END.x + 2.4, WEST_END.z + 2.6), WEST_END.z + 2.6, '往 無名之丘', Math.PI / 2);
+makeSignpost(world, NORTH_END.x + 2.6, heightAt(NORTH_END.x + 2.6, NORTH_END.z + 2.2), NORTH_END.z + 2.2, '往 獸道', 0);
+
 /* ─────────────── 邊界之外的遠山與林緣（升級1：遠景延伸） ── */
 // 花田是全遊戲最亮最開闊的圖，邊界直接切天空反而最顯眼。
 // 外圈鋪一層低緩的林緣稜線 —— 花海一路黃到腳下、遠處收進綠色的林子。
@@ -642,6 +649,22 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({
+  current: 'sunflower',
+  isBlocked: () => dialogue.active || escMenu.isOpen,
+});
+const minimap = installMinimap({
+  bounds: { minX: -182, maxX: 182, minZ: -182, maxZ: 182 },
+  paths: PATHS,
+  portals: [
+    { x: WEST_END.x, z: WEST_END.z, label: '無名之丘', color: '#d8e8a0' },
+    { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#9fd8a0' },
+  ],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.2;
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_END.x, ctrl.pos.z - NORTH_END.z) < 5.2;
 
@@ -684,6 +707,7 @@ function tick(rawDt) {
 
   westPortal.userData.update(t);
   northPortal.userData.update(t);
+  minimap.update();
 
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;

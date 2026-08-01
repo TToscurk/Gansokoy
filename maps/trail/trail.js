@@ -39,6 +39,9 @@ import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward, portalMist } from '../../src/world/vista.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -47,7 +50,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -424,6 +427,12 @@ portalMist(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END
 portalMist(world, SUNFLOWER_END.x, heightAt(SUNFLOWER_END.x, SUNFLOWER_END.z), SUNFLOWER_END.z,
   { color: REGION_BY_ID.sunflower.fog, away: 10 });
 
+/* 道標：每個口一塊，牌面朝來路（升級5 的世界內引導） */
+makeSignpost(world, SHRINE_END.x + 2.6, heightAt(SHRINE_END.x + 2.6, SHRINE_END.z + 1), SHRINE_END.z + 1, '往 博麗神社', 0);
+makeSignpost(world, VILLAGE_END.x + 3.0, heightAt(VILLAGE_END.x + 3.0, VILLAGE_END.z - 1.5), VILLAGE_END.z - 1.5, '往 人間之里', 2.44);
+makeSignpost(world, BAMBOO_END.x - 3.0, heightAt(BAMBOO_END.x - 3.0, BAMBOO_END.z - 1.5), BAMBOO_END.z - 1.5, '往 迷途竹林', -2.48);
+makeSignpost(world, SUNFLOWER_END.x - 2.4, heightAt(SUNFLOWER_END.x - 2.4, SUNFLOWER_END.z + 2), SUNFLOWER_END.z + 2, '往 太陽花田', -0.94);
+
 /* ─────────────────── 北端遠景：山上的博麗神社全貌 ──────────────────
  * 站在獸道朝神社方向望，要看得到整座神社蓋在山頭上：
  * 山體 + 一條長石階爬上山面 + 台地上的紅鳥居、拜殿、玉垣剪影。
@@ -702,6 +711,21 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({ current: 'trail', isBlocked: () => escMenu.isOpen });
+const minimap = installMinimap({
+  bounds: { minX: -180, maxX: 276, minZ: -320, maxZ: 275 },
+  paths: PATHS,
+  portals: [
+    { x: SHRINE_END.x, z: SHRINE_END.z, label: '博麗神社', color: '#8be8ff' },
+    { x: VILLAGE_END.x, z: VILLAGE_END.z, label: '人間之里', color: '#f0d89a' },
+    { x: BAMBOO_END.x, z: BAMBOO_END.z, label: '迷途竹林', color: '#d8f0a0' },
+    { x: SUNFLOWER_END.x, z: SUNFLOWER_END.z, label: '太陽花田', color: '#f2c832' },
+  ],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const near = (p) => Math.hypot(ctrl.pos.x - p.x, ctrl.pos.z - p.z) < 4.6;
 const nearShrine = () => near(SHRINE_END);
 const nearVillage = () => near(VILLAGE_END);
@@ -736,6 +760,7 @@ function tick(rawDt) {
   villagePortal.userData.update(t);
   bambooPortal.userData.update(t);
   sunflowerPortal.userData.update(t);
+  minimap.update();
   motes.position.z = ctrl.pos.z * 0.2;
 
   if (nearShrine()) HUD.prompt('[ E ]  前往博麗神社');

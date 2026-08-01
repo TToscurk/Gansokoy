@@ -27,6 +27,9 @@ import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
 import { installHUD, bindEscMenu } from './src/ui/hud.js';
+import { makeSignpost } from './src/world/signpost.js';
+import { installWorldMap } from './src/ui/worldmap.js';
+import { installMinimap } from './src/ui/minimap.js';
 import { installLoadout } from './src/player/loadout.js';
 import { Progression } from './src/player/progression.js';
 import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
@@ -42,7 +45,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['J', '任務'], ['P', '場景編輯'], ['ESC', '選單'],
+    ['E', '互動'], ['J', '任務'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
@@ -1074,6 +1077,8 @@ for (let i = 0; i < 40; i++) {
 // 獸道入口 —— 山腳低地土徑盡頭的一個發光提示點（楓之谷式），
 // 依需求不做鳥居/告示牌等任何裝飾。按 E 前往獸道（trail.html）。
 const trailPortal = makePortalGlow(world, 0, -OUTER_DROP, OUT_FAR + 14);
+// 道標（升級5）：石階盡頭、光點旁 —— 下山前就知道要去哪
+makeSignpost(world, 2.6, -OUTER_DROP, OUT_FAR + 13, '往 獸道', Math.PI);
 OBJ.trailGate = new THREE.Vector3(0, -OUTER_DROP, OUT_FAR + 14);
 
 // distant mountains (Youkai Mountain silhouettes)
@@ -1536,6 +1541,19 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({
+  current: 'shrine',
+  isBlocked: () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen,
+});
+const minimap = installMinimap({
+  bounds: { minX: -85, maxX: 85, minZ: -70, maxZ: 118 },
+  lines: [[[0, 46], [0, OUT_FAR + 8]]],            // 參道＋下山石階
+  portals: [{ x: 0, z: OUT_FAR + 14, label: '獸道', color: '#8be8ff' }],
+  getPos: () => ctrl?.pos,          // 選角前 ctrl 是 null
+  getYaw: () => ctrl?.yaw ?? 0,
+});
+
 /* 角色的隨身裝備。要排在 escMenu / dialogue / sceneEditor 之後 ——
  * isBlocked 會讀到它們。境內沒有敵人，所以不傳 mobs。 */
 kit = installLoadout({
@@ -1695,6 +1713,7 @@ function animate() {
 
   // orbs bob and spin
   trailPortal.userData.update(t);
+  minimap.update();
   for (const o of orbs) {
     o.rotation.y += dt * 0.8;
     o.rotation.z = Math.sin(t * 0.7 + o.userData.phase) * 0.25;

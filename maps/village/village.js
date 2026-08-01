@@ -30,6 +30,9 @@ import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
+import { makeSignpost } from '../../src/world/signpost.js';
+import { installWorldMap } from '../../src/ui/worldmap.js';
+import { installMinimap } from '../../src/ui/minimap.js';
 import { scatterGrass } from '../../src/world/flora.js';
 
 const HUD = installHUD({
@@ -38,7 +41,7 @@ const HUD = installHUD({
   keys: [
     ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
     ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['K', '技能'], ['P', '場景編輯'], ['ESC', '選單'],
+    ['E', '互動'], ['K', '技能'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
   ],
   flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
   combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
@@ -1131,6 +1134,10 @@ const kourinPortal = makePortalGlow(
   world, KOURIN_PORTAL.x, heightAt(KOURIN_PORTAL.x, KOURIN_PORTAL.z), KOURIN_PORTAL.z, 0xe0c88a,
 );
 
+/* 道標（升級5）：兩個出口各一塊，牌面朝里內 */
+makeSignpost(world, 3.2, heightAt(3.2, GATE_Z - 3), GATE_Z - 3, '往 獸道', 0);
+makeSignpost(world, KOURIN_PORTAL.x + 4, heightAt(KOURIN_PORTAL.x + 4, KOURIN_PORTAL.z - 2.6), KOURIN_PORTAL.z - 2.6, '往 香霖堂', Math.PI / 2);
+
 /* ─────────────────────────────── 草叢與雜草（街廓後院、河岸、里外） ── */
 scatterGrass(world, {
   count: 3200, heightAt,
@@ -1420,6 +1427,27 @@ const escMenu = bindEscMenu({
   },
 });
 
+/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
+const worldMap = installWorldMap({
+  current: 'village',
+  isBlocked: () => sceneEditor.isOpen || escMenu.isOpen,
+});
+const minimap = installMinimap({
+  bounds: { minX: -160, maxX: 160, minZ: -195, maxZ: 265 },
+  lines: [
+    [[0, GATE_Z], [0, SOUTH_GATE_Z]],                                  // 主街
+    ...CROSS_Z.map(cz => [[-102, cz], [102, cz]]),                     // 橫街
+    ...LANE_X.map(lx => [[lx, -160], [lx, 200]]),                      // 小巷
+    [[-98, 100], [SW_GATE.x, 100]],                                    // 西南門引道
+  ],
+  portals: [
+    { x: 0, z: GATE_Z - 6, label: '獸道', color: '#8be8ff' },
+    { x: KOURIN_PORTAL.x, z: KOURIN_PORTAL.z, label: '香霖堂', color: '#e0c88a' },
+  ],
+  getPos: () => ctrl.pos,
+  getYaw: () => ctrl.yaw,
+});
+
 const nearPortal = () => Math.hypot(ctrl.pos.x, ctrl.pos.z - (GATE_Z - 6)) < 4.2;
 const nearKourindou = () =>
   Math.hypot(ctrl.pos.x - KOURIN_PORTAL.x, ctrl.pos.z - KOURIN_PORTAL.z) < 4.6;
@@ -1452,6 +1480,7 @@ function tick(rawDt) {
   env.update(dt, camera.position);
   trailPortal.userData.update(t);
   kourinPortal.userData.update(t);
+  minimap.update();
   if (nearPortal()) HUD.prompt('[ E ]  前往獸道（往博麗神社・迷途竹林）');
   else if (nearKourindou()) HUD.prompt('[ E ]  前往香霖堂（往魔法之森）');
   else HUD.prompt(null);

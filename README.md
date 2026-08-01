@@ -45,6 +45,8 @@ node tools/dev-server.mjs . 5603
 | `F` | 飛行（會飛的角色）　`Ctrl` / `C` 下降 |
 | `E` | 對話 / 互動（賽錢箱、NPC） |
 | `J` | 任務日誌 |
+| `M` | 大地圖（幻想鄉全域，含未開放地區） |
+| `N` | 小地圖開關（右上角） |
 | `T` | 時間快轉 3 小時　`Shift+T` 暫停時間 |
 | `Y` | 切換天氣：晴 → 雨 → 雪 → 霧 |
 | `G` | 切換畫質：高 → 低 → 中 |
@@ -309,9 +311,9 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/player/progression.js` | 角色等級／技能練度（localStorage，跨地圖共用） |
 | `src/player/vitals.js` | 玩家 HP/MP、無敵幀、自然回復、死亡與復活 |
 | `src/player/loadout.js` | 角色隨身裝備（HP/MP + 戰鬥 + 技能 + K 視窗），每張圖一行掛上 |
-| `src/ui/` | 對話框、任務日誌、共用 HUD（`hud.js`）、角色場景編輯器 |
+| `src/ui/` | 對話框、任務日誌、共用 HUD（`hud.js`）、大地圖（`worldmap.js`）、小地圖（`minimap.js`）、角色場景編輯器 |
 | `src/quests/` | 任務資料（原封不動）與分支引擎 |
-| `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`）、路網（`pathnet.js`） |
+| `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`）、路網（`pathnet.js`）、遠景稜線（`vista.js`）、道標（`signpost.js`） |
 | `src/combat/` | 戰鬥引擎（`combat.js`/`hud.js`）、技能系統（`skills.js`）、怪物（`mobcore.js` 共用判定 + `mobs.js` 妖精 + `rabbits.js` 妖怪兔）、招式資料（`forms.js`/`motion.js`），跨地圖共用 |
 | `src/fx/` | 特效（刀光、粒子） |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
