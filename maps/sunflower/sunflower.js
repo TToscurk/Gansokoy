@@ -13,71 +13,46 @@
 // 會動的大場景元素，也是向日葵最有辨識度的行為。
 //
 // 路一樣不鋪石磚（使用者要求）：田埂是踩出來的土痕，靠花的疏密引導。
+//
+// ※ 這是第一張改用 GameCore（src/core/GameCore.js）的圖：renderer /
+//    Environment / 玩家 / 成長 / ESC / 大小地圖 / 主迴圈全部由共用層
+//    提供，這個檔案只剩太陽花田獨有的東西（整合書・階段 A）。
 
 import * as THREE from 'three';
 import { setGroundHeightFn } from '../../src/world/terrain.js';
 import { WORLD, REGION_BY_ID } from '../../src/config.js';
-import { buildCharacter } from '../../src/entities/model.js';
-import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
-import { PlayerController } from '../../src/player/controller.js';
-import { Environment } from '../../src/world/environment.js';
 import { makePortalGlow } from '../../src/world/portal.js';
 import { NPCManager, TALK_RANGE } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
 import { FlowerFairies } from '../../src/combat/flowerfairies.js';
-import { Progression, progressMobs } from '../../src/player/progression.js';
-import { installLoadout } from '../../src/player/loadout.js';
-import { installHUD, bindEscMenu } from '../../src/ui/hud.js';
+import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
-import { installWorldMap } from '../../src/ui/worldmap.js';
-import { installMinimap } from '../../src/ui/minimap.js';
-import { loadQualityIdx, saveQualityIdx, applyBasicQuality, QUALITY_NAMES } from '../../src/world/quality.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { bootMap } from '../../src/core/GameCore.js';
 
-const HUD = installHUD({
-  title: '太陽花田',
-  subtitle: 'GARDEN OF THE SUN · 無名之丘 ⇄ 獸道',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+const core = bootMap({
+  hud: {
+    title: '太陽花田',
+    subtitle: 'GARDEN OF THE SUN · 無名之丘 ⇄ 獸道',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動 / 對話'], ['K', '技能'], ['M', '地圖'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀'], ['1 ~ 4', '技']],
+  },
+  camera: { far: 700 },
+  exposure: 1.1,
+  // 花田是開闊的：霧要很淡，「望不到邊的黃」是這張圖的第一印象
+  env: { fogMul: 0.5, shadowArea: 58, followSun: true },
 });
-
-/* ─────────────────────────────────────────────── renderer / scene ── */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(68, innerWidth / innerHeight, 0.2, 700);
-camera.rotation.order = 'YXZ';
-
-// 花田是開闊的：霧要很淡，「望不到邊的黃」是這張圖的第一印象
-const env = new Environment(scene, renderer, {
-  fogMul: 0.5,
-  shadowArea: 58,
-  followSun: true,
-});
-
-let qualityIdx = loadQualityIdx(2);
-const syncQuality = () => {
-  applyBasicQuality(renderer, env.sun, qualityIdx);
-  HUD.qualLabel.textContent = `畫質：${QUALITY_NAMES[qualityIdx]}`;
-};
-syncQuality();
+const { HUD, renderer, scene, camera, env, world, colliders } = core;
+const { box, cyl, post, block } = core;
 
 /* ─────────────────────────────────────────────────── 地形高度場 ── */
 const HALF = 180;
@@ -185,31 +160,6 @@ const MAT = {
   foliage: new THREE.MeshStandardMaterial({ color: '#4f6b34', roughness: 1, flatShading: true }),
   cloth: new THREE.MeshStandardMaterial({ color: '#a02838', roughness: 0.95, side: THREE.DoubleSide }),
 };
-
-const world = new THREE.Group();
-scene.add(world);
-
-const colliders = [];
-function post(x, z, r, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, r });
-}
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
-}
-function box(sx, sy, sz, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(r1, r2, h, mat, x, y, z, seg = 8, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────── 地面 ── */
 const GRID = new GroundGrid({ size: HALF * 2 + 130, seg: 190, heightAt });
@@ -566,32 +516,22 @@ ridgeRing(world, {
 }
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
-let saved = null;
-try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-const spec = ACTIVE_PLAYABLE.find(p => p.id === saved) ?? DEFAULT_PLAYER;
-
-const model = buildCharacter(spec);
-scene.add(model);
-const ctrl = new PlayerController(model, camera, renderer.domElement, colliders);
-ctrl.canFly = spec.canFly ?? true;
-ctrl.maxAirJumps = spec.airJumps ?? 0;
-ctrl.jumpV = spec.jump ?? 9.2;
-ctrl.airJumpV = spec.airJump ?? 8.4;
-ctrl.sprintMul = spec.sprintMul ?? 1.85;
-ctrl.speedMul = spec.speed ?? 1.0;
-ctrl.bounds = { hx: HALF + 8, hz: HALF + 8 };
-ctrl.maxGrade = 1.05;
-
-const FROM = new URLSearchParams(location.search).get('from');
-if (FROM === 'trail') {
-  ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
-  ctrl.yaw = 0;                    // 面向南（走進花田）
-  ctrl.camYaw = Math.PI;
-} else {
-  ctrl.teleport(WEST_END.x + 8, WEST_END.z);
-  ctrl.yaw = Math.PI / 2;          // 面向東
-  ctrl.camYaw = -Math.PI / 2;
-}
+core.spawnPlayer({
+  bounds: { hx: HALF + 8, hz: HALF + 8 },
+  maxGrade: 1.05,
+  spawn(from, ctrl) {
+    if (from === 'trail') {
+      ctrl.teleport(NORTH_END.x, NORTH_END.z + 8);
+      ctrl.yaw = 0;                    // 面向南（走進花田）
+      ctrl.camYaw = Math.PI;
+    } else {
+      ctrl.teleport(WEST_END.x + 8, WEST_END.z);
+      ctrl.yaw = Math.PI / 2;          // 面向東
+      ctrl.camYaw = -Math.PI / 2;
+    }
+  },
+});
+const ctrl = core.ctrl;
 
 /* ─────────────────────────────── 幽香（對話） ── */
 const npcMgr = new NPCManager(scene);
@@ -599,9 +539,7 @@ npcMgr.setRoster(['yuuka'], REGION_BY_ID.sunflower, 300);
 const dialogue = new Dialogue();
 
 /* ─────────────────── 花妖精 + 成長系統 + 角色隨身裝備 ── */
-const prog = new Progression({
-  onLevelUp: (msg) => { HUD.toast(msg); kit.skills?.onLevelUp(); },
-});
+const prog = core.createProgression();
 // 花叢沿田埂散布 —— 玩家一定走田埂，怪窩擺在別處等於沒有怪
 const PATCHES = (() => {
   const out = [];
@@ -620,56 +558,36 @@ const fairies = new FlowerFairies(scene, PATCHES, 7, {
 });
 const mobs = progressMobs(fairies, prog, 'hinokami', '日之呼吸');
 
-const kit = installLoadout({
-  getSpec: () => spec, getCtrl: () => ctrl, scene, HUD, prog, mobs,
-  isBlocked: () => escMenu.isOpen || dialogue.active,
+const kit = core.installKit({
+  mobs,
+  isBlocked: () => core.escMenu.isOpen || dialogue.active,
   onDeath: () => {
     ctrl.teleport(WEST_END.x + 8, WEST_END.z);
     HUD.toast('花妖精把你趕出了花田 —— 醒來時躺在田埂邊。');
   },
 });
-prog.renderBadge(spec.combat ? 'hinokami' : null, '日之呼吸');
+
+/* ───────────────────────────────────────────── ESC + 地圖 UI ── */
+core.bindEsc();
+core.installMapUI({
+  current: 'sunflower',
+  isBlocked: () => dialogue.active || core.escMenu.isOpen,
+  minimap: {
+    bounds: { minX: -182, maxX: 182, minZ: -182, maxZ: 182 },
+    paths: PATHS,
+    portals: [
+      { x: WEST_END.x, z: WEST_END.z, label: '無名之丘', color: '#d8e8a0' },
+      { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#9fd8a0' },
+    ],
+  },
+});
 
 /* ───────────────────────────────────────────── 互動與提示 ── */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
-  env,
-  quality: {
-    get: () => QUALITY_NAMES[qualityIdx],
-    cycle() {
-      qualityIdx = (qualityIdx + 1) % QUALITY_NAMES.length;
-      saveQualityIdx(qualityIdx);
-      syncQuality();
-      return QUALITY_NAMES[qualityIdx];
-    },
-  },
-  onBackToSelect() {
-    HUD.showLoading('博麗神社 讀取中');
-    location.href = '../../index.html';
-  },
-});
-
-/* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
-  current: 'sunflower',
-  isBlocked: () => dialogue.active || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -182, maxX: 182, minZ: -182, maxZ: 182 },
-  paths: PATHS,
-  portals: [
-    { x: WEST_END.x, z: WEST_END.z, label: '無名之丘', color: '#d8e8a0' },
-    { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#9fd8a0' },
-  ],
-  getPos: () => ctrl.pos,
-  getYaw: () => ctrl.yaw,
-});
-
 const nearWest = () => Math.hypot(ctrl.pos.x - WEST_END.x, ctrl.pos.z - WEST_END.z) < 5.2;
 const nearNorth = () => Math.hypot(ctrl.pos.x - NORTH_END.x, ctrl.pos.z - NORTH_END.z) < 5.2;
 
 window.addEventListener('keydown', (e) => {
-  if (e.code !== 'KeyE' || escMenu.isOpen) return;
+  if (e.code !== 'KeyE' || core.escMenu.isOpen) return;
   if (dialogue.active) { dialogue.advance(); return; }
   if (!ctrl.locked) return;
 
@@ -684,21 +602,17 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
-const clock = new THREE.Clock();
-let t = 0;
 const _sunDir = new THREE.Vector3();
 
-function tick(rawDt) {
-  let dt = rawDt;
-  if (kit.combat?.hitstop > 0) dt *= 0.12;
-  t += dt;
-  ctrl.update(dt, t);
-  kit.update(dt, rawDt);
+// kit 結算之後、env 之前：怪物 AI、NPC、對話（原樣板的順序）
+core.onUpdate((dt, rawDt, t) => {
   fairies.update(dt, t, ctrl.pos);
   npcMgr.update(t, ctrl.pos, camera);
   dialogue.update(dt);
-  env.update(dt, camera.position);
+});
 
+// env 之後：追日要讀 env.update 完的太陽方位；傳送點呼吸與提示照舊
+core.onLateUpdate((dt, rawDt, t) => {
   // 追日：花盤轉向太陽。太陽在地平線下時停在最後一個方位（夜裡花是低垂的）
   _sunDir.copy(env.sun.position).normalize();
   if (_sunDir.y > 0.02) {
@@ -707,7 +621,6 @@ function tick(rawDt) {
 
   westPortal.userData.update(t);
   northPortal.userData.update(t);
-  minimap.update();
 
   if (dialogue.active) { HUD.prompt(null); return; }
   const npc = npcMgr.nearest;
@@ -716,36 +629,12 @@ function tick(rawDt) {
   } else if (nearWest()) HUD.prompt('[ E ]  返回無名之丘');
   else if (nearNorth()) HUD.prompt('[ E ]  往獸道');
   else HUD.prompt(null);
-}
-
-function animate() {
-  tick(Math.min(clock.getDelta(), 0.05));
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+core.start();
 
 // debug handle（跟其他地圖同一套測試口徑）
-window.__sunflower = {
-  renderer, scene, camera, ctrl, THREE, heightAt, env, colliders, prog, fairies, npcMgr, dialogue,
-  get vitals() { return kit.vitals; }, get skills() { return kit.skills; },
-  get combat() { return kit.combat; }, get panel() { return kit.panel; },
-  get kit() { return kit; },
-  tp(x, z, yaw = 0) { ctrl.teleport(x, z); ctrl.yaw = yaw; },
-  step(n = 1, dt = 0.016) {
-    for (let i = 0; i < n; i++) tick(dt);
-    return ctrl.pos.toArray().map(v => +v.toFixed(2));
-  },
-  frame() { renderer.render(scene, camera); },
-  setHour(h) { return env.setHour(h); },
-  setTimeFlowing(v) { env.timeFlowing = v; },
+window.__sunflower = core.debugHandle({
+  heightAt, fairies, npcMgr, dialogue,
   PATHS, PATCHES, WEST_END, NORTH_END, YUUKA, sunflowers: SUN.count,
-};
+});
