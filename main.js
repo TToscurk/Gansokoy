@@ -19,6 +19,7 @@ import { Progression } from './src/player/progression.js';
 import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 import { scatterGrass } from './src/world/flora.js';
 import { bootMap } from './src/core/GameCore.js';
+import { mapsFromTexture } from './src/world/texgen.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
 // HUD、renderer、scene/camera、Environment、完整後製鏈、畫質、world 群組
@@ -63,7 +64,10 @@ const { block, box, cyl } = core;
 function makeTexture(size, draw, repeatX = 1, repeatY = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  // willReadFrequently：noise() 與 texgen 都要 getImageData 把畫好的內容讀回來。
+  // 這個旗標只在**第一次** getContext 時生效，之後再傳一次會被忽略 ——
+  // 所以一定要在這裡給，不能等到讀的那一端才補。
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -265,16 +269,51 @@ scene.environmentIntensity = 0.55;
 /** 鋪在地面上的薄層（參道、土徑）共用的材質設定 —— 見 path/path2/path3 */
 const DECAL = { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 };
 
+/* ── 法線／粗糙度貼圖（材質與畫質升級書・第 1 章）──────────────
+ * 從既有的 canvas 貼圖自動長出 normalMap + roughnessMap。不加三角形、
+ * 不下載檔案，木頭立刻有木紋起伏、石牆有磚縫深度。
+ *
+ * 升級書 §5 規定這一項先只在神社做、截圖 A/B 決定強度再推其他圖 ——
+ * 所以 `?nstr=` 這個查詢參數可以現場換強度（0.5 / 1.0 / 1.5 那組對照）：
+ *   index.html?nstr=1.5
+ * 定案之後把預設值改掉、參數留著當之後調校的口子即可。
+ *
+ * roughRange 各自以原本的 roughness 純量為中心往兩邊開 —— 有了
+ * roughnessMap 之後純量要設 1，否則兩者相乘會把整體壓暗一階。
+ */
+const NORMAL_STRENGTH = (() => {
+  const v = parseFloat(new URLSearchParams(location.search).get('nstr'));
+  return Number.isFinite(v) && v >= 0 ? v : 1.0;
+})();
+let _texgenCount = 0;
+const texMaps = (tex, roughRange, o = {}) => {
+  _texgenCount += 2;
+  return mapsFromTexture(tex, { normalStrength: NORMAL_STRENGTH, roughRange, ...o });
+};
+
 const MAT = {};
 function mats() {
-  MAT.wood = new THREE.MeshStandardMaterial({ map: TEX.wood(1, 2), roughness: 0.85, color: '#c9b49c' });
-  MAT.darkWood = new THREE.MeshStandardMaterial({ map: TEX.wood(1, 2), roughness: 0.9, color: '#7a6146' });
-  MAT.plank = new THREE.MeshStandardMaterial({ map: TEX.wood(4, 1), roughness: 0.82, color: '#e0c6a4' });
-  MAT.red = new THREE.MeshStandardMaterial({ map: TEX.lacquer(1, 3), roughness: 0.48, color: '#ff6a55' });
-  MAT.redFlat = new THREE.MeshStandardMaterial({ map: TEX.lacquer(1, 1), roughness: 0.5, color: '#ff6a55' });
-  MAT.stone = new THREE.MeshStandardMaterial({ map: TEX.stone(1, 1), roughness: 0.95, color: '#cfcabc' });
-  MAT.stoneBig = new THREE.MeshStandardMaterial({ map: TEX.masonry(12, 1), roughness: 0.95, color: '#c6c3b8' });
-  MAT.roof = new THREE.MeshStandardMaterial({ map: TEX.roof(6, 3), roughness: 0.72, color: '#dfe9e4', side: THREE.DoubleSide });
+  // 木：紋理是凹進去的纖維，暗處較粗（invert 預設值）
+  MAT.wood = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.wood(1, 2), [0.72, 0.95]), roughness: 1, color: '#c9b49c' });
+  MAT.darkWood = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.wood(1, 2), [0.78, 0.98]), roughness: 1, color: '#7a6146' });
+  MAT.plank = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.wood(4, 1), [0.68, 0.94]), roughness: 1, color: '#e0c6a4' });
+  // 漆：亮的地方是刷痕高光、暗的地方是漆層厚處 —— 這一種不反轉
+  MAT.red = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.lacquer(1, 3), [0.36, 0.60], { roughInvert: false }),
+    roughness: 1, color: '#ff6a55' });
+  MAT.redFlat = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.lacquer(1, 1), [0.38, 0.62], { roughInvert: false }),
+    roughness: 1, color: '#ff6a55' });
+  MAT.stone = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.stone(1, 1), [0.86, 1.0]), roughness: 1, color: '#cfcabc' });
+  MAT.stoneBig = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.masonry(12, 1), [0.84, 1.0]), roughness: 1, color: '#c6c3b8' });
+  MAT.roof = new THREE.MeshStandardMaterial({
+    ...texMaps(TEX.roof(6, 3), [0.58, 0.88]), roughness: 1, color: '#dfe9e4',
+    side: THREE.DoubleSide });
   MAT.shoji = new THREE.MeshStandardMaterial({ map: TEX.shoji(), roughness: 0.9, color: '#fff6e0' });
   MAT.white = new THREE.MeshStandardMaterial({ color: '#f4efe4', roughness: 0.75, side: THREE.DoubleSide });
   MAT.shide = new THREE.MeshStandardMaterial({
@@ -1656,6 +1695,14 @@ camera.position.set(0, 1.62, 46);
 // resize handler、收掉 #loading、後製鏈 + 名牌 overlay 的每幀渲染，
 // 全部由 core.start() / core.renderFrame() 提供（跟遷移前逐字相同）。
 core.start();
+
+// 升級書要求盯著貼圖總量：一張色彩貼圖現在多帶兩張同尺寸的資料貼圖。
+// renderer.info.memory.textures 算的是**已上傳到 GPU** 的張數，所以要等
+// 畫過幾幀才有意義（在 mats() 當下讀一律是 0）。
+setTimeout(() => {
+  console.info(`[texgen] 法線強度 ${NORMAL_STRENGTH}；自動生成 ${_texgenCount} 張資料貼圖；`
+    + `GPU 上的貼圖總數 ${renderer.info.memory.textures}`);
+}, 1200);
 
 // debug handle。tp / step / frame 神社的語意跟 GameCore 預設不同，
 // 放在 extra 裡覆寫掉（extra 展開在最後）。原本沒有的鍵用 omit 拿掉。

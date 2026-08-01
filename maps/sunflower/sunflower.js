@@ -191,24 +191,63 @@ const SUN = (() => {
   const cells = new Map();
   const key = (x, z) => `${Math.floor(x / CELL)},${Math.floor(z / CELL)}`;
 
-  let n = 0;
-  for (let i = 0; i < 62000; i++) {
-    const x = rr(-HALF + 6, HALF - 6), z = rr(-HALF + 6, HALF - 6);
-    if (pathDist(x, z) < 3.2) continue;                 // 田埂上不種
-    if (Math.hypot(x - YUUKA.x, z - YUUKA.z) < 9) continue;   // 幽香站的空地
-    // 田埂邊種得密一點：玩家一定走田埂，看到的就是路兩側那幾公尺。
-    // 均勻撒的話走在路上會覺得「花田好稀疏」，但總數其實不少。
-    if (pathDist(x, z) > 22 && rand() < 0.28) continue;
+  // --- 鏡頭讓道（照搬迷途竹林已驗證的 block-clump 做法）---
+  // 相機吊在玩家後方 5.2 公尺、離地約 2.3 公尺。實測（把玩家放在田埂
+  // 中線、camYaw 轉一圈量最遠的那個方位）相機最遠只跑到**路緣外 2.6
+  // 公尺**；但玩家會走到埂緣、也會直接踏進田裡，那時相機就整個沒入花中 ——
+  // 株高 1.9~2.9 公尺、花盤再加半公尺，正好蓋住相機的高度帶。
+  //
+  // 竹林的解法有兩半，這裡兩半都照抄：
+  //   ① 近路疏、遠路密（`density = min(1,(pd-2.6)/14)`）—— 相機穿過的
+  //      是稀疏帶，穿得過去；
+  //   ② 只有「叢」才擋人 —— 三五株長一起才給碰撞盒，玩家往田中央走會
+  //      被一叢一叢推回田埂。每一株都給碰撞盒的話會像卡在竹籤堆裡。
+  //
+  // 花田唯一調整的是**斜坡長度**：竹林攤 14 公尺，花田只攤 8 公尺就滿。
+  // 「一整片密不透風的黃」是這張圖的第一印象，斜坡拉太長會把它稀釋掉。
+  //
+  // （試過另一條路：近路種矮株讓相機從花梢掠過。結果更糟 —— 花盤從
+  //   「相機上方」掉到「相機下方」，變成畫面下緣兩坨巨大的黃盤子。
+  //   花盤太大，高矮這條路走不通，疏密才是對的。）
+  const LANE_IN = 3.2;         // 田埂上不種（原值，比竹林的 2.6 已經更寬）
+  const RAMP = 8.0;            // 疏→密的斜坡長度（竹林是 14）
+  const CLUMP_MIN = 9.0;       // 比斜坡再外面才有花叢（竹林用 pd > 7）
+
+  let n = 0, clumps = 0;
+  const plant = (x, z) => ({
+    x, z,
+    h: rr(1.9, 2.9),
+    scale: rr(0.95, 1.4),
+    lean: rr(-0.09, 0.09),
+    leanYaw: rand() * 6.28,
+  });
+  const put = (x, z) => {
     const k = key(x, z);
     if (!cells.has(k)) cells.set(k, []);
-    cells.get(k).push({
-      x, z,
-      h: rr(1.9, 2.9),
-      scale: rr(0.95, 1.4),
-      lean: rr(-0.09, 0.09),
-      leanYaw: rand() * 6.28,
-    });
+    cells.get(k).push(plant(x, z));
     n++;
+  };
+
+  for (let i = 0; i < 62000; i++) {
+    const x = rr(-HALF + 6, HALF - 6), z = rr(-HALF + 6, HALF - 6);
+    const pd = pathDist(x, z);
+    if (pd < LANE_IN) continue;                               // 田埂上不種
+    if (Math.hypot(x - YUUKA.x, z - YUUKA.z) < 9) continue;   // 幽香站的空地
+    // 田裡（離埂 22 公尺外）本來就疏一點，維持原值
+    if (pd > 22 && rand() < 0.28) continue;
+    // ① 疏密斜坡：路緣是空的，往外八公尺長回滿密度
+    if (rand() > Math.min(1, (pd - LANE_IN) / RAMP)) continue;
+    put(x, z);
+
+    // ② 叢生擋人處：只有叢才有碰撞盒，而且只長在斜坡之外
+    if (pd > CLUMP_MIN && rand() < 0.006) {
+      clumps++;
+      post(x, z, 0.95, heightAt(x, z) + 2.6);
+      for (let k = 0; k < 3 + (rand() * 3 | 0); k++) {
+        const ba = rand() * 6.28, bd = rr(0.3, 0.9);
+        put(x + Math.cos(ba) * bd, z + Math.sin(ba) * bd);
+      }
+    }
   }
 
   // --- 幾何 ---
@@ -283,7 +322,7 @@ const SUN = (() => {
     world.add(stalks, leaves, heads);
     groups.push({ heads, base });
   }
-  console.info(`[sunflower] 向日葵 ${n} 株（${meshes} 個 InstancedMesh，${cells.size} 個格子）`);
+  console.info(`[sunflower] 向日葵 ${n} 株（${meshes} 個 InstancedMesh，${cells.size} 個格子），花叢擋人處 ${clumps}`);
 
   /** 依太陽方位轉頭。yaw = 太陽的水平方位；pitch = 抬頭角。 */
   let lastYaw = 999;
@@ -303,7 +342,7 @@ const SUN = (() => {
       g.heads.instanceMatrix.needsUpdate = true;
     }
   }
-  return { sunTurn, count: n };
+  return { sunTurn, count: n, clumps };
 })();
 
 /** 幾片幾何合一個（避免每個地圖都 import BufferGeometryUtils 的樣板） */
@@ -640,5 +679,6 @@ core.start();
 // debug handle（跟其他地圖同一套測試口徑）
 window.__sunflower = core.debugHandle({
   heightAt, fairies, npcMgr, dialogue,
-  PATHS, PATCHES, WEST_END, NORTH_END, YUUKA, sunflowers: SUN.count,
+  PATHS, PATCHES, WEST_END, NORTH_END, YUUKA,
+  sunflowers: SUN.count, flowerClumps: SUN.clumps,
 });
