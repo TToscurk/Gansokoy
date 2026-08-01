@@ -21,8 +21,9 @@
 //
 // 遷移守則（整合書 §5）：這是重構不是加功能 —— 每張圖遷移後的
 // 成功標準是「行為完全不變」。更新順序刻意保留原樣板的每一步：
-//   ctrl.update → kit.update → onUpdate → env.update → onLateUpdate
-//   → minimap.update → render
+//   onPreTick → [tickWhen 閘門：ctrl.update → kit.update → onUpdate
+//   → env.update → onLateUpdate] → onPreMinimap → minimap.update
+//   → onPostUpdate → render
 // onUpdate / onLateUpdate 拆成兩個掛勾不是過度設計 —— 花田的向日葵
 // 追日要讀 env.update 之後的太陽方位，怪物 AI 卻要在 kit 結算之後、
 // env 之前跑，一個掛勾包不住原本的順序。
@@ -233,7 +234,7 @@ export function bootMap({
     spec: null, model: null, ctrl: null, prog: null, kit: null,
     escMenu: null, worldMap: null, minimap: null,
     hazards: null,
-    _updates: [], _lateUpdates: [], _postUpdates: [], _preTicks: [],
+    _updates: [], _lateUpdates: [], _postUpdates: [], _preTicks: [], _preMinimap: [],
     heightAt: null,
     _t: 0,
     _clock: new THREE.Clock(),
@@ -301,6 +302,10 @@ export function bootMap({
       get idx() { return qualityIdx; },
       get name() { return QUALITY_NAMES[qualityIdx]; },
       names: QUALITY_NAMES,
+      /** 三檔的實際映射（dpr / 陰影貼圖 / 各 pass 開關）。神社的 debug
+       *  handle 原本就把整張表掛在 __shrine.QUALITY 上，遷移後不該只剩
+       *  name —— 唯讀，地圖端請自己 spread 一份出去。 */
+      tiers: FULL_QUALITY,
       set(i) {
         qualityIdx = Math.max(0, Math.min(QUALITY_NAMES.length - 1, i));
         saveQualityIdx(qualityIdx);
@@ -475,6 +480,11 @@ export function bootMap({
      *  塞進 onUpdate 會變成 ctrl.update 之後，晚了一格。
      *  簽名 (dt, rawDt, t)：dt 已套過 hitstop、t 已推進，與原本逐字相同。 */
     onPreTick(fn) { core._preTicks.push(fn); },
+    /** 閘門**之外**、minimap.update() 之前的掛勾。神社的傳送點呼吸動畫住這裡：
+     *  它原本在 animate 裡、在 update()（＝tickWhen 的閘門）外面，而且排在
+     *  minimap 之前 —— onLateUpdate 會被閘門擋掉，onPostUpdate 又跑在 minimap
+     *  之後，兩個都不對，所以補這一格。 */
+    onPreMinimap(fn) { core._preMinimap.push(fn); },
     /** minimap.update() **之後**的掛勾（G1）。神社的陰陽玉/鈴緒/光塵三段
      *  動畫原本就排在小地圖之後 —— 實務影響大概是零（minimap 只讀
      *  ctrl.pos/yaw），但「相對位置」就是行為，給地圖一個逐字保序的選項。 */
@@ -500,6 +510,7 @@ export function bootMap({
         env.update(dt, camera.position);
         for (const fn of core._lateUpdates) fn(dt, rawDt, t);
       }
+      for (const fn of core._preMinimap) fn(dt, rawDt, t);
       core.minimap?.update();
       for (const fn of core._postUpdates) fn(dt, rawDt, t);
     },

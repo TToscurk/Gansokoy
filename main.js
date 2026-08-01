@@ -3,53 +3,60 @@
  * Fan-made, unofficial. Built with three.js, no external assets.
  */
 import * as THREE from 'three';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { SMAAPass } from 'three/addons/postprocessing/SMAAPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { spawnAllNPCs } from './src/entities/shrine-spawn.js';
-import { setGroundHeightFn } from './src/world/terrain.js';
-import { WORLD } from './src/config.js';
 import { ZoneTracker } from './src/world/zones.js';
 import { clockLabel, isNightAt } from './src/world/daycycle.js';
 import { WEATHERS } from './src/world/weather.js';
-import { Environment } from './src/world/environment.js';
 import { makePortalGlow } from './src/world/portal.js';
-import { buildCharacter } from './src/entities/model.js';
 import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from './src/entities/roster.js';
 import { TALK_RANGE as TALK_REACH } from './src/entities/npc.js';
-import { PlayerController } from './src/player/controller.js';
 import { Dialogue } from './src/ui/dialogue.js';
 import { QuestManager } from './src/quests/manager.js';
 import { QuestLog } from './src/ui/questlog.js';
 import { SceneEditor } from './src/ui/scene-editor.js';
-import { installHUD, bindEscMenu } from './src/ui/hud.js';
 import { makeSignpost } from './src/world/signpost.js';
-import { installWorldMap } from './src/ui/worldmap.js';
-import { installMinimap } from './src/ui/minimap.js';
-import { installLoadout } from './src/player/loadout.js';
 import { Progression } from './src/player/progression.js';
-import { loadQualityIdx, saveQualityIdx } from './src/world/quality.js';
 import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 import { scatterGrass } from './src/world/flora.js';
+import { bootMap } from './src/core/GameCore.js';
 
-/* ─────────────────────────────────────────────────────────────── HUD ── */
-// 全地圖共用的 HUD（準心、地名、提示、操作列、戰鬥 HUD、ESC 選單、讀取畫面）。
-// 要在任何 getElementById 之前裝好。
-const HUD = installHUD({
-  title: '博麗神社',
-  subtitle: 'HAKUREI SHRINE',
-  keys: [
-    ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
-    ['Shift', '衝刺'], ['Space', '跳躍'],
-    ['E', '互動'], ['J', '任務'], ['K', '技能'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
-  ],
-  flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
-  combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+/* ───────────────────────────────────────────── GameCore 開機 ── */
+// HUD、renderer、scene/camera、Environment、完整後製鏈、畫質、world 群組
+// 與 colliders 全部由共用執行層提供（src/core/GameCore.js，整合書・階段 D）。
+// 這個檔案只留博麗神社獨有的東西 —— 行為與遷移前逐字相同：選角畫面與
+// 中途換角、沒有玩家時整個 tick 凍結、canvas 重同步與 FPS 自動降檔、
+// PMREM 天空 IBL、以及 bindHotkeys → ESC 選單的註冊次序。
+const core = bootMap({
+  hud: {
+    title: '博麗神社',
+    subtitle: 'HAKUREI SHRINE',
+    keys: [
+      ['WASD / 方向鍵', '移動'], ['滑鼠', '轉視角'], ['滾輪', '縮放'],
+      ['Shift', '衝刺'], ['Space', '跳躍'],
+      ['E', '互動'], ['J', '任務'], ['K', '技能'], ['M', '地圖'], ['P', '場景編輯'], ['ESC', '選單'],
+    ],
+    flyKeys: [['F', '飛行'], ['Ctrl/C', '下降']],
+    combatKeys: [['左鍵', '出招'], ['長按左鍵', '日之呼吸・全型'], ['R', '拔刀/納刀']],
+  },
+  // near 拉到 0.2：深度緩衝精度幾乎全由 near/far 比值決定。第三人稱相機
+  // 離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），不會被切到。
+  camera: { fov: 72, near: 0.2, far: 800 },
+  exposure: 1.05,
+  env: { shadowArea: 78, sunPivot: new THREE.Vector3(0, 2, -2) },
+  // 走 composer 時 MSAA 對主畫面無效，只有直接畫上 canvas 的名牌吃得到
+  renderer: { antialias: false, powerPreference: 'high-performance' },
+  // 完整後製鏈：Render → GTAO → Bloom → OutputPass → 分級 → SMAA。
+  // 參數（含三檔 dpr/shadow）就是從這個檔案搬進 GameCore 的那一份。
+  postFX: 'full',
+  // 選角之前 ctrl 是 null —— 原本 update() 第一行就 return，連 env.update
+  // 都不跑（時刻在標題畫面上是凍結的，否則會偷偷寫進 localStorage 流掉）。
+  // minimap 與 onPostUpdate 不受閘門影響，跟原本 animate 的結構一致。
+  tickWhen: () => !!core.ctrl,
 });
+const { HUD, renderer, scene, camera, env, world } = core;
+// block / box / cyl 與原本這個檔案裡的三個同名函式逐字相同（碰撞盒格式
+// 就是原本 ctrlColliders 轉換後的格式；本檔所有 cyl 呼叫都顯式帶 seg）。
+const { block, box, cyl } = core;
 
 /* ────────────────────────────────────────────────────────────── textures ── */
 /** Draw into a canvas and return a repeating CanvasTexture. */
@@ -223,29 +230,11 @@ const TEX = {
   }),
 };
 
-/* ─────────────────────────────────────────────────────── scene & renderer ── */
-const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-renderer.setSize(innerWidth, innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
-document.body.appendChild(renderer.domElement);
-
-const scene = new THREE.Scene();
-// near 拉到 0.2：深度緩衝精度幾乎全由 near/far 比值決定。第三人稱相機
-// 離視點最近也有 1.2 公尺（見 controller 的 _updateCamera），不會被切到。
-const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.2, 800);
-
-/* 晝夜 + 天氣：共用的環境系統（src/world/environment.js）。
- * 神社自己的追加調色（燈籠、星空、bloom、IBL 重烘）之後在
- * applyTime 的 onApply/onEnvBake 回呼裡接上（見下方 env.opts 設定）。 */
-const env = new Environment(scene, renderer, {
-  shadowArea: 78,
-  sunPivot: new THREE.Vector3(0, 2, -2),
-});
-const sky = env.sky, sun = env.sun, hemi = env.hemi;
+/* 晝夜 + 天氣：共用的環境系統（src/world/environment.js），由 bootMap 建好。
+ * 神社自己的追加調色（燈籠、星空、IBL 重烘）之後接在 core.onEnvApply /
+ * onEnvBake / onEnvLabel 上（見下方）。bloom 強度與飽和跟時刻走的那兩行
+ * 已經是 GameCore 後製鏈內建的第一個 onEnvApply，這裡不再重複一份。 */
+const sky = env.sky;
 
 /* ───────────────────────────────────── image-based lighting from the sky ──
  * The closest stand-in for a Lumen-style sky light: prefilter the sky dome
@@ -265,20 +254,13 @@ function updateEnvironment() {
 scene.environmentIntensity = 0.55;
 
 /* ────────────────────────────────────────────────────────────── helpers ── */
-const world = new THREE.Group();
-scene.add(world);
-
-/** Axis-aligned blockers the player can't walk through.
+/* world / colliders / block / box / cyl 由 GameCore 提供（見檔頭的解構）。
  *
  * 場上的實體物件（樹、鳥居柱、燈籠、狛犬、欄杆、岩石、建物牆柱……）
  * 都要有碰撞，走過去會被實實在在擋住。之前碰到會「被推移」是控制器的
  * 問題（推開位置卻沒清掉往牆裡的速度，於是每幀擠進去又被彈出來），
  * 已在 PlayerController._killInward 修好 —— 所以這裡可以放心設實心。
  * 碰撞盒請貼合實際模型尺寸，不要外擴成看不見的空氣牆。 */
-const colliders = [];
-function block(x, z, sx, sz, top, bottom = -99) {
-  colliders.push({ minX: x - sx / 2, maxX: x + sx / 2, minZ: z - sz / 2, maxZ: z + sz / 2, top, bottom });
-}
 
 /** 鋪在地面上的薄層（參道、土徑）共用的材質設定 —— 見 path/path2/path3 */
 const DECAL = { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 };
@@ -312,21 +294,6 @@ function mats() {
   MAT.leafGold = new THREE.MeshStandardMaterial({ color: '#b7772a', roughness: 1, flatShading: true });
 }
 mats();
-
-function box(w, h, d, mat, x, y, z, parent = world) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
-function cyl(rt, rb, h, mat, x, y, z, seg = 14, parent = world) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
-  m.position.set(x, y, z);
-  m.castShadow = m.receiveShadow = true;
-  parent.add(m);
-  return m;
-}
 
 /* ───────────────────────────────────────────────────────────── terrain ── */
 /* Two levels: forecourt at y=0, shrine plateau at y=PLATEAU, joined by stairs. */
@@ -1197,23 +1164,23 @@ console.info(`[optimize] 神社靜態合併：${mergeStats.before} → ${mergeSt
   + `（合併成 ${mergeStats.merged}，保留 ${mergeStats.kept}）`);
 
 /* ───────────────────────────────────────────────────────── NPC 系統 ── */
-// 把 shrine 的高度場接上 NPC 模組，這樣角色才會站在地面上
-setGroundHeightFn(heightAt);
-// 這張圖沒有水域：水面高度壓到夠低，否則 controller 會把腳下的地板
-// 鉗在舊開放世界的湖面（0）—— 山腳低地（-14）會變成踩在空氣上。
-WORLD.waterLevel = -999;
+// 把 shrine 的高度場接上 NPC 模組，這樣角色才會站在地面上。
+// waterLevel 省略 ＝ -999：這張圖沒有水域，水面高度壓到夠低，否則
+// controller 會把腳下的地板鉗在舊開放世界的湖面（0）—— 山腳低地（-14）
+// 會變成踩在空氣上。
+core.setTerrain(heightAt);
 
 /* NPC 名牌住在這個 overlay 場景，在後製鏈之後才畫 —— 見 NPCManager 的註解 */
-const labelScene = new THREE.Scene();
+const labelScene = core.labelScene;
 const npcSystem = spawnAllNPCs(scene, heightAt, labelScene);
 
 /* 角色場景編輯器：拖曳把未上場的角色放進場景，或搬移／收回已上場的角色。
- * getPlayerId/getCtrl 用 getter 是因為 chosenSpec/ctrl 是下面才宣告、
- * 換角色時會重新賦值的頂層變數 —— 用 closure 讀取才不會抓到舊值。 */
+ * getPlayerId/getCtrl 用 getter 是因為 core.spec / core.ctrl 換角色時
+ * 會重新賦值 —— 用 closure 讀取才不會抓到舊值。 */
 const sceneEditor = new SceneEditor({
   scene, camera, renderer, world, heightAt, npcSystem,
-  getPlayerId: () => chosenSpec.id,
-  getCtrl: () => ctrl,
+  getPlayerId: () => core.spec.id,
+  getCtrl: () => core.ctrl,
 });
 
 /* ───────────────────────────────────────── 戰鬥（繼國緣一限定） ── */
@@ -1227,7 +1194,10 @@ const sceneEditor = new SceneEditor({
 let kit = null;
 // 角色/技能等級（localStorage，跟獸道共用同一份資料）。神社境內沒有怪，
 // 這裡只負責顯示徽章；打怪練級去獸道。
+// ※ 不用 core.createProgression()：那份的 onLevelUp 是 HUD.toast（2400ms）
+//   外加通知技能系統，跟神社原本的 toast 包裝（2200ms、不通知）不一樣。
 const progression = new Progression({ onLevelUp: (msg) => toast(msg) });
+core.prog = progression;
 
 /* ─────────────────────────────────────────────── 對話框與任務引擎 ── */
 const dialogue = new Dialogue();
@@ -1243,122 +1213,39 @@ zones.onEnter = (id, zone) => {
   toast(`── ${zone.zh} ──`, 1800);
 };
 
-/* ─────────────────────────────────────────── post-processing stack ──
- * Render → ambient occlusion → bloom → tone map → grade → anti-alias.
- * AO is what actually sells the "modern engine" look: it puts contact
- * darkening in every corner the shadow map is too coarse to catch. */
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
-const gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
-gtao.output = GTAOPass.OUTPUT.Default;
-gtao.updateGtaoMaterial({
-  radius: 1.6, distanceExponent: 1.2, thickness: 1.5, scale: 1.2,
-  samples: 16, distanceFallOff: 1, screenSpaceRadius: false,
-});
-gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 4, rings: 2, samples: 16 });
-composer.addPass(gtao);
-
-// high threshold: only lanterns, candles and the mirror should glow — not the sky
-const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.34, 0.45, 1.15);
-composer.addPass(bloom);
-
-composer.addPass(new OutputPass());
-
-/** Filmic grade: a touch of contrast, saturation and a vignette. */
-const gradePass = new ShaderPass({
-  uniforms: {
-    tDiffuse: { value: null },
-    contrast: { value: 1.11 },
-    saturation: { value: 1.12 },
-    vignette: { value: 0.45 },
-    tint: { value: new THREE.Color('#2a1c3a') },
-  },
-  vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
-  fragmentShader: `
-    uniform sampler2D tDiffuse; uniform float contrast, saturation, vignette;
-    uniform vec3 tint; varying vec2 vUv;
-    void main(){
-      vec4 src = texture2D(tDiffuse, vUv);
-      vec3 c = src.rgb;
-      c = (c - 0.5) * contrast + 0.5;
-      float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
-      c = mix(vec3(l), c, saturation);
-      c = mix(c, tint, (1.0 - l) * 0.09);                 // cool, lifted shadows
-      float v = smoothstep(0.95, 0.28, length(vUv - 0.5));
-      c *= mix(1.0, v, vignette);
-      gl_FragColor = vec4(clamp(c, 0.0, 1.0), src.a);
-    }`,
-});
-composer.addPass(gradePass);
-
-const smaa = new SMAAPass();
-composer.addPass(smaa);
-
-/* Quality tiers — everything above is toggleable, because AO + bloom + SMAA
- * at native resolution is a lot to ask of an integrated GPU. */
-const QUALITY = [
-  { name: '低', dpr: 1.0, shadow: 1024, gtao: false, bloom: false, smaa: false, grade: false },
-  { name: '中', dpr: 1.25, shadow: 2048, gtao: false, bloom: true, smaa: true, grade: true },
-  { name: '高', dpr: 1.5, shadow: 4096, gtao: true, bloom: true, smaa: true, grade: true },
-];
-let qualityIdx = loadQualityIdx(2);   // 跨地圖共用的畫質檔（localStorage）
-function applyQuality(i) {
-  qualityIdx = i;
-  saveQualityIdx(i);
-  const q = QUALITY[i];
-  renderer.setPixelRatio(Math.min(devicePixelRatio, q.dpr));
-  renderer.setSize(innerWidth, innerHeight);
-  composer.setSize(innerWidth, innerHeight);
-  gtao.enabled = q.gtao;
-  bloom.enabled = q.bloom;
-  smaa.enabled = q.smaa;
-  gradePass.enabled = q.grade;
-  if (sun.shadow.mapSize.x !== q.shadow) {
-    sun.shadow.mapSize.set(q.shadow, q.shadow);
-    sun.shadow.map?.dispose();
-    sun.shadow.map = null;
-    sun.shadow.needsUpdate = true;
-  }
-  const el = document.getElementById('qualLabel');
-  if (el) el.textContent = `畫質：${q.name}`;
-}
+/* ────────────────────────────────────────── 畫質（GameCore 的三檔） ── */
+// 後製鏈與三檔映射（dpr / 陰影貼圖 / GTAO / Bloom / SMAA / 分級）都在
+// GameCore 的 postFX:'full' 裡，就是從這個檔案搬過去的那一份。
+// 這裡只留 debug handle 對外的兩個名字（口徑跟遷移前一樣）——
+// 每一檔的內容也要跟遷移前一樣（{name, dpr, shadow, gtao, bloom, smaa,
+// grade}），否則 __shrine.QUALITY[i].dpr 這種既有探針會讀到 undefined。
+const QUALITY = core.quality.names.map((name, i) => ({ name, ...core.quality.tiers[i] }));
+const applyQuality = (i) => { core.quality.set(i); };
 
 /* ────────────────────────────────────────── 連續晝夜循環 + 天氣 ── */
 // 通用的部份（天空、太陽、霧、時刻、天氣偏移）都在 Environment 裡；
-// 這裡只接上神社「自己的」追加調色：後製、燈籠、星空、IBL 重烘。
+// 這裡只接上神社「自己的」追加調色：燈籠、光塵、星空、IBL 重烘。
+// bloom 強度與飽和那兩行是 GameCore 後製鏈內建的第一個 onEnvApply，
+// 排在這一份之前 —— 相對順序跟遷移前逐字相同。
 const weather = env.weather;
 const todLabel = document.getElementById('todLabel');
 
-env.opts.onApply = (t, wx) => {
-  bloom.strength = t.bloom;
-  gradePass.uniforms.saturation.value = t.sat * wx.satMul;
+core.onEnvApply((t) => {
   lanternLights.forEach((l) => (l.intensity = t.lantern * 5));
   lanternGlows.forEach((m) => (m.material.opacity = t.lantern > 0.05 ? 0.95 : 0.35));
   motes.material.opacity = (0.35 + t.stars * 0.5) * 0.8;
   stars.material.opacity = t.stars * 0.9;
-};
-env.opts.onEnvBake = () => updateEnvironment();
-env.opts.onLabel = (text) => { if (todLabel) todLabel.textContent = text; };
+});
+core.onEnvBake(() => updateEnvironment());
+// #todLabel 維持神社自己這一份（不傳 bootMap 的 clock:true，否則會有兩份）
+core.onEnvLabel((text) => { if (todLabel) todLabel.textContent = text; });
 
-function applyTime(h = env.hour, forceEnvBake = false) {
-  env.applyTime(h, forceEnvBake);
-}
-
-applyQuality(qualityIdx);
-applyTime(env.hour, true);
+// 開機套一次天色。**一定要排在三個 onEnv* 註冊之後** —— Environment 的
+// 建構子不呼叫 applyTime，onEnvBake 又只在 force 時觸發，少了這一行
+// scene.environment 永遠是 null，第 0 幀的燈籠/星空不透明度也不對。
+core.applyEnvNow(true);
 
 /* ───────────────────────────────────────────────────────── controls ── */
-// --- 把 shrine 的 AABB 碰撞盒轉成 PlayerController 認識的格式 ---
-const ctrlColliders = colliders.map(c => ({
-  x: (c.minX + c.maxX) / 2,
-  z: (c.minZ + c.maxZ) / 2,
-  y: c.bottom ?? -99,
-  h: (c.top ?? 99) - (c.bottom ?? -99),
-  hw: (c.maxX - c.minX) / 2,
-  hd: (c.maxZ - c.minZ) / 2,
-}));
-
 const veil = document.getElementById('veil');
 const promptEl = document.getElementById('prompt');
 const toastEl = document.getElementById('toast');
@@ -1369,7 +1256,10 @@ let yen = 0;
 // 只有一位可操作時不畫選角卡片，標題畫面直接點一下就開始，介面乾淨。
 const charCards = document.getElementById('charCards');
 const PLAYER_SPECS = ACTIVE_PLAYABLE;
-let chosenSpec = DEFAULT_PLAYER;
+// 「目前選中的角色」住 core.spec（原本是這個檔案的 chosenSpec）——
+// core.createPlayer 換角時也寫這裡，kit 的 getSpec 讀的是同一個值。
+// 選角之前就要先有值：kit 是在點掉 veil 之前就裝好的。
+core.spec = DEFAULT_PLAYER;
 
 const hex = (n) => '#' + n.toString(16).padStart(6, '0');
 
@@ -1397,7 +1287,7 @@ function buildCharCard(spec) {
      <div class="cbar"><i style="width:${pct}%"></i></div>
      <div class="ctags">${tags.join('')}</div>`;
 
-  const pick = (e) => { e.stopPropagation(); chosenSpec = spec; startGame(); };
+  const pick = (e) => { e.stopPropagation(); core.spec = spec; startGame(); };
   d.addEventListener('click', pick);
   d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') pick(e); });
   charCards.appendChild(d);
@@ -1412,7 +1302,7 @@ if (PLAYER_SPECS.length > 1) {
   const who = document.createElement('div');
   who.className = 'crm';
   who.style.marginTop = '14px';
-  who.textContent = `${chosenSpec.zh}　${chosenSpec.en}`;
+  who.textContent = `${core.spec.zh}　${core.spec.en}`;
   go?.after(who);
 }
 
@@ -1420,62 +1310,53 @@ if (PLAYER_SPECS.length > 1) {
 veil.addEventListener('click', () => startGame());
 
 // --- 啟動遊戲（選完角色後） ---
-let ctrl = null;
-let charModel = null;
-
 function startGame() {
   veil.classList.add('hide');
-  if (ctrl) return;
+  if (core.ctrl) return;
   initPlayer();
 }
 
 /**
- * 建立（或更換）玩家角色。可以重複呼叫 —— 舊的 controller 會被 dispose，
+ * 建立（或更換）玩家角色。可以重複呼叫 —— core.createPlayer 會 dispose 舊的
+ * controller、把舊 model 移出場景（**不是** 一次性的 spawnPlayer）。
  * 熱鍵監聽器則是全域只註冊一次（見下方 bindHotkeys），不會隨著換角色累加。
  */
 function initPlayer(keepPos = false) {
-  const prev = ctrl ? { x: ctrl.pos.x, z: ctrl.pos.z, yaw: ctrl.yaw } : null;
-
-  if (ctrl) { ctrl.dispose(); ctrl = null; }
-  if (charModel) { scene.remove(charModel); charModel = null; }
-
-  charModel = buildCharacter(chosenSpec);
-  charModel.visible = false;   // 等一下 teleport 後才顯示
-  scene.add(charModel);
-
-  ctrl = new PlayerController(charModel, camera, renderer.domElement, ctrlColliders);
-
-  // 套用角色能力值
-  ctrl.canFly = chosenSpec.canFly ?? true;
-  ctrl.maxAirJumps = chosenSpec.airJumps ?? 0;
-  ctrl.jumpV = chosenSpec.jump ?? 9.2;
-  ctrl.airJumpV = chosenSpec.airJump ?? 8.4;
-  ctrl.sprintMul = chosenSpec.sprintMul ?? 1.85;
-  ctrl.speedMul = chosenSpec.speed ?? 1.0;
-  ctrl.bounds = { hx: 78, hz: 124 };    // 神社場地邊界（南端含下山石階與山腳低地）
+  // ※ 刻意**不用** createPlayer 的 keepPos：那個版本連 camYaw 一起還原、
+  //   而且 teleport 發生在 kit.rebuild/renderBadge 之前。原本的語意是
+  //   「只還原 x/z/yaw，且 teleport 排在最後」—— 兩者都要保住，所以
+  //   自己在外面存、在外面還原。
+  const prev = core.ctrl ? { x: core.ctrl.pos.x, z: core.ctrl.pos.z, yaw: core.ctrl.yaw } : null;
+  // 能力值（canFly / airJumps / jump / airJump / sprintMul / speed）與
+  // bounds 都由 createPlayer 依 spec 套上，跟原本逐字相同。
+  const { ctrl, model } = core.createPlayer({
+    spec: core.spec,
+    bounds: { hx: 78, hz: 124 },    // 神社場地邊界（南端含下山石階與山腳低地）
+  });
+  model.visible = false;            // 等一下 teleport 後才顯示
 
   // 你扮演的人不該同時站在境內
-  npcSystem.setPlayerCharacter(chosenSpec.id);
+  npcSystem.setPlayerCharacter(core.spec.id);
 
   // 記住這次選的角色 —— 前往獸道（trail.html）之後回來還是同一位
-  try { sessionStorage.setItem('gansokoy:char', chosenSpec.id); } catch { /* 私隱模式 */ }
+  core.setSavedChar(core.spec.id);
 
   // 戰鬥控制器只給有 combat 旗標的角色（目前是緣一；之後其他角色設計好
   // 技能後，在 roster 的 PLAYABLE 加上 combat: true 就會自動接上）
   kit.rebuild();
   // 等級徽章（成長資料在 localStorage，跟獸道那邊同一份）
-  progression.renderBadge(chosenSpec.combat ? 'hinokami' : null, '日之呼吸');
+  progression.renderBadge(core.spec.combat ? 'hinokami' : null, '日之呼吸');
 
   if (keepPos && prev) { ctrl.teleport(prev.x, prev.z); ctrl.yaw = prev.yaw; }
   else ctrl.teleport(0, 46);
-  charModel.visible = true;
+  model.visible = true;
 }
 
 /** 全域熱鍵。只在模組載入時註冊一次。 */
 function bindHotkeys() {
   window.addEventListener('keydown', (e) => {
     // ESC 先處理：對話中／編輯器開啟時，ESC 是「關掉它」；其餘情況交給
-    // 共用的 ESC 選單（bindEscMenu，見下方）。
+    // 共用的 ESC 選單（core.bindEsc，見下方）。
     if (e.code === 'Escape') {
       if (dialogue.active) { dialogue.close(); return; }
       if (sceneEditor.isOpen) { sceneEditor.close(); return; }
@@ -1487,14 +1368,14 @@ function bindHotkeys() {
     // 面板只能開、按第二次 P 會因為已經沒鎖定而被 `!ctrl?.locked` 擋掉。
     if (e.code === 'KeyP' && !dialogue.active) { sceneEditor.toggle(); e.preventDefault(); return; }
     if (sceneEditor.isOpen) return;   // 編輯器開著時，其餘熱鍵一律不處理，避免衝突
-    if (!ctrl?.locked) return;
+    if (!core.ctrl?.locked) return;
 
     if (e.code === 'KeyE') { interact(); e.preventDefault(); return; }
     // 對話進行中吃掉其他熱鍵，免得一邊講話一邊切晝夜
     if (dialogue.active) return;
 
     if (e.code === 'KeyJ') questLog.toggle();
-    if (e.code === 'KeyG') { applyQuality((qualityIdx + 1) % QUALITY.length); autoTuned = true; toast(`畫質：${QUALITY[qualityIdx].name}`); }
+    if (e.code === 'KeyG') { core.quality.cycle(); autoTuned = true; toast(`畫質：${core.quality.name}`); }
 
     // T：時間快轉 3 小時。Shift+T：暫停／恢復時間流動。
     if (e.code === 'KeyT') {
@@ -1503,7 +1384,7 @@ function bindHotkeys() {
         toast(env.timeFlowing ? '時間繼續流動' : '時間已暫停');
       } else {
         env.hour = (env.hour + 3) % 24;
-        applyTime(env.hour, true);
+        core.applyEnvNow(true);
         toast(`時刻：${clockLabel(env.hour)}`);
       }
     }
@@ -1519,49 +1400,49 @@ function bindHotkeys() {
 }
 bindHotkeys();
 
-/* ESC 選單（全地圖共用）。「回到選角畫面」把面紗放回來重選人。 */
-const escMenu = bindEscMenu({
-  getCtrl: () => ctrl,
+/* ESC 選單（全地圖共用）。「回到選角畫面」把面紗放回來重選人。
+ * ※ 註冊次序就是行為：bindHotkeys() 已經在上面跑過，所以「對話中按 ESC」
+ *   是地圖的 handler 先關掉對話（同步把 active 設 false），escMenu 的
+ *   handler 才跑、此時 isBusy() 已回 false → 選單會被打開。把 bindEsc
+ *   提前就會反過來變成「選單不開」，那是使用者看得見的行為改變。 */
+const escMenu = core.bindEsc({
   isBusy: () => dialogue.active || sceneEditor.isOpen,
-  env,
   quality: {
-    get: () => QUALITY[qualityIdx].name,
+    get: () => core.quality.name,
     cycle() {
-      applyQuality((qualityIdx + 1) % QUALITY.length);
+      const name = core.quality.cycle();
       autoTuned = true;
-      return QUALITY[qualityIdx].name;
+      return name;
     },
   },
   onBackToSelect() {
     veil.classList.remove('hide');
-    if (ctrl) { ctrl.enabled = false; ctrl.dispose(); ctrl = null; }
-    if (charModel) { scene.remove(charModel); charModel = null; }
+    if (core.ctrl) { core.ctrl.enabled = false; core.ctrl.dispose(); core.ctrl = null; }
+    if (core.model) { scene.remove(core.model); core.model = null; }
     kit.rebuild();          // ctrl 沒了 → combat/skills 收掉、HUD 歸零
     HUD.prompt(null);
   },
 });
 
 /* ─────────────────────── 大地圖（M）與小地圖（N 開關）── 升級5 ── */
-const worldMap = installWorldMap({
+// getPos/getYaw 由 GameCore 代填（選角前 core.ctrl 是 null，回傳 undefined）
+core.installMapUI({
   current: 'shrine',
   isBlocked: () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen,
-});
-const minimap = installMinimap({
-  bounds: { minX: -85, maxX: 85, minZ: -70, maxZ: 118 },
-  lines: [[[0, 46], [0, OUT_FAR + 8]]],            // 參道＋下山石階
-  portals: [{ x: 0, z: OUT_FAR + 14, label: '獸道', color: '#8be8ff' }],
-  getPos: () => ctrl?.pos,          // 選角前 ctrl 是 null
-  getYaw: () => ctrl?.yaw ?? 0,
+  minimap: {
+    bounds: { minX: -85, maxX: 85, minZ: -70, maxZ: 118 },
+    lines: [[[0, 46], [0, OUT_FAR + 8]]],            // 參道＋下山石階
+    portals: [{ x: 0, z: OUT_FAR + 14, label: '獸道', color: '#8be8ff' }],
+  },
 });
 
 /* 角色的隨身裝備。要排在 escMenu / dialogue / sceneEditor 之後 ——
- * isBlocked 會讀到它們。境內沒有敵人，所以不傳 mobs。 */
-kit = installLoadout({
-  getSpec: () => chosenSpec,
-  getCtrl: () => ctrl,
-  scene, HUD, prog: progression,
+ * isBlocked 會讀到它們。境內沒有敵人，所以不傳 mobs。
+ * ※ core.installKit 會多打一次 prog.renderBadge（原本只有 initPlayer 裡
+ *   那一次）—— 目前 ACTIVE_PLAYABLE 只有一位，兩次是冪等的。 */
+kit = core.installKit({
   isBlocked: () => dialogue.active || sceneEditor.isOpen || escMenu.isOpen,
-  onDeath: () => ctrl?.teleport(0, 30),
+  onDeath: () => core.ctrl?.teleport(0, 30),
 });
 
 /* 從獸道走回來：不要閃過選角畫面，直接蓋上「博麗神社 讀取中」，
@@ -1571,12 +1452,12 @@ if (new URLSearchParams(location.search).get('from') === 'trail') {
   veil.classList.add('hide');
   let saved = null;
   try { saved = sessionStorage.getItem('gansokoy:char'); } catch { /* 私隱模式 */ }
-  chosenSpec = PLAYER_SPECS.find(p => p.id === saved) ?? DEFAULT_PLAYER;
+  core.spec = PLAYER_SPECS.find(p => p.id === saved) ?? DEFAULT_PLAYER;
   startGame();
-  if (ctrl) {
-    ctrl.teleport(0, OBJ.trailGate.z - 3);
-    ctrl.yaw = Math.PI;      // 面向神社
-    ctrl.camYaw = 0;
+  if (core.ctrl) {
+    core.ctrl.teleport(0, OBJ.trailGate.z - 3);
+    core.ctrl.yaw = Math.PI;      // 面向神社
+    core.ctrl.camYaw = 0;
   }
   // 等第一幀真的畫出來再收掉讀取畫面，避免看到半成品
   requestAnimationFrame(() => requestAnimationFrame(() => HUD.hideLoading()));
@@ -1593,6 +1474,7 @@ const PRAYERS = [
 ];
 let bellSwing = 0;
 function interact() {
+  const ctrl = core.ctrl;
   if (!ctrl?.locked) return;
 
   // 對話進行中：E 只負責推進，絕對不能落到下面的互動判定。
@@ -1611,7 +1493,9 @@ function interact() {
     })();
 
     ctrl.enabled = false;
-    dialogue.open(npc.spec, lines, () => { if (ctrl) ctrl.enabled = true; });
+    // 讀 core.ctrl 而不是上面那個區域變數：對話中途「回到選角畫面」會把
+    // 玩家換掉，原本這裡讀的就是當下的那一個（可能已是 null）。
+    dialogue.open(npc.spec, lines, () => { if (core.ctrl) core.ctrl.enabled = true; });
     return;
   }
 
@@ -1636,24 +1520,22 @@ function interact() {
 /* ───────────────────────────────────────────── movement + collision ── */
 // 全部由 PlayerController 處理
 
-const clock = new THREE.Clock();
+/* ─────────────────────────────────────────────────────── 主迴圈 ── */
+// 原本的 update() 被拆成 GameCore 的兩個掛勾，順序逐字相同：
+//   ctrl.update → kit.update → [onUpdate] → env.update → [onLateUpdate]
+// 「沒有玩家就整段不跑」由 bootMap 的 tickWhen 負責（見檔頭）。
 
-function update(dt, rawDt = dt) {
-  if (!ctrl) return;
-  ctrl.update(dt, t);
-
-  // 戰鬥姿勢一定要在 ctrl.update（裡面跑走路動畫）之後套，才壓得過去。
-  // rawDt 給 hitstop 自己倒數 —— 用壓慢後的 dt 倒數會永遠出不了頓挫。
-  kit.update(dt, rawDt);
-
+/** kit 結算之後、env 之前：NPC 與任務區域 */
+function updateActors(dt, rawDt, t) {
   // NPC 更新
-  npcSystem.update(t, ctrl.pos, camera);
+  npcSystem.update(t, core.ctrl.pos, camera);
 
-  zones.update(ctrl.pos.x, ctrl.pos.z);   // 任務的 onEnter
+  zones.update(core.ctrl.pos.x, core.ctrl.pos.z);   // 任務的 onEnter
+}
 
-  // 時間流動與天氣（天空跟隨、天氣過渡、重套光照都在 Environment 裡）
-  env.update(dt, camera.position);
-
+/** env 之後：對話逐字與 E 鍵提示 */
+function updatePrompt(dt) {
+  const ctrl = core.ctrl;
   dialogue.update(dt);          // 逐字顯示
   if (dialogue.active) { promptEl.classList.remove('on'); return; }
 
@@ -1677,43 +1559,74 @@ function update(dt, rawDt = dt) {
   }
 }
 
-/* ─────────────────────────────────────────────────────────── render ── */
-let t = 0;
-function animate() {
-  const rawDt = Math.min(clock.getDelta(), 0.05);
-  let dt = rawDt;
-  if (kit?.combat?.hitstop > 0) dt *= 0.12;   // 重擊頓挫：時間短暫變慢
-  t += dt;
+core.onUpdate(updateActors);
+core.onLateUpdate(updatePrompt);
 
+/**
+ * 神社自己的一格模擬 —— 只給 debug handle 的 step / say / goZone 用。
+ * 語意跟遷移前的 update() 逐字相同：**不推進 t**，也不跑 minimap 與
+ * 傳送點/陰陽玉/鈴緒/光塵那幾段（那些原本住在 animate 裡、update 外面）。
+ */
+function update(dt, rawDt = dt) {
+  if (!core.ctrl) return;
+  const t = core._t;
+  core.ctrl.update(dt, t);
+
+  // 戰鬥姿勢一定要在 ctrl.update（裡面跑走路動畫）之後套，才壓得過去。
+  // rawDt 給 hitstop 自己倒數 —— 用壓慢後的 dt 倒數會永遠出不了頓挫。
+  kit.update(dt, rawDt);
+
+  updateActors(dt, rawDt, t);
+
+  // 時間流動與天氣（天空跟隨、天氣過渡、重套光照都在 Environment 裡）
+  env.update(dt, camera.position);
+
+  updatePrompt(dt, rawDt, t);
+}
+
+/* animate 開頭那兩段前置：canvas 重同步、FPS 自動降檔。onPreTick 跑在
+ * `_t += dt` 之後、所有子系統之前，跟原本的 animate 逐字對應。 */
+let frames = 0, frameAcc = 0, autoTuned = false;
+core.onPreTick((dt) => {
   // the canvas can start at 0×0 in a background/hidden pane — re-sync on the fly
   const cv = renderer.domElement;
   if (cv.width !== Math.floor(innerWidth * renderer.getPixelRatio()) || cv.height !== Math.floor(innerHeight * renderer.getPixelRatio())) {
     camera.aspect = innerWidth / Math.max(1, innerHeight);
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
-    composer.setSize(innerWidth, innerHeight);
+    core.composer.setSize(innerWidth, innerHeight);
   }
 
   // drop a quality tier once if the frame rate can't keep up
-  if (!autoTuned && ctrl?.locked) {
+  if (!autoTuned && core.ctrl?.locked) {
     frames++; frameAcc += dt;
     if (frameAcc > 3) {
       const fps = frames / frameAcc;
-      if (fps < 32 && qualityIdx > 0) {
-        applyQuality(qualityIdx - 1);
-        toast(`偵測到掉幀，畫質降為「${QUALITY[qualityIdx].name}」（G 可切回）`);
+      if (fps < 32 && core.quality.idx > 0) {
+        core.quality.set(core.quality.idx - 1);
+        toast(`偵測到掉幀，畫質降為「${core.quality.name}」（G 可切回）`);
       } else {
         autoTuned = true;
       }
       frames = 0; frameAcc = 0;
     }
   }
+});
 
-  update(dt, rawDt);
+/* update() 之後那幾段：傳送點、陰陽玉、鈴緒、光塵。原本住在 animate 裡、
+ * 在 `if (!ctrl) return` 的外面 —— 所以標題畫面上它們照樣動；onPreMinimap
+ * 與 onPostUpdate 都不受 tickWhen 影響，正好對應。原本 minimap.update() 就
+ * 夾在傳送點與陰陽玉之間，所以拆成兩段掛，順序逐字保住。 */
 
-  // orbs bob and spin
+/* 傳送點的呼吸動畫：原本在 animate 裡、在 update()（＝tickWhen 的閘門）
+ * **外面**，而且排在 minimap.update() **之前** —— 所以掛 onPreMinimap，
+ * 不是 onLateUpdate（會被閘門擋掉）也不是 onPostUpdate（跑在 minimap 之後）。*/
+core.onPreMinimap((dt, rawDt, t) => {
   trailPortal.userData.update(t);
-  minimap.update();
+});
+
+core.onPostUpdate((dt, rawDt, t) => {
+  // orbs bob and spin
   for (const o of orbs) {
     o.rotation.y += dt * 0.8;
     o.rotation.z = Math.sin(t * 0.7 + o.userData.phase) * 0.25;
@@ -1734,75 +1647,47 @@ function animate() {
     if (p.array[i * 3 + 1] > 24) p.array[i * 3 + 1] = 0;
   }
   p.needsUpdate = true;
-
-  renderFrame();
-  requestAnimationFrame(animate);
-}
-let frames = 0, frameAcc = 0, autoTuned = false;
-
-/** 後製鏈 + 名牌 overlay。名牌不能進 composer，否則會被 GTAO 塗黑。 */
-function renderFrame() {
-  composer.render();
-  if (labelScene.children.length) {
-    const prevAutoClear = renderer.autoClear;
-    renderer.autoClear = false;          // 別把剛畫好的畫面清掉
-    renderer.setRenderTarget(null);
-    renderer.render(labelScene, camera);
-    renderer.autoClear = prevAutoClear;
-  }
-}
-
-// Controller 會自己管相機，但初始至少要有一幀
-camera.position.set(0, 1.62, 46);
-camera.rotation.order = 'YXZ';
-
-// resize handler
-window.addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-  composer.setSize(innerWidth, innerHeight);
 });
 
-document.getElementById('loading').style.display = 'none';
-animate();
+/* ─────────────────────────────────────────────────────────── render ── */
+// Controller 會自己管相機，但初始至少要有一幀
+camera.position.set(0, 1.62, 46);
 
-// debug handle
-window.__shrine = {
-  renderer, scene, camera, get ctrl() { return ctrl; }, THREE, npcs: npcSystem,
-  tp(x, z, yaw = Math.PI) { if (ctrl) { ctrl.teleport(x, z); ctrl.yaw = yaw; } },
-  step(n = 1, dt = 0.016) { for (let i = 0; i < n; i++) update(dt); return ctrl?.pos.toArray().map((v) => +v.toFixed(2)) ?? []; },
-  look(yaw, pitch = 0) { if (ctrl) { ctrl.yaw = yaw; ctrl.camPitch = pitch; } },
+// resize handler、收掉 #loading、後製鏈 + 名牌 overlay 的每幀渲染，
+// 全部由 core.start() / core.renderFrame() 提供（跟遷移前逐字相同）。
+core.start();
+
+// debug handle。tp / step / frame 神社的語意跟 GameCore 預設不同，
+// 放在 extra 裡覆寫掉（extra 展開在最後）。原本沒有的鍵用 omit 拿掉。
+window.__shrine = core.debugHandle({
+  npcs: npcSystem,
+  tp(x, z, yaw = Math.PI) { if (core.ctrl) { core.ctrl.teleport(x, z); core.ctrl.yaw = yaw; } },
+  step(n = 1, dt = 0.016) { for (let i = 0; i < n; i++) update(dt); return core.ctrl?.pos.toArray().map((v) => +v.toFixed(2)) ?? []; },
+  look(yaw, pitch = 0) { if (core.ctrl) { core.ctrl.yaw = yaw; core.ctrl.camPitch = pitch; } },
   switchChar(id) {
     const spec = PLAYER_SPECS.find(p => p.id === id);
-    if (!spec || !ctrl) return;
-    chosenSpec = spec;
+    if (!spec || !core.ctrl) return;
+    core.spec = spec;
     initPlayer(true);       // 留在原地換人
   },
   frame() {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
-    composer.setSize(innerWidth, innerHeight);
-    renderFrame();
+    core.composer.setSize(innerWidth, innerHeight);
+    core.renderFrame();
   },
-  composer, applyQuality, QUALITY,
+  applyQuality, QUALITY,
   quests, questLog, dialogue, zones, weather, sceneEditor,
-  get kit() { return kit; }, get combat() { return kit?.combat; },
-  get vitals() { return kit?.vitals; }, get skills() { return kit?.skills; },
-  /** 測試用：直接設定時刻（小時，0–24），並停住時間 */
-  setHour(h) { return env.setHour(h); },
   getHour() { return env.hour; },
-  setTimeFlowing(v) { env.timeFlowing = v; },
-  setWeather(id, dur = 0.01) { weather.set(id, dur); weather.update(dur, camera.position); applyTime(env.hour, true); return weather.label; },
-  env,
+  setWeather(id, dur = 0.01) { weather.set(id, dur); weather.update(dur, camera.position); core.applyEnvNow(true); return weather.label; },
   /** 測試用：走到指定 NPC 面前並跟他講完整段話，回傳每一句 */
   say(npcId) {
     const npc = npcSystem.mgr.npcs.find(n => n.spec.id === npcId);
-    if (!npc || !ctrl) return null;
-    ctrl.teleport(npc.pos.x + 1.2, npc.pos.z + 1.2);
+    if (!npc || !core.ctrl) return null;
+    core.ctrl.teleport(npc.pos.x + 1.2, npc.pos.z + 1.2);
     for (let i = 0; i < 40; i++) update(0.016);
-    ctrl.locked = true;
+    core.ctrl.locked = true;
     const lines = [];
     for (let guard = 0; guard < 40; guard++) {
       interact();
@@ -1819,9 +1704,10 @@ window.__shrine = {
   /** 測試用：把玩家傳送到某個區域中心，觸發 onEnter */
   goZone(id) {
     const z = zones.zones.find(v => v.id === id);
-    if (!z || !ctrl) return null;
-    ctrl.teleport(z.x, z.z);
+    if (!z || !core.ctrl) return null;
+    core.ctrl.teleport(z.x, z.z);
     update(0.016);
     return zones.current;
   },
-};
+  // 原本沒有 colliders / heightAt / prog / panel 這幾個鍵
+}, { omit: ['colliders', 'heightAt', 'prog', 'panel'] });

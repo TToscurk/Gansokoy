@@ -316,6 +316,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/world/` | 高度場、區域偵測、共用晝夜天氣系統（`environment.js`）、傳送光點（`portal.js`）、路網（`pathnet.js`）、遠景稜線（`vista.js`）、道標（`signpost.js`） |
 | `src/combat/` | 戰鬥引擎（`combat.js`/`hud.js`）、技能系統（`skills.js`）、怪物（`mobcore.js` 共用判定 + `mobs.js` 妖精 + `rabbits.js` 妖怪兔）、招式資料（`forms.js`/`motion.js`），跨地圖共用 |
 | `src/fx/` | 特效（刀光、粒子） |
+| `src/core/GameCore.js` | **統一執行層**：renderer／後製鏈／Environment／畫質／玩家／成長／ESC／大小地圖／主迴圈的唯一組裝點。地圖檔只寫「這張圖獨有的東西」 |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
 | `play.bat` / `play.sh` | 一鍵更新 + 啟動（Windows / macOS・Linux） |
 | `安裝.bat` | 就地安裝（把專案裝進它自己所在的資料夾，不多包一層），裝完直接啟動 |
