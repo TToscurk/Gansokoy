@@ -449,7 +449,8 @@ pine(-32, -14, 5.5); pine(30, -20, 4.8); pine(-16, 46, 5.2); pine(42, 40, 4.5);
     box(5.4, 0.07, 0.1, MAT.darkWood, cx, y + 1.25, cz + s * 2.6);
     box(0.1, 0.07, 5.4, MAT.darkWood, cx + s * 2.6, y + 1.25, cz);
   }
-  block(cx, cz, 6.2, 6.2, y + 0.62);
+  // 月見台是可以站上去的（跳上去賞月，不是一堵矮牆）
+  colliders.push({ x: cx, z: cz, y, h: 0.62, hw: 3.1, hd: 3.1, walk: true });
 })();
 
 /* 後庭的石組 */

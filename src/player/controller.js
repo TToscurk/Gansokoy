@@ -332,7 +332,10 @@ export class PlayerController {
     // 0.55 的步高容許讓台階可以一級一級走上去；低於頂面太多則視為在平台下方。
     for (const c of this.colliders) {
       if (!c.walk) continue;
-      if (Math.abs(this.pos.x - c.x) > c.hw || Math.abs(this.pos.z - c.z) > c.hd) continue;
+      if (c.hw == null) continue;    // 圓柱沒有頂面吸附 —— walk 只支援方盒
+      // 邊緣多留 0.28m 寬容：站在平台邊緣時，腳的圓半徑有一部分懸空，
+      // 沒有寬容的話會在「吸附到頂/掉下去」之間來回抖動。
+      if (Math.abs(this.pos.x - c.x) > c.hw + 0.28 || Math.abs(this.pos.z - c.z) > c.hd + 0.28) continue;
       const top = c.y + c.h;
       if (top > floor && this.pos.y >= top - 0.55) floor = top;
     }

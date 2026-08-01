@@ -432,7 +432,8 @@ for (let i = 0; i < 10; i++) {
         world.add(l);
       }
     }
-    block(bx, bz, 2.6, 1.9, by + 1.1);
+    // 柴堆頂是平的 —— 跳上去就站著（walk），不是被彈開
+    colliders.push({ x: bx, z: bz, y: by, h: 1.1, hw: 1.3, hd: 0.95, walk: true });
   })();
   // 曬衣竿（兩根叉柱架一根竹竿）
   for (const s of [-1, 1]) cyl(0.07, 0.08, 2.0, MAT.wood, -8 + s * 4, heightAt(-8 + s * 4, -18) + 1.0, -18, 6);

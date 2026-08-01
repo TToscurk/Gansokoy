@@ -194,6 +194,10 @@ const colliders = [];
 function block(x, z, sx, sz, top, bottom = -99) {
   colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2 });
 }
+/** 可站上去的平台（橋面、攤位桌、像座）。跳上去就站著，不會被推開。 */
+function walkBlock(x, z, sx, sz, top, bottom = -99) {
+  colliders.push({ x, z, y: bottom, h: top - bottom, hw: sx / 2, hd: sz / 2, walk: true });
+}
 function post(x, z, r, top, bottom = -99) {
   colliders.push({ x, z, y: bottom, h: top - bottom, r });
 }
@@ -294,11 +298,13 @@ function bridge(z) {
   const g = new THREE.Group();
   g.position.set(cx, 0, z);
   world.add(g);
-  // 橋面（微拱）
+  // 橋面（微拱）。每片橋板各自是一顆 walk 平台 —— 微拱的頂面高度
+  // 沿橋身變化，一顆大盒子蓋不住；一片一顆，走上去才是「一級一級」。
   for (let i = -3; i <= 3; i++) {
     const t = i / 3;
     const y = 0.5 - t * t * 0.35;
     box(3.0, 0.34, 8.4, MAT.stone, i * 3.0, y, 0, g);
+    colliders.push({ x: cx + i * 3.0, z, y: y - 0.17, h: 0.34, hw: 1.5, hd: 4.2, walk: true });
   }
   // 欄杆
   for (const sd of [-1, 1]) {
@@ -309,7 +315,10 @@ function bridge(z) {
     const rail = box(19, 0.18, 0.22, MAT.stone, 0, 1.15, sd * 3.9, g);
     rail.rotation.x = 0;
   }
-  block(cx, z, 20, 8.6, 0.9);
+  // 欄杆擋側落（別從橋邊掉進河裡）；橋面本身放行 —— 上面的 walk 平台
+  for (const sd of [-1, 1]) {
+    colliders.push({ x: cx, z: z + sd * 3.9, y: 0.15, h: 1.3, hw: 10.2, hd: 0.28 });
+  }
 }
 for (const cz of [-70, 40, 165]) bridge(cz);
 
@@ -527,7 +536,12 @@ const BLOCK_KEEP_OUT = [
 /* 河畔的倉庫與船板 —— 河岸不該只有樹 */
 (function riverSheds() {
   for (let i = 0; i < 6; i++) {
-    const z = -150 + i * 62 + (Math.random() - 0.5) * 16;
+    let z = -150 + i * 62 + (Math.random() - 0.5) * 16;
+    // 別壓住橋的引道：隨機抖動曾把一間倉庫剛好蓋在 z=40 橋的西岸
+    // 橋頭上，把整條過河動線堵死 —— 落點離橋街太近就往外推。
+    for (const bz of [-70, 40, 165]) {
+      if (Math.abs(z - bz) < 9) z = bz + (z >= bz ? 9 : -9);
+    }
     const x = riverX(z) - 13;
     house({
       x, z, w: 6 + Math.random() * 1.5, d: 5, h: 3.2,
@@ -650,7 +664,9 @@ const BLOCK_KEEP_OUT = [
   box(11, 0.5, 11, MAT.stone, 0, 0.25, 0, g);
   box(8.4, 0.5, 8.4, MAT.stone, 0, 0.75, 0, g);
   box(6.2, 0.6, 6.2, MAT.stone, 0, 1.3, 0, g);
-  block(DX, DZ, 11, 11, y + 1.6);
+  walkBlock(DX, DZ, 11, 11, y + 0.5);
+  walkBlock(DX, DZ, 8.4, 8.4, y + 1.0);
+  walkBlock(DX, DZ, 6.2, 6.2, y + 1.6);
 
   // 中央的石柱
   cyl(1.05, 1.3, 5.4, MAT.stone, 0, 4.3, 0, 10, g);
@@ -784,7 +800,7 @@ function stall(x, z, rot, cloth) {
     box(0.4, 0.3, 0.4, i % 2 ? MAT.wood : MAT.stone, -1.1 + i * 0.72, 1.08, 0, g);
   }
   const cs = Math.abs(Math.cos(rot)), sn = Math.abs(Math.sin(rot));
-  block(x, z, 3.2 * cs + 1.8 * sn, 3.2 * sn + 1.8 * cs, heightAt(x, z) + 1.0);
+  walkBlock(x, z, 3.2 * cs + 1.8 * sn, 3.2 * sn + 1.8 * cs, heightAt(x, z) + 1.0);
 }
 // 市集：水井廣場與龍神像廣場周邊的攤位
 for (let i = 0; i < 14; i++) {
