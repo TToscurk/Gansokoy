@@ -36,6 +36,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { ridgeRing, gapToward } from '../../src/world/vista.js';
 
 /* 共用 HUD —— 與其他三張圖完全同一套版面 */
 const HUD = installHUD({
@@ -817,6 +818,19 @@ scatterGrass(world, {
   }
   g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
+
+/* ─────────────── 圍坡上緣之外的遠景（升級1：遠景延伸） ── */
+// 圍坡把玩家收在林子裡，但坡頂直接切天空。外圈鋪「更遠處還是竹海」
+// 的剪影 —— 竹林的地平線應該是望不到頭的竹梢，不是土坡的邊。
+ridgeRing(world, {
+  radius: 400, heightAt,
+  height: [26, 46], color: 0x3c5136, treeTops: true, seed: 13,
+  gaps: [
+    gapToward(NORTH_END.x, NORTH_END.z, 0.5),
+    gapToward(SOUTH_END.x, SOUTH_END.z, 0.5),
+    gapToward(EAST_END.x, EAST_END.z, 0.5),
+  ],
+});
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 建築、地藏、石頭、竹筍全部不會動 —— 依「材質 × 空間格子」合併。

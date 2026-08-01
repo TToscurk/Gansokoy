@@ -29,6 +29,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { ridgeRing, gapToward } from '../../src/world/vista.js';
 
 const HUD = installHUD({
   title: '無名之丘',
@@ -472,6 +473,18 @@ scatterGrass(world, {
 /* ───────────────────────────────────────────── 傳送點 ── */
 const westPortal = makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0xa8c96a);
 const eastPortal = makePortalGlow(world, EAST_END.x, heightAt(EAST_END.x, EAST_END.z), EAST_END.z, 0xf2c832);
+
+/* ─────────────── 邊界圍坡之外的遠丘（升級1：遠景延伸） ── */
+// 無名之丘是丘陵地 —— 圖外應該是更多層層退遠的丘，不是天空直接切斷。
+// 顏色比場內的草丘灰一階，罩在霧裡剛好讀成「遠方的丘陵」。
+ridgeRing(world, {
+  radius: 185, heightAt,
+  height: [22, 40], color: 0x506051, seed: 17,
+  gaps: [
+    gapToward(WEST_END.x, WEST_END.z, 0.55),
+    gapToward(EAST_END.x, EAST_END.z, 0.55),
+  ],
+});
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 {

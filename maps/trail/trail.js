@@ -23,7 +23,7 @@
 
 import * as THREE from 'three';
 import { setGroundHeightFn } from '../../src/world/terrain.js';
-import { WORLD } from '../../src/config.js';
+import { WORLD, REGION_BY_ID } from '../../src/config.js';
 import { buildCharacter } from '../../src/entities/model.js';
 import { ACTIVE_PLAYABLE, DEFAULT_PLAYER } from '../../src/entities/roster.js';
 import { PlayerController } from '../../src/player/controller.js';
@@ -38,6 +38,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { ridgeRing, gapToward, portalMist } from '../../src/world/vista.js';
 
 /* 共用 HUD —— 與神社、人間之里完全同一套版面 */
 const HUD = installHUD({
@@ -412,6 +413,17 @@ const villagePortal = makePortalGlow(world, VILLAGE_END.x, heightAt(VILLAGE_END.
 const bambooPortal = makePortalGlow(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END.z, 0xd8f0a0);
 const sunflowerPortal = makePortalGlow(world, SUNFLOWER_END.x, heightAt(SUNFLOWER_END.x, SUNFLOWER_END.z), SUNFLOWER_END.z, 0xf2c832);
 
+/* 門後景深：光點後方一面目的地霧色的霧牆（升級1）。
+ * 各端的目的地剪影在牆後面 —— 隔著霧看，走近有視差。 */
+portalMist(world, SHRINE_END.x, heightAt(SHRINE_END.x, SHRINE_END.z), SHRINE_END.z,
+  { color: REGION_BY_ID.shrine.fog, away: 10 });
+portalMist(world, VILLAGE_END.x, heightAt(VILLAGE_END.x, VILLAGE_END.z), VILLAGE_END.z,
+  { color: REGION_BY_ID.village.fog, away: 10 });
+portalMist(world, BAMBOO_END.x, heightAt(BAMBOO_END.x, BAMBOO_END.z), BAMBOO_END.z,
+  { color: REGION_BY_ID.bamboo.fog, away: 10 });
+portalMist(world, SUNFLOWER_END.x, heightAt(SUNFLOWER_END.x, SUNFLOWER_END.z), SUNFLOWER_END.z,
+  { color: REGION_BY_ID.sunflower.fog, away: 10 });
+
 /* ─────────────────── 北端遠景：山上的博麗神社全貌 ──────────────────
  * 站在獸道朝神社方向望，要看得到整座神社蓋在山頭上：
  * 山體 + 一條長石階爬上山面 + 台地上的紅鳥居、拜殿、玉垣剪影。
@@ -558,6 +570,22 @@ const sunflowerPortal = makePortalGlow(world, SUNFLOWER_END.x, heightAt(SUNFLOWE
     new THREE.MeshStandardMaterial({ color: '#d8a8c8', roughness: 0.8 }));
   canopy.position.y = 3.5; umb.add(canopy);
 })();
+
+/* ─────────────────── 谷壁上緣之外的遠山稜線（升級1：遠景延伸） ── */
+// 谷壁本身合理（這是山谷），但谷壁上緣直接切天空 = 玩家知道「世界
+// 到這裡就沒了」。外圈再鋪兩層剪影稜線＋樹冠，罩在霧色裡。
+// 四臂的方向留缺口 —— 那些方向已經有目的地剪影（神社全貌、里的
+// 屋頂、竹梢、花田），稜線疊上去會把它們吃掉。
+ridgeRing(world, {
+  radius: 430, heightAt,
+  height: [42, 78], color: 0x3d4f44, treeTops: true, seed: 11,
+  gaps: [
+    gapToward(SHRINE_END.x, SHRINE_END.z, 0.7),
+    gapToward(VILLAGE_END.x, VILLAGE_END.z, 0.55),
+    gapToward(BAMBOO_END.x, BAMBOO_END.z, 0.55),
+    gapToward(SUNFLOWER_END.x, SUNFLOWER_END.z, 0.5),
+  ],
+});
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 樹、石頭、彼岸花、道祖神、三端的遠景全部不會動 ——

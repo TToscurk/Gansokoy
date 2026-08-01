@@ -33,6 +33,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { ridgeRing, gapToward } from '../../src/world/vista.js';
 
 const HUD = installHUD({
   title: '太陽花田',
@@ -538,6 +539,18 @@ scatterGrass(world, {
 /* ───────────────────────────────────────────── 傳送點 ── */
 const westPortal = makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0xd8e8a0);
 const northPortal = makePortalGlow(world, NORTH_END.x, heightAt(NORTH_END.x, NORTH_END.z), NORTH_END.z, 0x9fd8a0);
+
+/* ─────────────── 邊界之外的遠山與林緣（升級1：遠景延伸） ── */
+// 花田是全遊戲最亮最開闊的圖，邊界直接切天空反而最顯眼。
+// 外圈鋪一層低緩的林緣稜線 —— 花海一路黃到腳下、遠處收進綠色的林子。
+ridgeRing(world, {
+  radius: 300, heightAt,
+  height: [24, 44], color: 0x47584a, treeTops: true, seed: 19,
+  gaps: [
+    gapToward(WEST_END.x, WEST_END.z, 0.5),
+    gapToward(NORTH_END.x, NORTH_END.z, 0.5),
+  ],
+});
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 {

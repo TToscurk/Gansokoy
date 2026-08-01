@@ -32,6 +32,7 @@ import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { MAP_REGISTRY } from '../../src/world/mapRegistry.js';
+import { ridgeRing, gapToward } from '../../src/world/vista.js';
 
 const HUD = installHUD({
   title: '香霖堂',
@@ -592,6 +593,18 @@ const FOREST_OPEN = !!MAP_REGISTRY.forest?.built;
 const westPortal = FOREST_OPEN
   ? makePortalGlow(world, WEST_END.x, heightAt(WEST_END.x, WEST_END.z), WEST_END.z, 0x7dd88a)
   : null;
+
+/* ─────────────── 邊界圍坡之外的遠景（升級1：遠景延伸） ── */
+// 林緣小圖：外圈是層層退遠的樹冠稜線，東西兩口留缺
+// （那兩個方向已有里的屋頂與魔法之森的樹牆遠景）。
+ridgeRing(world, {
+  radius: 128, heightAt,
+  height: [18, 34], color: 0x3a4c33, treeTops: true, seed: 23,
+  gaps: [
+    gapToward(EAST_END.x, EAST_END.z, 0.6),
+    gapToward(WEST_END.x, WEST_END.z, 0.6),
+  ],
+});
 
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 {
