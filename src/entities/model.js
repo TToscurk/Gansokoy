@@ -226,7 +226,10 @@ const ANIM_NODES = ['head', 'hairBack', 'armL', 'armR', 'legL', 'legR', 'wingL',
  * 把角色壓成少數幾個 draw call，並補上沿法線外推的描邊。
  * 一個角色原本約 48 個網格，處理後降到 20 個左右，而且全部共用兩份材質。
  */
-function optimizeRig(root, thickness = 0.02) {
+/* thickness 0.02 → 0.014（角色書第 6 章）。段數提高、眼睛改貼圖之後，
+ * 原本的 0.02 會顯得過粗，臉部尤其糊 —— 所以 head 節點再細一階。
+ * 刀身的 ×0.45 特例保留。 */
+function optimizeRig(root, thickness = 0.014) {
   const nodes = [];
   root.traverse(o => {
     if (o.name === 'body' || ANIM_NODES.includes(o.name)) nodes.push(o);
@@ -239,7 +242,9 @@ function optimizeRig(root, thickness = 0.02) {
     if (!merged) continue;
 
     // 刀身厚度只有 1.2cm，用全厚描邊會把它撐成一根棍子
-    const th = (node.name === 'blade' || node.name === 'sheath') ? thickness * 0.45 : thickness;
+    const th = (node.name === 'blade' || node.name === 'sheath') ? thickness * 0.45
+      : node.name === 'head' ? thickness * 0.62      // 臉的描邊太粗會把五官糊掉
+      : thickness;
     const shell = new THREE.Mesh(shellGeometry(merged.geometry, th), OUTLINE);
     shell.castShadow = false;
     shell.receiveShadow = false;
@@ -937,9 +942,50 @@ export function buildCharacter(spec) {
   head.position.y = HEAD_Y;
   body.add(head);
 
-  const skull = part(new THREE.SphereGeometry(HEAD_R, 18, 14), skin, 0, 0, 0);
-  skull.scale.set(1, 1.04, 0.96);
+  /* 頭型（角色書 4.1–4.2）。正圓球是「娃娃感」的主因，三件事一起做：
+   *   1. 略拉長成橢球（y 1.05、z 1.02）
+   *   2. 下顎收窄 —— 頭骨下半的橫截面往內縮，才有下巴
+   *   3. 臉正面稍微壓平 —— 五官要有安放的平面，全球面會讓眼睛浮在弧上
+   * 後兩件用逐頂點變形做，比多加幾何便宜。 */
+  const skullGeo = new THREE.SphereGeometry(HEAD_R, 24, 18);
+  {
+    const p = skullGeo.attributes.position;
+    const v = new THREE.Vector3();
+    for (let i = 0; i < p.count; i++) {
+      v.fromBufferAttribute(p, i);
+      const ny = v.y / HEAD_R;                       // -1（下）~ 1（上）
+      // 下顎收窄：只作用在下半，越往下縮越多，但留一點不然會變尖錐
+      if (ny < 0) {
+        const k = 1 - Math.min(1, -ny) * 0.22;
+        v.x *= k; v.z *= k;
+      }
+      // 臉正面壓平：只壓 +z 側，且越靠中線壓越多（側臉維持圓）
+      if (v.z > 0) {
+        const nz = v.z / HEAD_R;
+        const centre = 1 - Math.min(1, Math.abs(v.x) / (HEAD_R * 0.72));
+        v.z -= nz * centre * HEAD_R * 0.10;
+      }
+      p.setXYZ(i, v.x, v.y, v.z);
+    }
+    skullGeo.computeVertexNormals();
+  }
+  const skull = part(skullGeo, skin, 0, 0, 0);
+  skull.scale.set(1, 1.05, 1.02);
   head.add(skull);
+
+  /* 耳朵（角色書 4.5）：兩片微彎的面，側面剪影立刻正常。
+   * 用球面的一小塊而不是平面片 —— 平的從正面看會是一條線。 */
+  for (const sx of [-1, 1]) {
+    const ear = part(
+      new THREE.SphereGeometry(HEAD_R * 0.19, 8, 6, 0, Math.PI, Math.PI * 0.15, Math.PI * 0.7),
+      skin, sx * HEAD_R * 0.84, -0.012, -0.006);
+    ear.rotation.y = sx > 0 ? -Math.PI / 2 : Math.PI / 2;
+    ear.rotation.z = sx * 0.14;
+    ear.scale.set(0.5, 1.15, 0.8);     // 貼著頭、上下略長，才像耳廓不像翅膀
+    // 不描邊：外擴的黑色外殼會把這麼小的一片撐成頭上兩隻角
+    ear.userData.noOutline = true;
+    head.add(ear);
+  }
 
   // 頸
   body.add(part(new THREE.CylinderGeometry(0.045, 0.05, 0.09, 16), skin, 0, LEG_H + TORSO_H + 0.04, 0));
@@ -1117,7 +1163,7 @@ export function buildCharacter(spec) {
   }
 
   // --- 合併 + 描邊 ---
-  optimizeRig(root, spec.outline ?? 0.02);
+  optimizeRig(root, spec.outline ?? 0.014);
 
   if (spec.scale) root.scale.setScalar(spec.scale);
 
