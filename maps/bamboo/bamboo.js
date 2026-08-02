@@ -328,6 +328,9 @@ const CLEARINGS = (() => {
 })();
 const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < c.r);
 
+/** 砍竹系統的共用資料（由下面的 bamboo() 填、由 cuttable() 消費） */
+const CUTTABLE = { cells: null, cellKey: null, thickets: null };
+
 /**
  * 竹子。一千多根重複物件 —— 全部走 InstancedMesh，而且依 CELL 公尺
  * 見方的格子各建一個，讓身後的竹林能整塊被視錐裁掉。
@@ -343,6 +346,8 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
   // --- 決定每根竹子的位置 ---
   // 密度：離小徑越遠越密。小徑兩側 2.6 公尺內完全不長，否則走不動。
   let thickets = 0;
+  const thicketList = [];        // { blocker, members[] } —— 砍光整叢才解除擋路
+  let thicketOf = null;
   // 沿著小徑網撒，而不是整張圖亂撒 —— 地圖 300×600 公尺，
   // 亂撒的話大部分點落在玩家永遠走不到的角落（獸道踩過這個坑）。
   for (let i = 0; i < 9000; i++) {
@@ -383,17 +388,24 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
     // 每一根都給碰撞盒的話，走在林子裡會像卡在牙籤堆裡。
     if (pd > 7 && rand() < 0.05) {
       thickets++;
+      // 留住這顆碰撞盒的參考：整叢被砍光時要把它解除（砍竹開路）
       post(x, z, 1.0, heightAt(x, z) + 6);
+      const blocker = colliders[colliders.length - 1];
+      const members = [];
+      thicketList.push({ blocker, members });
+      thicketOf = members;
       for (let k = 0; k < 3 + (rand() * 3 | 0); k++) {
         const ba = rand() * 6.28, bd = rr(0.25, 0.95);
         const bx = x + Math.cos(ba) * bd, bz = z + Math.sin(ba) * bd;
         const bk = cellKey(bx, bz);
         if (!cells.has(bk)) cells.set(bk, []);
         const bt = rand();
-        cells.get(bk).push({
+        const rec = {
           x: bx, z: bz, r: 0.07 + bt * 0.13, h: 8 + bt * 5 + rr(0, 2.5),
           tilt: rr(-0.09, 0.09), yaw: rand() * 6.28, broken: false, tone: rand(),
-        });
+        };
+        cells.get(bk).push(rec);
+        thicketOf?.push(rec);
       }
     }
   }
@@ -450,6 +462,9 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
     leaves.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(list.length * 3), 3);
 
     list.forEach((b, i) => {
+      // 砍竹要能改這一格的矩陣 —— 記住自己住在哪個 InstancedMesh 的第幾格
+      b.mesh = culms; b.leafMesh = leaves; b.idx = i;
+      b.hp = 3;                                   // 升級書：三刀
       const y = heightAt(b.x, b.z);
       e.set(b.tilt, b.yaw, b.tilt * 0.7);
       q.setFromEuler(e);
@@ -492,6 +507,181 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
     world.add(culms, leaves);
   }
   console.info(`[bamboo] 竹子 ${total} 根，分 ${meshes} 個 InstancedMesh（${cells.size} 個格子），叢生擋人處 ${thickets}`);
+
+  // 交給砍竹系統：cells 本身就是空間索引，直接沿用不必再建一份
+  CUTTABLE.cells = cells;
+  CUTTABLE.cellKey = cellKey;
+  CUTTABLE.thickets = thicketList;
+  window.__cuttableCells = cells;   // 給自動化測試查詢用（debug handle 之外的小口子）
+  window.__thickets = thicketList;
+})();
+
+/* ──────────────────────────────────────────────── 砍竹 ── */
+/**
+ * 可砍的竹子（品質升級書・升級 6 第 4 點）。
+ *
+ * 架構照 mobcore 的思路：**渲染歸 instance、狀態歸陣列**。竹子有一千多根，
+ * 不可能一根一個 Mesh；但砍下去要記血量、要單獨倒下、要五分鐘後長回來，
+ * 所以每根在生成時就記住自己住在哪個 InstancedMesh 的第幾格（b.mesh/b.idx），
+ * 砍中就直接改那一格的矩陣。
+ *
+ * 為什麼不用 Combat 的 mobs 系統：那套是給會動、會反擊、有 AI 的怪用的，
+ * 一千多根靜止的竹子塞進去每幀都要跑一次 AI 與分離，純浪費。
+ *
+ * 砍竹開路：竹叢（thicket）本來有一顆擋人的碰撞盒。整叢砍光就把它解除 ——
+ * 這是迷宮「可被玩家改寫」的地方：死路砍得穿，捨得花時間就有捷徑。
+ */
+(function cuttable() {
+  const { cells, cellKey, thickets } = CUTTABLE;
+  if (!cells) return;
+
+  const STUMP = 0.55;              // 砍完留下的斷茬高度
+  const FALL_T = 0.8;              // 傾倒
+  const FADE_T = 2.0;              // 落地後淡出
+  /* 五分鐘後長回。`?regrow=5` 可以縮短 —— 不然驗一次重生要等五分鐘，
+   * 自動化測試根本測不到（同 ?nstr= 的用意）。 */
+  const REGROW = (() => {
+    const v = parseFloat(new URLSearchParams(location.search).get('regrow'));
+    return Number.isFinite(v) && v > 0 ? v : 300;
+  })();
+  const GROW_T = 2.5;              // 冒出來的動畫長度
+
+  const falling = [];              // 正在倒/淡出的上半段
+  const regrowing = [];            // 等著長回來的
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion();
+  const e = new THREE.Euler(), v = new THREE.Vector3(), sc = new THREE.Vector3();
+
+  /** 把一根竹子的竿與葉重新寫回 instance 矩陣。scale 給 0 就是隱形。 */
+  const write = (b, hMul, leafMul) => {
+    const y = heightAt(b.x, b.z);
+    e.set(b.tilt, b.yaw, b.tilt * 0.7);
+    q.setFromEuler(e);
+    sc.set(b.r, b.h * hMul, b.r);
+    m4.compose(v.set(b.x, y, b.z), q, sc);
+    b.mesh.setMatrixAt(b.idx, m4);
+    b.mesh.instanceMatrix.needsUpdate = true;
+
+    const ls = (b.broken ? 0 : 1.15 + b.h * 0.085) * leafMul;
+    sc.set(ls, ls, ls);
+    m4.compose(
+      v.set(b.x + Math.sin(b.tilt) * b.h, y + b.h * 0.80, b.z + Math.sin(b.tilt * 0.7) * b.h),
+      q, sc);
+    b.leafMesh.setMatrixAt(b.idx, m4);
+    b.leafMesh.instanceMatrix.needsUpdate = true;
+  };
+
+  /** 砍斷：上半段倒下、下半段留斷茬、排進重生佇列 */
+  const cut = (b) => {
+    const y = heightAt(b.x, b.z);
+    const cutY = Math.min(b.h * 0.28, 1.6);      // 砍擊高度：約腰的位置
+
+    // 下半段：縮成斷茬，葉叢消失
+    b.cutHeight = cutY;
+    write(b, cutY / b.h, 0);
+    b.dead = true;
+
+    // 上半段：一根獨立的網格，繞斷點傾倒
+    const topLen = b.h - cutY;
+    const geo = new THREE.CylinderGeometry(b.r * 0.8, b.r, topLen, 6, 1);
+    geo.translate(0, topLen / 2, 0);             // 原點在斷面，才好繞它轉
+    const mat = MAT.culmSolid.clone();
+    mat.transparent = true;
+    const top = new THREE.Mesh(geo, mat);
+    top.position.set(b.x, y + cutY, b.z);
+    top.rotation.y = b.yaw;
+    top.castShadow = true;
+    world.add(top);
+    falling.push({ mesh: top, mat, t: 0, dir: rand() * 6.28, done: false });
+
+    regrowing.push({ b, at: REGROW });
+
+    // 整叢砍光就解除擋人的碰撞盒 —— 這是「砍竹開路」
+    for (const th of thickets) {
+      if (!th.blocker || th.blocker.r === 0) continue;
+      if (!th.members.includes(b)) continue;
+      if (th.members.every(mb => mb.dead)) {
+        th.blocker.r = 0;                        // 半徑歸零＝不再擋人
+        HUD.toast('竹叢被砍開了');
+      }
+    }
+  };
+
+  /* 每次揮刀：找扇形內的竹子扣血。用 cells 當空間索引，只掃玩家周圍
+   * 那幾格 —— 一千多根全掃的話每一刀都要跑一千次距離計算。 */
+  const RANGE_PAD = 0.6;
+  const onSwing = ({ form, origin, yaw }) => {
+    const range = (form.range ?? 2.2) + RANGE_PAD;
+    const arc = form.arc ?? 1.6;
+    const c = 38;                                 // 與 bamboo() 的 CELL 一致
+    const gx = Math.floor(origin.x / c), gz = Math.floor(origin.z / c);
+    for (let ox = -1; ox <= 1; ox++) {
+      for (let oz = -1; oz <= 1; oz++) {
+        const list = cells.get(`${gx + ox},${gz + oz}`);
+        if (!list) continue;
+        for (const b of list) {
+          if (b.dead || b.broken) continue;
+          const dx = b.x - origin.x, dz = b.z - origin.z;
+          const d = Math.hypot(dx, dz);
+          if (d > range) continue;
+          // 扇形：揮刀朝向與目標方位的夾角
+          let a = Math.atan2(dx, dz) - yaw;
+          while (a > Math.PI) a -= Math.PI * 2;
+          while (a < -Math.PI) a += Math.PI * 2;
+          if (Math.abs(a) > arc / 2) continue;
+          if (--b.hp <= 0) cut(b);
+        }
+      }
+    }
+  };
+
+  /* 掛載時機：cuttable() 跑在 installKit() 之前（竹子要先長出來），
+   * 那時 core.kit 還不存在。而且換角色時 kit.rebuild() 會**換掉整個
+   * Combat 實例** —— 開場註冊一次的話換完角色就失效了。
+   * 所以每幀檢查一次，實例換了就重掛。 */
+  let hooked = null;
+
+  core.onUpdate((dt) => {
+    const cb = core.kit?.combat;
+    if (cb && cb !== hooked) { hooked = cb; cb.onSwing(onSwing); }
+
+    // 倒下 → 落地 → 淡出
+    for (let i = falling.length - 1; i >= 0; i--) {
+      const f = falling[i];
+      f.t += dt;
+      if (f.t < FALL_T) {
+        const k = f.t / FALL_T;
+        // 先快後慢再輕彈一下 —— 純線性看起來像被推倒的紙板
+        const ang = (Math.PI / 2) * (1 - (1 - k) * (1 - k)) + Math.sin(k * Math.PI) * 0.06;
+        f.mesh.rotation.z = Math.cos(f.dir) * ang;
+        f.mesh.rotation.x = Math.sin(f.dir) * ang;
+      } else {
+        const k = (f.t - FALL_T) / FADE_T;
+        f.mat.opacity = Math.max(0, 1 - k);
+        if (k >= 1) {
+          world.remove(f.mesh);
+          f.mesh.geometry.dispose();
+          f.mat.dispose();
+          falling.splice(i, 1);
+        }
+      }
+    }
+    // 重生：縮放從 0 長回 1
+    for (let i = regrowing.length - 1; i >= 0; i--) {
+      const r = regrowing[i];
+      r.at -= dt;
+      if (r.at > 0) continue;
+      const k = Math.min(1, (-r.at) / GROW_T);
+      const b = r.b;
+      write(b, (b.cutHeight / b.h) + (1 - b.cutHeight / b.h) * k, k);
+      if (k >= 1) {
+        b.dead = false;
+        b.hp = 3;
+        regrowing.splice(i, 1);
+      }
+    }
+  });
+
+  console.info('[bamboo] 砍竹系統上線（3 刀斷、5 分鐘長回、砍光整叢解除擋路）');
 })();
 
 /* ─────────────────────────────────── 天蓋（遮住天空的那一層） ── */

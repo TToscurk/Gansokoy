@@ -85,6 +85,13 @@ export class Combat {
     // 介面：{ dmgMul(ctx) → number, onHit(ctx), onSwing(ctx) }
     this.mods = null;
 
+    /* 額外的揮刀監聽（清單制）。mods 只有一個位子，而且已經被技能系統
+     * 佔走了（skills.js 直接 combat.mods = this）—— 地圖想在每次揮刀時
+     * 做自己的事（竹林的砍竹）就沒地方掛。這裡另開一條清單，
+     * 誰都可以加，互不覆蓋。
+     * 回呼收到 { form, origin, yaw }：型、揮刀當下的座標與朝向。 */
+    this._swingHooks = [];
+
     // 前臂/手掌是靜態節點，矩陣只需要算一次
     const rig = player.model.userData.rig;
     rig?.foreR?.updateMatrix();
@@ -145,6 +152,7 @@ export class Combat {
     this.idleT = 0;
     this.stats.swings++;
     this.mods?.onSwing?.({ form, wasSheathed });
+    for (const fn of this._swingHooks) fn({ form, origin: p.pos, yaw: p.yaw });
 
     // 朝向：相機水平前方（跟 WASD 的「前」同一套定義）
     const fx = -Math.sin(p.camYaw), fz = -Math.cos(p.camYaw);
@@ -270,6 +278,12 @@ export class Combat {
     this._execForm(form, dmgMul);
     return true;
   }
+
+  /**
+   * 註冊一個揮刀監聽。每次出招（普攻與大招的每一段）都會叫。
+   * @param {(ctx:{form:object, origin:{x:number,z:number}, yaw:number}) => void} fn
+   */
+  onSwing(fn) { this._swingHooks.push(fn); }
 
   /** @param dt 受頓挫壓慢的時間；@param rawDt 真實時間（只給 hitstop 自己倒數用） */
   update(dt, rawDt = dt) {
