@@ -21,6 +21,7 @@ import { scatterGrass } from './src/world/flora.js';
 import { bootMap } from './src/core/GameCore.js';
 import { texMaps, texgenCount, NORMAL_STRENGTH } from './src/world/texgen.js';
 import { rng, fbm, ridged, worley, modulate } from './src/world/noise.js';
+import { buildLUT, LUT_PRESETS } from './src/world/lut.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
 // HUD、renderer、scene/camera、Environment、完整後製鏈、畫質、world 群組
@@ -1851,3 +1852,7 @@ window.__shrine = core.debugHandle({
   },
   // 原本沒有 colliders / heightAt / prog / panel 這幾個鍵
 }, { omit: ['colliders', 'heightAt', 'prog', 'panel'] });
+
+/* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
+ * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
+core.setLUT(buildLUT(LUT_PRESETS.shrine));

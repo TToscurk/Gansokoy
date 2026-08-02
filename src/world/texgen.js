@@ -124,6 +124,77 @@ export function roughnessFromCanvas(canvas, { min = 0.6, max = 0.95, invert = tr
   return tex;
 }
 
+
+/**
+ * 從同一份亮度場推「凹陷遮蔽」（cavity AO）貼圖。
+ *
+ * 原理：把高度場模糊一次當成「周圍的平均高度」，比周圍低的地方就是凹陷
+ * ——磚縫、木紋的溝、瓦楞的谷。凹陷處環境光進不去，該暗。
+ *
+ * 跟 GTAO 是互補的：GTAO 算的是幾何之間的遮蔽（屋簷對地面），這張算的是
+ * 表面自己的細微凹凸，尺度小到 GTAO 的取樣半徑根本看不到。
+ *
+ * 注意 aoMap 只影響間接光（環境光／IBL），不影響直射日光 —— 這是
+ * three.js 的定義，不是這裡少做了什麼。
+ *
+ * @param {HTMLCanvasElement} canvas
+ * @param {object} [o]
+ * @param {number} [o.strength=1] 遮蔽強度
+ * @param {number} [o.radius=4] 模糊半徑（像素）＝「周圍」有多大
+ * @returns {THREE.CanvasTexture} 灰階，白＝不遮蔽
+ */
+export function aoFromCanvas(canvas, { strength = 1, radius = 4 } = {}) {
+  const { w, h, data } = heightField(canvas);
+
+  // 可分離box blur，兩趟。取樣取模才平鋪得起來（同 normalFromCanvas）
+  const tmp = new Float32Array(w * h), blur = new Float32Array(w * h);
+  const n = radius * 2 + 1;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      let sum = 0;
+      for (let k = -radius; k <= radius; k++) sum += data[y * w + (((x + k) % w) + w) % w];
+      tmp[y * w + x] = sum / n;
+    }
+  }
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      let sum = 0;
+      for (let k = -radius; k <= radius; k++) sum += tmp[((((y + k) % h) + h) % h) * w + x];
+      blur[y * w + x] = sum / n;
+    }
+  }
+
+  // 只有「比周圍低」才遮蔽；凸起不該變亮，那是高光的事
+  const dip = new Float32Array(w * h);
+  for (let i = 0; i < data.length; i++) dip[i] = Math.max(0, blur[i] - data[i]);
+
+  // 依各自的凹陷分佈正規化。用固定係數的話，亮度梯度小的貼圖（木、漆）
+  // 會算出一張幾乎全白的 AO（實測平均 253/255，等於沒做），
+  // 而梯度大的（疊石牆）又過頭。取 98 百分位當「最深的凹陷」，
+  // 每張貼圖都用滿同樣的動態範圍，跨材質的 AO 強度才一致。
+  const sorted = Float32Array.from(dip).sort();
+  const p98 = sorted[Math.floor(sorted.length * 0.98)] || 1e-6;
+
+  const dst = document.createElement('canvas');
+  dst.width = w; dst.height = h;
+  const ctx = dst.getContext('2d');
+  const img = ctx.createImageData(w, h);
+  const o = img.data;
+  const depth = 0.55 * strength;          // 最深處掉到 1 - depth
+  for (let i = 0, p = 0; i < data.length; i++, p += 4) {
+    const t = Math.min(1, dip[i] / p98);
+    const v = Math.round(Math.max(0, Math.min(1, 1 - t * depth)) * 255);
+    o[p] = o[p + 1] = o[p + 2] = v;
+    o[p + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+
+  const tex = new THREE.CanvasTexture(dst);
+  tex.colorSpace = THREE.NoColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}
+
 /**
  * 從一張既有的 CanvasTexture 長出整組 PBR 貼圖。
  *
@@ -142,19 +213,25 @@ export function roughnessFromCanvas(canvas, { min = 0.6, max = 0.95, invert = tr
  */
 export function mapsFromTexture(tex, {
   normalStrength = 1, roughRange = [0.6, 0.95], roughInvert = true,
+  ao = true, aoStrength = 1,
 } = {}) {
   const canvas = tex.image;
   const normalMap = cachedNormal(tex, normalStrength);
   const roughnessMap = roughnessFromCanvas(canvas, {
     min: roughRange[0], max: roughRange[1], invert: roughInvert,
   });
-  for (const t of [normalMap, roughnessMap]) {
+  const aoMap = ao ? cachedAO(tex, aoStrength) : null;
+  for (const t of [normalMap, roughnessMap, aoMap].filter(Boolean)) {
     t.wrapS = tex.wrapS; t.wrapT = tex.wrapT;
     t.repeat.copy(tex.repeat);
     t.offset.copy(tex.offset);
     t.anisotropy = tex.anisotropy;
   }
-  return { map: tex, normalMap, roughnessMap };
+  if (!aoMap) return { map: tex, normalMap, roughnessMap };
+  // channel 0 ＝跟顏色貼圖共用同一組 UV。three.js 預設 aoMap 讀 uv1，
+  // 這個專案的幾何沒有第二組 UV，不指定的話整張圖會是黑的。
+  aoMap.channel = 0;
+  return { map: tex, normalMap, roughnessMap, aoMap };
 }
 
 /* ─────────────────────────────────────── 給各張地圖共用的薄包裝 ── */
@@ -188,6 +265,18 @@ function cachedNormal(tex, strength) {
   return byStrength.get(strength);
 }
 
+const _aoCache = new WeakMap();
+let _aoMade = 0;
+function cachedAO(tex, strength) {
+  let byStrength = _aoCache.get(tex);
+  if (!byStrength) _aoCache.set(tex, byStrength = new Map());
+  if (!byStrength.has(strength)) {
+    byStrength.set(strength, aoFromCanvas(tex.image, { strength }));
+    _aoMade++;
+  }
+  return byStrength.get(strength);
+}
+
 /**
  * `...texMaps(someCanvasTexture, [0.72, 0.95])` 展開進 MeshStandardMaterial。
  *
@@ -201,4 +290,4 @@ export function texMaps(tex, roughRange, o = {}) {
 }
 
 /** 這張圖實際生成了幾張資料貼圖（法線會共用，所以不是材質數 × 2）。 */
-export const texgenCount = () => _normalsMade + _roughMade;
+export const texgenCount = () => _normalsMade + _roughMade + _aoMade;

@@ -27,6 +27,7 @@ import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
+import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
 import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -1478,3 +1479,7 @@ window.__village = core.debugHandle({
   frame() { renderer.render(scene, camera); },
   GATE_Z, SOUTH_GATE_Z, SW_GATE, KOURIN_PORTAL,
 }, { omit: ['panel'] });
+
+/* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
+ * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
+core.setLUT(buildLUT(LUT_PRESETS.village));

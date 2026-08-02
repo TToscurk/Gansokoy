@@ -115,11 +115,34 @@ export function bootMap({
         saturation: { value: 1.12 },
         vignette: { value: 0.45 },
         tint: { value: new THREE.Color('#2a1c3a') },
+        // 色調分級 LUT（升級書 4.4）。預設沒有貼圖、強度 0 ——
+        // 地圖要用就呼叫 core.setLUT()，不用的圖一個指令都不多跑。
+        tLut: { value: null },
+        lutSize: { value: 16 },
+        lutMix: { value: 0 },
       },
       vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }',
       fragmentShader: `
         uniform sampler2D tDiffuse; uniform float contrast, saturation, vignette;
         uniform vec3 tint; varying vec2 vUv;
+        uniform sampler2D tLut; uniform float lutSize, lutMix;
+
+        // 條狀 LUT：N 個藍色切片橫向排開，寬 N*N、高 N。
+        // 半個像素的內縮是必要的 —— 沒有的話紅色軸取樣會滲到隔壁切片，
+        // 畫面上會出現一格一格的色塊。
+        vec3 lutLookup(vec3 c){
+          float N = lutSize;
+          c = clamp(c, 0.0, 1.0);
+          float b = c.b * (N - 1.0);
+          float b0 = floor(b), b1 = min(b0 + 1.0, N - 1.0);
+          float fb = b - b0;
+          float u = (0.5 + c.r * (N - 1.0)) / N;
+          float v = (0.5 + c.g * (N - 1.0)) / N;
+          vec3 s0 = texture2D(tLut, vec2((b0 + u) / N, v)).rgb;
+          vec3 s1 = texture2D(tLut, vec2((b1 + u) / N, v)).rgb;
+          return mix(s0, s1, fb);
+        }
+
         void main(){
           vec4 src = texture2D(tDiffuse, vUv);
           vec3 c = src.rgb;
@@ -127,6 +150,7 @@ export function bootMap({
           float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
           c = mix(vec3(l), c, saturation);
           c = mix(c, tint, (1.0 - l) * 0.09);
+          if (lutMix > 0.0) c = mix(c, lutLookup(clamp(c, 0.0, 1.0)), lutMix);
           float v = smoothstep(0.95, 0.28, length(vUv - 0.5));
           c *= mix(1.0, v, vignette);
           gl_FragColor = vec4(clamp(c, 0.0, 1.0), src.a);
@@ -315,6 +339,26 @@ export function bootMap({
       cycle() { return core.quality.set((qualityIdx + 1) % QUALITY_NAMES.length); },
     },
     onQualityChange(fn) { _qualityListeners.push(fn); },
+
+    /**
+     * 掛上這張圖的色調分級 LUT（升級書 4.4）。
+     *
+     * 只有 postFX:'full' 才有 gradePass —— basic 那條路沒有後製鏈，
+     * 呼叫會被安靜忽略（回傳 false），地圖端不必自己判斷。
+     * 低畫質檔位 gradePass 本來就關掉，所以 LUT 也跟著失效，不必另外連動。
+     *
+     * @param {THREE.DataTexture|null} tex buildLUT() 的產物；null ＝取消
+     * @param {number} [mix=1] 0~1，想要淡一點就調低
+     * @returns {boolean} 有沒有真的掛上
+     */
+    setLUT(tex, mix = 1) {
+      if (!fx || !fx.gradePass) return false;
+      const u = fx.gradePass.uniforms;
+      u.tLut.value = tex;
+      u.lutSize.value = tex?.userData?.lutSize ?? 16;
+      u.lutMix.value = tex ? mix : 0;
+      return !!tex;
+    },
 
     /* ─────────────────────── 玩家生命週期（G14） ── */
     /**
