@@ -19,7 +19,7 @@ import { Progression } from './src/player/progression.js';
 import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 import { scatterGrass } from './src/world/flora.js';
 import { bootMap } from './src/core/GameCore.js';
-import { mapsFromTexture } from './src/world/texgen.js';
+import { texMaps, texgenCount, NORMAL_STRENGTH } from './src/world/texgen.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
 // HUD、renderer、scene/camera、Environment、完整後製鏈、畫質、world 群組
@@ -281,15 +281,6 @@ const DECAL = { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits
  * roughRange 各自以原本的 roughness 純量為中心往兩邊開 —— 有了
  * roughnessMap 之後純量要設 1，否則兩者相乘會把整體壓暗一階。
  */
-const NORMAL_STRENGTH = (() => {
-  const v = parseFloat(new URLSearchParams(location.search).get('nstr'));
-  return Number.isFinite(v) && v >= 0 ? v : 1.0;
-})();
-let _texgenCount = 0;
-const texMaps = (tex, roughRange, o = {}) => {
-  _texgenCount += 2;
-  return mapsFromTexture(tex, { normalStrength: NORMAL_STRENGTH, roughRange, ...o });
-};
 
 const MAT = {};
 function mats() {
@@ -1700,7 +1691,7 @@ core.start();
 // renderer.info.memory.textures 算的是**已上傳到 GPU** 的張數，所以要等
 // 畫過幾幀才有意義（在 mats() 當下讀一律是 0）。
 setTimeout(() => {
-  console.info(`[texgen] 法線強度 ${NORMAL_STRENGTH}；自動生成 ${_texgenCount} 張資料貼圖；`
+  console.info(`[texgen] 法線強度 ${NORMAL_STRENGTH}；自動生成 ${texgenCount()} 張資料貼圖；`
     + `GPU 上的貼圖總數 ${renderer.info.memory.textures}`);
 }, 1200);
 

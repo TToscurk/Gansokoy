@@ -31,6 +31,7 @@ import { RabbitMobs } from '../../src/combat/rabbits.js';
 import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -155,7 +156,7 @@ core.setTerrain(heightAt);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -186,10 +187,10 @@ const trailTex = canvasTex(256, (g, s) => {
 }, 3, 40);
 
 const MAT = {
-  soil: new THREE.MeshStandardMaterial({ map: soilTex, roughness: 1 }),
+  soil: new THREE.MeshStandardMaterial({ ...texMaps(soilTex, [0.86, 1.0]), roughness: 1 }),
   // 小徑鋪在地面上：polygonOffset 讓它在深度測試上穩定贏過土壤（見人間之里的同一套處理）
   trail: new THREE.MeshStandardMaterial({
-    map: trailTex, roughness: 1,
+    ...texMaps(trailTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   culm: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.72 }),   // 竹竿（顏色走頂點/instance）

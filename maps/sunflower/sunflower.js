@@ -28,6 +28,7 @@ import { FlowerFairies } from '../../src/combat/flowerfairies.js';
 import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -107,7 +108,7 @@ const pathDist = (x, z) => PATHS.edgeDist(x, z, 2);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -141,9 +142,9 @@ const ridgeTex = canvasTex(256, (g, s) => {
 }, 3, 34);
 
 const MAT = {
-  field: new THREE.MeshStandardMaterial({ map: fieldTex, roughness: 1 }),
+  field: new THREE.MeshStandardMaterial({ ...texMaps(fieldTex, [0.86, 1.0]), roughness: 1 }),
   ridge: new THREE.MeshStandardMaterial({
-    map: ridgeTex, roughness: 1,
+    ...texMaps(ridgeTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   stalk: new THREE.MeshStandardMaterial({ color: '#4d6a2c', roughness: 1 }),

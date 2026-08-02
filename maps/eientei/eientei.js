@@ -24,6 +24,7 @@ import { NPCManager } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -81,7 +82,7 @@ core.setTerrain(heightAt);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -117,13 +118,13 @@ const stoneTex = canvasTex(256, (g, s) => {
 }, 2, 14);
 
 const MAT = {
-  soil: new THREE.MeshStandardMaterial({ map: soilTex, roughness: 1 }),
+  soil: new THREE.MeshStandardMaterial({ ...texMaps(soilTex, [0.86, 1.0]), roughness: 1 }),
   gravel: new THREE.MeshStandardMaterial({
-    map: gravelTex, roughness: 1,
+    ...texMaps(gravelTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   stonePath: new THREE.MeshStandardMaterial({
-    map: stoneTex, roughness: 0.95,
+    ...texMaps(stoneTex, [0.81, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
   }),
   plaster: new THREE.MeshStandardMaterial({ color: '#e8dfca', roughness: 0.95 }),

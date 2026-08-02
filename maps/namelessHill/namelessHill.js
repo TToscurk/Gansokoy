@@ -20,6 +20,7 @@ import * as THREE from 'three';
 import { makePortalGlow } from '../../src/world/portal.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -107,7 +108,7 @@ const pathDist = (x, z) => PATHS.edgeDist(x, z, 2);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -144,9 +145,9 @@ const wornTex = canvasTex(256, (g, s) => {
 }, 3, 30);
 
 const MAT = {
-  meadow: new THREE.MeshStandardMaterial({ map: meadowTex, roughness: 1 }),
+  meadow: new THREE.MeshStandardMaterial({ ...texMaps(meadowTex, [0.86, 1.0]), roughness: 1 }),
   worn: new THREE.MeshStandardMaterial({
-    map: wornTex, roughness: 1,
+    ...texMaps(wornTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   stone: new THREE.MeshStandardMaterial({ color: '#8d8b80', roughness: 1 }),

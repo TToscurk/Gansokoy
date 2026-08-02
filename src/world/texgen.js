@@ -144,7 +144,7 @@ export function mapsFromTexture(tex, {
   normalStrength = 1, roughRange = [0.6, 0.95], roughInvert = true,
 } = {}) {
   const canvas = tex.image;
-  const normalMap = normalFromCanvas(canvas, normalStrength);
+  const normalMap = cachedNormal(tex, normalStrength);
   const roughnessMap = roughnessFromCanvas(canvas, {
     min: roughRange[0], max: roughRange[1], invert: roughInvert,
   });
@@ -156,3 +156,49 @@ export function mapsFromTexture(tex, {
   }
   return { map: tex, normalMap, roughnessMap };
 }
+
+/* ─────────────────────────────────────── 給各張地圖共用的薄包裝 ── */
+
+/**
+ * 法線強度。`?nstr=1.5` 可以現場換，不必改代碼 —— 升級書 §5 規定的 A/B
+ * 流程要靠它。八張圖讀同一個查詢參數，不然比 A/B 時各圖強度會對不上。
+ */
+export const NORMAL_STRENGTH = (() => {
+  const v = parseFloat(new URLSearchParams(location.search).get('nstr'));
+  return Number.isFinite(v) && v >= 0 ? v : 1.0;
+})();
+
+let _roughMade = 0;
+
+/* 同一張貼圖常常被兩個材質共用（例如里的 wood 與 darkWood 只差顏色），
+ * 法線只跟來源與強度有關，重算一次就白白多一張 GPU 貼圖。粗糙度不快取 ——
+ * 它的範圍是各材質自己的。
+ *
+ * 鍵用 texture 物件而不是底下的 canvas：同一張 canvas 有可能被兩個 repeat
+ * 不同的 CanvasTexture 包起來，共用法線會被後者的 repeat 覆寫掉。 */
+const _normalCache = new WeakMap();
+let _normalsMade = 0;
+function cachedNormal(tex, strength) {
+  let byStrength = _normalCache.get(tex);
+  if (!byStrength) _normalCache.set(tex, byStrength = new Map());
+  if (!byStrength.has(strength)) {
+    byStrength.set(strength, normalFromCanvas(tex.image, strength));
+    _normalsMade++;
+  }
+  return byStrength.get(strength);
+}
+
+/**
+ * `...texMaps(someCanvasTexture, [0.72, 0.95])` 展開進 MeshStandardMaterial。
+ *
+ * **roughness 純量記得一起設成 1**：有了 roughnessMap 之後兩者是相乘的，
+ * 純量留在原本的 0.9 會把整體再壓暗一階。roughRange 則以原本那個純量為
+ * 中心往兩邊開，例如 0.95 → [0.86, 1.0]。
+ */
+export function texMaps(tex, roughRange, o = {}) {
+  _roughMade++;
+  return mapsFromTexture(tex, { normalStrength: NORMAL_STRENGTH, roughRange, ...o });
+}
+
+/** 這張圖實際生成了幾張資料貼圖（法線會共用，所以不是材質數 × 2）。 */
+export const texgenCount = () => _normalsMade + _roughMade;

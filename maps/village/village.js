@@ -24,6 +24,7 @@ import { VillagerCrowd } from '../../src/entities/villagers.js';
 import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -94,7 +95,7 @@ core.setTerrain(heightAt);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -143,16 +144,16 @@ const woodTex = canvasTex(128, (g, s) => {
 }, 1, 2);
 
 const MAT = {
-  ground: new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1 }),
+  ground: new THREE.MeshStandardMaterial({ ...texMaps(groundTex, [0.86, 1.0]), roughness: 1 }),
   // polygonOffset：石板路是鋪在地面上的薄薄一層，深度值跟地面非常接近。
   // 把它往鏡頭方向偏一點，地面就永遠搶不贏它，路草交界不會閃。
   road: new THREE.MeshStandardMaterial({
-    map: stoneRoadTex, roughness: 1,
+    ...texMaps(stoneRoadTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
-  plaster: new THREE.MeshStandardMaterial({ map: plasterTex, roughness: 0.95, color: '#f2ead6' }),
-  wood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.9, color: '#c8a880' }),
-  darkWood: new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.95, color: '#6a5038' }),
+  plaster: new THREE.MeshStandardMaterial({ ...texMaps(plasterTex, [0.81, 1.0]), roughness: 1, color: '#f2ead6' }),
+  wood: new THREE.MeshStandardMaterial({ ...texMaps(woodTex, [0.76, 0.95]), roughness: 1, color: '#c8a880' }),
+  darkWood: new THREE.MeshStandardMaterial({ ...texMaps(woodTex, [0.81, 1.0]), roughness: 1, color: '#6a5038' }),
   kura: new THREE.MeshStandardMaterial({ color: '#f4f0e2', roughness: 0.9 }),           // 土藏的白漆喰
   namako: new THREE.MeshStandardMaterial({ color: '#3a3f46', roughness: 0.85 }),        // 海鼠壁
   roofTile: new THREE.MeshStandardMaterial({ color: '#4c5560', roughness: 0.8, flatShading: true }),

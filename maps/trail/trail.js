@@ -31,6 +31,7 @@ import { makePortalGlow } from '../../src/world/portal.js';
 import { FairyMobs } from '../../src/combat/mobs.js';
 import { progressMobs } from '../../src/player/progression.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -146,7 +147,7 @@ core.setTerrain(heightAt);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -175,10 +176,10 @@ const MAT = {
   // 獸徑鋪在草坡上（makeStrip 已讓它貼著高度場），polygonOffset 讓它
   // 在深度測試上穩定贏過草地，邊緣不會閃
   dirt: new THREE.MeshStandardMaterial({
-    map: dirtTex, roughness: 1,
+    ...texMaps(dirtTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
-  grass: new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1 }),
+  grass: new THREE.MeshStandardMaterial({ ...texMaps(grassTex, [0.86, 1.0]), roughness: 1 }),
   bark: new THREE.MeshStandardMaterial({ color: '#4a3828', roughness: 1 }),
   leafA: new THREE.MeshStandardMaterial({ color: '#3d5c2a', roughness: 1, flatShading: true }),
   leafB: new THREE.MeshStandardMaterial({ color: '#557436', roughness: 1, flatShading: true }),

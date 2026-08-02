@@ -23,6 +23,7 @@ import { makePortalGlow } from '../../src/world/portal.js';
 import { NPCManager } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
+import { texMaps } from '../../src/world/texgen.js';
 import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -113,7 +114,7 @@ core.setTerrain(heightAt);
 function canvasTex(size, draw, rx = 1, ry = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
-  draw(c.getContext('2d'), size);
+  draw(c.getContext('2d', { willReadFrequently: true }), size);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(rx, ry);
@@ -166,17 +167,17 @@ const brickTex = canvasTex(128, (g, s) => {
 }, 2, 3);
 
 const MAT = {
-  soil: new THREE.MeshStandardMaterial({ map: soilTex, roughness: 1 }),
+  soil: new THREE.MeshStandardMaterial({ ...texMaps(soilTex, [0.86, 1.0]), roughness: 1 }),
   road: new THREE.MeshStandardMaterial({
-    map: roadTex, roughness: 1,
+    ...texMaps(roadTex, [0.86, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   flag: new THREE.MeshStandardMaterial({
-    map: flagTex, roughness: 0.95,
+    ...texMaps(flagTex, [0.81, 1.0]), roughness: 1,
     polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
   }),
-  plank: new THREE.MeshStandardMaterial({ map: plankTex, roughness: 0.95 }),
-  brick: new THREE.MeshStandardMaterial({ map: brickTex, roughness: 1 }),
+  plank: new THREE.MeshStandardMaterial({ ...texMaps(plankTex, [0.81, 1.0]), roughness: 1 }),
+  brick: new THREE.MeshStandardMaterial({ ...texMaps(brickTex, [0.86, 1.0]), roughness: 1 }),
   wood: new THREE.MeshStandardMaterial({ color: '#7a6144', roughness: 0.92 }),
   darkWood: new THREE.MeshStandardMaterial({ color: '#4a3626', roughness: 0.95 }),
   // 洋式的陡屋頂：暗青灰的石板瓦，跟里的和瓦分得開
