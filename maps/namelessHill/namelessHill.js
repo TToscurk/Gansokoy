@@ -29,6 +29,7 @@ import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { Ambience } from '../../src/world/ambience.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -615,3 +616,10 @@ window.__hill = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.namelessHill));
+
+/* 環境生命：開闊草原就該有鳥 ＋ 風吹過的花瓣。 */
+const amb = new Ambience(world, 61);
+amb.birds({ cx: 0, cz: 0, r: 95, y: 44, count: 7, speed: 0.055 });
+amb.drift({ cx: 0, cz: 0, hx: 100, hz: 100, top: 9, groundAt: heightAt,
+  count: 80, fall: 0.5, color: 0xf0f0e8, size: 0.11 });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));

@@ -40,6 +40,7 @@ import { PathNet, catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
+import { Ambience } from '../../src/world/ambience.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 /* 共用 HUD / renderer / scene / Environment —— 與其他圖完全同一套版面 */
@@ -1506,3 +1507,12 @@ window.__bamboo = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.bamboo));
+
+/* 環境生命：竹葉飄落 ＋ 高處掠過的飛鳥。
+ * 地上已經鋪了枯葉，飄落用的是同一組視覺語彙 —— 葉子從天蓋落到地面，
+ * 兩者接得起來。 */
+const amb = new Ambience(world, 47);
+amb.drift({ cx: 0, cz: 0, hx: 90, hz: 220, top: 13, groundAt: heightAt,
+  count: 120, fall: 0.65, color: 0xa8a860, size: 0.16 });
+amb.birds({ cx: 0, cz: -40, r: 150, y: 40, count: 4, speed: 0.045 });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));

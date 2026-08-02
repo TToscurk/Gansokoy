@@ -34,6 +34,7 @@ import { scatterGrass } from '../../src/world/flora.js';
 import { MAP_REGISTRY } from '../../src/world/mapRegistry.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { makeSignpost } from '../../src/world/signpost.js';
+import { Ambience } from '../../src/world/ambience.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -736,3 +737,10 @@ window.__kourindou = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.kourindou));
+
+/* 環境生命：店裡的炊煙 ＋ 森林邊緣的落葉 ＋ 門口的暖簾。 */
+const amb = new Ambience(world, 59);
+amb.smoke(2, heightAt(2, 4) + 4.4, 4, { count: 10, rise: 5, drift: 0.45 });
+amb.drift({ cx: -20, cz: -10, hx: 55, hz: 55, top: 11, groundAt: heightAt,
+  count: 60, fall: 0.55, color: 0xb08a4a, size: 0.14 });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));

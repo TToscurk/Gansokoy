@@ -21,6 +21,7 @@ import { scatterGrass } from './src/world/flora.js';
 import { bootMap } from './src/core/GameCore.js';
 import { texMaps, texgenCount, NORMAL_STRENGTH } from './src/world/texgen.js';
 import { rng, fbm, ridged, worley, modulate } from './src/world/noise.js';
+import { Ambience } from './src/world/ambience.js';
 import { buildLUT, LUT_PRESETS } from './src/world/lut.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
@@ -1856,3 +1857,12 @@ window.__shrine = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.shrine));
+
+/* 環境生命（升級書・升級 7 第 2 點）。神社是有人住的地方 ——
+ * 社務所的炊煙、境內飄落的紅葉、繞著山頭的鳥。 */
+const amb = new Ambience(world, 23);
+amb.smoke(-9.5, heightAt(-9.5, 8) + 4.8, 8, { count: 12, rise: 6, drift: 0.6 });
+amb.drift({ cx: 0, cz: 10, hx: 60, hz: 70, top: 12, groundAt: heightAt,
+  count: 80, fall: 0.55, color: 0xc85a3a, size: 0.14 });
+amb.birds({ cx: 0, cz: -20, r: 110, y: 50, count: 5, speed: 0.05 });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));

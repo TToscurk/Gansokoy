@@ -32,6 +32,7 @@ import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
 import { catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { Ambience } from '../../src/world/ambience.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -685,3 +686,10 @@ window.__eientei = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.eientei));
+
+/* 環境生命：院內的炊煙（有人住的永遠亭）＋ 飄落的竹葉。 */
+const amb = new Ambience(world, 53);
+amb.smoke(-14, heightAt(-14, 6) + 4.6, 6, { count: 11, rise: 5.5, drift: 0.5 });
+amb.drift({ cx: 0, cz: -20, hx: 70, hz: 70, top: 12, groundAt: heightAt,
+  count: 70, fall: 0.6, color: 0xa8a860, size: 0.15 });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));

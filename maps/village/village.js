@@ -33,6 +33,7 @@ import { GroundGrid, decalOnGrid, ribbonOnGrid } from '../../src/world/groundmes
 import { catmullRom } from '../../src/world/pathnet.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
+import { Ambience } from '../../src/world/ambience.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -1711,3 +1712,18 @@ window.__village = core.debugHandle({
 /* 色調分級 LUT（升級書 4.4）—— 這張圖的色調個性。
  * 各地區的預設值集中在 src/world/lut.js，改的時候看得到彼此的關係。 */
 core.setLUT(buildLUT(LUT_PRESETS.village));
+
+/* 環境生命（升級書・升級 7 第 2 點）。里是有人住的地方 ——
+ * 炊煙是「有人在煮飯」最省的表達，飛鳥讓盆地的天空不只是一張貼圖，
+ * 布幔則是把「風」畫出來。 */
+const amb = new Ambience(world, 31);
+// 街上幾戶的炊煙（挑主街兩側的屋，位置抓在屋脊上）
+for (const [sx, sz] of [[-26, -58], [24, 12], [-30, 86], [28, 140]]) {
+  amb.smoke(sx, heightAt(sx, sz) + 5.4, sz, { count: 12, rise: 6.5, drift: 0.7 });
+}
+amb.birds({ cx: 0, cz: 40, r: 120, y: 52, count: 6 });
+// 晾在後院的布：三塊不同顏色，刻意不等高
+amb.banner(-14.5, heightAt(-14.5, -6) + 2.1, -6, { w: 1.5, h: 1.2, rot: 0.1, color: 0xc9503c });
+amb.banner(-13.0, heightAt(-13.0, -6) + 2.25, -6, { w: 1.3, h: 1.0, rot: 0.1, color: 0x3a5a7a });
+amb.banner(-11.6, heightAt(-11.6, -6) + 2.0, -6, { w: 1.4, h: 1.3, rot: 0.1, color: 0xd8cfae });
+core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
