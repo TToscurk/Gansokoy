@@ -35,6 +35,7 @@ import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { Ambience } from '../../src/world/ambience.js';
 import { terraces, hamlet } from '../../src/world/midground.js';
+import { scuff } from '../../src/world/imperfect.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -207,6 +208,11 @@ const MAT = {
   bark: new THREE.MeshStandardMaterial({ color: '#4e3a28', roughness: 1 }),
   leaf: new THREE.MeshStandardMaterial({ color: '#4a6b33', roughness: 1, flatShading: true }),
   leafPink: new THREE.MeshStandardMaterial({ color: '#e0a8bc', roughness: 1, flatShading: true }),
+  // 竹（升級 7 第 4 點用：塌掉的土牆先用竹籬笆頂著、補屋頂的鷹架）。
+  // 里外就是竹林，「先弄根竹子綁一綁」是這裡最順手的臨時解。
+  bamboo: new THREE.MeshStandardMaterial({ color: '#8a9a5c', roughness: 0.85 }),
+  // 換下來還沒鋪上去的新茅草 —— 比屋頂上曬過的舊茅草亮
+  strawNew: new THREE.MeshStandardMaterial({ color: '#c8ab63', roughness: 1, flatShading: true }),
 };
 
 /* world / colliders / block / walkBlock / post / box / cyl 全部由 GameCore
@@ -463,8 +469,69 @@ for (const cz of [-70, 40, 165]) bridge(cz);
  *   'kura'    土藏（倉庫）：白漆喰厚牆、海鼠壁裙、高窗、厚重的門，沒有格柵
  * @param {object} o {x,z,w,d,h,rot,roof,style,sign,signColor,noren}
  */
-function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'machiya', sign = '', signColor = 0x6a5038, noren = null }) {
+/**
+ * 正在換屋頂的那一戶（升級 7 第 4 點・破綻之一）。
+ *
+ * 屋頂缺一塊露出底下的桷木、正面搭著竹鷹架、地上堆著還沒鋪上去的新茅草。
+ * 全部掛在房子的 Group 底下，所以房子轉幾度它就跟著轉幾度。
+ * 鷹架不給碰撞盒 —— 它站在屋簷底下，房子的碰撞盒已經把那一帶封住了，
+ * 再加一個只會讓玩家在門口被莫名其妙卡住。
+ *
+ * @param {THREE.Group} g 房子的 Group（局部座標）
+ * @param {number} rw @param {number} rd 屋頂的寬與深
+ * @param {number} topY 屋頂起算高度 @param {number} rh 屋頂高 @param {number} eave 出簷
+ * @param {THREE.Material} rm 屋頂材質
+ */
+function roofRepair(g, rw, rd, topY, rh, eave, rm) {
+  const front = rd / 4 + eave / 2;              // 正面那一坡的中心（局部 +z）
+  const pitch = Math.atan2(rh, rd / 2 + eave);
+
+  // 缺口：把一小塊屋頂換成深色的桷木格（掀掉茅草露出下面的骨架）
+  const patch = box(rw * 0.34, 0.1, 1.9, MAT.darkWood, -rw * 0.22, topY + rh / 2 + 0.16, front);
+  patch.rotation.x = pitch;
+  g.add(patch);
+  for (let i = 0; i < 5; i++) {
+    const b = box(0.08, 0.08, 1.9, MAT.wood,
+      -rw * 0.22 + (i - 2) * rw * 0.06, topY + rh / 2 + 0.22, front);
+    b.rotation.x = pitch;
+    g.add(b);
+  }
+  // 剛鋪好的一小條新茅草（顏色比舊的亮）—— 修了一半才看得出在修
+  const fresh = box(rw * 0.16, 0.36, 1.9, MAT.strawNew, -rw * 0.02, topY + rh / 2 + 0.2, front);
+  fresh.rotation.x = pitch;
+  g.add(fresh);
+
+  // 竹鷹架：四根立竿 + 兩道橫檔 + 頂上一片踏板
+  const sz = rd / 2 + eave + 0.5, sy = topY + rh * 0.45;
+  for (const sx of [-1, 1]) for (const dz of [0, 0.9]) {
+    const p = cyl(0.06, 0.07, sy, MAT.bamboo, sx * rw * 0.34, sy / 2, sz - dz, 6, g);
+    p.rotation.z = sx * 0.02;
+  }
+  for (const hy of [sy * 0.42, sy * 0.78]) {
+    box(rw * 0.78, 0.06, 0.06, MAT.bamboo, 0, hy, sz, g);
+    box(rw * 0.78, 0.06, 0.06, MAT.bamboo, 0, hy, sz - 0.9, g);
+  }
+  const deck = box(rw * 0.74, 0.08, 1.1, MAT.wood, 0, sy, sz - 0.45, g);
+  deck.rotation.x = 0.03;
+  // 斜撐 —— 沒有斜撐的鷹架看起來像圍欄
+  for (const sx of [-1, 1]) {
+    const br = box(0.06, sy * 1.02, 0.06, MAT.bamboo, sx * rw * 0.2, sy / 2, sz - 0.45, g);
+    br.rotation.z = sx * 0.32;
+  }
+
+  // 地上堆著還沒鋪的茅草束
+  for (let i = 0; i < 4; i++) {
+    const bundle = cyl(0.24, 0.24, 1.5, MAT.strawNew,
+      rw * 0.42, 0.24 + (i > 2 ? 0.44 : 0), sz + 0.6 + (i % 3) * 0.5, 6, g);
+    bundle.rotation.set(0, (i * 0.7) % 1.2, Math.PI / 2);
+  }
+}
+
+/** 每棟房子的 Group。升級 7 第 4 點的細微擾動要在合併之前對這些下手。 */
+const houseGroups = [];
+function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'machiya', sign = '', signColor = 0x6a5038, noren = null, repair = false }) {
   const g = new THREE.Group();
+  houseGroups.push(g);
   g.position.set(x, heightAt(x, z), z);
   g.rotation.y = rot;
   world.add(g);
@@ -527,6 +594,8 @@ function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'm
     slope.rotation.x = s * Math.atan2(rh, rd / 2 + eave);
   }
   box(rw + eave * 1.5, 0.42, 0.7, rm, 0, topY + rh, 0, g);        // 正脊
+  // 這一戶正在換屋頂（升級 7 第 4 點・破綻之一）
+  if (repair) roofRepair(g, rw, rd, topY, rh, eave, rm);
   // 山牆
   for (const s of [-1, 1]) {
     const shape = new THREE.Shape();
@@ -567,7 +636,10 @@ function house({ x, z, w = 9, d = 7, h = 4.2, rot = 0, roof = 'tile', style = 'm
 const SHOPS = [
   // ---- 北段（里門進來的第一條街） ----
   { x: -13, z: -140, w: 9, d: 7, rot: Math.PI, sign: '番所', roof: 'tile', signColor: 0x4a5a7a },
-  { x: 13.5, z: -138, w: 8.5, d: 7, rot: Math.PI, sign: '馬宿', roof: 'thatch' },
+  // 這一戶正在換屋頂（升級 7 第 4 點）。挑馬宿是因為它在北門進來的第一排、
+  // 正面朝著走進來的人，而且是茅草頂 —— 換茅草看得出「換到一半」，
+  // 瓦頂缺一塊只會像破圖。
+  { x: 13.5, z: -138, w: 8.5, d: 7, rot: Math.PI, sign: '馬宿', roof: 'thatch', repair: true },
   { x: -13, z: -112, w: 10, d: 8, rot: Math.PI, sign: '寺子屋', roof: 'tile', signColor: 0x4a5a7a },  // 慧音的私塾
   { x: 13, z: -108, w: 9, d: 7, rot: Math.PI, sign: '豆腐', noren: 'blue' },
   { x: -13.5, z: -86, w: 8.5, d: 7, rot: Math.PI, sign: '花', noren: 'red' },
@@ -895,29 +967,51 @@ const BLOCK_KEEP_OUT = [
 
 // 沿街的石燈籠與攤位
 const lanternGlows = [];
-function streetLantern(x, z) {
+/**
+ * @param {boolean} [broken=false] 這一盞是歪的、笠石掉在腳邊（升級 7 第 4 點）。
+ *        整支往一邊倒 12 度 —— 石燈籠是疊起來的，地基一沉就會這樣。
+ */
+function streetLantern(x, z, broken = false) {
   const y = heightAt(x, z);
-  cyl(0.28, 0.34, 0.5, MAT.stone, x, y + 0.25, z, 8);
-  cyl(0.16, 0.2, 1.5, MAT.stone, x, y + 1.2, z, 8);
-  const lamp = box(0.62, 0.6, 0.62, MAT.paper, x, y + 2.2, z);
-  box(0.9, 0.16, 0.9, MAT.stone, x, y + 2.58, z);
+  const lean = broken ? 0.21 : 0;      // ≈12 度
+  // 傾斜的話上面每一節都要跟著往同一邊位移，不然就變成散開的積木。
+  // 支點是**基座頂面**（y+0.5）而不是地面：沉下去的是基座下面的土，
+  // 基座本身沒動，柱子是從基座頂上倒過去的。用地面當支點的話柱腳會
+  // 整個偏出基座，看起來不是倒了而是插錯位置。
+  const off = (h) => broken ? (h - 0.5) * Math.tan(lean) : 0;
+  const tilt = (m) => { if (broken) m.rotation.z = -lean; return m; };
+
+  cyl(0.28, 0.34, 0.5, MAT.stone, x, y + 0.25, z, 8);      // 基座不動，是它沉下去的
+  tilt(cyl(0.16, 0.2, 1.5, MAT.stone, x + off(1.2), y + 1.2, z, 8));
+  const lamp = tilt(box(0.62, 0.6, 0.62, MAT.paper, x + off(2.2), y + 2.2, z));
+  if (broken) {
+    // 笠石滑下來，斜靠在柱腳
+    const cap = box(0.9, 0.16, 0.9, MAT.stone, x + 0.72, y + 0.34, z + 0.18);
+    cap.rotation.set(0.1, 0.4, 1.15);
+  } else {
+    box(0.9, 0.16, 0.9, MAT.stone, x, y + 2.58, z);
+  }
   const l = new THREE.PointLight('#ffcf8c', 0, 9, 2);
-  l.position.set(x, y + 2.2, z);
+  l.position.set(x + off(2.2), y + 2.2, z);
   world.add(l);
   lanternGlows.push({ lamp, light: l });
   post(x, z, 0.38, y + 2.6);
 }
+/** 這一盞是歪的 —— 水井廣場北口，主街上走過去一定會經過 */
+const BROKEN_LANTERN = { x: -7.4, z: -30 };
 // 街燈沿主街與橫街排。里放大之後不能再寫死幾盞 —— 用迴圈鋪。
 for (let z = -160; z <= 240; z += 26) {
-  streetLantern(-7.4, z);
+  streetLantern(-7.4, z, z === BROKEN_LANTERN.z);
   streetLantern(7.4, z + 13);
 }
 for (const cz of CROSS_Z) {
   for (const lx of [-88, -50, 50, 88]) streetLantern(lx, cz + 5.6);
 }
 
+const stallGroups = [];
 function stall(x, z, rot, cloth) {
   const g = new THREE.Group();
+  stallGroups.push(g);
   g.position.set(x, heightAt(x, z), z);
   g.rotation.y = rot;
   world.add(g);
@@ -1247,12 +1341,52 @@ waterMill(118);
 
 /* ───────────────────────────── 里門（南北兩座，通獸道與竹林） ── */
 /**
+ * 塌掉的那一段土牆（升級 7 第 4 點・破綻之一）。
+ *
+ * 兩端還留著半截白牆，中間整段倒了，暫時用竹籬笆擋著 —— 竹子是里外
+ * 就有的東西，「先弄根竹子頂著」正是還沒排到預算修的樣子。
+ * 地上散幾塊掉下來的瓦。碰撞盒照樣封住（籬笆也是牆），只是矮一截。
+ *
+ * @param {number} wx 這一段牆的中心 x @param {number} gz 門的 z @param {number} y 地面高度
+ */
+function brokenWallSpan(wx, gz, y) {
+  // 兩端的殘牆 —— 斷面不平，所以各給一塊斜的碎塊收邊
+  for (const s of [-1, 1]) {
+    box(5.2, 2.4, 0.7, MAT.plaster, wx + s * 7.4, y + 1.2, gz);
+    box(5.4, 0.25, 1.0, MAT.roofTile, wx + s * 7.4, y + 2.45, gz);
+    block(wx + s * 7.4, gz, 5.2, 0.7, y + 2.45);
+    const stub = box(1.4, 1.5, 0.7, MAT.plaster, wx + s * 4.1, y + 0.75, gz);
+    stub.rotation.z = s * 0.14;                 // 斷口是斜的
+  }
+  // 中間的竹籬笆：一排竹竿 + 兩道橫檔，綁得歪歪的
+  const N = 13, span = 9.2;
+  for (let i = 0; i < N; i++) {
+    const px = wx + (i / (N - 1) - 0.5) * span;
+    const hh = 1.7 + ((i * 37) % 11) / 11 * 0.35;   // 高矮不齊 —— 現砍現綁的
+    const c = cyl(0.055, 0.06, hh, MAT.bamboo, px, y + hh / 2, gz, 6);
+    c.rotation.z = (((i * 53) % 17) / 17 - 0.5) * 0.09;
+  }
+  for (const hy of [0.62, 1.42]) box(span + 0.4, 0.07, 0.07, MAT.darkWood, wx, y + hy, gz + 0.07);
+  block(wx, gz, span, 0.5, y + 1.8);
+  // 掉下來還沒收走的瓦
+  for (let i = 0; i < 7; i++) {
+    const px = wx + (((i * 71) % 23) / 23 - 0.5) * (span + 3);
+    const pz = gz + (((i * 41) % 19) / 19 - 0.5) * 2.6;
+    const t = box(0.5, 0.09, 0.34, MAT.roofTile, px, y + 0.05, pz);
+    t.rotation.y = ((i * 29) % 13) / 13 * Math.PI;
+    t.rotation.z = (((i * 17) % 7) / 7 - 0.5) * 0.5;
+  }
+}
+
+/**
  * 冠木門 + 兩側土牆。南北兩座長一樣，只有朝向相反。
  * @param {number} gz 門的 z 座標
  * @param {number} inward 里的內側方向（北門 +1，南門 -1）——
  *        結界柱要立在門的內側才對得上「進里前先過結界」。
+ * @param {{sd:number,k:number}} [gap] 哪一段土牆是塌掉、用竹籬笆暫時補起來的
+ *        （升級 7 第 4 點：圍牆缺一段）。sd 是 ±1 的左右側，k 是第幾段。
  */
-function villageGate(gz, inward) {
+function villageGate(gz, inward, gap = null) {
   const y = heightAt(0, gz);
   // 冠木門：兩根柱 + 橫樑 + 小屋頂
   for (const s of [-1, 1]) {
@@ -1270,6 +1404,7 @@ function villageGate(gz, inward) {
   for (const sd of [-1, 1]) {
     for (let k = 0; k < 5; k++) {
       const wx = sd * (17 + k * 20);
+      if (gap && gap.sd === sd && gap.k === k) { brokenWallSpan(wx, gz, y); continue; }
       box(20, 2.4, 0.7, MAT.plaster, wx, y + 1.2, gz);
       box(20.4, 0.25, 1.0, MAT.roofTile, wx, y + 2.45, gz);
       block(wx, gz, 20, 0.7, y + 2.45);
@@ -1281,7 +1416,11 @@ function villageGate(gz, inward) {
     post(s * 6.4, gz + 2.6 * inward, 0.22, y + 1.6);
   }
 }
-villageGate(GATE_Z, 1);          // 北端：通獸道 → 博麗神社
+// 北門東側緊鄰門口的那一段土牆是塌的（升級 7 第 4 點）。
+// 挑 k=0（最靠門的一段）而不是更外面的：站在門外正對著門的時候，
+// 13 公尺的距離配 66 度視角，畫面左右各只吃得下 8 公尺 ——
+// 再往旁邊擺就永遠不在畫面裡了。這一段是走進門、一轉頭就會看到的位置。
+villageGate(GATE_Z, 1, { sd: 1, k: 0 });
 villageGate(SOUTH_GATE_Z, -1);   // 南端：通迷途竹林 → 永遠亭
 
 /**
@@ -1461,6 +1600,21 @@ scatterGrass(world, {
   g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
 })();
 
+/* ─────────────────────────── 不對稱與不完美・第一層（升級 7 第 4 點） ── */
+// 上面那三處是「看得見的破綻」；這裡是看不見的那一層 —— 抽一部分房子與
+// 攤位做細微擾動，讓整排店面不再像複製貼上。
+//
+// 一定要在合併之前跑（合併之後頂點已經烘進世界座標，動不了）。
+// 碰撞盒不會跟著轉：房子的碰撞盒是軸對齊方塊，8.5 公尺寬的房子轉 1.7 度
+// 角落只差 13 公分，走過去感覺不出來。要更誇張的就得手工連碰撞盒一起改。
+{
+  // 主街店家：本來 rot 是寫死的整數角度，一排看過去完全平行 ——
+  // 網格街廓的民家在生成時已經有 ±0.03 的隨機朝向，所以不用再動
+  scuff(houseGroups.slice(0, SHOPS.length), { seed: 21, rate: 0.34, yaw: 0.026, tilt: 0.012, sink: 0.025 });
+  // 攤位是每天搬來搬去的東西，歪得比房子多才對
+  scuff(stallGroups, { seed: 23, rate: 0.7, yaw: 0.09, tilt: 0.02, sink: 0.02, scale: 0.04 });
+}
+
 /* ──────────────────────────────────────────── 靜態幾何合併 ── */
 // 里是三張圖裡最重的一張（近 1800 個網格）：房舍、圍牆、街燈、水田、遠山
 // 全部不會動，依「材質 × 空間格子」合併。里是南北向的長條聚落，
@@ -1585,14 +1739,22 @@ const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10, colliders,
 const { spec, ctrl } = core.spawnPlayer({
   bounds: { hx: 240, hz: 300 },
   // 出生點依來向分流：從香霖堂回來就站在西南門內，其餘（獸道／直接開頁）站北門內
+  // 視線設計（升級 7 第 3 點）：兩個入口都改成**出生在門外**，往門裡看。
+  //
+  // 原本是出生在門內 9 公尺處 —— 里門在背後，第一眼是一條兩側有房子的
+  // 空街，沒有任何框景。冠木門有 8.8 公尺的開口、6 公尺高，本來就是這張圖
+  // 最好的取景框，站在門外往裡看，街景才會被它框起來。
+  //
+  // 出生點要退到傳送點的觸發半徑之外（北門 4.2、西南門 4.6），
+  // 不然一進來畫面就掛著「按 E 回獸道」。
   spawn(from, c) {
     if (from === 'kourindou') {
-      c.teleport(SW_GATE.x + 9, SW_GATE.z);
-      c.yaw = Math.PI / 2;        // 面向東（往里內）
+      c.teleport(SW_GATE.x - 13, SW_GATE.z);
+      c.yaw = Math.PI / 2;        // 面向東（穿過西南門往里內）
       c.camYaw = -Math.PI / 2;
     } else {
-      c.teleport(0, GATE_Z + 9);
-      c.yaw = 0;
+      c.teleport(0, GATE_Z - 13);
+      c.yaw = 0;                  // 面向南（穿過北門往主街）
       c.camYaw = Math.PI;
     }
   },
