@@ -744,8 +744,13 @@ export function buildCharacter(spec) {
     } else {
       const thighLen = LEG_H * 0.55, shinLen = LEG_H * 0.45;
       leg.add(part(tapered(0.064, 0.074, thighLen, 20), legMat, 0, -thighLen / 2, 0));
-      leg.add(part(new THREE.SphereGeometry(0.058, 14, 10), legMat, 0, -thighLen, 0));   // 膝關節
+      // 膝：升級書第 2 章＝該處半徑 × 1.05。原本寫死 0.058，比大腿底端的
+      // 0.074 還細 —— 球根本填不滿接縫，一彎就露出楔形空隙。
+      // 掛在 leg（大腿節點）上，跟著大腿轉；掛到小腿去彎曲時會露餡。
+      leg.add(part(new THREE.SphereGeometry(0.074 * 1.05, 14, 10), legMat, 0, -thighLen, 0));
       leg.add(part(tapered(0.05, 0.06, shinLen, 20), legMat, 0, -thighLen - shinLen / 2, 0));
+      // 踝：小一點（×1.0），大了會看起來腫
+      leg.add(part(new THREE.SphereGeometry(0.06, 12, 8), legMat, 0, -thighLen - shinLen, 0));
     }
 
     // 腳跟＋腳尖，取代單一方塊 —— 剪影才看得出「站著」而不是「插了根柱子」
@@ -767,7 +772,9 @@ export function buildCharacter(spec) {
 
     const upperLen = 0.25, foreLen = 0.20;
     arm.add(part(tapered(0.05, 0.056, upperLen, 20), cloth, 0, -upperLen / 2, 0));
-    arm.add(part(new THREE.SphereGeometry(0.046, 14, 10), skin, 0, -upperLen, 0.008));  // 手肘
+    // 肘：×1.05。原本 0.046 比上臂底端的 0.056 還細，填不滿。
+    // 掛在 arm（上臂節點）而不是 fore —— 掛錯邊彎曲時會露餡。
+    arm.add(part(new THREE.SphereGeometry(0.056 * 1.05, 14, 10), cloth, 0, -upperLen, 0.008));
 
     const fore = new THREE.Group();
     fore.name = sx < 0 ? 'foreL' : 'foreR';
@@ -782,6 +789,9 @@ export function buildCharacter(spec) {
     cuff.rotation.x = Math.PI / 2;
     cuff.castShadow = true;
     fore.add(cuff);
+
+    // 腕：×1.0。掛在 fore（前臂節點），手掌轉動時接縫才不會開
+    fore.add(part(new THREE.SphereGeometry(0.048, 12, 8), skin, 0, -foreLen, 0));
 
     const hand = new THREE.Group();
     hand.name = sx < 0 ? 'handL' : 'handR';
@@ -815,7 +825,9 @@ export function buildCharacter(spec) {
   head.add(skull);
 
   // 頸
-  body.add(part(new THREE.CylinderGeometry(0.045, 0.05, 0.09, 8), skin, 0, LEG_H + TORSO_H + 0.04, 0));
+  body.add(part(new THREE.CylinderGeometry(0.045, 0.05, 0.09, 16), skin, 0, LEG_H + TORSO_H + 0.04, 0));
+  // 頸根填縫：×1.1，位置壓在領口裡，所以看不到球本身，只補掉頭轉動時的縫
+  body.add(part(new THREE.SphereGeometry(0.05 * 1.1, 12, 8), skin, 0, LEG_H + TORSO_H, 0));
 
   // 眼睛（純色橢圓，卡通風不需要複雜結構）
   const eyeMat = toon(pal.eyes || 0x3a2a3a);
