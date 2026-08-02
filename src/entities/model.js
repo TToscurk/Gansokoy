@@ -42,6 +42,123 @@ function toonDS(color) {
   return m;
 }
 
+
+/* ─────────────────────────────────────────────── 眼睛（貼圖式） ── */
+
+// 眼睛改用貼圖而不是疊小球（角色書 4.3）。
+// 這一項對「像不像人」的影響遠大於幾何精細度，而且**更便宜** ——
+// 原本一隻眼是「眼白球 + 高光球」兩顆 14×10 的球（約 500 個三角形），
+// 現在是一片 6×4 的微凸面片（48 個），虹膜、瞳孔、高光全在貼圖裡。
+//
+// 貼圖做成上下兩格（上＝睜眼、下＝閉眼），眨眼只要把 map.offset.y
+// 從 0.5 切到 0，不用動幾何 —— 之後要加眨眼動畫時直接用。
+const eyeTexCache = new Map();
+function eyeTexture(irisHex) {
+  if (eyeTexCache.has(irisHex)) return eyeTexCache.get(irisHex);
+  const W = 128, H = 256;                    // 兩格，每格 128×128
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const g = c.getContext('2d', { willReadFrequently: true });
+  const iris = new THREE.Color(irisHex);
+  const hex = (col) => '#' + col.getHexString();
+
+  g.clearRect(0, 0, W, H);
+
+  // --- 上格：睜眼 ---
+  // 眼型：杏仁形。上緣弧度大、下緣平 —— 這是「眼睛」而不是「圓孔」的關鍵
+  const eye = (yOff) => {
+    g.save();
+    g.beginPath();
+    g.moveTo(6, 64 + yOff);
+    g.quadraticCurveTo(64, 4 + yOff, 122, 64 + yOff);
+    g.quadraticCurveTo(64, 116 + yOff, 6, 64 + yOff);
+    g.closePath();
+    return g;
+  };
+  eye(0).clip();
+  g.fillStyle = '#f6f2ee'; g.fillRect(0, 0, W, 128);          // 眼白（不是純白，純白會太跳）
+  // 上眼瞼投影：眼球是球，上半本來就該暗
+  const lid = g.createLinearGradient(0, 0, 0, 128);
+  lid.addColorStop(0, 'rgba(90,70,80,.42)');
+  lid.addColorStop(0.42, 'rgba(90,70,80,0)');
+  g.fillStyle = lid; g.fillRect(0, 0, W, 128);
+  // 虹膜
+  const IX = 64, IY = 66, IR = 30;
+  g.fillStyle = hex(iris.clone().multiplyScalar(0.82));
+  g.beginPath(); g.arc(IX, IY, IR, 0, 7); g.fill();
+  // 虹膜的放射狀纖維：一圈深淺交錯的細線，沒有這個虹膜會像一塊色紙
+  for (let i = 0; i < 46; i++) {
+    const a = (i / 46) * Math.PI * 2;
+    const k = 0.6 + ((i * 7919) % 100) / 250;
+    g.strokeStyle = hex(iris.clone().multiplyScalar(k));
+    g.lineWidth = 1.6;
+    g.beginPath();
+    g.moveTo(IX + Math.cos(a) * IR * 0.32, IY + Math.sin(a) * IR * 0.32);
+    g.lineTo(IX + Math.cos(a) * IR * 0.96, IY + Math.sin(a) * IR * 0.96);
+    g.stroke();
+  }
+  // 虹膜外緣的深色環（limbal ring）—— 少了它眼睛會顯得沒有精神
+  g.strokeStyle = hex(iris.clone().multiplyScalar(0.38));
+  g.lineWidth = 4;
+  g.beginPath(); g.arc(IX, IY, IR - 1.5, 0, 7); g.stroke();
+  // 瞳孔
+  g.fillStyle = '#171015';
+  g.beginPath(); g.arc(IX, IY, IR * 0.42, 0, 7); g.fill();
+  // 高光：主高光在左上、補光在右下，兩個才有濕潤感
+  g.fillStyle = 'rgba(255,255,255,.92)';
+  g.beginPath(); g.arc(IX - 11, IY - 12, 8, 0, 7); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.45)';
+  g.beginPath(); g.arc(IX + 13, IY + 12, 4.2, 0, 7); g.fill();
+  g.restore();
+
+  // 眼線：沿上緣描一道，卡通臉的眼睛全靠這條撐起來
+  g.strokeStyle = 'rgba(32,22,30,.92)';
+  g.lineWidth = 7; g.lineCap = 'round';
+  g.beginPath();
+  g.moveTo(8, 62); g.quadraticCurveTo(64, 8, 120, 62);
+  g.stroke();
+
+  // --- 下格：閉眼（只有一道弧線）---
+  g.strokeStyle = 'rgba(32,22,30,.92)';
+  g.lineWidth = 6;
+  g.beginPath();
+  g.moveTo(10, 128 + 62); g.quadraticCurveTo(64, 128 + 84, 118, 128 + 62);
+  g.stroke();
+
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+  t.repeat.set(1, 0.5);
+  t.offset.set(0, 0.5);            // 預設睜眼（上格）；眨眼把 y 改成 0
+  t.anisotropy = 4;
+  eyeTexCache.set(irisHex, t);
+  return t;
+}
+
+/** 微凸的眼睛面片。平面片貼在球面臉上會露出邊緣，鼓一點才貼得住。 */
+function eyePatch(w, h, bulge) {
+  const g = new THREE.PlaneGeometry(w, h, 6, 4);
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i) / (w / 2), y = p.getY(i) / (h / 2);
+    p.setZ(i, Math.max(0, 1 - x * x * 0.9 - y * y * 0.9) * bulge);
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
+const eyeMatCache = new Map();
+function eyeMaterial(irisHex) {
+  if (eyeMatCache.has(irisHex)) return eyeMatCache.get(irisHex);
+  const m = new THREE.MeshToonMaterial({
+    map: eyeTexture(irisHex), gradientMap: gradientMap(3),
+    transparent: true, alphaTest: 0.35,   // alphaTest 而不是純 transparent：省掉排序，也不會被描邊蓋
+    depthWrite: true,
+  });
+  eyeMatCache.set(irisHex, m);
+  return m;
+}
+
 const OUTLINE = new THREE.MeshBasicMaterial({
   color: 0x1a1420, side: THREE.BackSide, fog: true,
 });
@@ -829,20 +946,25 @@ export function buildCharacter(spec) {
   // 頸根填縫：×1.1，位置壓在領口裡，所以看不到球本身，只補掉頭轉動時的縫
   body.add(part(new THREE.SphereGeometry(0.05 * 1.1, 12, 8), skin, 0, LEG_H + TORSO_H, 0));
 
-  // 眼睛（純色橢圓，卡通風不需要複雜結構）
-  const eyeMat = toon(pal.eyes || 0x3a2a3a);
+  // 眼睛：貼圖式（角色書 4.3）。虹膜、瞳孔、眼線、兩個高光全在貼圖裡，
+  // 幾何只剩一片微凸面片 —— 比原本的「眼白球＋高光球」更像人也更便宜。
+  // 兩隻眼共用同一份材質，先把幾何併成一個再掛上去 —— 分成兩個 mesh 的話
+  // 每個角色多兩個 draw call，34 位 NPC 同框就是多 68 個。
+  const eyeGeos = [];
   for (const sx of [-1, 1]) {
-    const e = part(new THREE.SphereGeometry(0.038, 14, 10), eyeMat,
-      sx * 0.088, 0.012, HEAD_R * 0.88);
-    e.scale.set(0.85, 1.25, 0.42);
-    e.userData.noOutline = true;
-    head.add(e);
-    const hl = part(new THREE.SphereGeometry(0.014, 8, 6), toon(0xffffff),
-      sx * 0.078, 0.045, HEAD_R * 0.93);
-    hl.scale.set(1, 1, 0.4);
-    hl.userData.noOutline = true;
-    head.add(hl);
+    const g = eyePatch(0.072, 0.056, 0.012);
+    const m = new THREE.Matrix4()
+      .makeRotationFromEuler(new THREE.Euler(0, sx * -0.30, sx * 0.06))
+      .setPosition(sx * 0.086, 0.026, HEAD_R * 0.905);
+    g.applyMatrix4(m);
+    eyeGeos.push(g);
   }
+  const eyes = new THREE.Mesh(BGU.mergeGeometries(eyeGeos, false),
+    eyeMaterial(pal.eyes || 0x3a2a3a));
+  eyes.userData.noOutline = true;
+  eyes.userData.noMerge = true;         // 有自己的貼圖材質，不能併進膚色那份
+  eyes.castShadow = false;
+  head.add(eyes);
 
   // 眉毛：比髮色深一階的細短線，眉尾略下垂 —— 沒有眉毛的臉會很「素」
   const browCol = new THREE.Color(pal.hair ?? 0x444444).multiplyScalar(0.45);
