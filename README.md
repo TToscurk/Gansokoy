@@ -14,9 +14,27 @@
 | Windows | 點兩下 `play.bat` |
 | macOS / Linux | 終端機執行 `./play.sh`（第一次要先 `chmod +x play.sh`） |
 | 完全還沒下載過（Windows） | 把 `安裝.bat` 放進**你想要安裝的資料夾**再執行（例如 `D:\神社\shrine`）。檔案會直接落在那個資料夾，不會再多包一層 |
+| 想拉還沒併進 main 的分支（Windows） | 點兩下 `更新.bat` |
 
 腳本會依序做：從 GitHub 拉最新的程式碼 → 啟動 `dev-server.mjs` → 開瀏覽器。
 **有還沒提交的本機修改時會跳過更新**，不會蓋掉你改的東西。
+
+### 更新.bat —— 抓別的分支
+
+`play.bat` 只跟一條分支（預設 `main`）。開發中的東西常常還在別的分支上沒併進
+`main`，那時候 `play.bat` 怎麼按都拉不到新檔案 —— 這就是 `更新.bat` 要解決的事：
+
+1. 一次抓下 GitHub 上**所有**分支
+2. 依最後更新時間由新到舊列出來，附上日期與提交訊息
+3. 你選一條 → 本地切過去，選擇記進 `.branch`，**之後 `play.bat` 會自動跟著這條走**
+
+另外有一個 `[A]` 選項：用 `git worktree` 把每一條分支各解一份到
+`branches\<分支名>\` 底下，全部分支的檔案同時存在本地、互不干擾，
+想玩哪一條就進去點裡面的 `play.bat`。共用同一份 `.git`，不會重複下載。
+
+`.branch` 與 `branches/` 都在 `.gitignore` 裡，屬於本機設定，不進版控。
+macOS / Linux 沒有對應的腳本，但 `play.sh` 同樣會讀 `.branch`，
+手動 `git checkout` 完就行。
 
 手動啟動也可以：
 
@@ -320,6 +338,7 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
 | `play.bat` / `play.sh` | 一鍵更新 + 啟動（Windows / macOS・Linux） |
 | `安裝.bat` | 就地安裝（把專案裝進它自己所在的資料夾，不多包一層），裝完直接啟動 |
+| `更新.bat` | 列出 GitHub 上所有分支讓你挑一條切過去；`[A]` 選項把每條分支各解一份到 `branches\` |
 | `tools/dev-server.mjs` | 開發用靜態伺服器（`no-store`，避免 ES module 快取；支援資料夾內的 `index.html`） |
 | `tools/capture-server.mjs` | 開發用：接收頁面截圖並存到 `shots/` |
 | `shots/` | 開發過程的截圖 |

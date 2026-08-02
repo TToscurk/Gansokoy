@@ -15,8 +15,10 @@
 set -u
 cd "$(dirname "$0")"
 
-# 想玩別的分支就改這一行
+# 要跟哪一條分支：優先讀 .branch（Windows 的「更新.bat」會寫這個檔），
+# 沒有就用 main。也可以自己改這一行當預設值。
 BRANCH="main"
+[ -s .branch ] && BRANCH="$(head -n1 .branch | tr -d '[:space:]')"
 PORT=5603
 
 echo
@@ -54,12 +56,13 @@ update() {
     return
   fi
 
-  echo "[1/3] 從 GitHub 抓取最新版本..."
+  echo "[1/3] 從 GitHub 抓取最新版本（分支：$BRANCH）..."
   if ! git fetch origin "$BRANCH" >/dev/null 2>&1; then
     echo "      抓取失敗（可能是沒有網路）。用現有的檔案啟動。"
     return
   fi
-  git checkout "$BRANCH" >/dev/null 2>&1
+  # 本地還沒有這條分支的話順手建出來
+  git checkout "$BRANCH" >/dev/null 2>&1 || git checkout -B "$BRANCH" "origin/$BRANCH" >/dev/null 2>&1
   if git merge --ff-only "origin/$BRANCH" >/dev/null 2>&1; then
     echo "      完成。"
   else

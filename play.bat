@@ -14,8 +14,12 @@ REM    ES module + importmap 會被 file:// 協定擋掉，遊戲根本不會啟
 REM ============================================================
 cd /d "%~dp0"
 
-REM 想玩別的分支就改這一行
+REM 要跟哪一條分支：優先讀「更新.bat」寫下的 .branch，沒有就用 main。
+REM 也可以自己改這一行當預設值。
 set BRANCH=main
+if exist ".branch" (
+  for /f "usebackq delims=" %%b in (".branch") do if not "%%b"=="" set "BRANCH=%%b"
+)
 
 echo.
 echo ============================================
@@ -61,7 +65,7 @@ if defined DIRTY (
   goto :serve
 )
 
-echo [1/3] 從 GitHub 抓取最新版本...
+echo [1/3] 從 GitHub 抓取最新版本（分支：%BRANCH%）...
 git fetch origin %BRANCH% 2>nul
 if errorlevel 1 (
   echo       抓取失敗（可能是沒有網路）。用現有的檔案啟動。
@@ -69,7 +73,9 @@ if errorlevel 1 (
   goto :serve
 )
 
+REM 本地還沒有這條分支的話（例如「更新.bat」剛換過），順手建出來
 git checkout %BRANCH% >nul 2>nul
+if errorlevel 1 git checkout -B %BRANCH% origin/%BRANCH% >nul 2>nul
 git merge --ff-only origin/%BRANCH% >nul 2>nul
 if errorlevel 1 (
   echo       無法快進合併，可能本機有分岔的提交。用現有的檔案啟動。

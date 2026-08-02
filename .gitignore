@@ -1,2 +1,7 @@
 node_modules/
 shots/
+
+# 「更新.bat」記住你選了哪條分支，屬於本機設定，不進版控
+.branch
+# 「更新.bat」的 [A] 選項解出來的各分支工作目錄
+branches/
