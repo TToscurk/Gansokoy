@@ -90,7 +90,11 @@ function part(geo, mat, x = 0, y = 0, z = 0) {
   return m;
 }
 
-function tapered(rTop, rBot, h, seg = 10) {
+// seg 預設 18（升級書第 1 章）。CylinderGeometry 的側面法線本來就是沿
+// 圓周平滑的，頂底面則是硬邊 —— 這正是書上要的「側面平滑、頂底硬邊」，
+// 所以不必再呼叫 computeVertexNormals()，段數才是稜線的唯一來源。
+// 手指、骨架那種一公分級的零件維持低段數，加了也看不到。
+function tapered(rTop, rBot, h, seg = 18) {
   const g = new THREE.CylinderGeometry(rTop, rBot, h, seg, 1);
   return g;
 }
@@ -138,7 +142,7 @@ function buildHair(style, mat, group, head, pal = {}) {
   // 頭髮基底。
   // 只能蓋到眼睛以上 —— 球面片如果一路延伸到 110°，從正面看會把整張臉包住。
   const cap = new THREE.Mesh(
-    new THREE.SphereGeometry(HEAD_R * 1.07, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.40), mat);
+    new THREE.SphereGeometry(HEAD_R * 1.07, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.40), mat);
   cap.position.y = HEAD_R * 0.02;
   cap.castShadow = true;
   head.add(cap);
@@ -146,14 +150,14 @@ function buildHair(style, mat, group, head, pal = {}) {
   // 後腦與兩側可以蓋得低。theta 的 0 在 -X、π/2 在 +Z，
   // 所以讓開 40°～140° 這段就等於讓開正面。
   const rear = new THREE.Mesh(
-    new THREE.SphereGeometry(HEAD_R * 1.06, 18, 12,
+    new THREE.SphereGeometry(HEAD_R * 1.06, 24, 16,
       Math.PI * 0.78, Math.PI * 1.44, 0, Math.PI * 0.74), mat);
   rear.castShadow = true;
   head.add(rear);
 
   // 瀏海：只遮額頭。球面片 theta 0→π 本來就朝著 +Z，不需要再旋轉。
   const bang = new THREE.Mesh(
-    new THREE.SphereGeometry(HEAD_R * 1.05, 16, 10,
+    new THREE.SphereGeometry(HEAD_R * 1.05, 20, 14,
       Math.PI * 0.16, Math.PI * 0.68, Math.PI * 0.10, Math.PI * 0.30), mat);
   bang.position.set(0, HEAD_R * 0.03, 0.012);
   bang.castShadow = true;
@@ -180,7 +184,7 @@ function buildHair(style, mat, group, head, pal = {}) {
   }
 
   const strand = (len, r, x, y, z, rx = 0, rz = 0) => {
-    const g = tapered(r * 0.55, r, len, 8);
+    const g = tapered(r * 0.55, r, len, 14);
     g.translate(0, -len / 2, 0);
     const m = part(g, mat, x, y, z);
     m.rotation.x = rx; m.rotation.z = rz;
@@ -198,7 +202,7 @@ function buildHair(style, mat, group, head, pal = {}) {
       back.add(strand(0.72, 0.085, -0.20, HEAD_R * 0.45, 0.0));
       back.add(strand(0.72, 0.085, 0.20, HEAD_R * 0.45, 0.0));
       if (pal.hairTip) {
-        const tip = tapered(0.07, 0.15, 0.42, 8);
+        const tip = tapered(0.07, 0.15, 0.42, 14);
         tip.translate(0, -0.21, 0);
         back.add(part(tip, toon(pal.hairTip), 0, HEAD_R * 0.7 - 1.05, -0.10));
       }
@@ -223,7 +227,7 @@ function buildHair(style, mat, group, head, pal = {}) {
       break;
     case 'braid':           // 美鈴：長辮
       for (let i = 0; i < 5; i++) {
-        const s = new THREE.Mesh(new THREE.SphereGeometry(0.088 - i * 0.007, 10, 8), mat);
+        const s = new THREE.Mesh(new THREE.SphereGeometry(0.088 - i * 0.007, 14, 10), mat);
         s.position.set(0, HEAD_R * 0.5 - i * 0.21, -0.13);
         s.castShadow = true;
         back.add(s);
@@ -237,7 +241,7 @@ function buildHair(style, mat, group, head, pal = {}) {
       back.add(strand(0.34, 0.17, 0, HEAD_R * 0.62, -0.12));   // 束起的根部
       const tail = strand(0.86, 0.125, 0, HEAD_R * 0.28, -0.155);
       back.add(tail);
-      const tip = tapered(0.055, 0.115, 0.34, 8);
+      const tip = tapered(0.055, 0.115, 0.34, 14);
       tip.translate(0, -0.17, 0);
       const tipMesh = part(tip, tipMat, 0, HEAD_R * 0.28 - 0.86, -0.155);
       back.add(tipMesh);
@@ -259,10 +263,10 @@ function buildHat(kind, pal, head, group) {
 
   switch (kind) {
     case 'ribbon': {        // 靈夢的大蝴蝶結
-      const knot = part(new THREE.SphereGeometry(0.075, 10, 8), rib, 0, HEAD_R * 0.85, -0.13);
+      const knot = part(new THREE.SphereGeometry(0.075, 14, 10), rib, 0, HEAD_R * 0.85, -0.13);
       head.add(knot);
       for (const sx of [-1, 1]) {
-        const w = new THREE.Mesh(new THREE.SphereGeometry(0.135, 12, 8), rib);
+        const w = new THREE.Mesh(new THREE.SphereGeometry(0.135, 16, 12), rib);
         w.scale.set(1.15, 0.62, 0.42);
         w.position.set(sx * 0.16, HEAD_R * 0.88, -0.16);
         w.rotation.z = sx * 0.42;
@@ -297,7 +301,7 @@ function buildHat(kind, pal, head, group) {
     case 'mob': {           // 帕秋莉的睡帽
       const c = part(new THREE.CylinderGeometry(0.27, 0.3, 0.16, 16), acc, 0, HEAD_R * 0.95, 0);
       head.add(c);
-      const t = part(new THREE.SphereGeometry(0.075, 10, 8), toon(0xffffff), 0, HEAD_R * 0.95 + 0.14, 0);
+      const t = part(new THREE.SphereGeometry(0.075, 14, 10), toon(0xffffff), 0, HEAD_R * 0.95 + 0.14, 0);
       head.add(t);
       break;
     }
@@ -314,7 +318,7 @@ function buildHat(kind, pal, head, group) {
     }
     case 'bunnyEars': {     // 鈴仙的兔耳
       for (const sx of [-1, 1]) {
-        const g = tapered(0.05, 0.085, 0.46, 8);
+        const g = tapered(0.05, 0.085, 0.46, 14);
         const e = part(g, toon(pal.hair), sx * 0.12, HEAD_R * 1.35, -0.02);
         e.rotation.z = sx * 0.2;
         e.rotation.x = -0.12;
@@ -341,7 +345,7 @@ function buildHat(kind, pal, head, group) {
       head.add(brim);
       const cyl = part(new THREE.CylinderGeometry(0.24, 0.26, 0.2, 16), acc, 0, HEAD_R * 0.92 + 0.11, 0);
       head.add(cyl);
-      const rb = part(new THREE.SphereGeometry(0.1, 10, 8), toon(0xd4405a), 0.19, HEAD_R * 0.92 + 0.11, 0.16);
+      const rb = part(new THREE.SphereGeometry(0.1, 14, 10), toon(0xd4405a), 0.19, HEAD_R * 0.92 + 0.11, 0.16);
       rb.scale.set(1.2, 0.6, 0.5);
       head.add(rb);
       break;
@@ -357,12 +361,12 @@ function buildHat(kind, pal, head, group) {
       const khaki = toon(0xc8b46a);
       const brim = part(new THREE.CylinderGeometry(0.44, 0.46, 0.03, 20), khaki, 0, HEAD_R * 0.9, 0);
       head.add(brim);
-      const dome = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), khaki);
+      const dome = new THREE.Mesh(new THREE.SphereGeometry(0.24, 20, 14, 0, Math.PI * 2, 0, Math.PI * 0.5), khaki);
       dome.position.set(0, HEAD_R * 0.9, 0);
       dome.castShadow = true;
       head.add(dome);
       for (const sx of [-1, 1]) {
-        const eye = part(new THREE.SphereGeometry(0.055, 10, 8), toon(0xf4f0e0), sx * 0.13, HEAD_R * 0.9 + 0.21, 0.12);
+        const eye = part(new THREE.SphereGeometry(0.055, 14, 10), toon(0xf4f0e0), sx * 0.13, HEAD_R * 0.9 + 0.21, 0.12);
         head.add(eye);
         const pupil = part(new THREE.SphereGeometry(0.026, 8, 6), toon(0x2a2028), sx * 0.13, HEAD_R * 0.9 + 0.22, 0.165);
         head.add(pupil);
@@ -379,12 +383,12 @@ function buildHat(kind, pal, head, group) {
     }
     case 'hairpin': {       // 早苗的青蛙髮飾（右側）+ 白蛇髮飾（左側）
       const frog = toon(0x58b060);
-      head.add(part(new THREE.SphereGeometry(0.042, 10, 8), frog, 0.155, HEAD_R * 0.55, 0.14));
+      head.add(part(new THREE.SphereGeometry(0.042, 14, 10), frog, 0.155, HEAD_R * 0.55, 0.14));
       for (const sx of [-1, 1]) {
         head.add(part(new THREE.SphereGeometry(0.016, 8, 6), toon(0xf4f4f8), 0.155 + sx * 0.024, HEAD_R * 0.55 + 0.034, 0.168));
       }
       const snake = toon(0xe8e4da);
-      head.add(part(new THREE.TorusGeometry(0.05, 0.014, 6, 12), snake, -0.16, HEAD_R * 0.6, 0.12));
+      head.add(part(new THREE.TorusGeometry(0.05, 0.014, 10, 12), snake, -0.16, HEAD_R * 0.6, 0.12));
       break;
     }
     case 'kasa': {          // 斗笠 —— 里民、旅人的稻草寬簷帽
@@ -398,13 +402,13 @@ function buildHat(kind, pal, head, group) {
     case 'horns': {         // 萃香的鬼角 —— 額前斜上兩根長角，各綁一圈緞帶
       const horn = toon(0xe8d8c0);
       for (const sx of [-1, 1]) {
-        const g = tapered(0.022, 0.062, 0.52, 8);
+        const g = tapered(0.022, 0.062, 0.52, 14);
         const h = part(g, horn, sx * 0.14, HEAD_R * 1.05, 0.1);
         h.rotation.z = sx * 0.5;
         h.rotation.x = -0.55;
         head.add(h);
         // 角上的緞帶結（左紅右紫）
-        const rb = part(new THREE.TorusGeometry(0.045, 0.018, 6, 12),
+        const rb = part(new THREE.TorusGeometry(0.045, 0.018, 10, 12),
           toon(sx < 0 ? 0xd84048 : 0x7a5abf), sx * 0.205, HEAD_R * 1.05 + 0.17, 0.21);
         rb.rotation.z = sx * 0.5;
         rb.rotation.x = Math.PI / 2 - 0.55;
@@ -504,7 +508,7 @@ function buildWings(kind, pal, group) {
     for (const sx of [-1, 1]) {
       const side = new THREE.Group();
       for (let i = 0; i < 2; i++) {
-        const p = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 8), mat);
+        const p = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 12), mat);
         p.scale.set(0.75, 1.25, 0.05);
         p.position.set(sx * 0.26, 0.24 - i * 0.22, -0.06);
         p.rotation.z = sx * (0.5 - i * 0.35);
@@ -593,7 +597,7 @@ function buildProp(kind, pal) {
       g.add(upper);
       g.add(part(new THREE.CylinderGeometry(0.03, 0.035, 0.09, 8), toon(0x8a6a3a), 0, 0.3, 0));   // 木栓
       // 綁在腰間的紅繩結
-      const knot = part(new THREE.TorusGeometry(0.05, 0.016, 6, 12), toon(0xc23a3a), 0, 0.07, 0);
+      const knot = part(new THREE.TorusGeometry(0.05, 0.016, 10, 12), toon(0xc23a3a), 0, 0.07, 0);
       knot.rotation.x = Math.PI / 2;
       g.add(knot);
       break;
@@ -685,8 +689,8 @@ export function buildCharacter(spec) {
   // 軀幹分兩段收腰，比單一錐狀圓柱多一點人形的起伏（不是描邊升級，
   // 是實際幾何升級：肩膀讀得出比腰寬，剪影不再是一根直筒）。
   const waistH = TORSO_H * 0.36, chestH = TORSO_H * 0.64;
-  body.add(part(tapered(0.150, 0.185, waistH, 14), cloth, 0, LEG_H + waistH / 2, 0));
-  body.add(part(tapered(0.172, 0.150, chestH, 14), cloth, 0, LEG_H + waistH + chestH / 2, 0));
+  body.add(part(tapered(0.150, 0.185, waistH, 24), cloth, 0, LEG_H + waistH / 2, 0));
+  body.add(part(tapered(0.172, 0.150, chestH, 24), cloth, 0, LEG_H + waistH + chestH / 2, 0));
 
   // 領子
   body.add(part(new THREE.CylinderGeometry(0.10, 0.13, 0.07, 14), cloth2,
@@ -694,7 +698,7 @@ export function buildCharacter(spec) {
 
   // 領口滾邊：貼頸的一圈細環，和風服的「襟」感
   const collarTrim = new THREE.Mesh(
-    new THREE.TorusGeometry(0.118, 0.013, 6, 18), toon(pal.trim || 0xf4f0e8));
+    new THREE.TorusGeometry(0.118, 0.013, 10, 18), toon(pal.trim || 0xf4f0e8));
   collarTrim.position.set(0, LEG_H + TORSO_H + 0.025, 0);
   collarTrim.rotation.x = Math.PI / 2;
   collarTrim.castShadow = true;
@@ -708,7 +712,7 @@ export function buildCharacter(spec) {
     body.add(part(new THREE.BoxGeometry(0.4, 0.13, 0.3), toon(pal.obi || 0x2a2028),
       0, LEG_H + 0.05, 0));
   } else {
-    const skirtGeo = new THREE.CylinderGeometry(0.19, 0.42, 0.44, 16, 1, true);
+    const skirtGeo = new THREE.CylinderGeometry(0.19, 0.42, 0.44, 24, 1, true);
     const skirt = part(skirtGeo, toonDS(pal.outfit2 || pal.accent), 0, LEG_H - 0.14, 0);
     skirt.name = 'skirt';
     skirt.userData.noMerge = true;   // 保住雙面
@@ -716,7 +720,7 @@ export function buildCharacter(spec) {
 
     // 裙擺滾邊：一圈對比色細環，裙子和腿之間不再糊成一塊色
     const hem = new THREE.Mesh(
-      new THREE.TorusGeometry(0.415, 0.016, 6, 22), toon(pal.trim || 0xf4f0e8));
+      new THREE.TorusGeometry(0.415, 0.016, 10, 22), toon(pal.trim || 0xf4f0e8));
     hem.position.set(0, LEG_H - 0.14 - 0.20, 0);
     hem.rotation.x = Math.PI / 2;
     hem.castShadow = true;
@@ -733,15 +737,15 @@ export function buildCharacter(spec) {
 
     if (hakama) {
       // 袴管：上寬下收，褶線靠外側稜角表現
-      const g = tapered(0.155, 0.105, LEG_H * 0.82, 8);
+      const g = tapered(0.155, 0.105, LEG_H * 0.82, 14);
       const l = part(g, cloth2, 0, -LEG_H * 0.41, 0);
       leg.add(l);
-      leg.add(part(tapered(0.062, 0.07, LEG_H * 0.22, 10), legMat, 0, -LEG_H * 0.9, 0));
+      leg.add(part(tapered(0.062, 0.07, LEG_H * 0.22, 20), legMat, 0, -LEG_H * 0.9, 0));
     } else {
       const thighLen = LEG_H * 0.55, shinLen = LEG_H * 0.45;
-      leg.add(part(tapered(0.064, 0.074, thighLen, 10), legMat, 0, -thighLen / 2, 0));
-      leg.add(part(new THREE.SphereGeometry(0.058, 10, 8), legMat, 0, -thighLen, 0));   // 膝關節
-      leg.add(part(tapered(0.05, 0.06, shinLen, 10), legMat, 0, -thighLen - shinLen / 2, 0));
+      leg.add(part(tapered(0.064, 0.074, thighLen, 20), legMat, 0, -thighLen / 2, 0));
+      leg.add(part(new THREE.SphereGeometry(0.058, 14, 10), legMat, 0, -thighLen, 0));   // 膝關節
+      leg.add(part(tapered(0.05, 0.06, shinLen, 20), legMat, 0, -thighLen - shinLen / 2, 0));
     }
 
     // 腳跟＋腳尖，取代單一方塊 —— 剪影才看得出「站著」而不是「插了根柱子」
@@ -755,25 +759,25 @@ export function buildCharacter(spec) {
   const arms = {};
   for (const sx of [-1, 1]) {
     // 肩頭：軀幹到手臂的過渡不再是一節一節硬接
-    body.add(part(new THREE.SphereGeometry(0.072, 10, 8), cloth, sx * 0.175, SHOULDER_Y, 0));
+    body.add(part(new THREE.SphereGeometry(0.072, 14, 10), cloth, sx * 0.175, SHOULDER_Y, 0));
 
     const arm = new THREE.Group();
     arm.name = sx < 0 ? 'armL' : 'armR';
     arm.position.set(sx * 0.185, SHOULDER_Y, 0);
 
     const upperLen = 0.25, foreLen = 0.20;
-    arm.add(part(tapered(0.05, 0.056, upperLen, 10), cloth, 0, -upperLen / 2, 0));
-    arm.add(part(new THREE.SphereGeometry(0.046, 10, 8), skin, 0, -upperLen, 0.008));  // 手肘
+    arm.add(part(tapered(0.05, 0.056, upperLen, 20), cloth, 0, -upperLen / 2, 0));
+    arm.add(part(new THREE.SphereGeometry(0.046, 14, 10), skin, 0, -upperLen, 0.008));  // 手肘
 
     const fore = new THREE.Group();
     fore.name = sx < 0 ? 'foreL' : 'foreR';
     fore.position.set(0, -upperLen, 0.008);
     fore.rotation.x = 0.14;   // 前臂微彎，站姿比一根直棍自然
-    fore.add(part(tapered(0.04, 0.048, foreLen, 10), cloth, 0, -foreLen / 2, 0));
+    fore.add(part(tapered(0.04, 0.048, foreLen, 20), cloth, 0, -foreLen / 2, 0));
 
     // 袖口滾邊（女巫袖、巫女袖都有白色袖口的印象）
     const cuff = new THREE.Mesh(
-      new THREE.TorusGeometry(0.047, 0.011, 6, 14), toon(pal.trim || 0xf4f0e8));
+      new THREE.TorusGeometry(0.047, 0.011, 10, 14), toon(pal.trim || 0xf4f0e8));
     cuff.position.set(0, -foreLen + 0.012, 0);
     cuff.rotation.x = Math.PI / 2;
     cuff.castShadow = true;
@@ -782,7 +786,7 @@ export function buildCharacter(spec) {
     const hand = new THREE.Group();
     hand.name = sx < 0 ? 'handL' : 'handR';
     hand.position.set(0, -foreLen, 0);
-    const palm = part(new THREE.SphereGeometry(0.044, 10, 8), skin, 0, 0, 0);
+    const palm = part(new THREE.SphereGeometry(0.044, 14, 10), skin, 0, 0, 0);
     palm.scale.set(1, 0.82, 0.68);
     hand.add(palm);
     for (let f = 0; f < 4; f++) {
@@ -816,7 +820,7 @@ export function buildCharacter(spec) {
   // 眼睛（純色橢圓，卡通風不需要複雜結構）
   const eyeMat = toon(pal.eyes || 0x3a2a3a);
   for (const sx of [-1, 1]) {
-    const e = part(new THREE.SphereGeometry(0.038, 10, 8), eyeMat,
+    const e = part(new THREE.SphereGeometry(0.038, 14, 10), eyeMat,
       sx * 0.088, 0.012, HEAD_R * 0.88);
     e.scale.set(0.85, 1.25, 0.42);
     e.userData.noOutline = true;
@@ -866,7 +870,7 @@ export function buildCharacter(spec) {
   if (spec.glasses) {
     const gm = toon(0x3a3a42);
     for (const sx of [-1, 1]) {
-      const lens = new THREE.Mesh(new THREE.TorusGeometry(0.058, 0.009, 6, 14), gm);
+      const lens = new THREE.Mesh(new THREE.TorusGeometry(0.058, 0.009, 10, 14), gm);
       lens.position.set(sx * 0.088, 0.015, HEAD_R * 0.95);
       lens.castShadow = true;
       head.add(lens);
@@ -963,7 +967,7 @@ export function buildCharacter(spec) {
       color: 0xdff0f4, emissive: 0xbfe4ee, emissiveIntensity: 0.75,
       transparent: true, opacity: 0.72, roughness: 0.4,
     });
-    const b = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 12), gm);
+    const b = new THREE.Mesh(new THREE.SphereGeometry(0.3, 20, 16), gm);
     b.scale.set(1, 0.92, 1);
     b.userData.noOutline = true;
     ghost.add(b);
