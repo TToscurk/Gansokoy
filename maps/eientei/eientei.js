@@ -25,6 +25,8 @@ import { Dialogue } from '../../src/ui/dialogue.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { applyTriplanar } from '../../src/world/triplanar.js';
+import { rockTexture } from '../../src/world/terraintex.js';
 import { catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
@@ -155,6 +157,40 @@ const gSample = (x, z) => GRID.sample(x, z);
   const m = new THREE.Mesh(GRID.buildGeometry(), MAT.soil);
   m.receiveShadow = true;
   world.add(m);
+
+  /* 三平面貼圖（升級書第 3 章）。從正上方投影的 UV 在斜面上會被拉成
+   * 一條一條 —— 改用世界座標三軸取樣，陡坡自動由側面那兩張主導。
+   *
+   * scale 用原本的 repeat 換算，密度才不會順便被放大或縮小；原本的
+   * repeat 是 20×18（非等向），三平面只吃一個尺度，取幾何平均。
+   *
+   * 低畫質不套：每像素多採樣兩次，低階機划不來，退回原本的單軸 UV。 */
+  const TRI_SCALE = Math.sqrt(20 * 18) / GRID.size;
+  let triOn = null;
+  const syncTri = (idx) => {
+    const want = idx >= 1;                 // 0=低 1=中 2=高
+    if (want === triOn) return;
+    triOn = want;
+    if (want) {
+      applyTriplanar(MAT.soil, {
+        scale: TRI_SCALE, sharp: 4,
+        rock: texMaps(rockTexture({ base: '#79746c' }), [0.8, 0.98]),
+        slope: [0.34, 0.60],
+      });
+    } else {
+      MAT.soil.onBeforeCompile = () => {};
+      MAT.soil.customProgramCacheKey = () => 'tri:off';
+      MAT.soil.map.repeat.set(20, 18);
+      MAT.soil.normalMap?.repeat.set(20, 18);
+      MAT.soil.roughnessMap?.repeat.set(20, 18);
+      MAT.soil.needsUpdate = true;
+    }
+  };
+  core.onQualityChange(syncTri);
+  // GameCore 建構時就跑過一次 syncQuality()，那時這張圖還沒註冊，
+  // 初始狀態要自己補，不能等下一次切畫質
+  syncTri(core.quality.idx);
+
 }
 
 // 院內整片白砂利（貼地 decal，網格三角形完全對齊 —— 不會閃）
