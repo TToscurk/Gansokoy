@@ -93,6 +93,7 @@ if (!existsSync('.git')) {
 
 // ---- 有沒有沒提交的本機修改 ----
 // --untracked-files=no：你隨手在資料夾裡放筆記或截圖不該擋住更新
+let force = false;  // 使用者點頭要丟掉本機修改，切換時就得帶 -f
 const dirty = (git('status', '--porcelain', '--untracked-files=no') || '').trim();
 if (dirty) {
   console.log('[注意] 你有還沒提交的本機修改：\n');
@@ -104,6 +105,9 @@ if (dirty) {
     console.log('已取消。');
     bye(0);
   }
+  // 說了要丟掉就真的要丟掉。少了這個旗標，下面跑的是普通 checkout，
+  // git 只會印一堆 "would be overwritten" 然後 Aborting —— 提示騙人。
+  force = true;
   console.log();
 }
 
@@ -116,13 +120,15 @@ console.log('      完成。\n');
 
 // ---- 列出來 ----
 // 用 \t 當分隔符，提交訊息本身有空格，split 成三段最穩
-const FMT = '%(refname:short)\t%(committerdate:short)\t%(subject)';
+// 用完整的 %(refname) 而不是 :short —— refs/remotes/origin/HEAD 的 short
+// 是「origin」，剝不掉也濾不掉，會被當成一條叫 origin 的分支列進選單。
+const FMT = '%(refname)\t%(committerdate:short)\t%(subject)';
 const rows = (git('for-each-ref', '--sort=-committerdate', `--format=${FMT}`, 'refs/remotes/origin') || '')
   .split('\n')
   .filter(Boolean)
   .map((line) => {
     const [ref, date, ...rest] = line.split('\t');
-    return { name: ref.replace(/^origin\//, ''), date, subject: rest.join('\t') };
+    return { name: ref.replace(/^refs\/remotes\/origin\//, ''), date, subject: rest.join('\t') };
   })
   .filter((b) => b.name !== 'HEAD');
 
@@ -186,8 +192,22 @@ const target = rows[idx - 1];
 if (!target) die(`沒有編號 ${sel} 這個選項。`);
 
 console.log(`\n[3/3] 切換到 ${target.name} ...`);
-if (!gitLoud('checkout', '-B', target.name, `origin/${target.name}`)) {
-  die('切換失敗。');
+function checkout(f) {
+  return gitLoud('checkout', ...(f ? ['-f'] : []), '-B', target.name, `origin/${target.name}`);
+}
+if (!checkout(force)) {
+  // 最常見的失敗：你把新版的檔案直接解壓縮蓋在資料夾上，那些檔案對 git
+  // 來說是「未追蹤」的，普通 checkout 不敢覆蓋。-f 連未追蹤的一起蓋掉。
+  console.log('\n上面那串 git 訊息的意思是：這些檔案會被覆蓋掉，所以它停手了。');
+  console.log('如果那些檔案只是你解壓縮蓋上去的、或改壞想丟掉，就選強制覆蓋。');
+  console.log('要保留的話現在關掉視窗，把檔案複製到別的地方再回來。\n');
+  const f = await ask('強制覆蓋並繼續嗎？（輸入 y 再按 Enter）：');
+  if (f.toLowerCase() !== 'y') {
+    console.log('已取消。');
+    bye(0);
+  }
+  console.log();
+  if (!checkout(true)) die('強制切換還是失敗了。');
 }
 git('branch', `--set-upstream-to=origin/${target.name}`);
 
