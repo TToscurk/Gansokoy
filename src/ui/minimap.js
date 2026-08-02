@@ -25,10 +25,12 @@ const LS_KEY = 'gansokoy:minimap';
  * @param {[number,number][][]} [o.lines]  額外的折線（沒有 PathNet 的圖用，世界座標）
  * @param {{x:number,z:number,label:string,color?:string}[]} [o.portals] 傳送點
  * @param {() => {x:number,z:number}} o.getPos  玩家位置
+ * @param {() => boolean} [o.lost]  回傳 true 時不畫玩家位置，改畫一個「？」——
+ *        迷途竹林用（升級書・升級 6）：走進深處就該真的不知道自己在哪
  * @param {() => number} o.getYaw  玩家朝向（controller 的 yaw：0 = 面向 -Z 北）
  * @param {number} [o.size=148]  畫布邊長上限（依地圖長寬比縮）
  */
-export function installMinimap({ bounds, paths = null, lines = [], portals = [], getPos, getYaw, size = 148 }) {
+export function installMinimap({ bounds, paths = null, lines = [], portals = [], getPos, getYaw, lost = null, size = 148 }) {
   const style = document.createElement('style');
   style.textContent = CSS;
   document.head.appendChild(style);
@@ -108,6 +110,22 @@ export function installMinimap({ bounds, paths = null, lines = [], portals = [],
     // 千萬別 throw：tick 裡丟例外會讓整個渲染迴圈斷掉。
     const p = getPos?.();
     if (!p) return;
+
+    /* 迷失狀態：底圖（邊界、傳送點）照畫 —— 玩家還是知道「這張圖長怎樣、
+     * 出口在哪」，只是不知道**自己**在哪。整張蓋掉的話等於關掉小地圖，
+     * 那就沒有「我大概往南走」的推理空間了。 */
+    if (lost && lost()) {
+      const cx = (w + PAD * 2) / 2, cy = (h + PAD * 2) / 2;
+      g.save();
+      g.font = 'bold 34px "Yu Mincho", serif';
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillStyle = 'rgba(240,232,214,.22)';
+      g.fillText('？', cx, cy);
+      g.restore();
+      return;
+    }
+
     const x = px(p.x), y = pz(p.z);
     // 玩家箭頭。controller 的 yaw 口徑：0 = 面向 +Z（南）、π/2 = +X（東）
     // —— 面向向量是 (sin yaw, cos yaw)。畫面上北(-Z)在上，箭頭素體朝上，

@@ -283,11 +283,15 @@ const gSample = (x, z) => GRID.sample(x, z);
 
 }
 
-// 支徑都是從主徑上岔出去的，起點那一段跟主徑完全重疊 —— 兩層路面共面
-// 就會互閃。每條徑的 lift 差 1.2 公分，分出前後（見獸道的同一段註解）。
-TRAIL_SEGMENTS.forEach((seg, i) => {
-  ribbonOnGrid(world, catmullRom(seg.pts, 2.5), seg.width / 2, MAT.trail, gSample, 0.05 + i * 0.012);
-});
+/* 路面不畫（品質升級書・升級 6）。
+ *
+ * 原本 PathNet 的每一段都用 ribbonOnGrid 鋪一條看得見的土徑 —— 於是
+ * 「迷途竹林」照著顏色走就出去了，名不副實。現在地面全圖統一材質，
+ * PathNet **只留作內部資料**：竹子的疏密、兔子與 NPC 的移動、出入口
+ * 判定都還要用它，只是玩家看不到它。
+ *
+ * 認路改靠地標（紅布條竹、石燈籠、地藏、死路的竹筍叢）—— 見下方
+ * landmarks()。 */
 
 /* ─────────────────────────────────────────────────────── 竹林 ── */
 /**
@@ -350,12 +354,26 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
     const density = Math.min(1, (pd - 2.6) / 14);
     if (rand() > density * 0.66) continue;
 
-    const h = rr(7.5, 13);
-    const r = rr(0.075, 0.12);
-    const tilt = rr(-0.055, 0.055);
+    /* 竹子的個體差異（升級書・升級 6 第 5 點）。驗收標準是
+     * 「截圖裡找不到兩根一模一樣的竹子」，所以每一項都要真的分開擲：
+     *   粗細 0.06~0.22（原本 0.075~0.12，範圍太窄看起來像複製貼上）
+     *   高度 8~16，**粗的傾向高** —— 隨機獨立擲的話會出現又粗又矮的
+     *     樁子跟又細又高的麵條，兩種都不像竹子
+     *   傾斜 ±4°
+     *   2% 是攔腰折斷的枯竹（只留下半截，沒有葉叢）*/
+    const thick = rand();                                  // 0 = 最細, 1 = 最粗
+    const r = 0.06 + thick * 0.16;
+    const h = 8 + thick * 5 + rr(0, 3);                    // 粗的傾向高，再加一點抖動
+    const tilt = rr(-0.07, 0.07);
+    const broken = rand() < 0.02;
     const key = cellKey(x, z);
     if (!cells.has(key)) cells.set(key, []);
-    cells.get(key).push({ x, z, h, r, tilt, yaw: rand() * 6.28 });
+    cells.get(key).push({
+      x, z, r, tilt, yaw: rand() * 6.28,
+      h: broken ? h * rr(0.25, 0.5) : h,
+      broken,
+      tone: rand(),                                        // 三種綠的抽籤（見下）
+    });
 
     // 一部分是「叢」：三五根長在一起，這些才擋人 ——
     // 每一根都給碰撞盒的話，走在林子裡會像卡在牙籤堆裡。
@@ -367,9 +385,10 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
         const bx = x + Math.cos(ba) * bd, bz = z + Math.sin(ba) * bd;
         const bk = cellKey(bx, bz);
         if (!cells.has(bk)) cells.set(bk, []);
+        const bt = rand();
         cells.get(bk).push({
-          x: bx, z: bz, h: rr(8, 13), r: rr(0.08, 0.12),
-          tilt: rr(-0.08, 0.08), yaw: rand() * 6.28,
+          x: bx, z: bz, r: 0.07 + bt * 0.13, h: 8 + bt * 5 + rr(0, 2.5),
+          tilt: rr(-0.09, 0.09), yaw: rand() * 6.28, broken: false, tone: rand(),
         });
       }
     }
@@ -429,19 +448,31 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
       m4.compose(v.set(b.x, y, b.z), q, s);
       culms.setMatrixAt(i, m4);
 
-      // 竹竿的顏色：從青竹到轉黃的老竹
-      const age = rand();
-      col.setHSL(0.19 - age * 0.03, 0.34 + age * 0.12, 0.34 + age * 0.16);
+      /* 竹竿的顏色：三種綠按 6:3:1 混（升級書指定的比例）。
+       * 原本是連續漸變 —— 連續色階在一片竹林裡會糊成同一種綠，
+       * 分成三群反而看得出「這根跟那根不一樣」。群內再各自抖動一點。 */
+      const t = b.tone;
+      const band = t < 0.6 ? 0 : t < 0.9 ? 1 : 2;          // 嫩綠 / 正綠 / 黃綠帶枯斑
+      const jit = (t * 37 % 1) - 0.5;                      // 群內抖動，不再消耗 rand()
+      const HSL = [
+        [0.235, 0.40, 0.42],   // 嫩綠
+        [0.205, 0.34, 0.34],   // 正綠
+        [0.150, 0.30, 0.40],   // 黃綠帶枯斑
+      ][band];
+      col.setHSL(HSL[0] + jit * 0.012, HSL[1] + jit * 0.06, HSL[2] + jit * 0.07);
+      if (b.broken) col.offsetHSL(-0.03, -0.16, 0.02);     // 枯竹更黃更淡
       culms.setColorAt(i, col);
 
       // 葉叢掛在頂端（跟著竹竿的傾斜偏移）。高的竹子葉叢也大一點。
-      const ls = 0.85 + b.h * 0.055;
+      // 攔腰折斷的枯竹沒有葉叢 —— 縮到 0 讓它整叢消失（instance 數量不變，
+      // 少一根就要重排整個陣列，不值得）。
+      const ls = b.broken ? 0 : 0.85 + b.h * 0.055;
       s.set(ls, ls, ls);
       m4.compose(
         v.set(b.x + Math.sin(b.tilt) * b.h, y + b.h * 0.86, b.z + Math.sin(b.tilt * 0.7) * b.h),
         q, s);
       leaves.setMatrixAt(i, m4);
-      col.setHSL(0.24 - age * 0.035, 0.42 - age * 0.1, 0.26 + age * 0.12);
+      col.setHSL(0.245 - band * 0.03, 0.44 - band * 0.06, 0.24 + band * 0.06);
       leaves.setColorAt(i, col);
     });
     culms.instanceColor.needsUpdate = true;
@@ -687,17 +718,125 @@ eienteiGate(SOUTH_END.x, SOUTH_END.z);
     rock.castShadow = rock.receiveShadow = true;
     world.add(rock);
   }
-  // 竹筍
-  for (let i = 0; i < 220; i++) {
-    const [x, z] = near(2.2, 22);
+  /* 筍株（升級書・升級 6 第 5 點的「地上一串長出來」）。
+   *
+   * 原本是單根散落的小圓錐。改成「一個基座冒出 3~6 根不等高的筍/幼竹」，
+   * 而且**聚落式分布**：用 fbm 決定哪裡是筍區，不是均勻亂撒 ——
+   * 均勻撒出來每個角落都一樣，走過去沒有「這裡不一樣」的感覺。
+   *
+   * 全部合進一個 InstancedMesh：一株 3~6 根、一百多株就是好幾百個物件。 */
+  const CLUMP_N = 130;
+  const shootMats = [];
+  const sm4 = new THREE.Matrix4(), sq = new THREE.Quaternion();
+  const se = new THREE.Euler(), sv = new THREE.Vector3(), ss = new THREE.Vector3();
+  for (let i = 0; i < CLUMP_N * 3; i++) {
+    if (shootMats.length >= CLUMP_N * 5) break;
+    const [x, z] = near(2.2, 30);
     if (pathDist(x, z) < 1.4 || Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
-    const h = rr(0.35, 0.85);
-    const shoot = new THREE.Mesh(new THREE.ConeGeometry(0.13, h, 6), MAT.shoot);
-    shoot.position.set(x, heightAt(x, z) + h / 2, z);
-    shoot.rotation.y = rand() * 6.28;
-    shoot.castShadow = true;
-    world.add(shoot);
+    // 聚落：fbm 高於門檻的地方才長。0.02 的頻率 ≈ 50 公尺一個聚落
+    if (fbm(x * 0.02, z * 0.02, { period: 12, octaves: 3, seed: 91 }) < 0.52) continue;
+    const n = 3 + (rand() * 4 | 0);
+    for (let k = 0; k < n; k++) {
+      const a = rand() * 6.28, d = rr(0.15, 0.75);
+      const sx = x + Math.cos(a) * d, sz = z + Math.sin(a) * d;
+      // 高度差很重要：一株裡有剛冒頭的、也有快變成竹子的，才像在長
+      const hh = rr(0.5, 3.0);
+      const rr2 = 0.09 + (hh / 3) * 0.06;
+      se.set(rr(-0.09, 0.09), rand() * 6.28, rr(-0.09, 0.09));
+      sq.setFromEuler(se);
+      ss.set(rr2 / 0.13, hh, rr2 / 0.13);
+      sv.set(sx, heightAt(sx, sz) + hh * 0.5, sz);
+      shootMats.push(sm4.clone().compose(sv, sq, ss));
+    }
   }
+  {
+    const g = new THREE.ConeGeometry(0.13, 1, 6);
+    const im = new THREE.InstancedMesh(g, MAT.shoot, shootMats.length);
+    shootMats.forEach((mm, i) => im.setMatrixAt(i, mm));
+    im.instanceMatrix.needsUpdate = true;
+    im.castShadow = true;
+    im.userData.noMerge = true;
+    world.add(im);
+    console.info(`[bamboo] 筍株 ${shootMats.length} 根（聚落式）`);
+  }
+})();
+
+/* ────────────────────────────── 地標引導系統（升級 6 第 2 點） ── */
+/**
+ * 路面拆掉之後，認路全靠地標。四種各自負責不同的訊息：
+ *
+ *   紅布條竹  —— 「這是正解路徑」。沿主徑每 34 公尺一根，綁在最近的竹子上。
+ *                布條刻意做小（0.5×0.34），遠看只是一點紅，走近才讀得出來。
+ *   石燈籠    —— 「離永遠亭還有多遠」。密度往南遞增，愈接近終點愈常見。
+ *                部分傾倒 —— 全部立正會變成路燈，那又變回一條看得見的路。
+ *   地藏      —— 「往這邊」。擺在岔路口，面朝正解方向。
+ *   竹筍叢    —— 「此路不通」。死路端的軟性阻擋（上面 scatter() 已經撒了，
+ *                這裡在支徑末端再補一圈密的）。
+ *
+ * 全部只讀 PathNet 的資料，不畫出任何路面。
+ */
+(function landmarks() {
+  const main = catmullRom(TRAIL_SEGMENTS[0].pts, 3);
+
+  // --- 紅布條竹 ---
+  const clothMat = new THREE.MeshStandardMaterial({
+    color: '#b8402f', roughness: 0.9, side: THREE.DoubleSide });
+  let ribbons = 0;
+  for (let i = 0; i < main.length; i++) {
+    if (i % 12) continue;                       // catmullRom step 3 → 約每 36 公尺
+    const [px, pz] = main[i];
+    // 綁在路邊 2.5~4 公尺處的一根竹子上（那裡本來就長得到竹子）
+    const a = (i % 2 ? 1 : -1) * (Math.PI / 2);
+    const dx = main[Math.min(i + 1, main.length - 1)][0] - px;
+    const dz = main[Math.min(i + 1, main.length - 1)][1] - pz;
+    const tl = Math.hypot(dx, dz) || 1;
+    const ox = (dz / tl) * Math.cos(a) * 3.2, oz = (-dx / tl) * Math.cos(a) * 3.2;
+    const x = px + ox, z = pz + oz;
+    if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
+    const y = heightAt(x, z);
+    // 竹竿（自己立一根，才保證布條有東西可綁）
+    cyl(0.075, 0.095, 9, MAT.culm, x, y + 4.5, z, 6);
+    const cloth = box(0.5, 0.34, 0.02, clothMat, x, y + 1.65, z + 0.06);
+    cloth.rotation.y = rand() * 0.6 - 0.3;
+    ribbons++;
+  }
+
+  // --- 石燈籠：密度往南（永遠亭方向）遞增 ---
+  let lanterns = 0;
+  for (let i = 0; i < main.length; i++) {
+    const [px, pz] = main[i];
+    // z 從 -282 到 282；t = 0 在北口、1 在南口
+    const t = (pz + LEN) / (LEN * 2);
+    if (rand() > 0.02 + t * 0.10) continue;
+    const side = rand() < 0.5 ? -1 : 1;
+    const x = px + side * rr(2.6, 5), z = pz + rr(-2, 2);
+    if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
+    const y = heightAt(x, z);
+    const g = new THREE.Group();
+    g.position.set(x, y, z);
+    // 三成是傾倒的 —— 全部立正就變成路燈，那又是一條看得見的路
+    if (rand() < 0.3) g.rotation.z = rr(0.4, 1.2) * (rand() < 0.5 ? -1 : 1);
+    g.rotation.y = rand() * 6.28;
+    world.add(g);
+    cyl(0.22, 0.28, 0.34, MAT.stone, 0, 0.17, 0, 6, g);
+    cyl(0.13, 0.16, 0.9, MAT.mossStone, 0, 0.79, 0, 6, g);
+    box(0.42, 0.4, 0.42, MAT.stone, 0, 1.44, 0, g);
+    box(0.6, 0.1, 0.6, MAT.stone, 0, 1.69, 0, g);
+    post(x, z, 0.3, y + 1.7);
+    lanterns++;
+  }
+
+  // --- 地藏：岔路口，面朝正解（往南）方向 ---
+  let jizos = 0;
+  for (let k = 1; k < TRAIL_SEGMENTS.length; k++) {
+    const seg = TRAIL_SEGMENTS[k];
+    const [jx, jz] = seg.pts[0];                 // 支徑的起點就是岔路口
+    if (Math.abs(jx) > HALF_W || Math.abs(jz) > LEN) continue;
+    jizo(jx + rr(-1.6, 1.6), jz + rr(1.6, 3), Math.PI);   // 面朝 +z＝往永遠亭
+    jizos++;
+  }
+
+  console.info(`[bamboo] 地標：紅布條竹 ${ribbons}、石燈籠 ${lanterns}、岔路地藏 ${jizos}`);
 })();
 
 /* ───────────────────────────────────────────── 傳送點 ── */
@@ -951,7 +1090,15 @@ core.installMapUI({
   isBlocked: () => dialogue.active || escMenu.isOpen,
   minimap: {
     bounds: { minX: -155, maxX: 155, minZ: -300, maxZ: 300 },
-    paths: PATHS,
+    /* 這裡刻意不傳 paths（升級書・升級 6）。世界裡的路面已經拆掉，
+     * 小地圖再把路網畫出來就等於把它還給玩家了。 */
+    /* 離邊界超過 60 公尺就是「深處」：小地圖不再顯示自己在哪，只剩
+     * 邊界與出口。妹紅嚮導仍然是安全出口（付費直達永遠亭）。 */
+    lost: () => {
+      const p = core.ctrl?.pos;
+      if (!p) return false;
+      return Math.min(HALF_W - Math.abs(p.x), LEN - Math.abs(p.z)) > 60;
+    },
     portals: [
       { x: NORTH_END.x, z: NORTH_END.z, label: '獸道', color: '#d8f0a0' },
       { x: SOUTH_END.x, z: SOUTH_END.z, label: '永遠亭', color: '#c0a8ff' },
