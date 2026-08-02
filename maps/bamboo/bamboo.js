@@ -41,6 +41,7 @@ import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 /* 共用 HUD / renderer / scene / Environment —— 與其他圖完全同一套版面 */
@@ -1516,3 +1517,10 @@ amb.drift({ cx: 0, cz: 0, hx: 90, hz: 220, top: 13, groundAt: heightAt,
   count: 120, fall: 0.65, color: 0xa8a860, size: 0.16 });
 amb.birds({ cx: 0, cz: -40, r: 150, y: 40, count: 4, speed: 0.045 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：竹海之外、南北兩端各一片坡上的田 —— 從林子裡偶爾透出來的
+ * 「外面還有世界」。竹林本身太密，中景只能靠這種高處的水平線讀出來。 */
+{
+  terraces(world, { cx: -HALF_W - 16, cz: -120, facing: -Math.PI * 0.5, steps: 11, w: 44, groundAt: heightAt, seed: 23 });
+  terraces(world, { cx: HALF_W + 16, cz: 140, facing: Math.PI * 0.5, steps: 11, w: 38, groundAt: heightAt, seed: 29 });
+}

@@ -35,6 +35,7 @@ import { MAP_REGISTRY } from '../../src/world/mapRegistry.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -744,3 +745,9 @@ amb.smoke(2, heightAt(2, 4) + 4.4, 4, { count: 10, rise: 5, drift: 0.45 });
 amb.drift({ cx: -20, cz: -10, hx: 55, hz: 55, top: 11, groundAt: heightAt,
   count: 60, fall: 0.55, color: 0xb08a4a, size: 0.14 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：往里的方向看得到坡上的田，往森林的方向留空（那邊該是深不見底）。 */
+{
+  terraces(world, { cx: HALF + 14, cz: 10, facing: Math.PI * 0.5, steps: 11, w: 32, groundAt: heightAt, seed: 41 });
+  hamlet(world, { cx: HALF + 46, cz: -46, groundAt: heightAt, count: 4, spread: 16, scale: 0.85, seed: 43 });
+}

@@ -42,6 +42,7 @@ import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward, portalMist } from '../../src/world/vista.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 /* 共用 HUD / renderer / scene / Environment / 畫質 —— 與神社、人間之里
@@ -763,3 +764,11 @@ amb.drift({ cx: 0, cz: 0, hx: 150, hz: 150, top: 12, groundAt: heightAt,
   count: 100, fall: 0.6, color: 0xc08a48, size: 0.15 });
 amb.birds({ cx: 0, cz: -60, r: 200, y: 56, count: 5, speed: 0.04 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：對面山坡的田與谷口的小聚落 —— 獸道是「路過的地方」，
+ * 中景要讓玩家看到「路通往有人住的地方」。 */
+{
+  // 可走範圍是 MAP_R + 30，不是 MAP_R —— 用 MAP_R 當基準會讓梯田伸進玩家走得到的地方
+  terraces(world, { cx: -MAP_R - 48, cz: -80, facing: -Math.PI * 0.5, steps: 11, w: 46, groundAt: heightAt, seed: 71 });
+  hamlet(world, { cx: MAP_R + 52, cz: 60, groundAt: heightAt, count: 6, spread: 30, seed: 73 });
+}

@@ -30,6 +30,7 @@ import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -623,3 +624,11 @@ amb.birds({ cx: 0, cz: 0, r: 95, y: 44, count: 7, speed: 0.055 });
 amb.drift({ cx: 0, cz: 0, hx: 100, hz: 100, top: 9, groundAt: heightAt,
   count: 80, fall: 0.5, color: 0xf0f0e8, size: 0.11 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：三座丘之外的坡上田與一處小聚落 —— 開闊的草原最需要中景，
+ * 不然視線一路滑到剪影就結束了。 */
+{
+  terraces(world, { cx: -HALF - 14, cz: -40, facing: -Math.PI * 0.5, steps: 11, w: 36, groundAt: heightAt, seed: 47 });
+  terraces(world, { cx: HALF + 14, cz: 55, facing: Math.PI * 0.5, steps: 11, w: 32, groundAt: heightAt, seed: 53 });
+  hamlet(world, { cx: 20, cz: -HALF - 40, groundAt: heightAt, count: 5, spread: 22, seed: 59 });
+}

@@ -22,6 +22,7 @@ import { bootMap } from './src/core/GameCore.js';
 import { texMaps, texgenCount, NORMAL_STRENGTH } from './src/world/texgen.js';
 import { rng, fbm, ridged, worley, modulate } from './src/world/noise.js';
 import { Ambience } from './src/world/ambience.js';
+import { terraces, hamlet } from './src/world/midground.js';
 import { buildLUT, LUT_PRESETS } from './src/world/lut.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
@@ -1866,3 +1867,14 @@ amb.drift({ cx: 0, cz: 10, hx: 60, hz: 70, top: 12, groundAt: heightAt,
   count: 80, fall: 0.55, color: 0xc85a3a, size: 0.14 });
 amb.birds({ cx: 0, cz: -20, r: 110, y: 50, count: 5, speed: 0.05 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層（升級書・升級 7 第 1 點）：山腰的梯田與谷口的小聚落。
+ * 神社在山上，往下望本來就該看到山腰有人耕作 —— 那是「這座山有人住」
+ * 而不是「這座山是一個關卡」的差別。擺在玩家 bounds（hx 78 / hz 124）之外。 */
+{
+  terraces(world, { cx: -92, cz: 40, facing: -Math.PI * 0.5, steps: 11, w: 34,
+    groundAt: heightAt, seed: 3 });
+  terraces(world, { cx: 92, cz: -30, facing: Math.PI * 0.5, steps: 11, w: 30,
+    groundAt: heightAt, seed: 7 });
+  hamlet(world, { cx: -86, cz: 168, groundAt: heightAt, count: 5, spread: 24, seed: 13 });
+}

@@ -38,6 +38,7 @@ import { GroundGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { ridgeRing, gapToward } from '../../src/world/vista.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -751,3 +752,10 @@ amb.birds({ cx: 0, cz: 0, r: 140, y: 48, count: 6, speed: 0.05 });
 amb.drift({ cx: 0, cz: 0, hx: 160, hz: 160, top: 10, groundAt: heightAt,
   count: 90, fall: 0.55, color: 0xf2c94a, size: 0.13 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：花田之外的坡地梯田 —— 同樣是「有人在種」的痕跡，
+ * 跟這張圖的主題（一整片人為的花田）接得起來。 */
+{
+  terraces(world, { cx: -HALF - 16, cz: 0, facing: -Math.PI * 0.5, steps: 11, w: 42, groundAt: heightAt, seed: 61 });
+  hamlet(world, { cx: HALF + 44, cz: -60, groundAt: heightAt, count: 5, spread: 24, seed: 67 });
+}

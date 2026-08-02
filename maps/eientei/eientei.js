@@ -33,6 +33,7 @@ import { catmullRom } from '../../src/world/pathnet.js';
 import { GroundGrid, ribbonOnGrid, decalOnGrid } from '../../src/world/groundmesh.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -693,3 +694,9 @@ amb.smoke(-14, heightAt(-14, 6) + 4.6, 6, { count: 11, rise: 5.5, drift: 0.5 });
 amb.drift({ cx: 0, cz: -20, hx: 70, hz: 70, top: 12, groundAt: heightAt,
   count: 70, fall: 0.6, color: 0xa8a860, size: 0.15 });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層：牆外竹海之上的小聚落（月之民的下屋敷）與坡上的田。 */
+{
+  hamlet(world, { cx: -HALF_X - 30, cz: 20, groundAt: heightAt, count: 4, spread: 18, scale: 0.9, seed: 31 });
+  terraces(world, { cx: HALF_X + 14, cz: -30, facing: Math.PI * 0.5, steps: 11, w: 30, groundAt: heightAt, seed: 37 });
+}

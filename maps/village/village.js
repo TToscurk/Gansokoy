@@ -34,6 +34,7 @@ import { catmullRom } from '../../src/world/pathnet.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { Ambience } from '../../src/world/ambience.js';
+import { terraces, hamlet } from '../../src/world/midground.js';
 import { bootMap } from '../../src/core/GameCore.js';
 
 const core = bootMap({
@@ -1727,3 +1728,16 @@ amb.banner(-14.5, heightAt(-14.5, -6) + 2.1, -6, { w: 1.5, h: 1.2, rot: 0.1, col
 amb.banner(-13.0, heightAt(-13.0, -6) + 2.25, -6, { w: 1.3, h: 1.0, rot: 0.1, color: 0x3a5a7a });
 amb.banner(-11.6, heightAt(-11.6, -6) + 2.0, -6, { w: 1.4, h: 1.3, rot: 0.1, color: 0xd8cfae });
 core.onUpdate((dt, rawDt, t) => amb.update(dt, t));
+
+/* 中景層（升級書・升級 7 第 1 點）：坡上的梯田與河對岸更遠的小聚落。
+ * 玩家走得到 hx 240 / hz 300，中景擺在那之外一點 —— 看得清、走不到。
+ * 梯田選在里的東西兩側坡上：那裡地形本來就在爬升，田順著坡才合理。 */
+{
+  // 里的 bounds 是 hx 240 / hz 300 —— 中景一定要在那之外，不然玩家走得到，
+  // 那就變成玩法層的一部分了（第一版擺在 ±232 就是這個錯）。
+  // 地面網格半徑 350，所以 ±265 還踏得到地。
+  terraces(world, { cx: -252, cz: -60, facing: -Math.PI * 0.5, steps: 11, w: 40, groundAt: heightAt, seed: 11 });
+  terraces(world, { cx: 252, cz: 90, facing: Math.PI * 0.5, steps: 11, w: 36, groundAt: heightAt, seed: 13 });
+  hamlet(world, { cx: -280, cz: 200, groundAt: heightAt, count: 6, spread: 30, seed: 17 });
+  hamlet(world, { cx: 288, cz: -180, groundAt: heightAt, count: 5, spread: 26, seed: 19 });
+}
