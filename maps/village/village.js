@@ -25,6 +25,7 @@ import { spawnAllNPCs } from '../../src/entities/shrine-spawn.js';
 import { SceneEditor } from '../../src/ui/scene-editor.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, grain, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -109,12 +110,15 @@ function canvasTex(size, draw, rx = 1, ry = 1) {
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
 }
-const noise = (g, s, n, a) => {
-  for (let i = 0; i < n; i++) {
-    g.fillStyle = `rgba(0,0,0,${Math.random() * a})`;
-    g.fillRect(Math.random() * s, Math.random() * s, 2, 2);
-  }
-};
+// 舊版是逐像素白噪音（隨機撒 n 個 2×2 暗點），放大看是砂糖不是表面。
+// 換成分層 fBm，介面保留 —— 呼叫端一行都不用改。
+// n 決定尺度、a 決定強度；grain 是乘法且以 1 為中心，而舊版只會變暗，
+// 所以強度往下讓一階，整體亮度才不會被推高。
+const noise = (g, s, n, a) => grain(g, s, {
+  scale: Math.max(4, Math.round(Math.sqrt(n) / 3)),
+  strength: Math.min(0.3, a * 0.8),
+  seed: n * 31 + Math.round(a * 100),
+});
 const groundTex = canvasTex(256, (g, s) => {
   g.fillStyle = '#5e6b3c'; g.fillRect(0, 0, s, s);
   for (let i = 0; i < 2000; i++) {
@@ -122,6 +126,15 @@ const groundTex = canvasTex(256, (g, s) => {
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 6, 0, 7); g.fill();
   }
   noise(g, s, 400, 0.15);
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 321 }) * 0.30,
+      { step: 2 });
+  }
 }, 26, 26);
 const stoneRoadTex = canvasTex(256, (g, s) => {
   g.fillStyle = '#8b8375'; g.fillRect(0, 0, s, s);
@@ -135,6 +148,15 @@ const stoneRoadTex = canvasTex(256, (g, s) => {
     }
   }
   noise(g, s, 700, 0.2);
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 6;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 331 }) * 0.30,
+      { step: 2 });
+  }
 }, 3, 22);
 const plasterTex = canvasTex(128, (g, s) => {
   g.fillStyle = '#e6dcc4'; g.fillRect(0, 0, s, s);

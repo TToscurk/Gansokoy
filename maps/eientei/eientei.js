@@ -25,6 +25,7 @@ import { Dialogue } from '../../src/ui/dialogue.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -103,6 +104,15 @@ const soilTex = canvasTex(256, (g, s) => {
     g.fillStyle = `rgba(${52 + Math.random() * 44},${58 + Math.random() * 38},${36 + Math.random() * 24},.5)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 5, 0, 7); g.fill();
   }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 221 }) * 0.30,
+      { step: 2 });
+  }
 }, 20, 18);
 const gravelTex = canvasTex(256, (g, s) => {
   // 院內的白砂利 —— 比外頭的林地亮一大截，一進門就知道「到了」
@@ -114,6 +124,15 @@ const gravelTex = canvasTex(256, (g, s) => {
   // 耙紋（枯山水的細線）
   g.strokeStyle = 'rgba(120,112,96,.25)'; g.lineWidth = 1.5;
   for (let y = 8; y < s; y += 14) { g.beginPath(); g.moveTo(0, y); g.lineTo(s, y); g.stroke(); }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 7;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 231 }) * 0.30,
+      { step: 2 });
+  }
 }, 22, 20);
 const stoneTex = canvasTex(256, (g, s) => {
   g.fillStyle = '#8b8578'; g.fillRect(0, 0, s, s);

@@ -32,6 +32,7 @@ import { FairyMobs } from '../../src/combat/mobs.js';
 import { progressMobs } from '../../src/player/progression.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -171,12 +172,30 @@ const dirtTex = canvasTex(256, (g, s) => {
       : `rgba(${64 + Math.random() * 40},${52 + Math.random() * 32},${34 + Math.random() * 22},.5)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 5, 0, 7); g.fill();
   }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 6;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 301 }) * 0.30,
+      { step: 2 });
+  }
 }, 4, 40);
 const grassTex = canvasTex(256, (g, s) => {
   g.fillStyle = '#3a4a26'; g.fillRect(0, 0, s, s);
   for (let i = 0; i < 2200; i++) {
     g.fillStyle = `rgba(${40 + Math.random() * 50},${64 + Math.random() * 55},${26 + Math.random() * 30},.55)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 6, 0, 7); g.fill();
+  }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 311 }) * 0.30,
+      { step: 2 });
   }
 }, 12, 44);
 

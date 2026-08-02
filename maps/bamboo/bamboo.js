@@ -32,6 +32,7 @@ import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -184,6 +185,15 @@ const soilTex = canvasTex(256, (g, s) => {
     const x = Math.random() * s, y = Math.random() * s, a = Math.random() * 6.3;
     g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * 7, y + Math.sin(a) * 7); g.stroke();
   }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 201 }) * 0.30,
+      { step: 2 });
+  }
 }, 16, 36);
 const trailTex = canvasTex(256, (g, s) => {
   // 比落葉地面亮一截，否則走在路上看不出自己在路上
@@ -191,6 +201,15 @@ const trailTex = canvasTex(256, (g, s) => {
   for (let i = 0; i < 1600; i++) {
     g.fillStyle = `rgba(${112 + Math.random() * 50},${96 + Math.random() * 42},${66 + Math.random() * 28},.5)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 4, 0, 7); g.fill();
+  }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 6;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 211 }) * 0.30,
+      { step: 2 });
   }
 }, 3, 40);
 

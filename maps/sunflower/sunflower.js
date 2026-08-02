@@ -29,6 +29,7 @@ import { progressMobs } from '../../src/player/progression.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -129,6 +130,15 @@ const fieldTex = canvasTex(256, (g, s) => {
     g.fillStyle = `rgba(${84 + Math.random() * 34},${106 + Math.random() * 34},${52 + Math.random() * 24},.45)`;
     g.fillRect(Math.random() * s, Math.random() * s, 2 + Math.random() * 4, 2 + Math.random() * 4);
   }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 281 }) * 0.30,
+      { step: 2 });
+  }
 }, 30, 30);
 const ridgeTex = canvasTex(256, (g, s) => {
   // 田埂：踩實的土，比田土亮一階（不是石磚）
@@ -141,6 +151,15 @@ const ridgeTex = canvasTex(256, (g, s) => {
     g.fillStyle = `rgba(${96 + Math.random() * 30},${116 + Math.random() * 30},${58 + Math.random() * 22},.5)`;
     const y = Math.random() < 0.5 ? Math.random() * 24 : s - Math.random() * 24;
     g.fillRect(Math.random() * s, y, 2 + Math.random() * 5, 2 + Math.random() * 5);
+  }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 6;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 291 }) * 0.30,
+      { step: 2 });
   }
 }, 3, 34);
 

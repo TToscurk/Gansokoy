@@ -24,6 +24,7 @@ import { NPCManager } from '../../src/entities/npc.js';
 import { Dialogue } from '../../src/ui/dialogue.js';
 import { mergeStaticByMaterial } from '../../src/core/optimize.js';
 import { texMaps } from '../../src/world/texgen.js';
+import { fbm, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
@@ -135,12 +136,30 @@ const soilTex = canvasTex(256, (g, s) => {
     g.fillStyle = `rgba(${58 + Math.random() * 46},${64 + Math.random() * 40},${40 + Math.random() * 26},.5)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 5, 0, 7); g.fill();
   }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 241 }) * 0.30,
+      { step: 2 });
+  }
 }, 16, 16);
 const roadTex = canvasTex(256, (g, s) => {
   g.fillStyle = '#8a7a5c'; g.fillRect(0, 0, s, s);
   for (let i = 0; i < 2600; i++) {
     g.fillStyle = `rgba(${138 + Math.random() * 46},${124 + Math.random() * 42},${96 + Math.random() * 36},.5)`;
     g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 0.8 + Math.random() * 3, 0, 7); g.fill();
+  }
+  // 大尺度的乾濕斑塊（升級書第 2 章）。散點是白噪音，只有高頻；沒有這層，
+  // 貼圖平鋪時會看得出一格一格 —— 改成世界座標三平面之後尤其明顯。
+  // 係數讓平均倍率落在 1.0 附近，只加結構不改整體亮度。
+  {
+    const k = 1 / s, C = 6;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 251 }) * 0.30,
+      { step: 2 });
   }
 }, 2, 24);
 const flagTex = canvasTex(256, (g, s) => {
