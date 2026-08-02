@@ -336,6 +336,11 @@ draw call 1976 → 1720、三角形 60.8 萬 → 44.5 萬。
 | `src/fx/` | 特效（刀光、粒子） |
 | `src/core/GameCore.js` | **統一執行層**：renderer／後製鏈／Environment／畫質／玩家／成長／ESC／大小地圖／主迴圈的唯一組裝點。地圖檔只寫「這張圖獨有的東西」 |
 | `src/core/optimize.js` | 幾何合併（地圖靜態合併、角色部位合併、遠景 LOD、描邊外殼） |
+| `src/world/noise.js` | value noise / fBm / ridged / Worley，全部平鋪安全。貼圖細節的底層 |
+| `src/world/texgen.js` | 從既有 canvas 貼圖推法線／粗糙度／凹陷 AO，不下載任何外部資產 |
+| `src/world/triplanar.js` | 地形三平面貼圖（世界座標三軸取樣），陡坡不拉伸、依坡度自動露岩 |
+| `src/world/terraintex.js` | 三平面用的共用岩石貼圖（層理＋顆粒＋風化） |
+| `src/world/lut.js` | 程序生成的色調分級 LUT 與八個地區的色調預設 |
 | `play.bat` / `play.sh` | 一鍵更新 + 啟動（Windows / macOS・Linux） |
 | `安裝.bat` | 就地安裝（把專案裝進它自己所在的資料夾，不多包一層），裝完直接啟動 |
 | `更新.bat` | 列出 GitHub 上所有分支讓你挑一條切過去；`[A]` 選項把每條分支各解一份到 `branches\` |
