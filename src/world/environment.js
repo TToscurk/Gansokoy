@@ -68,6 +68,16 @@ export class Environment {
       new THREE.ShaderMaterial({
         side: THREE.BackSide, depthWrite: false, uniforms: this.skyUniforms,
         vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
+        // 最後兩個 include 是必要的，不是裝飾。three.js 只會把
+        // tonemapping / colorspace 兩段自動注入**內建材質**，裸 ShaderMaterial
+        // 一律照你寫的輸出 —— 少了它們，天空在 basic 那條路（直接畫上畫布）
+        // 既沒被 tone map 也沒被 linear→sRGB 編碼，於是永遠比色表寫的更暗更濃
+        // （實測正午天頂 #011064，正好等於色表值 #0d47a8 的 sRGB→linear 解碼值，
+        // 三個通道全中）。full 那條路則由 OutputPass 補上，兩條路因此對不齊。
+        //
+        // 補上之後同一份程式碼在兩條路徑都正確：畫進 EffectComposer 的
+        // render target 時 three.js 會把 toneMapping 設成 None，chunk 自動變
+        // no-op，OutputPass 照舊負責；直接畫上畫布時則由這裡負責。
         fragmentShader: `
           uniform vec3 top, mid, bot; varying vec3 vP;
           void main(){
@@ -75,6 +85,8 @@ export class Environment {
             vec3 c = h < 0.5 ? mix(bot, mid, smoothstep(0.34,0.5,h))
                              : mix(mid, top, smoothstep(0.5,0.95,h));
             gl_FragColor = vec4(c,1.0);
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment>
           }`,
       })
     );
