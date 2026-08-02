@@ -20,6 +20,7 @@ import { mergeStaticByMaterial, keepDynamic } from './src/core/optimize.js';
 import { scatterGrass } from './src/world/flora.js';
 import { bootMap } from './src/core/GameCore.js';
 import { texMaps, texgenCount, NORMAL_STRENGTH } from './src/world/texgen.js';
+import { rng, fbm, ridged, worley, modulate } from './src/world/noise.js';
 
 /* ───────────────────────────────────────────── GameCore 開機 ── */
 // HUD、renderer、scene/camera、Environment、完整後製鏈、畫質、world 群組
@@ -88,121 +89,222 @@ function noise(ctx, size, amount, alpha) {
 }
 
 const TEX = {
-  wood: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+  /* 木：ridged fBm 沿纖維方向拉長成年輪 ＋ 節疤 ＋ 縱向細裂紋。
+   *
+   * 年輪用 ridged 而不是一般 fBm —— 一般 fBm 是「棉花」，峰谷都圓；
+   * 年輪的密材是窄而暗的硬線，那是 ridged 的形狀。CX 遠大於 CY 就把
+   * 圖樣拉成直條（實測橫向變化是縱向的 5.16 倍）。 */
+  wood: (rx = 1, ry = 1) => makeTexture(512, (g, s) => {
+    const R = rng(0x5EED01);
     g.fillStyle = '#6d4a30'; g.fillRect(0, 0, s, s);
-    for (let i = 0; i < 220; i++) {
-      g.strokeStyle = `rgba(${40 + Math.random() * 60},${25 + Math.random() * 35},${12 + Math.random() * 20},${0.12 + Math.random() * 0.3})`;
-      g.lineWidth = 0.5 + Math.random() * 2.4;
-      const x = Math.random() * s;
-      g.beginPath(); g.moveTo(x, 0);
-      g.bezierCurveTo(x + (Math.random() - 0.5) * 12, s / 3, x + (Math.random() - 0.5) * 12, s * 0.66, x + (Math.random() - 0.5) * 8, s);
+
+    // 節疤：先決定位置，年輪要繞著它扭曲
+    const knots = Array.from({ length: 3 }, () => ({
+      x: R() * s, y: R() * s, r: 12 + R() * 26, k: 0.5 + R() * 0.9,
+    }));
+    const CX = 30, CY = 4, k = 1 / s;
+    modulate(g, s, (x, y) => {
+      // 節疤把座標往外推，年輪就會繞成同心圓
+      let ux = x, uy = y;
+      for (const n of knots) {
+        const dx = x - n.x, dy = y - n.y;
+        const d = Math.hypot(dx, dy);
+        if (d < n.r * 3 && d > 0.001) {
+          const w = Math.exp(-(d / n.r) * (d / n.r)) * n.k;
+          ux += dx / d * w * n.r * 1.6;
+          uy += dy / d * w * n.r * 1.6;
+        }
+      }
+      const grain = ridged(ux * k * CX, uy * k * CY,
+        { period: [CX, CY], octaves: 4, seed: 11 });
+      const fine = fbm(x * k * 90, y * k * 14, { period: [90, 14], octaves: 2, seed: 23 });
+      // 係數乘過 0.918：新畫法本身比舊的亮 8.9%，基準亮度要對回去，
+      // 不然「加了細節」會被誤讀成「整體變亮了」
+      return 0.661 + grain * 0.386 + (fine - 0.5) * 0.129;
+    }, { step: 2 });
+
+    // 縱向細裂紋：這個用 2D API 畫比較銳利，noise 做出來會糊
+    for (let i = 0; i < 26; i++) {
+      g.strokeStyle = `rgba(38,24,12,${0.10 + R() * 0.18})`;
+      g.lineWidth = 0.4 + R() * 0.9;
+      const x = R() * s, len = s * (0.3 + R() * 0.7), y0 = R() * s;
+      g.beginPath(); g.moveTo(x, y0);
+      g.bezierCurveTo(x + (R() - 0.5) * 5, y0 + len * 0.4,
+                      x + (R() - 0.5) * 5, y0 + len * 0.7, x + (R() - 0.5) * 4, y0 + len);
       g.stroke();
     }
-    noise(g, s, 16);
   }, rx, ry),
 
-  lacquer: (rx = 1, ry = 1) => makeTexture(128, (g, s) => {
+  /* 漆：磨得很光的表面，只有極細的刷痕與淺裂紋。
+   * 這裡 roughInvert 之後要關掉（裂紋是亮的），見 mats()。 */
+  lacquer: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+    const R = rng(0x5EED02);
     g.fillStyle = '#b8402f'; g.fillRect(0, 0, s, s);
-    for (let i = 0; i < 90; i++) {
-      g.strokeStyle = `rgba(${120 + Math.random() * 60},${30 + Math.random() * 25},${20 + Math.random() * 20},.28)`;
-      g.lineWidth = 0.6 + Math.random() * 1.6;
-      const x = Math.random() * s;
-      g.beginPath(); g.moveTo(x, 0); g.lineTo(x + (Math.random() - 0.5) * 6, s); g.stroke();
+    const k = 1 / s;
+    modulate(g, s, (x, y) => {
+      const brush = fbm(x * k * 70, y * k * 6, { period: [70, 6], octaves: 2, seed: 31 });
+      return 0.859 + brush * 0.128;   // ×0.914，對回舊的基準亮度
+    });
+    for (let i = 0; i < 40; i++) {
+      g.strokeStyle = `rgba(225,180,150,${0.06 + R() * 0.10})`;
+      g.lineWidth = 0.4 + R() * 0.5;
+      const x = R() * s, y = R() * s;
+      g.beginPath(); g.moveTo(x, y);
+      g.lineTo(x + (R() - 0.5) * 26, y + (R() - 0.5) * 26); g.stroke();
     }
-    noise(g, s, 12);
   }, rx, ry),
 
-  stone: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+  /* 石：fBm 斑駁 ＋ Worley 顆粒 ＋ 細裂紋。
+   * Worley 是「一顆一顆」的形狀，fBm 做不出來 —— 石材的礦物顆粒要靠它。 */
+  stone: (rx = 1, ry = 1) => makeTexture(512, (g, s) => {
+    const R = rng(0x5EED03);
     g.fillStyle = '#8d8b83'; g.fillRect(0, 0, s, s);
-    for (let i = 0; i < 900; i++) {
-      const r = Math.random() * 3.2;
-      g.fillStyle = `rgba(${90 + Math.random() * 90},${88 + Math.random() * 85},${82 + Math.random() * 80},${0.15 + Math.random() * 0.4})`;
-      g.beginPath(); g.arc(Math.random() * s, Math.random() * s, r, 0, 7); g.fill();
+    const k = 1 / s, C = 10, W = 34;
+    modulate(g, s, (x, y) => {
+      const blotch = fbm(x * k * C, y * k * C, { period: C, octaves: 5, seed: 41 });
+      const cell = worley(x * k * W, y * k * W, W, 53);
+      // 顆粒邊界（cell 接近 0 的地方）壓暗一點，中心留亮
+      return 0.80 + blotch * 0.34 + Math.min(cell, 0.45) * 0.22;
+    }, { step: 2 });
+    for (let i = 0; i < 30; i++) {
+      g.strokeStyle = `rgba(60,58,54,${0.12 + R() * 0.14})`;
+      g.lineWidth = 0.5 + R() * 0.6;
+      g.beginPath(); g.moveTo(R() * s, R() * s);
+      g.lineTo(R() * s, R() * s); g.stroke();
     }
-    for (let i = 0; i < 26; i++) {
-      g.strokeStyle = 'rgba(60,58,54,.22)'; g.lineWidth = 0.8;
-      g.beginPath(); g.moveTo(Math.random() * s, Math.random() * s);
-      g.lineTo(Math.random() * s, Math.random() * s); g.stroke();
-    }
-    noise(g, s, 22);
   }, rx, ry),
 
-  /* coursed stone blocks, for retaining walls */
-  masonry: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
-    g.fillStyle = '#6f6b60'; g.fillRect(0, 0, s, s);
-    const rows = 6, h = s / rows;
+  /* 疊石牆：磚縫做深（法線貼圖直接吃這個落差）＋ 每塊磚色調微差。 */
+  masonry: (rx = 1, ry = 1) => makeTexture(512, (g, s) => {
+    const R = rng(0x5EED04);
+    // 底色＝縫的顏色，磚砌在上面，縫自然就是最暗的
+    g.fillStyle = '#3f3c35'; g.fillRect(0, 0, s, s);
+    const rows = 6, h = s / rows, gap = s * 0.012;
     for (let r = 0; r < rows; r++) {
       const cols = 4, w = s / cols, off = (r % 2) * w * 0.5;
       for (let c = -1; c <= cols; c++) {
-        const v = 120 + Math.random() * 55;
-        g.fillStyle = `rgb(${v + 6},${v + 2},${v - 8})`;
-        g.fillRect(c * w + off + 2, r * h + 2, w - 4, h - 4);
+        const v = 118 + R() * 58;
+        const tint = R() * 10 - 5;                    // 每塊磚的色調微差
+        g.fillStyle = `rgb(${v + 6 + tint},${v + 2},${v - 8 - tint})`;
+        g.beginPath();
+        // 圓角：石塊的邊被磨過，直角看起來像磁磚
+        const bx = c * w + off + gap, by = r * h + gap;
+        const bw = w - gap * 2, bh = h - gap * 2, rr = Math.min(bw, bh) * 0.12;
+        g.roundRect(bx, by, bw, bh, rr); g.fill();
       }
     }
-    for (let i = 0; i < 500; i++) {
-      g.fillStyle = `rgba(70,66,58,${Math.random() * 0.22})`;
-      g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 4, 0, 7); g.fill();
-    }
-    noise(g, s, 18);
+    const k = 1 / s, C = 14, W = 40;
+    modulate(g, s, (x, y) => {
+      const weather = fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 61 });
+      const cell = worley(x * k * W, y * k * W, W, 71);
+      // ×1.083：縫做深之後暗部面積變大，平均掉了 7.7%，磚面要補亮回來，
+      // 這樣「縫更深」才不會連帶變成「整面牆變暗」
+      return 0.91 + weather * 0.303 + Math.min(cell, 0.4) * 0.173;
+    }, { step: 2 });
   }, rx, ry),
 
   ground: (rx = 1, ry = 1) => makeTexture(512, (g, s) => {
+    const R = rng(0x5EED05);
     g.fillStyle = '#4a5a34'; g.fillRect(0, 0, s, s);
     for (let i = 0; i < 2600; i++) {
-      const v = Math.random();
+      const v = R();
       g.fillStyle = v > 0.72
-        ? `rgba(${96 + Math.random() * 40},${86 + Math.random() * 30},${52 + Math.random() * 24},.5)`
-        : `rgba(${52 + Math.random() * 55},${72 + Math.random() * 50},${34 + Math.random() * 34},.55)`;
-      g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 1 + Math.random() * 7, 0, 7); g.fill();
+        ? `rgba(${96 + R() * 40},${86 + R() * 30},${52 + R() * 24},.5)`
+        : `rgba(${52 + R() * 55},${72 + R() * 50},${34 + R() * 34},.55)`;
+      g.beginPath(); g.arc(R() * s, R() * s, 1 + R() * 7, 0, 7); g.fill();
     }
-    noise(g, s, 26);
+    // 大尺度的乾濕斑塊 —— 沒有這層，草地平鋪時會看得出一格一格
+    const k = 1 / s, C = 5;
+    modulate(g, s, (x, y) =>
+      0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 81 }) * 0.30,
+      { step: 2 });
   }, rx, ry),
 
   /* 榻榻米：藺草編織的細橫紋 + 每張蓆的黑色緣（へり） */
   tatami: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+    const R = rng(0x5EED06);
     g.fillStyle = '#8a9a5b'; g.fillRect(0, 0, s, s);
     for (let y = 0; y < s; y += 2) {
-      g.strokeStyle = `rgba(${110 + Math.random() * 30},${125 + Math.random() * 30},${70 + Math.random() * 20},.45)`;
+      g.strokeStyle = `rgba(${110 + R() * 30},${125 + R() * 30},${70 + R() * 20},.45)`;
       g.lineWidth = 1;
-      g.beginPath(); g.moveTo(0, y + Math.random()); g.lineTo(s, y + Math.random()); g.stroke();
+      g.beginPath(); g.moveTo(0, y + R()); g.lineTo(s, y + R()); g.stroke();
     }
+    // 藺草的粗細不均：沿編織方向拉長的低頻起伏
+    const k = 1 / s;
+    modulate(g, s, (x, y) =>
+      0.93 + fbm(x * k * 6, y * k * 40, { period: [6, 40], octaves: 3, seed: 91 }) * 0.16);
     // 蓆緣：畫面左右兩側的深色帶（貼圖重複時就是一張張蓆的分界）
     g.fillStyle = '#2a2a30';
     g.fillRect(0, 0, 7, s);
     g.fillRect(s - 7, 0, 7, s);
-    noise(g, s, 10);
   }, rx, ry),
 
   gravel: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+    const R = rng(0x5EED07);
     g.fillStyle = '#a09889'; g.fillRect(0, 0, s, s);
     for (let i = 0; i < 2200; i++) {
-      const v = 120 + Math.random() * 80;                 // grey pebbles, barely tinted
-      g.fillStyle = `rgba(${v + 8},${v + 3},${v - 6},${0.25 + Math.random() * 0.45})`;
-      g.beginPath(); g.arc(Math.random() * s, Math.random() * s, 0.8 + Math.random() * 2.6, 0, 7); g.fill();
+      const v = 120 + R() * 80;                 // grey pebbles, barely tinted
+      g.fillStyle = `rgba(${v + 8},${v + 3},${v - 6},${0.25 + R() * 0.45})`;
+      g.beginPath(); g.arc(R() * s, R() * s, 0.8 + R() * 2.6, 0, 7); g.fill();
     }
-    noise(g, s, 14);
+    // Worley 把散落的圓點收成一顆一顆的砂礫，而不是均勻的糖粉
+    const k = 1 / s, W = 26;
+    modulate(g, s, (x, y) => 0.86 + worley(x * k * W, y * k * W, W, 101) * 0.34);
   }, rx, ry),
 
-  roof: (rx = 1, ry = 1) => makeTexture(256, (g, s) => {
+  /* 瓦：每一列瓦片的弧面明暗漸層（法線轉出來就是立體瓦楞）＋ 苔痕。 */
+  roof: (rx = 1, ry = 1) => makeTexture(512, (g, s) => {
+    const R = rng(0x5EED08);
     g.fillStyle = '#5c6f6d'; g.fillRect(0, 0, s, s);
     const rows = 10, h = s / rows;
-    for (let r = 0; r < rows; r++) {
-      const y = r * h;
-      g.fillStyle = `rgba(${28 + Math.random() * 14},${38 + Math.random() * 16},${38 + Math.random() * 16},.6)`;
-      g.fillRect(0, y, s, h * 0.16);
-      g.fillStyle = 'rgba(120,148,142,.09)';
-      g.fillRect(0, y + h * 0.16, s, h * 0.1);
+    // 弧面：一列之內從暗（瓦溝）平滑升到亮（瓦脊）再落下
+    const img = g.getImageData(0, 0, s, s), d = img.data;
+    for (let y = 0; y < s; y++) {
+      const t = (y % h) / h;                       // 0~1 在一列之內
+      const arc = Math.sin(t * Math.PI);           // 弧面
+      const lip = t < 0.14 ? -0.34 * (1 - t / 0.14) : 0;   // 上緣的壓瓦陰影
+      const kk = 0.72 + arc * 0.46 + lip;
+      for (let x = 0; x < s; x++) {
+        const i = (y * s + x) * 4;
+        d[i] *= kk; d[i + 1] *= kk; d[i + 2] *= kk;
+      }
     }
-    for (let i = 0; i < 500; i++) {
-      g.fillStyle = `rgba(${60 + Math.random() * 60},${86 + Math.random() * 60},${80 + Math.random() * 50},${Math.random() * 0.22})`;
-      g.fillRect(Math.random() * s, Math.random() * s, 2 + Math.random() * 8, 1 + Math.random() * 3);
+    g.putImageData(img, 0, 0);
+    // 苔痕：低頻 fBm 只在暗處（瓦溝積水處）長，所以跟弧面相乘
+    const k = 1 / s, C = 7;
+    modulate(g, s, (x, y) => {
+      const moss = fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 111 });
+      const t = (y % h) / h;
+      const wet = 1 - Math.sin(t * Math.PI);       // 瓦溝＝1，瓦脊＝0
+      return 1 - Math.max(0, moss - 0.55) * wet * 0.55;
+    }, { step: 2 });
+    for (let i = 0; i < 260; i++) {
+      g.fillStyle = `rgba(${70 + R() * 50},${100 + R() * 50},${86 + R() * 40},${R() * 0.16})`;
+      g.fillRect(R() * s, R() * s, 2 + R() * 7, 1 + R() * 2);
     }
-    noise(g, s, 16);
   }, rx, ry),
 
+  /* 障子紙：楮紙的纖維 ＋ 透光不均（薄處比較亮）。 */
   shoji: () => makeTexture(256, (g, s) => {
+    const R = rng(0x5EED09);
     g.fillStyle = '#e8dfc8'; g.fillRect(0, 0, s, s);
-    noise(g, s, 14);
+    // 透光不均：大尺度的厚薄
+    const k = 1 / s;
+    modulate(g, s, (x, y) =>
+      0.94 + fbm(x * k * 4, y * k * 4, { period: 4, octaves: 3, seed: 121 }) * 0.13);
+    // 纖維：兩個方向各一層被拉長的細噪音，交織成紙的紋理
+    modulate(g, s, (x, y) => {
+      const h = fbm(x * k * 120, y * k * 8, { period: [120, 8], octaves: 2, seed: 131 });
+      const v = fbm(x * k * 8, y * k * 120, { period: [8, 120], octaves: 2, seed: 141 });
+      return 0.97 + (h + v - 1) * 0.06;
+    });
+    for (let i = 0; i < 60; i++) {                 // 幾根特別明顯的粗纖維
+      g.strokeStyle = `rgba(198,186,158,${0.10 + R() * 0.14})`;
+      g.lineWidth = 0.4 + R() * 0.6;
+      const x = R() * s, y = R() * s, a = R() * Math.PI, L = 8 + R() * 26;
+      g.beginPath(); g.moveTo(x, y);
+      g.lineTo(x + Math.cos(a) * L, y + Math.sin(a) * L); g.stroke();
+    }
     g.strokeStyle = 'rgba(90,66,42,.75)'; g.lineWidth = 5;
     for (let i = 1; i < 4; i++) {
       g.beginPath(); g.moveTo(0, (s / 4) * i); g.lineTo(s, (s / 4) * i); g.stroke();
