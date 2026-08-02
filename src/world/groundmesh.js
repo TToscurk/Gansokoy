@@ -85,18 +85,24 @@ export class GroundGrid {
  * @param {THREE.Material} mat 需開 polygonOffset 的鋪地材質
  * @param {(x:number,z:number)=>number} sample GroundGrid.sample（bind 過的）
  */
-export function ribbonOnGrid(parent, dense, halfW, mat, sample, lift = 0.05) {
+export function ribbonOnGrid(parent, dense, halfW, mat, sample, lift = 0.05, uvTile = 0) {
   const pos = [], uv = [], idx = [];
+  let arc = 0;                                   // 沿中心線累積的實際長度（公尺）
   for (let i = 0; i < dense.length; i++) {
     const [cx, cz] = dense[i];
     const a = dense[Math.max(0, i - 1)], b = dense[Math.min(dense.length - 1, i + 1)];
     const tx = b[0] - a[0], tz = b[1] - a[1];
     const tl = Math.hypot(tx, tz) || 1;
     const nx = tz / tl, nz = -tx / tl;
+    if (i > 0) arc += Math.hypot(cx - dense[i - 1][0], cz - dense[i - 1][1]);
     for (const sgn of [-1, 1]) {
       const x = cx + nx * halfW * sgn, z = cz + nz * halfW * sgn;
       pos.push(x, sample(x, z) + lift, z);
-      uv.push(sgn > 0 ? 1 : 0, i * 0.16);
+      // uvTile > 0：UV 以「公尺 ÷ uvTile」計 —— 一塊貼圖固定鋪 uvTile 公尺，
+      // 不同寬度、不同長度的路密度才會一致（材質的 repeat 要設 (1,1)）。
+      // 不給就維持舊行為（0..1 跨全寬、每點 0.16）—— 其他圖的呼叫不受影響。
+      if (uvTile > 0) uv.push((sgn > 0 ? halfW * 2 : 0) / uvTile, arc / uvTile);
+      else uv.push(sgn > 0 ? 1 : 0, i * 0.16);
     }
     if (i < dense.length - 1) {
       // 繞向決定面朝上還是朝下 —— 反了整條路會被背面剔除
@@ -118,9 +124,19 @@ export function ribbonOnGrid(parent, dense, halfW, mat, sample, lift = 0.05) {
 /**
  * 矩形鋪地（石板路、水田）。細分 + 每頂點貼地，同 ribbonOnGrid 的原理。
  */
-export function decalOnGrid(parent, w, d, x, z, mat, sample, lift = 0.05) {
+export function decalOnGrid(parent, w, d, x, z, mat, sample, lift = 0.05, uvTile = 0) {
   const geo = new THREE.PlaneGeometry(w, d, Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(d / 2)));
   geo.rotateX(-Math.PI / 2);
+  // uvTile > 0：UV 改成「公尺 ÷ uvTile」（見 ribbonOnGrid 同名參數）。
+  // PlaneGeometry 的 UV 是 0..1 跨全寬 —— 11×470 的主街與 196×8 的橫街
+  // 共用同一個 repeat 時，一邊的石板被拉成 21 公尺長、另一邊被壓成 0.36
+  // 公尺，兩條路看起來就像不同材質。
+  if (uvTile > 0) {
+    const uvA = geo.attributes.uv;
+    for (let i = 0; i < uvA.count; i++) {
+      uvA.setXY(i, uvA.getX(i) * (w / uvTile), uvA.getY(i) * (d / uvTile));
+    }
+  }
   const p = geo.attributes.position;
   for (let i = 0; i < p.count; i++) {
     p.setY(i, sample(p.getX(i) + x, p.getZ(i) + z) + lift);

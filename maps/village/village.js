@@ -158,7 +158,8 @@ const stoneRoadTex = canvasTex(256, (g, s) => {
     for (let c = -1; c <= cols; c++) {
       const v = 132 + Math.random() * 44;
       g.fillStyle = `rgb(${v},${v - 4},${v - 16})`;
-      g.fillRect(c * w + off + 2, r * h + 2, w - 4, h - 4);
+      // 縫 3px：2px 的縫在掠射角的 mip 下整個被平均掉，路面變成一塊平板
+      g.fillRect(c * w + off + 3, r * h + 3, w - 6, h - 6);
     }
   }
   noise(g, s, 700, 0.2);
@@ -171,7 +172,18 @@ const stoneRoadTex = canvasTex(256, (g, s) => {
       0.86 + fbm(x * k * C, y * k * C, { period: C, octaves: 4, seed: 331 }) * 0.30,
       { step: 2 });
   }
-}, 3, 22);
+}, 1, 1);
+// 異向性過濾：路面幾乎永遠是掠射角（人站著看路），預設 anisotropy=1 時
+// mip 會把整條路平均成一塊沒有接縫的平板 —— 石板路看起來像鋪木板的主因
+// 有一半是這個。texMaps 會把這個值連同 repeat 一起複製到法線/粗糙度貼圖。
+stoneRoadTex.anisotropy = 8;
+// ↑ repeat 給 (1,1)：石板路的密度不再由材質的 repeat 決定，改由每一段路面
+// 自己的 UV 用世界單位換算（decalOnGrid / ribbonOnGrid 的 uvTile 參數）。
+// 以前是 (3,22) 配 0..1 的 UV —— 11×470 的主街石板被拉成 21 公尺長（看起來
+// 像木板），196×8 的橫街被壓成 0.36 公尺（看起來像條紋），路口交界一眼就
+// 看出是兩種東西。世界單位之後每段路的石板都一樣大。
+/** 一塊石板路貼圖鋪幾公尺（5 欄 × 7 列 → 一塊石板約 0.92 × 0.66 公尺） */
+const ROAD_TILE = 4.6;
 const plasterTex = canvasTex(128, (g, s) => {
   g.fillStyle = '#e6dcc4'; g.fillRect(0, 0, s, s);
   noise(g, s, 600, 0.12);
@@ -237,8 +249,8 @@ const MAT = {
  */
 /** 鋪地物件（路、田）。實作見 src/world/groundmesh.js —— 每個頂點都
  * 取「地面網格實際渲染的高度」再抬 lift，這是路草交界不閃的根治。 */
-function groundDecal(w, d, x, z, mat, lift = 0.05) {
-  return decalOnGrid(world, w, d, x, z, mat, gSample, lift);
+function groundDecal(w, d, x, z, mat, lift = 0.05, uvTile = 0) {
+  return decalOnGrid(world, w, d, x, z, mat, gSample, lift, uvTile);
 }
 
 /* 地面網格 + 貼地查詢（見 src/world/groundmesh.js）
@@ -304,6 +316,7 @@ const gSample = (x, z) => GRID.sample(x, z);
 // 五條橫街切出街區，街區之間再補幾條小巷。
 const CROSS_Z = [-120, -70, -20, 40, 100, 165];   // 橫街
 const LANE_X = [-72, -36, 36, 72];                // 縱向的小巷
+const BRIDGE_Z = [-70, 40, 165];                  // 有橋的橫街（路面要鋪到橋頭）
 {
   /* 三種街道在每個路口都互相重疊。lift 全部用預設的 0.05 的話，重疊處
    * 兩層貼地面完全共面、polygonOffset 也一樣 —— 深度測試分不出前後，
@@ -311,11 +324,17 @@ const LANE_X = [-72, -36, 36, 72];                // 縱向的小巷
    * 肉眼看不出高低差，深度緩衝分得出來。
    * 由下而上：主街 → 橫街 → 小巷，窄的鋪在寬的上面才合理。 */
   // 主街（南北貫穿）
-  groundDecal(11, 470, 0, 40, MAT.road, 0.050);
-  // 橫街
-  for (const cz of CROSS_Z) groundDecal(196, 8, 0, cz, MAT.road, 0.062);
+  groundDecal(11, 470, 0, 40, MAT.road, 0.050, ROAD_TILE);
+  /* 橫街。東端不再一律鋪到 98 —— 那會斷在空地中間（使用者截圖抓到的
+   * 「路走一走突然沒了」）。有橋的三條鋪到橋頭、跟橋接上；沒橋的鋪到
+   * 最東的小巷（x=72）收在 T 字路口，路的盡頭都是「某個東西」。 */
+  for (const cz of CROSS_Z) {
+    const eastEnd = BRIDGE_Z.includes(cz) ? riverX(cz) - RIVER_HW - 4 : 76;
+    const w = eastEnd - (-98);
+    groundDecal(w, 8, (eastEnd + -98) / 2, cz, MAT.road, 0.062, ROAD_TILE);
+  }
   // 小巷（比主街窄，鋪到南北兩端的街廓為止）
-  for (const lx of LANE_X) groundDecal(6.5, 320, lx, 20, MAT.road, 0.074);
+  for (const lx of LANE_X) groundDecal(6.5, 320, lx, 20, MAT.road, 0.074, ROAD_TILE);
 }
 
 /* ────────────────────────────────────────────── 河與橋 ── */
@@ -459,7 +478,7 @@ function bridge(z) {
       hw: HALF_LEN, hd: 0.28, rail: true });
   }
 }
-for (const cz of [-70, 40, 165]) bridge(cz);
+for (const cz of BRIDGE_Z) bridge(cz);
 
 /* ─────────────────────────────────────────────────────── 建物 ── */
 /**
@@ -707,6 +726,45 @@ const BLOCK_KEEP_OUT = [
   }
 })();
 
+/* 巷邊的菜園（升級・回應「部分地區太空曠」）。
+ * 一塊翻過土的地 + 幾壟菜 + 三邊竹垣。壟是低矮的長條土堆上排一列綠球 ——
+ * 走近看是菜，走遠看是「有在用的地」。不給碰撞：踩過菜園不會卡住。 */
+const BUND_MAT = new THREE.MeshStandardMaterial({ color: '#5d5238', roughness: 1 });   // 田埂/菜壟共用
+const SOIL_MAT = new THREE.MeshStandardMaterial({
+  color: '#5c4a33', roughness: 1,
+  polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+});
+const VEG_MAT = new THREE.MeshStandardMaterial({ color: '#4f7a2e', roughness: 0.95, flatShading: true });
+function vegetableGarden(cx, cz, side) {
+  const W = 7, D = 9;
+  groundDecal(W, D, cx, cz, SOIL_MAT, 0.055);
+  const y = heightAt(cx, cz);
+  for (let r = 0; r < 3; r++) {
+    const rx = cx + (r - 1) * 2.1;
+    box(0.9, 0.22, D - 1.6, BUND_MAT, rx, y + 0.08, cz);          // 壟
+    for (let k = 0; k < 5; k++) {
+      const v = new THREE.Mesh(new THREE.IcosahedronGeometry(0.3, 0), VEG_MAT);
+      v.position.set(rx + ((k * 37) % 5) / 10 - 0.2, y + 0.34, cz + (k - 2) * (D - 2.6) / 4);
+      v.castShadow = v.receiveShadow = true;
+      world.add(v);
+    }
+  }
+  // 三邊竹垣（朝巷子那面開口）—— 圍起來才讀得出「這塊地是誰家的」。
+  // 巷子在 -side 方向（房子的排都是 lx + side*9.5，面朝 lx 的巷），
+  // 所以圍遠離巷子的那一面 +side，缺口朝巷。
+  for (const [ax, az, w, d] of [
+    [cx, cz - D / 2, W, 0.1], [cx, cz + D / 2, W, 0.1], [cx + side * (W / 2), cz, 0.1, D],
+  ]) {
+    const n = Math.max(2, Math.round(Math.max(w, d) / 1.3));
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      const px = ax - w / 2 + w * t, pz = az - d / 2 + d * t;
+      cyl(0.05, 0.06, 1.0, MAT.bamboo, px, heightAt(px, pz) + 0.5, pz, 5);
+    }
+    box(Math.max(w, 0.06), 0.06, Math.max(d, 0.06), MAT.bamboo, ax, y + 0.82, az);
+  }
+}
+
 /* 小巷側的第二排民家 —— 使用者回報里還是很空曠。街廓原本只有南北
  * 兩列面朝橫街的屋子，東西向（面朝小巷）是空的；補上這一排之後
  * 街廓才是「四邊都有房子、中間是後院」的完整形。 */
@@ -724,7 +782,9 @@ const BLOCK_KEEP_OUT = [
           if (!clearOf(hx, z)) continue;
           if (!offRiver(hx, z, 5)) continue;
           if (Math.abs(hx) < 19) continue;
-          if (Math.random() < 0.3) continue;            // 留些空隙當菜園
+          // 留些空隙當菜園 —— 原本這裡只是 continue，「菜園」從來沒有真的
+          // 種下去，空隙就只是空地（使用者截圖抓到的「太空曠」之一）。
+          if (Math.random() < 0.3) { vegetableGarden(hx, z, side); continue; }
           const r = Math.random();
           house({
             x: hx, z, w: 7 + Math.random() * 2, d: 5.5 + Math.random() * 1.5,
@@ -1122,15 +1182,50 @@ const PADDY_MAT = new THREE.MeshStandardMaterial({
   color: '#6f7f42', roughness: 1,
   polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
 });
-// 里外一圈的水田。放大之後數量也要跟上，不然外圍會是一片空草地。
-for (let i = 0; i < 44; i++) {
+/* 一格水田 = 貼地的田面 + 立起來的田埂框。
+ * 只有平的色塊時，站在里緣往外看就是「一片空地上printed了幾個綠矩形」
+ * （使用者截圖抓到的「太空曠」有一半是這個）—— 15 公分高的埂框讓它
+ * 從「貼圖」變成「有邊界的一塊田」，成本是每格 4 個合併掉的小盒子。 */
+function paddy(x, z) {
+  groundDecal(17, 11, x, z, PADDY_MAT, 0.05);
+  // 埂框逐段貼地：田在里外的斜坡上，一整條 17.8 公尺的直盒子兩端會浮空
+  // 或整根埋掉。切成 6 公尺一段、每段取自己中心的地面高度、下半截埋進土裡
+  //（高 0.55 只露 0.3），斜坡上的落差就被埋掉的部分吃掉。
+  const seg = (bx, bz, w, d) => {
+    box(w, 0.55, d, BUND_MAT, bx, heightAt(bx, bz) + 0.05, bz);
+  };
+  for (const sx of [-1, 0, 1]) {
+    seg(x + sx * 6.1, z - 5.7, 6.4, 0.55);
+    seg(x + sx * 6.1, z + 5.7, 6.4, 0.55);
+  }
+  for (const sz of [-1, 0, 1]) {
+    seg(x - 8.9, z + sz * 3.9, 0.55, 4.2);
+    seg(x + 8.9, z + sz * 3.9, 0.55, 4.2);
+  }
+}
+/** 稻草堆（收割後立在田邊的）：一根桿 + 一坨草 */
+function haystack(x, z) {
+  const y = heightAt(x, z);
+  cyl(0.06, 0.07, 2.0, MAT.darkWood, x, y + 1.0, z, 5);
+  const c = new THREE.Mesh(new THREE.ConeGeometry(0.85, 1.7, 7), MAT.roofThatch);
+  c.position.set(x, y + 1.15, z);
+  c.castShadow = c.receiveShadow = true;
+  world.add(c);
+}
+// 里外一圈的水田。從 112 起鋪 —— 原本從 128 起，街廓（±105）到水田之間
+// 有一圈 20 多公尺的純空草地，站在里緣看出去什麼都沒有。
+let paddies = 0;
+for (let i = 0; i < 60; i++) {
   const side = i % 2 ? 1 : -1;
-  const x = side * (128 + (i % 6) * 15);
+  const x = side * (112 + (i % 7) * 15);
   const z = -190 + (i * 21) % 420;
   if (!offRiver(x, z, 5)) continue;                // 河道上不種田
+  if (Math.abs(z - SW_GATE.z) < 10 && x < -90 && x > -140) continue;   // 西南門引道留空
   // 水田在里外的斜坡上，起伏比里內大得多 —— 一定要貼著地形，
   // 否則整片浮空或埋進土裡
-  groundDecal(17, 11, x, z, PADDY_MAT, 0.05);
+  paddy(x, z);
+  if (i % 4 === 0) haystack(x + 9.6, z + 6.4);     // 每幾格田角落一座稻草堆
+  paddies++;
 }
 
 /* ─────────────────────────────────────── 里外的農家聚落 ── */
@@ -1313,12 +1408,15 @@ graveyard(-158, -140);
 /* 東側（河對岸）。座標一律用 eastBankX() 從河緣推 ——
  * 原本是寫死的 x，而河是蜿蜒的：kura(126, 4) 的 x 正好落在 z=4 處的
  * 河心（riverX(4) ≈ 125.6），倉庫就蓋在河裡。河加寬之後這種錯只會更多。 */
+/* off 的下限由堤道決定：堤道中心在河緣外 5.5、半寬 2.6，外緣 = 河緣 + 8.1。
+ * 農家（含竹垣）半寬約 7、倉庫約 3.2 —— off 給到 16 / 12.5 才不會把房子
+ * 蓋在路中間（使用者截圖抓到 off=7 的倉庫正好壓住堤道）。 */
 for (const [z, off, rot, kind] of [
-  [-34, 16, -Math.PI * 0.5, 'farm'],
-  [46, 10, -Math.PI * 0.46, 'farm'],
+  [-34, 17, -Math.PI * 0.5, 'farm'],
+  [46, 16, -Math.PI * 0.46, 'farm'],
   [-112, 20, -Math.PI * 0.54, 'farm'],
-  [122, 12, -Math.PI * 0.5, 'farm'],
-  [4, 7, -Math.PI * 0.5, 'kura'],
+  [122, 16, -Math.PI * 0.5, 'farm'],
+  [4, 12.5, -Math.PI * 0.5, 'kura'],
   [-74, 14, -Math.PI * 0.5, 'kura'],
 ]) {
   const x = eastBankX(z, off);
@@ -1332,7 +1430,7 @@ for (const [z, off, rot, kind] of [
 {
   const pts = [];
   for (let z = -190; z <= 210; z += 10) pts.push([eastBankX(z, 5.5), z]);
-  ribbonOnGrid(world, catmullRom(pts, 3), 2.6, MAT.road, gSample, 0.086);
+  ribbonOnGrid(world, catmullRom(pts, 3), 2.6, MAT.road, gSample, 0.086, ROAD_TILE);
 }
 
 // 東河上的水車小屋（河在東側，riverX 決定位置）
@@ -1458,7 +1556,7 @@ function westGate(gx, gz) {
 westGate(SW_GATE.x, SW_GATE.z);
 
 // 橫街 z=100 往西接到西南門的一段土路（橫街本身只鋪到 |x|≈98）
-groundDecal(34, 7, (SW_GATE.x + 3 - 98) / 2, SW_GATE.z, MAT.road, 0.086);
+groundDecal(34, 7, (SW_GATE.x + 3 - 98) / 2, SW_GATE.z, MAT.road, 0.086, ROAD_TILE);
 
 /* 遠山（讓盆地有邊界感）
  *
@@ -1559,7 +1657,7 @@ scatterGrass(world, {
   world.add(g);
   const gy = heightAt(SW_GATE.x, SW_GATE.z);
   // 出門的土路先往西鋪一段（跟門內那段各差 1.2 公分，重疊處不會閃）
-  groundDecal(48, 6, SW_GATE.x - 28, SW_GATE.z + 2, MAT.road, 0.098);
+  groundDecal(48, 6, SW_GATE.x - 28, SW_GATE.z + 2, MAT.road, 0.098, ROAD_TILE);
   // 夾道的樹：愈往西愈密、愈暗（香霖堂在林緣，再過去就是魔法之森）
   for (let i = 0; i < 46; i++) {
     const s = 0.9 + Math.random() * 0.9;
@@ -1811,7 +1909,7 @@ core.installMapUI({
     bounds: { minX: -160, maxX: 160, minZ: -195, maxZ: 265 },
     lines: [
       [[0, GATE_Z], [0, SOUTH_GATE_Z]],                                  // 主街
-      ...CROSS_Z.map(cz => [[-102, cz], [102, cz]]),                     // 橫街
+      ...CROSS_Z.map(cz => [[-102, cz], [BRIDGE_Z.includes(cz) ? riverX(cz) + 28 : 76, cz]]), // 橫街（有橋的畫到對岸堤道）
       ...LANE_X.map(lx => [[lx, -160], [lx, 200]]),                      // 小巷
       [[-98, 100], [SW_GATE.x, 100]],                                    // 西南門引道
     ],
