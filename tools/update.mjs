@@ -35,18 +35,48 @@ function git(...args) {
   }
 }
 // 要讓使用者看到 git 自己的進度輸出時用這個（fetch、checkout）
+// stdin 一定要給 ignore，不能 inherit：readline 已經接管 stdin，
+// 讓 git 也去搶會兩邊互卡，整支腳本停在 fetch 那一步不動
 function gitLoud(...args) {
-  return spawnSync('git', [...GIT, ...args], { stdio: 'inherit' }).status === 0;
+  return spawnSync('git', [...GIT, ...args], { stdio: ['ignore', 'inherit', 'inherit'] }).status === 0;
 }
 
+// 全程共用同一個 readline。每問一次就新建一個的話，前一個 close 掉時會把
+// stdin 已經緩衝的後續輸入一起丟掉，第二題之後永遠讀到空字串。
+const rl = createInterface({ input: process.stdin, output: process.stdout });
+let stdinEnded = false;
+rl.on('close', () => { stdinEnded = true; });
+
+// 自己排隊，不用 rl.question：readline 在管線模式下會把整批輸入一口氣
+// 發成 line 事件，還沒問到的那幾行就直接掉了（測試時 A 選項永遠讀不到）。
+const queued = [];   // 已經收到、還沒有人來拿的行
+const waiting = [];  // 已經在問、還沒有行可以給的 resolve
+rl.on('line', (l) => {
+  const v = l.trim();
+  if (waiting.length) waiting.shift()(v);
+  else queued.push(v);
+});
+
 function ask(question) {
-  const rl = createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise((r) => rl.question(question, (a) => { rl.close(); r(a.trim()); }));
+  process.stdout.write(question);
+  if (queued.length) {
+    const v = queued.shift();
+    console.log(v);
+    return Promise.resolve(v);
+  }
+  // stdin 已經結束就直接回空字串，不然 Promise 會永遠掛著
+  if (stdinEnded) { console.log(); return Promise.resolve(''); }
+  return new Promise((r) => {
+    waiting.push(r);
+    rl.once('close', () => r(''));
+  });
 }
+// 走到底或中途 exit 都要把 rl 關掉，不然 node 不會結束
+function bye(code = 0) { rl.close(); process.exit(code); }
 
 function die(msg) {
   console.log(`\n[錯誤] ${msg}\n`);
-  process.exit(1);
+  bye(1);
 }
 
 console.log('\n============================================');
@@ -72,7 +102,7 @@ if (dirty) {
   const go = await ask('確定要繼續並丟掉這些修改嗎？（輸入 y 再按 Enter）：');
   if (go.toLowerCase() !== 'y') {
     console.log('已取消。');
-    process.exit(0);
+    bye(0);
   }
   console.log();
 }
@@ -114,7 +144,8 @@ const sel = (await ask('請輸入編號（直接按 Enter = 1，最新的那條�
 if (sel.toLowerCase() === 'a') {
   console.log('\n[3/3] 把每一條分支各解一份到 branches/ 底下...\n');
   console.log('  用的是 git worktree：同一份 .git 歷史，多個工作目錄。');
-  console.log('  不會重複下載，也不會互相干擾。\n');
+  console.log('  不會重複下載，但每一份的檔案是實體存在的，');
+  console.log(`  ${rows.length} 條分支大概會吃掉數百 MB 磁碟空間。\n`);
 
   if (!existsSync('branches')) mkdirSync('branches');
   let made = 0;
@@ -131,7 +162,11 @@ if (sel.toLowerCase() === 'a') {
       made++;
     } else {
       console.log(`  [失敗] ${dir}`);
+      continue;
     }
+    // 每一份都寫自己的 .branch，不然裡面的 play.bat 會預設去追 main，
+    // 等於你點開哪一份都被換成 main —— 整個 [A] 就白解了
+    writeFileSync(`${dir}/.branch`, b.name + '\n', 'utf8');
   }
 
   console.log(`\n============================================`);
@@ -143,7 +178,7 @@ if (sel.toLowerCase() === 'a') {
   console.log('  要整批砍掉：關掉遊戲後刪除 branches 資料夾，');
   console.log('  再回到這裡執行 git worktree prune 清乾淨。\n');
   await ask('按 Enter 關閉...');
-  process.exit(0);
+  bye(0);
 }
 
 const idx = Number(sel);
@@ -167,7 +202,8 @@ console.log('\n  之後直接點 play.bat 就會跟著這條分支更新。');
 console.log('  要換回 main 就再跑一次這個腳本。\n');
 
 const play = await ask('現在開始遊玩嗎？（直接按 Enter = 是，輸入 n = 否）：');
-if (play.toLowerCase() === 'n') process.exit(0);
+if (play.toLowerCase() === 'n') bye(0);
+rl.close();
 
 // play.bat 是 Windows 專用；其他系統走 play.sh
 const isWin = process.platform === 'win32';
