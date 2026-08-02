@@ -346,8 +346,20 @@ function buildHair(style, mat, group, head, pal = {}) {
     head.add(f);
   }
 
+  /* 髮束（角色書第 5 章）。原本是 tapered 圓柱 —— 末端是一個平的圓形切面，
+   * 這在剪影上非常明顯（頭髮不會有平的斷面）。改成：
+   *   1. 末端收尖：剖面最後一個控制點收到 12%，不收到 0 是因為完全歸零
+   *      會在尖端擠出一圈退化三角形，法線會亂掉
+   *   2. 橫截面壓扁（flat 0.82）：一束頭髮是扁的，不是圓棍
+   *   3. 沿長度輕微內彎：用平方曲線讓髮尾往內收，直棍最假 */
   const strand = (len, r, x, y, z, rx = 0, rz = 0) => {
-    const g = tapered(r * 0.55, r, len, 14);
+    const g = limb([r * 0.55, r, r * 0.92, r * 0.12], len, 12, 0.82);
+    const pos = g.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const t = (len / 2 - pos.getY(i)) / len;      // 0 = 髮根, 1 = 髮尾
+      pos.setZ(i, pos.getZ(i) + t * t * len * 0.11);
+    }
+    g.computeVertexNormals();
     g.translate(0, -len / 2, 0);
     const m = part(g, mat, x, y, z);
     m.rotation.x = rx; m.rotation.z = rz;
