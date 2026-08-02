@@ -80,7 +80,7 @@ export class VillagerCrowd {
    *   路點圖是手繪的，難免有幾條連線從屋角切過去，走到那裡的人會半個身體
    *   插在牆裡。這裡不改圖，直接在位置上把人推出去（見 _unstick）。
    */
-  constructor(scene, heightFn, graph, count = 22, warm = 12, colliders = null) {
+  constructor(scene, heightFn, graph, count = 22, warm = 12, colliders = null, attractors = null) {
     this.scene = scene;
     this.heightFn = heightFn;
     // 只留擋人的那些（有 hw 的矩形、有 r 的柱），並預先算好篩選半徑
@@ -103,6 +103,44 @@ export class VillagerCrowd {
     this._pending = 0;
     for (let i = 0; i < Math.min(warm, count); i++) this._spawn(i);
     this._pending = Math.min(warm, count);
+
+    /* ── 日程 AI（品質升級書・升級 3）──
+     * 給了 attractors 才啟用。每個路點先算好「離市集多近」「離燈籠多近」，
+     * 選下一個路點時照當下時段加權 —— 清晨往市集、黃昏往燈籠。
+     *
+     * 預算而不是每次現算：選路點是每人每到站一次，六十幾個人加起來很頻繁，
+     * 而節點與吸引點都是靜態的。 */
+    this.attractors = attractors;
+    this.hour = 12;
+    if (attractors) {
+      const score = (pts, falloff) => this.nodes.map((n) => {
+        let best = Infinity;
+        for (const [x, z] of pts) best = Math.min(best, Math.hypot(n.x - x, n.y - z));
+        return Math.exp(-(best / falloff) * (best / falloff));   // 1 = 就在旁邊，遠處趨近 0
+      });
+      // 市集的吸引範圍要比燈籠大得多：燈籠有五十幾盞、沿街鋪滿，隨便一個
+      // 路點附近都有一盞；市集只有兩個廣場，範圍收太緊的話高分節點少到
+      // 加權推不動人（實測 falloff 26 時清晨的市集人數只從 8 變 10）。
+      this._marketScore = score(attractors.market ?? [], 38);
+      // 燈籠 falloff 從 12 收到 8：五十幾盞沿街鋪滿，12 公尺的話幾乎每個路點
+      // 都算「在燈籠旁」，於是黃昏全街的人同時停下來逗留，互相卡住
+      // （實測磨蹭比例從白天的 0.036 升到 0.075、4 個人半數時間動不了）
+      this._lanternScore = score(attractors.lantern ?? [], 8);
+    }
+  }
+
+  /**
+   * 當下時段。清晨聚市集、白天遊走、黃昏往燈籠、夜晚大半回家。
+   * @returns {{bias:('market'|'lantern'|null), active:number}}
+   *   active ＝ 這個時段街上該有幾成的人
+   */
+  _phase() {
+    const h = this.hour;
+    if (h >= 5 && h < 9) return { bias: 'market', active: 0.85 };
+    if (h >= 9 && h < 17) return { bias: null, active: 1 };
+    if (h >= 17 && h < 20) return { bias: 'lantern', active: 0.9 };
+    if (h >= 20 || h < 3) return { bias: null, active: 0.18 };   // 夜行者
+    return { bias: null, active: 0.45 };                          // 3~5 點，天還沒亮
   }
 
   /** 生第 i 位路人 */
@@ -133,7 +171,20 @@ export class VillagerCrowd {
     // 盡量不要立刻掉頭（只有死路才回頭）
     const fwd = opts.filter(n => n !== avoid);
     const list = fwd.length ? fwd : opts;
-    return list[(r * list.length) | 0];
+
+    // 日程加權：往吸引點的方向機率高一點。**不是直接挑最高分的那個** ——
+    // 那樣所有人會走同一條路排成一列，而且到了市集就再也離不開。
+    // 用「分數轉權重」的輪盤，仍然有隨機性，只是重心偏過去。
+    const ph = this._phase();
+    const table = ph.bias === 'market' ? this._marketScore
+      : ph.bias === 'lantern' ? this._lanternScore : null;
+    if (!table) return list[(r * list.length) | 0];
+
+    let sum = 0;
+    const w = list.map((n) => { const v = 0.25 + table[n] * 4.0; sum += v; return v; });
+    let acc = r * sum;
+    for (let i = 0; i < list.length; i++) { acc -= w[i]; if (acc <= 0) return list[i]; }
+    return list[list.length - 1];
   }
 
   /** 顯示／隱藏所有路人（場景編輯器的開關用） */
@@ -142,8 +193,9 @@ export class VillagerCrowd {
     this.root.visible = on;
   }
 
-  update(dt, t, playerPos) {
+  update(dt, t, playerPos, hour = null) {
     if (!this.visible) return;
+    if (hour != null) this.hour = hour;
 
     // 每幀補一位還沒生出來的路人（見建構式的說明）
     if (this._pending < this.total) {
@@ -151,7 +203,32 @@ export class VillagerCrowd {
       this._pending++;
     }
 
+    /* 人數隨時段增減（升級書：「用現有的路人池慢慢淡入淡出，
+     * 不要整批瞬間消失」）。每 0.8 秒才調整一位 —— 一次調到位的話
+     * 天一黑街上會像被橡皮擦擦掉一片。
+     *
+     * 誰留下是固定的（用索引比大小），不是每次隨機挑 —— 隨機挑會讓
+     * 同一個人在門口反覆出現消失。 */
+    if (this.attractors) {
+      this._fadeT = (this._fadeT ?? 0) + dt;
+      if (this._fadeT >= 0.8) {
+        this._fadeT = 0;
+        const want = Math.max(1, Math.round(this.people.length * this._phase().active));
+        let shown = 0;
+        for (const p of this.people) if (p.model.visible) shown++;
+        if (shown !== want) {
+          const step = shown < want ? 1 : -1;
+          // 往目標移動一位：要現身就挑索引最小的隱藏者，要收就挑最大的現身者
+          const pool = this.people.filter(p => (step > 0 ? !p.model.visible : p.model.visible));
+          const pick = step > 0 ? pool[0] : pool[pool.length - 1];
+          if (pick) pick.model.visible = step > 0;
+        }
+      }
+    }
+
     for (const p of this.people) {
+      // 收工回家的人不必算動畫與避障
+      if (!p.model.visible) continue;
       // 細節層級要在動畫之前決定 —— 遠景的人整隻是一個烘死姿勢的網格，
       // 再去算手腳擺動只是白花 CPU
       const far = this._lod(p, playerPos);
@@ -173,9 +250,17 @@ export class VillagerCrowd {
         // 到站：挑下一個路點，偶爾在這裡停一下（像在看店）
         const r = Math.random();
         const prev = p.from;
+        const here = p.to;
         p.from = p.to;
         p.to = this._nextFrom(p.to, prev, Math.random());
-        if (r < 0.22) p.idle = 1.5 + Math.random() * 3.5;
+        // 走到吸引點附近就多待一會 —— 升級書要的「攤販定點、買菜的遊走」
+        // 與「黃昏站定點燈」。只靠選路加權的話人會從市集穿過去而不是留下。
+        const ph = this._phase();
+        const tbl = ph.bias === 'market' ? this._marketScore
+          : ph.bias === 'lantern' ? this._lanternScore : null;
+        const pull = tbl ? tbl[here] : 0;
+        if (pull > 0.7 && r < 0.12 + pull * 0.45) p.idle = 4 + Math.random() * 9;
+        else if (r < 0.22) p.idle = 1.5 + Math.random() * 3.5;
         continue;
       }
 
@@ -233,6 +318,7 @@ export class VillagerCrowd {
 
     // 推完之後才把模型的水平位置補上（y 留給上面算好的彈跳）
     for (const p of this.people) {
+      if (!p.model.visible) continue;
       p.model.position.x = p.pos.x;
       p.model.position.z = p.pos.y;
     }
@@ -254,6 +340,9 @@ export class VillagerCrowd {
     const buckets = new Map();
     const key = (x, z) => `${Math.floor(x / R)},${Math.floor(z / R)}`;
     for (const p of this.people) {
+      // 收工回家的人不參與互推 —— 他們停在最後的位置上，
+      // 會把在場的人從一個看不見的身體旁邊推開
+      if (!p.model.visible) continue;
       const k = key(p.pos.x, p.pos.y);
       let b = buckets.get(k);
       if (!b) buckets.set(k, (b = []));
@@ -261,6 +350,7 @@ export class VillagerCrowd {
     }
 
     for (const p of this.people) {
+      if (!p.model.visible) continue;
       const bx = Math.floor(p.pos.x / R), bz = Math.floor(p.pos.y / R);
       for (let ox = -1; ox <= 1; ox++) {
         for (let oz = -1; oz <= 1; oz++) {
@@ -345,6 +435,7 @@ export class VillagerCrowd {
   _unstick() {
     const PAD = 0.3;                 // 身體半徑：貼著牆走可以，插進去不行
     for (const p of this.people) {
+      if (!p.model.visible) continue;
       for (const c of this.colliders) {
         if (c.hw != null) {
           const dx = p.pos.x - c.x, dz = p.pos.y - c.z;

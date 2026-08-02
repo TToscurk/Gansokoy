@@ -1375,7 +1375,15 @@ for (const nd of CROWD_GRAPH.nodes) {
 
 // 傳 colliders：路點圖難免有幾條連線從屋角切過，路人走到那裡會插進牆裡。
 // VillagerCrowd 收到碰撞盒之後會每幀把人推出來（見 _unstick）。
-const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10, colliders);
+/* 日程 AI 的吸引點（品質升級書・升級 3）。
+ * 市集＝兩個廣場的攤位群中心；燈籠＝街上每一盞石燈籠的座標。
+ * 燈籠是現成的 —— streetLantern() 已經把每一盞記進 lanternGlows，
+ * 直接取它的位置，不必再維護第二份清單（維護兩份一定會不同步）。 */
+const CROWD_ATTRACTORS = {
+  market: [[0, -20], [0, 40]],
+  lantern: lanternGlows.map(({ light }) => [light.position.x, light.position.z]),
+};
+const crowd = new VillagerCrowd(scene, heightAt, CROWD_GRAPH, 64, 10, colliders, CROWD_ATTRACTORS);
 
 /* ─────────────────────────────────────────────────────── 玩家 ── */
 const { spec, ctrl } = core.spawnPlayer({
@@ -1476,7 +1484,7 @@ window.addEventListener('keydown', (e) => {
 /* ─────────────────────────────────────────────────── 主迴圈 ── */
 // kit 結算之後、env 之前：路人、名冊角色、水車（原樣板的順序）
 core.onUpdate((dt, rawDt, t) => {
-  crowd.update(dt, t, ctrl.pos);
+  crowd.update(dt, t, ctrl.pos, core.env.hour);
   npcSystem.update(t, ctrl.pos, camera);
   // 水車：里外唯一會動的建築，慢慢轉（河水推的，不用很快）
   for (const w of waterWheels) w.rotation.x += dt * 0.55;
