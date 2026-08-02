@@ -1170,6 +1170,123 @@ const northPortal = makePortalGlow(world, NORTH_END.x, heightAt(NORTH_END.x, NOR
 const southPortal = makePortalGlow(world, SOUTH_END.x, heightAt(SOUTH_END.x, SOUTH_END.z - 5), SOUTH_END.z - 5, 0xc0a8ff);
 const eastPortal = makePortalGlow(world, EAST_END.x, heightAt(EAST_END.x, EAST_END.z), EAST_END.z, 0xd8e8a0);
 
+/* ────────────────────── 入口的第一根紅布條竹（升級 7 第 3 點） ── */
+/**
+ * 視線設計：三個口進來的第一眼都得有構圖焦點。
+ *
+ * 竹林的問題是它**到處長得一樣** —— 一整片等距的垂直線，眼睛沒有地方
+ * 可以落。實測從獸道走進來的第一眼就是這樣：滿畫面的竹竿，最近的紅布條竹
+ * 在三十幾公尺外，小成一個紅點。
+ *
+ * 所以每個口的正前方立一組「門」：兩根往內傾的竹子，中間掛一條大布幔。
+ * 它同時做三件事 —— 給眼睛一個落點、告訴你「路在這個方向」、
+ * 而且用的還是林子裡本來就有的語彙（紅布條），不是憑空多一座牌樓。
+ *
+ * 布幔比沿途的布條大得多（2.6×0.75 對 0.5×0.34）：沿途的是走近才讀得出
+ * 的路標，這一個是隔著一段距離就要看得見的焦點，兩者的工作不一樣。
+ *
+ * @param {number} x @param {number} z 門的中心
+ * @param {number} rot 門面朝的方向（弧度）—— 布幔的法線方向
+ */
+function gateRibbon(x, z, rot) {
+  const g = new THREE.Group();
+  g.position.set(x, heightAt(x, z), z);
+  g.rotation.y = rot;
+  world.add(g);
+  const HW = 2.1;                     // 兩根柱子的半間距 —— 人走得過去
+  for (const s of [-1, 1]) {
+    // 往內傾 6 度：兩根平行的竹子讀起來是柵欄，微微內傾才是「門」
+    const c = cyl(0.1, 0.13, 8.4, MAT.culmSolid, s * HW, 4.2, 0, 6, g);
+    c.rotation.z = s * 0.105;
+    post(x + Math.cos(rot) * s * HW, z - Math.sin(rot) * s * HW, 0.16, heightAt(x, z) + 4);
+  }
+  // 橫著的竹竿 + 掛在上面的大布幔
+  box(HW * 2.1, 0.1, 0.1, MAT.culmSolid, 0, 3.35, 0, g);
+  const banner = box(2.6, 0.75, 0.02, MAT.cloth, 0, 2.9, 0.04, g);
+  banner.rotation.z = 0.015;          // 掛得不正 —— 綁上去的東西不會水平
+  // 底下再垂兩條窄的，風一吹會動的那種
+  for (const s of [-1, 1]) {
+    const t = box(0.16, 1.1, 0.02, MAT.cloth, s * 1.0, 1.95, 0.04, g);
+    t.rotation.z = s * 0.05;
+  }
+}
+// 三個口各一組，面朝走進來的人
+gateRibbon(NORTH_END.x, NORTH_END.z + 17, 0);
+gateRibbon(SOUTH_END.x, SOUTH_END.z - 19, Math.PI);
+gateRibbon(EAST_END.x - 17, EAST_END.z, -Math.PI / 2);
+
+/* ──────────────── 不對稱與不完美・看得見的那層（升級 7 第 4 點） ── */
+/**
+ * 竹林的三處破綻。挑的都是**竹林才會有**的破法 ——
+ * 換成別的林子就不成立，那才叫這個地方的痕跡，不是通用的裝飾。
+ */
+(function blemishes() {
+  // 1. 折斷的竹子：從半腰折斷、上半截倒下去卡在別的竹子上，沒有落地。
+  //    這是竹林最典型的樣子 —— 竹子太細太密，斷了也倒不下來。
+  const leanSpots = [
+    [NORTH_END.x + 6, NORTH_END.z + 34], [EAST_END.x - 26, EAST_END.z + 7],
+    [-18, 40], [22, -96], [-9, 150],
+  ];
+  for (let i = 0; i < leanSpots.length; i++) {
+    const [x, z] = leanSpots[i];
+    if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
+    const y = heightAt(x, z);
+    const stubH = 2.2 + (i % 3) * 0.6;
+    cyl(0.085, 0.1, stubH, MAT.culmSolid, x, y + stubH / 2, z, 6);      // 留在地上的斷樁
+    // 斷面刻意撕開 —— 竹子是縱向裂的，不是切平的
+    for (const s of [-1, 1]) {
+      const sp = box(0.05, 0.5, 0.03, MAT.culmSolid, x + s * 0.05, y + stubH + 0.22, z);
+      sp.rotation.z = s * 0.16;
+    }
+    // 倒下去卡住的上半截
+    const lean = 0.85 + (i % 2) * 0.18;
+    const len = 7.5;
+    const dir = i * 1.7;
+    const fall = cyl(0.06, 0.085, len, MAT.culmSolid,
+      x + Math.cos(dir) * Math.sin(lean) * len / 2,
+      y + stubH + Math.cos(lean) * len / 2,
+      z + Math.sin(dir) * Math.sin(lean) * len / 2, 6);
+    fall.rotation.set(Math.sin(dir) * lean, 0, -Math.cos(dir) * lean);
+  }
+
+  // 2. 有人來砍過竹子：一小片留著斜切殘樁的空地，旁邊擱著沒收走的竹束。
+  //    切口是斜的、高度不一 —— 那是人一刀一刀砍的，不是機器裁的。
+  {
+    const cx = -14, cz = -196;
+    const y0 = heightAt(cx, cz);
+    for (let i = 0; i < 9; i++) {
+      const a = i * 2.4, r = 1.2 + (i % 4) * 1.1;
+      const x = cx + Math.cos(a) * r, z = cz + Math.sin(a) * r;
+      const y = heightAt(x, z), hh = 0.25 + (i % 5) * 0.13;
+      const st = cyl(0.09, 0.1, hh, MAT.culmSolid, x, y + hh / 2, z, 6);
+      st.rotation.z = ((i % 7) / 7 - 0.5) * 0.3;      // 斜切口
+    }
+    // 綁好還沒扛走的竹束
+    for (let i = 0; i < 5; i++) {
+      const b = cyl(0.07, 0.07, 4.6, MAT.culmSolid,
+        cx + 3.4, y0 + 0.08 + (i > 2 ? 0.14 : 0), cz + 1.2 + i * 0.16, 6);
+      b.rotation.set(0, 0.24, Math.PI / 2);
+    }
+    box(0.06, 0.3, 0.3, MAT.cloth, cx + 3.4, y0 + 0.16, cz + 1.6);      // 綁束的紅繩
+  }
+
+  // 3. 倒下的地藏：底座還在，身子橫躺在旁邊，紅前掛褪成暗色落在一邊。
+  //    路口的地藏是「往這邊」的指示 —— 倒了的那一尊就是「這裡曾經有人指路，
+  //    現在沒人維護了」，比多放一尊立正的更有訊息。
+  {
+    const x = 9, z = -58, y = heightAt(x, z);
+    cyl(0.34, 0.4, 0.22, MAT.stone, x, y + 0.11, z, 8);                 // 台座還在原位
+    const body = cyl(0.2, 0.24, 0.72, MAT.mossStone, x + 0.62, y + 0.2, z + 0.3, 8);
+    body.rotation.set(0.2, 0, Math.PI / 2 + 0.15);                       // 橫躺
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.19, 10, 8), MAT.mossStone);
+    head.position.set(x + 1.24, y + 0.19, z + 0.42);
+    world.add(head);
+    const bib = box(0.34, 0.3, 0.04, MAT.cloth, x + 0.2, y + 0.03, z + 0.72);
+    bib.rotation.set(-Math.PI / 2, 0, 0.5);                              // 攤在地上
+    post(x, z, 0.42, y + 0.22);                                          // 只剩台座擋人
+  }
+})();
+
 /* 道標（升級5）：三個口各一塊，牌面朝林內 */
 makeSignpost(world, NORTH_END.x + 2.6, heightAt(NORTH_END.x + 2.6, NORTH_END.z + 2), NORTH_END.z + 2, '往 獸道', 0);
 makeSignpost(world, SOUTH_END.x + 2.6, heightAt(SOUTH_END.x + 2.6, SOUTH_END.z - 7), SOUTH_END.z - 7, '往 永遠亭', Math.PI);
