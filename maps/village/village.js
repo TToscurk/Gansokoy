@@ -29,7 +29,8 @@ import { fbm, grain, modulate } from '../../src/world/noise.js';
 import { applyTriplanar } from '../../src/world/triplanar.js';
 import { rockTexture } from '../../src/world/terraintex.js';
 import { buildLUT, LUT_PRESETS } from '../../src/world/lut.js';
-import { GroundGrid, decalOnGrid } from '../../src/world/groundmesh.js';
+import { GroundGrid, decalOnGrid, ribbonOnGrid } from '../../src/world/groundmesh.js';
+import { catmullRom } from '../../src/world/pathnet.js';
 import { makeSignpost } from '../../src/world/signpost.js';
 import { scatterGrass } from '../../src/world/flora.js';
 import { bootMap } from '../../src/core/GameCore.js';
@@ -77,16 +78,26 @@ const SOUTH_GATE_Z = 250;  // 南端里門（里的南界，不是出口）
 // 位置挑在里的平坦帶內（heightAt 的橢圓 d<175），門外才不會卡在爬坡上。
 const SW_GATE = { x: -126, z: 100 };
 const RIVER_X = 118;       // 東側的河（穿過里的東緣）
+/* 河的尺度（品質升級書・升級 4）。原本半寬 9、深 1.6 —— 那是水溝不是河。
+ * 所有跟河有關的東西（水面、橋、河岸的樹與屋、水車、留空判定）一律從
+ * 這兩個常數推導，改河的時候不會有人被忘記留在舊尺寸上。 */
+const RIVER_HW = 17;       // 河半寬
+const RIVER_DEPTH = 2.5;   // 河床最深處
+/** 東岸的可建帶：河緣再往外 off 公尺 */
+const eastBankX = (z, off) => riverX(z) + RIVER_HW + off;
+/** 離河心多遠才算「不在河上」 */
+const offRiver = (x, z, margin = 3) => Math.abs(x - riverX(z)) > RIVER_HW + margin;
 
 /** 河道中心線 —— 蜿蜒穿過里的東側 */
 function riverX(z) {
-  return RIVER_X + Math.sin(z * 0.011) * 16 + Math.sin(z * 0.026 + 1.3) * 7;
+  // 蜿蜒幅度加大（16/7 → 22/10）：河變寬之後原本的擺動看起來太直
+  return RIVER_X + Math.sin(z * 0.011) * 22 + Math.sin(z * 0.026 + 1.3) * 10;
 }
 
 function heightAt(x, z) {
   // 河床：里的東緣被切出一道低地，過河要走橋
   const rd = Math.abs(x - riverX(z));
-  const river = rd < 9 ? -1.6 * (1 - (rd / 9) * (rd / 9)) : 0;
+  const river = rd < RIVER_HW ? -RIVER_DEPTH * (1 - (rd / RIVER_HW) * (rd / RIVER_HW)) : 0;
 
   const d = Math.hypot(x * 0.8, z * 0.62);        // 橢圓形的里
   if (d < VILLAGE_R) {
@@ -311,7 +322,8 @@ const RIVER_MAT = new THREE.MeshStandardMaterial({
     const z = -230 + (i / SEG) * 460;
     const cx = riverX(z);
     for (const sgn of [-1, 1]) {
-      pos.push(cx + sgn * 7.5, -1.05, z);
+      // 水面比河緣低一截、比河床高 —— 露出一圈灘地，河才有「岸」
+      pos.push(cx + sgn * (RIVER_HW - 2.2), -RIVER_DEPTH + 1.0, z);
       uv.push(sgn > 0 ? 1 : 0, i * 0.4);
     }
     if (i < SEG) {
@@ -330,32 +342,113 @@ const RIVER_MAT = new THREE.MeshStandardMaterial({
   world.add(m);
 })();
 
+/* 河裡的淺灘石與蘆葦（升級書・升級 4）。
+ * 一條等寬的藍色帶子不像河 —— 讓水面被石頭與草打斷，才讀得出「這是水」。
+ * 兩者都用 InstancedMesh：加起來近千個物件，一個個 mesh 會直接吃掉
+ * 靜態合併省下來的 draw call。
+ *
+ * 石頭只放在「淺灘」—— 離河心 0.55~0.95 個半寬的環帶。放在河心會變成
+ * 踏腳石，那是另一種地形語彙（可以過河），跟「要走橋」的設計打架。 */
+(function riverDressing() {
+  let sd = 0x9E3779B9;
+  const rnd = () => ((sd = (sd * 1664525 + 1013904223) >>> 0), sd / 4294967296);
+
+  const stoneGeo = new THREE.IcosahedronGeometry(1, 0);
+  const stoneMat = new THREE.MeshStandardMaterial({ color: '#7d786e', roughness: 1, flatShading: true });
+  const reedGeo = new THREE.ConeGeometry(0.11, 1.5, 4, 1, true);
+  const reedMat = new THREE.MeshStandardMaterial({
+    color: '#6d7a3e', roughness: 1, flatShading: true, side: THREE.DoubleSide });
+
+  const stones = [], reeds = [];
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
+  const v = new THREE.Vector3(), sc = new THREE.Vector3();
+
+  for (let z = -228; z < 228; z += 1.6) {
+    const cx = riverX(z);
+    for (const sgn of [-1, 1]) {
+      // 淺灘石
+      if (rnd() < 0.22) {
+        const t = 0.55 + rnd() * 0.4;
+        const x = cx + sgn * RIVER_HW * t;
+        const s = 0.35 + rnd() * 0.75;
+        e.set(rnd() * 3, rnd() * 6, rnd() * 3);
+        q.setFromEuler(e);
+        sc.set(s, s * (0.55 + rnd() * 0.4), s);
+        // 沉一點：石頭要有一半在水面下才像河裡的石頭
+        v.set(x, heightAt(x, z) + s * 0.25, z);
+        stones.push(m4.clone().compose(v, q, sc));
+      }
+      // 蘆葦：貼著岸長，越靠水邊越密
+      if (rnd() < 0.5) {
+        const t = 0.82 + rnd() * 0.26;
+        const x = cx + sgn * RIVER_HW * t;
+        const s = 0.7 + rnd() * 0.8;
+        e.set((rnd() - 0.5) * 0.3, rnd() * 6, (rnd() - 0.5) * 0.3);
+        q.setFromEuler(e);
+        sc.set(1, s, 1);
+        v.set(x, heightAt(x, z) + s * 0.75, z);
+        reeds.push(m4.clone().compose(v, q, sc));
+      }
+    }
+  }
+
+  const put = (geo, mat, list, shadow) => {
+    if (!list.length) return;
+    const im = new THREE.InstancedMesh(geo, mat, list.length);
+    list.forEach((mm, i) => im.setMatrixAt(i, mm));
+    im.instanceMatrix.needsUpdate = true;
+    im.castShadow = shadow;
+    im.receiveShadow = true;
+    im.userData.noMerge = true;        // InstancedMesh 不能被靜態合併吃掉
+    world.add(im);
+  };
+  put(stoneGeo, stoneMat, stones, true);
+  put(reedGeo, reedMat, reeds, false);
+  console.info(`[village] 河：淺灘石 ${stones.length}、蘆葦 ${reeds.length}`);
+})();
+
 /** 石橋 —— 橫街跨過河的地方 */
 function bridge(z) {
   const cx = riverX(z);
   const g = new THREE.Group();
   g.position.set(cx, 0, z);
   world.add(g);
-  // 橋面（微拱）。每片橋板各自是一顆 walk 平台 —— 微拱的頂面高度
-  // 沿橋身變化，一顆大盒子蓋不住；一片一顆，走上去才是「一級一級」。
-  for (let i = -3; i <= 3; i++) {
-    const t = i / 3;
-    const y = 0.5 - t * t * 0.35;
-    box(3.0, 0.34, 8.4, MAT.stone, i * 3.0, y, 0, g);
-    colliders.push({ x: cx + i * 3.0, z, y: y - 0.17, h: 0.34, hw: 1.5, hd: 4.2, walk: true });
+  /* 橋要跨過整條河再各搭上兩岸，所以長度由 RIVER_HW 推導 ——
+   * 寫死長度的話改河寬就會變成「橋斷在河中間」。 */
+  const N = 8;                                   // 每側幾片橋板（共 2N+1 片）
+  const HALF_LEN = RIVER_HW + 6;                 // 橋的半長：跨過河再各搭上岸 6 公尺
+  const L = (HALF_LEN * 2) / (N * 2 + 1);        // 一片橋板的長度（也是間距）
+  const RISE = 1.35;                             // 拱頂比岸高多少（橋下要看得穿）
+  const ARCH = (i) => { const t = i / N; return 0.5 + RISE * (1 - t * t); };
+  const HALF_W = 4.6;                            // 橋面半寬（河變寬，橋也該寬一點）
+
+  // 橋面（拱）。每片橋板各自是一顆 walk 平台 —— 拱的頂面高度沿橋身變化，
+  // 一顆大盒子蓋不住；一片一顆，走上去才是「一級一級」。
+  for (let i = -N; i <= N; i++) {
+    const y = ARCH(i);
+    box(L, 0.34, HALF_W * 2, MAT.stone, i * L, y, 0, g);
+    colliders.push({ x: cx + i * L, z, y: y - 0.17, h: 0.34,
+      hw: L / 2, hd: HALF_W, walk: true });
+  }
+  // 橋墩：拱下兩根，讓橋看起來撐得住，也把「橋下有淨空」講清楚
+  for (const sd of [-1, 1]) {
+    const px = sd * (RIVER_HW * 0.52);
+    const py = ARCH(px / L);
+    cyl(1.1, 1.35, py + RIVER_DEPTH, MAT.stone, px, (py - RIVER_DEPTH) / 2, 0, 10, g);
   }
   // 欄杆
   for (const sd of [-1, 1]) {
-    for (let i = -3; i <= 3; i++) {
-      const t = i / 3, y = 0.5 - t * t * 0.35;
-      cyl(0.12, 0.13, 0.9, MAT.stone, i * 3.0, y + 0.6, sd * 3.9, 8, g);
+    for (let i = -N; i <= N; i++) {
+      cyl(0.12, 0.13, 0.9, MAT.stone, i * L, ARCH(i) + 0.6, sd * (HALF_W - 0.5), 8, g);
     }
-    const rail = box(19, 0.18, 0.22, MAT.stone, 0, 1.15, sd * 3.9, g);
+    const rail = box(HALF_LEN * 2, 0.18, 0.22, MAT.stone,
+      0, ARCH(0) + 0.62, sd * (HALF_W - 0.5), g);
     rail.rotation.x = 0;
   }
   // 欄杆擋側落（別從橋邊掉進河裡）；橋面本身放行 —— 上面的 walk 平台
   for (const sd of [-1, 1]) {
-    colliders.push({ x: cx, z: z + sd * 3.9, y: 0.15, h: 1.3, hw: 10.2, hd: 0.28 });
+    colliders.push({ x: cx, z: z + sd * (HALF_W - 0.5), y: 0.15, h: 1.3 + RISE,
+      hw: HALF_LEN, hd: 0.28, rail: true });
   }
 }
 for (const cz of [-70, 40, 165]) bridge(cz);
@@ -525,7 +618,7 @@ const BLOCK_KEEP_OUT = [
           const x = cx + (k - (n - 1) / 2) * 11 + (Math.random() - 0.5) * 1.6;
           const z = zEdge + (Math.random() - 0.5) * 2;
           if (!clearOf(x, z)) continue;
-          if (Math.abs(x - riverX(z)) < 14) continue;         // 河道留空
+          if (!offRiver(x, z, 5)) continue;                   // 河道留空
           if (Math.abs(x) < 19) continue;                     // 主街的店家已經佔了
           const r = Math.random();
           house({
@@ -555,7 +648,7 @@ const BLOCK_KEEP_OUT = [
         for (let k = 0; k < n; k++) {
           const z = z0 + (k + 0.5) * ((z1 - z0) / n) + (Math.random() - 0.5) * 2;
           if (!clearOf(hx, z)) continue;
-          if (Math.abs(hx - riverX(z)) < 14) continue;
+          if (!offRiver(hx, z, 5)) continue;
           if (Math.abs(hx) < 19) continue;
           if (Math.random() < 0.3) continue;            // 留些空隙當菜園
           const r = Math.random();
@@ -580,13 +673,13 @@ const BLOCK_KEEP_OUT = [
     for (const bz of [-70, 40, 165]) {
       if (Math.abs(z - bz) < 9) z = bz + (z >= bz ? 9 : -9);
     }
-    const x = riverX(z) - 13;
+    const x = riverX(z) - (RIVER_HW + 5);
     house({
       x, z, w: 6 + Math.random() * 1.5, d: 5, h: 3.2,
       rot: Math.PI / 2, roof: 'thatch', style: 'machiya',
     });
     // 河邊的小板橋（純視覺，不能走）
-    const plank = box(1.6, 0.14, 4.2, MAT.wood, riverX(z) - 3.5, -0.3, z + 6);
+    const plank = box(1.6, 0.14, 4.2, MAT.wood, riverX(z) - (RIVER_HW - 1.5), -1.1, z + 6);
     plank.rotation.z = 0.06;
   }
 })();
@@ -908,7 +1001,7 @@ for (let i = 0; i < 46; i++) {
   const p = freeSpot(() => {
     const z = -210 + Math.random() * 420;
     const sd = Math.random() < 0.5 ? -1 : 1;
-    return [riverX(z) + sd * (9 + Math.random() * 5), z];
+    return [riverX(z) + sd * (RIVER_HW + 2 + Math.random() * 7), z];
   }, 1.8 * s);
   if (p) tree(p[0], p[1], s, MAT.leaf);
 }
@@ -923,7 +1016,7 @@ for (let i = 0; i < 180; i++) {
   if (!p) continue;
   const [x, z] = p;
   if (Math.abs(x) < 108 && z > -175 && z < 258) continue;    // 街廓範圍留空
-  if (Math.abs(x - riverX(z)) < 11) continue;                // 河道留空
+  if (!offRiver(x, z, 2)) continue;                          // 河道留空
   tree(x, z, s, MAT.leaf);
 }
 
@@ -938,7 +1031,7 @@ for (let i = 0; i < 44; i++) {
   const side = i % 2 ? 1 : -1;
   const x = side * (128 + (i % 6) * 15);
   const z = -190 + (i * 21) % 420;
-  if (Math.abs(x - riverX(z)) < 14) continue;      // 河道上不種田
+  if (!offRiver(x, z, 5)) continue;                // 河道上不種田
   // 水田在里外的斜坡上，起伏比里內大得多 —— 一定要貼著地形，
   // 否則整片浮空或埋進土裡
   groundDecal(17, 11, x, z, PADDY_MAT, 0.05);
@@ -1038,7 +1131,10 @@ function kura(cx, cz, rot = 0) {
 const waterWheels = [];
 function waterMill(z) {
   const rx = riverX(z);
-  const cx = rx - 8.5;
+  // 小屋要在岸上、只有水輪沾水。屋身半寬 2.8、水輪在 +3.6 —— 把屋心放在
+  // 河緣外 1 公尺，屋子踏在岸上，水輪剛好伸進水裡 2.6 公尺。
+  // 原本是 rx - (RIVER_HW - 1.5)，河加寬之後整棟屋子壓在水面上。
+  const cx = rx - (RIVER_HW + 1.0);
   const y = heightAt(cx, z);
   const g = new THREE.Group();
   g.position.set(cx, y, z);
@@ -1118,13 +1214,30 @@ kura(-124, -62, Math.PI * 0.5);
 kura(-130, 132, Math.PI * 0.5);
 graveyard(-158, -140);
 
-// 東側（x ≈ 120 ~ 165）
-farmstead(148, -34, -Math.PI * 0.5);
-farmstead(140, 46, -Math.PI * 0.46);
-farmstead(152, -112, -Math.PI * 0.54);
-farmstead(134, 122, -Math.PI * 0.5);
-kura(126, 4, -Math.PI * 0.5);
-kura(144, -74, -Math.PI * 0.5);
+/* 東側（河對岸）。座標一律用 eastBankX() 從河緣推 ——
+ * 原本是寫死的 x，而河是蜿蜒的：kura(126, 4) 的 x 正好落在 z=4 處的
+ * 河心（riverX(4) ≈ 125.6），倉庫就蓋在河裡。河加寬之後這種錯只會更多。 */
+for (const [z, off, rot, kind] of [
+  [-34, 16, -Math.PI * 0.5, 'farm'],
+  [46, 10, -Math.PI * 0.46, 'farm'],
+  [-112, 20, -Math.PI * 0.54, 'farm'],
+  [122, 12, -Math.PI * 0.5, 'farm'],
+  [4, 7, -Math.PI * 0.5, 'kura'],
+  [-74, 14, -Math.PI * 0.5, 'kura'],
+]) {
+  const x = eastBankX(z, off);
+  (kind === 'farm' ? farmstead : kura)(x, z, rot);
+}
+
+/* 東岸堤道（升級書・升級 4：「讓過橋有目的地，不是過去就是圖邊」）。
+ * 沿著河緣鋪一條窄路，把三座橋頭與對岸的農家串起來。
+ * 用 ribbonOnGrid 而不是 groundDecal：路要跟著蜿蜒的河走，矩形貼不出來。
+ * lift 0.086 —— 跟里內那三層街道錯開，橋頭重疊處才不會閃。 */
+{
+  const pts = [];
+  for (let z = -190; z <= 210; z += 10) pts.push([eastBankX(z, 5.5), z]);
+  ribbonOnGrid(world, catmullRom(pts, 3), 2.6, MAT.road, gSample, 0.086);
+}
 
 // 東河上的水車小屋（河在東側，riverX 決定位置）
 waterMill(-46);
@@ -1258,7 +1371,7 @@ scatterGrass(world, {
     if (Math.abs(x) < 8.2) return null;                                 // 主街
     if (CROSS_Z.some(cz => Math.abs(z - cz) < 6.7) && Math.abs(x) < 102) return null;  // 橫街
     if (LANE_X.some(lx => Math.abs(x - lx) < 5.7) && z > -165 && z < 205) return null; // 小巷
-    if (Math.abs(x - riverX(z)) < 10.7) return null;                    // 河道
+    if (!offRiver(x, z, 1.7)) return null;                              // 河道
     // 建物腳下不長（快篩：只掃矩形碰撞盒）
     for (const c of colliders) {
       if (c.hw != null && Math.abs(x - c.x) < c.hw + 0.9 && Math.abs(z - c.z) < c.hd + 0.9) return null;
