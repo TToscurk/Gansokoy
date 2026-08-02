@@ -216,6 +216,47 @@ function tapered(rTop, rBot, h, seg = 18) {
   return g;
 }
 
+
+/**
+ * 紡錘形肢體（角色書第 3 章）。
+ *
+ * tapered() 是線性收縮的圓錐台，真實肢體是**中段粗、兩端細**（肌肉）。
+ * 這裡吃一組沿長度的半徑控制點，用 Catmull-Rom 風格的線性插值長出剖面
+ * ——一行參數就能捏出肌肉起伏。
+ *
+ * flat < 1 時橫截面壓成橢圓（x : z = 1 : flat）。前臂偏扁、小腿偏後鼓，
+ * 正圓的四肢是「這是圓柱不是手」的第二個來源。
+ *
+ * 用 LatheGeometry 而不是自己疊 BufferGeometry：它會沿輪廓線自動生出
+ * 正確的側面法線（跟 CylinderGeometry 同一套），不必再處理接縫。
+ *
+ * @param {number[]} profile 由頂到底的半徑控制點，至少兩個
+ * @param {number} h 全長
+ * @param {number} [seg=20] 圓周段數
+ * @param {number} [flat=1] 橫截面的 z/x 比
+ */
+function limb(profile, h, seg = 20, flat = 1) {
+  // 沿長度取樣幾圈。剖面只有 4 個控制點，12 圈是浪費 —— 實測 12 圈會讓
+  // 角色面數比原本 +90%（超出升級書預估的 +60~80%），6 圈的起伏一樣順。
+  const RINGS = 6;
+  const pts = [];
+  for (let i = 0; i <= RINGS; i++) {
+    const t = i / RINGS;                  // 0 = 頂, 1 = 底
+    const f = t * (profile.length - 1);
+    const i0 = Math.min(profile.length - 1, Math.floor(f));
+    const i1 = Math.min(profile.length - 1, i0 + 1);
+    const r = profile[i0] + (profile[i1] - profile[i0]) * (f - i0);
+    pts.push(new THREE.Vector2(Math.max(1e-4, r), h / 2 - t * h));
+  }
+  const g = new THREE.LatheGeometry(pts, seg);
+  if (flat !== 1) {
+    const p = g.attributes.position;
+    for (let i = 0; i < p.count; i++) p.setZ(i, p.getZ(i) * flat);
+    g.computeVertexNormals();
+  }
+  return g;
+}
+
 // 每個「動畫節點」的 transform 會被 animateCharacter 驅動，
 // 因此合併只能在節點內部進行，不能跨節點。
 // blade/sheath 也在列 —— 刀身要能離開腰間握到手上，就不能被合併進軀幹。
@@ -865,14 +906,19 @@ export function buildCharacter(spec) {
       leg.add(part(tapered(0.062, 0.07, LEG_H * 0.22, 20), legMat, 0, -LEG_H * 0.9, 0));
     } else {
       const thighLen = LEG_H * 0.55, shinLen = LEG_H * 0.45;
-      leg.add(part(tapered(0.064, 0.074, thighLen, 20), legMat, 0, -thighLen / 2, 0));
-      // 膝：升級書第 2 章＝該處半徑 × 1.05。原本寫死 0.058，比大腿底端的
-      // 0.074 還細 —— 球根本填不滿接縫，一彎就露出楔形空隙。
-      // 掛在 leg（大腿節點）上，跟著大腿轉；掛到小腿去彎曲時會露餡。
-      leg.add(part(new THREE.SphereGeometry(0.074 * 1.05, 14, 10), legMat, 0, -thighLen, 0));
-      leg.add(part(tapered(0.05, 0.06, shinLen, 20), legMat, 0, -thighLen - shinLen / 2, 0));
-      // 踝：小一點（×1.0），大了會看起來腫
-      leg.add(part(new THREE.SphereGeometry(0.06, 12, 8), legMat, 0, -thighLen - shinLen, 0));
+      // 剖面抽成具名常數，關節球直接讀它的端點推導 —— 寫死數字的話
+      // 剖面一改關節就腫（這正是第 2 章修掉的那個 bug 的成因）。
+      const THIGH = [0.070, 0.082, 0.079, 0.068];   // 髖略粗 → 股四頭肌 → 膝上收
+      const SHIN = [0.058, 0.068, 0.056, 0.044];    // 腓腸肌在上三分之一最鼓
+      leg.add(part(limb(THIGH, thighLen, 20, 0.94), legMat, 0, -thighLen / 2, 0));
+      // 膝：該處半徑 × 1.05。掛在 leg（大腿節點）跟著大腿轉；掛小腿會露餡
+      leg.add(part(new THREE.SphereGeometry(THIGH[THIGH.length - 1] * 1.05, 14, 10),
+        legMat, 0, -thighLen, 0));
+      // flat 0.88 讓小腿前後扁
+      leg.add(part(limb(SHIN, shinLen, 20, 0.88), legMat, 0, -thighLen - shinLen / 2, 0));
+      // 踝：×1.0，大了會看起來腫
+      leg.add(part(new THREE.SphereGeometry(SHIN[SHIN.length - 1], 12, 8),
+        legMat, 0, -thighLen - shinLen, 0));
     }
 
     // 腳跟＋腳尖，取代單一方塊 —— 剪影才看得出「站著」而不是「插了根柱子」
@@ -893,16 +939,19 @@ export function buildCharacter(spec) {
     arm.position.set(sx * 0.185, SHOULDER_Y, 0);
 
     const upperLen = 0.25, foreLen = 0.20;
-    arm.add(part(tapered(0.05, 0.056, upperLen, 20), cloth, 0, -upperLen / 2, 0));
-    // 肘：×1.05。原本 0.046 比上臂底端的 0.056 還細，填不滿。
-    // 掛在 arm（上臂節點）而不是 fore —— 掛錯邊彎曲時會露餡。
-    arm.add(part(new THREE.SphereGeometry(0.056 * 1.05, 14, 10), cloth, 0, -upperLen, 0.008));
+    const UPPER = [0.056, 0.060, 0.055, 0.050];   // 三角肌 → 二頭肌 → 肘上收
+    const FORE = [0.050, 0.052, 0.044, 0.036];    // 肘下最粗，往腕收得很細
+    arm.add(part(limb(UPPER, upperLen, 20, 0.95), cloth, 0, -upperLen / 2, 0));
+    // 肘：×1.05。掛在 arm（上臂節點）而不是 fore —— 掛錯邊彎曲時會露餡
+    arm.add(part(new THREE.SphereGeometry(UPPER[UPPER.length - 1] * 1.05, 14, 10),
+      cloth, 0, -upperLen, 0.008));
 
     const fore = new THREE.Group();
     fore.name = sx < 0 ? 'foreL' : 'foreR';
     fore.position.set(0, -upperLen, 0.008);
     fore.rotation.x = 0.14;   // 前臂微彎，站姿比一根直棍自然
-    fore.add(part(tapered(0.04, 0.048, foreLen, 20), cloth, 0, -foreLen / 2, 0));
+    // flat 0.86 —— 前臂是全身最扁的一段
+    fore.add(part(limb(FORE, foreLen, 20, 0.86), cloth, 0, -foreLen / 2, 0));
 
     // 袖口滾邊（女巫袖、巫女袖都有白色袖口的印象）
     const cuff = new THREE.Mesh(
@@ -913,7 +962,7 @@ export function buildCharacter(spec) {
     fore.add(cuff);
 
     // 腕：×1.0。掛在 fore（前臂節點），手掌轉動時接縫才不會開
-    fore.add(part(new THREE.SphereGeometry(0.048, 12, 8), skin, 0, -foreLen, 0));
+    fore.add(part(new THREE.SphereGeometry(FORE[FORE.length - 1], 12, 8), skin, 0, -foreLen, 0));
 
     const hand = new THREE.Group();
     hand.name = sx < 0 ? 'handL' : 'handR';
