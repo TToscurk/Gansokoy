@@ -221,6 +221,10 @@ const MAT = {
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
   }),
   culm: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.72 }),   // 竹竿（顏色走頂點/instance）
+  /* 一般網格用的竹竿。MAT.culm 的底色是白的 —— 那是給 InstancedMesh 用的，
+   * 顏色由 instanceColor 帶。直接拿去做單一網格會得到一根純白的柱子
+   * （紅布條竹踩過這個坑：白柱子在林子裡亮得像螢光棒）。 */
+  culmSolid: new THREE.MeshStandardMaterial({ color: '#6f8449', roughness: 0.72 }),
   leaf: new THREE.MeshStandardMaterial({
     color: 0x5f7a34, roughness: 1, flatShading: true, side: THREE.DoubleSide,
   }),
@@ -402,14 +406,20 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
   // 用幾片大方塊交叉會變成插在竿子上的綠旗子，一眼就假。
   // 這裡把十八片窄葉排成三層，整叢合成一個幾何，一根竹子一個 instance。
   const blades = [];
+  /* 樹冠要能遮天：孟宗竹的葉子集中在頂端一大片，相鄰竹子的葉叢互相交疊
+   * 之後才會把天空封起來。原本三層 18 片、最外只攤到 0.30 —— 從地面往上
+   * 看幾乎全是天。這裡加到五層 34 片、最外攤到 0.62（往外一倍多），
+   * 並且最下面兩層垂得更開，交疊的面積才夠。 */
   const LAYERS = [
-    { n: 7, up: 0.00, out: 0.30, len: 1.15, droop: 0.95 },
-    { n: 6, up: 0.55, out: 0.24, len: 0.95, droop: 0.75 },
-    { n: 5, up: 1.00, out: 0.16, len: 0.75, droop: 0.55 },
+    { n: 9, up: -0.15, out: 0.62, len: 1.55, droop: 1.25 },
+    { n: 8, up: 0.15, out: 0.50, len: 1.35, droop: 1.05 },
+    { n: 7, up: 0.50, out: 0.38, len: 1.10, droop: 0.85 },
+    { n: 6, up: 0.85, out: 0.26, len: 0.90, droop: 0.65 },
+    { n: 4, up: 1.15, out: 0.14, len: 0.70, droop: 0.45 },
   ];
   for (const L of LAYERS) {
     for (let i = 0; i < L.n; i++) {
-      const g = new THREE.PlaneGeometry(0.15, L.len);
+      const g = new THREE.PlaneGeometry(0.21, L.len);
       g.translate(0, L.len / 2, 0);       // 根部移到原點，才好繞根部轉
       g.rotateX(L.droop);                 // 往下垂
       g.translate(0, L.up, L.out);        // 抬高 + 往外推
@@ -466,10 +476,12 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
       // 葉叢掛在頂端（跟著竹竿的傾斜偏移）。高的竹子葉叢也大一點。
       // 攔腰折斷的枯竹沒有葉叢 —— 縮到 0 讓它整叢消失（instance 數量不變，
       // 少一根就要重排整個陣列，不值得）。
-      const ls = b.broken ? 0 : 0.85 + b.h * 0.055;
+      // 葉叢整體再放大一階（0.85+h*0.055 → 1.15+h*0.085）：一根竹子的葉叢
+      // 要能碰到鄰居的，天蓋才連得起來
+      const ls = b.broken ? 0 : 1.15 + b.h * 0.085;
       s.set(ls, ls, ls);
       m4.compose(
-        v.set(b.x + Math.sin(b.tilt) * b.h, y + b.h * 0.86, b.z + Math.sin(b.tilt * 0.7) * b.h),
+        v.set(b.x + Math.sin(b.tilt) * b.h, y + b.h * 0.80, b.z + Math.sin(b.tilt * 0.7) * b.h),
         q, s);
       leaves.setMatrixAt(i, m4);
       col.setHSL(0.245 - band * 0.03, 0.44 - band * 0.06, 0.24 + band * 0.06);
@@ -480,6 +492,82 @@ const inClearing = (x, z) => CLEARINGS.some(c => Math.hypot(x - c.x, z - c.z) < 
     world.add(culms, leaves);
   }
   console.info(`[bamboo] 竹子 ${total} 根，分 ${meshes} 個 InstancedMesh（${cells.size} 個格子），叢生擋人處 ${thickets}`);
+})();
+
+/* ─────────────────────────────────── 天蓋（遮住天空的那一層） ── */
+/**
+ * 竹竿頂端的葉叢遮不住天空 —— 因為走道附近**刻意種得疏**（不然走不動），
+ * 而葉叢只長在竹竿上，路的正上方就是空的。從地面抬頭看仍然一片藍。
+ *
+ * 所以另外鋪一層跟竹竿無關的天蓋：沿路網撒、高度 9~15 公尺、每片是一把
+ * 大葉扇。它不需要對應到任何一根竹子 —— 玩家看到的是「上面被葉子蓋住」，
+ * 不會去數哪片葉子長在哪根竹子上。
+ *
+ * 幾何刻意做小（6 片葉子）而尺度做大：要蓋住的是天空的面積，不是細節。
+ * 一片 12 個三角形，四千片也才 4.8 萬個。
+ */
+(function canopy() {
+  const CELL = 42;
+  const cells = new Map();
+  const key = (x, z) => `${Math.floor(x / CELL)},${Math.floor(z / CELL)}`;
+
+  // 葉扇：6 片寬葉繞一圈、略往下垂
+  const blades = [];
+  for (let i = 0; i < 6; i++) {
+    const g = new THREE.PlaneGeometry(0.9, 3.2);
+    g.translate(0, 1.6, 0);
+    g.rotateX(1.28);                       // 幾乎攤平 —— 攤平才遮得到天
+    g.translate(0, 0, 0.55);
+    g.rotateY((i / 6) * Math.PI * 2);
+    blades.push(g);
+  }
+  const fanGeo = BGU.mergeGeometries(blades, false);
+  blades.forEach(g => { if (g !== fanGeo) g.dispose(); });
+
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0xffffff, roughness: 0.85, side: THREE.DoubleSide, flatShading: true });
+
+  let n = 0;
+  for (let i = 0; i < 9000; i++) {
+    const sm = PATHS.samples[(rand() * PATHS.samples.length) | 0];
+    const a = rand() * Math.PI * 2, d = rr(0, 46);
+    const x = sm.x + Math.cos(a) * d, z = sm.z + Math.sin(a) * d;
+    if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
+    if (inClearing(x, z)) continue;        // 空地上方要留天光，那是休息點
+    const k = key(x, z);
+    if (!cells.has(k)) cells.set(k, []);
+    cells.get(k).push({ x, z, y: rr(9, 15), s: rr(1.6, 3.1), yaw: rand() * 6.28 });
+    n++;
+  }
+
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion();
+  const e = new THREE.Euler(), v = new THREE.Vector3(), sc = new THREE.Vector3();
+  const col = new THREE.Color();
+  let meshes = 0;
+  for (const list of cells.values()) {
+    if (!list.length) continue;
+    const im = new THREE.InstancedMesh(fanGeo, mat, list.length);
+    im.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(list.length * 3), 3);
+    im.userData.noMerge = true;
+    // 天蓋不投影：四千片各自投一次陰影會直接壓垮陰影貼圖，而且底下本來
+    // 就該是均勻的暗，不是四千個葉子形狀的影子
+    im.castShadow = false;
+    list.forEach((c, i) => {
+      e.set(rr(-0.25, 0.25), c.yaw, rr(-0.25, 0.25));
+      q.setFromEuler(e);
+      sc.set(c.s, c.s * 0.7, c.s);
+      m4.compose(v.set(c.x, heightAt(c.x, c.z) + c.y, c.z), q, sc);
+      im.setMatrixAt(i, m4);
+      const t = rand();
+      col.setHSL(0.245 - t * 0.05, 0.40 - t * 0.1, 0.17 + t * 0.09);   // 背光的葉子偏暗
+      im.setColorAt(i, col);
+    });
+    im.instanceMatrix.needsUpdate = true;
+    im.instanceColor.needsUpdate = true;
+    world.add(im);
+    meshes++;
+  }
+  console.info(`[bamboo] 天蓋 ${n} 片，分 ${meshes} 個 InstancedMesh`);
 })();
 
 /* ────────────────────────────────────────────── 林中的建築 ── */
@@ -561,9 +649,10 @@ function bambooBridge(cx, cz) {
   world.add(g);
   // 橋面：並排的竹管
   for (let i = -4; i <= 4; i++) {
-    const b = cyl(0.11, 0.11, 7.2, MAT.culm, i * 0.24, 0.42, 0, 6, g);
+    // 直接給 MAT.wood。原本先傳 MAT.culm 再覆寫 material —— 結果一樣，
+    // 但會讓人以為這裡真的用得到那個「白底＋instanceColor」的材質。
+    const b = cyl(0.11, 0.11, 7.2, MAT.wood, i * 0.24, 0.42, 0, 6, g);
     b.rotation.x = Math.PI / 2;
-    b.material = MAT.wood;
   }
   // 兩側扶手
   for (const s of [-1, 1]) {
@@ -718,6 +807,51 @@ eienteiGate(SOUTH_END.x, SOUTH_END.z);
     rock.castShadow = rock.receiveShadow = true;
     world.add(rock);
   }
+  /* 地面枯葉。竹林的地是一層厚厚的落葉腐植層 —— 只靠地面貼圖畫葉子，
+   * 走近看還是一張平的圖。這裡撒一層實體的葉片：貼著地、幾乎水平、
+   * 大小與角度各異，走過去才有「踩在落葉上」的層次。
+   *
+   * 一片就是一個四邊形（2 個三角形），三千片才六千個三角形 —— 比多
+   * 一根竹子還便宜。castShadow 關掉：貼地的薄片投影只會變成髒點。 */
+  {
+    const leafGeo = new THREE.PlaneGeometry(0.34, 0.11);
+    leafGeo.rotateX(-Math.PI / 2);                    // 攤平躺在地上
+    const litterMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff, roughness: 1, side: THREE.DoubleSide });
+    const mats = [];
+    const lm = new THREE.Matrix4(), lq = new THREE.Quaternion();
+    const le = new THREE.Euler(), lv = new THREE.Vector3(), ls = new THREE.Vector3();
+    const cols = [];
+    const lc = new THREE.Color();
+    for (let i = 0; i < 4200; i++) {
+      const [x, z] = near(1.0, 34);
+      if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
+      const sz = rr(0.7, 1.9);
+      // 幾乎水平，只給一點翹起 —— 完全貼平會看不出是一片一片
+      le.set(rr(-0.22, 0.22), rand() * 6.28, rr(-0.22, 0.22));
+      lq.setFromEuler(le);
+      ls.set(sz, 1, sz);
+      lv.set(x, heightAt(x, z) + 0.012 + rand() * 0.02, z);
+      mats.push(lm.clone().compose(lv, lq, ls));
+      // 枯到半枯：黃褐 → 帶點暗綠
+      const t = rand();
+      // 亮度上限壓到 0.20：林下大部分是暗的，但穿過天蓋的光斑會直接打在
+      // 落葉上 —— 反照率留在 0.30 的話那幾片會爆成刺眼的白色亮片。
+      lc.setHSL(0.09 + t * 0.06, 0.34 - t * 0.12, 0.10 + t * 0.10);
+      cols.push(lc.r, lc.g, lc.b);
+    }
+    const im = new THREE.InstancedMesh(leafGeo, litterMat, mats.length);
+    mats.forEach((mm, i) => im.setMatrixAt(i, mm));
+    im.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(cols), 3);
+    im.instanceMatrix.needsUpdate = true;
+    im.instanceColor.needsUpdate = true;
+    im.castShadow = false;
+    im.receiveShadow = true;
+    im.userData.noMerge = true;
+    world.add(im);
+    console.info(`[bamboo] 地面枯葉 ${mats.length} 片`);
+  }
+
   /* 筍株（升級書・升級 6 第 5 點的「地上一串長出來」）。
    *
    * 原本是單根散落的小圓錐。改成「一個基座冒出 3~6 根不等高的筍/幼竹」，
@@ -795,7 +929,7 @@ eienteiGate(SOUTH_END.x, SOUTH_END.z);
     if (Math.abs(x) > HALF_W || Math.abs(z) > LEN) continue;
     const y = heightAt(x, z);
     // 竹竿（自己立一根，才保證布條有東西可綁）
-    cyl(0.075, 0.095, 9, MAT.culm, x, y + 4.5, z, 6);
+    cyl(0.075, 0.095, 9, MAT.culmSolid, x, y + 4.5, z, 6);
     const cloth = box(0.5, 0.34, 0.02, clothMat, x, y + 1.65, z + 0.06);
     cloth.rotation.y = rand() * 0.6 - 0.3;
     ribbons++;
