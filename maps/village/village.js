@@ -222,8 +222,22 @@ function groundDecal(w, d, x, z, mat, lift = 0.05) {
   return decalOnGrid(world, w, d, x, z, mat, gSample, lift);
 }
 
-/* 地面網格 + 貼地查詢（見 src/world/groundmesh.js） */
-const GRID = new GroundGrid({ size: 460, seg: 120, heightAt });
+/* 地面網格 + 貼地查詢（見 src/world/groundmesh.js）
+ *
+ * 尺寸從 460 放大到 700 —— 原本地面只到 ±230，但玩家 bounds 給到
+ * hx 240 / hz 300，南門更是蓋在 z=250、里外的林子撒到 z≈276。
+ * 也就是說走到里的南邊時腳下的地面網格已經結束了：GroundGrid.sample()
+ * 超出範圍會退回解析高度，所以人不會掉下去，但**畫面上什麼都沒有**，
+ * 直接看到天空球。這就是「邊界破圖」。
+ *
+ * seg 跟著放大以維持格距（460/120 = 3.83 公尺 → 700/183 = 3.83），
+ * 格距變粗的話貼地物件（路、水田）會重新開始閃 —— GroundGrid 的整個
+ * 用意就是路面每個頂點都問「地面實際畫出來的高度」。 */
+const GROUND_SIZE = 700;
+/** 一塊地面貼圖鋪幾公尺。原本是 460/26 —— 放大地面時要維持這個密度，
+ *  不然草皮會整片被放大。三平面與單軸 UV 兩條路都讀它。 */
+const GROUND_TILE = 460 / 26;
+const GRID = new GroundGrid({ size: GROUND_SIZE, seg: 183, heightAt });
 const gSample = (x, z) => GRID.sample(x, z);
 {
   const m = new THREE.Mesh(GRID.buildGeometry(), MAT.ground);
@@ -237,7 +251,8 @@ const gSample = (x, z) => GRID.sample(x, z);
    * repeat 是 26×26（非等向），三平面只吃一個尺度，取幾何平均。
    *
    * 低畫質不套：每像素多採樣兩次，低階機划不來，退回原本的單軸 UV。 */
-  const TRI_SCALE = Math.sqrt(26 * 26) / GRID.size;
+  const TRI_SCALE = 1 / GROUND_TILE;
+  const UV_REPEAT = GROUND_SIZE / GROUND_TILE;      // 單軸 UV 那條路的等效 repeat
   let triOn = null;
   const syncTri = (idx) => {
     const want = idx >= 1;                 // 0=低 1=中 2=高
@@ -252,9 +267,9 @@ const gSample = (x, z) => GRID.sample(x, z);
     } else {
       MAT.ground.onBeforeCompile = () => {};
       MAT.ground.customProgramCacheKey = () => 'tri:off';
-      MAT.ground.map.repeat.set(26, 26);
-      MAT.ground.normalMap?.repeat.set(26, 26);
-      MAT.ground.roughnessMap?.repeat.set(26, 26);
+      MAT.ground.map.repeat.set(UV_REPEAT, UV_REPEAT);
+      MAT.ground.normalMap?.repeat.set(UV_REPEAT, UV_REPEAT);
+      MAT.ground.roughnessMap?.repeat.set(UV_REPEAT, UV_REPEAT);
       MAT.ground.needsUpdate = true;
     }
   };
@@ -271,12 +286,17 @@ const gSample = (x, z) => GRID.sample(x, z);
 const CROSS_Z = [-120, -70, -20, 40, 100, 165];   // 橫街
 const LANE_X = [-72, -36, 36, 72];                // 縱向的小巷
 {
+  /* 三種街道在每個路口都互相重疊。lift 全部用預設的 0.05 的話，重疊處
+   * 兩層貼地面完全共面、polygonOffset 也一樣 —— 深度測試分不出前後，
+   * 路口就會整片閃。錯開 1.2 公分即可（同無名之丘的支徑做法）：
+   * 肉眼看不出高低差，深度緩衝分得出來。
+   * 由下而上：主街 → 橫街 → 小巷，窄的鋪在寬的上面才合理。 */
   // 主街（南北貫穿）
-  groundDecal(11, 470, 0, 40, MAT.road);
+  groundDecal(11, 470, 0, 40, MAT.road, 0.050);
   // 橫街
-  for (const cz of CROSS_Z) groundDecal(196, 8, 0, cz, MAT.road);
+  for (const cz of CROSS_Z) groundDecal(196, 8, 0, cz, MAT.road, 0.062);
   // 小巷（比主街窄，鋪到南北兩端的街廓為止）
-  for (const lx of LANE_X) groundDecal(6.5, 320, lx, 20, MAT.road);
+  for (const lx of LANE_X) groundDecal(6.5, 320, lx, 20, MAT.road, 0.074);
 }
 
 /* ────────────────────────────────────────────── 河與橋 ── */
@@ -830,6 +850,31 @@ for (let i = 0; i < 14; i++) {
   stall(x, z, -a + Math.PI, i % 2 ? MAT.cloth : MAT.clothBlue);
 }
 
+/* 這個點附近淨空嗎？—— 修「樹長在房子裡」。
+ *
+ * 建物（343 行起）在樹之前就建好了，碰撞盒都已經進 colliders，所以撒東西
+ * 的時候直接查它就行，不必另外維護一份建物清單（維護兩份一定會不同步）。
+ * 半徑要給樹冠而不是樹幹：樹幹在牆外、樹冠穿進二樓一樣是穿模。 */
+function spotFree(x, z, r) {
+  for (const c of colliders) {
+    if (c.hw != null) {
+      if (Math.abs(x - c.x) < c.hw + r && Math.abs(z - c.z) < c.hd + r) return false;
+    } else if (c.r != null) {
+      if (Math.hypot(x - c.x, z - c.z) < c.r + r) return false;
+    }
+  }
+  return true;
+}
+
+/** 重試幾次找一個淨空的點；找不到就放棄（回傳 null，呼叫端跳過這一株）。 */
+function freeSpot(gen, r, tries = 14) {
+  for (let i = 0; i < tries; i++) {
+    const p = gen();
+    if (spotFree(p[0], p[1], r)) return p;
+  }
+  return null;
+}
+
 function tree(x, z, s, leafMat) {
   const y = heightAt(x, z);
   const h = (3.4 + Math.random() * 2.2) * s;
@@ -844,25 +889,42 @@ function tree(x, z, s, leafMat) {
   post(x, z, 0.3 * s, y + h);
 }
 // 廣場邊的櫻，其餘散在屋後、河岸與里外
-tree(-9, -30, 1.2, MAT.leafPink);
-tree(9, -12, 1.15, MAT.leafPink);
-tree(-9, 30, 1.15, MAT.leafPink);
-tree(9, 52, 1.1, MAT.leafPink);
+/* 街心的四棵櫻。座標是手挑的（要正好在街上），但還是過一次淨空檢查 ——
+ * 街廓的建物是程序生成的，改了配置就可能剛好蓋到某一棵。
+ * 被擋到就沿主街往南北找最近的空位，不是整棵丟掉：這四棵是地標。 */
+for (const [tx, tz, ts] of [[-9, -30, 1.2], [9, -12, 1.15], [-9, 30, 1.15], [9, 52, 1.1]]) {
+  let px = tx, pz = tz;
+  if (!spotFree(px, pz, 1.8 * ts)) {
+    for (let d = 3; d <= 30; d += 3) {
+      if (spotFree(tx, tz - d, 1.8 * ts)) { pz = tz - d; break; }
+      if (spotFree(tx, tz + d, 1.8 * ts)) { pz = tz + d; break; }
+    }
+  }
+  tree(px, pz, ts, MAT.leafPink);
+}
 // 河岸的柳與雜木
 for (let i = 0; i < 46; i++) {
-  const z = -210 + Math.random() * 420;
-  const sd = Math.random() < 0.5 ? -1 : 1;
-  const x = riverX(z) + sd * (9 + Math.random() * 5);
-  tree(x, z, 0.85 + Math.random() * 0.7, MAT.leaf);
+  const s = 0.85 + Math.random() * 0.7;
+  const p = freeSpot(() => {
+    const z = -210 + Math.random() * 420;
+    const sd = Math.random() < 0.5 ? -1 : 1;
+    return [riverX(z) + sd * (9 + Math.random() * 5), z];
+  }, 1.8 * s);
+  if (p) tree(p[0], p[1], s, MAT.leaf);
 }
 // 里外的雜木林
 for (let i = 0; i < 180; i++) {
-  const a = Math.random() * Math.PI * 2;
-  const r = VILLAGE_R * (0.62 + Math.random() * 0.55);
-  const x = Math.cos(a) * r, z = Math.sin(a) * r * 1.35;
+  const s = 0.85 + Math.random() * 0.8;
+  const p = freeSpot(() => {
+    const a = Math.random() * Math.PI * 2;
+    const r = VILLAGE_R * (0.62 + Math.random() * 0.55);
+    return [Math.cos(a) * r, Math.sin(a) * r * 1.35];
+  }, 1.8 * s);
+  if (!p) continue;
+  const [x, z] = p;
   if (Math.abs(x) < 108 && z > -175 && z < 258) continue;    // 街廓範圍留空
   if (Math.abs(x - riverX(z)) < 11) continue;                // 河道留空
-  tree(x, z, 0.85 + Math.random() * 0.8, MAT.leaf);
+  tree(x, z, s, MAT.leaf);
 }
 
 // 田埂（里外的水田格子，純視覺）。材質共用一份 —— 每格各自 new 一個的話，
@@ -1142,18 +1204,30 @@ function westGate(gx, gz) {
 westGate(SW_GATE.x, SW_GATE.z);
 
 // 橫街 z=100 往西接到西南門的一段土路（橫街本身只鋪到 |x|≈98）
-groundDecal(34, 7, (SW_GATE.x + 3 - 98) / 2, SW_GATE.z, MAT.road, 0.062);
+groundDecal(34, 7, (SW_GATE.x + 3 - 98) / 2, SW_GATE.z, MAT.road, 0.086);
 
-// 遠山（讓盆地有邊界感）
-// 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
-// 18 座山就永遠是 18 個 draw call。
+/* 遠山（讓盆地有邊界感）
+ *
+ * 材質共用一份 —— 每座山各自 new 一個材質的話，靜態合併只能按材質分組，
+ * 18 座山就永遠是 18 個 draw call。
+ *
+ * 山腳要逐座去問 heightAt，不能固定高度。里的外圍是二次上升的矮丘，
+ * 同一個半徑上不同方位的地面高度差到 30 公尺 —— 原本寫死 y = h/2 - 4，
+ * 於是有些方位的山埋進地裡、有些懸空切出一道硬邊，那就是畫面上那條
+ * 切進草地的黑線。
+ *
+ * 這裡沒有改用 ridgeRing：那是給「可走範圍緊貼邊界」的圖用的。里的
+ * 可走範圍 240×300 遠大於里本身（橢圓半徑 175），稜線環放在還看得到的
+ * 距離上會變成一堵連續的牆；離散的錐形山之間透得出天空，反而對。 */
 const MOUNTAIN_MAT = new THREE.MeshStandardMaterial({ color: '#3a4450', roughness: 1, flatShading: true });
 for (let i = 0; i < 18; i++) {
   const a = (i / 18) * Math.PI * 2 + 0.3;
   const r = 300 + Math.random() * 90;
   const h = 46 + Math.random() * 60;
+  const x = Math.cos(a) * r, z = Math.sin(a) * r;
   const m = new THREE.Mesh(new THREE.ConeGeometry(28 + Math.random() * 30, h, 5), MOUNTAIN_MAT);
-  m.position.set(Math.cos(a) * r, h / 2 - 4, Math.sin(a) * r);
+  // 山腳埋進地面 4 公尺，接縫才不會因為地形的三角形切分而露出來
+  m.position.set(x, heightAt(x, z) + h / 2 - 4, z);
   m.rotation.y = Math.random() * 3;
   world.add(m);
 }
@@ -1206,9 +1280,13 @@ scatterGrass(world, {
   groundDecal(6, 56, 3, GATE_Z - 34, pathMat, 0.06);
   // 夾道的闊葉樹（跟獸道同款）
   for (let i = 0; i < 40; i++) {
-    const z = GATE_Z - 12 - Math.random() * 50;
-    const x = (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 30);
-    tree(x + 3, z, 0.9 + Math.random() * 0.8, MAT.leaf);
+    const s = 0.9 + Math.random() * 0.8;
+    const p = freeSpot(() => {
+      const z = GATE_Z - 12 - Math.random() * 50;
+      const x = (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 30);
+      return [x + 3, z];
+    }, 1.8 * s);
+    if (p) tree(p[0], p[1], s, MAT.leaf);
   }
   // 更遠處的谷壁山稜剪影
   const ridgeMat = new THREE.MeshStandardMaterial({ color: '#37503a', roughness: 1, flatShading: true });
@@ -1227,12 +1305,15 @@ scatterGrass(world, {
   world.add(g);
   const gy = heightAt(SW_GATE.x, SW_GATE.z);
   // 出門的土路先往西鋪一段（跟門內那段各差 1.2 公分，重疊處不會閃）
-  groundDecal(48, 6, SW_GATE.x - 28, SW_GATE.z + 2, MAT.road, 0.074);
+  groundDecal(48, 6, SW_GATE.x - 28, SW_GATE.z + 2, MAT.road, 0.098);
   // 夾道的樹：愈往西愈密、愈暗（香霖堂在林緣，再過去就是魔法之森）
   for (let i = 0; i < 46; i++) {
-    const x = SW_GATE.x - 8 - Math.random() * 54;
-    const z = SW_GATE.z + (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 26);
-    tree(x, z, 0.9 + Math.random() * 0.9, MAT.leaf);
+    const s = 0.9 + Math.random() * 0.9;
+    const p = freeSpot(() => [
+      SW_GATE.x - 8 - Math.random() * 54,
+      SW_GATE.z + (Math.random() < 0.5 ? -1 : 1) * (5 + Math.random() * 26),
+    ], 1.8 * s);
+    if (p) tree(p[0], p[1], s, MAT.leaf);
   }
   // 那間屋頂歪歪的舊道具店：陡屋頂 + 煙囪，一眼就跟里的和瓦分得開
   const shopWall = new THREE.MeshStandardMaterial({ color: '#6b533a', roughness: 0.95 });
