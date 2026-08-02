@@ -179,9 +179,35 @@ export class VillagerCrowd {
         continue;
       }
 
+      // --- 避障（品質升級書・升級 3）---
+      // 舊版是節點之間直線走，路上有東西就頂著磨蹭。這裡往前探 2 公尺，
+      // 撞到就沿障礙的切線偏轉。用圓查詢而不是 raycast —— colliders 本來
+      // 就是圓柱／方盒的參數，直接算比丟射線便宜得多。
+      let ux = dx / d, uz = dz / d;
+      const steer = this._avoid(p.pos.x, p.pos.y, ux, uz);
+      ux = steer.x; uz = steer.z;
+
       const step = Math.min(d, p.speed * dt);
-      p.pos.x += (dx / d) * step;
-      p.pos.y += (dz / d) * step;
+      p.pos.x += ux * step;
+      p.pos.y += uz * step;
+
+      // --- 卡死偵測 ---
+      // 連續 2 秒位移不到 0.3 公尺就是卡住了（被兩面牆夾住、或切線方向
+      // 又是另一個障礙）。放棄目前目標，回到最近的路網節點重新選路。
+      p._stuckT = (p._stuckT ?? 0) + dt;
+      if (p._stuckT >= 2) {
+        const moved = Math.hypot(p.pos.x - (p._sx ?? p.pos.x), p.pos.y - (p._sy ?? p.pos.y));
+        if (moved < 0.3) {
+          let best = -1, bestD = Infinity;
+          for (let i = 0; i < this.nodes.length; i++) {
+            const n = this.nodes[i];
+            const nd = Math.hypot(n.x - p.pos.x, n.y - p.pos.y);
+            if (nd < bestD) { bestD = nd; best = i; }
+          }
+          if (best >= 0) { p.from = p.to; p.to = best; }
+        }
+        p._stuckT = 0; p._sx = p.pos.x; p._sy = p.pos.y;
+      }
 
       // 走路動畫：animateCharacter 的擺幅是按「玩家速度」調的（5.5 才滿幅），
       // 村民走 1~3 m/s 直接餵會只擺一點點、看起來像用飄的。乘個係數讓
@@ -271,6 +297,51 @@ export class VillagerCrowd {
    * 推的方向取「離哪一面牆最近就往哪一面推」（矩形）或徑向（柱）：
    * 沿最短路徑出來，人不會被彈飛到街的另一邊。
    */
+  /**
+   * 往前探 PROBE 公尺，撞到障礙就沿切線偏轉。
+   *
+   * 只挑「最擋路的那一個」處理 —— 同時對三個障礙求平均方向的話，
+   * 夾在兩棟房子中間時兩邊的偏轉會互相抵銷，人就直直撞上去了。
+   *
+   * @returns {{x:number, z:number}} 正規化過的行進方向
+   */
+  _avoid(px, pz, ux, uz) {
+    const PROBE = 2.0, PAD = 0.55;      // PAD 比 _unstick 的 0.3 大：提早繞開，而不是貼到牆才推
+    const tx = px + ux * PROBE, tz = pz + uz * PROBE;
+    let worst = null, worstPen = 0;
+    for (const c of this.colliders) {
+      let cx, cz, pen;
+      if (c.hw != null) {
+        // 方盒：取探測點在盒面上的最近點，反推穿透深度
+        const nx = Math.max(c.x - c.hw, Math.min(tx, c.x + c.hw));
+        const nz = Math.max(c.z - c.hd, Math.min(tz, c.z + c.hd));
+        const d = Math.hypot(tx - nx, tz - nz);
+        if (d >= PAD) continue;
+        pen = PAD - d; cx = c.x; cz = c.z;
+      } else {
+        const d = Math.hypot(tx - c.x, tz - c.z);
+        if (d >= c.r + PAD) continue;
+        pen = c.r + PAD - d; cx = c.x; cz = c.z;
+      }
+      if (pen > worstPen) { worstPen = pen; worst = { cx, cz }; }
+    }
+    if (!worst) return { x: ux, z: uz };
+
+    // 切線：障礙中心指向自己的方向轉 90 度。兩個切線方向挑跟原方向夾角
+    // 較小的那邊繞 —— 挑錯邊會整個人往回走。
+    let ax = px - worst.cx, az = pz - worst.cz;
+    const al = Math.hypot(ax, az) || 1;
+    ax /= al; az /= al;
+    const t1x = -az, t1z = ax;
+    const dot = t1x * ux + t1z * uz;
+    const sgn = dot >= 0 ? 1 : -1;
+    // 穿透越深轉得越多；乘 1.6 讓它真的繞得開，只加一點點會擦著牆走
+    const k = Math.min(1, worstPen * 1.6);
+    let rx = ux + sgn * t1x * k, rz = uz + sgn * t1z * k;
+    const rl = Math.hypot(rx, rz) || 1;
+    return { x: rx / rl, z: rz / rl };
+  }
+
   _unstick() {
     const PAD = 0.3;                 // 身體半徑：貼著牆走可以，插進去不行
     for (const p of this.people) {
