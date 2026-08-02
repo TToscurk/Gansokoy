@@ -49,6 +49,11 @@ const core = bootMap({
   camera: { fov: 68, near: 0.2, far: 460 },
   exposure: 1.06,
   env: { fogMul: 1.55, shadowArea: 52, followSun: true },
+  // 完整後製鏈：畫質雙標到此為止 —— 高檔有 GTAO 的接觸陰影與 Bloom，
+  // 跟神社同一套；低檔自動全關，跟原本的 basic 一樣輕。
+  // 天空色的 tone mapping / 色彩空間已在 environment.js 對齊（方案 A），
+  // 兩條路徑的天空至此一致，翻過來不會突然變色。
+  postFX: 'full',
 });
 const { scene, camera, world, colliders } = core;
 const { box, cyl, post, block } = core;
@@ -587,8 +592,9 @@ core.spawnPlayer({
 const ctrl = core.ctrl;
 
 /* ────────────────────────── 住民：輝夜・永琳・鈴仙（對話） ── */
-// postFX 維持 basic，名牌照舊直接畫進主場景（不傳第二參數）
-const npcMgr = new NPCManager(scene);
+// 名牌是 depthTest:false 的 sprite，翻成 full 之後必須住獨立的 overlay
+// 場景，否則會被 GTAO 塗成黑方塊（core.plateScene 會處理這件事）
+const npcMgr = new NPCManager(scene, core.plateScene);
 // roster 裡三位的 region 都是 eientei，origin 傳同一筆 REGION → offset 即局部座標
 npcMgr.setRoster(['kaguya', 'eirin', 'reisen'], REGION_BY_ID.eientei, 140);
 const dialogue = new Dialogue();

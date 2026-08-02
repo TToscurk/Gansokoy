@@ -56,7 +56,11 @@ const core = bootMap({
   exposure: 1,
   // 里是開闊的盆地：霧比獸道淡，看得到街尾與遠山
   env: { fogMul: 0.75, shadowArea: 78, followSun: true },
-  // postFX 維持 basic（無 composer），畫質走 applyBasicQuality 的三檔。
+  // 完整後製鏈：畫質雙標到此為止 —— 高檔有 GTAO 的接觸陰影與 Bloom，
+  // 跟神社同一套；低檔自動全關，跟原本的 basic 一樣輕。
+  // 天空色的 tone mapping / 色彩空間已在 environment.js 對齊（方案 A），
+  // 兩條路徑的天空至此一致，翻過來不會突然變色。
+  postFX: 'full',
 });
 const { HUD, renderer, scene, camera, world, colliders } = core;
 const { box, cyl, post, block, walkBlock } = core;

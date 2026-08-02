@@ -53,6 +53,11 @@ const core = bootMap({
   // 林緣：霧比開闊地濃一點（西邊那片森林要糊掉才有「更深處還有東西」的感覺），
   // 但不能濃到看不見店 —— 這張圖只有 140 公尺見方。
   env: { fogMul: 1.25, shadowArea: 46, followSun: true },
+  // 完整後製鏈：畫質雙標到此為止 —— 高檔有 GTAO 的接觸陰影與 Bloom，
+  // 跟神社同一套；低檔自動全關，跟原本的 basic 一樣輕。
+  // 天空色的 tone mapping / 色彩空間已在 environment.js 對齊（方案 A），
+  // 兩條路徑的天空至此一致，翻過來不會突然變色。
+  postFX: 'full',
 });
 const { scene, camera, world, colliders } = core;
 const { box, cyl, post, block } = core;
@@ -628,7 +633,7 @@ core.spawnPlayer({
 const ctrl = core.ctrl;
 
 /* ────────────────────────────────── 住民：霖之助（對話） ── */
-const npcMgr = new NPCManager(scene);
+const npcMgr = new NPCManager(scene, core.plateScene);
 // roster 裡霖之助的 region 是 kourindou，origin 傳同一筆 REGION → offset 即局部座標
 npcMgr.setRoster(['rinnosuke'], REGION_BY_ID.kourindou, 90);
 const dialogue = new Dialogue();

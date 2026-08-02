@@ -46,6 +46,11 @@ const core = bootMap({
   exposure: 1.08,
   // 丘陵是開闊地形：霧要淡，看得到遠處的起伏才有「丘」的感覺
   env: { fogMul: 0.62, shadowArea: 60, followSun: true },
+  // 完整後製鏈：畫質雙標到此為止 —— 高檔有 GTAO 的接觸陰影與 Bloom，
+  // 跟神社同一套；低檔自動全關，跟原本的 basic 一樣輕。
+  // 天空色的 tone mapping / 色彩空間已在 environment.js 對齊（方案 A），
+  // 兩條路徑的天空至此一致，翻過來不會突然變色。
+  postFX: 'full',
 });
 const { HUD, world } = core;
 const { box, cyl, post } = core;

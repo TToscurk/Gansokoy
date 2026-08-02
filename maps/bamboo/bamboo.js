@@ -61,6 +61,11 @@ const core = bootMap({
   camera: { fov: 68, near: 0.2, far: 560 },
   exposure: 1.06,
   env: { fogMul: 2.1, shadowArea: 48, followSun: true },
+  // 完整後製鏈：畫質雙標到此為止 —— 高檔有 GTAO 的接觸陰影與 Bloom，
+  // 跟神社同一套；低檔自動全關，跟原本的 basic 一樣輕。
+  // 天空色的 tone mapping / 色彩空間已在 environment.js 對齊（方案 A），
+  // 兩條路徑的天空至此一致，翻過來不會突然變色。
+  postFX: 'full',
 });
 const { HUD, scene, camera, world, colliders } = core;
 const { box, cyl, post, block } = core;
@@ -861,7 +866,7 @@ const ctrl = core.ctrl;
 // 迷いの竹林的設定：妹紅住在林中，常替迷路的人（與去永遠亭求醫的人）
 // 帶路。她站在主徑中段的路旁 —— 主徑是決定性隨機生成的，所以不能用
 // roster 的固定 offset，得直接取路上的點。
-const npcMgr = new NPCManager(scene);
+const npcMgr = new NPCManager(scene, core.plateScene);
 npcMgr.setRoster(['mokou'], REGION_BY_ID.bamboo, 340);
 {
   const main = catmullRom(TRAIL_SEGMENTS[0].pts, 2.5);
