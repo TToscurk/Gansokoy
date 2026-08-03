@@ -31,7 +31,7 @@ shader_parameter/path_diff = ExtResource("7_m6h8q")
 shader_parameter/path_nor = ExtResource("8_xcxft")
 shader_parameter/mask_tex = ExtResource("6_7p8rc")
 shader_parameter/tile = null
-shader_parameter/grass_tint = null
+shader_parameter/grass_tint = Color(1, 1, 1, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_kdbgm"]
 _surfaces = [{
@@ -2511,7 +2511,7 @@ height = 3.0
 radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8io4"]
-albedo_color = Color(0.66, 0.78, 0.58, 1)
+albedo_color = Color(0.5, 0.72, 0.46, 1)
 albedo_texture = ExtResource("4_1s4w7")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
@@ -2541,10 +2541,15 @@ sky_material = SubResource("ProceduralSkyMaterial_7qflk")
 background_mode = 2
 sky = SubResource("Sky_2rda2")
 ambient_light_source = 3
+ambient_light_energy = 0.55
 tonemap_mode = 3
+tonemap_exposure = 0.82
+tonemap_white = 4.0
 ssao_enabled = true
-sdfgi_enabled = true
 glow_enabled = true
+glow_intensity = 0.45
+glow_bloom = 0.05
+glow_hdr_threshold = 1.25
 fog_enabled = true
 fog_light_color = Color(0.72, 0.75, 0.68, 1)
 fog_density = 0.0035
@@ -2552,6 +2557,9 @@ fog_sky_affect = 0.2
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.018
 volumetric_fog_albedo = Color(0.8, 0.83, 0.76, 1)
+adjustment_enabled = true
+adjustment_contrast = 1.08
+adjustment_saturation = 1.12
 
 [node name="Trail" type="Node3D"]
 metadata/own_colliders = true

@@ -1,0 +1,294 @@
+# 地圖體檢 —— 自動抓幾何錯誤（ADR-003）
+#
+#   godot --headless --path godot --script tools/check_map.gd -- village
+#   godot --headless --path godot --script tools/check_map.gd -- all
+#
+# 為什麼要有這支：使用者回報的 bug 裡，有五個是「用眼睛看才發現」的幾何
+# 錯誤 —— 建築離地、樹穿建築、物件壓街、水面在河床下、生物錯位。
+# 這些全部可以自動檢查。產生器跑完就接這支，有紅字就不算完成。
+#
+# 做法：載入 .tscn，抓 Terrain 的 mesh 當高度場（不重算 height_at ——
+# 體檢要驗「場景實際長怎樣」，不是驗「產生器以為長怎樣」，否則
+# 產生器的 bug 會同時騙過自己與體檢）。
+extends SceneTree
+
+const TOL_FLOAT := 0.55        # 建物底面允許離地多少
+const TOL_SINK := 2.5          # 允許陷進地裡多少（基石本來就會埋）
+const TOL_WATER := 0.15        # 水面允許低於地面多少
+const WATER_BAD_FRAC := 0.06   # 超過這個比例的水面點被埋才算問題（邊緣點會壓到岸）
+
+## 建物「該貼地」的構件命名。屋頂／簷／瓦不列入 —— 它們本來就在半空中，
+## 拿它們量離地會得到 200 多筆假訊息。
+const GROUND_PARTS := ["基石", "屋身", "塀", "基壇", "土台"]
+## 明確排除：塀瓦 含「塀」但它是牆頂的蓋瓦，本來就懸在半空
+const NOT_GROUND := ["瓦", "屋根", "簷", "庇"]
+
+var _cell := 4.0
+var _gmin := {}                # Vector2i -> 該格地形最低點
+var _gmax := {}                # Vector2i -> 該格地形最高點
+var _issues := []
+
+func _init() -> void:
+	var args := OS.get_cmdline_user_args()
+	var maps: Array = []
+	if args.is_empty() or args[0] == "all":
+		maps = ["village", "trail", "kourindou"]
+	else:
+		maps = [args[0]]
+	var total := 0
+	for m in maps:
+		total += _check(String(m))
+	print("\n══ 體檢完成：%d 個問題 ══" % total)
+	quit(1 if total > 0 else 0)
+
+func _check(map_id: String) -> int:
+	_issues.clear()
+	_gmin.clear()
+	_gmax.clear()
+	var path := "res://maps/%s/%s.tscn" % [map_id, map_id]
+	if not ResourceLoader.exists(path):
+		print("[%s] 沒有原生場景，跳過（還在用 blockout 底稿）" % map_id)
+		return 0
+	print("\n──── 體檢：%s ────" % map_id)
+	var packed: PackedScene = load(path)
+	var root := packed.instantiate()
+
+	if not _build_height_field(root):
+		print("  ✗ 找不到 Terrain 的 mesh，無法體檢")
+		root.free()
+		return 1
+
+	var buildings: Array = []      # [{aabb, name}] 一棟 = 一個群組，不是一片牆
+	var scatters: Array = []       # MultiMeshInstance3D
+	var waters: Array = []
+	_collect(root, buildings, scatters, waters)
+	print("  掃到 %d 棟建物、%d 組散佈、%d 片水面" % [buildings.size(), scatters.size(), waters.size()])
+
+	_check_floating(buildings)
+	_check_scatter_overlap(scatters, buildings)
+	_check_water(waters)
+
+	for s in _issues:
+		print("  ✗ ", s)
+	if _issues.is_empty():
+		print("  ✓ 沒有發現幾何問題")
+	root.free()
+	return _issues.size()
+
+## 世界矩陣 —— 自己往上乘。
+## 不能用 global_transform：這支是 SceneTree script，`_init` 執行時 root
+## 視窗還沒進樹，instantiate 出來的節點永遠 is_inside_tree() == false，
+## global_transform 會靜靜回傳單位矩陣 → 所有 AABB 塌到原點 →
+## 體檢報「2600 棵樹全長在同一棟建物裡」這種假訊息。
+func _world_xf(n: Node) -> Transform3D:
+	var t := Transform3D()
+	var cur: Node = n
+	while cur != null and cur is Node3D:
+		t = (cur as Node3D).transform * t
+		cur = cur.get_parent()
+	return t
+
+## 從 Terrain 的 mesh 建高度場（每格記最低與最高）。
+## 兩個都要：建物要跟「footprint 最低點」比（產生器就是這樣擺的），
+## 水面要跟「河床最低點」比（拿最高點會量到岸）。
+func _build_height_field(root: Node) -> bool:
+	var terr := root.find_child("Terrain", true, false)
+	if terr == null or not (terr is MeshInstance3D):
+		return false
+	var mesh: Mesh = (terr as MeshInstance3D).mesh
+	if mesh == null or mesh.get_surface_count() == 0:
+		return false
+	var arr := mesh.surface_get_arrays(0)
+	var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var txf := _world_xf(terr)
+	for v in verts:
+		var w: Vector3 = txf * v
+		var c := Vector2i(int(floor(w.x / _cell)), int(floor(w.z / _cell)))
+		if not _gmin.has(c):
+			_gmin[c] = w.y
+			_gmax[c] = w.y
+		else:
+			if _gmin[c] > w.y:
+				_gmin[c] = w.y
+			if _gmax[c] < w.y:
+				_gmax[c] = w.y
+	return _gmin.size() > 0
+
+## 一塊水平範圍內的「地面基準高度」。
+## 取第 15 百分位而不是絕對最低點：大院子裡可能有池塘或水溝，
+## 一格池底就會讓整棟宅子被誤判成離地 1.7m。
+## 不外擴取樣範圍 —— 格子本身就有 4m 寬，再 padding 會把旁邊的斜坡算進來。
+func _ground_min_box(x0: float, z0: float, x1: float, z1: float) -> float:
+	var vals: Array[float] = []
+	for i in range(int(floor(x0 / _cell)), int(floor(x1 / _cell)) + 1):
+		for j in range(int(floor(z0 / _cell)), int(floor(z1 / _cell)) + 1):
+			var c := Vector2i(i, j)
+			if _gmin.has(c):
+				vals.append(_gmin[c])
+	if vals.is_empty():
+		return -INF
+	vals.sort()
+	return vals[mini(int(float(vals.size()) * 0.15), vals.size() - 1)]
+
+## 單點地形最低點（水面用：要跟河床比，不是跟岸比）
+func _ground_min_at(x: float, z: float) -> float:
+	var c := Vector2i(int(floor(x / _cell)), int(floor(z / _cell)))
+	return _gmin[c] if _gmin.has(c) else -INF
+
+func _is_ground_part(nm: String) -> bool:
+	for bad in NOT_GROUND:
+		if nm.contains(bad):
+			return false
+	for good in GROUND_PARTS:
+		if nm.contains(good):
+			return true
+	return false
+
+## 一棟建物 = 一個群組節點（長屋_0 / 塀_2_1 / 蔵）。
+## v1 把每片 mesh 當一棟，於是「牆頂蓋瓦離地 1.6m」被報成 227 筆離地。
+func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void:
+	if n is MultiMeshInstance3D:
+		scatters.append(n)
+		return
+	if n is MeshInstance3D:
+		var mat = (n as MeshInstance3D).material_override
+		if mat is ShaderMaterial and (mat as ShaderMaterial).shader != null \
+				and String((mat as ShaderMaterial).shader.resource_path).contains("water"):
+			waters.append(n)
+		return
+	# 這個節點是不是一棟建物的群組？看它有沒有直接掛著貼地構件
+	var box := AABB()
+	var got := false
+	for c in n.get_children():
+		if c is MeshInstance3D and _is_ground_part(String(c.name)):
+			var wb: AABB = _world_xf(c) * (c as MeshInstance3D).get_aabb()
+			box = wb if not got else box.merge(wb)
+			got = true
+	if got:
+		buildings.append({ "name": _path_of(n), "aabb": box })
+	for c in n.get_children():
+		_collect(c, buildings, scatters, waters)
+
+func _path_of(n: Node) -> String:
+	var parts := [String(n.name)]
+	var p := n.get_parent()
+	var depth := 0
+	while p != null and depth < 2:
+		parts.push_front(String(p.name))
+		p = p.get_parent()
+		depth += 1
+	return "/".join(parts)
+
+## 建物離地 / 陷太深
+func _check_floating(buildings: Array) -> void:
+	var floats := 0
+	var sinks := 0
+	var worst_f := 0.0
+	var worst_s := 0.0
+	for b in buildings:
+		var box: AABB = b.aabb
+		var c := box.get_center()
+		# 跟 footprint 的最低點比 —— 產生器就是把建物擺在最低點、
+		# 基石往下加深高差。拿中心點的高度比會在斜坡上全部誤判。
+		var g := _ground_min_box(box.position.x, box.position.z,
+			box.position.x + box.size.x, box.position.z + box.size.z)
+		if g == -INF:
+			continue
+		var gap := box.position.y - g
+		if gap > TOL_FLOAT:
+			floats += 1
+			worst_f = maxf(worst_f, gap)
+			if floats <= 6:
+				_issues.append("建物離地 %.2fm：%s @ (%.0f, %.0f)" % [gap, b.name, c.x, c.z])
+		elif gap < -TOL_SINK:
+			sinks += 1
+			worst_s = maxf(worst_s, -gap)
+			if sinks <= 4:
+				_issues.append("建物陷入地面 %.2fm：%s @ (%.0f, %.0f)" % [-gap, b.name, c.x, c.z])
+	if floats > 6:
+		_issues.append("…另有 %d 棟建物離地（最嚴重 %.2fm）" % [floats - 6, worst_f])
+	if sinks > 4:
+		_issues.append("…另有 %d 棟建物陷入地面（最嚴重 %.2fm）" % [sinks - 4, worst_s])
+
+## 散佈物（樹、草、岩石）跟建物重疊 —— 「樹長在建築裡」
+func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
+	if buildings.is_empty():
+		return
+	# 建物用空間索引，否則 2600 棵樹 × 上千棟是 O(n²)
+	var bgrid := {}
+	for i in buildings.size():
+		var box: AABB = buildings[i].aabb
+		for ii in range(int(floor(box.position.x / 16.0)), int(floor((box.position.x + box.size.x) / 16.0)) + 1):
+			for jj in range(int(floor(box.position.z / 16.0)), int(floor((box.position.z + box.size.z) / 16.0)) + 1):
+				var k := Vector2i(ii, jj)
+				if not bgrid.has(k):
+					bgrid[k] = []
+				bgrid[k].append(i)
+
+	for mmi in scatters:
+		var nm := String(mmi.name)
+		# 草與睡蓮貼地，穿模不影響觀感；只驗有體積的（樹、岩石）
+		if nm.to_lower().contains("grass") or nm.contains("睡蓮") or nm.contains("Rice") \
+				or nm.contains("Reed") or nm.to_lower().contains("flower"):
+			continue
+		var mm: MultiMesh = (mmi as MultiMeshInstance3D).multimesh
+		if mm == null or mm.instance_count == 0:
+			continue
+		var xf: Transform3D = _world_xf(mmi)
+		var hit := 0
+		var first := ""
+		for i in mm.instance_count:
+			var o: Vector3 = (xf * mm.get_instance_transform(i)).origin
+			var k := Vector2i(int(floor(o.x / 16.0)), int(floor(o.z / 16.0)))
+			if not bgrid.has(k):
+				continue
+			for bi in bgrid[k]:
+				var box: AABB = buildings[bi].aabb
+				# 只比水平範圍：樹幹落在建物平面內就是穿模
+				if o.x > box.position.x and o.x < box.position.x + box.size.x \
+						and o.z > box.position.z and o.z < box.position.z + box.size.z:
+					hit += 1
+					if hit == 1:
+						first = "例：(%.0f, %.0f) ← %s" % [o.x, o.z, buildings[bi].name]
+					break
+		if hit > 0:
+			_issues.append("%s 有 %d 個實例長在建物裡，%s" % [nm, hit, first])
+
+## 水面高度 —— 「水是隱形的」（水面沉到河床底下）
+## v1 拿 AABB 中心點量，河是彎的、中心點根本不在河上，於是報假訊息。
+## 改成取樣水面 mesh 的頂點，逐點跟該處河床比。
+func _check_water(waters: Array) -> void:
+	for w in waters:
+		var mi := w as MeshInstance3D
+		var mesh: Mesh = mi.mesh
+		if mesh == null or mesh.get_surface_count() == 0:
+			continue
+		var verts: PackedVector3Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		if verts.is_empty():
+			continue
+		var xf := _world_xf(mi)
+		var n := 0
+		var bad := 0
+		var worst := 0.0
+		var wx := 0.0
+		var wz := 0.0
+		var step := maxi(1, verts.size() / 4000)
+		for i in range(0, verts.size(), step):
+			var p: Vector3 = xf * verts[i]
+			var g := _ground_min_at(p.x, p.z)
+			if g == -INF:
+				continue
+			n += 1
+			var d := g - p.y
+			if d > TOL_WATER:
+				bad += 1
+				if d > worst:
+					worst = d
+					wx = p.x
+					wz = p.z
+		if n == 0:
+			continue
+		var frac := float(bad) / float(n)
+		if frac > WATER_BAD_FRAC:
+			_issues.append("水面有 %.0f%% 埋在地面下（最深 %.2fm @ %.0f, %.0f）：%s"
+				% [frac * 100.0, worst, wx, wz, mi.name])

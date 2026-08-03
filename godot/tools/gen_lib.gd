@@ -60,7 +60,14 @@ func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri
 		return mats[name]
 	var m := StandardMaterial3D.new()
 	m.albedo_color = tint
-	m.albedo_texture = load("res://assets/textures/%s_diff.jpg" % set_name)
+	var diff := "res://assets/textures/%s_diff.jpg" % set_name
+	# 貼圖組不存在時 load() 只會回傳 null，材質就退化成一片死白 ——
+	# 「屋頂／岩石整片發白」查了兩輪才發現是這個。所以要吵。
+	if not ResourceLoader.exists(diff):
+		push_warning("材質「%s」找不到貼圖組 %s，會變成純色" % [name, set_name])
+		print("  ⚠ 材質 %s：貼圖組 %s 不存在" % [name, set_name])
+	else:
+		m.albedo_texture = load(diff)
 	var nor := "res://assets/textures/%s_nor_gl.jpg" % set_name
 	if ResourceLoader.exists(nor):
 		m.normal_enabled = true
@@ -163,6 +170,26 @@ func vc_mat() -> StandardMaterial3D:
 	_save_mat(m, "vertex_color")
 	return m
 
+## 岩石材質：石壁貼圖 × Blender 烤進去的苔色頂點色。
+## 注意 —— prop_mesh 會直接改 glb 那份共用 Mesh 的 surface material，
+## 同一顆 rock_*.glb 只會留下最後設定的那個材質。所有用到岩石的地方
+## 都要拿這一份，不然先設的會被後設的洗掉（v8 就是這樣變成白色紙片：
+## 前面傳了 cliff_rock —— 那組貼圖根本不存在 —— 材質退化成一片死白）。
+func rock_mat() -> StandardMaterial3D:
+	if mats.has("rock"):
+		return mats["rock"]
+	var m := StandardMaterial3D.new()
+	m.albedo_texture = load("res://assets/textures/stone_wall_diff.jpg")
+	m.normal_enabled = true
+	m.normal_texture = load("res://assets/textures/stone_wall_nor_gl.jpg")
+	m.roughness_texture = load("res://assets/textures/stone_wall_rough.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.5, 0.5, 0.5)
+	m.vertex_color_use_as_albedo = true       # 岩頂的苔色是烤在頂點色裡的
+	m.albedo_color = Color(1.7, 1.75, 1.6)    # 頂點色是 0.5 灰，乘完太暗，補回來
+	_save_mat(m, "rock")
+	return m
+
 ## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）
 func prop_mesh(glb_path: String, mat: Material = null) -> Mesh:
 	var packed: PackedScene = load(glb_path)
@@ -236,7 +263,8 @@ func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: 
 
 # ── 地形網格（順時針繞向）＋遮罩貼圖材質 ──
 ## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro)
-func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable, path_set := "terrain_path") -> MeshInstance3D:
+func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable,
+		path_set := "terrain_path", grass_tint := Color(1, 1, 1)) -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var step := 2.0 * half / float(res - 1)
@@ -282,6 +310,9 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 	mat.set_shader_parameter("path_diff", load(pd))
 	mat.set_shader_parameter("path_nor", load(pn))
 	mat.set_shader_parameter("mask_tex", tex)
+	# 草地色偏：Poly Haven 那張草地本身偏乾黃，村子要的是初夏的青草
+	# 一定要傳 Color：uniform 有 source_color 提示，餵 Vector3 會被吃掉存成 null
+	mat.set_shader_parameter("grass_tint", grass_tint)
 
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh
@@ -334,7 +365,7 @@ func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
 	var mesh := st.commit()
 	var mat := StandardMaterial3D.new()
 	mat.albedo_texture = load("res://assets/textures/terrain_grass_diff.jpg")
-	mat.albedo_color = Color(0.66, 0.78, 0.58)
+	mat.albedo_color = Color(0.50, 0.72, 0.46)   # 遠山也要是綠的，不是乾草色
 	mat.uv1_triplanar = true
 	mat.uv1_scale = Vector3(0.1, 0.1, 0.1)
 	mat.roughness = 1.0
@@ -484,10 +515,26 @@ func pond_carve(cx: float, cz: float, r: float, depth: float, x: float, z: float
 	var t := clampf(d / (rr2 * 1.35), 0.0, 1.0)
 	return -depth * (0.5 + 0.5 * cos(t * PI))
 
+## 水線半徑：水面是一個平面，岸線就是「地形剛好等於水面高度」的那一圈。
+## pond_carve 的剖面是 -depth*(0.5+0.5*cos(t*PI))，t = d/(r*1.35)。
+## 令它等於 -sink 解出 t，就是水線落在碗的哪個位置。
+## 不解這條式子的話（v7 直接拿 r 當水面半徑），水面外圈會鋪到還沒挖夠深的
+## 地方 —— 體檢量到庭池有 14% 的水面埋在土裡。
+func pond_shore_r(r: float, sink: float, carve_depth: float) -> float:
+	if carve_depth <= 0.0:
+		return r
+	var c := clampf(2.0 * sink / carve_depth - 1.0, -1.0, 1.0)
+	var t := acos(c) / PI
+	# 再往內縮 4%：地形基準高度在池面上本來就有起伏，留一點餘裕
+	return r * 1.35 * t * 0.96
+
 ## 池水面：扇形網格，頂點色 R = 靠岸程度（shader 用來做淺灘泡沫）
+## carve_depth 傳 pond_carve 用的深度，水面半徑就會自動落在真正的水線上。
 func pond_water(out_dir: String, cx: float, cz: float, r: float, sink: float,
-		bank_y_fn: Callable, name := "Pond", wobble := 0.0, rings := 4, seg := 28) -> MeshInstance3D:
+		bank_y_fn: Callable, name := "Pond", wobble := 0.0, rings := 4, seg := 28,
+		carve_depth := 0.0) -> MeshInstance3D:
 	var y: float = float(bank_y_fn.call(cx, cz)) - sink
+	r = pond_shore_r(r, sink, carve_depth)
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var pt := func(ri: int, si: int) -> Vector3:

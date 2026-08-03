@@ -64,8 +64,12 @@ const BRIDGE := Vector2(221.0, 30.0)
 # ── 池塘（兩種：稗田邸的石組庭池 + 村西的自然池） ──
 const GARDEN_POND := Vector2(-80.0, 10.0)      # 稗田邸內庭（block -78,2 的南側）
 const GARDEN_POND_R := 6.4
+const GARDEN_POND_DEPTH := 1.7                 # 挖多深（碗底）
+const GARDEN_POND_SINK := 0.55                 # 水面比岸低多少
 const NATURE_POND := Vector2(-140.0, 150.0)    # 村西南的自然池
 const NATURE_POND_R := 15.0
+const NATURE_POND_DEPTH := 2.4
+const NATURE_POND_SINK := 0.75
 
 ## 街區用途（依 THBWiki 設施清單配置）
 const BLOCK_KIND := {
@@ -79,6 +83,9 @@ var lib: Lib
 var _nh: FastNoiseLite
 var _n2: FastNoiseLite
 var _rects: Array = []
+## 門面清單（Frontage）：每筆 { pos: Vector2 世界座標, dir: Vector2 朝外方向,
+## shop: bool, width: float, ground: float }。地板裝飾靠這份清單對齊門口。
+var _frontages: Array = []
 
 func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
 	var ab := b - a
@@ -122,8 +129,8 @@ func height_at(x: float, z: float) -> float:
 	var h := bank_h(x, z)
 	h += lib.river_carve(RIVER, RIVER_HALF, RIVER_DEPTH, x, z)
 	h += lib.river_carve(CANAL, CANAL_HALF, CANAL_DEPTH, x, z)
-	h += lib.pond_carve(GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, 1.7, x, z)
-	return h + lib.pond_carve(NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, 2.4, x, z, 0.22)
+	h += lib.pond_carve(GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, GARDEN_POND_DEPTH, x, z)
+	return h + lib.pond_carve(NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, NATURE_POND_DEPTH, x, z, 0.22)
 
 func mask_at(x: float, z: float) -> Color:
 	var info := _path_info(x, z)
@@ -154,7 +161,8 @@ func _init() -> void:
 	lib = Lib.new()
 	lib.setup(root, 20260810)
 
-	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble")   # 街道鋪石板
+	# 街道鋪石板；草地壓黃補綠（使用者回報「村內草地偏黃」）
+	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble", Color(0.60, 0.94, 0.55))
 	lib.boundary(HALF - 2.0)
 	lib.river_water(OUT_DIR, RIVER, RIVER_HALF, RIVER_DEPTH * 0.35, bank_h)
 	# 水色照參考圖：飽和的藍綠，不是淡青
@@ -163,8 +171,10 @@ func _init() -> void:
 	cm.set_shader_parameter("deep_color", Color(0.06, 0.24, 0.32))
 	cm.set_shader_parameter("shallow_color", Color(0.16, 0.44, 0.50))
 	cm.set_shader_parameter("bank_scale", 0.55)
-	lib.pond_water(OUT_DIR, GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, 0.55, bank_h, "庭池")
-	lib.pond_water(OUT_DIR, NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, 0.75, bank_h, "自然池", 0.22)
+	lib.pond_water(OUT_DIR, GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, GARDEN_POND_SINK, bank_h,
+		"庭池", 0.0, 4, 28, GARDEN_POND_DEPTH)
+	lib.pond_water(OUT_DIR, NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, NATURE_POND_SINK, bank_h,
+		"自然池", 0.22, 4, 28, NATURE_POND_DEPTH)
 	_build_blocks()
 	_build_bridge()
 	_build_canal_bridges()
@@ -206,13 +216,32 @@ func _cells(cx: float, cz: float, hw: float, hd: float) -> Array:
 			out.append(Vector2i(i, j))
 	return out
 
-func _claim(cx: float, cz: float, w: float, d: float) -> void:
+## 回傳這塊地在 _rects 裡的索引 —— 店前鋪面要能「忽略自己那棟房子」
+func _claim(cx: float, cz: float, w: float, d: float) -> int:
 	var idx := _rects.size()
 	_rects.append([cx, cz, w, d])
 	for c in _cells(cx, cz, w * 0.5, d * 0.5):
 		if not _grid.has(c):
 			_grid[c] = []
 		_grid[c].append(idx)
+	return idx
+
+## 店前鋪面專用的空地判定：
+## 不能用 _free —— 它會擋掉「離街 0.6m 內」與「壓到自家地權」，
+## 而鋪面本來就該貼著街緣、就該疊在自家門口那塊地上。
+func _free_for_apron(cx: float, cz: float, w: float, d: float, own: int) -> bool:
+	var hw := w * 0.5
+	var hd := d * 0.5
+	for c in _cells(cx, cz, hw, hd):
+		if not _grid.has(c):
+			continue
+		for idx in _grid[c]:
+			if idx == own:
+				continue
+			var r: Array = _rects[idx]
+			if absf(cx - r[0]) < (hw + r[2] * 0.5) and absf(cz - r[1]) < (hd + r[3] * 0.5):
+				return false
+	return true
 
 func _free(cx: float, cz: float, w: float, d: float, margin := 0.6) -> bool:
 	var hw := w * 0.5 + margin
@@ -225,6 +254,12 @@ func _free(cx: float, cz: float, w: float, d: float, margin := 0.6) -> bool:
 	if lib.poly_dist(RIVER, cx, cz) < RIVER_HALF * 1.9:
 		return false
 	if lib.poly_dist(CANAL, cx, cz) < CANAL_HALF * 2.4 + maxf(hw, hd) * 0.5:
+		return false
+	# 池塘：v7 的 _free 只認得河與水路，於是自然池邊蓋了一棟陷進碗裡 2.8m 的長屋。
+	# 池的開挖半徑是 R*1.35，再留一點岸。
+	if Vector2(cx - GARDEN_POND.x, cz - GARDEN_POND.y).length() < GARDEN_POND_R * 1.45 + maxf(hw, hd):
+		return false
+	if Vector2(cx - NATURE_POND.x, cz - NATURE_POND.y).length() < NATURE_POND_R * 1.45 + maxf(hw, hd):
 		return false
 	var seen := {}
 	for c in _cells(cx, cz, hw, hd):
@@ -255,7 +290,9 @@ func _collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
 func _mat(key: String) -> StandardMaterial3D:
 	match key:
 		"kawara": return lib.pbr("kawara", "roof_kawara", 0.22, Color(0.8, 0.84, 0.92))
-		"thatch": return lib.pbr("thatch", "roof_thatch", 0.3, Color(0.95, 0.9, 0.78))
+		# 茅葺：沒有專用貼圖組，借草地那張當纖維紋理，壓成乾稻草色。
+		# （原本指到不存在的 roof_thatch，整片茅屋頂是死白的）
+		"thatch": return lib.pbr("thatch", "terrain_grass", 1.1, Color(0.66, 0.54, 0.36))
 		"plaster": return lib.pbr("plaster", "plaster", 0.4)
 		"mud": return lib.pbr("mud_wall", "plaster", 0.5, Color(0.80, 0.72, 0.58))
 		"dark": return lib.pbr("dark_wood", "dark_wood", 0.45)
@@ -263,21 +300,49 @@ func _mat(key: String) -> StandardMaterial3D:
 		"stone": return lib.pbr("stone", "stone_wall", 0.30)
 	return lib.pbr("plaster", "plaster", 0.4)
 
+## 擺建物時該看到的地面高度：實際地面，但水面以下不算數。
+## 兩個坑各踩過一次：
+##   拿 height_at → 稗田邸的院子裡有庭池，最低點是池底，整棟宅子沉 1.7m；
+##   拿 bank_h（完全不開挖）→ 水路旁的土塀量到未開挖的岸高，整段浮 0.9m。
+## 正解是「河床不算、但岸坡算」——水裡的取樣點一律當成水面高度。
+func _ground_sample(x: float, z: float) -> float:
+	var y := height_at(x, z)
+	var surf := -INF
+	var rd := lib.poly_dist(RIVER, x, z)
+	if rd < RIVER_HALF:
+		surf = maxf(surf, bank_h(x, z) - RIVER_DEPTH * 0.35)
+	var cd := lib.poly_dist(CANAL, x, z)
+	if cd < CANAL_HALF:
+		surf = maxf(surf, bank_h(x, z) - CANAL_DEPTH * 0.35)
+	if Vector2(x - GARDEN_POND.x, z - GARDEN_POND.y).length() < GARDEN_POND_R:
+		surf = maxf(surf, bank_h(x, z) - GARDEN_POND_SINK)
+	if Vector2(x - NATURE_POND.x, z - NATURE_POND.y).length() < NATURE_POND_R:
+		surf = maxf(surf, bank_h(x, z) - NATURE_POND_SINK)
+	return maxf(y, surf)
+
 ## 建物腳下的地面高度：取涵蓋範圍內最低點（只取中心的話，一端會浮空）
 ## 回傳 [最低高度, 高差] —— 高差交給基石往下埋掉。
 func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
 	var lo := INF
 	var hi := -INF
-	for ox in [-0.5, 0.0, 0.5]:
-		for oz in [-0.5, 0.0, 0.5]:
-			var y := height_at(cx + ox * w, cz + oz * d)
+	# 取樣密度跟尺寸走：約每 4m 一點。3×3 對 40m 長的土塀來說太稀，
+	# 中段有個坑就整段浮空（體檢抓到的 塀全_2 就是這樣來的）。
+	var nx := clampi(int(ceil(w / 4.0)) + 1, 3, 9)
+	var nz := clampi(int(ceil(d / 4.0)) + 1, 3, 9)
+	for i in nx:
+		for j in nz:
+			var ox := float(i) / float(nx - 1) - 0.5
+			var oz := float(j) / float(nz - 1) - 0.5
+			var y := _ground_sample(cx + ox * w, cz + oz * d)
 			lo = minf(lo, y)
 			hi = maxf(hi, y)
 	return [lo, hi - lo]
 
 ## 長屋：街區周邊的長條建築。ridge_along_x = 屋脊沿 x 軸（南北向的牆用）
+## flip = 立面轉 180 度。v7 的立面永遠朝本地 +z，於是街區北側與西側的長屋
+## 「玄關開向自家中庭」—— 這也是店前鋪面永遠對不齊門口的根本原因。
 func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float, depth: float,
-		ridge_along_x: bool, storey := 1, roof := "kawara") -> void:
+		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false) -> void:
 	var wall := _mat("plaster") if lib.rand() < 0.6 else _mat("mud")
 	var dark := _mat("dark")
 	var stone := _mat("stone")
@@ -286,8 +351,10 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var gu := _ground_under(cx, cz, length if ridge_along_x else depth, depth if ridge_along_x else length)
 	var g := Node3D.new()
 	g.position = Vector3(cx, gu[0], cz)          # 站在最低點，不會有一端浮空
-	if not ridge_along_x:
-		g.rotation.y = PI / 2.0
+	var yaw := 0.0 if ridge_along_x else PI / 2.0
+	if flip:
+		yaw += PI
+	g.rotation.y = yaw
 	lib.add(parent, g, name)
 	# 本體（本地座標一律「長邊沿 x」，靠 rotation 轉向）
 	# 基石往下加深「高差 + 0.4」，把坡度吃掉（v6 的建築離地就是缺這段）
@@ -302,6 +369,13 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var bw := length / float(bays)
 	var door_bay := int(lib.rand() * float(bays))
 	var is_shop := lib.rand() < 0.55
+	# ── 門面（Frontage）：把玄關的世界座標與朝向登記出去 ──
+	# 有了這個，店前鋪面／飛石／樽桶才能真的擺在門口，而不是沿街亂撒。
+	var door_lx := -length * 0.5 + (float(door_bay) + 0.5) * bw
+	var cy := cos(yaw)
+	var sy := sin(yaw)
+	var out_dir := Vector2(sy, cy)                                   # 本地 +z 的世界方向
+	var door_w := Vector2(cx + door_lx * cy + fz2 * sy, cz - door_lx * sy + fz2 * cy)
 	for i in bays + 1:
 		var px: float = -length * 0.5 + float(i) * bw
 		lib.box(g, "通柱_%d" % i, Vector3(0.22, h, 0.24), dark, Vector3(px, 0.32 + h * 0.5, fz2 + 0.03))
@@ -378,10 +452,12 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var pitch := 0.5 if roof == "kawara" else 0.68
 	lib.gable_roof(g, 0.32 + h, length + 0.9, depth + 1.5, pitch, thick, roof_m, wall)
 	_collide(g, Vector3(length + 0.4, h + 2.0, depth + 0.4))
-	if ridge_along_x:
-		_claim(cx, cz, length + 1.0, depth + 1.6)
-	else:
-		_claim(cx, cz, depth + 1.6, length + 1.0)
+	var own := _claim(cx, cz, length + 1.0, depth + 1.6) if ridge_along_x \
+		else _claim(cx, cz, depth + 1.6, length + 1.0)
+	_frontages.append({
+		"pos": door_w, "dir": out_dir, "shop": is_shop,
+		"width": minf(bw, 3.2), "ground": float(gu[0]), "own": own,
+	})
 
 ## 土塀：街區外圍的圍牆（帶瓦冠）
 func _wall_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
@@ -441,7 +517,8 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 			if _free(cx, cz, length if along_x else depth, depth if along_x else length, 0.2):
 				var storey := 2 if lib.rand() < 0.3 else 1
 				var roof := "kawara" if lib.rand() < 0.72 else "thatch"
-				_longhouse(parent, "長屋_%d" % side, cx, cz, length, depth, along_x, storey, roof)
+				# 立面朝街：北側／西側要轉 180 度，否則玄關開向中庭
+				_longhouse(parent, "長屋_%d" % side, cx, cz, length, depth, along_x, storey, roof, sgn < 0.0)
 				n += 1
 				# 兩端補土塀
 				for e in [-1.0, 1.0]:
@@ -465,7 +542,7 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 		var iz := bz + lib.rr(-11.0, 11.0)
 		if lib.rand() < 0.55 and _free(ix, iz, 11.0, 7.0, 0.5):
 			_longhouse(parent, "離れ_%d" % k, ix, iz, lib.rr(8.0, 11.0), lib.rr(5.5, 6.8),
-				lib.rand() < 0.5, 1, "kawara" if lib.rand() < 0.5 else "thatch")
+				lib.rand() < 0.5, 1, "kawara" if lib.rand() < 0.5 else "thatch", lib.rand() < 0.5)
 			n += 1
 	# 內庭：土藏（白牆倉庫）
 	if lib.rand() < 0.6:
@@ -545,17 +622,22 @@ func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
 
 ## 稗田邸：土塀圍院 + 表門 + 主屋 + 長廊 + 庭園水池與楓樹（THBWiki 考據）
 func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
+	# 站在整塊地的最低點：v7 用中心點高度，體檢量出主屋離地 1.68m
+	var gu := _ground_under(bx, bz, BLOCK_W, BLOCK_D)
+	var spread: float = float(gu[1])
 	var g := Node3D.new()
-	g.position = Vector3(bx, height_at(bx, bz), bz)
+	g.position = Vector3(bx, gu[0], bz)
 	lib.add(parent, g, "稗田邸")
 	var hw := BLOCK_W * 0.5 - 1.0
 	var hd := BLOCK_D * 0.5 - 1.0
 	# 圍牆（南面留門）
 	for w in [[0.0, -hd, hw * 2.0, true], [-hw, 0.0, hd * 2.0, false], [hw, 0.0, hd * 2.0, false],
 			[-hw * 0.62, hd, hw * 0.76, true], [hw * 0.62, hd, hw * 0.76, true]]:
+		# 牆身往下加深「高差 + 0.3」，坡地上才不會有一段懸空
+		var wfoot := spread + 0.3
 		lib.box(g, "土塀_%d_%d" % [int(w[0]), int(w[1])],
-			Vector3(w[2] if w[3] else 0.36, 2.2, 0.36 if w[3] else w[2]), _mat("mud"),
-			Vector3(w[0], 1.1, w[1]))
+			Vector3(w[2] if w[3] else 0.36, 2.2 + wfoot, 0.36 if w[3] else w[2]), _mat("mud"),
+			Vector3(w[0], 1.1 - wfoot * 0.5, w[1]))
 		lib.box(g, "塀瓦_%d_%d" % [int(w[0]), int(w[1])],
 			Vector3((w[2] + 0.2) if w[3] else 0.62, 0.15, 0.62 if w[3] else (w[2] + 0.2)), _mat("kawara"),
 			Vector3(w[0], 2.28, w[1]))
@@ -566,7 +648,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	lib.box(g, "門樑", Vector3(6.0, 0.45, 0.7), _mat("dark"), Vector3(0, 3.3, hd))
 	lib.box(g, "門屋根", Vector3(7.2, 0.24, 2.0), _mat("kawara"), Vector3(0, 3.7, hd))
 	# 主屋
-	lib.box(g, "主屋基壇", Vector3(19.0, 0.55, 13.0), _mat("stone"), Vector3(-3.0, 0.28, -7.0))
+	var hfoot := spread + 0.4
+	lib.box(g, "主屋基壇", Vector3(19.0, 0.55 + hfoot, 13.0), _mat("stone"), Vector3(-3.0, 0.28 - hfoot * 0.5, -7.0))
 	lib.box(g, "主屋", Vector3(17.5, 4.0, 11.5), _mat("plaster"), Vector3(-3.0, 2.55, -7.0))
 	lib.box(g, "緣側", Vector3(18.4, 0.26, 2.0), _mat("wood"), Vector3(-3.0, 0.68, -0.8))
 	lib.gable_roof(g, 4.55, 20.0, 14.0, 0.5, 0.32, _mat("kawara"), _mat("plaster"), Vector3(-3.0, 0, -7.0))
@@ -585,23 +668,67 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 庭園：石組庭池（水面在 lib.pond_water，這裡只做石砌護岸與添景）
 	# 池心在 GARDEN_POND（世界座標），換算成這個節點的本地座標
 	var pl := Vector3(GARDEN_POND.x - bx, 0.0, GARDEN_POND.y - bz)
-	for i in 20:                                   # 護岸：Blender 岩石，大小不一、半埋
-		var a := float(i) / 20.0 * TAU + lib.rr(-0.12, 0.12)
-		var rr3 := GARDEN_POND_R * (1.02 + lib.rr(0.0, 0.16))
-		var sc := lib.rr(0.45, 1.1)
-		var rk := MeshInstance3D.new()
-		rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)])
-		rk.position = pl + Vector3(cos(a) * rr3, -sc * lib.rr(0.2, 0.5), sin(a) * rr3)
-		rk.scale = Vector3(sc * lib.rr(0.8, 1.3), sc * lib.rr(0.7, 1.1), sc * lib.rr(0.8, 1.3))
-		rk.rotation = Vector3(lib.rr(-0.3, 0.3), lib.rr(0.0, TAU), lib.rr(-0.3, 0.3))
-		lib.add(g, rk, "護岸石_%d" % i)
+	# 護岸石組：v7 是 20 顆等角度繞一圈，遠看就是一條石頭項鍊。
+	# 日式庭園的石組是「數顆一群、群與群之間留白」，留白處鋪州濱（小卵石）。
+	var shore := lib.pond_shore_r(GARDEN_POND_R, GARDEN_POND_SINK, GARDEN_POND_DEPTH)
+	var moss_m := lib.rock_mat()
+	# 石頭要坐在**自己腳下**的地面上。這棟宅子的原點是整塊地的基準高度，
+	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
+	var rock_y := func(wx: float, wz: float, sink: float) -> float:
+		return height_at(wx, wz) - g.position.y - sink
+	# 掃滿一整圈：起點隨機、但走的總角度是 TAU（v8 初版寫成 while ang < TAU，
+	# 起點若落在 5.5 rad 就只鋪了一小段，池邊等於光禿禿的）
+	var ang := lib.rr(0.0, TAU)
+	var swept := 0.0
+	var rk_i := 0
+	while swept < TAU:
+		var group := 2 + int(lib.rand() * 3.0)      # 一組 2~4 顆
+		var ga := ang
+		for k in group:
+			var a := ga + float(k) * lib.rr(0.10, 0.20)
+			var sc: float = lib.rr(0.5, 1.25) * (1.25 if k == 0 else 0.8)   # 主石 + 添石
+			var rr3: float = shore * lib.rr(0.99, 1.14)
+			var rk := MeshInstance3D.new()
+			rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+			var wx: float = bx + pl.x + cos(a) * rr3
+			var wz: float = bz + pl.z + sin(a) * rr3
+			rk.position = Vector3(pl.x + cos(a) * rr3,
+				rock_y.call(wx, wz, sc * lib.rr(0.25, 0.55)), pl.z + sin(a) * rr3)
+			rk.scale = Vector3(sc * lib.rr(0.8, 1.4), sc * lib.rr(0.6, 1.1), sc * lib.rr(0.8, 1.4))
+			rk.rotation = Vector3(lib.rr(-0.35, 0.35), lib.rr(0.0, TAU), lib.rr(-0.35, 0.35))
+			lib.add(g, rk, "護岸石_%d" % rk_i)
+			rk_i += 1
+			swept += a - ang
+			ang = a
+		# 留白：這段岸沒有大石，改鋪一排半埋的小卵石（州濱）
+		var gap: float = lib.rr(0.35, 0.95)
+		var pebbles := int(gap * 9.0)
+		for k2 in pebbles:
+			var a3 := ang + gap * (float(k2) + 0.5) / float(maxi(pebbles, 1)) + lib.rr(-0.05, 0.05)
+			var sc2 := lib.rr(0.14, 0.30)
+			var pb := MeshInstance3D.new()
+			pb.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+			var pr: float = shore * lib.rr(1.0, 1.10)
+			pb.position = Vector3(pl.x + cos(a3) * pr,
+				rock_y.call(bx + pl.x + cos(a3) * pr, bz + pl.z + sin(a3) * pr, sc2 * 0.5),
+				pl.z + sin(a3) * pr)
+			pb.scale = Vector3(sc2 * 1.3, sc2 * 0.55, sc2 * 1.3)
+			pb.rotation.y = lib.rr(0.0, TAU)
+			lib.add(g, pb, "州濱_%d" % rk_i)
+			rk_i += 1
+		ang += gap
+		swept += gap
+	print("garden pond rocks: ", rk_i)
 	for i in 3:                                    # 池中的三尊石組
 		var a2 := float(i) / 3.0 * TAU + 0.7
-		var d2 := GARDEN_POND_R * lib.rr(0.25, 0.5)
+		var d2: float = shore * lib.rr(0.25, 0.5)
 		var sc3 := lib.rr(0.6, 1.1)
 		var rk3 := MeshInstance3D.new()
-		rk3.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)])
-		rk3.position = pl + Vector3(cos(a2) * d2, -0.6, sin(a2) * d2)
+		rk3.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+		# 池中立石：從池底長上來，露出水面一截
+		rk3.position = Vector3(pl.x + cos(a2) * d2,
+			rock_y.call(bx + pl.x + cos(a2) * d2, bz + pl.z + sin(a2) * d2, -sc3 * 0.55),
+			pl.z + sin(a2) * d2)
 		rk3.scale = Vector3(sc3 * 0.8, sc3 * 1.7, sc3 * 0.8)
 		rk3.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, rk3, "立石_%d" % i)
@@ -630,15 +757,21 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 
 ## 足洗邸：荒廢的宅子（傳說中的妖怪宅）—— 土塀有缺口、屋頂塌一角
 func _blk_ashiarai(parent: Node, bx: float, bz: float) -> void:
+	var gu := _ground_under(bx, bz, BLOCK_W, BLOCK_D)   # 崩れ塀鋪到街區邊，footprint 要一起算
+	var spread: float = float(gu[1])
 	var g := Node3D.new()
-	g.position = Vector3(bx, height_at(bx, bz), bz)
+	g.position = Vector3(bx, gu[0], bz)
 	lib.add(parent, g, "足洗邸")
 	var hw := BLOCK_W * 0.5 - 2.0
 	var hd := BLOCK_D * 0.5 - 2.0
 	for w in [[0.0, -hd, hw * 1.4, true], [-hw, -6.0, hd * 0.9, false], [hw, 4.0, hd * 0.8, false]]:
-		lib.box(g, "崩れ塀_%d" % int(w[0]), Vector3(w[2] if w[3] else 0.36, lib.rr(1.2, 1.9), 0.36 if w[3] else w[2]),
-			_mat("mud"), Vector3(w[0], 0.8, w[1]))
-	lib.box(g, "母屋基壇", Vector3(16.0, 0.5, 12.0), _mat("stone"), Vector3(0, 0.25, -2.0))
+		var kh := lib.rr(1.2, 1.9)
+		var kfoot := spread + 0.4                  # 牆腳埋進坡裡，否則整段浮著
+		lib.box(g, "崩れ塀_%d" % int(w[0]),
+			Vector3(w[2] if w[3] else 0.36, kh + kfoot, 0.36 if w[3] else w[2]),
+			_mat("mud"), Vector3(w[0], kh * 0.5 - kfoot * 0.5, w[1]))
+	var afoot := spread + 0.4
+	lib.box(g, "母屋基壇", Vector3(16.0, 0.5 + afoot, 12.0), _mat("stone"), Vector3(0, 0.25 - afoot * 0.5, -2.0))
 	lib.box(g, "母屋", Vector3(14.5, 3.6, 10.5), _mat("dark"), Vector3(0, 2.3, -2.0))
 	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _mat("thatch"), _mat("dark"), Vector3(0, 0, -2.0))
 	_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
@@ -726,8 +859,9 @@ func _blk_market(parent: Node, bx: float, bz: float) -> void:
 func _blk_tower(parent: Node, bx: float, bz: float) -> void:
 	var dark := _mat("dark")
 	var wood := _mat("wood")
+	var tgu := _ground_under(bx, bz, 7.0, 7.0)
 	var f := Node3D.new()
-	f.position = Vector3(bx, height_at(bx, bz), bz)
+	f.position = Vector3(bx, tgu[0], bz)
 	lib.add(parent, f, "火見櫓")
 	for i in 4:
 		var sx := 1.0 if i % 2 == 0 else -1.0
@@ -922,15 +1056,17 @@ func _build_canal_banks() -> void:
 # ── 自然池：不規則水岸、大小不一半埋的苔石（使用者要的「挖坑填水」）──
 func _build_nature_pond() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "自然池畔")
-	var moss := lib.pbr("moss_rock", "cliff_rock", 0.28, Color(0.78, 0.84, 0.72))
+	var moss := lib.rock_mat()
 	var stone := _mat("stone")
 	# 岩石換成 Blender 產的不規則造型（v5 之前是方板，使用者直接點出來）
 	var rock_lists := [[], [], [], []]
+	# 岩石帶要落在真正的水線上（水面半徑 ≈ 0.84R，拿 R 排會全部離水一大圈）
+	var nshore := lib.pond_shore_r(NATURE_POND_R, NATURE_POND_SINK, NATURE_POND_DEPTH)
 	for i in 46:
 		var a := lib.rr(0.0, TAU)
 		# 岸線本身是不規則的（跟 pond_carve 的 wobble 同一條公式）
-		var rr4 := NATURE_POND_R * (1.0 + 0.22 * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
-		var d := rr4 * lib.rr(0.9, 1.3)
+		var rr4 := nshore * (1.0 + 0.22 * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
+		var d := rr4 * lib.rr(0.92, 1.22)
 		var px := NATURE_POND.x + cos(a) * d
 		var pz := NATURE_POND.y + sin(a) * d
 		var sc := lib.rr(0.5, 1.5)
@@ -941,7 +1077,7 @@ func _build_nature_pond() -> void:
 			Transform3D(basis, Vector3(px, height_at(px, pz) - sc * lib.rr(0.15, 0.4), pz)))
 	for i in 7:                                    # 水中的露頭石
 		var a2 := lib.rr(0.0, TAU)
-		var d2 := NATURE_POND_R * lib.rr(0.2, 0.6)
+		var d2: float = nshore * lib.rr(0.2, 0.6)
 		var px2 := NATURE_POND.x + cos(a2) * d2
 		var pz2 := NATURE_POND.y + sin(a2) * d2
 		var sc2 := lib.rr(0.6, 1.4)
@@ -952,7 +1088,7 @@ func _build_nature_pond() -> void:
 		if rock_lists[ri].is_empty():
 			continue
 		var rmm := MultiMeshInstance3D.new()
-		rmm.multimesh = lib.make_multimesh(lib.prop_mesh(Lib.ROCK_GLBS[ri]), rock_lists[ri], [],
+		rmm.multimesh = lib.make_multimesh(lib.prop_mesh(Lib.ROCK_GLBS[ri], moss), rock_lists[ri], [],
 			OUT_DIR + "gen/pond_rocks_%d.res" % ri)
 		lib.add(g, rmm, "岸石_%d" % ri)
 	_claim(NATURE_POND.x, NATURE_POND.y, NATURE_POND_R * 2.8, NATURE_POND_R * 2.8)
@@ -1061,65 +1197,54 @@ func _build_floor_decor() -> void:
 	var n_apron := 0
 	var n_step := 0
 	var n_gutter := 0
-	# 店門口的石板鋪面 + 飛石：沿主街與橫町，貼著街緣鋪
-	for st in [{ "axis": "z", "at": 0.0, "w": 11.0, "from": -230.0, "to": 230.0 },
-			{ "axis": "x", "at": 30.0, "w": 9.0, "from": -180.0, "to": 190.0 }]:
-		var pos: float = st.from
-		while pos < float(st.to):
-			pos += lib.rr(9.0, 17.0)
-			var side := 1.0 if lib.rand() < 0.5 else -1.0
-			var off := float(st.w) * 0.5 + lib.rr(1.4, 2.6)
-			var px: float = (side * off) if st.axis == "z" else pos
-			var pz: float = pos if st.axis == "z" else (30.0 + side * off)
-			# 店前鋪面本來就緊貼街緣，不能套「離街 0.6m」那條規則 ——
-			# 只檢查跟既有建物/物件的重疊
-			var busy := false
-			for c in _cells(px, pz, 2.6, 2.0):
-				if not _grid.has(c):
-					continue
-				var bucket2: Array = _grid[c]
-				for idx2 in bucket2:
-					var r2: Array = _rects[idx2]
-					if absf(px - r2[0]) < (2.6 + r2[2] * 0.5) and absf(pz - r2[1]) < (2.0 + r2[3] * 0.5):
-						busy = true
-						break
-				if busy:
-					break
-			if busy:
-				continue
-			var y := height_at(px, pz)
-			var ap := Node3D.new()
-			ap.position = Vector3(px, y, pz)
-			ap.rotation.y = 0.0 if st.axis == "z" else PI * 0.5
-			lib.add(g, ap, "店前鋪面_%d" % n_apron)
-			# 鋪面：3×2 塊石板，微微高於街面
-			for ix in 3:
-				for iz in 2:
-					var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.35, 0.12, 1.35), slab,
-						Vector3((float(ix) - 1.0) * 1.42, 0.06, (float(iz) - 0.5) * 1.42))
-					sl.rotation.y = lib.rr(-0.02, 0.02)
-			# 飛石：從鋪面往店門方向的不規則踏石
-			for k in 3:
-				var fx := lib.rr(-0.5, 0.5)
-				lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.7, 1.0), 0.14, lib.rr(0.6, 0.9)), stone,
-					Vector3(fx, 0.07, 1.9 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
-				n_step += 1
-			# 地面招牌與樽桶（標示這間店在賣什麼）
-			if lib.rand() < 0.6:
-				var brd := lib.box(ap, "立看板", Vector3(0.9, 1.3, 0.1), wood, Vector3(-2.1, 0.75, 0.6))
-				brd.rotation.y = lib.rr(-0.25, 0.25)
-				lib.box(ap, "看板腳", Vector3(1.0, 0.1, 0.5), dark, Vector3(-2.1, 0.12, 0.6))
-			if lib.rand() < 0.55:
-				for b in 2:
-					var bar := lib.cyl(ap, "樽_%d" % b, 0.34, 0.30, 0.72, wood,
-						Vector3(2.0 + float(b) * 0.78, 0.36, lib.rr(-0.3, 0.3)), 10)
-					lib.box(ap, "樽箍_%d" % b, Vector3(0.72, 0.07, 0.72), dark,
-						Vector3(bar.position.x, 0.52, bar.position.z))
-			if lib.rand() < 0.4:
-				lib.box(ap, "米俵", Vector3(1.1, 0.42, 0.5), lib.pbr("tawara", "roof_thatch", 0.5, Color(1.0, 0.95, 0.8)),
-					Vector3(2.4, 0.22, 1.6)).rotation.y = lib.rr(0.0, TAU)
-			_claim(px, pz, 5.4, 4.0)
-			n_apron += 1
+	# 店門口的石板鋪面 + 飛石：擺在**真正的玄關**前面。
+	# v7 是沿著主街每隔 9~17m 隨機撒一組，於是鋪面跟門口對不上 ——
+	# 那是因為當時建築不對外公布自己的門開在哪（缺 Frontage 這個概念）。
+	# 現在 _longhouse 會把每個玄關的世界座標與朝向登記進 _frontages。
+	for f in _frontages:
+		if not f.shop:
+			continue
+		var fp: Vector2 = f.pos
+		var fd: Vector2 = f.dir
+		# 只裝飾「開向街道」的店面：門口往外 6m 內要碰得到路
+		var reach: float = _path_info(fp.x + fd.x * 6.0, fp.y + fd.y * 6.0)[0]
+		if reach > 4.5:
+			continue
+		var cxy: Vector2 = fp + fd * 1.75            # 鋪面中心：門前一步半
+		if not _free_for_apron(cxy.x, cxy.y, 3.6, 3.0, int(f.own)):
+			continue
+		var ap := Node3D.new()
+		ap.position = Vector3(cxy.x, height_at(cxy.x, cxy.y), cxy.y)
+		ap.rotation.y = atan2(fd.x, fd.y)            # 本地 +z 對齊「朝街道」
+		lib.add(g, ap, "店前鋪面_%d" % n_apron)
+		# 鋪面：3×2 塊石板，微微高於街面
+		for ix in 3:
+			for iz in 2:
+				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.35, 0.12, 1.35), slab,
+					Vector3((float(ix) - 1.0) * 1.42, 0.06, (float(iz) - 0.5) * 1.42))
+				sl.rotation.y = lib.rr(-0.02, 0.02)
+		# 飛石：從鋪面繼續往街心走
+		for k in 3:
+			lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.7, 1.0), 0.14, lib.rr(0.6, 0.9)), stone,
+				Vector3(lib.rr(-0.5, 0.5), 0.07, 2.6 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
+			n_step += 1
+		# 立看板、樽桶、米俵擺在門的兩側，不擋動線
+		if lib.rand() < 0.6:
+			var brd := lib.box(ap, "立看板", Vector3(0.9, 1.3, 0.1), wood, Vector3(-2.1, 0.75, 0.1))
+			brd.rotation.y = lib.rr(-0.25, 0.25)
+			lib.box(ap, "看板腳", Vector3(1.0, 0.1, 0.5), dark, Vector3(-2.1, 0.12, 0.1))
+		if lib.rand() < 0.55:
+			for b in 2:
+				var bar := lib.cyl(ap, "樽_%d" % b, 0.34, 0.30, 0.72, wood,
+					Vector3(2.0 + float(b) * 0.78, 0.36, lib.rr(-0.5, 0.1)), 10)
+				lib.box(ap, "樽箍_%d" % b, Vector3(0.72, 0.07, 0.72), dark,
+					Vector3(bar.position.x, 0.52, bar.position.z))
+		if lib.rand() < 0.4:
+			lib.box(ap, "米俵", Vector3(1.1, 0.42, 0.5),
+				lib.pbr("tawara", "terrain_grass", 1.4, Color(0.82, 0.70, 0.46)),
+				Vector3(2.4, 0.22, 0.9)).rotation.y = lib.rr(0.0, TAU)
+		_claim(cxy.x, cxy.y, 4.2, 3.4)
+		n_apron += 1
 	# 石溝與溝蓋：沿本通兩側的排水溝
 	for side2 in [-1.0, 1.0]:
 		var gx: float = float(side2) * 6.2
@@ -1138,7 +1263,7 @@ func _build_floor_decor() -> void:
 				lib.box(gt, "溝蓋", Vector3(1.15, 0.14, 1.6), slab, Vector3(0, 0.04, 0))
 			z2 += seg_len
 			n_gutter += 1
-	print("floor decor: ", n_apron, " 店前鋪面 / ", n_step, " 飛石 / ", n_gutter, " 石溝節")
+	print("floor decor: ", n_apron, "/", _frontages.size(), " 店前鋪面 / ", n_step, " 飛石 / ", n_gutter, " 石溝節")
 
 # ── 生活痕跡（街邊） ──
 func _build_props() -> void:
@@ -1288,9 +1413,10 @@ func _build_trees() -> void:
 	print("trees: ", count)
 
 func _build_grass() -> void:
-	var tall := lib.tuft_mesh(7, 0.40, 0.20, Color(0.13, 0.22, 0.08), Color(0.38, 0.50, 0.20))
+	# 草色：v7 的葉尖 (0.38,0.50,0.20) 是橄欖色，配上偏乾的地形貼圖整片發黃
+	var tall := lib.tuft_mesh(7, 0.40, 0.20, Color(0.11, 0.21, 0.08), Color(0.29, 0.48, 0.18))
 	tall.surface_set_material(0, lib.grass_wind_mat(0.10))
-	var flower := lib.tuft_mesh(5, 0.34, 0.16, Color(0.14, 0.23, 0.09), Color(0.36, 0.48, 0.20), true)
+	var flower := lib.tuft_mesh(5, 0.34, 0.16, Color(0.12, 0.22, 0.09), Color(0.28, 0.46, 0.18), true)
 	flower.surface_set_material(0, lib.grass_wind_mat(0.08))
 	var rice := lib.tuft_mesh(5, 0.32, 0.10, Color(0.20, 0.34, 0.12), Color(0.45, 0.62, 0.22))
 	rice.surface_set_material(0, lib.grass_wind_mat(0.07))
@@ -1348,8 +1474,8 @@ func _build_env() -> void:
 	var env := Environment.new()
 	var sky_mat := ProceduralSkyMaterial.new()
 	sky_mat.sky_top_color = Color(0.36, 0.54, 0.82)
-	sky_mat.sky_horizon_color = Color(0.84, 0.83, 0.74)
-	sky_mat.ground_horizon_color = Color(0.72, 0.7, 0.62)
+	sky_mat.sky_horizon_color = Color(0.76, 0.82, 0.82)
+	sky_mat.ground_horizon_color = Color(0.62, 0.66, 0.60)
 	var sky := Sky.new()
 	sky.sky_material = sky_mat
 	env.background_mode = Environment.BG_SKY
@@ -1367,7 +1493,7 @@ func _build_env() -> void:
 	env.adjustment_contrast = 1.08
 	env.adjustment_saturation = 1.12
 	env.fog_enabled = true
-	env.fog_light_color = Color(0.78, 0.78, 0.7)
+	env.fog_light_color = Color(0.72, 0.78, 0.78)
 	env.fog_density = 0.0016
 	env.fog_sky_affect = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
@@ -1378,7 +1504,7 @@ func _build_env() -> void:
 	env.ssr_enabled = true
 	env.volumetric_fog_enabled = true
 	env.volumetric_fog_density = 0.012
-	env.volumetric_fog_albedo = Color(0.84, 0.85, 0.78)
+	env.volumetric_fog_albedo = Color(0.78, 0.83, 0.83)
 	var we := WorldEnvironment.new()
 	we.environment = env
 	lib.add(lib.root, we, "WorldEnvironment")
