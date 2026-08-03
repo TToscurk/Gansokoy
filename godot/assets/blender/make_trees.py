@@ -126,7 +126,7 @@ def tree_round(name, seed, h=3.2, spread=1.0):
     join_and_export(objs, name)
 
 
-def tree_pine(name, seed, h=2.2, layers=None):
+def tree_pine(name, seed, h=3.2, layers=None):
     clear_scene()
     rng = random.Random(seed)
     layers = layers or TIERS_PINE
@@ -158,9 +158,9 @@ def tree_pine(name, seed, h=2.2, layers=None):
     join_and_export(objs, name)
 
 
-tree_round("tree_round_a", 11)
-tree_round("tree_round_b", 47)
-tree_round("tree_round_c", 88, h=4.6, spread=0.72)      # 瘦高型，打破天際線
+tree_round("tree_round_a", 11, h=4.6)
+tree_round("tree_round_b", 47, h=5.0)
+tree_round("tree_round_c", 88, h=6.4, spread=0.72)      # 瘦高型，打破天際線
 tree_pine("tree_pine_a", 23)
-tree_pine("tree_pine_b", 61, h=3.4, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
+tree_pine("tree_pine_b", 61, h=4.6, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
 print("done")
