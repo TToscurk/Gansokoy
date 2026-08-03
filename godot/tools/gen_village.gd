@@ -170,6 +170,8 @@ func _init() -> void:
 	_build_canal_bridges()
 	_build_canal_banks()
 	_build_nature_pond()
+	_build_fauna()
+	_build_floor_decor()
 	_build_props()
 	_build_gates()
 	_build_lamps()
@@ -566,21 +568,26 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 庭園：石組庭池（水面在 lib.pond_water，這裡只做石砌護岸與添景）
 	# 池心在 GARDEN_POND（世界座標），換算成這個節點的本地座標
 	var pl := Vector3(GARDEN_POND.x - bx, 0.0, GARDEN_POND.y - bz)
-	for i in 16:                                   # 護岸：大小不一、半埋、傾斜的石
-		var a := float(i) / 16.0 * TAU + lib.rr(-0.1, 0.1)
-		var rr3 := GARDEN_POND_R * (1.02 + lib.rr(0.0, 0.14))
-		var sx := lib.rr(0.6, 1.5)
-		var sy := lib.rr(0.8, 1.9)
-		var rock := lib.box(g, "護岸石_%d" % i, Vector3(sx, sy, sx * lib.rr(0.6, 1.1)), _mat("stone"),
-			pl + Vector3(cos(a) * rr3, sy * 0.5 - lib.rr(0.5, 1.1), sin(a) * rr3))
-		rock.rotation = Vector3(lib.rr(-0.35, 0.35), lib.rr(0.0, TAU), lib.rr(-0.35, 0.35))
-	for i in 3:                                    # 池中的立石（三尊石組）
+	for i in 20:                                   # 護岸：Blender 岩石，大小不一、半埋
+		var a := float(i) / 20.0 * TAU + lib.rr(-0.12, 0.12)
+		var rr3 := GARDEN_POND_R * (1.02 + lib.rr(0.0, 0.16))
+		var sc := lib.rr(0.45, 1.1)
+		var rk := MeshInstance3D.new()
+		rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)])
+		rk.position = pl + Vector3(cos(a) * rr3, -sc * lib.rr(0.2, 0.5), sin(a) * rr3)
+		rk.scale = Vector3(sc * lib.rr(0.8, 1.3), sc * lib.rr(0.7, 1.1), sc * lib.rr(0.8, 1.3))
+		rk.rotation = Vector3(lib.rr(-0.3, 0.3), lib.rr(0.0, TAU), lib.rr(-0.3, 0.3))
+		lib.add(g, rk, "護岸石_%d" % i)
+	for i in 3:                                    # 池中的三尊石組
 		var a2 := float(i) / 3.0 * TAU + 0.7
 		var d2 := GARDEN_POND_R * lib.rr(0.25, 0.5)
-		var hh := lib.rr(0.9, 1.6)
-		var st3 := lib.box(g, "立石_%d" % i, Vector3(lib.rr(0.5, 0.9), hh, lib.rr(0.5, 0.8)), _mat("stone"),
-			pl + Vector3(cos(a2) * d2, hh * 0.5 - 1.2, sin(a2) * d2))
-		st3.rotation = Vector3(lib.rr(-0.12, 0.12), lib.rr(0.0, TAU), lib.rr(-0.12, 0.12))
+		var sc3 := lib.rr(0.6, 1.1)
+		var rk3 := MeshInstance3D.new()
+		rk3.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)])
+		rk3.position = pl + Vector3(cos(a2) * d2, -0.6, sin(a2) * d2)
+		rk3.scale = Vector3(sc3 * 0.8, sc3 * 1.7, sc3 * 0.8)
+		rk3.rotation.y = lib.rr(0.0, TAU)
+		lib.add(g, rk3, "立石_%d" % i)
 	# 沢渡り（踏石）與石橋板
 	for i in 4:
 		lib.box(g, "踏石_%d" % i, Vector3(0.9, 0.35, 0.8), _mat("stone"),
@@ -624,62 +631,23 @@ func _blk_ashiarai(parent: Node, bx: float, bz: float) -> void:
 func _blk_market(parent: Node, bx: float, bz: float) -> void:
 	var wood := _mat("wood")
 	var stone := _mat("stone")
-	# 龍神像（里的守護神・THBWiki 設施清單）
-	# v4 的版本只是「傾斜圓柱＋方塊頭」，看起來像石十字架 —— 使用者直接問
-	# 「這是什麼」。改成盤龍柱：龍身螺旋纏繞柱身、頭在頂端張口向天。
-	var d := Node3D.new()
-	d.position = Vector3(bx - 12.0, height_at(bx - 12.0, bz - 10.0), bz - 10.0)
-	lib.add(parent, d, "龍神像")
-	# 基壇（三層收分）
-	lib.box(d, "基壇下", Vector3(4.4, 0.5, 4.4), stone, Vector3(0, 0.25, 0))
-	lib.box(d, "基壇中", Vector3(3.6, 0.45, 3.6), stone, Vector3(0, 0.72, 0))
-	lib.box(d, "基壇上", Vector3(2.9, 0.4, 2.9), stone, Vector3(0, 1.15, 0))
-	for i in 4:                                    # 基壇四角的擬寶珠
-		var ca := float(i) / 4.0 * TAU + PI * 0.25
-		lib.cyl(d, "角珠_%d" % i, 0.0, 0.22, 0.4, stone,
-			Vector3(cos(ca) * 1.75, 1.55, sin(ca) * 1.75), 6)
-	# 柱身
-	lib.cyl(d, "石柱", 0.42, 0.55, 5.2, stone, Vector3(0, 3.95, 0), 10)
-	# 盤龍：螺旋纏繞的身體（一節一節的石雕）
-	var segs := 22
-	for i in segs:
-		var t := float(i) / float(segs)
-		var ang := t * TAU * 2.4                   # 繞柱兩圈半
-		var ry := 1.9 + t * 4.6                    # 由下往上盤
-		var rad := 0.72 - t * 0.12
-		var thick := 0.44 - t * 0.16               # 尾端漸細
-		var seg := lib.box(d, "龍身_%02d" % i, Vector3(0.62, thick, thick), stone,
-			Vector3(cos(ang) * rad, ry, sin(ang) * rad))
-		seg.rotation = Vector3(0, -ang, 0.55)
-		if i % 4 == 1:                             # 背鰭
-			lib.box(d, "背鰭_%02d" % i, Vector3(0.12, 0.34, 0.16), stone,
-				Vector3(cos(ang) * (rad + 0.16), ry + 0.26, sin(ang) * (rad + 0.16)))
-		if i % 6 == 3:                             # 爪
-			var claw := lib.box(d, "爪_%02d" % i, Vector3(0.5, 0.16, 0.16), stone,
-				Vector3(cos(ang) * (rad + 0.42), ry - 0.2, sin(ang) * (rad + 0.42)))
-			claw.rotation = Vector3(0, -ang, -0.4)
-	# 龍首：頂端張口向天（上顎 + 下顎 + 角 + 鬚）
-	var head := Node3D.new()
-	head.position = Vector3(0.35, 6.85, 0)
-	head.rotation = Vector3(0, 0.4, -0.55)
-	lib.add(d, head, "龍首")
-	lib.box(head, "頭", Vector3(1.25, 0.62, 0.72), stone, Vector3(0, 0, 0))
-	lib.box(head, "上顎", Vector3(0.85, 0.22, 0.5), stone, Vector3(0.9, 0.12, 0))
-	var jaw := lib.box(head, "下顎", Vector3(0.75, 0.2, 0.44), stone, Vector3(0.82, -0.3, 0))
-	jaw.rotation.z = -0.3
-	for sd in [-1, 1]:
-		var horn := lib.cyl(head, "角_%d" % (sd + 1), 0.04, 0.11, 0.9, stone,
-			Vector3(-0.35, 0.5, float(sd) * 0.26), 6)
-		horn.rotation = Vector3(float(sd) * 0.35, 0, -0.45)
-		lib.cyl(head, "鬚_%d" % (sd + 1), 0.03, 0.05, 0.7, stone,
-			Vector3(0.75, -0.18, float(sd) * 0.3), 5).rotation = Vector3(float(sd) * 0.5, 0, 0.9)
-		lib.box(head, "眼_%d" % (sd + 1), Vector3(0.18, 0.16, 0.1), stone,
-			Vector3(0.22, 0.18, float(sd) * 0.33))
-	# 注連繩（神體的標記）與供物台
-	lib.cyl(d, "注連繩", 0.62, 0.62, 0.18, lib.pbr("shimenawa", "roof_thatch", 0.6, Color(1.05, 1.0, 0.85)),
-		Vector3(0, 2.3, 0), 12)
-	lib.box(d, "供物台", Vector3(1.3, 0.5, 0.8), stone, Vector3(0, 1.6, 2.1))
-	_collide(d, Vector3(4.4, 7.5, 4.4))
+	# 龍神像（THBWiki 設施清單）—— Blender 雕的完整龍（曲面龍身、五爪、
+	# 鬃鰭、角鬚、龍珠、石柱與基壇），不再是方塊堆。
+	var dstat := MeshInstance3D.new()
+	dstat.mesh = lib.prop_mesh("res://assets/models/dragon_statue.glb", _mat("stone"))
+	dstat.position = Vector3(bx - 12.0, height_at(bx - 12.0, bz - 10.0), bz - 10.0)
+	dstat.rotation.y = 0.6
+	lib.add(parent, dstat, "龍神像")
+	var dbody := StaticBody3D.new()
+	dstat.add_child(dbody)
+	dbody.owner = lib.root
+	var dsh := CollisionShape3D.new()
+	var dbx := BoxShape3D.new()
+	dbx.size = Vector3(3.0, 7.6, 3.0)
+	dsh.shape = dbx
+	dsh.position = Vector3(0, 3.8, 0)
+	dbody.add_child(dsh)
+	dsh.owner = lib.root
 	_claim(bx - 12.0, bz - 10.0, 4.0, 4.0)
 	# 攤位群
 	var cloths := [Color(0.62, 0.3, 0.26), Color(0.28, 0.36, 0.52), Color(0.72, 0.6, 0.3), Color(0.34, 0.46, 0.32)]
@@ -938,28 +906,37 @@ func _build_nature_pond() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "自然池畔")
 	var moss := lib.pbr("moss_rock", "cliff_rock", 0.28, Color(0.78, 0.84, 0.72))
 	var stone := _mat("stone")
-	for i in 34:
+	# 岩石換成 Blender 產的不規則造型（v5 之前是方板，使用者直接點出來）
+	var rock_lists := [[], [], [], []]
+	for i in 46:
 		var a := lib.rr(0.0, TAU)
 		# 岸線本身是不規則的（跟 pond_carve 的 wobble 同一條公式）
 		var rr4 := NATURE_POND_R * (1.0 + 0.22 * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
-		var d := rr4 * lib.rr(0.92, 1.28)
+		var d := rr4 * lib.rr(0.9, 1.3)
 		var px := NATURE_POND.x + cos(a) * d
 		var pz := NATURE_POND.y + sin(a) * d
-		var sx := lib.rr(0.7, 2.2)
-		var sy := lib.rr(0.9, 2.6)
-		var rock := lib.box(g, "岸石_%02d" % i, Vector3(sx, sy, sx * lib.rr(0.6, 1.2)),
-			moss if lib.rand() < 0.6 else stone,
-			Vector3(px, height_at(px, pz) + sy * 0.5 - lib.rr(0.6, 1.5), pz))   # 半埋進土裡
-		rock.rotation = Vector3(lib.rr(-0.4, 0.4), lib.rr(0.0, TAU), lib.rr(-0.4, 0.4))
-	for i in 5:                                    # 水中的露頭石
+		var sc := lib.rr(0.5, 1.5)
+		var basis := Basis(Vector3.UP, lib.rand() * TAU).scaled(
+			Vector3(sc * lib.rr(0.8, 1.3), sc * lib.rr(0.6, 1.0), sc * lib.rr(0.8, 1.3)))
+		basis = basis.rotated(Vector3.RIGHT, lib.rr(-0.3, 0.3))
+		rock_lists[int(lib.rand() * 4.0)].append(
+			Transform3D(basis, Vector3(px, height_at(px, pz) - sc * lib.rr(0.15, 0.4), pz)))
+	for i in 7:                                    # 水中的露頭石
 		var a2 := lib.rr(0.0, TAU)
 		var d2 := NATURE_POND_R * lib.rr(0.2, 0.6)
 		var px2 := NATURE_POND.x + cos(a2) * d2
 		var pz2 := NATURE_POND.y + sin(a2) * d2
-		var sy2 := lib.rr(0.8, 1.8)
-		var r2 := lib.box(g, "露頭石_%d" % i, Vector3(lib.rr(0.7, 1.6), sy2, lib.rr(0.7, 1.4)), moss,
-			Vector3(px2, height_at(px2, pz2) + sy2 * 0.2, pz2))
-		r2.rotation = Vector3(lib.rr(-0.2, 0.2), lib.rr(0.0, TAU), lib.rr(-0.2, 0.2))
+		var sc2 := lib.rr(0.6, 1.4)
+		var b2 := Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(sc2, sc2 * 1.2, sc2))
+		rock_lists[int(lib.rand() * 4.0)].append(
+			Transform3D(b2, Vector3(px2, height_at(px2, pz2) + sc2 * 0.25, pz2)))
+	for ri in 4:
+		if rock_lists[ri].is_empty():
+			continue
+		var rmm := MultiMeshInstance3D.new()
+		rmm.multimesh = lib.make_multimesh(lib.prop_mesh(Lib.ROCK_GLBS[ri]), rock_lists[ri], [],
+			OUT_DIR + "gen/pond_rocks_%d.res" % ri)
+		lib.add(g, rmm, "岸石_%d" % ri)
 	_claim(NATURE_POND.x, NATURE_POND.y, NATURE_POND_R * 2.8, NATURE_POND_R * 2.8)
 	print("nature pond rocks: 39")
 
@@ -1003,6 +980,145 @@ func _build_canal_bridges() -> void:
 		shape.owner = lib.root
 		_claim(bx, bz, 4.5, span + 1.0)
 	print("canal bridges: ", CANAL_BRIDGES.size())
+
+# ── 水邊生態：游動的鴨、水下的鯉、岸邊的鷺鷥 ──
+func _build_fauna() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "Fauna")
+	g.set_script(load("res://scripts/fauna.gd"))
+	# 水路中心線交給 fauna.gd 當巡游路徑（水面高度 = 岸高 - sink）
+	var pts: Array[Vector2] = []
+	for p in CANAL:
+		pts.append(Vector2(p[0], p[1]))
+	var wy := bank_h(0.0, 85.0) - CANAL_DEPTH * 0.35
+	g.set("paths", [{ "pts": pts, "y": wy }])
+
+	var duck_mesh := lib.prop_mesh("res://assets/models/duck.glb")
+	var koi_mesh := lib.prop_mesh("res://assets/models/koi.glb")
+	for i in 9:                                    # 鴨（水面）
+		var d := MeshInstance3D.new()
+		d.mesh = duck_mesh
+		d.scale = Vector3.ONE * lib.rr(0.85, 1.15)
+		lib.add(g, d, "鴨_%d" % i)
+		d.set_meta("swim_kind", 0)
+		d.set_meta("swim_t", lib.rr(0.02, 0.95))
+		d.set_meta("swim_speed", lib.rr(0.006, 0.016))
+	for i in 14:                                   # 鯉（水下）
+		var k := MeshInstance3D.new()
+		k.mesh = koi_mesh
+		k.scale = Vector3.ONE * lib.rr(0.8, 1.4)
+		lib.add(g, k, "鯉_%d" % i)
+		k.set_meta("swim_kind", 1)
+		k.set_meta("swim_t", lib.rr(0.02, 0.95))
+		k.set_meta("swim_speed", lib.rr(0.010, 0.026))
+
+	# 鷺鷥：站在岸邊不動（單腳立姿是牠的招牌）
+	var heron_mesh := lib.prop_mesh("res://assets/models/heron.glb")
+	var placed := 0
+	var tries := 0
+	while placed < 5 and tries < 400:
+		tries += 1
+		var hx := lib.rr(-170.0, 180.0)
+		var side := 1.0 if lib.rand() < 0.5 else -1.0
+		var hz := 85.0 + side * (CANAL_HALF + lib.rr(0.6, 1.4))
+		if _path_info(hx, hz)[0] < 0.8:
+			continue
+		var h := MeshInstance3D.new()
+		h.mesh = heron_mesh
+		h.position = Vector3(hx, bank_h(hx, hz), hz)
+		h.rotation.y = lib.rr(0.0, TAU)
+		h.scale = Vector3.ONE * lib.rr(0.9, 1.15)
+		lib.add(g, h, "鷺鷥_%d" % placed)
+		placed += 1
+	print("fauna: 9 鴨 / 14 鯉 / ", placed, " 鷺鷥")
+
+# ── 地板裝飾：店門石板鋪面、飛石步道、石溝與溝蓋、地面招牌與樽桶 ──
+func _build_floor_decor() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "FloorDecor")
+	var stone := _mat("stone")
+	var slab := lib.pbr("slab", "stone_path", 0.35) if ResourceLoader.exists("res://assets/textures/stone_path_diff.jpg") else _mat("stone")
+	var wood := _mat("wood")
+	var dark := _mat("dark")
+	var n_apron := 0
+	var n_step := 0
+	var n_gutter := 0
+	# 店門口的石板鋪面 + 飛石：沿主街與橫町，貼著街緣鋪
+	for st in [{ "axis": "z", "at": 0.0, "w": 11.0, "from": -230.0, "to": 230.0 },
+			{ "axis": "x", "at": 30.0, "w": 9.0, "from": -180.0, "to": 190.0 }]:
+		var pos: float = st.from
+		while pos < float(st.to):
+			pos += lib.rr(9.0, 17.0)
+			var side := 1.0 if lib.rand() < 0.5 else -1.0
+			var off := float(st.w) * 0.5 + lib.rr(1.4, 2.6)
+			var px: float = (side * off) if st.axis == "z" else pos
+			var pz: float = pos if st.axis == "z" else (30.0 + side * off)
+			# 店前鋪面本來就緊貼街緣，不能套「離街 0.6m」那條規則 ——
+			# 只檢查跟既有建物/物件的重疊
+			var busy := false
+			for c in _cells(px, pz, 2.6, 2.0):
+				if not _grid.has(c):
+					continue
+				var bucket2: Array = _grid[c]
+				for idx2 in bucket2:
+					var r2: Array = _rects[idx2]
+					if absf(px - r2[0]) < (2.6 + r2[2] * 0.5) and absf(pz - r2[1]) < (2.0 + r2[3] * 0.5):
+						busy = true
+						break
+				if busy:
+					break
+			if busy:
+				continue
+			var y := height_at(px, pz)
+			var ap := Node3D.new()
+			ap.position = Vector3(px, y, pz)
+			ap.rotation.y = 0.0 if st.axis == "z" else PI * 0.5
+			lib.add(g, ap, "店前鋪面_%d" % n_apron)
+			# 鋪面：3×2 塊石板，微微高於街面
+			for ix in 3:
+				for iz in 2:
+					var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.35, 0.12, 1.35), slab,
+						Vector3((float(ix) - 1.0) * 1.42, 0.06, (float(iz) - 0.5) * 1.42))
+					sl.rotation.y = lib.rr(-0.02, 0.02)
+			# 飛石：從鋪面往店門方向的不規則踏石
+			for k in 3:
+				var fx := lib.rr(-0.5, 0.5)
+				lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.7, 1.0), 0.14, lib.rr(0.6, 0.9)), stone,
+					Vector3(fx, 0.07, 1.9 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
+				n_step += 1
+			# 地面招牌與樽桶（標示這間店在賣什麼）
+			if lib.rand() < 0.6:
+				var brd := lib.box(ap, "立看板", Vector3(0.9, 1.3, 0.1), wood, Vector3(-2.1, 0.75, 0.6))
+				brd.rotation.y = lib.rr(-0.25, 0.25)
+				lib.box(ap, "看板腳", Vector3(1.0, 0.1, 0.5), dark, Vector3(-2.1, 0.12, 0.6))
+			if lib.rand() < 0.55:
+				for b in 2:
+					var bar := lib.cyl(ap, "樽_%d" % b, 0.34, 0.30, 0.72, wood,
+						Vector3(2.0 + float(b) * 0.78, 0.36, lib.rr(-0.3, 0.3)), 10)
+					lib.box(ap, "樽箍_%d" % b, Vector3(0.72, 0.07, 0.72), dark,
+						Vector3(bar.position.x, 0.52, bar.position.z))
+			if lib.rand() < 0.4:
+				lib.box(ap, "米俵", Vector3(1.1, 0.42, 0.5), lib.pbr("tawara", "roof_thatch", 0.5, Color(1.0, 0.95, 0.8)),
+					Vector3(2.4, 0.22, 1.6)).rotation.y = lib.rr(0.0, TAU)
+			_claim(px, pz, 5.4, 4.0)
+			n_apron += 1
+	# 石溝與溝蓋：沿本通兩側的排水溝
+	for side2 in [-1.0, 1.0]:
+		var gx: float = float(side2) * 6.2
+		var z2 := -220.0
+		while z2 < 230.0:
+			var seg_len := 6.0
+			var y2 := height_at(gx, z2)
+			var gt := Node3D.new()
+			gt.position = Vector3(gx, y2, z2 + seg_len * 0.5)
+			lib.add(g, gt, "石溝_%d" % n_gutter)
+			for sd in [-1, 1]:                    # 溝壁
+				lib.box(gt, "溝壁_%d" % (sd + 1), Vector3(0.22, 0.5, seg_len), stone,
+					Vector3(float(sd) * 0.42, -0.22, 0))
+			lib.box(gt, "溝底", Vector3(0.7, 0.12, seg_len), stone, Vector3(0, -0.44, 0))
+			if n_gutter % 3 == 1:                  # 每三節架一塊石蓋
+				lib.box(gt, "溝蓋", Vector3(1.15, 0.14, 1.6), slab, Vector3(0, 0.04, 0))
+			z2 += seg_len
+			n_gutter += 1
+	print("floor decor: ", n_apron, " 店前鋪面 / ", n_step, " 飛石 / ", n_gutter, " 石溝節")
 
 # ── 生活痕跡（街邊） ──
 func _build_props() -> void:

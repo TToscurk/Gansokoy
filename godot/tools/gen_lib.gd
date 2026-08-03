@@ -153,6 +153,42 @@ func tree_mesh(glb_path: String) -> Mesh:
 		mesh.surface_set_material(0, canopy_m)
 	return mesh
 
+## 有機造型資產（assets/blender/make_props.py 產）：顏色全在頂點色裡
+func vc_mat() -> StandardMaterial3D:
+	if mats.has("vertex_color"):
+		return mats["vertex_color"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.roughness = 0.85
+	_save_mat(m, "vertex_color")
+	return m
+
+## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）
+func prop_mesh(glb_path: String, mat: Material = null) -> Mesh:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	var m: Material = mat if mat else vc_mat()
+	for s in mesh.get_surface_count():
+		mesh.surface_set_material(s, m)
+	return mesh
+
+const ROCK_GLBS := [
+	"res://assets/models/rock_a.glb",
+	"res://assets/models/rock_b.glb",
+	"res://assets/models/rock_c.glb",
+	"res://assets/models/rock_d.glb",
+]
+
 const TREE_GLBS := [
 	"res://assets/models/tree_round_a.glb",
 	"res://assets/models/tree_round_b.glb",
