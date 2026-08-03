@@ -33,7 +33,7 @@ void fragment() {
 	float fres = pow(1.0 - clamp(dot(normalize(VIEW), NORMAL), 0.0, 1.0), 2.0);
 	vec3 col = mix(deep_color, shallow_color, clamp(fres + bank * 0.6, 0.0, 1.0));
 	// 岸邊泡沫：淺水處提亮
-	float foam = smoothstep(0.55, 1.0, bank);
+	float foam = smoothstep(0.82, 1.0, bank);
 	ALBEDO = mix(col, vec3(0.86, 0.90, 0.88), foam * 0.7);
 	ROUGHNESS = mix(0.06, 0.35, foam);
 	METALLIC = 0.0;

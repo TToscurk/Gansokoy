@@ -200,7 +200,7 @@ func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: 
 
 # ── 地形網格（順時針繞向）＋遮罩貼圖材質 ──
 ## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro)
-func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable) -> MeshInstance3D:
+func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable, path_set := "terrain_path") -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var step := 2.0 * half / float(res - 1)
@@ -237,8 +237,14 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 	mat.set_shader_parameter("grass_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
 	mat.set_shader_parameter("forest_diff", load("res://assets/textures/terrain_forest_diff.jpg"))
 	mat.set_shader_parameter("forest_nor", load("res://assets/textures/terrain_forest_nor_gl.jpg"))
-	mat.set_shader_parameter("path_diff", load("res://assets/textures/terrain_path_diff.jpg"))
-	mat.set_shader_parameter("path_nor", load("res://assets/textures/terrain_path_nor_gl.jpg"))
+	# 街道層貼圖由呼叫端指定（森林走土徑、村子鋪石板）
+	var pd := "res://assets/textures/%s_diff.jpg" % path_set
+	var pn := "res://assets/textures/%s_nor_gl.jpg" % path_set
+	if not ResourceLoader.exists(pd):
+		pd = "res://assets/textures/terrain_path_diff.jpg"
+		pn = "res://assets/textures/terrain_path_nor_gl.jpg"
+	mat.set_shader_parameter("path_diff", load(pd))
+	mat.set_shader_parameter("path_nor", load(pn))
 	mat.set_shader_parameter("mask_tex", tex)
 
 	var mi := MeshInstance3D.new()
@@ -427,6 +433,63 @@ func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y
 	mi.material_override = mat
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add(root, mi, name)
+
+## 池塘：地形凹陷（負值）—— 加進 height_at，地才是真的挖下去
+func pond_carve(cx: float, cz: float, r: float, depth: float, x: float, z: float, wobble := 0.0) -> float:
+	var d := Vector2(x - cx, z - cz).length()
+	# 不規則岸線：半徑隨方位角起伏
+	var rr2 := r
+	if wobble > 0.0:
+		var a := atan2(z - cz, x - cx)
+		rr2 = r * (1.0 + wobble * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
+	if d > rr2 * 1.35:
+		return 0.0
+	var t := clampf(d / (rr2 * 1.35), 0.0, 1.0)
+	return -depth * (0.5 + 0.5 * cos(t * PI))
+
+## 池水面：扇形網格，頂點色 R = 靠岸程度（shader 用來做淺灘泡沫）
+func pond_water(out_dir: String, cx: float, cz: float, r: float, sink: float,
+		bank_y_fn: Callable, name := "Pond", wobble := 0.0, rings := 4, seg := 28) -> MeshInstance3D:
+	var y: float = float(bank_y_fn.call(cx, cz)) - sink
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var pt := func(ri: int, si: int) -> Vector3:
+		var a := float(si) / float(seg) * TAU
+		var rr2 := r
+		if wobble > 0.0:
+			rr2 = r * (1.0 + wobble * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
+		var f := float(ri) / float(rings)
+		return Vector3(cx + cos(a) * rr2 * f, y, cz + sin(a) * rr2 * f)
+	for ri in rings:
+		for si in seg:
+			var c0 := float(ri) / float(rings)
+			var c1 := float(ri + 1) / float(rings)
+			var a0: Vector3 = pt.call(ri, si)
+			var a1: Vector3 = pt.call(ri, si + 1)
+			var b0: Vector3 = pt.call(ri + 1, si)
+			var b1: Vector3 = pt.call(ri + 1, si + 1)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a0)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b0)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a1)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a1)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b0)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b1)
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/water.gdshader")
+	mat.set_shader_parameter("wave_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.set_shader_parameter("wave_scale", 0.6)
+	mat.set_shader_parameter("flow_speed", 0.012)
+	mat.set_shader_parameter("bank_scale", 0.42)      # 小池子不要整片泡沫
+	mat.set_shader_parameter("deep_color", Color(0.05, 0.14, 0.13))
+	mat.set_shader_parameter("shallow_color", Color(0.22, 0.38, 0.34))
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add(root, mi, name)
+	return mi
 
 # ── 空氣牆 ──
 func boundary(half: float) -> void:
