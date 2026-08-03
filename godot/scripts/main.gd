@@ -29,10 +29,36 @@ func _ready() -> void:
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--map="):
 			start = a.substr(6)
+		elif a.begins_with("--shot="):      # 跑 N 幀後存截圖然後退出（CI / 無頭檢視用）
+			_shot_path = a.substr(7)
+		elif a.begins_with("--shot-cam="):  # x,y,z,lx,ly,lz 自由鏡位（拍照模式）
+			_shot_cam = a.substr(11)
 	load_map(start, "")
+	if _shot_cam != "":
+		var v := _shot_cam.split_floats(",")
+		var cam := Camera3D.new()
+		cam.position = Vector3(v[0], v[1], v[2])
+		add_child(cam)
+		cam.look_at(Vector3(v[3], v[4], v[5]))
+		cam.current = true
+
+var _shot_path := ""
+var _shot_cam := ""
+var _shot_frames := 0
+var _default_env: Environment = null
+
+func _shot_tick() -> void:
+	_shot_frames += 1
+	if _shot_frames == 45:
+		var img := get_viewport().get_texture().get_image()
+		img.save_png(_shot_path)
+		print("screenshot -> ", _shot_path)
+		get_tree().quit()
 
 func _process(delta: float) -> void:
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
+	if _shot_path != "":
+		_shot_tick()
 
 func _load_json(p: String) -> Dictionary:
 	var txt := FileAccess.get_file_as_string(p)
@@ -49,9 +75,24 @@ func load_map(id: String, from_id: String) -> void:
 		map_root.queue_free()
 
 	current_id = id
-	var packed: PackedScene = load("res://blockout/%s.glb" % id)
+	# 原生場景（maps/<id>/<id>.tscn，視覺重做完成的圖）優先；
+	# 還沒重做的圖 fallback 到 three.js 烤出來的 blockout 底稿。
+	var native := "res://maps/%s/%s.tscn" % [id, id]
+	var use_native := ResourceLoader.exists(native)
+	print("[map] %s → %s" % [id, native if use_native else "blockout"])
+	var packed: PackedScene = load(native) if use_native else load("res://blockout/%s.glb" % id)
 	map_root = packed.instantiate()
 	add_child(map_root)
+	var terr := map_root.get_node_or_null("Terrain")
+	if terr and terr is MeshInstance3D:
+		print("[map] Terrain override=", terr.material_override)
+
+	# 原生場景可以自帶 WorldEnvironment（霧、氛圍是每張圖的個性）——
+	# 有的話就讓 main 的預設環境讓位，離圖時還回來
+	var map_env := map_root.find_child("WorldEnvironment", true, false)
+	if _default_env == null:
+		_default_env = $WorldEnvironment.environment
+	$WorldEnvironment.environment = null if map_env else _default_env
 
 	_build_trimesh_collision(map_root)
 	_build_game_colliders(meta)
@@ -137,10 +178,15 @@ func _on_portal_entered(body: Node3D, target: String) -> void:
 	var from := current_id
 	call_deferred("load_map", target, from)
 
-## 從 from_id 進來 → 落在通往 from_id 的傳送點旁；首次啟動落圖中心上空
+## 從 from_id 進來 → 落在通往 from_id 的傳送點旁；首次啟動（沒有來源圖）
+## 也落在第一個傳送點旁 —— 圖中心常常是建築物的正上方
 func _place_player(meta: Dictionary, from_id: String) -> void:
 	var spawn := Vector3(0.0, 40.0, 0.0)
-	for p in meta.get("portals", []):
+	var portals: Array = meta.get("portals", [])
+	if from_id == "" and portals.size() > 0:
+		var p0: Dictionary = portals[0]
+		spawn = Vector3(p0.x, p0.y + 2.0, p0.z)
+	for p in portals:
 		if p.get("target") == from_id:
 			spawn = Vector3(p.x, p.y + 2.0, p.z)
 			# 往圖中心退幾步，不要站在觸發區正中央

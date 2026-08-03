@@ -74,6 +74,38 @@ godot/
 - 花海圖（sunflower / namelessHill）底稿密度有抽稀。
 - 傳送光柱是 `main.gd` 生成的臨時示意（青色圓柱），不是 web 版那顆光球。
 
+## 原生場景（視覺重做）的做法 —— 香霖堂打樣
+
+第一張原生重做的圖：`godot/maps/kourindou/kourindou.tscn`。
+`main.gd` 的載圖順序是**原生場景優先**（`maps/<id>/<id>.tscn` 存在就用它，
+沒有才 fallback 到 blockout）—— 之後每張圖重做完，放對位置就自動生效。
+
+場景是 `godot/tools/gen_kourindou.gd` 產生的
+（`godot --headless --path godot --script tools/gen_kourindou.gd`）：
+佈局座標照抄 web 版 kourindou.js，所以 meta.json 的碰撞與傳送點原樣可用。
+**產出的 .tscn 是普通場景**，每片屋頂、每根柱子都是獨立節點，直接在
+編輯器裡拖改；改完就別重跑產生器（會整個覆蓋）。
+
+在 headless 產生器裡踩過的 Godot 坑（之後寫其他圖的產生器要避開）：
+
+1. **三角形繞向**：Godot 正面是順時針（three.js 相反）。反了的話
+   mesh 只有從背面看得到 —— 症狀是「整片地形消失」。
+2. **MultiMesh**：`set_instance_transform` 寫進去的資料存檔不會跟著走，
+   要自己組 `buffer`（PackedFloat32Array）再存。
+3. **貼圖**：`ImageTexture` 存 .res 會空殼；`PortableCompressedTexture2D`
+   要先開 `keep_compressed_buffer = true` 再 `create_from_image`。
+4. headless（dummy renderer）下查 MultiMesh 的 transform 一律回 identity，
+   驗證要用 xvfb + `--rendering-method gl_compatibility` 實渲染截圖
+   （`--shot=out.png --shot-cam=x,y,z,lx,ly,lz`）。
+
+## Blender 資產管線（下一步）
+
+Godot 4 直接吃 `.glb`；編輯器設定 Blender 路徑後連 `.blend` 都能直接放進
+專案自動匯入。建議流程：hero 資產（店屋、角色、指標物）在 Blender 做，
+輸出 `.glb` 放 `godot/assets/models/`，在編輯器把場景裡對應的佔位節點
+換成模型 —— 場景結構、碰撞、傳送點都不用動。角色走 Blender 建模 + 骨架
+（或 VRM），匯入後接 CharacterBody3D。
+
 ## 建議的重做順序
 
 1. **一張圖打樣**（建議香霖堂：最小、有室內外）：在編輯器裡以底稿為比例尺，
