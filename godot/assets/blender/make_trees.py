@@ -28,6 +28,18 @@ def clear_scene():
     bpy.ops.object.delete()
 
 
+def get_mat(name):
+    m = bpy.data.materials.get(name)
+    if m is None:
+        m = bpy.data.materials.new(name)
+    return m
+
+
+def assign_mat(obj, name):
+    obj.data.materials.clear()
+    obj.data.materials.append(get_mat(name))
+
+
 def set_vertex_colors(obj, color_fn):
     """color_fn(world_co, normal) -> (r,g,b)。烤進 CORNER domain 的 COLOR_0。"""
     mesh = obj.data
@@ -47,6 +59,7 @@ def add_trunk(height, r_bot, r_top, lean=0.06, seed=0):
     # 微傾＋頂端隨機偏，看起來不像釘子
     obj.rotation_euler = (lean * rng.uniform(0.5, 1.5), 0, rng.uniform(0, 6.28))
     set_vertex_colors(obj, lambda co, n: BARK)
+    assign_mat(obj, "bark")
     return obj
 
 
@@ -70,6 +83,7 @@ def add_cluster(center, radius, squash, tier_color, seed):
         return (min(1, r * k), min(1, g * k), min(1, b * k))
 
     set_vertex_colors(obj, col)
+    assign_mat(obj, "foliage")
     return obj
 
 
@@ -89,16 +103,15 @@ def join_and_export(objs, name):
     print("exported", path)
 
 
-def tree_round(name, seed):
+def tree_round(name, seed, h=3.2, spread=1.0):
     clear_scene()
     rng = random.Random(seed)
-    h = 3.2
     objs = [add_trunk(h, 0.30, 0.16, seed=seed)]
     # 三圈環繞層 + 一顆頂冠：多層次的重點在「看得出一層一層」
     tiers = [
-        (h + 0.1, 1.55, 2, TIERS_ROUND[0], TIERS_ROUND[1]),
-        (h + 1.1, 1.30, 3, TIERS_ROUND[1], TIERS_ROUND[2]),
-        (h + 2.0, 1.00, 2, TIERS_ROUND[2], TIERS_ROUND[3]),
+        (h + 0.1, 1.55 * spread, 2, TIERS_ROUND[0], TIERS_ROUND[1]),
+        (h + 1.1, 1.30 * spread, 3, TIERS_ROUND[1], TIERS_ROUND[2]),
+        (h + 2.0, 1.00 * spread, 2, TIERS_ROUND[2], TIERS_ROUND[3]),
     ]
     si = 0
     for (z, rad, count, c_lo, c_hi) in tiers:
@@ -109,19 +122,19 @@ def tree_round(name, seed):
             c = c_lo if k % 2 == 0 else c_hi
             objs.append(add_cluster((math.cos(a) * d, math.sin(a) * d, z),
                                     rad, rng.uniform(0.62, 0.72), c, seed * 31 + si))
-    objs.append(add_cluster((0, 0, h + 2.7), 0.85, 0.7, TIERS_ROUND[3], seed * 31 + 99))
+    objs.append(add_cluster((0, 0, h + 2.7), 0.85 * spread, 0.7, TIERS_ROUND[3], seed * 31 + 99))
     join_and_export(objs, name)
 
 
-def tree_pine(name, seed):
+def tree_pine(name, seed, h=2.2, layers=None):
     clear_scene()
     rng = random.Random(seed)
-    h = 2.2
+    layers = layers or TIERS_PINE
     objs = [add_trunk(h + 0.6, 0.26, 0.12, seed=seed)]
     # 四層堆疊錐，往上縮小變亮 —— 剪影就是「一棵杉樹」
     z = h * 0.8
     rad = 1.5
-    for i, c in enumerate(TIERS_PINE):
+    for i, c in enumerate(layers):
         bpy.ops.mesh.primitive_cone_add(vertices=8, radius1=rad, radius2=rad * 0.12,
                                         depth=1.7, location=(0, 0, z + 0.55))
         cone = bpy.context.active_object
@@ -138,6 +151,7 @@ def tree_pine(name, seed):
             return (min(1, r * k), min(1, g * k), min(1, b * k))
 
         set_vertex_colors(cone, col)
+        assign_mat(cone, "foliage")
         objs.append(cone)
         z += 1.05
         rad *= 0.74
@@ -146,5 +160,7 @@ def tree_pine(name, seed):
 
 tree_round("tree_round_a", 11)
 tree_round("tree_round_b", 47)
+tree_round("tree_round_c", 88, h=4.6, spread=0.72)      # 瘦高型，打破天際線
 tree_pine("tree_pine_a", 23)
+tree_pine("tree_pine_b", 61, h=3.4, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
 print("done")

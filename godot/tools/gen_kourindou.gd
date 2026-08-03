@@ -63,9 +63,8 @@ func height_at(x: float, z: float) -> float:
 	var inn := minf(minf(x - (YARD.x0 - 6.0), (YARD.x1 + 6.0) - x), minf(z - (YARD.z0 - 6.0), 10.0 - z))
 	if inn > 0.0:
 		h *= 1.0 - minf(1.0, inn / 6.0) * 0.85
-	var d := maxf(absf(x), absf(z)) - (HALF - 10.0)
-	if d > 0.0:
-		h += minf(13.0, d * d * 0.07)
+	# （web 版在這裡把邊界抬成坡牆收玩家 —— Godot 版拿掉：斷邊改用
+	#   遠景地形遮蔽 + 空氣牆，見 _build_vista / _build_boundary）
 	return h + sin(x * 0.46 + z * 0.33) * 0.05
 
 # ── 材質 ──
@@ -168,10 +167,12 @@ func _init() -> void:
 	_root.name = "Kourindou"
 
 	_build_terrain()
+	_build_boundary()
 	_build_shop()
 	_build_lamps()
 	_build_junk()
 	_build_forest()
+	_build_vista()   # 要用 _build_forest 建好的樹材質，順序在後
 	_build_env()
 
 	var packed := PackedScene.new()
@@ -252,6 +253,107 @@ func _build_terrain() -> void:
 	mi.mesh = mesh
 	mi.material_override = mat
 	_add(_root, mi, "Terrain")
+
+# ── 遠景地形：把「地圖斷邊」藏進綿延的丘陵 ──
+# 玩法範圍還是 ±70，但視野裡的世界一路鋪到 ±430：外圈起伏隨距離放大、
+# 最外緣抬成遠山稜線，配合霧把邊界完全收掉。純視覺，沒有碰撞。
+func _build_vista() -> void:
+	var nv := FastNoiseLite.new()
+	nv.frequency = 0.008
+	nv.fractal_octaves = 3
+	nv.seed = 99
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var ext := 430.0
+	var res := 101
+	var step := 2.0 * ext / float(res - 1)
+	var idx := {}
+	var verts: Array[Vector3] = []
+	for j in res:
+		for i in res:
+			var x := -ext + i * step
+			var z := -ext + j * step
+			var d := maxf(absf(x), absf(z)) - HALF
+			var t := clampf(d / 320.0, 0.0, 1.0)
+			var y: float
+			if d <= 0.0:
+				y = height_at(x, z) - 0.15          # 內圈墊在正圖下面一點，蓋接縫
+			else:
+				var hills := nv.get_noise_2d(x, z) * lerpf(3.0, 34.0, t)
+				y = height_at(clampf(x, -HALF, HALF), clampf(z, -HALF, HALF)) \
+					+ hills * (0.25 + 0.75 * t) + t * t * 46.0
+			idx[Vector2i(i, j)] = verts.size()
+			verts.append(Vector3(x, y, z))
+			st.set_uv(Vector2(x, z))
+			st.add_vertex(verts[verts.size() - 1])
+	var inner_lo := int((-HALF + ext) / step) + 1
+	var inner_hi := int((HALF + ext) / step) - 1
+	for j in res - 1:
+		for i in res - 1:
+			# 完全落在玩法範圍內的格子跳過（正圖地形在那裡）
+			if i >= inner_lo and i + 1 <= inner_hi and j >= inner_lo and j + 1 <= inner_hi:
+				continue
+			var a := j * res + i
+			st.add_index(a); st.add_index(a + 1); st.add_index(a + res)
+			st.add_index(a + 1); st.add_index(a + res + 1); st.add_index(a + res)
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := StandardMaterial3D.new()
+	mat.albedo_texture = load("res://assets/textures/terrain_grass_diff.jpg")
+	mat.albedo_color = Color(0.66, 0.78, 0.58)   # 遠景壓綠壓暗，跟正圖草地銜接
+	mat.uv1_triplanar = true
+	mat.uv1_scale = Vector3(0.1, 0.1, 0.1)
+	mat.roughness = 1.0
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	_add(_root, mi, "Vista")
+
+	# 遠方林帶：玩法圈外撒大棵的樹，剪影 + 霧 = 「森林一直延伸出去」
+	var far_trees: Array[Transform3D] = []
+	var tries := 0
+	while far_trees.size() < 300 and tries < 9000:
+		tries += 1
+		var x := _rr(-260.0, 260.0)
+		var z := _rr(-260.0, 260.0)
+		var d := maxf(absf(x), absf(z)) - HALF
+		if d < 4.0 or d > 190.0:
+			continue
+		if _rand() > clampf(1.0 - d / 220.0, 0.25, 0.95):
+			continue
+		var nvh := nv.get_noise_2d(x, z) * lerpf(3.0, 34.0, clampf(d / 320.0, 0.0, 1.0))
+		var y := height_at(clampf(x, -HALF, HALF), clampf(z, -HALF, HALF)) \
+			+ nvh * (0.25 + 0.75 * clampf(d / 320.0, 0.0, 1.0)) \
+			+ clampf(d / 320.0, 0.0, 1.0) * clampf(d / 320.0, 0.0, 1.0) * 46.0
+		var s := _rr(1.4, 2.4)
+		var basis := Basis(Vector3.UP, _rand() * TAU).scaled(Vector3(s, s * _rr(0.9, 1.15), s))
+		far_trees.append(Transform3D(basis, Vector3(x, y - 0.4, z)))
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = _make_multimesh(_tree_mesh("res://assets/models/tree_round_b.glb"),
+		far_trees, [], OUT_DIR + "gen/vista_trees.res")
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_add(_root, mmi, "VistaTrees")
+	print("vista trees: ", far_trees.size())
+
+# ── 空氣牆：四面透明的碰撞牆，把玩家留在 ±68 ──
+func _build_boundary() -> void:
+	var body := StaticBody3D.new()
+	body.name = "Boundary"
+	_add(_root, body, "Boundary")
+	var walls := [
+		[Vector3(0, 15, -68.5), Vector3(140, 30, 1)],
+		[Vector3(0, 15, 68.5), Vector3(140, 30, 1)],
+		[Vector3(-68.5, 15, 0), Vector3(1, 30, 140)],
+		[Vector3(68.5, 15, 0), Vector3(1, 30, 140)],
+	]
+	for w in walls:
+		var shape := CollisionShape3D.new()
+		var box := BoxShape3D.new()
+		box.size = w[1]
+		shape.shape = box
+		shape.position = w[0]
+		body.add_child(shape)
+		shape.owner = _root
 
 # ── 店（和洋混合，佈局照抄 web 版） ──
 func _build_shop() -> void:
@@ -442,9 +544,26 @@ func _build_junk() -> void:
 				p.position = Vector3(x, yy + r2, z)
 				_add(pg, p, "甕_" + nm)
 
-# ── 林緣（Blender 產的多層次卡通樹，見 assets/blender/make_trees.py） ──
-## 從匯入的 .glb 場景裡挖出 ArrayMesh，換上頂點色材質
-func _tree_mesh(glb_path: String, mat: Material) -> Mesh:
+# ── 林緣（Blender 產的多層次樹，見 assets/blender/make_trees.py） ──
+## 樹的兩個 surface：0=樹幹（bark 材質槽）、1=樹冠（foliage 材質槽）。
+## 樹幹上真樹皮 PBR；樹冠 = 頂點色層次 × 葉紋理（triplanar），
+## 讓平面色塊多一層有機的細節 —— 「寫實環境」定調下的樹。
+func _canopy_mat() -> StandardMaterial3D:
+	if _mats.has("canopy"):
+		return _mats["canopy"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.albedo_color = Color(1.7, 1.6, 1.45)   # 葉紋理偏暗，把亮度乘回來
+	m.albedo_texture = load("res://assets/textures/terrain_forest_diff.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.8, 0.8, 0.8)
+	m.roughness = 1.0
+	ResourceSaver.save(m, MAT_DIR + "canopy.tres")
+	m.take_over_path(MAT_DIR + "canopy.tres")
+	_mats["canopy"] = m
+	return m
+
+func _tree_mesh(glb_path: String) -> Mesh:
 	var packed: PackedScene = load(glb_path)
 	var node := packed.instantiate()
 	var mesh: Mesh = null
@@ -457,20 +576,23 @@ func _tree_mesh(glb_path: String, mat: Material) -> Mesh:
 			mesh = n.mesh
 			break
 	node.free()
-	for s in mesh.get_surface_count():
-		mesh.surface_set_material(s, mat)
+	var bark := _pbr("bark", "bark_cedar", 0.7)
+	var canopy := _canopy_mat()
+	if mesh.get_surface_count() >= 2:
+		mesh.surface_set_material(0, bark)
+		for s in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(s, canopy)
+	else:
+		mesh.surface_set_material(0, canopy)
 	return mesh
 
 func _build_forest() -> void:
-	# 顏色全在 glb 的頂點色裡（Blender 烤的層次漸層），材質只負責吃頂點色
-	var toon := _mat("toon_flat", Color(1, 1, 1), 1.0)
-	toon.vertex_color_use_as_albedo = true
-	ResourceSaver.save(toon, MAT_DIR + "toon_flat.tres")   # _mat 存檔在前，旗標要補存
-
 	var variants := [
-		{ "mesh": _tree_mesh("res://assets/models/tree_round_a.glb", toon), "list": [], "file": "trees_round_a" },
-		{ "mesh": _tree_mesh("res://assets/models/tree_round_b.glb", toon), "list": [], "file": "trees_round_b" },
-		{ "mesh": _tree_mesh("res://assets/models/tree_pine_a.glb", toon), "list": [], "file": "trees_pine_a" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_round_a.glb"), "list": [], "file": "trees_round_a" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_round_b.glb"), "list": [], "file": "trees_round_b" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_round_c.glb"), "list": [], "file": "trees_round_c" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_pine_a.glb"), "list": [], "file": "trees_pine_a" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_pine_b.glb"), "list": [], "file": "trees_pine_b" },
 	]
 
 	var count := 0
@@ -492,9 +614,15 @@ func _build_forest() -> void:
 		var y := height_at(x, z)
 		var s := _rr(0.7, 1.3)
 		var basis := Basis(Vector3.UP, _rand() * TAU).scaled(Vector3(s, s * _rr(0.9, 1.2), s))
-		# 杉樹愈往西（魔法之森深處）愈多，東邊幾乎全是闊葉
+		# 杉樹愈往西（魔法之森深處）愈多，東邊幾乎全是闊葉；
+		# 每型內再抽變體（a/b/c、pine a/b），打破複製感
 		var pine_p := clampf(0.55 - (x + HALF) / (2.0 * HALF) * 0.9, 0.04, 0.55)
-		var vi := 2 if _rand() < pine_p else (0 if _rand() < 0.7 else 1)
+		var vi: int
+		if _rand() < pine_p:
+			vi = 3 if _rand() < 0.65 else 4
+		else:
+			var r := _rand()
+			vi = 0 if r < 0.45 else (1 if r < 0.8 else 2)
 		variants[vi].list.append(Transform3D(basis, Vector3(x, y, z)))
 		count += 1
 
@@ -533,18 +661,24 @@ func _make_multimesh(mesh: Mesh, list: Array, cols: Array, path: String) -> Mult
 	mm.take_over_path(path)
 	return mm
 
-# ── 草叢（空地與路緣的細節，web 版滿地的草簇） ──
-func _build_grass() -> void:
+# ── 草叢：三種草 + 風吹 shader（grass_wind.gdshader） ──
+# 高叢（路緣與空地）、矮叢（大面積打底）、野花（零星點綴）。
+# 顏色烤頂點色（根暗尖亮），搖擺在 shader 做：相位吃世界座標 + 低頻陣風。
+func _grass_wind_mat(strength: float) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = load("res://assets/shaders/grass_wind.gdshader")
+	m.set_shader_parameter("sway_strength", strength)
+	return m
+
+## blades 片葉組成一簇；flower=true 時葉尖加一小簇花瓣色
+func _tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: Color, flower := false) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	# 一簇 = 7 片斜插的葉：根部暗、葉尖亮（吉卜力草地的漸層感）
-	var root_c := Color(0.13, 0.22, 0.08)
-	var tip_c := Color(0.38, 0.50, 0.20)
-	for b in 7:
-		var ang := float(b) / 7.0 * TAU + 0.4
-		var off := Vector2(cos(ang), sin(ang)) * 0.10
-		var lean := Vector2(cos(ang), sin(ang)) * 0.20
-		var hh := 0.38 + 0.16 * sin(float(b) * 2.1)
+	for b in blades:
+		var ang := float(b) / float(blades) * TAU + 0.4
+		var off := Vector2(cos(ang), sin(ang)) * spread * 0.5
+		var lean := Vector2(cos(ang), sin(ang)) * spread
+		var hh := base_h + base_h * 0.45 * sin(float(b) * 2.1)
 		var tip := tip_c.lerp(root_c, 0.15 * absf(sin(float(b) * 3.7)))
 		st.set_color(root_c)
 		st.add_vertex(Vector3(off.x - 0.045, 0, off.y))
@@ -552,37 +686,62 @@ func _build_grass() -> void:
 		st.add_vertex(Vector3(off.x + 0.045, 0, off.y))
 		st.set_color(tip)
 		st.add_vertex(Vector3(off.x + lean.x, hh, off.y + lean.y))
+	if flower:
+		for f in 3:
+			var ang2 := float(f) / 3.0 * TAU + 1.1
+			var fx := cos(ang2) * 0.05
+			var fz := sin(ang2) * 0.05
+			var fy := base_h * 1.15
+			st.set_color(Color(0.95, 0.9, 0.75))
+			st.add_vertex(Vector3(fx - 0.05, fy, fz))
+			st.set_color(Color(0.98, 0.95, 0.85))
+			st.add_vertex(Vector3(fx + 0.05, fy, fz))
+			st.set_color(Color(0.9, 0.78, 0.4))
+			st.add_vertex(Vector3(fx, fy + 0.09, fz))
 	st.generate_normals()
-	var tuft := st.commit()
-	var mat := StandardMaterial3D.new()
-	mat.vertex_color_use_as_albedo = true
-	mat.roughness = 1.0
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	tuft.surface_set_material(0, mat)
+	return st.commit()
 
+func _scatter_grass(target: int, min_edge: float, max_p: float, far_p: float) -> Array[Transform3D]:
 	var list: Array[Transform3D] = []
 	var tries := 0
-	while list.size() < 2600 and tries < 60000:
+	while list.size() < target and tries < target * 30:
 		tries += 1
-		var x := _rr(-HALF + 6.0, HALF - 6.0)
-		var z := _rr(-HALF + 6.0, HALF - 6.0)
+		var x := _rr(-HALF + 4.0, HALF - 4.0)
+		var z := _rr(-HALF + 4.0, HALF - 4.0)
 		if x < -34.0:                       # 深林裡不長草，長也看不到
 			continue
 		var ed: float = _path_info(x, z)[0]
-		if ed < 0.5:                        # 路面正中不長
+		if ed < min_edge:
 			continue
-		# 路緣密、遠處稀
-		var p := 0.85 if ed < 4.0 else 0.3
-		if _rand() > p:
+		if _rand() > (max_p if ed < 4.0 else far_p):
 			continue
 		var s := _rr(0.7, 1.6)
 		var basis := Basis(Vector3.UP, _rand() * TAU).scaled(Vector3(s, s, s))
 		list.append(Transform3D(basis, Vector3(x, height_at(x, z), z)))
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = _make_multimesh(tuft, list, [], OUT_DIR + "gen/grass.res")
-	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_add(_root, mmi, "Grass")
-	print("grass: ", list.size())
+	return list
+
+func _build_grass() -> void:
+	var tall := _tuft_mesh(7, 0.40, 0.20, Color(0.13, 0.22, 0.08), Color(0.38, 0.50, 0.20))
+	tall.surface_set_material(0, _grass_wind_mat(0.10))
+	var short := _tuft_mesh(5, 0.22, 0.28, Color(0.15, 0.24, 0.10), Color(0.33, 0.44, 0.18))
+	short.surface_set_material(0, _grass_wind_mat(0.06))
+	var flower := _tuft_mesh(5, 0.34, 0.16, Color(0.14, 0.23, 0.09), Color(0.36, 0.48, 0.20), true)
+	flower.surface_set_material(0, _grass_wind_mat(0.08))
+
+	var groups := [
+		{ "mesh": tall, "n": 1500, "min_edge": 0.5, "near": 0.85, "far": 0.25, "file": "grass_tall" },
+		{ "mesh": short, "n": 1400, "min_edge": 0.35, "near": 0.6, "far": 0.45, "file": "grass_short" },
+		{ "mesh": flower, "n": 240, "min_edge": 1.0, "near": 0.25, "far": 0.1, "file": "grass_flower" },
+	]
+	var total := 0
+	for g in groups:
+		var list := _scatter_grass(g.n, g.min_edge, g.near, g.far)
+		total += list.size()
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = _make_multimesh(g.mesh, list, [], OUT_DIR + "gen/" + String(g.file) + ".res")
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_add(_root, mmi, String(g.file).capitalize().replace(" ", ""))
+	print("grass: ", total)
 
 # ── 氛圍（這張圖自己的 WorldEnvironment，蓋掉 main 的預設） ──
 func _build_env() -> void:
