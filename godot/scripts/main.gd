@@ -96,7 +96,9 @@ func load_map(id: String, from_id: String) -> void:
 	$WorldEnvironment.environment = null if map_env else _default_env
 
 	_build_trimesh_collision(map_root)
-	_build_game_colliders(meta)
+	# 佈局重新生成的原生圖（如獸道的新森林）自帶碰撞，web 版碰撞箱對不上
+	if not map_root.get_meta("own_colliders", false):
+		_build_game_colliders(meta)
 	_spawn_portals(meta)
 	_place_player(meta, from_id)
 
