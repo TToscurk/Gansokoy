@@ -12,5 +12,8 @@
   "type": "commonjs",
   "dependencies": {
     "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.62.0"
   }
 }
