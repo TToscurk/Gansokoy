@@ -46,9 +46,21 @@ const PORTAL_TARGETS = {
 
 /* ── 找 Chromium ─────────────────────────────────────────────── */
 function findChromium() {
+  const LA = process.env.LOCALAPPDATA ?? '';
   const candidates = [
     process.env.CHROMIUM_PATH,
+    // Windows：Chrome，再不行用 Edge（每台 Windows 都有，本體就是 Chromium）
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+    LA && path.join(LA, 'Google\\Chrome\\Application\\chrome.exe'),
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    // macOS
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+    // Linux
     '/opt/pw-browsers/chromium',
+    '/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome',
   ].filter(Boolean);
   for (const c of candidates) {
     try {
@@ -70,7 +82,7 @@ function findChromium() {
       if (/^chromium-\d+$/.test(d) && fs.existsSync(p)) return p;
     }
   }
-  throw new Error('找不到 Chromium，可設 CHROMIUM_PATH 環境變數');
+  throw new Error('找不到 Chrome / Edge / Chromium —— 可設 CHROMIUM_PATH 環境變數指向瀏覽器執行檔');
 }
 
 /* ── dev server ──────────────────────────────────────────────── */
