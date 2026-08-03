@@ -163,16 +163,16 @@ func _init() -> void:
 func _ground_color(x: float, z: float, n1: FastNoiseLite, n2: FastNoiseLite) -> Color:
 	var g1 := clampf(n1.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
 	var g2 := clampf(n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
-	# 草地：綠 ↔ 橄欖 ↔ 乾黃 的斑駁
-	var grass := Color(0.30, 0.42, 0.20).lerp(Color(0.52, 0.52, 0.26), g1)
-	grass = grass.lerp(Color(0.45, 0.38, 0.22), g2 * g2 * 0.55)
+	# 草地：飽和的吉卜力綠 ↔ 黃綠的陽光斑塊
+	var grass := Color(0.28, 0.46, 0.18).lerp(Color(0.52, 0.60, 0.24), g1)
+	grass = grass.lerp(Color(0.42, 0.40, 0.20), g2 * g2 * 0.4)
 	# 林緣愈往西愈暗（樹蔭下的腐葉土）
-	var forest_floor := Color(0.24, 0.24, 0.15)
+	var forest_floor := Color(0.20, 0.26, 0.13)
 	var west := clampf(1.0 - (x + HALF) / (2.0 * HALF) * 1.6, 0.0, 1.0)
 	grass = grass.lerp(forest_floor, west * 0.55 + g2 * west * 0.2)
-	# 路面：沙土色，順著遮罩淡入
+	# 路面：暖沙色，順著遮罩淡入
 	var mask: float = _path_info(x, z)[1]
-	var dirt := Color(0.66, 0.55, 0.38).lerp(Color(0.56, 0.46, 0.32), g1)
+	var dirt := Color(0.72, 0.60, 0.40).lerp(Color(0.60, 0.49, 0.33), g1)
 	return grass.lerp(dirt, mask)
 
 func _build_terrain() -> void:
@@ -423,47 +423,40 @@ func _build_junk() -> void:
 				p.position = Vector3(x, yy + r2, z)
 				_add(pg, p, "甕_" + nm)
 
-# ── 林緣（低多邊形樹，MultiMesh ×2：樹幹/樹冠） ──
-func _flat_shaded(mesh: Mesh) -> ArrayMesh:
-	var st := SurfaceTool.new()
-	st.create_from(mesh, 0)
-	var arr := st.commit_to_arrays()
-	var st2 := SurfaceTool.new()
-	st2.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
-	var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
-	for k in idx:
-		st2.add_vertex(verts[k])
-	st2.generate_normals()
-	return st2.commit()
+# ── 林緣（Blender 產的多層次卡通樹，見 assets/blender/make_trees.py） ──
+## 從匯入的 .glb 場景裡挖出 ArrayMesh，換上頂點色材質
+func _tree_mesh(glb_path: String, mat: Material) -> Mesh:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	for s in mesh.get_surface_count():
+		mesh.surface_set_material(s, mat)
+	return mesh
 
 func _build_forest() -> void:
-	var bark := _mat("bark", Color(0.30, 0.25, 0.19), 0.95)
-	var leaf := _mat("leaf", Color(0.30, 0.42, 0.24), 0.95)
-	leaf.vertex_color_use_as_albedo = true   # 吃 MultiMesh 的 per-instance 色
-	ResourceSaver.save(leaf, MAT_DIR + "leaf.tres")   # _mat 存檔在前，旗標要補存
+	# 顏色全在 glb 的頂點色裡（Blender 烤的層次漸層），材質只負責吃頂點色
+	var toon := _mat("toon_flat", Color(1, 1, 1), 1.0)
+	toon.vertex_color_use_as_albedo = true
+	ResourceSaver.save(toon, MAT_DIR + "toon_flat.tres")   # _mat 存檔在前，旗標要補存
 
-	var trunk_src := CylinderMesh.new()
-	trunk_src.top_radius = 0.16
-	trunk_src.bottom_radius = 0.28
-	trunk_src.height = 5.0
-	trunk_src.radial_segments = 6
-	var trunk_mesh := _flat_shaded(trunk_src)
-	trunk_mesh.surface_set_material(0, bark)
+	var variants := [
+		{ "mesh": _tree_mesh("res://assets/models/tree_round_a.glb", toon), "list": [], "file": "trees_round_a" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_round_b.glb", toon), "list": [], "file": "trees_round_b" },
+		{ "mesh": _tree_mesh("res://assets/models/tree_pine_a.glb", toon), "list": [], "file": "trees_pine_a" },
+	]
 
-	var canopy_src := SphereMesh.new()
-	canopy_src.radius = 1.9
-	canopy_src.height = 3.4
-	canopy_src.radial_segments = 7
-	canopy_src.rings = 4
-	var canopy_mesh := _flat_shaded(canopy_src)
-	canopy_mesh.surface_set_material(0, leaf)
-
-	var trunks: Array[Transform3D] = []
-	var canopies: Array[Transform3D] = []
-	var colors: Array[Color] = []
+	var count := 0
 	var tries := 0
-	while trunks.size() < 560 and tries < 16000:
+	while count < 560 and tries < 16000:
 		tries += 1
 		var x := _rr(-HALF + 2.0, HALF - 2.0)
 		var z := _rr(-HALF + 2.0, HALF - 2.0)
@@ -478,21 +471,21 @@ func _build_forest() -> void:
 		if x > YARD.x0 - 3.0 and x < YARD.x1 + 3.0 and z > YARD.z0 - 3.0 and z < 10.0:
 			continue
 		var y := height_at(x, z)
-		var s := _rr(0.8, 1.5)
-		var basis := Basis(Vector3.UP, _rand() * TAU).scaled(Vector3(s, s * _rr(0.9, 1.25), s))
-		trunks.append(Transform3D(basis, Vector3(x, y + 2.2 * s, z)))
-		canopies.append(Transform3D(basis, Vector3(x, y + 5.4 * s, z)))
-		colors.append(Color(_rr(0.7, 1.1), _rr(0.85, 1.15), _rr(0.7, 1.05)))
+		var s := _rr(0.7, 1.3)
+		var basis := Basis(Vector3.UP, _rand() * TAU).scaled(Vector3(s, s * _rr(0.9, 1.2), s))
+		# 杉樹愈往西（魔法之森深處）愈多，東邊幾乎全是闊葉
+		var pine_p := clampf(0.55 - (x + HALF) / (2.0 * HALF) * 0.9, 0.04, 0.55)
+		var vi := 2 if _rand() < pine_p else (0 if _rand() < 0.7 else 1)
+		variants[vi].list.append(Transform3D(basis, Vector3(x, y, z)))
+		count += 1
 
 	var forest := Node3D.new()
 	_add(_root, forest, "Forest")
-	var defs := [["Trunks", trunk_mesh, trunks, false], ["Canopies", canopy_mesh, canopies, true]]
-	for def in defs:
+	for v in variants:
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = _make_multimesh(def[1], def[2], colors if def[3] else [],
-			OUT_DIR + "gen/" + String(def[0]).to_lower() + ".res")
-		_add(forest, mmi, def[0])
-	print("forest: ", trunks.size(), " trees")
+		mmi.multimesh = _make_multimesh(v.mesh, v.list, [], OUT_DIR + "gen/" + String(v.file) + ".res")
+		_add(forest, mmi, String(v.file).capitalize().replace(" ", ""))
+	print("forest: ", count, " trees")
 	_build_grass()
 
 ## MultiMesh 存檔的坑：set_instance_transform 寫進去的資料，ResourceSaver
@@ -525,15 +518,20 @@ func _make_multimesh(mesh: Mesh, list: Array, cols: Array, path: String) -> Mult
 func _build_grass() -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	# 一簇 = 5 片斜插的細三角葉
-	for b in 5:
-		var ang := float(b) / 5.0 * TAU + 0.4
-		var off := Vector2(cos(ang), sin(ang)) * 0.09
-		var lean := Vector2(cos(ang), sin(ang)) * 0.16
-		var hh := 0.34 + 0.14 * sin(float(b) * 2.1)
-		st.set_color(Color(0.32 + 0.1 * sin(float(b)), 0.46, 0.2))
-		st.add_vertex(Vector3(off.x - 0.035, 0, off.y))
-		st.add_vertex(Vector3(off.x + 0.035, 0, off.y))
+	# 一簇 = 7 片斜插的葉：根部暗、葉尖亮（吉卜力草地的漸層感）
+	var root_c := Color(0.16, 0.30, 0.10)
+	var tip_c := Color(0.55, 0.74, 0.30)
+	for b in 7:
+		var ang := float(b) / 7.0 * TAU + 0.4
+		var off := Vector2(cos(ang), sin(ang)) * 0.10
+		var lean := Vector2(cos(ang), sin(ang)) * 0.20
+		var hh := 0.38 + 0.16 * sin(float(b) * 2.1)
+		var tip := tip_c.lerp(root_c, 0.15 * absf(sin(float(b) * 3.7)))
+		st.set_color(root_c)
+		st.add_vertex(Vector3(off.x - 0.045, 0, off.y))
+		st.set_color(root_c)
+		st.add_vertex(Vector3(off.x + 0.045, 0, off.y))
+		st.set_color(tip)
 		st.add_vertex(Vector3(off.x + lean.x, hh, off.y + lean.y))
 	st.generate_normals()
 	var tuft := st.commit()
@@ -545,7 +543,7 @@ func _build_grass() -> void:
 
 	var list: Array[Transform3D] = []
 	var tries := 0
-	while list.size() < 900 and tries < 20000:
+	while list.size() < 2600 and tries < 60000:
 		tries += 1
 		var x := _rr(-HALF + 6.0, HALF - 6.0)
 		var z := _rr(-HALF + 6.0, HALF - 6.0)
@@ -582,7 +580,7 @@ func _build_env() -> void:
 	env.glow_enabled = true
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.78, 0.78, 0.7)
-	env.fog_density = 0.0025       # 林緣：霧濃一點，「更深處還有東西」
+	env.fog_density = 0.0016       # 林緣的薄霧：有縱深但不洗掉中景的顏色
 	env.fog_sky_affect = 0.25
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	env.ambient_light_energy = 1.1
