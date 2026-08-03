@@ -88,6 +88,29 @@ func _noise_tex(freq: float, octaves: int, s: int) -> NoiseTexture2D:
 	t.color_ramp = g
 	return t
 
+# Poly Haven PBR 材質（assets/textures/<set>_diff/nor_gl/rough.jpg）。
+# triplanar：BoxMesh 每面都是 0..1 的 UV，世界座標投影才有均勻的紋理密度。
+func _pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri := true) -> StandardMaterial3D:
+	if _mats.has(name):
+		return _mats[name]
+	var m := StandardMaterial3D.new()
+	m.albedo_color = tint
+	m.albedo_texture = load("res://assets/textures/%s_diff.jpg" % set_name)
+	var nor := "res://assets/textures/%s_nor_gl.jpg" % set_name
+	if ResourceLoader.exists(nor):
+		m.normal_enabled = true
+		m.normal_texture = load(nor)
+	var rgh := "res://assets/textures/%s_rough.jpg" % set_name
+	if ResourceLoader.exists(rgh):
+		m.roughness_texture = load(rgh)
+	m.uv1_triplanar = tri
+	m.uv1_scale = Vector3(uv, uv, uv)
+	var path := MAT_DIR + name + ".tres"
+	ResourceSaver.save(m, path)
+	m.take_over_path(path)
+	_mats[name] = m
+	return m
+
 func _mat(name: String, color: Color, rough := 0.9, noisy := 0.0, emission := Color(0, 0, 0)) -> StandardMaterial3D:
 	if _mats.has(name):
 		return _mats[name]
@@ -160,20 +183,6 @@ func _init() -> void:
 # ── 地形 ──
 # 顏色直接寫進頂點色（1 公尺一格 → 柔軟的低頻色塊，正是 web 版地面
 # 那種斑駁感）。比自訂 shader 穩：不吃貼圖生成時序、相容模式一定過。
-func _ground_color(x: float, z: float, n1: FastNoiseLite, n2: FastNoiseLite) -> Color:
-	var g1 := clampf(n1.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
-	var g2 := clampf(n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
-	# 草地：飽和的吉卜力綠 ↔ 黃綠的陽光斑塊
-	var grass := Color(0.28, 0.46, 0.18).lerp(Color(0.52, 0.60, 0.24), g1)
-	grass = grass.lerp(Color(0.42, 0.40, 0.20), g2 * g2 * 0.4)
-	# 林緣愈往西愈暗（樹蔭下的腐葉土）
-	var forest_floor := Color(0.20, 0.26, 0.13)
-	var west := clampf(1.0 - (x + HALF) / (2.0 * HALF) * 1.6, 0.0, 1.0)
-	grass = grass.lerp(forest_floor, west * 0.55 + g2 * west * 0.2)
-	# 路面：暖沙色，順著遮罩淡入
-	var mask: float = _path_info(x, z)[1]
-	var dirt := Color(0.72, 0.60, 0.40).lerp(Color(0.60, 0.49, 0.33), g1)
-	return grass.lerp(dirt, mask)
 
 func _build_terrain() -> void:
 	var st := SurfaceTool.new()
@@ -203,28 +212,37 @@ func _build_terrain() -> void:
 	st.generate_normals()
 	var mesh := st.commit()
 
-	# 地面顏色烤成貼圖（512px 蓋 140m ≈ 3.6px/m —— 柔和色塊，斑駁感）
+	# 混合遮罩烤成貼圖：R=石徑、G=林床（往西愈濃）、B=大尺度明暗。
+	# 細節紋理（Poly Haven PBR）在 shader 裡用世界座標平舖，遮罩負責「在哪」。
 	var tex_res := 512
 	var img := Image.create(tex_res, tex_res, false, Image.FORMAT_RGB8)
 	for j in tex_res:
 		for i in tex_res:
 			var x := -HALF + (float(i) + 0.5) / float(tex_res) * 2.0 * HALF
 			var z := -HALF + (float(j) + 0.5) / float(tex_res) * 2.0 * HALF
-			img.set_pixel(i, j, _ground_color(x, z, n1, n2))
-	img.save_png(ProjectSettings.globalize_path(OUT_DIR + "gen/ground.png"))
+			var g2 := clampf(n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
+			var west := clampf(1.0 - (x + HALF) / (2.0 * HALF) * 1.6, 0.0, 1.0)
+			var forest_w := clampf(west * 0.7 + g2 * west * 0.3, 0.0, 1.0)
+			var macro := clampf(n1.get_noise_2d(x * 0.4, z * 0.4) * 0.5 + 0.5, 0.0, 1.0)
+			img.set_pixel(i, j, Color(_path_info(x, z)[1], forest_w, macro))
+	img.save_png(ProjectSettings.globalize_path(OUT_DIR + "gen/ground_mask.png"))
 
-	# 貼圖與材質各自存成獨立資源，用 material_override 掛 ——
-	# 埋在 ArrayMesh .res 裡的貼圖資料（ImageTexture / PortableCompressed
-	# 都試過）載回來會變白，走 ext_resource 鏈才可靠。
+	# 遮罩存成獨立資源（PortableCompressedTexture2D 要先開 keep_compressed_buffer，
+	# 否則存出去是空殼），材質走 ext_resource 鏈掛 material_override
 	var tex := PortableCompressedTexture2D.new()
-	tex.keep_compressed_buffer = true   # 不留 CPU 端資料的話，存出去的 .res 是空殼
+	tex.keep_compressed_buffer = true
 	tex.create_from_image(img, PortableCompressedTexture2D.COMPRESSION_MODE_LOSSLESS)
 	ResourceSaver.save(tex, OUT_DIR + "gen/ground_tex.res")
 	tex.take_over_path(OUT_DIR + "gen/ground_tex.res")
-	var mat := StandardMaterial3D.new()
-	mat.albedo_texture = tex
-	mat.roughness = 0.95
-	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/terrain_pbr.gdshader")
+	mat.set_shader_parameter("grass_diff", load("res://assets/textures/terrain_grass_diff.jpg"))
+	mat.set_shader_parameter("grass_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.set_shader_parameter("forest_diff", load("res://assets/textures/terrain_forest_diff.jpg"))
+	mat.set_shader_parameter("forest_nor", load("res://assets/textures/terrain_forest_nor_gl.jpg"))
+	mat.set_shader_parameter("path_diff", load("res://assets/textures/terrain_path_diff.jpg"))
+	mat.set_shader_parameter("path_nor", load("res://assets/textures/terrain_path_nor_gl.jpg"))
+	mat.set_shader_parameter("mask_tex", tex)
 	ResourceSaver.save(mat, MAT_DIR + "terrain_kourindou.tres")
 	mat.take_over_path(MAT_DIR + "terrain_kourindou.tres")
 
@@ -237,12 +255,13 @@ func _build_terrain() -> void:
 
 # ── 店（和洋混合，佈局照抄 web 版） ──
 func _build_shop() -> void:
-	var wood := _mat("wood", Color(0.55, 0.42, 0.28), 0.85, 1.0)
-	var dark := _mat("dark_wood", Color(0.30, 0.22, 0.15), 0.9, 1.0)
-	var plank := _mat("plank", Color(0.48, 0.36, 0.24), 0.9, 1.0)
-	var stone := _mat("stone", Color(0.55, 0.54, 0.5), 0.95, 1.0)
-	var slate := _mat("slate", Color(0.23, 0.26, 0.32), 0.7, 1.0)
-	var brick := _mat("brick", Color(0.52, 0.3, 0.22), 0.9, 1.0)
+	# 寫實定調（風格筆記：寫實環境 × 卡通角色）—— 建物全上照片級 PBR
+	var wood := _pbr("wood", "planks", 0.5, Color(0.9, 0.82, 0.72))
+	var dark := _pbr("dark_wood", "dark_wood", 0.45)
+	var plank := _pbr("plank", "planks", 0.28)
+	var stone := _pbr("stone", "stone_wall", 0.30)
+	var slate := _pbr("slate", "roof_kawara", 0.22, Color(0.85, 0.88, 0.95))
+	var brick := _pbr("brick", "brick_red", 0.35)
 	var glass := _mat("glass", Color(0.75, 0.82, 0.78), 0.2, 0.0, Color(0.35, 0.3, 0.18))
 	var cloth := _mat("cloth", Color(0.32, 0.34, 0.45), 0.95)
 
@@ -519,8 +538,8 @@ func _build_grass() -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	# 一簇 = 7 片斜插的葉：根部暗、葉尖亮（吉卜力草地的漸層感）
-	var root_c := Color(0.16, 0.30, 0.10)
-	var tip_c := Color(0.55, 0.74, 0.30)
+	var root_c := Color(0.13, 0.22, 0.08)
+	var tip_c := Color(0.38, 0.50, 0.20)
 	for b in 7:
 		var ang := float(b) / 7.0 * TAU + 0.4
 		var off := Vector2(cos(ang), sin(ang)) * 0.10
@@ -578,6 +597,13 @@ func _build_env() -> void:
 	env.sky = sky
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
 	env.glow_enabled = true
+	# 效能放開（使用者指示不受本機規格侷限）：Forward+ 下生效，
+	# 相容模式自動忽略 —— SDFGI 全域光照 + SSAO 接觸陰影 + 體積霧
+	env.sdfgi_enabled = true
+	env.ssao_enabled = true
+	env.volumetric_fog_enabled = true
+	env.volumetric_fog_density = 0.015
+	env.volumetric_fog_albedo = Color(0.82, 0.84, 0.8)
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.78, 0.78, 0.7)
 	env.fog_density = 0.0016       # 林緣的薄霧：有縱深但不洗掉中景的顏色

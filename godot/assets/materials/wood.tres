@@ -1,21 +1,14 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3]
 
-[sub_resource type="Gradient" id="Gradient_ab415"]
-colors = PackedColorArray(0.78, 0.78, 0.78, 1, 1.02, 1.02, 1.02, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7x6pw"]
-seed = 750
-frequency = 0.05
-fractal_octaves = 4
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qxrbt"]
-width = 256
-height = 256
-seamless = true
-color_ramp = SubResource("Gradient_ab415")
-noise = SubResource("FastNoiseLite_7x6pw")
+[ext_resource type="Texture2D" path="res://assets/textures/planks_diff.jpg" id="1_x5d8h"]
+[ext_resource type="Texture2D" path="res://assets/textures/planks_nor_gl.jpg" id="2_a3w1p"]
+[ext_resource type="Texture2D" path="res://assets/textures/planks_rough.jpg" id="3_x2lso"]
 
 [resource]
-albedo_color = Color(0.55, 0.42, 0.28, 1)
-albedo_texture = SubResource("NoiseTexture2D_qxrbt")
-roughness = 0.85
+albedo_color = Color(0.9, 0.82, 0.72, 1)
+albedo_texture = ExtResource("1_x5d8h")
+roughness_texture = ExtResource("3_x2lso")
+normal_enabled = true
+normal_texture = ExtResource("2_a3w1p")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true

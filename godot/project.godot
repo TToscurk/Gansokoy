@@ -10,6 +10,11 @@ config/name="Gansokoy"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.4")
 
+[autoload]
+
+DayNight="*res://scripts/daynight.gd"
+Weather="*res://scripts/weather.gd"
+
 [input]
 
 move_forward={

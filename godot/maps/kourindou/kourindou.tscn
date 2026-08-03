@@ -442,11 +442,16 @@ sky = SubResource("Sky_gfeda")
 ambient_light_source = 3
 ambient_light_energy = 1.1
 tonemap_mode = 3
+ssao_enabled = true
+sdfgi_enabled = true
 glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.78, 0.78, 0.7, 1)
 fog_density = 0.0016
 fog_sky_affect = 0.25
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.015
+volumetric_fog_albedo = Color(0.82, 0.84, 0.8, 1)
 
 [node name="Kourindou" type="Node3D"]
 

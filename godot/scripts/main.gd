@@ -57,6 +57,7 @@ func _shot_tick() -> void:
 
 func _process(delta: float) -> void:
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
+	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":
 		_shot_tick()
 
