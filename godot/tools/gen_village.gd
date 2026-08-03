@@ -263,6 +263,18 @@ func _mat(key: String) -> StandardMaterial3D:
 		"stone": return lib.pbr("stone", "stone_wall", 0.30)
 	return lib.pbr("plaster", "plaster", 0.4)
 
+## 建物腳下的地面高度：取涵蓋範圍內最低點（只取中心的話，一端會浮空）
+## 回傳 [最低高度, 高差] —— 高差交給基石往下埋掉。
+func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
+	var lo := INF
+	var hi := -INF
+	for ox in [-0.5, 0.0, 0.5]:
+		for oz in [-0.5, 0.0, 0.5]:
+			var y := height_at(cx + ox * w, cz + oz * d)
+			lo = minf(lo, y)
+			hi = maxf(hi, y)
+	return [lo, hi - lo]
+
 ## 長屋：街區周邊的長條建築。ridge_along_x = 屋脊沿 x 軸（南北向的牆用）
 func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float, depth: float,
 		ridge_along_x: bool, storey := 1, roof := "kawara") -> void:
@@ -271,13 +283,16 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var stone := _mat("stone")
 	var roof_m := _mat(roof)
 	var h := 3.0 if storey == 1 else 5.0
+	var gu := _ground_under(cx, cz, length if ridge_along_x else depth, depth if ridge_along_x else length)
 	var g := Node3D.new()
-	g.position = Vector3(cx, height_at(cx, cz), cz)
+	g.position = Vector3(cx, gu[0], cz)          # 站在最低點，不會有一端浮空
 	if not ridge_along_x:
 		g.rotation.y = PI / 2.0
 	lib.add(parent, g, name)
 	# 本體（本地座標一律「長邊沿 x」，靠 rotation 轉向）
-	lib.box(g, "基石", Vector3(length + 0.4, 0.32, depth + 0.4), stone, Vector3(0, 0.16, 0))
+	# 基石往下加深「高差 + 0.4」，把坡度吃掉（v6 的建築離地就是缺這段）
+	var foot: float = float(gu[1]) + 0.45
+	lib.box(g, "基石", Vector3(length + 0.4, 0.32 + foot, depth + 0.4), stone, Vector3(0, 0.16 - foot * 0.5, 0))
 	lib.box(g, "屋身", Vector3(length, h, depth), wall, Vector3(0, 0.32 + h * 0.5, 0))
 	# ── 立面：逐間（bay）決定是玄關／窗／板壁 ──
 	# v3 的問題是「只有一片格子戶貼在牆上」，走近看是紙板。
@@ -372,12 +387,14 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 func _wall_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
 	if length < 1.0:
 		return
+	var gw := _ground_under(cx, cz, length if along_x else 0.6, 0.6 if along_x else length)
 	var g := Node3D.new()
-	g.position = Vector3(cx, height_at(cx, cz), cz)
+	g.position = Vector3(cx, gw[0], cz)
 	if not along_x:
 		g.rotation.y = PI / 2.0
 	lib.add(parent, g, name)
-	lib.box(g, "塀", Vector3(length, 1.9, 0.34), _mat("mud"), Vector3(0, 0.95, 0))
+	var wfoot: float = float(gw[1]) + 0.35
+	lib.box(g, "塀", Vector3(length, 1.9 + wfoot, 0.34), _mat("mud"), Vector3(0, 0.95 - wfoot * 0.5, 0))
 	lib.box(g, "塀瓦", Vector3(length + 0.2, 0.14, 0.62), _mat("kawara"), Vector3(0, 1.97, 0))
 	_collide(g, Vector3(length, 2.1, 0.5))
 
@@ -859,7 +876,8 @@ func _build_canal_banks() -> void:
 			continue
 		var sc := lib.rr(0.7, 1.5)
 		pads.append(Transform3D(Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(sc, sc, sc)),
-			Vector3(x, bank_h(x, z) - CANAL_DEPTH * 0.4 + 0.03, z)))
+			Vector3(x, minf(bank_h(x, z) - CANAL_DEPTH * 0.32,
+				height_at(x, z) + CANAL_DEPTH * 0.55), z)))   # 保險：不會浮到岸上
 	var pmm := MultiMeshInstance3D.new()
 	pmm.multimesh = lib.make_multimesh(pad_mesh, pads, [], OUT_DIR + "gen/lilypads.res")
 	pmm.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -986,11 +1004,13 @@ func _build_fauna() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "Fauna")
 	g.set_script(load("res://scripts/fauna.gd"))
 	# 水路中心線交給 fauna.gd 當巡游路徑（水面高度 = 岸高 - sink）
+	# 逐節點取水面高度（整條共用一個 y 的話，地面起伏會讓鴨子浮到路上）
 	var pts: Array[Vector2] = []
+	var ys: Array[float] = []
 	for p in CANAL:
 		pts.append(Vector2(p[0], p[1]))
-	var wy := bank_h(0.0, 85.0) - CANAL_DEPTH * 0.35
-	g.set("paths", [{ "pts": pts, "y": wy }])
+		ys.append(bank_h(float(p[0]), float(p[1])) - CANAL_DEPTH * 0.35)
+	g.set("paths", [{ "pts": pts, "ys": ys }])
 
 	var duck_mesh := lib.prop_mesh("res://assets/models/duck.glb")
 	var koi_mesh := lib.prop_mesh("res://assets/models/koi.glb")
