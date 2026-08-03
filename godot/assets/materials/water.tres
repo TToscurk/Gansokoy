@@ -12,3 +12,4 @@ shader_parameter/deep_color = null
 shader_parameter/flow_speed = null
 shader_parameter/wave_scale = null
 shader_parameter/alpha = null
+shader_parameter/bank_scale = null

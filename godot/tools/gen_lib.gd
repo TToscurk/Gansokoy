@@ -320,6 +320,43 @@ func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
 	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add(root, mmi, "VistaTrees")
 
+# ── 切妻屋頂（正確的幾何：脊高 = 半深 × tanθ） ──
+## 之前寫死抬升量 0.85，導致兩片斜面互相穿插、屋脊蓋在斜面下、
+## 山牆三角形開口 —— 牆會從屋簷「插出來」就是這個。
+## base_y = 牆頂高度（本地座標）；w/d = 屋頂平面尺寸（含出簷）
+func gable_roof(parent: Node, base_y: float, w: float, d: float, pitch: float,
+		thick: float, mat: Material, gable_mat: Material = null, off := Vector3.ZERO) -> void:
+	var hd := d * 0.5
+	var rise := hd * tan(pitch)
+	var slab := hd / cos(pitch)
+	for sd in [-1, 1]:
+		var mi := MeshInstance3D.new()
+		var bm := BoxMesh.new()
+		bm.size = Vector3(w, thick, slab)
+		bm.material = mat
+		mi.mesh = bm
+		mi.position = off + Vector3(0, base_y + rise * 0.5, float(sd) * hd * 0.5)
+		mi.rotation.x = float(sd) * pitch
+		add(parent, mi, "屋根坡_%d" % (sd + 1))
+	var cap := MeshInstance3D.new()
+	var cm := BoxMesh.new()
+	cm.size = Vector3(w + thick * 1.2, thick * 1.3, thick * 3.2)
+	cm.material = mat
+	cap.mesh = cm
+	cap.position = off + Vector3(0, base_y + rise, 0)
+	add(parent, cap, "棟")
+	# 山牆（妻壁）：把兩端的三角形封起來，否則從側面看得到屋頂內部
+	var gm: Material = gable_mat if gable_mat else mat
+	for sd2 in [-1, 1]:
+		var tri := MeshInstance3D.new()
+		var pm := PrismMesh.new()
+		pm.size = Vector3(d, rise, thick * 1.1)
+		pm.material = gm
+		tri.mesh = pm
+		tri.position = off + Vector3(float(sd2) * (w * 0.5 - thick * 0.6), base_y + rise * 0.5, 0)
+		tri.rotation.y = PI * 0.5
+		add(parent, tri, "妻壁_%d" % (sd2 + 1))
+
 # ── 河川（全世界共用：村、湖、澤都吃這組） ──
 ## 折線最近距離（河道中心線）
 func poly_dist(pts: Array, x: float, z: float) -> float:

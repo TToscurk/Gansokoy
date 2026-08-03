@@ -9,11 +9,14 @@ uniform vec3 deep_color : source_color = vec3(0.10, 0.20, 0.26);
 uniform float flow_speed = 0.05;
 uniform float wave_scale = 0.25;
 uniform float alpha = 0.86;
+// 沒有頂點色的 mesh（CylinderMesh 池塘）COLOR 預設是白的 →
+// bank=1 → 整片判定成岸邊泡沫 → 看起來像鐵板。這個係數設 0 就純深水。
+uniform float bank_scale = 1.0;
 
 varying float bank;      // 頂點色 R：1=岸邊、0=中央
 
 void vertex() {
-	bank = COLOR.r;
+	bank = COLOR.r * bank_scale;
 	// 水面微微起伏（河不是鏡子）
 	vec3 wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	VERTEX.y += sin(TIME * 0.9 + wp.x * 0.6 + wp.z * 0.4) * 0.025

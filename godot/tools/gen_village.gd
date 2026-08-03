@@ -15,51 +15,59 @@ extends SceneTree
 const Lib := preload("res://tools/gen_lib.gd")
 
 const OUT_DIR := "res://maps/village/"
-const HALF := 230.0
+const HALF := 300.0
 const PLAZA := Vector2(0.0, 30.0)
-const CORE := 140.0
+const CORE := 196.0
 
 # ── 街道格：南北 x = -104/-52/0/52/104、東西 z = -135/-80/-25/30/85/140 ──
-const ST_X := [-104.0, -52.0, 0.0, 52.0, 104.0]
-const ST_Z := [-135.0, -80.0, -25.0, 30.0, 85.0, 140.0]
-const BLOCK_X := [-78.0, -26.0, 26.0, 78.0]      # 街區中心
-const BLOCK_Z := [-107.0, -52.0, 2.0, 57.0, 112.0]
+const ST_X := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
+const ST_Z := [-190.0, -135.0, -80.0, -25.0, 30.0, 85.0, 140.0, 195.0]
+const BLOCK_X := [-130.0, -78.0, -26.0, 26.0, 78.0, 130.0]   # 街區中心
+const BLOCK_Z := [-162.0, -107.0, -52.0, 2.0, 57.0, 112.0, 167.0]
 const BLOCK_W := 42.0
 const BLOCK_D := 45.0
 
 const PATH_SEGMENTS := [
 	# 本通（主街・南北貫穿，最寬）
-	{ "width": 10.0, "pts": [[0.0, -174.0], [0.0, -80.0], [0.0, 30.0], [0.0, 140.0], [0.0, 190.0]] },
+	{ "width": 11.0, "pts": [[0.0, -240.0], [0.0, -120.0], [0.0, 30.0], [0.0, 160.0], [0.0, 250.0]] },
 	# 橫町（0.2 條・東西中段，東端過橋）
-	{ "width": 8.4, "pts": [[-130.0, 30.0], [-52.0, 30.0], [0.0, 30.0], [52.0, 30.0], [104.0, 30.0], [146.0, 30.0]] },
-	# 其餘南北街
-	{ "width": 7.0, "pts": [[-104.0, -135.0], [-104.0, 0.0], [-104.0, 140.0]] },
-	{ "width": 7.0, "pts": [[-52.0, -135.0], [-52.0, 0.0], [-52.0, 140.0]] },
-	{ "width": 7.0, "pts": [[52.0, -135.0], [52.0, 0.0], [52.0, 140.0]] },
-	{ "width": 7.0, "pts": [[104.0, -135.0], [104.0, 0.0], [104.0, 140.0]] },
+	{ "width": 9.0, "pts": [[-190.0, 30.0], [-104.0, 30.0], [0.0, 30.0], [104.0, 30.0], [190.0, 30.0], [232.0, 30.0]] },
+	# 其餘南北街（ST_X 除了本通）
+	{ "width": 7.0, "pts": [[-156.0, -190.0], [-156.0, 0.0], [-156.0, 195.0]] },
+	{ "width": 7.0, "pts": [[-104.0, -190.0], [-104.0, 0.0], [-104.0, 195.0]] },
+	{ "width": 7.0, "pts": [[-52.0, -190.0], [-52.0, 0.0], [-52.0, 195.0]] },
+	{ "width": 7.0, "pts": [[52.0, -190.0], [52.0, 0.0], [52.0, 195.0]] },
+	{ "width": 7.0, "pts": [[104.0, -190.0], [104.0, 0.0], [104.0, 195.0]] },
+	{ "width": 7.0, "pts": [[156.0, -190.0], [156.0, 0.0], [156.0, 195.0]] },
 	# 其餘東西街
-	{ "width": 7.0, "pts": [[-126.0, -135.0], [0.0, -135.0], [126.0, -135.0]] },
-	{ "width": 7.0, "pts": [[-126.0, -80.0], [0.0, -80.0], [126.0, -80.0]] },
-	{ "width": 7.0, "pts": [[-126.0, -25.0], [0.0, -25.0], [126.0, -25.0]] },
-	{ "width": 7.0, "pts": [[-126.0, 85.0], [0.0, 85.0], [126.0, 85.0]] },
-	{ "width": 7.0, "pts": [[-126.0, 140.0], [0.0, 140.0], [126.0, 140.0]] },
+	{ "width": 7.0, "pts": [[-182.0, -190.0], [0.0, -190.0], [182.0, -190.0]] },
+	{ "width": 7.0, "pts": [[-182.0, -135.0], [0.0, -135.0], [182.0, -135.0]] },
+	{ "width": 7.0, "pts": [[-182.0, -80.0], [0.0, -80.0], [182.0, -80.0]] },
+	{ "width": 7.0, "pts": [[-182.0, -25.0], [0.0, -25.0], [182.0, -25.0]] },
+	{ "width": 7.5, "pts": [[-182.0, 85.0], [0.0, 85.0], [182.0, 85.0]] },
+	{ "width": 7.0, "pts": [[-182.0, 140.0], [0.0, 140.0], [182.0, 140.0]] },
+	{ "width": 7.0, "pts": [[-182.0, 195.0], [0.0, 195.0], [182.0, 195.0]] },
 	# 西南門引道（香霖堂）
-	{ "width": 5.2, "pts": [[-132.0, 100.0], [-118.0, 96.0], [-104.0, 90.0]] },
+	{ "width": 5.2, "pts": [[-132.0, 100.0], [-145.0, 98.0], [-156.0, 94.0]] },
 ]
 # ── 河（東側，橫町東端石橋跨過；北端往圖外＝河畔道接口） ──
-const RIVER := [[196.0, -230.0], [178.0, -150.0], [162.0, -70.0], [152.0, -10.0],
-	[150.0, 30.0], [156.0, 90.0], [170.0, 160.0], [186.0, 230.0]]
+const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
+	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
+# ── 水路（貫穿村里的水渠，多座小橋橫過 —— 柱狀地圖裡那些白色帶狀物） ──
+const CANAL := [[-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5], [60.0, 86.0], [140.0, 84.5], [200.0, 85.5]]
+const CANAL_HALF := 2.1
+const CANAL_DEPTH := 1.5
+const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
 const RIVER_HALF := 8.0
 const RIVER_DEPTH := 2.8
-const BRIDGE := Vector2(151.0, 30.0)
+const BRIDGE := Vector2(221.0, 30.0)
 
 ## 街區用途（依 THBWiki 設施清單配置）
 const BLOCK_KIND := {
-	"-78,-107": "compound", "-26,-107": "compound", "26,-107": "compound", "78,-107": "compound",
-	"-78,-52": "compound", "-26,-52": "terakoya", "26,-52": "suzunaan", "78,-52": "compound",
-	"-78,2": "hieda", "-26,2": "compound", "26,2": "unomitei", "78,2": "compound",
-	"-78,57": "compound", "-26,57": "market", "26,57": "tower", "78,57": "compound",
-	"-78,112": "compound", "-26,112": "compound", "26,112": "ashiarai", "78,112": "compound",
+	"-26,-52": "terakoya", "26,-52": "suzunaan",
+	"-78,2": "hieda", "26,2": "unomitei",
+	"-26,57": "market", "26,57": "tower",
+	"26,112": "ashiarai",
 }
 
 var lib: Lib
@@ -87,7 +95,7 @@ func _path_info(x: float, z: float) -> Array:
 
 func _field_w(x: float, z: float) -> float:
 	var r := Vector2(x, z - PLAZA.y).length()
-	if r < CORE + 8.0 or r > 205.0:
+	if r < CORE + 10.0 or r > CORE + 62.0:
 		return 0.0
 	if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 2.4:
 		return 0.0
@@ -101,13 +109,16 @@ func height_at(x: float, z: float) -> float:
 	var roll := _nh.get_noise_2d(x, z) * 2.4
 	var town := smoothstep(CORE - 20.0, CORE + 70.0, Vector2(x, z - PLAZA.y).length())
 	var h := roll * (0.06 + 0.94 * town) + sin(x * 0.46 + z * 0.33) * 0.04
-	return h + lib.river_carve(RIVER, RIVER_HALF, RIVER_DEPTH, x, z)
+	h += lib.river_carve(RIVER, RIVER_HALF, RIVER_DEPTH, x, z)
+	return h + lib.river_carve(CANAL, CANAL_HALF, CANAL_DEPTH, x, z)
 
 func mask_at(x: float, z: float) -> Color:
 	var info := _path_info(x, z)
 	var g2 := clampf(_n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
 	var rd := lib.poly_dist(RIVER, x, z)
 	var shore := 1.0 - smoothstep(RIVER_HALF * 0.7, RIVER_HALF * 1.9, rd)
+	var cd := lib.poly_dist(CANAL, x, z)
+	shore = maxf(shore, 1.0 - smoothstep(CANAL_HALF * 0.8, CANAL_HALF * 2.6, cd))
 	# 里內的地面本來就是踏實的砂土（參考圖：整片砂色），街區內庭才有綠
 	var in_town := 1.0 - smoothstep(CORE - 30.0, CORE + 10.0, Vector2(x, z - PLAZA.y).length())
 	var packed_earth := in_town * 0.55
@@ -131,20 +142,22 @@ func _init() -> void:
 	lib = Lib.new()
 	lib.setup(root, 20260810)
 
-	lib.terrain(OUT_DIR, HALF, 181, height_at, mask_at)
+	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at)
 	lib.boundary(HALF - 2.0)
 	lib.river_water(OUT_DIR, RIVER, RIVER_HALF, RIVER_DEPTH * 0.6, height_at)
+	lib.river_water(OUT_DIR, CANAL, CANAL_HALF, CANAL_DEPTH * 0.55, height_at, "Canal")
 	_build_blocks()
 	_build_bridge()
+	_build_canal_bridges()
 	_build_props()
 	_build_gates()
 	_build_lamps()
 	_build_trees()
 	_build_grass()
-	lib.vista(OUT_DIR, HALF, 820.0, height_at, [
+	lib.vista(OUT_DIR, HALF, 900.0, height_at, [
 		{ "x": -520.0, "z": -560.0, "h": 140.0, "r": 240.0 },
 		{ "x": 480.0, "z": -420.0, "h": 55.0, "r": 180.0 },
-	], "res://assets/models/tree_round_b.glb", 320)
+	], "res://assets/models/tree_round_b.glb", 420)
 	_build_env()
 
 	var packed := PackedScene.new()
@@ -160,10 +173,14 @@ func _claim(cx: float, cz: float, w: float, d: float) -> void:
 func _free(cx: float, cz: float, w: float, d: float, margin := 0.6) -> bool:
 	var hw := w * 0.5 + margin
 	var hd := d * 0.5 + margin
-	for c in [[cx - hw, cz - hd], [cx + hw, cz - hd], [cx - hw, cz + hd], [cx + hw, cz + hd], [cx, cz]]:
+	# 邊中點也要取樣 —— 只測四角的話，長屋的側邊會壓在街上（v2 的 bug）
+	for c in [[cx - hw, cz - hd], [cx + hw, cz - hd], [cx - hw, cz + hd], [cx + hw, cz + hd],
+			[cx, cz], [cx - hw, cz], [cx + hw, cz], [cx, cz - hd], [cx, cz + hd]]:
 		if _path_info(c[0], c[1])[0] < 0.6:
 			return false
 	if lib.poly_dist(RIVER, cx, cz) < RIVER_HALF * 1.9:
+		return false
+	if lib.poly_dist(CANAL, cx, cz) < CANAL_HALF * 2.4 + maxf(hw, hd) * 0.5:
 		return false
 	for r in _rects:
 		if absf(cx - r[0]) < (hw + r[2] * 0.5) and absf(cz - r[1]) < (hd + r[3] * 0.5):
@@ -225,16 +242,9 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 		lib.box(g, "二階窗", Vector3(length * 0.75, 1.1, 0.08), dark, Vector3(0, 4.0, depth * 0.5 + 0.05))
 		lib.box(g, "庇", Vector3(length + 0.8, 0.14, 1.1), roof_m, Vector3(0, 3.1, depth * 0.5 + 0.42))
 	# 切妻屋頂
-	var rl := length + 0.9
-	var rd := depth + 1.5
 	var thick := 0.22 if roof == "kawara" else 0.5
-	var lift := 0.85 if roof == "kawara" else 1.15
-	var pitch := 0.58 if roof == "kawara" else 0.72
-	for s in [-1, 1]:
-		var slope := lib.box(g, "屋頂_%d" % (s + 1), Vector3(rl, thick, rd * 0.64), roof_m,
-			Vector3(0, 0.32 + h + lift, float(s) * rd * 0.21))
-		slope.rotation.x = float(s) * pitch
-	lib.box(g, "棟", Vector3(rl + 0.25, thick * 1.2, 0.8), roof_m, Vector3(0, 0.32 + h + lift + 0.85, 0))
+	var pitch := 0.5 if roof == "kawara" else 0.68
+	lib.gable_roof(g, 0.32 + h, length + 0.9, depth + 1.5, pitch, thick, roof_m, wall)
 	_collide(g, Vector3(length + 0.4, h + 2.0, depth + 0.4))
 	if ridge_along_x:
 		_claim(cx, cz, length + 1.0, depth + 1.6)
@@ -284,12 +294,13 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 		# side: 0=北(-z) 1=南(+z) 2=西(-x) 3=東(+x)
 		var along_x := side < 2
 		var span := BLOCK_W if along_x else BLOCK_D
-		var inset := (hd - 4.2) if along_x else (hw - 4.2)
 		var sgn := -1.0 if side % 2 == 0 else 1.0
 		var has_house := lib.rand() < 0.86
 		if has_house:
 			var length := span * lib.rr(0.48, 0.68)   # 轉角要留空，太長四邊會互相排擠
 			var depth := lib.rr(6.4, 8.2)
+			# 內縮量由進深決定：屋簷外緣要留在土塀內側（v2 的「建築卡圍牆」）
+			var inset := ((hd if along_x else hw) - 1.6) - depth * 0.5 - 0.75
 			var off := lib.rr(-0.45, 0.45) * (span - length)
 			var cx := bx + (off if along_x else sgn * inset)
 			var cz := bz + (sgn * inset if along_x else off)
@@ -299,12 +310,16 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 				_longhouse(parent, "長屋_%d" % side, cx, cz, length, depth, along_x, storey, roof)
 				n += 1
 				# 兩端補土塀
-				var rem := (span - length) * 0.5
 				for e in [-1.0, 1.0]:
-					var eo: float = off + float(e) * (length + rem) * 0.5
-					var wcx: float = bx + (eo if along_x else sgn * (hw - 0.4))
-					var wcz: float = bz + (sgn * (hd - 0.4) if along_x else eo)
-					_wall_run(parent, "塀_%d_%d" % [side, int(e)], wcx, wcz, maxf(rem - 0.6, 0.0), along_x)
+					var b_edge: float = off + float(e) * length * 0.5      # 屋身端點
+					var blk_edge: float = float(e) * span * 0.5            # 街區端點
+					var wlen: float = absf(blk_edge - b_edge) - 0.5
+					if wlen < 1.0:
+						continue
+					var wc: float = (b_edge + blk_edge) * 0.5
+					var wcx: float = bx + (wc if along_x else sgn * (hw - 0.4))
+					var wcz: float = bz + (sgn * (hd - 0.4) if along_x else wc)
+					_wall_run(parent, "塀_%d_%d" % [side, int(e)], wcx, wcz, wlen, along_x)
 				continue
 		# 沒有房子的邊：整段土塀（大門那邊留缺口）
 		var wl := span - (7.0 if side == gate_side else 0.0)
@@ -331,11 +346,7 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 			lib.box(s, "藏身", Vector3(5.0, 4.2, 4.0), _mat("plaster"), Vector3(0, 2.45, 0))
 			lib.box(s, "腰", Vector3(5.1, 0.9, 4.1), _mat("dark"), Vector3(0, 0.85, 0))
 			lib.box(s, "扉", Vector3(1.3, 2.0, 0.14), _mat("dark"), Vector3(0, 1.55, 2.05))
-			for sd in [-1, 1]:
-				var sl := lib.box(s, "屋頂_%d" % (sd + 1), Vector3(6.2, 0.22, 3.2), _mat("kawara"),
-					Vector3(0, 5.1, float(sd) * 1.1))
-				sl.rotation.x = float(sd) * 0.6
-			lib.box(s, "棟", Vector3(6.4, 0.26, 0.7), _mat("kawara"), Vector3(0, 5.75, 0))
+			lib.gable_roof(s, 4.55, 6.2, 5.2, 0.5, 0.22, _mat("kawara"), _mat("plaster"))
 			_collide(s, Vector3(5.2, 5.0, 4.2))
 			_claim(sx, sz, 6.4, 5.4)
 	return n
@@ -371,11 +382,7 @@ func _blk_shopfront(parent: Node, bx: float, bz: float, title: String, face_dir:
 		for i in 3:                                    # 鵜吞亭：店頭長凳
 			lib.box(g, "長凳_%d" % i, Vector3(1.8, 0.45, 0.6), _mat("wood"),
 				Vector3(-3.5 + float(i) * 3.5, 0.4, d * 0.5 + 1.5))
-	for sd in [-1, 1]:
-		var sl := lib.box(g, "屋頂_%d" % (sd + 1), Vector3(w + 1.4, 0.24, (d + 1.6) * 0.64), _mat("kawara"),
-			Vector3(0, 6.45, float(sd) * (d + 1.6) * 0.21))
-		sl.rotation.x = float(sd) * 0.58
-	lib.box(g, "棟", Vector3(w + 1.7, 0.28, 0.85), _mat("kawara"), Vector3(0, 7.35, 0))
+	lib.gable_roof(g, 5.75, w + 1.4, d + 1.6, 0.5, 0.24, _mat("kawara"), _mat("plaster"))
 	_collide(g, Vector3(w + 0.5, 7.0, d + 0.5))
 	_claim(cx, cz, d + 2.0, w + 2.0)
 	return 1 + _blk_compound(parent, bx, bz)
@@ -394,11 +401,7 @@ func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
 		lib.cyl(g, "廊柱_%d" % i, 0.15, 0.15, 2.8, _mat("dark"), Vector3(-10.0 + float(i) * 2.85, 2.2, 7.8), 6)
 	for i in 5:
 		lib.box(g, "障子_%d" % i, Vector3(3.4, 2.3, 0.08), _mat("wood"), Vector3(-8.6 + float(i) * 4.3, 1.85, 6.05))
-	for sd in [-1, 1]:
-		var sl := lib.box(g, "大屋根_%d" % (sd + 1), Vector3(25.0, 0.34, 10.0), _mat("kawara"),
-			Vector3(0, 5.9, float(sd) * 3.4))
-		sl.rotation.x = float(sd) * 0.55
-	lib.box(g, "大棟", Vector3(25.4, 0.4, 1.2), _mat("kawara"), Vector3(0, 7.15, 0))
+	lib.gable_roof(g, 4.4, 25.0, 15.0, 0.5, 0.34, _mat("kawara"), _mat("plaster"))
 	_collide(g, Vector3(22.4, 6.2, 12.4))
 	_claim(cx, cz, 25.0, 15.0)
 	# 前庭：手水缽與立札
@@ -432,11 +435,7 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	lib.box(g, "主屋基壇", Vector3(19.0, 0.55, 13.0), _mat("stone"), Vector3(-3.0, 0.28, -7.0))
 	lib.box(g, "主屋", Vector3(17.5, 4.0, 11.5), _mat("plaster"), Vector3(-3.0, 2.55, -7.0))
 	lib.box(g, "緣側", Vector3(18.4, 0.26, 2.0), _mat("wood"), Vector3(-3.0, 0.68, -0.8))
-	for sd in [-1, 1]:
-		var sl := lib.box(g, "主屋根_%d" % (sd + 1), Vector3(20.0, 0.32, 9.4), _mat("kawara"),
-			Vector3(-3.0, 5.8, -7.0 + float(sd) * 3.3))
-		sl.rotation.x = float(sd) * 0.56
-	lib.box(g, "主屋棟", Vector3(20.4, 0.36, 1.1), _mat("kawara"), Vector3(-3.0, 7.0, -7.0))
+	lib.gable_roof(g, 4.55, 20.0, 14.0, 0.5, 0.32, _mat("kawara"), _mat("plaster"), Vector3(-3.0, 0, -7.0))
 	_collide(g, Vector3(17.9, 6.2, 11.9), Vector3(-3.0, 0, -7.0))
 	# 長廊（連到東側的離れ）
 	lib.box(g, "長廊", Vector3(2.4, 0.24, 14.0), _mat("wood"), Vector3(8.0, 0.7, -2.0))
@@ -459,6 +458,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	var water := ShaderMaterial.new()
 	water.shader = load("res://assets/shaders/water.gdshader")
 	water.set_shader_parameter("wave_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	water.set_shader_parameter("bank_scale", 0.0)   # CylinderMesh 沒頂點色，不設 0 會整片變泡沫
+	water.set_shader_parameter("deep_color", Color(0.09, 0.22, 0.24))
 	pm.material = water
 	pond.mesh = pm
 	pond.position = Vector3(-2.0, 0.12, 8.0)
@@ -486,13 +487,7 @@ func _blk_ashiarai(parent: Node, bx: float, bz: float) -> void:
 			_mat("mud"), Vector3(w[0], 0.8, w[1]))
 	lib.box(g, "母屋基壇", Vector3(16.0, 0.5, 12.0), _mat("stone"), Vector3(0, 0.25, -2.0))
 	lib.box(g, "母屋", Vector3(14.5, 3.6, 10.5), _mat("dark"), Vector3(0, 2.3, -2.0))
-	for sd in [-1, 1]:
-		var sl := lib.box(g, "屋根_%d" % (sd + 1), Vector3(17.0, 0.5, 8.0), _mat("thatch"),
-			Vector3(0, 5.0, -2.0 + float(sd) * 2.8))
-		sl.rotation.x = float(sd) * 0.66
-		if sd > 0:
-			sl.rotation.z = 0.12          # 塌陷的一角
-	lib.box(g, "棟", Vector3(17.2, 0.45, 0.9), _mat("thatch"), Vector3(0, 6.1, -2.0))
+	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _mat("thatch"), _mat("dark"), Vector3(0, 0, -2.0))
 	_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
 	_claim(bx, bz, 18.0, 14.0)
 
@@ -650,6 +645,47 @@ func _build_bridge() -> void:
 		body.add_child(shape)
 		shape.owner = lib.root
 
+# ── 水路上的小木橋（柱狀地圖：多座橋橫貫村里） ──
+func _build_canal_bridges() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "CanalBridges")
+	var wood := _mat("wood")
+	var dark := _mat("dark")
+	var stone := _mat("stone")
+	for i in CANAL_BRIDGES.size():
+		var bx: float = CANAL_BRIDGES[i]
+		# 水路在這個 x 的實際 z（折線內插）
+		var bz := 85.0
+		for k in CANAL.size() - 1:
+			var a: Array = CANAL[k]
+			var b: Array = CANAL[k + 1]
+			if bx >= a[0] and bx <= b[0]:
+				bz = a[1] + (b[1] - a[1]) * ((bx - a[0]) / maxf(b[0] - a[0], 0.001))
+				break
+		var p := Node3D.new()
+		p.position = Vector3(bx, height_at(bx, bz) + CANAL_DEPTH + 0.35, bz)
+		lib.add(g, p, "水路橋_%d" % i)
+		var span := CANAL_HALF * 2.0 + 4.4
+		lib.box(p, "橋板", Vector3(3.6, 0.28, span), wood, Vector3.ZERO)
+		for sd in [-1, 1]:
+			lib.box(p, "橋台_%d" % (sd + 1), Vector3(3.8, CANAL_DEPTH + 0.9, 1.4), stone,
+				Vector3(0, -(CANAL_DEPTH + 0.9) * 0.5, float(sd) * (span * 0.5 - 0.7)))
+			# 欄杆
+			lib.box(p, "欄_%d" % (sd + 1), Vector3(0.12, 0.1, span), dark, Vector3(float(sd) * 1.7, 0.75, 0))
+			for k2 in 3:
+				lib.cyl(p, "欄柱_%d_%d" % [sd + 1, k2], 0.07, 0.07, 0.85, dark,
+					Vector3(float(sd) * 1.7, 0.42, -span * 0.35 + float(k2) * span * 0.35), 5)
+		var body := StaticBody3D.new()
+		p.add_child(body)
+		body.owner = lib.root
+		var shape := CollisionShape3D.new()
+		var bs := BoxShape3D.new()
+		bs.size = Vector3(3.6, 0.3, span)
+		shape.shape = bs
+		body.add_child(shape)
+		shape.owner = lib.root
+		_claim(bx, bz, 4.5, span + 1.0)
+	print("canal bridges: ", CANAL_BRIDGES.size())
+
 # ── 生活痕跡（街邊） ──
 func _build_props() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "Props")
@@ -709,8 +745,8 @@ func _build_gates() -> void:
 	var dark := _mat("dark")
 	var kawara := _mat("kawara")
 	var defs := [
-		{ "name": "北門", "x": 0.0, "z": -152.0, "yaw": 0.0 },
-		{ "name": "西南門", "x": -120.0, "z": 96.0, "yaw": 0.42 },
+		{ "name": "北門", "x": 0.0, "z": -215.0, "yaw": 0.0 },
+		{ "name": "西南門", "x": -172.0, "z": 92.0, "yaw": 0.42 },
 	]
 	for d in defs:
 		var g := Node3D.new()
@@ -760,7 +796,7 @@ func _build_trees() -> void:
 		variants.append({ "mesh": lib.tree_mesh(glb), "list": [] })
 	var count := 0
 	var tries := 0
-	while count < 1200 and tries < 60000:
+	while count < 2600 and tries < 130000:
 		tries += 1
 		var x := lib.rr(-HALF + 3.0, HALF - 3.0)
 		var z := lib.rr(-HALF + 3.0, HALF - 3.0)
@@ -770,6 +806,8 @@ func _build_trees() -> void:
 			continue
 		if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 1.4:
 			continue
+		if lib.poly_dist(CANAL, x, z) < CANAL_HALF * 2.2:
+			continue
 		var r0 := Vector2(x, z - PLAZA.y).length()
 		if r0 < CORE:
 			# 里內：只長在街區內庭的空隙（參考圖：每個院子都有一兩棵樹）
@@ -778,7 +816,7 @@ func _build_trees() -> void:
 			if lib.rand() > 0.35:
 				continue
 			_claim(x, z, 5.0, 5.0)
-		elif lib.rand() > (0.45 if r0 < 195.0 else 0.85):
+		elif lib.rand() > 0.7:      # 田環帶外側一路長到圖邊，遠景才不會空一塊
 			continue
 		var y := height_at(x, z)
 		var s := lib.rr(0.9, 1.7)
@@ -805,9 +843,9 @@ func _build_grass() -> void:
 	var reed := lib.tuft_mesh(6, 0.62, 0.14, Color(0.18, 0.28, 0.12), Color(0.52, 0.56, 0.28))
 	reed.surface_set_material(0, lib.grass_wind_mat(0.13))
 	var groups := [
-		{ "mesh": tall, "n": 1500, "file": "grass_tall", "mode": "wild" },
+		{ "mesh": tall, "n": 2600, "file": "grass_tall", "mode": "wild" },
 		{ "mesh": flower, "n": 240, "file": "grass_flower", "mode": "wild" },
-		{ "mesh": rice, "n": 3200, "file": "rice_rows", "mode": "field" },
+		{ "mesh": rice, "n": 3600, "file": "rice_rows", "mode": "field" },
 		{ "mesh": reed, "n": 800, "file": "reeds", "mode": "shore" },
 	]
 	var total := 0
@@ -827,12 +865,17 @@ func _build_grass() -> void:
 				z = snappedf(z, 1.4) + lib.rr(-0.12, 0.12)
 			elif mode == "shore":
 				var rd := lib.poly_dist(RIVER, x, z)
-				if rd < RIVER_HALF * 0.85 or rd > RIVER_HALF * 2.0:
+				var cd := lib.poly_dist(CANAL, x, z)
+				var on_river := rd >= RIVER_HALF * 0.85 and rd <= RIVER_HALF * 2.0
+				var on_canal := cd >= CANAL_HALF * 1.1 and cd <= CANAL_HALF * 2.3
+				if not (on_river or on_canal):
 					continue
 			else:
 				if _path_info(x, z)[0] < 1.0 or _field_w(x, z) > 0.2:
 					continue
 				if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 1.2:
+					continue
+				if lib.poly_dist(CANAL, x, z) < CANAL_HALF * 1.8:
 					continue
 				var r0 := Vector2(x, z - PLAZA.y).length()
 				if lib.rand() > (0.1 if r0 < CORE else 0.6):
