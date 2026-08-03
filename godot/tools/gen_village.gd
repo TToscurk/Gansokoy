@@ -55,8 +55,8 @@ const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0]
 	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
 # ── 水路（貫穿村里的水渠，多座小橋橫過 —— 柱狀地圖裡那些白色帶狀物） ──
 const CANAL := [[-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5], [60.0, 86.0], [140.0, 84.5], [200.0, 85.5]]
-const CANAL_HALF := 2.1
-const CANAL_DEPTH := 1.5
+const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
+const CANAL_DEPTH := 2.0
 const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
 const RIVER_HALF := 8.0
 const RIVER_DEPTH := 2.8
@@ -157,12 +157,18 @@ func _init() -> void:
 	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble")   # 街道鋪石板
 	lib.boundary(HALF - 2.0)
 	lib.river_water(OUT_DIR, RIVER, RIVER_HALF, RIVER_DEPTH * 0.35, bank_h)
-	lib.river_water(OUT_DIR, CANAL, CANAL_HALF, CANAL_DEPTH * 0.4, bank_h, "Canal")
+	# 水色照參考圖：飽和的藍綠，不是淡青
+	var canal_w := lib.river_water(OUT_DIR, CANAL, CANAL_HALF, CANAL_DEPTH * 0.35, bank_h, "Canal")
+	var cm: ShaderMaterial = canal_w.material_override
+	cm.set_shader_parameter("deep_color", Color(0.06, 0.24, 0.32))
+	cm.set_shader_parameter("shallow_color", Color(0.16, 0.44, 0.50))
+	cm.set_shader_parameter("bank_scale", 0.55)
 	lib.pond_water(OUT_DIR, GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, 0.55, bank_h, "庭池")
 	lib.pond_water(OUT_DIR, NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, 0.75, bank_h, "自然池", 0.22)
 	_build_blocks()
 	_build_bridge()
 	_build_canal_bridges()
+	_build_canal_banks()
 	_build_nature_pond()
 	_build_props()
 	_build_gates()
@@ -618,18 +624,62 @@ func _blk_ashiarai(parent: Node, bx: float, bz: float) -> void:
 func _blk_market(parent: Node, bx: float, bz: float) -> void:
 	var wood := _mat("wood")
 	var stone := _mat("stone")
-	# 龍神像（里的守護神）
+	# 龍神像（里的守護神・THBWiki 設施清單）
+	# v4 的版本只是「傾斜圓柱＋方塊頭」，看起來像石十字架 —— 使用者直接問
+	# 「這是什麼」。改成盤龍柱：龍身螺旋纏繞柱身、頭在頂端張口向天。
 	var d := Node3D.new()
 	d.position = Vector3(bx - 12.0, height_at(bx - 12.0, bz - 10.0), bz - 10.0)
 	lib.add(parent, d, "龍神像")
-	lib.box(d, "台座", Vector3(3.2, 1.2, 3.2), stone, Vector3(0, 0.6, 0))
-	lib.box(d, "台座上", Vector3(2.6, 0.3, 2.6), stone, Vector3(0, 1.35, 0))
-	var body := lib.cyl(d, "龍身", 0.34, 0.55, 4.2, stone, Vector3(0, 3.6, 0), 8)
-	body.rotation.z = 0.12
-	lib.box(d, "龍首", Vector3(1.5, 0.9, 1.1), stone, Vector3(0.55, 5.9, 0))
-	lib.box(d, "角", Vector3(0.2, 0.9, 0.2), stone, Vector3(0.2, 6.5, 0.3))
-	lib.box(d, "角b", Vector3(0.2, 0.9, 0.2), stone, Vector3(0.2, 6.5, -0.3))
-	_collide(d, Vector3(3.4, 6.5, 3.4))
+	# 基壇（三層收分）
+	lib.box(d, "基壇下", Vector3(4.4, 0.5, 4.4), stone, Vector3(0, 0.25, 0))
+	lib.box(d, "基壇中", Vector3(3.6, 0.45, 3.6), stone, Vector3(0, 0.72, 0))
+	lib.box(d, "基壇上", Vector3(2.9, 0.4, 2.9), stone, Vector3(0, 1.15, 0))
+	for i in 4:                                    # 基壇四角的擬寶珠
+		var ca := float(i) / 4.0 * TAU + PI * 0.25
+		lib.cyl(d, "角珠_%d" % i, 0.0, 0.22, 0.4, stone,
+			Vector3(cos(ca) * 1.75, 1.55, sin(ca) * 1.75), 6)
+	# 柱身
+	lib.cyl(d, "石柱", 0.42, 0.55, 5.2, stone, Vector3(0, 3.95, 0), 10)
+	# 盤龍：螺旋纏繞的身體（一節一節的石雕）
+	var segs := 22
+	for i in segs:
+		var t := float(i) / float(segs)
+		var ang := t * TAU * 2.4                   # 繞柱兩圈半
+		var ry := 1.9 + t * 4.6                    # 由下往上盤
+		var rad := 0.72 - t * 0.12
+		var thick := 0.44 - t * 0.16               # 尾端漸細
+		var seg := lib.box(d, "龍身_%02d" % i, Vector3(0.62, thick, thick), stone,
+			Vector3(cos(ang) * rad, ry, sin(ang) * rad))
+		seg.rotation = Vector3(0, -ang, 0.55)
+		if i % 4 == 1:                             # 背鰭
+			lib.box(d, "背鰭_%02d" % i, Vector3(0.12, 0.34, 0.16), stone,
+				Vector3(cos(ang) * (rad + 0.16), ry + 0.26, sin(ang) * (rad + 0.16)))
+		if i % 6 == 3:                             # 爪
+			var claw := lib.box(d, "爪_%02d" % i, Vector3(0.5, 0.16, 0.16), stone,
+				Vector3(cos(ang) * (rad + 0.42), ry - 0.2, sin(ang) * (rad + 0.42)))
+			claw.rotation = Vector3(0, -ang, -0.4)
+	# 龍首：頂端張口向天（上顎 + 下顎 + 角 + 鬚）
+	var head := Node3D.new()
+	head.position = Vector3(0.35, 6.85, 0)
+	head.rotation = Vector3(0, 0.4, -0.55)
+	lib.add(d, head, "龍首")
+	lib.box(head, "頭", Vector3(1.25, 0.62, 0.72), stone, Vector3(0, 0, 0))
+	lib.box(head, "上顎", Vector3(0.85, 0.22, 0.5), stone, Vector3(0.9, 0.12, 0))
+	var jaw := lib.box(head, "下顎", Vector3(0.75, 0.2, 0.44), stone, Vector3(0.82, -0.3, 0))
+	jaw.rotation.z = -0.3
+	for sd in [-1, 1]:
+		var horn := lib.cyl(head, "角_%d" % (sd + 1), 0.04, 0.11, 0.9, stone,
+			Vector3(-0.35, 0.5, float(sd) * 0.26), 6)
+		horn.rotation = Vector3(float(sd) * 0.35, 0, -0.45)
+		lib.cyl(head, "鬚_%d" % (sd + 1), 0.03, 0.05, 0.7, stone,
+			Vector3(0.75, -0.18, float(sd) * 0.3), 5).rotation = Vector3(float(sd) * 0.5, 0, 0.9)
+		lib.box(head, "眼_%d" % (sd + 1), Vector3(0.18, 0.16, 0.1), stone,
+			Vector3(0.22, 0.18, float(sd) * 0.33))
+	# 注連繩（神體的標記）與供物台
+	lib.cyl(d, "注連繩", 0.62, 0.62, 0.18, lib.pbr("shimenawa", "roof_thatch", 0.6, Color(1.05, 1.0, 0.85)),
+		Vector3(0, 2.3, 0), 12)
+	lib.box(d, "供物台", Vector3(1.3, 0.5, 0.8), stone, Vector3(0, 1.6, 2.1))
+	_collide(d, Vector3(4.4, 7.5, 4.4))
 	_claim(bx - 12.0, bz - 10.0, 4.0, 4.0)
 	# 攤位群
 	var cloths := [Color(0.62, 0.3, 0.26), Color(0.28, 0.36, 0.52), Color(0.72, 0.6, 0.3), Color(0.34, 0.46, 0.32)]
@@ -771,6 +821,118 @@ func _build_bridge() -> void:
 		body.add_child(shape)
 		shape.owner = lib.root
 
+# ── 石垣護岸 + 睡蓮 + 岸邊松（參考圖：《求聞編年史》的水路） ──
+func _build_canal_banks() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "水路護岸")
+	var stone := _mat("stone")
+	# 石垣：沿水路兩側砌牆，從河床砌到岸面
+	var n := 0
+	for k in CANAL.size() - 1:
+		var a := Vector2(CANAL[k][0], CANAL[k][1])
+		var b := Vector2(CANAL[k + 1][0], CANAL[k + 1][1])
+		var len_ab := a.distance_to(b)
+		var dir := (b - a).normalized()
+		var nrm := dir.orthogonal()
+		var steps := int(len_ab / 6.0)
+		for i in steps:
+			var t := (float(i) + 0.5) / float(steps)
+			var c := a.lerp(b, t)
+			for sd in [-1, 1]:
+				var p := c + nrm * (CANAL_HALF + 0.35) * float(sd)
+				var by := bank_h(p.x, p.y)
+				var wall := lib.box(g, "石垣_%d" % n, Vector3(6.2, CANAL_DEPTH + 0.6, 0.7), stone,
+					Vector3(p.x, by - (CANAL_DEPTH + 0.6) * 0.5 + 0.3, p.y))
+				wall.rotation.y = -atan2(dir.y, dir.x)
+				# 岸緣的收邊石（參考圖那圈白色石帶）
+				lib.box(g, "緣石_%d" % n, Vector3(6.2, 0.28, 1.1),
+					lib.pbr("edge_stone", "stone_wall", 0.5, Color(1.25, 1.25, 1.2)),
+					Vector3(p.x, by + 0.1, p.y)).rotation.y = -atan2(dir.y, dir.x)
+				n += 1
+	print("canal bank stones: ", n)
+
+	# 睡蓮與荷花（水面上的浮葉）
+	var pad_mesh := ArrayMesh.new()
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in 9:                                     # 圓葉（缺一角，睡蓮的特徵）
+		var a0 := float(i) / 9.0 * TAU * 0.92 + 0.3
+		var a1 := float(i + 1) / 9.0 * TAU * 0.92 + 0.3
+		st.set_color(Color(0.24, 0.42, 0.20))
+		st.add_vertex(Vector3.ZERO)
+		st.set_color(Color(0.32, 0.52, 0.24))
+		st.add_vertex(Vector3(cos(a0) * 0.45, 0, sin(a0) * 0.45))
+		st.set_color(Color(0.32, 0.52, 0.24))
+		st.add_vertex(Vector3(cos(a1) * 0.45, 0, sin(a1) * 0.45))
+	for p in 5:                                     # 花瓣
+		var pa := float(p) / 5.0 * TAU
+		st.set_color(Color(0.98, 0.94, 0.96))
+		st.add_vertex(Vector3(0.18, 0.03, 0))
+		st.set_color(Color(0.96, 0.82, 0.88))
+		st.add_vertex(Vector3(0.18 + cos(pa) * 0.14, 0.16, sin(pa) * 0.14))
+		st.set_color(Color(0.96, 0.82, 0.88))
+		st.add_vertex(Vector3(0.18 + cos(pa + 1.2) * 0.14, 0.16, sin(pa + 1.2) * 0.14))
+	st.generate_normals()
+	pad_mesh = st.commit()
+	var pad_mat := StandardMaterial3D.new()
+	pad_mat.vertex_color_use_as_albedo = true
+	pad_mat.roughness = 0.85
+	pad_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	pad_mesh.surface_set_material(0, pad_mat)
+	var pads: Array[Transform3D] = []
+	var tries := 0
+	while pads.size() < 190 and tries < 9000:
+		tries += 1
+		var x := lib.rr(-190.0, 200.0)
+		var z := lib.rr(78.0, 94.0)
+		var cd := lib.poly_dist(CANAL, x, z)
+		if cd > CANAL_HALF * 0.8:
+			continue
+		if lib.rand() < 0.55:                        # 成叢生長，不要均勻散佈
+			continue
+		var sc := lib.rr(0.7, 1.5)
+		pads.append(Transform3D(Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(sc, sc, sc)),
+			Vector3(x, bank_h(x, z) - CANAL_DEPTH * 0.4 + 0.03, z)))
+	var pmm := MultiMeshInstance3D.new()
+	pmm.multimesh = lib.make_multimesh(pad_mesh, pads, [], OUT_DIR + "gen/lilypads.res")
+	pmm.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	lib.add(g, pmm, "睡蓮")
+
+	# 岸邊松（參考圖：水路兩側成排的松）
+	var pines: Array[Transform3D] = []
+	var t2 := 0
+	while pines.size() < 26 and t2 < 3000:
+		t2 += 1
+		var px := lib.rr(-180.0, 190.0)
+		var side := 1.0 if lib.rand() < 0.5 else -1.0
+		var pz := 85.0 + side * lib.rr(CANAL_HALF + 2.2, CANAL_HALF + 4.0)
+		# 這裡不能用 _free —— 它會把「靠近水路」整個排除，而岸邊松
+		# 本來就要種在水路旁。只檢查街道與既有佔位。
+		if _path_info(px, pz)[0] < 1.2:
+			continue
+		var blocked := false
+		for c in _cells(px, pz, 2.5, 2.5):
+			if not _grid.has(c):
+				continue
+			var bucket: Array = _grid[c]
+			for idx in bucket:
+				var r: Array = _rects[idx]
+				if absf(px - r[0]) < (2.5 + r[2] * 0.5) and absf(pz - r[1]) < (2.5 + r[3] * 0.5):
+					blocked = true
+					break
+			if blocked:
+				break
+		if blocked:
+			continue
+		_claim(px, pz, 5.0, 5.0)
+		var sc2 := lib.rr(0.8, 1.3)
+		pines.append(Transform3D(Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(sc2, sc2 * lib.rr(0.8, 1.0), sc2)),
+			Vector3(px, height_at(px, pz), pz)))
+	var pinemm := MultiMeshInstance3D.new()
+	pinemm.multimesh = lib.make_multimesh(lib.tree_mesh("res://assets/models/tree_pine_a.glb"),
+		pines, [], OUT_DIR + "gen/canal_pines.res")
+	lib.add(g, pinemm, "岸邊松")
+	print("canal pines: ", pines.size())
+
 # ── 自然池：不規則水岸、大小不一半埋的苔石（使用者要的「挖坑填水」）──
 func _build_nature_pond() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "自然池畔")
@@ -820,22 +982,22 @@ func _build_canal_bridges() -> void:
 		var p := Node3D.new()
 		p.position = Vector3(bx, height_at(bx, bz) + CANAL_DEPTH + 0.35, bz)
 		lib.add(g, p, "水路橋_%d" % i)
-		var span := CANAL_HALF * 2.0 + 4.4
-		lib.box(p, "橋板", Vector3(3.6, 0.28, span), wood, Vector3.ZERO)
+		var span := CANAL_HALF * 2.0 + 5.0
+		lib.box(p, "橋板", Vector3(4.2, 0.28, span), wood, Vector3.ZERO)
 		for sd in [-1, 1]:
-			lib.box(p, "橋台_%d" % (sd + 1), Vector3(3.8, CANAL_DEPTH + 0.9, 1.4), stone,
+			lib.box(p, "橋台_%d" % (sd + 1), Vector3(4.4, CANAL_DEPTH + 0.9, 1.6), stone,
 				Vector3(0, -(CANAL_DEPTH + 0.9) * 0.5, float(sd) * (span * 0.5 - 0.7)))
 			# 欄杆
-			lib.box(p, "欄_%d" % (sd + 1), Vector3(0.12, 0.1, span), dark, Vector3(float(sd) * 1.7, 0.75, 0))
+			lib.box(p, "欄_%d" % (sd + 1), Vector3(0.12, 0.1, span), dark, Vector3(float(sd) * 2.0, 0.75, 0))
 			for k2 in 3:
 				lib.cyl(p, "欄柱_%d_%d" % [sd + 1, k2], 0.07, 0.07, 0.85, dark,
-					Vector3(float(sd) * 1.7, 0.42, -span * 0.35 + float(k2) * span * 0.35), 5)
+					Vector3(float(sd) * 2.0, 0.42, -span * 0.35 + float(k2) * span * 0.35), 5)
 		var body := StaticBody3D.new()
 		p.add_child(body)
 		body.owner = lib.root
 		var shape := CollisionShape3D.new()
 		var bs := BoxShape3D.new()
-		bs.size = Vector3(3.6, 0.3, span)
+		bs.size = Vector3(4.2, 0.3, span)
 		shape.shape = bs
 		body.add_child(shape)
 		shape.owner = lib.root
@@ -1058,12 +1220,22 @@ func _build_env() -> void:
 	env.sky = sky
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
 	env.glow_enabled = true
+	# 亮度校正（使用者回報畫面過白）：天空環境光原本 1.05 直接灌滿畫面、
+	# glow 門檻又是預設值 → 亮部整片溢出。壓曝光 + 抬 glow 門檻 + 補對比。
+	env.glow_intensity = 0.45
+	env.glow_bloom = 0.05
+	env.glow_hdr_threshold = 1.25
+	env.tonemap_exposure = 0.82
+	env.tonemap_white = 4.0
+	env.adjustment_enabled = true
+	env.adjustment_contrast = 1.08
+	env.adjustment_saturation = 1.12
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.78, 0.78, 0.7)
 	env.fog_density = 0.0016
 	env.fog_sky_affect = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_energy = 1.05
+	env.ambient_light_energy = 0.55
 	# SDFGI 關閉：室外大場景會把畫面整個洗白（使用者回報），改靠天空環境光
 	env.sdfgi_enabled = false
 	env.ssao_enabled = true

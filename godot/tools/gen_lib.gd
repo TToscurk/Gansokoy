@@ -388,7 +388,7 @@ func river_carve(pts: Array, half_w: float, depth: float, x: float, z: float) ->
 
 ## 水面：沿河道折線鋪一條帶狀 mesh（頂點色 R = 靠岸程度，shader 用來做泡沫）
 ## bank_y_fn(x,z) 給岸邊地面高度；水面 = 岸高 - sink
-func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y_fn: Callable, name := "River") -> void:
+func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y_fn: Callable, name := "River") -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var rows := []
@@ -433,6 +433,7 @@ func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y
 	mi.material_override = mat
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add(root, mi, name)
+	return mi
 
 ## 池塘：地形凹陷（負值）—— 加進 height_at，地才是真的挖下去
 func pond_carve(cx: float, cz: float, r: float, depth: float, x: float, z: float, wobble := 0.0) -> float:

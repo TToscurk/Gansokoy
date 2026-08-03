@@ -231,12 +231,22 @@ func _build_env() -> void:
 	env.sky = sky
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
 	env.glow_enabled = true
+	# 亮度校正（使用者回報畫面過白）：天空環境光原本 1.05 直接灌滿畫面、
+	# glow 門檻又是預設值 → 亮部整片溢出。壓曝光 + 抬 glow 門檻 + 補對比。
+	env.glow_intensity = 0.45
+	env.glow_bloom = 0.05
+	env.glow_hdr_threshold = 1.25
+	env.tonemap_exposure = 0.82
+	env.tonemap_white = 4.0
+	env.adjustment_enabled = true
+	env.adjustment_contrast = 1.08
+	env.adjustment_saturation = 1.12
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.72, 0.75, 0.68)
 	env.fog_density = 0.0035         # 樹海要一點霧的縱深
 	env.fog_sky_affect = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_energy = 1.0
+	env.ambient_light_energy = 0.55
 	# SDFGI 關閉：室外大場景會把畫面整個洗白（使用者回報），改靠天空環境光
 	env.sdfgi_enabled = false
 	env.ssao_enabled = true
