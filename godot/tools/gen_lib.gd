@@ -320,6 +320,77 @@ func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
 	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add(root, mmi, "VistaTrees")
 
+# ── 河川（全世界共用：村、湖、澤都吃這組） ──
+## 折線最近距離（河道中心線）
+func poly_dist(pts: Array, x: float, z: float) -> float:
+	var p := Vector2(x, z)
+	var best := INF
+	for k in pts.size() - 1:
+		best = minf(best, _seg_dist(p, Vector2(pts[k][0], pts[k][1]), Vector2(pts[k + 1][0], pts[k + 1][1])))
+	return best
+
+func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
+	var ab := b - a
+	var t := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 0.0001), 0.0, 1.0)
+	return p.distance_to(a + ab * t)
+
+## 地形下切量（負值）：河床是 U 形斷面，岸邊平滑收斂 —— 加進 height_at
+func river_carve(pts: Array, half_w: float, depth: float, x: float, z: float) -> float:
+	var d := poly_dist(pts, x, z)
+	if d > half_w * 2.2:
+		return 0.0
+	# 中央最深，往外 cos 收斂到 0（外緣 2.2 倍寬處完全沒影響）
+	var t := clampf(d / (half_w * 2.2), 0.0, 1.0)
+	return -depth * (0.5 + 0.5 * cos(t * PI))
+
+## 水面：沿河道折線鋪一條帶狀 mesh（頂點色 R = 靠岸程度，shader 用來做泡沫）
+## bank_y_fn(x,z) 給岸邊地面高度；水面 = 岸高 - sink
+func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y_fn: Callable, name := "River") -> void:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rows := []
+	var steps := 8       # 每段細分
+	for k in pts.size() - 1:
+		var a := Vector2(pts[k][0], pts[k][1])
+		var b := Vector2(pts[k + 1][0], pts[k + 1][1])
+		var n := (b - a).normalized().orthogonal()
+		var last := k == pts.size() - 2
+		for s in range(steps + (1 if last else 0)):
+			var t := float(s) / float(steps)
+			var c := a.lerp(b, t)
+			var y: float = float(bank_y_fn.call(c.x, c.y)) - sink
+			rows.append([c - n * half_w, c, c + n * half_w, y])
+	for r in rows.size() - 1:
+		var r0 = rows[r]
+		var r1 = rows[r + 1]
+		# 左半 + 右半（中央一排頂點讓 bank 漸層有中間值）
+		for half in 2:
+			var i0: int = half
+			var i1: int = half + 1
+			var c0 := 1.0 if half == 0 else 0.0
+			var c1 := 0.0 if half == 0 else 1.0
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r0[i0].x, r0[3], r0[i0].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r0[i1].x, r0[3], r0[i1].y))
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r1[i0].x, r1[3], r1[i0].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r0[i1].x, r0[3], r0[i1].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r1[i1].x, r1[3], r1[i1].y))
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r1[i0].x, r1[3], r1[i0].y))
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/water.gdshader")
+	mat.set_shader_parameter("wave_nor", load("res://assets/textures/terrain_sand_nor_gl.jpg")
+		if ResourceLoader.exists("res://assets/textures/terrain_sand_nor_gl.jpg")
+		else load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.render_priority = 1
+	ResourceSaver.save(mat, MAT_DIR + "water.tres")
+	mat.take_over_path(MAT_DIR + "water.tres")
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add(root, mi, name)
+
 # ── 空氣牆 ──
 func boundary(half: float) -> void:
 	var body := StaticBody3D.new()

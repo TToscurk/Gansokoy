@@ -17,7 +17,6 @@ background_mode = 2
 sky = SubResource("skyres")
 tonemap_mode = 3
 ssao_enabled = true
-sdfgi_enabled = true
 glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.75, 0.8, 0.86, 1)

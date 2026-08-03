@@ -758,7 +758,8 @@ func _build_env() -> void:
 	env.glow_enabled = true
 	# 效能放開（使用者指示不受本機規格侷限）：Forward+ 下生效，
 	# 相容模式自動忽略 —— SDFGI 全域光照 + SSAO 接觸陰影 + 體積霧
-	env.sdfgi_enabled = true
+	# SDFGI 關閉：室外大場景會把畫面整個洗白（使用者回報），改靠天空環境光
+	env.sdfgi_enabled = false
 	env.ssao_enabled = true
 	env.volumetric_fog_enabled = true
 	env.volumetric_fog_density = 0.015

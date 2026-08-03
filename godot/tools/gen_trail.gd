@@ -237,7 +237,8 @@ func _build_env() -> void:
 	env.fog_sky_affect = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	env.ambient_light_energy = 1.0
-	env.sdfgi_enabled = true
+	# SDFGI 關閉：室外大場景會把畫面整個洗白（使用者回報），改靠天空環境光
+	env.sdfgi_enabled = false
 	env.ssao_enabled = true
 	env.volumetric_fog_enabled = true
 	env.volumetric_fog_density = 0.018
