@@ -19,37 +19,23 @@ const HALF := 300.0
 const PLAZA := Vector2(0.0, 30.0)
 const CORE := 196.0
 
-# ── 街道格：南北 x = -104/-52/0/52/104、東西 z = -135/-80/-25/30/85/140 ──
-const ST_X := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
-const ST_Z := [-190.0, -135.0, -80.0, -25.0, 30.0, 85.0, 140.0, 195.0]
-const BLOCK_X := [-130.0, -78.0, -26.0, 26.0, 78.0, 130.0]   # 街區中心
-const BLOCK_Z := [-162.0, -107.0, -52.0, 2.0, 57.0, 112.0, 167.0]
+# ── 街道網（ADR-010）──
+# v8 以前是寫死的 6×7 方格 + 11m 寬的本通。兩個數字合起來就是「太模組化」
+# 的真兇：街寬 11m → 建築被推遠 → 街景空曠；等距方格 → 每個街區長一樣。
+# 現在改成**執行期長出來**：主街緩彎，巷道從主街分岔、長度不一、會拐彎。
+const MAIN_W := 8.0          # 本通（真實宿場町的主街大約 6~8m）
+const CROSS_W := 6.5         # 橫町
+const LANE_W := 3.6          # 巷道（真實村落巷道 2~4m）
+const ALLEY_W := 2.8         # 小路
+## 圍院型建物（稗田邸、足洗邸）的院子尺寸 —— 不再是街區的尺寸
 const BLOCK_W := 42.0
 const BLOCK_D := 45.0
 
-const PATH_SEGMENTS := [
-	# 本通（主街・南北貫穿，最寬）
-	{ "width": 11.0, "pts": [[0.0, -240.0], [0.0, -120.0], [0.0, 30.0], [0.0, 160.0], [0.0, 250.0]] },
-	# 橫町（0.2 條・東西中段，東端過橋）
-	{ "width": 9.0, "pts": [[-190.0, 30.0], [-104.0, 30.0], [0.0, 30.0], [104.0, 30.0], [190.0, 30.0], [232.0, 30.0]] },
-	# 其餘南北街（ST_X 除了本通）
-	{ "width": 7.0, "pts": [[-156.0, -190.0], [-156.0, 0.0], [-156.0, 195.0]] },
-	{ "width": 7.0, "pts": [[-104.0, -190.0], [-104.0, 0.0], [-104.0, 195.0]] },
-	{ "width": 7.0, "pts": [[-52.0, -190.0], [-52.0, 0.0], [-52.0, 195.0]] },
-	{ "width": 7.0, "pts": [[52.0, -190.0], [52.0, 0.0], [52.0, 195.0]] },
-	{ "width": 7.0, "pts": [[104.0, -190.0], [104.0, 0.0], [104.0, 195.0]] },
-	{ "width": 7.0, "pts": [[156.0, -190.0], [156.0, 0.0], [156.0, 195.0]] },
-	# 其餘東西街
-	{ "width": 7.0, "pts": [[-182.0, -190.0], [0.0, -190.0], [182.0, -190.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -135.0], [0.0, -135.0], [182.0, -135.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -80.0], [0.0, -80.0], [182.0, -80.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -25.0], [0.0, -25.0], [182.0, -25.0]] },
-	{ "width": 7.5, "pts": [[-182.0, 85.0], [0.0, 85.0], [182.0, 85.0]] },
-	{ "width": 7.0, "pts": [[-182.0, 140.0], [0.0, 140.0], [182.0, 140.0]] },
-	{ "width": 7.0, "pts": [[-182.0, 195.0], [0.0, 195.0], [182.0, 195.0]] },
-	# 西南門引道（香霖堂）
-	{ "width": 5.2, "pts": [[-132.0, 100.0], [-145.0, 98.0], [-156.0, 94.0]] },
-]
+## 執行期生成：[{ "width": float, "pts": [Vector2...], "rank": int }]
+## rank 0=主街 1=巷 2=小路。terrain 的路面遮罩也讀這份，所以要在
+## lib.terrain() 之前先長好。
+var _streets: Array = []
+
 # ── 河（東側，橫町東端石橋跨過；北端往圖外＝河畔道接口） ──
 const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
 	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
@@ -57,7 +43,8 @@ const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0]
 const CANAL := [[-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5], [60.0, 86.0], [140.0, 84.5], [200.0, 85.5]]
 const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
 const CANAL_DEPTH := 2.0
-const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
+## 水路橋的位置改成「巷道跟水路交會的地方」——街道網是長出來的，橋不能寫死
+var _canal_bridges: Array = []
 const RIVER_HALF := 8.0
 const RIVER_DEPTH := 2.8
 const BRIDGE := Vector2(221.0, 30.0)
@@ -72,13 +59,6 @@ const NATURE_POND_DEPTH := 2.4
 const NATURE_POND_SINK := 0.75
 
 ## 街區用途（依 THBWiki 設施清單配置）
-const BLOCK_KIND := {
-	"-26,-52": "terakoya", "26,-52": "suzunaan",
-	"-78,2": "hieda", "26,2": "unomitei",
-	"-26,57": "market", "26,57": "tower",
-	"26,112": "ashiarai",
-}
-
 var lib: Lib
 var _nh: FastNoiseLite
 var _n2: FastNoiseLite
@@ -86,6 +66,144 @@ var _rects: Array = []
 ## 門面清單（Frontage）：每筆 { pos: Vector2 世界座標, dir: Vector2 朝外方向,
 ## shop: bool, width: float, ground: float }。地板裝飾靠這份清單對齊門口。
 var _frontages: Array = []
+var _tries := 0
+var _rej_free := 0
+var _rej_far := 0
+var _rej_density := 0
+var _rej_water := 0
+var _rej_path := 0
+var _rej_rect := 0
+var _n_wall := 0
+
+# ═══════════════════════ 街道網的生成（ADR-010）═════════════════════════
+## 沿一條折線走，每 step 取一點，回傳 [Vector2...]
+func _walk(start: Vector2, heading: float, length: float, wobble: float, step := 12.0) -> Array:
+	var pts: Array[Vector2] = [start]
+	var p := start
+	var a := heading
+	var n := maxi(int(length / step), 2)
+	for i in n:
+		a += lib.rr(-wobble, wobble)
+		p += Vector2(cos(a), sin(a)) * step
+		pts.append(p)
+	return pts
+
+## 折線上取一點（t = 0~1）與該處切線
+func _along(pts: Array, t: float) -> Array:
+	var n := pts.size() - 1
+	var ft := clampf(t, 0.0, 0.9999) * float(n)
+	var i := int(ft)
+	var f := ft - float(i)
+	var a: Vector2 = pts[i]
+	var b: Vector2 = pts[mini(i + 1, n)]
+	return [a.lerp(b, f), (b - a).normalized()]
+
+func _gen_streets() -> void:
+	_streets.clear()
+	# 本通：南北貫穿，緩彎（振幅約 ±14m，走 500m）
+	var spine: Array[Vector2] = []
+	for i in 29:
+		var z := -250.0 + float(i) * (500.0 / 28.0)
+		spine.append(Vector2(sin(z * 0.0062) * 13.0 + sin(z * 0.0155 + 1.3) * 4.5, z))
+	_streets.append({ "width": MAIN_W, "pts": spine, "rank": 0 })
+
+	# 橫町：東西，通到河邊的石橋
+	var cross: Array[Vector2] = []
+	for i in 25:
+		var x := -205.0 + float(i) * (440.0 / 24.0)
+		cross.append(Vector2(x, 30.0 + sin(x * 0.0075) * 8.0 + sin(x * 0.019 + 0.7) * 2.5))
+	_streets.append({ "width": CROSS_W, "pts": cross, "rank": 0 })
+
+	# 巷道：從本通往東西分岔。間距不等、長度不等、會拐彎、不是每個路口兩邊都有。
+	var z_at := -235.0
+	while z_at < 240.0:
+		# 街廓寬度至少要放得下「兩排背對背的房子」：
+		# (街半寬 + 1.1 + 進深) × 2 ≈ 22m 是下限，低於這個值整排都會被擠掉
+		z_at += lib.rr(27.0, 46.0)
+		if absf(z_at - 30.0) < 20.0:            # 橫町附近不要再開巷
+			continue
+		var t := (z_at + 250.0) / 500.0
+		var info := _along(spine, t)
+		var base: Vector2 = info[0]
+		for sd in [-1.0, 1.0]:
+			if lib.rand() < 0.14:                # 有些路口只有一邊有巷
+				continue
+			var head := 0.0 if sd > 0.0 else PI
+			head += lib.rr(-0.16, 0.16)
+			# 巷長依「離村心多遠」收斂 —— 村邊的巷本來就短
+			var room: float = maxf(CORE * 0.92 - absf(z_at - PLAZA.y), 30.0)
+			var pts := _walk(base, head, minf(lib.rr(45.0, 155.0), room), 0.075, 12.0)
+			_streets.append({ "width": lib.rr(LANE_W - 0.5, LANE_W + 0.7), "pts": pts, "rank": 1 })
+
+	# 橫町也長巷（南北向），村子才不會只有東西向的紋理
+	var x_at := -190.0
+	while x_at < 190.0:
+		x_at += lib.rr(28.0, 50.0)
+		if absf(x_at) < 22.0:
+			continue
+		var info2 := _along(cross, (x_at + 205.0) / 440.0)
+		var base2: Vector2 = info2[0]
+		for sd2 in [-1.0, 1.0]:
+			if lib.rand() < 0.3:
+				continue
+			var head2 := (PI * 0.5 if sd2 > 0.0 else -PI * 0.5) + lib.rr(-0.16, 0.16)
+			var room2: float = maxf(CORE * 0.92 - absf(x_at), 28.0)
+			var pts2 := _walk(base2, head2, minf(lib.rr(40.0, 135.0), room2), 0.07, 12.0)
+			_streets.append({ "width": lib.rr(LANE_W - 0.6, LANE_W + 0.4), "pts": pts2, "rank": 1 })
+
+	# 小路：從巷再分岔，短、常常是死路（村落的巷弄感）
+	var lanes := _streets.slice(2)
+	for st in lanes:
+		if lib.rand() < 0.3:
+			continue
+		var info3 := _along(st.pts, lib.rr(0.25, 0.8))
+		var d3: Vector2 = info3[1]
+		var head3 := atan2(d3.y, d3.x) + (PI * 0.5 if lib.rand() < 0.5 else -PI * 0.5)
+		_streets.append({
+			"width": lib.rr(ALLEY_W - 0.4, ALLEY_W + 0.4),
+			"pts": _walk(info3[0], head3 + lib.rr(-0.2, 0.2), lib.rr(22.0, 62.0), 0.10, 11.0),
+			"rank": 2,
+		})
+
+	# 西南門引道（香霖堂方向）
+	_streets.append({ "width": 4.4, "pts": [Vector2(-132.0, 100.0), Vector2(-145.0, 98.0),
+		Vector2(-158.0, 94.0)], "rank": 1 })
+
+	# 水路橋：巷道跟水路交會的地方各架一座
+	_canal_bridges.clear()
+	for st in _streets:
+		var pts: Array = st.pts
+		for k in pts.size() - 1:
+			var a: Vector2 = pts[k]
+			var b: Vector2 = pts[k + 1]
+			var da := lib.poly_dist(CANAL, a.x, a.y)
+			var db := lib.poly_dist(CANAL, b.x, b.y)
+			if (da > CANAL_HALF) == (db > CANAL_HALF):
+				continue
+			var mid: Vector2 = a.lerp(b, 0.5)
+			if absf(mid.x) > 200.0:
+				continue
+			var dup := false
+			for c in _canal_bridges:
+				if absf(float(c) - mid.x) < 16.0:
+					dup = true
+					break
+			if not dup:
+				_canal_bridges.append(mid.x)
+	# 交會點太少就補 —— 水路兩岸的連通完全靠橋，橋太少會把村子切成兩半
+	var guard := 0
+	while _canal_bridges.size() < 6 and guard < 60:
+		guard += 1
+		var gx := lib.rr(-170.0, 180.0)
+		var ok := true
+		for c in _canal_bridges:
+			if absf(float(c) - gx) < 30.0:
+				ok = false
+				break
+		if ok:
+			_canal_bridges.append(gx)
+	_canal_bridges.sort()
+	print("streets: ", _streets.size(), " / canal bridges: ", _canal_bridges.size())
 
 func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
 	var ab := b - a
@@ -96,13 +214,13 @@ func _path_info(x: float, z: float) -> Array:
 	var p := Vector2(x, z)
 	var edge := INF
 	var mask := 0.0
-	for seg in PATH_SEGMENTS:
+	for seg in _streets:
 		var pts: Array = seg.pts
 		var w: float = seg.width
 		for k in pts.size() - 1:
-			var d := _seg_dist(p, Vector2(pts[k][0], pts[k][1]), Vector2(pts[k + 1][0], pts[k + 1][1]))
+			var d := _seg_dist(p, pts[k], pts[k + 1])
 			edge = minf(edge, maxf(0.0, d - w * 0.5))
-			mask = maxf(mask, 1.0 - smoothstep(w * 0.5 - 0.5, w * 0.5 + 2.0, d))
+			mask = maxf(mask, 1.0 - smoothstep(w * 0.5 - 0.5, w * 0.5 + 1.6, d))
 	return [edge, mask]
 
 func _field_w(x: float, z: float) -> float:
@@ -161,6 +279,7 @@ func _init() -> void:
 	lib = Lib.new()
 	lib.setup(root, 20260810)
 
+	_gen_streets()          # 路面遮罩與所有擺放都靠它，一定要在 terrain 之前
 	# 街道鋪石板；草地壓黃補綠（使用者回報「村內草地偏黃」）
 	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble", Color(0.60, 0.94, 0.55))
 	lib.boundary(HALF - 2.0)
@@ -244,13 +363,15 @@ func _free_for_apron(cx: float, cz: float, w: float, d: float, own: int) -> bool
 				return false
 	return true
 
-func _free(cx: float, cz: float, w: float, d: float, margin := 0.6) -> bool:
+## path_clear：離街緣至少要留多少。沿街排屋本來就該貼著街走，
+## 用預設的 0.6 會把整排房子擋掉（v9 第一版只蓋出 2 棟）。
+func _free(cx: float, cz: float, w: float, d: float, margin := 0.6, path_clear := 0.6) -> bool:
 	var hw := w * 0.5 + margin
 	var hd := d * 0.5 + margin
 	# 邊中點也要取樣 —— 只測四角的話，長屋的側邊會壓在街上（v2 的 bug）
 	for c in [[cx - hw, cz - hd], [cx + hw, cz - hd], [cx - hw, cz + hd], [cx + hw, cz + hd],
 			[cx, cz], [cx - hw, cz], [cx + hw, cz], [cx, cz - hd], [cx, cz + hd]]:
-		if _path_info(c[0], c[1])[0] < 0.6:
+		if _path_info(c[0], c[1])[0] < path_clear:
 			return false
 	if lib.poly_dist(RIVER, cx, cz) < RIVER_HALF * 1.9:
 		return false
@@ -342,8 +463,10 @@ func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
 ## 長屋：街區周邊的長條建築。ridge_along_x = 屋脊沿 x 軸（南北向的牆用）
 ## flip = 立面轉 180 度。v7 的立面永遠朝本地 +z，於是街區北側與西側的長屋
 ## 「玄關開向自家中庭」—— 這也是店前鋪面永遠對不齊門口的根本原因。
+## face_yaw：立面朝向（弧度）。給了就用它，沿街排屋靠這個對齊街的法線。
 func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float, depth: float,
-		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false) -> void:
+		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false,
+		face_yaw := INF) -> void:
 	var wall := _mat("plaster") if lib.rand() < 0.6 else _mat("mud")
 	var dark := _mat("dark")
 	var stone := _mat("stone")
@@ -355,6 +478,8 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var yaw := 0.0 if ridge_along_x else PI / 2.0
 	if flip:
 		yaw += PI
+	if face_yaw != INF:
+		yaw = face_yaw
 	g.rotation.y = yaw
 	lib.add(parent, g, name)
 	# 本體（本地座標一律「長邊沿 x」，靠 rotation 轉向）
@@ -460,107 +585,170 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 		"width": minf(bw, 3.2), "ground": float(gu[0]), "own": own,
 	})
 
-## 土塀：街區外圍的圍牆（帶瓦冠）
-func _wall_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
-	if length < 1.0:
-		return
-	var gw := _ground_under(cx, cz, length if along_x else 0.6, 0.6 if along_x else length)
+# ═══════════════════════ 聚落（沿街排屋）═══════════════════════════════
+## v8 以前是「填滿方格」：每個街區四邊各放一棟長屋、缺口補土塀。
+## 那產生的是六排一模一樣的圍院。真實村落是**沿街長出來的** ——
+## 房子貼著街緣一棟接一棟，中間偶爾有門、有巷口、有空地。
+## 這裡照後者做：走每一條街，兩側各排一排房子，門面自動朝街。
+func _build_blocks() -> void:
+	var root := lib.add(lib.root, Node3D.new(), "Blocks")
+	var n_house := 0
+	# 先放地標建築（它們要好位置），再讓一般民家去填剩下的沿街空間
+	n_house += _place_landmarks(root)
+	# 依等級排序：主街先挑位置，巷弄撿剩下的（不排的話大街會被小巷卡位）
+	var order: Array[int] = []
+	for r in 3:
+		for si in _streets.size():
+			if int(_streets[si].rank) == r:
+				order.append(si)
+	for si2 in order:
+		n_house += _street_row(root, _streets[si2], si2)
+	print("blocks built, longhouses: ", n_house, "  tries=", _tries, " rej_free=", _rej_free, " rej_far=", _rej_far, " rej_dens=", _rej_density, "  [water=", _rej_water, " path=", _rej_path, " rect=", _rej_rect, "] 沿街塀=", _n_wall)
+
+## 沿一條街的兩側排屋。
+## v9 第一版是「逐線段各自從 0 開始排」—— 線段只有 12m 長而房子間口可以到
+## 15m，於是每個線段交界都被重複佔用，八成的嘗試都撞在前一棟上。
+## 改成沿**整條折線的弧長**連續走。
+func _street_row(root: Node, st: Dictionary, si: int) -> int:
+	var pts: Array = st.pts
+	var half_w: float = float(st.width) * 0.5
+	var rank: int = int(st.rank)
+	# 主街的房子大、間口寬；巷弄裡的小而密
+	var depth_rng := Vector2(7.5, 10.0) if rank == 0 else Vector2(5.6, 8.0)
+	var span_rng := Vector2(8.0, 15.0) if rank == 0 else Vector2(5.5, 10.5)
+	# 累積弧長表，方便把「走了多遠」換算成折線上的點
+	var cum: Array[float] = [0.0]
+	for k in pts.size() - 1:
+		cum.append(cum[k] + (pts[k + 1] as Vector2).distance_to(pts[k]))
+	var total: float = cum[cum.size() - 1]
+	var n := 0
+	var g: Node3D = null
+	for sd in [-1.0, 1.0]:
+		var s := lib.rr(1.0, 5.0)
+		while s < total - 4.0:
+			var span: float = lib.rr(span_rng.x, span_rng.y)
+			var depth: float = lib.rr(depth_rng.x, depth_rng.y)
+			var at := _at_arc(pts, cum, s + span * 0.5)
+			var p: Vector2 = at[0]
+			var dir: Vector2 = at[1]
+			var nrm := dir.orthogonal()
+			var c: Vector2 = p + nrm * sd * (half_w + 1.1 + depth * 0.5)
+			s += span + lib.rr(0.2, 2.6)
+			# 密度隨離村心遞減：村心滿排、村邊稀疏，田環帶留給農地
+			var r0 := Vector2(c.x, c.y - PLAZA.y).length()
+			if r0 > CORE * 0.96:
+				_rej_far += 1
+				continue
+			if lib.rand() < smoothstep(CORE * 0.45, CORE * 0.95, r0) * 0.45:
+				_rej_density += 1
+				continue
+			# 立面朝街：本地 +z 要指向 -nrm*sd
+			var out: Vector2 = -nrm * sd
+			var yaw := atan2(out.x, out.y)
+			# 旋轉矩形的外接盒 = 兩軸投影相加（取 max 會低估，房子會互相咬）
+			var bb_w: float = absf(dir.x) * span + absf(nrm.x) * depth + 0.25
+			var bb_d: float = absf(dir.y) * span + absf(nrm.y) * depth + 0.25
+			# 町家是共壁的，留白給到 0.05 就好，不然整排會互相排擠掉一半
+			_tries += 1
+			if not _free(c.x, c.y, bb_w, bb_d, 0.05, 0.12):
+				_rej_free += 1
+				# 房子放不下就沿街補一段土塀：街緣才不會開天窗。
+				# 真實町並是「房子—塀—房子」連續的，空一大塊草地才是奇怪的。
+				# 塀貼在**建物線之前**（half_w+0.6），測試盒也要細 ——
+				# 拿 2.2 的盒去測會撞到旁邊房子的地權，一片塀都放不出來。
+				var fc: Vector2 = p + nrm * sd * (half_w + 0.6)
+				if _free(fc.x, fc.y, 0.7, 0.7, 0.0, 0.10):
+					if g == null:
+						g = lib.add(root, Node3D.new(), "町並_%d" % si)
+					_wall_run_yaw(g, "沿街塀_%d" % _n_wall, fc, minf(span, 9.0),
+						atan2(dir.x, dir.y) + PI * 0.5)
+					_n_wall += 1
+				# 哪一關擋的？
+				var hw2 := bb_w * 0.5 + 0.05
+				var hd2 := bb_d * 0.5 + 0.05
+				if lib.poly_dist(CANAL, c.x, c.y) < CANAL_HALF * 2.4 + maxf(hw2, hd2) * 0.5:
+					_rej_water += 1
+				elif lib.poly_dist(RIVER, c.x, c.y) < RIVER_HALF * 1.9:
+					_rej_water += 1
+				elif _path_info(c.x, c.y)[0] < 0.12:
+					_rej_path += 1
+				else:
+					_rej_rect += 1
+				continue
+			if g == null:
+				g = lib.add(root, Node3D.new(), "町並_%d" % si)
+			var storey := 2 if (rank == 0 and lib.rand() < 0.34) else (1 if lib.rand() < 0.88 else 2)
+			var roof := "kawara" if lib.rand() < (0.75 if rank == 0 else 0.5) else "thatch"
+			_longhouse(g, "町家_%d" % n, c.x, c.y, span, depth, true, storey, roof, false, yaw)
+			_claim(c.x, c.y, bb_w, bb_d)
+			n += 1
+			# 房子之間偶爾補一段土塀（真實町並就是這樣接起來的）
+			if lib.rand() < 0.35:
+				var wc: Vector2 = c + dir * (span * 0.5 + 1.6) + nrm * sd * (-depth * 0.5 + 0.6)
+				if _free(wc.x, wc.y, 3.0, 3.0, 0.2, 0.12):
+					_wall_run_yaw(g, "塀_%d" % n, wc, lib.rr(2.4, 4.5), yaw + PI * 0.5)
+	return n
+
+## 折線上走 s 距離後的 [位置, 方向]
+func _at_arc(pts: Array, cum: Array, s: float) -> Array:
+	var n := pts.size() - 1
+	var lo := 0
+	var hi := n
+	while lo < hi:
+		var mid := (lo + hi + 1) / 2
+		if float(cum[mid]) <= s:
+			lo = mid
+		else:
+			hi = mid - 1
+	var i := mini(lo, n - 1)
+	var a: Vector2 = pts[i]
+	var b: Vector2 = pts[i + 1]
+	var seg: float = maxf(float(cum[i + 1]) - float(cum[i]), 0.001)
+	return [a.lerp(b, clampf((s - float(cum[i])) / seg, 0.0, 1.0)), (b - a).normalized()]
+
+## 任意朝向的土塀
+func _wall_run_yaw(parent: Node, name: String, c: Vector2, length: float, yaw: float) -> void:
+	var gw := _ground_under(c.x, c.y, length, 0.6)
 	var g := Node3D.new()
-	g.position = Vector3(cx, gw[0], cz)
-	if not along_x:
-		g.rotation.y = PI / 2.0
+	g.position = Vector3(c.x, gw[0], c.y)
+	g.rotation.y = yaw
 	lib.add(parent, g, name)
 	var wfoot: float = float(gw[1]) + 0.35
 	lib.box(g, "塀", Vector3(length, 1.9 + wfoot, 0.34), _mat("mud"), Vector3(0, 0.95 - wfoot * 0.5, 0))
 	lib.box(g, "塀瓦", Vector3(length + 0.2, 0.14, 0.62), _mat("kawara"), Vector3(0, 1.97, 0))
 	_collide(g, Vector3(length, 2.1, 0.5))
+	_claim(c.x, c.y, absf(cos(yaw)) * length + 0.5, absf(sin(yaw)) * length + 0.5)
 
-# ═══════════════════════════════ 街區 ═══════════════════════════════════
-func _build_blocks() -> void:
-	var root := lib.add(lib.root, Node3D.new(), "Blocks")
-	var n_house := 0
-	for bx in BLOCK_X:
-		for bz in BLOCK_Z:
-			var kind: String = BLOCK_KIND.get("%d,%d" % [int(bx), int(bz)], "compound")
-			var g := lib.add(root, Node3D.new(), "街區_%d_%d_%s" % [int(bx), int(bz), kind])
-			match kind:
-				"market": _blk_market(g, bx, bz)
-				"tower": _blk_tower(g, bx, bz)
-				"hieda": _blk_hieda(g, bx, bz)
-				"terakoya": _blk_terakoya(g, bx, bz)
-				"suzunaan": n_house += _blk_shopfront(g, bx, bz, "鈴奈庵", -1)
-				"unomitei": n_house += _blk_shopfront(g, bx, bz, "鵜吞亭", -1)
-				"ashiarai": _blk_ashiarai(g, bx, bz)
-				_: n_house += _blk_compound(g, bx, bz)
-	print("blocks built, longhouses: ", n_house)
-
-## 一般街區：四邊長屋 + 土塀補缺 + 內庭（蔵、井、樹位）
-func _blk_compound(parent: Node, bx: float, bz: float) -> int:
-	var hw := BLOCK_W * 0.5
-	var hd := BLOCK_D * 0.5
+## 地標：挑靠近主街／廣場的位置放，不再綁在格子上
+func _place_landmarks(root: Node) -> int:
+	var spine: Array = _streets[0].pts
+	var cross: Array = _streets[1].pts
 	var n := 0
-	# 街區大門開在哪一邊（朝最近的主街）
-	var gate_side := 0 if absf(bx) > absf(bz - PLAZA.y) else 2      # 0=W/E 1..
-	for side in 4:
-		# side: 0=北(-z) 1=南(+z) 2=西(-x) 3=東(+x)
-		var along_x := side < 2
-		var span := BLOCK_W if along_x else BLOCK_D
-		var sgn := -1.0 if side % 2 == 0 else 1.0
-		var has_house := lib.rand() < 0.86
-		if has_house:
-			var length := span * lib.rr(0.48, 0.68)   # 轉角要留空，太長四邊會互相排擠
-			var depth := lib.rr(6.4, 8.2)
-			# 內縮量由進深決定：屋簷外緣要留在土塀內側（v2 的「建築卡圍牆」）
-			var inset := ((hd if along_x else hw) - 1.6) - depth * 0.5 - 0.75
-			var off := lib.rr(-0.45, 0.45) * (span - length)
-			var cx := bx + (off if along_x else sgn * inset)
-			var cz := bz + (sgn * inset if along_x else off)
-			if _free(cx, cz, length if along_x else depth, depth if along_x else length, 0.2):
-				var storey := 2 if lib.rand() < 0.3 else 1
-				var roof := "kawara" if lib.rand() < 0.72 else "thatch"
-				# 立面朝街：北側／西側要轉 180 度，否則玄關開向中庭
-				_longhouse(parent, "長屋_%d" % side, cx, cz, length, depth, along_x, storey, roof, sgn < 0.0)
-				n += 1
-				# 兩端補土塀
-				for e in [-1.0, 1.0]:
-					var b_edge: float = off + float(e) * length * 0.5      # 屋身端點
-					var blk_edge: float = float(e) * span * 0.5            # 街區端點
-					var wlen: float = absf(blk_edge - b_edge) - 0.5
-					if wlen < 1.0:
-						continue
-					var wc: float = (b_edge + blk_edge) * 0.5
-					var wcx: float = bx + (wc if along_x else sgn * (hw - 0.4))
-					var wcz: float = bz + (sgn * (hd - 0.4) if along_x else wc)
-					_wall_run(parent, "塀_%d_%d" % [side, int(e)], wcx, wcz, wlen, along_x)
-				continue
-		# 沒有房子的邊：整段土塀（大門那邊留缺口）
-		var wl := span - (7.0 if side == gate_side else 0.0)
-		_wall_run(parent, "塀全_%d" % side, bx + (0.0 if along_x else sgn * (hw - 0.4)),
-			bz + (sgn * (hd - 0.4) if along_x else 0.0), wl, along_x)
-	# 內庭：離れ（後棟小屋）—— 街區內部也要有東西
-	for k in 2:
-		var ix := bx + lib.rr(-11.0, 11.0)
-		var iz := bz + lib.rr(-11.0, 11.0)
-		if lib.rand() < 0.55 and _free(ix, iz, 11.0, 7.0, 0.5):
-			_longhouse(parent, "離れ_%d" % k, ix, iz, lib.rr(8.0, 11.0), lib.rr(5.5, 6.8),
-				lib.rand() < 0.5, 1, "kawara" if lib.rand() < 0.5 else "thatch", lib.rand() < 0.5)
-			n += 1
-	# 內庭：土藏（白牆倉庫）
-	if lib.rand() < 0.6:
-		var sx := bx + lib.rr(-6.0, 6.0)
-		var sz := bz + lib.rr(-6.0, 6.0)
-		if _free(sx, sz, 6.0, 5.0, 0.5):
-			var s := Node3D.new()
-			s.position = Vector3(sx, height_at(sx, sz), sz)
-			s.rotation.y = lib.rr(0.0, TAU)
-			lib.add(parent, s, "土藏")
-			lib.box(s, "基石", Vector3(5.6, 0.35, 4.6), _mat("stone"), Vector3(0, 0.18, 0))
-			lib.box(s, "藏身", Vector3(5.0, 4.2, 4.0), _mat("plaster"), Vector3(0, 2.45, 0))
-			lib.box(s, "腰", Vector3(5.1, 0.9, 4.1), _mat("dark"), Vector3(0, 0.85, 0))
-			lib.box(s, "扉", Vector3(1.3, 2.0, 0.14), _mat("dark"), Vector3(0, 1.55, 2.05))
-			lib.gable_roof(s, 4.55, 6.2, 5.2, 0.5, 0.22, _mat("kawara"), _mat("plaster"))
-			_collide(s, Vector3(5.2, 5.0, 4.2))
-			_claim(sx, sz, 6.4, 5.4)
+	# [名稱, 依附的街, 沿街位置 t, 側邊(±), 離街距離]
+	var sites := [
+		["market", cross, 0.47, 1.0, 34.0],
+		["terakoya", spine, 0.34, -1.0, 30.0],
+		["hieda", spine, 0.56, -1.0, 34.0],
+		["unomitei", cross, 0.60, -1.0, 16.0],
+		["suzunaan", spine, 0.62, 1.0, 16.0],
+		["tower", cross, 0.40, -1.0, 26.0],
+		["ashiarai", spine, 0.80, 1.0, 40.0],
+	]
+	for site in sites:
+		var info := _along(site[1], float(site[2]))
+		var p: Vector2 = info[0]
+		var d: Vector2 = info[1]
+		var c: Vector2 = p + d.orthogonal() * float(site[3]) * float(site[4])
+		var kind: String = site[0]
+		var g := lib.add(root, Node3D.new(), "街區_%d_%d_%s" % [int(c.x), int(c.y), kind])
+		match kind:
+			"market": _blk_market(g, c.x, c.y)
+			"tower": _blk_tower(g, c.x, c.y)
+			"hieda": _blk_hieda(g, c.x, c.y)
+			"terakoya": _blk_terakoya(g, c.x, c.y)
+			"ashiarai": _blk_ashiarai(g, c.x, c.y)
+			"suzunaan": n += _blk_shopfront(g, c.x, c.y, "鈴奈庵", -1)
+			"unomitei": n += _blk_shopfront(g, c.x, c.y, "鵜吞亭", -1)
 	return n
 
 ## 面街的商家街區（鈴奈庵、鵜吞亭）：主建築貼本通那一側，其餘同一般街區
@@ -597,7 +785,7 @@ func _blk_shopfront(parent: Node, bx: float, bz: float, title: String, face_dir:
 	lib.gable_roof(g, 5.75, w + 1.4, d + 1.6, 0.5, 0.24, _mat("kawara"), _mat("plaster"))
 	_collide(g, Vector3(w + 0.5, 7.0, d + 0.5))
 	_claim(cx, cz, d + 2.0, w + 2.0)
-	return 1 + _blk_compound(parent, bx, bz)
+	return 1
 
 ## 寺子屋：大屋頂主屋 + 外廊 + 前庭（慧音的私塾）
 func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
@@ -619,7 +807,6 @@ func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
 	# 前庭：手水缽與立札
 	lib.box(g, "立札", Vector3(1.6, 1.1, 0.1), _mat("wood"), Vector3(-8.0, 1.3, 10.5))
 	lib.cyl(g, "手水缽", 0.7, 0.75, 0.7, _mat("stone"), Vector3(9.0, 0.35, 10.0), 10)
-	_blk_compound(parent, bx, bz)
 
 ## 稗田邸：土塀圍院 + 表門 + 主屋 + 長廊 + 庭園水池與楓樹（THBWiki 考據）
 func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
@@ -776,7 +963,8 @@ func _blk_ashiarai(parent: Node, bx: float, bz: float) -> void:
 	lib.box(g, "母屋", Vector3(14.5, 3.6, 10.5), _mat("dark"), Vector3(0, 2.3, -2.0))
 	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _mat("thatch"), _mat("dark"), Vector3(0, 0, -2.0))
 	_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
-	_claim(bx, bz, 18.0, 14.0)
+	# 崩れ塀 鋪到街區邊，地權要跟著放大 —— 只claim 18×14 的話樹會長在牆裡
+	_claim(bx, bz, BLOCK_W, BLOCK_D)
 
 ## 市集街區：不設圍牆的開放廣場（攤位、龍神像）
 func _blk_market(parent: Node, bx: float, bz: float) -> void:
@@ -908,7 +1096,6 @@ func _blk_tower(parent: Node, bx: float, bz: float) -> void:
 	var qz := bz + 10.0
 	if _free(qx, qz, 10.0, 7.0, 0.6):
 		_longhouse(parent, "番屋", qx, qz, 9.0, 6.5, true, 1, "kawara")
-	_blk_compound(parent, bx, bz)
 
 # ── 石橋 ──
 func _build_bridge() -> void:
@@ -1113,8 +1300,8 @@ func _build_canal_bridges() -> void:
 	var wood := _mat("wood")
 	var dark := _mat("dark")
 	var stone := _mat("stone")
-	for i in CANAL_BRIDGES.size():
-		var bx: float = CANAL_BRIDGES[i]
+	for i in _canal_bridges.size():
+		var bx: float = _canal_bridges[i]
 		# 水路在這個 x 的實際 z（折線內插）
 		var bz := 85.0
 		for k in CANAL.size() - 1:
@@ -1146,7 +1333,7 @@ func _build_canal_bridges() -> void:
 		body.add_child(shape)
 		shape.owner = lib.root
 		_claim(bx, bz, 4.5, span + 1.0)
-	print("canal bridges: ", CANAL_BRIDGES.size())
+	print("canal bridges: ", _canal_bridges.size())
 
 # ── 水邊生態：游動的鴨、水下的鯉、岸邊的鷺鷥 ──
 func _build_fauna() -> void:
@@ -1220,11 +1407,11 @@ func _build_floor_decor() -> void:
 		var fp: Vector2 = f.pos
 		var fd: Vector2 = f.dir
 		# 只裝飾「開向街道」的店面：門口往外 6m 內要碰得到路
-		var reach: float = _path_info(fp.x + fd.x * 6.0, fp.y + fd.y * 6.0)[0]
-		if reach > 4.5:
+		var reach: float = _path_info(fp.x + fd.x * 1.8, fp.y + fd.y * 1.8)[0]
+		if reach > 1.2:
 			continue
-		var cxy: Vector2 = fp + fd * 1.75            # 鋪面中心：門前一步半
-		if not _free_for_apron(cxy.x, cxy.y, 3.6, 3.0, int(f.own)):
+		var cxy: Vector2 = fp + fd * 1.15            # 鋪面中心：門前一步
+		if not _free_for_apron(cxy.x, cxy.y, 3.2, 1.9, int(f.own)):
 			continue
 		var ap := Node3D.new()
 		ap.position = Vector3(cxy.x, height_at(cxy.x, cxy.y), cxy.y)
@@ -1233,13 +1420,13 @@ func _build_floor_decor() -> void:
 		# 鋪面：3×2 塊石板，微微高於街面
 		for ix in 3:
 			for iz in 2:
-				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.35, 0.12, 1.35), slab,
-					Vector3((float(ix) - 1.0) * 1.42, 0.06, (float(iz) - 0.5) * 1.42))
+				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.02, 0.12, 0.82), slab,
+					Vector3((float(ix) - 1.0) * 1.08, 0.06, (float(iz) - 0.5) * 0.88))
 				sl.rotation.y = lib.rr(-0.02, 0.02)
 		# 飛石：從鋪面繼續往街心走
 		for k in 3:
 			lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.7, 1.0), 0.14, lib.rr(0.6, 0.9)), stone,
-				Vector3(lib.rr(-0.5, 0.5), 0.07, 2.6 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
+				Vector3(lib.rr(-0.5, 0.5), 0.07, 1.5 + float(k) * 0.95)).rotation.y = lib.rr(-0.3, 0.3)
 			n_step += 1
 		# 立看板、樽桶、米俵擺在門的兩側，不擋動線
 		if lib.rand() < 0.6:
@@ -1256,7 +1443,7 @@ func _build_floor_decor() -> void:
 			lib.box(ap, "米俵", Vector3(1.1, 0.42, 0.5),
 				lib.pbr("tawara", "terrain_grass", 1.4, Color(0.82, 0.70, 0.46)),
 				Vector3(2.4, 0.22, 0.9)).rotation.y = lib.rr(0.0, TAU)
-		_claim(cxy.x, cxy.y, 4.2, 3.4)
+		_claim(cxy.x, cxy.y, 3.4, 2.2)
 		n_apron += 1
 	# 石溝與溝蓋：沿本通兩側的排水溝
 	for side2 in [-1.0, 1.0]:
@@ -1288,17 +1475,17 @@ func _build_villagers() -> void:
 
 	# 路線 = 街道折線，逐節點取地面高度（整條共用一個 y 會讓人陷進坡裡）
 	var routes: Array = []
-	for si in PATH_SEGMENTS.size():
-		var seg: Dictionary = PATH_SEGMENTS[si]
-		if float(seg.width) < 7.0:
+	for si in _streets.size():
+		var seg: Dictionary = _streets[si]
+		if int(seg.rank) > 1:
 			continue
 		var pts: Array[Vector2] = []
 		var ys: Array[float] = []
 		# 折線節點之間再細分，坡地上人才會貼著地走
 		var raw: Array = seg.pts
 		for k in raw.size() - 1:
-			var a := Vector2(raw[k][0], raw[k][1])
-			var b := Vector2(raw[k + 1][0], raw[k + 1][1])
+			var a: Vector2 = raw[k]
+			var b: Vector2 = raw[k + 1]
 			var steps := maxi(int(a.distance_to(b) / 8.0), 1)
 			for i in steps:
 				var q := a.lerp(b, float(i) / float(steps))
@@ -1419,14 +1606,23 @@ func _build_lamps() -> void:
 	var glow := lib.flat_mat("lamp_glow", Color(1.0, 0.85, 0.55), 0.3, Color(1.0, 0.75, 0.4))
 	var lamps := lib.add(lib.root, Node3D.new(), "Lamps")
 	var spots := []
-	for z in ST_Z:
-		spots.append(Vector2(6.2, z + 6.0))
-		spots.append(Vector2(-6.2, z - 6.0))
-	for x in ST_X:
-		if absf(x) > 0.1:
-			spots.append(Vector2(x + 5.2, 35.0))
-	for z2 in [-110.0, -55.0, 60.0, 115.0]:
-		spots.append(Vector2(5.8, z2))
+	# 燈籠沿主街與橫町的街緣擺（街道是長出來的，位置不能寫死）
+	for si in 2:
+		var st: Dictionary = _streets[si]
+		var pts: Array = st.pts
+		var hw: float = float(st.width) * 0.5 + 1.1
+		for k in range(0, pts.size() - 1, 2):
+			var a: Vector2 = pts[k]
+			var b: Vector2 = pts[k + 1]
+			var nrm := (b - a).normalized().orthogonal()
+			var sd := 1.0 if (k / 2) % 2 == 0 else -1.0
+			spots.append(a.lerp(b, 0.5) + nrm * hw * sd)
+	# 巷口也各一盞
+	for si2 in range(2, _streets.size()):
+		if int(_streets[si2].rank) != 1 or lib.rand() < 0.45:
+			continue
+		var pts2: Array = _streets[si2].pts
+		spots.append(pts2[0] + (Vector2(pts2[1]) - Vector2(pts2[0])).normalized() * 5.0)
 	var idx := 0
 	for s in spots:
 		idx += 1

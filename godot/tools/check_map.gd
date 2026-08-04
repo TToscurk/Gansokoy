@@ -235,10 +235,20 @@ func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 		if mm == null or mm.instance_count == 0:
 			continue
 		var xf: Transform3D = _world_xf(mmi)
+		# ⚠ 不能用 mm.get_instance_transform()：--headless 走的是 dummy 渲染器，
+		# MultiMesh 的 transform 存在 RenderingServer 那邊，讀回來一律是單位矩陣。
+		# 這支體檢因此**默默地綠燈了好幾個版本** —— 所有實例都被當成在原點，
+		# 而原點剛好沒有建物，所以「沒發現問題」。直接解 buffer 才是真資料。
+		var buf := mm.buffer
+		var stride := 16 if mm.use_colors else 12
+		if buf.size() < mm.instance_count * stride:
+			_issues.append("%s 的 MultiMesh buffer 長度不對，跳過檢查" % nm)
+			continue
 		var hit := 0
 		var first := ""
 		for i in mm.instance_count:
-			var o: Vector3 = (xf * mm.get_instance_transform(i)).origin
+			var b := i * stride
+			var o: Vector3 = xf * Vector3(buf[b + 3], buf[b + 7], buf[b + 11])
 			var k := Vector2i(int(floor(o.x / 16.0)), int(floor(o.z / 16.0)))
 			if not bgrid.has(k):
 				continue
