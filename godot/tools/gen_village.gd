@@ -27,28 +27,33 @@ const BLOCK_Z := [-162.0, -107.0, -52.0, 2.0, 57.0, 112.0, 167.0]
 const BLOCK_W := 42.0
 const BLOCK_D := 45.0
 
+# 街寬（使用者定案：主街 8m、巷道 3~4m；牆到牆剩下的空地用「街緣」填滿＝方案 B）。
+# ⚠ 這裡的 width 不是看得到的鋪面寬 —— 遮罩還會往外淡出 PATH_FADE，
+# 實際鋪面 ≈ width + 2*PATH_FADE。v13 的淡出是 2.0，所以 11m 的本通
+# 看起來有 15m 寬，整條街像機場跑道。
+const PATH_FADE := 0.9
 const PATH_SEGMENTS := [
 	# 本通（主街・南北貫穿，最寬）
-	{ "width": 11.0, "pts": [[0.0, -240.0], [0.0, -120.0], [0.0, 30.0], [0.0, 160.0], [0.0, 250.0]] },
+	{ "width": 8.0, "pts": [[0.0, -240.0], [0.0, -120.0], [0.0, 30.0], [0.0, 160.0], [0.0, 250.0]] },
 	# 橫町（0.2 條・東西中段，東端過橋）
-	{ "width": 9.0, "pts": [[-190.0, 30.0], [-104.0, 30.0], [0.0, 30.0], [104.0, 30.0], [190.0, 30.0], [232.0, 30.0]] },
+	{ "width": 7.0, "pts": [[-190.0, 30.0], [-104.0, 30.0], [0.0, 30.0], [104.0, 30.0], [190.0, 30.0], [232.0, 30.0]] },
 	# 其餘南北街（ST_X 除了本通）
-	{ "width": 7.0, "pts": [[-156.0, -190.0], [-156.0, 0.0], [-156.0, 195.0]] },
-	{ "width": 7.0, "pts": [[-104.0, -190.0], [-104.0, 0.0], [-104.0, 195.0]] },
-	{ "width": 7.0, "pts": [[-52.0, -190.0], [-52.0, 0.0], [-52.0, 195.0]] },
-	{ "width": 7.0, "pts": [[52.0, -190.0], [52.0, 0.0], [52.0, 195.0]] },
-	{ "width": 7.0, "pts": [[104.0, -190.0], [104.0, 0.0], [104.0, 195.0]] },
-	{ "width": 7.0, "pts": [[156.0, -190.0], [156.0, 0.0], [156.0, 195.0]] },
+	{ "width": 4.5, "pts": [[-156.0, -190.0], [-156.0, 0.0], [-156.0, 195.0]] },
+	{ "width": 4.5, "pts": [[-104.0, -190.0], [-104.0, 0.0], [-104.0, 195.0]] },
+	{ "width": 4.5, "pts": [[-52.0, -190.0], [-52.0, 0.0], [-52.0, 195.0]] },
+	{ "width": 4.5, "pts": [[52.0, -190.0], [52.0, 0.0], [52.0, 195.0]] },
+	{ "width": 4.5, "pts": [[104.0, -190.0], [104.0, 0.0], [104.0, 195.0]] },
+	{ "width": 4.5, "pts": [[156.0, -190.0], [156.0, 0.0], [156.0, 195.0]] },
 	# 其餘東西街
-	{ "width": 7.0, "pts": [[-182.0, -190.0], [0.0, -190.0], [182.0, -190.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -135.0], [0.0, -135.0], [182.0, -135.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -80.0], [0.0, -80.0], [182.0, -80.0]] },
-	{ "width": 7.0, "pts": [[-182.0, -25.0], [0.0, -25.0], [182.0, -25.0]] },
-	{ "width": 7.5, "pts": [[-182.0, 85.0], [0.0, 85.0], [182.0, 85.0]] },
-	{ "width": 7.0, "pts": [[-182.0, 140.0], [0.0, 140.0], [182.0, 140.0]] },
-	{ "width": 7.0, "pts": [[-182.0, 195.0], [0.0, 195.0], [182.0, 195.0]] },
+	{ "width": 4.5, "pts": [[-182.0, -190.0], [0.0, -190.0], [182.0, -190.0]] },
+	{ "width": 4.5, "pts": [[-182.0, -135.0], [0.0, -135.0], [182.0, -135.0]] },
+	{ "width": 4.5, "pts": [[-182.0, -80.0], [0.0, -80.0], [182.0, -80.0]] },
+	{ "width": 4.5, "pts": [[-182.0, -25.0], [0.0, -25.0], [182.0, -25.0]] },
+	{ "width": 5.0, "pts": [[-182.0, 85.0], [0.0, 85.0], [182.0, 85.0]] },
+	{ "width": 4.5, "pts": [[-182.0, 140.0], [0.0, 140.0], [182.0, 140.0]] },
+	{ "width": 4.5, "pts": [[-182.0, 195.0], [0.0, 195.0], [182.0, 195.0]] },
 	# 西南門引道（香霖堂）
-	{ "width": 5.2, "pts": [[-132.0, 100.0], [-145.0, 98.0], [-156.0, 94.0]] },
+	{ "width": 4.0, "pts": [[-132.0, 100.0], [-145.0, 98.0], [-156.0, 94.0]] },
 ]
 # ── 河（東側，橫町東端石橋跨過；北端往圖外＝河畔道接口） ──
 const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
@@ -109,7 +114,7 @@ func _path_info(x: float, z: float) -> Array:
 		for k in pts.size() - 1:
 			var d := _seg_dist(p, Vector2(pts[k][0], pts[k][1]), Vector2(pts[k + 1][0], pts[k + 1][1]))
 			edge = minf(edge, maxf(0.0, d - w * 0.5))
-			mask = maxf(mask, 1.0 - smoothstep(w * 0.5 - 0.5, w * 0.5 + 2.0, d))
+			mask = maxf(mask, 1.0 - smoothstep(w * 0.5 - 0.5, w * 0.5 + PATH_FADE, d))
 	return [edge, mask]
 
 func _field_w(x: float, z: float) -> float:
@@ -149,9 +154,15 @@ func mask_at(x: float, z: float) -> Color:
 	# 地面定調（使用者選《求聞編年史》）：街道鋪石板、街廓之間是綠草地。
 	# 不再把整個里塗成砂土色。
 	var path_w: float = maxf(info[1], shore)
+	# 在（村緣）的路不鋪石板 —— 石板一路鋪到田邊很出戲。
+	# 把石板的權重收掉、同樣的量補到土的通道上，路還在、材質換掉。
+	var zr := Vector2(x, z - PLAZA.y).length()
+	var stone_k := 1.0 - smoothstep(ZONE_R[1] - 18.0, ZONE_R[1] + 26.0, zr)
+	var lane_dirt: float = path_w * (1.0 - stone_k)
+	path_w *= stone_k
 	var soil := maxf(_field_w(x, z), g2 * 0.12)
 	var macro := clampf(_nh.get_noise_2d(x * 0.4, z * 0.4) * 0.5 + 0.5, 0.0, 1.0)
-	return Color(path_w, soil, macro, _court_w(x, z))
+	return Color(path_w, soil, macro, maxf(_court_w(x, z), lane_dirt))
 
 ## 街廓內側（土塀圍起來的院子）＝踏み固めた土。
 ## 天天有人走的地方不長草 —— 之前整個里的院子都是翠綠草皮，
@@ -336,10 +347,15 @@ const MAT_TONES := {
 		Color(0.72, 0.60, 0.40), Color(0.50, 0.42, 0.30)],
 	"mud": [Color(0.80, 0.72, 0.58), Color(0.70, 0.62, 0.48),
 		Color(0.86, 0.78, 0.64), Color(0.64, 0.58, 0.46)],
-	"dark": [Color(1.00, 1.00, 1.00), Color(0.82, 0.78, 0.74),
-		Color(0.70, 0.64, 0.60), Color(0.92, 0.86, 0.80)],
-	"wood": [Color(0.90, 0.82, 0.72), Color(0.78, 0.68, 0.56),
-		Color(0.96, 0.88, 0.74), Color(0.70, 0.62, 0.52)],
+	# ⚠ 別再讓木部的色調靠近 1.0 —— dark_wood 那張貼圖本身就很飽和，
+	# 乘 1.0 出來是鮮豔的橘紅色，一整排通柱看起來像上了漆的塑膠。
+	# 真實的木部是曬到發灰的褐色。
+	# 色調是**相乘**的，只能壓不能加。dark_wood 那張紅得很兇，
+	# 等比壓暗只會變成暗紅色 —— 要把紅色壓得比綠藍更多才會轉灰褐。
+	"dark": [Color(0.44, 0.47, 0.45), Color(0.37, 0.40, 0.39),
+		Color(0.52, 0.53, 0.50), Color(0.32, 0.35, 0.35)],
+	"wood": [Color(0.72, 0.66, 0.58), Color(0.62, 0.56, 0.48),
+		Color(0.80, 0.72, 0.62), Color(0.56, 0.51, 0.45)],
 	"stone": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
 		Color(0.82, 0.84, 0.82), Color(0.95, 0.93, 0.88)],
 	"namako": [Color(0.26, 0.27, 0.30), Color(0.20, 0.21, 0.24),
@@ -408,7 +424,8 @@ func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
 ## flip = 立面轉 180 度。v7 的立面永遠朝本地 +z，於是街區北側與西側的長屋
 ## 「玄關開向自家中庭」—— 這也是店前鋪面永遠對不齊門口的根本原因。
 func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float, depth: float,
-		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false) -> void:
+		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false,
+		shop_p := 0.55) -> void:
 	var wall := _mat("plaster") if lib.rand() < 0.6 else _mat("mud")
 	var dark := _mat("dark")
 	var stone := _mat("stone")
@@ -435,7 +452,7 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var bays := maxi(int(length / 3.4), 1)
 	var bw := length / float(bays)
 	var door_bay := int(lib.rand() * float(bays))
-	var is_shop := lib.rand() < 0.55
+	var is_shop := lib.rand() < shop_p
 	# ── 門面（Frontage）：把玄關的世界座標與朝向登記出去 ──
 	# 有了這個，店前鋪面／飛石／樽桶才能真的擺在門口，而不是沿街亂撒。
 	var door_lx := -length * 0.5 + (float(door_bay) + 0.5) * bw
@@ -552,9 +569,148 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 		"width": minf(bw, 3.2), "ground": float(gu[0]), "own": own,
 	})
 
+## 這個座標落在哪一種街區（給圍牆判斷用）
+func _kind_at(cx: float, cz: float) -> String:
+	var best := ""
+	var bd := INF
+	for bx in BLOCK_X:
+		for bz in BLOCK_Z:
+			var d := maxf(absf(cx - bx) / (BLOCK_W * 0.5), absf(cz - bz) / (BLOCK_D * 0.5))
+			if d < bd:
+				bd = d
+				best = BLOCK_KIND.get("%d,%d" % [int(bx), int(bz)], "compound")
+	return best if bd <= 1.15 else "compound"
+
+const LANDMARK_KINDS := ["hieda", "terakoya", "suzunaan", "unomitei", "ashiarai"]
+
+## 築地塀（ついじべい）：地標宅邸的圍牆。
+##
+## 使用者看《求聞編年史》的參考圖之後說：「有地標的建築圍牆跟建築比例
+## 都要放很大才有氣勢感」。關鍵不在把房子放大 —— 參考圖裡氣勢是靠
+## **高石垣 + 帶瓦屋頂的高牆 + 石階**堆出來的。
+## 一般民家用 1.9m 的土塀；地標用 2.9m 的築地塀，還有真的兩坡瓦頂與控柱。
+const TSUIJI_H := 2.9
+func _tsuiji_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
+	var gw := _ground_under(cx, cz, length if along_x else 1.4, 1.4 if along_x else length)
+	var g := Node3D.new()
+	g.position = Vector3(cx, gw[0], cz)
+	if not along_x:
+		g.rotation.y = PI / 2.0
+	lib.add(parent, g, name)
+	var foot: float = float(gw[1]) + 0.4
+	var stone := _mat("stone")
+	var kawara := _mat("kawara")
+	# 腰石垣：牆腳先墊一段亂石，高牆才站得住（也是參考圖裡最顯眼的一層）
+	lib.box(g, "腰石垣", Vector3(length, 0.85 + foot, 0.86), stone,
+		Vector3(0, 0.42 - foot * 0.5, 0))
+	lib.box(g, "塀身", Vector3(length, TSUIJI_H - 0.85, 0.62), _mat("plaster", 0),
+		Vector3(0, 0.85 + (TSUIJI_H - 0.85) * 0.5, 0))
+	# 白牆上的橫線（定規筋）—— 格式高的築地塀才有，一眼看出「這裡不一樣」
+	for i in 3:
+		lib.box(g, "定規筋_%d" % i, Vector3(length, 0.07, 0.70), stone,
+			Vector3(0, TSUIJI_H - 0.42 - float(i) * 0.22, 0))
+	# 兩坡瓦屋頂（不是一塊瓦冠板）
+	for sd in [-1.0, 1.0]:
+		var slope := lib.box(g, "塀屋根_%d" % int(float(sd) + 1),
+			Vector3(length + 0.3, 0.14, 0.78), kawara,
+			Vector3(0, TSUIJI_H + 0.16, float(sd) * 0.32))
+		slope.rotation.x = float(sd) * -0.42
+	lib.box(g, "棟瓦", Vector3(length + 0.3, 0.2, 0.26), kawara, Vector3(0, TSUIJI_H + 0.3, 0))
+	# 控柱（撐住高牆的斜柱）—— 沒有它高牆看起來像立起來的紙板
+	var props := maxi(int(length / 5.5), 1)
+	for i in props:
+		var px: float = -length * 0.5 + (float(i) + 0.5) / float(props) * length
+		lib.strut(g, "控柱_%d" % i, Vector3(px, 0.0, 0.75), Vector3(px, TSUIJI_H - 0.6, 0.34),
+			0.09, _mat("dark"), 5)
+	_collide(g, Vector3(length, TSUIJI_H + 0.5, 0.9))
+	_claim(cx, cz, length + 0.6 if along_x else 1.6, 1.6 if along_x else length + 0.6, "tsuiji_run")
+
+## 石垣基壇 + 石階：把地標墊高。參考圖裡的稗田邸就是坐在一道高石垣上，
+## 正面切出一段石階 —— 這是「氣勢」的來源，不是把屋身放大。
+## 回傳基壇頂面的相對高度。
+## ⚠ 基壇要掛在**建物自己的群組**底下，不能當兄弟節點 ——
+## 體檢是「一個群組 = 一棟建物」在量離地的，基壇分開放的話
+## 主屋會被判成離地 1.5m（而它其實是站在基壇上）。
+## 傳進來的 g 的原點 = 基壇**頂面**，所以基壇往下長。
+func _dais_in(g: Node3D, w: float, d: float, h: float, face: Vector2, spread: float) -> void:
+	var stone := _mat("stone")
+	var foot: float = spread + 0.3
+	# 石垣是**下寬上窄**的（扇の勾配），直上直下看起來像水泥擋土牆
+	var steps := 3
+	for i in steps:
+		var t := float(i) / float(steps)
+		var sw: float = w - t * 0.9
+		var sd: float = d - t * 0.9
+		var sh: float = (h + foot) / float(steps)
+		lib.box(g, "石垣_%d" % i, Vector3(sw, sh + 0.04, sd), stone,
+			Vector3(0, -h - foot + sh * (float(i) + 0.5), 0))
+	lib.box(g, "天端石", Vector3(w - 0.9, 0.16, d - 0.9), stone, Vector3(0, -0.08, 0))
+	# 正面的石階
+	var nsteps := maxi(int(h / 0.24), 3)
+	var tan := face.orthogonal()
+	for i in nsteps:
+		var t2 := (float(i) + 0.5) / float(nsteps)
+		var sy: float = -h + h * t2
+		var out: float = (1.0 - t2) * 1.9
+		lib.box(g, "石階_%d" % i, Vector3(3.4, h / float(nsteps) + 0.05, 0.42), stone,
+			Vector3(face.x * (d * 0.5 + out), sy - h / float(nsteps) * 0.5,
+				face.y * (d * 0.5 + out)))
+	# 階梯兩側的親柱
+	for sd2 in [-1.0, 1.0]:
+		lib.box(g, "親柱_%d" % int(float(sd2) + 1), Vector3(0.34, h + 0.5, 0.34), stone,
+			Vector3(face.x * (d * 0.5 + 0.3) + tan.x * float(sd2) * 1.9, -h * 0.5 + 0.05,
+				face.y * (d * 0.5 + 0.3) + tan.y * float(sd2) * 1.9))
+	_collide(g, Vector3(w, h, d), Vector3(0, -h, 0))
+
+## 生垣（樹籬）＋竹垣：村緣的「圍牆」。
+##
+## 在（農家那一環）用土塀是錯的 —— 土塀是町方的東西，要人力與瓦。
+## 村緣圍的是樹籬與竹垣，而且矮，看得到裡面的曬場。
+## 這也是「密度不一樣的街區不要混在一起」的一部分：材質本身就要換。
+func _hedge_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
+	var gw := _ground_under(cx, cz, length if along_x else 0.8, 0.8 if along_x else length)
+	var g := Node3D.new()
+	g.position = Vector3(cx, gw[0], cz)
+	if not along_x:
+		g.rotation.y = PI / 2.0
+	lib.add(parent, g, name)
+	var leaf := lib.pbr("hedge_leaf", "terrain_forest", 1.1, Color(0.52, 0.60, 0.40))
+	var bamboo := lib.pbr("hedge_bamboo", "planks", 0.9, Color(0.74, 0.72, 0.52))
+	# 竹垣：後面一排細竹，樹籬有缺口時看得到它（樹籬不是實心的）
+	var posts := maxi(int(length / 0.42), 2)
+	for i in posts:
+		var px: float = -length * 0.5 + (float(i) + 0.5) / float(posts) * length
+		lib.cyl(g, "竹_%d" % i, 0.045, 0.05, lib.rr(1.15, 1.35), bamboo,
+			Vector3(px, 0.62, 0.16), 5)
+	for hb in 2:                                        # 兩道橫竹
+		lib.cyl(g, "貫竹_%d" % hb, 0.038, 0.038, length, bamboo,
+			Vector3(0, 0.42 + float(hb) * 0.55, 0.16), 5).rotation.z = PI * 0.5
+	# 樹籬：一叢一叢疊出來，高低起伏才不像一塊綠色的牆
+	var clumps := maxi(int(length / 1.05), 2)
+	for i in clumps:
+		var px2: float = -length * 0.5 + (float(i) + 0.5) / float(clumps) * length
+		var h := lib.rr(1.15, 1.55)
+		var w := lib.rr(1.0, 1.3)
+		for k in 2:
+			var cl := lib.box(g, "叢_%d_%d" % [i, k],
+				Vector3(w, h * (0.62 if k == 0 else 0.46), 0.86), leaf,
+				Vector3(px2 + lib.rr(-0.1, 0.1),
+					h * (0.31 if k == 0 else 0.72), lib.rr(-0.08, 0.08)))
+			cl.rotation.y = lib.rr(-0.25, 0.25)
+	_collide(g, Vector3(length, 1.4, 0.9))
+	_claim(cx, cz, length + 0.6 if along_x else 1.2, 1.2 if along_x else length + 0.6, "hedge_run")
+
 ## 土塀：街區外圍的圍牆（帶瓦冠）
 func _wall_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
 	if length < 1.0:
+		return
+	# 地標宅邸用築地塀（高、帶瓦屋頂）—— 氣勢是圍牆給的
+	if _kind_at(cx, cz) in LANDMARK_KINDS:
+		_tsuiji_run(parent, name.replace("塀", "築地塀"), cx, cz, length, along_x)
+		return
+	# 在（村緣）改用生垣：材質換掉，區與區才不會混在一起
+	if _zone_of(cx, cz) == ZONE_ZAI:
+		_hedge_run(parent, name.replace("塀", "生垣"), cx, cz, length, along_x)
 		return
 	# 土塀是「街區缺口一律補上」的，不像建物會先問 _free ——
 	# 於是村西南那個街區的圍牆直接橫過自然池（岸石就長在牆裡了）。
@@ -605,6 +761,7 @@ func _build_blocks() -> void:
 		for bz in BLOCK_Z:
 			var kind: String = BLOCK_KIND.get("%d,%d" % [int(bx), int(bz)], "compound")
 			var g := lib.add(root, Node3D.new(), "街區_%d_%d_%s" % [int(bx), int(bz), kind])
+			var before := n_house
 			match kind:
 				"grove": _blk_grove(g, bx, bz)
 				"market": _blk_market(g, bx, bz)
@@ -615,7 +772,15 @@ func _build_blocks() -> void:
 				"unomitei": n_house += _blk_shopfront(g, bx, bz, "鵜吞亭", -1)
 				"ashiarai": _blk_ashiarai(g, bx, bz)
 				_: n_house += _blk_compound(g, bx, bz)
-	print("blocks built, longhouses: ", n_house)
+	# 分區報表：改了 ZONE_SPEC 要能一眼看出「密度真的不一樣」。
+	# 空拍看不出 5% 的差別，這行看得出來。
+	var zparts: Array[String] = []
+	for i in 3:
+		var blocks: int = _zone_stat[i][0]
+		var area: float = _zone_stat[i][2]
+		var cover: float = area / maxf(float(blocks) * BLOCK_W * BLOCK_D, 1.0) * 100.0
+		zparts.append("%s %d院落/%d棟/建蔽 %.0f%%" % [ZONE_NAME[i], blocks, _zone_stat[i][1], cover])
+	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
 	_assert_frontage_clear()
 
 ## 驗每個門面前方有沒有淨空 —— 使用者回報「有窗戶的面被牆壁擋住」。
@@ -644,37 +809,117 @@ func _assert_frontage_clear() -> void:
 	else:
 		print("frontage clearance: ok (%d 個門面)" % _frontages.size())
 
+# ═════════════════════════════ 街區分區 ═══════════════════════════════
+# 使用者：「村子在做密度不一樣的街區 不要混在一起」。
+#
+# v13 的 34 個院落全部走同一組參數：同樣的 0.86 有房機率、同樣的 0.48~0.68
+# 長度比、同樣的 0.3 兩層機率。建蔽率其實有 30%，不算低 —— 但每一格長得
+# 一模一樣，從空中看是同一個模具蓋 34 次，所以「看起來很空」。
+# 問題是**均質**，不是稀疏。
+#
+# 分法是**連續的環**（距廣場中心 r），不是隨機撒點 —— 這就是「不要混在一起」。
+# 詳細設計與各區參數見 docs/village-zoning-design.md。
+const ZONE_MACHI := 0      # 町方（商家町）    r < 95    12 區
+const ZONE_HANNO := 1      # 半農町（職人）    95~155    16 區
+const ZONE_ZAI := 2        # 在（農家）        r >= 155  14 區
+const ZONE_R := [95.0, 155.0]
+const ZONE_NAME := ["町方", "半農町", "在"]
+
+## 各區的性格。全部集中在這裡，不要散在程式各處（ADR-015）。
+const ZONE_SPEC := [
+	{   # 町方：屋頂要連成一片，轉角只留 1~2m
+		"has_house": 1.00, "len_lo": 0.84, "len_hi": 0.96,
+		"depth_lo": 7.6, "depth_hi": 9.0,
+		"storey2": 0.60, "kawara": 0.94, "shop": 0.85,
+		"hanare": 0, "kura": 0.75,
+	},
+	{   # 半農町：維持現況的密度，但屋根與店舖比例往下調
+		"has_house": 0.82, "len_lo": 0.55, "len_hi": 0.74,
+		"depth_lo": 6.6, "depth_hi": 8.2,
+		"storey2": 0.18, "kawara": 0.50, "shop": 0.30,
+		"hanare": 1, "kura": 0.55,
+	},
+	{   # 在：這一環之後會換成 _blk_farm()，這組參數是還沒換完時的退路
+		"has_house": 0.55, "len_lo": 0.40, "len_hi": 0.58,
+		"depth_lo": 6.2, "depth_hi": 7.4,
+		"storey2": 0.00, "kawara": 0.15, "shop": 0.05,
+		"hanare": 1, "kura": 0.30,
+	},
+]
+
+## 分區統計：{zone: [院落區數, 棟數, 建物佔地 m2]}
+## 用**建蔽率**而不是「每區棟數」—— 町方有 7 個街區是地標，
+## 棟數平均會被稀釋成 0.9，看起來像「町方最疏」，剛好講反。
+var _zone_stat := [[0, 0, 0.0], [0, 0, 0.0], [0, 0, 0.0]]
+
+func _zone_of(bx: float, bz: float) -> int:
+	var r := Vector2(bx, bz - PLAZA.y).length()
+	if r < ZONE_R[0]:
+		return ZONE_MACHI
+	return ZONE_HANNO if r < ZONE_R[1] else ZONE_ZAI
+
 ## 一般街區：四邊長屋 + 土塀補缺 + 內庭（蔵、井、樹位）
 func _blk_compound(parent: Node, bx: float, bz: float) -> int:
+	var zi := _zone_of(bx, bz)
+	var zs: Dictionary = ZONE_SPEC[zi]
+	_zone_stat[zi][0] += 1
 	var hw := BLOCK_W * 0.5
 	var hd := BLOCK_D * 0.5
 	var n := 0
 	# 街區大門開在哪一邊（朝最近的主街）
 	var gate_side := 0 if absf(bx) > absf(bz - PLAZA.y) else 2      # 0=W/E 1..
+
+	# ⚠ 四邊必須**先一起決定**，不能一邊一邊蓋。
+	# 町方的長度比是 0.84~0.96，四個邊各自吃到轉角，南北向那兩棟一定會跟
+	# 東西向那兩棟撞在轉角上 —— 而 `_free()` 只會默默把後兩棟拒掉，
+	# 結果「加密」反而只剩兩棟。真實的町並是：沿長邊那兩棟通到底，
+	# 短邊那兩棟**只排在它們之間**（轉角讓給長邊）。
+	# side: 0=北(-z) 1=南(+z) 2=西(-x) 3=東(+x)
+	var has := []
+	var depth := []
 	for side in 4:
-		# side: 0=北(-z) 1=南(+z) 2=西(-x) 3=東(+x)
+		has.append(lib.rand() < float(zs.has_house))
+		depth.append(lib.rr(float(zs.depth_lo), float(zs.depth_hi)))
+	# 東西向（沿 z）那兩棟的可用長度：扣掉南北兩棟實際佔到哪裡。
+	# ⚠ 不是「hd - 進深」—— 長屋還往內縮了 1.6（塀）+ 0.75（簷）＝ 2.35，
+	# 而且地權比屋身再大一圈。少扣這 2.35 的話兩邊會差 0.4m 卡住，
+	# `_free()` 只會默默拒掉，町方的建蔽率就卡在 19% 上不去。
+	const SIDE_PAD := 2.35 + 1.4          # 內縮量 + 地權外擴
+	var z_lo: float = -hd + (SIDE_PAD + float(depth[0]) if has[0] else 0.0)
+	var z_hi: float = hd - (SIDE_PAD + float(depth[1]) if has[1] else 0.0)
+
+	for side in 4:
 		var along_x := side < 2
-		var span := BLOCK_W if along_x else BLOCK_D
 		var sgn := -1.0 if side % 2 == 0 else 1.0
-		var has_house := lib.rand() < 0.86
-		if has_house:
-			var length := span * lib.rr(0.48, 0.68)   # 轉角要留空，太長四邊會互相排擠
-			var depth := lib.rr(6.4, 8.2)
+		# 這一邊可以用的區間（本地座標，沿著這一邊的方向）
+		# 沿 x 那兩棟也要縮 —— 不縮的話端點會頂進東西兩側的圍牆線
+		# （地標街區換成 0.92m 厚的築地塀之後就撞出來了）。
+		const WALL_PAD := 1.2
+		var lo: float = (-hw + WALL_PAD) if along_x else z_lo
+		var hi: float = (hw - WALL_PAD) if along_x else z_hi
+		var span: float = hi - lo
+		var mid: float = (lo + hi) * 0.5
+		if has[side] and span > 8.0:
+			var dp: float = float(depth[side])
+			var length: float = span * lib.rr(float(zs.len_lo), float(zs.len_hi))
 			# 內縮量由進深決定：屋簷外緣要留在土塀內側（v2 的「建築卡圍牆」）
-			var inset := ((hd if along_x else hw) - 1.6) - depth * 0.5 - 0.75
-			var off := lib.rr(-0.45, 0.45) * (span - length)
+			var inset := ((hd if along_x else hw) - 1.6) - dp * 0.5 - 0.75
+			var off := mid + lib.rr(-0.45, 0.45) * (span - length)
 			var cx := bx + (off if along_x else sgn * inset)
 			var cz := bz + (sgn * inset if along_x else off)
-			if _free(cx, cz, length if along_x else depth, depth if along_x else length, 0.2):
-				var storey := 2 if lib.rand() < 0.3 else 1
-				var roof := "kawara" if lib.rand() < 0.72 else "thatch"
+			if _free(cx, cz, length if along_x else dp, dp if along_x else length, 0.2):
+				var storey: int = 2 if lib.rand() < float(zs.storey2) else 1
+				var roof: String = "kawara" if lib.rand() < float(zs.kawara) else "thatch"
 				# 立面朝街：北側／西側要轉 180 度，否則玄關開向中庭
-				_longhouse(parent, "長屋_%d" % side, cx, cz, length, depth, along_x, storey, roof, sgn < 0.0)
+				_longhouse(parent, "長屋_%d" % side, cx, cz, length, dp, along_x, storey, roof,
+					sgn < 0.0, float(zs.shop))
 				n += 1
-				# 兩端補土塀
+				_zone_stat[zi][1] += 1
+				_zone_stat[zi][2] += length * dp
+				# 兩端補土塀（補到街區邊，不是補到可用區間邊 —— 圍牆要圍滿）
 				for e in [-1.0, 1.0]:
-					var b_edge: float = off + float(e) * length * 0.5      # 屋身端點
-					var blk_edge: float = float(e) * span * 0.5            # 街區端點
+					var b_edge: float = off + float(e) * length * 0.5            # 屋身端點
+					var blk_edge: float = float(e) * (hw if along_x else hd)     # 街區端點
 					var wlen: float = absf(blk_edge - b_edge) - 0.5
 					if wlen < 1.0:
 						continue
@@ -684,7 +929,7 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 					_wall_run(parent, "塀_%d_%d" % [side, int(e)], wcx, wcz, wlen, along_x)
 				continue
 		# 沒有房子的邊：整段土塀（大門那邊留缺口）
-		var wl := span - (7.0 if side == gate_side else 0.0)
+		var wl := (BLOCK_W if along_x else BLOCK_D) - (7.0 if side == gate_side else 0.0)
 		_wall_run(parent, "塀全_%d" % side, bx + (0.0 if along_x else sgn * (hw - 0.4)),
 			bz + (sgn * (hd - 0.4) if along_x else 0.0), wl, along_x)
 	# ── 四個角落的隅柱：把圍牆封起來 ──
@@ -710,10 +955,10 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 	# ⚠ 蔵要先蓋。它是中庭裡最大的量體，離れ的立面又一律朝中庭 ——
 	# 後蓋的話蔵就會正好堵在離れ門口（門面體檢抓到的就是這一條）。
 	# 先佔位，離れ才有辦法閃開它。
-	_kura_in_court(parent, bx, bz)
+	_kura_in_court(parent, bx, bz, float(zs.kura))
 
 	# 內庭：離れ（後棟小屋）—— 街區內部也要有東西
-	for k in 2:
+	for k in int(zs.hanare) * 2:
 		var ix := bx + lib.rr(-11.0, 11.0)
 		var iz := bz + lib.rr(-11.0, 11.0)
 		# ⚠ 先決定朝向再測空地。v8 是拿固定的 11×7 去測，之後才隨機轉 90° ——
@@ -741,6 +986,8 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 		_longhouse(parent, "離れ_%d" % k, ix, iz, ln, dp,
 			along, 1, "kawara" if lib.rand() < 0.5 else "thatch", toward < 0.0)
 		n += 1
+		_zone_stat[zi][1] += 1
+		_zone_stat[zi][2] += ln * dp
 	return n
 
 ## 反過來問：這塊要蓋的地，會不會擋到**已經蓋好**的某個門面？
@@ -781,8 +1028,8 @@ func _clear_ahead(p: Vector2, dir: Vector2, own := -1, half_w := 0.0) -> bool:
 ## 舊版的問題：隨機轉 TAU（於是屋脊跟街區歪掉、扉朝著自家圍牆），
 ## 但地權只登記軸對齊的 6.4×5.4，轉過之後量到的跟蓋出來的不是同一塊。
 ## 這一版只轉 90° 的倍數，且扉一律朝街區中心（中庭）——那是進得去的一側。
-func _kura_in_court(parent: Node, bx: float, bz: float) -> void:
-	if lib.rand() >= 0.6:
+func _kura_in_court(parent: Node, bx: float, bz: float, p := 0.6) -> void:
+	if lib.rand() >= p:
 		return
 	var w := 5.0          # 開間（沿屋脊）
 	var d := 4.2          # 進深
@@ -880,7 +1127,9 @@ func _kura_in_court(parent: Node, bx: float, bz: float) -> void:
 ## 面街的商家街區（鈴奈庵、鵜吞亭）：主建築貼本通那一側，其餘同一般街區
 func _blk_shopfront(parent: Node, bx: float, bz: float, title: String, face_dir: int) -> int:
 	var hw := BLOCK_W * 0.5
-	var cx := bx + float(face_dir) * (hw - 5.0)
+	# ⚠ 6.6 不是 5.0 —— 地標街區的圍牆換成築地塀之後厚了一倍（0.36 → 0.92），
+	# 5.0 會讓鈴奈庵／鵜吞亭的側牆卡進圍牆裡（體檢：建物互相卡住 8.4㎡）。
+	var cx := bx + float(face_dir) * (hw - 6.6)
 	var cz := bz + lib.rr(-4.0, 4.0)
 	var g := Node3D.new()
 	g.position = Vector3(cx, height_at(cx, cz), cz)
@@ -920,15 +1169,37 @@ func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
 	var g := Node3D.new()
 	g.position = Vector3(cx, height_at(cx, cz), cz)
 	lib.add(parent, g, "寺子屋")
-	lib.box(g, "基壇", Vector3(24.0, 0.6, 14.0), _mat("stone"), Vector3(0, 0.3, 0))
-	lib.box(g, "屋身", Vector3(22.0, 3.8, 12.0), _mat("plaster"), Vector3(0, 2.5, 0))
-	lib.box(g, "外廊", Vector3(23.4, 0.28, 2.2), _mat("wood"), Vector3(0, 0.74, 7.0))
+	# 石垣基壇（參考《求聞編年史》：地標坐在一道高石垣上，正面切石階）
+	var dgu := _ground_under(cx, cz, 26.0, 16.0)
+	const DAIS_H := 1.5
+	g.position = Vector3(cx, dgu[0] + DAIS_H, cz)
+	_dais_in(g, 26.0, 16.0, DAIS_H, Vector2(0, 1), float(dgu[1]))
+	lib.box(g, "土台", Vector3(24.0, 0.5, 14.0), _mat("stone"), Vector3(0, 0.25, 0))
+	lib.box(g, "屋身", Vector3(22.0, 4.6, 12.0), _mat("plaster", 0), Vector3(0, 2.9, 0))
+	# 縁側（寬廊）與高欄 —— 參考圖的正面就是一整道木廊
+	lib.box(g, "外廊", Vector3(23.4, 0.34, 3.0), _mat("wood"), Vector3(0, 0.85, 7.2))
+	lib.box(g, "高欄", Vector3(23.4, 0.14, 0.14), _mat("dark"), Vector3(0, 1.62, 8.6))
+	for i in 14:
+		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.62, 0.1), _mat("dark"),
+			Vector3(-11.2 + float(i) * 1.72, 1.32, 8.6))
 	for i in 8:
-		lib.cyl(g, "廊柱_%d" % i, 0.15, 0.15, 2.8, _mat("dark"), Vector3(-10.0 + float(i) * 2.85, 2.2, 7.8), 6)
+		lib.cyl(g, "廊柱_%d" % i, 0.19, 0.19, 3.6, _mat("dark"), Vector3(-10.0 + float(i) * 2.85, 2.8, 8.4), 6)
 	for i in 5:
-		lib.box(g, "障子_%d" % i, Vector3(3.4, 2.3, 0.08), _mat("wood"), Vector3(-8.6 + float(i) * 4.3, 1.85, 6.05))
-	lib.gable_roof(g, 4.4, 25.0, 15.0, 0.5, 0.34, _mat("kawara"), _mat("plaster"))
-	_collide(g, Vector3(22.4, 6.2, 12.4))
+		lib.box(g, "障子_%d" % i, Vector3(3.4, 2.8, 0.08),
+			lib.flat_mat("shoji", Color(0.94, 0.93, 0.88), 0.9),
+			Vector3(-8.6 + float(i) * 4.3, 2.25, 6.05))
+		lib.box(g, "障子框_%d" % i, Vector3(3.6, 0.14, 0.12), _mat("dark"),
+			Vector3(-8.6 + float(i) * 4.3, 3.72, 6.05))
+	lib.gable_roof(g, 5.2, 26.0, 16.0, 0.52, 0.4, _mat("kawara"), _mat("plaster", 0))
+	# 向拜（正面突出的唐破風式門廊）—— 參考圖最有辨識度的一件
+	lib.box(g, "向拜屋根", Vector3(7.4, 0.3, 3.4), _mat("kawara"), Vector3(0, 4.6, 8.0))
+	for sd in [-1.0, 1.0]:
+		lib.cyl(g, "向拜柱_%d" % int(sd + 1), 0.22, 0.24, 4.4, _mat("dark"),
+			Vector3(sd * 3.2, 2.2, 9.2), 8)
+	lib.box(g, "梵鐘架", Vector3(2.6, 0.3, 2.6), _mat("dark"), Vector3(13.0, 3.4, 6.0))
+	lib.cyl(g, "梵鐘", 0.62, 0.78, 1.5, lib.pbr("bonsho", "stone", 0.6, Color(0.52, 0.58, 0.52)),
+		Vector3(13.0, 2.4, 6.0), 12)
+	_collide(g, Vector3(22.4, 7.0, 12.4))
 	_claim(cx, cz, 25.0, 15.0, "blk_terakoya")
 	# 前庭：手水缽與立札
 	lib.box(g, "立札", Vector3(1.6, 1.1, 0.1), _mat("wood"), Vector3(-8.0, 1.3, 10.5))
@@ -949,14 +1220,34 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	for w in [[0.0, -hd, hw * 2.0, true], [-hw, 0.0, hd * 2.0, false], [hw, 0.0, hd * 2.0, false],
 			[-hw * 0.62, hd, hw * 0.76, true], [hw * 0.62, hd, hw * 0.76, true]]:
 		# 牆身往下加深「高差 + 0.3」，坡地上才不會有一段懸空
+		# 稗田邸的圍牆是**築地塀**規格：腰石垣 + 白牆 + 定規筋 + 兩坡瓦頂。
+		# 使用者看參考圖後說地標的圍牆比例要放大才有氣勢 —— 從 2.2m 拉到 3.1m。
 		var wfoot := spread + 0.3
-		lib.box(g, "土塀_%d_%d" % [int(w[0]), int(w[1])],
-			Vector3(w[2] if w[3] else 0.36, 2.2 + wfoot, 0.36 if w[3] else w[2]), _mat("mud"),
-			Vector3(w[0], 1.1 - wfoot * 0.5, w[1]))
-		lib.box(g, "塀瓦_%d_%d" % [int(w[0]), int(w[1])],
-			Vector3((w[2] + 0.2) if w[3] else 0.62, 0.15, 0.62 if w[3] else (w[2] + 0.2)), _mat("kawara"),
-			Vector3(w[0], 2.28, w[1]))
-		_collide(g, Vector3(w[2] if w[3] else 0.5, 2.4, 0.5 if w[3] else w[2]), Vector3(w[0], 0, w[1]))
+		var wl: float = float(w[2])
+		var alx: bool = bool(w[3])
+		lib.box(g, "腰石垣_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3(wl if alx else 0.92, 0.95 + wfoot, 0.92 if alx else wl), _mat("stone"),
+			Vector3(w[0], 0.47 - wfoot * 0.5, w[1]))
+		lib.box(g, "築地塀_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3(wl if alx else 0.62, 2.15, 0.62 if alx else wl), _mat("plaster", 0),
+			Vector3(w[0], 2.02, w[1]))
+		for k in 3:
+			lib.box(g, "定規筋_%d_%d_%d" % [int(w[0]), int(w[1]), k],
+				Vector3(wl if alx else 0.70, 0.07, 0.70 if alx else wl), _mat("stone"),
+				Vector3(w[0], 2.68 - float(k) * 0.22, w[1]))
+		for sd in [-1.0, 1.0]:
+			var sl := lib.box(g, "塀屋根_%d_%d_%d" % [int(w[0]), int(w[1]), int(sd + 1)],
+				Vector3((wl + 0.3) if alx else 0.82, 0.14, 0.82 if alx else (wl + 0.3)),
+				_mat("kawara"),
+				Vector3(w[0] + (0.0 if alx else sd * 0.34), 3.26, w[1] + (sd * 0.34 if alx else 0.0)))
+			if alx:
+				sl.rotation.x = sd * -0.42
+			else:
+				sl.rotation.z = sd * 0.42
+		lib.box(g, "棟瓦_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3((wl + 0.3) if alx else 0.28, 0.2, 0.28 if alx else (wl + 0.3)), _mat("kawara"),
+			Vector3(w[0], 3.4, w[1]))
+		_collide(g, Vector3(wl if alx else 0.95, 3.5, 0.95 if alx else wl), Vector3(w[0], 0, w[1]))
 	# 表門（藥醫門）
 	for sx in [-1, 1]:
 		lib.box(g, "門柱_%d" % (sx + 1), Vector3(0.55, 3.2, 0.55), _mat("dark"), Vector3(float(sx) * 2.6, 1.6, hd))

@@ -19,7 +19,7 @@ const WATER_BAD_FRAC := 0.06   # 超過這個比例的水面點被埋才算問�
 
 ## 建物「該貼地」的構件命名。屋頂／簷／瓦不列入 —— 它們本來就在半空中，
 ## 拿它們量離地會得到 200 多筆假訊息。
-const GROUND_PARTS := ["基石", "屋身", "塀", "基壇", "土台"]
+const GROUND_PARTS := ["基石", "屋身", "塀", "基壇", "土台", "石垣"]
 ## 明確排除：塀瓦 含「塀」但它是牆頂的蓋瓦，本來就懸在半空
 const NOT_GROUND := ["瓦", "屋根", "簷", "庇"]
 
@@ -170,7 +170,10 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 			var wb: AABB = _world_xf(c) * (c as MeshInstance3D).get_aabb()
 			box = wb if not got else box.merge(wb)
 			got = true
-	if got:
+	# 護岸／堤是**地景**不是建物。加了「石垣」當貼地構件之後，
+	# 水路護岸整條被當成一棟建物，岸邊的荷與蘆葦就全被判成「長在建物裡」。
+	var is_terrainish := String(n.name).contains("護岸") or String(n.name).contains("堤")
+	if got and not is_terrainish:
 		buildings.append({ "name": _path_of(n), "aabb": box })
 		# 個別構件也留一份：跨水檢查要**逐片牆**比。
 		# 拿整棟的外框去比，稗田邸院子裡的庭池會被誤報成「牆擋住水」。

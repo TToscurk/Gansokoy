@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/dark_wood_rough.jpg" id="3_28v0c"]
 
 [resource]
+albedo_color = Color(0.44, 0.47, 0.45, 1)
 albedo_texture = ExtResource("1_yvaim")
 roughness_texture = ExtResource("3_28v0c")
 normal_enabled = true

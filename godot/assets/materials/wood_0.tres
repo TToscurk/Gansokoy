@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/planks_rough.jpg" id="3_k35im"]
 
 [resource]
-albedo_color = Color(0.9, 0.82, 0.72, 1)
+albedo_color = Color(0.72, 0.66, 0.58, 1)
 albedo_texture = ExtResource("1_72huy")
 roughness_texture = ExtResource("3_k35im")
 normal_enabled = true
