@@ -631,6 +631,10 @@ const LANDMARK_KINDS := ["hieda", "terakoya", "suzunaan", "unomitei", "ashiarai"
 ## **高石垣 + 帶瓦屋頂的高牆 + 石階**堆出來的。
 ## 一般民家用 1.9m 的土塀；地標用 2.9m 的築地塀，還有真的兩坡瓦頂與控柱。
 const TSUIJI_H := 2.9
+## Blender 生垣模組的長度（make_hedge.py 的 MODULE_LEN）
+const HEDGE_MODULE := 2.4
+const HEDGE_MODS := ["hedge_a", "hedge_b", "hedge_c"]
+var _hedge_batch := {"hedge_a": [], "hedge_b": [], "hedge_c": []}
 func _tsuiji_run(parent: Node, name: String, cx: float, cz: float, length: float, along_x: bool) -> void:
 	var gw := _ground_under(cx, cz, length if along_x else 1.4, 1.4 if along_x else length)
 	var g := Node3D.new()
@@ -715,35 +719,33 @@ func _hedge_run(parent: Node, name: String, cx: float, cz: float, length: float,
 	if not along_x:
 		g.rotation.y = PI / 2.0
 	lib.add(parent, g, name)
-	# ⚠ 使用者：「這個方塊的草到底是什麼」—— 就是這裡。舊版用 lib.box 疊葉叢，
-	# 從側面看就是一排貼了森林貼圖的方塊。改用 blob_mesh（圓潤團塊）
-	# + foliage（新烤的葉團貼圖）。
-	var bamboo := lib.pbr("hedge_bamboo", "planks", 0.9, Color(0.74, 0.72, 0.52))
-	# 竹垣：後面一排細竹，樹籬有缺口時看得到它（樹籬不是實心的）
-	var posts := maxi(int(length / 0.42), 2)
-	for i in posts:
-		var px: float = -length * 0.5 + (float(i) + 0.5) / float(posts) * length
-		lib.cyl(g, "竹_%d" % i, 0.045, 0.05, lib.rr(1.15, 1.35), bamboo,
-			Vector3(px, 0.62, 0.16), 5)
-	for hb in 2:                                        # 兩道橫竹
-		lib.cyl(g, "貫竹_%d" % hb, 0.038, 0.038, length, bamboo,
-			Vector3(0, 0.42 + float(hb) * 0.55, 0.16), 5).rotation.z = PI * 0.5
-	# 樹籬：一叢一叢疊出來，高低起伏才不像一塊綠色的牆
-	var clumps := maxi(int(length / 0.62), 2)
-	for i in clumps:
-		var px2: float = -length * 0.5 + (float(i) + 0.5) / float(clumps) * length
-		var h := lib.rr(1.15, 1.55)
-		# 一叢兩球：下面一顆大的坐地、上面一顆小的收頂，天際線才會起伏
-		for k in 2:
-			var cl := MeshInstance3D.new()
-			cl.mesh = lib.blob_mesh(i * 17 + k * 3 + int(length), lib.rr(0.7, 1.0), lib.rr(0.26, 0.42))
-			cl.material_override = _mat("foliage", -1)
-			var rad: float = lib.rr(0.46, 0.62) * (1.0 if k == 0 else 0.72)
-			cl.scale = Vector3(rad, rad * lib.rr(0.9, 1.25), rad)
-			cl.position = Vector3(px2 + lib.rr(-0.12, 0.12),
-				h * (0.42 if k == 0 else 0.74), lib.rr(-0.14, 0.14))
-			cl.rotation = Vector3(lib.rr(-0.3, 0.3), lib.rr(0.0, TAU), lib.rr(-0.3, 0.3))
-			lib.add(g, cl, "葉叢_%d_%d" % [i, k])
+	# ⚠ 這裡改過兩次，兩次都被抓包：
+	#   v14 用 lib.box 疊葉叢 →「這個方塊的草到底是什麼」
+	#   v15 改成 blob_mesh 橢圓球 + cellular 葉貼圖 →「很像西瓜黏上去」
+	# 兩次的病根是同一個：**光滑的封閉曲面**。真正的樹籬輪廓是碎的，
+	# 幾百根小枝葉戳出來；光滑曲面不管貼什麼圖都是水果。
+	# v16 改成用 Blender 雕好的模組（assets/blender/make_hedge.py）：
+	# 粗胚塊體擋視線 + 表面 200 叢枝葉打碎輪廓 + 底下露枝幹。
+	# 模組不各自建 MeshInstance3D —— 一個模組 1.2 萬個三角形、全村 350 段，
+	# 那是 400 萬個三角形與 350 次 draw call。收集 transform，最後一次
+	# 用 MultiMesh 發出去（每種變體一次 draw call）。
+	var count := maxi(int(length / HEDGE_MODULE), 1)
+	var step := length / float(count)
+	for i in count:
+		var px2: float = -length * 0.5 + (float(i) + 0.5) * step
+		var mwx: float = cx + (px2 if along_x else 0.0)
+		var mwz: float = cz + (0.0 if along_x else px2)
+		var jitter: float = lib.rr(-0.10, 0.10)
+		var t := Transform3D()
+		# 模組要重疊一點（step > MODULE 時會露縫），高矮也各自變化
+		t.basis = t.basis.scaled(Vector3(step / HEDGE_MODULE * lib.rr(1.06, 1.16),
+			lib.rr(0.88, 1.16), lib.rr(0.92, 1.12)))
+		t.basis = t.basis.rotated(Vector3.UP, (PI if lib.rand() < 0.5 else 0.0)
+			+ (0.0 if along_x else PI * 0.5))
+		t.origin = Vector3(mwx + (0.0 if along_x else jitter),
+			_ground_sample(mwx, mwz) - 0.06,
+			mwz + (jitter if along_x else 0.0))
+		_hedge_batch[HEDGE_MODS[int(lib.rand() * 3.0)]].append(t)
 	_collide(g, Vector3(length, 1.4, 0.9))
 	_claim(cx, cz, length + 0.6 if along_x else 1.2, 1.2 if along_x else length + 0.6, "hedge_run")
 
@@ -828,7 +830,25 @@ func _build_blocks() -> void:
 		var cover: float = area / maxf(float(blocks) * BLOCK_W * BLOCK_D, 1.0) * 100.0
 		zparts.append("%s %d院落/%d棟/建蔽 %.0f%%" % [ZONE_NAME[i], blocks, _zone_stat[i][1], cover])
 	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
+	_emit_hedges()
 	_assert_frontage_clear()
+
+## 生垣：把收集到的模組 transform 一次發成 MultiMesh
+func _emit_hedges() -> void:
+	var total := 0
+	var g := lib.add(lib.root, Node3D.new(), "生垣")
+	for m in HEDGE_MODS:
+		var list: Array = _hedge_batch[m]
+		if list.is_empty():
+			continue
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(
+			lib.prop_mesh("res://assets/models/%s.glb" % m), list, [],
+			"%s/mm_%s.tres" % [OUT_DIR, m])
+		mmi.material_override = lib.foliage_vc_mat()
+		lib.add(g, mmi, "生垣_%s" % m)
+		total += list.size()
+	print("hedges: %d 模組 / %d 種" % [total, HEDGE_MODS.size()])
 
 ## 驗每個門面前方有沒有淨空 —— 使用者回報「有窗戶的面被牆壁擋住」。
 ## 立面（玄關與窗戶那一面）前方 CLEAR_D 公尺內不能有別的地權。

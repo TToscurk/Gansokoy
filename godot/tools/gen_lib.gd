@@ -233,6 +233,20 @@ func tree_mesh(glb_path: String) -> Mesh:
 	return mesh
 
 ## 有機造型資產（assets/blender/make_props.py 產）：顏色全在頂點色裡
+## 植栽用的頂點色材質：**雙面**。
+## 葉子本來就該雙面（背光那側也要看得見），而且雙面等於一次解決
+## 所有繞序問題 —— 鏡射出來的面法線朝內，單面渲染會整片變黑。
+func foliage_vc_mat() -> StandardMaterial3D:
+	if mats.has("foliage_vc"):
+		return mats["foliage_vc"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	m.roughness = 0.92
+	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	_save_mat(m, "foliage_vc")
+	return m
+
 func vc_mat() -> StandardMaterial3D:
 	if mats.has("vertex_color"):
 		return mats["vertex_color"]

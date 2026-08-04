@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+cull_mode = 2
+specular_mode = 2
+vertex_color_use_as_albedo = true
+roughness = 0.92

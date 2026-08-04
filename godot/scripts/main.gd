@@ -79,6 +79,12 @@ func _aim_shot(i: int) -> void:
 	var l: Array = e.get("look", [0, 0, 0])
 	_shot_cam_node.position = Vector3(c[0], c[1], c[2])
 	_shot_cam_node.look_at(Vector3(l[0], l[1], l[2]))
+	# 可指定時刻。ADR-016 要求每張正面照都要親眼看過 —— 但預設的 17:5x
+	# 斜陽會把半數畫面壓進陰影裡，看不出資產做得對不對。
+	# 要檢查造型的鏡頭就寫 "time": 11，讓太陽在高處。
+	if e.has("time"):
+		DayNight.flowing = false
+		DayNight.set_hour(float(e["time"]))
 	_shot_wait = 0
 
 func _shotlist_tick() -> void:
