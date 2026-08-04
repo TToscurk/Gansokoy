@@ -22,6 +22,9 @@ OUT_DIR = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else "godot/ass
 os.makedirs(OUT_DIR, exist_ok=True)
 TAU = math.pi * 2
 
+# 頭身數（ADR-011）。3.5 = Q 版；4.5 = 往寫實靠但仍有卡通感；7 = 寫實。
+HEADS = 4.5
+
 
 def clear():
     bpy.ops.object.select_all(action="SELECT")
@@ -193,27 +196,35 @@ PALETTES = {
 
 # ══════════════════════════════════════════════ 村民 ═══════════════════
 def make_villager(name):
-    """約 3.8 頭身。各部位獨立，origin 放在關節上：
-         Body   骨盤（0,0,hip）      —— 全身的根，走路時上下起伏
-         Head   頸（0,0,neck）
-         ArmL/R 肩
-         LegL/R 股関節
+    """身高由 HEADS（頭身數）反推，不再手調一堆常數。
+
+    ADR-011：3.5 頭身的 Q 版放進 PBR 石板街景像兩個遊戲的素材放在一起，
+    改成 4.5 頭身往環境靠。改這個數字就能整批重調比例。
+
+    各部位獨立，origin 放在關節上：
+      Body   骨盤   Head 頸   ArmL/R 肩   LegL/R 股関節
     """
     clear()
     p = PALETTES[name]
     T = p["tall"]
-    HEAD_R = 0.175 * (1.0 if T >= 1.0 else 0.92)   # 小孩頭沒有等比例縮小
-    hip = 0.46 * T                                  # 骨盤高度（地面到股関節）
-    torso = 0.40 * T                                # 骨盤到肩
-    neck = hip + torso
-    shoulder_w = 0.145 * T
+    heads = HEADS * (0.86 if T < 0.9 else 1.0)     # 小孩頭身數本來就比較少
+    height = 1.62 * T                               # 成人約 1.62m
+    HEAD_R = height / heads * 0.5
+    neck = height - HEAD_R * 2.0                    # 頸＝地面到下巴
+    # 腿佔身高約 47%（頭身數愈高腿愈長）
+    hip = neck * 0.545
+    torso = neck - hip
+    # 肩點要壓在軀幹的表面上，往外挪一點點就會出現「手臂是外掛的」那條縫
+    shoulder_w = HEAD_R * 0.66
 
     parts = []
 
     # ── 軀幹（含和服的裾張り與帶）──
     # 局部座標以骨盤為原點：z 從 0（腰）往上到 torso（肩）、往下到裙擺
-    prof_z = [-hip * 0.86, -hip * 0.45, -0.02, 0.10, 0.22, torso * 0.72, torso, torso + 0.035]
-    prof_r = [0.150, 0.140, 0.121, 0.118, 0.124, 0.140, 0.146, 0.120]
+    # 半徑一律用 HEAD_R 當單位 —— 寫死絕對值的話，身高一拉就變成矮冬瓜
+    R = HEAD_R
+    prof_z = [-hip * 0.86, -hip * 0.45, -0.02, 0.10, 0.22, torso * 0.72, torso, torso + 0.04]
+    prof_r = [R * 0.78, R * 0.72, R * 0.60, R * 0.58, R * 0.61, R * 0.70, R * 0.74, R * 0.60]
     prof_sq = [(1.0, 0.72), (1.0, 0.70), (1.0, 0.66), (1.0, 0.66),
                (1.0, 0.68), (1.0, 0.70), (1.0, 0.72), (1.0, 0.72)]
     body_v, body_f = tube([(0, 0, z) for z in prof_z], prof_r, prof_sq, sides=14)
@@ -225,10 +236,10 @@ def make_villager(name):
     body_parts = [(body_v, body_f, None)]
 
     # 帶（腰帶）
-    obi_v, obi_f = tube([(0, 0, 0.02), (0, 0, 0.115)], [0.128, 0.128],
+    obi_v, obi_f = tube([(0, 0, 0.02), (0, 0, 0.02 + R * 0.50)], [R * 0.635, R * 0.635],
                         [(1.0, 0.70), (1.0, 0.70)], sides=14, cap=False)
     # 襟（前面的 V 字合わせ）
-    lap_v, lap_f = box(0.085, 0.0, 0.30 * T + 0.02, 0.03, 0.075, 0.30 * T)
+    lap_v, lap_f = box(R * 0.42, 0.0, torso * 0.56, R * 0.16, R * 0.38, torso * 0.78)
 
     verts, faces, cols = [], [], []
     for pv, pf, col in [(body_v, body_f, None), (obi_v, obi_f, p["obi"]), (lap_v, lap_f, p["trim"])]:
@@ -266,13 +277,13 @@ def make_villager(name):
         return HEAD_R * (math.sqrt(max(q, 0.04)) + bulge)
 
     for sy in (-1, 1):
-        eyo = 0.34
+        eyo = 0.32
         eze = -0.04
         ev, ef = sphere(face_x(eyo, eze, -0.02), sy * HEAD_R * eyo, hz + HEAD_R * eze,
-                        HEAD_R * 0.26, 0.24, 0.62, 1.10, seg=12, rings=8)
+                        HEAD_R * 0.21, 0.22, 0.60, 1.15, seg=12, rings=8)
         head_parts.append((ev, ef, EYE))
         hv, hf = sphere(face_x(eyo * 0.92, 0.05, 0.015), sy * HEAD_R * eyo * 0.92,
-                        hz + HEAD_R * 0.05, HEAD_R * 0.070, 0.22, 0.9, 1.0, seg=8, rings=6)
+                        hz + HEAD_R * 0.05, HEAD_R * 0.055, 0.20, 0.9, 1.0, seg=8, rings=6)
         head_parts.append((hv, hf, (0.99, 0.99, 0.99)))
         # 眉離眼睛遠一點，貼太近會連成一條黑線
         bz = 0.21
@@ -287,30 +298,30 @@ def make_villager(name):
 
     # ── 腕（袖 + 手）──origin 在肩
     for side, sname in ((1, "ArmL"), (-1, "ArmR")):
-        arm_len = 0.30 * T
+        arm_len = torso * 0.92
         sleeve_v, sleeve_f = tube(
-            [(0, 0, 0.01), (0, 0, -arm_len * 0.30), (0, 0, -arm_len * 0.58)],
-            [0.052, 0.062, 0.050], [(1.0, 0.95)] * 3, sides=8)
+            [(0, 0, R * 0.06), (0, 0, -arm_len * 0.30), (0, 0, -arm_len * 0.58)],
+            [R * 0.31, R * 0.34, R * 0.25], [(1.0, 0.95)] * 3, sides=8)
         fore_v, fore_f = tube(
             [(0, 0, -arm_len * 0.56), (0, 0, -arm_len * 0.95)],
-            [0.036, 0.031], sides=8)
-        hand_v, hand_f = sphere(0, 0, -arm_len - 0.012, 0.040, 0.9, 0.75, 1.05,
+            [R * 0.185, R * 0.155], sides=8)
+        hand_v, hand_f = sphere(0, 0, -arm_len - R * 0.07, R * 0.205, 0.9, 0.75, 1.05,
                                 seg=10, rings=7)
         v, f, c = merge((sleeve_v, sleeve_f, p["top"]),
                         (fore_v, fore_f, SKIN), (hand_v, hand_f, SKIN))
         parts.append(make_object(sname, v, f, c,
-                                 loc=(0, side * shoulder_w, neck - 0.045)))
+                                 loc=(0, side * shoulder_w, neck - R * 0.23)))
 
     # ── 脚（腳 + 足袋 + 草履）──origin 在股関節
     for side, lname in ((1, "LegL"), (-1, "LegR")):
-        leg_len = hip - 0.045
+        leg_len = hip - R * 0.24
         leg_v, leg_f = tube([(0, 0, 0), (0, 0, -leg_len * 0.55), (0, 0, -leg_len)],
-                            [0.055, 0.046, 0.038], sides=8)
-        foot_v, foot_f = box(0.024, 0, -leg_len - 0.028, 0.115, 0.070, 0.052)
-        sole_v, sole_f = box(0.024, 0, -leg_len - 0.056, 0.130, 0.080, 0.018)
+                            [R * 0.28, R * 0.235, R * 0.195], sides=8)
+        foot_v, foot_f = box(R * 0.12, 0, -leg_len - R * 0.145, R * 0.59, R * 0.36, R * 0.27)
+        sole_v, sole_f = box(R * 0.12, 0, -leg_len - R * 0.29, R * 0.67, R * 0.41, R * 0.09)
         v, f, c = merge((leg_v, leg_f, p["skirt"] if name == "villager_b" else SKIN),
                         (foot_v, foot_f, TABI), (sole_v, sole_f, SOLE))
-        parts.append(make_object(lname, v, f, c, loc=(0, side * 0.058, hip)))
+        parts.append(make_object(lname, v, f, c, loc=(0, side * R * 0.30, hip)))
 
     export_parts(parts, name)
 
