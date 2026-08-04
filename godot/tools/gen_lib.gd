@@ -31,21 +31,31 @@ func add(parent: Node, node: Node, name: String) -> Node:
 	node.owner = root
 	return node
 
-## 整個 glb 場景搬進來（角色用）——不像 prop_mesh 只挖第一個 mesh，
-## 角色的各部位必須保持獨立節點，走路動畫靠轉關節（見 npc.gd）。
-## 存 .tscn 時每個子節點都要有 owner，不然存出去會只剩根節點。
+## 角色用：從 glb 取出各部位，重建成一棵**自己的**節點樹。
+##
+## 不能直接 instantiate glb 再把子節點設成 owner —— 那樣存 .tscn 時
+## 節點會被存兩次（一次是 instance=ExtResource，一次是明確的子節點），
+## 在編輯器開場景就會噴一整排「匯入的節點名稱與場景中現有的 … 衝突」。
+## 改成把 mesh 與 transform 抄出來、掛在新建的節點上，存檔就乾淨了。
 func char_scene(glb_path: String, mat: Material = null) -> Node3D:
 	var packed: PackedScene = load(glb_path)
-	var n: Node3D = packed.instantiate()
+	var src: Node = packed.instantiate()
 	var m: Material = mat if mat else vc_mat()
-	var stack: Array[Node] = [n]
+	var out := Node3D.new()
+	var stack: Array[Node] = [src]
 	while stack.size() > 0:
 		var c: Node = stack.pop_back()
-		for g in c.get_children():
-			stack.push_back(g)
+		for gch in c.get_children():
+			stack.push_back(gch)
 		if c is MeshInstance3D:
-			(c as MeshInstance3D).material_override = m
-	return n
+			var mi := MeshInstance3D.new()
+			mi.name = c.name
+			mi.mesh = (c as MeshInstance3D).mesh
+			mi.transform = (c as MeshInstance3D).transform
+			mi.material_override = m
+			out.add_child(mi)
+	src.free()
+	return out
 
 ## 把整棵子樹的 owner 設成 root（add() 只設了它自己那一層）
 func own_all(n: Node) -> void:
