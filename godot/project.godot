@@ -1,10 +1,12 @@
-; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
+; Gansokoy — Godot 4 版（遷移中）
+; 佈局來自 three.js 版的烘焙底稿（tools/export-godot.mjs → blockout/*.glb），
+; 視覺在這裡逐步重做。
 ;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
+; ⚠ 這個檔案會被 Godot 編輯器重寫。只要跑過 `--editor` 或 `--import`，
+; 檔頭註解就會被換成引擎的樣板、每個按鍵綁定也會被補上 physical_keycode。
+; 那是**格式正規化，不是設定變更**。撞到「local changes would be
+; overwritten by merge: godot/project.godot」時，先 `git diff` 確認
+; 只有這類雜訊，然後 `git checkout -- godot/project.godot` 丟掉就好。
 
 config_version=5
 
