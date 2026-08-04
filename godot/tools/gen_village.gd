@@ -243,6 +243,16 @@ func _init() -> void:
 	], "res://assets/models/tree_round_b.glb", 420)
 	_build_env()
 
+	# ⚠ _merge_decor() 目前**沒有啟用**。
+	# 它要解的問題是真的：全村 15,625 個 MeshInstance3D = 15,625 次 draw call
+	# （使用者：「我電腦變卡了」）。但這一版跑不完 —— 在 GDScript 裡逐頂點
+	# 重建上萬個 mesh 太慢，加了尺寸護欄與 null 防護之後仍然會撞到超時。
+	# 下一輪要改的方向：
+	#   ・不要用 SurfaceTool（每個頂點一次函式呼叫），改直接組 PackedArray
+	#   ・或者根本不要在產生器裡合併，改成獨立的一支後處理工具
+	# 這一版先靠「砍掉重複幾何」把 15,625 降到 11,825，其餘留給下一輪。
+	# var mg := _merge_decor(root)
+
 	var packed := PackedScene.new()
 	packed.pack(root)
 	var err := ResourceSaver.save(packed, OUT_DIR + "village.tscn")
@@ -454,6 +464,20 @@ func _ground_sample(x: float, z: float) -> float:
 		surf = maxf(surf, bank_h(x, z) - NATURE_POND_SINK)
 	return maxf(y, surf)
 
+## 這個座標在不在水裡（池／河／水路）。
+## 使用者拍到「池塘水裡有灰色方塊」—— 是店前的飛石。飛石是照玄關朝向
+## 往外排的，稗田邸的玄關正對著庭池，於是三塊石頭排進水裡浮在水面上。
+func _in_water(x: float, z: float, pad := 0.0) -> bool:
+	# ⚠ 要用**開挖半徑**（R * 1.35）不是 R —— 池子挖出來的碗比 R 大一圈，
+	# 拿 R 判定的話碗緣那一圈仍然會被當成陸地，石板照樣鋪進水裡。
+	if Vector2(x - GARDEN_POND.x, z - GARDEN_POND.y).length() < GARDEN_POND_R * 1.45 + pad:
+		return true
+	if Vector2(x - NATURE_POND.x, z - NATURE_POND.y).length() < NATURE_POND_R * 1.45 + pad:
+		return true
+	if lib.poly_dist(RIVER, x, z) < RIVER_HALF + pad:
+		return true
+	return lib.poly_dist(CANAL, x, z) < CANAL_HALF + pad
+
 ## 建物腳下的地面高度：取涵蓋範圍內最低點（只取中心的話，一端會浮空）
 ## 回傳 [最低高度, 高差] —— 高差交給基石往下埋掉。
 func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
@@ -525,7 +549,7 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 		var ez: float = depth * 0.5 + 0.045
 		var ex: float = length * 0.5 + 0.045
 		var y0: float = 0.32
-		var posts := maxi(int(length / 1.9), 2)
+		var posts := maxi(int(length / 3.2), 2)
 		for face in [1.0, -1.0]:                       # 前後兩面
 			for i in posts + 1:
 				var px: float = -length * 0.5 + length * float(i) / float(posts)
@@ -537,8 +561,8 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 				lib.box(g, "貫_%d_%d" % [int(face), ri], Vector3(length + 0.1, 0.17, 0.10), fr,
 					Vector3(0, y0 + h * float(rails[ri]), face * ez))
 		for face2 in [1.0, -1.0]:                      # 兩側妻面
-			for i in 3:
-				var pz: float = -depth * 0.5 + depth * float(i) / 2.0
+			for i in 2:
+				var pz: float = -depth * 0.5 + depth * float(i)
 				lib.box(g, "妻柱_%d_%d" % [int(face2), i], Vector3(0.10, h, 0.15), fr,
 					Vector3(face2 * ex, y0 + h * 0.5, pz))
 			lib.box(g, "妻貫_%d" % int(face2), Vector3(0.10, 0.17, depth + 0.1), fr,
@@ -609,10 +633,11 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 			for e in frames:
 				lib.box(g, "窗框_%d_%d" % [i, int(e[2] * 10 + e[3] * 10)],
 					Vector3(e[0], e[1], 0.16), dark, Vector3(dx + e[2], 1.85 + e[3], fz2 + 0.06))
-			for k in 3:
-				lib.box(g, "縦格子_%d_%d" % [i, k], Vector3(0.07, 1.35, 0.12), dark,
-					Vector3(dx - ww * 0.3 + float(k) * ww * 0.3, 1.85, fz2 + 0.05))
-			lib.box(g, "横桟_%d" % i, Vector3(ww, 0.07, 0.12), dark, Vector3(dx, 1.85, fz2 + 0.05))
+			# ⚠ 格子以前是 3 根直木 + 1 根橫桟的實體（每扇窗 4 個 mesh，全村 1160 個）。
+			# v15 烤了 wood_lattice 貼圖，改成一片板 —— 遠看一樣，近看差在深度，
+			# 但 1160 次 draw call 換一點深度不值得。
+			lib.box(g, "格子_%d" % i, Vector3(ww, 1.35, 0.06), _mat("lattice", tone_v),
+				Vector3(dx, 1.85, fz2 + 0.05))
 			if lib.rand() < 0.4:                     # 雨戶箱（收雨窗的箱子）
 				lib.box(g, "雨戶箱_%d" % i, Vector3(0.45, 1.5, 0.3), _mat("wood"),
 					Vector3(dx + ww * 0.5 + 0.3, 1.85, fz2 + 0.12))
@@ -899,6 +924,120 @@ func _build_blocks() -> void:
 	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
 	_emit_hedges()
 	_assert_frontage_clear()
+
+## ── 合併裝飾構件（降 draw call）──
+##
+## 使用者：「我電腦變卡了」。量出來是 **15,625 個 MeshInstance3D**，
+## 也就是 15,625 次 draw call（正常該在 2000 以內）。原因是產生器的每一根
+## 柱、每一片窗框、每一塊海鼠瓦都是獨立的 lib.box()。
+##
+## 解法是把**同一棟建物、同一個材質**的裝飾構件烤成一個 ArrayMesh。
+##
+## ⚠ 只合併裝飾件。`check_map.gd` 是靠子節點的名字（基石／屋身／塀／
+## 基壇／土台／石垣）逐片量離地與互卡的 —— 那些**不能**合併，
+## 合併了體檢就瞎了。這也是為什麼不做「整棟合成一個 mesh」。
+var _merged_removed := 0
+const NO_MERGE := ["基石", "屋身", "塀", "基壇", "土台", "石垣", "腰壁", "屋根", "瓦"]
+
+func _mergeable(nm: String) -> bool:
+	for k in NO_MERGE:
+		if nm.contains(k):
+			return false
+	return true
+
+func _merge_decor(root: Node) -> Array:
+	var before := 0
+	var after := 0
+	var stack: Array[Node] = [root]
+	const SKIP := ["Terrain", "Vista", "遠景", "River", "Canal", "Water"]
+	while stack.size() > 0:
+		var node: Node = stack.pop_back()
+		for c in node.get_children():
+			var skip := false
+			for k in SKIP:
+				if String(c.name).contains(k):
+					skip = true
+					break
+			if skip:
+				continue
+			if c.get_child_count() > 0 or (c is Node3D and not (c is MeshInstance3D)):
+				stack.push_back(c)
+		# 這一層的可合併子節點，依材質分組
+		var buckets := {}
+		for c in node.get_children():
+			if not (c is MeshInstance3D):
+				continue
+			var mi := c as MeshInstance3D
+			before += 1
+			if mi.get_child_count() > 0:          # 掛著碰撞體的不動
+				continue
+			if not _mergeable(String(mi.name)):
+				continue
+			var mat: Material = mi.material_override
+			if mat == null and mi.mesh != null and mi.mesh.get_surface_count() > 0:
+				mat = mi.mesh.surface_get_material(0)
+			if mat == null or mi.mesh == null:
+				continue
+			# ⚠ 只吃小零件。第一版沒設上限，合併器跑去啃遠景地形與 vista
+			# （幾十萬頂點），在 GDScript 裡逐頂點重建 → 直接掛住十分鐘。
+			# 箱子 24 個頂點、圓柱 ~70 個，180 綽綽有餘。
+			var vcount := 0
+			for si0 in mi.mesh.get_surface_count():
+				vcount += (mi.mesh.surface_get_arrays(si0)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
+			if vcount > 180:
+				continue
+			var key: String = mat.resource_path if mat.resource_path != "" else str(mat.get_instance_id())
+			if not buckets.has(key):
+				buckets[key] = [mat, []]
+			buckets[key][1].append(mi)
+		for key in buckets:
+			var mat: Material = buckets[key][0]
+			var list: Array = buckets[key][1]
+			if list.size() < 3:                   # 合併不划算
+				continue
+			var st := SurfaceTool.new()
+			st.begin(Mesh.PRIMITIVE_TRIANGLES)
+			for mi2 in list:
+				var mesh: Mesh = (mi2 as MeshInstance3D).mesh
+				var xf: Transform3D = (mi2 as MeshInstance3D).transform
+				for si in mesh.get_surface_count():
+					var arr: Array = mesh.surface_get_arrays(si)
+					# ⚠ 這幾格可能是 **null**（沒有 UV 或沒有索引的 mesh）。
+					# 直接指定給 PackedVector2Array 會拋型別錯誤，整個合併器死掉，
+					# 而且死在存檔前面 —— 場景根本不會被重寫。
+					var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+					var nv = arr[Mesh.ARRAY_NORMAL]
+					var uv = arr[Mesh.ARRAY_TEX_UV]
+					var ix = arr[Mesh.ARRAY_INDEX]
+					var norms: PackedVector3Array = nv if nv != null else PackedVector3Array()
+					var uvs: PackedVector2Array = uv if uv != null else PackedVector2Array()
+					var idx := PackedInt32Array()
+					if ix != null:
+						idx = ix
+					else:
+						for vi in verts.size():
+							idx.append(vi)
+					for ii in idx:
+						if norms.size() > ii:
+							st.set_normal((xf.basis * norms[ii]).normalized())
+						if uvs.size() > ii:
+							st.set_uv(uvs[ii])
+						st.add_vertex(xf * verts[ii])
+			st.index()
+			var merged := MeshInstance3D.new()
+			merged.mesh = st.commit()
+			merged.material_override = mat
+			# 名字保留一個代表，方便之後除錯知道合併了什麼
+			var tag := String((list[0] as MeshInstance3D).name).split("_")[0]
+			node.add_child(merged)
+			merged.owner = lib.root
+			merged.name = "合併_%s_x%d" % [tag, list.size()]
+			after += 1
+			_merged_removed += list.size()
+			for mi3 in list:
+				node.remove_child(mi3)
+				mi3.queue_free()
+	return [before, after]
 
 ## 生垣：把收集到的模組 transform 一次發成 MultiMesh
 func _emit_hedges() -> void:
@@ -1222,23 +1361,18 @@ func _kura_in_court(parent: Node, bx: float, bz: float, p := 0.6) -> void:
 	# 海鼠壁（なまこ壁）：下半段黑瓦 + 白灰縫的菱格。蔵最好認的紋樣，
 	# 也是「材質不要只有一塊純色」的解 —— 貼一整片深色會變成一坨。
 	var band_h := 1.5
-	var rows := int(band_h / 0.55)
+	# ⚠ 海鼠壁以前是**一顆一顆菱形方塊**排出來的 —— 全村 576 個獨立 mesh，
+	# 576 次 draw call，只為了做一個花紋。v15 已經烤了 namako 貼圖
+	# （菱格 + 凸白目地都在裡面），改成一面一塊板。
 	for side_i in 4:
 		var sx_face := side_i < 2                          # true = 正／背面（沿 x 展開）
 		var sn := -1.0 if side_i % 2 == 0 else 1.0
 		var span: float = w if sx_face else d
-		var nc := int(span / 0.55)
-		for ci in nc:
-			for ri in rows:
-				var u: float = (float(ci) + 0.5) / float(nc) * span - span * 0.5
-				var v: float = 0.45 + (float(ri) + 0.5) / float(rows) * band_h
-				var tile := lib.box(s, "海鼠_%d_%d_%d" % [side_i, ci, ri],
-					Vector3(0.42, 0.42, 0.1), namako,
-					Vector3(u, v, sn * (d * 0.5 + 0.05)) if sx_face
-					else Vector3(sn * (w * 0.5 + 0.05), v, u))
-				tile.rotation.z = PI * 0.25                # 菱形
-				if not sx_face:
-					tile.rotation.y = PI * 0.5
+		lib.box(s, "海鼠壁_%d" % side_i,
+			Vector3(span, band_h, 0.09) if sx_face else Vector3(0.09, band_h, span),
+			namako,
+			Vector3(0, 0.45 + band_h * 0.5, sn * (d * 0.5 + 0.05)) if sx_face
+			else Vector3(sn * (w * 0.5 + 0.05), 0.45 + band_h * 0.5, 0))
 	# 海鼠壁上緣的水切瓦
 	for side_j in 4:
 		var sx_face2 := side_j < 2
@@ -1430,70 +1564,91 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
 	var rock_y := func(wx: float, wz: float, sink: float) -> float:
 		return height_at(wx, wz) - g.position.y - sink
-	# 掃滿一整圈：起點隨機、但走的總角度是 TAU（v8 初版寫成 while ang < TAU，
-	# 起點若落在 5.5 rad 就只鋪了一小段，池邊等於光禿禿的）
-	var ang := lib.rr(0.0, TAU)
-	var swept := 0.0
+	# ── 石組：日本庭園的石不是均勻繞一圈，是「三尊石」的組法 ──
+	# 使用者：「這個池塘的石頭很醜」→「設計個有藝術性的池塘出來」。
+	# v15 是等角度撒滿一圈的扁石頭，看起來像一圈灰色麵包。真正的石組是：
+	#   ・**主石立起來**（縦石），高過水面，一組只有一顆
+	#   ・旁邊配 1~2 顆矮的臥石（横石）
+	#   ・組與組之間**大片留白**，留白處鋪州濱（細卵石灘）
+	#   ・數量取奇數（三・五・七）
 	var rk_i := 0
-	while swept < TAU:
-		var group := 2 + int(lib.rand() * 3.0)      # 一組 2~4 顆
-		var ga := ang
-		for k in group:
-			var a := ga + float(k) * lib.rr(0.10, 0.20)
-			var sc: float = lib.rr(0.5, 1.25) * (1.25 if k == 0 else 0.8)   # 主石 + 添石
-			var rr3: float = shore * lib.rr(0.99, 1.14)
-			var rk := MeshInstance3D.new()
-			# ⚠ 不用 ROCK_GLBS —— 那是稜角分明的岩塊。使用者要「山水畫的鵝卵石」，
-			# 庭池的石是被水磨圓的河石。blob_mesh 做圓潤團塊，pebble 是新烤的玉石貼圖。
-			rk.mesh = lib.blob_mesh(rk_i * 7 + 3, lib.rr(0.52, 0.74), lib.rr(0.16, 0.30))
-			rk.material_override = _mat("cobble", -1)
+	var groups := 5                                   # 奇數
+	var g_ang: Array[float] = []
+	var a0 := lib.rr(0.0, TAU)
+	for gi in groups:
+		# 不等角：黃金角的擾動，避免五顆平均分佈（那又變成項鍊）
+		g_ang.append(a0 + float(gi) * TAU / float(groups) + lib.rr(-0.34, 0.34))
+	for gi in groups:
+		var ga: float = g_ang[gi]
+		var upright: bool = gi % 2 == 0               # 隔一組立一顆
+		var members := 2 + (gi % 2)
+		for k in members:
+			var a := ga + float(k) * lib.rr(0.055, 0.10) * (1.0 if k % 2 == 0 else -1.0)
+			var rr3: float = shore * lib.rr(0.97, 1.09)
 			var wx: float = bx + pl.x + cos(a) * rr3
 			var wz: float = bz + pl.z + sin(a) * rr3
+			var rk := MeshInstance3D.new()
+			var main := k == 0
+			# 主石：立起來（y 拉長、xz 收窄）。配石：臥著。
+			var sc: float = lib.rr(0.75, 1.15) if main else lib.rr(0.42, 0.72)
+			rk.mesh = lib.blob_mesh(rk_i * 7 + 3,
+				lib.rr(1.15, 1.55) if (main and upright) else lib.rr(0.42, 0.62),
+				lib.rr(0.20, 0.34))
+			rk.material_override = _mat("cobble", -1)
 			rk.position = Vector3(pl.x + cos(a) * rr3,
-				rock_y.call(wx, wz, sc * lib.rr(0.25, 0.55)), pl.z + sin(a) * rr3)
-			rk.scale = Vector3(sc * lib.rr(0.85, 1.35), sc * lib.rr(0.68, 1.0), sc * lib.rr(0.85, 1.35))
-			rk.rotation = Vector3(lib.rr(-0.35, 0.35), lib.rr(0.0, TAU), lib.rr(-0.35, 0.35))
-			lib.add(g, rk, "護岸石_%d" % rk_i)
+				rock_y.call(wx, wz, sc * (0.18 if (main and upright) else 0.34)),
+				pl.z + sin(a) * rr3)
+			rk.scale = Vector3(sc * lib.rr(0.72, 0.95), sc * lib.rr(0.9, 1.35),
+				sc * lib.rr(0.72, 0.95)) if (main and upright) \
+				else Vector3(sc * lib.rr(1.0, 1.4), sc * lib.rr(0.55, 0.8), sc * lib.rr(1.0, 1.4))
+			rk.rotation = Vector3(lib.rr(-0.18, 0.18), lib.rr(0.0, TAU), lib.rr(-0.18, 0.18))
+			lib.add(g, rk, "石組%d_%s%d" % [gi, "主石" if main else "添石", k])
 			rk_i += 1
-			swept += a - ang
-			ang = a
-		# 留白：這段岸沒有大石，改鋪一排半埋的小卵石（州濱）
-		var gap: float = lib.rr(0.35, 0.95)
-		var pebbles := int(gap * 9.0)
-		for k2 in pebbles:
-			var a3 := ang + gap * (float(k2) + 0.5) / float(maxi(pebbles, 1)) + lib.rr(-0.05, 0.05)
-			var sc2 := lib.rr(0.14, 0.30)
-			var pb := MeshInstance3D.new()
-			pb.mesh = lib.blob_mesh(rk_i * 13 + k2 * 5 + 11, lib.rr(0.34, 0.52), 0.14)
-			pb.material_override = _mat("cobble", -1)
-			var pr: float = shore * lib.rr(1.0, 1.10)
-			pb.position = Vector3(pl.x + cos(a3) * pr,
-				rock_y.call(bx + pl.x + cos(a3) * pr, bz + pl.z + sin(a3) * pr, sc2 * 0.5),
-				pl.z + sin(a3) * pr)
-			pb.scale = Vector3(sc2 * 1.3, sc2 * 0.55, sc2 * 1.3)
-			pb.rotation.y = lib.rr(0.0, TAU)
-			lib.add(g, pb, "州濱_%d" % rk_i)
-			rk_i += 1
-		ang += gap
-		swept += gap
-	# 池面：睡蓮與菖蒲。空的水面就只是一塊色板 —— 要有東西打斷它。
+	# ── 州濱（すはま）：兩組石之間的留白鋪細卵石，一路鋪進淺水 ──
+	# 這是庭池最「有藝術性」的一段 —— 硬邊變成漸層的灘。
+	for gi in groups:
+		var a_lo: float = g_ang[gi] + 0.28
+		var a_hi: float = g_ang[(gi + 1) % groups] + (TAU if gi == groups - 1 else 0.0) - 0.28
+		if a_hi - a_lo < 0.25:
+			continue
+		var np := int((a_hi - a_lo) * 9.0)
+		for k2 in np:
+			var a3: float = a_lo + (a_hi - a_lo) * (float(k2) + 0.5) / float(np)
+			for band in 3:                            # 三圈：岸上、水際、淺水
+				var pr: float = shore * (1.12 - float(band) * 0.11) * lib.rr(0.98, 1.02)
+				var sc2 := lib.rr(0.10, 0.24) * (1.0 - float(band) * 0.15)
+				var pb := MeshInstance3D.new()
+				pb.mesh = lib.blob_mesh(rk_i * 13 + k2 * 5 + band * 3 + 11, lib.rr(0.30, 0.46), 0.14)
+				pb.material_override = _mat("cobble", -1)
+				var pwx: float = bx + pl.x + cos(a3) * pr
+				var pwz: float = bz + pl.z + sin(a3) * pr
+				pb.position = Vector3(pl.x + cos(a3) * pr,
+					rock_y.call(pwx, pwz, sc2 * 0.62), pl.z + sin(a3) * pr)
+				pb.scale = Vector3(sc2 * lib.rr(1.1, 1.5), sc2 * lib.rr(0.5, 0.75),
+					sc2 * lib.rr(1.1, 1.5))
+				pb.rotation.y = lib.rr(0.0, TAU)
+				lib.add(g, pb, "州濱_%d" % rk_i)
+				rk_i += 1
+	# ── 睡蓮：只鋪在一側，不要撒滿（滿池浮葉是水草不是庭園）──
+	var lily_a := g_ang[1] + lib.rr(-0.3, 0.3)
 	var pad := lib.tuft_mesh(6, 0.26, 0.30, Color(0.16, 0.30, 0.14), Color(0.28, 0.46, 0.20))
-	for i in 14:
-		var pa := lib.rr(0.0, TAU)
-		var pd: float = shore * lib.rr(0.15, 0.86)
+	for i in 11:
+		var pa := lily_a + lib.rr(-0.85, 0.85)
+		var pd: float = shore * lib.rr(0.30, 0.78)
 		var lp := MeshInstance3D.new()
 		lp.mesh = pad
 		lp.position = Vector3(pl.x + cos(pa) * pd,
-			rock_y.call(bx + pl.x + cos(pa) * pd, bz + pl.z + sin(pa) * pd, GARDEN_POND_SINK - 0.04),
+			rock_y.call(bx + pl.x + cos(pa) * pd, bz + pl.z + sin(pa) * pd,
+				GARDEN_POND_SINK - 0.04),
 			pl.z + sin(pa) * pd)
 		lp.scale = Vector3.ONE * lib.rr(0.7, 1.3)
 		lp.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, lp, "睡蓮_%d" % i)
-	# 岸邊的菖蒲叢（水際的垂直元素，讓水岸不是一條硬邊）
+	# ── 菖蒲：只長在州濱那幾段的水際，不繞整圈 ──
 	var iris := lib.tuft_mesh(7, 0.70, 0.10, Color(0.12, 0.26, 0.10), Color(0.34, 0.54, 0.20))
-	for i in 22:
-		var ia := lib.rr(0.0, TAU)
-		var ir: float = shore * lib.rr(0.94, 1.06)
+	for i in 16:
+		var ia := g_ang[int(lib.rand() * float(groups))] + lib.rr(0.35, 1.1)
+		var ir: float = shore * lib.rr(0.96, 1.06)
 		var ib := MeshInstance3D.new()
 		ib.mesh = iris
 		ib.position = Vector3(pl.x + cos(ia) * ir,
@@ -1502,6 +1657,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		ib.scale = Vector3.ONE * lib.rr(0.7, 1.25)
 		ib.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, ib, "菖蒲_%d" % i)
+	# 沢飛石（橫過池面的踏石）拿掉了：這個池只有 9m，踏石橫過去佔滿水面，
+	# 而且從岸上看就是幾塊石頭浮在水上 —— 反效果。庭池要留**空的水面**。
 	print("garden pond rocks: ", rk_i)
 	for i in 3:                                    # 池中的三尊石組
 		var a2 := float(i) / 3.0 * TAU + 0.7
@@ -2360,6 +2517,9 @@ func _build_floor_decor() -> void:
 		var cxy: Vector2 = fp + fd * 1.75            # 鋪面中心：門前一步半
 		if not _free_for_apron(cxy.x, cxy.y, 3.6, 3.0, int(f.own)):
 			continue
+		# 門口正對水面的話整組不做 —— 飛石會排進池裡
+		if _in_water(cxy.x, cxy.y, 2.0) or _in_water(fp.x + fd.x * 6.0, fp.y + fd.y * 6.0, 1.0):
+			continue
 		var ap := Node3D.new()
 		ap.position = Vector3(cxy.x, height_at(cxy.x, cxy.y), cxy.y)
 		ap.rotation.y = atan2(fd.x, fd.y)            # 本地 +z 對齊「朝街道」
@@ -2367,11 +2527,22 @@ func _build_floor_decor() -> void:
 		# 鋪面：3×2 塊石板，微微高於街面
 		for ix in 3:
 			for iz in 2:
+				# 逐塊檢查：鋪面中心過關不代表六塊石板都在陸地上
+				var lox: float = (float(ix) - 1.0) * 1.42
+				var loz: float = (float(iz) - 0.5) * 1.42
+				var wsx: float = cxy.x + fd.y * lox + fd.x * loz
+				var wsz: float = cxy.y - fd.x * lox + fd.y * loz
+				if _in_water(wsx, wsz, 0.6):
+					continue
 				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.38, 0.20, 1.38), slab,
 					Vector3((float(ix) - 1.0) * 1.42, -0.06, (float(iz) - 0.5) * 1.42))
 				sl.rotation.y = lib.rr(-0.02, 0.02)
 		# 飛石：從鋪面繼續往街心走
 		for k in 3:
+			var swx: float = cxy.x + fd.x * (2.6 + float(k) * 1.25)
+			var swz: float = cxy.y + fd.y * (2.6 + float(k) * 1.25)
+			if _in_water(swx, swz, 0.8):
+				break
 			# 飛石要**埋進地面**，只露 4cm。v8 是 14cm 厚整塊擺在地表上，
 			# 側面全看得到，遠看像疊在石板路上的紙板。
 			lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.78, 1.05), 0.22, lib.rr(0.66, 0.92)), stone,
@@ -2650,7 +2821,7 @@ func _build_clutter() -> void:
 	var dark := _mat("dark")
 	var n := 0
 	var tries := 0
-	while n < 320 and tries < 26000:
+	while n < 150 and tries < 26000:
 		tries += 1
 		var x := lib.rr(-CORE, CORE)
 		var z := PLAZA.y + lib.rr(-CORE, CORE)
@@ -2686,12 +2857,13 @@ func _build_clutter() -> void:
 					[Color(0.72, 0.74, 0.78), Color(0.42, 0.46, 0.56),
 					Color(0.78, 0.70, 0.58), Color(0.56, 0.60, 0.52)][n % 4], 1.0)
 				for k in 3:
-					lib.box(p, "布_%d" % k, Vector3(0.5, lib.rr(0.7, 1.05), 0.02), cloth,
+					# 0.02 太薄，側看就是三根黑棍子 —— 使用者拍到的「看不懂的雜物」就是它
+					lib.box(p, "布_%d" % k, Vector3(0.62, lib.rr(0.7, 1.05), 0.09), cloth,
 						Vector3(-0.9 + float(k) * 0.9, 1.82 - lib.rr(0.36, 0.53), 0))
 			1:      # 薪積み（柴堆）
-				var rows := 3 + int(lib.rand() * 2.0)
+				var rows := 2 + int(lib.rand() * 2.0)
 				for r in rows:
-					for k2 in 5:
+					for k2 in 3:
 						var lg := lib.cyl(p, "薪_%d_%d" % [r, k2], 0.075, 0.08, lib.rr(0.6, 0.8), wood,
 							Vector3(-0.5 + float(k2) * 0.25, 0.09 + float(r) * 0.17, lib.rr(-0.06, 0.06)), 5)
 						lg.rotation.z = PI * 0.5
@@ -2747,7 +2919,7 @@ func _build_props() -> void:
 		p.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, p, "小物_%02d" % n)
 		if kind == 0:
-			for i in 7:
+			for i in 4:
 				var lg := lib.cyl(p, "柴_%d" % i, 0.09, 0.11, lib.rr(1.1, 1.6), dark,
 					Vector3(lib.rr(-0.5, 0.5), 0.12 + float(i) * 0.17, lib.rr(-0.3, 0.3)), 5)
 				lg.rotation.z = PI / 2.0

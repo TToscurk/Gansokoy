@@ -25,6 +25,10 @@ import os
 OUT_DIR = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else "godot/assets/models"
 os.makedirs(OUT_DIR, exist_ok=True)
 
+# ⚠ 葉子的數量是**效能與外觀的取捨點**。v16 用 1750 叢／模組（2.2 萬三角形），
+# 全村 322 個模組 = 700 萬三角形，使用者回報「我電腦變卡了」。
+# v18 砍到 430 叢但把葉片放大 1.7 倍 —— 覆蓋率差不多，三角形剩 1/4。
+#
 # 一個模組的尺寸（公尺）。沿著生垣線每 MODULE_LEN 擺一個。
 MODULE_LEN = 2.4
 
@@ -236,14 +240,14 @@ def make_hedge(name, seed, half_len, half_d, h, n_sprig, lumps, stems=5):
         x, y, z, _ = surf(u, v)
         nrm = surf_normal(surf, u, v, sd, half_len, h)
         tone = min(1.0, 0.25 + v * 0.6 + rng.uniform(0.0, 0.35))
-        sprig(bld, rng, (x, y, z * sd), nrm, rng.uniform(0.062, 0.115), tone)
+        sprig(bld, rng, (x, y, z * sd), nrm, rng.uniform(0.115, 0.195), tone)
     # 頂脊：側面取樣在 v→1 時會收到中線上，頂面要另外補
     for _ in range(n_sprig // 4):
         u = rng.uniform(-1.0, 1.0)
         _, ytop, _, _ = surf(u, 1.0)
         z = rng.uniform(-0.55, 0.55) * half_d
         sprig(bld, rng, (u * half_len, ytop - 0.03, z), (0.0, 1.0, 0.0),
-              rng.uniform(0.065, 0.120), min(1.0, 0.8 + rng.uniform(0.0, 0.2)))
+              rng.uniform(0.120, 0.200), min(1.0, 0.8 + rng.uniform(0.0, 0.2)))
 
     # 底下的枝幹：樹籬不是浮在地上的，腳下看得到木質莖
     for i in range(stems):
@@ -271,7 +275,7 @@ def make_hedge(name, seed, half_len, half_d, h, n_sprig, lumps, stems=5):
 
 
 # 三種：密實修剪整齊 / 高而略散 / 矮寬。沿線隨機挑，一排才不是同一個模具。
-make_hedge("hedge_a", 71, MODULE_LEN * 0.5, 0.36, 1.26, 1750, 0.055, stems=5)
-make_hedge("hedge_b", 137, MODULE_LEN * 0.5, 0.32, 1.55, 1950, 0.105, stems=4)
-make_hedge("hedge_c", 293, MODULE_LEN * 0.5, 0.44, 1.00, 1550, 0.075, stems=6)
+make_hedge("hedge_a", 71, MODULE_LEN * 0.5, 0.36, 1.26, 430, 0.055, stems=3)
+make_hedge("hedge_b", 137, MODULE_LEN * 0.5, 0.32, 1.55, 480, 0.105, stems=3)
+make_hedge("hedge_c", 293, MODULE_LEN * 0.5, 0.44, 1.00, 390, 0.075, stems=3)
 print("done")
