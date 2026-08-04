@@ -27,6 +27,7 @@ var _cell := 4.0
 var _gmin := {}                # Vector2i -> 該格地形最低點
 var _gmax := {}                # Vector2i -> 該格地形最高點
 var _issues := []
+var _parts := []       # 個別貼地構件（跨水檢查用）
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
@@ -45,6 +46,7 @@ func _check(map_id: String) -> int:
 	_issues.clear()
 	_gmin.clear()
 	_gmax.clear()
+	_parts.clear()
 	var path := "res://maps/%s/%s.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		print("[%s] 沒有原生場景，跳過（還在用 blockout 底稿）" % map_id)
@@ -62,7 +64,7 @@ func _check(map_id: String) -> int:
 	var scatters: Array = []       # MultiMeshInstance3D
 	var waters: Array = []
 	_collect(root, buildings, scatters, waters)
-	print("  掃到 %d 棟建物、%d 組散佈、%d 片水面" % [buildings.size(), scatters.size(), waters.size()])
+	print("  掃到 %d 棟建物、%d 個構件、%d 組散佈、%d 片水面" % [buildings.size(), _parts.size(), scatters.size(), waters.size()])
 
 	_check_floating(buildings)
 	_check_building_overlap(buildings)
@@ -70,6 +72,7 @@ func _check(map_id: String) -> int:
 	_check_water(waters)
 	_check_water_on_road(waters, root)
 	_check_props_grounded(root)
+	_check_building_over_water(_parts, waters)
 
 	for s in _issues:
 		print("  ✗ ", s)
@@ -169,6 +172,14 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 			got = true
 	if got:
 		buildings.append({ "name": _path_of(n), "aabb": box })
+		# 個別構件也留一份：跨水檢查要**逐片牆**比。
+		# 拿整棟的外框去比，稗田邸院子裡的庭池會被誤報成「牆擋住水」。
+		for c2 in n.get_children():
+			if c2 is MeshInstance3D and _is_ground_part(String(c2.name)):
+				_parts.append({
+					"name": "%s/%s" % [_path_of(n), c2.name],
+					"aabb": _world_xf(c2) * (c2 as MeshInstance3D).get_aabb(),
+				})
 	for c in n.get_children():
 		_collect(c, buildings, scatters, waters)
 
@@ -359,6 +370,56 @@ func _check_water_on_road(waters: Array, _root: Node) -> void:
 		if frac > 0.12:
 			_issues.append("水面有 %.0f%% 高過岸緣（溢到平地／路面上）：%s 最高 %.2fm @ (%.0f, %.0f)"
 				% [frac * 100.0, mi.name, worst, wx, wz])
+
+## 建物／土塀橫跨水面 —— 使用者回報「水道被牆壁擋住了」。
+## 產生器那邊只測了牆的**中心點**離水多遠，但一道 42m 長的牆中心在遠處、
+## 身體照樣橫跨水路。這裡直接比幾何：水面頂點落在建物的水平範圍內就是壓到。
+func _check_building_over_water(buildings: Array, waters: Array) -> void:
+	if buildings.is_empty() or waters.is_empty():
+		return
+	var bgrid := {}
+	for i in buildings.size():
+		var box: AABB = buildings[i].aabb
+		for ii in range(int(floor(box.position.x / 10.0)), int(floor((box.position.x + box.size.x) / 10.0)) + 1):
+			for jj in range(int(floor(box.position.z / 10.0)), int(floor((box.position.z + box.size.z) / 10.0)) + 1):
+				var k := Vector2i(ii, jj)
+				if not bgrid.has(k):
+					bgrid[k] = []
+				bgrid[k].append(i)
+	var hits := {}
+	for w in waters:
+		var mi := w as MeshInstance3D
+		var mesh: Mesh = mi.mesh
+		if mesh == null or mesh.get_surface_count() == 0:
+			continue
+		var verts: PackedVector3Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		var xf := _world_xf(mi)
+		var step := maxi(1, verts.size() / 4000)
+		for i in range(0, verts.size(), step):
+			var p: Vector3 = xf * verts[i]
+			var k := Vector2i(int(floor(p.x / 10.0)), int(floor(p.z / 10.0)))
+			if not bgrid.has(k):
+				continue
+			for bi in bgrid[k]:
+				var box: AABB = buildings[bi].aabb
+				if p.x > box.position.x and p.x < box.position.x + box.size.x \
+						and p.z > box.position.z and p.z < box.position.z + box.size.z:
+					# 橋是應該跨過水的 —— 只抓牆與屋身
+					var nm: String = buildings[bi].name
+					# 只放行橋 —— 石垣護岸本來就在水面外側，它若壓到水
+					# 就是真的砌錯地方（v11 的護岸一路砌進大河）
+					if nm.contains("橋"):
+						continue
+					if not hits.has(nm):
+						hits[nm] = Vector2(p.x, p.z)
+	var n := 0
+	for nm in hits:
+		n += 1
+		if n <= 5:
+			var q: Vector2 = hits[nm]
+			_issues.append("建物橫跨水面（水被擋住）：%s @ (%.0f, %.0f)" % [nm, q.x, q.y])
+	if n > 5:
+		_issues.append("…另有 %d 棟建物壓在水面上" % (n - 5))
 
 ## 道具浮空 / 埋進地裡 —— 使用者回報「雜物在空中」。
 ## 掃 Clutter / Props / FloorDecor 這幾組群組節點，比它們的底面與地形。

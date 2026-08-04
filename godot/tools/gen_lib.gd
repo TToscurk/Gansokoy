@@ -28,6 +28,12 @@ func rr(a: float, b: float) -> float:
 func add(parent: Node, node: Node, name: String) -> Node:
 	node.name = name
 	parent.add_child(node)
+	# owner 設不上去 = 這個節點不會被存進 .tscn，而且 Godot 只在 stderr 噴一行
+	# 「Invalid owner」，很容易被 headless 的一整片 leak 警告蓋掉。
+	# （人里的 320 個生活雜物就是這樣整整四版都是空節點。）
+	if not root.is_ancestor_of(node):
+		push_error("gen_lib.add(): 「%s」的 parent 還沒接到 root，owner 會設失敗、"
+			% name + "節點不會被存檔。先把 parent 加進樹，或事後補 own_all()。")
 	node.owner = root
 	return node
 
@@ -345,9 +351,11 @@ func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: 
 	return st.commit()
 
 # ── 地形網格（順時針繞向）＋遮罩貼圖材質 ──
-## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro)
+## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro,A=踏み固めた土)
+## dirt_set 非空才會開第四層（A 通道）——只有人里需要，森林用不到。
 func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable,
-		path_set := "terrain_path", grass_tint := Color(1, 1, 1)) -> MeshInstance3D:
+		path_set := "terrain_path", grass_tint := Color(1, 1, 1),
+		dirt_set := "", dirt_tint := Color(1, 1, 1)) -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var step := 2.0 * half / float(res - 1)
@@ -366,7 +374,10 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 	var mesh := st.commit()
 
 	var tex_res := 512
-	var img := Image.create(tex_res, tex_res, false, Image.FORMAT_RGB8)
+	# 有第四層才需要 A 通道。沒有的話存 RGB8，取樣到的 A 恆為 1，
+	# 但 shader 的 dirt_amount 是 0，乘起來還是 0。
+	var img := Image.create(tex_res, tex_res, false,
+		Image.FORMAT_RGBA8 if dirt_set != "" else Image.FORMAT_RGB8)
 	for j in tex_res:
 		for i in tex_res:
 			var x := -half + (float(i) + 0.5) / float(tex_res) * 2.0 * half
@@ -393,6 +404,13 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 	mat.set_shader_parameter("path_diff", load(pd))
 	mat.set_shader_parameter("path_nor", load(pn))
 	mat.set_shader_parameter("mask_tex", tex)
+	if dirt_set != "":
+		mat.set_shader_parameter("dirt_diff",
+			load("res://assets/textures/%s_diff.jpg" % dirt_set))
+		mat.set_shader_parameter("dirt_nor",
+			load("res://assets/textures/%s_nor_gl.jpg" % dirt_set))
+		mat.set_shader_parameter("dirt_amount", 1.0)
+		mat.set_shader_parameter("dirt_tint", dirt_tint)
 	# 草地色偏：Poly Haven 那張草地本身偏乾黃，村子要的是初夏的青草
 	# 一定要傳 Color：uniform 有 source_color 提示，餵 Vector3 會被吃掉存成 null
 	mat.set_shader_parameter("grass_tint", grass_tint)
