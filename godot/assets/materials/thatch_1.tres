@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_diff.jpg" id="1_riapf"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_cu81m"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_rough.jpg" id="3_tw44q"]
+
+[resource]
+albedo_color = Color(0.58, 0.47, 0.31, 1)
+albedo_texture = ExtResource("1_riapf")
+roughness_texture = ExtResource("3_tw44q")
+normal_enabled = true
+normal_texture = ExtResource("2_cu81m")
+uv1_scale = Vector3(1.1, 1.1, 1.1)
+uv1_triplanar = true

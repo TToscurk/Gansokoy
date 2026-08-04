@@ -165,7 +165,9 @@ func canopy_mat() -> StandardMaterial3D:
 		return mats["canopy"]
 	var m := StandardMaterial3D.new()
 	m.vertex_color_use_as_albedo = true
-	m.albedo_color = Color(1.7, 1.6, 1.45)
+	# ⚠ 別再拿 >1.5 的 albedo_color 去「提亮」頂點色 —— 那會把顏色洗向白，
+	# 綠色洗成金黃色（使用者看到的「黃色低模樹團」）。要亮就調光照與曝光。
+	m.albedo_color = Color(1.06, 1.10, 0.98)
 	m.albedo_texture = load("res://assets/textures/terrain_forest_diff.jpg")
 	m.uv1_triplanar = true
 	m.uv1_scale = Vector3(0.8, 0.8, 0.8)
@@ -222,8 +224,25 @@ func rock_mat() -> StandardMaterial3D:
 	m.uv1_triplanar = true
 	m.uv1_scale = Vector3(0.5, 0.5, 0.5)
 	m.vertex_color_use_as_albedo = true       # 岩頂的苔色是烤在頂點色裡的
-	m.albedo_color = Color(1.7, 1.75, 1.6)    # 頂點色是 0.5 灰，乘完太暗，補回來
+	m.albedo_color = Color(1.05, 1.04, 0.98)  # 同上：乘太多會變成保麗龍白
 	_save_mat(m, "rock")
+	return m
+
+## 乾石：跟 rock_mat 同一組貼圖，但偏暖灰、不吃苔色。
+## 一堆石頭全用同一個材質的話，整組石組看起來像從同一塊挖出來的。
+func rock_mat_dry() -> StandardMaterial3D:
+	if mats.has("rock_dry"):
+		return mats["rock_dry"]
+	var m := StandardMaterial3D.new()
+	m.albedo_texture = load("res://assets/textures/stone_wall_diff.jpg")
+	m.normal_enabled = true
+	m.normal_texture = load("res://assets/textures/stone_wall_nor_gl.jpg")
+	m.roughness_texture = load("res://assets/textures/stone_wall_rough.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.62, 0.62, 0.62)
+	m.vertex_color_use_as_albedo = true
+	m.albedo_color = Color(1.14, 1.06, 0.94)
+	_save_mat(m, "rock_dry")
 	return m
 
 ## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）

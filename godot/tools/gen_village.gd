@@ -183,7 +183,6 @@ func _init() -> void:
 	_build_fauna()
 	_build_floor_decor()
 	_build_props()
-	_build_villagers()
 	_build_gates()
 	_build_lamps()
 	_build_trees()
@@ -288,18 +287,42 @@ func _collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
 	body.add_child(shape)
 	shape.owner = lib.root
 
-func _mat(key: String) -> StandardMaterial3D:
-	match key:
-		"kawara": return lib.pbr("kawara", "roof_kawara", 0.22, Color(0.8, 0.84, 0.92))
-		# 茅葺：沒有專用貼圖組，借草地那張當纖維紋理，壓成乾稻草色。
-		# （原本指到不存在的 roof_thatch，整片茅屋頂是死白的）
-		"thatch": return lib.pbr("thatch", "terrain_grass", 1.1, Color(0.66, 0.54, 0.36))
-		"plaster": return lib.pbr("plaster", "plaster", 0.4)
-		"mud": return lib.pbr("mud_wall", "plaster", 0.5, Color(0.80, 0.72, 0.58))
-		"dark": return lib.pbr("dark_wood", "dark_wood", 0.45)
-		"wood": return lib.pbr("wood", "planks", 0.5, Color(0.9, 0.82, 0.72))
-		"stone": return lib.pbr("stone", "stone_wall", 0.30)
-	return lib.pbr("plaster", "plaster", 0.4)
+## 每種建材的**色調變體**。使用者回報「不要只有一種材質的顏色模組」——
+## 以前 _mat() 每個 key 只回傳一個共用材質實例，全村的灰泥牆是同一個顏色，
+## 遠看就是一片同色的積木。真實聚落每戶的灰泥、瓦、木頭都風化得不一樣。
+const MAT_TONES := {
+	"plaster": [Color(1.00, 0.98, 0.94), Color(0.92, 0.88, 0.80),
+		Color(0.84, 0.82, 0.78), Color(0.96, 0.91, 0.84)],
+	"kawara": [Color(0.80, 0.84, 0.92), Color(0.66, 0.70, 0.78),
+		Color(0.74, 0.76, 0.80), Color(0.58, 0.62, 0.70)],
+	"thatch": [Color(0.66, 0.54, 0.36), Color(0.58, 0.47, 0.31),
+		Color(0.72, 0.60, 0.40), Color(0.50, 0.42, 0.30)],
+	"mud": [Color(0.80, 0.72, 0.58), Color(0.70, 0.62, 0.48),
+		Color(0.86, 0.78, 0.64), Color(0.64, 0.58, 0.46)],
+	"dark": [Color(1.00, 1.00, 1.00), Color(0.82, 0.78, 0.74),
+		Color(0.70, 0.64, 0.60), Color(0.92, 0.86, 0.80)],
+	"wood": [Color(0.90, 0.82, 0.72), Color(0.78, 0.68, 0.56),
+		Color(0.96, 0.88, 0.74), Color(0.70, 0.62, 0.52)],
+	"stone": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
+		Color(0.82, 0.84, 0.82), Color(0.95, 0.93, 0.88)],
+}
+const MAT_SET := {
+	"kawara": ["roof_kawara", 0.22], "thatch": ["terrain_grass", 1.1],
+	"plaster": ["plaster", 0.4], "mud": ["plaster", 0.5],
+	"dark": ["dark_wood", 0.45], "wood": ["planks", 0.5], "stone": ["stone_wall", 0.30],
+}
+
+## v = 色調變體編號。省略就隨機挑一個 —— 一棟房子要自己記住 v，
+## 不然同一棟的牆跟腰板會是不同色。
+func _mat(key: String, v := -1) -> StandardMaterial3D:
+	if not MAT_SET.has(key):
+		key = "plaster"
+	var tones: Array = MAT_TONES[key]
+	if v < 0:
+		v = int(lib.rand() * float(tones.size()))
+	v = v % tones.size()
+	var spec: Array = MAT_SET[key]
+	return lib.pbr("%s_%d" % [key, v], String(spec[0]), float(spec[1]), tones[v])
 
 ## 擺建物時該看到的地面高度：實際地面，但水面以下不算數。
 ## 兩個坑各踩過一次：
@@ -683,6 +706,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 日式庭園的石組是「數顆一群、群與群之間留白」，留白處鋪州濱（小卵石）。
 	var shore := lib.pond_shore_r(GARDEN_POND_R, GARDEN_POND_SINK, GARDEN_POND_DEPTH)
 	var moss_m := lib.rock_mat()
+	# 兩種石色：靠水的長苔偏綠、離水的偏乾灰。只有一種色的話整圈石頭是同一塊。
+	var dry_m := lib.rock_mat_dry()
 	# 石頭要坐在**自己腳下**的地面上。這棟宅子的原點是整塊地的基準高度，
 	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
 	var rock_y := func(wx: float, wz: float, sink: float) -> float:
@@ -700,12 +725,12 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 			var sc: float = lib.rr(0.5, 1.25) * (1.25 if k == 0 else 0.8)   # 主石 + 添石
 			var rr3: float = shore * lib.rr(0.99, 1.14)
 			var rk := MeshInstance3D.new()
-			rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+			rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m if lib.rand() < 0.55 else dry_m)
 			var wx: float = bx + pl.x + cos(a) * rr3
 			var wz: float = bz + pl.z + sin(a) * rr3
 			rk.position = Vector3(pl.x + cos(a) * rr3,
 				rock_y.call(wx, wz, sc * lib.rr(0.25, 0.55)), pl.z + sin(a) * rr3)
-			rk.scale = Vector3(sc * lib.rr(0.8, 1.4), sc * lib.rr(0.6, 1.1), sc * lib.rr(0.8, 1.4))
+			rk.scale = Vector3(sc * lib.rr(0.85, 1.35), sc * lib.rr(0.68, 1.0), sc * lib.rr(0.85, 1.35))
 			rk.rotation = Vector3(lib.rr(-0.35, 0.35), lib.rr(0.0, TAU), lib.rr(-0.35, 0.35))
 			lib.add(g, rk, "護岸石_%d" % rk_i)
 			rk_i += 1
@@ -729,6 +754,32 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 			rk_i += 1
 		ang += gap
 		swept += gap
+	# 池面：睡蓮與菖蒲。空的水面就只是一塊色板 —— 要有東西打斷它。
+	var pad := lib.tuft_mesh(6, 0.26, 0.30, Color(0.16, 0.30, 0.14), Color(0.28, 0.46, 0.20))
+	for i in 14:
+		var pa := lib.rr(0.0, TAU)
+		var pd: float = shore * lib.rr(0.15, 0.86)
+		var lp := MeshInstance3D.new()
+		lp.mesh = pad
+		lp.position = Vector3(pl.x + cos(pa) * pd,
+			rock_y.call(bx + pl.x + cos(pa) * pd, bz + pl.z + sin(pa) * pd, GARDEN_POND_SINK - 0.04),
+			pl.z + sin(pa) * pd)
+		lp.scale = Vector3.ONE * lib.rr(0.7, 1.3)
+		lp.rotation.y = lib.rr(0.0, TAU)
+		lib.add(g, lp, "睡蓮_%d" % i)
+	# 岸邊的菖蒲叢（水際的垂直元素，讓水岸不是一條硬邊）
+	var iris := lib.tuft_mesh(7, 0.70, 0.10, Color(0.12, 0.26, 0.10), Color(0.34, 0.54, 0.20))
+	for i in 22:
+		var ia := lib.rr(0.0, TAU)
+		var ir: float = shore * lib.rr(0.94, 1.06)
+		var ib := MeshInstance3D.new()
+		ib.mesh = iris
+		ib.position = Vector3(pl.x + cos(ia) * ir,
+			rock_y.call(bx + pl.x + cos(ia) * ir, bz + pl.z + sin(ia) * ir, 0.05),
+			pl.z + sin(ia) * ir)
+		ib.scale = Vector3.ONE * lib.rr(0.7, 1.25)
+		ib.rotation.y = lib.rr(0.0, TAU)
+		lib.add(g, ib, "菖蒲_%d" % i)
 	print("garden pond rocks: ", rk_i)
 	for i in 3:                                    # 池中的三尊石組
 		var a2 := float(i) / 3.0 * TAU + 0.7
@@ -740,30 +791,48 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		rk3.position = Vector3(pl.x + cos(a2) * d2,
 			rock_y.call(bx + pl.x + cos(a2) * d2, bz + pl.z + sin(a2) * d2, -sc3 * 0.55),
 			pl.z + sin(a2) * d2)
-		rk3.scale = Vector3(sc3 * 0.8, sc3 * 1.7, sc3 * 0.8)
+		# 不要拉高 1.7 倍 —— 那會把圓潤的岩石抽成尖刺，遠看像碎玻璃。
+		# 日式庭園的立石是「厚實、微微前傾」，不是尖塔。
+		rk3.scale = Vector3(sc3 * 0.95, sc3 * 1.05, sc3 * 0.85)
+		rk3.rotation.x = lib.rr(-0.18, 0.18)
+		rk3.rotation.z = lib.rr(-0.18, 0.18)
 		rk3.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, rk3, "立石_%d" % i)
 	# 沢渡り（踏石）與石橋板
 	for i in 4:
 		lib.box(g, "踏石_%d" % i, Vector3(0.9, 0.35, 0.8), _mat("stone"),
 			pl + Vector3(-GARDEN_POND_R * 0.7 + float(i) * GARDEN_POND_R * 0.45, -0.35, GARDEN_POND_R * 0.35)).rotation.y = lib.rr(0.0, TAU)
-	# 雪見燈籠（池畔）
-	lib.box(g, "燈籠基", Vector3(0.9, 0.2, 0.9), _mat("stone"), pl + Vector3(GARDEN_POND_R + 1.6, 0.1, -2.0))
-	for lg in 3:
-		lib.cyl(g, "燈籠腳_%d" % lg, 0.1, 0.12, 0.9, _mat("stone"),
-			pl + Vector3(GARDEN_POND_R + 1.6 + cos(float(lg) / 3.0 * TAU) * 0.45, 0.65,
-				-2.0 + sin(float(lg) / 3.0 * TAU) * 0.45), 6)
-	lib.box(g, "燈籠火袋", Vector3(0.85, 0.6, 0.85), _mat("stone"), pl + Vector3(GARDEN_POND_R + 1.6, 1.4, -2.0))
+	# 春日燈籠（池畔）—— v8 那座「雪見型」做出來像一張四腳桌：
+	# 笠是一片扁圓錐、腳細又外張、火袋懸在中間，看不出是燈籠。
+	# 改成有竿（柱身）的春日型：基礎→竿→中台→火袋（開窗）→笠→寶珠，
+	# 一根連續的柱子撐上去，剪影一眼就認得。
+	var lz := pl + Vector3(GARDEN_POND_R + 1.9, 0, -2.2)
+	var stone_l := _mat("stone", 1)
+	lib.cyl(g, "燈籠基礎", 0.52, 0.62, 0.26, stone_l, lz + Vector3(0, 0.13, 0), 8)
+	lib.cyl(g, "燈籠竿", 0.17, 0.20, 1.05, stone_l, lz + Vector3(0, 0.78, 0), 8)
+	for r_i in 2:                                   # 竿上的節（春日燈籠的特徵）
+		lib.cyl(g, "竿節_%d" % r_i, 0.23, 0.23, 0.07, stone_l,
+			lz + Vector3(0, 0.52 + float(r_i) * 0.52, 0), 8)
+	lib.cyl(g, "中台", 0.40, 0.30, 0.20, stone_l, lz + Vector3(0, 1.40, 0), 8)
+	# 火袋：六角柱 + 四根角柱撐出「窗」的感覺（實心一塊會像石墩）
+	lib.cyl(g, "火袋底", 0.36, 0.36, 0.07, stone_l, lz + Vector3(0, 1.54, 0), 6)
+	for c_i in 4:
+		var ca := float(c_i) / 4.0 * TAU + 0.4
+		lib.box(g, "火袋柱_%d" % c_i, Vector3(0.09, 0.46, 0.09), stone_l,
+			lz + Vector3(cos(ca) * 0.29, 1.80, sin(ca) * 0.29))
+	lib.cyl(g, "火袋頂", 0.38, 0.36, 0.07, stone_l, lz + Vector3(0, 2.06, 0), 6)
 	var kasa := MeshInstance3D.new()
 	var km := CylinderMesh.new()
-	km.top_radius = 0.1
-	km.bottom_radius = 1.35
-	km.height = 0.42
+	km.top_radius = 0.10
+	km.bottom_radius = 0.72          # v8 是 1.35 —— 比火袋寬一倍，像雨傘
+	km.height = 0.34
 	km.radial_segments = 6
-	km.material = _mat("stone")
+	km.material = stone_l
 	kasa.mesh = km
-	kasa.position = pl + Vector3(GARDEN_POND_R + 1.6, 1.9, -2.0)
+	kasa.position = lz + Vector3(0, 2.27, 0)
 	lib.add(g, kasa, "燈籠笠")
+	lib.cyl(g, "寶珠", 0.0, 0.13, 0.22, stone_l, lz + Vector3(0, 2.55, 0), 8)
+	_collide(g, Vector3(1.1, 2.7, 1.1), lz)
 	_claim(bx, bz, BLOCK_W + 2.0, BLOCK_D + 2.0)
 
 ## 足洗邸：荒廢的宅子（傳說中的妖怪宅）—— 土塀有缺口、屋頂塌一角
@@ -1247,13 +1316,15 @@ func _build_floor_decor() -> void:
 		# 鋪面：3×2 塊石板，微微高於街面
 		for ix in 3:
 			for iz in 2:
-				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.35, 0.12, 1.35), slab,
-					Vector3((float(ix) - 1.0) * 1.42, 0.06, (float(iz) - 0.5) * 1.42))
+				var sl := lib.box(ap, "石板_%d%d" % [ix, iz], Vector3(1.38, 0.20, 1.38), slab,
+					Vector3((float(ix) - 1.0) * 1.42, -0.06, (float(iz) - 0.5) * 1.42))
 				sl.rotation.y = lib.rr(-0.02, 0.02)
 		# 飛石：從鋪面繼續往街心走
 		for k in 3:
-			lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.7, 1.0), 0.14, lib.rr(0.6, 0.9)), stone,
-				Vector3(lib.rr(-0.5, 0.5), 0.07, 2.6 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
+			# 飛石要**埋進地面**，只露 4cm。v8 是 14cm 厚整塊擺在地表上，
+			# 側面全看得到，遠看像疊在石板路上的紙板。
+			lib.box(ap, "飛石_%d" % k, Vector3(lib.rr(0.78, 1.05), 0.22, lib.rr(0.66, 0.92)), stone,
+				Vector3(lib.rr(-0.5, 0.5), -0.07, 2.6 + float(k) * 1.25)).rotation.y = lib.rr(-0.3, 0.3)
 			n_step += 1
 		# 立看板、樽桶、米俵擺在門的兩側，不擋動線
 		if lib.rand() < 0.6:
@@ -1461,7 +1532,7 @@ func _build_lamps() -> void:
 func _build_trees() -> void:
 	var variants := []
 	for glb in Lib.TREE_GLBS:
-		variants.append({ "mesh": lib.tree_mesh(glb), "list": [] })
+		variants.append({ "mesh": lib.tree_mesh(glb), "list": [], "cols": [] })
 	var count := 0
 	var tries := 0
 	while count < 2600 and tries < 130000:
@@ -1495,11 +1566,13 @@ func _build_trees() -> void:
 		var r := lib.rand()
 		var vi := 0 if r < 0.4 else (1 if r < 0.7 else (2 if r < 0.85 else (3 if r < 0.95 else 4)))
 		variants[vi].list.append(Transform3D(basis, Vector3(x, y, z)))
+		# 逐棵色差：五種樹模乘上隨機色調，一整片林子才不會像同一個貼紙複製
+		variants[vi].cols.append(Color(lib.rr(0.84, 1.10), lib.rr(0.88, 1.08), lib.rr(0.80, 1.02)))
 		count += 1
 	var forest := lib.add(lib.root, Node3D.new(), "Trees")
 	for i in variants.size():
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(variants[i].mesh, variants[i].list, [],
+		mmi.multimesh = lib.make_multimesh(variants[i].mesh, variants[i].list, variants[i].cols,
 			OUT_DIR + "gen/trees_%d.res" % i)
 		lib.add(forest, mmi, "Trees%d" % i)
 	print("trees: ", count)
