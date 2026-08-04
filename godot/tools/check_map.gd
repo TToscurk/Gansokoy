@@ -65,6 +65,7 @@ func _check(map_id: String) -> int:
 	print("  掃到 %d 棟建物、%d 組散佈、%d 片水面" % [buildings.size(), scatters.size(), waters.size()])
 
 	_check_floating(buildings)
+	_check_building_overlap(buildings)
 	_check_scatter_overlap(scatters, buildings)
 	_check_water(waters)
 
@@ -210,6 +211,49 @@ func _check_floating(buildings: Array) -> void:
 	if sinks > 4:
 		_issues.append("…另有 %d 棟建物陷入地面（最嚴重 %.2fm）" % [sinks - 4, worst_s])
 
+## 建物互相卡住 —— 使用者要求：「建築物卡住其他建築」也要算進體檢。
+## 只比貼地構件（基石／屋身／塀）的水平範圍；屋簷本來就會互相探出去。
+func _check_building_overlap(buildings: Array) -> void:
+	var grid := {}
+	var hits := 0
+	var worst := 0.0
+	for i in buildings.size():
+		var box: AABB = buildings[i].aabb
+		var keys: Array[Vector2i] = []
+		for ii in range(int(floor(box.position.x / 12.0)), int(floor((box.position.x + box.size.x) / 12.0)) + 1):
+			for jj in range(int(floor(box.position.z / 12.0)), int(floor((box.position.z + box.size.z) / 12.0)) + 1):
+				keys.append(Vector2i(ii, jj))
+		var seen := {}
+		for k in keys:
+			if not grid.has(k):
+				grid[k] = []
+			for j in grid[k]:
+				if seen.has(j):
+					continue
+				seen[j] = true
+				var ob: AABB = buildings[j].aabb
+				# 水平重疊面積（只看 XZ）
+				var ox := minf(box.position.x + box.size.x, ob.position.x + ob.size.x) - maxf(box.position.x, ob.position.x)
+				var oz := minf(box.position.z + box.size.z, ob.position.z + ob.size.z) - maxf(box.position.z, ob.position.z)
+				if ox <= 0.35 or oz <= 0.35:
+					continue
+				# 上下疊在一起才算「卡住」；差 3m 以上視為不同層（例：橋跨過牆）
+				if absf(box.position.y - ob.position.y) > 3.0:
+					continue
+				var area := ox * oz
+				if area < 1.2:
+					continue
+				hits += 1
+				worst = maxf(worst, area)
+				if hits <= 5:
+					_issues.append("建物互相卡住 %.1f㎡：%s ↔ %s @ (%.0f, %.0f)"
+						% [area, buildings[i].name, buildings[j].name,
+							box.get_center().x, box.get_center().z])
+		for k2 in keys:
+			grid[k2].append(i)
+	if hits > 5:
+		_issues.append("…另有 %d 組建物互相卡住（最大重疊 %.1f㎡）" % [hits - 5, worst])
+
 ## 散佈物（樹、草、岩石）跟建物重疊 —— 「樹長在建築裡」
 func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 	if buildings.is_empty():
@@ -228,8 +272,9 @@ func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 	for mmi in scatters:
 		var nm := String(mmi.name)
 		# 草與睡蓮貼地，穿模不影響觀感；只驗有體積的（樹、岩石）
-		if nm.to_lower().contains("grass") or nm.contains("睡蓮") or nm.contains("Rice") \
-				or nm.contains("Reed") or nm.to_lower().contains("flower"):
+		# 睡蓮／蘆葦在水上，不會跟建物打架；稻米在田裡。其餘（含草）都要驗 ——
+		# 使用者：「不要有東西擋住或放在同一層」，草從屋內長出來一樣詭異。
+		if nm.contains("睡蓮") or nm.contains("Rice") or nm.contains("Reed"):
 			continue
 		var mm: MultiMesh = (mmi as MultiMeshInstance3D).multimesh
 		if mm == null or mm.instance_count == 0:

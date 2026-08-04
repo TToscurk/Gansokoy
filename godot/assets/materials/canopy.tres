@@ -4,7 +4,7 @@
 
 [resource]
 vertex_color_use_as_albedo = true
-albedo_color = Color(1.06, 1.1, 0.98, 1)
+albedo_color = Color(1.7, 1.6, 1.45, 1)
 albedo_texture = ExtResource("1_6tj2f")
 uv1_scale = Vector3(0.8, 0.8, 0.8)
 uv1_triplanar = true

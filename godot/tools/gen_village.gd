@@ -182,7 +182,9 @@ func _init() -> void:
 	_build_nature_pond()
 	_build_fauna()
 	_build_floor_decor()
+	_build_center()
 	_build_props()
+	_build_clutter()
 	_build_gates()
 	_build_lamps()
 	_build_trees()
@@ -371,7 +373,8 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var dark := _mat("dark")
 	var stone := _mat("stone")
 	var roof_m := _mat(roof)
-	var h := 3.0 if storey == 1 else 5.0
+	# 高度不要只有兩檔 —— v8 所有平房一律 3.0m，整排剪影一模一樣
+	var h := lib.rr(2.7, 3.4) if storey == 1 else lib.rr(4.6, 5.6)
 	var gu := _ground_under(cx, cz, length if ridge_along_x else depth, depth if ridge_along_x else length)
 	var g := Node3D.new()
 	g.position = Vector3(cx, gu[0], cz)          # 站在最低點，不會有一端浮空
@@ -471,9 +474,26 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	if storey == 2:
 		lib.box(g, "二階窗", Vector3(length * 0.75, 1.1, 0.08), dark, Vector3(0, 4.0, depth * 0.5 + 0.05))
 		lib.box(g, "庇", Vector3(length + 0.8, 0.14, 1.1), roof_m, Vector3(0, 3.1, depth * 0.5 + 0.42))
-	# 切妻屋頂
+	# ── 下屋（げや）：側面加一段低矮的披屋，剪影就不再是一個純方塊 ──
+	if lib.rand() < 0.42:
+		var gs := lib.rr(0.35, 0.5)
+		var gd := lib.rr(1.4, 2.2)
+		var gz := (depth * 0.5 + gd * 0.5) * (1.0 if lib.rand() < 0.5 else -1.0)
+		lib.box(g, "下屋壁", Vector3(length * lib.rr(0.5, 0.85), 2.0, gd), wall,
+			Vector3(lib.rr(-0.15, 0.15) * length, 1.32, gz))
+		var geya := lib.box(g, "下屋根", Vector3(length * lib.rr(0.55, 0.9), 0.16, gd + 0.8), roof_m,
+			Vector3(lib.rr(-0.15, 0.15) * length, 2.42, gz + (0.2 if gz > 0.0 else -0.2)))
+		geya.rotation.x = (-gs if gz > 0.0 else gs)
+	# ── 卯建（うだつ）：相鄰兩戶之間突出屋頂的防火壁，町並的招牌特徵 ──
+	if storey == 2 and lib.rand() < 0.55:
+		for sd_u in [-1.0, 1.0]:
+			lib.box(g, "卯建_%d" % int(sd_u + 1), Vector3(0.28, 1.5, depth * 0.72), wall,
+				Vector3(sd_u * length * 0.5, 0.32 + h + 0.55, 0))
+			lib.box(g, "卯建瓦_%d" % int(sd_u + 1), Vector3(0.5, 0.14, depth * 0.78), roof_m,
+				Vector3(sd_u * length * 0.5, 0.32 + h + 1.36, 0))
+	# 切妻屋頂：坡度也隨機一點，整排才不會像同一個模具壓出來
 	var thick := 0.22 if roof == "kawara" else 0.5
-	var pitch := 0.5 if roof == "kawara" else 0.68
+	var pitch := lib.rr(0.42, 0.58) if roof == "kawara" else lib.rr(0.60, 0.76)
 	lib.gable_roof(g, 0.32 + h, length + 0.9, depth + 1.5, pitch, thick, roof_m, wall)
 	_collide(g, Vector3(length + 0.4, h + 2.0, depth + 0.4))
 	var own := _claim(cx, cz, length + 1.0, depth + 1.6) if ridge_along_x \
@@ -574,9 +594,17 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 	for k in 2:
 		var ix := bx + lib.rr(-11.0, 11.0)
 		var iz := bz + lib.rr(-11.0, 11.0)
-		if lib.rand() < 0.55 and _free(ix, iz, 11.0, 7.0, 0.5):
-			_longhouse(parent, "離れ_%d" % k, ix, iz, lib.rr(8.0, 11.0), lib.rr(5.5, 6.8),
-				lib.rand() < 0.5, 1, "kawara" if lib.rand() < 0.5 else "thatch", lib.rand() < 0.5)
+		# ⚠ 先決定朝向再測空地。v8 是拿固定的 11×7 去測，之後才隨機轉 90° ——
+		# 轉了之後實際佔地變成 7×11，測到的跟蓋出來的不是同一塊，
+		# 結果離れ卡進長屋裡（體檢的「建物互相卡住」就是抓到這個）。
+		var along := lib.rand() < 0.5
+		var ln := lib.rr(8.0, 11.0)
+		var dp := lib.rr(5.5, 6.8)
+		var tw: float = (ln if along else dp) + 1.4
+		var td: float = (dp if along else ln) + 1.4
+		if lib.rand() < 0.55 and _free(ix, iz, tw, td, 0.5):
+			_longhouse(parent, "離れ_%d" % k, ix, iz, ln, dp,
+				along, 1, "kawara" if lib.rand() < 0.5 else "thatch", lib.rand() < 0.5)
 			n += 1
 	# 內庭：土藏（白牆倉庫）
 	if lib.rand() < 0.6:
@@ -1425,6 +1453,157 @@ func _build_villagers() -> void:
 		n += 1
 	print("villagers: ", n, " on ", routes.size(), " routes")
 
+# ── 村的中心：神木與鎮守之杜（地標的輕重層次）──
+## 使用者回報俯瞰時「眼睛沒有地方停」。原因是每塊街區的份量都一樣 ——
+## 同樣大小的圍院、同樣高的房子。真實聚落一定有一個「這裡是中心」的東西。
+## 這裡放一棵遠高於周圍的神木，四周清空、用玉垣圍起來。
+func _build_center() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "鎮守之杜")
+	var c := PLAZA + Vector2(-16.0, -14.0)
+	var gy := height_at(c.x, c.y)
+	# 先把地權圈起來 —— 之後的道具、樹、草都會避開，中心才留得住空間
+	_claim(c.x, c.y, 26.0, 26.0)
+
+	# 神木：比一般樹高兩倍以上，剪影才會從屋頂上冒出來
+	var trunk_mound := lib.cyl(g, "土壇", 5.6, 6.4, 0.7, _mat("stone", 2),
+		Vector3(c.x, gy + 0.25, c.y), 16)
+	trunk_mound.name = "土壇"
+	var big := MeshInstance3D.new()
+	big.mesh = lib.tree_mesh("res://assets/models/tree_round_b.glb")
+	big.position = Vector3(c.x, gy + 0.6, c.y)
+	big.scale = Vector3(3.4, 4.2, 3.4)
+	lib.add(g, big, "神木")
+	var tb := StaticBody3D.new()
+	big.add_child(tb)
+	tb.owner = lib.root
+	var tsh := CollisionShape3D.new()
+	var tcy := CylinderShape3D.new()
+	tcy.radius = 1.6
+	tcy.height = 8.0
+	tsh.shape = tcy
+	tsh.position = Vector3(0, 1.2, 0)
+	tb.add_child(tsh)
+	tsh.owner = lib.root
+
+	# 注連縄（繞樹一圈的粗繩 + 垂紙）—— 一眼看出這是神木不是路樹
+	var rope_m := lib.pbr("shimenawa", "roof_thatch" if false else "terrain_grass", 1.6,
+		Color(0.88, 0.84, 0.66))
+	var seg := 20
+	for i in seg:
+		var a := float(i) / float(seg) * TAU
+		var a2 := float(i + 1) / float(seg) * TAU
+		var r_in := 1.75
+		var mid := (a + a2) * 0.5
+		var link := lib.cyl(g, "注連縄_%d" % i, 0.17, 0.17,
+			r_in * TAU / float(seg) * 1.12, rope_m,
+			Vector3(c.x + cos(mid) * r_in, gy + 3.1, c.y + sin(mid) * r_in), 6)
+		link.rotation.y = -mid
+		link.rotation.z = PI * 0.5
+	for i in 6:                                     # 紙垂（白色垂紙）
+		var a3 := float(i) / 6.0 * TAU + 0.25
+		lib.box(g, "紙垂_%d" % i, Vector3(0.16, 0.5, 0.03),
+			lib.flat_mat("shide", Color(0.96, 0.96, 0.94), 0.9),
+			Vector3(c.x + cos(a3) * 1.78, gy + 2.72, c.y + sin(a3) * 1.78))
+
+	# 玉垣（圍住神木的矮石欄）—— 給中心一個明確的邊界
+	var post_m := _mat("stone", 1)
+	for i in 16:
+		var a4 := float(i) / 16.0 * TAU
+		var px := c.x + cos(a4) * 5.4
+		var pz := c.y + sin(a4) * 5.4
+		lib.box(g, "玉垣柱_%d" % i, Vector3(0.22, 1.05, 0.22), post_m,
+			Vector3(px, height_at(px, pz) + 0.5, pz))
+		var a5 := (float(i) + 0.5) / 16.0 * TAU
+		var bxp := c.x + cos(a5) * 5.4
+		var bzp := c.y + sin(a5) * 5.4
+		var rail := lib.box(g, "玉垣貫_%d" % i, Vector3(2.15, 0.13, 0.10), post_m,
+			Vector3(bxp, height_at(bxp, bzp) + 0.78, bzp))
+		rail.rotation.y = -a5
+
+	# 石燈籠一對、賽錢箱一個（有人來拜的痕跡）
+	for sd in [-1.0, 1.0]:
+		var lx: float = c.x + 6.6
+		var lz2: float = c.y + sd * 2.6
+		var ly := height_at(lx, lz2)
+		lib.cyl(g, "獻燈基_%d" % int(sd + 1), 0.34, 0.40, 0.22, post_m, Vector3(lx, ly + 0.11, lz2), 8)
+		lib.cyl(g, "獻燈竿_%d" % int(sd + 1), 0.13, 0.15, 1.15, post_m, Vector3(lx, ly + 0.8, lz2), 8)
+		lib.cyl(g, "獻燈袋_%d" % int(sd + 1), 0.30, 0.28, 0.42, post_m, Vector3(lx, ly + 1.58, lz2), 6)
+		lib.cyl(g, "獻燈笠_%d" % int(sd + 1), 0.08, 0.56, 0.26, post_m, Vector3(lx, ly + 1.92, lz2), 6)
+	print("center: 神木 + 玉垣 @ (", int(c.x), ",", int(c.y), ")")
+
+# ── 生活感雜物：曬衣、柴堆、水桶、農具、俵 ──
+## 每一件都要先問 _free 再 _claim（使用者：「放之前先算會不會擋住」）。
+func _build_clutter() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "Clutter")
+	var wood := _mat("wood")
+	var dark := _mat("dark")
+	var n := 0
+	var tries := 0
+	while n < 150 and tries < 9000:
+		tries += 1
+		var x := lib.rr(-CORE, CORE)
+		var z := PLAZA.y + lib.rr(-CORE, CORE)
+		# 只放在院子裡：離街 1.5~9m（太靠街會擋路，太遠是田）
+		var ed: float = _path_info(x, z)[0]
+		if ed < 1.5 or ed > 9.0:
+			continue
+		if _field_w(x, z) > 0.2:
+			continue
+		if not _free(x, z, 3.0, 3.0, 0.4):
+			continue
+		var y := height_at(x, z)
+		var p := Node3D.new()
+		p.position = Vector3(x, y, z)
+		p.rotation.y = lib.rr(0.0, TAU)
+		var kind := int(lib.rand() * 5.0)
+		match kind:
+			0:      # 物干し（曬衣竿 + 掛著的布）
+				for sd in [-1.0, 1.0]:
+					lib.cyl(p, "竿柱_%d" % int(sd + 1), 0.06, 0.07, 1.9, dark,
+						Vector3(sd * 1.3, 0.95, 0), 5)
+				lib.box(p, "竿", Vector3(2.9, 0.06, 0.06), dark, Vector3(0, 1.82, 0))
+				var cloth := lib.flat_mat("laundry_%d" % (n % 4),
+					[Color(0.72, 0.74, 0.78), Color(0.42, 0.46, 0.56),
+					Color(0.78, 0.70, 0.58), Color(0.56, 0.60, 0.52)][n % 4], 1.0)
+				for k in 3:
+					lib.box(p, "布_%d" % k, Vector3(0.5, lib.rr(0.7, 1.05), 0.02), cloth,
+						Vector3(-0.9 + float(k) * 0.9, 1.82 - lib.rr(0.36, 0.53), 0))
+			1:      # 薪積み（柴堆）
+				var rows := 3 + int(lib.rand() * 2.0)
+				for r in rows:
+					for k2 in 5:
+						var lg := lib.cyl(p, "薪_%d_%d" % [r, k2], 0.075, 0.08, lib.rr(0.6, 0.8), wood,
+							Vector3(-0.5 + float(k2) * 0.25, 0.09 + float(r) * 0.17, lib.rr(-0.06, 0.06)), 5)
+						lg.rotation.z = PI * 0.5
+						lg.rotation.y = lib.rr(-0.06, 0.06)
+			2:      # 水桶と桶台
+				lib.box(p, "桶台", Vector3(1.1, 0.14, 0.8), wood, Vector3(0, 0.07, 0))
+				for k3 in 2:
+					var bk := lib.cyl(p, "桶_%d" % k3, 0.26, 0.23, 0.46, wood,
+						Vector3(-0.28 + float(k3) * 0.56, 0.37, lib.rr(-0.1, 0.1)), 10)
+					lib.box(p, "桶箍_%d" % k3, Vector3(0.55, 0.05, 0.55), dark,
+						Vector3(bk.position.x, 0.52, bk.position.z))
+			3:      # 農具（鍬・鋤靠牆）
+				lib.box(p, "農具棚", Vector3(1.6, 0.1, 0.35), wood, Vector3(0, 0.05, 0))
+				for k4 in 3:
+					var hd := lib.cyl(p, "柄_%d" % k4, 0.035, 0.04, 1.5, wood,
+						Vector3(-0.5 + float(k4) * 0.5, 0.78, 0.1), 5)
+					hd.rotation.x = lib.rr(0.16, 0.26)
+					lib.box(p, "刃_%d" % k4, Vector3(0.2, 0.24, 0.04), dark,
+						Vector3(hd.position.x, 0.1, 0.32))
+			_:      # 俵積み（米袋）
+				var tawara := lib.pbr("tawara", "terrain_grass", 1.4, Color(0.82, 0.70, 0.46))
+				for r2 in 2:
+					for k5 in (3 - r2):
+						var tw := lib.cyl(p, "俵_%d_%d" % [r2, k5], 0.22, 0.22, 0.72, tawara,
+							Vector3(-0.35 + float(k5) * 0.35 + float(r2) * 0.18,
+								0.22 + float(r2) * 0.42, 0), 8)
+						tw.rotation.z = PI * 0.5
+		lib.add(g, p, "雜物_%d" % n)
+		_claim(x, z, 3.4, 3.4)
+		n += 1
+	print("clutter: ", n)
+
 # ── 生活痕跡（街邊） ──
 func _build_props() -> void:
 	var g := lib.add(lib.root, Node3D.new(), "Props")
@@ -1587,7 +1766,15 @@ func _build_grass() -> void:
 	rice.surface_set_material(0, lib.grass_wind_mat(0.07))
 	var reed := lib.tuft_mesh(6, 0.62, 0.14, Color(0.18, 0.28, 0.12), Color(0.52, 0.56, 0.28))
 	reed.surface_set_material(0, lib.grass_wind_mat(0.13))
+	# 灌木層：介於草與樹之間的中層。只有「草 + 樹」兩層時，
+	# 地面到樹冠之間是空的，遠看就是一片綠地上插著棒棒糖。
+	var shrub := lib.tuft_mesh(9, 1.05, 0.55, Color(0.10, 0.20, 0.08), Color(0.26, 0.42, 0.16))
+	shrub.surface_set_material(0, lib.grass_wind_mat(0.05))
+	var fern := lib.tuft_mesh(7, 0.55, 0.40, Color(0.13, 0.24, 0.10), Color(0.32, 0.50, 0.20))
+	fern.surface_set_material(0, lib.grass_wind_mat(0.06))
 	var groups := [
+		{ "mesh": shrub, "n": 900, "file": "shrubs", "mode": "wild" },
+		{ "mesh": fern, "n": 1200, "file": "ferns", "mode": "wild" },
 		{ "mesh": tall, "n": 2600, "file": "grass_tall", "mode": "wild" },
 		{ "mesh": flower, "n": 240, "file": "grass_flower", "mode": "wild" },
 		{ "mesh": rice, "n": 3600, "file": "rice_rows", "mode": "field" },
@@ -1617,6 +1804,11 @@ func _build_grass() -> void:
 					continue
 			else:
 				if _path_info(x, z)[0] < 1.0 or _field_w(x, z) > 0.2:
+					continue
+				# 草也要避開建物 —— 從屋內長出來的草跟樹一樣詭異
+				# （使用者：「不要有東西擋住或是放在同一層」）
+				var need: float = 2.6 if String(grp.file) == "shrubs" else 1.6
+				if not _free(x, z, need, need, 0.1):
 					continue
 				if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 1.2:
 					continue

@@ -713,6 +713,10 @@ func _scatter_grass(target: int, min_edge: float, max_p: float, far_p: float) ->
 		var ed: float = _path_info(x, z)[0]
 		if ed < min_edge:
 			continue
+		# 店屋的地盤不長草 —— 草從店裡長出來跟樹穿建築是同一種詭異
+		# （體檢的散佈物檢查修好之後才抓到；這張圖從來沒做過佔位判定）
+		if absf(x - SHOP.x) < SHOP.w * 0.5 + 1.2 and absf(z - SHOP.z) < SHOP.d * 0.5 + 1.2:
+			continue
 		if _rand() > (max_p if ed < 4.0 else far_p):
 			continue
 		var s := _rr(0.7, 1.6)

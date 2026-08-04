@@ -5,7 +5,9 @@ extends Node
 signal hour_changed(hour: float)
 
 ## 遊戲內時刻 0..24
-var hour := 10.5
+## 預設時刻。正午是最平的光 —— 沒有長影子、沒有色溫，建築的面看不出明暗。
+## 下午 15:40 的斜陽有方向感，同一個村子立刻不一樣。
+var hour := 15.7
 var flowing := true
 ## 現實幾秒 = 遊戲一天（預設 20 分鐘一天）
 var day_seconds := 1200.0
