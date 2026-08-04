@@ -54,7 +54,11 @@ const PATH_SEGMENTS := [
 const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
 	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
 # ── 水路（貫穿村里的水渠，多座小橋橫過 —— 柱狀地圖裡那些白色帶狀物） ──
-const CANAL := [[-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5], [60.0, 86.0], [140.0, 84.5], [200.0, 85.5]]
+## 東端要**接進大河**（使用者：「水道河流沒銜接到外部大河流」）。
+## v9 的東端停在 x=200，離河最近點還有 30m —— 水路憑空斷在草地上。
+## 西端也拉到圖外，讓它看起來是從山那邊引過來的。
+const CANAL := [[-260.0, 84.0], [-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5],
+	[60.0, 86.0], [140.0, 84.5], [196.0, 86.0], [216.0, 90.0], [226.0, 96.0]]
 const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
 const CANAL_DEPTH := 2.0
 const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
@@ -66,7 +70,9 @@ const GARDEN_POND := Vector2(-80.0, 10.0)      # 稗田邸內庭（block -78,2 �
 const GARDEN_POND_R := 6.4
 const GARDEN_POND_DEPTH := 1.7                 # 挖多深（碗底）
 const GARDEN_POND_SINK := 0.55                 # 水面比岸低多少
-const NATURE_POND := Vector2(-140.0, 150.0)    # 村西南的自然池
+## ⚠ 池心離最近街緣必須 > R*1.35 + 餘裕，否則開挖會吃到路面。
+## v9 放在 (-140,150)：離街緣只有 6.5m，而開挖半徑是 20m —— 池塘直接壓在路上。
+const NATURE_POND := Vector2(-202.0, 168.0)    # 村西北外緣的自然池
 const NATURE_POND_R := 15.0
 const NATURE_POND_DEPTH := 2.4
 const NATURE_POND_SINK := 0.75
@@ -76,6 +82,7 @@ const BLOCK_KIND := {
 	"-26,-52": "terakoya", "26,-52": "suzunaan",
 	"-78,2": "hieda", "26,2": "unomitei",
 	"-26,57": "market", "26,57": "tower",
+	"-26,2": "grove",                      # 鎮守之杜：整個街區留空給神木
 	"26,112": "ashiarai",
 }
 
@@ -175,6 +182,7 @@ func _init() -> void:
 		"庭池", 0.0, 4, 28, GARDEN_POND_DEPTH)
 	lib.pond_water(OUT_DIR, NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, NATURE_POND_SINK, bank_h,
 		"自然池", 0.22, 4, 28, NATURE_POND_DEPTH)
+	_assert_water_clear_of_streets()
 	_build_blocks()
 	_build_bridge()
 	_build_canal_bridges()
@@ -182,8 +190,8 @@ func _init() -> void:
 	_build_nature_pond()
 	_build_fauna()
 	_build_floor_decor()
-	_build_center()
 	_build_props()
+	_build_water_plants()
 	_build_clutter()
 	_build_gates()
 	_build_lamps()
@@ -529,6 +537,26 @@ func _wall_run(parent: Node, name: String, cx: float, cz: float, length: float, 
 	_claim(cx, cz, length + 0.6 if along_x else 1.2, 1.2 if along_x else length + 0.6)
 
 # ═══════════════════════════════ 街區 ═══════════════════════════════════
+## 產生器自己驗：水體的開挖範圍不能碰到街。
+## 使用者回報「池塘在路上」——池心離街緣 6.5m，而開挖半徑是 20m。
+## 這種事應該在產生的當下就吵，而不是等截圖才發現。
+func _assert_water_clear_of_streets() -> void:
+	var bad := 0
+	for w in [[NATURE_POND, NATURE_POND_R], [GARDEN_POND, GARDEN_POND_R]]:
+		var c: Vector2 = w[0]
+		var r: float = float(w[1]) * 1.35
+		var worst := 1e9
+		for i in 48:
+			var a := float(i) / 48.0 * TAU
+			var p := c + Vector2(cos(a), sin(a)) * r
+			worst = minf(worst, _path_info(p.x, p.y)[0])
+		if worst < 1.0:
+			bad += 1
+			push_warning("水體壓到街：池心 (%.0f, %.0f) 開挖到街緣內 %.1fm" % [c.x, c.y, 1.0 - worst])
+			print("  ⚠ 水體壓到街：池心 (%.0f, %.0f)，開挖圈離街緣 %.1fm" % [c.x, c.y, worst])
+	if bad == 0:
+		print("water/street clearance: ok")
+
 func _build_blocks() -> void:
 	var root := lib.add(lib.root, Node3D.new(), "Blocks")
 	var n_house := 0
@@ -537,6 +565,7 @@ func _build_blocks() -> void:
 			var kind: String = BLOCK_KIND.get("%d,%d" % [int(bx), int(bz)], "compound")
 			var g := lib.add(root, Node3D.new(), "街區_%d_%d_%s" % [int(bx), int(bz), kind])
 			match kind:
+				"grove": _blk_grove(g, bx, bz)
 				"market": _blk_market(g, bx, bz)
 				"tower": _blk_tower(g, bx, bz)
 				"hieda": _blk_hieda(g, bx, bz)
@@ -950,7 +979,9 @@ func _blk_market(parent: Node, bx: float, bz: float) -> void:
 	lib.gable_roof(well, 2.62, 3.0, 2.6, 0.5, 0.16, _mat("kawara"), wood)
 	lib.cyl(well, "滑車", 0.16, 0.16, 0.12, _mat("dark"), Vector3(0, 2.42, 0), 8)
 	_collide(well, Vector3(2.5, 1.2, 2.5))
-	_claim(wp.x, wp.y, 3.0, 3.0)
+	# 井有屋頂（3.0×2.6）與吊桶架，地權要涵蓋整組 —— v9 只 claim 3×3，
+	# 生活雜物就擺進井屋裡了
+	_claim(wp.x, wp.y, 5.2, 5.0)
 	var np := Vector2(bx + 14.0, bz - 12.0)
 	var notice := Node3D.new()
 	notice.position = Vector3(np.x, height_at(np.x, np.y), np.y)
@@ -1274,21 +1305,43 @@ func _build_fauna() -> void:
 
 	var duck_mesh := lib.prop_mesh("res://assets/models/duck.glb")
 	var koi_mesh := lib.prop_mesh("res://assets/models/koi.glb")
+	# ⚠ 一定要在**存檔時**就把生物擺到水路上。
+	# v8 只寫了 meta，位置留給 fauna.gd 在執行期算 —— 但編輯器不跑 _process，
+	# 所以在編輯器裡九隻鴨子全部疊在世界原點 (0,0,0)，
+	# 而原點剛好是本通正中央（使用者：「鴨子在路上」）。
+	var seg_n := pts.size() - 1
+	var at_canal := func(t: float, sink: float) -> Vector3:
+		var ft: float = clampf(t, 0.0, 0.999) * float(seg_n)
+		var i2 := int(ft)
+		var f := ft - float(i2)
+		var a: Vector2 = pts[i2]
+		var b: Vector2 = pts[mini(i2 + 1, seg_n)]
+		var q: Vector2 = a.lerp(b, f)
+		# 橫向擺一點，但要留在水面內（水路半寬 CANAL_HALF，石垣在更外側）
+		q += (b - a).normalized().orthogonal() * lib.rr(-1.6, 1.6)
+		return Vector3(q.x, bank_h(q.x, q.y) - CANAL_DEPTH * 0.35 - sink, q.y)
+
 	for i in 9:                                    # 鴨（水面）
 		var d := MeshInstance3D.new()
 		d.mesh = duck_mesh
 		d.scale = Vector3.ONE * lib.rr(0.85, 1.15)
+		var dt := lib.rr(0.06, 0.94)
 		lib.add(g, d, "鴨_%d" % i)
+		d.position = at_canal.call(dt, -0.02)
+		d.rotation.y = lib.rr(0.0, TAU)
 		d.set_meta("swim_kind", 0)
-		d.set_meta("swim_t", lib.rr(0.02, 0.95))
+		d.set_meta("swim_t", dt)
 		d.set_meta("swim_speed", lib.rr(0.006, 0.016))
 	for i in 14:                                   # 鯉（水下）
 		var k := MeshInstance3D.new()
 		k.mesh = koi_mesh
 		k.scale = Vector3.ONE * lib.rr(0.8, 1.4)
+		var kt := lib.rr(0.06, 0.94)
 		lib.add(g, k, "鯉_%d" % i)
+		k.position = at_canal.call(kt, 0.32)
+		k.rotation.y = lib.rr(0.0, TAU)
 		k.set_meta("swim_kind", 1)
-		k.set_meta("swim_t", lib.rr(0.02, 0.95))
+		k.set_meta("swim_t", kt)
 		k.set_meta("swim_speed", lib.rr(0.010, 0.026))
 
 	# 鷺鷥：站在岸邊不動（單腳立姿是牠的招牌）
@@ -1377,9 +1430,16 @@ func _build_floor_decor() -> void:
 		var z2 := -220.0
 		while z2 < 230.0:
 			var seg_len := 6.0
-			var y2 := height_at(gx, z2)
+			# 溝不能架在水上：本通兩側的溝會橫穿水路，那一段要跳掉
+			if lib.poly_dist(CANAL, gx, z2 + seg_len * 0.5) < CANAL_HALF * 1.9 \
+					or lib.poly_dist(RIVER, gx, z2 + seg_len * 0.5) < RIVER_HALF * 1.6:
+				z2 += seg_len
+				n_gutter += 1
+				continue
+			# 用 footprint 最低點：6m 長的一節溝拿中心高度擺，斜坡上會翹起來
+			var ggu := _ground_under(gx, z2 + seg_len * 0.5, 1.2, seg_len)
 			var gt := Node3D.new()
-			gt.position = Vector3(gx, y2, z2 + seg_len * 0.5)
+			gt.position = Vector3(gx, ggu[0], z2 + seg_len * 0.5)
 			lib.add(g, gt, "石溝_%d" % n_gutter)
 			for sd in [-1, 1]:                    # 溝壁
 				lib.box(gt, "溝壁_%d" % (sd + 1), Vector3(0.22, 0.5, seg_len), stone,
@@ -1453,16 +1513,77 @@ func _build_villagers() -> void:
 		n += 1
 	print("villagers: ", n, " on ", routes.size(), " routes")
 
+# ── 水生植物：睡蓮／荷／菖蒲／水草，鋪滿水路與河的岸邊 ──
+## 使用者：「河道也可以加很多植物蓮花之類的」。
+## 只鋪在**真的是水**的地方 —— 距離中心線 < 半寬，而且不能壓到橋。
+func _build_water_plants() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "WaterPlants")
+	var pad := lib.tuft_mesh(6, 0.30, 0.34, Color(0.15, 0.29, 0.13), Color(0.27, 0.45, 0.19))
+	var lotus := lib.tuft_mesh(5, 0.46, 0.14, Color(0.20, 0.34, 0.16), Color(0.92, 0.72, 0.80), true)
+	var reed := lib.tuft_mesh(8, 0.95, 0.10, Color(0.14, 0.26, 0.11), Color(0.42, 0.56, 0.24))
+	reed.surface_set_material(0, lib.grass_wind_mat(0.11))
+	var groups := [
+		{ "mesh": pad, "n": 260, "band": Vector2(0.0, 0.72), "sink": -0.03, "file": "睡蓮" },
+		{ "mesh": lotus, "n": 90, "band": Vector2(0.15, 0.66), "sink": -0.30, "file": "荷" },
+		{ "mesh": reed, "n": 420, "band": Vector2(0.82, 1.22), "sink": 0.10, "file": "蘆葦" },
+	]
+	var total := 0
+	for grp in groups:
+		var list: Array[Transform3D] = []
+		var tries := 0
+		var target: int = grp.n
+		while list.size() < target and tries < target * 60:
+			tries += 1
+			# 一半沿水路、一半沿河
+			var on_canal := lib.rand() < 0.62
+			var poly: Array = CANAL if on_canal else RIVER
+			var half: float = CANAL_HALF if on_canal else RIVER_HALF
+			var sink: float = CANAL_DEPTH if on_canal else RIVER_DEPTH
+			var k := int(lib.rand() * float(poly.size() - 1))
+			var a := Vector2(poly[k][0], poly[k][1])
+			var b := Vector2(poly[k + 1][0], poly[k + 1][1])
+			var q: Vector2 = a.lerp(b, lib.rr(0.0, 1.0))
+			var band: Vector2 = grp.band
+			var off: float = half * lib.rr(band.x, band.y) * (1.0 if lib.rand() < 0.5 else -1.0)
+			q += (b - a).normalized().orthogonal() * off
+			if absf(q.x) > HALF - 8.0 or absf(q.y) > HALF - 8.0:
+				continue
+			# 橋下不長（橋墩與橋面會穿過去）
+			var near_bridge := false
+			for bxp in _canal_bridge_xs():
+				if on_canal and absf(q.x - bxp) < 4.5:
+					near_bridge = true
+					break
+			if near_bridge:
+				continue
+			var wy: float = bank_h(q.x, q.y) - sink * 0.35 + float(grp.sink)
+			var sc := lib.rr(0.7, 1.5)
+			list.append(Transform3D(Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(sc, sc, sc)),
+				Vector3(q.x, wy, q.y)))
+		total += list.size()
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(grp.mesh, list, [],
+			OUT_DIR + "gen/water_%s.res" % String(grp.file))
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(g, mmi, String(grp.file))
+	print("water plants: ", total)
+
+func _canal_bridge_xs() -> Array:
+	return CANAL_BRIDGES
+
 # ── 村的中心：神木與鎮守之杜（地標的輕重層次）──
 ## 使用者回報俯瞰時「眼睛沒有地方停」。原因是每塊街區的份量都一樣 ——
 ## 同樣大小的圍院、同樣高的房子。真實聚落一定有一個「這裡是中心」的東西。
 ## 這裡放一棵遠高於周圍的神木，四周清空、用玉垣圍起來。
-func _build_center() -> void:
-	var g := lib.add(lib.root, Node3D.new(), "鎮守之杜")
-	var c := PLAZA + Vector2(-16.0, -14.0)
+## 鎮守之杜：**佔滿一整個街區**。
+## v9 把神木硬塞在 PLAZA 旁邊我手挑的座標，結果卡在建築的內角落 ——
+## 要「空曠」就不能跟建物搶地，得整塊街區都不蓋房子。
+func _blk_grove(parent: Node, bx: float, bz: float) -> void:
+	var g := lib.add(parent, Node3D.new(), "鎮守之杜")
+	var c := Vector2(bx, bz)
 	var gy := height_at(c.x, c.y)
-	# 先把地權圈起來 —— 之後的道具、樹、草都會避開，中心才留得住空間
-	_claim(c.x, c.y, 26.0, 26.0)
+	# ⚠ 這裡**先不 claim 整個街區**。v9 先圈地再種杜木，結果小樹全被自己
+	# 剛圈下的地權擋掉，一棵都沒長出來。整塊地權留到最後再圈。
 
 	# 神木：比一般樹高兩倍以上，剪影才會從屋頂上冒出來
 	var trunk_mound := lib.cyl(g, "土壇", 5.6, 6.4, 0.7, _mat("stone", 2),
@@ -1529,7 +1650,27 @@ func _build_center() -> void:
 		lib.cyl(g, "獻燈竿_%d" % int(sd + 1), 0.13, 0.15, 1.15, post_m, Vector3(lx, ly + 0.8, lz2), 8)
 		lib.cyl(g, "獻燈袋_%d" % int(sd + 1), 0.30, 0.28, 0.42, post_m, Vector3(lx, ly + 1.58, lz2), 6)
 		lib.cyl(g, "獻燈笠_%d" % int(sd + 1), 0.08, 0.56, 0.26, post_m, Vector3(lx, ly + 1.92, lz2), 6)
-	print("center: 神木 + 玉垣 @ (", int(c.x), ",", int(c.y), ")")
+	# 杜：神木周圍再種一圈較小的樹（「杜」是樹叢不是一棵樹）
+	for i in 14:
+		var wa := lib.rr(0.0, TAU)
+		var wr := lib.rr(8.5, 18.0)
+		var wx := c.x + cos(wa) * wr
+		var wz := c.y + sin(wa) * wr
+		# 只避開街與彼此，不用避開自己這塊街區
+		if _path_info(wx, wz)[0] < 1.6:
+			continue
+		if not _free(wx, wz, 5.0, 5.0, 0.5):
+			continue
+		var sub := MeshInstance3D.new()
+		sub.mesh = lib.tree_mesh(Lib.TREE_GLBS[int(lib.rand() * 5.0)])
+		sub.position = Vector3(wx, height_at(wx, wz), wz)
+		sub.scale = Vector3.ONE * lib.rr(1.1, 1.7)
+		sub.rotation.y = lib.rr(0.0, TAU)
+		lib.add(g, sub, "杜木_%d" % i)
+		_claim(wx, wz, 4.6, 4.6)
+	# 最後才把整個街區圈起來，別的東西就不會蓋進來
+	_claim(c.x, c.y, BLOCK_W + 2.0, BLOCK_D + 2.0)
+	print("grove: 神木 + 玉垣 @ (", int(c.x), ",", int(c.y), ")")
 
 # ── 生活感雜物：曬衣、柴堆、水桶、農具、俵 ──
 ## 每一件都要先問 _free 再 _claim（使用者：「放之前先算會不會擋住」）。
@@ -1539,21 +1680,26 @@ func _build_clutter() -> void:
 	var dark := _mat("dark")
 	var n := 0
 	var tries := 0
-	while n < 150 and tries < 9000:
+	while n < 320 and tries < 26000:
 		tries += 1
 		var x := lib.rr(-CORE, CORE)
 		var z := PLAZA.y + lib.rr(-CORE, CORE)
-		# 只放在院子裡：離街 1.5~9m（太靠街會擋路，太遠是田）
+		# v9 全塞在離街 1.5~9m 的院子裡 —— 那些院子被土塀圍著，從街上根本看不到
+		# （使用者：「我沒看到多的生活雜物」）。改成大部分貼著街緣擺。
 		var ed: float = _path_info(x, z)[0]
-		if ed < 1.5 or ed > 9.0:
+		if ed < 0.9 or ed > 11.0:
+			continue
+		if ed > 5.0 and lib.rand() < 0.55:
 			continue
 		if _field_w(x, z) > 0.2:
 			continue
-		if not _free(x, z, 3.0, 3.0, 0.4):
+		if not _free(x, z, 3.6, 3.6, 0.4):
 			continue
-		var y := height_at(x, z)
+		# 貼地要用 footprint 最低點：拿中心點的高度，斜坡上 3m 寬的曬衣竿
+		# 會有一端翹在半空（使用者：「雜物在空中」）
+		var gu := _ground_under(x, z, 3.2, 3.2)
 		var p := Node3D.new()
-		p.position = Vector3(x, y, z)
+		p.position = Vector3(x, gu[0], z)
 		p.rotation.y = lib.rr(0.0, TAU)
 		var kind := int(lib.rand() * 5.0)
 		match kind:
@@ -1600,7 +1746,7 @@ func _build_clutter() -> void:
 								0.22 + float(r2) * 0.42, 0), 8)
 						tw.rotation.z = PI * 0.5
 		lib.add(g, p, "雜物_%d" % n)
-		_claim(x, z, 3.4, 3.4)
+		_claim(x, z, 4.0, 4.0)
 		n += 1
 	print("clutter: ", n)
 

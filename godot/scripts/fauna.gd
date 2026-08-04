@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 		# 在水路寬度內左右擺一點，不要排成一直線
 		var dirv: Vector2 = info.dir
 		# 橫向擺動限制在水路中線附近（±1.8m），不會擦到石垣護岸
-		var side: Vector2 = dirv.orthogonal() * sin(tt * 0.35 + s.phase) * 1.8
+		var side: Vector2 = dirv.orthogonal() * sin(tt * 0.35 + s.phase) * 1.5
 		var pos: Vector2 = Vector2(info.pos) + side
 		var y: float = info.y
 		if s.kind == KIND_DUCK:

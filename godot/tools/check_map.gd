@@ -68,6 +68,8 @@ func _check(map_id: String) -> int:
 	_check_building_overlap(buildings)
 	_check_scatter_overlap(scatters, buildings)
 	_check_water(waters)
+	_check_water_on_road(waters, root)
+	_check_props_grounded(root)
 
 	for s in _issues:
 		print("  ✗ ", s)
@@ -308,6 +310,97 @@ func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 					break
 		if hit > 0:
 			_issues.append("%s 有 %d 個實例長在建物裡，%s" % [nm, hit, first])
+
+## 水體溢到平地／路面 —— 使用者回報「池塘在路上」。
+##
+## 判定方式踩過一次坑：一開始拿「周圍地面的**中位數**」比，結果碗狀的池塘
+## 全部被報 —— 碗底比水面低是正常的，水面當然高過中位數。
+## 正解是比**岸緣**（周圍地形的 95 百分位）：水躺在窪地裡時一定低於岸緣，
+## 只有鋪到平地上時才會超過。
+func _check_water_on_road(waters: Array, _root: Node) -> void:
+	for w in waters:
+		var mi := w as MeshInstance3D
+		var mesh: Mesh = mi.mesh
+		if mesh == null or mesh.get_surface_count() == 0:
+			continue
+		var verts: PackedVector3Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		if verts.is_empty():
+			continue
+		var xf := _world_xf(mi)
+		var n := 0
+		var high := 0
+		var worst := 0.0
+		var wx := 0.0
+		var wz := 0.0
+		var step := maxi(1, verts.size() / 2500)
+		for i in range(0, verts.size(), step):
+			var p: Vector3 = xf * verts[i]
+			var vals: Array[float] = []
+			for di in range(-4, 5):
+				for dj in range(-4, 5):
+					var c := Vector2i(int(floor(p.x / _cell)) + di, int(floor(p.z / _cell)) + dj)
+					if _gmax.has(c):
+						vals.append(_gmax[c])
+			if vals.size() < 20:
+				continue
+			vals.sort()
+			var rim: float = vals[int(float(vals.size()) * 0.95)]
+			n += 1
+			var d := p.y - rim
+			if d > 0.05:
+				high += 1
+				if d > worst:
+					worst = d
+					wx = p.x
+					wz = p.z
+		if n == 0:
+			continue
+		var frac := float(high) / float(n)
+		if frac > 0.12:
+			_issues.append("水面有 %.0f%% 高過岸緣（溢到平地／路面上）：%s 最高 %.2fm @ (%.0f, %.0f)"
+				% [frac * 100.0, mi.name, worst, wx, wz])
+
+## 道具浮空 / 埋進地裡 —— 使用者回報「雜物在空中」。
+## 掃 Clutter / Props / FloorDecor 這幾組群組節點，比它們的底面與地形。
+func _check_props_grounded(root: Node) -> void:
+	for gname in ["Clutter", "Props", "FloorDecor", "Lamps"]:
+		var grp := root.find_child(gname, true, false)
+		if grp == null:
+			continue
+		var floats := 0
+		var worst := 0.0
+		var wname := ""
+		var wpos := Vector3.ZERO
+		for c in grp.get_children():
+			if not (c is Node3D):
+				continue
+			var box := AABB()
+			var got := false
+			var stack: Array[Node] = [c]
+			while stack.size() > 0:
+				var n2: Node = stack.pop_back()
+				for gc in n2.get_children():
+					stack.push_back(gc)
+				if n2 is MeshInstance3D:
+					var wb: AABB = _world_xf(n2) * (n2 as MeshInstance3D).get_aabb()
+					box = wb if not got else box.merge(wb)
+					got = true
+			if not got:
+				continue
+			var g := _ground_min_box(box.position.x, box.position.z,
+				box.position.x + box.size.x, box.position.z + box.size.z)
+			if g == -INF:
+				continue
+			var gap := box.position.y - g
+			if gap > 0.6:
+				floats += 1
+				if gap > worst:
+					worst = gap
+					wname = String(c.name)
+					wpos = box.get_center()
+		if floats > 0:
+			_issues.append("%s 有 %d 件離地（最嚴重 %.2fm：%s @ %.0f, %.0f）"
+				% [gname, floats, worst, wname, wpos.x, wpos.z])
 
 ## 水面高度 —— 「水是隱形的」（水面沉到河床底下）
 ## v1 拿 AABB 中心點量，河是彎的、中心點根本不在河上，於是報假訊息。
