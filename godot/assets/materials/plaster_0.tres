@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/plaster_rough.jpg" id="3_ydpuf"]
 
 [resource]
-albedo_color = Color(1, 0.98, 0.94, 1)
+albedo_color = Color(1.3, 1.28, 1.22, 1)
 albedo_texture = ExtResource("1_pm0xw")
 roughness_texture = ExtResource("3_ydpuf")
 normal_enabled = true

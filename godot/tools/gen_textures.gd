@@ -27,6 +27,9 @@ func _init() -> void:
 	for fn in [
 		["roof_thatch", 11], ["wood_lattice", 22], ["pebble", 33], ["foliage", 44],
 		["namako", 55], ["tatami", 66], ["stone_flag", 77], ["shoji", 88],
+		# v17：牆面。量過場景才發現全村 653 面牆共用同一張 plaster 貼圖
+		# （MAT_SET 裡 "plaster" 與 "mud" 指向同一組），難怪單調。
+		["shitami", 101], ["yakisugi", 113], ["arakabe", 127], ["ishizumi", 139],
 	]:
 		var name: String = fn[0]
 		_rng.seed = int(fn[1])
@@ -134,7 +137,76 @@ func _pattern(name: String, u: float, v: float, n1: float, n2: float) -> Array:
 		"tatami": return _p_tatami(u, v, n1, n2)
 		"stone_flag": return _p_flag(u, v, n1, n2)
 		"shoji": return _p_shoji(u, v, n1, n2)
+		"shitami": return _p_shitami(u, v, n1, n2)
+		"yakisugi": return _p_yakisugi(u, v, n1, n2)
+		"arakabe": return _p_arakabe(u, v, n1, n2)
+		"ishizumi": return _p_ishizumi(u, v, n1, n2)
 	return [Color(1, 0, 1), 0.5, 0.8]
+
+## 下見板張り：橫向重疊的木板，下緣壓在下一片上（雨水才流得掉）。
+## 町家腰壁最常見的做法，一加上去整條街立刻不一樣。
+func _p_shitami(u: float, v: float, n1: float, n2: float) -> Array:
+	var boards := 11.0
+	var t: float = fposmod(v * boards, 1.0)
+	# 板不是平的：上緣薄、下緣厚，交界處有一道陰影
+	var lap: float = smoothstep(0.0, 0.14, t)
+	var h: float = 0.25 + t * 0.55 + n2 * 0.12
+	var grain: float = n1 * 0.55 + fposmod(u * 130.0, 1.0) * 0.12
+	var c := Color(0.40, 0.33, 0.25).lerp(Color(0.27, 0.22, 0.17), grain)
+	c = c.darkened((1.0 - lap) * 0.55)                  # 交界的陰影
+	# 押縁（壓條）：每隔一段有一根直的壓木
+	var batten: float = smoothstep(0.90, 0.97, absf(fposmod(u * 5.0, 1.0) - 0.5) * 2.0)
+	c = c.lerp(Color(0.22, 0.18, 0.14), batten * 0.8)
+	return [c, h + batten * 0.4, 0.72 + n2 * 0.15]
+
+## 焼杉（やきすぎ）：表面燒炭化的杉板。近乎純黑帶炭裂紋，
+## 是關西町並最有辨識度的一種牆 —— 一整片黑會讓旁邊的白牆跳出來。
+func _p_yakisugi(u: float, v: float, n1: float, n2: float) -> Array:
+	var boards := 7.0
+	var seam: float = smoothstep(0.86, 0.99, absf(fposmod(u * boards, 1.0) - 0.5) * 2.0)
+	# 炭化層的龜裂：沿著木紋方向的細長裂縫
+	var crack: float = smoothstep(0.62, 0.78, n1) * (1.0 - smoothstep(0.0, 0.35, absf(n2 - 0.5)))
+	var c := Color(0.055, 0.052, 0.050).lerp(Color(0.14, 0.13, 0.125), n2 * 0.8)
+	c = c.lerp(Color(0.30, 0.24, 0.19), crack * 0.7)   # 裂縫底下露出原木
+	c = c.darkened(seam * 0.5)
+	return [c, 0.5 - seam * 0.4 + crack * 0.2 + n2 * 0.1, 0.80 + crack * 0.15]
+
+## 荒壁（あらかべ）：摻稻稈的土壁，還沒上漆喰的那一層。
+## 跟 plaster 完全不同的表面 —— 粗、有稈屑、顏色偏赭。
+func _p_arakabe(u: float, v: float, n1: float, n2: float) -> Array:
+	# 稻稈：短短的線段隨機散在土裡
+	var straw := 0.0
+	for k in 3:
+		var fx: float = fposmod(u * (17.0 + float(k) * 6.0) + n1 * 3.0, 1.0)
+		var fy: float = fposmod(v * (13.0 + float(k) * 5.0) + n2 * 2.0, 1.0)
+		straw = maxf(straw, (1.0 - smoothstep(0.0, 0.06, absf(fy - 0.5)))
+			* smoothstep(0.15, 0.35, fx) * (1.0 - smoothstep(0.65, 0.85, fx)))
+	var c := Color(0.50, 0.40, 0.29).lerp(Color(0.62, 0.53, 0.40), n1 * 0.9)
+	c = c.lerp(Color(0.70, 0.63, 0.44), straw * 0.75)   # 稈是淺色的
+	# 抹刀痕
+	var trowel: float = sin(u * 22.0 + v * 9.0 + n2 * 4.0) * 0.5 + 0.5
+	c = c.darkened(trowel * 0.10)
+	return [c, 0.4 + n1 * 0.35 + straw * 0.25, 0.90 + n2 * 0.08]
+
+## 石積み腰壁：牆腳的野面積み（大小不一的石頭堆疊）。
+## 跟 stone_wall 的整齊砌法不同，這種是亂石，用在土塀與屋敷的腰。
+func _p_ishizumi(u: float, v: float, n1: float, n2: float) -> Array:
+	var rows := 5.0
+	var ri: float = floor(v * rows)
+	var rt: float = fposmod(v * rows, 1.0)
+	# 每一層錯開，石頭寬度也不一樣
+	var off: float = fposmod(sin(ri * 91.7) * 43758.5453, 1.0)
+	var wide: float = 3.0 + fposmod(sin(ri * 37.3) * 43758.5453, 1.0) * 3.0
+	var ct: float = fposmod(u * wide + off, 1.0)
+	var joint: float = maxf(smoothstep(0.80, 0.96, absf(ct - 0.5) * 2.0),
+		smoothstep(0.82, 0.98, absf(rt - 0.5) * 2.0))
+	var sid: float = fposmod(sin(floor(u * wide + off) * 57.1 + ri * 19.3) * 43758.5453, 1.0)
+	var pal := [Color(0.50, 0.49, 0.46), Color(0.42, 0.43, 0.44),
+		Color(0.58, 0.55, 0.49), Color(0.36, 0.38, 0.38)]
+	var c: Color = pal[int(sid * 4.0) % 4]
+	c = c.lerp(c.darkened(0.45), joint)
+	c = c.lerp(Color(0.36, 0.40, 0.30), clampf((n1 - 0.74) * 2.4, 0.0, 0.4))   # 苔
+	return [c, (1.0 - joint) * 0.8 + n2 * 0.15, 0.62 + joint * 0.25]
 
 ## 茅葺：一束一束的稻稈往下流，束與束之間有陰影溝
 func _p_thatch(u: float, v: float, n1: float, n2: float) -> Array:

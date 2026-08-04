@@ -161,8 +161,10 @@ func mask_at(x: float, z: float) -> Color:
 	var path_w: float = maxf(info[1], shore)
 	# 在（村緣）的路不鋪石板 —— 石板一路鋪到田邊很出戲。
 	# 把石板的權重收掉、同樣的量補到土的通道上，路還在、材質換掉。
+	# 參考圖（幻走スカイドリフト＋官方美術）四張的地面**全部是夯土**，
+	# 不是石板。石板只留給村心廣場周邊（參道與店前的鋪面另外做）。
 	var zr := Vector2(x, z - PLAZA.y).length()
-	var stone_k := 1.0 - smoothstep(ZONE_R[1] - 18.0, ZONE_R[1] + 26.0, zr)
+	var stone_k := 1.0 - smoothstep(10.0, 38.0, zr)
 	var lane_dirt: float = path_w * (1.0 - stone_k)
 	path_w *= stone_k
 	var soil := maxf(_field_w(x, z), g2 * 0.12)
@@ -345,8 +347,10 @@ func _collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
 ## 以前 _mat() 每個 key 只回傳一個共用材質實例，全村的灰泥牆是同一個顏色，
 ## 遠看就是一片同色的積木。真實聚落每戶的灰泥、瓦、木頭都風化得不一樣。
 const MAT_TONES := {
-	"plaster": [Color(1.00, 0.98, 0.94), Color(0.92, 0.88, 0.80),
-		Color(0.84, 0.82, 0.78), Color(0.96, 0.91, 0.84)],
+	# 真壁的填充要**亮**，木框才跳得出來 —— 參考圖的白灰接近純白。
+	# 舊的 0.84/0.92 配上曬過的木框，整棟是一團褐色。
+	"plaster": [Color(1.30, 1.28, 1.22), Color(1.16, 1.13, 1.06),
+		Color(1.05, 1.04, 1.00), Color(1.22, 1.17, 1.09)],
 	"kawara": [Color(0.80, 0.84, 0.92), Color(0.66, 0.70, 0.78),
 		Color(0.74, 0.76, 0.80), Color(0.58, 0.62, 0.70)],
 	"thatch": [Color(0.66, 0.54, 0.36), Color(0.58, 0.47, 0.31),
@@ -381,13 +385,21 @@ const MAT_TONES := {
 		Color(1.00, 0.98, 0.92), Color(0.92, 0.90, 0.86)],
 	"tatami": [Color(1.00, 1.00, 1.00), Color(0.92, 0.94, 0.86),
 		Color(0.86, 0.88, 0.80), Color(0.96, 0.92, 0.82)],
+	"shitami": [Color(1.00, 0.98, 0.95), Color(0.86, 0.84, 0.80),
+		Color(0.74, 0.72, 0.68), Color(0.92, 0.88, 0.82)],
+	"yakisugi": [Color(1.00, 1.00, 1.00), Color(0.86, 0.86, 0.88),
+		Color(1.12, 1.08, 1.04), Color(0.78, 0.79, 0.80)],
+	"ishizumi": [Color(1.00, 1.00, 1.00), Color(0.90, 0.91, 0.90),
+		Color(0.82, 0.84, 0.82), Color(0.95, 0.92, 0.86)],
 }
 const MAT_SET := {
 	"kawara": ["roof_kawara", 0.22],
 	# ⚠ 茅葺以前借的是 terrain_grass（空拍草地）—— 難怪茅頂看起來像鋪了草皮。
 	# roof_thatch 現在是 tools/gen_textures.gd 烤的真茅稈。
 	"thatch": ["roof_thatch", 0.55],
-	"plaster": ["plaster", 0.4], "mud": ["plaster", 0.5],
+	# ⚠ v16 之前 "plaster" 與 "mud" 指向**同一組貼圖**，只是色調不同 ——
+	# 全村 653 面牆等於一張圖染成 8 色。使用者：「其實我也覺得挺單調的」。
+	"plaster": ["plaster", 0.4], "mud": ["arakabe", 0.42],
 	"dark": ["dark_wood", 0.45], "wood": ["planks", 0.5], "stone": ["stone_wall", 0.30],
 	# 海鼠壁以前是拿瓦的貼圖硬壓成炭黑冒充，現在有真的菱格 + 凸目地了
 	"namako": ["namako", 0.30],
@@ -404,6 +416,10 @@ const MAT_SET := {
 	"cobble": ["stone_wall", 0.85],
 	"foliage": ["foliage", 0.42], "flag": ["stone_flag", 0.30],
 	"shoji": ["shoji", 0.30], "tatami": ["tatami", 0.42],
+	# v17 的牆面：下見板張り（腰壁）／焼杉（關西町並的黑板壁）／
+	# 荒壁（摻稻稈的土壁）／野面積み（亂石腰壁）
+	"shitami": ["shitami", 0.34], "yakisugi": ["yakisugi", 0.36],
+	"ishizumi": ["ishizumi", 0.30],
 }
 
 ## v = 色調變體編號。省略就隨機挑一個 —— 一棟房子要自己記住 v，
@@ -462,12 +478,26 @@ func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
 func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float, depth: float,
 		ridge_along_x: bool, storey := 1, roof := "kawara", flip := false,
 		shop_p := 0.55) -> void:
-	var wall := _mat("plaster") if lib.rand() < 0.6 else _mat("mud")
+	# ── 牆的做法（かべ）：一棟一種，按分區抽 ──
+	# v16 之前只有 plaster/mud 兩個 key，而且它們**指向同一張貼圖** ——
+	# 全村的牆是一張圖染成 8 色。使用者：「其實我也覺得挺單調的」。
+	# 現在町方偏漆喰與焼杉（都市感、講究），在偏荒壁（土壁裸露，農家的做法）。
+	var wall_kinds: Array = ["plaster", "plaster", "yakisugi", "shitami"] if _zone_of(cx, cz) == ZONE_MACHI \
+		else (["plaster", "mud", "shitami", "yakisugi"] if _zone_of(cx, cz) == ZONE_HANNO \
+		else ["mud", "mud", "mud", "shitami"])
+	var wall_kind: String = wall_kinds[int(lib.rand() * float(wall_kinds.size()))]
+	var tone_v := int(lib.rand() * 4.0)     # 整棟共用一個色調變體
+	var wall := _mat(wall_kind, tone_v)
+	# 腰壁（こしかべ）：牆腳那一段換材質。町並最好認的分層 ——
+	# 上半白漆喰、下半下見板張り或亂石，一整排立面立刻有節奏。
+	var skirt_kind := ""
+	if wall_kind in ["plaster", "mud"]:
+		skirt_kind = "shitami" if lib.rand() < 0.7 else "ishizumi"
 	var dark := _mat("dark")
 	var stone := _mat("stone")
 	var roof_m := _mat(roof)
 	# 高度不要只有兩檔 —— v8 所有平房一律 3.0m，整排剪影一模一樣
-	var h := lib.rr(2.7, 3.4) if storey == 1 else lib.rr(4.6, 5.6)
+	var h := lib.rr(2.9, 3.5) if storey == 1 else lib.rr(5.4, 6.6)
 	var gu := _ground_under(cx, cz, length if ridge_along_x else depth, depth if ridge_along_x else length)
 	var g := Node3D.new()
 	g.position = Vector3(cx, gu[0], cz)          # 站在最低點，不會有一端浮空
@@ -481,6 +511,39 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	var foot: float = float(gu[1]) + 0.45
 	lib.box(g, "基石", Vector3(length + 0.4, 0.32 + foot, depth + 0.4), stone, Vector3(0, 0.16 - foot * 0.5, 0))
 	lib.box(g, "屋身", Vector3(length, h, depth), wall, Vector3(0, 0.32 + h * 0.5, 0))
+	if skirt_kind != "":
+		# 只做四周薄薄一圈，不是整棟換材質（整棟換的話上半的白牆就沒了）
+		var sk_h := lib.rr(0.85, 1.25)
+		lib.box(g, "腰壁", Vector3(length + 0.09, sk_h, depth + 0.09), _mat(skirt_kind),
+			Vector3(0, 0.32 + sk_h * 0.5, 0))
+	# ── 真壁造（しんかべ）：柱樑露在牆外的格子 ──
+	# 使用者拿《幻走スカイドリフト》與官方美術當參考，四張圖的共同特徵就是這個：
+	# 牆不是一片平的，是**白灰嵌在木框裡**。這才是「材質模組更多樣」的答案 ——
+	# 光換貼圖沒有用，缺的是**結構線**。焼杉那種板壁本來就沒有真壁，跳過。
+	if wall_kind in ["plaster", "mud"]:
+		var fr := _mat("dark", tone_v)
+		var ez: float = depth * 0.5 + 0.045
+		var ex: float = length * 0.5 + 0.045
+		var y0: float = 0.32
+		var posts := maxi(int(length / 1.9), 2)
+		for face in [1.0, -1.0]:                       # 前後兩面
+			for i in posts + 1:
+				var px: float = -length * 0.5 + length * float(i) / float(posts)
+				lib.box(g, "柱_%d_%d" % [int(face), i], Vector3(0.15, h, 0.10), fr,
+					Vector3(px, y0 + h * 0.5, face * ez))
+			# 土台・胴貫・桁：三道橫材，二層的話中間再加一道
+			var rails: Array = [0.02, 0.99] if storey == 1 else [0.02, 0.50, 0.99]
+			for ri in rails.size():
+				lib.box(g, "貫_%d_%d" % [int(face), ri], Vector3(length + 0.1, 0.17, 0.10), fr,
+					Vector3(0, y0 + h * float(rails[ri]), face * ez))
+		for face2 in [1.0, -1.0]:                      # 兩側妻面
+			for i in 3:
+				var pz: float = -depth * 0.5 + depth * float(i) / 2.0
+				lib.box(g, "妻柱_%d_%d" % [int(face2), i], Vector3(0.10, h, 0.15), fr,
+					Vector3(face2 * ex, y0 + h * 0.5, pz))
+			lib.box(g, "妻貫_%d" % int(face2), Vector3(0.10, 0.17, depth + 0.1), fr,
+				Vector3(face2 * ex, y0 + h * 0.99, 0.0))
+
 	# ── 立面：逐間（bay）決定是玄關／窗／板壁 ──
 	# v3 的問題是「只有一片格子戶貼在牆上」，走近看是紙板。
 	# 這裡每一間都做立體：凹陷的玄關、有框有格的窗、腰板、庇。
@@ -520,12 +583,16 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 					Vector3(dx + float(sd2) * minf(bw * 0.45, 1.6), (0.32 + h * 0.78) * 0.5, fz2 + 1.1), 6)
 			if is_shop:                              # 商家：暖簾 + 吊招牌（象徵性裝飾）
 				var cloth := StandardMaterial3D.new()
-				cloth.albedo_color = [Color(0.26, 0.22, 0.32), Color(0.52, 0.24, 0.20),
-					Color(0.20, 0.30, 0.40), Color(0.34, 0.30, 0.18)][int(lib.rand() * 4.0)]
+				# ⚠ 舊的四個色全是灰掉的濁色（0.26,0.22,0.32 之類），
+				# 掛上去等於沒掛。參考圖裡的暖簾是**整條街唯一的顏色來源** ——
+				# 飽和的紫、綠、藍、紅，而且面積很大。
+				cloth.albedo_color = [Color(0.34, 0.16, 0.46), Color(0.12, 0.42, 0.24),
+					Color(0.10, 0.24, 0.56), Color(0.62, 0.16, 0.14),
+					Color(0.86, 0.72, 0.22), Color(0.08, 0.30, 0.42)][int(lib.rand() * 6.0)]
 				cloth.roughness = 1.0
 				for k in [-1, 0, 1]:
-					lib.box(g, "暖簾_%d_%d" % [i, k + 1], Vector3(minf(bw * 0.2, 0.75), 0.72, 0.04), cloth,
-						Vector3(dx + float(k) * minf(bw * 0.22, 0.82), 2.02, fz2 + 0.02))
+					lib.box(g, "暖簾_%d_%d" % [i, k + 1], Vector3(minf(bw * 0.26, 0.95), 1.05, 0.04), cloth,
+						Vector3(dx + float(k) * minf(bw * 0.27, 1.0), 1.92, fz2 + 0.02))
 				lib.box(g, "暖簾竿_%d" % i, Vector3(minf(bw * 0.72, 2.6), 0.08, 0.1), dark,
 					Vector3(dx, 2.4, fz2 + 0.02))
 				var sign := lib.box(g, "吊招牌_%d" % i, Vector3(0.5, 1.5, 0.1), _mat("wood"),
@@ -897,7 +964,9 @@ const ZONE_SPEC := [
 	{   # 町方：屋頂要連成一片，轉角只留 1~2m
 		"has_house": 1.00, "len_lo": 0.84, "len_hi": 0.96,
 		"depth_lo": 7.6, "depth_hi": 9.0,
-		"storey2": 0.60, "kawara": 0.94, "shop": 0.85,
+		# 使用者：「場景和建築都很高很有幻想鄉的獨特味道」。參考圖的町並
+		# 幾乎全是二層，而且街道相對窄 —— 高度感是「窄街 + 二層」給的。
+		"storey2": 0.88, "kawara": 0.94, "shop": 0.85,
 		"hanare": 0, "kura": 0.75,
 		# 町方的「圍牆」就是房子本身 —— 參考圖裡的商家町是連續立面直接臨街，
 		# 沒有土塀。端牆只在真的需要收邊時才補。
@@ -906,7 +975,7 @@ const ZONE_SPEC := [
 	{   # 半農町：維持現況的密度，但屋根與店舖比例往下調
 		"has_house": 0.82, "len_lo": 0.55, "len_hi": 0.74,
 		"depth_lo": 6.6, "depth_hi": 8.2,
-		"storey2": 0.18, "kawara": 0.50, "shop": 0.30,
+		"storey2": 0.42, "kawara": 0.50, "shop": 0.30,
 		"hanare": 1, "kura": 0.55,
 		"wall_end": 0.55, "wall_full": 0.75,
 	},

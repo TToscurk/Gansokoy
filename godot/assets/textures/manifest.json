@@ -1,11 +1,27 @@
 {
   "downloaded": "2026-07-24T10:50:10.150Z",
   "generated": {
+    "arakabe": {
+      "files": [
+        "arakabe_diff.jpg",
+        "arakabe_nor_gl.jpg",
+        "arakabe_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
+    },
     "foliage": {
       "files": [
         "foliage_diff.jpg",
         "foliage_nor_gl.jpg",
         "foliage_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
+    },
+    "ishizumi": {
+      "files": [
+        "ishizumi_diff.jpg",
+        "ishizumi_nor_gl.jpg",
+        "ishizumi_rough.jpg"
       ],
       "source": "procedural (tools/gen_textures.gd)"
     },
@@ -30,6 +46,14 @@
         "roof_thatch_diff.jpg",
         "roof_thatch_nor_gl.jpg",
         "roof_thatch_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
+    },
+    "shitami": {
+      "files": [
+        "shitami_diff.jpg",
+        "shitami_nor_gl.jpg",
+        "shitami_rough.jpg"
       ],
       "source": "procedural (tools/gen_textures.gd)"
     },
@@ -62,6 +86,14 @@
         "wood_lattice_diff.jpg",
         "wood_lattice_nor_gl.jpg",
         "wood_lattice_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
+    },
+    "yakisugi": {
+      "files": [
+        "yakisugi_diff.jpg",
+        "yakisugi_nor_gl.jpg",
+        "yakisugi_rough.jpg"
       ],
       "source": "procedural (tools/gen_textures.gd)"
     }
