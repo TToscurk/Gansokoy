@@ -320,6 +320,57 @@ func grass_wind_mat(strength: float) -> ShaderMaterial:
 	m.set_shader_parameter("sway_strength", strength)
 	return m
 
+## 圓潤團塊：球面頂點用低頻雜訊推出去，法線重算成平滑。
+##
+## 兩個地方都需要它，而兩個地方本來都做錯了：
+##   ・庭池的石頭用 ROCK_GLBS —— 那是**稜角分明的岩塊**，
+##     使用者要的是「山水畫的鵝卵石」，河石是被水磨圓的。
+##   ・生垣用 box —— 就是那個「方塊的草」。
+## flat 是壓扁量（河石扁、葉團圓），lumps 是凹凸幅度。
+func blob_mesh(seed_i: int, flat := 0.62, lumps := 0.22, rings := 9, radial := 14) -> ArrayMesh:
+	var rg := RandomNumberGenerator.new()
+	rg.seed = seed_i
+	# 四個隨機方向的低頻擾動 —— 用球諧的窮人版，夠自然又不會破面
+	var dirs: Array[Vector3] = []
+	var amps: Array[float] = []
+	for i in 4:
+		dirs.append(Vector3(rg.randf_range(-1, 1), rg.randf_range(-1, 1),
+			rg.randf_range(-1, 1)).normalized())
+		amps.append(rg.randf_range(0.45, 1.0))
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var idx := PackedInt32Array()
+	var disp := func(n: Vector3) -> float:
+		var d := 1.0
+		for i in 4:
+			d += (n.dot(dirs[i])) * amps[i] * lumps * 0.5
+		return d
+	for ri in rings + 1:
+		var phi: float = PI * float(ri) / float(rings)
+		for si in radial + 1:
+			var th: float = TAU * float(si) / float(radial)
+			var n := Vector3(sin(phi) * cos(th), cos(phi), sin(phi) * sin(th))
+			var p: Vector3 = n * disp.call(n)
+			p.y *= flat
+			verts.append(p)
+			norms.append(p.normalized())
+			uvs.append(Vector2(float(si) / float(radial), float(ri) / float(rings)))
+	for ri in rings:
+		for si in radial:
+			var a0: int = ri * (radial + 1) + si
+			var b0: int = a0 + radial + 1
+			idx.append_array([a0, b0, a0 + 1, a0 + 1, b0, b0 + 1])
+	var arr := []
+	arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = verts
+	arr[Mesh.ARRAY_NORMAL] = norms
+	arr[Mesh.ARRAY_TEX_UV] = uvs
+	arr[Mesh.ARRAY_INDEX] = idx
+	var m := ArrayMesh.new()
+	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	return m
+
 func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: Color, flower := false) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)

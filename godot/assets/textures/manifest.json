@@ -1,207 +1,274 @@
 {
-  "source": "Poly Haven (polyhaven.com)",
-  "license": "CC0",
   "downloaded": "2026-07-24T10:50:10.150Z",
-  "sets": {
-    "terrain_grass": {
-      "id": "aerial_grass_rock",
+  "generated": {
+    "foliage": {
       "files": [
-        "terrain_grass_diff.jpg",
-        "terrain_grass_nor_gl.jpg",
-        "terrain_grass_rough.jpg"
-      ]
+        "foliage_diff.jpg",
+        "foliage_nor_gl.jpg",
+        "foliage_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
-    "terrain_forest": {
-      "id": "forest_leaves_02",
+    "namako": {
       "files": [
-        "terrain_forest_diff.jpg",
-        "terrain_forest_nor_gl.jpg",
-        "terrain_forest_rough.jpg"
-      ]
+        "namako_diff.jpg",
+        "namako_nor_gl.jpg",
+        "namako_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
-    "terrain_rock": {
-      "id": "rock_face_03",
+    "pebble": {
       "files": [
-        "terrain_rock_diff.jpg",
-        "terrain_rock_nor_gl.jpg",
-        "terrain_rock_rough.jpg"
-      ]
-    },
-    "terrain_path": {
-      "id": "stony_dirt_path",
-      "files": [
-        "terrain_path_diff.jpg",
-        "terrain_path_nor_gl.jpg",
-        "terrain_path_rough.jpg"
-      ]
-    },
-    "terrain_sand": {
-      "id": "coast_sand_02",
-      "files": [
-        "terrain_sand_diff.jpg",
-        "terrain_sand_nor_gl.jpg",
-        "terrain_sand_rough.jpg"
-      ]
-    },
-    "terrain_snow": {
-      "id": "snow_02",
-      "files": [
-        "terrain_snow_diff.jpg",
-        "terrain_snow_nor_gl.jpg",
-        "terrain_snow_rough.jpg"
-      ]
-    },
-    "plaster": {
-      "id": "white_plaster_02",
-      "files": [
-        "plaster_diff.jpg",
-        "plaster_nor_gl.jpg",
-        "plaster_rough.jpg"
-      ]
-    },
-    "planks": {
-      "id": "weathered_brown_planks",
-      "files": [
-        "planks_diff.jpg",
-        "planks_nor_gl.jpg",
-        "planks_rough.jpg"
-      ]
-    },
-    "wood_frame": {
-      "id": "wood_planks",
-      "files": [
-        "wood_frame_diff.jpg",
-        "wood_frame_nor_gl.jpg",
-        "wood_frame_rough.jpg"
-      ]
-    },
-    "roof_kawara": {
-      "id": "grey_roof_tiles",
-      "files": [
-        "roof_kawara_diff.jpg",
-        "roof_kawara_nor_gl.jpg",
-        "roof_kawara_rough.jpg"
-      ]
+        "pebble_diff.jpg",
+        "pebble_nor_gl.jpg",
+        "pebble_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
     "roof_thatch": {
-      "id": "reed_roof_04",
       "files": [
         "roof_thatch_diff.jpg",
         "roof_thatch_nor_gl.jpg",
         "roof_thatch_rough.jpg"
-      ]
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
-    "brick_red": {
-      "id": "castle_brick_02_red",
+    "shoji": {
       "files": [
-        "brick_red_diff.jpg",
-        "brick_red_nor_gl.jpg",
-        "brick_red_rough.jpg"
-      ]
+        "shoji_diff.jpg",
+        "shoji_nor_gl.jpg",
+        "shoji_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
-    "stone_wall": {
-      "id": "japanese_stone_wall",
+    "stone_flag": {
       "files": [
-        "stone_wall_diff.jpg",
-        "stone_wall_nor_gl.jpg",
-        "stone_wall_rough.jpg"
-      ]
-    },
-    "stone_path": {
-      "id": "grey_stone_path",
-      "files": [
-        "stone_path_diff.jpg",
-        "stone_path_nor_gl.jpg",
-        "stone_path_rough.jpg"
-      ]
-    },
-    "cobble": {
-      "id": "cobblestone_05",
-      "files": [
-        "cobble_diff.jpg",
-        "cobble_nor_gl.jpg",
-        "cobble_rough.jpg"
-      ]
-    },
-    "deck": {
-      "id": "wood_floor_deck",
-      "files": [
-        "deck_diff.jpg",
-        "deck_nor_gl.jpg",
-        "deck_rough.jpg"
-      ]
-    },
-    "bark_cedar": {
-      "id": "japanese_cedar_bark",
-      "files": [
-        "bark_cedar_diff.jpg",
-        "bark_cedar_nor_gl.jpg",
-        "bark_cedar_rough.jpg"
-      ]
-    },
-    "bark_sakura": {
-      "id": "sakura_bark",
-      "files": [
-        "bark_sakura_diff.jpg",
-        "bark_sakura_nor_gl.jpg",
-        "bark_sakura_rough.jpg"
-      ]
+        "stone_flag_diff.jpg",
+        "stone_flag_nor_gl.jpg",
+        "stone_flag_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
     "tatami": {
-      "id": "tatami_mat",
       "files": [
         "tatami_diff.jpg",
         "tatami_nor_gl.jpg",
         "tatami_rough.jpg"
-      ]
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
     },
-    "velvet_red": {
-      "id": "velour_velvet",
+    "wood_lattice": {
       "files": [
-        "velvet_red_diff.jpg",
-        "velvet_red_nor_gl.jpg",
-        "velvet_red_rough.jpg"
-      ]
+        "wood_lattice_diff.jpg",
+        "wood_lattice_nor_gl.jpg",
+        "wood_lattice_rough.jpg"
+      ],
+      "source": "procedural (tools/gen_textures.gd)"
+    }
+  },
+  "generated_note": "這幾組是 tools/gen_textures.gd 烤出來的 —— Poly Haven 被網路政策擋掉，改成程式生成。要改樣式就改那支，不要手動編輯 jpg。",
+  "license": "CC0",
+  "sets": {
+    "bark_cedar": {
+      "files": [
+        "bark_cedar_diff.jpg",
+        "bark_cedar_nor_gl.jpg",
+        "bark_cedar_rough.jpg"
+      ],
+      "id": "japanese_cedar_bark"
     },
-    "marble_check": {
-      "id": "floor_tiles_06",
+    "bark_sakura": {
       "files": [
-        "marble_check_diff.jpg",
-        "marble_check_nor_gl.jpg",
-        "marble_check_rough.jpg"
-      ]
+        "bark_sakura_diff.jpg",
+        "bark_sakura_nor_gl.jpg",
+        "bark_sakura_rough.jpg"
+      ],
+      "id": "sakura_bark"
     },
-    "marble_plain": {
-      "id": "marble_tiles",
+    "brick_red": {
       "files": [
-        "marble_plain_diff.jpg",
-        "marble_plain_nor_gl.jpg",
-        "marble_plain_rough.jpg"
-      ]
+        "brick_red_diff.jpg",
+        "brick_red_nor_gl.jpg",
+        "brick_red_rough.jpg"
+      ],
+      "id": "castle_brick_02_red"
     },
     "cliff_rock": {
-      "id": "cliff_side",
       "files": [
         "cliff_rock_diff.jpg",
         "cliff_rock_nor_gl.jpg",
         "cliff_rock_rough.jpg"
-      ]
+      ],
+      "id": "cliff_side"
     },
-    "grave_stone": {
-      "id": "mossy_sandstone",
+    "cobble": {
       "files": [
-        "grave_stone_diff.jpg",
-        "grave_stone_nor_gl.jpg",
-        "grave_stone_rough.jpg"
-      ]
+        "cobble_diff.jpg",
+        "cobble_nor_gl.jpg",
+        "cobble_rough.jpg"
+      ],
+      "id": "cobblestone_05"
     },
     "dark_wood": {
-      "id": "dark_wood",
       "files": [
         "dark_wood_diff.jpg",
         "dark_wood_nor_gl.jpg",
         "dark_wood_rough.jpg"
-      ]
+      ],
+      "id": "dark_wood"
+    },
+    "deck": {
+      "files": [
+        "deck_diff.jpg",
+        "deck_nor_gl.jpg",
+        "deck_rough.jpg"
+      ],
+      "id": "wood_floor_deck"
+    },
+    "grave_stone": {
+      "files": [
+        "grave_stone_diff.jpg",
+        "grave_stone_nor_gl.jpg",
+        "grave_stone_rough.jpg"
+      ],
+      "id": "mossy_sandstone"
+    },
+    "marble_check": {
+      "files": [
+        "marble_check_diff.jpg",
+        "marble_check_nor_gl.jpg",
+        "marble_check_rough.jpg"
+      ],
+      "id": "floor_tiles_06"
+    },
+    "marble_plain": {
+      "files": [
+        "marble_plain_diff.jpg",
+        "marble_plain_nor_gl.jpg",
+        "marble_plain_rough.jpg"
+      ],
+      "id": "marble_tiles"
+    },
+    "planks": {
+      "files": [
+        "planks_diff.jpg",
+        "planks_nor_gl.jpg",
+        "planks_rough.jpg"
+      ],
+      "id": "weathered_brown_planks"
+    },
+    "plaster": {
+      "files": [
+        "plaster_diff.jpg",
+        "plaster_nor_gl.jpg",
+        "plaster_rough.jpg"
+      ],
+      "id": "white_plaster_02"
+    },
+    "roof_kawara": {
+      "files": [
+        "roof_kawara_diff.jpg",
+        "roof_kawara_nor_gl.jpg",
+        "roof_kawara_rough.jpg"
+      ],
+      "id": "grey_roof_tiles"
+    },
+    "roof_thatch": {
+      "files": [
+        "roof_thatch_diff.jpg",
+        "roof_thatch_nor_gl.jpg",
+        "roof_thatch_rough.jpg"
+      ],
+      "id": "reed_roof_04"
+    },
+    "stone_path": {
+      "files": [
+        "stone_path_diff.jpg",
+        "stone_path_nor_gl.jpg",
+        "stone_path_rough.jpg"
+      ],
+      "id": "grey_stone_path"
+    },
+    "stone_wall": {
+      "files": [
+        "stone_wall_diff.jpg",
+        "stone_wall_nor_gl.jpg",
+        "stone_wall_rough.jpg"
+      ],
+      "id": "japanese_stone_wall"
+    },
+    "tatami": {
+      "files": [
+        "tatami_diff.jpg",
+        "tatami_nor_gl.jpg",
+        "tatami_rough.jpg"
+      ],
+      "id": "tatami_mat"
+    },
+    "terrain_forest": {
+      "files": [
+        "terrain_forest_diff.jpg",
+        "terrain_forest_nor_gl.jpg",
+        "terrain_forest_rough.jpg"
+      ],
+      "id": "forest_leaves_02"
+    },
+    "terrain_grass": {
+      "files": [
+        "terrain_grass_diff.jpg",
+        "terrain_grass_nor_gl.jpg",
+        "terrain_grass_rough.jpg"
+      ],
+      "id": "aerial_grass_rock"
+    },
+    "terrain_path": {
+      "files": [
+        "terrain_path_diff.jpg",
+        "terrain_path_nor_gl.jpg",
+        "terrain_path_rough.jpg"
+      ],
+      "id": "stony_dirt_path"
+    },
+    "terrain_rock": {
+      "files": [
+        "terrain_rock_diff.jpg",
+        "terrain_rock_nor_gl.jpg",
+        "terrain_rock_rough.jpg"
+      ],
+      "id": "rock_face_03"
+    },
+    "terrain_sand": {
+      "files": [
+        "terrain_sand_diff.jpg",
+        "terrain_sand_nor_gl.jpg",
+        "terrain_sand_rough.jpg"
+      ],
+      "id": "coast_sand_02"
+    },
+    "terrain_snow": {
+      "files": [
+        "terrain_snow_diff.jpg",
+        "terrain_snow_nor_gl.jpg",
+        "terrain_snow_rough.jpg"
+      ],
+      "id": "snow_02"
+    },
+    "velvet_red": {
+      "files": [
+        "velvet_red_diff.jpg",
+        "velvet_red_nor_gl.jpg",
+        "velvet_red_rough.jpg"
+      ],
+      "id": "velour_velvet"
+    },
+    "wood_frame": {
+      "files": [
+        "wood_frame_diff.jpg",
+        "wood_frame_nor_gl.jpg",
+        "wood_frame_rough.jpg"
+      ],
+      "id": "wood_planks"
     }
-  }
+  },
+  "source": "Poly Haven (polyhaven.com)"
 }

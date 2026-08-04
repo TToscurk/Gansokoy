@@ -1,14 +1,13 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_diff.jpg" id="1_sjtlu"]
-[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_nor_gl.jpg" id="2_51y8o"]
-[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_rough.jpg" id="3_2sxgq"]
+[ext_resource type="Texture2D" path="res://assets/textures/namako_diff.jpg" id="1_sjtlu"]
+[ext_resource type="Texture2D" path="res://assets/textures/namako_nor_gl.jpg" id="2_51y8o"]
+[ext_resource type="Texture2D" path="res://assets/textures/namako_rough.jpg" id="3_2sxgq"]
 
 [resource]
-albedo_color = Color(0.26, 0.27, 0.3, 1)
 albedo_texture = ExtResource("1_sjtlu")
 roughness_texture = ExtResource("3_2sxgq")
 normal_enabled = true
 normal_texture = ExtResource("2_51y8o")
-uv1_scale = Vector3(0.28, 0.28, 0.28)
+uv1_scale = Vector3(0.3, 0.3, 0.3)
 uv1_triplanar = true

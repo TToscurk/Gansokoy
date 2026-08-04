@@ -1,8 +1,8 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_diff.jpg" id="1_httfe"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_vvuf0"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_rough.jpg" id="3_qm8pn"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_diff.jpg" id="1_httfe"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_nor_gl.jpg" id="2_vvuf0"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_rough.jpg" id="3_qm8pn"]
 
 [resource]
 albedo_color = Color(0.5, 0.42, 0.3, 1)
@@ -10,5 +10,5 @@ albedo_texture = ExtResource("1_httfe")
 roughness_texture = ExtResource("3_qm8pn")
 normal_enabled = true
 normal_texture = ExtResource("2_vvuf0")
-uv1_scale = Vector3(1.1, 1.1, 1.1)
+uv1_scale = Vector3(0.55, 0.55, 0.55)
 uv1_triplanar = true

@@ -63,7 +63,12 @@ const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0]
 ## v10 為了接河把東端拐了個彎，那個折角在編輯器裡很明顯。
 ## 改成固定 z=85 一路往東拉到 x=236 —— 大河在 z=85 附近的中心線約在
 ## x=225，所以直直拉過去自然就接上了，不用轉彎。
-const CANAL := [[-300.0, 85.0], [-150.0, 85.0], [0.0, 85.0], [150.0, 85.0], [236.0, 85.0]]
+# ⚠ 東端**不能**畫到 236 —— 河在 z=85 這一段的中心在 x≈224、半寬 8，
+# 也就是佔到 x=232。水路畫到 236 等於把水路的水面直接疊在河的水面上，
+# 兩張半透明面互穿，遠看是一條詭異的斜向色帶（使用者：「水道請改善」）。
+# 收在 206，剩下那段用水門（落水口）洩到河裡。
+const CANAL := [[-300.0, 85.0], [-150.0, 85.0], [0.0, 85.0], [150.0, 85.0], [206.0, 85.0]]
+const CANAL_OUTLET := Vector2(206.0, 85.0)
 const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
 const CANAL_DEPTH := 2.0
 const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
@@ -203,9 +208,10 @@ func _init() -> void:
 	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble", Color(0.60, 0.94, 0.55),
 		"terrain_path", Color(0.80, 0.75, 0.66))
 	lib.boundary(HALF - 2.0)
-	lib.river_water(OUT_DIR, RIVER, RIVER_HALF, RIVER_DEPTH * 0.35, bank_h)
+	# 水面要比開挖**窄**：開挖是有坡度的，水面照全寬鋪會爬到岸上去
+	lib.river_water(OUT_DIR, RIVER, RIVER_HALF * 0.86, RIVER_DEPTH * 0.35, bank_h)
 	# 水色照參考圖：飽和的藍綠，不是淡青
-	var canal_w := lib.river_water(OUT_DIR, CANAL, CANAL_HALF, CANAL_DEPTH * 0.35, bank_h, "Canal")
+	var canal_w := lib.river_water(OUT_DIR, CANAL, CANAL_HALF * 0.84, CANAL_DEPTH * 0.35, bank_h, "Canal")
 	var cm: ShaderMaterial = canal_w.material_override
 	cm.set_shader_parameter("deep_color", Color(0.06, 0.24, 0.32))
 	cm.set_shader_parameter("shallow_color", Color(0.16, 0.44, 0.50))
@@ -358,16 +364,46 @@ const MAT_TONES := {
 		Color(0.80, 0.72, 0.62), Color(0.56, 0.51, 0.45)],
 	"stone": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
 		Color(0.82, 0.84, 0.82), Color(0.95, 0.93, 0.88)],
-	"namako": [Color(0.26, 0.27, 0.30), Color(0.20, 0.21, 0.24),
-		Color(0.30, 0.30, 0.32), Color(0.23, 0.25, 0.28)],
+	"namako": [Color(1.00, 1.00, 1.00), Color(0.88, 0.90, 0.92),
+		Color(0.94, 0.93, 0.90), Color(0.80, 0.83, 0.86)],
+	"lattice": [Color(1.00, 0.98, 0.95), Color(0.88, 0.86, 0.84),
+		Color(0.78, 0.76, 0.74), Color(0.94, 0.90, 0.86)],
+	"gravel": [Color(1.00, 1.00, 1.00), Color(0.92, 0.94, 0.96),
+		Color(0.88, 0.86, 0.82), Color(0.80, 0.83, 0.85)],
+	# 河石是中灰的，不是白的。四個色調＝四種石色，一堆石頭才不是同一塊。
+	"cobble": [Color(0.60, 0.61, 0.60), Color(0.50, 0.48, 0.45),
+		Color(0.66, 0.63, 0.57), Color(0.42, 0.45, 0.48)],
+	"foliage": [Color(1.00, 1.00, 1.00), Color(0.86, 0.94, 0.82),
+		Color(0.74, 0.84, 0.70), Color(0.94, 0.90, 0.72)],
+	"flag": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
+		Color(0.82, 0.84, 0.86), Color(0.94, 0.91, 0.86)],
+	"shoji": [Color(1.00, 1.00, 1.00), Color(0.96, 0.94, 0.90),
+		Color(1.00, 0.98, 0.92), Color(0.92, 0.90, 0.86)],
+	"tatami": [Color(1.00, 1.00, 1.00), Color(0.92, 0.94, 0.86),
+		Color(0.86, 0.88, 0.80), Color(0.96, 0.92, 0.82)],
 }
 const MAT_SET := {
-	"kawara": ["roof_kawara", 0.22], "thatch": ["terrain_grass", 1.1],
+	"kawara": ["roof_kawara", 0.22],
+	# ⚠ 茅葺以前借的是 terrain_grass（空拍草地）—— 難怪茅頂看起來像鋪了草皮。
+	# roof_thatch 現在是 tools/gen_textures.gd 烤的真茅稈。
+	"thatch": ["roof_thatch", 0.55],
 	"plaster": ["plaster", 0.4], "mud": ["plaster", 0.5],
 	"dark": ["dark_wood", 0.45], "wood": ["planks", 0.5], "stone": ["stone_wall", 0.30],
-	# 海鼠壁的黑瓦：借瓦的貼圖，但壓到近乎炭黑。用 "dark"（＝木頭）會變成
-	# 紅褐色的菱格，遠看像掛了一排祭典布幔。
-	"namako": ["roof_kawara", 0.28],
+	# 海鼠壁以前是拿瓦的貼圖硬壓成炭黑冒充，現在有真的菱格 + 凸目地了
+	"namako": ["namako", 0.30],
+	# 以下都是 v15 新烤的：格子窗、玉石、葉團、板石、障子、疊蓆
+	"lattice": ["wood_lattice", 0.28],
+	# pebble 有兩個用法，比例差十倍，不能共用一個材質：
+	#   "gravel" = 一片小石子地（州濱、洗石子），一張貼圖裡看到很多顆
+	#   "cobble" = **一顆**玉石，整顆石頭只吃到貼圖裡的一格
+	# v15 初版兩邊都用 0.5，結果每一顆護岸石表面都長出五顆小石頭。
+	"gravel": ["pebble", 0.5],
+	# 單顆玉石不要用 pebble 貼圖 —— 縮到「一顆填滿整張」之後圖案沒了，
+	# 只剩一片近乎純色的高光，看起來像塑膠豆。改用 stone_wall 的石粒
+	# （比例調到一顆石頭上看得到顆粒，但看不到石塊接縫）。
+	"cobble": ["stone_wall", 0.85],
+	"foliage": ["foliage", 0.42], "flag": ["stone_flag", 0.30],
+	"shoji": ["shoji", 0.30], "tatami": ["tatami", 0.42],
 }
 
 ## v = 色調變體編號。省略就隨機挑一個 —— 一棟房子要自己記住 v，
@@ -534,7 +570,12 @@ func _longhouse(parent: Node, name: String, cx: float, cz: float, length: float,
 	# ── 下屋（げや）：側面加一段低矮的披屋，剪影就不再是一個純方塊 ──
 	if lib.rand() < 0.42:
 		var gd := lib.rr(1.5, 2.3)                 # 披屋的進深
-		var sgn_g := 1.0 if lib.rand() < 0.5 else -1.0
+		# ⚠ 只能往**背面**長（-z）。本地 +z 是立面 —— 格子窗、玄關、庇都在那邊。
+		# v13 這裡是 `1.0 if rand()<0.5 else -1.0`，於是一半的長屋
+		# 在自己的窗前 1.5~2.3m 立了一道下屋壁 ——
+		# 使用者兩次回報「有牆擋到窗戶」，就是這個。
+		# 門面淨空檢查抓不到它：它是**同一棟建物自己的**構件，不是別人的地權。
+		var sgn_g := -1.0
 		var gw := length * lib.rr(0.5, 0.8)
 		var gxo := lib.rr(-0.12, 0.12) * length
 		var z_in: float = depth * 0.5              # 貼著主屋牆的那一邊
@@ -674,7 +715,9 @@ func _hedge_run(parent: Node, name: String, cx: float, cz: float, length: float,
 	if not along_x:
 		g.rotation.y = PI / 2.0
 	lib.add(parent, g, name)
-	var leaf := lib.pbr("hedge_leaf", "terrain_forest", 1.1, Color(0.52, 0.60, 0.40))
+	# ⚠ 使用者：「這個方塊的草到底是什麼」—— 就是這裡。舊版用 lib.box 疊葉叢，
+	# 從側面看就是一排貼了森林貼圖的方塊。改用 blob_mesh（圓潤團塊）
+	# + foliage（新烤的葉團貼圖）。
 	var bamboo := lib.pbr("hedge_bamboo", "planks", 0.9, Color(0.74, 0.72, 0.52))
 	# 竹垣：後面一排細竹，樹籬有缺口時看得到它（樹籬不是實心的）
 	var posts := maxi(int(length / 0.42), 2)
@@ -686,17 +729,21 @@ func _hedge_run(parent: Node, name: String, cx: float, cz: float, length: float,
 		lib.cyl(g, "貫竹_%d" % hb, 0.038, 0.038, length, bamboo,
 			Vector3(0, 0.42 + float(hb) * 0.55, 0.16), 5).rotation.z = PI * 0.5
 	# 樹籬：一叢一叢疊出來，高低起伏才不像一塊綠色的牆
-	var clumps := maxi(int(length / 1.05), 2)
+	var clumps := maxi(int(length / 0.62), 2)
 	for i in clumps:
 		var px2: float = -length * 0.5 + (float(i) + 0.5) / float(clumps) * length
 		var h := lib.rr(1.15, 1.55)
-		var w := lib.rr(1.0, 1.3)
+		# 一叢兩球：下面一顆大的坐地、上面一顆小的收頂，天際線才會起伏
 		for k in 2:
-			var cl := lib.box(g, "叢_%d_%d" % [i, k],
-				Vector3(w, h * (0.62 if k == 0 else 0.46), 0.86), leaf,
-				Vector3(px2 + lib.rr(-0.1, 0.1),
-					h * (0.31 if k == 0 else 0.72), lib.rr(-0.08, 0.08)))
-			cl.rotation.y = lib.rr(-0.25, 0.25)
+			var cl := MeshInstance3D.new()
+			cl.mesh = lib.blob_mesh(i * 17 + k * 3 + int(length), lib.rr(0.7, 1.0), lib.rr(0.26, 0.42))
+			cl.material_override = _mat("foliage", -1)
+			var rad: float = lib.rr(0.46, 0.62) * (1.0 if k == 0 else 0.72)
+			cl.scale = Vector3(rad, rad * lib.rr(0.9, 1.25), rad)
+			cl.position = Vector3(px2 + lib.rr(-0.12, 0.12),
+				h * (0.42 if k == 0 else 0.74), lib.rr(-0.14, 0.14))
+			cl.rotation = Vector3(lib.rr(-0.3, 0.3), lib.rr(0.0, TAU), lib.rr(-0.3, 0.3))
+			lib.add(g, cl, "葉叢_%d_%d" % [i, k])
 	_collide(g, Vector3(length, 1.4, 0.9))
 	_claim(cx, cz, length + 0.6 if along_x else 1.2, 1.2 if along_x else length + 0.6, "hedge_run")
 
@@ -832,18 +879,23 @@ const ZONE_SPEC := [
 		"depth_lo": 7.6, "depth_hi": 9.0,
 		"storey2": 0.60, "kawara": 0.94, "shop": 0.85,
 		"hanare": 0, "kura": 0.75,
+		# 町方的「圍牆」就是房子本身 —— 參考圖裡的商家町是連續立面直接臨街，
+		# 沒有土塀。端牆只在真的需要收邊時才補。
+		"wall_end": 0.20, "wall_full": 0.45,
 	},
 	{   # 半農町：維持現況的密度，但屋根與店舖比例往下調
 		"has_house": 0.82, "len_lo": 0.55, "len_hi": 0.74,
 		"depth_lo": 6.6, "depth_hi": 8.2,
 		"storey2": 0.18, "kawara": 0.50, "shop": 0.30,
 		"hanare": 1, "kura": 0.55,
+		"wall_end": 0.55, "wall_full": 0.75,
 	},
 	{   # 在：這一環之後會換成 _blk_farm()，這組參數是還沒換完時的退路
 		"has_house": 0.55, "len_lo": 0.40, "len_hi": 0.58,
 		"depth_lo": 6.2, "depth_hi": 7.4,
 		"storey2": 0.00, "kawara": 0.15, "shop": 0.05,
 		"hanare": 1, "kura": 0.30,
+		"wall_end": 0.40, "wall_full": 0.55,
 	},
 ]
 
@@ -918,6 +970,8 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 				_zone_stat[zi][2] += length * dp
 				# 兩端補土塀（補到街區邊，不是補到可用區間邊 —— 圍牆要圍滿）
 				for e in [-1.0, 1.0]:
+					if lib.rand() >= float(zs.wall_end):
+						continue
 					var b_edge: float = off + float(e) * length * 0.5            # 屋身端點
 					var blk_edge: float = float(e) * (hw if along_x else hd)     # 街區端點
 					var wlen: float = absf(blk_edge - b_edge) - 0.5
@@ -928,7 +982,11 @@ func _blk_compound(parent: Node, bx: float, bz: float) -> int:
 					var wcz: float = bz + (sgn * (hd - 0.4) if along_x else wc)
 					_wall_run(parent, "塀_%d_%d" % [side, int(e)], wcx, wcz, wlen, along_x)
 				continue
-		# 沒有房子的邊：整段土塀（大門那邊留缺口）
+		# 沒有房子的邊：整段土塀（大門那邊留缺口）。
+		# ⚠ 不是每一邊都要牆 —— 使用者：「不用每個住家都用圍牆」。
+		# 地標街區例外，那裡的牆是氣勢的來源。
+		if not (_kind_at(bx, bz) in LANDMARK_KINDS) and lib.rand() >= float(zs.wall_full):
+			continue
 		var wl := (BLOCK_W if along_x else BLOCK_D) - (7.0 if side == gate_side else 0.0)
 		_wall_run(parent, "塀全_%d" % side, bx + (0.0 if along_x else sgn * (hw - 0.4)),
 			bz + (sgn * (hd - 0.4) if along_x else 0.0), wl, along_x)
@@ -1197,7 +1255,7 @@ func _blk_terakoya(parent: Node, bx: float, bz: float) -> void:
 		lib.cyl(g, "向拜柱_%d" % int(sd + 1), 0.22, 0.24, 4.4, _mat("dark"),
 			Vector3(sd * 3.2, 2.2, 9.2), 8)
 	lib.box(g, "梵鐘架", Vector3(2.6, 0.3, 2.6), _mat("dark"), Vector3(13.0, 3.4, 6.0))
-	lib.cyl(g, "梵鐘", 0.62, 0.78, 1.5, lib.pbr("bonsho", "stone", 0.6, Color(0.52, 0.58, 0.52)),
+	lib.cyl(g, "梵鐘", 0.62, 0.78, 1.5, lib.pbr("bonsho", "stone_wall", 0.6, Color(0.52, 0.58, 0.52)),
 		Vector3(13.0, 2.4, 6.0), 12)
 	_collide(g, Vector3(22.4, 7.0, 12.4))
 	_claim(cx, cz, 25.0, 15.0, "blk_terakoya")
@@ -1277,9 +1335,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 護岸石組：v7 是 20 顆等角度繞一圈，遠看就是一條石頭項鍊。
 	# 日式庭園的石組是「數顆一群、群與群之間留白」，留白處鋪州濱（小卵石）。
 	var shore := lib.pond_shore_r(GARDEN_POND_R, GARDEN_POND_SINK, GARDEN_POND_DEPTH)
-	var moss_m := lib.rock_mat()
-	# 兩種石色：靠水的長苔偏綠、離水的偏乾灰。只有一種色的話整圈石頭是同一塊。
-	var dry_m := lib.rock_mat_dry()
+	# 玉石的色差交給 _mat("cobble", -1) 的四個色調變體（隨機挑），
+	# 不再用 rock_mat / rock_mat_dry —— 那兩個是配稜角岩塊的。
 	# 石頭要坐在**自己腳下**的地面上。這棟宅子的原點是整塊地的基準高度，
 	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
 	var rock_y := func(wx: float, wz: float, sink: float) -> float:
@@ -1297,7 +1354,10 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 			var sc: float = lib.rr(0.5, 1.25) * (1.25 if k == 0 else 0.8)   # 主石 + 添石
 			var rr3: float = shore * lib.rr(0.99, 1.14)
 			var rk := MeshInstance3D.new()
-			rk.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m if lib.rand() < 0.55 else dry_m)
+			# ⚠ 不用 ROCK_GLBS —— 那是稜角分明的岩塊。使用者要「山水畫的鵝卵石」，
+			# 庭池的石是被水磨圓的河石。blob_mesh 做圓潤團塊，pebble 是新烤的玉石貼圖。
+			rk.mesh = lib.blob_mesh(rk_i * 7 + 3, lib.rr(0.52, 0.74), lib.rr(0.16, 0.30))
+			rk.material_override = _mat("cobble", -1)
 			var wx: float = bx + pl.x + cos(a) * rr3
 			var wz: float = bz + pl.z + sin(a) * rr3
 			rk.position = Vector3(pl.x + cos(a) * rr3,
@@ -1315,7 +1375,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 			var a3 := ang + gap * (float(k2) + 0.5) / float(maxi(pebbles, 1)) + lib.rr(-0.05, 0.05)
 			var sc2 := lib.rr(0.14, 0.30)
 			var pb := MeshInstance3D.new()
-			pb.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+			pb.mesh = lib.blob_mesh(rk_i * 13 + k2 * 5 + 11, lib.rr(0.34, 0.52), 0.14)
+			pb.material_override = _mat("cobble", -1)
 			var pr: float = shore * lib.rr(1.0, 1.10)
 			pb.position = Vector3(pl.x + cos(a3) * pr,
 				rock_y.call(bx + pl.x + cos(a3) * pr, bz + pl.z + sin(a3) * pr, sc2 * 0.5),
@@ -1358,7 +1419,8 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		var d2: float = shore * lib.rr(0.25, 0.5)
 		var sc3 := lib.rr(0.6, 1.1)
 		var rk3 := MeshInstance3D.new()
-		rk3.mesh = lib.prop_mesh(Lib.ROCK_GLBS[int(lib.rand() * 4.0)], moss_m)
+		rk3.mesh = lib.blob_mesh(i * 29 + 5, lib.rr(0.6, 0.9), lib.rr(0.20, 0.34))
+		rk3.material_override = _mat("cobble", -1)
 		# 池中立石：從池底長上來，露出水面一截
 		rk3.position = Vector3(pl.x + cos(a2) * d2,
 			rock_y.call(bx + pl.x + cos(a2) * d2, bz + pl.z + sin(a2) * d2, -sc3 * 0.55),
@@ -1854,7 +1916,56 @@ func _build_canal_banks() -> void:
 					lib.pbr("edge_stone", "stone_wall", 0.5, Color(1.25, 1.25, 1.2)),
 					Vector3(p.x, by + 0.1, p.y)).rotation.y = -atan2(dir.y, dir.x)
 				n += 1
-	print("canal bank stones: ", n)
+	# ── 洗い場（かわど）：從岸面下到水邊的石階，村人在這裡洗菜洗衣 ──
+	# 水路現在是一條沒有出入口的溝，兩岸只有石垣 —— 看起來像排水渠不像生活用水。
+	# 每隔一段開一個缺口，這是水路最有生活感的一件事。
+	var wash := 0
+	for wx in [-170.0, -122.0, -70.0, -18.0, 34.0, 86.0, 138.0]:
+		var side := 1.0 if fposmod(wx, 104.0) < 52.0 else -1.0
+		var by := bank_h(wx, 85.0)
+		var wg := Node3D.new()
+		wg.position = Vector3(wx, by, 85.0 + side * (CANAL_HALF + 0.35))
+		lib.add(g, wg, "洗い場_%d" % wash)
+		# 石階往水裡下 4 階
+		for st in 4:
+			var t := float(st) + 0.5
+			lib.box(wg, "洗石_%d" % st, Vector3(2.6, 0.3, 0.75), stone,
+				Vector3(0, -t * 0.42, -side * (t * 0.42)))
+		# 兩側的立石（擋住上下的人不會滑進水裡）
+		for sd2 in [-1.0, 1.0]:
+			lib.box(wg, "立石_%d" % int(sd2 + 1), Vector3(0.32, 1.0, 0.9), stone,
+				Vector3(sd2 * 1.55, 0.2, -side * 0.4))
+		# 洗い場前擺個桶
+		lib.cyl(wg, "桶", 0.28, 0.26, 0.34, _mat("wood"), Vector3(1.0, 0.28, side * 0.9), 10)
+		wash += 1
+
+	# ── 水門（落水口）：水路在河岸前收住，靠這座石造水門洩進大河 ──
+	# 沒有它的話水路就是「走到一半消失」。
+	var og := Node3D.new()
+	var oy := bank_h(CANAL_OUTLET.x, CANAL_OUTLET.y)
+	og.position = Vector3(CANAL_OUTLET.x, oy, CANAL_OUTLET.y)
+	lib.add(g, og, "水門")
+	# 兩側的翼牆（八字張開，把水收進閘口）
+	for sd3 in [-1.0, 1.0]:
+		var wing := lib.box(og, "翼壁_%d" % int(sd3 + 1),
+			Vector3(7.0, CANAL_DEPTH + 1.2, 0.8), stone,
+			Vector3(2.8, -(CANAL_DEPTH + 1.2) * 0.5 + 0.5, sd3 * (CANAL_HALF + 1.4)))
+		wing.rotation.y = sd3 * 0.28
+	# 閘口的門框與木閘板
+	for sd4 in [-1.0, 1.0]:
+		lib.box(og, "門柱_%d" % int(sd4 + 1), Vector3(0.7, CANAL_DEPTH + 2.0, 0.7), stone,
+			Vector3(0, -(CANAL_DEPTH + 2.0) * 0.5 + 1.2, sd4 * (CANAL_HALF - 0.6)))
+	lib.box(og, "門楣", Vector3(0.8, 0.6, CANAL_HALF * 2.0), stone, Vector3(0, 2.0, 0))
+	lib.box(og, "閘板", Vector3(0.24, 1.5, CANAL_HALF * 1.7), _mat("dark"), Vector3(0, 0.5, 0))
+	for hw2 in 3:                                     # 閘板的橫貫
+		lib.box(og, "閘貫_%d" % hw2, Vector3(0.34, 0.16, CANAL_HALF * 1.8), _mat("dark"),
+			Vector3(0, 0.05 + float(hw2) * 0.55, 0))
+	# 落差工：閘口外的石疊，水從這裡跌進河
+	for st2 in 4:
+		lib.box(og, "落差石_%d" % st2, Vector3(1.6, 0.36, CANAL_HALF * 1.9 - float(st2) * 0.5), stone,
+			Vector3(1.4 + float(st2) * 1.5, -0.5 - float(st2) * 0.5, 0))
+	_collide(og, Vector3(1.0, CANAL_DEPTH + 2.0, CANAL_HALF * 2.0))
+	print("canal bank stones: %d、洗い場 %d、水門 1" % [n, wash])
 
 	# 睡蓮與荷花（水面上的浮葉）
 	var pad_mesh := ArrayMesh.new()
