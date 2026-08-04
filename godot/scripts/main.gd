@@ -95,9 +95,10 @@ func load_map(id: String, from_id: String) -> void:
 		_default_env = $WorldEnvironment.environment
 	$WorldEnvironment.environment = null if map_env else _default_env
 
-	_build_trimesh_collision(map_root)
 	# 佈局重新生成的原生圖（如獸道的新森林）自帶碰撞，web 版碰撞箱對不上
-	if not map_root.get_meta("own_colliders", false):
+	var own: bool = map_root.get_meta("own_colliders", false)
+	_build_trimesh_collision(map_root, own)
+	if not own:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
 	_place_player(meta, from_id)
@@ -105,17 +106,28 @@ func load_map(id: String, from_id: String) -> void:
 	var info: Dictionary = registry.get(id, {})
 	map_label.text = "%s  %s" % [info.get("zh", id), info.get("en", "")]
 
-## 大 mesh（地形、合併後的建築群）做 trimesh 靜態碰撞
-func _build_trimesh_collision(root: Node) -> void:
+## 大 mesh 做 trimesh 靜態碰撞。
+##
+## own_colliders 的原生圖只做地形 —— 它們的建物已經自己放了手做碰撞箱
+## （人間之里就有 458 個）。原本這裡不分青紅皂白掃全場，等於在 458 個
+## 箱子上面又疊了 2262 個三角網碰撞體，每一片屋頂、每一段牆各一個。
+## 「有點卡」有一大半是這個。
+func _build_trimesh_collision(root: Node, own_colliders: bool) -> int:
+	var n_col := 0
 	var stack: Array[Node] = [root]
 	while stack.size() > 0:
 		var n: Node = stack.pop_back()
 		for c in n.get_children():
 			stack.push_back(c)
 		if n is MeshInstance3D:
+			if own_colliders and not (String(n.name) == "Terrain" or n.has_meta("needs_trimesh")):
+				continue
 			var aabb: AABB = n.get_aabb()
 			if maxf(aabb.size.x, aabb.size.z) >= TRIMESH_MIN_SPAN:
 				n.create_trimesh_collision()
+				n_col += 1
+	print("[map] trimesh 碰撞 %d 個（own_colliders=%s）" % [n_col, own_colliders])
+	return n_col
 
 ## web 版的遊戲碰撞箱（box / cylinder，手感調過的那份）
 func _build_game_colliders(meta: Dictionary) -> void:

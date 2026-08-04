@@ -31,6 +31,32 @@ func add(parent: Node, node: Node, name: String) -> Node:
 	node.owner = root
 	return node
 
+## 整個 glb 場景搬進來（角色用）——不像 prop_mesh 只挖第一個 mesh，
+## 角色的各部位必須保持獨立節點，走路動畫靠轉關節（見 npc.gd）。
+## 存 .tscn 時每個子節點都要有 owner，不然存出去會只剩根節點。
+func char_scene(glb_path: String, mat: Material = null) -> Node3D:
+	var packed: PackedScene = load(glb_path)
+	var n: Node3D = packed.instantiate()
+	var m: Material = mat if mat else vc_mat()
+	var stack: Array[Node] = [n]
+	while stack.size() > 0:
+		var c: Node = stack.pop_back()
+		for g in c.get_children():
+			stack.push_back(g)
+		if c is MeshInstance3D:
+			(c as MeshInstance3D).material_override = m
+	return n
+
+## 把整棵子樹的 owner 設成 root（add() 只設了它自己那一層）
+func own_all(n: Node) -> void:
+	var stack: Array[Node] = [n]
+	while stack.size() > 0:
+		var c: Node = stack.pop_back()
+		for g in c.get_children():
+			stack.push_back(g)
+		if c != root:
+			c.owner = root
+
 func box(parent: Node, name: String, size: Vector3, mat: Material, pos: Vector3) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	var m := BoxMesh.new()

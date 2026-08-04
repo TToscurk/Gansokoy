@@ -71,7 +71,7 @@ func _check(map_id: String) -> void:
 
 	var root: Node3D = (load(path) as PackedScene).instantiate()
 	get_root().add_child(root)
-	var n_col := _build_trimesh_collision(root)
+	var n_col := _build_trimesh_collision(root, root.get_meta("own_colliders", false))
 	# 物理要跑一拍，剛掛上去的 StaticBody 才會進 PhysicsServer
 	await physics_frame
 	await physics_frame
@@ -97,7 +97,9 @@ func _teardown(root: Node) -> void:
 	get_root().remove_child(root)
 	root.queue_free()
 
-func _build_trimesh_collision(root: Node) -> int:
+## 規則必須跟 main.gd 一模一樣，否則測到的不是玩家實際會撞到的東西：
+## own_colliders 的原生圖只有地形做 trimesh，建物靠場景自帶的碰撞箱。
+func _build_trimesh_collision(root: Node, own_colliders: bool) -> int:
 	var n := 0
 	var stack: Array[Node] = [root]
 	while stack.size() > 0:
@@ -105,6 +107,8 @@ func _build_trimesh_collision(root: Node) -> int:
 		for c in node.get_children():
 			stack.push_back(c)
 		if node is MeshInstance3D:
+			if own_colliders and not (String(node.name) == "Terrain" or node.has_meta("needs_trimesh")):
+				continue
 			var aabb: AABB = (node as MeshInstance3D).get_aabb()
 			if maxf(aabb.size.x, aabb.size.z) >= TRIMESH_MIN_SPAN:
 				(node as MeshInstance3D).create_trimesh_collision()

@@ -183,6 +183,7 @@ func _init() -> void:
 	_build_fauna()
 	_build_floor_decor()
 	_build_props()
+	_build_villagers()
 	_build_gates()
 	_build_lamps()
 	_build_trees()
@@ -962,6 +963,18 @@ func _build_canal_banks() -> void:
 				var wall := lib.box(g, "石垣_%d" % n, Vector3(6.2, CANAL_DEPTH + 0.6, 0.7), stone,
 					Vector3(p.x, by - (CANAL_DEPTH + 0.6) * 0.5 + 0.3, p.y))
 				wall.rotation.y = -atan2(dir.y, dir.x)
+				# 護岸要擋人 —— 水路的兩岸只能靠橋連通。
+				# 以前是靠 main.gd 給每片 mesh 生 trimesh 才擋得住，
+				# 那層拿掉之後就得自己放碰撞箱（可走性測試立刻抓到穿牆過河）。
+				var wc := StaticBody3D.new()
+				wall.add_child(wc)
+				wc.owner = lib.root
+				var wsh := CollisionShape3D.new()
+				var wbx := BoxShape3D.new()
+				wbx.size = Vector3(6.2, CANAL_DEPTH + 1.4, 0.7)
+				wsh.shape = wbx
+				wc.add_child(wsh)
+				wsh.owner = lib.root
 				# 岸緣的收邊石（參考圖那圈白色石帶）
 				lib.box(g, "緣石_%d" % n, Vector3(6.2, 0.28, 1.1),
 					lib.pbr("edge_stone", "stone_wall", 0.5, Color(1.25, 1.25, 1.2)),
@@ -1264,6 +1277,68 @@ func _build_floor_decor() -> void:
 			z2 += seg_len
 			n_gutter += 1
 	print("floor decor: ", n_apron, "/", _frontages.size(), " 店前鋪面 / ", n_step, " 飛石 / ", n_gutter, " 石溝節")
+
+# ── 村民：沿街走動的路人 NPC ──
+## 這是「先做 Q 版中階給我看」那一輪的產物。角色資產在
+## assets/blender/make_chars.py，走路動畫在 scripts/npc.gd。
+## 這裡只負責：挑幾條街當路線、取地面高度、灑人。
+func _build_villagers() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "Villagers")
+	g.set_script(load("res://scripts/npc.gd"))
+
+	# 路線 = 街道折線，逐節點取地面高度（整條共用一個 y 會讓人陷進坡裡）
+	var routes: Array = []
+	for si in PATH_SEGMENTS.size():
+		var seg: Dictionary = PATH_SEGMENTS[si]
+		if float(seg.width) < 7.0:
+			continue
+		var pts: Array[Vector2] = []
+		var ys: Array[float] = []
+		# 折線節點之間再細分，坡地上人才會貼著地走
+		var raw: Array = seg.pts
+		for k in raw.size() - 1:
+			var a := Vector2(raw[k][0], raw[k][1])
+			var b := Vector2(raw[k + 1][0], raw[k + 1][1])
+			var steps := maxi(int(a.distance_to(b) / 8.0), 1)
+			for i in steps:
+				var q := a.lerp(b, float(i) / float(steps))
+				# 只留在村範圍內的段（村外的街沒有人走）
+				if absf(q.x) > CORE + 20.0 or absf(q.y - PLAZA.y) > CORE + 40.0:
+					continue
+				pts.append(q)
+				ys.append(height_at(q.x, q.y))
+		if pts.size() >= 2:
+			routes.append({ "pts": pts, "ys": ys })
+	g.set("routes", routes)
+
+	var kinds := ["villager_a", "villager_b", "villager_c"]
+	var n := 0
+	for i in 90:
+		var kind: String = kinds[0] if lib.rand() < 0.42 else (kinds[1] if lib.rand() < 0.75 else kinds[2])
+		var ri := int(lib.rand() * float(routes.size()))
+		var t := lib.rr(0.02, 0.96)
+		var v := lib.char_scene("res://assets/models/%s.glb" % kind)
+		lib.add(g, v, "村民_%d" % i)
+		lib.own_all(v)
+		# 存檔時就把人擺在路線上：npc.gd 沒跑（或壞掉）時場景依然是對的，
+		# 而且省掉「第一幀所有人疊在原點」的那一瞬間。
+		var rt: Dictionary = routes[ri]
+		var pts: Array = rt.pts
+		var ys: Array = rt.ys
+		var k := clampi(int(t * float(pts.size() - 1)), 0, pts.size() - 2)
+		var a: Vector2 = pts[k]
+		var b: Vector2 = pts[k + 1]
+		var dir := (b - a).normalized()
+		var side: Vector2 = dir.orthogonal() * lib.rr(-2.4, 2.4)
+		var q: Vector2 = a.lerp(b, lib.rr(0.0, 1.0)) + side
+		v.position = Vector3(q.x, float(ys[k]), q.y)
+		v.rotation.y = atan2(-dir.y, dir.x)
+		v.set_meta("walk_route", ri)
+		v.set_meta("walk_t", t)
+		v.set_meta("walk_speed", lib.rr(0.0035, 0.0085) * (1.0 if lib.rand() < 0.5 else -1.0))
+		v.set_meta("walk_phase", lib.rr(0.0, TAU))
+		n += 1
+	print("villagers: ", n, " on ", routes.size(), " routes")
 
 # ── 生活痕跡（街邊） ──
 func _build_props() -> void:
