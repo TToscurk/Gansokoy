@@ -381,3 +381,14 @@ ADR-016 要求每張都親眼看過，但預設的 17:5x 斜陽會把半數畫�
   而且 CLI 腳本比 MCP 適合這個專案：跟著 git 走、可重跑。
 - Blender 在這台機器上 **EEVEE 不能用**（缺 libEGL），預覽要用
   `CYCLES` + `device='CPU'` + `use_denoising=False`（沒有 OpenImageDenoiser）。
+
+### 9.5 正面照分成兩組
+
+生垣改成 Blender 模組之後全圖多了約 700 萬個三角形，
+28 張的完整正面照從 ~90 秒變成 **~25 分鐘**（OpenGL3 相容渲染器）。
+所以拆成兩組：
+
+- `tools/shots/village.json` —— 全部 28 張，收工前跑一次
+- `tools/shots/village_key.json` —— 4 張（村全景／町方街景／在街景／生垣），
+  改東西時跑這組，約 3 分鐘
+
