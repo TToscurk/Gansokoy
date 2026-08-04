@@ -54,11 +54,11 @@ const PATH_SEGMENTS := [
 const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
 	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
 # ── 水路（貫穿村里的水渠，多座小橋橫過 —— 柱狀地圖裡那些白色帶狀物） ──
-## 東端要**接進大河**（使用者：「水道河流沒銜接到外部大河流」）。
-## v9 的東端停在 x=200，離河最近點還有 30m —— 水路憑空斷在草地上。
-## 西端也拉到圖外，讓它看起來是從山那邊引過來的。
-const CANAL := [[-260.0, 84.0], [-190.0, 85.0], [-100.0, 86.5], [-20.0, 84.5],
-	[60.0, 86.0], [140.0, 84.5], [196.0, 86.0], [216.0, 90.0], [226.0, 96.0]]
+## 水路是**一條直線**（使用者：「水道直直的就好不要轉彎」）。
+## v10 為了接河把東端拐了個彎，那個折角在編輯器裡很明顯。
+## 改成固定 z=85 一路往東拉到 x=236 —— 大河在 z=85 附近的中心線約在
+## x=225，所以直直拉過去自然就接上了，不用轉彎。
+const CANAL := [[-300.0, 85.0], [-150.0, 85.0], [0.0, 85.0], [150.0, 85.0], [236.0, 85.0]]
 const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
 const CANAL_DEPTH := 2.0
 const CANAL_BRIDGES := [-156.0, -104.0, -52.0, 0.0, 52.0, 104.0, 156.0]
@@ -996,52 +996,109 @@ func _blk_market(parent: Node, bx: float, bz: float) -> void:
 	print("market stalls: ", placed)
 
 ## 火見櫓街區：木塔 + 番屋（消防小屋）
+## 火見櫓（望火樓）。
+##
+## v9 的做法是「每層各自放四根傾斜的圓柱」—— 每層的傾角是各自算的，
+## 層與層之間對不起來，遠看整座塔像散掉的鷹架（使用者：「設計不良」）。
+## 正解是把柱子當成**一根從地面直通塔頂的連續構件**，用 lib.strut 給端點，
+## 讓程式去算位置與旋轉；橫材與斜撐也一樣用端點定義，接點自然吻合。
 func _blk_tower(parent: Node, bx: float, bz: float) -> void:
-	var dark := _mat("dark")
-	var wood := _mat("wood")
-	var tgu := _ground_under(bx, bz, 7.0, 7.0)
+	var dark := _mat("dark", 2)
+	var wood := _mat("wood", 1)
+	var tgu := _ground_under(bx, bz, 8.0, 8.0)
 	var f := Node3D.new()
 	f.position = Vector3(bx, tgu[0], bz)
 	lib.add(parent, f, "火見櫓")
+
+	var H := 13.2                                  # 塔身高（不含屋頂）
+	var R0 := 2.9                                  # 地面的半跨（外八字）
+	var R1 := 1.15                                 # 塔頂的半跨
+	var LEV := [0.0, 3.5, 6.9, 10.1, H]            # 五個節點高度
+	var corner := func(lvl: float, i: int) -> Vector3:
+		var t := lvl / H
+		var r: float = lerpf(R0, R1, t)
+		var a := float(i) * PI * 0.5 + PI * 0.25
+		return Vector3(cos(a) * r, lvl, sin(a) * r)
+
+	# ── 四根主柱：一根到頂，不分段 ──
 	for i in 4:
-		var sx := 1.0 if i % 2 == 0 else -1.0
-		var sz := 1.0 if i < 2 else -1.0
-		for lvl in 3:
-			var y0 := float(lvl) * 3.6
-			var sp0 := 2.6 - float(lvl) * 0.6
-			var sp1 := 2.6 - float(lvl + 1) * 0.6
-			var col := lib.cyl(f, "柱_%d_%d" % [i, lvl], 0.13, 0.15, 3.7, dark,
-				Vector3(sx * (sp0 + sp1) * 0.5, y0 + 1.85, sz * (sp0 + sp1) * 0.5), 6)
-			col.rotation.z = -sx * 0.08
-			col.rotation.x = sz * 0.08
-	for lvl in 3:
-		var y1 := float(lvl) * 3.6 + 3.6
-		var sp2 := 2.6 - float(lvl + 1) * 0.6
-		for sd in [-1, 1]:
-			lib.box(f, "橫材_%d_%d" % [lvl, sd + 1], Vector3(sp2 * 2.2, 0.12, 0.12), dark,
-				Vector3(0, y1, float(sd) * sp2))
-			lib.box(f, "橫材b_%d_%d" % [lvl, sd + 1], Vector3(0.12, 0.12, sp2 * 2.2), dark,
-				Vector3(float(sd) * sp2, y1, 0))
-	lib.box(f, "樓板", Vector3(4.0, 0.2, 4.0), wood, Vector3(0, 10.9, 0))
-	for sd3 in [-1, 1]:
-		lib.box(f, "欄杆_%d" % (sd3 + 1), Vector3(4.0, 0.55, 0.09), wood, Vector3(0, 11.4, float(sd3) * 1.95))
-		lib.box(f, "欄杆b_%d" % (sd3 + 1), Vector3(0.09, 0.55, 4.0), wood, Vector3(float(sd3) * 1.95, 11.4, 0))
-		lib.cyl(f, "屋根柱_%d" % (sd3 + 1), 0.09, 0.09, 1.9, dark, Vector3(float(sd3) * 1.6, 12.05, 0), 6)
+		lib.strut(f, "主柱_%d" % i, corner.call(0.0, i), corner.call(H, i),
+			0.17, dark, 6, 0.11)
+	# ── 各層的水平橫材（貫）──
+	for li in range(1, LEV.size()):
+		var y: float = LEV[li]
+		for i in 4:
+			lib.strut(f, "貫_%d_%d" % [li, i], corner.call(y, i), corner.call(y, (i + 1) % 4),
+				0.075, dark, 5)
+	# ── 斜撐（筋交い）：每一面每一層打一根對角，這才是塔不會晃的原因 ──
+	for li in range(LEV.size() - 1):
+		var y0: float = LEV[li]
+		var y1: float = LEV[li + 1]
+		for i in 4:
+			var j := (i + 1) % 4
+			# 交錯方向，看起來才像真的桁架
+			if (li + i) % 2 == 0:
+				lib.strut(f, "筋交_%d_%d" % [li, i], corner.call(y0, i), corner.call(y1, j), 0.055, dark, 5)
+			else:
+				lib.strut(f, "筋交_%d_%d" % [li, i], corner.call(y0, j), corner.call(y1, i), 0.055, dark, 5)
+
+	# ── 望樓（頂上的平台）──
+	var pf := 1.72
+	lib.box(f, "樓板", Vector3(pf * 2.0, 0.18, pf * 2.0), wood, Vector3(0, H + 0.09, 0))
+	for i in 4:                                    # 平台的托木（挑出去撐住樓板）
+		var a2 := float(i) * PI * 0.5 + PI * 0.25
+		lib.strut(f, "腕木_%d" % i,
+			Vector3(cos(a2) * R1 * 0.4, H - 1.1, sin(a2) * R1 * 0.4),
+			Vector3(cos(a2) * pf * 1.02, H, sin(a2) * pf * 1.02), 0.07, dark, 5)
+	# 欄杆：四根角柱 + 上下兩道橫木（v9 是四片薄板，近看是紙片）
+	for i in 4:
+		var p0 := Vector3(cos(float(i) * PI * 0.5 + PI * 0.25) * pf * 0.98, H + 0.18,
+			sin(float(i) * PI * 0.5 + PI * 0.25) * pf * 0.98)
+		lib.strut(f, "欄杆柱_%d" % i, p0, p0 + Vector3(0, 0.92, 0), 0.055, wood, 5)
+	for hgt in [0.5, 0.9]:
+		for i in 4:
+			var a3 := float(i) * PI * 0.5 + PI * 0.25
+			var a4 := float((i + 1) % 4) * PI * 0.5 + PI * 0.25
+			lib.strut(f, "欄杆貫_%d_%d" % [int(hgt * 10), i],
+				Vector3(cos(a3) * pf * 0.98, H + 0.18 + hgt, sin(a3) * pf * 0.98),
+				Vector3(cos(a4) * pf * 0.98, H + 0.18 + hgt, sin(a4) * pf * 0.98), 0.045, wood, 5)
+	# 屋根：四根柱撐起的小方形屋頂
+	for i in 4:
+		var a5 := float(i) * PI * 0.5 + PI * 0.25
+		lib.strut(f, "屋根柱_%d" % i,
+			Vector3(cos(a5) * pf * 0.78, H + 0.27, sin(a5) * pf * 0.78),
+			Vector3(cos(a5) * pf * 0.62, H + 2.15, sin(a5) * pf * 0.62), 0.07, dark, 5)
 	var roof := MeshInstance3D.new()
 	var rm := CylinderMesh.new()
-	rm.top_radius = 0.0
-	rm.bottom_radius = 3.4
-	rm.height = 1.5
+	rm.top_radius = 0.06
+	rm.bottom_radius = pf * 1.42
+	rm.height = 0.95
 	rm.radial_segments = 4
-	rm.material = _mat("kawara")
+	rm.material = _mat("kawara", 1)
 	roof.mesh = rm
-	roof.position = Vector3(0, 13.6, 0)
+	roof.position = Vector3(0, H + 2.55, 0)
 	roof.rotation.y = PI / 4.0
 	lib.add(f, roof, "望樓屋根")
-	lib.cyl(f, "半鐘", 0.3, 0.36, 0.55, lib.flat_mat("bell", Color(0.42, 0.36, 0.22), 0.4),
-		Vector3(1.2, 11.7, 0), 10)
-	_collide(f, Vector3(5.2, 3.2, 5.2))
-	_claim(bx, bz, 7.0, 7.0)
+	lib.cyl(f, "露盤", 0.16, 0.22, 0.28, dark, Vector3(0, H + 3.14, 0), 6)
+	# 半鐘：吊在屋簷下，加一根吊木才不會浮在空中
+	lib.strut(f, "鐘吊木", Vector3(0, H + 2.05, 0.0), Vector3(0.95, H + 2.05, 0.0), 0.05, dark, 5)
+	lib.strut(f, "鐘繩", Vector3(0.95, H + 2.05, 0.0), Vector3(0.95, H + 1.62, 0.0), 0.02, dark, 4)
+	lib.cyl(f, "半鐘", 0.24, 0.33, 0.52,
+		lib.flat_mat("bell", Color(0.40, 0.34, 0.20), 0.35), Vector3(0.95, H + 1.35, 0.0), 10)
+
+	# ── 梯子：從地面爬到望樓（沒有梯子的話這座塔沒人上得去）──
+	var lx := R0 * 0.72
+	for sd in [-1.0, 1.0]:
+		lib.strut(f, "梯柱_%d" % int(sd + 1),
+			Vector3(lx, 0.0, sd * 0.34), Vector3(R1 * 0.7, H, sd * 0.34), 0.055, wood, 5)
+	var rungs := int(H / 0.42)
+	for i in rungs:
+		var t2 := (float(i) + 0.5) / float(rungs)
+		var rx: float = lerpf(lx, R1 * 0.7, t2)
+		lib.strut(f, "踏桟_%d" % i, Vector3(rx, t2 * H, -0.34), Vector3(rx, t2 * H, 0.34), 0.035, wood, 4)
+
+	_collide(f, Vector3(R0 * 2.0, 3.2, R0 * 2.0))
+	_claim(bx, bz, 9.0, 9.0)
 	# 番屋
 	var qx := bx + 12.0
 	var qz := bz + 10.0

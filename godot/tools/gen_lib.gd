@@ -67,6 +67,34 @@ func own_all(n: Node) -> void:
 		if c != root:
 			c.owner = root
 
+## 兩點之間拉一根圓桿（桁架、斜撐、繩索都用這個）。
+## 手動算「位置 + 兩個歐拉角」一定會錯 —— 火見櫓的柱子就是這樣每層各自
+## 傾斜、層與層之間對不起來，整座塔像散掉的鷹架。給端點讓程式去算。
+func strut(parent: Node, name: String, a: Vector3, b: Vector3, r: float,
+		mat: Material, seg := 6, r_top := -1.0) -> MeshInstance3D:
+	var d := b - a
+	var len_d := d.length()
+	if len_d < 0.001:
+		return null
+	var mi := MeshInstance3D.new()
+	var m := CylinderMesh.new()
+	m.top_radius = r if r_top < 0.0 else r_top
+	m.bottom_radius = r
+	m.height = len_d
+	m.radial_segments = seg
+	m.material = mat
+	mi.mesh = m
+	mi.position = a + d * 0.5
+	# CylinderMesh 的軸是 +Y；把 +Y 轉到 d 的方向
+	var up := Vector3.UP
+	var axis := up.cross(d.normalized())
+	if axis.length() > 0.0001:
+		mi.rotate(axis.normalized(), up.angle_to(d.normalized()))
+	elif d.y < 0.0:
+		mi.rotate(Vector3.RIGHT, PI)
+	add(parent, mi, name)
+	return mi
+
 func box(parent: Node, name: String, size: Vector3, mat: Material, pos: Vector3) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	var m := BoxMesh.new()
