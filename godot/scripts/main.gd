@@ -33,7 +33,17 @@ func _ready() -> void:
 			_shot_path = a.substr(7)
 		elif a.begins_with("--shot-cam="):  # x,y,z,lx,ly,lz 自由鏡位（拍照模式）
 			_shot_cam = a.substr(11)
+		elif a.begins_with("--shots="):     # 資產正面照：一次載圖、連拍多張
+			_shots_file = a.substr(8)
+		elif a.begins_with("--shotdir="):
+			_shot_dir = a.substr(10)
 	load_map(start, "")
+	if _shots_file != "":
+		_shots = _load_json_array(_shots_file)
+		_shot_cam_node = Camera3D.new()
+		add_child(_shot_cam_node)
+		_shot_cam_node.current = true
+		_aim_shot(0)
 	if _shot_cam != "":
 		var v := _shot_cam.split_floats(",")
 		var cam := Camera3D.new()
@@ -45,6 +55,46 @@ func _ready() -> void:
 var _shot_path := ""
 var _shot_cam := ""
 var _shot_frames := 0
+## ── 資產正面照（ADR-016）──
+## 每個具體的建築與地標登記一組固定機位，改完自動全拍一輪。
+## 一次載圖連拍，不然 15 張要重開 15 次 Godot。
+var _shots_file := ""
+var _shot_dir := "/tmp"
+var _shots: Array = []
+var _shot_i := 0
+var _shot_cam_node: Camera3D = null
+var _shot_wait := 0
+
+func _load_json_array(path: String) -> Array:
+	var txt := FileAccess.get_file_as_string(path)
+	if txt.is_empty():
+		push_error("讀不到 shots 清單 %s" % path)
+		return []
+	var v = JSON.parse_string(txt)
+	return v if v is Array else []
+
+func _aim_shot(i: int) -> void:
+	var e: Dictionary = _shots[i]
+	var c: Array = e.get("cam", [0, 10, 10])
+	var l: Array = e.get("look", [0, 0, 0])
+	_shot_cam_node.position = Vector3(c[0], c[1], c[2])
+	_shot_cam_node.look_at(Vector3(l[0], l[1], l[2]))
+	_shot_wait = 0
+
+func _shotlist_tick() -> void:
+	_shot_wait += 1
+	if _shot_wait < 30:
+		return
+	var e: Dictionary = _shots[_shot_i]
+	var out := "%s/%s.png" % [_shot_dir, String(e.get("name", "shot%d" % _shot_i))]
+	get_viewport().get_texture().get_image().save_png(out)
+	print("  ✓ ", e.get("name", ""), " -> ", out)
+	_shot_i += 1
+	if _shot_i >= _shots.size():
+		print("資產正面照完成：%d 張" % _shots.size())
+		get_tree().quit()
+		return
+	_aim_shot(_shot_i)
 var _default_env: Environment = null
 
 func _shot_tick() -> void:
@@ -60,6 +110,8 @@ func _process(delta: float) -> void:
 	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":
 		_shot_tick()
+	elif not _shots.is_empty():
+		_shotlist_tick()
 
 func _load_json(p: String) -> Dictionary:
 	var txt := FileAccess.get_file_as_string(p)

@@ -937,32 +937,95 @@ func _blk_market(parent: Node, bx: float, bz: float) -> void:
 	dbody.add_child(dsh)
 	dsh.owner = lib.root
 	_claim(bx - 12.0, bz - 10.0, 4.0, 4.0)
-	# 攤位群
-	var cloths := [Color(0.62, 0.3, 0.26), Color(0.28, 0.36, 0.52), Color(0.72, 0.6, 0.3), Color(0.34, 0.46, 0.32)]
+	# ── 屋台（攤位）──
+	# v9 是「四支腳撐一塊純色板」，遠看像塑膠野餐桌。真正的屋台有：
+	# 斜的布篷（會下垂）、撐篷的斜柱、檯面上的貨、垂下來的暖簾、
+	# 腳邊的木箱與草蓆。而且要立在**掃出來的土間**上，不是直接插在草地。
+	# 布篷的顏色要壓下來 —— 純色高飽和的一大片，從上面看就只是色塊。
+	# 而且要有織紋（借 plaster 那張當布紋），不然是塑膠板。
+	var cloths := [Color(0.52, 0.30, 0.27), Color(0.30, 0.35, 0.45),
+		Color(0.58, 0.50, 0.32), Color(0.34, 0.42, 0.33), Color(0.46, 0.40, 0.50)]
+	var goods := [Color(0.78, 0.62, 0.34), Color(0.52, 0.30, 0.24), Color(0.40, 0.52, 0.30),
+		Color(0.86, 0.80, 0.62), Color(0.30, 0.34, 0.40)]
+	var earth := lib.pbr("市場土間", "terrain_path", 0.30, Color(0.92, 0.88, 0.80))
 	var placed := 0
 	for i in 12:
 		var px := bx - 14.0 + float(i % 4) * 9.0 + lib.rr(-0.8, 0.8)
 		var pz := bz - 2.0 + float(i / 4) * 8.5 + lib.rr(-0.8, 0.8)
-		if not _free(px, pz, 3.4, 2.6, 0.4):
+		if not _free(px, pz, 4.2, 3.4, 0.4):
 			continue
 		placed += 1
+		var gu := _ground_under(px, pz, 3.6, 3.0)
 		var st := Node3D.new()
-		st.position = Vector3(px, height_at(px, pz), pz)
-		st.rotation.y = lib.rr(-0.25, 0.25)
-		lib.add(parent, st, "攤_%d" % i)
-		for sx in [-1, 1]:
-			for sz in [-1, 1]:
-				lib.cyl(st, "腳_%d%d" % [sx + 1, sz + 1], 0.05, 0.05, 2.2, wood,
-					Vector3(float(sx) * 1.3, 1.1, float(sz) * 0.9), 6)
-		lib.box(st, "檯面", Vector3(2.8, 0.12, 1.9), wood, Vector3(0, 0.95, 0))
-		var cm := StandardMaterial3D.new()
-		cm.albedo_color = cloths[i % cloths.size()]
-		cm.roughness = 1.0
-		var top := lib.box(st, "棚布", Vector3(3.2, 0.08, 2.4), cm, Vector3(0, 2.35, -0.2))
-		top.rotation.x = 0.16
-		lib.box(st, "貨箱", Vector3(0.8, 0.5, 0.6), wood, Vector3(lib.rr(-1, 1), 0.25, 1.4))
+		st.position = Vector3(px, gu[0], pz)
+		st.rotation.y = lib.rr(-0.28, 0.28)
+		lib.add(parent, st, "屋台_%d" % i)
+		# 掃過的土間（攤位腳下的地是踩實的，不是草）
+		lib.box(st, "土間", Vector3(4.4, 0.10, 3.6), earth, Vector3(0, 0.03, 0.2))
+		# 四支腳 + 檯面 + 檯面下的橫撐
+		for sx in [-1.0, 1.0]:
+			for sz in [-1.0, 1.0]:
+				lib.strut(st, "腳_%d%d" % [int(sx + 1), int(sz + 1)],
+					Vector3(sx * 1.3, 0.06, sz * 0.85), Vector3(sx * 1.3, 0.95, sz * 0.85),
+					0.055, wood, 5)
+			lib.strut(st, "貫_%d" % int(sx + 1),
+				Vector3(sx * 1.3, 0.34, -0.85), Vector3(sx * 1.3, 0.34, 0.85), 0.04, wood, 4)
+		lib.box(st, "檯面", Vector3(2.9, 0.10, 1.9), _mat("wood", i % 4), Vector3(0, 1.0, 0))
+		# 支篷的斜柱（後高前低，布才會斜）
+		var back_h := 2.45
+		var front_h := 2.05
+		for sx2 in [-1.0, 1.0]:
+			lib.strut(st, "篷柱後_%d" % int(sx2 + 1),
+				Vector3(sx2 * 1.35, 0.95, -0.95), Vector3(sx2 * 1.4, back_h, -1.05), 0.05, wood, 5)
+			lib.strut(st, "篷柱前_%d" % int(sx2 + 1),
+				Vector3(sx2 * 1.35, 0.95, 0.95), Vector3(sx2 * 1.4, front_h, 1.15), 0.05, wood, 5)
+		var base_c: Color = cloths[i % cloths.size()]
+		var cm := lib.pbr("屋台布_%d" % (i % 5), "plaster", 1.8, base_c)
+		# 條紋：屋台的布篷幾乎都是縞（直條紋），單色一片太假
+		var cm2 := lib.pbr("屋台布縞_%d" % (i % 5), "plaster", 1.8,
+			Color(base_c.r * 0.62 + 0.30, base_c.g * 0.62 + 0.30, base_c.b * 0.62 + 0.30))
+		# 布篷做成兩片，中間下垂一點（一整片平板一看就是塑膠）
+		# 篷布切成 6 條直條紋、前後兩段（中間微微下垂）
+		var strips := 6
+		for k in 2:
+			var t := float(k)
+			var sag := -0.10 if k == 0 else 0.0
+			for sI in strips:
+				var sw := 3.3 / float(strips)
+				var cloth := lib.box(st, "篷_%d_%d" % [k, sI], Vector3(sw * 0.99, 0.05, 1.25),
+					cm if sI % 2 == 0 else cm2,
+					Vector3(-1.65 + (float(sI) + 0.5) * sw,
+						lerpf(back_h, front_h, 0.25 + t * 0.5) + sag, -0.55 + t * 1.1))
+				cloth.rotation.x = 0.20 + t * 0.06
+		# 前緣垂下來的布邊
+		var skirt := lib.box(st, "篷垂", Vector3(3.3, 0.34, 0.04), cm2, Vector3(0, front_h - 0.12, 1.18))
+		skirt.rotation.x = 0.1
+		# 檯面上的貨（三堆不同顏色，才看得出在賣東西）
+		for k2 in 3:
+			var gmat := lib.flat_mat("貨_%d" % ((i + k2) % 5), goods[(i + k2) % goods.size()], 0.9)
+			var gx2 := -0.95 + float(k2) * 0.95
+			if lib.rand() < 0.5:
+				for k3 in 3:                       # 疊起來的圓形（果物・團子）
+					lib.cyl(st, "貨_%d_%d" % [k2, k3], 0.16, 0.18, 0.12, gmat,
+						Vector3(gx2 + lib.rr(-0.05, 0.05), 1.11 + float(k3) * 0.12, lib.rr(-0.3, 0.3)), 8)
+			else:
+				lib.box(st, "貨箱_%d" % k2, Vector3(0.6, 0.26, 0.5), gmat,
+					Vector3(gx2, 1.18, lib.rr(-0.25, 0.25)))
+		# 暖簾（垂在攤位側邊）
+		if lib.rand() < 0.6:
+			var nx := 1.42 * (1.0 if lib.rand() < 0.5 else -1.0)
+			for k4 in 3:
+				lib.box(st, "暖簾_%d" % k4, Vector3(0.04, 0.6, 0.42),
+					cm if k4 % 2 == 0 else cm2, Vector3(nx, 1.72, -0.5 + float(k4) * 0.5))
+		# 腳邊的木箱與草蓆
+		lib.box(st, "木箱", Vector3(0.75, 0.48, 0.58), _mat("wood", (i + 1) % 4),
+			Vector3(lib.rr(-1.1, 1.1), 0.29, 1.45))
+		if lib.rand() < 0.5:
+			lib.box(st, "莚", Vector3(1.5, 0.05, 1.0),
+				lib.pbr("莚", "terrain_grass", 1.5, Color(0.80, 0.70, 0.46)),
+				Vector3(lib.rr(-0.6, 0.6), 0.09, 1.7))
 		_collide(st, Vector3(3.0, 1.1, 2.2))
-		_claim(px, pz, 3.6, 2.8)
+		_claim(px, pz, 4.6, 3.8)
 	# 水井與高札場
 	var wp := Vector2(bx + 13.0, bz + 8.0)
 	var well := Node3D.new()
@@ -1326,15 +1389,50 @@ func _build_canal_bridges() -> void:
 		p.position = Vector3(bx, height_at(bx, bz) + CANAL_DEPTH + 0.35, bz)
 		lib.add(g, p, "水路橋_%d" % i)
 		var span := CANAL_HALF * 2.0 + 5.0
-		lib.box(p, "橋板", Vector3(4.2, 0.28, span), wood, Vector3.ZERO)
+		# ── 橋桁（縱樑）：橋面下面要有東西撐，不然只是一片飄著的木板 ──
+		var beam_y := -0.30
+		for sd0 in [-1.0, 1.0]:
+			lib.strut(p, "橋桁_%d" % int(sd0 + 1),
+				Vector3(sd0 * 1.55, beam_y, -span * 0.5), Vector3(sd0 * 1.55, beam_y, span * 0.5),
+				0.16, dark, 4)
+		# 橋脚：水中兩排短柱（水路窄，兩排就夠）
+		for sd1 in [-1.0, 1.0]:
+			for sd2 in [-1.0, 1.0]:
+				lib.strut(p, "橋脚_%d_%d" % [int(sd1 + 1), int(sd2 + 1)],
+					Vector3(sd2 * 1.55, beam_y - 0.1, sd1 * CANAL_HALF * 0.62),
+					Vector3(sd2 * 1.55, -CANAL_DEPTH - 0.5, sd1 * CANAL_HALF * 0.62),
+					0.13, dark, 5)
+			lib.strut(p, "橋脚貫_%d" % int(sd1 + 1),
+				Vector3(-1.55, -CANAL_DEPTH * 0.55, sd1 * CANAL_HALF * 0.62),
+				Vector3(1.55, -CANAL_DEPTH * 0.55, sd1 * CANAL_HALF * 0.62), 0.09, dark, 4)
+		# ── 橋面：一片片木板（v9 是一整塊，看不出是木橋）──
+		var nb := int(span / 0.42)
+		for k3 in nb:
+			var bzp: float = -span * 0.5 + (float(k3) + 0.5) * (span / float(nb))
+			lib.box(p, "橋板_%d" % k3, Vector3(4.1, 0.13, span / float(nb) * 0.86),
+				_mat("wood", k3 % 4), Vector3(0, 0, bzp))
 		for sd in [-1, 1]:
 			lib.box(p, "橋台_%d" % (sd + 1), Vector3(4.4, CANAL_DEPTH + 0.9, 1.6), stone,
 				Vector3(0, -(CANAL_DEPTH + 0.9) * 0.5, float(sd) * (span * 0.5 - 0.7)))
-			# 欄杆
-			lib.box(p, "欄_%d" % (sd + 1), Vector3(0.12, 0.1, span), dark, Vector3(float(sd) * 2.0, 0.75, 0))
-			for k2 in 3:
-				lib.cyl(p, "欄柱_%d_%d" % [sd + 1, k2], 0.07, 0.07, 0.85, dark,
-					Vector3(float(sd) * 2.0, 0.42, -span * 0.35 + float(k2) * span * 0.35), 5)
+			# ── 高欄：**兩側都要**（v9 只做了一邊，走上去一邊是懸空的）──
+			# 親柱（端柱）粗、中間的架柱細，上面架一道手摺
+			for k2 in 5:
+				var t2 := float(k2) / 4.0
+				var zz: float = -span * 0.42 + t2 * span * 0.84
+				var is_end := (k2 == 0 or k2 == 4)
+				lib.strut(p, "欄柱_%d_%d" % [sd + 1, k2],
+					Vector3(float(sd) * 1.95, 0.0, zz),
+					Vector3(float(sd) * 1.95, 0.95 if is_end else 0.82, zz),
+					0.085 if is_end else 0.055, dark, 5)
+				if is_end:      # 親柱頂上的擬寶珠
+					lib.cyl(p, "擬寶珠_%d_%d" % [sd + 1, k2], 0.0, 0.10, 0.18, dark,
+						Vector3(float(sd) * 1.95, 1.03, zz), 6)
+			lib.strut(p, "手摺_%d" % (sd + 1),
+				Vector3(float(sd) * 1.95, 0.86, -span * 0.42),
+				Vector3(float(sd) * 1.95, 0.86, span * 0.42), 0.055, dark, 5)
+			lib.strut(p, "中貫_%d" % (sd + 1),
+				Vector3(float(sd) * 1.95, 0.46, -span * 0.42),
+				Vector3(float(sd) * 1.95, 0.46, span * 0.42), 0.04, dark, 4)
 		var body := StaticBody3D.new()
 		p.add_child(body)
 		body.owner = lib.root
