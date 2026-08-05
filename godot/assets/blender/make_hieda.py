@@ -54,6 +54,15 @@ C_STONE_DK = (0.400, 0.405, 0.395)
 C_SHOJI = (0.870, 0.850, 0.780)
 C_ENGAWA = (0.420, 0.330, 0.240)
 C_GRASS = (0.240, 0.360, 0.150)
+# 犬走り（牆腳碎石帶）兩階：貼牆一條窄的**暗帶**（假的接觸陰影／AO），
+# 外側一條寬的土色帶往草地過渡。第一版兩條都調得太亮（0.35/0.47），
+# 跟石垣的 0.52 差不多，整片牆腳糊成一坨白 —— 過渡帶要看得出來才有用，
+# 關鍵是那條暗帶：物件「坐」在地上而不是「放」在地上，讀的就是接觸陰影。
+# 暗帶必須比**草地**還暗才讀得成接觸陰影。量過渲染值：草地 albedo 0.22
+# 出來是 130，第一版暗帶給 0.285 出來是 144 —— 比草還亮，於是整條讀成
+# 「一道混凝土路緣」，反而多加了一條硬邊，跟要解的問題正好相反。
+C_GRAVEL_DK = (0.150, 0.150, 0.135)
+C_GRAVEL = (0.425, 0.420, 0.370)
 C_BARK = (0.200, 0.150, 0.110)
 # 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
 # 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
@@ -583,7 +592,43 @@ def build_avenue(bld, y0, y1, width=6.0, rng=None):
 # 本輪只做**正面那一道 + 兩側短回折**（參道視角看得到的範圍）。整圈
 # 的東西南北四面留給 §3 正式那輪 —— 這輪的指定範圍是「前庭裝飾」。
 
-def build_wall_run(bld, a0, a1, fix, axis="x", gate_hw=0.0):
+def _batter(bld, p, q, fix, axis, ht, hb, z_lo, z_hi, col):
+    """石垣腳：上窄下寬的梯形斷面 —— 真石垣的「勾配」。
+
+    牆腳原本是一個等寬的 box，跟地面交出一條完全垂直的硬邊，讀起來就是
+    「一塊牆放在一塊地上」的兩個物件。往外攤開的斜面會讓光沿著它連續
+    變化，視覺上牆是從地裡長出來的。繞序交給 _auto_quad 判（梯形柱是
+    凸的，離心方向永遠等於外法線）。"""
+    ctr = ((p + q) / 2, fix, (z_lo + z_hi) / 2) if axis == "x" \
+        else (fix, (p + q) / 2, (z_lo + z_hi) / 2)
+
+    def P(t, off, z):
+        return (t, fix + off, z) if axis == "x" else (fix + off, t, z)
+
+    for sd in (1, -1):
+        _auto_quad(bld, ctr, P(p, sd * ht, z_hi), P(q, sd * ht, z_hi),
+                   P(q, sd * hb, z_lo), P(p, sd * hb, z_lo), col)
+    for t in (p, q):                                     # 兩端的梯形端面
+        _auto_quad(bld, ctr, P(t, -ht, z_hi), P(t, ht, z_hi),
+                   P(t, hb, z_lo), P(t, -hb, z_lo), col)
+
+
+def _apron(bld, p, q, fix, axis, hb, z=0.045):
+    """犬走り：牆腳往外的兩階碎石帶（暗→淡），把牆腳接進地面。"""
+    bands = ((hb, hb + 0.34, C_GRAVEL_DK), (hb + 0.34, hb + 1.34, C_GRAVEL))
+    for sd in (1, -1):
+        for o0, o1, col in bands:
+            if axis == "x":
+                bld.quad((p, fix + sd * o0, z), (q, fix + sd * o0, z),
+                         (q, fix + sd * o1, z), (p, fix + sd * o1, z),
+                         col, flip=(sd < 0))
+            else:
+                bld.quad((fix + sd * o0, p, z), (fix + sd * o0, q, z),
+                         (fix + sd * o1, q, z), (fix + sd * o1, p, z),
+                         col, flip=(sd > 0))
+
+
+def build_wall_run(bld, a0, a1, fix, axis="x", gate_hw=0.0, apron_trim=(0.0, 0.0)):
     """一段格子塀。axis="x" 時沿 x 走、fix 是 y 座標；axis="y" 則相反。
     gate_hw > 0 時中央讓出門洞（只有正面那道用得到）。
 
@@ -603,7 +648,9 @@ def build_wall_run(bld, a0, a1, fix, axis="x", gate_hw=0.0):
         if q - p < 0.05:
             continue
         cc, ln = (p + q) / 2, q - p
-        slab(cc, ln, 1.05, z_stone / 2, z_stone, C_STONE)                    # 腰石垣
+        # 腰石垣：外八字的梯形（上半寬 0.525 → 地面 0.79），不是等寬 box
+        _batter(bld, p, q, fix, axis, 0.525, 0.79, 0.0, z_stone, C_STONE)
+        _apron(bld, p + apron_trim[0], q - apron_trim[1], fix, axis, 0.79)
         slab(cc, ln, 0.86, (z_stone + z_wall) / 2, z_wall - z_stone, C_PLASTER)
         # 格子帶：深色底板 + 直立木格柵（格柵厚過底板，才有立體的格子影）
         slab(cc, ln, 0.80, (z_wall + z_lat) / 2, z_lat - z_wall, C_WOOD)
@@ -629,14 +676,27 @@ def build_wall_run(bld, a0, a1, fix, axis="x", gate_hw=0.0):
         slab(cc, ln, 0.28, z_top + 0.06, 0.18, C_RIDGE)                      # 棟瓦
 
 
-def build_gate(bld, y, gate_hw):
-    """表門：兩根粗門柱 + 冠木 + 瓦屋根（棟門形）。參道從中間穿過。"""
-    z_post, z_beam = 3.60, 3.62
+def build_gate(bld, y, gate_hw, post_hw=0.35):
+    """表門：兩根粗門柱 + 冠木 + 瓦屋根（棟門形）。參道從中間穿過。
+
+    柱高從 3.60 收到 3.30：狛犬放大之後，門柱／簷口與狛犬要在同一個
+    視覺量級上，門太高會把石獅子吃掉（使用者：狛犬「get visually
+    swallowed by the gate structure」）。兩邊各讓一步 —— 狛犬 +18%、
+    門 -8%，比只動一邊自然。"""
+    z_post, z_beam = 3.30, 3.32
     for sx in (1, -1):
-        bld.box(sx * (gate_hw + 0.34), y, 0.30, 0.92, 1.30, 0.60, C_STONE)   # 礎石
-        bld.box(sx * (gate_hw + 0.34), y, (0.55 + z_post) / 2, 0.62, 0.62,
-                z_post - 0.55, C_WOOD)                                        # 門柱
-    span = 2 * (gate_hw + 0.34) + 0.62
+        px = sx * (gate_hw + post_hw)
+        # 礎石也走外八字，跟牆腳同一套語言，柱子才不是「插在地上」。
+        # 半寬與犬走り的 hb 都跟牆腳取同一組（0.525/0.79），兩邊的碎石帶
+        # 才會**接齊而不是疊在一起** —— 疊在一起就是兩張同法線的共面，
+        # 互相擋掉對方的環境光，整塊算成全黑。
+        _batter(bld, px - post_hw, px + post_hw, y, "x", 0.525, 0.79, 0.0, 0.52, C_STONE)
+        _apron(bld, px - post_hw, px + post_hw, y, "x", 0.79)
+        # 門柱比牆厚（1.10 vs 牆身 0.86）才露得出來。上一版柱寬 0.62 完全
+        # 埋在牆裡，整座門只剩一片浮在開口上的屋頂，柱子一根都看不到。
+        bld.box(px, y, (0.48 + z_post) / 2, 2 * post_hw, 1.10,
+                z_post - 0.48, C_WOOD)                                        # 門柱
+    span = 2 * (gate_hw + 2 * post_hw)
     bld.box(0, y, z_beam + 0.24, span, 0.52, 0.48, C_WOOD)                   # 冠木
     bld.box(0, y, z_beam - 0.40, span * 0.86, 0.34, 0.34, C_WOOD)            # 貫
     # 屋根：兩坡，出簷比牆頂大一截 —— 門要比牆搶眼
@@ -902,13 +962,23 @@ build_avenue(bld, Y_STEP, Y_OUT, width=6.0)
 
 # 前庭圍牆：正面一道 + 兩側短回折（本輪只做參道視角看得到的範圍）
 WALL_HX = 19.0
-GATE_HW = 3.6                            # 門洞半寬，6m 參道穿得過
-build_wall_run(bld, -WALL_HX, WALL_HX, Y_GATE, axis="x", gate_hw=GATE_HW)
-build_gate(bld, Y_GATE, GATE_HW)
+# ⚠ 不要叫 GATE_HW —— 模組層已經有一個 GATE_HW=2.9（唐破風玄関的開口半寬，
+# build_house 在用）。在這裡同名再指派一次會把模組層那個整個蓋掉，之後
+# 任何人再呼叫 build_house() 就會拿到 3.6，玄関的窗、高欄、腰簷缺口全部跑掉。
+MON_HW = 3.6                             # 表門門洞半寬，6m 參道穿得過
+MON_POST_HW = 0.35                       # 門柱半寬
+# 牆的缺口要把**門柱也讓出來**（MON_HW + 兩根柱寬），柱子才站得出來；
+# 缺口只讓門洞的話柱子會整根埋在牆身裡。
+build_wall_run(bld, -WALL_HX, WALL_HX, Y_GATE, axis="x",
+               gate_hw=MON_HW + 2 * MON_POST_HW)
+build_gate(bld, Y_GATE, MON_HW, MON_POST_HW)
 # 兩側回折：一路拉到主屋側面（y=-6）才收。第一版只往北 12m 就停在半空中，
 # 空中斷頭的牆比沒有牆還糟。北面與東西後段留給 §3 郭外防線那輪補完整圈。
+# apron_trim 把回折的犬走り往內縮 1.9m —— 不縮的話轉角處會跟正面那道的
+# 犬走り**完全共面重疊**，兩張同法線的面互相擋住對方的環境光，整塊算成
+# 全黑（跟唐破風那輪階梯側面同一個病，見 docs）。
 for sx in (1, -1):
-    build_wall_run(bld, Y_GATE, -6.0, sx * WALL_HX, axis="y")
+    build_wall_run(bld, Y_GATE, -6.0, sx * WALL_HX, axis="y", apron_trim=(1.9, 0.0))
 
 build_giant_tree(bld, +4.9, -20.4, 11)
 build_giant_tree(bld, -4.9, -21.5, 47)
@@ -918,13 +988,25 @@ build_giant_tree(bld, -4.9, -21.5, 47)
 # 處 = -34 + 22.6/3 ≈ -26.5。燈籠與松依序往外側讓開，形成一個漸開的
 # 八字 —— 站在門口往內看，三對物件把視線收束到唐破風玄関上。
 objs = [bld.build("hieda_scene")]
+# 狛犬**維持左右嚴格對稱**：牠是儀式性的門衛，一對石獅子擺歪就只是沒對齊。
+# 原型面朝 -y，繞 z 轉 θ 後朝向是 (sinθ, -cosθ)，θ=-sx*1.0 讓兩隻都斜對
+# 參道中線、同時偏向來人（約 57°）。
+# 放大到 1.18：門柱同時降到 3.30，兩邊各讓一步之後狛犬（3.25m）跟門柱
+# （3.30m）幾乎同高，才「carry equal visual weight」而不是被門吃掉。
 for sx in (1, -1):
-    # 狛犬原型面朝 -y。繞 z 轉 θ 之後朝向是 (sinθ, -cosθ)，所以 θ=-sx*1.0
-    # 會讓兩隻都**斜對著參道中線、同時偏向來人**（約 57°）。
-    # 第一版寫 π/0 —— 那是右邊那隻轉 180° 面向屋子、左邊那隻面向門外，
-    # 一對石獅子背對背，正面看過去一隻給你臉一隻給你屁股。
-    objs += place_asset("komainu_a", [(sx * 4.7, -26.5, 0.0, -sx * 1.0, 1.0)])
-    objs += place_asset("stone_lantern", [(sx * 6.8, -27.8, 0.0, sx * 0.26, 1.05)])
-    objs += place_asset("tree_pine_a", [(sx * 9.2, -29.4, 0.0, sx * 0.8, 1.25)])
+    objs += place_asset("komainu_a", [(sx * 4.7, -26.5, 0.0, -sx * 1.0, 1.18)])
+
+# ── 松與燈籠：刻意**不對稱** ──
+# 上一版兩側是完全鏡射、而且燈籠與松等距排開，讀起來像貼上去的裝飾而不是
+# 長出來的庭園。這裡把兩側的間距、前後、大小全部拆開寫成明表（不用 for
+# 迴圈鏡射）—— 迴圈天生只會生出對稱，要不對稱就得放棄迴圈。
+#   右側：燈籠緊挨狛犬（1.9m），松再往外拉開（4.8m）—— 疏密對比大
+#   左側：燈籠退遠（3.6m），松貼著燈籠（2.9m）—— 節奏跟右側相反
+for mdl, px, py, rot, sc in [
+        ("stone_lantern", 6.50, -27.20, 0.26, 1.06),
+        ("tree_pine_a", 9.90, -30.60, 0.80, 1.30),
+        ("stone_lantern", -7.40, -28.90, -0.62, 0.98),
+        ("tree_pine_a", -9.50, -30.90, -1.35, 1.34)]:
+    objs += place_asset(mdl, [(px, py, 0.0, rot, sc)])
 export_sel(objs, "hieda_blockout")
 print("done")
