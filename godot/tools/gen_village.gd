@@ -1117,64 +1117,10 @@ func _merge_decor(root: Node) -> Array:
 ## 燈籠走 MultiMesh（全村一次 draw call），繩子是一根細桿一個 span。
 func _build_festival(parent: Node) -> void:
 	var g := lib.add(parent, Node3D.new(), "祭典")
-	var lantern_mesh := CylinderMesh.new()
-	lantern_mesh.top_radius = 0.16
-	lantern_mesh.bottom_radius = 0.16
-	lantern_mesh.height = 0.42
-	lantern_mesh.radial_segments = 8
-	var lm := StandardMaterial3D.new()
-	lm.albedo_color = Color(0.78, 0.16, 0.10)          # 朱紅（美術規格：稍微加入）
-	lm.emission_enabled = true
-	lm.emission = Color(0.9, 0.30, 0.12)
-	lm.emission_energy_multiplier = 0.5                # 白天微亮、夜裡是一串光
-	lantern_mesh.material = lm
-	var lst: Array[Transform3D] = []
-	var cols: Array[Color] = []
-	var rope := _mat("dark", 3)
-	var n_span := 0
-	# 本通（x=0，南北）與橫町（z=30，東西）的町方段，每 13m 一跨
-	var spans: Array = []
-	var zz := -46.0
-	while zz < 118.0:
-		spans.append([Vector2(-4.6, zz), Vector2(4.6, zz)])
-		zz += 13.0
-	var xx := -80.0
-	while xx < 84.0:
-		if absf(xx) > 6.0:                              # 十字路口不掛（會跟本通的串打架）
-			spans.append([Vector2(xx, 25.4), Vector2(xx, 34.6)])
-		xx += 13.0
-	for sp in spans:
-		var a2: Vector2 = sp[0]
-		var b2: Vector2 = sp[1]
-		var ya: float = height_at(a2.x, a2.y) + 4.6
-		var yb: float = height_at(b2.x, b2.y) + 4.6
-		# 兩根撐桿
-		for e in [[a2, ya], [b2, yb]]:
-			var pe: Vector2 = e[0]
-			var pole := lib.cyl(g, "提灯柱_%d" % n_span, 0.07, 0.09,
-				float(e[1]) - height_at(pe.x, pe.y) + 0.3, _mat("dark", 3),
-				Vector3(pe.x, (float(e[1]) + height_at(pe.x, pe.y)) * 0.5, pe.y), 6)
-			n_span += 1
-		# 繩（一根直桿近似，中點下垂 0.35）
-		var mid := (a2 + b2) * 0.5
-		var ropelen := a2.distance_to(b2)
-		var rp := lib.box(g, "提灯繩_%d" % n_span, Vector3(0.05, 0.05, ropelen), rope,
-			Vector3(mid.x, (ya + yb) * 0.5 - 0.35, mid.y))
-		rp.rotation.y = atan2(b2.x - a2.x, b2.y - a2.y)
-		# 燈籠 5 顆，沿繩排、微下垂
-		for k in 5:
-			var t := (float(k) + 0.5) / 5.0
-			var pv := a2.lerp(b2, t)
-			var sag := sin(t * PI) * 0.55
-			var basis := Basis(Vector3.UP, lib.rr(0.0, TAU))
-			lst.append(Transform3D(basis,
-				Vector3(pv.x, lerpf(ya, yb, t) - sag - 0.3, pv.y)))
-			# 紅白相間（祭典的串就是這樣掛）
-			cols.append(Color(1, 1, 1) if k % 2 == 1 else Color(1.0, 0.5, 0.45))
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = lib.make_multimesh(lantern_mesh, lst, cols, OUT_DIR + "gen/lanterns.res")
-	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	lib.add(g, mmi, "提灯串")
+	# 提灯串拿掉了（v22）。使用者：「先把這個慶典燈籠竿子拿掉」——
+	# 光禿的撐桿 + 橫繩 + 浮著的橘色方塊，遠看像電線桿掛施工燈，
+	# 不是祭典。祭典色彩改由幟旗／暖簾／幔幕承擔；提灯要回來的話
+	# 只能**貼著建築**掛（屋簷下、店門口），不要橫跨街道。
 	# 幟旗（のぼり）：店門口的直立旗，飽和色 —— 街上第二個顏色來源
 	var flag_cols := [Color(0.34, 0.16, 0.46), Color(0.12, 0.42, 0.24),
 		Color(0.10, 0.24, 0.56), Color(0.72, 0.14, 0.12), Color(0.86, 0.70, 0.16)]
@@ -1196,7 +1142,7 @@ func _build_festival(parent: Node) -> void:
 			Vector3(bp.x + fd.x * 0.34, gy + 2.2, bp.y + fd.y * 0.34))
 		fb.rotation.y = atan2(fd.x, fd.y)
 		n_flag += 1
-	print("festival：%d 跨提灯串（%d 顆）/ %d 支幟旗" % [spans.size(), lst.size(), n_flag])
+	print("festival：%d 支幟旗（提灯串已移除）" % n_flag)
 
 ## 生垣：把收集到的模組 transform 一次發成 MultiMesh
 func _emit_hedges() -> void:
