@@ -146,7 +146,8 @@ func height_at(x: float, z: float) -> float:
 	var h := bank_h(x, z)
 	h += lib.river_carve(RIVER, RIVER_HALF, RIVER_DEPTH, x, z)
 	h += lib.river_carve(CANAL, CANAL_HALF, CANAL_DEPTH, x, z)
-	h += lib.pond_carve(GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, GARDEN_POND_DEPTH, x, z)
+	# wobble 0.16 = 曲岸（池泉庭園，美術規格 §2）。圓規畫出來的池是泳池不是庭園。
+	h += lib.pond_carve(GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, GARDEN_POND_DEPTH, x, z, 0.16)
 	return h + lib.pond_carve(NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, NATURE_POND_DEPTH, x, z, 0.22)
 
 func mask_at(x: float, z: float) -> Color:
@@ -486,7 +487,8 @@ func _ground_sample(x: float, z: float) -> float:
 func _in_water(x: float, z: float, pad := 0.0) -> bool:
 	# ⚠ 要用**開挖半徑**（R * 1.35）不是 R —— 池子挖出來的碗比 R 大一圈，
 	# 拿 R 判定的話碗緣那一圈仍然會被當成陸地，石板照樣鋪進水裡。
-	if Vector2(x - GARDEN_POND.x, z - GARDEN_POND.y).length() < GARDEN_POND_R * 1.45 + pad:
+	# 1.65 不是 1.45：曲岸（wobble 0.16）最遠會把開挖推到 R*1.55 左右
+	if Vector2(x - GARDEN_POND.x, z - GARDEN_POND.y).length() < GARDEN_POND_R * 1.65 + pad:
 		return true
 	if Vector2(x - NATURE_POND.x, z - NATURE_POND.y).length() < NATURE_POND_R * 1.45 + pad:
 		return true
@@ -1595,24 +1597,60 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		lib.box(g, "門柱_%d" % (sx + 1), Vector3(0.55, 3.2, 0.55), _mat("dark"), Vector3(float(sx) * 2.6, 1.6, hd))
 	lib.box(g, "門樑", Vector3(6.0, 0.45, 0.7), _mat("dark"), Vector3(0, 3.3, hd))
 	lib.box(g, "門屋根", Vector3(7.2, 0.24, 2.0), _mat("kawara"), Vector3(0, 3.7, hd))
-	# 主屋
+	# ── 主屋：二層入母屋（美術規格 §3.2）──
+	# 使用者：「稗田邸外觀的感覺太小 但是貴族家 所以要拉大」。
+	# 17.5×11.5×4.0 單層 → 25×15、一層 3.6 + 二層 2.9、入母屋屋頂。
+	# 位置往北挪（中心 z -7 → -11.5），南面讓出庭池的曲岸（開挖到 z≈-2.2）。
 	var hfoot := spread + 0.4
-	lib.box(g, "主屋基壇", Vector3(19.0, 0.55 + hfoot, 13.0), _mat("stone"), Vector3(-3.0, 0.28 - hfoot * 0.5, -7.0))
-	lib.box(g, "主屋", Vector3(17.5, 4.0, 11.5), _mat("plaster"), Vector3(-3.0, 2.55, -7.0))
-	lib.box(g, "緣側", Vector3(18.4, 0.26, 2.0), _mat("wood"), Vector3(-3.0, 0.68, -0.8))
-	lib.gable_roof(g, 4.55, 20.0, 14.0, 0.5, 0.32, _mat("kawara"), _mat("plaster"), Vector3(-3.0, 0, -7.0))
-	_collide(g, Vector3(17.9, 6.2, 11.9), Vector3(-3.0, 0, -7.0))
-	# 長廊（連到東側的離れ）
-	lib.box(g, "長廊", Vector3(2.4, 0.24, 14.0), _mat("wood"), Vector3(8.0, 0.7, -2.0))
-	for i in 6:
-		lib.cyl(g, "廊柱_%d" % i, 0.12, 0.12, 2.4, _mat("dark"), Vector3(8.9, 1.9, -8.0 + float(i) * 2.6), 6)
+	var HX := -5.0
+	var HZ := -11.5
+	lib.box(g, "主屋基壇", Vector3(26.5, 0.6 + hfoot, 16.5), _mat("stone"),
+		Vector3(HX, 0.3 - hfoot * 0.5, HZ))
+	lib.box(g, "主屋", Vector3(25.0, 3.6, 15.0), _mat("plaster", 0), Vector3(HX, 0.6 + 1.8, HZ))
+	lib.box(g, "主屋腰壁", Vector3(25.1, 1.15, 15.1), _mat("shitami", 0),
+		Vector3(HX, 0.6 + 0.58, HZ))
+	# 一層立面的通柱（南面）
+	for i in 9:
+		lib.box(g, "主屋柱_%d" % i, Vector3(0.17, 3.6, 0.12), _mat("dark", 0),
+			Vector3(HX - 12.0 + float(i) * 3.0, 0.6 + 1.8, HZ + 7.56))
+	# 裳階（一二層之間的環繞屋簷）—— 這一圈才是「二層豪邸」的剪影
+	for sd2 in [-1.0, 1.0]:
+		var mk := lib.box(g, "裳階_z%d" % int(sd2 + 1), Vector3(27.0, 0.18, 2.1), _mat("kawara"),
+			Vector3(HX, 4.35, HZ + sd2 * 8.2))
+		mk.rotation.x = sd2 * -0.42
+		var mk2 := lib.box(g, "裳階_x%d" % int(sd2 + 1), Vector3(2.1, 0.18, 17.2), _mat("kawara"),
+			Vector3(HX + sd2 * 13.2, 4.35, HZ))
+		mk2.rotation.z = sd2 * 0.42
+	# 二層（內縮，才有塔狀的收分）
+	lib.box(g, "主屋二階", Vector3(21.0, 2.9, 12.0), _mat("plaster", 0),
+		Vector3(HX, 4.5 + 1.45, HZ))
+	lib.box(g, "二階窗帯", Vector3(18.0, 1.15, 0.1), _mat("lattice", 0),
+		Vector3(HX, 6.2, HZ + 6.06))
+	# 入母屋 = 切妻（上）+ 四注的裾（下）。gable_roof 給切妻與妻壁，
+	# 兩端再各蓋一片斜的隅屋根，蓋住妻壁的下半 —— 剪影就是入母屋。
+	lib.gable_roof(g, 7.4, 23.0, 14.0, 0.52, 0.34, _mat("kawara"), _mat("plaster", 0),
+		Vector3(HX, 0, HZ))
+	for e in [-1.0, 1.0]:
+		var hip := lib.box(g, "隅屋根_%d" % int(e + 1), Vector3(6.0, 0.3, 10.5), _mat("kawara"),
+			Vector3(HX + e * 10.2, 9.1, HZ))
+		hip.rotation.z = e * 0.72
+	lib.box(g, "緣側", Vector3(24.0, 0.3, 2.2), _mat("wood"), Vector3(HX, 0.75, HZ + 8.6))
+	for i in 12:
+		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.6, 0.1), _mat("dark", 0),
+			Vector3(HX - 11.5 + float(i) * 2.1, 1.35, HZ + 9.6))
+	lib.box(g, "高欄", Vector3(24.0, 0.12, 0.12), _mat("dark", 0), Vector3(HX, 1.68, HZ + 9.6))
+	_collide(g, Vector3(25.4, 10.0, 15.4), Vector3(HX, 0, HZ))
+	# 長廊（連到東側的離れ；主屋放大後整組往東挪）
+	lib.box(g, "長廊", Vector3(2.4, 0.24, 12.0), _mat("wood"), Vector3(10.6, 0.7, -6.0))
+	for i in 5:
+		lib.cyl(g, "廊柱_%d" % i, 0.12, 0.12, 2.4, _mat("dark"), Vector3(11.5, 1.9, -11.0 + float(i) * 2.6), 6)
 	for sd2 in [-1, 1]:
-		var sl2 := lib.box(g, "廊屋根_%d" % (sd2 + 1), Vector3(1.9, 0.16, 14.4), _mat("kawara"),
-			Vector3(8.0 + float(sd2) * 0.85, 3.15, -2.0))
+		var sl2 := lib.box(g, "廊屋根_%d" % (sd2 + 1), Vector3(1.9, 0.16, 12.4), _mat("kawara"),
+			Vector3(10.6 + float(sd2) * 0.85, 3.15, -6.0))
 		sl2.rotation.z = float(sd2) * -0.5
-	lib.box(g, "離れ", Vector3(7.0, 3.2, 7.0), _mat("plaster"), Vector3(9.0, 1.9, -11.0))
-	lib.box(g, "離れ屋根", Vector3(8.4, 0.26, 8.4), _mat("kawara"), Vector3(9.0, 3.7, -11.0))
-	_collide(g, Vector3(7.2, 3.6, 7.2), Vector3(9.0, 0, -11.0))
+	lib.box(g, "離れ", Vector3(6.5, 3.2, 6.5), _mat("plaster"), Vector3(13.5, 1.9, -14.5))
+	lib.box(g, "離れ屋根", Vector3(7.9, 0.26, 7.9), _mat("kawara"), Vector3(13.5, 3.7, -14.5))
+	_collide(g, Vector3(6.7, 3.6, 6.7), Vector3(13.5, 0, -14.5))
 	# 庭園：石組庭池（水面在 lib.pond_water，這裡只做石砌護岸與添景）
 	# 池心在 GARDEN_POND（世界座標），換算成這個節點的本地座標
 	var pl := Vector3(GARDEN_POND.x - bx, 0.0, GARDEN_POND.y - bz)
@@ -1718,6 +1756,65 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		ib.scale = Vector3.ONE * lib.rr(0.7, 1.25)
 		ib.rotation.y = lib.rr(0.0, TAU)
 		lib.add(g, ib, "菖蒲_%d" % i)
+	# ── 中島 + 石橋：池泉庭園的核心（美術規格 §2：曲岸／中島／石橋）──
+	# 中島不是浮的 —— 它從碗底疊上來，頂面略低於岸、高於水面。
+	var isl := Vector2(pl.x + 2.3, pl.z + 1.4)                 # 本地座標的島心
+	var bank_ref: float = height_at(bx + pl.x + 12.0, bz + pl.z) - g.position.y
+	var floor_y: float = height_at(bx + isl.x, bz + isl.y) - g.position.y
+	var top_y: float = bank_ref - 0.18
+	var base := MeshInstance3D.new()
+	base.mesh = lib.blob_mesh(311, 0.55, 0.22)
+	base.material_override = _mat("cobble", 1)
+	base.position = Vector3(isl.x, (floor_y + top_y) * 0.5, isl.y)
+	base.scale = Vector3(2.5, (top_y - floor_y) * 0.5 + 0.55, 2.5)
+	lib.add(g, base, "中島岩")  # ⚠ 不能叫「基石」：那是體檢的貼地關鍵字，會被判成建物跨水
+	var cap := MeshInstance3D.new()
+	cap.mesh = lib.blob_mesh(317, 0.35, 0.18)
+	cap.material_override = lib.flat_mat("island_moss", Color(0.21, 0.30, 0.16), 0.95)
+	cap.position = Vector3(isl.x, top_y + 0.05, isl.y)
+	cap.scale = Vector3(1.8, 0.3, 1.8)
+	lib.add(g, cap, "中島苔面")
+	# 島上一棵小松 + 石灯籠（庭園的「景」）
+	var pine := MeshInstance3D.new()
+	pine.mesh = lib.tree_mesh("res://assets/models/tree_pine_a.glb")
+	pine.position = Vector3(isl.x - 0.4, top_y + 0.1, isl.y - 0.3)
+	pine.scale = Vector3(0.72, 0.66, 0.72)
+	pine.rotation.y = lib.rr(0.0, TAU)
+	lib.add(g, pine, "中島松")
+	lib.cyl(g, "島灯籠竿", 0.10, 0.12, 0.8, _mat("stone"), Vector3(isl.x + 0.9, top_y + 0.5, isl.y + 0.6), 8)
+	lib.box(g, "島灯籠火袋", Vector3(0.34, 0.3, 0.34), _mat("stone"), Vector3(isl.x + 0.9, top_y + 1.05, isl.y + 0.6))
+	lib.box(g, "島灯籠笠", Vector3(0.52, 0.12, 0.52), _mat("stone"), Vector3(isl.x + 0.9, top_y + 1.28, isl.y + 0.6))
+	# 石橋：兩片微拱的石板，從西北岸跨到島 —— 玩家可以走上島
+	var shore_pt := Vector2(pl.x - 4.2, pl.z + 3.4)
+	var bdir := (isl - shore_pt).normalized()
+	var blen := shore_pt.distance_to(isl) - 1.2
+	for k3 in 2:
+		var t0: float = 0.28 + 0.46 * float(k3)
+		var bc := shore_pt + bdir * blen * t0
+		var slab := lib.box(g, "石橋_%d" % k3, Vector3(1.35, 0.22, 2.3), _mat("stone"),
+			Vector3(bc.x, bank_ref - 0.10 + float(k3) * 0.05, bc.y))
+		slab.rotation.y = atan2(bdir.x, bdir.y)
+		slab.rotation.x = (0.06 if k3 == 0 else -0.06)
+		var sb := StaticBody3D.new()
+		slab.add_child(sb)
+		sb.owner = lib.root
+		var sh := CollisionShape3D.new()
+		var bx2 := BoxShape3D.new()
+		bx2.size = Vector3(1.35, 0.25, 2.3)
+		sh.shape = bx2
+		sb.add_child(sh)
+		sh.owner = lib.root
+	# 中島也要能站 —— 玩家走石橋上島
+	var isb := StaticBody3D.new()
+	isb.position = Vector3(isl.x, top_y - 0.1, isl.y)
+	var ish := CollisionShape3D.new()
+	var icy := CylinderShape3D.new()
+	icy.radius = 1.9
+	icy.height = 0.6
+	ish.shape = icy
+	isb.add_child(ish)
+	lib.add(g, isb, "中島碰撞")
+	ish.owner = lib.root
 	# 沢飛石（橫過池面的踏石）拿掉了：這個池只有 9m，踏石橫過去佔滿水面，
 	# 而且從岸上看就是幾塊石頭浮在水上 —— 反效果。庭池要留**空的水面**。
 	print("garden pond rocks: ", rk_i)
