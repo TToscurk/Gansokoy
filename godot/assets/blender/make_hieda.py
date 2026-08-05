@@ -2,18 +2,25 @@
 #   blender -b -P godot/assets/blender/make_hieda.py -- godot/assets/models
 #   blender -b -P godot/assets/blender/preview.py -- hieda_main hieda_blockout
 #
-# Feature List 見 docs/hieda-estate-features.md。本輪動工的四件（使用者點名）：
+# Feature List 見 docs/hieda-estate-features.md。已完成：
 #   1. 屋頂陡峭化 + 誇張軒反り（四角沿 Z 抬升 1.0m，神殿級飛翹）
 #   2. 京間木柱加粗到 35~40cm
 #   3. 6m 拱形鋪石大道（中央微拱、邊緣與草地交錯侵蝕）
 #   4. 11m 巨樹框景 ×2（枝幹 3.5m 高處向路中央橫伸 5m，楓紅拱門）
+#   5. 腰簷（錣葺き）—— 主屋頂／裳階／腰簷三層剪影
+#   6. 唐破風玄関 + 五段階梯（本輪，見下方 build_karahafu 的長註解）
 #
 # ⚠ 軒反り的技術含義：角要獨立抬升，屋面就不能是整片大 quad ——
 # 入母屋改成「沿簷線細分」的掃掠網格：每圈截面是繞矩形一周的折線
 # （每邊 M 段），圈與圈之間鋪 quad。角部抬升量沿邊緣按 |2t-1|³ 集中。
 #
 # 面數守則（Feature List §4）：瓦壟**不做實體幾何**，之後在 Godot 用
-# 法線/位移貼圖做。主屋單體（hieda_main）守在 ~2,000 面。
+# 法線/位移貼圖做。主屋單體（hieda_main）原本守在 ~2,000 面，這輪加唐破風
+# 玄関之後是 **2,532 面**。多出來的 500 面幾乎全在那條 S 曲線的橫向細分
+# （nt=18）跟破風板上 —— 那是這個玄関唯一的賣點，砍下去就只剩一塊雨遮。
+# 已經先把能省的省掉了：屋面深度方向是直紋曲面所以 nd 只給 2、階梯改成
+# 開放殼（30→20 quad）、被妻壁擋住的蟇股整組拿掉。仍然是一份 mesh、
+# 一次 draw call。
 #
 # ⚠ 楓樹的樹冠**不是**橢球體。使用者看完第一版 blockout：「球體樹我覺得
 # 不太有我想要的」——那兩棵巨樹是全場唯一的有機造型，卻是平滑橢球，
@@ -32,6 +39,9 @@ OUT_DIR = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else "godot/ass
 os.makedirs(OUT_DIR, exist_ok=True)
 
 KEN = 1.82
+# 玄関開口半寬。腰簷、正面高欄、格子窗全部照這個讓路 —— 唐破風、階梯、
+# 大扉、簷的缺口是同一件事，散在四處各寫一個數字遲早會對不齊。
+GATE_HW = 2.9
 
 C_PLASTER = (0.760, 0.740, 0.690)
 C_WOOD = (0.165, 0.135, 0.110)
@@ -214,8 +224,14 @@ def irimoya(bld, w, d, base_z, rise, gable_frac=0.42, overhang=2.0,
 
 
 def skirt_ring(bld, xi, yi, zi, xo, yo, zo, lift_corner=0.45, m=5,
-               col=C_KAWARA, col_edge=C_KAWARA_DK):
-    """裳階／腰簷：內外兩圈細分折線，四角斜接 + 角部微翹。"""
+               col=C_KAWARA, col_edge=C_KAWARA_DK, gap_hw=0.0):
+    """裳階／腰簷：內外兩圈細分折線，四角斜接 + 角部微翹。
+
+    gap_hw > 0 時在**正面（-y 邊）**|x| < gap_hw 的區段整段不畫 ——
+    唐破風玄関要從這裡穿出去。簷不讓路的話，一條 25m 的水平簷會直接
+    從玄関屋頂中間橫切過去，唐破風就變成貼在牆上的雨遮而不是玄関。
+    切口露出來的斷面不補（正上方就是唐破風屋面，看不到）。
+    要切得準，m 要開大：預設 m=5 一段就 5.5m 寬，根本切不出 6m 的口。"""
     def ring(xm, ym, z, do_lift):
         pts = []
         for j in range(m):
@@ -241,10 +257,188 @@ def skirt_ring(bld, xi, yi, zi, xo, yo, zo, lift_corner=0.45, m=5,
     n = 4 * m
     for j in range(n):
         j2 = (j + 1) % n
+        # j < m 才是正面那條邊（ring() 的第一段），玄関開口只在正面讓路
+        if gap_hw > 0.0 and j < m and abs(ro[j][0] + ro[j2][0]) * 0.5 < gap_hw:
+            continue
         bld.quad(ro[j], ro[j2], ri[j2], ri[j], col)
         bld.quad((ro[j][0], ro[j][1], ro[j][2] - 0.16),
                  (ro[j2][0], ro[j2][1], ro[j2][2] - 0.16),
                  ro[j2], ro[j], col_edge)
+
+
+# ─────────────────────── 唐破風玄関（向唐破風）───────────────────────
+#
+# Feature List §1 建築件的最後一塊，也是整張清單技術上最麻煩的一件。
+#
+# 破風的輪廓是一條 **S 曲線**：中央上凸（起り）→ 兩翼下凹（反り）→
+# 末端再往上勾一下（簷角）。三段曲率、兩個反曲點。硬湊控制點會湊到天亮，
+# 但找對函數就只是一行：
+#
+#   **sin²(sπ/2) 天生就是這條 S。** 它在 s=0 附近二階導為正、s=1 附近為負，
+#   反曲點正正好落在 s=0.5。拿它當「從棟往下掉多少」，中央自然是凸的、
+#   外側自然是凹的，而且只用 drop 一個參數就控制整條曲線的深度。
+#
+#   末端那一勾另外加 s⁶。六次方在 s<0.75 幾乎是 0，只有最外側十幾 % 才
+#   抬得動 —— 剛好是簷角的位置，不會把中段辛苦做出來的凸給壓平。
+#
+# 屋面**不是**把這條曲線沿 y 平移拉出去（那是圓筒，看起來像水管）：
+# 從牆面掃到簷口的過程中半寬 3.35→3.85 外張、棟高 4.45→3.75 下傾，
+# **每一圈都是一條不同的 S 曲線**，圈與圈之間鋪 quad。這就是「曲面斷面
+# ＋寬度方向切妻疊合」—— 整片屋面沒有任何一塊 quad 是平的。
+#
+# 高度是被上下夾死的，不能亂調：上面 y=-8.98 處有裳階的簷口壓著
+# （底 4.54），下面有腰簷（頂 3.36）。棟頂 4.45→3.75 這組數字是量出來
+# 剛好穿過中間的，動 z_back/z_tip 之前先重算這兩個夾擠點。
+
+def _bar_y(bld, x, hx, hz, y0, z0, y1, z1, col):
+    """沿 y 掃的矩形斷面棒，**可以斜** —— box() 只能軸對齊，做不出跟著
+    屋面一起下傾的棟。繞序交給 _auto_quad 用幾何判（手推六個面的繞序
+    是純粹在給自己找錯）。"""
+    ctr = (x, (y0 + y1) / 2, (z0 + z1) / 2)
+
+    def sec(y, z):
+        return [(x - hx, y, z - hz), (x + hx, y, z - hz),
+                (x + hx, y, z + hz), (x - hx, y, z + hz)]
+
+    a, b = sec(y0, z0), sec(y1, z1)
+    for k in range(4):
+        k2 = (k + 1) % 4
+        _auto_quad(bld, ctr, a[k], a[k2], b[k2], b[k], col)
+    _auto_quad(bld, ctr, a[0], a[1], a[2], a[3], col)
+    _auto_quad(bld, ctr, b[0], b[1], b[2], b[3], col)
+
+
+def _kara_z(t, peak, drop, flare):
+    """唐破風斷面。t ∈ [-1,1]（0=棟、±1=簷角），回傳絕對高度。"""
+    s = min(1.0, abs(t))
+    return peak - drop * math.sin(s * math.pi / 2) ** 2 + flare * s ** 6
+
+
+def build_karahafu(bld, y_wall, y_deck, deck_z, gate_hw):
+    """向唐破風玄関：屋面 + 破風板 + 兎毛通 + 向拝柱 + 虹樑 + 五段階梯。
+
+    y_wall  正面外牆平面（-y 側）
+    y_deck  縁側外緣（階梯從這裡往外落）
+    deck_z  縁側面高（階梯要爬到這個高度）
+    gate_hw 玄関開口半寬（腰簷、高欄、格子窗都照這個讓路）
+    """
+    y_back, y_tip, y_post = y_wall + 0.13, -12.35, -11.90
+    z_back, z_tip = 4.45, 3.75
+    hw_back, hw_tip = 3.35, 3.85
+    drop, flare = 1.25, 0.55
+    # nd 只要 2：hw_at/pk_at 都是 u 的一次式，_kara_z 的 v 項又跟 u 無關 ——
+    # 這片屋面在深度方向是**直紋曲面**，切再多刀也是同一個形狀，純浪費面。
+    # 曲率全部集中在 nt（橫向），那才是 S 曲線所在、也才是輪廓所在。
+    nd, nt = 2, 18
+    bd_h, bd_t, sof = 0.46, 0.20, 0.22          # 破風板垂高／厚度、屋面下皮
+
+    def hw_at(u):
+        return hw_back + (hw_tip - hw_back) * u
+
+    def pk_at(u):
+        return z_back + (z_tip - z_back) * u
+
+    def pt(i, j):
+        u = i / nd                              # 0=牆 1=簷口
+        v = j / nt * 2.0 - 1.0                  # -1=左簷角 0=棟 +1=右簷角
+        return (v * hw_at(u), y_back + (y_tip - y_back) * u,
+                _kara_z(v, pk_at(u), drop, flare))
+
+    # ── 屋面（上皮）+ 下皮（軒裏）──
+    # 下皮不是可有可無：玩家站在階梯上抬頭第一眼就是這一面，零厚度的
+    # 單面屋頂會被背面剔除直接看穿到天空去。
+    for i in range(nd):
+        for j in range(nt):
+            a, b2, c, dd = pt(i, j), pt(i, j + 1), pt(i + 1, j + 1), pt(i + 1, j)
+            bld.quad(a, b2, c, dd, C_KAWARA if j % 2 == 0 else C_KAWARA_DK, flip=True)
+            bld.quad((a[0], a[1], a[2] - sof), (b2[0], b2[1], b2[2] - sof),
+                     (c[0], c[1], c[2] - sof), (dd[0], dd[1], dd[2] - sof), C_WOOD_LT)
+    for i in range(nd):                         # 左右簷口的厚度側面
+        for j in (0, nt):
+            a, b2 = pt(i, j), pt(i + 1, j)
+            _auto_quad(bld, (0.0, (y_back + y_tip) / 2, (z_back + z_tip) / 2 - 1.0),
+                       a, b2, (b2[0], b2[1], b2[2] - sof), (a[0], a[1], a[2] - sof),
+                       C_KAWARA_DK)
+    # 棟收在破風板後面 0.6m：頂到簷口的話，正面看就是破風尖上頂著一顆
+    # 方盒子（棟的端面），唐破風最好看的那個頂點會被自己的棟砸爛。
+    y_rg = y_tip + 0.60
+    _bar_y(bld, 0.0, 0.26, 0.11, y_back, z_back + 0.06,
+           y_rg, pk_at((y_rg - y_back) / (y_tip - y_back)) + 0.06, C_RIDGE)
+
+    # ── 破風板：沿簷口那條 S 曲線垂下的厚板，唐破風的招牌 ──
+    def tip_z(v):
+        return _kara_z(v, z_tip, drop, flare)
+
+    y_bd = y_tip - bd_t
+    for j in range(nt):
+        v0, v1 = j / nt * 2.0 - 1.0, (j + 1) / nt * 2.0 - 1.0
+        x0, x1 = v0 * hw_tip, v1 * hw_tip
+        z0t, z1t = tip_z(v0), tip_z(v1)
+        bld.quad((x0, y_tip, z0t), (x1, y_tip, z1t),
+                 (x1, y_bd, z1t), (x0, y_bd, z0t), C_KAWARA_DK, flip=True)
+        bld.quad((x0, y_bd, z0t), (x1, y_bd, z1t),
+                 (x1, y_bd, z1t - bd_h), (x0, y_bd, z0t - bd_h), C_WOOD_LT, flip=True)
+        bld.quad((x0, y_bd, z0t - bd_h), (x1, y_bd, z1t - bd_h),
+                 (x1, y_tip, z1t - bd_h), (x0, y_tip, z0t - bd_h), C_WOOD, flip=True)
+
+    # ── 向拝柱 ×2 + 礎石 + 虹樑 ──
+    # 柱頂／樑頂都用 _kara_z 現算屋面高度，不寫死數字：改上面任何一個
+    # 參數，柱子會自己跟著長到屋面底下，不會又戳出去或懸空。
+    u_post = (y_post - y_back) / (y_tip - y_back)
+    z_col = _kara_z(2.55 / hw_at(u_post), pk_at(u_post), drop, flare) - 0.06
+    z_lint = _kara_z(2.78 / hw_at(u_post), pk_at(u_post), drop, flare) - 0.35
+    for sx in (1, -1):
+        bld.box(sx * 2.55, y_post, 0.13, 0.72, 0.72, 0.26, C_STONE)          # 礎石
+        bld.box(sx * 2.55, y_post, (0.26 + z_col) / 2, 0.40, 0.40, z_col - 0.26, C_WOOD)
+    bld.box(0.0, y_post, z_lint - 0.21, 5.9, 0.34, 0.42, C_WOOD)             # 虹樑
+    # 樑上不放蟇股：妻壁在 y_tip、樑在 y_post，中間差 0.45m，蟇股會**整個**
+    # 被妻壁擋在後面 —— 六個 quad 誰也看不到。
+
+    # ── 妻壁：破風板背後那片漆喰，被 S 曲線切成一彎月牙 ──
+    for j in range(nt):
+        v0, v1 = j / nt * 2.0 - 1.0, (j + 1) / nt * 2.0 - 1.0
+        z0t, z1t = tip_z(v0) - bd_h, tip_z(v1) - bd_h
+        if z0t <= z_lint and z1t <= z_lint:
+            continue                                    # 曲線已經掉到樑下，月牙到此為止
+        bld.quad((v0 * hw_tip, y_tip, max(z0t, z_lint)),
+                 (v1 * hw_tip, y_tip, max(z1t, z_lint)),
+                 (v1 * hw_tip, y_tip, z_lint), (v0 * hw_tip, y_tip, z_lint),
+                 C_PLASTER, flip=True)
+
+    # 兎毛通（破風正中央垂下的懸魚）：兩段收窄，不然就是一顆掛在破風上的箱子
+    zc = tip_z(0.0) - bd_h
+    bld.box(0.0, y_bd - 0.06, zc - 0.14, 0.52, 0.14, 0.30, C_WOOD)
+    bld.box(0.0, y_bd - 0.06, zc - 0.38, 0.30, 0.14, 0.26, C_WOOD)
+
+    # ── 五段階梯（Feature List §1「5 階木階梯」）──
+    # 舊版的階梯埋在縁側**底下**（頂階 y≈-8.6，縁側從 -9.33 才開始），
+    # 爬到第三階就撞到地板，前面還橫著一整排不斷開的高欄 —— 等於做了
+    # 一座走不上去的階梯。這次落在縁側外緣往外，高欄在這一段開口。
+    # ⚠ 階梯**不能**用 5 個實心 box 疊。box 是巢狀的（每個都從地面長到自己
+    # 的高度），側面全部落在 x=±hw_st 同一個平面上互相重疊 —— 共面的兩張面
+    # 會讓 Cycles 的陰影線一離開表面就打到對方，整片階梯側面算成 **純黑
+    # (0,0,0)**，連關掉太陽只留環境光都還是黑的。（這個黑塊 debug 花的時間
+    # 比唐破風本身還久：看起來像破洞，ray_cast 打下去卻是好好的面、法線
+    # 對、顏色對 —— 錯的是「有兩張」。）
+    #
+    # 改成分段鋪面的**開放殼**：蹴込 + 踏面 + 兩側，每一段各佔各的 y/z 區間，
+    # 沒有任何一對共面。底面與背面直接不畫 —— 它們永遠貼著地面和基壇正面，
+    # 看不到，而畫出來就又是兩對共面。順便還從 30 個 quad 降到 20 個。
+    n_st, tread = 5, 0.42
+    hw_st = gate_hw - 0.05
+    ys = [y_deck - (n_st - i) * tread for i in range(n_st)] + [y_deck]
+    zs = [0.0] + [deck_z * (i + 1) / n_st for i in range(n_st)]
+    for i in range(n_st):
+        y0, y1, za, zb = ys[i], ys[i + 1], zs[i], zs[i + 1]
+        bld.quad((-hw_st, y0, za), (hw_st, y0, za),
+                 (hw_st, y0, zb), (-hw_st, y0, zb), C_WOOD)              # 蹴込板
+        bld.quad((-hw_st, y0, zb), (hw_st, y0, zb),
+                 (hw_st, y1, zb), (-hw_st, y1, zb),
+                 C_WOOD_LT if i % 2 else C_ENGAWA)                       # 踏面
+        for sx in (1, -1):
+            bld.quad((sx * hw_st, y0, 0.0), (sx * hw_st, y1, 0.0),
+                     (sx * hw_st, y1, zb), (sx * hw_st, y0, zb),
+                     C_ENGAWA, flip=(sx < 0))
 
 
 # ─────────────────────── 主屋 ───────────────────────
@@ -255,12 +449,11 @@ def build_house(bld):
     f1 = 3.9
     f2 = 3.1
     pod = 0.85
-    # 基壇 + 石階
-    bld.box(0, 0, pod / 2, w + 2.2, d + 2.2, pod, C_STONE)
-    for i in range(5):
-        t = (i + 0.5) / 5
-        bld.box(0, -(d / 2 + 1.1) - (1 - t) * 1.8, pod * t - 0.10,
-                4.4, 0.55, 0.22, C_ENGAWA if i % 2 == 0 else C_WOOD_LT)
+    # 基壇（階梯歸唐破風玄関那段做 —— 階梯得跟玄関對齊才有意義）
+    # 前後進深吃到 d+4.1：縁側外緣就在 ±(d/2+2.05)，基壇原本只到 ±(d/2+1.1)，
+    # 縁側等於有 0.95m 懸空。以前正面被一整排高欄擋著看不出來，這輪把高欄
+    # 在玄関處切開之後，階梯旁邊就露出一個全黑的洞。基壇接到縁側外緣為止。
+    bld.box(0, 0, pod / 2, w + 2.2, d + 4.1, pod, C_STONE)
     z0 = pod
     bld.box(0, 0, z0 + f1 / 2, w, d, f1, C_PLASTER)
     bld.box(0, 0, z0 + 0.55, w + 0.08, d + 0.08, 1.1, C_WOOD_LT)
@@ -277,21 +470,39 @@ def build_house(bld):
         bld.box(0, sy * (d / 2 + 0.06), z0 + 2.30, w + 0.3, 0.16, 0.16, C_WOOD)
     for i in range(n_post - 1):
         px = -w / 2 + (i + 0.5) * (w / (n_post - 1))
+        if abs(px) < GATE_HW:
+            continue                                     # 這一段是玄関大扉
         bld.box(px, -(d / 2 + 0.02), z0 + 1.75, KEN * 0.74, 0.06, 1.15, C_SHOJI)
+    # 玄関大扉（雙開）—— 唐破風正下方
+    bld.box(0, -(d / 2 + 0.10), z0 + 1.125, 2 * GATE_HW - 0.5, 0.20, 2.25, C_WOOD)
+    for sx in (1, -1):
+        bld.box(sx * 1.25, -(d / 2 + 0.17), z0 + 1.10, 2.30, 0.10, 2.00, C_WOOD_LT)
     # ── 腰簷（Feature List §1：多層次屋頂／錣葺き）──
     # 牆中段切一圈外突腰簷，給下方格子窗一條長條柔和陰影。
     # z0+2.35 ≈ 地面上 3.2m（使用者指定高度），剛好卡在窗楣（頂在
     # z0+2.325）正上方 —— 窗跟簷幾乎是同一條線，陰影才會貼著窗蓋下來。
+    # 正面中央讓給唐破風（gap_hw）；m 從 5 開到 13 才切得出準確的開口。
     koshi_z = z0 + 2.35
     skirt_ring(bld, w / 2 - 0.05, d / 2 - 0.05, koshi_z + 0.16,
-               w / 2 + 1.0, d / 2 + 1.0, koshi_z - 0.06, lift_corner=0.10)
-    # 縁側 + 高欄
+               w / 2 + 1.0, d / 2 + 1.0, koshi_z - 0.06, lift_corner=0.10,
+               m=13, gap_hw=GATE_HW + 0.3)
+    # 縁側 + 高欄（正面在玄関處斷開，階梯才進得來）
     for sy in (1, -1):
         bld.box(0, sy * (d / 2 + 1.05), z0 + 0.12, w + 1.4, 2.0, 0.22, C_ENGAWA)
-        bld.box(0, sy * (d / 2 + 1.95), z0 + 0.95, w + 1.4, 0.11, 0.11, C_WOOD)
+        if sy > 0:
+            bld.box(0, sy * (d / 2 + 1.95), z0 + 0.95, w + 1.4, 0.11, 0.11, C_WOOD)
+        else:
+            seg = (w + 1.4) / 2 - GATE_HW
+            for sx in (1, -1):
+                bld.box(sx * (GATE_HW + seg / 2), sy * (d / 2 + 1.95),
+                        z0 + 0.95, seg, 0.11, 0.11, C_WOOD)
         for i in range(13):
             px = -w / 2 + i * (w / 12)
+            if sy < 0 and abs(px) < GATE_HW:
+                continue
             bld.box(px, sy * (d / 2 + 1.95), z0 + 0.5, 0.09, 0.09, 0.9, C_WOOD)
+    # ── 唐破風玄関（Feature List §1）──
+    build_karahafu(bld, -d / 2, -(d / 2 + 2.05), z0 + 0.23, GATE_HW)
     # 裳階（角部微翹跟主屋頂呼應）
     z1 = z0 + f1
     w2, d2 = w - 3.6, d - 2.6
@@ -542,7 +753,7 @@ export_sel([bld.build("hieda_main")], "hieda_main")
 clear()
 bld = B()
 w, d, pod = build_house(bld)
-sy0 = -(d / 2 + 3.2)                     # 石階前
+sy0 = -(d / 2 + 5.6)                     # 唐破風玄関（簷口 -12.35）之外
 build_avenue(bld, sy0, sy0 - 26.0, width=6.0)
 build_giant_tree(bld, +4.9, sy0 - 7.5, 11)
 build_giant_tree(bld, -4.9, sy0 - 8.6, 47)
