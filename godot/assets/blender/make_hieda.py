@@ -113,6 +113,9 @@ C_HG_DEEP = (0.070, 0.125, 0.100)
 C_HG_MID = (0.128, 0.208, 0.168)
 C_HG_LIT = (0.205, 0.295, 0.238)
 C_BARK = (0.200, 0.150, 0.110)
+# 樹皮：主幹深、末梢略淺。C_BARK 原本渲染出來偏灰白，像水泥柱
+C_TRUNK = (0.115, 0.086, 0.062)
+C_TWIG = (0.175, 0.132, 0.094)
 # 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
 # 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
 C_MAPLE_DK = (0.290, 0.045, 0.030)
@@ -889,23 +892,6 @@ def _leaf_sprig(bld, rng, org, nrm, size, tone_t):
         bld.tri2(p1, p2, tip, col)
 
 
-def add_canopy(bld, center, rx, ry, rz, seed, n_sprigs=80, leaf_size=0.62):
-    """一叢楓葉團：凹凸殼 + 撒葉，取代舊版的平滑橢球。"""
-    rng = random.Random(seed)
-    surf = _canopy_surf(center, rx, ry, rz, seed)
-    _canopy_hull(bld, center, surf)
-    for _ in range(n_sprigs):
-        u, v = rng.uniform(0.0, 1.0), rng.uniform(0.04, 0.96)
-        p, n = surf(u, v)
-        tone_t = rng.uniform(0.15, 1.0)
-        _leaf_sprig(bld, rng, p, n, leaf_size, tone_t)
-    # 頂部補幾叢，避免極點附近（v 接近 0）撒得稀
-    for _ in range(n_sprigs // 5):
-        u = rng.uniform(0.0, 1.0)
-        p, n = surf(u, rng.uniform(0.0, 0.08))
-        _leaf_sprig(bld, rng, p, n, leaf_size, rng.uniform(0.6, 1.0))
-
-
 def build_giant_tree(bld, x_side, y, seed):
     """框景巨樹（Feature List §2）：高 11m、幹徑 0.8m，
     枝幹 3.5m 高處向路中央橫伸 5m —— 兩棵在頭頂交織成楓紅拱門。
@@ -946,13 +932,20 @@ def build_giant_tree(bld, x_side, y, seed):
             bld.quad(p(ax0, rr0, a0), p(ax0, rr0, a1), p(ax1, rr1, a1), p(ax1, rr1, a0),
                      C_BARK, flip=(sgn < 0))
     # 樹冠：主冠（幹頂）+ 拱門冠（枝端，覆在路上方）—— 凹凸殼+撒葉，不是球
-    add_canopy(bld, (x_side + lean, y, 9.2), 2.6, 2.6, 2.6 * 0.62, seed * 3 + 1, n_sprigs=110)
-    add_canopy(bld, (x_side + lean * 0.6, y + rng.uniform(-1, 1), 7.4),
-               2.1, 2.1, 2.1 * 0.66, seed * 3 + 2, n_sprigs=90)
-    add_canopy(bld, (x_side - sgn * 3.4, y, 6.1), 2.0, 2.0, 2.0 * 0.62, seed * 3 + 3, n_sprigs=85)
-    add_canopy(bld, (x_side - sgn * 5.2, y + rng.uniform(-0.6, 0.6), 5.6),
-               1.55, 1.55, 1.55 * 0.6, seed * 3 + 4, n_sprigs=65)
-    add_canopy(bld, (x_side + sgn * 1.2, y - 1.6, 8.2), 1.7, 1.7, 1.7 * 0.6, seed * 3 + 5, n_sprigs=70)
+    # ⚠ 樹冠改用 _canopy_from_tips（跟後院的樹同一套）。原本是 5 顆
+    # add_canopy 球疊在枝上 —— 拱門的**骨架**是對的（枝真的橫伸 5m），
+    # 但冠仍然是「球黏在枝上」。骨架保留不動，只把冠換成沿枝端撒葉。
+    tips = [
+        ((x_side + lean, y, 9.2), (x_side + lean, y, 6.8), 2.6),
+        ((x_side + lean * 0.6, y + rng.uniform(-1, 1), 7.4),
+         (x_side + lean, y, 5.8), 2.1),
+        ((x_side - sgn * 3.4, y, 6.1), (bx0, y, bz0), 2.0),
+        ((x_side - sgn * 5.2, y + rng.uniform(-0.6, 0.6), 5.6),
+         (x_side - sgn * 3.2, y, 6.0), 1.6),
+        ((x_side + sgn * 1.2, y - 1.6, 8.2), (x_side + lean, y, 6.6), 1.7),
+    ]
+    _canopy_from_tips(bld, rng, tips, 1.95, 660, 0.70,
+                      TREE_MAPLE["hull"], TREE_MAPLE["lo"], TREE_MAPLE["hi"])
 
 
 # ─────────────────────── 後院（back garden）───────────────────────
@@ -1139,36 +1132,215 @@ def build_karetaki(bld, x_top, y_top, x_bot, y_bot, z_top, seed):
 
 # ── 楓（池畔）──
 
-def build_maple(bld, x, y, h, seed, lean=0.28, crown=1.0, dens=1.0, clusters=2):
-    """楓。`crown`（冠幅倍率）／`dens`（葉量倍率）／`clusters`（冠叢數）
-    是**品種參數** —— 只換 seed 的話每棵樹的輪廓統計上是一樣的，遠看仍是
-    同一棵複製貼上。要「看得出是不同的樹」得改的是比例與疏密：
-      老木 = 高、冠寬、葉疏、枝幹傾斜大
-      中木 = 中等、冠圓、葉密
-      若木 = 矮、冠小而緊、葉最密
-    """
+# ─────────────────── 樹：遞迴分枝（不是棍子上插球）───────────────────
+#
+# ⚠ 舊版 build_maple 是「八角柱樹幹 + 2~3 顆 add_canopy 球」，樹冠中心是
+# 寫死在樹幹頂端上方的偏移量 —— 跟枝條完全無關。那就是字面意義上的
+# 「棍子上插一顆球」，再怎麼調球的凹凸都救不回來，因為**問題不在表面**。
+#
+# 真正的樹：樹冠的形狀是「所有枝條末端在哪裡」的結果，不是一個獨立的
+# 幾何體貼上去。所以這裡改成遞迴分枝：
+#   1. 樹幹長一段 → 分岔 → 每個子枝再長再分，深度 3
+#   2. 半徑逐段收細，每次分岔再乘一個 < 1 的比例（枝越分越細）
+#   3. **葉團只長在枝端**，一個枝端一團。樹冠 = 所有葉團的聯集 ——
+#      枝條伸到哪，冠就到哪；枝條不對稱，冠就自然不對稱
+#   4. 子枝的方位角平均分佈後再抖動，長度／半徑比例也各自隨機 ——
+#      完全對稱的分岔會長出聖誕樹
+#
+# 松用同一支產生器，只換 profile：多一個「主幹延續（leader）」的子枝
+# 幾乎直上，其餘側枝接近水平 —— 那是針葉樹的骨架，闊葉樹則是主幹在
+# 分岔處就消失（分叉成對等的枝）。
+
+
+def _norm3(v):
+    l = math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]) or 1.0
+    return (v[0] / l, v[1] / l, v[2] / l)
+
+
+def _basis(d):
+    """給方向 d 一組正交基底 (d, u, v)。"""
+    ref = (0.0, 0.0, 1.0) if abs(d[2]) < 0.9 else (1.0, 0.0, 0.0)
+    u = _norm3((d[1] * ref[2] - d[2] * ref[1], d[2] * ref[0] - d[0] * ref[2],
+                d[0] * ref[1] - d[1] * ref[0]))
+    v = (d[1] * u[2] - d[2] * u[1], d[2] * u[0] - d[0] * u[2], d[0] * u[1] - d[1] * u[0])
+    return u, v
+
+
+def _bend(d, az, ang):
+    """把方向 d 依方位角 az 偏開 ang 弧度。"""
+    u, v = _basis(d)
+    ca, sa = math.cos(ang), math.sin(ang)
+    cz, sz = math.cos(az), math.sin(az)
+    return _norm3((d[0] * ca + (u[0] * cz + v[0] * sz) * sa,
+                   d[1] * ca + (u[1] * cz + v[1] * sz) * sa,
+                   d[2] * ca + (u[2] * cz + v[2] * sz) * sa))
+
+
+def _tube(bld, pts, radii, col, sides=5):
+    """沿折線掃的錐形管（枝幹）。每節點各自取正交基底 —— 會有一點扭轉，
+    但枝這種細長物件看不出來，省掉 parallel transport。"""
+    n = len(pts)
+    rings = []
+    for i, p in enumerate(pts):
+        a, b = pts[max(i - 1, 0)], pts[min(i + 1, n - 1)]
+        t = _norm3((b[0] - a[0], b[1] - a[1], b[2] - a[2]))
+        u, v = _basis(t)
+        ring = []
+        for k in range(sides):
+            ang = k / sides * math.tau
+            cu, cv = math.cos(ang) * radii[i], math.sin(ang) * radii[i]
+            ring.append((p[0] + u[0] * cu + v[0] * cv,
+                         p[1] + u[1] * cu + v[1] * cv,
+                         p[2] + u[2] * cu + v[2] * cv))
+        rings.append(ring)
+    for i in range(n - 1):
+        for k in range(sides):
+            k2 = (k + 1) % sides
+            bld.quad(rings[i][k], rings[i][k2], rings[i + 1][k2], rings[i + 1][k], col)
+
+
+def _canopy_from_tips(bld, rng, tips, spread, n_tuft, leaf, c_hull, c_lo, c_hi,
+                      n_shade=5):
+    """樹冠 = 所有枝端**周圍體積**裡的葉子聯集，不是「每個枝端一顆殼」。
+
+    ⚠ 這是第五版才走對的路。v4 是每個枝端做一顆凹凸殼再撒葉，結果每團
+    都是「深色核心 + 一圈放射狀的葉」—— 像海膽不像樹。原因是密度算不過來：
+    一顆半徑 0.56 的殼表面約 3m²，要蓋滿得撒數百片葉（make_hedge.py 實測
+    要 276 片/m²），24 顆殼乘起來根本撒不起，於是殼永遠露著。
+
+    改成把葉子直接撒進枝端周圍的**體積**：密度集中在冠的外緣（真正形成
+    剪影的地方），而不是平均攤在每顆殼的表面上。同樣的面數，覆蓋率完全
+    不同。暗色團塊只留 5 顆放在最粗的枝端，純粹擋光。
+
+    葉子朝向取「離冠心的方向」—— 整個冠的受光才會連貫（每片各自朝外的話
+    明暗會亂成雜訊）。"""
+    if not tips:
+        return
+    cx = sum(t[0][0] for t in tips) / len(tips)
+    cy = sum(t[0][1] for t in tips) / len(tips)
+    cz = sum(t[0][2] for t in tips) / len(tips)
+    # ⚠ 不放暗色團塊。v5 在粗枝端擺了 5 顆暗殼擋光，結果它們在葉子之間
+    # 露成一顆顆深色多面體 —— 像樹上掛了幾個鳥巢。擋光改用**顏色**做：
+    # 靠近枝端（冠內部）的葉子往暗色混，外緣的保持鮮亮。同樣讀得出
+    # 「裡面是暗的」，但沒有任何一塊硬幾何露出來，而且不花面數。
+    # 葉子：挑一枝，沿它的**外段**（t=0.32~1.0）取點再偏移。
+    # 只堆在末端一點的話，枝條會長長一段光禿禿地露在外面 —— 真的樹
+    # 葉子是長在枝的外三分之一整段上的。
+    ws = [t[2] for t in tips]
+    tot = sum(ws) or 1.0
+    for _ in range(n_tuft):
+        r = rng.random() * tot
+        acc = 0.0
+        pick = tips[0]
+        for t, wq in zip(tips, ws):
+            acc += wq
+            if acc >= r:
+                pick = t
+                break
+        ft = rng.uniform(0.32, 1.0)
+        tp = (pick[1][0] + (pick[0][0] - pick[1][0]) * ft,
+              pick[1][1] + (pick[0][1] - pick[1][1]) * ft,
+              pick[1][2] + (pick[0][2] - pick[1][2]) * ft)
+        # ⚠ 半徑取 u^0.45 而不是球內均勻取樣。均勻取樣有一半的葉子落在
+        # 內部被自己擋住 —— 對剪影完全沒貢獻，等於白花面數。偏外側取樣
+        # 讓同樣的葉數集中在真正形成輪廓的地方（但仍不是純球面，
+        # 純球面會排成一層殼、內部空掉）。
+        _d = _norm3((rng.gauss(0, 1), rng.gauss(0, 1), rng.gauss(0, 1)))
+        _rad = rng.random() ** 0.45
+        ox, oy, oz = _d[0] * _rad, _d[1] * _rad, _d[2] * _rad
+        sc = spread * 1.16
+        rad = _rad
+        p_ = (tp[0] + ox * sc, tp[1] + oy * sc, tp[2] + oz * sc * 0.82)
+        nrm = _norm3((p_[0] - cx, p_[1] - cy, (p_[2] - cz) * 0.7 + 0.25))
+        # 內深外亮：rad 小 = 貼著枝端 = 冠內部
+        lo = _mix(c_hull, c_lo, min(1.0, 0.30 + rad * 0.95))
+        hi = _mix(c_lo, c_hi, min(1.0, rad * 1.15))
+        _leaf_tuft(bld, rng, p_, nrm, leaf, lo, hi, n_leaf=2)
+
+
+def _grow(bld, tips, p, d, r, ln, depth, cfg, rng):
+    """一段枝：邊長邊收細，末端分岔；到底層就記下枝端位置給葉團用。"""
+    segs = 3
+    pts, rr = [p], [r]
+    if depth == 0:
+        # 樹頭外張：真的樹幹在地面附近會擴根盤，等徑圓柱插進土裡像電線桿
+        pts = [p, (p[0] + d[0] * ln * 0.10, p[1] + d[1] * ln * 0.10,
+                   p[2] + d[2] * ln * 0.10)]
+        rr = [r * 1.42, r]
+    cur_p, cur_d = pts[-1], d
+    ups = cfg["up"]
+    up_k = ups[min(depth, len(ups) - 1)]
+    for i in range(segs):
+        cur_d = _norm3((cur_d[0] + rng.uniform(-cfg["wig"], cfg["wig"]),
+                        cur_d[1] + rng.uniform(-cfg["wig"], cfg["wig"]),
+                        cur_d[2] + up_k))
+        step = ln / segs
+        cur_p = (cur_p[0] + cur_d[0] * step, cur_p[1] + cur_d[1] * step,
+                 cur_p[2] + cur_d[2] * step)
+        pts.append(cur_p)
+        rr.append(r * (1.0 - (i + 1) / segs * cfg["taper"]))
+    _tube(bld, pts, rr, _mix(C_TRUNK, C_TWIG, min(1.0, depth / 3.0)),
+          sides=5 if depth == 0 else (4 if depth == 1 else 3))
+    r_end = rr[-1]
+    if depth >= cfg["depth"]:
+        tips.append((cur_p, pts[0], ln))
+        return
+    n = cfg["split"][min(depth, len(cfg["split"]) - 1)]
+    az0 = rng.uniform(0.0, math.tau)
+    for c in range(n):
+        leader = cfg.get("leader") and c == 0
+        az = az0 + (c / float(n)) * math.tau + rng.uniform(-0.55, 0.55)
+        ang = rng.uniform(*(cfg["lead_ang"] if leader else cfg["ang"]))
+        lr = rng.uniform(*(cfg["lead_lratio"] if leader else cfg["lratio"]))
+        _grow(bld, tips, cur_p, _bend(cur_d, az, ang),
+              r_end * rng.uniform(*cfg["rratio"]), ln * lr, depth + 1, cfg, rng)
+
+
+# ⚠ 闊葉樹也要 leader。沒有 leader 的話樹幹在第一次分岔就消失，所有枝
+# 從同一高度散開 —— 冠因此是一頂**平底的蘑菇帽**（v2 就是這樣）。
+# 有 leader 主幹才會一路往上、每一層沿途甩出側枝，枝端散佈在不同高度，
+# 冠的下緣才會參差。
+# up 改成 per-depth：主幹向上(0.34) → 側枝漸平(0.14/0.02) → 末梢下垂(-0.12)。
+# 楓的枝是外展微垂的，全部向上就是白楊。
+TREE_MAPLE = dict(
+    trunk_r=0.044, trunk_len=0.30, depth=4, split=(4, 2, 2, 2),
+    ang=(0.62, 1.15), lratio=(0.50, 0.88), rratio=(0.54, 0.74),
+    up=(0.34, 0.14, 0.02, -0.12), wig=0.30, taper=0.28,
+    leader=True, lead_ang=(0.10, 0.32), lead_lratio=(0.66, 0.86),
+    fol=0.072, ntuft=500, leaf=0.50, flat=0.78,
+    hull=(0.048, 0.016, 0.012),
+    lo=(0.520, 0.095, 0.045), hi=(0.830, 0.290, 0.095))
+
+TREE_PINE = dict(
+    trunk_r=0.036, trunk_len=0.32, depth=4, split=(4, 3, 2, 2),
+    ang=(1.06, 1.42), lratio=(0.40, 0.60), rratio=(0.40, 0.58),
+    up=(0.46, 0.06, -0.06, -0.12), wig=0.10, taper=0.34,
+    leader=True, lead_ang=(0.06, 0.20), lead_lratio=(0.62, 0.76),
+    # 松要的是**密而扁的葉盤**：葉小(0.29)、量大(760)、fol 收緊(0.046)、
+    # flat 壓到 0.40。稀疏的針葉樹會讀成闊葉樹的幼苗。
+    fol=0.046, ntuft=640, leaf=0.34, flat=0.40,
+    hull=(0.016, 0.030, 0.018),
+    lo=(0.130, 0.245, 0.115), hi=(0.265, 0.395, 0.180))
+
+
+# 三個品種：差在**骨架比例**（枝角、下垂、葉量），不是只換 seed ——
+# 只換 seed 的話每棵的統計輪廓一樣，遠看仍是同一棵複製貼上。
+MAPLE_OLD = dict(TREE_MAPLE, ang=(0.72, 1.28), up=(0.30, 0.08, -0.04, -0.20),
+                 fol=0.080, ntuft=470, trunk_r=0.050)
+MAPLE_MID = dict(TREE_MAPLE)
+MAPLE_YNG = dict(TREE_MAPLE, ang=(0.50, 0.95), up=(0.40, 0.22, 0.10, -0.04),
+                 fol=0.064, ntuft=500, trunk_r=0.038)
+
+
+def build_tree(bld, x, y, h, seed, cfg):
+    """遞迴分枝樹。h = 目標樹高（公尺）。"""
     rng = random.Random(seed)
-    ht = h * 0.52
-    for seg, (r0, r1, z0, z1) in enumerate([(0.30, 0.24, 0.0, ht * 0.55),
-                                            (0.24, 0.15, ht * 0.55, ht)]):
-        nn = 8
-        for k in range(nn):
-            a0, a1 = k / nn * math.tau, (k + 1) / nn * math.tau
-            lx0, lx1 = lean * (z0 / ht), lean * (z1 / ht)
-            bld.quad((x + lx0 + math.cos(a0) * r0, y + math.sin(a0) * r0, z0),
-                     (x + lx0 + math.cos(a1) * r0, y + math.sin(a1) * r0, z0),
-                     (x + lx1 + math.cos(a1) * r1, y + math.sin(a1) * r1, z1),
-                     (x + lx1 + math.cos(a0) * r1, y + math.sin(a0) * r1, z1), C_BARK)
-    cr = h * 0.30 * crown
-    add_canopy(bld, (x + lean, y, ht + cr * 0.55), cr, cr, cr * 0.66,
-               seed * 7 + 1, n_sprigs=int(46 * dens), leaf_size=0.50 * crown)
-    add_canopy(bld, (x + lean * 1.9, y + rng.uniform(-1.1, 1.1), ht + cr * 0.15),
-               cr * 0.74, cr * 0.74, cr * 0.52, seed * 7 + 2,
-               n_sprigs=int(34 * dens), leaf_size=0.46 * crown)
-    if clusters > 2:
-        add_canopy(bld, (x + lean * 0.4, y + rng.uniform(-1.4, 1.4), ht + cr * 0.92),
-                   cr * 0.62, cr * 0.62, cr * 0.46, seed * 7 + 3,
-                   n_sprigs=int(26 * dens), leaf_size=0.44 * crown)
+    tips = []
+    d0 = _norm3((rng.uniform(-0.10, 0.10), rng.uniform(-0.10, 0.10), 1.0))
+    _grow(bld, tips, (x, y, 0.0), d0, h * cfg["trunk_r"], h * cfg["trunk_len"],
+          0, cfg, rng)
+    _canopy_from_tips(bld, rng, tips, h * cfg["fol"], cfg["ntuft"], cfg["leaf"],
+                      cfg["hull"], cfg["lo"], cfg["hi"])
 
 
 # ── 2. 菜園 ──
@@ -1604,7 +1776,7 @@ def build_closed_gate(bld, px, py, ang, seed):
     bld.box(c0[0], c0[1], 2.99, 3.60, 0.24, 0.16, C_RIDGE)
 
 
-def _leaf_tuft(bld, rng, org, nrm, size, c_lo, c_hi):
+def _leaf_tuft(bld, rng, org, nrm, size, c_lo, c_hi, n_leaf=3):
     """一叢 3 片**短而寬**的葉。
 
     ⚠ 寬度要接近長度（0.72~0.95×）。`make_hedge.py` 踩過並寫在註解裡：
@@ -1616,8 +1788,8 @@ def _leaf_tuft(bld, rng, org, nrm, size, c_lo, c_hi):
     tl = math.sqrt(tx * tx + ty * ty + tz * tz) or 1.0
     tx, ty, tz = tx / tl, ty / tl, tz / tl
     bx, by, bz = ny * tz - nz * ty, nz * tx - nx * tz, nx * ty - ny * tx
-    for k in range(3):
-        a = rng.uniform(0.0, math.tau) + k * math.tau / 3.0
+    for k in range(n_leaf):
+        a = rng.uniform(0.0, math.tau) + k * math.tau / n_leaf
         ln = size * rng.uniform(0.85, 1.30)
         wd = ln * rng.uniform(0.72, 0.95)
         dx = nx + (tx * math.cos(a) + bx * math.sin(a)) * 0.85
@@ -1780,22 +1952,13 @@ def build_back_garden(bld):
     #   老木 crown 1.25 / dens 0.72 / 3 叢：高、冠寬、葉疏
     #   中木 crown 1.00 / dens 1.00 / 2 叢
     #   若木 crown 0.72 / dens 1.30 / 2 叢：矮、冠緊、葉最密
-    OLD = dict(crown=1.25, dens=0.72, clusters=3)
-    MID = dict(crown=1.00, dens=1.00, clusters=2)
-    YNG = dict(crown=0.72, dens=1.30, clusters=2)
-    # 池畔（原有兩棵）
-    build_maple(bld, m1[0], m1[1], 11.0, 23, lean=1.2, **OLD)
-    build_maple(bld, m2[0], m2[1], 7.8, 41, lean=0.8, **MID)
-    # 枯山水外緣三棵 —— 砂庭四周原本整片空，只有砂與石
-    for mx, my, mh, ms, ml, var in [(35.6, 19.8, 8.6, 53, -0.7, MID),
-                                    (31.9, 47.6, 6.2, 59, 0.5, YNG),
-                                    (5.4, 21.1, 10.2, 67, 0.9, OLD)]:
-        build_maple(bld, mx, my, mh, ms, lean=ml, **var)
-    # 小徑沿線三棵 —— 走過去的路上不能只有樹叢
-    for mx, my, mh, ms, ml, var in [(-8.0, 50.0, 9.4, 73, 0.6, OLD),
-                                    (12.5, 50.0, 6.6, 79, -0.5, YNG),
-                                    (24.5, 55.5, 8.0, 83, 0.7, MID)]:
-        build_maple(bld, mx, my, mh, ms, lean=ml, **var)
+    for mx, my, mh, ms, var in [
+            (m1[0], m1[1], 11.0, 23, MAPLE_OLD), (m2[0], m2[1], 7.8, 41, MAPLE_MID),
+            (35.6, 19.8, 8.6, 53, MAPLE_MID), (31.9, 47.6, 6.2, 59, MAPLE_YNG),
+            (5.4, 21.1, 10.2, 67, MAPLE_OLD),          # 枯山水外緣
+            (-8.0, 50.0, 9.4, 73, MAPLE_OLD), (12.5, 50.0, 6.6, 79, MAPLE_YNG),
+            (24.5, 55.5, 8.0, 83, MAPLE_MID)]:         # 小徑沿線
+        build_tree(bld, mx, my, mh, ms, var)
 
     # 菜園（西北角，退到最裡面）
     build_veg_garden(bld, -30.0, 52.0, 11)
@@ -1859,7 +2022,7 @@ def build_back_garden(bld):
             (-1.0, 45.8, 63, 3), (10.6, 53.4, 64, 2),      # 折點內側（視線遮蔽）
             (20.0, 61.6, 65, 2),                            # 第二折之後
             (-33.6, 45.4, 61, 2), (-4.2, 15.8, 62, 2),     # 池畔（東北岸／東南岸）
-            (7.2, 11.4, 67, 2), (-12.5, 11.9, 68, 2),      # 縁側前（貼主屋北面）
+            (7.2, 13.1, 67, 2), (-6.0, 13.3, 68, 2),       # 縁側前（離基壇 1.2~1.4m）
             (-40.5, 27.0, 69, 3), (31.5, 52.5, 70, 2),     # 生垣內側
             (-8.5, 69.5, 71, 2)]:                           # 生垣內側（北段）
         build_shrub_clump(bld, bx, by, bs, n=bn)
@@ -1881,8 +2044,8 @@ def build_back_garden(bld):
     # 兩側密植往外挪、收小一號：擋得住繞路，但不會把木戶壓成配角 ——
     # 終點要讀成「一道關著的門」，不是「兩叢樹中間有東西」
     for sd in (1, -1):
-        build_shrub_clump(bld, PATH_END[0] - math.sin(PATH_END_ANG) * sd * 4.0,
-                          PATH_END[1] + math.cos(PATH_END_ANG) * sd * 4.0,
+        build_shrub_clump(bld, PATH_END[0] - math.sin(PATH_END_ANG) * sd * 5.4,
+                          PATH_END[1] + math.cos(PATH_END_ANG) * sd * 5.4,
                           80 + sd, n=3, spread=1.9)
     return [
         ("rock_c", g1[0], g1[1], 0.30, 0.6, (1.15, 1.15, 1.30)),
@@ -2000,6 +2163,11 @@ build_giant_tree(bld, -4.9, -21.5, 47)
 # 前庭深 22.6m（門 -34 → 石階 -11.4）。狛犬擺在「從外側參道往內約 1/3」
 # 處 = -34 + 22.6/3 ≈ -26.5。燈籠與松依序往外側讓開，形成一個漸開的
 # 八字 —— 站在門口往內看，三對物件把視線收束到唐破風玄関上。
+# 門前的松：改用遞迴樹產生器。tree_pine_a.glb 是「圓錐插在棍子上」，
+# 跟舊版楓同一個病；這裡不動那個共用資產（村裡還在用），改成在
+# 稗田邸自己長兩棵。
+build_tree(bld, 9.90, -30.60, 7.6, 151, TREE_PINE)
+build_tree(bld, -9.50, -30.90, 8.8, 157, TREE_PINE)
 garden_rocks = build_back_garden(bld)
 objs = [bld.build("hieda_scene")]
 # 狛犬**維持左右嚴格對稱**：牠是儀式性的門衛，一對石獅子擺歪就只是沒對齊。
@@ -2018,9 +2186,7 @@ for sx in (1, -1):
 #   左側：燈籠退遠（3.6m），松貼著燈籠（2.9m）—— 節奏跟右側相反
 for mdl, px, py, rot, sc in [
         ("stone_lantern", 6.50, -27.20, 0.26, 1.06),
-        ("tree_pine_a", 9.90, -30.60, 0.80, 1.30),
-        ("stone_lantern", -7.40, -28.90, -0.62, 0.98),
-        ("tree_pine_a", -9.50, -30.90, -1.35, 1.34)]:
+        ("stone_lantern", -7.40, -28.90, -0.62, 0.98)]:
     objs += place_asset(mdl, [(px, py, 0.0, rot, sc)])
 
 # ── 後院（主屋北面）── 設計語言刻意跟前庭相反：沒有任何鏡射與等距。
