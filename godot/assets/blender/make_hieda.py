@@ -98,6 +98,9 @@ C_LEAF_LT = (0.390, 0.545, 0.205)
 C_HEDGE_DK = (0.115, 0.205, 0.095)
 C_HEDGE = (0.175, 0.300, 0.130)
 C_HEDGE_LT = (0.290, 0.420, 0.185)
+C_BAMBOO = (0.470, 0.500, 0.265)
+C_BAMBOO_LT = (0.560, 0.585, 0.330)
+C_BAMBOO_DK = (0.330, 0.355, 0.185)
 C_BARK = (0.200, 0.150, 0.110)
 # 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
 # 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
@@ -1125,9 +1128,14 @@ def build_karetaki(bld, x_top, y_top, x_bot, y_bot, z_top, seed):
 
 # ── 楓（池畔）──
 
-def build_maple(bld, x, y, h, seed, lean=0.28):
-    """池畔楓：單幹 + 2~3 叢樹冠。不是前庭那種橫伸 5m 的拱門巨樹 ——
-    這裡要的是能落在鏡面上的樹影，樹形往水面那側傾。"""
+def build_maple(bld, x, y, h, seed, lean=0.28, crown=1.0, dens=1.0, clusters=2):
+    """楓。`crown`（冠幅倍率）／`dens`（葉量倍率）／`clusters`（冠叢數）
+    是**品種參數** —— 只換 seed 的話每棵樹的輪廓統計上是一樣的，遠看仍是
+    同一棵複製貼上。要「看得出是不同的樹」得改的是比例與疏密：
+      老木 = 高、冠寬、葉疏、枝幹傾斜大
+      中木 = 中等、冠圓、葉密
+      若木 = 矮、冠小而緊、葉最密
+    """
     rng = random.Random(seed)
     ht = h * 0.52
     for seg, (r0, r1, z0, z1) in enumerate([(0.30, 0.24, 0.0, ht * 0.55),
@@ -1140,11 +1148,16 @@ def build_maple(bld, x, y, h, seed, lean=0.28):
                      (x + lx0 + math.cos(a1) * r0, y + math.sin(a1) * r0, z0),
                      (x + lx1 + math.cos(a1) * r1, y + math.sin(a1) * r1, z1),
                      (x + lx1 + math.cos(a0) * r1, y + math.sin(a0) * r1, z1), C_BARK)
-    cr = h * 0.30
+    cr = h * 0.30 * crown
     add_canopy(bld, (x + lean, y, ht + cr * 0.55), cr, cr, cr * 0.66,
-               seed * 7 + 1, n_sprigs=58, leaf_size=0.50)
+               seed * 7 + 1, n_sprigs=int(46 * dens), leaf_size=0.50 * crown)
     add_canopy(bld, (x + lean * 1.9, y + rng.uniform(-1.1, 1.1), ht + cr * 0.15),
-               cr * 0.74, cr * 0.74, cr * 0.52, seed * 7 + 2, n_sprigs=42, leaf_size=0.46)
+               cr * 0.74, cr * 0.74, cr * 0.52, seed * 7 + 2,
+               n_sprigs=int(34 * dens), leaf_size=0.46 * crown)
+    if clusters > 2:
+        add_canopy(bld, (x + lean * 0.4, y + rng.uniform(-1.4, 1.4), ht + cr * 0.92),
+                   cr * 0.62, cr * 0.62, cr * 0.46, seed * 7 + 3,
+                   n_sprigs=int(26 * dens), leaf_size=0.44 * crown)
 
 
 # ── 2. 菜園 ──
@@ -1351,52 +1364,69 @@ def _spline(ctrl, samples):
     return out
 
 
-def build_bush(bld, x, y, rx, rz, seed, n_sprig=58):
-    """遮蔽視線用的樹叢。
+def build_bush(bld, x, y, rx, rz, seed, n_sprig=44):
+    """遮蔽視線用的樹叢：**2~3 個互相重疊的團塊**，不是一顆球。
 
-    ⚠ 不要直接借 `_canopy_surf`：那支的起伏振幅（4 項 ×0.14~0.30，合計可到
-    ±1.0）是為**滿身葉子的大樹冠**調的 —— 殼再怎麼歪都會被上千片葉子蓋掉。
-    樹叢只有幾十撮葉子，殼會整片露出來，於是變成一顆帶尖角的多面體
-    （第一版就是一叢叢綠色的星星）。這裡用自己的緩起伏（±16%）、殼細分
-    加密到 6×14，葉子改成小而多。
+    ⚠ 前兩版都失敗，病根不同：
+      v1 直接借 `_canopy_surf` → 起伏振幅（合計可到 ±1.0）是為滿身葉子的
+         大樹冠調的，樹叢只有幾十撮葉、殼整片露出來 → 一叢叢綠色的星星。
+      v2 改成自己的緩起伏 ±16% → 但那 0.16 是**三項權重加總後的上限**
+         （0.4/0.35/0.25），三個正弦要同相位才到得了；實際起伏大多只有
+         ±6~8%，而且頻率只有 1.6~3.2（起伏比球本身還寬），結果就是
+         「一顆幾乎完美的球，頂上插幾根刺」。
 
-    也不用 hedge_*.glb —— 那幾個資產一顆上萬面，路邊放八叢就把整個
-    blockout 的面數吃光。"""
+    v3 不再靠單一曲面的擾動去救輪廓 —— **輪廓由團塊的疊加產生**。
+    每叢 2~3 個各自偏心、各自扁長比不同的球體互相咬合，交界處自然形成
+    凹口；每個團塊再各自疊 ±28% 的高頻起伏（頻率 2.6~5.4，比團塊本身
+    小，才會讀成表面的簇而不是把球拉歪）。殼細分 6×13/團塊。
+    """
     rng = random.Random(seed)
-    ph = [rng.uniform(0.0, math.tau) for _ in range(3)]
-    fr = [rng.uniform(1.6, 3.2) for _ in range(3)]
+    n_lobe = 2 + (seed % 2)
+    ctr_all = (x, y, rz * 0.78)
+    for li in range(n_lobe):
+        ang = rng.uniform(0.0, math.tau)
+        off = rx * rng.uniform(0.22, 0.44) if li else 0.0
+        lx = x + math.cos(ang) * off
+        ly = y + math.sin(ang) * off
+        lrx = rx * (1.0 if li == 0 else rng.uniform(0.55, 0.82))
+        lrz = rz * (1.0 if li == 0 else rng.uniform(0.50, 0.85))
+        lcz = lrz * rng.uniform(0.74, 0.92)
+        ph = [rng.uniform(0.0, math.tau) for _ in range(3)]
+        fr = [rng.uniform(2.6, 5.4) for _ in range(3)]
+        sq = rng.uniform(0.82, 1.18)
 
-    def surf(u, v):
-        th, phi = u * math.tau, v * math.pi
-        nx = math.sin(phi) * math.cos(th)
-        ny = math.sin(phi) * math.sin(th)
-        nz = math.cos(phi)
-        k = 1.0 + 0.16 * (math.sin(th * fr[0] + ph[0]) * 0.4
-                          + math.sin(phi * fr[1] + ph[1]) * 0.35
-                          + math.sin((th + phi) * fr[2] + ph[2]) * 0.25)
-        return ((x + nx * rx * k, y + ny * rx * 0.94 * k, rz * 0.80 + nz * rz * k),
-                (nx, ny, nz))
+        def surf(u, v, lx=lx, ly=ly, lrx=lrx, lrz=lrz, lcz=lcz, ph=ph, fr=fr, sq=sq):
+            th, phi = u * math.tau, v * math.pi
+            nx = math.sin(phi) * math.cos(th)
+            ny = math.sin(phi) * math.sin(th)
+            nz = math.cos(phi)
+            # 三項各自就是 ±28%（不再先分權重再加總），高頻才咬得出簇
+            k = 1.0 + 0.28 * (math.sin(th * fr[0] + ph[0])
+                              + math.sin(phi * fr[1] + ph[1])
+                              + math.sin((th * 0.7 + phi * 1.3) * fr[2] + ph[2])) / 1.8
+            k = max(0.55, k)
+            return ((lx + nx * lrx * k, ly + ny * lrx * sq * k, lcz + nz * lrz * k),
+                    (nx, ny, nz))
 
-    ctr = (x, y, rz * 0.80)
-    rows, cols = 6, 14
-    for ri in range(rows):
-        for ci in range(cols):
-            v0, v1 = ri / rows, (ri + 1) / rows
-            u0, u1 = ci / cols, (ci + 1) / cols
-            _auto_quad(bld, ctr, surf(u0, v0)[0], surf(u1, v0)[0],
-                       surf(u1, v1)[0], surf(u0, v1)[0],
-                       _mix(C_HEDGE_DK, C_HEDGE, 0.15 + 0.55 * (1.0 - v0)))
-    for _ in range(n_sprig):
-        p_, nn = surf(rng.uniform(0.0, 1.0), rng.uniform(0.04, 0.96))
-        for k in range(3):
-            a = rng.uniform(0.0, math.tau) + k * math.tau / 3.0
-            ln = rng.uniform(0.13, 0.26)
-            wd = ln * 0.34
-            tp = (p_[0] + nn[0] * ln + math.cos(a) * ln * 0.42,
-                  p_[1] + nn[1] * ln + math.sin(a) * ln * 0.42,
-                  p_[2] + nn[2] * ln)
-            bld.tri2((p_[0] - wd, p_[1], p_[2]), (p_[0] + wd, p_[1], p_[2]), tp,
-                     _mix(C_HEDGE, C_HEDGE_LT, rng.random()))
+        rows, cols = 6, 13
+        for ri in range(rows):
+            for ci in range(cols):
+                v0, v1 = ri / rows, (ri + 1) / rows
+                u0, u1 = ci / cols, (ci + 1) / cols
+                _auto_quad(bld, ctr_all, surf(u0, v0)[0], surf(u1, v0)[0],
+                           surf(u1, v1)[0], surf(u0, v1)[0],
+                           _mix(C_HEDGE_DK, C_HEDGE, 0.12 + 0.58 * (1.0 - v0)))
+        for _ in range(n_sprig // n_lobe):
+            p_, nn = surf(rng.uniform(0.0, 1.0), rng.uniform(0.04, 0.96))
+            for k in range(3):
+                a = rng.uniform(0.0, math.tau) + k * math.tau / 3.0
+                ln = rng.uniform(0.16, 0.32)
+                wd = ln * 0.36
+                tp = (p_[0] + nn[0] * ln + math.cos(a) * ln * 0.45,
+                      p_[1] + nn[1] * ln + math.sin(a) * ln * 0.45,
+                      p_[2] + nn[2] * ln)
+                bld.tri2((p_[0] - wd, p_[1], p_[2]), (p_[0] + wd, p_[1], p_[2]), tp,
+                         _mix(C_HEDGE, C_HEDGE_LT, rng.random()))
 
 
 def build_path(bld, ctrl, width=2.3, seed=77):
@@ -1463,6 +1493,54 @@ def build_closed_gate(bld, px, py, ang, seed):
     bld.box(c0[0], c0[1], 2.99, 3.60, 0.24, 0.16, C_RIDGE)
 
 
+def build_bamboo_fence(bld, pts, skip_at=None, skip_r=5.0):
+    """四つ目垣：親柱 + 三道胴縁 + 立子。高 1.15m（規格 1.0~1.3m）。
+
+    為什麼是竹垣不是土塀：土塀是前庭那種對外的、儀式性的界線；後院是
+    私領域，圍的東西要矮到看得見裡面、材質要軟。這跟 `gen_village.gd`
+    給村緣的判斷是同一條（「密度不一樣的街區，材質本身就要換」）。
+
+    `skip_at` 半徑內不畫 —— 小徑終點的木戶就是這道垣的開口，兩者要接上，
+    不然會變成「一道牆旁邊另外立著一扇門」。
+    """
+    z_top, n_rail = 1.15, 3
+    for i in range(len(pts) - 1):
+        ax, ay = pts[i]
+        bx, by = pts[i + 1]
+        mx, my = (ax + bx) * 0.5, (ay + by) * 0.5
+        if skip_at and math.hypot(mx - skip_at[0], my - skip_at[1]) < skip_r:
+            continue
+        seg = math.hypot(bx - ax, by - ay)
+        ux, uy = (bx - ax) / seg, (by - ay) / seg
+        # 胴縁（橫向三道）
+        for k in range(n_rail):
+            zz = 0.30 + k * 0.36
+            bld.quad((ax - uy * 0.035, ay + ux * 0.035, zz - 0.035),
+                     (bx - uy * 0.035, by + ux * 0.035, zz - 0.035),
+                     (bx - uy * 0.035, by + ux * 0.035, zz + 0.035),
+                     (ax - uy * 0.035, ay + ux * 0.035, zz + 0.035), C_BAMBOO_DK)
+            bld.quad((ax + uy * 0.035, ay - ux * 0.035, zz + 0.035),
+                     (bx + uy * 0.035, by - ux * 0.035, zz + 0.035),
+                     (bx + uy * 0.035, by - ux * 0.035, zz - 0.035),
+                     (ax + uy * 0.035, ay - ux * 0.035, zz - 0.035), C_BAMBOO_DK)
+        # 立子（縱向細竹）+ 親柱（每隔幾根換粗的）
+        n_v = max(2, int(seg / 0.82))
+        for j in range(n_v):
+            t = (j + 0.5) / n_v
+            px, py = ax + (bx - ax) * t, ay + (by - ay) * t
+            post = (j % 4 == 0)
+            rr = 0.055 if post else 0.032
+            hh = z_top + (0.14 if post else 0.0)
+            col = C_BAMBOO if post else C_BAMBOO_LT
+            ns = 5 if post else 4
+            for k in range(ns):
+                a0, a1 = k / ns * math.tau, (k + 1) / ns * math.tau
+                bld.quad((px + math.cos(a0) * rr, py + math.sin(a0) * rr, 0.0),
+                         (px + math.cos(a1) * rr, py + math.sin(a1) * rr, 0.0),
+                         (px + math.cos(a1) * rr, py + math.sin(a1) * rr, hh),
+                         (px + math.cos(a0) * rr, py + math.sin(a0) * rr, hh), col)
+
+
 def build_back_garden(bld):
     """把三區擺進後院，回傳要用 place_asset 擺的自然石清單。
 
@@ -1500,8 +1578,28 @@ def build_back_garden(bld):
     # 池畔楓 ×2：都在南岸（鏡面那側），大小與前後都不同
     m1 = at_edge(248.0, 2.2)
     m2 = at_edge(288.0, 1.6)
-    build_maple(bld, m1[0], m1[1], 11.0, 23, lean=1.2)
-    build_maple(bld, m2[0], m2[1], 7.8, 41, lean=0.8)
+    # ── 楓的分佈 ──
+    # 三個品種（老木／中木／若木），差在**比例與疏密**而不只是 seed ——
+    # 只換 seed 的話每棵的輪廓統計上一樣，遠看還是同一棵複製貼上。
+    #   老木 crown 1.25 / dens 0.72 / 3 叢：高、冠寬、葉疏
+    #   中木 crown 1.00 / dens 1.00 / 2 叢
+    #   若木 crown 0.72 / dens 1.30 / 2 叢：矮、冠緊、葉最密
+    OLD = dict(crown=1.25, dens=0.72, clusters=3)
+    MID = dict(crown=1.00, dens=1.00, clusters=2)
+    YNG = dict(crown=0.72, dens=1.30, clusters=2)
+    # 池畔（原有兩棵）
+    build_maple(bld, m1[0], m1[1], 11.0, 23, lean=1.2, **OLD)
+    build_maple(bld, m2[0], m2[1], 7.8, 41, lean=0.8, **MID)
+    # 枯山水外緣三棵 —— 砂庭四周原本整片空，只有砂與石
+    for mx, my, mh, ms, ml, var in [(35.6, 19.8, 8.6, 53, -0.7, MID),
+                                    (31.9, 47.6, 6.2, 59, 0.5, YNG),
+                                    (5.4, 21.1, 10.2, 67, 0.9, OLD)]:
+        build_maple(bld, mx, my, mh, ms, lean=ml, **var)
+    # 小徑沿線三棵 —— 走過去的路上不能只有樹叢
+    for mx, my, mh, ms, ml, var in [(-8.0, 50.0, 9.4, 73, 0.6, OLD),
+                                    (12.5, 50.0, 6.6, 79, -0.5, YNG),
+                                    (24.5, 55.5, 8.0, 83, 0.7, MID)]:
+        build_maple(bld, mx, my, mh, ms, lean=ml, **var)
 
     # 菜園（西北角，退到最裡面）
     build_veg_garden(bld, -30.0, 52.0, 11)
@@ -1533,6 +1631,13 @@ def build_back_garden(bld):
         build_bush(bld, bx, by, brx, brz, bs)
     # 終點：關著的木戶 + 兩側密植（不是斷頭路，是「現在過不去」）
     build_closed_gate(bld, PATH_END[0], PATH_END[1], PATH_END_ANG, 71)
+    # ── 竹垣：後院外周（規格 1.0~1.3m）──
+    # 木戶那一段留開口，垣與門接在一起 —— 分開的話會變成「一道垣旁邊
+    # 另外立著一扇門」，門就不是這道界線的出入口了。
+    FENCE = [(16.0, 10.0), (36.0, 16.0), (45.0, 34.0), (42.0, 54.0), (36.0, 66.0),
+             (26.0, 72.0), (8.0, 76.0), (-12.0, 74.0), (-30.0, 68.0), (-46.0, 54.0),
+             (-50.0, 34.0), (-42.0, 16.0), (-16.0, 10.0)]
+    build_bamboo_fence(bld, _spline(FENCE, len(FENCE) * 4), skip_at=PATH_END, skip_r=5.5)
     # 兩側密植往外挪、收小一號：擋得住繞路，但不會把木戶壓成配角 ——
     # 終點要讀成「一道關著的門」，不是「兩叢樹中間有東西」
     for sd in (1, -1):
