@@ -63,6 +63,31 @@ C_GRASS = (0.240, 0.360, 0.150)
 # 「一道混凝土路緣」，反而多加了一條硬邊，跟要解的問題正好相反。
 C_GRAVEL_DK = (0.150, 0.150, 0.135)
 C_GRAVEL = (0.425, 0.420, 0.370)
+# ── 後院（back garden）──
+# 水：由岸到心的深度漸層 + 一個「鏡面」色。鏡面偏天空的冷灰藍，是拿來
+# 讀成「這片在映屋頂」的，不是真的反射（blockout 只有頂點色）。
+C_WATER_SHAL = (0.255, 0.400, 0.300)
+C_WATER_DEEP = (0.045, 0.105, 0.140)
+C_WATER_MIRROR = (0.430, 0.505, 0.575)
+C_WATER_MIRROR_DK = (0.175, 0.220, 0.280)
+C_MUD = (0.300, 0.255, 0.185)
+C_EARTH = (0.200, 0.160, 0.115)
+# 枯山水的白砂：兩階明度交替就是耙紋
+C_SAND = (0.700, 0.685, 0.620)
+C_SAND_DK = (0.545, 0.532, 0.478)
+C_ROCK_DK = (0.330, 0.325, 0.310)
+C_MOSS = (0.185, 0.310, 0.130)
+C_MOSS_LT = (0.290, 0.415, 0.175)
+# 靈氣裂縫：全場最亮的顏色，Godot 端要拿這個色域驅動 emissive
+# 兩階都把紅通道推到 0.92 以上 —— 全場其他顏色最高只到 C_SHOJI 的 0.87，
+# 所以「R > 0.92」是一條乾淨的判別線，Godot 端可以直接用它挑出要發光的面。
+C_GLOW = (1.000, 0.895, 0.660)
+C_GLOW_DIM = (0.945, 0.700, 0.360)
+# 菜園
+C_SOIL = (0.195, 0.140, 0.092)
+C_STRAW = (0.620, 0.550, 0.360)
+C_LEAF = (0.235, 0.410, 0.150)
+C_LEAF_LT = (0.390, 0.545, 0.205)
 C_BARK = (0.200, 0.150, 0.110)
 # 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
 # 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
@@ -881,6 +906,409 @@ def build_giant_tree(bld, x_side, y, seed):
     add_canopy(bld, (x_side + sgn * 1.2, y - 1.6, 8.2), 1.7, 1.7, 1.7 * 0.6, seed * 3 + 5, n_sprigs=70)
 
 
+# ─────────────────────── 後院（back garden）───────────────────────
+#
+# 設計語言**刻意跟前庭相反**：門前是儀式性的左右對稱（狛犬成對、燈籠成對、
+# 參道筆直），後院是私密的、有機的、看起來像幾代人陸續加出來的。所以這一
+# 段裡沒有任何一對鏡射物件、沒有等距排列。
+#
+# 但「不對稱」不等於「亂撒」—— 每一件都有構圖上的理由：
+#   ・水池的南岸留白 = 映主屋屋頂與楓樹的鏡面
+#   ・涸れ滝擺在池的北緣 = 從主屋往北看，視線越過鏡面落在瀑布上
+#   ・枯山水的波紋圓心 = 懸浮石的正下方（沙面在「回應」靈氣）
+#   ・主石／添石的主賓關係 = 石組的古典規矩，不是三顆一樣大的石頭
+#
+# 三區的份量也不對等：水池與菜園是日常的、安靜的，枯山水＋靈氣裂縫才是
+# 這座後院的主角（規格：pond/veg 是玩家「路過」的，裂縫是要停下來看的）。
+
+
+def _rough_box(bld, cx, cy, cz, sx, sy, sz, seed, col, col_top=None, yaw=0.0, jit=0.10):
+    """粗胚石塊：八個角各自隨機位移的六面體，可繞 z 轉。
+    庭石不是工整方塊、也不是圓球 —— 要有稜有角、每個面朝向都不同，
+    方向光才切得出面與面的明暗差。"""
+    rng = random.Random(seed)
+    hx, hy, hz = sx / 2.0, sy / 2.0, sz / 2.0
+    ca, sa = math.cos(yaw), math.sin(yaw)
+    v = []
+    for dx, dy, dz in [(-1, -1, -1), (1, -1, -1), (1, 1, -1), (-1, 1, -1),
+                       (-1, -1, 1), (1, -1, 1), (1, 1, 1), (-1, 1, 1)]:
+        px = dx * hx * (1.0 + rng.uniform(-jit, jit))
+        py = dy * hy * (1.0 + rng.uniform(-jit, jit))
+        pz = dz * hz * (1.0 + rng.uniform(-jit, jit))
+        v.append((cx + px * ca - py * sa, cy + px * sa + py * ca, cz + pz))
+    ct = col_top or col
+    bld.quad(v[0], v[1], v[5], v[4], col)
+    bld.quad(v[2], v[3], v[7], v[6], col)
+    bld.quad(v[1], v[2], v[6], v[5], col)
+    bld.quad(v[3], v[0], v[4], v[7], col)
+    bld.quad(v[7], v[4], v[5], v[6], ct)
+    bld.quad(v[0], v[3], v[2], v[1], col)
+
+
+def _organic(cx, cy, r, seed, n, amp=0.24):
+    """有機輪廓：極座標半徑疊三個隨機頻率的正弦。回傳 [(x, y, 角度, 半徑)]。
+    池岸與砂紋都用這個 —— 完美的圓在庭園裡一眼就假。"""
+    rng = random.Random(seed)
+    ws = [rng.uniform(0.45, 1.0) for _ in range(3)]
+    ws = [w / sum(ws) for w in ws]                    # 正規化：k ∈ [1-amp, 1+amp]
+    terms = [(rng.randint(2, 4), rng.uniform(0.0, math.tau), amp * w) for w in ws]
+    out = []
+    for i in range(n):
+        a = i / n * math.tau
+        k = 1.0
+        for f, ph, am in terms:
+            k += am * math.sin(a * f + ph)
+        out.append((cx + math.cos(a) * r * k, cy + math.sin(a) * r * k, a, r * k))
+    return out
+
+
+# ── 1. 石造水池 ──
+
+def build_pond(bld, cx, cy, r, seed):
+    """石造水池。三件事各自有目的：
+
+    ・**深度漸層**：池底不是等深（中心 -1.25m、岸邊 0），水色直接由實際
+      深度算出來 —— 岸邊亮綠、中心暗藍。單一色調的水面看起來是一塊藍色
+      塑膠板，深淺差才讀得出「這裡踩得到、那裡踩不到」。
+    ・**鏡面**：朝主屋那一側（-y）留一片**乾淨無石**的水面，色調往天空色
+      偏。那片是拿來映主屋屋頂與楓樹的，所以護岸的石頭在那一段要讓開。
+    ・**石造護岸**：池緣一圈天端石（切石）+ 錯落的自然石。
+
+    水面高於地面 0.30 —— 這是「石**造**」水池，池壁是砌起來的，不是挖的坑。
+    （blockout 沒有地形網格，挖下去的水面在預覽裡會被地面整片蓋掉。）
+    """
+    n = 30
+    # amp 壓到 0.15：0.24 會把輪廓拉出尖銳的葉瓣（星形），而且半徑上限
+    # 變得抓不準 —— 第一版的涸れ滝就因此整組站進水裡
+    rim = _organic(cx, cy, r, seed, n, amp=0.18)
+    z_w, d_max = 0.30, 1.25
+    rings = 6
+
+    def lerp_pt(t, idx):
+        return (cx + (rim[idx][0] - cx) * t, cy + (rim[idx][1] - cy) * t)
+
+    # 水面：由中心往岸鋪環，色階跟著深度走
+    for ri in range(rings):
+        t0, t1 = ri / rings, (ri + 1) / rings
+        tm = (t0 + t1) * 0.5
+        dep = 1.0 - tm * tm                       # 0=岸 1=最深
+        for i in range(n):
+            i2 = (i + 1) % n
+            am = rim[i][2] + (math.tau / n) * 0.5
+            col = _mix(C_WATER_SHAL, C_WATER_DEEP, dep ** 0.75)
+            # 鏡面：朝主屋（-y）那一側往天空色偏。sin(a)=-1 正對主屋。
+            # 指數從 2 放寬到 1.2：**2 的衰減太陡，只有正對主屋的那幾片吃得到
+            # 色，讀不出「一片」鏡面。
+            # ⚠ 鏡面色本身也要**隨深度變暗**。第一版整個 -y 楔形不分深淺
+            # 塗同一個淺色，等於在最深的地方畫出最淺的水 —— 鏡面把深度漸層
+            # 直接抵銷掉了。淺處映天（亮）、深處映屋頂量體（暗），兩件事才
+            # 能同時成立。
+            mir = max(0.0, -math.sin(am)) ** 1.2
+            col = _mix(col, _mix(C_WATER_MIRROR, C_WATER_MIRROR_DK, dep), mir * 0.80)
+            a0, b0 = lerp_pt(t0, i), lerp_pt(t0, i2)
+            a1, b1 = lerp_pt(t1, i), lerp_pt(t1, i2)
+            bld.quad((a0[0], a0[1], z_w), (a1[0], a1[1], z_w),
+                     (b1[0], b1[1], z_w), (b0[0], b0[1], z_w), col)
+    # 池底：真的做出深淺（Godot 端接水體 shader 時這層才有意義）
+    for ri in range(3):
+        t0, t1 = ri / 3.0, (ri + 1) / 3.0
+        for i in range(n):
+            i2 = (i + 1) % n
+            def flr(t, idx):
+                p = lerp_pt(t, idx)
+                return (p[0], p[1], z_w - d_max * (1.0 - t * t))
+            bld.quad(flr(t0, i), flr(t1, i), flr(t1, i2), flr(t0, i2),
+                     _mix(C_MUD, C_EARTH, 1.0 - t0))
+    # 池壁 + 天端石
+    for i in range(n):
+        i2 = (i + 1) % n
+        for idx_a, idx_b in ((i, i2),):
+            pa, pb = rim[idx_a], rim[idx_b]
+            na = (math.cos(pa[2]), math.sin(pa[2]))
+            nb = (math.cos(pb[2]), math.sin(pb[2]))
+            oa = (pa[0] + na[0] * 0.62, pa[1] + na[1] * 0.62)
+            ob = (pb[0] + nb[0] * 0.62, pb[1] + nb[1] * 0.62)
+            bld.quad((pa[0], pa[1], 0.46), (oa[0], oa[1], 0.46),
+                     (ob[0], ob[1], 0.46), (pb[0], pb[1], 0.46), C_STONE)      # 天端石頂
+            bld.quad((oa[0], oa[1], 0.46), (oa[0], oa[1], 0.0),
+                     (ob[0], ob[1], 0.0), (ob[0], ob[1], 0.46), C_STONE_DK)    # 外壁
+            bld.quad((pa[0], pa[1], 0.46), (pb[0], pb[1], 0.46),
+                     (pb[0], pb[1], z_w - 0.02), (pa[0], pa[1], z_w - 0.02),
+                     C_STONE_DK)                                               # 內壁
+    return rim
+
+
+# ── 涸れ滝（乾瀑布）──
+
+def build_karetaki(bld, x_top, y_top, x_bot, y_bot, z_top, seed):
+    """涸れ滝：沒有水，但堆出「水曾經從這裡落下」的石階。
+
+    這是水池的戲劇性錨點。做法是古典的三段式 —— 兩側**立起來**的挟石
+    （水落石）夾出一道垂直的溝，中間錯落的階石一路跌到水面。石頭要
+    一階比一階往前吐，跌水的動線才看得出來（全部切齊就只是一道樓梯）。
+    """
+    rng = random.Random(seed)
+    steps = 5
+    for k in range(steps):
+        t = k / (steps - 1.0)
+        px = x_top + (x_bot - x_top) * t
+        py = y_top + (y_bot - y_top) * t
+        pz = z_top * (1.0 - t) ** 1.35 + 0.30
+        w = 1.35 + t * 1.15
+        _rough_box(bld, px, py, pz, w, 0.95 + t * 0.5, 0.42 + (1 - t) * 0.22,
+                   seed * 13 + k, C_STONE, col_top=_mix(C_STONE, C_MOSS, 0.18 * t),
+                   yaw=rng.uniform(-0.35, 0.35), jit=0.16)
+    # 挟石：兩側立石，高度不等（等高就變成門框）
+    ang = math.atan2(y_bot - y_top, x_bot - x_top)
+    sx_, sy_ = -math.sin(ang), math.cos(ang)
+    # ⚠ hh 是**總高**，不是「在 z_top 之上再加多少」。第一版寫成 z_top + hh，
+    # 兩塊挟石變成 4.7m / 4.1m 的巨柱，加上低 jit 的方正比例，整組讀起來
+    # 是兩根清水模柱子夾一道樓梯，不是石組。
+    # 挟石要**矮胖、粗糙、左右不等高**：它們是夾住水路的岩壁，不是門框。
+    for sd, hh, ww in ((1, 2.35, 1.15), (-1, 1.65, 0.95)):
+        _rough_box(bld, x_top + sx_ * sd * 1.45, y_top + sy_ * sd * 1.45,
+                   hh * 0.46, ww, ww * 1.25, hh,
+                   seed * 29 + sd, C_STONE_DK,
+                   col_top=_mix(C_STONE_DK, C_MOSS, 0.32),
+                   yaw=rng.uniform(-0.5, 0.5), jit=0.26)
+
+
+# ── 楓（池畔）──
+
+def build_maple(bld, x, y, h, seed, lean=0.28):
+    """池畔楓：單幹 + 2~3 叢樹冠。不是前庭那種橫伸 5m 的拱門巨樹 ——
+    這裡要的是能落在鏡面上的樹影，樹形往水面那側傾。"""
+    rng = random.Random(seed)
+    ht = h * 0.52
+    for seg, (r0, r1, z0, z1) in enumerate([(0.30, 0.24, 0.0, ht * 0.55),
+                                            (0.24, 0.15, ht * 0.55, ht)]):
+        nn = 8
+        for k in range(nn):
+            a0, a1 = k / nn * math.tau, (k + 1) / nn * math.tau
+            lx0, lx1 = lean * (z0 / ht), lean * (z1 / ht)
+            bld.quad((x + lx0 + math.cos(a0) * r0, y + math.sin(a0) * r0, z0),
+                     (x + lx0 + math.cos(a1) * r0, y + math.sin(a1) * r0, z0),
+                     (x + lx1 + math.cos(a1) * r1, y + math.sin(a1) * r1, z1),
+                     (x + lx1 + math.cos(a0) * r1, y + math.sin(a0) * r1, z1), C_BARK)
+    cr = h * 0.30
+    add_canopy(bld, (x + lean, y, ht + cr * 0.55), cr, cr, cr * 0.66,
+               seed * 7 + 1, n_sprigs=58, leaf_size=0.50)
+    add_canopy(bld, (x + lean * 1.9, y + rng.uniform(-1.1, 1.1), ht + cr * 0.15),
+               cr * 0.74, cr * 0.74, cr * 0.52, seed * 7 + 2, n_sprigs=42, leaf_size=0.46)
+
+
+# ── 2. 菜園 ──
+
+def build_veg_garden(bld, cx, cy, seed):
+    """菜園：手作感的關鍵不是「亂」，是**畦是直的、但畦與畦不對齊**。
+    大小、角度、行距各自不同，畦間留的走道也寬窄不一 —— 那是有人每天
+    踩出來的，不是機器犁出來的格線。"""
+    rng = random.Random(seed)
+    beds = [(-3.4, -2.1, 4.6, 1.9, 0.13), (2.3, -1.3, 3.0, 2.4, -0.21),
+            (-2.4, 2.2, 5.4, 1.6, 0.04), (3.9, 2.6, 2.3, 2.0, 0.31),
+            (-5.2, 4.6, 2.8, 1.5, -0.16)]
+    for bi, (ox, oy, bw, bd, rot) in enumerate(beds):
+        bx, by = cx + ox, cy + oy
+        _rough_box(bld, bx, by, 0.11, bw, bd, 0.22, seed * 17 + bi,
+                   C_SOIL, col_top=_mix(C_SOIL, C_STRAW, 0.14), yaw=rot, jit=0.07)
+        rows = max(2, int(bd / 0.62))
+        ca, sa = math.cos(rot), math.sin(rot)
+        for r in range(rows):
+            ry = (-bd / 2 + (r + 0.5) * (bd / rows)) * rng.uniform(0.92, 1.08)
+            nper = max(3, int(bw / rng.uniform(0.52, 0.78)))
+            for c in range(nper):
+                rx = -bw / 2 + (c + 0.5) * (bw / nper) + rng.uniform(-0.07, 0.07)
+                px = bx + rx * ca - ry * sa
+                py = by + rx * sa + ry * ca
+                s = rng.uniform(0.16, 0.30)
+                for k in range(3):
+                    a = rng.uniform(0.0, math.tau) + k * math.tau / 3.0
+                    bld.tri2((px - math.cos(a) * s * 0.4, py - math.sin(a) * s * 0.4, 0.22),
+                             (px + math.cos(a) * s * 0.4, py + math.sin(a) * s * 0.4, 0.22),
+                             (px + math.cos(a) * s * 0.9, py + math.sin(a) * s * 0.9,
+                              0.22 + s * rng.uniform(1.5, 2.4)),
+                             _mix(C_LEAF, C_LEAF_LT, rng.random()))
+
+
+# ── 3. 枯山水 + 靈氣裂縫（後院主角）──
+
+def build_float_rock(bld, cx, cy, cz, sx, sy, sz, seed, gap=0.15, n_dash=7):
+    """懸浮景觀石：上下兩塊之間裂開一道縫，縫裡是暖白的光。
+
+    ⚠ 真正的自發光是 **Godot 端的 emissive 材質**；這份 .glb 只帶頂點色，
+    這條高亮色帶是之後驅動 emission 用的來源（Feature List §3 本來就寫
+    「內填⋯Emission」）。所以這裡的重點是把**裂縫的幾何**做出來、把顏色
+    拉到明顯高於全場任何東西，而不是假裝 blockout 能發光。
+
+    裂縫內壁切成長短不一的「筆畫」（亮/次亮交替、高度不一）—— 遠看是
+    一條連續光帶，近看有字跡感。呼應阿求記錄幻想鄉緣起的設定：裂縫漏出
+    來的是被記下來的歷史（規格裡 optional 的 rune 那條）。
+    """
+    rng = random.Random(seed)
+    hd = sz * 0.46
+    _rough_box(bld, cx, cy, cz - gap / 2 - hd / 2, sx, sy, hd, seed * 3 + 1,
+               C_ROCK_DK, col_top=C_ROCK_DK, yaw=rng.uniform(0, math.tau), jit=0.17)
+    _rough_box(bld, cx, cy, cz + gap / 2 + hd * 0.58, sx * 0.94, sy * 0.94, hd * 1.16,
+               seed * 3 + 2, C_ROCK_DK, col_top=_mix(C_ROCK_DK, C_MOSS, 0.22),
+               yaw=rng.uniform(0, math.tau), jit=0.17)
+    # 裂縫：內縮一點，讓上下兩塊的邊緣稍微罩住光源（光才像是從「裡面」漏出來）
+    for k in range(n_dash):
+        u0 = -0.46 + k * (0.92 / n_dash)
+        u1 = u0 + (0.92 / n_dash) * rng.uniform(0.55, 0.92)
+        hz = gap * rng.uniform(0.55, 1.0)
+        col = C_GLOW if k % 2 == 0 else C_GLOW_DIM
+        _rough_box(bld, cx + (u0 + u1) * 0.5 * sx, cy, cz,
+                   (u1 - u0) * sx, sy * rng.uniform(0.78, 0.94), hz,
+                   seed * 5 + k, col, col_top=col, jit=0.05)
+
+
+def build_karesansui(bld, cx, cy, r, seed, host, guests, floats):
+    """枯山水：砂紋、石組（主賓）、苔、懸浮石。
+
+    **砂紋是同心圓，圓心正好在懸浮石的正下方** —— 規格的核心：耙紋不是
+    裝飾，是在敘事。像石頭落水那樣一圈圈盪開，把「靈氣正在擾動沙面」
+    畫出來。所以這裡不用平行直紋（那是海波紋，講的是別的事）。
+
+    砂床的外緣就是最外那圈波紋 —— 不另外畫一塊床再把圓紋裁進去，
+    波紋本身定義了這片砂的形狀。
+    """
+    rng = random.Random(seed)
+    n = 26
+    n_ring = 16
+    # ⚠ 所有圈**共用同一組噪聲相位**，半徑只差在倍率。
+    # 每圈各自抽噪聲的話，內圈在某些角度會胖過外圈 —— 兩圈交叉重疊，
+    # 共面的兩張同法線面互相擋掉環境光，整片砂紋變成一圈圈死黑的環。
+    # （階梯側面 → 犬走り → 這裡，同一個病第四次踩到：**任何時候在同一個
+    # 高度鋪兩片面，都要先證明它們不會重疊**。）
+    # 共用相位 k(θ) 之後 r_i(θ) = r_i · k(θ) 對 i 嚴格遞增，數學上保證不交叉。
+    rng_k = random.Random(seed * 31)
+    terms = [(rng_k.randint(2, 4), rng_k.uniform(0.0, math.tau),
+              rng_k.uniform(0.05, 0.11)) for _ in range(3)]
+
+    def kdev(a):
+        k = 1.0
+        for f, ph, am in terms:
+            k += am * math.sin(a * f + ph)
+        return k
+
+    ringpts = []
+    for ri in range(n_ring + 1):
+        rr = r * (ri / float(n_ring)) ** 0.92
+        ringpts.append([(cx + math.cos(i / n * math.tau) * rr * kdev(i / n * math.tau),
+                         cy + math.sin(i / n * math.tau) * rr * kdev(i / n * math.tau))
+                        for i in range(n)])
+    for ri in range(n_ring):
+        a_ring, b_ring = ringpts[ri], ringpts[ri + 1]
+        col = C_SAND if ri % 2 == 0 else C_SAND_DK
+        for i in range(n):
+            i2 = (i + 1) % n
+            bld.quad((a_ring[i][0], a_ring[i][1], 0.05),
+                     (b_ring[i][0], b_ring[i][1], 0.05),
+                     (b_ring[i2][0], b_ring[i2][1], 0.05),
+                     (a_ring[i2][0], a_ring[i2][1], 0.05), col)
+
+    # 砂床外緣倒角：直接切一刀的話是一道 5cm 垂直斷崖，又變成「一盤砂
+    # 放在草地上」（跟上一輪牆腳同一個病）。最外圈往外斜下去接到地面。
+    outer = ringpts[n_ring]
+    for i in range(n):
+        i2 = (i + 1) % n
+        ex0 = (cx + (outer[i][0] - cx) * 1.075, cy + (outer[i][1] - cy) * 1.075)
+        ex1 = (cx + (outer[i2][0] - cx) * 1.075, cy + (outer[i2][1] - cy) * 1.075)
+        bld.quad((outer[i][0], outer[i][1], 0.05), (ex0[0], ex0[1], 0.0),
+                 (ex1[0], ex1[1], 0.0), (outer[i2][0], outer[i2][1], 0.05),
+                 _mix(C_SAND_DK, C_EARTH, 0.45))
+
+    # ── 石組：主賓關係 ──
+    # 主石**立起來**、最大、稍微偏離中心；添石矮、退後、朝主石傾。
+    # 三顆一樣大平均擺開就只是「三顆石頭」，沒有主從就沒有石組。
+    hx, hy, hw, hh = host
+    _rough_box(bld, hx, hy, hh * 0.42, hw, hw * 0.82, hh, seed * 41,
+               C_STONE_DK, col_top=_mix(C_STONE_DK, C_MOSS, 0.30),
+               yaw=rng.uniform(-0.5, 0.5), jit=0.19)
+    # 主石腳下一圈苔：只在**基部**，不爬上石身。這圈苔是在講年份 ——
+    # 石頭立在這裡夠久了，久到腳邊長出東西。稗田家一千年的家業，
+    # 要有一個地方看得出時間。
+    for i in range(n):
+        i2 = (i + 1) % n
+        a0, a1 = i / n * math.tau, i2 / n * math.tau
+        r0 = hw * 0.62
+        r1 = hw * (1.02 + 0.30 * math.sin(a0 * 3.0 + seed))
+        r1b = hw * (1.02 + 0.30 * math.sin(a1 * 3.0 + seed))
+        bld.quad((hx + math.cos(a0) * r0, hy + math.sin(a0) * r0, 0.062),
+                 (hx + math.cos(a0) * r1, hy + math.sin(a0) * r1, 0.062),
+                 (hx + math.cos(a1) * r1b, hy + math.sin(a1) * r1b, 0.062),
+                 (hx + math.cos(a1) * r0, hy + math.sin(a1) * r0, 0.062),
+                 _mix(C_MOSS, C_MOSS_LT, 0.5 + 0.5 * math.sin(a0 * 5.0)))
+    for gi, (gx, gy, gw, gh) in enumerate(guests):
+        # 添石朝主石傾：yaw 指向主石，高度只有主石的三~四成
+        yaw = math.atan2(hy - gy, hx - gx)
+        _rough_box(bld, gx, gy, gh * 0.36, gw, gw * 0.9, gh, seed * 53 + gi,
+                   C_STONE_DK, col_top=_mix(C_STONE_DK, C_MOSS, 0.16),
+                   yaw=yaw + rng.uniform(-0.2, 0.2), jit=0.20)
+
+    # ── 懸浮石 ──
+    for fi, (fx, fy, fz, fs) in enumerate(floats):
+        build_float_rock(bld, fx, fy, fz, fs, fs * 0.78, fs * 0.62, seed * 67 + fi)
+        # 地面的受光池：砂面上一圈被照亮的暈。這圈同時把「波紋圓心在這裡」
+        # 再講一次 —— 光源、圓心、懸浮石三者對齊。
+        for i in range(n):
+            i2 = (i + 1) % n
+            a0, a1 = i / n * math.tau, i2 / n * math.tau
+            # 每顆石頭的受光池各給各的高度：兩池的半徑和大於兩石間距，
+            # 擺同一個 z 就會共面重疊 → 又是一塊黑斑
+            pz = 0.058 + fi * 0.007
+            # ⚠ 半徑收到 0.95 倍、混色減半。第一版鋪到 1.7 倍又混得很重，
+            # 兩片大白盤正好蓋掉砂紋的圓心 —— 而圓心就是「靈氣在擾動沙面」
+            # 的敘事重點，等於為了加光暈把主題擦掉了。
+            for k, (rr0, rr1, mixk) in enumerate([(0.0, fs * 0.55, 0.30),
+                                                  (fs * 0.55, fs * 0.95, 0.13)]):
+                col = _mix(C_SAND, C_GLOW, mixk / max(fz, 0.6))
+                bld.quad((fx + math.cos(a0) * rr0, fy + math.sin(a0) * rr0, pz),
+                         (fx + math.cos(a0) * rr1, fy + math.sin(a0) * rr1, pz),
+                         (fx + math.cos(a1) * rr1, fy + math.sin(a1) * rr1, pz),
+                         (fx + math.cos(a1) * rr0, fy + math.sin(a1) * rr0, pz), col)
+
+
+def build_back_garden(bld):
+    """把三區擺進後院，回傳要用 place_asset 擺的自然石清單。
+
+    配置的理由（不是隨手擺）：
+      水池貼著主屋北面 —— 南岸那片鏡面才照得到屋頂；
+      涸れ滝在池的北緣 —— 從主屋往北看，視線越過鏡面正好落在瀑布上；
+      枯山水在東側單獨一區 —— 主角要有自己的空間，不跟日常物件擠；
+      菜園退到西北角 —— 最私密、最不需要被看見的東西擺最裡面。
+    """
+    # 水池（中心偏西，貼著主屋背面）
+    rim = build_pond(bld, -7.5, 18.0, 6.4, 5)
+    # 涸れ滝：池北緣往西南跌進水裡
+    # 涸れ滝的落點用**實際池緣半徑**算出來，不寫死座標：池岸是隨機起伏的，
+    # 寫死的話換個 seed 石階就可能整組站進水裡（第一版正是如此）。
+    ta = math.radians(72.0)
+    r_edge = min(rim, key=lambda q: abs(((q[2] - ta + math.pi) % math.tau) - math.pi))[3]
+    kb = (-7.5 + math.cos(ta) * (r_edge - 0.5), 18.0 + math.sin(ta) * (r_edge - 0.5))
+    kt = (-7.5 + math.cos(ta) * (r_edge + 3.8), 18.0 + math.sin(ta) * (r_edge + 3.8))
+    build_karetaki(bld, kt[0], kt[1], kb[0], kb[1], 2.55, 9)
+    # 池畔楓 ×2：都在西岸、大小與前後都不同，成對鏡射是前庭的語言
+    build_maple(bld, -15.6, 13.6, 8.4, 23, lean=0.9)
+    build_maple(bld, -15.0, 22.2, 6.2, 41, lean=0.7)
+    # 菜園（西北角）
+    build_veg_garden(bld, -14.0, 30.5, 11)
+    # 枯山水（東側）：波紋圓心 = 懸浮石正下方
+    build_karesansui(
+        bld, 9.6, 20.2, 7.0, 3,
+        host=(12.0, 17.4, 1.30, 2.35),
+        guests=[(13.9, 20.6, 0.78, 0.88), (9.6, 15.7, 0.62, 0.62)],
+        floats=[(9.4, 20.6, 1.14, 1.35), (10.9, 22.3, 0.86, 0.95)])
+    # 自然石：池畔散置 + 枯山水外緣一顆。全部避開南岸鏡面（-y 那側）。
+    return [
+        ("rock_c", -13.9, 16.4, 0.30, 0.6, (0.85, 0.85, 0.95)),
+        ("rock_a", -11.6, 24.4, 0.22, 2.1, (0.95, 0.95, 0.8)),
+        ("rock_b", -2.6, 21.9, 0.20, 1.2, (0.9, 0.9, 0.75)),
+        ("rock_d", -10.8, 25.4, 0.26, 0.4, (0.7, 0.7, 0.6)),
+        ("rock_b", 15.9, 24.1, 0.24, 2.6, (1.0, 1.0, 0.85)),
+    ]
+
+
 def place_asset(model, xforms):
     """把**已經定案的** .glb（狛犬、石燈籠、松）載進場景擺位，回傳物件清單。
 
@@ -903,7 +1331,8 @@ def place_asset(model, xforms):
             o.parent = None
             o.location = (px, py, pz)
             o.rotation_euler = (0.0, 0.0, rot)
-            o.scale = (sc, sc, sc)
+            # sc 可以是純量或 (x, y, z) —— 庭石要壓扁或拉高才有「立石／臥石」
+            o.scale = tuple(sc) if isinstance(sc, (tuple, list)) else (sc, sc, sc)
             me = o.data
             ca = me.color_attributes
             if len(ca):
@@ -987,6 +1416,7 @@ build_giant_tree(bld, -4.9, -21.5, 47)
 # 前庭深 22.6m（門 -34 → 石階 -11.4）。狛犬擺在「從外側參道往內約 1/3」
 # 處 = -34 + 22.6/3 ≈ -26.5。燈籠與松依序往外側讓開，形成一個漸開的
 # 八字 —— 站在門口往內看，三對物件把視線收束到唐破風玄関上。
+garden_rocks = build_back_garden(bld)
 objs = [bld.build("hieda_scene")]
 # 狛犬**維持左右嚴格對稱**：牠是儀式性的門衛，一對石獅子擺歪就只是沒對齊。
 # 原型面朝 -y，繞 z 轉 θ 後朝向是 (sinθ, -cosθ)，θ=-sx*1.0 讓兩隻都斜對
@@ -1008,5 +1438,9 @@ for mdl, px, py, rot, sc in [
         ("stone_lantern", -7.40, -28.90, -0.62, 0.98),
         ("tree_pine_a", -9.50, -30.90, -1.35, 1.34)]:
     objs += place_asset(mdl, [(px, py, 0.0, rot, sc)])
+
+# ── 後院（主屋北面）── 設計語言刻意跟前庭相反：沒有任何鏡射與等距。
+for mdl, px, py, pz, rot, sc in garden_rocks:
+    objs += place_asset(mdl, [(px, py, pz, rot, sc)])
 export_sel(objs, "hieda_blockout")
 print("done")
