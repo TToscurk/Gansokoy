@@ -114,3 +114,46 @@ Godot 4 直接吃 `.glb`；編輯器設定 Blender 路徑後連 `.blend` 都能�
 3. 其餘 7 張圖照基準逐張重做；每張做完就把該圖的 blockout 隱藏或刪掉。
 4. 系統重寫：對話 → NPC → 戰鬥 → 任務（順序照依賴關係）。
 5. web 版凍結為參考實作，不再加新圖。
+
+
+---
+
+## ⚠ `godot/project.godot` 不要寫自訂註解
+
+**症狀**：使用者每次 `git pull` 都撞到——
+
+```
+error: Your local changes to the following files would be overwritten by merge:
+        godot/project.godot
+error: cannot pull with rebase: You have unstaged changes.
+```
+
+**原因**：Godot 編輯器每次啟動（`--editor` 或 `--import`）都會**重寫**
+`project.godot`：檔頭換成引擎自己的樣板、每個 `InputEventKey` 補上
+`physical_keycode` 欄位。我曾經在檔頭寫過中文說明，於是變成
+「我跟編輯器互相覆寫」——使用者那邊只要開過一次 Godot 就髒掉。
+
+**解法**：讓檔案跟編輯器寫出來的**一字不差**。檔頭必須是這七行，不多不少：
+
+```
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+```
+
+要記的事寫在這裡（docs/），**不要寫進 project.godot**。
+
+**驗證方式**（改完一定要跑）：
+
+```bash
+git add godot/project.godot && git commit -m wip
+godot --headless --import --path godot
+git status --short godot/project.godot     # 要是空的
+```
+
+`.godot/` 已在 `godot/.gitignore` 裡；92 個 `.import` 是**該**進版控的
+（Godot 靠它們知道匯入設定與 uid），它們產生一次之後不會再變。
