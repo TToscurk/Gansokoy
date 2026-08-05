@@ -1465,62 +1465,82 @@ def build_shrub_clump(bld, x, y, seed, n=2, spread=1.6, scale=1.0):
         build_bush(bld, x + math.cos(a) * d, y + math.sin(a) * d, rr, hh, seed * 7 + i)
 
 
-def build_tobiishi(bld, ctrl, seed=77):
+def build_tobiishi(bld, ctrl, seed=77, specials=None):
     """飛石小徑：一塊塊埋進草皮的踏石，不是連續鋪面。
 
-    路線／視線設計／終點全部沿用（樣條、控制點都沒動）—— 這輪只換
-    「表面處理」：連續碎石帶讀起來是「有人鋪了一條路」，飛石讀起來是
-    「有人常走，所以放了石頭」。後院要的是後者。
+    路線／視線設計／終點沿用；「grown-in」用頂點色畫（頂面 tri_v 扇形，
+    中心石色、外圈往苔綠混隨機量），側裙只露 6.5cm。
 
-    「grown-in」的關鍵在**每塊石頭的邊緣色**：頂面用 `tri_v` 扇形，
-    中心是乾淨的石面色，外圈頂點各自往苔綠混一個隨機量 —— 草從邊上
-    爬上來的樣子是用頂點色畫的，不是靠幾何。硬切邊的石頭永遠像剛
-    施工完。
-
-    間距 1.15~1.55m（一步一塊）、每塊自轉、大小不一。村裡店門口的
-    飛石（gen_village.gd）也是同一個語彙，只是這裡是庭園尺度。"""
+    **節奏**（本輪）：不是整條等距單石到底 —— 在幾個「該停一步」的點換
+    語彙，其餘路段維持單石：
+      ・兩個折點與終點木戶前：**大判の踏み分け石**（1.5~1.8×、更圓更整）
+        或 **二枚打ち**（兩塊小石並置、微錯位）
+      ・過了第一折的遮蔽樹叢、池面第一次整個露出來的位置：大石 ——
+        腳下的石頭變大，人自然停下來，抬頭剛好是水面
+    變化**集中在這些點**，不平均撒 —— 平均撒就只是隨機混尺寸，讀不出
+    「這裡要你停」。specials: [(弧長, "landing"|"pair"), ...]。"""
     rng = random.Random(seed)
     pts = _spline(ctrl, len(ctrl) * 9)
-    # 沿樣條等弧長取樣：直接按索引取的話，控制點密的路段石頭會擠在一起
     dists = [0.0]
     for i in range(1, len(pts)):
         dists.append(dists[-1] + math.hypot(pts[i][0] - pts[i - 1][0],
                                             pts[i][1] - pts[i - 1][1]))
     total = dists[-1]
-    d = 0.9
-    while d < total - 1.2:
+
+    def at_dist(d):
         i = next(k for k in range(1, len(dists)) if dists[k] >= d)
         f = (d - dists[i - 1]) / (dists[i] - dists[i - 1] or 1.0)
         px = pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f
         py = pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f
-        # 左右微幅蛇行：飛石不會排成一直線正中央
         tx, ty = pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]
         tl = math.hypot(tx, ty) or 1.0
-        off = rng.uniform(-0.34, 0.34)
-        px += -ty / tl * off
-        py += tx / tl * off
-        # 一塊踏石：不規則八角盤，頂面 tri_v 扇形（中心石色、外圈混苔）
+        return px, py, tx / tl, ty / tl
+
+    def stone(px, py, scale=1.0, round_k=0.0):
+        """一塊踏石。round_k→1 半徑趨於一致（大石要圓整，單石保持不規則）。"""
         rot = rng.uniform(0.0, math.tau)
-        rr = [rng.uniform(0.40, 0.60) for _ in range(8)]
+        rr = [rng.uniform(0.40, 0.60) * (1.0 - round_k) + 0.52 * round_k
+              for _ in range(8)]
         sh = rng.uniform(-0.03, 0.03)
         c_top = (C_STONE[0] + sh, C_STONE[1] + sh, C_STONE[2] + sh)
         zt = 0.065
         ring = []
         for k in range(8):
             a = rot + k / 8.0 * math.tau
-            ring.append((px + math.cos(a) * rr[k], py + math.sin(a) * rr[k] * 0.88))
+            ring.append((px + math.cos(a) * rr[k] * scale,
+                         py + math.sin(a) * rr[k] * scale * 0.88))
         for k in range(8):
             k2 = (k + 1) % 8
             c_e1 = _mix(c_top, C_MOSS, rng.uniform(0.22, 0.60))
             c_e2 = _mix(c_top, C_MOSS, rng.uniform(0.22, 0.60))
             bld.tri_v((px, py, zt), (ring[k][0], ring[k][1], zt),
                       (ring[k2][0], ring[k2][1], zt), c_top, c_e1, c_e2)
-            # 側裙：只露 6.5cm，往下接進草皮（村裡飛石「要埋進地面」同一課）
             bld.quad((ring[k][0], ring[k][1], zt), (ring[k][0], ring[k][1], 0.0),
                      (ring[k2][0], ring[k2][1], 0.0), (ring[k2][0], ring[k2][1], zt),
                      _mix(C_STONE_DK, C_MOSS, 0.35), flip=True)
+
+    specials = sorted(specials or [], key=lambda q: q[0])
+    d = 0.9
+    while d < total - 1.2:
+        # 特殊點落在這一步之內 → 放大石／二枚打ち，然後跳過它
+        if specials and specials[0][0] <= d + 1.55:
+            sd, kind = specials.pop(0)
+            px, py, ux, uy = at_dist(sd)
+            if kind == "pair":
+                # 二枚打ち：兩塊小石並置、沿行進方向微錯位
+                off = rng.uniform(0.42, 0.52)
+                slip = rng.uniform(0.14, 0.26)
+                stone(px - uy * off - ux * slip, py + ux * off - uy * slip, 0.82)
+                stone(px + uy * off + ux * slip, py - ux * off + uy * slip, 0.82)
+            else:
+                stone(px, py, rng.uniform(1.5, 1.8), round_k=0.65)
+            d = sd + rng.uniform(1.35, 1.65)
+            continue
+        px, py, ux, uy = at_dist(d)
+        off = rng.uniform(-0.34, 0.34)
+        stone(px - uy * off, py + ux * off)
         d += rng.uniform(1.15, 1.55)
-    return pts
+    return pts, dists
 
 
 def build_garden_lantern(bld, x, y, seed, h=1.30):
@@ -1799,7 +1819,27 @@ def build_back_garden(bld):
     # 木戶才整個露出來。往外走、不繞回庭園 —— 之後要延伸有地方接。
     PATH_CTRL = [(2.0, 20.0), (4.0, 31.0), (0.0, 42.0), (5.0, 52.0),
                  (15.0, 59.0), (27.0, 64.0), (PATH_END[0], PATH_END[1])]
-    path_pts = build_tobiishi(bld, PATH_CTRL)
+    # 特殊點的弧長：兩個折點（樣條控制點 (0,42)、(15,59)）＋池面揭示點
+    # （過了第一折的遮蔽樹叢 ~4m）＋終點木戶前。位置從樣條上找最近取樣點
+    # 算弧長，不寫死數字 —— 之後動路線會自己跟著。
+    _probe = _spline(PATH_CTRL, len(PATH_CTRL) * 9)
+    _pd = [0.0]
+    for _i in range(1, len(_probe)):
+        _pd.append(_pd[-1] + math.hypot(_probe[_i][0] - _probe[_i - 1][0],
+                                        _probe[_i][1] - _probe[_i - 1][1]))
+
+    def _arc_near(tx, ty):
+        return _pd[min(range(len(_probe)),
+                       key=lambda k: math.hypot(_probe[k][0] - tx, _probe[k][1] - ty))]
+
+    _bend1 = _arc_near(0.0, 42.0)
+    _bend2 = _arc_near(15.0, 59.0)
+    path_pts, _ = build_tobiishi(bld, PATH_CTRL, specials=[
+        (_bend1, "landing"),                  # 第一折：大石
+        (_bend1 + 4.0, "landing"),            # 過遮蔽樹叢、池面整個露出來
+        (_bend2, "pair"),                     # 第二折：二枚打ち
+        (_pd[-1] - 2.6, "landing"),           # 木戶前：停一步再面對關著的門
+    ])
     # ── 小型石燈籠 ×4：單獨擺、間距不等、左右交錯但偏移量各自不同 ——
     # 成對鏡射是前庭的語言。位置沿樣條取比例點，路線改了會自己跟著。
     for t, side, off, ls, lh in [(0.16, 1, 1.7, 201, 1.30), (0.40, -1, 2.1, 202, 1.14),
@@ -1828,9 +1868,14 @@ def build_back_garden(bld):
     # ── 生垣（刈込み）：後院外周，高 1.0~1.4m 起伏 + 視線缺口 ──
     # 木戶那一段留 5.5m 開口，垣與門接在一起 —— 分開的話會變成「一道垣
     # 旁邊另外立著一扇門」，門就不是這道界線的出入口了。
-    FENCE = [(16.0, 10.0), (36.0, 16.0), (45.0, 34.0), (42.0, 54.0), (36.0, 66.0),
-             (26.0, 72.0), (8.0, 76.0), (-12.0, 74.0), (-30.0, 68.0), (-46.0, 54.0),
-             (-50.0, 34.0), (-42.0, 16.0), (-16.0, 10.0)]
+    # 兩端**埋進主屋基壇 0.3m**（基壇角落在 ±13.84, 9.33；端點 ±13.5, 8.8
+    # 在基壇footprint內），整圈的封閉由「生垣＋建築本體」共同完成。
+    # 原本端點在 (±16, 10)，離基壇角落懸空 ~2.3m —— 界線在建築兩側各開
+    # 一個大洞，跟規格裡刻意留的窄視線缺口完全是兩回事。
+    # 端點只埋 0.3m 不多埋：埋深了會從基壇另一側戳出來。
+    FENCE = [(13.5, 8.8), (16.0, 10.0), (36.0, 16.0), (45.0, 34.0), (42.0, 54.0),
+             (36.0, 66.0), (26.0, 72.0), (8.0, 76.0), (-12.0, 74.0), (-30.0, 68.0),
+             (-46.0, 54.0), (-50.0, 34.0), (-42.0, 16.0), (-16.0, 10.0), (-13.5, 8.8)]
     build_clipped_hedge(bld, _spline(FENCE, len(FENCE) * 13), 91,
                         skip_at=PATH_END, skip_r=5.5)
     # 兩側密植往外挪、收小一號：擋得住繞路，但不會把木戶壓成配角 ——
