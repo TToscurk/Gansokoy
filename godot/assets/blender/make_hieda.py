@@ -13,7 +13,15 @@
 # （每邊 M 段），圈與圈之間鋪 quad。角部抬升量沿邊緣按 |2t-1|³ 集中。
 #
 # 面數守則（Feature List §4）：瓦壟**不做實體幾何**，之後在 Godot 用
-# 法線/位移貼圖做 —— 這裡守住 ~2,500 面以內。
+# 法線/位移貼圖做。主屋單體（hieda_main）守在 ~2,000 面。
+#
+# ⚠ 楓樹的樹冠**不是**橢球體。使用者看完第一版 blockout：「球體樹我覺得
+# 不太有我想要的」——那兩棵巨樹是全場唯一的有機造型，卻是平滑橢球，
+# 跟 make_hedge.py 已經解決過的「西瓜」是同一個病：光滑封閉曲面不管
+# 怎麼上色都是球。這裡搬同一招（凹凸殼 + 上千片小葉打碎輪廓），
+# 只是換成球面參數化。全場只有 2 棵，面數可以放心加密
+# （單棵樹冠一叢 ~80~110 片葉，5 叢/棵）。仍然是 flat shading 的扁平
+# 三角片、頂點色、無貼圖 —— 不是走寫實，是打碎輪廓（規格 §1.1）。
 import bpy
 import math
 import random
@@ -37,10 +45,17 @@ C_SHOJI = (0.870, 0.850, 0.780)
 C_ENGAWA = (0.420, 0.330, 0.240)
 C_GRASS = (0.240, 0.360, 0.150)
 C_BARK = (0.200, 0.150, 0.110)
-# 楓紅三階（線性）—— 火紅拱門
+# 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
+# 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
 C_MAPLE_DK = (0.290, 0.045, 0.030)
 C_MAPLE = (0.470, 0.085, 0.042)
 C_MAPLE_LT = (0.640, 0.150, 0.055)
+C_MAPLE_HI = (0.820, 0.320, 0.090)
+MAPLE_TONES = (C_MAPLE_DK, C_MAPLE, C_MAPLE_LT, C_MAPLE_HI)
+
+
+def _mix(a, b, t):
+    return tuple(a[i] * (1.0 - t) + b[i] * t for i in range(3))
 
 
 class B:
@@ -60,6 +75,13 @@ class B:
     def quad(self, a, b, c, d, col, flip=False):
         self.tri(a, b, c, col, flip)
         self.tri(a, c, d, col, flip)
+
+    def tri2(self, a, b, c, col):
+        """雙面三角形（葉片專用）：CULL_DISABLED 只讓背面畫得出來，
+        照明用的還是原法線，背面會全黑（make_hedge.py 踩過的坑）——
+        正反各給一張自己的面才是真的雙面。"""
+        self.tri(a, b, c, col)
+        self.tri(a, b, c, col, flip=True)
 
     def box(self, cx, cy, cz, sx, sy, sz, col, col_top=None):
         hx, hy, hz = sx / 2, sy / 2, sz / 2
@@ -318,34 +340,129 @@ def build_avenue(bld, y0, y1, width=6.0, rng=None):
         bld.box((el + er) / 2, yb, 0.045, er - el, 0.10, 0.05, C_STONE_DK)
 
 
-def _cluster(bld_obj_list, center, radius, squash, tier, seed):
-    """楓葉團：低細分 icosphere（借 make_trees 的做法）。"""
+# ── 楓葉樹冠：不做球體 ──
+#
+# 使用者看完 blockout：「球體樹我覺得不太有我想要的」。他是對的，而且
+# 是同一個病根，這次還是同一帖藥：**光滑的封閉曲面不管怎麼上色都是球**。
+# make_hedge.py 已經驗證過「凹凸殼 + 上千片小葉打碎輪廓」能解決這件事，
+# 這裡把同一招搬到球面參數（生垣是半圓柱剖面，樹冠要整顆球）。
+#
+# 不是往寫實走——規格 §1.1 定案是「偏卡通」，這裡的葉子仍然是
+# flat shading 的扁平三角片、頂點色、無貼圖。差別只在**輪廓形狀**：
+# 平滑橢球 → 凹凸的雲朵狀，邊緣是碎的不是圓的。
+#
+# 全場只有 2 棵巨樹（不像生垣要撒滿全村），面數可以放心加密。
+
+def _canopy_surf(center, rx, ry, rz, seed):
+    """凹凸球面：標準球面參數（u=方位角/TAU、v=極角/π）疊 4 個隨機頻率的
+    正弦擾動，讓半徑忽大忽小 —— 從「撞球」變成「雲朵」。
+    回傳 surf(u,v) -> (絕對座標點, 擾動前的球面法線)。用擾動前的法線
+    當作葉片朝向已經夠準（凹凸只有 ±30% 半徑，方向不會偏太多），
+    比對曲面做有限差分省一半功夫。"""
     rng = random.Random(seed)
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=radius, location=center)
-    ob = bpy.context.active_object
-    ob.scale = (1 + rng.uniform(-0.1, 0.1), 1 + rng.uniform(-0.1, 0.1), squash)
-    bpy.ops.object.transform_apply(scale=True)
-    me = ob.data
-    attr = me.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
-    cz, rad = center[2], radius * squash
-    for poly in me.polygons:
-        vz = sum(me.vertices[me.loops[li].vertex_index].co.z for li in poly.loop_indices) / len(poly.loop_indices)
-        t = max(0.0, min(1.0, (vz - (cz - rad)) / (2 * rad)))
-        base = C_MAPLE_DK if t < 0.35 else (C_MAPLE if t < 0.75 else C_MAPLE_LT)
-        k = 0.8 + 0.4 * t
-        for li in poly.loop_indices:
-            attr.data[li].color = (min(1, base[0] * k), min(1, base[1] * k),
-                                   min(1, base[2] * k), 1.0)
-        poly.use_smooth = False
-    bld_obj_list.append(ob)
+    terms = [(rng.uniform(2.0, 4.0), rng.uniform(1.5, 3.5),
+              rng.uniform(0.0, math.tau), rng.uniform(0.14, 0.30)) for _ in range(4)]
+
+    def surf(u, v):
+        theta = u * math.tau
+        phi = v * math.pi
+        nx = math.sin(phi) * math.cos(theta)
+        ny = math.sin(phi) * math.sin(theta)
+        nz = math.cos(phi)
+        lump = 1.0
+        for fu, fv, ph, amp in terms:
+            lump += amp * math.sin(theta * fu + phi * fv + ph)
+        lump = max(0.55, lump)
+        pt = (center[0] + nx * rx * lump, center[1] + ny * ry * lump,
+              center[2] + nz * rz * lump)
+        return pt, (nx, ny, nz)
+    return surf
 
 
-def build_giant_tree(objs, x_side, y, seed):
+def _auto_quad(bld, ctr, p0, p1, p2, p3, col):
+    """繞序自動判斷：算面法線，跟「面心 - 球心」的方向比對，
+    反了就翻面。凹凸球面手動推繞序很容易推錯（make_hedge.py 的鏡射
+    翻面就是手推出過錯），這裡直接用幾何判斷，不用每次盯著算。"""
+    e1 = (p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2])
+    e2 = (p3[0] - p0[0], p3[1] - p0[1], p3[2] - p0[2])
+    n = (e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2],
+         e1[0] * e2[1] - e1[1] * e2[0])
+    mid = ((p0[0] + p2[0]) / 2 - ctr[0], (p0[1] + p2[1]) / 2 - ctr[1],
+           (p0[2] + p2[2]) / 2 - ctr[2])
+    dot = n[0] * mid[0] + n[1] * mid[1] + n[2] * mid[2]
+    bld.quad(p0, p1, p2, p3, col, flip=(dot < 0))
+
+
+def _canopy_hull(bld, center, surf, rows=6, cols=10):
+    """粗胚殼：只負責擋視線，壓暗色，看得到它就是葉子撒得不夠
+    （跟生垣的 hull 同一個角色）。"""
+    for ri in range(rows):
+        v0, v1 = ri / rows, (ri + 1) / rows
+        for ci in range(cols):
+            u0, u1 = ci / cols, (ci + 1) / cols
+            p00, _ = surf(u0, v0)
+            p10, _ = surf(u1, v0)
+            p11, _ = surf(u1, v1)
+            p01, _ = surf(u0, v1)
+            col = _mix(C_MAPLE_DK, C_MAPLE, 0.15 + 0.25 * v0)
+            _auto_quad(bld, center, p00, p10, p11, p01, col)
+
+
+def _leaf_sprig(bld, rng, org, nrm, size, tone_t):
+    """一叢 4 片短寬雙面葉，沿法線方向岔開（make_hedge.py sprig() 的
+    球面版）。org 要往內縮一點讓葉根埋進殼裡，殼的接縫才不會露出來。"""
+    nx, ny, nz = nrm
+    ref = (0.0, 1.0, 0.0) if abs(nz) < 0.9 else (1.0, 0.0, 0.0)
+    tx, ty, tz = ny * ref[2] - nz * ref[1], nz * ref[0] - nx * ref[2], nx * ref[1] - ny * ref[0]
+    tl = math.sqrt(tx * tx + ty * ty + tz * tz) or 1.0
+    tx, ty, tz = tx / tl, ty / tl, tz / tl
+    bx, by, bz = ny * tz - nz * ty, nz * tx - nx * tz, nx * ty - ny * tx
+    org = (org[0] - nx * 0.09, org[1] - ny * 0.09, org[2] - nz * 0.09)
+    for k in range(4):
+        a = rng.uniform(0.0, math.tau) + k * math.tau / 4.0
+        spread = rng.uniform(0.65, 1.35)
+        ln = size * rng.uniform(0.95, 1.65)
+        wd = size * rng.uniform(0.36, 0.58)
+        dx = nx + (tx * math.cos(a) + bx * math.sin(a)) * spread
+        dy = ny + (ty * math.cos(a) + by * math.sin(a)) * spread
+        dz = nz + (tz * math.cos(a) + bz * math.sin(a)) * spread
+        dl = math.sqrt(dx * dx + dy * dy + dz * dz) or 1.0
+        dx, dy, dz = dx / dl, dy / dl, dz / dl
+        tip = (org[0] + dx * ln, org[1] + dy * ln, org[2] + dz * ln)
+        p1 = (org[0] + tx * wd, org[1] + ty * wd, org[2] + tz * wd)
+        p2 = (org[0] - tx * wd, org[1] - ty * wd, org[2] - tz * wd)
+        col = _mix(C_MAPLE, C_MAPLE_LT, tone_t * rng.uniform(0.3, 1.0))
+        r = rng.random()
+        if r < 0.16:
+            col = _mix(col, C_MAPLE_HI, rng.uniform(0.4, 0.9))       # 逆光/新葉的亮橙
+        elif r < 0.30:
+            col = _mix(col, C_MAPLE_DK, rng.uniform(0.3, 0.6))       # 陰影葉
+        bld.tri2(p1, p2, tip, col)
+
+
+def add_canopy(bld, center, rx, ry, rz, seed, n_sprigs=80, leaf_size=0.62):
+    """一叢楓葉團：凹凸殼 + 撒葉，取代舊版的平滑橢球。"""
+    rng = random.Random(seed)
+    surf = _canopy_surf(center, rx, ry, rz, seed)
+    _canopy_hull(bld, center, surf)
+    for _ in range(n_sprigs):
+        u, v = rng.uniform(0.0, 1.0), rng.uniform(0.04, 0.96)
+        p, n = surf(u, v)
+        tone_t = rng.uniform(0.15, 1.0)
+        _leaf_sprig(bld, rng, p, n, leaf_size, tone_t)
+    # 頂部補幾叢，避免極點附近（v 接近 0）撒得稀
+    for _ in range(n_sprigs // 5):
+        u = rng.uniform(0.0, 1.0)
+        p, n = surf(u, rng.uniform(0.0, 0.08))
+        _leaf_sprig(bld, rng, p, n, leaf_size, rng.uniform(0.6, 1.0))
+
+
+def build_giant_tree(bld, x_side, y, seed):
     """框景巨樹（Feature List §2）：高 11m、幹徑 0.8m，
-    枝幹 3.5m 高處向路中央橫伸 5m —— 兩棵在頭頂交織成楓紅拱門。"""
-    import mathutils
+    枝幹 3.5m 高處向路中央橫伸 5m —— 兩棵在頭頂交織成楓紅拱門。
+    ⚠ 寫進**呼叫者傳進來的 bld**，不再自己開一個新物件 —— 主幹、
+    枝、樹冠現在是同一份網格的一部分，不需要再 join。"""
     rng = random.Random(seed)
-    bld = B()
     sgn = 1 if x_side > 0 else -1
     # 主幹（八角柱疊兩段，微傾向路心）
     lean = -sgn * 0.35
@@ -379,15 +496,14 @@ def build_giant_tree(objs, x_side, y, seed):
             rr1 = r0 + (r1 - r0) * t1
             bld.quad(p(ax0, rr0, a0), p(ax0, rr0, a1), p(ax1, rr1, a1), p(ax1, rr1, a0),
                      C_BARK, flip=(sgn < 0))
-    # 側枝兩根（往外、往後）
-    ob = bld.build("tree_trunk_%d" % seed)
-    objs.append(ob)
-    # 樹冠：主冠（幹頂）+ 拱門冠（枝端，覆在路上方）
-    _cluster(objs, (x_side + lean, y, 9.2), 2.6, 0.62, 0, seed * 3 + 1)
-    _cluster(objs, (x_side + lean * 0.6, y + rng.uniform(-1, 1), 7.4), 2.1, 0.66, 1, seed * 3 + 2)
-    _cluster(objs, (x_side - sgn * 3.4, y, 6.1), 2.0, 0.62, 1, seed * 3 + 3)
-    _cluster(objs, (x_side - sgn * 5.2, y + rng.uniform(-0.6, 0.6), 5.6), 1.55, 0.6, 2, seed * 3 + 4)
-    _cluster(objs, (x_side + sgn * 1.2, y - 1.6, 8.2), 1.7, 0.6, 1, seed * 3 + 5)
+    # 樹冠：主冠（幹頂）+ 拱門冠（枝端，覆在路上方）—— 凹凸殼+撒葉，不是球
+    add_canopy(bld, (x_side + lean, y, 9.2), 2.6, 2.6, 2.6 * 0.62, seed * 3 + 1, n_sprigs=110)
+    add_canopy(bld, (x_side + lean * 0.6, y + rng.uniform(-1, 1), 7.4),
+               2.1, 2.1, 2.1 * 0.66, seed * 3 + 2, n_sprigs=90)
+    add_canopy(bld, (x_side - sgn * 3.4, y, 6.1), 2.0, 2.0, 2.0 * 0.62, seed * 3 + 3, n_sprigs=85)
+    add_canopy(bld, (x_side - sgn * 5.2, y + rng.uniform(-0.6, 0.6), 5.6),
+               1.55, 1.55, 1.55 * 0.6, seed * 3 + 4, n_sprigs=65)
+    add_canopy(bld, (x_side + sgn * 1.2, y - 1.6, 8.2), 1.7, 1.7, 1.7 * 0.6, seed * 3 + 5, n_sprigs=70)
 
 
 def export_sel(objs, name):
@@ -413,13 +529,15 @@ build_house(bld)
 export_sel([bld.build("hieda_main")], "hieda_main")
 
 # ── 產出 2：Blockout（主屋 + 大道 + 巨樹框景）──
+# ⚠ 巨樹現在直接寫進同一個 bld —— 房子＋大道＋兩棵樹是**一份網格**，
+# 不再需要 export_sel 裡的 bpy.ops.object.join()（少一次操作、少一個
+# 出錯點），整個 blockout 場景在 Godot 端也只佔 1 個 draw call。
 clear()
 bld = B()
 w, d, pod = build_house(bld)
 sy0 = -(d / 2 + 3.2)                     # 石階前
 build_avenue(bld, sy0, sy0 - 26.0, width=6.0)
-scene_objs = [bld.build("hieda_scene")]
-build_giant_tree(scene_objs, +4.9, sy0 - 7.5, 11)
-build_giant_tree(scene_objs, -4.9, sy0 - 8.6, 47)
-export_sel(scene_objs, "hieda_blockout")
+build_giant_tree(bld, +4.9, sy0 - 7.5, 11)
+build_giant_tree(bld, -4.9, sy0 - 8.6, 47)
+export_sel([bld.build("hieda_scene")], "hieda_blockout")
 print("done")
