@@ -44,6 +44,14 @@ KEN = 1.82
 # 都從這裡取 —— 分開寫死兩份的話，之後挪動木戶觸發區就會留在原地。
 PATH_END = (37.0, 68.0)
 PATH_END_ANG = math.radians(28.0)
+
+# 生垣外周的控制點。**兩端 (±13.5, 8.8) 必須落在主屋基壇 footprint
+# (|x|<13.84, |y|<9.33) 之內** —— 界線的封閉是「生垣 + 建築本體」共同完成的，
+# 端點懸空的話建築兩側各開一個大洞。提到模組層級是為了讓驗證腳本能直接
+# 引用同一份座標，不用抄一遍（抄一遍就驗不到真正跑的那份）。
+FENCE = [(13.5, 8.8), (16.0, 10.0), (36.0, 16.0), (45.0, 34.0), (42.0, 54.0),
+         (36.0, 66.0), (26.0, 72.0), (8.0, 76.0), (-12.0, 74.0), (-30.0, 68.0),
+         (-46.0, 54.0), (-50.0, 34.0), (-42.0, 16.0), (-16.0, 10.0), (-13.5, 8.8)]
 # 玄関開口半寬。腰簷、正面高欄、格子窗全部照這個讓路 —— 唐破風、階梯、
 # 大扉、簷的缺口是同一件事，散在四處各寫一個數字遲早會對不齊。
 GATE_HW = 2.9
@@ -1690,13 +1698,24 @@ def build_shrub_clump(bld, x, y, seed, n=2, spread=1.6, scale=1.0):
     收到 rx≈1.25（2.5m 寬、約 23m²），同樣的葉片數才蓋得住；
     要體積就用**叢生**補回來 —— 順帶比單顆巨球自然。
     """
+    for px, py, rr, hh, sd in shrub_clump_layout(x, y, seed, n, spread, scale):
+        build_bush(bld, px, py, rr, hh, sd)
+
+
+def shrub_clump_layout(x, y, seed, n=2, spread=1.6, scale=1.0):
+    """一叢的擺位表 [(x, y, rx, rz, seed), ...]。
+
+    抽出來是為了讓 MultiMesh 那條路用**同一份亂數**排布 —— 排布邏輯抄一份
+    到匯出腳本的話，兩邊遲早會不一樣，而且不會有人發現。"""
     rng = random.Random(seed)
+    out = []
     for i in range(n):
         a = rng.uniform(0.0, math.tau)
         d = 0.0 if i == 0 else spread * rng.uniform(0.55, 1.0)
         rr = scale * (1.25 if i == 0 else rng.uniform(0.70, 0.96))
         hh = scale * (1.80 if i == 0 else rng.uniform(1.15, 1.55))
-        build_bush(bld, x + math.cos(a) * d, y + math.sin(a) * d, rr, hh, seed * 7 + i)
+        out.append((x + math.cos(a) * d, y + math.sin(a) * d, rr, hh, seed * 7 + i))
+    return out
 
 
 def build_tobiishi(bld, ctrl, seed=77, specials=None):
@@ -1870,7 +1889,73 @@ _HEDGE_PROF = [(-1.00, 0.00), (-1.00, 0.62), (-0.94, 0.88), (-0.52, 1.00),
                (0.00, 1.035), (0.52, 1.00), (0.94, 0.88), (1.00, 0.62), (1.00, 0.00)]
 
 
-def build_clipped_hedge(bld, pts, seed, hw=0.46, skip_at=None, skip_r=5.5):
+# ── 生垣的「高度」與「缺口」：掃出來的帶狀網格、MultiMesh 的模組排布、
+# 以及驗證腳本，**三邊共用這兩個函式**。
+# ⚠ 上一輪的教訓：缺口的規格是「窄視線縫」，實際卻是 8.4m 和 16.8m（比木戶
+# 開口還大）。原因有兩個，都寫在下面：
+#   (a) 缺口寬度以前寫在 t（比例）上 —— 0.016 在 241m 的環上是 7.7m。
+#   (b) 高度歸零與「不畫」混在同一個函式，h=0 會經由「鄰點也檢查」把缺口
+#       往兩邊各撐開一個取樣間距。
+# 所以現在：寬度寫**公尺**，高度只管高度，畫不畫只看段中點。
+_HG_DIPS = [(0.14, 0.055), (0.47, 0.05), (0.78, 0.06)]   # (t 中心, t 半寬)
+_HG_GAPS_M = [(0.205, 2.2), (0.655, 2.4)]                # (t 中心, 公尺寬)
+
+
+def hedge_h(t, seed):
+    """沿線第 t（0~1）處的生垣高度（公尺）。1.0~1.42 起伏 + 三處壓低。"""
+    h = 1.20 + 0.20 * math.sin(t * 17.0 + seed) * 0.5 + 0.10 * math.sin(t * 41.0)
+    for dt, dw in _HG_DIPS:
+        k = max(0.0, 1.0 - abs(t - dt) / dw)
+        h -= 0.62 * (k * k * (3 - 2 * k))                # smoothstep 壓低
+    return max(0.0, min(1.42, h))
+
+
+def hedge_live(t, x, y, total, skip_at, skip_r):
+    """這個位置有沒有生垣。x,y 用段中點（缺口寬度才可控），total = 全長。"""
+    if skip_at and math.hypot(x - skip_at[0], y - skip_at[1]) < skip_r:
+        return False
+    for gt, gm in _HG_GAPS_M:
+        if abs(t - gt) * total < gm * 0.5:
+            return False
+    return True
+
+
+def hedge_layout(pts, seed, skip_at=None, skip_r=2.0, mod_len=2.4):
+    """把生垣線切成**等弧長的模組擺位**，給 Godot 端發 MultiMesh。
+
+    回傳 [(x, y, yaw, h), ...]：yaw 是模組沿線的朝向（模組本體沿 +x 排），
+    h 是該處高度 —— Godot 端把 h 當 y 方向的 scale。高度起伏、壓低、缺口
+    全部由上面那兩個函式決定，跟掃出來的那份是同一組數。
+    """
+    n = len(pts)
+    seg = [math.dist(pts[i], pts[i + 1]) for i in range(n - 1)]
+    total = sum(seg) or 1.0
+    acc = [0.0]
+    for s in seg:
+        acc.append(acc[-1] + s)
+
+    def at(d):
+        i = min(range(n - 1), key=lambda k: abs(acc[k] - d))
+        i = max(0, min(n - 2, i if acc[i] <= d else i - 1))
+        f = (d - acc[i]) / (seg[i] or 1.0)
+        return (pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f,
+                pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f,
+                math.atan2(pts[i + 1][1] - pts[i][1], pts[i + 1][0] - pts[i][0]))
+
+    out = []
+    k = 0
+    while (k + 0.5) * mod_len < total:
+        d = (k + 0.5) * mod_len
+        x, y, yaw = at(d)
+        t = d / total
+        if hedge_live(t, x, y, total, skip_at, skip_r):
+            out.append((x, y, yaw, hedge_h(t, seed)))
+        k += 1
+    return out
+
+
+def build_clipped_hedge(bld, pts, seed, hw=0.46, skip_at=None, skip_r=5.5,
+                        h_fn=None, leaf_den=3.4):
     """生垣（刈込み）：修剪過的條狀塊體，**刻意跟路邊灌木叢的有機輪廓相反**。
 
     邊界要一眼讀得出來，靠的是「語彙對比」：灌木叢是野的（多團塊、亂輪廓、
@@ -1883,31 +1968,31 @@ def build_clipped_hedge(bld, pts, seed, hw=0.46, skip_at=None, skip_r=5.5):
       2. 殼與葉**共用同一組剖面**，不然葉撒不到側面，露出光滑的殼。
       3. 葉片**短而寬**，不是細長刺（見 `_leaf_tuft`）。
 
-    ⚠ 但**不能直接 instance hedge_a/b/c.glb**：一個 2.4m 模組 5,786 面，
-    這圈約 240m 要 ~100 個模組 ≈ 58 萬面，而整個 blockout 現在才 4.2 萬。
-    村內能用是因為 `gen_village.gd` 走 MultiMesh（每種變體一次 draw call）；
-    blockout 只有一份 mesh，沒有這個選項。所以照技法重寫、密度按 blockout 調。
-    Godot 端接手時應該換回 MultiMesh + hedge_*.glb。
+    現在這支有兩個用途：
+      ・`h_fn=lambda t: 1.0` + 一條直線 → 蓋出**單位模組**（給 MultiMesh）。
+      ・預設（沿 FENCE 的曲線）→ 蓋出整圈，只有 Blender 預覽在用。
 
-    高度沿線起伏 1.0~1.4m，並在幾處**壓低或斷開**留視線缺口 —— 一圈等高
-    密不透風的綠牆會把後院關成一個盒子。
+    `leaf_den` = 每公尺撒幾叢葉。整圈那條只能給 3.4（面數要乘 100 段），
+    模組不用 —— MultiMesh 只存一份幾何，實例數不會乘上去。所以模組可以
+    照 `make_hedge.py` 驗證過的密度撒（那支一個 2.4m 模組 430 叢），
+    「看得到殼就是葉子撒得不夠」這條規矩到這裡才真的做得到。
     """
     rng = random.Random(seed)
     n = len(pts)
-    # 視線缺口：t 是沿線的比例位置。dip = 壓低到看得過去，gap = 整段不畫。
-    dips = [(0.14, 0.055), (0.47, 0.05), (0.78, 0.06)]
-    gaps = [(0.315, 0.016), (0.635, 0.014)]
+    total = sum(math.dist(pts[i], pts[i + 1]) for i in range(n - 1)) or 1.0
 
     def h_at(i):
         t = i / float(n - 1)
-        for gt, gw in gaps:
-            if abs(t - gt) < gw:
-                return 0.0
-        h = 1.20 + 0.20 * math.sin(t * 17.0 + seed) * 0.5 + 0.10 * math.sin(t * 41.0)
-        for dt, dw in dips:
-            k = max(0.0, 1.0 - abs(t - dt) / dw)
-            h -= 0.62 * (k * k * (3 - 2 * k))          # smoothstep 壓低
-        return max(0.0, min(1.42, h))
+        return h_fn(t) if h_fn else hedge_h(t, seed)
+
+    def live(i):
+        """第 i 段（pts[i]→pts[i+1]）畫不畫。只看**段中點**，缺口寬度才可控。"""
+        if i < 0 or i > n - 2:
+            return False
+        if h_fn:
+            return True
+        mx, my = (pts[i][0] + pts[i + 1][0]) * 0.5, (pts[i][1] + pts[i + 1][1]) * 0.5
+        return hedge_live((i + 0.5) / float(n - 1), mx, my, total, skip_at, skip_r)
 
     def frame(i):
         a = pts[min(i + 1, n - 1)]
@@ -1923,20 +2008,17 @@ def build_clipped_hedge(bld, pts, seed, hw=0.46, skip_at=None, skip_r=5.5):
         return (pts[i][0] + nx * o * hw, pts[i][1] + ny * o * hw, zf * h)
 
     for i in range(n - 1):
+        if not live(i):
+            continue
         mx, my = (pts[i][0] + pts[i + 1][0]) * 0.5, (pts[i][1] + pts[i + 1][1]) * 0.5
-        if skip_at and math.hypot(mx - skip_at[0], my - skip_at[1]) < skip_r:
-            continue
-        if h_at(i) < 0.05 or h_at(i + 1) < 0.05:
-            continue
         ctr = (mx, my, (h_at(i) + h_at(i + 1)) * 0.25)
         for j in range(len(_HEDGE_PROF) - 1):
             _auto_quad(bld, ctr, prof_pt(i, j), prof_pt(i, j + 1),
                        prof_pt(i + 1, j + 1), prof_pt(i + 1, j),
                        _mix(C_HG_HULL, C_HG_DEEP, 0.10 + 0.35 * _HEDGE_PROF[j][1]))
-        # 缺口與端點的封口
-        for i_end, sd in ((i, -1), (i + 1, 1)):
-            nb = i_end + sd
-            if 0 <= nb < n and h_at(nb) >= 0.05:
+        # 缺口與端點的封口：鄰段不畫就在這一頭收口
+        for i_end, nb in ((i, i - 1), (i + 1, i + 1)):
+            if live(nb):
                 continue
             for j in range(len(_HEDGE_PROF) - 1):
                 _auto_quad(bld, ctr, prof_pt(i_end, j), prof_pt(i_end, j + 1),
@@ -1947,13 +2029,10 @@ def build_clipped_hedge(bld, pts, seed, hw=0.46, skip_at=None, skip_r=5.5):
     # 葉：沿頂緣與上側面撒，把修剪過的稜線「毛」掉一點點 —— 完全銳利的
     # 邊會變成塑膠模型，但也不能撒到把平頂打散（那就不是刈込み了）。
     for i in range(n - 1):
-        mx, my = (pts[i][0] + pts[i + 1][0]) * 0.5, (pts[i][1] + pts[i + 1][1]) * 0.5
-        if skip_at and math.hypot(mx - skip_at[0], my - skip_at[1]) < skip_r:
-            continue
-        if h_at(i) < 0.05:
+        if not live(i):
             continue
         seg = math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1])
-        for _ in range(max(1, int(seg * 3.4))):
+        for _ in range(max(1, int(seg * leaf_den))):
             f = rng.random()
             jj = rng.uniform(1.0, len(_HEDGE_PROF) - 2.0)
             j0 = int(jj)
@@ -2014,13 +2093,19 @@ def build_back_garden(bld):
     #   老木 crown 1.25 / dens 0.72 / 3 叢：高、冠寬、葉疏
     #   中木 crown 1.00 / dens 1.00 / 2 叢
     #   若木 crown 0.72 / dens 1.30 / 2 叢：矮、冠緊、葉最密
+    # ⚠ 這裡改成**記擺位**而不是蓋幾何：八棵楓一起烘進單一 mesh 是 ~25,000 面，
+    # 而它們其實只有三種造型。模組化之後 blockout 不再帶這些面，Godot 端
+    # 用 MultiMesh 發（見 Inst / hieda_garden.instances.json）。
+    # seed 原本決定造型，現在造型由模組決定，seed 改成決定**轉角** ——
+    # 同一個模組轉不同角度，遠看仍然不像複製貼上。
     for mx, my, mh, ms, var in [
-            (m1[0], m1[1], 11.0, 23, MAPLE_OLD), (m2[0], m2[1], 7.8, 41, MAPLE_MID),
-            (35.6, 19.8, 8.6, 53, MAPLE_MID), (31.9, 47.6, 6.2, 59, MAPLE_YNG),
-            (5.4, 21.1, 10.2, 67, MAPLE_OLD),          # 枯山水外緣
-            (-8.0, 50.0, 9.4, 73, MAPLE_OLD), (12.5, 50.0, 6.6, 79, MAPLE_YNG),
-            (24.5, 55.5, 8.0, 83, MAPLE_MID)]:         # 小徑沿線
-        build_tree(bld, mx, my, mh, ms, var)
+            (m1[0], m1[1], 11.0, 23, "a"), (m2[0], m2[1], 7.8, 41, "b"),
+            (35.6, 19.8, 8.6, 53, "b"), (31.9, 47.6, 6.2, 59, "c"),
+            (5.4, 21.1, 10.2, 67, "a"),                # 枯山水外緣
+            (-8.0, 50.0, 9.4, 73, "a"), (12.5, 50.0, 6.6, 79, "c"),
+            (24.5, 55.5, 8.0, 83, "b")]:               # 小徑沿線
+        INST.add("hieda_maple_" + var, mx, my, 0.0,
+                 (ms * 2.399963) % math.tau, mh / TREE_H0)
 
     # 菜園（西北角，退到最裡面）
     build_veg_garden(bld, -30.0, 52.0, 11)
@@ -2087,7 +2172,7 @@ def build_back_garden(bld):
             (7.2, 13.1, 67, 2), (-6.0, 13.3, 68, 2),       # 縁側前（離基壇 1.2~1.4m）
             (-40.5, 27.0, 69, 3), (31.5, 52.5, 70, 2),     # 生垣內側
             (-8.5, 69.5, 71, 2)]:                           # 生垣內側（北段）
-        build_shrub_clump(bld, bx, by, bs, n=bn)
+        emit_clump(bx, by, bs, n=bn)
     # 終點：關著的木戶 + 兩側密植（不是斷頭路，是「現在過不去」）
     build_closed_gate(bld, PATH_END[0], PATH_END[1], PATH_END_ANG, 71)
     # ── 生垣（刈込み）：後院外周，高 1.0~1.4m 起伏 + 視線缺口 ──
@@ -2098,17 +2183,22 @@ def build_back_garden(bld):
     # 原本端點在 (±16, 10)，離基壇角落懸空 ~2.3m —— 界線在建築兩側各開
     # 一個大洞，跟規格裡刻意留的窄視線缺口完全是兩回事。
     # 端點只埋 0.3m 不多埋：埋深了會從基壇另一側戳出來。
-    FENCE = [(13.5, 8.8), (16.0, 10.0), (36.0, 16.0), (45.0, 34.0), (42.0, 54.0),
-             (36.0, 66.0), (26.0, 72.0), (8.0, 76.0), (-12.0, 74.0), (-30.0, 68.0),
-             (-46.0, 54.0), (-50.0, 34.0), (-42.0, 16.0), (-16.0, 10.0), (-13.5, 8.8)]
-    build_clipped_hedge(bld, _spline(FENCE, len(FENCE) * 13), 91,
-                        skip_at=PATH_END, skip_r=5.5)
+    # skip_r 從 5.5 收到 2.0：5.5 是**半徑**，等於在環上挖掉 11m，而木戶
+    # 連屋根才 3.6m 寬 —— 門的左右各留了 3.7m 可以直接走過去，那不是「門」
+    # 是「門旁邊有兩個洞」。收到 2.0 之後生垣直接頂到門柱。
+    # 生垣也走 MultiMesh：整圈 ~100 個 2.4m 模組，每個 h 當 y 方向 scale。
+    # 高度起伏／壓低／缺口全部由 hedge_h / hedge_live 決定，跟 Blender 預覽
+    # 掃出來的那份是同一組數（同一組函式）。
+    for hx, hy, hyaw, hh in hedge_layout(_spline(FENCE, len(FENCE) * 13), 91,
+                                         skip_at=PATH_END, skip_r=2.0):
+        INST.add("hieda_hedge_%s" % "abc"[int(abs(hx * 7.3 + hy * 3.1)) % 3],
+                 hx, hy, 0.0, hyaw, 1.0, hh, 1.0)
     # 兩側密植往外挪、收小一號：擋得住繞路，但不會把木戶壓成配角 ——
     # 終點要讀成「一道關著的門」，不是「兩叢樹中間有東西」
     for sd in (1, -1):
-        build_shrub_clump(bld, PATH_END[0] - math.sin(PATH_END_ANG) * sd * 5.4,
-                          PATH_END[1] + math.cos(PATH_END_ANG) * sd * 5.4,
-                          80 + sd, n=3, spread=1.9)
+        emit_clump(PATH_END[0] - math.sin(PATH_END_ANG) * sd * 5.4,
+                   PATH_END[1] + math.cos(PATH_END_ANG) * sd * 5.4,
+                   80 + sd, n=3, spread=1.9)
     return [
         ("rock_c", g1[0], g1[1], 0.30, 0.6, (1.15, 1.15, 1.30)),
         ("rock_a", g2[0], g2[1], 0.22, 2.1, (1.30, 1.30, 1.05)),
@@ -2116,6 +2206,56 @@ def build_back_garden(bld):
         ("rock_d", g4[0], g4[1], 0.26, 0.4, (0.95, 0.95, 0.80)),
         ("rock_b", 33.5, 40.0, 0.24, 2.6, (1.35, 1.35, 1.10)),
     ]
+
+
+# ── MultiMesh 擺位收集器 ──
+# 樹／灌木／生垣佔 blockout 92,854 面裡的 ~71,000（76%）。它們是**同一個
+# 東西重複很多次**，烘進單一 mesh 等於把同一份幾何複製幾十份存進檔案。
+# 改成「單位模組 .glb + 擺位表」，Godot 端照 gen_village.gd 的 _emit_hedges()
+# 發 MultiMeshInstance3D：每種模組一次 draw call，記憶體只留一份幾何。
+#
+# 座標一律**在這裡就轉成 Godot 空間**（glTF export_yup=True 的同一組換算：
+# godot_x = blender_x、godot_y = blender_z、godot_z = -blender_y）。
+# 讓 Godot 端再轉一次的話，兩邊的換算遲早會有一邊改錯 —— markers.json
+# 已經走這個規矩了，這裡跟著走。
+class Inst:
+    def __init__(self):
+        self.mods = {}
+
+    def add(self, mod, x, y, z=0.0, yaw=0.0, sx=1.0, sy=None, sz=None):
+        """x,y,z 是 Blender 座標（z 向上）、yaw 是繞 Blender +z 的角度。"""
+        sy = sx if sy is None else sy
+        sz = sx if sz is None else sz
+        # 轉角：Blender 繞 +z 轉 θ，代進 (gx, gy, gz) = (bx, bz, -by) 之後
+        #   gx' = gx cosθ + gz sinθ、gz' = -gx sinθ + gz cosθ
+        # 正好是 Godot 繞 +y 轉 θ 的式子 —— **同號**，不用取負。
+        # （位置要取負的是 z，不是角度。這兩件事很容易一起搞錯。）
+        self.mods.setdefault(mod, []).append(
+            [round(x, 3), round(z, 3), round(-y, 3), round(yaw, 4),
+             round(sx, 4), round(sy, 4), round(sz, 4)])
+
+    def count(self):
+        return sum(len(v) for v in self.mods.values())
+
+
+INST = Inst()
+
+# 模組的**基準尺寸**。擺位表存的是「相對這個尺寸的倍率」，模組本身重蓋
+# 之後只要基準不變，所有擺位不用動。
+TREE_H0 = 8.0        # 樹模組的樹高
+BUSH_RX0 = 1.0       # 灌木模組的水平半徑
+BUSH_RZ0 = 1.44      # 灌木模組的高度（1.0 : 1.44 ≈ 常用的 1.25 : 1.80）
+HEDGE_MOD_LEN = 2.4  # 生垣模組長度（沿用 make_hedge.py 的 MODULE_LEN）
+HEDGE_MOD_H = 1.0    # 生垣模組高度 → 擺位的 sy 直接就是公尺數
+
+
+def emit_clump(x, y, seed, n=2, spread=1.6, scale=1.0):
+    """一叢灌木 → 幾筆 MultiMesh 擺位。排布用的是 shrub_clump_layout()，
+    跟烘進 mesh 的那條路同一份亂數，所以兩邊的位置一定一樣。"""
+    for px, py, rr, hh, sd in shrub_clump_layout(x, y, seed, n, spread, scale):
+        INST.add("hieda_bush_%s" % "abc"[sd % 3], px, py, 0.0,
+                 (sd * 1.107) % math.tau,
+                 rr / BUSH_RX0, hh / BUSH_RZ0, rr / BUSH_RX0)
 
 
 def place_asset(model, xforms):
@@ -2139,6 +2279,13 @@ def place_asset(model, xforms):
         for o in meshes:
             o.parent = None
             o.location = (px, py, pz)
+            # ⚠ glTF 匯入器把 rotation_mode 設成 QUATERNION，這時候寫
+            # rotation_euler **完全沒有作用**（Blender 讀的是四元數）。
+            # 這個 bug 從第一輪就在：狛犬那句 -sx*1.0（兩隻各斜對參道中線
+            # 57°）、兩座燈籠刻意不對稱的 0.26 / -0.62、五顆庭石的轉角，
+            # 全部都沒生效 —— 一直是資產原型的朝向。
+            # 它不會報錯、渲染也「有東西」，所以肉眼看不出來。
+            o.rotation_mode = "XYZ"
             o.rotation_euler = (0.0, 0.0, rot)
             # sc 可以是純量或 (x, y, z) —— 庭石要壓扁或拉高才有「立石／臥石」
             o.scale = tuple(sc) if isinstance(sc, (tuple, list)) else (sc, sc, sc)
@@ -2228,8 +2375,8 @@ build_giant_tree(bld, -4.9, -21.5, 47)
 # 門前的松：改用遞迴樹產生器。tree_pine_a.glb 是「圓錐插在棍子上」，
 # 跟舊版楓同一個病；這裡不動那個共用資產（村裡還在用），改成在
 # 稗田邸自己長兩棵。
-build_tree(bld, 9.90, -30.60, 7.6, 151, TREE_PINE)
-build_tree(bld, -9.50, -30.90, 8.8, 157, TREE_PINE)
+INST.add("hieda_pine_a", 9.90, -30.60, 0.0, 0.9, 7.6 / TREE_H0)
+INST.add("hieda_pine_a", -9.50, -30.90, 0.0, 2.4, 8.8 / TREE_H0)
 garden_rocks = build_back_garden(bld)
 objs = [bld.build("hieda_scene")]
 # 狛犬**維持左右嚴格對稱**：牠是儀式性的門衛，一對石獅子擺歪就只是沒對齊。
@@ -2278,4 +2425,68 @@ try:
     print("wrote %s" % _mpath)
 except OSError as e:
     print("!! marker 寫入失敗：%s" % e)
+
+
+# ── 產出 3：MultiMesh 模組 + 擺位表 ──
+# 樹／灌木／生垣不再烘進 blockout，改成「一份單位幾何 + 一張擺位表」。
+# 模組一律**蓋在原點、基準尺寸**（TREE_H0 / BUSH_RX0 / HEDGE_MOD_*），
+# 擺位表裡存的是倍率 —— 之後重蓋模組只要基準不變，擺位一行都不用改。
+def export_module(name, fn):
+    clear()
+    b = B()
+    fn(b)
+    ob = b.build(name)
+    path = os.path.join(OUT_DIR, name + ".glb")
+    bpy.ops.object.select_all(action="DESELECT")
+    ob.select_set(True)
+    bpy.context.view_layer.objects.active = ob
+    bpy.ops.export_scene.gltf(filepath=path, use_selection=True,
+                              export_format="GLB", export_yup=True,
+                              export_apply=True)
+    return len(ob.data.polygons)
+
+
+_mod_faces = {}
+for _nm, _cfg, _sd in (("hieda_maple_a", MAPLE_OLD, 23), ("hieda_maple_b", MAPLE_MID, 41),
+                       ("hieda_maple_c", MAPLE_YNG, 59), ("hieda_pine_a", TREE_PINE, 157)):
+    _mod_faces[_nm] = export_module(
+        _nm, lambda b, c=_cfg, s=_sd: build_tree(b, 0.0, 0.0, TREE_H0, s, c))
+
+for _nm, _sd in (("hieda_bush_a", 5), ("hieda_bush_b", 19), ("hieda_bush_c", 47)):
+    _mod_faces[_nm] = export_module(
+        _nm, lambda b, s=_sd: build_bush(b, 0.0, 0.0, BUSH_RX0, BUSH_RZ0, s))
+
+# 生垣模組：把同一支 build_clipped_hedge 跑在**一條直線**上、高度鎖 1.0。
+# 造型完全是整圈那一版（已經過稿的那個刈込み），只是切成一段。
+# 密度可以拉高 —— MultiMesh 只存一份幾何，模組的面數不會乘以實例數。
+# ⚠ 模組要比擺位間距**長 2×0.02m**。等長的話相鄰兩塊的封口面會完全共面 ——
+# 兩張同法線的面互相擋住對方的環境光，整條接縫算成一道黑線。這個坑在這個
+# 專案已經踩過四次（階梯側面、門柱犬走り、砂紋圓環、靈氣光池），寫在 docs
+# 裡的結論是「要在同一個位置鋪兩片面，先證明它們不會重疊」。
+# 這裡讓它們**確實重疊**：封口埋進隔壁塊裡 2cm，就不會有共面。
+_MOV = HEDGE_MOD_LEN * 0.5 + 0.02
+_HM = [(-_MOV + _MOV * 2.0 * (k / 12.0), 0.0) for k in range(13)]
+for _nm, _sd in (("hieda_hedge_a", 71), ("hieda_hedge_b", 137), ("hieda_hedge_c", 293)):
+    _mod_faces[_nm] = export_module(
+        _nm, lambda b, s=_sd: build_clipped_hedge(
+            b, _HM, s, h_fn=lambda t: HEDGE_MOD_H, leaf_den=125.0))
+
+_ipath = os.path.join(os.path.dirname(_mpath), "hieda_garden.instances.json")
+_manifest = {
+    "note": "稗田邸植栽的 MultiMesh 擺位。座標已經是 Godot 空間（y 向上）。"
+            "xform = [x, y, z, yaw, sx, sy, sz]。由 make_hieda.py 產出，別手改。",
+    "base": {"tree_h": TREE_H0, "bush_rx": BUSH_RX0, "bush_rz": BUSH_RZ0,
+             "hedge_len": HEDGE_MOD_LEN, "hedge_h": HEDGE_MOD_H},
+    "modules": {k: {"glb": "res://assets/models/%s.glb" % k,
+                    "faces": _mod_faces.get(k, 0),
+                    "xforms": v}
+                for k, v in sorted(INST.mods.items())},
+}
+with open(_ipath, "w", encoding="utf-8") as fh:
+    json.dump(_manifest, fh, ensure_ascii=False, indent=1)
+print("wrote %s（%d 模組 / %d 實例）"
+      % (_ipath, len(INST.mods), INST.count()))
+_saved = sum(_mod_faces.get(k, 0) * len(v) for k, v in INST.mods.items())
+print("  模組本體共 %d 面；烘進單一 mesh 的話會是 %d 面"
+      % (sum(_mod_faces.values()), _saved))
 print("done")
