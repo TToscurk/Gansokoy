@@ -243,6 +243,12 @@ func _init() -> void:
 	], "res://assets/models/tree_round_b.glb", 420)
 	_build_env()
 
+	# ── 效能 pass（美術規格 §2.1，使用者確認排第一）──
+	# 一次走訪場景樹，按構件尺寸自動設距離剔除與陰影，不動幾何、零風險。
+	# 這比合併器便宜一百倍：15,625 個 draw call 的大宗是柱／窗框／雜物這種
+	# 小件，它們在 55m 外根本不到一個像素，畫了也是白畫。
+	_apply_perf_pass(root)
+
 	# ⚠ _merge_decor() 目前**沒有啟用**。
 	# 它要解的問題是真的：全村 15,625 個 MeshInstance3D = 15,625 次 draw call
 	# （使用者：「我電腦變卡了」）。但這一版跑不完 —— 在 GDScript 裡逐頂點
@@ -924,6 +930,51 @@ func _build_blocks() -> void:
 	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
 	_emit_hedges()
 	_assert_frontage_clear()
+
+## ── 效能 pass：距離剔除 + 小件關陰影（美術規格 §2.1）──
+##
+## 規則按**構件實際尺寸**分級，不靠名字清單（名字會漏）：
+##   < 0.9m  → 55m 外不畫（螺絲級：窗框、格子、樽、俵、布）
+##   < 2.8m  → 100m 外不畫（家具級：柱、貫、庇、雜物）
+##   < 1.35m → 不投影（陰影 pass 等於把場景再畫一次，小件的影子看不到）
+## 大件（屋身、屋頂、塀、地形）不動 —— 它們是輪廓，剔了會穿幫。
+##
+## fade：用 VISIBILITY_RANGE_FADE_SELF + 8m margin，消失是淡出不是彈出
+## （美術規格的驗收條件：「遠處沒有東西突兀地消失」）。
+func _apply_perf_pass(root: Node) -> void:
+	var n_shadow := 0
+	var n_near := 0
+	var n_mid := 0
+	var stack: Array[Node] = [root]
+	while stack.size() > 0:
+		var node: Node = stack.pop_back()
+		for c in node.get_children():
+			stack.push_back(c)
+		if not (node is MeshInstance3D):
+			continue
+		var mi := node as MeshInstance3D
+		if mi.mesh == null:
+			continue
+		var nm := String(mi.name)
+		# 水面／地形／遠景不碰（尺寸規則其實也會放過它們，這是保險）
+		if nm.contains("Terrain") or nm.contains("Water") or nm.contains("水面"):
+			continue
+		var sz: Vector3 = mi.get_aabb().size * mi.scale.abs()
+		var m := maxf(sz.x, maxf(sz.y, sz.z))
+		if m < 1.35:
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			n_shadow += 1
+		if m < 0.9:
+			mi.visibility_range_end = 55.0
+			mi.visibility_range_end_margin = 8.0
+			mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+			n_near += 1
+		elif m < 2.8:
+			mi.visibility_range_end = 100.0
+			mi.visibility_range_end_margin = 10.0
+			mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+			n_mid += 1
+	print("perf pass：%d 件關陰影 / %d 件 55m 剔除 / %d 件 100m 剔除" % [n_shadow, n_near, n_mid])
 
 ## ── 合併裝飾構件（降 draw call）──
 ##
