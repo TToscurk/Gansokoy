@@ -66,7 +66,10 @@ def add_trunk(height, r_bot, r_top, lean=0.06, seed=0):
 def add_cluster(center, radius, squash, tier_color, seed):
     """一層樹冠：低細分 icosphere 壓扁，頂點色 = 層色 × 高度漸層，底面壓暗。"""
     rng = random.Random(seed)
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=radius, location=center)
+    # subdiv 2（320 面）：subdiv 1 的 80 面在近景是「一顆低模球」，
+    # 跟 PBR 建築擺在一起打架（美術規格 §1.1）。翻倍後仍是 flat shading
+    # 的塊面感，但塊小到看起來是「葉團」而不是「多面體」。
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=radius, location=center)
     obj = bpy.context.active_object
     obj.scale = (1 + rng.uniform(-0.12, 0.12), 1 + rng.uniform(-0.12, 0.12), squash)
     obj.rotation_euler = (0, 0, rng.uniform(0, 6.28))
@@ -103,26 +106,59 @@ def join_and_export(objs, name):
     print("exported", path)
 
 
+def add_branch(base, tip, r, seed):
+    """一根分枝：兩端掃掠的細圓錐。剪影裡看得到「樹幹分岔」，
+    才不是棒棒糖（美術規格：加分枝、修剪影）。"""
+    rng = random.Random(seed)
+    dx, dy, dz = tip[0] - base[0], tip[1] - base[1], tip[2] - base[2]
+    ln = math.sqrt(dx * dx + dy * dy + dz * dz)
+    mid = ((base[0] + tip[0]) / 2, (base[1] + tip[1]) / 2, (base[2] + tip[2]) / 2)
+    bpy.ops.mesh.primitive_cone_add(vertices=5, radius1=r, radius2=r * 0.45, depth=ln,
+                                    location=mid)
+    obj = bpy.context.active_object
+    # 把 +z 轉到 base→tip 方向
+    import mathutils
+    obj.rotation_euler = mathutils.Vector((dx, dy, dz)).to_track_quat("Z", "X").to_euler()
+    set_vertex_colors(obj, lambda co, n: BARK)
+    assign_mat(obj, "bark")
+    return obj
+
+
 def tree_round(name, seed, h=3.2, spread=1.0):
     clear_scene()
     rng = random.Random(seed)
-    objs = [add_trunk(h, 0.30, 0.16, seed=seed)]
-    # 三圈環繞層 + 一顆頂冠：多層次的重點在「看得出一層一層」
-    tiers = [
-        (h + 0.1, 1.55 * spread, 2, TIERS_ROUND[0], TIERS_ROUND[1]),
-        (h + 1.1, 1.30 * spread, 3, TIERS_ROUND[1], TIERS_ROUND[2]),
-        (h + 2.0, 1.00 * spread, 2, TIERS_ROUND[2], TIERS_ROUND[3]),
-    ]
+    # 主幹只到分岔點（0.62h），上面交給分枝 —— 一根圓錐直通樹頂就是棒棒糖
+    fork = h * 0.62
+    objs = [add_trunk(fork * 1.06, 0.30, 0.20, seed=seed)]
+    # 3~4 根分枝，枝端就是外圈樹冠的中心 —— 樹冠「長在枝上」而不是浮著
+    n_br = 3 + (seed % 2)
+    branch_tips = []
+    for k in range(n_br):
+        a = rng.uniform(0, 6.28) + k * (6.28 / n_br)
+        # ⚠ 枝端要**張開、放低**（d 0.9~1.6、z 比軸心冠低）。
+        # 第一版 d 只到 0.95、z 全在 h 以上，七顆樹冠疊在同一個點 ——
+        # 預覽照出來又是一顆球插在棍子上。樹冠的寬度來自枝端的水平距離。
+        d = rng.uniform(0.95, 1.55) * spread
+        # 枝端 z 壓在 0.72h~0.92h：樹冠底要蓋住分岔點（0.66h），
+        # 不然幹與冠之間有一段裸縫（preview 抓到的）
+        tip = (math.cos(a) * d, math.sin(a) * d, h * rng.uniform(0.72, 0.92))
+        branch_tips.append(tip)
+        objs.append(add_branch((0, 0, fork * 0.92), tip, 0.11, seed * 7 + k))
     si = 0
-    for (z, rad, count, c_lo, c_hi) in tiers:
-        for k in range(count):
-            si += 1
-            a = rng.uniform(0, 6.28) + k * (6.28 / max(count, 1))
-            d = rad * 0.55 if count > 1 else 0.0
-            c = c_lo if k % 2 == 0 else c_hi
-            objs.append(add_cluster((math.cos(a) * d, math.sin(a) * d, z),
-                                    rad, rng.uniform(0.62, 0.72), c, seed * 31 + si))
-    objs.append(add_cluster((0, 0, h + 2.7), 0.85 * spread, 0.7, TIERS_ROUND[3], seed * 31 + 99))
+    # 枝端各掛一顆樹冠（低層用暗色）
+    for k, tip in enumerate(branch_tips):
+        si += 1
+        c = TIERS_ROUND[1] if k % 2 == 0 else TIERS_ROUND[2]
+        objs.append(add_cluster(tip, rng.uniform(1.05, 1.35) * spread,
+                                rng.uniform(0.62, 0.72), c, seed * 31 + si))
+    # ⚠ 軸心一定要有一顆，而且中心壓在分岔點上方 —— v1 的樹冠全在側面，
+    # 樹幹頂端那截裸露在外（截圖裡的「縫」）
+    objs.append(add_cluster((0, 0, h * 0.82), 1.50 * spread, 0.68,
+                            TIERS_ROUND[0], seed * 31 + 88))
+    objs.append(add_cluster((0, 0, h * 1.06), 1.15 * spread, 0.68,
+                            TIERS_ROUND[2], seed * 31 + 97))
+    objs.append(add_cluster((0, 0, h * 1.26), 0.85 * spread, 0.70,
+                            TIERS_ROUND[3], seed * 31 + 99))
     join_and_export(objs, name)
 
 
@@ -158,9 +194,44 @@ def tree_pine(name, seed, h=3.2, layers=None):
     join_and_export(objs, name)
 
 
+def bamboo_clump(name, seed, n_culm=7, h=9.0):
+    """竹叢（遠景用）：5~9 根細直的稈 + 頂部小葉團。
+    美術規格 §4：西南方是迷途竹林 —— 竹要**細、直、密、高**，
+    跟闊葉樹的剪影完全不同才有辨識度。遠景資產，面數壓到最低
+    （稈 5 邊形、葉團 subdiv 1）。"""
+    clear_scene()
+    rng = random.Random(seed)
+    objs = []
+    CULM = (0.32, 0.44, 0.20)          # 竹稈的黃綠
+    CULM_DK = (0.22, 0.32, 0.15)
+    for k in range(n_culm):
+        a = rng.uniform(0, 6.28)
+        d = rng.uniform(0.0, 1.1)
+        hx, hz = math.cos(a) * d, math.sin(a) * d
+        ch = h * rng.uniform(0.75, 1.1)
+        bpy.ops.mesh.primitive_cone_add(vertices=5, radius1=0.09, radius2=0.055,
+                                        depth=ch, location=(hx, hz, ch / 2))
+        culm = bpy.context.active_object
+        culm.rotation_euler = (rng.uniform(-0.03, 0.03), rng.uniform(-0.03, 0.03), 0)
+        cc = CULM if k % 2 == 0 else CULM_DK
+        set_vertex_colors(culm, lambda co, n, c=cc: c)
+        assign_mat(culm, "bark")
+        objs.append(culm)
+        # 頂部 2 顆小葉團（竹葉是稀疏的，不要做成闊葉樹冠）
+        for j in range(2):
+            objs.append(add_cluster(
+                (hx + rng.uniform(-0.5, 0.5), hz + rng.uniform(-0.5, 0.5),
+                 ch - 0.4 - j * 1.1),
+                rng.uniform(0.55, 0.85), 0.5,
+                TIERS_PINE[2] if j == 0 else TIERS_PINE[1], seed * 13 + k * 3 + j))
+    join_and_export(objs, name)
+
+
 tree_round("tree_round_a", 11, h=4.6)
 tree_round("tree_round_b", 47, h=5.0)
 tree_round("tree_round_c", 88, h=6.4, spread=0.72)      # 瘦高型，打破天際線
 tree_pine("tree_pine_a", 23)
 tree_pine("tree_pine_b", 61, h=4.6, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
+bamboo_clump("bamboo_a", 71)
+bamboo_clump("bamboo_b", 137, n_culm=9, h=10.5)
 print("done")

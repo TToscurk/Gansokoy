@@ -490,7 +490,7 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 ## landmarks: [{ "x":…, "z":…, "h":…, "r":… }] 在遠景高度上疊高斯山包
 func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
 		landmarks: Array = [], tree_glb := "res://assets/models/tree_round_b.glb",
-		far_tree_count := 300) -> void:
+		far_tree_count := 300, groves: Array = []) -> void:
 	var nv := FastNoiseLite.new()
 	nv.frequency = 0.008
 	nv.fractal_octaves = 3
@@ -558,6 +558,31 @@ func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
 	mmi.multimesh = make_multimesh(tree_mesh(tree_glb), far_trees, [], out_dir + "gen/vista_trees.res")
 	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add(root, mmi, "VistaTrees")
+
+	# 指定區域的遠景群落（美術規格 §4：西南竹林這種「方向性」的地理）。
+	# grove = { glb, count, cx, cz, r, smin, smax }，撒在 vista 高度上。
+	var gi := 0
+	for gv in groves:
+		var list: Array[Transform3D] = []
+		var t2 := 0
+		while list.size() < int(gv.count) and t2 < int(gv.count) * 25:
+			t2 += 1
+			var a3 := rand() * TAU
+			var d3 := sqrt(rand()) * float(gv.r)
+			var x := float(gv.cx) + cos(a3) * d3
+			var z := float(gv.cz) + sin(a3) * d3
+			# 只落在遊玩區之外（村內的樹另有系統管）
+			if maxf(absf(x), absf(z)) < half + 4.0:
+				continue
+			var s2 := rr(float(gv.get("smin", 1.2)), float(gv.get("smax", 2.0)))
+			var basis2 := Basis(Vector3.UP, rand() * TAU).scaled(Vector3(s2, s2 * rr(0.92, 1.1), s2))
+			list.append(Transform3D(basis2, Vector3(x, vh.call(x, z) - 0.4, z)))
+		var gmi := MultiMeshInstance3D.new()
+		gmi.multimesh = make_multimesh(tree_mesh(String(gv.glb)), list, [],
+			out_dir + "gen/vista_grove_%d.res" % gi)
+		gmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add(root, gmi, "VistaGrove_%d" % gi)
+		gi += 1
 
 # ── 切妻屋頂（正確的幾何：脊高 = 半深 × tanθ） ──
 ## 之前寫死抬升量 0.85，導致兩片斜面互相穿插、屋脊蓋在斜面下、

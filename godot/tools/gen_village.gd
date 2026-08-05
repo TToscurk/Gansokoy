@@ -237,10 +237,20 @@ func _init() -> void:
 	_build_lamps()
 	_build_trees()
 	_build_grass()
+	# 遠景地理（美術規格 §4，使用者提供的幻想鄉相對位置；-z = 北）：
+	#   東北 = 妖怪之山（高聳，要壓過天際線）  西北 = 霧之湖畔的丘
+	#   東南 = 博麗神社的山                    西南 = 迷途竹林（groves）
 	lib.vista(OUT_DIR, HALF, 900.0, height_at, [
-		{ "x": -520.0, "z": -560.0, "h": 140.0, "r": 240.0 },
-		{ "x": 480.0, "z": -420.0, "h": 55.0, "r": 180.0 },
-	], "res://assets/models/tree_round_b.glb", 420)
+		{ "x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0 },
+		{ "x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0 },   # 妖怪之山的前峰（山不是一顆饅頭）
+		{ "x": -560.0, "z": -600.0, "h": 70.0, "r": 220.0 },
+		{ "x": 520.0, "z": 560.0, "h": 90.0, "r": 180.0 },
+	], "res://assets/models/tree_round_b.glb", 420, [
+		{ "glb": "res://assets/models/bamboo_a.glb", "count": 300,
+			"cx": -430.0, "cz": 470.0, "r": 240.0, "smin": 1.3, "smax": 2.2 },
+		{ "glb": "res://assets/models/bamboo_b.glb", "count": 220,
+			"cx": -540.0, "cz": 350.0, "r": 200.0, "smin": 1.4, "smax": 2.4 },
+	])
 	_build_env()
 
 	# ── 效能 pass（美術規格 §2.1，使用者確認排第一）──
