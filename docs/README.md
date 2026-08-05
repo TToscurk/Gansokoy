@@ -1,0 +1,19 @@
+# docs —— 哪份文件管什麼
+
+**活文件只有五份。** 動工前查這裡，不要翻 archive。
+
+| 文件 | 管什麼 | 什麼時候更新 |
+|---|---|---|
+| **village-art-direction.md** | 人間之里的美術規格（風格／尺度／色彩／工序）——「這樣好不好看」的唯一依據 | 使用者定案新方向時 |
+| **domain-model.md** | 產生器的領域詞彙（Footprint／Parcel／Frontage…）與 ADR | 加新概念或新 ADR 時 |
+| **godot-migration.md** | Godot 環境的事實（烘焙管線、project.godot 規則、指令） | 踩到新的環境坑時 |
+| **border-vistas.md** | 每張圖的地平線該看到什麼（幻想鄉方位考據） | 開新地圖時 |
+| **journal.md** | 開發日誌（新的在上面） | 每輪收工時 |
+
+## 歸檔規則
+
+設計書「做完」就搬進 `archive/`（用 `git mv`，歷史還在）。
+判斷標準：**內容已經活在程式碼或別的活文件裡，再讀一次不會改變任何決定。**
+
+three.js 時代（`src/`）的計畫書全部在 archive —— 那條線已凍結，
+Godot 版不吃那些檔案。

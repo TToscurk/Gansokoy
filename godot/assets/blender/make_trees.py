@@ -1,7 +1,7 @@
 # 多層次卡通樹產生器 —— Blender headless 跑：
 #   blender -b -P godot/assets/blender/make_trees.py -- godot/assets/models
 #
-# 風格定位（見 docs/art-style-notes.md）：吉卜力/低多邊形混合 ——
+# 風格定位（docs/village-art-direction.md §1：偏卡通混一點寫實）——
 # 樹冠是「分層的雲朵」，每層一個色階（下暗上亮），flat shading 讓
 # 每個面都是一塊乾淨的色面。顏色全部烤進頂點色（COLOR_0），
 # Godot 端統一換上 vertex_color_use_as_albedo 的材質，不吃貼圖。

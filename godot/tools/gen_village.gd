@@ -1,4 +1,4 @@
-# 人間之里・場景產生器 v2（設計書：docs/village-design.md）
+# 人間之里・場景產生器（美術規格：docs/village-art-direction.md）
 #
 #   godot --headless --path godot --script tools/gen_village.gd
 #
@@ -942,7 +942,6 @@ func _build_blocks() -> void:
 	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
 	_emit_hedges()
 	_build_festival(root)
-	_build_paddies(root)
 	_assert_frontage_clear()
 
 ## ── 效能 pass：距離剔除 + 小件關陰影（美術規格 §2.1）──
@@ -1104,69 +1103,12 @@ func _merge_decor(root: Node) -> Array:
 				mi3.queue_free()
 	return [before, after]
 
-## ── 稻田重做（美術規格 §2 G5：留著但要重做 —— 要有畦、有水）──
-## v13 的田只是地表換色 + 稻叢排排站，「平的網格，很假」。
-## 補上兩層：畦（stripe 邊界的土壟）與水鏡（田面近水平處的靜水反光）。
-## 都走 MultiMesh —— 各一次 draw call，田環帶有幾百個實例也不傷效能。
-func _build_paddies(parent: Node) -> void:
-	var g := lib.add(parent, Node3D.new(), "田")
-	# 畦：沿 _field_w 的 stripe 邊界（row 1.3~1.9 那條帶）擺土壟
-	var ridge := BoxMesh.new()
-	ridge.size = Vector3(2.1, 0.30, 0.55)
-	ridge.material = _mat("mud", 1)
-	var rl: Array[Transform3D] = []
-	# 水鏡：田面近水平的地方鋪一塊靜水（稻是種在水裡的）
-	var mirror := BoxMesh.new()
-	mirror.size = Vector3(2.6, 0.04, 2.2)
-	var wm := StandardMaterial3D.new()
-	wm.albedo_color = Color(0.30, 0.38, 0.40, 0.82)
-	wm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	wm.roughness = 0.06
-	wm.metallic = 0.4
-	mirror.material = wm
-	var ml: Array[Transform3D] = []
-	var ang := atan2(0.7, -0.3)                      # stripe 的走向（垂直於遮罩梯度）
-	var x := -HALF + 4.0
-	while x < HALF - 4.0:
-		var z := -HALF + 4.0
-		while z < HALF - 4.0:
-			z += 3.0
-			var r := Vector2(x, z - PLAZA.y).length()
-			if r < CORE + 10.0 or r > CORE + 62.0:
-				continue
-			if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 2.4 or _path_info(x, z)[0] < 3.4:
-				continue
-			# 田環帶（r 206~258）跟最外圈街區重疊 —— 佔位檢查一定要做，
-			# 不做的話畦與水鏡長進院子裡（體檢第一輪就抓到 25 個）
-			if not _free(x, z, 3.2, 2.8, 0.3):
-				continue
-			var row := fmod(absf(z * 0.7 + x * 0.3), 8.0)
-			if row > 1.3 and row < 1.9:
-				var b2 := Basis(Vector3.UP, ang + lib.rr(-0.04, 0.04))
-				rl.append(Transform3D(b2, Vector3(x + lib.rr(-0.3, 0.3),
-					height_at(x, z) + 0.10, z + lib.rr(-0.3, 0.3))))
-			elif row > 3.2 and row < 6.6 and lib.rand() < 0.4:
-				# 只鋪在近乎水平的地方 —— 斜的水面比沒有水面更假
-				var hs: Array[float] = []
-				for c in [[-1.4, -1.2], [1.4, -1.2], [-1.4, 1.2], [1.4, 1.2]]:
-					hs.append(height_at(x + float(c[0]), z + float(c[1])))
-				var lo := INF
-				var hi := -INF
-				for h2 in hs:
-					lo = minf(lo, h2)
-					hi = maxf(hi, h2)
-				if hi - lo < 0.20:
-					ml.append(Transform3D(Basis(Vector3.UP, ang),
-						Vector3(x, hi + 0.05, z)))
-		x += 3.0
-	for cfg in [[ridge, rl, "畦", "gen/paddy_ridge.res"], [mirror, ml, "水鏡", "gen/paddy_water.res"]]:
-		if (cfg[1] as Array).is_empty():
-			continue
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(cfg[0], cfg[1], [], OUT_DIR + String(cfg[3]))
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		lib.add(g, mmi, String(cfg[2]))
-	print("paddies：畦 %d / 水鏡 %d" % [rl.size(), ml.size()])
+## 稻田的畦與水鏡拿掉了（v20）。
+## 使用者：「地上都有像是玻璃板的東西 請拿掉」—— 就是水鏡。
+## 失敗原因：田面到處有 >0.2m 起伏，「近水平」的取樣點是零散的，
+## 於是 704 塊水鏡互不相連、像玻璃板撒在地上；畦（孤立土條）同理。
+## 正確做法是先把田整成**梯田式的平整台地**（要動地形），再鋪整片水面。
+## 記在美術規格 §2 G5：稻田重做欠地形工程，不是撒 props 能解的。
 
 ## ── 祭典色彩（美術規格 §2：燈籠串、旗幟、幔幕 + 一點朱紅）──
 ## 參考圖（幻走）最搶眼的一件事：紅燈籠串橫過街道。
@@ -1306,7 +1248,7 @@ func _assert_frontage_clear() -> void:
 # 問題是**均質**，不是稀疏。
 #
 # 分法是**連續的環**（距廣場中心 r），不是隨機撒點 —— 這就是「不要混在一起」。
-# 詳細設計與各區參數見 docs/village-zoning-design.md。
+# 分區設計已定案（docs/archive/village-zoning-design.md 是當時的設計書）。
 const ZONE_MACHI := 0      # 町方（商家町）    r < 95    12 區
 const ZONE_HANNO := 1      # 半農町（職人）    95~155    16 區
 const ZONE_ZAI := 2        # 在（農家）        r >= 155  14 區
@@ -1766,12 +1708,15 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 		lib.box(g, "主屋柱_%d" % i, Vector3(0.17, 3.6, 0.12), _mat("dark", 0),
 			Vector3(HX - 12.0 + float(i) * 3.0, 0.6 + 1.8, HZ + 7.56))
 	# 裳階（一二層之間的環繞屋簷）—— 這一圈才是「二層豪邸」的剪影
+	# ⚠ 裳階的內緣要**塞進二階牆裡**（二階半深 6.0／半寬 10.5）。
+	# 第一版板寬 2.1、中心壓在一層牆外，內緣離二階牆有 1.2~1.7m 的缺口 ——
+	# 從上往下看是一圈懸空的簷（使用者：「屋簷位置不對」）。
 	for sd2 in [-1.0, 1.0]:
-		var mk := lib.box(g, "裳階_z%d" % int(sd2 + 1), Vector3(27.0, 0.18, 2.1), _mat("kawara"),
-			Vector3(HX, 4.35, HZ + sd2 * 8.2))
+		var mk := lib.box(g, "裳階_z%d" % int(sd2 + 1), Vector3(27.0, 0.18, 3.1), _mat("kawara"),
+			Vector3(HX, 4.62, HZ + sd2 * 7.15))
 		mk.rotation.x = sd2 * -0.42
-		var mk2 := lib.box(g, "裳階_x%d" % int(sd2 + 1), Vector3(2.1, 0.18, 17.2), _mat("kawara"),
-			Vector3(HX + sd2 * 13.2, 4.35, HZ))
+		var mk2 := lib.box(g, "裳階_x%d" % int(sd2 + 1), Vector3(3.4, 0.18, 17.2), _mat("kawara"),
+			Vector3(HX + sd2 * 11.8, 4.62, HZ))
 		mk2.rotation.z = sd2 * 0.42
 	# 二層（內縮，才有塔狀的收分）
 	lib.box(g, "主屋二階", Vector3(21.0, 2.9, 12.0), _mat("plaster", 0),
@@ -1782,9 +1727,11 @@ func _blk_hieda(parent: Node, bx: float, bz: float) -> void:
 	# 兩端再各蓋一片斜的隅屋根，蓋住妻壁的下半 —— 剪影就是入母屋。
 	lib.gable_roof(g, 7.4, 23.0, 14.0, 0.52, 0.34, _mat("kawara"), _mat("plaster", 0),
 		Vector3(HX, 0, HZ))
+	# 隅屋根要跟切妻屋面收齊：第一版寬 6.0、中心 ±10.2、y 9.1 ——
+	# 外緣戳出屋端 1m、下緣垂到簷口以下（跟「裳階缺口」同一張截圖抓到）。
 	for e in [-1.0, 1.0]:
-		var hip := lib.box(g, "隅屋根_%d" % int(e + 1), Vector3(6.0, 0.3, 10.5), _mat("kawara"),
-			Vector3(HX + e * 10.2, 9.1, HZ))
+		var hip := lib.box(g, "隅屋根_%d" % int(e + 1), Vector3(5.4, 0.3, 10.5), _mat("kawara"),
+			Vector3(HX + e * 9.4, 9.35, HZ))
 		hip.rotation.z = e * 0.72
 	lib.box(g, "緣側", Vector3(24.0, 0.3, 2.2), _mat("wood"), Vector3(HX, 0.75, HZ + 8.6))
 	for i in 12:
