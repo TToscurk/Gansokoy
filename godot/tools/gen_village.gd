@@ -378,8 +378,10 @@ const MAT_TONES := {
 	# 舊的 0.84/0.92 配上曬過的木框，整棟是一團褐色。
 	"plaster": [Color(1.30, 1.28, 1.22), Color(1.16, 1.13, 1.06),
 		Color(1.05, 1.04, 1.00), Color(1.22, 1.17, 1.09)],
-	"kawara": [Color(0.80, 0.84, 0.92), Color(0.66, 0.70, 0.78),
-		Color(0.74, 0.76, 0.80), Color(0.58, 0.62, 0.70)],
+	# 去髒（美術規格 §1.3）：貼圖裡的黃苔用「壓黃提藍」的色調蓋掉，
+	# 瓦要乾淨的藍灰 —— 參考圖的屋頂近乎無髒污
+	"kawara": [Color(0.86, 0.94, 1.10), Color(0.72, 0.80, 0.96),
+		Color(0.80, 0.86, 1.00), Color(0.64, 0.72, 0.88)],
 	"thatch": [Color(0.66, 0.54, 0.36), Color(0.58, 0.47, 0.31),
 		Color(0.72, 0.60, 0.40), Color(0.50, 0.42, 0.30)],
 	"mud": [Color(0.80, 0.72, 0.58), Color(0.70, 0.62, 0.48),
@@ -3377,10 +3379,11 @@ func _build_grass() -> void:
 
 func _build_env() -> void:
 	var env := Environment.new()
-	var sky_mat := ProceduralSkyMaterial.new()
-	sky_mat.sky_top_color = Color(0.36, 0.54, 0.82)
-	sky_mat.sky_horizon_color = Color(0.76, 0.82, 0.82)
-	sky_mat.ground_horizon_color = Color(0.62, 0.66, 0.60)
+	# ⚠ 天空要在**這裡**換，不是 main.tscn —— 村自帶 WorldEnvironment，
+	# main 的 env 會被整組停用（main.gd:154）。第一版把積雲 shader 只裝在
+	# main.tscn，拍了兩輪天空都沒有雲才找到這條。
+	var sky_mat := ShaderMaterial.new()
+	sky_mat.shader = load("res://shaders/sky_cumulus.gdshader")
 	var sky := Sky.new()
 	sky.sky_material = sky_mat
 	env.background_mode = Environment.BG_SKY
@@ -3389,20 +3392,20 @@ func _build_env() -> void:
 	env.glow_enabled = true
 	# 亮度校正（使用者回報畫面過白）：天空環境光原本 1.05 直接灌滿畫面、
 	# glow 門檻又是預設值 → 亮部整片溢出。壓曝光 + 抬 glow 門檻 + 補對比。
-	env.glow_intensity = 0.45
+	env.glow_intensity = 0.72
 	env.glow_bloom = 0.05
 	env.glow_hdr_threshold = 1.25
-	env.tonemap_exposure = 0.82
+	env.tonemap_exposure = 1.02
 	env.tonemap_white = 4.0
 	env.adjustment_enabled = true
 	env.adjustment_contrast = 1.08
-	env.adjustment_saturation = 1.12
+	env.adjustment_saturation = 1.24
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.72, 0.78, 0.78)
 	env.fog_density = 0.0016
 	env.fog_sky_affect = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_energy = 0.55
+	env.ambient_light_energy = 0.72
 	# SDFGI 關閉：室外大場景會把畫面整個洗白（使用者回報），改靠天空環境光
 	env.sdfgi_enabled = false
 	env.ssao_enabled = true

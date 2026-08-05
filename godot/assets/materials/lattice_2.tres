@@ -9,6 +9,7 @@ albedo_color = Color(0.78, 0.76, 0.74, 1)
 albedo_texture = ExtResource("1_iyw2x")
 roughness_texture = ExtResource("3_843c5")
 normal_enabled = true
+normal_scale = 0.65
 normal_texture = ExtResource("2_g2jyd")
 uv1_scale = Vector3(0.28, 0.28, 0.28)
 uv1_triplanar = true

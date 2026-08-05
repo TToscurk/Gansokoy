@@ -5,10 +5,11 @@
 [ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_rough.jpg" id="3_pymxu"]
 
 [resource]
-albedo_color = Color(0.74, 0.76, 0.8, 1)
+albedo_color = Color(0.8, 0.86, 1, 1)
 albedo_texture = ExtResource("1_j2a6n")
 roughness_texture = ExtResource("3_pymxu")
 normal_enabled = true
+normal_scale = 0.65
 normal_texture = ExtResource("2_kxvqb")
 uv1_scale = Vector3(0.22, 0.22, 0.22)
 uv1_triplanar = true

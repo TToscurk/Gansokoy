@@ -142,6 +142,9 @@ func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri
 	if ResourceLoader.exists(nor):
 		m.normal_enabled = true
 		m.normal_texture = load(nor)
+		# 美術規格 §1.3（類超現實）：法線減弱 —— 寫實的凹凸細節
+		# 是「無感」的來源之一，參考圖的表面都很平
+		m.normal_scale = 0.65
 	var rgh := "res://assets/textures/%s_rough.jpg" % set_name
 	if ResourceLoader.exists(rgh):
 		m.roughness_texture = load(rgh)
