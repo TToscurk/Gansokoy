@@ -1258,7 +1258,54 @@ def _canopy_from_tips(bld, rng, tips, spread, n_tuft, leaf, c_hull, c_lo, c_hi,
         _leaf_tuft(bld, rng, p_, nrm, leaf, lo, hi, n_leaf=2)
 
 
-def _grow(bld, tips, p, d, r, ln, depth, cfg, rng):
+def _canopy_pads(bld, rng, tips, n_tuft, leaf, c_hull, c_lo, c_hi,
+                 flat=0.34, bulk=1.30, rmin=0.30):
+    """松專用的樹冠：**幾團扁平的葉盤**，不是一整片平均的葉雲。
+
+    ⚠ 一開始松跟楓共用 _canopy_from_tips（葉子平均撒在每個枝端周圍）。
+    楓對，松錯 —— 針葉小，同樣的 ntuft 攤到 48 個枝端上每處都只剩十幾片，
+    整棵讀成「闊葉樹幼苗」，主幹還會有一段光禿禿的鞭子露在葉子上方。
+
+    庭木的松（仕立て松）本來就不是平均的：葉子被剪成幾團**扁平的段**，
+    段與段之間露出彎曲的枝，最頂上那團是天芯。所以這裡先把枝端依
+    pad_depth 的祖先分組，每組塌成一個扁球（z 只有 flat 倍），葉量按組
+    的枝長權重分。同樣的面數集中成團 → 密；團之間留空 → 骨架看得見。"""
+    groups = {}
+    for t in tips:
+        groups.setdefault(t[3], []).append(t)
+    if not groups:
+        return
+    tot_w = sum(sum(t[2] for t in ts) for ts in groups.values()) or 1.0
+    for ts in groups.values():
+        gx = sum(t[0][0] for t in ts) / len(ts)
+        gy = sum(t[0][1] for t in ts) / len(ts)
+        gz = sum(t[0][2] for t in ts) / len(ts)
+        # 盤的半徑取「枝端離組心的散佈」——枝張得開的那組盤就大
+        sp = sum(math.dist(t[0], (gx, gy, gz)) for t in ts) / len(ts)
+        rad = max(rmin, sp * bulk) * rng.uniform(0.86, 1.15)
+        # 每盤各自傾斜一點、扁度也不同。全部水平等厚的話會讀成「一疊盤子」
+        fl = flat * rng.uniform(0.82, 1.30)
+        til, taz = rng.uniform(0.06, 0.26), rng.uniform(0.0, math.tau)
+        tx, ty = math.cos(taz) * til, math.sin(taz) * til
+        w = sum(t[2] for t in ts)
+        n = max(14, int(n_tuft * w / tot_w))
+        for _ in range(n):
+            _d = _norm3((rng.gauss(0, 1), rng.gauss(0, 1), rng.gauss(0, 1)))
+            u = rng.random() ** 0.40
+            ox, oy = _d[0] * rad * u, _d[1] * rad * u
+            # 盤面上拱下平：頂面往上鼓一點，底面幾乎不掉下去
+            oz = _d[2] * rad * u * fl * (1.35 if _d[2] > 0 else 0.62)
+            p_ = (gx + ox, gy + oy, gz + oz + ox * tx + oy * ty)
+            nrm = _norm3((ox * 0.55, oy * 0.55, oz * 0.4 + rad * 0.62))
+            # 內暗外亮 × 上亮下暗：松的段是「上面一層受光、下面全是陰影」
+            t_up = 0.5 + oz / (rad * fl * 2.0 + 1e-6) * 0.5
+            k = min(1.0, 0.16 + u * 0.72 + max(0.0, t_up - 0.5) * 0.66)
+            lo = _mix(c_hull, c_lo, k)
+            hi = _mix(c_lo, c_hi, min(1.0, (u * 0.70 + t_up * 0.75)))
+            _leaf_tuft(bld, rng, p_, nrm, leaf, lo, hi, n_leaf=2)
+
+
+def _grow(bld, tips, p, d, r, ln, depth, cfg, rng, gid=None, ctr=None):
     """一段枝：邊長邊收細，末端分岔；到底層就記下枝端位置給葉團用。"""
     segs = 3
     pts, rr = [p], [r]
@@ -1283,17 +1330,23 @@ def _grow(bld, tips, p, d, r, ln, depth, cfg, rng):
           sides=5 if depth == 0 else (4 if depth == 1 else 3))
     r_end = rr[-1]
     if depth >= cfg["depth"]:
-        tips.append((cur_p, pts[0], ln))
+        tips.append((cur_p, pts[0], ln, gid))
         return
     n = cfg["split"][min(depth, len(cfg["split"]) - 1)]
     az0 = rng.uniform(0.0, math.tau)
+    pad_d = cfg.get("pad_depth")
     for c in range(n):
         leader = cfg.get("leader") and c == 0
         az = az0 + (c / float(n)) * math.tau + rng.uniform(-0.55, 0.55)
         ang = rng.uniform(*(cfg["lead_ang"] if leader else cfg["ang"]))
         lr = rng.uniform(*(cfg["lead_lratio"] if leader else cfg["lratio"]))
+        g = gid
+        if pad_d is not None and g is None and depth + 1 >= pad_d:
+            ctr[0] += 1
+            g = ctr[0]
         _grow(bld, tips, cur_p, _bend(cur_d, az, ang),
-              r_end * rng.uniform(*cfg["rratio"]), ln * lr, depth + 1, cfg, rng)
+              r_end * rng.uniform(*cfg["rratio"]), ln * lr, depth + 1, cfg, rng,
+              g, ctr)
 
 
 # ⚠ 闊葉樹也要 leader。沒有 leader 的話樹幹在第一次分岔就消失，所有枝
@@ -1311,14 +1364,17 @@ TREE_MAPLE = dict(
     hull=(0.048, 0.016, 0.012),
     lo=(0.520, 0.095, 0.045), hi=(0.830, 0.290, 0.095))
 
+# 松走另一條路：pad_depth 開啟「葉盤」模式（見 _canopy_pads）。枝角開得比
+# 楓大(1.10~1.52)、wig 很小 —— 松枝是折線不是曲線，一節一節硬轉。
 TREE_PINE = dict(
-    trunk_r=0.036, trunk_len=0.32, depth=4, split=(4, 3, 2, 2),
-    ang=(1.06, 1.42), lratio=(0.40, 0.60), rratio=(0.40, 0.58),
-    up=(0.46, 0.06, -0.06, -0.12), wig=0.10, taper=0.34,
-    leader=True, lead_ang=(0.06, 0.20), lead_lratio=(0.62, 0.76),
-    # 松要的是**密而扁的葉盤**：葉小(0.29)、量大(760)、fol 收緊(0.046)、
-    # flat 壓到 0.40。稀疏的針葉樹會讀成闊葉樹的幼苗。
-    fol=0.046, ntuft=640, leaf=0.34, flat=0.40,
+    trunk_r=0.040, trunk_len=0.30, depth=4, split=(3, 3, 2, 2),
+    ang=(1.10, 1.52), lratio=(0.44, 0.64), rratio=(0.56, 0.70),
+    up=(0.50, 0.02, -0.10, -0.16), wig=0.09, taper=0.22,
+    leader=True, lead_ang=(0.08, 0.24), lead_lratio=(0.60, 0.74),
+    # 葉盤模式：9 團（pad_depth=2 → 3×3），每團扁到 0.36，葉量集中。
+    pad_depth=2, ntuft=1500, leaf=0.32, pad_flat=0.34, pad_bulk=1.55,
+    pad_rmin=0.080,
+    fol=0.046, flat=0.40,
     hull=(0.016, 0.030, 0.018),
     lo=(0.130, 0.245, 0.115), hi=(0.265, 0.395, 0.180))
 
@@ -1338,9 +1394,15 @@ def build_tree(bld, x, y, h, seed, cfg):
     tips = []
     d0 = _norm3((rng.uniform(-0.10, 0.10), rng.uniform(-0.10, 0.10), 1.0))
     _grow(bld, tips, (x, y, 0.0), d0, h * cfg["trunk_r"], h * cfg["trunk_len"],
-          0, cfg, rng)
-    _canopy_from_tips(bld, rng, tips, h * cfg["fol"], cfg["ntuft"], cfg["leaf"],
-                      cfg["hull"], cfg["lo"], cfg["hi"])
+          0, cfg, rng, None, [0])
+    if cfg.get("pad_depth") is not None:
+        _canopy_pads(bld, rng, tips, cfg["ntuft"], cfg["leaf"] * h / 8.0,
+                     cfg["hull"], cfg["lo"], cfg["hi"],
+                     flat=cfg["pad_flat"], bulk=cfg["pad_bulk"],
+                     rmin=h * cfg["pad_rmin"])
+    else:
+        _canopy_from_tips(bld, rng, tips, h * cfg["fol"], cfg["ntuft"],
+                          cfg["leaf"], cfg["hull"], cfg["lo"], cfg["hi"])
 
 
 # ── 2. 菜園 ──
