@@ -77,12 +77,19 @@ def setup_stage(size):
 
 
 def frame(obj, angle_deg, size):
-    """把相機擺到能框住整個物件的距離 —— 手調相機是 v16 另一個時間黑洞。"""
+    """把相機擺到能框住整個物件的距離 —— 手調相機是 v16 另一個時間黑洞。
+    可用環境變數換視角：PREVIEW_YAW（度，預設 35）、PREVIEW_ELEV（0~1，
+    預設 0.85 = 高角俯視；0.15 左右是人視角低角）。"""
+    yaw = float(os.environ.get("PREVIEW_YAW", angle_deg))
+    elev = float(os.environ.get("PREVIEW_ELEV", 0.85))
     d = size * 2.1
-    a = math.radians(angle_deg)
-    bpy.ops.object.camera_add(location=(math.sin(a) * d, -math.cos(a) * d, size * 0.85))
+    a = math.radians(yaw)
+    h = size * elev
+    bpy.ops.object.camera_add(location=(math.sin(a) * d, -math.cos(a) * d, max(h, 1.2)))
     cam = bpy.context.object
-    cam.rotation_euler = (math.radians(74), 0, a)
+    # 俯角照高度算，低角時接近水平
+    pitch = math.radians(90) - math.atan2(h - size * 0.35, d)
+    cam.rotation_euler = (pitch, 0, a)
     bpy.context.scene.camera = cam
     return cam
 
