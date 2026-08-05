@@ -527,35 +527,132 @@ def build_house(bld):
 # ─────────────────────── 庭院 Blockout ───────────────────────
 
 def build_avenue(bld, y0, y1, width=6.0, rng=None):
-    """拱形鋪石大道（Feature List §2）：中央微拱 + 邊緣與草地交錯侵蝕。
-    y0（靠石階）→ y1（遠端），寬 width。"""
+    """參道：一條乾淨連續的石板道，中央微拱。y0（靠石階）→ y1（遠端）。
+
+    ⚠ 這裡本來是「邊緣與草地不規則交錯侵蝕」（Feature List §2 原始規格）：
+    每一排的左右邊界各自亂數抖動 ±0.45m，邊緣車道還有 30% 機率整格換成草色。
+    使用者看過參考圖（求聞編年史的稗田邸參道）後改規格 —— 那條參道是**整齊
+    的切石鋪面**，不是荒廢的碎石徑。侵蝕感讓整條路看起來像沒人維護的野徑，
+    跟「貴族宅邸的正式參道」是反的。
+
+    改成規則的石板網格：邊界筆直、板與板之間留固定目地。石板尺寸仍有
+    ±3% 的色差（真石材本來就不同色），但**幾何**完全對齊。"""
     rng = rng or random.Random(7)
-    rows = int(abs(y1 - y0) / 2.2)
-    lanes = 6
     hw = width / 2
+    cols = 4                                   # 橫向四塊板
+    rows = max(1, int(abs(y1 - y0) / 1.55))
+    joint = 0.055                              # 目地寬（板與板之間的縫）
+
+    def crown(x):
+        """中央微拱：拋物線，中心 +0.16、兩緣歸零。"""
+        u = x / hw
+        return 0.16 * max(0.0, 1.0 - u * u)
+
+    # 底層鋪面（目地的陰影色）—— 石板浮在它上面，縫看起來就是暗的
+    bld.quad((-hw, y0, 0.035), (hw, y0, 0.035), (hw, y1, 0.035), (-hw, y1, 0.035),
+             C_STONE_DK, flip=(y1 > y0))
     for r in range(rows):
         ya = y0 + (y1 - y0) * r / rows
         yb = y0 + (y1 - y0) * (r + 1) / rows
-        # 邊緣侵蝕：這一排的左右邊界各自抖動
-        el = -hw + rng.uniform(-0.45, 0.35)
-        er = hw + rng.uniform(-0.35, 0.45)
-        for c in range(lanes):
-            xa = el + (er - el) * c / lanes
-            xb = el + (er - el) * (c + 1) / lanes
-            # 拱形：中央 +0.18、邊緣歸零（拋物線）
-            def crown(x):
-                u = (x - (el + er) / 2) / ((er - el) / 2)
-                return 0.18 * max(0.0, 1.0 - u * u)
-            sh = rng.uniform(-0.06, 0.06)
+        # 目地往內縮，四邊都留縫
+        sa, sb = (ya + joint, yb - joint) if yb > ya else (ya - joint, yb + joint)
+        for c in range(cols):
+            xa = -hw + width * c / cols + joint
+            xb = -hw + width * (c + 1) / cols - joint
+            sh = rng.uniform(-0.022, 0.022)          # 石材色差，不是幾何雜訊
             col = (C_STONE[0] + sh, C_STONE[1] + sh, C_STONE[2] + sh)
-            # 邊緣車道偶爾換成草色 —— 「與草地不規則交錯」
-            if c in (0, lanes - 1) and rng.random() < 0.30:
-                col = C_GRASS
-            ga = 0.05
-            bld.quad((xa, ya, crown(xa) + ga), (xb, ya, crown(xb) + ga),
-                     (xb, yb, crown(xb) + ga), (xa, yb, crown(xa) + ga), col)
-        # 排與排之間的目地（細縫陰影）
-        bld.box((el + er) / 2, yb, 0.045, er - el, 0.10, 0.05, C_STONE_DK)
+            za, zb2 = crown(xa) + 0.075, crown(xb) + 0.075
+            bld.quad((xa, sa, za), (xb, sa, zb2), (xb, sb, zb2), (xa, sb, za),
+                     col, flip=(y1 > y0))
+            # 板厚的側緣：只畫最外側兩排的外邊，中間的縫看不到側面
+            if c in (0, cols - 1):
+                ex = xa if c == 0 else xb
+                bld.quad((ex, sa, za), (ex, sb, za),
+                         (ex, sb, 0.035), (ex, sa, 0.035),
+                         C_STONE_DK, flip=(c == 0) != (y1 > y0))
+
+
+# ─────────────────────── 格子塀 + 表門（前庭圍牆）───────────────────────
+#
+# Feature List §3「郭外防線」。原規格寫的是**平的白壁土塀**，使用者看過
+# 參考圖後改成 **格子塀**：石垣基 → 白漆喰腰壁 → 上段一條深色木格子帶 →
+# 兩坡瓦頂。差別在「上段那條格子帶」：一面 3.5m 高、38m 長的純白牆在
+# 遠景就是一條白帶子，沒有任何尺度感；橫向的格子把它切成有節奏的段落，
+# 遠看是深淺相間的帶，近看才看得出是木格柵。
+#
+# 本輪只做**正面那一道 + 兩側短回折**（參道視角看得到的範圍）。整圈
+# 的東西南北四面留給 §3 正式那輪 —— 這輪的指定範圍是「前庭裝飾」。
+
+def build_wall_run(bld, a0, a1, fix, axis="x", gate_hw=0.0):
+    """一段格子塀。axis="x" 時沿 x 走、fix 是 y 座標；axis="y" 則相反。
+    gate_hw > 0 時中央讓出門洞（只有正面那道用得到）。
+
+    兩軸共用同一支函式而不是各寫一份：牆有石垣／漆喰／格子帶／冠木／
+    兩坡瓦頂／棟瓦六層，各寫一份等於把六層的尺寸抄兩遍，改一邊忘另一邊
+    是遲早的事（第一版側面回折就是手抄的，格柵間距跟正面對不上）。"""
+    z_stone, z_wall, z_lat, z_top = 0.72, 2.30, 3.10, 3.50
+    segs = [(a0, -gate_hw), (gate_hw, a1)] if gate_hw > 0.0 else [(a0, a1)]
+
+    def slab(c, ln, thick, cz, h, col):
+        if axis == "x":
+            bld.box(c, fix, cz, ln, thick, h, col)
+        else:
+            bld.box(fix, c, cz, thick, ln, h, col)
+
+    for p, q in segs:
+        if q - p < 0.05:
+            continue
+        cc, ln = (p + q) / 2, q - p
+        slab(cc, ln, 1.05, z_stone / 2, z_stone, C_STONE)                    # 腰石垣
+        slab(cc, ln, 0.86, (z_stone + z_wall) / 2, z_wall - z_stone, C_PLASTER)
+        # 格子帶：深色底板 + 直立木格柵（格柵厚過底板，才有立體的格子影）
+        slab(cc, ln, 0.80, (z_wall + z_lat) / 2, z_lat - z_wall, C_WOOD)
+        n_sl = max(2, int(ln / 0.42))
+        for i in range(n_sl):
+            pc = p + (i + 0.5) * (ln / n_sl)
+            if axis == "x":
+                bld.box(pc, fix, (z_wall + z_lat) / 2, 0.14, 0.94,
+                        z_lat - z_wall - 0.12, C_WOOD_LT)
+            else:
+                bld.box(fix, pc, (z_wall + z_lat) / 2, 0.94, 0.14,
+                        z_lat - z_wall - 0.12, C_WOOD_LT)
+        slab(cc, ln, 1.00, z_lat + 0.07, 0.14, C_WOOD)                       # 冠木
+        for sd in (1, -1):                                                   # 兩坡瓦頂
+            if axis == "x":
+                bld.quad((p, fix + sd * 0.06, z_top), (q, fix + sd * 0.06, z_top),
+                         (q, fix + sd * 0.74, z_lat + 0.14),
+                         (p, fix + sd * 0.74, z_lat + 0.14), C_KAWARA, flip=(sd < 0))
+            else:
+                bld.quad((fix + sd * 0.06, p, z_top), (fix + sd * 0.06, q, z_top),
+                         (fix + sd * 0.74, q, z_lat + 0.14),
+                         (fix + sd * 0.74, p, z_lat + 0.14), C_KAWARA, flip=(sd > 0))
+        slab(cc, ln, 0.28, z_top + 0.06, 0.18, C_RIDGE)                      # 棟瓦
+
+
+def build_gate(bld, y, gate_hw):
+    """表門：兩根粗門柱 + 冠木 + 瓦屋根（棟門形）。參道從中間穿過。"""
+    z_post, z_beam = 3.60, 3.62
+    for sx in (1, -1):
+        bld.box(sx * (gate_hw + 0.34), y, 0.30, 0.92, 1.30, 0.60, C_STONE)   # 礎石
+        bld.box(sx * (gate_hw + 0.34), y, (0.55 + z_post) / 2, 0.62, 0.62,
+                z_post - 0.55, C_WOOD)                                        # 門柱
+    span = 2 * (gate_hw + 0.34) + 0.62
+    bld.box(0, y, z_beam + 0.24, span, 0.52, 0.48, C_WOOD)                   # 冠木
+    bld.box(0, y, z_beam - 0.40, span * 0.86, 0.34, 0.34, C_WOOD)            # 貫
+    # 屋根：兩坡，出簷比牆頂大一截 —— 門要比牆搶眼
+    zr = z_beam + 0.48
+    for sy in (1, -1):
+        bld.quad((-span / 2 - 0.6, y + sy * 0.08, zr + 0.84),
+                 (span / 2 + 0.6, y + sy * 0.08, zr + 0.84),
+                 (span / 2 + 0.6, y + sy * 1.55, zr),
+                 (-span / 2 - 0.6, y + sy * 1.55, zr), C_KAWARA, flip=(sy < 0))
+        bld.quad((-span / 2 - 0.6, y + sy * 1.55, zr),
+                 (span / 2 + 0.6, y + sy * 1.55, zr),
+                 (span / 2 + 0.6, y + sy * 1.55, zr - 0.16),
+                 (-span / 2 - 0.6, y + sy * 1.55, zr - 0.16), C_KAWARA_DK, flip=(sy < 0))
+    bld.box(0, y, zr + 0.92, span + 1.2, 0.42, 0.26, C_RIDGE)                # 大棟
+    for sx in (1, -1):                                                       # 鬼瓦
+        bld.box(sx * (span / 2 + 0.58), y, zr + 1.02, 0.34, 0.52, 0.46, C_RIDGE)
 
 
 # ── 楓葉樹冠：不做球體 ──
@@ -724,6 +821,49 @@ def build_giant_tree(bld, x_side, y, seed):
     add_canopy(bld, (x_side + sgn * 1.2, y - 1.6, 8.2), 1.7, 1.7, 1.7 * 0.6, seed * 3 + 5, n_sprigs=70)
 
 
+def place_asset(model, xforms):
+    """把**已經定案的** .glb（狛犬、石燈籠、松）載進場景擺位，回傳物件清單。
+
+    為什麼不把幾何抄進這支檔案：狛犬在 make_props.py 已經改過三輪才過關，
+    抄一份過來就等於開了第二個真相來源，下次改狛犬會有一隻沒跟到。
+    這裡只負責「擺哪裡」，造型永遠是 make_props.py 說了算。
+
+    ⚠ 匯入的網格顏色屬性名字不一定叫 "Col"（glTF 匯入器有時給 "Color"），
+    而 export_sel() 的 join 是**照名字合併**屬性的 —— 名字對不上，
+    合併後那半邊的顏色會整片變成預設值（白）。所以這裡強制正規化成
+    跟 B.build() 一樣的 BYTE_COLOR / CORNER / "Col"。"""
+    path = os.path.join(OUT_DIR, model + ".glb")
+    out = []
+    for i, (px, py, pz, rot, sc) in enumerate(xforms):
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.gltf(filepath=path)
+        fresh = [o for o in bpy.data.objects if o not in before]
+        meshes = [o for o in fresh if o.type == "MESH"]
+        for o in meshes:
+            o.parent = None
+            o.location = (px, py, pz)
+            o.rotation_euler = (0.0, 0.0, rot)
+            o.scale = (sc, sc, sc)
+            me = o.data
+            ca = me.color_attributes
+            if len(ca):
+                if ca[0].name != "Col" or ca[0].domain != "CORNER" or ca[0].data_type != "BYTE_COLOR":
+                    src = [tuple(d.color) for d in ca[0].data]
+                    dom, typ = ca[0].domain, ca[0].data_type
+                    ca.remove(ca[0])
+                    new = me.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
+                    for poly in me.polygons:
+                        for li in poly.loop_indices:
+                            vi = me.loops[li].vertex_index
+                            new.data[li].color = src[vi] if dom == "POINT" else src[li]
+            out.append(o)
+        # glTF 匯入會多帶一個空的場景根節點，不清掉 join 時會抓到它當 active
+        for o in fresh:
+            if o.type != "MESH":
+                bpy.data.objects.remove(o, do_unlink=True)
+    return out
+
+
 def export_sel(objs, name):
     bpy.ops.object.select_all(action="DESELECT")
     for o in objs:
@@ -746,16 +886,45 @@ bld = B()
 build_house(bld)
 export_sel([bld.build("hieda_main")], "hieda_main")
 
-# ── 產出 2：Blockout（主屋 + 大道 + 巨樹框景）──
-# ⚠ 巨樹現在直接寫進同一個 bld —— 房子＋大道＋兩棵樹是**一份網格**，
-# 不再需要 export_sel 裡的 bpy.ops.object.join()（少一次操作、少一個
-# 出錯點），整個 blockout 場景在 Godot 端也只佔 1 個 draw call。
+# ── 產出 2：Blockout（主屋 + 參道 + 巨樹框景 + 前庭門牆與添景）──
+# ⚠ 巨樹直接寫進同一個 bld —— 房子＋參道＋兩棵樹是**一份網格**。
+# 狛犬／石燈籠／松是 make_props.py 定案的獨立資產，用 place_asset() 載進來
+# 擺位，最後在 export_sel() 裡一起 join 成同一份 mesh（仍是 1 個 draw call）。
 clear()
 bld = B()
 w, d, pod = build_house(bld)
-sy0 = -(d / 2 + 5.6)                     # 唐破風玄関（簷口 -12.35）之外
-build_avenue(bld, sy0, sy0 - 26.0, width=6.0)
-build_giant_tree(bld, +4.9, sy0 - 7.5, 11)
-build_giant_tree(bld, -4.9, sy0 - 8.6, 47)
-export_sel([bld.build("hieda_scene")], "hieda_blockout")
+
+# 參道：從石階腳下（y=-11.43）一路連到門外，中間不斷開。
+Y_STEP = -11.43                          # 唐破風石階最外緣
+Y_GATE = -34.0                           # 表門：主殿正面前推 ~27m（§3：25~30m）
+Y_OUT = -40.5                            # 外側參道端點
+build_avenue(bld, Y_STEP, Y_OUT, width=6.0)
+
+# 前庭圍牆：正面一道 + 兩側短回折（本輪只做參道視角看得到的範圍）
+WALL_HX = 19.0
+GATE_HW = 3.6                            # 門洞半寬，6m 參道穿得過
+build_wall_run(bld, -WALL_HX, WALL_HX, Y_GATE, axis="x", gate_hw=GATE_HW)
+build_gate(bld, Y_GATE, GATE_HW)
+# 兩側回折：一路拉到主屋側面（y=-6）才收。第一版只往北 12m 就停在半空中，
+# 空中斷頭的牆比沒有牆還糟。北面與東西後段留給 §3 郭外防線那輪補完整圈。
+for sx in (1, -1):
+    build_wall_run(bld, Y_GATE, -6.0, sx * WALL_HX, axis="y")
+
+build_giant_tree(bld, +4.9, -20.4, 11)
+build_giant_tree(bld, -4.9, -21.5, 47)
+
+# ── 對稱添景：狛犬 / 石燈籠 / 松，三對沿參道由內而外、由窄而寬排開 ──
+# 前庭深 22.6m（門 -34 → 石階 -11.4）。狛犬擺在「從外側參道往內約 1/3」
+# 處 = -34 + 22.6/3 ≈ -26.5。燈籠與松依序往外側讓開，形成一個漸開的
+# 八字 —— 站在門口往內看，三對物件把視線收束到唐破風玄関上。
+objs = [bld.build("hieda_scene")]
+for sx in (1, -1):
+    # 狛犬原型面朝 -y。繞 z 轉 θ 之後朝向是 (sinθ, -cosθ)，所以 θ=-sx*1.0
+    # 會讓兩隻都**斜對著參道中線、同時偏向來人**（約 57°）。
+    # 第一版寫 π/0 —— 那是右邊那隻轉 180° 面向屋子、左邊那隻面向門外，
+    # 一對石獅子背對背，正面看過去一隻給你臉一隻給你屁股。
+    objs += place_asset("komainu_a", [(sx * 4.7, -26.5, 0.0, -sx * 1.0, 1.0)])
+    objs += place_asset("stone_lantern", [(sx * 6.8, -27.8, 0.0, sx * 0.26, 1.05)])
+    objs += place_asset("tree_pine_a", [(sx * 9.2, -29.4, 0.0, sx * 0.8, 1.25)])
+export_sel(objs, "hieda_blockout")
 print("done")

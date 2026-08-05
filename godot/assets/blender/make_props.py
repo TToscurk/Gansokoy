@@ -446,6 +446,69 @@ def make_komainu(name="komainu_a", mouth_open=True, seed=5):
     export([ob], name)
 
 
+# ══════════════════════════════════════════════ 石燈籠 ══════════════════
+#
+# 稗田邸參道用（春日燈籠形）。六角形，由下而上：
+# 基礎 → 竿（柱，帶兩道節）→ 中台 → 火袋 → 笠 → 宝珠。
+#
+# 火袋（燈室）**不做實體六角柱**：那樣就是一顆石頭疙瘩，看不出是燈。
+# 改成上下兩片六角盤 + 六根角柱，中間鏤空 —— 剪影上就是「透光的燈室」，
+# 而且完全不需要 boolean（這支檔案沒有 bmesh 布林的基礎建設）。
+#
+# sides=6 的 sweep 垂直掃時，六角形正好落在 x-y 平面（u=-x、v=-y），
+# 不用另外轉向。
+
+def make_stone_lantern(name="stone_lantern", seed=3):
+    clear()
+    rng = random.Random(seed)
+    parts = []
+
+    # 基礎（覆蓮式的矮座）
+    parts.append(sweep([(0, 0, 0.0), (0, 0, 0.18), (0, 0, 0.30)],
+                       [0.44, 0.42, 0.33], sides=6))
+    # 竿（柱）+ 兩道節
+    parts.append(sweep([(0, 0, 0.28), (0, 0, 1.18)], [0.135, 0.125], sides=8))
+    for zz in (0.58, 0.92):
+        parts.append(sweep([(0, 0, zz - 0.045), (0, 0, zz + 0.045)],
+                           [0.175, 0.175], sides=8))
+    # 中台（往外翻的托盤）
+    parts.append(sweep([(0, 0, 1.14), (0, 0, 1.30), (0, 0, 1.42)],
+                       [0.20, 0.32, 0.30], sides=6))
+    # 火袋：上下盤 + 六根角柱，中間鏤空
+    parts.append(sweep([(0, 0, 1.40), (0, 0, 1.50)], [0.34, 0.33], sides=6))
+    parts.append(sweep([(0, 0, 1.88), (0, 0, 1.96)], [0.33, 0.35], sides=6))
+    for k in range(6):
+        a = (k / 6.0) * TAU + TAU / 12.0
+        px, py = math.cos(a) * 0.285, math.sin(a) * 0.285
+        parts.append(sweep([(px, py, 1.48), (px, py, 1.90)], [0.052, 0.052], sides=4))
+    # 笠（六角屋頂，簷口微微外翻）
+    parts.append(sweep([(0, 0, 1.94), (0, 0, 2.14), (0, 0, 2.19)],
+                       [0.30, 0.58, 0.62], sides=6))
+    for k in range(6):                                   # 蕨手（簷角的小翹起）
+        a = (k / 6.0) * TAU
+        px, py = math.cos(a) * 0.60, math.sin(a) * 0.60
+        parts.append(sweep([(px, py, 2.16), (px * 1.10, py * 1.10, 2.30)],
+                           [0.055, 0.022], sides=4))
+    # 宝珠
+    parts.append(sweep([(0, 0, 2.16), (0, 0, 2.30), (0, 0, 2.44)],
+                       [0.10, 0.135, 0.03], sides=8))
+
+    verts, faces = merge(*parts)
+
+    def col(co, n):
+        # 上朝面積苔、下方陰乾 —— 跟 make_rock 同一套邏輯，燈籠才不是一塊
+        # 均勻的灰塑膠
+        base = (0.545, 0.540, 0.510)
+        moss = (0.32, 0.39, 0.25)
+        k = max(n.z, 0.0) ** 2 * 0.42
+        k += 0.10 if co.z < 0.35 else 0.0
+        k = min(k, 0.62)
+        return tuple(base[i] * (1 - k) + moss[i] * k for i in range(3))
+
+    ob = mesh_from(name, verts, faces, col)
+    export([ob], name)
+
+
 # ══════════════════════════════════════════════ 岩石 ════════════════════
 def make_rock(name, seed, subdiv=1, rough=0.34):
     clear()
@@ -482,6 +545,7 @@ make_koi()
 # 先只出阿形一隻給使用者看造型；吽形（mouth_open=False, seed 換一個）
 # 等這隻過關再補，不用兩隻一起賭。
 make_komainu("komainu_a", mouth_open=True, seed=5)
+make_stone_lantern()
 for i, nm in enumerate(["rock_a", "rock_b", "rock_c", "rock_d"]):
     make_rock(nm, 17 + i * 31, subdiv=1 if i < 2 else 2, rough=0.30 + i * 0.06)
 print("done")
