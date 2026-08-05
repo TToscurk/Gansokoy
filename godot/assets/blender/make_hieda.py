@@ -278,6 +278,13 @@ def build_house(bld):
     for i in range(n_post - 1):
         px = -w / 2 + (i + 0.5) * (w / (n_post - 1))
         bld.box(px, -(d / 2 + 0.02), z0 + 1.75, KEN * 0.74, 0.06, 1.15, C_SHOJI)
+    # ── 腰簷（Feature List §1：多層次屋頂／錣葺き）──
+    # 牆中段切一圈外突腰簷，給下方格子窗一條長條柔和陰影。
+    # z0+2.35 ≈ 地面上 3.2m（使用者指定高度），剛好卡在窗楣（頂在
+    # z0+2.325）正上方 —— 窗跟簷幾乎是同一條線，陰影才會貼著窗蓋下來。
+    koshi_z = z0 + 2.35
+    skirt_ring(bld, w / 2 - 0.05, d / 2 - 0.05, koshi_z + 0.16,
+               w / 2 + 1.0, d / 2 + 1.0, koshi_z - 0.06, lift_corner=0.10)
     # 縁側 + 高欄
     for sy in (1, -1):
         bld.box(0, sy * (d / 2 + 1.05), z0 + 0.12, w + 1.4, 2.0, 0.22, C_ENGAWA)
