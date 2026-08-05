@@ -30,6 +30,7 @@
 # （單棵樹冠一叢 ~80~110 片葉，5 叢/棵）。仍然是 flat shading 的扁平
 # 三角片、頂點色、無貼圖 —— 不是走寫實，是打碎輪廓（規格 §1.1）。
 import bpy
+import json
 import math
 import random
 import sys
@@ -39,6 +40,10 @@ OUT_DIR = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else "godot/ass
 os.makedirs(OUT_DIR, exist_ok=True)
 
 KEN = 1.82
+# 後院小徑終點（Blender Z-up）。木戶、樹叢、以及匯出給 Godot 的觸發區座標
+# 都從這裡取 —— 分開寫死兩份的話，之後挪動木戶觸發區就會留在原地。
+PATH_END = (37.0, 68.0)
+PATH_END_ANG = math.radians(28.0)
 # 玄関開口半寬。腰簷、正面高欄、格子窗全部照這個讓路 —— 唐破風、階梯、
 # 大扉、簷的缺口是同一件事，散在四處各寫一個數字遲早會對不齊。
 GATE_HW = 2.9
@@ -70,6 +75,8 @@ C_WATER_SHAL = (0.255, 0.400, 0.300)
 C_WATER_DEEP = (0.045, 0.105, 0.140)
 C_WATER_MIRROR = (0.430, 0.505, 0.575)
 C_WATER_MIRROR_DK = (0.175, 0.220, 0.280)
+C_WATER_SHEEN = (0.760, 0.820, 0.880)      # 天光柔斑（假的 specular）
+C_WATER_EDGE = (0.395, 0.440, 0.395)       # 岸際：水與石之間的過渡色
 C_MUD = (0.300, 0.255, 0.185)
 C_EARTH = (0.200, 0.160, 0.115)
 # 枯山水的白砂：兩階明度交替就是耙紋
@@ -88,6 +95,9 @@ C_SOIL = (0.195, 0.140, 0.092)
 C_STRAW = (0.620, 0.550, 0.360)
 C_LEAF = (0.235, 0.410, 0.150)
 C_LEAF_LT = (0.390, 0.545, 0.205)
+C_HEDGE_DK = (0.115, 0.205, 0.095)
+C_HEDGE = (0.175, 0.300, 0.130)
+C_HEDGE_LT = (0.290, 0.420, 0.185)
 C_BARK = (0.200, 0.150, 0.110)
 # 楓紅四階（線性）—— 火紅拱門。HI 是新葉／逆光邊緣的亮橙，
 # 打碎輪廓時要靠這階跟 LT 拉開層次，不然疊起來還是一坨均勻的紅。
@@ -115,6 +125,25 @@ class B:
         self.verts += [a, c, b] if flip else [a, b, c]
         self.faces.append((i, i + 1, i + 2))
         self.cols.append(col)
+
+    def tri_v(self, a, b, c, ca, cb, cc, flip=False):
+        """每個角各自一個顏色（build() 會偵測 cols[fi] 是不是巢狀）。
+
+        為什麼需要它：原本一張面只能給一個色，畫漸層就只能靠「一圈一個色」
+        堆出來 —— 六圈就是六條等高線，水面看起來是地形圖不是水。
+        角色可以在面內線性內插，色階才是連續的。"""
+        i = len(self.verts)
+        if flip:
+            self.verts += [a, c, b]
+            self.cols.append((ca, cc, cb))
+        else:
+            self.verts += [a, b, c]
+            self.cols.append((ca, cb, cc))
+        self.faces.append((i, i + 1, i + 2))
+
+    def quad_v(self, a, b, c, d, ca, cb, cc, cd, flip=False):
+        self.tri_v(a, b, c, ca, cb, cc, flip)
+        self.tri_v(a, c, d, ca, cc, cd, flip)
 
     def quad(self, a, b, c, d, col, flip=False):
         self.tri(a, b, c, col, flip)
@@ -149,9 +178,15 @@ class B:
         bpy.context.collection.objects.link(ob)
         attr = me.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
         for fi, poly in enumerate(me.polygons):
-            r, g, b2 = self.cols[fi]
-            for li in poly.loop_indices:
-                attr.data[li].color = (r, g, b2, 1.0)
+            c = self.cols[fi]
+            if isinstance(c[0], (tuple, list)):          # 每角一色（tri_v）
+                for k, li in enumerate(poly.loop_indices):
+                    r, g, b2 = c[k]
+                    attr.data[li].color = (r, g, b2, 1.0)
+            else:                                        # 整面一色
+                r, g, b2 = c
+                for li in poly.loop_indices:
+                    attr.data[li].color = (r, g, b2, 1.0)
             poly.use_smooth = False
         return ob
 
@@ -965,77 +1000,90 @@ def _organic(cx, cy, r, seed, n, amp=0.24):
 # ── 1. 石造水池 ──
 
 def build_pond(bld, cx, cy, r, seed):
-    """石造水池。三件事各自有目的：
+    """石造水池。回傳 (rim, r_at)，讓涸れ滝／楓／庭石都能照**實際池緣**擺。
 
-    ・**深度漸層**：池底不是等深（中心 -1.25m、岸邊 0），水色直接由實際
-      深度算出來 —— 岸邊亮綠、中心暗藍。單一色調的水面看起來是一塊藍色
-      塑膠板，深淺差才讀得出「這裡踩得到、那裡踩不到」。
-    ・**鏡面**：朝主屋那一側（-y）留一片**乾淨無石**的水面，色調往天空色
-      偏。那片是拿來映主屋屋頂與楓樹的，所以護岸的石頭在那一段要讓開。
-    ・**石造護岸**：池緣一圈天端石（切石）+ 錯落的自然石。
+    ⚠ 水面用 `quad_v`（每角一色）而不是整面一色。整面一色時漸層只能靠
+    「一圈一個色」堆，六圈就是六條清清楚楚的等高線 —— 使用者看到的
+    「像地形圖不像水」就是這個。改成把顏色寫成一個**連續的位置函式**
+    `wcol(x, y)`，每個角各自取值、面內線性內插，色帶邊界就消失了。
 
-    水面高於地面 0.30 —— 這是「石**造**」水池，池壁是砌起來的，不是挖的坑。
-    （blockout 沒有地形網格，挖下去的水面在預覽裡會被地面整片蓋掉。）
+    wcol 疊四件事：
+      1. 深度漸層（岸亮綠 → 心暗藍），由實際池底深度算
+      2. 鏡面：朝主屋那側往天空色偏，且**鏡面色本身隨深度變暗**
+      3. 天光柔斑：一塊高斯狀的亮區，假的 specular
+         （真正的粗糙度/反射是 Godot 材質的事，這裡只烤一個柔和的亮部）
+      4. 岸際柔化：最外 14% 半徑往岸石色收，水與石之間不是一刀切
     """
-    n = 30
-    # amp 壓到 0.15：0.24 會把輪廓拉出尖銳的葉瓣（星形），而且半徑上限
-    # 變得抓不準 —— 第一版的涸れ滝就因此整組站進水裡
+    n = 44
     rim = _organic(cx, cy, r, seed, n, amp=0.18)
     z_w, d_max = 0.30, 1.25
-    rings = 6
+
+    def r_at(a):
+        aa = (a % math.tau) / math.tau * n
+        i0 = int(math.floor(aa)) % n
+        f = aa - math.floor(aa)
+        return rim[i0][3] * (1.0 - f) + rim[(i0 + 1) % n][3] * f
+
+    # 天光柔斑：擺在鏡面那一側、偏離中心（正中央會讀成一顆太陽）
+    hx, hy = cx - r * 0.30, cy - r * 0.40
+    hsig = r * 0.34
+
+    def wcol(px, py):
+        dx, dy = px - cx, py - cy
+        d = math.hypot(dx, dy)
+        a = math.atan2(dy, dx)
+        t = min(1.0, d / max(r_at(a), 0.001))
+        dep = 1.0 - t * t
+        col = _mix(C_WATER_SHAL, C_WATER_DEEP, dep ** 0.75)
+        mir = max(0.0, -math.sin(a)) ** 1.2
+        col = _mix(col, _mix(C_WATER_MIRROR, C_WATER_MIRROR_DK, dep), mir * 0.80)
+        sheen = math.exp(-((math.hypot(px - hx, py - hy) / hsig) ** 2))
+        # 0.42 太強、半徑又寬，整池被洗成一片淡灰藍，深度漸層讀不出來。
+        # 柔斑是「一塊天光」，不該蓋過水本身的深淺。
+        col = _mix(col, C_WATER_SHEEN, sheen * 0.26)
+        if t > 0.86:
+            k = (t - 0.86) / 0.14
+            col = _mix(col, C_WATER_EDGE, k * k * 0.62)
+        return col
 
     def lerp_pt(t, idx):
         return (cx + (rim[idx][0] - cx) * t, cy + (rim[idx][1] - cy) * t)
 
-    # 水面：由中心往岸鋪環，色階跟著深度走
+    rings = 12
     for ri in range(rings):
         t0, t1 = ri / rings, (ri + 1) / rings
-        tm = (t0 + t1) * 0.5
-        dep = 1.0 - tm * tm                       # 0=岸 1=最深
         for i in range(n):
             i2 = (i + 1) % n
-            am = rim[i][2] + (math.tau / n) * 0.5
-            col = _mix(C_WATER_SHAL, C_WATER_DEEP, dep ** 0.75)
-            # 鏡面：朝主屋（-y）那一側往天空色偏。sin(a)=-1 正對主屋。
-            # 指數從 2 放寬到 1.2：**2 的衰減太陡，只有正對主屋的那幾片吃得到
-            # 色，讀不出「一片」鏡面。
-            # ⚠ 鏡面色本身也要**隨深度變暗**。第一版整個 -y 楔形不分深淺
-            # 塗同一個淺色，等於在最深的地方畫出最淺的水 —— 鏡面把深度漸層
-            # 直接抵銷掉了。淺處映天（亮）、深處映屋頂量體（暗），兩件事才
-            # 能同時成立。
-            mir = max(0.0, -math.sin(am)) ** 1.2
-            col = _mix(col, _mix(C_WATER_MIRROR, C_WATER_MIRROR_DK, dep), mir * 0.80)
             a0, b0 = lerp_pt(t0, i), lerp_pt(t0, i2)
             a1, b1 = lerp_pt(t1, i), lerp_pt(t1, i2)
-            bld.quad((a0[0], a0[1], z_w), (a1[0], a1[1], z_w),
-                     (b1[0], b1[1], z_w), (b0[0], b0[1], z_w), col)
+            bld.quad_v((a0[0], a0[1], z_w), (a1[0], a1[1], z_w),
+                       (b1[0], b1[1], z_w), (b0[0], b0[1], z_w),
+                       wcol(*a0), wcol(*a1), wcol(*b1), wcol(*b0))
     # 池底：真的做出深淺（Godot 端接水體 shader 時這層才有意義）
     for ri in range(3):
         t0, t1 = ri / 3.0, (ri + 1) / 3.0
         for i in range(n):
             i2 = (i + 1) % n
             def flr(t, idx):
-                p = lerp_pt(t, idx)
-                return (p[0], p[1], z_w - d_max * (1.0 - t * t))
+                q = lerp_pt(t, idx)
+                return (q[0], q[1], z_w - d_max * (1.0 - t * t))
             bld.quad(flr(t0, i), flr(t1, i), flr(t1, i2), flr(t0, i2),
                      _mix(C_MUD, C_EARTH, 1.0 - t0))
     # 池壁 + 天端石
     for i in range(n):
         i2 = (i + 1) % n
-        for idx_a, idx_b in ((i, i2),):
-            pa, pb = rim[idx_a], rim[idx_b]
-            na = (math.cos(pa[2]), math.sin(pa[2]))
-            nb = (math.cos(pb[2]), math.sin(pb[2]))
-            oa = (pa[0] + na[0] * 0.62, pa[1] + na[1] * 0.62)
-            ob = (pb[0] + nb[0] * 0.62, pb[1] + nb[1] * 0.62)
-            bld.quad((pa[0], pa[1], 0.46), (oa[0], oa[1], 0.46),
-                     (ob[0], ob[1], 0.46), (pb[0], pb[1], 0.46), C_STONE)      # 天端石頂
-            bld.quad((oa[0], oa[1], 0.46), (oa[0], oa[1], 0.0),
-                     (ob[0], ob[1], 0.0), (ob[0], ob[1], 0.46), C_STONE_DK)    # 外壁
-            bld.quad((pa[0], pa[1], 0.46), (pb[0], pb[1], 0.46),
-                     (pb[0], pb[1], z_w - 0.02), (pa[0], pa[1], z_w - 0.02),
-                     C_STONE_DK)                                               # 內壁
-    return rim
+        pa, pb = rim[i], rim[i2]
+        na = (math.cos(pa[2]), math.sin(pa[2]))
+        nb = (math.cos(pb[2]), math.sin(pb[2]))
+        oa = (pa[0] + na[0] * 0.72, pa[1] + na[1] * 0.72)
+        ob = (pb[0] + nb[0] * 0.72, pb[1] + nb[1] * 0.72)
+        bld.quad((pa[0], pa[1], 0.46), (oa[0], oa[1], 0.46),
+                 (ob[0], ob[1], 0.46), (pb[0], pb[1], 0.46), C_STONE)
+        bld.quad((oa[0], oa[1], 0.46), (oa[0], oa[1], 0.0),
+                 (ob[0], ob[1], 0.0), (ob[0], ob[1], 0.46), C_STONE_DK)
+        bld.quad((pa[0], pa[1], 0.46), (pb[0], pb[1], 0.46),
+                 (pb[0], pb[1], z_w - 0.02), (pa[0], pa[1], z_w - 0.02), C_STONE_DK)
+    return rim, r_at
 
 
 # ── 涸れ滝（乾瀑布）──
@@ -1048,14 +1096,16 @@ def build_karetaki(bld, x_top, y_top, x_bot, y_bot, z_top, seed):
     一階比一階往前吐，跌水的動線才看得出來（全部切齊就只是一道樓梯）。
     """
     rng = random.Random(seed)
-    steps = 5
+    steps = 6
+    sc = z_top / 2.55                       # 石階尺寸跟著落差走，不然大池配小瀑布
     for k in range(steps):
         t = k / (steps - 1.0)
         px = x_top + (x_bot - x_top) * t
         py = y_top + (y_bot - y_top) * t
         pz = z_top * (1.0 - t) ** 1.35 + 0.30
-        w = 1.35 + t * 1.15
-        _rough_box(bld, px, py, pz, w, 0.95 + t * 0.5, 0.42 + (1 - t) * 0.22,
+        w = (1.35 + t * 1.15) * sc
+        _rough_box(bld, px, py, pz, w, (0.95 + t * 0.5) * sc,
+                   (0.42 + (1 - t) * 0.22) * sc,
                    seed * 13 + k, C_STONE, col_top=_mix(C_STONE, C_MOSS, 0.18 * t),
                    yaw=rng.uniform(-0.35, 0.35), jit=0.16)
     # 挟石：兩側立石，高度不等（等高就變成門框）
@@ -1065,8 +1115,8 @@ def build_karetaki(bld, x_top, y_top, x_bot, y_bot, z_top, seed):
     # 兩塊挟石變成 4.7m / 4.1m 的巨柱，加上低 jit 的方正比例，整組讀起來
     # 是兩根清水模柱子夾一道樓梯，不是石組。
     # 挟石要**矮胖、粗糙、左右不等高**：它們是夾住水路的岩壁，不是門框。
-    for sd, hh, ww in ((1, 2.35, 1.15), (-1, 1.65, 0.95)):
-        _rough_box(bld, x_top + sx_ * sd * 1.45, y_top + sy_ * sd * 1.45,
+    for sd, hh, ww in ((1, 2.35 * sc, 1.15 * sc), (-1, 1.65 * sc, 0.95 * sc)):
+        _rough_box(bld, x_top + sx_ * sd * 1.45 * sc, y_top + sy_ * sd * 1.45 * sc,
                    hh * 0.46, ww, ww * 1.25, hh,
                    seed * 29 + sd, C_STONE_DK,
                    col_top=_mix(C_STONE_DK, C_MOSS, 0.32),
@@ -1173,8 +1223,8 @@ def build_karesansui(bld, cx, cy, r, seed, host, guests, floats):
     波紋本身定義了這片砂的形狀。
     """
     rng = random.Random(seed)
-    n = 26
-    n_ring = 16
+    n = 34
+    n_ring = 28
     # ⚠ 所有圈**共用同一組噪聲相位**，半徑只差在倍率。
     # 每圈各自抽噪聲的話，內圈在某些角度會胖過外圈 —— 兩圈交叉重疊，
     # 共面的兩張同法線面互相擋掉環境光，整片砂紋變成一圈圈死黑的環。
@@ -1269,43 +1319,232 @@ def build_karesansui(bld, cx, cy, r, seed, host, guests, floats):
                          (fx + math.cos(a1) * rr0, fy + math.sin(a1) * rr0, pz), col)
 
 
+# ── 4. 迂迴小徑（為後續劇情預留）──
+#
+# 需求有兩面：氣氛上要「有地方可以走過去」，結構上要留一個之後能接場景的
+# 出口。所以路線**往外走、不繞回庭園**，終點做成「刻意的封閉」而不是斷頭 ——
+# 一道打不開的木戶、兩側密植擋住視線，讀起來是「這邊還有路，只是現在過不去」。
+#
+# 視線設計：控制點刻意讓路在兩處折向，並在折點的內側放遮蔽物（樹叢／立石）。
+# 站在起點看不到終點；走過第二個彎，木戶才整個露出來。一眼望穿的直路
+# 沒有「還有東西沒看到」的感覺，也就留不住劇情空間。
+
+
+def _spline(ctrl, samples):
+    """Catmull-Rom 取樣。控制點只給大方向，實際曲線由樣條插出來 ——
+    手打折線的路一定看得出折角。"""
+    out = []
+    m = len(ctrl)
+    for s in range(samples + 1):
+        u = s / float(samples) * (m - 1)
+        i = min(int(u), m - 2)
+        f = u - i
+        p0, p1 = ctrl[max(i - 1, 0)], ctrl[i]
+        p2, p3 = ctrl[i + 1], ctrl[min(i + 2, m - 1)]
+        f2, f3 = f * f, f * f * f
+        pt = []
+        for k in range(2):
+            pt.append(0.5 * (2 * p1[k] + (-p0[k] + p2[k]) * f
+                             + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * f2
+                             + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * f3))
+        out.append((pt[0], pt[1]))
+    return out
+
+
+def build_bush(bld, x, y, rx, rz, seed, n_sprig=58):
+    """遮蔽視線用的樹叢。
+
+    ⚠ 不要直接借 `_canopy_surf`：那支的起伏振幅（4 項 ×0.14~0.30，合計可到
+    ±1.0）是為**滿身葉子的大樹冠**調的 —— 殼再怎麼歪都會被上千片葉子蓋掉。
+    樹叢只有幾十撮葉子，殼會整片露出來，於是變成一顆帶尖角的多面體
+    （第一版就是一叢叢綠色的星星）。這裡用自己的緩起伏（±16%）、殼細分
+    加密到 6×14，葉子改成小而多。
+
+    也不用 hedge_*.glb —— 那幾個資產一顆上萬面，路邊放八叢就把整個
+    blockout 的面數吃光。"""
+    rng = random.Random(seed)
+    ph = [rng.uniform(0.0, math.tau) for _ in range(3)]
+    fr = [rng.uniform(1.6, 3.2) for _ in range(3)]
+
+    def surf(u, v):
+        th, phi = u * math.tau, v * math.pi
+        nx = math.sin(phi) * math.cos(th)
+        ny = math.sin(phi) * math.sin(th)
+        nz = math.cos(phi)
+        k = 1.0 + 0.16 * (math.sin(th * fr[0] + ph[0]) * 0.4
+                          + math.sin(phi * fr[1] + ph[1]) * 0.35
+                          + math.sin((th + phi) * fr[2] + ph[2]) * 0.25)
+        return ((x + nx * rx * k, y + ny * rx * 0.94 * k, rz * 0.80 + nz * rz * k),
+                (nx, ny, nz))
+
+    ctr = (x, y, rz * 0.80)
+    rows, cols = 6, 14
+    for ri in range(rows):
+        for ci in range(cols):
+            v0, v1 = ri / rows, (ri + 1) / rows
+            u0, u1 = ci / cols, (ci + 1) / cols
+            _auto_quad(bld, ctr, surf(u0, v0)[0], surf(u1, v0)[0],
+                       surf(u1, v1)[0], surf(u0, v1)[0],
+                       _mix(C_HEDGE_DK, C_HEDGE, 0.15 + 0.55 * (1.0 - v0)))
+    for _ in range(n_sprig):
+        p_, nn = surf(rng.uniform(0.0, 1.0), rng.uniform(0.04, 0.96))
+        for k in range(3):
+            a = rng.uniform(0.0, math.tau) + k * math.tau / 3.0
+            ln = rng.uniform(0.13, 0.26)
+            wd = ln * 0.34
+            tp = (p_[0] + nn[0] * ln + math.cos(a) * ln * 0.42,
+                  p_[1] + nn[1] * ln + math.sin(a) * ln * 0.42,
+                  p_[2] + nn[2] * ln)
+            bld.tri2((p_[0] - wd, p_[1], p_[2]), (p_[0] + wd, p_[1], p_[2]), tp,
+                     _mix(C_HEDGE, C_HEDGE_LT, rng.random()))
+
+
+def build_path(bld, ctrl, width=2.3, seed=77):
+    """砂利敷きの小徑：沿樣條鋪的碎石帶，兩緣寬度微幅起伏（等寬會像跑道）。"""
+    rng = random.Random(seed)
+    pts = _spline(ctrl, len(ctrl) * 9)
+    left, right = [], []
+    for i, (px, py) in enumerate(pts):
+        a = pts[min(i + 1, len(pts) - 1)]
+        b = pts[max(i - 1, 0)]
+        tx, ty = a[0] - b[0], a[1] - b[1]
+        tl = math.hypot(tx, ty) or 1.0
+        nx, ny = -ty / tl, tx / tl
+        hw = width * 0.5 * (1.0 + 0.14 * math.sin(i * 0.7 + seed))
+        left.append((px + nx * hw, py + ny * hw))
+        right.append((px - nx * hw, py - ny * hw))
+    for i in range(len(pts) - 1):
+        col = _mix(C_SAND_DK, C_GRAVEL, 0.35 + rng.uniform(-0.12, 0.12))
+        bld.quad((left[i][0], left[i][1], 0.045), (right[i][0], right[i][1], 0.045),
+                 (right[i + 1][0], right[i + 1][1], 0.045),
+                 (left[i + 1][0], left[i + 1][1], 0.045), col)
+        # 兩側鑲邊石：把路與草地的交界收掉（跟牆腳犬走り同一個道理）
+        for sd, edge in ((1, left), (-1, right)):
+            ox = (edge[i][0] - pts[i][0]) * 0.30
+            oy = (edge[i][1] - pts[i][1]) * 0.30
+            bld.quad((edge[i][0], edge[i][1], 0.045),
+                     (edge[i][0] + ox, edge[i][1] + oy, 0.0),
+                     (edge[i + 1][0] + ox, edge[i + 1][1] + oy, 0.0),
+                     (edge[i + 1][0], edge[i + 1][1], 0.045),
+                     C_GRAVEL_DK, flip=(sd < 0))
+    return pts
+
+
+def build_closed_gate(bld, px, py, ang, seed):
+    """終點的「刻意封閉」：一道關著的木戶。
+
+    不是斷頭路 —— 有柱、有門扇、有屋根、有門閂，只是打不開。兩側再密植
+    擋住繞過去的可能。玩家讀到的是「這裡通往別處，只是現在不開」，
+    而不是「地圖到此為止」。之後要開通的話，這裡就是接場景的地方。"""
+    ca, sa = math.cos(ang), math.sin(ang)
+
+    def P(u, v, z):
+        return (px + u * ca - v * sa, py + u * sa + v * ca, z)
+
+    for sd in (1, -1):                                       # 門柱
+        for dz, w in ((1.35, 0.30),):
+            v = sd * 1.45
+            bld.box(px + (-v) * sa, py + v * ca, dz, w, w, 2.70, C_WOOD)
+    # 門扇（關著）：直立板 ×5
+    for k in range(5):
+        v = -1.25 + (k + 0.5) * (2.50 / 5)
+        c0 = P(0.0, v, 0.0)
+        bld.box(c0[0], c0[1], 1.15, 0.46, 0.10, 2.10,
+                C_WOOD_LT if k % 2 else _mix(C_WOOD_LT, C_WOOD, 0.35))
+    for zz, th in ((0.55, 0.13), (1.72, 0.13)):              # 橫閂
+        c0 = P(0.0, 0.0, 0.0)
+        bld.box(c0[0], c0[1], zz, 2.60, 0.16, th, C_WOOD)
+    c0 = P(0.0, 0.0, 0.0)
+    bld.box(c0[0], c0[1], 2.42, 3.30, 0.34, 0.22, C_WOOD)    # 冠木
+    for sd in (1, -1):                                       # 兩坡小屋根
+        bld.quad(P(sd * 0.06, -1.75, 2.92), P(sd * 0.06, 1.75, 2.92),
+                 P(sd * 0.90, 1.75, 2.56), P(sd * 0.90, -1.75, 2.56),
+                 C_KAWARA, flip=(sd < 0))
+    bld.box(c0[0], c0[1], 2.99, 3.60, 0.24, 0.16, C_RIDGE)
+
+
 def build_back_garden(bld):
     """把三區擺進後院，回傳要用 place_asset 擺的自然石清單。
 
-    配置的理由（不是隨手擺）：
-      水池貼著主屋北面 —— 南岸那片鏡面才照得到屋頂；
-      涸れ滝在池的北緣 —— 從主屋往北看，視線越過鏡面正好落在瀑布上；
-      枯山水在東側單獨一區 —— 主角要有自己的空間，不跟日常物件擠；
-      菜園退到西北角 —— 最私密、最不需要被看見的東西擺最裡面。
+    ── 尺度（第二輪修正）──
+    第一版水池 r=6.4（直徑 13m）、枯山水 r=7.0，對上 25.5m 寬的主屋只有
+    一半不到，讀起來是「屋子旁邊的兩個小擺設」而不是庭園本身。
+    水池放大到 r=16（2.5×，直徑 32m ≈ 主屋寬），枯山水放大到 r=14（2×，
+    砂紋因此有足夠半徑鋪出漸層）。兩者與主屋、以及兩者彼此之間都拉開：
+      主屋背面 y=9.33 → 水池南緣 ≈17、枯山水南緣 ≈18（原本只有 1~4m）
+      水池東緣 ≈-1 ↔ 枯山水西緣 ≈7（原本兩區幾乎相連）
+    目的是讓每一區各自是一個「目的地」，不是擠成一團的裝飾。
+
+    ── 位置的理由（跟第一輪相同，只是放大）──
+    水池貼主屋北面 —— 南岸那片鏡面才照得到屋頂；
+    涸れ滝在池的北緣 —— 從主屋往北看，視線越過鏡面正好落在瀑布上；
+    枯山水在東側單獨一區 —— 主角要有自己的空間；
+    菜園退到西北角 —— 最私密的擺最裡面。
     """
-    # 水池（中心偏西，貼著主屋背面）
-    rim = build_pond(bld, -7.5, 18.0, 6.4, 5)
-    # 涸れ滝：池北緣往西南跌進水裡
-    # 涸れ滝的落點用**實際池緣半徑**算出來，不寫死座標：池岸是隨機起伏的，
-    # 寫死的話換個 seed 石階就可能整組站進水裡（第一版正是如此）。
-    ta = math.radians(72.0)
-    r_edge = min(rim, key=lambda q: abs(((q[2] - ta + math.pi) % math.tau) - math.pi))[3]
-    kb = (-7.5 + math.cos(ta) * (r_edge - 0.5), 18.0 + math.sin(ta) * (r_edge - 0.5))
-    kt = (-7.5 + math.cos(ta) * (r_edge + 3.8), 18.0 + math.sin(ta) * (r_edge + 3.8))
-    build_karetaki(bld, kt[0], kt[1], kb[0], kb[1], 2.55, 9)
-    # 池畔楓 ×2：都在西岸、大小與前後都不同，成對鏡射是前庭的語言
-    build_maple(bld, -15.6, 13.6, 8.4, 23, lean=0.9)
-    build_maple(bld, -15.0, 22.2, 6.2, 41, lean=0.7)
-    # 菜園（西北角）
-    build_veg_garden(bld, -14.0, 30.5, 11)
-    # 枯山水（東側）：波紋圓心 = 懸浮石正下方
+    PX, PY, PR = -17.0, 33.0, 16.0
+    rim, r_at = build_pond(bld, PX, PY, PR, 5)
+
+    def at_edge(deg, out):
+        """池緣外 out 公尺處的座標。所有靠池的東西都照**實際池緣**擺 ——
+        池岸是隨機起伏的，寫死座標換個 seed 就會站進水裡。"""
+        a = math.radians(deg)
+        rr = r_at(a) + out
+        return (PX + math.cos(a) * rr, PY + math.sin(a) * rr)
+
+    # 涸れ滝：池北緣，落差 4.6m。放大是為了配得上 32m 的池 —— 但仍然遠低於
+    # 池本身的尺度，它是池裡的重音，不是蓋過池的主角。
+    kb = at_edge(72.0, -0.6)
+    kt = at_edge(72.0, 6.4)
+    build_karetaki(bld, kt[0], kt[1], kb[0], kb[1], 4.6, 9)
+
+    # 池畔楓 ×2：都在南岸（鏡面那側），大小與前後都不同
+    m1 = at_edge(248.0, 2.2)
+    m2 = at_edge(288.0, 1.6)
+    build_maple(bld, m1[0], m1[1], 11.0, 23, lean=1.2)
+    build_maple(bld, m2[0], m2[1], 7.8, 41, lean=0.8)
+
+    # 菜園（西北角，退到最裡面）
+    build_veg_garden(bld, -30.0, 52.0, 11)
+
+    # 枯山水（東側）：波紋圓心 = 懸浮石正下方。石與懸浮石一併放大 ~1.6×，
+    # 砂床變兩倍大而石頭不變的話，主賓關係在遠景就消失了。
     build_karesansui(
-        bld, 9.6, 20.2, 7.0, 3,
-        host=(12.0, 17.4, 1.30, 2.35),
-        guests=[(13.9, 20.6, 0.78, 0.88), (9.6, 15.7, 0.62, 0.62)],
-        floats=[(9.4, 20.6, 1.14, 1.35), (10.9, 22.3, 0.86, 0.95)])
-    # 自然石：池畔散置 + 枯山水外緣一顆。全部避開南岸鏡面（-y 那側）。
+        bld, 21.0, 32.0, 14.0, 3,
+        host=(25.0, 27.0, 2.10, 3.80),
+        guests=[(28.4, 32.6, 1.25, 1.42), (21.0, 24.2, 1.00, 1.00)],
+        floats=[(19.6, 32.8, 1.16, 2.20), (22.6, 35.6, 0.88, 1.55)])
+
+    # 自然石：池畔散置。全部照池緣擺，並避開南岸鏡面（角度 230°~310°）。
+    g1 = at_edge(196.0, 0.4)
+    g2 = at_edge(126.0, 1.1)
+    g3 = at_edge(38.0, 0.6)
+    g4 = at_edge(158.0, 2.4)
+
+    # ── 迂迴小徑：從池與枯山水之間出發，一路往東北的未開發地走 ──
+    # 路線刻意兩次折向，折點內側擺遮蔽物：起點看不到終點，走過第二個彎
+    # 木戶才整個露出來。往外走、不繞回庭園 —— 之後要延伸有地方接。
+    PATH_CTRL = [(2.0, 20.0), (4.0, 31.0), (0.0, 42.0), (5.0, 52.0),
+                 (15.0, 59.0), (27.0, 64.0), (PATH_END[0], PATH_END[1])]
+    build_path(bld, PATH_CTRL)
+    # 遮蔽視線的樹叢（擺在兩個折點的內側）
+    for bx, by, brx, brz, bs in [(7.6, 35.0, 2.3, 2.5, 61), (6.2, 39.6, 1.8, 2.0, 62),
+                                 (-3.4, 45.0, 2.1, 2.3, 63), (10.6, 53.4, 2.4, 2.7, 64),
+                                 (20.0, 61.6, 2.0, 2.2, 65), (31.0, 61.0, 2.2, 2.4, 66)]:
+        build_bush(bld, bx, by, brx, brz, bs)
+    # 終點：關著的木戶 + 兩側密植（不是斷頭路，是「現在過不去」）
+    build_closed_gate(bld, PATH_END[0], PATH_END[1], PATH_END_ANG, 71)
+    # 兩側密植往外挪、收小一號：擋得住繞路，但不會把木戶壓成配角 ——
+    # 終點要讀成「一道關著的門」，不是「兩叢樹中間有東西」
+    for sd in (1, -1):
+        build_bush(bld, PATH_END[0] - math.sin(PATH_END_ANG) * sd * 4.3,
+                   PATH_END[1] + math.cos(PATH_END_ANG) * sd * 4.3,
+                   2.2, 2.25, 80 + sd)
     return [
-        ("rock_c", -13.9, 16.4, 0.30, 0.6, (0.85, 0.85, 0.95)),
-        ("rock_a", -11.6, 24.4, 0.22, 2.1, (0.95, 0.95, 0.8)),
-        ("rock_b", -2.6, 21.9, 0.20, 1.2, (0.9, 0.9, 0.75)),
-        ("rock_d", -10.8, 25.4, 0.26, 0.4, (0.7, 0.7, 0.6)),
-        ("rock_b", 15.9, 24.1, 0.24, 2.6, (1.0, 1.0, 0.85)),
+        ("rock_c", g1[0], g1[1], 0.30, 0.6, (1.15, 1.15, 1.30)),
+        ("rock_a", g2[0], g2[1], 0.22, 2.1, (1.30, 1.30, 1.05)),
+        ("rock_b", g3[0], g3[1], 0.20, 1.2, (1.25, 1.25, 1.00)),
+        ("rock_d", g4[0], g4[1], 0.26, 0.4, (0.95, 0.95, 0.80)),
+        ("rock_b", 33.5, 40.0, 0.24, 2.6, (1.35, 1.35, 1.10)),
     ]
 
 
@@ -1443,4 +1682,27 @@ for mdl, px, py, rot, sc in [
 for mdl, px, py, pz, rot, sc in garden_rocks:
     objs += place_asset(mdl, [(px, py, pz, rot, sc)])
 export_sel(objs, "hieda_blockout")
+
+# ── 後院小徑終點的觸發區座標，寫成資料檔給 Godot 端用 ──
+# 手抄一份到 meta.json 的話，之後挪動木戶就會忘了改觸發區。這裡直接從
+# 建幾何用的同一個 PATH_END 算出來，永遠對得上。
+# 座標轉換：glTF 是 export_yup=True，Blender(Z-up) → Godot(Y-up) 是
+#   godot_x = blender_x、godot_y = blender_z、godot_z = -blender_y
+# target 留 null = 保留中。main.gd 看到 null 仍會建 Area3D 並接上偵測，
+# 只是不執行切換；哪天填上目的地就自動變成正常傳送點，不用再改程式。
+_marker = {
+    "note": "稗田邸後院小徑終點（木戶）。target 待指定；填上之後即生效。",
+    "portals": [{"x": round(PATH_END[0], 3), "y": 0.9,
+                 "z": round(-PATH_END[1], 3), "target": None}],
+}
+_mpath = os.path.join(os.path.dirname(OUT_DIR.rstrip("/")), "..", "data",
+                      "hieda_garden.markers.json")
+_mpath = os.path.normpath(_mpath)
+try:
+    os.makedirs(os.path.dirname(_mpath), exist_ok=True)
+    with open(_mpath, "w", encoding="utf-8") as fh:
+        json.dump(_marker, fh, ensure_ascii=False, indent=2)
+    print("wrote %s" % _mpath)
+except OSError as e:
+    print("!! marker 寫入失敗：%s" % e)
 print("done")

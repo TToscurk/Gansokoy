@@ -209,12 +209,20 @@ func _build_game_colliders(meta: Dictionary) -> void:
 		body.add_child(shape)
 
 ## 傳送點：光柱示意 + Area3D 觸發
+##
+## target 為 null／空字串 = **保留中的觸發區**：Area3D 與偵測照樣建起來，
+## 只是不執行場景切換、也不畫光柱（還不能走的出口不該亮著邀請玩家）。
+## 之後在 meta.json 的 portals[].target 填上目的地，這裡不用改任何一行
+## 就會自動變成正常傳送點。
+## （首例：稗田邸後院小徑終點的木戶，座標見 data/hieda_garden.markers.json，
+## 由 make_hieda.py 跟幾何一起產出，不是手抄的。）
 func _spawn_portals(meta: Dictionary) -> void:
 	for p in meta.get("portals", []):
-		if p.get("target") == null:
-			continue
+		var tgt: Variant = p.get("target")
+		var reserved: bool = tgt == null or String(tgt).is_empty()
+
 		var area := Area3D.new()
-		area.name = "Portal_%s" % p.target
+		area.name = "Portal_%s" % ("保留" if reserved else String(tgt))
 		area.position = Vector3(p.x, p.y + 1.0, p.z)
 		var shape := CollisionShape3D.new()
 		var cyl := CylinderShape3D.new()
@@ -223,23 +231,35 @@ func _spawn_portals(meta: Dictionary) -> void:
 		shape.shape = cyl
 		area.add_child(shape)
 
-		var beam := MeshInstance3D.new()
-		var m := CylinderMesh.new()
-		m.top_radius = 0.35
-		m.bottom_radius = 0.55
-		m.height = 2.6
-		beam.mesh = m
-		var mat := StandardMaterial3D.new()
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		mat.albedo_color = Color(0.55, 0.9, 1.0, 0.35)
-		mat.emission_enabled = true
-		mat.emission = Color(0.55, 0.9, 1.0)
-		mat.emission_energy_multiplier = 2.0
-		beam.material_override = mat
-		area.add_child(beam)
+		if not reserved:
+			var beam := MeshInstance3D.new()
+			var m := CylinderMesh.new()
+			m.top_radius = 0.35
+			m.bottom_radius = 0.55
+			m.height = 2.6
+			beam.mesh = m
+			var mat := StandardMaterial3D.new()
+			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			mat.albedo_color = Color(0.55, 0.9, 1.0, 0.35)
+			mat.emission_enabled = true
+			mat.emission = Color(0.55, 0.9, 1.0)
+			mat.emission_energy_multiplier = 2.0
+			beam.material_override = mat
+			area.add_child(beam)
 
-		area.body_entered.connect(_on_portal_entered.bind(String(p.target)))
+		if reserved:
+			area.body_entered.connect(_on_portal_reserved.bind(area.name))
+		else:
+			area.body_entered.connect(_on_portal_entered.bind(String(tgt)))
 		map_root.add_child(area)
+
+## 保留中的觸發區：偵測邏輯已經接好，只差目的地。
+func _on_portal_reserved(body: Node3D, who: String) -> void:
+	if body != player or portal_cooldown > 0.0:
+		return
+	portal_cooldown = PORTAL_COOLDOWN
+	if OS.is_debug_build():
+		print("[portal] %s：觸發區已作用，但尚未指定目的地" % who)
 
 func _on_portal_entered(body: Node3D, target: String) -> void:
 	if body != player or portal_cooldown > 0.0:
