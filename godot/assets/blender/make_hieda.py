@@ -1465,35 +1465,90 @@ def build_shrub_clump(bld, x, y, seed, n=2, spread=1.6, scale=1.0):
         build_bush(bld, x + math.cos(a) * d, y + math.sin(a) * d, rr, hh, seed * 7 + i)
 
 
-def build_path(bld, ctrl, width=2.3, seed=77):
-    """砂利敷きの小徑：沿樣條鋪的碎石帶，兩緣寬度微幅起伏（等寬會像跑道）。"""
+def build_tobiishi(bld, ctrl, seed=77):
+    """飛石小徑：一塊塊埋進草皮的踏石，不是連續鋪面。
+
+    路線／視線設計／終點全部沿用（樣條、控制點都沒動）—— 這輪只換
+    「表面處理」：連續碎石帶讀起來是「有人鋪了一條路」，飛石讀起來是
+    「有人常走，所以放了石頭」。後院要的是後者。
+
+    「grown-in」的關鍵在**每塊石頭的邊緣色**：頂面用 `tri_v` 扇形，
+    中心是乾淨的石面色，外圈頂點各自往苔綠混一個隨機量 —— 草從邊上
+    爬上來的樣子是用頂點色畫的，不是靠幾何。硬切邊的石頭永遠像剛
+    施工完。
+
+    間距 1.15~1.55m（一步一塊）、每塊自轉、大小不一。村裡店門口的
+    飛石（gen_village.gd）也是同一個語彙，只是這裡是庭園尺度。"""
     rng = random.Random(seed)
     pts = _spline(ctrl, len(ctrl) * 9)
-    left, right = [], []
-    for i, (px, py) in enumerate(pts):
-        a = pts[min(i + 1, len(pts) - 1)]
-        b = pts[max(i - 1, 0)]
-        tx, ty = a[0] - b[0], a[1] - b[1]
+    # 沿樣條等弧長取樣：直接按索引取的話，控制點密的路段石頭會擠在一起
+    dists = [0.0]
+    for i in range(1, len(pts)):
+        dists.append(dists[-1] + math.hypot(pts[i][0] - pts[i - 1][0],
+                                            pts[i][1] - pts[i - 1][1]))
+    total = dists[-1]
+    d = 0.9
+    while d < total - 1.2:
+        i = next(k for k in range(1, len(dists)) if dists[k] >= d)
+        f = (d - dists[i - 1]) / (dists[i] - dists[i - 1] or 1.0)
+        px = pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f
+        py = pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f
+        # 左右微幅蛇行：飛石不會排成一直線正中央
+        tx, ty = pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]
         tl = math.hypot(tx, ty) or 1.0
-        nx, ny = -ty / tl, tx / tl
-        hw = width * 0.5 * (1.0 + 0.14 * math.sin(i * 0.7 + seed))
-        left.append((px + nx * hw, py + ny * hw))
-        right.append((px - nx * hw, py - ny * hw))
-    for i in range(len(pts) - 1):
-        col = _mix(C_SAND_DK, C_GRAVEL, 0.35 + rng.uniform(-0.12, 0.12))
-        bld.quad((left[i][0], left[i][1], 0.045), (right[i][0], right[i][1], 0.045),
-                 (right[i + 1][0], right[i + 1][1], 0.045),
-                 (left[i + 1][0], left[i + 1][1], 0.045), col)
-        # 兩側鑲邊石：把路與草地的交界收掉（跟牆腳犬走り同一個道理）
-        for sd, edge in ((1, left), (-1, right)):
-            ox = (edge[i][0] - pts[i][0]) * 0.30
-            oy = (edge[i][1] - pts[i][1]) * 0.30
-            bld.quad((edge[i][0], edge[i][1], 0.045),
-                     (edge[i][0] + ox, edge[i][1] + oy, 0.0),
-                     (edge[i + 1][0] + ox, edge[i + 1][1] + oy, 0.0),
-                     (edge[i + 1][0], edge[i + 1][1], 0.045),
-                     C_GRAVEL_DK, flip=(sd < 0))
+        off = rng.uniform(-0.34, 0.34)
+        px += -ty / tl * off
+        py += tx / tl * off
+        # 一塊踏石：不規則八角盤，頂面 tri_v 扇形（中心石色、外圈混苔）
+        rot = rng.uniform(0.0, math.tau)
+        rr = [rng.uniform(0.40, 0.60) for _ in range(8)]
+        sh = rng.uniform(-0.03, 0.03)
+        c_top = (C_STONE[0] + sh, C_STONE[1] + sh, C_STONE[2] + sh)
+        zt = 0.065
+        ring = []
+        for k in range(8):
+            a = rot + k / 8.0 * math.tau
+            ring.append((px + math.cos(a) * rr[k], py + math.sin(a) * rr[k] * 0.88))
+        for k in range(8):
+            k2 = (k + 1) % 8
+            c_e1 = _mix(c_top, C_MOSS, rng.uniform(0.22, 0.60))
+            c_e2 = _mix(c_top, C_MOSS, rng.uniform(0.22, 0.60))
+            bld.tri_v((px, py, zt), (ring[k][0], ring[k][1], zt),
+                      (ring[k2][0], ring[k2][1], zt), c_top, c_e1, c_e2)
+            # 側裙：只露 6.5cm，往下接進草皮（村裡飛石「要埋進地面」同一課）
+            bld.quad((ring[k][0], ring[k][1], zt), (ring[k][0], ring[k][1], 0.0),
+                     (ring[k2][0], ring[k2][1], 0.0), (ring[k2][0], ring[k2][1], zt),
+                     _mix(C_STONE_DK, C_MOSS, 0.35), flip=True)
+        d += rng.uniform(1.15, 1.55)
     return pts
+
+
+def build_garden_lantern(bld, x, y, seed, h=1.30):
+    """庭園裡的小型石燈籠（置き燈籠風）。
+
+    **刻意比前庭那對簡單**：前庭的 stone_lantern.glb 是春日形（六角、
+    火袋鏤空、蕨手），是儀式性的；這裡是私人庭園的道具，方形、矮、
+    構件少 —— 兩者擺在同一張圖裡要一眼分得出「門面」與「日用」。
+    幾何簡單到不值得開一個 .glb 資產，直接內建。"""
+    rng = random.Random(seed)
+    rot = rng.uniform(0.0, math.tau)
+    sc = h / 1.30
+    base_w = 0.42 * sc
+    _rough_box(bld, x, y, 0.09 * sc, base_w, base_w, 0.18 * sc, seed * 3 + 1,
+               C_STONE, col_top=_mix(C_STONE, C_MOSS, 0.30), yaw=rot, jit=0.08)
+    bld.box(x, y, 0.42 * sc, 0.16 * sc, 0.16 * sc, 0.50 * sc, C_STONE_DK)     # 短竿
+    bld.box(x, y, 0.72 * sc, 0.30 * sc, 0.30 * sc, 0.10 * sc, C_STONE)        # 中台
+    # 火袋：四角柱夾出開口（方形，不是前庭的六角）
+    for sx in (1, -1):
+        for sy in (1, -1):
+            bld.box(x + sx * 0.115 * sc, y + sy * 0.115 * sc, 0.95 * sc,
+                    0.055 * sc, 0.055 * sc, 0.36 * sc, C_STONE_DK)
+    bld.box(x, y, 1.16 * sc, 0.34 * sc, 0.34 * sc, 0.07 * sc, C_STONE)
+    # 笠：方形四坡（一顆壓扁的 rough box 就夠 —— 這是日用道具）
+    _rough_box(bld, x, y, 1.25 * sc, 0.52 * sc, 0.52 * sc, 0.12 * sc,
+               seed * 3 + 2, C_STONE, col_top=_mix(C_STONE, C_MOSS, 0.42),
+               yaw=rot, jit=0.10)
+    bld.box(x, y, 1.36 * sc, 0.10 * sc, 0.10 * sc, 0.10 * sc, C_STONE_DK)     # 宝珠
 
 
 def build_closed_gate(bld, px, py, ang, seed):
@@ -1744,11 +1799,29 @@ def build_back_garden(bld):
     # 木戶才整個露出來。往外走、不繞回庭園 —— 之後要延伸有地方接。
     PATH_CTRL = [(2.0, 20.0), (4.0, 31.0), (0.0, 42.0), (5.0, 52.0),
                  (15.0, 59.0), (27.0, 64.0), (PATH_END[0], PATH_END[1])]
-    build_path(bld, PATH_CTRL)
-    # 遮蔽視線的樹叢（擺在兩個折點的內側）
-    for bx, by, bs, bn in [(7.6, 35.0, 61, 3), (6.2, 39.6, 62, 2),
-                           (-3.4, 45.0, 63, 3), (10.6, 53.4, 64, 2),
-                           (20.0, 61.6, 65, 3), (31.0, 61.0, 66, 2)]:
+    path_pts = build_tobiishi(bld, PATH_CTRL)
+    # ── 小型石燈籠 ×4：單獨擺、間距不等、左右交錯但偏移量各自不同 ——
+    # 成對鏡射是前庭的語言。位置沿樣條取比例點，路線改了會自己跟著。
+    for t, side, off, ls, lh in [(0.16, 1, 1.7, 201, 1.30), (0.40, -1, 2.1, 202, 1.14),
+                                 (0.63, 1, 1.5, 203, 1.38), (0.87, -1, 1.9, 204, 1.22)]:
+        i = int(t * (len(path_pts) - 2))
+        tx = path_pts[i + 1][0] - path_pts[i][0]
+        ty = path_pts[i + 1][1] - path_pts[i][1]
+        tl = math.hypot(tx, ty) or 1.0
+        build_garden_lantern(bld, path_pts[i][0] - ty / tl * side * off,
+                             path_pts[i][1] + tx / tl * side * off, ls, h=lh)
+    # ── 灌木叢重新分佈 ──
+    # 原本六叢全擠在小徑前段，其中兩叢（7.6,35 / 6.2,39.6）還直接壓在
+    # 枯山水的砂床上 —— 耙好的砂上不能長東西，那片必須淨空。
+    # 改成四個帶：折點內側（視線遮蔽，留兩叢）／池畔／縁側前／生垣內側。
+    # 枯山水足跡（中心 21,32、有機外緣 ~16.1m）已逐叢驗過淨空。
+    for bx, by, bs, bn in [
+            (-1.0, 45.8, 63, 3), (10.6, 53.4, 64, 2),      # 折點內側（視線遮蔽）
+            (20.0, 61.6, 65, 2),                            # 第二折之後
+            (-33.6, 45.4, 61, 2), (-4.2, 15.8, 62, 2),     # 池畔（東北岸／東南岸）
+            (7.2, 11.4, 67, 2), (-12.5, 11.9, 68, 2),      # 縁側前（貼主屋北面）
+            (-40.5, 27.0, 69, 3), (31.5, 52.5, 70, 2),     # 生垣內側
+            (-8.5, 69.5, 71, 2)]:                           # 生垣內側（北段）
         build_shrub_clump(bld, bx, by, bs, n=bn)
     # 終點：關著的木戶 + 兩側密植（不是斷頭路，是「現在過不去」）
     build_closed_gate(bld, PATH_END[0], PATH_END[1], PATH_END_ANG, 71)
