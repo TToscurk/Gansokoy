@@ -941,6 +941,8 @@ func _build_blocks() -> void:
 		zparts.append("%s %d院落/%d棟/建蔽 %.0f%%" % [ZONE_NAME[i], blocks, _zone_stat[i][1], cover])
 	print("blocks built, longhouses: %d ── %s" % [n_house, "  ".join(zparts)])
 	_emit_hedges()
+	_build_festival(root)
+	_build_paddies(root)
 	_assert_frontage_clear()
 
 ## ── 效能 pass：距離剔除 + 小件關陰影（美術規格 §2.1）──
@@ -1101,6 +1103,156 @@ func _merge_decor(root: Node) -> Array:
 				node.remove_child(mi3)
 				mi3.queue_free()
 	return [before, after]
+
+## ── 稻田重做（美術規格 §2 G5：留著但要重做 —— 要有畦、有水）──
+## v13 的田只是地表換色 + 稻叢排排站，「平的網格，很假」。
+## 補上兩層：畦（stripe 邊界的土壟）與水鏡（田面近水平處的靜水反光）。
+## 都走 MultiMesh —— 各一次 draw call，田環帶有幾百個實例也不傷效能。
+func _build_paddies(parent: Node) -> void:
+	var g := lib.add(parent, Node3D.new(), "田")
+	# 畦：沿 _field_w 的 stripe 邊界（row 1.3~1.9 那條帶）擺土壟
+	var ridge := BoxMesh.new()
+	ridge.size = Vector3(2.1, 0.30, 0.55)
+	ridge.material = _mat("mud", 1)
+	var rl: Array[Transform3D] = []
+	# 水鏡：田面近水平的地方鋪一塊靜水（稻是種在水裡的）
+	var mirror := BoxMesh.new()
+	mirror.size = Vector3(2.6, 0.04, 2.2)
+	var wm := StandardMaterial3D.new()
+	wm.albedo_color = Color(0.30, 0.38, 0.40, 0.82)
+	wm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	wm.roughness = 0.06
+	wm.metallic = 0.4
+	mirror.material = wm
+	var ml: Array[Transform3D] = []
+	var ang := atan2(0.7, -0.3)                      # stripe 的走向（垂直於遮罩梯度）
+	var x := -HALF + 4.0
+	while x < HALF - 4.0:
+		var z := -HALF + 4.0
+		while z < HALF - 4.0:
+			z += 3.0
+			var r := Vector2(x, z - PLAZA.y).length()
+			if r < CORE + 10.0 or r > CORE + 62.0:
+				continue
+			if lib.poly_dist(RIVER, x, z) < RIVER_HALF * 2.4 or _path_info(x, z)[0] < 3.4:
+				continue
+			# 田環帶（r 206~258）跟最外圈街區重疊 —— 佔位檢查一定要做，
+			# 不做的話畦與水鏡長進院子裡（體檢第一輪就抓到 25 個）
+			if not _free(x, z, 3.2, 2.8, 0.3):
+				continue
+			var row := fmod(absf(z * 0.7 + x * 0.3), 8.0)
+			if row > 1.3 and row < 1.9:
+				var b2 := Basis(Vector3.UP, ang + lib.rr(-0.04, 0.04))
+				rl.append(Transform3D(b2, Vector3(x + lib.rr(-0.3, 0.3),
+					height_at(x, z) + 0.10, z + lib.rr(-0.3, 0.3))))
+			elif row > 3.2 and row < 6.6 and lib.rand() < 0.4:
+				# 只鋪在近乎水平的地方 —— 斜的水面比沒有水面更假
+				var hs: Array[float] = []
+				for c in [[-1.4, -1.2], [1.4, -1.2], [-1.4, 1.2], [1.4, 1.2]]:
+					hs.append(height_at(x + float(c[0]), z + float(c[1])))
+				var lo := INF
+				var hi := -INF
+				for h2 in hs:
+					lo = minf(lo, h2)
+					hi = maxf(hi, h2)
+				if hi - lo < 0.20:
+					ml.append(Transform3D(Basis(Vector3.UP, ang),
+						Vector3(x, hi + 0.05, z)))
+		x += 3.0
+	for cfg in [[ridge, rl, "畦", "gen/paddy_ridge.res"], [mirror, ml, "水鏡", "gen/paddy_water.res"]]:
+		if (cfg[1] as Array).is_empty():
+			continue
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(cfg[0], cfg[1], [], OUT_DIR + String(cfg[3]))
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(g, mmi, String(cfg[2]))
+	print("paddies：畦 %d / 水鏡 %d" % [rl.size(), ml.size()])
+
+## ── 祭典色彩（美術規格 §2：燈籠串、旗幟、幔幕 + 一點朱紅）──
+## 參考圖（幻走）最搶眼的一件事：紅燈籠串橫過街道。
+## 燈籠走 MultiMesh（全村一次 draw call），繩子是一根細桿一個 span。
+func _build_festival(parent: Node) -> void:
+	var g := lib.add(parent, Node3D.new(), "祭典")
+	var lantern_mesh := CylinderMesh.new()
+	lantern_mesh.top_radius = 0.16
+	lantern_mesh.bottom_radius = 0.16
+	lantern_mesh.height = 0.42
+	lantern_mesh.radial_segments = 8
+	var lm := StandardMaterial3D.new()
+	lm.albedo_color = Color(0.78, 0.16, 0.10)          # 朱紅（美術規格：稍微加入）
+	lm.emission_enabled = true
+	lm.emission = Color(0.9, 0.30, 0.12)
+	lm.emission_energy_multiplier = 0.5                # 白天微亮、夜裡是一串光
+	lantern_mesh.material = lm
+	var lst: Array[Transform3D] = []
+	var cols: Array[Color] = []
+	var rope := _mat("dark", 3)
+	var n_span := 0
+	# 本通（x=0，南北）與橫町（z=30，東西）的町方段，每 13m 一跨
+	var spans: Array = []
+	var zz := -46.0
+	while zz < 118.0:
+		spans.append([Vector2(-4.6, zz), Vector2(4.6, zz)])
+		zz += 13.0
+	var xx := -80.0
+	while xx < 84.0:
+		if absf(xx) > 6.0:                              # 十字路口不掛（會跟本通的串打架）
+			spans.append([Vector2(xx, 25.4), Vector2(xx, 34.6)])
+		xx += 13.0
+	for sp in spans:
+		var a2: Vector2 = sp[0]
+		var b2: Vector2 = sp[1]
+		var ya: float = height_at(a2.x, a2.y) + 4.6
+		var yb: float = height_at(b2.x, b2.y) + 4.6
+		# 兩根撐桿
+		for e in [[a2, ya], [b2, yb]]:
+			var pe: Vector2 = e[0]
+			var pole := lib.cyl(g, "提灯柱_%d" % n_span, 0.07, 0.09,
+				float(e[1]) - height_at(pe.x, pe.y) + 0.3, _mat("dark", 3),
+				Vector3(pe.x, (float(e[1]) + height_at(pe.x, pe.y)) * 0.5, pe.y), 6)
+			n_span += 1
+		# 繩（一根直桿近似，中點下垂 0.35）
+		var mid := (a2 + b2) * 0.5
+		var ropelen := a2.distance_to(b2)
+		var rp := lib.box(g, "提灯繩_%d" % n_span, Vector3(0.05, 0.05, ropelen), rope,
+			Vector3(mid.x, (ya + yb) * 0.5 - 0.35, mid.y))
+		rp.rotation.y = atan2(b2.x - a2.x, b2.y - a2.y)
+		# 燈籠 5 顆，沿繩排、微下垂
+		for k in 5:
+			var t := (float(k) + 0.5) / 5.0
+			var pv := a2.lerp(b2, t)
+			var sag := sin(t * PI) * 0.55
+			var basis := Basis(Vector3.UP, lib.rr(0.0, TAU))
+			lst.append(Transform3D(basis,
+				Vector3(pv.x, lerpf(ya, yb, t) - sag - 0.3, pv.y)))
+			# 紅白相間（祭典的串就是這樣掛）
+			cols.append(Color(1, 1, 1) if k % 2 == 1 else Color(1.0, 0.5, 0.45))
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = lib.make_multimesh(lantern_mesh, lst, cols, OUT_DIR + "gen/lanterns.res")
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	lib.add(g, mmi, "提灯串")
+	# 幟旗（のぼり）：店門口的直立旗，飽和色 —— 街上第二個顏色來源
+	var flag_cols := [Color(0.34, 0.16, 0.46), Color(0.12, 0.42, 0.24),
+		Color(0.10, 0.24, 0.56), Color(0.72, 0.14, 0.12), Color(0.86, 0.70, 0.16)]
+	var n_flag := 0
+	for f in _frontages:
+		if not f.shop or n_flag >= 14 or lib.rand() > 0.35:
+			continue
+		var fp: Vector2 = f.pos
+		var fd: Vector2 = f.dir
+		var side := Vector2(fd.y, -fd.x)
+		var bp := fp + fd * 2.2 + side * lib.rr(1.6, 2.4)
+		if _in_water(bp.x, bp.y, 0.5) or _path_info(bp.x, bp.y)[0] < 0.7:
+			continue
+		var gy := height_at(bp.x, bp.y)
+		lib.cyl(g, "幟竿_%d" % n_flag, 0.05, 0.07, 3.4, _mat("dark", 3),
+			Vector3(bp.x, gy + 1.7, bp.y), 5)
+		var fb := lib.box(g, "幟_%d" % n_flag, Vector3(0.62, 2.3, 0.05),
+			lib.flat_mat("nobori_%d" % (n_flag % 5), flag_cols[n_flag % 5], 0.95),
+			Vector3(bp.x + fd.x * 0.34, gy + 2.2, bp.y + fd.y * 0.34))
+		fb.rotation.y = atan2(fd.x, fd.y)
+		n_flag += 1
+	print("festival：%d 跨提灯串（%d 顆）/ %d 支幟旗" % [spans.size(), lst.size(), n_flag])
 
 ## 生垣：把收集到的模組 transform 一次發成 MultiMesh
 func _emit_hedges() -> void:
