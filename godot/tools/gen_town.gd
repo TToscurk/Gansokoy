@@ -256,14 +256,43 @@ func _road_info(x: float, z: float) -> float:
 	return best
 
 
+## 店前鋪面：路緣到建物正面之間那條帶。
+## ⚠ 這條帶原本是**草**，於是商業核心讀成郊區而不是密集市街（使用者指出）。
+## 實測 164 棟臨街町家的正面離路緣：中位 3.85m、57 棟 ≤3m、43 棟 3~6m ——
+## 所以鋪面寬度取 4.2m 就能把大部分的縫補起來，再往外就會鋪到院子裡。
+## 只在村心生效：村緣的房子門口本來就該是土與草。
+const APRON_W := 4.2
+
+func _road_apron(x: float, z: float) -> float:
+	# ⚠ 一定要**限村心**。第一版沒加這個閘門（註解寫了「只在村心生效」，
+	# 程式碼卻沒寫）→ 全鎮每條路都外擴 4.2m，空拍下整個路網糊成一片淺色。
+	# 村緣的房子門口本來就該是土與草。
+	var core_k := 1.0 - smoothstep(96.0, 150.0, Vector2(x, z - PLAZA.y).length())
+	if core_k <= 0.0:
+		return 0.0
+	var best := 0.0
+	for r in _roads:
+		var d: float = lib.poly_dist(r.pts, x, z) - r.w * 0.5
+		if d <= 0.0:
+			continue
+		best = maxf(best, clampf(1.0 - d / APRON_W, 0.0, 1.0))
+	return best * core_k
+
+
 func mask_at(x: float, z: float) -> Color:
 	## 遮罩通道的意義由 terrain_pbr.gdshader 定：
 	##   R = 鋪石板　G = 田（農地）　B = 巨觀明暗　A = 夯土
 	## ⚠ 第一版把 G 拿去當「森林」用，結果全鎮外圈鋪成一圈黃田 ——
 	## 而**農田系統是規格裡明確延後的獨立階段**，這輪不該有田。G 一律 0。
-	## 另外照 gen_village 已驗收的定調：石板**只留給村心**（r<38 漸收），
-	## 其餘的路一律走 A 的夯土 —— 石板鋪到田邊很出戲。
+	##
+	## 石板範圍在整合輪重新定案（使用者：商業核心讀成郊區）。
+	## 舊規則「只留村心 r<38」實測**只涵蓋 169 棟町家裡的 4 棟** —— 等於
+	## 整個市街都是夯土，難怪不密。新規則綁 `_commerce()`：**有店的地方
+	## 就有石板**，跟暖簾／提灯同一條梯度，過渡才有理由（住宅帶轉夯土、
+	## 村緣轉土與草），而不是一個任意半徑。
 	var road := _road_info(x, z)
+	# 店前鋪面：把路緣到建物正面之間的草帶補成鋪面
+	road = maxf(road, _road_apron(x, z) * 0.92)
 	# 河畔道：沿岸 3.2m 的步道（街區讓出來的濱水公共空間）
 	var dr: float = lib.poly_dist(_river(), x, z) - (RIVER_HALF + 1.2)
 	if dr > 0.0 and dr < 3.2:
@@ -272,7 +301,7 @@ func mask_at(x: float, z: float) -> Color:
 	var rd: float = lib.poly_dist(_river(), x, z)
 	var shore := 1.0 - smoothstep(RIVER_HALF * 0.7, RIVER_HALF * 1.9, rd)
 	var r := Vector2(x, z - PLAZA.y).length()
-	var stone_k := 1.0 - smoothstep(10.0, 38.0, r)
+	var stone_k := clampf(_commerce(Vector2(x, z)) * 1.55 - 0.16, 0.0, 1.0)
 	var path_w: float = maxf(road, shore)
 	var dirt: float = path_w * (1.0 - stone_k)
 	path_w *= stone_k
