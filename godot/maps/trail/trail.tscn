@@ -29,8 +29,13 @@ shader_parameter/forest_diff = ExtResource("2_nsydw")
 shader_parameter/forest_nor = ExtResource("3_aovcv")
 shader_parameter/path_diff = ExtResource("7_m6h8q")
 shader_parameter/path_nor = ExtResource("8_xcxft")
+shader_parameter/dirt_amount = null
+shader_parameter/dirt_tile = null
+shader_parameter/dirt_tint = null
 shader_parameter/mask_tex = ExtResource("6_7p8rc")
 shader_parameter/tile = null
+shader_parameter/path_tile = null
+shader_parameter/forest_tile = null
 shader_parameter/grass_tint = Color(1, 1, 1, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_kdbgm"]
@@ -47,16 +52,16 @@ _surfaces = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r0vhy"]
-size = Vector3(676, 40, 1)
+size = Vector3(676, 52, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gdgr0"]
-size = Vector3(676, 40, 1)
+size = Vector3(676, 52, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6dbia"]
-size = Vector3(1, 40, 676)
+size = Vector3(1, 52, 676)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6x0n4"]
-size = Vector3(1, 40, 676)
+size = Vector3(1, 52, 676)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7m24a"]
 height = 6.0
@@ -2571,19 +2576,19 @@ mesh = SubResource("ArrayMesh_kdbgm")
 [node name="Boundary" type="StaticBody3D" parent="."]
 
 [node name="@CollisionShape3D@2" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -338.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -338.5)
 shape = SubResource("BoxShape3D_r0vhy")
 
 [node name="@CollisionShape3D@3" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 338.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 338.5)
 shape = SubResource("BoxShape3D_gdgr0")
 
 [node name="@CollisionShape3D@4" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -338.5, 20, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -338.5, 14, 0)
 shape = SubResource("BoxShape3D_6dbia")
 
 [node name="@CollisionShape3D@5" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 338.5, 20, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 338.5, 14, 0)
 shape = SubResource("BoxShape3D_6x0n4")
 
 [node name="Forest" type="Node3D" parent="."]
