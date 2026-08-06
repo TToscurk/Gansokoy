@@ -1129,27 +1129,27 @@ mesh = SubResource("PrismMesh_jv6rv")
 [node name="稗田邸" type="Node3D" parent="地標佔位"]
 
 [node name="屋身" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 4.00992, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 3.94207, -164)
 mesh = SubResource("BoxMesh_yaiqj")
 
 [node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(1, 0, 0, 0, 0.887139, 0.461502, 0, -0.461502, 0.887139, -78, 10.618, -3.075)
+transform = Transform3D(1, 0, 0, 0, 0.887139, 0.461502, 0, -0.461502, 0.887139, -78, 10.5502, -169.075)
 mesh = SubResource("BoxMesh_r6lik")
 
 [node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(1, 0, 0, 0, 0.887139, -0.461502, 0, 0.461502, 0.887139, -78, 10.618, 7.075)
+transform = Transform3D(1, 0, 0, 0, 0.887139, -0.461502, 0, 0.461502, 0.887139, -78, 10.5502, -158.925)
 mesh = SubResource("BoxMesh_eryba")
 
 [node name="棟" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 13.2581, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 13.1902, -164)
 mesh = SubResource("BoxMesh_eiya3")
 
 [node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -92.518, 10.618, 2)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -92.518, 10.5502, -164)
 mesh = SubResource("PrismMesh_085is")
 
 [node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/稗田邸"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -63.482, 10.618, 2)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -63.482, 10.5502, -164)
 mesh = SubResource("PrismMesh_vcyqp")
 
 [node name="鎮守之杜" type="Node3D" parent="地標佔位"]
@@ -1241,7 +1241,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 1.65973, -52)
 shape = SubResource("BoxShape3D_ydf6l")
 
 [node name="@CollisionShape3D@10" type="CollisionShape3D" parent="地標碰撞"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 4.00992, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 3.94207, -164)
 shape = SubResource("BoxShape3D_8bf28")
 
 [node name="@CollisionShape3D@11" type="CollisionShape3D" parent="地標碰撞"]

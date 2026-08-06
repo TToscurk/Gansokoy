@@ -80,10 +80,23 @@ const UNOMITEI_ANCHOR := Vector2(50.0, 2.0)
 # 既有地標街區：本輪**不重做**（不在街區重設計的範圍內），
 # 但要把地佔起來，街區才不會排到它們身上。佔位量體也一起畫出來，
 # 不然評圖時會看到八個空洞，讀不出城鎮的完整度。
+# w/d = **佔地**（保留區，不准蓋町家的範圍）
+# bw/bd = 佔位量體（沒寫就等於 w/d）。兩者要分開的原因見稗田邸那條。
 const LANDMARKS := [
 	{"n": "寺子屋", "x": -26.0, "z": -52.0, "w": 26.0, "d": 16.0, "h": 6.1},
 	{"n": "鈴奈庵", "x": 11.6, "z": -52.0, "w": 13.0, "d": 9.5, "h": 5.4},
-	{"n": "稗田邸", "x": -78.0, "z": 2.0, "w": 27.7, "d": 18.7, "h": 12.8},
+	# ⚠ 稗田邸搬到村緣（使用者定案・方案 B）。舊位置 (-78, 2) 是沿用舊格線
+	# 來的，離廣場只有 83m、離鎮守之杜 52m、離市場 76m —— 埋在商業核心裡，
+	# 跟「私密、安靜、避世」的設定矛盾。新位置在北門西側：離北門（主入口、
+	# portals[0]、玩家從 trail 進村的落點）79m，離最近商業設施 122m。
+	# ⚠ 佔地從 27.7×18.7 改成 **40.7×43.7** —— 那是 village.tscn 裡**實際
+	# 蓋出來**的院落（築地塀＋腰石垣＋主屋＋庭池）量出來的尺寸。舊值小了
+	# 13×25m，等於保留區根本框不住真正的院落；現在沒撞到純粹是運氣好
+	# （實測舊框內外都是 0 棟町家），不是護欄有效。
+	# 量體（bw/bd）維持主屋大小：整塊 40.7×43.7 拉成 12.8m 高的實心箱會讀成
+	# 城砦，而真正的稗田邸是「牆圍著院子、主屋在中間」。
+	{"n": "稗田邸", "x": -78.0, "z": -164.0, "w": 40.7, "d": 43.7, "h": 12.8,
+		"bw": 27.7, "bd": 18.7},
 	{"n": "鎮守之杜", "x": -26.0, "z": 2.0, "w": 34.0, "d": 36.0, "h": 14.0},
 	{"n": "市場", "x": -26.0, "z": 57.0, "w": 30.0, "d": 34.0, "h": 4.6},
 	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 24.0, "d": 18.0, "h": 6.4},
@@ -448,7 +461,10 @@ func _build_landmark_stubs() -> void:
 	var mr := lib.flat_mat("佔位瓦", Color(0.150, 0.163, 0.192), 0.88)
 	for L in LANDMARKS:
 		var y: float = bank_h(L.x, L.z)
-		var wall_h: float = maxf(L.h * 0.62, L.h - L.d * 0.30)
+		# 量體與佔地分開：佔地（w/d）是保留區，量體（bw/bd）才是畫出來的箱。
+		var bw: float = float(L.get("bw", L.w))
+		var bd: float = float(L.get("bd", L.d))
+		var wall_h: float = maxf(L.h * 0.62, L.h - bd * 0.30)
 		# 每座地標**自己一個子群組**，牆體命名「屋身」：
 		# (a) check_map 的建物判定看「群組直下有沒有貼地構件」——
 		#     以前七座全掛在同一個群組、名字又不含關鍵字 → 佔位對體檢隱形；
@@ -457,17 +473,18 @@ func _build_landmark_stubs() -> void:
 		#     蓋七次會被 Godot 自動改名成 @MeshInstance3D@8 之類 —— 分開的
 		#     父節點各自命名空間，名字保得住。
 		var gl := lib.add(g, Node3D.new(), L.n)
-		lib.box(gl, "屋身", Vector3(L.w, wall_h, L.d), mw,
+		lib.box(gl, "屋身", Vector3(bw, wall_h, bd), mw,
 			Vector3(L.x, y + wall_h * 0.5, L.z))
-		lib.gable_roof(gl, y + wall_h, L.w + 1.6, L.d + 1.6,
-			atan2(L.h - wall_h, L.d * 0.5), 0.22, mr, mr,
+		lib.gable_roof(gl, y + wall_h, bw + 1.6, bd + 1.6,
+			atan2(L.h - wall_h, bd * 0.5), 0.22, mr, mr,
 			Vector3(L.x, 0.0, L.z))
-		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過七座地標
+		# 保留區用**佔地**（w/d）：町家不准蓋進院子，不是只避開主屋
 		_reserved.append([Vector2(L.x, L.z), Vector2(1, 0), Vector2(0, 1),
 			(L.w + 1.6) * 0.5, (L.d + 1.6) * 0.5, L.n])
+		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過地標
 		var sh := CollisionShape3D.new()
 		var bx := BoxShape3D.new()
-		bx.size = Vector3(L.w, wall_h, L.d)
+		bx.size = Vector3(bw, wall_h, bd)
 		sh.shape = bx
 		sh.position = Vector3(L.x, y + wall_h * 0.5, L.z)
 		lm_body.add_child(sh)
