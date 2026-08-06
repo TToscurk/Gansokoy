@@ -74,6 +74,7 @@ func _check(map_id: String) -> int:
 	_check_props_grounded(root)
 	_check_building_over_water(_parts, waters)
 	_check_fauna(root, waters)
+	_check_mm_alive(root)
 
 	for s in _issues:
 		print("  ✗ ", s)
@@ -449,6 +450,44 @@ func _check_scatter_overlap(scatters: Array, all_buildings: Array) -> void:
 					break
 		if hit > 0:
 			_issues.append("%s 有 %d 個實例長在建物裡，%s" % [nm, hit, first])
+
+## MultiMesh 是不是空的 —— 「整層看不見，但場景與體檢全綠」那個坑。
+##
+## 真實案例：新烤的 glb 還沒被 Godot 匯入就跑無頭產生器，`prop_mesh()` 拿到
+## 空 mesh，MultiMesh 照樣建得起來、節點數照樣對、體檢照樣綠 —— 只是那一層
+## 在引擎裡**完全不存在**。當時是靠「`gen/mm_*.res` 只有 1KB」這個側面特徵
+## 才發現的。既然知道特徵，就不要再靠人去看檔案大小。
+func _check_mm_alive(root: Node) -> void:
+	var stack: Array[Node] = [root]
+	var empty := []
+	var n_mm := 0
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if not (n is MultiMeshInstance3D):
+			continue
+		n_mm += 1
+		var mm: MultiMesh = (n as MultiMeshInstance3D).multimesh
+		if mm == null:
+			empty.append("%s（沒有 MultiMesh）" % n.name)
+			continue
+		if mm.instance_count == 0:
+			empty.append("%s（0 個實例）" % n.name)
+			continue
+		if mm.mesh == null or mm.mesh.get_surface_count() == 0:
+			empty.append("%s（mesh 是空的）" % n.name)
+			continue
+		var verts := 0
+		for s in mm.mesh.get_surface_count():
+			var arr: Array = mm.mesh.surface_get_arrays(s)
+			var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			verts += v.size()
+		if verts == 0:
+			empty.append("%s（mesh 有面但沒有頂點）" % n.name)
+	if not empty.is_empty():
+		_issues.append("有 %d/%d 個 MultiMesh 是空的（整層在引擎裡看不見）：%s"
+			% [empty.size(), n_mm, ", ".join(empty)])
 
 ## 生物錯位 —— 這支檔頭從第一版就寫著要驗，但**一直沒有實作**。
 ## 而這正是舊圖出過的 bug：v8 只寫 meta、位置留給執行期算，編輯器不跑
