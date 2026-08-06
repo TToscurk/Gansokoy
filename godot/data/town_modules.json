@@ -1,0 +1,65 @@
+{
+ "note": "人間之里模組庫。由 make_town.py 產出，gen_town.gd 讀。模組正面朝 -y（machiya）；bridge 沿 x。單位公尺。",
+ "modules": {
+  "machiya_f_a": {
+   "kind": "machiya",
+   "w": 7.6,
+   "d": 7.8,
+   "fw": 9.3,
+   "fd": 9.5,
+   "h": 4.8,
+   "faces": 354,
+   "glb": "res://assets/models/machiya_f_a.glb"
+  },
+  "machiya_f_b": {
+   "kind": "machiya",
+   "w": 8.8,
+   "d": 8.2,
+   "fw": 10.5,
+   "fd": 9.9,
+   "h": 5.4,
+   "faces": 464,
+   "glb": "res://assets/models/machiya_f_b.glb"
+  },
+  "machiya_b_a": {
+   "kind": "machiya",
+   "w": 9.2,
+   "d": 7.6,
+   "fw": 10.9,
+   "fd": 9.3,
+   "h": 9.4,
+   "faces": 614,
+   "glb": "res://assets/models/machiya_b_a.glb"
+  },
+  "machiya_b_b": {
+   "kind": "machiya",
+   "w": 10.4,
+   "d": 8.0,
+   "fw": 12.1,
+   "fd": 9.7,
+   "h": 9.9,
+   "faces": 654,
+   "glb": "res://assets/models/machiya_b_b.glb"
+  },
+  "machiya_e_a": {
+   "kind": "machiya",
+   "w": 6.0,
+   "d": 6.2,
+   "fw": 7.7,
+   "fd": 7.9,
+   "h": 3.5,
+   "faces": 314,
+   "glb": "res://assets/models/machiya_e_a.glb"
+  },
+  "bridge_main": {
+   "kind": "bridge",
+   "span": 22.0,
+   "w": 12.0,
+   "rise": 1.5,
+   "rail_h": 1.15,
+   "h": 3.59,
+   "faces": 1168,
+   "glb": "res://assets/models/bridge_main.glb"
+  }
+ }
+}
