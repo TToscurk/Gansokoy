@@ -55,19 +55,24 @@ const PATH_SEGMENTS := [
 	# 西南門引道（香霖堂）
 	{ "width": 4.0, "pts": [[-132.0, 100.0], [-145.0, 98.0], [-156.0, 94.0]] },
 ]
-# ── 河（東側，橫町東端石橋跨過；北端往圖外＝河畔道接口） ──
-const RIVER := [[268.0, -300.0], [250.0, -190.0], [232.0, -80.0], [222.0, -10.0],
-	[220.0, 30.0], [226.0, 100.0], [240.0, 200.0], [256.0, 300.0]]
-# ── 水路（貫穿村里的水渠，多座小橋橫過 —— 柱狀地圖裡那些白色帶狀物） ──
-## 水路是**一條直線**（使用者：「水道直直的就好不要轉彎」）。
-## v10 為了接河把東端拐了個彎，那個折角在編輯器裡很明顯。
-## 改成固定 z=85 一路往東拉到 x=236 —— 大河在 z=85 附近的中心線約在
-## x=225，所以直直拉過去自然就接上了，不用轉彎。
-# ⚠ 東端**不能**畫到 236 —— 河在 z=85 這一段的中心在 x≈224、半寬 8，
-# 也就是佔到 x=232。水路畫到 236 等於把水路的水面直接疊在河的水面上，
-# 兩張半透明面互穿，遠看是一條詭異的斜向色帶（使用者：「水道請改善」）。
-# 收在 206，剩下那段用水門（落水口）洩到河裡。
-const CANAL := [[-300.0, 85.0], [-150.0, 85.0], [0.0, 85.0], [150.0, 85.0], [206.0, 85.0]]
+# ══════════ 整合 Stage 1：舊東緣河 + 直水道已移除（2026-08-06）══════════
+# 人間之里重設計把**蜿蜒河道**定為城鎮的結構脊椎（gen_town.gd 的
+# RIVER_SPINE，穿過鎮東側、主橋在 (66,30)）。舊的兩條水體不能與它並存：
+#   ・舊東緣河 x 222~268：同一張圖上的第二條河，沒有任何規劃理由
+#   ・直水道 z=85（x −300~206）：**直接橫越**新河道（新河在 z=85 處
+#     中心約 x=62）→ 兩張半透明水面互穿，正是 v10 那個老 bug 的重演
+#
+# 移除方式刻意用「把折線清空」而不是刪掉 25 處呼叫點：
+# `lib.poly_dist()` 對空折線回傳 INF（迴圈跑 0 次），於是所有
+# `if poly_dist(...) < X` 的守衛自動變成「水離無限遠」= 水不存在；
+# `river_carve()` 收到 INF 也直接回 0，地形不再被挖。語意精確，
+# 而且沒有任何一處呼叫點需要冒著改錯的風險。
+# 舊座標留在註解裡，整合完成前都還查得到：
+#   RIVER = (268,−300) (250,−190) (232,−80) (222,−10) (220,30) (226,100)
+#           (240,200) (256,300)
+#   CANAL = z=85 直線，x −300 → 206（東端用水門洩到舊河）
+const RIVER: Array = []
+const CANAL: Array = []
 const CANAL_OUTLET := Vector2(206.0, 85.0)
 const CANAL_HALF := 4.6      # 參考圖的水路很寬，不是小水溝
 const CANAL_DEPTH := 2.0
@@ -211,28 +216,26 @@ func _init() -> void:
 	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble", Color(0.60, 0.94, 0.55),
 		"terrain_path", Color(0.80, 0.75, 0.66))
 	lib.boundary(HALF - 2.0)
-	# 水面要比開挖**窄**：開挖是有坡度的，水面照全寬鋪會爬到岸上去
-	lib.river_water(OUT_DIR, RIVER, RIVER_HALF * 0.86, RIVER_DEPTH * 0.35, bank_h)
-	# 水色照參考圖：飽和的藍綠，不是淡青
-	var canal_w := lib.river_water(OUT_DIR, CANAL, CANAL_HALF * 0.84, CANAL_DEPTH * 0.35, bank_h, "Canal")
-	var cm: ShaderMaterial = canal_w.material_override
-	cm.set_shader_parameter("deep_color", Color(0.06, 0.24, 0.32))
-	cm.set_shader_parameter("shallow_color", Color(0.16, 0.44, 0.50))
-	cm.set_shader_parameter("bank_scale", 0.55)
+	# Stage 1：舊東緣河與直水道的水面不再產生（RIVER/CANAL 已清空）。
+	# 兩座池塘留著 —— 它們不與新河道衝突，處置在整合清單裡另行決定。
 	lib.pond_water(OUT_DIR, GARDEN_POND.x, GARDEN_POND.y, GARDEN_POND_R, GARDEN_POND_SINK, bank_h,
 		"庭池", 0.0, 4, 28, GARDEN_POND_DEPTH)
 	lib.pond_water(OUT_DIR, NATURE_POND.x, NATURE_POND.y, NATURE_POND_R, NATURE_POND_SINK, bank_h,
 		"自然池", 0.22, 4, 28, NATURE_POND_DEPTH)
 	_assert_water_clear_of_streets()
 	_build_blocks()
-	_build_bridge()
-	_build_canal_bridges()
-	_build_canal_banks()
+	# Stage 1 一起下架的（全部只為舊水體而存在）：
+	#   _build_bridge()        石橋 —— 跨的是舊東緣河
+	#   _build_canal_bridges() 七座水路小橋
+	#   _build_canal_banks()   水路護岸
+	#   _build_fauna()         鯉／鴨／鷺鷥 —— 巡游路徑就是 CANAL 折線，
+	#                          空折線會讓 fauna.gd 拿到 0 個節點的路徑
+	#   _build_water_plants()  睡蓮／荷／蘆葦 —— 沿 CANAL/RIVER 的水帶取樣
+	# 這五項在 Stage 0 清單裡分別是 SUPERSEDED（橋、護岸）與
+	# REBUILD（動物、水生植物 → 之後接到新河道上）。
 	_build_nature_pond()
-	_build_fauna()
 	_build_floor_decor()
 	_build_props()
-	_build_water_plants()
 	_build_clutter()
 	_build_gates()
 	_build_lamps()
