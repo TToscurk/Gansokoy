@@ -122,9 +122,10 @@ const LANDMARKS := [
 	# 實建 34.3×25.8（八座屋台攤開的寬度）
 	{"n": "市場", "x": -26.0, "z": 57.0, "w": 34.8, "d": 34.0, "h": 4.6,
 		"bw": 30.0, "bd": 34.0},
-	# 實建 38.0×24.5 —— 差最多的一座（保留區只有 24×18）
+	# 實建 38.0×24.5 —— 差最多的一座（保留區原本只有 24×18）
+	# ✅ 已搬入真內容（build）→ 不再產生佔位方塊與佔位碰撞箱
 	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 38.5, "d": 25.0, "h": 6.4,
-		"bw": 24.0, "bd": 18.0},
+		"build": "_lm_ashiarai"},
 ]
 
 var lib = preload("res://tools/gen_lib.gd").new()
@@ -513,7 +514,25 @@ func _build_landmark_stubs() -> void:
 	lm_body.owner = _root
 	var mw := lib.flat_mat("佔位牆", Color(0.575, 0.560, 0.520), 0.92)
 	var mr := lib.flat_mat("佔位瓦", Color(0.150, 0.163, 0.192), 0.88)
+	_lm_rng.seed = SEED + 4177        # 地標內容專用序列，不動街區排列
+	var n_stub := 0
+	var n_real := 0
 	for L in LANDMARKS:
+		# 保留區**不論搬入與否都要登記** —— 它是「町家不准蓋進來」的依據
+		_reserved.append([Vector2(L.x, L.z), Vector2(1, 0), Vector2(0, 1),
+			(L.w + 1.6) * 0.5, (L.d + 1.6) * 0.5, L.n])
+		# ⚠ 有 `build` 的地標已經搬入真內容 —— **這裡就完全不碰它**：
+		# 不畫佔位方塊、不掛佔位碰撞箱。使用者明確要求驗證「舊的空殼碰撞
+		# 箱真的被移除，不留殘影碰撞」，而最可靠的作法不是事後刪，是
+		# **一開始就不要生**：只要 build 存在，這個迴圈連 StaticBody 都不建。
+		if L.has("build"):
+			var gr := lib.add(g, Node3D.new(), L.n)
+			var gu := _ground_under(L.x, L.z, L.w, L.d)
+			gr.position = Vector3(L.x, float(gu[0]), L.z)
+			call(String(L.build), gr, float(gu[1]))
+			n_real += 1
+			continue
+		n_stub += 1
 		var y: float = bank_h(L.x, L.z)
 		# 量體與佔地分開：佔地（w/d）是保留區，量體（bw/bd）才是畫出來的箱。
 		var bw: float = float(L.get("bw", L.w))
@@ -532,9 +551,6 @@ func _build_landmark_stubs() -> void:
 		lib.gable_roof(gl, y + wall_h, bw + 1.6, bd + 1.6,
 			atan2(L.h - wall_h, bd * 0.5), 0.22, mr, mr,
 			Vector3(L.x, 0.0, L.z))
-		# 保留區用**佔地**（w/d）：町家不准蓋進院子，不是只避開主屋
-		_reserved.append([Vector2(L.x, L.z), Vector2(1, 0), Vector2(0, 1),
-			(L.w + 1.6) * 0.5, (L.d + 1.6) * 0.5, L.n])
 		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過地標
 		var sh := CollisionShape3D.new()
 		var bx := BoxShape3D.new()
@@ -543,8 +559,8 @@ func _build_landmark_stubs() -> void:
 		sh.position = Vector3(L.x, y + wall_h * 0.5, L.z)
 		lm_body.add_child(sh)
 		sh.owner = _root
-	_audit.append("地標佔位 %d 座（本輪不重做內容，只佔地 + 給天際線量體）"
-		% LANDMARKS.size())
+	_audit.append("地標：真內容 %d 座、佔位 %d 座（佔位才有空殼碰撞箱）"
+		% [n_real, n_stub])
 
 
 func _build_unomitei() -> void:
@@ -1786,6 +1802,171 @@ func _build_grass() -> void:
 		parts.append("%s %d" % [String(grp.node), list.size()])
 	_audit.append("草層：%s —— 共 %d 叢 / %d draw call（稻田不搬：農田是延後項目）"
 		% [", ".join(parts), total, groups.size()])
+
+
+
+
+# ══════════════════ 地標內容搬遷（MIGRATE，來源 gen_village.gd）═══════════
+# 搬遷用的共用基礎設施。四個 helper 從舊產生器搬過來，因為六座地標都用它們：
+#   _lmat()          材質色調變體（同一種建材四個色調，全村才不是同色積木）
+#   _ground_under()  一塊 footprint 的最低地面 + 起伏量（牆腳要埋進坡裡）
+#   _lm_collide()    建物碰撞箱
+#   _lm_rng          **地標專用亂數**
+#
+# ⚠ 最後一項是必要的，不是潔癖：舊 builder 大量呼叫 `lib.rr()`／`lib.rand()`。
+# 那是 gen_lib 的共用 RNG，街區排列（jog／lateral／模組挑選）與 vista 散佈
+# 也吃同一條序列。地標內容一旦動用它，**整座城鎮的町家排列會跟著位移**，
+# diff 會變成「搬一座地標順便重排全鎮」，看不出真正改了什麼。
+# 密度層與草層已經各自帶自己的 RNG，這裡沿用同一條規矩。
+const MAT_TONES := {
+	# 真壁的填充要**亮**，木框才跳得出來 —— 參考圖的白灰接近純白。
+	# 舊的 0.84/0.92 配上曬過的木框，整棟是一團褐色。
+	"plaster": [Color(1.30, 1.28, 1.22), Color(1.16, 1.13, 1.06),
+		Color(1.05, 1.04, 1.00), Color(1.22, 1.17, 1.09)],
+	# 去髒（美術規格 §1.3）：貼圖裡的黃苔用「壓黃提藍」的色調蓋掉，
+	# 瓦要乾淨的藍灰 —— 參考圖的屋頂近乎無髒污
+	"kawara": [Color(0.86, 0.94, 1.10), Color(0.72, 0.80, 0.96),
+		Color(0.80, 0.86, 1.00), Color(0.64, 0.72, 0.88)],
+	"thatch": [Color(0.66, 0.54, 0.36), Color(0.58, 0.47, 0.31),
+		Color(0.72, 0.60, 0.40), Color(0.50, 0.42, 0.30)],
+	"mud": [Color(0.80, 0.72, 0.58), Color(0.70, 0.62, 0.48),
+		Color(0.86, 0.78, 0.64), Color(0.64, 0.58, 0.46)],
+	# ⚠ 別再讓木部的色調靠近 1.0 —— dark_wood 那張貼圖本身就很飽和，
+	# 乘 1.0 出來是鮮豔的橘紅色，一整排通柱看起來像上了漆的塑膠。
+	# 真實的木部是曬到發灰的褐色。
+	# 色調是**相乘**的，只能壓不能加。dark_wood 那張紅得很兇，
+	# 等比壓暗只會變成暗紅色 —— 要把紅色壓得比綠藍更多才會轉灰褐。
+	"dark": [Color(0.44, 0.47, 0.45), Color(0.37, 0.40, 0.39),
+		Color(0.52, 0.53, 0.50), Color(0.32, 0.35, 0.35)],
+	"wood": [Color(0.72, 0.66, 0.58), Color(0.62, 0.56, 0.48),
+		Color(0.80, 0.72, 0.62), Color(0.56, 0.51, 0.45)],
+	"stone": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
+		Color(0.82, 0.84, 0.82), Color(0.95, 0.93, 0.88)],
+	"namako": [Color(1.00, 1.00, 1.00), Color(0.88, 0.90, 0.92),
+		Color(0.94, 0.93, 0.90), Color(0.80, 0.83, 0.86)],
+	"lattice": [Color(1.00, 0.98, 0.95), Color(0.88, 0.86, 0.84),
+		Color(0.78, 0.76, 0.74), Color(0.94, 0.90, 0.86)],
+	"gravel": [Color(1.00, 1.00, 1.00), Color(0.92, 0.94, 0.96),
+		Color(0.88, 0.86, 0.82), Color(0.80, 0.83, 0.85)],
+	# 河石是中灰的，不是白的。四個色調＝四種石色，一堆石頭才不是同一塊。
+	"cobble": [Color(0.60, 0.61, 0.60), Color(0.50, 0.48, 0.45),
+		Color(0.66, 0.63, 0.57), Color(0.42, 0.45, 0.48)],
+	"foliage": [Color(1.00, 1.00, 1.00), Color(0.86, 0.94, 0.82),
+		Color(0.74, 0.84, 0.70), Color(0.94, 0.90, 0.72)],
+	"flag": [Color(1.00, 1.00, 1.00), Color(0.90, 0.90, 0.88),
+		Color(0.82, 0.84, 0.86), Color(0.94, 0.91, 0.86)],
+	"shoji": [Color(1.00, 1.00, 1.00), Color(0.96, 0.94, 0.90),
+		Color(1.00, 0.98, 0.92), Color(0.92, 0.90, 0.86)],
+	"tatami": [Color(1.00, 1.00, 1.00), Color(0.92, 0.94, 0.86),
+		Color(0.86, 0.88, 0.80), Color(0.96, 0.92, 0.82)],
+	"shitami": [Color(1.00, 0.98, 0.95), Color(0.86, 0.84, 0.80),
+		Color(0.74, 0.72, 0.68), Color(0.92, 0.88, 0.82)],
+	"yakisugi": [Color(1.00, 1.00, 1.00), Color(0.86, 0.86, 0.88),
+		Color(1.12, 1.08, 1.04), Color(0.78, 0.79, 0.80)],
+	"ishizumi": [Color(1.00, 1.00, 1.00), Color(0.90, 0.91, 0.90),
+		Color(0.82, 0.84, 0.82), Color(0.95, 0.92, 0.86)],
+}
+
+const MAT_SET := {
+	"kawara": ["roof_kawara", 0.22],
+	# ⚠ 茅葺以前借的是 terrain_grass（空拍草地）—— 難怪茅頂看起來像鋪了草皮。
+	# roof_thatch 現在是 tools/gen_textures.gd 烤的真茅稈。
+	"thatch": ["roof_thatch", 0.55],
+	# ⚠ v16 之前 "plaster" 與 "mud" 指向**同一組貼圖**，只是色調不同 ——
+	# 全村 653 面牆等於一張圖染成 8 色。使用者：「其實我也覺得挺單調的」。
+	"plaster": ["plaster", 0.4], "mud": ["arakabe", 0.42],
+	"dark": ["dark_wood", 0.45], "wood": ["planks", 0.5], "stone": ["stone_wall", 0.30],
+	# 海鼠壁以前是拿瓦的貼圖硬壓成炭黑冒充，現在有真的菱格 + 凸目地了
+	"namako": ["namako", 0.30],
+	# 以下都是 v15 新烤的：格子窗、玉石、葉團、板石、障子、疊蓆
+	"lattice": ["wood_lattice", 0.28],
+	# pebble 有兩個用法，比例差十倍，不能共用一個材質：
+	#   "gravel" = 一片小石子地（州濱、洗石子），一張貼圖裡看到很多顆
+	#   "cobble" = **一顆**玉石，整顆石頭只吃到貼圖裡的一格
+	# v15 初版兩邊都用 0.5，結果每一顆護岸石表面都長出五顆小石頭。
+	"gravel": ["pebble", 0.5],
+	# 單顆玉石不要用 pebble 貼圖 —— 縮到「一顆填滿整張」之後圖案沒了，
+	# 只剩一片近乎純色的高光，看起來像塑膠豆。改用 stone_wall 的石粒
+	# （比例調到一顆石頭上看得到顆粒，但看不到石塊接縫）。
+	"cobble": ["stone_wall", 0.85],
+	"foliage": ["foliage", 0.42], "flag": ["stone_flag", 0.30],
+	"shoji": ["shoji", 0.30], "tatami": ["tatami", 0.42],
+	# v17 的牆面：下見板張り（腰壁）／焼杉（關西町並的黑板壁）／
+	# 荒壁（摻稻稈的土壁）／野面積み（亂石腰壁）
+	"shitami": ["shitami", 0.34], "yakisugi": ["yakisugi", 0.36],
+	"ishizumi": ["ishizumi", 0.30],
+}
+
+
+var _lm_rng := RandomNumberGenerator.new()
+
+## 材質：同一種建材四個色調。舊 `_mat()` 的搬遷版。
+func _lmat(key: String, v := -1) -> StandardMaterial3D:
+	if not MAT_SET.has(key):
+		key = "plaster"
+	var tones: Array = MAT_TONES[key]
+	if v < 0:
+		v = int(_lm_rng.randf() * float(tones.size()))
+	v = v % tones.size()
+	var spec: Array = MAT_SET[key]
+	return lib.pbr("%s_%d" % [key, v], String(spec[0]), float(spec[1]), tones[v])
+
+## 水面以下不算地面 —— 拿 height_at 的話院內有池就整棟沉下去。
+func _lm_ground_sample(x: float, z: float) -> float:
+	var y := height_at(x, z)
+	if lib.poly_dist(_river(), x, z) < RIVER_HALF:
+		y = maxf(y, bank_h(x, z) - RIVER_DEPTH * 0.20)
+	return y
+
+## 一塊 footprint 的 [最低地面, 起伏量]。取樣約每 4m 一點 ——
+## 3×3 對 40m 長的土塀太稀，中段有坑就整段浮空（舊圖體檢抓過）。
+func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
+	var lo := INF
+	var hi := -INF
+	var nx := clampi(int(ceil(w / 4.0)) + 1, 3, 9)
+	var nz := clampi(int(ceil(d / 4.0)) + 1, 3, 9)
+	for i in nx:
+		for j in nz:
+			var ox := float(i) / float(nx - 1) - 0.5
+			var oz := float(j) / float(nz - 1) - 0.5
+			var y := _lm_ground_sample(cx + ox * w, cz + oz * d)
+			lo = minf(lo, y)
+			hi = maxf(hi, y)
+	return [lo, hi - lo]
+
+## 建物碰撞箱。⚠ owner 一定要是 _root，否則不會存進 .tscn（ADR-017）。
+func _lm_collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
+	var body := StaticBody3D.new()
+	g.add_child(body)
+	body.owner = _root
+	var shape := CollisionShape3D.new()
+	var bx := BoxShape3D.new()
+	bx.size = size
+	shape.shape = bx
+	shape.position = off + Vector3(0, size.y * 0.5, 0)
+	body.add_child(shape)
+	shape.owner = _root
+
+
+## ── 足洗邸（第一座搬入）──
+## 荒廢的宅邸：崩れ塀三段 + 母屋（茅葺）。牆腳要埋進坡裡，不然整段浮著。
+func _lm_ashiarai(g: Node3D, spread: float) -> void:
+	var hw := 42.0 * 0.5 - 2.0        # 舊 BLOCK_W/D：崩れ塀鋪到街區邊
+	var hd := 45.0 * 0.5 - 2.0
+	for w in [[0.0, -hd, hw * 1.4, true], [-hw, -6.0, hd * 0.9, false],
+			[hw, 4.0, hd * 0.8, false]]:
+		var kh := _lm_rng.randf_range(1.2, 1.9)
+		var kfoot := spread + 0.4
+		lib.box(g, "崩れ塀_%d" % int(w[0]),
+			Vector3(w[2] if w[3] else 0.36, kh + kfoot, 0.36 if w[3] else w[2]),
+			_lmat("mud"), Vector3(w[0], kh * 0.5 - kfoot * 0.5, w[1]))
+	var afoot := spread + 0.4
+	lib.box(g, "母屋基壇", Vector3(16.0, 0.5 + afoot, 12.0), _lmat("stone"),
+		Vector3(0, 0.25 - afoot * 0.5, -2.0))
+	lib.box(g, "母屋", Vector3(14.5, 3.6, 10.5), _lmat("dark"), Vector3(0, 2.3, -2.0))
+	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _lmat("thatch"), _lmat("dark"),
+		Vector3(0, 0, -2.0))
+	_lm_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
 
 
 func _write_meta() -> void:
