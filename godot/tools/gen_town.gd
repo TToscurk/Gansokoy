@@ -160,6 +160,8 @@ func _init() -> void:
 	_emit_batches()
 	_build_collision()
 	_build_density()
+	# 草層要在密度層之後：它要避開的保留區（地標／橋／鵜呑亭）到這裡才齊
+	_build_grass()
 	lib.vista(OUT_DIR, HALF, 900.0, height_at,
 		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
 		 {"x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0},
@@ -1524,13 +1526,220 @@ func _emit_density() -> void:
 		mmi.multimesh = lib.make_multimesh(mesh, _dbatch[kind], [],
 			OUT_DIR + "gen/mm_%s.res" % k)
 		if not k.begins_with("tree_"):
-			# 小道具：60~110m 外淡出、吊掛不投影 —— 密度層不能反過來吃掉幀率
-			mmi.visibility_range_end = 110.0
-			mmi.visibility_range_end_margin = 12.0
-			mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+			# ⚠ 這裡原本設了 visibility_range_end = 110 —— 跟草層那個是**同一個
+			# bug**（見 _build_grass）：距離是拿整個 MMI 的 AABB 算的，而道具
+			# 鋪滿整個鎮，所以玩家走到村緣時整層道具會一次消失。
+			# 之前沒發現是因為截圖機位都在鎮中心，離 AABB 中心夠近。
+			# 拿掉；吊掛物不投影仍然保留（那是真的省）。
 			if k in ["prop_noren_a", "prop_noren_b", "prop_chochin", "prop_kanban"]:
 				mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		lib.add(g, mmi, "MM_%s" % k)
+
+
+# ══════════════════ 草層（MIGRATE：從 gen_village.gd 搬過來重寫）══════════════
+# 舊圖有六組草，新圖一組都沒有 —— 換完佈局後整張圖只剩地形貼圖，是目前最
+# 明顯的視覺退步。這裡不是照抄，因為舊實作綁著三樣**新圖沒有的東西**：
+#
+#  1. `rice_rows`（3,600 株）走 `_field_w()` = **農田權重**。農田是規格裡
+#     「🚫 獨立階段，未開工」的項目，第二輪還為了它把遮罩 G 通道清零過
+#     （不然全鎮外圈會鋪一圈黃田）。照抄等於把已經明確延後的系統偷渡回來 ——
+#     **這一組不搬**。
+#  2. `reeds` 沿舊 RIVER + CANAL 取樣，兩條都已在 Stage 1 移除 → 改沿新河道。
+#  3. 「避開路面」舊版自己重算 `_path_info`。新圖直接問 `mask_at()` ——
+#     那就是地形著色器吃的同一份遮罩，草與地面貼圖因此永遠一致，
+#     不會出現「貼圖是石板、上面卻長草」。
+#
+# 密度梯度沿用舊圖驗收過的直覺：**村心踏實、村外茂盛**（村心通過率 10%、
+# 村外 60%），這是「有人住」讀得出來的關鍵。
+
+const GRASS_SEED := SEED + 913
+
+## 草能不能長在這裡：不在建物／保留區內、不在鋪面上、不在河裡。
+func _grass_free(x: float, z: float, need: float, hgrid: Dictionary) -> bool:
+	# 鋪面（石板 R + 夯土 A）—— 用地形著色器同一份遮罩
+	var m := mask_at(x, z)
+	if m.r + m.a > 0.30:
+		return false
+	if _river_dist_xy(x, z) < RIVER_HALF + 1.6:
+		return false
+	var p := Vector2(x, z)
+	for q in _reserved:
+		var d: Vector2 = p - q[0]
+		if absf(d.dot(q[1])) < q[3] + need and absf(d.dot(q[2])) < q[4] + need:
+			return false
+	var key := Vector2i(int(floor(x / 24.0)), int(floor(z / 24.0)))
+	for dx in [-1, 0, 1]:
+		for dz in [-1, 0, 1]:
+			var k := Vector2i(key.x + dx, key.y + dz)
+			if not hgrid.has(k):
+				continue
+			for r in hgrid[k]:
+				var d2: Vector2 = p - r[0]
+				if absf(d2.dot(r[1])) < r[3] + need and absf(d2.dot(r[2])) < r[4] + need:
+					return false
+	return true
+
+## 離最近路緣多遠（0 = 站在路面上）。草的密度吃這個值。
+func _road_dist(x: float, z: float) -> float:
+	var best := 1e9
+	for r in _roads:
+		best = minf(best, lib.poly_dist(r.pts, x, z) - r.w * 0.5)
+	return maxf(best, 0.0)
+
+func _river_dist_xy(x: float, z: float) -> float:
+	## ⚠ 一定要用 poly_dist（點到**線段**）而不是 `_nearest_river_pt` 的
+	## 點到**取樣點**距離 —— 後者永遠 ≥ 真實距離，於是產生器以為在岸上的
+	## 蘆葦，實測有 17/747 落在水裡。產生器量得比驗證腳本粗，就會出現
+	## 「自檢過了、複驗抓到」這種假綠燈。mask_at 的水際帶也是用 poly_dist，
+	## 兩邊要用同一把尺。
+	return lib.poly_dist(_river(), x, z)
+
+## 蘆葦：**沿著河道走**，不是在全圖亂撒後篩掉。
+## 水際帶只佔全圖約 1.7%，用拒絕取樣的話 800 叢就要撞 48,000 次還撞不滿
+## （實測只拿到 740/800，卡在 tries 上限）。沿線取樣是 ~100% 命中，
+## 而且沿岸分佈均勻，不會這一段擠成一團、那一段空著。
+func _reed_along_river(rng: RandomNumberGenerator, target: int) -> Array[Transform3D]:
+	var out: Array[Transform3D] = []
+	var rv := _river()
+	var total_len := 0.0
+	for k in range(rv.size() - 1):
+		total_len += rv[k].distance_to(rv[k + 1])
+	if total_len <= 0.0:
+		return out
+	var per_m := float(target) / total_len          # 兩岸合計的每公尺株數
+	for k in range(rv.size() - 1):
+		var a: Vector2 = rv[k]
+		var b: Vector2 = rv[k + 1]
+		var seg := b - a
+		var ln := seg.length()
+		if ln <= 0.0001:
+			continue
+		var nrm := Vector2(seg.y, -seg.x) / ln       # 河道法線
+		var n := int(round(ln * per_m))
+		for i in n:
+			var p: Vector2 = a + seg * rng.randf()
+			var side := 1.0 if rng.randf() < 0.5 else -1.0
+			var off := rng.randf_range(RIVER_HALF * 0.82, RIVER_HALF * 1.52)
+			var q: Vector2 = p + nrm * side * off
+			if absf(q.x) > HALF - 4.0 or absf(q.y) > HALF - 4.0:
+				continue
+			# 橋下與鵜呑亭川床下不長（踩踏區與陰影）
+			var skip := false
+			for br in BRIDGES:
+				if q.distance_to(Vector2(float(br.x), float(br.z))) < 16.0:
+					skip = true
+					break
+			if skip or q.distance_to(_uno_pos) < 20.0:
+				continue
+			var s := rng.randf_range(0.7, 1.4)
+			var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s))
+			out.append(Transform3D(basis, Vector3(q.x, height_at(q.x, q.y), q.y)))
+	return out
+
+
+func _build_grass() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = GRASS_SEED
+	# 町家 OBB 的空間索引 —— 5,700 次取樣 × 169 棟是 O(n²)，會慢到不能接受
+	var hgrid := {}
+	for e in _dump:
+		var r := _obb_of(e)
+		var c: Vector2 = r[0]
+		var rad: float = maxf(r[3], r[4]) + 3.0
+		var i0 := int(floor((c.x - rad) / 24.0))
+		var i1 := int(floor((c.x + rad) / 24.0))
+		var j0 := int(floor((c.y - rad) / 24.0))
+		var j1 := int(floor((c.y + rad) / 24.0))
+		for i in range(i0, i1 + 1):
+			for j in range(j0, j1 + 1):
+				var k := Vector2i(i, j)
+				if not hgrid.has(k):
+					hgrid[k] = []
+				hgrid[k].append(r)
+
+	# 草色照舊圖驗收過的那組：葉根深、葉尖亮，別再用橄欖色（整片會發黃）
+	var tall := lib.tuft_mesh(7, 0.40, 0.20, Color(0.11, 0.21, 0.08), Color(0.29, 0.48, 0.18))
+	tall.surface_set_material(0, lib.grass_wind_mat(0.10))
+	var flower := lib.tuft_mesh(5, 0.34, 0.16, Color(0.12, 0.22, 0.09), Color(0.28, 0.46, 0.18), true)
+	flower.surface_set_material(0, lib.grass_wind_mat(0.08))
+	var reed := lib.tuft_mesh(6, 0.62, 0.14, Color(0.18, 0.28, 0.12), Color(0.52, 0.56, 0.28))
+	reed.surface_set_material(0, lib.grass_wind_mat(0.13))
+	# 灌木層：介於草與樹之間的中層。只有「草 + 樹」兩層時，地面到樹冠之間
+	# 是空的，遠看就是一片綠地上插著棒棒糖。
+	var shrub := lib.tuft_mesh(9, 1.05, 0.55, Color(0.10, 0.20, 0.08), Color(0.26, 0.42, 0.16))
+	shrub.surface_set_material(0, lib.grass_wind_mat(0.05))
+	var fern := lib.tuft_mesh(7, 0.55, 0.40, Color(0.13, 0.24, 0.10), Color(0.32, 0.50, 0.20))
+	fern.surface_set_material(0, lib.grass_wind_mat(0.06))
+
+	# ⚠ 數量比舊圖大幅提高。舊圖的 2,600 叢長草攤在 600×600 上是
+	# **每 57m² 一叢**（約每 7.5m 才一叢）—— 第一版照抄之後引擎內截圖
+	# 根本看不出有草層，只有地形貼圖的綠。tuft_mesh 一叢只有 5~9 個三角形
+	# （一片葉一張三角形），所以提高到 2.4 萬叢也才 ~19 萬三角形，
+	# 比樹便宜得多；再加上不投影 + 距離淡出，這個量是划算的。
+	var groups := [
+		{"mesh": shrub, "n": 2400, "file": "shrubs", "node": "Shrubs",
+			"mode": "wild", "need": 2.6, "vis": 150.0},
+		{"mesh": fern, "n": 5000, "file": "ferns", "node": "Ferns",
+			"mode": "wild", "need": 1.6, "vis": 120.0},
+		{"mesh": tall, "n": 14000, "file": "grass_tall", "node": "GrassTall",
+			"mode": "wild", "need": 1.6, "vis": 120.0},
+		{"mesh": flower, "n": 1000, "file": "grass_flower", "node": "GrassFlower",
+			"mode": "wild", "need": 1.6, "vis": 120.0},
+		{"mesh": reed, "n": 1800, "file": "reeds", "node": "Reeds",
+			"mode": "shore", "need": 0.0, "vis": 140.0},
+	]
+	var total := 0
+	var parts: Array[String] = []
+	for grp in groups:
+		var list: Array[Transform3D] = []
+		var target: int = int(grp.n)
+		if String(grp.mode) == "shore":
+			list = _reed_along_river(rng, target)
+		else:
+			var tries := 0
+			while list.size() < target and tries < target * 10:
+				tries += 1
+				var x := rng.randf_range(-HALF + 4.0, HALF - 4.0)
+				var z := rng.randf_range(-HALF + 4.0, HALF - 4.0)
+				if not _grass_free(x, z, float(grp.need), hgrid):
+					continue
+				# 「有人住」的關鍵是**踩踏**，不是離廣場多遠。
+				# ⚠ 舊圖用 `r < CORE ? 10% : 60%` 的硬半徑。照抄到新圖之後
+				# 引擎內截圖整個村子都是光禿的綠地 —— 因為 CORE=196 幾乎涵蓋
+				# 整座城鎮（最外圈町家在 r≈189），玩家在鎮上走的每一格都吃
+				# 那個 10%。改成看**離路緣多遠**：路邊被踩禿、屋與屋之間的
+				# 縫隙長得起來、出了村就茂盛。
+				var dr := _road_dist(x, z)
+				var p := lerpf(0.08, 0.80, clampf(dr / 13.0, 0.0, 1.0))
+				if Vector2(x, z - PLAZA.y).length() > CORE:
+					p = maxf(p, 0.70)
+				if rng.randf() > p:
+					continue
+				var s := rng.randf_range(0.7, 1.4)
+				var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s))
+				list.append(Transform3D(basis, Vector3(x, height_at(x, z), z)))
+		total += list.size()
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(grp.mesh, list, [],
+			OUT_DIR + "gen/%s.res" % String(grp.file))
+		# 幾千叢草不能投影
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		# ⚠⚠ **不准對「鋪滿全圖」的 MultiMesh 設 visibility_range**。
+		# 那個距離是拿**整個 MultiMeshInstance 的 AABB**去算的，不是逐實例 ——
+		# 草的 AABB 涵蓋整張 600×600 的圖，中心在地圖原點。相機站在
+		# (−30, 230) 時離該中心 232m > 120m，於是**整層草一次全部消失**。
+		#
+		# 這個 bug 的症狀極度誤導：節點在、instance_count 對、mesh 與材質
+		# 都在、座標驗證 4 項全過，就是畫面上一根都沒有。是從 9m 高垂直
+		# 俯瞰一個「明明有 49 叢」的格子、一根都看不到才確定的。
+		# （香霖堂的草沒事，因為那張圖只有 140×140，AABB 中心永遠在範圍內。）
+		#
+		# MultiMesh 本來就是一個 draw call，24,000 叢 × 7 三角形 ≈ 17 萬面，
+		# 不設距離剔除也划算。要真的做 LOD 得切成多個分區 MultiMesh。
+		lib.add(_root, mmi, String(grp.node))
+		parts.append("%s %d" % [String(grp.node), list.size()])
+	_audit.append("草層：%s —— 共 %d 叢 / %d draw call（稻田不搬：農田是延後項目）"
+		% [", ".join(parts), total, groups.size()])
 
 
 func _write_meta() -> void:

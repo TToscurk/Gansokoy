@@ -119,8 +119,35 @@ try {
     const m = await import('/src/world/mapRegistry.js');
     return JSON.parse(JSON.stringify(m.MAP_REGISTRY));
   });
-  fs.writeFileSync(path.join(OUT_DATA, 'mapRegistry.json'), JSON.stringify(registry, null, 2));
-  console.log(`mapRegistry.json：${Object.keys(registry).length} 張圖（含未建成）`);
+  /* ⚠ 這裡以前是直接 writeFileSync 整包蓋掉 —— 只存在於 Godot 端的地圖條目
+     （例如整合前的 sato）每次重烤就**靜靜消失**，而且沒有任何訊息。
+     症狀是「昨天還好好的，跑完 export 就 HUD 顯示 raw id」。
+
+     JS 的 mapRegistry.js 仍然是主要真相來源，但重烤**不准靜靜刪東西**：
+     JSON 裡有、JS 裡沒有的條目一律保留，並且大聲印出來 —— 要嘛去 JS 補上，
+     要嘛確認它該退場後手動刪。合併而不是覆蓋，遺失才不會沒人發現。 */
+  const regPath = path.join(OUT_DATA, 'mapRegistry.json');
+  let merged = registry;
+  if (fs.existsSync(regPath)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(regPath, 'utf8'));
+      const orphans = Object.keys(prev).filter((k) => !(k in registry));
+      if (orphans.length) {
+        merged = { ...registry };
+        for (const k of orphans) merged[k] = prev[k];
+        console.warn(
+          `  ⚠ mapRegistry：${orphans.length} 個條目只存在於 Godot 端，已保留：` +
+            `${orphans.join(', ')}\n` +
+            `    → 請在 src/world/mapRegistry.js 補上，或確認要退場後手動從 ` +
+            `godot/data/mapRegistry.json 刪掉。`
+        );
+      }
+    } catch (e) {
+      console.warn(`  ⚠ 讀不到舊的 mapRegistry.json（${e.message}），這次直接覆蓋`);
+    }
+  }
+  fs.writeFileSync(regPath, JSON.stringify(merged, null, 2));
+  console.log(`mapRegistry.json：${Object.keys(merged).length} 張圖（含未建成）`);
 
   const wanted = process.argv.slice(2);
   const builtIds = Object.values(registry)
