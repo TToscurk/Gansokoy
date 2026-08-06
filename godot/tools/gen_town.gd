@@ -99,11 +99,20 @@ const UNOMITEI_ANCHOR := Vector2(50.0, 2.0)
 # 量體（bw/bd）維持原值：佔位方塊只是暫時的，把它一起放大會讓天際線
 # 在搬入真內容前先亂一次。
 const LANDMARKS := [
-	# 實建 25.8×14.5 —— 這座原本就夠（唯一一座）
-	{"n": "寺子屋", "x": -26.0, "z": -52.0, "w": 26.0, "d": 16.0, "h": 6.1},
-	# 實建 14.1×8.6
-	{"n": "鈴奈庵", "x": 11.6, "z": -52.0, "w": 14.6, "d": 9.5, "h": 5.4,
-		"bw": 13.0, "bd": 9.5},
+	# 實建 25.8×14.5 —— 這座原本就夠（唯一一座）。
+	# ⚠ 舊 builder 把內容擺在街區中心**往南 6m**（cz = bz − 6），所以實際
+	# 量到的量體中心在 z=−58，會戳出保留區南緣 5.2m。搬入時把內容**對齊
+	# 保留區中心**（拿掉那個 −6 偏移），保留區才是誠實的。
+	# 保留區依**實測內容**放大：向拜與手水缽往南伸 2.8m、梵鐘往東 1.3m。
+	# 原本的 26×16 只框得住主屋，框不住那些附屬件。
+	{"n": "寺子屋", "x": -26.0, "z": -52.0, "w": 28.4, "d": 19.8, "h": 6.1,
+		"build": "_lm_terakoya"},
+	# ⚠ 實建 14.1×8.6 是**建物自己的局部尺寸**，而鈴奈庵整棟旋轉 −90°
+	# （正面朝西對著本通）—— 世界座標下 W/D 是對調的。我第一次量的時候
+	# 只累加平移、沒有處理旋轉，所以把保留區填成 14.6×9.5，**整個轉錯邊**。
+	# 舊 tscn 的 basis 實測 x=(0,−1)、z=(1,0)，確認有轉。
+	{"n": "鈴奈庵", "x": 11.6, "z": -52.0, "w": 12.8, "d": 15.0, "h": 5.4,
+		"build": "_lm_suzunaan"},
 	# ⚠ 稗田邸搬到村緣（使用者定案・方案 B）。舊位置 (-78, 2) 是沿用舊格線
 	# 來的，離廣場只有 83m、離鎮守之杜 52m、離市場 76m —— 埋在商業核心裡，
 	# 跟「私密、安靜、避世」的設定矛盾。新位置在北門西側：離北門（主入口、
@@ -122,9 +131,11 @@ const LANDMARKS := [
 	# 實建 34.3×25.8（八座屋台攤開的寬度）
 	{"n": "市場", "x": -26.0, "z": 57.0, "w": 34.8, "d": 34.0, "h": 4.6,
 		"bw": 30.0, "bd": 34.0},
-	# 實建 38.0×24.5 —— 差最多的一座（保留區原本只有 24×18）
+	# ⚠ 實建 z 向是 **32.9m** 不是 24.5 —— 我第一次量的是「子節點原點的散佈」，
+	# 沒算進側牆自己的長度（兩道側牆各長 16~18m）。保留區要框的是幾何，
+	# 不是原點。第二次用 mesh AABB 世界包絡量才對。
 	# ✅ 已搬入真內容（build）→ 不再產生佔位方塊與佔位碰撞箱
-	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 38.5, "d": 25.0, "h": 6.4,
+	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 38.5, "d": 33.6, "h": 6.4,
 		"build": "_lm_ashiarai"},
 ]
 
@@ -1948,9 +1959,53 @@ func _lm_collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
 	shape.owner = _root
 
 
+## 石垣基壇（寺子屋等地標坐在其上，正面切石階）。搬自 gen_village。
+func _dais_in(g: Node3D, w: float, d: float, h: float, face: Vector2, spread: float) -> void:
+	var stone := _lmat("stone")
+	var foot: float = spread + 0.3
+	# 石垣是**下寬上窄**的（扇の勾配），直上直下看起來像水泥擋土牆
+	var steps := 3
+	for i in steps:
+		var t := float(i) / float(steps)
+		var sw: float = w - t * 0.9
+		var sd: float = d - t * 0.9
+		var sh: float = (h + foot) / float(steps)
+		lib.box(g, "石垣_%d" % i, Vector3(sw, sh + 0.04, sd), stone,
+			Vector3(0, -h - foot + sh * (float(i) + 0.5), 0))
+	lib.box(g, "天端石", Vector3(w - 0.9, 0.16, d - 0.9), stone, Vector3(0, -0.08, 0))
+	# 正面的石階
+	var nsteps := maxi(int(h / 0.24), 3)
+	var tan := face.orthogonal()
+	for i in nsteps:
+		var t2 := (float(i) + 0.5) / float(nsteps)
+		var sy: float = -h + h * t2
+		var out: float = (1.0 - t2) * 1.9
+		lib.box(g, "石階_%d" % i, Vector3(3.4, h / float(nsteps) + 0.05, 0.42), stone,
+			Vector3(face.x * (d * 0.5 + out), sy - h / float(nsteps) * 0.5,
+				face.y * (d * 0.5 + out)))
+	# 階梯兩側的親柱
+	for sd2 in [-1.0, 1.0]:
+		lib.box(g, "親柱_%d" % int(float(sd2) + 1), Vector3(0.34, h + 0.5, 0.34), stone,
+			Vector3(face.x * (d * 0.5 + 0.3) + tan.x * float(sd2) * 1.9, -h * 0.5 + 0.05,
+				face.y * (d * 0.5 + 0.3) + tan.y * float(sd2) * 1.9))
+	_lm_collide(g, Vector3(w, h, d), Vector3(0, -h, 0))
+
+## 生垣（樹籬）＋竹垣：村緣的「圍牆」。
+##
+## 在（農家那一環）用土塀是錯的 —— 土塀是町方的東西，要人力與瓦。
+## 村緣圍的是樹籬與竹垣，而且矮，看得到裡面的曬場。
+## 這也是「密度不一樣的街區不要混在一起」的一部分：材質本身就要換。
+
+
 ## ── 足洗邸（第一座搬入）──
 ## 荒廢的宅邸：崩れ塀三段 + 母屋（茅葺）。牆腳要埋進坡裡，不然整段浮著。
 func _lm_ashiarai(g: Node3D, spread: float) -> void:
+	# ⚠ 舊 builder 的崩れ塀在 z 上是**不對稱**的（−20.5 / −6 / +4），整組偏北
+	# 8.2m。保留區是對稱的，所以內容要往南推回來對齊中心 —— 不然牆會伸出
+	# 保留區外，草就長進牆裡（check_map 抓到 10 叢）。
+	var c := lib.add(g, Node3D.new(), "本體")
+	c.position.z = 4.25
+	g = c
 	var hw := 42.0 * 0.5 - 2.0        # 舊 BLOCK_W/D：崩れ塀鋪到街區邊
 	var hd := 45.0 * 0.5 - 2.0
 	for w in [[0.0, -hd, hw * 1.4, true], [-hw, -6.0, hd * 0.9, false],
@@ -1967,6 +2022,81 @@ func _lm_ashiarai(g: Node3D, spread: float) -> void:
 	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _lmat("thatch"), _lmat("dark"),
 		Vector3(0, 0, -2.0))
 	_lm_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
+
+
+## ── 鈴奈庵（貸本屋）──
+## ⚠ 整棟旋轉 −90°：正面（局部 +z）要朝西對著本通。舊 builder 的
+## `bx + face_dir*(hw−6.6)` 與 `lib.rr(-4,4)` 抖動都已經烘進 LANDMARKS 的
+## 座標了，搬過來之後直接以保留區中心為原點，不再重算偏移（也不再抖動 ——
+## 抖動會讓保留區跟實際位置每次產生都對不上）。
+func _lm_suzunaan(g: Node3D, _spread: float) -> void:
+	g.rotation.y = -PI / 2.0
+	var w := 13.0
+	var d := 9.5
+	lib.box(g, "基石", Vector3(w + 0.5, 0.35, d + 0.5), _lmat("stone"), Vector3(0, 0.18, 0))
+	lib.box(g, "屋身", Vector3(w, 5.4, d), _lmat("plaster"), Vector3(0, 3.05, 0))
+	lib.box(g, "腰板", Vector3(w + 0.05, 1.0, 0.08), _lmat("dark"),
+		Vector3(0, 0.85, d * 0.5 + 0.05))
+	lib.box(g, "格子戶", Vector3(w * 0.62, 2.1, 0.1), _lmat("dark"),
+		Vector3(0, 1.75, d * 0.5 + 0.06))
+	lib.box(g, "二階窗", Vector3(w * 0.72, 1.3, 0.08), _lmat("dark"),
+		Vector3(0, 4.3, d * 0.5 + 0.06))
+	lib.box(g, "庇", Vector3(w + 1.0, 0.16, 1.4), _lmat("kawara"),
+		Vector3(0, 3.35, d * 0.5 + 0.6))
+	var cloth := StandardMaterial3D.new()
+	cloth.albedo_color = Color(0.28, 0.24, 0.34)      # 鈴奈庵的藍紫暖簾
+	cloth.roughness = 1.0
+	for k in [-1, 0, 1]:
+		lib.box(g, "暖簾_%d" % (k + 1), Vector3(2.0, 0.9, 0.05), cloth,
+			Vector3(float(k) * 2.2, 2.55, d * 0.5 + 0.66))
+	lib.box(g, "看板", Vector3(0.6, 2.4, 0.14), _lmat("wood"),
+		Vector3(w * 0.44, 3.0, d * 0.5 + 0.5))
+	lib.box(g, "書架", Vector3(4.2, 1.3, 0.9), _lmat("wood"),
+		Vector3(-2.6, 1.0, d * 0.5 + 1.1))
+	lib.gable_roof(g, 5.75, w + 1.4, d + 1.6, 0.5, 0.24, _lmat("kawara"), _lmat("plaster"))
+	_lm_collide(g, Vector3(w + 0.5, 7.0, d + 0.5))
+
+
+## ── 寺子屋（慧音的私塾）──
+## 大屋頂主屋 + 外廊 + 向拜 + 梵鐘。坐在 1.5m 石垣基壇上。
+## ⚠ 內容對齊保留區中心（舊版是街區中心往南 6m，會戳出保留區）。
+func _lm_terakoya(g: Node3D, spread: float) -> void:
+	const DAIS_H := 1.5
+	g.position.y += DAIS_H
+	# 內容整體偏東南（梵鐘 +x、向拜與手水缽 +z）—— 推回保留區中心
+	var c := lib.add(g, Node3D.new(), "本體")
+	c.position = Vector3(-0.55, 0.0, -1.35)
+	g = c
+	_dais_in(g, 26.0, 16.0, DAIS_H, Vector2(0, 1), spread)
+	lib.box(g, "土台", Vector3(24.0, 0.5, 14.0), _lmat("stone"), Vector3(0, 0.25, 0))
+	lib.box(g, "屋身", Vector3(22.0, 4.6, 12.0), _lmat("plaster", 0), Vector3(0, 2.9, 0))
+	lib.box(g, "外廊", Vector3(23.4, 0.34, 3.0), _lmat("wood"), Vector3(0, 0.85, 7.2))
+	lib.box(g, "高欄", Vector3(23.4, 0.14, 0.14), _lmat("dark"), Vector3(0, 1.62, 8.6))
+	for i in 14:
+		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.62, 0.1), _lmat("dark"),
+			Vector3(-11.2 + float(i) * 1.72, 1.32, 8.6))
+	for i in 8:
+		lib.cyl(g, "廊柱_%d" % i, 0.19, 0.19, 3.6, _lmat("dark"),
+			Vector3(-10.0 + float(i) * 2.85, 2.8, 8.4), 6)
+	for i in 5:
+		lib.box(g, "障子_%d" % i, Vector3(3.4, 2.8, 0.08),
+			lib.flat_mat("shoji", Color(0.94, 0.93, 0.88), 0.9),
+			Vector3(-8.6 + float(i) * 4.3, 2.25, 6.05))
+		lib.box(g, "障子框_%d" % i, Vector3(3.6, 0.14, 0.12), _lmat("dark"),
+			Vector3(-8.6 + float(i) * 4.3, 3.72, 6.05))
+	lib.gable_roof(g, 5.2, 26.0, 16.0, 0.52, 0.4, _lmat("kawara"), _lmat("plaster", 0))
+	# 向拜（正面突出的門廊）—— 參考圖最有辨識度的一件
+	lib.box(g, "向拜屋根", Vector3(7.4, 0.3, 3.4), _lmat("kawara"), Vector3(0, 4.6, 8.0))
+	for sd in [-1.0, 1.0]:
+		lib.cyl(g, "向拜柱_%d" % int(sd + 1), 0.22, 0.24, 4.4, _lmat("dark"),
+			Vector3(sd * 3.2, 2.2, 9.2), 8)
+	lib.box(g, "梵鐘架", Vector3(2.6, 0.3, 2.6), _lmat("dark"), Vector3(13.0, 3.4, 6.0))
+	lib.cyl(g, "梵鐘", 0.62, 0.78, 1.5,
+		lib.pbr("bonsho", "stone_wall", 0.6, Color(0.52, 0.58, 0.52)),
+		Vector3(13.0, 2.4, 6.0), 12)
+	lib.box(g, "立札", Vector3(1.6, 1.1, 0.1), _lmat("wood"), Vector3(-8.0, 1.3, 10.5))
+	lib.cyl(g, "手水缽", 0.7, 0.75, 0.7, _lmat("stone"), Vector3(9.0, 0.35, 10.0), 10)
+	_lm_collide(g, Vector3(22.4, 7.0, 12.4))
 
 
 func _write_meta() -> void:

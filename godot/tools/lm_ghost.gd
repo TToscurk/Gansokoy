@@ -10,12 +10,27 @@
 #      撞到的碰撞體必須屬於真內容（有可見 mesh 的群組），不能是孤兒 StaticBody。
 extends SceneTree
 
-const MIGRATED := ["足洗邸"]          # 已搬入真內容的地標（跟 gen_town 的 build 鍵對應）
+const MIGRATED := ["足洗邸", "鈴奈庵", "寺子屋"]          # 已搬入真內容的地標（跟 gen_town 的 build 鍵對應）
+const RESERVE := {
+	"寺子屋": {"w": 28.4, "d": 19.8}, "鈴奈庵": {"w": 12.8, "d": 15.0},
+	"鎮守之杜": {"w": 42.9, "d": 36.0}, "市場": {"w": 34.8, "d": 34.0},
+	"足洗邸": {"w": 38.5, "d": 33.6}, "稗田邸": {"w": 40.7, "d": 43.7},
+}
 const SITES := {
 	"寺子屋": Vector2(-26, -52), "鈴奈庵": Vector2(11.6, -52),
 	"鎮守之杜": Vector2(-26, 2), "市場": Vector2(-26, 57),
 	"足洗邸": Vector2(26, 112), "稗田邸": Vector2(-78, -164),
 }
+
+## 世界矩陣自己往上乘 —— SceneTree script 裡節點不在樹上，
+## global_transform 會靜靜回傳單位矩陣（check_map 的老坑）。
+func _wxf(n: Node) -> Transform3D:
+	var t := Transform3D()
+	var cur: Node = n
+	while cur != null and cur is Node3D:
+		t = (cur as Node3D).transform * t
+		cur = cur.get_parent()
+	return t
 
 func _init() -> void:
 	var root: Node3D = (load("res://maps/village/village.tscn") as PackedScene).instantiate()
@@ -86,6 +101,39 @@ func _init() -> void:
 							% [nm, col.name, p.x + dx, p.y + dz])
 						fail += 1
 		print("%s：碰撞取樣 命中真內容 %d、孤兒碰撞 %d" % [nm, hits_ok, hits_ghost])
-	print("\n══ 殘影碰撞檢查：%s ══" % ("通過 ✓" if fail == 0 else "%d 個問題 ✗" % fail))
+	# ── 3. 幾何面：真內容有沒有超出保留區 ──
+	# ⚠ 這一項是被 check_map 打臉之後補的：足洗邸的崩れ塀往北伸出保留區
+	# **8m**，於是草長進牆裡。保留區是「町家與草不准進來」的唯一依據，
+	# 內容超出去就等於那一圈沒有防護。內容必須**對齊保留區中心**。
+	for nm in MIGRATED:
+		var grp := root.find_child(nm, true, false)
+		if grp == null:
+			continue
+		var lo := Vector2(INF, INF)
+		var hi := Vector2(-INF, -INF)
+		var stack: Array[Node] = [grp]
+		while stack.size() > 0:
+			var n2: Node = stack.pop_back()
+			for ch in n2.get_children():
+				stack.push_back(ch)
+			if n2 is MeshInstance3D:
+				var wb: AABB = _wxf(n2) * (n2 as MeshInstance3D).get_aabb()
+				lo.x = minf(lo.x, wb.position.x); lo.y = minf(lo.y, wb.position.z)
+				hi.x = maxf(hi.x, wb.position.x + wb.size.x)
+				hi.y = maxf(hi.y, wb.position.z + wb.size.z)
+		var res: Dictionary = RESERVE[nm]
+		var c: Vector2 = SITES[nm]
+		var rlo := c - Vector2(float(res.w), float(res.d)) * 0.5
+		var rhi := c + Vector2(float(res.w), float(res.d)) * 0.5
+		var over := Vector4(rlo.x - lo.x, rlo.y - lo.y, hi.x - rhi.x, hi.y - rhi.y)
+		var worst: float = maxf(maxf(over.x, over.y), maxf(over.z, over.w))
+		if worst > 0.35:
+			print("  ✗ %s 內容超出保留區 %.2fm（西%+.1f 北%+.1f 東%+.1f 南%+.1f）"
+				% [nm, worst, over.x, over.y, over.z, over.w])
+			fail += 1
+		else:
+			print("  ✓ %s 內容在保留區內（最大外溢 %.2fm）" % [nm, maxf(worst, 0.0)])
+
+	print("\n══ 地標搬遷檢查：%s ══" % ("通過 ✓" if fail == 0 else "%d 個問題 ✗" % fail))
 	root.queue_free()
 	quit(1 if fail > 0 else 0)
