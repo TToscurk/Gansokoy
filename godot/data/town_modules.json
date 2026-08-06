@@ -5,19 +5,31 @@
    "kind": "machiya",
    "w": 7.6,
    "d": 7.8,
-   "fw": 9.3,
+   "fw": 9.54,
    "fd": 9.5,
-   "h": 4.8,
+   "h": 4.5,
+   "gbox": [
+    -4.77,
+    4.77,
+    -8.65,
+    0.85
+   ],
    "faces": 354,
    "glb": "res://assets/models/machiya_f_a.glb"
   },
   "machiya_f_b": {
    "kind": "machiya",
    "w": 8.8,
-   "d": 8.2,
-   "fw": 10.5,
-   "fd": 9.9,
-   "h": 5.4,
+   "d": 7.6,
+   "fw": 10.74,
+   "fd": 9.3,
+   "h": 4.5,
+   "gbox": [
+    -5.37,
+    5.37,
+    -8.45,
+    0.85
+   ],
    "faces": 464,
    "glb": "res://assets/models/machiya_f_b.glb"
   },
@@ -25,9 +37,15 @@
    "kind": "machiya",
    "w": 9.2,
    "d": 7.6,
-   "fw": 10.9,
+   "fw": 11.14,
    "fd": 9.3,
    "h": 9.4,
+   "gbox": [
+    -5.57,
+    5.57,
+    -8.45,
+    0.85
+   ],
    "faces": 614,
    "glb": "res://assets/models/machiya_b_a.glb"
   },
@@ -35,9 +53,15 @@
    "kind": "machiya",
    "w": 10.4,
    "d": 8.0,
-   "fw": 12.1,
+   "fw": 12.34,
    "fd": 9.7,
    "h": 9.9,
+   "gbox": [
+    -6.17,
+    6.17,
+    -8.85,
+    0.85
+   ],
    "faces": 654,
    "glb": "res://assets/models/machiya_b_b.glb"
   },
@@ -45,9 +69,15 @@
    "kind": "machiya",
    "w": 6.0,
    "d": 6.2,
-   "fw": 7.7,
+   "fw": 7.94,
    "fd": 7.9,
    "h": 3.5,
+   "gbox": [
+    -3.97,
+    3.97,
+    -7.05,
+    0.85
+   ],
    "faces": 314,
    "glb": "res://assets/models/machiya_e_a.glb"
   },
@@ -57,9 +87,52 @@
    "w": 12.0,
    "rise": 1.5,
    "rail_h": 1.15,
-   "h": 3.59,
+   "fw": 25.8,
+   "fd": 12.6,
+   "h": 2.89,
+   "gbox": [
+    -12.9,
+    12.9,
+    -6.3,
+    6.3
+   ],
    "faces": 1168,
    "glb": "res://assets/models/bridge_main.glb"
+  },
+  "bridge_small": {
+   "kind": "bridge",
+   "span": 19.0,
+   "w": 4.2,
+   "rise": 0.75,
+   "rail_h": 1.05,
+   "fw": 22.8,
+   "fd": 4.8,
+   "h": 2.04,
+   "gbox": [
+    -11.4,
+    11.4,
+    -2.4,
+    2.4
+   ],
+   "faces": 820,
+   "glb": "res://assets/models/bridge_small.glb"
+  },
+  "unomitei": {
+   "kind": "landmark",
+   "w": 13.2,
+   "d": 9.2,
+   "fw": 15.14,
+   "fd": 17.5,
+   "h": 6.95,
+   "gbox": [
+    -7.57,
+    7.57,
+    -16.005,
+    1.495
+   ],
+   "deck_d": 16.0,
+   "faces": 1574,
+   "glb": "res://assets/models/unomitei.glb"
   }
  }
 }

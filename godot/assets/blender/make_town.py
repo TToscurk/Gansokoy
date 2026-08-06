@@ -10,7 +10,8 @@
 # 92,854 面 → 拆完 22,600，這次第一步就走對的路）。
 #
 # 模組清單（尺寸寫進 town_modules.json，產生器照表擺位）：
-#   machiya_f_a / f_b   前排町家  總高 4.8 / 5.4（規格 4.5~5.5）
+#   machiya_f_a / f_b   前排町家  總高 **4.5 / 4.5**（使用者定案：壓到下限）
+#                       同高之後的變化改由面寬 7.6/8.8 與屋頂 23°/26° 帶
 #   machiya_b_a / b_b   後排町家  總高 9.4 / 9.9（規格 9~10），屋頂 45°
 #   machiya_e_a         村緣小屋  總高 3.5（規格）
 #   bridge_main         12m 寬半拱木橋（拱高 +1.5、欄杆 1.15、親柱加大）
@@ -40,6 +41,13 @@ C_DECK = (0.300, 0.228, 0.152)         # 橋面板（日曬過的木 —— 要�
 C_DECK_DK = (0.246, 0.184, 0.120)      # 第一版 0.36 灰階太高，整座讀成水泥橋）
 C_BEAM = (0.225, 0.172, 0.124)         # 橋樑構材
 C_GIBO = (0.300, 0.285, 0.240)         # 擬宝珠（銅綠前的木/金屬色）
+C_NOREN = (0.145, 0.170, 0.235)        # 暖簾（藍染）—— 食堂的招牌色
+C_CHOCHIN = (0.780, 0.560, 0.230)      # 提灯（點著的暖橘）
+C_BAMBOO = (0.400, 0.365, 0.200)       # 犬矢来的竹
+
+
+def clampf_(v, lo, hi):
+    return lo if v < lo else (hi if v > hi else v)
 
 
 def _mix(a, b, t):
@@ -208,9 +216,14 @@ def machiya(bld, W, D, target_h, storeys, pitch, seed, plinth=0.30):
         ko_z = z0 + body_h * rng.uniform(0.44, 0.50)
         bld.box(0, -0.28, ko_z, W + 0.7, 0.95, 0.10, C_KAWARA_DK, top=C_KAWARA)
         # 卯建（兩側防火牆立上）——後排高町家的剪影特徵
+        # ⚠ 卯建要**穿出屋面**才看得到。第一版頂在 z0+body_h（牆頂）、
+        # 外緣只到 W/2+0.10，整片埋在 0.85m 的出簷底下 —— 實測街道正面／
+        # 3/4 視角各 0 像素，等於白做（而註解還寫著「後排高町家的剪影特徵」）。
         for sx in (1, -1):
-            bld.box(sx * (W / 2 + 0.10), cy * 0.7, z0 + body_h - 0.5,
-                    0.16, D * 0.5, 1.0, C_PLASTER_DK, top=C_KAWARA_DK)
+            ud_top = z0 + body_h + (D / 2) * math.tan(pitch) * 0.72
+            bld.box(sx * (W / 2 + 0.62), cy * 0.72, (z0 + 0.9 + ud_top) / 2,
+                    0.20, D * 0.46, ud_top - z0 - 0.9,
+                    C_PLASTER_DK, top=C_KAWARA_DK)
     # 一階陰影帶（貼地一圈微暗 —— 頂點色的接觸陰影，稗田邸驗過的手法）
     bld.box(0, cy, z0 + 0.10, W + 0.04, D + 0.04, 0.20, C_PLASTER_DK)
     ridge = gable_roof(bld, 0, cy, z0 + body_h, W, D, pitch)
@@ -220,7 +233,8 @@ def machiya(bld, W, D, target_h, storeys, pitch, seed, plinth=0.30):
 # ── 12m 半拱木橋 ──
 
 
-def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
+def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15,
+                nseg=14, npost=12, oya=0.50, abut=True):
     """日式半拱木橋（太鼓橋的緩拱版）。
 
     模組座標：橋面沿 **x**（過橋方向 = x），寬沿 y，原點在橋中心地面。
@@ -236,7 +250,6 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
     """
     hs = span / 2
     hw = width / 2
-    nseg = 14
 
     def arc(x):
         t = max(-1.0, min(1.0, x / hs))
@@ -259,8 +272,8 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
         # 底面（從河面往上看得到）
         bld.quad((x0, -hw, z0 - deck_t), (x0, hw, z0 - deck_t),
                  (x1, hw, z1 - deck_t), (x1, -hw, z1 - deck_t), C_BEAM)
-    # 縱樑 ×3 + 橋腳（兩組，河裡）
-    for fy in (-hw * 0.62, 0.0, hw * 0.62):
+    # 縱樑 + 橋腳（兩組，河裡）。窄橋只要兩根縱樑。
+    for fy in ((-hw * 0.62, 0.0, hw * 0.62) if width >= 6.0 else (-hw * 0.55, hw * 0.55)):
         for i in range(nseg):
             x0 = -hs + i * (span / nseg)
             x1 = x0 + span / nseg
@@ -270,10 +283,18 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
                      C_BEAM)
             bld.quad((x0, fy + 0.17, z0 - deck_t - 0.3), (x1, fy + 0.17, z1 - deck_t - 0.3),
                      (x1, fy + 0.17, z1 - deck_t), (x0, fy + 0.17, z0 - deck_t), C_BEAM)
+    # 下部結構跟著橋寬縮 —— 第一版硬寫 0.42 見方、深 2.8，小橋的三根橋墩
+    # 佔掉 4.2m 橋面寬的 30%，從水面看跟主橋一樣重。
+    pier = clampf_(0.42 * width / 12.0, 0.18, 0.42)
+    pier_d = 1.2 + rise * 2.0
+    fys = (-hw * 0.62, 0.0, hw * 0.62) if width >= 6.0 else (-hw * 0.55, hw * 0.55)
     for px in (-hs * 0.42, hs * 0.42):
-        for fy in (-hw * 0.62, 0.0, hw * 0.62):
-            bld.box(px, fy, arc(px) / 2 - 1.4, 0.42, 0.42, arc(px) + 2.8, C_BEAM)
-        bld.box(px, 0, arc(px) - deck_t - 0.62, 0.5, width * 0.72, 0.34, C_BEAM)
+        for fy in fys:
+            bld.box(px, fy, arc(px) / 2 - pier_d / 2, pier, pier,
+                    arc(px) + pier_d, C_BEAM)
+        # width*0.72 在 width=4.2 時剛好等於橋墩外緣 (hw*0.62 + 0.21) ——
+        # bridge_small 的兩片側面完全共面。加 0.12 讓它一定錯開。
+        bld.box(px, 0, arc(px) - deck_t - 0.62, 0.5, width * 0.72 + 0.12, 0.34, C_BEAM)
     def rail_beam(ry, frac, th, wy, col):
         """沿拱的連續橫木：每段一個**斜切稜柱**（頂/底面跟著弧線斜），
         相鄰段共用端點 —— 連續、無縫。
@@ -297,7 +318,6 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
     # 欄杆（鏤空：上橫木 + 中橫木、束柱）＋ 親柱
     for sy in (1, -1):
         ry = sy * (hw - 0.28)
-        npost = 12
         for i in range(npost + 1):
             px = -hs + i * (span / npost)
             if i in (0, npost):
@@ -312,16 +332,138 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15):
         for sx in (1, -1):
             px = sx * hs
             pz = arc(px) + deck_t
-            bld.box(px, ry, pz + (rail_h + 0.35) / 2 - 0.10, 0.50, 0.50,
+            bld.box(px, ry, pz + (rail_h + 0.35) / 2 - 0.10, oya, oya,
                     rail_h + 0.55, C_WOOD)
             gz = pz + rail_h + 0.25
-            bld.box(px, ry, gz + 0.11, 0.38, 0.38, 0.22, C_GIBO)
-            bld.box(px, ry, gz + 0.31, 0.19, 0.19, 0.18, C_GIBO)
+            bld.box(px, ry, gz + 0.11, oya * 0.76, oya * 0.76, 0.22, C_GIBO)
+            bld.box(px, ry, gz + 0.31, oya * 0.38, oya * 0.38, 0.18, C_GIBO)
     # 橋台（兩端石座 —— 跟河岸接的地方；產生器把它埋進岸裡）
-    for sx in (1, -1):
-        bld.box(sx * (hs + 0.9), 0, -0.55, 2.0, width + 0.6, 1.7,
-                (0.520, 0.520, 0.500), top=(0.420, 0.425, 0.415))
+    if abut:
+        for sx in (1, -1):
+            # 頂緣切齊橋面端點（deck_t=0.24），第一版高出 0.06m，
+            # 正好在踏上橋的地方留一道石唇。
+            bld.box(sx * (hs + 0.9), 0, deck_t - 0.85, 2.0, width + 0.6, 1.7,
+                    (0.520, 0.520, 0.500), top=(0.420, 0.425, 0.415))
     return rise + deck_t + rail_h + 0.35 + 0.35
+
+
+
+# ── 鵜呑亭（臨河食堂）──
+# 使用者決策：河道經過舊街區時**不搬遷，改造成臨河食堂當賣點**。
+# 形制參考京都鴨川納涼床：主屋在陸上、川床（木造平台）用束柱架到水面上。
+# 本河只有 14m 寬、中心水深 1.6m，所以床面取 1.33m（介於鴨川的 2~4m
+# 與貴船的 0.3m 之間）—— 小河配小床。
+# 座標約定跟町家完全一樣（原點=正面地面中心、正面朝 -y、屋身往 +y）：
+#   **-y = 街側**（正面），+y 一路是 主屋 → 縁側 → 川床 → 水面。
+# 產生器只要把 face_dir 設成「河的法線、朝離水那側」就自動擺對，
+# _house()/OBB 檢查一行都不用改。
+def unomitei(bld):
+    W, D = 13.2, 9.2                 # 主屋
+    plinth, pitch = 0.45, math.radians(24.0)
+    body_h = 6.95 - plinth - (D / 2) * math.tan(pitch) - 0.14
+    cy = D / 2
+    rng = random.Random(97)
+    bld.box(0, cy, plinth / 2, W + 0.22, D + 0.22, plinth, C_STONE, top=C_STONE_DK)
+    z0 = plinth
+    bld.box(0, cy, z0 + body_h / 2, W, D, body_h, C_PLASTER)
+    bld.box(0, cy, z0 + 0.10, W + 0.04, D + 0.04, 0.20, C_PLASTER_DK)
+    # 真壁柱（街側 + 河側 + 角）
+    for py, n in ((-0.035, 5), (D + 0.035, 5)):
+        for i in range(n):
+            bld.box(-W / 2 + (i + 0.5) * (W / n), py, z0 + body_h / 2,
+                    0.17, 0.13, body_h, C_WOOD)
+    for sx in (1, -1):
+        bld.box(sx * (W / 2 + 0.02), cy, z0 + body_h / 2, 0.13, 0.13, body_h, C_WOOD)
+    for zz in (0.10, 2.30, body_h - 0.12):
+        for py in (-0.045, D + 0.045):
+            bld.box(0, py, z0 + zz, W + 0.1, 0.11, 0.15, C_WOOD)
+    # 街側門面：中央入口（暖簾）＋兩側出格子
+    bld.box(0, -0.30, z0 + 1.05, 3.30, 0.55, 2.10, C_WOOD_LT)          # 玄関凹處雨遮下
+    for k in range(5):                                                  # 暖簾五巾
+        bld.box(-1.28 + k * 0.64, -0.58, z0 + 2.34, 0.58, 0.03, 1.05, C_NOREN)
+    for sx in (1, -1):
+        bx = sx * 4.35
+        bld.box(bx, -0.22, z0 + 1.45, 3.90, 0.34, 1.70,
+                _mix(C_WOOD, (0, 0, 0), 0.30))                          # 出格子箱
+        for k in range(11):
+            bld.box(bx - 1.85 + k * 0.37, -0.40, z0 + 1.45, 0.07, 0.05, 1.70, C_WOOD_MID)
+        bld.box(bx, -0.22, z0 + 2.36, 4.06, 0.40, 0.14, C_WOOD)         # 格子上框
+    # 犬矢来（0.9m 高的弧形竹欄，貼牆腳）
+    for k in range(14):
+        bld.box(-6.2 + k * 0.95, -0.52, z0 + 0.45, 0.10, 0.10, 0.90, C_BAMBOO)
+    bld.box(0, -0.52, z0 + 0.88, 13.4, 0.12, 0.10, C_BAMBOO)
+    # 提灯 ×2（門口）
+    for sx in (1, -1):
+        bld.box(sx * 1.95, -0.62, z0 + 2.52, 0.34, 0.34, 0.52, C_CHOCHIN)
+        bld.box(sx * 1.95, -0.62, z0 + 2.82, 0.10, 0.10, 0.10, C_WOOD)
+    # 一階庇（街側下屋）
+    bld.box(0, -0.72, z0 + 2.62, W + 0.9, 1.55, 0.11, C_KAWARA_DK, top=C_KAWARA)
+    # 二階虫籠窓
+    # ⚠ 深度 0.10 配 cy=-0.05 → y∈[-0.10, 0.00]，背面**正好落在 y=0**，
+    # 跟主屋正面共面。這正是本檔 169 行明令禁止、docs 記了五次「黑洞」的那個
+    # 病，第六次。町家那邊用的是 cy=-0.050 / d=0.08（y∈[-0.09,-0.01]）。
+    for k in range(4):
+        bld.box(-4.5 + k * 3.0, -0.055, z0 + body_h - 1.05, 1.55, 0.08, 0.72, C_SHOJI)
+        for j in range(5):
+            bld.box(-4.5 + k * 3.0 - 0.62 + j * 0.31, -0.10,
+                    z0 + body_h - 1.05, 0.06, 0.06, 0.72, C_WOOD_MID)
+    gable_roof(bld, 0, cy, z0 + body_h, W, D, pitch)
+    # ── 縁側（主屋 → 川床的過渡）──
+    # 各段互相**重疊 1cm** 而不是零間隙貼合 —— 貼合面會餵給 LOD/陰影網格的
+    # 頂點焊接，是共面問題的溫床。
+    bld.box(0, D + 0.69, 0.50, W, 1.42, 0.14, C_DECK, top=C_DECK)
+    bld.box(0, D + 0.75, 0.16, W - 0.4, 1.30, 0.34, C_BEAM)
+    # 護岸石垣（縁側底下，模組自帶 —— 產生器的護岸在這段會讓開）
+    bld.box(0, D + 0.75, -0.55, W + 0.6, 1.90, 1.60, C_STONE, top=C_STONE_DK)
+    # ── 川床（懸在水面上）──
+    dW, dD = 12.4, 5.4
+    dy = D + 1.39 + dD / 2
+    bld.box(0, dy, 0.42, dW, dD, 0.12, C_DECK, top=C_DECK)              # 床板
+    for k in range(6):                                                   # 大引
+        bld.box(0, D + 1.55 + k * 1.02, 0.28, dW - 0.06, 0.16, 0.22, C_BEAM)
+    # 束柱：4 列 × 4 排，長度過長埋進河床（同 bridge_main 的手法）
+    for ix in range(4):
+        px = -dW / 2 + 0.55 + ix * ((dW - 1.1) / 3)
+        for iy in range(4):
+            py = D + 1.75 + iy * 1.30
+            bld.box(px, py, -1.05, 0.15, 0.15, 2.90, C_BEAM)
+        # 筋交（斜撐）—— 只做外側兩列，剪影才有結構感
+        if ix in (0, 3):
+            bld.box(px, D + 2.40, -0.42, 0.10, 3.20, 0.10, C_BEAM)
+    # 高欄（三面：左右 + 外側，靠主屋那面不做）
+    for sx in (1, -1):
+        for k in range(5):
+            bld.box(sx * (dW / 2 - 0.12), D + 1.75 + k * 1.25, 0.95, 0.11, 0.11, 0.96, C_WOOD_MID)
+        for frac in (0.94, 0.50):
+            bld.box(sx * (dW / 2 - 0.12), dy, 0.48 + 0.96 * frac, 0.13, dD - 0.2, 0.10, C_WOOD)
+    for k in range(11):
+        bld.box(-dW / 2 + 0.35 + k * 1.17, D + 1.40 + dD - 0.12, 0.95, 0.11, 0.11, 0.96, C_WOOD_MID)
+    for frac in (0.94, 0.50):
+        bld.box(0, D + 1.40 + dD - 0.12, 0.48 + 0.96 * frac, dW - 0.2, 0.13, 0.10, C_WOOD)
+    # 川床上半段的庇（靠主屋那 2.1m 有遮，外側開天 —— 納涼床的規矩）
+    bld.box(0, D + 2.45, 3.05, dW + 0.5, 2.30, 0.11, C_KAWARA_DK, top=C_KAWARA)
+    for sx in (1, -1):
+        bld.box(sx * (dW / 2 - 0.25), D + 2.45, 1.75, 0.14, 0.14, 2.60, C_WOOD)
+    return 6.95
+
+
+def _bbox(ob):
+    """(寬 x, 深 y, 高 z) —— 從實際頂點量，不是從建構參數推。"""
+    vs = [v.co for v in ob.data.vertices]
+    return (max(v.x for v in vs) - min(v.x for v in vs),
+            max(v.y for v in vs) - min(v.y for v in vs),
+            max(v.z for v in vs))
+
+
+def _gbox(ob):
+    """模組在 **Godot 局部座標**的 XZ 包絡 [x0, x1, z0, z1]。
+    Blender(x, y) → Godot(x, -y)，所以 z0 = -ymax、z1 = -ymin。
+    佈局端要靠它對**任何**模組建 OBB —— 光有 fw/fd 建不出「原點不在
+    幾何中心」的模組（町家的原點在正面、橋的原點在中心），而那正是
+    鵜呑亭壓到橋上卻沒被自檢抓到的原因。"""
+    vs = [v.co for v in ob.data.vertices]
+    return [round(min(v.x for v in vs), 3), round(max(v.x for v in vs), 3),
+            round(-max(v.y for v in vs), 3), round(-min(v.y for v in vs), 3)]
 
 
 def export(ob, name):
@@ -341,11 +483,18 @@ def export(ob, name):
 # (name, W 面寬, D 進深, 目標總高, storeys, pitch°, seed)
 # 後排進深收到 7.6/8.0：45° 屋頂的 rise = D/2，進深 9m 的話光屋頂就 4.5m，
 # 屋身只剩不到 5m 裝兩層樓。7.6~8.0 的進深讓屋頂 3.8~4.0、屋身 5.2~5.6。
+# 前排兩種都壓到 **4.50**（使用者定案：階梯天際線選 (c)，只動前排、
+# 後排與排間距不動）。同高之後變化改由**面寬／進深／屋頂斜度**帶：
+# f_a 7.6 寬 23°（緩坡、扁）、f_b 8.8 寬 26°（稍陡、寬）—— 剪影仍分得出來，
+# 但兩者的脊都在 4.5，後排 9.4/9.9 的露出量最大化。
+# ⚠ 屋身高是反推的：body = 目標 - 基石 0.30 - (D/2)·tanθ - 棟 0.14。
+# f_b 原本 D=8.2/29° 在 4.5 的目標下反推出 1.79m 屋身（低於 1.8 的下限，
+# assert 會擋），所以 D 收到 7.6、θ 收到 26。
 MACHIYA = [
-    ("machiya_f_a", 7.6, 7.8, 4.80, 1, 26.0, 11),   # 前排（規格 4.5~5.5）
-    ("machiya_f_b", 8.8, 8.2, 5.40, 1, 29.0, 23),   # 前排
-    ("machiya_b_a", 9.2, 7.6, 9.40, 2, 45.0, 37),   # 後排（規格 9~10、45°）
-    ("machiya_b_b", 10.4, 8.0, 9.90, 2, 45.0, 41),  # 後排
+    ("machiya_f_a", 7.6, 7.8, 4.50, 1, 23.0, 11),   # 前排（規格 4.5~5.5 → 壓到下限）
+    ("machiya_f_b", 8.8, 7.6, 4.50, 1, 26.0, 23),   # 前排
+    ("machiya_b_a", 9.2, 7.6, 9.40, 2, 45.0, 37),   # 後排（規格 9~10、45°）不動
+    ("machiya_b_b", 10.4, 8.0, 9.90, 2, 45.0, 41),  # 後排 不動
     ("machiya_e_a", 6.0, 6.2, 3.50, 1, 21.0, 53),   # 村緣（規格 3.5）
 ]
 
@@ -358,20 +507,48 @@ for name, W, D, bh, st, pit, sd in MACHIYA:
     total = machiya(b, W, D, bh, st, math.radians(pit), sd)
     ob = b.build(name)
     n = export(ob, name)
+    # ⚠ fw 要含**屋脊蓋**的 0.24（gable_roof 的棟是 hw*2+0.24）。
+    # 少算的話 gen_town 的 OBB 自檢會樂觀 0.24m —— 實測最壞穿透從 0.000
+    # 變成 0.038m，還在 0.05 門檻內，但報出來的餘裕是假的。
+    # fw/fd/h 一律**從實際 bbox 量**，不是從參數推。
+    bb = _bbox(ob)
     manifest["modules"][name] = {
-        "kind": "machiya", "w": W, "d": D, "fw": round(W + 1.7, 2),
-        "fd": round(D + 1.7, 2), "h": round(total, 2),
+        "kind": "machiya", "w": W, "d": D,
+        "fw": round(bb[0], 2), "fd": round(bb[1], 2), "h": round(bb[2], 2),
+        "gbox": _gbox(ob),
         "faces": n, "glb": "res://assets/models/%s.glb" % name}
     print("  %s 總高 %.2f m" % (name, total))
 
+for _nm, _sp, _wd, _ri, _rh, _ns, _np, _oy in (
+        ("bridge_main", 22.0, 12.0, 1.50, 1.15, 14, 12, 0.50),
+        # 小橋：明確從屬於主橋 —— 窄一半、拱矮一半、親柱小一號，
+        # 但語彙同源（同樣的半拱、鏤空欄杆、擬宝珠）。
+        ("bridge_small", 19.0, 4.2, 0.75, 1.05, 10, 8, 0.30)):
+    clear()
+    b = B()
+    bh = bridge_main(b, span=_sp, width=_wd, rise=_ri, rail_h=_rh,
+                     nseg=_ns, npost=_np, oya=_oy)
+    ob = b.build(_nm)
+    n = export(ob, _nm)
+    bb = _bbox(ob)
+    manifest["modules"][_nm] = {
+        "kind": "bridge", "span": _sp, "w": _wd, "rise": _ri, "rail_h": _rh,
+        "fw": round(bb[0], 2), "fd": round(bb[1], 2), "h": round(bb[2], 2),
+        "gbox": _gbox(ob),
+        "faces": n, "glb": "res://assets/models/%s.glb" % _nm}
+
 clear()
 b = B()
-bh = bridge_main(b)
-ob = b.build("bridge_main")
-n = export(ob, "bridge_main")
-manifest["modules"]["bridge_main"] = {
-    "kind": "bridge", "span": 22.0, "w": 12.0, "rise": 1.5, "rail_h": 1.15,
-    "h": round(bh, 2), "faces": n, "glb": "res://assets/models/bridge_main.glb"}
+uh = unomitei(b)
+ob = b.build("unomitei")
+n = export(ob, "unomitei")
+# ⚠ fd 一定要是**含川床**的真進深（17.5），不是主屋的 10.9 —— 少 6.6m
+# 就是鵜呑亭壓到橋上而 OBB 自檢沒抓到的原因。
+_bb = _bbox(ob)
+manifest["modules"]["unomitei"] = {
+    "kind": "landmark", "w": 13.2, "d": 9.2,
+    "fw": round(_bb[0], 2), "fd": round(_bb[1], 2), "h": round(_bb[2], 2),
+    "gbox": _gbox(ob), "deck_d": 16.0, "faces": n, "glb": "res://assets/models/unomitei.glb"}
 
 mp = os.path.normpath(os.path.join(os.path.dirname(OUT_DIR.rstrip("/")), "..",
                                    "data", "town_modules.json"))

@@ -1,38 +1,39 @@
-# 人間之里 街區重設計・參數化產生器（第一階段：寬橋核心區）
+# 人間之里 全鎮・參數化產生器（第二階段：批量鋪全鎮）
 #
 #   godot --headless --path godot --script tools/gen_town.gd
 #
-# 分工（開工前定案）：Blender 只做模組（make_town.py → machiya_*.glb /
-# bridge_main.glb + data/town_modules.json 尺寸表）；**佈局邏輯全在這裡**，
-# 資料驅動、MultiMesh 批次實例 —— 第一步就 MultiMesh，不重蹈稗田邸
-# 「單一 mesh 事後拆」的回頭路。
+# 分工（開工前定案）：Blender 只做模組（make_town.py → machiya_*/bridge_*/
+# unomitei.glb + data/town_modules.json 尺寸表）；**佈局邏輯全在這裡**，
+# 資料驅動、MultiMesh 批次實例。
 #
 # ── 水系優先 ──
-# RIVER_SPINE 是整個城鎮的結構脊椎（先定河，街區跟著水走）。這條線是
-# **全鎮提案**（村座標，跟 gen_village.gd 同一空間）；本輪只在寬橋核心區
-# 蓋出第一個街區群給使用者驗收，其餘街區等驗收後批量。
+# RIVER_SPINE 是城鎮的結構脊椎：先定河，街區跟著水走。臨河的十個街區
+# 臨街線是**沿著河的樣條**取的（法線方向偏移 11.9m＝河畔道外緣），
+# 不是格線；內陸街區才回到街道格線。
 #
-# 取代的舊決策（記錄在 gen_village.gd 的註解裡，使用者 2026-08-05 看過
-# 空拍幻想鄉參考後明確推翻）：
-#   ・「水道直直的就好不要轉彎」→ 改為蜿蜒河道作為城鎮脊椎
-#   ・12m 主路：舊決策「主街 8m、11m 像機場跑道」是對**南北向本通**說的
-#     （兩側只有 4~6m 的房子，路寬撐不起來）。新的 12m 軸是**過河的東西向
-#     主路**：有 9~10m 的後排町家壓著、有 12m 寬的橋收束，路寬有東西扛。
-#     南北本通維持 8m 不動。
+# ── 這一版取代的舊決策（都在 gen_village.gd 的註解裡）──
+#   ・「水道直直的就好不要轉彎」→ 使用者看空拍參考後推翻，改蜿蜒脊椎。
+#   ・「主街 8m，11m 像機場跑道」→ 那是對南北本通說的，本通維持 8m。
+#     12m 軸放在**過河的東西向主路**（兩側有 9~10m 町家壓著、12m 橋收束）。
+#   ・前排町家 4.5m（使用者本輪定案：階梯天際線選 (c)，只壓前排）。
+#   ・鵜呑亭**不搬遷**，改成臨河食堂（使用者本輪定案）。
 #
-# 輸出：res://maps/townlab/townlab.tscn（獨立試驗場景，不碰 village.tscn）
-#       + data/townlab.instances.json（Blender 端 fallback 預覽用的擺位表）
-# 整合進 village.tscn 是批量階段的事 —— 先讓使用者看核心區。
+# ⚠ 輸出到 **maps/sato/**，不碰 maps/village/。整合（換掉 village、改 trail
+# 與 kourindou 的回程 portal、check_map/walk_test 的地圖清單）是下一個
+# 明確步驟，要使用者點頭 —— gen_village.gd 裡還有大量本輪範圍外的東西
+# （地標內裝、雜物、動物、村人路線），不能靜靜蓋掉。
 extends SceneTree
 
-const OUT_DIR := "res://maps/townlab/"
+const OUT_DIR := "res://maps/sato/"
+const MAP_ID := "sato"
 const MODULES := "res://data/town_modules.json"
-const SEED := 20260805
+const SEED := 20260806
 
-# ── 全鎮河道提案（村座標：-z=北，跟 gen_village.gd 同空間）──
-# 北端出圖處 x≈108（接未來的河畔道→湖，mapRegistry 的 lake connection 鉤子
-# 保留）；南端 x≈64 出圖。轉折避開既有地標街區（x=26 那排的東緣在 47，
-# 河最貼近時岸線離它 ≥8m）。主橋在 (66,30) —— 12m 東西主路過河處。
+const HALF := 300.0
+const PLAZA := Vector2(0, 30)
+const CORE := 196.0
+
+# ── 河道脊椎（村座標：-z = 北）──
 const RIVER_SPINE := [
 	Vector2(108, -300), Vector2(96, -236), Vector2(74, -168), Vector2(86, -108),
 	Vector2(64, -50), Vector2(62, -6), Vector2(66, 30), Vector2(78, 72),
@@ -40,22 +41,50 @@ const RIVER_SPINE := [
 ]
 const RIVER_HALF := 7.0
 const RIVER_DEPTH := 2.5
-const BRIDGE_POS := Vector2(66, 30)
+const BANK_PATH := 11.4          # 岸 7.0 + 護岸 1.2 + 河畔道 3.2
 
-# 12m 東西主路（升級版橫町）。南北本通維持 8m（既有決策不動）。
 const MAIN_EW_Z := 30.0
 const MAIN_EW_W := 12.0
 
-# 核心區試驗場範圍（地形只鋪這一塊）
-const LAB_C := Vector2(66, 30)
-const LAB_HALF := 64.0
+# 橋：主橋 12m 在 12m 主路上；兩座小橋在 z=-80 / z=140 的橫街上。
+# （八條東西街都會碰到河，但規格只給 1~2 座小橋 —— 其餘東西街在西岸
+#  河畔道收尾，不硬蓋橋。選這兩條是因為它們是東西兩側唯二需要的連通。）
+const BRIDGES := [
+	{"kind": "bridge_main", "x": 66.0, "z": 30.0, "yaw": 0.0},
+	{"kind": "bridge_small", "x": 76.8, "z": -80.0, "yaw": 0.0},
+	{"kind": "bridge_small", "x": 58.9, "z": 140.0, "yaw": 0.0},
+]
+
+# 鵜呑亭（臨河食堂）：正面朝河，離主橋西橋頭約 13m。
+# ⚠ 錨點要離主橋夠遠：模組**含川床深 17.5m**（不是主屋的 10.9m），
+# 放在 z=19 時東北角壓到橋的西引道（實測 20 處 3D 互穿，最深 0.78m）。
+const UNOMITEI_ANCHOR := Vector2(50.0, 2.0)
+
+# 既有地標街區：本輪**不重做**（不在街區重設計的範圍內），
+# 但要把地佔起來，街區才不會排到它們身上。佔位量體也一起畫出來，
+# 不然評圖時會看到八個空洞，讀不出城鎮的完整度。
+const LANDMARKS := [
+	{"n": "寺子屋", "x": -26.0, "z": -52.0, "w": 26.0, "d": 16.0, "h": 6.1},
+	{"n": "鈴奈庵", "x": 11.6, "z": -52.0, "w": 13.0, "d": 9.5, "h": 5.4},
+	{"n": "稗田邸", "x": -78.0, "z": 2.0, "w": 27.7, "d": 18.7, "h": 12.8},
+	{"n": "鎮守之杜", "x": -26.0, "z": 2.0, "w": 34.0, "d": 36.0, "h": 14.0},
+	{"n": "市場", "x": -26.0, "z": 57.0, "w": 30.0, "d": 34.0, "h": 4.6},
+	{"n": "火見櫓", "x": 26.0, "z": 57.0, "w": 9.0, "d": 9.0, "h": 16.7},
+	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 24.0, "d": 18.0, "h": 6.4},
+]
 
 var lib = preload("res://tools/gen_lib.gd").new()
 var _root: Node3D
-var _mods := {}                # town_modules.json 的模組表
-var _batch := {}               # 模組名 → Array[Transform3D]（MultiMesh 批次）
+var _mods := {}
+var _batch := {}                 # 模組名 → Array[Transform3D]
 var _audit: Array[String] = []
-var _dump := []                # Blender fallback 預覽用
+var _dump := []                  # [kind, x, y, z, yaw]
+var _nh: FastNoiseLite
+var _n2: FastNoiseLite
+var _river_pts := PackedVector2Array()
+var _roads := []                 # [{pts:[Vector2...], w:float}]
+var _uno_pos := Vector2(1e9, 1e9)   # 鵜呑亭位置（護岸在這段要讓開）
+var _reserved := []                 # 不准蓋町家的 OBB（地標／鵜呑亭／橋）
 
 
 func _init() -> void:
@@ -68,35 +97,67 @@ func _init() -> void:
 	f.close()
 
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR + "gen"))
-	_root = Node3D.new()
-	_root.name = "TownLab"
-	_root.set_meta("own_colliders", true)   # 不要讓 main.gd 套 village 的舊碰撞
-	lib.setup(_root, SEED)
+	# 地形噪聲：照抄 gen_village 已驗收的那組（種子也一樣），
+	# 換圖的時候地貌才不會整個變一個樣。
+	_nh = FastNoiseLite.new(); _nh.frequency = 0.011; _nh.seed = 500
+	_n2 = FastNoiseLite.new(); _n2.frequency = 0.03; _n2.seed = 77
 
-	_build_terrain()
-	_build_river()
-	_build_bridge()
+	_root = Node3D.new()
+	_root.name = "Sato"
+	_root.set_meta("own_colliders", true)
+	lib.setup(_root, SEED)
+	_build_roads()
+
+	lib.terrain(OUT_DIR, HALF, 221, height_at, mask_at, "cobble",
+		Color(0.60, 0.94, 0.55), "terrain_path", Color(0.80, 0.75, 0.66))
+	lib.boundary(HALF - 2.0)
+	_plug_river_mouths()
+	# sink 0.35 → 0.20：0.35 的話護岸頂離水面 0.98m，整條河讀成水泥排水渠
+	# （引擎內低視角截圖看出來的）。0.20 之後只差 0.60m，水是滿的。
+	lib.river_water(OUT_DIR, _river(), RIVER_HALF * 0.86, RIVER_DEPTH * 0.20, bank_h)
+	_build_unomitei()          # 先算位置：護岸要在這一段讓開
+	_build_revetment()
+	_build_bridges()
+	_build_landmark_stubs()
 	_build_blocks()
 	_assert_no_overlap()
 	_emit_batches()
+	_build_collision()
+	lib.vista(OUT_DIR, HALF, 900.0, height_at,
+		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
+		 {"x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0},
+		 {"x": -560.0, "z": -600.0, "h": 70.0, "r": 220.0},
+		 {"x": 520.0, "z": 560.0, "h": 90.0, "r": 180.0}],
+		"res://assets/models/tree_round_b.glb", 420,
+		[{"glb": "res://assets/models/bamboo_a.glb", "count": 300, "cx": -430.0,
+		  "cz": 470.0, "r": 240.0, "smin": 1.3, "smax": 2.2},
+		 {"glb": "res://assets/models/bamboo_b.glb", "count": 220, "cx": -540.0,
+		  "cz": 350.0, "r": 200.0, "smin": 1.4, "smax": 2.4}])
 	_build_env()
-	lib.boundary(LAB_HALF + 30.0)
+	_perf_pass(_root)
 
 	for line in _audit:
 		print(line)
 
 	var packed := PackedScene.new()
 	packed.pack(_root)
-	var err := ResourceSaver.save(packed, OUT_DIR + "townlab.tscn")
-	print("saved townlab.tscn err=", err)
+	var err := ResourceSaver.save(packed, OUT_DIR + "%s.tscn" % MAP_ID)
+	print("saved %s.tscn err=%d  節點 %d" % [MAP_ID, err, _count(_root)])
+	_write_meta()
 	_write_dump()
 	quit()
 
 
-# ── 河道幾何 ──
+func _count(n: Node) -> int:
+	var c := 1
+	for ch in n.get_children():
+		c += _count(ch)
+	return c
+
+
+# ── 河道 ──
 
 func _spline(ctrl: Array, per_seg: int) -> PackedVector2Array:
-	## Catmull-Rom（跟 make_hieda.py 的 _spline 同款）——控制點少、曲線滑。
 	var out := PackedVector2Array()
 	for i in ctrl.size() - 1:
 		var p0: Vector2 = ctrl[max(i - 1, 0)]
@@ -112,142 +173,343 @@ func _spline(ctrl: Array, per_seg: int) -> PackedVector2Array:
 	return out
 
 
-var _river_pts := PackedVector2Array()
-
-func _river_lab_pts() -> PackedVector2Array:
-	## 試驗場範圍內的河段（含一點越界，讓水在圖緣外收尾）
+func _river() -> PackedVector2Array:
 	if _river_pts.is_empty():
 		_river_pts = _spline(RIVER_SPINE, 14)
-	var out := PackedVector2Array()
-	for p in _river_pts:
-		if abs(p.x - LAB_C.x) < LAB_HALF + 24.0 and abs(p.y - LAB_C.y) < LAB_HALF + 24.0:
-			out.append(p)
-	return out
+	return _river_pts
+
+
+func _nearest_river_pt(at: Vector2) -> Vector2:
+	var best := _river()[0]
+	var bd := 1e18
+	for p in _river():
+		var d := p.distance_squared_to(at)
+		if d < bd:
+			bd = d
+			best = p
+	return best
 
 
 func river_tangent(at: Vector2) -> Vector2:
-	## 河道在最近點的切線（單位向量）。街區「對水角度」靠它。
-	if _river_pts.is_empty():
-		_river_pts = _spline(RIVER_SPINE, 14)
+	var pts := _river()
 	var bi := 0
 	var bd := 1e18
-	for i in _river_pts.size():
-		var d := _river_pts[i].distance_squared_to(at)
+	for i in pts.size():
+		var d := pts[i].distance_squared_to(at)
 		if d < bd:
 			bd = d
 			bi = i
-	var a := _river_pts[max(bi - 1, 0)]
-	var b := _river_pts[min(bi + 1, _river_pts.size() - 1)]
-	return (b - a).normalized()
+	return (pts[min(bi + 1, pts.size() - 1)] - pts[max(bi - 1, 0)]).normalized()
 
 
-# ── 地形（試驗場小patch：平地 + 河道下切 + 路面遮罩）──
+# ── 地形 ──
+# bank_h = 岸的高度（不含河道下切）。水面一律用它 —— 用 height_at 的話
+# 水面會跟著河床沉下去（gen_village 的註解點名過）。
 
-func _height_at(x: float, z: float) -> float:
-	var h: float = lib.river_carve(_river_lab_pts(), RIVER_HALF, RIVER_DEPTH, x, z)
-	var d: float = lib.poly_dist(_river_lab_pts(), x, z)
+func bank_h(x: float, z: float) -> float:
+	var r := Vector2(x, z - 30.0).length()
+	return _nh.get_noise_2d(x, z) * 2.4 * (0.06 + 0.94 * smoothstep(176.0, 266.0, r)) \
+		+ sin(x * 0.46 + z * 0.33) * 0.04
+
+
+func height_at(x: float, z: float) -> float:
+	var h := bank_h(x, z)
+	h += lib.river_carve(_river(), RIVER_HALF, RIVER_DEPTH, x, z)
+	var d: float = lib.poly_dist(_river(), x, z)
 	# 下切影響半徑收斂：river_carve 的緩坡拖到 2.2×half=15.4m，房子的基石
-	# 會浮在坡上、主路在橋前先陷 0.77m 再爬上橋台。岸外 1.2m 起 2.8m 內
-	# 收到 0 —— 岸還有軟肩，但路和街區站在平地上。
+	# 會浮在坡上、路在橋前先陷再爬上橋台。岸外 1.2m 起 2.8m 內收到 0。
 	if d > RIVER_HALF + 1.2:
-		h *= clampf(1.0 - (d - (RIVER_HALF + 1.2)) / 2.8, 0.0, 1.0)
-	# 12m 主路廊道拉平（水道開口除外）：橋的兩端要平接橋台，
-	# 不是先下坡再撞上 0.26m 的橋緣。
-	if absf(z - MAIN_EW_Z) < 7.5 and d > RIVER_HALF + 0.6:
-		h *= clampf((absf(z - MAIN_EW_Z) - 6.0) / 1.5, 0.0, 1.0)
+		var k := clampf(1.0 - (d - (RIVER_HALF + 1.2)) / 2.8, 0.0, 1.0)
+		h = bank_h(x, z) + (h - bank_h(x, z)) * k
+	# 橋頭把路廊拉平，才平接橋台
+	for b in BRIDGES:
+		if absf(x - b.x) < 16.0 and absf(z - b.z) < 8.0 and d > RIVER_HALF + 0.6:
+			h = bank_h(x, z) + (h - bank_h(x, z)) \
+				* clampf((absf(z - b.z) - 6.0) / 1.5, 0.0, 1.0)
 	return h
 
 
-func _mask_at(x: float, z: float) -> Color:
-	var path := 0.0
-	# 12m 東西主路
-	var dz: float = abs(z - MAIN_EW_Z) - MAIN_EW_W * 0.5
-	path = maxf(path, clampf(1.0 - maxf(dz, 0.0) / 0.9, 0.0, 1.0))
-	# （南北巷這輪不畫：上一版畫在 x=36/100，正好從 12 棟房子底下穿過 ——
-	# 巷子要等批量階段跟街區一起排，不是先畫線再擺房。）
-	# 河畔道（沿岸 3.2m —— 街區讓出來的濱水步道）
-	var dr: float = lib.poly_dist(_river_lab_pts(), x, z) - (RIVER_HALF + 1.2)
+func _road_info(x: float, z: float) -> float:
+	## 回傳 0~1 的路面遮罩（1 = 路心）
+	var best := 0.0
+	for r in _roads:
+		var d: float = lib.poly_dist(r.pts, x, z) - r.w * 0.5
+		best = maxf(best, clampf(1.0 - maxf(d, 0.0) / 0.9, 0.0, 1.0))
+	return best
+
+
+func mask_at(x: float, z: float) -> Color:
+	## 遮罩通道的意義由 terrain_pbr.gdshader 定：
+	##   R = 鋪石板　G = 田（農地）　B = 巨觀明暗　A = 夯土
+	## ⚠ 第一版把 G 拿去當「森林」用，結果全鎮外圈鋪成一圈黃田 ——
+	## 而**農田系統是規格裡明確延後的獨立階段**，這輪不該有田。G 一律 0。
+	## 另外照 gen_village 已驗收的定調：石板**只留給村心**（r<38 漸收），
+	## 其餘的路一律走 A 的夯土 —— 石板鋪到田邊很出戲。
+	var road := _road_info(x, z)
+	# 河畔道：沿岸 3.2m 的步道（街區讓出來的濱水公共空間）
+	var dr: float = lib.poly_dist(_river(), x, z) - (RIVER_HALF + 1.2)
 	if dr > 0.0 and dr < 3.2:
-		path = maxf(path, 0.7)
-	return Color(path, 0.0, 0.0, 0.0)
+		road = maxf(road, 0.72)
+	# 河灘：水邊一圈砂石，水面與草地之間要有過渡
+	var rd: float = lib.poly_dist(_river(), x, z)
+	var shore := 1.0 - smoothstep(RIVER_HALF * 0.7, RIVER_HALF * 1.9, rd)
+	var r := Vector2(x, z - PLAZA.y).length()
+	var stone_k := 1.0 - smoothstep(10.0, 38.0, r)
+	var path_w: float = maxf(road, shore)
+	var dirt: float = path_w * (1.0 - stone_k)
+	path_w *= stone_k
+	var macro := clampf(_nh.get_noise_2d(x * 0.4, z * 0.4) * 0.5 + 0.5, 0.0, 1.0)
+	# 街區內側（房子與房子之間的院子）也是踏實的土
+	var court := 0.0
+	if road < 0.15 and r < CORE:
+		court = clampf(0.34 - r / 700.0, 0.0, 0.34) \
+			* clampf(_n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
+	return Color(path_w, 0.0, macro, maxf(dirt, court))
 
 
-func _build_terrain() -> void:
-	# lib.terrain 自己掛進 root（回傳值只拿來設位置）。
-	# 地形以原點建、整塊平移到 LAB_C —— height/mask fn 對應把座標移回世界。
-	var t := lib.terrain(OUT_DIR, LAB_HALF, 129,
-		func(x: float, z: float) -> float:
-			return _height_at(x + LAB_C.x, z + LAB_C.y),
-		func(x: float, z: float) -> Color:
-			return _mask_at(x + LAB_C.x, z + LAB_C.y))
-	t.position = Vector3(LAB_C.x, 0.0, LAB_C.y)
+func _build_roads() -> void:
+	var rv := _river()
+	# 主要道路。東西向橫街碰到河就在西岸河畔道收尾（除了有橋的兩條）。
+	_roads.append({"pts": [Vector2(0, -240), Vector2(0, 250)], "w": 8.0})       # 本通
+	_roads.append({"pts": [Vector2(-190, 30), Vector2(200, 30)], "w": MAIN_EW_W})
+	for spec in [[-135.0, false], [-80.0, true], [85.0, false], [140.0, true]]:
+		var z: float = spec[0]
+		var bridged: bool = spec[1]
+		var rx := _nearest_river_pt(Vector2(0, z)).x
+		for p in rv:
+			if absf(p.y - z) < 2.5:
+				rx = p.x
+				break
+		if bridged:
+			_roads.append({"pts": [Vector2(-150, z), Vector2(150, z)], "w": 5.0})
+		else:
+			_roads.append({"pts": [Vector2(-150, z), Vector2(rx - BANK_PATH, z)], "w": 5.0})
+			_roads.append({"pts": [Vector2(rx + BANK_PATH, z), Vector2(150, z)], "w": 5.0})
+	for x in [-156.0, -104.0, -52.0, 104.0]:
+		_roads.append({"pts": [Vector2(x, -190), Vector2(x, 195)], "w": 4.5})
+	# x=52 在 z∈[125,190] 整段落在河裡（最近 3.85m，河半寬 7）→ 截斷在 118，
+	# 南段的通行由西岸河畔道接手。
+	_roads.append({"pts": [Vector2(52, -190), Vector2(52, 118)], "w": 4.5})
+	# 西南門引道
+	_roads.append({"pts": [Vector2(-104, 92), Vector2(-172, 92)], "w": 4.0})
+	# 北門引道（本通往北出村）
+	_roads.append({"pts": [Vector2(0, -240), Vector2(0, -215)], "w": 6.0})
 
 
-func _build_river() -> void:
-	var pts := _river_lab_pts()
-	# river_water 自己掛進 root；bank_y_fn 是 (x, z) 兩參數
-	lib.river_water(OUT_DIR, pts, RIVER_HALF * 0.86, RIVER_DEPTH * 0.35,
-		func(_x: float, _z: float) -> float: return 0.0)
-	# 石積護岸：沿線兩側的低擋牆（頂 +0.30、埋到 -1.3）。
-	# 參考空拍：市中心段的河是**砌石岸**，不是自然土坡 —— 這是「城鎮裡的河」
-	# 跟「野外的河」的分別。
-	var g := lib.add(_root, Node3D.new(), "護岸")
-	for i in range(0, pts.size() - 1):
+# ── 護岸（MultiMesh）──
+# 全長 619m、154 段 × 2 岸 = 308 個候選；扣掉橋位、鵜呑亭與村外之後
+# 實際約 119 個實例。一段一個 MeshInstance3D 的話就是 119 個節點。
+
+func _build_revetment() -> void:
+	var pts := _river()
+	var list: Array = []
+	var bm := BoxMesh.new()
+	# ⚠ 高度要夠深才埋得住。護岸擺在離河心 7.25m，而 river_carve 的坡在
+	# 那裡已經把地面挖到 bank_h - 1.37m —— 第一版用 1.15m 高、錨在 bank_h，
+	# 結果整條護岸**浮在被挖空的岸坡上方**，1.15m 全露出來，讀成水泥擋牆。
+	# 改成「頂緣固定在 bank_h + 0.08、往下埋 2.2m」，底一定在碎坡之下。
+	bm.size = Vector3(0.5, 2.2, 4.2)
+	for i in range(pts.size() - 1):
 		var a := pts[i]
 		var b := pts[i + 1]
-		var tan := (b - a)
-		var len := tan.length()
-		if len < 0.01:
+		var tv := b - a
+		var ln := tv.length()
+		if ln < 0.01:
 			continue
-		tan /= len
-		var nrm := Vector2(-tan.y, tan.x)
+		tv /= ln
+		var nrm := Vector2(-tv.y, tv.x)
 		for sd in [-1.0, 1.0]:
-			var off: Vector2 = nrm * sd * (RIVER_HALF + 0.25)
-			var mid: Vector2 = (a + b) * 0.5 + off
-			# 橋位讓開（橋台自己接岸）
-			if abs(mid.x - BRIDGE_POS.x) < 7.5 and abs(mid.y - BRIDGE_POS.y) < 7.5:
+			var mid: Vector2 = (a + b) * 0.5 + nrm * sd * (RIVER_HALF + 0.25)
+			var skip := false
+			for br in BRIDGES:
+				if absf(mid.x - br.x) < 8.0 and absf(mid.y - br.z) < 8.0:
+					skip = true
+			# 鵜呑亭自帶石垣（川床底下那段），產生器的護岸讓開免得兩片共面
+			if mid.distance_to(_uno_pos) < 22.0:
+				skip = true
+			# 砌石護岸是**城鎮裡的河**才有的東西；出了村心就是自然土岸。
+			# 一路砌到圖緣會讓整條河讀成人工渠道。
+			if Vector2(mid.x, mid.y - PLAZA.y).length() > 132.0:
+				skip = true
+			if skip:
 				continue
-			var bx := lib.box(g, "岸_%d_%d" % [i, int(sd)],
-				Vector3(0.55, 1.6, len + 0.25), lib.flat_mat("岸石", Color(0.42, 0.42, 0.40), 0.95),
-				Vector3(mid.x, -0.50, mid.y))
-			bx.rotation.y = atan2(tan.x, tan.y)
+			var bs := Basis(Vector3.UP, atan2(tv.x, tv.y))
+			bs = bs * Basis.from_scale(Vector3(1.0, 1.0, (ln + 0.25) / 4.2))
+			list.append(Transform3D(bs,
+				Vector3(mid.x, bank_h(mid.x, mid.y) - 1.02, mid.y)))
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = lib.make_multimesh(bm, list, [], OUT_DIR + "gen/mm_revetment.res")
+	# ⚠ 0.42 的灰在直射陽光下讀成水泥防洪牆（引擎內截圖看出來的）。
+	# 砌石護岸要暗、要偏冷；只露出 0.22m，其餘埋進岸裡。
+	mmi.material_override = lib.flat_mat("岸石", Color(0.205, 0.198, 0.183), 0.96)
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mmi.visibility_range_end = 160.0
+	lib.add(_root, mmi, "護岸")
+	_audit.append("護岸 %d 段 → 1 個 MultiMesh（一段一節點的話是 %d 個節點）"
+		% [list.size(), list.size()])
 
 
-func _build_bridge() -> void:
-	# 12m 半拱木橋。模組沿 Blender x → Godot x：橋面東西走向，正好跨過
-	# 在這裡南北流的河。**朝向跟太陽是配過的**：daynight 的影子永遠往 -z
-	# 半空擺 ±40°，南側欄杆的鏤空欄影整天都掃在橋面上（規格點）。
-	var mesh: Mesh = lib.prop_mesh(String(_mods["bridge_main"]["glb"]))
+func _plug_river_mouths() -> void:
+	## lib.boundary 的空氣牆只擋 y∈[0,40]，河床在圖緣是 -2.5~-3.5m ——
+	## 玩家可以從河口走出地圖。兩片小牆把河口補起來。
+	var body := StaticBody3D.new()
+	body.name = "河口封堵"
+	_root.add_child(body)
+	body.owner = _root
+	for p in [_river()[0], _river()[_river().size() - 1]]:
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(RIVER_HALF * 2.0 + 10.0, 10.0, 1.0)
+		sh.shape = bx
+		sh.position = Vector3(p.x, -3.0, clampf(p.y, -(HALF - 1.5), HALF - 1.5))
+		body.add_child(sh)
+		sh.owner = _root
+
+
+# ── 橋 ──
+
+func _build_bridges() -> void:
+	var g := lib.add(_root, Node3D.new(), "橋")
+	for b in BRIDGES:
+		var mesh: Mesh = lib.prop_mesh(String(_mods[b.kind]["glb"]))
+		var mi := MeshInstance3D.new()
+		mi.mesh = mesh
+		mi.position = Vector3(b.x, bank_h(b.x, b.z) + 0.02, b.z)
+		mi.rotation.y = b.yaw
+		# ⚠ own_colliders=true 之下，main.gd 只給名為 "Terrain" 或帶
+		# needs_trimesh 的 MeshInstance3D 做碰撞 —— 沒這行的話橋是可以穿的
+		# （上一輪的 townlab 就是這樣，全場只有一個空氣牆 StaticBody3D）。
+		mi.set_meta("needs_trimesh", true)
+		lib.add(g, mi, "%s_%d" % [b.kind, int(b.z)])
+		_dump.append([b.kind, b.x, mi.position.y, b.z, b.yaw])
+		_reserved.append(_obb_of([b.kind, b.x, 0.0, b.z, b.yaw]))
+	_audit.append("橋 %d 座（主橋 12m + 小橋 4.2m ×2），全部帶 needs_trimesh" % BRIDGES.size())
+
+
+# ── 地標佔位 + 鵜呑亭 ──
+
+func _build_landmark_stubs() -> void:
+	## ⚠ 第一版是無屋頂的素色方塊 —— 引擎內截圖讀成一排倉庫，把整個
+	## 天際線壓垮。佔位也要有屋頂：切妻 + 瓦色，剪影才跟町家同一個語彙。
+	## （內容仍然不做 —— 地標不在街區重設計的範圍內。）
+	var g := lib.add(_root, Node3D.new(), "地標佔位")
+	var lm_body := StaticBody3D.new()
+	lm_body.name = "地標碰撞"
+	_root.add_child(lm_body)
+	lm_body.owner = _root
+	var mw := lib.flat_mat("佔位牆", Color(0.575, 0.560, 0.520), 0.92)
+	var mr := lib.flat_mat("佔位瓦", Color(0.150, 0.163, 0.192), 0.88)
+	for L in LANDMARKS:
+		var y: float = bank_h(L.x, L.z)
+		var wall_h: float = maxf(L.h * 0.62, L.h - L.d * 0.30)
+		lib.box(g, L.n, Vector3(L.w, wall_h, L.d), mw,
+			Vector3(L.x, y + wall_h * 0.5, L.z))
+		lib.gable_roof(g, y + wall_h, L.w + 1.6, L.d + 1.6,
+			atan2(L.h - wall_h, L.d * 0.5), 0.22, mr, mr,
+			Vector3(L.x, 0.0, L.z))
+		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過七座地標
+		_reserved.append([Vector2(L.x, L.z), Vector2(1, 0), Vector2(0, 1),
+			(L.w + 1.6) * 0.5, (L.d + 1.6) * 0.5, L.n])
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(L.w, wall_h, L.d)
+		sh.shape = bx
+		sh.position = Vector3(L.x, y + wall_h * 0.5, L.z)
+		lm_body.add_child(sh)
+		sh.owner = _root
+	_audit.append("地標佔位 %d 座（本輪不重做內容，只佔地 + 給天際線量體）"
+		% LANDMARKS.size())
+
+
+func _build_unomitei() -> void:
+	## 使用者決策：鵜呑亭不搬遷，改成臨河食堂。
+	## 正面（-y 面）朝河，屋身往河延伸 → 川床懸在水面上。
+	var rp := _nearest_river_pt(UNOMITEI_ANCHOR)
+	var t := river_tangent(rp)
+	var n := Vector2(-t.y, t.x)
+	if n.dot(UNOMITEI_ANCHOR - rp) < 0.0:
+		n = -n                                   # 法線朝陸地（西岸）
+	# ⚠ 模組的 **-y 面是街側**（正面），屋身往 +y 長，川床在最遠端。
+	# 所以正面要朝**離開河的方向**（= n），屋身才會往河長、川床才會懸到
+	# 水上。第一版寫成 atan2(-n.x,-n.y)（正面朝河），屋身整個往陸地長，
+	# 川床落在離河 20m 的草地上 —— 引擎內截圖才看出來。
+	# 距離：原點（街側正面）離河心 18.5m
+	#   → 主屋河側牆 18.5-9.2 = 9.3（岸 7.0 外側 2.3m）
+	#   → 川床 7.9 ~ 2.5（水面半寬 6.02，外側 3.5m 懸在水上）
+	var pos: Vector2 = rp + n * 18.5
+	var mesh: Mesh = lib.prop_mesh(String(_mods["unomitei"]["glb"]))
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh
-	mi.position = Vector3(BRIDGE_POS.x, 0.02, BRIDGE_POS.y)
-	lib.add(_root, mi, "主橋")
-	_dump.append(["bridge_main", BRIDGE_POS.x, 0.02, BRIDGE_POS.y, 0.0])
-	_audit.append("主橋 @ (%.0f, %.0f)  跨 22m×寬 12m  拱 +1.5  欄杆 1.15（模組值）"
-		% [BRIDGE_POS.x, BRIDGE_POS.y])
+	var yaw := atan2(n.x, n.y)                   # 正面（街側）朝 n = 背對河
+	mi.position = Vector3(pos.x, bank_h(pos.x, pos.y), pos.y)
+	mi.rotation.y = yaw
+	mi.set_meta("needs_trimesh", true)
+	lib.add(_root, mi, "鵜呑亭")
+	_dump.append(["unomitei", pos.x, mi.position.y, pos.y, yaw])
+	_reserved.append(_obb_of(["unomitei", pos.x, 0.0, pos.y, yaw]))
+	var deck_out: Vector2 = pos - n * 16.0
+	_audit.append("鵜呑亭（臨河食堂）@(%.1f,%.1f) yaw %.1f°　川床外緣離河心 %.1fm"
+		% [pos.x, pos.y, rad_to_deg(yaw), deck_out.distance_to(rp)]
+		+ "（水面半寬 %.1f → 懸在水上 %.1fm）、離主橋 %.0fm"
+		% [RIVER_HALF * 0.86, RIVER_HALF * 0.86 - deck_out.distance_to(rp),
+		   pos.distance_to(Vector2(66, 30))])
+	_uno_pos = pos
 
 
-# ── 複合街區產生器（本輪真正的交付物）──
+# ── 複合街區產生器 ──
 #
 # 參數：
-#   frontage  {a: Vector2, b: Vector2}    臨街線（前排沿它擺，法線朝街）
-#   rows      [{kinds, setback, jog: [lo, hi]}, {kinds, gap: [lo, hi], ...}]
-#             jog = 鄰棟前後錯位範圍（規格 1~2m —— 打破直線）
-#   wrap      "L" / "U" / ""              端部轉 90° 包角（打破格狀）
-#   river_end true                        靠河那端最後一棟改成對河道切線
+#   frontage {a,b}   臨街線（河邊的街區這條線是**沿河樣條**取的）
+#   into             進深方向（街的反向）
+#   rows             [{kinds, setback|gap, jog, lateral, gap_after}]
+#   wrap "L"/"U"     端部轉 90° 包角（打破矩形排排站）
+#   river_end        靠河端補一棟正對河畔道的
+#   spacing          鄰棟間隔（村緣帶要放大 —— 疏才是村緣）
 #
-# 前排沿臨街線排；後排在前排背後 gap 處、橫向錯半個面寬（屋脊互相錯開，
-# 天際線才有進退）。鄰棟錯位 jog 由亂數逐棟累進 —— 這是「打破格線」的
-# 最小機制：排的方向仍然順著街／河，但沒有兩棟真正對齊。
+# 鄰棟前後錯位 jog 逐棟累進 = 「打破格線」的最小機制：排的方向仍順著
+# 街／河，但沒有兩棟真正對齊。
+
+func _on_road(pos: Vector2, face_dir: Vector2, kind: String) -> bool:
+	## 屋身（不含出簷）有沒有壓到任何路面。取四個角點對每條路量距離。
+	var m: Dictionary = _mods[kind]
+	var fwd := face_dir.normalized()
+	var side := Vector2(fwd.y, -fwd.x)
+	var hw: float = float(m["w"]) * 0.5
+	var dd: float = float(m["d"])
+	for sx in [-1.0, 1.0]:
+		for sy in [0.0, 1.0]:
+			var q: Vector2 = pos + side * sx * hw - fwd * (dd * sy)
+			for r in _roads:
+				if lib.poly_dist(r.pts, q.x, q.y) < r.w * 0.5 + 0.9:
+					return true
+	return false
+
+
+func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
+	## 這棟會不會壓到地標／鵜呑亭／橋。用跟自檢同一個 OBB 建法，
+	## 所以「產生時擋掉」跟「事後檢查」量的是同一件事。
+	var yaw := atan2(face_dir.x, face_dir.y)
+	var r := _obb_of([kind, pos.x, 0.0, pos.y, yaw])
+	for q in _reserved:
+		if _obb_pen(r, q) > 0.05:
+			return true
+	return false
+
 
 func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
-	## face_dir = 正面朝向（朝街的單位向量）。模組正面在 Godot 朝 +z（yaw 0）。
+	## 村緣降級的**單一收口點**。排屋迴圈裡也做了一次（那裡要早一步做，
+	## 才算得出正確的中心），但包角棟與河畔棟是直接呼叫這裡的 —— 只在
+	## 迴圈裡做的話它們會漏掉（實測 r≥155 還剩兩棟 4.5m 的 f_a）。
+	if kind != "machiya_e_a" and kind.begins_with("machiya") \
+			and Vector2(pos.x, pos.y - PLAZA.y).length() >= 155.0:
+		kind = "machiya_e_a"
 	var yaw := atan2(face_dir.x, face_dir.y)
-	var xf := Transform3D(Basis(Vector3.UP, yaw), Vector3(pos.x, 0.0, pos.y))
+	var y := bank_h(pos.x, pos.y)
+	var xf := Transform3D(Basis(Vector3.UP, yaw), Vector3(pos.x, y, pos.y))
 	if not _batch.has(kind):
 		_batch[kind] = []
 	_batch[kind].append(xf)
-	_dump.append([kind, pos.x, 0.0, pos.y, yaw])
+	_dump.append([kind, pos.x, y, pos.y, yaw])
 
 
 func _block(seed_i: int, cfg: Dictionary) -> void:
@@ -256,30 +518,29 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 	var a: Vector2 = cfg["frontage"]["a"]
 	var b: Vector2 = cfg["frontage"]["b"]
 	var along := (b - a).normalized()
-	var into: Vector2 = cfg.get("into", Vector2(-along.y, along.x))  # 街的反向＝進深方向
-	var face := -into                       # 正面朝街
+	var into: Vector2 = cfg.get("into", Vector2(-along.y, along.x))
+	var face := -into
 	var span := a.distance_to(b)
 	var rows: Array = cfg["rows"]
 	var name: String = cfg.get("name", "block")
+	var spacing: Array = cfg.get("spacing", [1.9, 3.0])
 
 	# ── 角落預留 ──
-	# 包角棟／河畔棟不是「事後硬塞」：先把端部的地讓出來，前排排到預留線
-	# 就停。第一版沒有預留，包角棟全數跟排屋穿插 0.5~6.2m（審查用 OBB
-	# 逐對量出來的）—— 位置對不對不能用看的，要留給 _assert_no_overlap()。
+	# 包角棟／河畔棟不是事後硬塞：先把端部的地讓出來，前排排到預留線就停。
+	# 沒有預留的那一版，五棟包角棟全數跟排屋穿插 0.5~6.2m。
 	var wrap: String = cfg.get("wrap", "")
 	var wrap_kind: String = cfg.get("wrap_kind", "machiya_f_a")
+	var wrap_end: String = cfg.get("wrap_end", "b")
 	var reserve_a := 0.0
 	var reserve_b := 0.0
-	if wrap == "U" or (wrap == "L" and cfg.get("wrap_end", "b") == "a"):
+	if wrap == "U" or (wrap == "L" and wrap_end == "a"):
 		reserve_a = float(_mods[wrap_kind]["d"]) + 1.6
-	if wrap == "U" or (wrap == "L" and cfg.get("wrap_end", "b") == "b"):
+	if wrap == "U" or (wrap == "L" and wrap_end == "b"):
 		reserve_b = float(_mods[wrap_kind]["d"]) + 1.6
 	var river_reserve := 0.0
 	if cfg.get("river_end", false):
-		# 河畔棟固定吃 b 端的角。牠的**屋身**朝街區內伸（面朝河），
-		# 佔掉的是 fd（含出簷進深）—— 用面寬算會少留 ~2.5m，後排尾棟
-		# 就撞上來（審查抓到的 1.01m 穿插正是這個）。而且**每一排**都要讓，
-		# 不只前排。
+		# 河畔棟的**屋身**朝街區內伸（正面朝河），佔掉的是 fd（含出簷進深），
+		# 用面寬算會少留 ~2.5m。而且每一排都要讓，不只前排。
 		river_reserve = float(_mods[cfg.get("river_kind", "machiya_f_b")]["fd"]) + 2.6
 		reserve_b = maxf(reserve_b, river_reserve)
 
@@ -291,10 +552,9 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 		var base_set: float = row.get("setback", 0.8)
 		if row_i > 0:
 			base_set = front_depth + rng.randf_range(row["gap"][0], row["gap"][1])
-		var lateral: float = row.get("lateral", 0.0)
-		var s: float = row.get("start", 0.6) + lateral
+		var s: float = row.get("start", 0.6) + float(row.get("lateral", 0.0))
 		if row_i == 0:
-			s += reserve_a                  # 角落讓給包角棟
+			s += reserve_a
 		var gap_after: int = row.get("gap_after", -1)
 		var set_prev := base_set
 		var deepest := base_set
@@ -306,177 +566,508 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			var limit: float = span - 0.4 - (reserve_b if row_i == 0 else river_reserve)
 			if s + w > limit:
 				break
-			# 鄰棟前後錯位：規格 1~2m。第一棟取 base，之後每棟相對前一棟
-			# 錯 ±rr(1,2) —— 夾回 [base, base+2.2] 免得整排漂走。
 			var setb := base_set
 			if hn > 0:
 				var d := rng.randf_range(jog[0], jog[1]) * (1.0 if hn % 2 == 1 else -1.0)
 				setb = clampf(set_prev + d, base_set, base_set + 2.2)
-				_audit.append("  %s 排%d 棟%d 錯位 %.2f m" % [name, row_i, hn, absf(setb - set_prev)])
 			set_prev = setb
+			# 村緣規則在這裡收口：r≥155 一律換成 3.5m 的村緣小屋，不管街區
+			# 怎麼配（規格：village-edge extreme downscale to 3.5m）。
+			# ⚠ 換模組要在**算中心之前**做 —— 先用舊 w 算中心再換模組的話，
+			# 房子會偏掉半個面寬差，實測造成鄰棟互穿 0.78m。
+			var prov: Vector2 = a + along * (s + w * 0.5) + into * setb
+			if Vector2(prov.x, prov.y - PLAZA.y).length() >= 155.0 \
+					and kind != "machiya_e_a":
+				kind = "machiya_e_a"
+				m = _mods[kind]
+				w = m["w"]
 			var center: Vector2 = a + along * (s + w * 0.5) + into * setb
+			# ⚠ 產生器原本從來沒把房子跟**路**或**保留區**比對過 —— 實測
+			# 4 棟屋身壓在路面上（最深的前牆離 x=52 路心只有 0.70m），
+			# 還有町家長進鵜呑亭與主橋裡。這裡逐棟擋掉，擋掉就跳過這個位置。
+			if _on_road(center, face, kind) or _in_reserved(kind, center, face):
+				s += w + rng.randf_range(spacing[0], spacing[1])
+				hn += 1
+				continue
 			_house(kind, center, face)
-			_audit.append("%s 排%d 棟%d %s @(%.1f,%.1f) 高 %.2f" %
-				[name, row_i, hn, kind, center.x, center.y, m["h"]])
-			deepest = maxf(deepest, setb + m["d"] + 1.0)
-			# 鄰棟間隔 ≥1.9m：兩側出簷各 0.85，1.7 以下**屋簷互相穿插**、
-			# 同模組鄰棟的簷還同高共面（老病）。1.9~3.0 → 簷距 0.2~1.3。
-			s += w + rng.randf_range(1.9, 3.0)
-			# 看河／看天缺口：指定棟數之後空一格（東南低開區的規格點——
-			# 「不只是矮，還要開」。缺口寬 ≈ 一棟小屋 + 餘量）
+			deepest = maxf(deepest, setb + float(m["d"]) + 1.0)
+			# 鄰棟間隔 ≥1.9：兩側出簷各 0.85，1.7 以下屋簷互相穿插，
+			# 同模組鄰棟的簷還同高共面（本專案的老病）。
+			s += w + rng.randf_range(spacing[0], spacing[1])
 			if hn == gap_after:
-				var gw := rng.randf_range(6.5, 8.0)
-				s += gw
-				_audit.append("  %s 排%d 在棟%d 後留 %.1fm 視線缺口" % [name, row_i, hn, gw])
+				s += rng.randf_range(6.5, 8.0)      # 視線缺口
 			hn += 1
 		front_depth = deepest
 		row_i += 1
 
-	# 包角（L / ㄇ）：端部一棟轉 90° 佔進預留的角 —— 打破「矩形排排站」。
-	# 幾何：正面線貼齊端點外側、屋身伸進預留段；橫向帶 [setback, setback+w]
-	# 與後排（setback+d+gap 起）在進深軸上不相交 —— 不重疊由建構保證，
-	# 再由 _assert_no_overlap() 複核。
 	if wrap != "":
 		var ends: Array = []
 		if wrap == "U":
 			ends = [[a, -1.0], [b, 1.0]]
 		else:
-			ends = [[b, 1.0]] if cfg.get("wrap_end", "b") == "b" else [[a, -1.0]]
+			ends = [[b, 1.0]] if wrap_end == "b" else [[a, -1.0]]
 		for epair in ends:
 			var e: Vector2 = epair[0]
 			var sgn: float = epair[1]
 			if sgn > 0 and cfg.get("river_end", false):
-				continue                    # b 端讓給河畔棟（一個角只放一棟）
-			var m: Dictionary = _mods[wrap_kind]
+				continue                              # b 端讓給河畔棟
+			var mw: Dictionary = _mods[wrap_kind]
 			var setb0: float = rows[0].get("setback", 0.8)
-			var pos: Vector2 = e + along * sgn * 0.3 + into * (setb0 + float(m["w"]) * 0.5)
+			var pos: Vector2 = e + along * sgn * 0.3 + into * (setb0 + float(mw["w"]) * 0.5)
 			_house(wrap_kind, pos, along * sgn)
-			_audit.append("%s 包角(%s) %s @(%.1f,%.1f) 面朝%s" %
-				[name, wrap, wrap_kind, pos.x, pos.y, "端外" if sgn > 0 else "端外(反)"])
 
-	# 靠河端：一棟正對**河畔道**的（街區跟著水彎 —— 水系優先的具體形）。
-	# ⚠ 從**河道最近點**起算，不是從錨點起算 —— 第一版寫 anchor+offset，
-	# 錨點本身離河 4.7~9.1m，房子被推到離河 16~21m 還壓進後排。
 	if cfg.get("river_end", false):
-		var kind: String = cfg.get("river_kind", "machiya_f_b")
-		var e2: Vector2 = cfg["river_anchor"]
-		var rp := _nearest_river_pt(e2)
+		# ⚠ 從**河道最近點**起算，不是從錨點 —— 錨點本身離河 4.7~9.1m，
+		# 從錨點加偏移會把房子推到離河 16~21m 還壓進後排。
+		var kind2: String = cfg.get("river_kind", "machiya_f_b")
+		var rp := _nearest_river_pt(cfg["river_anchor"])
 		var t := river_tangent(rp)
 		var n := Vector2(-t.y, t.x)
-		if n.dot(e2 - rp) < 0.0:
-			n = -n                          # 法線朝街區那側（離河）
-		# 正面線在 岸(7)+護岸帶(1.2)+河畔道(3.2)+0.5 ≈ 11.9m 處，面朝河
-		var pos2: Vector2 = rp + n * (RIVER_HALF + 4.9)
-		_house(kind, pos2, -n)
-		_audit.append("%s 河畔棟 %s @(%.1f,%.1f) 正面離河道中心 %.1fm、對切線 %.1f°" %
-			[name, kind, pos2.x, pos2.y, pos2.distance_to(rp), rad_to_deg(atan2(t.x, t.y))])
-
-
-func _nearest_river_pt(at: Vector2) -> Vector2:
-	if _river_pts.is_empty():
-		_river_pts = _spline(RIVER_SPINE, 14)
-	var best := _river_pts[0]
-	var bd := 1e18
-	for p in _river_pts:
-		var d := p.distance_squared_to(at)
-		if d < bd:
-			bd = d
-			best = p
-	return best
+		if n.dot(Vector2(cfg["river_anchor"]) - rp) < 0.0:
+			n = -n
+		_house(kind2, rp + n * (RIVER_HALF + 4.9), -n)
 
 
 func _build_blocks() -> void:
-	var rd := MAIN_EW_W * 0.5               # 主路半寬 6
-	# ── 橋西（過橋前）：標準階梯天際線 —— 前排 4.5~5.5 臨街、後排 9~10 在後 ──
-	_block(101, {
-		"name": "西北",
-		"frontage": {"a": Vector2(10, MAIN_EW_Z - rd - 1.2), "b": Vector2(52, MAIN_EW_Z - rd - 1.2)},
-		"into": Vector2(0, -1),
+	_block(201, {
+		"name": "西外・本通北",
+		"frontage": {"a": Vector2(-109.00, 22.80), "b": Vector2(-151.00, 22.80)},
+		"into": Vector2(0.0000, -1.0000),
 		"rows": [
-			{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
-			{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "b",
+	})
+	_block(202, {
+		"name": "西外・本通南",
+		"frontage": {"a": Vector2(-151.00, 37.20), "b": Vector2(-109.00, 37.20)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
 		],
 		"wrap": "L", "wrap_end": "a",
-		"river_end": true, "river_anchor": Vector2(56, 12), "river_kind": "machiya_f_a",
 	})
-	_block(102, {
-		"name": "西南",
-		"frontage": {"a": Vector2(10, MAIN_EW_Z + rd + 1.2), "b": Vector2(50, MAIN_EW_Z + rd + 1.2)},
-		"into": Vector2(0, 1),
+	_block(203, {
+		"name": "稗田南町",
+		"frontage": {"a": Vector2(-99.00, 37.20), "b": Vector2(-57.00, 37.20)},
+		"into": Vector2(0.0000, 1.0000),
 		"rows": [
-			{"kinds": ["machiya_f_b", "machiya_f_a"], "setback": 0.8},
-			{"kinds": ["machiya_b_b", "machiya_b_a"], "gap": [2.8, 4.2], "lateral": 4.6},
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
 		],
-		"wrap": "U",
-		"river_end": true, "river_anchor": Vector2(64, 52), "river_kind": "machiya_f_b",
+		"wrap": "L", "wrap_end": "b",
 	})
-	# ── 橋東：過橋後的不對稱（規格點）──
-	# 左（北）＝高壓：**後排模組直接臨街**，9~10m 的量體貼著路肩壓下來
+	_block(101, {
+		"name": "西北(R1)",
+		"frontage": {"a": Vector2(10.00, 22.80), "b": Vector2(52.00, 22.80)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		# river_end 拿掉：這段西岸已經給鵜呑亭了（兩者都被推到同一條河法線上，
+		# 彼此完全不知道對方存在 → 實測互穿 6.8m）。臨河的門面由鵜呑亭擔。
+		"wrap": "L", "wrap_end": "a",
+	})
 	_block(103, {
 		"name": "東北・高壓",
-		"frontage": {"a": Vector2(82, MAIN_EW_Z - rd - 0.6), "b": Vector2(126, MAIN_EW_Z - rd - 0.6)},
-		"into": Vector2(0, -1),
+		"frontage": {"a": Vector2(77.60, 23.40), "b": Vector2(100.60, 23.40)},
+		"into": Vector2(0.0000, -1.0000),
 		"rows": [
-			{"kinds": ["machiya_b_a", "machiya_b_b"], "setback": 0.4, "jog": [1.0, 1.8]},
-			{"kinds": ["machiya_f_a", "machiya_f_b"], "gap": [2.6, 3.6], "lateral": 4.2},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "setback": 0.4, "jog": [1.0, 1.8]},
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "gap": [2.6, 3.6], "lateral": 4.2},
 		],
-		"wrap": "L",
 	})
-	# 右（南）＝低開：前排／村緣模組、退距拉大、中段留一個看河的缺口
+	_block(206, {
+		"name": "東・本通北",
+		"frontage": {"a": Vector2(107.65, 22.80), "b": Vector2(151.50, 22.80)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "b",
+	})
+	_block(208, {
+		"name": "東・本通南",
+		"frontage": {"a": Vector2(107.65, 37.20), "b": Vector2(151.50, 37.20)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "b",
+	})
+	_block(209, {
+		"name": "本通西・北",
+		"frontage": {"a": Vector2(-5.50, -129.90), "b": Vector2(-5.50, -83.90)},
+		"into": Vector2(-1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "a",
+	})
+	_block(210, {
+		"name": "本通東・北",
+		"frontage": {"a": Vector2(5.50, -83.90), "b": Vector2(5.50, -129.70)},
+		"into": Vector2(1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "b",
+	})
+	_block(211, {
+		"name": "本通西・南",
+		"frontage": {"a": Vector2(-5.50, 90.10), "b": Vector2(-5.50, 136.10)},
+		"into": Vector2(-1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "a",
+	})
+	_block(212, {
+		"name": "本通西・南外",
+		"frontage": {"a": Vector2(-5.50, 143.90), "b": Vector2(-5.50, 186.00)},
+		"into": Vector2(-1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+	})
+	_block(213, {
+		"name": "本通東・南外",
+		"frontage": {"a": Vector2(5.50, 186.00), "b": Vector2(5.50, 143.90)},
+		"into": Vector2(1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(214, {
+		"name": "本通西・北端",
+		"frontage": {"a": Vector2(-5.50, -162.00), "b": Vector2(-5.50, -138.90)},
+		"into": Vector2(-1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(215, {
+		"name": "本通東・北端",
+		"frontage": {"a": Vector2(5.50, -138.90), "b": Vector2(5.50, -162.00)},
+		"into": Vector2(1.0000, 0.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(216, {
+		"name": "北在・西",
+		"frontage": {"a": Vector2(-55.65, -83.90), "b": Vector2(-97.00, -83.90)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(217, {
+		"name": "北在・西外",
+		"frontage": {"a": Vector2(-107.65, -83.90), "b": Vector2(-142.00, -83.90)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(218, {
+		"name": "寺子屋西町",
+		"frontage": {"a": Vector2(-97.00, -76.10), "b": Vector2(-57.00, -76.10)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "b",
+	})
+	_block(219, {
+		"name": "西外・北町",
+		"frontage": {"a": Vector2(-107.65, -28.65), "b": Vector2(-145.00, -28.65)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(220, {
+		"name": "西外・南町",
+		"frontage": {"a": Vector2(-145.00, -21.35), "b": Vector2(-107.65, -21.35)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(221, {
+		"name": "市場西・北",
+		"frontage": {"a": Vector2(-55.65, 81.10), "b": Vector2(-97.00, 81.10)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(222, {
+		"name": "市場西・南",
+		"frontage": {"a": Vector2(-97.00, 88.90), "b": Vector2(-55.65, 88.90)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
+		],
+		"wrap": "L", "wrap_end": "a",
+	})
+	_block(223, {
+		"name": "西外・南",
+		"frontage": {"a": Vector2(-107.65, 136.10), "b": Vector2(-149.00, 136.10)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(224, {
+		"name": "西外・在",
+		"frontage": {"a": Vector2(-142.00, 143.90), "b": Vector2(-107.65, 143.90)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(225, {
+		"name": "南町・西北",
+		"frontage": {"a": Vector2(-55.65, 136.10), "b": Vector2(-97.00, 136.10)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(226, {
+		"name": "南在・西",
+		"frontage": {"a": Vector2(-97.00, 143.90), "b": Vector2(-55.65, 143.90)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(227, {
+		"name": "東外・北町",
+		"frontage": {"a": Vector2(107.65, -28.65), "b": Vector2(149.00, -28.65)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(228, {
+		"name": "東外・南町",
+		"frontage": {"a": Vector2(149.00, -21.35), "b": Vector2(107.65, -21.35)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(229, {
+		"name": "東外・北",
+		"frontage": {"a": Vector2(107.65, 81.10), "b": Vector2(149.00, 81.10)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(230, {
+		"name": "東外・南",
+		"frontage": {"a": Vector2(149.00, 88.90), "b": Vector2(107.65, 88.90)},
+		"into": Vector2(0.0000, 1.0000),
+		"rows": [
+				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
+		],
+	})
+	_block(231, {
+		"name": "東外・在",
+		"frontage": {"a": Vector2(107.65, 136.10), "b": Vector2(145.00, 136.10)},
+		"into": Vector2(0.0000, -1.0000),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
+		],
+	})
+	_block(302, {
+		"name": "河西・北町",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(70.29, -129.00), "b": Vector2(65.55, -84.00)},
+		"into": Vector2(-0.9945, -0.1048),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(303, {
+		"name": "河西・橋北",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(49.51, -21.35), "b": Vector2(50.32, 1.00)},
+		"into": Vector2(-0.9993, 0.0364),
+		"rows": [
+				{"kinds": ["machiya_f_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(305, {
+		"name": "河西・橋南",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(63.30, 58.00), "b": Vector2(64.28, 82.00)},
+		"into": Vector2(-0.9992, 0.0407),
+		"rows": [
+				{"kinds": ["machiya_f_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
 	_block(104, {
-		"name": "東南・低開",
-		"frontage": {"a": Vector2(84, MAIN_EW_Z + rd + 2.6), "b": Vector2(126, MAIN_EW_Z + rd + 2.6)},
-		"into": Vector2(0, 1),
+		"name": "東南・低開",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(83.32, 41.80), "b": Vector2(90.03, 63.80)},
+		"into": Vector2(0.9565, -0.2917),
 		"rows": [
-			{"kinds": ["machiya_e_a", "machiya_f_a", "machiya_e_a"], "setback": 2.2, "jog": [1.2, 2.0], "gap_after": 1},
+				{"kinds": ["machiya_e_a"], "setback": 2.2, "jog": [1.2, 2.0]},
 		],
+		"riverside": true,
 	})
-	# 東北牆面 z = 23.4 - 0.4(退距)，路肩 z = 24 → 實際牆到路肩 1.0m
-	_audit.append("不對稱驗證：東北臨街=後排模組(9.4/9.9m 牆離路肩 1.0m)；"
-		+ "東南臨街=村緣/前排(3.5/4.8m 退 2.2m+ 且留視線缺口)")
+	_block(307, {
+		"name": "河東・橋南",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(90.02, 64.01), "b": Vector2(89.78, 80.01)},
+		"into": Vector2(0.9999, 0.0154),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(308, {
+		"name": "河東・南",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(87.17, 88.94), "b": Vector2(75.89, 122.04)},
+		"into": Vector2(0.9465, 0.3227),
+		"rows": [
+				{"kinds": ["machiya_f_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(309, {
+		"name": "河西・最南",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(44.30, 145.97), "b": Vector2(43.59, 173.97)},
+		"into": Vector2(-0.9997, -0.0255),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(310, {
+		"name": "河東・最南",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(70.24, 143.90), "b": Vector2(68.67, 172.00)},
+		"into": Vector2(0.9984, 0.0557),
+		"rows": [
+				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(311, {
+		"name": "河東・鈴奈庵對岸",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(88.15, -76.10), "b": Vector2(74.53, -42.00)},
+		"into": Vector2(0.9287, 0.3707),
+		"rows": [
+				{"kinds": ["machiya_f_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	_block(312, {
+		"name": "河東・橋北",   # 臨河：frontage ∥ 河脊
+		"frontage": {"a": Vector2(73.36, -21.35), "b": Vector2(73.92, -6.00)},
+		"into": Vector2(0.9993, -0.0370),
+		"rows": [
+				{"kinds": ["machiya_f_a"], "setback": 0.8, "jog": [1.0, 1.6]},
+		],
+		"riverside": true,
+	})
+	var nh := 0
+	for e in _dump:
+		if String(e[0]).begins_with("machiya"):
+			nh += 1
+	_audit.append("街區 → 町家 %d 棟" % nh)
+
+
+# ── 重疊自驗（OBB / SAT，含出簷）──
+
+func _obb_of(e: Array) -> Array:
+	## 從模組的 **Godot 局部 bbox（gbox）** 建世界 OBB。
+	## ⚠ 舊版只吃 fw/fd 又假設「原點在正面、往後長 fd」—— 那只對町家成立。
+	## 橋的原點在中心、鵜呑亭的川床往後伸 16m 而 fd 當時還寫成 10.9，
+	## 於是自檢對它們**結構性全盲**：印著「0 穿插 ✓」，實際有 3 對互穿
+	## （鵜呑亭 × 河畔町家 6.8m、鵜呑亭 × 主橋 2.3m）。gbox 一律照實量。
+	var m: Dictionary = _mods[e[0]]
+	var gb: Array = m.get("gbox", [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
+		-float(m["fd"]) + 0.85, 0.85])
+	var yaw: float = e[4]
+	var ax := Vector2(cos(yaw), -sin(yaw))          # Basis(UP,yaw).x 在 XZ 上
+	var az := Vector2(sin(yaw), cos(yaw))           # Basis(UP,yaw).z
+	var cx: float = (float(gb[0]) + float(gb[1])) * 0.5
+	var cz: float = (float(gb[2]) + float(gb[3])) * 0.5
+	var c := Vector2(e[1], e[3]) + ax * cx + az * cz
+	return [c, ax, az, (float(gb[1]) - float(gb[0])) * 0.5,
+		(float(gb[3]) - float(gb[2])) * 0.5, e[0]]
 
 
 func _assert_no_overlap() -> void:
-	## 逐對 OBB（SAT）檢查所有町家的**含出簷 footprint** —— 位置對不對
-	## 不能用看的。這一輪的兩個 blocker（包角棟、河畔棟穿插）都是審查
-	## 這樣量出來的，所以把檢查放進產生器本身，之後批量也一直有效。
+	## 逐對 OBB（SAT）—— **不再只檢查町家**：橋與鵜呑亭一起進來。
 	var rects: Array = []
 	for e in _dump:
-		if not String(e[0]).begins_with("machiya"):
-			continue
-		var m: Dictionary = _mods[e[0]]
-		var yaw: float = e[4]
-		var fwd := Vector2(sin(yaw), cos(yaw))      # 正面朝向（xz 平面）
-		var side := Vector2(fwd.y, -fwd.x)
-		var hw: float = float(m["fw"]) * 0.5
-		var fd: float = float(m["fd"])
-		# 模組原點在正面中心，屋身往背面延伸：中心 = 原點 - fwd*(fd/2 - 0.85)
-		var c := Vector2(e[1], e[3]) - fwd * (fd * 0.5 - 0.85)
-		rects.append([c, side, fwd, hw, fd * 0.5, e[0]])
-	var bad := 0
+		rects.append(_obb_of(e))
+	var cell := 26.0
+	var grid := {}
 	for i in rects.size():
-		for j in range(i + 1, rects.size()):
-			var pen := _obb_pen(rects[i], rects[j])
-			if pen > 0.05:
-				bad += 1
-				push_error("重疊：%s#%d × %s#%d 穿插 %.2fm" %
-					[rects[i][5], i, rects[j][5], j, pen])
+		var c: Vector2 = rects[i][0]
+		var rr: float = maxf(rects[i][3], rects[i][4])
+		var span := int(ceil(rr / cell))
+		var gx := int(floor(c.x / cell))
+		var gz := int(floor(c.y / cell))
+		for dx in range(-span - 1, span + 2):
+			for dz in range(-span - 1, span + 2):
+				var k := "%d,%d" % [gx + dx, gz + dz]
+				if not grid.has(k):
+					grid[k] = []
+				grid[k].append(i)
+	var bad := 0
+	var seen := {}
+	for k in grid:
+		var ids: Array = grid[k]
+		for ii in ids.size():
+			for jj in range(ii + 1, ids.size()):
+				var i: int = ids[ii]
+				var j: int = ids[jj]
+				var pk := "%d_%d" % [min(i, j), max(i, j)]
+				if seen.has(pk):
+					continue
+				seen[pk] = true
+				var pen := _obb_pen(rects[i], rects[j])
+				if pen > 0.05:
+					bad += 1
+					if bad <= 8:
+						push_error("重疊：%s#%d × %s#%d 穿插 %.2fm"
+							% [rects[i][5], i, rects[j][5], j, pen])
 	if bad == 0:
-		_audit.append("重疊檢查：%d 棟兩兩比對（含出簷）—— 0 穿插 ✓" % rects.size())
+		_audit.append("重疊檢查：%d 件（町家＋橋＋鵜呑亭，含出簷 OBB）—— 0 穿插 ✓"
+			% rects.size())
 	else:
-		_audit.append("⚠ 重疊檢查：%d 對穿插 —— 佈局有 bug，看上面的 push_error" % bad)
+		_audit.append("⚠ 重疊檢查：%d 對穿插 —— 佈局有 bug" % bad)
 
 
 func _obb_pen(ra: Array, rb: Array) -> float:
-	## SAT：回傳最小穿透深度（<=0 = 分離）。軸取兩個矩形的四個邊法線。
 	var pen := 1e18
 	for r in [ra, rb]:
 		for k in [1, 2]:
 			var axis: Vector2 = r[k]
 			var ca: float = Vector2(ra[0]).dot(axis)
 			var cb: float = Vector2(rb[0]).dot(axis)
-			var ea: float = absf(Vector2(ra[1]).dot(axis)) * ra[3] + absf(Vector2(ra[2]).dot(axis)) * ra[4]
-			var eb: float = absf(Vector2(rb[1]).dot(axis)) * rb[3] + absf(Vector2(rb[2]).dot(axis)) * rb[4]
+			var ea: float = absf(Vector2(ra[1]).dot(axis)) * ra[3] \
+				+ absf(Vector2(ra[2]).dot(axis)) * ra[4]
+			var eb: float = absf(Vector2(rb[1]).dot(axis)) * rb[3] \
+				+ absf(Vector2(rb[2]).dot(axis)) * rb[4]
 			var ov := ea + eb - absf(ca - cb)
 			if ov <= 0.0:
 				return 0.0
@@ -493,42 +1084,150 @@ func _emit_batches() -> void:
 		var list: Array = _batch[kind]
 		var mesh: Mesh = lib.prop_mesh(String(_mods[kind]["glb"]))
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(mesh, list, [],
-			OUT_DIR + "gen/mm_%s.res" % kind)
+		mmi.multimesh = lib.make_multimesh(mesh, list, [], OUT_DIR + "gen/mm_%s.res" % kind)
 		lib.add(g, mmi, "MM_%s" % kind)
 		total += list.size()
 	_audit.append("町家 %d 棟 / %d 種模組（%d draw call）" % [total, names.size(), names.size()])
 
 
+func _build_collision() -> void:
+	## ⚠ MultiMeshInstance3D **不是** MeshInstance3D，永遠拿不到 trimesh 碰撞。
+	## 上一輪的 townlab 全場只有一個空氣牆 StaticBody3D，21 棟町家全部可以穿。
+	## 這裡逐棟給一個旋轉過的 BoxShape3D：300 棟 = 1 個 StaticBody3D +
+	## 300 個 CollisionShape3D，0 draw call。
+	var body := StaticBody3D.new()
+	body.name = "町家碰撞"
+	_root.add_child(body)
+	body.owner = _root
+	var n := 0
+	for e in _dump:
+		if not String(e[0]).begins_with("machiya"):
+			continue
+		var m: Dictionary = _mods[e[0]]
+		var yaw: float = e[4]
+		var fwd := Vector2(sin(yaw), cos(yaw))
+		var c := Vector2(e[1], e[3]) - fwd * (float(m["d"]) * 0.5)
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(float(m["w"]), float(m["h"]), float(m["d"]))
+		sh.shape = bx
+		sh.position = Vector3(c.x, float(e[2]) + float(m["h"]) * 0.5, c.y)
+		sh.rotation.y = yaw
+		body.add_child(sh)
+		sh.owner = _root                      # ADR-017：沒 owner 就不會存進 .tscn
+		n += 1
+	_audit.append("町家碰撞箱 %d 個（1 個 StaticBody3D）" % n)
+
+
 func _build_env() -> void:
-	# 跟 gen_kourindou 同一組確認過的環境參數（SDFGI 關、ACES、微霧）
+	## 照抄 gen_village 已驗收的環境（sky shader、曝光、glow、飽和）——
+	## 換圖時氛圍要一致，不然評圖看到的是「另一個遊戲」。
 	var env := Environment.new()
 	env.background_mode = Environment.BG_SKY
 	var sky := Sky.new()
-	sky.sky_material = ProceduralSkyMaterial.new()
+	var sm := ShaderMaterial.new()
+	if ResourceLoader.exists("res://assets/shaders/sky_cumulus.gdshader"):
+		sm.shader = load("res://assets/shaders/sky_cumulus.gdshader")
+		sky.sky_material = sm
+	else:
+		sky.sky_material = ProceduralSkyMaterial.new()
 	env.sky = sky
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
-	env.tonemap_exposure = 0.82
+	env.tonemap_exposure = 1.02
 	env.glow_enabled = true
-	env.glow_intensity = 0.45
+	env.glow_intensity = 0.72
 	env.glow_hdr_threshold = 1.25
 	env.ssao_enabled = true
+	env.adjustment_enabled = true
+	env.adjustment_contrast = 1.08
+	env.adjustment_saturation = 1.24
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	env.ambient_light_sky_contribution = 0.55
+	env.ambient_light_energy = 0.72
 	env.fog_enabled = true
 	env.fog_density = 0.0016
+	env.volumetric_fog_enabled = true
+	env.volumetric_fog_density = 0.012
+	env.sdfgi_enabled = false
 	var we := WorldEnvironment.new()
 	we.environment = env
 	lib.add(_root, we, "WorldEnvironment")
 
 
+func _perf_pass(n: Node) -> void:
+	## 照抄 gen_village 的剔除／陰影分級。⚠ 那支只處理 MeshInstance3D，
+	## MultiMeshInstance3D 完全不碰 —— 新鎮的 MM 要另外設（見 _build_revetment）。
+	if n is MeshInstance3D and n.mesh != null:
+		var nm := String(n.name)
+		if not (nm.contains("Terrain") or nm.contains("Water") or nm.contains("水面")):
+			var ab: AABB = n.mesh.get_aabb()
+			var sc: Vector3 = n.scale.abs()
+			var mx: float = maxf(maxf(ab.size.x * sc.x, ab.size.y * sc.y), ab.size.z * sc.z)
+			if mx < 1.35:
+				n.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			if mx < 0.9:
+				n.visibility_range_end = 55.0
+				n.visibility_range_end_margin = 8.0
+				n.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+			elif mx < 2.8:
+				n.visibility_range_end = 100.0
+				n.visibility_range_end_margin = 10.0
+				n.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+	for c in n.get_children():
+		_perf_pass(c)
+
+
+func _write_meta() -> void:
+	## portals[0] 必須是北門：main.gd 的 _place_player 在 from_id=="" 時
+	## 落在 portals[0]，所以 `--map=sato` 會站在本通上而不是村角。
+	## y 由 height_at 量出來，不手抄 —— 地形換了數值就會變。
+	var ports := [
+		{"x": 0.0, "y": snappedf(height_at(0, -174), 0.01), "z": -174.0, "target": "trail"},
+		{"x": -132.0, "y": snappedf(height_at(-132, 100), 0.01), "z": 100.0,
+		 "target": "kourindou"},
+		# 河畔道北端出圖 → 未來的霧之湖。target 留 null = 保留中的觸發區
+		# （Area3D 照建、不畫光柱、不切場景），填上目的地就自動生效。
+		_bank_portal(-286.0),
+	]
+	var meta := {
+		"id": MAP_ID,
+		"note": "人間之里 全鎮版（gen_town.gd 批量產出）。尚未取代 village —— "
+			+ "trail/kourindou 的回程 portal 仍指向 village，整合是下一步。",
+		"playSize": [460, 460],
+		"safe": true,
+		# myouren 還沒有 portal（那張圖也還沒蓋）—— 先不宣告，免得連通圖說謊
+		"connections": ["trail", "kourindou", "lake"],
+		"portals": ports,
+		"colliders": [],
+	}
+	var f := FileAccess.open("res://data/%s.meta.json" % MAP_ID, FileAccess.WRITE)
+	f.store_string(JSON.stringify(meta, " "))
+	f.close()
+	print("wrote data/%s.meta.json" % MAP_ID)
+
+
+func _bank_portal(z: float) -> Dictionary:
+	## 河畔道上的保留觸發區。⚠ x 要用**該 z 的河道最近點**算，不是隨手挑
+	## 一個樣條索引（舊版拿 _river()[2]，那點在 z=-294，差了 8m）。
+	var rp := _nearest_river_pt(Vector2(0, z))
+	var best := rp
+	var bd := 1e18
+	for p in _river():
+		var d: float = absf(p.y - z)
+		if d < bd:
+			bd = d
+			best = p
+	var x: float = best.x - BANK_PATH
+	return {"x": snappedf(x, 0.1), "y": snappedf(height_at(x, z), 0.01),
+		"z": z, "target": null}
+
+
 func _write_dump() -> void:
-	# Blender 端 fallback 預覽用（座標已是 Godot 空間；yaw 繞 +y）
-	var out := {"note": "townlab 擺位表（gen_town.gd 產出，僅供預覽比對）",
+	var out := {"note": "sato 擺位表（gen_town.gd 產出，驗證腳本用）",
 		"river": [], "instances": _dump}
-	for p in _river_lab_pts():
+	for p in _river():
 		out["river"].append([snappedf(p.x, 0.01), snappedf(p.y, 0.01)])
-	var f := FileAccess.open("res://data/townlab.instances.json", FileAccess.WRITE)
+	var f := FileAccess.open("res://data/%s.instances.json" % MAP_ID, FileAccess.WRITE)
 	f.store_string(JSON.stringify(out, " "))
 	f.close()
-	print("wrote data/townlab.instances.json（%d 實例）" % _dump.size())
+	print("wrote data/%s.instances.json（%d 實例）" % [MAP_ID, _dump.size()])
