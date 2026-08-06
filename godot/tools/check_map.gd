@@ -187,7 +187,7 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 	# 水路護岸整條被當成一棟建物，岸邊的荷與蘆葦就全被判成「長在建物裡」。
 	var is_terrainish := String(n.name).contains("護岸") or String(n.name).contains("堤")
 	if got and not is_terrainish:
-		buildings.append({ "name": _path_of(n), "aabb": box })
+		buildings.append({ "name": _path_of(n), "aabb": box, "grouped": true })
 		# 個別構件也留一份：跨水檢查要**逐片牆**比。
 		# 拿整棟的外框去比，稗田邸院子裡的庭池會被誤報成「牆擋住水」。
 		for c2 in n.get_children():
@@ -384,7 +384,18 @@ func _check_building_overlap(buildings: Array) -> void:
 		_issues.append("…另有 %d 組建物互相卡住（最嚴重 %.1f）" % [hits - 5, worst])
 
 ## 散佈物（樹、草、岩石）跟建物重疊 —— 「樹長在建築裡」
-func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
+func _check_scatter_overlap(scatters: Array, all_buildings: Array) -> void:
+	## ⚠ 這一項**不能拿群組的合併 AABB 去比**。群組的外框是「整座宅邸」——
+	## 稗田邸的外框就是 41.5×44.7 的整塊地，於是院子裡的每一株樹都落在
+	## 「建物」範圍內，51 株植栽全部被誤報成「長在建物裡」。
+	## 跟「牆擋住水」那一項同一個教訓：**逐片牆比，不要拿整棟的外框比**。
+	## 所以這裡把群組項換成它自己的貼地構件（_parts）；MultiMesh 町家是
+	## 逐實例登記的、本來就不是群組，照舊留著。
+	var buildings: Array = []
+	for b in all_buildings:
+		if not b.get("grouped", false):
+			buildings.append(b)
+	buildings.append_array(_parts)
 	if buildings.is_empty():
 		return
 	# 建物用空間索引，否則 2600 棵樹 × 上千棟是 O(n²)

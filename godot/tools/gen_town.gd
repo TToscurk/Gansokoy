@@ -2750,6 +2750,161 @@ func _lm_hieda(g: Node3D, spread: float) -> void:
 	lib.cyl(g, "寶珠", 0.0, 0.13, 0.22, stone_l, lz + Vector3(0, 2.55, 0), 8)
 	_lm_collide(g, Vector3(1.1, 2.7, 1.1), lz)
 	_audit.append("稗田邸：庭池石組 %d 顆（護岸＋州濱＋立石）" % rk_i)
+	_lm_hieda_planting(g, wc, y0)
+
+
+# ══════════════ 稗田邸院內植栽（使用者定案：村院另做小型植栽）══════════════
+#
+# ⚠ 這**不是**把 `maps/hieda/gen/*.res` 搬過來 —— 那批做不到，實測：
+#     hieda_garden.instances.json 的擺位跨度  95.4 × 107.0 m（136 實例）
+#     hieda_blockout.glb 本體                75.6 × 110.5 m
+#     村圖稗田邸保留區                        42.4 ×  45.6 m
+#   線性差 ~2.3×；而且扣掉主屋／緣側／長廊／離れ／庭池之後，塀內 38×41m
+#   真正能種東西的只剩 **593 ㎡（38%）**，面積差 ~17×。整套塞進來只會是一叢
+#   互相穿模的樹牆。那批資產是照**獨立地圖**的尺度做的（markers 裡還有一個
+#   target 待填的木戶 portal），留給它自己那張圖。
+#
+# 這裡的做法是**重用同樣那 10 種模組**，照村院的實際空地重排：
+#   ・生垣沿築地塀內側（門洞、主屋、離れ 讓開）
+#   ・紅葉在西南象限群聚 + 一株探出池面（庭池的借景）
+#   ・松兩株框住庭池的視線，避開從表門到主屋的通道
+#   ・灌木填在生垣與紅葉之間
+#
+# ⚠ 亂數用自己的 `_gard_rng`：稗田邸是 LANDMARKS 的第 3 座，動 `_lm_rng`
+#   會把後面的鎮守之杜／市場／足洗邸整組位移。
+const GARD_SEED := SEED + 6011
+
+## 院內的障礙（本地座標，[cx, cz, w, d]）—— 跟 builder 的幾何對齊
+const GARD_BLOCK := [
+	[-5.0, -11.5, 26.5, 16.5],     # 主屋基壇
+	[-5.0, -2.9, 24.0, 2.2],       # 緣側
+	[10.6, -6.0, 2.4, 12.0],       # 長廊
+	[13.5, -14.5, 7.9, 7.9],       # 離れ屋根
+	[9.75, 9.5, 6.5, 23.0],        # 表門 → 主屋的通道（繞庭池東側走）
+]
+
+func _lm_hieda_planting(g: Node3D, wc: Vector2, y0: float) -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = GARD_SEED
+	var pond := Vector2(HIEDA_POND.x - wc.x, HIEDA_POND.y - wc.y)
+	# 本地 (x,z) → 本地 Vector3（貼地形；院子被整平過但庭池挖了碗，
+	# 而 g 的原點取的是**含碗底**的最低點，直接用 y=0 會整批埋進土裡 0.55m）
+	var lp := func(lx: float, lz: float) -> Vector3:
+		return Vector3(lx, height_at(wc.x + lx, wc.y + lz) - y0, lz)
+	var free := func(lx: float, lz: float, need: float) -> bool:
+		if absf(lx) > 19.54 - need or absf(lz) > 21.04 - need:
+			return false
+		for b in GARD_BLOCK:
+			if absf(lx - float(b[0])) < float(b[2]) * 0.5 + need \
+					and absf(lz - float(b[1])) < float(b[3]) * 0.5 + need:
+				return false
+		# 庭池（水面半徑 + 護岸石組那一圈）
+		if Vector2(lx - pond.x, lz - pond.y).length() < HIEDA_POND_R * 1.05 + need:
+			return false
+		return true
+
+	var batch := {}
+	var put := func(mod: String, t: Transform3D) -> void:
+		if not batch.has(mod):
+			batch[mod] = [] as Array[Transform3D]
+		batch[mod].append(t)
+
+	# ── 生垣：沿築地塀內側（模組實測 2.63 長 × 1.19 高 × 1.24 深）──
+	# 中心離牆內面 0.75m；間距 2.5 < 模組長 2.63，接得起來才是「一道」生垣。
+	var HED := ["hieda_hedge_a", "hieda_hedge_b", "hieda_hedge_c"]
+	var runs := [
+		{"x": -18.8, "a": -1.0, "b": 19.0, "ax": false},    # 西牆（主屋基壇以南）
+		{"x": 18.8, "a": -8.0, "b": 19.0, "ax": false},     # 東牆（離れ以南）
+		{"z": 20.3, "a": -18.5, "b": -6.0, "ax": true},     # 南牆・門西
+		{"z": 20.3, "a": 6.0, "b": 18.5, "ax": true},       # 南牆・門東
+	]
+	var n_hedge := 0
+	for r in runs:
+		var ax: bool = bool(r.ax)
+		var t := float(r.a)
+		while t <= float(r.b):
+			var lx: float = t if ax else float(r.x)
+			var lz: float = float(r.z) if ax else t
+			t += 2.5
+			var yaw: float = (0.0 if ax else PI * 0.5) + rng.randf_range(-0.04, 0.04)
+			var s := rng.randf_range(0.94, 1.06)
+			var b := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(s, rng.randf_range(0.9, 1.1), s))
+			put.call(HED[n_hedge % 3], Transform3D(b, lp.call(lx, lz)))
+			n_hedge += 1
+
+	# ── 紅葉：西南象限群聚（同種大群聚，不是散點單株）＋一株探出池面 ──
+	var MAP3 := ["hieda_maple_a", "hieda_maple_b", "hieda_maple_c"]
+	# ⚠ 南緣三株原本擺到 z=+16.8~17.5，樹冠實測伸到本地 **+22.55**（比門屋根
+	# 的 +22.50 還南），距保留區南緣只剩 0.25m。樹冠是隨機縮放又隨機轉向的，
+	# 旋轉後的 AABB 半徑到 5.05m —— 貼著邊界會變成「這次剛好過、下次剛好不過」。
+	# 全部收到 z ≤ 15.5，留 2.2m 餘裕。
+	var maples := [Vector2(-13.5, 15.0), Vector2(-15.5, 9.5), Vector2(-9.5, 15.5),
+		Vector2(-5.5, 15.2), Vector2(14.0, 14.2)]
+	for i in maples.size():
+		var p: Vector2 = maples[i]
+		var s := rng.randf_range(0.76, 0.94)
+		var b := Basis(Vector3.UP, rng.randf_range(0.0, TAU)) \
+			* Basis.from_scale(Vector3(s, s * rng.randf_range(0.94, 1.08), s))
+		put.call(MAP3[i % 3], Transform3D(b, lp.call(p.x, p.y)))
+		# 7m 高的樹要有幹的碰撞（跟鎮守之杜的神木同一條規矩）
+		var body := StaticBody3D.new()
+		body.position = lp.call(p.x, p.y)
+		var sh := CollisionShape3D.new()
+		var cy := CylinderShape3D.new()
+		cy.radius = 0.42
+		cy.height = 5.0
+		sh.shape = cy
+		sh.position = Vector3(0, 2.5, 0)
+		body.add_child(sh)
+		lib.add(g, body, "紅葉幹_%d" % i)
+		sh.owner = _root
+
+	# ── 松：框住庭池的視線，讓開表門→主屋的通道 ──
+	for p2 in [Vector2(4.0, 2.0), Vector2(-13.0, 1.5)]:
+		var s2 := rng.randf_range(0.82, 0.96)
+		put.call("hieda_pine_a", Transform3D(
+			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s2, s2, s2)),
+			lp.call(p2.x, p2.y)))
+
+	# ── 灌木：填在生垣與紅葉之間（模組本身 3~3.6m 寬、根部埋在原點以下）──
+	var BSH := ["hieda_bush_a", "hieda_bush_b", "hieda_bush_c"]
+	var n_bush := 0
+	var tries := 0
+	while n_bush < 12 and tries < 600:
+		tries += 1
+		var lx := rng.randf_range(-18.0, 18.0)
+		var lz := rng.randf_range(-1.0, 19.0)
+		if not free.call(lx, lz, 2.4):
+			continue
+		var near := false
+		for p3 in maples:
+			if Vector2(lx, lz).distance_to(p3) < 4.6:
+				near = true
+				break
+		if near:
+			continue
+		var s3 := rng.randf_range(0.48, 0.68)
+		put.call(BSH[n_bush % 3], Transform3D(
+			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s3, s3, s3)),
+			lp.call(lx, lz)))
+		n_bush += 1
+
+	var total := 0
+	var mods: Array = batch.keys()
+	mods.sort()
+	for m in mods:
+		var list: Array[Transform3D] = batch[m]
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(
+			lib.prop_mesh("res://assets/models/%s.glb" % m), list, [],
+			OUT_DIR + "gen/mm_%s.res" % m)
+		mmi.material_override = lib.foliage_vc_mat()
+		# 葉子是薄片，投影要 double-sided 才不會半邊沒影子
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
+		lib.add(g, mmi, "MM_%s" % m)
+		total += list.size()
+	_audit.append("稗田邸院內植栽：生垣 %d、紅葉 %d、松 2、灌木 %d —— 共 %d 株 / %d draw call"
+		% [n_hedge, maples.size(), n_bush, total, mods.size()])
 
 
 # ══════════════ 街緣設施 MIGRATE：門樓／石溝／街燈 ══════════════

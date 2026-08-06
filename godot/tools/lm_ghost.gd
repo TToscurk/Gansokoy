@@ -116,8 +116,35 @@ func _init() -> void:
 			var n2: Node = stack.pop_back()
 			for ch in n2.get_children():
 				stack.push_back(ch)
+			var boxes: Array[AABB] = []
 			if n2 is MeshInstance3D:
-				var wb: AABB = _wxf(n2) * (n2 as MeshInstance3D).get_aabb()
+				boxes.append(_wxf(n2) * (n2 as MeshInstance3D).get_aabb())
+			elif n2 is MultiMeshInstance3D:
+				# ⚠ MultiMeshInstance3D **不是** MeshInstance3D。第一版只掃
+				# MeshInstance3D，於是稗田邸院內那 51 株 MultiMesh 植栽對這項
+				# 檢查完全隱形 —— 加完植栽之後跨度數字**一個像素都沒變**，
+				# 印出來還是綠燈。這個檔案裡已經記過同一種病兩次（check_map
+				# 的町家、碰撞的 own_colliders），這是第三次。
+				# 逐實例解 buffer：headless 的 dummy 渲染器下
+				# get_instance_transform() 一律回單位矩陣。
+				var mm: MultiMesh = (n2 as MultiMeshInstance3D).multimesh
+				if mm == null or mm.mesh == null:
+					continue
+				var mab: AABB = mm.mesh.get_aabb()
+				var buf := mm.buffer
+				var stride := 16 if mm.use_colors else 12
+				if buf.size() < mm.instance_count * stride:
+					continue
+				var xf2 := _wxf(n2)
+				for i in mm.instance_count:
+					var b := i * stride
+					var t := Transform3D(
+						Vector3(buf[b + 0], buf[b + 4], buf[b + 8]),
+						Vector3(buf[b + 1], buf[b + 5], buf[b + 9]),
+						Vector3(buf[b + 2], buf[b + 6], buf[b + 10]),
+						Vector3(buf[b + 3], buf[b + 7], buf[b + 11]))
+					boxes.append((xf2 * t) * mab)
+			for wb in boxes:
 				lo.x = minf(lo.x, wb.position.x); lo.y = minf(lo.y, wb.position.z)
 				hi.x = maxf(hi.x, wb.position.x + wb.size.x)
 				hi.y = maxf(hi.y, wb.position.z + wb.size.z)
