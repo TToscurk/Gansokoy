@@ -447,6 +447,219 @@ def unomitei(bld):
     return 6.95
 
 
+
+# ══ 超現實地標塔 ══
+# 使用者本輪指令：**只挑 2~3 座**地標推到 15~20m，而且「基座要維持樸實
+# 的尺寸」—— 讀成超現實的是**太高配太窄**的錯配，不是單純的高。
+# 一般町家的階梯天際線（前排 4.5 / 後排 9~10）**維持不動**：對比才是重點，
+# 這個手法不准擴散出去。
+#
+# 三座都放在街道視線的終點（見 gen_town.gd 的 TOWERS）：
+#   火見櫓  本通北端終點      19.5m / 基座 4.6m 見方  → 高寬比 4.2
+#   鐘楼    本通南端終點      17.5m / 基座 4.2m 見方  → 高寬比 4.2
+#   水車櫓  z=85 街的河岸終點  16.5m / 基座 5.4×4.4    → 高寬比 3.1
+# 對照：後排町家 9.9m / 面寬 10.4 → 高寬比 0.95。差了四倍。
+
+
+def _quad_frustum(bld, z0, z1, r0, r1, a0, a1, col, cap=None, skip_bottom=True):
+    """四角錐台，上下可各自旋轉（扭轉）。r = 半寬、a = 弧度。"""
+    def ring(z, r, a):
+        return [(r * math.sqrt(2) * math.cos(a + math.pi / 4 + k * math.pi / 2),
+                 r * math.sqrt(2) * math.sin(a + math.pi / 4 + k * math.pi / 2), z)
+                for k in range(4)]
+    lo, hi = ring(z0, r0, a0), ring(z1, r1, a1)
+    for k in range(4):
+        k2 = (k + 1) % 4
+        bld.quad(lo[k], lo[k2], hi[k2], hi[k], col)
+    if cap:
+        bld.quad(hi[0], hi[1], hi[2], hi[3], cap)
+    if not skip_bottom:
+        bld.quad(lo[3], lo[2], lo[1], lo[0], col)
+    return hi
+
+
+def _hip_roof(bld, z, r, a, rise, over, col, col_dk):
+    """四角攢尖屋根（寶形造）—— 塔頂的標準收法。"""
+    ro = r + over
+    base = [(ro * math.sqrt(2) * math.cos(a + math.pi / 4 + k * math.pi / 2),
+             ro * math.sqrt(2) * math.sin(a + math.pi / 4 + k * math.pi / 2), z)
+            for k in range(4)]
+    apex = (0.0, 0.0, z + rise)
+    for k in range(4):
+        k2 = (k + 1) % 4
+        bld.tri(base[k], base[k2], apex, col if k % 2 else col_dk)
+        # 簷口斷面
+        bld.quad(base[k], base[k2],
+                 (base[k2][0], base[k2][1], z - 0.14), (base[k][0], base[k][1], z - 0.14),
+                 col_dk)
+    return z + rise
+
+
+def fire_tower(bld):
+    """火見櫓：四腳木造望楼。19.5m 配 4.6m 見方的基座。
+
+    ⚠ 「不合理」在**中段收到 38% 再往上張開**：真的櫓是一路收窄的，
+    這座收到腰身比腳還細，上面卻托著更大的望台 —— 結構上撐不住，
+    但它就站在那裡。每一節再各扭 6~9°，接縫也對不齊。"""
+    a = 0.0
+    # 石製礎盤（樸實 —— 基座不誇張，誇張的是它上面的東西）
+    bld.box(0, 0, 0.28, 4.8, 4.8, 0.56, C_STONE, top=C_STONE_DK)
+    # 四支通し柱（腳）：從 2.3 半寬收到 0.88（38%）
+    STAGES = [(0.56, 5.2, 2.30, 1.72, 0.00, 0.11),
+              (5.2, 9.6, 1.72, 1.18, 0.11, 0.26),
+              (9.6, 13.4, 1.18, 0.88, 0.26, 0.42),     # 最細的腰
+              (13.4, 15.6, 0.88, 1.62, 0.42, 0.30),    # ← 反過來張開
+              (15.6, 16.9, 1.62, 2.05, 0.30, 0.22)]    # 望台托座
+    for (z0, z1, r0, r1, a0, a1) in STAGES:
+        for k in range(4):
+            ang0 = a0 + math.pi / 4 + k * math.pi / 2
+            ang1 = a1 + math.pi / 4 + k * math.pi / 2
+            p0 = (r0 * math.sqrt(2) * math.cos(ang0), r0 * math.sqrt(2) * math.sin(ang0), z0)
+            p1 = (r1 * math.sqrt(2) * math.cos(ang1), r1 * math.sqrt(2) * math.sin(ang1), z1)
+            _leg(bld, p0, p1, 0.16, C_WOOD)
+        # 貫（水平箍）
+        for k in range(4):
+            k2 = (k + 1) % 4
+            ang0 = a1 + math.pi / 4 + k * math.pi / 2
+            ang2 = a1 + math.pi / 4 + k2 * math.pi / 2
+            q0 = (r1 * math.sqrt(2) * math.cos(ang0), r1 * math.sqrt(2) * math.sin(ang0), z1 - 0.12)
+            q1 = (r1 * math.sqrt(2) * math.cos(ang2), r1 * math.sqrt(2) * math.sin(ang2), z1 - 0.12)
+            _leg(bld, q0, q1, 0.10, C_WOOD_MID)
+        # 筋交（斜撐，只做兩面 —— 剪影才有疏密）
+        for k in (0, 2):
+            k2 = (k + 1) % 4
+            ang0 = a0 + math.pi / 4 + k * math.pi / 2
+            ang2 = a1 + math.pi / 4 + k2 * math.pi / 2
+            _leg(bld, (r0 * math.sqrt(2) * math.cos(ang0),
+                       r0 * math.sqrt(2) * math.sin(ang0), z0),
+                 (r1 * math.sqrt(2) * math.cos(ang2),
+                  r1 * math.sqrt(2) * math.sin(ang2), z1), 0.09, C_WOOD_MID)
+    # 望台（板張 + 高欄）
+    _quad_frustum(bld, 16.9, 17.12, 2.05, 2.05, 0.22, 0.22, C_DECK_DK, cap=C_DECK)
+    for k in range(4):
+        k2 = (k + 1) % 4
+        ang0 = 0.22 + math.pi / 4 + k * math.pi / 2
+        ang2 = 0.22 + math.pi / 4 + k2 * math.pi / 2
+        c0 = (2.05 * math.sqrt(2) * math.cos(ang0), 2.05 * math.sqrt(2) * math.sin(ang0))
+        c2 = (2.05 * math.sqrt(2) * math.cos(ang2), 2.05 * math.sqrt(2) * math.sin(ang2))
+        for f in (0.42, 1.0):
+            _leg(bld, (c0[0], c0[1], 17.12 + 1.05 * f), (c2[0], c2[1], 17.12 + 1.05 * f),
+                 0.09, C_WOOD)
+        for t in (0.0, 0.5):
+            px = c0[0] + (c2[0] - c0[0]) * t
+            py = c0[1] + (c2[1] - c0[1]) * t
+            _leg(bld, (px, py, 17.12), (px, py, 17.12 + 1.05), 0.10, C_WOOD_MID)
+    top = _hip_roof(bld, 18.35, 2.05, 0.22, 1.15, 0.42, C_KAWARA, C_KAWARA_DK)
+    # 半鐘（吊在望台下）
+    bld.box(0, 0, 17.55, 0.52, 0.52, 0.62, C_GIBO)
+    return top
+
+
+def _leg(bld, a, b, r, col):
+    """兩點之間的方柱（塔的腳、貫、筋交都用它）。"""
+    d = [b[i] - a[i] for i in range(3)]
+    L = math.sqrt(sum(c * c for c in d)) or 1.0
+    d = [c / L for c in d]
+    up = (0.0, 0.0, 1.0) if abs(d[2]) < 0.9 else (1.0, 0.0, 0.0)
+    sx = [d[1] * up[2] - d[2] * up[1], d[2] * up[0] - d[0] * up[2], d[0] * up[1] - d[1] * up[0]]
+    sl = math.sqrt(sum(c * c for c in sx)) or 1.0
+    sx = [c / sl for c in sx]
+    sy = [d[1] * sx[2] - d[2] * sx[1], d[2] * sx[0] - d[0] * sx[2], d[0] * sx[1] - d[1] * sx[0]]
+    def corner(p, i, j):
+        return tuple(p[k] + sx[k] * i * r + sy[k] * j * r for k in range(3))
+    for (i0, j0, i1, j1) in ((-1, -1, 1, -1), (1, -1, 1, 1), (1, 1, -1, 1), (-1, 1, -1, -1)):
+        bld.quad(corner(a, i0, j0), corner(a, i1, j1),
+                 corner(b, i1, j1), corner(b, i0, j0), col)
+
+
+def bell_tower(bld):
+    """鐘楼：17.5m 配 4.2m 見方的石壇。
+
+    ⚠ 「不合理」在**倒錐**：軸身一路收到 0.62 半寬，鐘室卻張到 1.95 ——
+    上面比下面寬三倍，像一根竹竿頂著一頂轎子。"""
+    bld.box(0, 0, 0.65, 5.0, 5.0, 1.30, C_STONE, top=C_STONE_DK)
+    bld.box(0, 0, 1.45, 4.2, 4.2, 0.30, C_STONE_DK)
+    # 軸身：白漆喰 + 真壁，一路收窄且扭轉
+    z, r, a = 1.60, 1.55, 0.0
+    for (dz, r1, da) in ((4.2, 1.22, 0.14), (4.0, 0.95, 0.30), (3.6, 0.62, 0.50)):
+        _quad_frustum(bld, z, z + dz, r, r1, a, a + da, C_PLASTER)
+        for k in range(4):
+            ang0 = a + math.pi / 4 + k * math.pi / 2
+            ang1 = a + da + math.pi / 4 + k * math.pi / 2
+            _leg(bld, (r * 1.414 * math.cos(ang0), r * 1.414 * math.sin(ang0), z),
+                 (r1 * 1.414 * math.cos(ang1), r1 * 1.414 * math.sin(ang1), z + dz),
+                 0.13, C_WOOD)
+        z += dz
+        r = r1
+        a += da
+    # 鐘室：反過來張到 1.95（比腰身寬三倍）
+    _quad_frustum(bld, z, z + 0.35, r, 1.95, a, a - 0.18, C_WOOD)
+    z += 0.35
+    a -= 0.18
+    _quad_frustum(bld, z, z + 2.10, 1.95, 1.82, a, a - 0.06, C_WOOD_LT)
+    # 鐘室的柱與梵鐘
+    for k in range(4):
+        ang = a + math.pi / 4 + k * math.pi / 2
+        _leg(bld, (1.95 * 1.414 * math.cos(ang), 1.95 * 1.414 * math.sin(ang), z),
+             (1.82 * 1.414 * math.cos(ang), 1.82 * 1.414 * math.sin(ang), z + 2.10),
+             0.17, C_WOOD)
+    bld.box(0, 0, z + 0.95, 1.10, 1.10, 1.30, C_GIBO)
+    bld.box(0, 0, z + 1.72, 0.34, 0.34, 0.26, C_GIBO)
+    return _hip_roof(bld, z + 2.10, 1.82, a - 0.06, 1.55, 0.60, C_KAWARA, C_KAWARA_DK)
+
+
+def water_mill_tower(bld):
+    """水車櫓：16.5m 配 5.4×4.4 的基座。水輪在 -y 側（朝河）。
+
+    ⚠ 「不合理」在**頭重腳輕**：上面三層一層比一層往河面挑出去，
+    最上層懸到基座外 2.6m，底下什麼支撐都沒有。"""
+    W, D = 5.4, 4.4
+    bld.box(0, 0, 0.35, W + 0.5, D + 0.5, 0.70, C_STONE, top=C_STONE_DK)
+    z = 0.70
+    # 一層：正常的水車小屋
+    bld.box(0, 0, z + 2.35, W, D, 4.70, C_PLASTER)
+    for sx in (1, -1):
+        bld.box(sx * (W / 2 + 0.02), 0, z + 2.35, 0.15, D + 0.06, 4.70, C_WOOD)
+    for zz in (0.12, 2.20, 4.58):
+        bld.box(0, -(D / 2 + 0.05), z + zz, W + 0.1, 0.11, 0.16, C_WOOD)
+    bld.box(0, -(D / 2 + 0.07), z + 1.35, W * 0.5, 0.09, 1.90, C_WOOD_LT)   # 板戶
+    z += 4.70
+    # 二～四層：一層比一層往 -y（河）挑出去，而且愈上愈窄
+    OVER = [(3.9, 0.90, 4.9, 3.9), (3.5, 1.85, 4.2, 3.3), (3.1, 2.60, 3.4, 2.7)]
+    for (dz, off, w2, d2) in OVER:
+        # 挑樑（露出來的支撐 —— 明知撐不住還是畫幾根，反差更強）
+        for sx in (-1, 1):
+            _leg(bld, (sx * w2 * 0.34, -off + d2 * 0.30, z + 0.10),
+                 (sx * w2 * 0.34, -off * 0.15, z - 0.75), 0.13, C_WOOD)
+        bld.box(0, -off, z + dz / 2, w2, d2, dz, C_PLASTER)
+        for sx in (1, -1):
+            bld.box(sx * (w2 / 2 + 0.02), -off, z + dz / 2, 0.13, d2 + 0.05, dz, C_WOOD)
+        bld.box(0, -off - d2 / 2 - 0.05, z + dz - 0.85, w2 * 0.62, 0.09, 0.80, C_SHOJI)
+        bld.box(0, -off, z + dz * 0.5, w2 + 0.06, d2 + 0.06, 0.22, C_WOOD)   # 胴差
+        # 腰簷
+        bld.box(0, -off, z + 0.16, w2 + 1.2, d2 + 1.2, 0.11, C_KAWARA_DK, top=C_KAWARA)
+        z += dz
+    top = _hip_roof(bld, z, 1.60, 0.0, 1.35, 0.80, C_KAWARA, C_KAWARA_DK)
+    # 水車（立輪，朝 -y 的河面）
+    wy = -(D / 2 + 0.75)
+    R = 2.85
+    for k in range(16):
+        t0 = k / 16.0 * math.tau
+        t1 = (k + 1) / 16.0 * math.tau
+        p0 = (R * math.cos(t0), wy, 1.05 + R * math.sin(t0))
+        p1 = (R * math.cos(t1), wy, 1.05 + R * math.sin(t1))
+        for dy in (-0.42, 0.42):
+            _leg(bld, (p0[0], wy + dy, p0[2]), (p1[0], wy + dy, p1[2]), 0.10, C_WOOD_MID)
+            _leg(bld, (p0[0], wy + dy, p0[2]), (p0[0] * 0.22, wy + dy, 1.05 + (p0[2] - 1.05) * 0.22),
+                 0.07, C_WOOD_MID)
+        # 水掻き（葉板）
+        bld.quad((p0[0], wy - 0.46, p0[2]), (p1[0], wy - 0.46, p1[2]),
+                 (p1[0] * 0.66, wy + 0.46, 1.05 + (p1[2] - 1.05) * 0.66),
+                 (p0[0] * 0.66, wy + 0.46, 1.05 + (p0[2] - 1.05) * 0.66), C_DECK_DK)
+    _leg(bld, (0, wy - 0.55, 1.05), (0, -(D / 2 - 0.3), 1.05), 0.22, C_WOOD)   # 心棒
+    return top
+
+
 def _bbox(ob):
     """(寬 x, 深 y, 高 z) —— 從實際頂點量，不是從建構參數推。"""
     vs = [v.co for v in ob.data.vertices]
@@ -536,6 +749,21 @@ for _nm, _sp, _wd, _ri, _rh, _ns, _np, _oy in (
         "fw": round(bb[0], 2), "fd": round(bb[1], 2), "h": round(bb[2], 2),
         "gbox": _gbox(ob),
         "faces": n, "glb": "res://assets/models/%s.glb" % _nm}
+
+for _nm, _fn in (("tower_fire", "fire_tower"), ("tower_bell", "bell_tower"),
+                 ("tower_mill", "water_mill_tower")):
+    clear()
+    b = B()
+    th = globals()[_fn](b)
+    ob = b.build(_nm)
+    n = export(ob, _nm)
+    bb = _bbox(ob)
+    manifest["modules"][_nm] = {
+        "kind": "tower", "fw": round(bb[0], 2), "fd": round(bb[1], 2),
+        "h": round(bb[2], 2), "gbox": _gbox(ob), "faces": n,
+        "glb": "res://assets/models/%s.glb" % _nm}
+    print("  %s 高 %.2f m / 基座 %.1f×%.1f → 高寬比 %.1f"
+          % (_nm, bb[2], bb[0], bb[1], bb[2] / max(bb[0], bb[1])))
 
 clear()
 b = B()

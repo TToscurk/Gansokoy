@@ -55,6 +55,23 @@ const BRIDGES := [
 	{"kind": "bridge_small", "x": 58.9, "z": 140.0, "yaw": 0.0},
 ]
 
+# ── 超現實地標塔（使用者本輪指令）──
+# **只有這幾座**推到 15~20m；一般町家的階梯天際線（前排 4.5 / 後排 9~10）
+# 維持不動 —— 對比才是重點，這個手法不准擴散。
+# 三座都放在**街道視線的終點**，高度才會被框住而不是隨機散落：
+#   火見櫓 → 本通北端（從廣場往北 162m 的直線走廊底）
+#   鐘楼   → 本通南端（往南 166m）
+#   水車櫓 → z=85 橫街的河岸終點；從主橋往北看也在視線裡
+# 三座都刻意偏離路心 6~10m：要被框住，不是擋住路。
+const TOWERS := [
+	{"kind": "tower_fire", "x": 9.5, "z": -132.0, "yaw": 0.20,
+	 "why": "本通北端終點"},
+	{"kind": "tower_bell", "x": 8.5, "z": 196.0, "yaw": -0.15,
+	 "why": "本通南端終點"},
+	{"kind": "tower_mill", "x": 62.5, "z": 89.0, "yaw": 1.5708,
+	 "why": "z=85 橫街的河岸終點；水輪朝河"},
+]
+
 # 鵜呑亭（臨河食堂）：正面朝河，離主橋西橋頭約 13m。
 # ⚠ 錨點要離主橋夠遠：模組**含川床深 17.5m**（不是主屋的 10.9m），
 # 放在 z=19 時東北角壓到橋的西引道（實測 20 處 3D 互穿，最深 0.78m）。
@@ -69,7 +86,6 @@ const LANDMARKS := [
 	{"n": "稗田邸", "x": -78.0, "z": 2.0, "w": 27.7, "d": 18.7, "h": 12.8},
 	{"n": "鎮守之杜", "x": -26.0, "z": 2.0, "w": 34.0, "d": 36.0, "h": 14.0},
 	{"n": "市場", "x": -26.0, "z": 57.0, "w": 30.0, "d": 34.0, "h": 4.6},
-	{"n": "火見櫓", "x": 26.0, "z": 57.0, "w": 9.0, "d": 9.0, "h": 16.7},
 	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 24.0, "d": 18.0, "h": 6.4},
 ]
 
@@ -119,6 +135,7 @@ func _init() -> void:
 	_build_revetment()
 	_build_bridges()
 	_build_landmark_stubs()
+	_build_towers()
 	_build_blocks()
 	_assert_no_overlap()
 	_emit_batches()
@@ -503,6 +520,12 @@ func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
 	if kind != "machiya_e_a" and kind.begins_with("machiya") \
 			and Vector2(pos.x, pos.y - PLAZA.y).length() >= 155.0:
 		kind = "machiya_e_a"
+	## 保留區／道路的檢查也收在這裡。排屋迴圈裡也有一份（那裡要早一步做，
+	## 才知道要不要跳過這個位置繼續往前排），但**包角棟與河畔棟是直接
+	## 呼叫這裡的** —— 只在迴圈裡擋的話它們會漏掉（實測一棟包角的村緣屋
+	## 直接長在火見櫓的塔腳裡，穿插 2.33m）。
+	if _in_reserved(kind, pos, face_dir) or _on_road(pos, face_dir, kind):
+		return
 	var yaw := atan2(face_dir.x, face_dir.y)
 	var y := bank_h(pos.x, pos.y)
 	var xf := Transform3D(Basis(Vector3.UP, yaw), Vector3(pos.x, y, pos.y))
@@ -626,6 +649,37 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 		if n.dot(Vector2(cfg["river_anchor"]) - rp) < 0.0:
 			n = -n
 		_house(kind2, rp + n * (RIVER_HALF + 4.9), -n)
+
+
+func _build_towers() -> void:
+	## 超現實地標塔。一次性、單一實例 → MeshInstance3D（不是 MultiMesh）。
+	## 一併登記成保留區，町家才不會排到塔腳下。
+	var g := lib.add(_root, Node3D.new(), "地標塔")
+	var body := StaticBody3D.new()
+	body.name = "地標塔碰撞"
+	_root.add_child(body)
+	body.owner = _root
+	for t in TOWERS:
+		var m: Dictionary = _mods[t.kind]
+		var mi := MeshInstance3D.new()
+		mi.mesh = lib.prop_mesh(String(m["glb"]))
+		mi.position = Vector3(t.x, bank_h(t.x, t.z), t.z)
+		mi.rotation.y = t.yaw
+		mi.set_meta("needs_trimesh", true)
+		lib.add(g, mi, t.kind)
+		_dump.append([t.kind, t.x, mi.position.y, t.z, t.yaw])
+		_reserved.append(_obb_of([t.kind, t.x, 0.0, t.z, t.yaw]))
+		# 塔身太細，trimesh 之外再給一個實心碰撞箱（不然玩家會卡進格柵裡）
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(float(m["fw"]) * 0.55, float(m["h"]), float(m["fd"]) * 0.55)
+		sh.shape = bx
+		sh.position = Vector3(t.x, mi.position.y + float(m["h"]) * 0.5, t.z)
+		sh.rotation.y = t.yaw
+		body.add_child(sh)
+		sh.owner = _root
+		_audit.append("地標塔 %s @(%.1f,%.1f) 高 %.1fm（%s）"
+			% [t.kind, t.x, t.z, float(m["h"]), t.why])
 
 
 func _build_blocks() -> void:

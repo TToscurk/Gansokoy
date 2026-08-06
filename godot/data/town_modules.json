@@ -117,6 +117,48 @@
    "faces": 820,
    "glb": "res://assets/models/bridge_small.glb"
   },
+  "tower_fire": {
+   "kind": "tower",
+   "fw": 5.9,
+   "fd": 5.9,
+   "h": 19.5,
+   "gbox": [
+    -2.949,
+    2.949,
+    -2.949,
+    2.949
+   ],
+   "faces": 570,
+   "glb": "res://assets/models/tower_fire.glb"
+  },
+  "tower_bell": {
+   "kind": "tower",
+   "fw": 6.82,
+   "fd": 6.82,
+   "h": 17.4,
+   "gbox": [
+    -3.41,
+    3.41,
+    -3.41,
+    3.41
+   ],
+   "faces": 220,
+   "glb": "res://assets/models/tower_bell.glb"
+  },
+  "tower_mill": {
+   "kind": "tower",
+   "fw": 6.1,
+   "fd": 7.0,
+   "h": 17.25,
+   "gbox": [
+    -3.05,
+    3.05,
+    -2.45,
+    4.55
+   ],
+   "faces": 872,
+   "glb": "res://assets/models/tower_mill.glb"
+  },
   "unomitei": {
    "kind": "landmark",
    "w": 13.2,
