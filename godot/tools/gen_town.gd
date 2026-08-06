@@ -190,6 +190,8 @@ func _init() -> void:
 	_build_unomitei()          # 先算位置：護岸要在這一段讓開
 	_build_revetment()
 	_build_bridges()
+	_street_rng.seed = STREET_SEED   # 街緣設施專用序列，不動地標／街區／草
+	_build_gates()             # 要在鋪街區之前：門洞得先登記成保留區
 	_build_landmark_stubs()
 	_build_towers()
 	_build_blocks()
@@ -197,7 +199,11 @@ func _init() -> void:
 	_emit_batches()
 	_build_collision()
 	_build_density()
-	# 草層要在密度層之後：它要避開的保留區（地標／橋／鵜呑亭）到這裡才齊
+	_build_gutters()           # 要在街區之後：溝要避開橫街，也吃商業梯度
+	_build_lamps()             # 要在街區之後：燈要避開町家的 OBB
+	_build_fauna()
+	_build_water_plants()
+	# 草層要在密度層之後：它要避開的保留區（地標／橋／鵜呑亭／門樓）到這裡才齊
 	_build_grass()
 	lib.vista(OUT_DIR, HALF, 900.0, height_at,
 		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
@@ -2744,6 +2750,459 @@ func _lm_hieda(g: Node3D, spread: float) -> void:
 	lib.cyl(g, "寶珠", 0.0, 0.13, 0.22, stone_l, lz + Vector3(0, 2.55, 0), 8)
 	_lm_collide(g, Vector3(1.1, 2.7, 1.1), lz)
 	_audit.append("稗田邸：庭池石組 %d 顆（護岸＋州濱＋立石）" % rk_i)
+
+
+# ══════════════ 街緣設施 MIGRATE：門樓／石溝／街燈 ══════════════
+#
+# 舊 gen_village 的 `_build_gates` / `_build_floor_decor`（石溝）/ `_build_lamps`。
+# ⚠ 這三樣的**座標一個都不能照抄** —— 舊值全綁在舊格線上（街燈吃 ST_X/ST_Z、
+# 石溝寫死本通 x=±6.2、北門寫死 z=-215）。新鎮的路是 `_roads` 的折線、門在
+# portal 上。搬的是**做法與比例**，位置一律從新路網重新推。照抄會撒進田裡。
+#
+# ⚠ 亂數：這一批一律用 `_street_rng`，而且材質全部指定色調索引（v ≥ 0）——
+# 只要碰一次 `_lm_rng.randf()`，六座地標的庭園散佈就會整組換位置。
+# （驗證方式：搬完之後把稗田邸子樹跟搬之前逐節點比對，位移必須是 0。）
+const STREET_SEED := SEED + 5231
+
+var _street_rng := RandomNumberGenerator.new()
+
+## 門樓：擺在 portal 上，玩家一落地就是**穿門進村**。
+## 舊值 (0,-215)/(-172,92) 是舊圖的村界，新圖的 portal 在 (0,-174)/(-132,100)。
+const GATES := [
+	# 北門：trail 落點 (0,-174) 往村內 6m。本通在這裡寬 8m，門洞 9.5m。
+	{"n": "北門", "x": 0.0, "z": -168.0, "yaw": 0.0},
+	# 西南門：kourindou 落點 (-132,100) 的**西側**（= 玩家背後就是林道）。
+	# 壓在西南門引道（z=92，沿 x 走）上 —— 所以要轉 90°，不然門是順著路
+	# 站的，跨不住路。舊圖那條引道是斜的（yaw 0.42），新圖是正的。
+	{"n": "西南門", "x": -150.0, "z": 92.0, "yaw": PI * 0.5},
+]
+
+func _build_gates() -> void:
+	var dark := _lmat("dark", 1)
+	var kawara := _lmat("kawara", 1)
+	var g0 := lib.add(_root, Node3D.new(), "門樓")
+	for d in GATES:
+		var yaw: float = float(d.yaw)
+		var ax := Vector2(cos(yaw), -sin(yaw))
+		var az := Vector2(sin(yaw), cos(yaw))
+		# 佔地是「沿門寬 13m × 進深 2.4m」，量地面要照這個方向取樣
+		var gu := _ground_under(float(d.x), float(d.z),
+			absf(ax.x) * 13.0 + absf(az.x) * 2.4, absf(ax.y) * 13.0 + absf(az.y) * 2.4)
+		var foot: float = float(gu[1]) + 0.35
+		var g := Node3D.new()
+		g.position = Vector3(float(d.x), float(gu[0]), float(d.z))
+		g.rotation.y = yaw
+		lib.add(g0, g, String(d.n))
+		for s in [-1, 1]:
+			# 柱腳往下埋「高差 + 0.35」，門跨在路上，兩側地面不會一樣高
+			lib.box(g, "柱_%d" % (s + 1), Vector3(0.7, 5.0 + foot, 0.7), dark,
+				Vector3(float(s) * 5.2, 2.5 - foot * 0.5, 0))
+			lib.box(g, "礎石_%d" % (s + 1), Vector3(1.05, 0.3, 1.05), _lmat("stone", 0),
+				Vector3(float(s) * 5.2, 0.12, 0))
+			_lm_collide(g, Vector3(0.95, 5.2, 0.95), Vector3(float(s) * 5.2, 0, 0))
+		lib.box(g, "樑", Vector3(12.0, 0.55, 0.9), dark, Vector3(0, 5.0, 0))
+		# 貫（柱間的橫木）：舊版只有樑與簷，剪影是「兩根柱撐一片板」。
+		# 補一根低位的貫，才讀得出是門而不是招牌架。
+		lib.box(g, "貫", Vector3(11.0, 0.3, 0.55), dark, Vector3(0, 3.6, 0))
+		lib.box(g, "簷", Vector3(13.2, 0.24, 1.8), kawara, Vector3(0, 5.5, 0))
+		lib.box(g, "棟", Vector3(13.2, 0.22, 0.4), kawara, Vector3(0, 5.68, 0))
+		# 保留區：町家不准蓋在門洞裡，草也不長進來
+		_reserved.append([Vector2(float(d.x), float(d.z)), ax, az, 7.6, 2.4, String(d.n)])
+	_audit.append("門樓 %d 座（北門在 trail 落點內側、西南門在 kourindou 引道上）" % GATES.size())
+
+
+## 石溝：本通與東西大街兩側的排水溝（町方的地面語彙）。
+## ⚠ 舊版一節一個 Node3D 帶 3~4 個 box —— 光本通就 150 節 = 500+ 個節點。
+## 這裡照護岸的做法收成 3 個 MultiMesh（溝壁／溝底／溝蓋）。
+const GUTTER_SEG := 6.0
+const GUTTER_COMMERCE := 0.45     # 石溝是町方的東西，村緣的排水是土溝
+
+func _build_gutters() -> void:
+	var walls: Array[Transform3D] = []
+	var floors: Array[Transform3D] = []
+	var lids: Array[Transform3D] = []
+	# [路索引, 沿 x?, 固定座標, 起, 迄, 路半寬]
+	var runs := [
+		{"ri": 0, "along_x": false, "fix": 0.0, "a": -170.0, "b": 220.0, "hw": 4.0},
+		{"ri": 1, "along_x": true, "fix": MAIN_EW_Z, "a": -80.0, "b": 130.0,
+			"hw": MAIN_EW_W * 0.5},
+	]
+	var n_seg := 0
+	var n_cover := 0
+	for run in runs:
+		var along_x: bool = bool(run.along_x)
+		var off: float = float(run.hw) + 0.6
+		for side in [-1.0, 1.0]:
+			var t: float = float(run.a)
+			var seg_i := 0
+			while t < float(run.b):
+				var mid := t + GUTTER_SEG * 0.5
+				var p := Vector2(mid, float(run.fix) + side * off) if along_x \
+					else Vector2(float(run.fix) + side * off, mid)
+				t += GUTTER_SEG
+				seg_i += 1
+				if _commerce(p) < GUTTER_COMMERCE:
+					continue
+				if _river_dist_xy(p.x, p.y) < RIVER_HALF + 2.0:
+					continue
+				# 橫街穿過來的地方不能是開口溝 —— 蓋起來讓人車過得去
+				var covered := false
+				for i in _roads.size():
+					if i == int(run.ri):
+						continue
+					var r: Dictionary = _roads[i]
+					if lib.poly_dist(r.pts, p.x, p.y) < float(r.w) * 0.5 + 1.2:
+						covered = true
+						break
+				# 6m 長的一節溝拿中心高度擺，斜坡上會翹起來 —— 取 footprint 最低點
+				var gu := _ground_under(p.x, p.y,
+					GUTTER_SEG if along_x else 1.2, 1.2 if along_x else GUTTER_SEG)
+				var y0: float = float(gu[0])
+				var b := Basis(Vector3.UP, PI * 0.5) if along_x else Basis()
+				n_seg += 1
+				if covered:
+					# 整節鋪石蓋（用縮放拉長，不要排 4 塊 1.6m 的板 ——
+					# 那樣重疊處會共面閃爍，這個檔案已經栽過六次）
+					n_cover += 1
+					lids.append(Transform3D(b.scaled(Vector3(1, 1, GUTTER_SEG / 1.6)),
+						Vector3(p.x, y0 + 0.04, p.y)))
+					continue
+				for sd in [-1.0, 1.0]:
+					var wo := Vector2(0.0, sd * 0.42) if along_x else Vector2(sd * 0.42, 0.0)
+					walls.append(Transform3D(b, Vector3(p.x + wo.x, y0 - 0.22, p.y + wo.y)))
+				floors.append(Transform3D(b, Vector3(p.x, y0 - 0.44, p.y)))
+				if seg_i % 3 == 1:                 # 每三節架一塊石蓋（過路用）
+					lids.append(Transform3D(b, Vector3(p.x, y0 + 0.04, p.y)))
+			pass
+	if n_seg == 0:
+		return
+	# ⚠ 別用 MAT_TONES["stone"]：那組色調最暗的一支也有 0.82，乘上本來就
+	# 亮的 stone_wall 貼圖，在直射陽光下是**純白的軌條**（俯視截圖看出來的，
+	# 跟護岸「0.42 的灰讀成水泥防洪牆」是同一個病）。排水溝的石頭是濕的、暗的。
+	var stone := lib.pbr("溝石", "stone_wall", 0.55, Color(0.60, 0.61, 0.59))
+	var slab := lib.pbr("溝蓋石", "stone_flag", 0.30, Color(0.70, 0.70, 0.67))
+	var g := lib.add(_root, Node3D.new(), "石溝")
+	var parts := [
+		{"size": Vector3(0.22, 0.5, GUTTER_SEG), "list": walls, "mat": stone, "n": "溝壁"},
+		{"size": Vector3(0.7, 0.12, GUTTER_SEG), "list": floors, "mat": stone, "n": "溝底"},
+		{"size": Vector3(1.15, 0.14, 1.6), "list": lids, "mat": slab, "n": "溝蓋"},
+	]
+	for pt in parts:
+		var bm := BoxMesh.new()
+		bm.size = pt.size
+		bm.material = pt.mat
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(bm, pt.list, [],
+			OUT_DIR + "gen/gutter_%s.res" % String(pt.n))
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(g, mmi, String(pt.n))
+	_audit.append("石溝 %d 節（其中 %d 節是橫街的覆蓋段）→ 3 個 MultiMesh"
+		% [n_seg, n_cover])
+
+
+## 街燈：沿路網放，間距吃商業梯度（村心密、村緣疏）。
+## ⚠ 舊版是手寫的 spots 陣列（吃 ST_X/ST_Z）；新圖的路是折線，所以改成
+## **沿線行走取樣**。也因此不會再出現「燈站在田中央」那種舊格線殘留。
+const LAMP_MAX := 44              # OmniLight3D 有成本，上限擺明寫死
+
+func _build_lamps() -> void:
+	var iron := lib.flat_mat("iron", Color(0.16, 0.16, 0.18), 0.6)
+	var glow := lib.flat_mat("lamp_glow", Color(1.0, 0.85, 0.55), 0.3, Color(1.0, 0.75, 0.4))
+	var g := lib.add(_root, Node3D.new(), "街燈")
+	# 町家 OBB 的空間索引（照 _build_grass 的做法）
+	var hgrid := {}
+	for e in _dump:
+		var r := _obb_of(e)
+		var c: Vector2 = r[0]
+		var rad: float = maxf(r[3], r[4]) + 3.0
+		for i in range(int(floor((c.x - rad) / 24.0)), int(floor((c.x + rad) / 24.0)) + 1):
+			for j in range(int(floor((c.y - rad) / 24.0)), int(floor((c.y + rad) / 24.0)) + 1):
+				var k := Vector2i(i, j)
+				if not hgrid.has(k):
+					hgrid[k] = []
+				hgrid[k].append(r)
+	var in_house := func(p: Vector2, pad: float) -> bool:
+		var key := Vector2i(int(floor(p.x / 24.0)), int(floor(p.y / 24.0)))
+		for dx in [-1, 0, 1]:
+			for dz in [-1, 0, 1]:
+				var k := Vector2i(key.x + dx, key.y + dz)
+				if not hgrid.has(k):
+					continue
+				for r in hgrid[k]:
+					var d: Vector2 = p - r[0]
+					if absf(d.dot(r[1])) < r[3] + pad and absf(d.dot(r[2])) < r[4] + pad:
+						return true
+		return false
+
+	var placed: Array[Vector2] = []
+	var side_flip := false
+	for r in _roads:
+		var pts: Array = r.pts
+		var half: float = float(r.w) * 0.5
+		for k in range(pts.size() - 1):
+			var a: Vector2 = pts[k]
+			var b: Vector2 = pts[k + 1]
+			var seg := b - a
+			var ln := seg.length()
+			if ln < 1.0:
+				continue
+			var dir := seg / ln
+			var nrm := dir.orthogonal()
+			var s := 0.0
+			while s < ln:
+				var base: Vector2 = a + dir * s
+				# 間距吃商業梯度：村心 17m、村緣 48m
+				var cm := _commerce(base)
+				var step: float = lerpf(48.0, 17.0, clampf(cm / 0.75, 0.0, 1.0))
+				s += step
+				if cm < 0.20:
+					continue
+				side_flip = not side_flip
+				var p: Vector2 = base + nrm * (1.0 if side_flip else -1.0) * (half + 1.3)
+				if _pt_reserved(p, 1.0) or in_house.call(p, 0.8):
+					continue
+				if _river_dist_xy(p.x, p.y) < RIVER_HALF + 1.5:
+					continue
+				var too_near := false
+				for q in placed:
+					if q.distance_to(p) < 12.0:
+						too_near = true
+						break
+				if too_near:
+					continue
+				placed.append(p)
+	# 太多的話按商業權重砍尾巴（村心的先留）
+	if placed.size() > LAMP_MAX:
+		placed.sort_custom(func(u, v): return _commerce(u) > _commerce(v))
+		placed.resize(LAMP_MAX)
+	for i in placed.size():
+		var p: Vector2 = placed[i]
+		var lamp := Node3D.new()
+		lamp.position = Vector3(p.x, height_at(p.x, p.y), p.y)
+		lib.add(g, lamp, "街燈_%d" % i)
+		lib.cyl(lamp, "柱", 0.055, 0.075, 3.2, iron, Vector3(0, 1.6, 0), 8)
+		lib.box(lamp, "燈頭", Vector3(0.38, 0.46, 0.38), glow, Vector3(0, 3.35, 0))
+		lib.box(lamp, "燈帽", Vector3(0.52, 0.1, 0.52), iron, Vector3(0, 3.63, 0))
+		var li := OmniLight3D.new()
+		li.position = Vector3(0, 3.3, 0)
+		li.light_color = Color(1.0, 0.78, 0.5)
+		li.light_energy = 1.2
+		li.omni_range = 9.0
+		li.shadow_enabled = false
+		# ⚠ 燈本體 _perf_pass 會設距離淡出，但**燈光不是 MeshInstance3D**，
+		# 不會被掃到。44 盞全程開著的話遠景白付一筆 —— 自己設距離淡出。
+		li.distance_fade_enabled = true
+		li.distance_fade_begin = 55.0
+		li.distance_fade_length = 15.0
+		lib.add(lamp, li, "光")
+	_audit.append("街燈 %d 盞（間距吃商業梯度：村心 17m、村緣 48m）" % placed.size())
+
+
+# ══════════════ 水邊 MIGRATE：動物／水生植物 ══════════════
+#
+# 舊 gen_village 的 `_build_fauna` / `_build_water_plants` 綁的是**水路**
+# （CANAL，Stage 1 已移除）。新圖只有河，所以路徑、水面高度、生長帶全部改綁
+# `_river()`。蘆葦已經在草層（`_reed_along_river`）裡了，這裡只補睡蓮與荷。
+#
+# 水面高度只有一個真相來源：`lib.river_water(..., RIVER_DEPTH * 0.20, bank_h)`
+# → 水面 = bank_h − 0.5。舊碼寫的是 `sink * 0.35`（水路的係數），照抄會讓
+# 全部的鴨與睡蓮浮高 0.375m。
+
+const FAUNA_Z := Vector2(-120.0, 160.0)     # 生物只放在**看得到**的村內段
+
+## 河道在村內段的中心線 + 每個節點的水面高度（fauna.gd 的巡游路徑格式）
+func _river_reach() -> Array:
+	var pts: Array[Vector2] = []
+	var ys: Array[float] = []
+	for p in _river():
+		if p.y < FAUNA_Z.x or p.y > FAUNA_Z.y:
+			continue
+		pts.append(p)
+		ys.append(bank_h(p.x, p.y) - RIVER_DEPTH * 0.20)
+	return [pts, ys]
+
+func _build_fauna() -> void:
+	var reach := _river_reach()
+	var pts: Array = reach[0]
+	var ys: Array = reach[1]
+	if pts.size() < 2:
+		return
+	var g := lib.add(_root, Node3D.new(), "Fauna")
+	g.set_script(load("res://scripts/fauna.gd"))
+	g.set("paths", [{"pts": pts, "ys": ys}])
+	var total_len := 0.0
+	for k in range(pts.size() - 1):
+		total_len += (pts[k] as Vector2).distance_to(pts[k + 1])
+
+	var seg_n := pts.size() - 1
+	var at_river := func(t: float, sink: float) -> Vector3:
+		var ft: float = clampf(t, 0.0, 0.999) * float(seg_n)
+		var i2 := int(ft)
+		var f := ft - float(i2)
+		var a: Vector2 = pts[i2]
+		var b: Vector2 = pts[mini(i2 + 1, seg_n)]
+		var q: Vector2 = a.lerp(b, f)
+		# 橫向擺一點，但要留在水面內（水面半寬 = RIVER_HALF * 0.86 = 6.0）
+		q += (b - a).normalized().orthogonal() * _street_rng.randf_range(-2.2, 2.2)
+		var y0: float = lerpf(float(ys[i2]), float(ys[mini(i2 + 1, seg_n)]), f)
+		return Vector3(q.x, y0 - sink, q.y)
+	# ⚠ fauna.gd 的 speed 是**每秒走完全長的比例**，不是 m/s。舊值 0.006~0.016
+	# 是配 390m 的水路寫的；直接搬到 619m 的河上，鴨子會用 3.7~9.9 m/s 巡游
+	# （比人跑還快）。所以這裡從**真實速度**回推比例。
+	var t_of := func(mps: float) -> float:
+		return mps / maxf(total_len, 1.0)
+
+	var duck_mesh := lib.prop_mesh("res://assets/models/duck.glb")
+	var koi_mesh := lib.prop_mesh("res://assets/models/koi.glb")
+	# ⚠ 位置一定要在**存檔時**就算好。只寫 meta、位置留給 fauna.gd 執行期算的話，
+	# 編輯器不跑 _process，九隻鴨會全部疊在世界原點 —— 而原點是本通正中央。
+	for i in 9:                                    # 鴨（水面）
+		var d := MeshInstance3D.new()
+		d.mesh = duck_mesh
+		d.scale = Vector3.ONE * _street_rng.randf_range(0.85, 1.15)
+		var dt := _street_rng.randf_range(0.06, 0.94)
+		lib.add(g, d, "鴨_%d" % i)
+		d.position = at_river.call(dt, -0.02)
+		d.rotation.y = _street_rng.randf_range(0.0, TAU)
+		d.set_meta("swim_kind", 0)
+		d.set_meta("swim_t", dt)
+		d.set_meta("swim_speed", t_of.call(_street_rng.randf_range(0.35, 0.9)))
+	for i in 14:                                   # 鯉（水下）
+		var k := MeshInstance3D.new()
+		k.mesh = koi_mesh
+		k.scale = Vector3.ONE * _street_rng.randf_range(0.8, 1.4)
+		var kt := _street_rng.randf_range(0.06, 0.94)
+		lib.add(g, k, "鯉_%d" % i)
+		k.position = at_river.call(kt, 0.32)
+		k.rotation.y = _street_rng.randf_range(0.0, TAU)
+		k.set_meta("swim_kind", 1)
+		k.set_meta("swim_t", kt)
+		k.set_meta("swim_speed", t_of.call(_street_rng.randf_range(0.6, 1.6)))
+
+	# 鷺鷥：站在**水際**不動（單腳立姿是牠的招牌）。
+	# ⚠ 舊版是「沿水路法線外推固定距離」。那招在**梯形斷面的水路**上成立，
+	# 在這條河上不成立 —— river_carve 的坡一路拖到 2.2×half=15.4m，
+	# 「岸 + 1m」那個位置的地面其實還在水面以下 0.9m。第一版照抄，
+	# 600 次嘗試 **一隻都站不住**（全被「沉在水裡」判掉）。
+	# 正解是**往外走到地面剛好露出水面的那一格**——那才是水際線。
+	var heron_mesh := lib.prop_mesh("res://assets/models/heron.glb")
+	var placed := 0
+	var tries := 0
+	var shore_off: Array[float] = []
+	while placed < 5 and tries < 600:
+		tries += 1
+		var k2 := _street_rng.randi() % maxi(seg_n, 1)
+		var a: Vector2 = pts[k2]
+		var b: Vector2 = pts[mini(k2 + 1, seg_n)]
+		var t2 := _street_rng.randf()
+		var c: Vector2 = a.lerp(b, t2)
+		var nrm := (b - a).normalized().orthogonal()
+		var sd := 1.0 if _street_rng.randf() < 0.5 else -1.0
+		# 橋、鵜呑亭讓開；砌石護岸那一段也讓開（鷺鷥不會站在石垣腳下的水裡）
+		var skip := false
+		for br in BRIDGES:
+			if c.distance_to(Vector2(float(br.x), float(br.z))) < 14.0:
+				skip = true
+		if skip or c.distance_to(_uno_pos) < 22.0:
+			continue
+		if Vector2(c.x, c.y - PLAZA.y).length() < 134.0:   # 護岸範圍（＋2m 餘裕）
+			continue
+		var wy: float = bank_h(c.x, c.y) - RIVER_DEPTH * 0.20
+		# 從水線往外走，找地面第一次露出水面的位置
+		var found := Vector2.ZERO
+		var found_y := 0.0
+		var found_d := 0.0
+		var d := RIVER_HALF * 0.86
+		while d < RIVER_HALF * 2.4:
+			var p2: Vector2 = c + nrm * sd * d
+			var gy2: float = height_at(p2.x, p2.y)
+			if gy2 >= wy + 0.03:
+				if gy2 <= wy + 0.5:                # 太高就是爬上岸頂了，不是水際
+					found = p2
+					found_y = gy2
+					found_d = d
+				break
+			d += 0.2
+		if found == Vector2.ZERO:
+			continue
+		var h := MeshInstance3D.new()
+		h.mesh = heron_mesh
+		h.position = Vector3(found.x, found_y, found.y)
+		# 面向水（鷺鷥盯著水面等魚），不是隨機亂轉
+		h.rotation.y = atan2(-nrm.x * sd, -nrm.y * sd) + _street_rng.randf_range(-0.5, 0.5)
+		h.scale = Vector3.ONE * _street_rng.randf_range(0.9, 1.15)
+		lib.add(g, h, "鷺鷥_%d" % placed)
+		shore_off.append(found_d)
+		placed += 1
+	if placed > 0:
+		var so := 0.0
+		for v in shore_off:
+			so += v
+		_audit.append("　鷺鷥水際線實測：離河心平均 %.2fm（河半寬 %.1f、水面半寬 %.2f）"
+			% [so / float(placed), RIVER_HALF, RIVER_HALF * 0.86])
+	_audit.append("水邊生物：9 鴨 / 14 鯉 / %d 鷺鷥（巡游段 z %.0f~%.0f，全長 %.0fm）"
+		% [placed, FAUNA_Z.x, FAUNA_Z.y, total_len])
+
+
+## 水生植物：睡蓮與荷。
+## ⚠ 舊版的生長帶是 0~0.72 半寬（= 撒到河心）。那是**靜水**水路的設定；
+## 浮葉植物長在淺灘不長在流心，所以這裡收到 0.42~0.86，貼著岸長。
+func _build_water_plants() -> void:
+	var g := lib.add(_root, Node3D.new(), "WaterPlants")
+	var pad := lib.tuft_mesh(6, 0.30, 0.34, Color(0.15, 0.29, 0.13), Color(0.27, 0.45, 0.19))
+	var lotus := lib.tuft_mesh(5, 0.46, 0.14, Color(0.20, 0.34, 0.16), Color(0.92, 0.72, 0.80), true)
+	var groups := [
+		{"mesh": pad, "n": 220, "band": Vector2(0.42, 0.86), "sink": -0.03, "file": "睡蓮"},
+		{"mesh": lotus, "n": 80, "band": Vector2(0.52, 0.84), "sink": -0.30, "file": "荷"},
+	]
+	var rv := _river()
+	var total := 0
+	var parts: Array[String] = []
+	for grp in groups:
+		var list: Array[Transform3D] = []
+		var tries := 0
+		var target: int = int(grp.n)
+		while list.size() < target and tries < target * 60:
+			tries += 1
+			var k := int(_street_rng.randf() * float(rv.size() - 1))
+			var a: Vector2 = rv[k]
+			var b: Vector2 = rv[k + 1]
+			var q: Vector2 = a.lerp(b, _street_rng.randf())
+			var band: Vector2 = grp.band
+			var off: float = RIVER_HALF * _street_rng.randf_range(band.x, band.y) \
+				* (1.0 if _street_rng.randf() < 0.5 else -1.0)
+			q += (b - a).normalized().orthogonal() * off
+			if absf(q.x) > HALF - 8.0 or absf(q.y) > HALF - 8.0:
+				continue
+			# 橋下與鵜呑亭川床下不長（橋墩／柱會穿過去，而且是陰影）
+			var skip := false
+			for br in BRIDGES:
+				if q.distance_to(Vector2(float(br.x), float(br.z))) < 12.0:
+					skip = true
+					break
+			if skip or q.distance_to(_uno_pos) < 16.0:
+				continue
+			# ⚠ 一定要用 poly_dist 複驗：沿線取樣的 off 是照**該段法線**推的，
+			# 河道轉彎處內側會被推到對岸去（實測會有株落在水面外）。
+			var d: float = lib.poly_dist(rv, q.x, q.y)
+			if d > RIVER_HALF * 0.86 - 0.3 or d < RIVER_HALF * 0.30:
+				continue
+			var wy: float = bank_h(q.x, q.y) - RIVER_DEPTH * 0.20 + float(grp.sink)
+			var sc := _street_rng.randf_range(0.7, 1.5)
+			list.append(Transform3D(
+				Basis(Vector3.UP, _street_rng.randf() * TAU).scaled(Vector3(sc, sc, sc)),
+				Vector3(q.x, wy, q.y)))
+		total += list.size()
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(grp.mesh, list, [],
+			OUT_DIR + "gen/water_%s.res" % String(grp.file))
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		# ⚠ 不設 visibility_range —— MultiMeshInstance 是**整批**用 AABB 中心
+		# 判距離的，跨半張圖的批次會被整批剔掉（草層踩過這個坑）。
+		lib.add(g, mmi, String(grp.file))
+		parts.append("%s %d" % [String(grp.file), list.size()])
+	_audit.append("水生植物：%s（共 %d 株，貼岸帶 0.42~0.86 半寬）"
+		% [", ".join(parts), total])
 
 
 func _write_meta() -> void:

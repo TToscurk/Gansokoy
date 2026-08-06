@@ -73,6 +73,7 @@ func _check(map_id: String) -> int:
 	_check_water_on_road(waters, root)
 	_check_props_grounded(root)
 	_check_building_over_water(_parts, waters)
+	_check_fauna(root, waters)
 
 	for s in _issues:
 		print("  ✗ ", s)
@@ -437,6 +438,89 @@ func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 					break
 		if hit > 0:
 			_issues.append("%s 有 %d 個實例長在建物裡，%s" % [nm, hit, first])
+
+## 生物錯位 —— 這支檔頭從第一版就寫著要驗，但**一直沒有實作**。
+## 而這正是舊圖出過的 bug：v8 只寫 meta、位置留給執行期算，編輯器不跑
+## _process，九隻鴨全部疊在世界原點（＝本通正中央），使用者回報「鴨子在路上」。
+## 存檔位置是唯一能被靜態驗的東西，所以就驗它：
+##   ・鴨（swim_kind 0）要**浮在水面上**（±0.35m）
+##   ・鯉（swim_kind 1）要在水面**以下**（0.05~1.2m）
+##   ・鷺鷥要站在水面**以上**（不能泡在水裡），而且要靠得到水（30m 內）
+const FAUNA_XY_TOL := 3.0      # 找水面時允許的水平誤差（水面是有限寬的帶狀網格）
+
+func _check_fauna(root: Node, waters: Array) -> void:
+	var beasts := []
+	_collect_fauna(root, beasts)
+	if beasts.is_empty():
+		return
+	# 水面高度場：把所有水面網格的頂點灑進 2m 的格子裡
+	var wgrid := {}
+	for w in waters:
+		var mi := w as MeshInstance3D
+		if mi.mesh == null or mi.mesh.get_surface_count() == 0:
+			continue
+		var verts: PackedVector3Array = mi.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		var xf := _world_xf(mi)
+		for i in verts.size():
+			var p: Vector3 = xf * verts[i]
+			var c := Vector2i(int(floor(p.x / 2.0)), int(floor(p.z / 2.0)))
+			if not wgrid.has(c) or p.y > wgrid[c]:
+				wgrid[c] = p.y
+	var water_at := func(x: float, z: float, rad: int) -> Variant:
+		var best = null
+		var c0 := Vector2i(int(floor(x / 2.0)), int(floor(z / 2.0)))
+		for di in range(-rad, rad + 1):
+			for dj in range(-rad, rad + 1):
+				var c := Vector2i(c0.x + di, c0.y + dj)
+				if wgrid.has(c) and (best == null or float(wgrid[c]) > float(best)):
+					best = wgrid[c]
+		return best
+	var bad_swim := 0
+	var bad_heron := 0
+	var worst := ""
+	for b in beasts:
+		var n: Node3D = b[0]
+		var kind: int = b[1]
+		var p: Vector3 = _world_xf(n).origin
+		var wy = water_at.call(p.x, p.z, int(ceil(FAUNA_XY_TOL / 2.0)))
+		if wy == null:
+			# 完全找不到水面 —— 這隻不在任何水體上（舊 bug 的樣子）
+			if kind == 2:
+				continue                       # 鷺鷥可以站在離水面格子稍遠的岸上
+			bad_swim += 1
+			if worst == "":
+				worst = "%s 附近 %.0fm 內沒有水面 @ (%.0f, %.0f)" % [n.name, FAUNA_XY_TOL, p.x, p.z]
+			continue
+		var d: float = p.y - float(wy)
+		match kind:
+			0:                                  # 鴨：浮在水面
+				if absf(d) > 0.35:
+					bad_swim += 1
+					if worst == "":
+						worst = "%s 離水面 %+.2fm @ (%.0f, %.0f)" % [n.name, d, p.x, p.z]
+			1:                                  # 鯉：水面下
+				if d > -0.05 or d < -1.2:
+					bad_swim += 1
+					if worst == "":
+						worst = "%s 離水面 %+.2fm（該在水下 0.05~1.2m）@ (%.0f, %.0f)" % [n.name, d, p.x, p.z]
+			2:                                  # 鷺鷥：站在水面以上
+				if d < -0.05:
+					bad_heron += 1
+					if worst == "":
+						worst = "%s 泡在水裡 %.2fm @ (%.0f, %.0f)" % [n.name, -d, p.x, p.z]
+	if bad_swim > 0:
+		_issues.append("水生生物位置錯誤 %d 隻（%s）" % [bad_swim, worst])
+	if bad_heron > 0:
+		_issues.append("鷺鷥站在水裡 %d 隻（%s）" % [bad_heron, worst])
+
+func _collect_fauna(n: Node, out: Array) -> void:
+	if n is Node3D:
+		if n.has_meta("swim_kind"):
+			out.append([n, int(n.get_meta("swim_kind"))])
+		elif String(n.name).begins_with("鷺鷥"):
+			out.append([n, 2])
+	for c in n.get_children():
+		_collect_fauna(c, out)
 
 ## 水體溢到平地／路面 —— 使用者回報「池塘在路上」。
 ##

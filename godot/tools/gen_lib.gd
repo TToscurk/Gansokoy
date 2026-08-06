@@ -331,10 +331,14 @@ const TREE_GLBS := [
 ]
 
 # ── 草（風吹 shader + 三種簇型） ──
-func grass_wind_mat(strength: float) -> ShaderMaterial:
+func grass_wind_mat(strength: float, gust := -1.0) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
 	m.shader = load("res://assets/shaders/grass_wind.gdshader")
 	m.set_shader_parameter("sway_strength", strength)
+	# gust 留 -1 就不動著色器的預設（0.14）—— 既有呼叫端的輸出因此完全不變。
+	# 需要「幾乎不動」的葉子（浮在水面的睡蓮）才把陣風也壓下去。
+	if gust >= 0.0:
+		m.set_shader_parameter("gust_strength", gust)
 	return m
 
 ## 圓潤團塊：球面頂點用低頻雜訊推出去，法線重算成平滑。
@@ -416,7 +420,15 @@ func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: 
 			st.set_color(Color(0.9, 0.78, 0.4))
 			st.add_vertex(Vector3(fx, fy + 0.09, fz))
 	st.generate_normals()
-	return st.commit()
+	var mesh := st.commit()
+	# ⚠ 這裡**一定要掛一個預設材質**。tuft_mesh 把顏色烤在頂點色上，而
+	# ArrayMesh 沒有材質時 Godot 給的是預設白 —— 頂點色根本沒人讀。
+	# 症狀：睡蓮／菖蒲／荷在引擎裡是一叢一叢的**白色碎片**（村圖的水邊與
+	# 稗田邸庭池都中招，因為那幾處忘了自己補材質）。
+	# 呼叫端照樣可以 surface_set_material 覆蓋掉（草層就是這麼做的）；
+	# 這個預設只是保證「忘了設」的結果是對的顏色，不是白色。
+	mesh.surface_set_material(0, grass_wind_mat(0.045, 0.03))
+	return mesh
 
 # ── 地形網格（順時針繞向）＋遮罩貼圖材質 ──
 ## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro,A=踏み固めた土)
