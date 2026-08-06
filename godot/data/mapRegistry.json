@@ -468,33 +468,5 @@
     ],
     "mobTheme": null,
     "connections": []
-  },
-  "sato": {
-    "id": "sato",
-    "zh": "人間之里",
-    "en": "HUMAN VILLAGE",
-    "dir": "中央",
-    "x": -80,
-    "z": 150,
-    "elev": 15,
-    "radius": 205,
-    "rough": 0.8,
-    "fog": 12109008,
-    "accent": 14266986,
-    "built": true,
-    "safe": true,
-    "playSize": [
-      460,
-      460
-    ],
-    "mobTheme": null,
-    "connections": [
-      "trail",
-      "kourindou",
-      "myouren",
-      "lake"
-    ],
-    "entry": "maps/sato/",
-    "note": "gen_town.gd 產出的全鎮重設計版（尚未取代 village）。⚠ 這個檔由 tools/export-godot.mjs 重烤時會被覆蓋 —— 重烤後要把這個條目補回來，或先把 sato 正式併進 village。"
   }
 }

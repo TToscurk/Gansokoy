@@ -25,19 +25,9 @@ const TRIMESH_MIN_SPAN := 15.0
 
 ## 每張圖要驗的路線。座標是世界 XZ。
 const ROUTES := {
+	# ⚠ 整合 Stage 2 起 village **就是**街區重設計版的佈局，所以路線表
+	# 直接沿用原本為它寫的那份（舊格線的路線已經對不上任何東西）。
 	"village": [
-		{ "name": "南口 → 北口", "a": Vector2(0, 250), "b": Vector2(0, -250) },
-		{ "name": "南口 → 西口", "a": Vector2(0, 250), "b": Vector2(-250, 30) },
-		{ "name": "廣場 → 東口", "a": Vector2(0, 30), "b": Vector2(250, 30) },
-		# ⚠ 這條原本測的是「過不過得了水路」（兩端跨在 z=85 的水路上，
-		# 對準水路橋_4）。整合 Stage 1 把直水道整條移除之後**已經沒有水路
-		# 可過** —— 它現在只是兩個相距 20m 的平地點，永遠會過。
-		# 留著是為了守住這段的連通性，但它不再是「過橋」測試；真正的過河
-		# 測試在 sato 的三條橋路線上。等 Stage 2 換上新河道後再換成跨新河的路線。
-		{ "name": "村心南北（原水路段，水路已移除）", "a": Vector2(52, 95), "b": Vector2(52, 75) },
-		{ "name": "廣場 → 稗田邸前", "a": Vector2(0, 30), "b": Vector2(-78, 20) },
-	],
-	"sato": [
 		# 幹道連通（南北向縱貫 + 兩座門）
 		{ "name": "北門 → 南口", "a": Vector2(0, -190), "b": Vector2(0, 245) },
 		{ "name": "北門 → 西南門", "a": Vector2(0, -174), "b": Vector2(-172, 92) },
@@ -72,7 +62,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou", "sato"]
+		maps = ["village", "trail", "kourindou"]
 	else:
 		maps = [args[0]]
 	_cap = CapsuleShape3D.new()

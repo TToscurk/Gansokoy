@@ -1,6 +1,20 @@
-# 人間之里・場景產生器（美術規格：docs/village-art-direction.md）
+# ╔══════════════════════════════════════════════════════════════════════╗
+# ║ ⛔ 這支已被 tools/gen_town.gd 取代（整合 Stage 2，2026-08-06）        ║
+# ║                                                                      ║
+# ║ **不要執行它** —— 跑下去會用舊格線佈局蓋掉 gen_town.gd 產出的         ║
+# ║ maps/village/village.tscn。為了防呆，_init() 開頭會直接中止。         ║
+# ║                                                                      ║
+# ║ 留著的唯一理由：它是 MIGRATE 清單的**內容來源**。以下東西還只存在     ║
+# ║ 於這支裡面，要逐項搬進 gen_town.gd：                                 ║
+# ║   ・地標內容：寺子屋 / 鈴奈庵 / 市場（龍神像・屋台・水井・高札場）    ║
+# ║     / 鎮守之杜 / 足洗邸 / 稗田邸院落                                  ║
+# ║   ・草層 6 種 MultiMesh（新圖完全沒有草）                             ║
+# ║   ・街燈、石溝、門（北門／西南門）                                    ║
+# ║   ・動物與水生植物（要重新接到新河道上）                              ║
+# ║ 搬完之後這個檔案就可以刪了。                                         ║
+# ╚══════════════════════════════════════════════════════════════════════╝
 #
-#   godot --headless --path godot --script tools/gen_village.gd
+# 人間之里・場景產生器（美術規格：docs/village-art-direction.md）
 #
 # 骨架依據：thwiki「幻想鄉柱狀地圖」的人里俯瞰圖（使用者提供）——
 # 里不是「街道兩側排房子」，而是**一格一格的圍牆街區**：
@@ -198,6 +212,11 @@ func _court_w(x: float, z: float) -> float:
 	return best
 
 func _init() -> void:
+	# ⛔ 防呆：這支已被 gen_town.gd 取代（見檔頭）。真的要拿舊佈局出來比對時，
+	# 把下面三行註解掉並改 OUT_DIR，**不要**讓它寫進 maps/village/。
+	push_error("gen_village.gd 已被 gen_town.gd 取代，不可執行 —— 見檔頭說明")
+	quit(1)
+	return
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR + "gen"))
 	_nh = FastNoiseLite.new()
 	_nh.frequency = 0.011

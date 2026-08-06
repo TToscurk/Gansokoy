@@ -507,3 +507,61 @@ z=85 處中心約 x=62），兩張半透明水面互穿正是 v10 那個老 bug 
 
 驗收：四張圖 check_map **0 問題**、walk_test **0 條不通**。
 村心 z=85 的引擎內截圖確認水路整條消失、沒有留下孤兒橋。
+
+---
+
+## 整合 Stage 2：街區佈局置換（2026-08-06）
+
+使用者定案**方案 (a)**：`gen_town.gd` 直接輸出到 `maps/village/`，而不是把
+新佈局搬進 `gen_village.gd`。理由是新產生器已經帶著完整護欄（gbox OBB 自檢、
+`_on_road`、`_in_reserved`、村緣降級、單一收口點 `_house`），而舊產生器的
+佈局程式碼在換圖後幾乎全部作廢 —— 把新護欄搬進舊架構風險高得多。
+
+### 回程 portal：**不用改 trail/kourindou**
+查證後確認（不是憑印象）：`main.gd` 的 `_place_player` 是「在**目的地圖**的
+portal 清單裡找 `target == from_id` 的那一個」，落點由目的地決定。而舊
+`village.meta.json` 的兩個 portal 座標 **(0,−174) / (−132,100)** 跟新產出
+**完全相同** —— 所以 trail→village、kourindou→village 的落點一格都沒動。
+
+寫了一支臨時腳本實跑四趟往返，全部接得上：
+
+| 往返 | 落點 |
+|---|---|
+| trail → village | (0, 0.33, −174) |
+| kourindou → village | (−132, 0.04, 100) |
+| village → trail | (−150, −1.57, 250) |
+| village → kourindou | (62, 0.30, 10) |
+
+### 一併處理的
+- `maps/sato/`、`data/sato.meta.json`、`data/sato.instances.json`、
+  mapRegistry 的 sato 條目**全部退場** —— 它現在就是 village，留著等於
+  兩份同樣的圖加一個會說謊的登記表。
+- 舊 `maps/village/gen/` 的 27 個 .res 與舊 `village.tscn` 一併移除
+  （git 留著歷史）。`mm_hedge_*.tres` 暫時留著 —— 生垣屬於 SUPERSEDED，
+  但檔案很小，等確定不再用時一起清。
+- `gen_village.gd` **加了防呆**：`_init()` 開頭 `push_error` + `quit(1)`，
+  跑它會直接中止。它留著是 MIGRATE 清單的內容來源，檔頭列了還沒搬的東西。
+- `check_map` / `walk_test` 的地圖清單改回三張；walk_test 的 village 路線表
+  換成原本為新佈局寫的那份（舊格線的路線已經對不上任何東西）。
+- meta 的 `connections` 跟 `src/world/mapRegistry.js` 對齊成
+  `[trail, kourindou, myouren, lake]` —— 兩份登記表要說同一件事。
+
+### 使用者這輪的四項裁決（已生效）
+| 項目 | 裁決 | 現況 |
+|---|---|---|
+| 自然池 | 讓新河道取代，不保留 | 隨舊 village 產出一起消失 ✅ |
+| 番屋／祭典幟旗 | DEFERRED | 未搬入 |
+| 雜物／小物密度 | 先不補，等 cel shading 後評估 | 維持密度層現有 119 件 |
+| 稗田邸後院 | MIGRATE | 待搬（`maps/hieda/gen/` 的 10 組 MultiMesh 仍是孤兒） |
+| 舊址 110m 空地 | 留白到材質階段再決定 | 未補街區 |
+
+### 驗收
+- `village` 節點 **13,702 → 268**（舊佈局 → 新佈局）
+- check_map 三張圖 **0 問題**、walk_test **12 條路線全通**
+- 引擎內空拍確認：只剩一條蜿蜒河，舊東緣河與直水道都不在了
+
+### ⚠ 現在的 village 缺什麼（MIGRATE 待辦）
+換圖是**佈局**的置換，內容還沒搬。目前 village 沒有：草層（6 種
+MultiMesh）、地標內容（寺子屋／鈴奈庵／市場的龍神像與屋台／鎮守之杜／
+足洗邸／稗田邸院落）、街燈、石溝、門樓、動物、水生植物。
+地標目前是**佔位量體**（有屋頂、有碰撞，但是空殼）。

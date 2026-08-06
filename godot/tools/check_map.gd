@@ -33,7 +33,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou", "sato"]
+		maps = ["village", "trail", "kourindou"]
 	else:
 		maps = [args[0]]
 	var total := 0
@@ -159,7 +159,7 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 		if mn.contains("護岸") or mn.contains("堤"):
 			return
 		# ⚠ MM_machiya_* 是**建物**不是散佈物。以前一律丟進 scatters →
-		# sato 的 169 棟町家全部隱形，buildings 為空時「建物互卡」與
+		# 人間之里的 169 棟町家全部隱形，buildings 為空時「建物互卡」與
 		# 「建物跨水」直接 return —— 體檢綠燈但什麼都沒驗。
 		# 逐實例解 buffer（不能用 get_instance_transform：headless 的
 		# dummy 渲染器一律回單位矩陣，本檔下面的散佈檢查踩過同一個坑）。

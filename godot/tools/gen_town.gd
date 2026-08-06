@@ -18,14 +18,20 @@
 #   ・前排町家 4.5m（使用者本輪定案：階梯天際線選 (c)，只壓前排）。
 #   ・鵜呑亭**不搬遷**，改成臨河食堂（使用者本輪定案）。
 #
-# ⚠ 輸出到 **maps/sato/**，不碰 maps/village/。整合（換掉 village、改 trail
-# 與 kourindou 的回程 portal、check_map/walk_test 的地圖清單）是下一個
-# 明確步驟，要使用者點頭 —— gen_village.gd 裡還有大量本輪範圍外的東西
-# （地標內裝、雜物、動物、村人路線），不能靜靜蓋掉。
+# ✅ 整合 Stage 2 已完成：輸出到 **maps/village/**，這支就是 village 的
+# 產生器（見下面 OUT_DIR 的說明）。中繼用的 maps/sato/ 已退場。
 extends SceneTree
 
-const OUT_DIR := "res://maps/sato/"
-const MAP_ID := "sato"
+# ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
+# 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
+# 佈局搬進 gen_village.gd。理由：這支已經帶著完整的護欄（gbox OBB 自檢、
+# _on_road、_in_reserved、村緣降級、單一收口點 _house），而 gen_village.gd 的
+# 佈局程式碼在換圖之後幾乎全部作廢 —— 把新護欄搬進舊架構的風險高得多。
+#
+# ⚠ `gen_village.gd` 從此**不可再執行**（跑了會蓋掉這裡的產出）。它留著是
+# 當 MIGRATE 清單的來源：地標內容、雜物、動物、草層都還在那支裡面。
+const OUT_DIR := "res://maps/village/"
+const MAP_ID := "village"
 const MODULES := "res://data/town_modules.json"
 const SEED := 20260806
 
@@ -1529,8 +1535,15 @@ func _emit_density() -> void:
 
 func _write_meta() -> void:
 	## portals[0] 必須是北門：main.gd 的 _place_player 在 from_id=="" 時
-	## 落在 portals[0]，所以 `--map=sato` 會站在本通上而不是村角。
+	## 落在 portals[0]，所以 `--map=village` 會站在本通上而不是村角。
 	## y 由 height_at 量出來，不手抄 —— 地形換了數值就會變。
+	##
+	## ⚠ Stage 2 的回程 portal：**不需要動 trail/kourindou**。
+	## main.gd 的 _place_player 是「找目的地圖裡 target == from_id 的那個
+	## portal」，也就是落點由**這張圖**的 portal 決定，不是由來源圖決定。
+	## 而舊 village 的兩個 portal 座標 (0,−174)/(−132,100) 跟這裡產出的
+	## **完全相同** —— 所以 trail→village、kourindou→village 的落點不變。
+	## （查證過 data/village.meta.json 的舊值，不是憑印象。）
 	var ports := [
 		{"x": 0.0, "y": snappedf(height_at(0, -174), 0.01), "z": -174.0, "target": "trail"},
 		{"x": -132.0, "y": snappedf(height_at(-132, 100), 0.01), "z": 100.0,
@@ -1541,12 +1554,15 @@ func _write_meta() -> void:
 	]
 	var meta := {
 		"id": MAP_ID,
-		"note": "人間之里 全鎮版（gen_town.gd 批量產出）。尚未取代 village —— "
-			+ "trail/kourindou 的回程 portal 仍指向 village，整合是下一步。",
+		"note": "人間之里（街區重設計版，gen_town.gd 產出）。整合 Stage 2 起"
+			+ "這支取代了 gen_village.gd 的佈局；地標內容／草層／動物等"
+			+ "MIGRATE 項目逐步搬入中。gen_village.gd 不可再執行。",
 		"playSize": [460, 460],
 		"safe": true,
-		# myouren 還沒有 portal（那張圖也還沒蓋）—— 先不宣告，免得連通圖說謊
-		"connections": ["trail", "kourindou", "lake"],
+		# 跟 src/world/mapRegistry.js 的 village 條目對齊（myouren/lake 是
+		# **規劃中**的連線，還沒有對應 portal；lake 已有保留觸發區）。
+		# 兩份登記表要說同一件事，不然整合完還是有兩個真相來源。
+		"connections": ["trail", "kourindou", "myouren", "lake"],
 		"portals": ports,
 		"colliders": [],
 	}
@@ -1573,7 +1589,7 @@ func _bank_portal(z: float) -> Dictionary:
 
 
 func _write_dump() -> void:
-	var out := {"note": "sato 擺位表（gen_town.gd 產出，驗證腳本用）",
+	var out := {"note": "人間之里擺位表（gen_town.gd 產出，驗證腳本用）",
 		"river": [], "instances": _dump, "density": _ddump}
 	for p in _river():
 		out["river"].append([snappedf(p.x, 0.01), snappedf(p.y, 0.01)])
