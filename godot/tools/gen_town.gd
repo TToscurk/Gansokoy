@@ -2969,7 +2969,12 @@ func _build_gates() -> void:
 ## 石溝：本通與東西大街兩側的排水溝（町方的地面語彙）。
 ## ⚠ 舊版一節一個 Node3D 帶 3~4 個 box —— 光本通就 150 節 = 500+ 個節點。
 ## 這裡照護岸的做法收成 3 個 MultiMesh（溝壁／溝底／溝蓋）。
-const GUTTER_SEG := 6.0
+## ⚠ 一節 3m 不是 6m，而且**每一節錨在自己中心的地面**，不是錨在
+## footprint 的最低點。舊版錨最低點是為了「斜坡上不要翹起來」，但那只治了
+## 一半：溝壁是沉的、埋掉沒人看得見，**溝蓋是浮的**（+0.04）—— 6m 長一片
+## 壓在 0.2m 落差上，遠端就架空 0.2m。Stage 4 的本通街景截圖裡是一片
+## 「掉在石板路上的板子」，還帶影子。節短一半 + 各自取樣就貼得住了。
+const GUTTER_SEG := 3.0
 const GUTTER_COMMERCE := 0.45     # 石溝是町方的東西，村緣的排水是土溝
 
 func _build_gutters() -> void:
@@ -3009,25 +3014,23 @@ func _build_gutters() -> void:
 					if lib.poly_dist(r.pts, p.x, p.y) < float(r.w) * 0.5 + 1.2:
 						covered = true
 						break
-				# 6m 長的一節溝拿中心高度擺，斜坡上會翹起來 —— 取 footprint 最低點
-				var gu := _ground_under(p.x, p.y,
-					GUTTER_SEG if along_x else 1.2, 1.2 if along_x else GUTTER_SEG)
-				var y0: float = float(gu[0])
+				# 每一節錨在**自己中心**的地面（見 GUTTER_SEG 的註解）
+				var y0: float = height_at(p.x, p.y)
 				var b := Basis(Vector3.UP, PI * 0.5) if along_x else Basis()
 				n_seg += 1
 				if covered:
-					# 整節鋪石蓋（用縮放拉長，不要排 4 塊 1.6m 的板 ——
+					# 整節鋪石蓋（用縮放拉長，不要排好幾塊 1.6m 的板 ——
 					# 那樣重疊處會共面閃爍，這個檔案已經栽過六次）
 					n_cover += 1
 					lids.append(Transform3D(b.scaled(Vector3(1, 1, GUTTER_SEG / 1.6)),
-						Vector3(p.x, y0 + 0.04, p.y)))
+						Vector3(p.x, y0 + 0.02, p.y)))
 					continue
 				for sd in [-1.0, 1.0]:
 					var wo := Vector2(0.0, sd * 0.42) if along_x else Vector2(sd * 0.42, 0.0)
-					walls.append(Transform3D(b, Vector3(p.x + wo.x, y0 - 0.22, p.y + wo.y)))
-				floors.append(Transform3D(b, Vector3(p.x, y0 - 0.44, p.y)))
-				if seg_i % 3 == 1:                 # 每三節架一塊石蓋（過路用）
-					lids.append(Transform3D(b, Vector3(p.x, y0 + 0.04, p.y)))
+					walls.append(Transform3D(b, Vector3(p.x + wo.x, y0 - 0.24, p.y + wo.y)))
+				floors.append(Transform3D(b, Vector3(p.x, y0 - 0.46, p.y)))
+				if seg_i % 6 == 1:                 # 每六節架一塊石蓋（過路用；節變短了）
+					lids.append(Transform3D(b, Vector3(p.x, y0 + 0.02, p.y)))
 			pass
 	if n_seg == 0:
 		return
@@ -3035,7 +3038,7 @@ func _build_gutters() -> void:
 	# 亮的 stone_wall 貼圖，在直射陽光下是**純白的軌條**（俯視截圖看出來的，
 	# 跟護岸「0.42 的灰讀成水泥防洪牆」是同一個病）。排水溝的石頭是濕的、暗的。
 	var stone := lib.pbr("溝石", "stone_wall", 0.55, Color(0.60, 0.61, 0.59))
-	var slab := lib.pbr("溝蓋石", "stone_flag", 0.30, Color(0.70, 0.70, 0.67))
+	var slab := lib.pbr("溝蓋石", "stone_flag", 0.30, Color(0.56, 0.57, 0.55))
 	var g := lib.add(_root, Node3D.new(), "石溝")
 	var parts := [
 		{"size": Vector3(0.22, 0.5, GUTTER_SEG), "list": walls, "mat": stone, "n": "溝壁"},
