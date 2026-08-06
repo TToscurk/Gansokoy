@@ -1,245 +1,170 @@
-# 多層次卡通樹產生器 —— Blender headless 跑：
+# 散佈用樹木產生器 —— Blender headless 跑：
 #   blender -b -P godot/assets/blender/make_trees.py -- godot/assets/models
 #
-# 風格定位（docs/village-art-direction.md §1：偏卡通混一點寫實）——
-# 樹冠是「分層的雲朵」，每層一個色階（下暗上亮），flat shading 讓
-# 每個面都是一塊乾淨的色面。顏色全部烤進頂點色（COLOR_0），
-# Godot 端統一換上 vertex_color_use_as_albedo 的材質，不吃貼圖。
+# ⚠ 骨架**不在這裡**，在 `tree_lib.py`（跟稗田邸的楓／松同一份）。
+# 這支只負責：品種參數 → 灌進 Blender mesh → 匯出 glb。
 #
-# 產出：tree_round_a / tree_round_b（闊葉，圓雲層）、tree_pine_a（杉，堆疊錐）
+# 為什麼：這支的舊版是「圓錐樹幹 + 疊 2~3 顆壓扁的 icosphere」，也就是
+# 稗田邸花了八版才修掉的那個棒棒糖 —— 而那八版的修正從來沒有回流過來。
+# 於是每開一張新圖、每加一種新樹（人間之里的櫻、背景綠樹），棒棒糖就
+# 再生一次。兩份合併之後樹的骨架只有一個實作，修一次全圖都吃得到。
+#
+# 產出：tree_round_a/b/c（闊葉）、tree_pine_a/b（杉）、
+#       tree_sakura_a/b（花樹）、bamboo_a/b（竹叢，遠景）
+#
+# ── 材質槽 ──
+# 每個 glb 一定要有 **兩個 surface**：0=bark、1=foliage。
+# Godot 端靠 surface 索引分材質（gen_lib.tree_mesh 給樹冠貼森林貼圖、
+# gen_town._sakura_mesh 給花冠**無貼圖雙面頂點色**）。合成一個 surface
+# 的話兩邊都會把整棵樹當樹冠 —— 花樹會被森林貼圖乘成濁褐色（粉×綠）。
 import bpy
-import bmesh
 import math
 import random
 import sys
 import os
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import tree_lib as T
+
 OUT_DIR = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else "godot/assets/models"
 os.makedirs(OUT_DIR, exist_ok=True)
 
-BARK = (0.30, 0.23, 0.16)
-# 樹冠層色：由下到上（暗 → 亮），帶一點黃綠偏移，吉卜力的「陽光打在樹頂」
-TIERS_ROUND = [(0.13, 0.22, 0.11), (0.19, 0.30, 0.14), (0.26, 0.38, 0.17), (0.34, 0.46, 0.21)]
-TIERS_PINE = [(0.10, 0.19, 0.12), (0.14, 0.25, 0.14), (0.19, 0.32, 0.16), (0.26, 0.40, 0.19)]
-# 花樹（櫻）：底層帶紫的暗粉 → 頂層近白的亮粉。稗田邸的教訓：同種
-# **大群聚**做色塊衝擊，所以層色差拉開一點，遠看才是一團有體積的粉。
-TIERS_SAKURA = [(0.50, 0.20, 0.28), (0.68, 0.30, 0.38), (0.84, 0.44, 0.50), (0.96, 0.62, 0.65)]
+SLOTS = ("bark", "foliage")
+
+
+class MeshB:
+    """tree_lib 的 builder：累積 tri/quad，依材質槽分面，最後灌進 bpy mesh。
+
+    每張面自己一個色（BYTE_COLOR/CORNER 的 "Col"，linear）—— 跟專案其他
+    產生器的慣例一致，Godot 端統一 vertex_color_use_as_albedo。"""
+
+    def __init__(self):
+        self.verts = []
+        self.faces = []
+        self.cols = []
+        self.mats = []
+        self.slot = 0
+
+    def use(self, slot):
+        self.slot = SLOTS.index(slot)
+
+    def tri(self, a, b, c, col, flip=False):
+        i = len(self.verts)
+        self.verts += [a, c, b] if flip else [a, b, c]
+        self.faces.append((i, i + 1, i + 2))
+        self.cols.append(col)
+        self.mats.append(self.slot)
+
+    def quad(self, a, b, c, d, col, flip=False):
+        self.tri(a, b, c, col, flip)
+        self.tri(a, c, d, col, flip)
+
+    def tri2(self, a, b, c, col):
+        """雙面三角形（葉片專用）：CULL_DISABLED 只讓背面畫得出來，照明用的
+        還是原法線，背面會全黑（make_hedge.py 踩過的坑）—— 正反各給一張
+        自己的面才是真的雙面。"""
+        self.tri(a, b, c, col)
+        self.tri(a, b, c, col, flip=True)
+
+    def build(self, name):
+        me = bpy.data.meshes.new(name)
+        me.from_pydata(self.verts, [], self.faces)
+        me.update()
+        ob = bpy.data.objects.new(name, me)
+        bpy.context.collection.objects.link(ob)
+        # ⚠ 槽的加入順序就是匯出後 surface 的順序 —— bark 一定要是 0。
+        for s in SLOTS:
+            m = bpy.data.materials.get(s) or bpy.data.materials.new(s)
+            ob.data.materials.append(m)
+        attr = me.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
+        for fi, poly in enumerate(me.polygons):
+            r, g, b = self.cols[fi]
+            for li in poly.loop_indices:
+                attr.data[li].color = (r, g, b, 1.0)
+            poly.material_index = self.mats[fi]
+            poly.use_smooth = False        # flat shading：每張面一塊乾淨色面
+        return ob
 
 
 def clear_scene():
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete()
+    for m in list(bpy.data.meshes):
+        bpy.data.meshes.remove(m)
 
 
-def get_mat(name):
-    m = bpy.data.materials.get(name)
-    if m is None:
-        m = bpy.data.materials.new(name)
-    return m
-
-
-def assign_mat(obj, name):
-    obj.data.materials.clear()
-    obj.data.materials.append(get_mat(name))
-
-
-def set_vertex_colors(obj, color_fn):
-    """color_fn(world_co, normal) -> (r,g,b)。烤進 CORNER domain 的 COLOR_0。"""
-    mesh = obj.data
-    attr = mesh.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
-    for poly in mesh.polygons:
-        for li in poly.loop_indices:
-            v = mesh.vertices[mesh.loops[li].vertex_index]
-            r, g, b = color_fn(v.co, poly.normal)
-            attr.data[li].color = (r, g, b, 1.0)
-
-
-def add_trunk(height, r_bot, r_top, lean=0.06, seed=0):
-    rng = random.Random(seed)
-    bpy.ops.mesh.primitive_cone_add(vertices=7, radius1=r_bot, radius2=r_top, depth=height,
-                                    location=(0, 0, height / 2))
-    obj = bpy.context.active_object
-    # 微傾＋頂端隨機偏，看起來不像釘子
-    obj.rotation_euler = (lean * rng.uniform(0.5, 1.5), 0, rng.uniform(0, 6.28))
-    set_vertex_colors(obj, lambda co, n: BARK)
-    assign_mat(obj, "bark")
-    return obj
-
-
-def add_cluster(center, radius, squash, tier_color, seed):
-    """一層樹冠：低細分 icosphere 壓扁，頂點色 = 層色 × 高度漸層，底面壓暗。"""
-    rng = random.Random(seed)
-    # subdiv 2（320 面）：subdiv 1 的 80 面在近景是「一顆低模球」，
-    # 跟 PBR 建築擺在一起打架（美術規格 §1.1）。翻倍後仍是 flat shading
-    # 的塊面感，但塊小到看起來是「葉團」而不是「多面體」。
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=radius, location=center)
-    obj = bpy.context.active_object
-    obj.scale = (1 + rng.uniform(-0.12, 0.12), 1 + rng.uniform(-0.12, 0.12), squash)
-    obj.rotation_euler = (0, 0, rng.uniform(0, 6.28))
-    bpy.ops.object.transform_apply(scale=True, rotation=True)
-    r, g, b = tier_color
-    cz, rad = center[2], radius * squash
-
-    def col(co, n):
-        # 層內漸層：頂亮底暗；朝下的面再壓一階（樹冠的陰影腹）
-        t = max(0.0, min(1.0, (co.z - (cz - rad)) / (2 * rad)))
-        k = 0.72 + 0.55 * t
-        if n.z < -0.25:
-            k *= 0.62
-        return (min(1, r * k), min(1, g * k), min(1, b * k))
-
-    set_vertex_colors(obj, col)
-    assign_mat(obj, "foliage")
-    return obj
-
-
-def join_and_export(objs, name):
-    bpy.ops.object.select_all(action="DESELECT")
-    for o in objs:
-        o.select_set(True)
-    bpy.context.view_layer.objects.active = objs[0]
-    bpy.ops.object.join()
-    tree = bpy.context.active_object
-    tree.name = name
-    # flat shading：每個面一塊色面
-    bpy.ops.object.shade_flat()
+def export(ob, name):
     path = os.path.join(OUT_DIR, name + ".glb")
+    bpy.ops.object.select_all(action="DESELECT")
+    ob.select_set(True)
+    bpy.context.view_layer.objects.active = ob
     bpy.ops.export_scene.gltf(filepath=path, use_selection=True, export_format="GLB",
                               export_yup=True, export_apply=True)
-    print("exported", path)
+    print("exported %s（%d 面）" % (path, len(ob.data.polygons)))
 
 
-def add_branch(base, tip, r, seed):
-    """一根分枝：兩端掃掠的細圓錐。剪影裡看得到「樹幹分岔」，
-    才不是棒棒糖（美術規格：加分枝、修剪影）。"""
-    rng = random.Random(seed)
-    dx, dy, dz = tip[0] - base[0], tip[1] - base[1], tip[2] - base[2]
-    ln = math.sqrt(dx * dx + dy * dy + dz * dz)
-    mid = ((base[0] + tip[0]) / 2, (base[1] + tip[1]) / 2, (base[2] + tip[2]) / 2)
-    bpy.ops.mesh.primitive_cone_add(vertices=5, radius1=r, radius2=r * 0.45, depth=ln,
-                                    location=mid)
-    obj = bpy.context.active_object
-    # 把 +z 轉到 base→tip 方向
-    import mathutils
-    obj.rotation_euler = mathutils.Vector((dx, dy, dz)).to_track_quat("Z", "X").to_euler()
-    set_vertex_colors(obj, lambda co, n: BARK)
-    assign_mat(obj, "bark")
-    return obj
+def make_tree(name, cfg, h, seed):
+    clear_scene()
+    b = MeshB()
+    T.build_tree(b, 0.0, 0.0, h, seed, cfg)
+    ob = b.build(name)
+    export(ob, name)
 
 
-def tree_round(name, seed, h=3.2, spread=1.0, tiers=None):
-    tiers = tiers or TIERS_ROUND
+def make_bamboo(name, seed, n_culm=7, h=9.0):
+    """竹叢（遠景用）：5~9 根細直的稈 + 稈上的葉。
+    美術規格 §4：西南方是迷途竹林 —— 竹要**細、直、密、高**，跟闊葉樹的
+    剪影完全不同才有辨識度。竹**不分枝**，所以不走 build_tree 的骨架，
+    但葉子用同一支 leaf_tuft —— 舊版拿 icosphere 當葉團，那是最後一處
+    球狀樹冠，一起拆掉。"""
     clear_scene()
     rng = random.Random(seed)
-    # 主幹只到分岔點（0.62h），上面交給分枝 —— 一根圓錐直通樹頂就是棒棒糖
-    fork = h * 0.62
-    objs = [add_trunk(fork * 1.06, 0.30, 0.20, seed=seed)]
-    # 3~4 根分枝，枝端就是外圈樹冠的中心 —— 樹冠「長在枝上」而不是浮著
-    n_br = 3 + (seed % 2)
-    branch_tips = []
-    for k in range(n_br):
-        a = rng.uniform(0, 6.28) + k * (6.28 / n_br)
-        # ⚠ 枝端要**張開、放低**（d 0.9~1.6、z 比軸心冠低）。
-        # 第一版 d 只到 0.95、z 全在 h 以上，七顆樹冠疊在同一個點 ——
-        # 預覽照出來又是一顆球插在棍子上。樹冠的寬度來自枝端的水平距離。
-        d = rng.uniform(0.95, 1.55) * spread
-        # 枝端 z 壓在 0.72h~0.92h：樹冠底要蓋住分岔點（0.66h），
-        # 不然幹與冠之間有一段裸縫（preview 抓到的）
-        tip = (math.cos(a) * d, math.sin(a) * d, h * rng.uniform(0.72, 0.92))
-        branch_tips.append(tip)
-        objs.append(add_branch((0, 0, fork * 0.92), tip, 0.11, seed * 7 + k))
-    si = 0
-    # 枝端各掛一顆樹冠（低層用暗色）
-    for k, tip in enumerate(branch_tips):
-        si += 1
-        c = tiers[1] if k % 2 == 0 else tiers[2]
-        objs.append(add_cluster(tip, rng.uniform(1.05, 1.35) * spread,
-                                rng.uniform(0.62, 0.72), c, seed * 31 + si))
-    # ⚠ 軸心一定要有一顆，而且中心壓在分岔點上方 —— v1 的樹冠全在側面，
-    # 樹幹頂端那截裸露在外（截圖裡的「縫」）
-    objs.append(add_cluster((0, 0, h * 0.82), 1.50 * spread, 0.68,
-                            tiers[0], seed * 31 + 88))
-    objs.append(add_cluster((0, 0, h * 1.06), 1.15 * spread, 0.68,
-                            tiers[2], seed * 31 + 97))
-    objs.append(add_cluster((0, 0, h * 1.26), 0.85 * spread, 0.70,
-                            tiers[3], seed * 31 + 99))
-    join_and_export(objs, name)
-
-
-def tree_pine(name, seed, h=3.2, layers=None):
-    clear_scene()
-    rng = random.Random(seed)
-    layers = layers or TIERS_PINE
-    objs = [add_trunk(h + 0.6, 0.26, 0.12, seed=seed)]
-    # 四層堆疊錐，往上縮小變亮 —— 剪影就是「一棵杉樹」
-    z = h * 0.8
-    rad = 1.5
-    for i, c in enumerate(layers):
-        bpy.ops.mesh.primitive_cone_add(vertices=8, radius1=rad, radius2=rad * 0.12,
-                                        depth=1.7, location=(0, 0, z + 0.55))
-        cone = bpy.context.active_object
-        cone.rotation_euler = (0, 0, rng.uniform(0, 6.28))
-        bpy.ops.object.transform_apply(rotation=True)
-        r, g, b = c
-        zc = z + 0.55
-
-        def col(co, n, r=r, g=g, b=b, zc=zc):
-            t = max(0.0, min(1.0, (co.z - (zc - 0.85)) / 1.7))
-            k = 0.75 + 0.5 * t
-            if n.z < -0.3:
-                k *= 0.6
-            return (min(1, r * k), min(1, g * k), min(1, b * k))
-
-        set_vertex_colors(cone, col)
-        assign_mat(cone, "foliage")
-        objs.append(cone)
-        z += 1.05
-        rad *= 0.74
-    join_and_export(objs, name)
-
-
-def bamboo_clump(name, seed, n_culm=7, h=9.0):
-    """竹叢（遠景用）：5~9 根細直的稈 + 頂部小葉團。
-    美術規格 §4：西南方是迷途竹林 —— 竹要**細、直、密、高**，
-    跟闊葉樹的剪影完全不同才有辨識度。遠景資產，面數壓到最低
-    （稈 5 邊形、葉團 subdiv 1）。"""
-    clear_scene()
-    rng = random.Random(seed)
-    objs = []
-    CULM = (0.32, 0.44, 0.20)          # 竹稈的黃綠
-    CULM_DK = (0.22, 0.32, 0.15)
+    b = MeshB()
+    C_CULM = (0.255, 0.290, 0.150)
+    C_LEAF_LO = (0.150, 0.235, 0.110)
+    C_LEAF_HI = (0.320, 0.430, 0.180)
     for k in range(n_culm):
-        a = rng.uniform(0, 6.28)
-        d = rng.uniform(0.0, 1.1)
-        hx, hz = math.cos(a) * d, math.sin(a) * d
-        ch = h * rng.uniform(0.75, 1.1)
-        bpy.ops.mesh.primitive_cone_add(vertices=5, radius1=0.09, radius2=0.055,
-                                        depth=ch, location=(hx, hz, ch / 2))
-        culm = bpy.context.active_object
-        culm.rotation_euler = (rng.uniform(-0.03, 0.03), rng.uniform(-0.03, 0.03), 0)
-        cc = CULM if k % 2 == 0 else CULM_DK
-        set_vertex_colors(culm, lambda co, n, c=cc: c)
-        assign_mat(culm, "bark")
-        objs.append(culm)
-        # 頂部 2 顆小葉團（竹葉是稀疏的，不要做成闊葉樹冠）
-        for j in range(2):
-            objs.append(add_cluster(
-                (hx + rng.uniform(-0.5, 0.5), hz + rng.uniform(-0.5, 0.5),
-                 ch - 0.4 - j * 1.1),
-                rng.uniform(0.55, 0.85), 0.5,
-                TIERS_PINE[2] if j == 0 else TIERS_PINE[1], seed * 13 + k * 3 + j))
-    join_and_export(objs, name)
+        a = rng.uniform(0.0, math.tau)
+        rr = rng.uniform(0.0, 1.05)
+        bx, by = math.cos(a) * rr, math.sin(a) * rr
+        ch = h * rng.uniform(0.75, 1.08)
+        lean = rng.uniform(0.02, 0.08)
+        laz = rng.uniform(0.0, math.tau)
+        # 稈：微彎的細管（5 節），上細下粗
+        pts, rad = [], []
+        for i in range(6):
+            t = i / 5.0
+            pts.append((bx + math.cos(laz) * lean * ch * t * t,
+                        by + math.sin(laz) * lean * ch * t * t, ch * t))
+            rad.append(0.070 * (1.0 - t * 0.42))
+        b.use("bark")
+        T.tube(b, pts, rad, C_CULM, sides=5)
+        # 葉：上三分之一，稀疏 —— 竹葉是一撮一撮掛在節上的
+        b.use("foliage")
+        for _ in range(int(13 * (0.6 + rng.random() * 0.8))):
+            t = rng.uniform(0.60, 1.0)
+            p = pts[min(4, int(t * 5))]
+            off = (rng.gauss(0, 0.34), rng.gauss(0, 0.34), rng.gauss(0, 0.30))
+            org = (p[0] + off[0], p[1] + off[1], p[2] + off[2])
+            nrm = T.norm3((off[0], off[1], off[2] * 0.5 + 0.35))
+            T.leaf_tuft(b, rng, org, nrm, 0.46, C_LEAF_LO, C_LEAF_HI, n_leaf=2)
+    ob = b.build(name)
+    export(ob, name)
 
 
-tree_round("tree_round_a", 11, h=4.6)
-tree_round("tree_round_b", 47, h=5.0)
-tree_round("tree_round_c", 88, h=6.4, spread=0.72)      # 瘦高型，打破天際線
-tree_pine("tree_pine_a", 23)
-tree_pine("tree_pine_b", 61, h=4.6, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
-bamboo_clump("bamboo_a", 71)
-bamboo_clump("bamboo_b", 137, n_culm=9, h=10.5)
-# 花樹：跟闊葉同構（同樣的枝＋冠），只換花色層 —— 剪影語彙一致，
-# 顏色一眼分出「這叢是花」。a 標準、b 稍高瘦（群聚裡才有高低差）。
-tree_round("tree_sakura_a", 19, h=4.4, tiers=TIERS_SAKURA)
-tree_round("tree_sakura_b", 53, h=5.2, spread=0.85, tiers=TIERS_SAKURA)
+# 闊葉三變體：差在**骨架比例**不是只換 seed（只換 seed 的話統計輪廓一樣，
+# 遠看仍是同一棵複製貼上）。b 是 vista／大量散佈用的精簡版。
+make_tree("tree_round_a", T.FOREST_ROUND, 4.6, 11)
+make_tree("tree_round_b", T.FOREST_FAR, 5.0, 47)
+make_tree("tree_round_c", T.FOREST_TALL, 6.4, 88)      # 瘦高型，打破天際線
+make_tree("tree_pine_a", T.FOREST_PINE, 5.4, 23)
+make_tree("tree_pine_b", dict(T.FOREST_PINE, ntuft=420), 6.8, 61)
+# 花樹：骨架同源、花色與灰樹皮由 profile 帶。
+# ⚠ 花冠的材質路徑在 Godot 端（gen_town._sakura_mesh：無貼圖雙面頂點色）。
+# 這裡只要保證 foliage 是 surface 1，那條路徑就不會被動到。
+make_tree("tree_sakura_a", T.SAKURA, 4.4, 19)
+make_tree("tree_sakura_b", dict(T.SAKURA, ang=(0.62, 1.10), up=(0.38, 0.14, -0.04),
+                                fol=0.078, ntuft=400), 5.2, 53)
+make_bamboo("bamboo_a", 71)
+make_bamboo("bamboo_b", 137, n_culm=9, h=10.5)
 print("done")
