@@ -140,6 +140,7 @@ func _init() -> void:
 	_assert_no_overlap()
 	_emit_batches()
 	_build_collision()
+	_build_density()
 	lib.vista(OUT_DIR, HALF, 900.0, height_at,
 		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
 		 {"x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0},
@@ -1239,6 +1240,247 @@ func _perf_pass(n: Node) -> void:
 		_perf_pass(c)
 
 
+# ══════════════════ 街道生活密度層（規格 §5，使用者選 B 後開工）══════════════
+# 三件事：簷下吊掛（暖簾／提灯／招牌，商業→住宅梯度）、地面雜物
+# （樽／籃／木箱／縁台，「商品溢到街上」）、花樹同種大群聚（稗田邸教訓）。
+# ⚠ 隨機數用**自己的 RNG**，不碰 lib.rand —— 密度層在佈局之後跑，
+# 消耗 lib.rand 會把 vista 的散佈整個換一副面孔（佈局本身則不受影響）。
+
+const SAKURA_SITES := [
+	{"c": Vector2(-16, -160), "r": 11.0, "n": 9},    # 北門內・西
+	{"c": Vector2(20, -152), "r": 8.0, "n": 6},      # 北門內・東
+	# ⚠ 舊點 (-52,34)/(148,34) 實測只塞得下 1/7 與 3/8 棵 —— 這兩區被街區
+	# 填滿了。新點是從 instances.json 掃出來的實際空地（離屋/河/路 ≥10m）。
+	{"c": Vector2(-86, -36), "r": 10.0, "n": 7},     # 寺子屋西・街區間空地
+	{"c": Vector2(14, 226), "r": 12.0, "n": 9},      # 南口
+	{"c": Vector2(-148, 84), "r": 13.0, "n": 8},     # 西南門道旁
+	{"c": Vector2(174, 112), "r": 12.0, "n": 8},     # 東南岸・小橋南望
+]
+const GREEN_SITES := [
+	{"c": Vector2(-168, -40), "r": 12.0, "n": 7},    # 西緣
+	{"c": Vector2(122, 182), "r": 12.0, "n": 7},     # 東南緣
+]
+
+var _drng := RandomNumberGenerator.new()
+var _dbatch := {}                # 道具名 → Array[Transform3D]
+var _ddump := []                 # [kind, x, y, z, yaw]（驗證腳本用）
+
+func _dxf(kind: String, p: Vector2, y: float, yaw: float, s: float = 1.0) -> void:
+	var b := Basis(Vector3.UP, yaw)
+	if s != 1.0:
+		b = b * Basis.from_scale(Vector3(s, s, s))
+	if not _dbatch.has(kind):
+		_dbatch[kind] = []
+	_dbatch[kind].append(Transform3D(b, Vector3(p.x, y, p.y)))
+	_ddump.append([kind, p.x, y, p.y, yaw])
+
+## 商業權重 0~1：廣場輻射 + 本通／主東西街走廊 + 市場周邊。
+## 吊掛與雜物的密度都吃它 —— 村緣自然安靜、橋頭與本通自然熱鬧。
+func _commerce(p: Vector2) -> float:
+	# 第一版全圖中位數只有 0.09、>0.35 的僅 17 棟 —— 暖簾靠底率四處亂撒，
+	# 「梯度」讀不出來。走廊項加寬加重、補鵜呑亭川床一帶，底率壓低
+	# （梯度來自權重差，不是來自到處都有一點）。
+	var w := clampf(1.0 - (p - PLAZA).length() / 120.0, 0.0, 1.0) * 0.45
+	if absf(p.x) < 26.0 and p.y > -150.0 and p.y < 210.0:
+		w += 0.42 * (1.0 - absf(p.x) / 26.0)
+	if absf(p.y - MAIN_EW_Z) < 24.0 and p.x > -60.0 and p.x < 110.0:
+		w += 0.40 * (1.0 - absf(p.y - MAIN_EW_Z) / 24.0)
+	w += clampf(1.0 - (p - Vector2(-26, 57)).length() / 46.0, 0.0, 1.0) * 0.32
+	w += clampf(1.0 - (p - Vector2(50, 2)).length() / 40.0, 0.0, 1.0) * 0.30
+	return clampf(w, 0.0, 1.0)
+
+func _pt_reserved(p: Vector2, margin: float) -> bool:
+	for q in _reserved:
+		var d: Vector2 = p - q[0]
+		if absf(d.dot(q[1])) < q[3] + margin and absf(d.dot(q[2])) < q[4] + margin:
+			return true
+	return false
+
+## 點離最近道路**中線帶**多近。雜物允許溢進路緣 1.3m（規格就是要
+## 「商品溢到街上」），但路中要留通行走廊。
+func _pt_on_road_core(p: Vector2, spill: float) -> bool:
+	for r in _roads:
+		if lib.poly_dist(r.pts, p.x, p.y) < r.w * 0.5 - spill:
+			return true
+	return false
+
+func _river_dist(p: Vector2) -> float:
+	return (_nearest_river_pt(p) - p).length()
+
+func _build_density() -> void:
+	_drng.seed = SEED + 77
+	var n_noren := 0
+	var n_cho := 0
+	var n_kan := 0
+	var n_clut := 0
+	# ── 逐棟：吊掛 + 門前雜物（位置全部從立面錨點推，錨點是從 glb 量的）──
+	for e in _dump:
+		var kind := String(e[0])
+		if not kind.begins_with("machiya"):
+			continue
+		var m: Dictionary = _mods[kind]
+		var fac: Dictionary = m.get("facade", {})
+		if fac.is_empty():
+			continue
+		var pos := Vector2(e[1], e[3])
+		var hy: float = e[2]
+		var yaw: float = e[4]
+		var fwd := Vector2(sin(yaw), cos(yaw))       # 局部 +z（正面朝外）
+		var ax := Vector2(cos(yaw), -sin(yaw))       # 局部 +x
+		var wgt := _commerce(pos)
+		var door_x: float = fac["door_x"]
+		var door_w: float = fac["door_w"]
+		var beam_y: float = hy + float(fac["beam_z"])
+		var half_w: float = float(m["w"]) * 0.5
+		# 村緣小屋是住家：吊掛機率砍半，招牌不掛
+		var shop := 1.0 if kind != "machiya_e_a" else 0.45
+		# 暖簾：門楣下。寬的門掛五巾藍染，窄的掛四巾柿渋
+		if _drng.randf() < (0.06 + 0.85 * wgt) * shop:
+			var nk := "prop_noren_a" if (door_w > 1.9 and _drng.randf() < 0.7) \
+				else "prop_noren_b"
+			_dxf(nk, pos + ax * door_x + fwd * 0.14, beam_y, yaw)
+			n_noren += 1
+		# 提灯：門兩側成對（食堂／酒屋的訊號，跟商業權重走）
+		if _drng.randf() < (0.04 + 0.62 * wgt) * shop:
+			for sx in [-1.0, 1.0]:
+				var cx: float = door_x + sx * (door_w * 0.5 + 0.28)
+				if absf(cx) > half_w - 0.35:
+					continue
+				_dxf("prop_chochin", pos + ax * cx + fwd * 0.24, beam_y - 0.02, yaw)
+				n_cho += 1
+		# 招牌：掛在離門遠的那半邊；只有商業帶掛
+		if wgt > 0.28 and _drng.randf() < 0.72 * wgt * shop:
+			var ks: float = 1.0 if door_x < 0.0 else -1.0
+			_dxf("prop_kanban", pos + ax * (ks * (half_w - 0.6)) + fwd * 0.18,
+				beam_y, yaw)
+			n_kan += 1
+		# 門前雜物：樽／籃堆／木箱溢到門面前 0.45~1.25m，避開門口帶。
+		# 縁台靠牆擺（跟牆平行），住宅帶也會有 —— 老人家坐門口那種。
+		var picks: Array[String] = []
+		if _drng.randf() < 0.12 + 0.72 * wgt:
+			picks.append(["prop_barrel", "prop_basket", "prop_crate"][_drng.randi() % 3])
+		if _drng.randf() < 0.45 * wgt:
+			picks.append(["prop_barrel", "prop_basket"][_drng.randi() % 2])
+		if _drng.randf() < 0.16:
+			picks.append("prop_bench")
+		for pk in picks:
+			var placed := false
+			for _try in 6:
+				var sx2: float = _drng.randf_range(-(half_w - 0.8), half_w - 0.8)
+				if absf(sx2 - door_x) < door_w * 0.5 + 0.45:
+					continue
+				var lz: float = 0.55 if pk == "prop_bench" else _drng.randf_range(0.45, 1.25)
+				var wp: Vector2 = pos + ax * sx2 + fwd * lz
+				if _pt_on_road_core(wp, 1.3) or _pt_reserved(wp, 0.4) \
+						or _river_dist(wp) < BANK_PATH + 0.8:
+					continue
+				var pyaw: float = yaw if pk == "prop_bench" \
+					else _drng.randf_range(0.0, TAU)
+				_dxf(pk, wp, height_at(wp.x, wp.y), pyaw)
+				n_clut += 1
+				placed = true
+				break
+			if not placed:
+				continue
+	# ── 花樹群聚：同種大群聚做色塊（散點單株是稗田邸點名過的反面教材）──
+	var house_obbs: Array = []
+	for e2 in _dump:
+		if String(e2[0]).begins_with("machiya"):
+			house_obbs.append(_obb_of(e2))
+	var n_tree := 0
+	for grp in [{"sites": SAKURA_SITES, "kinds": ["tree_sakura_a", "tree_sakura_b"]},
+			{"sites": GREEN_SITES, "kinds": ["tree_round_a", "tree_round_a"]}]:
+		for site in grp.sites:
+			var got: Array[Vector2] = []
+			var tries := 0
+			while got.size() < int(site.n) and tries < int(site.n) * 10:
+				tries += 1
+				var ang := _drng.randf_range(0.0, TAU)
+				var rad: float = sqrt(_drng.randf()) * float(site.r)
+				var p: Vector2 = site.c + Vector2(cos(ang), sin(ang)) * rad
+				if absf(p.x) > HALF - 6.0 or absf(p.y) > HALF - 6.0:
+					continue
+				if _pt_reserved(p, 1.2) or _pt_on_road_core(p, -1.6) \
+						or _river_dist(p) < BANK_PATH + 1.8:
+					continue
+				var near_house := false
+				for hb in house_obbs:
+					var d: Vector2 = p - hb[0]
+					if absf(d.dot(hb[1])) < hb[3] + 2.6 and absf(d.dot(hb[2])) < hb[4] + 2.6:
+						near_house = true
+						break
+				if near_house:
+					continue
+				var too_close := false
+				for q in got:
+					if (q - p).length() < 3.4:
+						too_close = true
+						break
+				if too_close:
+					continue
+				got.append(p)
+				var tk: String = grp.kinds[0] if _drng.randf() < 0.65 else grp.kinds[1]
+				_dxf(tk, p, height_at(p.x, p.y), _drng.randf_range(0.0, TAU),
+					_drng.randf_range(0.85, 1.2))
+				n_tree += 1
+			if got.size() < int(site.n):
+				_audit.append("⚠ 花樹群聚 (%d,%d) 只放進 %d/%d 棵（空間不夠）"
+					% [int(site.c.x), int(site.c.y), got.size(), int(site.n)])
+	_emit_density()
+	_audit.append("密度層：暖簾 %d、提灯 %d、招牌 %d、地面雜物 %d、花樹 %d（%d draw call）"
+		% [n_noren, n_cho, n_kan, n_clut, n_tree, _dbatch.size()])
+
+## 花樹的樹冠材質：**不能**走 lib.tree_mesh 的 canopy_mat —— 那個會拿
+## terrain_forest_diff 貼圖乘頂點色，粉色 × 綠貼圖 = 濁褐色。
+## 花冠用無貼圖的雙面頂點色材質，樹幹照用 bark PBR。
+func _sakura_mesh(glb: String) -> Mesh:
+	var packed: PackedScene = load(glb)
+	var node: Node = packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	var petal := lib.foliage_vc_mat()
+	if mesh.get_surface_count() >= 2:
+		mesh.surface_set_material(0, lib.pbr("bark", "bark_cedar", 0.7))
+		for s in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(s, petal)
+	else:
+		mesh.surface_set_material(0, petal)
+	return mesh
+
+func _emit_density() -> void:
+	var g := lib.add(_root, Node3D.new(), "密度層")
+	var names := _dbatch.keys()
+	names.sort()
+	for kind in names:
+		var k := String(kind)
+		var mesh: Mesh
+		if k.begins_with("tree_sakura"):
+			mesh = _sakura_mesh("res://assets/models/%s.glb" % k)
+		elif k.begins_with("tree_"):
+			mesh = lib.tree_mesh("res://assets/models/%s.glb" % k)
+		else:
+			mesh = lib.prop_mesh("res://assets/models/%s.glb" % k, lib.vc_mat())
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(mesh, _dbatch[kind], [],
+			OUT_DIR + "gen/mm_%s.res" % k)
+		if not k.begins_with("tree_"):
+			# 小道具：60~110m 外淡出、吊掛不投影 —— 密度層不能反過來吃掉幀率
+			mmi.visibility_range_end = 110.0
+			mmi.visibility_range_end_margin = 12.0
+			mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+			if k in ["prop_noren_a", "prop_noren_b", "prop_chochin", "prop_kanban"]:
+				mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(g, mmi, "MM_%s" % k)
+
+
 func _write_meta() -> void:
 	## portals[0] 必須是北門：main.gd 的 _place_player 在 from_id=="" 時
 	## 落在 portals[0]，所以 `--map=sato` 會站在本通上而不是村角。
@@ -1286,7 +1528,7 @@ func _bank_portal(z: float) -> Dictionary:
 
 func _write_dump() -> void:
 	var out := {"note": "sato 擺位表（gen_town.gd 產出，驗證腳本用）",
-		"river": [], "instances": _dump}
+		"river": [], "instances": _dump, "density": _ddump}
 	for p in _river():
 		out["river"].append([snappedf(p.x, 0.01), snappedf(p.y, 0.01)])
 	var f := FileAccess.open("res://data/%s.instances.json" % MAP_ID, FileAccess.WRITE)

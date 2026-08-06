@@ -14,6 +14,13 @@
     -8.65,
     0.85
    ],
+   "facade": {
+    "door_x": 1.9,
+    "door_w": 2.772,
+    "beam_z": 2.18,
+    "bay_w": 3.8,
+    "nbay": 2
+   },
    "faces": 354,
    "glb": "res://assets/models/machiya_f_a.glb"
   },
@@ -30,6 +37,13 @@
     -8.45,
     0.85
    ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 2.061,
+    "beam_z": 1.982,
+    "bay_w": 2.933,
+    "nbay": 3
+   },
    "faces": 464,
    "glb": "res://assets/models/machiya_f_b.glb"
   },
@@ -46,6 +60,13 @@
     -8.45,
     0.85
    ],
+   "facade": {
+    "door_x": 3.067,
+    "door_w": 2.17,
+    "beam_z": 2.375,
+    "bay_w": 3.067,
+    "nbay": 3
+   },
    "faces": 614,
    "glb": "res://assets/models/machiya_b_a.glb"
   },
@@ -62,6 +83,13 @@
     -8.85,
     0.85
    ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 2.498,
+    "beam_z": 2.375,
+    "bay_w": 3.467,
+    "nbay": 3
+   },
    "faces": 654,
    "glb": "res://assets/models/machiya_b_b.glb"
   },
@@ -78,6 +106,13 @@
     -7.05,
     0.85
    ],
+   "facade": {
+    "door_x": -1.5,
+    "door_w": 2.116,
+    "beam_z": 1.645,
+    "bay_w": 3.0,
+    "nbay": 2
+   },
    "faces": 314,
    "glb": "res://assets/models/machiya_e_a.glb"
   },

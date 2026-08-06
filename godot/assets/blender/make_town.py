@@ -227,7 +227,16 @@ def machiya(bld, W, D, target_h, storeys, pitch, seed, plinth=0.30):
     # 一階陰影帶（貼地一圈微暗 —— 頂點色的接觸陰影，稗田邸驗過的手法）
     bld.box(0, cy, z0 + 0.10, W + 0.04, D + 0.04, 0.20, C_PLASTER_DK)
     ridge = gable_roof(bld, 0, cy, z0 + body_h, W, D, pitch)
-    return ridge + 0.055 + 0.17 / 2
+    # 立面錨點：密度層的吊掛（暖簾／提灯／招牌）要對齊**真的門與樑**。
+    # 每種模組是一個固定 glb（seed 固定 → door_bay 固定），所以這些
+    # 座標對該 kind 是常數，寫進 manifest 給 gen_town 讀。
+    # door_x 是 Blender x = Godot x；beam_z 取中段樑**底緣**（吊掛頂點）。
+    facade = {
+        "door_x": round(-W / 2 + (door_bay + 0.5) * (W / nbay), 3),
+        "door_w": round((W / nbay - 0.42) * 0.82, 3),
+        "beam_z": round(z0 + mid_z - 0.075, 3),
+        "bay_w": round(W / nbay, 3), "nbay": nbay}
+    return ridge + 0.055 + 0.17 / 2, facade
 
 
 # ── 12m 半拱木橋 ──
@@ -717,7 +726,7 @@ manifest = {"note": "人間之里模組庫。由 make_town.py 產出，gen_town.
 for name, W, D, bh, st, pit, sd in MACHIYA:
     clear()
     b = B()
-    total = machiya(b, W, D, bh, st, math.radians(pit), sd)
+    total, facade = machiya(b, W, D, bh, st, math.radians(pit), sd)
     ob = b.build(name)
     n = export(ob, name)
     # ⚠ fw 要含**屋脊蓋**的 0.24（gable_roof 的棟是 hw*2+0.24）。
@@ -728,9 +737,9 @@ for name, W, D, bh, st, pit, sd in MACHIYA:
     manifest["modules"][name] = {
         "kind": "machiya", "w": W, "d": D,
         "fw": round(bb[0], 2), "fd": round(bb[1], 2), "h": round(bb[2], 2),
-        "gbox": _gbox(ob),
+        "gbox": _gbox(ob), "facade": facade,
         "faces": n, "glb": "res://assets/models/%s.glb" % name}
-    print("  %s 總高 %.2f m" % (name, total))
+    print("  %s 總高 %.2f m  門位 x=%.2f" % (name, total, facade["door_x"]))
 
 for _nm, _sp, _wd, _ri, _rh, _ns, _np, _oy in (
         ("bridge_main", 22.0, 12.0, 1.50, 1.15, 14, 12, 0.50),

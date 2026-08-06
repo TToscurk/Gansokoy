@@ -538,6 +538,171 @@ def make_rock(name, seed, subdiv=1, rough=0.34):
     export([ob], name)
 
 
+# ══════════════════════════════ 人間之里 密度層道具 ══════════════════════
+# 規格 §5 街道生活密度層：商品溢到街上（樽／籃／木箱／縁台）與簷下吊掛
+# （暖簾／提灯／招牌）。顏色沿用 make_town.py 的頂點色慣例（linear）。
+# 座標慣例：**地面道具**原點在底部中心（z=0 貼地）；**吊掛道具**原點在
+# 吊點（頂端），幾何往 -z 垂 —— gen_town 把原點放在樑底就掛好了。
+# 正面朝 -y（跟町家模組同向）。
+W_STAVE = (0.300, 0.240, 0.165)     # 樽板（日曬木，同橋面的暖色系）
+W_IRON = (0.130, 0.112, 0.095)      # 鐵箍
+W_LT = (0.240, 0.200, 0.160)        # 同 C_WOOD_LT
+W_DK = (0.165, 0.135, 0.110)        # 同 C_WOOD
+BASKET = (0.440, 0.360, 0.200)      # 竹編
+NOREN_AI = (0.145, 0.170, 0.235)    # 藍染（同 C_NOREN）
+NOREN_KAKI = (0.430, 0.195, 0.115)  # 柿渋染（商業帶第二色）
+CHOCHIN = (0.780, 0.560, 0.230)     # 同 C_CHOCHIN
+
+
+def _rotz(vf, ang, cx=0.0, cy=0.0):
+    """繞 z 軸轉一組 verts（box_verts 不能轉，疊箱要歪一點才不像倉儲架）"""
+    v, f = vf
+    c, s = math.cos(ang), math.sin(ang)
+    return ([(cx + (x - cx) * c - (y - cy) * s, cy + (x - cx) * s + (y - cy) * c, z)
+             for x, y, z in v], f)
+
+
+def make_barrel():
+    clear()
+    zs = [0.00, 0.13, 0.17, 0.40, 0.58, 0.62, 0.78]
+    rr = [0.255, 0.295, 0.300, 0.315, 0.300, 0.295, 0.260]
+    v, f = sweep([(0, 0, z) for z in zs], rr, sides=10)
+
+    def col(co, n):
+        if 0.12 < co.z < 0.18 or 0.57 < co.z < 0.63:
+            return W_IRON
+        if n.z > 0.7:                              # 頂蓋
+            return (0.255, 0.205, 0.140)
+        # 樽板：依角度交錯明暗，掃掠管才讀成「一板一板箍起來」
+        stave = int((math.atan2(co.y, co.x) + TAU) / TAU * 10) % 2
+        k = (0.90 + 0.12 * stave) * (0.92 + 0.18 * co.z / 0.78)
+        return tuple(min(1.0, c * k) for c in W_STAVE)
+
+    ob = mesh_from("prop_barrel", v, f, col, smooth=False)
+    export([ob], "prop_barrel")
+
+
+def make_basket_stack():
+    clear()
+    b1 = sweep([(0, 0, 0.0), (0, 0, 0.10), (0, 0, 0.26)], [0.195, 0.235, 0.270], sides=9)
+    b2 = sweep([(0.03, 0.02, 0.265), (0.03, 0.02, 0.36), (0.03, 0.02, 0.50)],
+               [0.170, 0.205, 0.240], sides=9)
+    v, f = merge(b1, b2)
+
+    def col(co, n):
+        if n.z > 0.7:                              # 籃口（蓋淺一階）
+            return tuple(min(1.0, c * 1.18) for c in BASKET)
+        ring = int(co.z / 0.055) % 2               # 橫編圈
+        stave = int((math.atan2(co.y - 0.01, co.x - 0.015) + TAU) / TAU * 9) % 2
+        k = 0.86 + 0.10 * ring + 0.08 * stave
+        return tuple(min(1.0, c * k) for c in BASKET)
+
+    ob = mesh_from("prop_basket", v, f, col, smooth=False)
+    export([ob], "prop_basket")
+
+
+def make_crate_stack():
+    clear()
+    p1 = box_verts(0.0, 0.0, 0.19, 0.62, 0.50, 0.38)
+    p2 = _rotz(box_verts(-0.02, 0.01, 0.38 + 0.17, 0.55, 0.45, 0.34), 0.16)
+    p3 = _rotz(box_verts(0.46, -0.06, 0.155, 0.36, 0.36, 0.31), -0.10, 0.46, -0.06)
+    v, f = merge(p1, p2, p3)
+
+    def col(co, n):
+        # 三個箱子三個木色階；頂面亮一階、貼地壓暗
+        base = W_LT if co.z > 0.40 else (W_STAVE if co.x > 0.24 else
+                                         (0.215, 0.175, 0.135))
+        k = 1.12 if n.z > 0.7 else (0.80 if co.z < 0.06 else 1.0)
+        return tuple(min(1.0, c * k) for c in base)
+
+    ob = mesh_from("prop_crate", v, f, col, smooth=False)
+    export([ob], "prop_crate")
+
+
+def make_bench():
+    clear()
+    parts = [box_verts(0, 0, 0.415, 1.50, 0.45, 0.055)]            # 座面
+    for sx in (1, -1):
+        for sy in (1, -1):
+            parts.append(box_verts(sx * 0.64, sy * 0.16, 0.195, 0.055, 0.055, 0.39))
+        parts.append(box_verts(sx * 0.64, 0, 0.10, 0.055, 0.30, 0.05))  # 貫
+    v, f = merge(*parts)
+
+    def col(co, n):
+        base = W_LT if co.z > 0.37 else W_DK
+        k = 1.10 if n.z > 0.7 else 1.0
+        return tuple(min(1.0, c * k) for c in base)
+
+    ob = mesh_from("prop_bench", v, f, col, smooth=False)
+    export([ob], "prop_bench")
+
+
+def _noren(name, width, n_flap, base_col, h=0.62, seed=7):
+    clear()
+    rng = random.Random(seed)
+    gap = 0.025
+    fw = (width - (n_flap - 1) * gap) / n_flap
+    parts = [sweep([(-width / 2 - 0.05, 0, 0.012), (width / 2 + 0.05, 0, 0.012)],
+                   [0.022, 0.022], sides=6)]                        # 掛竿
+    for i in range(n_flap):
+        cx = -width / 2 + fw / 2 + i * (fw + gap)
+        v, f = box_verts(cx, 0.0, -h / 2 + 0.01, fw, 0.030, h)
+        sway = rng.uniform(-0.045, 0.045)                           # 下擺微擺
+        v = [(x, y + (sway if z < -h * 0.4 else 0.0), z) for x, y, z in v]
+        parts.append((v, f))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > -0.02:
+            return W_DK                                             # 竿
+        k = 1.0 - 0.18 * (-co.z / h)                                # 下擺沉一點
+        if co.z < -h * 0.82:
+            k *= 1.30                                               # 底緣亮邊（縫份）
+        return tuple(min(1.0, c * k) for c in base_col)
+
+    ob = mesh_from(name, v, f, col, smooth=False)
+    export([ob], name)
+
+
+def make_chochin():
+    clear()
+    zs = [0.0, -0.030, -0.10, -0.26, -0.42, -0.49, -0.52]
+    rr = [0.050, 0.090, 0.150, 0.175, 0.150, 0.090, 0.050]
+    v, f = sweep([(0, 0, z) for z in zs], rr, sides=10)
+
+    def col(co, n):
+        if co.z > -0.045 or co.z < -0.475:
+            return W_DK                                             # 上下口輪
+        rib = int((math.atan2(co.y, co.x) + TAU) / TAU * 10) % 2    # 骨
+        k = (1.06 - 0.55 * abs(co.z + 0.26) / 0.26) * (0.92 + 0.10 * rib)
+        # 亮度係數壓在 1.0 以下 —— 超過就往白色截斷，橘色被洗成奶油色
+        return tuple(min(1.0, c * (0.55 + 0.42 * k)) for c in CHOCHIN)
+
+    ob = mesh_from("prop_chochin", v, f, col, smooth=False)
+    export([ob], "prop_chochin")
+
+
+def make_kanban():
+    clear()
+    parts = []
+    for sx in (1, -1):                                              # 吊帶 ×2
+        parts.append(box_verts(sx * 0.185, 0.0, -0.065, 0.030, 0.020, 0.13))
+    parts.append(box_verts(0, 0, -0.13 - 0.36, 0.55, 0.045, 0.72))  # 板
+    for sy in (1, -1):                                              # 兩面字板
+        # 字板要**小於板身一大圈**，木框才讀得出來 —— 第一版 0.42×0.56
+        # 幾乎蓋滿 0.55×0.72 的板，整塊變成一片白板
+        parts.append(box_verts(0, sy * 0.0315, -0.13 - 0.38, 0.32, 0.018, 0.46))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if abs(co.y) > 0.036 and abs(co.x) < 0.17 and co.z < -0.2:
+            return (0.700, 0.655, 0.560)                            # 字板（未題字）
+        return W_DK if co.z > -0.14 else W_LT
+
+    ob = mesh_from("prop_kanban", v, f, col, smooth=False)
+    export([ob], "prop_kanban")
+
+
 make_dragon()
 make_duck()
 make_heron()
@@ -548,4 +713,12 @@ make_komainu("komainu_a", mouth_open=True, seed=5)
 make_stone_lantern()
 for i, nm in enumerate(["rock_a", "rock_b", "rock_c", "rock_d"]):
     make_rock(nm, 17 + i * 31, subdiv=1 if i < 2 else 2, rough=0.30 + i * 0.06)
+make_barrel()
+make_basket_stack()
+make_crate_stack()
+make_bench()
+_noren("prop_noren_a", 2.05, 5, NOREN_AI, seed=7)
+_noren("prop_noren_b", 1.50, 4, NOREN_KAKI, h=0.55, seed=19)
+make_chochin()
+make_kanban()
 print("done")

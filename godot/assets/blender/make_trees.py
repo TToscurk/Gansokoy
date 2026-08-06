@@ -21,6 +21,9 @@ BARK = (0.30, 0.23, 0.16)
 # 樹冠層色：由下到上（暗 → 亮），帶一點黃綠偏移，吉卜力的「陽光打在樹頂」
 TIERS_ROUND = [(0.13, 0.22, 0.11), (0.19, 0.30, 0.14), (0.26, 0.38, 0.17), (0.34, 0.46, 0.21)]
 TIERS_PINE = [(0.10, 0.19, 0.12), (0.14, 0.25, 0.14), (0.19, 0.32, 0.16), (0.26, 0.40, 0.19)]
+# 花樹（櫻）：底層帶紫的暗粉 → 頂層近白的亮粉。稗田邸的教訓：同種
+# **大群聚**做色塊衝擊，所以層色差拉開一點，遠看才是一團有體積的粉。
+TIERS_SAKURA = [(0.50, 0.20, 0.28), (0.68, 0.30, 0.38), (0.84, 0.44, 0.50), (0.96, 0.62, 0.65)]
 
 
 def clear_scene():
@@ -124,7 +127,8 @@ def add_branch(base, tip, r, seed):
     return obj
 
 
-def tree_round(name, seed, h=3.2, spread=1.0):
+def tree_round(name, seed, h=3.2, spread=1.0, tiers=None):
+    tiers = tiers or TIERS_ROUND
     clear_scene()
     rng = random.Random(seed)
     # 主幹只到分岔點（0.62h），上面交給分枝 —— 一根圓錐直通樹頂就是棒棒糖
@@ -148,17 +152,17 @@ def tree_round(name, seed, h=3.2, spread=1.0):
     # 枝端各掛一顆樹冠（低層用暗色）
     for k, tip in enumerate(branch_tips):
         si += 1
-        c = TIERS_ROUND[1] if k % 2 == 0 else TIERS_ROUND[2]
+        c = tiers[1] if k % 2 == 0 else tiers[2]
         objs.append(add_cluster(tip, rng.uniform(1.05, 1.35) * spread,
                                 rng.uniform(0.62, 0.72), c, seed * 31 + si))
     # ⚠ 軸心一定要有一顆，而且中心壓在分岔點上方 —— v1 的樹冠全在側面，
     # 樹幹頂端那截裸露在外（截圖裡的「縫」）
     objs.append(add_cluster((0, 0, h * 0.82), 1.50 * spread, 0.68,
-                            TIERS_ROUND[0], seed * 31 + 88))
+                            tiers[0], seed * 31 + 88))
     objs.append(add_cluster((0, 0, h * 1.06), 1.15 * spread, 0.68,
-                            TIERS_ROUND[2], seed * 31 + 97))
+                            tiers[2], seed * 31 + 97))
     objs.append(add_cluster((0, 0, h * 1.26), 0.85 * spread, 0.70,
-                            TIERS_ROUND[3], seed * 31 + 99))
+                            tiers[3], seed * 31 + 99))
     join_and_export(objs, name)
 
 
@@ -234,4 +238,8 @@ tree_pine("tree_pine_a", 23)
 tree_pine("tree_pine_b", 61, h=4.6, layers=TIERS_PINE + [TIERS_PINE[-1]])  # 高杉五層
 bamboo_clump("bamboo_a", 71)
 bamboo_clump("bamboo_b", 137, n_culm=9, h=10.5)
+# 花樹：跟闊葉同構（同樣的枝＋冠），只換花色層 —— 剪影語彙一致，
+# 顏色一眼分出「這叢是花」。a 標準、b 稍高瘦（群聚裡才有高低差）。
+tree_round("tree_sakura_a", 19, h=4.4, tiers=TIERS_SAKURA)
+tree_round("tree_sakura_b", 53, h=5.2, spread=0.85, tiers=TIERS_SAKURA)
 print("done")
