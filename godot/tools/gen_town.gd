@@ -419,9 +419,17 @@ func _build_landmark_stubs() -> void:
 	for L in LANDMARKS:
 		var y: float = bank_h(L.x, L.z)
 		var wall_h: float = maxf(L.h * 0.62, L.h - L.d * 0.30)
-		lib.box(g, L.n, Vector3(L.w, wall_h, L.d), mw,
+		# 每座地標**自己一個子群組**，牆體命名「屋身」：
+		# (a) check_map 的建物判定看「群組直下有沒有貼地構件」——
+		#     以前七座全掛在同一個群組、名字又不含關鍵字 → 佔位對體檢隱形；
+		#     而且就算命中，七座會被併成一棟橫跨全鎮的巨型 AABB。
+		# (b) gable_roof 的子節點名是固定的（屋根坡_0…），同一個父節點下
+		#     蓋七次會被 Godot 自動改名成 @MeshInstance3D@8 之類 —— 分開的
+		#     父節點各自命名空間，名字保得住。
+		var gl := lib.add(g, Node3D.new(), L.n)
+		lib.box(gl, "屋身", Vector3(L.w, wall_h, L.d), mw,
 			Vector3(L.x, y + wall_h * 0.5, L.z))
-		lib.gable_roof(g, y + wall_h, L.w + 1.6, L.d + 1.6,
+		lib.gable_roof(gl, y + wall_h, L.w + 1.6, L.d + 1.6,
 			atan2(L.h - wall_h, L.d * 0.5), 0.22, mr, mr,
 			Vector3(L.x, 0.0, L.z))
 		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過七座地標

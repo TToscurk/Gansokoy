@@ -17,7 +17,11 @@ const CELL := 2.0              # 格點間距
 const RADIUS := 0.45           # 玩家半徑（對齊 player.tscn 的膠囊）
 const HEIGHT := 1.7
 const STEP_UP := 0.7           # 走得上去的落差（台階、緣石、橋頭）
-const TRIMESH_MIN_SPAN := 6.0  # 跟 main.gd 同一條規則
+# ⚠ 這個值以前是 6.0，註解還寫著「跟 main.gd 同一條規則」—— main.gd 是
+# 15.0。對 own_colliders 的圖看不出差別（名字過濾先生效），非 own 的圖
+# 會讓 6~15m 的 mesh 在測試裡是實心、在遊戲裡卻穿得過 —— 測試比現實嚴，
+# 「不通」可能是假的。對齊成 15.0，跟 main.gd 的 TRIMESH_MIN_SPAN 同值。
+const TRIMESH_MIN_SPAN := 15.0
 
 ## 每張圖要驗的路線。座標是世界 XZ。
 const ROUTES := {
@@ -30,6 +34,18 @@ const ROUTES := {
 		# 那是**修好了**，不是壞了。這條路要測的是「過不過得了水路」，
 		# 所以兩端都放在南北街 x=52 上，對準水路橋_4。
 		{ "name": "水路南岸 → 北岸（要過橋）", "a": Vector2(52, 95), "b": Vector2(52, 75) },
+		{ "name": "廣場 → 稗田邸前", "a": Vector2(0, 30), "b": Vector2(-78, 20) },
+	],
+	"sato": [
+		# 幹道連通（南北向縱貫 + 兩座門）
+		{ "name": "北門 → 南口", "a": Vector2(0, -190), "b": Vector2(0, 245) },
+		{ "name": "北門 → 西南門", "a": Vector2(0, -174), "b": Vector2(-172, 92) },
+		# 三座橋 —— 河東岸的連通**只靠它們**
+		{ "name": "廣場 → 東岸（過 12m 主橋）", "a": Vector2(0, 30), "b": Vector2(110, 30) },
+		{ "name": "小橋北（z=-80）", "a": Vector2(40, -80), "b": Vector2(100, -80) },
+		{ "name": "小橋南（z=140）", "a": Vector2(30, 140), "b": Vector2(90, 140) },
+		# 西岸河畔道（x=52 街被河截斷後，南段通行靠它）
+		{ "name": "河畔道 北 → 南", "a": Vector2(52, -40), "b": Vector2(54, 110) },
 		{ "name": "廣場 → 稗田邸前", "a": Vector2(0, 30), "b": Vector2(-78, 20) },
 	],
 	"trail": [
@@ -52,7 +68,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou"]
+		maps = ["village", "trail", "kourindou", "sato"]
 	else:
 		maps = [args[0]]
 	_cap = CapsuleShape3D.new()

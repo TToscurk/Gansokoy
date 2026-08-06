@@ -770,15 +770,19 @@ func pond_water(out_dir: String, cx: float, cz: float, r: float, sink: float,
 	return mi
 
 # ── 空氣牆 ──
+## ⚠ 牆底以前寫死 y=0。圖緣的地形不是平的 —— 人里在牆線上最低 −1.36m
+## （河口另計），玩家膠囊只剩 0.34m 跟牆重疊，再低一點就鑽出去了。
+## 改成蓋 y∈[-12, 40]：往下多 12m 把任何合理的圖緣下切都收掉，
+## 上緣維持 40 不變。既有 .tscn 不受影響（重跑各自的產生器才會換新牆）。
 func boundary(half: float) -> void:
 	var body := StaticBody3D.new()
 	body.name = "Boundary"
 	add(root, body, "Boundary")
 	var walls := [
-		[Vector3(0, 20, -half - 0.5), Vector3(half * 2.0, 40, 1)],
-		[Vector3(0, 20, half + 0.5), Vector3(half * 2.0, 40, 1)],
-		[Vector3(-half - 0.5, 20, 0), Vector3(1, 40, half * 2.0)],
-		[Vector3(half + 0.5, 20, 0), Vector3(1, 40, half * 2.0)],
+		[Vector3(0, 14, -half - 0.5), Vector3(half * 2.0, 52, 1)],
+		[Vector3(0, 14, half + 0.5), Vector3(half * 2.0, 52, 1)],
+		[Vector3(-half - 0.5, 14, 0), Vector3(1, 52, half * 2.0)],
+		[Vector3(half + 0.5, 14, 0), Vector3(1, 52, half * 2.0)],
 	]
 	for w in walls:
 		var shape := CollisionShape3D.new()

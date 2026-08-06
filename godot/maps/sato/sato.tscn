@@ -59,16 +59,16 @@ _surfaces = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q4nkd"]
-size = Vector3(596, 40, 1)
+size = Vector3(596, 52, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig0uw"]
-size = Vector3(596, 40, 1)
+size = Vector3(596, 52, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nyq5e"]
-size = Vector3(1, 40, 596)
+size = Vector3(1, 52, 596)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3p5om"]
-size = Vector3(1, 40, 596)
+size = Vector3(1, 52, 596)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cua81"]
 size = Vector3(24, 10, 1)
@@ -1003,19 +1003,19 @@ mesh = SubResource("ArrayMesh_7p3j8")
 [node name="Boundary" type="StaticBody3D" parent="."]
 
 [node name="@CollisionShape3D@2" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -298.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -298.5)
 shape = SubResource("BoxShape3D_q4nkd")
 
 [node name="@CollisionShape3D@3" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 298.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 298.5)
 shape = SubResource("BoxShape3D_ig0uw")
 
 [node name="@CollisionShape3D@4" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -298.5, 20, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -298.5, 14, 0)
 shape = SubResource("BoxShape3D_nyq5e")
 
 [node name="@CollisionShape3D@5" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 298.5, 20, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 298.5, 14, 0)
 shape = SubResource("BoxShape3D_3p5om")
 
 [node name="河口封堵" type="StaticBody3D" parent="."]
@@ -1063,147 +1063,159 @@ metadata/needs_trimesh = true
 
 [node name="地標佔位" type="Node3D" parent="."]
 
-[node name="寺子屋" type="MeshInstance3D" parent="地標佔位"]
+[node name="寺子屋" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.89637, -52)
 mesh = SubResource("BoxMesh_dh5uo")
 
-[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(1, 0, 0, 0, 0.960493, 0.278303, 0, -0.278303, 0.960493, -26, 5.06227, -56.4)
 mesh = SubResource("BoxMesh_x2mgp")
 
-[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(1, 0, 0, 0, 0.960493, -0.278303, 0, 0.278303, 0.960493, -26, 5.06227, -47.6)
 mesh = SubResource("BoxMesh_1jyj1")
 
-[node name="棟" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 6.33717, -52)
 mesh = SubResource("BoxMesh_hl223")
 
-[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -39.668, 5.06227, -52)
 mesh = SubResource("PrismMesh_av6eh")
 
-[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/寺子屋"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.332, 5.06227, -52)
 mesh = SubResource("PrismMesh_qb1vf")
 
-[node name="鈴奈庵" type="MeshInstance3D" parent="地標佔位"]
+[node name="鈴奈庵" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 1.65973, -52)
 mesh = SubResource("BoxMesh_gy05i")
 
-[node name="@MeshInstance3D@9" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(1, 0, 0, 0, 0.918002, 0.396577, 0, -0.396577, 0.918002, 11.6, 4.53253, -54.775)
 mesh = SubResource("BoxMesh_hbeyv")
 
-[node name="@MeshInstance3D@10" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(1, 0, 0, 0, 0.918002, -0.396577, 0, 0.396577, 0.918002, 11.6, 4.53253, -49.225)
 mesh = SubResource("BoxMesh_6mcnj")
 
-[node name="@MeshInstance3D@11" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 5.73133, -52)
 mesh = SubResource("BoxMesh_7tbot")
 
-[node name="@MeshInstance3D@12" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.432, 4.53253, -52)
 mesh = SubResource("PrismMesh_kuwx6")
 
-[node name="@MeshInstance3D@13" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/鈴奈庵"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.768, 4.53253, -52)
 mesh = SubResource("PrismMesh_7ci84")
 
-[node name="稗田邸" type="MeshInstance3D" parent="地標佔位"]
+[node name="稗田邸" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 4.00992, 2)
 mesh = SubResource("BoxMesh_5onmb")
 
-[node name="@MeshInstance3D@15" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(1, 0, 0, 0, 0.887139, 0.461502, 0, -0.461502, 0.887139, -78, 10.618, -3.075)
 mesh = SubResource("BoxMesh_ipg0e")
 
-[node name="@MeshInstance3D@16" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(1, 0, 0, 0, 0.887139, -0.461502, 0, 0.461502, 0.887139, -78, 10.618, 7.075)
 mesh = SubResource("BoxMesh_fi8tn")
 
-[node name="@MeshInstance3D@17" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 13.2581, 2)
 mesh = SubResource("BoxMesh_ms07j")
 
-[node name="@MeshInstance3D@18" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -92.518, 10.618, 2)
 mesh = SubResource("PrismMesh_hvqlm")
 
-[node name="@MeshInstance3D@19" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/稗田邸"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -63.482, 10.618, 2)
 mesh = SubResource("PrismMesh_i8vxd")
 
-[node name="鎮守之杜" type="MeshInstance3D" parent="地標佔位"]
+[node name="鎮守之杜" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 4.4245, 2)
 mesh = SubResource("BoxMesh_vlfdc")
 
-[node name="@MeshInstance3D@21" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(1, 0, 0, 0, 0.958991, 0.283435, 0, -0.283435, 0.958991, -26, 11.5427, -7.4)
 mesh = SubResource("BoxMesh_ftapt")
 
-[node name="@MeshInstance3D@22" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(1, 0, 0, 0, 0.958991, -0.283435, 0, 0.283435, 0.958991, -26, 11.5427, 11.4)
 mesh = SubResource("BoxMesh_st1kx")
 
-[node name="@MeshInstance3D@23" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 14.3209, 2)
 mesh = SubResource("BoxMesh_7bjsa")
 
-[node name="@MeshInstance3D@24" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43.668, 11.5427, 2)
 mesh = SubResource("PrismMesh_e4wug")
 
-[node name="@MeshInstance3D@25" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/鎮守之杜"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.332, 11.5427, 2)
 mesh = SubResource("PrismMesh_7ad6b")
 
-[node name="市場" type="MeshInstance3D" parent="地標佔位"]
+[node name="市場" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.48661, 57)
 mesh = SubResource("BoxMesh_csjac")
 
-[node name="@MeshInstance3D@27" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(1, 0, 0, 0, 0.994755, 0.102284, 0, -0.102284, 0.994755, -26, 3.82774, 48.1)
 mesh = SubResource("BoxMesh_p3q0k")
 
-[node name="@MeshInstance3D@28" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(1, 0, 0, 0, 0.994755, -0.102284, 0, 0.102284, 0.994755, -26, 3.82774, 65.9)
 mesh = SubResource("BoxMesh_t2apq")
 
-[node name="@MeshInstance3D@29" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 4.74286, 57)
 mesh = SubResource("BoxMesh_6t0qd")
 
-[node name="@MeshInstance3D@30" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -41.668, 3.82774, 57)
 mesh = SubResource("PrismMesh_7nkqr")
 
-[node name="@MeshInstance3D@31" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/市場"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.332, 3.82774, 57)
 mesh = SubResource("PrismMesh_6ur42")
 
-[node name="足洗邸" type="MeshInstance3D" parent="地標佔位"]
+[node name="足洗邸" type="Node3D" parent="地標佔位"]
+
+[node name="屋身" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.94101, 112)
 mesh = SubResource("BoxMesh_fqtxv")
 
-[node name="@MeshInstance3D@33" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_0" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(1, 0, 0, 0, 0.965375, 0.260866, 0, -0.260866, 0.965375, 26, 5.2491, 107.1)
 mesh = SubResource("BoxMesh_luu85")
 
-[node name="@MeshInstance3D@34" type="MeshInstance3D" parent="地標佔位"]
+[node name="屋根坡_2" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(1, 0, 0, 0, 0.965375, -0.260866, 0, 0.260866, 0.965375, 26, 5.2491, 116.9)
 mesh = SubResource("BoxMesh_8bniw")
 
-[node name="@MeshInstance3D@35" type="MeshInstance3D" parent="地標佔位"]
+[node name="棟" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 6.57319, 112)
 mesh = SubResource("BoxMesh_jv6rv")
 
-[node name="@MeshInstance3D@36" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_0" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 13.332, 5.2491, 112)
 mesh = SubResource("PrismMesh_yaiqj")
 
-[node name="@MeshInstance3D@37" type="MeshInstance3D" parent="地標佔位"]
+[node name="妻壁_2" type="MeshInstance3D" parent="地標佔位/足洗邸"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 38.668, 5.2491, 112)
 mesh = SubResource("PrismMesh_r6lik")
 
@@ -1213,23 +1225,23 @@ mesh = SubResource("PrismMesh_r6lik")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.89637, -52)
 shape = SubResource("BoxShape3D_eryba")
 
-[node name="@CollisionShape3D@14" type="CollisionShape3D" parent="地標碰撞"]
+[node name="@CollisionShape3D@9" type="CollisionShape3D" parent="地標碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 1.65973, -52)
 shape = SubResource("BoxShape3D_eiya3")
 
-[node name="@CollisionShape3D@20" type="CollisionShape3D" parent="地標碰撞"]
+[node name="@CollisionShape3D@10" type="CollisionShape3D" parent="地標碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78, 4.00992, 2)
 shape = SubResource("BoxShape3D_085is")
 
-[node name="@CollisionShape3D@26" type="CollisionShape3D" parent="地標碰撞"]
+[node name="@CollisionShape3D@11" type="CollisionShape3D" parent="地標碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 4.4245, 2)
 shape = SubResource("BoxShape3D_vcyqp")
 
-[node name="@CollisionShape3D@32" type="CollisionShape3D" parent="地標碰撞"]
+[node name="@CollisionShape3D@12" type="CollisionShape3D" parent="地標碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.48661, 57)
 shape = SubResource("BoxShape3D_y3xb6")
 
-[node name="@CollisionShape3D@38" type="CollisionShape3D" parent="地標碰撞"]
+[node name="@CollisionShape3D@13" type="CollisionShape3D" parent="地標碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.94101, 112)
 shape = SubResource("BoxShape3D_2ql21")
 
@@ -1252,15 +1264,15 @@ metadata/needs_trimesh = true
 
 [node name="地標塔碰撞" type="StaticBody3D" parent="."]
 
-[node name="@CollisionShape3D@39" type="CollisionShape3D" parent="地標塔碰撞"]
+[node name="@CollisionShape3D@14" type="CollisionShape3D" parent="地標塔碰撞"]
 transform = Transform3D(0.980067, 0, 0.198669, 0, 1, 0, -0.198669, 0, 0.980067, 9.5, 9.72625, -132)
 shape = SubResource("BoxShape3D_0t3j3")
 
-[node name="@CollisionShape3D@40" type="CollisionShape3D" parent="地標塔碰撞"]
+[node name="@CollisionShape3D@15" type="CollisionShape3D" parent="地標塔碰撞"]
 transform = Transform3D(0.988771, 0, -0.149438, 0, 1, 0, 0.149438, 0, 0.988771, 8.5, 8.68092, 196)
 shape = SubResource("BoxShape3D_yldnf")
 
-[node name="@CollisionShape3D@41" type="CollisionShape3D" parent="地標塔碰撞"]
+[node name="@CollisionShape3D@16" type="CollisionShape3D" parent="地標塔碰撞"]
 transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 62.5, 8.71167, 89)
 shape = SubResource("BoxShape3D_r7vk2")
 
@@ -1283,679 +1295,679 @@ multimesh = ExtResource("21_rcn7m")
 
 [node name="町家碰撞" type="StaticBody3D" parent="."]
 
-[node name="@CollisionShape3D@42" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@17" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114, 2.22218, 18.2)
 shape = SubResource("BoxShape3D_s4xrw")
 
-[node name="@CollisionShape3D@43" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@18" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.473, 2.20772, 16.3314)
 shape = SubResource("BoxShape3D_t0uky")
 
-[node name="@CollisionShape3D@44" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@19" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -135.192, 2.23609, 18.0153)
 shape = SubResource("BoxShape3D_fg2dg")
 
-[node name="@CollisionShape3D@45" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@20" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.6, 4.89303, 3.52172)
 shape = SubResource("BoxShape3D_y26gq")
 
-[node name="@CollisionShape3D@46" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@21" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -131.108, 4.61311, 2.12773)
 shape = SubResource("BoxShape3D_tnpvw")
 
-[node name="@CollisionShape3D@47" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@22" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143.356, 4.88109, 3.0077)
 shape = SubResource("BoxShape3D_3anos")
 
-[node name="@CollisionShape3D@48" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@23" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -147.4, 2.18314, 18.2)
 shape = SubResource("BoxShape3D_175n4")
 
-[node name="@CollisionShape3D@49" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@24" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -137.2, 2.25885, 41.9)
 shape = SubResource("BoxShape3D_nl7rp")
 
-[node name="@CollisionShape3D@50" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@25" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -126.621, 2.24096, 43.038)
 shape = SubResource("BoxShape3D_to1j3")
 
-[node name="@CollisionShape3D@51" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@26" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -116.451, 2.25851, 41.9)
 shape = SubResource("BoxShape3D_3jc14")
 
-[node name="@CollisionShape3D@52" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@27" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -142, 4.80077, 54.961)
 shape = SubResource("BoxShape3D_e0xsp")
 
-[node name="@CollisionShape3D@53" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@28" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -129.308, 5.03235, 56.5826)
 shape = SubResource("BoxShape3D_lww6o")
 
-[node name="@CollisionShape3D@54" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@29" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -116.882, 4.76562, 54.961)
 shape = SubResource("BoxShape3D_ql7hn")
 
-[node name="@CollisionShape3D@55" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@30" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -147.4, 2.27623, 41.8)
 shape = SubResource("BoxShape3D_bh8v0")
 
-[node name="@CollisionShape3D@56" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@31" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -94, 2.34335, 41.8)
 shape = SubResource("BoxShape3D_ydf6l")
 
-[node name="@CollisionShape3D@57" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@32" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -83.1662, 2.28503, 43.0066)
 shape = SubResource("BoxShape3D_8bf28")
 
-[node name="@CollisionShape3D@58" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@33" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -72.9062, 2.25431, 41.8)
 shape = SubResource("BoxShape3D_ga5kb")
 
-[node name="@CollisionShape3D@59" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@34" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -89.4, 4.97789, 54.7066)
 shape = SubResource("BoxShape3D_2854g")
 
-[node name="@CollisionShape3D@60" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@35" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -76.6007, 4.73065, 56.0387)
 shape = SubResource("BoxShape3D_00kv5")
 
-[node name="@CollisionShape3D@61" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@36" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -64.8461, 4.93521, 55.1352)
 shape = SubResource("BoxShape3D_6ixal")
 
-[node name="@CollisionShape3D@62" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@37" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -60.6, 2.24422, 41.8)
 shape = SubResource("BoxShape3D_65jae")
 
-[node name="@CollisionShape3D@63" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@38" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4, 2.1846, 18.2)
 shape = SubResource("BoxShape3D_vlfqi")
 
-[node name="@CollisionShape3D@64" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@39" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5135, 2.19792, 16.5168)
 shape = SubResource("BoxShape3D_cjac4")
 
-[node name="@CollisionShape3D@65" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@40" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6, 4.88461, 4.36177)
 shape = SubResource("BoxShape3D_sg582")
 
-[node name="@CollisionShape3D@66" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@41" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.2504, 4.63642, 3.00906)
 shape = SubResource("BoxShape3D_ttimd")
 
-[node name="@CollisionShape3D@67" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@42" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13.6, 2.19155, 18.2)
 shape = SubResource("BoxShape3D_bf8al")
 
-[node name="@CollisionShape3D@68" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@43" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.2487, 4.74287, 17.6653)
 shape = SubResource("BoxShape3D_pxbih")
 
-[node name="@CollisionShape3D@69" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@44" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.8, 2.20111, 5.51642)
 shape = SubResource("BoxShape3D_dvowq")
 
-[node name="@CollisionShape3D@70" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@45" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.05, 2.34604, 18.1)
 shape = SubResource("BoxShape3D_kwjvm")
 
-[node name="@CollisionShape3D@71" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@46" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123, 2.31553, 16.9777)
 shape = SubResource("BoxShape3D_otdr0")
 
-[node name="@CollisionShape3D@72" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@47" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.158, 2.25712, 18.1)
 shape = SubResource("BoxShape3D_scger")
 
-[node name="@CollisionShape3D@73" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@48" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 116.65, 4.72959, 4.89765)
 shape = SubResource("BoxShape3D_w0sp6")
 
-[node name="@CollisionShape3D@74" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@49" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.751, 4.94535, 2.77243)
 shape = SubResource("BoxShape3D_xhbqr")
 
-[node name="@CollisionShape3D@75" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@50" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140.979, 4.70665, 4.38514)
 shape = SubResource("BoxShape3D_hw1mr")
 
-[node name="@CollisionShape3D@76" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@51" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 147.9, 2.26232, 18.2)
 shape = SubResource("BoxShape3D_v7nkg")
 
-[node name="@CollisionShape3D@77" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@52" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 112.05, 2.28064, 41.9)
 shape = SubResource("BoxShape3D_smy8f")
 
-[node name="@CollisionShape3D@78" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@53" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 122.152, 2.21457, 43.688)
 shape = SubResource("BoxShape3D_8s761")
 
-[node name="@CollisionShape3D@79" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@54" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 132.342, 2.16938, 41.935)
 shape = SubResource("BoxShape3D_skfyp")
 
-[node name="@CollisionShape3D@80" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@55" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 116.65, 4.68775, 55.4293)
 shape = SubResource("BoxShape3D_wmflk")
 
-[node name="@CollisionShape3D@81" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@56" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 129.298, 4.92473, 57.2719)
 shape = SubResource("BoxShape3D_7jffg")
 
-[node name="@CollisionShape3D@82" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@57" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 141.485, 4.68147, 55.4766)
 shape = SubResource("BoxShape3D_8lvtp")
 
-[node name="@CollisionShape3D@83" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@58" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 147.9, 2.25347, 41.8)
 shape = SubResource("BoxShape3D_vq1ga")
 
-[node name="@CollisionShape3D@84" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@59" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1, 2.25879, -115.5)
 shape = SubResource("BoxShape3D_kjsnw")
 
-[node name="@CollisionShape3D@85" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@60" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.3221, 2.26071, -105.392)
 shape = SubResource("BoxShape3D_amqno")
 
-[node name="@CollisionShape3D@86" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@61" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1, 2.26073, -94.6152)
 shape = SubResource("BoxShape3D_vf2vs")
 
-[node name="@CollisionShape3D@87" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@62" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.0106, 4.98315, -120.3)
 shape = SubResource("BoxShape3D_8gnwp")
 
-[node name="@CollisionShape3D@88" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@63" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24.253, 4.67766, -108.095)
 shape = SubResource("BoxShape3D_ep1xs")
 
-[node name="@CollisionShape3D@89" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@64" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.0106, 4.93929, -96.098)
 shape = SubResource("BoxShape3D_ctftx")
 
-[node name="@CollisionShape3D@90" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@65" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.1, 1.72649, -127.1)
 shape = SubResource("BoxShape3D_bobmc")
 
-[node name="@CollisionShape3D@91" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@66" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.2, 2.25193, -88.3)
 shape = SubResource("BoxShape3D_j4k41")
 
-[node name="@CollisionShape3D@92" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@67" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.1378, 2.34067, -99.1126)
 shape = SubResource("BoxShape3D_0448r")
 
-[node name="@CollisionShape3D@93" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@68" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.2, 2.24987, -109.748)
 shape = SubResource("BoxShape3D_jx87b")
 
-[node name="@CollisionShape3D@94" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@69" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23.4478, 4.75448, -92.9)
 shape = SubResource("BoxShape3D_423mk")
 
-[node name="@CollisionShape3D@95" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@70" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.9548, 5.01777, -105.319)
 shape = SubResource("BoxShape3D_o1yll")
 
-[node name="@CollisionShape3D@96" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@71" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23.4478, 4.80037, -117.851)
 shape = SubResource("BoxShape3D_f11eo")
 
-[node name="@CollisionShape3D@97" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@72" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1, 2.19488, 104.5)
 shape = SubResource("BoxShape3D_mhyi8")
 
-[node name="@CollisionShape3D@98" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@73" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.4495, 2.18989, 115.538)
 shape = SubResource("BoxShape3D_kpeq7")
 
-[node name="@CollisionShape3D@99" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@74" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1, 2.2461, 125.791)
 shape = SubResource("BoxShape3D_v5cl5")
 
-[node name="@CollisionShape3D@100" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@75" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24.0227, 4.84151, 99.7)
 shape = SubResource("BoxShape3D_a5xwv")
 
-[node name="@CollisionShape3D@101" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@76" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25.2957, 4.65723, 112.008)
 shape = SubResource("BoxShape3D_n2bu6")
 
-[node name="@CollisionShape3D@102" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@77" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24.4528, 4.90239, 124.211)
 shape = SubResource("BoxShape3D_5pptw")
 
-[node name="@CollisionShape3D@103" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@78" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.1, 2.18984, 93.7)
 shape = SubResource("BoxShape3D_rphbb")
 
-[node name="@CollisionShape3D@104" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@79" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.2, 2.2447, 148.3)
 shape = SubResource("BoxShape3D_ncego")
 
-[node name="@CollisionShape3D@105" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@80" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.5006, 2.14827, 158.485)
 shape = SubResource("BoxShape3D_e5tdr")
 
-[node name="@CollisionShape3D@106" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@81" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.2, 2.22903, 169.67)
 shape = SubResource("BoxShape3D_n5llw")
 
-[node name="@CollisionShape3D@107" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@82" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.2556, 2.20651, 180.022)
 shape = SubResource("BoxShape3D_t7i8h")
 
-[node name="@CollisionShape3D@108" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@83" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.6552, 4.66783, 152.9)
 shape = SubResource("BoxShape3D_0nw58")
 
-[node name="@CollisionShape3D@109" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@84" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25.3067, 4.96848, 165.583)
 shape = SubResource("BoxShape3D_ro00o")
 
-[node name="@CollisionShape3D@110" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@85" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.7478, 4.68435, 178.244)
 shape = SubResource("BoxShape3D_kuljh")
 
-[node name="@CollisionShape3D@111" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@86" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.1, 2.18305, 181)
 shape = SubResource("BoxShape3D_wwihc")
 
-[node name="@CollisionShape3D@112" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@87" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.9704, 2.17552, 170.864)
 shape = SubResource("BoxShape3D_rcr2p")
 
-[node name="@CollisionShape3D@113" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@88" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.7517, 2.18113, 160.046)
 shape = SubResource("BoxShape3D_nyr1g")
 
-[node name="@CollisionShape3D@114" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@89" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.9805, 2.20261, 149.353)
 shape = SubResource("BoxShape3D_vl8s7")
 
-[node name="@CollisionShape3D@115" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@90" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.4, 1.83876, -158.4)
 shape = SubResource("BoxShape3D_bocuo")
 
-[node name="@CollisionShape3D@116" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@91" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.5075, 1.74504, -150.226)
 shape = SubResource("BoxShape3D_b2wd5")
 
-[node name="@CollisionShape3D@117" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@92" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.4, 1.78171, -142.5)
 shape = SubResource("BoxShape3D_8cdle")
 
-[node name="@CollisionShape3D@118" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@93" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.7605, 1.79734, -151.132)
 shape = SubResource("BoxShape3D_m21rc")
 
-[node name="@CollisionShape3D@119" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@94" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.25, 1.78852, -87.8)
 shape = SubResource("BoxShape3D_y2g37")
 
-[node name="@CollisionShape3D@120" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@95" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.2125, 1.73264, -89.5945)
 shape = SubResource("BoxShape3D_k56cm")
 
-[node name="@CollisionShape3D@121" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@96" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.8948, 1.71276, -88.3661)
 shape = SubResource("BoxShape3D_y7krs")
 
-[node name="@CollisionShape3D@122" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@97" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.3319, 1.75073, -89.6402)
 shape = SubResource("BoxShape3D_8gqqt")
 
-[node name="@CollisionShape3D@123" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@98" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.9377, 1.69563, -87.8745)
 shape = SubResource("BoxShape3D_3pyxy")
 
-[node name="@CollisionShape3D@124" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@99" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.25, 1.81888, -87.8)
 shape = SubResource("BoxShape3D_6qcw2")
 
-[node name="@CollisionShape3D@125" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@100" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.766, 1.74128, -89.5118)
 shape = SubResource("BoxShape3D_pwgjw")
 
-[node name="@CollisionShape3D@126" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@101" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -128.699, 1.78188, -88.2516)
 shape = SubResource("BoxShape3D_pmggl")
 
-[node name="@CollisionShape3D@127" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@102" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.479, 1.74659, -89.6812)
 shape = SubResource("BoxShape3D_3ij1m")
 
-[node name="@CollisionShape3D@128" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@103" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -92.6, 2.30436, -71.4)
 shape = SubResource("BoxShape3D_nd6t2")
 
-[node name="@CollisionShape3D@129" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@104" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -81.8425, 2.25876, -69.8503)
 shape = SubResource("BoxShape3D_m45li")
 
-[node name="@CollisionShape3D@130" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@105" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -71.392, 2.19886, -71.4)
 shape = SubResource("BoxShape3D_d5ugm")
 
-[node name="@CollisionShape3D@131" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@106" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -88, 4.75426, -57.8696)
 shape = SubResource("BoxShape3D_7trj0")
 
-[node name="@CollisionShape3D@132" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@107" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -76.2141, 4.98111, -56.2068)
 shape = SubResource("BoxShape3D_xoshn")
 
-[node name="@CollisionShape3D@133" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@108" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -63.8999, 4.69321, -57.4926)
 shape = SubResource("BoxShape3D_sc6ih")
 
-[node name="@CollisionShape3D@134" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@109" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -60.6, 2.24968, -71.5)
 shape = SubResource("BoxShape3D_f0kbu")
 
-[node name="@CollisionShape3D@135" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@110" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.65, 2.27677, -33.25)
 shape = SubResource("BoxShape3D_pryhm")
 
-[node name="@CollisionShape3D@136" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@111" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.644, 2.27424, -35.1093)
 shape = SubResource("BoxShape3D_iq7ec")
 
-[node name="@CollisionShape3D@137" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@112" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.9, 2.21052, -33.8657)
 shape = SubResource("BoxShape3D_julva")
 
-[node name="@CollisionShape3D@138" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@113" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -140.6, 2.17727, -16.65)
 shape = SubResource("BoxShape3D_t27f3")
 
-[node name="@CollisionShape3D@139" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@114" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -129.939, 2.20495, -15.7265)
 shape = SubResource("BoxShape3D_wirly")
 
-[node name="@CollisionShape3D@140" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@115" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -119.38, 2.24274, -16.65)
 shape = SubResource("BoxShape3D_317dy")
 
-[node name="@CollisionShape3D@141" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@116" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.65, 2.16286, 76.5)
 shape = SubResource("BoxShape3D_x3eyo")
 
-[node name="@CollisionShape3D@142" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@117" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.8973, 2.18038, 75.3676)
 shape = SubResource("BoxShape3D_mm0fb")
 
-[node name="@CollisionShape3D@143" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@118" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.6718, 2.28157, 76.5)
 shape = SubResource("BoxShape3D_hpjf7")
 
-[node name="@CollisionShape3D@144" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@119" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.353, 2.2791, 75.1459)
 shape = SubResource("BoxShape3D_w3div")
 
-[node name="@CollisionShape3D@145" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@120" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -83.2, 2.21426, 93.6)
 shape = SubResource("BoxShape3D_vlaq4")
 
-[node name="@CollisionShape3D@146" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@121" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -72.017, 2.22886, 95.0451)
 shape = SubResource("BoxShape3D_5f8r4")
 
-[node name="@CollisionShape3D@147" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@122" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -61.3078, 2.24421, 93.6)
 shape = SubResource("BoxShape3D_2bglj")
 
-[node name="@CollisionShape3D@148" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@123" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -88, 4.70625, 106.424)
 shape = SubResource("BoxShape3D_fbac1")
 
-[node name="@CollisionShape3D@149" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@124" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -75.6572, 4.94479, 108.254)
 shape = SubResource("BoxShape3D_7lpjs")
 
-[node name="@CollisionShape3D@150" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@125" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -63.341, 4.65785, 106.672)
 shape = SubResource("BoxShape3D_fpp86")
 
-[node name="@CollisionShape3D@151" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@126" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -93.4, 2.21698, 93.5)
 shape = SubResource("BoxShape3D_stveo")
 
-[node name="@CollisionShape3D@152" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@127" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.25, 1.78703, 132.2)
 shape = SubResource("BoxShape3D_8lxje")
 
-[node name="@CollisionShape3D@153" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@128" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.581, 1.84633, 130.808)
 shape = SubResource("BoxShape3D_t1m4y")
 
-[node name="@CollisionShape3D@154" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@129" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -127.824, 1.75905, 132.2)
 shape = SubResource("BoxShape3D_5vjt7")
 
-[node name="@CollisionShape3D@155" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@130" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -135.869, 1.78881, 130.451)
 shape = SubResource("BoxShape3D_khahs")
 
-[node name="@CollisionShape3D@156" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@131" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143.831, 1.71771, 132.085)
 shape = SubResource("BoxShape3D_r7kri")
 
-[node name="@CollisionShape3D@157" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@132" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -138.4, 1.74369, 147.8)
 shape = SubResource("BoxShape3D_wby0d")
 
-[node name="@CollisionShape3D@158" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@133" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -129.672, 1.80727, 149.397)
 shape = SubResource("BoxShape3D_r0h06")
 
-[node name="@CollisionShape3D@159" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@134" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -121.094, 1.75494, 147.869)
 shape = SubResource("BoxShape3D_xcuj1")
 
-[node name="@CollisionShape3D@160" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@135" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -113.156, 1.79812, 149.491)
 shape = SubResource("BoxShape3D_gq6yf")
 
-[node name="@CollisionShape3D@161" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@136" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.65, 2.21401, 131.5)
 shape = SubResource("BoxShape3D_v8mfn")
 
-[node name="@CollisionShape3D@162" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@137" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.1796, 2.23478, 129.928)
 shape = SubResource("BoxShape3D_64tc2")
 
-[node name="@CollisionShape3D@163" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@138" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.5267, 2.33903, 131.5)
 shape = SubResource("BoxShape3D_rq63b")
 
-[node name="@CollisionShape3D@164" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@139" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.35, 2.38355, 130.152)
 shape = SubResource("BoxShape3D_b63y3")
 
-[node name="@CollisionShape3D@165" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@140" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -93.4, 1.81002, 147.8)
 shape = SubResource("BoxShape3D_6lxst")
 
-[node name="@CollisionShape3D@166" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@141" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -85.3496, 1.85121, 149.419)
 shape = SubResource("BoxShape3D_ccp4c")
 
-[node name="@CollisionShape3D@167" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@142" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -76.7837, 1.81547, 148.225)
 shape = SubResource("BoxShape3D_ah7fs")
 
-[node name="@CollisionShape3D@168" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@143" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -68.194, 1.76967, 149.451)
 shape = SubResource("BoxShape3D_6upcx")
 
-[node name="@CollisionShape3D@169" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@144" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -59.4877, 1.82661, 148.339)
 shape = SubResource("BoxShape3D_1symg")
 
-[node name="@CollisionShape3D@170" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@145" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.65, 2.15537, -33.25)
 shape = SubResource("BoxShape3D_qc4k8")
 
-[node name="@CollisionShape3D@171" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@146" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.901, 2.22581, -34.675)
 shape = SubResource("BoxShape3D_nqiiq")
 
-[node name="@CollisionShape3D@172" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@147" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.329, 2.25327, -33.25)
 shape = SubResource("BoxShape3D_lx6fq")
 
-[node name="@CollisionShape3D@173" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@148" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.647, 1.7251, -34.0553)
 shape = SubResource("BoxShape3D_rhle6")
 
-[node name="@CollisionShape3D@174" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@149" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 144.6, 2.26946, -16.65)
 shape = SubResource("BoxShape3D_okrw0")
 
-[node name="@CollisionShape3D@175" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@150" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 134.082, 2.24018, -15.4957)
 shape = SubResource("BoxShape3D_85dr6")
 
-[node name="@CollisionShape3D@176" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@151" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 123.943, 2.23746, -16.6438)
 shape = SubResource("BoxShape3D_n0nb8")
 
-[node name="@CollisionShape3D@177" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@152" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 112.932, 2.26038, -15.7205)
 shape = SubResource("BoxShape3D_3jsw2")
 
-[node name="@CollisionShape3D@178" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@153" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.65, 2.2025, 76.5)
 shape = SubResource("BoxShape3D_y6b0r")
 
-[node name="@CollisionShape3D@179" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@154" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.561, 2.24395, 75.2726)
 shape = SubResource("BoxShape3D_v4u7c")
 
-[node name="@CollisionShape3D@180" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@155" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.752, 2.24032, 76.5)
 shape = SubResource("BoxShape3D_gjvgg")
 
-[node name="@CollisionShape3D@181" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@156" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 145.4, 1.75443, 92.8)
 shape = SubResource("BoxShape3D_qawgt")
 
-[node name="@CollisionShape3D@182" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@157" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 136.037, 2.145, 95.0004)
 shape = SubResource("BoxShape3D_nlxvi")
 
-[node name="@CollisionShape3D@183" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@158" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 125.044, 2.16919, 93.6)
 shape = SubResource("BoxShape3D_1cq0l")
 
-[node name="@CollisionShape3D@184" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@159" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 114.537, 2.2496, 95.0128)
 shape = SubResource("BoxShape3D_hjwp1")
 
-[node name="@CollisionShape3D@185" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@160" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.25, 1.83316, 132.2)
 shape = SubResource("BoxShape3D_cfmbw")
 
-[node name="@CollisionShape3D@186" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@161" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.549, 1.74301, 130.981)
 shape = SubResource("BoxShape3D_bumll")
 
-[node name="@CollisionShape3D@187" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@162" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.454, 1.75104, 131.985)
 shape = SubResource("BoxShape3D_mwo2p")
 
-[node name="@CollisionShape3D@188" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@163" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.64, 1.73547, 130.341)
 shape = SubResource("BoxShape3D_lqicr")
 
-[node name="@CollisionShape3D@189" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@164" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.104799, 0, 0.994493, 0, 1, 0, -0.994493, 0, 0.104799, 66.0344, 1.75179, -125.829)
 shape = SubResource("BoxShape3D_o1nt3")
 
-[node name="@CollisionShape3D@190" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@165" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.104799, 0, 0.994493, 0, 1, 0, -0.994493, 0, 0.104799, 63.8318, 1.69013, -117.713)
 shape = SubResource("BoxShape3D_ikeeg")
 
-[node name="@CollisionShape3D@191" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@166" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.104799, 0, 0.994493, 0, 1, 0, -0.994493, 0, 0.104799, 63.9654, 1.78358, -108.66)
 shape = SubResource("BoxShape3D_kyg7f")
 
-[node name="@CollisionShape3D@192" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@167" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.104799, 0, 0.994493, 0, 1, 0, -0.994493, 0, 0.104799, 61.6856, 1.74378, -100.355)
 shape = SubResource("BoxShape3D_ikpvc")
 
-[node name="@CollisionShape3D@193" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@168" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.104799, 0, 0.994493, 0, 1, 0, -0.994493, 0, 0.104799, 61.8482, 1.7472, -92.0635)
 shape = SubResource("BoxShape3D_hohdr")
 
-[node name="@CollisionShape3D@194" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@169" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.291703, 0, -0.956509, 0, 1, 0, 0.956509, 0, 0.291703, 89.4397, 1.67999, 43.6974)
 shape = SubResource("BoxShape3D_gwvml")
 
-[node name="@CollisionShape3D@195" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@170" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.291703, 0, -0.956509, 0, 1, 0, 0.956509, 0, 0.291703, 93.7529, 1.74039, 51.6714)
 shape = SubResource("BoxShape3D_dj4k3")
 
-[node name="@CollisionShape3D@196" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@171" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.0153997, 0, -0.999881, 0, 1, 0, 0.999881, 0, -0.0153997, 93.8656, 1.77422, 67.6697)
 shape = SubResource("BoxShape3D_0gesw")
 
-[node name="@CollisionShape3D@197" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@172" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.0153997, 0, -0.999881, 0, 1, 0, 0.999881, 0, -0.0153997, 95.0599, 1.70483, 76.4937)
 shape = SubResource("BoxShape3D_6jank")
 
-[node name="@CollisionShape3D@198" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@173" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.3227, 0, -0.946501, 0, 1, 0, 0.946501, 0, -0.3227, 90.1992, 2.33957, 94.6215)
 shape = SubResource("BoxShape3D_2yc25")
 
-[node name="@CollisionShape3D@199" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@174" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.3227, 0, -0.946501, 0, 1, 0, 0.946501, 0, -0.3227, 88.1733, 2.28498, 104.954)
 shape = SubResource("BoxShape3D_p4wyp")
 
-[node name="@CollisionShape3D@200" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@175" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.3227, 0, -0.946501, 0, 1, 0, 0.946501, 0, -0.3227, 83.4278, 2.26281, 114.492)
 shape = SubResource("BoxShape3D_cmkxe")
 
-[node name="@CollisionShape3D@201" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@176" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, 0.0254994, 40.31, 1.68084, 149.469)
 shape = SubResource("BoxShape3D_42sac")
 
-[node name="@CollisionShape3D@202" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@177" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, 0.0254994, 38.7477, 1.7095, 157.609)
 shape = SubResource("BoxShape3D_usd3h")
 
-[node name="@CollisionShape3D@203" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@178" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, 0.0254994, 39.5976, 1.66289, 166.461)
 shape = SubResource("BoxShape3D_uuqmv")
 
-[node name="@CollisionShape3D@204" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@179" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.0557026, 0, -0.998447, 0, 1, 0, 0.998447, 0, -0.0557026, 73.9331, 1.7376, 147.712)
 shape = SubResource("BoxShape3D_1d4c6")
 
-[node name="@CollisionShape3D@205" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@180" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.0557026, 0, -0.998447, 0, 1, 0, 0.998447, 0, -0.0557026, 74.5967, 1.77619, 155.91)
 shape = SubResource("BoxShape3D_a6pt1")
 
-[node name="@CollisionShape3D@206" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@181" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.0557026, 0, -0.998447, 0, 1, 0, 0.998447, 0, -0.0557026, 73.0217, 1.68778, 164.023)
 shape = SubResource("BoxShape3D_12enb")
 
-[node name="@CollisionShape3D@207" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@182" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.370718, 0, -0.928745, 0, 1, 0, 0.928745, 0, -0.370718, 90.883, 2.24683, -70.2715)
 shape = SubResource("BoxShape3D_qgqbo")
 
-[node name="@CollisionShape3D@208" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@183" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.370718, 0, -0.928745, 0, 1, 0, 0.928745, 0, -0.370718, 88.3259, 2.26404, -60.3455)
 shape = SubResource("BoxShape3D_vvry0")
 
-[node name="@CollisionShape3D@209" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@184" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(-0.370718, 0, -0.928745, 0, 1, 0, 0.928745, 0, -0.370718, 83.5604, 2.28946, -51.2353)
 shape = SubResource("BoxShape3D_v7ja1")
 
-[node name="@CollisionShape3D@210" type="CollisionShape3D" parent="町家碰撞"]
+[node name="@CollisionShape3D@185" type="CollisionShape3D" parent="町家碰撞"]
 transform = Transform3D(0.0370005, 0, -0.999315, 0, 1, 0, 0.999315, 0, 0.0370005, 78.2172, 2.23199, -17.1268)
 shape = SubResource("BoxShape3D_texo0")
 

@@ -33,7 +33,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou"]
+		maps = ["village", "trail", "kourindou", "sato"]
 	else:
 		maps = [args[0]]
 	var total := 0
@@ -154,6 +154,18 @@ func _is_ground_part(nm: String) -> bool:
 ## v1 把每片 mesh 當一棟，於是「牆頂蓋瓦離地 1.6m」被報成 227 筆離地。
 func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void:
 	if n is MultiMeshInstance3D:
+		var mn := String(n.name)
+		# 護岸／堤是地景，跟群組分支的豁免同一條規則
+		if mn.contains("護岸") or mn.contains("堤"):
+			return
+		# ⚠ MM_machiya_* 是**建物**不是散佈物。以前一律丟進 scatters →
+		# sato 的 169 棟町家全部隱形，buildings 為空時「建物互卡」與
+		# 「建物跨水」直接 return —— 體檢綠燈但什麼都沒驗。
+		# 逐實例解 buffer（不能用 get_instance_transform：headless 的
+		# dummy 渲染器一律回單位矩陣，本檔下面的散佈檢查踩過同一個坑）。
+		if mn.begins_with("MM_machiya"):
+			_collect_mm_buildings(n, buildings)
+			return
 		scatters.append(n)
 		return
 	if n is MeshInstance3D:
@@ -185,6 +197,93 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 				})
 	for c in n.get_children():
 		_collect(c, buildings, scatters, waters)
+
+## MultiMesh 町家 → 逐實例建物。
+## 建物範圍用**牆身 footprint**（w×d，不含出簷）—— 出簷本來就允許互相
+## 探出去，「建物互卡」與「跨水」都該量牆。模組尺寸讀 town_modules.json
+## （實測自 glb 的那份）；實例 transform 讀場景的 buffer —— 被驗的是場景。
+var _mods_cache = null
+
+func _collect_mm_buildings(mmi: MultiMeshInstance3D, buildings: Array) -> void:
+	if _mods_cache == null:
+		var f := FileAccess.open("res://data/town_modules.json", FileAccess.READ)
+		_mods_cache = JSON.parse_string(f.get_as_text())["modules"] if f else {}
+		if f:
+			f.close()
+	var kind := String(mmi.name).trim_prefix("MM_")
+	var mm: MultiMesh = mmi.multimesh
+	if mm == null or mm.instance_count == 0:
+		return
+	var buf := mm.buffer
+	var stride := 16 if mm.use_colors else 12
+	if buf.size() < mm.instance_count * stride:
+		_issues.append("%s 的 MultiMesh buffer 長度不對" % mmi.name)
+		return
+	# 牆身局部箱（Godot 局部：正面朝 +z、原點在正面地面中心）
+	var md: Dictionary = _mods_cache.get(kind, {})
+	var w: float = md.get("w", 8.0)
+	var d: float = md.get("d", 8.0)
+	var h: float = md.get("h", 5.0)
+	var corners_l := [
+		Vector3(-w / 2, 0, -d), Vector3(w / 2, 0, -d),
+		Vector3(-w / 2, 0, 0), Vector3(w / 2, 0, 0),
+		Vector3(-w / 2, h, -d), Vector3(w / 2, h, 0),
+	]
+	var pxf := _world_xf(mmi)
+	for i in mm.instance_count:
+		var b := i * stride
+		var t := Transform3D(
+			Vector3(buf[b + 0], buf[b + 4], buf[b + 8]),
+			Vector3(buf[b + 1], buf[b + 5], buf[b + 9]),
+			Vector3(buf[b + 2], buf[b + 6], buf[b + 10]),
+			Vector3(buf[b + 3], buf[b + 7], buf[b + 11]))
+		var xf := pxf * t
+		var box := AABB(xf * corners_l[0], Vector3.ZERO)
+		for ci in range(1, corners_l.size()):
+			box = box.expand(xf * corners_l[ci])
+		# 斜排的建物（河畔列 yaw −112°）用 AABB 會外擴出假面積 ——
+		# 兩棟實際沒碰到的町家被報「互卡 4.4㎡」。多存一份 2D OBB，
+		# 互卡與點在建物內的判定優先用它。
+		var c3: Vector3 = xf * Vector3(0.0, 0.0, -d / 2)
+		var entry := { "name": "%s#%d" % [kind, i], "aabb": box, "obb": {
+			"c": Vector2(c3.x, c3.z),
+			"ax": Vector2(xf.basis.x.x, xf.basis.x.z).normalized(),
+			"az": Vector2(xf.basis.z.x, xf.basis.z.z).normalized(),
+			"hx": w / 2, "hz": d / 2 } }
+		buildings.append(entry)
+		_parts.append(entry)
+
+
+## 建物的 2D OBB —— 有存 obb（MultiMesh 實例）就用，沒有的（群組建物，
+## 都是正交擺放）拿 AABB 當軸對齊 OBB。
+func _obb_of_entry(b: Dictionary) -> Dictionary:
+	if b.has("obb"):
+		return b.obb
+	var box: AABB = b.aabb
+	return { "c": Vector2(box.position.x + box.size.x / 2, box.position.z + box.size.z / 2),
+		"ax": Vector2(1, 0), "az": Vector2(0, 1),
+		"hx": box.size.x / 2, "hz": box.size.z / 2 }
+
+## SAT：兩個 2D OBB 的穿深（0 = 沒碰到）
+func _obb_pen(a: Dictionary, b: Dictionary) -> float:
+	var dv: Vector2 = b.c - a.c
+	var pen := INF
+	for ax in [a.ax, a.az, b.ax, b.az]:
+		var ra: float = a.hx * absf((ax as Vector2).dot(a.ax)) + a.hz * absf((ax as Vector2).dot(a.az))
+		var rb: float = b.hx * absf((ax as Vector2).dot(b.ax)) + b.hz * absf((ax as Vector2).dot(b.az))
+		var p: float = ra + rb - absf(dv.dot(ax))
+		if p <= 0.0:
+			return 0.0
+		pen = minf(pen, p)
+	return pen
+
+## 點在建物的水平範圍內？呼叫端已用 AABB 粗篩過，這裡只補斜排建物的精判
+func _pt_in_entry(b: Dictionary, x: float, z: float) -> bool:
+	if not b.has("obb"):
+		return true
+	var o: Dictionary = b.obb
+	var dv := Vector2(x, z) - (o.c as Vector2)
+	return absf(dv.dot(o.ax)) < o.hx and absf(dv.dot(o.az)) < o.hz
 
 func _path_of(n: Node) -> String:
 	var parts := [String(n.name)]
@@ -256,6 +355,19 @@ func _check_building_overlap(buildings: Array) -> void:
 				# 上下疊在一起才算「卡住」；差 3m 以上視為不同層（例：橋跨過牆）
 				if absf(box.position.y - ob.position.y) > 3.0:
 					continue
+				# 有一方是斜排建物（MultiMesh 實例）→ AABB 是外擴的假框，
+				# 改用 OBB SAT 精判；兩方都正交才走原本的面積判定。
+				if buildings[i].has("obb") or buildings[j].has("obb"):
+					var pen := _obb_pen(_obb_of_entry(buildings[i]), _obb_of_entry(buildings[j]))
+					if pen <= 0.35:
+						continue
+					hits += 1
+					worst = maxf(worst, pen)
+					if hits <= 5:
+						_issues.append("建物互相卡住（穿深 %.2fm）：%s ↔ %s @ (%.0f, %.0f)"
+							% [pen, buildings[i].name, buildings[j].name,
+								box.get_center().x, box.get_center().z])
+					continue
 				var area := ox * oz
 				if area < 1.2:
 					continue
@@ -268,7 +380,7 @@ func _check_building_overlap(buildings: Array) -> void:
 		for k2 in keys:
 			grid[k2].append(i)
 	if hits > 5:
-		_issues.append("…另有 %d 組建物互相卡住（最大重疊 %.1f㎡）" % [hits - 5, worst])
+		_issues.append("…另有 %d 組建物互相卡住（最嚴重 %.1f）" % [hits - 5, worst])
 
 ## 散佈物（樹、草、岩石）跟建物重疊 —— 「樹長在建築裡」
 func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
@@ -317,7 +429,8 @@ func _check_scatter_overlap(scatters: Array, buildings: Array) -> void:
 				var box: AABB = buildings[bi].aabb
 				# 只比水平範圍：樹幹落在建物平面內就是穿模
 				if o.x > box.position.x and o.x < box.position.x + box.size.x \
-						and o.z > box.position.z and o.z < box.position.z + box.size.z:
+						and o.z > box.position.z and o.z < box.position.z + box.size.z \
+						and _pt_in_entry(buildings[bi], o.x, o.z):
 					hit += 1
 					if hit == 1:
 						first = "例：(%.0f, %.0f) ← %s" % [o.x, o.z, buildings[bi].name]
@@ -406,7 +519,8 @@ func _check_building_over_water(buildings: Array, waters: Array) -> void:
 			for bi in bgrid[k]:
 				var box: AABB = buildings[bi].aabb
 				if p.x > box.position.x and p.x < box.position.x + box.size.x \
-						and p.z > box.position.z and p.z < box.position.z + box.size.z:
+						and p.z > box.position.z and p.z < box.position.z + box.size.z \
+						and _pt_in_entry(buildings[bi], p.x, p.z):
 					# 橋是應該跨過水的 —— 只抓牆與屋身
 					var nm: String = buildings[bi].name
 					# 只放行橋 —— 石垣護岸本來就在水面外側，它若壓到水

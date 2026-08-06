@@ -230,12 +230,10 @@
 （河半寬 7.0）、r≥155 **只有 machiya_e_a**。
 
 ### 已知還沒做（誠實清單）
-- `check_map.gd` 把 MultiMeshInstance3D 當散佈物 → 對 MultiMesh 町家**全盲**，
-  在 sato 上跑會綠燈但什麼都沒驗；`walk_test.gd` 沒有 sato 的路線表。
-  兩支的地圖清單也硬寫成 village/trail/kourindou。
-- `lib.boundary()` 的空氣牆底寫死 y=0，圖緣地形最低 −1.36m → 只剩 0.34m
-  的膠囊重疊，沒破但沒餘裕。
-- `sato` 沒進 mapRegistry → HUD 顯示 raw id。
+- ~~`check_map.gd` 對 MultiMesh 町家全盲~~ → **第四輪修掉**（見下）
+- ~~`walk_test.gd` 沒有 sato 路線表~~ → **第四輪修掉**
+- ~~`lib.boundary()` 空氣牆底寫死 y=0~~ → **第四輪修掉**（y∈[−12,40]）
+- ~~`sato` 沒進 mapRegistry~~ → **第四輪修掉**
 - 舊東緣河 + 直水道未整併（整合那步一起處理）。
 
 ---
@@ -268,3 +266,44 @@
 保留區檢查原本只寫在排屋迴圈裡，**包角棟與河畔棟是直接呼叫 `_house` 的**，
 所以一棟包角的村緣屋直接長進火見櫓的塔腳（穿插 2.33m）。跟村緣降級規則
 同一個病 —— 修法也一樣：把檢查收進 `_house` 這個**單一收口點**。
+
+---
+
+## 第四輪：把檢查修到誠實（2026-08-06）
+
+使用者排的優先序：**技術債先於視覺加工**。這輪不動任何看得到的東西 ——
+動的是「說綠燈的那幾支」。
+
+### check_map.gd —— 對 MultiMesh 町家全盲
+病根：`_collect` 把所有 MultiMeshInstance3D 丟進 scatters → sato 的 169 棟
+町家在「建物」清單裡是 0 棟，「建物互卡／離地／跨水」全部空轉綠燈。
+修法：`MM_machiya*` 走新的 `_collect_mm_buildings` —— **逐實例解 buffer**
+（不能用 `get_instance_transform`：headless 的 dummy 渲染器一律回單位矩陣，
+散佈檢查以前就踩過這個坑），模組尺寸讀 `town_modules.json` 實測值，
+牆身箱（w×d，不含出簷）逐棟進 buildings + _parts。
+
+**修完第一跑就抓到一隻假鳥**：machiya_f_a#46 ↔ #47 被報「互卡 4.4㎡」。
+從 instances.json 實算：兩棟都在河畔列、yaw −111.8°，**斜排建物的 AABB
+是外擴的假框**（牆 OBB 實距 > 0，全 169 棟兩兩 SAT 穿深 0.000）。
+修法不是調門檻，是把互卡判定升級成 **2D OBB SAT**（實例存軸向量，
+群組建物維持軸對齊）；「點在建物內」（樹穿建物、建物跨水）同樣補 OBB 精判。
+
+### walk_test.gd —— sato 路線表 + TRIMESH_MIN_SPAN 對齊
+- 新增 7 條路線：縱貫（北門→南口）、兩座門、**三座橋各一條**（東岸連通
+  只靠它們）、西岸河畔道、廣場→稗田邸前。
+- `TRIMESH_MIN_SPAN` 6.0→**15.0**：舊值註解寫「跟 main.gd 同一條規則」但
+  main.gd 是 15 —— 6~15m 的 mesh 在測試裡是實心、遊戲裡卻穿得過，
+  測試比現實嚴。對齊後 village/trail/kourindou 重跑，0 條路線翻盤。
+
+### 其他
+- `lib.boundary()` 空氣牆 y∈[0,40] → **[−12,40]**：河口河床 −3.5m，舊牆只剩
+  膠囊 0.34m 的重疊餘裕。從 sato.tscn 實測確認（52 高的箱、中心 y=14）。
+- `mapRegistry.json` 補 sato 條目（注意：`tools/export-godot.mjs` 重烘會蓋掉）。
+- 地標佔位改成每座一個子群組、屋身命名「屋身」→ check_map 認得出 6 棟。
+
+### 驗收（全部從產出物量）
+- check_map：**4 張圖 0 問題**，sato 實掃 **175 棟**（169 町家 + 6 地標佔位，
+  與 instances.json 的 176 實例對帳：橋×3、塔×3、鵜呑亭是 MeshInstance3D
+  不入建物清單，由產生器的 gbox OBB 把關；鵜呑亭的川床**本來就該**跨水，
+  不入清單反而避免假鳥）。
+- walk_test：**4 張圖 15 條路線全通**（sato 7/7，三座橋都實際走過）。
