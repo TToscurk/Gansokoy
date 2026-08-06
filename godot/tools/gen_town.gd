@@ -121,16 +121,20 @@ const LANDMARKS := [
 	# 蓋出來**的院落（築地塀＋腰石垣＋主屋＋庭池）量出來的尺寸。舊值小了
 	# 13×25m，等於保留區根本框不住真正的院落；現在沒撞到純粹是運氣好
 	# （實測舊框內外都是 0 棟町家），不是護欄有效。
-	# 量體（bw/bd）維持主屋大小：整塊 40.7×43.7 拉成 12.8m 高的實心箱會讀成
-	# 城砦，而真正的稗田邸是「牆圍著院子、主屋在中間」。
-	{"n": "稗田邸", "x": -78.0, "z": -164.0, "w": 40.7, "d": 43.7, "h": 12.8,
-		"bw": 27.7, "bd": 18.7},
+	# ✅ 已搬入真內容。保留區從 40.7×43.7 放大到 **42.4×45.6**：那是照
+	# builder 幾何逐件推出來的跨度（築地塀腰石垣中心 ±20.0／±21.5，塀屋根
+	# 兩坡各外探 0.34+0.41 → x 半跨 20.75；表門的門屋根中心壓在 z=+21.5、
+	# 深 2.0 → +22.5，比北牆的 22.25 還遠）。舊值是「量體」尺寸留下來的，
+	# 兩邊各短 0.4~0.9m —— 沿用的話會重演足洗邸的外溢。
+	{"n": "稗田邸", "x": -78.0, "z": -164.0, "w": 42.4, "d": 45.6, "h": 12.8,
+		"build": "_lm_hieda"},
 	# 實建 42.4×25.0（玉垣圍出來的境內比主殿大很多）
 	{"n": "鎮守之杜", "x": -26.0, "z": 2.0, "w": 42.9, "d": 36.0, "h": 14.0,
-		"bw": 34.0, "bd": 36.0},
+		"build": "_lm_grove"},
 	# 實建 34.3×25.8（八座屋台攤開的寬度）
-	{"n": "市場", "x": -26.0, "z": 57.0, "w": 34.8, "d": 34.0, "h": 4.6,
-		"bw": 30.0, "bd": 34.0},
+	# 實測幾何跨度 36.0×26.8（屋台兩排 + 龍神像砂利圈 + 井屋根）
+	{"n": "市場", "x": -26.0, "z": 57.0, "w": 37.2, "d": 34.0, "h": 4.6,
+		"build": "_lm_market"},
 	# ⚠ 實建 z 向是 **32.9m** 不是 24.5 —— 我第一次量的是「子節點原點的散佈」，
 	# 沒算進側牆自己的長度（兩道側牆各長 16~18m）。保留區要框的是幾何，
 	# 不是原點。第二次用 mesh AABB 世界包絡量才對。
@@ -181,6 +185,8 @@ func _init() -> void:
 	# sink 0.35 → 0.20：0.35 的話護岸頂離水面 0.98m，整條河讀成水泥排水渠
 	# （引擎內低視角截圖看出來的）。0.20 之後只差 0.60m，水是滿的。
 	lib.river_water(OUT_DIR, _river(), RIVER_HALF * 0.86, RIVER_DEPTH * 0.20, bank_h)
+	lib.pond_water(OUT_DIR, HIEDA_POND.x, HIEDA_POND.y, HIEDA_POND_R, HIEDA_POND_SINK,
+		_pond_bank_y, "庭池", 0.0, 4, 28, HIEDA_POND_DEPTH)
 	_build_unomitei()          # 先算位置：護岸要在這一段讓開
 	_build_revetment()
 	_build_bridges()
@@ -297,7 +303,23 @@ func height_at(x: float, z: float) -> float:
 			h = bank_h(x, z) + (h - bank_h(x, z)) \
 				* clampf((absf(z - b.z) - 6.0) / 1.5, 0.0, 1.0)
 	h = _flatten_yards(x, z, h)
+	# 庭池要挖在**整平之後**的院子上 —— 順序反過來的話整平會把碗填平。
+	h += lib.pond_carve(HIEDA_POND.x, HIEDA_POND.y, HIEDA_POND_R,
+		HIEDA_POND_DEPTH, x, z, 0.16)
 	return h
+
+
+## 稗田邸的庭池（石組庭池・中島・石橋）。世界座標＝院落中心 + (−2, +8)，
+## 跟舊址 (−78,2) 時代的相對位置一致，所以 builder 的本地座標整組沿用。
+const HIEDA_POND := Vector2(-80.0, -156.0)
+const HIEDA_POND_R := 6.4
+const HIEDA_POND_DEPTH := 1.7                  # 挖多深（碗底）
+const HIEDA_POND_SINK := 0.55                  # 水面比岸低多少
+
+## 池岸的基準高度。⚠ 不能直接用 bank_h —— 院子已經被 _flatten_yards 壓成
+## 一個水平面，拿原始地形當岸高的話水面會斜 0.5m（一邊淹岸、一邊懸空）。
+func _pond_bank_y(x: float, z: float) -> float:
+	return _flatten_yards(x, z, bank_h(x, z))
 
 
 ## 院落整平：把指定地標的佔地壓成一個水平面，邊緣平滑收斂回原地形。
@@ -306,7 +328,7 @@ func height_at(x: float, z: float) -> float:
 ## 使用者定案方案 1：整平地形，不換位置、不加基壇。
 ## 手法沿用橋頭路廊那招（同一個檔案裡已驗收過的做法），只是改成矩形區域。
 const YARD_FLATTEN := [
-	{"x": -78.0, "z": -164.0, "w": 40.7, "d": 43.7, "fade": 9.0},   # 稗田邸
+	{"x": -78.0, "z": -164.0, "w": 42.4, "d": 45.6, "fade": 9.0},   # 稗田邸（同保留區）
 ]
 
 func _flatten_yards(x: float, z: float, h: float) -> float:
@@ -1927,6 +1949,9 @@ func _lm_ground_sample(x: float, z: float) -> float:
 	var y := height_at(x, z)
 	if lib.poly_dist(_river(), x, z) < RIVER_HALF:
 		y = maxf(y, bank_h(x, z) - RIVER_DEPTH * 0.20)
+	# 稗田邸院內有庭池：不擋的話 _ground_under 會取到碗底，整座宅子沉 1.7m
+	if Vector2(x - HIEDA_POND.x, z - HIEDA_POND.y).length() < HIEDA_POND_R:
+		y = maxf(y, _pond_bank_y(x, z) - HIEDA_POND_SINK)
 	return y
 
 ## 一塊 footprint 的 [最低地面, 起伏量]。取樣約每 4m 一點 ——
@@ -2097,6 +2122,628 @@ func _lm_terakoya(g: Node3D, spread: float) -> void:
 	lib.box(g, "立札", Vector3(1.6, 1.1, 0.1), _lmat("wood"), Vector3(-8.0, 1.3, 10.5))
 	lib.cyl(g, "手水缽", 0.7, 0.75, 0.7, _lmat("stone"), Vector3(9.0, 0.35, 10.0), 10)
 	_lm_collide(g, Vector3(22.4, 7.0, 12.4))
+
+
+## ── 鎮守之杜（村社的神木與境內）──
+## 神木（放大的闊葉樹）＋土壇＋注連縄＋紙垂＋玉垣一圈＋石燈籠一對＋杜木。
+## ⚠ 舊 builder 全程用**世界座標**寫（因為它的 g 掛在原點）。搬過來之後 g
+## 已經被擺到地標位置了，所以每一件都要換算成群組**區域座標**：
+## 區域 = 世界 − 群組原點；y 則是 height_at(世界) − 群組原點 y。
+## 直接照抄世界座標的話整組會位移一個地標座標的量。
+func _lm_grove(g: Node3D, _spread: float) -> void:
+	var wc := Vector2(g.position.x, g.position.z)
+	var y0: float = g.position.y
+	var lp := func(wx: float, wz: float, dy: float) -> Vector3:
+		return Vector3(wx - wc.x, height_at(wx, wz) - y0 + dy, wz - wc.y)
+
+	var post_m := _lmat("stone", 1)
+	lib.cyl(g, "土壇", 5.6, 6.4, 0.7, _lmat("stone", 2), lp.call(wc.x, wc.y, 0.25), 16)
+	# 神木：比一般樹高兩倍以上，剪影才會從屋頂上冒出來。
+	# ⚠ 用 tree_round_a（近景款）而不是舊版的 tree_round_b —— b 在新的
+	# tree_lib 裡是 vista 精簡款（ntuft 只有一半），放大 4 倍會稀得看得出來。
+	var big := MeshInstance3D.new()
+	big.mesh = lib.tree_mesh("res://assets/models/tree_round_a.glb")
+	big.position = lp.call(wc.x, wc.y, 0.6)
+	big.scale = Vector3(3.0, 3.6, 3.0)
+	lib.add(g, big, "神木")
+	var tb := StaticBody3D.new()
+	big.add_child(tb)
+	tb.owner = _root
+	var tsh := CollisionShape3D.new()
+	var tcy := CylinderShape3D.new()
+	tcy.radius = 1.6 / 3.0          # 母節點有 3.0 倍縮放，形狀要除回去
+	tcy.height = 8.0 / 3.6
+	tsh.shape = tcy
+	tsh.position = Vector3(0, 1.2 / 3.6, 0)
+	tb.add_child(tsh)
+	tsh.owner = _root
+	# 注連縄（繞樹一圈的粗繩）＋紙垂 —— 一眼看出這是神木不是路樹
+	var rope_m := lib.pbr("shimenawa", "terrain_grass", 1.6, Color(0.88, 0.84, 0.66))
+	var seg := 20
+	for i in seg:
+		var mid := (float(i) + 0.5) / float(seg) * TAU
+		var r_in := 1.75
+		var link := lib.cyl(g, "注連縄_%d" % i, 0.17, 0.17,
+			r_in * TAU / float(seg) * 1.12, rope_m,
+			lp.call(wc.x + cos(mid) * r_in, wc.y + sin(mid) * r_in, 3.1), 6)
+		link.rotation.y = -mid
+		link.rotation.z = PI * 0.5
+	for i in 6:
+		var a3 := float(i) / 6.0 * TAU + 0.25
+		lib.box(g, "紙垂_%d" % i, Vector3(0.16, 0.5, 0.03),
+			lib.flat_mat("shide", Color(0.96, 0.96, 0.94), 0.9),
+			lp.call(wc.x + cos(a3) * 1.78, wc.y + sin(a3) * 1.78, 2.72))
+	# 玉垣（圍住神木的矮石欄）—— 給中心一個明確的邊界
+	for i in 16:
+		var a4 := float(i) / 16.0 * TAU
+		lib.box(g, "玉垣柱_%d" % i, Vector3(0.22, 1.05, 0.22), post_m,
+			lp.call(wc.x + cos(a4) * 5.4, wc.y + sin(a4) * 5.4, 0.5))
+		var a5 := (float(i) + 0.5) / 16.0 * TAU
+		var rail := lib.box(g, "玉垣貫_%d" % i, Vector3(2.15, 0.13, 0.10), post_m,
+			lp.call(wc.x + cos(a5) * 5.4, wc.y + sin(a5) * 5.4, 0.78))
+		rail.rotation.y = -a5
+	# 石燈籠一對、有人來拜的痕跡
+	for sd in [-1.0, 1.0]:
+		var lx: float = wc.x + 6.6
+		var lz2: float = wc.y + sd * 2.6
+		var tag := int(sd + 1)
+		lib.cyl(g, "獻燈基_%d" % tag, 0.34, 0.40, 0.22, post_m, lp.call(lx, lz2, 0.11), 8)
+		lib.cyl(g, "獻燈竿_%d" % tag, 0.13, 0.15, 1.15, post_m, lp.call(lx, lz2, 0.8), 8)
+		lib.cyl(g, "獻燈袋_%d" % tag, 0.30, 0.28, 0.42, post_m, lp.call(lx, lz2, 1.58), 6)
+		lib.cyl(g, "獻燈笠_%d" % tag, 0.08, 0.56, 0.26, post_m, lp.call(lx, lz2, 1.92), 6)
+	# 杜：神木周圍再種一圈較小的樹（「杜」是樹叢，不是一棵樹）。
+	# ⚠ 橢圓排布並收在保留區內 —— 舊版是 wr 8.5~18 的圓，那會戳出保留區
+	# 南北緣（d/2 只有 18），重演足洗邸外溢。樹冠半徑再留 3.5m。
+	var TREES := ["res://assets/models/tree_round_a.glb",
+		"res://assets/models/tree_round_c.glb", "res://assets/models/tree_pine_a.glb"]
+	for i in 14:
+		var wa := _lm_rng.randf_range(0.0, TAU)
+		var t := sqrt(_lm_rng.randf_range(0.30, 1.0))
+		var wx: float = wc.x + cos(wa) * (7.0 + t * 10.0)
+		var wz: float = wc.y + sin(wa) * (7.0 + t * 7.5)
+		if _road_dist(wx, wz) < 1.6:
+			continue
+		var sub := MeshInstance3D.new()
+		sub.mesh = lib.tree_mesh(TREES[_lm_rng.randi() % TREES.size()])
+		sub.position = lp.call(wx, wz, 0.0)
+		sub.scale = Vector3.ONE * _lm_rng.randf_range(1.05, 1.5)
+		sub.rotation.y = _lm_rng.randf_range(0.0, TAU)
+		lib.add(g, sub, "杜木_%d" % i)
+
+
+## ── 市場（開放廣場：龍神像＋屋台十二座＋水井＋高札場）──
+## ⚠ 跟鎮守之杜一樣，舊 builder 全用世界座標寫，搬過來要換算成區域座標。
+const SHRINE_R := 7.2
+
+func _lm_dragon(g: Node3D, ox: float, oz: float) -> void:
+	var stone := _lmat("stone")
+	var dark := _lmat("dark")
+	var sg := lib.add(g, Node3D.new(), "龍神像")
+	sg.position = Vector3(ox, 0.0, oz)
+	lib.cyl(sg, "砂利敷", SHRINE_R, SHRINE_R, 0.12,
+		lib.pbr("shrine_gravel", "cobble", 0.9, Color(0.88, 0.86, 0.80)),
+		Vector3(0, 0.06, 0), 24)
+	var tiers := [[6.0, 0.42], [4.9, 0.40], [4.0, 0.38]]
+	var y := 0.1
+	for i in tiers.size():
+		var tw: float = tiers[i][0]
+		var th: float = tiers[i][1]
+		lib.box(sg, "石壇_%d" % i, Vector3(tw, th, tw), stone, Vector3(0, y + th * 0.5, 0))
+		lib.box(sg, "壇緣_%d" % i, Vector3(tw + 0.22, 0.1, tw + 0.22), stone,
+			Vector3(0, y + th - 0.02, 0))
+		y += th
+	var dstat := MeshInstance3D.new()
+	dstat.mesh = lib.prop_mesh("res://assets/models/dragon_statue.glb", stone)
+	dstat.position = Vector3(0, y, 0)
+	dstat.rotation.y = 0.6
+	lib.add(sg, dstat, "像")
+	var posts := 16
+	for i in posts:
+		var a := float(i) / float(posts) * TAU
+		var px := cos(a) * SHRINE_R * 0.86
+		var pz := sin(a) * SHRINE_R * 0.86
+		var pl := lib.box(sg, "玉垣柱_%d" % i, Vector3(0.24, 1.25, 0.24), stone,
+			Vector3(px, 0.72, pz))
+		pl.rotation.y = -a
+		lib.box(sg, "玉垣笠_%d" % i, Vector3(0.34, 0.1, 0.34), stone, Vector3(px, 1.39, pz))
+		var a2 := float(i + 1) / float(posts) * TAU
+		lib.strut(sg, "玉垣貫_%d" % i, Vector3(px, 1.02, pz),
+			Vector3(cos(a2) * SHRINE_R * 0.86, 1.02, sin(a2) * SHRINE_R * 0.86),
+			0.055, stone, 4)
+	# 正面（朝 −z＝廣場中心）留缺口當入口
+	for sd in [-1.0, 1.0]:
+		var tag := int(sd + 1)
+		lib.box(sg, "門柱_%d" % tag, Vector3(0.34, 2.4, 0.34), stone,
+			Vector3(sd * 1.5, 1.2, -SHRINE_R * 0.86))
+		lib.cyl(sg, "門柱頭_%d" % tag, 0.0, 0.26, 0.3, stone,
+			Vector3(sd * 1.5, 2.5, -SHRINE_R * 0.86), 8)
+	var rope := lib.pbr("shimenawa", "terrain_grass", 1.6, Color(0.86, 0.80, 0.60))
+	for i in 8:
+		var t0 := float(i) / 8.0
+		var t1 := float(i + 1) / 8.0
+		lib.strut(sg, "注連縄_%d" % i,
+			Vector3(lerpf(-1.5, 1.5, t0), 2.2 - sin(t0 * PI) * 0.42, -SHRINE_R * 0.86),
+			Vector3(lerpf(-1.5, 1.5, t1), 2.2 - sin(t1 * PI) * 0.42, -SHRINE_R * 0.86),
+			0.13 - absf(t0 - 0.5) * 0.08, rope, 6)
+	for i in 3:
+		lib.box(sg, "紙垂_%d" % i, Vector3(0.16, 0.42, 0.02),
+			lib.flat_mat("shide", Color(0.97, 0.97, 0.95), 0.9),
+			Vector3(-0.9 + float(i) * 0.9, 1.62, -SHRINE_R * 0.86 - 0.06))
+	# 常夜燈一對
+	for sd2 in [-1.0, 1.0]:
+		var lx: float = sd2 * 4.6
+		var lz := -SHRINE_R * 0.55
+		var tg := int(sd2 + 1)
+		lib.box(sg, "燈籠基_%d" % tg, Vector3(0.9, 0.24, 0.9), stone, Vector3(lx, 0.24, lz))
+		lib.cyl(sg, "燈籠竿_%d" % tg, 0.16, 0.19, 1.25, stone, Vector3(lx, 0.98, lz), 8)
+		lib.box(sg, "燈籠中台_%d" % tg, Vector3(0.62, 0.16, 0.62), stone, Vector3(lx, 1.68, lz))
+		lib.box(sg, "火袋_%d" % tg, Vector3(0.52, 0.6, 0.52),
+			lib.flat_mat("toro_light", Color(0.98, 0.88, 0.62), 0.8, Color(0.9, 0.66, 0.34)),
+			Vector3(lx, 2.06, lz))
+		for ci in 4:
+			var ca := float(ci) / 4.0 * TAU + PI * 0.25
+			lib.box(sg, "火袋柱_%d_%d" % [tg, ci], Vector3(0.1, 0.62, 0.1), dark,
+				Vector3(lx + cos(ca) * 0.26, 2.06, lz + sin(ca) * 0.26))
+		lib.cyl(sg, "燈籠笠_%d" % tg, 0.12, 0.62, 0.34, stone, Vector3(lx, 2.53, lz), 6)
+		lib.cyl(sg, "寶珠_%d" % tg, 0.0, 0.14, 0.24, stone, Vector3(lx, 2.8, lz), 8)
+	# 供物台
+	lib.box(sg, "供物台", Vector3(1.5, 0.16, 0.7), stone,
+		Vector3(0, 0.72, -SHRINE_R * 0.86 - 0.9))
+	for sd3 in [-1.0, 1.0]:
+		lib.box(sg, "供物台脚_%d" % int(sd3 + 1), Vector3(0.22, 0.64, 0.5), stone,
+			Vector3(sd3 * 0.55, 0.34, -SHRINE_R * 0.86 - 0.9))
+	for i in 2:
+		lib.cyl(sg, "御神酒_%d" % i, 0.06, 0.11, 0.34,
+			lib.flat_mat("sake_bottle", Color(0.90, 0.90, 0.86), 0.35),
+			Vector3(-0.3 + float(i) * 0.6, 0.97, -SHRINE_R * 0.86 - 0.9), 8)
+	# 碰撞只給像與石壇 —— 玉垣要讓人走得過去，不然廣場被切成兩半
+	_lm_collide(sg, Vector3(4.2, 8.4, 4.2))
+
+
+func _lm_market(g: Node3D, _spread: float) -> void:
+	# 內容整體偏西南，推回保留區中心（實測後定的偏移）
+	# 偏移由**實測**定：第一版用 2.35 估，量出來中心偏東 1.1m，修正為 1.25。
+	var c := lib.add(g, Node3D.new(), "本體")
+	c.position = Vector3(1.25, 0.0, 3.95)
+	var wc := Vector2(g.position.x, g.position.z)
+	var y0: float = g.position.y
+	var wood := _lmat("wood")
+	var stone := _lmat("stone")
+	_lm_dragon(c, -12.0, -10.0)
+	var cloths := [Color(0.52, 0.30, 0.27), Color(0.30, 0.35, 0.45),
+		Color(0.58, 0.50, 0.32), Color(0.34, 0.42, 0.33), Color(0.46, 0.40, 0.50)]
+	var goods := [Color(0.78, 0.62, 0.34), Color(0.52, 0.30, 0.24), Color(0.40, 0.52, 0.30),
+		Color(0.86, 0.80, 0.62), Color(0.30, 0.34, 0.40)]
+	var earth := lib.pbr("市場土間", "terrain_path", 0.30, Color(0.92, 0.88, 0.80))
+	# ⚠ 攤位不能撒成方陣（從空中看是停車場）。市集是「兩排面對面夾一條走道」，
+	# 客人走中間、攤販站兩側；正面（+z）一律朝走道。
+	const AISLE_Z := 2.0
+	const AISLE_HALF := 4.6
+	for i in 12:
+		var row := i % 2
+		var k0: int = i / 2
+		var ox := -13.0 + float(k0) * 5.4 + _lm_rng.randf_range(-0.9, 0.9)
+		var oz := AISLE_Z + (AISLE_HALF if row == 1 else -AISLE_HALF) \
+			+ _lm_rng.randf_range(-0.4, 0.4)
+		var gu := _ground_under(wc.x + ox, wc.y + oz, 3.6, 3.0)
+		var st := Node3D.new()
+		st.position = Vector3(ox, float(gu[0]) - y0, oz)
+		st.rotation.y = (PI if row == 1 else 0.0) + _lm_rng.randf_range(-0.10, 0.10)
+		lib.add(c, st, "屋台_%d" % i)
+		lib.box(st, "土間", Vector3(4.4, 0.10, 3.6), earth, Vector3(0, 0.03, 0.2))
+		for sx in [-1.0, 1.0]:
+			for sz in [-1.0, 1.0]:
+				lib.strut(st, "腳_%d%d" % [int(sx + 1), int(sz + 1)],
+					Vector3(sx * 1.3, 0.06, sz * 0.85), Vector3(sx * 1.3, 0.95, sz * 0.85),
+					0.055, wood, 5)
+			lib.strut(st, "貫_%d" % int(sx + 1), Vector3(sx * 1.3, 0.34, -0.85),
+				Vector3(sx * 1.3, 0.34, 0.85), 0.04, wood, 4)
+		lib.box(st, "檯面", Vector3(2.9, 0.10, 1.9), _lmat("wood", i % 4), Vector3(0, 1.0, 0))
+		var back_h := 2.45
+		var front_h := 2.05
+		for sx2 in [-1.0, 1.0]:
+			lib.strut(st, "篷柱後_%d" % int(sx2 + 1), Vector3(sx2 * 1.35, 0.95, -0.95),
+				Vector3(sx2 * 1.4, back_h, -1.05), 0.05, wood, 5)
+			lib.strut(st, "篷柱前_%d" % int(sx2 + 1), Vector3(sx2 * 1.35, 0.95, 0.95),
+				Vector3(sx2 * 1.4, front_h, 1.15), 0.05, wood, 5)
+		var base_c: Color = cloths[i % cloths.size()]
+		var cm := lib.pbr("屋台布_%d" % (i % 5), "plaster", 1.8, base_c)
+		var cm2 := lib.pbr("屋台布縞_%d" % (i % 5), "plaster", 1.8,
+			Color(base_c.r * 0.62 + 0.30, base_c.g * 0.62 + 0.30, base_c.b * 0.62 + 0.30))
+		var strips := 6
+		for k in 2:
+			var t := float(k)
+			var sag := -0.10 if k == 0 else 0.0
+			for sI in strips:
+				var sw := 3.3 / float(strips)
+				var cloth := lib.box(st, "篷_%d_%d" % [k, sI],
+					Vector3(sw * 0.99, 0.05, 1.25), cm if sI % 2 == 0 else cm2,
+					Vector3(-1.65 + (float(sI) + 0.5) * sw,
+						lerpf(back_h, front_h, 0.25 + t * 0.5) + sag, -0.55 + t * 1.1))
+				cloth.rotation.x = 0.20 + t * 0.06
+		var skirt := lib.box(st, "篷垂", Vector3(3.3, 0.34, 0.04), cm2,
+			Vector3(0, front_h - 0.12, 1.18))
+		skirt.rotation.x = 0.1
+		for k2 in 3:
+			var gmat := lib.flat_mat("貨_%d" % ((i + k2) % 5), goods[(i + k2) % goods.size()], 0.9)
+			var gx2 := -0.95 + float(k2) * 0.95
+			if _lm_rng.randf() < 0.5:
+				for k3 in 3:
+					lib.cyl(st, "貨_%d_%d" % [k2, k3], 0.16, 0.18, 0.12, gmat,
+						Vector3(gx2 + _lm_rng.randf_range(-0.05, 0.05), 1.11 + float(k3) * 0.12,
+							_lm_rng.randf_range(-0.3, 0.3)), 8)
+			else:
+				lib.box(st, "貨箱_%d" % k2, Vector3(0.6, 0.26, 0.5), gmat,
+					Vector3(gx2, 1.18, _lm_rng.randf_range(-0.25, 0.25)))
+		if _lm_rng.randf() < 0.6:
+			var nx := 1.42 * (1.0 if _lm_rng.randf() < 0.5 else -1.0)
+			for k4 in 3:
+				lib.box(st, "暖簾_%d" % k4, Vector3(0.04, 0.6, 0.42),
+					cm if k4 % 2 == 0 else cm2, Vector3(nx, 1.72, -0.5 + float(k4) * 0.5))
+		lib.box(st, "木箱", Vector3(0.75, 0.48, 0.58), _lmat("wood", (i + 1) % 4),
+			Vector3(_lm_rng.randf_range(-1.1, 1.1), 0.29, 1.45))
+		if _lm_rng.randf() < 0.5:
+			lib.box(st, "莚", Vector3(1.5, 0.05, 1.0),
+				lib.pbr("莚", "terrain_grass", 1.5, Color(0.80, 0.70, 0.46)),
+				Vector3(_lm_rng.randf_range(-0.6, 0.6), 0.09, 1.7))
+		_lm_collide(st, Vector3(3.0, 1.1, 2.2))
+	# 水井（有屋頂與吊桶架）
+	var wo := Vector2(13.0, 8.0)
+	var well := Node3D.new()
+	well.position = Vector3(wo.x, height_at(wc.x + wo.x, wc.y + wo.y) - y0, wo.y)
+	lib.add(c, well, "水井")
+	lib.cyl(well, "井筒", 1.15, 1.25, 1.0, stone, Vector3(0, 0.5, 0), 12)
+	lib.cyl(well, "井口", 0.95, 0.95, 0.05,
+		lib.flat_mat("water_dark", Color(0.07, 0.12, 0.15), 0.1), Vector3(0, 1.0, 0), 12)
+	for sd in [-1, 1]:
+		lib.cyl(well, "支柱_%d" % (sd + 1), 0.09, 0.09, 2.6, _lmat("dark"),
+			Vector3(float(sd) * 1.0, 1.3, 0), 6)
+	lib.box(well, "橫木", Vector3(2.4, 0.14, 0.14), _lmat("dark"), Vector3(0, 2.55, 0))
+	lib.box(well, "桶", Vector3(0.4, 0.4, 0.4), wood, Vector3(0, 1.9, 0))
+	lib.gable_roof(well, 2.62, 3.0, 2.6, 0.5, 0.16, _lmat("kawara"), wood)
+	lib.cyl(well, "滑車", 0.16, 0.16, 0.12, _lmat("dark"), Vector3(0, 2.42, 0), 8)
+	_lm_collide(well, Vector3(2.5, 1.2, 2.5))
+	# 高札場
+	var no := Vector2(14.0, -12.0)
+	var notice := Node3D.new()
+	notice.position = Vector3(no.x, height_at(wc.x + no.x, wc.y + no.y) - y0, no.y)
+	notice.rotation.y = -0.5
+	lib.add(c, notice, "高札場")
+	for sd2 in [-1, 1]:
+		lib.box(notice, "柱_%d" % (sd2 + 1), Vector3(0.18, 2.6, 0.18), _lmat("dark"),
+			Vector3(float(sd2) * 1.2, 1.3, 0))
+	lib.box(notice, "板", Vector3(2.7, 1.5, 0.1), wood, Vector3(0, 2.0, 0))
+	lib.box(notice, "屋根", Vector3(3.1, 0.12, 0.6), _lmat("kawara"), Vector3(0, 2.85, 0))
+	_lm_collide(notice, Vector3(2.8, 2.8, 0.6))
+
+
+## ── 稗田邸（第六座・最後一座）：築地塀＋藥醫門＋二層入母屋主屋＋石組庭池 ──
+##
+## 舊 builder 的本地座標整組**原封不動**沿用：舊址中心 (−78, 2)、新址中心
+## (−78, −164)，兩邊都是「以院落中心為原點」，所以只有需要拿世界座標去問
+## 地形的地方要換算（wc + local）。庭池的相對位置 (−2, +8) 也一樣，於是
+## HIEDA_POND 就直接定成 (−80, −156)。
+##
+## ⚠ 這座宅子跟前五座不同：它**會改地形**（庭池在 height_at 裡挖碗）。
+## 所以三件事要同時成立，缺一就會出現「水面斜掛」或「主屋沉 1.7m」：
+##   1. height_at 的順序是「先整平院子、再挖池」
+##   2. _pond_bank_y（＝整平後的岸高）同時餵給 pond_water 與 _lm_ground_sample
+##   3. _lm_ground_sample 要把池心那圈當成「地面 = 水面」，_ground_under
+##      才不會把整棟宅子的基準高度拉到碗底
+func _lm_hieda(g: Node3D, spread: float) -> void:
+	var wc := Vector2(g.position.x, g.position.z)
+	var y0: float = g.position.y
+	# 舊 BLOCK_W/BLOCK_D = 42/45：築地塀鋪到街區邊內縮 1m
+	var hw := 42.0 * 0.5 - 1.0
+	var hd := 45.0 * 0.5 - 1.0
+	# 圍牆（南面留門）
+	for w in [[0.0, -hd, hw * 2.0, true], [-hw, 0.0, hd * 2.0, false], [hw, 0.0, hd * 2.0, false],
+			[-hw * 0.62, hd, hw * 0.76, true], [hw * 0.62, hd, hw * 0.76, true]]:
+		# 牆身往下加深「高差 + 0.3」，坡地上才不會有一段懸空
+		# 稗田邸的圍牆是**築地塀**規格：腰石垣 + 白牆 + 定規筋 + 兩坡瓦頂。
+		# 地標的圍牆比例要放大才有氣勢 —— 從 2.2m 拉到 3.1m。
+		var wfoot := spread + 0.3
+		var wl: float = float(w[2])
+		var alx: bool = bool(w[3])
+		lib.box(g, "腰石垣_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3(wl if alx else 0.92, 0.95 + wfoot, 0.92 if alx else wl), _lmat("stone"),
+			Vector3(w[0], 0.47 - wfoot * 0.5, w[1]))
+		lib.box(g, "築地塀_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3(wl if alx else 0.62, 2.15, 0.62 if alx else wl), _lmat("plaster", 0),
+			Vector3(w[0], 2.02, w[1]))
+		for k in 3:
+			lib.box(g, "定規筋_%d_%d_%d" % [int(w[0]), int(w[1]), k],
+				Vector3(wl if alx else 0.70, 0.07, 0.70 if alx else wl), _lmat("stone"),
+				Vector3(w[0], 2.68 - float(k) * 0.22, w[1]))
+		for sd in [-1.0, 1.0]:
+			var sl := lib.box(g, "塀屋根_%d_%d_%d" % [int(w[0]), int(w[1]), int(sd + 1)],
+				Vector3((wl + 0.3) if alx else 0.82, 0.14, 0.82 if alx else (wl + 0.3)),
+				_lmat("kawara"),
+				Vector3(w[0] + (0.0 if alx else sd * 0.34), 3.26, w[1] + (sd * 0.34 if alx else 0.0)))
+			if alx:
+				sl.rotation.x = sd * -0.42
+			else:
+				sl.rotation.z = sd * 0.42
+		lib.box(g, "棟瓦_%d_%d" % [int(w[0]), int(w[1])],
+			Vector3((wl + 0.3) if alx else 0.28, 0.2, 0.28 if alx else (wl + 0.3)), _lmat("kawara"),
+			Vector3(w[0], 3.4, w[1]))
+		_lm_collide(g, Vector3(wl if alx else 0.95, 3.5, 0.95 if alx else wl), Vector3(w[0], 0, w[1]))
+	# 表門（藥醫門）
+	for sx in [-1, 1]:
+		lib.box(g, "門柱_%d" % (sx + 1), Vector3(0.55, 3.2, 0.55), _lmat("dark"),
+			Vector3(float(sx) * 2.6, 1.6, hd))
+	lib.box(g, "門樑", Vector3(6.0, 0.45, 0.7), _lmat("dark"), Vector3(0, 3.3, hd))
+	lib.box(g, "門屋根", Vector3(7.2, 0.24, 2.0), _lmat("kawara"), Vector3(0, 3.7, hd))
+	# ── 主屋：二層入母屋 ──
+	# 25×15、一層 3.6 + 二層 2.9、入母屋屋頂。位置往北挪（中心 z −11.5），
+	# 南面讓出庭池的曲岸。
+	var hfoot := spread + 0.4
+	var HX := -5.0
+	var HZ := -11.5
+	lib.box(g, "主屋基壇", Vector3(26.5, 0.6 + hfoot, 16.5), _lmat("stone"),
+		Vector3(HX, 0.3 - hfoot * 0.5, HZ))
+	lib.box(g, "主屋", Vector3(25.0, 3.6, 15.0), _lmat("plaster", 0), Vector3(HX, 0.6 + 1.8, HZ))
+	lib.box(g, "主屋腰壁", Vector3(25.1, 1.15, 15.1), _lmat("shitami", 0),
+		Vector3(HX, 0.6 + 0.58, HZ))
+	# 一層立面的通柱（南面）
+	for i in 9:
+		lib.box(g, "主屋柱_%d" % i, Vector3(0.17, 3.6, 0.12), _lmat("dark", 0),
+			Vector3(HX - 12.0 + float(i) * 3.0, 0.6 + 1.8, HZ + 7.56))
+	# 裳階（一二層之間的環繞屋簷）—— 這一圈才是「二層豪邸」的剪影。
+	# ⚠ 裳階的內緣要**塞進二階牆裡**（二階半深 6.0／半寬 10.5），
+	# 不然從上往下看是一圈懸空的簷。
+	for sd2 in [-1.0, 1.0]:
+		var mk := lib.box(g, "裳階_z%d" % int(sd2 + 1), Vector3(27.0, 0.18, 3.1), _lmat("kawara"),
+			Vector3(HX, 4.62, HZ + sd2 * 7.15))
+		mk.rotation.x = sd2 * -0.42
+		var mk2 := lib.box(g, "裳階_x%d" % int(sd2 + 1), Vector3(3.4, 0.18, 17.2), _lmat("kawara"),
+			Vector3(HX + sd2 * 11.8, 4.62, HZ))
+		mk2.rotation.z = sd2 * 0.42
+	# 二層（內縮，才有塔狀的收分）
+	lib.box(g, "主屋二階", Vector3(21.0, 2.9, 12.0), _lmat("plaster", 0),
+		Vector3(HX, 4.5 + 1.45, HZ))
+	lib.box(g, "二階窗帯", Vector3(18.0, 1.15, 0.1), _lmat("lattice", 0),
+		Vector3(HX, 6.2, HZ + 6.06))
+	# 入母屋 = 切妻（上）+ 四注的裾（下）。gable_roof 給切妻與妻壁，
+	# 兩端再各蓋一片斜的隅屋根蓋住妻壁下半 —— 剪影就是入母屋。
+	lib.gable_roof(g, 7.4, 23.0, 14.0, 0.52, 0.34, _lmat("kawara"), _lmat("plaster", 0),
+		Vector3(HX, 0, HZ))
+	for e in [-1.0, 1.0]:
+		var hip := lib.box(g, "隅屋根_%d" % int(e + 1), Vector3(5.4, 0.3, 10.5), _lmat("kawara"),
+			Vector3(HX + e * 9.4, 9.35, HZ))
+		hip.rotation.z = e * 0.72
+	lib.box(g, "緣側", Vector3(24.0, 0.3, 2.2), _lmat("wood"), Vector3(HX, 0.75, HZ + 8.6))
+	for i in 12:
+		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.6, 0.1), _lmat("dark", 0),
+			Vector3(HX - 11.5 + float(i) * 2.1, 1.35, HZ + 9.6))
+	lib.box(g, "高欄", Vector3(24.0, 0.12, 0.12), _lmat("dark", 0), Vector3(HX, 1.68, HZ + 9.6))
+	_lm_collide(g, Vector3(25.4, 10.0, 15.4), Vector3(HX, 0, HZ))
+	# 長廊（連到東側的離れ）
+	lib.box(g, "長廊", Vector3(2.4, 0.24, 12.0), _lmat("wood"), Vector3(10.6, 0.7, -6.0))
+	for i in 5:
+		lib.cyl(g, "廊柱_%d" % i, 0.12, 0.12, 2.4, _lmat("dark"),
+			Vector3(11.5, 1.9, -11.0 + float(i) * 2.6), 6)
+	for sd2 in [-1, 1]:
+		var sl2 := lib.box(g, "廊屋根_%d" % (sd2 + 1), Vector3(1.9, 0.16, 12.4), _lmat("kawara"),
+			Vector3(10.6 + float(sd2) * 0.85, 3.15, -6.0))
+		sl2.rotation.z = float(sd2) * -0.5
+	lib.box(g, "離れ", Vector3(6.5, 3.2, 6.5), _lmat("plaster"), Vector3(13.5, 1.9, -14.5))
+	lib.box(g, "離れ屋根", Vector3(7.9, 0.26, 7.9), _lmat("kawara"), Vector3(13.5, 3.7, -14.5))
+	_lm_collide(g, Vector3(6.7, 3.6, 6.7), Vector3(13.5, 0, -14.5))
+	# ── 庭園：石組庭池（水面由 lib.pond_water 產，這裡只做護岸與添景）──
+	var pl := Vector3(HIEDA_POND.x - wc.x, 0.0, HIEDA_POND.y - wc.y)
+	var shore := lib.pond_shore_r(HIEDA_POND_R, HIEDA_POND_SINK, HIEDA_POND_DEPTH)
+	# 石頭要坐在**自己腳下**的地面上。這棟宅子的原點是院落的基準高度，
+	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
+	var rock_y := func(wx: float, wz: float, sink: float) -> float:
+		return height_at(wx, wz) - y0 - sink
+	# ── 石組：日本庭園的石不是均勻繞一圈，是「三尊石」的組法 ──
+	#   ・**主石立起來**（縦石），高過水面，一組只有一顆
+	#   ・旁邊配 1~2 顆矮的臥石（横石）
+	#   ・組與組之間**大片留白**，留白處鋪州濱（細卵石灘）
+	#   ・數量取奇數（三・五・七）
+	var rk_i := 0
+	var groups := 5                                   # 奇數
+	var g_ang: Array[float] = []
+	var a0 := _lm_rng.randf_range(0.0, TAU)
+	for gi in groups:
+		# 不等角：黃金角的擾動，避免五顆平均分佈（那又變成項鍊）
+		g_ang.append(a0 + float(gi) * TAU / float(groups) + _lm_rng.randf_range(-0.34, 0.34))
+	for gi in groups:
+		var ga: float = g_ang[gi]
+		var upright: bool = gi % 2 == 0               # 隔一組立一顆
+		var members := 2 + (gi % 2)
+		for k in members:
+			var a := ga + float(k) * _lm_rng.randf_range(0.055, 0.10) * (1.0 if k % 2 == 0 else -1.0)
+			var rr3: float = shore * _lm_rng.randf_range(0.97, 1.09)
+			var wx: float = wc.x + pl.x + cos(a) * rr3
+			var wz: float = wc.y + pl.z + sin(a) * rr3
+			var rk := MeshInstance3D.new()
+			var main := k == 0
+			# 主石：立起來（y 拉長、xz 收窄）。配石：臥著。
+			var sc: float = _lm_rng.randf_range(0.75, 1.15) if main else _lm_rng.randf_range(0.42, 0.72)
+			rk.mesh = lib.blob_mesh(rk_i * 7 + 3,
+				_lm_rng.randf_range(1.15, 1.55) if (main and upright) else _lm_rng.randf_range(0.42, 0.62),
+				_lm_rng.randf_range(0.20, 0.34))
+			rk.material_override = _lmat("cobble", -1)
+			rk.position = Vector3(pl.x + cos(a) * rr3,
+				rock_y.call(wx, wz, sc * (0.18 if (main and upright) else 0.34)),
+				pl.z + sin(a) * rr3)
+			rk.scale = Vector3(sc * _lm_rng.randf_range(0.72, 0.95), sc * _lm_rng.randf_range(0.9, 1.35),
+				sc * _lm_rng.randf_range(0.72, 0.95)) if (main and upright) \
+				else Vector3(sc * _lm_rng.randf_range(1.0, 1.4), sc * _lm_rng.randf_range(0.55, 0.8),
+					sc * _lm_rng.randf_range(1.0, 1.4))
+			rk.rotation = Vector3(_lm_rng.randf_range(-0.18, 0.18), _lm_rng.randf_range(0.0, TAU),
+				_lm_rng.randf_range(-0.18, 0.18))
+			lib.add(g, rk, "石組%d_%s%d" % [gi, "主石" if main else "添石", k])
+			rk_i += 1
+	# ── 州濱（すはま）：兩組石之間的留白鋪細卵石，一路鋪進淺水 ──
+	for gi in groups:
+		var a_lo: float = g_ang[gi] + 0.28
+		var a_hi: float = g_ang[(gi + 1) % groups] + (TAU if gi == groups - 1 else 0.0) - 0.28
+		if a_hi - a_lo < 0.25:
+			continue
+		var np := int((a_hi - a_lo) * 9.0)
+		for k2 in np:
+			var a3: float = a_lo + (a_hi - a_lo) * (float(k2) + 0.5) / float(np)
+			for band in 3:                            # 三圈：岸上、水際、淺水
+				var pr: float = shore * (1.12 - float(band) * 0.11) * _lm_rng.randf_range(0.98, 1.02)
+				var sc2 := _lm_rng.randf_range(0.10, 0.24) * (1.0 - float(band) * 0.15)
+				var pb := MeshInstance3D.new()
+				pb.mesh = lib.blob_mesh(rk_i * 13 + k2 * 5 + band * 3 + 11,
+					_lm_rng.randf_range(0.30, 0.46), 0.14)
+				pb.material_override = _lmat("cobble", -1)
+				var pwx: float = wc.x + pl.x + cos(a3) * pr
+				var pwz: float = wc.y + pl.z + sin(a3) * pr
+				pb.position = Vector3(pl.x + cos(a3) * pr,
+					rock_y.call(pwx, pwz, sc2 * 0.62), pl.z + sin(a3) * pr)
+				pb.scale = Vector3(sc2 * _lm_rng.randf_range(1.1, 1.5), sc2 * _lm_rng.randf_range(0.5, 0.75),
+					sc2 * _lm_rng.randf_range(1.1, 1.5))
+				pb.rotation.y = _lm_rng.randf_range(0.0, TAU)
+				lib.add(g, pb, "州濱_%d" % rk_i)
+				rk_i += 1
+	# ── 睡蓮：只鋪在一側，不要撒滿（滿池浮葉是水草不是庭園）──
+	var lily_a := g_ang[1] + _lm_rng.randf_range(-0.3, 0.3)
+	var pad := lib.tuft_mesh(6, 0.26, 0.30, Color(0.16, 0.30, 0.14), Color(0.28, 0.46, 0.20))
+	for i in 11:
+		var pa := lily_a + _lm_rng.randf_range(-0.85, 0.85)
+		var pd: float = shore * _lm_rng.randf_range(0.30, 0.78)
+		var lp := MeshInstance3D.new()
+		lp.mesh = pad
+		lp.position = Vector3(pl.x + cos(pa) * pd,
+			rock_y.call(wc.x + pl.x + cos(pa) * pd, wc.y + pl.z + sin(pa) * pd,
+				HIEDA_POND_SINK - 0.04),
+			pl.z + sin(pa) * pd)
+		lp.scale = Vector3.ONE * _lm_rng.randf_range(0.7, 1.3)
+		lp.rotation.y = _lm_rng.randf_range(0.0, TAU)
+		lib.add(g, lp, "睡蓮_%d" % i)
+	# ── 菖蒲：只長在州濱那幾段的水際，不繞整圈 ──
+	var iris := lib.tuft_mesh(7, 0.70, 0.10, Color(0.12, 0.26, 0.10), Color(0.34, 0.54, 0.20))
+	for i in 16:
+		var ia := g_ang[int(_lm_rng.randf() * float(groups))] + _lm_rng.randf_range(0.35, 1.1)
+		var ir: float = shore * _lm_rng.randf_range(0.96, 1.06)
+		var ib := MeshInstance3D.new()
+		ib.mesh = iris
+		ib.position = Vector3(pl.x + cos(ia) * ir,
+			rock_y.call(wc.x + pl.x + cos(ia) * ir, wc.y + pl.z + sin(ia) * ir, 0.05),
+			pl.z + sin(ia) * ir)
+		ib.scale = Vector3.ONE * _lm_rng.randf_range(0.7, 1.25)
+		ib.rotation.y = _lm_rng.randf_range(0.0, TAU)
+		lib.add(g, ib, "菖蒲_%d" % i)
+	# ── 中島 + 石橋：池泉庭園的核心（曲岸／中島／石橋）──
+	# 中島不是浮的 —— 它從碗底疊上來，頂面略低於岸、高於水面。
+	var isl := Vector2(pl.x + 2.3, pl.z + 1.4)                 # 本地座標的島心
+	var bank_ref: float = height_at(wc.x + pl.x + 12.0, wc.y + pl.z) - y0
+	var floor_y: float = height_at(wc.x + isl.x, wc.y + isl.y) - y0
+	var top_y: float = bank_ref - 0.18
+	var base := MeshInstance3D.new()
+	base.mesh = lib.blob_mesh(311, 0.55, 0.22)
+	base.material_override = _lmat("cobble", 1)
+	base.position = Vector3(isl.x, (floor_y + top_y) * 0.5, isl.y)
+	base.scale = Vector3(2.5, (top_y - floor_y) * 0.5 + 0.55, 2.5)
+	lib.add(g, base, "中島岩")  # ⚠ 不能叫「基石」：那是體檢的貼地關鍵字，會被判成建物跨水
+	var cap := MeshInstance3D.new()
+	cap.mesh = lib.blob_mesh(317, 0.35, 0.18)
+	cap.material_override = lib.flat_mat("island_moss", Color(0.21, 0.30, 0.16), 0.95)
+	cap.position = Vector3(isl.x, top_y + 0.05, isl.y)
+	cap.scale = Vector3(1.8, 0.3, 1.8)
+	lib.add(g, cap, "中島苔面")
+	# 島上一棵小松 + 石灯籠（庭園的「景」）
+	var pine := MeshInstance3D.new()
+	pine.mesh = lib.tree_mesh("res://assets/models/tree_pine_a.glb")
+	pine.position = Vector3(isl.x - 0.4, top_y + 0.1, isl.y - 0.3)
+	pine.scale = Vector3(0.72, 0.66, 0.72)
+	pine.rotation.y = _lm_rng.randf_range(0.0, TAU)
+	lib.add(g, pine, "中島松")
+	var stone_i := _lmat("stone")
+	lib.cyl(g, "島灯籠竿", 0.10, 0.12, 0.8, stone_i, Vector3(isl.x + 0.9, top_y + 0.5, isl.y + 0.6), 8)
+	lib.box(g, "島灯籠火袋", Vector3(0.34, 0.3, 0.34), stone_i, Vector3(isl.x + 0.9, top_y + 1.05, isl.y + 0.6))
+	lib.box(g, "島灯籠笠", Vector3(0.52, 0.12, 0.52), stone_i, Vector3(isl.x + 0.9, top_y + 1.28, isl.y + 0.6))
+	# 石橋：兩片微拱的石板，從西北岸跨到島 —— 玩家可以走上島
+	var shore_pt := Vector2(pl.x - 4.2, pl.z + 3.4)
+	var bdir := (isl - shore_pt).normalized()
+	var blen := shore_pt.distance_to(isl) - 1.2
+	for k3 in 2:
+		var t0: float = 0.28 + 0.46 * float(k3)
+		var bc := shore_pt + bdir * blen * t0
+		var slab := lib.box(g, "石橋_%d" % k3, Vector3(1.35, 0.22, 2.3), _lmat("stone"),
+			Vector3(bc.x, bank_ref - 0.10 + float(k3) * 0.05, bc.y))
+		slab.rotation.y = atan2(bdir.x, bdir.y)
+		slab.rotation.x = (0.06 if k3 == 0 else -0.06)
+		var sb := StaticBody3D.new()
+		slab.add_child(sb)
+		sb.owner = _root
+		var sh := CollisionShape3D.new()
+		var bx2 := BoxShape3D.new()
+		bx2.size = Vector3(1.35, 0.25, 2.3)
+		sh.shape = bx2
+		sb.add_child(sh)
+		sh.owner = _root
+	# 中島也要能站 —— 玩家走石橋上島
+	var isb := StaticBody3D.new()
+	isb.position = Vector3(isl.x, top_y - 0.1, isl.y)
+	var ish := CollisionShape3D.new()
+	var icy := CylinderShape3D.new()
+	icy.radius = 1.9
+	icy.height = 0.6
+	ish.shape = icy
+	isb.add_child(ish)
+	lib.add(g, isb, "中島碰撞")
+	ish.owner = _root
+	# 沢飛石（橫過池面的踏石）拿掉了：這個池只有 9m，踏石橫過去佔滿水面 ——
+	# 反效果。庭池要留**空的水面**。
+	for i in 3:                                    # 池中的三尊石組
+		var a2 := float(i) / 3.0 * TAU + 0.7
+		var d2: float = shore * _lm_rng.randf_range(0.25, 0.5)
+		var sc3 := _lm_rng.randf_range(0.6, 1.1)
+		var rk3 := MeshInstance3D.new()
+		rk3.mesh = lib.blob_mesh(i * 29 + 5, _lm_rng.randf_range(0.6, 0.9), _lm_rng.randf_range(0.20, 0.34))
+		rk3.material_override = _lmat("cobble", -1)
+		# 池中立石：從池底長上來，露出水面一截
+		rk3.position = Vector3(pl.x + cos(a2) * d2,
+			rock_y.call(wc.x + pl.x + cos(a2) * d2, wc.y + pl.z + sin(a2) * d2, -sc3 * 0.55),
+			pl.z + sin(a2) * d2)
+		# 不要拉高 1.7 倍 —— 那會把圓潤的岩石抽成尖刺。日式庭園的立石是
+		# 「厚實、微微前傾」，不是尖塔。
+		rk3.scale = Vector3(sc3 * 0.95, sc3 * 1.05, sc3 * 0.85)
+		rk3.rotation.x = _lm_rng.randf_range(-0.18, 0.18)
+		rk3.rotation.z = _lm_rng.randf_range(-0.18, 0.18)
+		rk3.rotation.y = _lm_rng.randf_range(0.0, TAU)
+		lib.add(g, rk3, "立石_%d" % i)
+	# 沢渡り（踏石）
+	for i in 4:
+		lib.box(g, "踏石_%d" % i, Vector3(0.9, 0.35, 0.8), _lmat("stone"),
+			pl + Vector3(-HIEDA_POND_R * 0.7 + float(i) * HIEDA_POND_R * 0.45, -0.35,
+				HIEDA_POND_R * 0.35)).rotation.y = _lm_rng.randf_range(0.0, TAU)
+	# 春日燈籠（池畔）：基礎→竿→中台→火袋（開窗）→笠→寶珠，
+	# 一根連續的柱子撐上去，剪影一眼就認得（雪見型做出來像四腳桌）。
+	var lz := pl + Vector3(HIEDA_POND_R + 1.9, 0, -2.2)
+	var stone_l := _lmat("stone", 1)
+	lib.cyl(g, "燈籠基礎", 0.52, 0.62, 0.26, stone_l, lz + Vector3(0, 0.13, 0), 8)
+	lib.cyl(g, "燈籠竿", 0.17, 0.20, 1.05, stone_l, lz + Vector3(0, 0.78, 0), 8)
+	for r_i in 2:                                   # 竿上的節（春日燈籠的特徵）
+		lib.cyl(g, "竿節_%d" % r_i, 0.23, 0.23, 0.07, stone_l,
+			lz + Vector3(0, 0.52 + float(r_i) * 0.52, 0), 8)
+	lib.cyl(g, "中台", 0.40, 0.30, 0.20, stone_l, lz + Vector3(0, 1.40, 0), 8)
+	lib.cyl(g, "火袋底", 0.36, 0.36, 0.07, stone_l, lz + Vector3(0, 1.54, 0), 6)
+	for c_i in 4:
+		var ca := float(c_i) / 4.0 * TAU + 0.4
+		lib.box(g, "火袋柱_%d" % c_i, Vector3(0.09, 0.46, 0.09), stone_l,
+			lz + Vector3(cos(ca) * 0.29, 1.80, sin(ca) * 0.29))
+	lib.cyl(g, "火袋頂", 0.38, 0.36, 0.07, stone_l, lz + Vector3(0, 2.06, 0), 6)
+	var kasa := MeshInstance3D.new()
+	var km := CylinderMesh.new()
+	km.top_radius = 0.10
+	km.bottom_radius = 0.72
+	km.height = 0.34
+	km.radial_segments = 6
+	km.material = stone_l
+	kasa.mesh = km
+	kasa.position = lz + Vector3(0, 2.27, 0)
+	lib.add(g, kasa, "燈籠笠")
+	lib.cyl(g, "寶珠", 0.0, 0.13, 0.22, stone_l, lz + Vector3(0, 2.55, 0), 8)
+	_lm_collide(g, Vector3(1.1, 2.7, 1.1), lz)
+	_audit.append("稗田邸：庭池石組 %d 顆（護岸＋州濱＋立石）" % rk_i)
 
 
 func _write_meta() -> void:

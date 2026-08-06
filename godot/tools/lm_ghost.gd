@@ -10,11 +10,11 @@
 #      撞到的碰撞體必須屬於真內容（有可見 mesh 的群組），不能是孤兒 StaticBody。
 extends SceneTree
 
-const MIGRATED := ["足洗邸", "鈴奈庵", "寺子屋"]          # 已搬入真內容的地標（跟 gen_town 的 build 鍵對應）
+const MIGRATED := ["足洗邸", "鈴奈庵", "寺子屋", "鎮守之杜", "市場", "稗田邸"]  # 已搬入真內容的地標（跟 gen_town 的 build 鍵對應）
 const RESERVE := {
 	"寺子屋": {"w": 28.4, "d": 19.8}, "鈴奈庵": {"w": 12.8, "d": 15.0},
-	"鎮守之杜": {"w": 42.9, "d": 36.0}, "市場": {"w": 34.8, "d": 34.0},
-	"足洗邸": {"w": 38.5, "d": 33.6}, "稗田邸": {"w": 40.7, "d": 43.7},
+	"鎮守之杜": {"w": 42.9, "d": 36.0}, "市場": {"w": 37.2, "d": 34.0},
+	"足洗邸": {"w": 38.5, "d": 33.6}, "稗田邸": {"w": 42.4, "d": 45.6},
 }
 const SITES := {
 	"寺子屋": Vector2(-26, -52), "鈴奈庵": Vector2(11.6, -52),
@@ -127,6 +127,11 @@ func _init() -> void:
 		var rhi := c + Vector2(float(res.w), float(res.d)) * 0.5
 		var over := Vector4(rlo.x - lo.x, rlo.y - lo.y, hi.x - rhi.x, hi.y - rhi.y)
 		var worst: float = maxf(maxf(over.x, over.y), maxf(over.z, over.w))
+		# 一律回報實測跨度 —— 保留區要用**這個數字**填，不是用零件擺放原點估。
+		# 足洗邸就是估錯的：原點散佈 24.5m，真正的幾何跨度 32.9m。
+		print("    %s 實測幾何跨度 W=%.1f D=%.1f（中心 %.1f, %.1f｜保留 %.1f×%.1f）"
+			% [nm, hi.x - lo.x, hi.y - lo.y, (lo.x + hi.x) * 0.5, (lo.y + hi.y) * 0.5,
+				float(res.w), float(res.d)])
 		if worst > 0.35:
 			print("  ✗ %s 內容超出保留區 %.2fm（西%+.1f 北%+.1f 東%+.1f 南%+.1f）"
 				% [nm, worst, over.x, over.y, over.z, over.w])
