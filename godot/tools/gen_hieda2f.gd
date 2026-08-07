@@ -391,41 +391,74 @@ func _build_scroll_wall() -> void:
 # ── 文机工作區：正常少女/成人比例的書桌，面向後院的光 ──
 func _build_desk() -> void:
 	var g := lib.add(_root, Node3D.new(), "文机")
-	g.position = Vector3(-3.2, 0, -2.4)
+	g.position = Vector3(-3.2, 0, -2.3)
 	var dark := _m_dark()
 	var lacquer := lib.pbr("2F漆几", "dark_wood", 0.9, Color(0.38, 0.35, 0.31))
 	lacquer.roughness = 0.30
-	# 文机：0.72 × 0.45、高 0.33 —— 常規座卓尺寸，不放大也不矮化。
-	# 「超大」的反差已經交給卷軸牆的數量，桌子回到誠實的日常尺度。
-	lib.box(g, "机面", Vector3(1.15, 0.06, 0.52), lacquer, Vector3(0, 0.30, 0))
+	# 文机：平面 2 倍（1.15×0.52 → 2.30×1.04）、高度維持常規 0.33 ——
+	# 「體積誇張、比例正常」（使用者 2026-08-07 指令：撐起「記錄者」的
+	# 存在感；配得上稗田家當家、編纂千年歷史的份量）。
+	# 高度**不**放大：跪坐的人用的桌高是人體的事，不是氣派的事。
+	lib.box(g, "机面", Vector3(2.30, 0.09, 1.04), lacquer, Vector3(0, 0.295, 0))
+	lib.box(g, "机縁", Vector3(2.36, 0.035, 1.10), dark, Vector3(0, 0.355, 0))
 	for sx in [-1.0, 1.0]:
-		lib.box(g, "机脚_%d" % int(sx + 1.0), Vector3(0.06, 0.27, 0.44), dark,
-			Vector3(sx * 0.50, 0.135, 0))
-	_collide(g, Vector3(1.2, 0.36, 0.55))
-	# 座布団（面向 -z 的光）
+		for sz in [-1.0, 1.0]:
+			lib.box(g, "机脚_%d_%d" % [int(sx + 1.0), int(sz + 1.0)],
+				Vector3(0.11, 0.25, 0.11), dark, Vector3(sx * 1.02, 0.125, sz * 0.40))
+	lib.box(g, "机貫", Vector3(2.04, 0.06, 0.08), dark, Vector3(0, 0.10, 0))
+	_collide(g, Vector3(2.4, 0.40, 1.12))
+	# 座布団（面向 -z 的光；桌深變 1.04，往後挪才不會頂到桌緣）
 	lib.box(g, "座布団", Vector3(0.60, 0.09, 0.60),
 		lib.pbr("2F座布", "tatami", 1.6, Color(0.46, 0.34, 0.30)),
-		Vector3(0, 0.075, 0.62))
-	# 机上：攤開的卷 + 硯箱 + 筆架 + 紙鎮
+		Vector3(0, 0.075, 0.98))
+	# ── 机上：桌面大了 4 倍（面積），物件放大 ~1.4 倍 + **增加數量**
+	# 填桌面 —— 「記錄者的工作檯」是攤開好幾份在同時對照的樣子。──
+	# 主卷：攤開 1.3m 的長卷（編纂中的那一份）
 	var open_s := lib.add(g, Node3D.new(), "攤開的卷")
-	open_s.position = Vector3(-0.12, 0.335, -0.02)
-	open_s.rotation.y = 0.06
-	lib.box(open_s, "紙面", Vector3(0.62, 0.012, 0.26), _m_pages(), Vector3.ZERO)
+	open_s.position = Vector3(-0.35, 0.37, 0.02)
+	open_s.rotation.y = 0.05
+	lib.box(open_s, "紙面", Vector3(1.30, 0.012, 0.34), _m_pages(), Vector3.ZERO)
 	for sx in [-1.0, 1.0]:
-		var ax := lib.cyl(open_s, "軸_%d" % int(sx + 1.0), 0.025, 0.025, 0.30, dark,
-			Vector3(sx * 0.33, 0.008, 0), 8)
+		var ax := lib.cyl(open_s, "軸_%d" % int(sx + 1.0), 0.032, 0.032, 0.38, dark,
+			Vector3(sx * 0.68, 0.012, 0), 8)
 		ax.rotation.x = PI * 0.5
-	lib.box(g, "硯箱", Vector3(0.24, 0.06, 0.16),
-		lib.flat_mat("硯漆", Color(0.16, 0.15, 0.17), 0.35), Vector3(0.38, 0.365, -0.08))
-	# 筆架：一根橫桿垂五支筆 —— 用的人每天在用
-	lib.box(g, "筆架桿", Vector3(0.34, 0.02, 0.02), dark, Vector3(0.36, 0.56, 0.14))
-	for sxp in [-0.14, -0.07, 0.0, 0.07, 0.14]:
-		lib.cyl(g, "筆_%d" % int(sxp * 100.0), 0.008, 0.012, 0.17,
+	# 文鎮兩根壓著主卷
+	for sx in [-0.42, 0.40]:
+		lib.box(g, "文鎮_%d" % int(sx * 100.0), Vector3(0.05, 0.025, 0.30),
+			lib.flat_mat("文鎮鐵", Color(0.20, 0.20, 0.22), 0.4),
+			Vector3(-0.35 + sx, 0.395, 0.02))
+	# 參照的舊卷：半開一份 + 捲著兩份（對照著寫 —— 千年的紀錄要互相查）
+	var ref_s := lib.add(g, Node3D.new(), "參照卷")
+	ref_s.position = Vector3(0.72, 0.37, -0.28)
+	ref_s.rotation.y = -0.18
+	lib.box(ref_s, "紙面", Vector3(0.52, 0.012, 0.28), _m_washi(0), Vector3.ZERO)
+	var rx := lib.cyl(ref_s, "軸", 0.030, 0.030, 0.32, dark, Vector3(0.28, 0.012, 0), 8)
+	rx.rotation.x = PI * 0.5
+	for k in 2:
+		var roll := lib.cyl(g, "捲卷_%d" % k, 0.034, 0.034, 0.36, _m_washi(k + 1),
+			Vector3(-0.92, 0.385 + float(k) * 0.005, -0.30 + float(k) * 0.09), 8)
+		roll.rotation.x = PI * 0.5
+		roll.rotation.y = 0.10 + float(k) * 0.12
+	# 硯箱（1.4 倍）+ 小硯 + 水滴（研墨的水注）
+	lib.box(g, "硯箱", Vector3(0.34, 0.08, 0.22),
+		lib.flat_mat("硯漆", Color(0.16, 0.15, 0.17), 0.35), Vector3(0.72, 0.38, 0.22))
+	lib.box(g, "小硯", Vector3(0.16, 0.035, 0.11),
+		lib.flat_mat("硯石", Color(0.22, 0.22, 0.24), 0.3), Vector3(0.40, 0.36, 0.30))
+	lib.cyl(g, "水滴", 0.035, 0.045, 0.06,
+		lib.flat_mat("水滴銅", Color(0.36, 0.32, 0.26), 0.5), Vector3(0.57, 0.37, 0.33), 8)
+	# 素紙一疊（等著被寫）
+	lib.box(g, "素紙疊", Vector3(0.38, 0.07, 0.27),
+		lib.flat_mat("素紙", Color(0.80, 0.77, 0.70), 0.9), Vector3(-0.86, 0.375, 0.26))
+	# 筆架（1.6 倍：七支筆 —— 粗細不同的筆是每天在換著用的）
+	lib.box(g, "筆架桿", Vector3(0.56, 0.025, 0.025), dark, Vector3(0.30, 0.60, -0.42))
+	for i in 7:
+		var sxp := -0.24 + float(i) * 0.08
+		lib.cyl(g, "筆_%d" % i, 0.008, 0.013, 0.19,
 			lib.flat_mat("筆桿", Color(0.55, 0.42, 0.30), 0.7),
-			Vector3(0.36 + sxp, 0.47, 0.14), 6)
+			Vector3(0.30 + sxp, 0.50, -0.42), 6)
 	for sxl in [-1.0, 1.0]:
-		lib.box(g, "筆架柱_%d" % int(sxl + 1.0), Vector3(0.02, 0.20, 0.02), dark,
-			Vector3(0.36 + sxl * 0.16, 0.46, 0.14))
+		lib.box(g, "筆架柱_%d" % int(sxl + 1.0), Vector3(0.025, 0.24, 0.025), dark,
+			Vector3(0.30 + sxl * 0.28, 0.48, -0.42))
 
 
 # ── 日常痕跡（普通少女的起居，正常比例，數量克制）──
@@ -434,7 +467,7 @@ func _build_daily_life() -> void:
 	var dark := _m_dark()
 	# 茶盆（文机旁）：托盤 + 急須 + 茶碗一只
 	var tray := lib.add(g, Node3D.new(), "茶盆")
-	tray.position = Vector3(-4.6, 0.03, -1.6)
+	tray.position = Vector3(-5.3, 0.03, -1.3)
 	lib.box(tray, "盤", Vector3(0.42, 0.03, 0.28), _m_dark(), Vector3(0, 0.015, 0))
 	lib.cyl(tray, "急須", 0.075, 0.09, 0.11,
 		lib.flat_mat("茶器", Color(0.45, 0.30, 0.24), 0.6), Vector3(-0.09, 0.09, 0), 10)
@@ -543,7 +576,7 @@ func _build_light() -> void:
 		lib.add(g, sp, "聚光_%d" % i)
 	# 行灯 ×2（夜的光源；暖，跟書口的冷白分開）
 	for k in 2:
-		var pos: Vector3 = [Vector3(-1.6, 0, -1.2), Vector3(7.6, 0, 3.6)][k]
+		var pos: Vector3 = [Vector3(-1.15, 0, -0.85), Vector3(7.6, 0, 3.6)][k]
 		var an := lib.add(g, Node3D.new(), "行灯_%d" % k)
 		an.position = pos
 		lib.box(an, "灯座", Vector3(0.30, 0.04, 0.30), _m_dark(), Vector3(0, 0.02, 0))
