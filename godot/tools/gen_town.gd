@@ -121,12 +121,18 @@ const LANDMARKS := [
 	# 蓋出來**的院落（築地塀＋腰石垣＋主屋＋庭池）量出來的尺寸。舊值小了
 	# 13×25m，等於保留區根本框不住真正的院落；現在沒撞到純粹是運氣好
 	# （實測舊框內外都是 0 棟町家），不是護欄有效。
-	# ✅ 已搬入真內容。保留區 42.4×45.6 → **45.2×48.2**（前庭替換那一輪）：
-	# 格子塀的牆腳外多了一圈犬走り（石垣腳 0.79 + 碎石帶 1.34 = 牆心外 2.13），
-	# 棟門的屋根也比舊藥醫門深（±1.65 vs ±1.0）。lm_ghost 實測新跨度
-	# 44.3×47.3，這裡照慣例留 0.45m/邊。舊值 42.4×45.6 是照築地塀推的，
-	# 沿用的話四邊各外溢 0.8~0.9m。
-	{"n": "稗田邸", "x": -78.0, "z": -164.0, "w": 45.2, "d": 48.2, "h": 12.8,
+	# ✅ **完整獨立版**（使用者定案・完整版遷移改善書 v1）。村內縮小版整組放棄，
+	# 改成把 make_hieda.py 產出的成品幾何直接落地在人間之里北緣。
+	# 保留區＝實測包絡 95.3×116.6（blockout x −36.8..38.8／z −70.0..40.5 併上
+	# 植栽擺位表 x −50.1..45.2／z −76.1..30.9）+ 0.85m/邊。
+	# 中心取**包絡中心**而不是 blockout 的原點 —— 兩者差 (2.45, 17.8)，
+	# 保留區要框的是幾何不是原點（足洗邸那次的教訓）。
+	# 落點怎麼挑的：街網的東西向間距是 52m，完整版要 95m，任何落點都會橫跨
+	# 兩個街廓。x=−104 與 x=−52 兩條南北側街在 z<−120 服務 **0 棟町家**
+	# （西北象限實測一棟都沒有），把它們的北段截掉最省。而 z=−135 那條橫街
+	# 的北緣（−137.5）**正好接上完整版自己的外參道端點**（本地 z=+40.5 →
+	# 世界 −137.5）—— 引道不用新拉，庭院自己的參道就接在街上。
+	{"n": "稗田邸", "x": -80.5, "z": -195.8, "w": 97.0, "d": 118.5, "h": 15.0,
 		"build": "_lm_hieda"},
 	# 實建 42.4×25.0（玉垣圍出來的境內比主殿大很多）
 	{"n": "鎮守之杜", "x": -26.0, "z": 2.0, "w": 42.9, "d": 36.0, "h": 14.0,
@@ -185,14 +191,13 @@ func _init() -> void:
 	# sink 0.35 → 0.20：0.35 的話護岸頂離水面 0.98m，整條河讀成水泥排水渠
 	# （引擎內低視角截圖看出來的）。0.20 之後只差 0.60m，水是滿的。
 	lib.river_water(OUT_DIR, _river(), RIVER_HALF * 0.86, RIVER_DEPTH * 0.20, bank_h)
-	lib.pond_water(OUT_DIR, HIEDA_POND.x, HIEDA_POND.y, HIEDA_POND_R, HIEDA_POND_SINK,
-		_pond_bank_y, "庭池", 0.0, 4, 28, HIEDA_POND_DEPTH)
 	_build_unomitei()          # 先算位置：護岸要在這一段讓開
 	_build_revetment()
 	_build_bridges()
 	_street_rng.seed = STREET_SEED   # 街緣設施專用序列，不動地標／街區／草
 	_build_gates()             # 要在鋪街區之前：門洞得先登記成保留區
 	_build_landmark_stubs()
+	_build_hieda_grove()
 	_build_towers()
 	_build_blocks()
 	_assert_no_overlap()
@@ -308,37 +313,10 @@ func height_at(x: float, z: float) -> float:
 		if absf(x - b.x) < 16.0 and absf(z - b.z) < 8.0 and d > RIVER_HALF + 0.6:
 			h = bank_h(x, z) + (h - bank_h(x, z)) \
 				* clampf((absf(z - b.z) - 6.0) / 1.5, 0.0, 1.0)
-	h = _flatten_yards(x, z, h)
-	# 庭池要挖在**整平之後**的院子上 —— 順序反過來的話整平會把碗填平。
-	h += lib.pond_carve(HIEDA_POND.x, HIEDA_POND.y, HIEDA_POND_R,
-		HIEDA_POND_DEPTH, x, z, 0.16)
-	return h
-
-
-## 稗田邸的庭池（石組庭池・中島・石橋）。世界座標＝院落中心 + (+11, +8.5)。
-##
-## ⚠ 位置在「前庭替換」這一輪從 (−2, +8) 移到 (+11, +8.5)（使用者定案 C-1(a)）。
-## 舊位置在**前庭正中央**：定案的參道是 6m 寬、筆直、從門一路連到玄関石階，
-## 走 x = 軸線 ±3；舊池心離軸線只有 3m，池面連護岸實測橫跨 x −9.2~+5.2 ——
-## 參道會從池子中間穿過去，狛犬（軸線 ±4.7）左邊那隻站在護岸上、右邊那隻
-## 踩在州濱裡。獨立版（make_hieda.py）的池本來就在主屋北面的後院，前庭是
-## 淨空的；村院沒有後院可用（主屋北牆到圍牆只剩 2.5m），所以往**東側**讓。
-##
-## 新位置的三個約束（都量過）：
-##   ・參道東緣 x=−2，池的州濱外圈到 x=+16.7 —— 中間留 8.7m，構圖不打架
-##   ・長廊南端 z=0（x 9.4~11.8），水線離它 3.4m
-##   ・池心到東牆內面 8.5m，護岸還有 3.4m 的岸
-## 東側原本就是空的（紅葉群聚在西南、離れ在東北），池填進去正好補上東半院
-## 的空白，而且從緣側東端（x=+7, z=−1.9）看出去就是水面 —— 座視の庭。
-const HIEDA_POND := Vector2(-67.0, -155.5)
-const HIEDA_POND_R := 6.4
-const HIEDA_POND_DEPTH := 1.7                  # 挖多深（碗底）
-const HIEDA_POND_SINK := 0.55                  # 水面比岸低多少
-
-## 池岸的基準高度。⚠ 不能直接用 bank_h —— 院子已經被 _flatten_yards 壓成
-## 一個水平面，拿原始地形當岸高的話水面會斜 0.5m（一邊淹岸、一邊懸空）。
-func _pond_bank_y(x: float, z: float) -> float:
-	return _flatten_yards(x, z, bank_h(x, z))
+	# ⚠ 稗田邸的庭池以前在這裡挖碗。換成完整獨立版之後，水池是 blockout 自己
+	# 烘進去的幾何（連同枯山水、飛石一起），地形不需要也不可以再挖 —— 挖了
+	# 就是在一片已經有池底的網格下面再挖一個坑。
+	return _flatten_yards(x, z, h)
 
 
 ## 院落整平：把指定地標的佔地壓成一個水平面，邊緣平滑收斂回原地形。
@@ -347,7 +325,9 @@ func _pond_bank_y(x: float, z: float) -> float:
 ## 使用者定案方案 1：整平地形，不換位置、不加基壇。
 ## 手法沿用橋頭路廊那招（同一個檔案裡已驗收過的做法），只是改成矩形區域。
 const YARD_FLATTEN := [
-	{"x": -78.0, "z": -164.0, "w": 45.2, "d": 48.2, "fade": 9.0},   # 稗田邸（同保留區）
+	# 稗田邸（同保留區）。⚠ fade 從 9 拉到 14：整平區從 45×48 變成 97×118，
+	# 邊緣的收斂距離要跟著長，不然 118m 長的一邊會在收尾處出現一道折角。
+	{"x": -80.5, "z": -195.8, "w": 97.0, "d": 118.5, "fade": 14.0},
 ]
 
 func _flatten_yards(x: float, z: float, h: float) -> float:
@@ -452,8 +432,16 @@ func _build_roads() -> void:
 		else:
 			_roads.append({"pts": [Vector2(-150, z), Vector2(rx - BANK_PATH, z)], "w": 5.0})
 			_roads.append({"pts": [Vector2(rx + BANK_PATH, z), Vector2(150, z)], "w": 5.0})
-	for x in [-156.0, -104.0, -52.0, 104.0]:
+	# ⚠ x=−104 與 x=−52 兩條南北側街的北段截到 z=−130（原本鋪到 −190）。
+	# 稗田邸換成完整獨立版之後保留區是 97×118，橫跨兩個街廓（街網東西向間距
+	# 52m），這兩條會從庭院正中央穿過去。截掉的那 60m 服務 **0 棟町家**
+	# ——西北象限（x<−40 且 z<−120）實測一棟都沒有，那兩段只是畫在草地上的
+	# 空路。街廓是 `_block()` 用明確的 frontage 座標擺的、不吃 `_roads`，
+	# 所以截這兩段不會動到任何一棟町家。
+	for x in [-156.0, 104.0]:
 		_roads.append({"pts": [Vector2(x, -190), Vector2(x, 195)], "w": 4.5})
+	for x in [-104.0, -52.0]:
+		_roads.append({"pts": [Vector2(x, -130), Vector2(x, 195)], "w": 4.5})
 	# x=52 在 z∈[125,190] 整段落在河裡（最近 3.85m，河半寬 7）→ 截斷在 118，
 	# 南段的通行由西岸河畔道接手。
 	_roads.append({"pts": [Vector2(52, -190), Vector2(52, 118)], "w": 4.5})
@@ -1968,17 +1956,6 @@ func _lm_ground_sample(x: float, z: float) -> float:
 	var y := height_at(x, z)
 	if lib.poly_dist(_river(), x, z) < RIVER_HALF:
 		y = maxf(y, bank_h(x, z) - RIVER_DEPTH * 0.20)
-	# 稗田邸院內有庭池：不擋的話 _ground_under 會取到碗底，整座宅子沉 1.7m。
-	# ⚠ 擋的範圍要**整個碗**（pond_carve 的影響半徑 = R×1.35），不是只有水面
-	# 那一圈：水線半徑只有 5.10m，碗緣還有 3.5m 是斜的，取樣點落在那一圈一樣
-	# 會把院落的基準高度往下拉（實測新池心那組取樣，最近的一點離水線只差
-	# 0.005m —— 那是「這次剛好過、下次挪一米就不過」的那種通過）。
-	# ⚠ 而且要取**岸高**不是水面高。舊版取 bank − sink，於是整座宅子（主屋
-	# 基壇、緣側、長廊、離れ）連同前庭整組沉在院子地面下 0.55m：基壇只露
-	# 5cm、緣側離地只剩 0.35m —— 唐破風玄関的五段石階（總升 0.90）根本擺不
-	# 進去。院落的基準面是**院子地面**，不是池水面。
-	if Vector2(x - HIEDA_POND.x, z - HIEDA_POND.y).length() < HIEDA_POND_R * 1.35:
-		y = maxf(y, _pond_bank_y(x, z))
 	return y
 
 ## 一塊 footprint 的 [最低地面, 起伏量]。取樣約每 4m 一點 ——
@@ -2444,999 +2421,137 @@ func _lm_market(g: Node3D, _spread: float) -> void:
 	_lm_collide(notice, Vector3(2.8, 2.8, 0.6))
 
 
-# ══════════════ 稗田邸前庭（定案構圖・2026-08-07 替換）══════════════
+# ══════════════ 稗田邸：完整獨立版直接落地 ══════════════
 #
-# ⚠ Stage 0 的「稗田邸 MIGRATE」搬錯版本 —— 搬的是舊 gen_village 的
-# **築地塀＋藥醫門**。使用者真正逐輪迭代驗收過的前庭在
-# `assets/blender/make_hieda.py`（獨立版 hieda_blockout.glb）：
-# 格子塀、棟門、成對狛犬、石燈籠、飛石參道。這一輪照定案規格重建。
+# 使用者定案（完整版遷移改善書 v1）：**放棄村內縮小版**，把
+# `assets/blender/make_hieda.py` 產出的完整獨立版整組搬到人間之里北緣。
+# 搬的是**成品幾何本身**，不是照規格重蓋一次：
 #
-# 座標換算（獨立版 Blender Z-up → 村院 Godot Y-up）：
-#     村本地 x = blender x + HIEDA_AXIS
-#     村本地 z = −blender y − 12.5      （定錨：門線 y=−34 → 南牆 z=+21.5）
-#     村本地 y = blender z + 院子地面高
+#   hieda_blockout.glb   22,600 面 / 1 surface / 1 draw call
+#                        （主屋含唐破風玄関、格子塀、棟門、切石參道、狛犬、
+#                          石燈籠、框景巨樹、水池、涸れ滝、枯山水、飛石、木戶）
+#   植栽 136 實例        10 種模組 → MultiMesh，由 tools/gen_hieda.gd 發
 #
-# 中軸為什麼是 −5 不是 0：獨立版的門與主屋同在 x=0；村版主屋中心偏西 5m
-# （HX=−5，那是為了讓出東側的長廊與離れ）。門留在 x=0 的話參道得斜著接
-# 玄関，違反定案第 3 條「從外參道一路連到石階腳下不斷開」。40m 長的連續牆
-# 上門偏 5m 沒人看得出來；主屋正立面配對稱入母屋屋頂，玄関偏心 5m 一眼就歪
-# —— 所以是**門讓主屋**。
-const HIEDA_AXIS := -5.0
-const MON_HW := 3.6              # 門洞半寬（6m 參道穿得過）
-const MON_POST_HW := 0.35        # 門柱半寬
-const WALL_HT := 0.525           # 石垣頂半寬（勾配上緣）
-const WALL_HB := 0.79            # 石垣腳半寬（勾配下緣）
-const INU_W := 1.34               # 犬走り總寬（內 0.34 是接觸陰影帶）
-const KARA_HW := 2.9             # 唐破風玄関開口半寬
+# 這是 `gen_hieda.gd` 從第一天就在等的那個呼叫點；`maps/hieda/gen/*.res`
+# 與 `hieda_garden.instances.json` 因此不再是孤兒。
+#
+# ⚠ blockout 是 Blender 那邊 join 成一份的烘焙網格：**沒有分件、沒有碰撞、
+# 沒有地形、材質只有頂點色**。所以這裡要補三件事，缺一件就是放了一團看得到
+# 走不進去的東西：
+#   1. 地形整平（YARD_FLATTEN 97×118）—— 它假設腳下是一片水平地
+#   2. `needs_trimesh` meta —— main.gd／walk_test／portal_test 都是看
+#      「名字是 Terrain 或掛了這個 meta」+ 跨度 ≥15m 才建 trimesh 碰撞
+#   3. 頂點色材質（`lib.vc_mat`）—— glb 自帶的材質不吃專案的材質庫
+#
+# ⚠ 本地座標＝blockout 自己的座標系：**+z 朝表門（朝村子）、−z 是後院**。
+# 保留區中心取的是**包絡中心**，跟 blockout 的原點差 (2.45, 17.8)。
+const HIEDA_OFF := Vector2(2.45, 17.8)
 
-## 面朝外的四邊形。a→b→c→d 共面即可，朝向由「離開 ctr 的方向」判，繞序自己
-## 翻正 —— 手推六個面的繞序純粹是在給自己找錯（獨立版 `_auto_quad` 的教訓）。
-## ⚠ Godot 的正面是**順時針**：一樓地板探針驗過的那組 a,b,c/a,c,d 算出來的
-## CCW 法線是 −Y，而那面是從 +Y 看得到、射線打得中的。法線明寫不靠
-## generate_normals —— 繞序若判錯，錯的會是「面被剔掉」（截圖一眼看得出來），
-## 不是「法線朝內」（只表現成一片詭異的暗，很難查）。
-func _face_out(st: SurfaceTool, ctr: Vector3, a: Vector3, b: Vector3, c: Vector3,
-		d: Vector3) -> void:
-	var n := (b - a).cross(c - a)
-	if n.length_squared() < 1e-12:
+
+## 緩衝疏林：沿保留區外緣一圈（改善書 §4）。
+##
+## ⚠ 改善書假設「邊界空曠處目前只有樹木與河川」，要我**保留**外緣一圈疏林
+## 當過渡帶。實測不是那樣：人間之里的北緣是**空曠草地**，playable 範圍內
+## 的樹只有密度層那 61 株花樹（全在街區旁），新保留區裡一株都沒有。
+## 也就是說 §4 的「清林」是空操作，而「野生林地 → 精緻人工造景的生硬斷層」
+## 這個問題在這個落點上根本不存在 —— 存在的是**另一個**斷層：97×118 的
+## 精緻庭院直接坐在一片剃平的草地上，四周什麼都沒有。
+## 所以這裡做的是規格的**意圖**而不是字面：在保留區外緣 3~9m 的環帶上撒
+## 一圈疏林，把庭院的外牆接進地景，密度刻意低（環帶面積的 ~1.4 株/100㎡）。
+## 讓開的地方：z=−135 那條橫街（庭院的門面動線）、南北兩條被截斷的側街。
+const GROVE_SEED := SEED + 6011
+
+func _build_hieda_grove() -> void:
+	var lm: Dictionary = {}
+	for L in LANDMARKS:
+		if L.n == "稗田邸":
+			lm = L
+	if lm.is_empty():
 		return
-	n = n.normalized()
-	if n.dot((a + b + c + d) * 0.25 - ctr) > 0.0:
-		st.set_normal(n)
-		st.add_vertex(a); st.add_vertex(d); st.add_vertex(c)
-		st.add_vertex(a); st.add_vertex(c); st.add_vertex(b)
-	else:
-		st.set_normal(-n)
-		st.add_vertex(a); st.add_vertex(b); st.add_vertex(c)
-		st.add_vertex(a); st.add_vertex(c); st.add_vertex(d)
-
-
-## 石垣腳：上窄下寬的梯形柱（真石垣的「勾配」）。長度沿本地 x，寬度沿本地 z。
-## 等寬 box 跟地面交出一條完全垂直的硬邊，讀起來就是「一塊牆放在一塊地上」
-## 的兩個物件；往外攤開的斜面讓光沿著它連續變化，牆才像從地裡長出來的
-## （使用者驗收意見・前庭修訂輪 2 第 3 點）。
-func _batter(g: Node3D, name: String, ln: float, ht: float, hb: float,
-		y_lo: float, y_hi: float, mat: Material, pos: Vector3, yaw := 0.0) -> MeshInstance3D:
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var ctr := Vector3(0, (y_lo + y_hi) * 0.5, 0)
-	var h := ln * 0.5
-	for sd in [1.0, -1.0]:
-		_face_out(st, ctr, Vector3(-h, y_hi, sd * ht), Vector3(h, y_hi, sd * ht),
-			Vector3(h, y_lo, sd * hb), Vector3(-h, y_lo, sd * hb))
-	for t in [-h, h]:
-		_face_out(st, ctr, Vector3(t, y_hi, -ht), Vector3(t, y_hi, ht),
-			Vector3(t, y_lo, hb), Vector3(t, y_lo, -hb))
-	_face_out(st, ctr, Vector3(-h, y_hi, -ht), Vector3(h, y_hi, -ht),
-		Vector3(h, y_hi, ht), Vector3(-h, y_hi, ht))
-	var mi := MeshInstance3D.new()
-	mi.mesh = st.commit()
-	mi.material_override = mat
-	mi.position = pos
-	mi.rotation.y = yaw
-	lib.add(g, mi, name)
-	return mi
-
-
-## 犬走り：牆腳外一圈兩階碎石帶（暗→淡），把牆腳接進地面。
-## ⚠ 內側那條 0.34 寬的是**接觸陰影**，albedo 必須壓到 0.15 —— 量過渲染值：
-## 草地 albedo 0.22 出來是 130，第一版暗帶給 0.285 出來 144、比草還亮，整條
-## 讀成一道混凝土路緣，等於又多加一條硬邊，跟要解的問題正好相反。
-func _apron(g: Node3D, tag: String, p: float, q: float, fix: float, ax: bool,
-		yard: float, dk: Material, gv: Material) -> void:
-	if q - p < 0.05:
-		return
-	for sd in [1.0, -1.0]:
-		for band in 2:
-			var o0: float = WALL_HB + (0.0 if band == 0 else 0.34)
-			var o1: float = WALL_HB + (0.34 if band == 0 else INU_W)
-			var c: float = fix + sd * (o0 + o1) * 0.5
-			var pos := Vector3((p + q) * 0.5, yard + 0.02, c) if ax \
-				else Vector3(c, yard + 0.02, (p + q) * 0.5)
-			var size := Vector3(q - p, 0.04, o1 - o0) if ax \
-				else Vector3(o1 - o0, 0.04, q - p)
-			lib.box(g, "犬走り_%s_%d%d" % [tag, int(sd + 1.0), band], size,
-				dk if band == 0 else gv, pos)
-
-
-## 一段格子塀：石垣勾配 → 犬走り → 白漆喰 → 深色木格子帶 → 冠木 → 兩坡瓦頂
-## → 棟瓦。`ax` = true 沿 x 走（fix 是 z），false 沿 z 走（fix 是 x）。
-##
-## 兩軸共用同一支函式而不是各寫一份：六層的尺寸各寫一份等於抄兩遍，改一邊
-## 忘另一邊是遲早的事（獨立版第一版的側面回折就是手抄的，格柵間距跟正面
-## 對不上）。ap_p/ap_q 是犬走り兩端各自要延伸／內縮到哪 —— 轉角處兩道牆的
-## 犬走り**共面重疊**的話，兩張同法線的面互相擋掉環境光，地上會出現全黑補丁
-## （唐破風階梯側面的同一個病，獨立版踩過第三次）。所以是接齊、不是疊。
-##
-## 格柵不各給一個節點：全院 300+ 支，一支一個 MeshInstance3D 會把場景撐爛。
-## 收進 slats 由呼叫端一起做成 MultiMesh。
-func _hieda_wall_run(g: Node3D, tag: String, p: float, q: float, fix: float, ax: bool,
-		yard: float, y_bot: float, slats: Array[Transform3D],
-		ap_p: float, ap_q: float) -> void:
-	if q - p < 0.05:
-		return
-	var y_stone := yard + 0.72
-	var y_wall := yard + 2.30
-	var y_lat := yard + 3.10
-	var y_top := yard + 3.50
-	var cc := (p + q) * 0.5
-	var ln := q - p
-	var yaw: float = 0.0 if ax else PI * 0.5
-	var at := func(c: float, off: float, y: float) -> Vector3:
-		return Vector3(c, y, fix + off) if ax else Vector3(fix + off, y, c)
-	var slab := func(nm: String, thick: float, cy: float, h: float, mat: Material,
-			ext := 0.0) -> void:
-		lib.box(g, nm, Vector3(ln + ext, h, thick) if ax else Vector3(thick, h, ln + ext),
-			mat, at.call(cc, 0.0, cy))
-	# 腰石垣（勾配梯形）+ 犬走り
-	_batter(g, "石垣_%s" % tag, ln, WALL_HT, WALL_HB, y_bot, y_stone,
-		_lmat("stone", 1), at.call(cc, 0.0, 0.0), yaw)
-	_apron(g, tag, ap_p, ap_q, fix, ax, yard,
-		lib.flat_mat("hieda_contact", Color(0.150, 0.150, 0.135), 0.96),
-		_lmat("gravel", 2))
-	# 白漆喰腰壁
-	slab.call("漆喰壁_%s" % tag, 0.86, (y_stone + y_wall) * 0.5, y_wall - y_stone,
-		_lmat("plaster", 0))
-	# 格子帶：深色底板 + 直立木格柵（格柵厚過底板，才有立體的格子影）。
-	# 一面 3.5m 高、40m 長的純白牆在遠景就是一條白帶子，沒有任何尺度感；
-	# 橫向的格子把它切成有節奏的段落，遠看深淺相間、近看才是木格柵。
-	slab.call("格子底_%s" % tag, 0.80, (y_wall + y_lat) * 0.5, y_lat - y_wall,
-		_lmat("dark", 3))
-	var n_sl: int = maxi(2, int(ln / 0.42))
-	for i in n_sl:
-		var pc: float = p + (float(i) + 0.5) * (ln / float(n_sl))
-		slats.append(Transform3D(Basis(Vector3.UP, yaw),
-			at.call(pc, 0.0, (y_wall + y_lat) * 0.5)))
-	slab.call("冠木_%s" % tag, 1.00, y_lat + 0.07, 0.14, _lmat("dark", 1))
-	# 兩坡瓦頂（出簷 0.74）+ 棟瓦
-	for sd in [-1.0, 1.0]:
-		var sl := lib.box(g, "塀屋根_%s_%d" % [tag, int(sd + 1.0)],
-			Vector3(ln, 0.10, 0.73) if ax else Vector3(0.73, 0.10, ln), _lmat("kawara", 1),
-			at.call(cc, sd * 0.40, y_top - 0.13))
-		if ax:
-			sl.rotation.x = sd * -0.365
-		else:
-			sl.rotation.z = sd * 0.365
-	slab.call("棟瓦_%s" % tag, 0.28, y_top + 0.15, 0.18, _lmat("kawara", 3))
-	_lm_collide(g, Vector3(ln, 3.5, 0.95) if ax else Vector3(0.95, 3.5, ln),
-		at.call(cc, 0.0, yard))
-
-
-## 表門（棟門）：兩根粗門柱 + 冠木 + 貫 + 瓦屋根。參道從中間穿過。
-##
-## 柱高 3.30（不是 3.60）：狛犬放大 18% 之後，門柱／簷口與狛犬要在同一個
-## 視覺量級上 —— 門太高會把石獅子吃掉（使用者：狛犬「被門吃掉」）。兩邊各
-## 讓一步比只動一邊自然，狛犬 3.25m 對門柱 3.30m，幾乎同高。
-## 門柱比牆身厚（1.10 vs 0.86）才露得出來：獨立版上一版柱寬 0.62 完全埋在
-## 牆裡，整座門只剩一片浮在開口上的屋頂，柱子一根都看不到。
-func _hieda_gate(g: Node3D, ctr: float, fix: float, yard: float, y_bot: float) -> void:
-	var dark := _lmat("dark", 1)
-	var stone := _lmat("stone", 1)
-	var z_post := yard + 3.30
-	var z_beam := yard + 3.32
-	for sx in [-1.0, 1.0]:
-		var px: float = ctr + sx * (MON_HW + MON_POST_HW)
-		# 礎石也走勾配，跟牆腳同一套語言，柱子才不是「插在地上」。半寬與
-		# 犬走り的偏移都跟牆腳取同一組（0.525/0.79），兩邊的碎石帶才會接齊
-		# 而不是疊在一起。
-		_batter(g, "門礎石_%d" % int(sx + 1.0), 2.0 * MON_POST_HW, WALL_HT, WALL_HB,
-			y_bot, yard + 0.52, stone, Vector3(px, 0.0, fix))
-		_apron(g, "門柱%d" % int(sx + 1.0), px - MON_POST_HW, px + MON_POST_HW, fix, true,
-			yard, lib.flat_mat("hieda_contact", Color(0.150, 0.150, 0.135), 0.96),
-			_lmat("gravel", 2))
-		lib.box(g, "門柱_%d" % int(sx + 1.0), Vector3(2.0 * MON_POST_HW, z_post - yard - 0.48, 1.10),
-			dark, Vector3(px, (yard + 0.48 + z_post) * 0.5, fix))
-		_lm_collide(g, Vector3(0.9, 3.3, 1.2), Vector3(px, yard, fix))
-	var span := 2.0 * (MON_HW + 2.0 * MON_POST_HW)
-	lib.box(g, "冠木", Vector3(span, 0.48, 0.52), dark, Vector3(ctr, z_beam + 0.24, fix))
-	lib.box(g, "貫", Vector3(span * 0.86, 0.34, 0.34), dark, Vector3(ctr, z_beam - 0.40, fix))
-	# 屋根：兩坡，出簷比牆頂大一截 —— 門要比牆搶眼
-	var zr := z_beam + 0.48
-	for sy in [-1.0, 1.0]:
-		var sl := lib.box(g, "門屋根_%d" % int(sy + 1.0), Vector3(span + 1.2, 0.16, 1.70),
-			_lmat("kawara", 1), Vector3(ctr, zr + 0.42, fix + sy * 0.815))
-		sl.rotation.x = sy * -0.520
-	lib.box(g, "門大棟", Vector3(span + 1.2, 0.26, 0.42), _lmat("kawara", 3),
-		Vector3(ctr, zr + 0.92, fix))
-	for sx2 in [-1.0, 1.0]:                                   # 鬼瓦
-		lib.box(g, "鬼瓦_%d" % int(sx2 + 1.0), Vector3(0.34, 0.46, 0.52), _lmat("kawara", 3),
-			Vector3(ctr + sx2 * (span * 0.5 + 0.58), zr + 1.02, fix))
-
-
-## 參道：一條乾淨連續的切石鋪面，中央微拱。z1（門外）→ z0（石階腳下）。
-##
-## ⚠ 原始規格是「邊緣與草地不規則交錯侵蝕」。使用者看過參考圖（求聞編年史
-## 的稗田邸參道）後改規格 —— 那是**整齊的切石鋪面**，不是荒廢的碎石徑。
-## 侵蝕感讓整條路看起來像沒人維護的野徑，跟「貴族宅邸的正式參道」是反的。
-## 石板尺寸仍有 ±3% 色差（真石材本來就不同色），但**幾何**完全對齊。
-func _hieda_sando(g: Node3D, ctr: float, z0: float, z1: float, wc: Vector2, y0: float) -> void:
-	const WIDTH := 6.0
-	var hw := WIDTH * 0.5
-	# ⚠ 橫向**五**塊不是獨立版的四塊：偶數塊會在正中央留下一條從門一路通到石階、
-	# 完全不斷開的縱向目地。橫向目地在視線裡是被壓扁的短線，那條縱向的卻是
-	# 沿著視線鋪過去的整條 —— 遠看就是一道排水溝，把整條參道從中間切成兩半
-	# （引擎內截圖抓到；四道靜態閘看不見這種東西）。奇數塊讓中央那塊跨在中軸上，
-	# 目地就變成兩條對稱的、離軸線 0.6m 的線，這也是真的切石敷き的排法。
-	var cols := 5
-	var rows: int = maxi(1, int(absf(z1 - z0) / 1.55))
-	var joint := 0.055
-	var crown := func(x: float) -> float:              # 中央微拱：拋物線
-		var u: float = x / hw
-		return 0.16 * maxf(0.0, 1.0 - u * u)
-	# 底層鋪面（目地的陰影色）—— 石板浮在它上面，縫看起來就是暗的。
-	# ⚠ 不能鋪一片**平的**底板：中央微拱把內側兩排的板抬高 0.15m，平底板與板面
-	# 之間就開出一道 0.19m 深的槽，正中央那條縫遠看是一條黑溝（引擎內截圖抓到
-	# 的；lm_ghost／check_map／walk_test／portal_test 四道閘全部看不見這種東西）。
-	# 底板改成跟著每一排一起傾斜、只低 0.045m，縫才是「縫」不是「溝」。
-	var base_y: float = height_at(wc.x + ctr, wc.y + (z0 + z1) * 0.5) - y0
-	var jmat := lib.flat_mat("hieda_sando_joint", Color(0.150, 0.152, 0.145), 0.94)
-	for c0 in cols:
-		var bxa: float = -hw + WIDTH * float(c0) / float(cols)
-		var bxb: float = -hw + WIDTH * float(c0 + 1) / float(cols)
-		var bha: float = crown.call(bxa)
-		var bhb: float = crown.call(bxb)
-		var bs := lib.box(g, "參道底_%d" % c0,
-			Vector3(bxb - bxa + joint * 2.0, 0.08, absf(z1 - z0) + joint * 2.0), jmat,
-			Vector3(ctr + (bxa + bxb) * 0.5, base_y + 0.030 + (bha + bhb) * 0.5,
-				(z0 + z1) * 0.5))
-		bs.rotation.z = -atan2(bhb - bha, bxb - bxa)
-	for r in rows:
-		var za: float = z0 + (z1 - z0) * float(r) / float(rows) + joint
-		var zb: float = z0 + (z1 - z0) * float(r + 1) / float(rows) - joint
-		var ry: float = height_at(wc.x + ctr, wc.y + (za + zb) * 0.5) - y0
-		for c in cols:
-			var xa: float = -hw + WIDTH * float(c) / float(cols) + joint
-			var xb: float = -hw + WIDTH * float(c + 1) / float(cols) - joint
-			var ha: float = crown.call(xa)
-			var hb: float = crown.call(xb)
-			var sl := lib.box(g, "參道石_%d_%d" % [r, c],
-				Vector3(xb - xa, 0.10, absf(zb - za)), _lmat("stone", (r + c) % 4),
-				Vector3(ctr + (xa + xb) * 0.5, ry + 0.075 + (ha + hb) * 0.5,
-					(za + zb) * 0.5))
-			# 拱是靠**每塊板自己傾斜**接出來的，不是四排各給一個高度：
-			# 四排各平放的話排與排之間會出現 8cm 的階，遠看是四條並排的路。
-			sl.rotation.z = -atan2(hb - ha, xb - xa)
-
-
-## 唐破風的斷面曲線。t ∈ [−1,1]（0=棟、±1=簷角），回傳絕對高度。
-## 末端那一勾用 s⁶：六次方在 s<0.75 幾乎是 0，只有最外側十幾 % 抬得動 ——
-## 剛好是簷角的位置，不會把中段的凸壓平。
-func _kara_y(t: float, peak: float, drop := 1.25, flare := 0.55) -> float:
-	var s: float = minf(1.0, absf(t))
-	return peak - drop * pow(sin(s * PI * 0.5), 2.0) + flare * pow(s, 6.0)
-
-
-## 向唐破風玄関（村版・程序化）：屋面 + 破風板 + 妻壁 + 兎毛通 + 向拝柱 + 虹樑
-## + 五段石階。使用者定案 C-2：不整棟換 hieda_main.glb，只在村版主屋南面補
-## 這座前廊 —— 定案構圖第 2 條說「三對添景把視線收束到唐破風玄関」，村版主屋
-## 原本是一片平立面，參道走到底會停在空牆前，整條軸線沒有終點。
-##
-## 屋面**不是**把斷面沿深度平移拉出去（那是圓筒，看起來像水管）：從牆面掃到
-## 簷口的過程中半寬 3.35→3.85 外張、棟高 4.45→3.75 下傾，每一圈都是一條不同
-## 的 S 曲線，圈與圈之間鋪 quad。高度是被上下夾死的 —— 上有裳階簷口（底 4.5）、
-## 下有腰壁（頂 1.76），動 peak 之前先重算這兩個夾擠點。
-func _hieda_karahafu(g: Node3D, ctr: float, z_face: float, deck_y: float, yard: float) -> void:
-	const ZB := -0.13                     # 屋面內端（埋進牆 0.13）
-	const ZT := 3.35                      # 簷口離牆面
-	const HWB := 3.35
-	const HWT := 3.85
-	const SOF := 0.22                     # 軒裏（下皮）厚
-	const BD_H := 0.46                    # 破風板垂高
-	const BD_T := 0.20                    # 破風板厚
-	var pk_b := yard + 4.45
-	var pk_t := yard + 3.75
-	var nd := 2
-	var nt := 18
-	var hw_at := func(u: float) -> float: return HWB + (HWT - HWB) * u
-	var pk_at := func(u: float) -> float: return pk_b + (pk_t - pk_b) * u
-	var pt := func(i: int, j: int) -> Vector3:
-		var u: float = float(i) / float(nd)
-		var v: float = float(j) / float(nt) * 2.0 - 1.0
-		return Vector3(ctr + v * float(hw_at.call(u)),
-			_kara_y(v, float(pk_at.call(u))), z_face + ZB + (ZT - ZB) * u)
-	var ctr3 := Vector3(ctr, pk_b - 2.0, z_face + (ZB + ZT) * 0.5)
-	# 屋面（上皮）+ 兩側簷口的厚度側面
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for i in nd:
-		for j in nt:
-			_face_out(st, ctr3, pt.call(i, j), pt.call(i, j + 1),
-				pt.call(i + 1, j + 1), pt.call(i + 1, j))
-	for i in nd:
-		for j in [0, nt]:
-			var a: Vector3 = pt.call(i, j)
-			var b: Vector3 = pt.call(i + 1, j)
-			_face_out(st, ctr3, a, b, b - Vector3(0, SOF, 0), a - Vector3(0, SOF, 0))
-	var roof := MeshInstance3D.new()
-	roof.mesh = st.commit()
-	roof.material_override = _lmat("kawara", 1)
-	lib.add(g, roof, "玄関屋面")
-	# 棟：收在破風板後面 0.60m。頂到簷口的話正面看就是破風尖上頂著一顆方盒子
-	# （棟的端面），唐破風最好看的那個頂點會被自己的棟砸爛。
-	var u_rg: float = (ZT - 0.60 - ZB) / (ZT - ZB)
-	var rg_a := Vector3(ctr, pk_b + 0.06, z_face + ZB)
-	var rg_b := Vector3(ctr, float(pk_at.call(u_rg)) + 0.06, z_face + ZT - 0.60)
-	lib.strut(g, "玄関棟", rg_a, rg_b, 0.13, _lmat("kawara", 3), 4)
-	# 軒裏（下皮）：玩家站在階梯上抬頭第一眼就是這一面，零厚度的單面屋頂
-	# 會被背面剔除直接看穿到天空去。
-	var st2 := SurfaceTool.new()
-	st2.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var dn := Vector3(0, SOF, 0)
-	for i in nd:
-		for j in nt:
-			_face_out(st2, ctr3 + Vector3(0, 40.0, 0),
-				pt.call(i, j) - dn, pt.call(i, j + 1) - dn,
-				pt.call(i + 1, j + 1) - dn, pt.call(i + 1, j) - dn)
-	var sof := MeshInstance3D.new()
-	sof.mesh = st2.commit()
-	sof.material_override = _lmat("wood", 2)
-	lib.add(g, sof, "玄関軒裏")
-	# 破風板：沿簷口那條 S 曲線垂下的厚板 —— 唐破風的招牌
-	var st3 := SurfaceTool.new()
-	st3.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var zt: float = z_face + ZT
-	for j in nt:
-		var v0: float = float(j) / float(nt) * 2.0 - 1.0
-		var v1: float = float(j + 1) / float(nt) * 2.0 - 1.0
-		var x0: float = ctr + v0 * HWT
-		var x1: float = ctr + v1 * HWT
-		var y0t := _kara_y(v0, pk_t)
-		var y1t := _kara_y(v1, pk_t)
-		var f0 := Vector3(x0, y0t, zt)
-		var f1 := Vector3(x1, y1t, zt)
-		_face_out(st3, ctr3, f0, f1, Vector3(x1, y1t - BD_H, zt),
-			Vector3(x0, y0t - BD_H, zt))
-		_face_out(st3, ctr3, Vector3(x0, y0t - BD_H, zt), Vector3(x1, y1t - BD_H, zt),
-			Vector3(x1, y1t - BD_H, zt - BD_T), Vector3(x0, y0t - BD_H, zt - BD_T))
-	var bd := MeshInstance3D.new()
-	bd.mesh = st3.commit()
-	bd.material_override = _lmat("dark", 1)
-	lib.add(g, bd, "玄関破風板")
-	# 妻壁：破風板背後那片漆喰，被 S 曲線切成一彎月牙
-	var y_lint := _kara_y(2.78 / HWT, pk_t) - 0.35
-	var st4 := SurfaceTool.new()
-	st4.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for j in nt:
-		var v0: float = float(j) / float(nt) * 2.0 - 1.0
-		var v1: float = float(j + 1) / float(nt) * 2.0 - 1.0
-		var y0t := _kara_y(v0, pk_t) - BD_H
-		var y1t := _kara_y(v1, pk_t) - BD_H
-		if y0t <= y_lint and y1t <= y_lint:
-			continue                       # 曲線已經掉到樑下，月牙到此為止
-		_face_out(st4, ctr3, Vector3(ctr + v0 * HWT, maxf(y0t, y_lint), zt - BD_T),
-			Vector3(ctr + v1 * HWT, maxf(y1t, y_lint), zt - BD_T),
-			Vector3(ctr + v1 * HWT, y_lint, zt - BD_T),
-			Vector3(ctr + v0 * HWT, y_lint, zt - BD_T))
-	var gw := MeshInstance3D.new()
-	gw.mesh = st4.commit()
-	gw.material_override = _lmat("plaster", 0)
-	lib.add(g, gw, "玄関妻壁")
-	# 兎毛通（破風正中央垂下的懸魚）：兩段收窄，不然就是掛在破風上的一顆箱子
-	var yc := _kara_y(0.0, pk_t) - BD_H
-	lib.box(g, "兎毛通_上", Vector3(0.52, 0.30, 0.14), _lmat("dark", 1),
-		Vector3(ctr, yc - 0.14, zt - BD_T - 0.06))
-	lib.box(g, "兎毛通_下", Vector3(0.30, 0.26, 0.14), _lmat("dark", 1),
-		Vector3(ctr, yc - 0.38, zt - BD_T - 0.06))
-	# 向拝柱 ×2 + 礎石 + 虹樑。柱頂用 _kara_y 現算屋面高度，不寫死數字：
-	# 改上面任何一個參數，柱子會自己長到屋面底下，不會又戳出去或懸空。
-	var z_post: float = z_face + 2.90
-	var u_post: float = (2.90 - ZB) / (ZT - ZB)
-	var pk_p: float = float(pk_at.call(u_post))
-	var hw_p: float = float(hw_at.call(u_post))
-	var y_col := _kara_y(2.55 / hw_p, pk_p) - SOF - 0.06
-	for sx in [-1.0, 1.0]:
-		lib.box(g, "礎石_%d" % int(sx + 1.0), Vector3(0.72, 0.26, 0.72), _lmat("stone", 1),
-			Vector3(ctr + sx * 2.55, yard + 0.13, z_post))
-		lib.box(g, "向拝柱_%d" % int(sx + 1.0), Vector3(0.40, y_col - yard - 0.26, 0.40),
-			_lmat("dark", 1), Vector3(ctr + sx * 2.55, (yard + 0.26 + y_col) * 0.5, z_post))
-	lib.box(g, "虹樑", Vector3(5.9, 0.42, 0.34), _lmat("dark", 1),
-		Vector3(ctr, y_lint - 0.21, z_post))
-	# 玄関口：格子戸（主屋那面平牆上要看得出這裡是入口）
-	lib.box(g, "玄関格子戸", Vector3(2.0 * KARA_HW - 0.4, 2.30, 0.10), _lmat("lattice", 1),
-		Vector3(ctr, deck_y + 1.15, z_face + 0.06))
-	lib.box(g, "玄関框", Vector3(2.0 * KARA_HW, 0.26, 0.16), _lmat("dark", 1),
-		Vector3(ctr, deck_y + 2.42, z_face + 0.06))
-	# ── 五段石階 ──
-	# ⚠ 不能用五個從地面長上來的**巢狀** box：側面全部落在同一個平面上互相
-	# 重疊，共面的兩張面會互相擋掉環境光，整片階梯側面算成純黑（獨立版查了
-	# 比唐破風本身還久的那個病）。這裡每一階各佔各的 z 區間、不重疊。
-	# ⚠ 階梯寬度收到 4.30（不是開口寬 5.70）：向拝柱的礎石在 x=±2.55、寬 0.72
-	# （→ 2.19~2.91），照獨立版的 hw_st=2.85 鋪下去，兩根柱子會**穿過階梯側面**
-	# 站在踏面中間。收到 2.15 之後是柱子夾著階梯，那才是向拝柱該站的位置。
-	var n_st := 5
-	var tread := 0.42
-	var hw_st := 2.15
-	var z_bot: float = z_face + 2.20 + tread * float(n_st)
-	for i in n_st:
-		var h: float = (deck_y - yard) * float(i + 1) / float(n_st)
-		var zc: float = z_bot - tread * (float(i) + 0.5)
-		lib.box(g, "玄関階_%d" % i, Vector3(2.0 * hw_st, h, tread), _lmat("stone", 2),
-			Vector3(ctr, yard + h * 0.5, zc))
-		var sb := StaticBody3D.new()
-		sb.position = Vector3(ctr, yard + h * 0.5, zc)
-		var sh := CollisionShape3D.new()
-		var bx := BoxShape3D.new()
-		bx.size = Vector3(2.0 * hw_st, h, tread)
-		sh.shape = bx
-		sb.add_child(sh)
-		lib.add(g, sb, "玄関階碰撞_%d" % i)
-		sh.owner = _root
-
-
-## ── 稗田邸（第六座・最後一座）：格子塀＋棟門＋二層入母屋主屋＋石組庭池 ──
-##
-## 舊 builder 的本地座標整組**原封不動**沿用：舊址中心 (−78, 2)、新址中心
-## (−78, −164)，兩邊都是「以院落中心為原點」，所以只有需要拿世界座標去問
-## 地形的地方要換算（wc + local）。庭池的相對位置 (−2, +8) 也一樣，於是
-## HIEDA_POND 就直接定成 (−80, −156)。
-##
-## ⚠ 這座宅子跟前五座不同：它**會改地形**（庭池在 height_at 裡挖碗）。
-## 所以三件事要同時成立，缺一就會出現「水面斜掛」或「主屋沉 1.7m」：
-##   1. height_at 的順序是「先整平院子、再挖池」
-##   2. _pond_bank_y（＝整平後的岸高）同時餵給 pond_water 與 _lm_ground_sample
-##   3. _lm_ground_sample 要把池心那圈當成「地面 = 水面」，_ground_under
-##      才不會把整棟宅子的基準高度拉到碗底
-func _lm_hieda(g: Node3D, spread: float) -> void:
-	var wc := Vector2(g.position.x, g.position.z)
-	var y0: float = g.position.y
-	# 院落地面。_lm_ground_sample 修好之後群組原點就是院子地面，yard≈0；
-	# 仍然照算不寫死 0 —— 哪天整平規則再改，前庭會自己跟著走。
-	var yard: float = _pond_bank_y(wc.x, wc.y) - y0
-	var y_bot: float = yard - (spread + 0.35)
-	var hw := 20.0
-	var hd := 21.5
-	# ── 格子塀：四面（南面讓出門洞）──
-	# 使用者定案 C-4：五段全部換成格子塀規格，把定案語言補完整圈。只換門面
-	# 那道的話，轉角處會是「格子塀硬接築地塀」，兩種語言對撞比不換還糟。
-	var slats: Array[Transform3D] = []
-	var gate_hw := MON_HW + 2.0 * MON_POST_HW
-	# 犬走り在轉角**接齊不重疊**：南北兩道各往外多鋪一個犬走り的寬度，
-	# 東西兩道就往內縮同一個量。重疊的話兩張同法線的面互相擋掉環境光，
-	# 轉角地上會出現全黑補丁。
-	var ex := WALL_HB + INU_W
-	_hieda_wall_run(g, "北", -hw, hw, -hd, true, yard, y_bot, slats, -hw - ex, hw + ex)
-	for sx in [-1.0, 1.0]:
-		_hieda_wall_run(g, "東" if sx > 0.0 else "西", -hd, hd, sx * hw, false,
-			yard, y_bot, slats, -hd + ex, hd - ex)
-	_hieda_wall_run(g, "南西", -hw, HIEDA_AXIS - gate_hw, hd, true, yard, y_bot, slats,
-		-hw - ex, HIEDA_AXIS - gate_hw)
-	_hieda_wall_run(g, "南東", HIEDA_AXIS + gate_hw, hw, hd, true, yard, y_bot, slats,
-		HIEDA_AXIS + gate_hw, hw + ex)
-	var slat_mesh := BoxMesh.new()
-	slat_mesh.size = Vector3(0.14, 0.68, 0.94)
-	slat_mesh.material = _lmat("dark", 0)
-	var lmm := MultiMeshInstance3D.new()
-	lmm.multimesh = lib.make_multimesh(slat_mesh, slats, [], OUT_DIR + "gen/mm_hieda_koushi.res")
-	lib.add(g, lmm, "MM_格子")
-	# ── 表門（棟門）+ 參道 ──
-	_hieda_gate(g, HIEDA_AXIS, hd, yard, y_bot)
-	_hieda_sando(g, HIEDA_AXIS, 0.35, hd + 0.9, wc, y0)
-	# ── 對稱添景：狛犬 / 石燈籠 / 松，三對沿參道由內而外、由窄而寬排成八字 ──
-	# 前庭深 22.6m（門 z=+21.5 → 石階 z=−1.1）。狛犬擺在「從門往內約 1/3」處
-	# = 21.5 − 22.6/3 ≈ +14.0。燈籠與松依序往外側讓開，站在門口往內看，
-	# 三對物件把視線收束到唐破風玄関上。
-	# 資產一律 `prop_mesh` 載定案的 .glb —— 抄一份幾何過來就等於開第二個真相
-	# 來源，下次改狛犬一定有一隻沒跟到。
-	var prop_stone := lib.rock_mat_dry()
-	var komainu := lib.prop_mesh("res://assets/models/komainu_a.glb", prop_stone)
-	var lantern := lib.prop_mesh("res://assets/models/stone_lantern.glb", prop_stone)
-	var pine_m := lib.prop_mesh("res://assets/models/hieda_pine_a.glb")
-	# 狛犬**維持嚴格左右對稱**：牠是儀式性的門衛，一對石獅子擺歪只是沒對齊。
-	# 放大到 1.18（2.75 → 3.25m）、門柱同時降到 3.30，兩邊各讓一步之後狛犬跟
-	# 門柱幾乎同高，在門前的構圖裡是同一個量級，不再是門洞旁的小擺設。
-	for sx2 in [-1.0, 1.0]:
-		var km := MeshInstance3D.new()
-		km.mesh = komainu
-		km.position = Vector3(HIEDA_AXIS + sx2 * 4.7,
-			height_at(wc.x + HIEDA_AXIS + sx2 * 4.7, wc.y + 14.0) - y0, 14.0)
-		km.scale = Vector3.ONE * 1.18
-		# 原型面朝 +z；繞 y 轉 ∓1.0 讓兩隻都斜對參道中線、同時偏向來人
-		km.rotation.y = -sx2 * 1.0
-		lib.add(g, km, "狛犬_%d" % int(sx2 + 1.0))
-		_lm_collide(g, Vector3(1.3, 3.3, 1.9),
-			Vector3(km.position.x, yard, km.position.z))
-	# ── 松與燈籠：刻意**不對稱** ──
-	# 上一版兩側完全鏡射、而且間距均等，讀起來像貼上去的裝飾而不是長出來的
-	# 庭園。四個物件的座標／旋轉／縮放全部拆成明表寫死、放棄 for 迴圈鏡射 ——
-	# 迴圈天生只生對稱，要不對稱就得先放棄迴圈。
-	#   右側：燈籠緊挨狛犬（1.9m）、松再拉遠（4.8m）—— 疏密對比大
-	#   左側：燈籠退遠（3.6m）、松貼著燈籠（2.9m）—— 節奏跟右側相反
-	for L in [[6.50, 14.70, 0.26, 1.06], [-7.40, 16.40, -0.62, 0.98]]:
-		var lx: float = HIEDA_AXIS + float(L[0])
-		var lz: float = float(L[1])
-		var ln2 := MeshInstance3D.new()
-		ln2.mesh = lantern
-		ln2.position = Vector3(lx, height_at(wc.x + lx, wc.y + lz) - y0, lz)
-		ln2.scale = Vector3.ONE * float(L[3])
-		ln2.rotation.y = float(L[2])
-		lib.add(g, ln2, "門前燈籠_%d" % int(signf(float(L[0])) + 1.0))
-		_lm_collide(g, Vector3(1.0, 2.6, 1.0), Vector3(lx, yard, lz))
-	# 門前的松：用稗田邸自己那棵遞迴樹（tree_pine_a 是「圓錐插在棍子上」）。
-	# 高度靠縮放給定 —— hieda_pine_a 的原型高 8.0m（make_props 量過）。
-	for P in [[9.90, 18.10, 0.9, 7.6], [-9.50, 18.40, 2.4, 8.8]]:
-		var px2: float = HIEDA_AXIS + float(P[0])
-		var pz2: float = float(P[1])
-		var pn := MeshInstance3D.new()
-		pn.mesh = pine_m
-		pn.material_override = lib.foliage_vc_mat()
-		pn.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
-		pn.position = Vector3(px2, height_at(wc.x + px2, wc.y + pz2) - y0, pz2)
-		pn.scale = Vector3.ONE * (float(P[3]) / 8.0)
-		pn.rotation.y = float(P[2])
-		lib.add(g, pn, "門前松_%d" % int(signf(float(P[0])) + 1.0))
-	# ⚠ 六座地標共用一條 `_lm_rng`（照 LANDMARKS 順序抽）。前庭改寫之後抽樣
-	# 次數變了，後面的鎮守之杜／市場／足洗邸會整組位移 —— 那是這一輪範圍外的
-	# 三座，不能動。舊前庭（築地塀 5 段 ×7 次色調 + 藥醫門 4 次）一共抽 39 次，
-	# 新前庭全部明指色調（0 次），所以這裡把序列補回原位。
-	# 附帶好處：庭池的石組排列跟搬遷前**逐項一致**，只有池心位置變了 ——
-	# 「這一輪只動了該動的東西」因此驗得出來，不必用眼睛比。
-	for _i in 39:
-		_lm_rng.randf()
-	# ── 主屋：二層入母屋 ──
-	# 25×15、一層 3.6 + 二層 2.9、入母屋屋頂。位置往北挪（中心 z −11.5），
-	# 南面讓出庭池的曲岸。
-	var hfoot := spread + 0.4
-	var HX := -5.0
-	var HZ := -11.5
-	lib.box(g, "主屋基壇", Vector3(26.5, 0.6 + hfoot, 16.5), _lmat("stone"),
-		Vector3(HX, 0.3 - hfoot * 0.5, HZ))
-	lib.box(g, "主屋", Vector3(25.0, 3.6, 15.0), _lmat("plaster", 0), Vector3(HX, 0.6 + 1.8, HZ))
-	lib.box(g, "主屋腰壁", Vector3(25.1, 1.15, 15.1), _lmat("shitami", 0),
-		Vector3(HX, 0.6 + 0.58, HZ))
-	# 一層立面的通柱（南面）
-	for i in 9:
-		var cx2: float = HX - 12.0 + float(i) * 3.0
-		# 玄関開口讓路：唐破風底下那一根會正對門洞、站在土間口正中央
-		if absf(cx2 - HIEDA_AXIS) < KARA_HW:
-			continue
-		lib.box(g, "主屋柱_%d" % i, Vector3(0.17, 3.6, 0.12), _lmat("dark", 0),
-			Vector3(cx2, 0.6 + 1.8, HZ + 7.56))
-	# 裳階（一二層之間的環繞屋簷）—— 這一圈才是「二層豪邸」的剪影。
-	# ⚠ 裳階的內緣要**塞進二階牆裡**（二階半深 6.0／半寬 10.5），
-	# 不然從上往下看是一圈懸空的簷。
-	for sd2 in [-1.0, 1.0]:
-		var mk := lib.box(g, "裳階_z%d" % int(sd2 + 1), Vector3(27.0, 0.18, 3.1), _lmat("kawara"),
-			Vector3(HX, 4.62, HZ + sd2 * 7.15))
-		mk.rotation.x = sd2 * -0.42
-		var mk2 := lib.box(g, "裳階_x%d" % int(sd2 + 1), Vector3(3.4, 0.18, 17.2), _lmat("kawara"),
-			Vector3(HX + sd2 * 11.8, 4.62, HZ))
-		mk2.rotation.z = sd2 * 0.42
-	# 二層（內縮，才有塔狀的收分）
-	lib.box(g, "主屋二階", Vector3(21.0, 2.9, 12.0), _lmat("plaster", 0),
-		Vector3(HX, 4.5 + 1.45, HZ))
-	lib.box(g, "二階窗帯", Vector3(18.0, 1.15, 0.1), _lmat("lattice", 0),
-		Vector3(HX, 6.2, HZ + 6.06))
-	# 入母屋 = 切妻（上）+ 四注的裾（下）。gable_roof 給切妻與妻壁，
-	# 兩端再各蓋一片斜的隅屋根蓋住妻壁下半 —— 剪影就是入母屋。
-	lib.gable_roof(g, 7.4, 23.0, 14.0, 0.52, 0.34, _lmat("kawara"), _lmat("plaster", 0),
-		Vector3(HX, 0, HZ))
-	for e in [-1.0, 1.0]:
-		var hip := lib.box(g, "隅屋根_%d" % int(e + 1), Vector3(5.4, 0.3, 10.5), _lmat("kawara"),
-			Vector3(HX + e * 9.4, 9.35, HZ))
-		hip.rotation.z = e * 0.72
-	lib.box(g, "緣側", Vector3(24.0, 0.3, 2.2), _lmat("wood"), Vector3(HX, 0.75, HZ + 8.6))
-	# ⚠ 高欄在玄関這一段要**開口**。獨立版的教訓：階梯做好了，前面卻橫著一整排
-	# 不斷開的高欄，等於做了一座走不上去的階梯。束柱同理，落在開口裡的跳過。
-	for i in 12:
-		var rx: float = HX - 11.5 + float(i) * 2.1
-		if absf(rx - HIEDA_AXIS) < KARA_HW:
-			continue
-		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.6, 0.1), _lmat("dark", 0),
-			Vector3(rx, 1.35, HZ + 9.6))
-	for k4 in 2:
-		var a2: float = (HX - 12.0) if k4 == 0 else (HIEDA_AXIS + KARA_HW)
-		var b2: float = (HIEDA_AXIS - KARA_HW) if k4 == 0 else (HX + 12.0)
-		lib.box(g, "高欄_%d" % k4, Vector3(b2 - a2, 0.12, 0.12), _lmat("dark", 0),
-			Vector3((a2 + b2) * 0.5, 1.68, HZ + 9.6))
-	_lm_collide(g, Vector3(25.4, 10.0, 15.4), Vector3(HX, 0, HZ))
-	# ── 唐破風玄関前廊（使用者定案 C-2）──
-	_hieda_karahafu(g, HIEDA_AXIS, HZ + 7.5, 0.90, yard)
-	# 長廊（連到東側的離れ）
-	lib.box(g, "長廊", Vector3(2.4, 0.24, 12.0), _lmat("wood"), Vector3(10.6, 0.7, -6.0))
-	for i in 5:
-		lib.cyl(g, "廊柱_%d" % i, 0.12, 0.12, 2.4, _lmat("dark"),
-			Vector3(11.5, 1.9, -11.0 + float(i) * 2.6), 6)
-	for sd2 in [-1, 1]:
-		var sl2 := lib.box(g, "廊屋根_%d" % (sd2 + 1), Vector3(1.9, 0.16, 12.4), _lmat("kawara"),
-			Vector3(10.6 + float(sd2) * 0.85, 3.15, -6.0))
-		sl2.rotation.z = float(sd2) * -0.5
-	lib.box(g, "離れ", Vector3(6.5, 3.2, 6.5), _lmat("plaster"), Vector3(13.5, 1.9, -14.5))
-	lib.box(g, "離れ屋根", Vector3(7.9, 0.26, 7.9), _lmat("kawara"), Vector3(13.5, 3.7, -14.5))
-	_lm_collide(g, Vector3(6.7, 3.6, 6.7), Vector3(13.5, 0, -14.5))
-	# ── 庭園：石組庭池（水面由 lib.pond_water 產，這裡只做護岸與添景）──
-	var pl := Vector3(HIEDA_POND.x - wc.x, 0.0, HIEDA_POND.y - wc.y)
-	var shore := lib.pond_shore_r(HIEDA_POND_R, HIEDA_POND_SINK, HIEDA_POND_DEPTH)
-	# 石頭要坐在**自己腳下**的地面上。這棟宅子的原點是院落的基準高度，
-	# 池邊的地已經往下挖了 —— 照原點擺，石頭會浮在水面上像紙片。
-	var rock_y := func(wx: float, wz: float, sink: float) -> float:
-		return height_at(wx, wz) - y0 - sink
-	# ── 石組：日本庭園的石不是均勻繞一圈，是「三尊石」的組法 ──
-	#   ・**主石立起來**（縦石），高過水面，一組只有一顆
-	#   ・旁邊配 1~2 顆矮的臥石（横石）
-	#   ・組與組之間**大片留白**，留白處鋪州濱（細卵石灘）
-	#   ・數量取奇數（三・五・七）
-	var rk_i := 0
-	var groups := 5                                   # 奇數
-	var g_ang: Array[float] = []
-	var a0 := _lm_rng.randf_range(0.0, TAU)
-	for gi in groups:
-		# 不等角：黃金角的擾動，避免五顆平均分佈（那又變成項鍊）
-		g_ang.append(a0 + float(gi) * TAU / float(groups) + _lm_rng.randf_range(-0.34, 0.34))
-	for gi in groups:
-		var ga: float = g_ang[gi]
-		var upright: bool = gi % 2 == 0               # 隔一組立一顆
-		var members := 2 + (gi % 2)
-		for k in members:
-			var a := ga + float(k) * _lm_rng.randf_range(0.055, 0.10) * (1.0 if k % 2 == 0 else -1.0)
-			var rr3: float = shore * _lm_rng.randf_range(0.97, 1.09)
-			var wx: float = wc.x + pl.x + cos(a) * rr3
-			var wz: float = wc.y + pl.z + sin(a) * rr3
-			var rk := MeshInstance3D.new()
-			var main := k == 0
-			# 主石：立起來（y 拉長、xz 收窄）。配石：臥著。
-			var sc: float = _lm_rng.randf_range(0.75, 1.15) if main else _lm_rng.randf_range(0.42, 0.72)
-			rk.mesh = lib.blob_mesh(rk_i * 7 + 3,
-				_lm_rng.randf_range(1.15, 1.55) if (main and upright) else _lm_rng.randf_range(0.42, 0.62),
-				_lm_rng.randf_range(0.20, 0.34))
-			rk.material_override = _lmat("cobble", -1)
-			rk.position = Vector3(pl.x + cos(a) * rr3,
-				rock_y.call(wx, wz, sc * (0.18 if (main and upright) else 0.34)),
-				pl.z + sin(a) * rr3)
-			rk.scale = Vector3(sc * _lm_rng.randf_range(0.72, 0.95), sc * _lm_rng.randf_range(0.9, 1.35),
-				sc * _lm_rng.randf_range(0.72, 0.95)) if (main and upright) \
-				else Vector3(sc * _lm_rng.randf_range(1.0, 1.4), sc * _lm_rng.randf_range(0.55, 0.8),
-					sc * _lm_rng.randf_range(1.0, 1.4))
-			rk.rotation = Vector3(_lm_rng.randf_range(-0.18, 0.18), _lm_rng.randf_range(0.0, TAU),
-				_lm_rng.randf_range(-0.18, 0.18))
-			lib.add(g, rk, "石組%d_%s%d" % [gi, "主石" if main else "添石", k])
-			rk_i += 1
-	# ── 州濱（すはま）：兩組石之間的留白鋪細卵石，一路鋪進淺水 ──
-	for gi in groups:
-		var a_lo: float = g_ang[gi] + 0.28
-		var a_hi: float = g_ang[(gi + 1) % groups] + (TAU if gi == groups - 1 else 0.0) - 0.28
-		if a_hi - a_lo < 0.25:
-			continue
-		var np := int((a_hi - a_lo) * 9.0)
-		for k2 in np:
-			var a3: float = a_lo + (a_hi - a_lo) * (float(k2) + 0.5) / float(np)
-			for band in 3:                            # 三圈：岸上、水際、淺水
-				var pr: float = shore * (1.12 - float(band) * 0.11) * _lm_rng.randf_range(0.98, 1.02)
-				var sc2 := _lm_rng.randf_range(0.10, 0.24) * (1.0 - float(band) * 0.15)
-				var pb := MeshInstance3D.new()
-				pb.mesh = lib.blob_mesh(rk_i * 13 + k2 * 5 + band * 3 + 11,
-					_lm_rng.randf_range(0.30, 0.46), 0.14)
-				pb.material_override = _lmat("cobble", -1)
-				var pwx: float = wc.x + pl.x + cos(a3) * pr
-				var pwz: float = wc.y + pl.z + sin(a3) * pr
-				pb.position = Vector3(pl.x + cos(a3) * pr,
-					rock_y.call(pwx, pwz, sc2 * 0.62), pl.z + sin(a3) * pr)
-				pb.scale = Vector3(sc2 * _lm_rng.randf_range(1.1, 1.5), sc2 * _lm_rng.randf_range(0.5, 0.75),
-					sc2 * _lm_rng.randf_range(1.1, 1.5))
-				pb.rotation.y = _lm_rng.randf_range(0.0, TAU)
-				lib.add(g, pb, "州濱_%d" % rk_i)
-				rk_i += 1
-	# ── 睡蓮：只鋪在一側，不要撒滿（滿池浮葉是水草不是庭園）──
-	var lily_a := g_ang[1] + _lm_rng.randf_range(-0.3, 0.3)
-	var pad := lib.tuft_mesh(6, 0.26, 0.30, Color(0.16, 0.30, 0.14), Color(0.28, 0.46, 0.20))
-	for i in 11:
-		var pa := lily_a + _lm_rng.randf_range(-0.85, 0.85)
-		var pd: float = shore * _lm_rng.randf_range(0.30, 0.78)
-		var lp := MeshInstance3D.new()
-		lp.mesh = pad
-		lp.position = Vector3(pl.x + cos(pa) * pd,
-			rock_y.call(wc.x + pl.x + cos(pa) * pd, wc.y + pl.z + sin(pa) * pd,
-				HIEDA_POND_SINK - 0.04),
-			pl.z + sin(pa) * pd)
-		lp.scale = Vector3.ONE * _lm_rng.randf_range(0.7, 1.3)
-		lp.rotation.y = _lm_rng.randf_range(0.0, TAU)
-		lib.add(g, lp, "睡蓮_%d" % i)
-	# ── 菖蒲：只長在州濱那幾段的水際，不繞整圈 ──
-	var iris := lib.tuft_mesh(7, 0.70, 0.10, Color(0.12, 0.26, 0.10), Color(0.34, 0.54, 0.20))
-	for i in 16:
-		var ia := g_ang[int(_lm_rng.randf() * float(groups))] + _lm_rng.randf_range(0.35, 1.1)
-		var ir: float = shore * _lm_rng.randf_range(0.96, 1.06)
-		var ib := MeshInstance3D.new()
-		ib.mesh = iris
-		ib.position = Vector3(pl.x + cos(ia) * ir,
-			rock_y.call(wc.x + pl.x + cos(ia) * ir, wc.y + pl.z + sin(ia) * ir, 0.05),
-			pl.z + sin(ia) * ir)
-		ib.scale = Vector3.ONE * _lm_rng.randf_range(0.7, 1.25)
-		ib.rotation.y = _lm_rng.randf_range(0.0, TAU)
-		lib.add(g, ib, "菖蒲_%d" % i)
-	# ── 中島 + 石橋：池泉庭園的核心（曲岸／中島／石橋）──
-	# 中島不是浮的 —— 它從碗底疊上來，頂面略低於岸、高於水面。
-	var isl := Vector2(pl.x + 2.3, pl.z + 1.4)                 # 本地座標的島心
-	var bank_ref: float = height_at(wc.x + pl.x + 12.0, wc.y + pl.z) - y0
-	var floor_y: float = height_at(wc.x + isl.x, wc.y + isl.y) - y0
-	var top_y: float = bank_ref - 0.18
-	var base := MeshInstance3D.new()
-	base.mesh = lib.blob_mesh(311, 0.55, 0.22)
-	base.material_override = _lmat("cobble", 1)
-	base.position = Vector3(isl.x, (floor_y + top_y) * 0.5, isl.y)
-	base.scale = Vector3(2.5, (top_y - floor_y) * 0.5 + 0.55, 2.5)
-	lib.add(g, base, "中島岩")  # ⚠ 不能叫「基石」：那是體檢的貼地關鍵字，會被判成建物跨水
-	var cap := MeshInstance3D.new()
-	cap.mesh = lib.blob_mesh(317, 0.35, 0.18)
-	cap.material_override = lib.flat_mat("island_moss", Color(0.21, 0.30, 0.16), 0.95)
-	cap.position = Vector3(isl.x, top_y + 0.05, isl.y)
-	cap.scale = Vector3(1.8, 0.3, 1.8)
-	lib.add(g, cap, "中島苔面")
-	# 島上一棵小松 + 石灯籠（庭園的「景」）
-	var pine := MeshInstance3D.new()
-	pine.mesh = lib.tree_mesh("res://assets/models/tree_pine_a.glb")
-	pine.position = Vector3(isl.x - 0.4, top_y + 0.1, isl.y - 0.3)
-	pine.scale = Vector3(0.72, 0.66, 0.72)
-	pine.rotation.y = _lm_rng.randf_range(0.0, TAU)
-	lib.add(g, pine, "中島松")
-	var stone_i := _lmat("stone")
-	lib.cyl(g, "島灯籠竿", 0.10, 0.12, 0.8, stone_i, Vector3(isl.x + 0.9, top_y + 0.5, isl.y + 0.6), 8)
-	lib.box(g, "島灯籠火袋", Vector3(0.34, 0.3, 0.34), stone_i, Vector3(isl.x + 0.9, top_y + 1.05, isl.y + 0.6))
-	lib.box(g, "島灯籠笠", Vector3(0.52, 0.12, 0.52), stone_i, Vector3(isl.x + 0.9, top_y + 1.28, isl.y + 0.6))
-	# 石橋：兩片微拱的石板，從西北岸跨到島 —— 玩家可以走上島
-	var shore_pt := Vector2(pl.x - 4.2, pl.z + 3.4)
-	var bdir := (isl - shore_pt).normalized()
-	var blen := shore_pt.distance_to(isl) - 1.2
-	for k3 in 2:
-		var t0: float = 0.28 + 0.46 * float(k3)
-		var bc := shore_pt + bdir * blen * t0
-		var slab := lib.box(g, "石橋_%d" % k3, Vector3(1.35, 0.22, 2.3), _lmat("stone"),
-			Vector3(bc.x, bank_ref - 0.10 + float(k3) * 0.05, bc.y))
-		slab.rotation.y = atan2(bdir.x, bdir.y)
-		slab.rotation.x = (0.06 if k3 == 0 else -0.06)
-		var sb := StaticBody3D.new()
-		slab.add_child(sb)
-		sb.owner = _root
-		var sh := CollisionShape3D.new()
-		var bx2 := BoxShape3D.new()
-		bx2.size = Vector3(1.35, 0.25, 2.3)
-		sh.shape = bx2
-		sb.add_child(sh)
-		sh.owner = _root
-	# 中島也要能站 —— 玩家走石橋上島
-	var isb := StaticBody3D.new()
-	isb.position = Vector3(isl.x, top_y - 0.1, isl.y)
-	var ish := CollisionShape3D.new()
-	var icy := CylinderShape3D.new()
-	icy.radius = 1.9
-	icy.height = 0.6
-	ish.shape = icy
-	isb.add_child(ish)
-	lib.add(g, isb, "中島碰撞")
-	ish.owner = _root
-	# 沢飛石（橫過池面的踏石）拿掉了：這個池只有 9m，踏石橫過去佔滿水面 ——
-	# 反效果。庭池要留**空的水面**。
-	for i in 3:                                    # 池中的三尊石組
-		var a2 := float(i) / 3.0 * TAU + 0.7
-		var d2: float = shore * _lm_rng.randf_range(0.25, 0.5)
-		var sc3 := _lm_rng.randf_range(0.6, 1.1)
-		var rk3 := MeshInstance3D.new()
-		rk3.mesh = lib.blob_mesh(i * 29 + 5, _lm_rng.randf_range(0.6, 0.9), _lm_rng.randf_range(0.20, 0.34))
-		rk3.material_override = _lmat("cobble", -1)
-		# 池中立石：從池底長上來，露出水面一截
-		rk3.position = Vector3(pl.x + cos(a2) * d2,
-			rock_y.call(wc.x + pl.x + cos(a2) * d2, wc.y + pl.z + sin(a2) * d2, -sc3 * 0.55),
-			pl.z + sin(a2) * d2)
-		# 不要拉高 1.7 倍 —— 那會把圓潤的岩石抽成尖刺。日式庭園的立石是
-		# 「厚實、微微前傾」，不是尖塔。
-		rk3.scale = Vector3(sc3 * 0.95, sc3 * 1.05, sc3 * 0.85)
-		rk3.rotation.x = _lm_rng.randf_range(-0.18, 0.18)
-		rk3.rotation.z = _lm_rng.randf_range(-0.18, 0.18)
-		rk3.rotation.y = _lm_rng.randf_range(0.0, TAU)
-		lib.add(g, rk3, "立石_%d" % i)
-	# 沢渡り（踏石）
-	for i in 4:
-		lib.box(g, "踏石_%d" % i, Vector3(0.9, 0.35, 0.8), _lmat("stone"),
-			pl + Vector3(-HIEDA_POND_R * 0.7 + float(i) * HIEDA_POND_R * 0.45, -0.35,
-				HIEDA_POND_R * 0.35)).rotation.y = _lm_rng.randf_range(0.0, TAU)
-	# 春日燈籠（池畔）：基礎→竿→中台→火袋（開窗）→笠→寶珠，
-	# 一根連續的柱子撐上去，剪影一眼就認得（雪見型做出來像四腳桌）。
-	# ⚠ 舊位置是池心 +(R+1.9, −2.2)＝池的東南岸。池搬到東側之後那個位置正好
-	# 落在東牆的犬走り上（本地 x=19.3，牆內面才 17.9）。改到**西南岸、石橋橋頭
-	# 旁**：從緣側往東看是「燈籠 → 水面 → 中島」的層次，而且燈籠替橋頭定位。
-	var lz := pl + Vector3(-6.2, 0, 4.4)
-	lz.y = height_at(wc.x + lz.x, wc.y + lz.z) - y0
-	var stone_l := _lmat("stone", 1)
-	lib.cyl(g, "燈籠基礎", 0.52, 0.62, 0.26, stone_l, lz + Vector3(0, 0.13, 0), 8)
-	lib.cyl(g, "燈籠竿", 0.17, 0.20, 1.05, stone_l, lz + Vector3(0, 0.78, 0), 8)
-	for r_i in 2:                                   # 竿上的節（春日燈籠的特徵）
-		lib.cyl(g, "竿節_%d" % r_i, 0.23, 0.23, 0.07, stone_l,
-			lz + Vector3(0, 0.52 + float(r_i) * 0.52, 0), 8)
-	lib.cyl(g, "中台", 0.40, 0.30, 0.20, stone_l, lz + Vector3(0, 1.40, 0), 8)
-	lib.cyl(g, "火袋底", 0.36, 0.36, 0.07, stone_l, lz + Vector3(0, 1.54, 0), 6)
-	for c_i in 4:
-		var ca := float(c_i) / 4.0 * TAU + 0.4
-		lib.box(g, "火袋柱_%d" % c_i, Vector3(0.09, 0.46, 0.09), stone_l,
-			lz + Vector3(cos(ca) * 0.29, 1.80, sin(ca) * 0.29))
-	lib.cyl(g, "火袋頂", 0.38, 0.36, 0.07, stone_l, lz + Vector3(0, 2.06, 0), 6)
-	var kasa := MeshInstance3D.new()
-	var km := CylinderMesh.new()
-	km.top_radius = 0.10
-	km.bottom_radius = 0.72
-	km.height = 0.34
-	km.radial_segments = 6
-	km.material = stone_l
-	kasa.mesh = km
-	kasa.position = lz + Vector3(0, 2.27, 0)
-	lib.add(g, kasa, "燈籠笠")
-	lib.cyl(g, "寶珠", 0.0, 0.13, 0.22, stone_l, lz + Vector3(0, 2.55, 0), 8)
-	_lm_collide(g, Vector3(1.1, 2.7, 1.1), lz)
-	_audit.append("稗田邸：庭池石組 %d 顆（護岸＋州濱＋立石）" % rk_i)
-	_lm_hieda_planting(g, wc, y0)
-
-
-# ══════════════ 稗田邸院內植栽（使用者定案：村院另做小型植栽）══════════════
-#
-# ⚠ 這**不是**把 `maps/hieda/gen/*.res` 搬過來 —— 那批做不到，實測：
-#     hieda_garden.instances.json 的擺位跨度  95.4 × 107.0 m（136 實例）
-#     hieda_blockout.glb 本體                75.6 × 110.5 m
-#     村圖稗田邸保留區                        42.4 ×  45.6 m
-#   線性差 ~2.3×；而且扣掉主屋／緣側／長廊／離れ／庭池之後，塀內 38×41m
-#   真正能種東西的只剩 **593 ㎡（38%）**，面積差 ~17×。整套塞進來只會是一叢
-#   互相穿模的樹牆。那批資產是照**獨立地圖**的尺度做的（markers 裡還有一個
-#   target 待填的木戶 portal），留給它自己那張圖。
-#
-# 這裡的做法是**重用同樣那 10 種模組**，照村院的實際空地重排：
-#   ・生垣沿築地塀內側（門洞、主屋、離れ 讓開）
-#   ・紅葉在西南象限群聚 + 一株探出池面（庭池的借景）
-#   ・松兩株框住庭池的視線，避開從表門到主屋的通道
-#   ・灌木填在生垣與紅葉之間
-#
-# ⚠ 亂數用自己的 `_gard_rng`：稗田邸是 LANDMARKS 的第 3 座，動 `_lm_rng`
-#   會把後面的鎮守之杜／市場／足洗邸整組位移。
-const GARD_SEED := SEED + 6011
-
-## 院內的障礙（本地座標，[cx, cz, w, d]）—— 跟 builder 的幾何對齊
-const GARD_BLOCK := [
-	[-5.0, -11.5, 26.5, 16.5],     # 主屋基壇
-	[-5.0, -2.9, 24.0, 2.2],       # 緣側
-	[-5.0, -0.7, 5.6, 3.6],        # 唐破風玄関前廊（五段石階＋向拝柱）
-	[10.6, -6.0, 2.4, 12.0],       # 長廊
-	[13.5, -14.5, 7.9, 7.9],       # 離れ屋根
-	# 定案構圖的中軸與八字添景：參道是**筆直不斷開**的，兩側的添景也各有
-	# 明表座標，灌木不能長進來擋住視線收束。
-	[-5.0, 11.0, 8.0, 23.0],       # 參道（6m 鋪面 + 兩側各 1m）
-	[-0.3, 14.0, 3.2, 3.2],        # 狛犬（右）
-	[-9.7, 14.0, 3.2, 3.2],        # 狛犬（左）
-	[1.5, 14.7, 2.6, 2.6],         # 門前燈籠（右）
-	[-12.4, 16.4, 2.6, 2.6],       # 門前燈籠（左）
-	[4.9, 18.1, 5.2, 5.2],         # 門前松（右）
-	[-14.5, 18.4, 5.8, 5.8],       # 門前松（左）
-	[4.8, 12.9, 2.4, 2.4],         # 池畔春日燈籠
-]
-
-func _lm_hieda_planting(g: Node3D, wc: Vector2, y0: float) -> void:
 	var rng := RandomNumberGenerator.new()
-	rng.seed = GARD_SEED
-	var pond := Vector2(HIEDA_POND.x - wc.x, HIEDA_POND.y - wc.y)
-	# 本地 (x,z) → 本地 Vector3（貼地形；院子被整平過但庭池挖了碗，
-	# 而 g 的原點取的是**含碗底**的最低點，直接用 y=0 會整批埋進土裡 0.55m）
-	var lp := func(lx: float, lz: float) -> Vector3:
-		return Vector3(lx, height_at(wc.x + lx, wc.y + lz) - y0, lz)
-	var free := func(lx: float, lz: float, need: float) -> bool:
-		# 界限是**犬走り的內緣**（牆心 20/21.5 − 石垣腳 0.79 − 碎石帶 1.34），
-		# 不是牆的內面 —— 種在碎石帶上的灌木讀起來像從水泥地裡長出來的。
-		if absf(lx) > 17.87 - need or absf(lz) > 19.37 - need:
-			return false
-		for b in GARD_BLOCK:
-			if absf(lx - float(b[0])) < float(b[2]) * 0.5 + need \
-					and absf(lz - float(b[1])) < float(b[3]) * 0.5 + need:
-				return false
-		# 庭池（水面半徑 + 護岸石組那一圈）
-		if Vector2(lx - pond.x, lz - pond.y).length() < HIEDA_POND_R * 1.05 + need:
-			return false
-		return true
-
+	rng.seed = GROVE_SEED
+	var hw: float = float(lm.w) * 0.5
+	var hd: float = float(lm.d) * 0.5
+	var cx: float = float(lm.x)
+	var cz: float = float(lm.z)
+	var kinds := ["res://assets/models/tree_round_a.glb",
+		"res://assets/models/tree_round_c.glb", "res://assets/models/tree_pine_a.glb"]
 	var batch := {}
-	var put := func(mod: String, t: Transform3D) -> void:
-		if not batch.has(mod):
-			batch[mod] = [] as Array[Transform3D]
-		batch[mod].append(t)
-
-	# ── 生垣：沿格子塀內側（模組實測 2.63 長 × 1.19 高 × 1.24 深）──
-	# 間距 2.5 < 模組長 2.63，接得起來才是「一道」生垣。
-	# ⚠ 舊值 ±18.8 / 20.3 是貼著築地塀內面排的。換成格子塀之後牆腳外多了一圈
-	# 1.68m 的犬走り，舊位置整排會種在碎石帶上 —— 全部往內退到犬走り內緣。
-	# 南緣兩段還要讓開新的門洞與參道（中軸挪到 x=−5）。
-	var HED := ["hieda_hedge_a", "hieda_hedge_b", "hieda_hedge_c"]
-	var runs := [
-		{"x": -17.1, "a": -1.0, "b": 16.5, "ax": false},    # 西牆（主屋基壇以南）
-		{"x": 17.1, "a": -8.0, "b": 14.5, "ax": false},     # 東牆（離れ以南、庭池以東）
-		{"z": 18.6, "a": -18.0, "b": -8.8, "ax": true},     # 南牆・門西
-		{"z": 18.6, "a": 0.2, "b": 16.0, "ax": true},       # 南牆・門東
-	]
-	var n_hedge := 0
-	for r in runs:
-		var ax: bool = bool(r.ax)
-		var t := float(r.a)
-		while t <= float(r.b):
-			var lx: float = t if ax else float(r.x)
-			var lz: float = float(r.z) if ax else t
-			t += 2.5
-			var yaw: float = (0.0 if ax else PI * 0.5) + rng.randf_range(-0.04, 0.04)
-			var s := rng.randf_range(0.94, 1.06)
-			var b := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(s, rng.randf_range(0.9, 1.1), s))
-			put.call(HED[n_hedge % 3], Transform3D(b, lp.call(lx, lz)))
-			n_hedge += 1
-
-	# ── 紅葉：兩株框住參道 + 西側群聚 + 一株探出池面 ──
-	var MAP3 := ["hieda_maple_a", "hieda_maple_b", "hieda_maple_c"]
-	# ⚠ 樹冠是隨機縮放又隨機轉向的，旋轉後的 AABB 半徑實測到 5.05m ——
-	# 貼著保留區邊界會變成「這次剛好過、下次剛好不過」。收到 |x| ≤ 15.5、z ≤ 14.5。
-	# ⚠ 舊的西南象限群聚（−13.5 / −9.5 / −5.5，z≈15）整組壓在新的前庭構圖上：
-	# −5.5 那株直接站在參道正中（中軸挪到 x=−5），−9.5 與 −13.5 壓住左側的
-	# 門前燈籠與松。前兩株改擺到獨立版**巨樹框景**的位置（軸線 ±4.9、z 7.9/9.0）
-	# —— 那本來就是定案構圖裡收束視線的一對，村院沒有巨樹資產，用紅葉擔這角色。
-	var maples := [Vector2(-0.1, 7.9), Vector2(-9.9, 9.0), Vector2(-15.5, 12.0),
-		Vector2(-15.0, 6.0), Vector2(14.0, 14.2)]
-	for i in maples.size():
-		var p: Vector2 = maples[i]
-		var s := rng.randf_range(0.76, 0.94)
-		var b := Basis(Vector3.UP, rng.randf_range(0.0, TAU)) \
-			* Basis.from_scale(Vector3(s, s * rng.randf_range(0.94, 1.08), s))
-		put.call(MAP3[i % 3], Transform3D(b, lp.call(p.x, p.y)))
-		# 7m 高的樹要有幹的碰撞（跟鎮守之杜的神木同一條規矩）
-		var body := StaticBody3D.new()
-		body.position = lp.call(p.x, p.y)
-		var sh := CollisionShape3D.new()
-		var cy := CylinderShape3D.new()
-		cy.radius = 0.42
-		cy.height = 5.0
-		sh.shape = cy
-		sh.position = Vector3(0, 2.5, 0)
-		body.add_child(sh)
-		lib.add(g, body, "紅葉幹_%d" % i)
-		sh.owner = _root
-
-	# ── 松：框住庭池的視線，讓開表門→主屋的通道 ──
-	for p2 in [Vector2(4.0, 2.0), Vector2(-13.0, 1.5)]:
-		var s2 := rng.randf_range(0.82, 0.96)
-		put.call("hieda_pine_a", Transform3D(
-			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s2, s2, s2)),
-			lp.call(p2.x, p2.y)))
-
-	# ── 灌木：填在生垣與紅葉之間（模組本身 3~3.6m 寬、根部埋在原點以下）──
-	# ⚠ 株數不寫死 12，改成「補到全院 51 株」（使用者定案：村院植栽總數不變）。
-	# 生垣因為犬走り退縮、南緣讓開新門洞而少了幾株，缺口在這裡補回來 ——
-	# 補的是**數量**，位置仍然照 free() 的規則挑。
-	var BSH := ["hieda_bush_a", "hieda_bush_b", "hieda_bush_c"]
-	var n_bush := 0
 	var tries := 0
-	var n_want: int = 51 - n_hedge - maples.size() - 2
-	while n_bush < n_want and tries < 900:
+	var n := 0
+	while n < 46 and tries < 3000:
 		tries += 1
-		var lx := rng.randf_range(-17.0, 17.0)
-		var lz := rng.randf_range(-1.0, 18.0)
-		if not free.call(lx, lz, 2.4):
+		var x := rng.randf_range(cx - hw - 9.0, cx + hw + 9.0)
+		var z := rng.randf_range(cz - hd - 9.0, cz + hd + 9.0)
+		# 只留環帶：保留區內不種（那是庭院自己的地），環帶外也不種
+		var ox: float = absf(x - cx) - hw
+		var oz: float = absf(z - cz) - hd
+		var out: float = maxf(ox, oz)
+		if out < 3.0 or out > 9.0:
 			continue
-		var near := false
-		for p3 in maples:
-			if Vector2(lx, lz).distance_to(p3) < 4.6:
-				near = true
-				break
-		if near:
+		# 門面動線讓開：橫街（z=−135，含路寬）與外參道的正前方
+		if absf(z + 135.0) < 9.0:
 			continue
-		var s3 := rng.randf_range(0.48, 0.68)
-		put.call(BSH[n_bush % 3], Transform3D(
-			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s3, s3, s3)),
-			lp.call(lx, lz)))
-		n_bush += 1
-
-	var total := 0
-	var mods: Array = batch.keys()
-	mods.sort()
-	for m in mods:
-		var list: Array[Transform3D] = batch[m]
+		if absf(x - (cx + HIEDA_OFF.x)) < 9.0 and z > cz:
+			continue
+		if _road_info(x, z) > 0.02:
+			continue
+		var k: String = kinds[n % kinds.size()]
+		if not batch.has(k):
+			batch[k] = [] as Array[Transform3D]
+		var s := rng.randf_range(0.72, 1.15)
+		batch[k].append(Transform3D(
+			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s, s, s)),
+			Vector3(x, height_at(x, z), z)))
+		n += 1
+	var g := lib.add(_root, Node3D.new(), "稗田邸緩衝林")
+	var ks: Array = batch.keys()
+	ks.sort()
+	for k in ks:
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(
-			lib.prop_mesh("res://assets/models/%s.glb" % m), list, [],
-			OUT_DIR + "gen/mm_%s.res" % m)
-		mmi.material_override = lib.foliage_vc_mat()
-		# 葉子是薄片，投影要 double-sided 才不會半邊沒影子
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
-		lib.add(g, mmi, "MM_%s" % m)
-		total += list.size()
-	_audit.append("稗田邸院內植栽：生垣 %d、紅葉 %d、松 2、灌木 %d —— 共 %d 株 / %d draw call"
-		% [n_hedge, maples.size(), n_bush, total, mods.size()])
+		mmi.multimesh = lib.make_multimesh(lib.tree_mesh(String(k)), batch[k], [],
+			OUT_DIR + "gen/mm_hieda_grove_%s.res" % String(k).get_file().get_basename())
+		lib.add(g, mmi, "MM_%s" % String(k).get_file().get_basename())
+	_audit.append("稗田邸緩衝疏林：%d 株 / %d 種（保留區外緣 3~9m 環帶，門面動線讓開）"
+		% [n, ks.size()])
+
+
+## blockout 專用材質：頂點色 + **關掉背面剔除**。
+##
+## ⚠ 這不是「順手保險一下」，是修一個實際炸出來的洞。Blender/Cycles 預設
+## **雙面渲染**，所以 make_hieda.py 那邊繞序寫錯的面在 Blender 的算圖裡看起來
+## 完全正常；Godot 預設剔背面，同一批面就整片消失。第一次落地實測：整條
+## 6m 切石參道（`build_avenue` 的 quad，`flip=(y1 > y0)` 在這個呼叫方向下
+## 恆為 false）在引擎裡**一塊都看不到**，前庭只剩草地 —— 而後院的枯山水、
+## 水池同樣是貼地 quad 卻好好的，因為那批的繞序剛好是對的。
+## 逐面去修 Blender 端的繞序要重跑整條匯出鏈，而且下次加東西還會再犯；
+## 關掉剔除是一次解決。代價只有背面的片段著色，blockout 才 22,600 面。
+func _hieda_mat() -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	m.roughness = 0.88
+	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	m.resource_name = "hieda_blockout_vc"
+	return m
+
+
+func _lm_hieda(g: Node3D, _spread: float) -> void:
+	# 院子被 _flatten_yards 壓平；群組原點取保留區內的最低點 —— 整平之後
+	# 兩者相等，仍然照算不寫死 0（哪天整平規則再改，這裡會自己跟著走）。
+	var yard: float = _flatten_yards(g.position.x, g.position.z,
+		bank_h(g.position.x, g.position.z)) - g.position.y
+	var off := Vector3(HIEDA_OFF.x, yard, HIEDA_OFF.y)
+	var body := MeshInstance3D.new()
+	body.mesh = lib.prop_mesh("res://assets/models/hieda_blockout.glb", _hieda_mat())
+	body.position = off
+	body.set_meta("needs_trimesh", true)
+	lib.add(g, body, "本體")
+	# 植栽：擺位表的座標是 blockout 的本地座標，所以要掛在同一個偏移下面
+	var holder := lib.add(g, Node3D.new(), "植栽") as Node3D
+	holder.position = off
+	var n: int = preload("res://tools/gen_hieda.gd").new().emit(lib, holder)
+	_audit.append("稗田邸（完整獨立版）：blockout 22,600 面 + 植栽 %d 實例 / 10 模組" % n)
 
 
 # ══════════════ 街緣設施 MIGRATE：門樓／石溝／街燈 ══════════════
@@ -3914,16 +3029,17 @@ func _write_meta() -> void:
 		# （Area3D 照建、不畫光柱、不切場景），填上目的地就自動生效。
 		_bank_portal(-286.0),
 		# 稗田邸玄関前 → 室內一樓（傳送場景）。
-		# ⚠ 位置隨前庭替換一起挪：舊點 (−84, −167) 在主屋正面外 0.8m，那裡
-		# 現在是唐破風玄関的五段石階**底下**（緣側往外 2.2m 才是階梯口）。
-		# 新點放在**石階腳下**、參道的終點上 —— 定案構圖第 3 條的「參道一路連到
-		# 唐破風石階腳下」，走到底就是入口，動線與構圖同一條線。
-		# 世界座標 = 院落中心 (−78, −164) + 本地 (HIEDA_AXIS, +0.6)。
+		# ⚠ 位置隨「換成完整獨立版」一起挪。座標不是量出來的、是**推**出來的：
+		# make_hieda.py 的 `Y_STEP = -11.43` 是唐破風石階最外緣，也是參道的
+		# 起點（`build_avenue(bld, Y_STEP, Y_OUT)`）。Blender→Godot 是
+		# z = −y，所以石階腳在 blockout 本地 z=+11.43；blockout 原點在世界
+		# (−78.05, −178.0)（＝保留區中心 + HIEDA_OFF），石階腳就是 z=−166.6。
+		# portal 再往參道外挪 2m，站在階前而不是站在階上。
 		# ⚠ 這個 portal **刻意不進 connections**：connections 是世界圖層級
 		# 的連通表（跟 mapRegistry.js 對齊），建築內部不是世界圖上的一格
 		# —— 「不進 mapRegistry」的裁決串接後仍適用，樓層連結只活在
 		# meta 的 portal 層。
-		{"x": -83.0, "y": snappedf(height_at(-83, -163.4), 0.01), "z": -163.4,
+		{"x": -78.05, "y": snappedf(height_at(-78.05, -164.6), 0.01), "z": -164.6,
 		 "target": "hieda1f"},
 	]
 	var meta := {
