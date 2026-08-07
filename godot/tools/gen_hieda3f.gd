@@ -376,8 +376,17 @@ func _build_core() -> void:
 	var g := lib.add(_root, Node3D.new(), "核心典籍")
 	g.position = Vector3(8.4, 0, 0)
 	var dark := _m_dark()
-	lib.cyl(g, "台座", 0.85, 1.0, 0.22, lib.pbr("3F台石", "stone_wall", 0.6,
-		Color(0.34, 0.34, 0.35)), Vector3(0, 0.11, 0), 12)
+	# ⚠ 台座第一版用石砌（stone_wall）—— 整層是溫潤木質調，一顆粗糙石感
+	# 的基座跳出來很突兀（使用者退件）。「莊重、久遠」改用**材質等級的
+	# 細微差異**做：上過漆的深色木（更深、更有光澤）對比架上未上漆的
+	# 原木 —— 同色系內分級，不引入脫節的材質類別。
+	var lac := lib.pbr("3F台漆", "dark_wood", 0.7, Color(0.20, 0.185, 0.17))
+	lac.roughness = 0.22
+	lib.cyl(g, "台座", 0.85, 1.0, 0.16, lac, Vector3(0, 0.08, 0), 12)
+	lib.cyl(g, "台座上段", 0.68, 0.80, 0.10, lac, Vector3(0, 0.21, 0), 12)
+	# 框的細線：漆器的「緣」——講究的東西才有的收邊
+	lib.cyl(g, "台縁", 0.87, 0.87, 0.025, lib.pbr("3F台縁", "dark_wood", 0.5,
+		Color(0.42, 0.36, 0.26)), Vector3(0, 0.165, 0), 12)
 	lib.box(g, "書見台脚", Vector3(0.30, 0.85, 0.30), dark, Vector3(0, 0.62, 0))
 	var top := lib.box(g, "書見台面", Vector3(1.05, 0.06, 0.75), dark, Vector3(0, 1.08, 0))
 	top.rotation.x = -0.20
