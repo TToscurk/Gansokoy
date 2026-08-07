@@ -53,6 +53,17 @@ const ROUTES := {
 		{ "name": "店前 → 南方林道", "a": Vector2(0, 16), "b": Vector2(0, -58) },
 		{ "name": "店前 → 東側林緣", "a": Vector2(0, 16), "b": Vector2(58, 0) },
 	],
+	# 稗田邸一樓（傳送場景）：土間 → 客間各角落。式台 0.15+0.15 的落差
+	# 要走得上去；家具（矮桌／屏風／箱階段）不能把哪個角落堵死。
+	"hieda1f": [
+		{ "name": "玄関 → 床の間前", "a": Vector2(0, 5.2), "b": Vector2(-4.3, -5.0) },
+		# ⚠ 終點不能塞在屏風跟西襖牆之間那條 1.9m 的縫 —— 膠囊擠得過去，
+		# 但 CELL=2 的格點兩側各壓在牆與屏風的碰撞箱上，BFS 根本沒有格點
+		# 可走（格點解析度的假陰性，不是真的堵死）。驗「西區沒被家具封死」
+		# 用屏風北緣外側的格點就夠了。
+		{ "name": "玄関 → 屏風北側（西區）", "a": Vector2(0, 5.2), "b": Vector2(-8.5, 2.0) },
+		{ "name": "玄関 → 東の間", "a": Vector2(0, 5.2), "b": Vector2(7.0, -5.0) },
+	],
 }
 
 var _sps: PhysicsDirectSpaceState3D
@@ -66,7 +77,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou"]
+		maps = ["village", "trail", "kourindou", "hieda1f"]
 	else:
 		maps = [args[0]]
 	_cap = CapsuleShape3D.new()
