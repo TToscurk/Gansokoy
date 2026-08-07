@@ -3381,6 +3381,15 @@ func _write_meta() -> void:
 		# 河畔道北端出圖 → 未來的霧之湖。target 留 null = 保留中的觸發區
 		# （Area3D 照建、不畫光柱、不切場景），填上目的地就自動生效。
 		_bank_portal(-286.0),
+		# 稗田邸玄関前 → 室內一樓（傳送場景）。位置在主屋正面（門臉
+		# 世界 z≈-167.8）外 0.8m、庭池水線外側；落點（+4m 朝原點推）
+		# 實測在池畔緩坡的平坦段上。
+		# ⚠ 這個 portal **刻意不進 connections**：connections 是世界圖層級
+		# 的連通表（跟 mapRegistry.js 對齊），建築內部不是世界圖上的一格
+		# —— 「不進 mapRegistry」的裁決串接後仍適用，樓層連結只活在
+		# meta 的 portal 層。
+		{"x": -84.0, "y": snappedf(height_at(-84, -167), 0.01), "z": -167.0,
+		 "target": "hieda1f"},
 	]
 	var meta := {
 		"id": MAP_ID,

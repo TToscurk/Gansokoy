@@ -395,9 +395,12 @@ func _build_furniture() -> void:
 	# 紋樣：抽象流動紋 —— 直向的流線，不是山水畫。
 	var sg := lib.add(g, Node3D.new(), "屏風")
 	# ⚠ 第一版貼在西襖牆前 0.3m —— 兩個都是米色直紋，屏風**融進牆裡**。
-	# 站到桌後、斜 24°，跟牆脫開，才是一件「擺在空間裡的東西」。
-	sg.position = Vector3(-7.3, 0, -3.3)
-	sg.rotation.y = 0.42
+	# 站到桌後、斜置，跟牆脫開，才是一件「擺在空間裡的東西」。
+	# ⚠⚠ 串接輪 portal_test 抓到：擺在 (-7.3,-3.3) 時屏風南端離箱階段
+	# 只剩 4cm —— 上二樓的樓梯口被封在西南角的口袋裡。北移 + 收斜角，
+	# 讓出 1.35m 的走道；樓梯也要看得見，玩家才找得到上樓的路。
+	sg.position = Vector3(-6.9, 0, -1.9)
+	sg.rotation.y = 0.30
 	var gold := lib.flat_mat("屏風地", Color(0.70, 0.60, 0.40), 0.5)
 	var st_a := lib.flat_mat("流紋深", Color(0.24, 0.32, 0.36), 0.7)
 	var st_b := lib.flat_mat("流紋金", Color(0.72, 0.60, 0.34), 0.5)
@@ -546,21 +549,35 @@ func _build_garden_backdrop() -> void:
 	lib.box(g, "參道", Vector3(3.6, 0.16, 14.0),
 		lib.pbr("參道石", "stone_flag", 0.5, Color(0.80, 0.79, 0.74)),
 		Vector3(0, -0.76, HD + 8.6))
-	# 狛犬一對（真資產縮小 0.8 —— 「剛走過的狛犬」）
-	for sx in [-1.0, 1.0]:
-		var k9 := MeshInstance3D.new()
-		k9.mesh = lib.prop_mesh("res://assets/models/komainu_a.glb")
-		k9.position = Vector3(sx * 3.1, -0.75, HD + 4.5)
-		k9.scale = Vector3.ONE * 0.8
-		k9.rotation.y = -sx * 1.35         # 相對而立、微朝參道來向
-		lib.add(g, k9, "狛犬_%d" % int(sx + 1.0))
-	# 春日燈籠一對
-	for sx in [-1.0, 1.0]:
-		var lt := MeshInstance3D.new()
-		lt.mesh = lib.prop_mesh("res://assets/models/stone_lantern.glb")
-		lt.position = Vector3(sx * 3.3, -0.75, HD + 8.5)
-		lt.scale = Vector3.ONE * 0.85
-		lib.add(g, lt, "燈籠_%d" % int(sx + 1.0))
+	# ⚠ 串接後假窗改對「真正的室外」：這扇門通往 village 圖的稗田邸院落
+	# （庭池在門外左前方、紅葉群在西、表門是藥醫門）—— 原本畫的是獨立版
+	# 前庭的狛犬/參道，玩家走出門看到的卻是院落，迴圈就穿幫了。
+	# 庭池（面向 +z 時 +x 在左手邊 = 世界東側，對上 village 的池位）
+	lib.cyl(g, "庭池面", 4.0, 4.0, 0.05,
+		lib.flat_mat("假窗池水", Color(0.30, 0.42, 0.42), 0.25),
+		Vector3(3.4, -0.72, HD + 9.6), 18)
+	for k in 4:
+		var rk := MeshInstance3D.new()
+		rk.mesh = lib.blob_mesh(211 + k * 13, 0.5, 0.25)
+		rk.material_override = lib.pbr("假窗岸石", "stone_wall", 0.85, Color(0.48, 0.47, 0.44))
+		var a := float(k) / 4.0 * TAU + 0.9
+		rk.position = Vector3(3.4 + cos(a) * 4.1, -0.7, HD + 9.6 + sin(a) * 3.9)
+		rk.scale = Vector3.ONE * _rng.randf_range(0.45, 0.8)
+		lib.add(g, rk, "假窗岸石_%d" % k)
+	# 春日燈籠一座（池畔 —— village 院落的那座）
+	var lt := MeshInstance3D.new()
+	lt.mesh = lib.prop_mesh("res://assets/models/stone_lantern.glb")
+	lt.position = Vector3(7.6, -0.75, HD + 8.2)
+	lt.scale = Vector3.ONE * 0.85
+	lib.add(g, lt, "燈籠")
+	# 築地塀一線（門兩側 —— 院落的圍牆；表門剪影在牆中央的缺口上）
+	for sxw in [-1.0, 1.0]:
+		lib.box(g, "假窗塀_%d" % int(sxw + 1.0), Vector3(14.0, 2.6, 0.5),
+			lib.pbr("假窗塀壁", "plaster", 1.2, Color(0.80, 0.76, 0.66)),
+			Vector3(sxw * 11.0, 0.55, HD + 13.4))
+		lib.box(g, "假窗塀瓦_%d" % int(sxw + 1.0), Vector3(14.2, 0.22, 0.7),
+			lib.pbr("假窗塀頂", "roof_kawara", 0.3, Color(0.60, 0.66, 0.78)),
+			Vector3(sxw * 11.0, 1.95, HD + 13.4))
 	# 表門的剪影（遠端收束）
 	var dark := _m_dark()
 	for sx in [-1.0, 1.0]:
@@ -575,9 +592,10 @@ func _build_garden_backdrop() -> void:
 	for k in 4:
 		var t := MeshInstance3D.new()
 		t.mesh = lib.tree_mesh("res://assets/models/tree_round_a.glb")
-		var sx2 := -1.0 if k % 2 == 0 else 1.0
-		t.position = Vector3(sx2 * _rng.randf_range(8.5, 14.0), -0.8,
-			HD + _rng.randf_range(9.5, 14.0))
+		# 紅葉群在村圖院落的西側 —— 面向 +z 時是右手邊（-x）
+		var sx2 := -1.0 if k < 3 else 1.0
+		t.position = Vector3(sx2 * _rng.randf_range(7.5, 13.0), -0.8,
+			HD + _rng.randf_range(8.5, 12.5))
 		t.scale = Vector3.ONE * _rng.randf_range(1.0, 1.35)
 		t.rotation.y = _rng.randf_range(0.0, TAU)
 		lib.add(g, t, "庭樹_%d" % k)
@@ -633,13 +651,16 @@ func _write_meta() -> void:
 		"id": MAP_ID,
 		"note": "稗田邸一樓（玄関/客間）—— 傳送場景。外殼照凍結的外觀量體"
 			+ "（25.48×14.56、淨高 3.90、障子帶 1.18→2.32 朝前庭 +z）。"
-			+ "回程 portal 的 target 等稗田邸室外圖建成後填上（現為保留觸發區）。"
+			+ "玄関 portal ↔ village（人間之里的稗田邸院落）；階段口 → hieda2f。"
 			+ "不進 mapRegistry：這是建築內部，不是世界圖上的一格。",
 		"playSize": [26, 16],
 		"safe": true,
 		"connections": [],
+		# 串接（2026-08-07）：室外 = village 圖裡的稗田邸院落（獨立室外圖
+		# 仍未建）。玄関 portal ↔ village 的玄関前 portal；階段口 → 2F。
 		"portals": [
-			{"x": 0.0, "y": DOMA_Y, "z": 6.2, "target": null},
+			{"x": 0.0, "y": DOMA_Y, "z": 6.2, "target": "village"},
+			{"x": -8.2, "y": 0.0, "z": -4.9, "target": "hieda2f"},
 		],
 		"colliders": [],
 	}

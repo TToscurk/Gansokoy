@@ -625,12 +625,13 @@ func _write_meta() -> void:
 		"note": "稗田邸三樓（大書庫）—— 傳送場景。住在入母屋屋根量體裡"
 			+ "（舉高 4.90、屋面斜率 0.8194、腰壁切在 |z|=3.55）。"
 			+ "『內部大於外部』靠視覺技術：書架貼真實上限 3.55m、頂部無光隱沒。"
-			+ "階段口 portal target 待二樓串接時填上。不進 mapRegistry。",
+			+ "階段口 ↔ hieda2f。不進 mapRegistry。",
 		"playSize": [21, 8],
 		"safe": true,
 		"connections": [],
+		# 串接：階段口（下）↔ 2F 的上り階段。
 		"portals": [
-			{"x": -8.9, "y": 0.0, "z": -0.5, "target": null},
+			{"x": -8.9, "y": 0.0, "z": -0.5, "target": "hieda2f"},
 		],
 		"colliders": [],
 	}

@@ -314,6 +314,20 @@ func _build_stairwell() -> void:
 					float(s[1]) + (0.0 if alx else t)))
 	_collide(g, Vector3(2.3, 0.9, 0.15), Vector3(0, 0, 0.62))
 	_collide(g, Vector3(0.15, 0.9, 1.25), Vector3(1.10, 0, 0))
+	# ── 上り階段（→ 三樓）：西牆中段的箱階段，portal 在它腳下 ──
+	var ug := lib.add(_root, Node3D.new(), "上り階段")
+	ug.position = Vector3(-10.05, 0, -0.1)
+	var uw := lib.pbr("2F階段箱", "planks", 0.6, Color(0.50, 0.44, 0.35))
+	for k in 5:
+		lib.box(ug, "段_%d" % k, Vector3(0.85, 0.42 * float(k + 1), 0.44), uw,
+			Vector3(0, 0.21 * float(k + 1), -0.9 + float(k) * 0.44))
+	lib.box(ug, "側板", Vector3(0.05, 2.15, 2.3), uw, Vector3(0.44, 1.07, 0))
+	lib.box(ug, "口框", Vector3(1.1, 0.10, 2.3), _m_dark(), Vector3(-0.05, CEIL_H - 0.05, 0))
+	var uwell := StandardMaterial3D.new()
+	uwell.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	uwell.albedo_color = Color(0.045, 0.040, 0.035)
+	lib.box(ug, "口暗", Vector3(0.95, 0.02, 2.1), uwell, Vector3(-0.05, CEIL_H - 0.11, 0))
+	_collide(ug, Vector3(0.95, 2.2, 2.4), Vector3(0, 0, 0))
 
 
 # ── 卷軸收納格：整面北牆 —— 「不合常理地多」的主載體（數百卷）──
@@ -752,13 +766,16 @@ func _write_meta() -> void:
 		"id": MAP_ID,
 		"note": "稗田邸二樓（阿求書房）—— 傳送場景。外殼照凍結的外觀量體"
 			+ "（21.88×11.96、淨高 3.10、窗帶 1.22→2.28 朝後院 -z）。"
-			+ "階段口 portal 的 target 等一樓/室外圖串接時填上（現為保留觸發區）。"
+			+ "階段口（下）↔ hieda1f；上り階段 → hieda3f。"
 			+ "不進 mapRegistry：建築內部不是世界圖上的一格。",
 		"playSize": [22, 12],
 		"safe": true,
 		"connections": [],
+		# 串接：階段口（下）↔ 1F；上り階段（西牆中段）→ 3F。
+		# 兩個 portal 圓柱半徑 1.6，中心距 4.1 —— 不重疊。
 		"portals": [
-			{"x": -8.9, "y": 0.0, "z": -3.2, "target": null},
+			{"x": -8.9, "y": 0.0, "z": -3.2, "target": "hieda1f"},
+			{"x": -9.2, "y": 0.0, "z": 0.9, "target": "hieda3f"},
 		],
 		"colliders": [],
 	}
