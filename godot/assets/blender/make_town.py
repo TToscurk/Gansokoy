@@ -712,6 +712,12 @@ def export(ob, name):
 # ⚠ 屋身高是反推的：body = 目標 - 基石 0.30 - (D/2)·tanθ - 棟 0.14。
 # f_b 原本 D=8.2/29° 在 4.5 的目標下反推出 1.79m 屋身（低於 1.8 的下限，
 # assert 會擋），所以 D 收到 7.6、θ 收到 26。
+# ⚠ machiya_f_a 已經換成 **production prototype**（PHASE 1）：幾何由
+# `make_machiya.py` 產（真壁造軸組 + 語意材質 + 構件化屋頂／庇），不再走
+# 下面這個 blockout 的 `machiya()`。尺寸列在這裡是因為 manifest 仍由本檔
+# 統一寫出 —— 一份 manifest 一個寫入者，兩邊各寫一份遲早對不上。
+# 其餘四種維持 legacy blockout，Phase 1 明令不批量替換。
+PROTO = {"machiya_f_a"}
 MACHIYA = [
     ("machiya_f_a", 7.6, 7.8, 4.50, 1, 23.0, 11),   # 前排（規格 4.5~5.5 → 壓到下限）
     ("machiya_f_b", 8.8, 7.6, 4.50, 1, 26.0, 23),   # 前排
@@ -725,10 +731,32 @@ manifest = {"note": "人間之里模組庫。由 make_town.py 產出，gen_town.
             "modules": {}}
 for name, W, D, bh, st, pit, sd in MACHIYA:
     clear()
-    b = B()
-    total, facade = machiya(b, W, D, bh, st, math.radians(pit), sd)
-    ob = b.build(name)
-    n = export(ob, name)
+    if name in PROTO:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "make_machiya", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                         "make_machiya.py"))
+        _mm = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_mm)
+        _mm.make_materials()
+        _b = _mm.MB()
+        _ridge, _door_x = _mm.machiya_f_a(_b, W, D, bh, math.radians(pit))
+        ob = _b.build(name)
+        rep = _mm.validate(ob)
+        assert rep["degenerate"] == 0, "prototype 有退化面：%s" % rep
+        assert len(rep["material_faces"]) == 6, "語意材質不齊：%s" % rep
+        n = _mm.export(ob, name)
+        n = len(ob.data.polygons)
+        total = max(v.co.z for v in ob.data.vertices)
+        facade = {"door_x": round(_door_x, 3), "door_w": 1.63,
+                  "beam_z": round(_mm.LINTEL_Z + 0.30 - 0.07, 3),
+                  "bay_w": round(W / 4.0, 3), "nbay": 4}
+        print("  [PROTO] %s 面 %d 材質 %s" % (name, n, rep["material_faces"]))
+    else:
+        b = B()
+        total, facade = machiya(b, W, D, bh, st, math.radians(pit), sd)
+        ob = b.build(name)
+        n = export(ob, name)
     # ⚠ fw 要含**屋脊蓋**的 0.24（gable_roof 的棟是 hw*2+0.24）。
     # 少算的話 gen_town 的 OBB 自檢會樂觀 0.24m —— 實測最壞穿透從 0.000
     # 變成 0.038m，還在 0.05 門檻內，但報出來的餘裕是假的。

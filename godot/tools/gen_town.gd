@@ -1301,7 +1301,17 @@ func _emit_batches() -> void:
 	names.sort()
 	for kind in names:
 		var list: Array = _batch[kind]
-		var mesh: Mesh = lib.prop_mesh(String(_mods[kind]["glb"]))
+		# ⚠ PHASE 1：帶語意材質的 production 模組要走 `semantic_mesh()`，
+		# 逐 surface 依 Blender 材質名掛專案的 PBR 材質；legacy blockout 模組
+		# 仍是單一頂點色 mesh，走舊路徑。判斷依據是 **surface 數**（>1 就是
+		# 分過材質的），不是寫死模組名 —— Phase 2 加新模組時不用再改這裡。
+		var probe: Array = lib.semantic_mesh(String(_mods[kind]["glb"]))
+		var mesh: Mesh = probe[0]
+		if mesh.get_surface_count() > 1:
+			_audit.append("　%s：語意材質 %d surface %s" % [kind, mesh.get_surface_count(),
+				str(probe[1])])
+		else:
+			mesh = lib.prop_mesh(String(_mods[kind]["glb"]))
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = lib.make_multimesh(mesh, list, [], OUT_DIR + "gen/mm_%s.res" % kind)
 		lib.add(g, mmi, "MM_%s" % kind)

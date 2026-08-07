@@ -296,6 +296,65 @@ func rock_mat_dry() -> StandardMaterial3D:
 	_save_mat(m, "rock_dry")
 	return m
 
+## ── 語意材質（PHASE 1：Blender → GLB → Godot 的材質身分要活著走完）──
+##
+## ⚠ `prop_mesh()` 會把 mesh 的**每一個** surface 覆蓋成同一份材質。那對
+## 頂點色資產（岩石／樹／鴨）是對的，對 production 町家是災難：Blender 端
+## 好不容易分出 WOOD / PLASTER / KAWARA / SHOJI 六個 primitive，進 Godot
+## 第一件事就被抹成一個 vertex-color 材質，語意當場死亡。
+##
+## 這裡的做法是**逐 surface 照名字換成專案的 PBR 材質**：glTF 匯入器會把
+## Blender 材質名帶進來（可能是 "WOOD" 或 "WOOD_001" 之類的變體，所以用
+## 前綴比對）。對不上的名字保留 glb 自己的材質、不亂猜。
+const SEMANTIC := {
+	"WOOD_LT": ["planks", 0.5, Color(0.72, 0.66, 0.58)],
+	"WOOD": ["dark_wood", 0.45, Color(0.44, 0.47, 0.45)],
+	"PLASTER": ["plaster", 0.4, Color(1.16, 1.13, 1.06)],
+	"STONE": ["stone_wall", 0.30, Color(0.90, 0.90, 0.88)],
+	"KAWARA": ["roof_kawara", 0.22, Color(0.80, 0.86, 1.00)],
+	"SHOJI": ["shoji", 0.30, Color(0.96, 0.94, 0.90)],
+}
+
+func semantic_mat(sem: String) -> Material:
+	if not SEMANTIC.has(sem):
+		return null
+	var spec: Array = SEMANTIC[sem]
+	return pbr("sem_" + sem, String(spec[0]), float(spec[1]), spec[2])
+
+
+## 保留材質身分的 glb 載入：逐 surface 依材質名掛語意材質。
+## 回傳 [mesh, 對應表]（對應表給檢查工具用 —— 「有沒有真的掛上」要驗得到）。
+func semantic_mesh(glb_path: String) -> Array:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = (n as MeshInstance3D).mesh
+			break
+	node.free()
+	var map := {}
+	for s in mesh.get_surface_count():
+		var m: Material = mesh.surface_get_material(s)
+		var nm: String = m.resource_name if m != null else ""
+		var hit := ""
+		# 長名優先（WOOD_LT 不能被 WOOD 吃掉）
+		for key in ["WOOD_LT", "WOOD", "PLASTER", "STONE", "KAWARA", "SHOJI"]:
+			if nm.begins_with(key):
+				hit = key
+				break
+		if hit == "":
+			map[nm] = "(保留 glb 原材質)"
+			continue
+		mesh.surface_set_material(s, semantic_mat(hit))
+		map[nm] = hit
+	return [mesh, map]
+
+
 ## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）
 func prop_mesh(glb_path: String, mat: Material = null) -> Mesh:
 	var packed: PackedScene = load(glb_path)
