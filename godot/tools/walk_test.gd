@@ -74,6 +74,13 @@ const ROUTES := {
 		{ "name": "階段口 → 東端衣桁", "a": Vector2(-6.4, -2.0), "b": Vector2(7.6, -2.2) },
 		{ "name": "階段口 → 押入前", "a": Vector2(-6.4, -2.0), "b": Vector2(-9.6, 2.2) },
 	],
+	# 稗田邸三樓（傳送場景）：中軸廊是唯一的通道 —— 兩排 3.55m 高的中央
+	# 書架不能把哪一段夾死；腰側走道（書架與腰壁之間）也要通。
+	"hieda3f": [
+		{ "name": "階段口 → 核心典籍", "a": Vector2(-6.5, 0.0), "b": Vector2(6.6, 0.0) },
+		{ "name": "階段口 → 南腰側走道", "a": Vector2(-6.5, 0.0), "b": Vector2(5.0, -2.4) },
+		{ "name": "階段口 → 北腰側走道", "a": Vector2(-6.5, 0.0), "b": Vector2(5.0, 2.4) },
+	],
 }
 
 var _sps: PhysicsDirectSpaceState3D
@@ -87,7 +94,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou", "hieda1f", "hieda2f"]
+		maps = ["village", "trail", "kourindou", "hieda1f", "hieda2f", "hieda3f"]
 	else:
 		maps = [args[0]]
 	_cap = CapsuleShape3D.new()
@@ -164,22 +171,41 @@ func _scan(span: AABB) -> void:
 	var q := PhysicsShapeQueryParameters3D.new()
 	q.shape_rid = _shape_rid
 	q.collide_with_areas = false
+	# ⚠ 地面不是「由上而下第一個命中」。室內圖有天花碰撞之後，第一個
+	# 命中永遠是**天花的頂面** —— 二樓那輪的「69/77 可站」其實整片站在
+	# 天花板上（平面上路線全通 = 假綠燈），三樓的斜屋面連膠囊都放不下
+	# 才把這件事逼出來。正解：往下行進收集命中，只取「地形高度帶內
+	# （terrain max + 2.5）」最高的那個 —— 天花/牆頂/架頂全部被帶外
+	# 排除，橋面（在帶內）仍然是第一候選，村圖行為不變。
+	var ymax := span.position.y + span.size.y + 2.5
 	for i in range(x0, x1 + 1):
 		for j in range(z0, z1 + 1):
 			var x := float(i) * CELL
 			var z := float(j) * CELL
-			ray.from = Vector3(x, span.position.y + span.size.y + 60.0, z)
-			ray.to = Vector3(x, span.position.y - 30.0, z)
-			var hit := _sps.intersect_ray(ray)
-			if hit.is_empty():
-				continue
+			var from_y := span.position.y + span.size.y + 60.0
+			var cands: Array[float] = []
+			while cands.size() < 8:
+				ray.from = Vector3(x, from_y, z)
+				ray.to = Vector3(x, span.position.y - 30.0, z)
+				var hit := _sps.intersect_ray(ray)
+				if hit.is_empty():
+					break
+				cands.append(hit.position.y)
+				from_y = hit.position.y - 0.05
+				if from_y < span.position.y - 29.0:
+					break
 			var c := Vector2i(i, j)
-			var gy: float = hit.position.y
-			_hf[c] = gy
-			# 膠囊底端離地 5cm（站著的姿勢），撞到東西就是站不下
-			q.transform = Transform3D(Basis(), Vector3(x, gy + HEIGHT * 0.5 + 0.05, z))
-			if _sps.intersect_shape(q, 1).is_empty():
-				_walk[c] = true
+			for gy in cands:
+				if gy > ymax:
+					continue
+				if not _hf.has(c):
+					_hf[c] = gy
+				# 膠囊底端離地 5cm（站著的姿勢），撞到東西就是站不下
+				q.transform = Transform3D(Basis(), Vector3(x, gy + HEIGHT * 0.5 + 0.05, z))
+				if _sps.intersect_shape(q, 1).is_empty():
+					_hf[c] = gy
+					_walk[c] = true
+					break
 
 ## BFS：a 走不走得到 b
 func _route(name: String, a: Vector2, b: Vector2) -> void:

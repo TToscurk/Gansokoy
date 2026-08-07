@@ -33,7 +33,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou", "hieda1f", "hieda2f"]
+		maps = ["village", "trail", "kourindou", "hieda1f", "hieda2f", "hieda3f"]
 	else:
 		maps = [args[0]]
 	var total := 0
