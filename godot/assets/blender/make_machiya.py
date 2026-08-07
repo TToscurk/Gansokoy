@@ -154,12 +154,27 @@ INFILL = 0.100          # 漆喰嵌板厚
 RECESS = 0.025          # 嵌板比柱面內縮 —— 真壁造在遠景唯一讀得出來的東西
 
 
-def machiya_f_a(bld, W=7.6, D=7.8, total_h=4.50, pitch=math.radians(23.0),
+def machiya_f_a(bld, W=7.6, D=7.8, total_h=5.40, pitch=math.radians(21.0),
                 plinth=0.30, nbay=4):
-    # ⚠ 扣的是**棟的實際堆疊高**（熨斗 0.13 + 冠瓦 0.13 = 0.26），不是舊版
-    # 那個 0.14 —— 舊版的棟只有一根方條，這版是熨斗＋冠瓦兩層。第一次跑出來
-    # 總高 4.78（規格 4.50），差的就是這 0.28。天際線的階梯是使用者定案過的，
-    # prototype 不許順手改掉，所以是**屋身讓棟**。
+    """PHASE 1.1：比例與屋頂語彙重平衡。
+
+    ── 為什麼 4.50 不行 ──
+    4.50 的總高扣掉 23° 屋頂（1.655）與棟（0.26）之後，屋身只剩 2.29m。
+    屋頂佔立面 42%、小壁只有 0.32m —— 審圖的結論是「屋頂壓倒立面」。
+    那不是造型問題，是**預算問題**：屋身沒有高度可以長出真壁造的節奏
+    （腰→貫→内法→小壁），所以怎麼調細節都救不回來。
+
+    ── 5.40 怎麼分配 ──
+        基礎 0.30 ┃ 屋身 3.36 ┃ 屋頂 1.50 ┃ 棟 0.24
+    屋頂佔比從 42% 降到 **28%**。多出來的 1.07m 屋身**不是拉高一層樓**，
+    是長出 **厨子二階（つし二階）**：江戸～明治町家的標準形，一階內法之上
+    一條矮夾層，開虫籠窓。這樣立面才有東西可看，不然 3.36m 高的牆上半段
+    會是一片空白的漆喰。
+
+    ── 坡度 23° → 21° ──
+    只收 2°。屋頂量體主要是被總高救回來的，不是靠壓坡度 —— 規格明講
+    「不要把町家變成低坡現代住宅」，21°（約 3.8 寸勾配）仍在民家的常見帶。
+    """
     body = total_h - plinth - (D / 2) * math.tan(pitch) - RIDGE_STACK
     assert body > 1.8, "反推出的屋身太矮：%.2f" % body
     z0 = plinth                     # 土台底
@@ -173,17 +188,24 @@ def machiya_f_a(bld, W=7.6, D=7.8, total_h=4.50, pitch=math.radians(23.0),
     _frame(bld, W, D, z0, z_top, wall_y, posts_x)
     _walls(bld, W, D, z0, z_top, wall_y, posts_x, bay)
     door_x = _facade(bld, W, z0, z_top, wall_y, posts_x, bay)
-    z_lintel = z0 + SILL + _NUKI_Z0 + 0.0    # 由 _facade 內部決定，見下
-    _hisashi(bld, door_x, bay, z0 + LINTEL_Z, wall_y)
+    _tsushi(bld, W, z0, z_top, wall_y, posts_x)
+    # 通し庇：**橫貫整個面寬**，不是只罩住入口。
+    # ⚠ 這是把「屋頂壓倒立面」真正解掉的那一件：3.36m 高的立面需要一條
+    # 水平線把它切成「一階店面／厨子二階」兩段，否則就算屋頂縮小了，
+    # 牆還是一整片。町家的正面本來就有這條庇。
+    _hisashi(bld, 0.0, W, z0 + LINTEL_Z + 0.20, wall_y, span_over=0.50, proj=0.88)
     ridge = _roof(bld, W, D, z_top, pitch)
     return ridge, door_x
 
 
-# 内法高（門・格子的上緣）：一般町家 1.75~1.85。這裡取下限 1.72 ——
-# 4.50 的總高扣掉 23° 屋頂（1.655）之後屋身只剩 2.29，內法再高一點，
-# 長押以上的「小壁」就薄到讀不出來（真壁造的立面節奏就是靠那條小壁）。
-LINTEL_Z = 1.72
-RIDGE_STACK = 0.26          # 棟：熨斗瓦 0.13 + 冠瓦 0.13
+# 内法高（門・格子的上緣）。PHASE 1.1 從 1.72 放回 **1.85** —— 一般町家的
+# 常見值，而且 5.40 的總高終於養得起它。
+LINTEL_Z = 1.85
+# 棟：桟瓦葺きの棟比本瓦的矮（熨斗少一層）。0.26 → 0.24。
+RIDGE_STACK = 0.24
+# 厨子二階：内法長押之上的矮夾層。TSUSHI_Z0 是它的下緣（相對 z0）。
+TSUSHI_Z0 = 2.36
+TSUSHI_H = 0.78
 _NUKI_Z0 = 0.0
 
 
@@ -258,14 +280,20 @@ def _walls(bld, W, D, z0, z_top, wall_y, posts_x, bay):
     hw = W / 2
     z_lo = z0 + SILL
     z_hi = z_top - PLATE
-    # 正面：一階是建具（格子／板戶），漆喰只在内法長押以上那條「小壁」
+    # 正面：一階是建具（格子／板戶）。内法長押以上是漆喰，但**分成三段**：
+    # 小壁 → 厨子二階的窗帶（由 _tsushi 開洞）→ 上小壁。分段的理由是
+    # 立面節奏 —— 一整片 1.1m 的漆喰讀起來是倉庫不是町家。
     for i in range(len(posts_x) - 1):
         x0 = posts_x[i] + POST / 2
         x1 = posts_x[i + 1] - POST / 2
-        zc = (z0 + LINTEL_Z + 0.13 + z_hi) / 2
-        h = z_hi - (z0 + LINTEL_Z + 0.13)
-        if h > 0.05:
-            bld.box((x0 + x1) / 2, wall_y, zc, x1 - x0, INFILL, h, "PLASTER")
+        for lo, hi in ((z0 + LINTEL_Z + 0.13, z0 + TSUSHI_Z0),
+                       (z0 + TSUSHI_Z0 + TSUSHI_H, z_hi)):
+            if hi - lo > 0.05:
+                bld.box((x0 + x1) / 2, wall_y, (lo + hi) / 2,
+                        x1 - x0, INFILL, hi - lo, "PLASTER")
+        # 窗帶那一段仍要有牆（虫籠窓只開在開間中央 62%，兩側是漆喰）
+        bld.box((x0 + x1) / 2, wall_y, z0 + TSUSHI_Z0 + TSUSHI_H / 2,
+                x1 - x0, INFILL, TSUSHI_H, "PLASTER")
     # 背面：整面漆喰（逐格）
     for i in range(len(posts_x) - 1):
         x0 = posts_x[i] + POST / 2
@@ -314,6 +342,38 @@ def _facade(bld, W, z0, z_top, wall_y, posts_x, bay):
         else:
             _koushi(bld, cx, w, z_lo, z_hi, wall_y, koshi_h=0.42)
     return door_x
+
+
+def _tsushi(bld, W, z0, z_top, wall_y, posts_x):
+    """厨子二階（つし二階）：一階內法之上的矮夾層，開**虫籠窓**。
+
+    ⚠ PHASE 1.1 新增。放寬總高之後多出來的 1.07m 屋身，如果只是把漆喰
+    往上長，立面上半段就是一片 1.1m 高的空白 —— 屋頂不壓迫了，牆改成
+    壓迫。江戸～明治町家對這段高度的標準答案就是厨子二階。
+
+    虫籠窓不是格子：它是**塗り込め**的 —— 木骨外面裹一層漆喰，所以櫺條
+    又厚又圓、顏色跟牆一樣，剪影上是一排粗胖的白色豎條。跟一階那排細而
+    深色的連子格子形成對比，這個對比就是町家立面的招牌。"""
+    zb = z0 + TSUSHI_Z0
+    zt = zb + TSUSHI_H
+    for i in range(len(posts_x) - 1):
+        x0 = posts_x[i] + POST / 2
+        x1 = posts_x[i + 1] - POST / 2
+        cx = (x0 + x1) / 2
+        w = x1 - x0
+        # 窗洞：比開間窄一截（虫籠窓不會做滿整間）
+        ww = w * 0.62
+        # 洞內的暗底（開口的深度）
+        bld.box(cx, wall_y + 0.02, (zb + zt) / 2, ww, INFILL, TSUSHI_H, "WOOD")
+        # 塗り込め櫺：粗、圓、白 —— 用漆喰材質，不是木材質
+        n = max(3, int(ww / 0.26))
+        for k in range(n):
+            x = cx - ww / 2 + (k + 0.5) * (ww / n)
+            bld.box(x, wall_y - POST / 2 + 0.020, (zb + zt) / 2,
+                    0.105, 0.075, TSUSHI_H, "PLASTER")
+        # 窗的上下框（漆喰的厚邊，塗り込め的特徵）
+        for zz, hh in ((zb - 0.055, 0.11), (zt + 0.055, 0.11)):
+            bld.box(cx, wall_y - POST / 2 + 0.015, zz, ww + 0.22, 0.085, hh, "PLASTER")
 
 
 def _koushi(bld, cx, w, z_lo, z_hi, wall_y, koshi_h=0.42):
@@ -369,22 +429,22 @@ def _door(bld, cx, w, z_lo, z_hi, wall_y):
     bld.box(cx, wall_y - POST / 2 - 0.008, z_lo + 0.035, w + 0.06, 0.060, 0.070, "WOOD")
 
 
-def _hisashi(bld, cx, w, z, wall_y):
+def _hisashi(bld, cx, w, z, wall_y, span_over=0.9, proj=0.95):
     """庇（入口上方）：腕木 → 桁 → 垂木 → 野地 → 軒裏 → 鼻隠し → 瓦。
 
     ⚠ 規格明令禁止「horizontal cube sticking from wall」。所以這裡每一件都
     在：撐它的腕木、它自己的桁、看得到的垂木、有厚度的野地、仰視看得到的
     軒裏、簷口的鼻隠し、以及瓦。"""
-    proj = 0.95
     slope = math.radians(17.0)
     y0 = wall_y - POST / 2
     y1 = y0 - proj
     z1 = z - proj * math.tan(slope)
-    span = w + 0.9
-    # 腕木（穿出牆面的懸臂）
-    for sx in (-1, 1):
-        bld.box(cx + sx * (w / 2 - 0.05), y0 - 0.30, z - 0.16,
-                0.09, 0.62, 0.13, "WOOD")
+    span = w + span_over
+    # 腕木（穿出牆面的懸臂）—— 通し庇要多幾根，不然中段會像懸空的板
+    n_arm = max(2, int(span / 2.1) + 1)
+    for k in range(n_arm):
+        ax = cx - span / 2 + 0.35 + k * ((span - 0.70) / max(1, n_arm - 1))
+        bld.box(ax, y0 - 0.30, z - 0.16, 0.09, 0.62, 0.13, "WOOD")
     # 前桁
     bld.box(cx, y1 + 0.06, z1 + 0.02, span, 0.11, 0.13, "WOOD")
     # 垂木（看得到的椽）
@@ -406,12 +466,12 @@ def _hisashi(bld, cx, w, z, wall_y):
             xx = x0 if sxx == 0 else x1
             bld.quad((xx, y0, z), (xx, y1, z1), (xx, y1, z1 - th), (xx, y0, z - th),
                      "KAWARA", flip=(sxx == 0))
-    # 瓦：縱向丸瓦
-    nk = max(6, int(span / 0.33))
+    # 瓦：桟瓦（淺桟）—— 跟主屋頂同一套語彙
+    nk = max(8, int(span / 0.30))
     for k in range(nk):
         x = cx - span / 2 + (k + 0.5) * (span / nk)
-        bld.prism_y(x - 0.055, x + 0.055, y0, z,
-                    0.0, 0.048, -proj, -proj * math.tan(slope) + 0.048, "KAWARA")
+        bld.prism_y(x - 0.028, x + 0.028, y0, z,
+                    0.0, 0.024, -proj, -proj * math.tan(slope) + 0.024, "KAWARA")
 
 
 def _roof(bld, W, D, z_wall, pitch, overhang=0.85, thick=0.16):
@@ -452,17 +512,35 @@ def _roof(bld, W, D, z_wall, pitch, overhang=0.85, thick=0.16):
                         (ye - y_in), (eave_z - thick - 0.005) - (z_wall - thick - 0.005),
                         (ye - y_in), (eave_z - thick - 0.062) - (z_wall - thick - 0.005),
                         "WOOD")
-        # 丸瓦（本瓦葺きの縱向半圓）—— 近看有瓦的關鍵
-        nk = max(10, int(2 * hw / 0.36))
+        # ── 桟瓦葺き（PHASE 1.1：本瓦／丸瓦改成這個）──
+        # 使用者定案：一般 machiya_f_a 用**樸素的桟瓦**，本瓦葺（深半圓的
+        # 丸瓦）留給未來的富戶／寺社／地標。
+        #
+        # 兩者在幾何上的差別就是這裡實作的差別：
+        #   本瓦 = 深半圓的丸瓦壓在平瓦接縫上（凸 52mm，剪影是一排粗肋）
+        #   桟瓦 = 一體成型的波形瓦，只有淺桟（凸 22mm），而且**橫向的
+        #          葺き足（每列的重疊段差）才是主節奏**
+        # 所以這裡：淺桟 + 橫向列線。近看有瓦、遠看是平順的坡，不搶戲。
+        nk = max(12, int(2 * hw / 0.302))          # 桟瓦定尺 305mm
         for k in range(nk):
             x = -hw + (k + 0.5) * (2 * hw / nk)
-            bld.prism_y(x - 0.062, x + 0.062, cy, ridge_z,
-                        0.0, 0.052,
-                        sy * hd, (eave_z - ridge_z) + 0.052, "KAWARA")
-        # 軒瓦（簷端的巴瓦：每條丸瓦末端一個小圓盤，剪影上是一排點）
-        for k in range(nk):
-            x = -hw + (k + 0.5) * (2 * hw / nk)
-            bld.box(x, ye - sy * 0.045, eave_z + 0.055, 0.115, 0.09, 0.085, "KAWARA")
+            bld.prism_y(x - 0.030, x + 0.030, cy, ridge_z,
+                        0.0, 0.022,
+                        sy * hd, (eave_z - ridge_z) + 0.022, "KAWARA")
+        # 葺き足：每列瓦的下緣段差（桟瓦的主節奏）。做成貼在坡面上的細條，
+        # 不切開坡面本身 —— 切開的話坡面會變成一階一階的樓梯，段差 30mm
+        # 在 5m 外根本看不出是瓦、只看得出是鋸齒。
+        ncourse = max(6, int(slope_len / 0.265))
+        for k in range(1, ncourse):
+            t = float(k) / ncourse
+            yy = cy + sy * hd * t
+            zz = ridge_z + (eave_z - ridge_z) * t
+            bld.prism_y(-hw, hw, yy, zz + 0.023,
+                        sy * 0.055, -0.055 * math.tan(pitch) + 0.012,
+                        sy * 0.055, -0.055 * math.tan(pitch) - 0.010, "KAWARA")
+        # 軒瓦（簷端一列瓦當）—— 桟瓦的軒先瓦是**連續的唇**，不是一排圓盤
+        bld.box(0, ye - sy * 0.050, eave_z + 0.052, 2 * hw + 0.02, 0.10, 0.075,
+                "KAWARA")
 
     # 破風板（妻側的封簷板）+ 懸魚
     for sx in (1, -1):
@@ -624,12 +702,12 @@ if __name__ == "__main__":
     ob = b.build("machiya_f_a")
     rep = validate(ob)
     bb = bbox(ob)
-    print("\n── machiya_f_a（production prototype）──")
+    print("\n── machiya_f_a（production prototype・PHASE 1.1）──")
     print("  面 %d / 頂點 %d" % (rep["faces"], rep["verts"]))
     print("  退化面 %d / 鬆散頂點 %d / 非流形邊 %d"
           % (rep["degenerate"], rep["loose_verts"], rep["non_manifold_edges"]))
     print("  材質分佈：%s" % rep["material_faces"])
-    print("  bbox %.2f × %.2f × %.2f（總高規格 4.50）" % bb)
+    print("  bbox %.2f × %.2f × %.2f（PHASE 1.1 規格 5.2~5.6）" % bb)
     print("  gbox %s　門位 x=%.2f" % (gbox(ob), door_x))
     p = export(ob, "machiya_f_a")
     print("  匯出 %s" % p)

@@ -6,22 +6,22 @@
    "w": 7.6,
    "d": 7.8,
    "fw": 9.56,
-   "fd": 9.6,
-   "h": 4.5,
+   "fd": 9.53,
+   "h": 5.42,
    "gbox": [
     -4.78,
     4.78,
     -8.65,
-    0.95
+    0.88
    ],
    "facade": {
     "door_x": 0.95,
     "door_w": 1.63,
-    "beam_z": 1.95,
+    "beam_z": 2.08,
     "bay_w": 1.9,
     "nbay": 4
    },
-   "faces": 2478,
+   "faces": 2962,
    "glb": "res://assets/models/machiya_f_a.glb"
   },
   "machiya_f_b": {
