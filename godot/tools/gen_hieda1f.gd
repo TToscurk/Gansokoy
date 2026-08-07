@@ -313,6 +313,9 @@ func _build_ceiling() -> void:
 	lib.box(g, "梁", Vector3(HW * 2.0, 0.20, 0.26),
 		lib.pbr("梁材", "dark_wood", 0.5, Color(0.30, 0.29, 0.26)),
 		Vector3(0, CEIL_H - 0.10, DOMA_Z0))
+	# ⚠ 天花碰撞：沒有的話牆頂對 walk_test 是一排「可站立」的格點
+	# （二樓真的踩到：起點吸附上牆頂，三條路線全假不通）。
+	_collide(g, Vector3(HW * 2.0, 0.3, HD * 2.0), Vector3(0, CEIL_H, 0))
 
 
 # ── 床の間：後牆正中偏西。掛軸一幅、香炉一座 —— 擺設就這些。──

@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/tatami_diff.jpg" id="1_k2syi"]
+[ext_resource type="Texture2D" path="res://assets/textures/tatami_nor_gl.jpg" id="2_mroc5"]
+[ext_resource type="Texture2D" path="res://assets/textures/tatami_rough.jpg" id="3_x3q44"]
+
+[resource]
+albedo_color = Color(0.42, 0.3, 0.38, 1)
+albedo_texture = ExtResource("1_k2syi")
+roughness_texture = ExtResource("3_x3q44")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_mroc5")
+uv1_scale = Vector3(1.8, 1.8, 1.8)
+uv1_triplanar = true

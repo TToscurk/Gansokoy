@@ -64,6 +64,15 @@ const ROUTES := {
 		{ "name": "玄関 → 屏風北側（西區）", "a": Vector2(0, 5.2), "b": Vector2(-8.5, 2.0) },
 		{ "name": "玄関 → 東の間", "a": Vector2(0, 5.2), "b": Vector2(7.0, -5.0) },
 	],
+	# 稗田邸二樓（傳送場景）：階段口 → 書房各區。家具（文机/火鉢/書塔/
+	# 行灯）不能把哪一區堵死；卷軸牆的碰撞不能吃進走道。
+	"hieda2f": [
+		# ⚠ 起點在圍欄旁 1m 內的話，那一格被欄杆碰撞箱壓住，
+		# _nearest_walkable 會吸附到隔壁格 —— 挑一格保證乾淨的
+		{ "name": "階段口 → 文机", "a": Vector2(-6.4, -2.0), "b": Vector2(-2.0, -1.0) },
+		{ "name": "階段口 → 東端衣桁", "a": Vector2(-6.4, -2.0), "b": Vector2(7.6, -2.2) },
+		{ "name": "階段口 → 押入前", "a": Vector2(-6.4, -2.0), "b": Vector2(-9.6, 2.2) },
+	],
 }
 
 var _sps: PhysicsDirectSpaceState3D
@@ -77,7 +86,7 @@ func _init() -> void:
 	var args := OS.get_cmdline_user_args()
 	var maps: Array = []
 	if args.is_empty() or args[0] == "all":
-		maps = ["village", "trail", "kourindou", "hieda1f"]
+		maps = ["village", "trail", "kourindou", "hieda1f", "hieda2f"]
 	else:
 		maps = [args[0]]
 	_cap = CapsuleShape3D.new()
