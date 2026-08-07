@@ -1,0 +1,12 @@
+{
+ "id": "slice",
+ "note": "PHASE 1.5 vertical slice（art benchmark）。8 棟建築、一條主街、兩條巷、一個井戶節點。獨立於 village，改這裡不影響 169 棟。",
+ "playSize": [
+  92.0,
+  92.0
+ ],
+ "safe": true,
+ "colliders": [],
+ "connections": [],
+ "portals": []
+}
