@@ -168,6 +168,11 @@ func _collect(n: Node, buildings: Array, scatters: Array, waters: Array) -> void
 		if mn.begins_with("MM_machiya"):
 			_collect_mm_buildings(n, buildings)
 			return
+		# ⚠ MM_格子 是**牆自己的一層**（格子塀上段的直立木格柵），不是散佈物：
+		# 它本來就該埋在牆身裡。丟進 scatters 的話 373 支格柵會被逐支報成
+		# 「長在建物裡」。牆體本身已經由 石垣_* 那個貼地構件登記過了。
+		if mn.begins_with("MM_格子"):
+			return
 		scatters.append(n)
 		return
 	if n is MeshInstance3D:
