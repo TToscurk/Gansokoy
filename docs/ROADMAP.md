@@ -27,17 +27,17 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 
 ## CURRENT
 
-Nothing in progress. Phase 2.6b approved; Phase 3 proposed and awaiting
-human approval.
+**Phase 3 — Village Architecture Rollout, PILOT.** Blocks 209/210/214/215
+built (18 houses, 7 module kinds village-wide), zero drift proven outside
+the corridor, all five gates green. Awaiting Art Review.
 
 ## NEXT
 
-- **Phase 3 — Village Architecture Rollout (pilot)** — proposed. Blocks
-  214/215/209/210, the 本通 corridor from the north-gate spawn, ~24 of 169
-  houses. Derives a module-distribution rule and role-driven dressing rules
-  that scale, instead of hand-authoring lots.
+- **Architecture Kit gap: a 9–10 m 総二階/大型町家 module** — required
+  before full rollout; the village's back rows are 9.4/9.9 m and the kit
+  tops out at 6.42 m.
 - **Full rollout** to the remaining 36 blocks — only after the pilot clears
-  Art Review.
+  Art Review and the back-row gap is closed.
 - **Lighting / cel-shading round** — after the village carries production
   architecture, not before (Phase 1.6's lesson: you cannot art-review a
   scene dominated by blockout).

@@ -4,21 +4,27 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 2.6b APPROVED; next phase awaiting approval).
+Last updated: 2026-08-08 (Phase 3 pilot built, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**None in progress.** Phase 2.6b is approved; the next production phase has
-been proposed and is awaiting human approval.
+**Phase 3 — Village Architecture Rollout, PILOT.** Blocks 209/210/214/215
+(本通 north-gate corridor). Built; renders produced; **awaiting Art Review**.
+Do not roll out to the remaining 36 blocks.
 
 ## Current Status
 
-Clean approved checkpoint. Phase 2.6b is the **approved visual baseline for
-facade dressing, cloth placement, business-identity composition, and
-foreground prop quality**. The slice (`maps/slice/`) is the benchmark scene;
-the village is still entirely legacy blockout architecture.
+Phase 2.6b is the approved baseline for facade dressing, cloth placement,
+business-identity composition and foreground prop quality. The slice
+(`maps/slice/`) remains the benchmark scene.
+
+The village now carries the production kit **in the 本通 north-gate corridor
+only** (18 houses of 170, 7 module kinds). Zero drift proven outside it.
+Correction to an earlier claim: the village was never 100% blockout —
+`machiya_f_a` was upgraded in place in Phase 1, so 49 houses already carried
+production geometry before this pilot.
 
 Branch: `claude/previous-progress-92cb1a`.
 
@@ -90,15 +96,16 @@ unplanned and unapproved.
 
 ## Current Art Review Gate
 
-**Open.** Nothing is waiting on review. The next visual change runs the full
-gate: prototype/slice → render → Human Art Review → rollout.
+**Phase 3 pilot** — `shots2/village_p3/` (6 views + before/after
+comparisons, incl. two production/legacy seam renders). Awaiting review.
 
 ## Next Planned Phase
 
-**Proposed, not approved, not started:** Phase 3 — Village Architecture
-Rollout, pilot on the 本通 north-gate corridor (blocks 214/215/209/210,
-~24 of 169 houses). See the proposal in the session record; execute only on
-explicit approval.
+Blocked on the pilot's Art Review: full rollout to the remaining 36 blocks.
+**Blocker found:** the kit has no 9–10 m module for the village's back rows
+(`b_a` 9.4 m / `b_b` 9.9 m). Substituting the 6.42 m `f_n` would drop the
+village's second-layer skyline by 3 m. A 総二階/大型町家 module is required
+before full rollout.
 
 Deferred behind it: the lighting / cel-shading round (the parking lot for
 backlit plaster, blockout textures, water, prop scale).
@@ -127,6 +134,9 @@ Settled by human decision. Reopening requires regression evidence.
   Stage-0 shrunken village variant is dead.
 - Godot front-face winding is clockwise; verified by ray probe.
 - `make_town.py` is the single writer of `town_modules.json`.
+- Density-layer additions must be checked for order dependence: `_drng` is a
+  single sequential stream over `_dump`, so a house-count change anywhere
+  moves props village-wide (see ningen-no-sato §11.4, ghost-pass fix).
 - Hanging props derive their height from the manifest's `facade.hisashi` /
   `facade.eave` planes via `_hang_y()`. Never hand-write an absolute hang
   height again — that is what put cloth through the eaves in Phase 2.6.

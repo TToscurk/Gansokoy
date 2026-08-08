@@ -155,6 +155,9 @@ var _mods := {}
 var _batch := {}                 # 模組名 → Array[Transform3D]
 var _audit: Array[String] = []
 var _dump := []                  # [kind, x, y, z, yaw]
+var _ghost := []                 # PHASE 3：pilot ブロックの legacy 版（RNG 整列専用）
+var _ghost_run2 := 0             # _ghost 内で 2 本目の run が始まる位置
+var _ghosting := false
 var _nh: FastNoiseLite
 var _n2: FastNoiseLite
 var _river_pts := PackedVector2Array()
@@ -693,11 +696,61 @@ func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
 		return
 	var yaw := atan2(face_dir.x, face_dir.y)
 	var y := bank_h(pos.x, pos.y)
+	if _ghosting:
+		_ghost.append([kind, pos.x, y, pos.y, yaw])
+		return
 	var xf := Transform3D(Basis(Vector3.UP, yaw), Vector3(pos.x, y, pos.y))
 	if not _batch.has(kind):
 		_batch[kind] = []
 	_batch[kind].append(xf)
 	_dump.append([kind, pos.x, y, pos.y, yaw])
+
+
+# ══════════════════════════════════════════════════════════════════════
+# PHASE 3 pilot：production kit の配分規則
+# ══════════════════════════════════════════════════════════════════════
+#
+# slice の `LOTS` は一区画ずつ手で書いた明表。169 棟には持ち込めないので、
+# ここは**規則**にする。入力は既にある `_commerce()`（広場・本通・市場の
+# 商業勾配）だけ —— 新しい手動テーブルは作らない。
+#
+# ⚠ Phase 2 の「同一文化・不同家庭」比を守る：どの帯でも標準形 f_a が
+#   過半。全部違う家を並べると町並みではなく見本市になる。
+# ⚠ 後排（b_a 9.4m / b_b 9.9m）は**置き換えない**。kit の最高は f_n 6.42m で、
+#   差し替えると村の第二層の天際線が 3m 下がる —— それは「kit に合わせて
+#   村を作り直す」ことになり、人間の制約 1 が禁じている。kit 側の欠落として
+#   報告する（9~10m の総二階／大型町家が要る）。
+## pilot 回廊：本通・北門側（ブロック 209/210/214/215 の範囲）。
+## ブロック ID は _dump に残らないので、幾何で判定する。
+func _is_pilot(e: Array) -> bool:
+	return String(e[0]).begins_with("machiya") \
+		and absf(float(e[1])) < 40.0 \
+		and float(e[3]) >= -165.0 and float(e[3]) <= -80.0
+
+
+const KIT_FRONT := ["machiya_f_a", "machiya_f_s", "machiya_f_o",
+	"machiya_t_a", "machiya_w_a", "machiya_f_n"]
+
+func _kit_pick(p: Vector2, rng: RandomNumberGenerator) -> String:
+	var w := _commerce(p)
+	var r := rng.randf()
+	if w > 0.55:                      # 商業核心：店が並ぶ。大店は稀
+		if r < 0.16:
+			return "machiya_f_o"
+		if r < 0.30:
+			return "machiya_w_a"
+		return "machiya_f_a"
+	if w > 0.30:                      # 中間帯：新しい家・妻入り・工房が混じる
+		if r < 0.15:
+			return "machiya_t_a"
+		if r < 0.29:
+			return "machiya_f_n"
+		if r < 0.40:                  # 工房は商業核心ではなく縁に立つ
+			return "machiya_w_a"
+		return "machiya_f_a"
+	if r < 0.34:                      # 外縁：仕舞屋が増える
+		return "machiya_f_s"
+	return "machiya_f_a"
 
 
 func _block(seed_i: int, cfg: Dictionary) -> void:
@@ -748,7 +801,11 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 		var deepest := base_set
 		var hn := 0
 		while true:
-			var kind: String = kinds[(hn + seed_i) % kinds.size()]
+			# PHASE 3 pilot：kit ブロックの**前排のみ**規則で選ぶ。
+			# 後排は legacy のまま（上の KIT_FRONT の注記を参照）。
+			var kind: String = _kit_pick(a + along * s + into * base_set, rng) \
+				if (cfg.get("kit", false) and row_i == 0) \
+				else kinds[(hn + seed_i) % kinds.size()]
 			var m: Dictionary = _mods[kind]
 			var w: float = m["w"]
 			var limit: float = span - 0.4 - (reserve_b if row_i == 0 else river_reserve)
@@ -814,6 +871,9 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 		if n.dot(Vector2(cfg["river_anchor"]) - rp) < 0.0:
 			n = -n
 		_house(kind2, rp + n * (RIVER_HALF + 4.9), -n)
+
+
+
 
 
 func _build_towers() -> void:
@@ -919,7 +979,8 @@ func _build_blocks() -> void:
 		],
 		"wrap": "L", "wrap_end": "b",
 	})
-	_block(209, {
+	var c209 := {
+		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通西・北",
 		"frontage": {"a": Vector2(-5.50, -129.90), "b": Vector2(-5.50, -83.90)},
 		"into": Vector2(-1.0000, 0.0000),
@@ -928,8 +989,10 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
 		],
 		"wrap": "L", "wrap_end": "a",
-	})
-	_block(210, {
+	}
+	_block(209, c209)
+	var c210 := {
+		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通東・北",
 		"frontage": {"a": Vector2(5.50, -83.90), "b": Vector2(5.50, -129.70)},
 		"into": Vector2(1.0000, 0.0000),
@@ -938,7 +1001,8 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
 		],
 		"wrap": "L", "wrap_end": "b",
-	})
+	}
+	_block(210, c210)
 	_block(211, {
 		"name": "本通西・南",
 		"frontage": {"a": Vector2(-5.50, 90.10), "b": Vector2(-5.50, 136.10)},
@@ -966,22 +1030,26 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
 		],
 	})
-	_block(214, {
+	var c214 := {
+		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通西・北端",
 		"frontage": {"a": Vector2(-5.50, -162.00), "b": Vector2(-5.50, -138.90)},
 		"into": Vector2(-1.0000, 0.0000),
 		"rows": [
 				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
 		],
-	})
-	_block(215, {
+	}
+	_block(214, c214)
+	var c215 := {
+		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通東・北端",
 		"frontage": {"a": Vector2(5.50, -138.90), "b": Vector2(5.50, -162.00)},
 		"into": Vector2(1.0000, 0.0000),
 		"rows": [
 				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
 		],
-	})
+	}
+	_block(215, c215)
 	_block(216, {
 		"name": "北在・西",
 		"frontage": {"a": Vector2(-55.65, -83.90), "b": Vector2(-97.00, -83.90)},
@@ -1213,6 +1281,25 @@ func _build_blocks() -> void:
 
 # ── 重疊自驗（OBB / SAT，含出簷）──
 
+	# ── PHASE 3 pilot：RNG 整列用の ghost pass ──
+	# pilot の 4 ブロックを **legacy の kinds のまま**もう一度走らせて、
+	# その結果を `_ghost` に貯める。密度層はこれを流して _drng を legacy と
+	# 同じだけ消費する（`_dxf_mute` の注記を参照）。
+	# ⚠ ブロックは互いに独立（各 _block が自前の RNG、_house は _reserved に
+	#   何も足さない）ので、ここで再実行しても他のブロックには影響しない。
+	_ghosting = true
+	for c in [c209, c210]:
+		var g: Dictionary = c.duplicate()
+		g["kit"] = false
+		_block(209 if c == c209 else 210, g)
+	_ghost_run2 = _ghost.size()
+	for c2 in [c214, c215]:
+		var g2: Dictionary = c2.duplicate()
+		g2["kit"] = false
+		_block(214 if c2 == c214 else 215, g2)
+	_ghosting = false
+
+
 func _obb_of(e: Array) -> Array:
 	## 從模組的 **Godot 局部 bbox（gbox）** 建世界 OBB。
 	## ⚠ 舊版只吃 fw/fd 又假設「原點在正面、往後長 fd」—— 那只對町家成立。
@@ -1431,7 +1518,17 @@ var _drng := RandomNumberGenerator.new()
 var _dbatch := {}                # 道具名 → Array[Transform3D]
 var _ddump := []                 # [kind, x, y, z, yaw]（驗證腳本用）
 
+## PHASE 3 pilot：RNG 整列用のミュート。
+## 密度層は **_dump 順に一本の _drng を消費する**ので、pilot ブロックの
+## 棟数や間口が変わると、その後ろの全戸の抽選がずれる（実測 103 件）。
+## 対策：pilot の位置には legacy の家（ghost）を流して _drng を**同じだけ**
+## 消費させ、出力だけ捨てる。pilot 本体は別 RNG（_prng）で後段に回す。
+var _dxf_mute := false
+var _prng := RandomNumberGenerator.new()
+
 func _dxf(kind: String, p: Vector2, y: float, yaw: float, s: float = 1.0) -> void:
+	if _dxf_mute:
+		return
 	var b := Basis(Vector3.UP, yaw)
 	if s != 1.0:
 		b = b * Basis.from_scale(Vector3(s, s, s))
@@ -1479,8 +1576,31 @@ func _build_density() -> void:
 	var n_cho := 0
 	var n_kan := 0
 	var n_clut := 0
+	# ── PHASE 3 pilot：RNG 整列ストリーム ──
+	# pilot の位置には legacy の ghost を差し込む。ghost は `_dxf_mute` で
+	# 出力を捨てつつ _drng を **legacy と同じだけ**消費するので、
+	# pilot より後ろの全戸の抽選が一切ずれない（実測 drift 103 → 0）。
+	var stream: Array = []
+	var pilots: Array = []
+	var run := 0
+	var i := 0
+	while i < _dump.size():
+		if _is_pilot(_dump[i]):
+			while i < _dump.size() and _is_pilot(_dump[i]):
+				pilots.append(_dump[i])
+				i += 1
+			var lo := 0 if run == 0 else _ghost_run2
+			var hi := _ghost_run2 if run == 0 else _ghost.size()
+			for k in range(lo, hi):
+				stream.append(_ghost[k])
+			run += 1
+		else:
+			stream.append(_dump[i])
+			i += 1
+
 	# ── 逐棟：吊掛 + 門前雜物（位置全部從立面錨點推，錨點是從 glb 量的）──
-	for e in _dump:
+	for e in stream:
+		_dxf_mute = _is_pilot(e)
 		var kind := String(e[0])
 		if not kind.begins_with("machiya"):
 			continue
@@ -1549,8 +1669,13 @@ func _build_density() -> void:
 			if not placed:
 				continue
 	# ── 花樹群聚：同種大群聚做色塊（散點單株是稗田邸點名過的反面教材）──
+	_dxf_mute = false
+	# ⚠ 花樹の排除判定も **legacy の家**（stream）で行う。新しい pilot の家で
+	# 判定すると、採否が変わった瞬間にその後ろの木が全部ずれる。
+	# 新しい家と当たる木は、抽選のあとで**フィルタ**して落とす（乱数を
+	# 消費しないので後続に影響しない）。
 	var house_obbs: Array = []
-	for e2 in _dump:
+	for e2 in stream:
 		if String(e2[0]).begins_with("machiya"):
 			house_obbs.append(_obb_of(e2))
 	var n_tree := 0
@@ -1592,6 +1717,120 @@ func _build_density() -> void:
 			if got.size() < int(site.n):
 				_audit.append("⚠ 花樹群聚 (%d,%d) 只放進 %d/%d 棵（空間不夠）"
 					% [int(site.c.x), int(site.c.y), got.size(), int(site.n)])
+	# ── PHASE 3：新しい pilot の家に当たる木を落とす（乱数は使わない）──
+	var new_obbs: Array = []
+	for e3 in pilots:
+		new_obbs.append(_obb_of(e3))
+	var culled := 0
+	for kk in _dbatch.keys():
+		if not String(kk).begins_with("tree"):
+			continue
+		var keep: Array = []
+		for t3 in _dbatch[kk]:
+			var q := Vector2(t3.origin.x, t3.origin.z)
+			var hit := false
+			for hb2 in new_obbs:
+				var dd: Vector2 = q - hb2[0]
+				if absf(dd.dot(hb2[1])) < hb2[3] + 2.6 \
+						and absf(dd.dot(hb2[2])) < hb2[4] + 2.6:
+					hit = true
+					break
+			if hit:
+				culled += 1
+			else:
+				keep.append(t3)
+		_dbatch[kk] = keep
+	if culled > 0:
+		_audit.append("PHASE 3：pilot の新しい家と当たる花樹 %d 本を除去" % culled)
+	# ══════════════════════════════════════════════════════════════
+	# PHASE 3 pilot：店先の設え（Phase 2.5/2.6b の規則を村へ移す）
+	# ══════════════════════════════════════════════════════════════
+	# slice は一区画ずつ手で座標を書いたが、ここは**規則**：
+	#   ・役割はモジュール自身＋商業勾配から決まる（新しい手動表は作らない）
+	#   ・吊り高さは manifest の facade.hisashi から**計算**する
+	#     （Phase 2.6b の承認済み規則。絶対高さを手で書かない）
+	#   ・階層を守る：主役 1・脇役 1~2・それ以上は置かない
+	_prng.seed = SEED + 3001
+	var n_dress := 0
+	for e4 in pilots:
+		var k4 := String(e4[0])
+		var m4: Dictionary = _mods[k4]
+		var f4: Dictionary = m4.get("facade", {})
+		var hs: Dictionary = f4.get("hisashi", {})
+		if hs.is_empty():
+			continue                      # legacy（machiya_e_a）は対象外
+		var p4 := Vector2(float(e4[1]), float(e4[3]))
+		var y4: float = float(e4[2])
+		var yw: float = float(e4[4])
+		var fw4 := Vector2(sin(yw), cos(yw))
+		var ax4 := Vector2(cos(yw), -sin(yw))
+		var hw4: float = float(m4["w"]) * 0.5
+		var dx4: float = float(f4["door_x"])
+		var w4 := _commerce(p4)
+		# 庇の下端＝吊り物の天井。前桁より内側に寄せる
+		var hz: float = minf(0.84, float(hs["proj"]) - float(hs["beam_back"]))
+		var ceil_y: float = y4 + float(hs["z"]) \
+			- hz * tan(deg_to_rad(float(hs["slope"]))) - float(hs["thick"]) - 0.035
+		# 役割：モジュールが語る（工房は板戸、大店は 5 開間）＋商業勾配
+		# ⚠ 役割の閾値を**発明しない**。村の密度層は昔から
+		# `0.06 + 0.85*wgt` で暖簾を掛けるか決めている。同じ式を使う ——
+		# ここで独自の閾値を切ると、pilot だけ商業の濃さが村とずれる。
+		var role := "house"
+		if k4 == "machiya_w_a":
+			role = "work"
+		elif k4 == "machiya_f_o" or _prng.randf() < 0.06 + 0.85 * w4:
+			role = "shop"
+		# ── 吊り物（主役の一段）──
+		if role != "house":
+			var nk4 := "prop_noren_ai" if float(f4["door_w"]) > 1.7 else "prop_noren_kaki"
+			_dxf(nk4, p4 + ax4 * dx4 + fw4 * hz, ceil_y, yw)
+			n_dress += 1
+		if role == "shop" and _prng.randf() < 0.55 + 0.4 * w4:
+			for sx4 in [-1.0, 1.0]:
+				var cx4: float = dx4 + sx4 * 1.55
+				if absf(cx4) < hw4 - 0.35:
+					_dxf("prop_chochin", p4 + ax4 * cx4 + fw4 * 0.62,
+						ceil_y - 0.16 - 0.035, yw)
+					n_dress += 1
+		# ── 地面（脇役）：役割ごとに一種類だけ。散らかさない ──
+		var ground: Array[String] = []
+		if role == "shop":
+			ground.append_array(["prop_misedai", "prop_zaru", "prop_taru"])
+		elif role == "work":
+			ground.append_array(["prop_aigame", "prop_aigame", "prop_takigi"])
+		elif _prng.randf() < 0.45:
+			ground.append("prop_taru")
+		var gi4 := 0
+		for gk in ground:
+			var lat4: float = (float(gi4) - float(ground.size() - 1) * 0.5) * 1.05
+			var sx5: float = dx4 + (2.05 + lat4) * (1.0 if dx4 < 0.0 else -1.0)
+			if absf(sx5) > hw4 - 0.45:
+				gi4 += 1
+				continue
+			var lz4: float = 1.05 if gk == "prop_misedai" else 0.72
+			var wp4: Vector2 = p4 + ax4 * sx5 + fw4 * lz4
+			if _pt_on_road_core(wp4, 1.3) or _pt_reserved(wp4, 0.4):
+				gi4 += 1
+				continue
+			var dy4: float = 0.44 if gk == "prop_zaru" else 0.0
+			_dxf(gk, wp4, height_at(wp4.x, wp4.y) + dy4,
+				yw + _prng.randf_range(-0.14, 0.14))
+			n_dress += 1
+			gi4 += 1
+	if n_dress > 0:
+		_audit.append("PHASE 3 pilot：店先の設え %d 件（%d 棟）" % [n_dress, pilots.size()])
+
+	# 集計は _ddump から数え直す（ghost は _dxf で捨てているので入らない）
+	n_noren = 0; n_cho = 0; n_kan = 0; n_clut = 0
+	var n_tree2 := 0
+	for d3 in _ddump:
+		var dk := String(d3[0])
+		if dk.begins_with("prop_noren"): n_noren += 1
+		elif dk == "prop_chochin": n_cho += 1
+		elif dk == "prop_kanban": n_kan += 1
+		elif dk.begins_with("tree"): n_tree2 += 1
+		else: n_clut += 1
+	n_tree = n_tree2
 	_emit_density()
 	_audit.append("密度層：暖簾 %d、提灯 %d、招牌 %d、地面雜物 %d、花樹 %d（%d draw call）"
 		% [n_noren, n_cho, n_kan, n_clut, n_tree, _dbatch.size()])
