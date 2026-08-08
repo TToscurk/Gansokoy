@@ -4,18 +4,25 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (after Phase 2 Human Art Review).
+Last updated: 2026-08-08 (Phase 2.5 built, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**Phase 2 — Architecture Kit.** Complete.
+**Phase 2.5 — Human Village Facade & Life Dressing.**
+
+Purpose: kill the "clean architecture model / demo" reading **before** any
+mass rollout. Scope is three hero buildings only — `machiya_f_a`,
+`machiya_f_o`, `machiya_w_a` — each given a distinct household/business
+identity through **composition**, not random prop scattering.
 
 ## Current Status
 
-Phase 2 passed **Human Art Review**. No production phase is in progress.
-The repository is at a clean approved checkpoint.
+Phase 2 approved as the **structural baseline**. Phase 2.5 built on three
+hero buildings (八百屋 / 酒屋 / 紺屋) — renders produced, **awaiting Human
+Art Review**. Village untouched; the other seven slice lots still carry the
+generic prop tables.
 
 Branch: `claude/previous-progress-92cb1a`.
 
@@ -30,7 +37,7 @@ Locked by human approval. Treat as settled.
 | Phase 1.5 | Vertical slice as art benchmark (`maps/slice/`, independent of village) | `shots2/slice/s0-before_after.png` |
 | Phase 1.6 | Legacy blockout quarantined out of the slice | 4 slice views |
 | Phase 1.7 | Material readability: plaster, packed earth, wood grain, distant tile moiré | `shots2/slice_16/` vs `shots2/slice/` |
-| Phase 2 | Architecture Kit — 6 distinct machiya modules | `shots2/kit/00_lineup_*`, `shots2/slice_17/` vs `shots2/slice/` |
+| Phase 2 | Architecture Kit — 6 distinct machiya modules. Approved as **structural baseline** | `shots2/kit/00_lineup_*`, `shots2/slice_17/` vs `shots2/slice/` |
 
 ## Current Architecture State
 
@@ -74,27 +81,27 @@ unplanned and unapproved.
 | Backlit plaster reads cold grey and flat (lighting problem, not texture) | deferred to lighting/cel-shading round |
 | LOD is `lod_bias` only; no hand-authored LOD0/1/2 | Master Plan §5 still open |
 | Anisotropic filtering was added globally in `pbr()` — village inherits it on next regeneration | `gen_lib.gd` |
-| Legacy props/villagers resolution mismatch (提灯 = yellow blob, villagers = white capsule) | slice + village |
+| Placeholder villagers quarantined out of the slice — no human figure left as a scale reference | `gen_slice.gd::_build_people` |
+| `prop_barrel` is a 10-sided sweep; now a foreground hero object and reads faceted | `make_props.py` |
+| Signboards carry no lettering (blank panels) | `prop_kanban`, `prop_kanban_tate` |
+| `sun_angle_max` and shot-mode `player.visible` were changed as by-products of a misdiagnosis — revisit both in the lighting round | `gen_slice.gd`, `scripts/main.gd` |
 | 稗田邸 blockout has no textures — the only untextured building in the village | `docs/ningen-no-sato.md` §9.1 |
 | Water / wet-flat gap and lotus geometry unresolved | deferred to cel shading |
 | Slice's 10 lots are hand-placed; no rule yet for distributing 6 modules over 169 houses | `gen_slice.gd` vs `gen_town.gd` |
 
 ## Current Art Review Gate
 
-**Open.** Nothing is waiting on review. The next visual change must run the
-full gate: prototype/slice → render → Human Art Review → rollout.
+**Phase 2.5** — three hero-building renders plus one slice street view,
+awaiting human review.
 
 ## Next Planned Phase
 
-Not yet chosen by the human. The two live candidates, in the order they
-were discussed:
+Both deferred by explicit human decision until Phase 2.5 clears.
 
 1. **Village rollout of the Architecture Kit** — distribute the 6 modules
-   across the 169 houses. Requires a distribution rule and a village
-   regression run; blocked on human approval.
-2. **Lighting / cel-shading round** — several deferred items (backlit
-   plaster, blockout textures, water, prop scale) were explicitly parked
-   here.
+   across the 169 houses. Explicitly **not yet**.
+2. **Lighting / cel-shading round** — the parking lot for backlit plaster,
+   blockout textures, water, prop scale. Explicitly **not yet**.
 
 Do not start either without an explicit instruction.
 
@@ -116,3 +123,5 @@ Settled by human decision. Reopening requires regression evidence.
   Stage-0 shrunken village variant is dead.
 - Godot front-face winding is clockwise; verified by ray probe.
 - `make_town.py` is the single writer of `town_modules.json`.
+- Phase 2 is the structural baseline; the kit is not expanded to the
+  village until facade/life dressing clears review.

@@ -38,6 +38,17 @@ func _ready() -> void:
 		elif a.begins_with("--shotdir="):
 			_shot_dir = a.substr(10)
 	load_map(start, "")
+	# ⚠ 撮影モードではプレイヤーを隠す。
+	# `$Player` は未テクスチャの白いカプセル。スポーン地点に立ったまま
+	# **Phase 1.5 以降ほぼ全ての審図カットに写り込んでいた** —— しかも
+	# slice.tscn には存在しないので、シーングラフをいくら probe しても
+	# 見つからない。村民を隔離し、箒を暗くし、立て看板を作り直し、太陽の
+	# 円盤まで疑ってから、ようやく「撮影者自身が写っていた」と判明した。
+	# ⚠ ここに置くこと：`load_map()` は上で**先に**走るので、その中に
+	#   `_shots.is_empty()` の判定を書いても永遠に成立しない（一度やった）。
+	# 教訓：シーンに無い白い物体は、シーンの外（ランナー側）を疑う。
+	if _shot_path != "" or _shots_file != "":
+		player.visible = false
 	if _shots_file != "":
 		_shots = _load_json_array(_shots_file)
 		_shot_cam_node = Camera3D.new()

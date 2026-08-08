@@ -20,16 +20,19 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 | Phase 1.5 | vertical slice art benchmark (`maps/slice/`) |
 | Phase 1.6 | legacy blockout quarantine in the slice |
 | Phase 1.7 | material readability pass |
-| Phase 2 | Architecture Kit — 6 machiya modules |
+| Phase 2 | Architecture Kit — 6 machiya modules (structural baseline) |
 | Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
 
 ## CURRENT
 
-Nothing in progress. Repository sits at the Phase 2 approved checkpoint.
+**Phase 2.5 — Human Village Facade & Life Dressing.**
+Reusable facade/life components on three hero buildings (`machiya_f_a`,
+`machiya_f_o`, `machiya_w_a`), each a different household/business identity.
+Village untouched; no batch processing.
 
 ## NEXT
 
-Candidates awaiting a human decision. Neither is started.
+Both explicitly deferred by the human until Phase 2.5 clears review.
 
 - **Village rollout of the Architecture Kit** — distribution rule for 6
   modules over 169 houses + village regression.

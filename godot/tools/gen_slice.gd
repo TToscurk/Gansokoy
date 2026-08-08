@@ -75,7 +75,7 @@ var _audit: Array[String] = []
 const LOTS := [
 	# ── 北側（正面朝街）──
 	{"kind": "machiya_f_a", "x": -20.0, "back": 3.4, "side": 1, "yaw": 0.0,
-	 "role": "shop", "why": "街西端。標準形＝基準。W7.6"},
+	 "role": "shop", "biz": "yaoya", "why": "街西端。標準形＝基準。W7.6"},
 	{"kind": "machiya_f_s", "x": -11.3, "back": 3.0, "side": 1, "yaw": 0.028,
 	 "role": "house", "why": "仕舞屋 W5.2。両隣より低く狭い —— 間口の落差が"
 		+ "町並みのリズム。退縮も 0.4m 少ない（店ではないのに前に出る家）"},
@@ -84,14 +84,14 @@ const LOTS := [
 	 "role": "house", "why": "**妻入り** W6.4。主街に破風と懸魚が正面を向く"
 		+ "一軒 —— 軒の連なりに縦の切れ目が入る。退縮も一番深い"},
 	{"kind": "machiya_f_o", "x": 9.7, "back": 3.1, "side": 1, "yaw": 0.016,
-	 "role": "shop", "why": "大店 W9.8・卯建あり。街で一番高い民家。"
+	 "role": "shop", "biz": "sakaya", "why": "大店 W9.8・卯建あり。街で一番高い民家。"
 		+ "東の辻に近いほど地価が高い＝一番いい家が角に近い"},
 	# ── 南側（正面朝街，yaw=PI）──
 	{"kind": "machiya_f_n", "x": -15.6, "back": 3.3, "side": -1, "yaw": 0.0,
 	 "role": "house", "why": "二階建て W8.0。対岸の一番西 —— 北側の f_a と"
 		+ "向かい合って、同じ位置に違う高さが立つ"},
 	{"kind": "machiya_w_a", "x": -5.6, "back": 3.5, "side": -1, "yaw": -0.024,
-	 "role": "shop", "why": "工房 W7.2・煙出しあり。板戸張りで格子がない —— "
+	 "role": "shop", "biz": "konya", "why": "工房 W7.2・煙出しあり。板戸張りで格子がない —— "
 		+ "街から見て「ここは店ではない」が一目でわかる立面"},
 	{"kind": "machiya_f_a", "x": 6.0, "back": 3.2, "side": -1, "yaw": 0.019,
 	 "role": "house", "why": "標準形の二軒目。工房との間に 2.2m の側巷"},
@@ -119,6 +119,119 @@ const HOUSE_PROPS := [
 	{"m": "prop_barrel", "dx": 3.05, "dz": 1.05, "yaw": 0.3, "s": 0.78},
 	{"m": "prop_basket", "dx": -3.2, "dz": 0.95, "yaw": -0.6, "s": 0.82},
 ]
+
+# ══════════════════════════════════════════════════════════════════════
+# PHASE 2.5：店先と暮らしの構図（三軒の hero building）
+# ══════════════════════════════════════════════════════════════════════
+#
+# 上の SHOP_PROPS / HOUSE_PROPS は「どの店にも同じ荷物」を置く汎用表 ——
+# 建築が良くなった今、それが「きれいな建築模型」に見える最後の理由になった。
+# ここは**一軒ずつ、業を決めて**置く。
+#
+# ── 構図の原則（散らすのではなく、業を語る）────────────────────────
+#   店   ：商品が**街を向いて**並ぶ。客の動線の上に置く。整っているほど格が高い
+#   住   ：物は**壁際に寄せて**しまう。街に出さない
+#   工房 ：物は**仕事のまわり**に置く。戸口と水場から手の届く範囲。整えない
+# 同じ樽でも、積み方と置き場所で「売り物」と「道具」に分かれる。
+#
+# 座標は lot ローカル：dx = 間口方向（facade の右手が +）、dz = 街へ向かう向き、
+# dy = 追加の高さ。⚠ hero の dx は**実際の間口に合わせて手で置いてある**ので、
+# 汎用表と違って `lat`（間口比）の伸縮はかけない。
+const BIZ := {
+	# ── 八百屋・乾物屋：間口 7.6・出格子ひとつ・大戸口ひとつの標準形 ──
+	# 一番普通の店。だから一番わかりやすく「商品が街に出ている」で語る。
+	# 見世棚を出格子の下に出し、その上に竹籠、戸口の反対側に俵を積む。
+	# 角度は少しずつ振ってある（毎日出し入れするものは尺で置かない）。
+	"yaoya": {
+		"why": "標準形＝一番ふつうの店。商品が街に出ていることだけで語る",
+		"hang": [
+			{"m": "prop_noren_b", "dx": 0.95, "dz": 0.92, "dy": 0.0},
+			{"m": "prop_kanban", "dx": -1.60, "dz": 0.62, "dy": 0.42},
+			{"m": "prop_chochin", "dx": -0.50, "dz": 0.80, "dy": 0.30},
+			{"m": "prop_chochin", "dx": 2.40, "dz": 0.80, "dy": 0.30},
+		],
+		"ground": [
+			{"m": "prop_misedai", "dx": -2.85, "dz": 1.16, "yaw": 0.03, "s": 1.0},
+			# 竹籠は棚の**上**（dy 0.44 = 平台の高さ）。地面に置いたら在庫、
+			# 棚に載せたら商品 —— 同じ資産で意味が変わる
+			# ⚠ 一回目は prop_basket を 0.6 倍に縮めて載せたら「金色の椀」に
+			# 読めた。深い籠を縮めても浅い笊にはならない —— 専用の
+			# prop_zaru（浅い・口が広い・暗い竹色・商品を盛ってある）に交換
+			{"m": "prop_zaru", "dx": -3.30, "dz": 1.08, "yaw": 0.5, "s": 1.0, "dy": 0.44},
+			{"m": "prop_zaru", "dx": -2.66, "dz": 1.14, "yaw": -0.9, "s": 0.92, "dy": 0.44},
+			{"m": "prop_zaru", "dx": -2.06, "dz": 1.06, "yaw": 1.7, "s": 0.86, "dy": 0.44},
+			{"m": "prop_tawara", "dx": 2.55, "dz": 1.02, "yaw": 0.08, "s": 1.0},
+			{"m": "prop_tawara", "dx": 3.15, "dz": 1.08, "yaw": -0.05, "s": 1.0},
+			{"m": "prop_tawara", "dx": 2.86, "dz": 1.05, "yaw": 0.03, "s": 1.0, "dy": 0.42},
+			{"m": "prop_crate", "dx": 1.55, "dz": 1.38, "yaw": 0.22, "s": 0.82},
+			{"m": "prop_basket", "dx": -1.05, "dz": 1.30, "yaw": -0.4, "s": 0.88},
+		],
+		"hand": [
+			{"k": "broom", "dx": -3.72, "dz": 0.52},
+			{"k": "bucket", "dx": 3.62, "dz": 0.88},
+		],
+	},
+	# ── 酒屋：間口 9.8・出格子ふたつ・広い大戸口・卯建 ──
+	# 金持ちの店。派手にするのではなく**整える**ことで格を出す ——
+	# 樽はきちんと三角に積み、縁台は正面と平行、荷物の角度もほぼ揃える。
+	# 杉玉は字の読めない客にも通じる、町で一番強い商標。
+	"sakaya": {
+		"why": "大店＝整っていることで格を出す。散らかっていたら金持ちに見えない",
+		"hang": [
+			{"m": "prop_sugidama", "dx": -2.60, "dz": 0.98, "dy": -0.06},
+			{"m": "prop_noren_a", "dx": 0.00, "dz": 0.90, "dy": 0.0},
+			{"m": "prop_kanban", "dx": 3.40, "dz": 0.62, "dy": 0.42},
+			{"m": "prop_chochin", "dx": -1.75, "dz": 0.82, "dy": 0.30},
+			{"m": "prop_chochin", "dx": 1.75, "dz": 0.82, "dy": 0.30},
+		],
+		"ground": [
+			# 菰樽の三角積み：下三つ・上ふたつ。**角度を振らない**のが肝
+			{"m": "prop_barrel", "dx": -4.32, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_barrel", "dx": -3.70, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_barrel", "dx": -3.08, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_barrel", "dx": -4.01, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
+			{"m": "prop_barrel", "dx": -3.39, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
+			{"m": "prop_kanban_tate", "dx": 2.35, "dz": 1.26, "yaw": -0.06, "s": 1.0},
+			{"m": "prop_bench", "dx": 4.05, "dz": 1.05, "yaw": 0.01, "s": 1.0},
+			{"m": "prop_barrel", "dx": 3.05, "dz": 1.48, "yaw": 0.0, "s": 0.70},
+			{"m": "prop_crate", "dx": -1.30, "dz": 1.46, "yaw": 0.05, "s": 0.90},
+		],
+		"hand": [
+			{"k": "bucket", "dx": 4.72, "dz": 0.78},
+			{"k": "planter", "dx": -4.74, "dz": 0.96},
+		],
+	},
+	# ── 紺屋（藍染屋）：間口 7.2・板戸張り・広い大戸口・屋根に煙出し ──
+	# 売る店ではない。だから暖簾を掛けない —— 代わりに藍甕と物干しで語る。
+	# 煙出し（屋根）と薪（地面）が「火を使う家」の対、井戸が近いのは水を使うから。
+	# 配置は整えない：全部が戸口から手の届く円の中にある、という置き方。
+	"konya": {
+		"why": "工房＝売り場ではない。暖簾を掛けず、道具の配置で仕事を語る",
+		"hang": [
+			{"m": "prop_chochin", "dx": 1.30, "dz": 0.72, "dy": 0.24},
+		],
+		"ground": [
+			# 藍甕は地面に埋めて使う（藍は温度が命）。戸口の前に一列 ——
+			# 屋根の煙出しと直接つながる情報
+			{"m": "prop_aigame", "dx": -1.32, "dz": 0.58, "yaw": 0.2, "s": 1.0},
+			{"m": "prop_aigame", "dx": -0.44, "dz": 0.55, "yaw": -0.5, "s": 1.0},
+			{"m": "prop_aigame", "dx": 0.44, "dz": 0.57, "yaw": 0.9, "s": 1.0},
+			{"m": "prop_aigame", "dx": 1.32, "dz": 0.54, "yaw": -0.3, "s": 1.0},
+			# 物干し：染めた反物。街から見える一番強い看板
+			{"m": "prop_monohoshi", "dx": -2.75, "dz": 1.62, "yaw": 0.26, "s": 1.0},
+			{"m": "prop_takigi", "dx": 2.95, "dz": 0.92, "yaw": 0.07, "s": 1.0},
+			{"m": "prop_kanban_tate", "dx": -3.28, "dz": 0.82, "yaw": 0.12, "s": 0.88},
+			{"m": "prop_barrel", "dx": 1.95, "dz": 1.36, "yaw": 0.4, "s": 0.86},
+			{"m": "prop_barrel", "dx": 2.44, "dz": 1.52, "yaw": -0.7, "s": 0.74},
+			{"m": "prop_crate", "dx": -2.30, "dz": 0.86, "yaw": -0.18, "s": 0.84},
+		],
+		"hand": [
+			{"k": "bucket", "dx": 1.05, "dz": 1.24},
+			{"k": "bucket", "dx": 1.48, "dz": 1.52},
+			{"k": "broom", "dx": 3.44, "dz": 0.58},
+		],
+	},
+}
 
 
 func _init() -> void:
@@ -485,6 +598,7 @@ func _build_props() -> void:
 			batch[m] = [] as Array[Transform3D]
 		batch[m].append(t)
 	var n_hang := 0
+	var n_biz := 0
 	for L in LOTS:
 		var c := _lot_center(L)
 		var role := String(L.role)
@@ -499,6 +613,33 @@ func _build_props() -> void:
 		# 荷物が隣の家の前に置かれる。半幅の比で伸縮させる。
 		var lat: float = float(m.w) * 0.5 / 3.8
 		var fz: float = float(m.get("facade", {}).get("beam_z", 1.95))
+		# ── PHASE 2.5：hero building は業ごとの構図表を使う ──
+		# 汎用表（SHOP_PROPS / HOUSE_PROPS）は「どの店にも同じ荷物」なので、
+		# 建築が良くなった今それ自体が「模型」に見える理由になっている。
+		# biz が付いている lot は汎用表を**通さず**、一軒ぶんの構図で置く。
+		if L.has("biz"):
+			var spec: Dictionary = BIZ[String(L.biz)]
+			for h in spec["hang"]:
+				var hp: Vector3 = base + rgt * float(h.dx) + fwd * float(h.dz)
+				hp.y = height_at(hp.x, hp.z) + fz + float(h.get("dy", 0.0))
+				put.call(String(h.m), Transform3D(Basis(Vector3.UP, yaw), hp))
+				n_hang += 1
+			for gp in spec["ground"]:
+				var q: Vector3 = base + rgt * float(gp.dx) + fwd * float(gp.dz)
+				q.y = height_at(q.x, q.z) + float(gp.get("dy", 0.0))
+				var sc := float(gp.get("s", 1.0))
+				put.call(String(gp.m), Transform3D(
+					Basis(Vector3.UP, yaw + float(gp.get("yaw", 0.0)))
+						* Basis.from_scale(Vector3(sc, sc, sc)), q))
+			for hd in spec["hand"]:
+				var hq: Vector3 = base + rgt * float(hd.dx) + fwd * float(hd.dz)
+				match String(hd.k):
+					"bucket": _bucket(g, hq, yaw)
+					"broom": _broom(g, hq, yaw)
+					"planter": _planter(g, hq, yaw)
+					"firewood": _firewood(g, hq, yaw)
+			n_biz += 1
+			continue
 		# ── 掛的：暖簾（店）／招牌（店）／提灯（店，兩盞）──
 		if role == "shop":
 			var nk := "prop_noren_a" if int(L.x) % 2 == 0 else "prop_noren_b"
@@ -545,8 +686,8 @@ func _build_props() -> void:
 			OUT_DIR + "gen/mm_%s.res" % k)
 		lib.add(g, mmi, "MM_%s" % k)
 		total += batch[k].size()
-	_audit.append("道具：%d 件 / %d 種既有模組（其中吊掛 %d）+ 手工小件"
-		% [total, mods.size(), n_hang])
+	_audit.append("道具：%d 件 / %d 種模組（吊掛 %d）+ 手工小件・業別構圖 %d 軒"
+		% [total, mods.size(), n_hang, n_biz])
 
 
 ## ── 手工小件：用既有材質疊出來，不開新 glb ──
@@ -563,7 +704,10 @@ func _bucket(g: Node3D, p: Vector3, yaw: float) -> void:
 func _broom(g: Node3D, p: Vector3, yaw: float) -> void:
 	## 掃帚**靠著牆**站 —— 立在空地上會像插在地裡的棍子
 	var d := lib.pbr("slice_dark", "dark_wood", 0.45, Color(0.40, 0.42, 0.40))
-	var st := lib.pbr("slice_straw", "roof_thatch", 0.5, Color(0.72, 0.62, 0.40))
+	# ⚠ PHASE 2.5：uv 0.5（tile 2m）だと 0.2m の穂は貼図の一点しか拾わず
+	# 均一色になり、明るいティントと合わさって**白いカプセル**に読めていた。
+	# 街のどのカットにも写り込む位置にあったので影響が大きい。
+	var st := lib.pbr("slice_straw", "roof_thatch", 2.6, Color(0.46, 0.40, 0.26))
 	var y := height_at(p.x, p.z)
 	var pole := lib.cyl(g, "掃帚柄", 0.018, 0.020, 1.35, d, Vector3(p.x, y + 0.66, p.z), 6)
 	pole.rotation = Vector3(0.16 * cos(yaw), 0, -0.16 * sin(yaw))
@@ -736,9 +880,14 @@ func _build_planting() -> void:
 func _build_people() -> void:
 	## 三個村民 —— 驗收問題 5：「放東方角色進去是否自然」。
 	## 尺度參考也靠他們：房子好不好看很主觀，但「門比人高多少」是客觀的。
+	##
+	## ⚠ PHASE 2.5：**slice からは外した**（資産は消していない）。
+	## legacy の villager は白いカプセルで、店先を作り込むほど画面の中で
+	## 一番目立つ未完成物になる —— Phase 1.6 で白盒子の建築を slice から
+	## 出したのとまったく同じ判断。人物は別ラウンドの仕事。
+	## 尺度の基準は失うので、審図では「内法高 1.85m の戸口」を物差しにする。
 	var g := lib.add(_root, Node3D.new(), "村民") as Node3D
-	for spec in [[-6.4, 1.2, "villager_a", 2.1], [15.9, -1.4, "villager_b", -0.7],
-			[3.1, 2.6, "villager_c", 1.2]]:
+	for spec in []:
 		var x := float(spec[0])
 		var z := float(spec[1])
 		var v := MeshInstance3D.new()
@@ -746,7 +895,7 @@ func _build_people() -> void:
 		v.position = Vector3(x, height_at(x, z), z)
 		v.rotation.y = float(spec[3])
 		lib.add(g, v, String(spec[2]))
-	_audit.append("村民 3 人（尺度參考 + 驗收問題 5）")
+	_audit.append("村民 0 人（PHASE 2.5：白いカプセルを slice から隔離。資産は保持）")
 
 
 func _build_env() -> void:
@@ -760,7 +909,13 @@ func _build_env() -> void:
 	pm.sky_horizon_color = Color(0.72, 0.76, 0.80)
 	pm.ground_bottom_color = Color(0.32, 0.32, 0.30)
 	pm.ground_horizon_color = Color(0.62, 0.62, 0.58)
-	pm.sun_angle_max = 8.0
+	# ⚠ PHASE 2.5：8.0° は**太陽の円盤が 8 度角**ということ（実際の太陽は 0.5°）。
+	# 地平線に白いカプセルが浮いて見え、Phase 1.5 以降ほぼ全カットに写り込んで
+	# いた。店先を作り込むまで「村民か提灯の未完成物」だと誤診し続け、
+	# 村民を隔離し・箒を暗くし・立て看板を作り直しても消えなかった —— 探して
+	# いた場所（シーングラフ）に**最初から無かった**から。影を落とさない・
+	# 常に地平線上にある・どの probe にも引っかからない、の三点が答えだった。
+	pm.sun_angle_max = 1.5
 	sky.sky_material = pm
 	env.background_mode = Environment.BG_SKY
 	env.sky = sky
