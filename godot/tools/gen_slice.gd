@@ -146,14 +146,17 @@ const BIZ := {
 		"why": "標準形＝一番ふつうの店。商品が街に出ていることだけで語る",
 		# PHASE 2.6：構図が地面の高さに集中していた。簾（虫籠窓の前）と
 		# 干し柿（軒下の橙の点列）で 店先 → 庇 → 上段 を縦につなぐ。
+		# up = アンカーより上に伸びる分／drop = 下に垂れる分（天井との判定用）
+		# dy = 天井からさらに下げる分。絶対高さはもう書かない
 		"hang": [
-			{"m": "prop_noren_kaki", "dx": 0.95, "dz": 0.92, "dy": 0.0},
-			{"m": "prop_kanban", "dx": -1.60, "dz": 0.62, "dy": 0.42},
-			{"m": "prop_chochin", "dx": -0.50, "dz": 0.80, "dy": 0.30},
-			{"m": "prop_chochin", "dx": 2.40, "dz": 0.80, "dy": 0.30},
-			{"m": "prop_sudare", "dx": -0.95, "dz": 0.30, "dy": 1.34},
-			{"m": "prop_hoshigaki", "dx": -3.35, "dz": 0.88, "dy": 0.12},
-			{"m": "prop_hoshigaki", "dx": 3.35, "dz": 0.88, "dy": 0.12},
+			{"m": "prop_noren_kaki", "dx": 0.95, "dz": 0.84, "drop": 0.55},
+			{"m": "prop_kanban", "dx": -1.60, "dz": 0.62, "drop": 0.85},
+			{"m": "prop_chochin", "dx": -0.50, "dz": 0.62, "up": 0.16, "drop": 0.52},
+			{"m": "prop_chochin", "dx": 2.40, "dz": 0.62, "up": 0.16, "drop": 0.52},
+			{"m": "prop_sudare", "dx": -0.95, "dz": 0.26, "up": 0.08, "drop": 0.82,
+			 "upper": true, "dy": 0.06},
+			{"m": "prop_hoshigaki", "dx": -3.35, "dz": 0.58, "drop": 0.86},
+			{"m": "prop_hoshigaki", "dx": 3.35, "dz": 0.58, "drop": 0.86},
 		],
 		"ground": [
 			{"m": "prop_misedai", "dx": -2.85, "dz": 1.16, "yaw": 0.03, "s": 1.0},
@@ -185,13 +188,15 @@ const BIZ := {
 		# PHASE 2.6：簾二枚を上段（虫籠窓の前）に。杉玉 → 暖簾 → 簾で
 		# 立面が三段になる。数は増やさない —— 大店は整っているのが格
 		"hang": [
-			{"m": "prop_sugidama", "dx": -2.60, "dz": 0.98, "dy": -0.06},
-			{"m": "prop_noren_ai", "dx": 0.00, "dz": 0.90, "dy": 0.0},
-			{"m": "prop_kanban", "dx": 3.40, "dz": 0.62, "dy": 0.42},
-			{"m": "prop_chochin", "dx": -1.75, "dz": 0.82, "dy": 0.30},
-			{"m": "prop_chochin", "dx": 1.75, "dz": 0.82, "dy": 0.30},
-			{"m": "prop_sudare", "dx": -1.90, "dz": 0.28, "dy": 1.80},
-			{"m": "prop_sudare", "dx": 1.90, "dz": 0.28, "dy": 1.80},
+			{"m": "prop_sugidama", "dx": -2.60, "dz": 0.52, "drop": 0.77},
+			{"m": "prop_noren_ai", "dx": 0.00, "dz": 0.84, "drop": 0.62},
+			{"m": "prop_kanban", "dx": 3.40, "dz": 0.62, "drop": 0.85},
+			{"m": "prop_chochin", "dx": -1.75, "dz": 0.62, "up": 0.16, "drop": 0.52},
+			{"m": "prop_chochin", "dx": 1.75, "dz": 0.62, "up": 0.16, "drop": 0.52},
+			{"m": "prop_sudare", "dx": -1.90, "dz": 0.24, "up": 0.08, "drop": 0.82,
+			 "upper": true, "dy": 0.34},
+			{"m": "prop_sudare", "dx": 1.90, "dz": 0.24, "up": 0.08, "drop": 0.82,
+			 "upper": true, "dy": 0.34},
 		],
 		"ground": [
 			# 菰樽の三角積み：下三つ・上ふたつ。**角度を振らない**のが肝
@@ -219,10 +224,13 @@ const BIZ := {
 		# PHASE 2.6：染め上げた反物を**高く**干す（軒下から 1.9m 垂れる）。
 		# 地面の藍甕 → 中段の物干し → 上段の反物 → 屋根の煙出し、と
 		# 「染めの仕事」が立面を縦に貫く
+		# ⚠ 染め布は**庇の下**に吊る。庇と主屋根のあいだは約 1.09m しか
+		# なく、1.26m の反物は物理的に入らない（Phase 2.6 はここを無視して
+		# 庇を突き抜けていた）。戸口を塞がないよう両脇の板戸の前へ。
 		"hang": [
-			{"m": "prop_chochin", "dx": 1.30, "dz": 0.72, "dy": 0.24},
-			{"m": "prop_somenuno", "dx": -0.85, "dz": 0.42, "dy": 1.18},
-			{"m": "prop_somenuno", "dx": 0.15, "dz": 0.40, "dy": 1.12},
+			{"m": "prop_chochin", "dx": 1.30, "dz": 0.62, "up": 0.16, "drop": 0.52},
+			{"m": "prop_somenuno", "dx": -2.55, "dz": 0.78, "drop": 1.30},
+			{"m": "prop_somenuno", "dx": 2.62, "dz": 0.74, "drop": 1.30},
 		],
 		"ground": [
 			# 藍甕は地面に埋めて使う（藍は温度が命）。戸口の前に一列 ——
@@ -402,6 +410,57 @@ func _lot_center(L: Dictionary) -> Vector2:
 func _lot_yaw(L: Dictionary) -> float:
 	return float(L.yaw) + (PI if int(L.side) < 0
 		and String(L.role) != "corner" else 0.0)
+
+
+# ══════════════════════════════════════════════════════════════════════
+# PHASE 2.6b：吊り物の天井 —— 屋根面から高さを**計算する**
+# ══════════════════════════════════════════════════════════════════════
+#
+# Phase 2.6 は暖簾・簾・染め布の高さを手で決めた。結果、庇の前桁が暖簾の
+# 上帯を貫き、染め布が庇を突き抜けた。原因は配置側が屋根面の高さを
+# 知らなかったこと —— 目分量で 2.08 や +1.18 と書いていた。
+# manifest（make_machiya が書く）に庇と軒の面が入ったので、ここは全部
+# 計算にする。手で決めるのは「どの天井の下か」と「どれだけ内側か」だけ。
+const HANG_GAP := 0.035        # 天井とのすき間（cm 単位の余裕）
+
+## 庇の下端（lot ローカル・地面から）。dz = 壁面からの張り出し。
+func _hisashi_bottom(m: Dictionary, dz: float) -> float:
+	var h: Dictionary = m.get("facade", {}).get("hisashi", {})
+	if h.is_empty():
+		return 2.05
+	var d: float = clampf(dz, 0.0, float(h.proj))
+	return float(h.z) - d * tan(deg_to_rad(float(h.slope))) - float(h.thick)
+
+## 庇の上端（上段に吊る物の「床」）
+func _hisashi_top(m: Dictionary, dz: float) -> float:
+	return _hisashi_bottom(m, dz) + float(m.get("facade", {})
+		.get("hisashi", {}).get("thick", 0.055)) + 0.024
+
+## 主屋根の軒裏（上段の天井）。⚠ 妻入りは軒の向きが 90° 違うので使わない。
+func _roof_soffit(m: Dictionary, dz: float) -> float:
+	var e: Dictionary = m.get("facade", {}).get("eave", {})
+	if e.is_empty():
+		return 3.40
+	return float(e.z_wall) - dz * tan(deg_to_rad(float(e.pitch))) - float(e.thick)
+
+## 吊り物の張り出しを「前桁より内側」に丸める。
+## 前桁は先端から beam_back の帯を占めるので、そこへ吊ると布が桁に刺さる。
+func _hang_dz(m: Dictionary, dz: float) -> float:
+	var h: Dictionary = m.get("facade", {}).get("hisashi", {})
+	if h.is_empty():
+		return dz
+	return minf(dz, float(h.proj) - float(h.get("beam_back", 0.15)))
+
+## 吊り物のアンカー高さ。`up` = アンカーより上に伸びる分（提灯の紐など）、
+## `drop` = 下に垂れる分。回傳が天井にぶつからない最大の高さ。
+func _hang_y(m: Dictionary, dz: float, up: float, drop: float,
+		under_roof: bool) -> float:
+	if under_roof:
+		var top := _roof_soffit(m, dz) - HANG_GAP - up
+		# 上段の物は庇の**上**にも乗ってはいけない
+		var floor_y := _hisashi_top(m, dz) + HANG_GAP + drop
+		return maxf(top, floor_y) if floor_y <= top else top
+	return _hisashi_bottom(m, dz) - HANG_GAP - up
 
 
 ## 地塊の**実際の**footprint。回傳 [量體中心, 屋根まで含む半徑, 壁の半徑]。
@@ -634,8 +693,14 @@ func _build_props() -> void:
 		if L.has("biz"):
 			var spec: Dictionary = BIZ[String(L.biz)]
 			for h in spec["hang"]:
-				var hp: Vector3 = base + rgt * float(h.dx) + fwd * float(h.dz)
-				hp.y = height_at(hp.x, hp.z) + fz + float(h.get("dy", 0.0))
+				# PHASE 2.6b：dz は前桁より内側へ丸め、高さは天井から逆算。
+				# `dy` は**天井からどれだけ下げるか**（＋で下がる）に意味が
+				# 変わった —— 絶対高さを手で書くのをやめたので
+				var hz := _hang_dz(m, float(h.dz))
+				var hp: Vector3 = base + rgt * float(h.dx) + fwd * hz
+				hp.y = height_at(hp.x, hp.z) + _hang_y(m, hz,
+					float(h.get("up", 0.0)), float(h.get("drop", 0.0)),
+					bool(h.get("upper", false))) - float(h.get("dy", 0.0))
 				put.call(String(h.m), Transform3D(Basis(Vector3.UP, yaw), hp))
 				n_hang += 1
 			for gp in spec["ground"]:
@@ -659,17 +724,21 @@ func _build_props() -> void:
 			# PHASE 2.6：布 v2（村は旧 prop_noren_a/b のまま。slice だけ参照替え）
 			var nk := "prop_noren_ai" if int(L.x) % 2 == 0 else "prop_noren_kaki"
 			var dx: float = float(m.get("facade", {}).get("door_x", 0.0))
-			var p := base + rgt * dx + fwd * 0.92
-			p.y = height_at(p.x, p.z) + fz
+			# PHASE 2.6b：hero と同じく庇の面から逆算する
+			var nz := _hang_dz(m, 0.84)
+			var p := base + rgt * dx + fwd * nz
+			p.y = height_at(p.x, p.z) + _hang_y(m, nz, 0.0, 0.62, false)
 			put.call(nk, Transform3D(Basis(Vector3.UP, yaw), p))
 			n_hang += 1
-			var kp := base + rgt * (dx - 2.5 * lat) + fwd * 0.62
-			kp.y = height_at(kp.x, kp.z) + fz + 0.42
+			var kz := _hang_dz(m, 0.62)
+			var kp := base + rgt * (dx - 2.5 * lat) + fwd * kz
+			kp.y = height_at(kp.x, kp.z) + _hang_y(m, kz, 0.0, 0.85, false)
 			put.call("prop_kanban", Transform3D(Basis(Vector3.UP, yaw), kp))
 			n_hang += 1
 			for s2 in [-1.0, 1.0]:
-				var cp: Vector3 = base + rgt * (dx + s2 * 1.55 * lat) + fwd * 0.80
-				cp.y = height_at(cp.x, cp.z) + fz + 0.30
+				var cz := _hang_dz(m, 0.62)
+				var cp: Vector3 = base + rgt * (dx + s2 * 1.55 * lat) + fwd * cz
+				cp.y = height_at(cp.x, cp.z) + _hang_y(m, cz, 0.16, 0.52, false)
 				put.call("prop_chochin", Transform3D(Basis(Vector3.UP, yaw), cp))
 				n_hang += 1
 		# ── 地上的：靠牆、簷下 ──

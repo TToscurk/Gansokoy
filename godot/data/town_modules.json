@@ -28,7 +28,21 @@
     ],
     "orient": "hira",
     "tsushi": "mushiko",
-    "ridge": 5.16
+    "ridge": 5.16,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.88,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.663,
+     "overhang": 0.85,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
    },
    "faces": 2834,
    "glb": "res://assets/models/machiya_f_a.glb"
@@ -59,7 +73,21 @@
     ],
     "orient": "hira",
     "tsushi": "none",
-    "ridge": 4.61
+    "ridge": 4.61,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.35,
+     "proj": 0.72,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.236,
+     "overhang": 0.85,
+     "pitch": 22.0,
+     "thick": 0.16
+    }
    },
    "faces": 1686,
    "glb": "res://assets/models/machiya_f_s.glb"
@@ -92,7 +120,21 @@
     ],
     "orient": "hira",
     "tsushi": "mushiko",
-    "ridge": 5.91
+    "ridge": 5.91,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 1.02,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.345,
+     "overhang": 0.85,
+     "pitch": 20.0,
+     "thick": 0.16
+    }
    },
    "faces": 3630,
    "glb": "res://assets/models/machiya_f_o.glb"
@@ -123,7 +165,21 @@
     ],
     "orient": "tsuma",
     "tsushi": "mushiko",
-    "ridge": 5.46
+    "ridge": 5.46,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.35,
+     "proj": 0.95,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.102,
+     "overhang": 0.78,
+     "pitch": 23.0,
+     "thick": 0.16
+    }
    },
    "faces": 2408,
    "glb": "res://assets/models/machiya_t_a.glb"
@@ -154,7 +210,21 @@
     ],
     "orient": "hira",
     "tsushi": "none",
-    "ridge": 4.91
+    "ridge": 4.91,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 1.06,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.636,
+     "overhang": 0.85,
+     "pitch": 19.0,
+     "thick": 0.16
+    }
    },
    "faces": 2144,
    "glb": "res://assets/models/machiya_w_a.glb"
@@ -186,7 +256,21 @@
     ],
     "orient": "hira",
     "tsushi": "nikai",
-    "ridge": 6.16
+    "ridge": 6.16,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.82,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.586,
+     "overhang": 0.85,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
    },
    "faces": 3488,
    "glb": "res://assets/models/machiya_f_n.glb"

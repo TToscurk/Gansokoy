@@ -334,7 +334,7 @@ def machiya(bld, s):
         _udatsu(bld, W, z0, z_top, wall_y)
     if s["smoke"]:
         _smoke(bld, W, D, z_top, pitch, s["overhang"], tsuma)
-    return ridge, door_x
+    return ridge, door_x, z_top
 
 
 def _roof_dispatch(bld, s, W, D, z_top, pitch):
@@ -910,9 +910,15 @@ def build_variant(name, W=None, D=None, total_h=None, pitch=None):
     """給 make_town.py 呼叫：依 spec 生一棟，回傳 (ob, report, meta)。"""
     s = spec_of(name, W, D, total_h, pitch)
     b = MB()
-    ridge, door_x = machiya(b, s)
+    ridge, door_x, z_top = machiya(b, s)
     ob = b.build(name)
     nbay = len(s["bays"])
+    hmode, hproj, _hover = s["hisashi"]
+    # ⚠ PHASE 2.6b：庇と軒の**面の位置**を manifest に出す。
+    # Phase 2.6 で吊り物（暖簾・簾・染め布・提灯）の高さを手で決めたら、
+    # 庇の桁が暖簾の上帯を貫き、染め布が庇を突き抜けた。原因は単純で、
+    # 配置側が屋根面の高さを**知らなかった**こと。数字を持たせれば
+    # 「庇の下端より下に吊る」が計算になる。
     meta = {
         "door_x": round(door_x, 3),
         "door_w": round(s["W"] / nbay - POST, 3),
@@ -920,6 +926,15 @@ def build_variant(name, W=None, D=None, total_h=None, pitch=None):
         "bay_w": round(s["W"] / nbay, 3), "nbay": nbay,
         "bays": list(s["bays"]), "orient": s["orient"],
         "tsushi": s["tsushi"][0], "ridge": round(ridge, 3),
+        # 庇（storefront の天井）。z は壁面での上端、slope は下り勾配。
+        # 前桁は先端から 0.06 内側・断面 0.11 なので、吊り物は
+        # proj − 0.15 より内側に置けば桁と当たらない。
+        "hisashi": {"mode": hmode, "z": round(s["plinth"] + LINTEL_Z + 0.20, 3),
+                    "proj": round(hproj, 3), "slope": 17.0,
+                    "thick": 0.055, "beam_back": 0.15},
+        # 主屋根（上段の天井）。妻入りは軒の向きが 90° 違うので使わないこと。
+        "eave": {"z_wall": round(z_top, 3), "overhang": round(s["overhang"], 3),
+                 "pitch": round(s["pitch"], 3), "thick": 0.16},
     }
     return ob, validate(ob), meta
 

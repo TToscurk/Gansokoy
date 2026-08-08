@@ -140,18 +140,46 @@ CLAY = (0.135, 0.120, 0.115)        # 藍甕の釉
 PAPER = (0.720, 0.640, 0.480)       # 提灯の火袋（昼・火なし）
 SIGN = (0.700, 0.655, 0.560)        # 看板の字板
 BAMBOO = (0.325, 0.270, 0.170)      # 竹の笊（既存 prop_basket より暗い）
+# ⚠ 簾に STRAW を流用したら黄色すぎて画面で浮いた（c2/c7）。
+# 日に焼けた竹は彩度が低く、屋根や腰板の色域に近い
+BAMBOO_DRY = (0.360, 0.315, 0.205)  # 簾（日焼けした竹）
 GOODS = (0.300, 0.255, 0.150)       # 盛った乾物・穀
 
 
 # ── 布のヘルパ（PHASE 2.6）──
+# 布が変形に使ってよい割合の下限。クリアランスが厳しくても**ここまでは
+# 残す** —— 0 にすると布ではなく板になる。これ以上詰まる場所は、変形では
+# なく**配置**が間違っている（そのときは配置を直すこと）。
+CLOTH_FLOOR = 0.28
+
+
 def cloth_strip(cx, top_z, w, h, rows=6, cols=4, sway=0.06, bow=0.035,
-                tilt=0.0, phase=0.0, ripple=0.014):
+                tilt=0.0, phase=0.0, ripple=0.014,
+                clear_front=None, clear_side=None, thick=0.012):
     """吊るした布の一枚。**平らな長方形ではなく**、下端ほど前へ流れ
     （sway・t^1.8）、幅方向に膨らみ（bow）、細かい波（ripple）が入る。
 
-    ⚠ 面は**表裏二枚**貼る（裏は巻き順を反転しただけ）。厚み 0 の一枚板は
-    Godot が背面剔除して、裏へ回った瞬間に消える —— docs §3 の参道と同じ罠。
-    表裏を最初から張れば、巻き順の向きを推理する必要そのものが消える。"""
+    ── PHASE 2.6b：クリアランス規則（再利用可能・個別パッチにしない）──
+    `clear_front` … 手前にある物（庇の前桁・隣の柱・次の布）までの空き[m]。
+        前方向の最大振れは sway+bow+ripple+thick。これが空きを超えるとき、
+        **三つをまとめて同じ率で**縮める —— 形の比率は保ったまま量だけ落ちる。
+    `clear_side` … 幅方向の空き[m]。tilt による裾の横ずれ |tilt|·w を頭打ちに。
+    どちらも None なら無制限（既存の呼び出しはそのまま）。
+
+    ⚠ 縮める率には下限 `CLOTH_FLOOR` がある。呼び出し側が非現実的な
+      クリアランスを渡しても布は板にならない —— 代わりに**まだ当たる**。
+      当たったらそれは配置のバグで、変形で隠すべきではない。
+
+    ⚠ 面は**表裏二枚**貼る。厚み 0 の一枚板は Godot が背面剔除して、
+      裏へ回った瞬間に消える —— docs §3 の参道と同じ罠。表裏を最初から
+      張れば、巻き順の向きを推理する必要そのものが消える。"""
+    if clear_front is not None:
+        peak = sway + bow + ripple + thick
+        if peak > 1e-6:
+            k = max(CLOTH_FLOOR, min(1.0, clear_front / peak))
+            sway, bow, ripple = sway * k, bow * k, ripple * k
+    if clear_side is not None and abs(tilt) * w > clear_side:
+        tilt = math.copysign(clear_side / max(w, 1e-6), tilt)
     # ⚠ 裏面は**頂点ごと複製**して 0.012 奥にずらす。最初は同じ頂点で
     # 巻き順だけ反転した面を重ねたが、from_pydata の検証が「重複面」として
     # **黙って捨てて**いた（"Mesh not valid" の警告＋面数が半分で発覚）。
@@ -165,7 +193,7 @@ def cloth_strip(cx, top_z, w, h, rows=6, cols=4, sway=0.06, bow=0.035,
             y = -(sway * (t ** 1.8) + bow * math.sin(u * math.pi) * t
                   + ripple * math.sin((u * 2.2 + phase) * TAU) * t)
             front.append((x, y, z))
-    back = [(x, y + 0.012, z) for x, y, z in front]
+    back = [(x, y + thick, z) for x, y, z in front]
     verts = front + back
     off = len(front)
     faces = []
@@ -191,21 +219,34 @@ def make_noren(name, width, n_flap, base_col, h=0.62, seed=7):
     アンカーは旧と同じ：竿の中心 z≈0、布は下へ。"""
     clear()
     rng = random.Random(seed)
-    gap = 0.022
+    # ⚠ gap 0.022 は正面から見ると 1px も無く、暖簾が**一枚の板**に読めた
+    # （c2 の正対カットで発覚）。0.055 なら裾の割れが距離をおいても残る。
+    # clear_side に gap/2 を渡してあるので、広げても裾は隣と当たらない。
+    gap = 0.055
     fw = (width - (n_flap - 1) * gap) / n_flap
     parts = [sweep([(-width / 2 - 0.06, 0, 0.012), (width / 2 + 0.06, 0, 0.012)],
                    [0.022, 0.022], sides=7)]                        # 掛竿
     band_h = 0.09
-    parts.append(cloth_strip(0.0, 0.004, width, band_h, rows=2, cols=8,
-                             sway=0.012, bow=0.02, ripple=0.006))    # かけ（上帯）
+    # ⚠ 上帯の天は竿の**下端**（0.012−0.022 = −0.010）から。最初は 0.004 で
+    # 始めていて、竿の芯を布が貫いていた（d2 の近景で発覚）。
+    band_top = -0.011
+    parts.append(cloth_strip(0.0, band_top, width, band_h, rows=2, cols=8,
+                             sway=0.010, bow=0.016, ripple=0.005,
+                             clear_front=0.05))                      # かけ（上帯）
     for i in range(n_flap):
         cx2 = -width / 2 + fw / 2 + i * (fw + gap)
-        hh = h - band_h + rng.uniform(-0.022, 0.018)
-        parts.append(cloth_strip(cx2, 0.004 - band_h, fw, hh, rows=6, cols=3,
-                                 sway=rng.uniform(0.05, 0.09),
-                                 bow=rng.uniform(0.02, 0.045),
-                                 tilt=rng.uniform(-0.02, 0.02),
-                                 phase=rng.random()))
+        hh = h - band_h + rng.uniform(-0.050, 0.030)      # 裾の高さを揃えない
+        # 隣の裾と当たらない範囲でしか傾けない（gap の半分まで）
+        fv, ff = cloth_strip(cx2, band_top - band_h, fw, hh, rows=6, cols=3,
+                             sway=rng.uniform(0.05, 0.09),
+                             bow=rng.uniform(0.02, 0.045),
+                             tilt=rng.uniform(-0.02, 0.02),
+                             phase=rng.random(),
+                             clear_front=0.16, clear_side=gap * 0.5)
+        # 一枚ずつ奥行きをずらす —— 全部が同一平面に並ぶと、割れていても
+        # 面としては一枚に見える。0〜18mm でいい
+        dy = -rng.uniform(0.0, 0.018)
+        parts.append(([(x, y + dy, z) for x, y, z in fv], ff))
     v, f = merge(*parts)
 
     def col(co, n):
@@ -279,13 +320,16 @@ def make_sudare():
     外に掛ける日除け。横桟の縞＋下端の巻き＋吊り紐二本。
     アンカーは上端 z=0（提灯と同じ規約）、正面 −y。"""
     clear()
-    W, H = 0.92, 1.04
+    # ⚠ H 1.04 では庇の上端と主屋根の軒裏のあいだ（f_a で約 1.05m）に
+    # 吊り紐ぶんが入らなかった。0.78 なら余裕 0.13m。
+    W, H = 0.92, 0.78
     parts = [cloth_strip(0.0, 0.0, W, H, rows=5, cols=3,
-                         sway=0.045, bow=0.012, ripple=0.004)]
+                         sway=0.045, bow=0.012, ripple=0.004,
+                         clear_front=0.13)]
     parts.append(sweep([(-W / 2, -0.052, -H), (W / 2, -0.052, -H)],
                        [0.034, 0.034], sides=8))                     # 下端の巻き
     for sx in (1, -1):                                               # 吊り紐
-        parts.append(sweep([(sx * W * 0.30, -0.006, 0.10),
+        parts.append(sweep([(sx * W * 0.30, -0.006, 0.08),
                             (sx * W * 0.30, -0.010, -H * 0.55)],
                            [0.006, 0.006], sides=4))
     v, f = merge(*parts)
@@ -295,10 +339,10 @@ def make_sudare():
             return ROPE
         if co.z < -H + 0.05:
             k = 0.95 + 0.10 * (int((co.x + 1.0) / 0.05) % 2)
-            return tuple(min(1.0, c * k) for c in W_LT)              # 巻き
+            return tuple(min(1.0, c * k) for c in W_ST)              # 巻き
         slat = int(-co.z / 0.032) % 2                                # 横桟の縞
-        k = (0.86 + 0.16 * slat) * (1.0 + 0.5 * (co.y + 0.05))
-        return tuple(min(1.0, max(0.0, c * k)) for c in STRAW)
+        k = (0.88 + 0.13 * slat) * (1.0 + 0.35 * (co.y + 0.05))
+        return tuple(min(1.0, max(0.0, c * k)) for c in BAMBOO_DRY)
 
     export(mesh_from("prop_sudare", v, f, col, smooth=False), "prop_sudare")
 
@@ -336,14 +380,17 @@ def make_somenuno():
     アンカーは上端 z=0。"""
     clear()
     parts = [sweep([(-0.26, 0, 0.008), (0.26, 0, 0.008)], [0.016, 0.016], sides=6)]
-    parts.append(cloth_strip(0.0, 0.0, 0.42, 1.88, rows=8, cols=3,
-                             sway=0.13, bow=0.045, ripple=0.018, phase=0.3))
+    # ⚠ 1.88m では庇と主屋根のあいだ（約 1.09m）に絶対入らず、庇を
+    # 突き抜けていた（d3 の近景）。庇の**下**に吊る前提の 1.26m に。
+    parts.append(cloth_strip(0.0, 0.0, 0.42, 1.26, rows=7, cols=3,
+                             sway=0.13, bow=0.045, ripple=0.018, phase=0.3,
+                             clear_front=0.20))
     v, f = merge(*parts)
 
     def col(co, n):
         if co.z > -0.01 and abs(co.y) < 0.03:
             return W_DK
-        t = -co.z / 1.88
+        t = -co.z / 1.26
         base = tuple(AI[i] * (0.75 + 0.5 * t) for i in range(3))     # 下ほど濃い
         k = 1.0 + 0.6 * (co.y + 0.08)
         return tuple(min(1.0, max(0.0, c * k)) for c in base)
@@ -368,7 +415,8 @@ def make_chochin():
     parts.append(sweep([(0, 0, 0.004), (0, 0, -0.030)], [0.058, 0.058], sides=16))
     parts.append(sweep([(0, 0, -0.490), (0, 0, -0.524)], [0.062, 0.062], sides=16))
     # 吊り紐（上に伸びる。軒桁に掛かっているという情報）
-    parts.append(sweep([(0, 0, 0.30), (0, 0, 0.004)], [0.009, 0.009], sides=5))
+    # ⚠ 0.30 は庇の下に収まらなかったので 0.16。UP_CHOCHIN と揃えること
+    parts.append(sweep([(0, 0, 0.16), (0, 0, 0.004)], [0.009, 0.009], sides=5))
     v, f = merge(*parts)
 
     def col(co, n):
@@ -548,7 +596,8 @@ def make_monohoshi():
         cv, cf = cloth_strip(cx, H - 0.05, 0.36, ln, rows=7, cols=3,
                              sway=rng.uniform(0.06, 0.12),
                              bow=rng.uniform(0.02, 0.05),
-                             tilt=rng.uniform(-0.03, 0.03), phase=rng.random())
+                             tilt=rng.uniform(-0.03, 0.03), phase=rng.random(),
+                             clear_front=0.22, clear_side=0.12)
         cv = [(x, y - 0.055, z) for x, y, z in cv]
         parts.append((cv, cf))
         cloth.append((cx, H - 0.05 - ln))

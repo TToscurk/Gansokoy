@@ -4,7 +4,7 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 2.6 built, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 2.6b cloth-clearance fix, awaiting Art Review).
 
 ---
 
@@ -21,10 +21,13 @@ same slice, same business-identity rules.
 
 ## Current Status
 
-Phase 2 approved as the **structural baseline**. Phase 2.6 built — renders
-produced, **awaiting Human Art Review**. Village untouched (old
-prop_barrel/basket/noren_a,b glbs unchanged; v2 assets are new names
-referenced only by the slice).
+Phase 2 approved as the **structural baseline**. Phase 2.6 was **not
+approved** — cloth intersected the eaves. Phase 2.6b fixes it: hanging
+placement is now derived from the hisashi/roof planes exported in the module
+manifest, plus a reusable `clear_front`/`clear_side` rule on `cloth_strip`.
+Renders re-produced and visually inspected, **awaiting Human Art Review**.
+Village untouched (old prop_barrel/basket/noren_a,b glbs unchanged; v2
+assets are new names referenced only by the slice).
 
 Branch: `claude/previous-progress-92cb1a`.
 
@@ -84,7 +87,9 @@ unplanned and unapproved.
 | LOD is `lod_bias` only; no hand-authored LOD0/1/2 | Master Plan §5 still open |
 | Anisotropic filtering was added globally in `pbr()` — village inherits it on next regeneration | `gen_lib.gd` |
 | Placeholder villagers quarantined out of the slice — no human figure left as a scale reference | `gen_slice.gd::_build_people` |
-| Sudare colour slightly too yellow (reuses STRAW); hand-built small props (bucket/broom/planter) still old quality | `make_facade.py`, `gen_slice.gd` |
+| Cloth clearance rule is currently non-binding (k≈0.98–1.0) — it is a guard-rail, not what fixed the intersections | `make_facade.py::cloth_strip` |
+| 妻入り `eave` metadata assumes 平入り axes; unusable for upper-facade hangers on `machiya_t_a` | manifest `facade.eave` |
+| Hand-built small props (bucket/broom/planter) still old quality | `gen_slice.gd` |
 | Signboards carry no lettering (blank panels) | `prop_kanban`, `prop_kanban_tate` |
 | `sun_angle_max` and shot-mode `player.visible` were changed as by-products of a misdiagnosis — revisit both in the lighting round | `gen_slice.gd`, `scripts/main.gd` |
 | 稗田邸 blockout has no textures — the only untextured building in the village | `docs/ningen-no-sato.md` §9.1 |
