@@ -724,7 +724,9 @@ def export(ob, name):
 #       `make_machiya.py` 的 `SPECS` 決定構成（開間・厨子・庇・卯建…）。
 #       兩邊的 W/D/總高/坡度必須一致，不一致時以這張表為準。
 PROTO = {"machiya_f_a", "machiya_f_s", "machiya_f_o",
-         "machiya_t_a", "machiya_w_a", "machiya_f_n"}
+         "machiya_t_a", "machiya_w_a", "machiya_f_n",
+         # PHASE 3 Consolidation：legacy を置き換える三戸
+         "machiya_e_p", "machiya_n_a", "machiya_n_o"}
 MACHIYA = [
     # ⚠ PHASE 1.1：總高 4.50 → **5.40**、坡度 23° → 21°（使用者定案：放寬到
     # 5.2~5.6 讓屋頂不再壓倒立面）。這張表是**唯一**的真相來源 —— prototype
@@ -736,7 +738,13 @@ MACHIYA = [
     ("machiya_t_a", 6.4, 8.8, 5.70, 1, 23.0, 71),   # 妻入りの町家
     ("machiya_w_a", 7.2, 7.4, 5.15, 1, 19.0, 73),   # 工房（煙出しあり）
     ("machiya_f_n", 8.0, 8.2, 6.40, 2, 21.0, 79),   # 二階建て
-    # ── legacy blockout（Phase 2 も置き換えない。village の 169 棟が使用中）──
+    # ── PHASE 3 Consolidation の三戸（legacy の置き換え）────────────
+    # 尺寸は「置き換える相手の fw/fd に合わせる」ことが第一条件 ——
+    # 配置は fw で決まるので、fw が変わると frontage の棟数が変わる。
+    ("machiya_e_p", 6.0, 6.2, 4.15, 1, 19.0, 83),   # 村緣の平屋 → e_a
+    ("machiya_n_a", 9.2, 7.6, 7.65, 2, 23.0, 89),   # 総二階     → b_a
+    ("machiya_n_o", 10.4, 8.0, 7.95, 2, 24.0, 97),  # 総二階の大店 → b_b
+    # ── legacy blockout（Phase 3 で置き換え中。まだ 117 棟が使用中）──
     ("machiya_f_b", 8.8, 7.6, 4.50, 1, 26.0, 23),   # 前排
     ("machiya_b_a", 9.2, 7.6, 9.40, 2, 45.0, 37),   # 後排（規格 9~10、45°）不動
     ("machiya_b_b", 10.4, 8.0, 9.90, 2, 45.0, 41),  # 後排 不動

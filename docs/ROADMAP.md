@@ -27,30 +27,20 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 
 ## CURRENT
 
-**Phase 3.2A — 本通 sight-line, diagnostic increment.** Three civic nodes
-(共同井戸 / 上屋 / 常夜灯の対) built and awaiting Art Review. Result is a
-*negative* one and that is the point: off-axis nodes fill the mid-field
-(z=−60 FOV median 114→75 m) but barely move the axis (北門 axis ±8°
-unchanged at 78.8 m). Zero drift proven at byte level — all 54 `gen/*.res`
-and both data JSONs unchanged; 0 nodes moved. All five gates green.
-
-**Composition rollout paused** (human, 2026-08-08). The audit in
-`ningen-no-sato.md` §11.13 found the real blocker: 117 of 170 houses (69%)
-are untextured single-surface blockouts, including the north-gate front row
-inside the approved corridor. Proposal A–G written, nothing implemented.
-
-Recommended order: **A** legacy roofs → production kawara (117 houses at
-once) · **B** `b_a`/`b_b` pitch 45° → 21–23° · **C** a 3.5 m kit module to
-replace the 5 gate-front `machiya_e_a`. Then **Phase 3.2B** (landmark
-frontage), then full rollout.
+**Phase 3 Architecture Consolidation — Legacy House Removal.** Composition
+work is paused by human instruction. Three new production modules built
+(`machiya_e_p` / `machiya_n_a` / `machiya_n_o`) and swapped in inside the
+north-gate corridor, which is now 18/18 production. Village-wide 64/170 (38%)
+production. Awaiting Art Review on the modules; rollout is one flag flip.
 
 ## NEXT
 
-- **Architecture Kit gap: a 9–10 m 総二階/大型町家 module** — required
-  before full rollout; the village's back rows are 9.4/9.9 m and the kit
-  tops out at 6.42 m.
-- **Full rollout** to the remaining 36 blocks — only after the pilot clears
-  Art Review and the back-row gap is closed.
+- **Village-wide rollout** of the consolidation — `CONSOLIDATE_ALL = true`
+  plus routing `machiya_f_b`'s 32 lots through `_kit_pick` (no new module
+  needed; fw 10.74 sits between `f_n` 9.96 and `f_o` 11.76).
+- **Phase 3.2B — landmark frontage on 本通** — deliberately *after* the
+  legacy removal: a building that stops the axis must not itself be a
+  blockout.
 - **Lighting / cel-shading round** — after the village carries production
   architecture, not before (Phase 1.6's lesson: you cannot art-review a
   scene dominated by blockout).

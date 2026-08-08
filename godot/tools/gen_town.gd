@@ -703,13 +703,48 @@ func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
 	return false
 
 
+# ══════ PHASE 3 Architecture Consolidation：legacy house の置き換え ══════
+## legacy blockout（1 surface・テクスチャ 0 枚）→ production kit（6 surface）。
+## 置き換え先の fw/fd は相手に合わせて作ってあるので**配置は動かない**
+## （e_p 7.90/7.84 ↔ e_a 7.94/7.90、n_a 11.16/9.33 ↔ b_a 11.14/9.30、
+##   n_o 12.36/9.80 ↔ b_b 12.34/9.70）。
+##
+## ⚠ 今ラウンドは **Art Review gate 1**：北門回廊の中だけを置き換える。
+##   人が承認したら `_consolidate()` の座標窓を外すだけで全村に広がる。
+##   `machiya_f_b`（32 棟）はここに入れていない —— fw 10.74 は既存 kit の
+##   f_n 9.96 と f_o 11.76 に挟まれていて、新規モジュールを足さずに
+##   `_kit_pick` で吸収できる（rollout ラウンドで扱う）。
+const CONSOLIDATE := {
+	"machiya_e_a": "machiya_e_p",     # 村緣の平屋
+	"machiya_b_a": "machiya_n_a",     # 総二階
+	"machiya_b_b": "machiya_n_o",     # 総二階の大店
+}
+const CONSOLIDATE_ALL := false        # ← Art Review 承認後に true にする
+
+
+func _consolidate(kind: String, p: Vector2) -> String:
+	# ⚠ ghost pass では**絶対に**置き換えない。ghost は「pilot が無かった頃の
+	#   家並み」を共有 RNG に流し直すためのものなので、ここで新モジュール
+	#   （面寬が 0.2m 違う）を混ぜると ghost の家の位置がずれ、密度層と
+	#   草層の抽選が村中で動く。実測：入れ忘れて葦 615 株・花樹 53 株が
+	#   回廊の外で移動した。
+	if _ghosting:
+		return kind
+	if not CONSOLIDATE.has(kind):
+		return kind
+	if not CONSOLIDATE_ALL and not (absf(p.x) < 40.0 and p.y >= -165.0 and p.y <= -80.0):
+		return kind
+	return String(CONSOLIDATE[kind])
+
+
 func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
 	## 村緣降級的**單一收口點**。排屋迴圈裡也做了一次（那裡要早一步做，
 	## 才算得出正確的中心），但包角棟與河畔棟是直接呼叫這裡的 —— 只在
 	## 迴圈裡做的話它們會漏掉（實測 r≥155 還剩兩棟 4.5m 的 f_a）。
 	if kind != "machiya_e_a" and kind.begins_with("machiya") \
 			and Vector2(pos.x, pos.y - PLAZA.y).length() >= 155.0:
-		kind = "machiya_e_a"
+		kind = _consolidate("machiya_e_a", pos)
+	kind = _consolidate(kind, pos)
 	## 保留區／道路的檢查也收在這裡。排屋迴圈裡也有一份（那裡要早一步做，
 	## 才知道要不要跳過這個位置繼續往前排），但**包角棟與河畔棟是直接
 	## 呼叫這裡的** —— 只在迴圈裡擋的話它們會漏掉（實測一棟包角的村緣屋
@@ -855,6 +890,9 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			var kind: String = _kit_pick(a + along * s + into * base_set, rng) \
 				if (cfg.get("kit", false) and row_i == 0) \
 				else kinds[(hn + seed_i) % kinds.size()]
+			# PHASE 3 Consolidation：中心を算出する**前**に差し替える
+			# （後だと面寬差ぶん家が偏る —— 下の村緣規則と同じ罠）
+			kind = _consolidate(kind, a + along * s + into * base_set)
 			var m: Dictionary = _mods[kind]
 			var w: float = m["w"]
 			var limit: float = span - 0.4 - (reserve_b if row_i == 0 else river_reserve)
@@ -872,8 +910,8 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			# 房子會偏掉半個面寬差，實測造成鄰棟互穿 0.78m。
 			var prov: Vector2 = a + along * (s + w * 0.5) + into * setb
 			if Vector2(prov.x, prov.y - PLAZA.y).length() >= 155.0 \
-					and kind != "machiya_e_a":
-				kind = "machiya_e_a"
+					and kind != "machiya_e_a" and kind != "machiya_e_p":
+				kind = _consolidate("machiya_e_a", prov)
 				m = _mods[kind]
 				w = m["w"]
 			var center: Vector2 = a + along * (s + w * 0.5) + into * setb

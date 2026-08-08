@@ -275,6 +275,144 @@
    "faces": 3488,
    "glb": "res://assets/models/machiya_f_n.glb"
   },
+  "machiya_e_p": {
+   "kind": "machiya",
+   "w": 6.0,
+   "d": 6.2,
+   "fw": 7.96,
+   "fd": 7.9,
+   "h": 4.17,
+   "gbox": [
+    -3.98,
+    3.98,
+    -7.05,
+    0.85
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 1.85,
+    "beam_z": 2.08,
+    "bay_w": 2.0,
+    "nbay": 3,
+    "bays": [
+     "itado",
+     "door_s",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 3.91,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.31,
+     "proj": 0.68,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 2.843,
+     "overhang": 0.85,
+     "pitch": 19.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 1712,
+   "glb": "res://assets/models/machiya_e_p.glb"
+  },
+  "machiya_n_a": {
+   "kind": "machiya",
+   "w": 9.2,
+   "d": 7.6,
+   "fw": 11.16,
+   "fd": 9.3,
+   "h": 7.67,
+   "gbox": [
+    -5.58,
+    5.58,
+    -8.45,
+    0.85
+   ],
+   "facade": {
+    "door_x": 1.15,
+    "door_w": 2.15,
+    "beam_z": 2.08,
+    "bay_w": 2.3,
+    "nbay": 4,
+    "bays": [
+     "koushi",
+     "koushi",
+     "door_w",
+     "itado"
+    ],
+    "orient": "hira",
+    "tsushi": "nikai",
+    "ridge": 7.41,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 5.797,
+     "overhang": 0.85,
+     "pitch": 23.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 3620,
+   "glb": "res://assets/models/machiya_n_a.glb"
+  },
+  "machiya_n_o": {
+   "kind": "machiya",
+   "w": 10.4,
+   "d": 8.0,
+   "fw": 12.36,
+   "fd": 9.7,
+   "h": 8.55,
+   "gbox": [
+    -6.18,
+    6.18,
+    -8.85,
+    0.85
+   ],
+   "facade": {
+    "door_x": -2.08,
+    "door_w": 1.93,
+    "beam_z": 2.08,
+    "bay_w": 2.08,
+    "nbay": 5,
+    "bays": [
+     "koushi",
+     "door_w",
+     "degoushi",
+     "koushi",
+     "itado"
+    ],
+    "orient": "hira",
+    "tsushi": "nikai",
+    "ridge": 7.71,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 5.929,
+     "overhang": 0.85,
+     "pitch": 24.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 4374,
+   "glb": "res://assets/models/machiya_n_o.glb"
+  },
   "machiya_f_b": {
    "kind": "machiya",
    "w": 8.8,

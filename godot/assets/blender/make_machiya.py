@@ -263,6 +263,64 @@ SPECS = {
         "tsushi": ("nikai", 2.36, 1.42),
         "hisashi": ("full", 0.82, 0.50),
     },
+
+    # ══ PHASE 3 Architecture Consolidation：legacy を消すための三戸 ══
+    #
+    # ⚠ この三戸は「舊 blockout を production 風に化粧したもの」ではない。
+    #   軸組・嵌板・組物屋根は他の六戸とまったく同じ経路で生成される。
+    #   既存モジュールを scale して名前を変えたものは一つもない。
+
+    # ── 村緣の平屋：`machiya_e_a`（49 棟）の置き換え ──────────────
+    # 里の外縁、田と町のあいだの家。店ではないので通し庇はなく、入口だけ。
+    # 一間ぶんが板戸 —— 農具と薪を仕舞う土間がそのまま道に面している。
+    # 腰板が高いのは風雨が直接当たる場所だから。懸魚は付けない（格が違う）。
+    #
+    # ⚠ 高さについて：`machiya_e_a` は総高 3.50 だったが、内法 1.85 の真壁を
+    #   建てて瓦を葺くと 3.50 には**物理的に入らない**（反推した屋身が
+    #   1.8m の下限を割る）。内法高は kit 全戸共通の契約なので下げられない。
+    #   したがって総高は 4.15 —— 前列の 5.40 より明確に低く、段差は残る。
+    #   fw/fd は e_a と同じ 7.90 に合わせてあるので**配置は 1cm も動かない**。
+    "machiya_e_p": {
+        "W": 6.0, "D": 6.2, "total_h": 4.15, "pitch": 19.0,
+        "bays": ["itado", "door_s", "koushi"],
+        "tsushi": ("none", 0, 0),
+        "hisashi": ("entry", 0.68, 1.20),
+        "koshi": 0.80, "overhang": 0.85, "plinth": 0.26,
+        "gyogyo": False,
+    },
+
+    # ── 総二階（そうにかい）：`machiya_b_a`（20 棟）の置き換え ────────
+    # 後列の二層目のスカイラインを担う家。厨子ではなく**本物の二階**で、
+    # 一階の階高が 3.30 と高い（後列は蔵と作業場を兼ねる）。
+    # 二階は連子格子＋手摺、通し庇が一階の上を横に切る。
+    #
+    # ⚠ 総高について：b_a は 9.40 だったが、その高さの 4.0m は**45° の屋根**
+    #   が稼いでいたもので、屋身は 5.06 しかない。21〜23° の kit 語彙で
+    #   同じ 9.40 に届かせようとすると三階建てになる（＝嘘）。
+    #   実測（前列の軒 3.66m を 6.1m 先から見る角を 14m 先で超える高さ）は
+    #   **6.14m** —— 7.65 なら二層目は 1.5m ぶん残る。潰れてはいない。
+    # ⚠ bays は `machiya_f_n` と**必ず違えること**。最初の版は f_n と
+    #   一字一句同じ並び（koushi/door/koushi/degoushi）で、間口と総高だけ
+    #   違う「同じ家の大きい版」になっていた —— それは規格が禁じている
+    #   fake variation そのもの。後列の家は荷が入るので大戸口と板戸を持つ。
+    "machiya_n_a": {
+        "W": 9.2, "D": 7.6, "total_h": 7.65, "pitch": 23.0,
+        "bays": ["koushi", "koushi", "door_w", "itado"],
+        "tsushi": ("nikai", 3.30, 1.55),
+        "hisashi": ("full", 0.85, 0.46),
+        "koshi": 0.66,
+    },
+
+    # ── 総二階の大店：`machiya_b_b`（16 棟）の置き換え ──────────────
+    # n_a を広げただけにはしない。間口が五間、卯建が上がり、屋根に煙出し
+    # ——「後列でいちばん羽振りのいい家」。勾配も 24° で n_a と分ける。
+    "machiya_n_o": {
+        "W": 10.4, "D": 8.0, "total_h": 7.95, "pitch": 24.0,
+        "bays": ["koushi", "door_w", "degoushi", "koushi", "itado"],
+        "tsushi": ("nikai", 3.45, 1.55),
+        "hisashi": ("full", 0.85, 0.44),
+        "koshi": 0.66, "udatsu": True, "smoke": True,
+    },
 }
 
 
@@ -1035,16 +1093,21 @@ def render_lineup(objs, out_dir, gap=2.6):
     off = total / 2 - gap / 2
     for ob, x in zip(objs, xs):
         ob.location = (x - off, 0, 0)
-    sc = _neutral_stage(ground_at=(0, 4.0), ground_size=260)
-    cam = _camera(sc, lens=70.0)
-    # 画角：50mm・センサ 36mm。並び全長は 6 棟＋間隔で約 69m。
-    # 70mm/78m → 両端が切れた。50mm/110m → まだ切れた（実測で写る幅は
-    # 0.72×距離ではなく約 0.61×距離だった）。実測から逆算して 145m。
-    # 目測で寄せずに**撮った絵から px/m を測って**決める。
+    sc = _neutral_stage(ground_at=(0, 4.0), ground_size=420)
+    lens = 70.0
+    cam = _camera(sc, lens=lens)
+    # ⚠ 距離は**並びの実測幅から逆算**する。ハードコードすると kit が増えた
+    #   ときに黙って両端が切れる（6 棟のときは 145m 固定で足りていた）。
+    #   70mm・センサ 36mm → 写る幅 = 2·d·tan(atan(18/70)) = 0.5143·d。
+    #   余白 12% を見て d = 全長 / 0.5143 × 1.12。
+    dist = total / (2 * math.tan(math.atan(18.0 / lens))) * 1.04
+    top = max(bbox(ob)[2] for ob in objs)
     shots = [
-        ("00_lineup_front", (0.0, -145.0, 13.0), (0.0, 4.0, 3.2)),
-        ("00_lineup_45", (-64.0, -104.0, 32.0), (0.0, 4.0, 2.8)),
+        ("00_lineup_front", (0.0, -dist, top * 0.95), (0.0, 4.0, top * 0.46)),
+        ("00_lineup_45", (-dist * 0.42, -dist * 0.70, dist * 0.17),
+         (0.0, 4.0, top * 0.34)),
     ]
+    print("  lineup：全長 %.1fm → 距離 %.0fm（最高 %.2fm）" % (total, dist, top))
     sc.render.resolution_x = 2400
     sc.render.resolution_y = 900
     for name, pos, tgt in shots:
