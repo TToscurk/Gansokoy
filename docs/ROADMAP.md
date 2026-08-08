@@ -23,24 +23,24 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 | Phase 2 | Architecture Kit — 6 machiya modules (structural baseline) |
 | Phase 2.5 | facade & life dressing — 3 hero storefronts, business identity by composition |
 | Phase 2.6 / 2.6b | foreground prop v2, cloth as cloth, vertical dressing, cloth clearance from eave planes |
+| Phase 3 pilot / 3.1A / 3.1B / 3.2A | north-gate corridor kit rollout, street section, fire-watch crossing, sight-line diagnostic |
+| Architecture Consolidation | legacy house removal — 170/170 production, 0 blockout |
 | Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
 
 ## CURRENT
 
-**Phase 3 Architecture Consolidation — Legacy House Removal.** Composition
-work is paused by human instruction. Three new production modules built
-(`machiya_e_p` / `machiya_n_a` / `machiya_n_o`) and swapped in inside the
-north-gate corridor, which is now 18/18 production. Village-wide 64/170 (38%)
-production. Awaiting Art Review on the modules; rollout is one flag flip.
+**Human Village — Architecture Complete.** 170 houses, 7 production modules,
+**0 legacy blockout**. Four replacement modules built (`machiya_e_p`,
+`machiya_f_m`, `machiya_n_a`, `machiya_n_o`), each with the exact frontage
+width of the module it replaced, so layout and house count are unchanged.
+Full validation suite green. Awaiting Art Review.
 
 ## NEXT
 
-- **Village-wide rollout** of the consolidation — `CONSOLIDATE_ALL = true`
-  plus routing `machiya_f_b`'s 32 lots through `_kit_pick` (no new module
-  needed; fw 10.74 sits between `f_n` 9.96 and `f_o` 11.76).
-- **Phase 3.2B — landmark frontage on 本通** — deliberately *after* the
-  legacy removal: a building that stops the axis must not itself be a
-  blockout.
+- **3.2B — landmark frontage on 本通**, the 490 m sight line, and street lamp
+  vocabulary. All were paused for the legacy removal; now unblocked.
+- **稗田邸 blockout material split** and **tower asset quality**
+  (`tower_bell` / `tower_fire`) — the remaining non-residential blockout.
 - **Lighting / cel-shading round** — after the village carries production
   architecture, not before (Phase 1.6's lesson: you cannot art-review a
   scene dominated by blockout).

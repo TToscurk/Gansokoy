@@ -709,17 +709,18 @@ func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
 ## （e_p 7.90/7.84 ↔ e_a 7.94/7.90、n_a 11.16/9.33 ↔ b_a 11.14/9.30、
 ##   n_o 12.36/9.80 ↔ b_b 12.34/9.70）。
 ##
-## ⚠ 今ラウンドは **Art Review gate 1**：北門回廊の中だけを置き換える。
-##   人が承認したら `_consolidate()` の座標窓を外すだけで全村に広がる。
-##   `machiya_f_b`（32 棟）はここに入れていない —— fw 10.74 は既存 kit の
-##   f_n 9.96 と f_o 11.76 に挟まれていて、新規モジュールを足さずに
-##   `_kit_pick` で吸収できる（rollout ラウンドで扱う）。
+## 村全体に適用（PRODUCTION MODE：Human Village — Architecture Complete）。
+## `machiya_f_b` は当初「既存 kit で吸収できる」と判断したが、`_kit_pick` に
+## 流すと面寬が 9.56〜11.76 でばらつき、前列の詰め込みが変わって棟数と
+## 保留区の当たり判定が動く。**配置は保護対象**なので、fw 10.74 に合わせた
+## `machiya_f_m` を一戸足すほうが安全側 —— 判断を変えた理由を残しておく。
 const CONSOLIDATE := {
 	"machiya_e_a": "machiya_e_p",     # 村緣の平屋
+	"machiya_f_b": "machiya_f_m",     # 米屋（広い間口・低い）
 	"machiya_b_a": "machiya_n_a",     # 総二階
 	"machiya_b_b": "machiya_n_o",     # 総二階の大店
 }
-const CONSOLIDATE_ALL := false        # ← Art Review 承認後に true にする
+const CONSOLIDATE_ALL := true
 
 
 func _consolidate(kind: String, p: Vector2) -> String:

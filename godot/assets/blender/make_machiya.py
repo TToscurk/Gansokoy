@@ -285,7 +285,7 @@ SPECS = {
         "bays": ["itado", "door_s", "koushi"],
         "tsushi": ("none", 0, 0),
         "hisashi": ("entry", 0.68, 1.20),
-        "koshi": 0.80, "overhang": 0.85, "plinth": 0.26,
+        "koshi": 0.80, "overhang": 0.84, "plinth": 0.26,
         "gyogyo": False,
     },
 
@@ -308,7 +308,24 @@ SPECS = {
         "bays": ["koushi", "koushi", "door_w", "itado"],
         "tsushi": ("nikai", 3.30, 1.55),
         "hisashi": ("full", 0.85, 0.46),
-        "koshi": 0.66,
+        "koshi": 0.66, "overhang": 0.84,
+    },
+
+    # ── 米屋・仕出し：`machiya_f_b`（32 棟）の置き換え ────────────────
+    # 前列でいちばん数の多い「間口が広くて背の低い店」。荷が土間に入るので
+    # 大戸口が広く、その隣は板戸（俵と炭を積む）。厨子二階は**無い** ——
+    # 使用者が承認した階梯天際線（前列 4.5 / 後列 9〜10）の低い側を担うのが
+    # この家の都市的な役割なので、二階を足して f_a に近づけてはいけない。
+    # 通し庇は深い（荷を濡らさない）。
+    #
+    # ⚠ 総高 4.50 → 4.60。内法 1.85 の真壁に瓦を葺くと 4.50 では小壁が
+    #   0.05m を切って嵌板が生成されない。0.10m だけ上げて成立させた。
+    "machiya_f_m": {
+        "W": 8.8, "D": 7.6, "total_h": 4.60, "pitch": 21.0,
+        "bays": ["degoushi", "door_w", "itado", "koushi"],
+        "tsushi": ("none", 0, 0),
+        "hisashi": ("full", 0.85, 0.42),
+        "koshi": 0.72, "overhang": 0.84, "gyogyo": False,
     },
 
     # ── 総二階の大店：`machiya_b_b`（16 棟）の置き換え ──────────────
@@ -319,7 +336,7 @@ SPECS = {
         "bays": ["koushi", "door_w", "degoushi", "koushi", "itado"],
         "tsushi": ("nikai", 3.45, 1.55),
         "hisashi": ("full", 0.85, 0.44),
-        "koshi": 0.66, "udatsu": True, "smoke": True,
+        "koshi": 0.66, "overhang": 0.84, "udatsu": True, "smoke": True,
     },
 }
 

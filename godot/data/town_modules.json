@@ -279,14 +279,14 @@
    "kind": "machiya",
    "w": 6.0,
    "d": 6.2,
-   "fw": 7.96,
-   "fd": 7.9,
+   "fw": 7.94,
+   "fd": 7.88,
    "h": 4.17,
    "gbox": [
-    -3.98,
-    3.98,
-    -7.05,
-    0.85
+    -3.97,
+    3.97,
+    -7.04,
+    0.84
    ],
    "facade": {
     "door_x": 0.0,
@@ -312,7 +312,7 @@
     },
     "eave": {
      "z_wall": 2.843,
-     "overhang": 0.85,
+     "overhang": 0.84,
      "pitch": 19.0,
      "thick": 0.16
     }
@@ -320,17 +320,63 @@
    "faces": 1712,
    "glb": "res://assets/models/machiya_e_p.glb"
   },
+  "machiya_f_m": {
+   "kind": "machiya",
+   "w": 8.8,
+   "d": 7.6,
+   "fw": 10.74,
+   "fd": 9.29,
+   "h": 4.62,
+   "gbox": [
+    -5.37,
+    5.37,
+    -8.44,
+    0.85
+   ],
+   "facade": {
+    "door_x": -1.1,
+    "door_w": 2.05,
+    "beam_z": 2.08,
+    "bay_w": 2.2,
+    "nbay": 4,
+    "bays": [
+     "degoushi",
+     "door_w",
+     "itado",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 4.36,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 2.901,
+     "overhang": 0.84,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 2610,
+   "glb": "res://assets/models/machiya_f_m.glb"
+  },
   "machiya_n_a": {
    "kind": "machiya",
    "w": 9.2,
    "d": 7.6,
-   "fw": 11.16,
-   "fd": 9.3,
+   "fw": 11.14,
+   "fd": 9.29,
    "h": 7.67,
    "gbox": [
-    -5.58,
-    5.58,
-    -8.45,
+    -5.57,
+    5.57,
+    -8.44,
     0.85
    ],
    "facade": {
@@ -358,7 +404,7 @@
     },
     "eave": {
      "z_wall": 5.797,
-     "overhang": 0.85,
+     "overhang": 0.84,
      "pitch": 23.0,
      "thick": 0.16
     }
@@ -370,13 +416,13 @@
    "kind": "machiya",
    "w": 10.4,
    "d": 8.0,
-   "fw": 12.36,
-   "fd": 9.7,
+   "fw": 12.34,
+   "fd": 9.69,
    "h": 8.55,
    "gbox": [
-    -6.18,
-    6.18,
-    -8.85,
+    -6.17,
+    6.17,
+    -8.84,
     0.85
    ],
    "facade": {
@@ -405,7 +451,7 @@
     },
     "eave": {
      "z_wall": 5.929,
-     "overhang": 0.85,
+     "overhang": 0.84,
      "pitch": 24.0,
      "thick": 0.16
     }

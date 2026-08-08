@@ -26,6 +26,29 @@ Do **not** automatically read all of `docs/`. Do not re-audit the repository.
 
 ---
 
+## Execution Modes
+
+Every task runs in **DESIGN MODE** or **PRODUCTION MODE**. Full rule:
+`.claude/rules/execution-modes.md`. Current mode per subsystem:
+`docs/PROJECT_STATE.md`. If the mode is not stated, ask.
+
+- **DESIGN MODE** — only when art direction, architecture language, world
+  structure or a major gameplay decision is unresolved. Proposal + Human Art
+  Review required; production changes are not the deliverable.
+- **PRODUCTION MODE** — after a direction is approved. Execute the **full**
+  approved deliverable autonomously. No micro-approvals, no new phase numbers
+  for internal steps, one recon pass, full validation once at batch
+  completion, docs updated once, one report at the end. Fix obvious defects
+  inside scope without asking. Time-box investigation: past a reasonable
+  effort on a non-blocker, take the safest reversible option and record the
+  unknown in Known Risks.
+
+Stop and ask in either mode before: changing road or village structure,
+moving a major landmark, changing approved art direction, changing
+gameplay/worldbuilding, or a destructive decision with no safe rollback.
+
+---
+
 ## Permanent Rules
 
 **Baseline**
@@ -34,10 +57,12 @@ Do **not** automatically read all of `docs/`. Do not re-audit the repository.
 - Preserve validated production pipelines.
 
 **Scope**
-- Work only within the requested Phase / subphase.
+- Work only within the requested Phase / batch.
 - No opportunistic refactors.
 - No repo-wide audit by default.
 - Stop when the current task is complete. Do not start the next phase.
+- In PRODUCTION MODE "the current task" is the whole approved deliverable,
+  not the next convenient stopping point.
 
 **Reading**
 - Prefer targeted reads over full-file reads.
@@ -52,6 +77,7 @@ Do **not** automatically read all of `docs/`. Do not re-audit the repository.
 
 **Documentation**
 - Maintain canonical project-state documentation when material state changes.
+- In PRODUCTION MODE that means **once, at batch completion** — not per step.
 
 ---
 
