@@ -4,30 +4,21 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 2.6b cloth-clearance fix, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 2.6b APPROVED; next phase awaiting approval).
 
 ---
 
 ## Current Phase
 
-**Phase 2.6 — Visual Quality Pass** on the Phase 2.5 hero storefronts.
-
-Phase 2.5 review verdict: direction correct, **not approved** — foreground
-props and cloth read far simpler than the architecture. Phase 2.6 upgrades
-only the dominant foreground assets (taru/kago/noren v2, cloth as cloth via
-`cloth_strip`), and adds restrained vertical dressing (sudare, hoshigaki,
-somenuno) to connect storefront → eaves → upper facade. Same three heroes,
-same slice, same business-identity rules.
+**None in progress.** Phase 2.6b is approved; the next production phase has
+been proposed and is awaiting human approval.
 
 ## Current Status
 
-Phase 2 approved as the **structural baseline**. Phase 2.6 was **not
-approved** — cloth intersected the eaves. Phase 2.6b fixes it: hanging
-placement is now derived from the hisashi/roof planes exported in the module
-manifest, plus a reusable `clear_front`/`clear_side` rule on `cloth_strip`.
-Renders re-produced and visually inspected, **awaiting Human Art Review**.
-Village untouched (old prop_barrel/basket/noren_a,b glbs unchanged; v2
-assets are new names referenced only by the slice).
+Clean approved checkpoint. Phase 2.6b is the **approved visual baseline for
+facade dressing, cloth placement, business-identity composition, and
+foreground prop quality**. The slice (`maps/slice/`) is the benchmark scene;
+the village is still entirely legacy blockout architecture.
 
 Branch: `claude/previous-progress-92cb1a`.
 
@@ -43,6 +34,7 @@ Locked by human approval. Treat as settled.
 | Phase 1.6 | Legacy blockout quarantined out of the slice | 4 slice views |
 | Phase 1.7 | Material readability: plaster, packed earth, wood grain, distant tile moiré | `shots2/slice_16/` vs `shots2/slice/` |
 | Phase 2 | Architecture Kit — 6 distinct machiya modules. Approved as **structural baseline** | `shots2/kit/00_lineup_*`, `shots2/slice_17/` vs `shots2/slice/` |
+| Phase 2.5–2.6b | Facade & life dressing on 3 hero storefronts (八百屋/酒屋/紺屋); foreground prop v2 (taru/kago/noren); cloth as cloth; vertical dressing; cloth clearance derived from manifest eave planes. Approved as the **facade-dressing baseline** | `shots2/hero/h1–h3`, `shots2/cloth/c1–c7`, `shots2/slice/s1` |
 
 ## Current Architecture State
 
@@ -98,19 +90,24 @@ unplanned and unapproved.
 
 ## Current Art Review Gate
 
-**Phase 2.5** — three hero-building renders plus one slice street view,
-awaiting human review.
+**Open.** Nothing is waiting on review. The next visual change runs the full
+gate: prototype/slice → render → Human Art Review → rollout.
 
 ## Next Planned Phase
 
-Both deferred by explicit human decision until Phase 2.5 clears.
+**Proposed, not approved, not started:** Phase 3 — Village Architecture
+Rollout, pilot on the 本通 north-gate corridor (blocks 214/215/209/210,
+~24 of 169 houses). See the proposal in the session record; execute only on
+explicit approval.
 
-1. **Village rollout of the Architecture Kit** — distribute the 6 modules
-   across the 169 houses. Explicitly **not yet**.
-2. **Lighting / cel-shading round** — the parking lot for backlit plaster,
-   blockout textures, water, prop scale. Explicitly **not yet**.
+Deferred behind it: the lighting / cel-shading round (the parking lot for
+backlit plaster, blockout textures, water, prop scale).
 
-Do not start either without an explicit instruction.
+**AI 3D asset generation is deferred by human decision.** Environment audit
+completed: this machine has **no GPU**, and `huggingface.co` (plus every
+other model-weight host) is denied by org egress policy over both HTTPS and
+git, so no open image-to-3D model can be installed here. Do not spend
+further time on it without an explicit instruction.
 
 ## Explicit Do-Not-Reopen
 
@@ -130,5 +127,8 @@ Settled by human decision. Reopening requires regression evidence.
   Stage-0 shrunken village variant is dead.
 - Godot front-face winding is clockwise; verified by ray probe.
 - `make_town.py` is the single writer of `town_modules.json`.
+- Hanging props derive their height from the manifest's `facade.hisashi` /
+  `facade.eave` planes via `_hang_y()`. Never hand-write an absolute hang
+  height again — that is what put cloth through the eaves in Phase 2.6.
 - Phase 2 is the structural baseline; the kit is not expanded to the
   village until facade/life dressing clears review.

@@ -21,23 +21,26 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 | Phase 1.6 | legacy blockout quarantine in the slice |
 | Phase 1.7 | material readability pass |
 | Phase 2 | Architecture Kit — 6 machiya modules (structural baseline) |
+| Phase 2.5 | facade & life dressing — 3 hero storefronts, business identity by composition |
+| Phase 2.6 / 2.6b | foreground prop v2, cloth as cloth, vertical dressing, cloth clearance from eave planes |
 | Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
 
 ## CURRENT
 
-**Phase 2.5 — Human Village Facade & Life Dressing.**
-Reusable facade/life components on three hero buildings (`machiya_f_a`,
-`machiya_f_o`, `machiya_w_a`), each a different household/business identity.
-Village untouched; no batch processing.
+Nothing in progress. Phase 2.6b approved; Phase 3 proposed and awaiting
+human approval.
 
 ## NEXT
 
-Both explicitly deferred by the human until Phase 2.5 clears review.
-
-- **Village rollout of the Architecture Kit** — distribution rule for 6
-  modules over 169 houses + village regression.
-- **Lighting / cel-shading round** — the parking lot for backlit plaster,
-  water, blockout textures, prop scale.
+- **Phase 3 — Village Architecture Rollout (pilot)** — proposed. Blocks
+  214/215/209/210, the 本通 corridor from the north-gate spawn, ~24 of 169
+  houses. Derives a module-distribution rule and role-driven dressing rules
+  that scale, instead of hand-authoring lots.
+- **Full rollout** to the remaining 36 blocks — only after the pilot clears
+  Art Review.
+- **Lighting / cel-shading round** — after the village carries production
+  architecture, not before (Phase 1.6's lesson: you cannot art-review a
+  scene dominated by blockout).
 
 ## LATER
 
@@ -46,3 +49,6 @@ Both explicitly deferred by the human until Phase 2.5 clears review.
 - Prop and villager asset pass (提灯, villagers, small props).
 - 稗田邸 blockout material split (the only untextured building).
 - Other 幻想鄉 locations beyond 人間之里 and 博麗神社.
+- **AI 3D asset pipeline** — deferred by human decision. Audit found no GPU
+  on this machine and all model-weight hosts blocked by egress policy; not
+  actionable here without human intervention.
