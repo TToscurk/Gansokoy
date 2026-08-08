@@ -125,7 +125,8 @@ func cyl(parent: Node, name: String, r_top: float, r_bot: float, h: float, mat: 
 	return mi
 
 # ── 材質 ──
-func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri := true) -> StandardMaterial3D:
+func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri := true,
+		norm := 0.65) -> StandardMaterial3D:
 	if mats.has(name):
 		return mats[name]
 	var m := StandardMaterial3D.new()
@@ -144,12 +145,15 @@ func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri
 		m.normal_texture = load(nor)
 		# 美術規格 §1.3（類超現實）：法線減弱 —— 寫實的凹凸細節
 		# 是「無感」的來源之一，參考圖的表面都很平
-		m.normal_scale = 0.65
+		m.normal_scale = norm
 	var rgh := "res://assets/textures/%s_rough.jpg" % set_name
 	if ResourceLoader.exists(rgh):
 		m.roughness_texture = load(rgh)
 	m.uv1_triplanar = tri
 	m.uv1_scale = Vector3(uv, uv, uv)
+	# PHASE 1.7：各向異性過濾。屋頂、地面這種**掠射角**的面，各向同性 mipmap
+	# 會在遠景抖成一團雜訊 —— 這是瓦片摩爾紋的一半成因（另一半是幾何，交給 LOD）
+	m.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 	_save_mat(m, name)
 	return m
 
@@ -306,20 +310,42 @@ func rock_mat_dry() -> StandardMaterial3D:
 ## 這裡的做法是**逐 surface 照名字換成專案的 PBR 材質**：glTF 匯入器會把
 ## Blender 材質名帶進來（可能是 "WOOD" 或 "WOOD_001" 之類的變體，所以用
 ## 前綴比對）。對不上的名字保留 glb 自己的材質、不亂猜。
+## ⚠ PHASE 1.7（material readability pass）重調過一次。原本這張表沿用材質庫
+## 的預設 uv —— 那組數字是配 blockout 的**大面積**調的（一面 25m 的牆），
+## 貼到 0.15m 的柱與 1.6m 的嵌板上完全不對：一張貼圖鋪滿 2.5m，嵌板上只看
+## 得到貼圖的一個角落，於是漆喰讀成**斜向的瓦楞板**、木紋讀成粗條紋。
+##
+## `uv1_scale` 是「世界座標 × 它 = UV」，所以**數字越大貼圖越細**
+## （tile 邊長 = 1/uv）。下面每一個都標了 tile 邊長，改的時候看那個數字，
+## 不要看 uv 本身 —— 直覺會反過來。
 const SEMANTIC := {
-	"WOOD_LT": ["planks", 0.5, Color(0.72, 0.66, 0.58)],
-	"WOOD": ["dark_wood", 0.45, Color(0.44, 0.47, 0.45)],
-	"PLASTER": ["plaster", 0.4, Color(1.16, 1.13, 1.06)],
-	"STONE": ["stone_wall", 0.30, Color(0.90, 0.90, 0.88)],
-	"KAWARA": ["roof_kawara", 0.22, Color(0.80, 0.86, 1.00)],
-	"SHOJI": ["shoji", 0.30, Color(0.96, 0.94, 0.90)],
+	# tile 0.74m：板戶／腰板的板寬量級。1.6（0.62m）在腰板上讀得有點碎
+	"WOOD_LT": ["planks", 1.35, Color(0.72, 0.66, 0.58), 0.50],
+	# tile 0.31m：柱只有 0.15 寬，一根 3m 的柱上要看到十來段木紋才像木頭；
+	# 舊值 0.45（tile 2.2m）等於整根柱只吃到貼圖的 7%，讀成一條均勻色帶。
+	# 0.31m ≈ 兩倍柱寬 —— 木紋走柱長方向，一根柱上約十段，這個比例是對的
+	"WOOD": ["dark_wood", 3.2, Color(0.44, 0.47, 0.45), 0.50],
+	# tile 0.65m + 法線壓到 0.14：漆喰是**低頻**表面。
+	# 這一項的三段調校值得記著：
+	#   0.40（tile 2.5m）→ 貼圖的方向性被放大成整面牆的斜向瓦楞板
+	#   2.40（tile 0.42m）→ 方向性消失了，但變成砂紙／混凝土骨材的高頻雜點
+	#   1.55（tile 0.65m）→ 一面 3.6m 的牆上約 5.5 個週期，看得出是抹面不是圖案
+	"PLASTER": ["plaster", 1.55, Color(1.20, 1.16, 1.07), 0.14],
+	# tile 0.91m：基礎的石塊尺度
+	"STONE": ["stone_wall", 1.1, Color(0.86, 0.85, 0.82), 0.55],
+	# tile 1.11m：瓦的**幾何**已經有桟與列，貼圖只負責色與髒，不該再加頻率。
+	# 顏色從 (0.80,0.86,1.00) 壓到燻し瓦的暗冷灰：俯視時亮藍白的瓦跟深色土路
+	# 對比太強，桟的高頻在遠景就炸成雜訊。降對比 = 降摩爾紋的振幅
+	"KAWARA": ["roof_kawara", 0.9, Color(0.60, 0.63, 0.68), 0.18],
+	# tile 0.83m + 法線幾乎關掉：障子紙是平的，凹凸只會讓它讀成布
+	"SHOJI": ["shoji", 1.2, Color(0.96, 0.94, 0.90), 0.12],
 }
 
 func semantic_mat(sem: String) -> Material:
 	if not SEMANTIC.has(sem):
 		return null
 	var spec: Array = SEMANTIC[sem]
-	return pbr("sem_" + sem, String(spec[0]), float(spec[1]), spec[2])
+	return pbr("sem_" + sem, String(spec[0]), float(spec[1]), spec[2], true, float(spec[3]))
 
 
 ## 保留材質身分的 glb 載入：逐 surface 依材質名掛語意材質。

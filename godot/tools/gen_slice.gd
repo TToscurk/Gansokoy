@@ -124,8 +124,18 @@ func _init() -> void:
 	_root.set_meta("own_colliders", true)
 	lib.setup(_root, SEED)
 
-	lib.terrain(OUT_DIR, HALF, 181, height_at, mask_at, "stone_flag",
-		Color(0.62, 0.90, 0.56), "terrain_path", Color(0.78, 0.70, 0.58))
+	# ⚠ PHASE 1.7（material readability）：夯土在街景裡讀成**碎石場**。
+	# 兩個原因，兩個修法：
+	#   1. tint 太亮太白（0.78/0.70/0.58）→ 貼圖裡的白石粒直接曝出來。
+	#      壓到 0.56/0.48/0.39：暗、暖、偏土色，白石粒退成暗紋。
+	#   2. dirt_tile 預設 2.6（石粒約 10cm，一顆一顆數得出來）→ 拉到 5.4，
+	#      石粒縮到 5cm 以下，變成「土裡的顆粒」而不是「地上的石頭」。
+	# 「細石可以存在，但不能主導畫面」—— 就是這兩個數字。
+	var terr := lib.terrain(OUT_DIR, HALF, 181, height_at, mask_at, "stone_flag",
+		Color(0.62, 0.88, 0.55), "terrain_path", Color(0.56, 0.48, 0.39))
+	var tmat: ShaderMaterial = terr.material_override
+	tmat.set_shader_parameter("dirt_tile", 5.4)
+	tmat.set_shader_parameter("path_tile", 2.2)
 	lib.boundary(HALF - 2.0)
 	_build_ground()
 	_build_buildings()
@@ -237,9 +247,12 @@ func _lot_center(L: Dictionary) -> Vector2:
 # ══════════════════════════════════════════════════════════════════════
 func _build_ground() -> void:
 	var g := lib.add(_root, Node3D.new(), "地面層") as Node3D
-	var stone := lib.pbr("slice_kerb", "stone_wall", 0.32, Color(0.80, 0.80, 0.78))
-	var dark := lib.pbr("slice_gutter", "stone_wall", 0.36, Color(0.52, 0.53, 0.52))
-	var flag := lib.pbr("slice_flag", "stone_flag", 0.30, Color(0.86, 0.85, 0.82))
+	# PHASE 1.7：石材整組降亮度。夯土壓暗之後，原本的亮灰石在深色土路上
+	# 變成一顆一顆的白斑 —— 石頭本身沒變大，是**對比**讓它搶了主街。
+	# 街上的石頭是被踩了幾百年的，不會是新採的亮面
+	var stone := lib.pbr("slice_kerb", "stone_wall", 0.32, Color(0.62, 0.60, 0.56))
+	var dark := lib.pbr("slice_gutter", "stone_wall", 0.36, Color(0.44, 0.44, 0.43))
+	var flag := lib.pbr("slice_flag", "stone_flag", 0.30, Color(0.64, 0.62, 0.57))
 	# ── 石溝：路兩側各一條。町家的雨水從簷口落下就進這條溝 ──
 	var gut: Array[Transform3D] = []
 	var gm := BoxMesh.new()
@@ -280,23 +293,30 @@ func _build_ground() -> void:
 				Vector3(px, height_at(px, pz) + 0.03, pz)))
 	_mm(g, "MM_踏石", sm, step)
 	# ── 牆腳碎石（犬走り的簡版）+ 排水點 ──
+	# ⚠ PHASE 1.7：這一叢是「碎石場」觀感的真兇，不是地形貼圖。
+	#   ・半徑 5.4 已經越過 4.9 的正面線，石頭灑到街上去了 → 收回 5.05，貼牆腳
+	#   ・尺寸 0.10–0.20（實測 20–40cm）→ 0.06–0.11，回到「碎」石的量級
+	#   ・每棟 26 顆 → 15 顆
+	#   ・材質從 rock_mat_dry（albedo 1.14 亮白，village 共用）換成本場景專用的
+	#     暗土色。不動 rock_mat_dry 是因為 village 的河石在用它
 	var peb: Array[Transform3D] = []
 	var pm: Mesh = lib.blob_mesh(41, 0.5, 0.22)
 	for L in LOTS:
 		var c := _lot_center(L)
-		for k in 26:
-			var a := TAU * float(k) / 26.0
-			var rr := 5.4 + _rng.randf_range(-0.5, 0.5)
+		for k in 15:
+			var a := TAU * float(k) / 15.0
+			var rr := 5.05 + _rng.randf_range(-0.28, 0.28)
 			var px: float = c.x + cos(a) * rr
 			var pz: float = c.y + sin(a) * rr * 0.92
-			var s := _rng.randf_range(0.10, 0.20)
+			var s := _rng.randf_range(0.06, 0.11)
 			peb.append(Transform3D(
 				Basis(Vector3.UP, _rng.randf_range(0.0, TAU))
 					* Basis.from_scale(Vector3(s, s * 0.55, s)),
-				Vector3(px, height_at(px, pz) + 0.02, pz)))
+				Vector3(px, height_at(px, pz) + 0.015, pz)))
 	var pmi := MultiMeshInstance3D.new()
 	pmi.multimesh = lib.make_multimesh(pm, peb, [], OUT_DIR + "gen/mm_pebble.res")
-	pmi.material_override = lib.rock_mat_dry()
+	pmi.material_override = lib.pbr("slice_pebble", "stone_wall", 1.4,
+		Color(0.56, 0.52, 0.46))
 	lib.add(g, pmi, "MM_牆腳碎石")
 	_audit.append("地面層：石溝 %d 節・路邊石 %d・踏石 %d・牆腳碎石 %d"
 		% [gut.size(), krb.size(), step.size(), peb.size()])
@@ -353,6 +373,11 @@ func _build_buildings() -> void:
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = lib.make_multimesh(mesh, batch[k], [],
 			OUT_DIR + "gen/mm_%s.res" % k)
+		# PHASE 1.7：distance simplification。glTF importer 的 generate_lods 已經
+		# 幫每個 surface 生了 LOD 鏈，但預設 lod_bias=1.0 要退到很遠才切 ——
+		# 屋頂那 31 條桟在俯視距離全部保留，就是遠景摩爾紋的幾何成因。
+		# 0.5 = 提早一倍距離降級；牆身輪廓在那個距離只剩幾十像素，看不出差別
+		mmi.lod_bias = 0.5
 		lib.add(g, mmi, "MM_%s" % k)
 	_audit.append("建築 %d 棟 / %d 種模組（新版 machiya_f_a %d 棟、legacy %d 棟）"
 		% [LOTS.size(), names.size(),

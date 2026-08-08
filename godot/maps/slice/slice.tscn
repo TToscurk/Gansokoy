@@ -13,7 +13,7 @@
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/mm_石溝.res" id="11_dhqty"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/mm_路邊石.res" id="12_xm1ot"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/mm_踏石.res" id="13_4fgux"]
-[ext_resource type="Material" path="res://assets/materials/rock_dry.tres" id="14_clp4j"]
+[ext_resource type="Material" path="res://assets/materials/slice_pebble.tres" id="14_clp4j"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/mm_pebble.res" id="15_j6oqy"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/mm_machiya_f_a.res" id="16_pm8s3"]
 [ext_resource type="Material" path="res://assets/materials/slice_pot.tres" id="17_jm55c"]
@@ -56,13 +56,13 @@ shader_parameter/path_nor = ExtResource("10_idg0l")
 shader_parameter/dirt_diff = ExtResource("2_otgcm")
 shader_parameter/dirt_nor = ExtResource("3_4ob86")
 shader_parameter/dirt_amount = 1.0
-shader_parameter/dirt_tile = null
-shader_parameter/dirt_tint = Color(0.78, 0.7, 0.58, 1)
+shader_parameter/dirt_tile = 5.4
+shader_parameter/dirt_tint = Color(0.56, 0.48, 0.39, 1)
 shader_parameter/mask_tex = ExtResource("8_lgkyf")
 shader_parameter/tile = null
-shader_parameter/path_tile = null
+shader_parameter/path_tile = 2.2
 shader_parameter/forest_tile = null
-shader_parameter/grass_tint = Color(0.62, 0.9, 0.56, 1)
+shader_parameter/grass_tint = Color(0.62, 0.88, 0.55, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_u6515"]
 _surfaces = [{
@@ -1274,6 +1274,7 @@ multimesh = ExtResource("15_j6oqy")
 [node name="建築" type="Node3D" parent="."]
 
 [node name="MM_machiya_f_a" type="MultiMeshInstance3D" parent="建築"]
+lod_bias = 0.5
 multimesh = ExtResource("16_pm8s3")
 
 [node name="建築碰撞" type="StaticBody3D" parent="."]
@@ -1883,11 +1884,11 @@ cast_shadow = 2
 multimesh = ExtResource("40_oo11f")
 
 [node name="樹_tree_round_a" type="MeshInstance3D" parent="植栽"]
-transform = Transform3D(-0.327386, 0, -0.838343, 0, 0.9, 0, 0.838343, 0, -0.327386, 16.2, -0.0965952, 4.6)
+transform = Transform3D(0.844734, 0, 0.310522, 0, 0.9, 0, -0.310522, 0, 0.844734, 16.2, -0.0965952, 4.6)
 mesh = SubResource("ArrayMesh_yuuty")
 
 [node name="樹_tree_round_c" type="MeshInstance3D" parent="植栽"]
-transform = Transform3D(-0.588018, 0, 0.415493, 0, 0.72, 0, -0.415493, 0, -0.588018, -4.2, -0.00194658, -13.5)
+transform = Transform3D(0.633681, 0, 0.341831, 0, 0.72, 0, -0.341831, 0, 0.633681, -4.2, -0.00194658, -13.5)
 mesh = SubResource("ArrayMesh_xj31u")
 
 [node name="村民" type="Node3D" parent="."]
