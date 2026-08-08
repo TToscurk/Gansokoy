@@ -4,17 +4,26 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 3.1B fire-watch crossing, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 3.2A 本通 sight-line diagnostic, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**Phase 3.1B — the fire-watch crossing** (火の番の辻) at z=−135.
-半鐘 on the tower, 天水桶 ×5, 番小屋 (subordinate), 高札場, gate-facing 地藏,
-one framing tree. The crossing itself is kept as open space. Built;
-**awaiting Art Review**. Do not roll out to the remaining 36 blocks; the
-490 m sight line is not started.
+**Phase 3.2A — 本通 sight-line composition, diagnostic increment.**
+Three civic nodes, each with a distinct function and silhouette:
+N1 共同井戸 (z≈−52, ground event), N2 上屋 (z≈+41, horizontal occluder),
+N3 常夜灯の対＋道標 (z≈+78, vertical frame). No machiya added, no landmark
+moved, road width and axis untouched. Built; **awaiting Art Review**.
+
+The measured answer is **negative and that is the finding**: off-axis nodes
+fill the mid-field (z=−60 FOV median 114→75 m, <60 m occupancy 15→31%) but
+barely move the axis (北門 axis ±8° median unchanged at 78.8 m). Only a
+building **facing** 本通 can break a 490 m axis — which is the case for
+reopening landmark frontage in **Phase 3.2B**.
+
+3.1B (fire-watch crossing) is the approved production baseline. Do not roll
+out to the remaining 36 blocks.
 
 ## Current Status
 

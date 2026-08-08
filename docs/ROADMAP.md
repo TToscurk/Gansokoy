@@ -27,12 +27,16 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 
 ## CURRENT
 
-**Phase 3.1B — the fire-watch crossing.** 3.1A (section) approved; 3.1B
-built and awaiting Art Review. Zero drift outside the corridor on the two
-dumped layers, all five gates green.
+**Phase 3.2A — 本通 sight-line, diagnostic increment.** Three civic nodes
+(共同井戸 / 上屋 / 常夜灯の対) built and awaiting Art Review. Result is a
+*negative* one and that is the point: off-axis nodes fill the mid-field
+(z=−60 FOV median 114→75 m) but barely move the axis (北門 axis ±8°
+unchanged at 78.8 m). Zero drift proven at byte level — all 54 `gen/*.res`
+and both data JSONs unchanged; 0 nodes moved. All five gates green.
 
-Next after approval: the **490 m sight line** on 本通, then full rollout
-(still blocked on the 9–10 m back-row module gap).
+Next after review: **Phase 3.2B** — reopen landmark frontage placement on
+本通 (the only mass that can break the axis is a building facing it), then
+full rollout (still blocked on the 9–10 m back-row module gap).
 
 ## NEXT
 
