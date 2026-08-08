@@ -143,6 +143,214 @@ BAMBOO = (0.325, 0.270, 0.170)      # 竹の笊（既存 prop_basket より暗�
 GOODS = (0.300, 0.255, 0.150)       # 盛った乾物・穀
 
 
+# ── 布のヘルパ（PHASE 2.6）──
+def cloth_strip(cx, top_z, w, h, rows=6, cols=4, sway=0.06, bow=0.035,
+                tilt=0.0, phase=0.0, ripple=0.014):
+    """吊るした布の一枚。**平らな長方形ではなく**、下端ほど前へ流れ
+    （sway・t^1.8）、幅方向に膨らみ（bow）、細かい波（ripple）が入る。
+
+    ⚠ 面は**表裏二枚**貼る（裏は巻き順を反転しただけ）。厚み 0 の一枚板は
+    Godot が背面剔除して、裏へ回った瞬間に消える —— docs §3 の参道と同じ罠。
+    表裏を最初から張れば、巻き順の向きを推理する必要そのものが消える。"""
+    # ⚠ 裏面は**頂点ごと複製**して 0.012 奥にずらす。最初は同じ頂点で
+    # 巻き順だけ反転した面を重ねたが、from_pydata の検証が「重複面」として
+    # **黙って捨てて**いた（"Mesh not valid" の警告＋面数が半分で発覚）。
+    front = []
+    for j in range(rows + 1):
+        t = j / rows
+        z = top_z - t * h
+        for i in range(cols + 1):
+            u = i / cols
+            x = cx - w / 2 + u * w + tilt * t * w
+            y = -(sway * (t ** 1.8) + bow * math.sin(u * math.pi) * t
+                  + ripple * math.sin((u * 2.2 + phase) * TAU) * t)
+            front.append((x, y, z))
+    back = [(x, y + 0.012, z) for x, y, z in front]
+    verts = front + back
+    off = len(front)
+    faces = []
+    for j in range(rows):
+        for i in range(cols):
+            a = j * (cols + 1) + i
+            b = a + 1
+            c = a + cols + 2
+            d = a + cols + 1
+            faces.append((a, b, c, d))
+            faces.append((off + a, off + d, off + c, off + b))
+    return verts, faces
+
+
+def make_noren(name, width, n_flap, base_col, h=0.62, seed=7):
+    """暖簾 v2（PHASE 2.6）。旧 prop_noren_a/b は**箱を並べただけ**で、
+    建築の質が上がった今、正面のど真ん中で一番「プリミティブ」に見える
+    ものになっていた。ここでは布として作る：
+      ・上端 0.09 は縫い合わせた一枚（かけ）—— 分かれるのは裾だけ
+      ・flap ごとに長さ ±2cm、揺れの位相、傾き 0.5° を変える
+      ・裾は前へ流れ、幅方向に膨らむ（cloth_strip）
+    ⚠ village が使う旧資産は残す。これは**新名義**で slice だけが参照する。
+    アンカーは旧と同じ：竿の中心 z≈0、布は下へ。"""
+    clear()
+    rng = random.Random(seed)
+    gap = 0.022
+    fw = (width - (n_flap - 1) * gap) / n_flap
+    parts = [sweep([(-width / 2 - 0.06, 0, 0.012), (width / 2 + 0.06, 0, 0.012)],
+                   [0.022, 0.022], sides=7)]                        # 掛竿
+    band_h = 0.09
+    parts.append(cloth_strip(0.0, 0.004, width, band_h, rows=2, cols=8,
+                             sway=0.012, bow=0.02, ripple=0.006))    # かけ（上帯）
+    for i in range(n_flap):
+        cx2 = -width / 2 + fw / 2 + i * (fw + gap)
+        hh = h - band_h + rng.uniform(-0.022, 0.018)
+        parts.append(cloth_strip(cx2, 0.004 - band_h, fw, hh, rows=6, cols=3,
+                                 sway=rng.uniform(0.05, 0.09),
+                                 bow=rng.uniform(0.02, 0.045),
+                                 tilt=rng.uniform(-0.02, 0.02),
+                                 phase=rng.random()))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > -0.005 and abs(co.y) < 0.03 and co.z > 0.0:
+            return W_DK                                              # 竿
+        t = -co.z / h
+        k = 1.0 - 0.16 * t                                           # 裾ほど沈む
+        if co.z < -h * 0.86:
+            k *= 1.28                                                # 裾の縫い代
+        # 布の膨らみで受ける光：前に出ている所（y が浅い）ほど明るい
+        k *= 1.0 + 0.7 * (co.y + 0.06)
+        return tuple(min(1.0, max(0.0, c * k)) for c in base_col)
+
+    export(mesh_from(name, v, f, col, smooth=False), name)
+
+
+def make_taru():
+    """樽 v2（PHASE 2.6）。旧 prop_barrel は 10 面スイープで、酒屋の店先で
+    三角積みの**主役**になった途端、多角形の胴が一番目立つ欠点になった。
+    16 面＋箍を**幾何**で三本（旧は色を塗っただけ）＋天端の縁。
+    ⚠ 旧資産は village が使うので残す。寸法・アンカーは旧と同じ
+    （接地 z=0、高さ 0.78、最大半径 0.315）。"""
+    clear()
+    zs = [0.00, 0.025, 0.11, 0.40, 0.67, 0.755, 0.78]
+    rr = [0.262, 0.292, 0.306, 0.322, 0.306, 0.292, 0.262]
+    parts = [sweep([(0, 0, z) for z in zs], rr, sides=16)]
+    for hz, hr in ((0.135, 0.310), (0.40, 0.325), (0.655, 0.311)):   # 箍
+        parts.append(sweep([(0, 0, hz - 0.019), (0, 0, hz + 0.019)],
+                           [hr + 0.007, hr + 0.007], sides=16))
+    parts.append(sweep([(0, 0, 0.755), (0, 0, 0.79)],
+                       [0.268, 0.262], sides=16))                    # 天端の縁
+    v, f = merge(*parts)
+
+    def col(co, n):
+        for hz in (0.135, 0.40, 0.655):
+            if abs(co.z - hz) < 0.024 and math.hypot(co.x, co.y) > 0.30:
+                return (0.150, 0.125, 0.100)                         # 箍（鉄・竹）
+        if n.z > 0.7 and co.z > 0.7:
+            return (0.285, 0.230, 0.160)                             # 鏡（天板）
+        stave = int((math.atan2(co.y, co.x) + TAU) / TAU * 16) % 2
+        k = (0.90 + 0.11 * stave) * (0.90 + 0.20 * co.z / 0.78)
+        return tuple(min(1.0, c * k) for c in W_ST)
+
+    export(mesh_from("prop_taru", v, f, col, smooth=False), "prop_taru")
+
+
+def make_kago():
+    """竹籠 v2（PHASE 2.6）。旧 prop_basket（9 面の二段積み）の前景版。
+    12 面・口縁の巻きを幾何で・編み目は環×縦の市松。接地 z=0。"""
+    clear()
+    zs = [0.00, 0.035, 0.14, 0.30, 0.43]
+    rr = [0.140, 0.198, 0.243, 0.262, 0.246]
+    parts = [sweep([(0, 0, z) for z in zs], rr, sides=12)]
+    parts.append(sweep([(0, 0, 0.408), (0, 0, 0.452)],
+                       [0.258, 0.252], sides=12))                    # 口縁の巻き
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > 0.405:
+            return tuple(min(1.0, c * 1.20) for c in BAMBOO)
+        ring = int(co.z / 0.048) % 2
+        stave = int((math.atan2(co.y, co.x) + TAU) / TAU * 12) % 2
+        k = 0.82 + 0.11 * ring + 0.10 * stave
+        return tuple(min(1.0, c * k) for c in BAMBOO)
+
+    export(mesh_from("prop_kago", v, f, col, smooth=False), "prop_kago")
+
+
+def make_sudare():
+    """簾（PHASE 2.6・立面の上段を埋める垂直要素）。虫籠窓や二階の窓の
+    外に掛ける日除け。横桟の縞＋下端の巻き＋吊り紐二本。
+    アンカーは上端 z=0（提灯と同じ規約）、正面 −y。"""
+    clear()
+    W, H = 0.92, 1.04
+    parts = [cloth_strip(0.0, 0.0, W, H, rows=5, cols=3,
+                         sway=0.045, bow=0.012, ripple=0.004)]
+    parts.append(sweep([(-W / 2, -0.052, -H), (W / 2, -0.052, -H)],
+                       [0.034, 0.034], sides=8))                     # 下端の巻き
+    for sx in (1, -1):                                               # 吊り紐
+        parts.append(sweep([(sx * W * 0.30, -0.006, 0.10),
+                            (sx * W * 0.30, -0.010, -H * 0.55)],
+                           [0.006, 0.006], sides=4))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > 0.02 or (abs(abs(co.x) - W * 0.30) < 0.012 and co.y > -0.03):
+            return ROPE
+        if co.z < -H + 0.05:
+            k = 0.95 + 0.10 * (int((co.x + 1.0) / 0.05) % 2)
+            return tuple(min(1.0, c * k) for c in W_LT)              # 巻き
+        slat = int(-co.z / 0.032) % 2                                # 横桟の縞
+        k = (0.86 + 0.16 * slat) * (1.0 + 0.5 * (co.y + 0.05))
+        return tuple(min(1.0, max(0.0, c * k)) for c in STRAW)
+
+    export(mesh_from("prop_sudare", v, f, col, smooth=False), "prop_sudare")
+
+
+def make_hoshigaki():
+    """干し柿の吊るし紐（PHASE 2.6・軒下の垂直要素）。八百屋・乾物屋の
+    軒から下がる縄に柿が連なる —— 季節の記号で、遠目にも橙の点列で読める。
+    アンカーは上端 z=0。"""
+    clear()
+    rng = random.Random(41)
+    parts = [sweep([(0, 0, 0.0), (0, 0, -0.86)], [0.008, 0.008], sides=4)]
+    kakis = []
+    for k in range(6):
+        z = -0.13 - k * 0.125
+        dx = (0.030 if k % 2 == 0 else -0.030) + rng.uniform(-0.008, 0.008)
+        kakis.append((dx, z))
+        parts.append(sweep([(dx, 0, z + 0.038), (dx, 0, z + 0.012),
+                            (dx, 0, z - 0.030), (dx, 0, z - 0.048)],
+                           [0.012, 0.042, 0.038, 0.012], sides=7))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        for dx, z in kakis:
+            if abs(co.x - dx) < 0.05 and abs(co.z - z + 0.005) < 0.055:
+                k = 0.85 + 0.30 * max(0.0, n.z) + 0.10 * math.sin(co.x * 60)
+                return tuple(min(1.0, c * k) for c in (0.560, 0.265, 0.095))
+        return ROPE
+
+    export(mesh_from("prop_hoshigaki", v, f, col, smooth=False), "prop_hoshigaki")
+
+
+def make_somenuno():
+    """染め上げた反物を高く干す一枚（PHASE 2.6・紺屋の上段用）。
+    monohoshi（低い物干し）より上、軒に近い高さから 1.9m 垂れる。
+    アンカーは上端 z=0。"""
+    clear()
+    parts = [sweep([(-0.26, 0, 0.008), (0.26, 0, 0.008)], [0.016, 0.016], sides=6)]
+    parts.append(cloth_strip(0.0, 0.0, 0.42, 1.88, rows=8, cols=3,
+                             sway=0.13, bow=0.045, ripple=0.018, phase=0.3))
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > -0.01 and abs(co.y) < 0.03:
+            return W_DK
+        t = -co.z / 1.88
+        base = tuple(AI[i] * (0.75 + 0.5 * t) for i in range(3))     # 下ほど濃い
+        k = 1.0 + 0.6 * (co.y + 0.08)
+        return tuple(min(1.0, max(0.0, c * k)) for c in base)
+
+    export(mesh_from("prop_somenuno", v, f, col, smooth=False), "prop_somenuno")
+
+
 # ══════════════════════════════════ 提灯（差し替え）══════════════════
 def make_chochin():
     """既存は 10 面・輪なし・紐なしで、眼高だと黄色い多角形の塊に読めた。
@@ -331,21 +539,24 @@ def make_monohoshi():
     parts.append(sweep([(-SPAN / 2 - 0.10, 0, H - 0.05),
                         (SPAN / 2 + 0.10, 0, H - 0.05)], [0.038, 0.038], sides=7))
     # 反物：幅 0.36 の布を四枚。長さと揺れを一枚ずつ変える
+    # PHASE 2.6：箱 → cloth_strip。平板のままだと「青い長方形が四枚」で、
+    # 紺屋の一番の見せ場が一番プリミティブに見えていた
     cloth = []
     for i in range(4):
         cx = -0.99 + i * 0.66
         ln = rng.uniform(1.15, 1.52)
-        sway = rng.uniform(-0.07, 0.07)
-        cv, cf = box_verts(cx, -0.055, H - 0.05 - ln / 2, 0.36, 0.022, ln)
-        bot = H - 0.05 - ln
-        cv = [(x, y + sway * (1.0 - (z - bot) / ln), z) for x, y, z in cv]
+        cv, cf = cloth_strip(cx, H - 0.05, 0.36, ln, rows=7, cols=3,
+                             sway=rng.uniform(0.06, 0.12),
+                             bow=rng.uniform(0.02, 0.05),
+                             tilt=rng.uniform(-0.03, 0.03), phase=rng.random())
+        cv = [(x, y - 0.055, z) for x, y, z in cv]
         parts.append((cv, cf))
-        cloth.append((cx, bot))
+        cloth.append((cx, H - 0.05 - ln))
     v, f = merge(*parts)
 
     def col(co, n):
         for cx, bot in cloth:
-            if abs(co.x - cx) < 0.19 and co.z < H - 0.02 and abs(co.y) < 0.13:
+            if abs(co.x - cx) < 0.21 and co.z < H - 0.02 and -0.30 < co.y < -0.02:
                 # 染めの濃淡：一枚ごとに回数が違う。下ほど濃い（液に長く浸かる）
                 deep = (int((co.x + 1.6) / 0.66) % 2) == 0
                 base = AI if deep else AI_LT
@@ -454,6 +665,13 @@ def make_zaru():
 make_chochin()
 make_zaru()
 make_sugidama()
+make_noren("prop_noren_ai", 2.05, 5, AI, seed=7)
+make_noren("prop_noren_kaki", 1.50, 4, (0.430, 0.195, 0.115), h=0.55, seed=19)
+make_taru()
+make_kago()
+make_sudare()
+make_hoshigaki()
+make_somenuno()
 make_tawara()
 make_misedai()
 make_aigame()

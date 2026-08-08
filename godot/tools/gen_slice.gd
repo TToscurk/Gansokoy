@@ -112,11 +112,11 @@ const SHOP_PROPS := [
 	{"m": "prop_crate", "dx": -2.9, "dz": 1.35, "yaw": 0.22, "s": 1.0},
 	{"m": "prop_crate", "dx": -2.55, "dz": 1.05, "yaw": -0.35, "s": 0.86},
 	{"m": "prop_basket", "dx": -3.5, "dz": 1.15, "yaw": 0.9, "s": 1.0},
-	{"m": "prop_barrel", "dx": 3.2, "dz": 1.25, "yaw": 0.0, "s": 1.0},
-	{"m": "prop_barrel", "dx": 3.62, "dz": 0.95, "yaw": 0.5, "s": 0.9},
+	{"m": "prop_taru", "dx": 3.2, "dz": 1.25, "yaw": 0.0, "s": 1.0},
+	{"m": "prop_taru", "dx": 3.62, "dz": 0.95, "yaw": 0.5, "s": 0.9},
 ]
 const HOUSE_PROPS := [
-	{"m": "prop_barrel", "dx": 3.05, "dz": 1.05, "yaw": 0.3, "s": 0.78},
+	{"m": "prop_taru", "dx": 3.05, "dz": 1.05, "yaw": 0.3, "s": 0.78},
 	{"m": "prop_basket", "dx": -3.2, "dz": 0.95, "yaw": -0.6, "s": 0.82},
 ]
 
@@ -144,11 +144,16 @@ const BIZ := {
 	# 角度は少しずつ振ってある（毎日出し入れするものは尺で置かない）。
 	"yaoya": {
 		"why": "標準形＝一番ふつうの店。商品が街に出ていることだけで語る",
+		# PHASE 2.6：構図が地面の高さに集中していた。簾（虫籠窓の前）と
+		# 干し柿（軒下の橙の点列）で 店先 → 庇 → 上段 を縦につなぐ。
 		"hang": [
-			{"m": "prop_noren_b", "dx": 0.95, "dz": 0.92, "dy": 0.0},
+			{"m": "prop_noren_kaki", "dx": 0.95, "dz": 0.92, "dy": 0.0},
 			{"m": "prop_kanban", "dx": -1.60, "dz": 0.62, "dy": 0.42},
 			{"m": "prop_chochin", "dx": -0.50, "dz": 0.80, "dy": 0.30},
 			{"m": "prop_chochin", "dx": 2.40, "dz": 0.80, "dy": 0.30},
+			{"m": "prop_sudare", "dx": -0.95, "dz": 0.30, "dy": 1.34},
+			{"m": "prop_hoshigaki", "dx": -3.35, "dz": 0.88, "dy": 0.12},
+			{"m": "prop_hoshigaki", "dx": 3.35, "dz": 0.88, "dy": 0.12},
 		],
 		"ground": [
 			{"m": "prop_misedai", "dx": -2.85, "dz": 1.16, "yaw": 0.03, "s": 1.0},
@@ -164,7 +169,7 @@ const BIZ := {
 			{"m": "prop_tawara", "dx": 3.15, "dz": 1.08, "yaw": -0.05, "s": 1.0},
 			{"m": "prop_tawara", "dx": 2.86, "dz": 1.05, "yaw": 0.03, "s": 1.0, "dy": 0.42},
 			{"m": "prop_crate", "dx": 1.55, "dz": 1.38, "yaw": 0.22, "s": 0.82},
-			{"m": "prop_basket", "dx": -1.05, "dz": 1.30, "yaw": -0.4, "s": 0.88},
+			{"m": "prop_kago", "dx": -1.05, "dz": 1.30, "yaw": -0.4, "s": 1.0},
 		],
 		"hand": [
 			{"k": "broom", "dx": -3.72, "dz": 0.52},
@@ -177,23 +182,27 @@ const BIZ := {
 	# 杉玉は字の読めない客にも通じる、町で一番強い商標。
 	"sakaya": {
 		"why": "大店＝整っていることで格を出す。散らかっていたら金持ちに見えない",
+		# PHASE 2.6：簾二枚を上段（虫籠窓の前）に。杉玉 → 暖簾 → 簾で
+		# 立面が三段になる。数は増やさない —— 大店は整っているのが格
 		"hang": [
 			{"m": "prop_sugidama", "dx": -2.60, "dz": 0.98, "dy": -0.06},
-			{"m": "prop_noren_a", "dx": 0.00, "dz": 0.90, "dy": 0.0},
+			{"m": "prop_noren_ai", "dx": 0.00, "dz": 0.90, "dy": 0.0},
 			{"m": "prop_kanban", "dx": 3.40, "dz": 0.62, "dy": 0.42},
 			{"m": "prop_chochin", "dx": -1.75, "dz": 0.82, "dy": 0.30},
 			{"m": "prop_chochin", "dx": 1.75, "dz": 0.82, "dy": 0.30},
+			{"m": "prop_sudare", "dx": -1.90, "dz": 0.28, "dy": 1.80},
+			{"m": "prop_sudare", "dx": 1.90, "dz": 0.28, "dy": 1.80},
 		],
 		"ground": [
 			# 菰樽の三角積み：下三つ・上ふたつ。**角度を振らない**のが肝
-			{"m": "prop_barrel", "dx": -4.32, "dz": 1.12, "yaw": 0.0, "s": 1.0},
-			{"m": "prop_barrel", "dx": -3.70, "dz": 1.12, "yaw": 0.0, "s": 1.0},
-			{"m": "prop_barrel", "dx": -3.08, "dz": 1.12, "yaw": 0.0, "s": 1.0},
-			{"m": "prop_barrel", "dx": -4.01, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
-			{"m": "prop_barrel", "dx": -3.39, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
+			{"m": "prop_taru", "dx": -4.32, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_taru", "dx": -3.70, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_taru", "dx": -3.08, "dz": 1.12, "yaw": 0.0, "s": 1.0},
+			{"m": "prop_taru", "dx": -4.01, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
+			{"m": "prop_taru", "dx": -3.39, "dz": 1.12, "yaw": 0.0, "s": 1.0, "dy": 0.76},
 			{"m": "prop_kanban_tate", "dx": 2.35, "dz": 1.26, "yaw": -0.06, "s": 1.0},
 			{"m": "prop_bench", "dx": 4.05, "dz": 1.05, "yaw": 0.01, "s": 1.0},
-			{"m": "prop_barrel", "dx": 3.05, "dz": 1.48, "yaw": 0.0, "s": 0.70},
+			{"m": "prop_taru", "dx": 3.05, "dz": 1.48, "yaw": 0.0, "s": 0.70},
 			{"m": "prop_crate", "dx": -1.30, "dz": 1.46, "yaw": 0.05, "s": 0.90},
 		],
 		"hand": [
@@ -207,8 +216,13 @@ const BIZ := {
 	# 配置は整えない：全部が戸口から手の届く円の中にある、という置き方。
 	"konya": {
 		"why": "工房＝売り場ではない。暖簾を掛けず、道具の配置で仕事を語る",
+		# PHASE 2.6：染め上げた反物を**高く**干す（軒下から 1.9m 垂れる）。
+		# 地面の藍甕 → 中段の物干し → 上段の反物 → 屋根の煙出し、と
+		# 「染めの仕事」が立面を縦に貫く
 		"hang": [
 			{"m": "prop_chochin", "dx": 1.30, "dz": 0.72, "dy": 0.24},
+			{"m": "prop_somenuno", "dx": -0.85, "dz": 0.42, "dy": 1.18},
+			{"m": "prop_somenuno", "dx": 0.15, "dz": 0.40, "dy": 1.12},
 		],
 		"ground": [
 			# 藍甕は地面に埋めて使う（藍は温度が命）。戸口の前に一列 ——
@@ -221,8 +235,8 @@ const BIZ := {
 			{"m": "prop_monohoshi", "dx": -2.75, "dz": 1.62, "yaw": 0.26, "s": 1.0},
 			{"m": "prop_takigi", "dx": 2.95, "dz": 0.92, "yaw": 0.07, "s": 1.0},
 			{"m": "prop_kanban_tate", "dx": -3.28, "dz": 0.82, "yaw": 0.12, "s": 0.88},
-			{"m": "prop_barrel", "dx": 1.95, "dz": 1.36, "yaw": 0.4, "s": 0.86},
-			{"m": "prop_barrel", "dx": 2.44, "dz": 1.52, "yaw": -0.7, "s": 0.74},
+			{"m": "prop_taru", "dx": 1.95, "dz": 1.36, "yaw": 0.4, "s": 0.86},
+			{"m": "prop_taru", "dx": 2.44, "dz": 1.52, "yaw": -0.7, "s": 0.74},
 			{"m": "prop_crate", "dx": -2.30, "dz": 0.86, "yaw": -0.18, "s": 0.84},
 		],
 		"hand": [
@@ -642,7 +656,8 @@ func _build_props() -> void:
 			continue
 		# ── 掛的：暖簾（店）／招牌（店）／提灯（店，兩盞）──
 		if role == "shop":
-			var nk := "prop_noren_a" if int(L.x) % 2 == 0 else "prop_noren_b"
+			# PHASE 2.6：布 v2（村は旧 prop_noren_a/b のまま。slice だけ参照替え）
+			var nk := "prop_noren_ai" if int(L.x) % 2 == 0 else "prop_noren_kaki"
 			var dx: float = float(m.get("facade", {}).get("door_x", 0.0))
 			var p := base + rgt * dx + fwd * 0.92
 			p.y = height_at(p.x, p.z) + fz

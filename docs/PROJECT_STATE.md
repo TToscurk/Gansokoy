@@ -4,25 +4,27 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 2.5 built, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 2.6 built, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**Phase 2.5 — Human Village Facade & Life Dressing.**
+**Phase 2.6 — Visual Quality Pass** on the Phase 2.5 hero storefronts.
 
-Purpose: kill the "clean architecture model / demo" reading **before** any
-mass rollout. Scope is three hero buildings only — `machiya_f_a`,
-`machiya_f_o`, `machiya_w_a` — each given a distinct household/business
-identity through **composition**, not random prop scattering.
+Phase 2.5 review verdict: direction correct, **not approved** — foreground
+props and cloth read far simpler than the architecture. Phase 2.6 upgrades
+only the dominant foreground assets (taru/kago/noren v2, cloth as cloth via
+`cloth_strip`), and adds restrained vertical dressing (sudare, hoshigaki,
+somenuno) to connect storefront → eaves → upper facade. Same three heroes,
+same slice, same business-identity rules.
 
 ## Current Status
 
-Phase 2 approved as the **structural baseline**. Phase 2.5 built on three
-hero buildings (八百屋 / 酒屋 / 紺屋) — renders produced, **awaiting Human
-Art Review**. Village untouched; the other seven slice lots still carry the
-generic prop tables.
+Phase 2 approved as the **structural baseline**. Phase 2.6 built — renders
+produced, **awaiting Human Art Review**. Village untouched (old
+prop_barrel/basket/noren_a,b glbs unchanged; v2 assets are new names
+referenced only by the slice).
 
 Branch: `claude/previous-progress-92cb1a`.
 
@@ -82,7 +84,7 @@ unplanned and unapproved.
 | LOD is `lod_bias` only; no hand-authored LOD0/1/2 | Master Plan §5 still open |
 | Anisotropic filtering was added globally in `pbr()` — village inherits it on next regeneration | `gen_lib.gd` |
 | Placeholder villagers quarantined out of the slice — no human figure left as a scale reference | `gen_slice.gd::_build_people` |
-| `prop_barrel` is a 10-sided sweep; now a foreground hero object and reads faceted | `make_props.py` |
+| Sudare colour slightly too yellow (reuses STRAW); hand-built small props (bucket/broom/planter) still old quality | `make_facade.py`, `gen_slice.gd` |
 | Signboards carry no lettering (blank panels) | `prop_kanban`, `prop_kanban_tate` |
 | `sun_angle_max` and shot-mode `player.visible` were changed as by-products of a misdiagnosis — revisit both in the lighting round | `gen_slice.gd`, `scripts/main.gd` |
 | 稗田邸 blockout has no textures — the only untextured building in the village | `docs/ningen-no-sato.md` §9.1 |
