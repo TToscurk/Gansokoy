@@ -208,6 +208,7 @@ func _init() -> void:
 	_build_collision()
 	_build_density()
 	_build_gutters()           # 要在街區之後：溝要避開橫街，也吃商業梯度
+	_build_pilot_edge()        # PHASE 3.1A：回廊だけの縁石と踏石
 	_build_lamps()             # 要在街區之後：燈要避開町家的 OBB
 	_build_fauna()
 	_build_water_plants()
@@ -371,6 +372,12 @@ func _road_apron(x: float, z: float) -> float:
 	# 程式碼卻沒寫）→ 全鎮每條路都外擴 4.2m，空拍下整個路網糊成一片淺色。
 	# 村緣的房子門口本來就該是土與草。
 	var core_k := 1.0 - smoothstep(96.0, 150.0, Vector2(x, z - PLAZA.y).length())
+	# PHASE 3.1A：北門回廊は広場から 114~192m 離れているので core_k が
+	# 0 に落ち、**門から 55m ぶんの路肩が草のまま**だった（診断の実測）。
+	# 「村縁の家の前は土と草」という元の意図は正しいが、その効き目が
+	# ちょうどプレイヤーの第一印象に当たっていた。回廊だけ通す。
+	if _in_pilot_xz(x, z):
+		core_k = maxf(core_k, 0.92)
 	if core_k <= 0.0:
 		return 0.0
 	var best := 0.0
@@ -414,6 +421,15 @@ func mask_at(x: float, z: float) -> Color:
 	if road < 0.15 and r < CORE:
 		court = clampf(0.34 - r / 700.0, 0.0, 0.34) \
 			* clampf(_n2.get_noise_2d(x, z) * 0.5 + 0.5, 0.0, 1.0)
+	# ── PHASE 3.1A：回廊の「踏み固め」帯 ──
+	# apron だけでは足りなかった：線形の落ちが 4.2m なので、建物の足元は
+	# 実測 dirt 0.23 ＝ ほぼ芝のまま（1 枚目の 3.1A レンダで判明）。
+	# slice が使っている規則を持ち込む —— **毎日踏まれる所に草は生えない**。
+	# 路縁（4.0）から建物列（~6.1）を越えて 9.0 まで踏み固め、11.0 で草へ。
+	# ⚠ 地形は街区より先に生成されるので家の位置は参照できない。だから
+	#   本通の**幾何**（frontage は x=±5.5 固定）から静的に引く。
+	if _in_pilot_xz(x, z):
+		dirt = maxf(dirt, 0.95 * (1.0 - smoothstep(9.0, 11.0, absf(x))))
 	return Color(path_w, 0.0, macro, maxf(dirt, court))
 
 
@@ -720,12 +736,39 @@ func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
 #   差し替えると村の第二層の天際線が 3m 下がる —— それは「kit に合わせて
 #   村を作り直す」ことになり、人間の制約 1 が禁じている。kit 側の欠落として
 #   報告する（9~10m の総二階／大型町家が要る）。
+## PHASE 3.1A：回廊の帯（地面処理・石溝・縁石が共有する唯一の定義）。
+## 本通の apron は路縁から 4.2m しか伸びないので |x|<14 で十分足り、
+## z=−135 の横街まで巻き込まない（辻の設計は 3.1B の仕事）。
+func _in_pilot_xz(x: float, z: float) -> bool:
+	return absf(x) < 14.0 and z >= -168.0 and z <= -80.0
+
+
 ## pilot 回廊：本通・北門側（ブロック 209/210/214/215 の範囲）。
 ## ブロック ID は _dump に残らないので、幾何で判定する。
 func _is_pilot(e: Array) -> bool:
 	return String(e[0]).begins_with("machiya") \
 		and absf(float(e[1])) < 40.0 \
 		and float(e[3]) >= -165.0 and float(e[3]) <= -80.0
+
+
+## PHASE 3.1A：pilot ブロックの上書き。
+## ⚠ **元の cfg は綺麗なまま残す**こと。ghost pass は legacy の設えを
+##   そのまま再現しないと _drng の消費が変わり、zero-drift が崩れる。
+##   だから「kit 化した cfg」は複製の上に作り、ghost には原本を渡す。
+##
+## 断面の是正（診断より）：
+##   setback 0.8 → 0.0、jog の振れ幅 ±2.2 → ±0.6。
+##   前排の軒先を路縁（±4.0）へ寄せ、草の帯を潰す。
+##   道路幅（_roads の 8.0m）は**触らない** —— あれは本通 490m 全体、
+##   つまり他の 36 ブロックに効いてしまう。街を締めるのは建物側の仕事。
+func _kitify(cfg: Dictionary) -> Dictionary:
+	var c: Dictionary = cfg.duplicate(true)
+	c["kit"] = true
+	var r0: Dictionary = c["rows"][0]
+	r0["setback"] = 0.0
+	r0["jog"] = [0.25, 0.6]
+	r0["jog_max"] = 0.6
+	return c
 
 
 const KIT_FRONT := ["machiya_f_a", "machiya_f_s", "machiya_f_o",
@@ -814,7 +857,8 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			var setb := base_set
 			if hn > 0:
 				var d := rng.randf_range(jog[0], jog[1]) * (1.0 if hn % 2 == 1 else -1.0)
-				setb = clampf(set_prev + d, base_set, base_set + 2.2)
+				setb = clampf(set_prev + d, base_set,
+					base_set + float(row.get("jog_max", 2.2)))
 			set_prev = setb
 			# 村緣規則在這裡收口：r≥155 一律換成 3.5m 的村緣小屋，不管街區
 			# 怎麼配（規格：village-edge extreme downscale to 3.5m）。
@@ -980,7 +1024,6 @@ func _build_blocks() -> void:
 		"wrap": "L", "wrap_end": "b",
 	})
 	var c209 := {
-		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通西・北",
 		"frontage": {"a": Vector2(-5.50, -129.90), "b": Vector2(-5.50, -83.90)},
 		"into": Vector2(-1.0000, 0.0000),
@@ -990,9 +1033,8 @@ func _build_blocks() -> void:
 		],
 		"wrap": "L", "wrap_end": "a",
 	}
-	_block(209, c209)
+	_block(209, _kitify(c209))
 	var c210 := {
-		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通東・北",
 		"frontage": {"a": Vector2(5.50, -83.90), "b": Vector2(5.50, -129.70)},
 		"into": Vector2(1.0000, 0.0000),
@@ -1002,7 +1044,7 @@ func _build_blocks() -> void:
 		],
 		"wrap": "L", "wrap_end": "b",
 	}
-	_block(210, c210)
+	_block(210, _kitify(c210))
 	_block(211, {
 		"name": "本通西・南",
 		"frontage": {"a": Vector2(-5.50, 90.10), "b": Vector2(-5.50, 136.10)},
@@ -1031,7 +1073,6 @@ func _build_blocks() -> void:
 		],
 	})
 	var c214 := {
-		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通西・北端",
 		"frontage": {"a": Vector2(-5.50, -162.00), "b": Vector2(-5.50, -138.90)},
 		"into": Vector2(-1.0000, 0.0000),
@@ -1039,9 +1080,8 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
 		],
 	}
-	_block(214, c214)
+	_block(214, _kitify(c214))
 	var c215 := {
-		"kit": true,        # PHASE 3 pilot（本通・北門回廊）
 		"name": "本通東・北端",
 		"frontage": {"a": Vector2(5.50, -138.90), "b": Vector2(5.50, -162.00)},
 		"into": Vector2(1.0000, 0.0000),
@@ -1049,7 +1089,7 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_e_a"], "setback": 0.8, "jog": [1.0, 1.8]},
 		],
 	}
-	_block(215, c215)
+	_block(215, _kitify(c215))
 	_block(216, {
 		"name": "北在・西",
 		"frontage": {"a": Vector2(-55.65, -83.90), "b": Vector2(-97.00, -83.90)},
@@ -1287,16 +1327,15 @@ func _build_blocks() -> void:
 	# 同じだけ消費する（`_dxf_mute` の注記を参照）。
 	# ⚠ ブロックは互いに独立（各 _block が自前の RNG、_house は _reserved に
 	#   何も足さない）ので、ここで再実行しても他のブロックには影響しない。
+	# ⚠ ghost には **原本の cfg** をそのまま渡す（_kitify を通さない）。
+	#   setback も jog も kinds も legacy のまま再現しないと、_drng の
+	#   消費数が legacy と一致せず zero-drift が崩れる。
 	_ghosting = true
-	for c in [c209, c210]:
-		var g: Dictionary = c.duplicate()
-		g["kit"] = false
-		_block(209 if c == c209 else 210, g)
+	_block(209, c209)
+	_block(210, c210)
 	_ghost_run2 = _ghost.size()
-	for c2 in [c214, c215]:
-		var g2: Dictionary = c2.duplicate()
-		g2["kit"] = false
-		_block(214 if c2 == c214 else 215, g2)
+	_block(214, c214)
+	_block(215, c215)
 	_ghosting = false
 
 
@@ -2873,6 +2912,72 @@ func _build_gates() -> void:
 const GUTTER_SEG := 3.0
 const GUTTER_COMMERCE := 0.45     # 石溝是町方的東西，村緣的排水是土溝
 
+# ══════════════════════════════════════════════════════════════════════
+# PHASE 3.1A：回廊の「路 → 建物」の移行層
+# ══════════════════════════════════════════════════════════════════════
+#
+# slice で検証済みの語彙のうち、村に無かった二つを回廊にだけ足す：
+#   ・縁石（路邊石）—— 石溝の外側に一列。路と路肩の境界を線として立てる
+#   ・踏石 —— 各戸の**門前**から街へ。門の位置は manifest の facade.door_x
+# 犬走りはモジュール側の基礎に既に入っているので足さない。
+#
+# ⚠ 専用 RNG。密度層の `_drng` には一切触らない（順序依存で村中がずれる）。
+func _build_pilot_edge() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = SEED + 4101
+	var kerbs: Array[Transform3D] = []
+	var steps: Array[Transform3D] = []
+	# 縁石：石溝の外側（路半寬 4.0 + 溝 0.6 + 0.5）
+	var t := -166.0
+	while t < -80.0:
+		for side in [-1.0, 1.0]:
+			var px: float = side * 5.1
+			kerbs.append(Transform3D(Basis(),
+				Vector3(px, height_at(px, t) + 0.02, t)))
+		t += 1.0
+	# 踏石：門前から街へ三枚
+	for e in _dump:
+		if not _is_pilot(e):
+			continue
+		var m: Dictionary = _mods[String(e[0])]
+		var fac: Dictionary = m.get("facade", {})
+		if fac.is_empty():
+			continue
+		var pos := Vector2(float(e[1]), float(e[3]))
+		var yaw: float = float(e[4])
+		var fwd := Vector2(sin(yaw), cos(yaw))
+		var ax := Vector2(cos(yaw), -sin(yaw))
+		var dx: float = float(fac["door_x"])
+		for k in 3:
+			var q: Vector2 = pos + ax * (dx - 0.9 + float(k) * 0.9) \
+				+ fwd * (0.55 + float(k % 2) * 0.22)
+			if _pt_on_road_core(q, 1.0):
+				continue
+			steps.append(Transform3D(
+				Basis(Vector3.UP, yaw + rng.randf_range(-0.08, 0.08)),
+				Vector3(q.x, height_at(q.x, q.y) + 0.03, q.y)))
+	if kerbs.is_empty() and steps.is_empty():
+		return
+	var g := lib.add(_root, Node3D.new(), "回廊路縁")
+	# 色は石溝と同じ系統（濡れて暗い石）。明るい石は白い軌条に読める
+	var kmat := lib.pbr("回廊縁石", "stone_wall", 0.42, Color(0.58, 0.58, 0.56))
+	var smat := lib.pbr("回廊踏石", "stone_flag", 0.30, Color(0.62, 0.61, 0.57))
+	for spec in [{"size": Vector3(1.0, 0.22, 0.16), "list": kerbs,
+			"mat": kmat, "n": "路邊石"},
+			{"size": Vector3(0.72, 0.11, 0.62), "list": steps,
+			"mat": smat, "n": "踏石"}]:
+		if (spec["list"] as Array).is_empty():
+			continue
+		var bm := BoxMesh.new()
+		bm.size = spec["size"]
+		bm.material = spec["mat"]
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(bm, spec["list"], [],
+			OUT_DIR + "gen/pedge_%s.res" % String(spec["n"]))
+		lib.add(g, mmi, "MM_%s" % String(spec["n"]))
+	_audit.append("PHASE 3.1A：回廊の縁石 %d・踏石 %d" % [kerbs.size(), steps.size()])
+
+
 func _build_gutters() -> void:
 	var walls: Array[Transform3D] = []
 	var floors: Array[Transform3D] = []
@@ -2897,7 +3002,9 @@ func _build_gutters() -> void:
 					else Vector2(float(run.fix) + side * off, mid)
 				t += GUTTER_SEG
 				seg_i += 1
-				if _commerce(p) < GUTTER_COMMERCE:
+				# PHASE 3.1A：回廊は commerce≈0.32 < 0.45 なので、石溝が
+				# 一節も立っていなかった（＝路と建物のあいだに何もない）。
+				if _commerce(p) < GUTTER_COMMERCE and not _in_pilot_xz(p.x, p.y):
 					continue
 				if _river_dist_xy(p.x, p.y) < RIVER_HALF + 2.0:
 					continue

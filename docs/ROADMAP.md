@@ -27,9 +27,14 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 
 ## CURRENT
 
-**Phase 3 — Village Architecture Rollout, PILOT.** Blocks 209/210/214/215
-built (18 houses, 7 module kinds village-wide), zero drift proven outside
-the corridor, all five gates green. Awaiting Art Review.
+**Phase 3.1A — street-section correction** on the pilot corridor
+(setback, verge, transition layer). Zero drift outside the corridor, all
+five gates green. Awaiting Art Review.
+
+Next after approval: **Phase 3.1B** — design the z=−135 crossing as a
+deliberate 辻 (propose well / notice board / 地藏 / tree composition first),
+then the 490 m sight line, treating the fire-watch tower as part of the
+composition problem.
 
 ## NEXT
 

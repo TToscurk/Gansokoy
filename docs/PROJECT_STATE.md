@@ -4,15 +4,17 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 3 pilot built, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 3.1A section correction, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**Phase 3 — Village Architecture Rollout, PILOT.** Blocks 209/210/214/215
-(本通 north-gate corridor). Built; renders produced; **awaiting Art Review**.
-Do not roll out to the remaining 36 blocks.
+**Phase 3.1A — street-section correction** on the pilot corridor.
+Setback/jog tightened, packed-earth apron + gutter + kerb + stepping-stone
+transition extended through the north-gate corridor. Built; **awaiting Art
+Review**. Do not roll out to the remaining 36 blocks; 3.1B (辻 / sight line /
+tower) not started.
 
 ## Current Status
 
