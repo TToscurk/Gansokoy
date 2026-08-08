@@ -34,9 +34,15 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 unchanged at 78.8 m). Zero drift proven at byte level — all 54 `gen/*.res`
 and both data JSONs unchanged; 0 nodes moved. All five gates green.
 
-Next after review: **Phase 3.2B** — reopen landmark frontage placement on
-本通 (the only mass that can break the axis is a building facing it), then
-full rollout (still blocked on the 9–10 m back-row module gap).
+**Composition rollout paused** (human, 2026-08-08). The audit in
+`ningen-no-sato.md` §11.13 found the real blocker: 117 of 170 houses (69%)
+are untextured single-surface blockouts, including the north-gate front row
+inside the approved corridor. Proposal A–G written, nothing implemented.
+
+Recommended order: **A** legacy roofs → production kawara (117 houses at
+once) · **B** `b_a`/`b_b` pitch 45° → 21–23° · **C** a 3.5 m kit module to
+replace the 5 gate-front `machiya_e_a`. Then **Phase 3.2B** (landmark
+frontage), then full rollout.
 
 ## NEXT
 

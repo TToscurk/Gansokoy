@@ -25,17 +25,35 @@ reopening landmark frontage in **Phase 3.2B**.
 3.1B (fire-watch crossing) is the approved production baseline. Do not roll
 out to the remaining 36 blocks.
 
+**Composition rollout is paused** (human instruction, 2026-08-08). The
+blocking Art Review issue is the production/legacy mix, diagnosed in
+`ningen-no-sato.md` §11.13 with a proposal table (A–G). Nothing implemented;
+awaiting approval. Phase 3.2B (landmark frontage) is recommended *after*
+A/B/C.
+
 ## Current Status
 
 Phase 2.6b is the approved baseline for facade dressing, cloth placement,
 business-identity composition and foreground prop quality. The slice
 (`maps/slice/`) remains the benchmark scene.
 
-The village now carries the production kit **in the 本通 north-gate corridor
-only** (18 houses of 170, 7 module kinds). Zero drift proven outside it.
-Correction to an earlier claim: the village was never 100% blockout —
-`machiya_f_a` was upgraded in place in Phase 1, so 49 houses already carried
-production geometry before this pilot.
+**Correction (2026-08-08 audit).** An earlier line here said the pilot
+corridor carries the kit in "18 houses". 18 is the number of houses *inside*
+the corridor; the number actually built from the production kit is **7**.
+Village-wide the split, measured from the meshes, is:
+
+| | modules | houses | surfaces | albedo textures |
+|---|---|---|---|---|
+| production | `f_a`, `f_n`, `t_a` | **53 (31%)** | 6 | 6 |
+| legacy blockout | `e_a`, `f_b`, `b_a`, `b_b` | **117 (69%)** | 1 | **none** — vertex colour only |
+
+The legacy modules have no roof texture at all, so "incomplete/placeholder
+roof" is not a separate population — it *is* the legacy blockout roof.
+`b_a`/`b_b` additionally use a 45° pitch against the kit's 19–23°.
+
+Inside the approved 3.1A/3.1B corridor, the front row from the north gate to
+the fire-watch crossing (z −158.4 … −130.2) is still 5 × `machiya_e_a`, and
+the whole back row (6 houses) is `b_a`/`b_b`. See `ningen-no-sato.md` §11.13.
 
 Branch: `claude/previous-progress-92cb1a`.
 
