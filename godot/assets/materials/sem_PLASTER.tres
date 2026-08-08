@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/plaster_diff.jpg" id="1_vgb2x"]
+[ext_resource type="Texture2D" path="res://assets/textures/plaster_nor_gl.jpg" id="2_b038c"]
+[ext_resource type="Texture2D" path="res://assets/textures/plaster_rough.jpg" id="3_ibt2a"]
+
+[resource]
+albedo_color = Color(1.2, 1.16, 1.07, 1)
+albedo_texture = ExtResource("1_vgb2x")
+roughness_texture = ExtResource("3_ibt2a")
+normal_enabled = true
+normal_scale = 0.14
+normal_texture = ExtResource("2_b038c")
+uv1_scale = Vector3(1.55, 1.55, 1.55)
+uv1_triplanar = true
+texture_filter = 5

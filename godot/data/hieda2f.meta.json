@@ -1,0 +1,25 @@
+{
+ "colliders": [],
+ "connections": [],
+ "id": "hieda2f",
+ "note": "稗田邸二樓（阿求書房）—— 傳送場景。外殼照凍結的外觀量體（21.88×11.96、淨高 3.10、窗帶 1.22→2.28 朝後院 -z）。階段口（下）↔ hieda1f；上り階段 → hieda3f。不進 mapRegistry：建築內部不是世界圖上的一格。",
+ "playSize": [
+  22,
+  12
+ ],
+ "portals": [
+  {
+   "target": "hieda1f",
+   "x": -8.9,
+   "y": 0.0,
+   "z": -3.2
+  },
+  {
+   "target": "hieda3f",
+   "x": -9.2,
+   "y": 0.0,
+   "z": 0.9
+  }
+ ],
+ "safe": true
+}

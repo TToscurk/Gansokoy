@@ -198,6 +198,10 @@ export function bootMap({
   scene.add(world);
   const colliders = [];
 
+  // Godot 遷移的唯讀匯出口（tools/export-godot.mjs 用）：不走 debugHandle，
+  // 免得動到各圖既有 handle 的鍵集合。只掛引用，對遊戲本身零影響。
+  window.__godotExport = { THREE, scene, world, colliders };
+
   // 名牌 overlay：depthTest:false 的 sprite 不能進後製鏈（GTAO 會把它
   // 塗成黑方塊，README 踩坑 #3）。名牌一律住這個場景，主畫面畫完再疊。
   const labelScene = new THREE.Scene();

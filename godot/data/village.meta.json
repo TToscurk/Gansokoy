@@ -1,0 +1,42 @@
+{
+ "colliders": [],
+ "connections": [
+  "trail",
+  "kourindou",
+  "myouren",
+  "lake"
+ ],
+ "id": "village",
+ "note": "人間之里（街區重設計版，gen_town.gd 產出）。整合 Stage 2 起這支取代了 gen_village.gd 的佈局；地標內容／草層／動物等MIGRATE 項目逐步搬入中。gen_village.gd 不可再執行。",
+ "playSize": [
+  460,
+  460
+ ],
+ "portals": [
+  {
+   "target": "trail",
+   "x": 0.0,
+   "y": 0.33,
+   "z": -174.0
+  },
+  {
+   "target": "kourindou",
+   "x": -132.0,
+   "y": 0.04,
+   "z": 100.0
+  },
+  {
+   "target": null,
+   "x": 94.3,
+   "y": 0.3,
+   "z": -286.0
+  },
+  {
+   "target": "hieda1f",
+   "x": -78.05,
+   "y": -0.67,
+   "z": -164.6
+  }
+ ],
+ "safe": true
+}

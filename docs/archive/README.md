@@ -1,0 +1,14 @@
+# archive —— 已完成或已過時的設計書
+
+放這裡的文件**不再是工作依據**，只留作歷史紀錄。要查「現在該怎麼做」
+一律看 `docs/` 根目錄的活文件（見 docs/README.md）。
+
+| 檔案 | 為什麼歸檔 |
+|---|---|
+| `village-design.md` | 人里 v2 設計書，內容已全部蓋出來，被 zoning-design 取代後又被取代 |
+| `village-zoning-design.md` | v14 分區設計 + v14~v18 的施工日誌。設計已落地（ZONE_SPEC 在程式裡），坑都記在 commit message 與新的規格書裡 |
+| `art-style-notes.md` | 2026-08 市場觀察。結論（吉卜力/低模混合）已被 village-art-direction.md §1 的定案取代 |
+| `材質與畫質升級書.md` | **three.js 時代**的材質計畫（MeshStandardMaterial/Toon），Godot 遷移後不適用 |
+| `共用系統整合書.md` | **three.js 時代**的 GameCore 重構計畫（src/ 已凍結） |
+| `角色模型精緻化升級書.md` | **three.js 時代**的 src/entities/model.js 升級計畫 |
+| `ui-review-2026-08-01.md` | three.js 版 UI 的審查快照 |

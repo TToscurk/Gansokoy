@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="1_n5diq"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_wg45u"]
+
+[resource]
+render_priority = 1
+shader = ExtResource("1_n5diq")
+shader_parameter/wave_nor = ExtResource("2_wg45u")
+shader_parameter/shallow_color = null
+shader_parameter/deep_color = null
+shader_parameter/flow_speed = null
+shader_parameter/wave_scale = null
+shader_parameter/alpha = null
+shader_parameter/bank_scale = null
+shader_parameter/sky_tint = null

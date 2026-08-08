@@ -5,3 +5,6 @@ shots/
 .branch
 # 「更新.bat」的 [A] 選項解出來的各分支工作目錄
 branches/
+
+# Blender 腳本的 bytecode 快取
+__pycache__/

@@ -1,0 +1,650 @@
+{
+ "note": "人間之里模組庫。由 make_town.py 產出，gen_town.gd 讀。模組正面朝 -y（machiya）；bridge 沿 x。單位公尺。",
+ "modules": {
+  "machiya_f_a": {
+   "kind": "machiya",
+   "w": 7.6,
+   "d": 7.8,
+   "fw": 9.56,
+   "fd": 9.53,
+   "h": 5.42,
+   "gbox": [
+    -4.78,
+    4.78,
+    -8.65,
+    0.88
+   ],
+   "facade": {
+    "door_x": 0.95,
+    "door_w": 1.75,
+    "beam_z": 2.08,
+    "bay_w": 1.9,
+    "nbay": 4,
+    "bays": [
+     "degoushi",
+     "koushi",
+     "door",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "mushiko",
+    "ridge": 5.16,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.88,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.663,
+     "overhang": 0.85,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 2834,
+   "glb": "res://assets/models/machiya_f_a.glb"
+  },
+  "machiya_f_s": {
+   "kind": "machiya",
+   "w": 5.2,
+   "d": 6.8,
+   "fw": 7.16,
+   "fd": 8.5,
+   "h": 4.87,
+   "gbox": [
+    -3.58,
+    3.58,
+    -7.65,
+    0.85
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 1.583,
+    "beam_z": 2.08,
+    "bay_w": 1.733,
+    "nbay": 3,
+    "bays": [
+     "koushi",
+     "door_s",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 4.61,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.35,
+     "proj": 0.72,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.236,
+     "overhang": 0.85,
+     "pitch": 22.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 1686,
+   "glb": "res://assets/models/machiya_f_s.glb"
+  },
+  "machiya_f_o": {
+   "kind": "machiya",
+   "w": 9.8,
+   "d": 8.6,
+   "fw": 11.76,
+   "fd": 10.47,
+   "h": 6.17,
+   "gbox": [
+    -5.88,
+    5.88,
+    -9.45,
+    1.02
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 1.81,
+    "beam_z": 2.08,
+    "bay_w": 1.96,
+    "nbay": 5,
+    "bays": [
+     "degoushi",
+     "degoushi",
+     "door_w",
+     "koushi",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "mushiko",
+    "ridge": 5.91,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 1.02,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.345,
+     "overhang": 0.85,
+     "pitch": 20.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 3630,
+   "glb": "res://assets/models/machiya_f_o.glb"
+  },
+  "machiya_t_a": {
+   "kind": "machiya",
+   "w": 6.4,
+   "d": 8.8,
+   "fw": 7.96,
+   "fd": 10.66,
+   "h": 5.72,
+   "gbox": [
+    -3.98,
+    3.98,
+    -9.71,
+    0.95
+   ],
+   "facade": {
+    "door_x": -0.0,
+    "door_w": 1.983,
+    "beam_z": 2.08,
+    "bay_w": 2.133,
+    "nbay": 3,
+    "bays": [
+     "koushi",
+     "door",
+     "koushi"
+    ],
+    "orient": "tsuma",
+    "tsushi": "mushiko",
+    "ridge": 5.46,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.35,
+     "proj": 0.95,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.102,
+     "overhang": 0.78,
+     "pitch": 23.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 2408,
+   "glb": "res://assets/models/machiya_t_a.glb"
+  },
+  "machiya_w_a": {
+   "kind": "machiya",
+   "w": 7.2,
+   "d": 7.4,
+   "fw": 9.16,
+   "fd": 9.31,
+   "h": 5.75,
+   "gbox": [
+    -4.58,
+    4.58,
+    -8.25,
+    1.06
+   ],
+   "facade": {
+    "door_x": -0.0,
+    "door_w": 2.25,
+    "beam_z": 2.08,
+    "bay_w": 2.4,
+    "nbay": 3,
+    "bays": [
+     "itado",
+     "door_w",
+     "itado"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 4.91,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 1.06,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 3.636,
+     "overhang": 0.85,
+     "pitch": 19.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 2144,
+   "glb": "res://assets/models/machiya_w_a.glb"
+  },
+  "machiya_f_n": {
+   "kind": "machiya",
+   "w": 8.0,
+   "d": 8.2,
+   "fw": 9.96,
+   "fd": 9.9,
+   "h": 6.42,
+   "gbox": [
+    -4.98,
+    4.98,
+    -9.05,
+    0.85
+   ],
+   "facade": {
+    "door_x": -1.0,
+    "door_w": 1.85,
+    "beam_z": 2.08,
+    "bay_w": 2.0,
+    "nbay": 4,
+    "bays": [
+     "koushi",
+     "door",
+     "koushi",
+     "degoushi"
+    ],
+    "orient": "hira",
+    "tsushi": "nikai",
+    "ridge": 6.16,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.82,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 4.586,
+     "overhang": 0.85,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 3488,
+   "glb": "res://assets/models/machiya_f_n.glb"
+  },
+  "machiya_e_p": {
+   "kind": "machiya",
+   "w": 6.0,
+   "d": 6.2,
+   "fw": 7.94,
+   "fd": 7.88,
+   "h": 4.17,
+   "gbox": [
+    -3.97,
+    3.97,
+    -7.04,
+    0.84
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 1.85,
+    "beam_z": 2.08,
+    "bay_w": 2.0,
+    "nbay": 3,
+    "bays": [
+     "itado",
+     "door_s",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 3.91,
+    "hisashi": {
+     "mode": "entry",
+     "z": 2.31,
+     "proj": 0.68,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 2.843,
+     "overhang": 0.84,
+     "pitch": 19.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 1712,
+   "glb": "res://assets/models/machiya_e_p.glb"
+  },
+  "machiya_f_m": {
+   "kind": "machiya",
+   "w": 8.8,
+   "d": 7.6,
+   "fw": 10.74,
+   "fd": 9.29,
+   "h": 4.62,
+   "gbox": [
+    -5.37,
+    5.37,
+    -8.44,
+    0.85
+   ],
+   "facade": {
+    "door_x": -1.1,
+    "door_w": 2.05,
+    "beam_z": 2.08,
+    "bay_w": 2.2,
+    "nbay": 4,
+    "bays": [
+     "degoushi",
+     "door_w",
+     "itado",
+     "koushi"
+    ],
+    "orient": "hira",
+    "tsushi": "none",
+    "ridge": 4.36,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 2.901,
+     "overhang": 0.84,
+     "pitch": 21.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 2610,
+   "glb": "res://assets/models/machiya_f_m.glb"
+  },
+  "machiya_n_a": {
+   "kind": "machiya",
+   "w": 9.2,
+   "d": 7.6,
+   "fw": 11.14,
+   "fd": 9.29,
+   "h": 7.67,
+   "gbox": [
+    -5.57,
+    5.57,
+    -8.44,
+    0.85
+   ],
+   "facade": {
+    "door_x": 1.15,
+    "door_w": 2.15,
+    "beam_z": 2.08,
+    "bay_w": 2.3,
+    "nbay": 4,
+    "bays": [
+     "koushi",
+     "koushi",
+     "door_w",
+     "itado"
+    ],
+    "orient": "hira",
+    "tsushi": "nikai",
+    "ridge": 7.41,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 5.797,
+     "overhang": 0.84,
+     "pitch": 23.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 3620,
+   "glb": "res://assets/models/machiya_n_a.glb"
+  },
+  "machiya_n_o": {
+   "kind": "machiya",
+   "w": 10.4,
+   "d": 8.0,
+   "fw": 12.34,
+   "fd": 9.69,
+   "h": 8.55,
+   "gbox": [
+    -6.17,
+    6.17,
+    -8.84,
+    0.85
+   ],
+   "facade": {
+    "door_x": -2.08,
+    "door_w": 1.93,
+    "beam_z": 2.08,
+    "bay_w": 2.08,
+    "nbay": 5,
+    "bays": [
+     "koushi",
+     "door_w",
+     "degoushi",
+     "koushi",
+     "itado"
+    ],
+    "orient": "hira",
+    "tsushi": "nikai",
+    "ridge": 7.71,
+    "hisashi": {
+     "mode": "full",
+     "z": 2.35,
+     "proj": 0.85,
+     "slope": 17.0,
+     "thick": 0.055,
+     "beam_back": 0.15
+    },
+    "eave": {
+     "z_wall": 5.929,
+     "overhang": 0.84,
+     "pitch": 24.0,
+     "thick": 0.16
+    }
+   },
+   "faces": 4374,
+   "glb": "res://assets/models/machiya_n_o.glb"
+  },
+  "machiya_f_b": {
+   "kind": "machiya",
+   "w": 8.8,
+   "d": 7.6,
+   "fw": 10.74,
+   "fd": 9.3,
+   "h": 4.5,
+   "gbox": [
+    -5.37,
+    5.37,
+    -8.45,
+    0.85
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 2.061,
+    "beam_z": 1.982,
+    "bay_w": 2.933,
+    "nbay": 3
+   },
+   "faces": 464,
+   "glb": "res://assets/models/machiya_f_b.glb"
+  },
+  "machiya_b_a": {
+   "kind": "machiya",
+   "w": 9.2,
+   "d": 7.6,
+   "fw": 11.14,
+   "fd": 9.3,
+   "h": 9.4,
+   "gbox": [
+    -5.57,
+    5.57,
+    -8.45,
+    0.85
+   ],
+   "facade": {
+    "door_x": 3.067,
+    "door_w": 2.17,
+    "beam_z": 2.375,
+    "bay_w": 3.067,
+    "nbay": 3
+   },
+   "faces": 614,
+   "glb": "res://assets/models/machiya_b_a.glb"
+  },
+  "machiya_b_b": {
+   "kind": "machiya",
+   "w": 10.4,
+   "d": 8.0,
+   "fw": 12.34,
+   "fd": 9.7,
+   "h": 9.9,
+   "gbox": [
+    -6.17,
+    6.17,
+    -8.85,
+    0.85
+   ],
+   "facade": {
+    "door_x": 0.0,
+    "door_w": 2.498,
+    "beam_z": 2.375,
+    "bay_w": 3.467,
+    "nbay": 3
+   },
+   "faces": 654,
+   "glb": "res://assets/models/machiya_b_b.glb"
+  },
+  "machiya_e_a": {
+   "kind": "machiya",
+   "w": 6.0,
+   "d": 6.2,
+   "fw": 7.94,
+   "fd": 7.9,
+   "h": 3.5,
+   "gbox": [
+    -3.97,
+    3.97,
+    -7.05,
+    0.85
+   ],
+   "facade": {
+    "door_x": -1.5,
+    "door_w": 2.116,
+    "beam_z": 1.645,
+    "bay_w": 3.0,
+    "nbay": 2
+   },
+   "faces": 314,
+   "glb": "res://assets/models/machiya_e_a.glb"
+  },
+  "bridge_main": {
+   "kind": "bridge",
+   "span": 22.0,
+   "w": 12.0,
+   "rise": 1.5,
+   "rail_h": 1.15,
+   "fw": 25.8,
+   "fd": 12.6,
+   "h": 2.89,
+   "gbox": [
+    -12.9,
+    12.9,
+    -6.3,
+    6.3
+   ],
+   "faces": 1168,
+   "glb": "res://assets/models/bridge_main.glb"
+  },
+  "bridge_small": {
+   "kind": "bridge",
+   "span": 19.0,
+   "w": 4.2,
+   "rise": 0.75,
+   "rail_h": 1.05,
+   "fw": 22.8,
+   "fd": 4.8,
+   "h": 2.04,
+   "gbox": [
+    -11.4,
+    11.4,
+    -2.4,
+    2.4
+   ],
+   "faces": 820,
+   "glb": "res://assets/models/bridge_small.glb"
+  },
+  "tower_fire": {
+   "kind": "tower",
+   "fw": 5.9,
+   "fd": 5.9,
+   "h": 19.5,
+   "gbox": [
+    -2.949,
+    2.949,
+    -2.949,
+    2.949
+   ],
+   "faces": 570,
+   "glb": "res://assets/models/tower_fire.glb"
+  },
+  "tower_bell": {
+   "kind": "tower",
+   "fw": 6.82,
+   "fd": 6.82,
+   "h": 17.4,
+   "gbox": [
+    -3.41,
+    3.41,
+    -3.41,
+    3.41
+   ],
+   "faces": 220,
+   "glb": "res://assets/models/tower_bell.glb"
+  },
+  "tower_mill": {
+   "kind": "tower",
+   "fw": 6.1,
+   "fd": 7.0,
+   "h": 17.25,
+   "gbox": [
+    -3.05,
+    3.05,
+    -2.45,
+    4.55
+   ],
+   "faces": 872,
+   "glb": "res://assets/models/tower_mill.glb"
+  },
+  "unomitei": {
+   "kind": "landmark",
+   "w": 13.2,
+   "d": 9.2,
+   "fw": 15.14,
+   "fd": 17.5,
+   "h": 6.95,
+   "gbox": [
+    -7.57,
+    7.57,
+    -16.005,
+    1.495
+   ],
+   "deck_d": 16.0,
+   "faces": 1574,
+   "glb": "res://assets/models/unomitei.glb"
+  }
+ }
+}

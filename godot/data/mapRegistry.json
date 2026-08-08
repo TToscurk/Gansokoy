@@ -1,0 +1,472 @@
+{
+  "shrine": {
+    "id": "shrine",
+    "zh": "博麗神社",
+    "en": "HAKUREI SHRINE",
+    "dir": "東",
+    "x": 855,
+    "z": -175,
+    "elev": 104,
+    "radius": 185,
+    "rough": 1.6,
+    "fog": 10466508,
+    "accent": 12728367,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      150,
+      110
+    ],
+    "mobTheme": null,
+    "connections": [
+      "trail"
+    ],
+    "entry": "index.html"
+  },
+  "trail": {
+    "id": "trail",
+    "built": true,
+    "safe": false,
+    "playSize": [
+      680,
+      680
+    ],
+    "mobTheme": "fairy",
+    "connections": [
+      "shrine",
+      "village",
+      "bamboo",
+      "sunflower"
+    ],
+    "entry": "maps/trail/",
+    "zh": "獸道",
+    "en": "BEAST TRAIL",
+    "x": 240,
+    "z": 270
+  },
+  "village": {
+    "id": "village",
+    "zh": "人間之里",
+    "en": "HUMAN VILLAGE",
+    "dir": "中央",
+    "x": -80,
+    "z": 150,
+    "elev": 15,
+    "radius": 205,
+    "rough": 0.8,
+    "fog": 12109008,
+    "accent": 14266986,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      460,
+      460
+    ],
+    "mobTheme": null,
+    "connections": [
+      "trail",
+      "kourindou",
+      "myouren",
+      "lake"
+    ],
+    "entry": "maps/village/"
+  },
+  "bamboo": {
+    "id": "bamboo",
+    "zh": "迷途竹林",
+    "en": "BAMBOO FOREST OF THE LOST",
+    "dir": "南",
+    "x": -60,
+    "z": 840,
+    "elev": 17,
+    "radius": 235,
+    "rough": 3,
+    "fog": 9416326,
+    "accent": 11061610,
+    "built": true,
+    "safe": false,
+    "playSize": [
+      300,
+      600
+    ],
+    "mobTheme": "rabbit",
+    "connections": [
+      "trail",
+      "eientei",
+      "namelessHill"
+    ],
+    "entry": "maps/bamboo/"
+  },
+  "namelessHill": {
+    "id": "namelessHill",
+    "zh": "無名之丘",
+    "en": "NAMELESS HILL",
+    "dir": "東南",
+    "x": 430,
+    "z": 640,
+    "elev": 68,
+    "radius": 175,
+    "rough": 5,
+    "fog": 13161656,
+    "accent": 14215328,
+    "built": true,
+    "safe": false,
+    "playSize": [
+      220,
+      220
+    ],
+    "mobTheme": "hazard",
+    "connections": [
+      "bamboo",
+      "sunflower"
+    ],
+    "entry": "maps/namelessHill/"
+  },
+  "eientei": {
+    "id": "eientei",
+    "zh": "永遠亭",
+    "en": "EIENTEI",
+    "dir": "南",
+    "x": -50,
+    "z": 980,
+    "elev": 17,
+    "radius": 90,
+    "rough": 1,
+    "fog": 14209218,
+    "accent": 13150440,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      200,
+      180
+    ],
+    "mobTheme": null,
+    "connections": [
+      "bamboo"
+    ],
+    "entry": "maps/eientei/"
+  },
+  "sunflower": {
+    "id": "sunflower",
+    "zh": "太陽花田",
+    "en": "GARDEN OF THE SUN",
+    "dir": "東南",
+    "x": 660,
+    "z": 330,
+    "elev": 32,
+    "radius": 200,
+    "rough": 1.4,
+    "fog": 14995600,
+    "accent": 15910962,
+    "built": true,
+    "safe": false,
+    "playSize": [
+      360,
+      360
+    ],
+    "mobTheme": "flowerFairy",
+    "connections": [
+      "namelessHill",
+      "trail"
+    ],
+    "entry": "maps/sunflower/"
+  },
+  "kourindou": {
+    "id": "kourindou",
+    "zh": "香霖堂",
+    "en": "KOURINDOU",
+    "dir": "西南",
+    "x": -235,
+    "z": 340,
+    "elev": 19,
+    "radius": 82,
+    "rough": 1,
+    "fog": 12893352,
+    "accent": 9075290,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      140,
+      140
+    ],
+    "mobTheme": null,
+    "connections": [
+      "village",
+      "forest"
+    ],
+    "entry": "maps/kourindou/"
+  },
+  "forest": {
+    "id": "forest",
+    "zh": "魔法之森",
+    "en": "FOREST OF MAGIC",
+    "dir": "西南",
+    "x": -420,
+    "z": 570,
+    "elev": 26,
+    "radius": 250,
+    "rough": 6.5,
+    "fog": 4874060,
+    "accent": 8247434,
+    "built": false,
+    "safe": false,
+    "playSize": [
+      450,
+      450
+    ],
+    "mobTheme": "beast",
+    "connections": [
+      "kourindou",
+      "muenzuka"
+    ]
+  },
+  "muenzuka": {
+    "id": "muenzuka",
+    "zh": "無緣塚",
+    "en": "MUENZUKA",
+    "dir": "西南",
+    "x": -640,
+    "z": 760,
+    "elev": 22,
+    "radius": 95,
+    "rough": 2.4,
+    "fog": 8023936,
+    "accent": 13144280,
+    "built": false,
+    "safe": false,
+    "playSize": [
+      280,
+      280
+    ],
+    "mobTheme": "ghost",
+    "connections": [
+      "forest",
+      "higan"
+    ]
+  },
+  "lake": {
+    "id": "lake",
+    "zh": "霧之湖",
+    "en": "MISTY LAKE",
+    "dir": "北西",
+    "x": -430,
+    "z": -400,
+    "elev": -14,
+    "radius": 195,
+    "rough": 1,
+    "fog": 12834530,
+    "accent": 9427182,
+    "built": false,
+    "safe": false,
+    "playSize": [
+      400,
+      400
+    ],
+    "mobTheme": "iceFairy",
+    "connections": [
+      "village",
+      "youkaiMountain",
+      "sdm"
+    ]
+  },
+  "sdm": {
+    "id": "sdm",
+    "zh": "紅魔館",
+    "en": "SCARLET DEVIL MANSION",
+    "dir": "西北",
+    "x": -700,
+    "z": -270,
+    "elev": 36,
+    "radius": 175,
+    "rough": 1.2,
+    "fog": 11567240,
+    "accent": 13641274,
+    "built": false,
+    "safe": false,
+    "playSize": [
+      280,
+      220
+    ],
+    "mobTheme": "maid",
+    "connections": [
+      "lake"
+    ]
+  },
+  "youkaiMountain": {
+    "id": "youkaiMountain",
+    "zh": "妖怪之山",
+    "en": "YOUKAI MOUNTAIN",
+    "dir": "西北",
+    "x": -640,
+    "z": -690,
+    "elev": 150,
+    "radius": 360,
+    "rough": 26,
+    "peak": true,
+    "peakH": 225,
+    "craterR": 56,
+    "craterDepth": 26,
+    "rimH": 26,
+    "fog": 9413812,
+    "accent": 7311295,
+    "warp": [
+      -408,
+      -536
+    ],
+    "built": false,
+    "safe": false,
+    "playSize": [
+      560,
+      560
+    ],
+    "mobTheme": "kappaTengu",
+    "connections": [
+      "lake",
+      "moriya",
+      "tenguVillage",
+      "higan"
+    ]
+  },
+  "moriya": {
+    "id": "moriya",
+    "zh": "守矢神社",
+    "en": "MORIYA SHRINE",
+    "dir": "西北",
+    "x": -598,
+    "z": -648,
+    "elev": 352,
+    "radius": 62,
+    "rough": 1.2,
+    "fog": 12374244,
+    "accent": 4165570,
+    "built": false,
+    "safe": true,
+    "playSize": [
+      180,
+      180
+    ],
+    "mobTheme": null,
+    "connections": [
+      "youkaiMountain"
+    ]
+  },
+  "tenguVillage": {
+    "id": "tenguVillage",
+    "zh": "天狗聚落",
+    "en": "TENGU SETTLEMENT",
+    "dir": "西北",
+    "x": -840,
+    "z": -590,
+    "elev": 142,
+    "radius": 78,
+    "rough": 3.2,
+    "fog": 11058382,
+    "accent": 9083568,
+    "warp": [
+      -832,
+      -566
+    ],
+    "built": false,
+    "safe": true,
+    "playSize": [
+      220,
+      220
+    ],
+    "mobTheme": null,
+    "connections": [
+      "youkaiMountain"
+    ]
+  },
+  "myouren": {
+    "id": "myouren",
+    "zh": "命蓮寺",
+    "en": "MYOUREN TEMPLE",
+    "dir": "西",
+    "x": -455,
+    "z": 70,
+    "elev": 28,
+    "radius": 120,
+    "rough": 1.2,
+    "fog": 13155544,
+    "accent": 12160984,
+    "built": false,
+    "safe": true,
+    "playSize": [
+      200,
+      200
+    ],
+    "mobTheme": null,
+    "connections": [
+      "village"
+    ]
+  },
+  "netherworld": {
+    "id": "netherworld",
+    "zh": "白玉樓",
+    "en": "HAKUGYOKUROU",
+    "dir": "結界之外",
+    "remote": true,
+    "x": 620,
+    "z": -760,
+    "elev": 168,
+    "radius": 190,
+    "rough": 2,
+    "fog": 15123156,
+    "accent": 15902916,
+    "built": false,
+    "safe": true,
+    "playSize": [
+      300,
+      260
+    ],
+    "mobTheme": "ghost",
+    "connections": []
+  },
+  "higan": {
+    "id": "higan",
+    "zh": "彼岸",
+    "en": "HIGAN",
+    "dir": "結界之外",
+    "remote": true,
+    "x": 950,
+    "z": -550,
+    "elev": -6,
+    "radius": 150,
+    "rough": 1.6,
+    "fog": 9476260,
+    "accent": 14168154,
+    "built": false,
+    "safe": true,
+    "playSize": [
+      280,
+      200
+    ],
+    "mobTheme": null,
+    "connections": [
+      "muenzuka",
+      "youkaiMountain"
+    ]
+  },
+  "tenkai": {
+    "id": "tenkai",
+    "zh": "天界",
+    "en": "BHAVA-AGRA",
+    "dir": "天空",
+    "remote": true,
+    "x": 350,
+    "z": -880,
+    "elev": 340,
+    "radius": 130,
+    "rough": 1.2,
+    "fog": 14477556,
+    "accent": 16046256,
+    "built": false,
+    "safe": true,
+    "playSize": [
+      240,
+      200
+    ],
+    "mobTheme": null,
+    "connections": []
+  }
+}

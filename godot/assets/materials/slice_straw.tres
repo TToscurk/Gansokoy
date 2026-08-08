@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_diff.jpg" id="1_82rxc"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_nor_gl.jpg" id="2_l5ip7"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_thatch_rough.jpg" id="3_r0gro"]
+
+[resource]
+albedo_color = Color(0.46, 0.4, 0.26, 1)
+albedo_texture = ExtResource("1_82rxc")
+roughness_texture = ExtResource("3_r0gro")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_l5ip7")
+uv1_scale = Vector3(2.6, 2.6, 2.6)
+uv1_triplanar = true
+texture_filter = 5

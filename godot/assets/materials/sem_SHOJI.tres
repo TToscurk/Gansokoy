@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/shoji_diff.jpg" id="1_a5jnb"]
+[ext_resource type="Texture2D" path="res://assets/textures/shoji_nor_gl.jpg" id="2_r2pps"]
+[ext_resource type="Texture2D" path="res://assets/textures/shoji_rough.jpg" id="3_ofvci"]
+
+[resource]
+albedo_color = Color(0.96, 0.94, 0.9, 1)
+albedo_texture = ExtResource("1_a5jnb")
+roughness_texture = ExtResource("3_ofvci")
+normal_enabled = true
+normal_scale = 0.12
+normal_texture = ExtResource("2_r2pps")
+uv1_scale = Vector3(1.2, 1.2, 1.2)
+uv1_triplanar = true
+texture_filter = 5

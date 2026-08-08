@@ -15,6 +15,8 @@ export function makePortalGlow(parent, x, y, z, color = 0x8be8ff) {
   g.position.set(x, y, z);
   // 整組都在呼吸／旋轉，靜態合併必須跳過（見 src/core/optimize.js）
   g.userData.noMerge = true;
+  // Godot 匯出工具靠這個 tag 收集傳送點座標（tools/export-godot.mjs）
+  g.userData.portalGlow = true;
   parent.add(g);
 
   const noOutline = (m) => { m.userData.noOutline = true; return m; };

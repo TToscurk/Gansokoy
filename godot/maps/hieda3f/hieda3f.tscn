@@ -1,0 +1,4382 @@
+[gd_scene load_steps=276 format=4]
+
+[ext_resource type="Material" path="res://assets/materials/3F床板.tres" id="1_n58yw"]
+[ext_resource type="Material" path="res://assets/materials/3F壁.tres" id="2_q41i6"]
+[ext_resource type="Material" path="res://assets/materials/3F屋裏.tres" id="3_hrdj8"]
+[ext_resource type="Material" path="res://assets/materials/3F木部.tres" id="4_t6n02"]
+[ext_resource type="Material" path="res://assets/materials/3F架材.tres" id="5_8an2a"]
+[ext_resource type="Material" path="res://assets/materials/3F書列_2.tres" id="6_elgfw"]
+[ext_resource type="Material" path="res://assets/materials/3F書列_0.tres" id="7_xwurc"]
+[ext_resource type="Material" path="res://assets/materials/3F書列_1.tres" id="8_1bkdf"]
+[ext_resource type="Material" path="res://assets/materials/3F書微光.tres" id="9_dfnxn"]
+[ext_resource type="Material" path="res://assets/materials/3F台漆.tres" id="10_8843h"]
+[ext_resource type="Material" path="res://assets/materials/3F台縁.tres" id="11_fpws1"]
+[ext_resource type="Material" path="res://assets/materials/3F典籍頁.tres" id="12_mlc2q"]
+[ext_resource type="Material" path="res://assets/materials/3F裂縫.tres" id="13_p8poc"]
+[ext_resource type="Material" path="res://assets/materials/3F灯紙.tres" id="14_13dd7"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_e1okw"]
+_surfaces = [{
+"aabb": AABB(-10.2, 0, -3.55, 20.4, 1e-05, 7.1),
+"format": 34359738375,
+"material": ExtResource("1_n58yw"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("MzMjwQAAAAAzM2PAMzMjQQAAAAAzM2PAMzMjQQAAAAAzM2NAMzMjwQAAAAAzM2PAMzMjQQAAAAAzM2NAMzMjwQAAAAAzM2NA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8g2sc"]
+material = ExtResource("2_q41i6")
+size = Vector3(20.4, 1.99113, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tgqky"]
+size = Vector3(20.4, 2.09113, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ho0ak"]
+material = ExtResource("2_q41i6")
+size = Vector3(20.4, 1.99113, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ox5lo"]
+size = Vector3(20.4, 2.09113, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g6g08"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.99113, 7.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7em06"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 2.54526, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sfnym"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 2.54526, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcvng"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.81804, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5feyn"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.81804, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xxfs8"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.09083, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_10pu2"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.09083, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d2as3"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 0.363609, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dnfe0"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 0.363609, 0.8875)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g6icf"]
+size = Vector3(0.3, 4.9, 7.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r3chy"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.99113, 7.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cjrnt"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 2.54526, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vicvi"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 2.54526, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wq4q6"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.81804, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yxyg7"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.81804, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_akpou"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.09083, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yjy7g"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 1.09083, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ajbfp"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 0.363609, 0.8875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bxj4f"]
+material = ExtResource("2_q41i6")
+size = Vector3(0.12, 0.363609, 0.8875)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yxjg3"]
+size = Vector3(0.3, 4.9, 7.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eguyr"]
+material = ExtResource("3_hrdj8")
+size = Vector3(20.7, 0.1, 5.10811)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i8t4o"]
+size = Vector3(20.7, 0.3, 5.60811)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ftcjb"]
+material = ExtResource("3_hrdj8")
+size = Vector3(20.7, 0.1, 5.10811)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_frulh"]
+size = Vector3(20.7, 0.3, 5.60811)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iq0dn"]
+material = ExtResource("4_t6n02")
+size = Vector3(20.7, 0.24, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kthrg"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.24, 0.28, 7.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_magma"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.18, 1.9, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3agec"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.24, 0.28, 7.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bb4rx"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.18, 1.9, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p2h3t"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.24, 0.28, 7.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4t1ur"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.18, 1.9, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fn0m7"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.24, 0.28, 7.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bbbft"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.18, 1.9, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wlj4d"]
+shading_mode = 0
+albedo_color = Color(0.04, 0.036, 0.032, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_04gok"]
+material = SubResource("StandardMaterial3D_wlj4d")
+size = Vector3(2, 0.02, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pot1i"]
+material = ExtResource("4_t6n02")
+size = Vector3(2.2, 0.1, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jpyex"]
+material = ExtResource("4_t6n02")
+size = Vector3(2.2, 0.1, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yiv5f"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.08, 0.1, 1.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c4s3q"]
+material = ExtResource("4_t6n02")
+size = Vector3(2.2, 0.07, 0.06)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yw6jo"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s6jo8"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a2lxm"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lfini"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lcwtl"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_75faj"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_82aqu"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.06, 0.07, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y7cnb"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l7bnw"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_05sfh"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.05, 0.72, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rvftc"]
+size = Vector3(2.3, 0.9, 0.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1lmc0"]
+size = Vector3(0.15, 0.9, 1.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p5d01"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 3.55, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0y2dj"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 3.55, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d03yv"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pynt1"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bb1f6"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8hp3x"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yaroa"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c7xvc"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o4y0s"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3alkm"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1beio"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x0j5v"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qci1s"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fmpcu"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pjr4k"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0umf6"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ly4o0"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7crl7"]
+material = ExtResource("6_elgfw")
+size = Vector3(3.6, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gr85o"]
+material = ExtResource("7_xwurc")
+size = Vector3(2.2, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b07we"]
+material = ExtResource("8_1bkdf")
+size = Vector3(3.6, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d55bs"]
+material = ExtResource("7_xwurc")
+size = Vector3(3.6, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u8b1h"]
+material = ExtResource("8_1bkdf")
+size = Vector3(2.9, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_crhrp"]
+material = ExtResource("8_1bkdf")
+size = Vector3(2.2, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ogpw"]
+material = ExtResource("6_elgfw")
+size = Vector3(2.9, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_owsi2"]
+material = ExtResource("9_dfnxn")
+size = Vector3(0.055, 0.3, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8whvf"]
+material = ExtResource("9_dfnxn")
+size = Vector3(0.075, 0.3, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bk2wq"]
+material = ExtResource("7_xwurc")
+size = Vector3(2.9, 0.3, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dujod"]
+material = ExtResource("6_elgfw")
+size = Vector3(2.2, 0.3, 0.24)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aute8"]
+size = Vector3(15.9, 3.55, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6xdcq"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 3.55, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w440a"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 3.55, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ymfhf"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bdwbj"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rj2e7"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j8yln"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j6ac1"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_40dk2"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o1mgo"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 3.55, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g1jgo"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u1e5v"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kc4xe"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exed2"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u61jh"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yrhft"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7iun7"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qecom"]
+material = ExtResource("5_8an2a")
+size = Vector3(15.8, 0.045, 0.44)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5xttg"]
+size = Vector3(15.9, 3.55, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1w36s"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 1.85, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5e8ua"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 1.85, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o7dn7"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stg64"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dfb4c"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6l47q"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_03eic"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wr5a3"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_86gta"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d5hhb"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wvrgv"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sd37e"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q52o5"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pj7dm"]
+size = Vector3(17.3, 1.85, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dg8qa"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 1.85, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1803"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.05, 1.85, 0.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nm0ne"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e4me2"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ajcwg"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0opdi"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jm6lb"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_18ira"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_15lyc"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.04, 1.85, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qqhs"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kklpc"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l52qo"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uxbdm"]
+material = ExtResource("5_8an2a")
+size = Vector3(17.2, 0.045, 0.44)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4m1r2"]
+size = Vector3(17.3, 1.85, 0.44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jwdyx"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y6qmh"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qbi7p"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f5dak"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fp58g"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pu1q1"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1862m"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j44tk"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r6i6x"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o6o4p"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 2.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1ek3a"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0e6go"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u8clu"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l8tco"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ktxdc"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p2uhu"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2qkm0"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r5sne"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_26uqu"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 2.46)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4ol0"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jshgk"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rqsnv"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qrq58"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j1qhc"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_72h68"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_toxg1"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8mciy"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ucffs"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mf0p2"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2chx0"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0p73w"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tmqck"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8mxvn"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_asywk"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cwoe6"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pssbm"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2iooo"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_us6qc"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bw4bh"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1e4k1"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hy36s"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_75o8e"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tmxbm"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ggrwn"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4sviw"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8cp1i"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nso2y"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2e0y7"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qtm7k"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6doj8"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i4tgi"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hqkvc"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t2cgx"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q34ol"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f5j0i"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_plkt8"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6xb8"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4houv"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wu23k"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_82ihv"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vimj6"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8m0rn"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qv5no"]
+material = ExtResource("5_8an2a")
+size = Vector3(0.4, 0.045, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rjllw"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m4hef"]
+material = ExtResource("8_1bkdf")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i0ru2"]
+material = ExtResource("6_elgfw")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yk1lh"]
+material = ExtResource("7_xwurc")
+size = Vector3(0.24, 0.3, 0.96)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lh3in"]
+size = Vector3(0.6, 4.4, 7.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i63jd"]
+material = ExtResource("10_8843h")
+top_radius = 0.85
+bottom_radius = 1.0
+height = 0.16
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tce8b"]
+material = ExtResource("10_8843h")
+top_radius = 0.68
+bottom_radius = 0.8
+height = 0.1
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f0hdl"]
+material = ExtResource("11_fpws1")
+top_radius = 0.87
+bottom_radius = 0.87
+height = 0.025
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="BoxMesh_044q6"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.3, 0.85, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pfsa1"]
+material = ExtResource("4_t6n02")
+size = Vector3(1.05, 0.06, 0.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gwdhn"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.44, 0.035, 0.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3brfp"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.44, 0.035, 0.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gr6fj"]
+material = ExtResource("4_t6n02")
+size = Vector3(0.06, 0.05, 0.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6wjp2"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.26, 0.008, 0.36)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kdsa1"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.26, 0.008, 0.36)
+
+[sub_resource type="BoxMesh" id="BoxMesh_15v3p"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.26, 0.008, 0.36)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3jun"]
+material = ExtResource("12_mlc2q")
+size = Vector3(0.26, 0.008, 0.36)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tr5a"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55, 0.65, 0.85, 0.028)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rqa1f"]
+material = SubResource("StandardMaterial3D_4tr5a")
+top_radius = 1.05
+bottom_radius = 0.38
+height = 2.6
+radial_segments = 12
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x5rf6"]
+size = Vector3(1.6, 1.35, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_as2q0"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.317409, 0.035, 0.179112)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cu1ug"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.236349, 0.035, 0.152336)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uxebq"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.332461, 0.035, 0.15804)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6bphl"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.580602, 0.035, 0.132988)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wkhg8"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.268062, 0.035, 0.12389)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ei2w4"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.608519, 0.035, 0.0881688)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iut1u"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.747207, 0.035, 0.0867415)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nexni"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.245832, 0.035, 0.21752)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j5j0y"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.424803, 0.035, 0.141423)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p18i3"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.469675, 0.035, 0.0975294)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xaqkv"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.263744, 0.035, 0.193311)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dfpgo"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.497509, 0.035, 0.157064)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n21i4"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.308777, 0.035, 0.208435)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8apvb"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.452615, 0.035, 0.185548)
+
+[sub_resource type="BoxMesh" id="BoxMesh_geiga"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.522904, 0.035, 0.16683)
+
+[sub_resource type="BoxMesh" id="BoxMesh_weetn"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.406346, 0.035, 0.153203)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6jqqt"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.424455, 0.035, 0.192338)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mxilo"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.758409, 0.035, 0.189005)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qxgh"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.41951, 0.035, 0.0979225)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s4mw0"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.57085, 0.035, 0.130693)
+
+[sub_resource type="BoxMesh" id="BoxMesh_faugd"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.847413, 0.035, 0.165807)
+
+[sub_resource type="BoxMesh" id="BoxMesh_griuq"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.692532, 0.035, 0.122295)
+
+[sub_resource type="BoxMesh" id="BoxMesh_okqru"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.627197, 0.035, 0.089373)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xih80"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.26557, 0.035, 0.161611)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bjvdk"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.623332, 0.035, 0.191281)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e0ulm"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.618266, 0.035, 0.136838)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1mxcl"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.641369, 0.158864, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gu3jf"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.68301, 0.173799, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2nk3x"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.775769, 0.203992, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u788w"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.781259, 0.174061, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vitsb"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.62667, 0.152632, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1r24"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.438048, 0.147341, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iw4yc"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.48032, 0.10644, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_28j6c"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.666831, 0.161137, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_skncp"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.684037, 0.103386, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kpxbn"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.354759, 0.156056, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fp3d0"]
+material = ExtResource("13_p8poc")
+size = Vector3(0.789564, 0.174429, 0.035)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8p1ky"]
+material = ExtResource("4_t6n02")
+top_radius = 0.012
+bottom_radius = 0.012
+height = 2.35
+radial_segments = 4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rdbuv"]
+material = ExtResource("14_13dd7")
+top_radius = 0.17
+bottom_radius = 0.2
+height = 0.42
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hd7cx"]
+material = ExtResource("4_t6n02")
+top_radius = 0.24
+bottom_radius = 0.22
+height = 0.04
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ilsnr"]
+material = ExtResource("4_t6n02")
+top_radius = 0.012
+bottom_radius = 0.012
+height = 2.35
+radial_segments = 4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0psa6"]
+material = ExtResource("14_13dd7")
+top_radius = 0.17
+bottom_radius = 0.2
+height = 0.42
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4oaoj"]
+material = ExtResource("4_t6n02")
+top_radius = 0.24
+bottom_radius = 0.22
+height = 0.04
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hr5dp"]
+material = ExtResource("4_t6n02")
+top_radius = 0.012
+bottom_radius = 0.012
+height = 2.35
+radial_segments = 4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lhhyc"]
+material = ExtResource("14_13dd7")
+top_radius = 0.17
+bottom_radius = 0.2
+height = 0.42
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wpuga"]
+material = ExtResource("4_t6n02")
+top_radius = 0.24
+bottom_radius = 0.22
+height = 0.04
+radial_segments = 8
+
+[sub_resource type="Environment" id="Environment_go40o"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.024, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.72, 0.76, 0.86, 1)
+ambient_light_energy = 0.46
+tonemap_mode = 3
+tonemap_exposure = 0.95
+tonemap_white = 4.0
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.04
+adjustment_enabled = true
+adjustment_contrast = 1.1
+adjustment_saturation = 1.02
+
+[node name="Hieda3F" type="Node3D"]
+metadata/own_colliders = true
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_e1okw")
+
+[node name="殼" type="Node3D" parent="."]
+
+[node name="腰壁_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.995565, -3.62)
+mesh = SubResource("BoxMesh_8g2sc")
+
+[node name="@StaticBody3D@2" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@3" type="CollisionShape3D" parent="殼/@StaticBody3D@2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04557, -3.7)
+shape = SubResource("BoxShape3D_tgqky")
+
+[node name="腰壁_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.995565, 3.62)
+mesh = SubResource("BoxMesh_ho0ak")
+
+[node name="@StaticBody3D@4" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@5" type="CollisionShape3D" parent="殼/@StaticBody3D@4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04557, 3.7)
+shape = SubResource("BoxShape3D_ox5lo")
+
+[node name="妻壁下_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 0.995565, 0)
+mesh = SubResource("BoxMesh_g6g08")
+
+[node name="妻壁上_0_0_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 3.26376, -0.44375)
+mesh = SubResource("BoxMesh_7em06")
+
+[node name="妻壁上_0_0_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 3.26376, 0.44375)
+mesh = SubResource("BoxMesh_sfnym")
+
+[node name="妻壁上_0_1_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.90015, -1.33125)
+mesh = SubResource("BoxMesh_mcvng")
+
+[node name="妻壁上_0_1_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.90015, 1.33125)
+mesh = SubResource("BoxMesh_5feyn")
+
+[node name="妻壁上_0_2_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.53654, -2.21875)
+mesh = SubResource("BoxMesh_xxfs8")
+
+[node name="妻壁上_0_2_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.53654, 2.21875)
+mesh = SubResource("BoxMesh_10pu2")
+
+[node name="妻壁上_0_3_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.17293, -3.10625)
+mesh = SubResource("BoxMesh_d2as3")
+
+[node name="妻壁上_0_3_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.27, 2.17293, 3.10625)
+mesh = SubResource("BoxMesh_dnfe0")
+
+[node name="@StaticBody3D@6" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@7" type="CollisionShape3D" parent="殼/@StaticBody3D@6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.35, 2.45, 0)
+shape = SubResource("BoxShape3D_g6icf")
+
+[node name="妻壁下_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 0.995565, 0)
+mesh = SubResource("BoxMesh_r3chy")
+
+[node name="妻壁上_2_0_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 3.26376, -0.44375)
+mesh = SubResource("BoxMesh_cjrnt")
+
+[node name="妻壁上_2_0_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 3.26376, 0.44375)
+mesh = SubResource("BoxMesh_vicvi")
+
+[node name="妻壁上_2_1_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.90015, -1.33125)
+mesh = SubResource("BoxMesh_wq4q6")
+
+[node name="妻壁上_2_1_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.90015, 1.33125)
+mesh = SubResource("BoxMesh_yxyg7")
+
+[node name="妻壁上_2_2_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.53654, -2.21875)
+mesh = SubResource("BoxMesh_akpou")
+
+[node name="妻壁上_2_2_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.53654, 2.21875)
+mesh = SubResource("BoxMesh_yjy7g")
+
+[node name="妻壁上_2_3_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.17293, -3.10625)
+mesh = SubResource("BoxMesh_ajbfp")
+
+[node name="妻壁上_2_3_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.27, 2.17293, 3.10625)
+mesh = SubResource("BoxMesh_bxj4f")
+
+[node name="@StaticBody3D@8" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@9" type="CollisionShape3D" parent="殼/@StaticBody3D@8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.35, 2.45, 0)
+shape = SubResource("BoxShape3D_yxjg3")
+
+[node name="屋裏_0" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 0.773495, 0.633802, 0, -0.633802, 0.773495, 0, 3.60557, -1.975)
+mesh = SubResource("BoxMesh_eguyr")
+
+[node name="@StaticBody3D@10" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@11" type="CollisionShape3D" parent="殼/@StaticBody3D@10"]
+transform = Transform3D(1, 0, 0, 0, 0.773495, 0.633802, 0, -0.633802, 0.773495, 0, 3.70556, -1.975)
+shape = SubResource("BoxShape3D_i8t4o")
+
+[node name="屋裏_2" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 0.773495, -0.633802, 0, 0.633802, 0.773495, 0, 3.60557, 1.975)
+mesh = SubResource("BoxMesh_ftcjb")
+
+[node name="@StaticBody3D@12" type="StaticBody3D" parent="殼"]
+
+[node name="@CollisionShape3D@13" type="CollisionShape3D" parent="殼/@StaticBody3D@12"]
+transform = Transform3D(1, 0, 0, 0, 0.773495, -0.633802, 0, 0.633802, 0.773495, 0, 3.70556, 1.975)
+shape = SubResource("BoxShape3D_frulh")
+
+[node name="棟木" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.88, 0)
+mesh = SubResource("BoxMesh_iq0dn")
+
+[node name="繫梁_-66" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 2.72, 0)
+mesh = SubResource("BoxMesh_kthrg")
+
+[node name="束柱_-66" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 3.81, 0)
+mesh = SubResource("BoxMesh_magma")
+
+[node name="繫梁_-22" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 2.72, 0)
+mesh = SubResource("BoxMesh_3agec")
+
+[node name="束柱_-22" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 3.81, 0)
+mesh = SubResource("BoxMesh_bb4rx")
+
+[node name="繫梁_22" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 2.72, 0)
+mesh = SubResource("BoxMesh_p2h3t")
+
+[node name="束柱_22" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 3.81, 0)
+mesh = SubResource("BoxMesh_4t1ur")
+
+[node name="繫梁_66" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 2.72, 0)
+mesh = SubResource("BoxMesh_fn0m7")
+
+[node name="束柱_66" type="MeshInstance3D" parent="殼"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 3.81, 0)
+mesh = SubResource("BoxMesh_bbbft")
+
+[node name="階段口" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9, 0, -1.6)
+
+[node name="暗井" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.035, 0)
+mesh = SubResource("BoxMesh_04gok")
+
+[node name="口框N" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.6)
+mesh = SubResource("BoxMesh_pot1i")
+
+[node name="口框S" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.6)
+mesh = SubResource("BoxMesh_jpyex")
+
+[node name="口框E" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08, 0.05, 0)
+mesh = SubResource("BoxMesh_yiv5f")
+
+[node name="欄_0_6" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 0.62)
+mesh = SubResource("BoxMesh_c4s3q")
+
+[node name="欄束_0_0" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.916667, 0.39, 0.62)
+mesh = SubResource("BoxMesh_yw6jo")
+
+[node name="欄束_0_1" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.39, 0.62)
+mesh = SubResource("BoxMesh_s6jo8")
+
+[node name="欄束_0_2" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.183333, 0.39, 0.62)
+mesh = SubResource("BoxMesh_a2lxm")
+
+[node name="欄束_0_3" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183333, 0.39, 0.62)
+mesh = SubResource("BoxMesh_lfini")
+
+[node name="欄束_0_4" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0.39, 0.62)
+mesh = SubResource("BoxMesh_lcwtl")
+
+[node name="欄束_0_5" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.916667, 0.39, 0.62)
+mesh = SubResource("BoxMesh_75faj")
+
+[node name="欄_11_0" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.78, 0)
+mesh = SubResource("BoxMesh_82aqu")
+
+[node name="欄束_11_0" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.39, -0.4)
+mesh = SubResource("BoxMesh_y7cnb")
+
+[node name="欄束_11_1" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.39, 0)
+mesh = SubResource("BoxMesh_l7bnw")
+
+[node name="欄束_11_2" type="MeshInstance3D" parent="階段口"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.39, 0.4)
+mesh = SubResource("BoxMesh_05sfh")
+
+[node name="@StaticBody3D@14" type="StaticBody3D" parent="階段口"]
+
+[node name="@CollisionShape3D@15" type="CollisionShape3D" parent="階段口/@StaticBody3D@14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0.62)
+shape = SubResource("BoxShape3D_rvftc")
+
+[node name="@StaticBody3D@16" type="StaticBody3D" parent="階段口"]
+
+[node name="@CollisionShape3D@17" type="CollisionShape3D" parent="階段口/@StaticBody3D@16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.45, 0)
+shape = SubResource("BoxShape3D_1lmc0")
+
+[node name="書架" type="Node3D" parent="."]
+
+[node name="架_中央南" type="Node3D" parent="書架"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3)
+
+[node name="側板_0" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9, 1.775, 0)
+mesh = SubResource("BoxMesh_p5d01")
+
+[node name="側板_2" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.9, 1.775, 0)
+mesh = SubResource("BoxMesh_0y2dj")
+
+[node name="隔板_0" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.925, 1.775, 0)
+mesh = SubResource("BoxMesh_d03yv")
+
+[node name="隔板_1" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.95, 1.775, 0)
+mesh = SubResource("BoxMesh_pynt1")
+
+[node name="隔板_2" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.975, 1.775, 0)
+mesh = SubResource("BoxMesh_bb1f6")
+
+[node name="隔板_3" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.775, 0)
+mesh = SubResource("BoxMesh_8hp3x")
+
+[node name="隔板_4" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 1.775, 0)
+mesh = SubResource("BoxMesh_yaroa")
+
+[node name="隔板_5" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 1.775, 0)
+mesh = SubResource("BoxMesh_c7xvc")
+
+[node name="隔板_6" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.925, 1.775, 0)
+mesh = SubResource("BoxMesh_o4y0s")
+
+[node name="層板_0" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_3alkm")
+
+[node name="層板_1" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_1beio")
+
+[node name="層板_2" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_x0j5v")
+
+[node name="層板_3" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_qci1s")
+
+[node name="層板_4" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_fmpcu")
+
+[node name="層板_5" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("BoxMesh_pjr4k")
+
+[node name="層板_6" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74, 0)
+mesh = SubResource("BoxMesh_0umf6")
+
+[node name="層板_7" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+mesh = SubResource("BoxMesh_ly4o0")
+
+[node name="列_0" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 0.295, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="列_1" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71758, 0.295, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_2" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424029, 0.295, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_3" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13928, 0.295, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="列_4" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 0.295, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="列_5" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33827, 0.295, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="列_6" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36641, 0.295, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="列_7" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03688, 0.295, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="列_8" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.78215, 0.295, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="列_9" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 0.735, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_0" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18462, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_10" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.95082, 0.735, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_1" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.30551, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_11" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22179, 0.735, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_12" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8604, 0.735, -0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_2" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02281, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_13" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0.735, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_3" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00929, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_14" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.66461, 0.735, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_4" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9559, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_15" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.06173, 0.735, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_5" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.86264, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_16" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94956, 0.735, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_6" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.90287, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_17" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 1.175, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_7" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.22999, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_8" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45166, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_18" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33862, 1.175, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_9" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17094, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_19" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05212, 1.175, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_10" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75565, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_11" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51192, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_20" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13399, 1.175, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_12" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.43709, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_21" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.40088, 1.175, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_13" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.69904, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_22" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 1.175, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_14" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.27799, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_23" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.23298, 1.175, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_15" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1623, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_24" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12366, 1.175, 0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_16" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11879, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_17" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40434, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_25" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22042, 1.175, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_18" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49656, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_26" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29654, 1.175, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_19" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33354, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_27" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 1.615, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_20" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.19968, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_21" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06292, 1.615, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_28" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.01323, 1.615, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_22" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56076, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_23" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1229, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_29" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.263867, 1.615, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_24" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399744, 1.615, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_30" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76968, 1.615, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_25" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14649, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_26" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.46138, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_31" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15122, 1.615, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_27" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.67101, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_28" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04528, 1.615, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_32" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 1.615, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_29" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.30694, 1.615, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_33" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72845, 1.615, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_30" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.22016, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_31" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.95592, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_34" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980984, 1.615, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_32" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92932, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_35" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70676, 1.615, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_33" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.429796, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_34" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33945, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_36" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0819, 1.615, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_35" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.25771, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_36" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2798, 1.615, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_37" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 2.055, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_37" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8212, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_38" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.45483, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_39" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.53381, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_38" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.21837, 2.055, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_40" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.04031, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_41" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.88833, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_42" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.91454, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_39" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0792266, 2.055, -0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_43" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.417835, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_44" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103522, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_45" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.688403, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_40" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36396, 2.055, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_46" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70858, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_47" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53158, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_48" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13592, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_41" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 2.055, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_49" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.19344, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_50" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.30929, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_51" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.27752, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_42" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46528, 2.055, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_52" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.23479, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_53" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.47086, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_54" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.01385, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_43" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.640932, 2.055, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_55" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0936875, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_56" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.322328, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_57" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.181208, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_44" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.47026, 2.055, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_58" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32586, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_59" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.11795, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_45" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.87987, 2.055, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_60" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12981, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_61" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5471, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_46" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 2.495, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_62" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50695, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_63" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1955, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_64" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.40816, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_65" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.80381, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_47" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98886, 2.495, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_66" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88755, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_67" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77177, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_68" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.604061, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_69" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9928, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_48" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85712, 2.495, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_70" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54839, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_71" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17886, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_72" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44662, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_73" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90782, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_49" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.84316, 2.495, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_74" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97418, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_75" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73082, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_50" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 2.495, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_76" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77415, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_77" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8156, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_78" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10323, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_79" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.54942, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_51" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72317, 2.495, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_80" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40264, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_81" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43993, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_52" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.334698, 2.495, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_82" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.586542, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_83" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.814346, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_84" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517943, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_85" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.635083, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_53" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.66082, 2.495, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_86" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96499, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_87" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00915, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_88" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.36106, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_54" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.36596, 2.495, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_89" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.26135, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_90" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.63908, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_55" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 2.935, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_91" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.46663, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_92" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.06187, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_93" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89004, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_94" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.12087, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_56" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43627, 2.935, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_95" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62973, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_96" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21281, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_97" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.28756, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_57" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11813, 2.935, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_98" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86698, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_99" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.80957, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_100" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.96197, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_58" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85298, 2.935, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_101" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.24262, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_102" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.165975, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_103" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27471, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_104" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57997, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_105" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.448561, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_59" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82668, 2.935, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_106" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.52733, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_107" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42441, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_108" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.90931, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_60" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 2.935, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_109" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.57118, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_110" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.38196, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_111" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.82031, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_61" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82304, 2.935, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_112" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.95927, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_113" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.02145, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_114" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81686, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_115" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70064, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_62" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.02492, 2.935, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_116" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.727868, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_117" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60628, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_118" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50601, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_63" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71161, 2.935, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_119" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47405, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_120" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57741, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_121" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.69674, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_122" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38286, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_64" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68904, 2.935, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_123" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.80293, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_124" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3598, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_125" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45332, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_126" type="MeshInstance3D" parent="書架/架_中央南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.43609, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="@StaticBody3D@18" type="StaticBody3D" parent="書架/架_中央南"]
+
+[node name="@CollisionShape3D@19" type="CollisionShape3D" parent="書架/架_中央南/@StaticBody3D@18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.775, 0)
+shape = SubResource("BoxShape3D_aute8")
+
+[node name="架_中央北" type="Node3D" parent="書架"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.3)
+
+[node name="側板_0" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9, 1.775, 0)
+mesh = SubResource("BoxMesh_6xdcq")
+
+[node name="側板_2" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.9, 1.775, 0)
+mesh = SubResource("BoxMesh_w440a")
+
+[node name="隔板_0" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.925, 1.775, 0)
+mesh = SubResource("BoxMesh_ymfhf")
+
+[node name="隔板_1" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.95, 1.775, 0)
+mesh = SubResource("BoxMesh_bdwbj")
+
+[node name="隔板_2" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.975, 1.775, 0)
+mesh = SubResource("BoxMesh_rj2e7")
+
+[node name="隔板_3" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.775, 0)
+mesh = SubResource("BoxMesh_j8yln")
+
+[node name="隔板_4" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.975, 1.775, 0)
+mesh = SubResource("BoxMesh_j6ac1")
+
+[node name="隔板_5" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 1.775, 0)
+mesh = SubResource("BoxMesh_40dk2")
+
+[node name="隔板_6" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.925, 1.775, 0)
+mesh = SubResource("BoxMesh_o1mgo")
+
+[node name="層板_0" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_g1jgo")
+
+[node name="層板_1" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_u1e5v")
+
+[node name="層板_2" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_kc4xe")
+
+[node name="層板_3" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_exed2")
+
+[node name="層板_4" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_u61jh")
+
+[node name="層板_5" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("BoxMesh_yrhft")
+
+[node name="層板_6" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74, 0)
+mesh = SubResource("BoxMesh_7iun7")
+
+[node name="層板_7" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+mesh = SubResource("BoxMesh_qecom")
+
+[node name="列_65" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0.295, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="列_66" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.21205, 0.295, -0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="列_67" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126029, 0.295, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="列_68" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.96537, 0.295, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="列_69" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6754, 0.295, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_70" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 0.295, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_71" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.04613, 0.295, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_72" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00423, 0.295, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_73" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.14464, 0.295, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_74" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 0.735, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="列_75" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39086, 0.735, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_127" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01512, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_76" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.363127, 0.735, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_128" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.582191, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_77" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32837, 0.735, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="列_78" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.75003, 0.735, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="列_79" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 0.735, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_129" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.31533, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_80" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06222, 0.735, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_130" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.463901, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_81" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78047, 0.735, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_131" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1279, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_82" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12872, 0.735, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_132" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.35892, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_83" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 1.175, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_133" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36604, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_84" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.45667, 1.175, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_134" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75893, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_85" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11871, 1.175, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_135" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.91129, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_86" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.59258, 1.175, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_136" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61858, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_87" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68032, 1.175, -0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_137" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.63096, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_88" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 1.175, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_138" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.20099, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_89" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.78734, 1.175, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_139" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.18732, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_90" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1229, 1.175, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_140" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.147864, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_91" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6689, 1.175, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_141" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.876296, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_92" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1683, 1.175, 0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_142" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.18475, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_143" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25721, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_93" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 1.615, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_144" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.09969, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_94" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92551, 1.615, -0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_145" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.60109, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_146" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.81853, 1.615, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_95" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.377705, 1.615, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_147" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.702445, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_148" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02989, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_96" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49203, 1.615, -0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_149" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.28151, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_150" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87501, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_97" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45309, 1.615, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_151" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.34703, 1.615, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_98" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 1.615, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_152" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.92548, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_153" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35506, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_99" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78019, 1.615, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_154" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68731, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_155" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.38639, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_100" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.610606, 1.615, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_156" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62824, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_157" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38611, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_101" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61868, 1.615, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_158" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88322, 1.615, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_159" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.48781, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_102" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.34529, 1.615, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_160" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17266, 1.615, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_103" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 2.055, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_161" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99898, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_162" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51334, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_104" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.93913, 2.055, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_163" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39451, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_164" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.22404, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_165" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42943, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_105" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.497772, 2.055, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_166" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40243, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_167" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.99657, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_168" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.448472, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_106" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49611, 2.055, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_169" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.93193, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_170" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26586, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_107" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94117, 2.055, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_171" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11626, 2.055, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_172" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68322, 2.055, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_108" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 2.055, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_173" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.08106, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_174" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52751, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_175" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.44022, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_109" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.09623, 2.055, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_176" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2177, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_177" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.25683, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_178" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.69975, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_110" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.303599, 2.055, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_179" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61799, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_180" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.238134, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_181" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12377, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_111" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.28088, 2.055, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_182" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.56915, 2.055, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_183" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06247, 2.055, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_112" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 2.495, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_184" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.854, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_185" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43909, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_113" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92669, 2.495, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_186" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.09582, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_187" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.79413, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_188" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43368, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_114" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.409656, 2.495, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="微_189" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.909165, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_190" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.350484, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_191" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.239819, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_192" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59036, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_115" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44557, 2.495, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_193" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05152, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_194" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82903, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_195" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4217, 2.495, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_196" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.21782, 2.495, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_116" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 2.495, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_197" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.21458, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_198" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40641, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_199" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.91056, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_117" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.38795, 2.495, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_200" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.06836, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_201" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.31193, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_118" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.938313, 2.495, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_202" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.510067, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_203" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48305, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_119" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3656, 2.495, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_204" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54549, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_205" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.12731, 2.495, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_120" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.12026, 2.495, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_206" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.31617, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_207" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.19401, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_208" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45439, 2.495, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_121" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 2.935, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_209" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.94434, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_210" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.48813, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_211" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.32009, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_212" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.40056, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_213" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0272, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_122" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86201, 2.935, -0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_214" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.89367, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_215" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.80036, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_216" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1177, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_123" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0688571, 2.935, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_217" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.922926, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_218" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.774239, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_219" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25152, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_220" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.714338, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_124" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.96517, 2.935, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_221" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3889, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_222" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84139, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_223" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.68247, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_224" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1339, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_125" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96915, 2.935, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_225" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.92783, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_226" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29823, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_227" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.70937, 2.935, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_228" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5579, 2.935, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_126" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 2.935, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_229" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.37683, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_230" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96551, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_231" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.13541, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_232" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66805, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_233" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84694, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_127" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6919, 2.935, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_234" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40095, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_235" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06371, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_236" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.63144, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_128" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.215912, 2.935, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_237" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.159009, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_238" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.319906, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_239" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.343143, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_129" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4187, 2.935, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_240" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07129, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_241" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25367, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_242" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48818, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_243" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20552, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_130" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89342, 2.935, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_244" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09931, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_245" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.55909, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_246" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4221, 2.935, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_247" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.63801, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_248" type="MeshInstance3D" parent="書架/架_中央北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.44372, 2.935, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="@StaticBody3D@20" type="StaticBody3D" parent="書架/架_中央北"]
+
+[node name="@CollisionShape3D@21" type="CollisionShape3D" parent="書架/架_中央北/@StaticBody3D@20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.775, 0)
+shape = SubResource("BoxShape3D_5xttg")
+
+[node name="架_腰南" type="Node3D" parent="書架"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.28)
+
+[node name="側板_0" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6, 0.925, 0)
+mesh = SubResource("BoxMesh_1w36s")
+
+[node name="側板_2" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 0.925, 0)
+mesh = SubResource("BoxMesh_5e8ua")
+
+[node name="隔板_0" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.45, 0.925, 0)
+mesh = SubResource("BoxMesh_o7dn7")
+
+[node name="隔板_1" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3, 0.925, 0)
+mesh = SubResource("BoxMesh_stg64")
+
+[node name="隔板_2" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0.925, 0)
+mesh = SubResource("BoxMesh_dfb4c")
+
+[node name="隔板_3" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+mesh = SubResource("BoxMesh_6l47q")
+
+[node name="隔板_4" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15, 0.925, 0)
+mesh = SubResource("BoxMesh_03eic")
+
+[node name="隔板_5" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0.925, 0)
+mesh = SubResource("BoxMesh_wr5a3")
+
+[node name="隔板_6" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45, 0.925, 0)
+mesh = SubResource("BoxMesh_86gta")
+
+[node name="層板_0" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_d5hhb")
+
+[node name="層板_1" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_wvrgv")
+
+[node name="層板_2" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_sd37e")
+
+[node name="層板_3" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_q52o5")
+
+[node name="列_131" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9, 0.295, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="列_132" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39194, 0.295, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_133" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0537836, 0.295, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="列_134" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23249, 0.295, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="列_135" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9932, 0.295, 0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_136" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.25, 0.735, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_249" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.60098, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_137" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.18384, 0.735, 0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_250" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.93577, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_251" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83744, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_138" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19659, 0.735, 0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_252" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4892, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_139" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4957, 0.735, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_253" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63198, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_254" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.174022, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_140" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.27326, 0.735, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_255" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39846, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_141" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01773, 0.735, 0.1)
+mesh = SubResource("BoxMesh_u8b1h")
+
+[node name="微_256" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09492, 0.735, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_257" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18711, 0.735, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_142" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.25, 1.175, 0.1)
+mesh = SubResource("BoxMesh_dujod")
+
+[node name="微_258" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.01002, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_259" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.28437, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_260" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.55702, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_143" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.58252, 1.175, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_261" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.54115, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_262" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.36082, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_263" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92452, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_264" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.39573, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_144" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48206, 1.175, 0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_265" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70272, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_266" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5933, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_267" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41539, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_268" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.631487, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_145" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87354, 1.175, 0.1)
+mesh = SubResource("BoxMesh_d55bs")
+
+[node name="微_269" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03319, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_270" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03563, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_271" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.15435, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_272" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63854, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_273" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.29715, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_146" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3198, 1.175, 0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_274" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.20032, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_275" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12017, 1.175, 0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_276" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42189, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_277" type="MeshInstance3D" parent="書架/架_腰南"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.21396, 1.175, 0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="@StaticBody3D@22" type="StaticBody3D" parent="書架/架_腰南"]
+
+[node name="@CollisionShape3D@23" type="CollisionShape3D" parent="書架/架_腰南/@StaticBody3D@22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+shape = SubResource("BoxShape3D_pj7dm")
+
+[node name="架_腰北" type="Node3D" parent="書架"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.28)
+
+[node name="側板_0" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6, 0.925, 0)
+mesh = SubResource("BoxMesh_dg8qa")
+
+[node name="側板_2" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 0.925, 0)
+mesh = SubResource("BoxMesh_n1803")
+
+[node name="隔板_0" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.45, 0.925, 0)
+mesh = SubResource("BoxMesh_nm0ne")
+
+[node name="隔板_1" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3, 0.925, 0)
+mesh = SubResource("BoxMesh_e4me2")
+
+[node name="隔板_2" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0.925, 0)
+mesh = SubResource("BoxMesh_ajcwg")
+
+[node name="隔板_3" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+mesh = SubResource("BoxMesh_0opdi")
+
+[node name="隔板_4" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15, 0.925, 0)
+mesh = SubResource("BoxMesh_jm6lb")
+
+[node name="隔板_5" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0.925, 0)
+mesh = SubResource("BoxMesh_18ira")
+
+[node name="隔板_6" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45, 0.925, 0)
+mesh = SubResource("BoxMesh_15lyc")
+
+[node name="層板_0" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_8qqhs")
+
+[node name="層板_1" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_kklpc")
+
+[node name="層板_2" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_l52qo")
+
+[node name="層板_3" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_uxbdm")
+
+[node name="列_147" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 0.295, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="列_148" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.20368, 0.295, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="列_149" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20801, 0.295, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="列_150" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39988, 0.295, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="列_151" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.41125, 0.295, -0.1)
+mesh = SubResource("BoxMesh_7crl7")
+
+[node name="列_152" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 0.735, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_278" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.58346, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_279" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.67311, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_153" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.57683, 0.735, -0.1)
+mesh = SubResource("BoxMesh_crhrp")
+
+[node name="微_280" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1685, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_154" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.28268, 0.735, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_281" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.798204, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_155" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46458, 0.735, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_282" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22779, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_283" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.825, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_156" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.61787, 0.735, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_284" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72962, 0.735, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_285" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.75698, 0.735, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_157" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55, 1.175, -0.1)
+mesh = SubResource("BoxMesh_b07we")
+
+[node name="微_286" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.61637, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_287" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77235, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_288" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.37491, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_289" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27261, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_290" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.24785, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_158" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.10641, 1.175, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_291" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10226, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_292" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.84867, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_293" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.07808, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_294" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.26873, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列_159" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.402189, 1.175, -0.1)
+mesh = SubResource("BoxMesh_gr85o")
+
+[node name="微_295" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.783006, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_296" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04948, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_297" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.115198, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_160" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26326, 1.175, -0.1)
+mesh = SubResource("BoxMesh_8ogpw")
+
+[node name="微_298" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4328, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_299" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30157, 1.175, -0.145)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微_300" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78096, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_301" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71752, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列_161" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24144, 1.175, -0.1)
+mesh = SubResource("BoxMesh_bk2wq")
+
+[node name="微_302" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.98442, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_303" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.06637, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_304" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.34184, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微_305" type="MeshInstance3D" parent="書架/架_腰北"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.29523, 1.175, -0.145)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="@StaticBody3D@24" type="StaticBody3D" parent="書架/架_腰北"]
+
+[node name="@CollisionShape3D@25" type="CollisionShape3D" parent="書架/架_腰北/@StaticBody3D@24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+shape = SubResource("BoxShape3D_4m1r2")
+
+[node name="架_西妻" type="Node3D" parent="書架"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0, 0)
+
+[node name="段_0_2" type="Node3D" parent="書架/架_西妻"]
+
+[node name="板_0" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_jwdyx")
+
+[node name="板_1" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_y6qmh")
+
+[node name="板_2" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_qbi7p")
+
+[node name="板_3" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_f5dak")
+
+[node name="板_4" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_fp58g")
+
+[node name="板_5" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("BoxMesh_pu1q1")
+
+[node name="板_6" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74, 0)
+mesh = SubResource("BoxMesh_1862m")
+
+[node name="板_7" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+mesh = SubResource("BoxMesh_j44tk")
+
+[node name="板_8" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62, 0)
+mesh = SubResource("BoxMesh_r6i6x")
+
+[node name="板_9" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.06, 0)
+mesh = SubResource("BoxMesh_o6o4p")
+
+[node name="列w_162" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.295, 0)
+mesh = SubResource("BoxMesh_1ek3a")
+
+[node name="微w_306" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.295, -0.757356)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_163" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.735, 0)
+mesh = SubResource("BoxMesh_0e6go")
+
+[node name="微w_307" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, 0.128304)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_164" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.175, 0)
+mesh = SubResource("BoxMesh_u8clu")
+
+[node name="微w_308" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.750024)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_165" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.615, 0)
+mesh = SubResource("BoxMesh_l8tco")
+
+[node name="微w_309" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.761717)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_310" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.105089)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_166" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.055, 0)
+mesh = SubResource("BoxMesh_ktxdc")
+
+[node name="微w_311" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, 0.49767)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_312" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.155305)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_167" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.495, 0)
+mesh = SubResource("BoxMesh_p2uhu")
+
+[node name="微w_313" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.689499)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_314" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.460991)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_168" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.935, 0)
+mesh = SubResource("BoxMesh_2qkm0")
+
+[node name="微w_315" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, 0.594045)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_316" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.567648)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_317" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.829985)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_169" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 3.375, 0)
+mesh = SubResource("BoxMesh_r5sne")
+
+[node name="微w_318" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.375, -0.262481)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_319" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.375, 0.506244)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_320" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.375, 0.601451)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_170" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 3.815, 0)
+mesh = SubResource("BoxMesh_26uqu")
+
+[node name="微w_321" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.815, 0.222715)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_322" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.815, -0.512229)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_323" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.815, 0.206596)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_324" type="MeshInstance3D" parent="書架/架_西妻/段_0_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 3.815, 0.411278)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="段_1_0" type="Node3D" parent="書架/架_西妻"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9)
+
+[node name="板_0" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_g4ol0")
+
+[node name="板_1" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_jshgk")
+
+[node name="板_2" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_rqsnv")
+
+[node name="板_3" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_qrq58")
+
+[node name="板_4" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_j1qhc")
+
+[node name="板_5" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("BoxMesh_72h68")
+
+[node name="板_6" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74, 0)
+mesh = SubResource("BoxMesh_toxg1")
+
+[node name="板_7" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+mesh = SubResource("BoxMesh_8mciy")
+
+[node name="列w_171" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.295, 0)
+mesh = SubResource("BoxMesh_ucffs")
+
+[node name="微w_325" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.295, -0.0590552)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_172" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.735, 0)
+mesh = SubResource("BoxMesh_mf0p2")
+
+[node name="微w_326" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, 0.0535919)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_173" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.175, 0)
+mesh = SubResource("BoxMesh_2chx0")
+
+[node name="微w_327" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.318698)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_328" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.184941)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_174" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.615, 0)
+mesh = SubResource("BoxMesh_0p73w")
+
+[node name="微w_329" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.156413)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_330" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.319805)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_175" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.055, 0)
+mesh = SubResource("BoxMesh_tmqck")
+
+[node name="微w_331" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.214036)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_332" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.384038)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_333" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.304218)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_176" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.495, 0)
+mesh = SubResource("BoxMesh_8mxvn")
+
+[node name="微w_334" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.303004)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_335" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, 0.3686)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_336" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.191343)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_177" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.935, 0)
+mesh = SubResource("BoxMesh_asywk")
+
+[node name="微w_337" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, 0.0276002)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_338" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.00953081)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_339" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, 0.13025)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_340" type="MeshInstance3D" parent="書架/架_西妻/段_1_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.21978)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="段_1_2" type="Node3D" parent="書架/架_西妻"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.9)
+
+[node name="板_0" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_cwoe6")
+
+[node name="板_1" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_pssbm")
+
+[node name="板_2" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_2iooo")
+
+[node name="板_3" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_us6qc")
+
+[node name="板_4" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_bw4bh")
+
+[node name="板_5" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("BoxMesh_1e4k1")
+
+[node name="板_6" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74, 0)
+mesh = SubResource("BoxMesh_hy36s")
+
+[node name="板_7" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18, 0)
+mesh = SubResource("BoxMesh_75o8e")
+
+[node name="列w_178" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.295, 0)
+mesh = SubResource("BoxMesh_tmxbm")
+
+[node name="微w_341" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.295, -0.133552)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_179" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.735, 0)
+mesh = SubResource("BoxMesh_ggrwn")
+
+[node name="微w_342" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, -0.109484)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_180" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.175, 0)
+mesh = SubResource("BoxMesh_4sviw")
+
+[node name="微w_343" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.287757)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_344" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.372136)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_181" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.615, 0)
+mesh = SubResource("BoxMesh_8cp1i")
+
+[node name="微w_345" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.332391)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_346" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.0180847)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_182" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.055, 0)
+mesh = SubResource("BoxMesh_nso2y")
+
+[node name="微w_347" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.319144)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_348" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.0489661)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_349" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.055, -0.198849)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_183" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.495, 0)
+mesh = SubResource("BoxMesh_2e0y7")
+
+[node name="微w_350" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.00864533)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_351" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, -0.360799)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_352" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.495, 0.289758)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_184" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 2.935, 0)
+mesh = SubResource("BoxMesh_qtm7k")
+
+[node name="微w_353" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.1798)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_354" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.274716)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_355" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, -0.254204)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_356" type="MeshInstance3D" parent="書架/架_西妻/段_1_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 2.935, 0.337464)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="段_2_0" type="Node3D" parent="書架/架_西妻"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="板_0" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_6doj8")
+
+[node name="板_1" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_i4tgi")
+
+[node name="板_2" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_hqkvc")
+
+[node name="板_3" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_t2cgx")
+
+[node name="板_4" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_q34ol")
+
+[node name="列w_185" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.295, 0)
+mesh = SubResource("BoxMesh_f5j0i")
+
+[node name="微w_357" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.295, 0.083642)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_186" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.735, 0)
+mesh = SubResource("BoxMesh_plkt8")
+
+[node name="微w_358" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, -0.325989)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_359" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, 0.381364)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_187" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.175, 0)
+mesh = SubResource("BoxMesh_x6xb8")
+
+[node name="微w_360" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.268681)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_361" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, -0.0888315)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_362" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, 0.271035)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_188" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.615, 0)
+mesh = SubResource("BoxMesh_4houv")
+
+[node name="微w_363" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.114691)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_364" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.292777)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_365" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.0345991)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_366" type="MeshInstance3D" parent="書架/架_西妻/段_2_0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.0415466)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="段_2_2" type="Node3D" parent="書架/架_西妻"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="板_0" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_wu23k")
+
+[node name="板_1" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
+mesh = SubResource("BoxMesh_82ihv")
+
+[node name="板_2" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0)
+mesh = SubResource("BoxMesh_vimj6")
+
+[node name="板_3" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
+mesh = SubResource("BoxMesh_8m0rn")
+
+[node name="板_4" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86, 0)
+mesh = SubResource("BoxMesh_qv5no")
+
+[node name="列w_189" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.295, 0)
+mesh = SubResource("BoxMesh_rjllw")
+
+[node name="微w_367" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.295, -0.340199)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="列w_190" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.735, 0)
+mesh = SubResource("BoxMesh_m4hef")
+
+[node name="微w_368" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, 0.369085)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_369" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 0.735, 0.0655841)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_191" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.175, 0)
+mesh = SubResource("BoxMesh_i0ru2")
+
+[node name="微w_370" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, 0.262366)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_371" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, 0.0531565)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_372" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.175, 0.219511)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="列w_192" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 1.615, 0)
+mesh = SubResource("BoxMesh_yk1lh")
+
+[node name="微w_373" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.266519)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_374" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.0988174)
+mesh = SubResource("BoxMesh_owsi2")
+
+[node name="微w_375" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, 0.0345611)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="微w_376" type="MeshInstance3D" parent="書架/架_西妻/段_2_2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.19, 1.615, -0.328276)
+mesh = SubResource("BoxMesh_8whvf")
+
+[node name="@StaticBody3D@26" type="StaticBody3D" parent="書架"]
+
+[node name="@CollisionShape3D@27" type="CollisionShape3D" parent="書架/@StaticBody3D@26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 2.2, 0)
+shape = SubResource("BoxShape3D_lh3in")
+
+[node name="核心典籍" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4, 0, 0)
+
+[node name="台座" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+mesh = SubResource("CylinderMesh_i63jd")
+
+[node name="台座上段" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
+mesh = SubResource("CylinderMesh_tce8b")
+
+[node name="台縁" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165, 0)
+mesh = SubResource("CylinderMesh_f0hdl")
+
+[node name="書見台脚" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
+mesh = SubResource("BoxMesh_044q6")
+
+[node name="書見台面" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 0.980067, 0.198669, 0, -0.198669, 0.980067, 0, 1.08, 0)
+mesh = SubResource("BoxMesh_pfsa1")
+
+[node name="典籍" type="Node3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 0.980067, 0.198669, 0, -0.198669, 0.980067, 0, 1.14, -0.02)
+
+[node name="左頁" type="MeshInstance3D" parent="核心典籍/典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0, 0)
+mesh = SubResource("BoxMesh_gwdhn")
+
+[node name="右頁" type="MeshInstance3D" parent="核心典籍/典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23, 0, 0)
+mesh = SubResource("BoxMesh_3brfp")
+
+[node name="書背" type="MeshInstance3D" parent="核心典籍/典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+mesh = SubResource("BoxMesh_gr6fj")
+
+[node name="散頁_0" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(-0.921529, 0.105643, -0.373662, 0.224874, 0.929688, -0.29174, 0.316568, -0.352874, -0.880491, -0.213212, 0.62327, 0.216638)
+mesh = SubResource("BoxMesh_6wjp2")
+
+[node name="散頁_1" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(-0.846617, 0.146086, -0.51176, 0.0222325, 0.970458, 0.240245, 0.531738, 0.192018, -0.824854, -0.206058, 0.927948, -0.0639058)
+mesh = SubResource("BoxMesh_kdsa1")
+
+[node name="散頁_2" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(0.568869, 0.424069, -0.704666, -0.077679, 0.880686, 0.467288, 0.818751, -0.211088, 0.533936, 0.355268, 1.39524, -0.0570485)
+mesh = SubResource("BoxMesh_15v3p")
+
+[node name="散頁_3" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(-0.49341, -0.493313, -0.716372, -0.261344, 0.869634, -0.41885, 0.829606, -0.0194447, -0.558011, -0.231305, 1.85895, -0.240505)
+mesh = SubResource("BoxMesh_i3jun")
+
+[node name="光暈" type="MeshInstance3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_rqa1f")
+
+[node name="典籍光" type="OmniLight3D" parent="核心典籍"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+light_color = Color(0.72, 0.8, 0.95, 1)
+light_energy = 1.65
+omni_range = 5.6
+
+[node name="@StaticBody3D@28" type="StaticBody3D" parent="核心典籍"]
+
+[node name="@CollisionShape3D@29" type="CollisionShape3D" parent="核心典籍/@StaticBody3D@28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.675, 0)
+shape = SubResource("BoxShape3D_x5rf6")
+
+[node name="裂縫" type="Node3D" parent="."]
+
+[node name="碎片_0" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.997903, 0, 0.0647215, 0, 1, 0, -0.0647215, 0, -0.997903, 2.70043, 0.035, 1.10899)
+mesh = SubResource("BoxMesh_as2q0")
+
+[node name="碎片_1" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.675345, 0, -0.737502, 0, 1, 0, 0.737502, 0, 0.675345, 4.79769, 0.035, 0.736415)
+mesh = SubResource("BoxMesh_cu1ug")
+
+[node name="碎片_2" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.231853, 0, -0.972751, 0, 1, 0, 0.972751, 0, 0.231853, 4.37659, 0.035, 1.2528)
+mesh = SubResource("BoxMesh_uxebq")
+
+[node name="碎片_3" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.921713, 0, -0.387874, 0, 1, 0, 0.387874, 0, -0.921713, 2.93509, 0.035, 1.15818)
+mesh = SubResource("BoxMesh_6bphl")
+
+[node name="碎片_4" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.524129, 0, 0.851639, 0, 1, 0, -0.851639, 0, 0.524129, 3.44433, 0.035, 1.29397)
+mesh = SubResource("BoxMesh_wkhg8")
+
+[node name="碎片_5" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.778172, 0, 0.628052, 0, 1, 0, -0.628052, 0, -0.778172, -3.47251, 0.035, -1.72801)
+mesh = SubResource("BoxMesh_ei2w4")
+
+[node name="碎片_6" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.980064, 0, 0.198681, 0, 1, 0, -0.198681, 0, 0.980064, -3.93922, 0.035, -2.91449)
+mesh = SubResource("BoxMesh_iut1u")
+
+[node name="碎片_7" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.911973, 0, 0.410249, 0, 1, 0, -0.410249, 0, 0.911973, -5.00949, 0.035, -2.82048)
+mesh = SubResource("BoxMesh_nexni")
+
+[node name="碎片_8" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.547902, 0, -0.836542, 0, 1, 0, 0.836542, 0, -0.547902, -4.46357, 0.035, -2.98106)
+mesh = SubResource("BoxMesh_j5j0y")
+
+[node name="碎片_9" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.983732, 0, 0.179644, 0, 1, 0, -0.179644, 0, 0.983732, -5.32443, 0.035, -2.02094)
+mesh = SubResource("BoxMesh_p18i3")
+
+[node name="碎片_10" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.84364, 0, -0.536909, 0, 1, 0, 0.536909, 0, 0.84364, -4.98682, 0.035, -3.04231)
+mesh = SubResource("BoxMesh_xaqkv")
+
+[node name="碎片_11" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.0714719, 0, 0.997443, 0, 1, 0, -0.997443, 0, 0.0714719, -4.78773, 0.035, -2.32925)
+mesh = SubResource("BoxMesh_dfpgo")
+
+[node name="碎片_12" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.475032, 0, -0.879968, 0, 1, 0, 0.879968, 0, 0.475032, -5.13191, 0.035, -1.76423)
+mesh = SubResource("BoxMesh_n21i4")
+
+[node name="碎片_13" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.884867, 0, 0.465844, 0, 1, 0, -0.465844, 0, -0.884867, 6.03086, 0.035, 3.00145)
+mesh = SubResource("BoxMesh_8apvb")
+
+[node name="碎片_14" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.938298, 0, -0.345828, 0, 1, 0, 0.345828, 0, 0.938298, 6.85126, 0.035, 1.2621)
+mesh = SubResource("BoxMesh_geiga")
+
+[node name="碎片_15" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.971518, 0, 0.236967, 0, 1, 0, -0.236967, 0, -0.971518, 7.24146, 0.035, 1.77799)
+mesh = SubResource("BoxMesh_weetn")
+
+[node name="碎片_16" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.550407, 0, 0.834896, 0, 1, 0, -0.834896, 0, 0.550407, 7.90883, 0.035, 2.59342)
+mesh = SubResource("BoxMesh_6jqqt")
+
+[node name="碎片_17" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.939259, 0, 0.34321, 0, 1, 0, -0.34321, 0, 0.939259, 8.19226, 0.035, 2.60897)
+mesh = SubResource("BoxMesh_mxilo")
+
+[node name="碎片_18" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.866139, 0, 0.499804, 0, 1, 0, -0.499804, 0, -0.866139, 6.8113, 0.035, -1.68696)
+mesh = SubResource("BoxMesh_8qxgh")
+
+[node name="碎片_19" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.879272, 0, 0.47632, 0, 1, 0, -0.47632, 0, 0.879272, -2.5791, 0.035, 2.08594)
+mesh = SubResource("BoxMesh_s4mw0")
+
+[node name="碎片_20" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.999956, 0, -0.00941796, 0, 1, 0, 0.00941796, 0, -0.999956, 0.553572, 0.035, -0.216919)
+mesh = SubResource("BoxMesh_faugd")
+
+[node name="碎片_21" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.259648, 0, -0.965703, 0, 1, 0, 0.965703, 0, 0.259648, -2.29749, 0.035, 2.51947)
+mesh = SubResource("BoxMesh_griuq")
+
+[node name="碎片_22" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.906661, 0, -0.421861, 0, 1, 0, 0.421861, 0, -0.906661, -6.46379, 0.035, -2.49556)
+mesh = SubResource("BoxMesh_okqru")
+
+[node name="碎片_23" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.971278, 0, 0.237949, 0, 1, 0, -0.237949, 0, -0.971278, 8.01253, 0.035, 2.76811)
+mesh = SubResource("BoxMesh_xih80")
+
+[node name="碎片_24" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.928581, 0, 0.37113, 0, 1, 0, -0.37113, 0, 0.928581, 7.81627, 0.035, 1.50067)
+mesh = SubResource("BoxMesh_bjvdk")
+
+[node name="碎片_25" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(-0.502562, 0, 0.864541, 0, 1, 0, -0.864541, 0, -0.502562, 4.09564, 0.035, 2.77099)
+mesh = SubResource("BoxMesh_e0ulm")
+
+[node name="碎片_26" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.982589, -0.185791, 0, 0.185791, 0.982589, 0, 0, 0, 1, 5.75772, 1.51961, -3.53)
+mesh = SubResource("BoxMesh_1mxcl")
+
+[node name="碎片_27" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.999975, -0.00711054, 0, 0.00711054, 0.999975, 0, 0, 0, 1, 10.18, 1.9789, 0.640894)
+mesh = SubResource("BoxMesh_gu3jf")
+
+[node name="碎片_28" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.996067, 0.0885983, 0, -0.0885983, 0.996067, 0, 0, 0, 1, -1.45136, 1.02729, 3.53)
+mesh = SubResource("BoxMesh_2nk3x")
+
+[node name="碎片_29" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.998024, -0.0628267, 0, 0.0628267, 0.998024, 0, 0, 0, 1, 10.18, 1.38449, -0.604217)
+mesh = SubResource("BoxMesh_u788w")
+
+[node name="碎片_30" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.848882, -0.528583, 0, 0.528583, 0.848882, 0, 0, 0, 1, 7.35962, 1.11894, -3.53)
+mesh = SubResource("BoxMesh_vitsb")
+
+[node name="碎片_31" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.902501, -0.430687, 0, 0.430687, 0.902501, 0, 0, 0, 1, -1.60108, 1.18293, 3.53)
+mesh = SubResource("BoxMesh_n1r24")
+
+[node name="碎片_32" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.877652, -0.479298, 0, 0.479298, 0.877652, 0, 0, 0, 1, -5.02364, 2.72339, -1.03)
+mesh = SubResource("BoxMesh_iw4yc")
+
+[node name="碎片_33" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.954469, 0.298311, 0, -0.298311, 0.954469, 0, 0, 0, 1, 6.3525, 0.646975, 1.03)
+mesh = SubResource("BoxMesh_28j6c")
+
+[node name="碎片_34" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.85001, 0.526767, 0, -0.526767, 0.85001, 0, 0, 0, 1, 2.46291, 1.5434, -1.03)
+mesh = SubResource("BoxMesh_skncp")
+
+[node name="碎片_35" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.868403, -0.495859, 0, 0.495859, 0.868403, 0, 0, 0, 1, 3.34875, 3.19834, 1.03)
+mesh = SubResource("BoxMesh_kpxbn")
+
+[node name="碎片_36" type="MeshInstance3D" parent="裂縫"]
+transform = Transform3D(0.968771, 0.247957, 0, -0.247957, 0.968771, 0, 0, 0, 1, -5.42441, 0.692464, -1.03)
+mesh = SubResource("BoxMesh_fp3d0")
+
+[node name="裂光_0" type="OmniLight3D" parent="裂縫"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.5, 0.4)
+light_color = Color(1, 0.68, 0.32, 1)
+light_energy = 1.4
+omni_range = 4.2
+
+[node name="裂光_1" type="OmniLight3D" parent="裂縫"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0.5, -2.2)
+light_color = Color(1, 0.68, 0.32, 1)
+light_energy = 1.4
+omni_range = 4.2
+
+[node name="裂光_2" type="OmniLight3D" parent="裂縫"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8, 0.5, 2.2)
+light_color = Color(1, 0.68, 0.32, 1)
+light_energy = 1.4
+omni_range = 4.2
+
+[node name="光" type="Node3D" parent="."]
+
+[node name="吊灯_0" type="Node3D" parent="光"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 0, 0)
+
+[node name="鎖" type="MeshInstance3D" parent="光/吊灯_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.58, 0)
+mesh = SubResource("CylinderMesh_8p1ky")
+
+[node name="灯袋" type="MeshInstance3D" parent="光/吊灯_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("CylinderMesh_rdbuv")
+
+[node name="灯蓋" type="MeshInstance3D" parent="光/吊灯_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.54, 0)
+mesh = SubResource("CylinderMesh_hd7cx")
+
+[node name="@OmniLight3D@30" type="OmniLight3D" parent="光/吊灯_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 1.35
+omni_range = 5.4
+
+[node name="吊灯_1" type="Node3D" parent="光"]
+
+[node name="鎖" type="MeshInstance3D" parent="光/吊灯_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.58, 0)
+mesh = SubResource("CylinderMesh_ilsnr")
+
+[node name="灯袋" type="MeshInstance3D" parent="光/吊灯_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("CylinderMesh_0psa6")
+
+[node name="灯蓋" type="MeshInstance3D" parent="光/吊灯_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.54, 0)
+mesh = SubResource("CylinderMesh_4oaoj")
+
+[node name="@OmniLight3D@31" type="OmniLight3D" parent="光/吊灯_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 1.35
+omni_range = 5.4
+
+[node name="吊灯_2" type="Node3D" parent="光"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 0, 0)
+
+[node name="鎖" type="MeshInstance3D" parent="光/吊灯_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.58, 0)
+mesh = SubResource("CylinderMesh_hr5dp")
+
+[node name="灯袋" type="MeshInstance3D" parent="光/吊灯_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("CylinderMesh_lhhyc")
+
+[node name="灯蓋" type="MeshInstance3D" parent="光/吊灯_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.54, 0)
+mesh = SubResource("CylinderMesh_wpuga")
+
+[node name="@OmniLight3D@32" type="OmniLight3D" parent="光/吊灯_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 1.35
+omni_range = 5.4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_go40o")

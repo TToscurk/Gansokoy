@@ -1,0 +1,891 @@
+# 產生器共用程式庫 —— 各地圖的 gen_<map>.gd 用 preload 載入。
+# 抽自香霖堂產生器（gen_kourindou.gd 尚未回頭改用，之後清理）。
+#
+# 踩過的坑都封在這裡：Godot 順時針繞向、MultiMesh 要手組 buffer、
+# PortableCompressedTexture2D 要 keep_compressed_buffer、
+# 貼圖／材質走 ext_resource 鏈。
+extends RefCounted
+
+const MAT_DIR := "res://assets/materials/"
+
+var root: Node3D
+var mats := {}
+var _seed_state := 1
+
+func setup(p_root: Node3D, p_seed: int) -> void:
+	root = p_root
+	_seed_state = p_seed
+
+# ── 決定性亂數 ──
+func rand() -> float:
+	_seed_state = int((_seed_state * 1664525 + 1013904223) & 0xFFFFFFFF)
+	return float(_seed_state) / 4294967296.0
+
+func rr(a: float, b: float) -> float:
+	return a + rand() * (b - a)
+
+# ── 節點 ──
+func add(parent: Node, node: Node, name: String) -> Node:
+	node.name = name
+	parent.add_child(node)
+	# owner 設不上去 = 這個節點不會被存進 .tscn，而且 Godot 只在 stderr 噴一行
+	# 「Invalid owner」，很容易被 headless 的一整片 leak 警告蓋掉。
+	# （人里的 320 個生活雜物就是這樣整整四版都是空節點。）
+	if not root.is_ancestor_of(node):
+		push_error("gen_lib.add(): 「%s」的 parent 還沒接到 root，owner 會設失敗、"
+			% name + "節點不會被存檔。先把 parent 加進樹，或事後補 own_all()。")
+	node.owner = root
+	return node
+
+## 角色用：從 glb 取出各部位，重建成一棵**自己的**節點樹。
+##
+## 不能直接 instantiate glb 再把子節點設成 owner —— 那樣存 .tscn 時
+## 節點會被存兩次（一次是 instance=ExtResource，一次是明確的子節點），
+## 在編輯器開場景就會噴一整排「匯入的節點名稱與場景中現有的 … 衝突」。
+## 改成把 mesh 與 transform 抄出來、掛在新建的節點上，存檔就乾淨了。
+func char_scene(glb_path: String, mat: Material = null) -> Node3D:
+	var packed: PackedScene = load(glb_path)
+	var src: Node = packed.instantiate()
+	var m: Material = mat if mat else vc_mat()
+	var out := Node3D.new()
+	var stack: Array[Node] = [src]
+	while stack.size() > 0:
+		var c: Node = stack.pop_back()
+		for gch in c.get_children():
+			stack.push_back(gch)
+		if c is MeshInstance3D:
+			var mi := MeshInstance3D.new()
+			mi.name = c.name
+			mi.mesh = (c as MeshInstance3D).mesh
+			mi.transform = (c as MeshInstance3D).transform
+			mi.material_override = m
+			out.add_child(mi)
+	src.free()
+	return out
+
+## 把整棵子樹的 owner 設成 root（add() 只設了它自己那一層）
+func own_all(n: Node) -> void:
+	var stack: Array[Node] = [n]
+	while stack.size() > 0:
+		var c: Node = stack.pop_back()
+		for g in c.get_children():
+			stack.push_back(g)
+		if c != root:
+			c.owner = root
+
+## 兩點之間拉一根圓桿（桁架、斜撐、繩索都用這個）。
+## 手動算「位置 + 兩個歐拉角」一定會錯 —— 火見櫓的柱子就是這樣每層各自
+## 傾斜、層與層之間對不起來，整座塔像散掉的鷹架。給端點讓程式去算。
+func strut(parent: Node, name: String, a: Vector3, b: Vector3, r: float,
+		mat: Material, seg := 6, r_top := -1.0) -> MeshInstance3D:
+	var d := b - a
+	var len_d := d.length()
+	if len_d < 0.001:
+		return null
+	var mi := MeshInstance3D.new()
+	var m := CylinderMesh.new()
+	m.top_radius = r if r_top < 0.0 else r_top
+	m.bottom_radius = r
+	m.height = len_d
+	m.radial_segments = seg
+	m.material = mat
+	mi.mesh = m
+	mi.position = a + d * 0.5
+	# CylinderMesh 的軸是 +Y；把 +Y 轉到 d 的方向
+	var up := Vector3.UP
+	var axis := up.cross(d.normalized())
+	if axis.length() > 0.0001:
+		mi.rotate(axis.normalized(), up.angle_to(d.normalized()))
+	elif d.y < 0.0:
+		mi.rotate(Vector3.RIGHT, PI)
+	add(parent, mi, name)
+	return mi
+
+func box(parent: Node, name: String, size: Vector3, mat: Material, pos: Vector3) -> MeshInstance3D:
+	var mi := MeshInstance3D.new()
+	var m := BoxMesh.new()
+	m.size = size
+	m.material = mat
+	mi.mesh = m
+	mi.position = pos
+	add(parent, mi, name)
+	return mi
+
+func cyl(parent: Node, name: String, r_top: float, r_bot: float, h: float, mat: Material, pos: Vector3, seg := 10) -> MeshInstance3D:
+	var mi := MeshInstance3D.new()
+	var m := CylinderMesh.new()
+	m.top_radius = r_top
+	m.bottom_radius = r_bot
+	m.height = h
+	m.radial_segments = seg
+	m.material = mat
+	mi.mesh = m
+	mi.position = pos
+	add(parent, mi, name)
+	return mi
+
+# ── 材質 ──
+func pbr(name: String, set_name: String, uv := 0.35, tint := Color(1, 1, 1), tri := true,
+		norm := 0.65) -> StandardMaterial3D:
+	if mats.has(name):
+		return mats[name]
+	var m := StandardMaterial3D.new()
+	m.albedo_color = tint
+	var diff := "res://assets/textures/%s_diff.jpg" % set_name
+	# 貼圖組不存在時 load() 只會回傳 null，材質就退化成一片死白 ——
+	# 「屋頂／岩石整片發白」查了兩輪才發現是這個。所以要吵。
+	if not ResourceLoader.exists(diff):
+		push_warning("材質「%s」找不到貼圖組 %s，會變成純色" % [name, set_name])
+		print("  ⚠ 材質 %s：貼圖組 %s 不存在" % [name, set_name])
+	else:
+		m.albedo_texture = load(diff)
+	var nor := "res://assets/textures/%s_nor_gl.jpg" % set_name
+	if ResourceLoader.exists(nor):
+		m.normal_enabled = true
+		m.normal_texture = load(nor)
+		# 美術規格 §1.3（類超現實）：法線減弱 —— 寫實的凹凸細節
+		# 是「無感」的來源之一，參考圖的表面都很平
+		m.normal_scale = norm
+	var rgh := "res://assets/textures/%s_rough.jpg" % set_name
+	if ResourceLoader.exists(rgh):
+		m.roughness_texture = load(rgh)
+	m.uv1_triplanar = tri
+	m.uv1_scale = Vector3(uv, uv, uv)
+	# PHASE 1.7：各向異性過濾。屋頂、地面這種**掠射角**的面，各向同性 mipmap
+	# 會在遠景抖成一團雜訊 —— 這是瓦片摩爾紋的一半成因（另一半是幾何，交給 LOD）
+	m.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+	_save_mat(m, name)
+	return m
+
+func flat_mat(name: String, color: Color, rough := 0.9, emission := Color(0, 0, 0)) -> StandardMaterial3D:
+	if mats.has(name):
+		return mats[name]
+	var m := StandardMaterial3D.new()
+	m.albedo_color = color
+	m.roughness = rough
+	if emission.get_luminance() > 0.01:
+		m.emission_enabled = true
+		m.emission = emission
+		m.emission_energy_multiplier = 1.6
+	_save_mat(m, name)
+	return m
+
+func _save_mat(m: Material, name: String) -> void:
+	var path := MAT_DIR + name + ".tres"
+	ResourceSaver.save(m, path)
+	m.take_over_path(path)
+	mats[name] = m
+
+# ── MultiMesh（buffer 手組，否則存檔資料會掉） ──
+func make_multimesh(mesh: Mesh, list: Array, cols: Array, path: String) -> MultiMesh:
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_colors = cols.size() > 0
+	mm.mesh = mesh
+	mm.instance_count = list.size()
+	var stride := 16 if cols.size() > 0 else 12
+	var buf := PackedFloat32Array()
+	buf.resize(list.size() * stride)
+	for i in list.size():
+		var t: Transform3D = list[i]
+		var o := i * stride
+		buf[o + 0] = t.basis.x.x; buf[o + 1] = t.basis.y.x; buf[o + 2] = t.basis.z.x; buf[o + 3] = t.origin.x
+		buf[o + 4] = t.basis.x.y; buf[o + 5] = t.basis.y.y; buf[o + 6] = t.basis.z.y; buf[o + 7] = t.origin.y
+		buf[o + 8] = t.basis.x.z; buf[o + 9] = t.basis.y.z; buf[o + 10] = t.basis.z.z; buf[o + 11] = t.origin.z
+		if cols.size() > 0:
+			var c: Color = cols[i]
+			buf[o + 12] = c.r; buf[o + 13] = c.g; buf[o + 14] = c.b; buf[o + 15] = c.a
+	mm.buffer = buf
+	ResourceSaver.save(mm, path)
+	mm.take_over_path(path)
+	return mm
+
+# ── 樹（Blender glb：surface 0=樹幹 bark、1+=樹冠 foliage） ──
+func canopy_mat() -> StandardMaterial3D:
+	if mats.has("canopy"):
+		return mats["canopy"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	# ⚠ 別再拿 >1.5 的 albedo_color 去「提亮」頂點色 —— 那會把顏色洗向白，
+	# 綠色洗成金黃色（使用者看到的「黃色低模樹團」）。要亮就調光照與曝光。
+	m.albedo_color = Color(1.06, 1.10, 0.98)
+	m.albedo_texture = load("res://assets/textures/terrain_forest_diff.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.8, 0.8, 0.8)
+	m.roughness = 1.0
+	_save_mat(m, "canopy")
+	return m
+
+func tree_mesh(glb_path: String) -> Mesh:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	var bark_m := pbr("bark", "bark_cedar", 0.7)
+	var canopy_m := canopy_mat()
+	if mesh.get_surface_count() >= 2:
+		mesh.surface_set_material(0, bark_m)
+		for s in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(s, canopy_m)
+	else:
+		mesh.surface_set_material(0, canopy_m)
+	return mesh
+
+## 有機造型資產（assets/blender/make_props.py 產）：顏色全在頂點色裡
+## 植栽用的頂點色材質：**雙面**。
+## 葉子本來就該雙面（背光那側也要看得見），而且雙面等於一次解決
+## 所有繞序問題 —— 鏡射出來的面法線朝內，單面渲染會整片變黑。
+func foliage_vc_mat() -> StandardMaterial3D:
+	if mats.has("foliage_vc"):
+		return mats["foliage_vc"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	m.roughness = 0.92
+	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	_save_mat(m, "foliage_vc")
+	return m
+
+func vc_mat() -> StandardMaterial3D:
+	if mats.has("vertex_color"):
+		return mats["vertex_color"]
+	var m := StandardMaterial3D.new()
+	m.vertex_color_use_as_albedo = true
+	m.roughness = 0.85
+	_save_mat(m, "vertex_color")
+	return m
+
+## 岩石材質：石壁貼圖 × Blender 烤進去的苔色頂點色。
+## 注意 —— prop_mesh 會直接改 glb 那份共用 Mesh 的 surface material，
+## 同一顆 rock_*.glb 只會留下最後設定的那個材質。所有用到岩石的地方
+## 都要拿這一份，不然先設的會被後設的洗掉（v8 就是這樣變成白色紙片：
+## 前面傳了 cliff_rock —— 那組貼圖根本不存在 —— 材質退化成一片死白）。
+func rock_mat() -> StandardMaterial3D:
+	if mats.has("rock"):
+		return mats["rock"]
+	var m := StandardMaterial3D.new()
+	m.albedo_texture = load("res://assets/textures/stone_wall_diff.jpg")
+	m.normal_enabled = true
+	m.normal_texture = load("res://assets/textures/stone_wall_nor_gl.jpg")
+	m.roughness_texture = load("res://assets/textures/stone_wall_rough.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.5, 0.5, 0.5)
+	m.vertex_color_use_as_albedo = true       # 岩頂的苔色是烤在頂點色裡的
+	m.albedo_color = Color(1.05, 1.04, 0.98)  # 同上：乘太多會變成保麗龍白
+	_save_mat(m, "rock")
+	return m
+
+## 乾石：跟 rock_mat 同一組貼圖，但偏暖灰、不吃苔色。
+## 一堆石頭全用同一個材質的話，整組石組看起來像從同一塊挖出來的。
+func rock_mat_dry() -> StandardMaterial3D:
+	if mats.has("rock_dry"):
+		return mats["rock_dry"]
+	var m := StandardMaterial3D.new()
+	m.albedo_texture = load("res://assets/textures/stone_wall_diff.jpg")
+	m.normal_enabled = true
+	m.normal_texture = load("res://assets/textures/stone_wall_nor_gl.jpg")
+	m.roughness_texture = load("res://assets/textures/stone_wall_rough.jpg")
+	m.uv1_triplanar = true
+	m.uv1_scale = Vector3(0.62, 0.62, 0.62)
+	m.vertex_color_use_as_albedo = true
+	m.albedo_color = Color(1.14, 1.06, 0.94)
+	_save_mat(m, "rock_dry")
+	return m
+
+## ── 語意材質（PHASE 1：Blender → GLB → Godot 的材質身分要活著走完）──
+##
+## ⚠ `prop_mesh()` 會把 mesh 的**每一個** surface 覆蓋成同一份材質。那對
+## 頂點色資產（岩石／樹／鴨）是對的，對 production 町家是災難：Blender 端
+## 好不容易分出 WOOD / PLASTER / KAWARA / SHOJI 六個 primitive，進 Godot
+## 第一件事就被抹成一個 vertex-color 材質，語意當場死亡。
+##
+## 這裡的做法是**逐 surface 照名字換成專案的 PBR 材質**：glTF 匯入器會把
+## Blender 材質名帶進來（可能是 "WOOD" 或 "WOOD_001" 之類的變體，所以用
+## 前綴比對）。對不上的名字保留 glb 自己的材質、不亂猜。
+## ⚠ PHASE 1.7（material readability pass）重調過一次。原本這張表沿用材質庫
+## 的預設 uv —— 那組數字是配 blockout 的**大面積**調的（一面 25m 的牆），
+## 貼到 0.15m 的柱與 1.6m 的嵌板上完全不對：一張貼圖鋪滿 2.5m，嵌板上只看
+## 得到貼圖的一個角落，於是漆喰讀成**斜向的瓦楞板**、木紋讀成粗條紋。
+##
+## `uv1_scale` 是「世界座標 × 它 = UV」，所以**數字越大貼圖越細**
+## （tile 邊長 = 1/uv）。下面每一個都標了 tile 邊長，改的時候看那個數字，
+## 不要看 uv 本身 —— 直覺會反過來。
+const SEMANTIC := {
+	# tile 0.74m：板戶／腰板的板寬量級。1.6（0.62m）在腰板上讀得有點碎
+	"WOOD_LT": ["planks", 1.35, Color(0.72, 0.66, 0.58), 0.50],
+	# tile 0.31m：柱只有 0.15 寬，一根 3m 的柱上要看到十來段木紋才像木頭；
+	# 舊值 0.45（tile 2.2m）等於整根柱只吃到貼圖的 7%，讀成一條均勻色帶。
+	# 0.31m ≈ 兩倍柱寬 —— 木紋走柱長方向，一根柱上約十段，這個比例是對的
+	"WOOD": ["dark_wood", 3.2, Color(0.44, 0.47, 0.45), 0.50],
+	# tile 0.65m + 法線壓到 0.14：漆喰是**低頻**表面。
+	# 這一項的三段調校值得記著：
+	#   0.40（tile 2.5m）→ 貼圖的方向性被放大成整面牆的斜向瓦楞板
+	#   2.40（tile 0.42m）→ 方向性消失了，但變成砂紙／混凝土骨材的高頻雜點
+	#   1.55（tile 0.65m）→ 一面 3.6m 的牆上約 5.5 個週期，看得出是抹面不是圖案
+	"PLASTER": ["plaster", 1.55, Color(1.20, 1.16, 1.07), 0.14],
+	# tile 0.91m：基礎的石塊尺度
+	"STONE": ["stone_wall", 1.1, Color(0.86, 0.85, 0.82), 0.55],
+	# tile 1.11m：瓦的**幾何**已經有桟與列，貼圖只負責色與髒，不該再加頻率。
+	# 顏色從 (0.80,0.86,1.00) 壓到燻し瓦的暗冷灰：俯視時亮藍白的瓦跟深色土路
+	# 對比太強，桟的高頻在遠景就炸成雜訊。降對比 = 降摩爾紋的振幅
+	"KAWARA": ["roof_kawara", 0.9, Color(0.60, 0.63, 0.68), 0.18],
+	# tile 0.83m + 法線幾乎關掉：障子紙是平的，凹凸只會讓它讀成布
+	"SHOJI": ["shoji", 1.2, Color(0.96, 0.94, 0.90), 0.12],
+}
+
+func semantic_mat(sem: String) -> Material:
+	if not SEMANTIC.has(sem):
+		return null
+	var spec: Array = SEMANTIC[sem]
+	return pbr("sem_" + sem, String(spec[0]), float(spec[1]), spec[2], true, float(spec[3]))
+
+
+## 保留材質身分的 glb 載入：逐 surface 依材質名掛語意材質。
+## 回傳 [mesh, 對應表]（對應表給檢查工具用 —— 「有沒有真的掛上」要驗得到）。
+func semantic_mesh(glb_path: String) -> Array:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = (n as MeshInstance3D).mesh
+			break
+	node.free()
+	var map := {}
+	for s in mesh.get_surface_count():
+		var m: Material = mesh.surface_get_material(s)
+		var nm: String = m.resource_name if m != null else ""
+		var hit := ""
+		# 長名優先（WOOD_LT 不能被 WOOD 吃掉）
+		for key in ["WOOD_LT", "WOOD", "PLASTER", "STONE", "KAWARA", "SHOJI"]:
+			if nm.begins_with(key):
+				hit = key
+				break
+		if hit == "":
+			map[nm] = "(保留 glb 原材質)"
+			continue
+		mesh.surface_set_material(s, semantic_mat(hit))
+		map[nm] = hit
+	return [mesh, map]
+
+
+## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）
+func prop_mesh(glb_path: String, mat: Material = null) -> Mesh:
+	var packed: PackedScene = load(glb_path)
+	var node := packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.push_back(c)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	var m: Material = mat if mat else vc_mat()
+	for s in mesh.get_surface_count():
+		mesh.surface_set_material(s, m)
+	return mesh
+
+const ROCK_GLBS := [
+	"res://assets/models/rock_a.glb",
+	"res://assets/models/rock_b.glb",
+	"res://assets/models/rock_c.glb",
+	"res://assets/models/rock_d.glb",
+]
+
+const TREE_GLBS := [
+	"res://assets/models/tree_round_a.glb",
+	"res://assets/models/tree_round_b.glb",
+	"res://assets/models/tree_round_c.glb",
+	"res://assets/models/tree_pine_a.glb",
+	"res://assets/models/tree_pine_b.glb",
+]
+
+# ── 草（風吹 shader + 三種簇型） ──
+func grass_wind_mat(strength: float, gust := -1.0) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = load("res://assets/shaders/grass_wind.gdshader")
+	m.set_shader_parameter("sway_strength", strength)
+	# gust 留 -1 就不動著色器的預設（0.14）—— 既有呼叫端的輸出因此完全不變。
+	# 需要「幾乎不動」的葉子（浮在水面的睡蓮）才把陣風也壓下去。
+	if gust >= 0.0:
+		m.set_shader_parameter("gust_strength", gust)
+	return m
+
+## 圓潤團塊：球面頂點用低頻雜訊推出去，法線重算成平滑。
+##
+## 兩個地方都需要它，而兩個地方本來都做錯了：
+##   ・庭池的石頭用 ROCK_GLBS —— 那是**稜角分明的岩塊**，
+##     使用者要的是「山水畫的鵝卵石」，河石是被水磨圓的。
+##   ・生垣用 box —— 就是那個「方塊的草」。
+## flat 是壓扁量（河石扁、葉團圓），lumps 是凹凸幅度。
+func blob_mesh(seed_i: int, flat := 0.62, lumps := 0.22, rings := 9, radial := 14) -> ArrayMesh:
+	var rg := RandomNumberGenerator.new()
+	rg.seed = seed_i
+	# 四個隨機方向的低頻擾動 —— 用球諧的窮人版，夠自然又不會破面
+	var dirs: Array[Vector3] = []
+	var amps: Array[float] = []
+	for i in 4:
+		dirs.append(Vector3(rg.randf_range(-1, 1), rg.randf_range(-1, 1),
+			rg.randf_range(-1, 1)).normalized())
+		amps.append(rg.randf_range(0.45, 1.0))
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var idx := PackedInt32Array()
+	var disp := func(n: Vector3) -> float:
+		var d := 1.0
+		for i in 4:
+			d += (n.dot(dirs[i])) * amps[i] * lumps * 0.5
+		return d
+	for ri in rings + 1:
+		var phi: float = PI * float(ri) / float(rings)
+		for si in radial + 1:
+			var th: float = TAU * float(si) / float(radial)
+			var n := Vector3(sin(phi) * cos(th), cos(phi), sin(phi) * sin(th))
+			var p: Vector3 = n * disp.call(n)
+			p.y *= flat
+			verts.append(p)
+			norms.append(p.normalized())
+			uvs.append(Vector2(float(si) / float(radial), float(ri) / float(rings)))
+	for ri in rings:
+		for si in radial:
+			var a0: int = ri * (radial + 1) + si
+			var b0: int = a0 + radial + 1
+			idx.append_array([a0, b0, a0 + 1, a0 + 1, b0, b0 + 1])
+	var arr := []
+	arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = verts
+	arr[Mesh.ARRAY_NORMAL] = norms
+	arr[Mesh.ARRAY_TEX_UV] = uvs
+	arr[Mesh.ARRAY_INDEX] = idx
+	var m := ArrayMesh.new()
+	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	return m
+
+func tuft_mesh(blades: int, base_h: float, spread: float, root_c: Color, tip_c: Color, flower := false) -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for b in blades:
+		var ang := float(b) / float(blades) * TAU + 0.4
+		var off := Vector2(cos(ang), sin(ang)) * spread * 0.5
+		var lean := Vector2(cos(ang), sin(ang)) * spread
+		var hh := base_h + base_h * 0.45 * sin(float(b) * 2.1)
+		var tip := tip_c.lerp(root_c, 0.15 * absf(sin(float(b) * 3.7)))
+		st.set_color(root_c)
+		st.add_vertex(Vector3(off.x - 0.045, 0, off.y))
+		st.set_color(root_c)
+		st.add_vertex(Vector3(off.x + 0.045, 0, off.y))
+		st.set_color(tip)
+		st.add_vertex(Vector3(off.x + lean.x, hh, off.y + lean.y))
+	if flower:
+		for f in 3:
+			var ang2 := float(f) / 3.0 * TAU + 1.1
+			var fx := cos(ang2) * 0.05
+			var fz := sin(ang2) * 0.05
+			var fy := base_h * 1.15
+			st.set_color(Color(0.95, 0.9, 0.75))
+			st.add_vertex(Vector3(fx - 0.05, fy, fz))
+			st.set_color(Color(0.98, 0.95, 0.85))
+			st.add_vertex(Vector3(fx + 0.05, fy, fz))
+			st.set_color(Color(0.9, 0.78, 0.4))
+			st.add_vertex(Vector3(fx, fy + 0.09, fz))
+	st.generate_normals()
+	var mesh := st.commit()
+	# ⚠ 這裡**一定要掛一個預設材質**。tuft_mesh 把顏色烤在頂點色上，而
+	# ArrayMesh 沒有材質時 Godot 給的是預設白 —— 頂點色根本沒人讀。
+	# 症狀：睡蓮／菖蒲／荷在引擎裡是一叢一叢的**白色碎片**（村圖的水邊與
+	# 稗田邸庭池都中招，因為那幾處忘了自己補材質）。
+	# 呼叫端照樣可以 surface_set_material 覆蓋掉（草層就是這麼做的）；
+	# 這個預設只是保證「忘了設」的結果是對的顏色，不是白色。
+	mesh.surface_set_material(0, grass_wind_mat(0.045, 0.03))
+	return mesh
+
+# ── 地形網格（順時針繞向）＋遮罩貼圖材質 ──
+## height_fn(x,z)->float；mask_fn(x,z)->Color(R=路徑,G=林床,B=macro,A=踏み固めた土)
+## dirt_set 非空才會開第四層（A 通道）——只有人里需要，森林用不到。
+func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_fn: Callable,
+		path_set := "terrain_path", grass_tint := Color(1, 1, 1),
+		dirt_set := "", dirt_tint := Color(1, 1, 1)) -> MeshInstance3D:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var step := 2.0 * half / float(res - 1)
+	for j in res:
+		for i in res:
+			var x := -half + i * step
+			var z := -half + j * step
+			st.set_uv(Vector2(float(i) / float(res - 1), float(j) / float(res - 1)))
+			st.add_vertex(Vector3(x, height_fn.call(x, z), z))
+	for j in res - 1:
+		for i in res - 1:
+			var a := j * res + i
+			st.add_index(a); st.add_index(a + 1); st.add_index(a + res)
+			st.add_index(a + 1); st.add_index(a + res + 1); st.add_index(a + res)
+	st.generate_normals()
+	var mesh := st.commit()
+
+	var tex_res := 512
+	# 有第四層才需要 A 通道。沒有的話存 RGB8，取樣到的 A 恆為 1，
+	# 但 shader 的 dirt_amount 是 0，乘起來還是 0。
+	var img := Image.create(tex_res, tex_res, false,
+		Image.FORMAT_RGBA8 if dirt_set != "" else Image.FORMAT_RGB8)
+	for j in tex_res:
+		for i in tex_res:
+			var x := -half + (float(i) + 0.5) / float(tex_res) * 2.0 * half
+			var z := -half + (float(j) + 0.5) / float(tex_res) * 2.0 * half
+			img.set_pixel(i, j, mask_fn.call(x, z))
+	var tex := PortableCompressedTexture2D.new()
+	tex.keep_compressed_buffer = true
+	tex.create_from_image(img, PortableCompressedTexture2D.COMPRESSION_MODE_LOSSLESS)
+	ResourceSaver.save(tex, out_dir + "gen/ground_tex.res")
+	tex.take_over_path(out_dir + "gen/ground_tex.res")
+
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/terrain_pbr.gdshader")
+	mat.set_shader_parameter("grass_diff", load("res://assets/textures/terrain_grass_diff.jpg"))
+	mat.set_shader_parameter("grass_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.set_shader_parameter("forest_diff", load("res://assets/textures/terrain_forest_diff.jpg"))
+	mat.set_shader_parameter("forest_nor", load("res://assets/textures/terrain_forest_nor_gl.jpg"))
+	# 街道層貼圖由呼叫端指定（森林走土徑、村子鋪石板）
+	var pd := "res://assets/textures/%s_diff.jpg" % path_set
+	var pn := "res://assets/textures/%s_nor_gl.jpg" % path_set
+	if not ResourceLoader.exists(pd):
+		pd = "res://assets/textures/terrain_path_diff.jpg"
+		pn = "res://assets/textures/terrain_path_nor_gl.jpg"
+	mat.set_shader_parameter("path_diff", load(pd))
+	mat.set_shader_parameter("path_nor", load(pn))
+	mat.set_shader_parameter("mask_tex", tex)
+	if dirt_set != "":
+		mat.set_shader_parameter("dirt_diff",
+			load("res://assets/textures/%s_diff.jpg" % dirt_set))
+		mat.set_shader_parameter("dirt_nor",
+			load("res://assets/textures/%s_nor_gl.jpg" % dirt_set))
+		mat.set_shader_parameter("dirt_amount", 1.0)
+		mat.set_shader_parameter("dirt_tint", dirt_tint)
+	# 草地色偏：Poly Haven 那張草地本身偏乾黃，村子要的是初夏的青草
+	# 一定要傳 Color：uniform 有 source_color 提示，餵 Vector3 會被吃掉存成 null
+	mat.set_shader_parameter("grass_tint", grass_tint)
+
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	add(root, mi, "Terrain")
+	return mi
+
+# ── 遠景：丘陵 + 地標山 + 遠方林帶（斷邊藏進風景） ──
+## landmarks: [{ "x":…, "z":…, "h":…, "r":… }] 在遠景高度上疊高斯山包
+func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
+		landmarks: Array = [], tree_glb := "res://assets/models/tree_round_b.glb",
+		far_tree_count := 300, groves: Array = []) -> void:
+	var nv := FastNoiseLite.new()
+	nv.frequency = 0.008
+	nv.fractal_octaves = 3
+	nv.seed = 99
+	var vh := func(x: float, z: float) -> float:
+		var d := maxf(absf(x), absf(z)) - half
+		if d <= 0.0:
+			return float(height_fn.call(x, z)) - 0.15
+		var t := clampf(d / (ext - half - 20.0), 0.0, 1.0)
+		var y := float(height_fn.call(clampf(x, -half, half), clampf(z, -half, half))) \
+			+ nv.get_noise_2d(x, z) * lerpf(3.0, 34.0, t) * (0.25 + 0.75 * t) + t * t * 46.0
+		for lm in landmarks:
+			var dx := x - float(lm.x)
+			var dz := z - float(lm.z)
+			y += float(lm.h) * exp(-(dx * dx + dz * dz) / (float(lm.r) * float(lm.r)))
+		return y
+
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var res := 101
+	var step := 2.0 * ext / float(res - 1)
+	for j in res:
+		for i in res:
+			var x := -ext + i * step
+			var z := -ext + j * step
+			st.set_uv(Vector2(x, z))
+			st.add_vertex(Vector3(x, vh.call(x, z), z))
+	var inner_lo := int((-half + ext) / step) + 1
+	var inner_hi := int((half + ext) / step) - 1
+	for j in res - 1:
+		for i in res - 1:
+			if i >= inner_lo and i + 1 <= inner_hi and j >= inner_lo and j + 1 <= inner_hi:
+				continue
+			var a := j * res + i
+			st.add_index(a); st.add_index(a + 1); st.add_index(a + res)
+			st.add_index(a + 1); st.add_index(a + res + 1); st.add_index(a + res)
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := StandardMaterial3D.new()
+	mat.albedo_texture = load("res://assets/textures/terrain_grass_diff.jpg")
+	mat.albedo_color = Color(0.50, 0.72, 0.46)   # 遠山也要是綠的，不是乾草色
+	mat.uv1_triplanar = true
+	mat.uv1_scale = Vector3(0.1, 0.1, 0.1)
+	mat.roughness = 1.0
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	add(root, mi, "Vista")
+
+	var far_trees: Array[Transform3D] = []
+	var tries := 0
+	while far_trees.size() < far_tree_count and tries < far_tree_count * 30:
+		tries += 1
+		var x := rr(-(half + 200.0), half + 200.0)
+		var z := rr(-(half + 200.0), half + 200.0)
+		var d := maxf(absf(x), absf(z)) - half
+		if d < 4.0 or d > 190.0:
+			continue
+		if rand() > clampf(1.0 - d / 220.0, 0.25, 0.95):
+			continue
+		var s := rr(1.4, 2.4)
+		var basis := Basis(Vector3.UP, rand() * TAU).scaled(Vector3(s, s * rr(0.9, 1.15), s))
+		far_trees.append(Transform3D(basis, Vector3(x, vh.call(x, z) - 0.4, z)))
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = make_multimesh(tree_mesh(tree_glb), far_trees, [], out_dir + "gen/vista_trees.res")
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add(root, mmi, "VistaTrees")
+
+	# 指定區域的遠景群落（美術規格 §4：西南竹林這種「方向性」的地理）。
+	# grove = { glb, count, cx, cz, r, smin, smax }，撒在 vista 高度上。
+	var gi := 0
+	for gv in groves:
+		var list: Array[Transform3D] = []
+		var t2 := 0
+		while list.size() < int(gv.count) and t2 < int(gv.count) * 25:
+			t2 += 1
+			var a3 := rand() * TAU
+			var d3 := sqrt(rand()) * float(gv.r)
+			var x := float(gv.cx) + cos(a3) * d3
+			var z := float(gv.cz) + sin(a3) * d3
+			# 只落在遊玩區之外（村內的樹另有系統管）
+			if maxf(absf(x), absf(z)) < half + 4.0:
+				continue
+			var s2 := rr(float(gv.get("smin", 1.2)), float(gv.get("smax", 2.0)))
+			var basis2 := Basis(Vector3.UP, rand() * TAU).scaled(Vector3(s2, s2 * rr(0.92, 1.1), s2))
+			list.append(Transform3D(basis2, Vector3(x, vh.call(x, z) - 0.4, z)))
+		var gmi := MultiMeshInstance3D.new()
+		gmi.multimesh = make_multimesh(tree_mesh(String(gv.glb)), list, [],
+			out_dir + "gen/vista_grove_%d.res" % gi)
+		gmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add(root, gmi, "VistaGrove_%d" % gi)
+		gi += 1
+
+# ── 切妻屋頂（正確的幾何：脊高 = 半深 × tanθ） ──
+## 之前寫死抬升量 0.85，導致兩片斜面互相穿插、屋脊蓋在斜面下、
+## 山牆三角形開口 —— 牆會從屋簷「插出來」就是這個。
+## base_y = 牆頂高度（本地座標）；w/d = 屋頂平面尺寸（含出簷）
+func gable_roof(parent: Node, base_y: float, w: float, d: float, pitch: float,
+		thick: float, mat: Material, gable_mat: Material = null, off := Vector3.ZERO) -> void:
+	var hd := d * 0.5
+	var rise := hd * tan(pitch)
+	var slab := hd / cos(pitch)
+	for sd in [-1, 1]:
+		var mi := MeshInstance3D.new()
+		var bm := BoxMesh.new()
+		bm.size = Vector3(w, thick, slab)
+		bm.material = mat
+		mi.mesh = bm
+		mi.position = off + Vector3(0, base_y + rise * 0.5, float(sd) * hd * 0.5)
+		mi.rotation.x = float(sd) * pitch
+		add(parent, mi, "屋根坡_%d" % (sd + 1))
+	var cap := MeshInstance3D.new()
+	var cm := BoxMesh.new()
+	cm.size = Vector3(w + thick * 1.2, thick * 1.3, thick * 3.2)
+	cm.material = mat
+	cap.mesh = cm
+	cap.position = off + Vector3(0, base_y + rise, 0)
+	add(parent, cap, "棟")
+	# 山牆（妻壁）：把兩端的三角形封起來，否則從側面看得到屋頂內部
+	var gm: Material = gable_mat if gable_mat else mat
+	for sd2 in [-1, 1]:
+		var tri := MeshInstance3D.new()
+		var pm := PrismMesh.new()
+		pm.size = Vector3(d, rise, thick * 1.1)
+		pm.material = gm
+		tri.mesh = pm
+		tri.position = off + Vector3(float(sd2) * (w * 0.5 - thick * 0.6), base_y + rise * 0.5, 0)
+		tri.rotation.y = PI * 0.5
+		add(parent, tri, "妻壁_%d" % (sd2 + 1))
+
+# ── 河川（全世界共用：村、湖、澤都吃這組） ──
+## 折線最近距離（河道中心線）
+func poly_dist(pts: Array, x: float, z: float) -> float:
+	var p := Vector2(x, z)
+	var best := INF
+	for k in pts.size() - 1:
+		best = minf(best, _seg_dist(p, Vector2(pts[k][0], pts[k][1]), Vector2(pts[k + 1][0], pts[k + 1][1])))
+	return best
+
+func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
+	var ab := b - a
+	var t := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 0.0001), 0.0, 1.0)
+	return p.distance_to(a + ab * t)
+
+## 地形下切量（負值）：河床是 U 形斷面，岸邊平滑收斂 —— 加進 height_at
+func river_carve(pts: Array, half_w: float, depth: float, x: float, z: float) -> float:
+	var d := poly_dist(pts, x, z)
+	if d > half_w * 2.2:
+		return 0.0
+	# 中央最深，往外 cos 收斂到 0（外緣 2.2 倍寬處完全沒影響）
+	var t := clampf(d / (half_w * 2.2), 0.0, 1.0)
+	return -depth * (0.5 + 0.5 * cos(t * PI))
+
+## 水面：沿河道折線鋪一條帶狀 mesh（頂點色 R = 靠岸程度，shader 用來做泡沫）
+## bank_y_fn(x,z) 給岸邊地面高度；水面 = 岸高 - sink
+func river_water(out_dir: String, pts: Array, half_w: float, sink: float, bank_y_fn: Callable, name := "River") -> MeshInstance3D:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rows := []
+	var steps := 8       # 每段細分
+	for k in pts.size() - 1:
+		var a := Vector2(pts[k][0], pts[k][1])
+		var b := Vector2(pts[k + 1][0], pts[k + 1][1])
+		var n := (b - a).normalized().orthogonal()
+		var last := k == pts.size() - 2
+		for s in range(steps + (1 if last else 0)):
+			var t := float(s) / float(steps)
+			var c := a.lerp(b, t)
+			var y: float = float(bank_y_fn.call(c.x, c.y)) - sink
+			rows.append([c - n * half_w, c, c + n * half_w, y])
+	for r in rows.size() - 1:
+		var r0 = rows[r]
+		var r1 = rows[r + 1]
+		# 左半 + 右半（中央一排頂點讓 bank 漸層有中間值）
+		for half in 2:
+			var i0: int = half
+			var i1: int = half + 1
+			var c0 := 1.0 if half == 0 else 0.0
+			var c1 := 0.0 if half == 0 else 1.0
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r0[i0].x, r0[3], r0[i0].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r0[i1].x, r0[3], r0[i1].y))
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r1[i0].x, r1[3], r1[i0].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r0[i1].x, r0[3], r0[i1].y))
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(Vector3(r1[i1].x, r1[3], r1[i1].y))
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(Vector3(r1[i0].x, r1[3], r1[i0].y))
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/water.gdshader")
+	mat.set_shader_parameter("wave_nor", load("res://assets/textures/terrain_sand_nor_gl.jpg")
+		if ResourceLoader.exists("res://assets/textures/terrain_sand_nor_gl.jpg")
+		else load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.render_priority = 1
+	ResourceSaver.save(mat, MAT_DIR + "water.tres")
+	mat.take_over_path(MAT_DIR + "water.tres")
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add(root, mi, name)
+	return mi
+
+## 池塘：地形凹陷（負值）—— 加進 height_at，地才是真的挖下去
+func pond_carve(cx: float, cz: float, r: float, depth: float, x: float, z: float, wobble := 0.0) -> float:
+	var d := Vector2(x - cx, z - cz).length()
+	# 不規則岸線：半徑隨方位角起伏
+	var rr2 := r
+	if wobble > 0.0:
+		var a := atan2(z - cz, x - cx)
+		rr2 = r * (1.0 + wobble * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
+	if d > rr2 * 1.35:
+		return 0.0
+	var t := clampf(d / (rr2 * 1.35), 0.0, 1.0)
+	return -depth * (0.5 + 0.5 * cos(t * PI))
+
+## 水線半徑：水面是一個平面，岸線就是「地形剛好等於水面高度」的那一圈。
+## pond_carve 的剖面是 -depth*(0.5+0.5*cos(t*PI))，t = d/(r*1.35)。
+## 令它等於 -sink 解出 t，就是水線落在碗的哪個位置。
+## 不解這條式子的話（v7 直接拿 r 當水面半徑），水面外圈會鋪到還沒挖夠深的
+## 地方 —— 體檢量到庭池有 14% 的水面埋在土裡。
+func pond_shore_r(r: float, sink: float, carve_depth: float) -> float:
+	if carve_depth <= 0.0:
+		return r
+	var c := clampf(2.0 * sink / carve_depth - 1.0, -1.0, 1.0)
+	var t := acos(c) / PI
+	# 再往內縮 4%：地形基準高度在池面上本來就有起伏，留一點餘裕
+	return r * 1.35 * t * 0.96
+
+## 池水面：扇形網格，頂點色 R = 靠岸程度（shader 用來做淺灘泡沫）
+## carve_depth 傳 pond_carve 用的深度，水面半徑就會自動落在真正的水線上。
+func pond_water(out_dir: String, cx: float, cz: float, r: float, sink: float,
+		bank_y_fn: Callable, name := "Pond", wobble := 0.0, rings := 4, seg := 28,
+		carve_depth := 0.0) -> MeshInstance3D:
+	var y: float = float(bank_y_fn.call(cx, cz)) - sink
+	r = pond_shore_r(r, sink, carve_depth)
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var pt := func(ri: int, si: int) -> Vector3:
+		var a := float(si) / float(seg) * TAU
+		var rr2 := r
+		if wobble > 0.0:
+			rr2 = r * (1.0 + wobble * (sin(a * 3.0) * 0.6 + sin(a * 5.0 + 1.3) * 0.4))
+		var f := float(ri) / float(rings)
+		return Vector3(cx + cos(a) * rr2 * f, y, cz + sin(a) * rr2 * f)
+	for ri in rings:
+		for si in seg:
+			var c0 := float(ri) / float(rings)
+			var c1 := float(ri + 1) / float(rings)
+			var a0: Vector3 = pt.call(ri, si)
+			var a1: Vector3 = pt.call(ri, si + 1)
+			var b0: Vector3 = pt.call(ri + 1, si)
+			var b1: Vector3 = pt.call(ri + 1, si + 1)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a0)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b0)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a1)
+			st.set_color(Color(c0, 0, 0)); st.add_vertex(a1)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b0)
+			st.set_color(Color(c1, 0, 0)); st.add_vertex(b1)
+	st.generate_normals()
+	var mesh := st.commit()
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/water.gdshader")
+	mat.set_shader_parameter("wave_nor", load("res://assets/textures/terrain_grass_nor_gl.jpg"))
+	mat.set_shader_parameter("wave_scale", 0.6)
+	mat.set_shader_parameter("flow_speed", 0.012)
+	mat.set_shader_parameter("bank_scale", 0.42)      # 小池子不要整片泡沫
+	mat.set_shader_parameter("deep_color", Color(0.05, 0.14, 0.13))
+	mat.set_shader_parameter("shallow_color", Color(0.22, 0.38, 0.34))
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add(root, mi, name)
+	return mi
+
+# ── 空氣牆 ──
+## ⚠ 牆底以前寫死 y=0。圖緣的地形不是平的 —— 人里在牆線上最低 −1.36m
+## （河口另計），玩家膠囊只剩 0.34m 跟牆重疊，再低一點就鑽出去了。
+## 改成蓋 y∈[-12, 40]：往下多 12m 把任何合理的圖緣下切都收掉，
+## 上緣維持 40 不變。既有 .tscn 不受影響（重跑各自的產生器才會換新牆）。
+func boundary(half: float) -> void:
+	var body := StaticBody3D.new()
+	body.name = "Boundary"
+	add(root, body, "Boundary")
+	var walls := [
+		[Vector3(0, 14, -half - 0.5), Vector3(half * 2.0, 52, 1)],
+		[Vector3(0, 14, half + 0.5), Vector3(half * 2.0, 52, 1)],
+		[Vector3(-half - 0.5, 14, 0), Vector3(1, 52, half * 2.0)],
+		[Vector3(half + 0.5, 14, 0), Vector3(1, 52, half * 2.0)],
+	]
+	for w in walls:
+		var shape := CollisionShape3D.new()
+		var b := BoxShape3D.new()
+		b.size = w[1]
+		shape.shape = b
+		shape.position = w[0]
+		body.add_child(shape)
+		shape.owner = root
