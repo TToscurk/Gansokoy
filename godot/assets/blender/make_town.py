@@ -717,12 +717,26 @@ def export(ob, name):
 # 下面這個 blockout 的 `machiya()`。尺寸列在這裡是因為 manifest 仍由本檔
 # 統一寫出 —— 一份 manifest 一個寫入者，兩邊各寫一份遲早對不上。
 # 其餘四種維持 legacy blockout，Phase 1 明令不批量替換。
-PROTO = {"machiya_f_a"}
+# ⚠ PHASE 2（Architecture Kit）：production 模組從 1 種變成 **6 種**。
+# 六棟不是同一份 mesh 換 scale／rotation —— 面數、開間數、屋根の向き、
+# 剪影全部各自生成（假 variation 是規格明令禁止的）。
+# 分工：**這張表**決定尺寸（一份 manifest 一個寫入者），
+#       `make_machiya.py` 的 `SPECS` 決定構成（開間・厨子・庇・卯建…）。
+#       兩邊的 W/D/總高/坡度必須一致，不一致時以這張表為準。
+PROTO = {"machiya_f_a", "machiya_f_s", "machiya_f_o",
+         "machiya_t_a", "machiya_w_a", "machiya_f_n"}
 MACHIYA = [
     # ⚠ PHASE 1.1：總高 4.50 → **5.40**、坡度 23° → 21°（使用者定案：放寬到
     # 5.2~5.6 讓屋頂不再壓倒立面）。這張表是**唯一**的真相來源 —— prototype
     # builder 自己的預設值只在單獨跑 make_machiya.py 時生效，正式產出走這裡。
-    ("machiya_f_a", 7.6, 7.8, 5.40, 1, 21.0, 11),   # 前排（PHASE 1.1 prototype）
+    ("machiya_f_a", 7.6, 7.8, 5.40, 1, 21.0, 11),   # 標準商家（PHASE 1.1 prototype）
+    # ── PHASE 2 の五戸 ──────────────────────────────────────────
+    ("machiya_f_s", 5.2, 6.8, 4.85, 1, 22.0, 61),   # 仕舞屋（小間口の住宅）
+    ("machiya_f_o", 9.8, 8.6, 6.15, 2, 20.0, 67),   # 大店（卯建あり）
+    ("machiya_t_a", 6.4, 8.8, 5.70, 1, 23.0, 71),   # 妻入りの町家
+    ("machiya_w_a", 7.2, 7.4, 5.15, 1, 19.0, 73),   # 工房（煙出しあり）
+    ("machiya_f_n", 8.0, 8.2, 6.40, 2, 21.0, 79),   # 二階建て
+    # ── legacy blockout（Phase 2 も置き換えない。village の 169 棟が使用中）──
     ("machiya_f_b", 8.8, 7.6, 4.50, 1, 26.0, 23),   # 前排
     ("machiya_b_a", 9.2, 7.6, 9.40, 2, 45.0, 37),   # 後排（規格 9~10、45°）不動
     ("machiya_b_b", 10.4, 8.0, 9.90, 2, 45.0, 41),  # 後排 不動
@@ -742,19 +756,21 @@ for name, W, D, bh, st, pit, sd in MACHIYA:
         _mm = _ilu.module_from_spec(_spec)
         _spec.loader.exec_module(_mm)
         _mm.make_materials()
-        _b = _mm.MB()
-        _ridge, _door_x = _mm.machiya_f_a(_b, W, D, bh, math.radians(pit))
-        ob = _b.build(name)
-        rep = _mm.validate(ob)
-        assert rep["degenerate"] == 0, "prototype 有退化面：%s" % rep
-        assert len(rep["material_faces"]) == 6, "語意材質不齊：%s" % rep
-        n = _mm.export(ob, name)
+        # ⚠ pitch は**度**で渡す（spec 側が degrees 保持、machiya() の中で
+        # radians に直す）。Phase 1 の呼び方は radians を渡していたので、
+        # そのまま移植したら二重変換で 21° が 0.37° になり、屋根がほぼ
+        # 平らになっていた。面数が 2834→2858 に変わったのが唯一の兆候。
+        ob, rep, facade = _mm.build_variant(name, W, D, bh, pit)
+        assert rep["degenerate"] == 0, "%s 有退化面：%s" % (name, rep)
+        # ⚠ ≥4 であって ==6 ではない：工房 machiya_w_a は板戸張りで障子紙が
+        # 一枚もない。これは立面語彙の差であって材質身分の喪失ではない。
+        assert len(rep["material_faces"]) >= 4, "%s 語意材質塌了：%s" % (name, rep)
+        _mm.export(ob, name)
         n = len(ob.data.polygons)
         total = max(v.co.z for v in ob.data.vertices)
-        facade = {"door_x": round(_door_x, 3), "door_w": 1.63,
-                  "beam_z": round(_mm.LINTEL_Z + 0.30 - 0.07, 3),
-                  "bay_w": round(W / 4.0, 3), "nbay": 4}
-        print("  [PROTO] %s 面 %d 材質 %s" % (name, n, rep["material_faces"]))
+        print("  [PROTO] %s 面 %d 材質 %d 種 %s%d間"
+              % (name, n, len(rep["material_faces"]),
+                 "妻入" if facade["orient"] == "tsuma" else "平入", facade["nbay"]))
     else:
         b = B()
         total, facade = machiya(b, W, D, bh, st, math.radians(pit), sd)

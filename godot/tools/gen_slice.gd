@@ -57,40 +57,52 @@ var _audit: Array[String] = []
 # 南側要轉 PI。「微轉」是 ±0.03 rad（約 1.7°）—— 大到看得出不是尺規排的，
 # 小到不會讓相鄰的簷口打架。真實町並みの不整齊就是這個量級：
 # 地界是幾百年前分的，房子照地界蓋，所以歪的是**地界**不是房子。
+# ── PHASE 2：Architecture Kit を入れ替え ──
+# Phase 1.6/1.7 は 10 棟すべてが machiya_f_a だった。構図と材質はそれで
+# 通ったが、審図の結論はずっと同じ：「立面が逐格同じ・天際線が平ら」。
+# ここで 6 種の**別々に生成された**モジュールに差し替える。
+#
+# ⚠ 配分は意図的に偏らせてある：f_a×3・f_o×2・f_n×2・f_s/t_a/w_a 各 1。
+#   「一戸ずつ全部違う」は町並みではなく見本市になる。**同じ家が何軒か
+#   ある**ことこそが「同一文化」の証拠 —— 標準形 f_a が三軒あって、
+#   その間に金持ち・職人・新築・仕舞屋が挟まる、という比率が現実。
+#
+# 間隔は隣棟の**実際の屋根幅**（manifest の fw、出簷込み）から決めている。
+# W だけで測ると足りない —— f_a は W7.6 でも屋根は 9.56 あるので、
+# 最初 W 基準で並べたら隣同士の軒が 0.5m 食い込んでいた（俯視で発覚）。
+# 軒先どうしのすき間：通常 0.2~0.4m（町家は軒を寄せて建てる）、
+# 巷口 3.2m、側巷 2.0m。後列は前列の軒から 2m 以上あける。
 const LOTS := [
 	# ── 北側（正面朝街）──
 	{"kind": "machiya_f_a", "x": -20.0, "back": 3.4, "side": 1, "yaw": 0.0,
-	 "role": "shop", "why": "街西端。最正、當基準"},
-	{"kind": "machiya_f_a", "x": -9.8, "back": 3.0, "side": 1, "yaw": 0.028,
-	 "role": "shop", "why": "退縮比鄰居少 0.4m —— 店面搶街，這是商業街的常態"},
-	# ⚠ 這裡是**巷口**：下一棟往東讓開 2.6m
-	{"kind": "machiya_f_a", "x": 2.4, "back": 3.7, "side": 1, "yaw": -0.021,
-	 "role": "house", "why": "PHASE 1.6：原本是 legacy machiya_f_b（白盒子）。"
-		+ "退縮最多，巷口那側的山牆才露得出來"},
-	{"kind": "machiya_f_a", "x": 12.6, "back": 3.1, "side": 1, "yaw": 0.016,
-	 "role": "shop", "why": "接近路口，重新往前站"},
+	 "role": "shop", "why": "街西端。標準形＝基準。W7.6"},
+	{"kind": "machiya_f_s", "x": -11.3, "back": 3.0, "side": 1, "yaw": 0.028,
+	 "role": "house", "why": "仕舞屋 W5.2。両隣より低く狭い —— 間口の落差が"
+		+ "町並みのリズム。退縮も 0.4m 少ない（店ではないのに前に出る家）"},
+	# ⚠ 這裡是**巷口**：下一棟往東讓開 4.4m
+	{"kind": "machiya_t_a", "x": -0.5, "back": 3.7, "side": 1, "yaw": -0.021,
+	 "role": "house", "why": "**妻入り** W6.4。主街に破風と懸魚が正面を向く"
+		+ "一軒 —— 軒の連なりに縦の切れ目が入る。退縮も一番深い"},
+	{"kind": "machiya_f_o", "x": 9.7, "back": 3.1, "side": 1, "yaw": 0.016,
+	 "role": "shop", "why": "大店 W9.8・卯建あり。街で一番高い民家。"
+		+ "東の辻に近いほど地価が高い＝一番いい家が角に近い"},
 	# ── 南側（正面朝街，yaw=PI）──
-	{"kind": "machiya_f_a", "x": -15.2, "back": 3.3, "side": -1, "yaw": 0.0,
-	 "role": "house", "why": "對街不對齊北側 —— 兩側的節奏錯開，街才不像走廊"},
-	{"kind": "machiya_f_a", "x": -4.6, "back": 3.5, "side": -1, "yaw": -0.024,
-	 "role": "shop", "why": "對街的店。跟東鄰之間留 2.0m 側巷（服務動線）"},
-	{"kind": "machiya_f_a", "x": 7.4, "back": 3.2, "side": -1, "yaw": 0.019,
-	 "role": "house", "why": "側巷的另一側"},
-	# ── 轉角：**妻入り**（山牆朝街）──
-	# ⚠ PHASE 1.6：原本是 legacy machiya_e_a。同一份 mesh 轉 90° 之後，
-	# 街上看到的是**山牆＋破風板＋懸魚**而不是格子立面 —— 剪影完全不同。
-	# 平入り／妻入り本來就是町家的兩種正統形，這不是偷懶，是免費的變化。
+	{"kind": "machiya_f_n", "x": -15.6, "back": 3.3, "side": -1, "yaw": 0.0,
+	 "role": "house", "why": "二階建て W8.0。対岸の一番西 —— 北側の f_a と"
+		+ "向かい合って、同じ位置に違う高さが立つ"},
+	{"kind": "machiya_w_a", "x": -5.6, "back": 3.5, "side": -1, "yaw": -0.024,
+	 "role": "shop", "why": "工房 W7.2・煙出しあり。板戸張りで格子がない —— "
+		+ "街から見て「ここは店ではない」が一目でわかる立面"},
+	{"kind": "machiya_f_a", "x": 6.0, "back": 3.2, "side": -1, "yaw": 0.019,
+	 "role": "house", "why": "標準形の二軒目。工房との間に 2.2m の側巷"},
+	# ── 轉角：正面朝側街 ──
 	{"kind": "machiya_f_a", "x": 21.6, "back": -5.4, "side": 1, "yaw": -PI * 0.5,
-	 "role": "corner", "why": "轉角棟：妻入り，正面朝側街（−x）"},
+	 "role": "corner", "why": "轉角棟：正面朝側街（−x）、主街には妻側を見せる"},
 	# ── 後排：只供天際線的第二層 ──
-	# ⚠ PHASE 1.6：原本是 legacy machiya_b_a（9.4m 白盒子）。它退到後排之後
-	# 仍然在天際線上讀成一塊白色量體 —— 規格的判準是「高度搶戲但細節不足」，
-	# 它兩條都中。換成兩棟**妻入り的 production 町家**：屋脊垂直街道，
-	# 從街上看是兩片山牆疊在前排屋頂後面，深度資訊拿到了、白盒子沒了。
-	{"kind": "machiya_f_a", "x": -6.5, "back": 15.8, "side": -1, "yaw": PI * 0.5 + 0.04,
-	 "role": "back", "why": "後排・妻入り。只供天際線，不供街景"},
-	{"kind": "machiya_f_a", "x": 4.8, "back": 16.6, "side": -1, "yaw": PI * 0.5 - 0.03,
-	 "role": "back", "why": "後排第二棟，退得比鄰棟深 0.8m"},
+	{"kind": "machiya_f_o", "x": -6.5, "back": 17.8, "side": -1, "yaw": PI * 0.5 + 0.04,
+	 "role": "back", "why": "後排。棟が街と直交＝前列の屋根の上に妻が重なる"},
+	{"kind": "machiya_f_n", "x": 5.4, "back": 18.9, "side": -1, "yaw": PI * 0.5 - 0.03,
+	 "role": "back", "why": "後排第二棟。6.42m で天際線の一番奥を持ち上げる"},
 ]
 
 # 道具佈局：靠牆、簷下、不對稱。也是明表。
@@ -186,11 +198,13 @@ func height_at(x: float, z: float) -> float:
 	for rut in [-1.15, 1.15]:
 		var d := absf(z - rut)
 		h -= on_road * 0.025 * (1.0 - smoothstep(0.0, 0.34, d))
-	# 建物腳下微微墊高：土堆在牆邊
+	# 建物腳下微微墊高：土堆在牆邊（**牆身**的 footprint，不是屋根の出）
 	for L in LOTS:
-		var c := _lot_center(L)
-		var lx: float = absf(x - c.x) - 5.2
-		var lz: float = absf(z - c.y) - 5.0
+		var b := _lot_box(L)
+		var ctr: Vector2 = b[0]
+		var hwv: Vector2 = b[2]
+		var lx: float = absf(x - ctr.x) - hwv.x
+		var lz: float = absf(z - ctr.y) - hwv.y
 		h += 0.055 * (1.0 - smoothstep(0.0, 1.7, maxf(maxf(lx, lz), 0.0)))
 	return h
 
@@ -207,27 +221,43 @@ func mask_at(x: float, z: float) -> Color:
 	road = maxf(road, (1.0 - smoothstep(0.0, 1.8, maxf(dx2, 0.0)))
 		* clampf(1.0 - absf(z) / 26.0, 0.0, 1.0))
 	var dirt := road
-	# 店門口的敷石：只在 shop 的門前 2.4m 見方
+	# 店門口的敷石：只在 shop 的**門前** 2.4m 見方
+	# ⚠ PHASE 2 で直した：`fz = c.y − side*4.9` は建物の**中**を指していた
+	#   （原點が正面の面なので、そこから 4.9m 奥＝土間の真ん中）。
+	#   だから敷石は Phase 1.5 からずっと床下に敷かれていて、街には
+	#   一度も出ていない。門前は `c` から正面方向へ 0.9m。
 	var stone := 0.0
 	for L in LOTS:
 		if String(L.role) != "shop":
 			continue
 		var c := _lot_center(L)
-		var fz: float = c.y - float(L.side) * 4.9      # 門面線
-		if absf(x - c.x) < 2.6 and absf(z - fz) < 1.5:
-			stone = maxf(stone, 1.0 - smoothstep(1.0, 1.5, absf(z - fz)))
+		var m: Dictionary = _mods[String(L.kind)]
+		var yaw := _lot_yaw(L)
+		var fwd := Vector2(sin(yaw), cos(yaw))
+		var rgt := Vector2(cos(yaw), -sin(yaw))
+		var dx: float = float(m.get("facade", {}).get("door_x", 0.0))
+		var dp := c + rgt * dx + fwd * 0.95
+		var dd: float = (Vector2(x, z) - dp).length()
+		# ⚠ 上限 0.55。門前の敷石が街に出た**初めてのラウンド**で判ったこと：
+		# 1.0 まで振ると、暗い夯土の中に真っ白な板が浮いて「貼り付けた
+		# テクスチャ」に読める。0.55 なら踏み固められた土の下から石が
+		# 覗いている、という混ざり方になる。石は「ある」より「透ける」
+		stone = maxf(stone, 0.55 * (1.0 - smoothstep(0.9, 1.8, dd)))
 	# 井邊也鋪石（打水的地方一定是硬鋪面）
 	if Vector2(x - 17.6, z - 0.4).length() < 3.4:
 		stone = maxf(stone, 1.0 - smoothstep(2.2, 3.4, Vector2(x - 17.6, z - 0.4).length()))
 	dirt = maxf(dirt * (1.0 - stone), 0.0)
 	# 屋邊的踏み固め：牆腳一圈也是土（沒有草會長在天天走的地方）
 	for L in LOTS:
-		var c2 := _lot_center(L)
 		# ⚠ 第一版只鋪到牆外 1.5m，實測房子腳下還看得到亮綠草地 —— 房子讀成
 		# 「放在草皮上的模型」，正是規格要解的那件事。加寬到 3.4m，而且
 		# **貼牆那一圈給滿**（0.95）：天天有人走的地方不會有草。
-		var lx: float = absf(x - c2.x) - 5.4
-		var lz: float = absf(z - c2.y) - 5.2
+		# PHASE 2：決め打ちの 5.4/5.2 をやめて実際の屋根 footprint から取る。
+		var b2 := _lot_box(L)
+		var ctr2: Vector2 = b2[0]
+		var hrv: Vector2 = b2[1]
+		var lx: float = absf(x - ctr2.x) - hrv.x
+		var lz: float = absf(z - ctr2.y) - hrv.y
 		var od: float = maxf(maxf(lx, lz), 0.0)
 		dirt = maxf(dirt, 0.95 * (1.0 - smoothstep(0.0, 3.4, od)))
 	var macro := clampf(_nh.get_noise_2d(x * 0.22, z * 0.22) * 0.5 + 0.5, 0.0, 1.0)
@@ -240,6 +270,40 @@ func _lot_center(L: Dictionary) -> Vector2:
 	if String(L.role) == "corner":
 		return Vector2(float(L.x), float(L.back))
 	return Vector2(float(L.x), -float(L.side) * float(L.back))
+
+
+func _lot_yaw(L: Dictionary) -> float:
+	return float(L.yaw) + (PI if int(L.side) < 0
+		and String(L.role) != "corner" else 0.0)
+
+
+## 地塊の**実際の**footprint。回傳 [量體中心, 屋根まで含む半徑, 壁の半徑]。
+##
+## ⚠ PHASE 2 で足した。Phase 1.5~1.7 は地面の処理が全部
+##   「原點から半徑 5.0~5.4」の決め打ちで、二つ壊れていた：
+##     1. 原點は**正面の面**であって中心ではない（`_lot_center` の docstring
+##        にそう書いてあるのに、使う側が中心のつもりで使っていた）。
+##        だから牆腳の土帶も踏石も、半分は道路に、半分は建物の中に落ちていた
+##        —— Phase 1.7 で「白石が街に散っている」と直したのは症状のほうで、
+##        原因はこれ。
+##     2. 6 種類の面寬・進深がバラバラになった今、決め打ちの 5.0 は
+##        f_s（5.2×6.8）には大きすぎ f_o（9.8×8.6）には小さすぎる。
+##   yaw で回った地塊（角地・後列）は W と D が入れ替わるので、
+##   軸平行の半徑は |cos|/|sin| で混ぜて出す。
+func _lot_box(L: Dictionary) -> Array:
+	var c := _lot_center(L)
+	var m: Dictionary = _mods[String(L.kind)]
+	var yaw := _lot_yaw(L)
+	var fwd := Vector2(sin(yaw), cos(yaw))          # 模組正面朝這個方向
+	var ca := absf(cos(yaw))
+	var sa := absf(sin(yaw))
+	var rw: float = float(m.fw) * 0.5               # 含出簷
+	var rd: float = float(m.fd) * 0.5
+	var ww: float = float(m.w) * 0.5                # 牆身 footprint
+	var wd: float = float(m.d) * 0.5
+	return [c - fwd * wd,
+		Vector2(rw * ca + rd * sa, rw * sa + rd * ca),
+		Vector2(ww * ca + wd * sa, ww * sa + wd * ca)]
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -280,34 +344,45 @@ func _build_ground() -> void:
 	sm.size = Vector3(0.72, 0.11, 0.62)
 	sm.material = flag
 	for L in LOTS:
-		var c := _lot_center(L)
-		var fz: float = c.y - float(L.side) * 4.9
-		if String(L.role) == "corner":
+		if String(L.role) == "corner" or String(L.role) == "back":
 			continue
-		# 跨石溝的踏石（從門口踏出來到街上）
+		# 跨石溝的踏石（從**門口**踏出來到街上）
+		# ⚠ PHASE 2：これも `− side*4.9` で建物の中に置かれていた。門は
+		#   manifest の facade.door_x にある —— そこから正面方向へ並べる。
+		var c := _lot_center(L)
+		var m: Dictionary = _mods[String(L.kind)]
+		var yaw := _lot_yaw(L)
+		var fwd := Vector2(sin(yaw), cos(yaw))
+		var rgt := Vector2(cos(yaw), -sin(yaw))
+		var dx: float = float(m.get("facade", {}).get("door_x", 0.0))
 		for k in 3:
-			var px: float = c.x - 1.1 + float(k) * 1.1
-			var pz: float = fz - float(L.side) * (0.5 + float(k % 2) * 0.22)
+			var p := c + rgt * (dx - 1.1 + float(k) * 1.1) \
+				+ fwd * (0.62 + float(k % 2) * 0.24)
 			step.append(Transform3D(
-				Basis(Vector3.UP, _rng.randf_range(-0.09, 0.09)),
-				Vector3(px, height_at(px, pz) + 0.03, pz)))
+				Basis(Vector3.UP, yaw + _rng.randf_range(-0.09, 0.09)),
+				Vector3(p.x, height_at(p.x, p.y) + 0.03, p.y)))
 	_mm(g, "MM_踏石", sm, step)
 	# ── 牆腳碎石（犬走り的簡版）+ 排水點 ──
 	# ⚠ PHASE 1.7：這一叢是「碎石場」觀感的真兇，不是地形貼圖。
-	#   ・半徑 5.4 已經越過 4.9 的正面線，石頭灑到街上去了 → 收回 5.05，貼牆腳
 	#   ・尺寸 0.10–0.20（實測 20–40cm）→ 0.06–0.11，回到「碎」石的量級
 	#   ・每棟 26 顆 → 15 顆
 	#   ・材質從 rock_mat_dry（albedo 1.14 亮白，village 共用）換成本場景專用的
 	#     暗土色。不動 rock_mat_dry 是因為 village 的河石在用它
+	# ⚠ PHASE 2：位置の根本を直した。Phase 1.7 は「半徑 5.4 → 5.05」で
+	#   街に散るのを抑えたが、そもそも中心が**正面の面**だったので、
+	#   円の半分は道路、半分は建物の中だった。実際の壁 footprint に沿った
+	#   楕円に置き換える —— 名前どおり「**牆腳**碎石」になる。
 	var peb: Array[Transform3D] = []
 	var pm: Mesh = lib.blob_mesh(41, 0.5, 0.22)
 	for L in LOTS:
-		var c := _lot_center(L)
+		var b := _lot_box(L)
+		var ctr: Vector2 = b[0]
+		var hwv: Vector2 = b[2]
 		for k in 15:
 			var a := TAU * float(k) / 15.0
-			var rr := 5.05 + _rng.randf_range(-0.28, 0.28)
-			var px: float = c.x + cos(a) * rr
-			var pz: float = c.y + sin(a) * rr * 0.92
+			var jit := _rng.randf_range(0.0, 0.30)
+			var px: float = ctr.x + cos(a) * (hwv.x + 0.30 + jit)
+			var pz: float = ctr.y + sin(a) * (hwv.y + 0.30 + jit)
 			var s := _rng.randf_range(0.06, 0.11)
 			peb.append(Transform3D(
 				Basis(Vector3.UP, _rng.randf_range(0.0, TAU))
@@ -379,10 +454,19 @@ func _build_buildings() -> void:
 		# 0.5 = 提早一倍距離降級；牆身輪廓在那個距離只剩幾十像素，看不出差別
 		mmi.lod_bias = 0.5
 		lib.add(g, mmi, "MM_%s" % k)
-	_audit.append("建築 %d 棟 / %d 種模組（新版 machiya_f_a %d 棟、legacy %d 棟）"
-		% [LOTS.size(), names.size(),
-			batch.get("machiya_f_a", []).size(),
-			LOTS.size() - batch.get("machiya_f_a", []).size()])
+	# PHASE 2：production kit は 6 種。legacy blockout は slice には一棟もない
+	# （Phase 1.6 の隔離を維持）—— 内訳を種類ごとに出して、審図のときに
+	# 「何がどれだけ立っているか」が絵と突き合わせられるようにする。
+	var breakdown: Array[String] = []
+	for k in names:
+		breakdown.append("%s×%d" % [String(k).trim_prefix("machiya_"),
+			batch[k].size()])
+	var legacy := 0
+	for k in names:
+		if int(_mods[k].get("faces", 0)) < 1000:      # blockout は数百面
+			legacy += batch[k].size()
+	_audit.append("建築 %d 棟 / %d 種 production 模組（%s）・legacy blockout %d 棟"
+		% [LOTS.size(), names.size(), ", ".join(breakdown), legacy])
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -406,10 +490,14 @@ func _build_props() -> void:
 		var role := String(L.role)
 		var m: Dictionary = _mods[String(L.kind)]
 		var sd: float = float(L.side) if role != "corner" else 1.0
-		var yaw: float = float(L.yaw) + (PI if int(L.side) < 0 and role != "corner" else 0.0)
+		var yaw := _lot_yaw(L)
 		var fwd := Vector3(sin(yaw), 0, cos(yaw))       # 模組正面朝這個方向
 		var rgt := Vector3(cos(yaw), 0, -sin(yaw))
 		var base := Vector3(c.x, 0, c.y)
+		# ⚠ PHASE 2：道具の横方向オフセットは W=7.6（半幅 3.8）を前提に
+		# 手で置いた値。間口が 5.2~9.8 に散った今、そのままだと仕舞屋の
+		# 荷物が隣の家の前に置かれる。半幅の比で伸縮させる。
+		var lat: float = float(m.w) * 0.5 / 3.8
 		var fz: float = float(m.get("facade", {}).get("beam_z", 1.95))
 		# ── 掛的：暖簾（店）／招牌（店）／提灯（店，兩盞）──
 		if role == "shop":
@@ -419,19 +507,19 @@ func _build_props() -> void:
 			p.y = height_at(p.x, p.z) + fz
 			put.call(nk, Transform3D(Basis(Vector3.UP, yaw), p))
 			n_hang += 1
-			var kp := base + rgt * (dx - 2.5) + fwd * 0.62
+			var kp := base + rgt * (dx - 2.5 * lat) + fwd * 0.62
 			kp.y = height_at(kp.x, kp.z) + fz + 0.42
 			put.call("prop_kanban", Transform3D(Basis(Vector3.UP, yaw), kp))
 			n_hang += 1
 			for s2 in [-1.0, 1.0]:
-				var cp: Vector3 = base + rgt * (dx + s2 * 1.55) + fwd * 0.80
+				var cp: Vector3 = base + rgt * (dx + s2 * 1.55 * lat) + fwd * 0.80
 				cp.y = height_at(cp.x, cp.z) + fz + 0.30
 				put.call("prop_chochin", Transform3D(Basis(Vector3.UP, yaw), cp))
 				n_hang += 1
 		# ── 地上的：靠牆、簷下 ──
 		var table: Array = SHOP_PROPS if role == "shop" else HOUSE_PROPS
 		for pr in table:
-			var p2 := base + rgt * float(pr.dx) + fwd * float(pr.dz)
+			var p2 := base + rgt * (float(pr.dx) * lat) + fwd * float(pr.dz)
 			p2.y = height_at(p2.x, p2.z)
 			var s3 := float(pr.s)
 			put.call(String(pr.m), Transform3D(
@@ -439,14 +527,14 @@ func _build_props() -> void:
 				p2))
 		# ── 手工的小件（不開新 glb）──
 		if role == "house":
-			_bucket(g, base + rgt * -3.6 + fwd * 1.1, yaw)
-			_broom(g, base + rgt * 3.4 + fwd * 0.55, yaw)
-			_firewood(g, base + rgt * -4.5 + fwd * -1.2, yaw + 0.1)
-			_planter(g, base + rgt * 2.4 + fwd * 1.15, yaw)
-			_laundry(g, base + rgt * 0.4 + fwd * -6.2, yaw)
+			_bucket(g, base + rgt * (-3.6 * lat) + fwd * 1.1, yaw)
+			_broom(g, base + rgt * (3.4 * lat) + fwd * 0.55, yaw)
+			_firewood(g, base + rgt * (-4.5 * lat) + fwd * -1.2, yaw + 0.1)
+			_planter(g, base + rgt * (2.4 * lat) + fwd * 1.15, yaw)
+			_laundry(g, base + rgt * (0.4 * lat) + fwd * -6.2, yaw)
 		elif role == "shop":
-			_planter(g, base + rgt * -4.2 + fwd * 1.0, yaw)
-			_bucket(g, base + rgt * 4.0 + fwd * 0.9, yaw)
+			_planter(g, base + rgt * (-4.2 * lat) + fwd * 1.0, yaw)
+			_bucket(g, base + rgt * (4.0 * lat) + fwd * 0.9, yaw)
 	var mods: Array = batch.keys()
 	mods.sort()
 	var total := 0
