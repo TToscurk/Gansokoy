@@ -5,12 +5,12 @@
 [ext_resource type="Texture2D" path="res://assets/textures/stone_flag_rough.jpg" id="3_nrcpa"]
 
 [resource]
-albedo_color = Color(0.56, 0.57, 0.55, 1)
+albedo_color = Color(0.42, 0.43, 0.42, 1)
 albedo_texture = ExtResource("1_8xvcn")
 roughness_texture = ExtResource("3_nrcpa")
 normal_enabled = true
 normal_scale = 0.65
 normal_texture = ExtResource("2_1afdv")
-uv1_scale = Vector3(0.3, 0.3, 0.3)
+uv1_scale = Vector3(1.9, 1.9, 1.9)
 uv1_triplanar = true
 texture_filter = 5

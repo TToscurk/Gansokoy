@@ -220,6 +220,7 @@ func _init() -> void:
 	#   乱数を消費しないので、村の他の場所の草は一本も動かない。
 	_build_pilot_node()        # PHASE 3.1B：北門の最初の辻（火の番の辻）
 	_build_sight_nodes()       # PHASE 3.2A：本通の視線を割る 3 つの civic node
+	_build_mainstreet()        # Main Street batch：塀・門・鳥居・幟・蔵・街路樹
 	lib.vista(OUT_DIR, HALF, 900.0, height_at,
 		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
 		 {"x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0},
@@ -3179,45 +3180,11 @@ func _build_pilot_node() -> void:
 	lib.add(g, tree, "辻の樹")
 	placed.append("樹")
 
-	# 辻の足元の草を抜く（乱数は使わない＝村の他の草は一本も動かない）
+	# 辻の足元の草を抜く（乱数不使用・buffer 直読み。共有 helper）
 	var foot := [[Vector2(hx, hz), 2.1, 1.8], [Vector2(nx, nz), 1.5, 0.7],
 			[Vector2(jx, jz), 1.0, 0.8], [Vector2(TX - 2.0, TZ + 2.4), 2.4, 2.6],
 			[Vector2(tx2, tz2), 1.3, 1.3]]
-	var cut := 0
-	# ⚠ 一度目は `_root.get_node_or_null("草層")` を見ていたが、草の
-	# MultiMesh は **_root 直下**に個別の名前（Shrubs / Ferns / …）で
-	# ぶら下がっている。null が返って**フィルタが黙って何もしていなかった**
-	# （"0 叢を除去" は「無かった」ではなく「探せていなかった」）。
-	# 実測では辻の足元に草は 0 本なので絵は変わらないが、発火しない
-	# 安全網を残すのは嘘なので直す。
-	const GRASS_NODES := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
-	if true:
-		for ch in _root.get_children():
-			if not (ch is MultiMeshInstance3D) or not (String(ch.name) in GRASS_NODES):
-				continue
-			var mm: MultiMesh = (ch as MultiMeshInstance3D).multimesh
-			var keep: Array[Transform3D] = []
-			for i in mm.instance_count:
-				var t := mm.get_instance_transform(i)
-				var q := Vector2(t.origin.x, t.origin.z)
-				var hit := false
-				for f in foot:
-					var dd: Vector2 = q - (f[0] as Vector2)
-					if absf(dd.x) < float(f[1]) and absf(dd.y) < float(f[2]):
-						hit = true
-						break
-				if hit:
-					cut += 1
-				else:
-					keep.append(t)
-			if keep.size() != mm.instance_count:
-				var nm := MultiMesh.new()
-				nm.transform_format = MultiMesh.TRANSFORM_3D
-				nm.mesh = mm.mesh
-				nm.instance_count = keep.size()
-				for j in keep.size():
-					nm.set_instance_transform(j, keep[j])
-				(ch as MultiMeshInstance3D).multimesh = nm
+	var cut := _cut_grass(foot)
 	_audit.append("PHASE 3.1B 火の番の辻：%s（足元の草 %d 叢を除去）"
 		% [", ".join(placed), cut])
 
@@ -3315,29 +3282,84 @@ func _build_sight_nodes() -> void:
 		made.append("N1 共同井戸")
 		foot.append([w1, 2.4, 3.0])
 
-	# ── N2：上屋（z=+30、MAIN_EW の辻）───────────────────────
+	# ── N2：荷継の上屋（z=+30、MAIN_EW の辻）─────────────────
 	# 市場の保留区が西側 x −44.6..−7.4 / z 40..74 を占めるので東側へ。
-	# **唯一、消失点そのものを切る**質量。軒 2.7m・5.6×3.6 の屋根だけの小屋。
+	# ⚠ 初版は「左右対称・細い同断面の柱 6 本・薄い切妻・床なし」で、
+	#   **現代のバス停の図**そのものだった（Art Review の指摘）。直しは
+	#   対称を壊すことから：背面（東）を板壁で塞いで片流れ気味に葺き下ろし、
+	#   柱は沓石に載せて貫と方杖を通し、軒下に垂木を見せ、土間を敷く。
 	var w2: Vector2 = dodge_lamp.call(Vector2(8.4, 41.0), 5.5)
 	if not _pt_reserved(w2, 2.4):
 		var y2 := height_at(w2.x, w2.y)
 		var uwa := lib.add(g, Node3D.new(), "上屋") as Node3D
 		uwa.position = Vector3(w2.x, y2, w2.y)
 		uwa.rotation.y = -0.12
-		for sx in [-1.0, 1.0]:
-			for sz in [-1.0, 0.0, 1.0]:
-				lib.box(uwa, "柱_%d_%d" % [int(sx + 1.0), int(sz + 1.0)],
-					Vector3(0.17, 2.7, 0.17), dark,
-					Vector3(sx * 2.55, 1.35, sz * 1.55))
-		lib.box(uwa, "桁_西", Vector3(5.5, 0.18, 0.18), dark, Vector3(0, 2.78, -1.55))
-		lib.box(uwa, "桁_東", Vector3(5.5, 0.18, 0.18), dark, Vector3(0, 2.78, 1.55))
-		lib.gable_roof(uwa, 2.87, 5.6, 3.6, 0.36, 0.15, kawara, dark)
-		_lm_collide(uwa, Vector3(5.3, 2.8, 3.3))
-		# 荷を置く台と積み荷 —— 「継立の場」だと判る最小限
-		lib.box(uwa, "荷台", Vector3(2.2, 0.34, 1.1), plank, Vector3(-1.1, 0.17, 0.2))
-		lib.box(uwa, "俵積", Vector3(1.0, 0.62, 0.9), plank, Vector3(1.6, 0.31, -0.5))
+		# 土間：踏み固めた土＋石の縁 —— 芝の上に浮いていた足元を地面に接ぐ
+		lib.box(uwa, "土間", Vector3(6.4, 0.12, 4.6),
+			lib.pbr("上屋土間", "terrain_path", 0.9, Color(0.72, 0.66, 0.56)),
+			Vector3(0, 0.05, 0.2))
+		for sz in [-2.05, 2.45]:
+			lib.box(uwa, "土間縁", Vector3(6.4, 0.14, 0.22), stone, Vector3(0, 0.07, sz))
+		# 柱：背面（東）3 本が高く、前（西・街側）3 本が低い ——
+		# 背の壁に凭れる**下屋（лean-to）**。全て沓石（礎石）に載せる。
+		# ⚠ 初版は前後差 0.6m を 4.7m の屋根に割った勾配 7° で、眼高から
+		#   見ると屋根が**厚みのない一枚の線**に消えた（描画で確認）。
+		#   勾配は前後の桁で作る：後桁 3.06 → 前桁 2.46。
+		for i in 3:
+			var px := -2.55 + float(i) * 2.55
+			lib.box(uwa, "沓石_w%d" % i, Vector3(0.34, 0.26, 0.34), stone,
+				Vector3(px, 0.16, -1.55))
+			lib.box(uwa, "柱_w%d" % i, Vector3(0.16, 2.10, 0.16), dark,
+				Vector3(px, 0.29 + 1.05, -1.55))
+			lib.box(uwa, "沓石_e%d" % i, Vector3(0.34, 0.26, 0.34), stone,
+				Vector3(px, 0.16, 1.75))
+			lib.box(uwa, "柱_e%d" % i, Vector3(0.16, 2.70, 0.16), dark,
+				Vector3(px, 0.29 + 1.35, 1.75))
+		# 貫（腰の高さで三方を回す）と方杖（前桁を斜めに受ける）
+		lib.box(uwa, "貫_前", Vector3(5.3, 0.10, 0.14), dark, Vector3(0, 0.98, -1.55))
+		lib.box(uwa, "貫_後", Vector3(5.3, 0.10, 0.14), dark, Vector3(0, 0.98, 1.75))
+		for sxk in [-1.0, 1.0]:
+			lib.box(uwa, "貫_妻", Vector3(0.14, 0.10, 3.3), dark,
+				Vector3(sxk * 2.55, 0.98, 0.1))
+			var hj := lib.box(uwa, "方杖", Vector3(0.11, 0.90, 0.11), dark,
+				Vector3(sxk * 2.35, 2.02, -1.42))
+			hj.rotation.z = sxk * 0.6
+		# 桁：後ろ（壁側）が高く、前（街側）が低い
+		lib.box(uwa, "桁_前", Vector3(5.9, 0.17, 0.17), dark, Vector3(0, 2.46, -1.55))
+		lib.box(uwa, "桁_後", Vector3(5.9, 0.17, 0.17), dark, Vector3(0, 3.06, 1.75))
+		# 垂木：前後の桁に渡す（軒下に木の目が並ぶ —— バス停との決定的な差）
+		for i in 8:
+			var rx := -2.75 + float(i) * (5.5 / 7.0)
+			var rf := lib.box(uwa, "垂木_%d" % i, Vector3(0.09, 0.09, 4.9), dark,
+				Vector3(rx, 2.80, 0.10))
+			rf.rotation.x = -0.181
+		# 一枚屋根を**街へ葺き下ろす**（後高・前低の下屋）
+		var slope := lib.box(uwa, "屋根面", Vector3(6.5, 0.15, 5.3), kawara,
+			Vector3(0, 2.94, 0.10))
+		slope.rotation.x = -0.181
+		lib.box(uwa, "棟押え", Vector3(6.54, 0.14, 0.30), dark, Vector3(0, 3.42, 2.15))
+		for sxk in [-1.0, 1.0]:                        # 破風板（妻の小口を隠す）
+			var hf := lib.box(uwa, "破風_%d" % int(sxk + 1.0),
+				Vector3(0.07, 0.17, 5.35), dark, Vector3(sxk * 3.26, 2.93, 0.10))
+			hf.rotation.x = -0.181
+		# 背面の板壁（腰から後桁まで。西＝街側だけが開く）
+		lib.box(uwa, "背板壁", Vector3(5.2, 1.90, 0.07),
+			lib.pbr("上屋板壁", "planks", 1.6, Color(0.62, 0.55, 0.45)),
+			Vector3(0, 1.90, 1.72))
+		_lm_collide(uwa, Vector3(5.6, 2.9, 3.6), Vector3(0, 0, 0.1))
+		# 荷：土間の上に俵と木箱 —— 「継立の場」だと判る最小限
+		var ni := MeshInstance3D.new()
+		ni.mesh = lib.prop_mesh("res://assets/models/prop_tawara.glb")
+		ni.position = Vector3(1.5, 0.12, 0.6)
+		ni.rotation.y = 0.4
+		lib.add(uwa, ni, "俵")
+		var nc := MeshInstance3D.new()
+		nc.mesh = lib.prop_mesh("res://assets/models/prop_crate.glb")
+		nc.position = Vector3(-1.6, 0.12, 0.9)
+		nc.rotation.y = -0.25
+		lib.add(uwa, nc, "木箱")
 		made.append("N2 上屋")
-		foot.append([w2, 3.2, 2.4])
+		foot.append([w2, 3.6, 2.8])
 
 	# ── N3：常夜灯の対＋道標（z=+85 の横街）──────────────────
 	# 石・細い垂直。channel を絞るだけで塞がない。
@@ -3380,17 +3402,31 @@ func _build_sight_nodes() -> void:
 			foot.append([dz2, 0.7, 0.7])
 		made.append("N3 常夜灯 %d ＋道標" % placed3)
 
-	# 足元の草を抜く（乱数不使用 → 村の他の草は動かない）
-	const GNODES := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
+	# 足元の草を抜く（乱数不使用・buffer 直読み。共有 helper）
+	var cut := _cut_grass(foot)
+	_audit.append("PHASE 3.2A 本通の節：%s（足元の草 %d 叢を除去）"
+		% [", ".join(made), cut])
+
+
+## 足元の草取り（共有 helper）。⚠ get_instance_transform は headless の
+## dummy レンダラーでは**単位行列しか返さない**（check_map が同じ坑を
+## 踏んで buffer 読みに直している）。ここも buffer を stride 12 で直接
+## 読み書きする —— 3.1B/3.2A のフィルタは実は一度も発火していなかった
+## （"0 叢を除去" は「無かった」ではなく「読めていなかった」）。
+func _cut_grass(foot: Array) -> int:
+	const GN := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
 	var cut := 0
 	for ch in _root.get_children():
-		if not (ch is MultiMeshInstance3D) or not (String(ch.name) in GNODES):
+		if not (ch is MultiMeshInstance3D) or not (String(ch.name) in GN):
 			continue
 		var mm: MultiMesh = (ch as MultiMeshInstance3D).multimesh
-		var keep: Array[Transform3D] = []
+		var buf: PackedFloat32Array = mm.buffer
+		var stride := 12
+		var keep := PackedFloat32Array()
+		var kept := 0
 		for i in mm.instance_count:
-			var t := mm.get_instance_transform(i)
-			var q := Vector2(t.origin.x, t.origin.z)
+			var o := i * stride
+			var q := Vector2(buf[o + 3], buf[o + 11])
 			var hit := false
 			for f in foot:
 				var dd: Vector2 = q - (f[0] as Vector2)
@@ -3400,17 +3436,255 @@ func _build_sight_nodes() -> void:
 			if hit:
 				cut += 1
 			else:
-				keep.append(t)
-		if keep.size() != mm.instance_count:
+				keep.append_array(buf.slice(o, o + stride))
+				kept += 1
+		if kept != mm.instance_count:
 			var nm2 := MultiMesh.new()
 			nm2.transform_format = MultiMesh.TRANSFORM_3D
 			nm2.mesh = mm.mesh
-			nm2.instance_count = keep.size()
-			for j in keep.size():
-				nm2.set_instance_transform(j, keep[j])
+			nm2.instance_count = kept
+			nm2.buffer = keep
 			(ch as MultiMeshInstance3D).multimesh = nm2
-	_audit.append("PHASE 3.2A 本通の節：%s（足元の草 %d 叢を除去）"
-		% [", ".join(made), cut])
+	return cut
+
+
+# ══════════════ Main Street batch：本通の街並みの回復 ══════════════
+#
+# 達成条件：北から南へ歩いたとき、本通が「畑の中を通る道」ではなく
+# 「人の住む町の通り」として連続して読めること。
+#
+# 手段は地標の**正面の延長**（塀・門・鳥居・幟・蔵・前庭）であって、
+# 地標本体の移動ではない。路軸と路幅・地標の同一性・portal・動線・
+# 承認済みの北門／火の番の構図は触らない。
+#
+# ⚠ 乱数は使わない（全て決め打ち）。lm_ghost の孤児碰撞検査があるので、
+#   **碰撞体は地標保留区の外にだけ**置く。保留区の縁より内側の要素
+#   （鳥居・玉垣）は見た目だけにして碰撞体を付けない。
+func _build_mainstreet() -> void:
+	var g := lib.add(_root, Node3D.new(), "本通の街並") as Node3D
+	var dark := lib.pbr("塀柱", "dark_wood", 2.2, Color(0.34, 0.32, 0.29))
+	# ⚠ shitami テクスチャはこの縮尺で扇形の柄に読める（描画で確認）。
+	#   板塀は素直に planks。
+	var itaita := lib.pbr("塀板", "planks", 3.4, Color(0.50, 0.44, 0.37))
+	var stone := lib.pbr("街石", "stone_flag", 1.6, Color(0.55, 0.56, 0.54))
+	var kawara := _lmat("kawara", 1)
+	var made: Array[String] = []
+	var foot: Array = []
+
+	# ── 板塀 builder（柱＋下見板＋笠木。gap は門の開口）───────────
+	var fence := func(fg: Node3D, fx: float, z0: float, z1: float, gaps: Array,
+			h := 1.7, collide := true) -> void:
+		var t := z0
+		var pn := 0
+		while t < z1 - 0.1:
+			var seg_end := minf(t + 1.9, z1)
+			var in_gap := false
+			for gp in gaps:
+				if t < float(gp[1]) and seg_end > float(gp[0]):
+					in_gap = true
+					break
+			var y := height_at(fx, (t + seg_end) * 0.5)
+			if not in_gap:
+				lib.box(fg, "塀板_%d_%d" % [int(fx * 10.0), pn],
+					Vector3(0.08, h - 0.26, seg_end - t - 0.13), itaita,
+					Vector3(fx, y + 0.18 + (h - 0.26) * 0.5, (t + seg_end) * 0.5))
+				lib.box(fg, "塀笠_%d_%d" % [int(fx * 10.0), pn],
+					Vector3(0.16, 0.09, seg_end - t + 0.05), dark,
+					Vector3(fx, y + h - 0.02, (t + seg_end) * 0.5))
+			lib.box(fg, "塀柱_%d_%d" % [int(fx * 10.0), pn],
+				Vector3(0.14, h + 0.08, 0.14), dark,
+				Vector3(fx, height_at(fx, t) + (h + 0.08) * 0.5, t))
+			t = seg_end
+			pn += 1
+		lib.box(fg, "塀柱_%d_end" % int(fx * 10.0), Vector3(0.14, h + 0.08, 0.14),
+			dark, Vector3(fx, height_at(fx, z1) + (h + 0.08) * 0.5, z1))
+		if collide:
+			for gp2 in [[z0, gaps[0][0] if gaps.size() > 0 else z1],
+					[gaps[0][1] if gaps.size() > 0 else z1, z1]]:
+				var a2 := float(gp2[0])
+				var b2 := float(gp2[1])
+				if b2 - a2 < 0.5:
+					continue
+				var body := StaticBody3D.new()
+				fg.add_child(body)
+				body.owner = _root
+				var cs := CollisionShape3D.new()
+				var bx := BoxShape3D.new()
+				bx.size = Vector3(0.25, h, b2 - a2)
+				cs.shape = bx
+				cs.position = Vector3(fx, height_at(fx, (a2 + b2) * 0.5) + h * 0.5,
+					(a2 + b2) * 0.5)
+				body.add_child(cs)
+				cs.owner = _root
+
+	# ── 棟門 builder（塀の開口に小さな切妻の屋根門）─────────────
+	var mune := func(fg: Node3D, fx: float, fz: float, w: float) -> void:
+		var y := height_at(fx, fz)
+		var mn := lib.add(fg, Node3D.new(), "門_%d" % int(fz)) as Node3D
+		mn.position = Vector3(fx, y, fz)
+		for sd in [-1.0, 1.0]:
+			lib.box(mn, "門柱_%d" % int(sd + 1.0), Vector3(0.19, 2.30, 0.19), dark,
+				Vector3(0, 1.15, sd * w * 0.5))
+		lib.box(mn, "冠木", Vector3(0.17, 0.20, w + 0.55), dark, Vector3(0, 2.22, 0))
+		lib.gable_roof(mn, 2.42, 1.30, w + 0.95, 0.42, 0.11, kawara, dark)
+		# 敷石（門から路肩へ）
+		for i in 3:
+			lib.box(fg, "門敷石_%d_%d" % [int(fz), i], Vector3(0.95, 0.07, 0.75), stone,
+				Vector3(fx + (0.55 + float(i) * 0.85) * (1.0 if fx < 0.0 else -1.0) * -1.0,
+					height_at(fx, fz) + 0.02, fz))
+
+	# ── 1. 寺子屋の正面（西・z −62..−44）：板塀＋棟門 ─────────────
+	# 保留区の東縁は x −11.8。塀は −8.2（保留区の外）。N1 共同井戸（−6.9,−52）
+	# は塀の**前**に立つ ——「学び舎の塀の下の村の井戸」という読み。
+	var g_tera := lib.add(g, Node3D.new(), "寺子屋塀") as Node3D
+	fence.call(g_tera, -8.2, -62.0, -44.0, [[-55.3, -53.3]])
+	mune.call(g_tera, -8.2, -54.3, 1.85)
+	made.append("寺子屋の塀と門")
+	foot.append([Vector2(-8.2, -53.0), 1.2, 9.6])
+
+	# ── 2. 稲荷の小祠（西・z −30）：寺子屋と杜のあいだの空白を埋める ──
+	var iy := height_at(-7.8, -30.0)
+	var ina := lib.add(g, Node3D.new(), "稲荷小祠") as Node3D
+	ina.position = Vector3(-7.8, iy, -30.0)
+	ina.rotation.y = 0.5
+	lib.box(ina, "基壇", Vector3(1.5, 0.28, 1.2), stone, Vector3(0, 0.14, 0))
+	lib.box(ina, "祠身", Vector3(0.78, 0.72, 0.62),
+		lib.pbr("祠木", "dark_wood", 2.6, Color(0.52, 0.46, 0.40)), Vector3(0, 0.64, 0))
+	lib.gable_roof(ina, 1.02, 1.06, 0.92, 0.55, 0.09, kawara, dark)
+	var verm := lib.flat_mat("鳥居朱", Color(0.435, 0.135, 0.10), 0.78)
+	for k in 2:
+		var tz := -1.05 - float(k) * 0.75
+		for sd in [-1.0, 1.0]:
+			lib.box(ina, "小鳥居柱_%d_%d" % [k, int(sd + 1.0)],
+				Vector3(0.07, 0.95, 0.07), verm, Vector3(sd * 0.36, 0.475, tz))
+		lib.box(ina, "小鳥居笠_%d" % k, Vector3(0.98, 0.08, 0.10), verm,
+			Vector3(0, 0.95, tz))
+	_lm_collide(ina, Vector3(1.6, 1.3, 1.3))
+	made.append("稲荷小祠")
+	foot.append([Vector2(-7.8, -30.0), 1.4, 1.8])
+
+	# ── 3. 鎮守之杜の街縁（西・z −13..+17）：玉垣＋鳥居 ───────────
+	# ⚠ 保留区の東縁は x −5.65 —— この帯の要素は保留区の**内側**に立つので
+	#   碰撞体は付けない（lm_ghost の孤児碰撞に化ける）。低い玉垣なので
+	#   跨げる見た目＝当たり無しでも嘘にならない。
+	var tama := lib.pbr("玉垣", "planks", 1.9, Color(0.60, 0.55, 0.47))
+	for rng2 in [[-13.0, -1.6], [5.6, 17.0]]:
+		var t2 := float(rng2[0])
+		while t2 < float(rng2[1]) - 0.1:
+			var e2 := minf(t2 + 1.55, float(rng2[1]))
+			var y3 := height_at(-6.5, (t2 + e2) * 0.5)
+			lib.box(g, "玉垣板_%d" % int(t2 * 10.0), Vector3(0.07, 0.66, e2 - t2 - 0.10),
+				tama, Vector3(-6.5, y3 + 0.52, (t2 + e2) * 0.5))
+			lib.box(g, "玉垣柱_%d" % int(t2 * 10.0), Vector3(0.11, 0.94, 0.11),
+				dark, Vector3(-6.5, height_at(-6.5, t2) + 0.47, t2))
+			t2 = e2
+	# 鳥居（社の街への顔。二本柱＋島木＋笠木＋貫 —— 反りは省く）
+	var ty := height_at(-6.4, 2.0)
+	var tor := lib.add(g, Node3D.new(), "鳥居") as Node3D
+	tor.position = Vector3(-6.4, ty, 2.0)
+	for sd in [-1.0, 1.0]:
+		lib.box(tor, "柱_%d" % int(sd + 1.0), Vector3(0.24, 3.30, 0.24), verm,
+			Vector3(0, 1.65, sd * 1.45))
+		lib.box(tor, "亀腹_%d" % int(sd + 1.0), Vector3(0.38, 0.22, 0.38), stone,
+			Vector3(0, 0.11, sd * 1.45))
+	lib.box(tor, "貫", Vector3(0.16, 0.20, 3.85), verm, Vector3(0, 2.55, 0))
+	lib.box(tor, "島木", Vector3(0.22, 0.20, 3.75), verm, Vector3(0, 3.32, 0))
+	lib.box(tor, "笠木", Vector3(0.30, 0.17, 4.10), dark, Vector3(0, 3.50, 0))
+	for i in 3:
+		lib.box(g, "参道敷石_%d" % i, Vector3(0.95, 0.07, 0.80), stone,
+			Vector3(-5.3 + 0.0, height_at(-5.3, 2.0) + 0.02, 2.0 - 0.85 + float(i) * 0.85))
+	made.append("鎮守之杜の玉垣と鳥居")
+
+	# ── 4. 蔵屋敷（東・z −38..−8）：市場の蔵の列 ─────────────────
+	# 鈴奈庵（〜z −44）と MAIN_EW の家並み（z 0〜）のあいだ、東側 44m の
+	# 空白。市の荷が入る蔵二棟を板塀で囲う —— 従属構造で正面を回復する。
+	var g_kura := lib.add(g, Node3D.new(), "蔵屋敷塀") as Node3D
+	fence.call(g_kura, 6.9, -38.0, -8.0, [[-23.4, -21.4]])
+	mune.call(g_kura, 6.9, -22.4, 1.85)
+	var kura_wall := lib.pbr("蔵漆喰", "plaster", 1.5, Color(1.04, 1.01, 0.95))
+	var kura_koshi := lib.pbr("蔵海鼠", "namako", 2.1, Color(0.92, 0.92, 0.90))
+	for kz in [-30.5, -14.5]:
+		var kx := 11.6
+		if _pt_reserved(Vector2(kx, kz), 2.0):
+			continue
+		var ky := height_at(kx, kz)
+		var kura := lib.add(g, Node3D.new(), "蔵_%d" % int(kz)) as Node3D
+		kura.position = Vector3(kx, ky, kz)
+		kura.rotation.y = PI * 0.5           # 妻を街へ（蔵は妻入りが多い）
+		lib.box(kura, "基壇", Vector3(5.0, 0.42, 6.4), stone, Vector3(0, 0.21, 0))
+		lib.box(kura, "腰", Vector3(4.62, 0.95, 6.02), kura_koshi, Vector3(0, 0.90, 0))
+		lib.box(kura, "壁", Vector3(4.58, 2.35, 5.98), kura_wall, Vector3(0, 2.53, 0))
+		lib.box(kura, "扉", Vector3(1.15, 1.75, 0.14), dark, Vector3(0.6, 1.45, -3.02))
+		lib.box(kura, "窓", Vector3(0.72, 0.55, 0.10), dark, Vector3(0, 3.05, -3.00))
+		lib.gable_roof(kura, 3.72, 5.3, 7.0, 0.44, 0.15, kawara, dark)
+		_lm_collide(kura, Vector3(5.0, 3.8, 6.4))
+		foot.append([Vector2(kx, kz), 3.4, 3.0])
+	made.append("蔵屋敷（塀＋蔵二棟）")
+	foot.append([Vector2(6.9, -23.0), 1.0, 15.6])
+
+	# ── 5. 市場の口（西・z 44..72）：幟の列＋木戸＋荷 ─────────────
+	var nobori_c := [Color(0.16, 0.19, 0.31), Color(0.55, 0.30, 0.16),
+		Color(0.80, 0.76, 0.66), Color(0.16, 0.19, 0.31), Color(0.30, 0.42, 0.28)]
+	for i in 5:
+		var nz := 46.0 + float(i) * 6.0
+		var ny := height_at(-6.9, nz)
+		var nb := lib.add(g, Node3D.new(), "幟_%d" % i) as Node3D
+		nb.position = Vector3(-6.9, ny, nz)
+		nb.rotation.y = 0.10 * float(i % 3 - 1)
+		lib.cyl(nb, "竿", 0.045, 0.055, 4.3, dark, Vector3(0, 2.15, 0), 6)
+		lib.box(nb, "横手", Vector3(0.05, 0.05, 0.62), dark, Vector3(0, 4.05, 0.26))
+		lib.box(nb, "布", Vector3(0.035, 2.55, 0.55),
+			lib.flat_mat("幟布_%d" % i, nobori_c[i], 0.85), Vector3(0, 2.72, 0.30))
+	for sd in [-1.0, 1.0]:
+		lib.box(g, "市木戸柱_%d" % int(sd + 1.0), Vector3(0.20, 2.45, 0.20), dark,
+			Vector3(-6.9, height_at(-6.9, 57.0 + sd * 1.35) + 1.22, 57.0 + sd * 1.35))
+	lib.box(g, "市木戸冠木", Vector3(0.17, 0.19, 3.35), dark,
+		Vector3(-6.9, height_at(-6.9, 57.0) + 2.42, 57.0))
+	# 荷のこぼれ：俵・木箱・笊 —— 市の口が「使われている」ことの最小の証拠
+	var spill := [["prop_tawara", -6.3, 60.4, 0.7], ["prop_crate", -6.6, 61.4, -0.3],
+		["prop_zaru", -6.1, 48.6, 0.2], ["prop_taru", -6.5, 47.6, 1.2]]
+	for sp in spill:
+		var mi := MeshInstance3D.new()
+		mi.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(sp[0]))
+		mi.position = Vector3(float(sp[1]),
+			height_at(float(sp[1]), float(sp[2])), float(sp[2]))
+		mi.rotation.y = float(sp[3])
+		lib.add(g, mi, "市荷_%s_%d" % [String(sp[0]), int(float(sp[2]))])
+	made.append("市場の幟と木戸")
+
+	# ── 6. 湯屋（足洗邸）南の生垣（東・z 96..113）─────────────────
+	for i in 4:
+		var hz := 96.5 + float(i) * 4.4
+		var hm := MeshInstance3D.new()
+		hm.mesh = lib.prop_mesh("res://assets/models/hedge_a.glb", lib.vc_mat())
+		hm.position = Vector3(6.6, height_at(6.6, hz), hz)
+		hm.rotation.y = PI * 0.5
+		lib.add(g, hm, "生垣_%d" % i)
+	made.append("湯屋前の生垣")
+
+	# ── 7. 街路樹（軒線より高い塊で長軸の抜けを上から刻む）─────────
+	# 動線は塞がない：全て路肩の外。等間隔にはしない。
+	var trees := [["tree_round_a", -6.3, -70.0, 1.30, 0.8],
+		["tree_pine_a", 6.3, -43.0, 1.15, 2.1],
+		["tree_sakura_a", -6.2, 26.0, 1.20, 4.0],
+		["tree_round_c", 6.5, 61.0, 1.25, 5.3],
+		["tree_sakura_b", -6.4, 120.0, 1.10, 0.4]]
+	for tr in trees:
+		var tx := float(tr[1])
+		var tz := float(tr[2])
+		if _pt_reserved(Vector2(tx, tz), 1.0):
+			continue
+		var tm := MeshInstance3D.new()
+		tm.mesh = lib.tree_mesh("res://assets/models/%s.glb" % String(tr[0]))
+		tm.position = Vector3(tx, height_at(tx, tz), tz)
+		tm.rotation.y = float(tr[4])
+		tm.scale = Vector3(float(tr[3]), float(tr[3]) * 1.05, float(tr[3]))
+		lib.add(g, tm, "街路樹_%s" % String(tr[0]))
+	made.append("街路樹 5 本")
+
+	# ── 足元の草を抜く（乱数不使用・buffer 直読み）─────────────
+	var cut := _cut_grass(foot)
+	_audit.append("本通の街並：%s（足元の草 %d 叢を除去）" % [", ".join(made), cut])
 
 
 func _build_gutters() -> void:
@@ -3476,12 +3750,17 @@ func _build_gutters() -> void:
 	# 亮的 stone_wall 貼圖，在直射陽光下是**純白的軌條**（俯視截圖看出來的，
 	# 跟護岸「0.42 的灰讀成水泥防洪牆」是同一個病）。排水溝的石頭是濕的、暗的。
 	var stone := lib.pbr("溝石", "stone_wall", 0.55, Color(0.60, 0.61, 0.59))
-	var slab := lib.pbr("溝蓋石", "stone_flag", 0.30, Color(0.56, 0.57, 0.55))
+	# ⚠ 蓋の uv 0.30 は**タイル 3.33m** —— pbr() の uv は「大きいほど細かい」
+	# ので、1.6〜3.0m の板に目地が一枚も乗らず「巨大なコンクリート板」に
+	# 読めていた（Art Review の指摘）。1.9（≒53cm）で敷石の目が出る。
+	# 色も路面より**暗い**濡れた石に落とし、板は薄く・地面に沈める
+	# （+0.02 の浮きが縁に硬い影を落として「後から置いた板」に見えていた）。
+	var slab := lib.pbr("溝蓋石", "stone_flag", 1.9, Color(0.42, 0.43, 0.42))
 	var g := lib.add(_root, Node3D.new(), "石溝")
 	var parts := [
 		{"size": Vector3(0.22, 0.5, GUTTER_SEG), "list": walls, "mat": stone, "n": "溝壁"},
 		{"size": Vector3(0.7, 0.12, GUTTER_SEG), "list": floors, "mat": stone, "n": "溝底"},
-		{"size": Vector3(1.15, 0.14, 1.6), "list": lids, "mat": slab, "n": "溝蓋"},
+		{"size": Vector3(1.05, 0.10, 1.6), "list": lids, "mat": slab, "n": "溝蓋"},
 	]
 	for pt in parts:
 		var bm := BoxMesh.new()
@@ -3501,97 +3780,70 @@ func _build_gutters() -> void:
 ## **沿線行走取樣**。也因此不會再出現「燈站在田中央」那種舊格線殘留。
 const LAMP_MAX := 44              # OmniLight3D 有成本，上限擺明寫死
 
-func _build_lamps() -> void:
-	var iron := lib.flat_mat("iron", Color(0.16, 0.16, 0.18), 0.6)
-	var glow := lib.flat_mat("lamp_glow", Color(1.0, 0.85, 0.55), 0.3, Color(1.0, 0.75, 0.4))
-	var g := lib.add(_root, Node3D.new(), "街燈")
-	# 町家 OBB 的空間索引（照 _build_grass 的做法）
-	var hgrid := {}
-	for e in _dump:
-		var r := _obb_of(e)
-		var c: Vector2 = r[0]
-		var rad: float = maxf(r[3], r[4]) + 3.0
-		for i in range(int(floor((c.x - rad) / 24.0)), int(floor((c.x + rad) / 24.0)) + 1):
-			for j in range(int(floor((c.y - rad) / 24.0)), int(floor((c.y + rad) / 24.0)) + 1):
-				var k := Vector2i(i, j)
-				if not hgrid.has(k):
-					hgrid[k] = []
-				hgrid[k].append(r)
-	var in_house := func(p: Vector2, pad: float) -> bool:
-		var key := Vector2i(int(floor(p.x / 24.0)), int(floor(p.y / 24.0)))
-		for dx in [-1, 0, 1]:
-			for dz in [-1, 0, 1]:
-				var k := Vector2i(key.x + dx, key.y + dz)
-				if not hgrid.has(k):
-					continue
-				for r in hgrid[k]:
-					var d: Vector2 = p - r[0]
-					if absf(d.dot(r[1])) < r[3] + pad and absf(d.dot(r[2])) < r[4] + pad:
-						return true
-		return false
+## Main Street batch：街燈の語彙を全取り替え。
+## 旧版は「機械的に丸い鉄柱＋乳白の発光箱＋商業勾配の等間隔・両側交互」——
+## それは近代の街路照明の配置規則そのもので、村の灯りの規則ではない
+## （Art Review の指摘）。村の規則は**人が集まる所だけ明るい**：
+## 門・辻・社前・市の口・橋詰・湯屋の前。器具は木の**辻行灯**
+## （台石＋角柱＋紙の火袋＋木の笠）。等間隔の巡回配置は廃止。
+## ⚠ 乱数は使わない（決め打ちの錨点表）。N1/N2/N3 の錨点から 7m 以上
+##   離す —— sight nodes 側の dodge_lamp が動いて節がずれるため。
+const LAMP_ANCHORS := [
+	[-5.4, -163.0], [5.4, -160.0],          # 北門の内側
+	[-5.4, -138.5], [5.8, -124.0],          # 火の番の辻（高札場と番小屋の脇）
+	[-5.4, -60.0], [5.4, -46.5],            # 寺子屋・鈴奈庵の辻
+	[5.6, -22.5],                           # 蔵屋敷の木戸前
+	[-5.6, 6.5],                            # 鎮守之杜の鳥居脇
+	[-5.4, 22.0], [5.6, 33.5],              # MAIN_EW の辻（広場の口）
+	[-5.4, 49.0], [-5.4, 66.0],             # 市場の口と幟の列
+	[50.0, 26.5],                           # 主橋の西詰
+	[5.6, 100.0],                           # 足洗邸（湯屋）の前
+	[-5.4, 140.0],                          # 南の住宅列（一本だけ・間隔を殺す）
+	[-5.4, 191.0], [5.4, 185.0],            # 南口（鐘楼の手前）
+]
 
-	var placed: Array[Vector2] = []
-	var side_flip := false
-	for r in _roads:
-		var pts: Array = r.pts
-		var half: float = float(r.w) * 0.5
-		for k in range(pts.size() - 1):
-			var a: Vector2 = pts[k]
-			var b: Vector2 = pts[k + 1]
-			var seg := b - a
-			var ln := seg.length()
-			if ln < 1.0:
-				continue
-			var dir := seg / ln
-			var nrm := dir.orthogonal()
-			var s := 0.0
-			while s < ln:
-				var base: Vector2 = a + dir * s
-				# 間距吃商業梯度：村心 17m、村緣 48m
-				var cm := _commerce(base)
-				var step: float = lerpf(48.0, 17.0, clampf(cm / 0.75, 0.0, 1.0))
-				s += step
-				if cm < 0.20:
-					continue
-				side_flip = not side_flip
-				var p: Vector2 = base + nrm * (1.0 if side_flip else -1.0) * (half + 1.3)
-				if _pt_reserved(p, 1.0) or in_house.call(p, 0.8):
-					continue
-				if _river_dist_xy(p.x, p.y) < RIVER_HALF + 1.5:
-					continue
-				var too_near := false
-				for q in placed:
-					if q.distance_to(p) < 12.0:
-						too_near = true
-						break
-				if too_near:
-					continue
-				placed.append(p)
-	# 太多的話按商業權重砍尾巴（村心的先留）
-	if placed.size() > LAMP_MAX:
-		placed.sort_custom(func(u, v): return _commerce(u) > _commerce(v))
-		placed.resize(LAMP_MAX)
-	for i in placed.size():
-		var p: Vector2 = placed[i]
+func _build_lamps() -> void:
+	var g := lib.add(_root, Node3D.new(), "街燈")
+	var wood := lib.pbr("行灯柱", "dark_wood", 2.4, Color(0.42, 0.40, 0.37))
+	var stone := lib.pbr("行灯台石", "stone_flag", 1.8, Color(0.50, 0.51, 0.49))
+	var paper := lib.flat_mat("行灯紙", Color(0.93, 0.87, 0.72), 0.6,
+		Color(0.34, 0.245, 0.115))
+	var n := 0
+	for a in LAMP_ANCHORS:
+		var p := Vector2(float(a[0]), float(a[1]))
+		if _pt_reserved(p, 0.8):
+			continue
 		var lamp := Node3D.new()
 		lamp.position = Vector3(p.x, height_at(p.x, p.y), p.y)
-		lib.add(g, lamp, "街燈_%d" % i)
-		lib.cyl(lamp, "柱", 0.055, 0.075, 3.2, iron, Vector3(0, 1.6, 0), 8)
-		lib.box(lamp, "燈頭", Vector3(0.38, 0.46, 0.38), glow, Vector3(0, 3.35, 0))
-		lib.box(lamp, "燈帽", Vector3(0.52, 0.1, 0.52), iron, Vector3(0, 3.63, 0))
+		lamp.rotation.y = 0.35 * float((n * 7) % 5 - 2) * 0.25   # わずかな振れ
+		lib.add(g, lamp, "街燈_%d" % n)
+		# 台石 → 角柱 → 紙の火袋（木の框）→ 木の笠。全て直方 —— 旋盤の丸柱は無い
+		lib.box(lamp, "台石", Vector3(0.50, 0.22, 0.50), stone, Vector3(0, 0.11, 0))
+		lib.box(lamp, "柱", Vector3(0.13, 1.85, 0.13), wood, Vector3(0, 0.22 + 0.925, 0))
+		lib.box(lamp, "火袋", Vector3(0.36, 0.44, 0.36), paper, Vector3(0, 2.32, 0))
+		# 火袋の框：四隅の細い柱だけ。⚠ 側板 2 枚で作った初版は紙の箱の
+		#   前面が真っ黒な板になった（描画で確認）—— 紙は四面とも見せる。
+		for ci in 4:
+			lib.box(lamp, "框_%d" % ci, Vector3(0.05, 0.50, 0.05), wood,
+				Vector3((-1.0 if ci % 2 == 0 else 1.0) * 0.165, 2.32,
+					(-1.0 if ci < 2 else 1.0) * 0.165))
+		lib.box(lamp, "笠", Vector3(0.56, 0.06, 0.56), wood, Vector3(0, 2.60, 0))
+		lib.box(lamp, "笠上", Vector3(0.34, 0.05, 0.34), wood, Vector3(0, 2.65, 0))
 		var li := OmniLight3D.new()
-		li.position = Vector3(0, 3.3, 0)
-		li.light_color = Color(1.0, 0.78, 0.5)
-		li.light_energy = 1.2
-		li.omni_range = 9.0
+		li.position = Vector3(0, 2.32, 0)
+		li.light_color = Color(1.0, 0.76, 0.46)
+		li.light_energy = 1.1
+		li.omni_range = 8.0
 		li.shadow_enabled = false
 		# ⚠ 燈本體 _perf_pass 會設距離淡出，但**燈光不是 MeshInstance3D**，
-		# 不會被掃到。44 盞全程開著的話遠景白付一筆 —— 自己設距離淡出。
+		# 不會被掃到 —— 自己設距離淡出。
 		li.distance_fade_enabled = true
 		li.distance_fade_begin = 55.0
 		li.distance_fade_length = 15.0
 		lib.add(lamp, li, "光")
-	_audit.append("街燈 %d 盞（間距吃商業梯度：村心 17m、村緣 48m）" % placed.size())
+		n += 1
+	_audit.append("街燈 %d 盞（辻行灯：門・辻・社前・市の口・橋詰だけ。等間隔配置は廃止）" % n)
+
 
 
 # ══════════════ 水邊 MIGRATE：動物／水生植物 ══════════════

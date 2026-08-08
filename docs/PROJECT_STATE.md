@@ -4,7 +4,7 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Human Village — Architecture Complete: 0 legacy residential blockout).
+Last updated: 2026-08-08 (Human Village — Main Street Complete).
 
 ---
 
@@ -19,29 +19,24 @@ Rule: `.claude/rules/execution-modes.md`.
 
 ## Current Phase
 
-**Human Village — Architecture Complete. Delivered.**
+**Human Village — Main Street Complete. Delivered** (after Architecture
+Complete, same day). 本通 now reads as an inhabited street north to south:
 
-Completion condition was *"normal gameplay views contain no obvious
-legacy/blockout residential architecture."* Met: all **170** houses are
-production kit, and `village.tscn` contains **zero** references to
-`machiya_e_a` / `f_b` / `b_a` / `b_b`.
+- 174 m civic-core gap re-fronted by **extending landmark frontage**: 寺子屋
+  board fence + roofed gate, 稲荷小祠, 鎮守之杜 玉垣 + torii, a walled
+  二蔵 compound (market storehouses) on the east side, market 幟 ×5 + 木戸 +
+  goods spill, hedges by 足洗邸, 5 street trees. Road axis/width, landmark
+  identity, portals, circulation untouched.
+- N2 上屋 rebuilt as a lean-to (下屋): rear wall, 沓石+貫+方杖, exposed
+  rafters, packed-earth floor — no longer a bus shelter.
+- Gutter lids: uv 0.30→1.9, darker, thinner, sunk flush.
+- Street lamps: municipal fixture + even spacing replaced by 木の辻行灯 at
+  14 fixed anchors (gates, crossings, shrine, market, bridge, bathhouse).
+  Lighting phase NOT started.
 
-| module | houses | fw / fd / h | pitch | faces | mats | replaced |
-|---|---|---|---|---|---|---|
-| `machiya_f_a` | 50 | 9.56 / 9.53 / 5.42 | 21° | 2834 | 6 | — |
-| `machiya_e_p` 村緣の平屋 | 49 | 7.94 / 7.88 / 4.17 | 19° | 1712 | 6 | `e_a` |
-| `machiya_f_m` 米屋 | 32 | 10.74 / 9.29 / 4.62 | 21° | 2610 | 6 | `f_b` |
-| `machiya_n_a` 総二階 | 20 | 11.14 / 9.29 / 7.67 | 23° | 3620 | 6 | `b_a` |
-| `machiya_n_o` 総二階の大店 | 16 | 12.34 / 9.69 / 8.55 | 24° | 4374 | 6 | `b_b` |
-| `machiya_t_a` | 2 | 7.96 / 10.66 / 5.72 | 23° | 2408 | 6 | — |
-| `machiya_f_n` | 1 | 9.96 / 9.90 / 6.42 | 21° | 3488 | 6 | — |
-
-Each replacement's **fw matches what it replaced exactly**, so layout, house
-count (170) and reservations are unchanged. Composition detail and the
-honest trade-offs are in `ningen-no-sato.md` §12.
-
-Legacy `.glb` files are kept on disk but are no longer referenced by village
-generation. `maps/slice/` never contained them.
+Measured: z=−60 southward FOV median 99→43 m; near-field (<60 m) occlusion
+20→52%; no frontage-less stretch over 40 m remains in the core gap.
+Details and honest leftovers: `ningen-no-sato.md` §13.
 
 ## Current Status
 
