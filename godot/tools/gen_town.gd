@@ -3144,10 +3144,16 @@ func _build_pilot_node() -> void:
 			[Vector2(jx, jz), 1.0, 0.8], [Vector2(TX - 2.0, TZ + 2.4), 2.4, 2.6],
 			[Vector2(tx2, tz2), 1.3, 1.3]]
 	var cut := 0
-	var gl := _root.get_node_or_null("草層")
-	if gl != null:
-		for ch in gl.get_children():
-			if not (ch is MultiMeshInstance3D):
+	# ⚠ 一度目は `_root.get_node_or_null("草層")` を見ていたが、草の
+	# MultiMesh は **_root 直下**に個別の名前（Shrubs / Ferns / …）で
+	# ぶら下がっている。null が返って**フィルタが黙って何もしていなかった**
+	# （"0 叢を除去" は「無かった」ではなく「探せていなかった」）。
+	# 実測では辻の足元に草は 0 本なので絵は変わらないが、発火しない
+	# 安全網を残すのは嘘なので直す。
+	const GRASS_NODES := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
+	if true:
+		for ch in _root.get_children():
+			if not (ch is MultiMeshInstance3D) or not (String(ch.name) in GRASS_NODES):
 				continue
 			var mm: MultiMesh = (ch as MultiMeshInstance3D).multimesh
 			var keep: Array[Transform3D] = []
