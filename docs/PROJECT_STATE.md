@@ -4,17 +4,17 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Phase 3.1A section correction, awaiting Art Review).
+Last updated: 2026-08-08 (Phase 3.1B fire-watch crossing, awaiting Art Review).
 
 ---
 
 ## Current Phase
 
-**Phase 3.1A — street-section correction** on the pilot corridor.
-Setback/jog tightened, packed-earth apron + gutter + kerb + stepping-stone
-transition extended through the north-gate corridor. Built; **awaiting Art
-Review**. Do not roll out to the remaining 36 blocks; 3.1B (辻 / sight line /
-tower) not started.
+**Phase 3.1B — the fire-watch crossing** (火の番の辻) at z=−135.
+半鐘 on the tower, 天水桶 ×5, 番小屋 (subordinate), 高札場, gate-facing 地藏,
+one framing tree. The crossing itself is kept as open space. Built;
+**awaiting Art Review**. Do not roll out to the remaining 36 blocks; the
+490 m sight line is not started.
 
 ## Current Status
 

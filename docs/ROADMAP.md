@@ -27,14 +27,12 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 
 ## CURRENT
 
-**Phase 3.1A — street-section correction** on the pilot corridor
-(setback, verge, transition layer). Zero drift outside the corridor, all
-five gates green. Awaiting Art Review.
+**Phase 3.1B — the fire-watch crossing.** 3.1A (section) approved; 3.1B
+built and awaiting Art Review. Zero drift outside the corridor on the two
+dumped layers, all five gates green.
 
-Next after approval: **Phase 3.1B** — design the z=−135 crossing as a
-deliberate 辻 (propose well / notice board / 地藏 / tree composition first),
-then the 490 m sight line, treating the fire-watch tower as part of the
-composition problem.
+Next after approval: the **490 m sight line** on 本通, then full rollout
+(still blocked on the 9–10 m back-row module gap).
 
 ## NEXT
 
