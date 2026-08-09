@@ -711,6 +711,134 @@ def make_zaru():
     export(mesh_from("prop_zaru", v, f, col, smooth=False), "prop_zaru")
 
 
+def make_business_front(name, role):
+    """Reusable, geometry-led shopfront identity assembled at a facade origin.
+
+    Blender -Y is the street side (Godot +Z after export).  Every family fits
+    within a 4.8 m frontage and projects less than 0.95 m, so the village can
+    instance these against existing machiya without changing their structure.
+    """
+    clear()
+    parts = []
+
+    def bx(x, y, z, w, d, h):
+        parts.append(box_verts(x, y, z, w, d, h))
+
+    # Shared construction vocabulary: sill, two posts, lintel and deep threshold.
+    bx(0, -0.08, 0.08, 4.6, 0.34, 0.16)
+    bx(-2.18, -0.04, 1.22, 0.16, 0.22, 2.44)
+    bx(2.18, -0.04, 1.22, 0.16, 0.22, 2.44)
+    bx(0, -0.04, 2.34, 4.5, 0.24, 0.16)
+
+    if role == "sake":
+        # Open selling ledge, three standing casks and a cedar-ball bracket.
+        bx(-0.55, -0.55, 0.55, 2.55, 0.78, 0.16)
+        for x in (-1.25, -0.55, 0.15):
+            parts.append(sweep([(x, -0.68, 0.12), (x, -0.68, 0.82)],
+                               [0.34, 0.39], sides=10))
+            parts.append(sweep([(x, -0.68, 0.20), (x, -0.68, 0.74)],
+                               [0.355, 0.405], sides=10, close_start=False,
+                               close_end=False))
+        bx(1.35, -0.28, 1.72, 0.12, 0.58, 1.14)
+        bx(1.62, -0.55, 2.20, 0.68, 0.12, 0.12)
+        parts.append(sweep([(1.62, -0.55, 2.10), (1.62, -0.55, 1.62)],
+                           [0.05, 0.42], sides=10))
+        parts.append(cloth_strip(0.25, 2.16, 2.15, 0.64, rows=5, cols=5,
+                                 sway=0.055, bow=0.025, phase=0.2))
+    elif role == "rice":
+        # Broad open bay, raised bale deck and two visibly crossed bale tiers.
+        bx(0.25, -0.52, 0.34, 3.55, 0.82, 0.18)
+        for row, z in enumerate((0.58, 1.02)):
+            for i in range(3 - row):
+                x = -0.75 + i * 0.78 + row * 0.36
+                parts.append(sweep([(x, -0.61, z - 0.24), (x, -0.61, z + 0.24)],
+                                   [0.30, 0.30], sides=10))
+                parts.append(sweep([(x, -0.61, z - 0.17), (x, -0.61, z + 0.17)],
+                                   [0.315, 0.315], sides=10, close_start=False,
+                                   close_end=False))
+        bx(-1.72, -0.24, 1.25, 0.12, 0.50, 1.82)
+        bx(1.75, -0.24, 1.25, 0.12, 0.50, 1.82)
+        bx(0.02, -0.45, 1.86, 3.58, 0.12, 0.12)
+    elif role == "dye":
+        # Dye vats at ground level and a real projecting drying rack with cloth.
+        for x in (-1.25, 1.25):
+            parts.append(sweep([(x, -0.63, 0.08), (x, -0.63, 0.54)],
+                               [0.38, 0.46], sides=12))
+        for x in (-1.72, 1.72):
+            bx(x, -0.56, 1.28, 0.12, 0.12, 2.28)
+        bx(0, -0.56, 2.34, 3.62, 0.14, 0.14)
+        for x, h, ph in ((-1.05, 1.48, 0.1), (0.0, 1.72, 0.4), (1.02, 1.34, 0.7)):
+            parts.append(cloth_strip(x, 2.24, 0.72, h, rows=7, cols=3,
+                                     sway=0.09, bow=0.04, phase=ph))
+    elif role == "goods":
+        # Two-depth display shelves with differently sized functional bins.
+        for z in (0.42, 0.96, 1.50):
+            bx(0.32, -0.50, z, 3.25, 0.62, 0.12)
+        for x in (-1.25, -0.15, 0.92):
+            bx(x, -0.70, 0.30, 0.72, 0.60, 0.50)
+        for x in (-1.18, 0.18, 1.22):
+            parts.append(sweep([(x, -0.62, 1.04), (x, -0.62, 1.32)],
+                               [0.28, 0.34], sides=8))
+        bx(-1.72, -0.20, 1.12, 0.12, 0.46, 1.90)
+        bx(1.95, -0.20, 1.12, 0.12, 0.46, 1.90)
+    elif role == "inn":
+        # Deep double threshold, full-width noren and paired lantern brackets.
+        bx(0, -0.56, 0.18, 4.10, 0.96, 0.20)
+        bx(0, -0.18, 1.18, 0.16, 0.22, 2.10)
+        parts.append(cloth_strip(0, 2.16, 3.65, 0.82, rows=6, cols=8,
+                                 sway=0.07, bow=0.035, phase=0.55))
+        for x in (-1.82, 1.82):
+            bx(x, -0.48, 2.05, 0.72, 0.10, 0.10)
+            parts.append(sweep([(x, -0.48, 1.94), (x, -0.48, 1.37)],
+                               [0.10, 0.22], sides=10))
+    elif role == "closed":
+        # Closed shutters are geometry, not a recolour: six plank leaves, lattice
+        # transom, stone threshold and a modest side bench.
+        for i in range(6):
+            x = -1.70 + i * 0.68
+            bx(x, -0.16, 1.05, 0.58, 0.12, 1.82)
+            bx(x, -0.235, 1.05, 0.035, 0.035, 1.68)
+        for i in range(9):
+            bx(-1.84 + i * 0.46, -0.18, 2.02, 0.045, 0.09, 0.48)
+        bx(0, -0.28, 0.14, 4.0, 0.55, 0.22)
+        bx(1.45, -0.57, 0.48, 1.20, 0.40, 0.12)
+        bx(1.02, -0.57, 0.25, 0.10, 0.34, 0.46)
+        bx(1.88, -0.57, 0.25, 0.10, 0.34, 0.46)
+    elif role == "workshop":
+        # Open work bay, asymmetric lean-to edge, trestle and sorted timber stock.
+        bx(-0.62, -0.58, 0.70, 2.25, 0.92, 0.18)
+        bx(-1.55, -0.58, 0.40, 0.12, 0.72, 0.70)
+        bx(0.30, -0.58, 0.40, 0.12, 0.72, 0.70)
+        bx(1.20, -0.24, 1.32, 0.14, 0.66, 2.20)
+        bx(1.68, -0.53, 2.18, 1.12, 0.14, 0.14)
+        for i in range(6):
+            z = 0.16 + i * 0.14
+            bx(1.48, -0.67, z, 1.28 - i * 0.05, 0.16, 0.10)
+        for x in (-1.25, -0.08):
+            parts.append(sweep([(x, -0.72, 0.14), (x, -0.72, 0.92)],
+                               [0.055, 0.055], sides=6))
+
+    v, f = merge(*parts)
+
+    def col(co, normal):
+        # One shared vertex-colour material for all seven families.  Colour helps
+        # legibility, but role identity comes from the compositions above.
+        if role == "dye" and co.y < -0.45 and co.z > 0.65:
+            base = AI_LT
+        elif role == "rice" and co.y < -0.42:
+            base = STRAW
+        elif role == "sake" and co.y < -0.45 and co.z < 1.15:
+            base = W_ST
+        elif role == "closed":
+            base = W_DK
+        else:
+            base = W_LT if co.z > 1.75 else W_ST
+        light = 0.82 + 0.22 * max(0.0, normal.z) + 0.08 * max(0.0, -normal.y)
+        return tuple(min(1.0, c * light) for c in base)
+
+    export(mesh_from(name, v, f, col, smooth=False), name)
+
+
 make_chochin()
 make_zaru()
 make_sugidama()
@@ -727,4 +855,6 @@ make_aigame()
 make_monohoshi()
 make_kanban_tate()
 make_takigi()
+for _role in ("sake", "rice", "dye", "goods", "inn", "closed", "workshop"):
+    make_business_front("facade_%s" % _role, _role)
 print("done")

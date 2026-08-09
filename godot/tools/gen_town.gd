@@ -1680,6 +1680,27 @@ func _commerce(p: Vector2) -> float:
 	w += clampf(1.0 - (p - Vector2(50, 2)).length() / 40.0, 0.0, 1.0) * 0.30
 	return clampf(w, 0.0, 1.0)
 
+
+func _identity_role(kind: String, p: Vector2) -> String:
+	## Stable business identity from the existing household and lot coordinate.
+	## This consumes no shared RNG, so vegetation and unrelated dressing do not drift.
+	var trade: float = _commerce(p)
+	if trade < 0.34:
+		return ""
+	var hx: int = int(round(p.x * 10.0)) * 73856093
+	var hz: int = int(round(p.y * 10.0)) * 19349663
+	var h: int = absi(hx ^ hz)
+	if kind == "machiya_w_a":
+		return "workshop"
+	if kind == "machiya_f_o" or (kind == "machiya_n_o" and trade > 0.62):
+		return "inn"
+	if kind == "machiya_f_m" and h % 3 == 0:
+		return "rice"
+	if h % 100 >= 68:
+		return ""
+	var roles: Array[String] = ["sake", "rice", "dye", "goods", "closed", "inn", "workshop"]
+	return roles[h % roles.size()]
+
 func _pt_reserved(p: Vector2, margin: float) -> bool:
 	for q in _reserved:
 		var d: Vector2 = p - q[0]
@@ -1748,6 +1769,10 @@ func _build_density() -> void:
 		var half_w: float = float(m["w"]) * 0.5
 		# 村緣小屋是住家：吊掛機率砍半，招牌不掛
 		var shop := 1.0 if kind != "machiya_e_a" else 0.45
+		var identity: String = _identity_role(kind, pos)
+		if identity != "":
+			_dxf("facade_%s" % identity, pos + ax * door_x + fwd * 0.45, hy, yaw)
+			continue
 		# 暖簾：門楣下。寬的門掛五巾藍染，窄的掛四巾柿渋
 		if _drng.randf() < (0.06 + 0.85 * wgt) * shop:
 			var nk := "prop_noren_a" if (door_w > 1.9 and _drng.randf() < 0.7) \
@@ -1885,7 +1910,7 @@ func _build_density() -> void:
 		var m4: Dictionary = _mods[k4]
 		var f4: Dictionary = m4.get("facade", {})
 		var hs: Dictionary = f4.get("hisashi", {})
-		if hs.is_empty():
+		if hs.is_empty() and not f4.has("door_x"):
 			continue                      # legacy（machiya_e_a）は対象外
 		var p4 := Vector2(float(e4[1]), float(e4[3]))
 		var y4: float = float(e4[2])
@@ -1895,7 +1920,15 @@ func _build_density() -> void:
 		var hw4: float = float(m4["w"]) * 0.5
 		var dx4: float = float(f4["door_x"])
 		var w4 := _commerce(p4)
+		var identity4: String = _identity_role(k4, p4)
+		if identity4 != "":
+			_dxf("facade_%s" % identity4, p4 + ax4 * dx4 + fw4 * 0.45,
+				y4, yw)
+			n_dress += 1
+			continue
 		# 庇の下端＝吊り物の天井。前桁より内側に寄せる
+		if hs.is_empty():
+			continue
 		var hz: float = minf(0.84, float(hs["proj"]) - float(hs["beam_back"]))
 		var ceil_y: float = y4 + float(hs["z"]) \
 			- hz * tan(deg_to_rad(float(hs["slope"]))) - float(hs["thick"]) - 0.035

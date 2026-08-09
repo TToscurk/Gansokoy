@@ -1161,3 +1161,21 @@ families. `machiya_f_a` falls from 50 → 41, while `machiya_f_s` and
 2 → 4. Fixed-camera evidence is in `shots2/village_arch_streets/` (`before`,
 `after_round1`, `after`). The fire tower and torii sightlines remain open in
 both eye-level and elevated main-street views.
+
+## Human Village asset identity production pass (2026-08-09)
+
+`assets/blender/make_facade.py` now exports seven genuinely different frontage
+families: sake, rice, dye, general goods, inn, closed residence, and workshop.
+Differences are geometric and functional (open bays, shutters, display ledges,
+casks, bales, cloth racks, shelves, lantern brackets, thresholds, and workshop
+stock), rather than transform or colour-only variants. `gen_town.gd` assigns
+these families from a coordinate hash without consuming the shared RNG stream
+and emits one MultiMesh batch per used family.
+
+Measured density changed from 210 to 184 instances: generic prop instances
+149 to 114, replaced by 9 composed frontage instances. Seven GLBs add seven
+unique meshes, no unique materials, and at most seven batched draw calls.
+Fixed-camera evidence is under `shots2/village_asset_identity/` (`before`,
+`after_round1`, `after_round2`, `after_final`). The final wide views preserve
+the fire tower, torii, market, roads, and village-edge composition; the remaining
+weakness is role readability at the longest main-street camera distance.
