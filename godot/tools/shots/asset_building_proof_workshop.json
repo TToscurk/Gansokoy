@@ -1,0 +1,7 @@
+[
+  {"name":"01_workshop_front","cam":[14,4.4,19],"look":[14,2.8,0],"time":10.5},
+  {"name":"02_workshop_45","cam":[25,5.4,17],"look":[14,2.8,0],"time":10.5},
+  {"name":"03_workshop_rear_45","cam":[25,5.4,-17],"look":[14,2.8,0],"time":10.5},
+  {"name":"04_workshop_side","cam":[31,4.8,0],"look":[14,2.8,0],"time":10.5},
+  {"name":"05_lineup","cam":[0,8.0,35],"look":[0,2.8,0],"time":10.5}
+]
