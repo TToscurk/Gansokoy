@@ -215,3 +215,19 @@ street, market context, and selected civic junctions: merchant gable, restrained
 udatsu, balcony/drying frontage, and storage-loft canopy. Deterministic overlays
 preserve host footprints, OBBs, setbacks, routes, landmarks, vegetation, and
 lighting while adding medium-distance upper-bay and sign-bracket silhouettes.
+
+## Human Village Phase 2A building-family candidate (2026-08-09)
+
+Phase 2A adds a standalone, Blender-generated asset library for four approved
+families without changing Human Village placement: six Standard Machiya
+residential recipes, three continuous-roof Nagaya recipes, three standalone
+Kura recipes, and five Small Merchant recipes. Standard Machiya reuses the
+production `machiya_f_a`, `machiya_f_n`, and `machiya_t_a` structures; Small
+Merchant reuses `machiya_f_s` and `machiya_f_m`. Nagaya and Kura are new full
+building systems. All seventeen GLBs retain the six shared semantic material
+slots.
+
+The isolated review scene is `maps/asset_family_showcase/`; fixed evidence is
+under `shots2/asset_family_phase2a/`. The targeted correction strengthened the
+Nagaya entry rhythm and closed the Kura roof with a plaster front gable. This
+library is awaiting Human Art Review and is not approved for village rollout.

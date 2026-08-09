@@ -1,0 +1,12 @@
+[
+  {"name":"01_standard_front","cam":[-60,3.5,52],"look":[-60,2.7,37.5],"time":10.5},
+  {"name":"02_standard_45","cam":[-71,5.2,50],"look":[-60,2.6,38.0],"time":10.5},
+  {"name":"03_nagaya_front","cam":[-20,3.7,56],"look":[-20,2.4,38.0],"time":10.5},
+  {"name":"04_nagaya_45","cam":[-35,5.3,52],"look":[-20,2.4,38.0],"time":10.5},
+  {"name":"05_kura_front","cam":[20,3.5,51],"look":[20,2.8,38.0],"time":10.5},
+  {"name":"06_kura_45","cam":[10,5.0,49],"look":[20,2.7,38.0],"time":10.5},
+  {"name":"07_small_merchant_front","cam":[60,3.3,53],"look":[60,2.2,38.0],"time":10.5},
+  {"name":"08_small_merchant_45","cam":[49,4.8,50],"look":[60,2.2,38.0],"time":10.5},
+  {"name":"09_four_family_lineup","cam":[-6,4.0,8],"look":[-6,2.5,-22],"time":10.5},
+  {"name":"10_elevated_roofscape","cam":[-6,22,15],"look":[-6,1.8,-21],"time":10.5}
+]

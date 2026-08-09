@@ -1,0 +1,361 @@
+{
+  "recipes": [
+    {
+      "name": "family_standard_machiya_01",
+      "glb": "godot/assets/models/family_standard_machiya_01.glb",
+      "dimensions": [
+        9.56,
+        11.605,
+        5.42
+      ],
+      "faces": 3366,
+      "triangles": 3366,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1688,
+        "WOOD_LT": 140,
+        "PLASTER": 462,
+        "STONE": 30,
+        "KAWARA": 1016,
+        "SHOJI": 30
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_standard_machiya_02",
+      "glb": "godot/assets/models/family_standard_machiya_02.glb",
+      "dimensions": [
+        9.56,
+        11.595,
+        5.42
+      ],
+      "faces": 3390,
+      "triangles": 3390,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1698,
+        "WOOD_LT": 140,
+        "PLASTER": 464,
+        "STONE": 30,
+        "KAWARA": 1028,
+        "SHOJI": 30
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_standard_machiya_03",
+      "glb": "godot/assets/models/family_standard_machiya_03.glb",
+      "dimensions": [
+        7.96,
+        12.605,
+        5.72
+      ],
+      "faces": 2906,
+      "triangles": 2906,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1420,
+        "WOOD_LT": 130,
+        "PLASTER": 402,
+        "STONE": 30,
+        "KAWARA": 904,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_standard_machiya_04",
+      "glb": "godot/assets/models/family_standard_machiya_04.glb",
+      "dimensions": [
+        9.96,
+        11.995,
+        6.42
+      ],
+      "faces": 4144,
+      "triangles": 4144,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 2582,
+        "WOOD_LT": 140,
+        "PLASTER": 234,
+        "STONE": 30,
+        "KAWARA": 1068,
+        "SHOJI": 90
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_standard_machiya_05",
+      "glb": "godot/assets/models/family_standard_machiya_05.glb",
+      "dimensions": [
+        9.96,
+        12.005,
+        6.42
+      ],
+      "faces": 4120,
+      "triangles": 4120,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 2572,
+        "WOOD_LT": 140,
+        "PLASTER": 232,
+        "STONE": 30,
+        "KAWARA": 1056,
+        "SHOJI": 90
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_standard_machiya_06",
+      "glb": "godot/assets/models/family_standard_machiya_06.glb",
+      "dimensions": [
+        7.96,
+        12.595,
+        5.72
+      ],
+      "faces": 2930,
+      "triangles": 2930,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1430,
+        "WOOD_LT": 130,
+        "PLASTER": 404,
+        "STONE": 30,
+        "KAWARA": 916,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_nagaya_03bay",
+      "glb": "godot/assets/models/family_nagaya_03bay.glb",
+      "dimensions": [
+        13.62,
+        10.61,
+        4.95
+      ],
+      "faces": 734,
+      "triangles": 734,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 520,
+        "WOOD_LT": 100,
+        "PLASTER": 10,
+        "STONE": 50,
+        "KAWARA": 24,
+        "SHOJI": 30
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_nagaya_04bay",
+      "glb": "godot/assets/models/family_nagaya_04bay.glb",
+      "dimensions": [
+        19.01,
+        10.61,
+        4.95
+      ],
+      "faces": 948,
+      "triangles": 948,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 670,
+        "WOOD_LT": 140,
+        "PLASTER": 10,
+        "STONE": 60,
+        "KAWARA": 28,
+        "SHOJI": 40
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_nagaya_05bay",
+      "glb": "godot/assets/models/family_nagaya_05bay.glb",
+      "dimensions": [
+        23.01,
+        10.61,
+        4.95
+      ],
+      "faces": 1150,
+      "triangles": 1150,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 820,
+        "WOOD_LT": 170,
+        "PLASTER": 10,
+        "STONE": 70,
+        "KAWARA": 30,
+        "SHOJI": 50
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_kura_compact",
+      "glb": "godot/assets/models/family_kura_compact.glb",
+      "dimensions": [
+        7.3,
+        8.09,
+        5.95
+      ],
+      "faces": 236,
+      "triangles": 236,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 140,
+        "WOOD_LT": 10,
+        "PLASTER": 32,
+        "STONE": 20,
+        "KAWARA": 14,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_kura_loading",
+      "glb": "godot/assets/models/family_kura_loading.glb",
+      "dimensions": [
+        7.9,
+        10.165,
+        5.95
+      ],
+      "faces": 508,
+      "triangles": 508,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 280,
+        "WOOD_LT": 22,
+        "PLASTER": 32,
+        "STONE": 20,
+        "KAWARA": 134,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_kura_deep",
+      "glb": "godot/assets/models/family_kura_deep.glb",
+      "dimensions": [
+        8.3,
+        10.39,
+        5.95
+      ],
+      "faces": 236,
+      "triangles": 236,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 140,
+        "WOOD_LT": 10,
+        "PLASTER": 32,
+        "STONE": 20,
+        "KAWARA": 14,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_small_merchant_01",
+      "glb": "godot/assets/models/family_small_merchant_01.glb",
+      "dimensions": [
+        7.16,
+        9.7,
+        4.87
+      ],
+      "faces": 2012,
+      "triangles": 2012,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1002,
+        "WOOD_LT": 120,
+        "PLASTER": 122,
+        "STONE": 30,
+        "KAWARA": 718,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_small_merchant_02",
+      "glb": "godot/assets/models/family_small_merchant_02.glb",
+      "dimensions": [
+        7.16,
+        10.9,
+        4.87
+      ],
+      "faces": 2034,
+      "triangles": 2034,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1012,
+        "WOOD_LT": 120,
+        "PLASTER": 132,
+        "STONE": 30,
+        "KAWARA": 720,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_small_merchant_03",
+      "glb": "godot/assets/models/family_small_merchant_03.glb",
+      "dimensions": [
+        10.74,
+        11.7,
+        4.62
+      ],
+      "faces": 3024,
+      "triangles": 3024,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1574,
+        "WOOD_LT": 140,
+        "PLASTER": 132,
+        "STONE": 30,
+        "KAWARA": 1128,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_small_merchant_04",
+      "glb": "godot/assets/models/family_small_merchant_04.glb",
+      "dimensions": [
+        10.74,
+        11.7,
+        4.62
+      ],
+      "faces": 3114,
+      "triangles": 3114,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1664,
+        "WOOD_LT": 140,
+        "PLASTER": 132,
+        "STONE": 30,
+        "KAWARA": 1128,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "family_small_merchant_05",
+      "glb": "godot/assets/models/family_small_merchant_05.glb",
+      "dimensions": [
+        7.16,
+        10.9,
+        4.87
+      ],
+      "faces": 2124,
+      "triangles": 2124,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1102,
+        "WOOD_LT": 120,
+        "PLASTER": 132,
+        "STONE": 30,
+        "KAWARA": 720,
+        "SHOJI": 20
+      },
+      "degenerate": 0
+    }
+  ]
+}
