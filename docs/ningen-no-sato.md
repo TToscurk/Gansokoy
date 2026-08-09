@@ -1199,3 +1199,20 @@ Fixed-camera evidence is in `shots2/village_roofscape_upper_facade/` (`before`,
 and firebreak walls. Final views retain the fire-tower and torii sightlines; the
 remaining weakness is that overlay roof surfaces are simpler than the host kawara
 meshes and some firebreak/sign forms remain deliberately blocky at close range.
+
+## Phase 5A market and north-approach pilot (2026-08-09)
+
+The approved pilot is a deterministic substitution layer in `gen_town.gd`, not
+a new settlement pass. It replaces exactly nine pre-existing house lots: six in
+market blocks 221/222 and three on the north approach (blocks 214/215 plus one
+selected front-row lot). Total building population remains 171. The pilot uses
+only approved Phase 2A families and existing Sake Shop, Hatago, and Workshop
+assets; roads, portals, landmark transforms, lighting, and all other districts
+remain unchanged.
+
+The market mix is two Small Merchants, two Standard Machiya, one Workshop, and
+one rear Kura. The north mix is one Hatago, one Sake Shop, and one Small Merchant.
+Specialty assets are aligned behind their frontage plane while family assets keep
+their native front-aligned origin. The final generator checks 178 building OBBs
+with zero overlaps after one measured correction pass. Phase 2B is not a rollout
+prerequisite; subsequent work should remain a district-by-district visual review.

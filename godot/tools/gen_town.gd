@@ -165,6 +165,17 @@ var _roads := []                 # [{pts:[Vector2...], w:float}]
 var _uno_pos := Vector2(1e9, 1e9)   # 鵜呑亭位置（護岸在這段要讓開）
 var _reserved := []                 # 不准蓋町家的 OBB（地標／鵜呑亭／橋）
 
+const PHASE5A_FAMILIES := {
+	"family_standard_machiya_02": {"w": 9.56, "d": 11.60, "h": 5.42, "fw": 9.56, "fd": 11.60, "glb": "res://assets/models/family_standard_machiya_02.glb"},
+	"family_standard_machiya_03": {"w": 7.96, "d": 12.61, "h": 5.72, "fw": 7.96, "fd": 12.61, "glb": "res://assets/models/family_standard_machiya_03.glb"},
+	"family_small_merchant_01": {"w": 7.16, "d": 9.70, "h": 4.87, "fw": 7.16, "fd": 9.70, "glb": "res://assets/models/family_small_merchant_01.glb"},
+	"family_small_merchant_03": {"w": 10.74, "d": 11.70, "h": 4.62, "fw": 10.74, "fd": 11.70, "glb": "res://assets/models/family_small_merchant_03.glb"},
+	"family_kura_compact": {"w": 7.30, "d": 8.09, "h": 5.95, "fw": 7.30, "fd": 8.09, "glb": "res://assets/models/family_kura_compact.glb"},
+	"asset_proof_hatago": {"w": 9.10, "d": 13.00, "h": 7.30, "fw": 9.10, "fd": 13.00, "centered": true, "glb": "res://assets/models/asset_proof_hatago.glb"},
+	"asset_proof_sake_shop": {"w": 12.20, "d": 9.60, "h": 5.30, "fw": 12.20, "fd": 9.60, "centered": true, "glb": "res://assets/models/asset_proof_sake_shop.glb"},
+	"asset_proof_workshop": {"w": 11.30, "d": 9.60, "h": 6.45, "fw": 11.30, "fd": 9.60, "centered": true, "glb": "res://assets/models/asset_proof_workshop.glb"},
+}
+
 
 func _init() -> void:
 	var f := FileAccess.open(MODULES, FileAccess.READ)
@@ -174,6 +185,8 @@ func _init() -> void:
 		return
 	_mods = JSON.parse_string(f.get_as_text())["modules"]
 	f.close()
+	for family in PHASE5A_FAMILIES:
+		_mods[family] = PHASE5A_FAMILIES[family].duplicate(true)
 
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR + "gen"))
 	# 地形噪聲：照抄 gen_village 已驗收的那組（種子也一樣），
@@ -203,6 +216,7 @@ func _init() -> void:
 	_build_hieda_grove()
 	_build_towers()
 	_build_blocks()
+	_apply_phase5a_pilot()
 	_assert_no_overlap()
 	_emit_batches()
 	_build_collision()
@@ -802,7 +816,7 @@ func _in_pilot_xz(x: float, z: float) -> bool:
 ## pilot 回廊：本通・北門側（ブロック 209/210/214/215 の範囲）。
 ## ブロック ID は _dump に残らないので、幾何で判定する。
 func _is_pilot(e: Array) -> bool:
-	return String(e[0]).begins_with("machiya") \
+	return _is_house_kind(String(e[0])) \
 		and absf(float(e[1])) < 40.0 \
 		and float(e[3]) >= -165.0 and float(e[3]) <= -80.0
 
@@ -1406,6 +1420,74 @@ func _build_blocks() -> void:
 		if String(e[0]).begins_with("machiya"):
 			nh += 1
 	_audit.append("街區 → 町家 %d 棟" % nh)
+	# Replay the four Phase 3 pilot configs with their legacy kinds so the
+	# established density RNG stream remains stable after consolidation.
+	_ghosting = true
+	_block(209, c209)
+	_block(210, c210)
+	_ghost_run2 = _ghost.size()
+	_block(214, c214)
+	_block(215, c215)
+	_ghosting = false
+
+
+func _is_house_kind(kind: String) -> bool:
+	return kind.begins_with("machiya") or PHASE5A_FAMILIES.has(kind)
+
+
+func _apply_phase5a_pilot() -> void:
+	var replacements := [
+		{"lot": Vector2(-69.6973, 78.6869), "kind": "family_small_merchant_01"},
+		{"lot": Vector2(-78.8831, 80.2153), "kind": "family_small_merchant_03"},
+		{"lot": Vector2(-89.0626, 78.7573), "kind": "asset_proof_workshop", "move": Vector2(-1.0, 0.0)},
+		{"lot": Vector2(-83.2000, 89.7000), "kind": "family_standard_machiya_02"},
+		{"lot": Vector2(-61.6623, 90.1261), "kind": "family_standard_machiya_03"},
+		{"lot": Vector2(-75.6838, 104.7178), "kind": "family_kura_compact"},
+		{"lot": Vector2(-6.1034, -150.3902), "kind": "asset_proof_hatago", "move": Vector2(0.0, 0.3)},
+		{"lot": Vector2(6.7199, -150.0819), "kind": "asset_proof_sake_shop", "move": Vector2(0.0, -2.7)},
+		{"lot": Vector2(-5.6500, -116.7000), "kind": "family_small_merchant_01"},
+	]
+	var changed := 0
+	for spec in replacements:
+		var best := -1
+		var best_d := 0.35
+		for i in _dump.size():
+			if not String(_dump[i][0]).begins_with("machiya"):
+				continue
+			var p := Vector2(float(_dump[i][1]), float(_dump[i][3]))
+			var d: float = p.distance_to(spec["lot"])
+			if d < best_d:
+				best = i
+				best_d = d
+		if best < 0:
+			push_error("PHASE 5A lot missing near %s" % str(spec["lot"]))
+			continue
+		var e: Array = _dump[best]
+		var new_kind: String = spec["kind"]
+		var yaw: float = float(e[4])
+		if bool(_mods[new_kind].get("centered", false)):
+			var fwd := Vector2(sin(yaw), cos(yaw))
+			var shift: float = float(_mods[new_kind]["d"]) * 0.5 - 0.85
+			e[1] = float(e[1]) - fwd.x * shift
+			e[3] = float(e[3]) - fwd.y * shift
+			e[2] = bank_h(float(e[1]), float(e[3]))
+		var move: Vector2 = spec.get("move", Vector2.ZERO)
+		e[1] = float(e[1]) + move.x
+		e[3] = float(e[3]) + move.y
+		e[2] = bank_h(float(e[1]), float(e[3]))
+		e[0] = new_kind
+		changed += 1
+	_batch.clear()
+	for e in _dump:
+		var kind := String(e[0])
+		if not _is_house_kind(kind):
+			continue
+		var xf := Transform3D(Basis(Vector3.UP, float(e[4])),
+			Vector3(float(e[1]), float(e[2]), float(e[3])))
+		if not _batch.has(kind):
+			_batch[kind] = []
+		_batch[kind].append(xf)
+	_audit.append("PHASE 5A curated pilot: %d lots replaced" % changed)
 
 
 # ── 重疊自驗（OBB / SAT，含出簷）──
@@ -1419,15 +1501,6 @@ func _build_blocks() -> void:
 	# ⚠ ghost には **原本の cfg** をそのまま渡す（_kitify を通さない）。
 	#   setback も jog も kinds も legacy のまま再現しないと、_drng の
 	#   消費数が legacy と一致せず zero-drift が崩れる。
-	_ghosting = true
-	_block(209, c209)
-	_block(210, c210)
-	_ghost_run2 = _ghost.size()
-	_block(214, c214)
-	_block(215, c215)
-	_ghosting = false
-
-
 func _obb_of(e: Array) -> Array:
 	## 從模組的 **Godot 局部 bbox（gbox）** 建世界 OBB。
 	## ⚠ 舊版只吃 fw/fd 又假設「原點在正面、往後長 fd」—— 那只對町家成立。
@@ -1435,8 +1508,13 @@ func _obb_of(e: Array) -> Array:
 	## 於是自檢對它們**結構性全盲**：印著「0 穿插 ✓」，實際有 3 對互穿
 	## （鵜呑亭 × 河畔町家 6.8m、鵜呑亭 × 主橋 2.3m）。gbox 一律照實量。
 	var m: Dictionary = _mods[e[0]]
-	var gb: Array = m.get("gbox", [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
-		-float(m["fd"]) + 0.85, 0.85])
+	var gb: Array
+	if bool(m.get("centered", false)):
+		gb = [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
+			-float(m["fd"]) * 0.5, float(m["fd"]) * 0.5]
+	else:
+		gb = m.get("gbox", [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
+			-float(m["fd"]) + 0.85, 0.85])
 	var yaw: float = e[4]
 	var ax := Vector2(cos(yaw), -sin(yaw))          # Basis(UP,yaw).x 在 XZ 上
 	var az := Vector2(sin(yaw), cos(yaw))           # Basis(UP,yaw).z
@@ -1545,12 +1623,14 @@ func _build_collision() -> void:
 	body.owner = _root
 	var n := 0
 	for e in _dump:
-		if not String(e[0]).begins_with("machiya"):
+		if not _is_house_kind(String(e[0])):
 			continue
 		var m: Dictionary = _mods[e[0]]
 		var yaw: float = e[4]
 		var fwd := Vector2(sin(yaw), cos(yaw))
-		var c := Vector2(e[1], e[3]) - fwd * (float(m["d"]) * 0.5)
+		var c := Vector2(e[1], e[3])
+		if not bool(m.get("centered", false)):
+			c -= fwd * (float(m["d"]) * 0.5)
 		var sh := CollisionShape3D.new()
 		var bx := BoxShape3D.new()
 		bx.size = Vector3(float(m["w"]), float(m["h"]), float(m["d"]))
@@ -1850,7 +1930,7 @@ func _build_density() -> void:
 	# 消費しないので後続に影響しない）。
 	var house_obbs: Array = []
 	for e2 in stream:
-		if String(e2[0]).begins_with("machiya"):
+		if _is_house_kind(String(e2[0])):
 			house_obbs.append(_obb_of(e2))
 	var n_tree := 0
 	for grp in [{"sites": SAKURA_SITES, "kinds": ["tree_sakura_a", "tree_sakura_b"]},

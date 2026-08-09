@@ -231,3 +231,18 @@ The isolated review scene is `maps/asset_family_showcase/`; fixed evidence is
 under `shots2/asset_family_phase2a/`. The targeted correction strengthened the
 Nagaya entry rhythm and closed the Kura roof with a plaster front gable. This
 library is awaiting Human Art Review and is not approved for village rollout.
+
+## Human Village Phase 5A market + north-approach pilot (2026-08-09)
+
+Phase 5A replaces nine existing lots without changing the 171-building count,
+roads, portals, landmarks, lighting, or rollout outside the approved pilot.
+Market blocks 221/222 receive two Small Merchants, two Standard Machiya, one
+Workshop, and one subordinate rear Kura. The north approach receives one
+Hatago, one Sake Shop, and one Small Merchant. One measured correction pass
+resolved three building OBB conflicts; the final 178-OBB check reports zero
+overlaps. Fixed before/after evidence is local under `shots2/village_phase5a/`.
+
+The fire-tower and torii sightlines, market circulation, and low north-entry
+transition remain open. Phase 2B is not required before a controlled Phase 5B:
+the approved Phase 2A families are technically suitable, although distant role
+readability should continue to be reviewed district by district.
