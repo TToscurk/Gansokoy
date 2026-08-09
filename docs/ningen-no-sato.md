@@ -1179,3 +1179,23 @@ Fixed-camera evidence is under `shots2/village_asset_identity/` (`before`,
 `after_round1`, `after_round2`, `after_final`). The final wide views preserve
 the fire tower, torii, market, roads, and village-edge composition; the remaining
 weakness is role readability at the longest main-street camera distance.
+
+## Human Village roofscape and upper-facade identity pass (2026-08-09)
+
+`assets/blender/make_facade.py` exports four collisionless architectural overlay
+families: `roofline_gable`, `roofline_udatsu`, `roofline_balcony`, and
+`roofline_store`. They add real upper-storey geometry—different bay rhythms,
+shutters/lattice, drying frontage, storage openings, projecting sign standards,
+front gables, attached lower roofs, asymmetric canopy depth, and firebreak cheeks.
+
+`gen_town.gd::_roofline_role()` assigns 22 instances only along the north-south
+main street, the east-west civic street, and the market context using a stable
+coordinate hash. The assets remain within the existing host frontage and add no
+collision, materials, ground props, lighting, or vegetation changes. Four shared
+MultiMesh batches are the maximum draw-call increase.
+
+Fixed-camera evidence is in `shots2/village_roofscape_upper_facade/` (`before`,
+`after_round1`, `after`). The correction round reduced oversized dark roof blocks
+and firebreak walls. Final views retain the fire-tower and torii sightlines; the
+remaining weakness is that overlay roof surfaces are simpler than the host kawara
+meshes and some firebreak/sign forms remain deliberately blocky at close range.

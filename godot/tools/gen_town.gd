@@ -1701,6 +1701,27 @@ func _identity_role(kind: String, p: Vector2) -> String:
 	var roles: Array[String] = ["sake", "rice", "dye", "goods", "closed", "inn", "workshop"]
 	return roles[h % roles.size()]
 
+
+func _roofline_role(kind: String, p: Vector2) -> String:
+	## Large-form identity is reserved for civic streets and market context.
+	## Coordinate hashing is independent of shared dressing/vegetation RNG.
+	var on_ns: bool = absf(p.x) < 18.0 and p.y > -166.0 and p.y < 176.0
+	var on_ew: bool = absf(p.y - MAIN_EW_Z) < 18.0 and p.x > -76.0 and p.x < 112.0
+	var market_context: bool = p.distance_to(Vector2(-26.0, 57.0)) < 58.0
+	if not (on_ns or on_ew or market_context):
+		return ""
+	var hx: int = int(round(p.x * 10.0)) * 83492791
+	var hz: int = int(round(p.y * 10.0)) * 2971215073
+	var h: int = absi(hx ^ hz)
+	if h % 100 >= 62:
+		return ""
+	var roles: Array[String] = ["gable", "udatsu", "balcony", "store"]
+	if kind == "machiya_w_a":
+		return "store"
+	if kind == "machiya_f_o" or kind == "machiya_n_o":
+		return "udatsu"
+	return roles[h % roles.size()]
+
 func _pt_reserved(p: Vector2, margin: float) -> bool:
 	for q in _reserved:
 		var d: Vector2 = p - q[0]
@@ -1992,6 +2013,17 @@ func _build_density() -> void:
 		elif dk.begins_with("tree"): n_tree2 += 1
 		else: n_clut += 1
 	n_tree = n_tree2
+	# Roof/upper-front overlays are architectural batches, not scattered props.
+	# They sit on existing origins and therefore preserve every lot OBB/setback.
+	for e5 in _dump:
+		var k5 := String(e5[0])
+		if not k5.begins_with("machiya"):
+			continue
+		var p5 := Vector2(float(e5[1]), float(e5[3]))
+		var roofline: String = _roofline_role(k5, p5)
+		if roofline == "":
+			continue
+		_dxf("roofline_%s" % roofline, p5, float(e5[2]), float(e5[4]))
 	_emit_density()
 	_audit.append("密度層：暖簾 %d、提灯 %d、招牌 %d、地面雜物 %d、花樹 %d（%d draw call）"
 		% [n_noren, n_cho, n_kan, n_clut, n_tree, _dbatch.size()])

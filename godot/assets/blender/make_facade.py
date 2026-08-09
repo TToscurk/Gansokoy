@@ -839,6 +839,97 @@ def make_business_front(name, role):
     export(mesh_from(name, v, f, col, smooth=False), name)
 
 
+def make_roofline(name, role):
+    """Upper-storey and roof-edge identity that preserves the host footprint.
+
+    These are architectural overlays for existing machiya: 6.4 m wide, close
+    to the street wall, and without collision.  Their large forms are intended
+    to remain readable at normal street and elevated roofscape distances.
+    """
+    clear()
+    parts = []
+
+    def bx(x, y, z, w, d, h):
+        parts.append(box_verts(x, y, z, w, d, h))
+
+    def gable(cx, front_y, width, depth, eave_z, ridge_z):
+        hw = width * 0.5
+        back_y = front_y + depth
+        v = [(cx - hw, front_y, eave_z), (cx + hw, front_y, eave_z),
+             (cx, front_y, ridge_z), (cx - hw, back_y, eave_z),
+             (cx + hw, back_y, eave_z), (cx, back_y, ridge_z)]
+        f = [(0, 1, 2), (5, 4, 3), (0, 3, 4, 1),
+             (1, 4, 5, 2), (2, 5, 3, 0)]
+        parts.append((v, f))
+        bx(cx, front_y - 0.04, eave_z + 0.03, width + 0.18, 0.12, 0.12)
+        bx(cx, (front_y + back_y) * 0.5, ridge_z + 0.04, 0.18, depth + 0.18, 0.12)
+
+    # A common timber datum keeps every variant in the same village language.
+    bx(0, -0.12, 2.62, 6.35, 0.22, 0.18)
+    bx(-3.06, -0.10, 3.48, 0.14, 0.18, 1.68)
+    bx(3.06, -0.10, 3.48, 0.14, 0.18, 1.68)
+
+    if role == "gable":
+        # Central merchant gable with a projecting lattice and tall sign arm.
+        gable(0.15, -0.78, 2.80, 1.28, 4.48, 5.42)
+        for x in (-0.90, -0.38, 0.15, 0.68, 1.20):
+            bx(x, -0.48, 3.62, 0.09, 0.15, 1.32)
+        bx(2.45, -0.44, 4.28, 0.13, 0.52, 2.02)
+        bx(2.04, -0.66, 5.08, 0.94, 0.11, 0.13)
+        bx(1.68, -0.70, 4.70, 0.62, 0.09, 0.68)
+    elif role == "udatsu":
+        # Restrained firebreak cheeks interrupt the ridge band without becoming
+        # temple architecture; shutters establish a slower three-bay rhythm.
+        for x in (-2.88, 2.88):
+            bx(x, -0.02, 4.82, 0.24, 0.54, 1.72)
+            gable(x, -0.30, 0.58, 0.62, 5.66, 5.98)
+        for x in (-1.82, 0.0, 1.82):
+            bx(x, -0.30, 3.70, 1.02, 0.16, 1.48)
+            bx(x - 0.40, -0.48, 3.70, 0.10, 0.12, 1.42)
+            bx(x + 0.40, -0.48, 3.70, 0.10, 0.12, 1.42)
+        bx(0, -0.48, 4.52, 5.92, 0.72, 0.14)
+    elif role == "balcony":
+        # Deep balcony/drying frontage plus a lower attached roof changes both
+        # upper facade shadow and eave depth at player distance.
+        bx(-0.35, -0.54, 3.30, 5.15, 0.82, 0.16)
+        for x in (-2.82, -1.70, -0.58, 0.54, 1.66, 2.42):
+            bx(x, -1.08, 3.88, 0.12, 0.12, 1.30)
+        bx(-0.25, -1.08, 4.46, 5.62, 0.14, 0.16)
+        bx(-0.25, -1.08, 3.46, 5.62, 0.12, 0.12)
+        # Asymmetric mono-pitch canopy represented as two strong stepped slabs.
+        bx(-0.72, -0.66, 4.52, 4.55, 0.92, 0.14)
+        bx(-0.72, -0.25, 4.70, 4.55, 0.22, 0.14)
+        for x in (-1.70, -0.35, 1.00):
+            bx(x, -1.13, 4.05, 0.70, 0.08, 1.00)
+    elif role == "store":
+        # Closed storage loft with offset opening and side canopy/sign standard.
+        for x in (-2.42, -1.54, -0.66, 0.22, 1.10):
+            bx(x, -0.44, 3.65, 0.10, 0.10, 1.42)
+        bx(1.78, -0.48, 3.72, 1.10, 0.14, 1.02)
+        gable(-0.92, -0.70, 3.65, 1.05, 4.50, 5.22)
+        bx(2.50, -0.56, 4.02, 0.13, 0.68, 1.72)
+        bx(2.12, -0.84, 4.68, 0.90, 0.11, 0.13)
+        bx(2.10, -0.88, 4.36, 0.66, 0.09, 0.58)
+
+    v, f = merge(*parts)
+
+    def col(co, normal):
+        # Vertex colour uses the repository's single shared material. Roof caps
+        # are cool charcoal; construction and signs retain warm timber contrast.
+        if co.z > 4.62 and (abs(co.y) > 0.45 or role in ("gable", "udatsu")):
+            base = (0.235, 0.245, 0.260)
+        elif co.y < -0.70:
+            base = W_LT
+        elif abs(co.x) > 2.70 and co.z > 4.5:
+            base = (0.54, 0.50, 0.42)
+        else:
+            base = W_ST
+        light = 0.86 + 0.20 * max(0.0, normal.z) + 0.08 * max(0.0, -normal.y)
+        return tuple(min(1.0, c * light) for c in base)
+
+    export(mesh_from(name, v, f, col, smooth=False), name)
+
+
 make_chochin()
 make_zaru()
 make_sugidama()
@@ -857,4 +948,6 @@ make_kanban_tate()
 make_takigi()
 for _role in ("sake", "rice", "dye", "goods", "inn", "closed", "workshop"):
     make_business_front("facade_%s" % _role, _role)
+for _role in ("gable", "udatsu", "balcony", "store"):
+    make_roofline("roofline_%s" % _role, _role)
 print("done")

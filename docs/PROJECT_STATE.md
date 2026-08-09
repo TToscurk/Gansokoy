@@ -207,3 +207,11 @@ one shared vertex-colour material path and deterministic household assignment;
 roads, building OBBs, portals, landmarks, lighting, and vegetation are unchanged.
 The fixed wide review cameras confirm no new obstruction or landmark occlusion,
 but long-range main-street role readability remains a follow-up art-direction item.
+
+## Human Village roofscape and upper-facade identity pass (2026-08-09)
+
+Four reusable Blender-generated roofline families now punctuate only the main
+street, market context, and selected civic junctions: merchant gable, restrained
+udatsu, balcony/drying frontage, and storage-loft canopy. Deterministic overlays
+preserve host footprints, OBBs, setbacks, routes, landmarks, vegetation, and
+lighting while adding medium-distance upper-bay and sign-bracket silhouettes.
