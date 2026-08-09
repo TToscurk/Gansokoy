@@ -362,7 +362,12 @@ func _road_info(x: float, z: float) -> float:
 	## 回傳 0~1 的路面遮罩（1 = 路心）
 	var best := 0.0
 	for r in _roads:
-		var d: float = lib.poly_dist(r.pts, x, z) - r.w * 0.5
+		# Keep the authored road centreline and width intact, but break the perfectly
+		# parallel material boundary with a slow, deterministic packed-earth wobble.
+		# The perturbation only affects the 0.9 m visual blend outside the road core.
+		var edge_wobble: float = _n2.get_noise_2d(x * 0.075 + 31.0,
+			z * 0.075 - 19.0) * 0.42
+		var d: float = lib.poly_dist(r.pts, x, z) - r.w * 0.5 - edge_wobble
 		best = maxf(best, clampf(1.0 - maxf(d, 0.0) / 0.9, 0.0, 1.0))
 	return best
 
@@ -418,7 +423,15 @@ func mask_at(x: float, z: float) -> Color:
 	var rd: float = lib.poly_dist(_river(), x, z)
 	var shore := 1.0 - smoothstep(RIVER_HALF * 0.7, RIVER_HALF * 1.9, rd)
 	var r := Vector2(x, z - PLAZA.y).length()
-	var stone_k := clampf(_commerce(Vector2(x, z)) * 1.55 - 0.16, 0.0, 1.0)
+	# Street hierarchy is a surface treatment, not a route change: the two civic
+	# axes retain the most durable stone, secondary streets mix stone and earth,
+	# and alleys read predominantly as packed earth.
+	var ns_d: float = absf(x) - 4.0
+	var ew_d: float = absf(z - MAIN_EW_Z) - MAIN_EW_W * 0.5
+	var primary_k: float = maxf(1.0 - smoothstep(0.0, 4.5, ns_d),
+		1.0 - smoothstep(0.0, 4.5, ew_d))
+	var civic_stone: float = clampf(_commerce(Vector2(x, z)) * 1.30 - 0.22, 0.0, 1.0)
+	var stone_k := clampf(civic_stone * 0.68 + primary_k * 0.46, 0.0, 1.0)
 	var path_w: float = maxf(road, shore)
 	var dirt: float = path_w * (1.0 - stone_k)
 	path_w *= stone_k
@@ -808,9 +821,9 @@ func _kitify(cfg: Dictionary) -> Dictionary:
 	var c: Dictionary = cfg.duplicate(true)
 	c["kit"] = true
 	var r0: Dictionary = c["rows"][0]
-	r0["setback"] = 0.0
-	r0["jog"] = [0.25, 0.6]
-	r0["jog_max"] = 0.6
+	r0["setback"] = 0.15
+	r0["jog"] = [0.35, 1.1]
+	r0["jog_max"] = 1.35
 	return c
 
 
@@ -821,10 +834,14 @@ func _kit_pick(p: Vector2, rng: RandomNumberGenerator) -> String:
 	var w := _commerce(p)
 	var r := rng.randf()
 	if w > 0.55:                      # 商業核心：店が並ぶ。大店は稀
-		if r < 0.16:
+		if r < 0.18:
 			return "machiya_f_o"
-		if r < 0.30:
+		if r < 0.36:
 			return "machiya_w_a"
+		if r < 0.48:
+			return "machiya_f_n"
+		if r < 0.58:
+			return "machiya_f_s"
 		return "machiya_f_a"
 	if w > 0.30:                      # 中間帯：新しい家・妻入り・工房が混じる
 		if r < 0.15:
@@ -837,6 +854,27 @@ func _kit_pick(p: Vector2, rng: RandomNumberGenerator) -> String:
 	if r < 0.34:                      # 外縁：仕舞屋が増える
 		return "machiya_f_s"
 	return "machiya_f_a"
+
+
+func _frontage_pick(base_kind: String, p: Vector2,
+		rng: RandomNumberGenerator) -> String:
+	## Controlled family-scale variation for ordinary first-row frontages.
+	## Main-street blocks already opt into the stronger `_kit_pick()` mix; this
+	## quieter mix prevents secondary streets from becoming copied f_a/f_m runs.
+	## Rear rows and village-edge e_p rows remain stable silhouettes.
+	if base_kind != "machiya_f_a":
+		return base_kind
+	var r := rng.randf()
+	var commerce: float = _commerce(p)
+	if r < 0.12:
+		return "machiya_f_s"
+	if r < 0.22:
+		return "machiya_w_a"
+	if r < 0.29 and commerce > 0.22:
+		return "machiya_t_a"
+	if r < 0.36 and commerce > 0.30:
+		return "machiya_f_n"
+	return base_kind
 
 
 func _block(seed_i: int, cfg: Dictionary) -> void:
@@ -889,9 +927,12 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 		while true:
 			# PHASE 3 pilot：kit ブロックの**前排のみ**規則で選ぶ。
 			# 後排は legacy のまま（上の KIT_FRONT の注記を参照）。
-			var kind: String = _kit_pick(a + along * s + into * base_set, rng) \
+			var pick_pos: Vector2 = a + along * s + into * base_set
+			var kind: String = _kit_pick(pick_pos, rng) \
 				if (cfg.get("kit", false) and row_i == 0) \
 				else kinds[(hn + seed_i) % kinds.size()]
+			if row_i == 0 and not cfg.get("kit", false):
+				kind = _frontage_pick(kind, pick_pos, rng)
 			# PHASE 3 Consolidation：中心を算出する**前**に差し替える
 			# （後だと面寬差ぶん家が偏る —— 下の村緣規則と同じ罠）
 			kind = _consolidate(kind, a + along * s + into * base_set)
@@ -913,7 +954,9 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			var prov: Vector2 = a + along * (s + w * 0.5) + into * setb
 			if Vector2(prov.x, prov.y - PLAZA.y).length() >= 155.0 \
 					and kind != "machiya_e_a" and kind != "machiya_e_p":
-				kind = _consolidate("machiya_e_a", prov)
+				# Predominantly low edge farmhouses, punctuated by compact machiya.
+				kind = "machiya_f_s" if rng.randf() < 0.26 \
+					else _consolidate("machiya_e_a", prov)
 				m = _mods[kind]
 				w = m["w"]
 			var center: Vector2 = a + along * (s + w * 0.5) + into * setb

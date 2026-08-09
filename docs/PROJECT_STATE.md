@@ -4,7 +4,7 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-09 (Human Village vegetation production pass complete).
+Last updated: 2026-08-09 (Human Village architecture and streets visual pass complete).
 
 ---
 
@@ -18,6 +18,15 @@ Last updated: 2026-08-09 (Human Village vegetation production pass complete).
 Rule: `.claude/rules/execution-modes.md`.
 
 ## Current Phase
+
+**Human Village architecture and streets visual pass complete.** Deterministic
+lot-family selection now breaks up copied secondary frontages and gives the
+main street a controlled 0.15–1.50 m setback cadence while preserving road
+centrelines, portals, reservations, OBB collision and landmark transforms.
+The two civic axes retain the strongest stone finish; secondary streets and
+alleys transition toward packed earth through a deterministic irregular edge
+blend. Fixed BEFORE / round-1 / AFTER evidence is in
+`shots2/village_arch_streets/`.
 
 **Human Village vegetation production pass complete.** Village-local canopy
 shading now preserves readable green crowns instead of black spike masses.

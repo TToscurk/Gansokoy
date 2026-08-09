@@ -1138,3 +1138,26 @@ Validation: `check_map`, `walk_test`, `lm_ghost`, `portal_test`, and
 street and entrances remain clear, market and shrine activity zones are sparse,
 the village edge is denser, ground cover forms colonies rather than even dots,
 and tree crowns remain readable green forms.
+
+## Human Village architecture and streets visual production pass (2026-08-09)
+
+The authored road graph, portals, landmark transforms, reservations, gameplay
+routes and collision rules remain unchanged. Ordinary first-row frontages now
+use a quieter deterministic family mix outside the already varied main-street
+corridor. Main-street lots use a controlled 0.15–1.50 m setback cadence; rear
+rows and the predominantly low village-edge family remain stable. The result
+keeps repeated standard houses as a cultural signal while adding compact,
+workshop, gable-front and upper-floor punctuation.
+
+Road hierarchy is expressed only through the terrain material mask: the north–
+south main street and east–west civic axis retain the strongest stone finish,
+secondary streets mix stone and packed earth, and alleys read mostly as earth.
+A low-frequency deterministic edge offset removes ruler-straight material
+boundaries without changing road geometry or walkable space.
+
+Measured architecture population: 170 → 171 houses; 7 → 9 represented module
+families. `machiya_f_a` falls from 50 → 41, while `machiya_f_s` and
+`machiya_w_a` enter the village at 5 and 3 instances; `machiya_t_a` rises
+2 → 4. Fixed-camera evidence is in `shots2/village_arch_streets/` (`before`,
+`after_round1`, `after`). The fire tower and torii sightlines remain open in
+both eye-level and elevated main-street views.
