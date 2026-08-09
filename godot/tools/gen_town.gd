@@ -1945,6 +1945,32 @@ func _sakura_mesh(glb: String) -> Mesh:
 		mesh.surface_set_material(0, petal)
 	return mesh
 
+var _village_canopy: StandardMaterial3D = null
+
+func _village_canopy_mat() -> StandardMaterial3D:
+	if _village_canopy != null:
+		return _village_canopy
+	_village_canopy = StandardMaterial3D.new()
+	_village_canopy.vertex_color_use_as_albedo = true
+	_village_canopy.albedo_color = Color(0.82, 0.95, 0.76)
+	_village_canopy.cull_mode = BaseMaterial3D.CULL_DISABLED
+	_village_canopy.roughness = 1.0
+	_village_canopy.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	_village_canopy.disable_receive_shadows = true
+	return _village_canopy
+
+## Village-only tree material path. The shared canopy texture multiplies the
+## already dark vertex colours until nearby crowns read as black spikes. Keep
+## the existing meshes, but use a brighter, shadow-resistant vertex-colour
+## material in this map only.
+func _village_tree_mesh(glb_path: String) -> Mesh:
+	var mesh: Mesh = lib.tree_mesh(glb_path).duplicate(true) as Mesh
+	if mesh.get_surface_count() >= 2:
+		for surface in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(surface, _village_canopy_mat())
+	return mesh
+
+
 func _emit_density() -> void:
 	var g := lib.add(_root, Node3D.new(), "密度層")
 	var names := _dbatch.keys()
@@ -1955,7 +1981,7 @@ func _emit_density() -> void:
 		if k.begins_with("tree_sakura"):
 			mesh = _sakura_mesh("res://assets/models/%s.glb" % k)
 		elif k.begins_with("tree_"):
-			mesh = lib.tree_mesh("res://assets/models/%s.glb" % k)
+			mesh = _village_tree_mesh("res://assets/models/%s.glb" % k)
 		else:
 			mesh = lib.prop_mesh("res://assets/models/%s.glb" % k, lib.vc_mat())
 		var mmi := MultiMeshInstance3D.new()
@@ -2076,6 +2102,10 @@ func _reed_along_river(rng: RandomNumberGenerator, target: int) -> Array[Transfo
 func _build_grass() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = GRASS_SEED
+	var patch_noise := FastNoiseLite.new()
+	patch_noise.seed = GRASS_SEED + 41
+	patch_noise.frequency = 0.018
+	patch_noise.fractal_octaves = 3
 	# 町家 OBB 的空間索引 —— 5,700 次取樣 × 169 棟是 O(n²)，會慢到不能接受
 	var hgrid := {}
 	for e in _dump:
@@ -2114,26 +2144,27 @@ func _build_grass() -> void:
 	# 比樹便宜得多；再加上不投影 + 距離淡出，這個量是划算的。
 	var groups := [
 		{"mesh": shrub, "n": 2400, "file": "shrubs", "node": "Shrubs",
-			"mode": "wild", "need": 2.6, "vis": 150.0},
+			"mode": "wild", "need": 2.6, "patch": 0.48, "edge": 0.78},
 		{"mesh": fern, "n": 5000, "file": "ferns", "node": "Ferns",
-			"mode": "wild", "need": 1.6, "vis": 120.0},
+			"mode": "wild", "need": 1.6, "patch": 0.42, "edge": 0.66},
 		{"mesh": tall, "n": 14000, "file": "grass_tall", "node": "GrassTall",
-			"mode": "wild", "need": 1.6, "vis": 120.0},
+			"mode": "wild", "need": 1.6, "patch": 0.38, "edge": 0.58},
 		{"mesh": flower, "n": 1000, "file": "grass_flower", "node": "GrassFlower",
-			"mode": "wild", "need": 1.6, "vis": 120.0},
+			"mode": "wild", "need": 1.6, "patch": 0.58, "edge": 0.72},
 		{"mesh": reed, "n": 1800, "file": "reeds", "node": "Reeds",
-			"mode": "shore", "need": 0.0, "vis": 140.0},
+			"mode": "shore", "need": 0.0},
 	]
 	var total := 0
 	var parts: Array[String] = []
-	for grp in groups:
+	for group_i in range(groups.size()):
+		var grp: Dictionary = groups[group_i]
 		var list: Array[Transform3D] = []
 		var target: int = int(grp.n)
 		if String(grp.mode) == "shore":
 			list = _reed_along_river(rng, target)
 		else:
 			var tries := 0
-			while list.size() < target and tries < target * 10:
+			while list.size() < target and tries < target * 30:
 				tries += 1
 				var x := rng.randf_range(-HALF + 4.0, HALF - 4.0)
 				var z := rng.randf_range(-HALF + 4.0, HALF - 4.0)
@@ -2146,9 +2177,23 @@ func _build_grass() -> void:
 				# 那個 10%。改成看**離路緣多遠**：路邊被踩禿、屋與屋之間的
 				# 縫隙長得起來、出了村就茂盛。
 				var dr := _road_dist(x, z)
-				var p := lerpf(0.08, 0.80, clampf(dr / 13.0, 0.0, 1.0))
-				if Vector2(x, z - PLAZA.y).length() > CORE:
-					p = maxf(p, 0.70)
+				var pos := Vector2(x, z)
+				# Daily activity suppresses vegetation continuously instead of using
+				# one arbitrary core radius. Roads/frontages, market and shrine stay
+				# sparse; the village edge receives coherent colonies rather than an
+				# even salt-and-pepper scatter.
+				var activity := maxf(_commerce(pos), 1.0 - smoothstep(2.5, 14.0, dr))
+				activity = maxf(activity,
+					1.0 - smoothstep(28.0, 48.0, pos.distance_to(Vector2(-26, 57))))
+				activity = maxf(activity * 0.82,
+					1.0 - smoothstep(22.0, 38.0, pos.distance_to(Vector2(-26, 2))))
+				var edge_dist := maxf(absf(x), absf(z))
+				var edge_k := smoothstep(105.0, 225.0, edge_dist)
+				var zone := lerpf(1.0 - float(grp.edge), 1.0, edge_k)
+				var noise_value := patch_noise.get_noise_2d(
+					x + float(group_i) * 137.0, z - float(group_i) * 83.0) * 0.5 + 0.5
+				var colony := smoothstep(float(grp.patch), 0.82, noise_value)
+				var p := colony * zone * lerpf(0.10, 1.0, 1.0 - activity)
 				if rng.randf() > p:
 					continue
 				var s := rng.randf_range(0.7, 1.4)
@@ -2480,7 +2525,7 @@ func _lm_grove(g: Node3D, _spread: float) -> void:
 	# ⚠ 用 tree_round_a（近景款）而不是舊版的 tree_round_b —— b 在新的
 	# tree_lib 裡是 vista 精簡款（ntuft 只有一半），放大 4 倍會稀得看得出來。
 	var big := MeshInstance3D.new()
-	big.mesh = lib.tree_mesh("res://assets/models/tree_round_a.glb")
+	big.mesh = _village_tree_mesh("res://assets/models/tree_round_a.glb")
 	big.position = lp.call(wc.x, wc.y, 0.6)
 	big.scale = Vector3(3.0, 3.6, 3.0)
 	lib.add(g, big, "神木")
@@ -2542,7 +2587,7 @@ func _lm_grove(g: Node3D, _spread: float) -> void:
 		if _road_dist(wx, wz) < 1.6:
 			continue
 		var sub := MeshInstance3D.new()
-		sub.mesh = lib.tree_mesh(TREES[_lm_rng.randi() % TREES.size()])
+		sub.mesh = _village_tree_mesh(TREES[_lm_rng.randi() % TREES.size()])
 		sub.position = lp.call(wx, wz, 0.0)
 		sub.scale = Vector3.ONE * _lm_rng.randf_range(1.05, 1.5)
 		sub.rotation.y = _lm_rng.randf_range(0.0, TAU)
@@ -2843,7 +2888,7 @@ func _build_hieda_grove() -> void:
 	ks.sort()
 	for k in ks:
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(lib.tree_mesh(String(k)), batch[k], [],
+		mmi.multimesh = lib.make_multimesh(_village_tree_mesh(String(k)), batch[k], [],
 			OUT_DIR + "gen/mm_hieda_grove_%s.res" % String(k).get_file().get_basename())
 		lib.add(g, mmi, "MM_%s" % String(k).get_file().get_basename())
 	_audit.append("稗田邸緩衝疏林：%d 株 / %d 種（保留區外緣 3~9m 環帶，門面動線讓開）"
@@ -3173,7 +3218,7 @@ func _build_pilot_node() -> void:
 	var tx2 := -8.8
 	var tz2 := -136.4
 	var tree := MeshInstance3D.new()
-	tree.mesh = lib.tree_mesh("res://assets/models/tree_round_a.glb")
+	tree.mesh = _village_tree_mesh("res://assets/models/tree_round_a.glb")
 	tree.position = Vector3(tx2, height_at(tx2, tz2), tz2)
 	tree.rotation.y = 0.6
 	tree.scale = Vector3(1.15, 1.2, 1.15)
@@ -3675,7 +3720,7 @@ func _build_mainstreet() -> void:
 		if _pt_reserved(Vector2(tx, tz), 1.0):
 			continue
 		var tm := MeshInstance3D.new()
-		tm.mesh = lib.tree_mesh("res://assets/models/%s.glb" % String(tr[0]))
+		tm.mesh = _village_tree_mesh("res://assets/models/%s.glb" % String(tr[0]))
 		tm.position = Vector3(tx, height_at(tx, tz), tz)
 		tm.rotation.y = float(tr[4])
 		tm.scale = Vector3(float(tr[3]), float(tr[3]) * 1.05, float(tr[3]))

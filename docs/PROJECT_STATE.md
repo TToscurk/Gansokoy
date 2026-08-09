@@ -4,7 +4,7 @@ Canonical answer to "where is this project right now". First document a new
 task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
 subsystem docs, not here.
 
-Last updated: 2026-08-08 (Human Village — Main Street Complete).
+Last updated: 2026-08-09 (Human Village vegetation production pass complete).
 
 ---
 
@@ -18,6 +18,16 @@ Last updated: 2026-08-08 (Human Village — Main Street Complete).
 Rule: `.claude/rules/execution-modes.md`.
 
 ## Current Phase
+
+**Human Village vegetation production pass complete.** Village-local canopy
+shading now preserves readable green crowns instead of black spike masses.
+Ground vegetation uses low-frequency colonies plus activity and edge weighting:
+roads, entrances, market and shrine stay sparse, while the village edge carries
+denser shrub/fern/tall-grass layers. Fixed review evidence lives in
+`shots2/village_vegetation/`; the reusable Windows capture entry point is
+`tools/capture-godot.cmd`.
+
+---
 
 **Human Village — Main Street Complete. Delivered** (after Architecture
 Complete, same day). 本通 now reads as an inhabited street north to south:

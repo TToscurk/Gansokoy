@@ -26,14 +26,15 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 | Phase 3 pilot / 3.1A / 3.1B / 3.2A | north-gate corridor kit rollout, street section, fire-watch crossing, sight-line diagnostic |
 | Architecture Consolidation | legacy house removal — 170/170 production, 0 blockout |
 | Main Street batch | 本通 frontage restored: 塀/門/鳥居/蔵/幟/街路樹, N2 lean-to, 溝蓋, 辻行灯 |
+| Vegetation production pass | village-local readable canopies; activity-sparse core and entrances; clustered, denser village-edge ground layers; fixed 5-camera local review loop |
 | Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
 
 ## CURRENT
 
-**Human Village — Main Street Complete.** The 174 m civic-core gap is
-re-fronted with landmark-frontage extensions (fences, gates, torii, kura
-compound, banners, trees), N2 rebuilt as a lean-to, gutter lids and street
-lamps fixed. Full suite green. Awaiting Art Review.
+**Human Village vegetation production pass complete.** Five fixed local-render
+views confirm readable tree crowns, clustered ground vegetation, sparse human
+activity zones, denser village edges, and clear roads/entrances/market/shrine.
+Full static suite green. Awaiting Art Review.
 
 ## NEXT
 

@@ -1111,3 +1111,30 @@ PRODUCTION MODE の一括工事。達成条件は「北から南へ歩いたと�
 `hieda_boundary_check` 0 項不符。
 
 Renders: `shots2/village_mainstreet/`（w01〜w14 北→南の連続歩き＋ d1〜d6 詳細）。
+
+## 14. Vegetation production pass (2026-08-09)
+
+The village ground layers keep their existing meshes and total targets, but
+placement is no longer uniform random scatter. `gen_town.gd::_build_grass()`
+combines low-frequency colony noise with two continuous signals:
+
+- daily activity suppresses growth around roads, frontages, market and shrine;
+- distance toward the playable edge increases shrub, fern and tall-grass density.
+
+Each layer has a different colony threshold and edge bias, producing distinct
+near/mid/far vegetation bands without changing roads, landmarks or gameplay.
+Village trees retain their existing GLBs; a village-local vertex-colour canopy
+material prevents nearby crowns from collapsing into black spike silhouettes.
+The shared tree assets and other maps are unchanged.
+
+Windows visual feedback uses `tools/capture-godot.cmd`, which wraps the existing
+`main.gd --shots/--shotdir` path, waits for one Godot process, and verifies every
+expected PNG. Fixed review cameras are in
+`godot/tools/village_vegetation_shots.json`; final renders are in
+`shots2/village_vegetation/`.
+
+Validation: `check_map`, `walk_test`, `lm_ghost`, `portal_test`, and
+`hieda_boundary_check` all exit 0. Codex inspected all five final PNGs: the main
+street and entrances remain clear, market and shrine activity zones are sparse,
+the village edge is denser, ground cover forms colonies rather than even dots,
+and tree crowns remain readable green forms.
