@@ -23,6 +23,7 @@
 extends SceneTree
 
 const TownGeometry := preload("res://tools/town/town_geometry.gd")
+const TownValidation := preload("res://tools/town/town_validation.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -1635,46 +1636,7 @@ func _obb_of(e: Array) -> Array:
 
 func _assert_no_overlap() -> void:
 	## 逐對 OBB（SAT）—— **不再只檢查町家**：橋與鵜呑亭一起進來。
-	var rects: Array = []
-	for e in _dump:
-		rects.append(_obb_of(e))
-	var cell := 26.0
-	var grid := {}
-	for i in rects.size():
-		var c: Vector2 = rects[i][0]
-		var rr: float = maxf(rects[i][3], rects[i][4])
-		var span := int(ceil(rr / cell))
-		var gx := int(floor(c.x / cell))
-		var gz := int(floor(c.y / cell))
-		for dx in range(-span - 1, span + 2):
-			for dz in range(-span - 1, span + 2):
-				var k := "%d,%d" % [gx + dx, gz + dz]
-				if not grid.has(k):
-					grid[k] = []
-				grid[k].append(i)
-	var bad := 0
-	var seen := {}
-	for k in grid:
-		var ids: Array = grid[k]
-		for ii in ids.size():
-			for jj in range(ii + 1, ids.size()):
-				var i: int = ids[ii]
-				var j: int = ids[jj]
-				var pk := "%d_%d" % [min(i, j), max(i, j)]
-				if seen.has(pk):
-					continue
-				seen[pk] = true
-				var pen := _obb_pen(rects[i], rects[j])
-				if pen > 0.05:
-					bad += 1
-					if bad <= 8:
-						push_error("重疊：%s#%d × %s#%d 穿插 %.2fm"
-							% [rects[i][5], i, rects[j][5], j, pen])
-	if bad == 0:
-		_audit.append("重疊檢查：%d 件（町家＋橋＋鵜呑亭，含出簷 OBB）—— 0 穿插 ✓"
-			% rects.size())
-	else:
-		_audit.append("⚠ 重疊檢查：%d 對穿插 —— 佈局有 bug" % bad)
+	TownValidation.assert_no_overlap(_dump, _mods, _audit)
 
 
 func _obb_pen(ra: Array, rb: Array) -> float:
