@@ -27,6 +27,7 @@ const TownValidation := preload("res://tools/town/town_validation.gd")
 const TownAssets := preload("res://tools/town/town_assets.gd")
 const TownHydrography := preload("res://tools/town/town_hydrography.gd")
 const TownOutput := preload("res://tools/town/town_output.gd")
+const TownEnvironment := preload("res://tools/town/town_environment.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -1661,59 +1662,13 @@ func _build_collision() -> void:
 func _build_env() -> void:
 	## 照抄 gen_village 已驗收的環境（sky shader、曝光、glow、飽和）——
 	## 換圖時氛圍要一致，不然評圖看到的是「另一個遊戲」。
-	var env := Environment.new()
-	env.background_mode = Environment.BG_SKY
-	var sky := Sky.new()
-	var sm := ShaderMaterial.new()
-	if ResourceLoader.exists("res://assets/shaders/sky_cumulus.gdshader"):
-		sm.shader = load("res://assets/shaders/sky_cumulus.gdshader")
-		sky.sky_material = sm
-	else:
-		sky.sky_material = ProceduralSkyMaterial.new()
-	env.sky = sky
-	env.tonemap_mode = Environment.TONE_MAPPER_ACES
-	env.tonemap_exposure = 1.02
-	env.glow_enabled = true
-	env.glow_intensity = 0.72
-	env.glow_hdr_threshold = 1.25
-	env.ssao_enabled = true
-	env.adjustment_enabled = true
-	env.adjustment_contrast = 1.08
-	env.adjustment_saturation = 1.24
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_sky_contribution = 0.55
-	env.ambient_light_energy = 0.72
-	env.fog_enabled = true
-	env.fog_density = 0.0016
-	env.volumetric_fog_enabled = true
-	env.volumetric_fog_density = 0.012
-	env.sdfgi_enabled = false
-	var we := WorldEnvironment.new()
-	we.environment = env
-	lib.add(_root, we, "WorldEnvironment")
+	TownEnvironment.build(lib, _root)
 
 
 func _perf_pass(n: Node) -> void:
 	## 照抄 gen_village 的剔除／陰影分級。⚠ 那支只處理 MeshInstance3D，
 	## MultiMeshInstance3D 完全不碰 —— 新鎮的 MM 要另外設（見 _build_revetment）。
-	if n is MeshInstance3D and n.mesh != null:
-		var nm := String(n.name)
-		if not (nm.contains("Terrain") or nm.contains("Water") or nm.contains("水面")):
-			var ab: AABB = n.mesh.get_aabb()
-			var sc: Vector3 = n.scale.abs()
-			var mx: float = maxf(maxf(ab.size.x * sc.x, ab.size.y * sc.y), ab.size.z * sc.z)
-			if mx < 1.35:
-				n.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			if mx < 0.9:
-				n.visibility_range_end = 55.0
-				n.visibility_range_end_margin = 8.0
-				n.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-			elif mx < 2.8:
-				n.visibility_range_end = 100.0
-				n.visibility_range_end_margin = 10.0
-				n.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-	for c in n.get_children():
-		_perf_pass(c)
+	TownEnvironment.apply_performance_pass(n)
 
 
 # ══════════════════ 街道生活密度層（規格 §5，使用者選 B 後開工）══════════════
