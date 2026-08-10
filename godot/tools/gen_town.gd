@@ -36,6 +36,7 @@ const TownStreetFixtures := preload("res://tools/town/town_street_fixtures.gd")
 const TownEcology := preload("res://tools/town/town_ecology.gd")
 const TownPilotNode := preload("res://tools/town/town_pilot_node.gd")
 const TownSightNodes := preload("res://tools/town/town_sight_nodes.gd")
+const TownMarketQuarter := preload("res://tools/town/town_market_quarter.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -2678,142 +2679,9 @@ func _build_sight_nodes() -> void:
 # ⚠ RNG は一切使わない。草より後に建て、足元の草はフィルタで抜く
 #   （3.1B/3.2A と同じ手 —— _reserved に足すと村中の草の抽選がずれる）。
 func _build_market_quarter() -> void:
-	var g := lib.add(_root, Node3D.new(), "市場區の設え") as Node3D
-	var dark := _lmat("dark", 1)
-	var wood := _lmat("wood", 0)
-	var plank := lib.pbr("市場板", "planks", 0.55, Color(0.66, 0.58, 0.46))
-	var stone := lib.pbr("市場踏石", "stone_wall", 2.0, Color(0.70, 0.69, 0.66))
-	var made: Array[String] = []
-	var foot: Array = []
-
-	# ── 1. 荷揚げ台（蔵の広場側）────────────────────────────────
-	# 蔵は横街に面して立つ。背面（z≈74.2）が広場に向くので、そこが荷捌き場。
-	# 台は地面より 0.45m 高い —— 荷車の床と同じ高さ、というのが理由。
-	var lx := -46.5
-	var lz := 73.0
-	var ly := height_at(lx, lz)
-	var plat := lib.add(g, Node3D.new(), "荷揚げ台") as Node3D
-	plat.position = Vector3(lx, ly, lz)
-	for sx in [-1.0, 1.0]:
-		for sz in [-1.0, 1.0]:
-			lib.box(plat, "束石_%d%d" % [int(sx + 1.0), int(sz + 1.0)],
-				Vector3(0.34, 0.30, 0.34), stone, Vector3(sx * 1.45, 0.15, sz * 0.78))
-	lib.box(plat, "台板", Vector3(3.60, 0.16, 2.10), plank, Vector3(0, 0.45, 0))
-	lib.box(plat, "縁桁", Vector3(3.72, 0.13, 0.13), dark, Vector3(0, 0.35, 1.06))
-	lib.box(plat, "踏段", Vector3(1.30, 0.15, 0.42), plank, Vector3(-0.9, 0.22, 1.32))
-	_lm_collide(plat, Vector3(3.7, 0.55, 2.2))
-	for spec in [["prop_tawara", -47.6, 72.5, 0.30, 0.53],
-			["prop_tawara", -47.6, 73.4, 0.34, 0.53],
-			["prop_tawara", -47.5, 72.95, 0.10, 0.86],
-			["prop_crate", -45.4, 73.2, -0.4, 0.53]]:
-		var mi := MeshInstance3D.new()
-		mi.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec[0]))
-		mi.position = Vector3(float(spec[1]),
-			height_at(lx, lz) + float(spec[4]), float(spec[2]))
-		mi.rotation.y = float(spec[3])
-		lib.add(g, mi, "蔵荷_%s_%d" % [String(spec[0]), int(float(spec[4]) * 100.0)])
-	made.append("荷揚げ台と俵")
-	foot.append([Vector2(lx, lz), 2.4, 1.8])
-
-	# ── 2. 仕事庇（作業場の前）──────────────────────────────────
-	# 作業場は市場に正面（z≈72.7）を向く。その前 2.5m に葭簀掛けの下屋を出す。
-	# 軒 2.45m ＝ 町家の軒より低い。従属した仮設だと一目で判る高さにする。
-	var wx := -34.0
-	var wz := 70.0
-	var wy := height_at(wx, wz)
-	var can := lib.add(g, Node3D.new(), "仕事庇") as Node3D
-	can.position = Vector3(wx, wy, wz)
-	for sx2 in [-1.0, 1.0]:
-		for sz2 in [-1.0, 1.0]:
-			lib.strut(can, "庇柱_%d%d" % [int(sx2 + 1.0), int(sz2 + 1.0)],
-				Vector3(sx2 * 2.55, 0.0, sz2 * 1.35),
-				Vector3(sx2 * 2.55, 2.32 + sz2 * 0.13, sz2 * 1.35), 0.075, dark, 6)
-	lib.box(can, "桁前", Vector3(5.30, 0.13, 0.12), dark, Vector3(0, 2.20, -1.35))
-	lib.box(can, "桁後", Vector3(5.30, 0.13, 0.12), dark, Vector3(0, 2.46, 1.35))
-	for i in 9:
-		var rx := -2.35 + float(i) * 0.59
-		var rf := lib.box(can, "垂木_%d" % i, Vector3(0.09, 0.06, 2.86), dark,
-			Vector3(rx, 2.36, 0))
-		rf.rotation.x = -0.09
-	var yoshi := lib.box(can, "葭簀", Vector3(5.30, 0.05, 2.90),
-		lib.pbr("葭簀", "planks", 1.6, Color(0.74, 0.66, 0.45)), Vector3(0, 2.42, 0))
-	yoshi.rotation.x = -0.09
-	# 作業台と材の staging —— 「ここで何かが作られている」の最小の証拠
-	lib.box(can, "作業台", Vector3(2.10, 0.10, 0.86), plank, Vector3(-0.8, 0.78, 0.15))
-	for sx3 in [-1.0, 1.0]:
-		lib.box(can, "台脚_%d" % int(sx3 + 1.0), Vector3(0.11, 0.73, 0.78), wood,
-			Vector3(-0.8 + sx3 * 0.92, 0.37, 0.15))
-	for i2 in 5:
-		lib.box(can, "材_%d" % i2, Vector3(2.60, 0.11, 0.13), wood,
-			Vector3(1.55, 0.09 + float(i2 % 3) * 0.12, -0.65 + float(i2 / 3) * 0.30))
-	_lm_collide(can, Vector3(5.4, 2.5, 2.9))
-	for spec2 in [["prop_takigi", -36.9, 71.2, 0.25], ["prop_takigi", -36.9, 70.1, 0.25],
-			["prop_taru", -31.3, 71.4, -0.5]]:
-		var mi2 := MeshInstance3D.new()
-		mi2.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec2[0]))
-		mi2.position = Vector3(float(spec2[1]),
-			height_at(float(spec2[1]), float(spec2[2])), float(spec2[2]))
-		mi2.rotation.y = float(spec2[3])
-		lib.add(g, mi2, "作業荷_%s_%d" % [String(spec2[0]), int(float(spec2[2]))])
-	made.append("仕事庇と材")
-	foot.append([Vector2(wx, wz), 3.4, 2.4])
-
-	# ── 3. 見世台（南縁の常設店の店先）──────────────────────────
-	# 常設店が広場に向かって商う面。屋台との違いは「毎日そこに在る」こと。
-	for spec3 in [["prop_misedai", -22.6, 71.4, 0.0], ["prop_zaru", -20.2, 71.5, 0.4],
-			["prop_kago", -19.4, 71.9, -0.2], ["prop_crate", -23.9, 71.9, 0.15],
-			["prop_taru", -24.6, 72.2, 0.6]]:
-		var mi3 := MeshInstance3D.new()
-		mi3.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec3[0]))
-		mi3.position = Vector3(float(spec3[1]),
-			height_at(float(spec3[1]), float(spec3[2])), float(spec3[2]))
-		mi3.rotation.y = float(spec3[3])
-		lib.add(g, mi3, "店先_%s_%d" % [String(spec3[0]), int(-float(spec3[1]))])
-	made.append("見世台と店先の荷")
-	foot.append([Vector2(-22.0, 71.7), 3.6, 1.4])
-
-	# ── 4. 西縁の荷置き ─────────────────────────────────────────
-	# 市の通りの突き当たり。屋台が仕舞われている間の在庫が積んである。
-	var sx4 := -42.2
-	var sz4 := 66.6
-	var sy4 := height_at(sx4, sz4)
-	var rack := lib.add(g, Node3D.new(), "荷置き") as Node3D
-	rack.position = Vector3(sx4, sy4, sz4)
-	rack.rotation.y = -PI * 0.5
-	lib.box(rack, "簀の子", Vector3(2.80, 0.10, 1.50), plank, Vector3(0, 0.10, 0))
-	for sz5 in [-1.0, 1.0]:
-		lib.box(rack, "枕木_%d" % int(sz5 + 1.0), Vector3(2.90, 0.12, 0.14), dark,
-			Vector3(0, 0.06, sz5 * 0.62))
-	_lm_collide(rack, Vector3(2.9, 0.3, 1.6))
-	for spec4 in [["prop_tawara", -42.4, 65.9, 1.55, 0.16],
-			["prop_tawara", -42.4, 66.8, 1.55, 0.16],
-			["prop_tawara", -42.3, 66.35, 1.55, 0.49],
-			["prop_crate", -41.6, 67.5, 0.2, 0.16],
-			["prop_zaru", -43.0, 67.7, -0.3, 0.0]]:
-		var mi4 := MeshInstance3D.new()
-		mi4.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec4[0]))
-		mi4.position = Vector3(float(spec4[1]),
-			sy4 + float(spec4[4]), float(spec4[2]))
-		mi4.rotation.y = float(spec4[3])
-		lib.add(g, mi4, "西荷_%s_%d" % [String(spec4[0]), int(float(spec4[4]) * 100.0)])
-	made.append("西縁の荷置き")
-	foot.append([Vector2(sx4, sz4), 2.2, 2.2])
-
-	# ── 5. 飛石（市木戸 → 南縁の店）────────────────────────────
-	# 石畳は入口だけ。そこから先は土間なので、雨の日の動線を飛石で示す。
-	for i3 in 7:
-		var t := float(i3) / 6.0
-		var px := lerpf(-14.2, -19.4, t)
-		var pz := lerpf(66.4, 71.6, t)
-		var st := lib.box(g, "飛石_%d" % i3, Vector3(0.62, 0.09, 0.52), stone,
-			Vector3(px, height_at(px, pz) + 0.045, pz))
-		st.rotation.y = 0.22 * float(i3 % 3 - 1)
-	made.append("飛石 7")
-	foot.append([Vector2(-16.8, 69.0), 3.6, 3.6])
-
-	var cut := _cut_grass(foot)
-	_audit.append("PHASE 5A-V 市場區の設え：%s（足元の草 %d 叢を除去）"
-		% [", ".join(made), cut])
+	TownMarketQuarter.build(
+		lib, _root, _lmat, height_at,
+		_lm_collide, _cut_grass, _audit)
 
 
 ## 足元の草取り（共有 helper）。⚠ get_instance_transform は headless の
