@@ -40,3 +40,37 @@ static func add_collision(root: Node3D, group: Node3D, size: Vector3,
 	shape.position = offset + Vector3(0, size.y * 0.5, 0)
 	body.add_child(shape)
 	shape.owner = root
+
+
+## Blockout material uses vertex colour and disables back-face culling. Blender
+## rendered the source as double-sided, while Godot otherwise removed several
+## reversed ground quads, including the full cut-stone approach.
+static func hieda_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.vertex_color_use_as_albedo = true
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.roughness = 0.88
+	material.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	material.resource_name = "hieda_blockout_vc"
+	return material
+
+
+static func build_hieda(lib, group: Node3D, offset: Vector2,
+		flatten_fn: Callable, bank_fn: Callable, audit: Array[String]) -> void:
+	# The yard is flattened, but keep deriving its height so future terrain
+	# changes remain aligned with the baked blockout.
+	var bank: float = bank_fn.call(group.position.x, group.position.z)
+	var yard: float = flatten_fn.call(
+		group.position.x, group.position.z, bank) - group.position.y
+	var local_offset := Vector3(offset.x, yard, offset.y)
+	var body := MeshInstance3D.new()
+	body.mesh = lib.prop_mesh(
+		"res://assets/models/hieda_blockout.glb", hieda_material())
+	body.position = local_offset
+	body.set_meta("needs_trimesh", true)
+	lib.add(group, body, "本體")
+	# Planting coordinates share the baked blockout's local coordinate system.
+	var holder := lib.add(group, Node3D.new(), "植栽") as Node3D
+	holder.position = local_offset
+	var count: int = preload("res://tools/gen_hieda.gd").new().emit(lib, holder)
+	audit.append("稗田邸（完整獨立版）：blockout 22,600 面 + 植栽 %d 實例 / 10 模組" % count)

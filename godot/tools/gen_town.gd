@@ -2813,42 +2813,8 @@ func _build_hieda_grove() -> void:
 		% [n, ks.size()])
 
 
-## blockout 專用材質：頂點色 + **關掉背面剔除**。
-##
-## ⚠ 這不是「順手保險一下」，是修一個實際炸出來的洞。Blender/Cycles 預設
-## **雙面渲染**，所以 make_hieda.py 那邊繞序寫錯的面在 Blender 的算圖裡看起來
-## 完全正常；Godot 預設剔背面，同一批面就整片消失。第一次落地實測：整條
-## 6m 切石參道（`build_avenue` 的 quad，`flip=(y1 > y0)` 在這個呼叫方向下
-## 恆為 false）在引擎裡**一塊都看不到**，前庭只剩草地 —— 而後院的枯山水、
-## 水池同樣是貼地 quad 卻好好的，因為那批的繞序剛好是對的。
-## 逐面去修 Blender 端的繞序要重跑整條匯出鏈，而且下次加東西還會再犯；
-## 關掉剔除是一次解決。代價只有背面的片段著色，blockout 才 22,600 面。
-func _hieda_mat() -> StandardMaterial3D:
-	var m := StandardMaterial3D.new()
-	m.vertex_color_use_as_albedo = true
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED
-	m.roughness = 0.88
-	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
-	m.resource_name = "hieda_blockout_vc"
-	return m
-
-
 func _lm_hieda(g: Node3D, _spread: float) -> void:
-	# 院子被 _flatten_yards 壓平；群組原點取保留區內的最低點 —— 整平之後
-	# 兩者相等，仍然照算不寫死 0（哪天整平規則再改，這裡會自己跟著走）。
-	var yard: float = _flatten_yards(g.position.x, g.position.z,
-		bank_h(g.position.x, g.position.z)) - g.position.y
-	var off := Vector3(HIEDA_OFF.x, yard, HIEDA_OFF.y)
-	var body := MeshInstance3D.new()
-	body.mesh = lib.prop_mesh("res://assets/models/hieda_blockout.glb", _hieda_mat())
-	body.position = off
-	body.set_meta("needs_trimesh", true)
-	lib.add(g, body, "本體")
-	# 植栽：擺位表的座標是 blockout 的本地座標，所以要掛在同一個偏移下面
-	var holder := lib.add(g, Node3D.new(), "植栽") as Node3D
-	holder.position = off
-	var n: int = preload("res://tools/gen_hieda.gd").new().emit(lib, holder)
-	_audit.append("稗田邸（完整獨立版）：blockout 22,600 面 + 植栽 %d 實例 / 10 模組" % n)
+	TownLandmarks.build_hieda(lib, g, HIEDA_OFF, _flatten_yards, bank_h, _audit)
 
 
 # ══════════════ 街緣設施 MIGRATE：門樓／石溝／街燈 ══════════════
