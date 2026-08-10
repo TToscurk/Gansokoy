@@ -1973,26 +1973,7 @@ func _build_density() -> void:
 ## terrain_forest_diff 貼圖乘頂點色，粉色 × 綠貼圖 = 濁褐色。
 ## 花冠用無貼圖的雙面頂點色材質，樹幹照用 bark PBR。
 func _sakura_mesh(glb: String) -> Mesh:
-	var packed: PackedScene = load(glb)
-	var node: Node = packed.instantiate()
-	var mesh: Mesh = null
-	var stack: Array[Node] = [node]
-	while stack.size() > 0:
-		var n: Node = stack.pop_back()
-		for c in n.get_children():
-			stack.push_back(c)
-		if n is MeshInstance3D:
-			mesh = n.mesh
-			break
-	node.free()
-	var petal := lib.foliage_vc_mat()
-	if mesh.get_surface_count() >= 2:
-		mesh.surface_set_material(0, lib.pbr("bark", "bark_cedar", 0.7))
-		for s in range(1, mesh.get_surface_count()):
-			mesh.surface_set_material(s, petal)
-	else:
-		mesh.surface_set_material(0, petal)
-	return mesh
+	return TownAssets.sakura_mesh(lib, glb)
 
 var _village_canopy: StandardMaterial3D = null
 
@@ -2013,11 +1994,7 @@ func _village_canopy_mat() -> StandardMaterial3D:
 ## the existing meshes, but use a brighter, shadow-resistant vertex-colour
 ## material in this map only.
 func _village_tree_mesh(glb_path: String) -> Mesh:
-	var mesh: Mesh = lib.tree_mesh(glb_path).duplicate(true) as Mesh
-	if mesh.get_surface_count() >= 2:
-		for surface in range(1, mesh.get_surface_count()):
-			mesh.surface_set_material(surface, _village_canopy_mat())
-	return mesh
+	return TownAssets.village_tree_mesh(lib, glb_path, _village_canopy_mat())
 
 
 func _emit_density() -> void:
@@ -2294,14 +2271,7 @@ var _lm_rng := RandomNumberGenerator.new()
 
 ## 材質：同一種建材四個色調。舊 `_mat()` 的搬遷版。
 func _lmat(key: String, v := -1) -> StandardMaterial3D:
-	if not MAT_SET.has(key):
-		key = "plaster"
-	var tones: Array = MAT_TONES[key]
-	if v < 0:
-		v = int(_lm_rng.randf() * float(tones.size()))
-	v = v % tones.size()
-	var spec: Array = MAT_SET[key]
-	return lib.pbr("%s_%d" % [key, v], String(spec[0]), float(spec[1]), tones[v])
+	return TownAssets.material(lib, _lm_rng, key, v)
 
 ## 水面以下不算地面 —— 拿 height_at 的話院內有池就整棟沉下去。
 func _lm_ground_sample(x: float, z: float) -> float:

@@ -73,3 +73,47 @@ const MAT_SET := {
 	"shitami": ["shitami", 0.34], "yakisugi": ["yakisugi", 0.36],
 	"ishizumi": ["ishizumi", 0.30],
 }
+
+
+static func material(lib, rng: RandomNumberGenerator, key: String,
+		v := -1) -> StandardMaterial3D:
+	if not MAT_SET.has(key):
+		key = "plaster"
+	var tones: Array = MAT_TONES[key]
+	if v < 0:
+		v = int(rng.randf() * float(tones.size()))
+	v = v % tones.size()
+	var spec: Array = MAT_SET[key]
+	return lib.pbr("%s_%d" % [key, v], String(spec[0]), float(spec[1]), tones[v])
+
+
+static func sakura_mesh(lib, glb: String) -> Mesh:
+	var packed: PackedScene = load(glb)
+	var node: Node = packed.instantiate()
+	var mesh: Mesh = null
+	var stack: Array[Node] = [node]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		for child in n.get_children():
+			stack.push_back(child)
+		if n is MeshInstance3D:
+			mesh = n.mesh
+			break
+	node.free()
+	var petal = lib.foliage_vc_mat()
+	if mesh.get_surface_count() >= 2:
+		mesh.surface_set_material(0, lib.pbr("bark", "bark_cedar", 0.7))
+		for surface in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(surface, petal)
+	else:
+		mesh.surface_set_material(0, petal)
+	return mesh
+
+
+static func village_tree_mesh(lib, glb_path: String,
+		canopy: StandardMaterial3D) -> Mesh:
+	var mesh: Mesh = lib.tree_mesh(glb_path).duplicate(true) as Mesh
+	if mesh.get_surface_count() >= 2:
+		for surface in range(1, mesh.get_surface_count()):
+			mesh.surface_set_material(surface, canopy)
+	return mesh
