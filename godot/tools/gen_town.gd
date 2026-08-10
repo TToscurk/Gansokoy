@@ -3419,61 +3419,9 @@ func _build_fauna() -> void:
 ## ⚠ 舊版的生長帶是 0~0.72 半寬（= 撒到河心）。那是**靜水**水路的設定；
 ## 浮葉植物長在淺灘不長在流心，所以這裡收到 0.42~0.86，貼著岸長。
 func _build_water_plants() -> void:
-	var g := lib.add(_root, Node3D.new(), "WaterPlants")
-	var pad := lib.tuft_mesh(6, 0.30, 0.34, Color(0.15, 0.29, 0.13), Color(0.27, 0.45, 0.19))
-	var lotus := lib.tuft_mesh(5, 0.46, 0.14, Color(0.20, 0.34, 0.16), Color(0.92, 0.72, 0.80), true)
-	var groups := [
-		{"mesh": pad, "n": 220, "band": Vector2(0.42, 0.86), "sink": -0.03, "file": "睡蓮"},
-		{"mesh": lotus, "n": 80, "band": Vector2(0.52, 0.84), "sink": -0.30, "file": "荷"},
-	]
-	var rv := _river()
-	var total := 0
-	var parts: Array[String] = []
-	for grp in groups:
-		var list: Array[Transform3D] = []
-		var tries := 0
-		var target: int = int(grp.n)
-		while list.size() < target and tries < target * 60:
-			tries += 1
-			var k := int(_street_rng.randf() * float(rv.size() - 1))
-			var a: Vector2 = rv[k]
-			var b: Vector2 = rv[k + 1]
-			var q: Vector2 = a.lerp(b, _street_rng.randf())
-			var band: Vector2 = grp.band
-			var off: float = RIVER_HALF * _street_rng.randf_range(band.x, band.y) \
-				* (1.0 if _street_rng.randf() < 0.5 else -1.0)
-			q += (b - a).normalized().orthogonal() * off
-			if absf(q.x) > HALF - 8.0 or absf(q.y) > HALF - 8.0:
-				continue
-			# 橋下與鯢吞亭川床下不長（橋墩／柱會穿過去，而且是陰影）
-			var skip := false
-			for br in BRIDGES:
-				if q.distance_to(Vector2(float(br.x), float(br.z))) < 12.0:
-					skip = true
-					break
-			if skip or q.distance_to(_uno_pos) < 16.0:
-				continue
-			# ⚠ 一定要用 poly_dist 複驗：沿線取樣的 off 是照**該段法線**推的，
-			# 河道轉彎處內側會被推到對岸去（實測會有株落在水面外）。
-			var d: float = lib.poly_dist(rv, q.x, q.y)
-			if d > RIVER_HALF * 0.86 - 0.3 or d < RIVER_HALF * 0.30:
-				continue
-			var wy: float = bank_h(q.x, q.y) - RIVER_DEPTH * 0.20 + float(grp.sink)
-			var sc := _street_rng.randf_range(0.7, 1.5)
-			list.append(Transform3D(
-				Basis(Vector3.UP, _street_rng.randf() * TAU).scaled(Vector3(sc, sc, sc)),
-				Vector3(q.x, wy, q.y)))
-		total += list.size()
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(grp.mesh, list, [],
-			OUT_DIR + "gen/water_%s.res" % String(grp.file))
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		# ⚠ 不設 visibility_range —— MultiMeshInstance 是**整批**用 AABB 中心
-		# 判距離的，跨半張圖的批次會被整批剔掉（草層踩過這個坑）。
-		lib.add(g, mmi, String(grp.file))
-		parts.append("%s %d" % [String(grp.file), list.size()])
-	_audit.append("水生植物：%s（共 %d 株，貼岸帶 0.42~0.86 半寬）"
-		% [", ".join(parts), total])
+	TownEcology.build_water_plants(
+		lib, _root, _river(), OUT_DIR, HALF, RIVER_HALF, RIVER_DEPTH,
+		BRIDGES, _uno_pos, _street_rng, bank_h, _audit)
 
 
 func _write_meta() -> void:
