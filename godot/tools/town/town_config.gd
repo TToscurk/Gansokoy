@@ -88,3 +88,75 @@ const LANDMARKS := [
 	{"n": "足洗邸", "x": 26.0, "z": 112.0, "w": 38.5, "d": 33.6, "h": 6.4,
 		"build": "_lm_ashiarai"},
 ]
+
+const YARD_FLATTEN := [
+	# fade 從 9 拉到 14：整平區擴成 97×118，避免長邊收尾出現折角。
+	{"x": -80.5, "z": -195.8, "w": 97.0, "d": 118.5, "fade": 14.0},
+]
+const APRON_W := 4.2
+
+const CONSOLIDATE := {
+	"machiya_e_a": "machiya_e_p",     # 村緣の平屋
+	"machiya_f_b": "machiya_f_m",     # 米屋（広い間口・低い）
+	"machiya_b_a": "machiya_n_a",     # 総二階
+	"machiya_b_b": "machiya_n_o",     # 総二階の大店
+}
+const CONSOLIDATE_ALL := true
+const KIT_FRONT := ["machiya_f_a", "machiya_f_s", "machiya_f_o",
+	"machiya_t_a", "machiya_w_a", "machiya_f_n"]
+
+const GRASS_SEED := SEED + 913
+const SHRINE_R := 7.2
+const HIEDA_OFF := Vector2(2.45, 17.8)
+const GROVE_SEED := SEED + 6011
+const STREET_SEED := SEED + 5231
+const GUTTER_SEG := 3.0
+const GUTTER_COMMERCE := 0.45
+const LAMP_MAX := 44
+const FAUNA_Z := Vector2(-120.0, 160.0)
+
+const SAKURA_SITES := [
+	{"c": Vector2(-16, -160), "r": 11.0, "n": 9},    # 北門內・西
+	{"c": Vector2(20, -152), "r": 8.0, "n": 6},      # 北門內・東
+	# 新點是從 instances.json 掃出的實際空地（離屋／河／路至少 10m）。
+	{"c": Vector2(-86, -36), "r": 10.0, "n": 7},     # 寺子屋西・街區間空地
+	{"c": Vector2(14, 226), "r": 12.0, "n": 9},      # 南口
+	{"c": Vector2(-148, 84), "r": 13.0, "n": 8},     # 西南門道旁
+	{"c": Vector2(174, 112), "r": 12.0, "n": 8},     # 東南岸・小橋南望
+]
+const GREEN_SITES := [
+	{"c": Vector2(-168, -40), "r": 12.0, "n": 7},    # 西緣
+	{"c": Vector2(122, 182), "r": 12.0, "n": 7},     # 東南緣
+]
+
+const GATES := [
+	# 北門：trail 落點往村內 6m，本通門洞 9.5m。
+	{"n": "北門", "x": 0.0, "z": -168.0, "yaw": 0.0},
+	# 西南門壓在沿 x 走的引道上，因此旋轉 90° 跨路。
+	{"n": "西南門", "x": -150.0, "z": 92.0, "yaw": PI * 0.5},
+]
+
+const LAMP_ANCHORS := [
+	[-5.4, -163.0], [5.4, -160.0],          # 北門の内側
+	[-5.4, -138.5], [5.8, -124.0],          # 火の番の辻
+	[-5.4, -60.0], [5.4, -46.5],            # 寺子屋・鈴奈庵の辻
+	[5.6, -22.5],                           # 蔵屋敷の木戸前
+	[-5.6, 6.5],                            # 鎮守之杜の鳥居脇
+	[-5.4, 22.0], [5.6, 33.5],              # MAIN_EW の辻
+	[-5.4, 49.0], [-5.4, 66.0],             # 市場の口と幟の列
+	[50.0, 26.5],                           # 主橋の西詰
+	[5.6, 100.0],                           # 足洗邸の前
+	[-5.4, 140.0],                          # 南の住宅列
+	[-5.4, 191.0], [5.4, 185.0],            # 南口
+]
+
+const MARKET_QUARTER_LOTS := [
+	# 南東角的市場藏面向本通，收緊幟列南端並替市口構成框景。
+	{"kind": "family_kura_compact", "x": -8.6, "z": 77.5, "yaw": PI * 0.5},
+	{"kind": "family_small_merchant_01", "x": -21.5, "z": 72.6, "yaw": PI},
+	# 使用已驗證的生產套件；舊 asset_proof_workshop GLB 的實際尺寸不符宣告。
+	{"kind": "machiya_w_a", "x": -34.0, "z": 74.0, "yaw": PI},
+	{"kind": "family_kura_compact", "x": -46.5, "z": 82.3, "yaw": 0.0},
+	{"kind": "family_standard_machiya_02", "x": -46.0, "z": 60.0, "yaw": PI * 0.5},
+	{"kind": "family_small_merchant_01", "x": -45.0, "z": 69.2, "yaw": PI * 0.5},
+]

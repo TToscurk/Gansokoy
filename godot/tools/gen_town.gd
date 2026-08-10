@@ -258,11 +258,7 @@ func height_at(x: float, z: float) -> float:
 ## 40×44m 的築地塀圍牆＋庭池擺在 1m 的坡上會有一邊浮、一邊埋。
 ## 使用者定案方案 1：整平地形，不換位置、不加基壇。
 ## 手法沿用橋頭路廊那招（同一個檔案裡已驗收過的做法），只是改成矩形區域。
-const YARD_FLATTEN := [
-	# 稗田邸（同保留區）。⚠ fade 從 9 拉到 14：整平區從 45×48 變成 97×118，
-	# 邊緣的收斂距離要跟著長，不然 118m 長的一邊會在收尾處出現一道折角。
-	{"x": -80.5, "z": -195.8, "w": 97.0, "d": 118.5, "fade": 14.0},
-]
+const YARD_FLATTEN := TownConfig.YARD_FLATTEN
 
 func _flatten_yards(x: float, z: float, h: float) -> float:
 	for y in YARD_FLATTEN:
@@ -300,7 +296,7 @@ func _road_info(x: float, z: float) -> float:
 ## 實測 164 棟臨街町家的正面離路緣：中位 3.85m、57 棟 ≤3m、43 棟 3~6m ——
 ## 所以鋪面寬度取 4.2m 就能把大部分的縫補起來，再往外就會鋪到院子裡。
 ## 只在村心生效：村緣的房子門口本來就該是土與草。
-const APRON_W := 4.2
+const APRON_W := TownConfig.APRON_W
 
 func _road_apron(x: float, z: float) -> float:
 	# ⚠ 一定要**限村心**。第一版沒加這個閘門（註解寫了「只在村心生效」，
@@ -696,13 +692,8 @@ func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
 ## 流すと面寬が 9.56〜11.76 でばらつき、前列の詰め込みが変わって棟数と
 ## 保留区の当たり判定が動く。**配置は保護対象**なので、fw 10.74 に合わせた
 ## `machiya_f_m` を一戸足すほうが安全側 —— 判断を変えた理由を残しておく。
-const CONSOLIDATE := {
-	"machiya_e_a": "machiya_e_p",     # 村緣の平屋
-	"machiya_f_b": "machiya_f_m",     # 米屋（広い間口・低い）
-	"machiya_b_a": "machiya_n_a",     # 総二階
-	"machiya_b_b": "machiya_n_o",     # 総二階の大店
-}
-const CONSOLIDATE_ALL := true
+const CONSOLIDATE := TownConfig.CONSOLIDATE
+const CONSOLIDATE_ALL := TownConfig.CONSOLIDATE_ALL
 
 
 func _consolidate(kind: String, p: Vector2) -> String:
@@ -795,8 +786,7 @@ func _kitify(cfg: Dictionary) -> Dictionary:
 	return c
 
 
-const KIT_FRONT := ["machiya_f_a", "machiya_f_s", "machiya_f_o",
-	"machiya_t_a", "machiya_w_a", "machiya_f_n"]
+const KIT_FRONT := TownConfig.KIT_FRONT
 
 func _kit_pick(p: Vector2, rng: RandomNumberGenerator) -> String:
 	var w := _commerce(p)
@@ -1476,31 +1466,7 @@ func _apply_phase5a_pilot() -> void:
 ## ⚠ 深さは横街の路縁（z=82.5）と屋台の南端（z≈69.4）に挟まれた 13m で
 ##   決まる。だから南縁は **浅い三棟**（9.7 / 9.6 / 8.1m）しか入らない ——
 ##   標準町家（11.6〜12.6m）は西縁に回す。
-const MARKET_QUARTER_LOTS := [
-	# 南東の角：**本通に正面を向ける**市場の蔵。
-	# ⚠ 修正ラウンドで追加。round 1 の mq_approach は BEFORE とほとんど
-	#   区別が付かなかった —— 南から本通を歩く目線に市場の質量が一つも
-	#   入らないからで、地面だけでは approach は直らなかった。
-	#   幟の列（z 46..70）の南端を締め、市の口が「額縁」になる。
-	{"kind": "family_kura_compact", "x": -8.6, "z": 77.5, "yaw": PI * 0.5},
-	# 南縁 東：市場に正面を向ける常設店。本通側は入口として広く空ける
-	{"kind": "family_small_merchant_01", "x": -21.5, "z": 72.6, "yaw": PI},
-	# 南縁 中：生産・服務の錨。店との間の 4.3m は横街から市への横丁になる。
-	# ⚠ ここは当初 `asset_proof_workshop` を使ったが、**あの glb は壊れている**
-	#   （宣言 11.30×9.60×6.45 に対し実測 1.40×0.55×0.10・1 surface）。
-	#   OBB も衝突箱も JSON の表から作るので静的検査は全部通り、engine 内で
-	#   だけ「見えない 11m の建物」になっていた —— art-review.md の
-	#   「パラメータではなく成果物を測れ」がそのまま起きた事例。
-	#   生産キットの `machiya_w_a`（板戸張り・煙出し、実測 9.16×5.75×9.31・
-	#   5 surface）に差し替える。工房の identity はこちらの方が正しい。
-	{"kind": "machiya_w_a", "x": -34.0, "z": 74.0, "yaw": PI},
-	# 南縁 西：蔵は**横街に面して**立つ。背面が荷捌き庭になり、
-	#          作業場との 3.2m が服務用の路地に読める
-	{"kind": "family_kura_compact", "x": -46.5, "z": 82.3, "yaw": 0.0},
-	# 西縁：市の通りの突き当たりを閉じる二戸（正面は市場を向く）
-	{"kind": "family_standard_machiya_02", "x": -46.0, "z": 60.0, "yaw": PI * 0.5},
-	{"kind": "family_small_merchant_01", "x": -45.0, "z": 69.2, "yaw": PI * 0.5},
-]
+const MARKET_QUARTER_LOTS := TownConfig.MARKET_QUARTER_LOTS
 
 
 func _market_quarter_lots() -> int:
@@ -1614,20 +1580,8 @@ func _perf_pass(n: Node) -> void:
 # ⚠ 隨機數用**自己的 RNG**，不碰 lib.rand —— 密度層在佈局之後跑，
 # 消耗 lib.rand 會把 vista 的散佈整個換一副面孔（佈局本身則不受影響）。
 
-const SAKURA_SITES := [
-	{"c": Vector2(-16, -160), "r": 11.0, "n": 9},    # 北門內・西
-	{"c": Vector2(20, -152), "r": 8.0, "n": 6},      # 北門內・東
-	# ⚠ 舊點 (-52,34)/(148,34) 實測只塞得下 1/7 與 3/8 棵 —— 這兩區被街區
-	# 填滿了。新點是從 instances.json 掃出來的實際空地（離屋/河/路 ≥10m）。
-	{"c": Vector2(-86, -36), "r": 10.0, "n": 7},     # 寺子屋西・街區間空地
-	{"c": Vector2(14, 226), "r": 12.0, "n": 9},      # 南口
-	{"c": Vector2(-148, 84), "r": 13.0, "n": 8},     # 西南門道旁
-	{"c": Vector2(174, 112), "r": 12.0, "n": 8},     # 東南岸・小橋南望
-]
-const GREEN_SITES := [
-	{"c": Vector2(-168, -40), "r": 12.0, "n": 7},    # 西緣
-	{"c": Vector2(122, 182), "r": 12.0, "n": 7},     # 東南緣
-]
+const SAKURA_SITES := TownConfig.SAKURA_SITES
+const GREEN_SITES := TownConfig.GREEN_SITES
 
 var _drng := RandomNumberGenerator.new()
 var _dbatch := {}                # 道具名 → Array[Transform3D]
@@ -2109,7 +2063,7 @@ func _emit_density() -> void:
 # 密度梯度沿用舊圖驗收過的直覺：**村心踏實、村外茂盛**（村心通過率 10%、
 # 村外 60%），這是「有人住」讀得出來的關鍵。
 
-const GRASS_SEED := SEED + 913
+const GRASS_SEED := TownConfig.GRASS_SEED
 
 ## 草能不能長在這裡：不在建物／保留區內、不在鋪面上、不在河裡。
 func _grass_free(x: float, z: float, need: float, hgrid: Dictionary) -> bool:
@@ -2691,7 +2645,7 @@ func _lm_grove(g: Node3D, _spread: float) -> void:
 
 ## ── 市場（開放廣場：龍神像＋屋台十二座＋水井＋高札場）──
 ## ⚠ 跟鎮守之杜一樣，舊 builder 全用世界座標寫，搬過來要換算成區域座標。
-const SHRINE_R := 7.2
+const SHRINE_R := TownConfig.SHRINE_R
 
 func _lm_dragon(g: Node3D, ox: float, oz: float) -> void:
 	var stone := _lmat("stone")
@@ -2928,7 +2882,7 @@ func _lm_market(g: Node3D, _spread: float) -> void:
 #
 # ⚠ 本地座標＝blockout 自己的座標系：**+z 朝表門（朝村子）、−z 是後院**。
 # 保留區中心取的是**包絡中心**，跟 blockout 的原點差 (2.45, 17.8)。
-const HIEDA_OFF := Vector2(2.45, 17.8)
+const HIEDA_OFF := TownConfig.HIEDA_OFF
 
 
 ## 緩衝疏林：沿保留區外緣一圈（改善書 §4）。
@@ -2942,7 +2896,7 @@ const HIEDA_OFF := Vector2(2.45, 17.8)
 ## 所以這裡做的是規格的**意圖**而不是字面：在保留區外緣 3~9m 的環帶上撒
 ## 一圈疏林，把庭院的外牆接進地景，密度刻意低（環帶面積的 ~1.4 株/100㎡）。
 ## 讓開的地方：z=−135 那條橫街（庭院的門面動線）、南北兩條被截斷的側街。
-const GROVE_SEED := SEED + 6011
+const GROVE_SEED := TownConfig.GROVE_SEED
 
 func _build_hieda_grove() -> void:
 	var lm: Dictionary = {}
@@ -3047,20 +3001,13 @@ func _lm_hieda(g: Node3D, _spread: float) -> void:
 # ⚠ 亂數：這一批一律用 `_street_rng`，而且材質全部指定色調索引（v ≥ 0）——
 # 只要碰一次 `_lm_rng.randf()`，六座地標的庭園散佈就會整組換位置。
 # （驗證方式：搬完之後把稗田邸子樹跟搬之前逐節點比對，位移必須是 0。）
-const STREET_SEED := SEED + 5231
+const STREET_SEED := TownConfig.STREET_SEED
 
 var _street_rng := RandomNumberGenerator.new()
 
 ## 門樓：擺在 portal 上，玩家一落地就是**穿門進村**。
 ## 舊值 (0,-215)/(-172,92) 是舊圖的村界，新圖的 portal 在 (0,-174)/(-132,100)。
-const GATES := [
-	# 北門：trail 落點 (0,-174) 往村內 6m。本通在這裡寬 8m，門洞 9.5m。
-	{"n": "北門", "x": 0.0, "z": -168.0, "yaw": 0.0},
-	# 西南門：kourindou 落點 (-132,100) 的**西側**（= 玩家背後就是林道）。
-	# 壓在西南門引道（z=92，沿 x 走）上 —— 所以要轉 90°，不然門是順著路
-	# 站的，跨不住路。舊圖那條引道是斜的（yaw 0.42），新圖是正的。
-	{"n": "西南門", "x": -150.0, "z": 92.0, "yaw": PI * 0.5},
-]
+const GATES := TownConfig.GATES
 
 func _build_gates() -> void:
 	var dark := _lmat("dark", 1)
@@ -3104,8 +3051,8 @@ func _build_gates() -> void:
 ## 一半：溝壁是沉的、埋掉沒人看得見，**溝蓋是浮的**（+0.04）—— 6m 長一片
 ## 壓在 0.2m 落差上，遠端就架空 0.2m。Stage 4 的本通街景截圖裡是一片
 ## 「掉在石板路上的板子」，還帶影子。節短一半 + 各自取樣就貼得住了。
-const GUTTER_SEG := 3.0
-const GUTTER_COMMERCE := 0.45     # 石溝是町方的東西，村緣的排水是土溝
+const GUTTER_SEG := TownConfig.GUTTER_SEG
+const GUTTER_COMMERCE := TownConfig.GUTTER_COMMERCE     # 石溝是町方的東西，村緣的排水是土溝
 
 # ══════════════════════════════════════════════════════════════════════
 # PHASE 3.1A：回廊の「路 → 建物」の移行層
@@ -4079,7 +4026,7 @@ func _build_gutters() -> void:
 ## 街燈：沿路網放，間距吃商業梯度（村心密、村緣疏）。
 ## ⚠ 舊版是手寫的 spots 陣列（吃 ST_X/ST_Z）；新圖的路是折線，所以改成
 ## **沿線行走取樣**。也因此不會再出現「燈站在田中央」那種舊格線殘留。
-const LAMP_MAX := 44              # OmniLight3D 有成本，上限擺明寫死
+const LAMP_MAX := TownConfig.LAMP_MAX              # OmniLight3D 有成本，上限擺明寫死
 
 ## Main Street batch：街燈の語彙を全取り替え。
 ## 旧版は「機械的に丸い鉄柱＋乳白の発光箱＋商業勾配の等間隔・両側交互」——
@@ -4089,19 +4036,7 @@ const LAMP_MAX := 44              # OmniLight3D 有成本，上限擺明寫死
 ## （台石＋角柱＋紙の火袋＋木の笠）。等間隔の巡回配置は廃止。
 ## ⚠ 乱数は使わない（決め打ちの錨点表）。N1/N2/N3 の錨点から 7m 以上
 ##   離す —— sight nodes 側の dodge_lamp が動いて節がずれるため。
-const LAMP_ANCHORS := [
-	[-5.4, -163.0], [5.4, -160.0],          # 北門の内側
-	[-5.4, -138.5], [5.8, -124.0],          # 火の番の辻（高札場と番小屋の脇）
-	[-5.4, -60.0], [5.4, -46.5],            # 寺子屋・鈴奈庵の辻
-	[5.6, -22.5],                           # 蔵屋敷の木戸前
-	[-5.6, 6.5],                            # 鎮守之杜の鳥居脇
-	[-5.4, 22.0], [5.6, 33.5],              # MAIN_EW の辻（広場の口）
-	[-5.4, 49.0], [-5.4, 66.0],             # 市場の口と幟の列
-	[50.0, 26.5],                           # 主橋の西詰
-	[5.6, 100.0],                           # 足洗邸（湯屋）の前
-	[-5.4, 140.0],                          # 南の住宅列（一本だけ・間隔を殺す）
-	[-5.4, 191.0], [5.4, 185.0],            # 南口（鐘楼の手前）
-]
+const LAMP_ANCHORS := TownConfig.LAMP_ANCHORS
 
 func _build_lamps() -> void:
 	var g := lib.add(_root, Node3D.new(), "街燈")
@@ -4157,7 +4092,7 @@ func _build_lamps() -> void:
 # → 水面 = bank_h − 0.5。舊碼寫的是 `sink * 0.35`（水路的係數），照抄會讓
 # 全部的鴨與睡蓮浮高 0.375m。
 
-const FAUNA_Z := Vector2(-120.0, 160.0)     # 生物只放在**看得到**的村內段
+const FAUNA_Z := TownConfig.FAUNA_Z     # 生物只放在**看得到**的村內段
 
 ## 河道在村內段的中心線 + 每個節點的水面高度（fauna.gd 的巡游路徑格式）
 func _river_reach() -> Array:
