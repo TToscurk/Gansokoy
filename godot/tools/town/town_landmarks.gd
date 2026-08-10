@@ -42,6 +42,56 @@ static func add_collision(root: Node3D, group: Node3D, size: Vector3,
 	shape.owner = root
 
 
+static func build_dais(
+		lib,
+		group: Node3D,
+		width: float,
+		depth: float,
+		height: float,
+		face: Vector2,
+		spread: float,
+		material_fn: Callable,
+		collide: Callable) -> void:
+	var stone: Material = material_fn.call("stone")
+	var foot := spread + 0.3
+	var step_count := 3
+	for index in step_count:
+		var ratio := float(index) / float(step_count)
+		var step_width := width - ratio * 0.9
+		var step_depth := depth - ratio * 0.9
+		var step_height := (height + foot) / float(step_count)
+		lib.box(
+			group, "石垣_%d" % index,
+			Vector3(step_width, step_height + 0.04, step_depth), stone,
+			Vector3(
+				0, -height - foot + step_height * (float(index) + 0.5), 0))
+	lib.box(
+		group, "天端石", Vector3(width - 0.9, 0.16, depth - 0.9), stone,
+		Vector3(0, -0.08, 0))
+	var stair_count := maxi(int(height / 0.24), 3)
+	var tangent := face.orthogonal()
+	for index in stair_count:
+		var ratio := (float(index) + 0.5) / float(stair_count)
+		var stair_y := -height + height * ratio
+		var outward := (1.0 - ratio) * 1.9
+		lib.box(
+			group, "石階_%d" % index,
+			Vector3(3.4, height / float(stair_count) + 0.05, 0.42), stone,
+			Vector3(
+				face.x * (depth * 0.5 + outward),
+				stair_y - height / float(stair_count) * 0.5,
+				face.y * (depth * 0.5 + outward)))
+	for side in [-1.0, 1.0]:
+		lib.box(
+			group, "親柱_%d" % int(side + 1),
+			Vector3(0.34, height + 0.5, 0.34), stone,
+			Vector3(
+				face.x * (depth * 0.5 + 0.3) + tangent.x * side * 1.9,
+				-height * 0.5 + 0.05,
+				face.y * (depth * 0.5 + 0.3) + tangent.y * side * 1.9))
+	collide.call(group, Vector3(width, height, depth), Vector3(0, -height, 0))
+
+
 ## Blockout material uses vertex colour and disables back-face culling. Blender
 ## rendered the source as double-sided, while Godot otherwise removed several
 ## reversed ground quads, including the full cut-stone approach.

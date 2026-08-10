@@ -1,5 +1,29 @@
 extends RefCounted
 
+
+static func build_market(
+		lib,
+		group: Node3D,
+		lm_rng: RandomNumberGenerator,
+		ground_under: Callable,
+		height_at: Callable,
+		material_fn: Callable,
+		collide: Callable,
+		build_dragon: Callable) -> void:
+	var content: Node3D = lib.add(group, Node3D.new(), "本體")
+	content.position = Vector3(1.25, 0.0, 3.95)
+	var world_centre := Vector2(group.position.x, group.position.z)
+	var base_y := group.position.y
+	var wood: Material = material_fn.call("wood")
+	var stone: Material = material_fn.call("stone")
+	build_dragon.call(content, -12.0, -10.0)
+	build_stalls(
+		lib, content, world_centre, base_y, wood, lm_rng,
+		ground_under, material_fn, collide)
+	build_civic_fixtures(
+		lib, content, world_centre, base_y, wood, stone,
+		height_at, material_fn, collide)
+
 ## Deterministic Human Village market builders. Callers retain ownership of
 ## the shared landmark RNG so extraction cannot silently reset its sequence.
 

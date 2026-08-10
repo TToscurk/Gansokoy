@@ -44,6 +44,7 @@ const TownLandmarkRegistry := preload("res://tools/town/town_landmark_registry.g
 const TownRiversideDiner := preload("res://tools/town/town_riverside_diner.gd")
 const TownRoadNetwork := preload("res://tools/town/town_road_network.gd")
 const TownWaterfront := preload("res://tools/town/town_waterfront.gd")
+const TownHiedaGrove := preload("res://tools/town/town_hieda_grove.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -2045,34 +2046,8 @@ func _lm_collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
 
 ## 石垣基壇（寺子屋等地標坐在其上，正面切石階）。搬自 gen_village。
 func _dais_in(g: Node3D, w: float, d: float, h: float, face: Vector2, spread: float) -> void:
-	var stone := _lmat("stone")
-	var foot: float = spread + 0.3
-	# 石垣是**下寬上窄**的（扇の勾配），直上直下看起來像水泥擋土牆
-	var steps := 3
-	for i in steps:
-		var t := float(i) / float(steps)
-		var sw: float = w - t * 0.9
-		var sd: float = d - t * 0.9
-		var sh: float = (h + foot) / float(steps)
-		lib.box(g, "石垣_%d" % i, Vector3(sw, sh + 0.04, sd), stone,
-			Vector3(0, -h - foot + sh * (float(i) + 0.5), 0))
-	lib.box(g, "天端石", Vector3(w - 0.9, 0.16, d - 0.9), stone, Vector3(0, -0.08, 0))
-	# 正面的石階
-	var nsteps := maxi(int(h / 0.24), 3)
-	var tan := face.orthogonal()
-	for i in nsteps:
-		var t2 := (float(i) + 0.5) / float(nsteps)
-		var sy: float = -h + h * t2
-		var out: float = (1.0 - t2) * 1.9
-		lib.box(g, "石階_%d" % i, Vector3(3.4, h / float(nsteps) + 0.05, 0.42), stone,
-			Vector3(face.x * (d * 0.5 + out), sy - h / float(nsteps) * 0.5,
-				face.y * (d * 0.5 + out)))
-	# 階梯兩側的親柱
-	for sd2 in [-1.0, 1.0]:
-		lib.box(g, "親柱_%d" % int(float(sd2) + 1), Vector3(0.34, h + 0.5, 0.34), stone,
-			Vector3(face.x * (d * 0.5 + 0.3) + tan.x * float(sd2) * 1.9, -h * 0.5 + 0.05,
-				face.y * (d * 0.5 + 0.3) + tan.y * float(sd2) * 1.9))
-	_lm_collide(g, Vector3(w, h, d), Vector3(0, -h, 0))
+	TownLandmarks.build_dais(
+		lib, g, w, d, h, face, spread, _lmat, _lm_collide)
 
 ## 生垣（樹籬）＋竹垣：村緣的「圍牆」。
 ##
@@ -2126,21 +2101,9 @@ func _lm_dragon(g: Node3D, ox: float, oz: float) -> void:
 
 
 func _lm_market(g: Node3D, _spread: float) -> void:
-	# 內容整體偏西南，推回保留區中心（實測後定的偏移）
-	# 偏移由**實測**定：第一版用 2.35 估，量出來中心偏東 1.1m，修正為 1.25。
-	var c := lib.add(g, Node3D.new(), "本體")
-	c.position = Vector3(1.25, 0.0, 3.95)
-	var wc := Vector2(g.position.x, g.position.z)
-	var y0: float = g.position.y
-	var wood := _lmat("wood")
-	var stone := _lmat("stone")
-	_lm_dragon(c, -12.0, -10.0)
-	TownMarket.build_stalls(
-		lib, c, wc, y0, wood, _lm_rng,
-		_ground_under, _lmat, _lm_collide)
-	TownMarket.build_civic_fixtures(
-		lib, c, wc, y0, wood, stone,
-		height_at, _lmat, _lm_collide)
+	TownMarket.build_market(
+		lib, g, _lm_rng, _ground_under, height_at,
+		_lmat, _lm_collide, _lm_dragon)
 
 
 # ══════════════ 稗田邸：完整獨立版直接落地 ══════════════
@@ -2184,58 +2147,9 @@ const HIEDA_OFF := TownConfig.HIEDA_OFF
 const GROVE_SEED := TownConfig.GROVE_SEED
 
 func _build_hieda_grove() -> void:
-	var lm: Dictionary = {}
-	for L in LANDMARKS:
-		if L.n == "稗田邸":
-			lm = L
-	if lm.is_empty():
-		return
-	var rng := RandomNumberGenerator.new()
-	rng.seed = GROVE_SEED
-	var hw: float = float(lm.w) * 0.5
-	var hd: float = float(lm.d) * 0.5
-	var cx: float = float(lm.x)
-	var cz: float = float(lm.z)
-	var kinds := ["res://assets/models/tree_round_a.glb",
-		"res://assets/models/tree_round_c.glb", "res://assets/models/tree_pine_a.glb"]
-	var batch := {}
-	var tries := 0
-	var n := 0
-	while n < 46 and tries < 3000:
-		tries += 1
-		var x := rng.randf_range(cx - hw - 9.0, cx + hw + 9.0)
-		var z := rng.randf_range(cz - hd - 9.0, cz + hd + 9.0)
-		# 只留環帶：保留區內不種（那是庭院自己的地），環帶外也不種
-		var ox: float = absf(x - cx) - hw
-		var oz: float = absf(z - cz) - hd
-		var out: float = maxf(ox, oz)
-		if out < 3.0 or out > 9.0:
-			continue
-		# 門面動線讓開：橫街（z=−135，含路寬）與外參道的正前方
-		if absf(z + 135.0) < 9.0:
-			continue
-		if absf(x - (cx + HIEDA_OFF.x)) < 9.0 and z > cz:
-			continue
-		if _road_info(x, z) > 0.02:
-			continue
-		var k: String = kinds[n % kinds.size()]
-		if not batch.has(k):
-			batch[k] = [] as Array[Transform3D]
-		var s := rng.randf_range(0.72, 1.15)
-		batch[k].append(Transform3D(
-			Basis(Vector3.UP, rng.randf_range(0.0, TAU)) * Basis.from_scale(Vector3(s, s, s)),
-			Vector3(x, height_at(x, z), z)))
-		n += 1
-	var g := lib.add(_root, Node3D.new(), "稗田邸緩衝林")
-	var ks: Array = batch.keys()
-	ks.sort()
-	for k in ks:
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(_village_tree_mesh(String(k)), batch[k], [],
-			OUT_DIR + "gen/mm_hieda_grove_%s.res" % String(k).get_file().get_basename())
-		lib.add(g, mmi, "MM_%s" % String(k).get_file().get_basename())
-	_audit.append("稗田邸緩衝疏林：%d 株 / %d 種（保留區外緣 3~9m 環帶，門面動線讓開）"
-		% [n, ks.size()])
+	TownHiedaGrove.build(
+		lib, _root, OUT_DIR, LANDMARKS, HIEDA_OFF, GROVE_SEED,
+		_road_info, height_at, _village_tree_mesh, _audit)
 
 
 func _lm_hieda(g: Node3D, _spread: float) -> void:
