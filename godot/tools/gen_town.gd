@@ -34,6 +34,7 @@ const TownLandmarks := preload("res://tools/town/town_landmarks.gd")
 const TownMarket := preload("res://tools/town/town_market.gd")
 const TownStreetFixtures := preload("res://tools/town/town_street_fixtures.gd")
 const TownEcology := preload("res://tools/town/town_ecology.gd")
+const TownPilotNode := preload("res://tools/town/town_pilot_node.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -2628,148 +2629,10 @@ func _build_pilot_edge() -> void:
 #   にも `_lm_rng` にも触らない —— `_lmat()` は必ず tone を明示で渡すこと
 #   （省略すると `_lm_rng` を消費して地標の中身がずれる）。
 func _build_pilot_node() -> void:
-	var TX := 9.5                       # 火見櫓の中心
-	var TZ := -132.0
-	var g := lib.add(_root, Node3D.new(), "火の番の辻") as Node3D
-	var dark := _lmat("dark", 1)
-	var kawara := _lmat("kawara", 1)
-	var wood := _lmat("wood", 0) if MAT_SET.has("wood") else _lmat("dark", 0)
-	var stone := lib.pbr("辻石", "stone_wall", 0.5, Color(0.62, 0.61, 0.58))
-	var placed: Array[String] = []
-
-	# ── 1. 半鐘 ──────────────────────────────────────────────
-	# 櫓の西面（本通側）に腕木を出して吊る。火事も妖怪も、まずこれが鳴る。
-	# 縄は下まで垂らす —— 「人が引く物」だと判るのはこの一本のおかげ。
-	# ⚠ 一度目は小さすぎ・明るすぎで、櫓の格子に紛れて**茶色い棒**に読めた
-	# （t3 の近景で発覚）。鐘は「離れて見て鐘と判る」大きさが要る ——
-	# 腕木を街側へ 1.9m 出し、格子ではなく**空を背に**吊る。
-	var by := height_at(TX - 3.6, TZ) + 3.15
-	lib.box(g, "半鐘腕木", Vector3(2.1, 0.17, 0.19), dark,
-		Vector3(TX - 2.6, by + 0.46, TZ))
-	lib.box(g, "半鐘方杖", Vector3(0.9, 0.13, 0.13), dark,
-		Vector3(TX - 2.2, by + 0.02, TZ))
-	lib.cyl(g, "半鐘吊環", 0.06, 0.06, 0.16, dark,
-		Vector3(TX - 3.6, by + 0.30, TZ), 6)
-	lib.cyl(g, "半鐘笠", 0.30, 0.42, 0.18,
-		lib.flat_mat("半鐘銅", Color(0.155, 0.135, 0.095), 0.38),
-		Vector3(TX - 3.6, by + 0.12, TZ), 14)
-	lib.cyl(g, "半鐘", 0.42, 0.50, 0.66,
-		lib.flat_mat("半鐘銅", Color(0.155, 0.135, 0.095), 0.38),
-		Vector3(TX - 3.6, by - 0.30, TZ), 14)
-	lib.cyl(g, "半鐘縄", 0.018, 0.018, 1.55,
-		lib.flat_mat("辻縄", Color(0.22, 0.18, 0.12), 0.95),
-		Vector3(TX - 3.6, by - 1.40, TZ), 5)
-	placed.append("半鐘")
-
-	# ── 2. 天水桶 ────────────────────────────────────────────
-	# L 字に並べる：西面（本通から見える）3、南面（辻から見える）2。
-	# 火消しの水は雨水を溜めておく —— 蓋を少しずらして水面を見せる。
-	var tw: Array[Transform3D] = []
-	for spec in [[TX - 2.6, TZ + 0.9], [TX - 2.6, TZ + 2.0], [TX - 2.6, TZ + 3.1],
-			[TX - 1.3, TZ + 3.9], [TX - 0.1, TZ + 3.9]]:
-		var px: float = float(spec[0])
-		var pz: float = float(spec[1])
-		tw.append(Transform3D(Basis(Vector3.UP, 0.2)
-			* Basis.from_scale(Vector3(1.28, 1.32, 1.28)),
-			Vector3(px, height_at(px, pz), pz)))
-	var tmi := MultiMeshInstance3D.new()
-	tmi.multimesh = lib.make_multimesh(
-		lib.prop_mesh("res://assets/models/prop_taru.glb", lib.vc_mat()), tw, [],
-		OUT_DIR + "gen/tsuji_tensuioke.res")
-	lib.add(g, tmi, "MM_天水桶")
-	placed.append("天水桶 %d" % tw.size())
-
-	# ── 3. 番小屋 ────────────────────────────────────────────
-	# ⚠ 櫓に**従属**させる。壁高 2.05m・3.0×2.6 —— 町家（軒高 3.6m 以上）
-	#   より明らかに低く、屋根も片流れに近い緩勾配。夜に灯が点く唯一の窓。
-	var hx := TX - 1.3
-	var hz := TZ + 6.6
-	var hy := height_at(hx, hz)
-	var hut := lib.add(g, Node3D.new(), "番小屋") as Node3D
-	hut.position = Vector3(hx, hy, hz)
-	hut.rotation.y = 0.2
-	lib.box(hut, "土台", Vector3(3.15, 0.18, 2.75), stone, Vector3(0, 0.09, 0))
-	lib.box(hut, "壁", Vector3(3.0, 2.05, 2.6), _lmat("plaster", 1),
-		Vector3(0, 1.20, 0))
-	for sx in [-1.0, 1.0]:
-		lib.box(hut, "隅柱_%d" % int(sx + 1.0), Vector3(0.14, 2.05, 0.14), dark,
-			Vector3(sx * 1.43, 1.20, 1.23))
-	lib.box(hut, "腰板", Vector3(3.06, 0.62, 2.66), dark, Vector3(0, 0.49, 0))
-	# 番人が街を見る窓（本通側）。夜はここだけ灯る
-	# ⚠ 「夜はここだけ灯る」と書いておきながら emissive を付けておらず、
-	# 夕暮れの診断カットで真っ暗だった。番人が居ることの唯一の証拠なので、
-	# 街燈と同じ既存パターンで自発光にする（光照ラウンドには入らない ——
-	# 光源は足さず、材質の emission だけ）。
-	lib.box(hut, "窓", Vector3(0.06, 0.72, 1.05),
-		# ⚠ emission 0.85 は昼に**真っ白なパネル**として抜けた（t3）。
-		# 目標は「昼は障子紙、夕方に灯る」なので、自発光は夕闇でだけ
-		# 効く程度まで落とす。白い面積を作らない。
-		lib.flat_mat("番小屋灯", Color(0.74, 0.67, 0.53), 0.55,
-			Color(0.24, 0.17, 0.08)),
-		Vector3(-1.52, 1.45, 0.1))
-	lib.gable_roof(hut, 2.25, 3.5, 3.1, 0.30, 0.14, kawara, dark)
-	_lm_collide(hut, Vector3(3.1, 2.3, 2.7))
-	placed.append("番小屋")
-
-	# ── 4. 高札場 ────────────────────────────────────────────
-	# 辻の西側。火の用心の触れも、妖怪の警告も、ここに貼られる。
-	var nx := -6.6
-	var nz := -133.4
-	var ny := height_at(nx, nz)
-	var notice := lib.add(g, Node3D.new(), "高札場") as Node3D
-	notice.position = Vector3(nx, ny, nz)
-	notice.rotation.y = -PI * 0.5 + 0.18          # 板面が本通を向く
-	for sd in [-1.0, 1.0]:
-		lib.box(notice, "柱_%d" % int(sd + 1.0), Vector3(0.16, 2.5, 0.16), dark,
-			Vector3(sd * 1.05, 1.25, 0))
-	lib.box(notice, "板", Vector3(2.4, 1.35, 0.09),
-		lib.pbr("高札板", "planks", 0.5, Color(0.70, 0.62, 0.50)),
-		Vector3(0, 1.88, 0))
-	lib.box(notice, "屋根", Vector3(2.8, 0.11, 0.55), kawara, Vector3(0, 2.68, 0))
-	_lm_collide(notice, Vector3(2.5, 2.6, 0.55))
-	placed.append("高札場")
-
-	# ── 5. 地蔵 ──────────────────────────────────────────────
-	# **門を向く**。村に入る者を迎え、出る者を送る。旅の無事の方の地蔵。
-	var jx := -6.5
-	var jz := -139.6
-	var jy := height_at(jx, jz)
-	var jz3 := lib.add(g, Node3D.new(), "辻地蔵") as Node3D
-	jz3.position = Vector3(jx, jy, jz)
-	jz3.rotation.y = PI                            # 北（門）を向く
-	lib.box(jz3, "台座", Vector3(0.86, 0.30, 0.72), stone, Vector3(0, 0.15, 0))
-	lib.cyl(jz3, "地蔵身", 0.19, 0.22, 0.62, stone, Vector3(0, 0.61, 0), 10)
-	lib.cyl(jz3, "地蔵頭", 0.17, 0.17, 0.28, stone, Vector3(0, 1.06, 0), 10)
-	lib.box(jz3, "前掛", Vector3(0.36, 0.34, 0.05),
-		lib.flat_mat("辻前掛", Color(0.52, 0.13, 0.11), 0.85),
-		Vector3(0, 0.70, -0.21))
-	for sd2 in [-1.0, 1.0]:
-		lib.box(jz3, "祠柱_%d" % int(sd2 + 1.0), Vector3(0.09, 1.42, 0.09), dark,
-			Vector3(sd2 * 0.52, 0.71, 0.16))
-	lib.box(jz3, "祠屋根", Vector3(1.32, 0.10, 0.92), kawara, Vector3(0, 1.50, 0.0))
-	_lm_collide(jz3, Vector3(1.3, 1.6, 0.95))
-	placed.append("辻地蔵")
-
-	# ── 樹（任意項目）──
-	# 機能要素を置いたあと、西側が空のままで櫓の質量と釣り合わなかった
-	# （t2 で確認）。日陰と額縁のために**一本だけ**。並木にはしない。
-	var tx2 := -8.8
-	var tz2 := -136.4
-	var tree := MeshInstance3D.new()
-	tree.mesh = _village_tree_mesh("res://assets/models/tree_round_a.glb")
-	tree.position = Vector3(tx2, height_at(tx2, tz2), tz2)
-	tree.rotation.y = 0.6
-	tree.scale = Vector3(1.15, 1.2, 1.15)
-	lib.add(g, tree, "辻の樹")
-	placed.append("樹")
-
-	# 辻の足元の草を抜く（乱数不使用・buffer 直読み。共有 helper）
-	var foot := [[Vector2(hx, hz), 2.1, 1.8], [Vector2(nx, nz), 1.5, 0.7],
-			[Vector2(jx, jz), 1.0, 0.8], [Vector2(TX - 2.0, TZ + 2.4), 2.4, 2.6],
-			[Vector2(tx2, tz2), 1.3, 1.3]]
-	var cut := _cut_grass(foot)
-	_audit.append("PHASE 3.1B 火の番の辻：%s（足元の草 %d 叢を除去）"
-		% [", ".join(placed), cut])
+	TownPilotNode.build(
+		lib, _root, OUT_DIR, MAT_SET.has("wood"),
+		_lmat, height_at, _lm_collide,
+		_village_tree_mesh, _cut_grass, _audit)
 
 
 # ══════════════════════════════════════════════════════════════════════
