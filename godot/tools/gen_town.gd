@@ -28,6 +28,7 @@ const TownAssets := preload("res://tools/town/town_assets.gd")
 const TownHydrography := preload("res://tools/town/town_hydrography.gd")
 const TownOutput := preload("res://tools/town/town_output.gd")
 const TownEnvironment := preload("res://tools/town/town_environment.gd")
+const TownConfig := preload("res://tools/town/town_config.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -37,36 +38,28 @@ const TownEnvironment := preload("res://tools/town/town_environment.gd")
 #
 # ⚠ `gen_village.gd` 從此**不可再執行**（跑了會蓋掉這裡的產出）。它留著是
 # 當 MIGRATE 清單的來源：地標內容、雜物、動物、草層都還在那支裡面。
-const OUT_DIR := "res://maps/village/"
-const MAP_ID := "village"
-const MODULES := "res://data/town_modules.json"
-const SEED := 20260806
+const OUT_DIR := TownConfig.OUT_DIR
+const MAP_ID := TownConfig.MAP_ID
+const MODULES := TownConfig.MODULES
+const SEED := TownConfig.SEED
 
-const HALF := 300.0
-const PLAZA := Vector2(0, 30)
-const CORE := 196.0
+const HALF := TownConfig.HALF
+const PLAZA := TownConfig.PLAZA
+const CORE := TownConfig.CORE
 
 # ── 河道脊椎（村座標：-z = 北）──
-const RIVER_SPINE := [
-	Vector2(108, -300), Vector2(96, -236), Vector2(74, -168), Vector2(86, -108),
-	Vector2(64, -50), Vector2(62, -6), Vector2(66, 30), Vector2(78, 72),
-	Vector2(64, 120), Vector2(56, 168), Vector2(72, 224), Vector2(64, 300),
-]
-const RIVER_HALF := 7.0
-const RIVER_DEPTH := 2.5
-const BANK_PATH := 11.4          # 岸 7.0 + 護岸 1.2 + 河畔道 3.2
+const RIVER_SPINE := TownConfig.RIVER_SPINE
+const RIVER_HALF := TownConfig.RIVER_HALF
+const RIVER_DEPTH := TownConfig.RIVER_DEPTH
+const BANK_PATH := TownConfig.BANK_PATH          # 岸 7.0 + 護岸 1.2 + 河畔道 3.2
 
-const MAIN_EW_Z := 30.0
-const MAIN_EW_W := 12.0
+const MAIN_EW_Z := TownConfig.MAIN_EW_Z
+const MAIN_EW_W := TownConfig.MAIN_EW_W
 
 # 橋：主橋 12m 在 12m 主路上；兩座小橋在 z=-80 / z=140 的橫街上。
 # （八條東西街都會碰到河，但規格只給 1~2 座小橋 —— 其餘東西街在西岸
 #  河畔道收尾，不硬蓋橋。選這兩條是因為它們是東西兩側唯二需要的連通。）
-const BRIDGES := [
-	{"kind": "bridge_main", "x": 66.0, "z": 30.0, "yaw": 0.0},
-	{"kind": "bridge_small", "x": 76.8, "z": -80.0, "yaw": 0.0},
-	{"kind": "bridge_small", "x": 58.9, "z": 140.0, "yaw": 0.0},
-]
+const BRIDGES := TownConfig.BRIDGES
 
 # ── 超現實地標塔（使用者本輪指令）──
 # **只有這幾座**推到 15~20m；一般町家的階梯天際線（前排 4.5 / 後排 9~10）
@@ -76,19 +69,12 @@ const BRIDGES := [
 #   鐘楼   → 本通南端（往南 166m）
 #   水車櫓 → z=85 橫街的河岸終點；從主橋往北看也在視線裡
 # 三座都刻意偏離路心 6~10m：要被框住，不是擋住路。
-const TOWERS := [
-	{"kind": "tower_fire", "x": 9.5, "z": -132.0, "yaw": 0.20,
-	 "why": "本通北端終點"},
-	{"kind": "tower_bell", "x": 8.5, "z": 196.0, "yaw": -0.15,
-	 "why": "本通南端終點"},
-	{"kind": "tower_mill", "x": 62.5, "z": 89.0, "yaw": 1.5708,
-	 "why": "z=85 橫街的河岸終點；水輪朝河"},
-]
+const TOWERS := TownConfig.TOWERS
 
 # 鵜呑亭（臨河食堂）：正面朝河，離主橋西橋頭約 13m。
 # ⚠ 錨點要離主橋夠遠：模組**含川床深 17.5m**（不是主屋的 10.9m），
 # 放在 z=19 時東北角壓到橋的西引道（實測 20 處 3D 互穿，最深 0.78m）。
-const UNOMITEI_ANCHOR := Vector2(50.0, 2.0)
+const UNOMITEI_ANCHOR := TownConfig.UNOMITEI_ANCHOR
 
 # 既有地標街區：本輪**不重做**（不在街區重設計的範圍內），
 # 但要把地佔起來，街區才不會排到它們身上。佔位量體也一起畫出來，
