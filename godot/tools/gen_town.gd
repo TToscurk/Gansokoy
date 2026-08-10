@@ -32,6 +32,7 @@ const TownConfig := preload("res://tools/town/town_config.gd")
 const TownTerrain := preload("res://tools/town/town_terrain.gd")
 const TownLandmarks := preload("res://tools/town/town_landmarks.gd")
 const TownMarket := preload("res://tools/town/town_market.gd")
+const TownStreetFixtures := preload("res://tools/town/town_street_fixtures.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -3524,46 +3525,8 @@ const LAMP_MAX := TownConfig.LAMP_MAX              # OmniLight3D 有成本，上
 const LAMP_ANCHORS := TownConfig.LAMP_ANCHORS
 
 func _build_lamps() -> void:
-	var g := lib.add(_root, Node3D.new(), "街燈")
-	var wood := lib.pbr("行灯柱", "dark_wood", 2.4, Color(0.42, 0.40, 0.37))
-	var stone := lib.pbr("行灯台石", "stone_flag", 1.8, Color(0.50, 0.51, 0.49))
-	var paper := lib.flat_mat("行灯紙", Color(0.93, 0.87, 0.72), 0.6,
-		Color(0.34, 0.245, 0.115))
-	var n := 0
-	for a in LAMP_ANCHORS:
-		var p := Vector2(float(a[0]), float(a[1]))
-		if _pt_reserved(p, 0.8):
-			continue
-		var lamp := Node3D.new()
-		lamp.position = Vector3(p.x, height_at(p.x, p.y), p.y)
-		lamp.rotation.y = 0.35 * float((n * 7) % 5 - 2) * 0.25   # わずかな振れ
-		lib.add(g, lamp, "街燈_%d" % n)
-		# 台石 → 角柱 → 紙の火袋（木の框）→ 木の笠。全て直方 —— 旋盤の丸柱は無い
-		lib.box(lamp, "台石", Vector3(0.50, 0.22, 0.50), stone, Vector3(0, 0.11, 0))
-		lib.box(lamp, "柱", Vector3(0.13, 1.85, 0.13), wood, Vector3(0, 0.22 + 0.925, 0))
-		lib.box(lamp, "火袋", Vector3(0.36, 0.44, 0.36), paper, Vector3(0, 2.32, 0))
-		# 火袋の框：四隅の細い柱だけ。⚠ 側板 2 枚で作った初版は紙の箱の
-		#   前面が真っ黒な板になった（描画で確認）—— 紙は四面とも見せる。
-		for ci in 4:
-			lib.box(lamp, "框_%d" % ci, Vector3(0.05, 0.50, 0.05), wood,
-				Vector3((-1.0 if ci % 2 == 0 else 1.0) * 0.165, 2.32,
-					(-1.0 if ci < 2 else 1.0) * 0.165))
-		lib.box(lamp, "笠", Vector3(0.56, 0.06, 0.56), wood, Vector3(0, 2.60, 0))
-		lib.box(lamp, "笠上", Vector3(0.34, 0.05, 0.34), wood, Vector3(0, 2.65, 0))
-		var li := OmniLight3D.new()
-		li.position = Vector3(0, 2.32, 0)
-		li.light_color = Color(1.0, 0.76, 0.46)
-		li.light_energy = 1.1
-		li.omni_range = 8.0
-		li.shadow_enabled = false
-		# ⚠ 燈本體 _perf_pass 會設距離淡出，但**燈光不是 MeshInstance3D**，
-		# 不會被掃到 —— 自己設距離淡出。
-		li.distance_fade_enabled = true
-		li.distance_fade_begin = 55.0
-		li.distance_fade_length = 15.0
-		lib.add(lamp, li, "光")
-		n += 1
-	_audit.append("街燈 %d 盞（辻行灯：門・辻・社前・市の口・橋詰だけ。等間隔配置は廃止）" % n)
+	TownStreetFixtures.build_lamps(
+		lib, _root, LAMP_ANCHORS, _pt_reserved, height_at, _audit)
 
 
 
