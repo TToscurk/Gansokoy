@@ -4494,24 +4494,9 @@ func _write_meta() -> void:
 		{"x": -78.05, "y": snappedf(height_at(-78.05, -164.6), 0.01), "z": -164.6,
 		 "target": "hieda1f"},
 	]
-	var meta := {
-		"id": MAP_ID,
-		"note": "人間之里（街區重設計版，gen_town.gd 產出）。整合 Stage 2 起"
-			+ "這支取代了 gen_village.gd 的佈局；地標內容／草層／動物等"
-			+ "MIGRATE 項目逐步搬入中。gen_village.gd 不可再執行。",
-		"playSize": [460, 460],
-		"safe": true,
-		# 跟 src/world/mapRegistry.js 的 village 條目對齊（myouren/lake 是
-		# **規劃中**的連線，還沒有對應 portal；lake 已有保留觸發區）。
-		# 兩份登記表要說同一件事，不然整合完還是有兩個真相來源。
-		"connections": ["trail", "kourindou", "myouren", "lake"],
-		"portals": ports,
-		"colliders": [],
-	}
-	var f := FileAccess.open("res://data/%s.meta.json" % MAP_ID, FileAccess.WRITE)
-	f.store_string(JSON.stringify(meta, " "))
-	f.close()
-	print("wrote data/%s.meta.json" % MAP_ID)
+	# 跟 src/world/mapRegistry.js 的 village 條目對齊（myouren/lake 是
+	# **規劃中**的連線，還沒有對應 portal；lake 已有保留觸發區）。
+	TownOutput.write_meta(MAP_ID, ports)
 
 
 func _bank_portal(z: float) -> Dictionary:
