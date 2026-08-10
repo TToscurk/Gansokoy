@@ -88,6 +88,59 @@ static func build_mune_gate(lib, group: Node3D, fixed_x: float,
 				float(height_fn.call(fixed_x, fixed_z)) + 0.02,
 				fixed_z))
 
+
+static func build_gates(
+		lib,
+		root: Node3D,
+		gates: Array,
+		material_fn: Callable,
+		ground_under: Callable,
+		collide: Callable,
+		reserved: Array,
+		audit: Array[String]) -> void:
+	var dark: Material = material_fn.call("dark", 1)
+	var roof: Material = material_fn.call("kawara", 1)
+	var group: Node3D = lib.add(root, Node3D.new(), "門樓")
+	for gate_spec in gates:
+		var yaw: float = float(gate_spec.yaw)
+		var axis_x := Vector2(cos(yaw), -sin(yaw))
+		var axis_z := Vector2(sin(yaw), cos(yaw))
+		var ground: Array = ground_under.call(
+			float(gate_spec.x), float(gate_spec.z),
+			absf(axis_x.x) * 13.0 + absf(axis_z.x) * 2.4,
+			absf(axis_x.y) * 13.0 + absf(axis_z.y) * 2.4)
+		var foot: float = float(ground[1]) + 0.35
+		var gate := Node3D.new()
+		gate.position = Vector3(
+			float(gate_spec.x), float(ground[0]), float(gate_spec.z))
+		gate.rotation.y = yaw
+		lib.add(group, gate, String(gate_spec.n))
+		for side in [-1, 1]:
+			lib.box(
+				gate, "柱_%d" % (side + 1),
+				Vector3(0.7, 5.0 + foot, 0.7), dark,
+				Vector3(float(side) * 5.2, 2.5 - foot * 0.5, 0))
+			lib.box(
+				gate, "礎石_%d" % (side + 1),
+				Vector3(1.05, 0.3, 1.05), material_fn.call("stone", 0),
+				Vector3(float(side) * 5.2, 0.12, 0))
+			collide.call(
+				gate, Vector3(0.95, 5.2, 0.95),
+				Vector3(float(side) * 5.2, 0, 0))
+		lib.box(gate, "樑", Vector3(12.0, 0.55, 0.9), dark,
+			Vector3(0, 5.0, 0))
+		lib.box(gate, "貫", Vector3(11.0, 0.3, 0.55), dark,
+			Vector3(0, 3.6, 0))
+		lib.box(gate, "簷", Vector3(13.2, 0.24, 1.8), roof,
+			Vector3(0, 5.5, 0))
+		lib.box(gate, "棟", Vector3(13.2, 0.22, 0.4), roof,
+			Vector3(0, 5.68, 0))
+		reserved.append([
+			Vector2(float(gate_spec.x), float(gate_spec.z)),
+			axis_x, axis_z, 7.6, 2.4, String(gate_spec.n)])
+	audit.append("門樓 %d 座（北門在 trail 落點內側、西南門在 kourindou 引道上）"
+		% gates.size())
+
 static func build_gutters(lib, root: Node3D, out_dir: String,
 		main_ew_z: float, main_ew_w: float, gutter_segment: float,
 		gutter_commerce: float, river_half: float, roads: Array,

@@ -42,6 +42,8 @@ const TownPhase5APilot := preload("res://tools/town/town_phase5a_pilot.gd")
 const TownPilotEdge := preload("res://tools/town/town_pilot_edge.gd")
 const TownLandmarkRegistry := preload("res://tools/town/town_landmark_registry.gd")
 const TownRiversideDiner := preload("res://tools/town/town_riverside_diner.gd")
+const TownRoadNetwork := preload("res://tools/town/town_road_network.gd")
+const TownWaterfront := preload("res://tools/town/town_waterfront.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -417,40 +419,8 @@ func mask_at(x: float, z: float) -> Color:
 
 
 func _build_roads() -> void:
-	var rv := _river()
-	# 主要道路。東西向橫街碰到河就在西岸河畔道收尾（除了有橋的兩條）。
-	_roads.append({"pts": [Vector2(0, -240), Vector2(0, 250)], "w": 8.0})       # 本通
-	_roads.append({"pts": [Vector2(-190, 30), Vector2(200, 30)], "w": MAIN_EW_W})
-	for spec in [[-135.0, false], [-80.0, true], [85.0, false], [140.0, true]]:
-		var z: float = spec[0]
-		var bridged: bool = spec[1]
-		var rx := _nearest_river_pt(Vector2(0, z)).x
-		for p in rv:
-			if absf(p.y - z) < 2.5:
-				rx = p.x
-				break
-		if bridged:
-			_roads.append({"pts": [Vector2(-150, z), Vector2(150, z)], "w": 5.0})
-		else:
-			_roads.append({"pts": [Vector2(-150, z), Vector2(rx - BANK_PATH, z)], "w": 5.0})
-			_roads.append({"pts": [Vector2(rx + BANK_PATH, z), Vector2(150, z)], "w": 5.0})
-	# ⚠ x=−104 與 x=−52 兩條南北側街的北段截到 z=−130（原本鋪到 −190）。
-	# 稗田邸換成完整獨立版之後保留區是 97×118，橫跨兩個街廓（街網東西向間距
-	# 52m），這兩條會從庭院正中央穿過去。截掉的那 60m 服務 **0 棟町家**
-	# ——西北象限（x<−40 且 z<−120）實測一棟都沒有，那兩段只是畫在草地上的
-	# 空路。街廓是 `_block()` 用明確的 frontage 座標擺的、不吃 `_roads`，
-	# 所以截這兩段不會動到任何一棟町家。
-	for x in [-156.0, 104.0]:
-		_roads.append({"pts": [Vector2(x, -190), Vector2(x, 195)], "w": 4.5})
-	for x in [-104.0, -52.0]:
-		_roads.append({"pts": [Vector2(x, -130), Vector2(x, 195)], "w": 4.5})
-	# x=52 在 z∈[125,190] 整段落在河裡（最近 3.85m，河半寬 7）→ 截斷在 118，
-	# 南段的通行由西岸河畔道接手。
-	_roads.append({"pts": [Vector2(52, -190), Vector2(52, 118)], "w": 4.5})
-	# 西南門引道
-	_roads.append({"pts": [Vector2(-104, 92), Vector2(-172, 92)], "w": 4.0})
-	# 北門引道（本通往北出村）
-	_roads.append({"pts": [Vector2(0, -240), Vector2(0, -215)], "w": 6.0})
+	TownRoadNetwork.build(
+		_roads, _river(), MAIN_EW_W, BANK_PATH, _nearest_river_pt)
 
 
 # ── 護岸（MultiMesh）──
@@ -458,89 +428,21 @@ func _build_roads() -> void:
 # 實際約 119 個實例。一段一個 MeshInstance3D 的話就是 119 個節點。
 
 func _build_revetment() -> void:
-	var pts := _river()
-	var list: Array = []
-	var bm := BoxMesh.new()
-	# ⚠ 高度要夠深才埋得住。護岸擺在離河心 7.25m，而 river_carve 的坡在
-	# 那裡已經把地面挖到 bank_h - 1.37m —— 第一版用 1.15m 高、錨在 bank_h，
-	# 結果整條護岸**浮在被挖空的岸坡上方**，1.15m 全露出來，讀成水泥擋牆。
-	# 改成「頂緣固定在 bank_h + 0.08、往下埋 2.2m」，底一定在碎坡之下。
-	bm.size = Vector3(0.5, 2.2, 4.2)
-	for i in range(pts.size() - 1):
-		var a := pts[i]
-		var b := pts[i + 1]
-		var tv := b - a
-		var ln := tv.length()
-		if ln < 0.01:
-			continue
-		tv /= ln
-		var nrm := Vector2(-tv.y, tv.x)
-		for sd in [-1.0, 1.0]:
-			var mid: Vector2 = (a + b) * 0.5 + nrm * sd * (RIVER_HALF + 0.25)
-			var skip := false
-			for br in BRIDGES:
-				if absf(mid.x - br.x) < 8.0 and absf(mid.y - br.z) < 8.0:
-					skip = true
-			# 鯢吞亭自帶石垣（川床底下那段），產生器的護岸讓開免得兩片共面
-			if mid.distance_to(_uno_pos) < 22.0:
-				skip = true
-			# 砌石護岸是**城鎮裡的河**才有的東西；出了村心就是自然土岸。
-			# 一路砌到圖緣會讓整條河讀成人工渠道。
-			if Vector2(mid.x, mid.y - PLAZA.y).length() > 132.0:
-				skip = true
-			if skip:
-				continue
-			var bs := Basis(Vector3.UP, atan2(tv.x, tv.y))
-			bs = bs * Basis.from_scale(Vector3(1.0, 1.0, (ln + 0.25) / 4.2))
-			list.append(Transform3D(bs,
-				Vector3(mid.x, bank_h(mid.x, mid.y) - 1.02, mid.y)))
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = lib.make_multimesh(bm, list, [], OUT_DIR + "gen/mm_revetment.res")
-	# ⚠ 0.42 的灰在直射陽光下讀成水泥防洪牆（引擎內截圖看出來的）。
-	# 砌石護岸要暗、要偏冷；只露出 0.22m，其餘埋進岸裡。
-	mmi.material_override = lib.flat_mat("岸石", Color(0.205, 0.198, 0.183), 0.96)
-	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	mmi.visibility_range_end = 160.0
-	lib.add(_root, mmi, "護岸")
-	_audit.append("護岸 %d 段 → 1 個 MultiMesh（一段一節點的話是 %d 個節點）"
-		% [list.size(), list.size()])
+	TownWaterfront.build_revetment(
+		lib, _root, OUT_DIR, _river(), RIVER_HALF, BRIDGES,
+		_uno_pos, PLAZA, bank_h, _audit)
 
 
 func _plug_river_mouths() -> void:
-	## lib.boundary 的空氣牆只擋 y∈[0,40]，河床在圖緣是 -2.5~-3.5m ——
-	## 玩家可以從河口走出地圖。兩片小牆把河口補起來。
-	var body := StaticBody3D.new()
-	body.name = "河口封堵"
-	_root.add_child(body)
-	body.owner = _root
-	for p in [_river()[0], _river()[_river().size() - 1]]:
-		var sh := CollisionShape3D.new()
-		var bx := BoxShape3D.new()
-		bx.size = Vector3(RIVER_HALF * 2.0 + 10.0, 10.0, 1.0)
-		sh.shape = bx
-		sh.position = Vector3(p.x, -3.0, clampf(p.y, -(HALF - 1.5), HALF - 1.5))
-		body.add_child(sh)
-		sh.owner = _root
+	TownWaterfront.plug_river_mouths(_root, _river(), RIVER_HALF, HALF)
 
 
 # ── 橋 ──
 
 func _build_bridges() -> void:
-	var g := lib.add(_root, Node3D.new(), "橋")
-	for b in BRIDGES:
-		var mesh: Mesh = lib.prop_mesh(String(_mods[b.kind]["glb"]))
-		var mi := MeshInstance3D.new()
-		mi.mesh = mesh
-		mi.position = Vector3(b.x, bank_h(b.x, b.z) + 0.02, b.z)
-		mi.rotation.y = b.yaw
-		# ⚠ own_colliders=true 之下，main.gd 只給名為 "Terrain" 或帶
-		# needs_trimesh 的 MeshInstance3D 做碰撞 —— 沒這行的話橋是可以穿的
-		# （上一輪的 townlab 就是這樣，全場只有一個空氣牆 StaticBody3D）。
-		mi.set_meta("needs_trimesh", true)
-		lib.add(g, mi, "%s_%d" % [b.kind, int(b.z)])
-		_dump.append([b.kind, b.x, mi.position.y, b.z, b.yaw])
-		_reserved.append(_obb_of([b.kind, b.x, 0.0, b.z, b.yaw]))
-	_audit.append("橋 %d 座（主橋 12m + 小橋 4.2m ×2），全部帶 needs_trimesh" % BRIDGES.size())
+	TownWaterfront.build_bridges(
+		lib, _root, BRIDGES, _mods, bank_h, _obb_of,
+		_dump, _reserved, _audit)
 
 
 # ── 地標佔位 + 鯢吞亭 ──
@@ -2359,37 +2261,9 @@ var _street_rng := RandomNumberGenerator.new()
 const GATES := TownConfig.GATES
 
 func _build_gates() -> void:
-	var dark := _lmat("dark", 1)
-	var kawara := _lmat("kawara", 1)
-	var g0 := lib.add(_root, Node3D.new(), "門樓")
-	for d in GATES:
-		var yaw: float = float(d.yaw)
-		var ax := Vector2(cos(yaw), -sin(yaw))
-		var az := Vector2(sin(yaw), cos(yaw))
-		# 佔地是「沿門寬 13m × 進深 2.4m」，量地面要照這個方向取樣
-		var gu := _ground_under(float(d.x), float(d.z),
-			absf(ax.x) * 13.0 + absf(az.x) * 2.4, absf(ax.y) * 13.0 + absf(az.y) * 2.4)
-		var foot: float = float(gu[1]) + 0.35
-		var g := Node3D.new()
-		g.position = Vector3(float(d.x), float(gu[0]), float(d.z))
-		g.rotation.y = yaw
-		lib.add(g0, g, String(d.n))
-		for s in [-1, 1]:
-			# 柱腳往下埋「高差 + 0.35」，門跨在路上，兩側地面不會一樣高
-			lib.box(g, "柱_%d" % (s + 1), Vector3(0.7, 5.0 + foot, 0.7), dark,
-				Vector3(float(s) * 5.2, 2.5 - foot * 0.5, 0))
-			lib.box(g, "礎石_%d" % (s + 1), Vector3(1.05, 0.3, 1.05), _lmat("stone", 0),
-				Vector3(float(s) * 5.2, 0.12, 0))
-			_lm_collide(g, Vector3(0.95, 5.2, 0.95), Vector3(float(s) * 5.2, 0, 0))
-		lib.box(g, "樑", Vector3(12.0, 0.55, 0.9), dark, Vector3(0, 5.0, 0))
-		# 貫（柱間的橫木）：舊版只有樑與簷，剪影是「兩根柱撐一片板」。
-		# 補一根低位的貫，才讀得出是門而不是招牌架。
-		lib.box(g, "貫", Vector3(11.0, 0.3, 0.55), dark, Vector3(0, 3.6, 0))
-		lib.box(g, "簷", Vector3(13.2, 0.24, 1.8), kawara, Vector3(0, 5.5, 0))
-		lib.box(g, "棟", Vector3(13.2, 0.22, 0.4), kawara, Vector3(0, 5.68, 0))
-		# 保留區：町家不准蓋在門洞裡，草也不長進來
-		_reserved.append([Vector2(float(d.x), float(d.z)), ax, az, 7.6, 2.4, String(d.n)])
-	_audit.append("門樓 %d 座（北門在 trail 落點內側、西南門在 kourindou 引道上）" % GATES.size())
+	TownStreetFixtures.build_gates(
+		lib, _root, GATES, _lmat, _ground_under,
+		_lm_collide, _reserved, _audit)
 
 
 ## 石溝：本通與東西大街兩側的排水溝（町方的地面語彙）。
