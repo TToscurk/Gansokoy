@@ -31,6 +31,7 @@ const TownEnvironment := preload("res://tools/town/town_environment.gd")
 const TownConfig := preload("res://tools/town/town_config.gd")
 const TownTerrain := preload("res://tools/town/town_terrain.gd")
 const TownLandmarks := preload("res://tools/town/town_landmarks.gd")
+const TownMarket := preload("res://tools/town/town_market.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -2368,92 +2369,9 @@ func _lm_market(g: Node3D, _spread: float) -> void:
 	var wood := _lmat("wood")
 	var stone := _lmat("stone")
 	_lm_dragon(c, -12.0, -10.0)
-	var cloths := [Color(0.52, 0.30, 0.27), Color(0.30, 0.35, 0.45),
-		Color(0.58, 0.50, 0.32), Color(0.34, 0.42, 0.33), Color(0.46, 0.40, 0.50)]
-	var goods := [Color(0.78, 0.62, 0.34), Color(0.52, 0.30, 0.24), Color(0.40, 0.52, 0.30),
-		Color(0.86, 0.80, 0.62), Color(0.30, 0.34, 0.40)]
-	var earth := lib.pbr("市場土間", "terrain_path", 0.30, Color(0.92, 0.88, 0.80))
-	# ⚠ 攤位不能撒成方陣（從空中看是停車場）。市集是「兩排面對面夾一條走道」，
-	# 客人走中間、攤販站兩側；正面（+z）一律朝走道。
-	const AISLE_Z := 2.0
-	const AISLE_HALF := 4.6
-	# ⚠ PHASE 5A-V 修正ラウンド：等間隔 5.4m の 6 スパンは空撮で**定規で引いた
-	#   格子**に読めた（round 1 の mq_elevated）。市は島ごとに寄って立つもの
-	#   なので、間隔を 4.55m に詰めたうえで島の頭に段差を入れ、三つの塊に割る。
-	#   通路の幅は島の間で広がる。⚠ _lm_rng の**消費回数は一つも変えない**
-	#   （地標の抽選列がずれると水井・高札場・龍神像まで動く）。
-	const STALL_ISLAND_DX := [0.0, 0.0, 2.10, 2.10, 4.60, 4.60]
-	const STALL_ISLAND_DZ := [0.0, 0.35, -0.45]
-	for i in 12:
-		var row := i % 2
-		var k0: int = i / 2
-		var ox: float = -13.0 + float(k0) * 4.55 + float(STALL_ISLAND_DX[k0]) \
-			+ _lm_rng.randf_range(-0.9, 0.9)
-		var oz: float = AISLE_Z + (AISLE_HALF if row == 1 else -AISLE_HALF) \
-			+ float(STALL_ISLAND_DZ[k0 / 2]) * (1.0 if row == 1 else -1.0) \
-			+ _lm_rng.randf_range(-0.4, 0.4)
-		var gu := _ground_under(wc.x + ox, wc.y + oz, 3.6, 3.0)
-		var st := Node3D.new()
-		st.position = Vector3(ox, float(gu[0]) - y0, oz)
-		st.rotation.y = (PI if row == 1 else 0.0) + _lm_rng.randf_range(-0.18, 0.18)
-		lib.add(c, st, "屋台_%d" % i)
-		lib.box(st, "土間", Vector3(4.4, 0.10, 3.6), earth, Vector3(0, 0.03, 0.2))
-		for sx in [-1.0, 1.0]:
-			for sz in [-1.0, 1.0]:
-				lib.strut(st, "腳_%d%d" % [int(sx + 1), int(sz + 1)],
-					Vector3(sx * 1.3, 0.06, sz * 0.85), Vector3(sx * 1.3, 0.95, sz * 0.85),
-					0.055, wood, 5)
-			lib.strut(st, "貫_%d" % int(sx + 1), Vector3(sx * 1.3, 0.34, -0.85),
-				Vector3(sx * 1.3, 0.34, 0.85), 0.04, wood, 4)
-		lib.box(st, "檯面", Vector3(2.9, 0.10, 1.9), _lmat("wood", i % 4), Vector3(0, 1.0, 0))
-		var back_h := 2.45
-		var front_h := 2.05
-		for sx2 in [-1.0, 1.0]:
-			lib.strut(st, "篷柱後_%d" % int(sx2 + 1), Vector3(sx2 * 1.35, 0.95, -0.95),
-				Vector3(sx2 * 1.4, back_h, -1.05), 0.05, wood, 5)
-			lib.strut(st, "篷柱前_%d" % int(sx2 + 1), Vector3(sx2 * 1.35, 0.95, 0.95),
-				Vector3(sx2 * 1.4, front_h, 1.15), 0.05, wood, 5)
-		var base_c: Color = cloths[i % cloths.size()]
-		var cm := lib.pbr("屋台布_%d" % (i % 5), "plaster", 1.8, base_c)
-		var cm2 := lib.pbr("屋台布縞_%d" % (i % 5), "plaster", 1.8,
-			Color(base_c.r * 0.62 + 0.30, base_c.g * 0.62 + 0.30, base_c.b * 0.62 + 0.30))
-		var strips := 6
-		for k in 2:
-			var t := float(k)
-			var sag := -0.10 if k == 0 else 0.0
-			for sI in strips:
-				var sw := 3.3 / float(strips)
-				var cloth := lib.box(st, "篷_%d_%d" % [k, sI],
-					Vector3(sw * 0.99, 0.05, 1.25), cm if sI % 2 == 0 else cm2,
-					Vector3(-1.65 + (float(sI) + 0.5) * sw,
-						lerpf(back_h, front_h, 0.25 + t * 0.5) + sag, -0.55 + t * 1.1))
-				cloth.rotation.x = 0.20 + t * 0.06
-		var skirt := lib.box(st, "篷垂", Vector3(3.3, 0.34, 0.04), cm2,
-			Vector3(0, front_h - 0.12, 1.18))
-		skirt.rotation.x = 0.1
-		for k2 in 3:
-			var gmat := lib.flat_mat("貨_%d" % ((i + k2) % 5), goods[(i + k2) % goods.size()], 0.9)
-			var gx2 := -0.95 + float(k2) * 0.95
-			if _lm_rng.randf() < 0.5:
-				for k3 in 3:
-					lib.cyl(st, "貨_%d_%d" % [k2, k3], 0.16, 0.18, 0.12, gmat,
-						Vector3(gx2 + _lm_rng.randf_range(-0.05, 0.05), 1.11 + float(k3) * 0.12,
-							_lm_rng.randf_range(-0.3, 0.3)), 8)
-			else:
-				lib.box(st, "貨箱_%d" % k2, Vector3(0.6, 0.26, 0.5), gmat,
-					Vector3(gx2, 1.18, _lm_rng.randf_range(-0.25, 0.25)))
-		if _lm_rng.randf() < 0.6:
-			var nx := 1.42 * (1.0 if _lm_rng.randf() < 0.5 else -1.0)
-			for k4 in 3:
-				lib.box(st, "暖簾_%d" % k4, Vector3(0.04, 0.6, 0.42),
-					cm if k4 % 2 == 0 else cm2, Vector3(nx, 1.72, -0.5 + float(k4) * 0.5))
-		lib.box(st, "木箱", Vector3(0.75, 0.48, 0.58), _lmat("wood", (i + 1) % 4),
-			Vector3(_lm_rng.randf_range(-1.1, 1.1), 0.29, 1.45))
-		if _lm_rng.randf() < 0.5:
-			lib.box(st, "莚", Vector3(1.5, 0.05, 1.0),
-				lib.pbr("莚", "terrain_grass", 1.5, Color(0.80, 0.70, 0.46)),
-				Vector3(_lm_rng.randf_range(-0.6, 0.6), 0.09, 1.7))
-		_lm_collide(st, Vector3(3.0, 1.1, 2.2))
+	TownMarket.build_stalls(
+		lib, c, wc, y0, wood, _lm_rng,
+		_ground_under, _lmat, _lm_collide)
 	# 水井（有屋頂與吊桶架）
 	var wo := Vector2(13.0, 8.0)
 	var well := Node3D.new()
