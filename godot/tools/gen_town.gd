@@ -30,6 +30,7 @@ const TownOutput := preload("res://tools/town/town_output.gd")
 const TownEnvironment := preload("res://tools/town/town_environment.gd")
 const TownConfig := preload("res://tools/town/town_config.gd")
 const TownTerrain := preload("res://tools/town/town_terrain.gd")
+const TownLandmarks := preload("res://tools/town/town_landmarks.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -2262,39 +2263,17 @@ func _lmat(key: String, v := -1) -> StandardMaterial3D:
 
 ## 水面以下不算地面 —— 拿 height_at 的話院內有池就整棟沉下去。
 func _lm_ground_sample(x: float, z: float) -> float:
-	var y := height_at(x, z)
-	if lib.poly_dist(_river(), x, z) < RIVER_HALF:
-		y = maxf(y, bank_h(x, z) - RIVER_DEPTH * 0.20)
-	return y
+	return TownLandmarks.ground_sample(lib, _river(), RIVER_HALF, RIVER_DEPTH,
+		height_at, bank_h, x, z)
 
 ## 一塊 footprint 的 [最低地面, 起伏量]。取樣約每 4m 一點 ——
 ## 3×3 對 40m 長的土塀太稀，中段有坑就整段浮空（舊圖體檢抓過）。
 func _ground_under(cx: float, cz: float, w: float, d: float) -> Array:
-	var lo := INF
-	var hi := -INF
-	var nx := clampi(int(ceil(w / 4.0)) + 1, 3, 9)
-	var nz := clampi(int(ceil(d / 4.0)) + 1, 3, 9)
-	for i in nx:
-		for j in nz:
-			var ox := float(i) / float(nx - 1) - 0.5
-			var oz := float(j) / float(nz - 1) - 0.5
-			var y := _lm_ground_sample(cx + ox * w, cz + oz * d)
-			lo = minf(lo, y)
-			hi = maxf(hi, y)
-	return [lo, hi - lo]
+	return TownLandmarks.ground_under(_lm_ground_sample, cx, cz, w, d)
 
 ## 建物碰撞箱。⚠ owner 一定要是 _root，否則不會存進 .tscn（ADR-017）。
 func _lm_collide(g: Node3D, size: Vector3, off := Vector3.ZERO) -> void:
-	var body := StaticBody3D.new()
-	g.add_child(body)
-	body.owner = _root
-	var shape := CollisionShape3D.new()
-	var bx := BoxShape3D.new()
-	bx.size = size
-	shape.shape = bx
-	shape.position = off + Vector3(0, size.y * 0.5, 0)
-	body.add_child(shape)
-	shape.owner = _root
+	TownLandmarks.add_collision(_root, g, size, off)
 
 
 ## 石垣基壇（寺子屋等地標坐在其上，正面切石階）。搬自 gen_village。
