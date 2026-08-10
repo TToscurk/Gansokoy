@@ -47,6 +47,7 @@ const TownWaterfront := preload("res://tools/town/town_waterfront.gd")
 const TownHiedaGrove := preload("res://tools/town/town_hieda_grove.gd")
 const TownBuildingOutput := preload("res://tools/town/town_building_output.gd")
 const TownGrass := preload("res://tools/town/town_grass.gd")
+const TownBlocks := preload("res://tools/town/town_blocks.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -476,314 +477,49 @@ func _build_unomitei() -> void:
 # 鄰棟前後錯位 jog 逐棟累進 = 「打破格線」的最小機制：排的方向仍順著
 # 街／河，但沒有兩棟真正對齊。
 
-func _on_road(pos: Vector2, face_dir: Vector2, kind: String) -> bool:
-	## 屋身（不含出簷）有沒有壓到任何路面。取四個角點對每條路量距離。
-	var m: Dictionary = _mods[kind]
-	var fwd := face_dir.normalized()
-	var side := Vector2(fwd.y, -fwd.x)
-	var hw: float = float(m["w"]) * 0.5
-	var dd: float = float(m["d"])
-	for sx in [-1.0, 1.0]:
-		for sy in [0.0, 1.0]:
-			var q: Vector2 = pos + side * sx * hw - fwd * (dd * sy)
-			for r in _roads:
-				if lib.poly_dist(r.pts, q.x, q.y) < r.w * 0.5 + 0.9:
-					return true
-	return false
-
-
-func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
-	## 這棟會不會壓到地標／鯢吞亭／橋。用跟自檢同一個 OBB 建法，
-	## 所以「產生時擋掉」跟「事後檢查」量的是同一件事。
-	var yaw := atan2(face_dir.x, face_dir.y)
-	var r := _obb_of([kind, pos.x, 0.0, pos.y, yaw])
-	for q in _reserved:
-		if _obb_pen(r, q) > 0.05:
-			return true
-	return false
-
-
-# ══════ PHASE 3 Architecture Consolidation：legacy house の置き換え ══════
-## legacy blockout（1 surface・テクスチャ 0 枚）→ production kit（6 surface）。
-## 置き換え先の fw/fd は相手に合わせて作ってあるので**配置は動かない**
-## （e_p 7.90/7.84 ↔ e_a 7.94/7.90、n_a 11.16/9.33 ↔ b_a 11.14/9.30、
-##   n_o 12.36/9.80 ↔ b_b 12.34/9.70）。
-##
-## 村全体に適用（PRODUCTION MODE：Human Village — Architecture Complete）。
-## `machiya_f_b` は当初「既存 kit で吸収できる」と判断したが、`_kit_pick` に
-## 流すと面寬が 9.56〜11.76 でばらつき、前列の詰め込みが変わって棟数と
-## 保留区の当たり判定が動く。**配置は保護対象**なので、fw 10.74 に合わせた
-## `machiya_f_m` を一戸足すほうが安全側 —— 判断を変えた理由を残しておく。
 const CONSOLIDATE := TownConfig.CONSOLIDATE
 const CONSOLIDATE_ALL := TownConfig.CONSOLIDATE_ALL
+const KIT_FRONT := TownConfig.KIT_FRONT
+
+var _block_rng := RandomNumberGenerator.new()
 
 
-func _consolidate(kind: String, p: Vector2) -> String:
-	# ⚠ ghost pass では**絶対に**置き換えない。ghost は「pilot が無かった頃の
-	#   家並み」を共有 RNG に流し直すためのものなので、ここで新モジュール
-	#   （面寬が 0.2m 違う）を混ぜると ghost の家の位置がずれ、密度層と
-	#   草層の抽選が村中で動く。実測：入れ忘れて葦 615 株・花樹 53 株が
-	#   回廊の外で移動した。
-	if _ghosting:
-		return kind
-	if not CONSOLIDATE.has(kind):
-		return kind
-	if not CONSOLIDATE_ALL and not (absf(p.x) < 40.0 and p.y >= -165.0 and p.y <= -80.0):
-		return kind
-	return String(CONSOLIDATE[kind])
-
-
-func _house(kind: String, pos: Vector2, face_dir: Vector2) -> void:
-	## 村緣降級的**單一收口點**。排屋迴圈裡也做了一次（那裡要早一步做，
-	## 才算得出正確的中心），但包角棟與河畔棟是直接呼叫這裡的 —— 只在
-	## 迴圈裡做的話它們會漏掉（實測 r≥155 還剩兩棟 4.5m 的 f_a）。
-	if kind != "machiya_e_a" and kind.begins_with("machiya") \
-			and Vector2(pos.x, pos.y - PLAZA.y).length() >= 155.0:
-		kind = _consolidate("machiya_e_a", pos)
-	kind = _consolidate(kind, pos)
-	## 保留區／道路的檢查也收在這裡。排屋迴圈裡也有一份（那裡要早一步做，
-	## 才知道要不要跳過這個位置繼續往前排），但**包角棟與河畔棟是直接
-	## 呼叫這裡的** —— 只在迴圈裡擋的話它們會漏掉（實測一棟包角的村緣屋
-	## 直接長在火見櫓的塔腳裡，穿插 2.33m）。
-	if _in_reserved(kind, pos, face_dir) or _on_road(pos, face_dir, kind):
-		return
-	var yaw := atan2(face_dir.x, face_dir.y)
-	var y := bank_h(pos.x, pos.y)
-	if _ghosting:
-		_ghost.append([kind, pos.x, y, pos.y, yaw])
-		return
-	var xf := Transform3D(Basis(Vector3.UP, yaw), Vector3(pos.x, y, pos.y))
-	if not _batch.has(kind):
-		_batch[kind] = []
-	_batch[kind].append(xf)
-	_dump.append([kind, pos.x, y, pos.y, yaw])
-
-
-# ══════════════════════════════════════════════════════════════════════
-# PHASE 3 pilot：production kit の配分規則
-# ══════════════════════════════════════════════════════════════════════
-#
-# slice の `LOTS` は一区画ずつ手で書いた明表。169 棟には持ち込めないので、
-# ここは**規則**にする。入力は既にある `_commerce()`（広場・本通・市場の
-# 商業勾配）だけ —— 新しい手動テーブルは作らない。
-#
-# ⚠ Phase 2 の「同一文化・不同家庭」比を守る：どの帯でも標準形 f_a が
-#   過半。全部違う家を並べると町並みではなく見本市になる。
-# ⚠ 後排（b_a 9.4m / b_b 9.9m）は**置き換えない**。kit の最高は f_n 6.42m で、
-#   差し替えると村の第二層の天際線が 3m 下がる —— それは「kit に合わせて
-#   村を作り直す」ことになり、人間の制約 1 が禁じている。kit 側の欠落として
-#   報告する（9~10m の総二階／大型町家が要る）。
-## PHASE 3.1A：回廊の帯（地面処理・石溝・縁石が共有する唯一の定義）。
-## 本通の apron は路縁から 4.2m しか伸びないので |x|<14 で十分足り、
-## z=−135 の横街まで巻き込まない（辻の設計は 3.1B の仕事）。
 func _in_pilot_xz(x: float, z: float) -> bool:
 	return absf(x) < 14.0 and z >= -168.0 and z <= -80.0
 
 
-## pilot 回廊：本通・北門側（ブロック 209/210/214/215 の範囲）。
-## ブロック ID は _dump に残らないので、幾何で判定する。
 func _is_pilot(e: Array) -> bool:
 	return _is_house_kind(String(e[0])) \
 		and absf(float(e[1])) < 40.0 \
 		and float(e[3]) >= -165.0 and float(e[3]) <= -80.0
 
 
-## PHASE 3.1A：pilot ブロックの上書き。
-## ⚠ **元の cfg は綺麗なまま残す**こと。ghost pass は legacy の設えを
-##   そのまま再現しないと _drng の消費が変わり、zero-drift が崩れる。
-##   だから「kit 化した cfg」は複製の上に作り、ghost には原本を渡す。
-##
-## 断面の是正（診断より）：
-##   setback 0.8 → 0.0、jog の振れ幅 ±2.2 → ±0.6。
-##   前排の軒先を路縁（±4.0）へ寄せ、草の帯を潰す。
-##   道路幅（_roads の 8.0m）は**触らない** —— あれは本通 490m 全体、
-##   つまり他の 36 ブロックに効いてしまう。街を締めるのは建物側の仕事。
 func _kitify(cfg: Dictionary) -> Dictionary:
-	var c: Dictionary = cfg.duplicate(true)
-	c["kit"] = true
-	var r0: Dictionary = c["rows"][0]
-	r0["setback"] = 0.15
-	r0["jog"] = [0.35, 1.1]
-	r0["jog_max"] = 1.35
-	return c
-
-
-const KIT_FRONT := TownConfig.KIT_FRONT
-
-func _kit_pick(p: Vector2, rng: RandomNumberGenerator) -> String:
-	var w := _commerce(p)
-	var r := rng.randf()
-	if w > 0.55:                      # 商業核心：店が並ぶ。大店は稀
-		if r < 0.18:
-			return "machiya_f_o"
-		if r < 0.36:
-			return "machiya_w_a"
-		if r < 0.48:
-			return "machiya_f_n"
-		if r < 0.58:
-			return "machiya_f_s"
-		return "machiya_f_a"
-	if w > 0.30:                      # 中間帯：新しい家・妻入り・工房が混じる
-		if r < 0.15:
-			return "machiya_t_a"
-		if r < 0.29:
-			return "machiya_f_n"
-		if r < 0.40:                  # 工房は商業核心ではなく縁に立つ
-			return "machiya_w_a"
-		return "machiya_f_a"
-	if r < 0.34:                      # 外縁：仕舞屋が増える
-		return "machiya_f_s"
-	return "machiya_f_a"
-
-
-func _frontage_pick(base_kind: String, p: Vector2,
-		rng: RandomNumberGenerator) -> String:
-	## Controlled family-scale variation for ordinary first-row frontages.
-	## Main-street blocks already opt into the stronger `_kit_pick()` mix; this
-	## quieter mix prevents secondary streets from becoming copied f_a/f_m runs.
-	## Rear rows and village-edge e_p rows remain stable silhouettes.
-	if base_kind != "machiya_f_a":
-		return base_kind
-	var r := rng.randf()
-	var commerce: float = _commerce(p)
-	if r < 0.12:
-		return "machiya_f_s"
-	if r < 0.22:
-		return "machiya_w_a"
-	if r < 0.29 and commerce > 0.22:
-		return "machiya_t_a"
-	if r < 0.36 and commerce > 0.30:
-		return "machiya_f_n"
-	return base_kind
+	return TownBlocks.kitify(cfg)
 
 
 func _block(seed_i: int, cfg: Dictionary) -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = seed_i
-	var a: Vector2 = cfg["frontage"]["a"]
-	var b: Vector2 = cfg["frontage"]["b"]
-	var along := (b - a).normalized()
-	var into: Vector2 = cfg.get("into", Vector2(-along.y, along.x))
-	var face := -into
-	var span := a.distance_to(b)
-	var rows: Array = cfg["rows"]
-	var name: String = cfg.get("name", "block")
-	var spacing: Array = cfg.get("spacing", [1.9, 3.0])
-
-	# ── 角落預留 ──
-	# 包角棟／河畔棟不是事後硬塞：先把端部的地讓出來，前排排到預留線就停。
-	# 沒有預留的那一版，五棟包角棟全數跟排屋穿插 0.5~6.2m。
-	var wrap: String = cfg.get("wrap", "")
-	var wrap_kind: String = cfg.get("wrap_kind", "machiya_f_a")
-	var wrap_end: String = cfg.get("wrap_end", "b")
-	var reserve_a := 0.0
-	var reserve_b := 0.0
-	if wrap == "U" or (wrap == "L" and wrap_end == "a"):
-		reserve_a = float(_mods[wrap_kind]["d"]) + 1.6
-	if wrap == "U" or (wrap == "L" and wrap_end == "b"):
-		reserve_b = float(_mods[wrap_kind]["d"]) + 1.6
-	var river_reserve := 0.0
-	if cfg.get("river_end", false):
-		# 河畔棟的**屋身**朝街區內伸（正面朝河），佔掉的是 fd（含出簷進深），
-		# 用面寬算會少留 ~2.5m。而且每一排都要讓，不只前排。
-		river_reserve = float(_mods[cfg.get("river_kind", "machiya_f_b")]["fd"]) + 2.6
-		reserve_b = maxf(reserve_b, river_reserve)
-
-	var front_depth := 0.0
-	var row_i := 0
-	for row in rows:
-		var kinds: Array = row["kinds"]
-		var jog: Array = row.get("jog", [1.0, 2.0])
-		var base_set: float = row.get("setback", 0.8)
-		if row_i > 0:
-			base_set = front_depth + rng.randf_range(row["gap"][0], row["gap"][1])
-		var s: float = row.get("start", 0.6) + float(row.get("lateral", 0.0))
-		if row_i == 0:
-			s += reserve_a
-		var gap_after: int = row.get("gap_after", -1)
-		var set_prev := base_set
-		var deepest := base_set
-		var hn := 0
-		while true:
-			# PHASE 3 pilot：kit ブロックの**前排のみ**規則で選ぶ。
-			# 後排は legacy のまま（上の KIT_FRONT の注記を参照）。
-			var pick_pos: Vector2 = a + along * s + into * base_set
-			var kind: String = _kit_pick(pick_pos, rng) \
-				if (cfg.get("kit", false) and row_i == 0) \
-				else kinds[(hn + seed_i) % kinds.size()]
-			if row_i == 0 and not cfg.get("kit", false):
-				kind = _frontage_pick(kind, pick_pos, rng)
-			# PHASE 3 Consolidation：中心を算出する**前**に差し替える
-			# （後だと面寬差ぶん家が偏る —— 下の村緣規則と同じ罠）
-			kind = _consolidate(kind, a + along * s + into * base_set)
-			var m: Dictionary = _mods[kind]
-			var w: float = m["w"]
-			var limit: float = span - 0.4 - (reserve_b if row_i == 0 else river_reserve)
-			if s + w > limit:
-				break
-			var setb := base_set
-			if hn > 0:
-				var d := rng.randf_range(jog[0], jog[1]) * (1.0 if hn % 2 == 1 else -1.0)
-				setb = clampf(set_prev + d, base_set,
-					base_set + float(row.get("jog_max", 2.2)))
-			set_prev = setb
-			# 村緣規則在這裡收口：r≥155 一律換成 3.5m 的村緣小屋，不管街區
-			# 怎麼配（規格：village-edge extreme downscale to 3.5m）。
-			# ⚠ 換模組要在**算中心之前**做 —— 先用舊 w 算中心再換模組的話，
-			# 房子會偏掉半個面寬差，實測造成鄰棟互穿 0.78m。
-			var prov: Vector2 = a + along * (s + w * 0.5) + into * setb
-			if Vector2(prov.x, prov.y - PLAZA.y).length() >= 155.0 \
-					and kind != "machiya_e_a" and kind != "machiya_e_p":
-				# Predominantly low edge farmhouses, punctuated by compact machiya.
-				kind = "machiya_f_s" if rng.randf() < 0.26 \
-					else _consolidate("machiya_e_a", prov)
-				m = _mods[kind]
-				w = m["w"]
-			var center: Vector2 = a + along * (s + w * 0.5) + into * setb
-			# ⚠ 產生器原本從來沒把房子跟**路**或**保留區**比對過 —— 實測
-			# 4 棟屋身壓在路面上（最深的前牆離 x=52 路心只有 0.70m），
-			# 還有町家長進鯢吞亭與主橋裡。這裡逐棟擋掉，擋掉就跳過這個位置。
-			if _on_road(center, face, kind) or _in_reserved(kind, center, face):
-				s += w + rng.randf_range(spacing[0], spacing[1])
-				hn += 1
-				continue
-			_house(kind, center, face)
-			deepest = maxf(deepest, setb + float(m["d"]) + 1.0)
-			# 鄰棟間隔 ≥1.9：兩側出簷各 0.85，1.7 以下屋簷互相穿插，
-			# 同模組鄰棟的簷還同高共面（本專案的老病）。
-			s += w + rng.randf_range(spacing[0], spacing[1])
-			if hn == gap_after:
-				s += rng.randf_range(6.5, 8.0)      # 視線缺口
-			hn += 1
-		front_depth = deepest
-		row_i += 1
-
-	if wrap != "":
-		var ends: Array = []
-		if wrap == "U":
-			ends = [[a, -1.0], [b, 1.0]]
-		else:
-			ends = [[b, 1.0]] if wrap_end == "b" else [[a, -1.0]]
-		for epair in ends:
-			var e: Vector2 = epair[0]
-			var sgn: float = epair[1]
-			if sgn > 0 and cfg.get("river_end", false):
-				continue                              # b 端讓給河畔棟
-			var mw: Dictionary = _mods[wrap_kind]
-			var setb0: float = rows[0].get("setback", 0.8)
-			var pos: Vector2 = e + along * sgn * 0.3 + into * (setb0 + float(mw["w"]) * 0.5)
-			_house(wrap_kind, pos, along * sgn)
-
-	if cfg.get("river_end", false):
-		# ⚠ 從**河道最近點**起算，不是從錨點 —— 錨點本身離河 4.7~9.1m，
-		# 從錨點加偏移會把房子推到離河 16~21m 還壓進後排。
-		var kind2: String = cfg.get("river_kind", "machiya_f_b")
-		var rp := _nearest_river_pt(cfg["river_anchor"])
-		var t := river_tangent(rp)
-		var n := Vector2(-t.y, t.x)
-		if n.dot(Vector2(cfg["river_anchor"]) - rp) < 0.0:
-			n = -n
-		_house(kind2, rp + n * (RIVER_HALF + 4.9), -n)
+	_block_rng.seed = seed_i
+	TownBlocks.build_block(seed_i, cfg, _block_rng, {
+		"lib": lib,
+		"mods": _mods,
+		"roads": _roads,
+		"reserved": _reserved,
+		"plaza": PLAZA,
+		"consolidate": CONSOLIDATE,
+		"consolidate_all": CONSOLIDATE_ALL,
+		"ghosting": _ghosting,
+		"ghost": _ghost,
+		"batches": _batch,
+		"dump": _dump,
+		"bank_h": bank_h,
+		"obb_of": _obb_of,
+		"obb_pen": _obb_pen,
+		"nearest_river_point": _nearest_river_pt,
+		"river_tangent": river_tangent,
+		"river_half": RIVER_HALF,
+		"commerce": _commerce,
+	})
 
 
 
