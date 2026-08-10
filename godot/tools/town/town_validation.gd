@@ -41,7 +41,7 @@ static func assert_no_overlap(dump: Array, modules: Dictionary, audit: Array[Str
 						push_error("重疊：%s#%d × %s#%d 穿插 %.2fm"
 							% [rects[i][5], i, rects[j][5], j, depth])
 	if bad == 0:
-		audit.append("重疊檢查：%d 件（町家＋橋＋鵜呑亭，含出簷 OBB）—— 0 穿插 ✓"
+		audit.append("重疊檢查：%d 件（町家＋橋＋鯢吞亭，含出簷 OBB）—— 0 穿插 ✓"
 			% rects.size())
 	else:
 		audit.append("⚠ 重疊檢查：%d 對穿插 —— 佈局有 bug" % bad)

@@ -8289,7 +8289,7 @@ material_override = ExtResource("11_4i7q7")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_gk4qh")
 
-[node name="鵜呑亭" type="MeshInstance3D" parent="." unique_id=576134536]
+[node name="鯢吞亭" type="MeshInstance3D" parent="." unique_id=576134536]
 transform = Transform3D(0.055034313, 0, -0.9984845, 0, 1, 0, 0.9984845, 0, 0.055034313, 43.844, 0.038055897, 3.1533394)
 mesh = SubResource("ArrayMesh_ophtu")
 metadata/needs_trimesh = true

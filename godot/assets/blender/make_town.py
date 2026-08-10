@@ -357,7 +357,7 @@ def bridge_main(bld, span=22.0, width=12.0, rise=1.5, rail_h=1.15,
 
 
 
-# ── 鵜呑亭（臨河食堂）──
+# ── 鯢吞亭（臨河食堂）──
 # 使用者決策：河道經過舊街區時**不搬遷，改造成臨河食堂當賣點**。
 # 形制參考京都鴨川納涼床：主屋在陸上、川床（木造平台）用束柱架到水面上。
 # 本河只有 14m 寬、中心水深 1.6m，所以床面取 1.33m（介於鴨川的 2~4m
@@ -682,7 +682,7 @@ def _gbox(ob):
     Blender(x, y) → Godot(x, -y)，所以 z0 = -ymax、z1 = -ymin。
     佈局端要靠它對**任何**模組建 OBB —— 光有 fw/fd 建不出「原點不在
     幾何中心」的模組（町家的原點在正面、橋的原點在中心），而那正是
-    鵜呑亭壓到橋上卻沒被自檢抓到的原因。"""
+    鯢吞亭壓到橋上卻沒被自檢抓到的原因。"""
     vs = [v.co for v in ob.data.vertices]
     return [round(min(v.x for v in vs), 3), round(max(v.x for v in vs), 3),
             round(-max(v.y for v in vs), 3), round(-min(v.y for v in vs), 3)]
@@ -836,7 +836,7 @@ uh = unomitei(b)
 ob = b.build("unomitei")
 n = export(ob, "unomitei")
 # ⚠ fd 一定要是**含川床**的真進深（17.5），不是主屋的 10.9 —— 少 6.6m
-# 就是鵜呑亭壓到橋上而 OBB 自檢沒抓到的原因。
+# 就是鯢吞亭壓到橋上而 OBB 自檢沒抓到的原因。
 _bb = _bbox(ob)
 manifest["modules"]["unomitei"] = {
     "kind": "landmark", "w": 13.2, "d": 9.2,

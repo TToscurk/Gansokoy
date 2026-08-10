@@ -16,7 +16,7 @@
 #   ・「主街 8m，11m 像機場跑道」→ 那是對南北本通說的，本通維持 8m。
 #     12m 軸放在**過河的東西向主路**（兩側有 9~10m 町家壓著、12m 橋收束）。
 #   ・前排町家 4.5m（使用者本輪定案：階梯天際線選 (c)，只壓前排）。
-#   ・鵜呑亭**不搬遷**，改成臨河食堂（使用者本輪定案）。
+#   ・鯢吞亭**不搬遷**，改成臨河食堂（使用者本輪定案）。
 #
 # ✅ 整合 Stage 2 已完成：輸出到 **maps/village/**，這支就是 village 的
 # 產生器（見下面 OUT_DIR 的說明）。中繼用的 maps/sato/ 已退場。
@@ -72,7 +72,7 @@ const BRIDGES := TownConfig.BRIDGES
 # 三座都刻意偏離路心 6~10m：要被框住，不是擋住路。
 const TOWERS := TownConfig.TOWERS
 
-# 鵜呑亭（臨河食堂）：正面朝河，離主橋西橋頭約 13m。
+# 鯢吞亭（臨河食堂）：正面朝河，離主橋西橋頭約 13m。
 # ⚠ 錨點要離主橋夠遠：模組**含川床深 17.5m**（不是主屋的 10.9m），
 # 放在 z=19 時東北角壓到橋的西引道（實測 20 處 3D 互穿，最深 0.78m）。
 const UNOMITEI_ANCHOR := TownConfig.UNOMITEI_ANCHOR
@@ -107,8 +107,8 @@ var _nh: FastNoiseLite
 var _n2: FastNoiseLite
 var _river_pts := PackedVector2Array()
 var _roads := []                 # [{pts:[Vector2...], w:float}]
-var _uno_pos := Vector2(1e9, 1e9)   # 鵜呑亭位置（護岸在這段要讓開）
-var _reserved := []                 # 不准蓋町家的 OBB（地標／鵜呑亭／橋）
+var _uno_pos := Vector2(1e9, 1e9)   # 鯢吞亭位置（護岸在這段要讓開）
+var _reserved := []                 # 不准蓋町家的 OBB（地標／鯢吞亭／橋）
 
 const PHASE5A_FAMILIES := TownAssets.PHASE5A_FAMILIES
 
@@ -162,7 +162,7 @@ func _init() -> void:
 	_build_lamps()             # 要在街區之後：燈要避開町家的 OBB
 	_build_fauna()
 	_build_water_plants()
-	# 草層要在密度層之後：它要避開的保留區（地標／橋／鵜呑亭／門樓）到這裡才齊
+	# 草層要在密度層之後：它要避開的保留區（地標／橋／鯢吞亭／門樓）到這裡才齊
 	_build_grass()
 	# ⚠ PHASE 3.1B：辻は**草層のあと**に建てる。_reserved に足してから草を
 	#   撒くと、棄却が変わって抽選列がずれる（実測：葦が 1495→1494）。
@@ -442,7 +442,7 @@ func _build_roads() -> void:
 
 
 # ── 護岸（MultiMesh）──
-# 全長 619m、154 段 × 2 岸 = 308 個候選；扣掉橋位、鵜呑亭與村外之後
+# 全長 619m、154 段 × 2 岸 = 308 個候選；扣掉橋位、鯢吞亭與村外之後
 # 實際約 119 個實例。一段一個 MeshInstance3D 的話就是 119 個節點。
 
 func _build_revetment() -> void:
@@ -469,7 +469,7 @@ func _build_revetment() -> void:
 			for br in BRIDGES:
 				if absf(mid.x - br.x) < 8.0 and absf(mid.y - br.z) < 8.0:
 					skip = true
-			# 鵜呑亭自帶石垣（川床底下那段），產生器的護岸讓開免得兩片共面
+			# 鯢吞亭自帶石垣（川床底下那段），產生器的護岸讓開免得兩片共面
 			if mid.distance_to(_uno_pos) < 22.0:
 				skip = true
 			# 砌石護岸是**城鎮裡的河**才有的東西；出了村心就是自然土岸。
@@ -531,7 +531,7 @@ func _build_bridges() -> void:
 	_audit.append("橋 %d 座（主橋 12m + 小橋 4.2m ×2），全部帶 needs_trimesh" % BRIDGES.size())
 
 
-# ── 地標佔位 + 鵜呑亭 ──
+# ── 地標佔位 + 鯢吞亭 ──
 
 func _build_landmark_stubs() -> void:
 	## ⚠ 第一版是無屋頂的素色方塊 —— 引擎內截圖讀成一排倉庫，把整個
@@ -594,7 +594,7 @@ func _build_landmark_stubs() -> void:
 
 
 func _build_unomitei() -> void:
-	## 使用者決策：鵜呑亭不搬遷，改成臨河食堂。
+	## 使用者決策：鯢吞亭不搬遷，改成臨河食堂。
 	## 正面（-y 面）朝河，屋身往河延伸 → 川床懸在水面上。
 	var rp := _nearest_river_pt(UNOMITEI_ANCHOR)
 	var t := river_tangent(rp)
@@ -616,11 +616,11 @@ func _build_unomitei() -> void:
 	mi.position = Vector3(pos.x, bank_h(pos.x, pos.y), pos.y)
 	mi.rotation.y = yaw
 	mi.set_meta("needs_trimesh", true)
-	lib.add(_root, mi, "鵜呑亭")
+	lib.add(_root, mi, "鯢吞亭")
 	_dump.append(["unomitei", pos.x, mi.position.y, pos.y, yaw])
 	_reserved.append(_obb_of(["unomitei", pos.x, 0.0, pos.y, yaw]))
 	var deck_out: Vector2 = pos - n * 16.0
-	_audit.append("鵜呑亭（臨河食堂）@(%.1f,%.1f) yaw %.1f°　川床外緣離河心 %.1fm"
+	_audit.append("鯢吞亭（臨河食堂）@(%.1f,%.1f) yaw %.1f°　川床外緣離河心 %.1fm"
 		% [pos.x, pos.y, rad_to_deg(yaw), deck_out.distance_to(rp)]
 		+ "（水面半寬 %.1f → 懸在水上 %.1fm）、離主橋 %.0fm"
 		% [RIVER_HALF * 0.86, RIVER_HALF * 0.86 - deck_out.distance_to(rp),
@@ -658,7 +658,7 @@ func _on_road(pos: Vector2, face_dir: Vector2, kind: String) -> bool:
 
 
 func _in_reserved(kind: String, pos: Vector2, face_dir: Vector2) -> bool:
-	## 這棟會不會壓到地標／鵜呑亭／橋。用跟自檢同一個 OBB 建法，
+	## 這棟會不會壓到地標／鯢吞亭／橋。用跟自檢同一個 OBB 建法，
 	## 所以「產生時擋掉」跟「事後檢查」量的是同一件事。
 	var yaw := atan2(face_dir.x, face_dir.y)
 	var r := _obb_of([kind, pos.x, 0.0, pos.y, yaw])
@@ -907,7 +907,7 @@ func _block(seed_i: int, cfg: Dictionary) -> void:
 			var center: Vector2 = a + along * (s + w * 0.5) + into * setb
 			# ⚠ 產生器原本從來沒把房子跟**路**或**保留區**比對過 —— 實測
 			# 4 棟屋身壓在路面上（最深的前牆離 x=52 路心只有 0.70m），
-			# 還有町家長進鵜呑亭與主橋裡。這裡逐棟擋掉，擋掉就跳過這個位置。
+			# 還有町家長進鯢吞亭與主橋裡。這裡逐棟擋掉，擋掉就跳過這個位置。
 			if _on_road(center, face, kind) or _in_reserved(kind, center, face):
 				s += w + rng.randf_range(spacing[0], spacing[1])
 				hn += 1
@@ -1024,8 +1024,8 @@ func _build_blocks() -> void:
 				{"kinds": ["machiya_f_a", "machiya_f_b"], "setback": 0.8},
 				{"kinds": ["machiya_b_a", "machiya_b_b"], "gap": [2.6, 4.0], "lateral": 3.8},
 		],
-		# river_end 拿掉：這段西岸已經給鵜呑亭了（兩者都被推到同一條河法線上，
-		# 彼此完全不知道對方存在 → 實測互穿 6.8m）。臨河的門面由鵜呑亭擔。
+		# river_end 拿掉：這段西岸已經給鯢吞亭了（兩者都被推到同一條河法線上，
+		# 彼此完全不知道對方存在 → 實測互穿 6.8m）。臨河的門面由鯢吞亭擔。
 		"wrap": "L", "wrap_end": "a",
 	})
 	_block(103, {
@@ -1478,14 +1478,14 @@ func _market_quarter_lots() -> int:
 func _obb_of(e: Array) -> Array:
 	## 從模組的 **Godot 局部 bbox（gbox）** 建世界 OBB。
 	## ⚠ 舊版只吃 fw/fd 又假設「原點在正面、往後長 fd」—— 那只對町家成立。
-	## 橋的原點在中心、鵜呑亭的川床往後伸 16m 而 fd 當時還寫成 10.9，
+	## 橋的原點在中心、鯢吞亭的川床往後伸 16m 而 fd 當時還寫成 10.9，
 	## 於是自檢對它們**結構性全盲**：印著「0 穿插 ✓」，實際有 3 對互穿
-	## （鵜呑亭 × 河畔町家 6.8m、鵜呑亭 × 主橋 2.3m）。gbox 一律照實量。
+	## （鯢吞亭 × 河畔町家 6.8m、鯢吞亭 × 主橋 2.3m）。gbox 一律照實量。
 	return TownGeometry.obb_of(e, _mods)
 
 
 func _assert_no_overlap() -> void:
-	## 逐對 OBB（SAT）—— **不再只檢查町家**：橋與鵜呑亭一起進來。
+	## 逐對 OBB（SAT）—— **不再只檢查町家**：橋與鯢吞亭一起進來。
 	TownValidation.assert_no_overlap(_dump, _mods, _audit)
 
 
@@ -1597,7 +1597,7 @@ func _dxf(kind: String, p: Vector2, y: float, yaw: float, s: float = 1.0) -> voi
 ## 吊掛與雜物的密度都吃它 —— 村緣自然安靜、橋頭與本通自然熱鬧。
 func _commerce(p: Vector2) -> float:
 	# 第一版全圖中位數只有 0.09、>0.35 的僅 17 棟 —— 暖簾靠底率四處亂撒，
-	# 「梯度」讀不出來。走廊項加寬加重、補鵜呑亭川床一帶，底率壓低
+	# 「梯度」讀不出來。走廊項加寬加重、補鯢吞亭川床一帶，底率壓低
 	# （梯度來自權重差，不是來自到處都有一點）。
 	var w := clampf(1.0 - (p - PLAZA).length() / 120.0, 0.0, 1.0) * 0.45
 	if absf(p.x) < 26.0 and p.y > -150.0 and p.y < 210.0:
@@ -2098,7 +2098,7 @@ func _reed_along_river(rng: RandomNumberGenerator, target: int) -> Array[Transfo
 			var q: Vector2 = p + nrm * side * off
 			if absf(q.x) > HALF - 4.0 or absf(q.y) > HALF - 4.0:
 				continue
-			# 橋下與鵜呑亭川床下不長（踩踏區與陰影）
+			# 橋下與鯢吞亭川床下不長（踩踏區與陰影）
 			var skip := false
 			for br in BRIDGES:
 				if q.distance_to(Vector2(float(br.x), float(br.z))) < 16.0:
@@ -4063,7 +4063,7 @@ func _build_fauna() -> void:
 		var c: Vector2 = a.lerp(b, t2)
 		var nrm := (b - a).normalized().orthogonal()
 		var sd := 1.0 if _street_rng.randf() < 0.5 else -1.0
-		# 橋、鵜呑亭讓開；砌石護岸那一段也讓開（鷺鷥不會站在石垣腳下的水裡）
+		# 橋、鯢吞亭讓開；砌石護岸那一段也讓開（鷺鷥不會站在石垣腳下的水裡）
 		var skip := false
 		for br in BRIDGES:
 			if c.distance_to(Vector2(float(br.x), float(br.z))) < 14.0:
@@ -4139,7 +4139,7 @@ func _build_water_plants() -> void:
 			q += (b - a).normalized().orthogonal() * off
 			if absf(q.x) > HALF - 8.0 or absf(q.y) > HALF - 8.0:
 				continue
-			# 橋下與鵜呑亭川床下不長（橋墩／柱會穿過去，而且是陰影）
+			# 橋下與鯢吞亭川床下不長（橋墩／柱會穿過去，而且是陰影）
 			var skip := false
 			for br in BRIDGES:
 				if q.distance_to(Vector2(float(br.x), float(br.z))) < 12.0:

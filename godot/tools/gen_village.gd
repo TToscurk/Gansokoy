@@ -22,7 +22,7 @@
 # 街區之間是寬闊的砂土大街。1.2 條主街 = 本通（南北貫穿）+ 橫町（東西中段）。
 #
 # 官方設施（THBWiki）：寺子屋、稗田邸（房舍＋長廊＋庭院水池楓樹）、
-# 鈴奈庵（貸本屋）、鵜吞亭、足洗邸、龍神像。
+# 鈴奈庵（貸本屋）、鯢吞亭、足洗邸、龍神像。
 # 傳送點沿用 meta.json：北門 (0,-174) → 獸道、西南門 (-132,100) → 香霖堂。
 extends SceneTree
 
@@ -952,7 +952,7 @@ func _build_blocks() -> void:
 				"hieda": _blk_hieda(g, bx, bz)
 				"terakoya": _blk_terakoya(g, bx, bz)
 				"suzunaan": n_house += _blk_shopfront(g, bx, bz, "鈴奈庵", -1)
-				"unomitei": n_house += _blk_shopfront(g, bx, bz, "鵜吞亭", -1)
+				"unomitei": n_house += _blk_shopfront(g, bx, bz, "鯢吞亭", -1)
 				"ashiarai": _blk_ashiarai(g, bx, bz)
 				_: n_house += _blk_compound(g, bx, bz)
 	# 分區報表：改了 ZONE_SPEC 要能一眼看出「密度真的不一樣」。
@@ -1532,11 +1532,11 @@ func _kura_in_court(parent: Node, bx: float, bz: float, p := 0.6) -> void:
 		"width": 2.1, "ground": float(gu[0]), "own": own,
 	})
 
-## 面街的商家街區（鈴奈庵、鵜吞亭）：主建築貼本通那一側，其餘同一般街區
+## 面街的商家街區（鈴奈庵、鯢吞亭）：主建築貼本通那一側，其餘同一般街區
 func _blk_shopfront(parent: Node, bx: float, bz: float, title: String, face_dir: int) -> int:
 	var hw := BLOCK_W * 0.5
 	# ⚠ 6.6 不是 5.0 —— 地標街區的圍牆換成築地塀之後厚了一倍（0.36 → 0.92），
-	# 5.0 會讓鈴奈庵／鵜吞亭的側牆卡進圍牆裡（體檢：建物互相卡住 8.4㎡）。
+	# 5.0 會讓鈴奈庵／鯢吞亭的側牆卡進圍牆裡（體檢：建物互相卡住 8.4㎡）。
 	var cx := bx + float(face_dir) * (hw - 6.6)
 	var cz := bz + lib.rr(-4.0, 4.0)
 	var g := Node3D.new()
@@ -1562,7 +1562,7 @@ func _blk_shopfront(parent: Node, bx: float, bz: float, title: String, face_dir:
 	if title == "鈴奈庵":
 		lib.box(g, "書架", Vector3(4.2, 1.3, 0.9), _mat("wood"), Vector3(-2.6, 1.0, d * 0.5 + 1.1))
 	else:
-		for i in 3:                                    # 鵜吞亭：店頭長凳
+		for i in 3:                                    # 鯢吞亭：店頭長凳
 			lib.box(g, "長凳_%d" % i, Vector3(1.8, 0.45, 0.6), _mat("wood"),
 				Vector3(-3.5 + float(i) * 3.5, 0.4, d * 0.5 + 1.5))
 	lib.gable_roof(g, 5.75, w + 1.4, d + 1.6, 0.5, 0.24, _mat("kawara"), _mat("plaster"))
