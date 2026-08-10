@@ -29,6 +29,7 @@ const TownHydrography := preload("res://tools/town/town_hydrography.gd")
 const TownOutput := preload("res://tools/town/town_output.gd")
 const TownEnvironment := preload("res://tools/town/town_environment.gd")
 const TownConfig := preload("res://tools/town/town_config.gd")
+const TownTerrain := preload("res://tools/town/town_terrain.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -330,10 +331,7 @@ func _road_apron(x: float, z: float) -> float:
 ## 空撮で「地面に貼った長方形のシール」に読める。
 func _rrect_k(x: float, z: float, c: Vector2, h: Vector2, fade: float,
 		wobble: float) -> float:
-	var sd: float = maxf(absf(x - c.x) - h.x, absf(z - c.y) - h.y)
-	if wobble > 0.0:
-		sd += _n2.get_noise_2d(x * 0.55 + 13.0, z * 0.55 - 9.0) * wobble
-	return clampf(1.0 - smoothstep(0.0, fade, sd), 0.0, 1.0)
+	return TownTerrain.rounded_rect(_n2, x, z, c, h, fade, wobble)
 
 
 ## ⚠ 修正ラウンド：一枚の大きな矩形（48×40）は空撮で「地面に貼った褐色の
@@ -341,22 +339,11 @@ func _rrect_k(x: float, z: float, c: Vector2, h: Vector2, fade: float,
 ## （round 1 の mq_elevated / market_context）。活動のある三つの帯の**和**に
 ## 変え、誰も歩かない隅は芝へ戻す。
 func _market_ground(x: float, z: float) -> float:
-	var plaza: float = _rrect_k(x, z, Vector2(-25.0, 62.5), Vector2(18.0, 13.0), 5.0, 2.4)
-	# ⚠ 東端は本通の路肩（x≈−8.2）まで伸ばす。−11 で止めた版では南東角の蔵が
-	#   一棟だけ芝の上に立ち、市場の口が地面から切れて見えた（market_context）。
-	var south: float = _rrect_k(x, z, Vector2(-27.0, 76.5), Vector2(22.0, 7.5), 4.2, 1.8)
-	var west: float = _rrect_k(x, z, Vector2(-49.0, 65.0), Vector2(6.5, 10.5), 4.0, 1.6)
-	return maxf(plaza, maxf(south, west))
+	return TownTerrain.market_ground(_n2, x, z)
 
 
 func _market_paving(x: float, z: float) -> float:
-	# 本通 → 市木戸 → 市場の口：唯一の「石で歓迎する」帯
-	var entry: float = _rrect_k(x, z, Vector2(-11.5, 62.0), Vector2(6.5, 16.0), 3.0, 1.1)
-	# 南縁の常設店の店先（軒下から広場へ抜ける通路）
-	var thr: float = _rrect_k(x, z, Vector2(-28.5, 71.6), Vector2(13.5, 1.8), 2.4, 0.9)
-	# 西縁の店先
-	var west: float = _rrect_k(x, z, Vector2(-43.4, 64.5), Vector2(2.2, 9.0), 2.2, 0.9)
-	return maxf(entry, maxf(thr, west))
+	return TownTerrain.market_paving(_n2, x, z)
 
 
 func mask_at(x: float, z: float) -> Color:
