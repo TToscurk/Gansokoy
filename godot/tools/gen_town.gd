@@ -2334,42 +2334,7 @@ func _lm_suzunaan(g: Node3D, _spread: float) -> void:
 ## 大屋頂主屋 + 外廊 + 向拜 + 梵鐘。坐在 1.5m 石垣基壇上。
 ## ⚠ 內容對齊保留區中心（舊版是街區中心往南 6m，會戳出保留區）。
 func _lm_terakoya(g: Node3D, spread: float) -> void:
-	const DAIS_H := 1.5
-	g.position.y += DAIS_H
-	# 內容整體偏東南（梵鐘 +x、向拜與手水缽 +z）—— 推回保留區中心
-	var c := lib.add(g, Node3D.new(), "本體")
-	c.position = Vector3(-0.55, 0.0, -1.35)
-	g = c
-	_dais_in(g, 26.0, 16.0, DAIS_H, Vector2(0, 1), spread)
-	lib.box(g, "土台", Vector3(24.0, 0.5, 14.0), _lmat("stone"), Vector3(0, 0.25, 0))
-	lib.box(g, "屋身", Vector3(22.0, 4.6, 12.0), _lmat("plaster", 0), Vector3(0, 2.9, 0))
-	lib.box(g, "外廊", Vector3(23.4, 0.34, 3.0), _lmat("wood"), Vector3(0, 0.85, 7.2))
-	lib.box(g, "高欄", Vector3(23.4, 0.14, 0.14), _lmat("dark"), Vector3(0, 1.62, 8.6))
-	for i in 14:
-		lib.box(g, "高欄束_%d" % i, Vector3(0.1, 0.62, 0.1), _lmat("dark"),
-			Vector3(-11.2 + float(i) * 1.72, 1.32, 8.6))
-	for i in 8:
-		lib.cyl(g, "廊柱_%d" % i, 0.19, 0.19, 3.6, _lmat("dark"),
-			Vector3(-10.0 + float(i) * 2.85, 2.8, 8.4), 6)
-	for i in 5:
-		lib.box(g, "障子_%d" % i, Vector3(3.4, 2.8, 0.08),
-			lib.flat_mat("shoji", Color(0.94, 0.93, 0.88), 0.9),
-			Vector3(-8.6 + float(i) * 4.3, 2.25, 6.05))
-		lib.box(g, "障子框_%d" % i, Vector3(3.6, 0.14, 0.12), _lmat("dark"),
-			Vector3(-8.6 + float(i) * 4.3, 3.72, 6.05))
-	lib.gable_roof(g, 5.2, 26.0, 16.0, 0.52, 0.4, _lmat("kawara"), _lmat("plaster", 0))
-	# 向拜（正面突出的門廊）—— 參考圖最有辨識度的一件
-	lib.box(g, "向拜屋根", Vector3(7.4, 0.3, 3.4), _lmat("kawara"), Vector3(0, 4.6, 8.0))
-	for sd in [-1.0, 1.0]:
-		lib.cyl(g, "向拜柱_%d" % int(sd + 1), 0.22, 0.24, 4.4, _lmat("dark"),
-			Vector3(sd * 3.2, 2.2, 9.2), 8)
-	lib.box(g, "梵鐘架", Vector3(2.6, 0.3, 2.6), _lmat("dark"), Vector3(13.0, 3.4, 6.0))
-	lib.cyl(g, "梵鐘", 0.62, 0.78, 1.5,
-		lib.pbr("bonsho", "stone_wall", 0.6, Color(0.52, 0.58, 0.52)),
-		Vector3(13.0, 2.4, 6.0), 12)
-	lib.box(g, "立札", Vector3(1.6, 1.1, 0.1), _lmat("wood"), Vector3(-8.0, 1.3, 10.5))
-	lib.cyl(g, "手水缽", 0.7, 0.75, 0.7, _lmat("stone"), Vector3(9.0, 0.35, 10.0), 10)
-	_lm_collide(g, Vector3(22.4, 7.0, 12.4))
+	TownLandmarks.build_terakoya(lib, g, spread, _dais_in, _lmat, _lm_collide)
 
 
 ## ── 鎮守之杜（村社的神木與境內）──

@@ -138,3 +138,55 @@ static func build_suzunaan(lib, group: Node3D, material_fn: Callable,
 	lib.gable_roof(group, 5.75, width + 1.4, depth + 1.6, 0.5, 0.24,
 		material_fn.call("kawara", -1), material_fn.call("plaster", -1))
 	collision_fn.call(group, Vector3(width + 0.5, 7.0, depth + 0.5), Vector3.ZERO)
+
+
+static func build_terakoya(lib, group: Node3D, spread: float,
+		dais_fn: Callable, material_fn: Callable, collision_fn: Callable) -> void:
+	const DAIS_H := 1.5
+	group.position.y += DAIS_H
+	# The bell, worship porch, and basin make the contents east/south-heavy, so
+	# shift them back toward the centre of the reserved landmark footprint.
+	var body := lib.add(group, Node3D.new(), "本體") as Node3D
+	body.position = Vector3(-0.55, 0.0, -1.35)
+	dais_fn.call(body, 26.0, 16.0, DAIS_H, Vector2(0, 1), spread)
+	lib.box(body, "土台", Vector3(24.0, 0.5, 14.0),
+		material_fn.call("stone", -1), Vector3(0, 0.25, 0))
+	lib.box(body, "屋身", Vector3(22.0, 4.6, 12.0),
+		material_fn.call("plaster", 0), Vector3(0, 2.9, 0))
+	lib.box(body, "外廊", Vector3(23.4, 0.34, 3.0),
+		material_fn.call("wood", -1), Vector3(0, 0.85, 7.2))
+	lib.box(body, "高欄", Vector3(23.4, 0.14, 0.14),
+		material_fn.call("dark", -1), Vector3(0, 1.62, 8.6))
+	for i in 14:
+		lib.box(body, "高欄束_%d" % i, Vector3(0.1, 0.62, 0.1),
+			material_fn.call("dark", -1),
+			Vector3(-11.2 + float(i) * 1.72, 1.32, 8.6))
+	for i in 8:
+		lib.cyl(body, "廊柱_%d" % i, 0.19, 0.19, 3.6,
+			material_fn.call("dark", -1),
+			Vector3(-10.0 + float(i) * 2.85, 2.8, 8.4), 6)
+	for i in 5:
+		lib.box(body, "障子_%d" % i, Vector3(3.4, 2.8, 0.08),
+			lib.flat_mat("shoji", Color(0.94, 0.93, 0.88), 0.9),
+			Vector3(-8.6 + float(i) * 4.3, 2.25, 6.05))
+		lib.box(body, "障子框_%d" % i, Vector3(3.6, 0.14, 0.12),
+			material_fn.call("dark", -1),
+			Vector3(-8.6 + float(i) * 4.3, 3.72, 6.05))
+	lib.gable_roof(body, 5.2, 26.0, 16.0, 0.52, 0.4,
+		material_fn.call("kawara", -1), material_fn.call("plaster", 0))
+	lib.box(body, "向拜屋根", Vector3(7.4, 0.3, 3.4),
+		material_fn.call("kawara", -1), Vector3(0, 4.6, 8.0))
+	for side in [-1.0, 1.0]:
+		lib.cyl(body, "向拜柱_%d" % int(side + 1), 0.22, 0.24, 4.4,
+			material_fn.call("dark", -1),
+			Vector3(side * 3.2, 2.2, 9.2), 8)
+	lib.box(body, "梵鐘架", Vector3(2.6, 0.3, 2.6),
+		material_fn.call("dark", -1), Vector3(13.0, 3.4, 6.0))
+	lib.cyl(body, "梵鐘", 0.62, 0.78, 1.5,
+		lib.pbr("bonsho", "stone_wall", 0.6, Color(0.52, 0.58, 0.52)),
+		Vector3(13.0, 2.4, 6.0), 12)
+	lib.box(body, "立札", Vector3(1.6, 1.1, 0.1),
+		material_fn.call("wood", -1), Vector3(-8.0, 1.3, 10.5))
+	lib.cyl(body, "手水缽", 0.7, 0.75, 0.7,
+		material_fn.call("stone", -1), Vector3(9.0, 0.35, 10.0), 10)
+	collision_fn.call(body, Vector3(22.4, 7.0, 12.4), Vector3.ZERO)
