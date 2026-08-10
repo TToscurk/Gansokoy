@@ -22,6 +22,8 @@
 # 產生器（見下面 OUT_DIR 的說明）。中繼用的 maps/sato/ 已退場。
 extends SceneTree
 
+const TownGeometry := preload("res://tools/town/town_geometry.gd")
+
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
 # 佈局搬進 gen_village.gd。理由：這支已經帶著完整的護欄（gbox OBB 自檢、
@@ -1628,22 +1630,7 @@ func _obb_of(e: Array) -> Array:
 	## 橋的原點在中心、鵜呑亭的川床往後伸 16m 而 fd 當時還寫成 10.9，
 	## 於是自檢對它們**結構性全盲**：印著「0 穿插 ✓」，實際有 3 對互穿
 	## （鵜呑亭 × 河畔町家 6.8m、鵜呑亭 × 主橋 2.3m）。gbox 一律照實量。
-	var m: Dictionary = _mods[e[0]]
-	var gb: Array
-	if bool(m.get("centered", false)):
-		gb = [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
-			-float(m["fd"]) * 0.5, float(m["fd"]) * 0.5]
-	else:
-		gb = m.get("gbox", [-float(m["fw"]) * 0.5, float(m["fw"]) * 0.5,
-			-float(m["fd"]) + 0.85, 0.85])
-	var yaw: float = e[4]
-	var ax := Vector2(cos(yaw), -sin(yaw))          # Basis(UP,yaw).x 在 XZ 上
-	var az := Vector2(sin(yaw), cos(yaw))           # Basis(UP,yaw).z
-	var cx: float = (float(gb[0]) + float(gb[1])) * 0.5
-	var cz: float = (float(gb[2]) + float(gb[3])) * 0.5
-	var c := Vector2(e[1], e[3]) + ax * cx + az * cz
-	return [c, ax, az, (float(gb[1]) - float(gb[0])) * 0.5,
-		(float(gb[3]) - float(gb[2])) * 0.5, e[0]]
+	return TownGeometry.obb_of(e, _mods)
 
 
 func _assert_no_overlap() -> void:
@@ -1691,21 +1678,7 @@ func _assert_no_overlap() -> void:
 
 
 func _obb_pen(ra: Array, rb: Array) -> float:
-	var pen := 1e18
-	for r in [ra, rb]:
-		for k in [1, 2]:
-			var axis: Vector2 = r[k]
-			var ca: float = Vector2(ra[0]).dot(axis)
-			var cb: float = Vector2(rb[0]).dot(axis)
-			var ea: float = absf(Vector2(ra[1]).dot(axis)) * ra[3] \
-				+ absf(Vector2(ra[2]).dot(axis)) * ra[4]
-			var eb: float = absf(Vector2(rb[1]).dot(axis)) * rb[3] \
-				+ absf(Vector2(rb[2]).dot(axis)) * rb[4]
-			var ov := ea + eb - absf(ca - cb)
-			if ov <= 0.0:
-				return 0.0
-			pen = minf(pen, ov)
-	return pen
+	return TownGeometry.penetration(ra, rb)
 
 
 func _emit_batches() -> void:
