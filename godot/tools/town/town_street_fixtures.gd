@@ -2,6 +2,98 @@ extends RefCounted
 
 ## Deterministic street-edge fixtures for the Human Village generator.
 
+static func build_gutters(lib, root: Node3D, out_dir: String,
+		main_ew_z: float, main_ew_w: float, gutter_segment: float,
+		gutter_commerce: float, river_half: float, roads: Array,
+		commerce_fn: Callable, in_pilot_fn: Callable,
+		river_dist_fn: Callable, height_fn: Callable,
+		audit: Array[String]) -> void:
+	var walls: Array[Transform3D] = []
+	var floors: Array[Transform3D] = []
+	var lids: Array[Transform3D] = []
+	var runs := [
+		{"ri": 0, "along_x": false, "fix": 0.0,
+			"a": -170.0, "b": 220.0, "hw": 4.0},
+		{"ri": 1, "along_x": true, "fix": main_ew_z,
+			"a": -80.0, "b": 130.0, "hw": main_ew_w * 0.5},
+	]
+	var segment_count := 0
+	var covered_count := 0
+	for run in runs:
+		var along_x: bool = bool(run.along_x)
+		var offset: float = float(run.hw) + 0.6
+		for side in [-1.0, 1.0]:
+			var distance: float = float(run.a)
+			var run_segment_index := 0
+			while distance < float(run.b):
+				var middle := distance + gutter_segment * 0.5
+				var position := Vector2(
+					middle, float(run.fix) + side * offset) if along_x \
+					else Vector2(float(run.fix) + side * offset, middle)
+				distance += gutter_segment
+				run_segment_index += 1
+				if float(commerce_fn.call(position)) < gutter_commerce \
+						and not bool(in_pilot_fn.call(position.x, position.y)):
+					continue
+				if float(river_dist_fn.call(position.x, position.y)) < river_half + 2.0:
+					continue
+				var covered := false
+				for road_index in roads.size():
+					if road_index == int(run.ri):
+						continue
+					var road: Dictionary = roads[road_index]
+					if lib.poly_dist(road.pts, position.x, position.y) \
+							< float(road.w) * 0.5 + 1.2:
+						covered = true
+						break
+				var ground_y: float = height_fn.call(position.x, position.y)
+				var basis := Basis(Vector3.UP, PI * 0.5) if along_x else Basis()
+				segment_count += 1
+				if covered:
+					covered_count += 1
+					lids.append(Transform3D(
+						basis.scaled(Vector3(1, 1, gutter_segment / 1.6)),
+						Vector3(position.x, ground_y + 0.02, position.y)))
+					continue
+				for wall_side in [-1.0, 1.0]:
+					var wall_offset := Vector2(0.0, wall_side * 0.42) if along_x \
+						else Vector2(wall_side * 0.42, 0.0)
+					walls.append(Transform3D(basis,
+						Vector3(position.x + wall_offset.x, ground_y - 0.24,
+							position.y + wall_offset.y)))
+				floors.append(Transform3D(
+					basis, Vector3(position.x, ground_y - 0.46, position.y)))
+				if run_segment_index % 6 == 1:
+					lids.append(Transform3D(
+						basis, Vector3(position.x, ground_y + 0.02, position.y)))
+	if segment_count == 0:
+		return
+	var stone: StandardMaterial3D = lib.pbr(
+		"溝石", "stone_wall", 0.55, Color(0.60, 0.61, 0.59))
+	var slab: StandardMaterial3D = lib.pbr(
+		"溝蓋石", "stone_flag", 1.9, Color(0.42, 0.43, 0.42))
+	var group: Node3D = lib.add(root, Node3D.new(), "石溝")
+	var parts := [
+		{"size": Vector3(0.22, 0.5, gutter_segment),
+			"list": walls, "mat": stone, "n": "溝壁"},
+		{"size": Vector3(0.7, 0.12, gutter_segment),
+			"list": floors, "mat": stone, "n": "溝底"},
+		{"size": Vector3(1.05, 0.10, 1.6),
+			"list": lids, "mat": slab, "n": "溝蓋"},
+	]
+	for part in parts:
+		var mesh := BoxMesh.new()
+		mesh.size = part.size
+		mesh.material = part.mat
+		var instance := MultiMeshInstance3D.new()
+		instance.multimesh = lib.make_multimesh(
+			mesh, part.list, [],
+			out_dir + "gen/gutter_%s.res" % String(part.n))
+		instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(group, instance, String(part.n))
+	audit.append("石溝 %d 節（其中 %d 節是橫街的覆蓋段）→ 3 個 MultiMesh"
+		% [segment_count, covered_count])
+
 static func build_lamps(lib, root: Node3D, anchors: Array,
 		reserved_fn: Callable, height_fn: Callable, audit: Array[String]) -> void:
 	var group: Node3D = lib.add(root, Node3D.new(), "街燈")

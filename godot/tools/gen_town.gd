@@ -3422,91 +3422,10 @@ func _build_mainstreet() -> void:
 
 
 func _build_gutters() -> void:
-	var walls: Array[Transform3D] = []
-	var floors: Array[Transform3D] = []
-	var lids: Array[Transform3D] = []
-	# [路索引, 沿 x?, 固定座標, 起, 迄, 路半寬]
-	var runs := [
-		{"ri": 0, "along_x": false, "fix": 0.0, "a": -170.0, "b": 220.0, "hw": 4.0},
-		{"ri": 1, "along_x": true, "fix": MAIN_EW_Z, "a": -80.0, "b": 130.0,
-			"hw": MAIN_EW_W * 0.5},
-	]
-	var n_seg := 0
-	var n_cover := 0
-	for run in runs:
-		var along_x: bool = bool(run.along_x)
-		var off: float = float(run.hw) + 0.6
-		for side in [-1.0, 1.0]:
-			var t: float = float(run.a)
-			var seg_i := 0
-			while t < float(run.b):
-				var mid := t + GUTTER_SEG * 0.5
-				var p := Vector2(mid, float(run.fix) + side * off) if along_x \
-					else Vector2(float(run.fix) + side * off, mid)
-				t += GUTTER_SEG
-				seg_i += 1
-				# PHASE 3.1A：回廊は commerce≈0.32 < 0.45 なので、石溝が
-				# 一節も立っていなかった（＝路と建物のあいだに何もない）。
-				if _commerce(p) < GUTTER_COMMERCE and not _in_pilot_xz(p.x, p.y):
-					continue
-				if _river_dist_xy(p.x, p.y) < RIVER_HALF + 2.0:
-					continue
-				# 橫街穿過來的地方不能是開口溝 —— 蓋起來讓人車過得去
-				var covered := false
-				for i in _roads.size():
-					if i == int(run.ri):
-						continue
-					var r: Dictionary = _roads[i]
-					if lib.poly_dist(r.pts, p.x, p.y) < float(r.w) * 0.5 + 1.2:
-						covered = true
-						break
-				# 每一節錨在**自己中心**的地面（見 GUTTER_SEG 的註解）
-				var y0: float = height_at(p.x, p.y)
-				var b := Basis(Vector3.UP, PI * 0.5) if along_x else Basis()
-				n_seg += 1
-				if covered:
-					# 整節鋪石蓋（用縮放拉長，不要排好幾塊 1.6m 的板 ——
-					# 那樣重疊處會共面閃爍，這個檔案已經栽過六次）
-					n_cover += 1
-					lids.append(Transform3D(b.scaled(Vector3(1, 1, GUTTER_SEG / 1.6)),
-						Vector3(p.x, y0 + 0.02, p.y)))
-					continue
-				for sd in [-1.0, 1.0]:
-					var wo := Vector2(0.0, sd * 0.42) if along_x else Vector2(sd * 0.42, 0.0)
-					walls.append(Transform3D(b, Vector3(p.x + wo.x, y0 - 0.24, p.y + wo.y)))
-				floors.append(Transform3D(b, Vector3(p.x, y0 - 0.46, p.y)))
-				if seg_i % 6 == 1:                 # 每六節架一塊石蓋（過路用；節變短了）
-					lids.append(Transform3D(b, Vector3(p.x, y0 + 0.02, p.y)))
-			pass
-	if n_seg == 0:
-		return
-	# ⚠ 別用 MAT_TONES["stone"]：那組色調最暗的一支也有 0.82，乘上本來就
-	# 亮的 stone_wall 貼圖，在直射陽光下是**純白的軌條**（俯視截圖看出來的，
-	# 跟護岸「0.42 的灰讀成水泥防洪牆」是同一個病）。排水溝的石頭是濕的、暗的。
-	var stone := lib.pbr("溝石", "stone_wall", 0.55, Color(0.60, 0.61, 0.59))
-	# ⚠ 蓋の uv 0.30 は**タイル 3.33m** —— pbr() の uv は「大きいほど細かい」
-	# ので、1.6〜3.0m の板に目地が一枚も乗らず「巨大なコンクリート板」に
-	# 読めていた（Art Review の指摘）。1.9（≒53cm）で敷石の目が出る。
-	# 色も路面より**暗い**濡れた石に落とし、板は薄く・地面に沈める
-	# （+0.02 の浮きが縁に硬い影を落として「後から置いた板」に見えていた）。
-	var slab := lib.pbr("溝蓋石", "stone_flag", 1.9, Color(0.42, 0.43, 0.42))
-	var g := lib.add(_root, Node3D.new(), "石溝")
-	var parts := [
-		{"size": Vector3(0.22, 0.5, GUTTER_SEG), "list": walls, "mat": stone, "n": "溝壁"},
-		{"size": Vector3(0.7, 0.12, GUTTER_SEG), "list": floors, "mat": stone, "n": "溝底"},
-		{"size": Vector3(1.05, 0.10, 1.6), "list": lids, "mat": slab, "n": "溝蓋"},
-	]
-	for pt in parts:
-		var bm := BoxMesh.new()
-		bm.size = pt.size
-		bm.material = pt.mat
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(bm, pt.list, [],
-			OUT_DIR + "gen/gutter_%s.res" % String(pt.n))
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		lib.add(g, mmi, String(pt.n))
-	_audit.append("石溝 %d 節（其中 %d 節是橫街的覆蓋段）→ 3 個 MultiMesh"
-		% [n_seg, n_cover])
+	TownStreetFixtures.build_gutters(
+		lib, _root, OUT_DIR, MAIN_EW_Z, MAIN_EW_W,
+		GUTTER_SEG, GUTTER_COMMERCE, RIVER_HALF, _roads,
+		_commerce, _in_pilot_xz, _river_dist_xy, height_at, _audit)
 
 
 ## 街燈：沿路網放，間距吃商業梯度（村心密、村緣疏）。
