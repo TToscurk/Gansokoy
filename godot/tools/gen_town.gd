@@ -2317,28 +2317,8 @@ func _dais_in(g: Node3D, w: float, d: float, h: float, face: Vector2, spread: fl
 ## ── 足洗邸（第一座搬入）──
 ## 荒廢的宅邸：崩れ塀三段 + 母屋（茅葺）。牆腳要埋進坡裡，不然整段浮著。
 func _lm_ashiarai(g: Node3D, spread: float) -> void:
-	# ⚠ 舊 builder 的崩れ塀在 z 上是**不對稱**的（−20.5 / −6 / +4），整組偏北
-	# 8.2m。保留區是對稱的，所以內容要往南推回來對齊中心 —— 不然牆會伸出
-	# 保留區外，草就長進牆裡（check_map 抓到 10 叢）。
-	var c := lib.add(g, Node3D.new(), "本體")
-	c.position.z = 4.25
-	g = c
-	var hw := 42.0 * 0.5 - 2.0        # 舊 BLOCK_W/D：崩れ塀鋪到街區邊
-	var hd := 45.0 * 0.5 - 2.0
-	for w in [[0.0, -hd, hw * 1.4, true], [-hw, -6.0, hd * 0.9, false],
-			[hw, 4.0, hd * 0.8, false]]:
-		var kh := _lm_rng.randf_range(1.2, 1.9)
-		var kfoot := spread + 0.4
-		lib.box(g, "崩れ塀_%d" % int(w[0]),
-			Vector3(w[2] if w[3] else 0.36, kh + kfoot, 0.36 if w[3] else w[2]),
-			_lmat("mud"), Vector3(w[0], kh * 0.5 - kfoot * 0.5, w[1]))
-	var afoot := spread + 0.4
-	lib.box(g, "母屋基壇", Vector3(16.0, 0.5 + afoot, 12.0), _lmat("stone"),
-		Vector3(0, 0.25 - afoot * 0.5, -2.0))
-	lib.box(g, "母屋", Vector3(14.5, 3.6, 10.5), _lmat("dark"), Vector3(0, 2.3, -2.0))
-	lib.gable_roof(g, 4.1, 17.0, 13.0, 0.62, 0.5, _lmat("thatch"), _lmat("dark"),
-		Vector3(0, 0, -2.0))
-	_lm_collide(g, Vector3(14.9, 5.4, 10.9), Vector3(0, 0, -2.0))
+	TownLandmarks.build_ashiarai(
+		lib, g, spread, _lm_rng, _lmat, _lm_collide)
 
 
 ## ── 鈴奈庵（貸本屋）──
@@ -2347,31 +2327,7 @@ func _lm_ashiarai(g: Node3D, spread: float) -> void:
 ## 座標了，搬過來之後直接以保留區中心為原點，不再重算偏移（也不再抖動 ——
 ## 抖動會讓保留區跟實際位置每次產生都對不上）。
 func _lm_suzunaan(g: Node3D, _spread: float) -> void:
-	g.rotation.y = -PI / 2.0
-	var w := 13.0
-	var d := 9.5
-	lib.box(g, "基石", Vector3(w + 0.5, 0.35, d + 0.5), _lmat("stone"), Vector3(0, 0.18, 0))
-	lib.box(g, "屋身", Vector3(w, 5.4, d), _lmat("plaster"), Vector3(0, 3.05, 0))
-	lib.box(g, "腰板", Vector3(w + 0.05, 1.0, 0.08), _lmat("dark"),
-		Vector3(0, 0.85, d * 0.5 + 0.05))
-	lib.box(g, "格子戶", Vector3(w * 0.62, 2.1, 0.1), _lmat("dark"),
-		Vector3(0, 1.75, d * 0.5 + 0.06))
-	lib.box(g, "二階窗", Vector3(w * 0.72, 1.3, 0.08), _lmat("dark"),
-		Vector3(0, 4.3, d * 0.5 + 0.06))
-	lib.box(g, "庇", Vector3(w + 1.0, 0.16, 1.4), _lmat("kawara"),
-		Vector3(0, 3.35, d * 0.5 + 0.6))
-	var cloth := StandardMaterial3D.new()
-	cloth.albedo_color = Color(0.28, 0.24, 0.34)      # 鈴奈庵的藍紫暖簾
-	cloth.roughness = 1.0
-	for k in [-1, 0, 1]:
-		lib.box(g, "暖簾_%d" % (k + 1), Vector3(2.0, 0.9, 0.05), cloth,
-			Vector3(float(k) * 2.2, 2.55, d * 0.5 + 0.66))
-	lib.box(g, "看板", Vector3(0.6, 2.4, 0.14), _lmat("wood"),
-		Vector3(w * 0.44, 3.0, d * 0.5 + 0.5))
-	lib.box(g, "書架", Vector3(4.2, 1.3, 0.9), _lmat("wood"),
-		Vector3(-2.6, 1.0, d * 0.5 + 1.1))
-	lib.gable_roof(g, 5.75, w + 1.4, d + 1.6, 0.5, 0.24, _lmat("kawara"), _lmat("plaster"))
-	_lm_collide(g, Vector3(w + 0.5, 7.0, d + 0.5))
+	TownLandmarks.build_suzunaan(lib, g, _lmat, _lm_collide)
 
 
 ## ── 寺子屋（慧音的私塾）──
