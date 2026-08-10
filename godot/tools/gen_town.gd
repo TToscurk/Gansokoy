@@ -33,6 +33,7 @@ const TownTerrain := preload("res://tools/town/town_terrain.gd")
 const TownLandmarks := preload("res://tools/town/town_landmarks.gd")
 const TownMarket := preload("res://tools/town/town_market.gd")
 const TownStreetFixtures := preload("res://tools/town/town_street_fixtures.gd")
+const TownEcology := preload("res://tools/town/town_ecology.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -3407,138 +3408,11 @@ func _build_lamps() -> void:
 
 const FAUNA_Z := TownConfig.FAUNA_Z     # 生物只放在**看得到**的村內段
 
-## 河道在村內段的中心線 + 每個節點的水面高度（fauna.gd 的巡游路徑格式）
-func _river_reach() -> Array:
-	var pts: Array[Vector2] = []
-	var ys: Array[float] = []
-	for p in _river():
-		if p.y < FAUNA_Z.x or p.y > FAUNA_Z.y:
-			continue
-		pts.append(p)
-		ys.append(bank_h(p.x, p.y) - RIVER_DEPTH * 0.20)
-	return [pts, ys]
-
 func _build_fauna() -> void:
-	var reach := _river_reach()
-	var pts: Array = reach[0]
-	var ys: Array = reach[1]
-	if pts.size() < 2:
-		return
-	var g := lib.add(_root, Node3D.new(), "Fauna")
-	g.set_script(load("res://scripts/fauna.gd"))
-	g.set("paths", [{"pts": pts, "ys": ys}])
-	var total_len := 0.0
-	for k in range(pts.size() - 1):
-		total_len += (pts[k] as Vector2).distance_to(pts[k + 1])
-
-	var seg_n := pts.size() - 1
-	var at_river := func(t: float, sink: float) -> Vector3:
-		var ft: float = clampf(t, 0.0, 0.999) * float(seg_n)
-		var i2 := int(ft)
-		var f := ft - float(i2)
-		var a: Vector2 = pts[i2]
-		var b: Vector2 = pts[mini(i2 + 1, seg_n)]
-		var q: Vector2 = a.lerp(b, f)
-		# 橫向擺一點，但要留在水面內（水面半寬 = RIVER_HALF * 0.86 = 6.0）
-		q += (b - a).normalized().orthogonal() * _street_rng.randf_range(-2.2, 2.2)
-		var y0: float = lerpf(float(ys[i2]), float(ys[mini(i2 + 1, seg_n)]), f)
-		return Vector3(q.x, y0 - sink, q.y)
-	# ⚠ fauna.gd 的 speed 是**每秒走完全長的比例**，不是 m/s。舊值 0.006~0.016
-	# 是配 390m 的水路寫的；直接搬到 619m 的河上，鴨子會用 3.7~9.9 m/s 巡游
-	# （比人跑還快）。所以這裡從**真實速度**回推比例。
-	var t_of := func(mps: float) -> float:
-		return mps / maxf(total_len, 1.0)
-
-	var duck_mesh := lib.prop_mesh("res://assets/models/duck.glb")
-	var koi_mesh := lib.prop_mesh("res://assets/models/koi.glb")
-	# ⚠ 位置一定要在**存檔時**就算好。只寫 meta、位置留給 fauna.gd 執行期算的話，
-	# 編輯器不跑 _process，九隻鴨會全部疊在世界原點 —— 而原點是本通正中央。
-	for i in 9:                                    # 鴨（水面）
-		var d := MeshInstance3D.new()
-		d.mesh = duck_mesh
-		d.scale = Vector3.ONE * _street_rng.randf_range(0.85, 1.15)
-		var dt := _street_rng.randf_range(0.06, 0.94)
-		lib.add(g, d, "鴨_%d" % i)
-		d.position = at_river.call(dt, -0.02)
-		d.rotation.y = _street_rng.randf_range(0.0, TAU)
-		d.set_meta("swim_kind", 0)
-		d.set_meta("swim_t", dt)
-		d.set_meta("swim_speed", t_of.call(_street_rng.randf_range(0.35, 0.9)))
-	for i in 14:                                   # 鯉（水下）
-		var k := MeshInstance3D.new()
-		k.mesh = koi_mesh
-		k.scale = Vector3.ONE * _street_rng.randf_range(0.8, 1.4)
-		var kt := _street_rng.randf_range(0.06, 0.94)
-		lib.add(g, k, "鯉_%d" % i)
-		k.position = at_river.call(kt, 0.32)
-		k.rotation.y = _street_rng.randf_range(0.0, TAU)
-		k.set_meta("swim_kind", 1)
-		k.set_meta("swim_t", kt)
-		k.set_meta("swim_speed", t_of.call(_street_rng.randf_range(0.6, 1.6)))
-
-	# 鷺鷥：站在**水際**不動（單腳立姿是牠的招牌）。
-	# ⚠ 舊版是「沿水路法線外推固定距離」。那招在**梯形斷面的水路**上成立，
-	# 在這條河上不成立 —— river_carve 的坡一路拖到 2.2×half=15.4m，
-	# 「岸 + 1m」那個位置的地面其實還在水面以下 0.9m。第一版照抄，
-	# 600 次嘗試 **一隻都站不住**（全被「沉在水裡」判掉）。
-	# 正解是**往外走到地面剛好露出水面的那一格**——那才是水際線。
-	var heron_mesh := lib.prop_mesh("res://assets/models/heron.glb")
-	var placed := 0
-	var tries := 0
-	var shore_off: Array[float] = []
-	while placed < 5 and tries < 600:
-		tries += 1
-		var k2 := _street_rng.randi() % maxi(seg_n, 1)
-		var a: Vector2 = pts[k2]
-		var b: Vector2 = pts[mini(k2 + 1, seg_n)]
-		var t2 := _street_rng.randf()
-		var c: Vector2 = a.lerp(b, t2)
-		var nrm := (b - a).normalized().orthogonal()
-		var sd := 1.0 if _street_rng.randf() < 0.5 else -1.0
-		# 橋、鯢吞亭讓開；砌石護岸那一段也讓開（鷺鷥不會站在石垣腳下的水裡）
-		var skip := false
-		for br in BRIDGES:
-			if c.distance_to(Vector2(float(br.x), float(br.z))) < 14.0:
-				skip = true
-		if skip or c.distance_to(_uno_pos) < 22.0:
-			continue
-		if Vector2(c.x, c.y - PLAZA.y).length() < 134.0:   # 護岸範圍（＋2m 餘裕）
-			continue
-		var wy: float = bank_h(c.x, c.y) - RIVER_DEPTH * 0.20
-		# 從水線往外走，找地面第一次露出水面的位置
-		var found := Vector2.ZERO
-		var found_y := 0.0
-		var found_d := 0.0
-		var d := RIVER_HALF * 0.86
-		while d < RIVER_HALF * 2.4:
-			var p2: Vector2 = c + nrm * sd * d
-			var gy2: float = height_at(p2.x, p2.y)
-			if gy2 >= wy + 0.03:
-				if gy2 <= wy + 0.5:                # 太高就是爬上岸頂了，不是水際
-					found = p2
-					found_y = gy2
-					found_d = d
-				break
-			d += 0.2
-		if found == Vector2.ZERO:
-			continue
-		var h := MeshInstance3D.new()
-		h.mesh = heron_mesh
-		h.position = Vector3(found.x, found_y, found.y)
-		# 面向水（鷺鷥盯著水面等魚），不是隨機亂轉
-		h.rotation.y = atan2(-nrm.x * sd, -nrm.y * sd) + _street_rng.randf_range(-0.5, 0.5)
-		h.scale = Vector3.ONE * _street_rng.randf_range(0.9, 1.15)
-		lib.add(g, h, "鷺鷥_%d" % placed)
-		shore_off.append(found_d)
-		placed += 1
-	if placed > 0:
-		var so := 0.0
-		for v in shore_off:
-			so += v
-		_audit.append("　鷺鷥水際線實測：離河心平均 %.2fm（河半寬 %.1f、水面半寬 %.2f）"
-			% [so / float(placed), RIVER_HALF, RIVER_HALF * 0.86])
-	_audit.append("水邊生物：9 鴨 / 14 鯉 / %d 鷺鷥（巡游段 z %.0f~%.0f，全長 %.0fm）"
-		% [placed, FAUNA_Z.x, FAUNA_Z.y, total_len])
+	TownEcology.build_fauna(
+		lib, _root, _river(), FAUNA_Z, RIVER_HALF, RIVER_DEPTH,
+		BRIDGES, _uno_pos, PLAZA, _street_rng,
+		bank_h, height_at, _audit)
 
 
 ## 水生植物：睡蓮與荷。
