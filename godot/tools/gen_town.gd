@@ -2344,84 +2344,9 @@ func _lm_terakoya(g: Node3D, spread: float) -> void:
 ## 區域 = 世界 − 群組原點；y 則是 height_at(世界) − 群組原點 y。
 ## 直接照抄世界座標的話整組會位移一個地標座標的量。
 func _lm_grove(g: Node3D, _spread: float) -> void:
-	var wc := Vector2(g.position.x, g.position.z)
-	var y0: float = g.position.y
-	var lp := func(wx: float, wz: float, dy: float) -> Vector3:
-		return Vector3(wx - wc.x, height_at(wx, wz) - y0 + dy, wz - wc.y)
-
-	var post_m := _lmat("stone", 1)
-	lib.cyl(g, "土壇", 5.6, 6.4, 0.7, _lmat("stone", 2), lp.call(wc.x, wc.y, 0.25), 16)
-	# 神木：比一般樹高兩倍以上，剪影才會從屋頂上冒出來。
-	# ⚠ 用 tree_round_a（近景款）而不是舊版的 tree_round_b —— b 在新的
-	# tree_lib 裡是 vista 精簡款（ntuft 只有一半），放大 4 倍會稀得看得出來。
-	var big := MeshInstance3D.new()
-	big.mesh = _village_tree_mesh("res://assets/models/tree_round_a.glb")
-	big.position = lp.call(wc.x, wc.y, 0.6)
-	big.scale = Vector3(3.0, 3.6, 3.0)
-	lib.add(g, big, "神木")
-	var tb := StaticBody3D.new()
-	big.add_child(tb)
-	tb.owner = _root
-	var tsh := CollisionShape3D.new()
-	var tcy := CylinderShape3D.new()
-	tcy.radius = 1.6 / 3.0          # 母節點有 3.0 倍縮放，形狀要除回去
-	tcy.height = 8.0 / 3.6
-	tsh.shape = tcy
-	tsh.position = Vector3(0, 1.2 / 3.6, 0)
-	tb.add_child(tsh)
-	tsh.owner = _root
-	# 注連縄（繞樹一圈的粗繩）＋紙垂 —— 一眼看出這是神木不是路樹
-	var rope_m := lib.pbr("shimenawa", "terrain_grass", 1.6, Color(0.88, 0.84, 0.66))
-	var seg := 20
-	for i in seg:
-		var mid := (float(i) + 0.5) / float(seg) * TAU
-		var r_in := 1.75
-		var link := lib.cyl(g, "注連縄_%d" % i, 0.17, 0.17,
-			r_in * TAU / float(seg) * 1.12, rope_m,
-			lp.call(wc.x + cos(mid) * r_in, wc.y + sin(mid) * r_in, 3.1), 6)
-		link.rotation.y = -mid
-		link.rotation.z = PI * 0.5
-	for i in 6:
-		var a3 := float(i) / 6.0 * TAU + 0.25
-		lib.box(g, "紙垂_%d" % i, Vector3(0.16, 0.5, 0.03),
-			lib.flat_mat("shide", Color(0.96, 0.96, 0.94), 0.9),
-			lp.call(wc.x + cos(a3) * 1.78, wc.y + sin(a3) * 1.78, 2.72))
-	# 玉垣（圍住神木的矮石欄）—— 給中心一個明確的邊界
-	for i in 16:
-		var a4 := float(i) / 16.0 * TAU
-		lib.box(g, "玉垣柱_%d" % i, Vector3(0.22, 1.05, 0.22), post_m,
-			lp.call(wc.x + cos(a4) * 5.4, wc.y + sin(a4) * 5.4, 0.5))
-		var a5 := (float(i) + 0.5) / 16.0 * TAU
-		var rail := lib.box(g, "玉垣貫_%d" % i, Vector3(2.15, 0.13, 0.10), post_m,
-			lp.call(wc.x + cos(a5) * 5.4, wc.y + sin(a5) * 5.4, 0.78))
-		rail.rotation.y = -a5
-	# 石燈籠一對、有人來拜的痕跡
-	for sd in [-1.0, 1.0]:
-		var lx: float = wc.x + 6.6
-		var lz2: float = wc.y + sd * 2.6
-		var tag := int(sd + 1)
-		lib.cyl(g, "獻燈基_%d" % tag, 0.34, 0.40, 0.22, post_m, lp.call(lx, lz2, 0.11), 8)
-		lib.cyl(g, "獻燈竿_%d" % tag, 0.13, 0.15, 1.15, post_m, lp.call(lx, lz2, 0.8), 8)
-		lib.cyl(g, "獻燈袋_%d" % tag, 0.30, 0.28, 0.42, post_m, lp.call(lx, lz2, 1.58), 6)
-		lib.cyl(g, "獻燈笠_%d" % tag, 0.08, 0.56, 0.26, post_m, lp.call(lx, lz2, 1.92), 6)
-	# 杜：神木周圍再種一圈較小的樹（「杜」是樹叢，不是一棵樹）。
-	# ⚠ 橢圓排布並收在保留區內 —— 舊版是 wr 8.5~18 的圓，那會戳出保留區
-	# 南北緣（d/2 只有 18），重演足洗邸外溢。樹冠半徑再留 3.5m。
-	var TREES := ["res://assets/models/tree_round_a.glb",
-		"res://assets/models/tree_round_c.glb", "res://assets/models/tree_pine_a.glb"]
-	for i in 14:
-		var wa := _lm_rng.randf_range(0.0, TAU)
-		var t := sqrt(_lm_rng.randf_range(0.30, 1.0))
-		var wx: float = wc.x + cos(wa) * (7.0 + t * 10.0)
-		var wz: float = wc.y + sin(wa) * (7.0 + t * 7.5)
-		if _road_dist(wx, wz) < 1.6:
-			continue
-		var sub := MeshInstance3D.new()
-		sub.mesh = _village_tree_mesh(TREES[_lm_rng.randi() % TREES.size()])
-		sub.position = lp.call(wx, wz, 0.0)
-		sub.scale = Vector3.ONE * _lm_rng.randf_range(1.05, 1.5)
-		sub.rotation.y = _lm_rng.randf_range(0.0, TAU)
-		lib.add(g, sub, "杜木_%d" % i)
+	TownLandmarks.build_grove(
+		lib, g, _root, _lm_rng, height_at, _road_dist,
+		_village_tree_mesh, _lmat)
 
 
 ## ── 市場（開放廣場：龍神像＋屋台十二座＋水井＋高札場）──

@@ -190,3 +190,99 @@ static func build_terakoya(lib, group: Node3D, spread: float,
 	lib.cyl(body, "手水缽", 0.7, 0.75, 0.7,
 		material_fn.call("stone", -1), Vector3(9.0, 0.35, 10.0), 10)
 	collision_fn.call(body, Vector3(22.4, 7.0, 12.4), Vector3.ZERO)
+
+
+static func build_grove(lib, group: Node3D, root: Node3D,
+		rng: RandomNumberGenerator, height_fn: Callable,
+		road_dist_fn: Callable, tree_mesh_fn: Callable,
+		material_fn: Callable) -> void:
+	var world_centre := Vector2(group.position.x, group.position.z)
+	var origin_y: float = group.position.y
+	var local_position := func(wx: float, wz: float, dy: float) -> Vector3:
+		return Vector3(
+			wx - world_centre.x,
+			float(height_fn.call(wx, wz)) - origin_y + dy,
+			wz - world_centre.y)
+
+	var post_material = material_fn.call("stone", 1)
+	lib.cyl(group, "土壇", 5.6, 6.4, 0.7, material_fn.call("stone", 2),
+		local_position.call(world_centre.x, world_centre.y, 0.25), 16)
+	var sacred_tree := MeshInstance3D.new()
+	sacred_tree.mesh = tree_mesh_fn.call("res://assets/models/tree_round_a.glb")
+	sacred_tree.position = local_position.call(world_centre.x, world_centre.y, 0.6)
+	sacred_tree.scale = Vector3(3.0, 3.6, 3.0)
+	lib.add(group, sacred_tree, "神木")
+	var tree_body := StaticBody3D.new()
+	sacred_tree.add_child(tree_body)
+	tree_body.owner = root
+	var tree_shape := CollisionShape3D.new()
+	var tree_cylinder := CylinderShape3D.new()
+	tree_cylinder.radius = 1.6 / 3.0
+	tree_cylinder.height = 8.0 / 3.6
+	tree_shape.shape = tree_cylinder
+	tree_shape.position = Vector3(0, 1.2 / 3.6, 0)
+	tree_body.add_child(tree_shape)
+	tree_shape.owner = root
+	var rope_material: StandardMaterial3D = lib.pbr(
+		"shimenawa", "terrain_grass", 1.6, Color(0.88, 0.84, 0.66))
+	var segment_count := 20
+	for i in segment_count:
+		var middle := (float(i) + 0.5) / float(segment_count) * TAU
+		var radius := 1.75
+		var link: MeshInstance3D = lib.cyl(group, "注連縄_%d" % i, 0.17, 0.17,
+			radius * TAU / float(segment_count) * 1.12, rope_material,
+			local_position.call(
+				world_centre.x + cos(middle) * radius,
+				world_centre.y + sin(middle) * radius, 3.1), 6)
+		link.rotation.y = -middle
+		link.rotation.z = PI * 0.5
+	for i in 6:
+		var angle := float(i) / 6.0 * TAU + 0.25
+		lib.box(group, "紙垂_%d" % i, Vector3(0.16, 0.5, 0.03),
+			lib.flat_mat("shide", Color(0.96, 0.96, 0.94), 0.9),
+			local_position.call(
+				world_centre.x + cos(angle) * 1.78,
+				world_centre.y + sin(angle) * 1.78, 2.72))
+	for i in 16:
+		var post_angle := float(i) / 16.0 * TAU
+		lib.box(group, "玉垣柱_%d" % i, Vector3(0.22, 1.05, 0.22),
+			post_material, local_position.call(
+				world_centre.x + cos(post_angle) * 5.4,
+				world_centre.y + sin(post_angle) * 5.4, 0.5))
+		var rail_angle := (float(i) + 0.5) / 16.0 * TAU
+		var rail: MeshInstance3D = lib.box(group, "玉垣貫_%d" % i,
+			Vector3(2.15, 0.13, 0.10), post_material,
+			local_position.call(
+				world_centre.x + cos(rail_angle) * 5.4,
+				world_centre.y + sin(rail_angle) * 5.4, 0.78))
+		rail.rotation.y = -rail_angle
+	for side in [-1.0, 1.0]:
+		var lamp_x: float = world_centre.x + 6.6
+		var lamp_z: float = world_centre.y + side * 2.6
+		var tag := int(side + 1)
+		lib.cyl(group, "獻燈基_%d" % tag, 0.34, 0.40, 0.22,
+			post_material, local_position.call(lamp_x, lamp_z, 0.11), 8)
+		lib.cyl(group, "獻燈竿_%d" % tag, 0.13, 0.15, 1.15,
+			post_material, local_position.call(lamp_x, lamp_z, 0.8), 8)
+		lib.cyl(group, "獻燈袋_%d" % tag, 0.30, 0.28, 0.42,
+			post_material, local_position.call(lamp_x, lamp_z, 1.58), 6)
+		lib.cyl(group, "獻燈笠_%d" % tag, 0.08, 0.56, 0.26,
+			post_material, local_position.call(lamp_x, lamp_z, 1.92), 6)
+	var trees := [
+		"res://assets/models/tree_round_a.glb",
+		"res://assets/models/tree_round_c.glb",
+		"res://assets/models/tree_pine_a.glb",
+	]
+	for i in 14:
+		var world_angle := rng.randf_range(0.0, TAU)
+		var radius_factor := sqrt(rng.randf_range(0.30, 1.0))
+		var wx: float = world_centre.x + cos(world_angle) * (7.0 + radius_factor * 10.0)
+		var wz: float = world_centre.y + sin(world_angle) * (7.0 + radius_factor * 7.5)
+		if float(road_dist_fn.call(wx, wz)) < 1.6:
+			continue
+		var tree := MeshInstance3D.new()
+		tree.mesh = tree_mesh_fn.call(trees[rng.randi() % trees.size()])
+		tree.position = local_position.call(wx, wz, 0.0)
+		tree.scale = Vector3.ONE * rng.randf_range(1.05, 1.5)
+		tree.rotation.y = rng.randf_range(0.0, TAU)
+		lib.add(group, tree, "杜木_%d" % i)
