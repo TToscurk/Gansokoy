@@ -286,3 +286,105 @@ static func build_grove(lib, group: Node3D, root: Node3D,
 		tree.scale = Vector3.ONE * rng.randf_range(1.05, 1.5)
 		tree.rotation.y = rng.randf_range(0.0, TAU)
 		lib.add(group, tree, "杜木_%d" % i)
+
+
+static func build_dragon(lib, group: Node3D, offset_x: float, offset_z: float,
+		shrine_radius: float, material_fn: Callable,
+		collision_fn: Callable) -> void:
+	var stone = material_fn.call("stone", -1)
+	var dark = material_fn.call("dark", -1)
+	var shrine: Node3D = lib.add(group, Node3D.new(), "龍神像")
+	shrine.position = Vector3(offset_x, 0.0, offset_z)
+	lib.cyl(shrine, "砂利敷", shrine_radius, shrine_radius, 0.12,
+		lib.pbr("shrine_gravel", "cobble", 0.9, Color(0.88, 0.86, 0.80)),
+		Vector3(0, 0.06, 0), 24)
+	var tiers := [[6.0, 0.42], [4.9, 0.40], [4.0, 0.38]]
+	var y := 0.1
+	for i in tiers.size():
+		var tier_width: float = tiers[i][0]
+		var tier_height: float = tiers[i][1]
+		lib.box(shrine, "石壇_%d" % i,
+			Vector3(tier_width, tier_height, tier_width), stone,
+			Vector3(0, y + tier_height * 0.5, 0))
+		lib.box(shrine, "壇緣_%d" % i,
+			Vector3(tier_width + 0.22, 0.1, tier_width + 0.22), stone,
+			Vector3(0, y + tier_height - 0.02, 0))
+		y += tier_height
+	var statue := MeshInstance3D.new()
+	statue.mesh = lib.prop_mesh("res://assets/models/dragon_statue.glb", stone)
+	statue.position = Vector3(0, y, 0)
+	statue.rotation.y = 0.6
+	lib.add(shrine, statue, "像")
+	var post_count := 16
+	for i in post_count:
+		var angle := float(i) / float(post_count) * TAU
+		var px := cos(angle) * shrine_radius * 0.86
+		var pz := sin(angle) * shrine_radius * 0.86
+		var post: MeshInstance3D = lib.box(
+			shrine, "玉垣柱_%d" % i, Vector3(0.24, 1.25, 0.24), stone,
+			Vector3(px, 0.72, pz))
+		post.rotation.y = -angle
+		lib.box(shrine, "玉垣笠_%d" % i, Vector3(0.34, 0.1, 0.34), stone,
+			Vector3(px, 1.39, pz))
+		var next_angle := float(i + 1) / float(post_count) * TAU
+		lib.strut(shrine, "玉垣貫_%d" % i, Vector3(px, 1.02, pz),
+			Vector3(cos(next_angle) * shrine_radius * 0.86, 1.02,
+				sin(next_angle) * shrine_radius * 0.86),
+			0.055, stone, 4)
+	for side in [-1.0, 1.0]:
+		var tag := int(side + 1)
+		lib.box(shrine, "門柱_%d" % tag, Vector3(0.34, 2.4, 0.34), stone,
+			Vector3(side * 1.5, 1.2, -shrine_radius * 0.86))
+		lib.cyl(shrine, "門柱頭_%d" % tag, 0.0, 0.26, 0.3, stone,
+			Vector3(side * 1.5, 2.5, -shrine_radius * 0.86), 8)
+	var rope: StandardMaterial3D = lib.pbr(
+		"shimenawa", "terrain_grass", 1.6, Color(0.86, 0.80, 0.60))
+	for i in 8:
+		var t0 := float(i) / 8.0
+		var t1 := float(i + 1) / 8.0
+		lib.strut(shrine, "注連縄_%d" % i,
+			Vector3(lerpf(-1.5, 1.5, t0),
+				2.2 - sin(t0 * PI) * 0.42, -shrine_radius * 0.86),
+			Vector3(lerpf(-1.5, 1.5, t1),
+				2.2 - sin(t1 * PI) * 0.42, -shrine_radius * 0.86),
+			0.13 - absf(t0 - 0.5) * 0.08, rope, 6)
+	for i in 3:
+		lib.box(shrine, "紙垂_%d" % i, Vector3(0.16, 0.42, 0.02),
+			lib.flat_mat("shide", Color(0.97, 0.97, 0.95), 0.9),
+			Vector3(-0.9 + float(i) * 0.9, 1.62,
+				-shrine_radius * 0.86 - 0.06))
+	for side in [-1.0, 1.0]:
+		var lamp_x: float = side * 4.6
+		var lamp_z := -shrine_radius * 0.55
+		var tag := int(side + 1)
+		lib.box(shrine, "燈籠基_%d" % tag, Vector3(0.9, 0.24, 0.9), stone,
+			Vector3(lamp_x, 0.24, lamp_z))
+		lib.cyl(shrine, "燈籠竿_%d" % tag, 0.16, 0.19, 1.25, stone,
+			Vector3(lamp_x, 0.98, lamp_z), 8)
+		lib.box(shrine, "燈籠中台_%d" % tag, Vector3(0.62, 0.16, 0.62), stone,
+			Vector3(lamp_x, 1.68, lamp_z))
+		lib.box(shrine, "火袋_%d" % tag, Vector3(0.52, 0.6, 0.52),
+			lib.flat_mat("toro_light", Color(0.98, 0.88, 0.62), 0.8,
+				Color(0.9, 0.66, 0.34)), Vector3(lamp_x, 2.06, lamp_z))
+		for corner in 4:
+			var corner_angle := float(corner) / 4.0 * TAU + PI * 0.25
+			lib.box(shrine, "火袋柱_%d_%d" % [tag, corner],
+				Vector3(0.1, 0.62, 0.1), dark,
+				Vector3(lamp_x + cos(corner_angle) * 0.26, 2.06,
+					lamp_z + sin(corner_angle) * 0.26))
+		lib.cyl(shrine, "燈籠笠_%d" % tag, 0.12, 0.62, 0.34, stone,
+			Vector3(lamp_x, 2.53, lamp_z), 6)
+		lib.cyl(shrine, "寶珠_%d" % tag, 0.0, 0.14, 0.24, stone,
+			Vector3(lamp_x, 2.8, lamp_z), 8)
+	lib.box(shrine, "供物台", Vector3(1.5, 0.16, 0.7), stone,
+		Vector3(0, 0.72, -shrine_radius * 0.86 - 0.9))
+	for side in [-1.0, 1.0]:
+		lib.box(shrine, "供物台脚_%d" % int(side + 1),
+			Vector3(0.22, 0.64, 0.5), stone,
+			Vector3(side * 0.55, 0.34, -shrine_radius * 0.86 - 0.9))
+	for i in 2:
+		lib.cyl(shrine, "御神酒_%d" % i, 0.06, 0.11, 0.34,
+			lib.flat_mat("sake_bottle", Color(0.90, 0.90, 0.86), 0.35),
+			Vector3(-0.3 + float(i) * 0.6, 0.97,
+				-shrine_radius * 0.86 - 0.9), 8)
+	collision_fn.call(shrine, Vector3(4.2, 8.4, 4.2), Vector3.ZERO)
