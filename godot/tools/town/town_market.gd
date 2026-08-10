@@ -118,3 +118,56 @@ static func build_stalls(lib, group: Node3D, world_centre: Vector2,
 				lib.pbr("莚", "terrain_grass", 1.5, Color(0.80, 0.70, 0.46)),
 				Vector3(rng.randf_range(-0.6, 0.6), 0.09, 1.7))
 		collision_fn.call(stall, Vector3(3.0, 1.1, 2.2), Vector3.ZERO)
+
+
+static func build_civic_fixtures(lib, group: Node3D,
+		world_centre: Vector2, origin_y: float, wood: Material, stone: Material,
+		height_fn: Callable, material_fn: Callable,
+		collision_fn: Callable) -> void:
+	var well_offset := Vector2(13.0, 8.0)
+	var well := Node3D.new()
+	well.position = Vector3(
+		well_offset.x,
+		float(height_fn.call(
+			world_centre.x + well_offset.x,
+			world_centre.y + well_offset.y)) - origin_y,
+		well_offset.y)
+	lib.add(group, well, "水井")
+	lib.cyl(well, "井筒", 1.15, 1.25, 1.0, stone,
+		Vector3(0, 0.5, 0), 12)
+	lib.cyl(well, "井口", 0.95, 0.95, 0.05,
+		lib.flat_mat("water_dark", Color(0.07, 0.12, 0.15), 0.1),
+		Vector3(0, 1.0, 0), 12)
+	for side in [-1, 1]:
+		lib.cyl(well, "支柱_%d" % (side + 1), 0.09, 0.09, 2.6,
+			material_fn.call("dark", -1),
+			Vector3(float(side) * 1.0, 1.3, 0), 6)
+	lib.box(well, "橫木", Vector3(2.4, 0.14, 0.14),
+		material_fn.call("dark", -1), Vector3(0, 2.55, 0))
+	lib.box(well, "桶", Vector3(0.4, 0.4, 0.4), wood,
+		Vector3(0, 1.9, 0))
+	lib.gable_roof(well, 2.62, 3.0, 2.6, 0.5, 0.16,
+		material_fn.call("kawara", -1), wood)
+	lib.cyl(well, "滑車", 0.16, 0.16, 0.12,
+		material_fn.call("dark", -1), Vector3(0, 2.42, 0), 8)
+	collision_fn.call(well, Vector3(2.5, 1.2, 2.5), Vector3.ZERO)
+
+	var notice_offset := Vector2(14.0, -12.0)
+	var notice := Node3D.new()
+	notice.position = Vector3(
+		notice_offset.x,
+		float(height_fn.call(
+			world_centre.x + notice_offset.x,
+			world_centre.y + notice_offset.y)) - origin_y,
+		notice_offset.y)
+	notice.rotation.y = -0.5
+	lib.add(group, notice, "高札場")
+	for side in [-1, 1]:
+		lib.box(notice, "柱_%d" % (side + 1), Vector3(0.18, 2.6, 0.18),
+			material_fn.call("dark", -1),
+			Vector3(float(side) * 1.2, 1.3, 0))
+	lib.box(notice, "板", Vector3(2.7, 1.5, 0.1), wood,
+		Vector3(0, 2.0, 0))
+	lib.box(notice, "屋根", Vector3(3.1, 0.12, 0.6),
+		material_fn.call("kawara", -1), Vector3(0, 2.85, 0))
+	collision_fn.call(notice, Vector3(2.8, 2.8, 0.6), Vector3.ZERO)

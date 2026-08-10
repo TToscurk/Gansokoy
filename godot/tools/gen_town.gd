@@ -2372,34 +2372,9 @@ func _lm_market(g: Node3D, _spread: float) -> void:
 	TownMarket.build_stalls(
 		lib, c, wc, y0, wood, _lm_rng,
 		_ground_under, _lmat, _lm_collide)
-	# 水井（有屋頂與吊桶架）
-	var wo := Vector2(13.0, 8.0)
-	var well := Node3D.new()
-	well.position = Vector3(wo.x, height_at(wc.x + wo.x, wc.y + wo.y) - y0, wo.y)
-	lib.add(c, well, "水井")
-	lib.cyl(well, "井筒", 1.15, 1.25, 1.0, stone, Vector3(0, 0.5, 0), 12)
-	lib.cyl(well, "井口", 0.95, 0.95, 0.05,
-		lib.flat_mat("water_dark", Color(0.07, 0.12, 0.15), 0.1), Vector3(0, 1.0, 0), 12)
-	for sd in [-1, 1]:
-		lib.cyl(well, "支柱_%d" % (sd + 1), 0.09, 0.09, 2.6, _lmat("dark"),
-			Vector3(float(sd) * 1.0, 1.3, 0), 6)
-	lib.box(well, "橫木", Vector3(2.4, 0.14, 0.14), _lmat("dark"), Vector3(0, 2.55, 0))
-	lib.box(well, "桶", Vector3(0.4, 0.4, 0.4), wood, Vector3(0, 1.9, 0))
-	lib.gable_roof(well, 2.62, 3.0, 2.6, 0.5, 0.16, _lmat("kawara"), wood)
-	lib.cyl(well, "滑車", 0.16, 0.16, 0.12, _lmat("dark"), Vector3(0, 2.42, 0), 8)
-	_lm_collide(well, Vector3(2.5, 1.2, 2.5))
-	# 高札場
-	var no := Vector2(14.0, -12.0)
-	var notice := Node3D.new()
-	notice.position = Vector3(no.x, height_at(wc.x + no.x, wc.y + no.y) - y0, no.y)
-	notice.rotation.y = -0.5
-	lib.add(c, notice, "高札場")
-	for sd2 in [-1, 1]:
-		lib.box(notice, "柱_%d" % (sd2 + 1), Vector3(0.18, 2.6, 0.18), _lmat("dark"),
-			Vector3(float(sd2) * 1.2, 1.3, 0))
-	lib.box(notice, "板", Vector3(2.7, 1.5, 0.1), wood, Vector3(0, 2.0, 0))
-	lib.box(notice, "屋根", Vector3(3.1, 0.12, 0.6), _lmat("kawara"), Vector3(0, 2.85, 0))
-	_lm_collide(notice, Vector3(2.8, 2.8, 0.6))
+	TownMarket.build_civic_fixtures(
+		lib, c, wc, y0, wood, stone,
+		height_at, _lmat, _lm_collide)
 
 
 # ══════════════ 稗田邸：完整獨立版直接落地 ══════════════
