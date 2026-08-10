@@ -1448,7 +1448,7 @@ func _build_blocks() -> void:
 
 
 func _is_house_kind(kind: String) -> bool:
-	return TownAssets.is_house_kind(kind)
+	return kind.begins_with("machiya") or PHASE5A_FAMILIES.has(kind)
 
 
 func _apply_phase5a_pilot() -> void:
@@ -1603,7 +1603,28 @@ func _obb_pen(ra: Array, rb: Array) -> float:
 
 
 func _emit_batches() -> void:
-	TownAssets.emit_house_batches(lib, _root, _batch, _mods, OUT_DIR, _audit)
+	var g := lib.add(_root, Node3D.new(), "町家")
+	var total := 0
+	var names := _batch.keys()
+	names.sort()
+	for kind in names:
+		var list: Array = _batch[kind]
+		# ⚠ PHASE 1：帶語意材質的 production 模組要走 `semantic_mesh()`，
+		# 逐 surface 依 Blender 材質名掛專案的 PBR 材質；legacy blockout 模組
+		# 仍是單一頂點色 mesh，走舊路徑。判斷依據是 **surface 數**（>1 就是
+		# 分過材質的），不是寫死模組名 —— Phase 2 加新模組時不用再改這裡。
+		var probe: Array = lib.semantic_mesh(String(_mods[kind]["glb"]))
+		var mesh: Mesh = probe[0]
+		if mesh.get_surface_count() > 1:
+			_audit.append("　%s：語意材質 %d surface %s" % [kind, mesh.get_surface_count(),
+				str(probe[1])])
+		else:
+			mesh = lib.prop_mesh(String(_mods[kind]["glb"]))
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = lib.make_multimesh(mesh, list, [], OUT_DIR + "gen/mm_%s.res" % kind)
+		lib.add(g, mmi, "MM_%s" % kind)
+		total += list.size()
+	_audit.append("町家 %d 棟 / %d 種模組（%d draw call）" % [total, names.size(), names.size()])
 
 
 func _build_collision() -> void:
@@ -1611,7 +1632,30 @@ func _build_collision() -> void:
 	## 上一輪的 townlab 全場只有一個空氣牆 StaticBody3D，21 棟町家全部可以穿。
 	## 這裡逐棟給一個旋轉過的 BoxShape3D：300 棟 = 1 個 StaticBody3D +
 	## 300 個 CollisionShape3D，0 draw call。
-	TownAssets.emit_house_collisions(_root, _dump, _mods, _audit)
+	var body := StaticBody3D.new()
+	body.name = "町家碰撞"
+	_root.add_child(body)
+	body.owner = _root
+	var n := 0
+	for e in _dump:
+		if not _is_house_kind(String(e[0])):
+			continue
+		var m: Dictionary = _mods[e[0]]
+		var yaw: float = e[4]
+		var fwd := Vector2(sin(yaw), cos(yaw))
+		var c := Vector2(e[1], e[3])
+		if not bool(m.get("centered", false)):
+			c -= fwd * (float(m["d"]) * 0.5)
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(float(m["w"]), float(m["h"]), float(m["d"]))
+		sh.shape = bx
+		sh.position = Vector3(c.x, float(e[2]) + float(m["h"]) * 0.5, c.y)
+		sh.rotation.y = yaw
+		body.add_child(sh)
+		sh.owner = _root                      # ADR-017：沒 owner 就不會存進 .tscn
+		n += 1
+	_audit.append("町家碰撞箱 %d 個（1 個 StaticBody3D）" % n)
 
 
 func _build_env() -> void:
