@@ -40,6 +40,8 @@ const TownMarketQuarter := preload("res://tools/town/town_market_quarter.gd")
 const TownMainStreet := preload("res://tools/town/town_mainstreet.gd")
 const TownPhase5APilot := preload("res://tools/town/town_phase5a_pilot.gd")
 const TownPilotEdge := preload("res://tools/town/town_pilot_edge.gd")
+const TownLandmarkRegistry := preload("res://tools/town/town_landmark_registry.gd")
+const TownRiversideDiner := preload("res://tools/town/town_riverside_diner.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -544,98 +546,16 @@ func _build_bridges() -> void:
 # ── 地標佔位 + 鯢吞亭 ──
 
 func _build_landmark_stubs() -> void:
-	## ⚠ 第一版是無屋頂的素色方塊 —— 引擎內截圖讀成一排倉庫，把整個
-	## 天際線壓垮。佔位也要有屋頂：切妻 + 瓦色，剪影才跟町家同一個語彙。
-	## （內容仍然不做 —— 地標不在街區重設計的範圍內。）
-	var g := lib.add(_root, Node3D.new(), "地標佔位")
-	var lm_body := StaticBody3D.new()
-	lm_body.name = "地標碰撞"
-	_root.add_child(lm_body)
-	lm_body.owner = _root
-	var mw := lib.flat_mat("佔位牆", Color(0.575, 0.560, 0.520), 0.92)
-	var mr := lib.flat_mat("佔位瓦", Color(0.150, 0.163, 0.192), 0.88)
-	_lm_rng.seed = SEED + 4177        # 地標內容專用序列，不動街區排列
-	var n_stub := 0
-	var n_real := 0
-	for L in LANDMARKS:
-		# 保留區**不論搬入與否都要登記** —— 它是「町家不准蓋進來」的依據
-		_reserved.append([Vector2(L.x, L.z), Vector2(1, 0), Vector2(0, 1),
-			(L.w + 1.6) * 0.5, (L.d + 1.6) * 0.5, L.n])
-		# ⚠ 有 `build` 的地標已經搬入真內容 —— **這裡就完全不碰它**：
-		# 不畫佔位方塊、不掛佔位碰撞箱。使用者明確要求驗證「舊的空殼碰撞
-		# 箱真的被移除，不留殘影碰撞」，而最可靠的作法不是事後刪，是
-		# **一開始就不要生**：只要 build 存在，這個迴圈連 StaticBody 都不建。
-		if L.has("build"):
-			var gr := lib.add(g, Node3D.new(), L.n)
-			var gu := _ground_under(L.x, L.z, L.w, L.d)
-			gr.position = Vector3(L.x, float(gu[0]), L.z)
-			call(String(L.build), gr, float(gu[1]))
-			n_real += 1
-			continue
-		n_stub += 1
-		var y: float = bank_h(L.x, L.z)
-		# 量體與佔地分開：佔地（w/d）是保留區，量體（bw/bd）才是畫出來的箱。
-		var bw: float = float(L.get("bw", L.w))
-		var bd: float = float(L.get("bd", L.d))
-		var wall_h: float = maxf(L.h * 0.62, L.h - bd * 0.30)
-		# 每座地標**自己一個子群組**，牆體命名「屋身」：
-		# (a) check_map 的建物判定看「群組直下有沒有貼地構件」——
-		#     以前七座全掛在同一個群組、名字又不含關鍵字 → 佔位對體檢隱形；
-		#     而且就算命中，七座會被併成一棟橫跨全鎮的巨型 AABB。
-		# (b) gable_roof 的子節點名是固定的（屋根坡_0…），同一個父節點下
-		#     蓋七次會被 Godot 自動改名成 @MeshInstance3D@8 之類 —— 分開的
-		#     父節點各自命名空間，名字保得住。
-		var gl := lib.add(g, Node3D.new(), L.n)
-		lib.box(gl, "屋身", Vector3(bw, wall_h, bd), mw,
-			Vector3(L.x, y + wall_h * 0.5, L.z))
-		lib.gable_roof(gl, y + wall_h, bw + 1.6, bd + 1.6,
-			atan2(L.h - wall_h, bd * 0.5), 0.22, mr, mr,
-			Vector3(L.x, 0.0, L.z))
-		# 佔位也要有碰撞 —— 沒有的話玩家直接穿過地標
-		var sh := CollisionShape3D.new()
-		var bx := BoxShape3D.new()
-		bx.size = Vector3(bw, wall_h, bd)
-		sh.shape = bx
-		sh.position = Vector3(L.x, y + wall_h * 0.5, L.z)
-		lm_body.add_child(sh)
-		sh.owner = _root
-	_audit.append("地標：真內容 %d 座、佔位 %d 座（佔位才有空殼碰撞箱）"
-		% [n_real, n_stub])
+	TownLandmarkRegistry.build(
+		lib, _root, LANDMARKS, SEED, _lm_rng, _reserved,
+		_ground_under, bank_h, self, _audit)
 
 
 func _build_unomitei() -> void:
-	## 使用者決策：鯢吞亭不搬遷，改成臨河食堂。
-	## 正面（-y 面）朝河，屋身往河延伸 → 川床懸在水面上。
-	var rp := _nearest_river_pt(UNOMITEI_ANCHOR)
-	var t := river_tangent(rp)
-	var n := Vector2(-t.y, t.x)
-	if n.dot(UNOMITEI_ANCHOR - rp) < 0.0:
-		n = -n                                   # 法線朝陸地（西岸）
-	# ⚠ 模組的 **-y 面是街側**（正面），屋身往 +y 長，川床在最遠端。
-	# 所以正面要朝**離開河的方向**（= n），屋身才會往河長、川床才會懸到
-	# 水上。第一版寫成 atan2(-n.x,-n.y)（正面朝河），屋身整個往陸地長，
-	# 川床落在離河 20m 的草地上 —— 引擎內截圖才看出來。
-	# 距離：原點（街側正面）離河心 18.5m
-	#   → 主屋河側牆 18.5-9.2 = 9.3（岸 7.0 外側 2.3m）
-	#   → 川床 7.9 ~ 2.5（水面半寬 6.02，外側 3.5m 懸在水上）
-	var pos: Vector2 = rp + n * 18.5
-	var mesh: Mesh = lib.prop_mesh(String(_mods["unomitei"]["glb"]))
-	var mi := MeshInstance3D.new()
-	mi.mesh = mesh
-	var yaw := atan2(n.x, n.y)                   # 正面（街側）朝 n = 背對河
-	mi.position = Vector3(pos.x, bank_h(pos.x, pos.y), pos.y)
-	mi.rotation.y = yaw
-	mi.set_meta("needs_trimesh", true)
-	lib.add(_root, mi, "鯢吞亭")
-	_dump.append(["unomitei", pos.x, mi.position.y, pos.y, yaw])
-	_reserved.append(_obb_of(["unomitei", pos.x, 0.0, pos.y, yaw]))
-	var deck_out: Vector2 = pos - n * 16.0
-	_audit.append("鯢吞亭（臨河食堂）@(%.1f,%.1f) yaw %.1f°　川床外緣離河心 %.1fm"
-		% [pos.x, pos.y, rad_to_deg(yaw), deck_out.distance_to(rp)]
-		+ "（水面半寬 %.1f → 懸在水上 %.1fm）、離主橋 %.0fm"
-		% [RIVER_HALF * 0.86, RIVER_HALF * 0.86 - deck_out.distance_to(rp),
-		   pos.distance_to(Vector2(66, 30))])
-	_uno_pos = pos
+	_uno_pos = TownRiversideDiner.build(
+		lib, _root, UNOMITEI_ANCHOR, RIVER_HALF, _mods,
+		_nearest_river_pt, river_tangent, bank_h, _obb_of,
+		_dump, _reserved, _audit)
 
 
 # ── 複合街區產生器 ──
