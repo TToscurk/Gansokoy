@@ -7,6 +7,9 @@ import math
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import blender_compat as BC   # shader nodes by TYPE, not by (localized) name
+
 ARGV = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 OUT = os.path.abspath(ARGV[0] if ARGV else "godot/assets/models")
 SOURCE_OUT = os.path.abspath("godot/assets/blender/sources")
@@ -32,29 +35,11 @@ def clear():
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False)
 
-def principled(mat):
-    """Find (or create) the Principled BSDF by NODE TYPE, not by node label.
-
-    ⚠ `nodes.get("Principled BSDF")` returns None on Blender 5.2 — the default
-    node is no longer under that name — so the whole script died on line 1 of
-    the first material. Every exporter in this directory still looks it up by
-    name; they will need the same fix when they are next run.
-    """
-    nt = mat.node_tree
-    for n in nt.nodes:
-        if n.type == "BSDF_PRINCIPLED":
-            return n
-    node = nt.nodes.new("ShaderNodeBsdfPrincipled")
-    out = next((n for n in nt.nodes if n.type == "OUTPUT_MATERIAL"), None) \
-        or nt.nodes.new("ShaderNodeOutputMaterial")
-    nt.links.new(node.outputs["BSDF"], out.inputs["Surface"])
-    return node
-
 def materials():
     for name, (color, rough) in MATS.items():
         mat = bpy.data.materials.get(name) or bpy.data.materials.new(name)
         mat.use_nodes = True
-        bsdf = principled(mat)
+        bsdf = BC.principled(mat)
         bsdf.inputs["Base Color"].default_value = color
         bsdf.inputs["Roughness"].default_value = rough
 

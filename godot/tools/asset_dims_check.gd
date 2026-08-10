@@ -131,6 +131,8 @@ func _init() -> void:
 				% [kind, size.x, size.y, size.z, mesh.get_surface_count(), worst,
 					"" if is_building else "・高さは機能値なので対象外"])
 
+	bad += _teeth_test(lib)
+
 	if bad == 0:
 		print("\n══ 資産寸法検査：%d モジュール、0 項不符 ✓ ══\n" % checked)
 		quit(0)
@@ -138,3 +140,35 @@ func _init() -> void:
 		print("\n══ 資産寸法検査：%d モジュール中 %d 項が不符 ✗ ══" % [checked, bad])
 		push_error("asset dimension mismatch: %d module(s)" % bad)
 		quit(1)
+
+
+## 歯の検査（teeth-test）。
+##
+## `.claude/rules/godot.md`：検査を触ったら、**既知の不良入力でまだ落ちるか**
+## を確かめること。ここで確かめるのは寸法ではなく、その手前の
+## **単一 mesh 契約** —— `semantic_mesh()` が複数 mesh の glb を黙って
+## 「最初の一個」に縮めないこと。それが縮むなら、寸法の一致は何も保証しない
+## （Phase 5A はまさに「表と実測が一致していないのに全部通った」状態だった）。
+##
+## ⚠ 専用の不良 fixture は**作らない**。`villager_a.glb` は実際に 6 つの
+##   MeshInstance3D を持つ既存資産で、しかも `char_scene()` を通るので
+##   production では一度もここに来ない —— 追加の資産も .import も増やさずに
+##   本物の不良入力が手に入る。
+const MULTI_MESH_PROBE := "res://assets/models/villager_a.glb"
+
+func _teeth_test(lib) -> int:
+	print("\n──── 歯の検査：単一 mesh 契約 ────")
+	if not ResourceLoader.exists(MULTI_MESH_PROBE):
+		print("  ⚠ probe 資産が無いので検査を飛ばした：%s" % MULTI_MESH_PROBE)
+		return 1
+	# 6 mesh の glb。契約どおりなら null が返り、push_error が一本出る。
+	# （下の "MESH CONTRACT" エラーは**期待された出力**。）
+	var probe: Array = lib.semantic_mesh(MULTI_MESH_PROBE)
+	if probe[0] == null:
+		print("  ✓ 複数 mesh の glb は拒否された（最初の一個に縮まなかった）")
+		return 0
+	var size: Vector3 = (probe[0] as Mesh).get_aabb().size
+	print(("  ✗ 複数 mesh の glb が通ってしまった —— %s が %.2f×%.2f×%.2f "
+		+ "として黙って読まれた。これは Phase 5A の欠陥そのもの")
+		% [MULTI_MESH_PROBE, size.x, size.y, size.z])
+	return 1

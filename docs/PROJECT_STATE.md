@@ -142,8 +142,7 @@ Substitution lives in `gen_town.gd::CONSOLIDATE` / `_consolidate()`,
 | `tower_bell` / `tower_fire` read as flat dark slabs at close range — landmark asset quality, not residential; a tower redesign is an art-direction call | `assets/models/tower_*.glb` |
 | Machiya triangles +127% after consolidation; LOD is still `lod_bias` only | `gen_town.gd`, Master Plan §5 |
 | 総二階 ridge is 7.67/8.55 m where the legacy blockout was 9.40/9.90 m — the second skyline is preserved but lower (measured: 6.14 m is the minimum to clear the front eave line) | `ningen-no-sato.md` §12.2 |
-| **Every Blender exporter still resolves the shader node by the name `"Principled BSDF"`, which returns null on the installed Blender 5.2** — `make_building_asset_proof.py` was fixed to look it up by node *type*; `make_machiya.py`, `make_town.py`, `preview.py` and the rest will die on their first material the next time anyone runs them | `assets/blender/*.py` |
-| `semantic_mesh()` / `prop_mesh()` silently accept a multi-object GLB and use only the first mesh. The dimension gate now catches the consequence, but the reader itself still has no opinion about it | `gen_lib.gd` |
+| `Material.use_nodes` is deprecated and slated for removal in Blender 6.0 — every exporter sets it. Not urgent on 5.2, but it is the next toolchain break | `assets/blender/*.py` |
 | Family GLBs are exported from `.blend` sources under `assets/blender/sources/`, which are now `.gdignore`d — Godot was trying to import them and failing for want of a Blender path | `godot/assets/blender/.gdignore` |
 | Water / wet-flat gap and lotus geometry unresolved | deferred to cel shading |
 | Slice's 10 lots are hand-placed; no rule yet for distributing 6 modules over 169 houses | `gen_slice.gd` vs `gen_town.gd` |
@@ -323,12 +322,43 @@ At their true widths the 旅籠 and 酒屋 cut 0.21 m and 0.29 m into a
 neighbouring `machiya_e_p`. Both were shifted 0.8 m **along the street**, so
 setback, side of 本通 and orientation — the reviewed parts — are unchanged.
 
-`tools/asset_dims_check.gd` is the new gate: it measures every module the
+## Asset toolchain hardening (2026-08-10)
+
+Two latent traps closed repository-wide. No composition, placement, gameplay,
+vegetation, lighting, road or building-art change; no asset regenerated.
+
+**Shader nodes are looked up by type, never by name.** The `"Principled BSDF"`
+lookup was not a Blender-version problem, it was a **locale** problem, which is
+worse because it is invisible to whoever wrote the script: newly created nodes
+are named in the running Blender's UI language. On this machine
+`bpy.data.materials.new()` yields `原則化 BSDF` / `材質輸出`, so every exporter
+died on its first material — and two people on the same Blender version would
+get different results. `node.type` is a stable, untranslated enum. New shared
+module `assets/blender/blender_compat.py` (`principled()`, `background()`),
+imported by the same `sys.path` idiom `tree_lib` already uses. The `Background`
+lookup had the same flaw and was only working by luck where the node came from
+the English startup file — `make_machiya.py`'s neutral stage creates its own
+world and would have raised.
+
+**`gen_lib` now enforces a single-mesh GLB contract.** `semantic_mesh()` and
+`prop_mesh()` collect *every* `MeshInstance3D` and, on anything other than
+exactly one, `push_error` naming the asset and its mesh nodes and return null,
+so the caller fails visibly. Runtime mesh merging was deliberately **not**
+added: merging silently reorders material slots and can flip winding, which is
+this repository's most expensive class of accident. Joining belongs in the
+exporter, where every exporter already does it. Villagers are unaffected —
+they carry 6 meshes but load through `char_scene()`, which keeps the tree.
+
+`tools/asset_dims_check.gd` is the gate: it measures every module the
 generator can instance, through the same reader the generator uses, and fails
 on more than **0.05 m** absolute deviation from the declared `fw`/`h`/`fd`. It
 also fails a building that arrives with a single surface. Height is compared
 for buildings only — `bridge`/`tower`/`landmark` declare a functional height,
 not a bbox height. Teeth-tested against the real defect: it reported all three
-proof assets ✗ before the fix and 28/28 ✓ after. Evidence:
+proof assets ✗ before the fix and 28/28 ✓ after. It now also runs a standing
+teeth-test of the single-mesh contract on every invocation, using
+`villager_a.glb` — a real 6-mesh asset that production never routes through
+this reader — so there is no throwaway fixture and no extra `.import`.
+Evidence:
 `shots2/asset_building_proof/dims_fix/` (standalone, production path) and
 `shots2/asset_dims_fix/before` vs `after` (north approach).

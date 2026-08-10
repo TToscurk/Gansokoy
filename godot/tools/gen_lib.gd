@@ -348,21 +348,60 @@ func semantic_mat(sem: String) -> Material:
 	return pbr("sem_" + sem, String(spec[0]), float(spec[1]), spec[2], true, float(spec[3]))
 
 
-## 保留材質身分的 glb 載入：逐 surface 依材質名掛語意材質。
-## 回傳 [mesh, 對應表]（對應表給檢查工具用 —— 「有沒有真的掛上」要驗得到）。
-func semantic_mesh(glb_path: String) -> Array:
-	var packed: PackedScene = load(glb_path)
+## 単一 mesh 契約：**glb は一つの MeshInstance3D しか持ってはいけない。**
+##
+## ⚠ この関数群は以前「見つけた最初の MeshInstance3D を採って break」して
+##   いた。それが Phase 5A で三棟の**見えない建物**を出した仕組みの半分
+##   （もう半分は書き出し側が join せず loose な glTF ノードを吐いたこと）。
+##   煙出し 1.40m・格子の桟 1.12m・杉玉 0.96m —— engine はそれだけを描き、
+##   OBB も衝突箱も表の 9〜13m を信じたまま、静的検査は全部通った。
+##
+##   実行時に mesh を結合して救うことは**しない**。結合はマテリアル slot の
+##   順序・頂点色・法線・winding を静かに変える操作で、この repo が最も高く
+##   ついた事故（winding 一枚で参道が消えた）と同じ土俵にある。書き出し側で
+##   join するのが正しく、既存の書き出しは全部そうしている。
+##   ここは**契約違反を大声で言う**役だけを持つ。
+##
+## ⚠ 人物（villager_*）は 6 mesh だが `char_scene()` を通る（手足を個別に
+##   animate するので木構造ごと保持する）。ここには来ない。
+func _single_mesh(glb_path: String) -> Mesh:
+	var packed: PackedScene = load(glb_path) as PackedScene
+	if packed == null:
+		push_error("MESH CONTRACT: glb が PackedScene として読めない —— %s" % glb_path)
+		return null
 	var node := packed.instantiate()
-	var mesh: Mesh = null
+	var found: Array[MeshInstance3D] = []
+	var names: Array[String] = []
 	var stack: Array[Node] = [node]
 	while stack.size() > 0:
 		var n: Node = stack.pop_back()
 		for c in n.get_children():
 			stack.push_back(c)
 		if n is MeshInstance3D:
-			mesh = (n as MeshInstance3D).mesh
-			break
+			found.append(n as MeshInstance3D)
+			names.append(String(n.name))
+	var mesh: Mesh = null
+	if found.size() == 1:
+		mesh = found[0].mesh
+	elif found.is_empty():
+		push_error("MESH CONTRACT: %s に MeshInstance3D が一つも無い" % glb_path)
+	else:
+		names.sort()
+		push_error(("MESH CONTRACT: %s は MeshInstance3D を %d 個持っている —— "
+			+ "書き出し側で一つに join すること（Blender: 全 mesh を選択して "
+			+ "bpy.ops.object.join()）。ノード: %s")
+			% [glb_path, found.size(), ", ".join(names)])
 	node.free()
+	return mesh
+
+
+## 保留材質身分的 glb 載入：逐 surface 依材質名掛語意材質。
+## 回傳 [mesh, 對應表]（對應表給檢查工具用 —— 「有沒有真的掛上」要驗得到）。
+## 契約違反時は [null, {}] を返す —— 呼び出し側はそこで**目に見えて**壊れる。
+func semantic_mesh(glb_path: String) -> Array:
+	var mesh: Mesh = _single_mesh(glb_path)
+	if mesh == null:
+		return [null, {}]
 	var map := {}
 	for s in mesh.get_surface_count():
 		var m: Material = mesh.surface_get_material(s)
@@ -382,19 +421,11 @@ func semantic_mesh(glb_path: String) -> Array:
 
 
 ## 從 glb 挖出 mesh 並掛頂點色材質（岩石、龍、鴨、鯉、鷺共用）
+## 契約違反時は null を返す（`_single_mesh` が資産名を名指しで push_error する）。
 func prop_mesh(glb_path: String, mat: Material = null) -> Mesh:
-	var packed: PackedScene = load(glb_path)
-	var node := packed.instantiate()
-	var mesh: Mesh = null
-	var stack: Array[Node] = [node]
-	while stack.size() > 0:
-		var n: Node = stack.pop_back()
-		for c in n.get_children():
-			stack.push_back(c)
-		if n is MeshInstance3D:
-			mesh = n.mesh
-			break
-	node.free()
+	var mesh: Mesh = _single_mesh(glb_path)
+	if mesh == null:
+		return null
 	var m: Material = mat if mat else vc_mat()
 	for s in mesh.get_surface_count():
 		mesh.surface_set_material(s, m)

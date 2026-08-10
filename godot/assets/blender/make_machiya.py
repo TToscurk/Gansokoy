@@ -52,6 +52,9 @@ import math
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import blender_compat as BC   # shader nodes by TYPE, not by (localized) name
+
 ARGV = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 OUT_DIR = ARGV[0] if ARGV else "godot/assets/models"
 RENDER_DIR = None
@@ -147,7 +150,7 @@ def make_materials():
     for name, (col, rough) in MATS.items():
         m = bpy.data.materials.get(name) or bpy.data.materials.new(name)
         m.use_nodes = True
-        bsdf = m.node_tree.nodes.get("Principled BSDF")
+        bsdf = BC.principled(m)
         bsdf.inputs["Base Color"].default_value = (col[0], col[1], col[2], 1.0)
         bsdf.inputs["Roughness"].default_value = rough
         if "Specular IOR Level" in bsdf.inputs:
@@ -1047,7 +1050,7 @@ def _neutral_stage(ground_at=(0, 3.9), ground_size=140):
     world = bpy.data.worlds.new("neutral")
     sc.world = world
     world.use_nodes = True
-    bg = world.node_tree.nodes["Background"]
+    bg = BC.background(world)
     bg.inputs[0].default_value = (0.55, 0.56, 0.58, 1.0)
     bg.inputs[1].default_value = 1.0
     sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
@@ -1064,9 +1067,9 @@ def _neutral_stage(ground_at=(0, 3.9), ground_size=140):
     ground = bpy.context.active_object
     gm = bpy.data.materials.new("GROUND")
     gm.use_nodes = True
-    gm.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (
-        0.20, 0.20, 0.20, 1.0)
-    gm.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 1.0
+    gbsdf = BC.principled(gm)
+    gbsdf.inputs["Base Color"].default_value = (0.20, 0.20, 0.20, 1.0)
+    gbsdf.inputs["Roughness"].default_value = 1.0
     ground.data.materials.append(gm)
     return sc
 

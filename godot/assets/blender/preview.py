@@ -24,6 +24,9 @@ import math
 import sys
 import os
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import blender_compat as BC   # shader nodes by TYPE, not by (localized) name
+
 argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 out_path = None
 if "--out" in argv:
@@ -48,7 +51,7 @@ def vertex_color_mat():
     m = bpy.data.materials.new("preview_vc")
     m.use_nodes = True
     nt = m.node_tree
-    bsdf = nt.nodes["Principled BSDF"]
+    bsdf = BC.principled(m)
     ca = nt.nodes.new("ShaderNodeVertexColor")
     ca.layer_name = "Col"
     nt.links.new(ca.outputs["Color"], bsdf.inputs["Base Color"])
@@ -62,7 +65,7 @@ def setup_stage(size):
     bpy.ops.mesh.primitive_plane_add(size=size * 20.0, location=(0, 0, 0))
     gp = bpy.data.materials.new("ground")
     gp.use_nodes = True
-    gp.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.22, 0.28, 0.13, 1)
+    BC.principled(gp).inputs["Base Color"].default_value = (0.22, 0.28, 0.13, 1)
     bpy.context.active_object.data.materials.append(gp)
 
     bpy.ops.object.light_add(type="SUN")
@@ -71,7 +74,7 @@ def setup_stage(size):
     sun.data.angle = math.radians(2.0)
     sun.rotation_euler = (math.radians(52), 0, math.radians(38))
 
-    w = bpy.context.scene.world.node_tree.nodes["Background"]
+    w = BC.background(bpy.context.scene.world)
     w.inputs[0].default_value = (0.42, 0.55, 0.76, 1)
     w.inputs[1].default_value = 1.2
 
