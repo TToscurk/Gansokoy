@@ -2,6 +2,92 @@ extends RefCounted
 
 ## Deterministic street-edge fixtures for the Human Village generator.
 
+static func build_fence(lib, root: Node3D, group: Node3D, fixed_x: float,
+		start_z: float, end_z: float, gaps: Array, dark: Material,
+		boards: Material, height_fn: Callable, height := 1.7,
+		collide := true) -> void:
+	var cursor := start_z
+	var post_index := 0
+	while cursor < end_z - 0.1:
+		var segment_end := minf(cursor + 1.9, end_z)
+		var in_gap := false
+		for gap in gaps:
+			if cursor < float(gap[1]) and segment_end > float(gap[0]):
+				in_gap = true
+				break
+		var ground_y: float = height_fn.call(
+			fixed_x, (cursor + segment_end) * 0.5)
+		if not in_gap:
+			lib.box(group, "塀板_%d_%d" % [int(fixed_x * 10.0), post_index],
+				Vector3(0.08, height - 0.26, segment_end - cursor - 0.13), boards,
+				Vector3(fixed_x, ground_y + 0.18 + (height - 0.26) * 0.5,
+					(cursor + segment_end) * 0.5))
+			lib.box(group, "塀笠_%d_%d" % [int(fixed_x * 10.0), post_index],
+				Vector3(0.16, 0.09, segment_end - cursor + 0.05), dark,
+				Vector3(fixed_x, ground_y + height - 0.02,
+					(cursor + segment_end) * 0.5))
+		lib.box(group, "塀柱_%d_%d" % [int(fixed_x * 10.0), post_index],
+			Vector3(0.14, height + 0.08, 0.14), dark,
+			Vector3(fixed_x,
+				float(height_fn.call(fixed_x, cursor)) + (height + 0.08) * 0.5,
+				cursor))
+		cursor = segment_end
+		post_index += 1
+	lib.box(group, "塀柱_%d_end" % int(fixed_x * 10.0),
+		Vector3(0.14, height + 0.08, 0.14), dark,
+		Vector3(fixed_x,
+			float(height_fn.call(fixed_x, end_z)) + (height + 0.08) * 0.5,
+			end_z))
+	if not collide:
+		return
+	for span in [
+			[start_z, gaps[0][0] if gaps.size() > 0 else end_z],
+			[gaps[0][1] if gaps.size() > 0 else end_z, end_z],
+		]:
+		var span_start := float(span[0])
+		var span_end := float(span[1])
+		if span_end - span_start < 0.5:
+			continue
+		var body := StaticBody3D.new()
+		group.add_child(body)
+		body.owner = root
+		var collision_shape := CollisionShape3D.new()
+		var box := BoxShape3D.new()
+		box.size = Vector3(0.25, height, span_end - span_start)
+		collision_shape.shape = box
+		collision_shape.position = Vector3(
+			fixed_x,
+			float(height_fn.call(fixed_x, (span_start + span_end) * 0.5))
+				+ height * 0.5,
+			(span_start + span_end) * 0.5)
+		body.add_child(collision_shape)
+		collision_shape.owner = root
+
+
+static func build_mune_gate(lib, group: Node3D, fixed_x: float,
+		fixed_z: float, width: float, dark: Material, roof: Material,
+		stone: Material, height_fn: Callable) -> void:
+	var ground_y: float = height_fn.call(fixed_x, fixed_z)
+	var gate: Node3D = lib.add(
+		group, Node3D.new(), "門_%d" % int(fixed_z))
+	gate.position = Vector3(fixed_x, ground_y, fixed_z)
+	for side in [-1.0, 1.0]:
+		lib.box(gate, "門柱_%d" % int(side + 1.0),
+			Vector3(0.19, 2.30, 0.19), dark,
+			Vector3(0, 1.15, side * width * 0.5))
+	lib.box(gate, "冠木", Vector3(0.17, 0.20, width + 0.55), dark,
+		Vector3(0, 2.22, 0))
+	lib.gable_roof(gate, 2.42, 1.30, width + 0.95, 0.42, 0.11,
+		roof, dark)
+	for index in 3:
+		lib.box(group, "門敷石_%d_%d" % [int(fixed_z), index],
+			Vector3(0.95, 0.07, 0.75), stone,
+			Vector3(
+				fixed_x + (0.55 + float(index) * 0.85)
+					* (1.0 if fixed_x < 0.0 else -1.0) * -1.0,
+				float(height_fn.call(fixed_x, fixed_z)) + 0.02,
+				fixed_z))
+
 static func build_gutters(lib, root: Node3D, out_dir: String,
 		main_ew_z: float, main_ew_w: float, gutter_segment: float,
 		gutter_commerce: float, river_half: float, roads: Array,

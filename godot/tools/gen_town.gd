@@ -3205,74 +3205,16 @@ func _build_mainstreet() -> void:
 	var made: Array[String] = []
 	var foot: Array = []
 
-	# ── 板塀 builder（柱＋下見板＋笠木。gap は門の開口）───────────
-	var fence := func(fg: Node3D, fx: float, z0: float, z1: float, gaps: Array,
-			h := 1.7, collide := true) -> void:
-		var t := z0
-		var pn := 0
-		while t < z1 - 0.1:
-			var seg_end := minf(t + 1.9, z1)
-			var in_gap := false
-			for gp in gaps:
-				if t < float(gp[1]) and seg_end > float(gp[0]):
-					in_gap = true
-					break
-			var y := height_at(fx, (t + seg_end) * 0.5)
-			if not in_gap:
-				lib.box(fg, "塀板_%d_%d" % [int(fx * 10.0), pn],
-					Vector3(0.08, h - 0.26, seg_end - t - 0.13), itaita,
-					Vector3(fx, y + 0.18 + (h - 0.26) * 0.5, (t + seg_end) * 0.5))
-				lib.box(fg, "塀笠_%d_%d" % [int(fx * 10.0), pn],
-					Vector3(0.16, 0.09, seg_end - t + 0.05), dark,
-					Vector3(fx, y + h - 0.02, (t + seg_end) * 0.5))
-			lib.box(fg, "塀柱_%d_%d" % [int(fx * 10.0), pn],
-				Vector3(0.14, h + 0.08, 0.14), dark,
-				Vector3(fx, height_at(fx, t) + (h + 0.08) * 0.5, t))
-			t = seg_end
-			pn += 1
-		lib.box(fg, "塀柱_%d_end" % int(fx * 10.0), Vector3(0.14, h + 0.08, 0.14),
-			dark, Vector3(fx, height_at(fx, z1) + (h + 0.08) * 0.5, z1))
-		if collide:
-			for gp2 in [[z0, gaps[0][0] if gaps.size() > 0 else z1],
-					[gaps[0][1] if gaps.size() > 0 else z1, z1]]:
-				var a2 := float(gp2[0])
-				var b2 := float(gp2[1])
-				if b2 - a2 < 0.5:
-					continue
-				var body := StaticBody3D.new()
-				fg.add_child(body)
-				body.owner = _root
-				var cs := CollisionShape3D.new()
-				var bx := BoxShape3D.new()
-				bx.size = Vector3(0.25, h, b2 - a2)
-				cs.shape = bx
-				cs.position = Vector3(fx, height_at(fx, (a2 + b2) * 0.5) + h * 0.5,
-					(a2 + b2) * 0.5)
-				body.add_child(cs)
-				cs.owner = _root
-
-	# ── 棟門 builder（塀の開口に小さな切妻の屋根門）─────────────
-	var mune := func(fg: Node3D, fx: float, fz: float, w: float) -> void:
-		var y := height_at(fx, fz)
-		var mn := lib.add(fg, Node3D.new(), "門_%d" % int(fz)) as Node3D
-		mn.position = Vector3(fx, y, fz)
-		for sd in [-1.0, 1.0]:
-			lib.box(mn, "門柱_%d" % int(sd + 1.0), Vector3(0.19, 2.30, 0.19), dark,
-				Vector3(0, 1.15, sd * w * 0.5))
-		lib.box(mn, "冠木", Vector3(0.17, 0.20, w + 0.55), dark, Vector3(0, 2.22, 0))
-		lib.gable_roof(mn, 2.42, 1.30, w + 0.95, 0.42, 0.11, kawara, dark)
-		# 敷石（門から路肩へ）
-		for i in 3:
-			lib.box(fg, "門敷石_%d_%d" % [int(fz), i], Vector3(0.95, 0.07, 0.75), stone,
-				Vector3(fx + (0.55 + float(i) * 0.85) * (1.0 if fx < 0.0 else -1.0) * -1.0,
-					height_at(fx, fz) + 0.02, fz))
-
 	# ── 1. 寺子屋の正面（西・z −62..−44）：板塀＋棟門 ─────────────
 	# 保留区の東縁は x −11.8。塀は −8.2（保留区の外）。N1 共同井戸（−6.9,−52）
 	# は塀の**前**に立つ ——「学び舎の塀の下の村の井戸」という読み。
 	var g_tera := lib.add(g, Node3D.new(), "寺子屋塀") as Node3D
-	fence.call(g_tera, -8.2, -62.0, -44.0, [[-55.3, -53.3]])
-	mune.call(g_tera, -8.2, -54.3, 1.85)
+	TownStreetFixtures.build_fence(
+		lib, _root, g_tera, -8.2, -62.0, -44.0, [[-55.3, -53.3]],
+		dark, itaita, height_at)
+	TownStreetFixtures.build_mune_gate(
+		lib, g_tera, -8.2, -54.3, 1.85,
+		dark, kawara, stone, height_at)
 	made.append("寺子屋の塀と門")
 	foot.append([Vector2(-8.2, -53.0), 1.2, 9.6])
 
@@ -3333,8 +3275,12 @@ func _build_mainstreet() -> void:
 	# 鈴奈庵（〜z −44）と MAIN_EW の家並み（z 0〜）のあいだ、東側 44m の
 	# 空白。市の荷が入る蔵二棟を板塀で囲う —— 従属構造で正面を回復する。
 	var g_kura := lib.add(g, Node3D.new(), "蔵屋敷塀") as Node3D
-	fence.call(g_kura, 6.9, -38.0, -8.0, [[-23.4, -21.4]])
-	mune.call(g_kura, 6.9, -22.4, 1.85)
+	TownStreetFixtures.build_fence(
+		lib, _root, g_kura, 6.9, -38.0, -8.0, [[-23.4, -21.4]],
+		dark, itaita, height_at)
+	TownStreetFixtures.build_mune_gate(
+		lib, g_kura, 6.9, -22.4, 1.85,
+		dark, kawara, stone, height_at)
 	var kura_wall := lib.pbr("蔵漆喰", "plaster", 1.5, Color(1.04, 1.01, 0.95))
 	var kura_koshi := lib.pbr("蔵海鼠", "namako", 2.1, Color(0.92, 0.92, 0.90))
 	for kz in [-30.5, -14.5]:
