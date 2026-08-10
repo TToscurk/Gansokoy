@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+[gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="1_n5diq"]
 [ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_wg45u"]

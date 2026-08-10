@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+[gd_resource type="StandardMaterial3D" format=3]
 
 [ext_resource type="Texture2D" path="res://assets/textures/plaster_diff.jpg" id="1_absnv"]
 [ext_resource type="Texture2D" path="res://assets/textures/plaster_nor_gl.jpg" id="2_5207j"]

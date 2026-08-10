@@ -142,6 +142,8 @@ Substitution lives in `gen_town.gd::CONSOLIDATE` / `_consolidate()`,
 | `tower_bell` / `tower_fire` read as flat dark slabs at close range — landmark asset quality, not residential; a tower redesign is an art-direction call | `assets/models/tower_*.glb` |
 | Machiya triangles +127% after consolidation; LOD is still `lod_bias` only | `gen_town.gd`, Master Plan §5 |
 | 総二階 ridge is 7.67/8.55 m where the legacy blockout was 9.40/9.90 m — the second skyline is preserved but lower (measured: 6.14 m is the minimum to clear the front eave line) | `ningen-no-sato.md` §12.2 |
+| **`asset_proof_hatago` / `asset_proof_sake_shop` GLBs import as sub-metre fragments** — the north-approach 旅籠 and 酒屋 are invisible buildings with full-size invisible colliders. Static gates cannot see this because OBB/collision come from the JSON table | `assets/models/asset_proof_*.glb`, `gen_town.gd::PHASE5A_FAMILIES` |
+| Declared module sizes in `PHASE5A_FAMILIES` are hand-written, not measured from the exported mesh — the same class of defect can recur silently for any future family | `gen_town.gd::PHASE5A_FAMILIES` |
 | Water / wet-flat gap and lotus geometry unresolved | deferred to cel shading |
 | Slice's 10 lots are hand-placed; no rule yet for distributing 6 modules over 169 houses | `gen_slice.gd` vs `gen_town.gd` |
 
@@ -246,3 +248,40 @@ The fire-tower and torii sightlines, market circulation, and low north-entry
 transition remain open. Phase 2B is not required before a controlled Phase 5B:
 the approved Phase 2A families are technically suitable, although distant role
 readability should continue to be reviewed district by district.
+
+## Human Village Phase 5A-V market quarter vertical slice (2026-08-10)
+
+A visual-production pass on the Market Quarter only (blocks 221/222, the
+market's street-facing and service edges, and the 本通 junction). Phase 5A's
+placements were kept as the starting point; nothing outside the market quarter
+was touched.
+
+- **Ground.** The market plaza was literally lawn — twelve stalls standing on
+  grass. `mask_at` now carries a market-quarter surface: packed earth over the
+  plaza, service band and west frontage (a union of three noise-perturbed
+  rects, not one rectangle), with stone reserved for the 本通 entrance, the
+  south shop thresholds and the west shopfront.
+- **Permanent commercial edge.** Six lots from already-approved assets close
+  the market: a 蔵 fronting 本通 at the south-east corner, a small merchant
+  and the production-kit workshop `machiya_w_a` facing the plaza, a 蔵 fronting
+  the z=85 cross street with its rear as the loading yard, and two west-edge
+  buildings closing the aisle's vanishing point. Gaps of 3–4.5 m between them
+  are readable service and market passages.
+- **Stalls.** The even 5.4 m grid became three islands (4.55 m inside an
+  island, ~6.6 m between) with a per-island aisle jog. `_lm_rng` consumption is
+  unchanged, so the well, notice board and dragon statue did not move.
+- **Functional dressing.** Loading platform + rice bales at the 蔵, work canopy
+  with timber staging at the workshop, display bench at the merchant, a goods
+  rack at the west edge, and stepping stones from the market gate. No random
+  props.
+
+Fixed evidence: `shots2/market_quarter/before` vs `after` (four player-eye
+views, one elevated, plus the Phase 5A `market_context` camera for regression).
+
+**Defect found and partly fixed:** all three `asset_proof_*` GLBs import as
+sub-metre single-surface fragments (`workshop` 1.40×0.55×0.10 against a
+declared 11.30×9.60×6.45; `hatago` 1.12×0.07×0.075; `sake_shop` 0.96×0.75×0.96)
+while OBB and collision are built from the JSON table. Phase 5A therefore
+placed three **invisible buildings with invisible colliders** and every static
+gate passed. The two inside this slice were replaced with verified assets. The
+north-approach 旅籠 and 酒屋 are out of this slice's scope and are still broken.

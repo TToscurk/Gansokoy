@@ -235,6 +235,7 @@ func _init() -> void:
 	_build_pilot_node()        # PHASE 3.1B：北門の最初の辻（火の番の辻）
 	_build_sight_nodes()       # PHASE 3.2A：本通の視線を割る 3 つの civic node
 	_build_mainstreet()        # Main Street batch：塀・門・鳥居・幟・蔵・街路樹
+	_build_market_quarter()    # PHASE 5A-V：市場區の機能的な設え
 	lib.vista(OUT_DIR, HALF, 900.0, height_at,
 		[{"x": 620.0, "z": -680.0, "h": 260.0, "r": 300.0},
 		 {"x": 430.0, "z": -520.0, "h": 110.0, "r": 170.0},
@@ -415,6 +416,45 @@ func _road_apron(x: float, z: float) -> float:
 	return best * core_k
 
 
+## PHASE 5A-V：市場區の地面。
+## 診断（`shots2/market_quarter/before/mq_interior.png`）：屋台十二座が
+## **芝生の上**に立っていた。市が毎日立つ場所に草は生えない —— 3.1A で
+## 回廊に持ち込んだのと同じ規則を、今度は広場そのものに適用する。
+## 石は広場全面には敷かない（それは近代の舗装広場になる）。本通からの
+## 入口と店先の**閾**だけを石で締め、広場の本体は踏み固めた土のまま。
+## 角の丸い矩形の内外判定。境界は低周波ノイズで揺らす —— 揺らさないと
+## 空撮で「地面に貼った長方形のシール」に読める。
+func _rrect_k(x: float, z: float, c: Vector2, h: Vector2, fade: float,
+		wobble: float) -> float:
+	var sd: float = maxf(absf(x - c.x) - h.x, absf(z - c.y) - h.y)
+	if wobble > 0.0:
+		sd += _n2.get_noise_2d(x * 0.55 + 13.0, z * 0.55 - 9.0) * wobble
+	return clampf(1.0 - smoothstep(0.0, fade, sd), 0.0, 1.0)
+
+
+## ⚠ 修正ラウンド：一枚の大きな矩形（48×40）は空撮で「地面に貼った褐色の
+## シール」に読め、北西の隅が**緑の空地から褐色の空地に変わっただけ**だった
+## （round 1 の mq_elevated / market_context）。活動のある三つの帯の**和**に
+## 変え、誰も歩かない隅は芝へ戻す。
+func _market_ground(x: float, z: float) -> float:
+	var plaza: float = _rrect_k(x, z, Vector2(-25.0, 62.5), Vector2(18.0, 13.0), 5.0, 2.4)
+	# ⚠ 東端は本通の路肩（x≈−8.2）まで伸ばす。−11 で止めた版では南東角の蔵が
+	#   一棟だけ芝の上に立ち、市場の口が地面から切れて見えた（market_context）。
+	var south: float = _rrect_k(x, z, Vector2(-27.0, 76.5), Vector2(22.0, 7.5), 4.2, 1.8)
+	var west: float = _rrect_k(x, z, Vector2(-49.0, 65.0), Vector2(6.5, 10.5), 4.0, 1.6)
+	return maxf(plaza, maxf(south, west))
+
+
+func _market_paving(x: float, z: float) -> float:
+	# 本通 → 市木戸 → 市場の口：唯一の「石で歓迎する」帯
+	var entry: float = _rrect_k(x, z, Vector2(-11.5, 62.0), Vector2(6.5, 16.0), 3.0, 1.1)
+	# 南縁の常設店の店先（軒下から広場へ抜ける通路）
+	var thr: float = _rrect_k(x, z, Vector2(-28.5, 71.6), Vector2(13.5, 1.8), 2.4, 0.9)
+	# 西縁の店先
+	var west: float = _rrect_k(x, z, Vector2(-43.4, 64.5), Vector2(2.2, 9.0), 2.2, 0.9)
+	return maxf(entry, maxf(thr, west))
+
+
 func mask_at(x: float, z: float) -> Color:
 	## 遮罩通道的意義由 terrain_pbr.gdshader 定：
 	##   R = 鋪石板　G = 田（農地）　B = 巨觀明暗　A = 夯土
@@ -464,6 +504,12 @@ func mask_at(x: float, z: float) -> Color:
 	#   本通の**幾何**（frontage は x=±5.5 固定）から静的に引く。
 	if _in_pilot_xz(x, z):
 		dirt = maxf(dirt, 0.95 * (1.0 - smoothstep(9.0, 11.0, absf(x))))
+	# ── PHASE 5A-V：市場區の土間と閾 ──
+	var mk: float = _market_ground(x, z)
+	if mk > 0.0:
+		var mp: float = _market_paving(x, z) * mk
+		dirt = maxf(dirt, mk * 0.96 * (1.0 - mp))
+		path_w = maxf(path_w, mp * 0.90)
 	return Color(path_w, 0.0, macro, maxf(dirt, court))
 
 
@@ -1439,7 +1485,12 @@ func _apply_phase5a_pilot() -> void:
 	var replacements := [
 		{"lot": Vector2(-69.6973, 78.6869), "kind": "family_small_merchant_01"},
 		{"lot": Vector2(-78.8831, 80.2153), "kind": "family_small_merchant_03"},
-		{"lot": Vector2(-89.0626, 78.7573), "kind": "asset_proof_workshop", "move": Vector2(-1.0, 0.0)},
+		# ⚠ PHASE 5A-V：`asset_proof_workshop` の glb は壊れている（実測
+		#   1.40×0.55×0.10）。この区画は市場區の視界（market_rows / mq_service）
+		#   に入るので、見えない建物＋見えない衝突箱のまま残せない。
+		#   検証済みの Phase 2A 家族に差し替える —— `family_*` は密度層が
+		#   読み飛ばす kind なので、村全体の _drng は 1 回もずれない。
+		{"lot": Vector2(-89.0626, 78.7573), "kind": "family_standard_machiya_02", "move": Vector2(-1.0, 0.0)},
 		{"lot": Vector2(-83.2000, 89.7000), "kind": "family_standard_machiya_02"},
 		{"lot": Vector2(-61.6623, 90.1261), "kind": "family_standard_machiya_03"},
 		{"lot": Vector2(-75.6838, 104.7178), "kind": "family_kura_compact"},
@@ -1477,6 +1528,7 @@ func _apply_phase5a_pilot() -> void:
 		e[2] = bank_h(float(e[1]), float(e[3]))
 		e[0] = new_kind
 		changed += 1
+	var added := _market_quarter_lots()
 	_batch.clear()
 	for e in _dump:
 		var kind := String(e[0])
@@ -1488,6 +1540,59 @@ func _apply_phase5a_pilot() -> void:
 			_batch[kind] = []
 		_batch[kind].append(xf)
 	_audit.append("PHASE 5A curated pilot: %d lots replaced" % changed)
+	_audit.append("PHASE 5A-V market quarter: %d permanent commercial lots added" % added)
+
+
+## ══════════════════════════════════════════════════════════════════════
+## PHASE 5A-V：市場區の常設商業縁
+## ══════════════════════════════════════════════════════════════════════
+##
+## 診断：市場は「原っぱに屋台を置いた」構図で、囲いが一つも無かった。
+## 南は横街まで 13m の空地、西は突き当たりが無く地平線が抜ける。
+##
+## 直し方は**建物家族を増やすことではない**（それは 5A で済んでいる）。
+## 既承認の Phase 2A 家族だけで、市場に **縁と役割** を与える：
+##
+##   本通 ── 市木戸（既設）── 石の口 ── 広場 ── 西縁の突き当たり
+##                                  └ 南縁：店 → 作業場 → 蔵（服務側）
+##
+## ⚠ 中心は空けたまま。屋台・道・portal・地標は一つも動かさない。
+## ⚠ 深さは横街の路縁（z=82.5）と屋台の南端（z≈69.4）に挟まれた 13m で
+##   決まる。だから南縁は **浅い三棟**（9.7 / 9.6 / 8.1m）しか入らない ——
+##   標準町家（11.6〜12.6m）は西縁に回す。
+const MARKET_QUARTER_LOTS := [
+	# 南東の角：**本通に正面を向ける**市場の蔵。
+	# ⚠ 修正ラウンドで追加。round 1 の mq_approach は BEFORE とほとんど
+	#   区別が付かなかった —— 南から本通を歩く目線に市場の質量が一つも
+	#   入らないからで、地面だけでは approach は直らなかった。
+	#   幟の列（z 46..70）の南端を締め、市の口が「額縁」になる。
+	{"kind": "family_kura_compact", "x": -8.6, "z": 77.5, "yaw": PI * 0.5},
+	# 南縁 東：市場に正面を向ける常設店。本通側は入口として広く空ける
+	{"kind": "family_small_merchant_01", "x": -21.5, "z": 72.6, "yaw": PI},
+	# 南縁 中：生産・服務の錨。店との間の 4.3m は横街から市への横丁になる。
+	# ⚠ ここは当初 `asset_proof_workshop` を使ったが、**あの glb は壊れている**
+	#   （宣言 11.30×9.60×6.45 に対し実測 1.40×0.55×0.10・1 surface）。
+	#   OBB も衝突箱も JSON の表から作るので静的検査は全部通り、engine 内で
+	#   だけ「見えない 11m の建物」になっていた —— art-review.md の
+	#   「パラメータではなく成果物を測れ」がそのまま起きた事例。
+	#   生産キットの `machiya_w_a`（板戸張り・煙出し、実測 9.16×5.75×9.31・
+	#   5 surface）に差し替える。工房の identity はこちらの方が正しい。
+	{"kind": "machiya_w_a", "x": -34.0, "z": 74.0, "yaw": PI},
+	# 南縁 西：蔵は**横街に面して**立つ。背面が荷捌き庭になり、
+	#          作業場との 3.2m が服務用の路地に読める
+	{"kind": "family_kura_compact", "x": -46.5, "z": 82.3, "yaw": 0.0},
+	# 西縁：市の通りの突き当たりを閉じる二戸（正面は市場を向く）
+	{"kind": "family_standard_machiya_02", "x": -46.0, "z": 60.0, "yaw": PI * 0.5},
+	{"kind": "family_small_merchant_01", "x": -45.0, "z": 69.2, "yaw": PI * 0.5},
+]
+
+
+func _market_quarter_lots() -> int:
+	for spec in MARKET_QUARTER_LOTS:
+		var x: float = float(spec["x"])
+		var z: float = float(spec["z"])
+		_dump.append([String(spec["kind"]), x, bank_h(x, z), z, float(spec["yaw"])])
+	return MARKET_QUARTER_LOTS.size()
 
 
 # ── 重疊自驗（OBB / SAT，含出簷）──
@@ -2890,16 +2995,25 @@ func _lm_market(g: Node3D, _spread: float) -> void:
 	# 客人走中間、攤販站兩側；正面（+z）一律朝走道。
 	const AISLE_Z := 2.0
 	const AISLE_HALF := 4.6
+	# ⚠ PHASE 5A-V 修正ラウンド：等間隔 5.4m の 6 スパンは空撮で**定規で引いた
+	#   格子**に読めた（round 1 の mq_elevated）。市は島ごとに寄って立つもの
+	#   なので、間隔を 4.55m に詰めたうえで島の頭に段差を入れ、三つの塊に割る。
+	#   通路の幅は島の間で広がる。⚠ _lm_rng の**消費回数は一つも変えない**
+	#   （地標の抽選列がずれると水井・高札場・龍神像まで動く）。
+	const STALL_ISLAND_DX := [0.0, 0.0, 2.10, 2.10, 4.60, 4.60]
+	const STALL_ISLAND_DZ := [0.0, 0.35, -0.45]
 	for i in 12:
 		var row := i % 2
 		var k0: int = i / 2
-		var ox := -13.0 + float(k0) * 5.4 + _lm_rng.randf_range(-0.9, 0.9)
-		var oz := AISLE_Z + (AISLE_HALF if row == 1 else -AISLE_HALF) \
+		var ox: float = -13.0 + float(k0) * 4.55 + float(STALL_ISLAND_DX[k0]) \
+			+ _lm_rng.randf_range(-0.9, 0.9)
+		var oz: float = AISLE_Z + (AISLE_HALF if row == 1 else -AISLE_HALF) \
+			+ float(STALL_ISLAND_DZ[k0 / 2]) * (1.0 if row == 1 else -1.0) \
 			+ _lm_rng.randf_range(-0.4, 0.4)
 		var gu := _ground_under(wc.x + ox, wc.y + oz, 3.6, 3.0)
 		var st := Node3D.new()
 		st.position = Vector3(ox, float(gu[0]) - y0, oz)
-		st.rotation.y = (PI if row == 1 else 0.0) + _lm_rng.randf_range(-0.10, 0.10)
+		st.rotation.y = (PI if row == 1 else 0.0) + _lm_rng.randf_range(-0.18, 0.18)
 		lib.add(c, st, "屋台_%d" % i)
 		lib.box(st, "土間", Vector3(4.4, 0.10, 3.6), earth, Vector3(0, 0.03, 0.2))
 		for sx in [-1.0, 1.0]:
@@ -3638,6 +3752,158 @@ func _build_sight_nodes() -> void:
 	# 足元の草を抜く（乱数不使用・buffer 直読み。共有 helper）
 	var cut := _cut_grass(foot)
 	_audit.append("PHASE 3.2A 本通の節：%s（足元の草 %d 叢を除去）"
+		% [", ".join(made), cut])
+
+
+# ══════════════════════════════════════════════════════════════════════
+# PHASE 5A-V：市場區の機能的な設え
+# ══════════════════════════════════════════════════════════════════════
+#
+# 「なぜこの物がここに在るのか」に答えられる物だけを置く。飾りは足さない。
+#   荷揚げ台 … 蔵と広場の間で荷が動いている証拠
+#   仕事庇   … 作業場の前で実際に作業する場所（生産が見える）
+#   見世台   … 常設店が広場に向かって商う面
+#   荷置き   … 屋台が仕舞われている間の在庫（西縁）
+#   飛石     … 市木戸から南縁の店へ、雨の日の動線
+#
+# ⚠ RNG は一切使わない。草より後に建て、足元の草はフィルタで抜く
+#   （3.1B/3.2A と同じ手 —— _reserved に足すと村中の草の抽選がずれる）。
+func _build_market_quarter() -> void:
+	var g := lib.add(_root, Node3D.new(), "市場區の設え") as Node3D
+	var dark := _lmat("dark", 1)
+	var wood := _lmat("wood", 0)
+	var plank := lib.pbr("市場板", "planks", 0.55, Color(0.66, 0.58, 0.46))
+	var stone := lib.pbr("市場踏石", "stone_wall", 2.0, Color(0.70, 0.69, 0.66))
+	var made: Array[String] = []
+	var foot: Array = []
+
+	# ── 1. 荷揚げ台（蔵の広場側）────────────────────────────────
+	# 蔵は横街に面して立つ。背面（z≈74.2）が広場に向くので、そこが荷捌き場。
+	# 台は地面より 0.45m 高い —— 荷車の床と同じ高さ、というのが理由。
+	var lx := -46.5
+	var lz := 73.0
+	var ly := height_at(lx, lz)
+	var plat := lib.add(g, Node3D.new(), "荷揚げ台") as Node3D
+	plat.position = Vector3(lx, ly, lz)
+	for sx in [-1.0, 1.0]:
+		for sz in [-1.0, 1.0]:
+			lib.box(plat, "束石_%d%d" % [int(sx + 1.0), int(sz + 1.0)],
+				Vector3(0.34, 0.30, 0.34), stone, Vector3(sx * 1.45, 0.15, sz * 0.78))
+	lib.box(plat, "台板", Vector3(3.60, 0.16, 2.10), plank, Vector3(0, 0.45, 0))
+	lib.box(plat, "縁桁", Vector3(3.72, 0.13, 0.13), dark, Vector3(0, 0.35, 1.06))
+	lib.box(plat, "踏段", Vector3(1.30, 0.15, 0.42), plank, Vector3(-0.9, 0.22, 1.32))
+	_lm_collide(plat, Vector3(3.7, 0.55, 2.2))
+	for spec in [["prop_tawara", -47.6, 72.5, 0.30, 0.53],
+			["prop_tawara", -47.6, 73.4, 0.34, 0.53],
+			["prop_tawara", -47.5, 72.95, 0.10, 0.86],
+			["prop_crate", -45.4, 73.2, -0.4, 0.53]]:
+		var mi := MeshInstance3D.new()
+		mi.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec[0]))
+		mi.position = Vector3(float(spec[1]),
+			height_at(lx, lz) + float(spec[4]), float(spec[2]))
+		mi.rotation.y = float(spec[3])
+		lib.add(g, mi, "蔵荷_%s_%d" % [String(spec[0]), int(float(spec[4]) * 100.0)])
+	made.append("荷揚げ台と俵")
+	foot.append([Vector2(lx, lz), 2.4, 1.8])
+
+	# ── 2. 仕事庇（作業場の前）──────────────────────────────────
+	# 作業場は市場に正面（z≈72.7）を向く。その前 2.5m に葭簀掛けの下屋を出す。
+	# 軒 2.45m ＝ 町家の軒より低い。従属した仮設だと一目で判る高さにする。
+	var wx := -34.0
+	var wz := 70.0
+	var wy := height_at(wx, wz)
+	var can := lib.add(g, Node3D.new(), "仕事庇") as Node3D
+	can.position = Vector3(wx, wy, wz)
+	for sx2 in [-1.0, 1.0]:
+		for sz2 in [-1.0, 1.0]:
+			lib.strut(can, "庇柱_%d%d" % [int(sx2 + 1.0), int(sz2 + 1.0)],
+				Vector3(sx2 * 2.55, 0.0, sz2 * 1.35),
+				Vector3(sx2 * 2.55, 2.32 + sz2 * 0.13, sz2 * 1.35), 0.075, dark, 6)
+	lib.box(can, "桁前", Vector3(5.30, 0.13, 0.12), dark, Vector3(0, 2.20, -1.35))
+	lib.box(can, "桁後", Vector3(5.30, 0.13, 0.12), dark, Vector3(0, 2.46, 1.35))
+	for i in 9:
+		var rx := -2.35 + float(i) * 0.59
+		var rf := lib.box(can, "垂木_%d" % i, Vector3(0.09, 0.06, 2.86), dark,
+			Vector3(rx, 2.36, 0))
+		rf.rotation.x = -0.09
+	var yoshi := lib.box(can, "葭簀", Vector3(5.30, 0.05, 2.90),
+		lib.pbr("葭簀", "planks", 1.6, Color(0.74, 0.66, 0.45)), Vector3(0, 2.42, 0))
+	yoshi.rotation.x = -0.09
+	# 作業台と材の staging —— 「ここで何かが作られている」の最小の証拠
+	lib.box(can, "作業台", Vector3(2.10, 0.10, 0.86), plank, Vector3(-0.8, 0.78, 0.15))
+	for sx3 in [-1.0, 1.0]:
+		lib.box(can, "台脚_%d" % int(sx3 + 1.0), Vector3(0.11, 0.73, 0.78), wood,
+			Vector3(-0.8 + sx3 * 0.92, 0.37, 0.15))
+	for i2 in 5:
+		lib.box(can, "材_%d" % i2, Vector3(2.60, 0.11, 0.13), wood,
+			Vector3(1.55, 0.09 + float(i2 % 3) * 0.12, -0.65 + float(i2 / 3) * 0.30))
+	_lm_collide(can, Vector3(5.4, 2.5, 2.9))
+	for spec2 in [["prop_takigi", -36.9, 71.2, 0.25], ["prop_takigi", -36.9, 70.1, 0.25],
+			["prop_taru", -31.3, 71.4, -0.5]]:
+		var mi2 := MeshInstance3D.new()
+		mi2.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec2[0]))
+		mi2.position = Vector3(float(spec2[1]),
+			height_at(float(spec2[1]), float(spec2[2])), float(spec2[2]))
+		mi2.rotation.y = float(spec2[3])
+		lib.add(g, mi2, "作業荷_%s_%d" % [String(spec2[0]), int(float(spec2[2]))])
+	made.append("仕事庇と材")
+	foot.append([Vector2(wx, wz), 3.4, 2.4])
+
+	# ── 3. 見世台（南縁の常設店の店先）──────────────────────────
+	# 常設店が広場に向かって商う面。屋台との違いは「毎日そこに在る」こと。
+	for spec3 in [["prop_misedai", -22.6, 71.4, 0.0], ["prop_zaru", -20.2, 71.5, 0.4],
+			["prop_kago", -19.4, 71.9, -0.2], ["prop_crate", -23.9, 71.9, 0.15],
+			["prop_taru", -24.6, 72.2, 0.6]]:
+		var mi3 := MeshInstance3D.new()
+		mi3.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec3[0]))
+		mi3.position = Vector3(float(spec3[1]),
+			height_at(float(spec3[1]), float(spec3[2])), float(spec3[2]))
+		mi3.rotation.y = float(spec3[3])
+		lib.add(g, mi3, "店先_%s_%d" % [String(spec3[0]), int(-float(spec3[1]))])
+	made.append("見世台と店先の荷")
+	foot.append([Vector2(-22.0, 71.7), 3.6, 1.4])
+
+	# ── 4. 西縁の荷置き ─────────────────────────────────────────
+	# 市の通りの突き当たり。屋台が仕舞われている間の在庫が積んである。
+	var sx4 := -42.2
+	var sz4 := 66.6
+	var sy4 := height_at(sx4, sz4)
+	var rack := lib.add(g, Node3D.new(), "荷置き") as Node3D
+	rack.position = Vector3(sx4, sy4, sz4)
+	rack.rotation.y = -PI * 0.5
+	lib.box(rack, "簀の子", Vector3(2.80, 0.10, 1.50), plank, Vector3(0, 0.10, 0))
+	for sz5 in [-1.0, 1.0]:
+		lib.box(rack, "枕木_%d" % int(sz5 + 1.0), Vector3(2.90, 0.12, 0.14), dark,
+			Vector3(0, 0.06, sz5 * 0.62))
+	_lm_collide(rack, Vector3(2.9, 0.3, 1.6))
+	for spec4 in [["prop_tawara", -42.4, 65.9, 1.55, 0.16],
+			["prop_tawara", -42.4, 66.8, 1.55, 0.16],
+			["prop_tawara", -42.3, 66.35, 1.55, 0.49],
+			["prop_crate", -41.6, 67.5, 0.2, 0.16],
+			["prop_zaru", -43.0, 67.7, -0.3, 0.0]]:
+		var mi4 := MeshInstance3D.new()
+		mi4.mesh = lib.prop_mesh("res://assets/models/%s.glb" % String(spec4[0]))
+		mi4.position = Vector3(float(spec4[1]),
+			sy4 + float(spec4[4]), float(spec4[2]))
+		mi4.rotation.y = float(spec4[3])
+		lib.add(g, mi4, "西荷_%s_%d" % [String(spec4[0]), int(float(spec4[4]) * 100.0)])
+	made.append("西縁の荷置き")
+	foot.append([Vector2(sx4, sz4), 2.2, 2.2])
+
+	# ── 5. 飛石（市木戸 → 南縁の店）────────────────────────────
+	# 石畳は入口だけ。そこから先は土間なので、雨の日の動線を飛石で示す。
+	for i3 in 7:
+		var t := float(i3) / 6.0
+		var px := lerpf(-14.2, -19.4, t)
+		var pz := lerpf(66.4, 71.6, t)
+		var st := lib.box(g, "飛石_%d" % i3, Vector3(0.62, 0.09, 0.52), stone,
+			Vector3(px, height_at(px, pz) + 0.045, pz))
+		st.rotation.y = 0.22 * float(i3 % 3 - 1)
+	made.append("飛石 7")
+	foot.append([Vector2(-16.8, 69.0), 3.6, 3.6])
+
+	var cut := _cut_grass(foot)
+	_audit.append("PHASE 5A-V 市場區の設え：%s（足元の草 %d 叢を除去）"
 		% [", ".join(made), cut])
 
 
