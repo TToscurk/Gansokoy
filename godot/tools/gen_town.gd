@@ -46,6 +46,7 @@ const TownRoadNetwork := preload("res://tools/town/town_road_network.gd")
 const TownWaterfront := preload("res://tools/town/town_waterfront.gd")
 const TownHiedaGrove := preload("res://tools/town/town_hieda_grove.gd")
 const TownBuildingOutput := preload("res://tools/town/town_building_output.gd")
+const TownGrass := preload("res://tools/town/town_grass.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -1752,31 +1753,8 @@ func _emit_density() -> void:
 # 村外 60%），這是「有人住」讀得出來的關鍵。
 
 const GRASS_SEED := TownConfig.GRASS_SEED
-
-## 草能不能長在這裡：不在建物／保留區內、不在鋪面上、不在河裡。
-func _grass_free(x: float, z: float, need: float, hgrid: Dictionary) -> bool:
-	# 鋪面（石板 R + 夯土 A）—— 用地形著色器同一份遮罩
-	var m := mask_at(x, z)
-	if m.r + m.a > 0.30:
-		return false
-	if _river_dist_xy(x, z) < RIVER_HALF + 1.6:
-		return false
-	var p := Vector2(x, z)
-	for q in _reserved:
-		var d: Vector2 = p - q[0]
-		if absf(d.dot(q[1])) < q[3] + need and absf(d.dot(q[2])) < q[4] + need:
-			return false
-	var key := Vector2i(int(floor(x / 24.0)), int(floor(z / 24.0)))
-	for dx in [-1, 0, 1]:
-		for dz in [-1, 0, 1]:
-			var k := Vector2i(key.x + dx, key.y + dz)
-			if not hgrid.has(k):
-				continue
-			for r in hgrid[k]:
-				var d2: Vector2 = p - r[0]
-				if absf(d2.dot(r[1])) < r[3] + need and absf(d2.dot(r[2])) < r[4] + need:
-					return false
-	return true
+var _grass_rng := RandomNumberGenerator.new()
+var _grass_patch_noise := FastNoiseLite.new()
 
 ## 離最近路緣多遠（0 = 站在路面上）。草的密度吃這個值。
 func _road_dist(x: float, z: float) -> float:
@@ -1785,179 +1763,21 @@ func _road_dist(x: float, z: float) -> float:
 		best = minf(best, lib.poly_dist(r.pts, x, z) - r.w * 0.5)
 	return maxf(best, 0.0)
 
-func _river_dist_xy(x: float, z: float) -> float:
-	## ⚠ 一定要用 poly_dist（點到**線段**）而不是 `_nearest_river_pt` 的
-	## 點到**取樣點**距離 —— 後者永遠 ≥ 真實距離，於是產生器以為在岸上的
-	## 蘆葦，實測有 17/747 落在水裡。產生器量得比驗證腳本粗，就會出現
-	## 「自檢過了、複驗抓到」這種假綠燈。mask_at 的水際帶也是用 poly_dist，
-	## 兩邊要用同一把尺。
-	return lib.poly_dist(_river(), x, z)
 
-## 蘆葦：**沿著河道走**，不是在全圖亂撒後篩掉。
-## 水際帶只佔全圖約 1.7%，用拒絕取樣的話 800 叢就要撞 48,000 次還撞不滿
-## （實測只拿到 740/800，卡在 tries 上限）。沿線取樣是 ~100% 命中，
-## 而且沿岸分佈均勻，不會這一段擠成一團、那一段空著。
-func _reed_along_river(rng: RandomNumberGenerator, target: int) -> Array[Transform3D]:
-	var out: Array[Transform3D] = []
-	var rv := _river()
-	var total_len := 0.0
-	for k in range(rv.size() - 1):
-		total_len += rv[k].distance_to(rv[k + 1])
-	if total_len <= 0.0:
-		return out
-	var per_m := float(target) / total_len          # 兩岸合計的每公尺株數
-	for k in range(rv.size() - 1):
-		var a: Vector2 = rv[k]
-		var b: Vector2 = rv[k + 1]
-		var seg := b - a
-		var ln := seg.length()
-		if ln <= 0.0001:
-			continue
-		var nrm := Vector2(seg.y, -seg.x) / ln       # 河道法線
-		var n := int(round(ln * per_m))
-		for i in n:
-			var p: Vector2 = a + seg * rng.randf()
-			var side := 1.0 if rng.randf() < 0.5 else -1.0
-			var off := rng.randf_range(RIVER_HALF * 0.82, RIVER_HALF * 1.52)
-			var q: Vector2 = p + nrm * side * off
-			if absf(q.x) > HALF - 4.0 or absf(q.y) > HALF - 4.0:
-				continue
-			# 橋下與鯢吞亭川床下不長（踩踏區與陰影）
-			var skip := false
-			for br in BRIDGES:
-				if q.distance_to(Vector2(float(br.x), float(br.z))) < 16.0:
-					skip = true
-					break
-			if skip or q.distance_to(_uno_pos) < 20.0:
-				continue
-			var s := rng.randf_range(0.7, 1.4)
-			var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s))
-			out.append(Transform3D(basis, Vector3(q.x, height_at(q.x, q.y), q.y)))
-	return out
+func _river_dist_xy(x: float, z: float) -> float:
+	return lib.poly_dist(_river(), x, z)
 
 
 func _build_grass() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = GRASS_SEED
-	var patch_noise := FastNoiseLite.new()
-	patch_noise.seed = GRASS_SEED + 41
-	patch_noise.frequency = 0.018
-	patch_noise.fractal_octaves = 3
-	# 町家 OBB 的空間索引 —— 5,700 次取樣 × 169 棟是 O(n²)，會慢到不能接受
-	var hgrid := {}
-	for e in _dump:
-		var r := _obb_of(e)
-		var c: Vector2 = r[0]
-		var rad: float = maxf(r[3], r[4]) + 3.0
-		var i0 := int(floor((c.x - rad) / 24.0))
-		var i1 := int(floor((c.x + rad) / 24.0))
-		var j0 := int(floor((c.y - rad) / 24.0))
-		var j1 := int(floor((c.y + rad) / 24.0))
-		for i in range(i0, i1 + 1):
-			for j in range(j0, j1 + 1):
-				var k := Vector2i(i, j)
-				if not hgrid.has(k):
-					hgrid[k] = []
-				hgrid[k].append(r)
-
-	# 草色照舊圖驗收過的那組：葉根深、葉尖亮，別再用橄欖色（整片會發黃）
-	var tall := lib.tuft_mesh(7, 0.40, 0.20, Color(0.11, 0.21, 0.08), Color(0.29, 0.48, 0.18))
-	tall.surface_set_material(0, lib.grass_wind_mat(0.10))
-	var flower := lib.tuft_mesh(5, 0.34, 0.16, Color(0.12, 0.22, 0.09), Color(0.28, 0.46, 0.18), true)
-	flower.surface_set_material(0, lib.grass_wind_mat(0.08))
-	var reed := lib.tuft_mesh(6, 0.62, 0.14, Color(0.18, 0.28, 0.12), Color(0.52, 0.56, 0.28))
-	reed.surface_set_material(0, lib.grass_wind_mat(0.13))
-	# 灌木層：介於草與樹之間的中層。只有「草 + 樹」兩層時，地面到樹冠之間
-	# 是空的，遠看就是一片綠地上插著棒棒糖。
-	var shrub := lib.tuft_mesh(9, 1.05, 0.55, Color(0.10, 0.20, 0.08), Color(0.26, 0.42, 0.16))
-	shrub.surface_set_material(0, lib.grass_wind_mat(0.05))
-	var fern := lib.tuft_mesh(7, 0.55, 0.40, Color(0.13, 0.24, 0.10), Color(0.32, 0.50, 0.20))
-	fern.surface_set_material(0, lib.grass_wind_mat(0.06))
-
-	# ⚠ 數量比舊圖大幅提高。舊圖的 2,600 叢長草攤在 600×600 上是
-	# **每 57m² 一叢**（約每 7.5m 才一叢）—— 第一版照抄之後引擎內截圖
-	# 根本看不出有草層，只有地形貼圖的綠。tuft_mesh 一叢只有 5~9 個三角形
-	# （一片葉一張三角形），所以提高到 2.4 萬叢也才 ~19 萬三角形，
-	# 比樹便宜得多；再加上不投影 + 距離淡出，這個量是划算的。
-	var groups := [
-		{"mesh": shrub, "n": 2400, "file": "shrubs", "node": "Shrubs",
-			"mode": "wild", "need": 2.6, "patch": 0.48, "edge": 0.78},
-		{"mesh": fern, "n": 5000, "file": "ferns", "node": "Ferns",
-			"mode": "wild", "need": 1.6, "patch": 0.42, "edge": 0.66},
-		{"mesh": tall, "n": 14000, "file": "grass_tall", "node": "GrassTall",
-			"mode": "wild", "need": 1.6, "patch": 0.38, "edge": 0.58},
-		{"mesh": flower, "n": 1000, "file": "grass_flower", "node": "GrassFlower",
-			"mode": "wild", "need": 1.6, "patch": 0.58, "edge": 0.72},
-		{"mesh": reed, "n": 1800, "file": "reeds", "node": "Reeds",
-			"mode": "shore", "need": 0.0},
-	]
-	var total := 0
-	var parts: Array[String] = []
-	for group_i in range(groups.size()):
-		var grp: Dictionary = groups[group_i]
-		var list: Array[Transform3D] = []
-		var target: int = int(grp.n)
-		if String(grp.mode) == "shore":
-			list = _reed_along_river(rng, target)
-		else:
-			var tries := 0
-			while list.size() < target and tries < target * 30:
-				tries += 1
-				var x := rng.randf_range(-HALF + 4.0, HALF - 4.0)
-				var z := rng.randf_range(-HALF + 4.0, HALF - 4.0)
-				if not _grass_free(x, z, float(grp.need), hgrid):
-					continue
-				# 「有人住」的關鍵是**踩踏**，不是離廣場多遠。
-				# ⚠ 舊圖用 `r < CORE ? 10% : 60%` 的硬半徑。照抄到新圖之後
-				# 引擎內截圖整個村子都是光禿的綠地 —— 因為 CORE=196 幾乎涵蓋
-				# 整座城鎮（最外圈町家在 r≈189），玩家在鎮上走的每一格都吃
-				# 那個 10%。改成看**離路緣多遠**：路邊被踩禿、屋與屋之間的
-				# 縫隙長得起來、出了村就茂盛。
-				var dr := _road_dist(x, z)
-				var pos := Vector2(x, z)
-				# Daily activity suppresses vegetation continuously instead of using
-				# one arbitrary core radius. Roads/frontages, market and shrine stay
-				# sparse; the village edge receives coherent colonies rather than an
-				# even salt-and-pepper scatter.
-				var activity := maxf(_commerce(pos), 1.0 - smoothstep(2.5, 14.0, dr))
-				activity = maxf(activity,
-					1.0 - smoothstep(28.0, 48.0, pos.distance_to(Vector2(-26, 57))))
-				activity = maxf(activity * 0.82,
-					1.0 - smoothstep(22.0, 38.0, pos.distance_to(Vector2(-26, 2))))
-				var edge_dist := maxf(absf(x), absf(z))
-				var edge_k := smoothstep(105.0, 225.0, edge_dist)
-				var zone := lerpf(1.0 - float(grp.edge), 1.0, edge_k)
-				var noise_value := patch_noise.get_noise_2d(
-					x + float(group_i) * 137.0, z - float(group_i) * 83.0) * 0.5 + 0.5
-				var colony := smoothstep(float(grp.patch), 0.82, noise_value)
-				var p := colony * zone * lerpf(0.10, 1.0, 1.0 - activity)
-				if rng.randf() > p:
-					continue
-				var s := rng.randf_range(0.7, 1.4)
-				var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s))
-				list.append(Transform3D(basis, Vector3(x, height_at(x, z), z)))
-		total += list.size()
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(grp.mesh, list, [],
-			OUT_DIR + "gen/%s.res" % String(grp.file))
-		# 幾千叢草不能投影
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		# ⚠⚠ **不准對「鋪滿全圖」的 MultiMesh 設 visibility_range**。
-		# 那個距離是拿**整個 MultiMeshInstance 的 AABB**去算的，不是逐實例 ——
-		# 草的 AABB 涵蓋整張 600×600 的圖，中心在地圖原點。相機站在
-		# (−30, 230) 時離該中心 232m > 120m，於是**整層草一次全部消失**。
-		#
-		# 這個 bug 的症狀極度誤導：節點在、instance_count 對、mesh 與材質
-		# 都在、座標驗證 4 項全過，就是畫面上一根都沒有。是從 9m 高垂直
-		# 俯瞰一個「明明有 49 叢」的格子、一根都看不到才確定的。
-		# （香霖堂的草沒事，因為那張圖只有 140×140，AABB 中心永遠在範圍內。）
-		#
-		# MultiMesh 本來就是一個 draw call，24,000 叢 × 7 三角形 ≈ 17 萬面，
-		# 不設距離剔除也划算。要真的做 LOD 得切成多個分區 MultiMesh。
-		lib.add(_root, mmi, String(grp.node))
-		parts.append("%s %d" % [String(grp.node), list.size()])
-	_audit.append("草層：%s —— 共 %d 叢 / %d draw call（稻田不搬：農田是延後項目）"
-		% [", ".join(parts), total, groups.size()])
+	_grass_rng.seed = GRASS_SEED
+	_grass_patch_noise.seed = GRASS_SEED + 41
+	_grass_patch_noise.frequency = 0.018
+	_grass_patch_noise.fractal_octaves = 3
+	TownGrass.build(
+		lib, _root, OUT_DIR, HALF, _river(), RIVER_HALF,
+		BRIDGES, _uno_pos, _dump, _reserved,
+		_grass_rng, _grass_patch_noise,
+		mask_at, _obb_of, _road_dist, _commerce, height_at, _audit)
 
 
 
