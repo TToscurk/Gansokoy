@@ -25,6 +25,7 @@ extends SceneTree
 const TownGeometry := preload("res://tools/town/town_geometry.gd")
 const TownValidation := preload("res://tools/town/town_validation.gd")
 const TownAssets := preload("res://tools/town/town_assets.gd")
+const TownHydrography := preload("res://tools/town/town_hydrography.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -266,19 +267,7 @@ func _count(n: Node) -> int:
 # ── 河道 ──
 
 func _spline(ctrl: Array, per_seg: int) -> PackedVector2Array:
-	var out := PackedVector2Array()
-	for i in ctrl.size() - 1:
-		var p0: Vector2 = ctrl[max(i - 1, 0)]
-		var p1: Vector2 = ctrl[i]
-		var p2: Vector2 = ctrl[i + 1]
-		var p3: Vector2 = ctrl[min(i + 2, ctrl.size() - 1)]
-		for k in per_seg:
-			var t := float(k) / per_seg
-			out.append(0.5 * ((2.0 * p1) + (-p0 + p2) * t
-				+ (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * t * t
-				+ (-p0 + 3.0 * p1 - 3.0 * p2 + p3) * t * t * t))
-	out.append(ctrl[ctrl.size() - 1])
-	return out
+	return TownHydrography.spline(ctrl, per_seg)
 
 
 func _river() -> PackedVector2Array:
@@ -288,26 +277,11 @@ func _river() -> PackedVector2Array:
 
 
 func _nearest_river_pt(at: Vector2) -> Vector2:
-	var best := _river()[0]
-	var bd := 1e18
-	for p in _river():
-		var d := p.distance_squared_to(at)
-		if d < bd:
-			bd = d
-			best = p
-	return best
+	return TownHydrography.nearest_point(_river(), at)
 
 
 func river_tangent(at: Vector2) -> Vector2:
-	var pts := _river()
-	var bi := 0
-	var bd := 1e18
-	for i in pts.size():
-		var d := pts[i].distance_squared_to(at)
-		if d < bd:
-			bd = d
-			bi = i
-	return (pts[min(bi + 1, pts.size() - 1)] - pts[max(bi - 1, 0)]).normalized()
+	return TownHydrography.tangent(_river(), at)
 
 
 # ── 地形 ──
