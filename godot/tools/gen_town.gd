@@ -38,6 +38,8 @@ const TownPilotNode := preload("res://tools/town/town_pilot_node.gd")
 const TownSightNodes := preload("res://tools/town/town_sight_nodes.gd")
 const TownMarketQuarter := preload("res://tools/town/town_market_quarter.gd")
 const TownMainStreet := preload("res://tools/town/town_mainstreet.gd")
+const TownPhase5APilot := preload("res://tools/town/town_phase5a_pilot.gd")
+const TownPilotEdge := preload("res://tools/town/town_pilot_edge.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -1375,73 +1377,9 @@ func _is_house_kind(kind: String) -> bool:
 
 
 func _apply_phase5a_pilot() -> void:
-	var replacements := [
-		{"lot": Vector2(-69.6973, 78.6869), "kind": "family_small_merchant_01"},
-		{"lot": Vector2(-78.8831, 80.2153), "kind": "family_small_merchant_03"},
-		# ⚠ PHASE 5A-V：`asset_proof_workshop` の glb は壊れている（実測
-		#   1.40×0.55×0.10）。この区画は市場區の視界（market_rows / mq_service）
-		#   に入るので、見えない建物＋見えない衝突箱のまま残せない。
-		#   検証済みの Phase 2A 家族に差し替える —— `family_*` は密度層が
-		#   読み飛ばす kind なので、村全体の _drng は 1 回もずれない。
-		{"lot": Vector2(-89.0626, 78.7573), "kind": "family_standard_machiya_02", "move": Vector2(-1.0, 0.0)},
-		{"lot": Vector2(-83.2000, 89.7000), "kind": "family_standard_machiya_02"},
-		{"lot": Vector2(-61.6623, 90.1261), "kind": "family_standard_machiya_03"},
-		{"lot": Vector2(-75.6838, 104.7178), "kind": "family_kura_compact"},
-		# ⚠ The `move` here is **along the street**, so the setback, the side of
-		#   本通 and the orientation — the parts that were reviewed — are
-		#   untouched. Only the along-street position shifts, by 0.8 m each,
-		#   to absorb the buildings' true width: the 旅籠 is 9.90 m wide and the
-		#   酒屋 13.20 m, not the 9.10 / 12.20 the table used to claim. At the
-		#   old (understated) sizes these two cleared their neighbouring
-		#   machiya_e_p; at the real sizes they cut into it by 0.21 m and
-		#   0.29 m. That is the OBB check finally seeing the real building.
-		{"lot": Vector2(-6.1034, -150.3902), "kind": "asset_proof_hatago", "move": Vector2(0.0, 1.1)},
-		{"lot": Vector2(6.7199, -150.0819), "kind": "asset_proof_sake_shop", "move": Vector2(0.0, -3.5)},
-		{"lot": Vector2(-5.6500, -116.7000), "kind": "family_small_merchant_01"},
-	]
-	var changed := 0
-	for spec in replacements:
-		var best := -1
-		var best_d := 0.35
-		for i in _dump.size():
-			if not String(_dump[i][0]).begins_with("machiya"):
-				continue
-			var p := Vector2(float(_dump[i][1]), float(_dump[i][3]))
-			var d: float = p.distance_to(spec["lot"])
-			if d < best_d:
-				best = i
-				best_d = d
-		if best < 0:
-			push_error("PHASE 5A lot missing near %s" % str(spec["lot"]))
-			continue
-		var e: Array = _dump[best]
-		var new_kind: String = spec["kind"]
-		var yaw: float = float(e[4])
-		if bool(_mods[new_kind].get("centered", false)):
-			var fwd := Vector2(sin(yaw), cos(yaw))
-			var shift: float = float(_mods[new_kind]["d"]) * 0.5 - 0.85
-			e[1] = float(e[1]) - fwd.x * shift
-			e[3] = float(e[3]) - fwd.y * shift
-			e[2] = bank_h(float(e[1]), float(e[3]))
-		var move: Vector2 = spec.get("move", Vector2.ZERO)
-		e[1] = float(e[1]) + move.x
-		e[3] = float(e[3]) + move.y
-		e[2] = bank_h(float(e[1]), float(e[3]))
-		e[0] = new_kind
-		changed += 1
-	var added := _market_quarter_lots()
-	_batch.clear()
-	for e in _dump:
-		var kind := String(e[0])
-		if not _is_house_kind(kind):
-			continue
-		var xf := Transform3D(Basis(Vector3.UP, float(e[4])),
-			Vector3(float(e[1]), float(e[2]), float(e[3])))
-		if not _batch.has(kind):
-			_batch[kind] = []
-		_batch[kind].append(xf)
-	_audit.append("PHASE 5A curated pilot: %d lots replaced" % changed)
-	_audit.append("PHASE 5A-V market quarter: %d permanent commercial lots added" % added)
+	TownPhase5APilot.apply(
+		_mods, _dump, _batch, PHASE5A_FAMILIES,
+		bank_h, _market_quarter_lots, _audit)
 
 
 ## ══════════════════════════════════════════════════════════════════════
@@ -2556,59 +2494,9 @@ const GUTTER_COMMERCE := TownConfig.GUTTER_COMMERCE     # 石溝是町方的東�
 #
 # ⚠ 専用 RNG。密度層の `_drng` には一切触らない（順序依存で村中がずれる）。
 func _build_pilot_edge() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = SEED + 4101
-	var kerbs: Array[Transform3D] = []
-	var steps: Array[Transform3D] = []
-	# 縁石：石溝の外側（路半寬 4.0 + 溝 0.6 + 0.5）
-	var t := -166.0
-	while t < -80.0:
-		for side in [-1.0, 1.0]:
-			var px: float = side * 5.1
-			kerbs.append(Transform3D(Basis(),
-				Vector3(px, height_at(px, t) + 0.02, t)))
-		t += 1.0
-	# 踏石：門前から街へ三枚
-	for e in _dump:
-		if not _is_pilot(e):
-			continue
-		var m: Dictionary = _mods[String(e[0])]
-		var fac: Dictionary = m.get("facade", {})
-		if fac.is_empty():
-			continue
-		var pos := Vector2(float(e[1]), float(e[3]))
-		var yaw: float = float(e[4])
-		var fwd := Vector2(sin(yaw), cos(yaw))
-		var ax := Vector2(cos(yaw), -sin(yaw))
-		var dx: float = float(fac["door_x"])
-		for k in 3:
-			var q: Vector2 = pos + ax * (dx - 0.9 + float(k) * 0.9) \
-				+ fwd * (0.55 + float(k % 2) * 0.22)
-			if _pt_on_road_core(q, 1.0):
-				continue
-			steps.append(Transform3D(
-				Basis(Vector3.UP, yaw + rng.randf_range(-0.08, 0.08)),
-				Vector3(q.x, height_at(q.x, q.y) + 0.03, q.y)))
-	if kerbs.is_empty() and steps.is_empty():
-		return
-	var g := lib.add(_root, Node3D.new(), "回廊路縁")
-	# 色は石溝と同じ系統（濡れて暗い石）。明るい石は白い軌条に読める
-	var kmat := lib.pbr("回廊縁石", "stone_wall", 0.42, Color(0.58, 0.58, 0.56))
-	var smat := lib.pbr("回廊踏石", "stone_flag", 0.30, Color(0.62, 0.61, 0.57))
-	for spec in [{"size": Vector3(1.0, 0.22, 0.16), "list": kerbs,
-			"mat": kmat, "n": "路邊石"},
-			{"size": Vector3(0.72, 0.11, 0.62), "list": steps,
-			"mat": smat, "n": "踏石"}]:
-		if (spec["list"] as Array).is_empty():
-			continue
-		var bm := BoxMesh.new()
-		bm.size = spec["size"]
-		bm.material = spec["mat"]
-		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(bm, spec["list"], [],
-			OUT_DIR + "gen/pedge_%s.res" % String(spec["n"]))
-		lib.add(g, mmi, "MM_%s" % String(spec["n"]))
-	_audit.append("PHASE 3.1A：回廊の縁石 %d・踏石 %d" % [kerbs.size(), steps.size()])
+	TownPilotEdge.build(
+		lib, _root, OUT_DIR, SEED, _mods, _dump,
+		_is_pilot, _pt_on_road_core, height_at, _audit)
 
 
 # ══════════════════════════════════════════════════════════════════════
