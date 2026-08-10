@@ -12,24 +12,49 @@ OUT = os.path.abspath(ARGV[0] if ARGV else "godot/assets/models")
 SOURCE_OUT = os.path.abspath("godot/assets/blender/sources")
 ONLY = set(ARGV[1:])
 
+# Material names are a contract, not labels. `gen_lib.semantic_mesh()` maps a
+# surface to the project's PBR set by NAME PREFIX over
+# WOOD_LT / WOOD / PLASTER / STONE / KAWARA / SHOJI.
+# These were previously named "WOOD_LIGHT" and "PAPER": the first collapsed
+# into the plain WOOD bucket (prefix match) and the second matched nothing at
+# all, so the light timber and the shoji lost their identity on the way into
+# Godot. EARTH has no semantic slot and deliberately keeps the glb material.
 MATS = {
     "WOOD": ((0.11, 0.075, 0.045, 1), 0.84),
-    "WOOD_LIGHT": ((0.28, 0.18, 0.09, 1), 0.82),
+    "WOOD_LT": ((0.28, 0.18, 0.09, 1), 0.82),
     "PLASTER": ((0.72, 0.67, 0.56, 1), 0.92),
     "KAWARA": ((0.12, 0.15, 0.18, 1), 0.68),
     "EARTH": ((0.30, 0.20, 0.12, 1), 0.94),
-    "PAPER": ((0.82, 0.77, 0.64, 1), 0.94),
+    "SHOJI": ((0.82, 0.77, 0.64, 1), 0.94),
 }
 
 def clear():
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False)
 
+def principled(mat):
+    """Find (or create) the Principled BSDF by NODE TYPE, not by node label.
+
+    ⚠ `nodes.get("Principled BSDF")` returns None on Blender 5.2 — the default
+    node is no longer under that name — so the whole script died on line 1 of
+    the first material. Every exporter in this directory still looks it up by
+    name; they will need the same fix when they are next run.
+    """
+    nt = mat.node_tree
+    for n in nt.nodes:
+        if n.type == "BSDF_PRINCIPLED":
+            return n
+    node = nt.nodes.new("ShaderNodeBsdfPrincipled")
+    out = next((n for n in nt.nodes if n.type == "OUTPUT_MATERIAL"), None) \
+        or nt.nodes.new("ShaderNodeOutputMaterial")
+    nt.links.new(node.outputs["BSDF"], out.inputs["Surface"])
+    return node
+
 def materials():
     for name, (color, rough) in MATS.items():
         mat = bpy.data.materials.get(name) or bpy.data.materials.new(name)
         mat.use_nodes = True
-        bsdf = mat.node_tree.nodes.get("Principled BSDF")
+        bsdf = principled(mat)
         bsdf.inputs["Base Color"].default_value = color
         bsdf.inputs["Roughness"].default_value = rough
 
@@ -80,7 +105,7 @@ def lattice(prefix, x0, x1, y, z0, z1, count):
     for i,z in enumerate((z0,z1,(z0+z1)/2)): box(f"{prefix}_rail_{i}",((x0+x1)/2,y,z),(x1-x0,.075,.07),"WOOD")
 
 def barrel(name,x,y,z,scale=1):
-    cyl(name,(x,y,z),.48*scale,.9*scale,"WOOD_LIGHT",16)
+    cyl(name,(x,y,z),.48*scale,.9*scale,"WOOD_LT",16)
     for dz in (-.32,.32): cyl(name+"_band"+str(dz),(x,y,z+dz*scale),.50*scale,.06*scale,"WOOD",16)
 
 def build_sake():
@@ -90,7 +115,7 @@ def build_sake():
     posts("sake",[-5.35,-3.5,-1.6,.2,2.1,4.0,5.35],-3.44,.35,2.75)
     lattice("sake_left",-5.1,-2.0,-3.51,.65,2.45,11)
     lattice("sake_right",1.4,5.05,-3.51,.65,2.45,12)
-    box("sake_entry",(-.55,-3.53,1.48),(1.65,.12,2.25),"WOOD_LIGHT")
+    box("sake_entry",(-.55,-3.53,1.48),(1.65,.12,2.25),"WOOD_LT")
     hip_roof("sake_main_hip",11.8,7.5,3.45,1.65)
     box("sake_canopy",(0,-4.02,2.55),(12.0,1.55,.16),"KAWARA")
     posts("sake_canopy",[-5.4,0,5.4],-4.55,.25,2.25,.13)
@@ -109,19 +134,19 @@ def build_inn():
     gable_roof("inn_main_roof",8.5,10.7,5.25,2.05)
     posts("inn_front",[-3.75,-2.5,-1.2,1.1,2.4,3.75],-4.78,.4,2.55)
     lattice("inn_shop",-3.55,-1.5,-4.87,.7,2.5,8)
-    box("inn_recess",(0,-4.93,1.5),(1.75,.2,2.45),"WOOD_LIGHT")
+    box("inn_recess",(0,-4.93,1.5),(1.75,.2,2.45),"WOOD_LT")
     lattice("inn_room",1.35,3.55,-4.87,.7,2.5,8)
     # Strong inn cue: continuous second-floor guest gallery with rhythmic room screens.
     box("inn_gallery_deck",(0,-5.25,3.45),(8.7,1.25,.18),"WOOD")
     posts("inn_gallery",[-3.75,-2.5,-1.25,0,1.25,2.5,3.75],-5.65,3.45,1.62,.12)
     box("inn_gallery_top",(0,-5.65,5.05),(8.4,.15,.14),"WOOD")
     for i,x in enumerate([-3.1,-1.55,0,1.55,3.1]):
-        box(f"inn_shoji_{i}",(x,-4.84,4.22),(1.25,.10,1.35),"PAPER")
+        box(f"inn_shoji_{i}",(x,-4.84,4.22),(1.25,.10,1.35),"SHOJI")
         lattice(f"inn_upper_{i}",x-.56,x+.56,-4.91,3.6,4.85,4)
     box("inn_entry_roof",(0,-5.72,2.72),(2.65,1.75,.16),"KAWARA")
     posts("inn_entry",[-1.05,1.05],-6.3,.25,2.45,.15)
     # Side-wall veranda and rain-shutter rhythm make the long depth legible.
-    box("inn_side_walk",(4.45,.6,1.05),(1.1,8.3,.18),"WOOD_LIGHT")
+    box("inn_side_walk",(4.45,.6,1.05),(1.1,8.3,.18),"WOOD_LT")
     posts("inn_side",[4.25,4.25],-2.8,.35,2.4,.15)
     for y in (-2.6,-1.0,.6,2.2,3.8): box("inn_side_shutter",(4.14,y,1.65),(.12,1.05,1.7),"WOOD")
     box("inn_rear_wing",(-2.4,5.25,2.0),(3.4,2.7,3.6),"PLASTER")
@@ -130,7 +155,7 @@ def build_inn():
 def build_workshop():
     # Asymmetric compound: tall street-facing work hall plus low storage lean-to.
     box("work_plinth",(0,.2,.18),(10.4,8.6,.36),"EARTH")
-    box("work_hall",(-1.55,.1,2.15),(6.7,7.8,3.95),"WOOD_LIGHT")
+    box("work_hall",(-1.55,.1,2.15),(6.7,7.8,3.95),"WOOD_LT")
     # Street-facing gable gives a silhouette unlike the two eave-front merchants.
     gable_roof_at("work_gable",-1.55,.1,6.9,8.1,4.1,2.25)
     # Straight ridge, matched eave fascias, and a framed plaster front gable.
@@ -151,7 +176,7 @@ def build_workshop():
     cyl("work_hoist",(-1.55,-4.58,2.15),.18,1.25,"WOOD",12)
     lattice("work_front_side",.45,1.55,-3.82,.7,2.75,5)
     for i,z in enumerate((.65,1.25,1.85)): box(f"work_rack_{i}",(3.55,-3.65,z),(2.8,.55,.13),"WOOD")
-    for i,x in enumerate((2.55,3.55,4.55)): cyl(f"work_log_{i}",(x,-3.9,.55),.24,2.2,"WOOD_LIGHT",10,rot=(math.pi/2,0,0))
+    for i,x in enumerate((2.55,3.55,4.55)): cyl(f"work_log_{i}",(x,-3.9,.55),.24,2.2,"WOOD_LT",10,rot=(math.pi/2,0,0))
     # Clerestory smoke monitor makes the upper silhouette unmistakable.
     box("work_monitor",(-1.55,.45,5.05),(2.25,2.5,1.05),"PLASTER")
     gable_roof_at("work_monitor_roof",-1.55,.45,2.5,2.8,5.55,.72,over=.40)
@@ -162,17 +187,49 @@ def build_workshop():
     posts("work_rear",[-4.55,-3.0,-1.45,.1,1.65],3.86,.35,3.20,.16)
     box("work_rear_lintel",(-1.45,3.88,3.25),(6.35,.18,.20),"WOOD")
     for i,x in enumerate((-3.75,-2.20,-.65,.90)):
-        box(f"work_rear_screen_{i}",(x,3.91,2.55),(1.15,.10,.72),"PAPER")
+        box(f"work_rear_screen_{i}",(x,3.91,2.55),(1.15,.10,.72),"SHOJI")
         box(f"work_rear_screen_sill_{i}",(x,3.96,2.16),(1.25,.14,.14),"WOOD")
 
 def export_asset(name, builder):
+    """Build, JOIN INTO ONE OBJECT, export, and report the measured bbox.
+
+    ⚠ The join is the whole point of this function, not tidiness.
+    This script used to export every loose primitive as its own glTF node.
+    Blender was happy and `measure_building_asset_proof.py` reported the right
+    dimensions, because it aggregates *all* mesh objects after re-import.
+    But the engine does not: `gen_lib.semantic_mesh()` / `prop_mesh()` walk the
+    imported scene, take the FIRST MeshInstance3D they meet, and stop. So each
+    of these three buildings arrived in Godot as one arbitrary sub-part —
+    a smoke vent (1.40 m), a lattice rail (1.12 m), a cedar ball (0.96 m) —
+    while `PHASE5A_FAMILIES` still declared 9–13 m footprints. OBB checks and
+    collision boxes are built from that table, so every static gate passed and
+    Phase 5A shipped three invisible buildings with invisible colliders.
+    Every other exporter in this kit (`make_machiya.py`, `make_building_
+    families.py`) hands `export_scene.gltf` a single joined object. So does
+    this one now. `tools/asset_dims_check.gd` is the gate that keeps it true.
+    """
     clear(); materials(); builder()
     meshes=[o for o in bpy.context.scene.objects if o.type=="MESH"]
+    bpy.ops.object.select_all(action="DESELECT")
     for o in meshes: o.select_set(True)
     bpy.context.view_layer.objects.active=meshes[0]
+    if len(meshes) > 1:
+        bpy.ops.object.join()
+    ob=bpy.context.view_layer.objects.active
+    ob.name=name
+    bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+    assert len([o for o in bpy.context.scene.objects if o.type=="MESH"])==1, \
+        "%s did not collapse to a single mesh object" % name
     os.makedirs(SOURCE_OUT,exist_ok=True); os.makedirs(OUT,exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(SOURCE_OUT,name+".blend"))
     bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,name+".glb"),use_selection=True,export_format="GLB",export_yup=True,export_apply=True,export_materials="EXPORT")
+    vs=[v.co for v in ob.data.vertices]
+    dx=max(v.x for v in vs)-min(v.x for v in vs)
+    dy=max(v.y for v in vs)-min(v.y for v in vs)
+    dz=max(v.z for v in vs)-min(v.z for v in vs)
+    # Blender (x, y, z) with export_yup -> Godot (x, z, -y): w = dx, h = dz, d = dy
+    print("PROOF_ASSET %s w=%.3f h=%.3f d=%.3f faces=%d mats=%d" %
+          (name, dx, dz, dy, len(ob.data.polygons), len(ob.data.materials)))
 
 for asset,builder in (("asset_proof_sake_shop",build_sake),("asset_proof_hatago",build_inn),("asset_proof_workshop",build_workshop)):
     if not ONLY or asset in ONLY:

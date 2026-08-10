@@ -142,8 +142,9 @@ Substitution lives in `gen_town.gd::CONSOLIDATE` / `_consolidate()`,
 | `tower_bell` / `tower_fire` read as flat dark slabs at close range — landmark asset quality, not residential; a tower redesign is an art-direction call | `assets/models/tower_*.glb` |
 | Machiya triangles +127% after consolidation; LOD is still `lod_bias` only | `gen_town.gd`, Master Plan §5 |
 | 総二階 ridge is 7.67/8.55 m where the legacy blockout was 9.40/9.90 m — the second skyline is preserved but lower (measured: 6.14 m is the minimum to clear the front eave line) | `ningen-no-sato.md` §12.2 |
-| **`asset_proof_hatago` / `asset_proof_sake_shop` GLBs import as sub-metre fragments** — the north-approach 旅籠 and 酒屋 are invisible buildings with full-size invisible colliders. Static gates cannot see this because OBB/collision come from the JSON table | `assets/models/asset_proof_*.glb`, `gen_town.gd::PHASE5A_FAMILIES` |
-| Declared module sizes in `PHASE5A_FAMILIES` are hand-written, not measured from the exported mesh — the same class of defect can recur silently for any future family | `gen_town.gd::PHASE5A_FAMILIES` |
+| **Every Blender exporter still resolves the shader node by the name `"Principled BSDF"`, which returns null on the installed Blender 5.2** — `make_building_asset_proof.py` was fixed to look it up by node *type*; `make_machiya.py`, `make_town.py`, `preview.py` and the rest will die on their first material the next time anyone runs them | `assets/blender/*.py` |
+| `semantic_mesh()` / `prop_mesh()` silently accept a multi-object GLB and use only the first mesh. The dimension gate now catches the consequence, but the reader itself still has no opinion about it | `gen_lib.gd` |
+| Family GLBs are exported from `.blend` sources under `assets/blender/sources/`, which are now `.gdignore`d — Godot was trying to import them and failing for want of a Blender path | `godot/assets/blender/.gdignore` |
 | Water / wet-flat gap and lotus geometry unresolved | deferred to cel shading |
 | Slice's 10 lots are hand-placed; no rule yet for distributing 6 modules over 169 houses | `gen_slice.gd` vs `gen_town.gd` |
 
@@ -278,10 +279,56 @@ was touched.
 Fixed evidence: `shots2/market_quarter/before` vs `after` (four player-eye
 views, one elevated, plus the Phase 5A `market_context` camera for regression).
 
-**Defect found and partly fixed:** all three `asset_proof_*` GLBs import as
-sub-metre single-surface fragments (`workshop` 1.40×0.55×0.10 against a
-declared 11.30×9.60×6.45; `hatago` 1.12×0.07×0.075; `sake_shop` 0.96×0.75×0.96)
-while OBB and collision are built from the JSON table. Phase 5A therefore
-placed three **invisible buildings with invisible colliders** and every static
-gate passed. The two inside this slice were replaced with verified assets. The
-north-approach 旅籠 and 酒屋 are out of this slice's scope and are still broken.
+**Defect found here, fixed in the asset-integrity pass below:** all three
+`asset_proof_*` GLBs imported as sub-metre single-surface fragments while OBB
+and collision were built from the JSON table, so Phase 5A placed three
+**invisible buildings with invisible colliders** and every static gate passed.
+
+## Asset integrity pass — proof GLBs and dimension gate (2026-08-10)
+
+Three independent things had to line up for the defect to be invisible:
+
+1. `make_building_asset_proof.py` exported every loose primitive as its own
+   glTF node — it never joined, unlike `make_machiya.py` and
+   `make_building_families.py`.
+2. `gen_lib.semantic_mesh()` / `prop_mesh()` take the **first** MeshInstance3D
+   in the imported scene and stop, so the engine drew one arbitrary sub-part:
+   a smoke vent, a lattice rail, a cedar ball.
+3. `PHASE5A_FAMILIES` declared sizes by hand, and every consumer — OBB overlap,
+   collision boxes, spacing — read that table rather than the mesh.
+
+The review evidence agreed with nobody: `maps/asset_building_proof` built its
+buildings with `GLTFDocument.generate_scene()` (the whole node tree) and
+`measure_building_asset_proof.py` aggregated *all* mesh objects after
+re-import, so both reported complete, correctly sized buildings. **The
+reviewer and the player were looking at two different readings of the same
+file.**
+
+Fixed: the exporter now joins to a single object and prints its measured bbox;
+the proof scene builds through the production `semantic_mesh()` path so it can
+no longer disagree with the village; material names moved onto the semantic
+contract (`WOOD_LIGHT` → `WOOD_LT`, `PAPER` → `SHOJI` — the first collapsed
+into the WOOD bucket by prefix, the second matched nothing); and
+`PHASE5A_FAMILIES` now carries measured numbers.
+
+Corrected dimensions (Godot AABB of the joined mesh, w × h × d):
+
+| asset | declared before | measured now | surfaces |
+|---|---|---|---|
+| `asset_proof_hatago` | 9.10 × 7.30 × 13.00 | **9.90 × 7.30 × 13.19** | 6 |
+| `asset_proof_sake_shop` | 12.20 × 5.30 × 9.60 | **13.20 × 5.30 × 9.36** | 5 |
+| `asset_proof_workshop` | 11.30 × 6.45 × 9.60 | **11.10 × 6.49 × 9.88** | 6 |
+
+At their true widths the 旅籠 and 酒屋 cut 0.21 m and 0.29 m into a
+neighbouring `machiya_e_p`. Both were shifted 0.8 m **along the street**, so
+setback, side of 本通 and orientation — the reviewed parts — are unchanged.
+
+`tools/asset_dims_check.gd` is the new gate: it measures every module the
+generator can instance, through the same reader the generator uses, and fails
+on more than **0.05 m** absolute deviation from the declared `fw`/`h`/`fd`. It
+also fails a building that arrives with a single surface. Height is compared
+for buildings only — `bridge`/`tower`/`landmark` declare a functional height,
+not a bbox height. Teeth-tested against the real defect: it reported all three
+proof assets ✗ before the fix and 28/28 ✓ after. Evidence:
+`shots2/asset_building_proof/dims_fix/` (standalone, production path) and
+`shots2/asset_dims_fix/before` vs `after` (north approach).

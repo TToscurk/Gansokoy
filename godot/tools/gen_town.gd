@@ -171,9 +171,17 @@ const PHASE5A_FAMILIES := {
 	"family_small_merchant_01": {"w": 7.16, "d": 9.70, "h": 4.87, "fw": 7.16, "fd": 9.70, "glb": "res://assets/models/family_small_merchant_01.glb"},
 	"family_small_merchant_03": {"w": 10.74, "d": 11.70, "h": 4.62, "fw": 10.74, "fd": 11.70, "glb": "res://assets/models/family_small_merchant_03.glb"},
 	"family_kura_compact": {"w": 7.30, "d": 8.09, "h": 5.95, "fw": 7.30, "fd": 8.09, "glb": "res://assets/models/family_kura_compact.glb"},
-	"asset_proof_hatago": {"w": 9.10, "d": 13.00, "h": 7.30, "fw": 9.10, "fd": 13.00, "centered": true, "glb": "res://assets/models/asset_proof_hatago.glb"},
-	"asset_proof_sake_shop": {"w": 12.20, "d": 9.60, "h": 5.30, "fw": 12.20, "fd": 9.60, "centered": true, "glb": "res://assets/models/asset_proof_sake_shop.glb"},
-	"asset_proof_workshop": {"w": 11.30, "d": 9.60, "h": 6.45, "fw": 11.30, "fd": 9.60, "centered": true, "glb": "res://assets/models/asset_proof_workshop.glb"},
+	# ⚠ These three sizes are **measured**, not intended. They were hand-written
+	#   before (9.10 / 12.20 / 11.30 wide) and nothing compared them against the
+	#   exported mesh, which is half of why Phase 5A shipped three invisible
+	#   buildings: the other half was the exporter emitting loose glTF nodes so
+	#   the engine only ever drew one sub-part. Both halves are fixed; the
+	#   numbers below come from the Godot AABB of the joined mesh and are held
+	#   there by `tools/asset_dims_check.gd` (0.05 m tolerance).
+	#   Never edit these by hand — re-measure and paste.
+	"asset_proof_hatago": {"w": 9.90, "d": 13.20, "h": 7.30, "fw": 9.90, "fd": 13.20, "centered": true, "glb": "res://assets/models/asset_proof_hatago.glb"},
+	"asset_proof_sake_shop": {"w": 13.20, "d": 9.36, "h": 5.30, "fw": 13.20, "fd": 9.36, "centered": true, "glb": "res://assets/models/asset_proof_sake_shop.glb"},
+	"asset_proof_workshop": {"w": 11.11, "d": 9.88, "h": 6.49, "fw": 11.11, "fd": 9.88, "centered": true, "glb": "res://assets/models/asset_proof_workshop.glb"},
 }
 
 
@@ -1494,8 +1502,16 @@ func _apply_phase5a_pilot() -> void:
 		{"lot": Vector2(-83.2000, 89.7000), "kind": "family_standard_machiya_02"},
 		{"lot": Vector2(-61.6623, 90.1261), "kind": "family_standard_machiya_03"},
 		{"lot": Vector2(-75.6838, 104.7178), "kind": "family_kura_compact"},
-		{"lot": Vector2(-6.1034, -150.3902), "kind": "asset_proof_hatago", "move": Vector2(0.0, 0.3)},
-		{"lot": Vector2(6.7199, -150.0819), "kind": "asset_proof_sake_shop", "move": Vector2(0.0, -2.7)},
+		# ⚠ The `move` here is **along the street**, so the setback, the side of
+		#   本通 and the orientation — the parts that were reviewed — are
+		#   untouched. Only the along-street position shifts, by 0.8 m each,
+		#   to absorb the buildings' true width: the 旅籠 is 9.90 m wide and the
+		#   酒屋 13.20 m, not the 9.10 / 12.20 the table used to claim. At the
+		#   old (understated) sizes these two cleared their neighbouring
+		#   machiya_e_p; at the real sizes they cut into it by 0.21 m and
+		#   0.29 m. That is the OBB check finally seeing the real building.
+		{"lot": Vector2(-6.1034, -150.3902), "kind": "asset_proof_hatago", "move": Vector2(0.0, 1.1)},
+		{"lot": Vector2(6.7199, -150.0819), "kind": "asset_proof_sake_shop", "move": Vector2(0.0, -3.5)},
 		{"lot": Vector2(-5.6500, -116.7000), "kind": "family_small_merchant_01"},
 	]
 	var changed := 0
