@@ -26,6 +26,7 @@ const TownGeometry := preload("res://tools/town/town_geometry.gd")
 const TownValidation := preload("res://tools/town/town_validation.gd")
 const TownAssets := preload("res://tools/town/town_assets.gd")
 const TownHydrography := preload("res://tools/town/town_hydrography.gd")
+const TownOutput := preload("res://tools/town/town_output.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
 # 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
@@ -4530,11 +4531,4 @@ func _bank_portal(z: float) -> Dictionary:
 
 
 func _write_dump() -> void:
-	var out := {"note": "人間之里擺位表（gen_town.gd 產出，驗證腳本用）",
-		"river": [], "instances": _dump, "density": _ddump}
-	for p in _river():
-		out["river"].append([snappedf(p.x, 0.01), snappedf(p.y, 0.01)])
-	var f := FileAccess.open("res://data/%s.instances.json" % MAP_ID, FileAccess.WRITE)
-	f.store_string(JSON.stringify(out, " "))
-	f.close()
-	print("wrote data/%s.instances.json（%d 實例）" % [MAP_ID, _dump.size()])
+	TownOutput.write_instance_dump(MAP_ID, _river(), _dump, _ddump)
