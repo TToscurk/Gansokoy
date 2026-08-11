@@ -208,20 +208,11 @@ func _init() -> void:
 	for line in _audit:
 		print(line)
 
-	var packed := PackedScene.new()
-	packed.pack(_root)
-	var err := ResourceSaver.save(packed, OUT_DIR + "%s.tscn" % MAP_ID)
-	print("saved %s.tscn err=%d  節點 %d" % [MAP_ID, err, _count(_root)])
-	_write_meta()
-	_write_dump()
+	TownOutput.save_scene(_root, OUT_DIR, MAP_ID)
+	TownOutput.write_meta(MAP_ID, TownOutput.build_portals(
+		height_at, _nearest_river_pt, _river(), BANK_PATH))
+	TownOutput.write_instance_dump(MAP_ID, _river(), _dump, _ddump)
 	quit()
-
-
-func _count(n: Node) -> int:
-	var c := 1
-	for ch in n.get_children():
-		c += _count(ch)
-	return c
 
 
 # ── 河道 ──
@@ -1200,60 +1191,3 @@ func _build_water_plants() -> void:
 	TownEcology.build_water_plants(
 		lib, _root, _river(), OUT_DIR, HALF, RIVER_HALF, RIVER_DEPTH,
 		BRIDGES, _uno_pos, _street_rng, bank_h, _audit)
-
-
-func _write_meta() -> void:
-	## portals[0] 必須是北門：main.gd 的 _place_player 在 from_id=="" 時
-	## 落在 portals[0]，所以 `--map=village` 會站在本通上而不是村角。
-	## y 由 height_at 量出來，不手抄 —— 地形換了數值就會變。
-	##
-	## ⚠ Stage 2 的回程 portal：**不需要動 trail/kourindou**。
-	## main.gd 的 _place_player 是「找目的地圖裡 target == from_id 的那個
-	## portal」，也就是落點由**這張圖**的 portal 決定，不是由來源圖決定。
-	## 而舊 village 的兩個 portal 座標 (0,−174)/(−132,100) 跟這裡產出的
-	## **完全相同** —— 所以 trail→village、kourindou→village 的落點不變。
-	## （查證過 data/village.meta.json 的舊值，不是憑印象。）
-	var ports := [
-		{"x": 0.0, "y": snappedf(height_at(0, -174), 0.01), "z": -174.0, "target": "trail"},
-		{"x": -132.0, "y": snappedf(height_at(-132, 100), 0.01), "z": 100.0,
-		 "target": "kourindou"},
-		# 河畔道北端出圖 → 未來的霧之湖。target 留 null = 保留中的觸發區
-		# （Area3D 照建、不畫光柱、不切場景），填上目的地就自動生效。
-		_bank_portal(-286.0),
-		# 稗田邸玄関前 → 室內一樓（傳送場景）。
-		# ⚠ 位置隨「換成完整獨立版」一起挪。座標不是量出來的、是**推**出來的：
-		# make_hieda.py 的 `Y_STEP = -11.43` 是唐破風石階最外緣，也是參道的
-		# 起點（`build_avenue(bld, Y_STEP, Y_OUT)`）。Blender→Godot 是
-		# z = −y，所以石階腳在 blockout 本地 z=+11.43；blockout 原點在世界
-		# (−78.05, −178.0)（＝保留區中心 + HIEDA_OFF），石階腳就是 z=−166.6。
-		# portal 再往參道外挪 2m，站在階前而不是站在階上。
-		# ⚠ 這個 portal **刻意不進 connections**：connections 是世界圖層級
-		# 的連通表（跟 mapRegistry.js 對齊），建築內部不是世界圖上的一格
-		# —— 「不進 mapRegistry」的裁決串接後仍適用，樓層連結只活在
-		# meta 的 portal 層。
-		{"x": -78.05, "y": snappedf(height_at(-78.05, -164.6), 0.01), "z": -164.6,
-		 "target": "hieda1f"},
-	]
-	# 跟 src/world/mapRegistry.js 的 village 條目對齊（myouren/lake 是
-	# **規劃中**的連線，還沒有對應 portal；lake 已有保留觸發區）。
-	TownOutput.write_meta(MAP_ID, ports)
-
-
-func _bank_portal(z: float) -> Dictionary:
-	## 河畔道上的保留觸發區。⚠ x 要用**該 z 的河道最近點**算，不是隨手挑
-	## 一個樣條索引（舊版拿 _river()[2]，那點在 z=-294，差了 8m）。
-	var rp := _nearest_river_pt(Vector2(0, z))
-	var best := rp
-	var bd := 1e18
-	for p in _river():
-		var d: float = absf(p.y - z)
-		if d < bd:
-			bd = d
-			best = p
-	var x: float = best.x - BANK_PATH
-	return {"x": snappedf(x, 0.1), "y": snappedf(height_at(x, z), 0.01),
-		"z": z, "target": null}
-
-
-func _write_dump() -> void:
-	TownOutput.write_instance_dump(MAP_ID, _river(), _dump, _ddump)
