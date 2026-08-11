@@ -112,7 +112,6 @@ One fact lives in exactly one place. Never duplicate across documents.
 | Godot environment facts | `docs/godot-migration.md` |
 | Horizon / geography per map | `docs/border-vistas.md` |
 | 稗田邸 (estate + interiors + story) | `docs/hieda-estate-features.md` |
-| Development journal | `docs/journal.md` |
 
 `docs/README.md` is the index. `docs/archive/` is history — do not read it
 unless a decision is disputed.

@@ -16,11 +16,10 @@
 | **machiya-production-kit.md** | 町家 Architecture Kit 現行規格（Blender→GLB→Godot、模組、材質與驗證契約） | kit 的規格或模組變動時 |
 | **ningen-no-sato.md** | 人間之里的**現況與規則總結**（管線／座標約定／不可違反的規則／復發性病症目錄／檢查工具能力邊界／未結項目）—— 要動村圖之前先讀這份 | 村圖的事實或規則變動時 |
 | **village-art-direction.md** | 人間之里的美術規格（風格／尺度／色彩／工序）——「這樣好不好看」的唯一依據 | 使用者定案新方向時 |
-| **domain-model.md** | 產生器的領域詞彙（Footprint／Parcel／Frontage…）與 ADR | 加新概念或新 ADR 時 |
+| **domain-model.md** | 產生器的現行領域詞彙、模組邊界與 ADR 摘要 | 加新概念、跨模組不變量或新 ADR 時 |
 | **godot-migration.md** | Godot 環境的事實（烘焙管線、project.godot 規則、指令） | 踩到新的環境坑時 |
 | **border-vistas.md** | 每張圖的地平線該看到什麼（幻想鄉方位考據） | 開新地圖時 |
 | **hieda-estate-features.md** | 稗田邸現行規格（完整院落、庭園、三層內裝、portal 與驗證） | 稗田邸相關變動時 |
-| **journal.md** | 開發日誌（新的在上面） | 每輪收工時 |
 
 人間之里的逐輪工作紀錄已移至 `archive/ningen-no-sato-redesign.md` 與
 `archive/ningen-no-sato-production-history-2026-08-10.md`。日常工作只讀

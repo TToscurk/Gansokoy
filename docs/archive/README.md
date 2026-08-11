@@ -18,3 +18,5 @@
 | `ningen-no-sato-production-history-2026-08-10.md` | 人間之里 Phase 3 至 Phase 5A 的完整實作與驗證紀錄 |
 | `hieda-estate-features-production-history-2026-08-11.md` | 稗田邸外觀、庭園、三層內裝與完整版搬遷的逐輪紀錄 |
 | `machiya-production-kit-production-history-2026-08-11.md` | 町家 Phase 1 至 2.6b 的完整製作、審圖與除錯紀錄 |
+| `domain-model-full-history-2026-08-11.md` | 領域詞彙與 ADR 的完整演變史；現行摘要已留在 `docs/domain-model.md` |
+| `journal-threejs-2026-08-02.md` | 已凍結的 three.js 時代開發日誌；不再作為 Godot 日常工作入口 |
