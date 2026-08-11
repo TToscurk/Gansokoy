@@ -292,7 +292,10 @@ func _place_player(meta: Dictionary, from_id: String) -> void:
 		spawn = Vector3(p0.x, p0.y + 2.0, p0.z)
 	for p in portals:
 		if p.get("target") == from_id:
-			spawn = Vector3(p.x, p.y + 2.0, p.z)
+			# Low-ceiling interiors may override the default 2 m drop height.
+			# The horizontal inward offset remains identical for every portal.
+			var arrival_y_offset: float = float(p.get("arrival_y_offset", 2.0))
+			spawn = Vector3(p.x, p.y + arrival_y_offset, p.z)
 			# 往圖中心退幾步，不要站在觸發區正中央
 			var inward := (Vector3(0.0, spawn.y, 0.0) - spawn)
 			inward.y = 0.0

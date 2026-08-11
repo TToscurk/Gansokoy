@@ -774,8 +774,8 @@ func _write_meta() -> void:
 		# 串接：階段口（下）↔ 1F；上り階段（西牆中段）→ 3F。
 		# 兩個 portal 圓柱半徑 1.6，中心距 4.1 —— 不重疊。
 		"portals": [
-			{"x": -8.9, "y": 0.0, "z": -3.2, "target": "hieda1f"},
-			{"x": -9.2, "y": 0.0, "z": 0.9, "target": "hieda3f"},
+			{"x": -8.9, "y": 0.0, "z": -3.2, "target": "hieda1f", "arrival_y_offset": 0.8},
+			{"x": -9.2, "y": 0.0, "z": 0.9, "target": "hieda3f", "arrival_y_offset": 0.8},
 		],
 		"colliders": [],
 	}

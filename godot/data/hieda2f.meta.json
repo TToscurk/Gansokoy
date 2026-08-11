@@ -12,13 +12,15 @@
    "target": "hieda1f",
    "x": -8.9,
    "y": 0.0,
-   "z": -3.2
+   "z": -3.2,
+   "arrival_y_offset": 0.8
   },
   {
    "target": "hieda3f",
    "x": -9.2,
    "y": 0.0,
-   "z": 0.9
+   "z": 0.9,
+   "arrival_y_offset": 0.8
   }
  ],
  "safe": true
