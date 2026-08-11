@@ -206,13 +206,13 @@ grep -c 'type="MeshInstance3D"' godot/maps/village/village.tscn
 
 | # | 工作 | 關鍵檔案 | 風險 |
 |---|---|---|---|
-| 1 | **效能三件套** | `gen_village.gd`、`scripts/main.gd` | 低；要目視確認遠處沒東西消失 |
-| 2 | 地標放大（稗田邸為主）＋ 內外一致檢查進體檢 | `gen_village.gd:1539`、`tools/check_map.gd` | **中**：會撞地權 |
+| 1 | **效能三件套** | `tools/town/town_environment.gd`、`scripts/main.gd` | 低；要目視確認遠處沒東西消失 |
+| 2 | 地標放大（稗田邸為主）＋ 內外一致檢查進體檢 | `tools/town/town_landmarks.gd`、`tools/check_map.gd` | **中**：會撞地權 |
 | 3 | 樹重做 | `assets/blender/make_trees.py` | 低；先用 `preview.py` 看模型 |
-| 4 | 庭池改池泉庭園（曲岸／中島／石橋） | `gen_village.gd` 庭池段、`gen_lib.gd` 的 `pond_carve(wobble)` | 中 |
-| 5 | 祭典級色彩（燈籠串、旗幟、幔幕）＋ 一點朱紅 | `gen_village.gd` | 低；**會加 draw call，必須在 1 之後** |
-| 6 | 遠景地理（妖怪之山／竹林／神社山） | `gen_village.gd:240`、新竹子 glb | 低 |
-| 7 | 稻田重做（畦／水／田埂道） | `gen_village.gd` 田野段 | 低 |
+| 4 | 庭池改池泉庭園（曲岸／中島／石橋） | `tools/town/town_landmarks.gd`、`gen_lib.gd` 的 `pond_carve(wobble)` | 中 |
+| 5 | 祭典級色彩（燈籠串、旗幟、幔幕）＋ 一點朱紅 | `tools/town/town_mainstreet.gd` | 低；**會加 draw call，必須在 1 之後** |
+| 6 | 遠景地理（妖怪之山／竹林／神社山） | `gen_town.gd` 的 vista orchestration、新竹子 glb | 低 |
+| 7 | 稻田重做（畦／水／田埂道） | `tools/town/town_terrain.gd`、`town_grass.gd` | 低 |
 | 8 | 室內 4~5 間 + NPC + 商店 | 新場景 + `scripts/` | **高**：這是新系統不是美術工作 |
 
 ---
@@ -220,7 +220,7 @@ grep -c 'type="MeshInstance3D"' godot/maps/village/village.tscn
 ## 8. 每一項的收工條件（不變，ADR-016）
 
 ```bash
-godot --headless --path godot --script tools/gen_village.gd
+godot --headless --path godot --script tools/gen_town.gd
 godot --headless --path godot --script tools/check_map.gd -- village    # 要 0 問題
 godot --headless --path godot --script tools/walk_test.gd -- village    # 要 0 條不通
 xvfb-run -a godot --path godot --rendering-driver opengl3 -- \

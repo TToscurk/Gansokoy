@@ -62,9 +62,9 @@ static func _bank_portal(z: float, height_at: Callable,
 static func write_meta(map_id: String, portals: Array) -> void:
 	var meta := {
 		"id": map_id,
-		"note": "人間之里（街區重設計版，gen_town.gd 產出）。整合 Stage 2 起"
-			+ "這支取代了 gen_village.gd 的佈局；地標內容／草層／動物等"
-			+ "MIGRATE 項目逐步搬入中。gen_village.gd 不可再執行。",
+		"note": "人間之里（街區重設計版，gen_town.gd 產出）。舊版的地標、"
+			+ "草層、街緣與水邊內容已完成搬遷；deprecated gen_village.gd "
+			+ "已於 2026-08-11 退休。農田、祭典與 NPC 為獨立延後階段。",
 		"playSize": [460, 460],
 		"safe": true,
 		"connections": ["trail", "kourindou", "myouren", "lake"],

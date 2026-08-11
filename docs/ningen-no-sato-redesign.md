@@ -537,10 +537,10 @@ portal 清單裡找 `target == from_id` 的那一個」，落點由目的地決�
   mapRegistry 的 sato 條目**全部退場** —— 它現在就是 village，留著等於
   兩份同樣的圖加一個會說謊的登記表。
 - 舊 `maps/village/gen/` 的 27 個 .res 與舊 `village.tscn` 一併移除
-  （git 留著歷史）。`mm_hedge_*.tres` 暫時留著 —— 生垣屬於 SUPERSEDED，
-  但檔案很小，等確定不再用時一起清。
-- `gen_village.gd` **加了防呆**：`_init()` 開頭 `push_error` + `quit(1)`，
-  跑它會直接中止。它留著是 MIGRATE 清單的內容來源，檔頭列了還沒搬的東西。
+  （git 留著歷史）。當時暫留的根目錄 `mm_hedge_*.tres` 後來確認無引用，
+  已於 2026-08-11 清除。
+- `gen_village.gd` 當時先加防呆，留作 MIGRATE 來源；地標、草層、街緣與
+  水邊內容完成搬遷後，已於 2026-08-11 刪除，需要考古時從 Git 歷史查閱。
 - `check_map` / `walk_test` 的地圖清單改回三張；walk_test 的 village 路線表
   換成原本為新佈局寫的那份（舊格線的路線已經對不上任何東西）。
 - meta 的 `connections` 跟 `src/world/mapRegistry.js` 對齊成

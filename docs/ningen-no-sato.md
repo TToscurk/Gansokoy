@@ -99,10 +99,11 @@ blender -b -P assets/blender/make_town.py -- <outdir>
 
 | 檔案 | 管什麼 |
 |---|---|
-| `tools/gen_town.gd` | 村圖的一切：地形／河道／路網／街區／地標內容／密度／街緣設施／水邊／草層 |
+| `tools/gen_town.gd` | 村圖 orchestration、shared state 與 deterministic RNG ownership |
+| `tools/town/*.gd` | 地形／河道／路網／街區／地標／密度／街緣／水邊／草層等責任模組 |
 | `tools/gen_lib.gd` | 共用的幾何與材質工具（`box` `cyl` `gable_roof` `tuft_mesh` `blob_mesh` `terrain` `river_water` `pond_water` `make_multimesh` `pbr` `flat_mat`…） |
 | `tools/gen_hieda.gd` | 稗田邸**獨立地圖**用的植栽發射器。**目前沒有人呼叫**，見 §7 |
-| `tools/gen_village.gd` | 舊產生器。`_init()` 第一行就 `push_error` + `quit(1)`，**不可執行**。留著當 MIGRATE 的內容來源 |
+| `tools/gen_village.gd` | 已於 2026-08-11 刪除；需要考古時從 Git 歷史查閱 |
 | `assets/blender/tree_lib.py` | 唯一的樹產生器（第六輪把散落各處的版本合併掉的成果） |
 
 ---
@@ -338,8 +339,9 @@ v1）。原本那套程序化的「村內縮小版」（`_lm_hieda` 的築地塀
 - **稗田邸獨立地圖**：完整版已經落在 village 裡了，「另開一張圖」這件事本身
   變成待裁決 —— 要嘛取消（村圖已經有完整的它），要嘛那張圖改放別的內容。
   `hieda_garden.markers.json` 裡那個 `target: null` 的木戶 portal 也跟著待定
-- **清理候選**：`godot/maps/village/mm_hedge_{a,b,c}.tres`（約 2MB）是舊 `gen_village`
-  留下的孤兒，全庫沒有任何引用（只剩編輯器的 filesystem cache）。沒有刪，等指示
+- **已清理**：舊村圖根目錄的 `mm_hedge_{a,b,c}.tres` 是無引用孤兒，已與
+  `gen_village.gd` 一起於 2026-08-11 刪除。稗田邸使用中的
+  `maps/hieda/gen/mm_hieda_hedge_*.res` 不在此列。
 
 ---
 

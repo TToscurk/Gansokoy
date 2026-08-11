@@ -11,7 +11,7 @@
 # 臨街線是**沿著河的樣條**取的（法線方向偏移 11.9m＝河畔道外緣），
 # 不是格線；內陸街區才回到街道格線。
 #
-# ── 這一版取代的舊決策（都在 gen_village.gd 的註解裡）──
+# ── 這一版取代的舊決策（詳見 docs/ningen-no-sato-redesign.md 與 Git 歷史）──
 #   ・「水道直直的就好不要轉彎」→ 使用者看空拍參考後推翻，改蜿蜒脊椎。
 #   ・「主街 8m，11m 像機場跑道」→ 那是對南北本通說的，本通維持 8m。
 #     12m 軸放在**過河的東西向主路**（兩側有 9~10m 町家壓著、12m 橋收束）。
@@ -52,13 +52,10 @@ const TownBlockLayout := preload("res://tools/town/town_block_layout.gd")
 const TownDensity := preload("res://tools/town/town_density.gd")
 
 # ══════════ 整合 Stage 2：這支現在就是 village 的產生器（2026-08-06）══════════
-# 使用者定案方案 (a)：sato 產生器**直接輸出到 maps/village/**，而不是把 sato 的
-# 佈局搬進 gen_village.gd。理由：這支已經帶著完整的護欄（gbox OBB 自檢、
-# _on_road、_in_reserved、村緣降級、單一收口點 _house），而 gen_village.gd 的
-# 佈局程式碼在換圖之後幾乎全部作廢 —— 把新護欄搬進舊架構的風險高得多。
-#
-# ⚠ `gen_village.gd` 從此**不可再執行**（跑了會蓋掉這裡的產出）。它留著是
-# 當 MIGRATE 清單的來源：地標內容、雜物、動物、草層都還在那支裡面。
+# 使用者定案方案 (a)：sato 產生器直接輸出到 maps/village/。舊產生器的
+# 地標、草層、街緣與水邊內容已全部完成搬遷；deprecated gen_village.gd
+# 於 2026-08-11 退休，仍可從 Git 歷史查閱。農田、祭典與 NPC 是明確延後的
+# 新階段，不是待複製的 legacy runtime code。
 const OUT_DIR := TownConfig.OUT_DIR
 const MAP_ID := TownConfig.MAP_ID
 const MODULES := TownConfig.MODULES

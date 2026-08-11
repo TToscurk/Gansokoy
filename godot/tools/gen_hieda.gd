@@ -39,7 +39,7 @@ const MANIFEST := "res://data/hieda_garden.instances.json"
 const MODEL_DIR := "res://assets/models/"
 
 ## 依模組名字挑材質：葉子要雙面（cull 關掉），不然從背面看整片消失。
-## 生垣與樹冠都是頂點色 + 雙面，跟 gen_village.gd 的 _emit_hedges() 同一組。
+## 生垣與樹冠都是頂點色 + 雙面，沿用舊村圖驗證過的 foliage 規格。
 static func _is_foliage(name: String) -> bool:
 	return name.contains("hedge") or name.contains("bush") \
 		or name.contains("maple") or name.contains("pine")
