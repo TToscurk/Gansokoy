@@ -19,20 +19,12 @@
 #     var hieda := preload("res://tools/gen_hieda.gd").new()
 #     hieda.emit(lib, parent_node)
 #
-# 這支刻意**只做植栽**：稗田邸還不是一張獨立的 Godot 地圖（地形、碰撞、
-# 出生點、傳送點都還沒有）。等那張圖開工時，這支直接被呼叫就好。
+# 這支刻意只做植栽 emission。現行村圖由 town_landmarks.gd 放入完整的
+# hieda_blockout.glb，再呼叫本檔 emit() 產生 10 種模組／136 個實例；這批資產
+# 已不是孤兒，也不得另抄一份擺位進場景。舊的縮小程序版已退休。
 #
-# ⚠⚠ 這批資產是照**獨立地圖**的尺度做的，塞不進村圖（village）裡那座稗田邸。
-# 2026-08-06 實測：
-#     這份擺位表的跨度            95.4 × 107.0 m（136 實例）
-#     hieda_blockout.glb 本體     75.6 × 110.5 m
-#     村圖稗田邸的保留區           42.4 ×  45.6 m
-#   線性差 ~2.3×；而且扣掉主屋／緣側／長廊／離れ／庭池之後，村院塀內 38×41m
-#   真正能種東西的只剩 **593 ㎡（38%）**，面積差 ~17×。
-# 使用者定案：村院**另做小型植栽**（重用這 10 種模組、重排位置，見
-# gen_town.gd 的 `_lm_hieda_planting`），這份擺位表原封不動留給獨立地圖。
-# 所以 `maps/hieda/gen/*.res` 目前是刻意保留的孤兒 —— 不要以為它壞了就刪掉。
-# hieda_garden.markers.json 裡那個 target 還是 null 的木戶 portal 同理。
+# hieda_garden.markers.json 裡 target 仍為 null 的木戶是未定案故事出口，保留但
+# 不自動生成 portal。
 extends RefCounted
 
 const MANIFEST := "res://data/hieda_garden.instances.json"

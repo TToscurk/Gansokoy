@@ -16,3 +16,5 @@
 | `PROJECT_STATE-2026-08-10.md` | 壓縮前的專案狀態與逐輪生產紀錄 |
 | `ningen-no-sato-redesign.md` | 2026-08-06 街區重構的開工規格與 15 輪歷史 |
 | `ningen-no-sato-production-history-2026-08-10.md` | 人間之里 Phase 3 至 Phase 5A 的完整實作與驗證紀錄 |
+| `hieda-estate-features-production-history-2026-08-11.md` | 稗田邸外觀、庭園、三層內裝與完整版搬遷的逐輪紀錄 |
+| `machiya-production-kit-production-history-2026-08-11.md` | 町家 Phase 1 至 2.6b 的完整製作、審圖與除錯紀錄 |
