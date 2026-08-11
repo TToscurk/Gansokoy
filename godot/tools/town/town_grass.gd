@@ -1,6 +1,46 @@
 extends RefCounted
 
 
+## Remove grass under deterministic post-grass features without consuming RNG.
+## get_instance_transform returns identity under the headless dummy renderer,
+## so read and rewrite the MultiMesh buffer directly with stride 12.
+static func cut_footprints(root: Node3D, footprints: Array) -> int:
+	const GRASS_NODES := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
+	var cut := 0
+	for child in root.get_children():
+		if not (child is MultiMeshInstance3D) \
+				or not (String(child.name) in GRASS_NODES):
+			continue
+		var multimesh: MultiMesh = (child as MultiMeshInstance3D).multimesh
+		var buffer: PackedFloat32Array = multimesh.buffer
+		var stride := 12
+		var keep := PackedFloat32Array()
+		var kept := 0
+		for index in multimesh.instance_count:
+			var offset := index * stride
+			var position := Vector2(buffer[offset + 3], buffer[offset + 11])
+			var hit := false
+			for footprint in footprints:
+				var delta: Vector2 = position - (footprint[0] as Vector2)
+				if absf(delta.x) < float(footprint[1]) \
+						and absf(delta.y) < float(footprint[2]):
+					hit = true
+					break
+			if hit:
+				cut += 1
+			else:
+				keep.append_array(buffer.slice(offset, offset + stride))
+				kept += 1
+		if kept != multimesh.instance_count:
+			var replacement := MultiMesh.new()
+			replacement.transform_format = MultiMesh.TRANSFORM_3D
+			replacement.mesh = multimesh.mesh
+			replacement.instance_count = kept
+			replacement.buffer = keep
+			(child as MultiMeshInstance3D).multimesh = replacement
+	return cut
+
+
 static func build(
 		lib,
 		root: Node3D,

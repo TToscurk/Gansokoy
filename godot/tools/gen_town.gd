@@ -1079,44 +1079,8 @@ func _build_market_quarter() -> void:
 		_lm_collide, _cut_grass, _audit)
 
 
-## 足元の草取り（共有 helper）。⚠ get_instance_transform は headless の
-## dummy レンダラーでは**単位行列しか返さない**（check_map が同じ坑を
-## 踏んで buffer 読みに直している）。ここも buffer を stride 12 で直接
-## 読み書きする —— 3.1B/3.2A のフィルタは実は一度も発火していなかった
-## （"0 叢を除去" は「無かった」ではなく「読めていなかった」）。
 func _cut_grass(foot: Array) -> int:
-	const GN := ["Shrubs", "Ferns", "GrassTall", "GrassFlower", "Reeds"]
-	var cut := 0
-	for ch in _root.get_children():
-		if not (ch is MultiMeshInstance3D) or not (String(ch.name) in GN):
-			continue
-		var mm: MultiMesh = (ch as MultiMeshInstance3D).multimesh
-		var buf: PackedFloat32Array = mm.buffer
-		var stride := 12
-		var keep := PackedFloat32Array()
-		var kept := 0
-		for i in mm.instance_count:
-			var o := i * stride
-			var q := Vector2(buf[o + 3], buf[o + 11])
-			var hit := false
-			for f in foot:
-				var dd: Vector2 = q - (f[0] as Vector2)
-				if absf(dd.x) < float(f[1]) and absf(dd.y) < float(f[2]):
-					hit = true
-					break
-			if hit:
-				cut += 1
-			else:
-				keep.append_array(buf.slice(o, o + stride))
-				kept += 1
-		if kept != mm.instance_count:
-			var nm2 := MultiMesh.new()
-			nm2.transform_format = MultiMesh.TRANSFORM_3D
-			nm2.mesh = mm.mesh
-			nm2.instance_count = kept
-			nm2.buffer = keep
-			(ch as MultiMeshInstance3D).multimesh = nm2
-	return cut
+	return TownGrass.cut_footprints(_root, foot)
 
 
 # ══════════════ Main Street batch：本通の街並みの回復 ══════════════
