@@ -8,6 +8,3 @@ branches/
 
 # Blender 腳本的 bytecode 快取
 __pycache__/
-
-# 人間之里 audit 工具的本機產生報告；正式驗證結果寫在任務報告／文件
-village_audit.json
