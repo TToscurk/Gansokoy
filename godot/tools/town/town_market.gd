@@ -50,6 +50,9 @@ static func build_stalls(lib, group: Node3D, world_centre: Vector2,
 	const STALL_ISLAND_DX := [0.0, 0.0, 2.10, 2.10, 4.60, 4.60]
 	const STALL_ISLAND_DZ := [0.0, 0.35, -0.45]
 	for i in 12:
+		# Stable family assignment.  Deliberately uses no RNG: changing stall art
+		# must not move the shared landmark stream or anything generated after it.
+		var family := i % 3 # 0 produce, 1 dry goods, 2 prepared food
 		var row := i % 2
 		var k0: int = i / 2
 		var ox: float = -13.0 + float(k0) * 4.55 \
@@ -74,10 +77,15 @@ static func build_stalls(lib, group: Node3D, world_centre: Vector2,
 			lib.strut(stall, "貫_%d" % int(sx + 1),
 				Vector3(sx * 1.3, 0.34, -0.85),
 				Vector3(sx * 1.3, 0.34, 0.85), 0.04, wood, 4)
-		lib.box(stall, "檯面", Vector3(2.9, 0.10, 1.9),
+		var counter_size: Vector3 = [
+			Vector3(3.25, 0.10, 1.95),
+			Vector3(2.85, 0.10, 1.72),
+			Vector3(3.05, 0.12, 2.10),
+		][family]
+		lib.box(stall, "檯面", counter_size,
 			material_fn.call("wood", i % 4), Vector3(0, 1.0, 0))
-		var back_h := 2.45
-		var front_h := 2.05
+		var back_h: float = [2.18, 2.78, 2.55][family]
+		var front_h: float = [1.82, 2.34, 1.92][family]
 		for sx in [-1.0, 1.0]:
 			lib.strut(stall, "篷柱後_%d" % int(sx + 1),
 				Vector3(sx * 1.35, 0.95, -0.95),
@@ -93,21 +101,26 @@ static func build_stalls(lib, group: Node3D, world_centre: Vector2,
 			Color(base_colour.r * 0.62 + 0.30,
 				base_colour.g * 0.62 + 0.30, base_colour.b * 0.62 + 0.30))
 		var strip_count := 6
+		var canopy_width: float = [3.55, 3.20, 3.45][family]
+		var canopy_depth: float = [1.12, 1.18, 1.42][family]
 		for row_index in 2:
 			var row_t := float(row_index)
-			var sag := -0.10 if row_index == 0 else 0.0
+			var sag: float = (-0.14 if family == 0 else -0.08) \
+				if row_index == 0 else 0.0
 			for strip_index in strip_count:
-				var strip_width := 3.3 / float(strip_count)
+				var strip_width := canopy_width / float(strip_count)
 				var canopy: MeshInstance3D = lib.box(
 					stall, "篷_%d_%d" % [row_index, strip_index],
-					Vector3(strip_width * 0.99, 0.05, 1.25),
+					Vector3(strip_width * 0.99, 0.055, canopy_depth),
 					cloth if strip_index % 2 == 0 else striped_cloth,
-					Vector3(-1.65 + (float(strip_index) + 0.5) * strip_width,
+					Vector3(-canopy_width * 0.5 \
+							+ (float(strip_index) + 0.5) * strip_width,
 						lerpf(back_h, front_h, 0.25 + row_t * 0.5) + sag,
-						-0.55 + row_t * 1.1))
-				canopy.rotation.x = 0.20 + row_t * 0.06
+						-canopy_depth * 0.44 + row_t * canopy_depth * 0.88))
+				canopy.rotation.x = (0.16 if family == 1 else 0.22) + row_t * 0.06
 		var skirt: MeshInstance3D = lib.box(
-			stall, "篷垂", Vector3(3.3, 0.34, 0.04), striped_cloth,
+			stall, "篷垂", Vector3(canopy_width,
+				[0.28, 0.52, 0.40][family], 0.04), striped_cloth,
 			Vector3(0, front_h - 0.12, 1.18))
 		skirt.rotation.x = 0.1
 		for goods_index in 3:
@@ -141,7 +154,80 @@ static func build_stalls(lib, group: Node3D, world_centre: Vector2,
 			lib.box(stall, "莚", Vector3(1.5, 0.05, 1.0),
 				lib.pbr("莚", "terrain_grass", 1.5, Color(0.80, 0.70, 0.46)),
 				Vector3(rng.randf_range(-0.6, 0.6), 0.09, 1.7))
+		_build_stall_family_details(
+			lib, stall, family, i, wood, cloth, striped_cloth, material_fn)
 		collision_fn.call(stall, Vector3(3.0, 1.1, 2.2), Vector3.ZERO)
+
+
+static func _stall_prop(lib, stall: Node3D, kind: String, suffix: String,
+		position: Vector3, yaw: float = 0.0,
+		scale: Vector3 = Vector3.ONE) -> void:
+	var item := MeshInstance3D.new()
+	item.mesh = lib.prop_mesh("res://assets/models/%s.glb" % kind)
+	item.position = position
+	item.rotation.y = yaw
+	item.scale = scale
+	lib.add(stall, item, "%s_%s" % [kind, suffix])
+
+
+static func _build_stall_family_details(lib, stall: Node3D, family: int,
+		index: int, wood: Material, cloth: Material, striped_cloth: Material,
+		material_fn: Callable) -> void:
+	if family == 0:
+		# Produce: low horizontal abundance, baskets and a ground mat.  The
+		# container silhouette carries the meaning, not three differently coloured boxes.
+		lib.box(stall, "農產莚", Vector3(2.35, 0.045, 1.15),
+			lib.pbr("農產莚", "terrain_grass", 1.5, Color(0.72, 0.61, 0.38)),
+			Vector3(-0.25, 0.085, 1.48))
+		_stall_prop(lib, stall, "prop_kago", "左_%d" % index,
+			Vector3(-0.92, 1.08, 0.18), -0.18, Vector3(0.72, 0.72, 0.72))
+		_stall_prop(lib, stall, "prop_zaru", "右_%d" % index,
+			Vector3(0.82, 1.10, -0.10), 0.22, Vector3(0.86, 0.86, 0.86))
+		_stall_prop(lib, stall, "prop_basket", "地_%d" % index,
+			Vector3(1.18, 0.04, 1.30), 0.35, Vector3(0.70, 0.70, 0.70))
+		# Rolled cloth at each front post gives the canopy a tied, soft edge.
+		for side in [-1.0, 1.0]:
+			lib.box(stall, "農產布束_%d" % int(side + 1.0),
+				Vector3(0.15, 0.46, 0.18), cloth,
+				Vector3(side * 1.38, 1.58, 1.10))
+	elif family == 1:
+		# Dry goods: a tall side rack, hanging packets and stacked containers.
+		for shelf in 3:
+			lib.box(stall, "乾貨棚_%d" % shelf, Vector3(1.05, 0.08, 0.42), wood,
+				Vector3(0.98, 0.72 + float(shelf) * 0.50, 0.62))
+		for side in [-1.0, 1.0]:
+			lib.strut(stall, "乾貨立柱_%d" % int(side + 1.0),
+				Vector3(0.98 + side * 0.48, 0.48, 0.62),
+				Vector3(0.98 + side * 0.48, 2.18, 0.62), 0.045, wood, 4)
+		for packet in 4:
+			lib.box(stall, "掛貨_%d" % packet, Vector3(0.22, 0.34, 0.12),
+				striped_cloth, Vector3(-0.72 + float(packet) * 0.46, 1.78, 0.92))
+		_stall_prop(lib, stall, "prop_crate", "乾_%d" % index,
+			Vector3(-1.02, 0.05, 1.30), -0.12, Vector3(0.78, 0.78, 0.78))
+		_stall_prop(lib, stall, "prop_kago", "棚_%d" % index,
+			Vector3(0.98, 1.72, 0.60), 0.20, Vector3(0.55, 0.55, 0.55))
+	else:
+		# Prepared food: a projecting service ledge and vessel cluster create a
+		# working face instead of another pure display table.
+		lib.box(stall, "熟食前台", Vector3(3.22, 0.14, 0.56),
+			material_fn.call("wood", (index + 2) % 4), Vector3(0, 1.05, 1.22))
+		for side in [-1.0, 1.0]:
+			lib.box(stall, "熟食台腳_%d" % int(side + 1.0),
+				Vector3(0.13, 0.88, 0.48), wood,
+				Vector3(side * 1.38, 0.52, 1.22))
+		var vessel_mat: StandardMaterial3D = lib.flat_mat(
+			"熟食器", Color(0.28, 0.30, 0.29), 0.72)
+		lib.cyl(stall, "鍋", 0.36, 0.42, 0.28, vessel_mat,
+			Vector3(-0.62, 1.26, 1.18), 12)
+		lib.cyl(stall, "器", 0.22, 0.25, 0.34, vessel_mat,
+			Vector3(0.08, 1.29, 1.18), 10)
+		_stall_prop(lib, stall, "prop_taru", "熟_%d" % index,
+			Vector3(1.02, 0.04, -0.35), 0.18, Vector3(0.62, 0.62, 0.62))
+		_stall_prop(lib, stall, "prop_zaru", "器_%d" % index,
+			Vector3(0.74, 1.20, 0.72), -0.20, Vector3(0.62, 0.62, 0.62))
+		# Short side flap protects the work surface without hiding the shops beyond.
+		lib.box(stall, "熟食側簾", Vector3(0.04, 0.64, 0.72), cloth,
+			Vector3(-1.48, 1.62, 0.58))
 
 
 static func build_civic_fixtures(lib, group: Node3D,
