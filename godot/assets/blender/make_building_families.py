@@ -54,6 +54,11 @@ MERCHANT_RECIPES = [
     ("family_small_merchant_05", "machiya_f_s", "center", "display"),
 ]
 
+PILOT_RECIPES = [
+    ("pilot_residence_01", "residence"),
+    ("pilot_shop_01", "shop"),
+]
+
 REPRESENTATIVE_SOURCES = {
     "family_standard_machiya_04",
     "family_nagaya_04bay",
@@ -294,6 +299,76 @@ def build_merchant(name, host, side, stock_mode):
     return b.build(name)
 
 
+def add_closed_residential_front(b, width, door_x):
+    """A quiet, layered frontage: closed screens beside a recessed genkan."""
+    genkan_x = -width * 0.27
+    # The dark back plane and the screen line are deliberately separated in Y;
+    # that small shadow gap reads as a real entrance at player-eye distance.
+    b.box(genkan_x, -0.25, 1.28, 1.22, 0.08, 1.98, "WOOD")
+    b.box(genkan_x, -0.75, 1.28, 1.02, 0.07, 1.78, "SHOJI")
+    for dx in (-0.48, 0.0, 0.48):
+        b.box(genkan_x + dx, -0.80, 1.28, 0.055, 0.07, 1.82, "WOOD")
+    for z in (0.40, 1.25, 2.16):
+        b.box(genkan_x, -0.80, z, 1.04, 0.07, 0.055, "WOOD")
+
+    # Closed rain shutters distinguish the dwelling from an open shop bay.
+    shutter_cx = width * 0.21
+    shutter_w = min(3.15, width * 0.38)
+    b.box(shutter_cx, -0.34, 1.28, shutter_w, 0.09, 1.88, "WOOD_LT")
+    for i in range(7):
+        x = shutter_cx - shutter_w * 0.5 + shutter_w * (i + 0.5) / 7
+        b.box(x, -0.40, 1.28, 0.045, 0.06, 1.82, "WOOD")
+    # Two restrained stones remain inside the existing declared frontage bbox.
+    for x, y, w in ((genkan_x, -1.13, 0.72), (genkan_x + 0.34, -1.20, 0.58)):
+        b.box(x, y, 0.11, w, 0.22, 0.12, "STONE")
+
+
+def add_shop_identity_front(b, width):
+    """Open merchant bay with noren, a projecting sign and display threshold."""
+    cx = -width * 0.20
+    opening_w = min(4.4, width * 0.60)
+    # Five short noren panels leave a readable gap above the display deck.
+    panel_w = (opening_w - 0.28) / 5.0
+    for i in range(5):
+        x = cx - opening_w * 0.5 + 0.14 + panel_w * (i + 0.5)
+        b.box(x, -1.66, 2.16, panel_w - 0.06, 0.035, 0.72, "PLASTER")
+    b.box(cx, -1.66, 2.55, opening_w + 0.10, 0.06, 0.10, "WOOD")
+
+    # A shallow display shelf keeps the doorway open instead of turning the
+    # whole frontage into the dwelling's closed lattice wall.
+    display_x = width * 0.27
+    display_w = min(1.75, width * 0.25)
+    b.box(display_x, -1.70, 0.92, display_w, 0.44, 0.12, "WOOD_LT")
+    for px in (display_x - display_w * 0.42, display_x + display_w * 0.42):
+        b.box(px, -1.70, 0.56, 0.10, 0.10, 0.68, "WOOD")
+
+    # Plain wooden hanging sign: architecture first, no text dependency.
+    sign_x = width * 0.39
+    b.box(sign_x, -1.60, 2.23, 0.12, 0.12, 1.02, "WOOD")
+    b.box(sign_x, -1.68, 1.89, 0.54, 0.08, 0.72, "WOOD_LT")
+
+
+def build_pilot(name, role):
+    """Build isolated variants for the two player-visible market-front lots."""
+    if role == "residence":
+        s = kit.spec_of("machiya_f_a")
+        b = kit.MB()
+        _ridge, door_x, _z_top = kit.machiya(b, s)
+        add_residential_entry(b, s["W"], door_x, "left")
+        add_rear_service(b, s["W"], s["D"], "gable")
+        add_upper_residential_treatment(b, s["W"], "mushiko")
+        add_closed_residential_front(b, s["W"], door_x)
+        return b.build(name)
+    if role == "shop":
+        s = kit.spec_of("machiya_f_s")
+        b = kit.MB()
+        kit.machiya(b, s)
+        add_merchant_front(b, s["W"], s["D"], "left", "compact")
+        add_shop_identity_front(b, s["W"])
+        return b.build(name)
+    raise ValueError("unknown Phase 2A pilot role: %s" % role)
+
+
 def export_asset(ob, name):
     os.makedirs(OUT_DIR, exist_ok=True)
     os.makedirs(SOURCE_DIR, exist_ok=True)
@@ -327,6 +402,7 @@ def generate():
     jobs += [(r[0], build_nagaya, r) for r in NAGAYA_RECIPES]
     jobs += [(r[0], build_kura, r) for r in KURA_RECIPES]
     jobs += [(r[0], build_merchant, r) for r in MERCHANT_RECIPES]
+    jobs += [(r[0], build_pilot, r) for r in PILOT_RECIPES]
     for name, builder, args in jobs:
         reset_scene()
         ob = builder(*args)

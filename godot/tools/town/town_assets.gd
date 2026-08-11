@@ -7,6 +7,8 @@ const PHASE5A_FAMILIES := {
 	"family_standard_machiya_03": {"w": 7.96, "d": 12.61, "h": 5.72, "fw": 7.96, "fd": 12.61, "glb": "res://assets/models/family_standard_machiya_03.glb"},
 	"family_small_merchant_01": {"w": 7.16, "d": 9.70, "h": 4.87, "fw": 7.16, "fd": 9.70, "glb": "res://assets/models/family_small_merchant_01.glb"},
 	"family_small_merchant_03": {"w": 10.74, "d": 11.70, "h": 4.62, "fw": 10.74, "fd": 11.70, "glb": "res://assets/models/family_small_merchant_03.glb"},
+	"pilot_residence_01": {"w": 9.56, "d": 11.60, "h": 5.42, "fw": 9.56, "fd": 11.60, "glb": "res://assets/models/pilot_residence_01.glb"},
+	"pilot_shop_01": {"w": 7.16, "d": 9.70, "h": 4.87, "fw": 7.16, "fd": 9.70, "glb": "res://assets/models/pilot_shop_01.glb"},
 	"family_kura_compact": {"w": 7.30, "d": 8.09, "h": 5.95, "fw": 7.30, "fd": 8.09, "glb": "res://assets/models/family_kura_compact.glb"},
 	# These sizes are measured from the Godot AABB of each joined mesh. Never
 	# edit them by hand: re-measure and update the asset dimension gate instead.

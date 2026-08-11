@@ -356,6 +356,48 @@
         "SHOJI": 20
       },
       "degenerate": 0
+    },
+    {
+      "name": "pilot_residence_01",
+      "glb": "godot/assets/models/pilot_residence_01.glb",
+      "dimensions": [
+        9.56,
+        11.595,
+        5.42
+      ],
+      "faces": 3570,
+      "triangles": 3570,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1838,
+        "WOOD_LT": 150,
+        "PLASTER": 464,
+        "STONE": 50,
+        "KAWARA": 1028,
+        "SHOJI": 40
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "pilot_shop_01",
+      "glb": "godot/assets/models/pilot_shop_01.glb",
+      "dimensions": [
+        7.16,
+        9.7,
+        4.87
+      ],
+      "faces": 2122,
+      "triangles": 2122,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 1042,
+        "WOOD_LT": 140,
+        "PLASTER": 172,
+        "STONE": 30,
+        "KAWARA": 718,
+        "SHOJI": 20
+      },
+      "degenerate": 0
     }
   ]
 }

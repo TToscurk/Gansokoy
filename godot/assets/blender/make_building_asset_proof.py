@@ -108,6 +108,14 @@ def build_sake():
     box("sake_loading_frame",(-4.3,-4.02,1.2),(2.35,.35,2.15),"WOOD")
     barrel("sake_cask_a",-4.65,-4.38,.82,1.05); barrel("sake_cask_b",-3.65,-4.38,.72,.85)
     cyl("sake_sugidama",(3.85,-4.38,2.55),.48,.75,"EARTH",16,rot=(math.pi/2,0,0))
+    # Phase 2A hero frontage: the broad open bay gets a readable noren rhythm,
+    # while the cedar ball and cask bay remain the sake-shop-specific cues.
+    for i, x in enumerate((-1.28, -.82, -.36, .10)):
+        box(f"sake_noren_{i}",(x,-4.43,2.18),(.38,.035,.82),"PLASTER")
+    box("sake_noren_rail",(-.59,-4.43,2.63),(1.95,.07,.11),"WOOD")
+    box("sake_sign_bracket",(2.72,-4.34,2.56),(.12,.12,1.10),"WOOD")
+    box("sake_sign_board",(2.72,-4.43,2.18),(.62,.07,.78),"WOOD_LT")
+    box("sake_threshold",(-.58,-4.48,.30),(2.15,.48,.16),"WOOD_LT")
     box("sake_kura",(4.55,2.3,2.25),(3.0,3.0,4.15),"PLASTER")
     gable_roof("sake_kura_roof",3.2,3.2,4.3,1.0,y=2.3)
     lattice("sake_side",-5.76,-5.76,-.2,.8,2.2,3)  # side relief rhythm
