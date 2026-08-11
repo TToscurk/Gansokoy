@@ -12,14 +12,21 @@ extends CharacterBody3D
 
 @onready var pivot: Node3D = $Pivot
 @onready var arm: SpringArm3D = $Pivot/SpringArm3D
+@onready var interaction_ray: RayCast3D = $InteractionRay
+
+signal interaction_prompt_changed(text: String)
+signal interaction_message(text: String)
 
 var flying := false
+var _interaction_target: Node = null
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if event.is_action_pressed("interact"):
+		_interact()
+	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		pivot.rotate_x(-event.relative.y * mouse_sensitivity)
 		pivot.rotation.x = clampf(pivot.rotation.x, -1.2, 0.7)
@@ -60,3 +67,34 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if flying and is_on_floor():
 		flying = false
+	_update_interaction_target()
+
+
+func _update_interaction_target() -> void:
+	var next_target: Node = null
+	if interaction_ray.is_colliding():
+		next_target = _find_interactable(interaction_ray.get_collider() as Node)
+	if next_target == _interaction_target:
+		return
+	_interaction_target = next_target
+	var prompt := ""
+	if _interaction_target != null:
+		prompt = String(_interaction_target.get_interaction_prompt())
+	interaction_prompt_changed.emit(prompt)
+
+
+func _find_interactable(node: Node) -> Node:
+	var candidate := node
+	while candidate != null and candidate != self:
+		if candidate.has_method("get_interaction_prompt") and candidate.has_method("interact"):
+			return candidate
+		candidate = candidate.get_parent()
+	return null
+
+
+func _interact() -> void:
+	if _interaction_target == null or not is_instance_valid(_interaction_target):
+		return
+	var response: Variant = _interaction_target.interact()
+	if response != null and not String(response).is_empty():
+		interaction_message.emit(String(response))

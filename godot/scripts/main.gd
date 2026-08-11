@@ -13,6 +13,7 @@ const PORTAL_COOLDOWN := 2.0
 ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
 ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
 const TRIMESH_MIN_SPAN := 15.0
+const VERTICAL_SLICE_NPC := preload("res://scenes/test_npc.tscn")
 
 var registry: Dictionary = {}
 var current_id := ""
@@ -21,8 +22,12 @@ var portal_cooldown := 0.0
 
 @onready var player: CharacterBody3D = $Player
 @onready var map_label: Label = $UI/MapLabel
+@onready var interaction_prompt: Label = $UI/InteractionPrompt
+@onready var interaction_message: Label = $UI/InteractionMessage
 
 func _ready() -> void:
+	player.interaction_prompt_changed.connect(_on_interaction_prompt_changed)
+	player.interaction_message.connect(_on_interaction_message)
 	registry = _load_json("res://data/mapRegistry.json")
 	# godot -- --map=trail 直接跳到指定圖（測試 / 開發用）
 	var start := START_MAP
@@ -138,6 +143,8 @@ func _load_json(p: String) -> Dictionary:
 	return JSON.parse_string(txt)
 
 func load_map(id: String, from_id: String) -> void:
+	interaction_prompt.visible = false
+	interaction_message.visible = false
 	var meta := _load_json("res://data/%s.meta.json" % id)
 	if meta.is_empty():
 		return
@@ -170,10 +177,30 @@ func load_map(id: String, from_id: String) -> void:
 	if not own:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
+	_spawn_vertical_slice_npc(id)
 	_place_player(meta, from_id)
 
 	var info: Dictionary = registry.get(id, {})
 	map_label.text = "%s  %s" % [info.get("zh", id), info.get("en", "")]
+
+
+func _spawn_vertical_slice_npc(map_id: String) -> void:
+	if map_id != "village":
+		return
+	var npc := VERTICAL_SLICE_NPC.instantiate() as Node3D
+	npc.name = "VerticalSliceNPC"
+	npc.position = Vector3(2.5, 0.3, -158.0)
+	map_root.add_child(npc)
+
+
+func _on_interaction_prompt_changed(text: String) -> void:
+	interaction_prompt.text = text
+	interaction_prompt.visible = not text.is_empty()
+
+
+func _on_interaction_message(text: String) -> void:
+	interaction_message.text = text
+	interaction_message.visible = not text.is_empty()
 
 ## 大 mesh 做 trimesh 靜態碰撞。
 ##

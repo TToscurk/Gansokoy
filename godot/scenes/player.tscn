@@ -24,6 +24,13 @@ mesh = SubResource("capmesh")
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="InteractionRay" type="RayCast3D" parent="."]
+position = Vector3(0, 1.35, 0)
+target_position = Vector3(0, 0, -4)
+collision_mask = 1
+collide_with_areas = true
+collide_with_bodies = true
+
 [node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
 spring_length = 5.0
 
