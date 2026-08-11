@@ -9,8 +9,9 @@ STOP WHEN TASK COMPLETE**
   usually answers the question without opening a file.
 - Grep for the symbol, then read the ±30 lines around it. Read whole files
   only when you must edit their structure.
-- The generators are large (`gen_town.gd` ≈ 3.4k lines, `make_town.py`,
-  `make_machiya.py`). Never read one end-to-end to "get oriented".
+- The Human Village entry point is about 1.2k lines and delegates to
+  `tools/town/*.gd`; search for the responsible module before opening
+  `gen_town.gd`. Never read a generator end-to-end just to get oriented.
 - Never re-audit the repository. `docs/PROJECT_STATE.md` is the audit.
 - Do not re-investigate a decision listed in PROJECT_STATE's
   do-not-reopen section.

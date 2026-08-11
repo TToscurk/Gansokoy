@@ -12,3 +12,7 @@
 | `共用系統整合書.md` | **three.js 時代**的 GameCore 重構計畫（src/ 已凍結） |
 | `角色模型精緻化升級書.md` | **three.js 時代**的 src/entities/model.js 升級計畫 |
 | `ui-review-2026-08-01.md` | three.js 版 UI 的審查快照 |
+| `web-threejs-readme.md` | 舊 three.js 啟動、操作與開發說明；現行入口已改為 Godot |
+| `PROJECT_STATE-2026-08-10.md` | 壓縮前的專案狀態與逐輪生產紀錄 |
+| `ningen-no-sato-redesign.md` | 2026-08-06 街區重構的開工規格與 15 輪歷史 |
+| `ningen-no-sato-production-history-2026-08-10.md` | 人間之里 Phase 3 至 Phase 5A 的完整實作與驗證紀錄 |

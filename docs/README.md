@@ -22,9 +22,9 @@
 | **hieda-estate-features.md** | 稗田邸（外觀・庭園・三層內裝・故事設定） | 稗田邸相關變動時 |
 | **journal.md** | 開發日誌（新的在上面） | 每輪收工時 |
 
-`ningen-no-sato-redesign.md` 是人間之里街區重構的**逐輪工作紀錄**（開工規格 +
-15 輪，924 行）。街區重構已於 2026-08-06 完結，它現在的用途是「當時為什麼
-這樣決定」的歷史；日常查詢請看 `ningen-no-sato.md`。
+人間之里的逐輪工作紀錄已移至 `archive/ningen-no-sato-redesign.md` 與
+`archive/ningen-no-sato-production-history-2026-08-10.md`。日常工作只讀
+`ningen-no-sato.md`。
 
 ## 歸檔規則
 

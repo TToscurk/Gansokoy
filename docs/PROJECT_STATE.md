@@ -1,364 +1,78 @@
 # PROJECT STATE
 
-Canonical answer to "where is this project right now". First document a new
-task reads after `CLAUDE.md`. Kept short on purpose — history belongs in the
-subsystem docs, not here.
+這是每個新任務在 `CLAUDE.md` 之後必讀的目前狀態。只保留會影響下一個決策的
+事實；逐輪紀錄在子系統文件或 `docs/archive/`。
 
-Last updated: 2026-08-09 (Human Village architecture and streets visual pass complete).
-
----
+Last updated: 2026-08-11.
 
 ## Execution Mode
 
-| subsystem | mode |
+| 子系統 | 模式 |
 |---|---|
-| **Human Village architecture** | **PRODUCTION MODE** |
-| everything else | DESIGN MODE unless the human says otherwise |
+| Human Village production work | PRODUCTION MODE |
+| 其他子系統 | DESIGN MODE，除非使用者另有指示 |
 
-Rule: `.claude/rules/execution-modes.md`.
+完整規則：`.claude/rules/execution-modes.md`。
 
-## Current Phase
+## Current Build
 
-**Human Village architecture and streets visual pass complete.** Deterministic
-lot-family selection now breaks up copied secondary frontages and gives the
-main street a controlled 0.15–1.50 m setback cadence while preserving road
-centrelines, portals, reservations, OBB collision and landmark transforms.
-The two civic axes retain the strongest stone finish; secondary streets and
-alleys transition toward packed earth through a deterministic irregular edge
-blend. Fixed BEFORE / round-1 / AFTER evidence is in
-`shots2/village_arch_streets/`.
+- 現行遊戲是 `godot/` 下的 Godot 4.4 專案。
+- 頂層 `src/` 是凍結的 three.js 舊線，但仍供尚未原生化的地圖匯出 blockout。
+- 人間之里場景：`godot/maps/village/village.tscn`。
+- 正式生成入口：`godot/tools/gen_town.gd`，約 1,154 行。
+- `gen_town.gd` 只保留 orchestration、shared state 與 deterministic RNG ownership；
+  實作責任已拆到 `godot/tools/town/*.gd`。
+- 已淘汰的 `godot/tools/gen_village.gd` 已於 2026-08-11 刪除；需要考古時查 Git。
+- 人間之里生成結果目前是 1,680 個節點。最後一次結構重構前後，instance 與
+  MultiMesh stable hashes 均保持一致，五項靜態驗證通過。
 
-**Human Village vegetation production pass complete.** Village-local canopy
-shading now preserves readable green crowns instead of black spike masses.
-Ground vegetation uses low-frequency colonies plus activity and edge weighting:
-roads, entrances, market and shrine stay sparse, while the village edge carries
-denser shrub/fern/tall-grass layers. Fixed review evidence lives in
-`shots2/village_vegetation/`; the reusable Windows capture entry point is
-`tools/capture-godot.cmd`.
+## Human Village Baseline
 
----
+- 道路、河道、地標、傳送點、建物配置及 deterministic output 已鎖定。
+- 住宅已全面使用 production architecture；legacy residential blockout 為 0。
+- 市場、主要街道、街燈、河岸生態、草層及密度層均已模組化。
+- 六座正式地標均有真內容；名稱一律使用「鯢吞亭／鲵吞亭」，不得沿用歷史誤字
+  「鵜吞亭」。
+- 視覺變更仍須 prototype/slice → render → Human Art Review → rollout。
 
-**Human Village — Main Street Complete. Delivered** (after Architecture
-Complete, same day). 本通 now reads as an inhabited street north to south:
+## Generator Contract
 
-- 174 m civic-core gap re-fronted by **extending landmark frontage**: 寺子屋
-  board fence + roofed gate, 稲荷小祠, 鎮守之杜 玉垣 + torii, a walled
-  二蔵 compound (market storehouses) on the east side, market 幟 ×5 + 木戸 +
-  goods spill, hedges by 足洗邸, 5 street trees. Road axis/width, landmark
-  identity, portals, circulation untouched.
-- N2 上屋 rebuilt as a lean-to (下屋): rear wall, 沓石+貫+方杖, exposed
-  rafters, packed-earth floor — no longer a bus shelter.
-- Gutter lids: uv 0.30→1.9, darker, thinner, sunk flush.
-- Street lamps: municipal fixture + even spacing replaced by 木の辻行灯 at
-  14 fixed anchors (gates, crossings, shrine, market, bridge, bathhouse).
-  Lighting phase NOT started.
+- 不改 RNG 呼叫次序、不在責任模組內建立新的獨立 RNG ownership。
+- 不改程序生成順序、座標、建物數、資產選擇或保留區，除非使用者明確核准。
+- 驗證以輸出的 `.tscn`、instances JSON、MultiMesh buffer 及引擎畫面為準。
+- `gen_town.gd` 是正式入口，不能刪除，也不再以行數為理由強拆。
 
-Measured: z=−60 southward FOV median 99→43 m; near-field (<60 m) occlusion
-20→52%; no frontage-less stretch over 40 m remains in the core gap.
-Details and honest leftovers: `ningen-no-sato.md` §13.
+## Current Risks
 
-## Current Status
+- RNG 雖已分層，個別層內仍可能是循序 stream；插入隨機呼叫會造成後續漂移。
+- 稗田邸 blockout、鐘塔／火見櫓、近景小物和水生植物仍有美術品質債。
+- 手工 LOD 尚未完成；住宅 production geometry 的三角面成本高於早期 blockout。
+- `bamboo`、`eientei`、`namelessHill`、`shrine`、`sunflower` 尚依賴
+  `godot/blockout/*.glb`。
+- `shots2/` 有尚未納入 Git 的驗收圖；清除前需由使用者決定是否保留。
 
-Phase 2.6b is the approved baseline for facade dressing, cloth placement,
-business-identity composition and foreground prop quality. The slice
-(`maps/slice/`) remains the benchmark scene.
+## Current Gate / Next
 
-The 2026-08-08 audit that started this work found 117 of 170 houses (69%)
-were untextured single-surface blockouts. That population is now **0**.
+- 先完成現有市場、資產尺寸與村落視覺證據的 Human Art Review／保存決策。
+- 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。
+- 若工作只涉及程式結構，硬條件是生成結果 stable hash 不漂移，所有靜態檢查通過。
 
-Branch: `claude/previous-progress-92cb1a`.
+## Do Not Reopen Without Regression Evidence
 
-## Approved Baselines
+- 人間之里道路與河道結構、主要地標位置及 portal 連接。
+- 已核准的町家結構比例、材質語言與 production asset pipeline。
+- 稗田邸完整版放在人間之里，舊縮小程序版不復活。
+- Godot front-face winding 為 clockwise。
+- `make_town.py` 是 `town_modules.json` 的單一 writer。
+- `gen_town.gd` 持有 shared state 與 RNG；責任模組不另起一套生成流程。
 
-Locked by human approval. Treat as settled.
+## Canonical Documents
 
-| Baseline | What it fixed | Evidence |
-|---|---|---|
-| Phase 1 | `machiya_f_a` production prototype: 真壁造 frame, semantic materials, component roof/hisashi, Blender→Godot pipeline | `shots2/phase1/` |
-| Phase 1.1 | Proportion + roof language: total height 5.40 m, pitch 21°, 厨子二階, 桟瓦葺き | `shots2/phase1/p1-新舊並排.png` |
-| Phase 1.5 | Vertical slice as art benchmark (`maps/slice/`, independent of village) | `shots2/slice/s0-before_after.png` |
-| Phase 1.6 | Legacy blockout quarantined out of the slice | 4 slice views |
-| Phase 1.7 | Material readability: plaster, packed earth, wood grain, distant tile moiré | `shots2/slice_16/` vs `shots2/slice/` |
-| Phase 2 | Architecture Kit — 6 distinct machiya modules. Approved as **structural baseline** | `shots2/kit/00_lineup_*`, `shots2/slice_17/` vs `shots2/slice/` |
-| Phase 2.5–2.6b | Facade & life dressing on 3 hero storefronts (八百屋/酒屋/紺屋); foreground prop v2 (taru/kago/noren); cloth as cloth; vertical dressing; cloth clearance derived from manifest eave planes. Approved as the **facade-dressing baseline** | `shots2/hero/h1–h3`, `shots2/cloth/c1–c7`, `shots2/slice/s1` |
-
-## Current Architecture State
-
-Production kit, all generated by `godot/assets/blender/make_machiya.py`
-(`SPECS`), sizes owned by `make_town.py` (`MACHIYA`):
-
-| module | fw × fd × h | faces | character |
-|---|---|---|---|
-| `machiya_f_a` | 9.56 × 9.53 × 5.42 | 2834 | standard shop (Phase 1 baseline, geometry frozen) |
-| `machiya_f_s` | 7.16 × 8.50 × 4.87 | 1686 | 仕舞屋, no mezzanine, entry-only hisashi |
-| `machiya_f_o` | 11.76 × 10.47 × 6.17 | 3630 | 大店, 5 bays, 卯建 |
-| `machiya_t_a` | 7.96 × 10.66 × 5.72 | 2408 | 妻入り (gable to street) |
-| `machiya_w_a` | 9.16 × 9.31 × 5.75 | 2144 | workshop, 板戸張り, 煙出し |
-| `machiya_f_n` | 9.96 × 9.90 × 6.42 | 3488 | real second floor + 手摺 |
-| `machiya_e_p` | 7.94 × 7.88 × 4.17 | 1712 | 村緣の平屋, 板戸 bay, entry hisashi |
-| `machiya_f_m` | 10.74 × 9.29 × 4.62 | 2610 | 米屋, wide door + 板戸, no mezzanine (the low half of the stepped skyline) |
-| `machiya_n_a` | 11.14 × 9.29 × 7.67 | 3620 | 総二階, wide door + 板戸 ground floor |
-| `machiya_n_o` | 12.34 × 9.69 × 8.55 | 4374 | 総二階の大店, 5 bays, 卯建 + 煙出し |
-
-Legacy blockout modules (`machiya_e_a` / `f_b` / `b_a` / `b_b`, 314–654 faces,
-1 surface, no albedo texture) are **still built and still in the manifest**
-(the block configs name them before substitution) but are **not instanced in
-any map**. `village.tscn` references them 0 times.
-
-Slice scene `maps/slice/` places 10 lots from the 6 production modules
-(f_a×3, f_o×2, f_n×2, f_s/t_a/w_a ×1). No legacy blockout in the slice.
-
-## Current Human Village State
-
-`maps/village/village.tscn`, generator `tools/gen_town.gd`, seed 20260806.
-
-- **170 machiya, 7 module names, 100% production kit, 0 legacy blockout**
-- machiya triangle budget 202,982 → **459,796 (+127%)** — the cost of
-  replacing 314–654-face blockouts with 1,712–4,374-face production geometry.
-  Not optimized preemptively; no regression measured yet.
-- 6 landmarks with real content, 3 towers, 3 bridges, 115 revetment segments
-- 稗田邸: the full standalone version now lives inside the village map
-- Interiors: 稗田邸 1F / 2F / 3F as separate scenes, portals linked
-
-Substitution lives in `gen_town.gd::CONSOLIDATE` / `_consolidate()`,
-`CONSOLIDATE_ALL = true`.
-
-## Known Risks
-
-| Risk | Where |
+| 主題 | 文件 |
 |---|---|
-| 卯建 form still reads as a panel on the wall, not a continuous fire wall | `make_machiya.py::_udatsu` |
-| All kit roofs are 切妻 — no 入母屋 / 落棟 / 下屋 | kit silhouette range |
-| Backlit plaster reads cold grey and flat (lighting problem, not texture) | deferred to lighting/cel-shading round |
-| LOD is `lod_bias` only; no hand-authored LOD0/1/2 | Master Plan §5 still open |
-| Anisotropic filtering was added globally in `pbr()` — village inherits it on next regeneration | `gen_lib.gd` |
-| Placeholder villagers quarantined out of the slice — no human figure left as a scale reference | `gen_slice.gd::_build_people` |
-| Cloth clearance rule is currently non-binding (k≈0.98–1.0) — it is a guard-rail, not what fixed the intersections | `make_facade.py::cloth_strip` |
-| 妻入り `eave` metadata assumes 平入り axes; unusable for upper-facade hangers on `machiya_t_a` | manifest `facade.eave` |
-| Hand-built small props (bucket/broom/planter) still old quality | `gen_slice.gd` |
-| Signboards carry no lettering (blank panels) | `prop_kanban`, `prop_kanban_tate` |
-| `sun_angle_max` and shot-mode `player.visible` were changed as by-products of a misdiagnosis — revisit both in the lighting round | `gen_slice.gd`, `scripts/main.gd` |
-| 稗田邸 blockout has no textures — now the only untextured building in the village | `docs/ningen-no-sato.md` §9.1 |
-| `tower_bell` / `tower_fire` read as flat dark slabs at close range — landmark asset quality, not residential; a tower redesign is an art-direction call | `assets/models/tower_*.glb` |
-| Machiya triangles +127% after consolidation; LOD is still `lod_bias` only | `gen_town.gd`, Master Plan §5 |
-| 総二階 ridge is 7.67/8.55 m where the legacy blockout was 9.40/9.90 m — the second skyline is preserved but lower (measured: 6.14 m is the minimum to clear the front eave line) | `ningen-no-sato.md` §12.2 |
-| `Material.use_nodes` is deprecated and slated for removal in Blender 6.0 — every exporter sets it. Not urgent on 5.2, but it is the next toolchain break | `assets/blender/*.py` |
-| Family GLBs are exported from `.blend` sources under `assets/blender/sources/`, which are now `.gdignore`d — Godot was trying to import them and failing for want of a Blender path | `godot/assets/blender/.gdignore` |
-| Water / wet-flat gap and lotus geometry unresolved | deferred to cel shading |
-| Slice's 10 lots are hand-placed; no rule yet for distributing 6 modules over 169 houses | `gen_slice.gd` vs `gen_town.gd` |
-
-## Current Art Review Gate
-
-**Human Village — Architecture Complete.** `shots2/village_arch/` (v01–v15
-normal gameplay views) and `shots2/kit10/` (10-module lineup).
-`shots2/village_consolidate/` holds the BEFORE/AFTER pairs from the corridor
-step.
-
-## Next Planned Phase
-
-The legacy residential population is gone, so the work that was paused for it
-is unblocked: **3.2B landmark frontage on 本通**, the 490 m sight line, street
-lamp vocabulary, and the lighting / cel-shading round. Order and mode are the
-human's call.
-**Blocker found:** the kit has no 9–10 m module for the village's back rows
-(`b_a` 9.4 m / `b_b` 9.9 m). Substituting the 6.42 m `f_n` would drop the
-village's second-layer skyline by 3 m. A 総二階/大型町家 module is required
-before full rollout.
-
-Deferred behind it: the lighting / cel-shading round (the parking lot for
-backlit plaster, blockout textures, water, prop scale).
-
-**AI 3D asset generation is deferred by human decision.** Environment audit
-completed: this machine has **no GPU**, and `huggingface.co` (plus every
-other model-weight host) is denied by org egress policy over both HTTPS and
-git, so no open image-to-3D model can be installed here. Do not spend
-further time on it without an explicit instruction.
-
-## Explicit Do-Not-Reopen
-
-Settled by human decision. Reopening requires regression evidence.
-
-- `machiya_f_a` geometry (2834 faces, 5.42 m total height).
-- Standard machiya total-height band 5.2–5.6 m; do not flatten the pitch
-  into a low-slope modern house.
-- Ordinary machiya use 桟瓦葺き; 本瓦/丸瓦 is reserved for future wealthy,
-  temple and landmark buildings.
-- 内法高 `LINTEL_Z = 1.85` is constant across the whole kit — it is the
-  "same culture" signal.
-- Legacy blockout assets are **kept, not deleted**; they are excluded from
-  the slice only.
-- The village's 169 houses are not to be mass-replaced without approval.
-- 稗田邸 lives in the village map as the full standalone design; the
-  Stage-0 shrunken village variant is dead.
-- Godot front-face winding is clockwise; verified by ray probe.
-- `make_town.py` is the single writer of `town_modules.json`.
-- Density-layer additions must be checked for order dependence: `_drng` is a
-  single sequential stream over `_dump`, so a house-count change anywhere
-  moves props village-wide (see ningen-no-sato §11.4, ghost-pass fix).
-- Hanging props derive their height from the manifest's `facade.hisashi` /
-  `facade.eave` planes via `_hang_y()`. Never hand-write an absolute hang
-  height again — that is what put cloth through the eaves in Phase 2.6.
-- Phase 2 is the structural baseline; the kit is not expanded to the
-  village until facade/life dressing clears review.
-
-## Human Village asset identity pass (2026-08-09)
-
-Seven reusable business-front GLBs are now generated by `make_facade.py`:
-sake, rice, dye, general goods, inn, closed residence, and workshop. They use
-one shared vertex-colour material path and deterministic household assignment;
-roads, building OBBs, portals, landmarks, lighting, and vegetation are unchanged.
-The fixed wide review cameras confirm no new obstruction or landmark occlusion,
-but long-range main-street role readability remains a follow-up art-direction item.
-
-## Human Village roofscape and upper-facade identity pass (2026-08-09)
-
-Four reusable Blender-generated roofline families now punctuate only the main
-street, market context, and selected civic junctions: merchant gable, restrained
-udatsu, balcony/drying frontage, and storage-loft canopy. Deterministic overlays
-preserve host footprints, OBBs, setbacks, routes, landmarks, vegetation, and
-lighting while adding medium-distance upper-bay and sign-bracket silhouettes.
-
-## Human Village Phase 2A building-family candidate (2026-08-09)
-
-Phase 2A adds a standalone, Blender-generated asset library for four approved
-families without changing Human Village placement: six Standard Machiya
-residential recipes, three continuous-roof Nagaya recipes, three standalone
-Kura recipes, and five Small Merchant recipes. Standard Machiya reuses the
-production `machiya_f_a`, `machiya_f_n`, and `machiya_t_a` structures; Small
-Merchant reuses `machiya_f_s` and `machiya_f_m`. Nagaya and Kura are new full
-building systems. All seventeen GLBs retain the six shared semantic material
-slots.
-
-The isolated review scene is `maps/asset_family_showcase/`; fixed evidence is
-under `shots2/asset_family_phase2a/`. The targeted correction strengthened the
-Nagaya entry rhythm and closed the Kura roof with a plaster front gable. This
-library is awaiting Human Art Review and is not approved for village rollout.
-
-## Human Village Phase 5A market + north-approach pilot (2026-08-09)
-
-Phase 5A replaces nine existing lots without changing the 171-building count,
-roads, portals, landmarks, lighting, or rollout outside the approved pilot.
-Market blocks 221/222 receive two Small Merchants, two Standard Machiya, one
-Workshop, and one subordinate rear Kura. The north approach receives one
-Hatago, one Sake Shop, and one Small Merchant. One measured correction pass
-resolved three building OBB conflicts; the final 178-OBB check reports zero
-overlaps. Fixed before/after evidence is local under `shots2/village_phase5a/`.
-
-The fire-tower and torii sightlines, market circulation, and low north-entry
-transition remain open. Phase 2B is not required before a controlled Phase 5B:
-the approved Phase 2A families are technically suitable, although distant role
-readability should continue to be reviewed district by district.
-
-## Human Village Phase 5A-V market quarter vertical slice (2026-08-10)
-
-A visual-production pass on the Market Quarter only (blocks 221/222, the
-market's street-facing and service edges, and the 本通 junction). Phase 5A's
-placements were kept as the starting point; nothing outside the market quarter
-was touched.
-
-- **Ground.** The market plaza was literally lawn — twelve stalls standing on
-  grass. `mask_at` now carries a market-quarter surface: packed earth over the
-  plaza, service band and west frontage (a union of three noise-perturbed
-  rects, not one rectangle), with stone reserved for the 本通 entrance, the
-  south shop thresholds and the west shopfront.
-- **Permanent commercial edge.** Six lots from already-approved assets close
-  the market: a 蔵 fronting 本通 at the south-east corner, a small merchant
-  and the production-kit workshop `machiya_w_a` facing the plaza, a 蔵 fronting
-  the z=85 cross street with its rear as the loading yard, and two west-edge
-  buildings closing the aisle's vanishing point. Gaps of 3–4.5 m between them
-  are readable service and market passages.
-- **Stalls.** The even 5.4 m grid became three islands (4.55 m inside an
-  island, ~6.6 m between) with a per-island aisle jog. `_lm_rng` consumption is
-  unchanged, so the well, notice board and dragon statue did not move.
-- **Functional dressing.** Loading platform + rice bales at the 蔵, work canopy
-  with timber staging at the workshop, display bench at the merchant, a goods
-  rack at the west edge, and stepping stones from the market gate. No random
-  props.
-
-Fixed evidence: `shots2/market_quarter/before` vs `after` (four player-eye
-views, one elevated, plus the Phase 5A `market_context` camera for regression).
-
-**Defect found here, fixed in the asset-integrity pass below:** all three
-`asset_proof_*` GLBs imported as sub-metre single-surface fragments while OBB
-and collision were built from the JSON table, so Phase 5A placed three
-**invisible buildings with invisible colliders** and every static gate passed.
-
-## Asset integrity pass — proof GLBs and dimension gate (2026-08-10)
-
-Three independent things had to line up for the defect to be invisible:
-
-1. `make_building_asset_proof.py` exported every loose primitive as its own
-   glTF node — it never joined, unlike `make_machiya.py` and
-   `make_building_families.py`.
-2. `gen_lib.semantic_mesh()` / `prop_mesh()` take the **first** MeshInstance3D
-   in the imported scene and stop, so the engine drew one arbitrary sub-part:
-   a smoke vent, a lattice rail, a cedar ball.
-3. `PHASE5A_FAMILIES` declared sizes by hand, and every consumer — OBB overlap,
-   collision boxes, spacing — read that table rather than the mesh.
-
-The review evidence agreed with nobody: `maps/asset_building_proof` built its
-buildings with `GLTFDocument.generate_scene()` (the whole node tree) and
-`measure_building_asset_proof.py` aggregated *all* mesh objects after
-re-import, so both reported complete, correctly sized buildings. **The
-reviewer and the player were looking at two different readings of the same
-file.**
-
-Fixed: the exporter now joins to a single object and prints its measured bbox;
-the proof scene builds through the production `semantic_mesh()` path so it can
-no longer disagree with the village; material names moved onto the semantic
-contract (`WOOD_LIGHT` → `WOOD_LT`, `PAPER` → `SHOJI` — the first collapsed
-into the WOOD bucket by prefix, the second matched nothing); and
-`PHASE5A_FAMILIES` now carries measured numbers.
-
-Corrected dimensions (Godot AABB of the joined mesh, w × h × d):
-
-| asset | declared before | measured now | surfaces |
-|---|---|---|---|
-| `asset_proof_hatago` | 9.10 × 7.30 × 13.00 | **9.90 × 7.30 × 13.19** | 6 |
-| `asset_proof_sake_shop` | 12.20 × 5.30 × 9.60 | **13.20 × 5.30 × 9.36** | 5 |
-| `asset_proof_workshop` | 11.30 × 6.45 × 9.60 | **11.10 × 6.49 × 9.88** | 6 |
-
-At their true widths the 旅籠 and 酒屋 cut 0.21 m and 0.29 m into a
-neighbouring `machiya_e_p`. Both were shifted 0.8 m **along the street**, so
-setback, side of 本通 and orientation — the reviewed parts — are unchanged.
-
-## Asset toolchain hardening (2026-08-10)
-
-Two latent traps closed repository-wide. No composition, placement, gameplay,
-vegetation, lighting, road or building-art change; no asset regenerated.
-
-**Shader nodes are looked up by type, never by name.** The `"Principled BSDF"`
-lookup was not a Blender-version problem, it was a **locale** problem, which is
-worse because it is invisible to whoever wrote the script: newly created nodes
-are named in the running Blender's UI language. On this machine
-`bpy.data.materials.new()` yields `原則化 BSDF` / `材質輸出`, so every exporter
-died on its first material — and two people on the same Blender version would
-get different results. `node.type` is a stable, untranslated enum. New shared
-module `assets/blender/blender_compat.py` (`principled()`, `background()`),
-imported by the same `sys.path` idiom `tree_lib` already uses. The `Background`
-lookup had the same flaw and was only working by luck where the node came from
-the English startup file — `make_machiya.py`'s neutral stage creates its own
-world and would have raised.
-
-**`gen_lib` now enforces a single-mesh GLB contract.** `semantic_mesh()` and
-`prop_mesh()` collect *every* `MeshInstance3D` and, on anything other than
-exactly one, `push_error` naming the asset and its mesh nodes and return null,
-so the caller fails visibly. Runtime mesh merging was deliberately **not**
-added: merging silently reorders material slots and can flip winding, which is
-this repository's most expensive class of accident. Joining belongs in the
-exporter, where every exporter already does it. Villagers are unaffected —
-they carry 6 meshes but load through `char_scene()`, which keeps the tree.
-
-`tools/asset_dims_check.gd` is the gate: it measures every module the
-generator can instance, through the same reader the generator uses, and fails
-on more than **0.05 m** absolute deviation from the declared `fw`/`h`/`fd`. It
-also fails a building that arrives with a single surface. Height is compared
-for buildings only — `bridge`/`tower`/`landmark` declare a functional height,
-not a bbox height. Teeth-tested against the real defect: it reported all three
-proof assets ✗ before the fix and 28/28 ✓ after. It now also runs a standing
-teeth-test of the single-mesh contract on every invocation, using
-`villager_a.glb` — a real 6-mesh asset that production never routes through
-this reader — so there is no throwaway fixture and no extra `.import`.
-Evidence:
-`shots2/asset_building_proof/dims_fix/` (standalone, production path) and
-`shots2/asset_dims_fix/before` vs `after` (north approach).
+| 路線圖 | `docs/ROADMAP.md` |
+| 人間之里生成規則 | `docs/ningen-no-sato.md` |
+| 人間之里美術方向 | `docs/village-art-direction.md` |
+| 町家 production kit | `docs/machiya-production-kit.md` |
+| Generator domain / ADR | `docs/domain-model.md` |
+| Godot 遷移狀態 | `docs/godot-migration.md` |
