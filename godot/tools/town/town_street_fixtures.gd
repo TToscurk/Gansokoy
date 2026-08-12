@@ -102,6 +102,17 @@ static func build_gates(
 	var roof: Material = material_fn.call("kawara", 1)
 	var group: Node3D = lib.add(root, Node3D.new(), "門樓")
 	for gate_spec in gates:
+		var is_north_gate := String(gate_spec.n) == "北門"
+		# MAP CELL 01：北門だけは「黒い平板の枠」ではなく、村の入口として
+		# 読める暖木と切妻屋根にする。位置・門洞・衝突・保留区は変えない。
+		var gate_dark: Material = dark
+		var gate_roof: Material = roof
+		var gate_plaster: Material = material_fn.call("plaster", 2)
+		if is_north_gate:
+			gate_dark = lib.pbr(
+				"北門暖木", "dark_wood", 0.52, Color(0.58, 0.42, 0.29))
+			gate_roof = lib.pbr(
+				"北門瓦", "roof_kawara", 0.24, Color(0.62, 0.68, 0.78))
 		var yaw: float = float(gate_spec.yaw)
 		var axis_x := Vector2(cos(yaw), -sin(yaw))
 		var axis_z := Vector2(sin(yaw), cos(yaw))
@@ -118,7 +129,7 @@ static func build_gates(
 		for side in [-1, 1]:
 			lib.box(
 				gate, "柱_%d" % (side + 1),
-				Vector3(0.7, 5.0 + foot, 0.7), dark,
+				Vector3(0.7, 5.0 + foot, 0.7), gate_dark,
 				Vector3(float(side) * 5.2, 2.5 - foot * 0.5, 0))
 			lib.box(
 				gate, "礎石_%d" % (side + 1),
@@ -127,14 +138,71 @@ static func build_gates(
 			collide.call(
 				gate, Vector3(0.95, 5.2, 0.95),
 				Vector3(float(side) * 5.2, 0, 0))
-		lib.box(gate, "樑", Vector3(12.0, 0.55, 0.9), dark,
+		lib.box(gate, "樑", Vector3(12.0, 0.55, 0.9), gate_dark,
 			Vector3(0, 5.0, 0))
-		lib.box(gate, "貫", Vector3(11.0, 0.3, 0.55), dark,
+		lib.box(gate, "貫", Vector3(11.0, 0.3, 0.55), gate_dark,
 			Vector3(0, 3.6, 0))
-		lib.box(gate, "簷", Vector3(13.2, 0.24, 1.8), roof,
-			Vector3(0, 5.5, 0))
-		lib.box(gate, "棟", Vector3(13.2, 0.22, 0.4), roof,
-			Vector3(0, 5.68, 0))
+		if is_north_gate:
+			# 50m：勾配と棟を一筆で読ませる。既存の flat slab は北門だけ廃止。
+			lib.gable_roof(
+				gate, 5.34, 13.8, 2.8, deg_to_rad(27.0), 0.18,
+				gate_roof, gate_dark)
+			# 20m：柱と大梁の間に受木・方杖を足して、屋根が空中に載る
+			# placeholder 感を消す。
+			for side in [-1.0, 1.0]:
+				var sx: float = float(side) * 5.2
+				lib.box(gate, "受木_%d" % int(side + 1.0),
+					Vector3(2.15, 0.22, 0.76), gate_dark,
+					Vector3(sx, 5.28, 0))
+				lib.strut(gate, "方杖外_%d" % int(side + 1.0),
+					Vector3(sx, 4.12, -0.28),
+					Vector3(sx - side * 1.18, 5.08, -0.28),
+					0.10, gate_dark, 6)
+			# 入口の両端を低い土塀で受ける。道路中心線と 9.5m の門洞は
+			# そのまま、門の外側だけを植栽へ繋ぐ。
+			for side in [-1.0, 1.0]:
+				var wall_x: float = float(side) * 8.55
+				lib.box(gate, "袖壁_%d" % int(side + 1.0),
+					Vector3(5.25, 1.08, 0.42), gate_plaster,
+					Vector3(wall_x, 0.62, 0.34))
+				lib.box(gate, "袖壁笠_%d" % int(side + 1.0),
+					Vector3(5.55, 0.16, 0.68), gate_roof,
+					Vector3(wall_x, 1.20, 0.34))
+				for post_x_value in [float(side) * 6.15, float(side) * 10.95]:
+					var post_x: float = float(post_x_value)
+					lib.box(gate, "袖柱_%d_%d" % [int(side + 1.0), int(absf(post_x))],
+						Vector3(0.22, 1.42, 0.56), gate_dark,
+						Vector3(post_x, 0.71, 0.34))
+			# 5m：門額は文字を描かず、木の厚みと縁だけで「名のある門」にする。
+			var plaque: Material = lib.pbr(
+				"北門額", "planks", 0.62, Color(0.60, 0.31, 0.18))
+			lib.box(gate, "門額", Vector3(2.55, 0.82, 0.16), plaque,
+				Vector3(0, 4.24, -0.50))
+			for px in [-1.22, 1.22]:
+				lib.box(gate, "門額縁", Vector3(0.10, 0.94, 0.22), gate_dark,
+					Vector3(px, 4.24, -0.51))
+			# 50m：既存の花樹群だけでは左右が同じ桃色の粒に見えるため、
+			# 既存樹種を二本だけ決め打ちで重ね、緑の大きな塊を非対称に作る。
+			# RNG は使わず、他の植生配置を一切ずらさない。
+			for tree_spec in [
+				{"name": "門脇松_西", "path": "res://assets/models/tree_pine_a.glb",
+					"pos": Vector3(-11.8, 0.0, 2.8), "yaw": 0.42,
+					"scale": Vector3(1.28, 1.38, 1.28)},
+				{"name": "門脇樹_東", "path": "res://assets/models/tree_round_a.glb",
+					"pos": Vector3(12.2, 0.0, 4.6), "yaw": -0.35,
+					"scale": Vector3(1.18, 1.32, 1.18)},
+			]:
+				var tree := MeshInstance3D.new()
+				tree.mesh = lib.prop_mesh(String(tree_spec.path))
+				tree.position = Vector3(tree_spec.pos)
+				tree.rotation.y = float(tree_spec.yaw)
+				tree.scale = Vector3(tree_spec.scale)
+				lib.add(gate, tree, String(tree_spec.name))
+		else:
+			lib.box(gate, "簷", Vector3(13.2, 0.24, 1.8), gate_roof,
+				Vector3(0, 5.5, 0))
+			lib.box(gate, "棟", Vector3(13.2, 0.22, 0.4), gate_roof,
+				Vector3(0, 5.68, 0))
 		reserved.append([
 			Vector2(float(gate_spec.x), float(gate_spec.z)),
 			axis_x, axis_z, 7.6, 2.4, String(gate_spec.n)])

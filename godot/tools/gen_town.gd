@@ -527,6 +527,11 @@ func _build_towers() -> void:
 		var m: Dictionary = _mods[t.kind]
 		var mi := MeshInstance3D.new()
 		mi.mesh = lib.prop_mesh(String(m["glb"]))
+		# MAP CELL 01：位置も形も変えず、北門から最初に見える火見櫓だけを
+		# 黒い線画から村の木造設備へ戻す。
+		if String(t.kind) == "tower_fire":
+			mi.material_override = lib.pbr(
+				"火見櫓暖木", "dark_wood", 0.54, Color(0.54, 0.38, 0.26))
 		mi.position = Vector3(t.x, bank_h(t.x, t.z), t.z)
 		mi.rotation.y = t.yaw
 		mi.set_meta("needs_trimesh", true)
