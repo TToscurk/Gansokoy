@@ -2,12 +2,14 @@
 
 ## 目前狀態
 
-`CHARACTER TRACK 01 — Y01 Visual Target + Y02 Base Prototype`
+`YORIICHI_Y02_REBUILD — BODY_PROPORTION_GATE + IDENTITY_SILHOUETTE_GATE`
 
-狀態：`ART_REVIEW`。只有使用者可以標記 `ART_APPROVED`。
+技術狀態：`TECH_PASS`。美術狀態：`ART_REVIEW`。只有使用者可以標記
+`ART_APPROVED`。
 
 本輪是獨立 `ART_FAST` 人物線；不得修改人間之里 generator、道路、配置、Portal、
-環境美術、玩家移動或碰撞。Y01/Y02 核准以前，不開始 Rig、動畫或正式 Player 整合。
+環境美術、玩家移動或碰撞。兩道 Gate 核准以前，不開始細節、Rig、動畫或正式
+Player 整合。
 
 ## Art Card
 
@@ -22,28 +24,42 @@
 `shots2/yoriichi_character_track_01/y01_visual_target.png` 是正式拓樸與造型下一輪的
 視覺目標，不是 3D 完成證據。應優先追上：
 
-1. 約七至七點五頭身的高瘦比例。
+1. 約七點五至八頭身的高瘦成人比例。
 2. 後綁、分層的大髮束輪廓，而不是細碎髮絲。
 3. 深沉酒紅羽織、自然下垂袖形與膝上長度。
 4. 寬鬆下裝、腳踝綁帶與較輕的鞋腳量體。
 5. 安靜中性的臉，不靠表情演出辨識度。
 
-## Y02 基礎模型
+## 舊 Y02：TECH_DUMMY / ART_REJECTED
 
 - 生成入口：`godot/assets/blender/make_yoriichi_prototype.py`
 - Blender source：`godot/assets/blender/sources/yoriichi_base_prototype.blend`
 - GLB：`godot/assets/models/yoriichi_base_prototype.glb`
 - 審視圖與量測：`shots2/yoriichi_character_track_01/`
 
-Y02 是可重生、可匯出、可用於決定大形的非骨架原型。它已拆出頭、身體、四肢、
-手足、隊服、腰帶、羽織、主要髮束、斑紋、花札耳飾、刀與鞘；目前不宣稱正式拓樸、
-UV、最終材質、Rig 或動畫完成。
+舊 Y02 只保留作尺度、匯出與失敗比較，不得修漂亮、上骨架、製作動畫或成為正式
+角色基底。其方形頭身、硬板羽織、短厚比例與玩具感已構成結構性否決。
+
+## Production Base Candidate
+
+- 生成入口：`godot/assets/blender/make_yoriichi_production_base.py`
+- Blender source：`godot/assets/blender/sources/yoriichi_production_base.blend`
+- GLB：`godot/assets/models/yoriichi_production_base.glb`
+- Gate 圖與量測：`shots2/yoriichi_character_rebuild/`
+
+新基底從零建立，不匯入或修改舊 Y02。BODY Gate 使用獨立人體、成人頭部基形與
+landmark 線；Identity Gate 只增加曲線髮量、羽織大形、袴、綁腿與刀鞘。最終臉、
+斑紋、耳飾、鈕扣、UV、材質精修、Rig、動畫及 Player 整合維持鎖定。
 
 ## 穩定尺度契約
 
 | 項目 | 契約 |
 |---|---|
-| 視覺目標身高 | 1.78 m（生成後包圍盒含頭髮約 1.793 m） |
+| 視覺目標身高 | 1.78 m（Production Base 包圍盒約 1.775 m） |
+| 頭身 | 7.61 |
+| 肩寬 | 0.42 m；身高比 0.236 |
+| 胯高 | 0.93 m；身高比 0.522 |
+| 膝高 | 0.50 m；身高比 0.281 |
 | 現有 Player capsule | 1.70 m 高、0.45 m 半徑；本輪只參照，不修改 |
 | Blender 單位 | 1 unit = 1 m |
 | Blender 軸向 | +Z up、-Y forward |
@@ -51,7 +67,11 @@ UV、最終材質、Rig 或動畫完成。
 | Origin | 兩腳底之間、地面高度 0 |
 | 匯出縮放 | GLB 1.0，不在後續階段靜默改縮放 |
 
-## 下一個 Gate
+## Gate 狀態
 
-使用者核准或否決 Y01 比例、臉、頭髮、羽織與整體方向。若否決，先改 Y01/Y02；
-若核准，下一輪才做 game-ready cleanup + conventional humanoid Rig。
+- `BODY_PROPORTION_GATE`：`ART_REVIEW`。數值契約已達成，視覺判斷由使用者決定。
+- `IDENTITY_SILHOUETTE_GATE`：`ART_REVIEW`。已具長髮、羽織、寬下裝與左側刀鞘，
+  但髮束層次、羽織側面垂墜和袴接腿仍是明確大形風險。
+
+若任一 Gate 被否決，繼續改大形；只有兩道 Gate 都由使用者核准後，才進 Y03
+Production Modeling／Face／Clothing Refinement。Rig 仍屬更後階段。
