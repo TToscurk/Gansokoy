@@ -103,6 +103,19 @@ func _village_tree_mesh(path: String) -> Mesh:
 	return _village_tree_mesh_fn.call(path)
 
 
+func _density_host_kind(kind: String) -> String:
+	## Phase 2B changes only the mesh assigned to three fixed lots.  Dressing
+	## must continue to read the original host recipe so no facade, prop, RNG
+	## consumption, or roofline metadata drifts with the asset alias.
+	match kind:
+		"machiya_pilot_silhouette_quiet_01", \
+		"machiya_pilot_silhouette_gable_01":
+			return "machiya_e_p"
+		"machiya_pilot_silhouette_workshop_01":
+			return "machiya_w_a"
+	return kind
+
+
 func _dxf(kind: String, p: Vector2, y: float, yaw: float, s: float = 1.0) -> void:
 	if _dxf_mute:
 		return
@@ -124,7 +137,7 @@ func _identity_role(kind: String, p: Vector2) -> String:
 	var hx: int = int(round(p.x * 10.0)) * 73856093
 	var hz: int = int(round(p.y * 10.0)) * 19349663
 	var h: int = absi(hx ^ hz)
-	if kind == "machiya_w_a":
+	if kind == "machiya_w_a" or kind == "machiya_pilot_silhouette_workshop_01":
 		return "workshop"
 	if kind == "machiya_f_o" or (kind == "machiya_n_o" and trade > 0.62):
 		return "inn"
@@ -150,7 +163,7 @@ func _roofline_role(kind: String, p: Vector2) -> String:
 	if h % 100 >= 62:
 		return ""
 	var roles: Array[String] = ["gable", "udatsu", "balcony", "store"]
-	if kind == "machiya_w_a":
+	if kind == "machiya_w_a" or kind == "machiya_pilot_silhouette_workshop_01":
 		return "store"
 	if kind == "machiya_f_o" or kind == "machiya_n_o":
 		return "udatsu"
@@ -193,7 +206,8 @@ func build(context: Dictionary) -> void:
 		var kind := String(e[0])
 		if not kind.begins_with("machiya"):
 			continue
-		var m: Dictionary = _mods[kind]
+		var host_kind := _density_host_kind(kind)
+		var m: Dictionary = _mods[host_kind]
 		var fac: Dictionary = m.get("facade", {})
 		if fac.is_empty():
 			continue
@@ -209,7 +223,7 @@ func build(context: Dictionary) -> void:
 		var half_w: float = float(m["w"]) * 0.5
 		# 村緣小屋是住家：吊掛機率砍半，招牌不掛
 		var shop := 1.0 if kind != "machiya_e_a" else 0.45
-		var identity: String = _identity_role(kind, pos)
+		var identity: String = _identity_role(host_kind, pos)
 		if identity != "":
 			_dxf("facade_%s" % identity, pos + ax * door_x + fwd * 0.45, hy, yaw)
 			continue
@@ -346,7 +360,8 @@ func build(context: Dictionary) -> void:
 	var n_dress := 0
 	for e4 in pilots:
 		var k4 := String(e4[0])
-		var m4: Dictionary = _mods[k4]
+		var host_k4 := _density_host_kind(k4)
+		var m4: Dictionary = _mods[host_k4]
 		var f4: Dictionary = m4.get("facade", {})
 		var hs: Dictionary = f4.get("hisashi", {})
 		if hs.is_empty() and not f4.has("door_x"):
@@ -359,7 +374,7 @@ func build(context: Dictionary) -> void:
 		var hw4: float = float(m4["w"]) * 0.5
 		var dx4: float = float(f4["door_x"])
 		var w4 := _commerce(p4)
-		var identity4: String = _identity_role(k4, p4)
+		var identity4: String = _identity_role(host_k4, p4)
 		if identity4 != "":
 			_dxf("facade_%s" % identity4, p4 + ax4 * dx4 + fw4 * 0.45,
 				y4, yw)
@@ -376,7 +391,7 @@ func build(context: Dictionary) -> void:
 		# `0.06 + 0.85*wgt` で暖簾を掛けるか決めている。同じ式を使う ——
 		# ここで独自の閾値を切ると、pilot だけ商業の濃さが村とずれる。
 		var role := "house"
-		if k4 == "machiya_w_a":
+		if host_k4 == "machiya_w_a":
 			role = "work"
 		elif k4 == "machiya_f_o" or _prng.randf() < 0.06 + 0.85 * w4:
 			role = "shop"
@@ -438,7 +453,7 @@ func build(context: Dictionary) -> void:
 		if not k5.begins_with("machiya"):
 			continue
 		var p5 := Vector2(float(e5[1]), float(e5[3]))
-		var roofline: String = _roofline_role(k5, p5)
+		var roofline: String = _roofline_role(_density_host_kind(k5), p5)
 		if roofline == "":
 			continue
 		_dxf("roofline_%s" % roofline, p5, float(e5[2]), float(e5[4]))

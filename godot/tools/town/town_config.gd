@@ -155,7 +155,7 @@ const MARKET_QUARTER_LOTS := [
 	{"kind": "family_kura_compact", "x": -8.6, "z": 77.5, "yaw": PI * 0.5},
 	{"kind": "pilot_shop_01", "x": -21.5, "z": 72.6, "yaw": PI},
 	# 使用已驗證的生產套件；舊 asset_proof_workshop GLB 的實際尺寸不符宣告。
-	{"kind": "machiya_w_a", "x": -34.0, "z": 74.0, "yaw": PI},
+	{"kind": "machiya_pilot_silhouette_workshop_01", "x": -34.0, "z": 74.0, "yaw": PI},
 	{"kind": "family_kura_compact", "x": -46.5, "z": 82.3, "yaw": 0.0},
 	{"kind": "pilot_residence_01", "x": -46.0, "z": 60.0, "yaw": PI * 0.5},
 	{"kind": "family_small_merchant_01", "x": -45.0, "z": 69.2, "yaw": PI * 0.5},

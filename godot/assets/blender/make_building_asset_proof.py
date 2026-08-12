@@ -101,7 +101,7 @@ def build_sake():
     lattice("sake_left",-5.1,-2.0,-3.51,.65,2.45,11)
     lattice("sake_right",1.4,5.05,-3.51,.65,2.45,12)
     box("sake_entry",(-.55,-3.53,1.48),(1.65,.12,2.25),"WOOD_LT")
-    hip_roof("sake_main_hip",11.8,7.5,3.45,1.65)
+    hip_roof("sake_main_hip",11.8,7.5,3.45,1.88)
     box("sake_canopy",(0,-4.02,2.55),(12.0,1.55,.16),"KAWARA")
     posts("sake_canopy",[-5.4,0,5.4],-4.55,.25,2.25,.13)
     # Architectural business cue: integrated cask loading bay and cedar-ball bracket.
@@ -117,14 +117,19 @@ def build_sake():
     box("sake_sign_board",(2.72,-4.43,2.18),(.62,.07,.78),"WOOD_LT")
     box("sake_threshold",(-.58,-4.48,.30),(2.15,.48,.16),"WOOD_LT")
     box("sake_kura",(4.55,2.3,2.25),(3.0,3.0,4.15),"PLASTER")
-    gable_roof("sake_kura_roof",3.2,3.2,4.3,1.0,y=2.3)
+    gable_roof("sake_kura_roof",3.2,3.2,4.3,1.16,y=2.3)
+    # Phase 2B hero tier: one low brewing smoke monitor.  It is deliberately
+    # smaller than the attached kura and remains part of the roof mass, never
+    # a tower or universal shop motif.
+    box("sake_smoke_monitor",(1.65,.85,4.86),(1.75,1.90,.52),"PLASTER")
+    gable_roof_at("sake_smoke_monitor_roof",1.65,.85,1.95,2.10,5.12,.52,over=.30)
     lattice("sake_side",-5.76,-5.76,-.2,.8,2.2,3)  # side relief rhythm
 
 def build_inn():
     # Tall deep hatago: two-storey front block, projecting gallery, stepped rear wing and entry porch.
     box("inn_plinth",(0,.3,.2),(8.8,11.2,.4),"EARTH")
     box("inn_body",(0,.4,2.75),(8.2,10.3,5.1),"PLASTER")
-    gable_roof("inn_main_roof",8.5,10.7,5.25,2.05)
+    gable_roof("inn_main_roof",8.5,10.7,5.25,2.24)
     posts("inn_front",[-3.75,-2.5,-1.2,1.1,2.4,3.75],-4.78,.4,2.55)
     lattice("inn_shop",-3.55,-1.5,-4.87,.7,2.5,8)
     box("inn_recess",(0,-4.93,1.5),(1.75,.2,2.45),"WOOD_LT")

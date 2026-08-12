@@ -363,15 +363,15 @@
       "dimensions": [
         9.56,
         11.595,
-        5.42
+        5.6
       ],
-      "faces": 3570,
-      "triangles": 3570,
+      "faces": 3610,
+      "triangles": 3610,
       "materials": 6,
       "material_faces": {
         "WOOD": 1838,
         "WOOD_LT": 150,
-        "PLASTER": 464,
+        "PLASTER": 504,
         "STONE": 50,
         "KAWARA": 1028,
         "SHOJI": 40
@@ -384,18 +384,80 @@
       "dimensions": [
         7.16,
         9.7,
-        4.87
+        5.17
       ],
-      "faces": 2122,
-      "triangles": 2122,
+      "faces": 2138,
+      "triangles": 2138,
       "materials": 6,
       "material_faces": {
         "WOOD": 1042,
         "WOOD_LT": 140,
         "PLASTER": 172,
         "STONE": 30,
-        "KAWARA": 718,
+        "KAWARA": 734,
         "SHOJI": 20
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "machiya_pilot_silhouette_quiet_01",
+      "glb": "godot/assets/models/machiya_pilot_silhouette_quiet_01.glb",
+      "dimensions": [
+        7.94,
+        7.88,
+        4.27
+      ],
+      "faces": 1712,
+      "triangles": 1712,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 800,
+        "WOOD_LT": 98,
+        "PLASTER": 122,
+        "STONE": 20,
+        "KAWARA": 662,
+        "SHOJI": 10
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "machiya_pilot_silhouette_gable_01",
+      "glb": "godot/assets/models/machiya_pilot_silhouette_gable_01.glb",
+      "dimensions": [
+        7.94,
+        7.88,
+        4.59
+      ],
+      "faces": 1732,
+      "triangles": 1732,
+      "materials": 6,
+      "material_faces": {
+        "WOOD": 820,
+        "WOOD_LT": 98,
+        "PLASTER": 122,
+        "STONE": 20,
+        "KAWARA": 662,
+        "SHOJI": 10
+      },
+      "degenerate": 0
+    },
+    {
+      "name": "machiya_pilot_silhouette_workshop_01",
+      "glb": "godot/assets/models/machiya_pilot_silhouette_workshop_01.glb",
+      "dimensions": [
+        9.16,
+        9.31,
+        6.17
+      ],
+      "faces": 2144,
+      "triangles": 2144,
+      "materials": 5,
+      "material_faces": {
+        "WOOD": 1016,
+        "WOOD_LT": 118,
+        "PLASTER": 102,
+        "STONE": 20,
+        "KAWARA": 888
       },
       "degenerate": 0
     }

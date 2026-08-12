@@ -11,6 +11,10 @@ const REPLACEMENTS := [
 	{"lot": Vector2(-6.1034, -150.3902), "kind": "asset_proof_hatago", "move": Vector2(0.0, 1.1)},
 	{"lot": Vector2(6.7199, -150.0819), "kind": "asset_proof_sake_shop", "move": Vector2(0.0, -3.5)},
 	{"lot": Vector2(-5.6500, -116.7000), "kind": "family_small_merchant_01"},
+	# Phase 2B fixed skyline assignments: asset kind changes only; the source
+	# lot transform and shared RNG stream remain untouched.
+	{"lot": Vector2(-5.6500, -158.8000), "kind": "machiya_pilot_silhouette_quiet_01"},
+	{"lot": Vector2(5.6500, -142.5000), "kind": "machiya_pilot_silhouette_gable_01"},
 ]
 
 

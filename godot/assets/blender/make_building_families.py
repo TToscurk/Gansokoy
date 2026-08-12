@@ -59,6 +59,12 @@ PILOT_RECIPES = [
     ("pilot_shop_01", "shop"),
 ]
 
+SILHOUETTE_RECIPES = [
+    ("machiya_pilot_silhouette_quiet_01", "machiya_e_p", "quiet"),
+    ("machiya_pilot_silhouette_gable_01", "machiya_e_p", "gable"),
+    ("machiya_pilot_silhouette_workshop_01", "machiya_w_a", "workshop"),
+]
+
 REPRESENTATIVE_SOURCES = {
     "family_standard_machiya_04",
     "family_nagaya_04bay",
@@ -352,6 +358,7 @@ def build_pilot(name, role):
     """Build isolated variants for the two player-visible market-front lots."""
     if role == "residence":
         s = kit.spec_of("machiya_f_a")
+        s["total_h"] += 0.18
         b = kit.MB()
         _ridge, door_x, _z_top = kit.machiya(b, s)
         add_residential_entry(b, s["W"], door_x, "left")
@@ -361,12 +368,41 @@ def build_pilot(name, role):
         return b.build(name)
     if role == "shop":
         s = kit.spec_of("machiya_f_s")
+        s["total_h"] += 0.30
+        s["pitch"] += 2.0
         b = kit.MB()
         kit.machiya(b, s)
         add_merchant_front(b, s["W"], s["D"], "left", "compact")
         add_shop_identity_front(b, s["W"])
         return b.build(name)
     raise ValueError("unknown Phase 2A pilot role: %s" % role)
+
+
+def build_silhouette_pilot(name, host, role):
+    """Low-frequency Phase 2B variants for fixed pilot lots only."""
+    s = kit.spec_of(host)
+    if role == "quiet":
+        # Background tier: almost no extra height and the original footprint.
+        s["total_h"] += 0.10
+    elif role == "gable":
+        # Secondary tier: one tsuma-facing roof breaks the parallel eave run.
+        s["orient"] = "tsuma"
+        # Preserve the host's exact 7.94 x 7.88 outer footprint after rotating
+        # the roof language; only the massing inside that envelope changes.
+        s["W"] += 0.26
+        s["D"] -= 0.26
+        s["pitch"] = 23.0
+        s["total_h"] += 0.42
+    elif role == "workshop":
+        # Functional tier: a slightly heavier roof mass; the host already owns
+        # the only restrained smoke outlet in this market group.
+        s["pitch"] += 3.0
+        s["total_h"] += 0.42
+    else:
+        raise ValueError("unknown Phase 2B silhouette role: %s" % role)
+    b = kit.MB()
+    kit.machiya(b, s)
+    return b.build(name)
 
 
 def export_asset(ob, name):
@@ -403,6 +439,7 @@ def generate():
     jobs += [(r[0], build_kura, r) for r in KURA_RECIPES]
     jobs += [(r[0], build_merchant, r) for r in MERCHANT_RECIPES]
     jobs += [(r[0], build_pilot, r) for r in PILOT_RECIPES]
+    jobs += [(r[0], build_silhouette_pilot, r) for r in SILHOUETTE_RECIPES]
     for name, builder, args in jobs:
         reset_scene()
         ob = builder(*args)
