@@ -3,13 +3,14 @@
 這是每個新任務在 `CLAUDE.md` 之後必讀的目前狀態。只保留會影響下一個決策的
 事實；逐輪紀錄在子系統文件或 `docs/archive/`。
 
-Last updated: 2026-08-11.
+Last updated: 2026-08-12.
 
 ## Execution Mode
 
 | 子系統 | 模式 |
 |---|---|
 | Human Village production work | PRODUCTION MODE |
+| Yoriichi Character Track 01 | PRODUCTION MODE；Y01/Y02 完成後停在 ART_REVIEW |
 | 其他子系統 | DESIGN MODE，除非使用者另有指示 |
 
 完整規則：`.claude/rules/execution-modes.md`。
@@ -54,6 +55,8 @@ Last updated: 2026-08-11.
 ## Current Gate / Next
 
 - 先完成現有市場、資產尺寸與村落視覺證據的 Human Art Review／保存決策。
+- 獨立人物線已有緣一 Y01 視覺目標與可匯出 Y02 基礎原型，等待比例、臉、頭髮、
+  羽織與整體方向的 Human Art Review；未核准前不得開始 Rig 或 Player 整合。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。
 - 若工作只涉及程式結構，硬條件是生成結果 stable hash 不漂移，所有靜態檢查通過。
 
