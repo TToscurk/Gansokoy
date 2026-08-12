@@ -26,9 +26,13 @@ static func build_portals(height_at: Callable, nearest_river_point: Callable,
 	##
 	## Stage 2 回程落點由目的地圖中 target == from_id 的 portal 決定；
 	## 舊 village 的兩個座標與這裡相同，所以既有回程落點不變。
+	var north_portal_y := snappedf(height_at.call(0, -174), 0.01)
+	var north_arrival_y := snappedf(height_at.call(0, -170), 0.01)
 	return [
-		{"x": 0.0, "y": snappedf(height_at.call(0, -174), 0.01),
-			"z": -174.0, "target": "trail"},
+		{"x": 0.0, "y": north_portal_y, "z": -174.0, "target": "trail",
+			# The trigger stays at the approved portal coordinate.  Arrival is 4 m
+			# inward on the local road surface and faces south into the village.
+			"arrival_ground_y": north_arrival_y, "arrival_yaw": PI},
 		{"x": -132.0, "y": snappedf(height_at.call(-132, 100), 0.01),
 			"z": 100.0, "target": "kourindou"},
 		# 河畔道北端出圖 → 未來的霧之湖。target 留 null = 保留中的觸發區。

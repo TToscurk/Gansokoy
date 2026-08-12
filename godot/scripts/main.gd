@@ -38,11 +38,18 @@ func _ready() -> void:
 			_shot_path = a.substr(7)
 		elif a.begins_with("--shot-cam="):  # x,y,z,lx,ly,lz 自由鏡位（拍照模式）
 			_shot_cam = a.substr(11)
+		elif a.begins_with("--shot-player="): # x,y,z,yaw 實際遊戲鏡位驗收
+			_shot_player = a.substr(14)
 		elif a.begins_with("--shots="):     # 資產正面照：一次載圖、連拍多張
 			_shots_file = a.substr(8)
 		elif a.begins_with("--shotdir="):
 			_shot_dir = a.substr(10)
 	load_map(start, "")
+	if _shot_player != "":
+		var shot_spawn := _shot_player.split_floats(",")
+		player.global_position = Vector3(shot_spawn[0], shot_spawn[1], shot_spawn[2])
+		player.rotation.y = shot_spawn[3]
+		player.velocity = Vector3.ZERO
 	# ⚠ 撮影モードではプレイヤーを隠す。
 	# `$Player` は未テクスチャの白いカプセル。スポーン地点に立ったまま
 	# **Phase 1.5 以降ほぼ全ての審図カットに写り込んでいた** —— しかも
@@ -70,6 +77,7 @@ func _ready() -> void:
 
 var _shot_path := ""
 var _shot_cam := ""
+var _shot_player := ""
 var _shot_frames := 0
 ## ── 資產正面照（ADR-016）──
 ## 每個具體的建築與地標登記一組固定機位，改完自動全拍一輪。
@@ -258,10 +266,11 @@ func _spawn_portals(meta: Dictionary) -> void:
 	for p in meta.get("portals", []):
 		var tgt: Variant = p.get("target")
 		var reserved: bool = tgt == null or String(tgt).is_empty()
+		var ground_y := float(p.y)
 
 		var area := Area3D.new()
 		area.name = "Portal_%s" % ("保留" if reserved else String(tgt))
-		area.position = Vector3(p.x, p.y + 1.0, p.z)
+		area.position = Vector3(p.x, ground_y + 1.0, p.z)
 		var shape := CollisionShape3D.new()
 		var cyl := CylinderShape3D.new()
 		cyl.radius = 1.6
@@ -270,20 +279,43 @@ func _spawn_portals(meta: Dictionary) -> void:
 		area.add_child(shape)
 
 		if not reserved:
-			var beam := MeshInstance3D.new()
-			var m := CylinderMesh.new()
-			m.top_radius = 0.35
-			m.bottom_radius = 0.55
-			m.height = 2.6
-			beam.mesh = m
 			var mat := StandardMaterial3D.new()
 			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-			mat.albedo_color = Color(0.55, 0.9, 1.0, 0.35)
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+			mat.albedo_color = Color(0.48, 0.84, 1.0, 0.46)
 			mat.emission_enabled = true
-			mat.emission = Color(0.55, 0.9, 1.0)
-			mat.emission_energy_multiplier = 2.0
-			beam.material_override = mat
-			area.add_child(beam)
+			mat.emission = Color(0.32, 0.72, 1.0)
+			mat.emission_energy_multiplier = 1.15
+
+			# Keep the route marker legible without putting an opaque pillar between
+			# the arrival camera and the map cell.  The Area3D stays unchanged; only
+			# the visual is grounded at the portal's local terrain value.
+			var ring := MeshInstance3D.new()
+			var torus := TorusMesh.new()
+			torus.inner_radius = 1.10
+			torus.outer_radius = 1.38
+			torus.rings = 48
+			torus.ring_segments = 12
+			ring.mesh = torus
+			ring.position.y = -0.93
+			ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			ring.material_override = mat
+			area.add_child(ring)
+
+			var core := MeshInstance3D.new()
+			var core_mesh := CylinderMesh.new()
+			core_mesh.top_radius = 0.62
+			core_mesh.bottom_radius = 0.82
+			core_mesh.height = 0.62
+			core.mesh = core_mesh
+			core.position.y = -0.64
+			core.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			var core_mat := mat.duplicate() as StandardMaterial3D
+			core_mat.albedo_color.a = 0.10
+			core_mat.emission_energy_multiplier = 0.45
+			core.material_override = core_mat
+			area.add_child(core)
 
 		if reserved:
 			area.body_entered.connect(_on_portal_reserved.bind(area.name))
@@ -314,21 +346,33 @@ func _on_portal_entered(body: Node3D, target: String) -> void:
 func _place_player(meta: Dictionary, from_id: String) -> void:
 	var spawn := Vector3(0.0, 40.0, 0.0)
 	var portals: Array = meta.get("portals", [])
+	var arrival_portal: Dictionary = {}
 	if from_id == "" and portals.size() > 0:
 		var p0: Dictionary = portals[0]
-		spawn = Vector3(p0.x, p0.y + 2.0, p0.z)
+		arrival_portal = p0
+		spawn = _arrival_for_portal(p0)
 	for p in portals:
 		if p.get("target") == from_id:
-			# Low-ceiling interiors may override the default 2 m drop height.
-			# The horizontal inward offset remains identical for every portal.
-			var arrival_y_offset: float = float(p.get("arrival_y_offset", 2.0))
-			spawn = Vector3(p.x, p.y + arrival_y_offset, p.z)
-			# 往圖中心退幾步，不要站在觸發區正中央
-			var inward := (Vector3(0.0, spawn.y, 0.0) - spawn)
-			inward.y = 0.0
-			if inward.length() > 0.01:
-				spawn += inward.normalized() * 4.0
+			arrival_portal = p
+			spawn = _arrival_for_portal(p)
 			break
 	player.velocity = Vector3.ZERO
 	player.global_position = spawn
+	if arrival_portal.has("arrival_yaw"):
+		player.rotation.y = float(arrival_portal.arrival_yaw)
 	portal_cooldown = PORTAL_COOLDOWN
+
+
+func _arrival_for_portal(portal: Dictionary) -> Vector3:
+	# Low-ceiling interiors may override the default 2 m drop height.  A portal
+	# can also record the ground under the inward landing point when that differs
+	# from the ground under the trigger itself (the North Gate is the first case).
+	var arrival_y_offset := float(portal.get("arrival_y_offset", 2.0))
+	var arrival_ground_y := float(portal.get("arrival_ground_y", portal.y))
+	var arrival := Vector3(float(portal.x), arrival_ground_y + arrival_y_offset,
+		float(portal.z))
+	var inward := Vector3(0.0, arrival.y, 0.0) - arrival
+	inward.y = 0.0
+	if inward.length() > 0.01:
+		arrival += inward.normalized() * 4.0
+	return arrival

@@ -117,6 +117,10 @@ func _load_meta(map_id: String) -> Dictionary:
 		if portal.has("arrival_y_offset") and not portal.arrival_y_offset is float and not portal.arrival_y_offset is int:
 			_fail(scope, "portals[%d].arrival_y_offset must be numeric" % index)
 			return {}
+		for optional_axis in ["arrival_ground_y", "arrival_yaw"]:
+			if portal.has(optional_axis) and not portal[optional_axis] is float and not portal[optional_axis] is int:
+				_fail(scope, "portals[%d].%s must be numeric" % [index, optional_axis])
+				return {}
 	return meta
 
 
@@ -168,7 +172,8 @@ func _portal_to(meta: Dictionary, target: String) -> Variant:
 
 func _arrival_for(portal: Dictionary) -> Vector3:
 	var arrival_y_offset := float(portal.get("arrival_y_offset", 2.0))
-	var arrival := Vector3(float(portal.x), float(portal.y) + arrival_y_offset, float(portal.z))
+	var arrival_ground_y := float(portal.get("arrival_ground_y", portal.y))
+	var arrival := Vector3(float(portal.x), arrival_ground_y + arrival_y_offset, float(portal.z))
 	var inward := Vector3(0.0, arrival.y, 0.0) - arrival
 	inward.y = 0.0
 	if inward.length() > 0.01:
