@@ -1,0 +1,55 @@
+{
+  "asset": "Yoriichi BODY_MASTER (MPFB2 base human)",
+  "blend": "godot/assets/blender/sources/yoriichi_body_master.blend",
+  "object": "BODY_MASTER",
+  "status": "ART_REVIEW — anatomical base only, no clothing, no stylisation, no rig",
+  "generator": "MPFB2 (bl_ext.blender_org.mpfb, build 20260722) via HumanService.create_human",
+  "blender": "5.2.0 LTS",
+  "macro_detail_dict": {
+    "gender": 1.0,
+    "age": 0.5,
+    "muscle": 0.55,
+    "weight": 0.42,
+    "proportions": 0.75,
+    "height": 0.5961,
+    "cupsize": 0.5,
+    "firmness": 0.5,
+    "race": { "asian": 0.8, "caucasian": 0.1, "african": 0.1 }
+  },
+  "create_human_args": {
+    "mask_helpers": true,
+    "detailed_helpers": true,
+    "extra_vertex_groups": true,
+    "feet_on_ground": true,
+    "scale": 0.1
+  },
+  "measured_from_mesh": {
+    "height_m": 1.7804,
+    "shoulder_joint_span_m": 0.4068,
+    "shoulder_joint_z_m": 1.4191,
+    "neck_joint_z_m": 1.5243,
+    "jaw_joint_z_m": 1.562,
+    "head_top_z_m": 1.7804,
+    "crotch_upper_leg_joint_z_m": 0.9551,
+    "knee_joint_z_m": 0.5038,
+    "ankle_joint_z_m": 0.0732,
+    "arm_span_x_m": 1.183,
+    "body_verts_visible": 13380,
+    "base_verts_incl_helpers": 19158,
+    "shapekeys": 14
+  },
+  "contract_comparison": {
+    "target_height_m": 1.78,
+    "contract_shoulder_width_m": 0.42,
+    "contract_crotch_m": 0.93,
+    "contract_knee_m": 0.5,
+    "note": "shoulder value is joint-centre span, body surface is slightly wider; crotch sits 0.025 m above contract"
+  },
+  "scale_contract": {
+    "blender_units": "1 unit = 1 metre",
+    "axes": "+Z up, -Y forward",
+    "origin": "between soles at ground level, feet_on_ground"
+  },
+  "pose": "MPFB default relaxed A-pose, unmodified",
+  "next_gate": "user review of BODY_MASTER; no clothing work until approved"
+}
