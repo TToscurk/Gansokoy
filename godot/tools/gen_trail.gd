@@ -98,10 +98,38 @@ func _init() -> void:
 	print("saved trail.tscn err=", err)
 	quit()
 
+## 森の散佈。
+##
+## ⚠ ここは**二つの独立した問題**を同時に解いている。片方だけだと足りない。
+##
+## 1) LOD —— 描画費用は「本数 × 面数」に比例する（実測 tools/_bench.gd、
+##    Iris Xe で約 10 万面 / ms）。9,000 本すべてが近景解像度の約 1,900 面
+##    だったので森だけで 1,694 万面＝235 ms。草は 4,060 本あっても 1 本
+##    7 面なので 0.00 ms —— つまり本数は最初から問題ではなかった。
+##
+## 2) 空間分割 —— Godot の視錐カリングは **MultiMeshInstance 単位**で、
+##    インスタンス単位ではない。元は 5 個の MultiMesh が全図 680×680 を
+##    覆っていたので、その巨大な AABB が視錐に触れる限り 9,000 本が
+##    毎フレーム全部描かれる。プレイヤーがどこを向いていようが関係ない。
+##    draw call が 85 しか無いのに 238 ms かかっていた理由がこれ。
+##    格子に割れば、正面の数枚だけが描画対象になる。
+##
+## 帯分けの基準は「路からの距離 ed」。獣道は回廊で、カメラは常に路の上に
+## あるので、ed はそのまま視距離の代理になる。
+const FOREST_CHUNK := 100.0     # 格子。340*2/100 → 7×7 前後
+const BAND_NEAR := 32.0         # これより路寄り＝プレイヤーが近寄って見る
+const BAND_MID := 85.0
+
 func _build_forest() -> void:
-	var variants := []
+	var meshes := [[], [], []]
 	for glb in Lib.TREE_GLBS:
-		variants.append({ "mesh": lib.tree_mesh(glb), "list": [] })
+		meshes[0].append(lib.tree_mesh(glb))
+	for glb in Lib.TREE_GLBS_MID:
+		meshes[1].append(lib.tree_mesh(glb))
+	for glb in Lib.TREE_GLBS_FAR:
+		meshes[2].append(lib.tree_mesh(glb))
+	var buckets := {}                     # "band_vi_cx_cz" → Array[Transform3D]
+	var band_count := [0, 0, 0]
 	var trunks: Array[Vector3] = []       # 近路樹要碰撞
 	var count := 0
 	var tries := 0
@@ -124,17 +152,35 @@ func _build_forest() -> void:
 		var basis := Basis(Vector3.UP, lib.rand() * TAU).scaled(Vector3(s, s * lib.rr(0.9, 1.25), s))
 		var r := lib.rand()
 		var vi := 0 if r < 0.34 else (1 if r < 0.62 else (2 if r < 0.78 else (3 if r < 0.92 else 4)))
-		variants[vi].list.append(Transform3D(basis, Vector3(x, y, z)))
+		var band := 0 if ed < BAND_NEAR else (1 if ed < BAND_MID else 2)
+		if band == 2:
+			vi = 0 if vi < 3 else 1        # 遠景は闊葉／杉の二種に畳む
+		var cx := int(floor((x + HALF) / FOREST_CHUNK))
+		var cz := int(floor((z + HALF) / FOREST_CHUNK))
+		var key := "%d_%d_%d_%d" % [band, vi, cx, cz]
+		if not buckets.has(key):
+			buckets[key] = []
+		buckets[key].append(Transform3D(basis, Vector3(x, y, z)))
+		band_count[band] += 1
 		if ed < 14.0:
 			trunks.append(Vector3(x, y, z))
 		count += 1
 
 	var forest := lib.add(lib.root, Node3D.new(), "Forest")
-	for i in variants.size():
+	var slot := 0
+	var tris := 0
+	for key in buckets:
+		var parts: PackedStringArray = (key as String).split("_")
+		var band := int(parts[0])
+		var vi := int(parts[1])
+		var mesh: Mesh = meshes[band][vi]
 		var mmi := MultiMeshInstance3D.new()
-		mmi.multimesh = lib.make_multimesh(variants[i].mesh, variants[i].list, [],
-			OUT_DIR + "gen/trees_%d.res" % i)
-		lib.add(forest, mmi, "Trees%d" % i)
+		mmi.multimesh = lib.make_multimesh(mesh, buckets[key], [],
+			OUT_DIR + "gen/trees_%d.res" % slot)
+		lib.add(forest, mmi, "Trees_%s" % key)
+		slot += 1
+	print("forest 帯: 近 %d / 中 %d / 遠 %d  →  MultiMesh %d 個（格子 %.0fm）"
+		% [band_count[0], band_count[1], band_count[2], slot, FOREST_CHUNK])
 
 	# 近路樹幹碰撞（走在路上撞得到的那些才給實體）
 	var body := StaticBody3D.new()

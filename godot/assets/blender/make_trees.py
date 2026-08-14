@@ -167,4 +167,41 @@ make_tree("tree_sakura_b", dict(T.SAKURA, ang=(0.62, 1.10), up=(0.38, 0.14, -0.0
                                 fol=0.078, ntuft=400), 5.2, 53)
 make_bamboo("bamboo_a", 71)
 make_bamboo("bamboo_b", 137, n_culm=9, h=10.5)
+
+# ── 散佈用 LOD ────────────────────────────────────────────────────────
+# 獣道の実測（tools/_bench.gd、Iris Xe / gl_compatibility）：
+#
+#   Trees0  3,101 本 × 1,918 面 = 5.95M → +68.75 ms
+#   Trees1  2,489 × 1,176       = 2.93M → +28.49 ms
+#   GrassTall 2,200 × 7                 →  +0.00 ms
+#
+# 費用は「本数」ではなく「本数 × 面数」に比例し、この GPU では概ね
+# **10 万面 / ミリ秒**。森だけで 1,694 万面 ＝ 235ms、これが「通ると
+# フリーズする」の正体だった。草は 4,060 本あっても 1 本 7 面なので只。
+#
+# 上の profile は近景用の解像度で、それを三千回撒いていたのが誤り。
+# 距離で三段に分け、遠いものほど骨格ごと落とす。**近景の樹は一切
+# 変えない**——プレイヤーが近寄って見るのはそれだけなので。
+#
+#   近（路から 32m 未満）  現行のまま      約 1,900 面
+#   中（32〜85m）         _mid           約   240 面
+#   遠（85m 以上）        _far           約   104 面
+#
+# 面数の下限は樹幹の管（sides=5）で、そこから先は ntuft を削っても
+# 減らない。だから _far は depth=1・split=(2,) まで落としてある。
+MID = dict(split=(2, 2), depth=2, ntuft=20)
+FAR = dict(split=(2,), depth=1, ntuft=4)
+
+for _nm, _base, _h, _seed in (
+        ("tree_round_a", T.FOREST_ROUND, 4.6, 11),
+        ("tree_round_b", T.FOREST_FAR, 5.0, 47),
+        ("tree_round_c", T.FOREST_TALL, 6.4, 88),
+        ("tree_pine_a", T.FOREST_PINE, 5.4, 23),
+        ("tree_pine_b", dict(T.FOREST_PINE, ntuft=420), 6.8, 61)):
+    make_tree(_nm + "_mid", dict(_base, **MID), _h, _seed)
+
+# 遠景は輪郭しか読めないので、闊葉と杉の二種だけ残す（無くすと森が
+# 一様になり、遠景が壁に見える）。
+make_tree("tree_round_far", dict(T.FOREST_FAR, **FAR), 5.0, 47)
+make_tree("tree_pine_far", dict(T.FOREST_PINE, **FAR), 5.4, 23)
 print("done")

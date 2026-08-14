@@ -446,6 +446,27 @@ const TREE_GLBS := [
 	"res://assets/models/tree_pine_b.glb",
 ]
 
+## 散佈用 LOD。TREE_GLBS と**同じ並び**（索引が変体 id ＝ そのまま差し替え
+## られる）。約 1,900 面 → _MID 240 面 → _FAR 104 面。
+##
+## 実測（tools/_bench.gd、Iris Xe / gl_compatibility）：描画費用は本数では
+## なく「本数 × 面数」に比例し、この GPU で概ね 10 万面 / ms。獣道は森だけ
+## で 1,694 万面 ＝ 235 ms あり、これが「通るとフリーズする」の正体。
+const TREE_GLBS_MID := [
+	"res://assets/models/tree_round_a_mid.glb",
+	"res://assets/models/tree_round_b_mid.glb",
+	"res://assets/models/tree_round_c_mid.glb",
+	"res://assets/models/tree_pine_a_mid.glb",
+	"res://assets/models/tree_pine_b_mid.glb",
+]
+
+## 遠景は輪郭しか読めないので闊葉／杉の二種だけ。変体 id は
+## `0 if vi < 3 else 1` で畳む（TREE_GLBS の前 3 つが闊葉、後 2 つが杉）。
+const TREE_GLBS_FAR := [
+	"res://assets/models/tree_round_far.glb",
+	"res://assets/models/tree_pine_far.glb",
+]
+
 # ── 草（風吹 shader + 三種簇型） ──
 func grass_wind_mat(strength: float, gust := -1.0) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
@@ -620,7 +641,11 @@ func terrain(out_dir: String, half: float, res: int, height_fn: Callable, mask_f
 # ── 遠景：丘陵 + 地標山 + 遠方林帶（斷邊藏進風景） ──
 ## landmarks: [{ "x":…, "z":…, "h":…, "r":… }] 在遠景高度上疊高斯山包
 func vista(out_dir: String, half: float, ext: float, height_fn: Callable,
-		landmarks: Array = [], tree_glb := "res://assets/models/tree_round_b.glb",
+		landmarks: Array = [],
+		# vista は地平線を埋めるだけの背景で、輪郭以外は誰も見ない。
+		# 既定が tree_round_b（1,176 面）だったので、獣道と人里で各 300〜420
+		# 本ぶん、0.45M 面を背景に払っていた。_far は 104 面。
+		tree_glb := "res://assets/models/tree_round_far.glb",
 		far_tree_count := 300, groves: Array = []) -> void:
 	var nv := FastNoiseLite.new()
 	nv.frequency = 0.008
