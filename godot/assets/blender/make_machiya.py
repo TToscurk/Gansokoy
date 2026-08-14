@@ -942,16 +942,35 @@ def validate(ob):
     bm.faces.ensure_lookup_table()
     degen = [f for f in bm.faces if f.calc_area() < 1e-9]
     loose = [v for v in bm.verts if not v.link_faces]
-    nonmanifold = [e for e in bm.edges if not e.is_manifold]
     slots = {}
     for f in bm.faces:
         slots[f.material_index] = slots.get(f.material_index, 0) + 1
+
+    # ── 位相の検査は**溶接してから**でないと意味が無い ────────────
+    # MB は面ごとに独立した頂点を吐く（三角スープ）。素のままだと全ての辺が
+    # 一枚の面にしか属さないので、`is_manifold` は必ず偽になり、非多様体辺の
+    # 数は常に `3 × 三角形数 = 頂点数` という恒等式になる。幾何が繋がって
+    # いようが穴だらけだろうが同じ数字が出る——つまり今まで何も検査して
+    # いなかった。同一座標の頂点を潰してから数えて初めて、
+    #   boundary_edges … 面が一枚しか無い辺＝**開いている縁**
+    #   non_manifold_edges … 面が三枚以上、または開いている辺
+    # が「接いでいない箇所」の実測値になる。屋根面・軒裏・妻壁のように
+    # 設計上そもそも片面の板もあるので 0 にはならない。0 を要求するのでは
+    # なく、資産ごとに実測値を基準として控え、増えたら疑う。
+    probe = bm.copy()
+    bmesh.ops.remove_doubles(probe, verts=probe.verts, dist=1e-4)
+    boundary = [e for e in probe.edges if len(e.link_faces) == 1]
+    nonmanifold = [e for e in probe.edges if not e.is_manifold]
+    welded_verts = len(probe.verts)
+    probe.free()
     bm.free()
     report = {
         "faces": len(me.polygons),
         "verts": len(me.vertices),
+        "welded_verts": welded_verts,
         "degenerate": len(degen),
         "loose_verts": len(loose),
+        "boundary_edges": len(boundary),
         "non_manifold_edges": len(nonmanifold),
         "material_faces": {ORDER[k]: v for k, v in sorted(slots.items())},
     }

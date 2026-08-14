@@ -48,6 +48,21 @@ def beam(bld, a, b, r, mat):
         bld.quad(corner(a, i0, j0), corner(a, i1, j1),
                  corner(b, i1, j1), corner(b, i0, j0), mat)
 
+    # ── 木口（端蓋）──────────────────────────────────────────
+    # 側面 4 枚だけだと角材は**両端が開いた筒**になる。多くの角度では
+    # 気付かないが、端が空中で終わる材（腕木の下端・撞木・高欄の端）
+    # では筒の内側が直接見えてしまい、「接いでいない」как見える。
+    # これが `non_manifold_edges` が常に頂点数と同じ値を返していた理由でも
+    # ある——壊れた指標ではなく、全ての辺が開いていると正しく報告して
+    # いた。ここを塞ぐと初めてあの数字が意味を持つ。
+    #
+    # 巻き方向：(sx, sy, d) は右手系（sx × sy = d）。b 側は法線 +d なので
+    # (sx, sy) 平面で反時計回り、a 側は法線 -d なので逆順。
+    bld.quad(corner(b, -1, -1), corner(b, 1, -1),
+             corner(b, 1, 1), corner(b, -1, 1), mat)
+    bld.quad(corner(a, -1, -1), corner(a, -1, 1),
+             corner(a, 1, 1), corner(a, 1, -1), mat)
+
 
 def frustum4(bld, cx, cy, z0, z1, hw0, hd0, hw1, hd1, mat, cap=None,
              skip_bottom=True):
@@ -196,17 +211,33 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
             beam(bld, (gx + sx * 0.045, cy + sy * hd * (1.0 - g), z_b),
                  (gx + sx * 0.045, cy, ridge_z + 0.05), 0.085, barge)
         if gyogyo:
+            # 懸魚は破風から**吊り下がる**——下に何も無いので底面が要る。
             bld.box(gx + sx * 0.075, cy, ridge_z - 0.36, 0.09, 0.34, 0.44,
-                    gyogyo_mat)
+                    gyogyo_mat, skip_bottom=False)
 
     # ── 棟：熨斗瓦の層 + 冠瓦 + 鬼瓦 ──────────────────────────
-    bld.box(cx, cy, ridge_z + 0.075, 2 * xg + 0.26, 0.48, 0.15, kawara)
+    # 熨斗瓦の箱は**屋根面まで下ろして埋める**。底面を ridge_z に合わせると、
+    # 箱は y 方向に ±0.24 あるのに屋根面はそこで既に ridge_z - 0.24·tan(pitch)
+    # まで下がっているため、大棟に沿って三角形の空洞が通しで開く。妻壁の
+    # 三角形は頂点が ridge_z の一点なのでそれを塞げず、妻側から見ると
+    # 大棟の下に暗い隙間が抜けて見える。実物の熨斗瓦も屋根面に座るので、
+    # 下端を屋根面より下に落とすのが形としても正しい。
+    #
+    # `skip_bottom=False` は必須。box() は既定で底面を省く（地面や他の材に
+    # 座る箱では見えないので面数の節約になる）が、屋根は薄い殻であって
+    # 中身は鐘室の空気なので、下ろした熨斗瓦の底は**そのまま空洞に face
+    # している**。省いたままだと妻側から箱の内側が見えて、大棟の下に黒い
+    # 楔が現れる——上の空洞を塞いだ結果、今度は箱自身が穴になる。
+    _nz = 0.24 * math.tan(pitch) + 0.03      # 箱の半幅における屋根面の落差
+    bld.box(cx, cy, ridge_z + 0.075 - _nz / 2.0,
+            2 * xg + 0.26, 0.48, 0.15 + _nz, kawara, skip_bottom=False)
     beam(bld, (cx - xg - 0.13, cy, ridge_z + 0.22),
          (cx + xg + 0.13, cy, ridge_z + 0.22), 0.13, kawara)
     if onigawara:
         for sx in (1, -1):
+            # 鬼瓦は大棟の端に立つ。妻側は下が抜けているので底面が要る。
             bld.box(cx + sx * (xg + 0.16), cy, ridge_z + 0.30,
-                    0.12, 0.34, 0.50, kawara)
+                    0.12, 0.34, 0.50, kawara, skip_bottom=False)
 
     return {"ridge_z": ridge_z, "eave_z": eave_z, "gable_z": z_b,
             "gable_x": xg, "hw": hw, "hd": hd,
