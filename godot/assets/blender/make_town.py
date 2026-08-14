@@ -815,18 +815,46 @@ for _nm, _sp, _wd, _ri, _rh, _ns, _np, _oy in (
         "gbox": _gbox(ob),
         "faces": n, "glb": "res://assets/models/%s.glb" % _nm}
 
+# ⚠ 鐘楼だけ **production 実装**（`make_shourou.py`）に差し替わっている。
+# 承認済みの袴腰鐘楼 13.88m は `tower_bell_p.glb` として書き出し、manifest の
+# キーは `tower_bell` のまま —— キーを変えると town_config.gd の TOWERS が
+# 追随せねばならず、配置座標を触ることになる。
+# 旧 `bell_tower()`（17.5m の倒錐ブロックアウト）は履歴として残すが、
+# **ここから呼ばれない**ので manifest には二度と載らない。これを書かずに
+# town_modules.json だけ手で直すと、次に本ファイルを普通に流した人が
+# 気づかないまま旧塔に戻す（manifest の唯一の writer は本ファイル）。
+_TOWER_PROTO = {"tower_bell": ("make_shourou.py", "tower_bell_p")}
 for _nm, _fn in (("tower_fire", "fire_tower"), ("tower_bell", "bell_tower"),
                  ("tower_mill", "water_mill_tower")):
     clear()
-    b = B()
-    th = globals()[_fn](b)
-    ob = b.build(_nm)
-    n = export(ob, _nm)
+    if _nm in _TOWER_PROTO:
+        _src, _glb = _TOWER_PROTO[_nm]
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "make_shourou", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                         _src))
+        _ms = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_ms)
+        _ms.mm.make_materials()
+        ob, _roof = _ms.build(_glb)
+        _rep = _ms.mm.validate(ob)
+        assert _rep["degenerate"] == 0, "%s 有退化面：%s" % (_nm, _rep)
+        assert len(_rep["material_faces"]) >= 4, "%s 語意材質塌了：%s" % (_nm, _rep)
+        _ms.mm.export(ob, _glb)
+        n = len(ob.data.polygons)
+        print("  [PROTO] %s → %s 面 %d 材質 %d 種"
+              % (_nm, _glb, n, len(_rep["material_faces"])))
+    else:
+        _glb = _nm
+        b = B()
+        th = globals()[_fn](b)
+        ob = b.build(_nm)
+        n = export(ob, _nm)
     bb = _bbox(ob)
     manifest["modules"][_nm] = {
         "kind": "tower", "fw": round(bb[0], 2), "fd": round(bb[1], 2),
         "h": round(bb[2], 2), "gbox": _gbox(ob), "faces": n,
-        "glb": "res://assets/models/%s.glb" % _nm}
+        "glb": "res://assets/models/%s.glb" % _glb}
     print("  %s 高 %.2f m / 基座 %.1f×%.1f → 高寬比 %.1f"
           % (_nm, bb[2], bb[0], bb[1], bb[2] / max(bb[0], bb[1])))
 

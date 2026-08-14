@@ -61,7 +61,7 @@ BASE_H = 1.50          # 石垣
 BATTER = 0.22          # 石垣の勾配（片側の後退量）
 COPE_Z = BASE_H + 0.14  # 葛石の上端
 
-HAKAMA_TOP = 4.30      # 袴腰の上端＝縁の下端
+HAKAMA_TOP = 4.69      # ART LOCK：承認済みの少し高く細い袴腰
 # ⚠ 袴腰の裾は**葛石より内側**でなければならない。最初の版は裾 3.15 で
 # 葛石 3.15・石垣天 3.03 より外に出ており、正面から石垣が一切見えず、
 # 下半分が白い台形一枚に潰れていた（仕様の「石垣基壇 1.5m」が消えた）。
@@ -69,21 +69,21 @@ HAKAMA_TOP = 4.30      # 袴腰の上端＝縁の下端
 HAKAMA_HW0 = 2.90      # 袴腰の裾（下）半幅
 HAKAMA_HW1 = 2.275     # 袴腰の肩（上）半幅＝鐘室の半幅
 
-DECK_Z0, DECK_Z1 = HAKAMA_TOP, HAKAMA_TOP + 0.22
+DECK_Z0, DECK_Z1 = HAKAMA_TOP, 4.95
 DECK_HW = 2.95         # 縁は袴腰より 0.675 張り出す
 RAIL_HW = 2.80
-RAIL_TOP = DECK_Z1 + 0.82
+RAIL_TOP = 6.63
 
 POST_C = 2.115         # 通し柱の芯（断面 0.32 → 外面が 2.275 に揃う）
 POST_R = 0.16
-NUKI_Z = 5.42          # 腰貫（高欄のすぐ上）
-KASHIRA_Z = 7.35       # 頭貫
-PLATE_TOP = 7.75       # 桁の上端＝**屋根の壁面基準**（規約：桁天は壁天と面一）
+NUKI_Z = 6.79          # 腰貫（高欄のすぐ上）
+KASHIRA_Z = 10.73      # 頭貫
+PLATE_TOP = 11.55      # ART LOCK：増加高の大半を露鐘層へ配分
 PLATE_R = 0.11
 
-BEAM_Z = 7.05          # 梵鐘を吊る梁
-BELL_TOP = 6.80        # 鐘身の天（この上に竜頭）
-BELL_BOT = 4.95        # 口縁。縁から 0.43 浮く
+BEAM_Z = 10.12         # 梵鐘を吊る梁
+BELL_TOP = 8.99        # 鐘身の天（この上に竜頭）
+BELL_BOT = 6.91        # 承認済みの口縁高
 
 PITCH = math.radians(38.0)
 OVERHANG = 1.35
@@ -214,18 +214,26 @@ def _frame(bld):
 def _bell(bld):
     """梵鐘 ＋ 吊る梁 ＋ 撞木。"""
     RL.beam(bld, (-POST_C, CY, BEAM_Z), (POST_C, CY, BEAM_Z), 0.16, "WOOD")
-    prof = [(BELL_BOT, 0.630), (BELL_BOT + 0.11, 0.615), (5.95, 0.585),
-            (6.42, 0.555), (6.62, 0.500), (6.72, 0.340), (BELL_TOP, 0.200)]
+    # ART LOCK：最大直径約 2.05m。肩から口縁へ明確に広がる梵鐘輪郭。
+    prof = [(BELL_BOT, 1.023), (7.04, 0.966), (8.03, 0.824),
+            (8.56, 0.777), (8.78, 0.700), (8.90, 0.476), (BELL_TOP, 0.280)]
     _tube(bld, CY, prof, "STONE")
     # 上帯・下帯（鐘身を三段に割る横の線。無いと灰色の壺に見える）
-    for z in (5.62, 6.16):
-        _tube(bld, CY, [(z, 0.612), (z + 0.085, 0.610)], "STONE", cap=False)
-    bld.box(0, CY, BELL_TOP + 0.10, 0.24, 0.38, 0.20, "STONE")   # 竜頭
+    for z, r in ((7.66, 0.870), (8.26, 0.857)):
+        _tube(bld, CY, [(z, r), (z + 0.095, r - 0.003)], "STONE", cap=False)
+    bld.box(0, CY, BELL_TOP + 0.11, 0.34, 0.53, 0.22, "STONE")   # 竜頭
+    # 吊金具：竜頭の天から梁の下端まで。ART LOCK の鐘は梁との間に 0.75m の
+    # 空隙があり、**梵鐘が何にも吊られていない**状態だった。鐘も梁も動かさず
+    # ここだけを繋ぐ。材質は鐘と同じ STONE —— 六種の契約に金属は無く、
+    # 竜頭から連続した一本の金物に読ませたいので木ではなく鐘側に寄せる。
+    # 両端は竜頭と梁に 0.04 ほど埋める（beam() は端に蓋を張らないので、
+    # 突き出すと筒の断面が見える）。
+    RL.beam(bld, (0, CY, BELL_TOP + 0.18), (0, CY, BEAM_Z - 0.12), 0.085, "STONE")
     # 撞木：正面（-y）側から鐘を撞く。吊木から二本の縄で吊る。
-    RL.beam(bld, (0, CY - 2.30, 5.95), (0, CY - 0.95, 5.95), 0.105, "WOOD")
-    RL.beam(bld, (0, CY - POST_C, 7.12), (0, CY - 0.90, 7.12), 0.075, "WOOD")
+    RL.beam(bld, (0, CY - 2.30, 8.03), (0, CY - 0.95, 8.03), 0.105, "WOOD")
+    RL.beam(bld, (0, CY - POST_C, 10.26), (0, CY - 0.90, 10.26), 0.075, "WOOD")
     for y in (CY - 2.05, CY - 1.05):
-        RL.beam(bld, (0, y, 7.08), (0, y, 5.95), 0.032, "WOOD")
+        RL.beam(bld, (0, y, 10.22), (0, y, 8.03), 0.032, "WOOD")
 
 
 def build(name="tower_bell_p"):
@@ -237,7 +245,7 @@ def build(name="tower_bell_p"):
     _bell(b)
     roof = RL.irimoya_roof(b, 0.0, CY, PLATE_TOP, HAKAMA_HW1 * 2, HAKAMA_HW1 * 2,
                            PITCH, overhang=OVERHANG, thick=0.18,
-                           gable_at=GABLE_AT)
+                           gable_at=GABLE_AT, sori=0.16)
     ob = b.build(name)
     return ob, roof
 
@@ -284,7 +292,7 @@ if __name__ == "__main__":
           % (roof["ridge_z"], roof["eave_z"], roof["gable_z"], roof["gable_x"]))
     assert rep["degenerate"] == 0, "退化面あり：%s" % rep
     assert len(rep["material_faces"]) >= 4, "語意材質が塌れた：%s" % rep
-    assert 9.5 <= bb[2] <= 11.0, "総高 %.2f が仕様 9.5~11.0 の外" % bb[2]
+    assert 13.75 <= bb[2] <= 14.00, "ART LOCK 総高 %.2f が 13.75~14.00m の外" % bb[2]
     if not os.path.isdir(OUT_DIR):
         os.makedirs(OUT_DIR, exist_ok=True)
     print("exported %s" % mm.export(ob, "tower_bell_p"))

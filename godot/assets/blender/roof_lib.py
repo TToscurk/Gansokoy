@@ -70,7 +70,8 @@ def frustum4(bld, cx, cy, z0, z1, hw0, hd0, hw1, hd1, mat, cap=None,
 def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
                  gable_at=0.55, kawara="KAWARA", soffit="WOOD_LT",
                  barge="WOOD_LT", gable_wall="PLASTER", gyogyo_mat="WOOD",
-                 rafters=True, courses=True, gyogyo=True, onigawara=True):
+                 rafters=True, courses=True, gyogyo=True, onigawara=True,
+                 sori=0.0):
     """入母屋屋根一式。棟は x 方向（平入り）。
 
     構成：野地 → 鼻隠し → 軒裏 → 垂木 → 葺き足 → 隅棟 → 妻壁 →
@@ -82,6 +83,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
     hd = D / 2.0 + overhang
     t = math.tan(pitch)
     eave_z = z_wall - overhang * t
+    eave_edge_z = eave_z + sori
     ridge_z = z_wall + (D / 2.0) * t
     g = gable_at
     z_b = eave_z + (ridge_z - eave_z) * g
@@ -95,7 +97,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
         ye = cy + sy * hd
         yb = cy + sy * hd * (1.0 - g)
         bld.quad((cx - xg, yb, z_b), (cx + xg, yb, z_b),
-                 (cx + hw, ye, eave_z), (cx - hw, ye, eave_z),
+                 (cx + hw, ye, eave_edge_z), (cx - hw, ye, eave_edge_z),
                  kawara, flip=(sy > 0))
         bld.quad((cx - xg, cy, ridge_z), (cx + xg, cy, ridge_z),
                  (cx + xg, yb, z_b), (cx - xg, yb, z_b),
@@ -107,7 +109,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
         xe = cx + sx * hw
         xb = cx + sx * xg
         bld.quad((xb, cy - hd * (1.0 - g), z_b), (xb, cy + hd * (1.0 - g), z_b),
-                 (xe, cy + hd, eave_z), (xe, cy - hd, eave_z),
+                 (xe, cy + hd, eave_edge_z), (xe, cy - hd, eave_edge_z),
                  kawara, flip=(sx < 0))
 
     # ── 鼻隠し（軒口の小口）＋ 軒裏（仰視面）── 四周 ────────────
@@ -121,20 +123,20 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
     for sy in (1, -1):
         ye = cy + sy * hd
         yi = cy + sy * y_in
-        bld.quad((cx - hw, ye, eave_z), (cx + hw, ye, eave_z),
-                 (cx + hw, ye, eave_z - thick), (cx - hw, ye, eave_z - thick),
+        bld.quad((cx - hw, ye, eave_edge_z), (cx + hw, ye, eave_edge_z),
+                 (cx + hw, ye, eave_edge_z - thick), (cx - hw, ye, eave_edge_z - thick),
                  kawara, flip=(sy > 0))
-        bld.quad((cx - hw, ye, eave_z - thick), (cx + hw, ye, eave_z - thick),
+        bld.quad((cx - hw, ye, eave_edge_z - thick), (cx + hw, ye, eave_edge_z - thick),
                  (cx + hw - inset, yi, z_wall - thick),
                  (cx - hw + inset, yi, z_wall - thick),
                  soffit, flip=(sy < 0))
     for sx in (1, -1):
         xe = cx + sx * hw
         xi = cx + sx * x_in
-        bld.quad((xe, cy - hd, eave_z), (xe, cy + hd, eave_z),
-                 (xe, cy + hd, eave_z - thick), (xe, cy - hd, eave_z - thick),
+        bld.quad((xe, cy - hd, eave_edge_z), (xe, cy + hd, eave_edge_z),
+                 (xe, cy + hd, eave_edge_z - thick), (xe, cy - hd, eave_edge_z - thick),
                  kawara, flip=(sx < 0))
-        bld.quad((xe, cy - hd, eave_z - thick), (xe, cy + hd, eave_z - thick),
+        bld.quad((xe, cy - hd, eave_edge_z - thick), (xe, cy + hd, eave_edge_z - thick),
                  (xi, cy + hd - inset, z_wall - thick),
                  (xi, cy - hd + inset, z_wall - thick),
                  soffit, flip=(sx > 0))
@@ -144,7 +146,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
     # 軒裏と同じ理由で交差する。
     if rafters:
         zr = z_wall - thick - 0.02
-        ze = eave_z - thick - 0.02
+        ze = eave_edge_z - thick - 0.02
         hx = hw - inset
         n = max(7, int(2 * hx / 0.46))
         for sy in (1, -1):
@@ -180,7 +182,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
     # ── 隅棟（入母屋がそう読めるかどうかは、この四本で決まる）──
     for sx in (1, -1):
         for sy in (1, -1):
-            beam(bld, (cx + sx * hw, cy + sy * hd, eave_z + 0.04),
+            beam(bld, (cx + sx * hw, cy + sy * hd, eave_edge_z + 0.04),
                  (cx + sx * xg, cy + sy * hd * (1.0 - g), z_b + 0.04),
                  0.085, kawara)
 

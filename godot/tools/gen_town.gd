@@ -526,18 +526,39 @@ func _build_towers() -> void:
 	for t in TOWERS:
 		var m: Dictionary = _mods[t.kind]
 		var mi := MeshInstance3D.new()
-		mi.mesh = lib.prop_mesh(String(m["glb"]))
+		if String(t.kind) == "tower_bell":
+			var semantic_result: Array = lib.semantic_mesh(String(m["glb"]))
+			mi.mesh = semantic_result[0]
+			_audit.append("tower_bell：語意材質 %d surface %s" % [
+				mi.mesh.get_surface_count(), str(semantic_result[1])])
+		else:
+			mi.mesh = lib.prop_mesh(String(m["glb"]))
 		# MAP CELL 01：位置も形も変えず、北門から最初に見える火見櫓だけを
 		# 黒い線画から村の木造設備へ戻す。
 		if String(t.kind) == "tower_fire":
 			mi.material_override = lib.pbr(
 				"火見櫓暖木", "dark_wood", 0.54, Color(0.54, 0.38, 0.26))
-		mi.position = Vector3(t.x, bank_h(t.x, t.z), t.z)
 		mi.rotation.y = t.yaw
+		# The approved bell tower follows the production front-face-origin
+		# contract.  TOWERS stores the landmark centre, so move the mesh origin
+		# forward by its measured local bbox centre and keep the old sightline.
+		var origin := Vector2(t.x, t.z)
+		if String(t.kind) == "tower_bell":
+			var gbox: Array = m["gbox"]
+			var local_center := Vector2(
+				(float(gbox[0]) + float(gbox[1])) * 0.5,
+				(float(gbox[2]) + float(gbox[3])) * 0.5)
+			var axis_x := Vector2(cos(t.yaw), -sin(t.yaw))
+			var axis_z := Vector2(sin(t.yaw), cos(t.yaw))
+			origin -= axis_x * local_center.x + axis_z * local_center.y
+		mi.position = Vector3(origin.x, bank_h(t.x, t.z), origin.y)
 		mi.set_meta("needs_trimesh", true)
 		lib.add(g, mi, t.kind)
-		_dump.append([t.kind, t.x, mi.position.y, t.z, t.yaw])
-		_reserved.append(_obb_of([t.kind, t.x, 0.0, t.z, t.yaw]))
+		_dump.append([t.kind, origin.x, mi.position.y, origin.y, t.yaw])
+		# ⚠ 保留区も **origin** で建てる。gbox は模組の**原点**基準なので、
+		# 中心である t.x/t.z を渡すと OBB だけが 3.25m ずれ、鐘楼の北側に
+		# 町家が入り込める穴が空く（_dump は直っていたがここが漏れていた）。
+		_reserved.append(_obb_of([t.kind, origin.x, 0.0, origin.y, t.yaw]))
 		# 塔身太細，trimesh 之外再給一個實心碰撞箱（不然玩家會卡進格柵裡）
 		var sh := CollisionShape3D.new()
 		var bx := BoxShape3D.new()

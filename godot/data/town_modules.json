@@ -603,17 +603,17 @@
   },
   "tower_bell": {
    "kind": "tower",
-   "fw": 6.82,
-   "fd": 6.82,
-   "h": 17.4,
+   "fw": 7.42,
+   "fd": 7.42,
+   "h": 13.88,
    "gbox": [
-    -3.41,
-    3.41,
-    -3.41,
-    3.41
+    -3.712,
+    3.712,
+    -6.962,
+    0.462
    ],
-   "faces": 220,
-   "glb": "res://assets/models/tower_bell.glb"
+   "faces": 1466,
+   "glb": "res://assets/models/tower_bell_p.glb"
   },
   "tower_mill": {
    "kind": "tower",
