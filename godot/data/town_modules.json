@@ -605,14 +605,14 @@
    "kind": "tower",
    "fw": 7.42,
    "fd": 7.42,
-   "h": 13.88,
+   "h": 15.18,
    "gbox": [
     -3.712,
     3.712,
     -6.962,
     0.462
    ],
-   "faces": 1466,
+   "faces": 2152,
    "glb": "res://assets/models/tower_bell_p.glb"
   },
   "tower_mill": {
