@@ -3,3 +3,12 @@ shots/
 
 # Blender 腳本的 bytecode 快取
 __pycache__/
+
+# 本機工具產物 —— 不屬於專案本身。
+# `godot/addons/` 是 godot-mcp 每次 `godot_launch` 用 copytree 覆寫進來的，
+# 權威來源在 D:\godot-mcp，不是這個 repo；改這裡的副本會被下次啟動蓋掉。
+godot/addons/
+godot/.mcp.json
+godot/.cursor/
+.codex/
+godot/*.log
