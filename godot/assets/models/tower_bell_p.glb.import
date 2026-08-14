@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://sgmpmj3r8jlj"
-path="res://.godot/imported/machiya_pilot_silhouette_gable_01.glb-c70632ec37075338ae91c8487c7a76b7.scn"
+uid="uid://1ko5is2b5phi"
+path="res://.godot/imported/tower_bell_p.glb-7db772186bc9ca4db7ced57f83234adc.scn"
 
 [deps]
 
-source_file="res://assets/models/machiya_pilot_silhouette_gable_01.glb"
-dest_files=["res://.godot/imported/machiya_pilot_silhouette_gable_01.glb-c70632ec37075338ae91c8487c7a76b7.scn"]
+source_file="res://assets/models/tower_bell_p.glb"
+dest_files=["res://.godot/imported/tower_bell_p.glb-7db772186bc9ca4db7ced57f83234adc.scn"]
 
 [params]
 
