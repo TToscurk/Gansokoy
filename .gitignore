@@ -1,5 +1,6 @@
 node_modules/
 shots/
+shots2/
 
 # Blender 腳本的 bytecode 快取
 __pycache__/

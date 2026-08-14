@@ -8,6 +8,11 @@ extends Node3D
 ## 座標系：three / glTF / Godot 都是右手系 y-up，座標原樣通用。
 
 const START_MAP := "shrine"
+## START_MAP が未構築のときの退避先。shrine は mapRegistry には載っている
+## が実体（maps/shrine/shrine.tscn も blockout/shrine.glb も）が無いため、
+## これが無いと起動が黒画面になる。shrine が建ったらこの退避は自然に
+## 使われなくなる——START_MAP を書き換えて逃げないのはそのため。
+const BOOT_FALLBACK := "village"
 ## 傳送落地後的冷卻，免得一落地就被同一個傳送區抓回去
 const PORTAL_COOLDOWN := 2.0
 ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
@@ -44,7 +49,13 @@ func _ready() -> void:
 			_shots_file = a.substr(8)
 		elif a.begins_with("--shotdir="):
 			_shot_dir = a.substr(10)
+	# 起動図が未構築なら、構築済みの図へ落とす。黙って落とさない——
+	# START_MAP は「本来ここから始まる」という意思表示なので、書き換えて
+	# 隠すのではなく、毎回うるさく言いながら遊べる状態にしておく。
 	load_map(start, "")
+	if map_root == null:
+		push_error("[map] 起動図 '%s' が未構築。BOOT_FALLBACK へ退避する。" % start)
+		load_map(BOOT_FALLBACK, "")
 	if _shot_player != "":
 		var shot_spawn := _shot_player.split_floats(",")
 		player.global_position = Vector3(shot_spawn[0], shot_spawn[1], shot_spawn[2])
@@ -156,16 +167,31 @@ func load_map(id: String, from_id: String) -> void:
 	var meta := _load_json("res://data/%s.meta.json" % id)
 	if meta.is_empty():
 		return
-	if map_root:
-		map_root.queue_free()
 
-	current_id = id
 	# 原生場景（maps/<id>/<id>.tscn，視覺重做完成的圖）優先；
 	# 還沒重做的圖 fallback 到 three.js 烤出來的 blockout 底稿。
+	#
+	# 解決と存在確認は**現在の図を捨てる前**に済ませる。順序を逆にすると、
+	# 未構築の図へ飛んだ瞬間に map_root を queue_free した後で load() が
+	# null を返し、instantiate() がそこで落ちる——図が消えたまま復帰でき
+	# ない。mapRegistry に載っていても実体が無い図は実在する：blockout を
+	# 退役させた時点で shrine は native も blockout も無くなっており、
+	# START_MAP が shrine のままなので**起動一発目がこれで落ちていた**。
 	var native := "res://maps/%s/%s.tscn" % [id, id]
 	var use_native := ResourceLoader.exists(native)
-	print("[map] %s → %s" % [id, native if use_native else "blockout"])
-	var packed: PackedScene = load(native) if use_native else load("res://blockout/%s.glb" % id)
+	var path := native if use_native else "res://blockout/%s.glb" % id
+	if not ResourceLoader.exists(path):
+		push_error("[map] %s は未構築：%s も res://blockout/%s.glb も存在しない" % [id, native, id])
+		return
+	var packed: PackedScene = load(path)
+	if packed == null:
+		push_error("[map] %s の読み込みに失敗した：%s" % [id, path])
+		return
+
+	if map_root:
+		map_root.queue_free()
+	current_id = id
+	print("[map] %s → %s" % [id, path])
 	map_root = packed.instantiate()
 	add_child(map_root)
 	var terr := map_root.get_node_or_null("Terrain")
