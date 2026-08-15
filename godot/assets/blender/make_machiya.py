@@ -756,9 +756,12 @@ def _hisashi(bld, cx, w, z, wall_y, span_over=0.9, proj=0.95):
     # 野地（含厚度）
     th = 0.055
     for x0, x1 in [(cx - span / 2, cx + span / 2)]:
-        bld.quad((x0, y0, z), (x1, y0, z), (x1, y1, z1), (x0, y1, z1), "KAWARA")
+        # ⚠ 野地と鼻隠しは flip=True。無印だと法線が下・壁向きに出て、
+        # Godot では庇の上面が剔除される（主屋根と同じ符号誤りだった）。
+        bld.quad((x0, y0, z), (x1, y0, z), (x1, y1, z1), (x0, y1, z1), "KAWARA",
+                 flip=True)
         bld.quad((x0, y1, z1), (x1, y1, z1), (x1, y1, z1 - th), (x0, y1, z1 - th),
-                 "KAWARA")                                    # 鼻隠し（簷口斷面）
+                 "KAWARA", flip=True)                         # 鼻隠し（簷口斷面）
         bld.quad((x0, y1, z1 - th), (x1, y1, z1 - th), (x1, y0, z - th), (x0, y0, z - th),
                  "WOOD_LT", flip=True)                        # 軒裏（仰視面）
         for sxx in (0, 1):                                    # 兩端封口
@@ -850,12 +853,16 @@ def _roof(bld, W, D, z_wall, pitch, overhang=0.85, thick=0.16, gyogyo=True):
     for sy in (1, -1):
         ye = cy + sy * hd
         # 野地（瓦底層）
+        # ⚠ flip は **(sy < 0)**。長年 (sy > 0) で両坡とも法線が下向きに
+        # 出ていた —— Blender は双面描画で見えるが、Godot は表面剔除で
+        # 野地が上から**存在しない**。桟の隙間 66mm がそのまま屋内へ
+        # 貫通する（正しい側の見本は下の軒裏 flip=(sy < 0)）。
         bld.quad((-hw, cy, ridge_z), (hw, cy, ridge_z),
-                 (hw, ye, eave_z), (-hw, ye, eave_z), "KAWARA", flip=(sy > 0))
-        # 鼻隠し（簷口斷面）
+                 (hw, ye, eave_z), (-hw, ye, eave_z), "KAWARA", flip=(sy < 0))
+        # 鼻隠し（簷口斷面）—— 同じ符号誤り。外向きは flip=(sy < 0)。
         bld.quad((-hw, ye, eave_z), (hw, ye, eave_z),
                  (hw, ye, eave_z - thick), (-hw, ye, eave_z - thick),
-                 "KAWARA", flip=(sy > 0))
+                 "KAWARA", flip=(sy < 0))
         # 軒裏（仰視面）—— 木色，不是瓦色
         bld.quad((-hw, ye, eave_z - thick), (hw, ye, eave_z - thick),
                  (hw, cy + sy * (D / 2 - 0.05), z_wall - thick),
@@ -963,7 +970,19 @@ def validate(ob):
     nonmanifold = [e for e in probe.edges if not e.is_manifold]
     welded_verts = len(probe.verts)
     probe.free()
+
+    # ── 屋根面の向き（Godot は表面剔除、Blender は双面）────────────
+    # 面積 2m² 超の KAWARA 平面＝野地。法線が下向き（z < -0.5）なら、
+    # エンジン内では上から**存在しない**屋根を輸出しようとしている。
+    # 2026-08 に全 170 棟がこれで抜けていた —— ここで止める。
+    kawara_idx = ORDER.index("KAWARA")
+    inverted_noji = [f for f in bm.faces
+                     if f.material_index == kawara_idx
+                     and f.calc_area() > 2.0 and f.normal.z < -0.5]
     bm.free()
+    assert not inverted_noji, (
+        "%s：野地 %d 枚の法線が下向き（Godot で剔除される）"
+        % (ob.name, len(inverted_noji)))
     report = {
         "faces": len(me.polygons),
         "verts": len(me.vertices),
