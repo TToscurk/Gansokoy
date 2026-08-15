@@ -13,6 +13,14 @@ var _dbatch: Dictionary
 var _ddump: Array
 var _drng: RandomNumberGenerator
 var _prng: RandomNumberGenerator
+## 住家の生活痕跡は**独立した stream**。既存の店先 dressing と同じ _drng を
+## 使うと、抽選を一回足すだけで下流の暖簾・提灯・雑物が全部ずれる
+## （godot rule：層ごとに RNG を分離する）。
+var _lrng: RandomNumberGenerator
+var _n_life := 0                 # 生活痕跡の総数（_ddump から数え直す）
+## 生活痕跡の道具名。集計の分類に使うので、_life_traces に足したらここにも足す。
+const LIFE_KINDS := ["prop_sudare", "prop_hoshigaki", "prop_monohoshi",
+	"prop_somenuno", "prop_takigi", "prop_zaru"]
 var _audit: Array
 var _half: float
 var _bank_path: float
@@ -44,6 +52,7 @@ func _setup(context: Dictionary) -> void:
 	_ddump = context.ddump
 	_drng = context.density_rng
 	_prng = context.pilot_rng
+	_lrng = context.life_rng
 	_audit = context.audit
 	_half = context.half
 	_bank_path = context.bank_path
@@ -275,6 +284,15 @@ func build(context: Dictionary) -> void:
 				break
 			if not placed:
 				continue
+		# ── 住家の生活痕跡（工序 #5）────────────────────────────────
+		# 商業帯の吊掛は wgt 重みなので、住宅帯（wgt≈0）は暖簾 6% ＝
+		# 眼の高さに何も無い状態だった。埋めるのは**店の看板ではなく
+		# 暮らしの痕跡** —— Phase 2.6 で作ったのに村では一度も置かれて
+		# いなかった monohoshi / somenuno / sudare / hoshigaki と薪・笊を、
+		# 住宅ほど濃くなる重み (1-wgt) で置く。
+		# 規格（village-art-direction「店＝商品が街を向く／住＝物は壁際に
+		# 寄せる」）に従い、生活の物は壁へ寄せる。街へは出さない。
+		_life_traces(pos, ax, fwd, yaw, hy, beam_y, half_w, door_x, door_w, wgt)
 	# ── 花樹群聚：同種大群聚做色塊（散點單株是稗田邸點名過的反面教材）──
 	_dxf_mute = false
 	# ⚠ 花樹の排除判定も **legacy の家**（stream）で行う。新しい pilot の家で
@@ -438,11 +456,15 @@ func build(context: Dictionary) -> void:
 	# 集計は _ddump から数え直す（ghost は _dxf で捨てているので入らない）
 	n_noren = 0; n_cho = 0; n_kan = 0; n_clut = 0
 	var n_tree2 := 0
+	# ⚠ ここは **else が catch-all**。新しい道具を足したら必ず分類も足すこと
+	#   —— 生活痕跡を入れた最初の版は 301 件が丸ごと「地面雜物」に流れ込み、
+	#   56 → 332 に化けた（既存 dressing は一件も変わっていないのに）。
 	for d3 in _ddump:
 		var dk := String(d3[0])
 		if dk.begins_with("prop_noren"): n_noren += 1
 		elif dk == "prop_chochin": n_cho += 1
 		elif dk == "prop_kanban": n_kan += 1
+		elif dk in LIFE_KINDS: _n_life += 1
 		elif dk.begins_with("tree"): n_tree2 += 1
 		else: n_clut += 1
 	n_tree = n_tree2
@@ -460,10 +482,76 @@ func build(context: Dictionary) -> void:
 	_emit_density()
 	_audit.append("密度層：暖簾 %d、提灯 %d、招牌 %d、地面雜物 %d、花樹 %d（%d draw call）"
 		% [n_noren, n_cho, n_kan, n_clut, n_tree, _dbatch.size()])
+	_audit.append("生活痕跡：%d 件（簾・干柿・物干し・染布・薪・笊／住宅ほど濃い）"
+		% _n_life)
 
 ## 花樹的樹冠材質：**不能**走 lib.tree_mesh 的 canopy_mat —— 那個會拿
 ## terrain_forest_diff 貼圖乘頂點色，粉色 × 綠貼圖 = 濁褐色。
 ## 花冠用無貼圖的雙面頂點色材質，樹幹照用 bark PBR。
+
+## 一戸ぶんの暮らしの痕跡。**独立 stream `_lrng`** だけを引くので、
+## 既存の店先 dressing は一件もずれない。
+##
+## 語彙と置き場所（village-art-direction「住＝物は壁際」）：
+##   簾・干柿 … 軒下に吊る（beam_y）。戸口の反対側の半分に寄せる
+##   物干し＋染布 … 妻側の空き。街へ 1.0〜1.5m、間口の端
+##   薪束・笊 … 壁にくっつける（街へ 0.30〜0.55m）
+func _life_traces(pos: Vector2, ax: Vector2, fwd: Vector2, yaw: float,
+		hy: float, beam_y: float, half_w: float,
+		door_x: float, door_w: float, wgt: float) -> int:
+	var live: float = clampf(1.0 - wgt, 0.0, 1.0)     # 住宅ほど濃い
+	var n := 0
+	# 戸口の**反対側**の符号。物は戸の前を塞がない
+	var side: float = -1.0 if door_x > 0.0 else 1.0
+	# ── 軒下の吊り物：簾か干柿のどちらか一つ（両方吊ると屋台になる）──
+	if _lrng.randf() < 0.10 + 0.42 * live:
+		var hang := "prop_sudare" if _lrng.randf() < 0.62 else "prop_hoshigaki"
+		var hx: float = side * _lrng.randf_range(half_w * 0.35, half_w - 0.45)
+		if absf(hx - door_x) > door_w * 0.5 + 0.30:
+			_dxf(hang, pos + ax * hx + fwd * 0.16, beam_y - 0.03, yaw)
+			n += 1
+	# ── 物干し竿＋染布：**壁際**に寄せる ──
+	# ⚠ 最初は街へ 1.0〜1.55m 出して立てた。V3/V4 で門口を塞ぎ、店の
+	#   暖簾掛けのように読めた —— art-direction「住＝物は壁際に寄せて、
+	#   街に出さない」に真正面から反する。出は 0.35〜0.62 に抑え、
+	#   間口の端（側の空き）へ寄せ、確率も落とす。
+	# ⚠ 同じ藍布が同じ大きさで何度も出ると「単一」に読める（材質変化の
+	#   通則）。染布は毎回は掛けず、掛けるときも寸法を振る。
+	if _lrng.randf() < 0.04 + 0.20 * live:
+		var mx: float = side * (half_w - _lrng.randf_range(0.25, 0.60))
+		var mz: float = _lrng.randf_range(0.35, 0.62)
+		var mp: Vector2 = pos + ax * mx + fwd * mz
+		if not (_pt_on_road_core(mp, 1.5) or _pt_reserved(mp, 0.5)
+				or _river_dist(mp) < _bank_path + 0.8) 				and absf(mx - door_x) > door_w * 0.5 + 0.55:
+			# 竿は間口と平行（yaw そのまま）。斜めに立てると干し場に見えない
+			_dxf("prop_monohoshi", mp, height_at(mp.x, mp.y), yaw)
+			n += 1
+			if _lrng.randf() < 0.45:
+				_dxf("prop_somenuno", mp + ax * _lrng.randf_range(-0.20, 0.20),
+					height_at(mp.x, mp.y), yaw,
+					_lrng.randf_range(0.82, 1.06))
+				n += 1
+	# ── 薪束・笊：壁にくっつける。街へ出さない ──
+	for spec in [["prop_takigi", 0.08 + 0.34 * live, 0.30, 0.55],
+			["prop_zaru", 0.05 + 0.22 * live, 0.32, 0.50]]:
+		if _lrng.randf() >= float(spec[1]):
+			continue
+		for _try in 5:
+			var sx: float = _lrng.randf_range(-(half_w - 0.55), half_w - 0.55)
+			if absf(sx - door_x) < door_w * 0.5 + 0.40:
+				continue
+			var lz: float = _lrng.randf_range(float(spec[2]), float(spec[3]))
+			var wp: Vector2 = pos + ax * sx + fwd * lz
+			if _pt_on_road_core(wp, 1.2) or _pt_reserved(wp, 0.4) \
+					or _river_dist(wp) < _bank_path + 0.8:
+				continue
+			# 壁際の物は壁と平行 —— ±12° だけ崩す（放り出した感じ）
+			_dxf(String(spec[0]), wp, height_at(wp.x, wp.y),
+				yaw + _lrng.randf_range(-0.21, 0.21))
+			n += 1
+			break
+	return n
+
 
 func _emit_density() -> void:
 	var g: Node3D = _lib.add(_root, Node3D.new(), "密度層")

@@ -144,6 +144,11 @@ BAMBOO = (0.325, 0.270, 0.170)      # 竹の笊（既存 prop_basket より暗�
 # 日に焼けた竹は彩度が低く、屋根や腰板の色域に近い
 BAMBOO_DRY = (0.360, 0.315, 0.205)  # 簾（日焼けした竹）
 GOODS = (0.300, 0.255, 0.150)       # 盛った乾物・穀
+# 祭典色（art-direction 2.「色彩濃度＝祭典等級」「朱紅は少し入れてよい」）。
+# 鳥居朱 (0.435,0.135,0.10) より一段明るい —— 布は塗りではなく染めで、
+# 日に透ける。白は純白ではなく生成り（漆喰と同じ色温度に留める）。
+MAKU_RED = (0.455, 0.108, 0.088)    # 紅白幕の紅（0.52 はサーモンに転んだ）
+MAKU_WHITE = (0.790, 0.765, 0.700)  # 紅白幕の白（生成り）
 
 
 # ── 布のヘルパ（PHASE 2.6）──
@@ -259,6 +264,62 @@ def make_noren(name, width, n_flap, base_col, h=0.62, seed=7):
         # 布の膨らみで受ける光：前に出ている所（y が浅い）ほど明るい
         k *= 1.0 + 0.7 * (co.y + 0.06)
         return tuple(min(1.0, max(0.0, c * k)) for c in base_col)
+
+    export(mesh_from(name, v, f, col, smooth=False), name)
+
+
+def make_maku(name, width, base_col, alt_col, n_panel=5, h=1.15, seed=31):
+    """幔幕（まんまく）。祭・市・寄合のときに柵や塀へ横に張る幕。
+
+    art-direction 工序 #5 の「幟旗／暖簾／幔幕」で唯一無かった一件。
+    提灯串と違って**街を跨がない** —— 柵・塀・木戸に沿って張るので、
+    1.6 の教訓（浮いた橘の箱が電線に見える）を踏まない。
+
+    構成：上端の縄 → 縦縞の幕（色は二色交互）→ 裾の弛み。
+    ⚠ 縞は**一縞＝一枚の布**として作る。最初は面の色だけで塗ろうとしたが、
+      色は頂点に乗って面の中で内挿されるので、縞幅 0.36m に頂点が二つでは
+      紅白がピンクのグラデーションに溶ける（m2 の三面図で発覚）。
+      縞ごとに割れば境界は幾何の縁になり、遠景でも紅白が紅白のまま残る。
+    ⚠ 幕は柵の**前**に垂らす。sway を strip 幅より小さく保てば、
+      裏の柵と干渉しない（clear_front で保証）。"""
+    clear()
+    rng = random.Random(seed)
+    parts = [sweep([(-width / 2 - 0.05, 0, 0.02), (width / 2 + 0.05, 0, 0.02)],
+                   [0.016, 0.016], sides=6)]                        # 張り縄
+    n_stripe = n_panel * 2                                          # 紅白の縞数
+    sw = width / n_stripe
+    cx0 = -width / 2 + sw / 2
+    for i in range(n_stripe):
+        cx = cx0 + i * sw
+        # ⚠ 縞ごとに丈と揺れを乱数で振ったら、裾がギザギザに切れて
+        #   「破れた幕」に、前後のずれで「小旗の列」に読めた（m2 で発覚）。
+        #   幔幕は**一枚の布**。丈は揃え、揺れは幅方向に**なめらかに**変える
+        #   —— 縞は色の境界であって、布の切れ目ではない。
+        u = (i + 0.5) / n_stripe
+        belly = math.sin(u * math.pi)                   # 中央ほど前へ孕む
+        # 幅を 0.5% 詰める：縞の端の頂点が境界に**乗らない**ので、
+        # 下の色引き（最寄りの縞中心）が取り違えようがない。
+        parts.append(cloth_strip(cx, 0.0, sw * 0.995, h,
+                                 rows=7, cols=2,
+                                 sway=0.030 + 0.045 * belly,
+                                 bow=0.014 + 0.016 * belly,
+                                 phase=u * 1.7 + rng.uniform(-0.05, 0.05),
+                                 ripple=0.010,
+                                 clear_front=0.14))
+
+    v, f = merge(*parts)
+
+    def col(co, n):
+        if co.z > 0.008:
+            return ROPE                                             # 張り縄
+        idx = int(round((co.x - cx0) / sw))
+        base = base_col if idx % 2 == 0 else alt_col
+        t = -co.z / h
+        k = 1.0 - 0.14 * t                                          # 裾ほど沈む
+        if co.z < -h * 0.90:
+            k *= 1.22                                               # 裾の縫い代
+        k *= 1.0 + 0.6 * (co.y + 0.05)                              # 膨らみの受光
+        return tuple(min(1.0, max(0.0, c * k)) for c in base)
 
     export(mesh_from(name, v, f, col, smooth=False), name)
 
@@ -935,6 +996,8 @@ make_zaru()
 make_sugidama()
 make_noren("prop_noren_ai", 2.05, 5, AI, seed=7)
 make_noren("prop_noren_kaki", 1.50, 4, (0.430, 0.195, 0.115), h=0.55, seed=19)
+make_maku("prop_maku_kouhaku", 3.60, MAKU_RED, MAKU_WHITE, seed=31)
+make_maku("prop_maku_ai", 3.20, AI, MAKU_WHITE, n_panel=4, h=1.02, seed=57)
 make_taru()
 make_kago()
 make_sudare()

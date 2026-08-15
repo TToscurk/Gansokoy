@@ -683,6 +683,9 @@ const SAKURA_SITES := TownConfig.SAKURA_SITES
 const GREEN_SITES := TownConfig.GREEN_SITES
 
 var _drng := RandomNumberGenerator.new()
+## 住家の生活痕跡専用の stream。既存の店先 dressing を一切ずらさないため、
+## _drng とは別に持つ（層ごとの RNG 分離）。
+var _lrng := RandomNumberGenerator.new()
 var _dbatch := {}                # 道具名 → Array[Transform3D]
 var _ddump := []                 # [kind, x, y, z, yaw]（驗證腳本用）
 
@@ -726,6 +729,7 @@ func _build_density() -> void:
 	# RNG ownership stays here: the module only consumes these seeded streams.
 	_drng.seed = SEED + 77
 	_prng.seed = SEED + 3001
+	_lrng.seed = SEED + 5501
 	TownDensity.new().build({
 		"lib": lib,
 		"root": _root,
@@ -737,6 +741,7 @@ func _build_density() -> void:
 		"ddump": _ddump,
 		"density_rng": _drng,
 		"pilot_rng": _prng,
+		"life_rng": _lrng,
 		"audit": _audit,
 		"half": HALF,
 		"bank_path": BANK_PATH,
