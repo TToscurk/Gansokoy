@@ -14,7 +14,7 @@ $ErrorActionPreference = 'Stop'
 try {
     $repoRoot = Split-Path -Parent $PSScriptRoot
     $projectRoot = Join-Path $repoRoot 'godot'
-    $godotExecutable = 'D:\Godot\Godot.exe'
+    $godotExecutable = 'D:\Godot\4.4.1\Godot_v4.4.1-stable_win64_console.exe'
 
     if (-not (Test-Path -LiteralPath $godotExecutable -PathType Leaf)) {
         throw "Godot executable not found: $godotExecutable"

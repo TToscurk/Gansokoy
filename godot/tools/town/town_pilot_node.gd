@@ -19,11 +19,16 @@ static func build(lib, root: Node3D, out_dir: String, has_wood: bool,
 	var placed: Array[String] = []
 
 	var bell_y: float = height_fn.call(tower_x - 3.6, tower_z) + 3.15
-	lib.box(group, "半鐘腕木", Vector3(2.1, 0.17, 0.19), dark,
+	# 半鐘は火見櫓の西脚から張り出す腕木に吊る。旧版の「方杖」は回転の
+	# 無い水平 box で、腕木と同じ線に潰れていたため、横から見ると鐘だけが
+	# 空中に残った。腕木を少し太くし、櫓脚→腕木先端を本物の斜材で結ぶ。
+	lib.box(group, "半鐘腕木", Vector3(2.1, 0.22, 0.22), dark,
 		Vector3(tower_x - 2.6, bell_y + 0.46, tower_z))
-	lib.box(group, "半鐘方杖", Vector3(0.9, 0.13, 0.13), dark,
-		Vector3(tower_x - 2.2, bell_y + 0.02, tower_z))
-	lib.cyl(group, "半鐘吊環", 0.06, 0.06, 0.16, dark,
+	lib.strut(group, "半鐘方杖",
+		Vector3(tower_x - 1.95, bell_y - 0.48, tower_z),
+		Vector3(tower_x - 3.35, bell_y + 0.36, tower_z),
+		0.085, dark, 6)
+	lib.cyl(group, "半鐘吊環", 0.085, 0.085, 0.20, dark,
 		Vector3(tower_x - 3.6, bell_y + 0.30, tower_z), 6)
 	lib.cyl(group, "半鐘笠", 0.30, 0.42, 0.18,
 		lib.flat_mat("半鐘銅", Color(0.155, 0.135, 0.095), 0.38),

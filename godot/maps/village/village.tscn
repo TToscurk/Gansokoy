@@ -7266,17 +7266,20 @@ buffer = PackedFloat32Array(-0.196255, 0, 1.02027, -288.459, 0, 1.03898, 0, -0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_p05mp"]
 material = ExtResource("22_n1ipp")
-size = Vector3(2.1, 0.17, 0.19)
+size = Vector3(2.1, 0.22, 0.22)
 
-[sub_resource type="BoxMesh" id="BoxMesh_x82ow"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_x82ow"]
 material = ExtResource("22_n1ipp")
-size = Vector3(0.9, 0.13, 0.13)
+top_radius = 0.085
+bottom_radius = 0.085
+height = 1.63267
+radial_segments = 6
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clu3u"]
 material = ExtResource("22_n1ipp")
-top_radius = 0.06
-bottom_radius = 0.06
-height = 0.16
+top_radius = 0.085
+bottom_radius = 0.085
+height = 0.2
 radial_segments = 6
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_lxerf"]
@@ -17846,12 +17849,11 @@ visibility_range_fade_mode = 1
 mesh = SubResource("BoxMesh_p05mp")
 
 [node name="半鐘方杖" type="MeshInstance3D" parent="火の番の辻"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3, 3.17066, -132)
-cast_shadow = 0
-visibility_range_end = 55.0
-visibility_range_end_margin = 8.0
+transform = Transform3D(0.514496, -0.857493, 0, 0.857493, 0.514496, 0, 0, 0, 1, 6.85, 3.09066, -132)
+visibility_range_end = 100.0
+visibility_range_end_margin = 10.0
 visibility_range_fade_mode = 1
-mesh = SubResource("BoxMesh_x82ow")
+mesh = SubResource("CylinderMesh_x82ow")
 
 [node name="半鐘吊環" type="MeshInstance3D" parent="火の番の辻"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9, 3.45066, -132)
