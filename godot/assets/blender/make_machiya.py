@@ -930,9 +930,18 @@ def _roof(bld, W, D, z_wall, pitch, overhang=0.85, thick=0.16, gyogyo=True):
             bld.box(gx - sx * 0.05, cy, ridge_z - 0.30, 0.10, 0.34, 0.40, "WOOD")
 
     # 棟：熨斗瓦（層疊的平瓦）+ 冠瓦（半圓）
-    bld.box(0, cy, ridge_z + 0.065, 2 * hw + 0.20, 0.44, 0.13, "KAWARA")
-    bld.prism_y(-hw - 0.13, hw + 0.13, cy - 0.19, ridge_z + 0.13,
-                0.19, 0.13, 0.38, 0.0, "KAWARA")
+    # 旧版は 0.13 の箱一つ —— 遠景で「棒」に読める。実物の大棟は熨斗を
+    # 数段積んで上に冠を載せる。段ごとに幅・長さを絞ると水平の目地陰影が
+    # 出て、棟が「積んである」と読める。総高は旧版 +0.06 に抑える
+    # （階梯天際線は ridge_z 基準なので棟飾りの厚みは規格外形に含まれない）。
+    noshi = [(0.50, 0.30, 0.060), (0.44, 0.24, 0.055), (0.38, 0.18, 0.050)]
+    z_acc = ridge_z + 0.02
+    for wid, ext, ht in noshi:
+        bld.box(0, cy, z_acc + ht / 2, 2 * hw + ext, wid, ht, "KAWARA",
+                skip_bottom=False)
+        z_acc += ht
+    bld.prism_y(-hw - 0.11, hw + 0.11, cy - 0.17, z_acc,
+                0.17, 0.12, 0.34, 0.0, "KAWARA")
     return ridge_z
 
 
@@ -975,10 +984,13 @@ def validate(ob):
     # 面積 2m² 超の KAWARA 平面＝野地。法線が下向き（z < -0.5）なら、
     # エンジン内では上から**存在しない**屋根を輸出しようとしている。
     # 2026-08 に全 170 棟がこれで抜けていた —— ここで止める。
+    # 斜面だけを見る：閉じた箱の真下向きの底（n.z ≈ -1.0、棟の熨斗など）は
+    # 合法。野地の傾きは |n.z| 0.8~0.97 なので、その帯の下向きだけ違反。
     kawara_idx = ORDER.index("KAWARA")
     inverted_noji = [f for f in bm.faces
                      if f.material_index == kawara_idx
-                     and f.calc_area() > 2.0 and f.normal.z < -0.5]
+                     and f.calc_area() > 2.0
+                     and -0.995 < f.normal.z < -0.5]
     bm.free()
     assert not inverted_noji, (
         "%s：野地 %d 枚の法線が下向き（Godot で剔除される）"

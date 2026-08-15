@@ -181,7 +181,10 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
 
     # ── 葺き足（瓦の列。遠景でこれが無いと屋根が一枚の板になる）──
     if courses:
-        ncourse = 5
+        # 町家の葺き足は列距 0.46（可読性優先の規格値）。ここが固定 5 列の
+        # ままだと鐘楼だけ瓦の粒度が一桁粗く、同じ街に二つの瓦文化ができる。
+        slope_len = math.hypot(hd, hd * t)
+        ncourse = max(5, int(slope_len / 0.46))
         for k in range(1, ncourse + 1):
             f = float(k) / (ncourse + 1)
             z = eave_z + (ridge_z - eave_z) * f
