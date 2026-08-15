@@ -28,16 +28,16 @@ make_machiya.py / make_town.py
 
 | 模組 | 尺寸 m | 角色 |
 |---|---:|---|
-| `machiya_f_a` | 9.56 × 9.53 × 5.42 | 標準平入町家；結構基線 |
-| `machiya_f_s` | 7.16 × 8.50 × 4.87 | 低矮仕舞屋 |
-| `machiya_f_o` | 11.76 × 10.47 × 6.17 | 大店、五開間、卯建 |
-| `machiya_t_a` | 7.96 × 10.66 × 5.72 | 妻入町家 |
-| `machiya_w_a` | 9.16 × 9.31 × 5.75 | 工房、大戶口、煙出し |
-| `machiya_f_n` | 9.96 × 9.90 × 6.42 | 真二階町家 |
-| `machiya_e_p` | 7.94 × 7.88 × 4.17 | 村緣平屋 |
-| `machiya_f_m` | 10.74 × 9.29 × 4.62 | 低層寬間口商家 |
-| `machiya_n_a` | 11.14 × 9.29 × 7.67 | 總二階 |
-| `machiya_n_o` | 12.34 × 9.69 × 8.55 | 總二階大店 |
+| `machiya_f_a` | 9.60 × 9.53 × 5.47 | 標準平入町家；結構基線 |
+| `machiya_f_s` | 7.20 × 8.50 × 4.91 | 低矮仕舞屋 |
+| `machiya_f_o` | 11.80 × 10.47 × 6.22 | 大店、五開間、卯建 |
+| `machiya_t_a` | 7.96 × 10.68 × 5.76 | 妻入町家 |
+| `machiya_w_a` | 9.20 × 9.31 × 5.75 | 工房、大戶口、煙出し |
+| `machiya_f_n` | 10.00 × 9.90 × 6.47 | 真二階町家 |
+| `machiya_e_p` | 7.98 × 7.88 × 4.22 | 村緣平屋 |
+| `machiya_f_m` | 10.78 × 9.29 × 4.66 | 低層寬間口商家 |
+| `machiya_n_a` | 11.18 × 9.29 × 7.72 | 總二階 |
+| `machiya_n_o` | 12.38 × 9.69 × 8.55 | 總二階大店 |
 
 `machiya_f_b`、`machiya_b_a`、`machiya_b_b`、`machiya_e_a` 是 layout vocabulary
 中的 legacy source kinds；`town_config.gd` 會將它們替換成 production 模組。
@@ -111,9 +111,24 @@ godot --headless --path godot --script tools/lm_ghost.gd
 godot --headless --path godot --script tools/portal_test.gd
 ```
 
+## 屋面繞序（2026-08-15 修復）
+
+野地與鼻隠しの法線は **必ず上向き**。`_roof()`／`_hisashi()`／
+`irimoya_roof()` は長らく `flip=(sy > 0)` で両坡とも下向きに出しており、
+Blender の双面描画では正しく見え、Godot の表面剔除では野地が存在せず、
+桟の隙間 66 mm がそのまま屋内へ貫通していた（全 170 棟）。
+
+`validate()` が面積 2 m² 超・`-0.995 < n.z < -0.5` の KAWARA 面を検出して
+匯出を止める。閉じた箱の真下面（`n.z ≈ -1.0`、熨斗など）は合法。
+正しい符号の見本は同じ関数の軒裏 `flip=(sy < 0)`。
+
 ## 不可重開
 
 - `machiya_f_a` 是 production 結構基線，不因偏好重新改比例。
+- 大棟は熨斗三段（幅・長さ逓減）＋冠瓦。単一の扁平箱には戻さない
+  （2026-08-15 Human Art Review 承認）。
+- 鐘楼と町家の葺き足は同一列距 0.46 m。瓦の粒度は一つの文化に揃える
+  （同承認）。屋根勾配 17–24° の差は family 級の意図的変量で、缺陷ではない。
 - `town_modules.json` 維持單一 writer。
 - frontage／parcel／OBB 與道路結構不因換資產而改寫。
 - 建物材質走 semantic surface，不退回 `prop_mesh()` 的整棟單材質路徑。
@@ -122,7 +137,10 @@ godot --headless --path godot --script tools/portal_test.gd
 ## 已知風險
 
 - 卯建仍偏貼牆板，不像連續防火妻壁。
-- 屋頂家族仍以切妻為主，入母屋、落棟與下屋變化不足。
+- 屋頂家族仍以切妻為主；入母屋已有可重用實作（`roof_lib.py`，鐘楼で使用）、
+  落棟與下屋仍缺。
+- `make_town.py` 的 legacy blockout `gable_roof()` 仍帶舊繞序。村圖實例
+  為 0，其他地圖若引用會同樣穿頂。
 - 背光漆喰偏冷灰，屬於 lighting／cel-shading 階段。
 - 手工 LOD 尚未完成，production geometry 成本高於 legacy blockout。
 - 近景小物、空白招牌與部分布料風向仍有品質債。

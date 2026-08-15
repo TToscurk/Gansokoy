@@ -3,7 +3,7 @@
 這是每個新任務在 `CLAUDE.md` 之後必讀的目前狀態。只保留會影響下一個決策的
 事實；逐輪紀錄在子系統文件或 `docs/archive/`。
 
-Last updated: 2026-08-11.
+Last updated: 2026-08-15.
 
 ## Execution Mode
 
@@ -45,6 +45,9 @@ Last updated: 2026-08-11.
 ## Current Risks
 
 - RNG 雖已分層，個別層內仍可能是循序 stream；插入隨機呼叫會造成後續漂移。
+- 資產的面繞序只有引擎畫面能證明。Blender 是雙面渲染，Godot 剔背面 ——
+  屋面繞序錯了六個月沒被發現，靜態檢查與 Blender 圖全部通過。新增的板面
+  必須在引擎裡看過，或有對應的法線斷言。
 - 稗田邸 blockout、鐘塔／火見櫓、近景小物和水生植物仍有美術品質債。
 - 手工 LOD 尚未完成；住宅 production geometry 的三角面成本高於早期 blockout。
 - `bamboo`、`eientei`、`namelessHill`、`shrine`、`sunflower` 尚依賴

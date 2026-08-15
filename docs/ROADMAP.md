@@ -27,6 +27,7 @@ For "where are we right now", read `docs/PROJECT_STATE.md`.
 | Architecture Consolidation | legacy house removal — 170/170 production, 0 blockout |
 | Main Street batch | 本通 frontage restored: 塀/門/鳥居/蔵/幟/街路樹, N2 lean-to, 溝蓋, 辻行灯 |
 | Vegetation production pass | village-local readable canopies; activity-sparse core and entrances; clustered, denser village-edge ground layers; fixed 5-camera local review loop |
+| Roof winding fix + ridge vocabulary | 野地/鼻隠し繞序修復（全 170 棟穿頂）、大棟熨斗三段、鐘楼葺き足統一 |
 | Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
 
 ## CURRENT

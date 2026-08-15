@@ -54,5 +54,5 @@ short list of constraints that must not be violated.
 
 ## Do not touch without instruction
 
-`machiya_f_a` geometry (approved, 2834 faces), the four legacy blockouts
+`machiya_f_a` geometry (approved, 2860 faces), the four legacy blockouts
 still used by the village's 169 houses, and the village layout itself.
