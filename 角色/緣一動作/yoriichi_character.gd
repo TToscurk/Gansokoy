@@ -25,9 +25,20 @@ extends CharacterBody3D
 @export var attack_spin_resource: Animation = preload("res://animations/yoriichi_attack_spin.res")
 @export var attack_judgment_anim := "Attack_Judgment"
 @export var attack_judgment_resource: Animation = preload("res://animations/yoriichi_attack_judgment.res")
-@export var dodge_speed := 5.5
-@export var dodge_move_time := 0.48
+@export var roll_distance := 6.4
 @export var action_blend_time := 0.12
+@export var attack_speed_scale := 5.0
+@export_range(0.0, 1.0) var combo_cancel_start := 0.35
+@export_range(0.0, 1.0) var combo_cancel_end := 0.65
+@export var combo_input_buffer_time := 0.30
+@export var combo_section_blend := 0.035
+@export_range(0.0, 1.0) var attack_turn_control := 0.35
+
+const COMBO_SECTION_RANGES: Array[Vector2] = [
+	Vector2(0.00, 0.34),
+	Vector2(0.30, 0.67),
+	Vector2(0.63, 1.00),
+]
 
 # ---------------------------------------------------------------------------
 # 刀：兩個 socket、兩個刀實例（同一 GLB），只切 visible、不 reparent。
@@ -67,6 +78,13 @@ var _draw_len := 0.0
 var _action_anim := ""
 var _action_elapsed := 0.0
 var _dodge_dir := Vector3.ZERO
+var _roll_duration := 0.0
+var combo_stage := 0
+var combo_input_buffered := false
+var _combo_queued_inputs := 0
+var _combo_buffer_remaining := 0.0
+var _combo_section_start := 0.0
+var _combo_section_end := 0.0
 
 var _anim: AnimationPlayer
 var _visual: Node3D                   # FBX 視覺根節點（只旋轉這個，不動碰撞膠囊）
@@ -135,10 +153,10 @@ func _add_animation_resource(animation_name: String, animation: Animation) -> vo
 		return
 	_library().add_animation(animation_name, animation)
 
-func _play(name: String, blend := blend_time):
+func _play(name: String, blend := blend_time, custom_speed := 1.0):
 	if _current == name or not _anim.has_animation(name):
 		return
-	_anim.play(name, blend)
+	_anim.play(name, blend, custom_speed)
 	_current = name
 
 func _idle_for_state() -> String:
@@ -157,10 +175,7 @@ func _physics_process(delta):
 		velocity.x = input_dir.x * cur_speed
 		velocity.z = input_dir.z * cur_speed
 	elif action_state == ActionState.DODGING:
-		_action_elapsed += delta
-		var dodge_velocity := _dodge_dir * dodge_speed if _action_elapsed <= dodge_move_time else Vector3.ZERO
-		velocity.x = dodge_velocity.x
-		velocity.z = dodge_velocity.z
+		_update_roll_movement(delta)
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
@@ -171,6 +186,8 @@ func _physics_process(delta):
 		velocity.y = 0
 
 	move_and_slide()
+	if action_state == ActionState.DODGING and _action_elapsed >= _roll_duration:
+		_finish_action()
 
 	var moving := input_dir.length_squared() > 0.0
 	if moving and movement_allowed and _visual:
@@ -180,9 +197,11 @@ func _physics_process(delta):
 
 	if _anim == null:
 		return
-	if sword_state == SwordState.DRAWING:
+	if action_state == ActionState.ATTACKING:
+		_update_attack(delta, input_dir)
+	elif sword_state == SwordState.DRAWING:
 		_update_drawing()
-	elif action_state != ActionState.FREE:
+	elif action_state == ActionState.DODGING:
 		pass
 	else:
 		var running := moving and Input.is_key_pressed(KEY_SHIFT)
@@ -201,6 +220,19 @@ func _read_input_dir() -> Vector3:
 		input_dir.x += 1.0
 	return input_dir.normalized()
 
+func _update_roll_movement(delta: float) -> void:
+	var previous_t := clampf(_action_elapsed / _roll_duration, 0.0, 1.0) if _roll_duration > 0.0 else 1.0
+	_action_elapsed = minf(_action_elapsed + delta, _roll_duration)
+	var current_t := clampf(_action_elapsed / _roll_duration, 0.0, 1.0) if _roll_duration > 0.0 else 1.0
+	# Ease-out displacement curve: p(t) = 1 - (1 - t)^2. The per-frame delta
+	# moves CharacterBody3D itself, so its CollisionShape3D always follows.
+	var previous_curve := 1.0 - pow(1.0 - previous_t, 2.0)
+	var current_curve := 1.0 - pow(1.0 - current_t, 2.0)
+	var frame_distance := roll_distance * (current_curve - previous_curve)
+	var roll_velocity := _dodge_dir * (frame_distance / delta) if delta > 0.0 else Vector3.ZERO
+	velocity.x = roll_velocity.x
+	velocity.z = roll_velocity.z
+
 # ---------------------------------------------------------------------------
 # 拔刀狀態機
 # ---------------------------------------------------------------------------
@@ -212,13 +244,13 @@ func _unhandled_input(event):
 			KEY_SPACE:
 				request_dodge()
 			KEY_J:
-				request_attack(attack_combo_anim)
+				request_primary_attack()
 			KEY_K:
-				request_attack(attack_spin_anim)
+				request_special_attack(attack_spin_anim)
 			KEY_L:
-				request_attack(attack_judgment_anim)
+				request_special_attack(attack_judgment_anim)
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		request_attack(attack_combo_anim)
+		request_primary_attack()
 
 ## Q：SHEATHED → DRAWING → DRAWN。DRAWING / DRAWN 時忽略（收刀尚未實作）。
 func request_draw():
@@ -242,8 +274,13 @@ func _on_animation_finished(anim_name: StringName):
 	if sword_state == SwordState.DRAWING and String(anim_name) == draw_anim:
 		_draw_t = 1.0
 		_finish_draw()
-	elif action_state != ActionState.FREE and String(anim_name) == _action_anim:
-		_finish_action()
+	elif action_state == ActionState.DODGING and String(anim_name) == roll_anim:
+		return # CharacterBody3D completes the final roll displacement in physics.
+	elif action_state == ActionState.ATTACKING and String(anim_name) == _action_anim:
+		if combo_stage > 0 and _combo_queued_inputs > 0 and combo_stage < COMBO_SECTION_RANGES.size():
+			_advance_combo()
+		else:
+			_finish_action()
 
 func _finish_draw():
 	sword_state = SwordState.DRAWN
@@ -251,7 +288,42 @@ func _finish_draw():
 	_current = ""                      # 強制重新 blend 到 (combat) idle
 	_play(_idle_for_state())
 
+func request_primary_attack() -> void:
+	if sword_state != SwordState.DRAWN:
+		return
+	if action_state == ActionState.ATTACKING and combo_stage > 0:
+		_combo_queued_inputs = mini(_combo_queued_inputs + 1, COMBO_SECTION_RANGES.size() - combo_stage)
+		combo_input_buffered = _combo_queued_inputs > 0
+		_combo_buffer_remaining = combo_input_buffer_time
+		return
+	if action_state != ActionState.FREE:
+		return
+	_start_combo()
+
+func _start_combo() -> void:
+	if attack_combo_anim == "" or not _anim.has_animation(attack_combo_anim):
+		push_warning("yoriichi_character: primary attack animation is unavailable")
+		return
+	action_state = ActionState.ATTACKING
+	_action_anim = attack_combo_anim
+	_action_elapsed = 0.0
+	combo_stage = 1
+	_combo_queued_inputs = 0
+	combo_input_buffered = false
+	_combo_buffer_remaining = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+	_play_combo_section(combo_stage)
+
 func request_attack(animation_name: String) -> void:
+	# Public compatibility entrypoint: Attack_Combo uses the buffered primary
+	# chain; all other Attack animations use the shared 5x special-attack path.
+	if animation_name == attack_combo_anim:
+		request_primary_attack()
+	else:
+		request_special_attack(animation_name)
+
+func request_special_attack(animation_name: String) -> void:
 	if sword_state != SwordState.DRAWN or action_state != ActionState.FREE:
 		return
 	if animation_name == "" or not _anim.has_animation(animation_name):
@@ -260,17 +332,58 @@ func request_attack(animation_name: String) -> void:
 	action_state = ActionState.ATTACKING
 	_action_anim = animation_name
 	_action_elapsed = 0.0
+	combo_stage = 0
+	_combo_queued_inputs = 0
+	combo_input_buffered = false
 	velocity.x = 0.0
 	velocity.z = 0.0
-	_play(animation_name, action_blend_time)
+	_play(animation_name, combo_section_blend, attack_speed_scale)
 
-func request_dodge() -> void:
+func _play_combo_section(stage: int) -> void:
+	var animation := _anim.get_animation(attack_combo_anim)
+	var range := COMBO_SECTION_RANGES[stage - 1]
+	_combo_section_start = animation.length * range.x
+	_combo_section_end = animation.length * range.y
+	_anim.play_section(attack_combo_anim, _combo_section_start, _combo_section_end, combo_section_blend, attack_speed_scale)
+	_current = attack_combo_anim
+
+func _update_attack(delta: float, input_dir: Vector3) -> void:
+	_action_elapsed += delta
+	if not input_dir.is_zero_approx() and _visual:
+		var target_yaw := atan2(input_dir.x, input_dir.z)
+		_visual.rotation.y = lerp_angle(_visual.rotation.y, target_yaw, clampf(turn_speed * attack_turn_control * delta, 0.0, 1.0))
+	if combo_stage <= 0:
+		return
+	if _combo_queued_inputs > 0:
+		_combo_buffer_remaining = maxf(_combo_buffer_remaining - delta, 0.0)
+		if _combo_buffer_remaining <= 0.0:
+			_combo_queued_inputs = 0
+			combo_input_buffered = false
+	var section_length := _combo_section_end - _combo_section_start
+	var progress := clampf((_anim.current_animation_position - _combo_section_start) / section_length, 0.0, 1.0) if section_length > 0.0 else 1.0
+	if _combo_queued_inputs > 0 and progress >= combo_cancel_start and progress <= combo_cancel_end and combo_stage < COMBO_SECTION_RANGES.size():
+		_advance_combo()
+	elif progress >= 0.995:
+		if _combo_queued_inputs > 0 and combo_stage < COMBO_SECTION_RANGES.size():
+			_advance_combo()
+		else:
+			_finish_action()
+
+func _advance_combo() -> void:
+	_combo_queued_inputs = maxi(_combo_queued_inputs - 1, 0)
+	combo_input_buffered = _combo_queued_inputs > 0
+	_combo_buffer_remaining = combo_input_buffer_time if combo_input_buffered else 0.0
+	combo_stage += 1
+	_play_combo_section(combo_stage)
+
+func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	if sword_state == SwordState.DRAWING or action_state != ActionState.FREE:
 		return
 	if roll_anim == "" or not _anim.has_animation(roll_anim):
 		push_warning("yoriichi_character: dodge animation is unavailable")
 		return
-	_dodge_dir = _read_input_dir()
+	var horizontal_override := Vector3(direction_override.x, 0.0, direction_override.z)
+	_dodge_dir = horizontal_override.normalized() if not horizontal_override.is_zero_approx() else _read_input_dir()
 	if _dodge_dir.is_zero_approx():
 		var yaw := _visual.rotation.y if _visual else rotation.y
 		_dodge_dir = Vector3(sin(yaw), 0.0, cos(yaw)).normalized()
@@ -279,12 +392,18 @@ func request_dodge() -> void:
 	action_state = ActionState.DODGING
 	_action_anim = roll_anim
 	_action_elapsed = 0.0
+	_roll_duration = _anim.get_animation(roll_anim).length
 	_play(roll_anim, action_blend_time)
 
 func _finish_action() -> void:
 	action_state = ActionState.FREE
 	_action_anim = ""
 	_action_elapsed = 0.0
+	_roll_duration = 0.0
+	combo_stage = 0
+	_combo_queued_inputs = 0
+	combo_input_buffered = false
+	_combo_buffer_remaining = 0.0
 	velocity.x = 0.0
 	velocity.z = 0.0
 	_current = ""
