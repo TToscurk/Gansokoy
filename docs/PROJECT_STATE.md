@@ -58,7 +58,9 @@ Last updated: 2026-08-20.
 - 舊緣一 Y02 仍為 `TECH_DUMMY / ART_REJECTED`。目前角色基底已回到單一 Meshy Full
   Character 流程：Body 與 Haori 共用同一套 24-bone Meshy Skeleton，正式 prefab 為
   `角色/緣一動作/yoriichi_character_meshy_full.tscn`。Idle／Walk／Run／Draw Sword、
-  CharacterBody3D 控制器與雙刀 socket 已通過角色層 runtime 驗證；正式 prefab 不載入
+  RunFast／Roll Dodge／三組 DRAWN 攻擊、CharacterBody3D 控制器與雙刀 socket 已通過
+  角色層 runtime 驗證。操作為 WASD、Shift 疾跑、Space 翻滾、Q 拔刀、滑鼠左鍵或
+  J 連段、K 旋轉攻擊、L Judgment；正式 prefab 不載入
   SpringBone、SoftBody、獨立 Haori Skeleton 或 HaoriAnchor。v2/v2.1 布料研究保留為
   archive，不再是正式 Player 流程；尚未替換人間之里 Player。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。

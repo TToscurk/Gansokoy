@@ -9,10 +9,25 @@ extends CharacterBody3D
 @export var walk_anim := "Armature|Armature|walking_man|baselayer"
 @export var idle_anim := "Armature|Armature|Idle_11|baselayer"
 @export var run_anim := "Armature|Armature|running|baselayer"
+@export var run_fast_anim := "RunFast"
 ## 含 Idle / Running 動畫的 FBX（同一角色、同一骨架）。啟動時只抽出它們的 Animation，
 ## 合併進現有 AnimationPlayer；不會實例化第二隻角色到場景裡。
 @export var idle_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Idle_11_withSkin.fbx")
 @export var run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Running_withSkin.fbx")
+
+@export_group("Gameplay Animations")
+@export var run_fast_anim_resource: Animation = preload("res://animations/yoriichi_run_fast.res")
+@export var roll_anim := "Roll_Dodge"
+@export var roll_anim_resource: Animation = preload("res://animations/yoriichi_roll_dodge.res")
+@export var attack_combo_anim := "Attack_Combo"
+@export var attack_combo_resource: Animation = preload("res://animations/yoriichi_attack_combo.res")
+@export var attack_spin_anim := "Attack_Spin"
+@export var attack_spin_resource: Animation = preload("res://animations/yoriichi_attack_spin.res")
+@export var attack_judgment_anim := "Attack_Judgment"
+@export var attack_judgment_resource: Animation = preload("res://animations/yoriichi_attack_judgment.res")
+@export var dodge_speed := 5.5
+@export var dodge_move_time := 0.48
+@export var action_blend_time := 0.12
 
 # ---------------------------------------------------------------------------
 # 刀：兩個 socket、兩個刀實例（同一 GLB），只切 visible、不 reparent。
@@ -26,6 +41,7 @@ extends CharacterBody3D
 # 收刀流程尚未實作（DRAWN 再按 Q 目前不動作）。
 # ---------------------------------------------------------------------------
 enum SwordState { SHEATHED, DRAWING, DRAWN }
+enum ActionState { FREE, ATTACKING, DODGING }
 
 @export_group("Sword Draw")
 @export var draw_key := KEY_Q
@@ -45,8 +61,12 @@ enum SwordState { SHEATHED, DRAWING, DRAWN }
 @export var can_move_when_drawn := true
 
 var sword_state: SwordState = SwordState.SHEATHED
+var action_state: ActionState = ActionState.FREE
 var _draw_t := 0.0
 var _draw_len := 0.0
+var _action_anim := ""
+var _action_elapsed := 0.0
+var _dodge_dir := Vector3.ZERO
 
 var _anim: AnimationPlayer
 var _visual: Node3D                   # FBX 視覺根節點（只旋轉這個，不動碰撞膠囊）
@@ -65,13 +85,19 @@ func _ready():
 	_merge_animations_from(run_source)
 	_merge_animations_from(draw_source)
 	_merge_animations_from(drawn_idle_source)
+	_add_animation_resource(run_fast_anim, run_fast_anim_resource)
+	_add_animation_resource(roll_anim, roll_anim_resource)
+	_add_animation_resource(attack_combo_anim, attack_combo_resource)
+	_add_animation_resource(attack_spin_anim, attack_spin_resource)
+	_add_animation_resource(attack_judgment_anim, attack_judgment_resource)
 	if draw_anim_resource and draw_anim != "" and not _anim.has_animation(draw_anim):
 		_library().add_animation(draw_anim, draw_anim_resource)
-	for n in [walk_anim, idle_anim, run_anim, drawn_idle_anim]:
+	for n in [walk_anim, idle_anim, run_anim, run_fast_anim, drawn_idle_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
-	if draw_anim != "" and _anim.has_animation(draw_anim):
-		_anim.get_animation(draw_anim).loop_mode = Animation.LOOP_NONE
+	for n in [draw_anim, roll_anim, attack_combo_anim, attack_spin_anim, attack_judgment_anim]:
+		if n != "" and _anim.has_animation(n):
+			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_anim.animation_finished.connect(_on_animation_finished)
 	_sword_hand = _find_first("Sword_Hand")
 	_sword_sheathed = _find_first("Sword_Sheathed")
@@ -104,6 +130,11 @@ func _merge_animations_from(source: PackedScene):
 				lib.add_animation(n, src.get_animation(n).duplicate())
 	tmp.free()
 
+func _add_animation_resource(animation_name: String, animation: Animation) -> void:
+	if animation_name == "" or animation == null or _anim.has_animation(animation_name):
+		return
+	_library().add_animation(animation_name, animation)
+
 func _play(name: String, blend := blend_time):
 	if _current == name or not _anim.has_animation(name):
 		return
@@ -119,23 +150,20 @@ func _idle_for_state() -> String:
 # 移動 / 基本動畫
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
-	var input_dir = Vector3.ZERO
-	var movement_allowed := sword_state != SwordState.DRAWING and (sword_state != SwordState.DRAWN or can_move_when_drawn)
+	var input_dir := _read_input_dir()
+	var movement_allowed := action_state == ActionState.FREE and sword_state != SwordState.DRAWING and (sword_state != SwordState.DRAWN or can_move_when_drawn)
 	if movement_allowed:
-		if Input.is_key_pressed(KEY_W):
-			input_dir.z -= 1
-		if Input.is_key_pressed(KEY_S):
-			input_dir.z += 1
-		if Input.is_key_pressed(KEY_A):
-			input_dir.x -= 1
-		if Input.is_key_pressed(KEY_D):
-			input_dir.x += 1
-
-	input_dir = input_dir.normalized()
-
-	var cur_speed := run_speed if Input.is_key_pressed(KEY_SHIFT) else speed
-	velocity.x = input_dir.x * cur_speed
-	velocity.z = input_dir.z * cur_speed
+		var cur_speed := run_speed if Input.is_key_pressed(KEY_SHIFT) else speed
+		velocity.x = input_dir.x * cur_speed
+		velocity.z = input_dir.z * cur_speed
+	elif action_state == ActionState.DODGING:
+		_action_elapsed += delta
+		var dodge_velocity := _dodge_dir * dodge_speed if _action_elapsed <= dodge_move_time else Vector3.ZERO
+		velocity.x = dodge_velocity.x
+		velocity.z = dodge_velocity.z
+	else:
+		velocity.x = 0.0
+		velocity.z = 0.0
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -145,7 +173,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 	var moving := input_dir.length_squared() > 0.0
-	if moving and _visual:
+	if moving and movement_allowed and _visual:
 		# 模型正面朝 +Z，所以朝 input_dir 的 yaw = atan2(x, z)
 		var target_yaw := atan2(input_dir.x, input_dir.z)
 		_visual.rotation.y = lerp_angle(_visual.rotation.y, target_yaw, clamp(turn_speed * delta, 0.0, 1.0))
@@ -154,20 +182,47 @@ func _physics_process(delta):
 		return
 	if sword_state == SwordState.DRAWING:
 		_update_drawing()
+	elif action_state != ActionState.FREE:
+		pass
 	else:
 		var running := moving and Input.is_key_pressed(KEY_SHIFT)
-		_play(run_anim if running else (walk_anim if moving else _idle_for_state()))
+		var selected_run := run_fast_anim if run_fast_anim != "" and _anim.has_animation(run_fast_anim) else run_anim
+		_play(selected_run if running else (walk_anim if moving else _idle_for_state()))
+
+func _read_input_dir() -> Vector3:
+	var input_dir := Vector3.ZERO
+	if Input.is_key_pressed(KEY_W):
+		input_dir.z -= 1.0
+	if Input.is_key_pressed(KEY_S):
+		input_dir.z += 1.0
+	if Input.is_key_pressed(KEY_A):
+		input_dir.x -= 1.0
+	if Input.is_key_pressed(KEY_D):
+		input_dir.x += 1.0
+	return input_dir.normalized()
 
 # ---------------------------------------------------------------------------
 # 拔刀狀態機
 # ---------------------------------------------------------------------------
 func _unhandled_input(event):
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == draw_key:
-		request_draw()
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.keycode:
+			draw_key:
+				request_draw()
+			KEY_SPACE:
+				request_dodge()
+			KEY_J:
+				request_attack(attack_combo_anim)
+			KEY_K:
+				request_attack(attack_spin_anim)
+			KEY_L:
+				request_attack(attack_judgment_anim)
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		request_attack(attack_combo_anim)
 
 ## Q：SHEATHED → DRAWING → DRAWN。DRAWING / DRAWN 時忽略（收刀尚未實作）。
 func request_draw():
-	if sword_state != SwordState.SHEATHED:
+	if sword_state != SwordState.SHEATHED or action_state != ActionState.FREE:
 		return
 	if draw_anim == "" or not _anim.has_animation(draw_anim):
 		push_warning("yoriichi_character: no draw animation assigned (draw_anim / draw_source); staying SHEATHED")
@@ -187,11 +242,52 @@ func _on_animation_finished(anim_name: StringName):
 	if sword_state == SwordState.DRAWING and String(anim_name) == draw_anim:
 		_draw_t = 1.0
 		_finish_draw()
+	elif action_state != ActionState.FREE and String(anim_name) == _action_anim:
+		_finish_action()
 
 func _finish_draw():
 	sword_state = SwordState.DRAWN
 	_apply_sword_visibility()
 	_current = ""                      # 強制重新 blend 到 (combat) idle
+	_play(_idle_for_state())
+
+func request_attack(animation_name: String) -> void:
+	if sword_state != SwordState.DRAWN or action_state != ActionState.FREE:
+		return
+	if animation_name == "" or not _anim.has_animation(animation_name):
+		push_warning("yoriichi_character: attack animation is unavailable: " + animation_name)
+		return
+	action_state = ActionState.ATTACKING
+	_action_anim = animation_name
+	_action_elapsed = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+	_play(animation_name, action_blend_time)
+
+func request_dodge() -> void:
+	if sword_state == SwordState.DRAWING or action_state != ActionState.FREE:
+		return
+	if roll_anim == "" or not _anim.has_animation(roll_anim):
+		push_warning("yoriichi_character: dodge animation is unavailable")
+		return
+	_dodge_dir = _read_input_dir()
+	if _dodge_dir.is_zero_approx():
+		var yaw := _visual.rotation.y if _visual else rotation.y
+		_dodge_dir = Vector3(sin(yaw), 0.0, cos(yaw)).normalized()
+	elif _visual:
+		_visual.rotation.y = atan2(_dodge_dir.x, _dodge_dir.z)
+	action_state = ActionState.DODGING
+	_action_anim = roll_anim
+	_action_elapsed = 0.0
+	_play(roll_anim, action_blend_time)
+
+func _finish_action() -> void:
+	action_state = ActionState.FREE
+	_action_anim = ""
+	_action_elapsed = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+	_current = ""
 	_play(_idle_for_state())
 
 ## 依狀態（與拔刀進度）決定哪一把刀可見。永遠恰好一把可見。
