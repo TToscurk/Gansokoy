@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0kqpgtj61a4v"]
+
+[ext_resource type="PackedScene" path="res://yoriichi_character_meshy_full.tscn" id="1_char"]
+[ext_resource type="Script" uid="uid://ba6gnt6gn85ut" path="res://follow_camera.gd" id="2_cam"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.45, 0.5, 0.4, 1)
+
+[sub_resource type="Environment" id="Environment_sky"]
+background_mode = 1
+background_color = Color(0.55, 0.65, 0.8, 1)
+ambient_light_source = 1
+ambient_light_color = Color(0.7, 0.7, 0.75, 1)
+
+[node name="YoriichiTest" type="Node3D"]
+
+[node name="Yoriichi" parent="." instance=ExtResource("1_char")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("StandardMaterial3D_floor")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3.5, 6)
+current = true
+script = ExtResource("2_cam")
+target_path = NodePath("../Yoriichi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 5, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sky")

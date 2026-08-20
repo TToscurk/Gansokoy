@@ -25,6 +25,14 @@ extends CharacterBody3D
 @export var attack_spin_resource: Animation = preload("res://animations/yoriichi_attack_spin.res")
 @export var attack_judgment_anim := "Attack_Judgment"
 @export var attack_judgment_resource: Animation = preload("res://animations/yoriichi_attack_judgment.res")
+@export var jump_anim := "Jump"
+@export var jump_anim_resource: Animation = preload("res://animations/yoriichi_jump.res")
+@export var jump_key := KEY_F
+## 起跳速度。空中時間 2v/g 需與 Jump clip 的空中段（0.533~1.067 s，共 0.533 s）一致：
+## v = gravity * 0.533 / 2。動畫垂直弧線頂點 +0.63 m，物理跳高 v²/2g ≈ 0.71 m。
+@export var jump_velocity := 5.33
+## Jump clip 的離地時間點（前 0.533 s 是蹲伏預備，角色仍在地面）。
+@export var jump_takeoff_time := 0.533
 @export var roll_distance := 6.4
 @export var action_blend_time := 0.12
 @export var attack_speed_scale := 5.0
@@ -52,7 +60,7 @@ const COMBO_SECTION_RANGES: Array[Vector2] = [
 # 收刀流程尚未實作（DRAWN 再按 Q 目前不動作）。
 # ---------------------------------------------------------------------------
 enum SwordState { SHEATHED, DRAWING, DRAWN }
-enum ActionState { FREE, ATTACKING, DODGING }
+enum ActionState { FREE, ATTACKING, DODGING, JUMPING }
 
 @export_group("Sword Draw")
 @export var draw_key := KEY_Q
@@ -79,6 +87,8 @@ var _action_anim := ""
 var _action_elapsed := 0.0
 var _dodge_dir := Vector3.ZERO
 var _roll_duration := 0.0
+var _jump_launched := false
+var _jump_anim_done := false
 var combo_stage := 0
 var combo_input_buffered := false
 var _combo_queued_inputs := 0
@@ -108,12 +118,13 @@ func _ready():
 	_add_animation_resource(attack_combo_anim, attack_combo_resource)
 	_add_animation_resource(attack_spin_anim, attack_spin_resource)
 	_add_animation_resource(attack_judgment_anim, attack_judgment_resource)
+	_add_animation_resource(jump_anim, jump_anim_resource)
 	if draw_anim_resource and draw_anim != "" and not _anim.has_animation(draw_anim):
 		_library().add_animation(draw_anim, draw_anim_resource)
 	for n in [walk_anim, idle_anim, run_anim, run_fast_anim, drawn_idle_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
-	for n in [draw_anim, roll_anim, attack_combo_anim, attack_spin_anim, attack_judgment_anim]:
+	for n in [draw_anim, roll_anim, attack_combo_anim, attack_spin_anim, attack_judgment_anim, jump_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_anim.animation_finished.connect(_on_animation_finished)
@@ -169,7 +180,7 @@ func _idle_for_state() -> String:
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
 	var input_dir := _read_input_dir()
-	var movement_allowed := action_state == ActionState.FREE and sword_state != SwordState.DRAWING and (sword_state != SwordState.DRAWN or can_move_when_drawn)
+	var movement_allowed := (action_state == ActionState.FREE or action_state == ActionState.JUMPING) and sword_state != SwordState.DRAWING and (sword_state != SwordState.DRAWN or can_move_when_drawn)
 	if movement_allowed:
 		var cur_speed := run_speed if Input.is_key_pressed(KEY_SHIFT) else speed
 		velocity.x = input_dir.x * cur_speed
@@ -185,8 +196,14 @@ func _physics_process(delta):
 	else:
 		velocity.y = 0
 
+	# 起跳必須排在落地歸零之後，否則同一幀的 velocity.y 會被清掉。
+	if action_state == ActionState.JUMPING:
+		_update_jump(delta)
+
 	move_and_slide()
 	if action_state == ActionState.DODGING and _action_elapsed >= _roll_duration:
+		_finish_action()
+	elif action_state == ActionState.JUMPING and _jump_anim_done and is_on_floor():
 		_finish_action()
 
 	var moving := input_dir.length_squared() > 0.0
@@ -201,7 +218,7 @@ func _physics_process(delta):
 		_update_attack(delta, input_dir)
 	elif sword_state == SwordState.DRAWING:
 		_update_drawing()
-	elif action_state == ActionState.DODGING:
+	elif action_state == ActionState.DODGING or action_state == ActionState.JUMPING:
 		pass
 	else:
 		var running := moving and Input.is_key_pressed(KEY_SHIFT)
@@ -243,6 +260,8 @@ func _unhandled_input(event):
 				request_draw()
 			KEY_SPACE:
 				request_dodge()
+			jump_key:
+				request_jump()
 			KEY_J:
 				request_primary_attack()
 			KEY_K:
@@ -276,6 +295,8 @@ func _on_animation_finished(anim_name: StringName):
 		_finish_draw()
 	elif action_state == ActionState.DODGING and String(anim_name) == roll_anim:
 		return # CharacterBody3D completes the final roll displacement in physics.
+	elif action_state == ActionState.JUMPING and String(anim_name) == jump_anim:
+		_jump_anim_done = true # 落地判定在 physics（可能仍在空中，例如跳下平台）。
 	elif action_state == ActionState.ATTACKING and String(anim_name) == _action_anim:
 		if combo_stage > 0 and _combo_queued_inputs > 0 and combo_stage < COMBO_SECTION_RANGES.size():
 			_advance_combo()
@@ -395,11 +416,34 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	_roll_duration = _anim.get_animation(roll_anim).length
 	_play(roll_anim, action_blend_time)
 
+## F：跳躍。前 0.533 s 是蹲伏預備（仍在地面），之後由物理起跳；
+## 動畫垂直弧線已 clamp 到 rest 高度，上升完全由 CharacterBody3D 提供。
+func request_jump() -> void:
+	if action_state != ActionState.FREE or sword_state == SwordState.DRAWING or not is_on_floor():
+		return
+	if jump_anim == "" or not _anim.has_animation(jump_anim):
+		push_warning("yoriichi_character: jump animation is unavailable")
+		return
+	action_state = ActionState.JUMPING
+	_action_anim = jump_anim
+	_action_elapsed = 0.0
+	_jump_launched = false
+	_jump_anim_done = false
+	_play(jump_anim, action_blend_time)
+
+func _update_jump(delta: float) -> void:
+	_action_elapsed += delta
+	if not _jump_launched and _action_elapsed >= jump_takeoff_time:
+		_jump_launched = true
+		velocity.y = jump_velocity
+
 func _finish_action() -> void:
 	action_state = ActionState.FREE
 	_action_anim = ""
 	_action_elapsed = 0.0
 	_roll_duration = 0.0
+	_jump_launched = false
+	_jump_anim_done = false
 	combo_stage = 0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false

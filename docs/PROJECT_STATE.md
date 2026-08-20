@@ -59,10 +59,13 @@ Last updated: 2026-08-20.
   Character 流程：Body 與 Haori 共用同一套 24-bone Meshy Skeleton，正式 prefab 為
   `角色/緣一動作/yoriichi_character_meshy_full.tscn`。Idle／Walk／Run／Draw Sword、
   RunFast／Roll Dodge／三組 DRAWN 攻擊、CharacterBody3D 控制器與雙刀 socket 已通過
-  角色層 runtime 驗證。Roll 的 6.4m 位移完全由 CharacterBody3D 在 1.267s 內驅動，
-  視覺 X/Z root motion 為 0；主攻擊改為左鍵三段輸入緩衝 combo，所有 Attack 為 5x。
-  操作為 WASD、Shift 疾跑、Space 翻滾、Q 拔刀、左鍵三段連擊（J debug fallback）、
-  K 旋轉攻擊、L Judgment；正式 prefab 不載入
+  角色層 runtime 驗證。Roll 的 6.4m 位移完全由 CharacterBody3D 在 1.267s 內驅動；
+  衍生動畫資源第二版修正了骨架空間軸向（Hips 的 Z 是垂直軸），roll／attack 的
+  水平 root motion 已真正清除（軸向規格見 `角色/緣一動作/animations/README.md`）。
+  主攻擊為左鍵三段輸入緩衝 combo，所有 Attack 為 5x。Jump 已接入：F 鍵、
+  物理起跳 5.33 m/s 與 clip 空中段同步。
+  操作為 WASD、Shift 疾跑、Space 翻滾、F 跳躍、Q 拔刀、左鍵三段連擊
+  （J debug fallback）、K 旋轉攻擊、L Judgment；正式 prefab 不載入
   SpringBone、SoftBody、獨立 Haori Skeleton 或 HaoriAnchor。v2/v2.1 布料研究保留為
   archive，不再是正式 Player 流程；尚未替換人間之里 Player。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。
