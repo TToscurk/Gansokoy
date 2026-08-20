@@ -1,8 +1,8 @@
 extends SceneTree
 # Windowed screenshot run: fixed side camera, captures roll displacement,
-# jump phases and combo. Output: 角色/gameplay_bugfix_review/roll_jump_v2/
+# jump phases and combo. Output: 角色/gameplay_bugfix_review/mouse_combat_v3/
 
-const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/roll_jump_v2/"
+const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/mouse_combat_v3/"
 
 class Driver extends Node:
 	var chr: CharacterBody3D
@@ -21,30 +21,31 @@ class Driver extends Node:
 
 	func run() -> void:
 		await wait(0.6)
-		await shot("01_roll_start")
+		await shot("01_roll3x_start")
 		chr.request_dodge(Vector3(0, 0, -1))
-		await wait(0.45)
-		await shot("02_roll_mid")
-		await wait(0.9)
-		await shot("03_roll_end_no_snapback")
+		await wait(0.2)
+		await shot("02_roll3x_mid")
 		await wait(0.4)
-		chr.request_jump()
-		await wait(0.35)
-		await shot("04_jump_crouch")
-		await wait(0.45)
-		await shot("05_jump_air")
-		await wait(1.2)
-		await shot("06_jump_landed")
+		await shot("03_roll3x_end")
 		chr.request_draw()
 		await wait(1.3)
+		chr.request_jump()
+		await wait(0.7)
 		chr.request_primary_attack()
-		await wait(0.1)
-		chr.request_primary_attack()
+		await wait(0.12)
+		await shot("04_air_attack")
+		await wait(1.2)
 		chr.request_primary_attack()
 		await wait(0.15)
-		await shot("07_combo_mid")
+		await shot("05_ground_moving_attack")
+		await wait(1.0)
+		chr.request_sword_toggle()
+		await wait(0.25)
+		await shot("06_sheathe_hand")      # 反播前段：刀應仍在右手
+		await wait(0.45)
+		await shot("07_sheathe_hip")       # 跨過 t_unsheathe：刀應回左腰
 		await wait(0.6)
-		await shot("08_combo_recovered")
+		await shot("08_sheathed_idle")
 		get_tree().quit()
 
 func _initialize():

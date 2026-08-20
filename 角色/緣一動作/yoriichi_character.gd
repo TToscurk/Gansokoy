@@ -27,15 +27,30 @@ extends CharacterBody3D
 @export var attack_judgment_resource: Animation = preload("res://animations/yoriichi_attack_judgment.res")
 @export var jump_anim := "Jump"
 @export var jump_anim_resource: Animation = preload("res://animations/yoriichi_jump.res")
-@export var jump_key := KEY_F
 ## 起跳速度。空中時間 2v/g 需與 Jump clip 的空中段（0.533~1.067 s，共 0.533 s）一致：
 ## v = gravity * 0.533 / 2。動畫垂直弧線頂點 +0.63 m，物理跳高 v²/2g ≈ 0.71 m。
 @export var jump_velocity := 5.33
 ## Jump clip 的離地時間點（前 0.533 s 是蹲伏預備，角色仍在地面）。
 @export var jump_takeoff_time := 0.533
+## 空中攻擊結束後 blend 回 Jump clip 的這個時間點（下落姿勢）。
+@export var jump_air_pose_time := 0.9
+@export_group("Air Inertia")
+## 空中不直接覆寫水平速度：有輸入時以 air_acceleration * air_control (m/s²)
+## move_toward 目標速度；無輸入時只以 air_drag (m/s²) 衰減 → 保留起跳慣性。
+@export var air_acceleration := 4.0
+@export var air_control := 0.35
+@export var air_drag := 0.2
+@export_group("Actions")
 @export var roll_distance := 6.4
+@export var roll_animation_speed := 3.0
 @export var action_blend_time := 0.12
-@export var attack_speed_scale := 5.0
+@export var attack_speed_scale := 3.0
+## 地面攻擊期間保留的移動量（locomotion 速度 × 此係數）。
+@export var attack_move_factor := 0.65
+## 攻擊結束 → Walk/Run/Idle 的 blend。
+@export var attack_recovery_blend := 0.12
+## Shift 按住 = 疾跑；按下後在此秒數內放開 = 翻滾。
+@export var shift_tap_time := 0.25
 @export_range(0.0, 1.0) var combo_cancel_start := 0.35
 @export_range(0.0, 1.0) var combo_cancel_end := 0.65
 @export var combo_input_buffer_time := 0.30
@@ -59,7 +74,7 @@ const COMBO_SECTION_RANGES: Array[Vector2] = [
 #   [t_unsheathe, 1]  Sword_Sheathed 隱藏、Sword_Hand 可見（刀離開刀鞘）
 # 收刀流程尚未實作（DRAWN 再按 Q 目前不動作）。
 # ---------------------------------------------------------------------------
-enum SwordState { SHEATHED, DRAWING, DRAWN }
+enum SwordState { SHEATHED, DRAWING, DRAWN, SHEATHING }
 enum ActionState { FREE, ATTACKING, DODGING, JUMPING }
 
 @export_group("Sword Draw")
@@ -89,6 +104,9 @@ var _dodge_dir := Vector3.ZERO
 var _roll_duration := 0.0
 var _jump_launched := false
 var _jump_anim_done := false
+var pending_sheathe := false
+var _shift_pressed_msec := -1
+var _recovery_blend_pending := false
 var combo_stage := 0
 var combo_input_buffered := false
 var _combo_queued_inputs := 0
@@ -180,18 +198,28 @@ func _idle_for_state() -> String:
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
 	var input_dir := _read_input_dir()
-	var movement_allowed := (action_state == ActionState.FREE or action_state == ActionState.JUMPING) and sword_state != SwordState.DRAWING and (sword_state != SwordState.DRAWN or can_move_when_drawn)
-	if movement_allowed:
-		var cur_speed := run_speed if Input.is_key_pressed(KEY_SHIFT) else speed
+	var grounded := is_on_floor()
+	var cur_speed := run_speed if Input.is_key_pressed(KEY_SHIFT) else speed
+	var sword_busy := sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING
+	var movement_allowed := (action_state == ActionState.FREE or action_state == ActionState.JUMPING) \
+		and not sword_busy and (sword_state != SwordState.DRAWN or can_move_when_drawn)
+	if action_state == ActionState.DODGING:
+		_update_roll_movement(delta)
+	elif not grounded:
+		# 空中一律走慣性模型（跳躍、下落、空中攻擊都相同），不直接覆寫水平速度。
+		_apply_air_control(input_dir, cur_speed, delta)
+	elif action_state == ActionState.ATTACKING:
+		# 地面攻擊：保留玩家移動，但乘上 attack_move_factor。
+		velocity.x = input_dir.x * cur_speed * attack_move_factor
+		velocity.z = input_dir.z * cur_speed * attack_move_factor
+	elif movement_allowed:
 		velocity.x = input_dir.x * cur_speed
 		velocity.z = input_dir.z * cur_speed
-	elif action_state == ActionState.DODGING:
-		_update_roll_movement(delta)
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
 
-	if not is_on_floor():
+	if not grounded:
 		velocity.y -= gravity * delta
 	else:
 		velocity.y = 0
@@ -216,14 +244,30 @@ func _physics_process(delta):
 		return
 	if action_state == ActionState.ATTACKING:
 		_update_attack(delta, input_dir)
-	elif sword_state == SwordState.DRAWING:
+	elif sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
 		_update_drawing()
 	elif action_state == ActionState.DODGING or action_state == ActionState.JUMPING:
 		pass
 	else:
 		var running := moving and Input.is_key_pressed(KEY_SHIFT)
 		var selected_run := run_fast_anim if run_fast_anim != "" and _anim.has_animation(run_fast_anim) else run_anim
-		_play(selected_run if running else (walk_anim if moving else _idle_for_state()))
+		_play(selected_run if running else (walk_anim if moving else _idle_for_state()), _locomotion_blend())
+
+func _apply_air_control(input_dir: Vector3, cur_speed: float, delta: float) -> void:
+	var h := Vector2(velocity.x, velocity.z)
+	if input_dir.is_zero_approx():
+		h = h.move_toward(Vector2.ZERO, air_drag * delta)
+	else:
+		var desired := Vector2(input_dir.x, input_dir.z) * cur_speed
+		h = h.move_toward(desired, air_acceleration * air_control * delta)
+	velocity.x = h.x
+	velocity.z = h.y
+
+func _locomotion_blend() -> float:
+	if _recovery_blend_pending:
+		_recovery_blend_pending = false
+		return attack_recovery_blend
+	return blend_time
 
 func _read_input_dir() -> Vector3:
 	var input_dir := Vector3.ZERO
@@ -253,25 +297,40 @@ func _update_roll_movement(delta: float) -> void:
 # ---------------------------------------------------------------------------
 # 拔刀狀態機
 # ---------------------------------------------------------------------------
+# 正式戰鬥輸入：左鍵 = 主 Combo、右鍵 = Spin 重攻擊。鍵盤攻擊鍵（J/K/L）已全部移除。
+# Space = 跳躍；Shift 按住 = 疾跑、快按（<= shift_tap_time 放開）= 翻滾；Q = 拔刀/收刀 toggle。
 func _unhandled_input(event):
-	if event is InputEventKey and event.pressed and not event.echo:
-		match event.keycode:
-			draw_key:
-				request_draw()
-			KEY_SPACE:
+	if event is InputEventKey and not event.echo:
+		if event.pressed:
+			match event.keycode:
+				draw_key:
+					request_sword_toggle()
+				KEY_SPACE:
+					request_jump()
+				KEY_SHIFT:
+					_shift_pressed_msec = Time.get_ticks_msec()
+		elif event.keycode == KEY_SHIFT and _shift_pressed_msec >= 0:
+			if (Time.get_ticks_msec() - _shift_pressed_msec) / 1000.0 <= shift_tap_time:
 				request_dodge()
-			jump_key:
-				request_jump()
-			KEY_J:
-				request_primary_attack()
-			KEY_K:
-				request_special_attack(attack_spin_anim)
-			KEY_L:
-				request_special_attack(attack_judgment_anim)
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		request_primary_attack()
+			_shift_pressed_msec = -1
+	elif event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			request_primary_attack()
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			request_special_attack(attack_spin_anim)
 
-## Q：SHEATHED → DRAWING → DRAWN。DRAWING / DRAWN 時忽略（收刀尚未實作）。
+## Q toggle：SHEATHED → DRAWING → DRAWN；DRAWN → SHEATHING → SHEATHED。
+## ATTACKING 中按 Q 不打斷攻擊，改記 pending_sheathe，攻擊播完自動收刀。
+func request_sword_toggle():
+	match sword_state:
+		SwordState.SHEATHED:
+			request_draw()
+		SwordState.DRAWN:
+			if action_state == ActionState.ATTACKING:
+				pending_sheathe = true
+			elif action_state == ActionState.FREE:
+				_start_sheathe()
+
 func request_draw():
 	if sword_state != SwordState.SHEATHED or action_state != ActionState.FREE:
 		return
@@ -284,6 +343,20 @@ func request_draw():
 	_apply_sword_visibility()          # 起點：刀仍在左腰
 	_play(draw_anim, blend_time)
 
+## 收刀 = Draw_Sword 反向播放（不新增動畫資源）。visibility 依實際播放位置
+## （_draw_t 對 t_unsheathe）判斷，反向跨過 0.65 時刀自動回鞘，無需另換算。
+func _start_sheathe() -> void:
+	if draw_anim == "" or not _anim.has_animation(draw_anim):
+		sword_state = SwordState.SHEATHED
+		_apply_sword_visibility()
+		return
+	_draw_len = _anim.get_animation(draw_anim).length
+	_draw_t = 1.0
+	sword_state = SwordState.SHEATHING
+	_apply_sword_visibility()          # 起點：刀在右手
+	_anim.play_backwards(draw_anim, blend_time)
+	_current = draw_anim
+
 func _update_drawing():
 	if _anim.current_animation == _current and _draw_len > 0.0:
 		_draw_t = clamp(_anim.current_animation_position / _draw_len, 0.0, 1.0)
@@ -293,6 +366,11 @@ func _on_animation_finished(anim_name: StringName):
 	if sword_state == SwordState.DRAWING and String(anim_name) == draw_anim:
 		_draw_t = 1.0
 		_finish_draw()
+	elif sword_state == SwordState.SHEATHING and String(anim_name) == draw_anim:
+		_draw_t = 0.0
+		sword_state = SwordState.SHEATHED
+		_apply_sword_visibility()
+		_current = ""                  # 下一個 physics tick 依輸入回 Idle/Walk/Run
 	elif action_state == ActionState.DODGING and String(anim_name) == roll_anim:
 		return # CharacterBody3D completes the final roll displacement in physics.
 	elif action_state == ActionState.JUMPING and String(anim_name) == jump_anim:
@@ -317,7 +395,7 @@ func request_primary_attack() -> void:
 		combo_input_buffered = _combo_queued_inputs > 0
 		_combo_buffer_remaining = combo_input_buffer_time
 		return
-	if action_state != ActionState.FREE:
+	if action_state != ActionState.FREE and action_state != ActionState.JUMPING:
 		return
 	_start_combo()
 
@@ -332,8 +410,6 @@ func _start_combo() -> void:
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
 	_combo_buffer_remaining = 0.0
-	velocity.x = 0.0
-	velocity.z = 0.0
 	_play_combo_section(combo_stage)
 
 func request_attack(animation_name: String) -> void:
@@ -345,7 +421,9 @@ func request_attack(animation_name: String) -> void:
 		request_special_attack(animation_name)
 
 func request_special_attack(animation_name: String) -> void:
-	if sword_state != SwordState.DRAWN or action_state != ActionState.FREE:
+	if sword_state != SwordState.DRAWN:
+		return
+	if action_state != ActionState.FREE and action_state != ActionState.JUMPING:
 		return
 	if animation_name == "" or not _anim.has_animation(animation_name):
 		push_warning("yoriichi_character: attack animation is unavailable: " + animation_name)
@@ -356,8 +434,6 @@ func request_special_attack(animation_name: String) -> void:
 	combo_stage = 0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
-	velocity.x = 0.0
-	velocity.z = 0.0
 	_play(animation_name, combo_section_blend, attack_speed_scale)
 
 func _play_combo_section(stage: int) -> void:
@@ -398,7 +474,9 @@ func _advance_combo() -> void:
 	_play_combo_section(combo_stage)
 
 func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
-	if sword_state == SwordState.DRAWING or action_state != ActionState.FREE:
+	if sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
+		return
+	if action_state != ActionState.FREE or not is_on_floor():
 		return
 	if roll_anim == "" or not _anim.has_animation(roll_anim):
 		push_warning("yoriichi_character: dodge animation is unavailable")
@@ -413,13 +491,16 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	action_state = ActionState.DODGING
 	_action_anim = roll_anim
 	_action_elapsed = 0.0
-	_roll_duration = _anim.get_animation(roll_anim).length
-	_play(roll_anim, action_blend_time)
+	# 3x 播放：實際位移 duration 與動畫同步縮短，CharacterBody3D 曲線用同一個 _roll_duration。
+	_roll_duration = _anim.get_animation(roll_anim).length / roll_animation_speed
+	_play(roll_anim, action_blend_time, roll_animation_speed)
 
-## F：跳躍。前 0.533 s 是蹲伏預備（仍在地面），之後由物理起跳；
+## Space：跳躍。前 0.533 s 是蹲伏預備（仍在地面），之後由物理起跳；
 ## 動畫垂直弧線已 clamp 到 rest 高度，上升完全由 CharacterBody3D 提供。
 func request_jump() -> void:
-	if action_state != ActionState.FREE or sword_state == SwordState.DRAWING or not is_on_floor():
+	if sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
+		return
+	if action_state != ActionState.FREE or not is_on_floor():
 		return
 	if jump_anim == "" or not _anim.has_animation(jump_anim):
 		push_warning("yoriichi_character: jump animation is unavailable")
@@ -438,6 +519,7 @@ func _update_jump(delta: float) -> void:
 		velocity.y = jump_velocity
 
 func _finish_action() -> void:
+	var was_attack := action_state == ActionState.ATTACKING
 	action_state = ActionState.FREE
 	_action_anim = ""
 	_action_elapsed = 0.0
@@ -448,10 +530,29 @@ func _finish_action() -> void:
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
 	_combo_buffer_remaining = 0.0
-	velocity.x = 0.0
-	velocity.z = 0.0
 	_current = ""
-	_play(_idle_for_state())
+	if pending_sheathe and sword_state == SwordState.DRAWN and is_on_floor():
+		pending_sheathe = false
+		_start_sheathe()
+		return
+	if not is_on_floor():
+		_enter_airborne_recovery()
+		return
+	# 不強制回 Idle：下一個 physics tick 的 locomotion 分支依當前輸入
+	# 接回 Idle / Walk / Run；攻擊後用較短的 recovery blend。
+	_recovery_blend_pending = was_attack
+
+## 空中攻擊結束後回到 airborne：blend 回 Jump clip 的下落姿勢，
+## 慣性與 gravity 照常，落地時經由 JUMPING 的落地判定收尾。
+func _enter_airborne_recovery() -> void:
+	action_state = ActionState.JUMPING
+	_action_anim = jump_anim
+	_jump_launched = true
+	_jump_anim_done = true
+	if _anim.has_animation(jump_anim):
+		_anim.play(jump_anim, 0.08)
+		_anim.seek(jump_air_pose_time, true)
+		_current = jump_anim
 
 ## 依狀態（與拔刀進度）決定哪一把刀可見。永遠恰好一把可見。
 func _apply_sword_visibility():
@@ -460,6 +561,9 @@ func _apply_sword_visibility():
 		SwordState.SHEATHED:
 			in_hand = false
 		SwordState.DRAWING:
+			in_hand = _draw_t >= t_unsheathe
+		SwordState.SHEATHING:
+			# 反向播放共用同一個位置判斷：位置跌破 t_unsheathe 時刀回鞘。
 			in_hand = _draw_t >= t_unsheathe
 		SwordState.DRAWN:
 			in_hand = true
