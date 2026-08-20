@@ -1,0 +1,82 @@
+{
+  "body_mask": {
+    "mask": {
+      "L": {
+        "vertex_count": 3626,
+        "arm_start_world": [
+          0.165,
+          0.012627,
+          1.348804
+        ],
+        "wrist_world": [
+          0.630804,
+          -0.042039,
+          1.337804
+        ],
+        "projection_range": [
+          0.16,
+          0.95
+        ],
+        "max_segment_radius_m": 0.085
+      },
+      "R": {
+        "vertex_count": 3631,
+        "arm_start_world": [
+          -0.161402,
+          0.012489,
+          1.345123
+        ],
+        "wrist_world": [
+          -0.627164,
+          -0.033948,
+          1.330483
+        ],
+        "projection_range": [
+          0.16,
+          0.95
+        ],
+        "max_segment_radius_m": 0.085
+      }
+    },
+    "removed_faces": 14272,
+    "remaining_faces": 348022,
+    "output": "D:\\神社\\shrine-yoriichi\\角色\\緣一動作\\anti_clip\\assets\\yoriichi_body_v2_sleeve_masked.fbx"
+  },
+  "haori_variants": [
+    {
+      "clearance_cm": 2,
+      "moved_vertices": 29055,
+      "average_displacement_cm": 1.8048,
+      "max_displacement_cm": 2.0,
+      "vertices": 65534,
+      "polygons": 121343,
+      "output": "D:\\神社\\shrine-yoriichi\\角色\\緣一動作\\anti_clip\\assets\\haori_v21_clearance_2cm.glb"
+    },
+    {
+      "clearance_cm": 3,
+      "moved_vertices": 29055,
+      "average_displacement_cm": 2.7072,
+      "max_displacement_cm": 3.0,
+      "vertices": 65534,
+      "polygons": 121343,
+      "output": "D:\\神社\\shrine-yoriichi\\角色\\緣一動作\\anti_clip\\assets\\haori_v21_clearance_3cm.glb"
+    },
+    {
+      "clearance_cm": 4,
+      "moved_vertices": 29055,
+      "average_displacement_cm": 3.6096,
+      "max_displacement_cm": 4.0,
+      "vertices": 65534,
+      "polygons": 121343,
+      "output": "D:\\神社\\shrine-yoriichi\\角色\\緣一動作\\anti_clip\\assets\\haori_v21_clearance_4cm.glb"
+    }
+  ],
+  "protected_invariants": {
+    "uv_changed": false,
+    "atlas_changed": false,
+    "body_skeleton_changed": false,
+    "haori_rig_changed": false,
+    "animations_changed": false,
+    "springbone_changed": false
+  }
+}
