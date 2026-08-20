@@ -2,7 +2,7 @@ extends Node3D
 ## Haori v2.1 Stage 6 stress test（真實按鍵注入）＋ Stage 7 效能記錄。
 
 const SHOT_DIR := "D:/神社/shrine-yoriichi/角色/haori_work/v21_shots/"
-var char_scene: PackedScene = preload("res://haori_v21_character.tscn")
+var char_scene: PackedScene = preload("res://yoriichi_character_v21.tscn")
 var _char: CharacterBody3D
 var _cam: Camera3D
 var _perf: Array = []
@@ -71,8 +71,8 @@ func _fsb(prefix: String) -> void:
 	await _shot(prefix + "_back.png", PI)
 
 func _run() -> void:
-	# 1. Idle 10 秒
-	for i in [3.0, 3.0, 3.0]:
+	# 1. Production soak: Idle 30 秒
+	for i in [10.0, 10.0, 10.0]:
 		await get_tree().create_timer(i).timeout
 		await _shot("01_idle_%02d.png" % _perf.size())
 	await _fsb("01_idle")
@@ -133,6 +133,16 @@ func _run() -> void:
 	await _shot("10_stride_hem_close.png", 0.0, 1.5, 0.7, 0.6)
 	await _shot("10_stride_hem_side.png", PI * 0.5, 1.5, 0.7, 0.6)
 	_key(KEY_W, false); _key(KEY_SHIFT, false)
+	# 12. 快速連續 WASD（每次方向切換都保留足夠的可見反應時間）
+	var rapid_keys: Array[Key] = [KEY_W, KEY_D, KEY_S, KEY_A, KEY_W, KEY_A, KEY_S, KEY_D]
+	for i in rapid_keys.size():
+		_key(rapid_keys[i], true)
+		await get_tree().create_timer(0.18).timeout
+		_key(rapid_keys[i], false)
+		if i in [1, 3, 5, 7]:
+			await _shot("11_rapid_wasd_%02d.png" % i)
+	await get_tree().create_timer(0.8).timeout
+	await _shot("11_rapid_wasd_settled.png")
 	# perf 統計
 	var fps_sum := 0.0; var pm_sum := 0.0
 	for p in _perf:

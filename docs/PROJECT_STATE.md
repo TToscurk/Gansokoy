@@ -3,7 +3,7 @@
 這是每個新任務在 `CLAUDE.md` 之後必讀的目前狀態。只保留會影響下一個決策的
 事實；逐輪紀錄在子系統文件或 `docs/archive/`。
 
-Last updated: 2026-08-12.
+Last updated: 2026-08-20.
 
 ## Execution Mode
 
@@ -55,9 +55,10 @@ Last updated: 2026-08-12.
 ## Current Gate / Next
 
 - 先完成現有市場、資產尺寸與村落視覺證據的 Human Art Review／保存決策。
-- 舊緣一 Y02 已定義為 `TECH_DUMMY / ART_REJECTED`；全新 Production Base Candidate
-  已輸出 BODY_PROPORTION 與 IDENTITY_SILHOUETTE Gate 圖，等待 Human Art Review。
-  兩道 Gate 未核准前不得做細節、Rig、動畫或 Player 整合。
+- 舊緣一 Y02 仍為 `TECH_DUMMY / ART_REJECTED`。獨立的 Yoriichi Body v2 與 Haori
+  v2.1 已整合為 `角色/緣一動作/yoriichi_character_v21.tscn`：Body 動畫／控制器、
+  刀 socket、9 條 SpringBone chain 與 8 顆專用 collider 通過 runtime 技術驗證。
+  狀態為 `TECH_PASS / ART_REVIEW`；未經 Human Art Review 不替換人間之里 Player。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。
 - 若工作只涉及程式結構，硬條件是生成結果 stable hash 不漂移，所有靜態檢查通過。
 

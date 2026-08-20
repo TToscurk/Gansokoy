@@ -7,8 +7,10 @@ const AnchorScript := preload("res://haori_v21_anchor.gd")
 
 # chain: [root, end, stiffness, drag, gravity, radius, s_curve_tip, g_curve_root, colliders]
 const CHAINS := [
-	["Haori_SleeveBag_L_01", "Haori_SleeveBag_L_03", 1.9, 0.60, 1.0, 0.05, 0.5, 0.5, ["Col_Torso","Col_UpArm_L","Col_ForeArm_L"]],
-	["Haori_SleeveBag_R_01", "Haori_SleeveBag_R_03", 1.9, 0.60, 1.0, 0.05, 0.5, 0.5, ["Col_Torso","Col_UpArm_R","Col_ForeArm_R"]],
+	# Production polish: raise only the bag roots' restoring force while leaving
+	# the tips at roughly the validated baseline (2.1 * 0.48 ~= 1.0).
+	["Haori_SleeveBag_L_01", "Haori_SleeveBag_L_03", 2.1, 0.60, 1.0, 0.05, 0.48, 0.5, ["Col_Torso","Col_UpArm_L","Col_ForeArm_L"]],
+	["Haori_SleeveBag_R_01", "Haori_SleeveBag_R_03", 2.1, 0.60, 1.0, 0.05, 0.48, 0.5, ["Col_Torso","Col_UpArm_R","Col_ForeArm_R"]],
 	["Haori_SleeveCuff_L_01", "Haori_SleeveCuff_L_02", 2.2, 0.45, 0.7, 0.05, 0.6, 0.7, ["Col_UpArm_L","Col_ForeArm_L"]],
 	["Haori_SleeveCuff_R_01", "Haori_SleeveCuff_R_02", 2.2, 0.45, 0.7, 0.05, 0.6, 0.7, ["Col_UpArm_R","Col_ForeArm_R"]],
 	["Haori_Front_L_01", "Haori_Front_L_03", 3.2, 0.50, 1.4, 0.06, 0.75, 0.8, ["Col_Hips","Col_Thigh_L","Col_Thigh_R"]],
