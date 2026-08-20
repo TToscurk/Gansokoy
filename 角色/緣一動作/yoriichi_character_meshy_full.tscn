@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Walking_withSkin.fbx" id="1_fbx"]
+[ext_resource type="Script" path="res://yoriichi_character.gd" id="2_controller"]
+[ext_resource type="PackedScene" path="res://yoriichi_sword.glb" id="3_sword"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.3
+height = 1.7
+
+[node name="Yoriichi" type="CharacterBody3D"]
+script = ExtResource("2_controller")
+
+[node name="BodyVisual" parent="." instance=ExtResource("1_fbx")]
+
+[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D"]
+bone_name = "RightHand"
+
+[node name="Sword_Hand" parent="BodyVisual/Armature/Skeleton3D/HandSocket" instance=ExtResource("3_sword")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0.07, 0)
+visible = false
+
+[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D"]
+bone_name = "Hips"
+
+[node name="Sword_Sheathed" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" instance=ExtResource("3_sword")]
+transform = Transform3D(0.057647, -0.065052, 0.996215, -0.978981, 0.191859, 0.069177, -0.195633, -0.979264, -0.052624, 0.272761, -0.062122, 0.027695)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[editable path="BodyVisual"]

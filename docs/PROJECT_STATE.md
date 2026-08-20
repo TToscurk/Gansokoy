@@ -55,10 +55,12 @@ Last updated: 2026-08-20.
 ## Current Gate / Next
 
 - 先完成現有市場、資產尺寸與村落視覺證據的 Human Art Review／保存決策。
-- 舊緣一 Y02 仍為 `TECH_DUMMY / ART_REJECTED`。獨立的 Yoriichi Body v2 與 Haori
-  v2.1 已整合為 `角色/緣一動作/yoriichi_character_v21.tscn`：Body 動畫／控制器、
-  刀 socket、9 條 SpringBone chain 與 8 顆專用 collider 通過 runtime 技術驗證。
-  狀態為 `TECH_PASS / ART_REVIEW`；未經 Human Art Review 不替換人間之里 Player。
+- 舊緣一 Y02 仍為 `TECH_DUMMY / ART_REJECTED`。目前角色基底已回到單一 Meshy Full
+  Character 流程：Body 與 Haori 共用同一套 24-bone Meshy Skeleton，正式 prefab 為
+  `角色/緣一動作/yoriichi_character_meshy_full.tscn`。Idle／Walk／Run／Draw Sword、
+  CharacterBody3D 控制器與雙刀 socket 已通過角色層 runtime 驗證；正式 prefab 不載入
+  SpringBone、SoftBody、獨立 Haori Skeleton 或 HaoriAnchor。v2/v2.1 布料研究保留為
+  archive，不再是正式 Player 流程；尚未替換人間之里 Player。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。
 - 若工作只涉及程式結構，硬條件是生成結果 stable hash 不漂移，所有靜態檢查通過。
 
