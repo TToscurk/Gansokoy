@@ -20,10 +20,12 @@ full  (AnimationNodeOneShot, 無 filter)   全身 override
 output
 ```
 
-- Jump 拆三段（同一支 Regular_Jump clip 的 custom timeline）：
-  JumpStart 0–0.62 s × `jump_start_speed = 1.9`（起跳不再飄）、
-  Fall 0.75–1.05 s 循環（apex 後切入）、Land 1.067–1.9 s × `jump_land_speed = 1.5`
-  （落地無輸入才播；有輸入直接接 Run/Walk）。
+- **Jump/Fall 不是 ActionState，是純 physics**：`_jump_charge` 蓄力倒數
+  （(0.533−skip 0.30)/1.9 ≈ 0.12 s，Run→Jump 立即）→ `velocity.y = 5.33`；
+  之後不論播什麼攻擊，gravity / 慣性照常 —— 攻擊永遠取消不了跳躍，
+  蓄力期間按 LMB 攻擊照打、照樣離地。Jump 拆三段（custom timeline）：
+  JumpStart 0.30–0.62 s × 1.9、Fall 0.75–1.05 s 循環（vy≤0 切入）、
+  Land 1.067–1.9 s × 1.5（落地無輸入才播；有輸入直接接 Run/Walk）。
 - 每段/技的時間全部由腳本計時器管理（同一個時鐘），AnimationTree 只負責混合。
 - CharacterBody3D 永遠是真實位置；動畫零水平 root motion，位移全程式驅動。
 
@@ -71,9 +73,9 @@ output
   `_draw_real` 自動同步）；Idle/Walk/Run/Roll 以外的 Jump 三段見上。
 - 輕連段：Weapon Combo 三段 0–34% / 30–67% / 63–100%，cancel window 35–65%，
   input buffer 0.30 s，段間 blend 0.035 s。
-- 移動中攻擊動量：Run × `attack_move_factor_run = 0.85`、
-  Walk × `attack_move_factor_walk = 0.60`、全身技 × `attack_move_factor_heavy = 0.30`；
-  攻擊期間保留 35% WASD 轉向。
+- 移動中攻擊動量（MGR 式，攻擊不是 movement lock）：Run × 1.0（全速跑斬）、
+  Walk × 0.7、全身技 × 0.5 —— 即使 full-body override 也不停；
+  攻擊期間保留 35% WASD 轉向。拔刀中按 LMB 會 buffer 成拔刀斬。
 - 空中慣性：有輸入 move_toward(目標, `4.0 × 0.35 = 1.4 m/s²`)；無輸入僅
   `air_drag 0.2 m/s²` 衰減。跳躍物理：`jump_velocity = 5.33`，離地時刻
   `0.533 / 1.9 ≈ 0.28 s`；FREE 離地 > `coyote_time 0.12 s` 也會進 Fall。
@@ -116,9 +118,25 @@ output
 - **MISSING**（真缺專用動畫）：捌（直線突刺）、玖（dash 連斬鏈）、拾壹（殘影反擊）。
 - 未接入素材（全專案僅剩這兩支未使用）：`Dead`（完整倒地，留給死亡狀態）、
   `Double_Blade_Spin`（5.7 s 雙刀大迴旋，留給雙刀系統）。
-- 刀 socket：`Sword_Hand` local transform = identity basis + origin (0, 0.17, 0)
-  （刀 mesh 長軸 = local +Y，柄佔 −0.38~−0.1）。舊值 Z 轉 90° 使柄掉在手外、
-  刀身平舉；新值掌心落在柄卷中段、刀身斜下，三視角驗證於 grip_tuning/。
+- 刀 socket：`Sword_Hand` local transform = **繞 hand-X −90°** + origin (0, 0.17, 0)
+  （tscn: `Transform3D(1,0,0, 0,0,1, 0,-1,0, 0,0.17,0)`）。刀 mesh 長軸 = local +Y。
+  側視：刀尖朝角色正前（BodyVisual +Z）、柄尾朝後、掌心握柄卷中段 ——
+  武士備斬持刀。三視角驗證於 grip_tuning/final_from_tscn_*。
+
+## 動畫 layer 適性（依 Stage 1 實測腿/臂活動量分類）
+
+| 動畫 | 腿°/s | 臂°/s | 分類 |
+|---|---|---|---|
+| Weapon_Combo | 636 | 1112 | UPPER_BODY_SAFE（腿低活動 → 三段輕連段走 upper filter） |
+| Draw_Sword | 437 | 388 | UPPER_BODY_SAFE（拔/收刀走 upper） |
+| Weapon_Combo_1 | 860 | 1123 | FULL_BODY（含跳劈、垂直 0.52–1.50） |
+| Axe_Spin_Attack | 640 | 825 | FULL_BODY（整身旋轉，hips 轉向不可 filter） |
+| Sword_Judgment | 599 | 672 | FULL_BODY（大縱劈、垂直 0.59–1.79） |
+| 360_Power_Spin_Jump | 992 | 893 | FULL_BODY + AIRBORNE |
+| FL/FR_Run_Fight | ~2500 | ~870 | LOCOMOTION（完美循環側身跑） |
+| Run/Walk_Turn | 650–1030 | 440–620 | TRANSITION（剝離位移版） |
+| Roll_Dodge | 1551 | 1994 | FULL_BODY |
+| Regular_Jump | 1085 | 831(修) | LOCOMOTION（三段拆分＋手臂抑制） |
 - 拾參ノ型 = `start_form13()`：把可用的型按序高速循環（框架已驗證，
   解鎖條件 `form13_unlocked` / `form13_gauge_cost` 為 export data，尚未綁輸入）。
 - 型的選型輸入（方向派生 / mastery 映射）尚未實裝；目前僅左右鍵 + quick-draw。

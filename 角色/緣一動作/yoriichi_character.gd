@@ -59,6 +59,9 @@ extends CharacterBody3D
 @export var jump_land_speed := 1.5
 ## 起跳速度（物理）。空中時間 2v/g = 0.533 s，跳高 v²/2g ≈ 0.71 m。
 @export var jump_velocity := 5.33
+## JumpStart 跳過 clip 前面這段蹲伏（Run→Jump 立即起跳的關鍵）：
+## 實際蓄力 = (0.533 - skip) / jump_start_speed ≈ 0.12 s。
+@export var jump_start_skip := 0.30
 ## 落地後無輸入時 Land 動畫佔用 locomotion 的時間；有輸入直接接 Run/Walk。
 @export var land_lock_time := 0.35
 ## FREE 狀態離地超過此秒數視為 Fall（走出平台邊緣）。
@@ -98,10 +101,11 @@ extends CharacterBody3D
 @export var combo_input_buffer_time := 0.30
 @export var combo_section_blend := 0.035
 @export_range(0.0, 1.0) var attack_turn_control := 0.35
-## Run 攻擊保留 85% 前進動量、Walk 60%；全身技（heavy）30%。
-@export var attack_move_factor_run := 0.85
-@export var attack_move_factor_walk := 0.60
-@export var attack_move_factor_heavy := 0.30
+## MGR 式：攻擊不是 movement lock。Run 攻擊保留 100% 前進動量、Walk 70%；
+## 全身技（heavy）50% —— 即使 full-body override，CharacterBody3D 也不停。
+@export var attack_move_factor_run := 1.0
+@export var attack_move_factor_walk := 0.7
+@export var attack_move_factor_heavy := 0.5
 
 const SunBreathing = preload("res://sun_breathing.gd")
 const COMBO_SECTION_RANGES: Array[Vector2] = [
@@ -123,7 +127,9 @@ const UPPER_BONES := ["Spine02", "Spine01", "Spine",
 # 刀（socket 結構不變）：SheathSocket(Hips)=Sword_Sheathed、HandSocket(RightHand)=Sword_Hand
 # ---------------------------------------------------------------------------
 enum SwordState { SHEATHED, DRAWING, DRAWN, SHEATHING }
-enum ActionState { FREE, ATTACKING, DODGING, JUMPING }
+## Jump/Fall 不是 ActionState：跳躍是純 physics（_jump_charge 倒數 → velocity.y），
+## 攻擊只是疊在上面的 animation layer，永遠取消不了跳躍。
+enum ActionState { FREE, ATTACKING, DODGING }
 
 @export_group("Sword Draw")
 @export var draw_key := KEY_Q
@@ -171,8 +177,8 @@ var _roll_duration := 0.0
 var _dodge_dir := Vector3.ZERO
 var _combo_queued_inputs := 0
 var _combo_buffer_remaining := 0.0
-var _jump_launched := false
-var _in_fall := false
+var _jump_charge := -1.0     # >= 0 = 起跳蓄力倒數中（獨立於 ActionState，攻擊打不斷）
+var _was_airborne := false
 var _air_t := 0.0
 var _land_lock := 0.0
 var _turn_lock := 0.0
@@ -295,7 +301,7 @@ func _build_tree() -> void:
 		"Idle": _anim_node("Idle_Grounded" if _anim.has_animation("Idle_Grounded") else idle_anim),
 		"Walk": _anim_node(walk_anim),
 		"Run": _anim_node(run_fast_anim if _anim.has_animation(run_fast_anim) else run_anim),
-		"JumpStart": _scaled_state(_clip_node(jump_anim, 0.0, JUMP_START_END)),
+		"JumpStart": _scaled_state(_clip_node(jump_anim, jump_start_skip, JUMP_START_END)),
 		"Fall": _clip_node(jump_anim, JUMP_AIR_LOOP.x, JUMP_AIR_LOOP.y, true),
 		"Land": _scaled_state(_clip_node(jump_anim, JUMP_LAND_START, jump_anim_resource.length)),
 	}
@@ -446,8 +452,12 @@ func _physics_process(delta):
 	else:
 		velocity.y = 0
 
-	if action_state == ActionState.JUMPING:
-		_update_jump(delta)
+	# 跳躍蓄力是純 physics 倒數：與 ActionState 無關，攻擊/拔刀都打不斷。
+	if _jump_charge >= 0.0:
+		_jump_charge -= delta
+		if _jump_charge <= 0.0:
+			_jump_charge = -1.0
+			velocity.y = jump_velocity
 
 	move_and_slide()
 
@@ -456,9 +466,6 @@ func _physics_process(delta):
 			_finish_roll()
 	elif action_state == ActionState.ATTACKING:
 		_update_attack(delta, input_dir)
-	elif action_state == ActionState.JUMPING:
-		if _jump_launched and _air_t > 0.1 and is_on_floor():
-			_finish_jump(moving)
 
 	_update_sword(delta)
 	_update_visual_yaw(delta, input_dir, moving)
@@ -502,15 +509,22 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 		return   # 全身 override 顯示中
 	var pb := _playback()
 	if not grounded:
+		_was_airborne = true
 		_air_t += delta
-		var falling := (action_state == ActionState.JUMPING and _jump_launched and velocity.y <= 0.0) \
-			or (action_state != ActionState.JUMPING and _air_t > coyote_time)
-		if falling and pb.get_current_node() != &"Fall":
+		# 上升期維持 JumpStart 姿勢；velocity.y <= 0（或走出邊緣過 coyote）→ Fall。
+		if velocity.y <= 0.0 and _air_t > coyote_time and pb.get_current_node() != &"Fall":
 			pb.travel("Fall")
 		return
 	_air_t = 0.0
-	if action_state == ActionState.JUMPING:
-		return   # 蹲伏預備：JumpStart 播放中
+	if _jump_charge >= 0.0:
+		return   # 蓄力蹲伏：JumpStart 播放中，locomotion 不搶
+	if _was_airborne:
+		_was_airborne = false
+		if not moving:
+			_land_lock = land_lock_time
+			pb.travel("Land")
+			return
+		_land_lock = 0.0   # 有輸入：落地直接接 Run/Walk
 	if _land_lock > 0.0:
 		if moving:
 			_land_lock = 0.0   # 有輸入直接接 locomotion
@@ -595,34 +609,18 @@ func _unhandled_input(event):
 # ---------------------------------------------------------------------------
 # Jump
 # ---------------------------------------------------------------------------
+## 跳躍 = 純 physics。蓄力 ~0.12 s（JumpStart 跳過大半蹲伏）後給 velocity.y；
+## 之後不論播什麼 attack，gravity / 慣性照常，Jump/Fall 只是 loco 層的視覺。
+## 攻擊中也可以起跳（upper 攻擊照打、腿進 JumpStart）——攻擊永遠取消不了跳躍。
 func request_jump() -> void:
 	if sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
 		return
-	if action_state != ActionState.FREE or not is_on_floor():
+	if action_state == ActionState.DODGING or not is_on_floor() or _jump_charge >= 0.0:
 		return
-	action_state = ActionState.JUMPING
-	_action_elapsed = 0.0
-	_jump_launched = false
+	_jump_charge = (JUMP_TAKEOFF_CLIP - jump_start_skip) / jump_start_speed
 	_air_t = 0.0
-	_playback().travel("JumpStart")
-
-func _update_jump(delta: float) -> void:
-	_action_elapsed += delta
-	if not _jump_launched and _action_elapsed >= JUMP_TAKEOFF_CLIP / jump_start_speed:
-		_jump_launched = true
-		velocity.y = jump_velocity
-	if not is_on_floor():
-		_air_t += delta
-
-func _finish_jump(moving: bool) -> void:
-	action_state = ActionState.FREE
-	_jump_launched = false
-	_action_elapsed = 0.0
-	if moving:
-		_land_lock = 0.0        # 有輸入：直接接 Run/Walk
-	else:
-		_land_lock = land_lock_time
-		_playback().travel("Land")
+	if action_state != ActionState.ATTACKING or _attack_layer != "full":
+		_playback().travel("JumpStart")
 
 # ---------------------------------------------------------------------------
 # Roll
@@ -642,6 +640,7 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	action_state = ActionState.DODGING
 	_action_elapsed = 0.0
 	_attack_after_roll = false
+	_jump_charge = -1.0   # 翻滾取消尚未離地的跳躍蓄力
 	_roll_duration = roll_anim_resource.length / roll_animation_speed
 	_fire_full("roll", roll_animation_speed)
 
@@ -683,6 +682,9 @@ func request_primary_attack() -> void:
 	if action_state == ActionState.DODGING and sword_state == SwordState.DRAWN:
 		_attack_after_roll = true   # dodge counter：roll 結束自動接反擊斬
 		return
+	if sword_state == SwordState.DRAWING:
+		_attack_after_draw = true   # 拔刀中按 LMB：buffer 成拔刀斬（離鞘瞬間出刀）
+		return
 	if sword_state != SwordState.DRAWN:
 		return
 	if action_state == ActionState.ATTACKING and combo_stage > 0:
@@ -690,7 +692,7 @@ func request_primary_attack() -> void:
 		combo_input_buffered = _combo_queued_inputs > 0
 		_combo_buffer_remaining = combo_input_buffer_time
 		return
-	if action_state != ActionState.FREE and action_state != ActionState.JUMPING:
+	if action_state != ActionState.FREE:
 		return
 	_start_combo()
 
@@ -714,7 +716,7 @@ func _start_light_section(stage: int) -> void:
 func request_special_attack(animation_name: String) -> void:
 	if sword_state != SwordState.DRAWN:
 		return
-	if action_state != ActionState.FREE and action_state != ActionState.JUMPING:
+	if action_state != ActionState.FREE:
 		return
 	var key := _full_input_for(animation_name)
 	if key == "":
@@ -800,7 +802,7 @@ func request_sword_toggle():
 		SwordState.DRAWN:
 			if action_state == ActionState.ATTACKING:
 				pending_sheathe = true
-			elif action_state == ActionState.FREE or action_state == ActionState.JUMPING:
+			elif action_state == ActionState.FREE:
 				_start_sheathe()
 
 func request_draw():
@@ -884,7 +886,7 @@ func can_use_form(id: int) -> bool:
 func execute_form(id: int) -> bool:
 	if sword_state != SwordState.DRAWN or not can_use_form(id):
 		return false
-	if action_state != ActionState.FREE and action_state != ActionState.JUMPING:
+	if action_state != ActionState.FREE:
 		return false
 	var def: Dictionary = SunBreathing.FORMS[id]
 	action_state = ActionState.ATTACKING

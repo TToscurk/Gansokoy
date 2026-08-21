@@ -497,6 +497,150 @@ class Driver extends Node:
 		check("draw_slower", absf(draw_secs - expect_draw) < 0.15,
 			"draw took %.2f s (expect %.2f at %.1fx)" % [draw_secs, expect_draw, chr.draw_speed_scale])
 
+		# ============== MGR-style 壓力測試 A~F ==============
+		# A. 疾跑 5 秒連續 LMB：不停跑、連續揮刀
+		await recenter(25.0)
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
+		var min_v := 99.0
+		var stages := 0
+		var last_stage := 0
+		t = 0.0
+		var next_click := 0.0
+		while t < 5.0:
+			if t >= next_click:
+				click(MOUSE_BUTTON_LEFT)
+				next_click += 0.35
+			min_v = minf(min_v, hspeed())
+			if chr.combo_stage != last_stage and chr.combo_stage > 0:
+				stages += 1
+				last_stage = chr.combo_stage
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("stressA_run_slash_5s", min_v > chr.run_speed - 0.5 and stages >= 6,
+			"5 s run+LMB spam: min speed %.2f (never stopped), %d combo stage entries" % [min_v, stages])
+		await recenter(25.0)
+
+		# B. 跑跳 + 空中連斬：拋物線不中斷、gravity 不停
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
+		key(KEY_SPACE, true)
+		key(KEY_SPACE, false)
+		t = 0.0
+		while chr.is_on_floor() and t < 1.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var gravity_ok := true
+		var prev_vy: float = chr.velocity.y
+		var air_attacked := false
+		var clicked := 0
+		t = 0.0
+		while not chr.is_on_floor() and t < 2.0:
+			if clicked < 2 and t > 0.05 + clicked * 0.2:
+				click(MOUSE_BUTTON_LEFT)
+				clicked += 1
+			var vy_b: float = chr.velocity.y
+			if vy_b > prev_vy + 0.01:
+				gravity_ok = false   # vy 中途上升 = gravity 被打斷
+			prev_vy = vy_b
+			if chr.action_state == chr.ActionState.ATTACKING:
+				air_attacked = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("stressB_air_combo_parabola", gravity_ok and air_attacked and chr.is_on_floor(),
+			"vy monotonic under gravity=%s, attacked airborne=%s, landed=%s" % [gravity_ok, air_attacked, chr.is_on_floor()])
+		key(KEY_W, false)
+		key(KEY_SHIFT, false)
+		await recenter(25.0)
+
+		# C. Run → Q → LMB：邊跑拔刀斬，forward velocity 不中斷
+		if chr.sword_state == chr.SwordState.DRAWN:
+			await tap(KEY_Q)
+			await wait(1.0)
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
+		await tap(KEY_Q)
+		await wait(0.05)
+		click(MOUSE_BUTTON_LEFT)
+		var min_v_c := 99.0
+		var iai_attacked := false
+		t = 0.0
+		while t < 1.5:
+			min_v_c = minf(min_v_c, hspeed())
+			if chr.action_state == chr.ActionState.ATTACKING:
+				iai_attacked = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("stressC_run_iai", min_v_c > chr.run_speed - 0.5 and iai_attacked and chr.sword_state == chr.SwordState.DRAWN,
+			"run+Q+LMB: min speed %.2f, iai attack=%s" % [min_v_c, iai_attacked])
+		await recenter(25.0)
+
+		# D. 斜向跑 + 攻擊：RunFL 與 upper attack 同時
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
+		key(KEY_A, true)
+		await wait(0.1)
+		click(MOUSE_BUTTON_LEFT)
+		var d_both := false
+		t = 0.0
+		while t < 0.5:
+			if chr.action_state == chr.ActionState.ATTACKING and loco() == &"RunFL":
+				d_both = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		key(KEY_A, false)
+		check("stressD_diagonal_attack", d_both, "RunFL legs + upper attack simultaneous=%s" % d_both)
+		await recenter(25.0)
+
+		# E. Jump → Fall → Attack → Land → locomotion
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.4)
+		key(KEY_SPACE, true)
+		key(KEY_SPACE, false)
+		t = 0.0
+		while chr.is_on_floor() and t < 1.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		t = 0.0
+		while chr.velocity.y > 0.0 and t < 1.0:   # 等下落段
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		click(MOUSE_BUTTON_LEFT)
+		t = 0.0
+		while not chr.is_on_floor() and t < 2.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		await wait(0.6)
+		var e_loco := loco()
+		check("stressE_fall_attack_land", chr.is_on_floor() and (e_loco == &"Run" or e_loco == &"RunFL" or e_loco == &"RunFR"),
+			"fall attack -> landed -> loco=%s (locomotion resumed)" % e_loco)
+		await recenter(25.0)
+
+		# F. Space 後立即 LMB：攻擊不可取消跳躍蓄力
+		click(MOUSE_BUTTON_LEFT)
+		key(KEY_SPACE, true)
+		key(KEY_SPACE, false)
+		await wait(0.02)
+		click(MOUSE_BUTTON_LEFT)
+		var f_attacked := false
+		var f_left_ground := false
+		t = 0.0
+		while t < 0.8:
+			if chr.action_state == chr.ActionState.ATTACKING:
+				f_attacked = true
+			if not chr.is_on_floor():
+				f_left_ground = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("stressF_attack_cant_cancel_jump", f_left_ground,
+			"LMB during jump charge: attacked=%s, still left ground=%s" % [f_attacked, f_left_ground])
+		await wait_free(3.0)
+
 		print("=== VALIDATION RESULTS ===")
 		for r in results:
 			print(r)

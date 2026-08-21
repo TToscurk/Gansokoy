@@ -7,9 +7,7 @@ const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/grip_tunin
 
 # label -> Transform3D（Sword_Hand 相對 HandSocket 的 local transform）
 var CANDIDATES := {
-	"identity_007": Transform3D(Basis(), Vector3(0, 0.07, 0)),
-	"identity_012": Transform3D(Basis(), Vector3(0, 0.12, 0)),
-	"identity_017": Transform3D(Basis(), Vector3(0, 0.17, 0)),
+	"final_from_tscn": Transform3D(),
 }
 
 class Driver extends Node:
@@ -34,7 +32,8 @@ class Driver extends Node:
 		await wait(1.2)
 		var sword: Node3D = chr.find_children("Sword_Hand", "", true, false)[0]
 		for label in candidates:
-			sword.transform = candidates[label]
+			if label != "final_from_tscn":
+				sword.transform = candidates[label]
 			await wait(0.1)
 			for view in cams:
 				(cams[view] as Camera3D).current = true

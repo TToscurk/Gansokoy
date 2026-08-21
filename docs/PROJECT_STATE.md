@@ -66,7 +66,10 @@ Last updated: 2026-08-20.
   full 全身 OneShot）：邊跑邊拔收刀、邊跑邊斬、空中斬、Jump 拆
   JumpStart(1.9x)/Fall/Land。8 向 locomotion 以 local 速度方向分 sector
   （FL/FR 側身追擊跑、Walking 反播後退步、剝離位移的 Run_Turn 急轉），
-  居合拔刀斬（離鞘瞬間 cancel）與翻滾反擊已實裝。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
+  居合拔刀斬（離鞘瞬間 cancel、拔刀中 LMB 可 buffer）與翻滾反擊已實裝。
+  Jump/Fall 已抽離 ActionState 成純 physics 層（蓄力 0.12 s、攻擊取消不了
+  跳躍），攻擊動量 Run 1.0／Walk 0.7／全身技 0.5，MGR 式壓力測試 A–F 全過。
+  Sword_Hand 改為刀尖朝前、柄朝後的備斬握法（hand-X −90° + 0.17）。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
   Spin），Attack 2x、Draw/Sheathe 1.4x、Roll 3x 且距離減半為 3.2 m。姿勢
   校正：Idle 落地版（懸空 0.123 m 修正）、Jump 手臂抑制、握刀 socket 修正、
   Walk_Turn 接入；未使用素材僅剩 Dead 與 Double_Blade_Spin。日之呼吸十二型＋
