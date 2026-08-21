@@ -55,7 +55,7 @@ output
 | Attack_Judgment | `Animation_Sword_Judgment_withSkin.fbx` | 移除 Hips 水平位移（1.33 u）；柒型 |
 | Attack_Spin_Jump | `Animation_360_Power_Spin_Jump_withSkin.fbx` | 移除水平位移（2.85 u）＋垂直 clamp；拾型 |
 | Jump | `Animation_Regular_Jump_withSkin.fbx` | 移除水平位移；垂直弧線 clamp，上升由物理提供；**手臂 keys 向 Running 首幀 slerp（保留 35%），最大偏差 148.8°→52.1°，起跳不再雙手高舉** |
-| Draw_Sword | `Animation_拔刀_withSkin.fbx`（裁切 0–1.0 s） | 正播拔刀 2.2x；反播收刀 |
+| Draw_Sword | `Animation_拔刀_withSkin.fbx`（裁切 0–1.0 s） | 正播拔刀 1.4x；反播收刀同速 |
 
 **骨架空間軸向（Meshy 24-bone rig）**：Hips position track 的 **Z 是垂直軸**
 （rest ≈ 0.986 = 髖高），X/Y 是水平軸。清 root motion 必須凍結 X/Y、保留 Z。
@@ -95,13 +95,13 @@ output
 
 | 動作 | 來源 / 區段 | 倍率 | 層 | 程式位移 |
 |---|---|---|---|---|
-| Running Slash | Weapon_Combo 三段 | 3.0 | upper | run×0.85 動量 |
-| Quick Draw / 居合斬 | Draw_Sword 0~0.65（離鞘瞬間 cancel 接 Combo 段1） | 2.2→3.0 | upper | — |
-| Dodge Counter | Roll 全段 → Combo 段1 | 3.0 | full→upper | roll 3.2 m + 前衝 2 m/s |
-| Aerial Slash | Combo 段1~3（Fall 腿姿上） | 3.0 | upper | 慣性 + gravity |
-| Spin Slash | Axe_Spin 全段（完美循環，0 位移） | 3.0 | full | — |
-| Heavy Finisher | Sword_Judgment 全段 | 3.0 | full | impulse 0.5 |
-| Sheathe | Draw_Sword 反播 | 2.2 | upper | — |
+| Running Slash | Weapon_Combo 三段 | 2.0 | upper | run×0.85 動量 |
+| Quick Draw / 居合斬 | Draw_Sword 0~0.65（離鞘瞬間 cancel 接 Combo 段1） | 1.4→2.0 | upper | — |
+| Dodge Counter | Roll 全段 → Combo 段1 | 2.0 | full→upper | roll 3.2 m + 前衝 2 m/s |
+| Aerial Slash | Combo 段1~3（Fall 腿姿上） | 2.0 | upper | 慣性 + gravity |
+| Spin Slash | Axe_Spin 全段（完美循環，0 位移） | 2.0 | full | — |
+| Heavy Finisher | Sword_Judgment 全段 | 2.0 | full | impulse 0.5 |
+| Sheathe | Draw_Sword 反播 | 1.4 | upper | — |
 | BackPedal | Walking 反播 | 1.0 | loco | — |
 
 ## 日之呼吸（`sun_breathing.gd`，data-driven）
