@@ -62,12 +62,12 @@ Last updated: 2026-08-20.
   角色層 runtime 驗證。Roll 的 6.4m 位移完全由 CharacterBody3D 在 1.267s 內驅動；
   衍生動畫資源第二版修正了骨架空間軸向（Hips 的 Z 是垂直軸），roll／attack 的
   水平 root motion 已真正清除（軸向規格見 `角色/緣一動作/animations/README.md`）。
-  戰鬥輸入已改為滑鼠專屬：左鍵三段輸入緩衝 combo、右鍵 Spin，鍵盤攻擊鍵
-  （J/K/L）移除。所有 Attack 3x、Roll 3x（位移 duration 同步 0.422 s）。
-  Walk/Run/空中皆可攻擊（地面攻擊保留 0.65 移動量），空中為慣性移動模型。
-  Q 為拔刀/收刀 toggle，收刀 = Draw_Sword 反向播放，攻擊中按 Q 排隊收刀。
-  操作為 WASD、Shift 按住疾跑/快按翻滾、Space 跳躍（物理起跳 5.33 m/s 與
-  clip 空中段同步）、Q 拔/收刀、滑鼠左右鍵攻擊；正式 prefab 不載入
+  控制器已重構為 AnimationTree 三層架構（loco 狀態機 / upper 上半身 OneShot /
+  full 全身 OneShot）：邊跑邊拔收刀、邊跑邊斬、空中斬、Run Turn、Jump 拆
+  JumpStart(1.9x)/Fall/Land。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
+  Spin），Attack 3x、Draw 2.2x、Roll 3x 且距離減半為 3.2 m。日之呼吸十二型＋
+  拾參型為 data-driven 框架（`sun_breathing.gd`；有動畫的型 1/2/3/4/7/10，
+  缺動畫的型只留 slot）。規格詳見 `角色/緣一動作/animations/README.md`。正式 prefab 不載入
   SpringBone、SoftBody、獨立 Haori Skeleton 或 HaoriAnchor。v2/v2.1 布料研究保留為
   archive，不再是正式 Player 流程；尚未替換人間之里 Player。
 - 下一個主要美術階段是 lighting / cel-shading；不得順手改道路或地標結構。

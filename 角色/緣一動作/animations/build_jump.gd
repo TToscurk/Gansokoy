@@ -13,6 +13,8 @@ const JOBS := [
 	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Axe_Spin_Attack_withSkin.fbx", "out": "res://animations/yoriichi_attack_spin.res", "clamp_z": false},
 	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Sword_Judgment_withSkin.fbx", "out": "res://animations/yoriichi_attack_judgment.res", "clamp_z": false},
 	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Regular_Jump_withSkin.fbx", "out": "res://animations/yoriichi_jump.res", "clamp_z": true},
+	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Weapon_Combo_1_withSkin.fbx", "out": "res://animations/yoriichi_attack_combo_1.res", "clamp_z": false},
+	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_360_Power_Spin_Jump_withSkin.fbx", "out": "res://animations/yoriichi_attack_spin_jump.res", "clamp_z": true},
 ]
 
 func _anim_from_fbx(path: String) -> Animation:

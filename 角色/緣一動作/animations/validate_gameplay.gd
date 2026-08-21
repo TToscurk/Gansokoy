@@ -1,7 +1,7 @@
 extends SceneTree
-# Headless runtime validation for the mouse-combat controller rev:
-# keyboard attacks dead, LMB combo / RMB spin at 3x, Shift-tap roll at 3x,
-# Space jump with air inertia, moving/air attacks, Q draw/sheathe toggle.
+# Headless runtime validation for the AnimationTree-layered controller:
+# run-draw/sheathe without stopping, run turns, split jump (fast start/fall/land),
+# air inertia, moving & air attacks, roll 3.2m@3x, quick-draw, Form13 framework.
 # Injects real events via Input.parse_input_event.
 
 class Driver extends Node:
@@ -46,148 +46,220 @@ class Driver extends Node:
 	func hspeed() -> float:
 		return Vector2(chr.velocity.x, chr.velocity.z).length()
 
-	## 各段測試間把角色移回測試地板中心，避免累積位移走出 20 m 地板邊緣。
+	func loco() -> StringName:
+		return chr._playback().get_current_node()
+
 	func recenter(start_z := 0.0) -> void:
+		for k in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_SHIFT]:
+			key(k, false)
 		chr.velocity = Vector3.ZERO
 		chr.global_position = Vector3(0, 0.5, start_z)
-		await wait(0.3)
+		await wait(0.4)
 
 	func _ready() -> void:
 		run()
 
 	func run() -> void:
 		await wait(0.6)
+		check("tree_active", chr._tree != null and chr._tree.active and loco() == &"Idle",
+			"AnimationTree active, loco=%s" % loco())
 
-		# --- A. keyboard attacks dead (need DRAWN first so they would fire) ---
+		# --- 3/4. Run 中拔刀 / 收刀不停下（upper layer） ---
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.6)
 		await tap(KEY_Q)
-		await wait(1.4)
-		check("draw_toggle_Q", chr.sword_state == chr.SwordState.DRAWN, "Q -> DRAWN")
+		await wait(0.2)
+		var draw_speed_mid := hspeed()
+		var drawing_loco := loco()
+		await wait(0.6)
+		var drawn: bool = chr.sword_state == chr.SwordState.DRAWN
+		check("run_draw_no_stop", drawn and draw_speed_mid > 6.5 and drawing_loco == &"Run",
+			"DRAWING 中 speed=%.2f loco=%s -> DRAWN=%s" % [draw_speed_mid, drawing_loco, drawn])
+		await tap(KEY_Q)
+		await wait(0.2)
+		var sheathe_speed_mid := hspeed()
+		await wait(0.6)
+		check("run_sheathe_no_stop", chr.sword_state == chr.SwordState.SHEATHED and sheathe_speed_mid > 6.5,
+			"SHEATHING 中 speed=%.2f -> state=%d" % [sheathe_speed_mid, chr.sword_state])
+		await recenter()
+
+		# --- 12. quick-draw：SHEATHED + LMB → 自動拔刀接第一段 ---
+		click(MOUSE_BUTTON_LEFT)
+		await wait(0.3)
+		var qd_drawing: bool = chr.sword_state != chr.SwordState.SHEATHED
+		var reached_attack := false
+		var t := 0.0
+		while t < 2.0:
+			if chr.action_state == chr.ActionState.ATTACKING:
+				reached_attack = true
+				break
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		await wait_free(2.0)
+		check("quick_draw_slash", qd_drawing and reached_attack and chr.sword_state == chr.SwordState.DRAWN,
+			"LMB from SHEATHED -> draw -> auto Attack_1 (attack=%s)" % reached_attack)
+
+		# --- keyboard attacks dead ---
 		for c in [KEY_J, KEY_K, KEY_L]:
 			await tap(c)
-			await wait(0.1)
-		check("keyboard_attacks_dead", chr.action_state == chr.ActionState.FREE,
-			"J/K/L pressed, state stayed FREE")
+			await wait(0.08)
+		check("keyboard_attacks_dead", chr.action_state == chr.ActionState.FREE, "J/K/L no-op")
 
-		# --- B/C. LMB combo at 3x with buffer ---
+		# --- 11/13. LMB combo 3x + buffer；8. Run attack momentum ---
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
 		var t0 := Time.get_ticks_msec()
 		click(MOUSE_BUTTON_LEFT)
 		await wait(0.1)
-		var stage1: int = chr.combo_stage
-		var spd: float = chr._anim.get_playing_speed()
+		var ts_upper: float = chr._tree.get("parameters/ts_upper/scale")
+		var run_atk_v := hspeed()
+		var run_atk_loco := loco()
 		click(MOUSE_BUTTON_LEFT)
-		await wait(0.12)
+		await wait(0.1)
 		click(MOUSE_BUTTON_LEFT)
 		var max_stage := 0
-		while chr.action_state == chr.ActionState.ATTACKING:
+		t = 0.0
+		while chr.action_state == chr.ActionState.ATTACKING and t < 5.0:
 			max_stage = maxi(max_stage, chr.combo_stage)
 			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
 		var combo_secs := (Time.get_ticks_msec() - t0) / 1000.0
-		check("lmb_combo", stage1 == 1 and max_stage >= 3, "stage1=%d max=%d" % [stage1, max_stage])
-		check("attack_speed_3x", absf(spd - 3.0) < 0.01, "playing speed %.2f" % spd)
-		check("combo_duration", combo_secs < 2.5, "3-hit combo %.2f s" % combo_secs)
-
-		# --- B2. RMB spin ---
+		check("combo_buffer_3hits", max_stage >= 3 and combo_secs < 2.0,
+			"stage max=%d, %.2f s total" % [max_stage, combo_secs])
+		check("attack_speed_3x", absf(ts_upper - 3.0) < 0.01, "ts_upper=%.2f" % ts_upper)
+		var run_expect: float = chr.run_speed * chr.attack_move_factor_run
+		check("run_attack_momentum", absf(run_atk_v - run_expect) < 0.4 and run_atk_loco == &"Run",
+			"run attack v=%.2f (expect %.2f), legs=%s" % [run_atk_v, run_expect, run_atk_loco])
 		await wait(0.3)
-		click(MOUSE_BUTTON_RIGHT)
-		await wait(0.1)
-		var rmb_ok: bool = chr.action_state == chr.ActionState.ATTACKING and chr._action_anim == chr.attack_spin_anim
-		var rmb_spd: float = chr._anim.get_playing_speed()
-		check("rmb_spin", rmb_ok and absf(rmb_spd - 3.0) < 0.01,
-			"anim=%s speed=%.2f" % [chr._action_anim, rmb_spd])
-		await wait_free(4.0)
-
-		# --- F. moving attack: hold W, LMB, keep velocity * factor, resume walk ---
-		key(KEY_W, true)
-		await wait(0.4)
-		var walk_v := hspeed()
-		click(MOUSE_BUTTON_LEFT)
-		await wait(0.15)
-		var atk_v := hspeed()
-		var expect: float = chr.speed * chr.attack_move_factor
-		check("moving_attack_velocity", absf(atk_v - expect) < 0.3,
-			"walk %.2f -> attack %.2f (expect %.2f)" % [walk_v, atk_v, expect])
-		await wait_free(3.0)
-		await wait(0.3)
-		check("resume_walk_after_attack", hspeed() > chr.speed - 0.3 and chr._current == chr.walk_anim,
-			"v=%.2f anim=%s" % [hspeed(), chr._current])
-		key(KEY_W, false)
-		await wait(0.4)
-
+		check("resume_run_after_attack", hspeed() > chr.run_speed - 0.3 and loco() == &"Run",
+			"v=%.2f loco=%s" % [hspeed(), loco()])
 		await recenter()
 
-		# --- D. Shift-tap roll: 3x speed, displacement synced, no snap back ---
-		var p0: Vector3 = chr.global_position
+		# --- walk attack momentum ---
 		key(KEY_W, true)
+		await wait(0.4)
+		click(MOUSE_BUTTON_LEFT)
+		await wait(0.15)
+		var walk_atk_v := hspeed()
+		var walk_expect: float = chr.speed * chr.attack_move_factor_walk
+		await wait_free(2.0)
+		check("walk_attack_momentum", absf(walk_atk_v - walk_expect) < 0.3,
+			"walk attack v=%.2f (expect %.2f)" % [walk_atk_v, walk_expect])
+		await recenter()
+
+		# --- RMB heavy = full-body spin at 3x ---
+		click(MOUSE_BUTTON_RIGHT)
 		await wait(0.1)
-		key(KEY_W, false)
+		var ts_full: float = chr._tree.get("parameters/ts_full/scale")
+		var full_cur: StringName = chr._tree.get("parameters/full_sel/current_state")
+		var rmb_ok: bool = chr.action_state == chr.ActionState.ATTACKING and chr._attack_layer == "full"
+		await wait_free(3.0)
+		check("rmb_heavy_spin", rmb_ok and full_cur == &"spin" and absf(ts_full - 3.0) < 0.01,
+			"layer=full anim=%s ts=%.2f" % [full_cur, ts_full])
+
+		# --- 5. Run Turn ---
+		key(KEY_W, true)
 		key(KEY_SHIFT, true)
-		await wait(0.06)
-		key(KEY_SHIFT, false)
-		await wait(0.1)
-		var rolling: bool = chr.action_state == chr.ActionState.DODGING
-		var roll_spd: float = chr._anim.get_playing_speed()
-		var roll_dur: float = chr._roll_duration
-		var rt := 0.0
-		while chr.action_state == chr.ActionState.DODGING:
+		await wait(0.6)
+		key(KEY_W, false)
+		key(KEY_A, true)          # 90° 方向改變 → 應觸發 Turn 狀態
+		var saw_turn: StringName = &""
+		t = 0.0
+		while t < 0.5:
+			var n := loco()
+			if n == &"TurnL" or n == &"TurnR":
+				saw_turn = n
+				break
 			await get_tree().physics_frame
-			rt += get_physics_process_delta_time()
+			t += get_physics_process_delta_time()
+		await wait(0.5)
+		var back_to_run := loco() == &"Run"
+		check("run_turn", saw_turn != &"" and back_to_run,
+			"90° input change -> %s -> back to %s" % [saw_turn, loco()])
+		await recenter()
+
+		# --- 6/7. Roll：3.2 m、0.422 s、跑步中發動、結束回 Run ---
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.5)
+		key(KEY_SHIFT, false)     # 結束長按（>0.25 s，不觸發 roll）
+		await wait(0.05)
+		key(KEY_SHIFT, true)      # quick tap：0.05 s 內放開 → roll
+		await wait(0.05)
+		key(KEY_SHIFT, false)
+		key(KEY_SHIFT, true)      # 再按住：roll 結束後維持 Run 輸入
+		t = 0.0
+		while chr.action_state != chr.ActionState.DODGING and t < 0.5:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var rolling: bool = chr.action_state == chr.ActionState.DODGING
+		var p0: Vector3 = chr.global_position   # roll 起始幀才記起點，避免混入跑步位移
+		var roll_dur: float = chr._roll_duration
+		t = 0.0
+		while chr.action_state == chr.ActionState.DODGING and t < 3.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
 		var p1: Vector3 = chr.global_position
-		await wait(0.3)
+		var roll_dist := Vector2(p1.x - p0.x, p1.z - p0.z).length()
+		await wait(0.4)
 		var snap := (chr.global_position - p1).length()
-		var dist := Vector2(p1.x - p0.x, p1.z - p0.z).length()
-		check("shift_tap_rolls", rolling and absf(roll_spd - 3.0) < 0.01,
-			"DODGING=%s speed=%.2f" % [rolling, roll_spd])
-		check("roll_3x_sync", absf(roll_dur - 1.2667 / 3.0) < 0.01 and rt < roll_dur + 0.15,
-			"duration %.3f s (target 0.422), state ended at %.3f s" % [roll_dur, rt])
-		check("roll_distance_no_snap", absf(dist - chr.roll_distance) < 0.6 and snap < 0.05,
-			"moved %.2f m, post drift %.3f m" % [dist, snap])
+		var after_loco := loco()
+		check("roll_from_run", rolling and absf(roll_dur - chr.roll_anim_resource.length / 3.0) < 0.01,
+			"rolling=%s dur=%.3f s" % [rolling, roll_dur])
+		check("roll_half_distance", absf(roll_dist - chr.roll_distance) < 0.5,
+			"moved %.2f m (target %.1f)" % [roll_dist, chr.roll_distance])
+		check("roll_to_run_no_snap", after_loco == &"Run" and snap > 1.0,
+			"post-roll loco=%s, kept running %.2f m (no snap-back)" % [after_loco, snap])
+		await recenter(8.0)
 
-		await recenter(8.0)   # 疾跑起跳全程 ~12 m，往 -Z 需要完整跑道
-
-		# --- E. jump inertia: run-jump, release W in air, then counter-steer A ---
+		# --- 1/2. Jump：快起跳、apex 切 Fall、慣性、落地 ---
 		key(KEY_W, true)
 		key(KEY_SHIFT, true)
 		await wait(0.6)
 		var run_v := hspeed()
+		var jt0 := Time.get_ticks_msec()
 		key(KEY_SPACE, true)
 		key(KEY_SPACE, false)
-		# 對「實際離地」對時，避免固定秒數與起跳時刻的競態。
-		var t_air := 0.0
-		while chr.is_on_floor() and t_air < 1.5:
+		t = 0.0
+		while chr.is_on_floor() and t < 1.0:
 			await get_tree().physics_frame
-			t_air += get_physics_process_delta_time()
+			t += get_physics_process_delta_time()
+		var takeoff_secs := (Time.get_ticks_msec() - jt0) / 1000.0
 		key(KEY_W, false)
 		key(KEY_SHIFT, false)
 		await wait(0.12)
-		var airborne_at_coast := not chr.is_on_floor()
+		var airborne := not chr.is_on_floor()
 		var coast_v := hspeed()
-		var vx0: float = chr.velocity.x
-		key(KEY_A, true)
-		var steer_t := 0.0
-		while not chr.is_on_floor() and steer_t < 0.2:
+		var saw_fall := false
+		t = 0.0
+		while not chr.is_on_floor() and t < 1.5:
+			if loco() == &"Fall" and chr.velocity.y < 0.0:
+				saw_fall = true
 			await get_tree().physics_frame
-			steer_t += get_physics_process_delta_time()
-		var steer_dx: float = absf(chr.velocity.x - vx0)
-		key(KEY_A, false)
-		check("jump_inertia_coast", airborne_at_coast and coast_v > run_v * 0.85,
-			"run %.2f -> air (W released) %.2f, airborne=%s" % [run_v, coast_v, airborne_at_coast])
-		check("air_steer_gradual", steer_dx > 0.02 and steer_dx < 1.0,
-			"%.2f s of A gave dvx %.2f m/s (accel %.2f m/s²)" % [steer_t, steer_dx, chr.air_acceleration * chr.air_control])
-		await wait_free(3.0)
-		check("jump_lands", chr.is_on_floor() and chr.action_state == chr.ActionState.FREE, "landed, FREE")
-		await wait(0.3)
-
+			t += get_physics_process_delta_time()
+		await wait_free(1.0)
+		check("jump_fast_start", takeoff_secs < 0.45,
+			"Space -> takeoff %.2f s (clip 0.533 / %.1fx = %.2f)" % [takeoff_secs, chr.jump_start_speed, 0.533 / chr.jump_start_speed])
+		check("jump_momentum", airborne and coast_v > run_v * 0.85,
+			"run %.2f -> coast %.2f (W released)" % [run_v, coast_v])
+		check("jump_fall_state", saw_fall, "loco entered Fall while descending")
+		check("jump_lands", chr.is_on_floor() and chr.action_state == chr.ActionState.FREE, "landed FREE, loco=%s" % loco())
 		await recenter(8.0)
 
-		# --- G. air attack: gravity on, inertia kept, no hover ---
+		# --- 9/10. Air attack（Jump + LMB / Fall + LMB） ---
 		key(KEY_W, true)
 		key(KEY_SHIFT, true)
-		await wait(0.6)
+		await wait(0.5)
 		key(KEY_SPACE, true)
 		key(KEY_SPACE, false)
-		await wait(chr.jump_takeoff_time + 0.12)
+		t = 0.0
+		while chr.is_on_floor() and t < 1.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		await wait(0.05)
 		var air_v := hspeed()
-		var y_at_click: float = chr.global_position.y
 		click(MOUSE_BUTTON_LEFT)
 		await wait(0.1)
 		var air_atk: bool = chr.action_state == chr.ActionState.ATTACKING and not chr.is_on_floor()
@@ -198,34 +270,47 @@ class Driver extends Node:
 		key(KEY_W, false)
 		key(KEY_SHIFT, false)
 		await wait_free(4.0)
-		check("air_attack", air_atk, "ATTACKING while airborne at y=%.2f" % y_at_click)
-		check("air_attack_gravity", falling, "vy kept integrating (%.2f -> %.2f)" % [vy, chr.velocity.y])
-		check("air_attack_inertia", kept_v > air_v * 0.8, "h speed %.2f -> %.2f during air attack" % [air_v, kept_v])
-		check("air_attack_lands", chr.is_on_floor() and chr.action_state == chr.ActionState.FREE, "grounded, FREE")
-		await wait(0.3)
-
+		t = 0.0
+		while not chr.is_on_floor() and t < 2.0:   # FREE 可能發生在空中，等實際落地再驗
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("air_attack", air_atk and falling and kept_v > air_v * 0.8,
+			"airborne ATTACKING=%s, gravity on=%s, h %.2f->%.2f" % [air_atk, falling, air_v, kept_v])
+		check("air_attack_lands", chr.is_on_floor() and chr.action_state == chr.ActionState.FREE, "grounded FREE")
 		await recenter()
 
-		# --- H. sheathe: Q toggle + pending during attack ---
-		await tap(KEY_Q)
-		await wait(0.3)
-		var sheathing: bool = chr.sword_state == chr.SwordState.SHEATHING
-		await wait(1.2)
-		var hand_vis: bool = chr._sword_hand.visible
-		var sheath_vis: bool = chr._sword_sheathed.visible
-		check("q_sheathe", sheathing and chr.sword_state == chr.SwordState.SHEATHED,
-			"SHEATHING seen=%s final=%d" % [sheathing, chr.sword_state])
-		check("sheathe_sockets", not hand_vis and sheath_vis, "hand=%s sheath=%s" % [hand_vis, sheath_vis])
-		await tap(KEY_Q)
-		await wait(1.4)
+		# --- 收刀 queue（攻擊中 Q） ---
 		click(MOUSE_BUTTON_LEFT)
 		await wait(0.1)
 		await tap(KEY_Q)
-		await wait(0.05)
-		var queued: bool = chr.pending_sheathe and chr.action_state == chr.ActionState.ATTACKING
-		await wait(2.0)
-		check("pending_sheathe", queued and chr.sword_state == chr.SwordState.SHEATHED,
-			"queued during attack=%s, final state=%d" % [queued, chr.sword_state])
+		await wait(0.02)
+		var queued: bool = chr.pending_sheathe
+		await wait(1.5)
+		var hand_vis: bool = chr._sword_hand.visible
+		var sheath_vis: bool = chr._sword_sheathed.visible
+		check("pending_sheathe", queued and chr.sword_state == chr.SwordState.SHEATHED and not hand_vis and sheath_vis,
+			"queued=%s final=%d hand=%s sheath=%s" % [queued, chr.sword_state, hand_vis, sheath_vis])
+
+		# --- Form13 框架：可用型循環、缺動畫型誠實跳過 ---
+		await tap(KEY_Q)
+		await wait(0.8)
+		chr.form13_unlocked = true
+		chr.sun_mastery = 99      # 測試框架時解除熟練度門檻（正式預設 0 = 初期只開 1/3 型）
+		var started: bool = chr.start_form13()
+		var forms_seen: Array[int] = []
+		t = 0.0
+		while t < 15.0 and (chr.action_state == chr.ActionState.ATTACKING or not chr._form13_queue.is_empty()):
+			if chr.active_form > 0 and (forms_seen.is_empty() or forms_seen[-1] != chr.active_form):
+				forms_seen.append(chr.active_form)
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var missing: Array[int] = preload("res://sun_breathing.gd").missing_forms()
+		var skipped_ok := true
+		for id in forms_seen:
+			if id in missing:
+				skipped_ok = false
+		check("form13_sequence", started and forms_seen.size() >= 5 and skipped_ok,
+			"chained forms %s in %.1f s (missing slots %s skipped)" % [forms_seen, t, missing])
 
 		print("=== VALIDATION RESULTS ===")
 		for r in results:
