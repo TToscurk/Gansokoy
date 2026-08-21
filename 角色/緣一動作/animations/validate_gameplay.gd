@@ -105,6 +105,7 @@ class Driver extends Node:
 			await tap(c)
 			await wait(0.08)
 		check("keyboard_attacks_dead", chr.action_state == chr.ActionState.FREE, "J/K/L no-op")
+		await recenter(8.0)   # 2x 攻速下 run-combo 全程 ~13 m，需要完整跑道
 
 		# --- 11/13. LMB combo 3x + buffer；8. Run attack momentum ---
 		key(KEY_W, true)
@@ -128,7 +129,8 @@ class Driver extends Node:
 		var combo_secs := (Time.get_ticks_msec() - t0) / 1000.0
 		check("combo_buffer_3hits", max_stage >= 3 and combo_secs < 2.0,
 			"stage max=%d, %.2f s total" % [max_stage, combo_secs])
-		check("attack_speed_3x", absf(ts_upper - 3.0) < 0.01, "ts_upper=%.2f" % ts_upper)
+		check("attack_speed_scale", absf(ts_upper - chr.attack_speed_scale) < 0.01,
+			"ts_upper=%.2f (export %.1f)" % [ts_upper, chr.attack_speed_scale])
 		var run_expect: float = chr.run_speed * chr.attack_move_factor_run
 		check("run_attack_momentum", absf(run_atk_v - run_expect) < 0.4 and run_atk_loco == &"Run",
 			"run attack v=%.2f (expect %.2f), legs=%s" % [run_atk_v, run_expect, run_atk_loco])
@@ -156,7 +158,7 @@ class Driver extends Node:
 		var full_cur: StringName = chr._tree.get("parameters/full_sel/current_state")
 		var rmb_ok: bool = chr.action_state == chr.ActionState.ATTACKING and chr._attack_layer == "full"
 		await wait_free(3.0)
-		check("rmb_heavy_spin", rmb_ok and full_cur == &"spin" and absf(ts_full - 3.0) < 0.01,
+		check("rmb_heavy_spin", rmb_ok and full_cur == &"spin" and absf(ts_full - chr.attack_speed_scale) < 0.01,
 			"layer=full anim=%s ts=%.2f" % [full_cur, ts_full])
 
 		# --- 5. Run Turn ---
@@ -421,6 +423,79 @@ class Driver extends Node:
 		await wait_free(2.0)
 		check("dodge_counter", dc_rolling and dc_counter,
 			"LMB during roll -> counter slash on finish (rolling=%s counter=%s)" % [dc_rolling, dc_counter])
+
+		# --- 姿勢校正批次 ---
+		await recenter()
+		# Idle 腳趾貼地（修正前懸空 0.153）
+		var sk: Skeleton3D = chr.find_children("*", "Skeleton3D", true, false)[0]
+		var toe_sum := 0.0
+		var samples := 0
+		t = 0.0
+		while t < 0.8:
+			var lp := (sk.global_transform * sk.get_bone_global_pose(sk.find_bone("LeftToeBase"))).origin.y
+			var rp := (sk.global_transform * sk.get_bone_global_pose(sk.find_bone("RightToeBase"))).origin.y
+			toe_sum += minf(lp, rp)
+			samples += 1
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var idle_toe := toe_sum / samples
+		check("idle_feet_grounded", idle_toe < 0.07, "idle toe min avg %.3f (was 0.153, walk contact 0.027)" % idle_toe)
+		# Idle→Walk→Run→Idle 轉換不上下跳：Hips 全域 y 每幀變化量
+		var max_dy := 0.0
+		var spike_info := ""
+		var prev_y := (sk.global_transform * sk.get_bone_global_pose(sk.find_bone("Hips"))).origin.y
+		key(KEY_W, true)
+		var shift_sent := false
+		var released_sent := false
+		t = 0.0
+		while t < 2.0:
+			if t > 0.7 and not shift_sent:
+				shift_sent = true
+				key(KEY_SHIFT, true)     # 只送一次；每幀重送會被判成 tap-roll
+			if t > 1.4 and not released_sent:
+				released_sent = true
+				key(KEY_SHIFT, false)
+				key(KEY_W, false)
+			var hy := (sk.global_transform * sk.get_bone_global_pose(sk.find_bone("Hips"))).origin.y
+			if absf(hy - prev_y) > max_dy:
+				max_dy = absf(hy - prev_y)
+				spike_info = "t=%.2f loco=%s" % [t, loco()]
+			prev_y = hy
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		check("transition_no_pop", max_dy < 0.05, "max per-frame hips dy %.3f m (%s)" % [max_dy, spike_info])
+		await recenter()
+		# Walk Turn（剝離位移版）
+		key(KEY_W, true)
+		await wait(0.6)
+		key(KEY_W, false)
+		key(KEY_A, true)
+		var wt_seen: StringName = &""
+		t = 0.0
+		while t < 0.5:
+			var n := loco()
+			if n == &"WalkTurnL" or n == &"WalkTurnR":
+				wt_seen = n
+				break
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		key(KEY_A, false)
+		check("walk_turn", wt_seen != &"", "walk 90° input change -> %s" % wt_seen)
+		await recenter()
+		# Draw 減速：SHEATHED→DRAWN 時長 ≈ 1.0 / draw_speed_scale
+		if chr.sword_state == chr.SwordState.DRAWN:
+			await tap(KEY_Q)
+			await wait(1.0)
+		var dt0 := Time.get_ticks_msec()
+		await tap(KEY_Q)
+		t = 0.0
+		while chr.sword_state != chr.SwordState.DRAWN and t < 2.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var draw_secs := (Time.get_ticks_msec() - dt0) / 1000.0
+		var expect_draw: float = chr.draw_anim_resource.length / chr.draw_speed_scale
+		check("draw_slower", absf(draw_secs - expect_draw) < 0.15,
+			"draw took %.2f s (expect %.2f at %.1fx)" % [draw_secs, expect_draw, chr.draw_speed_scale])
 
 		print("=== VALIDATION RESULTS ===")
 		for r in results:

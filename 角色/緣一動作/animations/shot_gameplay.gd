@@ -4,7 +4,7 @@ extends SceneTree
 # split jump (fast start / fall), roll from run, air attack.
 # Output: 角色/gameplay_bugfix_review/tree_combat_v4/
 
-const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/eight_dir_v5/"
+const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/pose_fix_v6/"
 
 class Driver extends Node:
 	var chr: CharacterBody3D
@@ -46,54 +46,21 @@ class Driver extends Node:
 		await wait(0.4)
 
 	func run() -> void:
-		await wait(0.6)
-		# 1. 左前側身追擊跑（RunFL sector）
+		await wait(0.8)
+		await shot("01_idle_grounded_feet")
 		key(KEY_W, true)
 		key(KEY_SHIFT, true)
 		await wait(0.6)
-		key(KEY_A, true)
-		await wait(0.12)
-		await shot("01_run_fl_sector")
-		key(KEY_A, false)
+		key(KEY_SPACE, true)
+		key(KEY_SPACE, false)
+		await wait(0.45)
+		await shot("02_jump_air_arms_damped")
 		await wait(0.4)
-		# 2. 右前
-		key(KEY_D, true)
-		await wait(0.12)
-		await shot("02_run_fr_sector")
-		key(KEY_D, false)
-		await recenter()
-		# 3. BackPedal（Walking 反播）
-		key(KEY_W, true)
+		await shot("03_jump_fall_arms")
+		await wait(0.8)
+		for k in [KEY_W, KEY_SHIFT]:
+			key(k, false)
 		await wait(0.5)
-		key(KEY_W, false)
-		key(KEY_S, true)
-		await wait(0.1)
-		await shot("03_backpedal")
-		key(KEY_S, false)
-		await recenter()
-		# 4. 居合拔刀斬：LMB from SHEATHED，離鞘瞬間接斬擊
-		click(MOUSE_BUTTON_LEFT)
-		await wait(0.32)
-		await shot("04_iai_quick_draw")
-		await wait(0.8)
-		# 5. Dodge counter：翻滾中按 LMB，roll 結束反擊
-		key(KEY_SHIFT, true)
-		await wait(0.05)
-		key(KEY_SHIFT, false)
-		await wait(0.15)
-		click(MOUSE_BUTTON_LEFT)
-		await wait(0.35)
-		await shot("05_dodge_counter")
-		await wait(0.8)
-		# 6. 剝離位移後的 Run_Turn（不再拖離碰撞體）
-		key(KEY_W, true)
-		key(KEY_SHIFT, true)
-		await wait(0.6)
-		key(KEY_W, false)
-		key(KEY_A, true)
-		await wait(0.15)
-		await shot("06_run_turn_stripped")
-		await wait(0.6)
 		get_tree().quit()
 
 func _initialize():

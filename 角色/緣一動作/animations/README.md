@@ -45,14 +45,16 @@ output
 | RunFast | `Animation_RunFast_withSkin.fbx` | 原地循環 |
 | RunFL / RunFR | `Animation_ForwardLeft/Right_Run_Fight_withSkin.fbx` | 原地完美循環；local 速度方向 22.5°~112.5° 的側身追擊跑姿 |
 | BackPedal | `Animation_Walking_withSkin.fbx` **反播** | Walking 是零位移完美循環，反播即後退步，無需新動畫 |
-| TurnL / TurnR | `animations/yoriichi_turn_left/right.res` | **剝離 2.0~3.1 u 水平 root motion 的衍生版**（原始 clip 直接播會拖離碰撞體）；夾角 > 60° 急轉觸發 |
+| TurnL / TurnR | `animations/yoriichi_turn_left/right.res` | **剝離 2.0~3.1 u 水平 root motion 的衍生版**（原始 clip 直接播會拖離碰撞體）；夾角 60°~112.5° 急轉觸發（>112.5° 交給 BackPedal） |
+| WalkTurnL / WalkTurnR | `animations/yoriichi_walk_turn_left/right.res` | Walk 速度的轉身（剝離 1.1~2.1 u 水平位移） |
+| Idle_Grounded | `animations/yoriichi_idle_grounded.res` | 原 Idle 腳趾懸空 0.123 m（實測 vs Walk 接觸幀 0.027）；Hips 垂直軸下移補正，修正後 0.031 |
 | Roll_Dodge | `Animation_Roll_Dodge_1_withSkin.fbx` | 移除 Hips 水平位移（6.48 u） |
 | Attack_Combo | `Animation_Weapon_Combo_withSkin.fbx` | 移除 Hips 水平位移（1.56 u）；三段輕連段 |
 | Attack_Combo_1 | `Animation_Weapon_Combo_1_withSkin.fbx` | 移除 Hips 水平位移（2.64 u）；日之呼吸肆型 |
 | Attack_Spin | `Animation_Axe_Spin_Attack_withSkin.fbx` | 原始即為 0；右鍵重攻擊／貳型 |
 | Attack_Judgment | `Animation_Sword_Judgment_withSkin.fbx` | 移除 Hips 水平位移（1.33 u）；柒型 |
 | Attack_Spin_Jump | `Animation_360_Power_Spin_Jump_withSkin.fbx` | 移除水平位移（2.85 u）＋垂直 clamp；拾型 |
-| Jump | `Animation_Regular_Jump_withSkin.fbx` | 移除水平位移；垂直弧線 clamp，上升由物理提供 |
+| Jump | `Animation_Regular_Jump_withSkin.fbx` | 移除水平位移；垂直弧線 clamp，上升由物理提供；**手臂 keys 向 Running 首幀 slerp（保留 35%），最大偏差 148.8°→52.1°，起跳不再雙手高舉** |
 | Draw_Sword | `Animation_拔刀_withSkin.fbx`（裁切 0–1.0 s） | 正播拔刀 2.2x；反播收刀 |
 
 **骨架空間軸向（Meshy 24-bone rig）**：Hips position track 的 **Z 是垂直軸**
@@ -64,8 +66,9 @@ output
 - Roll：**3.2 m／0.422 s**（原 6.4 m 縮短 50%；clip 1.267 s × 3.0x）。
   ease-out `p(t)=1-(1-t)²`，位移與動畫共用 `_roll_duration`；跑步中可直接翻滾，
   結束依當前輸入回 Run / Walk / Idle。
-- Attack：`attack_speed_scale = 3.0`（輕連段與全身技同）；Draw/Sheathe 獨立
-  `draw_speed_scale = 2.2`；Idle/Walk/Run/Roll 以外的 Jump 三段見上。
+- Attack：`attack_speed_scale = 2.0`（輕連段、全身技與所有日之呼吸型統一）；
+  Draw/Sheathe 獨立 `draw_speed_scale = 1.4`（正反向同速，socket 切換依
+  `_draw_real` 自動同步）；Idle/Walk/Run/Roll 以外的 Jump 三段見上。
 - 輕連段：Weapon Combo 三段 0–34% / 30–67% / 63–100%，cancel window 35–65%，
   input buffer 0.30 s，段間 blend 0.035 s。
 - 移動中攻擊動量：Run × `attack_move_factor_run = 0.85`、
@@ -111,8 +114,11 @@ output
   伍（dodge counter 已實裝）、陸（居合 quick-draw 已實裝，缺 dash 版）、
   拾貳（quick-draw→段1→段2 鏈已可操作）。
 - **MISSING**（真缺專用動畫）：捌（直線突刺）、玖（dash 連斬鏈）、拾壹（殘影反擊）。
-- 未接入素材：`Dead`（完整倒地，留給死亡狀態）、`Double_Blade_Spin`
-  （5.7 s 雙刀大迴旋，留給雙刀系統）。
+- 未接入素材（全專案僅剩這兩支未使用）：`Dead`（完整倒地，留給死亡狀態）、
+  `Double_Blade_Spin`（5.7 s 雙刀大迴旋，留給雙刀系統）。
+- 刀 socket：`Sword_Hand` local transform = identity basis + origin (0, 0.17, 0)
+  （刀 mesh 長軸 = local +Y，柄佔 −0.38~−0.1）。舊值 Z 轉 90° 使柄掉在手外、
+  刀身平舉；新值掌心落在柄卷中段、刀身斜下，三視角驗證於 grip_tuning/。
 - 拾參ノ型 = `start_form13()`：把可用的型按序高速循環（框架已驗證，
   解鎖條件 `form13_unlocked` / `form13_gauge_cost` 為 export data，尚未綁輸入）。
 - 型的選型輸入（方向派生 / mastery 映射）尚未實裝；目前僅左右鍵 + quick-draw。

@@ -67,7 +67,9 @@ Last updated: 2026-08-20.
   JumpStart(1.9x)/Fall/Land。8 向 locomotion 以 local 速度方向分 sector
   （FL/FR 側身追擊跑、Walking 反播後退步、剝離位移的 Run_Turn 急轉），
   居合拔刀斬（離鞘瞬間 cancel）與翻滾反擊已實裝。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
-  Spin），Attack 3x、Draw 2.2x、Roll 3x 且距離減半為 3.2 m。日之呼吸十二型＋
+  Spin），Attack 2x、Draw/Sheathe 1.4x、Roll 3x 且距離減半為 3.2 m。姿勢
+  校正：Idle 落地版（懸空 0.123 m 修正）、Jump 手臂抑制、握刀 socket 修正、
+  Walk_Turn 接入；未使用素材僅剩 Dead 與 Double_Blade_Spin。日之呼吸十二型＋
   拾參型為 data-driven 框架（`sun_breathing.gd`；有動畫的型 1/2/3/4/7/10，
   缺動畫的型只留 slot）。規格詳見 `角色/緣一動作/animations/README.md`。正式 prefab 不載入
   SpringBone、SoftBody、獨立 Haori Skeleton 或 HaoriAnchor。v2/v2.1 布料研究保留為

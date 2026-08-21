@@ -26,11 +26,17 @@ extends CharacterBody3D
 @export var run_anim := "Armature|Armature|running|baselayer"
 @export var run_fast_anim := "RunFast"
 @export var idle_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Idle_11_withSkin.fbx")
+## Idle 落地版：原 Idle clip 腳趾懸空 0.123 m（實測 vs Walk 接觸幀），
+## 衍生副本將 Hips 垂直軸下移補正；CharacterBody3D 與碰撞體不動。
+@export var idle_grounded_resource: Animation = preload("res://animations/yoriichi_idle_grounded.res")
 @export var run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Running_withSkin.fbx")
 ## 剝離水平 root motion 的 Run_Turn 衍生資源（原始 clip 帶 2.8~3.5 u 水平位移，
 ## 直接播會把視覺拖離碰撞體 —— Stage 1 inventory 實測發現）。
 @export var turn_left_resource: Animation = preload("res://animations/yoriichi_turn_left.res")
 @export var turn_right_resource: Animation = preload("res://animations/yoriichi_turn_right.res")
+## Walk 速度的轉向（Walk_Turn FBX 同樣帶 1.1~2.1 u 水平位移，使用剝離版）。
+@export var walk_turn_left_resource: Animation = preload("res://animations/yoriichi_walk_turn_left.res")
+@export var walk_turn_right_resource: Animation = preload("res://animations/yoriichi_walk_turn_right.res")
 ## 左前 / 右前「武士側身追擊」跑姿（原地完美循環，手臂活動量僅 RunFast 1/3 的持刀跑）。
 @export var fl_run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_ForwardLeft_Run_Fight_withSkin.fbx")
 @export var fr_run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_ForwardRight_Run_Fight_withSkin.fbx")
@@ -86,7 +92,7 @@ extends CharacterBody3D
 @export var attack_combo_1_resource: Animation = preload("res://animations/yoriichi_attack_combo_1.res")
 @export var attack_spin_jump_anim := "Attack_Spin_Jump"
 @export var attack_spin_jump_resource: Animation = preload("res://animations/yoriichi_attack_spin_jump.res")
-@export var attack_speed_scale := 3.0
+@export var attack_speed_scale := 2.0
 @export_range(0.0, 1.0) var combo_cancel_start := 0.35
 @export_range(0.0, 1.0) var combo_cancel_end := 0.65
 @export var combo_input_buffer_time := 0.30
@@ -123,8 +129,8 @@ enum ActionState { FREE, ATTACKING, DODGING, JUMPING }
 @export var draw_key := KEY_Q
 @export var draw_anim := "Draw_Sword"
 @export var draw_anim_resource: Animation = preload("res://yoriichi_draw_sword.res")
-## 拔刀斬節奏：Draw/Sheathe 播放倍率（低於攻擊的 3x）。
-@export var draw_speed_scale := 2.2
+## Draw/Sheathe 播放倍率（正反向同速；socket 切換時間依 _draw_real 自動同步）。
+@export var draw_speed_scale := 1.4
 ## 拔刀動畫進度（0~1）中「刀離開刀鞘」的時間點。反播跨過同一點刀即回鞘。
 @export_range(0.0, 1.0) var t_unsheathe := 0.65
 
@@ -195,6 +201,9 @@ func _ready():
 	_turn_r_anim = "Turn_Right"
 	_add_animation_resource(_turn_l_anim, turn_left_resource)
 	_add_animation_resource(_turn_r_anim, turn_right_resource)
+	_add_animation_resource("Walk_Turn_L", walk_turn_left_resource)
+	_add_animation_resource("Walk_Turn_R", walk_turn_right_resource)
+	_add_animation_resource("Idle_Grounded", idle_grounded_resource)
 	_add_animation_resource(roll_anim, roll_anim_resource)
 	_add_animation_resource(jump_anim, jump_anim_resource)
 	_add_animation_resource(attack_combo_anim, attack_combo_resource)
@@ -204,7 +213,7 @@ func _ready():
 	_add_animation_resource(attack_spin_jump_anim, attack_spin_jump_resource)
 	_add_animation_resource(draw_anim, draw_anim_resource)
 	_add_animation_resource(run_fast_anim, preload("res://animations/yoriichi_run_fast.res"))
-	for n in [walk_anim, idle_anim, run_anim, run_fast_anim, _fl_anim, _fr_anim]:
+	for n in [walk_anim, idle_anim, run_anim, run_fast_anim, _fl_anim, _fr_anim, "Idle_Grounded"]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
@@ -283,7 +292,7 @@ func _build_tree() -> void:
 	# --- loco state machine ---
 	var sm := AnimationNodeStateMachine.new()
 	var states := {
-		"Idle": _anim_node(idle_anim),
+		"Idle": _anim_node("Idle_Grounded" if _anim.has_animation("Idle_Grounded") else idle_anim),
 		"Walk": _anim_node(walk_anim),
 		"Run": _anim_node(run_fast_anim if _anim.has_animation(run_fast_anim) else run_anim),
 		"JumpStart": _scaled_state(_clip_node(jump_anim, 0.0, JUMP_START_END)),
@@ -301,6 +310,9 @@ func _build_tree() -> void:
 	# 後退步：Walking 是零位移的完美循環（inventory 實測 start_end_diff 0.0°），
 	# 反播即為合法 backpedal，不需新動畫。
 	states["BackPedal"] = _anim_node(walk_anim, true)
+	if _anim.has_animation("Walk_Turn_L"):
+		states["WalkTurnL"] = _anim_node("Walk_Turn_L")
+		states["WalkTurnR"] = _anim_node("Walk_Turn_R")
 	for s in states:
 		sm.add_node(s, states[s])
 	for a in states:
@@ -512,13 +524,20 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 	if not moving:
 		pb.travel("Idle")
 		return
-	# 急轉（夾角 > turn_angle_deg）優先於 sector 側身跑姿。
-	if running and _anim.has_animation(_turn_l_anim) and pb.get_current_node() == &"Run":
+	# 急轉（夾角 > turn_angle_deg）優先於 sector 側身跑姿；Walk 用 Walk_Turn。
+	var cur_node := pb.get_current_node()
+	if moving and (cur_node == &"Run" or cur_node == &"Walk"):
 		var diff := wrapf(atan2(input_dir.x, input_dir.z) - _visual.rotation.y, -PI, PI)
-		if absf(diff) > deg_to_rad(turn_angle_deg):
-			pb.travel("TurnL" if diff > 0.0 else "TurnR")
-			_turn_lock = turn_time
-			return
+		# 只在 60°~112.5° 播轉身；接近 180° 反向交給 BackPedal sector。
+		if absf(diff) > deg_to_rad(turn_angle_deg) and absf(diff) <= deg_to_rad(112.5):
+			if running and _anim.has_animation(_turn_l_anim):
+				pb.travel("TurnL" if diff > 0.0 else "TurnR")
+				_turn_lock = turn_time
+				return
+			elif not running and _anim.has_animation("Walk_Turn_L"):
+				pb.travel("WalkTurnL" if diff > 0.0 else "WalkTurnR")
+				_turn_lock = turn_time
+				return
 	pb.travel(_locomotion_target(running))
 
 ## 8 向 locomotion：以角色 local 速度方向分 sector（不是世界座標、不是輸入鍵）。
