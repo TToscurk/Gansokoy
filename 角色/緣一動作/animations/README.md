@@ -7,7 +7,8 @@
 
 ```
 loco  (AnimationNodeStateMachine)         下半身 / 一般 locomotion
-      Idle / Walk / Run / TurnL / TurnR / JumpStart / Fall / Land
+      Idle / Walk / Run / RunFL / RunFR / BackPedal /
+      TurnL / TurnR / JumpStart / Fall / Land
   ↓
 upper (AnimationNodeOneShot, bone filter = Spine02 以上 15 根上半身骨)
       draw / sheathe(Draw_Sword 反播) / atk1 / atk2 / atk3（輕連段三段）
@@ -42,7 +43,9 @@ output
 | 遊戲內名稱 | Meshy 動畫來源 | 處理 |
 |---|---|---|
 | RunFast | `Animation_RunFast_withSkin.fbx` | 原地循環 |
-| TurnL / TurnR | `Animation_Run_Turn_Left/Right_withSkin.fbx` | 跑步中輸入夾角 > 25° 觸發，0.35 s 後回 Run |
+| RunFL / RunFR | `Animation_ForwardLeft/Right_Run_Fight_withSkin.fbx` | 原地完美循環；local 速度方向 22.5°~112.5° 的側身追擊跑姿 |
+| BackPedal | `Animation_Walking_withSkin.fbx` **反播** | Walking 是零位移完美循環，反播即後退步，無需新動畫 |
+| TurnL / TurnR | `animations/yoriichi_turn_left/right.res` | **剝離 2.0~3.1 u 水平 root motion 的衍生版**（原始 clip 直接播會拖離碰撞體）；夾角 > 60° 急轉觸發 |
 | Roll_Dodge | `Animation_Roll_Dodge_1_withSkin.fbx` | 移除 Hips 水平位移（6.48 u） |
 | Attack_Combo | `Animation_Weapon_Combo_withSkin.fbx` | 移除 Hips 水平位移（1.56 u）；三段輕連段 |
 | Attack_Combo_1 | `Animation_Weapon_Combo_1_withSkin.fbx` | 移除 Hips 水平位移（2.64 u）；日之呼吸肆型 |
@@ -74,14 +77,42 @@ output
 - 收刀：Draw_Sword 反播（`play_mode = BACKWARD` 的 tree 節點）；
   socket 切換依進度對 `t_unsheathe = 0.65`，正反向共用同一門檻。
 
+## 8 向 locomotion
+
+- 判定用**角色 local 速度方向**（`_locomotion_target()`：世界水平速度投影到
+  面朝 forward/left 軸取夾角），不是世界座標、不是輸入鍵。
+- Forward |a|<22.5° → Run/Walk；22.5°~112.5° → RunFL（純側向 67.5°~112.5°
+  暫無專用 strafe clip，代用 FL 側身跑，右側鏡像）；|a|>112.5° → BackPedal。
+- 換 sector 最短持續 `sector_min_hold = 0.15 s` 防抖；FL/FR 只在疾跑時啟用。
+- 8 向輸入 normalized，實測 8 方向速度全部 = 4.00（無 √2 加速）。
+- 面朝仍以 `turn_speed` lerp 向移動方向，因此純側/後 sector 主要出現在
+  轉向過渡與攻擊期間（attack_turn_control 0.35 使攻擊中側移可持續）。
+
+## 組合動作（全部由既有動畫組成，未新增 FBX）
+
+| 動作 | 來源 / 區段 | 倍率 | 層 | 程式位移 |
+|---|---|---|---|---|
+| Running Slash | Weapon_Combo 三段 | 3.0 | upper | run×0.85 動量 |
+| Quick Draw / 居合斬 | Draw_Sword 0~0.65（離鞘瞬間 cancel 接 Combo 段1） | 2.2→3.0 | upper | — |
+| Dodge Counter | Roll 全段 → Combo 段1 | 3.0 | full→upper | roll 3.2 m + 前衝 2 m/s |
+| Aerial Slash | Combo 段1~3（Fall 腿姿上） | 3.0 | upper | 慣性 + gravity |
+| Spin Slash | Axe_Spin 全段（完美循環，0 位移） | 3.0 | full | — |
+| Heavy Finisher | Sword_Judgment 全段 | 3.0 | full | impulse 0.5 |
+| Sheathe | Draw_Sword 反播 | 2.2 | upper | — |
+| BackPedal | Walking 反播 | 1.0 | loco | — |
+
 ## 日之呼吸（`sun_breathing.gd`，data-driven）
 
 - Form01–13 定義：animation / section / layer / speed / damage / breath_cost /
   cooldown / impulse / allowed_airborne / required_mastery / vfx / cancel / next。
-- 已有動畫的型：壹（Combo 第一段）、貳（Spin）、參（Combo 第二段）、
+- **READY**（動畫可直接/裁切完成）：壹（Combo 段1）、貳（Spin）、參（Combo 段2）、
   肆（Combo_1）、柒（Judgment）、拾（Spin_Jump）。
-- **仍缺專用動畫的型（slot 保留，執行時誠實跳過）**：伍（dodge counter）、
-  陸（拔刀 dash 斬）、捌（突刺）、玖（dash 連斬）、拾壹（殘影反擊）、拾貳（拔刀二段斬）。
+- **PARTIAL**（現有動畫＋程式位移已可操作，專用動畫仍可補）：
+  伍（dodge counter 已實裝）、陸（居合 quick-draw 已實裝，缺 dash 版）、
+  拾貳（quick-draw→段1→段2 鏈已可操作）。
+- **MISSING**（真缺專用動畫）：捌（直線突刺）、玖（dash 連斬鏈）、拾壹（殘影反擊）。
+- 未接入素材：`Dead`（完整倒地，留給死亡狀態）、`Double_Blade_Spin`
+  （5.7 s 雙刀大迴旋，留給雙刀系統）。
 - 拾參ノ型 = `start_form13()`：把可用的型按序高速循環（框架已驗證，
   解鎖條件 `form13_unlocked` / `form13_gauge_cost` 為 export data，尚未綁輸入）。
 - 型的選型輸入（方向派生 / mastery 映射）尚未實裝；目前僅左右鍵 + quick-draw。

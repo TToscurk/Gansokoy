@@ -63,8 +63,10 @@ Last updated: 2026-08-20.
   衍生動畫資源第二版修正了骨架空間軸向（Hips 的 Z 是垂直軸），roll／attack 的
   水平 root motion 已真正清除（軸向規格見 `角色/緣一動作/animations/README.md`）。
   控制器已重構為 AnimationTree 三層架構（loco 狀態機 / upper 上半身 OneShot /
-  full 全身 OneShot）：邊跑邊拔收刀、邊跑邊斬、空中斬、Run Turn、Jump 拆
-  JumpStart(1.9x)/Fall/Land。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
+  full 全身 OneShot）：邊跑邊拔收刀、邊跑邊斬、空中斬、Jump 拆
+  JumpStart(1.9x)/Fall/Land。8 向 locomotion 以 local 速度方向分 sector
+  （FL/FR 側身追擊跑、Walking 反播後退步、剝離位移的 Run_Turn 急轉），
+  居合拔刀斬（離鞘瞬間 cancel）與翻滾反擊已實裝。戰鬥輸入滑鼠專屬（左鍵輕連段＋quick-draw、右鍵
   Spin），Attack 3x、Draw 2.2x、Roll 3x 且距離減半為 3.2 m。日之呼吸十二型＋
   拾參型為 data-driven 框架（`sun_breathing.gd`；有動畫的型 1/2/3/4/7/10，
   缺動畫的型只留 slot）。規格詳見 `角色/緣一動作/animations/README.md`。正式 prefab 不載入

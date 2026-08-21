@@ -4,7 +4,7 @@ extends SceneTree
 # split jump (fast start / fall), roll from run, air attack.
 # Output: 角色/gameplay_bugfix_review/tree_combat_v4/
 
-const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/tree_combat_v4/"
+const OUT := "D:/神社/shrine-yoriichi/角色/gameplay_bugfix_review/eight_dir_v5/"
 
 class Driver extends Node:
 	var chr: CharacterBody3D
@@ -47,69 +47,52 @@ class Driver extends Node:
 
 	func run() -> void:
 		await wait(0.6)
-		# 1. 邊跑邊拔刀：腿 Run、上半身 Draw（分層證據）
+		# 1. 左前側身追擊跑（RunFL sector）
 		key(KEY_W, true)
 		key(KEY_SHIFT, true)
-		await wait(0.5)
-		key(KEY_Q, true)
-		key(KEY_Q, false)
-		await wait(0.18)
-		await shot("01_run_draw_upper_layer")
 		await wait(0.6)
-		# 2. 邊跑邊斬（upper 輕攻擊 + Run legs）
-		click(MOUSE_BUTTON_LEFT)
-		await wait(0.15)
-		await shot("02_run_attack_upper_layer")
-		await wait(0.6)
-		# 3. Run Turn
-		key(KEY_W, false)
 		key(KEY_A, true)
 		await wait(0.12)
-		await shot("03_run_turn")
-		await recenter()
-		# 4. Jump：快起跳與 Fall 段
-		key(KEY_W, true)
-		key(KEY_SHIFT, true)
-		await wait(0.5)
-		key(KEY_SPACE, true)
-		key(KEY_SPACE, false)
-		await wait(0.42)
-		await shot("04_jump_rise")
-		await wait(0.35)
-		await shot("05_jump_fall_state")
-		await wait(0.8)
-		await recenter()
-		# 5. 跑步中 Roll（3.2 m）
-		key(KEY_W, true)
-		key(KEY_SHIFT, true)
-		await wait(0.5)
-		key(KEY_SHIFT, false)
-		await wait(0.05)
-		key(KEY_SHIFT, true)
-		await wait(0.05)
-		key(KEY_SHIFT, false)
-		await wait(0.2)
-		await shot("06_roll_from_run")
-		await wait(0.5)
-		await recenter()
-		# 6. 空中攻擊
-		key(KEY_W, true)
-		key(KEY_SHIFT, true)
-		await wait(0.5)
-		key(KEY_SPACE, true)
-		key(KEY_SPACE, false)
-		await wait(0.35)
-		click(MOUSE_BUTTON_LEFT)
+		await shot("01_run_fl_sector")
+		key(KEY_A, false)
+		await wait(0.4)
+		# 2. 右前
+		key(KEY_D, true)
 		await wait(0.12)
-		await shot("07_air_attack")
-		await wait(1.0)
-		# 7. 跑步中收刀
-		click(MOUSE_BUTTON_LEFT)   # 若已 SHEATHED 則 quick-draw；確保 DRAWN
-		await wait(1.2)
-		key(KEY_Q, true)
-		key(KEY_Q, false)
-		await wait(0.3)
-		await shot("08_run_sheathe_upper_layer")
+		await shot("02_run_fr_sector")
+		key(KEY_D, false)
+		await recenter()
+		# 3. BackPedal（Walking 反播）
+		key(KEY_W, true)
+		await wait(0.5)
+		key(KEY_W, false)
+		key(KEY_S, true)
+		await wait(0.1)
+		await shot("03_backpedal")
+		key(KEY_S, false)
+		await recenter()
+		# 4. 居合拔刀斬：LMB from SHEATHED，離鞘瞬間接斬擊
+		click(MOUSE_BUTTON_LEFT)
+		await wait(0.32)
+		await shot("04_iai_quick_draw")
+		await wait(0.8)
+		# 5. Dodge counter：翻滾中按 LMB，roll 結束反擊
+		key(KEY_SHIFT, true)
+		await wait(0.05)
+		key(KEY_SHIFT, false)
+		await wait(0.15)
+		click(MOUSE_BUTTON_LEFT)
+		await wait(0.35)
+		await shot("05_dodge_counter")
+		await wait(0.8)
+		# 6. 剝離位移後的 Run_Turn（不再拖離碰撞體）
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.6)
+		key(KEY_W, false)
+		key(KEY_A, true)
+		await wait(0.15)
+		await shot("06_run_turn_stripped")
 		await wait(0.6)
 		get_tree().quit()
 

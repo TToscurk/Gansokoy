@@ -312,6 +312,116 @@ class Driver extends Node:
 		check("form13_sequence", started and forms_seen.size() >= 5 and skipped_ok,
 			"chained forms %s in %.1f s (missing slots %s skipped)" % [forms_seen, t, missing])
 
+		# --- 8 向速度一致（input normalized，禁止斜向 √2） ---
+		await recenter()
+		var dir_speeds := PackedFloat32Array()
+		for combo in [[KEY_W], [KEY_W, KEY_A], [KEY_W, KEY_D], [KEY_A], [KEY_D], [KEY_S], [KEY_S, KEY_A], [KEY_S, KEY_D]]:
+			for k in combo:
+				key(k, true)
+			await wait(0.4)
+			dir_speeds.append(hspeed())
+			for k in combo:
+				key(k, false)
+			await wait(0.15)
+		var speeds_ok := true
+		for v in dir_speeds:
+			if absf(v - chr.speed) > 0.15:
+				speeds_ok = false
+		check("eight_dir_speed_equal", speeds_ok, "8-dir speeds %s (target %.1f)" % [dir_speeds, chr.speed])
+		await recenter()
+
+		# --- FL / FR 側身跑姿：轉向瞬間出現、min-hold 防抖、回 Run ---
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.6)
+		key(KEY_A, true)
+		var fl_seen := false
+		var switches := 0
+		var prev: StringName = loco()
+		t = 0.0
+		while t < 0.6:
+			var n := loco()
+			if n == &"RunFL":
+				fl_seen = true
+			if n != prev:
+				switches += 1
+				prev = n
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		key(KEY_A, false)
+		await wait(0.4)
+		var fl_back := loco() == &"Run"
+		key(KEY_W, false)
+		key(KEY_SHIFT, false)
+		check("run_fl_sector", fl_seen and switches <= 3 and fl_back,
+			"RunFL seen=%s, %d state switches in 0.6 s (no flicker), back to %s" % [fl_seen, switches, loco()])
+		await recenter()
+		key(KEY_W, true)
+		key(KEY_SHIFT, true)
+		await wait(0.6)
+		key(KEY_D, true)
+		var fr_seen := false
+		t = 0.0
+		while t < 0.6:
+			if loco() == &"RunFR":
+				fr_seen = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		key(KEY_D, false)
+		key(KEY_W, false)
+		key(KEY_SHIFT, false)
+		check("run_fr_sector", fr_seen, "RunFR seen=%s" % fr_seen)
+		await recenter()
+
+		# --- BackPedal（Walking 反播）：反向輸入的過渡期出現 ---
+		key(KEY_W, true)
+		await wait(0.5)
+		key(KEY_W, false)
+		key(KEY_S, true)
+		var bp_seen := false
+		t = 0.0
+		while t < 0.6:
+			if loco() == &"BackPedal":
+				bp_seen = true
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		key(KEY_S, false)
+		check("backpedal_state", bp_seen, "BackPedal (reversed Walking) seen=%s during direction flip" % bp_seen)
+		await recenter()
+
+		# --- Quick Draw Slash：離鞘瞬間（0.65）就接攻擊，不等 draw 播完 ---
+		if chr.sword_state == chr.SwordState.DRAWN:
+			await tap(KEY_Q)          # 先收刀，確保從 SHEATHED 測居合
+			await wait(0.8)
+		var qt0 := Time.get_ticks_msec()
+		click(MOUSE_BUTTON_LEFT)
+		t = 0.0
+		while chr.action_state != chr.ActionState.ATTACKING and t < 1.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		var iai_secs := (Time.get_ticks_msec() - qt0) / 1000.0
+		var draw_full: float = chr.draw_anim_resource.length / chr.draw_speed_scale
+		await wait_free(2.0)
+		check("iai_cancel_timing", iai_secs < draw_full and chr.sword_state == chr.SwordState.DRAWN,
+			"attack at %.2f s < full draw %.2f s (cancel at t_unsheathe)" % [iai_secs, draw_full])
+
+		# --- Dodge Counter：DRAWN 翻滾中 LMB → roll 結束自動反擊 ---
+		key(KEY_SHIFT, true)
+		await wait(0.05)
+		key(KEY_SHIFT, false)
+		await wait(0.1)
+		var dc_rolling: bool = chr.action_state == chr.ActionState.DODGING
+		click(MOUSE_BUTTON_LEFT)
+		t = 0.0
+		while chr.action_state == chr.ActionState.DODGING and t < 1.0:
+			await get_tree().physics_frame
+			t += get_physics_process_delta_time()
+		await wait(0.05)
+		var dc_counter: bool = chr.action_state == chr.ActionState.ATTACKING and chr.combo_stage == 1
+		await wait_free(2.0)
+		check("dodge_counter", dc_rolling and dc_counter,
+			"LMB during roll -> counter slash on finish (rolling=%s counter=%s)" % [dc_rolling, dc_counter])
+
 		print("=== VALIDATION RESULTS ===")
 		for r in results:
 			print(r)

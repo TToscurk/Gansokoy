@@ -27,14 +27,22 @@ extends CharacterBody3D
 @export var run_fast_anim := "RunFast"
 @export var idle_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Idle_11_withSkin.fbx")
 @export var run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Running_withSkin.fbx")
-@export var turn_left_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Run_Turn_Left_withSkin.fbx")
-@export var turn_right_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Run_Turn_Right_withSkin.fbx")
+## 剝離水平 root motion 的 Run_Turn 衍生資源（原始 clip 帶 2.8~3.5 u 水平位移，
+## 直接播會把視覺拖離碰撞體 —— Stage 1 inventory 實測發現）。
+@export var turn_left_resource: Animation = preload("res://animations/yoriichi_turn_left.res")
+@export var turn_right_resource: Animation = preload("res://animations/yoriichi_turn_right.res")
+## 左前 / 右前「武士側身追擊」跑姿（原地完美循環，手臂活動量僅 RunFast 1/3 的持刀跑）。
+@export var fl_run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_ForwardLeft_Run_Fight_withSkin.fbx")
+@export var fr_run_source: PackedScene = preload("res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_ForwardRight_Run_Fight_withSkin.fbx")
 
-@export_group("Run Turn")
-## 跑步中輸入方向與面朝方向的夾角超過此值才播 Run_Turn，小角度維持 Run。
-@export var turn_angle_deg := 25.0
+@export_group("Run Turn / 8-Direction")
+## 跑步中輸入方向與面朝方向夾角超過此值才播 Run_Turn 急轉；
+## 22.5°~112.5° 的中等偏角由 FL/FR 側身跑姿處理。
+@export var turn_angle_deg := 60.0
 ## Turn clip 播放這麼久之後 blend 回 Run（不強制播完整支）。
 @export var turn_time := 0.35
+## 8 向 sector 判定以角色 local 速度方向為準；換 sector 後最短持續時間（防抖）。
+@export var sector_min_hold := 0.15
 
 @export_group("Jump")
 @export var jump_anim := "Jump"
@@ -144,6 +152,11 @@ var _sword_hand: Node3D
 var _sword_sheathed: Node3D
 var _turn_l_anim := ""
 var _turn_r_anim := ""
+var _fl_anim := ""
+var _fr_anim := ""
+var _sector_state := "Run"
+var _sector_hold := 0.0
+var _attack_after_roll := false
 
 var _attack_layer := "upper"          # "upper" | "full"
 var _action_elapsed := 0.0
@@ -176,8 +189,12 @@ func _ready():
 	_visual = _anim.get_parent()
 	_merge_animations_from(idle_source)
 	_merge_animations_from(run_source)
-	_turn_l_anim = _merge_animations_from(turn_left_source)
-	_turn_r_anim = _merge_animations_from(turn_right_source)
+	_fl_anim = _merge_animations_from(fl_run_source)
+	_fr_anim = _merge_animations_from(fr_run_source)
+	_turn_l_anim = "Turn_Left"
+	_turn_r_anim = "Turn_Right"
+	_add_animation_resource(_turn_l_anim, turn_left_resource)
+	_add_animation_resource(_turn_r_anim, turn_right_resource)
 	_add_animation_resource(roll_anim, roll_anim_resource)
 	_add_animation_resource(jump_anim, jump_anim_resource)
 	_add_animation_resource(attack_combo_anim, attack_combo_resource)
@@ -187,7 +204,7 @@ func _ready():
 	_add_animation_resource(attack_spin_jump_anim, attack_spin_jump_resource)
 	_add_animation_resource(draw_anim, draw_anim_resource)
 	_add_animation_resource(run_fast_anim, preload("res://animations/yoriichi_run_fast.res"))
-	for n in [walk_anim, idle_anim, run_anim, run_fast_anim]:
+	for n in [walk_anim, idle_anim, run_anim, run_fast_anim, _fl_anim, _fr_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
@@ -273,10 +290,17 @@ func _build_tree() -> void:
 		"Fall": _clip_node(jump_anim, JUMP_AIR_LOOP.x, JUMP_AIR_LOOP.y, true),
 		"Land": _scaled_state(_clip_node(jump_anim, JUMP_LAND_START, jump_anim_resource.length)),
 	}
-	if _turn_l_anim != "":
+	if _anim.has_animation(_turn_l_anim):
 		states["TurnL"] = _anim_node(_turn_l_anim)
-	if _turn_r_anim != "":
+	if _anim.has_animation(_turn_r_anim):
 		states["TurnR"] = _anim_node(_turn_r_anim)
+	if _fl_anim != "":
+		states["RunFL"] = _anim_node(_fl_anim)
+	if _fr_anim != "":
+		states["RunFR"] = _anim_node(_fr_anim)
+	# 後退步：Walking 是零位移的完美循環（inventory 實測 start_end_diff 0.0°），
+	# 反播即為合法 backpedal，不需新動畫。
+	states["BackPedal"] = _anim_node(walk_anim, true)
 	for s in states:
 		sm.add_node(s, states[s])
 	for a in states:
@@ -484,19 +508,46 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 	if _turn_lock > 0.0:
 		_turn_lock -= delta
 		return
+	_sector_hold = maxf(_sector_hold - delta, 0.0)
 	if not moving:
 		pb.travel("Idle")
 		return
-	if running:
-		if _turn_l_anim != "" and pb.get_current_node() == &"Run":
-			var diff := wrapf(atan2(input_dir.x, input_dir.z) - _visual.rotation.y, -PI, PI)
-			if absf(diff) > deg_to_rad(turn_angle_deg):
-				pb.travel("TurnL" if diff > 0.0 else "TurnR")
-				_turn_lock = turn_time
-				return
-		pb.travel("Run")
-	else:
-		pb.travel("Walk")
+	# 急轉（夾角 > turn_angle_deg）優先於 sector 側身跑姿。
+	if running and _anim.has_animation(_turn_l_anim) and pb.get_current_node() == &"Run":
+		var diff := wrapf(atan2(input_dir.x, input_dir.z) - _visual.rotation.y, -PI, PI)
+		if absf(diff) > deg_to_rad(turn_angle_deg):
+			pb.travel("TurnL" if diff > 0.0 else "TurnR")
+			_turn_lock = turn_time
+			return
+	pb.travel(_locomotion_target(running))
+
+## 8 向 locomotion：以角色 local 速度方向分 sector（不是世界座標、不是輸入鍵）。
+## 0°=前、+90°=左、180°=後。Forward |a|<22.5 → Run/Walk；22.5~112.5 → RunFL
+## （側向 67.5~112.5 目前無專用 strafe clip，代用 FL 側身跑，鏡像同理）；
+## |a|>112.5 → BackPedal（Walking 反播）。sector_min_hold 防抖。
+func _locomotion_target(running: bool) -> String:
+	var lv := Vector2(velocity.x, velocity.z)
+	var forward_state := "Run" if running else "Walk"
+	if lv.length() < 0.5 or _visual == null:
+		return forward_state
+	var yaw: float = _visual.rotation.y
+	var fwd := Vector2(sin(yaw), cos(yaw))
+	var left := Vector2(cos(yaw), -sin(yaw))
+	var nd := lv.normalized()
+	var ang := rad_to_deg(atan2(nd.dot(left), nd.dot(fwd)))
+	var target := forward_state
+	if absf(ang) > 112.5:
+		target = "BackPedal"
+	elif running and _fl_anim != "" and ang > 22.5:
+		target = "RunFL"
+	elif running and _fr_anim != "" and ang < -22.5:
+		target = "RunFR"
+	if target != _sector_state:
+		if _sector_hold > 0.0:
+			return _sector_state   # 換 sector 後最短持續 0.15 s，防高速抖動
+		_sector_state = target
+		_sector_hold = sector_min_hold
+	return _sector_state
 
 # ---------------------------------------------------------------------------
 # Input（正式戰鬥輸入只有滑鼠；J/K/L 已移除，無 debug fallback）
@@ -571,6 +622,7 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 		_visual.rotation.y = atan2(_dodge_dir.x, _dodge_dir.z)
 	action_state = ActionState.DODGING
 	_action_elapsed = 0.0
+	_attack_after_roll = false
 	_roll_duration = roll_anim_resource.length / roll_animation_speed
 	_fire_full("roll", roll_animation_speed)
 
@@ -591,16 +643,26 @@ func _finish_roll() -> void:
 	_action_elapsed = 0.0
 	_roll_duration = 0.0
 	_fade_full()
-	# 不強制回 Idle：locomotion 分支依當前輸入接回 Run / Walk / Idle。
+	if _attack_after_roll:
+		_attack_after_roll = false
+		if sword_state == SwordState.DRAWN:
+			# dodge counter（斜陽轉身雛形）：沿翻滾方向小前衝＋立即反擊斬。
+			velocity.x += _dodge_dir.x * 2.0
+			velocity.z += _dodge_dir.z * 2.0
+			_start_combo()
+	# 否則不強制回 Idle：locomotion 分支依當前輸入接回 Run / Walk / Idle。
 
 # ---------------------------------------------------------------------------
 # Attack（LMB 輕連段 = upper layer 邊跑邊斬；RMB/型 heavy = full-body override）
 # ---------------------------------------------------------------------------
 func request_primary_attack() -> void:
 	if sword_state == SwordState.SHEATHED and action_state == ActionState.FREE:
-		# quick-draw：收刀狀態直接 LMB = 拔刀 → 自動接第一段（拔刀斬雛形）。
+		# quick-draw：收刀狀態直接 LMB = 拔刀，刀離鞘（t=0.65）瞬間接第一段。
 		_attack_after_draw = true
 		request_draw()
+		return
+	if action_state == ActionState.DODGING and sword_state == SwordState.DRAWN:
+		_attack_after_roll = true   # dodge counter：roll 結束自動接反擊斬
 		return
 	if sword_state != SwordState.DRAWN:
 		return
@@ -747,6 +809,13 @@ func _update_sword(delta: float) -> void:
 		_draw_elapsed += delta
 		_draw_t = clampf(_draw_elapsed / _draw_real, 0.0, 1.0) if _draw_real > 0.0 else 1.0
 		_apply_sword_visibility()
+		if _attack_after_draw and _draw_t >= t_unsheathe:
+			# 拔刀斬（居合）：刀一離鞘立即取消剩餘 draw、接第一段斬擊。
+			sword_state = SwordState.DRAWN
+			_apply_sword_visibility()
+			_attack_after_draw = false
+			_start_combo()
+			return
 		if _draw_t >= 1.0:
 			sword_state = SwordState.DRAWN
 			_apply_sword_visibility()
