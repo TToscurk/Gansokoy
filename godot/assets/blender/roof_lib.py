@@ -107,16 +107,18 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
     assert z_b < ridge_z - 0.05, "妻壁が棟に届いている"
 
     # ── 屋根面（前後の大面）────────────────────────────────────
-    # 並びは _roof() と同一：上の稜 → 下の軒、flip=(sy>0)。
+    # 並びは _roof() と同一：上の稜 → 下の軒。
+    # ⚠ flip は **(sy < 0)**。(sy > 0) だと法線が下向き —— Blender の双面
+    # 描画では見えるが Godot では上から剔除され、屋根が抜ける。
     for sy in (1, -1):
         ye = cy + sy * hd
         yb = cy + sy * hd * (1.0 - g)
         bld.quad((cx - xg, yb, z_b), (cx + xg, yb, z_b),
                  (cx + hw, ye, eave_edge_z), (cx - hw, ye, eave_edge_z),
-                 kawara, flip=(sy > 0))
+                 kawara, flip=(sy < 0))
         bld.quad((cx - xg, cy, ridge_z), (cx + xg, cy, ridge_z),
                  (cx + xg, yb, z_b), (cx - xg, yb, z_b),
-                 kawara, flip=(sy > 0))
+                 kawara, flip=(sy < 0))
 
     # ── 屋根面（左右の隅＝降り棟の面）──────────────────────────
     # 前後の面を z 軸まわりに +90° 回した関係：sx=+1 ↔ sy=-1。
@@ -125,7 +127,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
         xb = cx + sx * xg
         bld.quad((xb, cy - hd * (1.0 - g), z_b), (xb, cy + hd * (1.0 - g), z_b),
                  (xe, cy + hd, eave_edge_z), (xe, cy - hd, eave_edge_z),
-                 kawara, flip=(sx < 0))
+                 kawara, flip=(sx > 0))
 
     # ── 鼻隠し（軒口の小口）＋ 軒裏（仰視面）── 四周 ────────────
     # ⚠ 軒裏は四隅で **留め（45°）** に切る。四面とも全幅で張ると、隅で
@@ -140,7 +142,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
         yi = cy + sy * y_in
         bld.quad((cx - hw, ye, eave_edge_z), (cx + hw, ye, eave_edge_z),
                  (cx + hw, ye, eave_edge_z - thick), (cx - hw, ye, eave_edge_z - thick),
-                 kawara, flip=(sy > 0))
+                 kawara, flip=(sy < 0))
         bld.quad((cx - hw, ye, eave_edge_z - thick), (cx + hw, ye, eave_edge_z - thick),
                  (cx + hw - inset, yi, z_wall - thick),
                  (cx - hw + inset, yi, z_wall - thick),
@@ -150,7 +152,7 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
         xi = cx + sx * x_in
         bld.quad((xe, cy - hd, eave_edge_z), (xe, cy + hd, eave_edge_z),
                  (xe, cy + hd, eave_edge_z - thick), (xe, cy - hd, eave_edge_z - thick),
-                 kawara, flip=(sx < 0))
+                 kawara, flip=(sx > 0))
         bld.quad((xe, cy - hd, eave_edge_z - thick), (xe, cy + hd, eave_edge_z - thick),
                  (xi, cy + hd - inset, z_wall - thick),
                  (xi, cy - hd + inset, z_wall - thick),
@@ -179,7 +181,10 @@ def irimoya_roof(bld, cx, cy, z_wall, W, D, pitch, overhang=1.35, thick=0.18,
 
     # ── 葺き足（瓦の列。遠景でこれが無いと屋根が一枚の板になる）──
     if courses:
-        ncourse = 5
+        # 町家の葺き足は列距 0.46（可読性優先の規格値）。ここが固定 5 列の
+        # ままだと鐘楼だけ瓦の粒度が一桁粗く、同じ街に二つの瓦文化ができる。
+        slope_len = math.hypot(hd, hd * t)
+        ncourse = max(5, int(slope_len / 0.46))
         for k in range(1, ncourse + 1):
             f = float(k) / (ncourse + 1)
             z = eave_z + (ridge_z - eave_z) * f
