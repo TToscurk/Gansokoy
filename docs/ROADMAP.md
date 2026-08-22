@@ -1,59 +1,30 @@
 # ROADMAP
 
-Status only. No implementation detail — that lives in the subsystem docs.
-For "where are we right now", read `docs/PROJECT_STATE.md`.
-
----
+Status only. For current facts read `docs/PROJECT_STATE.md`. Implementation detail belongs in subsystem docs.
 
 ## DONE
 
-| | |
-|---|---|
-| three.js 博麗神社 (`src/`) | frozen line, not maintained |
-| Godot migration | `godot/` is the live build |
-| 人間之里 block restructure | Stages 1–4, 169 houses, roads, river, revetments |
-| Landmark migration | 6 landmarks with real content + 3 towers + 3 bridges |
-| 稗田邸 exterior | full standalone design placed in the village map |
-| 稗田邸 interiors | 1F 玄関/客間 · 2F 阿求書房 · 3F 大書庫, portals linked |
-| Phase 1 | `machiya_f_a` production prototype + semantic material pipeline |
-| Phase 1.1 | proportion & roof language rebalance |
-| Phase 1.5 | vertical slice art benchmark (`maps/slice/`) |
-| Phase 1.6 | legacy blockout quarantine in the slice |
-| Phase 1.7 | material readability pass |
-| Phase 2 | Architecture Kit — 6 machiya modules (structural baseline) |
-| Phase 2.5 | facade & life dressing — 3 hero storefronts, business identity by composition |
-| Phase 2.6 / 2.6b | foreground prop v2, cloth as cloth, vertical dressing, cloth clearance from eave planes |
-| Phase 3 pilot / 3.1A / 3.1B / 3.2A | north-gate corridor kit rollout, street section, fire-watch crossing, sight-line diagnostic |
-| Architecture Consolidation | legacy house removal — 170/170 production, 0 blockout |
-| Main Street batch | 本通 frontage restored: 塀/門/鳥居/蔵/幟/街路樹, N2 lean-to, 溝蓋, 辻行灯 |
-| Vegetation production pass | village-local readable canopies; activity-sparse core and entrances; clustered, denser village-edge ground layers; fixed 5-camera local review loop |
-| Roof winding fix + ridge vocabulary | 野地/鼻隠し繞序修復（全 170 棟穿頂）、大棟熨斗三段、鐘楼葺き足統一 |
-| Project brain | `CLAUDE.md`, `.claude/rules/`, `PROJECT_STATE.md`, this file |
+- three.js line frozen; Godot 4.4 is the live build.
+- Human Village core layout, roads, river, portals, landmarks, production housing, main-street/facade work, and vegetation production passes.
+- Roof winding fix (野地/鼻隠し normals were inverted — all 170 houses were see-through in-engine), 大棟 熨斗 three-course ridge, and bell-tower 葺き足 spacing unified with the machiya.
+- Yoriichi character-project runtime: Meshy full character, shared 24-bone skeleton, locomotion, draw/sheathe, attacks, dodge/roll, jump/fall/land, sword sockets, and AnimationTree controller.
+- Repository cleanup pass removing obsolete web/review/generated files and adding ignore rules for local/generated artifacts.
 
 ## CURRENT
 
-**Human Village vegetation production pass complete.** Five fixed local-render
-views confirm readable tree crowns, clustered ground vegetation, sparse human
-activity zones, denser village edges, and clear roads/entrances/market/shrine.
-Full static suite green. Awaiting Art Review.
+- Keep the cleaned `main` as the canonical base.
+- Human Village lighting / cel-shading and remaining visible art-quality work.
+- Review remaining old feature branches before deleting or selectively porting anything from them.
 
 ## NEXT
 
-- **Lighting / cel-shading round** — the street lamps now carry the village
-  vocabulary; their light behaviour is untouched and waits for this round.
-- **稗田邸 blockout material split** and **tower asset quality**
-  (`tower_bell` / `tower_fire`) — the remaining non-residential blockout.
-- **Lighting / cel-shading round** — after the village carries production
-  architecture, not before (Phase 1.6's lesson: you cannot art-review a
-  scene dominated by blockout).
+- Integrate the finished Yoriichi runtime into the formal `godot/` Player when explicitly started.
+- Resolve remaining landmark / close-range prop quality debt.
+- Continue lighting / cel-shading without reopening locked village structure.
 
 ## LATER
 
-- Architecture Kit expansion: 入母屋 / 落棟 / 下屋 roofs.
-- Hand-authored LOD0/1/2 (currently `lod_bias` only).
-- Prop and villager asset pass (提灯, villagers, small props).
-- 稗田邸 blockout material split (the only untextured building).
-- Other 幻想鄉 locations beyond 人間之里 and 博麗神社.
-- **AI 3D asset pipeline** — deferred by human decision. Audit found no GPU
-  on this machine and all model-weight hosts blocked by egress policy; not
-  actionable here without human intervention.
+- Additional roof families and architecture vocabulary.
+- Hand-authored LOD work.
+- More props / villagers / polish.
+- Other Gensokyo locations beyond the current Human Village / shrine scope.
