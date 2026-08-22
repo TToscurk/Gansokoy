@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://wd2d7debqsyu"]
 
-[ext_resource type="PackedScene" path="res://yoriichi_character_meshy_full.tscn" id="1_char"]
-[ext_resource type="Script" path="res://follow_camera.gd" id="2_cam"]
+[ext_resource type="PackedScene" uid="uid://bah0ha6b5bdvb" path="res://yoriichi_character_meshy_full.tscn" id="1_char"]
+[ext_resource type="Script" uid="uid://ba6gnt6gn85ut" path="res://follow_camera.gd" id="2_cam"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(20, 0.2, 20)

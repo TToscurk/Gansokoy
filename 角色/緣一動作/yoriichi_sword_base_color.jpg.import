@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://b53xfgppfrv28"
+path.s3tc="res://.godot/imported/yoriichi_sword_base_color.jpg-2da73ed38c9ac4828f20ff87ad5b4deb.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "61dc63c93d561e442f2e0ffc1b8b2c1a"
+}
+
+[deps]
+
+source_file="res://yoriichi_sword_base_color.jpg"
+dest_files=["res://.godot/imported/yoriichi_sword_base_color.jpg-2da73ed38c9ac4828f20ff87ad5b4deb.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
