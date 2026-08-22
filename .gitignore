@@ -2,8 +2,14 @@ node_modules/
 shots/
 shots2/
 
-# Blender 腳本的 bytecode 快取
+# Blender / Python generated files
 __pycache__/
+*.py[cod]
+*.blend1
+
+# Local AI / secret files
+.qwen/
+meshy_api_key.txt
 
 # 本機工具產物 —— 不屬於專案本身。
 # `godot/addons/` 是 godot-mcp 每次 `godot_launch` 用 copytree 覆寫進來的，
