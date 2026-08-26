@@ -20,10 +20,15 @@ const GROUND_NODES := [
 	"RiverV3_Candidate/OuterTerrainTransition",
 	"RiverV3_Candidate/EastTailLandConnection",
 	"RiverV3_Candidate/WestTailLandConnection",
-	"RiverV3_Candidate/InnerDryBank",
-	"RiverV3_Candidate/OuterDryBank",
 ]
-const WATER_NODE := "RiverV3_Candidate/RiverWater"
+const BANK_NODES := [
+	"RiverV3_Candidate/InnerDryBank",
+	"RiverV3_Candidate/InnerWetBank",
+	"RiverV3_Candidate/OuterDryBank",
+	"RiverV3_Candidate/OuterWetBank",
+]
+const CHANNEL_NODES := ["RiverV3_Candidate/RiverWater", "RiverV3_Candidate/RiverBed"]
+const BANK_SINK := -6.0
 
 var _bins: Dictionary = {}
 const BIN := 40.0
@@ -62,22 +67,23 @@ func _add_mesh(mi: MeshInstance3D, tag: int) -> void:
 						_bins[key] = []
 					(_bins[key] as Array).append([a, b, c, tag])
 
-func _sample(x: float, z: float) -> Vector2:
-	# returns (ground_top or -1e9, water_flag)
+func _sample(x: float, z: float) -> Vector3:
+	# returns (ground_top or -1e9, channel_flag, bank_flag)
 	var key := _bin_key(x, z)
 	var top: float = -1e9
-	var water: float = 0.0
+	var chan: float = 0.0
+	var bank: float = 0.0
 	if not _bins.has(key):
-		return Vector2(top, water)
+		return Vector3(top, chan, bank)
 	for t_any in (_bins[key] as Array):
 		var t: Array = t_any
 		var y: float = _tri_y(t[0], t[1], t[2], x, z)
 		if y > -1e8:
-			if int(t[3]) == 1:
-				water = 1.0
-			else:
-				top = max(top, y)
-	return Vector2(top, water)
+			match int(t[3]):
+				1: chan = 1.0
+				2: bank = 1.0
+				_: top = max(top, y)
+	return Vector3(top, chan, bank)
 
 func _tri_y(a: Vector3, b: Vector3, c: Vector3, px: float, pz: float) -> float:
 	var d: float = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z)
@@ -99,8 +105,10 @@ func _init() -> void:
 			print("MISSING ground node: ", path)
 			continue
 		_add_mesh(mi, 0)
-	var wm: MeshInstance3D = root.get_node(WATER_NODE) as MeshInstance3D
-	_add_mesh(wm, 1)
+	for path in CHANNEL_NODES:
+		_add_mesh(root.get_node(path) as MeshInstance3D, 1)
+	for path in BANK_NODES:
+		_add_mesh(root.get_node(path) as MeshInstance3D, 2)
 	print("bins: ", _bins.size())
 
 	var nx: int = int((X1 - X0) / CELL) + 1
@@ -109,19 +117,23 @@ func _init() -> void:
 	hs.resize(nx * nz)
 	var covered: PackedByteArray = PackedByteArray()
 	covered.resize(nx * nz)
+	var skip: PackedByteArray = PackedByteArray()
+	skip.resize(nx * nz)
 	var holes: int = 0
 	for iz in range(nz):
 		for ix in range(nx):
 			var x: float = X0 + ix * CELL
 			var z: float = Z0 + iz * CELL
-			var r: Vector2 = _sample(x, z)
+			var r: Vector3 = _sample(x, z)
 			var i: int = iz * nx + ix
-			if r.y > 0.5 and r.x < -1e8:
-				hs[i] = CHANNEL_Y; covered[i] = 1      # channel interior
+			if r.y > 0.5 or r.z > 0.5:
+				# channel band (water/bed/any bank): cut the underlay out here —
+				# the channel geometry is complete and needs no backing sheet
+				skip[i] = 1
+				hs[i] = r.x - DROP if r.x > -1e8 else CHANNEL_Y
+				covered[i] = 1
 			elif r.x > -1e8:
-				hs[i] = min(r.x - DROP, r.x * 0.0 + r.x - DROP); covered[i] = 1
-				if r.y > 0.5:
-					hs[i] = min(hs[i], CHANNEL_Y)      # water also present -> stay low
+				hs[i] = r.x - DROP; covered[i] = 1
 			else:
 				hs[i] = -0.6; covered[i] = 0; holes += 1
 	print("grid %dx%d, uncovered=%d" % [nx, nz, holes])
@@ -149,6 +161,8 @@ func _init() -> void:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for iz in range(nz - 1):
 		for ix in range(nx - 1):
+			if skip[iz * nx + ix] == 1 or skip[iz * nx + ix + 1] == 1 					or skip[(iz + 1) * nx + ix] == 1 or skip[(iz + 1) * nx + ix + 1] == 1:
+				continue
 			var x0: float = X0 + ix * CELL
 			var z0: float = Z0 + iz * CELL
 			var x1: float = x0 + CELL
