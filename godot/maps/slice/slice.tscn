@@ -32,6 +32,7 @@
 [ext_resource type="Material" path="res://assets/materials/rock_dry.tres" id="28_clp4j"]
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="29_bb8mf"]
 [ext_resource type="PackedScene" uid="uid://c6pxufrenxvwm" path="res://assets/models/bridge_small.glb" id="29_j6oqy"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -2152,11 +2153,11 @@ glow_enabled = true
 glow_intensity = 0.72
 glow_hdr_threshold = 1.25
 fog_enabled = true
-fog_density = 0.0016
-fog_sky_affect = 0.18
+fog_density = 0.0006
+fog_sky_affect = 0.05
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.012
-volumetric_fog_sky_affect = 0.18
+volumetric_fog_density = 0.004
+volumetric_fog_sky_affect = 0.0
 adjustment_enabled = true
 adjustment_contrast = 1.08
 adjustment_saturation = 1.24
@@ -2772,6 +2773,11 @@ material_override = SubResource("StandardMaterial3D_88j0w")
 mesh = SubResource("ArrayMesh_2222y")
 metadata/needs_trimesh = true
 
+
+[node name="GroundUnderlay" type="MeshInstance3D" parent="."]
+mesh = ExtResource("40_underlay")
+material_override = ExtResource("29_bb8mf")
+cast_shadow = 0
 [node name="鎮守之杜" type="Node3D" parent="." unique_id=803029421]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 170.25989, -0.0872175, -128.84196)
 

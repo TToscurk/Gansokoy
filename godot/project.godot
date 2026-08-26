@@ -22,8 +22,8 @@ config/features=PackedStringArray("4.7")
 
 DayNight="*res://scripts/daynight.gd"
 Weather="*res://scripts/weather.gd"
-CyclopsAutoload="*res://addons/cyclops_level_builder/cyclops_autoload.tscn"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+CyclopsAutoload="*res://addons/cyclops_level_builder/cyclops_autoload.tscn"
 
 [editor_plugins]
 
