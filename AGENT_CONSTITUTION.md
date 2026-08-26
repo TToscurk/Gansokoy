@@ -128,19 +128,20 @@
 
 ### Godot 與 MCP 操作規則
 
-- 本專案是 Godot 專案，正式遊戲位於 `godot/`。需要讀取或修改場景、腳本、資源、節點樹，或執行遊戲與除錯時，允許並應優先使用當前可用的 MCP／Godot 相關工具取得實際證據；不得只依檔名、舊文件、記憶或推測判定專案狀態。
+- 本專案是 Godot 專案，正式遊戲位於 `godot/`。需要讀取或修改場景、腳本、資源、節點樹，或執行遊戲與除錯時，**必須優先使用 godot-ai MCP 工具**（editor_state／scene／node／material／screenshot 等）取得實際證據；不得只依檔名、舊文件、記憶或推測判定專案狀態。MCP 呼叫逾時不等於失敗——長操作（force_reload、re-import）常超過 5 秒等待，先用 `editor_state` 確認再重試；同一時間只允許一個 AI 對編輯器發指令。
 - 任何修改前，必須先確認目標專案、實際相關檔案，以及目前 Git 分支與工作樹狀態，再依檢查結果採取最小修改。若目標目錄沒有 Git metadata、分支無法確認，或所需 MCP／Godot 工具不可用，必須明確回報該限制，不得捏造分支、工具結果或執行中狀態。
 
 ### Godot Skill 路由規則
 
-- 所有 Godot 實作、診斷、審查、規劃、效能或視覺工作，先載入 `.claude/skills/godot-master/SKILL.md`，並只按其決策矩陣載入本次工作需要的 reference；不得一次載入整個參考庫。
-- 場景設計、道路規劃、3D 佈局、blockout、玩家尺度、視線、地標導引或關卡流線工作，另載入 `.claude/skills/level-design/SKILL.md`。導航與效能工作則按需使用 `godot-master` 的對應 reference，不再安裝功能重疊的 Skill。
+- **強制（使用者 2026-08-26 裁定）：每次開任務、只要工作涉及 Godot，必須先載入 `godot-master` Skill**（優先用 Skill 工具正式載入；工具不可用時直接讀 `.claude/skills/godot-master/SKILL.md`），並只按其決策矩陣載入本次工作需要的單一 reference；不得一次載入整個參考庫。
+- **必要時按需載入其他專案 Skill 執行**：場景設計／道路規劃／3D 佈局／視線／關卡流線 → `level-design`；視覺前後對照與審查 → `godot-visual-review`；Blender→GLB 資產機制 → `blender-asset-production`；美術判斷 → `gensokyo-3d-art-director`／`human-village-art-direction`；提交 → `safe-production-commit`。不再安裝功能重疊的外部 Skill。
 - Skill 是專業知識與工作路由，不是第二套 pipeline。使用者當前指示、本文、實際 Godot 版本、專案權威文件與既有 build／capture／validation 入口均優先於通用 Skill；不得用 Skill 規避 Human Art Review、擴張範圍或建立平行工具。
 - **禁用 `godot-master` 的平行 QA／建置工作流**：其 Workflow 11–14（Builder 程式化建場景、Agent Vision 截圖評分、Analyst 架構評分、Auditor never-list 掃描）及 `scripts/` 內的對應腳本一律不得使用——它們正是紅線 1 禁止的平行框架。視覺驗證只走本專案 capture 管線與 Human Art Review；架構與程式審查走專案既有 rules 與 skill。`godot-master` 只作為 Godot API／效能／物理等**知識查詢**，且只按需載入單一 reference。其中大量 genre／mobile／multiplayer／2D 內容與本專案無關，不得作為路由依據。
 
 ## 10. Agent Startup Checklist
 
 - [ ] 讀完本文件；確認使用者本輪明確要求。
+- [ ] 涉及 Godot：**載入 `godot-master` Skill**，並確認 godot-ai MCP 連線（`editor_state`）。
 - [ ] 宣告唯一模式：`ART_FAST`／`INTEGRATION`／`BUG_SWEEP`。
 - [ ] 確認工作直接改善現行展示路線（第 1 節基線），或說明必要阻塞。
 - [ ] 設定本輪 20／80 預算、距離層級與可見交付物。
