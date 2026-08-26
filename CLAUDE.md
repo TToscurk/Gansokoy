@@ -24,6 +24,10 @@ precedence rules in `AGENT_CONSTITUTION.md` under "Godot Skill 路由規則".
 
 ## Working Rules
 
+- Subagents for scan/inventory/audit work default to the **haiku** model, and their
+  task prompt must name an explicit whitelist of files or directories to read —
+  never "scan everything". Repo-wide deep scans are one-off; their conclusions live
+  in `docs/PROJECT_STATE.md` and are not re-run.
 - Work only on the requested deliverable; no opportunistic repo-wide refactors.
 - Preserve approved production baselines and validated pipelines.
 - Ask before destructive changes with no safe rollback, changing village/road structure, moving major landmarks, changing approved art direction, or changing gameplay/worldbuilding.
