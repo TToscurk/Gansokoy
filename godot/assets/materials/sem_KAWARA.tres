@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_diff.jpg" id="1_rqupx"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_nor_gl.jpg" id="2_38xki"]
+[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_rough.jpg" id="3_nmwnb"]
+
+[resource]
+albedo_color = Color(0.6, 0.63, 0.68, 1)
+albedo_texture = ExtResource("1_rqupx")
+roughness_texture = ExtResource("3_nmwnb")
+normal_enabled = true
+normal_scale = 0.18
+normal_texture = ExtResource("2_38xki")
+uv1_scale = Vector3(0.9, 0.9, 0.9)
+uv1_triplanar = true
+texture_filter = 5

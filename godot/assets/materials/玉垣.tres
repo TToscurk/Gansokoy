@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/planks_diff.jpg" id="1_yqeha"]
+[ext_resource type="Texture2D" path="res://assets/textures/planks_nor_gl.jpg" id="2_muxy6"]
+[ext_resource type="Texture2D" path="res://assets/textures/planks_rough.jpg" id="3_la8ux"]
+
+[resource]
+albedo_color = Color(0.6, 0.55, 0.47, 1)
+albedo_texture = ExtResource("1_yqeha")
+roughness_texture = ExtResource("3_la8ux")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_muxy6")
+uv1_scale = Vector3(1.9, 1.9, 1.9)
+uv1_triplanar = true
+texture_filter = 5

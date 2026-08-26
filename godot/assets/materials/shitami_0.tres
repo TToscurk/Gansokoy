@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/shitami_diff.jpg" id="1_qmnps"]
+[ext_resource type="Texture2D" path="res://assets/textures/shitami_nor_gl.jpg" id="2_mqkip"]
+[ext_resource type="Texture2D" path="res://assets/textures/shitami_rough.jpg" id="3_8e4th"]
+
+[resource]
+albedo_color = Color(1, 0.98, 0.95, 1)
+albedo_texture = ExtResource("1_qmnps")
+roughness_texture = ExtResource("3_8e4th")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_mqkip")
+uv1_scale = Vector3(0.34, 0.34, 0.34)
+uv1_triplanar = true

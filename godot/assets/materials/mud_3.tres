@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/arakabe_diff.jpg" id="1_wv1d8"]
+[ext_resource type="Texture2D" path="res://assets/textures/arakabe_nor_gl.jpg" id="2_h14jb"]
+[ext_resource type="Texture2D" path="res://assets/textures/arakabe_rough.jpg" id="3_unylv"]
+
+[resource]
+albedo_color = Color(0.64, 0.58, 0.46, 1)
+albedo_texture = ExtResource("1_wv1d8")
+roughness_texture = ExtResource("3_unylv")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_h14jb")
+uv1_scale = Vector3(0.42, 0.42, 0.42)
+uv1_triplanar = true
+texture_filter = 5

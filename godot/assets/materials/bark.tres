@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bhepfy5mcuoii"]
+
+[ext_resource type="Texture2D" uid="uid://cpa2sqh2bue2m" path="res://assets/textures/bark_cedar_diff.jpg" id="1_k5hj0"]
+[ext_resource type="Texture2D" uid="uid://bnxer56p8rhhe" path="res://assets/textures/bark_cedar_nor_gl.jpg" id="2_64srj"]
+[ext_resource type="Texture2D" uid="uid://dwrjyuu5jte0l" path="res://assets/textures/bark_cedar_rough.jpg" id="3_mfrh5"]
+
+[resource]
+albedo_texture = ExtResource("1_k5hj0")
+roughness_texture = ExtResource("3_mfrh5")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_64srj")
+uv1_scale = Vector3(0.7, 0.7, 0.7)
+uv1_triplanar = true
+texture_filter = 5

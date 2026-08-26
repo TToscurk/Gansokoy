@@ -1,0 +1,13 @@
+# Godot 4 匯入快取與編輯器個人設定 —— 不進版控
+.godot/
+*.tmp
+
+# 烘焙底稿是產物，不進版控（會把 repo 撐到幾百 MB）。
+# 重烤：在 repo 根目錄跑 `node tools/export-godot.mjs`（詳見 docs/godot-migration.md）
+blockout/*.glb
+blockout/*.import
+# Godot 匯入時從 glb 抽出來的內嵌貼圖，一樣是產物
+blockout/*.png
+
+# GDSkills agent vision scratch (do not commit)
+.gdskills/

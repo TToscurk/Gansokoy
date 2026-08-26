@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dkb4vx05u6ppp"]
+
+[resource]
+vertex_color_use_as_albedo = true
+roughness = 0.85

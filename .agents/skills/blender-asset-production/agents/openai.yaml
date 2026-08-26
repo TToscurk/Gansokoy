@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blender Asset Production"
+  short_description: "Produce reusable Blender assets through Godot"
+  default_prompt: "Use $blender-asset-production to build and validate this reusable game asset."

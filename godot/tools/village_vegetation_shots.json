@@ -1,0 +1,7 @@
+[
+  {"name":"veg_mainstreet_eye","cam":[0,1.7,-88],"look":[0,3.4,-124],"time":11},
+  {"name":"veg_mainstreet_high","cam":[0,7.0,-85],"look":[0,4.2,-126],"time":11},
+  {"name":"veg_market","cam":[4,5.5,88],"look":[-26,2.2,57],"time":11},
+  {"name":"veg_shrine","cam":[8,4.2,4],"look":[-26,4.0,2],"time":11},
+  {"name":"veg_village_edge","cam":[174,8.0,168],"look":[130,3.0,140],"time":11}
+]

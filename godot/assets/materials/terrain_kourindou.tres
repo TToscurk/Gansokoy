@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/terrain_pbr.gdshader" id="1_jkyob"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_forest_diff.jpg" id="2_p8lhc"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_forest_nor_gl.jpg" id="3_she4y"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_diff.jpg" id="4_f0jhm"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="5_vnhw5"]
+[ext_resource type="Texture2D" path="res://maps/kourindou/gen/ground_tex.res" id="6_0v7jd"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_path_diff.jpg" id="7_4jydg"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_path_nor_gl.jpg" id="8_1bx71"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_jkyob")
+shader_parameter/grass_diff = ExtResource("4_f0jhm")
+shader_parameter/grass_nor = ExtResource("5_vnhw5")
+shader_parameter/forest_diff = ExtResource("2_p8lhc")
+shader_parameter/forest_nor = ExtResource("3_she4y")
+shader_parameter/path_diff = ExtResource("7_4jydg")
+shader_parameter/path_nor = ExtResource("8_1bx71")
+shader_parameter/dirt_amount = null
+shader_parameter/dirt_tile = null
+shader_parameter/dirt_tint = null
+shader_parameter/mask_tex = ExtResource("6_0v7jd")
+shader_parameter/tile = null
+shader_parameter/path_tile = null
+shader_parameter/forest_tile = null
+shader_parameter/grass_tint = null

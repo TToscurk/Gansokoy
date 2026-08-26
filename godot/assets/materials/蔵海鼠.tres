@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/namako_diff.jpg" id="1_0nv4i"]
+[ext_resource type="Texture2D" path="res://assets/textures/namako_nor_gl.jpg" id="2_80uwq"]
+[ext_resource type="Texture2D" path="res://assets/textures/namako_rough.jpg" id="3_x6ya2"]
+
+[resource]
+albedo_color = Color(0.92, 0.92, 0.9, 1)
+albedo_texture = ExtResource("1_0nv4i")
+roughness_texture = ExtResource("3_x6ya2")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_80uwq")
+uv1_scale = Vector3(2.1, 2.1, 2.1)
+uv1_triplanar = true
+texture_filter = 5

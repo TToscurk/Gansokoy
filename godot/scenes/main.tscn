@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2"]
+
+[ext_resource type="Shader" path="res://shaders/sky_cumulus.gdshader" id="3"]
+
+[sub_resource type="ShaderMaterial" id="sky"]
+shader = ExtResource("3")
+
+[sub_resource type="Sky" id="skyres"]
+sky_material = SubResource("sky")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("skyres")
+tonemap_mode = 3
+tonemap_exposure = 1.02
+tonemap_white = 4.0
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 0.72
+glow_hdr_threshold = 1.25
+ambient_light_energy = 0.72
+adjustment_enabled = true
+adjustment_contrast = 1.08
+adjustment_saturation = 1.24
+fog_enabled = true
+fog_light_color = Color(0.75, 0.8, 0.86, 1)
+fog_density = 0.0012
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0, -0.5, -0.383, 0.643, -0.663, 0.3215, 0.766, 0.557, 0, 60, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 100.0
+
+[node name="Player" parent="." instance=ExtResource("2")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MapLabel" type="Label" parent="UI"]
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 500.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 22
+text = "…"
+
+[node name="ClockLabel" type="Label" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+text = "10:30"
+
+[node name="InteractionPrompt" type="Label" parent="UI"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -92.0
+offset_right = 110.0
+offset_bottom = -52.0
+theme_override_colors/font_color = Color(1, 0.94, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+text = "E：交談"
+horizontal_alignment = 1
+
+[node name="InteractionMessage" type="Label" parent="UI"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -155.0
+offset_right = 280.0
+offset_bottom = -108.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1

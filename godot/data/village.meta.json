@@ -1,0 +1,44 @@
+{
+ "colliders": [],
+ "connections": [
+  "trail",
+  "kourindou",
+  "myouren",
+  "lake"
+ ],
+ "id": "village",
+ "note": "人間之里（Meshy 手工建築與街區重設計版）。舊 gen_town／170 町家流程已於 2026-08-25 退休；目前 village.tscn、既有地標、地形、河道與路燈為保留基底。農田、祭典與 NPC 為獨立延後階段。",
+ "playSize": [
+  460,
+  460
+ ],
+ "portals": [
+  {
+   "arrival_ground_y": 0.3,
+   "arrival_yaw": 3.14159265358979,
+   "target": "trail",
+   "x": 0.0,
+   "y": 0.33,
+   "z": -174.0
+  },
+  {
+   "target": "kourindou",
+   "x": -132.0,
+   "y": 0.04,
+   "z": 100.0
+  },
+  {
+   "target": null,
+   "x": 94.3,
+   "y": 0.3,
+   "z": -286.0
+  },
+  {
+   "target": "hieda1f",
+   "x": -78.05,
+   "y": -0.67,
+   "z": -164.6
+  }
+ ],
+ "safe": true
+}

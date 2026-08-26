@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bq8ctfpgkwj7g"
+path.s3tc="res://.godot/imported/霧雨店_metallic_roughness_8.jpg-070613139006c71a2d0bd05eda5f7f4b.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "6dbafa205d1a5bbafae8add0693d7988"
+}
+
+[deps]
+
+source_file="res://maps/village/gen/霧雨店/霧雨店_metallic_roughness_8.jpg"
+dest_files=["res://.godot/imported/霧雨店_metallic_roughness_8.jpg-070613139006c71a2d0bd05eda5f7f4b.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

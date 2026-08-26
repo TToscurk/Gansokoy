@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" uid="uid://cadm4in1ug4ey" path="res://imported_models/Clockwork Lantern Pole_1/Clockwork Lantern Pole_1.glb" id="1_model"]
+
+[node name="路燈" type="Node3D" groups=["village_lamps"]]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="模型偏移" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23921108, 0, 0)
+
+[node name="Clockwork Lantern Pole_1" parent="模型偏移" instance=ExtResource("1_model")]
+
+[node name="光" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1502, 0.23, 0)
+light_color = Color(1, 0.76, 0.46, 1)
+light_energy = 1.1
+shadow_enabled = false
+distance_fade_enabled = true
+distance_fade_begin = 55.0
+distance_fade_length = 15.0
+omni_range = 14.0

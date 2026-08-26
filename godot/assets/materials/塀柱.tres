@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/dark_wood_diff.jpg" id="1_2b0hi"]
+[ext_resource type="Texture2D" path="res://assets/textures/dark_wood_nor_gl.jpg" id="2_588j5"]
+[ext_resource type="Texture2D" path="res://assets/textures/dark_wood_rough.jpg" id="3_wo36l"]
+
+[resource]
+albedo_color = Color(0.34, 0.32, 0.29, 1)
+albedo_texture = ExtResource("1_2b0hi")
+roughness_texture = ExtResource("3_wo36l")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("2_588j5")
+uv1_scale = Vector3(2.2, 2.2, 2.2)
+uv1_triplanar = true
+texture_filter = 5
