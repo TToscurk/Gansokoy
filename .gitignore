@@ -5,10 +5,10 @@ shots2/
 # 清理備份區 —— 不上傳（1.7GB，本地保險用）
 work_backups/
 
-# .claude/skills 是指向 .agents/skills 的 Windows Junction；
-# git 會把它當一般目錄提交成重複內容，故排除。
-# 權威來源是 .agents/skills/（CLAUDE.md 已寫明路由）。
-.claude/skills/
+# 2026-08-26 方向反轉：真實 skill 檔案在 .claude/skills/（Skill tool 需要），
+# .agents/skills/ 是指向它的 Windows Junction（Codex 讀檔穿透無礙）。
+# junction 側排除，避免 git 提交重複內容。
+.agents/skills/
 
 # 未被任何場景引用的大型模型下載（176/185MB，超過 GitHub 單檔上限）
 godot/imported_models/Mountain Garden Manor/

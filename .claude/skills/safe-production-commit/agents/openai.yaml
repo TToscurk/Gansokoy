@@ -1,0 +1,4 @@
+interface:
+  display_name: "Safe Production Commit"
+  short_description: "Validate and commit one subsystem safely"
+  default_prompt: "Use $safe-production-commit to validate and commit only the current subsystem."

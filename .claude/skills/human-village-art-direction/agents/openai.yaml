@@ -1,0 +1,4 @@
+interface:
+  display_name: "Human Village Art Direction"
+  short_description: "Apply the Human Village visual contract"
+  default_prompt: "Use $human-village-art-direction to guide this Human Village visual production pass."

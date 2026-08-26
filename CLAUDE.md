@@ -19,11 +19,10 @@ Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes,
 
 ## Project Skill Discovery
 
-The canonical project skills are shared from `.agents/skills/` to avoid duplicate
-Codex/Claude copies drifting apart. For Godot work, load
-`.agents/skills/godot-master/SKILL.md`; for scene design, road planning, 3D
+The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). For Godot work, load
+`.claude/skills/godot-master/SKILL.md`; for scene design, road planning, 3D
 layout, blockout, sightlines, landmark guidance, or level flow, also load
-`.agents/skills/level-design/SKILL.md`. Follow the on-demand routing and
+`.claude/skills/level-design/SKILL.md`. Follow the on-demand routing and
 precedence rules in `AGENT_CONSTITUTION.md` under "Godot Skill 路由規則".
 
 ## Working Rules
