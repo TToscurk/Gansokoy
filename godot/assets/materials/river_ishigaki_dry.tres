@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cxaipje5jwykf"]
+
+[ext_resource type="Texture2D" uid="uid://c3psomdrb2or7" path="res://assets/textures/stone_wall_diff.jpg" id="1_pvai3"]
+[ext_resource type="Texture2D" uid="uid://os61o62y0yn8" path="res://assets/textures/stone_wall_rough.jpg" id="2_5yl80"]
+[ext_resource type="Texture2D" uid="uid://csaw5csu6avkv" path="res://assets/textures/stone_wall_nor_gl.jpg" id="2_pi3mi"]
+
+[resource]
+cull_mode = 2
+albedo_color = Color(0.34, 0.34, 0.32, 1)
+albedo_texture = ExtResource("1_pvai3")
+roughness_texture = ExtResource("2_5yl80")
+normal_enabled = true
+normal_scale = 0.8
+normal_texture = ExtResource("2_pi3mi")
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true

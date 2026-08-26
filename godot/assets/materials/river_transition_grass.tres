@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bmnq3u3g8pqsa"]
+
+[ext_resource type="Texture2D" uid="uid://cskkyqgdy2y0f" path="res://assets/textures/terrain_grass_diff.jpg" id="1_qqbdq"]
+[ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_yp57o"]
+
+[resource]
+cull_mode = 2
+albedo_color = Color(0.55, 0.62, 0.38, 1)
+albedo_texture = ExtResource("1_qqbdq")
+normal_enabled = true
+normal_texture = ExtResource("2_yp57o")
+uv1_scale = Vector3(0.18, 0.18, 0.18)
+uv1_triplanar = true

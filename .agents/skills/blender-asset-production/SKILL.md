@@ -5,6 +5,13 @@ description: Produce or substantially revise reusable Blender-to-GLB assets for 
 
 # Blender Asset Production
 
+> **⚠️ Scope narrowed (user ruling 2026-08-26):** LLM-written procedural
+> generation of new visible 3D assets (props, buildings, bridges) is
+> **rejected — too ugly**. New visible assets come from the image-AI → Meshy 7
+> workflow instead. Use this skill only for: maintaining existing generators,
+> terrain/water/utility geometry, scattering, and export/import mechanics of
+> Meshy-produced GLBs. Do not author new bpy asset generators for visible art.
+
 Read `CLAUDE.md`, `.claude/rules/art-review.md`, and `.claude/rules/godot.md`. Inspect the relevant source in `godot/assets/blender/` before editing; reuse its helpers, export conventions, materials, and output paths.
 
 ## Workflow

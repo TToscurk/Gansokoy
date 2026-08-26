@@ -5,6 +5,13 @@ description: Direct and validate stylized Gensokyo/Touhou 3D environment assets 
 
 # Gensokyo 3D Art Director
 
+> **⚠️ Pipeline update (user ruling 2026-08-26):** new visible 3D assets are
+> produced via image-AI → Meshy 7 (image-to-3D), not LLM-written bpy
+> generators — the procedural route was rejected on quality. This skill's
+> judgment criteria (silhouette, proportion, materials, readability,
+> ART_REVIEW discipline) still apply fully to Meshy-produced assets and
+> their Godot integration.
+
 Build production-ready stylized environment assets while treating the repository as the source of truth. Combine technical-art discipline with explicit visual review instead of equating successful export with acceptable art.
 
 ## Establish the contract

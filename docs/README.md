@@ -17,6 +17,7 @@ Permanent agent policy lives in repo-root `CLAUDE.md`, `AGENTS.md`, `AGENT_CONST
 |---|---|
 | Human Village rules (generator retired 2026-08-25; structure rules still apply) | `ningen-no-sato.md` |
 | Human Village art direction | `village-art-direction.md` |
+| Village rebuild concept (zones, river spec, machiya types) | `village-concept-reference.md` |
 | Generator domain vocabulary (village-generator ADRs superseded) | `domain-model.md` |
 | Godot migration history (historical; current version is 4.7) | `godot-migration.md` |
 | Border / horizon geography | `border-vistas.md` |

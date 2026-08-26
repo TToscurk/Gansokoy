@@ -30,6 +30,26 @@ This file is intentionally short. It contains only facts that should affect the 
 - Yoriichi has **not yet replaced the formal Player in the main `godot/` game project**.
 - Read `docs/yoriichi-runtime.md` only when working on Yoriichi.
 
+## Village Rebuild — active work (2026-08-26)
+
+- Visual authority for the rebuild: `docs/village-concept-reference.md` (user-supplied concept art: dragon plaza center, market axis south, residential west, Hieda estate + rice fields east, graveyard north, **wide open-U river along the south edge**).
+- River rework in progress on `maps/slice/slice.tscn`: ring/narrow versions v1–v5 were **rejected by the user (too narrow, not U-shaped)**; current candidate is `river_open_u` v6b (`shots2/river_open_u_v6b_*_20260826`), awaiting Human Art Review.
+- River art card (user, 2026-08-26): **deep moat-like channel, stone-textured revetment, vegetation + trees along the banks**. The procedurally generated bridge is **placeholder only — do not treat it as final**; the user will replace it with a Meshy-made bridge.
+- v7 pass applied on slice (2026-08-26 afternoon): 22 bank trees (round/pine/sakura mix at the three bridge areas, node `RiverV3_Candidate/RiverBankTrees`), stone revetment materials assigned (`river_ishigaki_dry.tres` on Dry banks, `river_ishigaki_wet.tres` on Wet banks; shared `2F岸石.tres` untouched). Shots: `shots2/river_open_u_v7*_20260826`.
+- Bank trees were removed again on user order (2026-08-26 evening): trees/vegetation will come from Meshy; do not plant the existing tree_* GLBs along the river.
+- **Outer landscape rebuilt as one mesh (2026-08-26 evening).** The v8 double-sided-material change hid only one symptom: the former `OuterTerrainTransition` had a 187.52m AABB height, 244 vertices above 20m, folded walls, and triangular world voids. `tools/repair_river_outer_transition.gd` now derives the exact top boundary of `OuterDryBank` and writes one low, continuous `river_outer_transition_fixed.res` (2,543 vertices / 4,666 triangles, Y −0.09…0.19m). The east, west, and central dry-land closures are part of that same ArrayMesh; the separate `LandscapeGapUnderlay` and `NortheastLandscapeGapPatch` nodes/resources were retired. RiverWater remains confined to the U channel. BEFORE: `shots2/river_open_u_v17_no_legacy_vista_trees_detail_20260826`; AFTER: `shots2/river_open_u_v23_unified_outer_land_detail_20260826` and `shots2/river_open_u_v23_unified_outer_land_overview_20260826`. Status is **TECH PASS / awaiting Human Art Review**, not ART_APPROVED. No hill/mountain asset or elevation was generated.
+- Second defect found the same way: `VillageLandExtension`, `EastTail/WestTailLandConnection`, `OuterTerrainTransition` shipped with **no material at all** (rendered white). Patched: earth on the extensions/tails, grass on the transition.
+- Water is CLEAN — probe audit confirms `RiverWater` covers only the channel; earlier oversized-water suspicion was wrong.
+- Materials ready: `river_ishigaki_dry.tres` / `river_ishigaki_wet.tres` (stone revetment, triplanar) and `river_transition_grass.tres` (double-sided matte grass) in `assets/materials/`. Audit tool kept at `godot/tools/audit_river_slice.gd`. The large arch visible at the east edge belongs to the pre-existing root `Vista` mesh, not the river banks; an A/B hide test exposed world void, so `Vista` remains unchanged pending a dedicated landscape-vista replacement.
+- Remaining polish for next round: bright band at the revetment top edge along the waterline (stone material washes pale under fog at distance) — tune stone tint/fog, or accept until lighting pass.
+- Do not integrate any river into `village.tscn` until the slice prototype is approved.
+
+## Asset Pipeline — user ruling 2026-08-26
+
+- **LLM-written procedural 3D asset generation (bpy code producing props/buildings) is REJECTED for new visible assets** — quality verdict: too ugly. New visible 3D assets come from the **image-AI → Meshy 7** workflow (image concept → Meshy image-to-3D → Godot import), same lineage as the Yoriichi character and `godot/imported_models/`.
+- Procedural generation remains acceptable only for non-asset scene work: terrain shaping, water surfaces, scattering/placement, and utility geometry.
+- Existing baked assets in the current baseline stay as-is until individually replaced.
+
 ## Current Priorities
 
 1. Keep the working copy clean and avoid reviving obsolete prototype/review workflows or the retired village generator.
