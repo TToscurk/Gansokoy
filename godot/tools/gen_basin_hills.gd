@@ -11,8 +11,8 @@ const CELL := 12.0
 const R_IN := 430.0
 const R_OUT := 1250.0
 const SEED := 20260826
-const RIVER_CLEAR := 45.0      # inside this distance to water: zero hill
-const RIVER_RAMP := 110.0      # full height beyond this distance
+const RIVER_CLEAR := 80.0      # inside this distance to water: zero hill
+const RIVER_RAMP := 220.0      # full height beyond this distance
 const GAP_HALF_IN := 28.0      # north valley gap inner half-angle (deg)
 const GAP_HALF_OUT := 58.0
 
@@ -25,8 +25,8 @@ func _wkey(x: float, z: float) -> Vector2i:
 func _river_dist(x: float, z: float) -> float:
 	var k := _wkey(x, z)
 	var best: float = 1e9
-	for bx in range(k.x - 3, k.x + 4):
-		for bz in range(k.y - 3, k.y + 4):
+	for bx in range(k.x - 5, k.x + 6):
+		for bz in range(k.y - 5, k.y + 6):
 			var key := Vector2i(bx, bz)
 			if not water_bins.has(key):
 				continue
@@ -70,6 +70,7 @@ func _init() -> void:
 	var x0: float = -R_OUT
 	var hs := PackedFloat32Array(); hs.resize(n * n)
 	var mask := PackedByteArray(); mask.resize(n * n)
+	var cut := PackedByteArray(); cut.resize(n * n)
 	var cols := PackedColorArray(); cols.resize(n * n)
 	var near_col := Color(0.40, 0.50, 0.30)
 	var far_col := Color(0.52, 0.58, 0.52)
@@ -99,13 +100,18 @@ func _init() -> void:
 			var theta_deg: float = abs(rad_to_deg(atan2(x, -z)))   # 0 = north, 180 = south
 			var gap: float = 0.05 + 0.95 * smoothstep(GAP_HALF_IN, GAP_HALF_OUT, theta_deg)
 			var south: float = 1.0 + 0.30 * smoothstep(120.0, 170.0, theta_deg)
-			# river clearance
+			# river clearance: sheet is CUT OUT over the channel itself,
+			# and hills ramp in gently far from the water
 			var rd: float = _river_dist(x, z)
+			if rd < 8.0:
+				cut[i] = 1
 			var rf: float = smoothstep(RIVER_CLEAR, RIVER_RAMP, rd)
 			var hill: float = m * window * gap * south * rf
+			if rd < 45.0:
+				# tuck the base behind the revetment wall so the sheet edge hides
+				base = lerpf(-4.0, base, smoothstep(8.0, 45.0, rd))
 			if rd < RIVER_CLEAR:
 				eaten = max(eaten, m * window * gap * south)  # what WOULD have been there
-				hill = 0.0
 			hs[i] = base + hill
 			var tcol: float = smoothstep(660.0, 990.0, r)
 			cols[i] = near_col.lerp(far_col, tcol)
@@ -120,6 +126,8 @@ func _init() -> void:
 			var i01: int = (iz + 1) * n + ix
 			var i11: int = (iz + 1) * n + ix + 1
 			if mask[i00] == 0 or mask[i10] == 0 or mask[i01] == 0 or mask[i11] == 0:
+				continue
+			if cut[i00] == 1 or cut[i10] == 1 or cut[i01] == 1 or cut[i11] == 1:
 				continue
 			var va := Vector3(x0 + ix * CELL, hs[i00], x0 + iz * CELL)
 			var vb := Vector3(x0 + (ix + 1) * CELL, hs[i10], x0 + iz * CELL)
