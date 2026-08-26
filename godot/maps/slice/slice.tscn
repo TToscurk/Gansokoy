@@ -2751,21 +2751,6 @@ multimesh = SubResource("MultiMesh_6x18n")
 material_override = SubResource("StandardMaterial3D_1l18a")
 mesh = SubResource("ArrayMesh_pm8s3")
 
-[node name="VistaTrees" type="MultiMeshInstance3D" parent="." unique_id=545659398]
-cast_shadow = 0
-multimesh = SubResource("MultiMesh_jm55c")
-metadata/river_corridor_filtered = true
-
-[node name="VistaGrove_0" type="MultiMeshInstance3D" parent="." unique_id=1451203398]
-cast_shadow = 0
-multimesh = SubResource("MultiMesh_0bqe7")
-metadata/river_corridor_filtered = true
-
-[node name="VistaGrove_1" type="MultiMeshInstance3D" parent="." unique_id=20461378]
-cast_shadow = 0
-multimesh = SubResource("MultiMesh_l7i4n")
-metadata/river_corridor_filtered = true
-
 [node name="Terrain" type="MeshInstance3D" parent="." unique_id=9472395]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.082, 0)
 material_override = SubResource("StandardMaterial3D_88j0w")
