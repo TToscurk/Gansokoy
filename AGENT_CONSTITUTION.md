@@ -133,8 +133,8 @@
 
 ### Godot Skill 路由規則
 
-- 所有 Godot 實作、診斷、審查、規劃、效能或視覺工作，先載入 `.agents/skills/godot-master/SKILL.md`，並只按其決策矩陣載入本次工作需要的 reference；不得一次載入整個參考庫。
-- 場景設計、道路規劃、3D 佈局、blockout、玩家尺度、視線、地標導引或關卡流線工作，另載入 `.agents/skills/level-design/SKILL.md`。導航與效能工作則按需使用 `godot-master` 的對應 reference，不再安裝功能重疊的 Skill。
+- 所有 Godot 實作、診斷、審查、規劃、效能或視覺工作，先載入 `.claude/skills/godot-master/SKILL.md`，並只按其決策矩陣載入本次工作需要的 reference；不得一次載入整個參考庫。
+- 場景設計、道路規劃、3D 佈局、blockout、玩家尺度、視線、地標導引或關卡流線工作，另載入 `.claude/skills/level-design/SKILL.md`。導航與效能工作則按需使用 `godot-master` 的對應 reference，不再安裝功能重疊的 Skill。
 - Skill 是專業知識與工作路由，不是第二套 pipeline。使用者當前指示、本文、實際 Godot 版本、專案權威文件與既有 build／capture／validation 入口均優先於通用 Skill；不得用 Skill 規避 Human Art Review、擴張範圍或建立平行工具。
 - **禁用 `godot-master` 的平行 QA／建置工作流**：其 Workflow 11–14（Builder 程式化建場景、Agent Vision 截圖評分、Analyst 架構評分、Auditor never-list 掃描）及 `scripts/` 內的對應腳本一律不得使用——它們正是紅線 1 禁止的平行框架。視覺驗證只走本專案 capture 管線與 Human Art Review；架構與程式審查走專案既有 rules 與 skill。`godot-master` 只作為 Godot API／效能／物理等**知識查詢**，且只按需載入單一 reference。其中大量 genre／mobile／multiplayer／2D 內容與本專案無關，不得作為路由依據。
 

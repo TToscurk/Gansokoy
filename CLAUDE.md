@@ -11,8 +11,8 @@ The 170-house village generator pipeline was retired 2026-08-25; the village is 
 3. Read only the `.claude/rules/` file(s) relevant to the task.
 4. Read at most the one subsystem document needed for the task.
 5. Inspect `git status`, `git diff`, and relevant code before expanding context.
-   (This working copy has no git yet — it will be initialized before GitHub upload.
-   Until then skip git checks and git-dependent skills; this is not an error.)
+   (Git is initialized on branch `main`, local only — not yet pushed to GitHub.
+   Commit each approved round before handing work to another agent.)
 
 Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes, or unrelated subsystem files.
 `docs/archive/` is historical evidence only; read it only when a past decision is disputed.
