@@ -33,6 +33,7 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Material" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
+[ext_resource type="PackedScene" path="res://assets/models/vista/vista_youkai_mountain.glb" id="45_youkaimt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -2139,10 +2140,10 @@ glow_enabled = true
 glow_intensity = 0.72
 glow_hdr_threshold = 1.25
 fog_enabled = true
-fog_density = 0.0006
+fog_density = 0.00022
 fog_sky_affect = 0.05
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.004
+volumetric_fog_density = 0.0015
 volumetric_fog_sky_affect = 0.0
 adjustment_enabled = true
 adjustment_contrast = 1.08
@@ -2736,6 +2737,9 @@ cast_shadow = 0
 [node name="BasinHills" type="MeshInstance3D" parent="."]
 mesh = ExtResource("43_hills")
 material_override = ExtResource("44_hillsmat")
+
+[node name="VistaMountain_Youkai" parent="." instance=ExtResource("45_youkaimt")]
+transform = Transform3D(900, 0, 0, 0, 900, 0, 0, 0, 900, -1131, -397, -1131)
 [node name="鎮守之杜" type="Node3D" parent="." unique_id=803029421]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 170.25989, -0.0872175, -128.84196)
 
