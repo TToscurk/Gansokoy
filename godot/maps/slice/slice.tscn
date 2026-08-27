@@ -27,10 +27,13 @@
 [ext_resource type="Material" uid="uid://dxlldb4ljao4h" path="res://assets/materials/river_ishigaki_wet.tres" id="26_s44nm"]
 [ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="26_xm1ot"]
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="29_bb8mf"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="33_ks04b"]
+[ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="34_sronm"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="35_dkw4w"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
-[ext_resource type="ArrayMesh" uid="uid://c4m7ko3y7bxnd" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
+[ext_resource type="ArrayMesh" uid="uid://crsgmrjqmlhbd" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
-[ext_resource type="Material" uid="uid://b1agnxfwpf1fg" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
+[ext_resource type="Material" uid="uid://c7qpg3wphev7y" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
 [ext_resource type="Shader" uid="uid://cq4klosv1obrf" path="res://shaders/sky_panorama_lift.gdshader" id="44_skylift"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
@@ -2272,7 +2275,7 @@ size = Vector3(76.61282, 64, 8)
 shader = ExtResource("44_skylift")
 shader_parameter/panorama = ExtResource("43_skypano")
 shader_parameter/horizon_lift = 0.34999999403954
-shader_parameter/energy = 0.8650000410875
+shader_parameter/energy = 0.9750000463125
 
 [sub_resource type="Sky" id="Sky_r50dx"]
 sky_material = SubResource("ShaderMaterial_skylift")
@@ -2324,12 +2327,8 @@ material_override = ExtResource("2_bb8mf")
 mesh = SubResource("ArrayMesh_2222y")
 metadata/needs_trimesh = true
 
-[node name="GroundUnderlay" type="MeshInstance3D" parent="." unique_id=1650455372]
-material_override = ExtResource("29_bb8mf")
-cast_shadow = 0
-mesh = ExtResource("40_underlay")
-
 [node name="BasinHills" type="MeshInstance3D" parent="." unique_id=507562326]
+visible = false
 material_override = ExtResource("44_hillsmat")
 mesh = ExtResource("43_hills")
 
@@ -3708,6 +3707,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.866819, 180)
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.873203, 180)
 
 [node name="RiverV3_Candidate" type="Node3D" parent="." unique_id=297961216]
+visible = false
 metadata/art_ratio = "natural_70_human_30"
 
 [node name="VillageLandExtension" type="MeshInstance3D" parent="RiverV3_Candidate" unique_id=1983704240]
@@ -3926,3 +3926,17 @@ shape = SubResource("BoxShape3D_tk77k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
 environment = SubResource("Environment_2row0")
+
+[node name="GroundUnderlay" type="MeshInstance3D" parent="." unique_id=931504321]
+visible = false
+material_override = ExtResource("29_bb8mf")
+cast_shadow = 0
+mesh = ExtResource("40_underlay")
+
+[node name="UnifiedGround" type="MeshInstance3D" parent="." unique_id=1538605719]
+material_override = ExtResource("44_hillsmat")
+mesh = ExtResource("33_ks04b")
+
+[node name="EastRiverWater" type="MeshInstance3D" parent="." unique_id=1952612207]
+material_override = ExtResource("34_sronm")
+mesh = ExtResource("35_dkw4w")

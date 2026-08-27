@@ -23,10 +23,11 @@ config/features=PackedStringArray("4.7")
 DayNight="*res://scripts/daynight.gd"
 Weather="*res://scripts/weather.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+CyclopsAutoload="*uid://4siqre3jhe80"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg")
+enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [input]
 
