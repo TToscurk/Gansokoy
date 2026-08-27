@@ -62,7 +62,7 @@ func _init() -> void:
 			var cx: float = sin(ang) * rad
 			var cz: float = -cos(ang) * rad          # ang 0 = north (-z)
 			var mr: float = rng.randf_range(75.0, 150.0)
-			var mh: float = [rng.randf_range(14.0, 24.0), rng.randf_range(20.0, 34.0), rng.randf_range(26.0, 44.0)][row]
+			var mh: float = [rng.randf_range(24.0, 40.0), rng.randf_range(34.0, 56.0), rng.randf_range(44.0, 72.0)][row]
 			mounds.append([cx, cz, mr, mh])
 	print("mounds: ", mounds.size())
 
@@ -88,6 +88,7 @@ func _init() -> void:
 			# tuck-in base: starts under the existing ground, rises to field level
 			var base: float = lerpf(-1.6, -0.2, smoothstep(R_IN, 560.0, r))
 			var window: float = smoothstep(615.0, 690.0, r) * (1.0 - smoothstep(910.0, 990.0, r))
+			var wob: float = 0.82 + 0.36 * (sin(x * 0.011 + z * 0.007) * 0.5 + sin(x * 0.023 - z * 0.017 + 2.1) * 0.3 + sin(-x * 0.006 + z * 0.019 + 4.4) * 0.2)
 			var m: float = 0.0
 			for md in mounds:
 				var d: float = Vector2(x - (md as Array)[0], z - (md as Array)[1]).length()
@@ -95,7 +96,7 @@ func _init() -> void:
 				if d < mr:
 					var t: float = cos(d / mr * PI * 0.5)
 					m += (md as Array)[3] * t * t
-			m = min(m, 46.0)
+			m = min(m, 78.0)
 			# asymmetry: north gap + south boost
 			var theta_deg: float = abs(rad_to_deg(atan2(x, -z)))   # 0 = north, 180 = south
 			var gap: float = 0.05 + 0.95 * smoothstep(GAP_HALF_IN, GAP_HALF_OUT, theta_deg)
@@ -106,7 +107,7 @@ func _init() -> void:
 			if rd < 8.0:
 				cut[i] = 1
 			var rf: float = smoothstep(RIVER_CLEAR, RIVER_RAMP, rd)
-			var hill: float = m * window * gap * south * rf
+			var hill: float = m * wob * window * gap * south * rf
 			if rd < 26.0:
 				# over the channel: dive below the river bed, hidden by the walls
 				base = -9.8
