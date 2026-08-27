@@ -6,9 +6,7 @@
 
 以最短時間做出玩家**看得見、走得到、可展示**的幻想鄉品質提升。
 
-**基線（2026-08-26 裁定）**：現行 `village.tscn` 就是新基線——地標區（鎮守之杜、稗田邸、鈴奈庵、寺子屋、霧雨店、鯢吞亭、龍神像）＋路燈＋植被＋遠景。舊 170 戶町屋、市場、村門均已隨舊方案刪除，**不存在也不需尋找或還原**。近期 showable slice 為：
-
-**現有地標區的可走可看範圍**（使用者指定新路線前，以此為準）
+**基線**：現行 `village.tscn` 就是基線——地標區（鎮守之杜、稗田邸、鈴奈庵、寺子屋、霧雨店、鯢吞亭、龍神像）＋路燈＋植被＋遠景。近期 showable slice 為**現有地標區的可走可看範圍**（使用者指定新路線前，以此為準）。
 
 預設資源配置：**20% 修舊、80% 製作新美術與可見成果**。不要用內部整潔、架構優雅或測試數量冒充玩家可見進度。
 
@@ -88,12 +86,12 @@
 
 遇到選擇時依序判斷：
 
-1. 玩家在現行展示路線（見第 1 節基線）看得到嗎？看不到則降級或不做。
-2. 是新增可見價值，還是修舊？若本輪修舊已接近 20%，優先新製作。
-3. 能否重用既有工具或刪掉一個步驟？能則不得新增平行工具。
+1. 玩家在現行展示路線看得到嗎？看不到則降級或不做。
+2. 新增可見價值還是修舊？（預算見第 1 節）
+3. 能否重用既有工具或刪掉一個步驟？
 4. 目前是 50m、20m 還是 5m 問題？只解決最高影響距離。
-5. 修復與替換何者更快達到 ART REVIEW？預設選替換低價值壞資產。
-6. 是否真的被核心阻塞？沒有證據就不碰 generator/RNG/roads/Portal。
+5. 修復與替換何者更快達到 ART REVIEW？
+6. 是否真的被核心阻塞？（紅線 3）
 
 時間盒：
 
@@ -106,14 +104,7 @@
 
 ## 8. KPI：用成果而非忙碌衡量
 
-每輪至少回報：
-
-- 展示路線上新增／替換／移除的可見資產數
-- 通過 `TECH_PASS` 與等待 `ART_REVIEW` 的數量；`ART_APPROVED` 僅引用使用者決定
-- 50m／20m／5m 前後對照與改善層級
-- Fast 與 Full 各自耗時、失敗資產是否可單獨定位
-- 本輪修舊／新製作比例（目標約 20／80）
-- 新增永久工具數、淘汰舊步驟數（理想：新增 0；若新增，必須移除或取代既有負擔）
+每輪至少回報：展示路線上新增／替換／移除的可見資產數；`TECH_PASS` 與 `ART_REVIEW` 數量（`ART_APPROVED` 僅引用使用者決定）；三距離前後對照；修舊／新製比例；新增永久工具數（理想 0，若新增必須淘汰既有負擔）。
 
 「讀了很多檔、跑了很多測試、重構很漂亮」不是 KPI。
 
@@ -133,22 +124,16 @@
 
 ### Godot Skill 路由規則
 
-- **按需載入（使用者 2026-08-26 修訂，原「每次強制」因 token 成本過高撤回）**：`godot-master` 是**知識查詢庫，不是開工儀式**。只有在遇到真正需要查證的 Godot 技術問題時才載入——例如不確定 API 用法、效能／物理／shader 行為、匯入或算繪疑難。載入時只讀其決策矩陣指向的**單一 reference**，不得載入整個 SKILL.md 參考庫。
-- **不需要載入的情況**（多數任務屬此類）：場景節點增刪改、材質指派、資產擺位、跑既有生成器與 capture、文件更新、憲法既已規定的流程。這些照專案 rules 與既有入口做即可。
-- **必要時按需載入其他專案 Skill 執行**：場景設計／道路規劃／3D 佈局／視線／關卡流線 → `level-design`；視覺前後對照與審查 → `godot-visual-review`；Blender→GLB 資產機制 → `blender-asset-production`；美術判斷 → `gensokyo-3d-art-director`／`human-village-art-direction`；提交 → `safe-production-commit`。不再安裝功能重疊的外部 Skill。
-- Skill 是專業知識與工作路由，不是第二套 pipeline。使用者當前指示、本文、實際 Godot 版本、專案權威文件與既有 build／capture／validation 入口均優先於通用 Skill；不得用 Skill 規避 Human Art Review、擴張範圍或建立平行工具。
-- **禁用 `godot-master` 的平行 QA／建置工作流**：其 Workflow 11–14（Builder 程式化建場景、Agent Vision 截圖評分、Analyst 架構評分、Auditor never-list 掃描）及 `scripts/` 內的對應腳本一律不得使用——它們正是紅線 1 禁止的平行框架。視覺驗證只走本專案 capture 管線與 Human Art Review；架構與程式審查走專案既有 rules 與 skill。`godot-master` 只作為 Godot API／效能／物理等**知識查詢**，且只按需載入單一 reference。其中大量 genre／mobile／multiplayer／2D 內容與本專案無關，不得作為路由依據。
+- `godot-master` 是**按需知識查詢庫，不是開工儀式**：只在真正需要查證的 Godot 技術問題（API 用法、效能／物理／shader 行為、匯入或算繪疑難）時載入，且一次只讀其目錄指向的**單一 reference**。場景節點增刪改、材質指派、資產擺位、跑既有生成器與 capture、文件更新等日常任務不需載入。
+- 其他專案 Skill 同樣按需載入：場景設計／道路規劃／3D 佈局／視線／關卡流線 → `level-design`；視覺前後對照與審查 → `godot-visual-review`；Blender→GLB 資產機制 → `blender-asset-production`；美術判斷 → `gensokyo-3d-art-director`／`human-village-art-direction`；提交 → `safe-production-commit`。不安裝功能重疊的外部 Skill。
+- Skill 是知識與路由，不是第二套 pipeline：使用者當前指示、本文、專案權威文件與既有 build／capture／validation 入口優先於任何 Skill；不得用 Skill 規避 Human Art Review、擴張範圍或重建已刪除的平行 QA／建置工作流（Builder／Agent Vision／Analyst／Auditor 已於修剪時移除，不得重建）。
 
 ## 10. Agent Startup Checklist
 
 - [ ] 讀完本文件；確認使用者本輪明確要求。
-- [ ] 涉及 Godot：確認 godot-ai MCP 連線（`editor_state`）。遇到需查證的技術問題時才載入 `godot-master` 的單一 reference。
-- [ ] 宣告唯一模式：`ART_FAST`／`INTEGRATION`／`BUG_SWEEP`。
-- [ ] 確認工作直接改善現行展示路線（第 1 節基線），或說明必要阻塞。
-- [ ] 設定本輪 20／80 預算、距離層級與可見交付物。
+- [ ] 涉及 Godot：以 `editor_state` 確認 godot-ai MCP 連線。
+- [ ] 宣告唯一模式（第 3 節），確認工作改善現行展示路線，或說明必要阻塞。
 - [ ] 找到並重用既有 build、showcase、validation 入口。
-- [ ] 設定 30／60／120 分鐘檢查點。
-- [ ] 若是美術，先有短 Art Card；若未獲使用者批准，狀態只能到 `ART_REVIEW`。
 - [ ] 完成時提供前後對照、驗證層級、批次結果與下一個最小批次。
 
 若任何舊文件或慣例與本憲法衝突，先停止擴大變更，向使用者指出衝突；除非使用者明確裁決，不得自行建立折衷的第三套流程。
