@@ -8,7 +8,7 @@ extends SceneTree
 ## Run: godot --headless --path godot --script tools/gen_basin_hills.gd
 
 const CELL := 12.0
-const R_IN := 430.0
+const R_IN := 380.0
 const R_OUT := 1250.0
 const SEED := 20260826
 const RIVER_CLEAR := 80.0      # inside this distance to water: zero hill
@@ -86,7 +86,7 @@ func _init() -> void:
 				continue
 			mask[i] = 1
 			# tuck-in base: starts under the existing ground, rises to field level
-			var base: float = lerpf(-1.6, -0.2, smoothstep(R_IN, 620.0, r))
+			var base: float = lerpf(-1.6, -0.2, smoothstep(R_IN, 560.0, r))
 			var window: float = smoothstep(615.0, 690.0, r) * (1.0 - smoothstep(910.0, 990.0, r))
 			var m: float = 0.0
 			for md in mounds:
@@ -107,9 +107,14 @@ func _init() -> void:
 				cut[i] = 1
 			var rf: float = smoothstep(RIVER_CLEAR, RIVER_RAMP, rd)
 			var hill: float = m * window * gap * south * rf
-			if rd < 45.0:
-				# tuck the base behind the revetment wall so the sheet edge hides
-				base = lerpf(-4.0, base, smoothstep(8.0, 45.0, rd))
+			if rd < 26.0:
+				# over the channel: dive below the river bed, hidden by the walls
+				base = -9.8
+			elif rd < 45.0:
+				# climb back inside the revetment wall thickness
+				base = lerpf(-9.8, -0.05, smoothstep(26.0, 40.0, rd))
+			if rd < 60.0 and rd >= 45.0:
+				base = lerpf(-0.05, base, smoothstep(45.0, 60.0, rd))
 			if rd < RIVER_CLEAR:
 				eaten = max(eaten, m * window * gap * south)  # what WOULD have been there
 			hs[i] = base + hill
@@ -126,8 +131,6 @@ func _init() -> void:
 			var i01: int = (iz + 1) * n + ix
 			var i11: int = (iz + 1) * n + ix + 1
 			if mask[i00] == 0 or mask[i10] == 0 or mask[i01] == 0 or mask[i11] == 0:
-				continue
-			if cut[i00] == 1 or cut[i10] == 1 or cut[i01] == 1 or cut[i11] == 1:
 				continue
 			var va := Vector3(x0 + ix * CELL, hs[i00], x0 + iz * CELL)
 			var vb := Vector3(x0 + (ix + 1) * CELL, hs[i10], x0 + iz * CELL)

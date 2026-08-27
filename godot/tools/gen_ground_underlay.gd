@@ -17,7 +17,6 @@ const CHANNEL_Y := -9.6     # below the deepest river bed (-8.85)
 const GROUND_NODES := [
 	"Terrain",
 	"RiverV3_Candidate/VillageLandExtension",
-	"RiverV3_Candidate/OuterTerrainTransition",
 	"RiverV3_Candidate/EastTailLandConnection",
 	"RiverV3_Candidate/WestTailLandConnection",
 ]
@@ -124,8 +123,13 @@ func _init() -> void:
 		for ix in range(nx):
 			var x: float = X0 + ix * CELL
 			var z: float = Z0 + iz * CELL
-			var r: Vector3 = _sample(x, z)
 			var i: int = iz * nx + ix
+			if Vector2(x, z).length() > 430.0:
+				skip[i] = 1
+				hs[i] = -0.6
+				covered[i] = 1
+				continue
+			var r: Vector3 = _sample(x, z)
 			if r.y > 0.5 or r.z > 0.5:
 				# channel band (water/bed/any bank): cut the underlay out here —
 				# the channel geometry is complete and needs no backing sheet
