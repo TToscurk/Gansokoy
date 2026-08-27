@@ -34,6 +34,7 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Material" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
 [ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
+[ext_resource type="Shader" path="res://shaders/sky_panorama_lift.gdshader" id="44_skylift"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -1926,12 +1927,14 @@ shader_parameter/cloud_shade = Color(0.62, 0.68, 0.8, 1)
 shader_parameter/cloud_coverage = 0.48
 shader_parameter/cloud_scale = 7.0
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jinri"]
-panorama = ExtResource("43_skypano")
-energy_multiplier = 1.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skylift"]
+shader = ExtResource("44_skylift")
+shader_parameter/panorama = ExtResource("43_skypano")
+shader_parameter/horizon_lift = 0.08
+shader_parameter/energy = 1.0
 
 [sub_resource type="Sky" id="Sky_r50dx"]
-sky_material = SubResource("PanoramaSkyMaterial_jinri")
+sky_material = SubResource("ShaderMaterial_skylift")
 
 [sub_resource type="Environment" id="Environment_2row0"]
 background_mode = 2
