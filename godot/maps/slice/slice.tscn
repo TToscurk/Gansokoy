@@ -20,21 +20,17 @@
 [ext_resource type="PackedScene" uid="uid://bt6ean5t0aoes" path="res://maps/village/gen/稗田邸/裨田邸.glb" id="20_3gv65"]
 [ext_resource type="PackedScene" uid="uid://huxrost0wlqu" path="res://maps/village/gen/寺子屋/寺子屋.glb" id="21_qw07w"]
 [ext_resource type="PackedScene" uid="uid://dobvoe6skrdqi" path="res://maps/village/gen/稗田邸後院/裨田邸後院.glb" id="22_lgkyf"]
-[ext_resource type="Shader" uid="uid://ca30f2o27q2v1" path="res://shaders/sky_cumulus.gdshader" id="23_0kxbl"]
 [ext_resource type="PackedScene" path="res://scenes/road_lamp.tscn" id="24_idg0l"]
 [ext_resource type="Material" uid="uid://cxaipje5jwykf" path="res://assets/materials/river_ishigaki_dry.tres" id="25_5ybuw"]
 [ext_resource type="Shader" uid="uid://cy3h3t6y31nib" path="res://assets/shaders/water.gdshader" id="25_dhqty"]
 [ext_resource type="Material" uid="uid://dxlldb4ljao4h" path="res://assets/materials/river_ishigaki_wet.tres" id="26_s44nm"]
 [ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="26_xm1ot"]
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="29_bb8mf"]
-[ext_resource type="PackedScene" uid="uid://whvrfpf8rx55" path="res://maps/slice/gen/遠景2/遠景  妖怪之山.glb" id="31_v8gim"]
-[ext_resource type="PackedScene" uid="uid://b60kgc1hxpifa" path="res://maps/slice/gen/遠景3/遠景山.glb" id="32_oyn3r"]
-[ext_resource type="PackedScene" uid="uid://d2fvgcfds37pk" path="res://maps/slice/gen/遠景/遠景  妖怪之山2.glb" id="33_ks04b"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
+[ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
 [ext_resource type="Material" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
-[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
-[ext_resource type="Shader" path="res://shaders/sky_panorama_lift.gdshader" id="44_skylift"]
+[ext_resource type="Shader" uid="uid://cq4klosv1obrf" path="res://shaders/sky_panorama_lift.gdshader" id="44_skylift"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -1918,46 +1914,6 @@ radial_segments = 8
 [sub_resource type="BoxShape3D" id="BoxShape3D_ngtra"]
 size = Vector3(4.2, 8.4, 4.2)
 
-[sub_resource type="ShaderMaterial" id="ProceduralSkyMaterial_of155"]
-shader = ExtResource("23_0kxbl")
-shader_parameter/zenith_color = Color(0.13, 0.32, 0.72, 1)
-shader_parameter/horizon_color = Color(0.72, 0.82, 0.92, 1)
-shader_parameter/cloud_lit = Color(1.06, 1.04, 1, 1)
-shader_parameter/cloud_shade = Color(0.62, 0.68, 0.8, 1)
-shader_parameter/cloud_coverage = 0.48
-shader_parameter/cloud_scale = 7.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_skylift"]
-shader = ExtResource("44_skylift")
-shader_parameter/panorama = ExtResource("43_skypano")
-shader_parameter/horizon_lift = 0.08
-shader_parameter/energy = 1.0
-
-[sub_resource type="Sky" id="Sky_r50dx"]
-sky_material = SubResource("ShaderMaterial_skylift")
-
-[sub_resource type="Environment" id="Environment_2row0"]
-background_mode = 2
-sky = SubResource("Sky_r50dx")
-ambient_light_source = 3
-ambient_light_sky_contribution = 0.55
-ambient_light_energy = 0.72
-tonemap_mode = 3
-tonemap_exposure = 1.02
-ssao_enabled = true
-glow_enabled = true
-glow_intensity = 0.72
-glow_hdr_threshold = 1.25
-fog_enabled = true
-fog_density = 0.00022
-fog_sky_affect = 0.05
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0015
-volumetric_fog_sky_affect = 0.0
-adjustment_enabled = true
-adjustment_contrast = 1.08
-adjustment_saturation = 1.24
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_60qc7"]
 resource_name = "VillageLandExtensionMesh"
 _surfaces = [{
@@ -2310,6 +2266,35 @@ size = Vector3(76.61282, 64, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tk77k"]
 size = Vector3(76.61282, 64, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skylift"]
+shader = ExtResource("44_skylift")
+shader_parameter/panorama = ExtResource("43_skypano")
+shader_parameter/horizon_lift = 0.34999999403954
+shader_parameter/energy = 0.8650000410875
+
+[sub_resource type="Sky" id="Sky_r50dx"]
+sky_material = SubResource("ShaderMaterial_skylift")
+
+[sub_resource type="Environment" id="Environment_2row0"]
+background_mode = 2
+sky = SubResource("Sky_r50dx")
+ambient_light_source = 3
+tonemap_mode = 3
+tonemap_exposure = 1.02
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 0.72
+glow_hdr_threshold = 1.25
+fog_enabled = true
+fog_density = 0.00022
+fog_sky_affect = 0.05
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0015
+volumetric_fog_sky_affect = 0.0
+adjustment_enabled = true
+adjustment_contrast = 1.08
+adjustment_saturation = 1.24
 
 [node name="slice" type="Node3D" unique_id=2096512130]
 metadata/own_colliders = true
@@ -3665,7 +3650,7 @@ transform = Transform3D(-1.1527202e-06, 0, -28.893566, 0, 26.061302, 0, 26.37116
 transform = Transform3D(-2.9992383, 0, 0.067632824, 0, 3, 0, -0.067632824, 0, -2.9992383, 115.4915, -0.169771, 405.4388)
 
 [node name="霧雨店" parent="." unique_id=1073500153 instance=ExtResource("19_37d4b")]
-transform = Transform3D(-5, 0, -4.371139e-07, 0, 5, 0, 4.371139e-07, 0, -5, -111.715126, -0.296841, 63.5591)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -111.715126, -0.296841, 63.5591)
 
 [node name="裨田邸" parent="." unique_id=2032289406 instance=ExtResource("20_3gv65")]
 transform = Transform3D(-2.1855694e-06, 0, 50, 0, 50, 0, -50, 0, -2.1855694e-06, -165.75266, 0, 220.04938)
@@ -3677,6 +3662,7 @@ transform = Transform3D(-1.7484556e-06, 0, -40, 0, 40, 0, 40, 0, -1.7484556e-06,
 transform = Transform3D(-2.1855694e-06, 0, -50, 0, 50, 0, 50, 0, -2.1855694e-06, -243.318, 12.74621, 218.85553)
 
 [node name="路燈街牌" type="Node3D" parent="." unique_id=1026293718]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
 [node name="路燈_00" parent="路燈街牌" unique_id=880589974 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.952382, -160)
@@ -3719,9 +3705,6 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.866819, 180)
 
 [node name="路燈_13" parent="路燈街牌" unique_id=876063603 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.873203, 180)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
-environment = SubResource("Environment_2row0")
 
 [node name="RiverV3_Candidate" type="Node3D" parent="." unique_id=297961216]
 metadata/art_ratio = "natural_70_human_30"
@@ -3940,11 +3923,5 @@ shape = SubResource("BoxShape3D_hvrvn")
 transform = Transform3D(0.24298018, 0, 0.97003126, 0, 1, 0, 0.97003126, 0, -0.24298018, 744.22375, 26, -132.66493)
 shape = SubResource("BoxShape3D_tk77k")
 
-[node name="遠景  妖怪之山" parent="RiverV3_Candidate" unique_id=1167346400 instance=ExtResource("31_v8gim")]
-transform = Transform3D(-954.0373, 0, -299.68768, 0, 999.99994, 0, 299.68768, 0, -954.0373, 309.0631, -295.77676, 1756.422)
-
-[node name="遠景山" parent="RiverV3_Candidate" unique_id=1105720229 instance=ExtResource("32_oyn3r")]
-transform = Transform3D(131.61824, 0, 482.3657, 0, 500, 0, -482.3657, 0, 131.61824, -1393.9032, -40.674255, -145.95667)
-
-[node name="遠景  妖怪之山2" parent="RiverV3_Candidate" unique_id=1799146574 instance=ExtResource("33_ks04b")]
-transform = Transform3D(999.842, 17.733984, 1.1768036, -17.772985, 997.6478, 66.20258, 0, -66.213036, 997.8054, -779.2338, -4.1705933, -807.71594)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
+environment = SubResource("Environment_2row0")
