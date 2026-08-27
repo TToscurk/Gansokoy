@@ -18,8 +18,8 @@ const VILLAGE_R := 300.0      # Terrain plate half-size (600x600 centred)
 const RIV_N_Z := -430.0
 const RIV_S_Z := 560.0
 const FADE_LEN := 190.0
-const WATER_HALF := 8.0       # water width 16m
-const TOP_HALF := 15.0        # valley top width ~30m
+const WATER_HALF := 13.0      # water width 26m base
+const TOP_HALF := 21.0        # valley top width ~42m base
 const DEPTH := 5.2            # bank top to bed
 const WATER_DROP := 4.6       # bank top to water surface
 # dragon-statue pool: river widens, statue platform stays uncarved
@@ -34,6 +34,10 @@ func _river_x(z: float) -> float:
 	# gentle natural meander down the east side
 	return 430.0 + 55.0 * sin(z * 0.006 + 1.3) + 30.0 * sin(z * 0.0023 - 0.7) \
 		+ _n.get_noise_1d(z * 0.8) * 18.0
+
+func _wvar(z: float) -> float:
+	# organic width modulation: broad swells and narrows, +-20%
+	return 1.0 + 0.14 * sin(z * 0.0042 + 0.9) + 0.08 * sin(z * 0.0117 - 1.7) 		+ _n.get_noise_1d(z * 0.35 + 400.0) * 0.10
 
 func _fade(z: float) -> float:
 	# 0 = full river, 1 = fully faded (south end)
@@ -51,6 +55,19 @@ func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
 	var gap: float = 0.06 + 0.94 * smoothstep(24.0, 55.0, theta_deg)
 	var south: float = 1.0 + 0.22 * smoothstep(120.0, 170.0, theta_deg)
 	return shape * amp * env * gap * south
+
+func _grid_h(hs: PackedFloat32Array, n: int, x0: float, x: float, z: float) -> float:
+	var fx: float = (x - x0) / CELL
+	var fz: float = (z - x0) / CELL
+	var ix: int = clampi(int(floor(fx)), 0, n - 2)
+	var iz: int = clampi(int(floor(fz)), 0, n - 2)
+	var tx: float = clampf(fx - float(ix), 0.0, 1.0)
+	var tz: float = clampf(fz - float(iz), 0.0, 1.0)
+	var h00: float = hs[iz * n + ix]
+	var h10: float = hs[iz * n + ix + 1]
+	var h01: float = hs[(iz + 1) * n + ix]
+	var h11: float = hs[(iz + 1) * n + ix + 1]
+	return lerpf(lerpf(h00, h10, tx), lerpf(h01, h11, tx), tz)
 
 func _init() -> void:
 	_n.seed = SEED
@@ -91,8 +108,9 @@ func _init() -> void:
 				var cx: float = _river_x(z)
 				var d: float = absf(x - cx)
 				var pool: float = smoothstep(POOL_Z0 - 30.0, POOL_Z0 + 20.0, z) * (1.0 - smoothstep(POOL_Z1 - 20.0, POOL_Z1 + 30.0, z))
-				var wh: float = lerpf(WATER_HALF, 2.2, f) + 12.0 * pool
-				var th: float = lerpf(TOP_HALF, 5.0, f) + 14.0 * pool
+				var wv: float = _wvar(z)
+				var wh: float = lerpf(WATER_HALF * wv, 2.2, f) + 12.0 * pool
+				var th: float = lerpf(TOP_HALF * wv, 5.0, f) + 14.0 * pool
 				var dep: float = lerpf(DEPTH, 1.1, f)
 				var sd: float = Vector2(x - STATUE.x, z - STATUE.y).length()
 				var plat: float = 1.0 - smoothstep(STATUE_R - 10.0, STATUE_R + 6.0, sd)
@@ -109,7 +127,7 @@ func _init() -> void:
 						wat[i] = 1
 			# statue platform: flatten to a level pad so the pedestal skirt sits in the soil
 			var sd2: float = Vector2(x - STATUE.x, z - STATUE.y).length()
-			var plat2: float = 1.0 - smoothstep(STATUE_R - 12.0, STATUE_R + 2.0, sd2)
+			var plat2: float = 1.0 - smoothstep(STATUE_R - 6.0, STATUE_R + 2.0, sd2)
 			if plat2 > 0.0:
 				g = lerpf(g, -0.55, plat2)
 			hs[i] = g
@@ -162,8 +180,10 @@ func _init() -> void:
 			continue
 		var c0: float = _river_x(z0f)
 		var c1: float = _river_x(z1f)
-		var h0: float = lerpf(WATER_HALF, 2.2, f0) + 0.4
-		var h1: float = lerpf(WATER_HALF, 2.2, f1) + 0.4
+		var pool0: float = smoothstep(POOL_Z0 - 30.0, POOL_Z0 + 20.0, z0f) * (1.0 - smoothstep(POOL_Z1 - 20.0, POOL_Z1 + 30.0, z0f))
+		var pool1: float = smoothstep(POOL_Z0 - 30.0, POOL_Z0 + 20.0, z1f) * (1.0 - smoothstep(POOL_Z1 - 20.0, POOL_Z1 + 30.0, z1f))
+		var h0: float = lerpf(WATER_HALF * _wvar(z0f), 2.2, f0) + 12.0 * pool0 + 0.4
+		var h1: float = lerpf(WATER_HALF * _wvar(z1f), 2.2, f1) + 12.0 * pool1 + 0.4
 		var y0: float = -WATER_DROP + lerpf(0.0, 3.4, f0)
 		var y1: float = -WATER_DROP + lerpf(0.0, 3.4, f1)
 		# 4-vertex cross-section: edges carry vertex-colour R=1 (foam band),
@@ -200,5 +220,46 @@ func _init() -> void:
 		w2.generate_normals()
 		water = w2.commit()
 	var e2: int = ResourceSaver.save(water, "res://maps/slice/gen/east_river_water.res")
-	print("ground err=", e1, " water err=", e2, " grid=", n, "x", n)
+
+	# ---- stone revetment strips (concept: 石砌護岸 4-6m, both banks) ----
+	# heights sampled from the REAL grid so the wall hugs the carved valley
+	var rst := SurfaceTool.new()
+	rst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rsteps: int = int((RIV_S_Z - RIV_N_Z) / 3.0)
+	for side in [-1.0, 1.0]:
+		var prev_top := Vector3.ZERO
+		var prev_bot := Vector3.ZERO
+		var have_prev: bool = false
+		for k in range(rsteps + 1):
+			var zf: float = RIV_N_Z + (RIV_S_Z - RIV_N_Z) * float(k) / float(rsteps)
+			var f: float = _fade(zf)
+			var pool: float = smoothstep(POOL_Z0 - 30.0, POOL_Z0 + 20.0, zf) * (1.0 - smoothstep(POOL_Z1 - 20.0, POOL_Z1 + 30.0, zf))
+			var wv: float = _wvar(zf)
+			var wh: float = lerpf(WATER_HALF * wv, 2.2, f) + 12.0 * pool
+			var th: float = lerpf(TOP_HALF * wv, 5.0, f) + 14.0 * pool
+			var cx: float = _river_x(zf)
+			var xt: float = cx + side * (th - 1.2)
+			var xb: float = cx + side * (wh - 1.2)
+			var near_statue: bool = Vector2(cx + side * ((wh + th) * 0.5) - STATUE.x, zf - STATUE.y).length() < STATUE_R + 6.0
+			if f > 0.86 or near_statue:
+				have_prev = false
+				continue
+			var ytop: float = _grid_h(hs, n, x0, xt, zf) + 0.22
+			var ybot: float = _grid_h(hs, n, x0, xb, zf) + 0.10
+			var top := Vector3(xt, ytop, zf)
+			var bot := Vector3(xb, ybot, zf)
+			if have_prev:
+				if side > 0.0:
+					rst.add_vertex(prev_top); rst.add_vertex(top); rst.add_vertex(prev_bot)
+					rst.add_vertex(top); rst.add_vertex(bot); rst.add_vertex(prev_bot)
+				else:
+					rst.add_vertex(prev_top); rst.add_vertex(prev_bot); rst.add_vertex(top)
+					rst.add_vertex(top); rst.add_vertex(prev_bot); rst.add_vertex(bot)
+			prev_top = top
+			prev_bot = bot
+			have_prev = true
+	rst.generate_normals()
+	var rev: ArrayMesh = rst.commit()
+	var e3: int = ResourceSaver.save(rev, "res://maps/slice/gen/east_river_revetment.res")
+	print("ground err=", e1, " water err=", e2, " revetment err=", e3, " grid=", n, "x", n)
 	quit()

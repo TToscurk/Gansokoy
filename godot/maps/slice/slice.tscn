@@ -30,6 +30,7 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="33_ks04b"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="34_sronm"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="35_dkw4w"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="36_sronm"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 [ext_resource type="ArrayMesh" uid="uid://crsgmrjqmlhbd" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
@@ -3940,3 +3941,7 @@ mesh = ExtResource("33_ks04b")
 [node name="EastRiverWater" type="MeshInstance3D" parent="." unique_id=1952612207]
 material_override = ExtResource("34_sronm")
 mesh = ExtResource("35_dkw4w")
+
+[node name="EastRiverRevetment" type="MeshInstance3D" parent="." unique_id=724511507]
+material_override = ExtResource("25_5ybuw")
+mesh = ExtResource("36_sronm")
