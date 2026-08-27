@@ -62,7 +62,7 @@ func _init() -> void:
 			var cx: float = sin(ang) * rad
 			var cz: float = -cos(ang) * rad          # ang 0 = north (-z)
 			var mr: float = rng.randf_range(75.0, 150.0)
-			var mh: float = [rng.randf_range(16.0, 30.0), rng.randf_range(24.0, 42.0), rng.randf_range(34.0, 58.0)][row]
+			var mh: float = [rng.randf_range(14.0, 24.0), rng.randf_range(20.0, 34.0), rng.randf_range(26.0, 44.0)][row]
 			mounds.append([cx, cz, mr, mh])
 	print("mounds: ", mounds.size())
 
@@ -95,11 +95,11 @@ func _init() -> void:
 				if d < mr:
 					var t: float = cos(d / mr * PI * 0.5)
 					m += (md as Array)[3] * t * t
-			m = min(m, 62.0)
+			m = min(m, 46.0)
 			# asymmetry: north gap + south boost
 			var theta_deg: float = abs(rad_to_deg(atan2(x, -z)))   # 0 = north, 180 = south
 			var gap: float = 0.05 + 0.95 * smoothstep(GAP_HALF_IN, GAP_HALF_OUT, theta_deg)
-			var south: float = 1.0 + 0.30 * smoothstep(120.0, 170.0, theta_deg)
+			var south: float = 1.0 + 0.18 * smoothstep(120.0, 170.0, theta_deg)
 			# river clearance: sheet is CUT OUT over the channel itself,
 			# and hills ramp in gently far from the water
 			var rd: float = _river_dist(x, z)
