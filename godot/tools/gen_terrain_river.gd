@@ -61,6 +61,7 @@ func _init() -> void:
 	var n: int = int((R_EXT * 2.0) / CELL) + 1
 	var x0: float = -R_EXT
 	var hs := PackedFloat32Array(); hs.resize(n * n)
+	var skip := PackedByteArray(); skip.resize(n * n)
 	var wat := PackedByteArray(); wat.resize(n * n)   # 1 = inside water span
 	var cols := PackedColorArray(); cols.resize(n * n)
 	var near_col := Color(0.42, 0.50, 0.30)
@@ -79,9 +80,11 @@ func _init() -> void:
 			g += _hills(x, z, r, theta)
 			# blend band onto the village plate edge (plate ~y 0.05)
 			var pl: float = maxf(absf(x), absf(z))
-			if pl < VILLAGE_R + 15.0:
-				var t: float = smoothstep(VILLAGE_R - 5.0, VILLAGE_R + 15.0, pl)
-				g = lerpf(0.05, g, t)
+			if pl < VILLAGE_R - 4.0:
+				skip[i] = 1              # village Terrain plate owns this area
+			elif pl < VILLAGE_R + 15.0:
+				var t: float = smoothstep(VILLAGE_R - 4.0, VILLAGE_R + 15.0, pl)
+				g = lerpf(0.02, g, t)
 			# ---- carve the east river valley ----
 			if z > RIV_N_Z - 60.0 and z < RIV_S_Z + 10.0:
 				var f: float = _fade(z)
@@ -126,6 +129,8 @@ func _init() -> void:
 			var i10: int = iz * n + ix + 1
 			var i01: int = (iz + 1) * n + ix
 			var i11: int = (iz + 1) * n + ix + 1
+			if skip[i00] == 1 and skip[i10] == 1 and skip[i01] == 1 and skip[i11] == 1:
+				continue
 			var v00 := Vector3(x0 + ix * CELL, hs[i00], x0 + iz * CELL)
 			var v10 := Vector3(x0 + (ix + 1) * CELL, hs[i10], x0 + iz * CELL)
 			var v01 := Vector3(x0 + ix * CELL, hs[i01], x0 + (iz + 1) * CELL)
