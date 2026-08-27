@@ -22,6 +22,11 @@ const WATER_HALF := 8.0       # water width 16m
 const TOP_HALF := 15.0        # valley top width ~30m
 const DEPTH := 5.2            # bank top to bed
 const WATER_DROP := 4.6       # bank top to water surface
+# dragon-statue pool: river widens, statue platform stays uncarved
+const STATUE := Vector2(485.0, 50.0)
+const STATUE_R := 36.0
+const POOL_Z0 := 0.0
+const POOL_Z1 := 100.0
 
 var _n := FastNoiseLite.new()
 
@@ -82,18 +87,28 @@ func _init() -> void:
 				var f: float = _fade(z)
 				var cx: float = _river_x(z)
 				var d: float = absf(x - cx)
-				var wh: float = lerpf(WATER_HALF, 2.2, f)
-				var th: float = lerpf(TOP_HALF, 5.0, f)
+				var pool: float = smoothstep(POOL_Z0 - 30.0, POOL_Z0 + 20.0, z) * (1.0 - smoothstep(POOL_Z1 - 20.0, POOL_Z1 + 30.0, z))
+				var wh: float = lerpf(WATER_HALF, 2.2, f) + 12.0 * pool
+				var th: float = lerpf(TOP_HALF, 5.0, f) + 14.0 * pool
 				var dep: float = lerpf(DEPTH, 1.1, f)
-				if d < th:
+				var sd: float = Vector2(x - STATUE.x, z - STATUE.y).length()
+				var plat: float = 1.0 - smoothstep(STATUE_R - 10.0, STATUE_R + 6.0, sd)
+				if d < th and plat < 0.999:
 					var bank_top: float = g
+					var carved: float
 					if d <= wh:
-						g = bank_top - dep
+						carved = bank_top - dep
 					else:
 						var s: float = (d - wh) / (th - wh)   # 0 bed wall .. 1 top
-						g = bank_top - dep + dep * smoothstep(0.0, 1.0, s)
+						carved = bank_top - dep + dep * smoothstep(0.0, 1.0, s)
+					g = lerpf(carved, bank_top, plat)
 					if d <= wh + 1.5 and f < 0.985:
 						wat[i] = 1
+			# statue platform: flatten to a level pad so the pedestal skirt sits in the soil
+			var sd2: float = Vector2(x - STATUE.x, z - STATUE.y).length()
+			var plat2: float = 1.0 - smoothstep(STATUE_R - 12.0, STATUE_R + 2.0, sd2)
+			if plat2 > 0.0:
+				g = lerpf(g, -0.55, plat2)
 			hs[i] = g
 			# vertex colour: aerial fade + earth tint low
 			var fade_c: float = smoothstep(520.0, 1150.0, r)
