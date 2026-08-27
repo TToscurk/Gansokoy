@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b7il63chrjtcc"]
+
+[ext_resource type="Texture2D" uid="uid://cks3rvqum3lfd" path="res://assets/textures/terrain_path_diff.jpg" id="1_rxw8c"]
+[ext_resource type="Texture2D" uid="uid://hhi85apgbwc2" path="res://assets/textures/terrain_path_nor_gl.jpg" id="2_emd8n"]
+[ext_resource type="Texture2D" uid="uid://bgchbssq1kea3" path="res://assets/textures/terrain_path_rough.jpg" id="3_akmcd"]
+
+[resource]
+cull_mode = 2
+albedo_color = Color(0.58, 0.56, 0.4, 1)
+albedo_texture = ExtResource("1_rxw8c")
+roughness = 0.97
+roughness_texture = ExtResource("3_akmcd")
+normal_enabled = true
+normal_texture = ExtResource("2_emd8n")
+uv1_scale = Vector3(0.18, 0.18, 0.18)
+uv1_triplanar = true
