@@ -27,10 +27,13 @@
 [ext_resource type="Material" uid="uid://dxlldb4ljao4h" path="res://assets/materials/river_ishigaki_wet.tres" id="26_s44nm"]
 [ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="26_xm1ot"]
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="29_bb8mf"]
+[ext_resource type="PackedScene" uid="uid://whvrfpf8rx55" path="res://maps/slice/gen/遠景2/遠景  妖怪之山.glb" id="31_v8gim"]
+[ext_resource type="PackedScene" uid="uid://b60kgc1hxpifa" path="res://maps/slice/gen/遠景3/遠景山.glb" id="32_oyn3r"]
+[ext_resource type="PackedScene" uid="uid://d2fvgcfds37pk" path="res://maps/slice/gen/遠景/遠景  妖怪之山2.glb" id="33_ks04b"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Material" path="res://assets/materials/basin_hills.tres" id="44_hillsmat"]
-[ext_resource type="PackedScene" uid="uid://byee3xknnd0h2" path="res://assets/models/vista/vista_youkai_mountain.glb" id="45_youkaimt"]
+[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -1923,8 +1926,12 @@ shader_parameter/cloud_shade = Color(0.62, 0.68, 0.8, 1)
 shader_parameter/cloud_coverage = 0.48
 shader_parameter/cloud_scale = 7.0
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jinri"]
+panorama = ExtResource("43_skypano")
+energy_multiplier = 1.0
+
 [sub_resource type="Sky" id="Sky_r50dx"]
-sky_material = SubResource("ProceduralSkyMaterial_of155")
+sky_material = SubResource("PanoramaSkyMaterial_jinri")
 
 [sub_resource type="Environment" id="Environment_2row0"]
 background_mode = 2
@@ -2336,9 +2343,6 @@ mesh = ExtResource("40_underlay")
 [node name="BasinHills" type="MeshInstance3D" parent="." unique_id=507562326]
 material_override = ExtResource("44_hillsmat")
 mesh = ExtResource("43_hills")
-
-[node name="VistaMountain_Youkai" parent="." unique_id=402439693 instance=ExtResource("45_youkaimt")]
-transform = Transform3D(707.82806, 0, 555.85925, 0, 900, 0, -555.85925, 0, 707.82806, -1131, -226.09189, -1131)
 
 [node name="鎮守之杜" type="Node3D" parent="." unique_id=803029421]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 170.25989, -0.0872175, -128.84196)
@@ -3669,50 +3673,52 @@ transform = Transform3D(-1.7484556e-06, 0, -40, 0, 40, 0, 40, 0, -1.7484556e-06,
 [node name="裨田邸後院" parent="." unique_id=633248217 instance=ExtResource("22_lgkyf")]
 transform = Transform3D(-2.1855694e-06, 0, -50, 0, 50, 0, 50, 0, -2.1855694e-06, -243.318, 12.74621, 218.85553)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
-environment = SubResource("Environment_2row0")
+[node name="路燈街牌" type="Node3D" parent="." unique_id=1026293718]
 
-[node name="路燈_00" parent="." unique_id=880589974 instance=ExtResource("24_idg0l")]
+[node name="路燈_00" parent="路燈街牌" unique_id=880589974 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.952382, -160)
 
-[node name="路燈_01" parent="." unique_id=488785150 instance=ExtResource("24_idg0l")]
+[node name="路燈_01" parent="路燈街牌" unique_id=488785150 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 5.100588, -160)
 
-[node name="路燈_02" parent="." unique_id=1142350551 instance=ExtResource("24_idg0l")]
+[node name="路燈_02" parent="路燈街牌" unique_id=1142350551 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.918795, -110)
 
-[node name="路燈_03" parent="." unique_id=69458106 instance=ExtResource("24_idg0l")]
+[node name="路燈_03" parent="路燈街牌" unique_id=69458106 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.92387, -110)
 
-[node name="路燈_04" parent="." unique_id=1737478667 instance=ExtResource("24_idg0l")]
+[node name="路燈_04" parent="路燈街牌" unique_id=1737478667 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.942749, -60)
 
-[node name="路燈_05" parent="." unique_id=725150779 instance=ExtResource("24_idg0l")]
+[node name="路燈_05" parent="路燈街牌" unique_id=725150779 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.902704, -60)
 
-[node name="路燈_06" parent="." unique_id=868029675 instance=ExtResource("24_idg0l")]
+[node name="路燈_06" parent="路燈街牌" unique_id=868029675 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.905515, -10)
 
-[node name="路燈_07" parent="." unique_id=251382236 instance=ExtResource("24_idg0l")]
+[node name="路燈_07" parent="路燈街牌" unique_id=251382236 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.938453, -10)
 
-[node name="路燈_08" parent="." unique_id=2102083582 instance=ExtResource("24_idg0l")]
+[node name="路燈_08" parent="路燈街牌" unique_id=2102083582 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.939024, 40)
 
-[node name="路燈_09" parent="." unique_id=634971526 instance=ExtResource("24_idg0l")]
+[node name="路燈_09" parent="路燈街牌" unique_id=634971526 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.88372, 40)
 
-[node name="路燈_10" parent="." unique_id=372304320 instance=ExtResource("24_idg0l")]
+[node name="路燈_10" parent="路燈街牌" unique_id=372304320 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.906493, 130)
 
-[node name="路燈_11" parent="." unique_id=1445222260 instance=ExtResource("24_idg0l")]
+[node name="路燈_11" parent="路燈街牌" unique_id=1445222260 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.864136, 130)
 
-[node name="路燈_12" parent="." unique_id=593720420 instance=ExtResource("24_idg0l")]
+[node name="路燈_12" parent="路燈街牌" unique_id=593720420 instance=ExtResource("24_idg0l")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.866819, 180)
 
-[node name="路燈_13" parent="." unique_id=876063603 instance=ExtResource("24_idg0l")]
+[node name="路燈_13" parent="路燈街牌" unique_id=876063603 instance=ExtResource("24_idg0l")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.873203, 180)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
+environment = SubResource("Environment_2row0")
 
 [node name="RiverV3_Candidate" type="Node3D" parent="." unique_id=297961216]
 metadata/art_ratio = "natural_70_human_30"
@@ -3930,3 +3936,12 @@ shape = SubResource("BoxShape3D_hvrvn")
 [node name="Boundary_61" type="CollisionShape3D" parent="RiverV3_Candidate/RingOuterBoundary" unique_id=170375378]
 transform = Transform3D(0.24298018, 0, 0.97003126, 0, 1, 0, 0.97003126, 0, -0.24298018, 744.22375, 26, -132.66493)
 shape = SubResource("BoxShape3D_tk77k")
+
+[node name="遠景  妖怪之山" parent="RiverV3_Candidate" unique_id=1167346400 instance=ExtResource("31_v8gim")]
+transform = Transform3D(-954.0373, 0, -299.68768, 0, 999.99994, 0, 299.68768, 0, -954.0373, 309.0631, -295.77676, 1756.422)
+
+[node name="遠景山" parent="RiverV3_Candidate" unique_id=1105720229 instance=ExtResource("32_oyn3r")]
+transform = Transform3D(131.61824, 0, 482.3657, 0, 500, 0, -482.3657, 0, 131.61824, -1393.9032, -40.674255, -145.95667)
+
+[node name="遠景  妖怪之山2" parent="RiverV3_Candidate" unique_id=1799146574 instance=ExtResource("33_ks04b")]
+transform = Transform3D(999.842, 17.733984, 1.1768036, -17.772985, 997.6478, 66.20258, 0, -66.213036, 997.8054, -779.2338, -4.1705933, -807.71594)
