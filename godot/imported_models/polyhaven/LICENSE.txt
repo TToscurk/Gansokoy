@@ -1,0 +1,2 @@
+Assets in this directory are from PolyHaven (https://polyhaven.com), CC0 1.0.
+Downloaded 2026-08-28 at 1k texture resolution via api.polyhaven.com.
