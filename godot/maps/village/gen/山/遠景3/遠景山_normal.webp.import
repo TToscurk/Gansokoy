@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bhr0gtbhevpvx"
+path.s3tc="res://.godot/imported/遠景山_normal.webp-d565a1fe9a7cbf45ff4bc1260dbc3724.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "522d9895dc5ace33904efef02c453968"
+}
+
+[deps]
+
+source_file="res://maps/village/gen/山/遠景3/遠景山_normal.webp"
+dest_files=["res://.godot/imported/遠景山_normal.webp-d565a1fe9a7cbf45ff4bc1260dbc3724.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://maps/village/gen/山/遠景3/遠景山_normal.webp"
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

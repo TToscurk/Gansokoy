@@ -56,6 +56,15 @@ This file is intentionally short. It contains only facts that should affect the 
 - **Vegetation debt + bridge-approach clearing (2026-08-28, awaiting ART_REVIEW)**: three fixes in `gen_river_vegetation.gd`. (1) PolyHaven scan SETS are now split — each MeshInstance3D child bakes to its own re-centred single-plant mesh (`gen/ph_<species>_<i>.res`, 19 singles) and the bush/rock rows mix the singles; the 6 m hedge-sliver footprints from the scale audit are gone, periwinkle held to 1.55x so its flowers stop reading fist-sized. (2) **Curve gaps never worked**: removing Curve3D control points just lets the curve interpolate across the hole and Create Along Edge fills it — the bridge clearing had been decorative since round one. Rows are now built as ARRAYS of curve segments, one ScatterShape per contiguous segment; a skip genuinely ends the segment. (3) The bridge 龍石像橋 sits rotated 17.3 deg, so an oriented approach corridor (axis (0.9548,-0.2977), half-length 150 m, half-width 12 m) clears both walkway directions on top of the ±32 m river-crossing band. Evidence: `shots2/bridge_approach_before/after_20260828` (west approach: reeds+giant ferns against the deck -> clean walkway line), regression `shots2/vegbelt_singles_20260828`. Gates clean.
 - Do not integrate any river into `village.tscn` until the slice prototype is approved.
 
+## Asset diet — 2026-08-28 (user-ordered)
+
+- All Meshy GLBs under `maps/village/gen/` were re-exported via Blender: textures capped at 4096 (8K sources downscaled), all embedded images re-encoded WEBP q85, and three pathological meshes decimated (寺子屋 2.97M tris @0.35, 遠景山 2.97M @0.12, 稗田底新版 0.92M @0.5). Totals: 739MB -> 212MB across 21 files; visual A/B in `shots2/asset_diet_before/after_20260828` shows no perceptible change at review distances.
+- Meshy sidecar textures (`*_base_color/_metallic_roughness/_normal` etc.) were dead weight — zero scene/material references (the GLBs embed their own copies) — and were deleted (~460MB).
+- The three unreferenced manor generations (Serene Edo Estate / Mountain Garden Manor / Misty Mountain Sanctuary) were deleted on user order after preview renders.
+- slice.tscn no longer embeds the four vegetation MultiMesh buffers (the "binary data" save warning): they live in `maps/slice/gen/veg_mm_*.res` (compressed). Scene text 6.0MB -> 3.9MB, node structure verified identical (90 nodes), gates clean.
+- Generated river meshes save with `ResourceSaver.FLAG_COMPRESS`.
+- **GitHub blocker note**: history still contains >100MB blobs (Misty 174MB, 遠景山 112MB) from before the diet; first push requires either `git lfs migrate import --include="*.glb" --everything` or a one-off history rewrite. Working tree itself is now free of >100MB files outside `.godot` cache.
+
 ## Asset Pipeline — user ruling 2026-08-26
 
 - **LLM-written procedural 3D asset generation (bpy code producing props/buildings) is REJECTED for new visible assets** — quality verdict: too ugly. New visible 3D assets come from the **image-AI → Meshy 7** workflow (image concept → Meshy image-to-3D → Godot import), same lineage as the Yoriichi character and `godot/imported_models/`.
