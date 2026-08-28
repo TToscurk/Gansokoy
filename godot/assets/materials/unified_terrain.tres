@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cks3rvqum3lfd" path="res://assets/textures/terrain_path_diff.jpg" id="2_dirt"]
 [ext_resource type="Texture2D" uid="uid://bgchbssq1kea3" path="res://assets/textures/terrain_path_rough.jpg" id="3_rough"]
 [ext_resource type="Texture2D" uid="uid://cskkyqgdy2y0f" path="res://assets/textures/terrain_grass_diff.jpg" id="4_grass"]
-[ext_resource type="Texture2D" uid="uid://c3psomdrb2or7" path="res://assets/textures/stone_wall_diff.jpg" id="5_stone"]
-[ext_resource type="Texture2D" uid="uid://os61o62y0yn8" path="res://assets/textures/stone_wall_rough.jpg" id="6_stone_rough"]
+[ext_resource type="Texture2D" uid="uid://bj534f87qf58d" path="res://assets/textures/ishigaki_old_stone_diff_2k.jpg" id="5_stone"]
+[ext_resource type="Texture2D" uid="uid://5yiujmaao86u" path="res://assets/textures/ishigaki_old_stone_rough_2k.jpg" id="6_stone_rough"]
 
 [resource]
 render_priority = 0
@@ -15,9 +15,10 @@ shader_parameter/dirt_roughness = ExtResource("3_rough")
 shader_parameter/grass_albedo = ExtResource("4_grass")
 shader_parameter/stone_albedo = ExtResource("5_stone")
 shader_parameter/stone_roughness = ExtResource("6_stone_rough")
+shader_parameter/stone_normal_strength = 1.0
 shader_parameter/dirt_tint = Color(0.68, 0.52, 0.26, 1)
 shader_parameter/grass_tint = Color(0.42, 0.52, 0.3, 1)
-shader_parameter/stone_tint = Color(0.34, 0.34, 0.32, 1)
-shader_parameter/wet_stone_tint = Color(0.18, 0.23, 0.22, 1)
+shader_parameter/stone_tint = Color(0.47, 0.47, 0.44, 1)
+shader_parameter/wet_stone_tint = Color(0.22, 0.28, 0.27, 1)
 shader_parameter/texture_scale = 0.18
-shader_parameter/stone_texture_scale = 0.4
+shader_parameter/stone_texture_scale = 0.32

@@ -37,9 +37,16 @@ const Z0 := -620.0
 const Z1 := 660.0
 const STEP := 4.0
 
-# The Meshy bridge lands here; its approach must stay clear on both banks.
+# The Meshy bridge (slice node 龍石像橋) lands here; both the river crossing
+# and the walkway approaches must stay clear. The deck is rotated 17.3 deg, so
+# a z-interval alone leaves plants standing in the walkway line — the oriented
+# corridor below follows the actual bridge axis (from the node's live basis).
 const BRIDGE_Z := -143.9
 const BRIDGE_CLEAR := 32.0
+const BRIDGE_POS := Vector2(423.25, -143.89)
+const BRIDGE_AXIS := Vector2(0.9548, -0.2977)
+const APPROACH_HALF_LEN := 150.0
+const APPROACH_HALF_W := 12.0
 
 const OUT_PATH := "res://maps/slice/gen/river_vegetation.tscn"
 const SCATTER := "res://addons/proton_scatter/src/scatter.gd"
@@ -60,21 +67,23 @@ const REED_MAT := "res://assets/materials/river_transition_grass.tres"
 # These carry their own scanned PBR materials; no override, unlike the reeds.
 const PH := "res://imported_models/polyhaven/"
 const GEN := "res://maps/slice/gen/"
-# name -> [source gltf, baked mesh, is_foliage]
+# species -> [source gltf, baked-mesh basename, is_foliage]
 const PH_BAKES := {
-	"shrub": [PH + "shrub_01/shrub_01_1k.gltf", GEN + "ph_shrub.res", true],
-	"nettle": [PH + "nettle_plant/nettle_plant_1k.gltf", GEN + "ph_nettle.res", true],
-	"periwinkle": [PH + "periwinkle_plant/periwinkle_plant_1k.gltf", GEN + "ph_periwinkle.res", true],
-	"fern": [PH + "fern_02/fern_02_1k.gltf", GEN + "ph_fern.res", true],
-	"grass": [PH + "grass_medium_02/grass_medium_02_1k.gltf", GEN + "ph_grass.res", true],
-	"rock": [PH + "rock_moss_set_01/rock_moss_set_01_1k.gltf", GEN + "ph_rock.res", false],
+	"shrub": [PH + "shrub_01/shrub_01_1k.gltf", GEN + "ph_shrub", true],
+	"nettle": [PH + "nettle_plant/nettle_plant_1k.gltf", GEN + "ph_nettle", true],
+	"periwinkle": [PH + "periwinkle_plant/periwinkle_plant_1k.gltf", GEN + "ph_periwinkle", true],
+	"fern": [PH + "fern_02/fern_02_1k.gltf", GEN + "ph_fern", true],
+	"rock": [PH + "rock_moss_set_01/rock_moss_set_01_1k.gltf", GEN + "ph_rock", false],
 }
-const PH_SHRUB_A := GEN + "ph_shrub.res"
-const PH_SHRUB_B := GEN + "ph_nettle.res"
-const PH_SHRUB_C := GEN + "ph_periwinkle.res"
-const PH_FERN := GEN + "ph_fern.res"
-const PH_GRASS := GEN + "ph_grass.res"
-const PH_ROCK := GEN + "ph_rock.res"
+# Per-species scatter scale and mix share. Periwinkle held smallest — at 3.0x
+# its scanned flowers blew up to fist size (visible in water_flow BEFORE).
+const BUSH_MIX := [
+	["shrub", 2.0, 30],
+	["nettle", 2.2, 25],
+	["periwinkle", 1.55, 20],
+	["fern", 1.6, 25],
+]
+var _baked := {}
 
 # One row = one parallel curve at a fixed offset from the outer seam, so every
 # row carries its own exact terrain height. Lateral jitter stays small for the
@@ -88,7 +97,7 @@ const ROWS := [
 	{"offset": 7.2, "spacing": 13.0, "kind": "bush", "row_seed": 71},
 	# Mossy photoscan boulders half-buried in the grass shoulder; very sparse
 	# so they read as survivors, not decoration. y_sink buries the flat base.
-	{"offset": 5.0, "spacing": 60.0, "kind": "rock", "row_seed": 89, "y_sink": 0.3},
+	{"offset": 5.0, "spacing": 42.0, "kind": "rock", "row_seed": 89, "y_sink": 0.3},
 ]
 
 var _n := FastNoiseLite.new()
@@ -131,21 +140,39 @@ func _ground_y(x: float, z: float) -> float:
 	return g
 
 
-func _build_curve(side: float, offset: float, row_seed: int,
-		y_sink: float = 0.0) -> Curve3D:
+func _in_bridge_approach(x: float, z: float) -> bool:
+	var rel := Vector2(x, z) - BRIDGE_POS
+	var along: float = rel.dot(BRIDGE_AXIS)
+	var across: float = absf(rel.x * BRIDGE_AXIS.y - rel.y * BRIDGE_AXIS.x)
+	return absf(along) < APPROACH_HALF_LEN and across < APPROACH_HALF_W
+
+
+## Returns an ARRAY of curve segments. Skipping a control point is not enough
+## to clear a zone: Curve3D interpolates straight across the hole and the
+## Create Along Edge modifier happily fills it — which is why the first three
+## rounds still had reeds standing against the bridge deck. Every skip ends the
+## current segment; each segment becomes its own ScatterShape.
+func _build_curves(side: float, offset: float, row_seed: int,
+		y_sink: float = 0.0) -> Array:
+	var segments: Array = []
 	var curve := Curve3D.new()
 	var z: float = Z0
 	while z <= Z1:
-		if absf(z - BRIDGE_Z) < BRIDGE_CLEAR:
-			z += STEP
-			continue
 		# The belt must not read as a drawn line: the offset itself wanders.
 		var wander: float = _wander.get_noise_2d(z * 0.9, float(row_seed) * 40.0) * 2.3
 		var d: float = _widths(z).y + offset + wander
 		var x: float = _river_x(z) + side * d
+		if absf(z - BRIDGE_Z) < BRIDGE_CLEAR or _in_bridge_approach(x, z):
+			if curve.point_count >= 2:
+				segments.append(curve)
+			curve = Curve3D.new()
+			z += STEP
+			continue
 		curve.add_point(Vector3(x, _ground_y(x, z) - 0.12 - y_sink, z))
 		z += STEP
-	return curve
+	if curve.point_count >= 2:
+		segments.append(curve)
+	return segments
 
 
 ## The bamboo GLBs carry no colour of their own: their vertex "Col" channel
@@ -165,30 +192,36 @@ func _bake_reed(glb: String, out_path: String) -> void:
 	if mesh == null:
 		push_error("no mesh in %s" % glb)
 		return
-	var err: int = ResourceSaver.save(mesh, out_path)
+	var err: int = ResourceSaver.save(mesh, out_path, ResourceSaver.FLAG_COMPRESS)
 	if err != OK:
 		push_error("reed mesh save failed (%d): %s" % [err, out_path])
 
 
-## PolyHaven photoscans arrive as multi-MeshInstance scenes whose leaf materials
-## use ALPHA_SCISSOR at the default 0.5 threshold. Under gl_compatibility that
-## erodes the leaf cards to white speckles a few metres out (mip alpha shrinks,
-## scissor bites, only bright card edges survive) — measured in
-## shots2/vegbelt_ph2_20260828. Bake each scene to one ArrayMesh (transforms
-## applied, materials kept per surface) and re-tune every foliage material:
-## lower scissor threshold so mips keep their leaves, kill the specular sky
-## glint, force double-sided. Rocks pass through with materials untouched.
-func _bake_photoscan(glb: String, out_path: String, foliage: bool) -> void:
+## PolyHaven photoscans arrive as multi-plant scan SETS (a 6 m row of shrubs in
+## one scene). Scattering the whole set made little hedge slivers — measured in
+## the 2026-08-28 scale audit (footprints 6.2x0.5 m). Bake each MeshInstance3D
+## child as its OWN mesh, re-centred to its footprint (base at y=0), and let the
+## scatter rows mix the singles. Foliage materials are re-tuned while baking:
+## ALPHA_SCISSOR at 0.22 (default 0.5 erodes leaf mips to white dust under
+## gl_compatibility), specular killed, double-sided. Rocks keep their scanned
+## materials untouched.
+func _bake_photoscan_set(glb: String, out_base: String, foliage: bool) -> Array:
 	var packed: PackedScene = load(glb)
 	if packed == null:
 		push_error("missing photoscan %s" % glb)
-		return
+		return []
 	var node: Node = packed.instantiate()
-	var out := ArrayMesh.new()
 	var tuned := {}
+	var paths: Array = []
+	var idx: int = 0
 	for c in node.find_children("*", "MeshInstance3D", true, false):
 		var mi := c as MeshInstance3D
-		var xf: Transform3D = mi.transform
+		var box: AABB = mi.transform * mi.mesh.get_aabb()
+		if foliage and box.size.y < 0.15:
+			continue # scan debris / ground litter, useless as a standalone plant
+		var centre := Vector3(box.get_center().x, box.position.y, box.get_center().z)
+		var xf := Transform3D(mi.transform.basis, mi.transform.origin - centre)
+		var out := ArrayMesh.new()
 		for si in range(mi.mesh.get_surface_count()):
 			var st := SurfaceTool.new()
 			st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -205,13 +238,12 @@ func _bake_photoscan(glb: String, out_path: String, foliage: bool) -> void:
 				mat = tuned[mat]
 			st.set_material(mat)
 			st.commit(out)
+		var out_path := "%s_%d.res" % [out_base, idx]
+		if ResourceSaver.save(out, out_path, ResourceSaver.FLAG_COMPRESS) == OK:
+			paths.append(out_path)
+		idx += 1
 	node.free()
-	if out.get_surface_count() == 0:
-		push_error("no surfaces baked from %s" % glb)
-		return
-	var err: int = ResourceSaver.save(out, out_path)
-	if err != OK:
-		push_error("photoscan bake failed (%d): %s" % [err, out_path])
+	return paths
 
 
 func _make_item(parent: Node, nm: String, res_path: String,
@@ -249,14 +281,16 @@ func _make_row(root: Node3D, side: float, side_name: String, row: Dictionary,
 	scatter.dbg_disable_thread = true
 	root.add_child(scatter)
 
-	var shape_node: Node3D = load(SCATTER_SHAPE).new()
-	shape_node.name = "Crest"
-	var path_shape = load(PATH_SHAPE).new()
-	path_shape.closed = false
-	path_shape.curve = _build_curve(side, float(row["offset"]), int(row["row_seed"]),
+	var segments: Array = _build_curves(side, float(row["offset"]), int(row["row_seed"]),
 			float(row.get("y_sink", 0.0)))
-	shape_node.shape = path_shape
-	scatter.add_child(shape_node)
+	for si in range(segments.size()):
+		var shape_node: Node3D = load(SCATTER_SHAPE).new()
+		shape_node.name = "Crest%d" % si
+		var path_shape = load(PATH_SHAPE).new()
+		path_shape.closed = false
+		path_shape.curve = segments[si]
+		shape_node.shape = path_shape
+		scatter.add_child(shape_node)
 
 	match row["kind"]:
 		"reed":
@@ -268,16 +302,20 @@ func _make_row(root: Node3D, side: float, side_name: String, row: Dictionary,
 			_make_item(scatter, "ReedA", REED_A_MESH, 60, 0.22, REED_MAT)
 			_make_item(scatter, "ReedB", REED_B_MESH, 40, 0.19, REED_MAT)
 		"bush":
-			# Photoscans are real-world scale (0.4-1 m); scaled well past that
-			# so the leaf cards stay pixel-sized at the shot distances instead
-			# of eroding. Shadows on — a photoscan bush without a contact
-			# shadow floats visually.
-			_make_item(scatter, "ShrubA", PH_SHRUB_A, 35, 2.4, "", true)
-			_make_item(scatter, "ShrubB", PH_SHRUB_B, 25, 3.0, "", true)
-			_make_item(scatter, "ShrubC", PH_SHRUB_C, 20, 3.0, "", true)
-			_make_item(scatter, "FernA", PH_FERN, 20, 2.4, "", true)
+			# Single plants baked out of the scan sets, scaled past real size so
+			# leaf cards stay pixel-sized at shot distances. Shadows on — a
+			# photoscan bush without a contact shadow floats visually.
+			for mix in BUSH_MIX:
+				var variants: Array = _baked.get(mix[0], [])
+				for vi in range(variants.size()):
+					_make_item(scatter, "%s%d" % [mix[0], vi], variants[vi],
+							maxi(1, int(mix[2]) / maxi(1, variants.size())),
+							float(mix[1]), "", true)
 		"rock":
-			_make_item(scatter, "MossRock", PH_ROCK, 100, 1.3, "", true)
+			var rocks: Array = _baked.get("rock", [])
+			for vi in range(rocks.size()):
+				_make_item(scatter, "MossRock%d" % vi, rocks[vi],
+						maxi(1, 100 / maxi(1, rocks.size())), 1.25, "", true)
 
 	# Build through the global class names: assigning a plain `load(...).new()`
 	# Resource to the typed `modifier_stack` setter silently leaves it null, and
@@ -298,7 +336,10 @@ func _make_row(root: Node3D, side: float, side_name: String, row: Dictionary,
 	if scatter.modifier_stack == null:
 		push_error("modifier stack did not attach to %s" % scatter.name)
 
-	return {"name": scatter.name, "points": path_shape.curve.point_count}
+	var pts: int = 0
+	for seg in segments:
+		pts += (seg as Curve3D).point_count
+	return {"name": scatter.name, "points": pts, "segments": segments.size()}
 
 
 func _init() -> void:
@@ -316,7 +357,9 @@ func _init() -> void:
 	_bake_reed("res://assets/models/bamboo_b.glb", REED_B_MESH)
 	for k in PH_BAKES:
 		var spec: Array = PH_BAKES[k]
-		_bake_photoscan(spec[0], spec[1], spec[2])
+		_baked[k] = _bake_photoscan_set(spec[0], spec[1], spec[2])
+		if _baked[k].is_empty():
+			push_error("no singles baked for %s" % k)
 
 	var root := Node3D.new()
 	root.name = "RiverVegetation"

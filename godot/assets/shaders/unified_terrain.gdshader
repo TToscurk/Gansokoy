@@ -6,6 +6,9 @@ uniform sampler2D dirt_roughness : hint_roughness_r, filter_linear_mipmap_anisot
 uniform sampler2D grass_albedo : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D stone_albedo : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D stone_roughness : hint_roughness_r, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D stone_normal : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D stone_ao : hint_default_white, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform float stone_normal_strength = 1.0;
 uniform vec3 dirt_tint : source_color = vec3(0.68, 0.52, 0.26);
 uniform vec3 grass_tint : source_color = vec3(0.42, 0.52, 0.30);
 uniform vec3 stone_tint : source_color = vec3(0.34, 0.34, 0.32);
@@ -42,9 +45,11 @@ void fragment() {
 	vec3 sample_position = terrain_world_position * texture_scale;
 	vec3 dirt = triplanar_sample(dirt_albedo, sample_position, blend).rgb * dirt_tint;
 	vec3 grass = triplanar_sample(grass_albedo, sample_position, blend).rgb * grass_tint;
-	vec3 stone_sample = triplanar_sample(stone_albedo, terrain_world_position * stone_texture_scale, blend).rgb;
+	vec3 stone_uvw = terrain_world_position * stone_texture_scale;
+	vec3 stone_sample = triplanar_sample(stone_albedo, stone_uvw, blend).rgb;
+	float stone_ao_sample = triplanar_sample(stone_ao, stone_uvw, blend).r;
 	float wet_weight = smoothstep(0.05, 0.95, terrain_wet_weight);
-	vec3 stone = stone_sample * mix(stone_tint, wet_stone_tint, wet_weight);
+	vec3 stone = stone_sample * stone_ao_sample * mix(stone_tint, wet_stone_tint, wet_weight);
 	float grass_weight = smoothstep(0.05, 0.95, terrain_grass_weight);
 	vec3 terrain_color = mix(dirt, grass, grass_weight);
 	float stone_weight = smoothstep(0.05, 0.95, terrain_stone_weight);
@@ -55,4 +60,22 @@ void fragment() {
 	float stone_r = triplanar_sample(stone_roughness, terrain_world_position * stone_texture_scale, blend).r;
 	stone_r = mix(stone_r, min(stone_r, 0.48), wet_weight);
 	ROUGHNESS = mix(terrain_roughness, stone_r, stone_weight);
+
+	// Triplanar normal mapping (whiteout blend) for the masonry only. The
+	// geometry mesh has no UVs, so tangent-space NORMAL_MAP is unavailable;
+	// build the perturbed normal in world space and hand it to view space.
+	if (stone_weight > 0.001) {
+		vec3 wn = terrain_world_normal;
+		vec3 tnx = texture(stone_normal, stone_uvw.zy).xyz * 2.0 - 1.0;
+		vec3 tny = texture(stone_normal, stone_uvw.xz).xyz * 2.0 - 1.0;
+		vec3 tnz = texture(stone_normal, stone_uvw.xy).xyz * 2.0 - 1.0;
+		tnx = vec3(tnx.xy + wn.zy, abs(tnx.z) * wn.x);
+		tny = vec3(tny.xy + wn.xz, abs(tny.z) * wn.y);
+		tnz = vec3(tnz.xy + wn.xy, abs(tnz.z) * wn.z);
+		vec3 world_bumped = normalize(
+				tnx.zyx * blend.x + tny.xzy * blend.y + tnz.xyz * blend.z);
+		vec3 final_world = normalize(mix(wn, world_bumped,
+				stone_weight * stone_normal_strength));
+		NORMAL = normalize((VIEW_MATRIX * vec4(final_world, 0.0)).xyz);
+	}
 }

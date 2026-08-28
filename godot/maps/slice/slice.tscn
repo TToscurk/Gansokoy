@@ -20,11 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://i3tj8rkt6dmi" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_base_color.jpg" id="29_v8gim"]
 [ext_resource type="Texture2D" uid="uid://danhjab1iqnaj" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_metallic_roughness.jpg" id="30_oyn3r"]
 [ext_resource type="Texture2D" uid="uid://e6hlk0d0bhtq" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_normal.jpg" id="31_ks04b"]
-[ext_resource type="ArrayMesh" uid="uid://b5d7e5w7lljbs" path="res://maps/slice/gen/slice_unified_ground.res" id="33_ks04b"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="33_ks04b"]
 [ext_resource type="PackedScene" uid="uid://bwk4nobtxpmbt" path="res://maps/village/gen/龍神像/龍神像.glb" id="33_v8gim"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="34_sronm"]
-[ext_resource type="ArrayMesh" uid="uid://brtm7cdf20v5l" path="res://maps/slice/gen/east_river_water.res" id="35_dkw4w"]
-[ext_resource type="ArrayMesh" uid="uid://74irbhjem2mc" path="res://maps/slice/gen/east_river_revetment.res" id="36_sronm"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="35_dkw4w"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="36_sronm"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="40_underlay"]
 [ext_resource type="ArrayMesh" uid="uid://crsgmrjqmlhbd" path="res://maps/slice/gen/slice_basin_hills.res" id="43_hills"]
 [ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="43_skypano"]
@@ -32,6 +32,7 @@
 [ext_resource type="Shader" uid="uid://cq4klosv1obrf" path="res://shaders/sky_panorama_lift.gdshader" id="44_skylift"]
 [ext_resource type="Material" uid="uid://bmo26m66oe8oj" path="res://assets/materials/unified_terrain.tres" id="45_unifiedterrain"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="46_rivegetation"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_steps.res" id="47_riversteps"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rusy0"]
 render_priority = 0
@@ -570,7 +571,7 @@ sky_material = SubResource("ShaderMaterial_skylift")
 
 [sub_resource type="Environment" id="Environment_2row0"]
 background_mode = 2
-background_energy_multiplier = 0.87
+background_energy_multiplier = 1.16
 sky = SubResource("Sky_r50dx")
 ambient_light_source = 3
 tonemap_mode = 3
@@ -623,7 +624,7 @@ material_override = ExtResource("44_hillsmat")
 mesh = ExtResource("43_hills")
 
 [node name="鈴奈庵" parent="." unique_id=934187028 instance=ExtResource("17_4ob86")]
-transform = Transform3D(0.9961947, 0, 0.08715574, 0, 1, 0, -0.08715574, 0, 0.9961947, 212.223, 0.6225246, 17.436)
+transform = Transform3D(4.9809737, 0, 0.43577865, 0, 5, 0, -0.43577865, 0, 4.9809737, 212.223, 3.2278342, 17.436)
 
 [node name="鯢吞亭" parent="." unique_id=786666677 instance=ExtResource("18_y4f0o")]
 transform = Transform3D(0.8685389, 0, 0.49562094, 0, 1, 0, -0.49562094, 0, 0.8685389, 361.15488, 7.6293945e-06, -143.80064)
@@ -903,12 +904,12 @@ shape = SubResource("BoxShape3D_hvrvn")
 transform = Transform3D(0.24298018, 0, 0.97003126, 0, 1, 0, 0.97003126, 0, -0.24298018, 744.22375, 26, -132.66493)
 shape = SubResource("BoxShape3D_tk77k")
 
-[node name="Meshy_Stonebound Wooden Bri_1" type="Node3D" parent="." unique_id=728753522]
+[node name="龍石像橋" type="Node3D" parent="." unique_id=728753522]
 transform = Transform3D(57.254738, -1.4854553, 14.877219, 1.7017381, 49.97793, 0.44218403, -17.860548, 0, 47.733353, 423.24997, -1.7905645, -143.88815)
 
-[node name="Stonebound Wooden Bri_1" parent="Meshy_Stonebound Wooden Bri_1" unique_id=403524641 instance=ExtResource("28_3max6")]
+[node name="Stonebound Wooden Bri_1" parent="龍石像橋" unique_id=403524641 instance=ExtResource("28_3max6")]
 
-[node name="mesh_node2" type="MeshInstance3D" parent="Meshy_Stonebound Wooden Bri_1/Stonebound Wooden Bri_1" unique_id=1581241055]
+[node name="mesh_node2" type="MeshInstance3D" parent="龍石像橋/Stonebound Wooden Bri_1" unique_id=1581241055]
 mesh = SubResource("ArrayMesh_dkw4w")
 skeleton = NodePath("")
 
@@ -933,4 +934,9 @@ mesh = ExtResource("35_dkw4w")
 material_override = ExtResource("45_unifiedterrain")
 mesh = ExtResource("36_sronm")
 
-[node name="RiverVegetation" parent="." instance=ExtResource("46_rivegetation")]
+[node name="RiverVegetation" parent="." unique_id=1274932447 instance=ExtResource("46_rivegetation")]
+
+[node name="EastRiverSteps" type="MeshInstance3D" parent="." unique_id=1729300847]
+material_override = ExtResource("45_unifiedterrain")
+mesh = ExtResource("47_riversteps")
+metadata/needs_trimesh = true

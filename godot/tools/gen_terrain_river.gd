@@ -130,7 +130,11 @@ func _init() -> void:
 			if d >= revetment_top - 0.35 and d < widths.y:
 				grass_weight = 0.0
 			var aerial_fade: float = smoothstep(520.0, 1150.0, r)
-			cols[i] = Color(grass_weight, aerial_fade, 0.0, 0.0)
+			# Submerged bed reads as wet stone, not bright ochre dirt — the
+			# semi-transparent shallow band otherwise glows with the dirt
+			# texture underneath and that IS the bright waterline stripe.
+			var bed_stone: float = 1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g)
+			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.
 	var gst := SurfaceTool.new()
@@ -156,7 +160,7 @@ func _init() -> void:
 		push_error("ground winding flipped - fix generator")
 
 	DirAccess.make_dir_recursive_absolute("res://maps/slice/gen")
-	var e1: int = ResourceSaver.save(ground, "res://maps/slice/gen/slice_unified_ground.res")
+	var e1: int = ResourceSaver.save(ground, "res://maps/slice/gen/slice_unified_ground.res", ResourceSaver.FLAG_COMPRESS)
 
 	# Dense river-aligned strips create a clean wall silhouette on bends.  Each
 	# side is one continuous cross-section: submerged toe, wet waterline, dry
@@ -175,11 +179,18 @@ func _init() -> void:
 				var widths_r: Vector2 = _widths(zr)
 				var outer_x: float = center_x + side * (widths_r.y + 0.8)
 				var bank_y: float = _grid_height(hs, n, outer_x, zr) + 0.08
+				# Coping course: the face stops short of the crest and a stone
+				# lip rises ~0.22 m proud of the path before dropping back, per
+				# the 護岸強化 reference — the silhouette break is what stops
+				# the wall reading as a texture projected on a ramp.
 				rows.append([
 					[Vector3(center_x + side * (widths_r.x - 0.75), BED_Y + 0.12, zr), Color(0, 0, 1, 1)],
 					[Vector3(center_x + side * (widths_r.x + 0.30), WATER_Y + 0.06, zr), Color(0, 0, 1, 1)],
-					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN), bank_y, zr), Color(0, 0, 1, 0)],
-					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN + 0.65), bank_y, zr), Color(0, 0, 0, 0)],
+					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN - 0.45), bank_y - 0.06, zr), Color(0, 0, 1, 0)],
+					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN + 0.05), bank_y + 0.22, zr), Color(0, 0, 1, 0)],
+					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN + 0.50), bank_y + 0.22, zr), Color(0, 0, 1, 0)],
+					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN + 0.72), bank_y, zr), Color(0, 0, 1, 0)],
+					[Vector3(center_x + side * (widths_r.x + REVETMENT_RUN + 1.05), bank_y, zr), Color(0, 0, 0, 0)],
 					[Vector3(outer_x, bank_y, zr), Color(0, 0, 0, 0)]])
 			var row0r: Array = rows[0]
 			var row1r: Array = rows[1]
@@ -196,7 +207,7 @@ func _init() -> void:
 					_add_tri(rst, a1[0], b1[0], b0[0], a1[1], b1[1], b0[1])
 	rst.generate_normals()
 	var revetment: ArrayMesh = rst.commit()
-	var e3: int = ResourceSaver.save(revetment, "res://maps/slice/gen/east_river_revetment.res")
+	var e3: int = ResourceSaver.save(revetment, "res://maps/slice/gen/east_river_revetment.res", ResourceSaver.FLAG_COMPRESS)
 
 	# Water shares the carved bed's centreline and width, and reaches both map edges.
 	var wst := SurfaceTool.new()
@@ -220,23 +231,111 @@ func _init() -> void:
 			[Vector3(c1x - h1 + fe1, WATER_Y, z1f), 0.0],
 			[Vector3(c1x + h1 - fe1, WATER_Y, z1f), 0.0],
 			[Vector3(c1x + h1, WATER_Y, z1f), 1.0]]
+		# COLOR.gb carries the local downstream direction (encoded 0..1) so the
+		# water shader can scroll its normals along the meander instead of a
+		# fixed world axis. Flow runs north inlet -> south exit (+z).
+		var f0: Vector2 = Vector2((_river_x(z0f + 2.0) - _river_x(z0f - 2.0)) / 4.0, 1.0).normalized()
+		var f1: Vector2 = Vector2((_river_x(z1f + 2.0) - _river_x(z1f - 2.0)) / 4.0, 1.0).normalized()
 		for q in range(3):
 			var a0v: Array = row0[q]
 			var a1v: Array = row0[q + 1]
 			var b0v: Array = row1[q]
 			var b1v: Array = row1[q + 1]
-			wst.set_color(Color(a0v[1], 0, 0)); wst.add_vertex(a0v[0])
-			wst.set_color(Color(a1v[1], 0, 0)); wst.add_vertex(a1v[0])
-			wst.set_color(Color(b0v[1], 0, 0)); wst.add_vertex(b0v[0])
-			wst.set_color(Color(a1v[1], 0, 0)); wst.add_vertex(a1v[0])
-			wst.set_color(Color(b1v[1], 0, 0)); wst.add_vertex(b1v[0])
-			wst.set_color(Color(b0v[1], 0, 0)); wst.add_vertex(b0v[0])
+			var c0 := Color(a0v[1], f0.x * 0.5 + 0.5, f0.y * 0.5 + 0.5)
+			var c1 := Color(b0v[1], f1.x * 0.5 + 0.5, f1.y * 0.5 + 0.5)
+			wst.set_color(c0); wst.add_vertex(a0v[0])
+			wst.set_color(Color(a1v[1], c0.g, c0.b)); wst.add_vertex(a1v[0])
+			wst.set_color(Color(b0v[1], c1.g, c1.b)); wst.add_vertex(b0v[0])
+			wst.set_color(Color(a1v[1], c0.g, c0.b)); wst.add_vertex(a1v[0])
+			wst.set_color(Color(b1v[1], c1.g, c1.b)); wst.add_vertex(b1v[0])
+			wst.set_color(Color(b0v[1], c1.g, c1.b)); wst.add_vertex(b0v[0])
 	wst.generate_normals()
 	var water: ArrayMesh = wst.commit()
 	var water_arrays: Array = water.surface_get_arrays(0)
 	if (water_arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:
 		push_error("water winding flipped - fix generator")
-	var e2: int = ResourceSaver.save(water, "res://maps/slice/gen/east_river_water.res")
+	var e2: int = ResourceSaver.save(water, "res://maps/slice/gen/east_river_water.res", ResourceSaver.FLAG_COMPRESS)
+
+	# Stone landing steps beside the bridge abutment (west bank, z=-130), per
+	# the 護岸強化 reference's 階梯與水邊設施 panel: a solid stepped block from
+	# the crest path down through the wall face into the water. Sits inside the
+	# vegetation belt's bridge clearing, so no reeds intersect it.
+	# z chosen clear of the Meshy bridge deck (its approach ramp reaches ~z=-128)
+	# yet still inside the vegetation belt's bridge clearing (ends z=-111.9).
+	var sz0: float = -116.5
+	var sz1: float = -113.5
+	var szc: float = (sz0 + sz1) * 0.5
+	var scx: float = _river_x(szc)
+	var sw: Vector2 = _widths(szc)
+	var s_top_y: float = _grid_height(hs, n, scx - (sw.y + 0.8), szc) + 0.06
+	var s_top_d: float = sw.x + REVETMENT_RUN + 0.9
+	var riser: float = 0.30
+	var tread: float = 0.42
+	var n_steps: int = int(ceil((s_top_y - (WATER_Y - 0.75)) / riser))
+	var sst := SurfaceTool.new()
+	sst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var c_dry := Color(0, 0, 1, 0)
+	var base_y: float = WATER_Y - 1.4
+	# profile from top of stairs to bottom (x increases toward the river)
+	var prof: Array = []
+	for i in range(n_steps + 1):
+		var y_i: float = s_top_y - float(i) * riser
+		var x_i: float = scx - (s_top_d - float(i) * tread)
+		prof.append(Vector2(x_i, y_i))
+	for i in range(n_steps):
+		var pa: Vector2 = prof[i]
+		var pb: Vector2 = prof[i + 1]
+		var wet_a: float = 1.0 if pa.y < WATER_Y + 0.45 else 0.0
+		var wet_b: float = 1.0 if pb.y < WATER_Y + 0.45 else 0.0
+		var ca := Color(0, 0, 1, wet_a)
+		var cb := Color(0, 0, 1, wet_b)
+		# tread (horizontal, top face) at height pa.y from pa.x to pb.x
+		var t00 := Vector3(pa.x, pa.y, sz0)
+		var t01 := Vector3(pb.x, pa.y, sz0)
+		var t10 := Vector3(pa.x, pa.y, sz1)
+		var t11 := Vector3(pb.x, pa.y, sz1)
+		_add_tri(sst, t00, t01, t10, ca, ca, ca)
+		_add_tri(sst, t01, t11, t10, ca, ca, ca)
+		# riser (vertical, faces the river +x)
+		var r00 := Vector3(pb.x, pa.y, sz0)
+		var r01 := Vector3(pb.x, pb.y, sz0)
+		var r10 := Vector3(pb.x, pa.y, sz1)
+		var r11 := Vector3(pb.x, pb.y, sz1)
+		_add_tri(sst, r00, r10, r01, ca, ca, cb)
+		_add_tri(sst, r01, r10, r11, cb, ca, cb)
+	# side stringers: curtain from the step profile down to base_y on both sides
+	for side_i in range(2):
+		var zs: float = sz0 if side_i == 0 else sz1
+		for i in range(prof.size() - 1):
+			var pa2: Vector2 = prof[i]
+			var pb2: Vector2 = prof[i + 1]
+			var a_top := Vector3(pa2.x, pa2.y, zs)
+			var b_top := Vector3(pb2.x, pb2.y, zs)
+			var a_bot := Vector3(pa2.x, base_y, zs)
+			var b_bot := Vector3(pb2.x, base_y, zs)
+			# include the tread lip on the side: quad (pa top .. pb at pa.y)
+			var lip := Vector3(pb2.x, pa2.y, zs)
+			if side_i == 0:
+				_add_tri(sst, a_top, lip, a_bot, c_dry, c_dry, c_dry)
+				_add_tri(sst, lip, b_bot, a_bot, c_dry, c_dry, c_dry)
+				_add_tri(sst, lip, b_top, b_bot, c_dry, c_dry, c_dry)
+			else:
+				_add_tri(sst, a_top, a_bot, lip, c_dry, c_dry, c_dry)
+				_add_tri(sst, lip, a_bot, b_bot, c_dry, c_dry, c_dry)
+				_add_tri(sst, lip, b_bot, b_top, c_dry, c_dry, c_dry)
+	# front face of the lowest submerged step down to base
+	var last: Vector2 = prof[prof.size() - 1]
+	var f00 := Vector3(last.x, last.y, sz0)
+	var f01 := Vector3(last.x, base_y, sz0)
+	var f10 := Vector3(last.x, last.y, sz1)
+	var f11 := Vector3(last.x, base_y, sz1)
+	var c_wet := Color(0, 0, 1, 1)
+	_add_tri(sst, f00, f10, f01, c_wet, c_wet, c_wet)
+	_add_tri(sst, f01, f10, f11, c_wet, c_wet, c_wet)
+	sst.generate_normals()
+	var steps_mesh: ArrayMesh = sst.commit()
+	var e4: int = ResourceSaver.save(steps_mesh, "res://maps/slice/gen/east_river_steps.res", ResourceSaver.FLAG_COMPRESS)
+	print("steps err=", e4, " steps n=", n_steps, " top=(%.1f, %.2f, %.1f)" % [scx - s_top_d, s_top_y, szc])
 
 	print("ground err=", e1, " water err=", e2, " revetment err=", e3,
 		" grid=", n, "x", n, " water_width~=", WATER_HALF * 2.0,
