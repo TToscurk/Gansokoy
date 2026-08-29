@@ -69,7 +69,7 @@ func _init() -> void:
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
-		"z", 11.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), 0.0)
+		"z", 9.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), -0.45)
 	_place(root, "res://assets/riverbank/親水階梯.glb", "親水階梯",
 		"y", 1.8, -90.0, Vector3(343.2, 0.0, STAIR_Z), UP_WATER_Y)
 	_place(root, "res://assets/riverbank/濱水平台.glb", "濱水平台",
@@ -365,7 +365,10 @@ func _build_walkway(root: Node3D) -> void:
 	mat.roughness = 1.0
 	# 岸面實測約 0.2~0.3（壓頂石頂 0.30）。0.05 會讓整條步道埋在土裡。
 	# 與壓頂齊平才是碼頭該有的關係。
-	var y: float = -0.50
+	# 實測：步道外側自然地面 -0.08，內側渠底 -4.30。整片壓在 -0.50 會比
+	# 草地低 0.42m，走起來是一條下沉的溝、草緣看起來像突起。
+	# 齊平外側地面即可——內側低處被甲板蓋住，不影響。
+	var y: float = -0.06
 	# 實測：裸土帶止於 canal_d 9.5，草從 10.0 起（頂點色 grass 0.03 → 0.78）。
 	# 步道外緣必須跨過那道界線，否則永遠留一條縫。
 	var outer: float = 10.2
