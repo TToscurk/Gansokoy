@@ -29,6 +29,10 @@ CyclopsAutoload="*uid://4siqre3jhe80"
 
 enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 move_forward={

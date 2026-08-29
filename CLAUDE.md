@@ -51,6 +51,11 @@ The canonical project skills live in `.claude/skills/` (real files; `.agents/ski
 
 ## Git / Reporting
 
+- **This repo uses Git LFS for binary assets.** After any clone or machine move, run
+  `git lfs pull` (or `git lfs checkout` if objects are already local) BEFORE opening
+  the project in Godot. Opening with un-smudged LFS pointers makes every texture/GLB
+  import fail and stamps sticky `valid=false` into the `.import` files — recovery
+  then requires stripping those flags and a full headless reimport (2026-08-29 incident).
 - Git rules below apply only once the repository is initialized (pre-GitHub upload).
 - Commit and push work to the assigned branch.
 - Never open a pull request unless explicitly asked.
