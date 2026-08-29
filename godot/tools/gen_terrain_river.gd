@@ -22,9 +22,9 @@ const STREET_HALF_LEN := 76.0
 const CANAL_X := 340.0
 const CANAL_MID := 0.0
 const CANAL_HALF_LEN := 46.0
-const CANAL_BED_Y := -2.05
-const CANAL_BED_HALF := 5.0
-const CANAL_TOP_HALF := 8.0
+const CANAL_BED_Y := -2.45
+const CANAL_BED_HALF := 2.75
+const CANAL_TOP_HALF := 3.7
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0

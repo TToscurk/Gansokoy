@@ -3,133 +3,307 @@
 [ext_resource type="PackedScene" path="res://assets/riverbank/塊石疊砌牆一段.glb" id="1_higkt"]
 [ext_resource type="Material" path="res://assets/materials/east_river_water.tres" id="2_jtomv"]
 [ext_resource type="PackedScene" path="res://assets/riverbank/堰／小型分水閘門.glb" id="3_vmexq"]
-[ext_resource type="PackedScene" path="res://assets/riverbank/水車.glb" id="4_ur85r"]
-[ext_resource type="Script" path="res://scripts/water_wheel_spin.gd" id="5_l80tk"]
-[ext_resource type="PackedScene" path="res://assets/riverbank/水車小屋.glb" id="6_hngcq"]
+[ext_resource type="PackedScene" path="res://assets/riverbank/水車小屋.glb" id="4_ur85r"]
+[ext_resource type="PackedScene" path="res://assets/riverbank/水車.glb" id="5_l80tk"]
+[ext_resource type="Script" path="res://scripts/water_wheel_spin.gd" id="6_hngcq"]
 [ext_resource type="PackedScene" path="res://assets/bridges/田-村橋(清河橋).glb" id="7_dexqy"]
 [ext_resource type="PackedScene" path="res://assets/riverbank/親水階梯一組.glb" id="8_s01h8"]
 [ext_resource type="PackedScene" path="res://assets/riverbank/濱水平台一塊.glb" id="9_b028j"]
 [ext_resource type="PackedScene" path="res://assets/riverbank/田泵水口.glb" id="10_217sj"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4iyhn"]
-size = Vector2(10.2, 49.6)
+size = Vector2(5.1, 29.7)
 subdivide_width = 4
-subdivide_depth = 24
+subdivide_depth = 20
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g8k8d"]
-size = Vector2(10.2, 45.4)
+size = Vector2(5.1, 23.5)
 subdivide_width = 4
-subdivide_depth = 24
+subdivide_depth = 20
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_d1rfk"]
 _surfaces = [{
-"aabb": AABB(334.9, -1.37, 1.6, 10.200012, 0.8, 1.1),
-"attribute_data": PackedByteArray("wvUFQgrXIz4+CgpCCtcjPj4KCkJxPYo+wvUFQgrXIz4+CgpCcT2KPsL1BUJxPYo+"),
+"aabb": AABB(337.45, -1.67, 2.7, 5.0999756, 0.6999999, 0.89999986),
+"attribute_data": PackedByteArray("4voGQnE9ij4eBQlCcT2KPh4FCULrUbg+4voGQnE9ij4eBQlC61G4PuL6BkLrUbg+"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 6,
-"vertex_data": PackedByteArray("M3OnQ4XrEb/NzMw/zYysQ4XrEb/NzMw/zYysQylcr7/NzCxAM3OnQ4XrEb/NzMw/zYysQylcr7/NzCxAM3OnQylcr7/NzCxA/38aykRH/rD/fxrKREf+sP9/GspER/6w/38aykRH/rD/fxrKREf+sP9/GspER/6w")
+"vertex_data": PackedByteArray("mrmoQ+xReL/NzCxAZkarQ+xReL/NzCxAZkarQ4/C1b9mZmZAmrmoQ+xReL/NzCxAZkarQ4/C1b9mZmZAmrmoQ4/C1b9mZmZA/3//x0dKv6//f//HR0q/r/9//8dHSr+v/3//x0dKv6//f//HR0q/r/9//8dHSr+v")
 }]
 
-[node name="B2_Canal" type="Node3D" unique_id=490119467]
+[node name="B2_Canal" type="Node3D" unique_id=1232826088]
 
-[node name="護岸" type="Node3D" parent="." unique_id=1382690326]
+[node name="石砌護岸" type="Node3D" parent="." unique_id=1214209207]
 
-[node name="wall_00" type="Node3D" parent="護岸" unique_id=1296757311 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, -40)
+[node name="wall_00_0" type="Node3D" parent="石砌護岸" unique_id=1296757311 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -23.5)
 
-[node name="wall_01" type="Node3D" parent="護岸" unique_id=222743936 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, -31.95)
+[node name="wall_00_1" type="Node3D" parent="石砌護岸" unique_id=1560466256 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -23.5)
 
-[node name="wall_02" type="Node3D" parent="護岸" unique_id=829537437 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, -23.9)
+[node name="wall_00_2" type="Node3D" parent="石砌護岸" unique_id=1383488807 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -23.5)
 
-[node name="wall_03" type="Node3D" parent="護岸" unique_id=1501466036 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, -15.85)
+[node name="wall_01_0" type="Node3D" parent="石砌護岸" unique_id=2096632229 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -20.5)
 
-[node name="wall_04" type="Node3D" parent="護岸" unique_id=466809782 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, -7.8)
+[node name="wall_01_1" type="Node3D" parent="石砌護岸" unique_id=1523849667 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -20.5)
 
-[node name="wall_05" type="Node3D" parent="護岸" unique_id=1840565679 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, 0.25)
+[node name="wall_01_2" type="Node3D" parent="石砌護岸" unique_id=1368018958 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -20.5)
 
-[node name="wall_06" type="Node3D" parent="護岸" unique_id=1519162963 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, 16.35)
+[node name="wall_02_0" type="Node3D" parent="石砌護岸" unique_id=1872776475 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -17.5)
 
-[node name="wall_07" type="Node3D" parent="護岸" unique_id=1190642892 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, 24.4)
+[node name="wall_02_1" type="Node3D" parent="石砌護岸" unique_id=499014047 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -17.5)
 
-[node name="wall_08" type="Node3D" parent="護岸" unique_id=988685494 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, 32.45)
+[node name="wall_02_2" type="Node3D" parent="石砌護岸" unique_id=2049702542 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -17.5)
 
-[node name="wall_09" type="Node3D" parent="護岸" unique_id=1122835238 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, 1.4, 0, 8, 0, -8, 0, -6.119594e-08, 334.64276, -1.0203121, 40.5)
+[node name="wall_03_0" type="Node3D" parent="石砌護岸" unique_id=358445325 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -14.5)
 
-[node name="wall_10" type="Node3D" parent="護岸" unique_id=787896247 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, -40)
+[node name="wall_03_1" type="Node3D" parent="石砌護岸" unique_id=571415875 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -14.5)
 
-[node name="wall_11" type="Node3D" parent="護岸" unique_id=2058358103 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, -31.95)
+[node name="wall_03_2" type="Node3D" parent="石砌護岸" unique_id=211319937 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -14.5)
 
-[node name="wall_12" type="Node3D" parent="護岸" unique_id=319965804 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, -23.9)
+[node name="wall_04_0" type="Node3D" parent="石砌護岸" unique_id=560887704 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -11.5)
 
-[node name="wall_13" type="Node3D" parent="護岸" unique_id=947856671 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, -7.8)
+[node name="wall_04_1" type="Node3D" parent="石砌護岸" unique_id=826167022 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -11.5)
 
-[node name="wall_14" type="Node3D" parent="護岸" unique_id=2123182386 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 0.25)
+[node name="wall_04_2" type="Node3D" parent="石砌護岸" unique_id=2059357759 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -11.5)
 
-[node name="wall_15" type="Node3D" parent="護岸" unique_id=241048707 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 8.3)
+[node name="wall_05_0" type="Node3D" parent="石砌護岸" unique_id=113995496 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -8.5)
 
-[node name="wall_16" type="Node3D" parent="護岸" unique_id=884609463 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 16.35)
+[node name="wall_05_1" type="Node3D" parent="石砌護岸" unique_id=968896309 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -8.5)
 
-[node name="wall_17" type="Node3D" parent="護岸" unique_id=1949383747 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 24.4)
+[node name="wall_05_2" type="Node3D" parent="石砌護岸" unique_id=266844 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -8.5)
 
-[node name="wall_18" type="Node3D" parent="護岸" unique_id=263659941 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 32.45)
+[node name="wall_06_0" type="Node3D" parent="石砌護岸" unique_id=1463451254 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -5.5)
 
-[node name="wall_19" type="Node3D" parent="護岸" unique_id=1919434366 instance=ExtResource("1_higkt")]
-transform = Transform3D(-3.496911e-07, 0, -1.4, 0, 8, 0, 8, 0, -6.119594e-08, 345.35724, -1.0203121, 40.5)
+[node name="wall_06_1" type="Node3D" parent="石砌護岸" unique_id=671939708 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -5.5)
 
-[node name="UpperWater" type="MeshInstance3D" parent="." unique_id=1989419635]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340, -0.55, -23.2)
+[node name="wall_06_2" type="Node3D" parent="石砌護岸" unique_id=45948826 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -5.5)
+
+[node name="wall_07_0" type="Node3D" parent="石砌護岸" unique_id=1062317476 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, -2.5)
+
+[node name="wall_07_1" type="Node3D" parent="石砌護岸" unique_id=1446125764 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, -2.5)
+
+[node name="wall_07_2" type="Node3D" parent="石砌護岸" unique_id=295898683 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, -2.5)
+
+[node name="wall_08_0" type="Node3D" parent="石砌護岸" unique_id=1501588368 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, 0.5)
+
+[node name="wall_08_1" type="Node3D" parent="石砌護岸" unique_id=1773438760 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, 0.5)
+
+[node name="wall_08_2" type="Node3D" parent="石砌護岸" unique_id=540817607 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, 0.5)
+
+[node name="wall_12_0" type="Node3D" parent="石砌護岸" unique_id=1812040432 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, 12.5)
+
+[node name="wall_12_1" type="Node3D" parent="石砌護岸" unique_id=529832062 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, 12.5)
+
+[node name="wall_12_2" type="Node3D" parent="石砌護岸" unique_id=1361582400 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, 12.5)
+
+[node name="wall_13_0" type="Node3D" parent="石砌護岸" unique_id=1102820744 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, 15.5)
+
+[node name="wall_13_1" type="Node3D" parent="石砌護岸" unique_id=1133230040 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, 15.5)
+
+[node name="wall_13_2" type="Node3D" parent="石砌護岸" unique_id=1653571665 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, 15.5)
+
+[node name="wall_14_0" type="Node3D" parent="石砌護岸" unique_id=557731925 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, 18.5)
+
+[node name="wall_14_1" type="Node3D" parent="石砌護岸" unique_id=1862647519 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, 18.5)
+
+[node name="wall_14_2" type="Node3D" parent="石砌護岸" unique_id=426238675 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, 18.5)
+
+[node name="wall_15_0" type="Node3D" parent="石砌護岸" unique_id=574349332 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -2.007617, 21.5)
+
+[node name="wall_15_1" type="Node3D" parent="石砌護岸" unique_id=261625082 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -1.122851, 21.5)
+
+[node name="wall_15_2" type="Node3D" parent="石砌護岸" unique_id=1196190495 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 336.96307, -0.23808505, 21.5)
+
+[node name="@Node3D@2" type="Node3D" parent="石砌護岸" unique_id=2049918654 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -23.5)
+
+[node name="@Node3D@3" type="Node3D" parent="石砌護岸" unique_id=1183696146 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -23.5)
+
+[node name="@Node3D@4" type="Node3D" parent="石砌護岸" unique_id=1122005635 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -23.5)
+
+[node name="@Node3D@5" type="Node3D" parent="石砌護岸" unique_id=769004982 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -20.5)
+
+[node name="@Node3D@6" type="Node3D" parent="石砌護岸" unique_id=1467239475 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -20.5)
+
+[node name="@Node3D@7" type="Node3D" parent="石砌護岸" unique_id=431630203 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -20.5)
+
+[node name="@Node3D@8" type="Node3D" parent="石砌護岸" unique_id=1013346466 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -17.5)
+
+[node name="@Node3D@9" type="Node3D" parent="石砌護岸" unique_id=1609625129 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -17.5)
+
+[node name="@Node3D@10" type="Node3D" parent="石砌護岸" unique_id=979477530 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -17.5)
+
+[node name="@Node3D@11" type="Node3D" parent="石砌護岸" unique_id=602187952 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -14.5)
+
+[node name="@Node3D@12" type="Node3D" parent="石砌護岸" unique_id=880213671 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -14.5)
+
+[node name="@Node3D@13" type="Node3D" parent="石砌護岸" unique_id=1091982562 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -14.5)
+
+[node name="@Node3D@14" type="Node3D" parent="石砌護岸" unique_id=171256847 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -11.5)
+
+[node name="@Node3D@15" type="Node3D" parent="石砌護岸" unique_id=137705229 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -11.5)
+
+[node name="@Node3D@16" type="Node3D" parent="石砌護岸" unique_id=1588425391 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -11.5)
+
+[node name="@Node3D@17" type="Node3D" parent="石砌護岸" unique_id=2076677793 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -8.5)
+
+[node name="@Node3D@18" type="Node3D" parent="石砌護岸" unique_id=1205867594 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -8.5)
+
+[node name="@Node3D@19" type="Node3D" parent="石砌護岸" unique_id=1501364902 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -8.5)
+
+[node name="@Node3D@20" type="Node3D" parent="石砌護岸" unique_id=912910472 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -5.5)
+
+[node name="@Node3D@21" type="Node3D" parent="石砌護岸" unique_id=175304648 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -5.5)
+
+[node name="@Node3D@22" type="Node3D" parent="石砌護岸" unique_id=788805309 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -5.5)
+
+[node name="@Node3D@23" type="Node3D" parent="石砌護岸" unique_id=1102629583 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, -2.5)
+
+[node name="@Node3D@24" type="Node3D" parent="石砌護岸" unique_id=1856222128 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, -2.5)
+
+[node name="@Node3D@25" type="Node3D" parent="石砌護岸" unique_id=110033342 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, -2.5)
+
+[node name="@Node3D@26" type="Node3D" parent="石砌護岸" unique_id=1464792468 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, 0.5)
+
+[node name="@Node3D@27" type="Node3D" parent="石砌護岸" unique_id=1712439861 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, 0.5)
+
+[node name="@Node3D@28" type="Node3D" parent="石砌護岸" unique_id=603871529 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, 0.5)
+
+[node name="wall_09_0" type="Node3D" parent="石砌護岸" unique_id=522999987 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, 3.5)
+
+[node name="wall_09_1" type="Node3D" parent="石砌護岸" unique_id=1595878352 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, 3.5)
+
+[node name="wall_09_2" type="Node3D" parent="石砌護岸" unique_id=1712304904 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, 3.5)
+
+[node name="wall_10_0" type="Node3D" parent="石砌護岸" unique_id=1859370650 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, 6.5)
+
+[node name="wall_10_1" type="Node3D" parent="石砌護岸" unique_id=252199216 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, 6.5)
+
+[node name="wall_10_2" type="Node3D" parent="石砌護岸" unique_id=1641790543 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, 6.5)
+
+[node name="wall_11_0" type="Node3D" parent="石砌護岸" unique_id=1742614927 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, 9.5)
+
+[node name="wall_11_1" type="Node3D" parent="石砌護岸" unique_id=355257714 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, 9.5)
+
+[node name="wall_11_2" type="Node3D" parent="石砌護岸" unique_id=1512307907 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, 9.5)
+
+[node name="@Node3D@29" type="Node3D" parent="石砌護岸" unique_id=2074393463 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -2.007617, 21.5)
+
+[node name="@Node3D@30" type="Node3D" parent="石砌護岸" unique_id=1000502659 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -1.122851, 21.5)
+
+[node name="@Node3D@31" type="Node3D" parent="石砌護岸" unique_id=53117404 instance=ExtResource("1_higkt")]
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.03693, -0.23808505, 21.5)
+
+[node name="UpperWater" type="MeshInstance3D" parent="." unique_id=2116510103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340, -0.95, -12.15)
 material_override = ExtResource("2_jtomv")
 mesh = SubResource("PlaneMesh_4iyhn")
 metadata/water_surface = true
 
-[node name="LowerWater" type="MeshInstance3D" parent="." unique_id=406270056]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340, -1.35, 25.3)
+[node name="LowerWater" type="MeshInstance3D" parent="." unique_id=1317034937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340, -1.65, 15.25)
 material_override = ExtResource("2_jtomv")
 mesh = SubResource("PlaneMesh_g8k8d")
 metadata/water_surface = true
 
-[node name="WeirSpill" type="MeshInstance3D" parent="." unique_id=810422419]
+[node name="WeirSpill" type="MeshInstance3D" parent="." unique_id=2029311137]
 material_override = ExtResource("2_jtomv")
 mesh = SubResource("ArrayMesh_d1rfk")
 
 [node name="堰" type="Node3D" parent="." unique_id=105779623 instance=ExtResource("3_vmexq")]
-transform = Transform3D(5.4, 0, 0, 0, 5.4, 0, 0, 0, 5.4, 340.00235, -0.20153685, 2.0025408)
+transform = Transform3D(3.2119133, 0, 0, 0, 3.2119133, 0, 0, 0, 3.2119133, 340.0014, -1.3505365, 3.0015113)
 
-[node name="水車" type="Node3D" parent="." unique_id=286831243 instance=ExtResource("4_ur85r")]
-transform = Transform3D(-1.8358783e-07, 0, 4.2, 0, 4.2, 0, -4.2, 0, -1.8358783e-07, 334.60205, 0.25, 5.4)
-script = ExtResource("5_l80tk")
+[node name="水車小屋" type="Node3D" parent="." unique_id=1662361752 instance=ExtResource("4_ur85r")]
+transform = Transform3D(-1.8412636e-07, 0, 4.2123203, 0, 4.2123203, 0, -4.2123203, 0, -1.8412636e-07, 332.40634, 1.7867316, 6.507995)
 
-[node name="水車小屋" type="Node3D" parent="." unique_id=1662361752 instance=ExtResource("6_hngcq")]
-transform = Transform3D(-2.1855695e-07, 0, 5, 0, 5, 0, -5, 0, -2.1855695e-07, 327.50754, 2.0895395, 5.40949)
+[node name="水車輪" type="Node3D" parent="." unique_id=286831243 instance=ExtResource("5_l80tk")]
+transform = Transform3D(-1.7484555e-07, 0, 4, 0, 4, 0, -4, 0, -1.7484555e-07, 338.50195, 0, 6.5)
+script = ExtResource("6_hngcq")
 
 [node name="清河橋" type="Node3D" parent="." unique_id=147138287 instance=ExtResource("7_dexqy")]
-transform = Transform3D(-5.68248e-07, 0, 13, 0, 13, 0, -13, 0, -5.68248e-07, 340, 1.9986321, -28.006351)
+transform = Transform3D(-4.371139e-07, 0, 10, 0, 10, 0, -10, 0, -4.371139e-07, 340, 1.55664, -18.004885)
 
 [node name="親水階梯" type="Node3D" parent="." unique_id=474213131 instance=ExtResource("8_s01h8")]
-transform = Transform3D(-1.7484555e-07, 0, -4, 0, 4, 0, 4, 0, -1.7484555e-07, 343.1961, -0.871092, -14)
+transform = Transform3D(-1.4887061e-07, 0, -3.4057627, 0, 3.4057627, 0, 3.4057627, 0, -1.4887061e-07, 343.29666, -0.951662, 14)
 
 [node name="濱水平台" type="Node3D" parent="." unique_id=1532162210 instance=ExtResource("9_b028j")]
-transform = Transform3D(-9.616505e-08, 0, -2.2, 0, 2.2, 0, 2.2, 0, -9.616505e-08, 343.6, -1.2121102, -20.5)
+transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 343.6, 0.242577, 19)
 
-[node name="田泵水口" type="Node3D" parent="." unique_id=1527690186 instance=ExtResource("10_217sj")]
-transform = Transform3D(-1.13649605e-07, 0, -2.6, 0, 2.6, 0, 2.6, 0, -1.13649605e-07, 344.55298, 0.11380243, 28.001188)
+[node name="灌溉引水渠口" type="Node3D" parent="." unique_id=1527690186 instance=ExtResource("10_217sj")]
+transform = Transform3D(-8.048214e-08, 0, -1.8412167, 0, 1.8412167, 0, 1.8412167, 0, -8.048214e-08, 342.96667, -0.32369742, 19.000841)
