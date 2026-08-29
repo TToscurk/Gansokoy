@@ -18,6 +18,13 @@ const VILLAGE_BLEND_END := 440.0
 const STREET_AXIS_X := 235.0
 const STREET_MID_Z := 16.0
 const STREET_HALF_LEN := 76.0
+# B2 小河（用水路）樣板段：村核與農田之間的直渠（2026-08-29，使用者批准）
+const CANAL_X := 340.0
+const CANAL_MID := 0.0
+const CANAL_HALF_LEN := 46.0
+const CANAL_BED_Y := -2.05
+const CANAL_BED_HALF := 5.0
+const CANAL_TOP_HALF := 8.0
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0
@@ -142,6 +149,15 @@ func _init() -> void:
 				else:
 					var bank_t: float = (d - widths.x) / (widths.y - widths.x)
 					g = lerpf(BED_Y, bank_top, smoothstep(0.0, 1.0, bank_t))
+			# B2 小河：淺槽直渠，兩端漸收回地表；牆體與水面由 b2_canal 場景供給
+			var canal_d: float = absf(x - CANAL_X)
+			var canal_z: float = absf(z - CANAL_MID)
+			if canal_d < CANAL_TOP_HALF and canal_z < CANAL_HALF_LEN + 10.0:
+				var canal_end: float = 1.0 - smoothstep(CANAL_HALF_LEN - 8.0, CANAL_HALF_LEN + 10.0, canal_z)
+				var canal_prof: float = 1.0 - smoothstep(CANAL_BED_HALF, CANAL_TOP_HALF, canal_d)
+				var canal_cut: float = (g - CANAL_BED_Y) * canal_prof * canal_end
+				if canal_cut > 0.0:
+					g -= canal_cut
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
@@ -157,6 +173,10 @@ func _init() -> void:
 			# semi-transparent shallow band otherwise glows with the dirt
 			# texture underneath and that IS the bright waterline stripe.
 			var bed_stone: float = 1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g)
+			if canal_z < CANAL_HALF_LEN + 10.0:
+				grass_weight *= smoothstep(CANAL_TOP_HALF - 1.0, CANAL_TOP_HALF + 3.0, canal_d)
+				if canal_d < CANAL_TOP_HALF and g < -0.7:
+					bed_stone = maxf(bed_stone, 1.0 - smoothstep(-1.6, -0.7, g) * 0.4)
 			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.
