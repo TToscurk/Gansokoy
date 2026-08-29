@@ -49,10 +49,11 @@ func _init() -> void:
 	_build_walls(root)
 	_build_bed(root)
 	_build_water(root)
+	_build_bay(root)
 	# v2：落差取消後它不再是攔河堰，回歸「小型分水閘門」本名——
 	# 縮到高 1.0m 使冠頂齊水面 -1.80，靠東岸擺，是取水口不是水壩。
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "分水閘門",
-		"y", 1.6, 0.0, Vector3(342.4, 0.0, WEIR_Z), UP_WATER_Y - 0.40)
+		"y", 1.6, 0.0, Vector3(342.9, 0.0, WEIR_Z), UP_WATER_Y - 0.40)
 	# r11：新資產組。實測小屋軸桿在高度 35.5%，規格高 4.5m → 軸心在基座上 1.598m。
 	# 小屋不旋轉（rot 0），讓帶軸桿的 +X 面朝東對著渠道；基座 -2.30 使柱腳立在
 	# 水邊（床 -2.80 之上 0.5m），軸心落在 -0.702，屋頂 +2.20 高過岸面。
@@ -63,7 +64,7 @@ func _init() -> void:
 		"x", 3.0, 90.0, Vector3(337.0, 0.0, WHEEL_Z), -2.202)
 	# 木樋：自上游沿西岸送水到輪頂附近
 	_place(root, "res://assets/riverbank/木樋（引水槽）支撐棚架.glb", "木樋",
-		"x", 7.0, 90.0, Vector3(337.0, 0.0, 1.6), -0.60)
+		"x", 7.0, 90.0, Vector3(335.8, 0.0, 3.0), BED_UP)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
@@ -324,6 +325,43 @@ func _build_water(root: Node3D) -> void:
 	mi.material_override = mat
 	root.add_child(mi)
 	mi.owner = root
+
+
+## r12 磨坊池：渠道在磨坊處鼓出一個水池，小屋立在池中柱基上。
+## 上一輪把小屋擺在 -2.30 卻只把「牆」退開 6m，土沒退 → 小屋被埋。
+## 這裡把渠床與水面一起延伸進灣內，小屋才是站在水裡而不是土裡。
+func _build_bay(root: Node3D) -> void:
+	var x0: float = CX - WALL_FACE - PIT_DEPTH
+	var x1: float = CX - WALL_FACE
+	var mat: Material = load("res://assets/materials/east_river_water.tres")
+	# 池床（實體，與主渠床同高）
+	var st: SurfaceTool = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var y: float = BED_UP
+	var q: Array = [Vector3(x0, y, PIT_Z0), Vector3(x1, y, PIT_Z0),
+		Vector3(x1, y, PIT_Z1), Vector3(x0, y, PIT_Z1)]
+	for v in [q[0], q[1], q[2], q[0], q[2], q[3]]:
+		st.set_uv(Vector2(v.x * 0.25, v.z * 0.25))
+		st.add_vertex(v)
+	st.generate_normals()
+	var bed: MeshInstance3D = MeshInstance3D.new()
+	bed.name = "BayBed"
+	bed.mesh = st.commit()
+	bed.material_override = load("res://assets/materials/canal_bed.tres") if ResourceLoader.exists("res://assets/materials/canal_bed.tres") else null
+	root.add_child(bed); bed.owner = root
+	# 池水（與主渠水面接合，略為重疊避免縫）
+	var pm: PlaneMesh = PlaneMesh.new()
+	pm.size = Vector2((x1 + 0.30) - (x0 + 0.15), PIT_Z1 - PIT_Z0 - 0.2)
+	pm.subdivide_width = 6
+	pm.subdivide_depth = 6
+	var w: MeshInstance3D = MeshInstance3D.new()
+	w.name = "BayWater"
+	w.mesh = pm
+	w.position = Vector3(((x0 + 0.15) + (x1 + 0.30)) * 0.5, UP_WATER_Y,
+		(PIT_Z0 + PIT_Z1) * 0.5)
+	w.material_override = mat
+	w.set_meta("water_surface", true)
+	root.add_child(w); w.owner = root
 
 
 func _water_plane(root: Node3D, mat: Material, node_name: String,

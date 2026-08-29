@@ -24,11 +24,17 @@ const CANAL_MID := 0.0
 const CANAL_HALF_LEN := 46.0
 # 地形刻槽必須比「砌好的渠床」更深：地形格點 6m，渠寬僅 5.4m，
 # 內插後牆邊地面 h≈0.575×中線深度。要讓地形全程低於渠床，中線需挖到 1.75 倍。
-const CANAL_BED_Y := -4.30          # 上游：砌床 -2.45 對應
-const CANAL_BED_DN := -9.60         # 下游：砌床 -5.45 對應
+# r12：v2 剖面為單一水位（砌床 -2.80），地形一律挖到 -4.30 讓砌床有餘裕。
+# 舊值 -9.60 是 4m 落差時代的殘留，落差取消後下游會留一個看不見的深坑。
+const CANAL_BED_Y := -4.30
+const CANAL_BED_DN := -4.30
 const CANAL_WEIR_Z := 3.0
 const CANAL_BED_HALF := 2.75
-const CANAL_TOP_HALF := 3.7
+const CANAL_TOP_HALF := 4.3          # >WALL_FACE 4.0，讓護岸落在挖方內
+# 磨坊池：渠道在磨坊處往西鼓出，小屋才能立在水裡而不是埋進岸土
+const BAY_X0 := 329.5
+const BAY_Z0 := 3.3
+const BAY_Z1 := 9.7
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0
@@ -164,6 +170,13 @@ func _init() -> void:
 				var canal_cut: float = (g - canal_bed) * canal_prof * canal_end
 				if canal_cut > 0.0:
 					g -= canal_cut
+			# 磨坊池挖方：西側方形凹槽，邊緣漸收避免硬崖
+			if x > BAY_X0 and x < CANAL_X and z > BAY_Z0 - 1.5 and z < BAY_Z1 + 1.5:
+				var bfx: float = smoothstep(BAY_X0, BAY_X0 + 1.2, x)
+				var bfz: float = smoothstep(BAY_Z0 - 1.5, BAY_Z0, z) 					* (1.0 - smoothstep(BAY_Z1, BAY_Z1 + 1.5, z))
+				var bay_cut: float = (g - CANAL_BED_Y) * bfx * bfz
+				if bay_cut > 0.0:
+					g -= bay_cut
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
