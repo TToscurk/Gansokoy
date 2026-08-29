@@ -845,3 +845,4 @@ mesh = ExtResource("34_ww6k3")
 [node name="B1_Street" parent="." unique_id=54333952 instance=ExtResource("36_sronm")]
 
 [node name="B2_Canal" parent="." unique_id=1311059145 instance=ExtResource("37_dkw4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021362305, 0.005129099, 0.00389719)
