@@ -14,6 +14,10 @@ const R_EXT := 1250.0
 const SEED := 20260827
 const VILLAGE_HALF := 300.0
 const VILLAGE_BLEND_END := 440.0
+# 主街走廊參數（與 tools/gen_b1_street.gd 對齊）
+const STREET_AXIS_X := 235.0
+const STREET_MID_Z := 16.0
+const STREET_HALF_LEN := 76.0
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0
@@ -43,6 +47,25 @@ func _wvar(z: float) -> float:
 func _widths(z: float) -> Vector2:
 	var water_half: float = WATER_HALF * _wvar(z)
 	return Vector2(water_half, water_half + (TOP_HALF - WATER_HALF))
+
+
+
+## 村內地被分區（2026-08-29，使用者選定「用地面材質分區」取代撒草）。
+## 依據概念圖：草地是預設，踏み固めた土是例外——主街走廊與建物群周邊被踩實。
+## 注意頂點間距 = CELL(6m)，雜訊尺度必須夠大才畫得出來。
+func _village_cover(x: float, z: float) -> float:
+	# 主街走廊：夯土，不長草
+	var street_d: float = absf(x - STREET_AXIS_X)
+	var along: float = 1.0 - smoothstep(STREET_HALF_LEN * 0.90, STREET_HALF_LEN * 1.35,
+		absf(z - STREET_MID_Z))
+	var street_pack: float = (1.0 - smoothstep(13.0, 30.0, street_d)) * along
+	# 建物群周邊踩實，範圍收斂在村心 ~90m 內
+	var core: float = 1.0 - smoothstep(16.0, 58.0, Vector2(x - 250.0, z - 10.0).length())
+	# 有機斑塊，讓草地邊界不是同心圓
+	var patch: float = _n.get_noise_2d(x * 0.55 + 300.0, z * 0.55 - 120.0) * 0.5 + 0.5
+	var cover: float = smoothstep(0.28, 0.62, patch)
+	var base: float = lerpf(0.55, 1.0, cover)   # 底線 0.55，開闊地不會整片光禿
+	return clampf(base * (1.0 - street_pack) * (1.0 - 0.55 * core), 0.0, 1.0)
 
 
 func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
@@ -122,7 +145,7 @@ func _init() -> void:
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
-			var grass_weight: float = smoothstep(270.0, 455.0, pl)
+			var grass_weight: float = maxf(smoothstep(270.0, 455.0, pl), _village_cover(x, z))
 			if g < WATER_Y - 0.2:
 				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
