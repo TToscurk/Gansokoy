@@ -366,7 +366,9 @@ func _build_walkway(root: Node3D) -> void:
 	# 岸面實測約 0.2~0.3（壓頂石頂 0.30）。0.05 會讓整條步道埋在土裡。
 	# 與壓頂齊平才是碼頭該有的關係。
 	var y: float = -0.50
-	var outer: float = 9.0   # 必須蓋過地形收坡（TOP_HALF 6.5）外緣的裸土帶
+	# 實測：裸土帶止於 canal_d 9.5，草從 10.0 起（頂點色 grass 0.03 → 0.78）。
+	# 步道外緣必須跨過那道界線，否則永遠留一條縫。
+	var outer: float = 10.2
 	for side in [-1.0, 1.0]:
 		var st: SurfaceTool = SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
