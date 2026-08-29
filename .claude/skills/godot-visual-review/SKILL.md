@@ -5,7 +5,7 @@ description: Run the mandatory in-engine visual feedback loop for Godot 3D art, 
 
 # Godot Visual Review
 
-Treat rendered images as required evidence. Read `CLAUDE.md`, `.claude/rules/art-review.md`, `.claude/rules/execution-modes.md`, and `.claude/rules/godot.md` before acting.
+Treat rendered images as required evidence. Read `CLAUDE.md`, `.claude/rules/art-review.md`, and `.claude/rules/godot.md` before acting.
 
 ## Workflow
 

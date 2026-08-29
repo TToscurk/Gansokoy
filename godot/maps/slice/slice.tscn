@@ -1,40 +1,42 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://bomtd3ktjtats"]
 
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_shrubs.res" id="1_gl3i7"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_ferns.res" id="2_db0uk"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_grasstall.res" id="3_4uxy7"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_grassflower.res" id="4_8u05v"]
-[ext_resource type="Material" path="res://assets/materials/village_earth_ochre.tres" id="5_ml577"]
-[ext_resource type="Material" path="res://assets/materials/basin_hills.tres" id="6_3nkoh"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_basin_hills.res" id="7_si5ac"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/鈴奈庵/鈴奈庵.glb" id="8_f83ma"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/鯢吞亭/鯢吞亭.glb" id="9_j3smt"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/霧雨店/霧雨店.glb" id="10_rl0in"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/寺子屋/寺子屋.glb" id="11_tldba"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/龍神像/龍神像.glb" id="12_3lm1b"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/稗田邸/稗田底新版.glb" id="13_tljun"]
+[ext_resource type="Material" uid="uid://b7il63chrjtcc" path="res://assets/materials/village_earth_ochre.tres" id="5_ml577"]
+[ext_resource type="Material" uid="uid://c7qpg3wphev7y" path="res://assets/materials/basin_hills.tres" id="6_3nkoh"]
+[ext_resource type="ArrayMesh" uid="uid://crsgmrjqmlhbd" path="res://maps/slice/gen/slice_basin_hills.res" id="7_si5ac"]
+[ext_resource type="PackedScene" uid="uid://bqufusi10p8ld" path="res://maps/village/gen/鈴奈庵/鈴奈庵.glb" id="8_f83ma"]
+[ext_resource type="PackedScene" uid="uid://d0po5qd2jwkxh" path="res://maps/village/gen/鯢吞亭/鯢吞亭.glb" id="9_j3smt"]
+[ext_resource type="PackedScene" uid="uid://cws10r4siyyj6" path="res://maps/village/gen/霧雨店/霧雨店.glb" id="10_rl0in"]
+[ext_resource type="PackedScene" uid="uid://huxrost0wlqu" path="res://maps/village/gen/寺子屋/寺子屋.glb" id="11_tldba"]
+[ext_resource type="PackedScene" uid="uid://bwk4nobtxpmbt" path="res://maps/village/gen/龍神像/龍神像.glb" id="12_3lm1b"]
+[ext_resource type="PackedScene" uid="uid://bm2ugu0n3ddlx" path="res://maps/village/gen/稗田邸/稗田底新版.glb" id="13_tljun"]
 [ext_resource type="PackedScene" path="res://scenes/road_lamp.tscn" id="14_t6ny4"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_path_diff.jpg" id="15_gu4i5"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_path_nor_gl.jpg" id="16_rq5pj"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_path_rough.jpg" id="17_emrj2"]
-[ext_resource type="Material" path="res://assets/materials/river_ishigaki_dry.tres" id="18_cq7bq"]
-[ext_resource type="Material" path="res://assets/materials/river_ishigaki_wet.tres" id="19_ee87s"]
-[ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="20_uvsbe"]
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="21_bysoq"]
-[ext_resource type="PackedScene" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1.glb" id="22_wcsut"]
-[ext_resource type="Texture2D" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_base_color.jpg" id="23_xd2cf"]
-[ext_resource type="Texture2D" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_metallic_roughness.jpg" id="24_rfahl"]
-[ext_resource type="Texture2D" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_normal.jpg" id="25_1e0uk"]
-[ext_resource type="Shader" path="res://shaders/sky_panorama_lift.gdshader" id="26_ntakc"]
-[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="27_jm74x"]
-[ext_resource type="Material" path="res://assets/materials/river_transition_grass.tres" id="28_3eeac"]
+[ext_resource type="Texture2D" uid="uid://cks3rvqum3lfd" path="res://assets/textures/terrain_path_diff.jpg" id="15_gu4i5"]
+[ext_resource type="Texture2D" uid="uid://hhi85apgbwc2" path="res://assets/textures/terrain_path_nor_gl.jpg" id="16_rq5pj"]
+[ext_resource type="Texture2D" uid="uid://bgchbssq1kea3" path="res://assets/textures/terrain_path_rough.jpg" id="17_emrj2"]
+[ext_resource type="Material" uid="uid://cxaipje5jwykf" path="res://assets/materials/river_ishigaki_dry.tres" id="18_cq7bq"]
+[ext_resource type="Material" uid="uid://dxlldb4ljao4h" path="res://assets/materials/river_ishigaki_wet.tres" id="19_ee87s"]
+[ext_resource type="Shader" uid="uid://cy3h3t6y31nib" path="res://assets/shaders/water.gdshader" id="20_uvsbe"]
+[ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="21_bysoq"]
+[ext_resource type="PackedScene" uid="uid://dwvuxjahpeudf" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1.glb" id="22_wcsut"]
+[ext_resource type="Texture2D" uid="uid://i3tj8rkt6dmi" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_base_color.jpg" id="23_xd2cf"]
+[ext_resource type="Texture2D" uid="uid://danhjab1iqnaj" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_metallic_roughness.jpg" id="24_rfahl"]
+[ext_resource type="Texture2D" uid="uid://e6hlk0d0bhtq" path="res://imported_models/Stonebound Wooden Bri_1/Stonebound Wooden Bri_1_normal.jpg" id="25_1e0uk"]
+[ext_resource type="Shader" uid="uid://cq4klosv1obrf" path="res://shaders/sky_panorama_lift.gdshader" id="26_ntakc"]
+[ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="27_jm74x"]
+[ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="28_3eeac"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="29_e6ygp"]
-[ext_resource type="Material" path="res://assets/materials/unified_terrain.tres" id="30_3dxa0"]
+[ext_resource type="Material" uid="uid://bmo26m66oe8oj" path="res://assets/materials/unified_terrain.tres" id="30_3dxa0"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
-[ext_resource type="Material" path="res://assets/materials/east_river_water.tres" id="32_26gu2"]
+[ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="32_26gu2"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
+[ext_resource type="PackedScene" uid="uid://cdg24btawu5ep" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/b2_canal.tscn" id="37_dkw4w"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -527,67 +529,67 @@ visible = false
 material_override = ExtResource("6_3nkoh")
 mesh = ExtResource("7_si5ac")
 
-[node name="鈴奈庵" type="Node3D" parent="." unique_id=934187028 instance=ExtResource("8_f83ma")]
-transform = Transform3D(4.9809737, 0, 0.43577865, 0, 5, 0, -0.43577865, 0, 4.9809737, 212.223, 3.2278342, 17.436)
+[node name="鈴奈庵" parent="." unique_id=934187028 instance=ExtResource("8_f83ma")]
+transform = Transform3D(-0.09359127, 0, 4.999124, 0, 4.9999995, 0, -4.999124, 0, -0.09359127, 225.18315, 3.2278342, -65.471405)
 
-[node name="鯢吞亭" type="Node3D" parent="." unique_id=786666677 instance=ExtResource("9_j3smt")]
+[node name="鯢吞亭" parent="." unique_id=786666677 instance=ExtResource("9_j3smt")]
 transform = Transform3D(0.8685389, 0, 0.49562094, 0, 1, 0, -0.49562094, 0, 0.8685389, 361.15488, 7.6293945e-06, -143.80064)
 
-[node name="霧雨店" type="Node3D" parent="." unique_id=1073500153 instance=ExtResource("10_rl0in")]
-transform = Transform3D(0.7196601, 0, 0.6943265, 0, 1, 0, -0.6943265, 0, 0.7196601, 249.55585, -0.296841, -33.880886)
+[node name="霧雨店" parent="." unique_id=1073500153 instance=ExtResource("10_rl0in")]
+transform = Transform3D(0.02024356, 0, -1.4998634, 0, 1.5, 0, 1.4998634, 0, 0.02024356, 246.55923, -0.029773086, -35.476078)
 
-[node name="寺子屋" type="Node3D" parent="." unique_id=105953014 instance=ExtResource("11_tldba")]
-transform = Transform3D(0, 0, -8, 0, 8, 0, 8, 0, 0, 164.36655, 0.044628285, 194.65472)
+[node name="寺子屋" parent="." unique_id=105953014 instance=ExtResource("11_tldba")]
+transform = Transform3D(5.820159, 0, -5.488693, 0, 8, 0, 5.488693, 0, 5.820159, 314.8456, 0.044635914, 34.561848)
 
-[node name="龍神像" type="Node3D" parent="." unique_id=1220975449 instance=ExtResource("12_3lm1b")]
+[node name="龍神像" parent="." unique_id=1220975449 instance=ExtResource("12_3lm1b")]
 transform = Transform3D(8.307938, 0, -8.658993, 0, 12.000001, 0, 8.658993, 0, 8.307938, 422.66226, -7.046725, -182.85837)
 
-[node name="稗田底新版" type="Node3D" parent="." unique_id=982500271 instance=ExtResource("13_tljun")]
-transform = Transform3D(1.1978259, 0, 9.928001, 0, 10, 0, -9.928001, 0, 1.1978259, 169.46585, 4.9354653, 143.976)
+[node name="稗田底新版" parent="." unique_id=982500271 instance=ExtResource("13_tljun")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 233.19052, 7.1497493, -138.63266)
 
 [node name="路燈街牌" type="Node3D" parent="." unique_id=1026293718]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+transform = Transform3D(0.593642, 0, 0, 0, 0.4730985, 0, 0, 0, 0.4, 234.97394, 0, -32.34098)
 
-[node name="路燈_00" type="Node3D" parent="路燈街牌" unique_id=880589974 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_00" parent="路燈街牌" unique_id=880589974 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.952382, -160)
 
-[node name="路燈_01" type="Node3D" parent="路燈街牌" unique_id=488785150 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_01" parent="路燈街牌" unique_id=488785150 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 5.100588, -160)
 
-[node name="路燈_02" type="Node3D" parent="路燈街牌" unique_id=1142350551 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_02" parent="路燈街牌" unique_id=1142350551 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.918795, -110)
 
-[node name="路燈_03" type="Node3D" parent="路燈街牌" unique_id=69458106 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_03" parent="路燈街牌" unique_id=69458106 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.92387, -110)
 
-[node name="路燈_04" type="Node3D" parent="路燈街牌" unique_id=1737478667 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_04" parent="路燈街牌" unique_id=1737478667 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.942749, -60)
 
-[node name="路燈_05" type="Node3D" parent="路燈街牌" unique_id=725150779 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_05" parent="路燈街牌" unique_id=725150779 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.902704, -60)
 
-[node name="路燈_06" type="Node3D" parent="路燈街牌" unique_id=868029675 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_06" parent="路燈街牌" unique_id=868029675 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.905515, -10)
 
-[node name="路燈_07" type="Node3D" parent="路燈街牌" unique_id=251382236 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_07" parent="路燈街牌" unique_id=251382236 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.938453, -10)
 
-[node name="路燈_08" type="Node3D" parent="路燈街牌" unique_id=2102083582 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_08" parent="路燈街牌" unique_id=2102083582 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.939024, 40)
 
-[node name="路燈_09" type="Node3D" parent="路燈街牌" unique_id=634971526 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_09" parent="路燈街牌" unique_id=634971526 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.88372, 40)
 
-[node name="路燈_10" type="Node3D" parent="路燈街牌" unique_id=372304320 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_10" parent="路燈街牌" unique_id=372304320 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.906493, 130)
 
-[node name="路燈_11" type="Node3D" parent="路燈街牌" unique_id=1445222260 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_11" parent="路燈街牌" unique_id=1445222260 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.864136, 130)
 
-[node name="路燈_12" type="Node3D" parent="路燈街牌" unique_id=593720420 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_12" parent="路燈街牌" unique_id=593720420 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -8.4, 4.866819, 180)
 
-[node name="路燈_13" type="Node3D" parent="路燈街牌" unique_id=876063603 groups=["village_lamps"] instance=ExtResource("14_t6ny4")]
+[node name="路燈_13" parent="路燈街牌" unique_id=876063603 instance=ExtResource("14_t6ny4")]
 transform = Transform3D(-10, 0, -8.742278e-07, 0, 10, 0, 8.742278e-07, 0, -10, 8.4, 4.873203, 180)
 
 [node name="RiverV3_Candidate" type="Node3D" parent="." unique_id=297961216]
@@ -811,7 +813,7 @@ shape = SubResource("BoxShape3D_tk77k")
 [node name="龍石像橋" type="Node3D" parent="." unique_id=728753522]
 transform = Transform3D(57.254738, -1.4854553, 14.877219, 1.7017381, 49.97793, 0.44218403, -17.860548, 0, 47.733353, 423.24997, -1.7905645, -143.88815)
 
-[node name="Stonebound Wooden Bri_1" type="Node3D" parent="龍石像橋" unique_id=403524641 instance=ExtResource("22_wcsut")]
+[node name="Stonebound Wooden Bri_1" parent="龍石像橋" unique_id=403524641 instance=ExtResource("22_wcsut")]
 
 [node name="mesh_node2" type="MeshInstance3D" parent="龍石像橋/Stonebound Wooden Bri_1" unique_id=1581241055]
 mesh = SubResource("ArrayMesh_dkw4w")
@@ -838,4 +840,9 @@ mesh = ExtResource("33_ph07m")
 material_override = ExtResource("30_3dxa0")
 mesh = ExtResource("34_ww6k3")
 
-[node name="RiverVegetation" type="Node3D" parent="." unique_id=1274932447 instance=ExtResource("35_k7yef")]
+[node name="RiverVegetation" parent="." unique_id=1274932447 instance=ExtResource("35_k7yef")]
+
+[node name="B1_Street" parent="." unique_id=54333952 instance=ExtResource("36_sronm")]
+
+[node name="B2_Canal" parent="." unique_id=1311059145 instance=ExtResource("37_dkw4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021362305, 0.005129099, 0.00389719)

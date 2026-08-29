@@ -6,11 +6,13 @@ The 170-house village generator pipeline was retired 2026-08-25; the village is 
 
 ## Start Every Task
 
-1. Read `AGENT_CONSTITUTION.md`.
-2. Read `docs/PROJECT_STATE.md`.
-3. Read only the `.claude/rules/` file(s) relevant to the task.
-4. Read at most the one subsystem document needed for the task.
-5. Inspect `git status`, `git diff`, and relevant code before expanding context.
+1. Read `AGENT_CONSTITUTION.md` (使用者審定精簡版，含 MCP 證據優先政策).
+2. **Godot 任務起手先確認 godot-ai MCP 是否可用**（`editor_state` 起手）。
+   可用即以 MCP 為場景檢查／除錯／編輯／驗證的主要手段；不可用要先明講再改用替代方法。
+   截圖不是除錯手段，只用於最終視覺驗收。完整政策與強制除錯順序見
+   `AGENT_CONSTITUTION.md` §證據優先 — Godot MCP 政策。
+3. Read `docs/PROJECT_STATE.md`、相關 `.claude/rules/` 檔，與至多一份子系統文件。
+4. Inspect `git status`, `git diff`, and relevant code before expanding context.
    (Git is initialized on branch `main`, local only — not yet pushed to GitHub.
    Commit each approved round before handing work to another agent.)
 
@@ -19,8 +21,21 @@ Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes,
 
 ## Project Skill Discovery
 
-The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — `godot-master` only when a Godot technical question actually needs checking (then a single reference file, never the whole library); `level-design` only for scene design, road planning, 3D layout, blockout, sightlines, or level flow. Follow the on-demand routing and
-precedence rules in `AGENT_CONSTITUTION.md` under "Godot Skill 路由規則".
+The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — one skill, one reference file at a time.
+
+| Task | Skill |
+|---|---|
+| Godot 4.7 API / node / pattern lookup | `godot-master` (router — load one reference only) |
+| In-engine visual acceptance, before/after renders | `godot-visual-review` |
+| Human Village architecture, streets, props, composition | `human-village-art-direction` |
+| Stylized asset judgment, ART_REVIEW verdicts | `gensokyo-3d-art-director` |
+| Blender→GLB generators, terrain/water, scatter, export/import | `blender-asset-production` |
+| Level layout, blockout, pacing, critical path | `level-design` |
+| Hard bugs, crashes, performance regressions | `diagnosing-bugs` |
+| Finalize / validate / commit one subsystem | `safe-production-commit` |
+
+New **visible** 3D assets come from the image-AI → Meshy 7 route, not
+LLM-written procedural generators (user ruling 2026-08-26).
 
 ## Working Rules
 
@@ -53,6 +68,11 @@ precedence rules in `AGENT_CONSTITUTION.md` under "Godot Skill 路由規則".
 
 ## Git / Reporting
 
+- **This repo uses Git LFS for binary assets.** After any clone or machine move, run
+  `git lfs pull` (or `git lfs checkout` if objects are already local) BEFORE opening
+  the project in Godot. Opening with un-smudged LFS pointers makes every texture/GLB
+  import fail and stamps sticky `valid=false` into the `.import` files — recovery
+  then requires stripping those flags and a full headless reimport (2026-08-29 incident).
 - Git rules below apply only once the repository is initialized (pre-GitHub upload).
 - Commit and push work to the assigned branch.
 - Never open a pull request unless explicitly asked.

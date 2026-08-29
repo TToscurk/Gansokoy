@@ -14,6 +14,29 @@ const R_EXT := 1250.0
 const SEED := 20260827
 const VILLAGE_HALF := 300.0
 const VILLAGE_BLEND_END := 440.0
+# 主街走廊參數（與 tools/gen_b1_street.gd 對齊）
+const STREET_AXIS_X := 235.0
+const STREET_MID_Z := 16.0
+const STREET_HALF_LEN := 76.0
+# B2 小河（用水路）樣板段：村核與農田之間的直渠（2026-08-29，使用者批准）
+const CANAL_X := 340.0
+const CANAL_MID := 0.0
+const CANAL_HALF_LEN := 46.0
+# 地形刻槽必須比「砌好的渠床」更深：地形格點 6m，渠寬僅 5.4m，
+# 內插後牆邊地面 h≈0.575×中線深度。要讓地形全程低於渠床，中線需挖到 1.75 倍。
+# r12：v2 剖面為單一水位（砌床 -2.80），地形一律挖到 -4.30 讓砌床有餘裕。
+# 舊值 -9.60 是 4m 落差時代的殘留，落差取消後下游會留一個看不見的深坑。
+const CANAL_BED_Y := -4.30
+const CANAL_BED_DN := -4.30
+const CANAL_WEIR_Z := 3.0
+# r15：平底必須寬過護岸（WALL_FACE 4.0），否則 V 形斜面在 ±3.6 以外
+# 就爬高過水面 -1.80，沿整條渠道兩側露出一條褐色裸土帶。
+const CANAL_BED_HALF := 4.2
+const CANAL_TOP_HALF := 6.5          # 4.8 太陡：6m 格點畫不出崖，地形會穿過護岸
+# 磨坊池：渠道在磨坊處往西鼓出，小屋才能立在水裡而不是埋進岸土
+const BAY_X0 := 329.5
+const BAY_Z0 := 3.3
+const BAY_Z1 := 9.7
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0
@@ -43,6 +66,25 @@ func _wvar(z: float) -> float:
 func _widths(z: float) -> Vector2:
 	var water_half: float = WATER_HALF * _wvar(z)
 	return Vector2(water_half, water_half + (TOP_HALF - WATER_HALF))
+
+
+
+## 村內地被分區（2026-08-29，使用者選定「用地面材質分區」取代撒草）。
+## 依據概念圖：草地是預設，踏み固めた土是例外——主街走廊與建物群周邊被踩實。
+## 注意頂點間距 = CELL(6m)，雜訊尺度必須夠大才畫得出來。
+func _village_cover(x: float, z: float) -> float:
+	# 主街走廊：夯土，不長草
+	var street_d: float = absf(x - STREET_AXIS_X)
+	var along: float = 1.0 - smoothstep(STREET_HALF_LEN * 0.90, STREET_HALF_LEN * 1.35,
+		absf(z - STREET_MID_Z))
+	var street_pack: float = (1.0 - smoothstep(13.0, 30.0, street_d)) * along
+	# 建物群周邊踩實，範圍收斂在村心 ~90m 內
+	var core: float = 1.0 - smoothstep(16.0, 58.0, Vector2(x - 250.0, z - 10.0).length())
+	# 有機斑塊，讓草地邊界不是同心圓
+	var patch: float = _n.get_noise_2d(x * 0.55 + 300.0, z * 0.55 - 120.0) * 0.5 + 0.5
+	var cover: float = smoothstep(0.28, 0.62, patch)
+	var base: float = lerpf(0.55, 1.0, cover)   # 底線 0.55，開闊地不會整片光禿
+	return clampf(base * (1.0 - street_pack) * (1.0 - 0.55 * core), 0.0, 1.0)
 
 
 func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
@@ -119,10 +161,28 @@ func _init() -> void:
 				else:
 					var bank_t: float = (d - widths.x) / (widths.y - widths.x)
 					g = lerpf(BED_Y, bank_top, smoothstep(0.0, 1.0, bank_t))
+			# B2 小河：淺槽直渠，兩端漸收回地表；牆體與水面由 b2_canal 場景供給
+			var canal_d: float = absf(x - CANAL_X)
+			var canal_z: float = absf(z - CANAL_MID)
+			if canal_d < CANAL_TOP_HALF and canal_z < CANAL_HALF_LEN + 10.0:
+				var canal_end: float = 1.0 - smoothstep(CANAL_HALF_LEN - 8.0, CANAL_HALF_LEN + 10.0, canal_z)
+				var canal_prof: float = 1.0 - smoothstep(CANAL_BED_HALF, CANAL_TOP_HALF, canal_d)
+				var canal_bed: float = lerpf(CANAL_BED_Y, CANAL_BED_DN,
+					smoothstep(CANAL_WEIR_Z - 1.0, CANAL_WEIR_Z + 5.0, z))
+				var canal_cut: float = (g - canal_bed) * canal_prof * canal_end
+				if canal_cut > 0.0:
+					g -= canal_cut
+			# 磨坊池挖方：西側方形凹槽，邊緣漸收避免硬崖
+			if x > BAY_X0 and x < CANAL_X and z > BAY_Z0 - 1.5 and z < BAY_Z1 + 1.5:
+				var bfx: float = smoothstep(BAY_X0, BAY_X0 + 1.2, x)
+				var bfz: float = smoothstep(BAY_Z0 - 1.5, BAY_Z0, z) 					* (1.0 - smoothstep(BAY_Z1, BAY_Z1 + 1.5, z))
+				var bay_cut: float = (g - CANAL_BED_Y) * bfx * bfz
+				if bay_cut > 0.0:
+					g -= bay_cut
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
-			var grass_weight: float = smoothstep(270.0, 455.0, pl)
+			var grass_weight: float = maxf(smoothstep(270.0, 455.0, pl), _village_cover(x, z))
 			if g < WATER_Y - 0.2:
 				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
@@ -134,6 +194,10 @@ func _init() -> void:
 			# semi-transparent shallow band otherwise glows with the dirt
 			# texture underneath and that IS the bright waterline stripe.
 			var bed_stone: float = 1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g)
+			if canal_z < CANAL_HALF_LEN + 10.0:
+				grass_weight *= smoothstep(CANAL_TOP_HALF - 1.0, CANAL_TOP_HALF + 3.0, canal_d)
+				if canal_d < CANAL_TOP_HALF and g < -0.7:
+					bed_stone = maxf(bed_stone, 1.0 - smoothstep(-1.6, -0.7, g) * 0.4)
 			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.

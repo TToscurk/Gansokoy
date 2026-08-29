@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bj534f87qf58d" path="res://assets/textures/ishigaki_old_stone_diff_2k.jpg" id="1_a"]
+[ext_resource type="Texture2D" uid="uid://5yiujmaao86u" path="res://assets/textures/ishigaki_old_stone_rough_2k.jpg" id="2_r"]
+[ext_resource type="Texture2D" uid="uid://08g1pmc28k81" path="res://assets/textures/ishigaki_old_stone_nor_gl_2k.jpg" id="3_n"]
+
+[resource]
+albedo_color = Color(0.52, 0.53, 0.5, 1)
+albedo_texture = ExtResource("1_a")
+roughness = 1.0
+roughness_texture = ExtResource("2_r")
+normal_enabled = true
+normal_scale = 0.9
+normal_texture = ExtResource("3_n")
+uv1_scale = Vector3(1, 1, 1)
