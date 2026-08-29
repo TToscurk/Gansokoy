@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dc1w5m47ia1f"
-path="res://.godot/imported/木樋（引水槽）支撐棚架_base_color.jpg-f8877d0dbf9d18804d6aeaecd0bf5029.ctex"
+path.s3tc="res://.godot/imported/木樋（引水槽）支撐棚架_base_color.jpg-f8877d0dbf9d18804d6aeaecd0bf5029.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "a90a11f6a853b5cd660446fd9f2d36b2"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/riverbank/木樋（引水槽）支撐棚架_base_color.jpg"
-dest_files=["res://.godot/imported/木樋（引水槽）支撐棚架_base_color.jpg-f8877d0dbf9d18804d6aeaecd0bf5029.ctex"]
+dest_files=["res://.godot/imported/木樋（引水槽）支撐棚架_base_color.jpg-f8877d0dbf9d18804d6aeaecd0bf5029.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
