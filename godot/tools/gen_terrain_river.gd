@@ -22,8 +22,10 @@ const STREET_HALF_LEN := 76.0
 const CANAL_X := 340.0
 const CANAL_MID := 0.0
 const CANAL_HALF_LEN := 46.0
-const CANAL_BED_Y := -2.45          # 堰上游床
-const CANAL_BED_DN := -5.45         # 堰下游床：上掛水車水頭（見 gen_b2_canal.gd）
+# 地形刻槽必須比「砌好的渠床」更深：地形格點 6m，渠寬僅 5.4m，
+# 內插後牆邊地面 h≈0.575×中線深度。要讓地形全程低於渠床，中線需挖到 1.75 倍。
+const CANAL_BED_Y := -4.30          # 上游：砌床 -2.45 對應
+const CANAL_BED_DN := -9.60         # 下游：砌床 -5.45 對應
 const CANAL_WEIR_Z := 3.0
 const CANAL_BED_HALF := 2.75
 const CANAL_TOP_HALF := 3.7

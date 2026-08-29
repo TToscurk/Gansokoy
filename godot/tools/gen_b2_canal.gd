@@ -32,6 +32,7 @@ func _init() -> void:
 	var root: Node3D = Node3D.new()
 	root.name = "B2_Canal"
 	_build_walls(root)
+	_build_bed(root)
 	_build_water(root)
 	# 堰：以高度 2.2m 定縮放，寬度隨之約 6.1m，正好跨過 5.4m 水面
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "堰",
@@ -42,6 +43,10 @@ func _init() -> void:
 	# 水車：Ø4.0m，嵌進小屋側面空位，輪底觸下游水面
 	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
 		"x", 4.0, 90.0, Vector3(338.5, 0.0, WHEEL_Z), DN_WATER_Y - 0.20)
+	# 木樋（引水槽）＋支撐棚架：把上游水引到輪頂，上掛水車才有水源。
+	# 長 7m 沿 z 跨過堰到輪心；槽頂落在輪頂（-1.15）之上。
+	_place(root, "res://assets/riverbank/木樋（引水槽）支撐棚架.glb", "木樋",
+		"x", 7.0, 90.0, Vector3(338.5, 0.0, 3.4), -4.45)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
@@ -216,3 +221,36 @@ func _water_plane(root: Node3D, mat: Material, node_name: String,
 	mi.set_meta("water_surface", true)
 	root.add_child(mi)
 	mi.owner = root
+
+
+func _build_bed(root: Node3D) -> void:
+	## 砌石渠床。地形格點 6m 畫不出 5.4m 寬的垂直渠道（會內插成 V 形谷，
+	## 水面只剩中央一條縫——2026-08-29 的 AFTER 圖就是這個症狀）。
+	## 解法：地形挖得比這裡更深，渠床由本函式鋪成實體，水永遠有底。
+	var st: SurfaceTool = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var hw: float = WALL_FACE
+	var za: float = Z0 - 3.0
+	var zb: float = Z1 + 3.0
+	var segs: int = 90
+	for k in range(segs):
+		var z0: float = za + (zb - za) * float(k) / float(segs)
+		var z1: float = za + (zb - za) * float(k + 1) / float(segs)
+		var y0: float = _bed_y(z0)
+		var y1: float = _bed_y(z1)
+		var a: Vector3 = Vector3(CX - hw, y0, z0)
+		var b: Vector3 = Vector3(CX + hw, y0, z0)
+		var c: Vector3 = Vector3(CX + hw, y1, z1)
+		var d: Vector3 = Vector3(CX - hw, y1, z1)
+		for v in [a, b, c, a, c, d]:
+			st.set_uv(Vector2(v.x * 0.25, v.z * 0.25))
+			st.add_vertex(v)
+	st.generate_normals()
+	st.generate_tangents()
+	var mi: MeshInstance3D = MeshInstance3D.new()
+	mi.name = "CanalBed"
+	mi.mesh = st.commit()
+	mi.material_override = load("res://assets/materials/canal_bed.tres")
+	root.add_child(mi)
+	mi.owner = root
+	print("BED %.1fm long, %.2f..%.2f" % [zb - za, _bed_y(za), _bed_y(zb)])
