@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://db3iovg2ua34u"
-path="res://.godot/imported/堰／小型分水閘門.glb-39ff9b3c4a6e819d5526393c72813394.scn"
+uid="uid://bkbdwgkda5jfn"
+path="res://.godot/imported/分水閘門.glb-cf385b3bfba7498498c368b2d71339a5.scn"
 
 [deps]
 
-source_file="res://assets/riverbank/堰／小型分水閘門.glb"
-dest_files=["res://.godot/imported/堰／小型分水閘門.glb-39ff9b3c4a6e819d5526393c72813394.scn"]
+source_file="res://assets/riverbank/分水閘門.glb"
+dest_files=["res://.godot/imported/分水閘門.glb-cf385b3bfba7498498c368b2d71339a5.scn"]
 
 [params]
 

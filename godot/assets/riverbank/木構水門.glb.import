@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bcrfxwdxpvohp"
-path="res://.godot/imported/田泵水口.glb-8f4e663f8d74b283caa565fe8bc9ab9a.scn"
+uid="uid://belgokddk31yb"
+path="res://.godot/imported/木構水門.glb-f31292d90d86d66da4a7962c823020e6.scn"
 
 [deps]
 
-source_file="res://assets/riverbank/田泵水口.glb"
-dest_files=["res://.godot/imported/田泵水口.glb-8f4e663f8d74b283caa565fe8bc9ab9a.scn"]
+source_file="res://assets/riverbank/木構水門.glb"
+dest_files=["res://.godot/imported/木構水門.glb-f31292d90d86d66da4a7962c823020e6.scn"]
 
 [params]
 

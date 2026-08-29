@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2og5jssgihx5"
-path.s3tc="res://.godot/imported/堰／小型分水閘門_metallic_roughness.jpg-b1219e4f14eef1b754ea678d8110f536.s3tc.ctex"
+uid="uid://b7a4v7hejnjo2"
+path.s3tc="res://.godot/imported/木構水門_normal.jpg-5c773413d50f6ecc06015042ed7fe701.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "c7a251570173f479614f36077b887a97"
+"md5": "1f9efd00c288e6d03707a7eac98924ee"
 }
 
 [deps]
 
-source_file="res://assets/riverbank/堰／小型分水閘門_metallic_roughness.jpg"
-dest_files=["res://.godot/imported/堰／小型分水閘門_metallic_roughness.jpg-b1219e4f14eef1b754ea678d8110f536.s3tc.ctex"]
+source_file="res://assets/riverbank/木構水門_normal.jpg"
+dest_files=["res://.godot/imported/木構水門_normal.jpg-5c773413d50f6ecc06015042ed7fe701.s3tc.ctex"]
 
 [params]
 
@@ -25,12 +25,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://assets/riverbank/木構水門_normal.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

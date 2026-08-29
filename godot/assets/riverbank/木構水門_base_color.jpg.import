@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crs2fc5kswgdp"
-path.s3tc="res://.godot/imported/堰／小型分水閘門_base_color.jpg-b5a312ce20cf6c698e49cc24c37f79a0.s3tc.ctex"
+uid="uid://c8h0r8e304yu"
+path.s3tc="res://.godot/imported/木構水門_base_color.jpg-e2ca704dd120752f3a73f15745602020.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/riverbank/堰／小型分水閘門_base_color.jpg"
-dest_files=["res://.godot/imported/堰／小型分水閘門_base_color.jpg-b5a312ce20cf6c698e49cc24c37f79a0.s3tc.ctex"]
+source_file="res://assets/riverbank/木構水門_base_color.jpg"
+dest_files=["res://.godot/imported/木構水門_base_color.jpg-e2ca704dd120752f3a73f15745602020.s3tc.ctex"]
 
 [params]
 

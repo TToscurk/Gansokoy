@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg5m8163rt4lu"
-path.s3tc="res://.godot/imported/田泵水口_metallic_roughness.jpg-997ec4605b3ed93a2861c125be887edb.s3tc.ctex"
+uid="uid://cyic7d706ykmj"
+path.s3tc="res://.godot/imported/分水閘門_metallic_roughness.jpg-d5939ae8816eb787a5013074e070e357.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/riverbank/田泵水口_metallic_roughness.jpg"
-dest_files=["res://.godot/imported/田泵水口_metallic_roughness.jpg-997ec4605b3ed93a2861c125be887edb.s3tc.ctex"]
+source_file="res://assets/riverbank/分水閘門_metallic_roughness.jpg"
+dest_files=["res://.godot/imported/分水閘門_metallic_roughness.jpg-d5939ae8816eb787a5013074e070e357.s3tc.ctex"]
 
 [params]
 
