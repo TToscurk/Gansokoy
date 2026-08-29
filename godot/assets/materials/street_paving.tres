@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c5mhsrxos6c7j"]
+
+[ext_resource type="Shader" uid="uid://c8cjad34irdok" path="res://assets/shaders/street_paving.gdshader" id="1_sh"]
+[ext_resource type="Texture2D" uid="uid://qfgr17gwypik" path="res://assets/textures/street_earth_diff.png" id="2_alb"]
+[ext_resource type="Texture2D" uid="uid://cdsfv6bqatgo" path="res://assets/textures/cobble_rough.jpg" id="3_rgh"]
+[ext_resource type="Texture2D" uid="uid://dap8njl1q0qff" path="res://assets/textures/cobble_nor_gl.jpg" id="4_nrm"]
+[ext_resource type="Texture2D" uid="uid://cskkyqgdy2y0f" path="res://assets/textures/terrain_grass_diff.jpg" id="5_moss"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_sh")
+shader_parameter/stone_albedo = ExtResource("2_alb")
+shader_parameter/stone_rough = ExtResource("3_rgh")
+shader_parameter/stone_normal = ExtResource("4_nrm")
+shader_parameter/moss_albedo = ExtResource("5_moss")
+shader_parameter/moss_uv_scale = 3.2
+shader_parameter/moss_tint = Color(0.25, 0.3, 0.15, 1)
+shader_parameter/stone_tint = Color(0.95, 0.92, 0.86, 1)
+shader_parameter/joint_low = 0.1
+shader_parameter/joint_high = 0.55
+shader_parameter/joint_moss = 0.32
+shader_parameter/patch_moss = 0.26
+shader_parameter/patch_scale = 0.055
+shader_parameter/patch_low = 0.72
+shader_parameter/patch_high = 0.78
+shader_parameter/normal_strength = 0.22
