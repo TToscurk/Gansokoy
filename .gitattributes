@@ -37,3 +37,5 @@ godot/maps/village/gen/鯢吞亭/鯢吞亭.glb filter=lfs diff=lfs merge=lfs -te
 *.ogg filter=lfs diff=lfs merge=lfs -text
 godot/imported_models/Stonebound[[:space:]]Wooden[[:space:]]Bri_1/*.glb filter=lfs diff=lfs merge=lfs -text
 godot/imported_models/Stonebound[[:space:]]Wooden[[:space:]]Bri_1/*.jpg filter=lfs diff=lfs merge=lfs -text
+docs/reference/人間之里概念圖/*.png filter=lfs diff=lfs merge=lfs -text
+docs/reference/人間之里概念圖/*.PNG filter=lfs diff=lfs merge=lfs -text

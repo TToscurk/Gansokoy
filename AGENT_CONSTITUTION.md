@@ -23,7 +23,7 @@
 **流程**
 
 - 製作場景內的地形、或做村落／區域規劃前，先參考概念圖：
-  `C:\Users\B365\Downloads\參考圖概念圖\參考圖文理\人間之里 路 水 景 物 農 商 生活概念圖\`
+  `docs/reference/人間之里概念圖/`
   （道路、住商、住宅、村落農村概念俯視、水護岸、河童重工共 7 張）。
 - prototype → render → **Human Art Review** → rollout，不可跳步；未批准不得大量灌入。
 - 日常改動跑 Fast 檢查（既有檢查，不重寫）；整合／世界生成變更才跑 Full regression。
@@ -66,8 +66,7 @@ shortest time. Baseline = the current `village.tscn` landmark area;
 **Process**
 
 - Before building in-scene terrain or planning village/area layout, first review
-  the concept art in
-  `C:\Users\B365\Downloads\參考圖概念圖\參考圖文理\人間之里 路 水 景 物 農 商 生活概念圖\`
+  the concept art in `docs/reference/人間之里概念圖/`
   (7 sheets: roads, residential/commercial, housing, village-farm top view,
   water revetment, Kappa industry).
 - prototype → render → **Human Art Review** → rollout, no skipping; nothing
