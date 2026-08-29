@@ -44,3 +44,4 @@ godot/assets/riverbank/*.glb filter=lfs diff=lfs merge=lfs -text
 godot/assets/bridges/*.glb filter=lfs diff=lfs merge=lfs -text
 godot/assets/landmark/*.glb filter=lfs diff=lfs merge=lfs -text
 godot/assets/textures/street_earth_diff.png filter=lfs diff=lfs merge=lfs -text
+docs/reference/河岸部件/*.png filter=lfs diff=lfs merge=lfs -text
