@@ -22,9 +22,9 @@
 
 **流程**
 
-- 製作場景內的地形、或做村落／區域規劃前，先參考概念圖：
-  `docs/reference/人間之里概念圖/`
-  （道路、住商、住宅、村落農村概念俯視、水護岸、河童重工共 7 張）。
+- 製作場景內的地形、或做村落／區域規劃前，先參考概念圖 `docs/reference/人間之里概念圖/`：
+  以 **`村落農村概念俯視.png` 為主要依據**（搭配 `村落農村概念俯視區域分隔.png` 看分區），
+  其餘（道路、住商、住宅、水護岸、河童重工）為輔助參考。
 - prototype → render → **Human Art Review** → rollout，不可跳步；未批准不得大量灌入。
 - 日常改動跑 Fast 檢查（既有檢查，不重寫）；整合／世界生成變更才跑 Full regression。
 - 三距離審：50m 量體 → 20m 街道節奏 → 5m 細節；不得用 5m 掩蓋 50m 失敗。
@@ -66,9 +66,11 @@ shortest time. Baseline = the current `village.tscn` landmark area;
 **Process**
 
 - Before building in-scene terrain or planning village/area layout, first review
-  the concept art in `docs/reference/人間之里概念圖/`
-  (7 sheets: roads, residential/commercial, housing, village-farm top view,
-  water revetment, Kappa industry).
+  the concept art in `docs/reference/人間之里概念圖/`. **`村落農村概念俯視.png`
+  (village-farm top view) is the primary authority** (use
+  `村落農村概念俯視區域分隔.png` for its zoning breakdown); the other sheets
+  (roads, residential/commercial, housing, water revetment, Kappa industry) are
+  supporting references.
 - prototype → render → **Human Art Review** → rollout, no skipping; nothing
   unapproved gets mass-deployed.
 - Day-to-day changes run Fast checks (existing checks, never rewritten);
