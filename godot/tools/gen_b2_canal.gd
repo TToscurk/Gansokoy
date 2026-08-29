@@ -51,10 +51,12 @@ func _init() -> void:
 	_build_water(root)
 	_build_bay(root)
 	_build_walkway(root)
-	# v2：落差取消後它不再是攔河堰，回歸「小型分水閘門」本名——
-	# 縮到高 1.0m 使冠頂齊水面 -1.80，靠東岸擺，是取水口不是水壩。
-	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "分水閘門",
-		"y", 1.6, 0.0, Vector3(342.9, 0.0, WEIR_Z), UP_WATER_Y - 0.40)
+	# r20 檔名與內容不符（使用者 2026-08-30 指出）：
+	#   堰／小型分水閘門.glb 裝的其實是《河岸資產尺寸》項目 6「木構水門」
+	#   （跨距 4.0m × 高 3.0m，四石墩＋起吊木架），bbox 比 1.00:0.69:0.46
+	#   正符合規格的 1.0:0.75:0.40。先前照檔名套項目 5 的 1.6m，縮掉了一半。
+	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "木構水門",
+		"x", 4.0, 0.0, Vector3(341.6, 0.0, WEIR_Z), UP_WATER_Y - 0.30)
 	# r11：新資產組。實測小屋軸桿在高度 35.5%，規格高 4.5m → 軸心在基座上 1.598m。
 	# 小屋不旋轉（rot 0），讓帶軸桿的 +X 面朝東對著渠道；基座 -2.30 使柱腳立在
 	# 水邊（床 -2.80 之上 0.5m），軸心落在 -0.702，屋頂 +2.20 高過岸面。
@@ -74,8 +76,9 @@ func _init() -> void:
 		"y", 1.8, -90.0, Vector3(343.2, 0.0, STAIR_Z), UP_WATER_Y)
 	_place(root, "res://assets/riverbank/濱水平台.glb", "濱水平台",
 		"y", 1.1, -90.0, Vector3(343.8, 0.0, PLATFORM_Z), -1.10)
-	# 灌溉引水渠口：農田側（東岸），把水引出渠道進田
-	_place(root, "res://assets/riverbank/田泵水口.glb", "灌溉引水渠口",
+	# 田泵水口.glb 裝的其實是項目 5「分水閘門」（高 1.6m，兩石墩＋閘板拉桿）。
+	# 尺寸本來就對，只是名字反了——它在東岸當農田取水閘是說得通的。
+	_place(root, "res://assets/riverbank/田泵水口.glb", "分水閘門",
 		"y", 1.6, -90.0, Vector3(343.4, 0.0, INTAKE_Z), -1.40)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
