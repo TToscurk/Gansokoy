@@ -23,12 +23,12 @@ func _init() -> void:
 	_spawn(root, "res://assets/riverbank/堰／小型分水閘門.glb", "堰",
 		Vector3(5.4, 5.4, 5.4), 0.0, Vector3(CX, 0.0, WEIR_Z), -2.05, false)
 	var wheel: Node3D = _spawn(root, "res://assets/riverbank/水車.glb", "水車",
-		Vector3(4.2, 4.2, 4.2), 90.0, Vector3(337.9, 0.0, 5.4), 0.0, true)
+		Vector3(4.2, 4.2, 4.2), 90.0, Vector3(334.6, 0.0, 5.4), 0.0, true)
 	if wheel != null:
 		wheel.position.y = 0.25   # 軸心高：輪底 -1.85，浸入下游水面 0.5m
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_spawn(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
-		Vector3(3.2, 3.2, 3.2), 90.0, Vector3(330.2, 0.0, 5.4), -0.15, false)
+		Vector3(5.0, 5.0, 5.0), 90.0, Vector3(327.5, 0.0, 5.4), -0.15, false)
 	_spawn(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
 		Vector3(13.0, 13.0, 13.0), 90.0, Vector3(CX, 0.0, -28.0), -0.35, false)
 	_spawn(root, "res://assets/riverbank/親水階梯一組.glb", "親水階梯",
@@ -120,6 +120,9 @@ func _build_walls(root: Node3D) -> void:
 			var wz: float = -40.0 + WALL_STEP * float(k)
 			# 東岸親水階梯槽位
 			if side > 0.0 and absf(wz - (-16.0)) < 4.5:
+				continue
+			# 西岸水車槽位：輪子跨在牆線上，需開缺口（參考圖的輪坑）
+			if side < 0.0 and absf(wz - 5.4) < 4.5:
 				continue
 			var inst: Node3D = scn.instantiate() as Node3D
 			inst.name = "wall_%02d" % i
