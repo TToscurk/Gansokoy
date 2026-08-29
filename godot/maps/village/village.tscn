@@ -28,9 +28,8 @@
 [ext_resource type="PackedScene" path="res://maps/village/gen/鈴奈庵/鈴奈庵.glb" id="26_r3bwb"]
 [ext_resource type="PackedScene" path="res://maps/village/gen/鯢吞亭/鯢吞亭.glb" id="27_aajeo"]
 [ext_resource type="PackedScene" path="res://maps/village/gen/霧雨店/霧雨店.glb" id="28_7qiy4"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/稗田邸/裨田邸.glb" id="29_6u8gg"]
+[ext_resource type="PackedScene" path="res://maps/village/gen/稗田邸/稗田底新版.glb" id="29_6u8gg"]
 [ext_resource type="PackedScene" path="res://maps/village/gen/寺子屋/寺子屋.glb" id="30_ko0cd"]
-[ext_resource type="PackedScene" path="res://maps/village/gen/稗田邸後院/裨田邸後院.glb" id="31_infbh"]
 [ext_resource type="Shader" path="res://shaders/sky_cumulus.gdshader" id="32_q5qak"]
 [ext_resource type="PackedScene" path="res://scenes/road_lamp.tscn" id="33_xpiq4"]
 
@@ -3377,14 +3376,11 @@ transform = Transform3D(-1.3113416e-07, 0, -3, 0, 3, 0, 3, 0, -1.3113416e-07, 43
 [node name="霧雨店" type="Node3D" parent="." unique_id=1073500153 instance=ExtResource("28_7qiy4")]
 transform = Transform3D(-5, 0, -4.371139e-07, 0, 5, 0, 4.371139e-07, 0, -5, -111.715126, -0.296841, 63.5591)
 
-[node name="裨田邸" type="Node3D" parent="." unique_id=2032289406 instance=ExtResource("29_6u8gg")]
+[node name="稗田邸" type="Node3D" parent="." unique_id=2032289406 instance=ExtResource("29_6u8gg")]
 transform = Transform3D(-2.1855694e-06, 0, 50, 0, 50, 0, -50, 0, -2.1855694e-06, -165.75266, 0, 220.04938)
 
 [node name="寺子屋" type="Node3D" parent="." unique_id=105953014 instance=ExtResource("30_ko0cd")]
 transform = Transform3D(-1.7484556e-06, 0, -40, 0, 40, 0, 40, 0, -1.7484556e-06, 254.82544, 1.8431606, 213.30981)
-
-[node name="裨田邸後院" type="Node3D" parent="." unique_id=633248217 instance=ExtResource("31_infbh")]
-transform = Transform3D(-2.1855694e-06, 0, -50, 0, 50, 0, 50, 0, -2.1855694e-06, -243.318, 12.74621, 218.85553)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=732038734]
 environment = SubResource("Environment_2row0")
