@@ -15,23 +15,23 @@ extends SceneTree
 const CX: float = 340.0
 const Z0: float = -25.0
 const Z1: float = 25.0
-const BED_UP: float = -2.45         # 堰上游床
-const BED_DN: float = -5.45         # 堰下游床：上掛水車需要 ~4m 水頭
-const WALL_FACE: float = 2.7        # 護岸面到渠道中線
+const BED_UP: float = -2.80         # 堰上游床（水深 1.0m）
+const BED_DN: float = -2.80         # v2 雛型：單一水位，不再分上下游
+const WALL_FACE: float = 4.0        # 護岸面到渠道中線 → 水面寬 7.7m
 const COURSE: int = 7               # 上限；實測模組高 0.88m，超出地面自動停
 const WEIR_Z: float = 3.0
-const UP_WATER_Y: float = -0.95
-const DN_WATER_Y: float = -4.95     # 落差 4.00m＝輪徑，上掛水車成立
+const UP_WATER_Y: float = -1.80     # 上游水面：牆露 1.8m
+const DN_WATER_Y: float = -1.80     # 與上游同高：整條渠道讀成同一種建築
 const WHEEL_Z: float = 6.5        # 堰下游，承接跌水
-const STAIR_Z: float = -7.0         # 親水節點移到上游靜水段（下游是水車跌水區）
+const STAIR_Z: float = -7.0         # 親水節點在上游靜水段
 const INTAKE_Z: float = -14.0
 const PLATFORM_Z: float = -2.0
 const BRIDGE_Z: float = -21.0
 ## 水車坑：r8。舊版只是把三段牆 `continue` 掉，留下一片裸土（使用者 2026-08-29
 ## 指出的「缺口」）。改成砌成有底有側的壁龕：主牆在此退到坑底，兩端加回歸牆。
-const PIT_Z0: float = 3.4
-const PIT_Z1: float = 9.6
-const PIT_DEPTH: float = 1.5
+const PIT_Z0: float = 4.4
+const PIT_Z1: float = 8.6
+const PIT_DEPTH: float = 0.6
 ## 護岸砌法：錯縫 + 每塊微擾。固定種子，重跑結果一致。
 const WALL_SEED: int = 20260829
 const BOND_OVERLAP_Y: float = 0.06  # 層間壓疊量，>最大縮放抖動，杜絕透光橫縫
@@ -48,39 +48,33 @@ func _init() -> void:
 	_build_walls(root)
 	_build_bed(root)
 	_build_water(root)
-	# 堰：以高度 2.2m 定縮放，寬度隨之約 6.1m，正好跨過 5.4m 水面
-	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "堰",
-		"y", 2.2, 0.0, Vector3(CX, 0.0, WEIR_Z), BED_UP)
-	# 水車小屋：跨在水車坑上，東面出挑到輪心西側，輪子嵌進側面空位。
-	# r8 前 x=332.4 是手填值，小屋東緣 336.4 距輪西緣 337.84 空了 1.44m，
-	# 中間還隔著 337.3 的護岸面——輪子等於浮在渠道裡沒接上任何東西。
-	# 規格寬 8.0m ÷ 2 = 4.0，取 x=334.0 使東緣 338.0 略過輪西緣 337.84。
-	# r10：使用者指定放大 2m（規格長 8.0 → 10.0，連帶高 3.76 → 4.70，
-	# 終於高過輪徑 4.0）。放大後東緣會從 338.0 推到 339.0 吃進輪身
-	# （輪 x 337.84~339.16），所以中心同步西移 1.0m 到 333.0，
-	# 讓東緣維持在 338.0、與輪西緣重疊 0.16m。
-	# 底面維持 -0.85：小屋樓板比輪頂 -1.15 高 0.30m，正是上掛水車的
-	# 標準關係——輪子吊在樓板下的輪坑裡，不是被小屋包住。
-	_place(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
-		"z", 10.0, 90.0, Vector3(333.0, 0.0, WHEEL_Z), -0.85)
-	# 水車：Ø4.0m，嵌進小屋側面空位，輪底觸下游水面
+	# v2：落差取消後它不再是攔河堰，回歸「小型分水閘門」本名——
+	# 縮到高 1.0m 使冠頂齊水面 -1.80，靠東岸擺，是取水口不是水壩。
+	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "分水閘門",
+		"y", 1.0, 0.0, Vector3(342.2, 0.0, WEIR_Z), BED_UP)
+	# v2 雛型：放棄 4m 深坑上掛，改成齊岸胸射輪。渲染證實深坑讓上下游護岸
+	# 讀成兩種建築，且小屋永遠碰不到輪軸。現在輪軸在 -1.10（岸下 1.1m），
+	# 由砌石墩承住，小屋樓板落在岸面 0.0——與參考圖同一種關係。
+	# 輪 Ø3.0，底 -2.60 正好觸下游水面，頂 +0.40 微高於岸。
 	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
-		"x", 4.0, 90.0, Vector3(338.5, 0.0, WHEEL_Z), DN_WATER_Y - 0.20)
-	# 木樋（引水槽）＋支撐棚架：把上游水引到輪頂，上掛水車才有水源。
-	# 長 7m 沿 z 跨過堰到輪心；槽頂落在輪頂（-1.15）之上。
+		"x", 3.0, 90.0, Vector3(336.8, 0.0, WHEEL_Z), -2.40)
+	# 小屋樓板齊岸，東緣 336.3 接上輪西緣
+	_place(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
+		"z", 10.0, 90.0, Vector3(331.3, 0.0, WHEEL_Z), 0.0)
+	# 木樋：自上游引水到輪腰（胸射），不再吊到 4m 高
 	_place(root, "res://assets/riverbank/木樋（引水槽）支撐棚架.glb", "木樋",
-		"x", 7.0, 90.0, Vector3(338.5, 0.0, 3.4), -4.45)
+		"x", 7.0, 90.0, Vector3(336.8, 0.0, 3.4), -1.30)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
-		"z", 10.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), -0.25)
+		"z", 11.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), 0.0)
 	_place(root, "res://assets/riverbank/親水階梯一組.glb", "親水階梯",
-		"y", 1.5, -90.0, Vector3(343.3, 0.0, STAIR_Z), UP_WATER_Y - 0.05)
+		"y", 1.8, -90.0, Vector3(343.6, 0.0, STAIR_Z), UP_WATER_Y)
 	_place(root, "res://assets/riverbank/濱水平台一塊.glb", "濱水平台",
-		"x", 3.0, -90.0, Vector3(343.6, 0.0, PLATFORM_Z), -0.15)
+		"x", 3.0, -90.0, Vector3(344.4, 0.0, PLATFORM_Z), 0.0)
 	# 灌溉引水渠口：農田側（東岸），把水引出渠道進田
 	_place(root, "res://assets/riverbank/田泵水口.glb", "灌溉引水渠口",
-		"y", 1.2, -90.0, Vector3(343.0, 0.0, INTAKE_Z), -0.9)
+		"y", 1.2, -90.0, Vector3(344.0, 0.0, INTAKE_Z), -1.30)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
 	if err != OK:
