@@ -29,9 +29,10 @@ const PLATFORM_Z: float = -2.0
 const BRIDGE_Z: float = -21.0
 ## 水車坑：r8。舊版只是把三段牆 `continue` 掉，留下一片裸土（使用者 2026-08-29
 ## 指出的「缺口」）。改成砌成有底有側的壁龕：主牆在此退到坑底，兩端加回歸牆。
-const PIT_Z0: float = 4.4
-const PIT_Z1: float = 8.6
-const PIT_DEPTH: float = 0.6
+## 磨坊灣：小屋站在水邊柱基上，岸線在此退開讓出 6m 深的凹槽
+const PIT_Z0: float = 3.8
+const PIT_Z1: float = 9.2
+const PIT_DEPTH: float = 6.0
 ## 護岸砌法：錯縫 + 每塊微擾。固定種子，重跑結果一致。
 const WALL_SEED: int = 20260829
 const BOND_OVERLAP_Y: float = 0.06  # 層間壓疊量，>最大縮放抖動，杜絕透光橫縫
@@ -51,30 +52,29 @@ func _init() -> void:
 	# v2：落差取消後它不再是攔河堰，回歸「小型分水閘門」本名——
 	# 縮到高 1.0m 使冠頂齊水面 -1.80，靠東岸擺，是取水口不是水壩。
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "分水閘門",
-		"y", 1.0, 0.0, Vector3(342.2, 0.0, WEIR_Z), BED_UP)
-	# v2 雛型：放棄 4m 深坑上掛，改成齊岸胸射輪。渲染證實深坑讓上下游護岸
-	# 讀成兩種建築，且小屋永遠碰不到輪軸。現在輪軸在 -1.10（岸下 1.1m），
-	# 由砌石墩承住，小屋樓板落在岸面 0.0——與參考圖同一種關係。
-	# 輪 Ø3.0，底 -2.60 正好觸下游水面，頂 +0.40 微高於岸。
-	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
-		"x", 3.0, 90.0, Vector3(336.8, 0.0, WHEEL_Z), -2.40)
-	# 小屋樓板齊岸，東緣 336.3 接上輪西緣
+		"y", 1.6, 0.0, Vector3(342.4, 0.0, WEIR_Z), UP_WATER_Y - 0.40)
+	# r11：新資產組。實測小屋軸桿在高度 35.5%，規格高 4.5m → 軸心在基座上 1.598m。
+	# 小屋不旋轉（rot 0），讓帶軸桿的 +X 面朝東對著渠道；基座 -2.30 使柱腳立在
+	# 水邊（床 -2.80 之上 0.5m），軸心落在 -0.702，屋頂 +2.20 高過岸面。
 	_place(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
-		"z", 10.0, 90.0, Vector3(331.3, 0.0, WHEEL_Z), 0.0)
-	# 木樋：自上游引水到輪腰（胸射），不再吊到 4m 高
+		"y", 4.5, 0.0, Vector3(333.34, 0.0, WHEEL_Z), -2.30)
+	# 水車 Ø3.0：輪心對齊小屋軸心 -0.702（底 -2.202，入水 0.40m）
+	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
+		"x", 3.0, 90.0, Vector3(337.0, 0.0, WHEEL_Z), -2.202)
+	# 木樋：自上游沿西岸送水到輪頂附近
 	_place(root, "res://assets/riverbank/木樋（引水槽）支撐棚架.glb", "木樋",
-		"x", 7.0, 90.0, Vector3(336.8, 0.0, 3.4), -1.30)
+		"x", 7.0, 90.0, Vector3(337.0, 0.0, 1.6), -0.60)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
 		"z", 11.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), 0.0)
-	_place(root, "res://assets/riverbank/親水階梯一組.glb", "親水階梯",
-		"y", 1.8, -90.0, Vector3(343.6, 0.0, STAIR_Z), UP_WATER_Y)
-	_place(root, "res://assets/riverbank/濱水平台一塊.glb", "濱水平台",
-		"x", 3.0, -90.0, Vector3(344.4, 0.0, PLATFORM_Z), 0.0)
+	_place(root, "res://assets/riverbank/親水階梯.glb", "親水階梯",
+		"y", 1.8, -90.0, Vector3(343.2, 0.0, STAIR_Z), UP_WATER_Y)
+	_place(root, "res://assets/riverbank/濱水平台.glb", "濱水平台",
+		"y", 1.1, -90.0, Vector3(343.8, 0.0, PLATFORM_Z), -1.10)
 	# 灌溉引水渠口：農田側（東岸），把水引出渠道進田
 	_place(root, "res://assets/riverbank/田泵水口.glb", "灌溉引水渠口",
-		"y", 1.2, -90.0, Vector3(344.0, 0.0, INTAKE_Z), -1.30)
+		"y", 1.6, -90.0, Vector3(343.4, 0.0, INTAKE_Z), -1.40)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
 	if err != OK:
@@ -245,19 +245,24 @@ func _build_walls(root: Node3D) -> void:
 				count += 1
 		# 水車坑的兩道回歸牆（坑的上下游側壁），沿 x 佈置把裸土封起來
 		if side < 0.0:
+			var bay_n: int = int(ceil(PIT_DEPTH / pitch_z))
 			for pz in [PIT_Z0, PIT_Z1]:
+				var pside: float = -1.0 if pz < WHEEL_Z else 1.0
 				for course in range(COURSE):
 					var by: float = _bed_y(pz) + pitch_y * float(course)
 					if by + seg_h > 0.30:
 						continue
-					rng.seed = WALL_SEED + 900000 + int(pz * 10.0) * 100 + course
-					var pside: float = -1.0 if pz < WHEEL_Z else 1.0
 					var prise: float = pitch_y * float(course)
-					_wall_block(walls, root, scn, bb, c, s, seg_d, rng,
-						"pit_%02d_%d" % [int(pz), course],
-						0.0, pz + pside * WALL_BATTER * prise, pside,
-						by, CX - WALL_FACE - PIT_DEPTH * 0.5)
-					count += 1
+					for j in range(bay_n):
+						var rx: float = CX - WALL_FACE - PIT_DEPTH + pitch_z * (float(j) + 0.5)
+						if rx > CX - WALL_FACE:
+							continue
+						rng.seed = WALL_SEED + 900000 + int(pz * 10.0) * 1000 + course * 10 + j
+						_wall_block(walls, root, scn, bb, c, s, seg_d, rng,
+							"bay_%02d_%d_%d" % [int(pz), course, j],
+							0.0, pz + pside * WALL_BATTER * prise, pside,
+							by, rx)
+						count += 1
 	print("WALLS %d (seg %.2fm x %.2fm, pitch %.2f/%.2f, %d courses)"
 		% [count, seg_len, seg_h, pitch_z, pitch_y, COURSE])
 

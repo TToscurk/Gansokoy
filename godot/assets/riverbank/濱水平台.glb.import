@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bi7f55e2qlajd"
-path="res://.godot/imported/水車小屋.glb-15d219ce9336c4f65a9a35eb1f8a5ebd.scn"
+uid="uid://m6op5wm0mmfy"
+path="res://.godot/imported/濱水平台.glb-ea05aea272413c4b01e4225fcd9600b7.scn"
 
 [deps]
 
-source_file="res://assets/riverbank/水車小屋.glb"
-dest_files=["res://.godot/imported/水車小屋.glb-15d219ce9336c4f65a9a35eb1f8a5ebd.scn"]
+source_file="res://assets/riverbank/濱水平台.glb"
+dest_files=["res://.godot/imported/濱水平台.glb-ea05aea272413c4b01e4225fcd9600b7.scn"]
 
 [params]
 
