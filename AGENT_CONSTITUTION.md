@@ -12,13 +12,30 @@
 3. 視覺只有使用者能批准（`ART_APPROVED`）；agent 至多 `ART_REVIEW`。
 4. `godot/assets/blender/sources/` 唯讀。
 
-**證據優先**
+**證據優先 — Godot MCP 政策**
 
-- 場景／節點／資源狀態：先用 godot-ai MCP 查實況，不讀檔名或文件推測。
-  逾時不等於失敗——先 `editor_state` 確認再重試；同時只允許一個 AI 控編輯器。
-- 結構驗證用 MCP 查詢；**視覺驗收才截圖**，一律 shotlist 固定機位。
-  渲染問題（剔除、繞線、摩爾紋、光照）只有截圖抓得到。
-- Skill 按需載入，一次一個 reference（路由見 CLAUDE.md 的 skill 清單）。
+每個 Godot 任務開始時，先確認 godot-ai MCP 工具是否可用。
+
+- 可用時，**必須**以 MCP 為場景檢查、除錯、編輯、驗證的主要手段。
+- 不可用時，**必須先明確回報這個事實**，才可改用替代方法。
+- **不得**以截圖作為主要除錯手段。
+- 當 MCP 能提供場景、節點、transform、mesh、材質、碰撞或資源資訊時，
+  **不得**反覆執行專案再看截圖。
+- 截圖只可用於**最終視覺驗收**，或問題本質為視覺、無法用 MCP 可靠檢查時。
+- 為除錯而截圖前，先用 MCP 檢查相關場景結構與屬性。
+- 當 MCP 能取得實際數值時，**絕不**僅憑截圖推斷節點位置、尺寸、場景階層、
+  幾何或碰撞；同樣不得從檔名或文件推測。
+
+除錯順序，不可跳步：
+
+```
+MCP 檢查 → 程式碼／資源檢查 → 找出根因 → 修正 → MCP 驗證 → （選用）截圖驗收
+```
+
+- 逾時不等於失敗——先 `editor_state` 確認再重試；同時只允許一個 AI 控編輯器。
+- 截圖一律用 shotlist 固定機位。渲染問題（剔除、繞線、摩爾紋、光照）只有截圖抓得到，
+  這是截圖不可取代的唯一場合。
+- Skill 按需載入，一次一個 reference（路由表見 `CLAUDE.md` §Project Skill Discovery）。
 
 **流程**
 
@@ -53,15 +70,39 @@ shortest time. Baseline = the current `village.tscn` landmark area;
 3. Only the user approves visuals (`ART_APPROVED`); an agent reaches `ART_REVIEW` at most.
 4. `godot/assets/blender/sources/` is read-only.
 
-**Evidence first**
+**Evidence first — Godot MCP policy**
 
-- Scene / node / resource state: query the godot-ai MCP for ground truth —
-  never infer from filenames, docs, or memory. A timeout is not a failure:
-  confirm via `editor_state`, then retry. Only one AI drives the editor at a time.
-- Structural checks go through MCP queries; **screenshots are for visual
-  acceptance only**, always from fixed shotlist cameras. Render-side defects
-  (culling, winding, moiré, lighting) are catchable ONLY in screenshots.
-- Load skills on demand, one reference at a time (routing: see the skill list in CLAUDE.md).
+At the beginning of every Godot task, verify whether the godot-ai MCP tools
+are available.
+
+- If available, you **MUST** use Godot MCP as the primary method for scene
+  inspection, debugging, editing, and validation.
+- If unavailable, **explicitly report that fact** before using any fallback method.
+- **DO NOT** use screenshots as the primary debugging method.
+- **DO NOT** repeatedly run the project and inspect screenshots when MCP can
+  provide the relevant scene, node, transform, mesh, material, collision, or
+  resource information.
+- Screenshots may only be used for **final visual verification**, or when the
+  problem is inherently visual and cannot be reliably inspected through MCP.
+- Before taking a screenshot for debugging, first inspect the relevant scene
+  structure and properties through MCP.
+- **Never** infer node positions, dimensions, scene hierarchy, geometry, or
+  collision solely from screenshots when MCP can provide the actual values —
+  and never infer them from filenames, docs, or memory either.
+
+Required debugging order, no skipping:
+
+```
+MCP inspection → code/resource inspection → root cause → fix
+  → MCP validation → optional screenshot verification
+```
+
+- A timeout is not a failure: confirm via `editor_state`, then retry. Only one
+  AI drives the editor at a time.
+- Screenshots always come from fixed shotlist cameras. Render-side defects
+  (culling, winding, moiré, lighting) are catchable ONLY in screenshots — that
+  is the one job screenshots cannot delegate to MCP.
+- Load skills on demand, one reference at a time (routing table: `CLAUDE.md` § Project Skill Discovery).
 
 **Process**
 

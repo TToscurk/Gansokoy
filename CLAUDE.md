@@ -7,7 +7,10 @@ The 170-house village generator pipeline was retired 2026-08-25; the village is 
 ## Start Every Task
 
 1. Read `AGENT_CONSTITUTION.md` (使用者審定精簡版，含 MCP 證據優先政策).
-2. 涉及 Godot 場景/節點/資源狀態：用 godot-ai MCP 查實況（`editor_state` 起手），不推測。
+2. **Godot 任務起手先確認 godot-ai MCP 是否可用**（`editor_state` 起手）。
+   可用即以 MCP 為場景檢查／除錯／編輯／驗證的主要手段；不可用要先明講再改用替代方法。
+   截圖不是除錯手段，只用於最終視覺驗收。完整政策與強制除錯順序見
+   `AGENT_CONSTITUTION.md` §證據優先 — Godot MCP 政策。
 3. Read `docs/PROJECT_STATE.md`、相關 `.claude/rules/` 檔，與至多一份子系統文件。
 4. Inspect `git status`, `git diff`, and relevant code before expanding context.
    (Git is initialized on branch `main`, local only — not yet pushed to GitHub.
@@ -18,7 +21,21 @@ Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes,
 
 ## Project Skill Discovery
 
-The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — routing table in `AGENT_CONSTITUTION.md` §3.
+The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — one skill, one reference file at a time.
+
+| Task | Skill |
+|---|---|
+| Godot 4.7 API / node / pattern lookup | `godot-master` (router — load one reference only) |
+| In-engine visual acceptance, before/after renders | `godot-visual-review` |
+| Human Village architecture, streets, props, composition | `human-village-art-direction` |
+| Stylized asset judgment, ART_REVIEW verdicts | `gensokyo-3d-art-director` |
+| Blender→GLB generators, terrain/water, scatter, export/import | `blender-asset-production` |
+| Level layout, blockout, pacing, critical path | `level-design` |
+| Hard bugs, crashes, performance regressions | `diagnosing-bugs` |
+| Finalize / validate / commit one subsystem | `safe-production-commit` |
+
+New **visible** 3D assets come from the image-AI → Meshy 7 route, not
+LLM-written procedural generators (user ruling 2026-08-26).
 
 ## Working Rules
 
