@@ -15,15 +15,18 @@ extends SceneTree
 const CX: float = 340.0
 const Z0: float = -25.0
 const Z1: float = 25.0
-const BED_Y: float = -2.45
+const BED_UP: float = -2.45         # 堰上游床
+const BED_DN: float = -5.45         # 堰下游床：上掛水車需要 ~4m 水頭
 const WALL_FACE: float = 2.7        # 護岸面到渠道中線
-const COURSE: int = 3               # 護岸堆疊層數
+const COURSE: int = 7               # 上限；實測模組高 0.88m，超出地面自動停
 const WEIR_Z: float = 3.0
 const UP_WATER_Y: float = -0.95
-const DN_WATER_Y: float = -1.65     # 落差 0.70m 驅動水車
+const DN_WATER_Y: float = -4.95     # 落差 4.00m＝輪徑，上掛水車成立
 const WHEEL_Z: float = 6.5        # 堰下游，承接跌水
-const STAIR_Z: float = 14.0
-const INTAKE_Z: float = 19.0
+const STAIR_Z: float = -7.0         # 親水節點移到上游靜水段（下游是水車跌水區）
+const INTAKE_Z: float = -14.0
+const PLATFORM_Z: float = -2.0
+const BRIDGE_Z: float = -21.0
 
 func _init() -> void:
 	var root: Node3D = Node3D.new()
@@ -32,21 +35,21 @@ func _init() -> void:
 	_build_water(root)
 	# 堰：以高度 2.2m 定縮放，寬度隨之約 6.1m，正好跨過 5.4m 水面
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "堰",
-		"y", 2.2, 0.0, Vector3(CX, 0.0, WEIR_Z), BED_Y)
+		"y", 2.2, 0.0, Vector3(CX, 0.0, WEIR_Z), BED_UP)
 	# 水車小屋：岸上，側面空位朝渠道
 	_place(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
-		"z", 8.0, 90.0, Vector3(332.4, 0.0, WHEEL_Z), -0.1)
+		"z", 8.0, 90.0, Vector3(332.4, 0.0, WHEEL_Z), -0.85)
 	# 水車：Ø4.0m，嵌進小屋側面空位，輪底觸下游水面
 	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
-		"x", 4.0, 90.0, Vector3(338.5, 0.0, WHEEL_Z), DN_WATER_Y - 0.35)
+		"x", 4.0, 90.0, Vector3(338.5, 0.0, WHEEL_Z), DN_WATER_Y - 0.20)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
-		"z", 10.0, 90.0, Vector3(CX, 0.0, -18.0), -0.25)
+		"z", 10.0, 90.0, Vector3(CX, 0.0, BRIDGE_Z), -0.25)
 	_place(root, "res://assets/riverbank/親水階梯一組.glb", "親水階梯",
-		"y", 1.5, -90.0, Vector3(343.3, 0.0, STAIR_Z), DN_WATER_Y - 0.05)
+		"y", 1.5, -90.0, Vector3(343.3, 0.0, STAIR_Z), UP_WATER_Y - 0.05)
 	_place(root, "res://assets/riverbank/濱水平台一塊.glb", "濱水平台",
-		"x", 3.0, -90.0, Vector3(343.6, 0.0, STAIR_Z + 5.0), -0.15)
+		"x", 3.0, -90.0, Vector3(343.6, 0.0, PLATFORM_Z), -0.15)
 	# 灌溉引水渠口：農田側（東岸），把水引出渠道進田
 	_place(root, "res://assets/riverbank/田泵水口.glb", "灌溉引水渠口",
 		"y", 1.2, -90.0, Vector3(343.0, 0.0, INTAKE_Z), -0.9)
@@ -120,6 +123,11 @@ func _place(root: Node3D, path: String, node_name: String,
 	return inst
 
 
+## 渠床高程：堰上游平緩，下游跌落成水車坑（水頭＝輪徑 4.0m）。
+func _bed_y(z: float) -> float:
+	return lerpf(BED_UP, BED_DN, smoothstep(WEIR_Z - 1.0, WEIR_Z + 5.0, z))
+
+
 func _build_walls(root: Node3D) -> void:
 	## 塊石牆模組：規格 3.0m 長。平鋪沿岸、堆疊 COURSE 層築成護岸。
 	## 不拉長單一模組——那會把石紋撐爛（r3 的錯）。
@@ -154,7 +162,7 @@ func _build_walls(root: Node3D) -> void:
 			if side > 0.0 and (absf(wz - STAIR_Z) < 2.4 or absf(wz - INTAKE_Z) < 2.0):
 				continue
 			for course in range(COURSE):
-				var base_y: float = BED_Y + seg_h * float(course)
+				var base_y: float = _bed_y(wz) + seg_h * float(course)
 				if base_y > -0.05:
 					break
 				var inst: Node3D = scn.instantiate() as Node3D

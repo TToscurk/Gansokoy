@@ -22,7 +22,9 @@ const STREET_HALF_LEN := 76.0
 const CANAL_X := 340.0
 const CANAL_MID := 0.0
 const CANAL_HALF_LEN := 46.0
-const CANAL_BED_Y := -2.45
+const CANAL_BED_Y := -2.45          # 堰上游床
+const CANAL_BED_DN := -5.45         # 堰下游床：上掛水車水頭（見 gen_b2_canal.gd）
+const CANAL_WEIR_Z := 3.0
 const CANAL_BED_HALF := 2.75
 const CANAL_TOP_HALF := 3.7
 
@@ -155,7 +157,9 @@ func _init() -> void:
 			if canal_d < CANAL_TOP_HALF and canal_z < CANAL_HALF_LEN + 10.0:
 				var canal_end: float = 1.0 - smoothstep(CANAL_HALF_LEN - 8.0, CANAL_HALF_LEN + 10.0, canal_z)
 				var canal_prof: float = 1.0 - smoothstep(CANAL_BED_HALF, CANAL_TOP_HALF, canal_d)
-				var canal_cut: float = (g - CANAL_BED_Y) * canal_prof * canal_end
+				var canal_bed: float = lerpf(CANAL_BED_Y, CANAL_BED_DN,
+					smoothstep(CANAL_WEIR_Z - 1.0, CANAL_WEIR_Z + 5.0, z))
+				var canal_cut: float = (g - canal_bed) * canal_prof * canal_end
 				if canal_cut > 0.0:
 					g -= canal_cut
 			hs[i] = g
