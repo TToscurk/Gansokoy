@@ -1,0 +1,9 @@
+[
+ { "name": "b2_01_axis_downstream", "cam": [340, 1.9, -20],    "look": [339, -1.5, 4],    "time": 11 },
+ { "name": "b2_02_mill_from_east",  "cam": [348, 2.4, 6.5],    "look": [335, 0.5, 6.5],   "time": 11 },
+ { "name": "b2_03_wheel_close",     "cam": [344.5, 0.8, 10.5], "look": [338.3, -2.2, 6.8],"time": 11 },
+ { "name": "b2_04_revetment_5m",    "cam": [341.5, -0.3, -15], "look": [337.0, -1.6, -15],"time": 11 },
+ { "name": "b2_05_east_furniture",  "cam": [335.5, 1.6, -4.5], "look": [343.2, -0.4, -12],"time": 11 },
+ { "name": "b2_06_weir_hut_corner", "cam": [345.5, 2.2, -3.0], "look": [337.5, -0.6, 4.0],"time": 11 },
+ { "name": "b2_07_context_20m",     "cam": [352, 8.0, -14],    "look": [338, -1.0, 6],    "time": 11 }
+]
