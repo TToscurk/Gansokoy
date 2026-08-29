@@ -50,6 +50,7 @@ func _init() -> void:
 	_build_bed(root)
 	_build_water(root)
 	_build_bay(root)
+	_build_walkway(root)
 	# v2：落差取消後它不再是攔河堰，回歸「小型分水閘門」本名——
 	# 縮到高 1.0m 使冠頂齊水面 -1.80，靠東岸擺，是取水口不是水壩。
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "分水閘門",
@@ -346,6 +347,61 @@ func _build_water(root: Node3D) -> void:
 	mi.owner = root
 
 
+## r15 濱水步道：地形收坡移到牆外後，牆背會露出一段下凹。這條步道把它蓋住，
+## 同時補上概念圖裡一直缺的「濱水步道」——親水節點本來就該由步道串起來。
+func _build_walkway(root: Node3D) -> void:
+	var mat: StandardMaterial3D = StandardMaterial3D.new()
+	# terrain_path 是強烈的橘土，在渠邊會比砌石還搶眼。改用石板，
+	# 讓步道與護岸講同一種材料語言。
+	mat.albedo_texture = load("res://assets/textures/cobble_diff.jpg")
+	mat.normal_enabled = true
+	mat.normal_texture = load("res://assets/textures/cobble_nor_gl.jpg")
+	mat.roughness_texture = load("res://assets/textures/cobble_rough.jpg")
+	# uv=世界座標，scale 1.0 = 每公尺一格。0.35 時每格約 3m，碎石大得像鵝卵石。
+	mat.uv1_scale = Vector3(1.0, 1.0, 1.0)
+	# terrain_path 本身偏暖橘，在正午陽光下會刺眼——壓暗並去飽和，
+	# 讓步道退到護岸與水面之後，不要變成畫面最亮的東西。
+	mat.albedo_color = Color(0.72, 0.72, 0.70)
+	mat.roughness = 1.0
+	# 岸面實測約 0.2~0.3（壓頂石頂 0.30）。0.05 會讓整條步道埋在土裡。
+	# 與壓頂齊平才是碼頭該有的關係。
+	var y: float = -0.50
+	var outer: float = 9.0   # 必須蓋過地形收坡（TOP_HALF 6.5）外緣的裸土帶
+	for side in [-1.0, 1.0]:
+		var st: SurfaceTool = SurfaceTool.new()
+		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+		## ⚠ 繞線：兩側的 xa/xb 大小關係相反，若直接照 side 分支寫，
+		## 其中一側法線會朝下被剔除（東岸步道 r15 就這樣整條消失）。
+		## 一律排成升冪 x，用同一組三角形順序，法線保證 +Y。
+		var xa: float = minf(CX + side * WALL_FACE, CX + side * outer)
+		var xb: float = maxf(CX + side * WALL_FACE, CX + side * outer)
+		var z: float = Z0 - 2.0
+		var step: float = 2.0
+		while z < Z1 + 2.0:
+			var z1: float = minf(z + step, Z1 + 2.0)
+			# 西岸在磨坊池範圍讓開（那裡是水，不是岸）
+			var skip: bool = side < 0.0 and (z + z1) * 0.5 > PIT_Z0 - 0.5 				and (z + z1) * 0.5 < PIT_Z1 + 0.5
+			if not skip:
+				var q: Array = [Vector3(xa, y, z), Vector3(xb, y, z),
+					Vector3(xb, y, z1), Vector3(xa, y, z1)]
+				## 繞線對齊 _build_bed（渠床，已知從上方可見）的 [a,b,c,a,c,d]。
+				## r15c 我把它反轉，兩側步道同時從畫面消失——正是規則裡
+				## 「背面剔除」那條，而且我自己踩了一次。
+				var tri: Array = [q[0], q[1], q[2], q[0], q[2], q[3]]
+				for v in tri:
+					st.set_uv(Vector2(v.x, v.z))
+					st.add_vertex(v)
+			z = z1
+		st.generate_normals()
+		st.generate_tangents()
+		var mi: MeshInstance3D = MeshInstance3D.new()
+		mi.name = "濱水步道_W" if side < 0.0 else "濱水步道_E"
+		mi.mesh = st.commit()
+		mi.material_override = mat
+		root.add_child(mi)
+		mi.owner = root
+
+
 ## 磨坊池床：小屋立在池中柱基上，池床與主渠床同高（水面已由 _build_water 統一）。
 func _build_bay(root: Node3D) -> void:
 	var x0: float = CX - WALL_FACE - PIT_DEPTH
@@ -356,12 +412,18 @@ func _build_bay(root: Node3D) -> void:
 	var q: Array = [Vector3(x0, y, PIT_Z0), Vector3(x1, y, PIT_Z0),
 		Vector3(x1, y, PIT_Z1), Vector3(x0, y, PIT_Z1)]
 	for v in [q[0], q[1], q[2], q[0], q[2], q[3]]:
-		st.set_uv(Vector2(v.x * 0.25, v.z * 0.25))
+		st.set_uv(Vector2(v.x * 0.5, v.z * 0.5))
 		st.add_vertex(v)
 	st.generate_normals()
+	st.generate_tangents()
+	var bmat: StandardMaterial3D = StandardMaterial3D.new()
+	bmat.albedo_texture = load("res://assets/textures/cobble_diff.jpg")
+	bmat.albedo_color = Color(0.42, 0.44, 0.44)
+	bmat.roughness = 1.0
 	var bed: MeshInstance3D = MeshInstance3D.new()
 	bed.name = "BayBed"
 	bed.mesh = st.commit()
+	bed.material_override = bmat
 	root.add_child(bed)
 	bed.owner = root
 

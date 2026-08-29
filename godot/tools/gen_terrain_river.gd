@@ -29,8 +29,10 @@ const CANAL_HALF_LEN := 46.0
 const CANAL_BED_Y := -4.30
 const CANAL_BED_DN := -4.30
 const CANAL_WEIR_Z := 3.0
-const CANAL_BED_HALF := 2.75
-const CANAL_TOP_HALF := 4.3          # >WALL_FACE 4.0，讓護岸落在挖方內
+# r15：平底必須寬過護岸（WALL_FACE 4.0），否則 V 形斜面在 ±3.6 以外
+# 就爬高過水面 -1.80，沿整條渠道兩側露出一條褐色裸土帶。
+const CANAL_BED_HALF := 4.2
+const CANAL_TOP_HALF := 6.5          # 4.8 太陡：6m 格點畫不出崖，地形會穿過護岸
 # 磨坊池：渠道在磨坊處往西鼓出，小屋才能立在水裡而不是埋進岸土
 const BAY_X0 := 329.5
 const BAY_Z0 := 3.3
