@@ -27,6 +27,20 @@ const STAIR_Z: float = -7.0         # 親水節點移到上游靜水段（下游
 const INTAKE_Z: float = -14.0
 const PLATFORM_Z: float = -2.0
 const BRIDGE_Z: float = -21.0
+## 水車坑：r8。舊版只是把三段牆 `continue` 掉，留下一片裸土（使用者 2026-08-29
+## 指出的「缺口」）。改成砌成有底有側的壁龕：主牆在此退到坑底，兩端加回歸牆。
+const PIT_Z0: float = 3.4
+const PIT_Z1: float = 9.6
+const PIT_DEPTH: float = 1.5
+## 護岸砌法：錯縫 + 每塊微擾。固定種子，重跑結果一致。
+const WALL_SEED: int = 20260829
+const BOND_OVERLAP_Y: float = 0.06  # 層間壓疊量，>最大縮放抖動，杜絕透光橫縫
+const BOND_OVERLAP_Z: float = 0.05  # 同層相鄰壓疊量
+## r9 砌法：勾配與坐落。使用者 2026-08-29 指出「太直、沒貼平在河岸上」。
+## 量測佐證：147 塊局部 Y 軸偏離垂直全為 0.00 度，牆面只落在 8 個 X 平面。
+## 病灶是 (1) face 每層共用同一 WALL_FACE，零勾配；(2) 只給 yaw，X/Z 旋轉寫死 0。
+const WALL_BATTER: float = 0.15     # 勾配 1:0.15——每上升 1m，牆面往岸內退 0.15m
+const BLOCK_TILT: float = 1.4       # 每塊坐落微傾上限（度），疊在勾配之上
 
 func _init() -> void:
 	var root: Node3D = Node3D.new()
@@ -37,9 +51,12 @@ func _init() -> void:
 	# 堰：以高度 2.2m 定縮放，寬度隨之約 6.1m，正好跨過 5.4m 水面
 	_place(root, "res://assets/riverbank/堰／小型分水閘門.glb", "堰",
 		"y", 2.2, 0.0, Vector3(CX, 0.0, WEIR_Z), BED_UP)
-	# 水車小屋：岸上，側面空位朝渠道
+	# 水車小屋：跨在水車坑上，東面出挑到輪心西側，輪子嵌進側面空位。
+	# r8 前 x=332.4 是手填值，小屋東緣 336.4 距輪西緣 337.84 空了 1.44m，
+	# 中間還隔著 337.3 的護岸面——輪子等於浮在渠道裡沒接上任何東西。
+	# 規格寬 8.0m ÷ 2 = 4.0，取 x=334.0 使東緣 338.0 略過輪西緣 337.84。
 	_place(root, "res://assets/riverbank/水車小屋.glb", "水車小屋",
-		"z", 8.0, 90.0, Vector3(332.4, 0.0, WHEEL_Z), -0.85)
+		"z", 8.0, 90.0, Vector3(334.0, 0.0, WHEEL_Z), -0.85)
 	# 水車：Ø4.0m，嵌進小屋側面空位，輪底觸下游水面
 	var wheel: Node3D = _place(root, "res://assets/riverbank/水車.glb", "水車輪",
 		"x", 4.0, 90.0, Vector3(338.5, 0.0, WHEEL_Z), DN_WATER_Y - 0.20)
@@ -94,6 +111,32 @@ func _local_bbox(root_node: Node3D) -> AABB:
 	return acc
 
 
+## 與 _local_bbox 同一套走訪，但把 nd 自身的 transform 也算進去，
+## 用來在擺放之後量「實際落在哪」。
+func _subtree_bbox(nd: Node3D) -> AABB:
+	var acc: AABB = AABB()
+	var has: bool = false
+	var stack: Array = [[nd, Transform3D.IDENTITY]]
+	while not stack.is_empty():
+		var pair: Array = stack.pop_back()
+		var n: Node = pair[0]
+		var xf: Transform3D = pair[1]
+		if n is Node3D:
+			xf = xf * (n as Node3D).transform
+		if n is MeshInstance3D:
+			var mi: MeshInstance3D = n
+			if mi.mesh != null:
+				var a: AABB = xf * mi.mesh.get_aabb()
+				if has:
+					acc = acc.merge(a)
+				else:
+					acc = a
+					has = true
+		for c2 in n.get_children():
+			stack.push_back([c2, xf])
+	return acc
+
+
 ## 依規格尺寸擺放。spec_axis 指定用哪一軸對規格（"x"/"y"/"z"），
 ## 求得等比縮放後，水平置中於 center_xz、底面對齊 bottom_y。
 func _place(root: Node3D, path: String, node_name: String,
@@ -121,6 +164,15 @@ func _place(root: Node3D, path: String, node_name: String,
 		center_xz.x - off.x,
 		bottom_y - (c.y - bb.size.y * 0.5) * s,
 		center_xz.z - off.z)
+	## r9 兩段式定位：擺完實測一次，把殘差補回去。解析預測對水車小屋失準
+	## （要求中心 x=334.0，實得 328.27，與水車拉開 5.5m），實測校正讓宣告值必成立。
+	var got: AABB = _subtree_bbox(inst)
+	if got.size.length() > 0.0001:
+		var gc: Vector3 = got.position + got.size * 0.5
+		inst.position += Vector3(
+			center_xz.x - gc.x,
+			bottom_y - got.position.y,
+			center_xz.z - gc.z)
 	root.add_child(inst)
 	inst.owner = root
 	print("PLACED %s scale=%.3f final=%.2fx%.2fx%.2f" %
@@ -152,36 +204,98 @@ func _build_walls(root: Node3D) -> void:
 	var seg_h: float = bb.size.y * s
 	var seg_d: float = bb.size.z * s
 	var c: Vector3 = bb.position + bb.size * 0.5
-	var n_seg: int = int(floor((Z1 - Z0) / seg_len))
+	## r8 砌法修正。舊版三個病灶：
+	##  (1) 每層起點相同 → 垂直通縫每 3m 一道，從渠底通到牆頂；
+	##  (2) 層距正好等於模組高 → 塊與塊之間留髮絲縫透光，就是渲染圖裡
+	##      橫貫整個畫面那條亮線；
+	##  (3) 118 塊同一顆石頭、同一角度、同一尺寸 → 讀成貼圖不是砌石。
+	## 對策：奇數層平移半格（錯縫）、層距與格距各壓疊一點、每塊依固定種子
+	## 微擾角度與尺寸。不做 180 度翻面——模組背面未必可見，翻了會破面。
+	var pitch_z: float = seg_len - BOND_OVERLAP_Z
+	var pitch_y: float = seg_h - BOND_OVERLAP_Y
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	var count: int = 0
 	for side in [-1.0, 1.0]:
 		var ry: float = 90.0 if side < 0.0 else -90.0
-		var rot: Basis = Basis(Vector3.UP, deg_to_rad(ry))
-		var off: Vector3 = rot * (c * s)
-		for k in range(n_seg):
-			var wz: float = Z0 + seg_len * (float(k) + 0.5)
-			# 西岸水車輪坑
-			if side < 0.0 and absf(wz - WHEEL_Z) < 3.2:
-				continue
-			# 東岸親水階梯與引水渠口
-			if side > 0.0 and (absf(wz - STAIR_Z) < 2.4 or absf(wz - INTAKE_Z) < 2.0):
-				continue
-			for course in range(COURSE):
-				var base_y: float = _bed_y(wz) + seg_h * float(course)
-				if base_y > -0.05:
-					break
-				var inst: Node3D = scn.instantiate() as Node3D
-				inst.name = "wall_%02d_%d" % [k, course]
-				inst.rotation_degrees = Vector3(0.0, ry, 0.0)
-				inst.scale = Vector3(s, s, s)
-				var face_x: float = CX + side * WALL_FACE
-				var cx_w: float = face_x + side * seg_d * 0.5
-				inst.position = Vector3(cx_w - off.x,
-					base_y - (c.y - bb.size.y * 0.5) * s, wz - off.z)
-				walls.add_child(inst)
-				inst.owner = root
+		for course in range(COURSE):
+			var shift: float = pitch_z * 0.5 if course % 2 == 1 else 0.0
+			var n_seg: int = int(ceil((Z1 - Z0) / pitch_z)) + 1
+			for k in range(n_seg):
+				var wz: float = Z0 + shift + pitch_z * (float(k) + 0.5)
+				if wz > Z1 + pitch_z * 0.5:
+					continue
+				# 東岸親水階梯與引水渠口留空
+				if side > 0.0 and (absf(wz - STAIR_Z) < 2.4 or absf(wz - INTAKE_Z) < 2.0):
+					continue
+				# 西岸水車坑：主牆退到坑底，坑仍然是砌石不是裸土
+				var rise: float = pitch_y * float(course)
+				var face_x: float = CX + side * (WALL_FACE + WALL_BATTER * rise)
+				if side < 0.0 and wz > PIT_Z0 and wz < PIT_Z1:
+					face_x += side * PIT_DEPTH
+				# 截止條件看石塊「頂面」不是底面。r8 第一版沿用舊的底面判斷，
+				# 但層距壓成 0.82 後同一條件多容一層，壓頂石整排凸出草地。
+				# 0.30 是留給壓頂的唇高，與大河護岸 0.22 同一類做法。
+				var base_y: float = _bed_y(wz) + pitch_y * float(course)
+				if base_y + seg_h > 0.30:
+					continue
+				rng.seed = WALL_SEED + int(side + 2.0) * 100000 + k * 100 + course
+				_wall_block(walls, root, scn, bb, c, s, seg_d, rng,
+					"wall_%s%02d_%d" % ["w" if side < 0.0 else "e", k, course],
+					ry, face_x, side, base_y, wz)
 				count += 1
-	print("WALLS %d (seg %.2fm x %.2fm, %d courses)" % [count, seg_len, seg_h, COURSE])
+		# 水車坑的兩道回歸牆（坑的上下游側壁），沿 x 佈置把裸土封起來
+		if side < 0.0:
+			for pz in [PIT_Z0, PIT_Z1]:
+				for course in range(COURSE):
+					var by: float = _bed_y(pz) + pitch_y * float(course)
+					if by + seg_h > 0.30:
+						continue
+					rng.seed = WALL_SEED + 900000 + int(pz * 10.0) * 100 + course
+					var pside: float = -1.0 if pz < WHEEL_Z else 1.0
+					var prise: float = pitch_y * float(course)
+					_wall_block(walls, root, scn, bb, c, s, seg_d, rng,
+						"pit_%02d_%d" % [int(pz), course],
+						0.0, pz + pside * WALL_BATTER * prise, pside,
+						by, CX - WALL_FACE - PIT_DEPTH * 0.5)
+					count += 1
+	print("WALLS %d (seg %.2fm x %.2fm, pitch %.2f/%.2f, %d courses)"
+		% [count, seg_len, seg_h, pitch_z, pitch_y, COURSE])
+
+
+## 擺一塊護岸石。face_axis 是牆面所在座標，run_axis 是沿牆方向的座標；
+## 兩者的意義隨 ry 旋轉互換，由呼叫端負責傳對。
+func _wall_block(walls: Node3D, root: Node3D, scn: PackedScene, bb: AABB,
+		c: Vector3, s0: float, seg_d: float, rng: RandomNumberGenerator,
+		node_name: String, ry: float, face_v: float, side: float,
+		base_y: float, run_v: float) -> void:
+	var s: float = s0 * rng.randf_range(0.97, 1.03)
+	var yaw: float = ry + rng.randf_range(-2.5, 2.5)
+	## 勾配：石塊頂端往岸內傾，與每層退縮量同一角度，牆面才是一個斜面而非階梯。
+	## 再疊上每塊的坐落微傾，砌石才不會讀成一片機器切出來的平面。
+	var lean: float = rad_to_deg(atan(WALL_BATTER)) + rng.randf_range(-BLOCK_TILT, BLOCK_TILT)
+	var roll: float = rng.randf_range(-BLOCK_TILT, BLOCK_TILT)
+	var b: Basis = Basis(Vector3.UP, deg_to_rad(yaw))
+	if absf(ry) > 45.0:
+		# 牆沿 Z 走、深度在 X：繞世界 Z 傾倒
+		b = Basis(Vector3.BACK, deg_to_rad(-side * lean)) * b
+		b = Basis(Vector3.RIGHT, deg_to_rad(roll)) * b
+	else:
+		# 牆沿 X 走、深度在 Z：繞世界 X 傾倒
+		b = Basis(Vector3.RIGHT, deg_to_rad(side * lean)) * b
+		b = Basis(Vector3.BACK, deg_to_rad(roll)) * b
+	var off: Vector3 = b * (c * s)
+	var inst: Node3D = scn.instantiate() as Node3D
+	inst.name = node_name
+	inst.transform.basis = b.scaled(Vector3(s, s, s))
+	var depth_v: float = face_v + side * (seg_d * 0.5 + rng.randf_range(-0.05, 0.05))
+	var y: float = base_y - (c.y - bb.size.y * 0.5) * s + rng.randf_range(-0.03, 0.03)
+	var run: float = run_v + rng.randf_range(-0.04, 0.04)
+	if absf(ry) > 45.0:
+		inst.position = Vector3(depth_v - off.x, y, run - off.z)
+	else:
+		inst.position = Vector3(run - off.x, y, depth_v - off.z)
+	walls.add_child(inst)
+	inst.owner = root
 
 
 func _build_water(root: Node3D) -> void:
