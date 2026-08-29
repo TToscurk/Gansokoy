@@ -6,11 +6,10 @@ The 170-house village generator pipeline was retired 2026-08-25; the village is 
 
 ## Start Every Task
 
-1. Read `AGENT_CONSTITUTION.md`.
-2. Read `docs/PROJECT_STATE.md`.
-3. Read only the `.claude/rules/` file(s) relevant to the task.
-4. Read at most the one subsystem document needed for the task.
-5. Inspect `git status`, `git diff`, and relevant code before expanding context.
+1. Read `AGENT_CONSTITUTION.md` (使用者審定精簡版，含 MCP 證據優先政策).
+2. 涉及 Godot 場景/節點/資源狀態：用 godot-ai MCP 查實況（`editor_state` 起手），不推測。
+3. Read `docs/PROJECT_STATE.md`、相關 `.claude/rules/` 檔，與至多一份子系統文件。
+4. Inspect `git status`, `git diff`, and relevant code before expanding context.
    (Git is initialized on branch `main`, local only — not yet pushed to GitHub.
    Commit each approved round before handing work to another agent.)
 
@@ -19,8 +18,7 @@ Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes,
 
 ## Project Skill Discovery
 
-The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — `godot-master` only when a Godot technical question actually needs checking (then a single reference file, never the whole library); `level-design` only for scene design, road planning, 3D layout, blockout, sightlines, or level flow. Follow the on-demand routing and
-precedence rules in `AGENT_CONSTITUTION.md` under "Godot Skill 路由規則".
+The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — routing table in `AGENT_CONSTITUTION.md` §3.
 
 ## Working Rules
 
