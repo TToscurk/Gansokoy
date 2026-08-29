@@ -64,7 +64,7 @@ func _init() -> void:
 		"x", 3.0, 90.0, Vector3(337.0, 0.0, WHEEL_Z), -2.202)
 	# 木樋：自上游沿西岸送水到輪頂附近
 	_place(root, "res://assets/riverbank/木樋（引水槽）支撐棚架.glb", "木樋",
-		"x", 7.0, 90.0, Vector3(335.8, 0.0, 3.0), BED_UP)
+		"x", 7.0, 90.0, Vector3(336.4, 0.0, 3.0), -2.60)
 	if wheel != null:
 		wheel.set_script(load("res://scripts/water_wheel_spin.gd"))
 	_place(root, "res://assets/bridges/田-村橋(清河橋).glb", "清河橋",
@@ -305,36 +305,51 @@ func _wall_block(walls: Node3D, root: Node3D, scn: PackedScene, bb: AABB,
 
 
 func _build_water(root: Node3D) -> void:
-	var mat: Material = load("res://assets/materials/east_river_water.tres")
-	_water_plane(root, mat, "UpperWater", UP_WATER_Y, Z0 - 2.0, WEIR_Z - 0.3)
-	_water_plane(root, mat, "LowerWater", DN_WATER_Y, WEIR_Z + 0.5, Z1 + 2.0)
+	## r13：單一水面。落差取消後還留著 UpperWater/LowerWater/WeirSpill 三塊
+	## 同高度的面互相重疊，渲染出矩形接縫。改成一張網格，磨坊池一併涵蓋，
+	## 用同一組格點避免 T 型接點裂縫。
+	var mat: Material = load("res://assets/materials/b2_canal_water.tres")
+	var hw: float = WALL_FACE - 0.15
+	var bx: float = CX - WALL_FACE - PIT_DEPTH + 0.5   # 池西緣（略內縮於牆）
+	var za: float = Z0 - 2.0
+	var zb: float = Z1 + 2.0
+	var cell: float = 1.8
+	var nx: int = int(ceil((CX + hw - bx) / cell))
+	var nz: int = int(ceil((zb - za) / cell))
 	var st: SurfaceTool = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var hw: float = WALL_FACE - 0.15
-	var a: Vector3 = Vector3(CX - hw, UP_WATER_Y - 0.02, WEIR_Z - 0.3)
-	var b: Vector3 = Vector3(CX + hw, UP_WATER_Y - 0.02, WEIR_Z - 0.3)
-	var c2: Vector3 = Vector3(CX + hw, DN_WATER_Y - 0.02, WEIR_Z + 0.6)
-	var d: Vector3 = Vector3(CX - hw, DN_WATER_Y - 0.02, WEIR_Z + 0.6)
-	for v in [a, b, c2, a, c2, d]:
-		st.set_uv(Vector2(v.x * 0.1, v.z * 0.1))
-		st.add_vertex(v)
+	for ix in range(nx):
+		for iz in range(nz):
+			var x0: float = bx + cell * float(ix)
+			var x1: float = minf(x0 + cell, CX + hw)
+			var z0: float = za + cell * float(iz)
+			var z1: float = minf(z0 + cell, zb)
+			var mx: float = (x0 + x1) * 0.5
+			var mz: float = (z0 + z1) * 0.5
+			var in_canal: bool = mx >= CX - hw
+			var in_bay: bool = mz > PIT_Z0 and mz < PIT_Z1 and mx > bx
+			if not (in_canal or in_bay):
+				continue
+			var q: Array = [Vector3(x0, UP_WATER_Y, z0), Vector3(x1, UP_WATER_Y, z0),
+				Vector3(x1, UP_WATER_Y, z1), Vector3(x0, UP_WATER_Y, z1)]
+			for v in [q[0], q[1], q[2], q[0], q[2], q[3]]:
+				st.set_color(Color(0.0, 0.5, 0.5))   # bank=0：純深水，非岸邊泡沫
+				st.set_uv(Vector2(v.x * 0.1, v.z * 0.1))
+				st.add_vertex(v)
 	st.generate_normals()
 	var mi: MeshInstance3D = MeshInstance3D.new()
-	mi.name = "WeirSpill"
+	mi.name = "CanalWater"
 	mi.mesh = st.commit()
 	mi.material_override = mat
+	mi.set_meta("water_surface", true)
 	root.add_child(mi)
 	mi.owner = root
 
 
-## r12 磨坊池：渠道在磨坊處鼓出一個水池，小屋立在池中柱基上。
-## 上一輪把小屋擺在 -2.30 卻只把「牆」退開 6m，土沒退 → 小屋被埋。
-## 這裡把渠床與水面一起延伸進灣內，小屋才是站在水裡而不是土裡。
+## 磨坊池床：小屋立在池中柱基上，池床與主渠床同高（水面已由 _build_water 統一）。
 func _build_bay(root: Node3D) -> void:
 	var x0: float = CX - WALL_FACE - PIT_DEPTH
 	var x1: float = CX - WALL_FACE
-	var mat: Material = load("res://assets/materials/east_river_water.tres")
-	# 池床（實體，與主渠床同高）
 	var st: SurfaceTool = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var y: float = BED_UP
@@ -347,21 +362,8 @@ func _build_bay(root: Node3D) -> void:
 	var bed: MeshInstance3D = MeshInstance3D.new()
 	bed.name = "BayBed"
 	bed.mesh = st.commit()
-	bed.material_override = load("res://assets/materials/canal_bed.tres") if ResourceLoader.exists("res://assets/materials/canal_bed.tres") else null
-	root.add_child(bed); bed.owner = root
-	# 池水（與主渠水面接合，略為重疊避免縫）
-	var pm: PlaneMesh = PlaneMesh.new()
-	pm.size = Vector2((x1 + 0.30) - (x0 + 0.15), PIT_Z1 - PIT_Z0 - 0.2)
-	pm.subdivide_width = 6
-	pm.subdivide_depth = 6
-	var w: MeshInstance3D = MeshInstance3D.new()
-	w.name = "BayWater"
-	w.mesh = pm
-	w.position = Vector3(((x0 + 0.15) + (x1 + 0.30)) * 0.5, UP_WATER_Y,
-		(PIT_Z0 + PIT_Z1) * 0.5)
-	w.material_override = mat
-	w.set_meta("water_surface", true)
-	root.add_child(w); w.owner = root
+	root.add_child(bed)
+	bed.owner = root
 
 
 func _water_plane(root: Node3D, mat: Material, node_name: String,
