@@ -69,10 +69,17 @@ func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
 func _add_tri(
 		tool: SurfaceTool,
 		a: Vector3, b: Vector3, c: Vector3,
-		ca: Color, cb: Color, cc: Color) -> void:
-	tool.set_color(ca); tool.add_vertex(a)
-	tool.set_color(cb); tool.add_vertex(b)
-	tool.set_color(cc); tool.add_vertex(c)
+		ca: Color, cb: Color, cc: Color,
+		na: Vector3 = Vector3.ZERO, nb: Vector3 = Vector3.ZERO,
+		nc: Vector3 = Vector3.ZERO) -> void:
+	if na == Vector3.ZERO:
+		tool.set_color(ca); tool.add_vertex(a)
+		tool.set_color(cb); tool.add_vertex(b)
+		tool.set_color(cc); tool.add_vertex(c)
+		return
+	tool.set_normal(na); tool.set_color(ca); tool.add_vertex(a)
+	tool.set_normal(nb); tool.set_color(cb); tool.add_vertex(b)
+	tool.set_normal(nc); tool.set_color(cc); tool.add_vertex(c)
 
 
 func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
@@ -85,6 +92,17 @@ func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
 	var h0: float = lerpf(hs[iz * n + ix], hs[iz * n + ix + 1], tx)
 	var h1: float = lerpf(hs[(iz + 1) * n + ix], hs[(iz + 1) * n + ix + 1], tx)
 	return lerpf(h0, h1, tz)
+
+
+## 建成區平坦遮罩 0..1（1 = 必須維持水平）。街廓與地標都是照 y=0 擺的，
+## 平台起伏若灌進來會讓 42 棟町家與地標浮空或陷地。
+func _settled(x: float, z: float) -> float:
+	var blk: float = (1.0 - smoothstep(42.0, 88.0, absf(x - 235.0))) 		* (1.0 - smoothstep(105.0, 158.0, absf(z - 14.0)))
+	var m: float = blk
+	for a in APRONS:
+		var d: float = Vector2(x - a.x, z - a.y).length()
+		m = maxf(m, 1.0 - smoothstep(a.z * 1.15, a.z * 2.1, d))
+	return clampf(m, 0.0, 1.0)
 
 
 ## 踏實裸土權重 0..1（1 = 全裸土）。街廓數據來自 gen_b1_street.gd 的實測範圍：
@@ -107,8 +125,10 @@ func _bare(x: float, z: float) -> float:
 		var rr: float = a.z * (0.70 + 0.44 * (
 			_n.get_noise_2d(cos(ang) * 34.0 + a.x, sin(ang) * 34.0 + a.y) * 0.5 + 0.5))
 		b = maxf(b, 0.8 * (1.0 - smoothstep(rr * 0.55, rr, d)))
-	# 有機邊界：門檻被雜訊推擠，避免出現方正的色塊邊
-	b += _n.get_noise_2d(x * 0.9 + 310.0, z * 0.9) * 0.30
+	# 有機邊界：門檻被雜訊推擠，避免出現方正的色塊邊。
+	# 只在「已經有一點裸土」的地方擾動——否則整片開闊草地都被摻進最多
+	# 30% 的土，草色被拉髒，6 m 取樣網格也跟著現形。
+	b += _n.get_noise_2d(x * 0.9 + 310.0, z * 0.9) * 0.30 * smoothstep(0.02, 0.32, b)
 	return clampf(b, 0.0, 1.0)
 
 
@@ -141,6 +161,14 @@ func _init() -> void:
 			var d: float = absf(x - _river_x(z))
 			var valley_clear: float = smoothstep(widths.y + 48.0, widths.y + 155.0, d)
 			g += _hills(x, z, r, theta) * valley_clear
+
+			# r7: 平台內部原本是嚴格的 y=0，遠看像高爾夫球場。加一層只往上長
+			# 的緩坡（0..2.0 m，週期約 285 m / 111 m），但三處不准動：
+			# 建成區（建築照 y=0 擺）、已 ART_APPROVED 的河谷、以及外圈
+			# （交給既有的 natural_ground 與 hills，避免疊加兩套起伏）。
+			var roll: float = (_n.get_noise_2d(x * 0.35 + 1200.0, z * 0.35) * 0.5 + 0.5) * 1.55 				+ (_n.get_noise_2d(x * 0.9 - 640.0, z * 0.9) * 0.5 + 0.5) * 0.45
+			var river_keep: float = smoothstep(widths.y + 10.0, widths.y + 92.0, d)
+			g += roll * (1.0 - _settled(x, z)) * (1.0 - village_blend) * river_keep
 
 			# A continuous, conservative under-slope seals the terrain below the
 			# river-aligned revetment cap generated later.
@@ -178,6 +206,18 @@ func _init() -> void:
 			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.
+	# r7: _add_tri 送的是非索引三角形，generate_normals() 因此給的是「每面」
+	# 法線——6 m 的網格於是在斜射光下顯出規則的對角刻紋（俯視最明顯）。
+	# 改由高度場中央差分算「每頂點」法線，網格條紋才會真正消失。
+	var nrm := PackedVector3Array(); nrm.resize(n * n)
+	for iz in range(n):
+		for ix in range(n):
+			var hl: float = hs[iz * n + maxi(ix - 1, 0)]
+			var hr: float = hs[iz * n + mini(ix + 1, n - 1)]
+			var hd: float = hs[maxi(iz - 1, 0) * n + ix]
+			var hu: float = hs[mini(iz + 1, n - 1) * n + ix]
+			nrm[iz * n + ix] = Vector3(hl - hr, 2.0 * CELL, hd - hu).normalized()
+
 	var gst := SurfaceTool.new()
 	gst.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for iz in range(n - 1):
@@ -191,10 +231,11 @@ func _init() -> void:
 			var v01 := Vector3(x0 + ix * CELL, hs[i01], x0 + (iz + 1) * CELL)
 			var v11 := Vector3(x0 + (ix + 1) * CELL, hs[i11], x0 + (iz + 1) * CELL)
 
-			_add_tri(gst, v00, v10, v01, cols[i00], cols[i10], cols[i01])
-			_add_tri(gst, v10, v11, v01, cols[i10], cols[i11], cols[i01])
+			_add_tri(gst, v00, v10, v01, cols[i00], cols[i10], cols[i01],
+				nrm[i00], nrm[i10], nrm[i01])
+			_add_tri(gst, v10, v11, v01, cols[i10], cols[i11], cols[i01],
+				nrm[i10], nrm[i11], nrm[i01])
 
-	gst.generate_normals()
 	var ground: ArrayMesh = gst.commit()
 	var ground_arrays: Array = ground.surface_get_arrays(0)
 	if (ground_arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:

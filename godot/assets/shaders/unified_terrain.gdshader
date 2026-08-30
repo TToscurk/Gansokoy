@@ -18,6 +18,10 @@ uniform float texture_scale = 0.18;
 uniform float detile_ratio = 0.37;
 uniform float detile_blend_scale = 0.031;  // 混合遮罩的世界尺度（約 32 m）
 uniform float macro_amount = 1.0;          // 大尺度明暗變化強度
+// 遠距掠角下，5.5 m 的平鋪會走樣成規則條紋。超過 detail_fade_start
+// 就把高頻細節淡向該貼圖自身的低階 mip（等同平均色），只留大尺度變化。
+uniform float detail_fade_start = 85.0;
+uniform float detail_fade_end = 430.0;
 uniform float stone_texture_scale = 0.40;
 
 varying vec3 terrain_world_position;
@@ -75,6 +79,17 @@ void fragment() {
 	vec3 grass = mix(
 		triplanar_sample(grass_albedo, sample_position, blend).rgb,
 		triplanar_sample(grass_albedo, sample_position_b, blend).rgb, detile) * grass_tint;
+	// 遠場去細節：只在 y 軸取樣（地面幾乎全是水平面），取最低階 mip 當平均色。
+	// 白/灰 albedo 探針證實條紋純粹來自貼圖平鋪——幾何、法線、陰影、光照
+	// 全部排除（shots2/_probe_grey）。LOD 必須夠低才是「平均色」而不是
+	// 「模糊的斑塊」，8x8 的 LOD 7 仍會重複。
+	float view_dist = length(terrain_world_position - CAMERA_POSITION_WORLD);
+	float far_mix = smoothstep(detail_fade_start, detail_fade_end, view_dist);
+	if (far_mix > 0.001) {
+		vec2 flat_uv = terrain_world_position.xz * texture_scale;
+		dirt = mix(dirt, textureLod(dirt_albedo, flat_uv, 10.0).rgb * dirt_tint, far_mix);
+		grass = mix(grass, textureLod(grass_albedo, flat_uv, 10.0).rgb * grass_tint, far_mix);
+	}
 	// 大尺度明暗：草地不再是一片死平的同一個值
 	float macro = vnoise(terrain_world_position.xz * 0.011) * 0.6
 		+ vnoise(terrain_world_position.xz * 0.0038) * 0.4;

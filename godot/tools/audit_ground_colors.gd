@@ -11,6 +11,11 @@ const PROBES: Array = [
 	["街廓外 80m", 315.0, 0.0],
 	["平台西側空地", 120.0, 0.0],
 	["平台北側空地", 0.0, -240.0],
+	["鳥居腳下", 235.0, 101.0],
+	["寺子屋腳下", 314.8, 34.6],
+	["鯢吞亭腳下", 361.2, -143.8],
+	["稗田邸腳下", 233.2, -138.6],
+	["護岸外 60m", 300.0, -60.0],
 ]
 
 func _init() -> void:
@@ -28,7 +33,7 @@ func _init() -> void:
 	var bare: int = 0
 	var best: Array = []
 	for p in PROBES:
-		best.append([1e9, 0.0])
+		best.append([1e9, 0.0, 0.0])
 	for i in range(verts.size()):
 		var v: Vector3 = verts[i]
 		var g: float = cols[i].r
@@ -41,10 +46,11 @@ func _init() -> void:
 		for k in range(PROBES.size()):
 			var d: float = Vector2(v.x - PROBES[k][1], v.z - PROBES[k][2]).length()
 			if d < best[k][0]:
-				best[k] = [d, g]
+				best[k] = [d, g, v.y]
 	print("PLATEAU_VERTS %d  grass>0.6 %d (%.1f%%)  bare<0.25 %d (%.1f%%)" % [
 		inside, grassy, 100.0 * float(grassy) / float(maxi(inside, 1)),
 		bare, 100.0 * float(bare) / float(maxi(inside, 1))])
 	for k in range(PROBES.size()):
-		print("PROBE %-14s grass=%.2f (取樣點距離 %.1fm)" % [PROBES[k][0], best[k][1], best[k][0]])
+		print("PROBE %-14s grass=%.2f  y=%+.2f  (取樣點距離 %.1fm)" % [
+			PROBES[k][0], best[k][1], best[k][2], best[k][0]])
 	quit()
