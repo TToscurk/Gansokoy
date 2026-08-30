@@ -1,44 +1,40 @@
 [gd_scene format=3]
 
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_櫻花樹.res" id="1_7p23c"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_普通樹.res" id="2_85ard"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_大衫.res" id="3_e01te"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_2大衫.res" id="4_ng7bu"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉樹1.res" id="5_sxsml"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉樹2glb.res" id="6_vlk20"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹3.res" id="7_rn2lq"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹4.res" id="8_rlrip"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_松樹.res" id="9_mw1f6"]
-[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_盆樹.res" id="10_1hqht"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_櫻花樹.res" id="1_qqbo4"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_普通樹.res" id="2_7p23c"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_大衫.res" id="3_85ard"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_2大衫.res" id="4_e01te"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉樹1.res" id="5_ng7bu"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉樹2glb.res" id="6_sxsml"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹3.res" id="7_vlk20"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹4.res" id="8_rn2lq"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_盆樹.res" id="9_rlrip"]
 
-[node name="VillageTrees" type="Node3D" unique_id=1451392254]
+[node name="VillageTrees" type="Node3D" unique_id=2123460628]
 
-[node name="Trees_櫻花樹" type="MultiMeshInstance3D" parent="." unique_id=1691947579]
-multimesh = ExtResource("1_7p23c")
+[node name="Trees_櫻花樹" type="MultiMeshInstance3D" parent="." unique_id=1619724733]
+multimesh = ExtResource("1_qqbo4")
 
-[node name="Trees_普通樹" type="MultiMeshInstance3D" parent="." unique_id=1945946354]
-multimesh = ExtResource("2_85ard")
+[node name="Trees_普通樹" type="MultiMeshInstance3D" parent="." unique_id=758660062]
+multimesh = ExtResource("2_7p23c")
 
-[node name="Trees_大衫" type="MultiMeshInstance3D" parent="." unique_id=272763350]
-multimesh = ExtResource("3_e01te")
+[node name="Trees_大衫" type="MultiMeshInstance3D" parent="." unique_id=997589495]
+multimesh = ExtResource("3_85ard")
 
-[node name="Trees_2大衫" type="MultiMeshInstance3D" parent="." unique_id=1225548648]
-multimesh = ExtResource("4_ng7bu")
+[node name="Trees_2大衫" type="MultiMeshInstance3D" parent="." unique_id=345467729]
+multimesh = ExtResource("4_e01te")
 
-[node name="Trees_針葉樹1" type="MultiMeshInstance3D" parent="." unique_id=305162046]
-multimesh = ExtResource("5_sxsml")
+[node name="Trees_針葉樹1" type="MultiMeshInstance3D" parent="." unique_id=822241976]
+multimesh = ExtResource("5_ng7bu")
 
-[node name="Trees_針葉樹2glb" type="MultiMeshInstance3D" parent="." unique_id=1223261832]
-multimesh = ExtResource("6_vlk20")
+[node name="Trees_針葉樹2glb" type="MultiMeshInstance3D" parent="." unique_id=1002845012]
+multimesh = ExtResource("6_sxsml")
 
-[node name="Trees_針葉林樹3" type="MultiMeshInstance3D" parent="." unique_id=1258948692]
-multimesh = ExtResource("7_rn2lq")
+[node name="Trees_針葉林樹3" type="MultiMeshInstance3D" parent="." unique_id=617708870]
+multimesh = ExtResource("7_vlk20")
 
-[node name="Trees_針葉林樹4" type="MultiMeshInstance3D" parent="." unique_id=430376451]
-multimesh = ExtResource("8_rlrip")
+[node name="Trees_針葉林樹4" type="MultiMeshInstance3D" parent="." unique_id=1491937815]
+multimesh = ExtResource("8_rn2lq")
 
-[node name="Trees_松樹" type="MultiMeshInstance3D" parent="." unique_id=975179655]
-multimesh = ExtResource("9_mw1f6")
-
-[node name="Trees_盆樹" type="MultiMeshInstance3D" parent="." unique_id=1059062786]
-multimesh = ExtResource("10_1hqht")
+[node name="Trees_盆樹" type="MultiMeshInstance3D" parent="." unique_id=182584846]
+multimesh = ExtResource("9_rlrip")

@@ -14,6 +14,9 @@ const OUT_SCENE := "res://maps/slice/gen/village_trees.tscn"
 const SRC := "res://assets/landscape/"
 
 # 樹種：檔名、目標實高(m)、目標株數、最小間距(m)、隨機縮放範圍。
+# 松樹.glb 已移出（使用者裁決）：檔名是松，貼圖平均色卻是 hue 17 度、
+# 飽和 0.66 的橘紅——那是秋樹，混在綠林裡讓季節讀不出來。資產保留在
+# assets/landscape/，之後要做紅葉場景可以直接用。
 # 順序即優先權——共用間距集合會被先跑的樹種佔位，所以櫻花與雜木排最前面
 # （概念圖裡櫻花就在村緣，排最後只搶得到 3 個位置）。
 const SPECIES: Array = [
@@ -25,7 +28,6 @@ const SPECIES: Array = [
 	{"file": "針葉樹2glb.glb",  "h": 13.5, "n": 28, "gap": 12.0, "sv": 0.18, "seed": 4104},
 	{"file": "針葉林樹3.glb",   "h": 14.5, "n": 26, "gap": 13.0, "sv": 0.16, "seed": 4105},
 	{"file": "針葉林樹4.glb",   "h": 15.5, "n": 24, "gap": 13.0, "sv": 0.16, "seed": 4106},
-	{"file": "松樹.glb",        "h": 10.5, "n": 26, "gap": 11.0, "sv": 0.20, "seed": 4107},
 ]
 # 盆樹走另一條規則：只沿裏路地外緣點綴
 const BONSAI := {"file": "盆樹.glb", "h": 2.6, "n": 22, "sv": 0.22, "seed": 4110}
