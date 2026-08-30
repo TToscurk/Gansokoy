@@ -12,8 +12,9 @@ extends SceneTree
 ##    概念圖的広場與裏路地是夯土，鋪面層讓它們變成亮黃色球場；
 ##    這兩處的地面交給 gen_terrain_river.gd 的裸土分區。
 ##    攤台一度用 assets/models/prop_*（店台／樽／笊／俵），但那批 GLB
-##    materials=0、images=0，在引擎裡是純白塑膠塊——已移除。廣場的屋台
-##    需要使用者的 Meshy 屋台組才能上。
+##    materials=0、images=0，在引擎裡是純白塑膠塊——已刪除。
+## r6（2026-08-30）：使用者的 Meshy 市集組進場（assets/market/，已去重減面），
+##    廣場擺出兩列屋台夾中央走道，加旗子、水井與雜物堆。
 ##  - 前排南段補到接近鳥居，補掉 B1 z=66→92 的空洞。
 
 const STREET_X: float = 235.0      # 街道中線 x
@@ -78,6 +79,7 @@ func _init() -> void:
 	_build_row(root, ROW_EAST_BACK, false, EAST_BACK_X, "東裏", -40.0, 74.0, CROSS_E)
 	_build_torii(root)
 	_build_paving(root)
+	_build_market(root)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
 	if err != OK:
@@ -232,3 +234,91 @@ func _build_paving(root: Node3D) -> void:
 	mi.position.y = 0.0
 	root.add_child(mi)
 	mi.owner = root
+
+
+## 依實測 AABB 擺一件道具：縮到目標尺寸、底面貼地、xz 對準給定座標。
+## dim: "h" 依高度縮放、"w" 依最大水平邊縮放。
+func _place(root: Node3D, parent: Node3D, path: String, nm: String,
+		x: float, z: float, dim: String, target: float, yaw: float) -> void:
+	var scn: PackedScene = load(path)
+	if scn == null:
+		push_error("market load failed: " + path)
+		return
+	var inst: Node3D = scn.instantiate() as Node3D
+	var bb: AABB = _local_bbox(inst)
+	var ref: float = bb.size.y if dim == "h" else maxf(bb.size.x, bb.size.z)
+	var s: float = target / maxf(ref, 0.0001)
+	var c: Vector3 = bb.position + bb.size * 0.5
+	inst.name = nm
+	inst.rotation_degrees = Vector3(0.0, yaw, 0.0)
+	inst.scale = Vector3(s, s, s)
+	# 旋轉後的水平置中：先算局部中心的水平位移，再依 yaw 轉到世界
+	var a: float = deg_to_rad(yaw)
+	var ox: float = c.x * s
+	var oz: float = c.z * s
+	var rx: float = ox * cos(a) + oz * sin(a)
+	var rz: float = -ox * sin(a) + oz * cos(a)
+	inst.position = Vector3(
+		x - rx,
+		-0.04 - (c.y - bb.size.y * 0.5) * s,
+		z - rz)
+	parent.add_child(inst)
+	inst.owner = root
+
+
+## 中央広場的市集。資產全部來自 assets/market/（使用者 Meshy 組，
+## 已在 condition_market.py 去重並減面：屋台 974k/860k/606k -> 各 22k，
+## 旗子 647k -> 8k）。無新增程序生成資產。
+func _build_market(root: Node3D) -> void:
+	var holder: Node3D = Node3D.new()
+	holder.name = "PlazaMarket"
+	root.add_child(holder)
+	holder.owner = root
+
+	const M := "res://assets/market/"
+	# 屋台輪替：絲綢／蔬果／陶瓷，中間插一張平台攤
+	var stalls: Array = [
+		M + "屋台絲綢攤.glb", M + "屋台蔬果攤.glb", M + "屋台陶瓷攤.glb"]
+	var aisle_w: float = 219.2    # 西列（面朝 +x，看向走道）
+	var aisle_e: float = 226.8    # 東列（面朝 -x）
+	var n: int = 0
+	for row in range(2):
+		var px: float = aisle_w if row == 0 else aisle_e
+		var yaw: float = 90.0 if row == 0 else -90.0
+		var z: float = PLAZA_Z0 + 4.0 + float(row) * 2.3
+		while z < PLAZA_Z1 - 3.0:
+			var jitter: float = _n2(z, px) * 0.22
+			if n % 4 == 3:
+				# 每四攤插一張沒有頂棚的平台攤，打散屋簷的節奏
+				_place(root, holder, M + "平台攤蔬菜.glb", "heidai_%02d" % n,
+					px + jitter, z, "w", 1.8, yaw)
+			else:
+				_place(root, holder, stalls[n % stalls.size()], "yatai_%02d" % n,
+					px + jitter, z, "h", 2.6, yaw)
+			n += 1
+			z += 4.6
+	# 旗子：廣場對街的入口兩側，以及走道中段
+	var flags: Array = [
+		[M + "旗子紅色.glb", 230.2, 8.5, 0.0],
+		[M + "旗子藍色.glb", 230.2, 41.5, 0.0],
+		[M + "旗子藍色.glb", 223.0, 6.8, 0.0],
+		[M + "旗子紅色.glb", 223.0, 43.2, 0.0],
+	]
+	for i in range(flags.size()):
+		var fl: Array = flags[i]
+		_place(root, holder, fl[0], "hata_%02d" % i, fl[1], fl[2], "h", 2.9, fl[3])
+	# 水井：廣場入口北側（概念圖 ⑦水場・井戸）。原本擺在 z=37.5 的西南角，
+	# 與 5.4 m 一件的雜物堆撞在一起（稽核抓到 0.73 x 0.29 m 重疊）。
+	_place(root, holder, M + "水井.glb", "ido", 217.5, 12.5, "h", 1.5, 25.0)
+	# 雜物堆：靠西側商家腳下
+	var clutter: Array = [
+		M + "雜物堆木桶.glb", M + "雜物堆瓢盆.glb", M + "雜物草捆.glb"]
+	var m: int = 0
+	var cz: float = PLAZA_Z0 + 3.5
+	while cz < PLAZA_Z1 - 2.0:
+		_place(root, holder, clutter[m % clutter.size()], "zatsu_%02d" % m,
+			216.6 + _n2(cz, 7.0) * 0.4, cz, "w", 1.15,
+			float((m * 53) % 360))
+		m += 1
+		cz += 5.4
+	print("MARKET stalls=%d flags=%d clutter=%d" % [n, flags.size(), m])

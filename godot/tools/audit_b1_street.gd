@@ -35,7 +35,15 @@ func _init() -> void:
 		if not (c is Node3D):
 			continue
 		var nm: String = String(c.name)
-		if nm in ["StreetPaving", "PlazaGround", "AlleyWest", "AlleyEast", "PlazaMarket"]:
+		if nm in ["StreetPaving", "PlazaGround", "AlleyWest", "AlleyEast"]:
+			continue
+		if nm == "PlazaMarket":
+			# 市集道具逐件量：必須在廣場範圍內，且不得插進建築
+			for p in (c as Node3D).get_children():
+				if not (p is Node3D):
+					continue
+				var pb: AABB = _wbox(p as Node3D)
+				boxes.append(["市集/" + String(p.name), pb])
 			continue
 		var bb: AABB = _wbox(c as Node3D)
 		boxes.append([nm, bb])
@@ -47,7 +55,9 @@ func _init() -> void:
 	var worst: float = 0.0
 	var worst_n: String = ""
 	for b in boxes:
-		var d: float = absf(b[1].position.y - (-0.15))
+		# 市集道具的沉降基準是 -0.04（幾乎貼地），建築是 -0.15
+		var base: float = -0.04 if String(b[0]).begins_with("市集/") else -0.15
+		var d: float = absf(b[1].position.y - base)
 		if d > worst:
 			worst = d
 			worst_n = b[0]
@@ -65,6 +75,19 @@ func _init() -> void:
 				if hits <= 12:
 					print("OVERLAP %s <-> %s  x=%.2f z=%.2f" % [boxes[i][0], boxes[j][0], ox, oz])
 	print("OVERLAPS %d" % hits)
+	# 市集道具是否越出広場（x 214.5..231, z 6..44，容許 2.5 m 溢出）
+	var stray: int = 0
+	for b3 in boxes:
+		if not String(b3[0]).begins_with("市集/"):
+			continue
+		var a3: AABB = b3[1]
+		if a3.position.x < 212.0 or a3.position.x + a3.size.x > 233.5 				or a3.position.z < 3.5 or a3.position.z + a3.size.z > 46.5:
+			stray += 1
+			if stray <= 6:
+				print("STRAY %s  x %.1f..%.1f z %.1f..%.1f" % [
+					b3[0], a3.position.x, a3.position.x + a3.size.x,
+					a3.position.z, a3.position.z + a3.size.z])
+	print("MARKET_STRAY %d (必須是 0)" % stray)
 	# 各群 x/z 範圍
 	var groups: Dictionary = {}
 	for b in boxes:
