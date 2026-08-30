@@ -19,12 +19,16 @@
 - 結構驗證用 MCP 查詢；**視覺驗收才截圖**，一律 shotlist 固定機位。
   渲染問題（剔除、繞線、摩爾紋、光照）只有截圖抓得到。
 - Skill 按需載入，一次一個 reference（路由見 CLAUDE.md 的 skill 清單）。
+- **強制**：任何觸及 Godot 的工作（場景／節點／資源、GDScript、生成器、匯入、
+  material／shader、驗證腳本）開工前，必須先載入 `godot-master` skill，
+  再依其路由讀取所需的單一 reference。不得憑記憶寫 Godot 4.7 API。
 
 **流程**
 
 - 製作場景內的地形、或做村落／區域規劃前，先參考概念圖 `docs/reference/人間之里概念圖/`：
   以 **`村落農村概念俯視.png` 為主要依據**（搭配 `村落農村概念俯視區域分隔.png` 看分區），
-  其餘（道路、住商、住宅、水護岸、河童重工）為輔助參考。
+  其餘（住商地區、住宅概念圖、河童重工＋人間之里）為輔助參考。
+  以資料夾內**現存檔案**為準；檔案被移除即代表該參考作廢，不得引用不存在的圖。
 - prototype → render → **Human Art Review** → rollout，不可跳步；未批准不得大量灌入。
 - 日常改動跑 Fast 檢查（既有檢查，不重寫）；整合／世界生成變更才跑 Full regression。
 - 三距離審：50m 量體 → 20m 街道節奏 → 5m 細節；不得用 5m 掩蓋 50m 失敗。
@@ -62,6 +66,10 @@ shortest time. Baseline = the current `village.tscn` landmark area;
   acceptance only**, always from fixed shotlist cameras. Render-side defects
   (culling, winding, moiré, lighting) are catchable ONLY in screenshots.
 - Load skills on demand, one reference at a time (routing: see the skill list in CLAUDE.md).
+- **Mandatory**: before any Godot-touching work (scenes / nodes / resources,
+  GDScript, generators, import, materials / shaders, validation scripts), load
+  the `godot-master` skill first, then follow its routing to the one reference
+  the task needs. Never write Godot 4.7 API from memory.
 
 **Process**
 
@@ -69,8 +77,9 @@ shortest time. Baseline = the current `village.tscn` landmark area;
   the concept art in `docs/reference/人間之里概念圖/`. **`村落農村概念俯視.png`
   (village-farm top view) is the primary authority** (use
   `村落農村概念俯視區域分隔.png` for its zoning breakdown); the other sheets
-  (roads, residential/commercial, housing, water revetment, Kappa industry) are
-  supporting references.
+  (`住商地區`, `住宅概念圖`, `河童重工+人間之里`) are supporting references.
+  The **files actually present in that folder** are the authority — a removed
+  sheet is a retired reference and must not be cited.
 - prototype → render → **Human Art Review** → rollout, no skipping; nothing
   unapproved gets mass-deployed.
 - Day-to-day changes run Fast checks (existing checks, never rewritten);
