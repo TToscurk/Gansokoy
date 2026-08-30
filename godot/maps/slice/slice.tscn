@@ -35,7 +35,8 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
-[ext_resource type="PackedScene" uid="uid://cdg24btawu5ep" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/village_trees.tscn" id="37_dkw4w"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -842,3 +843,5 @@ mesh = ExtResource("34_ww6k3")
 [node name="RiverVegetation" parent="." unique_id=1274932447 instance=ExtResource("35_k7yef")]
 
 [node name="B1_Street" parent="." unique_id=54333952 instance=ExtResource("36_sronm")]
+
+[node name="VillageTrees" parent="." unique_id=1279348764 instance=ExtResource("37_dkw4w")]
