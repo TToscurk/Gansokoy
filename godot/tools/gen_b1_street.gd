@@ -1,10 +1,18 @@
 extends SceneTree
-## B1 密度原型：主街密排町家（等 ART_REVIEW，未批准不進 village）
+## B1/B3 市集街廓：主街密排町家 ＋ 裏路地背排 ＋ 中央広場（等 ART_REVIEW，未批准不進 village）
 ## 產出 res://maps/slice/gen/b1_street.tscn，於 slice.tscn 以單一節點實例。
 ## r4（2026-08-29）：
 ##  - 擺位改為「量實際 AABB 反推」，不再信任參數表。倉庫.glb 的 glTF 節點帶
 ##    translation[0,0.882,0]，大鳥居用 MATRIX——只量 mesh 座標會浮空。
 ##  - 街面改中央石板帶＋兩側夯土，邊緣以頂點 alpha 柔化並加不規則擾動。
+## r5（2026-08-30，B3 街廓化）：概念圖的市集是「街廓」不是「一條街」。
+##  - 前排改成可跳段（skip band），中段讓出中央広場。
+##  - 新增東西兩條裏路地與背排（長屋／倉庫／市集商家），街廓有了進深。
+##  - 中央広場：夯土廣場，西側以背排商家圍合。
+##    攤台一度用 assets/models/prop_*（店台／樽／笊／俵），但那批 GLB
+##    materials=0、images=0，在引擎裡是純白塑膠塊——已移除。廣場的屋台
+##    需要使用者的 Meshy 屋台組才能上。
+##  - 前排南段補到接近鳥居，補掉 B1 z=66→92 的空洞。
 
 const STREET_X: float = 235.0      # 街道中線 x
 const Z0: float = -60.0            # 北端（-z 為北）
@@ -18,6 +26,23 @@ const SINK: float = 0.15           # 沉降：主牆基入土
 const KIRISAME_Z0: float = -41.0
 const KIRISAME_Z1: float = -26.3
 
+# 前排實測最大進深 12.37（町家）→ 背牆線 x=231-12.37=218.63 / 239+12.37=251.37。
+# 裏路地夾在背牆線與背排正面之間，寬約 4.1 m。
+const WEST_FRONT_X: float = 231.0   # 西前排正面（朝 +x）
+const EAST_FRONT_X: float = 239.0   # 東前排正面（朝 -x）
+const WEST_BACK_X: float = 214.5    # 西背排正面（朝 +x，同時是廣場西緣）
+const EAST_BACK_X: float = 255.5    # 東背排正面（朝 -x）
+const WEST_ALLEY_X0: float = 214.5  # 西裏路地
+const WEST_ALLEY_X1: float = 218.7
+const EAST_ALLEY_X0: float = 251.3  # 東裏路地
+const EAST_ALLEY_X1: float = 255.5
+
+# 中央広場：開在主街西側，北南由前排收頭、西緣由背排商家圍合、東緣即主街。
+const PLAZA_Z0: float = 6.0
+const PLAZA_Z1: float = 44.0
+const PLAZA_X0: float = 214.5
+const PLAZA_X1: float = 231.0
+
 # 只保留路徑與目標簷高比例；尺寸一律實測。
 const TYPES: Dictionary = {
 	"machiya":  {"path": "res://assets/machiya/町家.glb",   "scale": 6.5},
@@ -28,16 +53,31 @@ const TYPES: Dictionary = {
 	"kura":     {"path": "res://assets/machiya/倉庫.glb",   "scale": 3.3},
 }
 
+# 前排（B1 已認可的組成，南段各補兩棟填掉鳥居前的空洞）
 const ROW_WEST: Array = ["machiya", "komachiya", "machiya", "shouka", "machiya", "nagaya", "komachiya", "machiya", "oomachiya", "machiya", "komachiya", "kura"]
-const ROW_EAST: Array = ["komachiya", "machiya", "shouka", "machiya", "nagaya", "machiya", "komachiya", "oomachiya", "machiya", "kura"]
+const ROW_EAST: Array = ["komachiya", "machiya", "shouka", "machiya", "nagaya", "machiya", "komachiya", "oomachiya", "machiya", "kura", "komachiya", "machiya"]
+# 背排：街廓深處是倉庫與長屋；廣場西緣安排市集商家當店面。
+const ROW_WEST_BACK: Array = ["kura", "nagaya", "komachiya", "kura", "nagaya", "shouka", "shouka", "komachiya", "kura", "nagaya", "komachiya"]
+const ROW_EAST_BACK: Array = ["kura", "nagaya", "kura", "komachiya", "nagaya", "kura", "nagaya", "komachiya", "kura", "nagaya"]
+
+# 橫向通路（讓廣場／主街能走進裏路地）
+const CROSS_W: Array = [[3.0, 9.0], [44.0, 50.0]]
+const CROSS_E: Array = [[-6.0, 0.0], [46.0, 52.0]]
+
 
 func _init() -> void:
 	var root: Node3D = Node3D.new()
 	root.name = "B1_Street"
-	_build_row(root, ROW_WEST, true)
-	_build_row(root, ROW_EAST, false)
+	# 前排：西排讓出中央広場，東排連續（當廣場對街的街牆）
+	_build_row(root, ROW_WEST, true, WEST_FRONT_X, "西", Z0, Z1, [[PLAZA_Z0, PLAZA_Z1]])
+	_build_row(root, ROW_EAST, false, EAST_FRONT_X, "東", Z0, Z1, [[KIRISAME_Z0, KIRISAME_Z1]])
+	# 背排
+	_build_row(root, ROW_WEST_BACK, true, WEST_BACK_X, "西裏", -50.0, 84.0, CROSS_W)
+	_build_row(root, ROW_EAST_BACK, false, EAST_BACK_X, "東裏", -40.0, 74.0, CROSS_E)
 	_build_torii(root)
 	_build_paving(root)
+	_build_plaza(root)
+	_build_alleys(root)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
 	if err != OK:
@@ -75,12 +115,12 @@ func _local_bbox(root_node: Node3D) -> AABB:
 	return acc
 
 
-func _build_row(root: Node3D, row: Array, is_west: bool) -> void:
-	var side: String = "西" if is_west else "東"
-	var front_x: float = STREET_X - STREET_W * 0.5 if is_west else STREET_X + STREET_W * 0.5
-	# 模型正面 +z。西排 rot_y=+90（局部 +z → 世界 +x）；東排 rot_y=-90（局部 +z → 世界 -x）。
-	var rot_y: float = 90.0 if is_west else -90.0
-	var cursor: float = Z0
+## faces_east=true：正面朝 +x（街西側各排）。skips 為 [[z0,z1], ...] 的讓位帶。
+func _build_row(root: Node3D, row: Array, faces_east: bool, front_x: float,
+		side: String, z_start: float, z_end: float, skips: Array) -> void:
+	# 模型正面 +z。朝東 rot_y=+90（局部 +z → 世界 +x）；朝西 rot_y=-90。
+	var rot_y: float = 90.0 if faces_east else -90.0
+	var cursor: float = z_start
 	var i: int = 0
 	for key in row:
 		var t: Dictionary = TYPES[key]
@@ -93,11 +133,11 @@ func _build_row(root: Node3D, row: Array, is_west: bool) -> void:
 		var bb: AABB = _local_bbox(inst)
 		var c: Vector3 = bb.position + bb.size * 0.5   # 局部中心
 		var fw: float = bb.size.x * s                  # 沿街寬（局部 x）
-		var fd: float = bb.size.z * s                  # 進深（局部 z）
-		# 東排避開霧雨店槽位
-		if not is_west and cursor < KIRISAME_Z1 and cursor + fw > KIRISAME_Z0:
-			cursor = KIRISAME_Z1 + GAP
-		if cursor + fw > Z1:
+		# 跨過所有讓位帶（廣場／地標槽位／橫向通路）
+		for band in skips:
+			if cursor < band[1] and cursor + fw > band[0]:
+				cursor = band[1] + GAP
+		if cursor + fw > z_end:
 			inst.free()
 			break
 		inst.name = "%s_%s_%02d" % [key, side, i]
@@ -105,9 +145,9 @@ func _build_row(root: Node3D, row: Array, is_west: bool) -> void:
 		inst.scale = Vector3(s, s, s)
 		# 正面（局部 +z 最大面）對齊 front_x
 		var front_local: float = (c.z + bb.size.z * 0.5) * s
-		var px: float = front_x - front_local if is_west else front_x + front_local
+		var px: float = front_x - front_local if faces_east else front_x + front_local
 		# 沿街跨距落在 [cursor, cursor+fw]
-		var pz: float = cursor + fw * 0.5 + (c.x * s if is_west else -c.x * s)
+		var pz: float = cursor + fw * 0.5 + (c.x * s if faces_east else -c.x * s)
 		# 底面落在 -SINK
 		var py: float = -SINK - (c.y - bb.size.y * 0.5) * s
 		inst.position = Vector3(px, py, pz)
@@ -189,5 +229,65 @@ func _build_paving(root: Node3D) -> void:
 	mi.mesh = st.commit()
 	mi.material_override = load("res://assets/materials/street_paving.tres")
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.position.y = 0.0
 	root.add_child(mi)
 	mi.owner = root
+
+
+## 通用夯土面：矩形範圍，四邊以蜿蜒邊界淡出，中心不放石板（廣場／路地都是踏實土）。
+func _ground_patch(name_: String, x0: float, x1: float, z0: float, z1: float,
+		fade: float, base_a: float) -> MeshInstance3D:
+	var segs_x: int = int(maxf(6.0, (x1 - x0) / 0.9))
+	var segs_z: int = int(maxf(6.0, (z1 - z0) / 0.9))
+	var st: SurfaceTool = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for iz in range(segs_z):
+		var za: float = lerpf(z0, z1, float(iz) / float(segs_z))
+		var zb: float = lerpf(z0, z1, float(iz + 1) / float(segs_z))
+		for ix in range(segs_x):
+			var xa: float = lerpf(x0, x1, float(ix) / float(segs_x))
+			var xb: float = lerpf(x0, x1, float(ix + 1) / float(segs_x))
+			var quad: Array = [[xa, za], [xb, za], [xb, zb], [xa, zb]]
+			for k in [0, 1, 2, 0, 2, 3]:
+				var p: Array = quad[k]
+				var x: float = p[0]
+				var z: float = p[1]
+				# 四邊蜿蜒淡出
+				var wob: float = sin(x * 0.21 + z * 0.13) * 0.7 + sin(z * 0.07 - 1.1) * 0.5
+				var dx: float = minf(x - x0, x1 - x) + wob
+				var dz: float = minf(z - z0, z1 - z) + wob
+				var edge: float = clampf(minf(dx, dz) / fade, 0.0, 1.0)
+				var wear: float = _n2(x * 0.8, z * 0.8)
+				var patch: float = smoothstep(-0.7, 0.3, wear)
+				var a: float = clampf(edge * (base_a + (1.0 - base_a) * patch), 0.0, 1.0)
+				var warm: float = clampf(0.5 + 0.5 * _n2(x * 0.4 + 40.0, z * 0.4), 0.0, 1.0)
+				var col: Color = Color(0.62, 0.56, 0.46).lerp(Color(0.80, 0.68, 0.44), warm)
+				st.set_color(Color(col.r, col.g, col.b, a))
+				st.set_uv(Vector2(x * 0.14, z * 0.14))
+				st.add_vertex(Vector3(x, 0.015, z))
+	st.generate_normals()
+	st.generate_tangents()
+	var mi: MeshInstance3D = MeshInstance3D.new()
+	mi.name = name_
+	mi.mesh = st.commit()
+	mi.material_override = load("res://assets/materials/street_paving.tres")
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return mi
+
+
+func _build_plaza(root: Node3D) -> void:
+	var mi: MeshInstance3D = _ground_patch("PlazaGround",
+		PLAZA_X0 - 1.0, PLAZA_X1 + 2.0, PLAZA_Z0 - 2.0, PLAZA_Z1 + 2.0, 3.5, 0.55)
+	root.add_child(mi)
+	mi.owner = root
+
+
+func _build_alleys(root: Node3D) -> void:
+	var w: MeshInstance3D = _ground_patch("AlleyWest",
+		WEST_ALLEY_X0, WEST_ALLEY_X1, -52.0, 86.0, 1.6, 0.5)
+	root.add_child(w)
+	w.owner = root
+	var e: MeshInstance3D = _ground_patch("AlleyEast",
+		EAST_ALLEY_X0, EAST_ALLEY_X1, -42.0, 76.0, 1.6, 0.5)
+	root.add_child(e)
+	e.owner = root
