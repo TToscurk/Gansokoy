@@ -8,7 +8,9 @@ extends SceneTree
 ## r5（2026-08-30，B3 街廓化）：概念圖的市集是「街廓」不是「一條街」。
 ##  - 前排改成可跳段（skip band），中段讓出中央広場。
 ##  - 新增東西兩條裏路地與背排（長屋／倉庫／市集商家），街廓有了進深。
-##  - 中央広場：夯土廣場，西側以背排商家圍合。
+##  - 中央広場：西側以背排商家圍合。r3 拔掉廣場與路地的石板鋪面——
+##    概念圖的広場與裏路地是夯土，鋪面層讓它們變成亮黃色球場；
+##    這兩處的地面交給 gen_terrain_river.gd 的裸土分區。
 ##    攤台一度用 assets/models/prop_*（店台／樽／笊／俵），但那批 GLB
 ##    materials=0、images=0，在引擎裡是純白塑膠塊——已移除。廣場的屋台
 ##    需要使用者的 Meshy 屋台組才能上。
@@ -76,8 +78,6 @@ func _init() -> void:
 	_build_row(root, ROW_EAST_BACK, false, EAST_BACK_X, "東裏", -40.0, 74.0, CROSS_E)
 	_build_torii(root)
 	_build_paving(root)
-	_build_plaza(root)
-	_build_alleys(root)
 	var ps: PackedScene = PackedScene.new()
 	var err: int = ps.pack(root)
 	if err != OK:
@@ -232,62 +232,3 @@ func _build_paving(root: Node3D) -> void:
 	mi.position.y = 0.0
 	root.add_child(mi)
 	mi.owner = root
-
-
-## 通用夯土面：矩形範圍，四邊以蜿蜒邊界淡出，中心不放石板（廣場／路地都是踏實土）。
-func _ground_patch(name_: String, x0: float, x1: float, z0: float, z1: float,
-		fade: float, base_a: float) -> MeshInstance3D:
-	var segs_x: int = int(maxf(6.0, (x1 - x0) / 0.9))
-	var segs_z: int = int(maxf(6.0, (z1 - z0) / 0.9))
-	var st: SurfaceTool = SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for iz in range(segs_z):
-		var za: float = lerpf(z0, z1, float(iz) / float(segs_z))
-		var zb: float = lerpf(z0, z1, float(iz + 1) / float(segs_z))
-		for ix in range(segs_x):
-			var xa: float = lerpf(x0, x1, float(ix) / float(segs_x))
-			var xb: float = lerpf(x0, x1, float(ix + 1) / float(segs_x))
-			var quad: Array = [[xa, za], [xb, za], [xb, zb], [xa, zb]]
-			for k in [0, 1, 2, 0, 2, 3]:
-				var p: Array = quad[k]
-				var x: float = p[0]
-				var z: float = p[1]
-				# 四邊蜿蜒淡出
-				var wob: float = sin(x * 0.21 + z * 0.13) * 0.7 + sin(z * 0.07 - 1.1) * 0.5
-				var dx: float = minf(x - x0, x1 - x) + wob
-				var dz: float = minf(z - z0, z1 - z) + wob
-				var edge: float = clampf(minf(dx, dz) / fade, 0.0, 1.0)
-				var wear: float = _n2(x * 0.8, z * 0.8)
-				var patch: float = smoothstep(-0.7, 0.3, wear)
-				var a: float = clampf(edge * (base_a + (1.0 - base_a) * patch), 0.0, 1.0)
-				var warm: float = clampf(0.5 + 0.5 * _n2(x * 0.4 + 40.0, z * 0.4), 0.0, 1.0)
-				var col: Color = Color(0.62, 0.56, 0.46).lerp(Color(0.80, 0.68, 0.44), warm)
-				st.set_color(Color(col.r, col.g, col.b, a))
-				st.set_uv(Vector2(x * 0.14, z * 0.14))
-				st.add_vertex(Vector3(x, 0.015, z))
-	st.generate_normals()
-	st.generate_tangents()
-	var mi: MeshInstance3D = MeshInstance3D.new()
-	mi.name = name_
-	mi.mesh = st.commit()
-	mi.material_override = load("res://assets/materials/street_paving.tres")
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	return mi
-
-
-func _build_plaza(root: Node3D) -> void:
-	var mi: MeshInstance3D = _ground_patch("PlazaGround",
-		PLAZA_X0 - 1.0, PLAZA_X1 + 2.0, PLAZA_Z0 - 2.0, PLAZA_Z1 + 2.0, 3.5, 0.55)
-	root.add_child(mi)
-	mi.owner = root
-
-
-func _build_alleys(root: Node3D) -> void:
-	var w: MeshInstance3D = _ground_patch("AlleyWest",
-		WEST_ALLEY_X0, WEST_ALLEY_X1, -52.0, 86.0, 1.6, 0.5)
-	root.add_child(w)
-	w.owner = root
-	var e: MeshInstance3D = _ground_patch("AlleyEast",
-		EAST_ALLEY_X0, EAST_ALLEY_X1, -42.0, 76.0, 1.6, 0.5)
-	root.add_child(e)
-	e.owner = root

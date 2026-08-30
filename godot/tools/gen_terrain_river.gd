@@ -97,10 +97,16 @@ func _bare(x: float, z: float) -> float:
 	# 中央広場
 	var plaza: float = (1.0 - smoothstep(9.0, 16.0, absf(x - 223.0))) 		* (1.0 - smoothstep(19.0, 27.0, absf(z - 25.0)))
 	var b: float = maxf(street, maxf(block, plaza))
-	# 地標前庭（鈴奈庵／霧雨店／稗田邸／寺子屋／鯢吞亭）
+	# 地標前庭（鈴奈庵／霧雨店／稗田邸／寺子屋／鯢吞亭）。
+	# 半徑隨方位擾動——正圓形前庭在俯視圖裡像隕石坑。
 	for a in APRONS:
-		var d: float = Vector2(x - a.x, z - a.y).length()
-		b = maxf(b, 0.8 * (1.0 - smoothstep(a.z * 0.6, a.z, d)))
+		var dx: float = x - a.x
+		var dz: float = z - a.y
+		var d: float = Vector2(dx, dz).length()
+		var ang: float = atan2(dz, dx)
+		var rr: float = a.z * (0.70 + 0.44 * (
+			_n.get_noise_2d(cos(ang) * 34.0 + a.x, sin(ang) * 34.0 + a.y) * 0.5 + 0.5))
+		b = maxf(b, 0.8 * (1.0 - smoothstep(rr * 0.55, rr, d)))
 	# 有機邊界：門檻被雜訊推擠，避免出現方正的色塊邊
 	b += _n.get_noise_2d(x * 0.9 + 310.0, z * 0.9) * 0.30
 	return clampf(b, 0.0, 1.0)
