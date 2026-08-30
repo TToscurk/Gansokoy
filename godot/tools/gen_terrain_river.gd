@@ -13,6 +13,14 @@ const CELL := 6.0
 const R_EXT := 1250.0
 const SEED := 20260827
 const VILLAGE_HALF := 300.0
+# 地標前庭：Vector3(x, z, 半徑)
+const APRONS: Array = [
+	Vector3(225.2, -65.5, 26.0),   # 鈴奈庵
+	Vector3(246.6, -35.5, 18.0),   # 霧雨店
+	Vector3(233.2, -138.6, 46.0),  # 稗田邸
+	Vector3(314.8, 34.6, 30.0),    # 寺子屋
+	Vector3(361.2, -143.8, 20.0),  # 鯢吞亭
+]
 const VILLAGE_BLEND_END := 440.0
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
@@ -79,6 +87,25 @@ func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
 	return lerpf(h0, h1, tz)
 
 
+## 踏實裸土權重 0..1（1 = 全裸土）。街廓數據來自 gen_b1_street.gd 的實測範圍：
+## 主街中線 x=235、街廓 x 204.9..264.6、中央広場 x 214.5..231 / z 6..44。
+func _bare(x: float, z: float) -> float:
+	# 主街走廊：最硬的一條，南北兩端淡出
+	var street: float = (1.0 - smoothstep(6.0, 17.0, absf(x - 235.0))) 		* (1.0 - smoothstep(86.0, 116.0, absf(z - 16.0)))
+	# 街廓本體（含裏路地與後院）：踏實但沒有街道那麼死
+	var block: float = 0.85 		* (1.0 - smoothstep(28.0, 42.0, absf(x - 235.0))) 		* (1.0 - smoothstep(76.0, 98.0, absf(z - 14.0)))
+	# 中央広場
+	var plaza: float = (1.0 - smoothstep(9.0, 16.0, absf(x - 223.0))) 		* (1.0 - smoothstep(19.0, 27.0, absf(z - 25.0)))
+	var b: float = maxf(street, maxf(block, plaza))
+	# 地標前庭（鈴奈庵／霧雨店／稗田邸／寺子屋／鯢吞亭）
+	for a in APRONS:
+		var d: float = Vector2(x - a.x, z - a.y).length()
+		b = maxf(b, 0.8 * (1.0 - smoothstep(a.z * 0.6, a.z, d)))
+	# 有機邊界：門檻被雜訊推擠，避免出現方正的色塊邊
+	b += _n.get_noise_2d(x * 0.9 + 310.0, z * 0.9) * 0.30
+	return clampf(b, 0.0, 1.0)
+
+
 func _init() -> void:
 	_n.seed = SEED
 	_n.noise_type = FastNoiseLite.TYPE_VALUE
@@ -122,7 +149,15 @@ func _init() -> void:
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
-			var grass_weight: float = smoothstep(270.0, 455.0, pl)
+			# r6 (2026-08-30): the plateau interior was hard-coded bare —
+			# smoothstep(270, 455, pl) is zero everywhere inside it, so with the
+			# bright grass MultiMeshes emptied the whole village floor read as
+			# one featureless orange plain. Ground is now grass by default and
+			# only goes bare where feet actually wear it: the main street, the
+			# 市集 block footprint, the plaza, and small landmark aprons.
+			var grass_weight: float = maxf(
+				smoothstep(270.0, 455.0, pl),
+				1.0 - _bare(x, z))
 			if g < WATER_Y - 0.2:
 				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
