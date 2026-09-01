@@ -1,0 +1,188 @@
+{
+  "layout/human-village-layout-contract.json": {
+    "mtime": 1788177600.4668822,
+    "seen": 1788256943.7541845,
+    "ast_hash": "f286c1709603bbdd6670d87eb211a1d1",
+    "semantic_hash": "f286c1709603bbdd6670d87eb211a1d1"
+  },
+  "PROJECT_STATE.md": {
+    "mtime": 1788111995.4075577,
+    "seen": 1788256943.7541845,
+    "ast_hash": "56df4ca5940a3e4c369dbc06aa80870c",
+    "semantic_hash": "56df4ca5940a3e4c369dbc06aa80870c"
+  },
+  "README.md": {
+    "mtime": 1788081895.4097884,
+    "seen": 1788256943.7541845,
+    "ast_hash": "d15cdd76926f6b89d2d97c89bce88c36",
+    "semantic_hash": "d15cdd76926f6b89d2d97c89bce88c36"
+  },
+  "ROADMAP.md": {
+    "mtime": 1787971937.20528,
+    "seen": 1788256943.7541845,
+    "ast_hash": "efcf950f7a439ced66fe25c9c7682844",
+    "semantic_hash": "efcf950f7a439ced66fe25c9c7682844"
+  },
+  "archive/README.md": {
+    "mtime": 1787971937.20528,
+    "seen": 1788256943.7541845,
+    "ast_hash": "a5608319c52390228d96e085d519079c",
+    "semantic_hash": "a5608319c52390228d96e085d519079c"
+  },
+  "archive/domain-model-full-history-2026-08-11.md": {
+    "mtime": 1787971937.20528,
+    "seen": 1788256943.7541845,
+    "ast_hash": "b58987c29f57610609563fcae21ad1db",
+    "semantic_hash": "b58987c29f57610609563fcae21ad1db"
+  },
+  "archive/hieda-estate-features-production-history-2026-08-11.md": {
+    "mtime": 1787971937.20528,
+    "seen": 1788256943.7541845,
+    "ast_hash": "66f2c7eaefc16550dacc7dd728208a48",
+    "semantic_hash": "66f2c7eaefc16550dacc7dd728208a48"
+  },
+  "archive/machiya-production-kit-2026-08.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "04de4cdf3690a2b27ea9ffe16f6fba4b",
+    "semantic_hash": "04de4cdf3690a2b27ea9ffe16f6fba4b"
+  },
+  "archive/machiya-production-kit-production-history-2026-08-11.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "3be9aba701332fedaaeaeee1cc7f9980",
+    "semantic_hash": "3be9aba701332fedaaeaeee1cc7f9980"
+  },
+  "archive/ningen-no-sato-production-history-2026-08-10.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "8f1a4da62706b50297669101bc90dd84",
+    "semantic_hash": "8f1a4da62706b50297669101bc90dd84"
+  },
+  "archive/ningen-no-sato-redesign.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "43de081372d5514578be43344d93fab7",
+    "semantic_hash": "43de081372d5514578be43344d93fab7"
+  },
+  "archive/web-threejs-readme.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "5808507c14ef6d02a4189e528680621b",
+    "semantic_hash": "5808507c14ef6d02a4189e528680621b"
+  },
+  "border-vistas.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "5d0678ef85835c8fc702763fd62d1ee4",
+    "semantic_hash": "5d0678ef85835c8fc702763fd62d1ee4"
+  },
+  "domain-model.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "3315661e7f8070e5b6fb17ebd34b5d73",
+    "semantic_hash": "3315661e7f8070e5b6fb17ebd34b5d73"
+  },
+  "godot-migration.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "66cf09dcebcd904c42638ad9e9994b29",
+    "semantic_hash": "66cf09dcebcd904c42638ad9e9994b29"
+  },
+  "hieda-estate-features.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "1ecba466c6df0ee6074ac15f1d6d742f",
+    "semantic_hash": "1ecba466c6df0ee6074ac15f1d6d742f"
+  },
+  "ningen-no-sato.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "109d73f46b24f5103de74a580a784a24",
+    "semantic_hash": "109d73f46b24f5103de74a580a784a24"
+  },
+  "plans/machi-canal-slice-integration.md": {
+    "mtime": 1788247757.9640071,
+    "seen": 1788256943.7541845,
+    "ast_hash": "9652f48edfecdcfb261a7fb28df4dd10",
+    "semantic_hash": "9652f48edfecdcfb261a7fb28df4dd10"
+  },
+  "plans/\u753a\u4e2d\u6c34\u8def\u91cd\u505a\u8a08\u756b.md": {
+    "mtime": 1788241624.0294952,
+    "seen": 1788256943.7541845,
+    "ast_hash": "90338a3d25a0e4cc44ba46a31376747c",
+    "semantic_hash": "90338a3d25a0e4cc44ba46a31376747c"
+  },
+  "river-sync-2026-08-26.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "a681cf0249b111551b220368bd6c5ab7",
+    "semantic_hash": "a681cf0249b111551b220368bd6c5ab7"
+  },
+  "village-art-direction.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "98e6802db838a5d061a7a52c970e6d70",
+    "semantic_hash": "98e6802db838a5d061a7a52c970e6d70"
+  },
+  "village-concept-reference.md": {
+    "mtime": 1788111995.4075577,
+    "seen": 1788256943.7541845,
+    "ast_hash": "4319fb19e86db8febdf17e7476768673",
+    "semantic_hash": "4319fb19e86db8febdf17e7476768673"
+  },
+  "vista-basin-plan.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "30a1f87a577bd446687cc4fb6d90d0d6",
+    "semantic_hash": "30a1f87a577bd446687cc4fb6d90d0d6"
+  },
+  "yoriichi-runtime.md": {
+    "mtime": 1787971937.2209046,
+    "seen": 1788256943.7541845,
+    "ast_hash": "d815783dd146e2656f32a117ea46ebb3",
+    "semantic_hash": "d815783dd146e2656f32a117ea46ebb3"
+  },
+  "\u65b0\u4eba\u91cc\u898f\u5283\u63d0\u6848.md": {
+    "mtime": 1788082099.8735828,
+    "seen": 1788256943.7541845,
+    "ast_hash": "5ae1d81d1233be2a5530e703ca9f5be9",
+    "semantic_hash": "5ae1d81d1233be2a5530e703ca9f5be9"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u4f4f\u5546\u5730\u5340.PNG": {
+    "mtime": 1787981196.3457172,
+    "seen": 1788256943.7541845,
+    "ast_hash": "24b1ede248ee9ff8d52924f3657deb45",
+    "semantic_hash": "24b1ede248ee9ff8d52924f3657deb45"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u4f4f\u5b85\u6982\u5ff5\u5716.png": {
+    "mtime": 1787981196.3517165,
+    "seen": 1788256943.7541845,
+    "ast_hash": "cac86ba924504dcf010efefd2cb65065",
+    "semantic_hash": "cac86ba924504dcf010efefd2cb65065"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u65b0\u7248\u6c34\u8b77\u5cb8\u6982\u5ff5\u5716.png": {
+    "mtime": 1788081917.5496907,
+    "seen": 1788256943.7541845,
+    "ast_hash": "be395224ea0b76daa69ededf47db220e",
+    "semantic_hash": "be395224ea0b76daa69ededf47db220e"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u6751\u843d\u8fb2\u6751\u6982\u5ff5\u4fef\u8996.png": {
+    "mtime": 1787981196.3767846,
+    "seen": 1788256943.7541845,
+    "ast_hash": "d40fe4476d1a4a0d0b23e2bbbc1b62f1",
+    "semantic_hash": "d40fe4476d1a4a0d0b23e2bbbc1b62f1"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u6751\u843d\u8fb2\u6751\u6982\u5ff5\u4fef\u8996\u5340\u57df\u5206\u9694.png": {
+    "mtime": 1787981196.384719,
+    "seen": 1788256943.7541845,
+    "ast_hash": "68f628c1f4f5fbfeb2088a78c7b0f032",
+    "semantic_hash": "68f628c1f4f5fbfeb2088a78c7b0f032"
+  },
+  "reference/\u4eba\u9593\u4e4b\u91cc\u6982\u5ff5\u5716/\u6cb3\u7ae5\u91cd\u5de5+\u4eba\u9593\u4e4b\u91cc.png": {
+    "mtime": 1787981196.397755,
+    "seen": 1788256943.7541845,
+    "ast_hash": "7dd3c405e57f03f7cf67bf5cf3869f4d",
+    "semantic_hash": "7dd3c405e57f03f7cf67bf5cf3869f4d"
+  }
+}

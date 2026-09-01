@@ -32,7 +32,13 @@ This file is intentionally short. It contains only facts that should affect the 
 
 ## Village Rebuild — active work (2026-08-26)
 
-- Visual authority for the rebuild: `docs/village-concept-reference.md` (user-supplied concept art: dragon plaza center, market axis south, residential west, Hieda estate + rice fields east, graveyard north, **wide open-U river along the south edge**).
+- 視覺基準：`docs/reference/人間之里概念圖/村落農村概念俯視.png`（使用者裁決 2026-08-30，
+  **圖本身是權威**）。圖上實況：市集主街貫穿村心、北面林丘社寺為視覺終點、
+  西半住宅、東半農田＋大宅、東北河中平台立龍神像、細渠與水車穿行村內。
+  `docs/village-concept-reference.md` 已於 2026-08-30 依圖校正（舊版有多處錯誤轉錄，
+  含虛構的中央龍神廣場、北緣墓地、南緣 U 形河，已作廢）。
+  ⚠️ slice 現行沿南緣的 U 形河**在概念圖上沒有依據**，出自使用者 2026-08-26 的
+  獨立裁決，屬刻意偏離。
 - River rework in progress on `maps/slice/slice.tscn`: ring/narrow versions v1–v5 were **rejected by the user (too narrow, not U-shaped)**; current candidate is `river_open_u` v6b (`shots2/river_open_u_v6b_*_20260826`), awaiting Human Art Review.
 - River art card (user, 2026-08-26): **deep moat-like channel, stone-textured revetment, vegetation + trees along the banks**. The procedurally generated bridge is **placeholder only — do not treat it as final**; the user will replace it with a Meshy-made bridge.
 - v7 pass applied on slice (2026-08-26 afternoon): 22 bank trees (round/pine/sakura mix at the three bridge areas, node `RiverV3_Candidate/RiverBankTrees`), stone revetment materials assigned (`river_ishigaki_dry.tres` on Dry banks, `river_ishigaki_wet.tres` on Wet banks; shared `2F岸石.tres` untouched). Shots: `shots2/river_open_u_v7*_20260826`.

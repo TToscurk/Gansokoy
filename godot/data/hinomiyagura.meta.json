@@ -1,0 +1,9 @@
+{
+  "id": "hinomiyagura",
+  "note": "火見櫓單體審查用中性舞台；僅供資產 ART_REVIEW，不是正式場景。",
+  "playSize": [80, 80],
+  "safe": true,
+  "connections": [],
+  "colliders": [],
+  "portals": []
+}

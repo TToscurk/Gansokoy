@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+; 濱水步道木欄杆材質。
+;
+; 為什麼是自製材質而非資產內嵌：資產庫沒有木欄件，欄杆幾何是自建的
+; BoxMesh（見 tools/bank_railing.gd 的說明），沒有 GLB 材質可繼承。
+;
+; 色值取自場景既有木構件的調性（水車、木樋、繫船柱皆為深褐杉木），
+; 讓自建欄杆不會在色彩上跳出委製資產群。
+; roughness 0.82：未上漆的戶外杉木，長期日曬雨淋，幾乎無鏡面。
+
+[resource]
+albedo_color = Color(0.271, 0.196, 0.141, 1)
+roughness = 0.82
+metallic = 0.0
+specular_mode = 1

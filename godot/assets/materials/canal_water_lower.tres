@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="1_wshdr"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_wnor"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wshdr")
+shader_parameter/wave_nor = ExtResource("2_wnor")
+shader_parameter/shallow_color = Color(0.24, 0.37, 0.33, 1)
+shader_parameter/deep_color = Color(0.055, 0.13, 0.14, 1)
+shader_parameter/flow_speed = 0.16
+shader_parameter/wave_scale = 0.048
+shader_parameter/alpha = 0.84
+shader_parameter/bank_scale = 1.0
+shader_parameter/sky_tint = Color(0.32, 0.42, 0.44, 1)
+shader_parameter/use_flow_vc = 1.0
+shader_parameter/flow_strength = 1.0
+shader_parameter/shore_alpha = 0.6
+shader_parameter/foam_roughness = 0.14

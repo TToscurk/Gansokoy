@@ -21,6 +21,13 @@ uniform vec3 sky_tint : source_color = vec3(0.62, 0.74, 0.86);
 // 預設 0 走舊的固定軸捲動，只有東大河的材質把它設成 1。
 uniform float use_flow_vc = 0.0;
 uniform float flow_strength = 1.0;
+// 岸邊清透帶的不透明度下限。太低的話淺水帶幾乎全透，波紋法線沒有
+// 顏色可以打亮，讀起來就是一片平的淺色。預設 0.42 維持東大河原樣，
+// 幹渠材質調高到 0.6 左右讓岸邊也看得出起伏。
+uniform float shore_alpha : hint_range(0.0, 1.0) = 0.42;
+// 泡沫的粗糙度上限。ROUGHNESS 一被推高，反射就糊掉、波紋跟著消失；
+// 岸邊 bank 高的地方永遠被泡沫壓住，是「淺水帶沒有波紋」的主因。
+uniform float foam_roughness : hint_range(0.0, 1.0) = 0.30;
 
 varying float bank;      // 頂點色 R：1=岸邊、0=中央
 varying vec2 flow_dir;   // 頂點色 GB：局部下游方向
@@ -80,9 +87,9 @@ void fragment() {
 		foam *= smoothstep(0.30, 0.75, lap);
 	}
 	ALBEDO = mix(col, vec3(0.82, 0.87, 0.85), foam * 0.40);
-	ROUGHNESS = mix(0.05, 0.30, foam);
+	ROUGHNESS = mix(0.05, foam_roughness, foam);
 	METALLIC = 0.0;
 	SPECULAR = 0.75;
 	// 岸邊半透（看得到淺灘），中央接近不透明
-	ALPHA = clamp(mix(0.42, alpha, dfac) + foam * 0.22, 0.0, 1.0);
+	ALPHA = clamp(mix(shore_alpha, alpha, dfac) + foam * 0.22, 0.0, 1.0);
 }
