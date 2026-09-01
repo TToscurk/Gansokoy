@@ -1,10 +1,28 @@
 # 町中水路 → slice 整合規劃
 
-> 狀態：**規劃中，尚未執行**。本文件不構成 ART_APPROVED。
+> 狀態：**已整合進 `slice.tscn`，停在 ART_REVIEW**。本文件不構成 ART_APPROVED。
 > 依據：`docs/village-concept-reference.md`（基準圖 `村落農村概念俯視.png`）、
 > `docs/reference/人間之里概念圖/新版水護岸概念圖.png`、
 > `godot/tools/gen_terrain_river.gd` 實測值。
 > 日期：2026-09-01
+
+## 2026-09-02 實裝紀錄（以下數值取代原規劃假設）
+
+- `MachiCanal` 以連結場景實例加入 `slice.tscn`，transform =
+  **`(287.0, -2.868, 10.0)`**。
+- 渠水實測 AABB：x **281.0..293.0**、z **-72.0..104.0**；完整岸帶
+  x **275.5..301.13**。
+- `UnifiedGround` 已在既有 `gen_terrain_river.gd` 高度場內開挖，不另造地台：
+  渠心三個實機探針地形頂均為 **y=-3.450**，低於渠床與水面。
+- 寺子屋保留原位；刪除與其相交的 **4 格水田、4 組／36 叢稻、16 段田埂**。
+  實機逐 mesh AABB 複驗後，寺子屋與剩餘水田系統重疊數為 **0**。
+- 原型審查專用 `VillageContext`、`Grove`、`ReviewSun`、`ReviewEnvironment`
+  已停用，`ReviewCamera` 已移除；正式場景 runtime 不會被原型相機搶走。
+- 宿主場景植被已套渠道淨空：x **273.5..302.5**、z **-73.5..105.5**；
+  runtime 檢查非渠道 MultiMesh 實例命中數為 **0**。
+- 水田／稻叢／田埂已是序列化獨立節點，搬遷不再重算生成器座標。
+- 尚未處理的既有美術債（渠道端點、岸線收頭、近景材質）留在 ART_REVIEW，
+  不得把本次正式整合視為 Human Art Approval。
 
 ## 一、為什麼是「搬進 slice」而不是「原型當主場景」
 

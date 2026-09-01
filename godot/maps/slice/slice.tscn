@@ -1,9 +1,9 @@
-[gd_scene format=4 uid="uid://bgpojg4uf8gsl"]
+[gd_scene format=4 uid="uid://bomtd3ktjtats"]
 
-[ext_resource type="MultiMesh" uid="uid://bxmq4tkoto202" path="res://maps/slice/gen/veg_mm_shrubs.res" id="1_gl3i7"]
-[ext_resource type="MultiMesh" uid="uid://21kghew234yj" path="res://maps/slice/gen/veg_mm_ferns.res" id="2_db0uk"]
-[ext_resource type="MultiMesh" uid="uid://bafjrns6p3wfg" path="res://maps/slice/gen/veg_mm_grasstall.res" id="3_4uxy7"]
-[ext_resource type="MultiMesh" uid="uid://dnmowof0cbtgd" path="res://maps/slice/gen/veg_mm_grassflower.res" id="4_8u05v"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_shrubs.res" id="1_gl3i7"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_ferns.res" id="2_db0uk"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_grasstall.res" id="3_4uxy7"]
+[ext_resource type="MultiMesh" path="res://maps/slice/gen/veg_mm_grassflower.res" id="4_8u05v"]
 [ext_resource type="Material" uid="uid://b7il63chrjtcc" path="res://assets/materials/village_earth_ochre.tres" id="5_ml577"]
 [ext_resource type="Material" uid="uid://c7qpg3wphev7y" path="res://assets/materials/basin_hills.tres" id="6_3nkoh"]
 [ext_resource type="ArrayMesh" uid="uid://crsgmrjqmlhbd" path="res://maps/slice/gen/slice_basin_hills.res" id="7_si5ac"]
@@ -23,10 +23,11 @@
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="28_3eeac"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="29_e6ygp"]
 [ext_resource type="Material" uid="uid://bmo26m66oe8oj" path="res://assets/materials/unified_terrain.tres" id="30_3dxa0"]
-[ext_resource type="ArrayMesh" uid="uid://yjdmcf7snqty" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="32_26gu2"]
-[ext_resource type="ArrayMesh" uid="uid://be8vof4wlv7x4" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
-[ext_resource type="ArrayMesh" uid="uid://durv6eix3uymn" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
+[ext_resource type="PackedScene" uid="uid://cx3mb6osqlvxu" path="res://maps/slice/prototypes/waterway_art_review.tscn" id="32_bb8mf"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/village_trees.tscn" id="37_dkw4w"]
@@ -166,7 +167,7 @@ transform = Transform3D(0.8685389, 0, 0.49562094, 0, 1, 0, -0.49562094, 0, 0.868
 transform = Transform3D(0.02024356, 0, -1.4998634, 0, 1.5, 0, 1.4998634, 0, 0.02024356, 246.55923, -0.029773086, -35.476078)
 
 [node name="寺子屋" parent="." unique_id=105953014 instance=ExtResource("11_tldba")]
-transform = Transform3D(5.820159, 0, -5.488693, 0, 8, 0, 5.488693, 0, 5.820159, 314.8456, 0.044635914, 34.561848)
+transform = Transform3D(5.041882, 0, 6.211234, 0, 8, 0, -6.211234, 0, 5.041882, 314.8456, 0.044635914, 34.561848)
 
 [node name="龍神像" parent="." unique_id=1220975449 instance=ExtResource("12_3lm1b")]
 transform = Transform3D(8.307938, 0, -8.658993, 0, 12.000001, 0, 8.658993, 0, 8.307938, 422.66226, -7.046725, -182.85837)
@@ -257,3 +258,6 @@ mesh = ExtResource("34_ww6k3")
 
 [node name="火見櫓" parent="." unique_id=997334749 instance=ExtResource("38_5ybuw")]
 transform = Transform3D(-7.8986573, 0, -6.9052254e-07, 0, 7.8986573, 0, 6.9052254e-07, 0, -7.8986573, 243.52115, 7.395359, -67.01389)
+
+[node name="MachiCanal" parent="." unique_id=1516803203 instance=ExtResource("32_bb8mf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 287, -2.868, 10)

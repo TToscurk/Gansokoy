@@ -33,6 +33,28 @@ const REVETMENT_RUN := 5.5
 const RIVER_Z0 := -R_EXT + CELL
 const RIVER_Z1 := R_EXT - CELL
 
+# 正式場景穿村幹渠。座標來自 waterway_art_review 以
+# (287, -2.868, 10) 整體搬入後的實機 AABB；底層地形必須低於原型渠床，
+# 否則 UnifiedGround 會把整條渠道蓋住。兩岸寬度不同，跟隨原型石岸外緣，
+# 不另造第二套地台。
+const CANAL_CENTER_X := 287.0
+const CANAL_Z0 := -72.0
+const CANAL_Z1 := 104.0
+const CANAL_INNER_HALF := 6.4
+const CANAL_WEST_OUTER_HALF := 12.0
+const CANAL_EAST_OUTER_HALF := 14.5
+const CANAL_TERRAIN_Y := -3.45
+
+# 水田整平區。原型水田世界 AABB（x 291.0..340.5、z -26.1..46.1）向外留
+# 3m 緩衝，田面底 -0.032 再下沉 0.10，保證泥面不會被村域緩坡（最高 2m）
+# 從下方穿出。邊界用 6m（=1 個地形格距）緩坡過渡。
+const PADDY_X0 := 288.0
+const PADDY_X1 := 343.5
+const PADDY_Z0 := -29.0
+const PADDY_Z1 := 49.0
+const PADDY_FLAT_Y := -0.132
+const PADDY_BLEND := 6.0
+
 var _n := FastNoiseLite.new()
 
 
@@ -92,6 +114,28 @@ func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
 	var h0: float = lerpf(hs[iz * n + ix], hs[iz * n + ix + 1], tx)
 	var h1: float = lerpf(hs[(iz + 1) * n + ix], hs[(iz + 1) * n + ix + 1], tx)
 	return lerpf(h0, h1, tz)
+
+
+func _canal_cut(x: float, z: float) -> float:
+	if z < CANAL_Z0 or z > CANAL_Z1:
+		return 0.0
+	var offset_x: float = x - CANAL_CENTER_X
+	var outer_half: float = CANAL_WEST_OUTER_HALF if offset_x < 0.0 else CANAL_EAST_OUTER_HALF
+	return 1.0 - smoothstep(CANAL_INNER_HALF, outer_half, absf(offset_x))
+
+
+## 水田整平權重 0..1：矩形足跡內部 = 1，四周以緩坡淡出。
+## 與寺子屋（x 304..325、z 24..45）重疊無妨——寺子屋照 y≈0 擺，
+## 整平頂 -0.132 在其基座下方。
+func _paddy_flatten(x: float, z: float) -> float:
+	if x < PADDY_X0 - PADDY_BLEND or x > PADDY_X1 + PADDY_BLEND \
+			or z < PADDY_Z0 - PADDY_BLEND or z > PADDY_Z1 + PADDY_BLEND:
+		return 0.0
+	var fx: float = smoothstep(PADDY_X0 - PADDY_BLEND, PADDY_X0, x) \
+			* (1.0 - smoothstep(PADDY_X1, PADDY_X1 + PADDY_BLEND, x))
+	var fz: float = smoothstep(PADDY_Z0 - PADDY_BLEND, PADDY_Z0, z) \
+			* (1.0 - smoothstep(PADDY_Z1, PADDY_Z1 + PADDY_BLEND, z))
+	return fx * fz
 
 
 ## 建成區平坦遮罩 0..1（1 = 必須維持水平）。街廓與地標都是照 y=0 擺的，
@@ -180,6 +224,12 @@ func _init() -> void:
 				else:
 					var bank_t: float = (d - widths.x) / (widths.y - widths.x)
 					g = lerpf(BED_Y, bank_top, smoothstep(0.0, 1.0, bank_t))
+			# 水田整平必須先於渠道開挖：兩者在東岸帶（x 288..301）重疊，
+			# 渠道 -3.45 必須贏過田面底 -0.132，否則地形會從東側堵進水面。
+			var paddy_w: float = _paddy_flatten(x, z)
+			g = lerpf(g, PADDY_FLAT_Y, paddy_w)
+			var canal_cut: float = _canal_cut(x, z)
+			g = lerpf(g, CANAL_TERRAIN_Y, canal_cut)
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
@@ -194,6 +244,8 @@ func _init() -> void:
 				1.0 - _bare(x, z))
 			if g < WATER_Y - 0.2:
 				grass_weight = 0.0
+			if canal_cut > 0.001:
+				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
 			# reference's continuous top access band.
 			if d >= revetment_top - 0.35 and d < widths.y:
@@ -202,7 +254,9 @@ func _init() -> void:
 			# Submerged bed reads as wet stone, not bright ochre dirt — the
 			# semi-transparent shallow band otherwise glows with the dirt
 			# texture underneath and that IS the bright waterline stripe.
-			var bed_stone: float = 1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g)
+			var bed_stone: float = maxf(
+				1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g),
+				canal_cut)
 			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.

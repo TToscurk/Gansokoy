@@ -25,9 +25,32 @@ const PROBES: Array = [
 	Vector2(330, -150),
 ]
 
+const CANAL_TRENCH_PROBES: Array[Vector2] = [
+	Vector2(287.0, -40.0),
+	Vector2(287.0, 16.0),
+	Vector2(287.0, 72.0),
+]
+const CANAL_TERRAIN_MAX_Y := -3.0
+
+
 func _init() -> void:
 	var ps: PackedScene = load("res://maps/slice/slice.tscn")
 	var root: Node = ps.instantiate()
+	if not _audit_canal_trench(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
+	if not _audit_paddy_support(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
+	if OS.get_cmdline_user_args().has("--canal-only"):
+		root.free()
+		ps = null
+		quit()
+		return
 	var targets: Array = []
 	_collect(root, targets)
 
@@ -94,6 +117,98 @@ func _init() -> void:
 	ps = null
 	quit()
 
+
+func _audit_canal_trench(root: Node) -> bool:
+	var ground: MeshInstance3D = root.get_node_or_null("UnifiedGround") as MeshInstance3D
+	if ground == null:
+		push_error("CANAL_TRENCH: UnifiedGround missing")
+		return false
+	var ok := true
+	for probe in CANAL_TRENCH_PROBES:
+		var top_y: float = _mesh_top_y_at(ground, probe)
+		print("CANAL_TRENCH probe=%s terrain_top=%.3f max=%.3f" % [
+			str(probe), top_y, CANAL_TERRAIN_MAX_Y])
+		if top_y > CANAL_TERRAIN_MAX_Y:
+			push_error("CANAL_TRENCH blocked at %s: terrain %.3f is above %.3f" % [
+				str(probe), top_y, CANAL_TERRAIN_MAX_Y])
+			ok = false
+	return ok
+
+
+## 水田支撐面審計：每格水田中心下方，UnifiedGround 的地形頂必須低於
+## 該格泥面底，否則地形會把田面埋掉。
+## 注意：實例化但未加入 SceneTree 時，global_transform 是 IDENTITY——
+## 必須手動累加 transform 鏈（本檔 _mesh_top_y_at 曾犯過同一個錯）。
+func _audit_paddy_support(root: Node) -> bool:
+	var ground: MeshInstance3D = root.get_node_or_null("UnifiedGround") as MeshInstance3D
+	var paddy: Node = root.get_node_or_null("MachiCanal/PaddyFields/PaddyWater")
+	if ground == null or paddy == null:
+		push_error("PADDY_SUPPORT: UnifiedGround or PaddyWater missing")
+		return false
+	var ok := true
+	var mesh_arrays: Array = ground.mesh.surface_get_arrays(0)
+	var verts: PackedVector3Array = mesh_arrays[Mesh.ARRAY_VERTEX]
+	for child in paddy.get_children():
+		var mi: MeshInstance3D = child as MeshInstance3D
+		if mi == null or mi.mesh == null:
+			continue
+		var ab: AABB = _world_xform(mi) * mi.get_aabb()
+		var probe: Vector2 = Vector2(ab.position.x + ab.size.x * 0.5, ab.position.z + ab.size.z * 0.5)
+		var paddy_bottom: float = ab.position.y
+		var terrain_top: float = -INF
+		for v in verts:
+			var d: float = Vector2(v.x - probe.x, v.z - probe.y).length_squared()
+			if d < 9.0 and v.y > terrain_top:  # 3m 半徑內取最高點
+				terrain_top = v.y
+		if terrain_top == -INF:
+			push_warning("PADDY_SUPPORT %s: no terrain sample near %s" % [child.name, str(probe)])
+			continue
+		var clearance: float = paddy_bottom - terrain_top
+		if clearance < 0.0:
+			push_error("PADDY_SUPPORT buried %s probe=(%.1f,%.1f): terrain %.3f above paddy bottom %.3f (%.3f m)" % [
+				child.name, probe.x, probe.y, terrain_top, paddy_bottom, -clearance])
+			ok = false
+		else:
+			print("PADDY_SUPPORT %s probe=(%.1f,%.1f) terrain=%.3f paddy_bottom=%.3f clearance=%.3f" % [
+				child.name, probe.x, probe.y, terrain_top, paddy_bottom, clearance])
+	return ok
+
+
+func _world_xform(n: Node3D) -> Transform3D:
+	var t: Transform3D = n.transform
+	var cur: Node = n.get_parent()
+	while cur != null:
+		if cur is Node3D:
+			t = (cur as Node3D).transform * t
+		cur = cur.get_parent()
+	return t
+
+
+func _mesh_top_y_at(mi: MeshInstance3D, world_xz: Vector2) -> float:
+	var mesh: ArrayMesh = mi.mesh as ArrayMesh
+	if mesh == null:
+		return INF
+	# The audit instantiates the scene without adding it to SceneTree, so use
+	# the node's local transform. UnifiedGround is a direct child of slice.
+	var local_probe: Vector3 = mi.transform.affine_inverse() * Vector3(world_xz.x, 0.0, world_xz.y)
+	var top_y := -INF
+	for surface in range(mesh.get_surface_count()):
+		var arrays: Array = mesh.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var raw_indices = arrays[Mesh.ARRAY_INDEX]
+		var indices: PackedInt32Array = raw_indices if raw_indices != null else PackedInt32Array()
+		var count: int = indices.size() if not indices.is_empty() else vertices.size()
+		for face in range(0, count, 3):
+			var a: Vector3 = vertices[indices[face]] if not indices.is_empty() else vertices[face]
+			var b: Vector3 = vertices[indices[face + 1]] if not indices.is_empty() else vertices[face + 1]
+			var c: Vector3 = vertices[indices[face + 2]] if not indices.is_empty() else vertices[face + 2]
+			var local_y: float = _tri_y_at(a, b, c, Vector2(local_probe.x, local_probe.z))
+			if local_y > -1e8:
+				var world_y: float = (mi.transform * Vector3(local_probe.x, local_y, local_probe.z)).y
+				top_y = maxf(top_y, world_y)
+	return top_y
+
+
 func _collect(n: Node, out: Array) -> void:
 	if n is MeshInstance3D:
 		var mi: MeshInstance3D = n
@@ -106,9 +221,11 @@ func _collect(n: Node, out: Array) -> void:
 	for c in n.get_children():
 		_collect(c, out)
 
+
 func _aabb_covers_xz(aabb: AABB, lp: Vector3) -> bool:
 	return lp.x >= aabb.position.x and lp.x <= aabb.position.x + aabb.size.x \
 		and lp.z >= aabb.position.z and lp.z <= aabb.position.z + aabb.size.z
+
 
 func _tri_y_at(a: Vector3, b: Vector3, c: Vector3, p: Vector2) -> float:
 	var p0 := Vector2(a.x, a.z)
@@ -124,9 +241,11 @@ func _tri_y_at(a: Vector3, b: Vector3, c: Vector3, p: Vector2) -> float:
 		return -1e9
 	return a.y * w0 + b.y * w1 + c.y * w2
 
+
 func _percentile(values: PackedFloat32Array, ratio: float) -> float:
 	var index: int = clampi(roundi(float(values.size() - 1) * ratio), 0, values.size() - 1)
 	return values[index]
+
 
 func _count_above(values: PackedFloat32Array, threshold: float) -> int:
 	var count: int = 0

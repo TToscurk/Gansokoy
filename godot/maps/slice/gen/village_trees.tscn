@@ -10,31 +10,31 @@
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹4.res" id="8_rn2lq"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_盆樹.res" id="9_rlrip"]
 
-[node name="VillageTrees" type="Node3D" unique_id=2123460628]
+[node name="VillageTrees" type="Node3D" unique_id=1401219288]
 
-[node name="Trees_櫻花樹" type="MultiMeshInstance3D" parent="." unique_id=1619724733]
+[node name="Trees_櫻花樹" type="MultiMeshInstance3D" parent="." unique_id=1574890424]
 multimesh = ExtResource("1_qqbo4")
 
-[node name="Trees_普通樹" type="MultiMeshInstance3D" parent="." unique_id=758660062]
+[node name="Trees_普通樹" type="MultiMeshInstance3D" parent="." unique_id=1397291341]
 multimesh = ExtResource("2_7p23c")
 
-[node name="Trees_大衫" type="MultiMeshInstance3D" parent="." unique_id=997589495]
+[node name="Trees_大衫" type="MultiMeshInstance3D" parent="." unique_id=1060062837]
 multimesh = ExtResource("3_85ard")
 
-[node name="Trees_2大衫" type="MultiMeshInstance3D" parent="." unique_id=345467729]
+[node name="Trees_2大衫" type="MultiMeshInstance3D" parent="." unique_id=1200392790]
 multimesh = ExtResource("4_e01te")
 
-[node name="Trees_針葉樹1" type="MultiMeshInstance3D" parent="." unique_id=822241976]
+[node name="Trees_針葉樹1" type="MultiMeshInstance3D" parent="." unique_id=2009212507]
 multimesh = ExtResource("5_ng7bu")
 
-[node name="Trees_針葉樹2glb" type="MultiMeshInstance3D" parent="." unique_id=1002845012]
+[node name="Trees_針葉樹2glb" type="MultiMeshInstance3D" parent="." unique_id=1905947415]
 multimesh = ExtResource("6_sxsml")
 
-[node name="Trees_針葉林樹3" type="MultiMeshInstance3D" parent="." unique_id=617708870]
+[node name="Trees_針葉林樹3" type="MultiMeshInstance3D" parent="." unique_id=209078884]
 multimesh = ExtResource("7_vlk20")
 
-[node name="Trees_針葉林樹4" type="MultiMeshInstance3D" parent="." unique_id=1491937815]
+[node name="Trees_針葉林樹4" type="MultiMeshInstance3D" parent="." unique_id=1221245863]
 multimesh = ExtResource("8_rn2lq")
 
-[node name="Trees_盆樹" type="MultiMeshInstance3D" parent="." unique_id=182584846]
+[node name="Trees_盆樹" type="MultiMeshInstance3D" parent="." unique_id=1223174516]
 multimesh = ExtResource("9_rlrip")
