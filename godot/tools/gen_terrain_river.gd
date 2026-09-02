@@ -55,6 +55,17 @@ const PADDY_Z1 := 49.0
 const PADDY_FLAT_Y := -0.132
 const PADDY_BLEND := 6.0
 
+# 東岸灌溉引水渠（2026-09-02，使用者選 a）。田泵水口_北 泵體實測貼東岸
+# x≈293.3 / z≈21，出水口朝渠。引水溝自岸頂 x=294.5 沿 EW_z04 田埂北側
+# z=22.9 向東進田到 x=341。地形沿線壓到 FEEDER_BED_Y（比田面 -0.032 低
+# 0.52），寬 1.2m，兩側 1m 緩坡。水面與石緣由 gen_feeder_channel.gd 生成。
+const FEEDER_Z := 22.9
+const FEEDER_X0 := 294.5
+const FEEDER_X1 := 341.0
+const FEEDER_HALF := 0.6
+const FEEDER_BED_Y := -0.55
+const FEEDER_BLEND := 1.0
+
 var _n := FastNoiseLite.new()
 
 
@@ -135,6 +146,16 @@ func _paddy_flatten(x: float, z: float) -> float:
 			* (1.0 - smoothstep(PADDY_X1, PADDY_X1 + PADDY_BLEND, x))
 	var fz: float = smoothstep(PADDY_Z0 - PADDY_BLEND, PADDY_Z0, z) \
 			* (1.0 - smoothstep(PADDY_Z1, PADDY_Z1 + PADDY_BLEND, z))
+	return fx * fz
+
+
+## 引水溝開挖權重 0..1，只作用於東岸帶以東；渠道溝槽（-3.45）不受影響。
+func _feeder_cut(x: float, z: float) -> float:
+	if x < FEEDER_X0 - FEEDER_BLEND or x > FEEDER_X1 + FEEDER_BLEND:
+		return 0.0
+	var fx: float = smoothstep(FEEDER_X0 - FEEDER_BLEND, FEEDER_X0, x) \
+			* (1.0 - smoothstep(FEEDER_X1, FEEDER_X1 + FEEDER_BLEND, x))
+	var fz: float = 1.0 - smoothstep(FEEDER_HALF, FEEDER_HALF + FEEDER_BLEND, absf(z - FEEDER_Z))
 	return fx * fz
 
 
@@ -228,6 +249,9 @@ func _init() -> void:
 			# 渠道 -3.45 必須贏過田面底 -0.132，否則地形會從東側堵進水面。
 			var paddy_w: float = _paddy_flatten(x, z)
 			g = lerpf(g, PADDY_FLAT_Y, paddy_w)
+			# 引水溝在整平之後、渠道之前：溝比田面低，但渠道更深要贏。
+			var feeder_w: float = _feeder_cut(x, z)
+			g = lerpf(g, minf(g, FEEDER_BED_Y), feeder_w)
 			var canal_cut: float = _canal_cut(x, z)
 			g = lerpf(g, CANAL_TERRAIN_Y, canal_cut)
 			hs[i] = g
@@ -472,6 +496,65 @@ func _init() -> void:
 	var steps_mesh: ArrayMesh = sst.commit()
 	var e4: int = ResourceSaver.save(steps_mesh, "res://maps/slice/gen/east_river_steps.res", ResourceSaver.FLAG_COMPRESS)
 	print("steps err=", e4, " steps n=", n_steps, " top=(%.1f, %.2f, %.1f)" % [scx - s_top_d, s_top_y, szc])
+
+	# ── 東岸引水溝：水面 + 兩側疊石溝緣 ─────────────────────────────
+	# 水面照 water.gdshader 頂點色契約：COLOR.r 靠岸、COLOR.gb 流向(+x 東流)。
+	# 水面 y = 溝底 + 0.30，低於田面 -0.032，溝緣石頂 = 田面 +0.08。
+	var fw_y: float = FEEDER_BED_Y + 0.30
+	var f_steps: int = int((FEEDER_X1 - FEEDER_X0) / 1.5)
+	var fst := SurfaceTool.new()
+	fst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var flow := Color(0.0, 1.0, 0.5)   # dir (+1, 0) → g=1.0, b=0.5
+	for k in range(f_steps):
+		var xa: float = lerpf(FEEDER_X0, FEEDER_X1, float(k) / float(f_steps))
+		var xb: float = lerpf(FEEDER_X0, FEEDER_X1, float(k + 1) / float(f_steps))
+		var zn: float = FEEDER_Z - FEEDER_HALF
+		var zm: float = FEEDER_Z
+		var zs2: float = FEEDER_Z + FEEDER_HALF
+		var cb := Color(0.8, flow.g, flow.b)   # 靠岸
+		var cm := Color(0.0, flow.g, flow.b)   # 溝心
+		# 兩條帶：北半 (zn..zm)、南半 (zm..zs2)，上面朝 +y
+		_add_tri(fst, Vector3(xa, fw_y, zn), Vector3(xb, fw_y, zn), Vector3(xa, fw_y, zm), cb, cb, cm)
+		_add_tri(fst, Vector3(xb, fw_y, zn), Vector3(xb, fw_y, zm), Vector3(xa, fw_y, zm), cb, cm, cm)
+		_add_tri(fst, Vector3(xa, fw_y, zm), Vector3(xb, fw_y, zm), Vector3(xa, fw_y, zs2), cm, cm, cb)
+		_add_tri(fst, Vector3(xb, fw_y, zm), Vector3(xb, fw_y, zs2), Vector3(xa, fw_y, zs2), cm, cb, cb)
+	fst.generate_normals()
+	var feeder_water: ArrayMesh = fst.commit()
+	if (feeder_water.surface_get_arrays(0)[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:
+		push_error("feeder water winding flipped")
+	var e5: int = ResourceSaver.save(feeder_water, "res://maps/slice/gen/feeder_water.res", ResourceSaver.FLAG_COMPRESS)
+
+	# 溝緣疊石：每側一道 0.35m 寬 × (溝底→田面+0.08) 的階狀石帶，用
+	# unified_terrain 的石頭分支頂點色 (0,0,1,a)。內側面貼溝、頂面 +0.08 露出。
+	var rst2 := SurfaceTool.new()
+	rst2.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rim_top: float = PADDY_FLAT_Y + 0.08
+	var rim_w: float = 0.35
+	var c_st := Color(0, 0, 1, 0)
+	var c_stw := Color(0, 0, 1, 1)
+	for side in [-1.0, 1.0]:
+		var z_in: float = FEEDER_Z + side * FEEDER_HALF
+		var z_out: float = z_in + side * rim_w
+		for k in range(f_steps):
+			var xa: float = lerpf(FEEDER_X0, FEEDER_X1, float(k) / float(f_steps))
+			var xb: float = lerpf(FEEDER_X0, FEEDER_X1, float(k + 1) / float(f_steps))
+			# 內側立面 (溝底 → 頂)
+			var i0 := Vector3(xa, FEEDER_BED_Y, z_in); var i1 := Vector3(xb, FEEDER_BED_Y, z_in)
+			var t0 := Vector3(xa, rim_top, z_in);      var t1 := Vector3(xb, rim_top, z_in)
+			var o0 := Vector3(xa, rim_top, z_out);     var o1 := Vector3(xb, rim_top, z_out)
+			var g0 := Vector3(xa, PADDY_FLAT_Y, z_out); var g1 := Vector3(xb, PADDY_FLAT_Y, z_out)
+			if side < 0.0:
+				_add_tri(rst2, i0, t0, i1, c_stw, c_st, c_stw); _add_tri(rst2, i1, t0, t1, c_stw, c_st, c_st)
+				_add_tri(rst2, t0, o0, t1, c_st, c_st, c_st);   _add_tri(rst2, t1, o0, o1, c_st, c_st, c_st)
+				_add_tri(rst2, o0, g0, o1, c_st, c_st, c_st);   _add_tri(rst2, o1, g0, g1, c_st, c_st, c_st)
+			else:
+				_add_tri(rst2, i0, i1, t0, c_stw, c_stw, c_st); _add_tri(rst2, i1, t1, t0, c_stw, c_st, c_st)
+				_add_tri(rst2, t0, t1, o0, c_st, c_st, c_st);   _add_tri(rst2, t1, o1, o0, c_st, c_st, c_st)
+				_add_tri(rst2, o0, o1, g0, c_st, c_st, c_st);   _add_tri(rst2, o1, g1, g0, c_st, c_st, c_st)
+	rst2.generate_normals()
+	var feeder_rim: ArrayMesh = rst2.commit()
+	var e6: int = ResourceSaver.save(feeder_rim, "res://maps/slice/gen/feeder_rim.res", ResourceSaver.FLAG_COMPRESS)
+	print("feeder water err=", e5, " rim err=", e6, " water_y=%.2f rim_top=%.2f x %.1f..%.1f z=%.1f" % [fw_y, rim_top, FEEDER_X0, FEEDER_X1, FEEDER_Z])
 
 	print("ground err=", e1, " water err=", e2, " revetment err=", e3,
 		" grid=", n, "x", n, " water_width~=", WATER_HALF * 2.0,

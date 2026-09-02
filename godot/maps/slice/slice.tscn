@@ -41,6 +41,10 @@
 [ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="40_lgkyf"]
 [ext_resource type="PackedScene" uid="uid://bixaqcmeif3n6" path="res://assets/lowpoly_scene/Ladder.gltf" id="41_0kxbl"]
 [ext_resource type="PackedScene" uid="uid://k1tr578f3mhu" path="res://assets/machiya/小町家1.glb" id="41_y88mg"]
+[ext_resource type="Material" path="res://assets/materials/canal_water_upper.tres" id="42_4ob86"]
+[ext_resource type="PackedScene" uid="uid://belgokddk31yb" path="res://assets/riverbank/木構水門.glb" id="42_idg0l"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_water.res" id="43_y4f0o"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_rim.res" id="44_37d4b"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -377,3 +381,14 @@ transform = Transform3D(-4.8, 0, -4.1962934e-07, 0, 4.8, 0, 4.1962934e-07, 0, -4
 
 [node name="farm_D" parent="EastBankDressing" unique_id=1008724304 instance=ExtResource("41_y88mg")]
 transform = Transform3D(4.8, 0, 0, 0, 4.8, 0, 0, 0, 4.8, 310, 3.754, -33)
+
+[node name="FeederWater" type="MeshInstance3D" parent="EastBankDressing" unique_id=491907797]
+material_override = ExtResource("42_4ob86")
+mesh = ExtResource("43_y4f0o")
+
+[node name="FeederRim" type="MeshInstance3D" parent="EastBankDressing" unique_id=1101043925]
+material_override = ExtResource("30_3dxa0")
+mesh = ExtResource("44_37d4b")
+
+[node name="suimon_feeder" parent="EastBankDressing" unique_id=1105862396 instance=ExtResource("42_idg0l")]
+transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, 296.2, -0.065, 22.9)
