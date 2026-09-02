@@ -48,14 +48,6 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_splash.res" id="46_37d4b"]
 [ext_resource type="Material" path="res://assets/materials/feeder_nappe.tres" id="47_3gv65"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_nappe.res" id="48_qw07w"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_outfall_water.res" id="49_clp4j"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_outfall_rim.res" id="50_j6oqy"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_intake_water.res" id="51_pm8s3"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_intake_rim.res" id="52_jm55c"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/outfall_nappe.res" id="55_88j0w"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_nappe.res" id="55_clp4j"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/outfall_splash.res" id="56_2222y"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_splash.res" id="56_j6oqy"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -408,43 +400,3 @@ mesh = ExtResource("46_37d4b")
 [node name="FeederNappe" type="MeshInstance3D" parent="EastBankDressing" unique_id=1232790614]
 material_override = ExtResource("47_3gv65")
 mesh = ExtResource("48_qw07w")
-
-[node name="RiverLinks" type="Node3D" parent="." unique_id=1801301890]
-
-[node name="OutfallWater" type="MeshInstance3D" parent="RiverLinks" unique_id=1194687599]
-material_override = ExtResource("42_4ob86")
-mesh = ExtResource("49_clp4j")
-
-[node name="OutfallRim" type="MeshInstance3D" parent="RiverLinks" unique_id=229556188]
-material_override = ExtResource("30_3dxa0")
-mesh = ExtResource("50_j6oqy")
-
-[node name="IntakeWater" type="MeshInstance3D" parent="RiverLinks" unique_id=1399082617]
-material_override = ExtResource("42_4ob86")
-mesh = ExtResource("51_pm8s3")
-
-[node name="IntakeRim" type="MeshInstance3D" parent="RiverLinks" unique_id=1359830708]
-material_override = ExtResource("30_3dxa0")
-mesh = ExtResource("52_jm55c")
-
-[node name="分水口水門" parent="RiverLinks" unique_id=1742106297 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-3.7611527, 0, -1.3615178, 0, 4, 0, 1.3615178, 0, -3.7611527, 400.8, -2.179, -113.2)
-
-[node name="OutfallNappe" type="MeshInstance3D" parent="RiverLinks" unique_id=1509325849]
-material_override = ExtResource("47_3gv65")
-mesh = ExtResource("55_88j0w")
-
-[node name="OutfallSplash" type="MeshInstance3D" parent="RiverLinks" unique_id=916259352]
-material_override = ExtResource("45_y4f0o")
-mesh = ExtResource("56_2222y")
-
-[node name="IntakeNappe" type="MeshInstance3D" parent="RiverLinks" unique_id=180938258]
-material_override = ExtResource("47_3gv65")
-mesh = ExtResource("55_clp4j")
-
-[node name="IntakeSplash" type="MeshInstance3D" parent="RiverLinks" unique_id=1361073552]
-material_override = ExtResource("45_y4f0o")
-mesh = ExtResource("56_j6oqy")
-
-[node name="北口水門" parent="RiverLinks" unique_id=1828290030 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-3.8211136, 0, 1.1828319, 0, 4, 0, -1.1828319, 0, -3.8211136, 422.6, -2.13, 145.9)

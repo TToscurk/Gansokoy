@@ -46,11 +46,6 @@ func _init() -> void:
 		ps = null
 		quit(1)
 		return
-	if not _audit_river_links(root):
-		root.free()
-		ps = null
-		quit(1)
-		return
 	if not _audit_paddy_support(root):
 		root.free()
 		ps = null
@@ -260,102 +255,6 @@ func _audit_feeder_outfall(root: Node) -> bool:
 			push_error("FEEDER_SHRED %s shore_alpha=%.2f floors ALPHA; edge cannot fade" % [spec[1], sa2])
 			return false
 	return true
-
-
-## 幹渠接大河的兩口都必須真的通到河裡。⚠ 上一版只比對 Y（跌水底 =
-## -5.15 = 河面）就放行，但沒檢查 XZ 是否落在水面範圍內 —— 結果南口
-## 跌水離水面西緣還差 1.0m，整段打在乾坡上，稽核全綠。
-## 根因是我用 _river_x() 解析式估水面位置，那條式子忽略 noise 項，
-## z=-118 算出 413.9 而實測 411.5。這裡改成從 EastRiverWater 的實際
-## mesh 取該 z 切片的水面 x 範圍，再確認泡沫確實落在裡面。
-func _river_water_span(root: Node, z: float) -> Vector2:
-	var rw: MeshInstance3D = root.get_node_or_null("EastRiverWater") as MeshInstance3D
-	if rw == null or rw.mesh == null:
-		return Vector2(INF, -INF)
-	var vs: PackedVector3Array = rw.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
-	var xf: Transform3D = _world_xform(rw)
-	var lo: float = INF
-	var hi: float = -INF
-	for v in vs:
-		var w: Vector3 = xf * v
-		if absf(w.z - z) < 4.0:
-			lo = minf(lo, w.x)
-			hi = maxf(hi, w.x)
-	return Vector2(lo, hi)
-
-
-func _audit_river_links(root: Node) -> bool:
-	var ok: bool = true
-	var mouths: Array = [
-		["outfall", "RiverLinks/OutfallWater", "RiverLinks/OutfallNappe", "RiverLinks/OutfallSplash", -118.0],
-		["intake", "RiverLinks/IntakeWater", "RiverLinks/IntakeNappe", "RiverLinks/IntakeSplash", 150.0]]
-	var water_y: float = -5.15
-	for m in mouths:
-		var tag: String = String(m[0])
-		var cw: MeshInstance3D = root.get_node_or_null(String(m[1])) as MeshInstance3D
-		var np: MeshInstance3D = root.get_node_or_null(String(m[2])) as MeshInstance3D
-		var sp: MeshInstance3D = root.get_node_or_null(String(m[3])) as MeshInstance3D
-		if cw == null or np == null or sp == null:
-			push_error("RIVER_LINK %s missing water/nappe/splash node" % tag)
-			return false
-		var cab: AABB = _node_world_aabb(cw)
-		var nab: AABB = _node_world_aabb(np)
-		var sab: AABB = _node_world_aabb(sp)
-		# 1) 渠道最低點必須接上跌水頂
-		var join: float = absf(cab.position.y - (nab.position.y + nab.size.y))
-		# 2) 跌水底必須落到河面
-		var land: float = absf(nab.position.y - water_y)
-		# 3) ⚠ 泡沫必須真的落在河水的 XZ 範圍內，不是只有高度對
-		var span: Vector2 = _river_water_span(root, float(m[4]))
-		var splash_e: float = sab.position.x + sab.size.x
-		var reach: float = splash_e - span.x
-		print("RIVER_LINK %s: canal_low=%.3f nappe %.3f..%.3f splash_x=%.1f..%.1f river_x=%.1f..%.1f | join=%.3f land=%.3f reach=%+.2fm" % [
-			tag, cab.position.y, nab.position.y, nab.position.y + nab.size.y,
-			sab.position.x, splash_e, span.x, span.y, join, land, reach])
-		if join > 0.05:
-			push_error("RIVER_LINK %s drop detached from canal by %.3f m" % [tag, join]); ok = false
-		if land > 0.05:
-			push_error("RIVER_LINK %s drop does not reach river level (%.3f m off)" % [tag, land]); ok = false
-		if reach < 0.5:
-			push_error("RIVER_LINK %s splash lands %.2f m SHORT of the river water — it is hitting dry bank" % [tag, -reach]); ok = false
-	# 兩座水門必須跨在渠上，不得埋進渠底
-	for g in [["RiverLinks/北口水門", "RiverLinks/IntakeWater"], ["RiverLinks/分水口水門", "RiverLinks/OutfallWater"]]:
-		var gn: Node3D = root.get_node_or_null(String(g[0])) as Node3D
-		var cn: MeshInstance3D = root.get_node_or_null(String(g[1])) as MeshInstance3D
-		if gn == null or cn == null:
-			push_error("RIVER_LINK gate %s missing" % String(g[0])); ok = false
-			continue
-		var gab: AABB = _node_world_aabb(gn)
-		var rab: AABB = _node_world_aabb(cn)
-		var sink: float = (rab.position.y - 0.32) - gab.position.y
-		print("RIVER_LINK %s bottom=%.3f sink=%.3f" % [String(g[0]).get_slice("/", 1), gab.position.y, sink])
-		if sink > 0.6:
-			push_error("RIVER_LINK %s buried %.3f m below the channel bed" % [String(g[0]).get_slice("/", 1), sink]); ok = false
-	# 水車方案已被使用者否決，這些節點不得復活
-	for dead in ["RiverLinks/揚水水車", "RiverLinks/揚水水車小屋", "RiverLinks/IntakeFlume", "RiverLinks/IntakeFlumeWater"]:
-		if root.get_node_or_null(dead) != null:
-			push_error("RIVER_LINK rejected waterwheel node still present: %s" % dead); ok = false
-	return ok
-
-
-## 取節點（含其所有 MeshInstance3D 子節點）的世界 AABB。
-func _node_world_aabb(n: Node3D) -> AABB:
-	var mi: MeshInstance3D = n as MeshInstance3D
-	if mi != null and mi.mesh != null:
-		return _world_xform(mi) * mi.get_aabb()
-	var agg: AABB = AABB()
-	var first: bool = true
-	for c in n.find_children("*", "MeshInstance3D", true, false):
-		var cm: MeshInstance3D = c as MeshInstance3D
-		if cm.mesh == null:
-			continue
-		var cab: AABB = _world_xform(cm) * cm.get_aabb()
-		if first:
-			agg = cab
-			first = false
-		else:
-			agg = agg.merge(cab)
-	return agg
 
 
 ## 水田支撐面審計：每格水田中心下方，UnifiedGround 的地形頂必須低於
