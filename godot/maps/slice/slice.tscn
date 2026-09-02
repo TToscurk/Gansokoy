@@ -26,12 +26,23 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="32_26gu2"]
 [ext_resource type="PackedScene" uid="uid://cx3mb6osqlvxu" path="res://maps/slice/prototypes/waterway_art_review.tscn" id="32_bb8mf"]
+[ext_resource type="PackedScene" uid="uid://qu7lrbvwkvff" path="res://assets/lowpoly_scene/Fence_Wood.gltf" id="33_obsh4"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
+[ext_resource type="PackedScene" uid="uid://ceh8avyfvralr" path="res://assets/lowpoly_scene/StoneLantern.gltf" id="34_otgcm"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
+[ext_resource type="PackedScene" uid="uid://ovqe6u1ybtyh" path="res://assets/lowpoly_scene/House_4x5.gltf" id="35_4ob86"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
-[ext_resource type="PackedScene" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
+[ext_resource type="PackedScene" uid="uid://iq1cyulra4xd" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
+[ext_resource type="PackedScene" uid="uid://rbk2blx1x4wt" path="res://assets/lowpoly_scene/Barrel.gltf" id="36_y4f0o"]
+[ext_resource type="PackedScene" uid="uid://bw363wp34scsp" path="res://assets/lowpoly_scene/WoodenCrate_L.gltf" id="37_37d4b"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/village_trees.tscn" id="37_dkw4w"]
+[ext_resource type="PackedScene" uid="uid://bs04cg5ax1qkc" path="res://assets/lowpoly_scene/Log_Cluster.gltf" id="38_3gv65"]
 [ext_resource type="PackedScene" uid="uid://b5vrfcn6poj20" path="res://assets/landmark/火見櫓.glb" id="38_5ybuw"]
+[ext_resource type="PackedScene" uid="uid://b76aow3ipsxp3" path="res://assets/lowpoly_scene/Basket_L.gltf" id="39_qw07w"]
+[ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="40_lgkyf"]
+[ext_resource type="PackedScene" uid="uid://bixaqcmeif3n6" path="res://assets/lowpoly_scene/Ladder.gltf" id="41_0kxbl"]
+[ext_resource type="PackedScene" uid="uid://belgokddk31yb" path="res://assets/riverbank/木構水門.glb" id="42_idg0l"]
+[ext_resource type="PackedScene" uid="uid://b50arwugicr6" path="res://assets/riverbank/洗物石段.glb" id="43_dhqty"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -257,7 +268,123 @@ mesh = ExtResource("34_ww6k3")
 [node name="VillageTrees" parent="." unique_id=1279348764 instance=ExtResource("37_dkw4w")]
 
 [node name="火見櫓" parent="." unique_id=997334749 instance=ExtResource("38_5ybuw")]
-transform = Transform3D(-7.8986573, 0, -6.9052254e-07, 0, 7.8986573, 0, 6.9052254e-07, 0, -7.8986573, 243.52115, 7.395359, -67.01389)
+transform = Transform3D(-7.8986573, 0, -6.9052254e-07, 0, 7.8986573, 0, 6.9052254e-07, 0, -7.8986573, 243.52115, 7.395359, -63.72341)
 
 [node name="MachiCanal" parent="." unique_id=1516803203 instance=ExtResource("32_bb8mf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 287, -2.868, 10)
+
+[node name="EastBankDressing" type="Node3D" parent="." unique_id=893890400]
+
+[node name="fence_000" parent="EastBankDressing" unique_id=1993991950 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -23.9)
+
+[node name="fence_001" parent="EastBankDressing" unique_id=2099211213 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -19.5)
+
+[node name="fence_002" parent="EastBankDressing" unique_id=1987001052 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -15.1)
+
+[node name="fence_003" parent="EastBankDressing" unique_id=1262839683 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -10.7)
+
+[node name="fence_004" parent="EastBankDressing" unique_id=1294328247 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -6.3)
+
+[node name="fence_005" parent="EastBankDressing" unique_id=1930441324 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, -1.9)
+
+[node name="fence_006" parent="EastBankDressing" unique_id=1391531504 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 2.5)
+
+[node name="fence_100" parent="EastBankDressing" unique_id=1147033226 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 10.4)
+
+[node name="fence_101" parent="EastBankDressing" unique_id=1238793903 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 14.6)
+
+[node name="fence_102" parent="EastBankDressing" unique_id=890273887 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 18.8)
+
+[node name="fence_103" parent="EastBankDressing" unique_id=1969427161 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 23)
+
+[node name="fence_104" parent="EastBankDressing" unique_id=1736981056 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 27.2)
+
+[node name="fence_105" parent="EastBankDressing" unique_id=1239396349 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 31.4)
+
+[node name="fence_106" parent="EastBankDressing" unique_id=2039292600 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 35.6)
+
+[node name="fence_107" parent="EastBankDressing" unique_id=64715570 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 39.8)
+
+[node name="fence_108" parent="EastBankDressing" unique_id=2132615604 instance=ExtResource("33_obsh4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 303.3, -0.132, 44)
+
+[node name="lantern_00" parent="EastBankDressing" unique_id=842728307 instance=ExtResource("34_otgcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, -24)
+
+[node name="lantern_01" parent="EastBankDressing" unique_id=166099623 instance=ExtResource("34_otgcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, -6)
+
+[node name="lantern_02" parent="EastBankDressing" unique_id=1416633784 instance=ExtResource("34_otgcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, 12)
+
+[node name="lantern_03" parent="EastBankDressing" unique_id=24336580 instance=ExtResource("34_otgcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, 30)
+
+[node name="lantern_04" parent="EastBankDressing" unique_id=1769711153 instance=ExtResource("34_otgcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, 44)
+
+[node name="house_A" parent="EastBankDressing" unique_id=1355513663 instance=ExtResource("35_4ob86")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 346.5, 0.026, -10)
+
+[node name="house_B" parent="EastBankDressing" unique_id=2107131008 instance=ExtResource("35_4ob86")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 348, -0.108, 20)
+
+[node name="house_C" parent="EastBankDressing" unique_id=1425837353 instance=ExtResource("35_4ob86")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 325, -0.07, 52)
+
+[node name="house_D" parent="EastBankDressing" unique_id=1576860323 instance=ExtResource("35_4ob86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310, 0.239, -33)
+
+[node name="house_A_Barrel_0" parent="EastBankDressing" unique_id=1529633464 instance=ExtResource("36_y4f0o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 344, 0.026, -13.5)
+
+[node name="house_A_WoodenCrate_L_1" parent="EastBankDressing" unique_id=475516170 instance=ExtResource("37_37d4b")]
+transform = Transform3D(0.9396926, 0, 0.34202012, 0, 1, 0, -0.34202012, 0, 0.9396926, 344.2, 0.026, -7)
+
+[node name="house_A_Log_Cluster_2" parent="EastBankDressing" unique_id=1343718505 instance=ExtResource("38_3gv65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 349.5, 0.322, -6)
+
+[node name="house_B_Basket_L_0" parent="EastBankDressing" unique_id=101311872 instance=ExtResource("39_qw07w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 345.6, -0.108, 17)
+
+[node name="house_B_WoodenBox_1" parent="EastBankDressing" unique_id=46369965 instance=ExtResource("40_lgkyf")]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 345.4, -0.108, 23.5)
+
+[node name="house_B_Ladder_2" parent="EastBankDressing" unique_id=1142014724 instance=ExtResource("41_0kxbl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 348, -0.108, 16.5)
+
+[node name="house_C_Barrel_0" parent="EastBankDressing" unique_id=1943877793 instance=ExtResource("36_y4f0o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 321.5, -0.07, 51)
+
+[node name="house_C_Log_Cluster_1" parent="EastBankDressing" unique_id=489230321 instance=ExtResource("38_3gv65")]
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 328.6, -0.07, 50.5)
+
+[node name="house_D_WoodenCrate_L_0" parent="EastBankDressing" unique_id=347193604 instance=ExtResource("37_37d4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 312.8, 0.239, -31)
+
+[node name="house_D_Basket_L_1" parent="EastBankDressing" unique_id=900105427 instance=ExtResource("39_qw07w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 0.239, -34)
+
+[node name="suimon_N" parent="EastBankDressing" unique_id=1105862396 instance=ExtResource("42_idg0l")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 302, 0.907, 21)
+
+[node name="suimon_S" parent="EastBankDressing" unique_id=1543914493 instance=ExtResource("42_idg0l")]
+transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 302, 0.907, -16)
+
+[node name="araimono_E" parent="EastBankDressing" unique_id=1346193100 instance=ExtResource("43_dhqty")]
+transform = Transform3D(-1.7484555e-07, 0, 4, 0, 4, 0, -4, 0, -1.7484555e-07, 297.5, -1.795, 40)
