@@ -30,7 +30,6 @@
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
 [ext_resource type="PackedScene" uid="uid://ceh8avyfvralr" path="res://assets/lowpoly_scene/StoneLantern.gltf" id="34_otgcm"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
-[ext_resource type="PackedScene" uid="uid://ovqe6u1ybtyh" path="res://assets/lowpoly_scene/House_4x5.gltf" id="35_4ob86"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
 [ext_resource type="PackedScene" uid="uid://iq1cyulra4xd" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
 [ext_resource type="PackedScene" uid="uid://rbk2blx1x4wt" path="res://assets/lowpoly_scene/Barrel.gltf" id="36_y4f0o"]
@@ -41,8 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://b76aow3ipsxp3" path="res://assets/lowpoly_scene/Basket_L.gltf" id="39_qw07w"]
 [ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="40_lgkyf"]
 [ext_resource type="PackedScene" uid="uid://bixaqcmeif3n6" path="res://assets/lowpoly_scene/Ladder.gltf" id="41_0kxbl"]
-[ext_resource type="PackedScene" uid="uid://belgokddk31yb" path="res://assets/riverbank/木構水門.glb" id="42_idg0l"]
-[ext_resource type="PackedScene" uid="uid://b50arwugicr6" path="res://assets/riverbank/洗物石段.glb" id="43_dhqty"]
+[ext_resource type="PackedScene" uid="uid://k1tr578f3mhu" path="res://assets/machiya/小町家1.glb" id="41_y88mg"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -338,18 +336,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, 30)
 [node name="lantern_04" parent="EastBankDressing" unique_id=1769711153 instance=ExtResource("34_otgcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.7, -0.132, 44)
 
-[node name="house_A" parent="EastBankDressing" unique_id=1355513663 instance=ExtResource("35_4ob86")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 346.5, 0.026, -10)
-
-[node name="house_B" parent="EastBankDressing" unique_id=2107131008 instance=ExtResource("35_4ob86")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 348, -0.108, 20)
-
-[node name="house_C" parent="EastBankDressing" unique_id=1425837353 instance=ExtResource("35_4ob86")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 325, -0.07, 52)
-
-[node name="house_D" parent="EastBankDressing" unique_id=1576860323 instance=ExtResource("35_4ob86")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310, 0.239, -33)
-
 [node name="house_A_Barrel_0" parent="EastBankDressing" unique_id=1529633464 instance=ExtResource("36_y4f0o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 344, 0.026, -13.5)
 
@@ -380,11 +366,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 312.8, 0.239, -31)
 [node name="house_D_Basket_L_1" parent="EastBankDressing" unique_id=900105427 instance=ExtResource("39_qw07w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 0.239, -34)
 
-[node name="suimon_N" parent="EastBankDressing" unique_id=1105862396 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 302, 0.907, 21)
+[node name="farm_A" parent="EastBankDressing" unique_id=134993351 instance=ExtResource("41_y88mg")]
+transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 346.5, 3.541, -10)
 
-[node name="suimon_S" parent="EastBankDressing" unique_id=1543914493 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 302, 0.907, -16)
+[node name="farm_B" parent="EastBankDressing" unique_id=1661592153 instance=ExtResource("41_y88mg")]
+transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 348, 3.407, 20)
 
-[node name="araimono_E" parent="EastBankDressing" unique_id=1346193100 instance=ExtResource("43_dhqty")]
-transform = Transform3D(-1.7484555e-07, 0, 4, 0, 4, 0, -4, 0, -1.7484555e-07, 297.5, -1.795, 40)
+[node name="farm_C" parent="EastBankDressing" unique_id=1001256522 instance=ExtResource("41_y88mg")]
+transform = Transform3D(-4.8, 0, -4.1962934e-07, 0, 4.8, 0, 4.1962934e-07, 0, -4.8, 325, 3.445, 52)
+
+[node name="farm_D" parent="EastBankDressing" unique_id=1008724304 instance=ExtResource("41_y88mg")]
+transform = Transform3D(4.8, 0, 0, 0, 4.8, 0, 0, 0, 4.8, 310, 3.754, -33)
