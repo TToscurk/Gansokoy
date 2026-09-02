@@ -14,14 +14,6 @@ uniform vec3 grass_tint : source_color = vec3(0.42, 0.52, 0.30);
 uniform vec3 stone_tint : source_color = vec3(0.34, 0.34, 0.32);
 uniform vec3 wet_stone_tint : source_color = vec3(0.18, 0.23, 0.22);
 uniform float texture_scale = 0.18;
-// 去平鋪：第二層取樣的比例，與主層互質才不會同步重複
-uniform float detile_ratio = 0.37;
-uniform float detile_blend_scale = 0.031;  // 混合遮罩的世界尺度（約 32 m）
-uniform float macro_amount = 1.0;          // 大尺度明暗變化強度
-// 遠距掠角下，5.5 m 的平鋪會走樣成規則條紋。超過 detail_fade_start
-// 就把高頻細節淡向該貼圖自身的低階 mip（等同平均色），只留大尺度變化。
-uniform float detail_fade_start = 85.0;
-uniform float detail_fade_end = 430.0;
 uniform float stone_texture_scale = 0.40;
 
 varying vec3 terrain_world_position;
@@ -30,23 +22,6 @@ varying float terrain_grass_weight;
 varying float terrain_aerial_fade;
 varying float terrain_stone_weight;
 varying float terrain_wet_weight;
-
-float hash12(vec2 p) {
-	vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-	p3 += dot(p3, p3.yzx + 33.33);
-	return fract((p3.x + p3.y) * p3.z);
-}
-
-float vnoise(vec2 p) {
-	vec2 i = floor(p);
-	vec2 f = fract(p);
-	f = f * f * (3.0 - 2.0 * f);
-	float a = hash12(i);
-	float b = hash12(i + vec2(1.0, 0.0));
-	float c = hash12(i + vec2(0.0, 1.0));
-	float d = hash12(i + vec2(1.0, 1.0));
-	return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-}
 
 vec4 triplanar_sample(sampler2D tex, vec3 p, vec3 blend) {
 	vec4 x_axis = texture(tex, p.zy);
@@ -68,33 +43,8 @@ void fragment() {
 	vec3 blend = pow(abs(terrain_world_normal), vec3(4.0));
 	blend /= max(blend.x + blend.y + blend.z, 0.0001);
 	vec3 sample_position = terrain_world_position * texture_scale;
-	// 同一張貼圖以兩個互質比例各取樣一次，用低頻遮罩混合：5.5 m 的規則
-	// 網格在 50 m 俯視下原本一眼看穿，這是最便宜的破除方式。
-	vec3 sample_position_b = terrain_world_position * (texture_scale * detile_ratio);
-	float detile = smoothstep(0.35, 0.65,
-		vnoise(terrain_world_position.xz * detile_blend_scale));
-	vec3 dirt = mix(
-		triplanar_sample(dirt_albedo, sample_position, blend).rgb,
-		triplanar_sample(dirt_albedo, sample_position_b, blend).rgb, detile) * dirt_tint;
-	vec3 grass = mix(
-		triplanar_sample(grass_albedo, sample_position, blend).rgb,
-		triplanar_sample(grass_albedo, sample_position_b, blend).rgb, detile) * grass_tint;
-	// 遠場去細節：只在 y 軸取樣（地面幾乎全是水平面），取最低階 mip 當平均色。
-	// 白/灰 albedo 探針證實條紋純粹來自貼圖平鋪——幾何、法線、陰影、光照
-	// 全部排除（shots2/_probe_grey）。LOD 必須夠低才是「平均色」而不是
-	// 「模糊的斑塊」，8x8 的 LOD 7 仍會重複。
-	float view_dist = length(terrain_world_position - CAMERA_POSITION_WORLD);
-	float far_mix = smoothstep(detail_fade_start, detail_fade_end, view_dist);
-	if (far_mix > 0.001) {
-		vec2 flat_uv = terrain_world_position.xz * texture_scale;
-		dirt = mix(dirt, textureLod(dirt_albedo, flat_uv, 10.0).rgb * dirt_tint, far_mix);
-		grass = mix(grass, textureLod(grass_albedo, flat_uv, 10.0).rgb * grass_tint, far_mix);
-	}
-	// 大尺度明暗：草地不再是一片死平的同一個值
-	float macro = vnoise(terrain_world_position.xz * 0.011) * 0.6
-		+ vnoise(terrain_world_position.xz * 0.0038) * 0.4;
-	grass *= mix(1.0, mix(0.80, 1.18, macro), macro_amount);
-	dirt *= mix(1.0, mix(0.87, 1.11, macro), macro_amount);
+	vec3 dirt = triplanar_sample(dirt_albedo, sample_position, blend).rgb * dirt_tint;
+	vec3 grass = triplanar_sample(grass_albedo, sample_position, blend).rgb * grass_tint;
 	vec3 stone_uvw = terrain_world_position * stone_texture_scale;
 	vec3 stone_sample = triplanar_sample(stone_albedo, stone_uvw, blend).rgb;
 	float stone_ao_sample = triplanar_sample(stone_ao, stone_uvw, blend).r;
