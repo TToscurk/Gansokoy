@@ -52,7 +52,7 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PlantGenerator/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/PlantGenerator/plugin.cfg", "res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [filesystem]
 

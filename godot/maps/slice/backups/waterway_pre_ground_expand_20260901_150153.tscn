@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://cx3mb6osqlvxu"]
+[gd_scene format=4]
 
 [ext_resource type="Material" uid="uid://dxlldb4ljao4h" path="res://assets/materials/river_ishigaki_wet.tres" id="1_odrsu"]
 [ext_resource type="Material" uid="uid://c7qpg3wphev7y" path="res://assets/materials/basin_hills.tres" id="2_7cbqh"]

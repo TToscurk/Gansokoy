@@ -1,9 +1,13 @@
 {
-  "id": "slice",
-  "note": "人間之里環村河道獨立灰盒；僅供 Human Art Review，不是正式村落場景。",
-  "playSize": [1100, 1100],
-  "safe": true,
-  "connections": [],
-  "colliders": [],
-  "portals": []
+  "_note": "portals 空陣列時 main.gd 的 _place_player() 會退回預設 spawn (0,40,0)，但村子在 x≈235，玩家會落在 235m 外的空草地上（實測：出生視角只有草地與遠山，看不到任何建築）。這裡放一個 target 為空的保留 portal——_spawn_portals() 對 reserved portal 只建 Area3D、不畫藍色光柱、不觸發傳送，所以它純粹當出生點標記用。⚠ _arrival_for_portal() 會把落點朝世界原點再推 4m，所以 x 要預先往東補償：填 239 才會落在主街中線 235。實機量測該處 UnifiedGround 地面 y=0.000。",
+  "portals": [
+    {
+      "x": 239.0,
+      "y": 0.0,
+      "z": 16.0,
+      "target": "",
+      "arrival_y_offset": 1.2,
+      "arrival_yaw": 0.0
+    }
+  ]
 }
