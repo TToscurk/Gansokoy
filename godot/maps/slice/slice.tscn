@@ -23,13 +23,13 @@
 [ext_resource type="Material" uid="uid://bmnq3u3g8pqsa" path="res://assets/materials/river_transition_grass.tres" id="28_3eeac"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_ground_underlay.res" id="29_e6ygp"]
 [ext_resource type="Material" uid="uid://bmo26m66oe8oj" path="res://assets/materials/unified_terrain.tres" id="30_3dxa0"]
-[ext_resource type="ArrayMesh" uid="uid://cxr3sl2w11mwr" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/slice_unified_ground.res" id="31_2buss"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="32_26gu2"]
 [ext_resource type="PackedScene" uid="uid://cx3mb6osqlvxu" path="res://maps/slice/prototypes/waterway_art_review.tscn" id="32_bb8mf"]
 [ext_resource type="PackedScene" uid="uid://qu7lrbvwkvff" path="res://assets/lowpoly_scene/Fence_Wood.gltf" id="33_obsh4"]
-[ext_resource type="ArrayMesh" uid="uid://be8vof4wlv7x4" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_water.res" id="33_ph07m"]
 [ext_resource type="PackedScene" uid="uid://ceh8avyfvralr" path="res://assets/lowpoly_scene/StoneLantern.gltf" id="34_otgcm"]
-[ext_resource type="ArrayMesh" uid="uid://crc6vsd72mjo4" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/east_river_revetment.res" id="34_ww6k3"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
 [ext_resource type="PackedScene" uid="uid://iq1cyulra4xd" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
 [ext_resource type="PackedScene" uid="uid://rbk2blx1x4wt" path="res://assets/lowpoly_scene/Barrel.gltf" id="36_y4f0o"]
@@ -41,23 +41,21 @@
 [ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="40_lgkyf"]
 [ext_resource type="Material" path="res://assets/materials/canal_water_upper.tres" id="42_4ob86"]
 [ext_resource type="PackedScene" uid="uid://belgokddk31yb" path="res://assets/riverbank/木構水門.glb" id="42_idg0l"]
-[ext_resource type="ArrayMesh" uid="uid://b82asgcmy64mn" path="res://maps/slice/gen/feeder_water.res" id="43_y4f0o"]
-[ext_resource type="ArrayMesh" uid="uid://bvb2ebmac244l" path="res://maps/slice/gen/feeder_rim.res" id="44_37d4b"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_water.res" id="43_y4f0o"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_rim.res" id="44_37d4b"]
 [ext_resource type="PackedScene" uid="uid://cpyt3ohct8rej" path="res://assets/machiya/農舍.glb" id="45_4ob86"]
 [ext_resource type="Material" path="res://assets/materials/feeder_splash.tres" id="45_y4f0o"]
-[ext_resource type="ArrayMesh" uid="uid://beehveoumlwq5" path="res://maps/slice/gen/feeder_splash.res" id="46_37d4b"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_splash.res" id="46_37d4b"]
 [ext_resource type="Material" path="res://assets/materials/feeder_nappe.tres" id="47_3gv65"]
-[ext_resource type="ArrayMesh" uid="uid://nxbq77te723c" path="res://maps/slice/gen/feeder_nappe.res" id="48_qw07w"]
-[ext_resource type="ArrayMesh" uid="uid://bhaoqk0nvwqpl" path="res://maps/slice/gen/link_outfall_water.res" id="49_clp4j"]
-[ext_resource type="ArrayMesh" uid="uid://c8jc12qwylosy" path="res://maps/slice/gen/link_outfall_rim.res" id="50_j6oqy"]
-[ext_resource type="ArrayMesh" uid="uid://b1qr4oo7i5moi" path="res://maps/slice/gen/link_intake_water.res" id="51_pm8s3"]
-[ext_resource type="ArrayMesh" uid="uid://uyg1vrpxuh7o" path="res://maps/slice/gen/link_intake_rim.res" id="52_jm55c"]
-[ext_resource type="PackedScene" uid="uid://dexi66e3ooshu" path="res://assets/riverbank/水車.glb" id="53_0bqe7"]
-[ext_resource type="PackedScene" uid="uid://bi7f55e2qlajd" path="res://assets/riverbank/水車小屋.glb" id="54_l7i4n"]
-[ext_resource type="ArrayMesh" uid="uid://dk6ovrprmpi5h" path="res://maps/slice/gen/outfall_nappe.res" id="55_88j0w"]
-[ext_resource type="ArrayMesh" uid="uid://qv7jeu2e5p2l" path="res://maps/slice/gen/outfall_splash.res" id="56_2222y"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_flume.res" id="57_pm8s3"]
-[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_flume_water.res" id="58_jm55c"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_nappe.res" id="48_qw07w"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_outfall_water.res" id="49_clp4j"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_outfall_rim.res" id="50_j6oqy"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_intake_water.res" id="51_pm8s3"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/link_intake_rim.res" id="52_jm55c"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/outfall_nappe.res" id="55_88j0w"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_nappe.res" id="55_clp4j"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/outfall_splash.res" id="56_2222y"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/intake_splash.res" id="56_j6oqy"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -395,7 +393,7 @@ transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08
 transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 346.5, -0.439, -10)
 
 [node name="farm_B" parent="EastBankDressing" unique_id=1301633821 instance=ExtResource("45_4ob86")]
-transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 348, -0.573, 20)
+transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 348, -0.573, 15.813068)
 
 [node name="farm_C" parent="EastBankDressing" unique_id=1733623995 instance=ExtResource("45_4ob86")]
 transform = Transform3D(-4.8, 0, -4.1962934e-07, 0, 4.8, 0, 4.1962934e-07, 0, -4.8, 331.50458, -0.535, 52)
@@ -429,17 +427,8 @@ mesh = ExtResource("51_pm8s3")
 material_override = ExtResource("30_3dxa0")
 mesh = ExtResource("52_jm55c")
 
-[node name="揚水水車" parent="RiverLinks" unique_id=286831243 instance=ExtResource("53_0bqe7")]
-transform = Transform3D(3.5110893, 0, -1.0333698, 0, 3.66, 0, 1.0333698, 0, 3.5110893, 443.5, -3.669, 150)
-
-[node name="揚水水車小屋" parent="RiverLinks" unique_id=116207240 instance=ExtResource("54_l7i4n")]
-transform = Transform3D(-1.8352199, 0, -6.2355404, 0, 6.5, 0, 6.2355404, 0, -1.8352199, 424, 2.018, 145)
-
-[node name="取水口水門" parent="RiverLinks" unique_id=2072541762 instance=ExtResource("42_idg0l")]
-transform = Transform3D(3.7998881, 0, -1.2493397, 0, 4, 0, 1.2493397, 0, 3.7998881, 419.4, -1.083, 147.5)
-
 [node name="分水口水門" parent="RiverLinks" unique_id=1742106297 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-3.7292953, 0, -1.446498, 0, 4, 0, 1.446498, 0, -3.7292953, 396.6, -2.123, -114.4)
+transform = Transform3D(-3.7611527, 0, -1.3615178, 0, 4, 0, 1.3615178, 0, -3.7611527, 400.8, -2.179, -113.2)
 
 [node name="OutfallNappe" type="MeshInstance3D" parent="RiverLinks" unique_id=1509325849]
 material_override = ExtResource("47_3gv65")
@@ -449,10 +438,13 @@ mesh = ExtResource("55_88j0w")
 material_override = ExtResource("45_y4f0o")
 mesh = ExtResource("56_2222y")
 
-[node name="IntakeFlume" type="MeshInstance3D" parent="RiverLinks" unique_id=2126420773]
-material_override = ExtResource("30_3dxa0")
-mesh = ExtResource("57_pm8s3")
+[node name="IntakeNappe" type="MeshInstance3D" parent="RiverLinks" unique_id=180938258]
+material_override = ExtResource("47_3gv65")
+mesh = ExtResource("55_clp4j")
 
-[node name="IntakeFlumeWater" type="MeshInstance3D" parent="RiverLinks" unique_id=929608661]
-material_override = ExtResource("42_4ob86")
-mesh = ExtResource("58_jm55c")
+[node name="IntakeSplash" type="MeshInstance3D" parent="RiverLinks" unique_id=1361073552]
+material_override = ExtResource("45_y4f0o")
+mesh = ExtResource("56_j6oqy")
+
+[node name="北口水門" parent="RiverLinks" unique_id=1828290030 instance=ExtResource("42_idg0l")]
+transform = Transform3D(-3.8211136, 0, 1.1828319, 0, 4, 0, -1.1828319, 0, -3.8211136, 422.6, -2.13, 145.9)

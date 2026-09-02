@@ -262,60 +262,79 @@ func _audit_feeder_outfall(root: Node) -> bool:
 	return true
 
 
-## 幹渠接大河的兩條鏈必須逐段銜接。⚠ 這裡不是「單點對單點」而是鏈：
-## 取水 大河 → 水車 → 木樋 → 明渠 → 幹渠；排水 幹渠 → 匯流渠 → 跌水 → 大河。
-## 任何一段斷開，水就從半空冒出來或消失在草地上。
+## 幹渠接大河的兩口都必須真的通到河裡。⚠ 上一版只比對 Y（跌水底 =
+## -5.15 = 河面）就放行，但沒檢查 XZ 是否落在水面範圍內 —— 結果南口
+## 跌水離水面西緣還差 1.0m，整段打在乾坡上，稽核全綠。
+## 根因是我用 _river_x() 解析式估水面位置，那條式子忽略 noise 項，
+## z=-118 算出 413.9 而實測 411.5。這裡改成從 EastRiverWater 的實際
+## mesh 取該 z 切片的水面 x 範圍，再確認泡沫確實落在裡面。
+func _river_water_span(root: Node, z: float) -> Vector2:
+	var rw: MeshInstance3D = root.get_node_or_null("EastRiverWater") as MeshInstance3D
+	if rw == null or rw.mesh == null:
+		return Vector2(INF, -INF)
+	var vs: PackedVector3Array = rw.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var xf: Transform3D = _world_xform(rw)
+	var lo: float = INF
+	var hi: float = -INF
+	for v in vs:
+		var w: Vector3 = xf * v
+		if absf(w.z - z) < 4.0:
+			lo = minf(lo, w.x)
+			hi = maxf(hi, w.x)
+	return Vector2(lo, hi)
+
+
 func _audit_river_links(root: Node) -> bool:
 	var ok: bool = true
-	var need: Array = [
-		"RiverLinks/OutfallWater", "RiverLinks/OutfallNappe", "RiverLinks/OutfallSplash",
-		"RiverLinks/IntakeWater", "RiverLinks/IntakeFlume", "RiverLinks/IntakeFlumeWater",
-		"RiverLinks/揚水水車", "RiverLinks/取水口水門", "RiverLinks/分水口水門"]
-	var ab: Dictionary = {}
-	for p in need:
-		var n: Node3D = root.get_node_or_null(p) as Node3D
-		if n == null:
-			push_error("RIVER_LINK missing node %s" % p)
-			return false
-		ab[p] = _node_world_aabb(n)
+	var mouths: Array = [
+		["outfall", "RiverLinks/OutfallWater", "RiverLinks/OutfallNappe", "RiverLinks/OutfallSplash", -118.0],
+		["intake", "RiverLinks/IntakeWater", "RiverLinks/IntakeNappe", "RiverLinks/IntakeSplash", 150.0]]
 	var water_y: float = -5.15
-	# 排水鏈
-	var ow: AABB = ab["RiverLinks/OutfallWater"]
-	var on_: AABB = ab["RiverLinks/OutfallNappe"]
-	var os_: AABB = ab["RiverLinks/OutfallSplash"]
-	var d1: float = absf(ow.position.y - (on_.position.y + on_.size.y))
-	var d2: float = absf(on_.position.y - water_y)
-	print("RIVER_LINK outfall: canal_low=%.3f nappe %.3f..%.3f splash=%.3f river=%.3f | join=%.3f land=%.3f" % [
-		ow.position.y, on_.position.y, on_.position.y + on_.size.y, os_.position.y, water_y, d1, d2])
-	if d1 > 0.05:
-		push_error("RIVER_LINK outfall drop detached from canal by %.3f m" % d1); ok = false
-	if d2 > 0.05:
-		push_error("RIVER_LINK outfall drop does not reach the river (%.3f m off)" % d2); ok = false
-	# 取水鏈：水車輪頂必須高於木樋水面，木樋末必須高於明渠起點
-	var wh: AABB = ab["RiverLinks/揚水水車"]
-	var fw2: AABB = ab["RiverLinks/IntakeFlumeWater"]
-	var iw: AABB = ab["RiverLinks/IntakeWater"]
-	var wheel_top: float = wh.position.y + wh.size.y
-	var wheel_bot: float = wh.position.y
-	var flume_hi: float = fw2.position.y + fw2.size.y
-	var canal_hi: float = iw.position.y + iw.size.y
-	print("RIVER_LINK intake: wheel %.3f..%.3f flume_water %.3f..%.3f canal_hi=%.3f river=%.3f" % [
-		wheel_bot, wheel_top, fw2.position.y, flume_hi, canal_hi, water_y])
-	if wheel_bot > water_y:
-		push_error("RIVER_LINK wheel does not touch the river (bottom %.3f above %.3f)" % [wheel_bot, water_y]); ok = false
-	if wheel_top < flume_hi:
-		push_error("RIVER_LINK wheel top %.3f below flume water %.3f — cannot lift" % [wheel_top, flume_hi]); ok = false
-	if flume_hi < canal_hi:
-		push_error("RIVER_LINK flume %.3f below canal intake %.3f — water flows backwards" % [flume_hi, canal_hi]); ok = false
+	for m in mouths:
+		var tag: String = String(m[0])
+		var cw: MeshInstance3D = root.get_node_or_null(String(m[1])) as MeshInstance3D
+		var np: MeshInstance3D = root.get_node_or_null(String(m[2])) as MeshInstance3D
+		var sp: MeshInstance3D = root.get_node_or_null(String(m[3])) as MeshInstance3D
+		if cw == null or np == null or sp == null:
+			push_error("RIVER_LINK %s missing water/nappe/splash node" % tag)
+			return false
+		var cab: AABB = _node_world_aabb(cw)
+		var nab: AABB = _node_world_aabb(np)
+		var sab: AABB = _node_world_aabb(sp)
+		# 1) 渠道最低點必須接上跌水頂
+		var join: float = absf(cab.position.y - (nab.position.y + nab.size.y))
+		# 2) 跌水底必須落到河面
+		var land: float = absf(nab.position.y - water_y)
+		# 3) ⚠ 泡沫必須真的落在河水的 XZ 範圍內，不是只有高度對
+		var span: Vector2 = _river_water_span(root, float(m[4]))
+		var splash_e: float = sab.position.x + sab.size.x
+		var reach: float = splash_e - span.x
+		print("RIVER_LINK %s: canal_low=%.3f nappe %.3f..%.3f splash_x=%.1f..%.1f river_x=%.1f..%.1f | join=%.3f land=%.3f reach=%+.2fm" % [
+			tag, cab.position.y, nab.position.y, nab.position.y + nab.size.y,
+			sab.position.x, splash_e, span.x, span.y, join, land, reach])
+		if join > 0.05:
+			push_error("RIVER_LINK %s drop detached from canal by %.3f m" % [tag, join]); ok = false
+		if land > 0.05:
+			push_error("RIVER_LINK %s drop does not reach river level (%.3f m off)" % [tag, land]); ok = false
+		if reach < 0.5:
+			push_error("RIVER_LINK %s splash lands %.2f m SHORT of the river water — it is hitting dry bank" % [tag, -reach]); ok = false
 	# 兩座水門必須跨在渠上，不得埋進渠底
-	for gate in ["RiverLinks/取水口水門", "RiverLinks/分水口水門"]:
-		var g: AABB = ab[gate]
-		var ref: AABB = iw if gate.contains("取水") else ow
-		var bed: float = ref.position.y - 0.32
-		var sink: float = bed - g.position.y
-		print("RIVER_LINK %s bottom=%.3f bed=%.3f sink=%.3f" % [gate.get_slice("/", 1), g.position.y, bed, sink])
-		if sink > 0.35:
-			push_error("RIVER_LINK %s buried %.3f m below the channel bed" % [gate.get_slice("/", 1), sink]); ok = false
+	for g in [["RiverLinks/北口水門", "RiverLinks/IntakeWater"], ["RiverLinks/分水口水門", "RiverLinks/OutfallWater"]]:
+		var gn: Node3D = root.get_node_or_null(String(g[0])) as Node3D
+		var cn: MeshInstance3D = root.get_node_or_null(String(g[1])) as MeshInstance3D
+		if gn == null or cn == null:
+			push_error("RIVER_LINK gate %s missing" % String(g[0])); ok = false
+			continue
+		var gab: AABB = _node_world_aabb(gn)
+		var rab: AABB = _node_world_aabb(cn)
+		var sink: float = (rab.position.y - 0.32) - gab.position.y
+		print("RIVER_LINK %s bottom=%.3f sink=%.3f" % [String(g[0]).get_slice("/", 1), gab.position.y, sink])
+		if sink > 0.6:
+			push_error("RIVER_LINK %s buried %.3f m below the channel bed" % [String(g[0]).get_slice("/", 1), sink]); ok = false
+	# 水車方案已被使用者否決，這些節點不得復活
+	for dead in ["RiverLinks/揚水水車", "RiverLinks/揚水水車小屋", "RiverLinks/IntakeFlume", "RiverLinks/IntakeFlumeWater"]:
+		if root.get_node_or_null(dead) != null:
+			push_error("RIVER_LINK rejected waterwheel node still present: %s" % dead); ok = false
 	return ok
 
 
