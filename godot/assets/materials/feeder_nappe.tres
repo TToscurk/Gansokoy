@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+; 排水河口「水舌」專用材質（2026-09-02）。
+; 與水平排水渠拆開的理由：水平段用 canal_water_upper，其 shore_alpha=0.62
+; 是 ALPHA 的下限，水舌底部與兩側邊緣因此永遠淡不到 0，不論 mesh 做成
+; 矩形、梯形還是毛邊，輪廓都是一條連續硬邊 → 讀成「一片斜切的玻璃板」。
+; 這裡 shore_alpha=0 讓邊緣真的消失，再用 shred 在 fragment 上把 alpha
+; 打散成斷續水絲——形狀改 mesh 沒有用，撕裂必須發生在 fragment。
+
+[ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="1_wshdr"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_wnor"]
+
+[resource]
+render_priority = 1
+shader = ExtResource("1_wshdr")
+shader_parameter/wave_nor = ExtResource("2_wnor")
+shader_parameter/shallow_color = Color(0.52, 0.62, 0.63, 1)
+shader_parameter/deep_color = Color(0.2, 0.32, 0.35, 1)
+shader_parameter/flow_speed = 0.42
+shader_parameter/wave_scale = 0.14
+shader_parameter/alpha = 0.72
+shader_parameter/bank_scale = 1.0
+shader_parameter/sky_tint = Color(0.68, 0.78, 0.84, 1)
+shader_parameter/use_flow_vc = 1.0
+shader_parameter/flow_strength = 3.0
+shader_parameter/shore_alpha = 0.0
+shader_parameter/foam_roughness = 0.5
+shader_parameter/shred = 0.8
+shader_parameter/shred_scale = 3.4
+shader_parameter/shred_speed = 2.2

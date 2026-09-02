@@ -41,6 +41,11 @@ func _init() -> void:
 		ps = null
 		quit(1)
 		return
+	if not _audit_feeder_outfall(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
 	if not _audit_paddy_support(root):
 		root.free()
 		ps = null
@@ -133,6 +138,123 @@ func _audit_canal_trench(root: Node) -> bool:
 				str(probe), top_y, CANAL_TERRAIN_MAX_Y])
 			ok = false
 	return ok
+
+
+## 田區排水鏈必須在三維上連續：水平排水渠要碰到幹渠東緣，且自身最低點
+## 必須落到該處下游水面；只在 XZ 重疊但懸在水面上方仍視為失敗。
+## ❗ 接水面必須取「實際看得見」的那一層。舊版寫死 DownstreamWater，
+## 而它在正式場景是 visible=false 的廢棄 box；它的 y 恰巧與新水面
+## 相同，於是 vertical_gap=0.000 假通過，而實機畫面裡跌水根本沒接到水。
+func _visible_receiver(root: Node) -> MeshInstance3D:
+	var candidates: Array[String] = [
+		"MachiCanal/ChannelGeometry/CanalWater/Reach_Lower",
+		"MachiCanal/ChannelGeometry/DownstreamWater",
+	]
+	for p in candidates:
+		var node: MeshInstance3D = root.get_node_or_null(p) as MeshInstance3D
+		if node == null:
+			continue
+		var shown: bool = node.visible
+		var walker: Node = node.get_parent()
+		while shown and walker != null and walker != root:
+			var as_v3d: Node3D = walker as Node3D
+			if as_v3d != null and not as_v3d.visible:
+				shown = false
+			walker = walker.get_parent()
+		if shown:
+			print("FEEDER_OUTFALL receiver=%s" % p)
+			return node
+		print("FEEDER_OUTFALL skip hidden receiver=%s" % p)
+	return null
+
+
+func _audit_feeder_outfall(root: Node) -> bool:
+	var feeder: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederWater") as MeshInstance3D
+	var receiver: MeshInstance3D = _visible_receiver(root)
+	if feeder == null or receiver == null:
+		push_error("FEEDER_OUTFALL: FeederWater or a VISIBLE canal water surface missing")
+		return false
+	var feeder_ab: AABB = _world_xform(feeder) * feeder.get_aabb()
+	var receiver_ab: AABB = _world_xform(receiver) * receiver.get_aabb()
+	var receiver_east: float = receiver_ab.position.x + receiver_ab.size.x
+	var receiver_top: float = receiver_ab.position.y + receiver_ab.size.y
+	# 排水鏈是三段：水平渠 → 水舌 → 幹渠水面。水舌已拆成獨立節點，所以
+	# 不能再拿 FeederWater 直接比幹渠水面（那樣它必然懸空 2.5m）。
+	# 逐段檢查銜接：水平渠底 ↔ 水舌頂、水舌底 ↔ 幹渠水面。
+	var nappe: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederNappe") as MeshInstance3D
+	if nappe == null:
+		push_error("FEEDER_OUTFALL: FeederNappe (the drop) missing — feeder would hang over the canal")
+		return false
+	var nab: AABB = _world_xform(nappe) * nappe.get_aabb()
+	var nappe_top: float = nab.position.y + nab.size.y
+	var nappe_bot: float = nab.position.y
+	# 銜接 1：水舌頂端必須接到水平渠的水面高度。
+	var link_up: float = absf(nappe_top - feeder_ab.position.y)
+	# 銜接 2：水舌底端必須落到幹渠水面（不得懸空）。
+	var vertical_gap: float = nappe_bot - receiver_top
+	# 銜接 3：水舌必須向西越過幹渠東緣。
+	var x_gap: float = nab.position.x - receiver_east
+	var old_trough: Node = root.get_node_or_null("MachiCanal/PaddyFields/Irrigation/木樋_北")
+	var old_pump: Node = root.get_node_or_null("MachiCanal/Waterworks/田泵水口_北")
+	print("FEEDER_OUTFALL link_up=%.3f x_gap=%.3f vertical_gap=%.3f nappe_y=%.3f..%.3f feeder_y=%.3f receiver_top=%.3f old_trough=%s old_pump=%s" % [
+		link_up, x_gap, vertical_gap, nappe_bot, nappe_top,
+		feeder_ab.position.y, receiver_top, str(old_trough != null), str(old_pump != null)])
+	if link_up > 0.05:
+		push_error("FEEDER_OUTFALL drop detached from the horizontal drain by %.3f m" % link_up)
+		return false
+	if x_gap > 0.01:
+		push_error("FEEDER_OUTFALL dry XZ break %.3f m" % x_gap)
+		return false
+	if vertical_gap > 0.05:
+		push_error("FEEDER_OUTFALL hangs %.3f m above canal water" % vertical_gap)
+		return false
+	if old_trough != null:
+		push_error("FEEDER_OUTFALL obsolete 木樋_北 still present")
+		return false
+	if old_pump != null:
+		push_error("FEEDER_OUTFALL obsolete 田泵水口_北 blocks the drop mouth")
+		return false
+	# 落點必須有泡沫舌，且鋪在下游（西）側。
+	# 泡沫扇形必須鋪在落點的下游（西）側。cos 符號寫錯會讓它整片往東
+	# 鋪回上游的田裡，而長度、面積、材質全部照樣通過——只有方向能抓到。
+	# 註：舊的 FEEDER_APRON west_reach 檢查已移除——泡沫舌已拆成獨立的
+	# FeederSplash 節點，不再是 FeederWater mesh 的一部分，那條會恆為 0。
+	var splash: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederSplash") as MeshInstance3D
+	if splash == null:
+		push_error("FEEDER_SPLASH node missing")
+		return false
+	var sab: AABB = _world_xform(splash) * splash.get_aabb()
+	var splash_w: float = sab.position.x
+	var splash_e: float = sab.position.x + sab.size.x
+	print("FEEDER_SPLASH x=%.2f..%.2f (mouth=292.40)" % [splash_w, splash_e])
+	if splash_w > 292.0:
+		push_error("FEEDER_SPLASH points upstream: west edge %.2f never reaches the canal" % splash_w)
+		return false
+	if splash_e > 292.9:
+		push_error("FEEDER_SPLASH spills %.2f m east onto the paddy side" % (splash_e - 292.4))
+		return false
+	# 水舌與泡沫都必須用有 shred 的專屬材質。若被合回 canal_water_upper
+	# （shore_alpha=0.62、shred=0），輪廓就淡不掉，重新變回硬邊平板——
+	# 位置、尺寸、連續性全部照樣通過，只有材質參數能抓到這個退化。
+	for spec in [["EastBankDressing/FeederNappe", "nappe"], ["EastBankDressing/FeederSplash", "splash"]]:
+		var mi: MeshInstance3D = root.get_node_or_null(spec[0]) as MeshInstance3D
+		if mi == null:
+			push_error("FEEDER_SHRED %s node missing" % spec[1])
+			return false
+		var mat: ShaderMaterial = mi.material_override as ShaderMaterial
+		if mat == null:
+			push_error("FEEDER_SHRED %s has no ShaderMaterial override" % spec[1])
+			return false
+		var sh: float = float(mat.get_shader_parameter("shred"))
+		var sa2: float = float(mat.get_shader_parameter("shore_alpha"))
+		print("FEEDER_SHRED %s shred=%.2f shore_alpha=%.2f" % [spec[1], sh, sa2])
+		if sh < 0.3:
+			push_error("FEEDER_SHRED %s shred=%.2f — edges will read as a hard plate" % [spec[1], sh])
+			return false
+		if sa2 > 0.05:
+			push_error("FEEDER_SHRED %s shore_alpha=%.2f floors ALPHA; edge cannot fade" % [spec[1], sa2])
+			return false
+	return true
 
 
 ## 水田支撐面審計：每格水田中心下方，UnifiedGround 的地形頂必須低於

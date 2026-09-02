@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+; 排水河口的落水泡沫舌專用材質（2026-09-02）。
+; 為什麼不共用 canal_water_upper：那份的 shore_alpha=0.62，
+; water.gdshader 的 ALPHA = mix(shore_alpha, alpha, dfac) + foam*0.22
+; 下限被卡在 0.62，泡沫片的外緣永遠淡不到透明，於是不管頂點色怎麼調
+; 都會讀成「一張磨砂玻璃長方形貼在水上」。這裡把 shore_alpha 壓到 0，
+; 讓 bank→1 的外緣真正消失，泡沫才有毛邊而不是硬邊。
+; foam_roughness 拉高讓落點糊掉反射，讀起來才像擾動的白沫。
+
+[ext_resource type="Shader" path="res://assets/shaders/water.gdshader" id="1_wshdr"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="2_wnor"]
+
+[resource]
+render_priority = 1
+shader = ExtResource("1_wshdr")
+shader_parameter/wave_nor = ExtResource("2_wnor")
+shader_parameter/shallow_color = Color(0.62, 0.7, 0.7, 1)
+shader_parameter/deep_color = Color(0.3, 0.42, 0.44, 1)
+shader_parameter/flow_speed = 0.26
+shader_parameter/wave_scale = 0.09
+shader_parameter/alpha = 0.55
+shader_parameter/bank_scale = 1.0
+shader_parameter/sky_tint = Color(0.72, 0.8, 0.85, 1)
+shader_parameter/use_flow_vc = 1.0
+shader_parameter/flow_strength = 2.4
+shader_parameter/shore_alpha = 0.0
+shader_parameter/foam_roughness = 0.62
+shader_parameter/shred = 0.95
+shader_parameter/shred_scale = 2.6
+shader_parameter/shred_speed = 1.5

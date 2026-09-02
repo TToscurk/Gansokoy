@@ -39,12 +39,15 @@
 [ext_resource type="PackedScene" uid="uid://b5vrfcn6poj20" path="res://assets/landmark/火見櫓.glb" id="38_5ybuw"]
 [ext_resource type="PackedScene" uid="uid://b76aow3ipsxp3" path="res://assets/lowpoly_scene/Basket_L.gltf" id="39_qw07w"]
 [ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="40_lgkyf"]
-[ext_resource type="PackedScene" uid="uid://bixaqcmeif3n6" path="res://assets/lowpoly_scene/Ladder.gltf" id="41_0kxbl"]
 [ext_resource type="Material" path="res://assets/materials/canal_water_upper.tres" id="42_4ob86"]
 [ext_resource type="PackedScene" uid="uid://belgokddk31yb" path="res://assets/riverbank/木構水門.glb" id="42_idg0l"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_water.res" id="43_y4f0o"]
 [ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_rim.res" id="44_37d4b"]
 [ext_resource type="PackedScene" uid="uid://cpyt3ohct8rej" path="res://assets/machiya/農舍.glb" id="45_4ob86"]
+[ext_resource type="Material" path="res://assets/materials/feeder_splash.tres" id="45_y4f0o"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_splash.res" id="46_37d4b"]
+[ext_resource type="Material" path="res://assets/materials/feeder_nappe.tres" id="47_3gv65"]
+[ext_resource type="ArrayMesh" path="res://maps/slice/gen/feeder_nappe.res" id="48_qw07w"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -180,7 +183,7 @@ transform = Transform3D(0.8685389, 0, 0.49562094, 0, 1, 0, -0.49562094, 0, 0.868
 transform = Transform3D(0.02024356, 0, -1.4998634, 0, 1.5, 0, 1.4998634, 0, 0.02024356, 246.55923, -0.029773086, -35.476078)
 
 [node name="寺子屋" parent="." unique_id=105953014 instance=ExtResource("11_tldba")]
-transform = Transform3D(5.041882, 0, 6.211234, 0, 8, 0, -6.211234, 0, 5.041882, 314.8456, 0.044635914, 34.561848)
+transform = Transform3D(7.994738, 0, -0.29011154, 0, 8, 0, 0.29011154, 0, 7.994738, 314.8456, 0.044635914, 34.561848)
 
 [node name="龍神像" parent="." unique_id=1220975449 instance=ExtResource("12_3lm1b")]
 transform = Transform3D(8.307938, 0, -8.658993, 0, 12.000001, 0, 8.658993, 0, 8.307938, 422.66226, -7.046725, -182.85837)
@@ -355,14 +358,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 342.3, -0.132, 15.5)
 [node name="house_B_WoodenBox_1" parent="EastBankDressing" unique_id=46369965 instance=ExtResource("40_lgkyf")]
 transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 342.3, -0.132, 16.8)
 
-[node name="house_B_Ladder_2" parent="EastBankDressing" unique_id=1142014724 instance=ExtResource("41_0kxbl")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 342.3, -0.132, 18)
-
 [node name="house_C_Barrel_0" parent="EastBankDressing" unique_id=1943877793 instance=ExtResource("36_y4f0o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 319, -0.006, 55.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 325.87213, -0.006, 55.5)
 
 [node name="house_C_Log_Cluster_1" parent="EastBankDressing" unique_id=489230321 instance=ExtResource("38_3gv65")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 319.5, -0.132, 53)
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 325.93756, -0.132, 53)
 
 [node name="house_D_WoodenCrate_L_0" parent="EastBankDressing" unique_id=347193604 instance=ExtResource("37_37d4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 304.3, 0.184, -34.6)
@@ -379,7 +379,7 @@ material_override = ExtResource("30_3dxa0")
 mesh = ExtResource("44_37d4b")
 
 [node name="suimon_feeder" parent="EastBankDressing" unique_id=1105862396 instance=ExtResource("42_idg0l")]
-transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, 296.2, -0.065, 22.9)
+transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, 296.2, -0.065, 22.808846)
 
 [node name="farm_A" parent="EastBankDressing" unique_id=1980757743 instance=ExtResource("45_4ob86")]
 transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 346.5, -0.439, -10)
@@ -388,7 +388,15 @@ transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-
 transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 348, -0.573, 20)
 
 [node name="farm_C" parent="EastBankDressing" unique_id=1733623995 instance=ExtResource("45_4ob86")]
-transform = Transform3D(-4.8, 0, -4.1962934e-07, 0, 4.8, 0, 4.1962934e-07, 0, -4.8, 325, -0.535, 52)
+transform = Transform3D(-4.8, 0, -4.1962934e-07, 0, 4.8, 0, 4.1962934e-07, 0, -4.8, 331.50458, -0.535, 52)
 
 [node name="farm_D" parent="EastBankDressing" unique_id=44054228 instance=ExtResource("45_4ob86")]
 transform = Transform3D(4.8, 0, 0, 0, 4.8, 0, 0, 0, 4.8, 310, -0.226, -33)
+
+[node name="FeederSplash" type="MeshInstance3D" parent="EastBankDressing" unique_id=265673247]
+material_override = ExtResource("45_y4f0o")
+mesh = ExtResource("46_37d4b")
+
+[node name="FeederNappe" type="MeshInstance3D" parent="EastBankDressing" unique_id=1232790614]
+material_override = ExtResource("47_3gv65")
+mesh = ExtResource("48_qw07w")

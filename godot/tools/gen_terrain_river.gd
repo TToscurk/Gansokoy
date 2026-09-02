@@ -44,6 +44,9 @@ const CANAL_INNER_HALF := 6.4
 const CANAL_WEST_OUTER_HALF := 12.0
 const CANAL_EAST_OUTER_HALF := 14.5
 const CANAL_TERRAIN_Y := -3.45
+# 正式幹渠在 slice 內停止；南北端各用 8m 地形坡收回地表，避免
+# UnifiedGround 在 z=-72 / 104 形成垂直硬切口。中央 160m 保持原深度。
+const CANAL_END_BLEND := 8.0
 
 # 水田整平區。原型水田世界 AABB（x 291.0..340.5、z -26.1..46.1）向外留
 # 3m 緩衝，田面底 -0.032 再下沉 0.10，保證泥面不會被村域緩坡（最高 2m）
@@ -55,12 +58,25 @@ const PADDY_Z1 := 49.0
 const PADDY_FLAT_Y := -0.132
 const PADDY_BLEND := 6.0
 
-# 東岸灌溉引水渠（2026-09-02，使用者選 a）。田泵水口_北 泵體實測貼東岸
-# x≈293.3 / z≈21，出水口朝渠。引水溝自岸頂 x=294.5 沿 EW_z04 田埂北側
-# z=22.9 向東進田到 x=341。地形沿線壓到 FEEDER_BED_Y（比田面 -0.032 低
-# 0.52），寬 1.2m，兩側 1m 緩坡。水面與石緣由 gen_feeder_channel.gd 生成。
+# 東岸田區排水渠（2026-09-02，2026-09-02 接河口修正）。田區水由東往西流，
+# 經 suimon_feeder 出水閥排入穿村幹渠；水平水面止於幹渠東緣 x=293，
+# 再以 0.6m 長跌水面落到該處下游水位 -2.778m，避免只做 XZ 重疊卻
+# 懸在幹渠上方。地形沿線壓到 FEEDER_BED_Y（比田面 -0.032 低 0.52），
+# 寬 1.2m，兩側 1m 緩坡。
 const FEEDER_Z := 22.9
-const FEEDER_X0 := 294.5
+const FEEDER_X0 := 293.0
+# 跌水與泡沫舌。注意：接水面是 CanalWater/Reach_Lower（y=-2.778），
+# 不是已經 visible=false 的舊 DownstreamWater box——兩者 y 碰巧相同，
+# 曾讓稽核拿看不見的 mesh 假通過。
+const FEEDER_MOUTH_X := 292.4
+const FEEDER_APRON_X := 291.0
+const FEEDER_NAPPE_SEGS := 6
+# 水舌落到底時的半寬倍率。1.0 = 等寬（讀成長方形板子），這裡張到 1.9。
+const FEEDER_NAPPE_FLARE := 1.9
+# 落水泡沫扇形的基準半徑與沿流向的拉長倍率。
+const FEEDER_SPLASH_R := 1.15
+const FEEDER_SPLASH_TAIL := 2.1
+const FEEDER_RECEIVER_Y := -2.778
 const FEEDER_X1 := 341.0
 const FEEDER_HALF := 0.6
 const FEEDER_BED_Y := -0.55
@@ -132,7 +148,10 @@ func _canal_cut(x: float, z: float) -> float:
 		return 0.0
 	var offset_x: float = x - CANAL_CENTER_X
 	var outer_half: float = CANAL_WEST_OUTER_HALF if offset_x < 0.0 else CANAL_EAST_OUTER_HALF
-	return 1.0 - smoothstep(CANAL_INNER_HALF, outer_half, absf(offset_x))
+	var cross_weight: float = 1.0 - smoothstep(CANAL_INNER_HALF, outer_half, absf(offset_x))
+	var end_weight: float = smoothstep(CANAL_Z0, CANAL_Z0 + CANAL_END_BLEND, z) \
+			* (1.0 - smoothstep(CANAL_Z1 - CANAL_END_BLEND, CANAL_Z1, z))
+	return cross_weight * end_weight
 
 
 ## 水田整平權重 0..1：矩形足跡內部 = 1，四周以緩坡淡出。
@@ -498,13 +517,13 @@ func _init() -> void:
 	print("steps err=", e4, " steps n=", n_steps, " top=(%.1f, %.2f, %.1f)" % [scx - s_top_d, s_top_y, szc])
 
 	# ── 東岸引水溝：水面 + 兩側疊石溝緣 ─────────────────────────────
-	# 水面照 water.gdshader 頂點色契約：COLOR.r 靠岸、COLOR.gb 流向(+x 東流)。
+	# 水面照 water.gdshader 頂點色契約：COLOR.r 靠岸、COLOR.gb 流向(-x 入幹渠)。
 	# 水面 y = 溝底 + 0.30，低於田面 -0.032，溝緣石頂 = 田面 +0.08。
 	var fw_y: float = FEEDER_BED_Y + 0.30
 	var f_steps: int = int((FEEDER_X1 - FEEDER_X0) / 1.5)
 	var fst := SurfaceTool.new()
 	fst.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var flow := Color(0.0, 1.0, 0.5)   # dir (+1, 0) → g=1.0, b=0.5
+	var flow := Color(0.0, 0.0, 0.5)   # dir (-1, 0) → g=0.0, b=0.5
 	for k in range(f_steps):
 		var xa: float = lerpf(FEEDER_X0, FEEDER_X1, float(k) / float(f_steps))
 		var xb: float = lerpf(FEEDER_X0, FEEDER_X1, float(k + 1) / float(f_steps))
@@ -523,6 +542,74 @@ func _init() -> void:
 	if (feeder_water.surface_get_arrays(0)[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:
 		push_error("feeder water winding flipped")
 	var e5: int = ResourceSaver.save(feeder_water, "res://maps/slice/gen/feeder_water.res", ResourceSaver.FLAG_COMPRESS)
+
+	# ── 河口水舌（獨立 mesh + feeder_nappe.tres）───────────────────
+	# 上緣承接水平排水渠，下緣伸入幹渠並落到下游水位。拆成獨立 mesh 的
+	# 理由與泡沫相同：水平段的 canal_water_upper shore_alpha=0.62 是
+	# ALPHA 下限，水舌邊緣淡不掉 → 讀成一片硬邊玻璃板。
+	# quadratic nappe：出口近水平、往下漸陡；同時向兩側張開（上窄下寬）。
+	# 但形狀只解決一半——真正把輪廓打散的是材質的 shred（fragment 噪聲）。
+	var nst := SurfaceTool.new()
+	nst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var mouth_zm: float = FEEDER_Z
+	for k in range(FEEDER_NAPPE_SEGS):
+		var t0: float = float(k) / float(FEEDER_NAPPE_SEGS)
+		var t1: float = float(k + 1) / float(FEEDER_NAPPE_SEGS)
+		var xa: float = lerpf(FEEDER_X0, FEEDER_MOUTH_X, t0)
+		var xb: float = lerpf(FEEDER_X0, FEEDER_MOUTH_X, t1)
+		var ya: float = lerpf(fw_y, FEEDER_RECEIVER_Y, t0 * t0)
+		var yb: float = lerpf(fw_y, FEEDER_RECEIVER_Y, t1 * t1)
+		var ha: float = FEEDER_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t0 * t0)
+		var hb: float = FEEDER_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t1 * t1)
+		var zna: float = FEEDER_Z - ha
+		var zsa: float = FEEDER_Z + ha
+		var znb: float = FEEDER_Z - hb
+		var zsb: float = FEEDER_Z + hb
+		# 越接近落點 bank 越高 → shred 咬得越兇，底部散成飛沫。
+		var ba := Color(lerpf(0.8, 1.0, t0), flow.g, flow.b)
+		var bb := Color(lerpf(0.8, 1.0, t1), flow.g, flow.b)
+		var ma := Color(lerpf(0.0, 1.0, t0 * t0), flow.g, flow.b)
+		var mb := Color(lerpf(0.0, 1.0, t1 * t1), flow.g, flow.b)
+		_add_tri(nst, Vector3(xa, ya, zna), Vector3(xb, yb, znb), Vector3(xa, ya, mouth_zm), ba, bb, ma)
+		_add_tri(nst, Vector3(xb, yb, znb), Vector3(xb, yb, mouth_zm), Vector3(xa, ya, mouth_zm), bb, mb, ma)
+		_add_tri(nst, Vector3(xa, ya, mouth_zm), Vector3(xb, yb, mouth_zm), Vector3(xa, ya, zsa), ma, mb, ba)
+		_add_tri(nst, Vector3(xb, yb, mouth_zm), Vector3(xb, yb, zsb), Vector3(xa, ya, zsa), mb, bb, ba)
+	nst.generate_normals()
+	var nappe: ArrayMesh = nst.commit()
+	var e8: int = ResourceSaver.save(nappe, "res://maps/slice/gen/feeder_nappe.res", ResourceSaver.FLAG_COMPRESS)
+	print("feeder nappe err=", e8, " flare=%.2f segs=%d" % [FEEDER_NAPPE_FLARE, FEEDER_NAPPE_SEGS])
+
+	# ── 落水泡沫舌（獨立 mesh + 專屬材質）──────────────────────────
+	# 為什麼不併進 feeder_water：feeder 用 canal_water_upper，其
+	# shore_alpha=0.62 是 ALPHA 的下限，外緣永遠淡不到 0 →
+	# 泡沫讀成「一張磨砂玻璃長方形貼在水上」。feeder_splash.tres 把
+	# shore_alpha 設 0，外緣才真的消失。
+	# 形狀用扇形而非矩形：以落點為心、往下游張開的半橢圓，外圍頂點色
+	# 依角度抖動製造毛邊，並沿流向拖出尾巴。
+	var pst := SurfaceTool.new()
+	pst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var splash_y: float = FEEDER_RECEIVER_Y + 0.012
+	var hub := Vector3(FEEDER_MOUTH_X, splash_y, FEEDER_Z)
+	var c_hub := Color(1.0, flow.g, flow.b)
+	var rings: int = 16
+	for k in range(rings):
+		# 角度掃過下游半圈（+z → -x → -z），泡沫只往幹渠那側鋪。
+		var a0: float = PI * 0.5 + PI * float(k) / float(rings)
+		var a1: float = PI * 0.5 + PI * float(k + 1) / float(rings)
+		var r0: float = FEEDER_SPLASH_R * (0.62 + 0.38 * sin(a0 * 3.7 + 1.1) * 0.5 + 0.19)
+		var r1: float = FEEDER_SPLASH_R * (0.62 + 0.38 * sin(a1 * 3.7 + 1.1) * 0.5 + 0.19)
+		# 沿 -x（下游）方向把扇形拉長成拖尾。cos 在此區間為負，
+		# 所以直接加（不再取負號），否則扇形會往東鋪到上游側。
+		var p0 := hub + Vector3(cos(a0) * r0 * FEEDER_SPLASH_TAIL, 0.0, sin(a0) * r0)
+		var p1 := hub + Vector3(cos(a1) * r1 * FEEDER_SPLASH_TAIL, 0.0, sin(a1) * r1)
+		# 外圍 bank 抖動 → 有的頂點淡光、有的還留白，邊緣就不是一條線。
+		var edge0 := Color(clampf(0.30 + 0.34 * sin(a0 * 5.3), 0.0, 1.0), flow.g, flow.b)
+		var edge1 := Color(clampf(0.30 + 0.34 * sin(a1 * 5.3), 0.0, 1.0), flow.g, flow.b)
+		_add_tri(pst, hub, p0, p1, c_hub, edge0, edge1)
+	pst.generate_normals()
+	var splash: ArrayMesh = pst.commit()
+	var e7: int = ResourceSaver.save(splash, "res://maps/slice/gen/feeder_splash.res", ResourceSaver.FLAG_COMPRESS)
+	print("feeder splash err=", e7, " r=%.2fm tail=%.2f" % [FEEDER_SPLASH_R, FEEDER_SPLASH_TAIL])
 
 	# 溝緣疊石：每側一道 0.35m 寬 × (溝底→田面+0.08) 的階狀石帶，用
 	# unified_terrain 的石頭分支頂點色 (0,0,1,a)。內側面貼溝、頂面 +0.08 露出。
