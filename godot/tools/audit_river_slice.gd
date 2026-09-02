@@ -46,6 +46,11 @@ func _init() -> void:
 		ps = null
 		quit(1)
 		return
+	if not _audit_river_links(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
 	if not _audit_paddy_support(root):
 		root.free()
 		ps = null
@@ -255,6 +260,83 @@ func _audit_feeder_outfall(root: Node) -> bool:
 			push_error("FEEDER_SHRED %s shore_alpha=%.2f floors ALPHA; edge cannot fade" % [spec[1], sa2])
 			return false
 	return true
+
+
+## 幹渠接大河的兩條鏈必須逐段銜接。⚠ 這裡不是「單點對單點」而是鏈：
+## 取水 大河 → 水車 → 木樋 → 明渠 → 幹渠；排水 幹渠 → 匯流渠 → 跌水 → 大河。
+## 任何一段斷開，水就從半空冒出來或消失在草地上。
+func _audit_river_links(root: Node) -> bool:
+	var ok: bool = true
+	var need: Array = [
+		"RiverLinks/OutfallWater", "RiverLinks/OutfallNappe", "RiverLinks/OutfallSplash",
+		"RiverLinks/IntakeWater", "RiverLinks/IntakeFlume", "RiverLinks/IntakeFlumeWater",
+		"RiverLinks/揚水水車", "RiverLinks/取水口水門", "RiverLinks/分水口水門"]
+	var ab: Dictionary = {}
+	for p in need:
+		var n: Node3D = root.get_node_or_null(p) as Node3D
+		if n == null:
+			push_error("RIVER_LINK missing node %s" % p)
+			return false
+		ab[p] = _node_world_aabb(n)
+	var water_y: float = -5.15
+	# 排水鏈
+	var ow: AABB = ab["RiverLinks/OutfallWater"]
+	var on_: AABB = ab["RiverLinks/OutfallNappe"]
+	var os_: AABB = ab["RiverLinks/OutfallSplash"]
+	var d1: float = absf(ow.position.y - (on_.position.y + on_.size.y))
+	var d2: float = absf(on_.position.y - water_y)
+	print("RIVER_LINK outfall: canal_low=%.3f nappe %.3f..%.3f splash=%.3f river=%.3f | join=%.3f land=%.3f" % [
+		ow.position.y, on_.position.y, on_.position.y + on_.size.y, os_.position.y, water_y, d1, d2])
+	if d1 > 0.05:
+		push_error("RIVER_LINK outfall drop detached from canal by %.3f m" % d1); ok = false
+	if d2 > 0.05:
+		push_error("RIVER_LINK outfall drop does not reach the river (%.3f m off)" % d2); ok = false
+	# 取水鏈：水車輪頂必須高於木樋水面，木樋末必須高於明渠起點
+	var wh: AABB = ab["RiverLinks/揚水水車"]
+	var fw2: AABB = ab["RiverLinks/IntakeFlumeWater"]
+	var iw: AABB = ab["RiverLinks/IntakeWater"]
+	var wheel_top: float = wh.position.y + wh.size.y
+	var wheel_bot: float = wh.position.y
+	var flume_hi: float = fw2.position.y + fw2.size.y
+	var canal_hi: float = iw.position.y + iw.size.y
+	print("RIVER_LINK intake: wheel %.3f..%.3f flume_water %.3f..%.3f canal_hi=%.3f river=%.3f" % [
+		wheel_bot, wheel_top, fw2.position.y, flume_hi, canal_hi, water_y])
+	if wheel_bot > water_y:
+		push_error("RIVER_LINK wheel does not touch the river (bottom %.3f above %.3f)" % [wheel_bot, water_y]); ok = false
+	if wheel_top < flume_hi:
+		push_error("RIVER_LINK wheel top %.3f below flume water %.3f — cannot lift" % [wheel_top, flume_hi]); ok = false
+	if flume_hi < canal_hi:
+		push_error("RIVER_LINK flume %.3f below canal intake %.3f — water flows backwards" % [flume_hi, canal_hi]); ok = false
+	# 兩座水門必須跨在渠上，不得埋進渠底
+	for gate in ["RiverLinks/取水口水門", "RiverLinks/分水口水門"]:
+		var g: AABB = ab[gate]
+		var ref: AABB = iw if gate.contains("取水") else ow
+		var bed: float = ref.position.y - 0.32
+		var sink: float = bed - g.position.y
+		print("RIVER_LINK %s bottom=%.3f bed=%.3f sink=%.3f" % [gate.get_slice("/", 1), g.position.y, bed, sink])
+		if sink > 0.35:
+			push_error("RIVER_LINK %s buried %.3f m below the channel bed" % [gate.get_slice("/", 1), sink]); ok = false
+	return ok
+
+
+## 取節點（含其所有 MeshInstance3D 子節點）的世界 AABB。
+func _node_world_aabb(n: Node3D) -> AABB:
+	var mi: MeshInstance3D = n as MeshInstance3D
+	if mi != null and mi.mesh != null:
+		return _world_xform(mi) * mi.get_aabb()
+	var agg: AABB = AABB()
+	var first: bool = true
+	for c in n.find_children("*", "MeshInstance3D", true, false):
+		var cm: MeshInstance3D = c as MeshInstance3D
+		if cm.mesh == null:
+			continue
+		var cab: AABB = _world_xform(cm) * cm.get_aabb()
+		if first:
+			agg = cab
+			first = false
+		else:
+			agg = agg.merge(cab)
+	return agg
 
 
 ## 水田支撐面審計：每格水田中心下方，UnifiedGround 的地形頂必須低於

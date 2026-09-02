@@ -1459,10 +1459,19 @@ transform = Transform3D(7.54979e-07, 0, -10, 0, 10, 0, 10, 0, 7.54979e-07, -6.42
 [node name="牆_N3" parent="VillageStoneBank" unique_id=1118519769 instance=ExtResource("6_2lseo")]
 transform = Transform3D(7.54979e-07, 0, -10, 0, 10, 0, 10, 0, 7.54979e-07, -6.42197, 1.48, 75.57)
 
+[node name="牆_S3" parent="VillageStoneBank" unique_id=2132788270 instance=ExtResource("6_2lseo")]
+transform = Transform3D(-4.371139e-07, 0, -10, 0, 10, 0, 10, 0, -4.371139e-07, -6.42197, 1.48, -43.57)
+
+[node name="牆_M1" parent="VillageStoneBank" unique_id=1763104534 instance=ExtResource("6_2lseo")]
+transform = Transform3D(-4.371139e-07, 0, -10, 0, 10, 0, 10, 0, -4.371139e-07, -6.42197, 1.48, 32.43)
+
+[node name="牆_M2" parent="VillageStoneBank" unique_id=51608311 instance=ExtResource("6_2lseo")]
+transform = Transform3D(-4.371139e-07, 0, -10, 0, 10, 0, 10, 0, -4.371139e-07, -6.42197, 1.48, 42.43)
+
 [node name="Waterworks" type="Node3D" parent="." unique_id=1139389972]
 
 [node name="親水階梯" parent="Waterworks" unique_id=2145959877 instance=ExtResource("10_v4ymh")]
-transform = Transform3D(5.284853e-07, 0, 7, 0, 11.647613, 0, -7, 0, 5.284853e-07, -3.9107807, 1.6864424, -13)
+transform = Transform3D(5.284853e-07, 0, 7, 0, 11.647613, 0, -7, 0, 5.284853e-07, -5.9104595, 1.6864424, -13)
 
 [node name="濱水平台" parent="Waterworks" unique_id=773904824 instance=ExtResource("11_iap1o")]
 transform = Transform3D(6.039832e-07, 0, 8, 0, 8, 0, -8, 0, 6.039832e-07, -4.7, 1.05, -5)
@@ -1594,7 +1603,10 @@ skeleton = NodePath("")
 [node name="Openings" type="Node3D" parent="." unique_id=1112074347]
 
 [node name="B_降台石梯" parent="Openings" unique_id=1622230556 instance=ExtResource("21_iap1o")]
-transform = Transform3D(2.5905, 0, 0, 0, 5.57318, 0, 0, 0, 3.0569906, -5.2232537, 2.1344032, -5.8200817)
+transform = Transform3D(2.5905, 0, 0, 0, 3.81, 0, 0, 0, 3.0569906, -5.2232537, 2.3264, -5.8200817)
+
+[node name="B_降台石梯_下段" parent="Openings" unique_id=107346624 instance=ExtResource("21_iap1o")]
+transform = Transform3D(2.5905, 0, 0, 0, 3.81, 0, 0, 0, 3.0569906, -5.2232537, 0.5814, -8.877072)
 
 [node name="BankCaps" type="Node3D" parent="." unique_id=1192013319]
 
@@ -2676,19 +2688,19 @@ scale_base = 0.75
 [node name="BankMasonry" type="Node3D" parent="." unique_id=546635176]
 script = ExtResource("51_ww5ki")
 
-[node name="CopingStones" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=2008447479]
+[node name="CopingStones" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=954133828]
 material_override = ExtResource("5_q4par")
 multimesh = SubResource("MultiMesh_fmx5x")
 
-[node name="Piers" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1803672304]
+[node name="Piers" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=373348337]
 material_override = ExtResource("5_q4par")
 multimesh = SubResource("MultiMesh_jywof")
 
-[node name="WeepHoles" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1726729825]
+[node name="WeepHoles" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=710728429]
 material_override = ExtResource("1_odrsu")
 multimesh = SubResource("MultiMesh_k7l42")
 
-[node name="WeepStreaks" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1563720324]
+[node name="WeepStreaks" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1194917716]
 material_override = ExtResource("1_odrsu")
 multimesh = SubResource("MultiMesh_u0h61")
 

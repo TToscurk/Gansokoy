@@ -82,6 +82,47 @@ const FEEDER_HALF := 0.6
 const FEEDER_BED_Y := -0.55
 const FEEDER_BLEND := 1.0
 
+# ── 幹渠接大河（2026-09-02，使用者裁決「渠道接大河」）────────────────
+# ⚠ 水力現實：大河水面 WATER_Y=-5.15，幹渠水面 -2.148(北) / -2.778(南)，
+# 幹渠比大河高 2.4~3.0m。所以：
+#   下游（南）匯流 —— 自流成立，渠水往大河跌落。
+#   上游（北）取水 —— 大河水位低於幹渠，無法自流。真實農村的解法是
+#     揚水水車（如朝倉三連水車），以河流動力把水提到高處灌溉渠。
+#     本場景既有 水車.glb / 水車小屋.glb，取水側照此擺設。
+# 兩條渠道皆為 3.2m 寬明渠，緩降 0.35%，末端以跌水入河／自水車注入。
+const LINK_HALF := 1.6
+const LINK_BLEND := 2.2
+const LINK_RIM := 0.30
+
+# 下游匯流：幹渠南端 (287, -72) → 大河西谷坡 (405.9, -118)
+const OUT_X0 := 287.0
+const OUT_Z0 := -72.0
+const OUT_X1 := 405.9
+const OUT_Z1 := -118.0
+const OUT_Y0 := -2.778
+const OUT_Y1 := -3.224
+# 匯流口跌水的水平投影長度。落差 1.926m 配 3.6m 水平 ≈ 28° 斜跌，
+# 不是垂直瀑布——這是渠道匯入河道，不是堰。
+const OUT_DROP_RUN := 3.6
+
+# 上游取水：揚水水車在河中 (443.5,150)，但明渠不能挖進河谷 ——
+# 谷頂西緣在 z=150 只到 x=430.0，渠道若延伸過去整段會落在 -6.10 的
+# 河床上（實測：水車小屋與水門一度都掉進河裡）。
+# 所以明渠止於谷外 x=427，水車到渠端的 16.5m 落差段改用架高木樋跨越，
+# 這也正是真實揚水水車（朝倉三連水車）的做法。
+const IN_X0 := 427.0
+const IN_Z0 := 150.0
+# 木樋：從水車輪頂 (443.5,150) 導到明渠起點 (427,150)
+const FLUME_X0 := 443.5
+const FLUME_X1 := 427.0
+const FLUME_Z := 150.0
+const FLUME_Y0 := -1.90
+const FLUME_Y1 := -2.05
+const IN_X1 := 287.0
+const IN_Z1 := 104.0
+const IN_Y0 := -2.148
+const IN_Y1 := -2.687
+
 var _n := FastNoiseLite.new()
 
 
@@ -176,6 +217,28 @@ func _feeder_cut(x: float, z: float) -> float:
 			* (1.0 - smoothstep(FEEDER_X1, FEEDER_X1 + FEEDER_BLEND, x))
 	var fz: float = 1.0 - smoothstep(FEEDER_HALF, FEEDER_HALF + FEEDER_BLEND, absf(z - FEEDER_Z))
 	return fx * fz
+
+
+## 接河渠道的開挖：沿線段 (x0,z0)→(x1,z1) 挖一條寬 LINK_HALF*2 的明渠，
+## 渠底沿線性內插從 y0 降到 y1。回傳 [權重 0..1, 該處渠底 y]。
+## ⚠ 不能用單一常數渠底：這兩條各長 127m / 154m，一個常數會讓渠道在
+## 一端浮在地表、另一端被地形埋掉。渠底必須跟著中心線走。
+func _link_cut(x: float, z: float, x0: float, z0: float, x1: float, z1: float,
+		y0: float, y1: float) -> Array:
+	var dx: float = x1 - x0
+	var dz: float = z1 - z0
+	var len2: float = dx * dx + dz * dz
+	if len2 < 0.0001:
+		return [0.0, y0]
+	# 投影到線段，t 夾在 0..1（端點外不延伸，交給幹渠與大河自己收口）
+	var t: float = clampf(((x - x0) * dx + (z - z0) * dz) / len2, 0.0, 1.0)
+	var px: float = x0 + dx * t
+	var pz: float = z0 + dz * t
+	var d: float = Vector2(x - px, z - pz).length()
+	if d > LINK_HALF + LINK_BLEND:
+		return [0.0, y0]
+	var w: float = 1.0 - smoothstep(LINK_HALF, LINK_HALF + LINK_BLEND, d)
+	return [w, lerpf(y0, y1, t)]
 
 
 ## 建成區平坦遮罩 0..1（1 = 必須維持水平）。街廓與地標都是照 y=0 擺的，
@@ -273,6 +336,15 @@ func _init() -> void:
 			g = lerpf(g, minf(g, FEEDER_BED_Y), feeder_w)
 			var canal_cut: float = _canal_cut(x, z)
 			g = lerpf(g, CANAL_TERRAIN_Y, canal_cut)
+			# 接河渠道最後套用，且只在「比現況低」時才挖 —— 靠近大河那端
+			# 地形已被河谷挖到 BED_Y=-6.10，接河渠 -3.2 不該把河谷填回去。
+			var out_link: Array = _link_cut(x, z, OUT_X0, OUT_Z0, OUT_X1, OUT_Z1, OUT_Y0, OUT_Y1)
+			var in_link: Array = _link_cut(x, z, IN_X0, IN_Z0, IN_X1, IN_Z1, IN_Y0, IN_Y1)
+			var link_w: float = maxf(float(out_link[0]), float(in_link[0]))
+			if link_w > 0.001:
+				var link_bed: float = float(out_link[1]) if float(out_link[0]) >= float(in_link[0]) else float(in_link[1])
+				# 渠底 = 水面 - 0.32；只往下挖，不抬高地形。
+				g = lerpf(g, minf(g, link_bed - 0.32), link_w)
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
@@ -288,6 +360,8 @@ func _init() -> void:
 			if g < WATER_Y - 0.2:
 				grass_weight = 0.0
 			if canal_cut > 0.001:
+				grass_weight = 0.0
+			if link_w > 0.35:
 				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
 			# reference's continuous top access band.
@@ -642,6 +716,192 @@ func _init() -> void:
 	var feeder_rim: ArrayMesh = rst2.commit()
 	var e6: int = ResourceSaver.save(feeder_rim, "res://maps/slice/gen/feeder_rim.res", ResourceSaver.FLAG_COMPRESS)
 	print("feeder water err=", e5, " rim err=", e6, " water_y=%.2f rim_top=%.2f x %.1f..%.1f z=%.1f" % [fw_y, rim_top, FEEDER_X0, FEEDER_X1, FEEDER_Z])
+
+	# ── 接大河的兩條渠：水面 + 兩側石緣 ─────────────────────────────
+	# 沿線段生成，寬 LINK_HALF*2，水面沿長度從 y0 緩降到 y1。
+	# 頂點色照 water.gdshader 契約：COLOR.r 靠岸、COLOR.gb 為流向。
+	# 流向必須是「單位向量映射到 0..1」，不能沿用幹渠的固定 (-x)：
+	# 這兩條是斜的，用錯方向 shader 的 flow map 會橫向抹過渠道。
+	for spec in [
+			["outfall", OUT_X0, OUT_Z0, OUT_X1, OUT_Z1, OUT_Y0, OUT_Y1],
+			["intake", IN_X0, IN_Z0, IN_X1, IN_Z1, IN_Y0, IN_Y1]]:
+		var lx0: float = float(spec[1]); var lz0: float = float(spec[2])
+		var lx1: float = float(spec[3]); var lz1: float = float(spec[4])
+		var ly0: float = float(spec[5]); var ly1: float = float(spec[6])
+		var dir := Vector2(lx1 - lx0, lz1 - lz0)
+		var run: float = dir.length()
+		dir = dir.normalized()
+		# 左右法向（水平面上垂直於流向）
+		var nrm2 := Vector2(-dir.y, dir.x)
+		var fcol := Color(0.0, dir.x * 0.5 + 0.5, dir.y * 0.5 + 0.5)
+		var segs: int = maxi(int(run / 3.0), 8)
+		var lkw := SurfaceTool.new()
+		lkw.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var lkr := SurfaceTool.new()
+		lkr.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var cbank := Color(0.85, fcol.g, fcol.b)
+		var cmid := Color(0.0, fcol.g, fcol.b)
+		var s_dry := Color(0, 0, 1, 0)
+		var s_wet := Color(0, 0, 1, 1)
+		for k in range(segs):
+			var ta: float = float(k) / float(segs)
+			var tb: float = float(k + 1) / float(segs)
+			var ca := Vector2(lx0, lz0).lerp(Vector2(lx1, lz1), ta)
+			var cb2 := Vector2(lx0, lz0).lerp(Vector2(lx1, lz1), tb)
+			var ya2: float = lerpf(ly0, ly1, ta)
+			var yb2: float = lerpf(ly0, ly1, tb)
+			var an := ca + nrm2 * LINK_HALF
+			var as2 := ca - nrm2 * LINK_HALF
+			var bn := cb2 + nrm2 * LINK_HALF
+			var bs := cb2 - nrm2 * LINK_HALF
+			var vAN := Vector3(an.x, ya2, an.y); var vAC := Vector3(ca.x, ya2, ca.y)
+			var vAS := Vector3(as2.x, ya2, as2.y)
+			var vBN := Vector3(bn.x, yb2, bn.y); var vBC := Vector3(cb2.x, yb2, cb2.y)
+			var vBS := Vector3(bs.x, yb2, bs.y)
+			_add_tri(lkw, vAN, vBN, vAC, cbank, cbank, cmid)
+			_add_tri(lkw, vBN, vBC, vAC, cbank, cmid, cmid)
+			_add_tri(lkw, vAC, vBC, vAS, cmid, cmid, cbank)
+			_add_tri(lkw, vBC, vBS, vAS, cmid, cbank, cbank)
+			# 兩側石緣：從水面下 0.32（渠底）到水面上 LINK_RIM
+			for side in [1.0, -1.0]:
+				var sg: float = float(side)
+				var ia: Vector2 = ca + nrm2 * (LINK_HALF * sg)
+				var ib: Vector2 = cb2 + nrm2 * (LINK_HALF * sg)
+				var oa: Vector2 = ca + nrm2 * ((LINK_HALF + 0.45) * sg)
+				var ob: Vector2 = cb2 + nrm2 * ((LINK_HALF + 0.45) * sg)
+				var i0 := Vector3(ia.x, ya2 - 0.32, ia.y)
+				var i1 := Vector3(ib.x, yb2 - 0.32, ib.y)
+				var t0b := Vector3(ia.x, ya2 + LINK_RIM, ia.y)
+				var t1b := Vector3(ib.x, yb2 + LINK_RIM, ib.y)
+				var o0 := Vector3(oa.x, ya2 + LINK_RIM, oa.y)
+				var o1 := Vector3(ob.x, yb2 + LINK_RIM, ob.y)
+				if sg > 0.0:
+					_add_tri(lkr, i0, t0b, i1, s_wet, s_dry, s_wet)
+					_add_tri(lkr, i1, t0b, t1b, s_wet, s_dry, s_dry)
+					_add_tri(lkr, t0b, o0, t1b, s_dry, s_dry, s_dry)
+					_add_tri(lkr, t1b, o0, o1, s_dry, s_dry, s_dry)
+				else:
+					_add_tri(lkr, i0, i1, t0b, s_wet, s_wet, s_dry)
+					_add_tri(lkr, i1, t1b, t0b, s_wet, s_dry, s_dry)
+					_add_tri(lkr, t0b, t1b, o0, s_dry, s_dry, s_dry)
+					_add_tri(lkr, t1b, o1, o0, s_dry, s_dry, s_dry)
+		lkw.generate_normals()
+		lkr.generate_normals()
+		var lw: ArrayMesh = lkw.commit()
+		var lr: ArrayMesh = lkr.commit()
+		var ew: int = ResourceSaver.save(lw, "res://maps/slice/gen/link_%s_water.res" % spec[0], ResourceSaver.FLAG_COMPRESS)
+		var er: int = ResourceSaver.save(lr, "res://maps/slice/gen/link_%s_rim.res" % spec[0], ResourceSaver.FLAG_COMPRESS)
+		print("link %s: water err=%d rim err=%d  run=%.1fm  y %.3f→%.3f  slope=%.2f%%" % [
+			spec[0], ew, er, run, ly0, ly1, (ly0 - ly1) / run * 100.0])
+
+	# ── 匯流口跌水 + 泡沫（渠水面 -3.224 → 大河 -5.15，落差 1.926m）──
+	# 沿用田區出水閥已驗證的做法：quadratic nappe + 下墜張寬，材質
+	# feeder_nappe / feeder_splash（shore_alpha=0 且 shred>0，邊緣才撕得開）。
+	var od := Vector2(OUT_X1 - OUT_X0, OUT_Z1 - OUT_Z0).normalized()
+	var on2 := Vector2(-od.y, od.x)
+	var ocol := Color(0.0, od.x * 0.5 + 0.5, od.y * 0.5 + 0.5)
+	var mouth := Vector2(OUT_X1, OUT_Z1)
+	var mst := SurfaceTool.new()
+	mst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for k in range(FEEDER_NAPPE_SEGS):
+		var t0m: float = float(k) / float(FEEDER_NAPPE_SEGS)
+		var t1m: float = float(k + 1) / float(FEEDER_NAPPE_SEGS)
+		var pa: Vector2 = mouth + od * (OUT_DROP_RUN * t0m)
+		var pb: Vector2 = mouth + od * (OUT_DROP_RUN * t1m)
+		var ya3: float = lerpf(OUT_Y1, WATER_Y, t0m * t0m)
+		var yb3: float = lerpf(OUT_Y1, WATER_Y, t1m * t1m)
+		var ha2: float = LINK_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t0m * t0m)
+		var hb2: float = LINK_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t1m * t1m)
+		var ba2 := Color(lerpf(0.8, 1.0, t0m), ocol.g, ocol.b)
+		var bb2 := Color(lerpf(0.8, 1.0, t1m), ocol.g, ocol.b)
+		var ma2 := Color(lerpf(0.0, 1.0, t0m * t0m), ocol.g, ocol.b)
+		var mb2 := Color(lerpf(0.0, 1.0, t1m * t1m), ocol.g, ocol.b)
+		var aN := pa + on2 * ha2; var aS := pa - on2 * ha2
+		var bN := pb + on2 * hb2; var bS := pb - on2 * hb2
+		var vaN := Vector3(aN.x, ya3, aN.y); var vaC := Vector3(pa.x, ya3, pa.y)
+		var vaS := Vector3(aS.x, ya3, aS.y)
+		var vbN := Vector3(bN.x, yb3, bN.y); var vbC := Vector3(pb.x, yb3, pb.y)
+		var vbS := Vector3(bS.x, yb3, bS.y)
+		_add_tri(mst, vaN, vbN, vaC, ba2, bb2, ma2)
+		_add_tri(mst, vbN, vbC, vaC, bb2, mb2, ma2)
+		_add_tri(mst, vaC, vbC, vaS, ma2, mb2, ba2)
+		_add_tri(mst, vbC, vbS, vaS, mb2, bb2, ba2)
+	mst.generate_normals()
+	var e9: int = ResourceSaver.save(mst.commit(), "res://maps/slice/gen/outfall_nappe.res", ResourceSaver.FLAG_COMPRESS)
+
+	# 落水泡沫：以落點為心的毛邊扇形，沿流向拖尾。
+	var hub2 := mouth + od * OUT_DROP_RUN
+	var sst2 := SurfaceTool.new()
+	sst2.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var hy: float = WATER_Y + 0.012
+	var vhub := Vector3(hub2.x, hy, hub2.y)
+	var chub := Color(1.0, ocol.g, ocol.b)
+	for k in range(16):
+		var a0: float = PI * float(k) / 16.0 - PI * 0.5
+		var a1: float = PI * float(k + 1) / 16.0 - PI * 0.5
+		var r0: float = FEEDER_SPLASH_R * 1.6 * (0.62 + 0.38 * sin(a0 * 3.7 + 1.1) * 0.5 + 0.19)
+		var r1: float = FEEDER_SPLASH_R * 1.6 * (0.62 + 0.38 * sin(a1 * 3.7 + 1.1) * 0.5 + 0.19)
+		# 局部座標：沿流向 od 拉長、沿法向 on2 展開
+		var q0: Vector2 = hub2 + od * (cos(a0) * r0 * FEEDER_SPLASH_TAIL) + on2 * (sin(a0) * r0)
+		var q1: Vector2 = hub2 + od * (cos(a1) * r1 * FEEDER_SPLASH_TAIL) + on2 * (sin(a1) * r1)
+		var g0c := Color(clampf(0.30 + 0.34 * sin(a0 * 5.3), 0.0, 1.0), ocol.g, ocol.b)
+		var g1c := Color(clampf(0.30 + 0.34 * sin(a1 * 5.3), 0.0, 1.0), ocol.g, ocol.b)
+		_add_tri(sst2, vhub, Vector3(q0.x, hy, q0.y), Vector3(q1.x, hy, q1.y), chub, g0c, g1c)
+	sst2.generate_normals()
+	var e10: int = ResourceSaver.save(sst2.commit(), "res://maps/slice/gen/outfall_splash.res", ResourceSaver.FLAG_COMPRESS)
+	print("outfall drop: nappe err=%d splash err=%d  y %.3f→%.3f (%.3fm) run=%.1fm" % [
+		e9, e10, OUT_Y1, WATER_Y, OUT_Y1 - WATER_Y, OUT_DROP_RUN])
+
+	# ── 取水木樋：水車輪頂 → 明渠起點，跨過 16.5m 的河谷坡 ────────────
+	# 明渠不能挖進河谷（谷底 -6.10），所以這段是架高的木槽。
+	# 生成槽體（U 形：底 + 兩側板）與槽內水面兩份 mesh。
+	var fst2 := SurfaceTool.new()
+	fst2.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var fwst := SurfaceTool.new()
+	fwst.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var fl_half: float = 0.55
+	var fl_wall: float = 0.42
+	var fl_segs: int = 18
+	var wood := Color(0, 0, 1, 0)
+	var wood_wet := Color(0, 0, 1, 1)
+	var fflow := Color(0.0, 0.0, 0.5)      # 流向 -x
+	var fbank := Color(0.85, fflow.g, fflow.b)
+	var fmid := Color(0.0, fflow.g, fflow.b)
+	for k in range(fl_segs):
+		var t0f: float = float(k) / float(fl_segs)
+		var t1f: float = float(k + 1) / float(fl_segs)
+		var xa2: float = lerpf(FLUME_X0, FLUME_X1, t0f)
+		var xb2: float = lerpf(FLUME_X0, FLUME_X1, t1f)
+		var ya4: float = lerpf(FLUME_Y0, FLUME_Y1, t0f)
+		var yb4: float = lerpf(FLUME_Y0, FLUME_Y1, t1f)
+		var zn2: float = FLUME_Z - fl_half
+		var zs3: float = FLUME_Z + fl_half
+		# 槽底
+		_add_tri(fst2, Vector3(xa2, ya4 - 0.18, zn2), Vector3(xb2, yb4 - 0.18, zn2), Vector3(xa2, ya4 - 0.18, zs3), wood_wet, wood_wet, wood_wet)
+		_add_tri(fst2, Vector3(xb2, yb4 - 0.18, zn2), Vector3(xb2, yb4 - 0.18, zs3), Vector3(xa2, ya4 - 0.18, zs3), wood_wet, wood_wet, wood_wet)
+		# 兩側板（內面朝渠心）
+		for fside in [-1.0, 1.0]:
+			var sgw: float = float(fside)
+			var zw: float = FLUME_Z + fl_half * sgw
+			var lo0 := Vector3(xa2, ya4 - 0.18, zw); var lo1 := Vector3(xb2, yb4 - 0.18, zw)
+			var hi0 := Vector3(xa2, ya4 + fl_wall, zw); var hi1 := Vector3(xb2, yb4 + fl_wall, zw)
+			if sgw < 0.0:
+				_add_tri(fst2, lo0, hi0, lo1, wood_wet, wood, wood_wet)
+				_add_tri(fst2, lo1, hi0, hi1, wood_wet, wood, wood)
+			else:
+				_add_tri(fst2, lo0, lo1, hi0, wood_wet, wood_wet, wood)
+				_add_tri(fst2, lo1, hi1, hi0, wood_wet, wood, wood)
+		# 槽內水面
+		_add_tri(fwst, Vector3(xa2, ya4, zn2), Vector3(xb2, yb4, zn2), Vector3(xa2, ya4, FLUME_Z), fbank, fbank, fmid)
+		_add_tri(fwst, Vector3(xb2, yb4, zn2), Vector3(xb2, yb4, FLUME_Z), Vector3(xa2, ya4, FLUME_Z), fbank, fmid, fmid)
+		_add_tri(fwst, Vector3(xa2, ya4, FLUME_Z), Vector3(xb2, yb4, FLUME_Z), Vector3(xa2, ya4, zs3), fmid, fmid, fbank)
+		_add_tri(fwst, Vector3(xb2, yb4, FLUME_Z), Vector3(xb2, yb4, zs3), Vector3(xa2, ya4, zs3), fmid, fbank, fbank)
+	fst2.generate_normals()
+	fwst.generate_normals()
+	var e11: int = ResourceSaver.save(fst2.commit(), "res://maps/slice/gen/intake_flume.res", ResourceSaver.FLAG_COMPRESS)
+	var e12: int = ResourceSaver.save(fwst.commit(), "res://maps/slice/gen/intake_flume_water.res", ResourceSaver.FLAG_COMPRESS)
+	print("intake flume: trough err=%d water err=%d  x %.1f→%.1f  y %.3f→%.3f  span=%.1fm" % [
+		e11, e12, FLUME_X0, FLUME_X1, FLUME_Y0, FLUME_Y1, FLUME_X0 - FLUME_X1])
 
 	print("ground err=", e1, " water err=", e2, " revetment err=", e3,
 		" grid=", n, "x", n, " water_width~=", WATER_HALF * 2.0,
