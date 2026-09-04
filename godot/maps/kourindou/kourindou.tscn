@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=4]
+[gd_scene load_steps=115 format=4]
 
 [ext_resource type="Material" path="res://assets/materials/terrain_kourindou.tres" id="1_nem4g"]
 [ext_resource type="Material" path="res://assets/materials/stone.tres" id="2_axm3f"]
@@ -23,6 +23,7 @@
 [ext_resource type="MultiMesh" path="res://maps/kourindou/gen/grass_flower.res" id="21_yjco8"]
 [ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_diff.jpg" id="22_7u2te"]
 [ext_resource type="MultiMesh" path="res://maps/kourindou/gen/vista_trees.res" id="23_r4b1h"]
+[ext_resource type="PackedScene" path="res://maps/kourindou/gen/forest_ring.tscn" id="90_forest"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_u4dhy"]
 _surfaces = [{
@@ -914,6 +915,7 @@ transform = Transform3D(-0.999404, 0, 0.0345327, 0, 1, 0, -0.0345327, 0, -0.9994
 mesh = SubResource("BoxMesh_o6x6m")
 
 [node name="Forest" type="Node3D" parent="."]
+visible = false
 
 [node name="TreesRoundA" type="MultiMeshInstance3D" parent="Forest"]
 multimesh = ExtResource("14_st8mk")
@@ -947,8 +949,11 @@ material_override = SubResource("StandardMaterial3D_whico")
 mesh = SubResource("ArrayMesh_2uf5y")
 
 [node name="VistaTrees" type="MultiMeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 multimesh = ExtResource("23_r4b1h")
+
+[node name="森林環" parent="." instance=ExtResource("90_forest")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kfjgt")
