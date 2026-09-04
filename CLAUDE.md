@@ -5,6 +5,14 @@
 2. **視覺專權**：視覺僅使用者能批准（`ART_APPROVED`）；Agent 至多給予 `ART_REVIEW`。
 3. **唯讀保護**：`godot/assets/blender/sources/` 全程唯讀。
 4. **禁止空想**：禁止憑記憶寫 API 或推測場景；觸及 Godot 必查 `godot-master`。
+5. **Godot Visual Workflow**
+   - MCP = inspect, measure, modify, debug, verify.
+   - Screenshot = visual evidence, not source of measurements.
+   - Never guess a measurable value from screenshots.
+   - Never self-approve subjective visual quality.
+   - Convert approved visual decisions into measurable constraints when possible.
+   - Workflow: Inspect → Measure → Modify → Run → Verify → User approves visuals.
+   - If MCP is unavailable, state it.
 
 ---
 
