@@ -21,31 +21,41 @@ COPIES = [ROOT / "CLAUDE.md", ROOT / ".hermes.md"]
 HEADING = "核心紅線"
 
 
-def extract(path: Path) -> list[str] | None:
-    """取出「核心紅線」小節的內容行（去尾隨空白、略過空行）。
+def extract(path: Path, keep_blank: bool = False) -> list[str] | None:
+    """取出「核心紅線」區塊的內容行。
 
-    小節從 '## …核心紅線…' 開始，到下一個 '## '、水平線 '---' 或檔尾為止。
-    ⚠ 水平線一定要當結束條件：CLAUDE.md 的紅線後面接的是 '---' 加一段散文，
-      只看 '## ' 的話會把那段散文一起吃進來，報成假的不同步。
-    找不到小節回傳 None——那是結構問題，不是內容不同步。
+    區塊從 '## …核心紅線…' 的下一行開始，到水平線 '---' 或檔尾為止。
+    比對時 keep_blank=False（略過空行，避免空行數差異造成假不同步）；
+    --fix 重建時 keep_blank=True，否則新格式條文之間的空行會被壓掉。
+
+    ⚠ 不能把 '## ' 當結束條件。憲法改版後每一條紅線自己就是一個 '## '
+      標題（'## 1. 重用優先'…），遇到標題就停的話一行都抓不到。
+    ⚠ 水平線一定要當結束條件：CLAUDE.md 的紅線後面接的是 '---' 加一段
+      散文與「## 核心防護」小節，不擋的話會把它們一起吃進來。
+
+    找不到區塊回傳 None——那是結構問題，不是內容不同步。
     """
     if not path.exists():
         return None
-    lines = path.read_text(encoding="utf-8").splitlines()
+    lines = path.read_bytes().decode("utf-8").splitlines()
     out: list[str] = []
     inside = False
     for line in lines:
         stripped = line.strip()
-        if line.startswith("## "):
-            if inside:
-                break
-            inside = HEADING in line
+        if not inside:
+            if line.startswith("## ") and HEADING in line:
+                inside = True
             continue
-        if inside and stripped.startswith("---"):
+        if stripped.startswith("---"):
             break
-        if inside and stripped:
+        if stripped or keep_blank:
             out.append(line.rstrip())
-    return out if inside or out else None
+    if not inside:
+        return None
+    if keep_blank:  # 去掉區塊尾端的空行，交給呼叫端決定間距
+        while out and not out[-1].strip():
+            out.pop()
+    return out
 
 
 def main() -> int:
@@ -90,21 +100,29 @@ def main() -> int:
         #   之後不管怎麼寫回去，原本的 CRLF 都已經丟失了。
         text = path.read_bytes().decode("utf-8")
         lines = text.splitlines(keepends=True)
+        # 重建用的版本要保留條文之間的空行（比對用的 src 已去空行）
+        body_src = extract(SOURCE, keep_blank=True) or src
         start = end = None
         for i, line in enumerate(lines):
-            if line.startswith("## ") and HEADING in line:
-                start = i + 1
-            elif start is not None and (
-                line.startswith("## ") or line.strip().startswith("---")
-            ):
-                # 與 extract() 同一組結束條件，否則 --fix 會蓋掉紅線後面的散文
+            if start is None:
+                if line.startswith("## ") and HEADING in line:
+                    start = i + 1
+                continue
+            # 與 extract() 同一組結束條件：只認水平線，不認 '## '
+            # （紅線本身就是一串 '## ' 標題）
+            if line.strip().startswith("---"):
                 end = i
                 break
         if start is None:
-            print(f"✗ {path.name} 沒有小節可覆寫，請手動處理")
+            print(f"✗ {path.name} 沒有區塊可覆寫，請手動處理")
             continue
         if end is None:
-            end = len(lines)
+            # ⚠ 沒有 '---' 結束標記時**不能**當成「抓到檔尾」。
+            #   .hermes.md 曾因此被吃掉整個「工具與證據入口」小節。
+            #   紅線區塊必須有明確結尾，否則拒絕自動修。
+            print(f"✗ {path.relative_to(ROOT)} 的紅線區塊沒有 '---' 結束標記，")
+            print("   自動覆寫會吃掉後面的內容。請先加上分隔線再重跑。")
+            continue
         nl = "\r\n" if "\r\n" in text else "\n"
         # ⚠ 換行處理踩過兩次，兩個坑都要避開：
         #   1. 空行：區段結束的空行已含在 lines[start:end] 裡，body 尾端
@@ -112,7 +130,7 @@ def main() -> int:
         #   2. CRLF：即使每行自己帶對換行符，write_text() 仍會正規化整份
         #      檔案，把 CRLF 檔寫成 LF、整個 git diff 爆掉。
         #      改成二進位寫入，完全繞過 Python 的換行轉換。
-        body = "".join(line + nl for line in src) + nl
+        body = "".join(line + nl for line in body_src) + nl
         lines[start:end] = [body]
         path.write_bytes("".join(lines).encode("utf-8"))
         print(f"→ 已用憲法覆寫 {path.relative_to(ROOT)}")
