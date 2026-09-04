@@ -1,0 +1,21 @@
+#!/bin/sh
+# 核心紅線同步檢查（見 AGENT_CONSTITUTION.md）
+#
+# 紅線同時存在三個檔案：AGENT_CONSTITUTION.md（權威）、CLAUDE.md、.hermes.md。
+# 2026-09-04 加第 5 條時漏掉 CLAUDE.md，「照哪份走」出現歧義。
+# 這個 hook 讓不同步無法進版。
+#
+# 安裝：godot/tools/install_hooks.sh
+# 繞過（僅限確有必要）：git commit --no-verify
+set -e
+
+# 只在三份文件之一被改動時才檢查，平常 commit 不受影響
+if git diff --cached --name-only | grep -qE '^(AGENT_CONSTITUTION\.md|CLAUDE\.md|\.hermes\.md)$'; then
+	if ! python godot/tools/check_constitution_sync.py; then
+		echo ""
+		echo "✗ 核心紅線不同步，commit 中止。"
+		echo "  修正：python godot/tools/check_constitution_sync.py --fix"
+		echo "  然後把改動的檔案重新 git add。"
+		exit 1
+	fi
+fi
