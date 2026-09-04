@@ -1,6 +1,6 @@
 # PROJECT STATE
 
-Last updated: 2026-08-27.
+Last updated: 2026-09-04.
 
 This file is intentionally short. It contains only facts that should affect the next task. Load subsystem details only when that subsystem is being edited.
 
@@ -9,7 +9,40 @@ This file is intentionally short. It contains only facts that should affect the 
 - Live game: **Godot 4.7** under `godot/` (`project.godot` features = 4.7; older docs saying 4.4 are historical).
 - `src/` is the frozen three.js line.
 - Human Village scene: `godot/maps/village/village.tscn` plus committed artifacts in `godot/maps/village/gen/`.
-- Git repository initialized (branch `main`); not yet pushed to GitHub. Commit each approved round before handing work to another agent.
+- **Active work happens in `godot/maps/slice/slice.tscn`**, not `village.tscn`. The slice
+  is where B1/B2/B3 rounds, the canal, the east river and the collision work live; it is
+  hand-tuned by the user between rounds and is now ~27 MB of scene text.
+- Git repository initialized. Branch `main` is ahead 18 of origin; active branch
+  `village-rebuild-b1-b2` has diverged (ahead/behind vs its own remote) — reconcile
+  before pushing. Not yet on GitHub.
+
+## Slice status (2026-09-04)
+
+- Content is at capacity: 13,001 nodes / 6,483 visible meshes / ~44 M triangles.
+  70 machiya, 14 landmarks, 2 torii, 415 water pieces, 208 trees, 3,118 ground-cover,
+  2,609 rocks, 14 street lamps. `tools/survey_slice_content.gd` regenerates this census.
+- Performance on a GTX 1070: main street 43-44 fps, riverside 44, village overview 31.
+  **24.3 M triangles are still shadow casters after culling** — the real bottleneck.
+  Top sources: `B1_Street` 5.1 M, `MachiCanal/TakeFence` (141 bamboo fences) 1.6 M,
+  `VillageTrees`×5 at 2.36 M each. Cutting these is a visual trade-off and needs a
+  user ruling, not an agent decision.
+- Collision is complete and verified: 23/23 probe audit, 17/17 real-controller walk,
+  675-sample ground-gap probe at zero deviation. Bodies: 71 convex hulls (avg 83 verts),
+  15 cylinders (14 lamps), 10 trimeshes.
+- Collision scenes are **binary `.scn`** (`gen/ground_collision.scn`,
+  `building_collision.scn`, `lamp_collision.scn`). Text `.tscn` has no import cache, so
+  it is re-parsed from decimal on every launch; the switch took F5 from 30.1 s to 19.3 s.
+- Generators bake from **disk**, so `slice.tscn` must be saved in the editor before any
+  `gen_*_collision.gd` run — otherwise hand-tuned positions bake at their old coordinates
+  (this happened: 鯢吞亭 was 90 m out).
+- Unused assets remaining: `assets/riverbank/` 9 (the paddy-field set: 稻作株, 水田一格,
+  畦道, 洗物石段, 水車小屋, 木樋支撐棚架, 水車(窄), 收頭件大/小) and `assets/bridges/` 3
+  (the live bridge is `imported_models/Stonebound Wooden Bri_1`). Using the paddy set
+  means opening a whole new field area, not dressing the existing one.
+- `check_map.gd -- slice` reports 12 issues; `tools/triage_check_map.gd` shows 10 of the
+  11 "water buried underground" hits are false — the canal is a *dug* channel, so its
+  water sits below village grade by design. The 2 empty MultiMesh layers
+  (`GrassFlower`/`GrassTall`, 0 instances) are real leftovers superseded by `草筆刷_*`.
 
 ## Human Village — new baseline (user ruling 2026-08-26)
 
@@ -82,6 +115,23 @@ This file is intentionally short. It contains only facts that should affect the 
 1. Keep the working copy clean and avoid reviving obsolete prototype/review workflows or the retired village generator.
 2. Continue Human Village lighting / cel-shading and remaining visible art-quality work.
 3. Integrate the finished Yoriichi runtime into the formal game Player only when that task is explicitly started.
+
+## Open decisions (waiting on the user)
+
+- **圍牆 scale.** `imported_models/Japanese Castle Wall` is placed at scale 20 =
+  8.18 m tall / 5.10 m thick / 37.98 m per segment. Real 築地塀 is 2.2-3.0 m; the user
+  picked 2.41 m (scale 5.9) but the scene still holds scale 20. Four segments sit at
+  (210.5, 93.8), (263.1, 93.8), (209.1, -76.2), (261.7, -76.2) — two rows flanking the
+  north and south torii. **These are deliberate placements, not duplicates** (an agent
+  misread them as a 4× stack and nearly deleted them).
+- **Shadow budget.** 24.3 M casting triangles is what holds the frame at 31-44 fps.
+  Turning off casting for `TakeFence` / `VillageTrees` would buy the most, but that is a
+  look decision. Street lamps were already switched off and bought nothing (0.7 % of the
+  total, 44→43 fps, inside noise) — recorded so it is not retried as a fix.
+- **Play boundary.** `tools/probe_play_bounds.gd`: 15 of 16 compass headings run 420 m+
+  with no terrain stopping the player. A plan exists at
+  `docs/plans/2026-09-04-圍牆佈局規劃.md` (invisible `StaticBody3D` bounds for movement,
+  wall segments only as gate dressing) but has not been approved or built.
 
 ## Do Not Reopen Without Evidence
 
