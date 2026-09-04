@@ -34,9 +34,7 @@
     "mobTheme": "fairy",
     "connections": [
       "shrine",
-      "village",
-      "bamboo",
-      "sunflower"
+      "village"
     ],
     "entry": "maps/trail/",
     "zh": "獸道",

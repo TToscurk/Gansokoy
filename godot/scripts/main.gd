@@ -52,6 +52,8 @@ func _ready() -> void:
 			_shots_file = a.substr(8)
 		elif a.begins_with("--shotdir="):
 			_shot_dir = a.substr(10)
+		elif a == "--playtest":            # 實機自檢：傳送區/出生點/可站立性
+			_playtest = true
 	# 起動図が未構築なら、構築済みの図へ落とす。黙って落とさない——
 	# START_MAP は「本来ここから始まる」という意思表示なので、書き換えて
 	# 隠すのではなく、毎回うるさく言いながら遊べる状態にしておく。
@@ -93,6 +95,8 @@ func _ready() -> void:
 
 var _shot_path := ""
 var _shot_cam := ""
+var _playtest := false
+var _playtest_frames := 0
 
 ## "+h" → 該 xz 射線打到的地面 + h；純數字 → 絕對 y。
 func _shot_xyz(xs: String, ys: String, zs: String) -> Vector3:
@@ -158,6 +162,99 @@ var _default_env: Environment = null
 
 var _shot_cam_pending: Camera3D = null
 
+## 實機自檢（--playtest）：走完整開機流程之後，驗玩家真的能玩。
+##
+## ⚠ 不能用獨立的 --script 工具跑這件事：那模式下 autoload（DayNight）
+##   不會建立，main.gd 的 _ready 中途就斷了，拿到的 map_root 是空殼。
+##   掛在這裡才是「遊戲實際跑起來的樣子」。
+func _run_playtest() -> void:
+	print("[PLAYTEST] 地圖：%s" % (map_root.name if map_root else "null"))
+	var space := get_viewport().get_world_3d().direct_space_state
+	var fail := 0
+
+	# 1) 傳送區（⚠ 掛在 map_root 底下，不是 Main —— 見 _spawn_portals()）
+	var portals := []
+	if map_root != null:
+		for c in map_root.get_children():
+			if String(c.name).begins_with("Portal_"):
+				portals.append(c)
+	print("[PLAYTEST] 傳送區 %d 個" % portals.size())
+	if portals.is_empty():
+		print("[PLAYTEST] ✗ 一個傳送區都沒生成 —— 檢查 data/<map>.meta.json 的 portals")
+		fail += 1
+	for a in portals:
+		var n3 := a as Node3D
+		var gy := _pt_ground(space, n3.global_position.x, n3.global_position.z)
+		if gy == -INF:
+			print("[PLAYTEST] ✗ %s 底下沒有地面" % a.name)
+			fail += 1
+			continue
+		var dy := n3.global_position.y - gy
+		var ok := absf(dy - 1.0) < 0.8
+		if not ok:
+			fail += 1
+		print("[PLAYTEST] %s %-20s xz=(%.1f, %.1f) 地面 %.2f 離地 %+.2f m"
+			% ["✓" if ok else "✗", a.name, n3.global_position.x, n3.global_position.z, gy, dy])
+
+	# 2) 玩家出生
+	if player != null:
+		var p: Vector3 = player.global_position
+		# ⚠ 射線要排除玩家自己。玩家膠囊高約 1.7 m，從上往下打會先命中
+		#   自己的頭頂，於是「地面」被算成 p.y + 1.7，看起來像埋在地下 1.7 m。
+		var gy := _pt_ground(space, p.x, p.z, [player.get_rid()] as Array[RID])
+		var dy: float = p.y - gy if gy != -INF else INF
+		var ok: bool = gy != -INF and dy > -0.3 and dy < 3.0
+		if not ok:
+			fail += 1
+		print("[PLAYTEST] %s 玩家出生 (%.1f, %.2f, %.1f) 地面 %.2f 離地 %+.2f m"
+			% ["✓" if ok else "✗", p.x, p.y, p.z, gy, dy])
+		if not ok:
+			# 出生失敗時報出「射線到底打到誰」——地形高度對得上卻站不住，
+			# 通常是某個碰撞體疊在上面（樹幹代理、岩石、遺跡碰撞…）。
+			var q := PhysicsRayQueryParameters3D.create(
+				Vector3(p.x, 400.0, p.z), Vector3(p.x, -100.0, p.z))
+			var ex: Array[RID] = []
+			var chain := []
+			for k in 6:
+				q.exclude = ex
+				var h := space.intersect_ray(q)
+				if not h.has("position"):
+					break
+				var col: Object = h.get("collider")
+				chain.append("%s[%s] y=%.2f" % [
+					col.name if col else "?", col.get_class() if col else "?", h.position.y])
+				ex.append(h.rid)
+			print("[PLAYTEST]   射線由上而下打到：%s" % " ← ".join(chain))
+	else:
+		print("[PLAYTEST] ✗ 沒有玩家節點")
+		fail += 1
+
+	# 3) 主脊沿線可站立性
+	var route := [
+		[9.6, 320.0, "南端·人里口"], [6.2, 275.2, "界碑"], [3.6, 128.0, "地藏疏段"],
+		[-7.1, 6.4, "小溪"], [-15.9, -38.4, "大空地"], [21.3, -172.8, "夜雀屋台"],
+		[8.6, -313.6, "北端·神社口"],
+	]
+	var miss := 0
+	for r in route:
+		var gy := _pt_ground(space, r[0], r[1])
+		if gy == -INF:
+			miss += 1
+			print("[PLAYTEST] ✗ %s (%.1f, %.1f) 無地面" % [r[2], r[0], r[1]])
+	print("[PLAYTEST] 主脊 %d 個關卡點，%d 個無地面" % [route.size(), miss])
+	fail += miss
+
+	print("[PLAYTEST] ══ %s（%d 項失敗）══" % ["通過" if fail == 0 else "有問題", fail])
+
+
+func _pt_ground(space: PhysicsDirectSpaceState3D, x: float, z: float,
+		exclude: Array[RID] = []) -> float:
+	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -100.0, z))
+	q.exclude = exclude
+	var hit := space.intersect_ray(q)
+	return hit.position.y if hit.has("position") else -INF
+
+
 func _shot_tick() -> void:
 	_shot_frames += 1
 	if _shot_cam_pending != null and _shot_frames == 2:
@@ -172,6 +269,13 @@ func _shot_tick() -> void:
 		get_tree().quit()
 
 func _process(delta: float) -> void:
+	if _playtest:
+		_playtest_frames += 1
+		if _playtest_frames == 40:
+			_run_playtest()
+			get_tree().quit()
+		portal_cooldown = maxf(0.0, portal_cooldown - delta)
+		return
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
 	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":

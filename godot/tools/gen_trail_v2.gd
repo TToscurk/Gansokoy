@@ -71,6 +71,21 @@ var _branches: Array = []        # 岔路：每條是 PackedVector2Array
 var _meshes := {}                # path → Mesh（tree/grass 快取）
 var _placed_trunks: PackedVector2Array
 var _trunk_log: Array = []      # [中心 xz, 樹冠水平半徑] — 走廊自檢用
+## 地藏位置。地表植被要讓開，否則 1 m 高的芒草會把地藏整個埋掉。
+## ⚠ 必須在 _build_ground_cover() **之前**填好——地藏本身是在
+##   _build_human_traces()（更後面）才生成的，所以位置要先預算。
+var _jizo_sites: Array = []
+
+## 地藏配置：[沿主脊 t, 幾尊, 側向(+1 左 / -1 右)]
+## 這份表同時被 _plan_jizo_sites()（植被讓位）與 _build_human_traces()
+## （實際擺放）使用，兩邊不可各寫一份。
+const JIZO_SPECS := [
+	[0.07, 1, 1.0],           # 入口
+	[0.19, 1, -1.0],
+	[T_JIZO, 3, 1.0],         # 疏段三尊（規格的「地藏／舊路標」節點）
+	[0.41, 1, -1.0],
+	[0.71, 1, 1.0],
+]
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -339,6 +354,7 @@ func _init() -> void:
 	_index_terrain(terrain)
 	_build_creek_water()
 	_build_forest()
+	_plan_jizo_sites()          # 先定位置，讓地表植被知道要讓開哪裡
 	_build_ground_cover()
 	_build_rocks_and_logs()
 	_build_human_traces()
@@ -903,6 +919,15 @@ func _build_ground_cover() -> void:
 			# 屋台區完全淨空，避免穿模桌椅與阻擋視野
 			if p.distance_to(_stall_pos()) < 7.0:
 				continue
+			# 地藏周圍淨空 —— 不然 1 m 高的芒草會把 1.1 m 的地藏整個埋掉
+			# （使用者回報：「地藏我根本看不到在哪裡」）
+			var near_jizo := false
+			for jq in _jizo_sites:
+				if p.distance_to(jq) < 1.7:
+					near_jizo = true
+					break
+			if near_jizo:
+				continue
 			# 空地範圍完全禁止高草、大灌木、大葉植栽（Plant）侵入，只留零星短草地被
 			if _clearing_dist(p) < 2.0:
 				if name in ["矮竹", "灌木", "芒草", "蕨"]:
@@ -1013,13 +1038,21 @@ func _build_rocks_and_logs() -> void:
 		mk.rotation.y = atan2(d.x, d.y) + (PI * 0.5 if across else lib.rr(-0.6, 0.6))
 		mk.set_meta("meshy", "倒木/腐木 2-3 種，長 4-7 m，%s" % ("橫跨小路" if across else "路旁"))
 		lib.add(logs, mk, "倒木_%02d%s" % [lm, "_橫跨" if across else ""])
-		# 暫代：Log_Cluster 放大成一根粗木
-		var ps := _ps(LP + "Log_Cluster.gltf")
-		var inst := ps.instantiate() as Node3D
-		inst.position = mk.position
-		inst.rotation.y = mk.rotation.y
-		inst.scale = Vector3(4.5, 1.6, 1.6)
-		lib.add(logs, inst, "暫代木_%02d" % lm)
+		# 暫代倒木：一根**圓柱**橫躺。
+		# ⚠ 不能用 Log_Cluster 拉長。那是「一捆短柴薪」，端面有淺色年輪，
+		#   非等比拉 4.5× 之後年輪變成螺旋紋 —— 使用者的原話是「肉桂捲蛋糕」。
+		var trunk := MeshInstance3D.new()
+		var cyl := CylinderMesh.new()
+		cyl.top_radius = 0.30
+		cyl.bottom_radius = 0.38          # 一頭粗一頭細，像真的樹幹
+		cyl.height = lib.rr(4.5, 7.0)
+		cyl.radial_segments = 10
+		trunk.mesh = cyl
+		trunk.material_override = lib.pbr("fallen_log", "bark_cedar", 0.6, Color(0.52, 0.47, 0.40))
+		trunk.position = mk.position + Vector3(0, 0.32, 0)
+		# 躺平：繞 Z 轉 90° 讓圓柱軸由縱轉橫，再依 mk 的朝向擺
+		trunk.rotation = Vector3(0.0, mk.rotation.y, PI * 0.5)
+		lib.add(logs, trunk, "暫代倒木_%02d" % lm)
 		if across:
 			var sh := CollisionShape3D.new()
 			var bx := BoxShape3D.new()
@@ -1084,14 +1117,18 @@ func _build_human_traces() -> void:
 			fn += 1
 	# 燈籠與地藏（入口一組）
 	_lantern(ent, c - perp * (hw + 1.0) + d * 6.0, true, body)
-	_jizo(ent, c + perp * (hw + 1.4) + d * 9.0, 1, body)
+	# 入口地藏由 JIZO_SPECS[0]（t=0.07）統一負責，這裡不再另放
 	# 沿路：地藏/舊路標/燈籠 —— 越深越少，且越破
 	var along := lib.add(g, Node3D.new(), "沿路遺跡") as Node3D
+	# 沿路遺跡：燈籠與路標（地藏另外走 JIZO_SPECS，位置要與植被讓位一致）
 	var specs := [
-		[0.13, "燈籠", true], [0.19, "地藏", 1], [T_JIZO, "地藏", 3], [T_JIZO + 0.02, "路標", 0],
-		[0.35, "燈籠", false], [0.41, "地藏", 1], [0.47, "路標", 0], [0.62, "燈籠", false],
-		[0.71, "地藏", 1], [0.88, "路標", 0],
+		[0.13, "燈籠", true], [T_JIZO + 0.02, "路標", 0],
+		[0.35, "燈籠", false], [0.47, "路標", 0], [0.62, "燈籠", false],
+		[0.88, "路標", 0],
 	]
+	# 地藏：座標由 JIZO_SPECS + _jizo_base() 決定，與 _plan_jizo_sites() 同源
+	for js in JIZO_SPECS:
+		_jizo(along, _jizo_base(js[0], js[2]), js[1], body)
 	for s in specs:
 		var t: float = s[0]
 		var kind: String = s[1]
@@ -1099,7 +1136,6 @@ func _build_human_traces() -> void:
 		var pp := _spine_pos(t) + Vector2(-dd.y, dd.x) * (_half_w(t) + lib.rr(0.8, 2.2)) * (1.0 if lib.rand() < 0.5 else -1.0)
 		match kind:
 			"燈籠": _lantern(along, pp, s[2], body)
-			"地藏": _jizo(along, pp, s[2], body)
 			"路標":
 				var mk := Marker3D.new()
 				mk.position = Vector3(pp.x, height_at(pp.x, pp.y), pp.y)
@@ -1158,25 +1194,107 @@ func _lantern(parent: Node3D, p: Vector2, intact: bool, body: StaticBody3D) -> v
 	sh.shape = c; sh.position = inst.position + Vector3(0, 0.8, 0); body.add_child(sh); sh.owner = lib.root
 
 
+## 地藏位置用的獨立 RNG：種子由該組的基準座標決定。
+##
+## ⚠ 一定要獨立於 lib 的主亂數序列。_plan_jizo_sites() 得在植被生成前
+##   算出座標、_jizo() 在更後面才真正擺放，兩者必須得到同一組數字；
+##   若共用主序列，預算會偷走亂數讓後面所有散佈位移。
+func _jizo_rng(p: Vector2) -> RandomNumberGenerator:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(Vector2i(int(round(p.x * 100.0)), int(round(p.y * 100.0)))) ^ SEED
+	return rng
+
+
+## 預先算出所有地藏的世界座標（供地表植被讓位）。
+## 位置公式必須與 _build_human_traces() 裡的呼叫端**完全一致**。
+func _plan_jizo_sites() -> void:
+	_jizo_sites.clear()
+	for spec in JIZO_SPECS:
+		var t: float = spec[0]
+		var cnt: int = spec[1]
+		var base: Vector2 = _jizo_base(t, spec[2])
+		var rng := _jizo_rng(base)
+		for i in cnt:
+			_jizo_sites.append(base + Vector2(rng.randf_range(-0.75, 0.75), rng.randf_range(-0.5, 0.5)) * float(i))
+	print("[TRAIL] 地藏預定 %d 尊（植被讓開 1.7 m）" % _jizo_sites.size())
+
+
+## 沿主脊 t 的地藏基準座標（側向 side：+1 左 / -1 右）
+func _jizo_base(t: float, side: float) -> Vector2:
+	var d := _spine_dir(t)
+	return _spine_pos(t) + Vector2(-d.y, d.x) * side * (_half_w(t) + 2.3)
+
+
 func _jizo(parent: Node3D, p: Vector2, n: int, body: StaticBody3D) -> void:
+	# 暫代地藏：底座 + 身 + 頭 + 紅頭巾。
+	#
+	# ⚠ 舊版是一根 0.8 m 高、半徑 0.18 m 的膠囊，站在 1 m 高的芒草叢裡
+	#   完全看不到（使用者：「地藏我根本看不到在哪裡」）。
+	#   地藏是玩家的路標，必須讀得出來：加寬底座、頭與身分開、紅頭巾當
+	#   色彩訊號 —— 紅色在整片綠褐森林裡是唯一的暖色。
+	#
+	# 位置用**獨立 RNG**（種子由座標決定），不碰 lib 的主亂數序列 ——
+	# _plan_jizo_sites() 要能在植被之前算出同一組座標，若這裡偷走亂數，
+	# 後面所有散佈都會位移。
+	var stone := lib.pbr("jizo_stone", "stone_wall", 0.3, Color(0.72, 0.72, 0.68))
+	var cloth := StandardMaterial3D.new()
+	cloth.albedo_color = Color(0.68, 0.13, 0.11)
+	cloth.roughness = 0.95
+	var rng := _jizo_rng(p)
 	for i in n:
-		var q := p + Vector2(lib.rr(-0.6, 0.6), lib.rr(-0.4, 0.4)) * float(i)
+		var q := p + Vector2(rng.randf_range(-0.75, 0.75), rng.randf_range(-0.5, 0.5)) * float(i)
+		var gy := height_at(q.x, q.y)
+		var lean := rng.randf_range(-0.10, 0.10)
+		var yaw := rng.randf() * TAU
 		var mk := Marker3D.new()
-		mk.position = Vector3(q.x, height_at(q.x, q.y), q.y)
-		mk.rotation.y = lib.rand() * TAU
-		mk.rotation.z = lib.rr(-0.12, 0.12)
-		mk.set_meta("meshy", "風化地藏，高 0.7-0.9 m，長苔，局部破損，可戴紅頭巾")
-		lib.add(parent, mk, "地藏_%d_%d" % [parent.get_child_count(), i])
-		# 暫代：一個立石
-		var mi := MeshInstance3D.new()
-		var cm := CapsuleMesh.new(); cm.radius = 0.18; cm.height = 0.8
-		mi.mesh = cm
-		mi.material_override = lib.pbr("jizo_stone", "stone_wall", 0.3)
-		mi.position = mk.position + Vector3(0, 0.4, 0)
-		mi.rotation = mk.rotation
-		lib.add(parent, mi, "暫代地藏_%d_%d" % [parent.get_child_count(), i])
-		var sh := CollisionShape3D.new(); var c := CylinderShape3D.new(); c.radius = 0.25; c.height = 0.9
-		sh.shape = c; sh.position = mk.position + Vector3(0, 0.45, 0); body.add_child(sh); sh.owner = lib.root
+		mk.position = Vector3(q.x, gy, q.y)
+		mk.rotation = Vector3(0.0, yaw, lean)
+		mk.set_meta("meshy", "風化地藏，總高 1.0-1.2 m（含底座），長苔，局部破損，紅頭巾與圍兜")
+		lib.add(parent, mk, "地藏_%02d_%d" % [parent.get_child_count(), i])
+		var g := Node3D.new()
+		g.position = mk.position
+		g.rotation = mk.rotation
+		lib.add(parent, g, "暫代地藏_%02d_%d" % [parent.get_child_count(), i])
+		# 底座（方石）
+		var base := MeshInstance3D.new()
+		var bm2 := BoxMesh.new(); bm2.size = Vector3(0.52, 0.20, 0.46)
+		base.mesh = bm2
+		base.material_override = stone
+		base.position = Vector3(0, 0.10, 0)
+		lib.add(g, base, "底座")
+		# 身（圓柱，比膠囊粗）
+		var torso := MeshInstance3D.new()
+		var tc := CylinderMesh.new()
+		tc.top_radius = 0.19; tc.bottom_radius = 0.24; tc.height = 0.56; tc.radial_segments = 10
+		torso.mesh = tc
+		torso.material_override = stone
+		torso.position = Vector3(0, 0.20 + 0.28, 0)
+		lib.add(g, torso, "身")
+		# 頭（球）
+		var head := MeshInstance3D.new()
+		var hs := SphereMesh.new(); hs.radius = 0.17; hs.height = 0.32; hs.radial_segments = 12; hs.rings = 7
+		head.mesh = hs
+		head.material_override = stone
+		head.position = Vector3(0, 0.20 + 0.56 + 0.15, 0)
+		lib.add(g, head, "頭")
+		# 紅頭巾（扁圓錐蓋在頭上）—— 森林裡唯一的暖色，遠遠就認得出
+		var cap := MeshInstance3D.new()
+		var cc4 := CylinderMesh.new()
+		cc4.top_radius = 0.02; cc4.bottom_radius = 0.21; cc4.height = 0.16; cc4.radial_segments = 12
+		cap.mesh = cc4
+		cap.material_override = cloth
+		cap.position = Vector3(0, 0.20 + 0.56 + 0.26, 0)
+		lib.add(g, cap, "紅頭巾")
+		# 圍兜
+		var bib := MeshInstance3D.new()
+		var bb := BoxMesh.new(); bb.size = Vector3(0.30, 0.26, 0.03)
+		bib.mesh = bb
+		bib.material_override = cloth
+		bib.position = Vector3(0, 0.20 + 0.44, 0.20)
+		lib.add(g, bib, "圍兜")
+		var sh := CollisionShape3D.new(); var c := CylinderShape3D.new(); c.radius = 0.28; c.height = 1.1
+		sh.shape = c; sh.position = mk.position + Vector3(0, 0.55, 0); body.add_child(sh); sh.owner = lib.root
+		_jizo_sites.append(q)
 
 
 # ══════════════════════════════════════════════════════════════════

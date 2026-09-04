@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/stone_wall_rough.jpg" id="3_d6gvl"]
 
 [resource]
+albedo_color = Color(0.72, 0.72, 0.68, 1)
 albedo_texture = ExtResource("1_ljb76")
 roughness_texture = ExtResource("3_d6gvl")
 normal_enabled = true
