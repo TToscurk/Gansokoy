@@ -64,6 +64,19 @@ This file is intentionally short. It contains only facts that should affect the 
   3. 空地與視線保護：空地半徑擴至 17m，古樹偏心置放並採自然綠葉闊葉巨木（CommonTree_1）；路心、屋台周圍與大空地完全禁入高草/大灌木，路面結實清晰。
   4. 螢火蟲粒子：白晝 `emitting = false`，光色柔綠微縮，消除黃色發光方塊。
 - **測試驗收**：`walk_test.gd -- trail` 通過（0 條路線不通，BFS 全線暢通）；`check_map.gd -- trail` 水面正常開挖；截圖集存於 `docs/art_review/trail_v2/`。
+- **傳送點**：`data/trail.meta.json` 的 portals 已改成新主脊兩端 —— 北 (8.64, 9.06, −313.6) → `shrine`、南 (9.56, 0.29, 320.0) → `village`，各帶 `arrival_ground_y`（玩家落在傳送點往圖心退 4 m 處，該處地面較高）。`connections` 與 `mapRegistry.json` 同步線性化；舊的 1,635 筆樹幹碰撞已清空（場景帶 `own_colliders`）。
+- **實機自檢**：`main.gd --playtest`（走完整開機流程後驗傳送區生成與貼地、玩家出生落地、主脊 7 點可站立性）。獸道結果 0 項失敗。⚠ 不能用獨立 `--script` 工具做這件事：那模式下 autoload 不建立，`main.gd._ready` 中途即斷。
+- **狀態：可接受、未定版**（使用者 2026-09-04 裁決，**非** `ART_APPROVED`）。之後可能回頭改。
+- **Meshy 待補件**：界碑×2、警告牌、夜雀小木牌、地藏×7、石燈籠、路標×3、倒木×7、古樹 Hero、屋台 Hero、木橋。全部有 `Marker3D` + `meshy` meta 寫好尺寸與風化要求，資產到位可直接替換。
+
+## check_map 誤報修正 (2026-09-04)
+
+`check_map.gd` 兩個誤報來源已修，slice 從 11 個問題降到 1 個真問題：
+
+- **地面高度場只讀 `Terrain`**。slice 同時有 `Terrain`（舊地形，河床沒挖，水路一帶 +0.3 m）與 `UnifiedGround`（`gen_terrain_river.gd` 產出，含河床 −3.4 m）。只讀前者導致 11 個水面全被報「100% 埋在地下」，而實拍水路正常。改成 `GROUND_MESHES` 列出的網格全部併入同一高度場。
+- **刻意清空的 MultiMesh 被當成漏做**。`GrassTall`／`GrassFlower` 是使用者 2026-08-29 判定「彩度過高、尺寸過大」後由 `tools/clear_bright_grass.gd` 清成 0 實例的，節點保留以便還原。加 `INTENTIONALLY_EMPTY` 白名單。
+
+**slice 剩下的 1 個真問題（使用者裁決本輪不修）**：幹渠上游 z≈104 附近渠道沒挖到底 —— `UpstreamWater` 水面 −2.29 m、該處地面僅 −0.47 m，實拍確認畫面上水渠斷掉、草地蓋過。`Reach_Lower` 在 (287, −20) 同樣是平地上的水面。屬水路整合當時的既有缺口。診斷工具：`probe_slice_ground_pair.gd`、`probe_slice_water_gap.gd`。
 
 ## Yoriichi
 
