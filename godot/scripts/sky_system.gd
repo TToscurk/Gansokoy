@@ -34,6 +34,9 @@ extends Node3D
 		_dirty = true
 
 ## 一個遊戲日等於幾分鐘的真實時間。0 = 停住時間（用來做美術審查）。
+##
+## ⚠ 只有在「沒有 DayNight autoload」時才由這裡推進時間。有 autoload 時
+## 時間的權威是它——見 _process 的說明。
 @export_range(0.0, 240.0, 0.5) var 一日長度分鐘: float = 0.0
 
 ## 太陽在天空中偏離正南的角度，決定日出日落的方位。
@@ -188,7 +191,24 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint() and not 編輯器中即時更新:
 		return
 
-	if 一日長度分鐘 > 0.0 and not Engine.is_editor_hint():
+	# ── 時刻的單一權威 ──
+	#
+	# DayNight autoload（scripts/daynight.gd）持有 `hour`、吃 `--hour=` 旗標、
+	# 驅動環境光下限與街燈點滅，而且 HUD 時鐘也是讀它。這個節點若自己另外
+	# 推進一份時刻，場上就有兩套時間：實測過 DayNight 說 11:00、這裡說 6.85，
+	# 太陽仰角 −11.3°（地平線以下），整排町家沒有光照到卻看起來像陰影，
+	# 而 `--hour=11` 完全改不動畫面——因為它改的是 DayNight，這裡不讀。
+	#
+	# 所以：有 autoload 時以它為準，這個節點只負責「把時刻畫成天空」。
+	# 沒有 autoload 時（例如 --script 工具直接載入場景）才自己走時鐘，
+	# 那些情境下 一日長度分鐘 仍然有效。
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null and not Engine.is_editor_hint():
+		var h: float = dn.get("hour")
+		if absf(h - 時刻) > 0.001:
+			時刻 = h
+			_dirty = true
+	elif 一日長度分鐘 > 0.0 and not Engine.is_editor_hint():
 		時刻 = fposmod(時刻 + delta * (24.0 / (一日長度分鐘 * 60.0)), 24.0)
 		_dirty = true
 
