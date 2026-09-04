@@ -96,16 +96,40 @@ func _world_xf(n: Node) -> Transform3D:
 		cur = cur.get_parent()
 	return t
 
-## 從 Terrain 的 mesh 建高度場（每格記最低與最高）。
+## 從地面 mesh 建高度場（每格記最低與最高）。
 ## 兩個都要：建物要跟「footprint 最低點」比（產生器就是這樣擺的），
 ## 水面要跟「河床最低點」比（拿最高點會量到岸）。
+##
+## ⚠ 一張圖可能有**多個**地面網格。slice 同時有：
+##     Terrain        — 舊地形，水路重做前的版本，河床沒挖（水路一帶 +0.3 m）
+##     UnifiedGround  — gen_terrain_river.gd 產出的統一地面，含河床（−3.4 m）
+##   只讀 Terrain 的話，11 個水面全被報成「100% 埋在地下、最深 3.2 m」，
+##   而實拍畫面上水好好的 —— 那 3.5 m 落差就是兩份地面的差。
+##   所以要把所有地面網格**合併**成同一個高度場。
+const GROUND_MESHES := ["Terrain", "UnifiedGround"]
+
+## 刻意清空的 MultiMesh 層（使用者裁決，不是漏做）。
+## GrassTall / GrassFlower：2026-08-29 判定彩度過高、尺寸過大，
+## 由 tools/clear_bright_grass.gd 清成 0 實例；節點保留以便還原。
+const INTENTIONALLY_EMPTY := ["GrassTall", "GrassFlower"]
+
 func _build_height_field(root: Node) -> bool:
-	var terr := root.find_child("Terrain", true, false)
-	if terr == null or not (terr is MeshInstance3D):
+	var found := 0
+	for nm in GROUND_MESHES:
+		var terr := root.find_child(nm, true, false)
+		if terr == null or not (terr is MeshInstance3D):
+			continue
+		var mesh: Mesh = (terr as MeshInstance3D).mesh
+		if mesh == null or mesh.get_surface_count() == 0:
+			continue
+		_accumulate_ground(terr as MeshInstance3D, mesh)
+		found += 1
+	if found == 0:
 		return false
-	var mesh: Mesh = (terr as MeshInstance3D).mesh
-	if mesh == null or mesh.get_surface_count() == 0:
-		return false
+	return _gmin.size() > 0
+
+
+func _accumulate_ground(terr: MeshInstance3D, mesh: Mesh) -> void:
 	var arr := mesh.surface_get_arrays(0)
 	var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
 	var txf := _world_xf(terr)
@@ -120,7 +144,6 @@ func _build_height_field(root: Node) -> bool:
 				_gmin[c] = w.y
 			if _gmax[c] < w.y:
 				_gmax[c] = w.y
-	return _gmin.size() > 0
 
 ## 一塊水平範圍內的「地面基準高度」。
 ## 取第 15 百分位而不是絕對最低點：大院子裡可能有池塘或水溝，
@@ -465,6 +488,13 @@ func _check_mm_alive(root: Node) -> void:
 		for c in n.get_children():
 			stack.push_back(c)
 		if not (n is MultiMeshInstance3D):
+			continue
+		# ⚠ 有些空層是**使用者的決定**，不是漏做。
+		#   GrassTall / GrassFlower 在 2026-08-29 被使用者判定「彩度過高、
+		#   尺寸過大，與新街道質感衝突」，由 tools/clear_bright_grass.gd
+		#   清成 0 實例（節點結構刻意保留，方便日後還原）。
+		#   把它報成問題會讓每次體檢都有假警報，久了就沒人看體檢了。
+		if String(n.name) in INTENTIONALLY_EMPTY:
 			continue
 		n_mm += 1
 		var mm: MultiMesh = (n as MultiMeshInstance3D).multimesh
