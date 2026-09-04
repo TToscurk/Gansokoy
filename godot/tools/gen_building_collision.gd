@@ -29,6 +29,8 @@ const SUBTREES := [
 	"B1_Street",
 	"鈴奈庵", "鯢吞亭", "霧雨店", "寺子屋", "龍神像", "稗田底新版", "火見櫓",
 	"龍石像橋",
+	"圍牆",
+	"岩石",
 ]
 # Inside those subtrees, skip meshes that are ground/paving (already covered by
 # the ground body) and decorative clutter under this triangle count.
@@ -54,7 +56,7 @@ const TRIMESH_NAMES := ["鳥居", "Tori", "torii", "橋", "Bri", "bridge"]
 ## 燈籠 (676 and 556 vertices on 鯢吞亭/霧雨店) are deliberately NOT here: they
 ## hang over the street at head height, and a box around a lantern's swept shape
 ## would stick out into the walkway.
-const BOX_NAMES := ["zatsu", "雜物"]
+const BOX_NAMES := ["zatsu", "雜物", "Castle Wall", "Japanese Castle Wall", "圍牆"]
 
 var _root: Node3D
 var _out: Node3D
@@ -107,12 +109,16 @@ func _bake_subtree(n: Node, label: String) -> void:
 		for s in SKIP_NAMES:
 			if nm.findn(s) != -1 or String(mi.get_parent().name).findn(s) != -1:
 				skip = true
-		if skip or mi.mesh == null or _tris(mi.mesh) < MIN_TRIS:
+		var min_tris := 100 if (label == "岩石" or label == "圍牆") else MIN_TRIS
+		if skip or mi.mesh == null or _tris(mi.mesh) < min_tris:
 			_skipped += 1
 			continue
 
 		var owner_nm := _owner_name(mi)
 		var wb: AABB = mi.global_transform * mi.get_aabb()
+		if label == "圍牆":
+			var dir := "北" if wb.position.z > 0 else "南"
+			owner_nm = "圍牆_%s" % dir
 		var key := "%s|%.2f,%.2f,%.2f|%.2f,%.2f,%.2f|%d" % [
 			owner_nm, wb.position.x, wb.position.y, wb.position.z,
 			wb.size.x, wb.size.y, wb.size.z, _tris(mi.mesh)]
@@ -250,7 +256,7 @@ func _owner_name(mi: Node) -> String:
 	var n: Node = mi.get_parent()
 	while n != null and n != _root:
 		var nm := String(n.name)
-		if nm == "B1_Street":
+		if nm in ["B1_Street", "圍牆", "岩石"]:
 			break
 		if not (nm.begins_with("mesh_node") or nm == "Armature" or nm.begins_with("Sketchfab") or nm.begins_with("RootNode")):
 			parts.push_front(nm)

@@ -50,25 +50,25 @@ extends CharacterBody3D
 @export var jump_anim := "Jump"
 @export var jump_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_jump.res")
 ## 起跳段（clip 0~0.62 s）播放倍率——修掉「懸空被拖著走」的飄浮感。
-@export var jump_start_speed := 1.9
+@export var jump_start_speed := 2.3
 ## 落地段（clip 1.067~1.9 s）播放倍率。
 @export var jump_land_speed := 1.5
-## 起跳速度（物理）。空中時間 2v/g = 0.533 s，跳高 v²/2g ≈ 0.71 m。
-@export var jump_velocity := 5.33
+## 起跳速度（物理）。空中時間 2v/g = 0.82 s，跳高 v²/2g ≈ 1.68 m。
+@export var jump_velocity := 8.2
 ## JumpStart 跳過 clip 前面這段蹲伏（Run→Jump 立即起跳的關鍵）：
-## 實際蓄力 = (0.533 - skip) / jump_start_speed ≈ 0.12 s。
-@export var jump_start_skip := 0.30
+## 實際蓄力 = (0.533 - skip) / jump_start_speed ≈ 0.09 s。
+@export var jump_start_skip := 0.32
 ## 落地後無輸入時 Land 動畫佔用 locomotion 的時間；有輸入直接接 Run/Walk。
-@export var land_lock_time := 0.35
+@export var land_lock_time := 0.25
 ## FREE 狀態離地超過此秒數視為 Fall（走出平台邊緣）。
 @export var coyote_time := 0.12
 
 @export_group("Air Inertia")
 ## 空中不直接覆寫水平速度：有輸入時以 air_acceleration * air_control (m/s²)
 ## move_toward 目標速度；無輸入時只以 air_drag (m/s²) 衰減 → 保留起跳慣性。
-@export var air_acceleration := 4.0
-@export var air_control := 0.35
-@export var air_drag := 0.2
+@export var air_acceleration := 5.0
+@export var air_control := 0.45
+@export var air_drag := 0.15
 
 @export_group("Roll")
 @export var roll_anim := "Roll_Dodge"
@@ -121,6 +121,8 @@ extends CharacterBody3D
 @export var attack_move_factor_heavy := 0.5
 
 const SunBreathing = preload("res://characters/yoriichi/sun_breathing.gd")
+const CombatVFX = preload("res://characters/yoriichi/vfx/combat_vfx.gd")
+const SwordTrail3D = preload("res://characters/yoriichi/vfx/sword_trail.gd")
 
 ## Relayed from the camera/interaction adapter child so main.gd can keep
 ## connecting to the Player root exactly as it did with scenes/player.gd.
@@ -210,6 +212,12 @@ var _draw_t := 0.0
 var _attack_after_draw := false
 var _shift_pressed_msec := -1
 var _form13_queue: Array[int] = []
+var _blade_base: Marker3D = null
+var _blade_tip: Marker3D = null
+var _sword_trail: SwordTrail3D = null
+var _hitbox: Area3D = null
+var _hitstop_time := 0.0
+var _hit_targets_this_swing: Dictionary = {}
 
 ## Step-up for ledges and stone edges up to this height (metres). The east
 ## river revetment top (coping lip 0.22 m proud, walk_slice 2026-09-03) and
@@ -257,10 +265,70 @@ func _ready():
 	_sword_sheathed = _find_first("Sword_Sheathed")
 	_apply_sword_visibility()
 	_build_tree()
+	_setup_combat_extensions()
 
 func _find_first(n: String) -> Node3D:
 	var r := find_children(n, "", true, false)
 	return r[0] if r.size() > 0 else null
+
+func _setup_combat_extensions() -> void:
+	if _sword_hand:
+		_blade_base = Marker3D.new()
+		_blade_base.name = "BladeBase"
+		_blade_base.position = Vector3(0, 0.1, 0)
+		_sword_hand.add_child(_blade_base)
+
+		_blade_tip = Marker3D.new()
+		_blade_tip.name = "BladeTip"
+		_blade_tip.position = Vector3(0, 1.05, 0)
+		_sword_hand.add_child(_blade_tip)
+
+		_sword_trail = SwordTrail3D.new()
+		_sword_trail.name = "SwordTrail"
+		_sword_trail.base_node = _blade_base
+		_sword_trail.tip_node = _blade_tip
+		add_child(_sword_trail)
+
+		_hitbox = Area3D.new()
+		_hitbox.name = "BladeHitbox"
+		_hitbox.collision_layer = 0
+		_hitbox.collision_mask = 3
+		_hitbox.monitoring = false
+		var col := CollisionShape3D.new()
+		var cap := CapsuleShape3D.new()
+		cap.radius = 0.40
+		cap.height = 1.10
+		col.shape = cap
+		col.position = Vector3(0, 0.55, 0)
+		_hitbox.add_child(col)
+		_sword_hand.add_child(_hitbox)
+		_hitbox.body_entered.connect(_on_hit_target)
+		_hitbox.area_entered.connect(_on_hit_target)
+
+func _on_hit_target(node: Node) -> void:
+	if action_state != ActionState.ATTACKING or _hit_targets_this_swing.has(node):
+		return
+	if node == self or is_ancestor_of(node) or node.is_ancestor_of(self):
+		return
+	_hit_targets_this_swing[node] = true
+
+	var is_heavy: bool = (_attack_layer == "full" or combo_stage == 0)
+	_hitstop_time = 0.07 if is_heavy else 0.05
+
+	var hit_pos: Vector3 = _blade_tip.global_position if _blade_tip != null else global_position + Vector3(0, 1, 0)
+	var fwd := -_visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
+	var hit_data := {
+		"damage": 35.0 if is_heavy else 15.0,
+		"hit_pos": hit_pos,
+		"hit_dir": fwd,
+		"heavy": is_heavy
+	}
+	if node.has_method("take_hit"):
+		node.take_hit(hit_data)
+	elif node.get_parent() != null and node.get_parent().has_method("take_hit"):
+		node.get_parent().take_hit(hit_data)
+	else:
+		CombatVFX.spawn_hit_spark(self, hit_pos, -fwd, is_heavy)
 
 func _library() -> AnimationLibrary:
 	var lib_name: StringName = _anim.get_animation_library_list()[0] if _anim.get_animation_library_list().size() > 0 else &""
@@ -447,6 +515,9 @@ func _fade_full() -> void:
 # Physics
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
+	if _hitstop_time > 0.0:
+		_hitstop_time = maxf(_hitstop_time - delta, 0.0)
+		return
 	var input_dir := _read_input_dir()
 	var grounded := is_on_floor()
 	var running := Input.is_action_pressed("sprint")
@@ -478,6 +549,7 @@ func _physics_process(delta):
 		if _jump_charge <= 0.0:
 			_jump_charge = -1.0
 			velocity.y = jump_velocity
+			CombatVFX.spawn_jump_dust(self, global_position)
 
 	# Gate on "not in a jump" rather than is_on_floor(): pressed against a
 	# 46° lip the body reports on_wall / off-floor while its feet are on the
@@ -627,6 +699,7 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 		return   # 蓄力蹲伏：JumpStart 播放中，locomotion 不搶
 	if _was_airborne:
 		_was_airborne = false
+		CombatVFX.spawn_land_dust(self, global_position)
 		if not moving:
 			_land_lock = land_lock_time
 			pb.travel("Land")
@@ -734,6 +807,7 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	_jump_charge = -1.0   # 翻滾取消尚未離地的跳躍蓄力
 	_roll_duration = roll_anim_resource.length / roll_animation_speed
 	_fire_full("roll", roll_animation_speed)
+	CombatVFX.spawn_roll_dust(self, global_position, _dodge_dir)
 
 func _update_roll_movement(delta: float) -> void:
 	var previous_t := clampf(_action_elapsed / _roll_duration, 0.0, 1.0) if _roll_duration > 0.0 else 1.0
@@ -808,6 +882,11 @@ func _start_light_section(stage: int) -> void:
 	# 第三斬結束要明確收勢；前兩段快速接續。
 	_upper_finish_fade = 0.20 if stage >= COMBO_SECTION_RANGES.size() else 0.10
 	_fire_upper("atk%d" % stage, spd)
+	if _sword_trail != null:
+		_sword_trail.start_trail()
+	_hit_targets_this_swing.clear()
+	if _hitbox != null:
+		_hitbox.monitoring = true
 
 ## 三連斬不取同一速度：第一刀突然、第二刀維持、第三刀略收。
 func _combo_stage_speed(stage: int) -> float:
@@ -839,6 +918,11 @@ func request_special_attack(animation_name: String) -> void:
 	_action_real = _full_anim_length(animation_name) / spd
 	_action_elapsed = 0.0
 	_fire_full(key, spd)
+	if _sword_trail != null:
+		_sword_trail.start_trail()
+	_hit_targets_this_swing.clear()
+	if _hitbox != null:
+		_hitbox.monitoring = true
 
 ## 各全身技的播放倍率（不再共用單一 attack_speed_scale）。
 func _special_speed_for(animation_name: String) -> float:
@@ -910,6 +994,11 @@ func request_heavy_cut() -> void:
 	_action_elapsed = 0.0
 	_upper_finish_fade = 0.24
 	_fire_upper("atk1", heavy_cut_speed)
+	if _sword_trail != null:
+		_sword_trail.start_trail()
+	_hit_targets_this_swing.clear()
+	if _hitbox != null:
+		_hitbox.monitoring = true
 
 func _finish_attack() -> void:
 	var was_layer := _attack_layer
@@ -920,6 +1009,11 @@ func _finish_attack() -> void:
 	combo_input_buffered = false
 	_action_elapsed = 0.0
 	_action_real = 0.0
+	if _sword_trail != null:
+		_sword_trail.stop_trail()
+	if _hitbox != null:
+		_hitbox.monitoring = false
+	_hit_targets_this_swing.clear()
 	if was_layer == "upper":
 		_fade_upper()
 	else:
@@ -970,6 +1064,7 @@ func _start_sheathe() -> void:
 
 func _update_sword(delta: float) -> void:
 	if sword_state == SwordState.DRAWING:
+		var prev_t := _draw_t
 		_draw_elapsed += delta
 		_draw_t = clampf(_draw_elapsed / _draw_real, 0.0, 1.0) if _draw_real > 0.0 else 1.0
 		_apply_sword_visibility()
@@ -1059,6 +1154,11 @@ func execute_form(id: int) -> bool:
 		_action_real = _full_anim_length(def.anim) / def.speed
 		_action_elapsed = 0.0
 		_fire_full(key, def.speed)
+	if _sword_trail != null:
+		_sword_trail.start_trail()
+	_hit_targets_this_swing.clear()
+	if _hitbox != null:
+		_hitbox.monitoring = true
 	return true
 
 ## 拾參ノ型：把可用的前十二型按 FORM13_SEQUENCE 高速循環（框架；

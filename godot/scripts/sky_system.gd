@@ -183,7 +183,16 @@ var _grey := 0.0
 
 func _ready() -> void:
 	_build()
-	_dirty = true
+	var t := _weather_targets()
+	_cloud = t.x
+	_fog = t.y
+	_rain = t.z
+	_grey = t.w
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null and not Engine.is_editor_hint():
+		時刻 = dn.get("hour")
+	_apply()
+	_dirty = false
 	set_process(true)
 
 
@@ -303,7 +312,7 @@ func _build() -> void:
 	_env.background_mode = Environment.BG_SKY
 	# Radiance must refresh every frame or the ambient light stays stuck at
 	# whatever time of day the sky was first baked at.
-	sky.radiance_size = Sky.RADIANCE_SIZE_128
+	sky.radiance_size = Sky.RADIANCE_SIZE_256
 	sky.process_mode = Sky.PROCESS_MODE_REALTIME
 
 	_env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY

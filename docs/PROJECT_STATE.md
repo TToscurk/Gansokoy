@@ -49,10 +49,21 @@ This file is intentionally short. It contains only facts that should affect the 
 - The 170-house era is **fully retired and deleted (2026-08-25)** — generator pipeline (`gen_town.gd`, `tools/town/`, `make_town.py`, `make_machiya.py`, `town_modules.json`) **and the machiya assets, market, village gates, and portals**. None of these exist in the repo. Do not look for them, restore them, or treat docs describing them as current.
 - **The current `village.tscn` IS the new baseline** (user ruling): landmarks 鎮守之杜, 稗田邸(+後院), 鈴奈庵, 寺子屋, 霧雨店, 鯢吞亭, 龍神像; 14 路燈; vegetation; vista; terrain; boundary. ~221 nodes. Future village content builds on top of this.
 - The village is a **frozen, committed scene**: edit `village.tscn` / its `gen/` artifacts directly, following normal art-review gates.
-- Remaining live generators: `gen_hieda*.gd`, `gen_kourindou.gd`, `gen_trail.gd`, `gen_textures.gd`, `gen_charpreview.gd` + Blender `make_hieda/shourou/trees/props/hedge/chars.py`.
+- Remaining live generators: `gen_hieda*.gd`, `gen_kourindou.gd`, `gen_trail_v2.gd`, `gen_textures.gd`, `gen_charpreview.gd` + Blender `make_hieda/shourou/trees/props/hedge/chars.py`.
 - Known naming wart: scene nodes and `gen/` folder use 「裨田邸」 (typo) for 稗田邸. Renaming touches scene references — leave as-is unless a task explicitly fixes it.
 - Visual changes still require prototype → render → Human Art Review → rollout.
 - Next major art direction is lighting / cel-shading.
+
+## Beast Trail (獸道) v2 重構完成 (2026-09-04)
+
+- **定位與規格**：南端（人里入口）至北端（神社傳送點）全線蛇行漸窄（路寬 2.8m → 1.3m），劃分 10 個張弛段落（農田/柵欄 → 界碑森林 → 密林1 → 疏段地藏 → 密林2 → 小溪木橋 → 獸道大空地 → 密林3妖怪痕跡 → 夜雀屋台 → 深處妖怪領域）。
+- **產生器**：`godot/tools/gen_trail_v2.gd` 產出 `maps/trail/trail.tscn`（節點約 30,700 個、樹幹碰撞 1,080+ 根）。
+- **自然與美術校正**：
+  1. 樹種分配：闊葉 42%、松 33%、杉 20%、老歪樹 3%、枯樹 2%。前半段老樹全面覆寫綠葉，僅深處極稀疏紅葉。
+  2. 密林感：樹木重兵配置在路沿 3.2m ~ 55m 帶狀區（路沿樹達 3,840+ 棵），營造林蔭穹頂。
+  3. 空地與視線保護：空地半徑擴至 17m，古樹偏心置放並採自然綠葉闊葉巨木（CommonTree_1）；路心、屋台周圍與大空地完全禁入高草/大灌木，路面結實清晰。
+  4. 螢火蟲粒子：白晝 `emitting = false`，光色柔綠微縮，消除黃色發光方塊。
+- **測試驗收**：`walk_test.gd -- trail` 通過（0 條路線不通，BFS 全線暢通）；`check_map.gd -- trail` 水面正常開挖；截圖集存於 `docs/art_review/trail_v2/`。
 
 ## Yoriichi
 

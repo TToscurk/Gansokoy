@@ -82,15 +82,30 @@ func _ready() -> void:
 		_shot_cam_node.current = true
 		_aim_shot(0)
 	if _shot_cam != "":
-		var v := _shot_cam.split_floats(",")
+		# y / ly 可寫成 "+1.7"：表示「該 xz 的地面高度 + 1.7」。
+		# 獸道整體往北抬 9 m，固定 y=1.7 的鏡位在密林段直接掉進地底看天。
+		# 地形 trimesh 這一幀才建，物理要下一幀才查得到 → 相對高度在
+		# _shot_tick 第 2 幀才解算（_shot_cam_pending）。
 		var cam := Camera3D.new()
-		cam.position = Vector3(v[0], v[1], v[2])
 		add_child(cam)
-		cam.look_at(Vector3(v[3], v[4], v[5]))
 		cam.current = true
+		_shot_cam_pending = cam
 
 var _shot_path := ""
 var _shot_cam := ""
+
+## "+h" → 該 xz 射線打到的地面 + h；純數字 → 絕對 y。
+func _shot_xyz(xs: String, ys: String, zs: String) -> Vector3:
+	var x := xs.to_float()
+	var z := zs.to_float()
+	if ys.begins_with("+"):
+		var h := ys.substr(1).to_float()
+		var space := get_viewport().get_world_3d().direct_space_state
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 500.0, z), Vector3(x, -500.0, z))
+		var hit := space.intersect_ray(q)
+		var gy: float = hit.position.y if hit.has("position") else 0.0
+		return Vector3(x, gy + h, z)
+	return Vector3(x, ys.to_float(), z)
 var _shot_player := ""
 var _shot_frames := 0
 ## ── 資產正面照（ADR-016）──
@@ -141,8 +156,15 @@ func _shotlist_tick() -> void:
 	_aim_shot(_shot_i)
 var _default_env: Environment = null
 
+var _shot_cam_pending: Camera3D = null
+
 func _shot_tick() -> void:
 	_shot_frames += 1
+	if _shot_cam_pending != null and _shot_frames == 2:
+		var parts := _shot_cam.split(",")
+		_shot_cam_pending.position = _shot_xyz(parts[0], parts[1], parts[2])
+		_shot_cam_pending.look_at(_shot_xyz(parts[3], parts[4], parts[5]))
+		_shot_cam_pending = null
 	if _shot_frames == 45:
 		var img := get_viewport().get_texture().get_image()
 		img.save_png(_shot_path)
