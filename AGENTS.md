@@ -16,11 +16,10 @@ capture pipeline and Human Art Review only.
 generic `godot-master` recommendation conflicts with it or with the user's
 current instruction, follow the constitution and the user's instruction.
 
-The canonical on-demand routing rules are in `AGENT_CONSTITUTION.md` under
-"Godot Skill 路由規則". In particular, scene design, road planning, 3D layout,
-blockout, sightline, landmark-guidance, and level-flow work also requires the
-project-local `.agents/skills/level-design/SKILL.md`; do not load or install
-overlapping skills for the same task.
+In particular, scene design, road planning, 3D layout, blockout, sightline,
+landmark-guidance, and level-flow work also requires the project-local
+`.agents/skills/level-design/SKILL.md`; do not load or install overlapping
+skills for the same task.
 
 ## Mandatory Production Constitution
 
