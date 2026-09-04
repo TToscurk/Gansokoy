@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dardo1l5gv008"
-path="res://.godot/imported/遠景  妖怪之山2_base_color.webp-0e68cdbd6c006e479b7129fbbf26d98a.ctex"
+path.s3tc="res://.godot/imported/遠景  妖怪之山2_base_color.webp-0e68cdbd6c006e479b7129fbbf26d98a.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "f96ac1dc8526bd5d98f0097e1b39177e"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://maps/village/gen/山/遠景/遠景  妖怪之山2_base_color.webp"
-dest_files=["res://.godot/imported/遠景  妖怪之山2_base_color.webp-0e68cdbd6c006e479b7129fbbf26d98a.ctex"]
+dest_files=["res://.godot/imported/遠景  妖怪之山2_base_color.webp-0e68cdbd6c006e479b7129fbbf26d98a.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

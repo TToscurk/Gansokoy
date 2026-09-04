@@ -40,8 +40,9 @@ const RIVER_Z1 := R_EXT - CELL
 const CANAL_CENTER_X := 287.0
 const CANAL_Z0 := -72.0
 const CANAL_Z1 := 104.0
-const CANAL_INNER_HALF := 6.4
+const CANAL_WEST_INNER_HALF := 6.4
 const CANAL_WEST_OUTER_HALF := 12.0
+const CANAL_EAST_INNER_HALF := 6.4
 const CANAL_EAST_OUTER_HALF := 14.5
 const CANAL_TERRAIN_Y := -3.45
 # 正式幹渠在 slice 內停止；南北端各用 8m 地形坡收回地表，避免
@@ -147,8 +148,9 @@ func _canal_cut(x: float, z: float) -> float:
 	if z < CANAL_Z0 or z > CANAL_Z1:
 		return 0.0
 	var offset_x: float = x - CANAL_CENTER_X
+	var inner_half: float = CANAL_WEST_INNER_HALF if offset_x < 0.0 else CANAL_EAST_INNER_HALF
 	var outer_half: float = CANAL_WEST_OUTER_HALF if offset_x < 0.0 else CANAL_EAST_OUTER_HALF
-	var cross_weight: float = 1.0 - smoothstep(CANAL_INNER_HALF, outer_half, absf(offset_x))
+	var cross_weight: float = 1.0 - smoothstep(inner_half, outer_half, absf(offset_x))
 	var end_weight: float = smoothstep(CANAL_Z0, CANAL_Z0 + CANAL_END_BLEND, z) \
 			* (1.0 - smoothstep(CANAL_Z1 - CANAL_END_BLEND, CANAL_Z1, z))
 	return cross_weight * end_weight

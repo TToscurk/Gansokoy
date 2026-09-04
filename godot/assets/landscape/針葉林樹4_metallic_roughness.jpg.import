@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://osmpadgkci2g"
-path="res://.godot/imported/針葉林樹4_metallic_roughness.jpg-ac8702c196ef893facd7718d7277d099.ctex"
+path.s3tc="res://.godot/imported/針葉林樹4_metallic_roughness.jpg-ac8702c196ef893facd7718d7277d099.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "34bc6dbdff2106e9ccca7f9c4757dfb3"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/針葉林樹4_metallic_roughness.jpg"
-dest_files=["res://.godot/imported/針葉林樹4_metallic_roughness.jpg-ac8702c196ef893facd7718d7277d099.ctex"]
+dest_files=["res://.godot/imported/針葉林樹4_metallic_roughness.jpg-ac8702c196ef893facd7718d7277d099.s3tc.ctex"]
 
 [params]
 

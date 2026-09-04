@@ -1,0 +1,125 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://maps/slice/gen/foam_sheet.gdshader" id="1_y346p"]
+
+[sub_resource type="Gradient" id="Gradient_kgm4m"]
+offsets = PackedFloat32Array(0, 1, 0.25)
+colors = PackedColorArray(0.93, 0.97, 1, 0.95, 0.85, 0.92, 0.96, 0, 0.98, 1, 1, 0.85)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ul2yk"]
+gradient = SubResource("Gradient_kgm4m")
+
+[sub_resource type="Curve" id="Curve_0foar"]
+_data = [Vector2(0, 0.55), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.15), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_01e7e"]
+curve = SubResource("Curve_0foar")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_noyad"]
+emission_shape = 3
+emission_box_extents = Vector3(0.15, 0.25, 0.9)
+direction = Vector3(0.4, 1, 0)
+spread = 32.0
+initial_velocity_min = 1.6
+initial_velocity_max = 3.4
+damping_min = 0.2
+damping_max = 0.6
+scale_min = 0.35
+scale_curve = SubResource("CurveTexture_01e7e")
+color_ramp = SubResource("GradientTexture1D_ul2yk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vqx6"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.9, 0.95, 1, 1)
+roughness = 0.15
+
+[sub_resource type="SphereMesh" id="SphereMesh_aj58c"]
+material = SubResource("StandardMaterial3D_3vqx6")
+radius = 0.035
+height = 0.07
+radial_segments = 6
+rings = 3
+
+[sub_resource type="Gradient" id="Gradient_trwd6"]
+offsets = PackedFloat32Array(0, 1, 0.15, 0.6)
+colors = PackedColorArray(1, 1, 1, 0, 0.92, 0.96, 0.99, 0, 1, 1, 1, 0.55, 0.96, 0.98, 1, 0.32)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r8bkm"]
+gradient = SubResource("Gradient_trwd6")
+
+[sub_resource type="Curve" id="Curve_2np66"]
+_data = [Vector2(0, 0.4), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_so3lm"]
+curve = SubResource("Curve_2np66")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6cosg"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.06, 1)
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0.6, 0.35, 0)
+spread = 25.0
+initial_velocity_min = 0.25
+initial_velocity_max = 0.9
+gravity = Vector3(0, -0.4, 0)
+damping_min = 1.2
+damping_max = 2.4
+scale_min = 0.8
+scale_max = 2.1
+scale_curve = SubResource("CurveTexture_so3lm")
+color_ramp = SubResource("GradientTexture1D_r8bkm")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rou2n"]
+transparency = 1
+depth_draw_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_ibc1v"]
+material = SubResource("StandardMaterial3D_rou2n")
+size = Vector2(0.55, 0.55)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1oac3"]
+render_priority = 0
+shader = ExtResource("1_y346p")
+shader_parameter/water_tint = null
+shader_parameter/foam_tint = null
+shader_parameter/flow_speed = null
+shader_parameter/streak_density = null
+shader_parameter/opacity = null
+shader_parameter/top_fade = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_1b12r"]
+size = Vector2(0.7, 1.4)
+
+[node name="水花示範" type="Node3D" unique_id=998820836]
+
+[node name="A_水滴噴濺" type="GPUParticles3D" parent="." unique_id=1934709835]
+amount = 220
+lifetime = 1.1
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_noyad")
+draw_pass_1 = SubResource("SphereMesh_aj58c")
+
+[node name="B_攪動泡沫" type="GPUParticles3D" parent="." unique_id=1885547772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
+amount = 90
+lifetime = 2.2
+visibility_aabb = AABB(-3, -2, -3, 6, 4, 6)
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_6cosg")
+draw_pass_1 = SubResource("QuadMesh_ibc1v")
+
+[node name="C_落水簾幕" type="MeshInstance3D" parent="." unique_id=1210210032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, -0.6, 0)
+material_override = SubResource("ShaderMaterial_1oac3")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_1b12r")

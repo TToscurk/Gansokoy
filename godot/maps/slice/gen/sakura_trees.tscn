@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dimmadw4b0qfu"]
+
+[ext_resource type="PackedScene" uid="uid://c5t2j5s4xyy7a" path="res://assets/landscape/櫻花樹.glb" id="1_madl4"]
+
+[node name="櫻花樹群" type="Node3D" unique_id=1813556734]
+
+[node name="櫻花樹_00" parent="." unique_id=856481504 instance=ExtResource("1_madl4")]
+transform = Transform3D(0.25098273, 0, 7.893523, 0, 7.897512, 0, -7.893523, 0, 0.25098273, 146.50352, -0.08, 185.58203)
+
+[node name="櫻花樹_01" parent="." unique_id=1125171417 instance=ExtResource("1_madl4")]
+transform = Transform3D(-1.1273069, 0, -7.5527096, 0, 7.636376, 0, 7.5527096, 0, -1.1273069, 120.82202, -0.08, -97.458435)
+
+[node name="櫻花樹_02" parent="." unique_id=1915470816 instance=ExtResource("1_madl4")]
+transform = Transform3D(2.6751788, 0, 6.646964, 0, 7.165104, 0, -6.646964, 0, 2.6751788, 273.21893, -0.08, 110.801025)
+
+[node name="櫻花樹_03" parent="." unique_id=315417675 instance=ExtResource("1_madl4")]
+transform = Transform3D(-5.232333, 0, -4.254145, 0, 6.7435203, 0, 4.254145, 0, -5.232333, 179.21051, -0.08, 210.79416)
+
+[node name="櫻花樹_04" parent="." unique_id=391867454 instance=ExtResource("1_madl4")]
+transform = Transform3D(5.864432, 0, 5.605067, 0, 8.112233, 0, -5.605067, 0, 5.864432, 159.86969, -0.08, 122.4689)
+
+[node name="櫻花樹_05" parent="." unique_id=2022019961 instance=ExtResource("1_madl4")]
+transform = Transform3D(-4.8734756, 0, -6.9592676, 0, 8.496009, 0, 6.9592676, 0, -4.8734756, 196.25545, -0.08, 6.2921295)
+
+[node name="櫻花樹_06" parent="." unique_id=567431756 instance=ExtResource("1_madl4")]
+transform = Transform3D(0.9011011, 0, -8.322701, 0, 8.371343, 0, 8.322701, 0, 0.9011011, 267.38055, -0.08, -91.757675)
+
+[node name="櫻花樹_07" parent="." unique_id=12892129 instance=ExtResource("1_madl4")]
+transform = Transform3D(2.7445567, 0, 8.991297, 0, 9.400851, 0, -8.991297, 0, 2.7445567, 300.33484, -0.08, 127.232025)
+
+[node name="櫻花樹_08" parent="." unique_id=1837319806 instance=ExtResource("1_madl4")]
+transform = Transform3D(-6.206239, 0, -2.496379, 0, 6.6894927, 0, 2.496379, 0, -6.206239, 191.91013, -0.08, 139.7016)
+
+[node name="櫻花樹_09" parent="." unique_id=1347317321 instance=ExtResource("1_madl4")]
+transform = Transform3D(3.8192215, 0, -5.8358746, 0, 6.9745164, 0, 5.8358746, 0, 3.8192215, 207.43817, -0.08, 134.03775)
+
+[node name="櫻花樹_10" parent="." unique_id=820103533 instance=ExtResource("1_madl4")]
+transform = Transform3D(-5.494678, 0, -3.8483815, 0, 6.7083178, 0, 3.8483815, 0, -5.494678, 144.60844, -0.08, 216.99088)
+
+[node name="櫻花樹_11" parent="." unique_id=1631615073 instance=ExtResource("1_madl4")]
+transform = Transform3D(-1.0070183, 0, 8.018151, 0, 8.0811405, 0, -8.018151, 0, -1.0070183, 284.0235, -0.08, -90.49257)
+
+[node name="櫻花樹_12" parent="." unique_id=1090388841 instance=ExtResource("1_madl4")]
+transform = Transform3D(-2.6130233, 0, 8.518404, 0, 8.910168, 0, -8.518404, 0, -2.6130233, 144.59007, -0.08, -90.17462)
+
+[node name="櫻花樹_13" parent="." unique_id=299447666 instance=ExtResource("1_madl4")]
+transform = Transform3D(-5.48704, 0, -6.5286, 0, 8.528203, 0, 6.5286, 0, -5.48704, 182.0032, -0.08, 103.08032)
+
+[node name="櫻花樹_14" parent="." unique_id=1987544498 instance=ExtResource("1_madl4")]
+transform = Transform3D(-0.11807636, 0, -9.231247, 0, 9.232002, 0, 9.231247, 0, -0.11807636, 163.92082, -0.08, -87.87938)
+
+[node name="櫻花樹_15" parent="." unique_id=1701779546 instance=ExtResource("1_madl4")]
+transform = Transform3D(-3.2122922, 0, 7.0431376, 0, 7.741099, 0, -7.0431376, 0, -3.2122922, 146.41032, -0.08, -42.829956)
+
+[node name="櫻花樹_16" parent="." unique_id=524639867 instance=ExtResource("1_madl4")]
+transform = Transform3D(-6.5322375, 0, -3.1208827, 0, 7.2394776, 0, 3.1208827, 0, -6.5322375, 145.44131, -0.08, 99.8985)

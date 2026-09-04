@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg8ybqb5agwn0"
-path="res://.godot/imported/盆樹_metallic_roughness.jpg-02474366d78ba2188bcafae2801dcf55.ctex"
+path.s3tc="res://.godot/imported/盆樹_metallic_roughness.jpg-02474366d78ba2188bcafae2801dcf55.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "a0cb97c0faa116fad8e2863335caccca"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/盆樹_metallic_roughness.jpg"
-dest_files=["res://.godot/imported/盆樹_metallic_roughness.jpg-02474366d78ba2188bcafae2801dcf55.ctex"]
+dest_files=["res://.godot/imported/盆樹_metallic_roughness.jpg-02474366d78ba2188bcafae2801dcf55.s3tc.ctex"]
 
 [params]
 

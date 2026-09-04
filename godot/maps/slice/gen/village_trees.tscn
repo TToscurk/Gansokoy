@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c4jwadkqtwgju"]
 
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_櫻花樹.res" id="1_qqbo4"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_普通樹.res" id="2_7p23c"]
@@ -9,10 +9,12 @@
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹3.res" id="7_vlk20"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_針葉林樹4.res" id="8_rn2lq"]
 [ext_resource type="MultiMesh" path="res://maps/slice/gen/treemm_盆樹.res" id="9_rlrip"]
+[ext_resource type="PackedScene" uid="uid://dimmadw4b0qfu" path="res://maps/slice/gen/sakura_trees.tscn" id="10_7p23c"]
 
 [node name="VillageTrees" type="Node3D" unique_id=1401219288]
 
 [node name="Trees_櫻花樹" type="MultiMeshInstance3D" parent="." unique_id=1574890424]
+visible = false
 multimesh = ExtResource("1_qqbo4")
 
 [node name="Trees_普通樹" type="MultiMeshInstance3D" parent="." unique_id=1397291341]
@@ -25,6 +27,7 @@ multimesh = ExtResource("3_85ard")
 multimesh = ExtResource("4_e01te")
 
 [node name="Trees_針葉樹1" type="MultiMeshInstance3D" parent="." unique_id=2009212507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.866806, 0, -27.50122)
 multimesh = ExtResource("5_ng7bu")
 
 [node name="Trees_針葉樹2glb" type="MultiMeshInstance3D" parent="." unique_id=1905947415]
@@ -38,3 +41,6 @@ multimesh = ExtResource("8_rn2lq")
 
 [node name="Trees_盆樹" type="MultiMeshInstance3D" parent="." unique_id=1223174516]
 multimesh = ExtResource("9_rlrip")
+
+[node name="櫻花樹群" parent="." unique_id=1813556734 instance=ExtResource("10_7p23c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9348145, 0)

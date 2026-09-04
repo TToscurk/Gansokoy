@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhjkj038pambe"
-path="res://.godot/imported/普通樹_base_color.jpg-667006f3d0155c9b51ec0ae1c2d9ac0c.ctex"
+path.s3tc="res://.godot/imported/普通樹_base_color.jpg-667006f3d0155c9b51ec0ae1c2d9ac0c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "7488ab83a171681a4a723112adf500fa"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/普通樹_base_color.jpg"
-dest_files=["res://.godot/imported/普通樹_base_color.jpg-667006f3d0155c9b51ec0ae1c2d9ac0c.ctex"]
+dest_files=["res://.godot/imported/普通樹_base_color.jpg-667006f3d0155c9b51ec0ae1c2d9ac0c.s3tc.ctex"]
 
 [params]
 

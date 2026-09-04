@@ -303,19 +303,23 @@ func _make_row(root: Node3D, side: float, side_name: String, row: Dictionary,
 			_make_item(scatter, "ReedB", REED_B_MESH, 40, 0.19, REED_MAT)
 		"bush":
 			# Single plants baked out of the scan sets, scaled past real size so
-			# leaf cards stay pixel-sized at shot distances. Shadows on — a
-			# photoscan bush without a contact shadow floats visually.
+			# leaf cards stay pixel-sized at shot distances.
+			# Shadows OFF (2026-09-03): a 156k-tri photoscan shrub × ~140
+			# instances × 4 cascades was 26.8M shadow-pass triangles — the
+			# single largest GPU cost in slice (audit_shadow_casters). The
+			# "floating" read is handled by the contact AO in the ground
+			# material, not by real shadows.
 			for mix in BUSH_MIX:
 				var variants: Array = _baked.get(mix[0], [])
 				for vi in range(variants.size()):
 					_make_item(scatter, "%s%d" % [mix[0], vi], variants[vi],
 							maxi(1, int(mix[2]) / maxi(1, variants.size())),
-							float(mix[1]), "", true)
+							float(mix[1]), "", false)
 		"rock":
 			var rocks: Array = _baked.get("rock", [])
 			for vi in range(rocks.size()):
 				_make_item(scatter, "MossRock%d" % vi, rocks[vi],
-						maxi(1, 100 / maxi(1, rocks.size())), 1.25, "", true)
+						maxi(1, 100 / maxi(1, rocks.size())), 1.25, "", false)
 
 	# Build through the global class names: assigning a plain `load(...).new()`
 	# Resource to the typed `modifier_stack` setter silently leaves it null, and

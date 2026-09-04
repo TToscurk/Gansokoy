@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dl8pu0rynp70c"
-path="res://.godot/imported/櫻花樹_base_color.jpg-2bb464fa9c58b5ae2738666463aeb9e3.ctex"
+path.s3tc="res://.godot/imported/櫻花樹_base_color.jpg-2bb464fa9c58b5ae2738666463aeb9e3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "096353cdc4ff0a5c15a841b70c11b07b"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/櫻花樹_base_color.jpg"
-dest_files=["res://.godot/imported/櫻花樹_base_color.jpg-2bb464fa9c58b5ae2738666463aeb9e3.ctex"]
+dest_files=["res://.godot/imported/櫻花樹_base_color.jpg-2bb464fa9c58b5ae2738666463aeb9e3.s3tc.ctex"]
 
 [params]
 

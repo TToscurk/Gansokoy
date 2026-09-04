@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c51afkg4w3xas"
-path="res://.godot/imported/大衫_base_color.jpg-007939366831527a23d8a84a10f4af54.ctex"
+path.s3tc="res://.godot/imported/大衫_base_color.jpg-007939366831527a23d8a84a10f4af54.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "61cf759e6adebb7a71864a7c5d7ccef0"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/大衫_base_color.jpg"
-dest_files=["res://.godot/imported/大衫_base_color.jpg-007939366831527a23d8a84a10f4af54.ctex"]
+dest_files=["res://.godot/imported/大衫_base_color.jpg-007939366831527a23d8a84a10f4af54.s3tc.ctex"]
 
 [params]
 

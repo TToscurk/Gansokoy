@@ -5,8 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://b1r7ipu7cvo3s" path="res://assets/machiya/市集商家.glb" id="3_mnaft"]
 [ext_resource type="PackedScene" uid="uid://gvgfwpl5vsud" path="res://assets/machiya/長屋.glb" id="4_u8fn5"]
 [ext_resource type="PackedScene" uid="uid://bq23r0hubdreo" path="res://assets/machiya/大町家.glb" id="5_6nlnt"]
-[ext_resource type="PackedScene" uid="uid://duje5la2lwidi" path="res://assets/machiya/倉庫.glb" id="6_2w7c2"]
-[ext_resource type="PackedScene" uid="uid://3aoa80tflymi" path="res://assets/lowpoly_scene/ToriGate.gltf" id="7_2j7dc"]
 [ext_resource type="PackedScene" uid="uid://dp245i7m4kv1r" path="res://assets/landmark/大鳥居.glb" id="7_lwccr"]
 [ext_resource type="Material" uid="uid://c5mhsrxos6c7j" path="res://assets/materials/street_paving.tres" id="8_8x4hv"]
 [ext_resource type="PackedScene" uid="uid://dbe81k4metmdw" path="res://assets/market/屋台絲綢攤.glb" id="9_irimy"]
@@ -18,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://1lbposx0vybx" path="res://assets/market/水井.glb" id="15_5ha42"]
 [ext_resource type="PackedScene" uid="uid://c3jgya6aye321" path="res://assets/market/雜物堆木桶.glb" id="16_aytt4"]
 [ext_resource type="PackedScene" uid="uid://ckcqrnns3qmd1" path="res://assets/market/雜物堆瓢盆.glb" id="17_ranue"]
+[ext_resource type="PackedScene" uid="uid://cx40yxd48kyxu" path="res://assets/_lod/倉庫.glb" id="18_2j7dc"]
 [ext_resource type="PackedScene" uid="uid://hyy03bx7la4a" path="res://assets/market/雜物草捆.glb" id="18_u1f15"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5wvcx"]
@@ -37,7 +36,7 @@ _surfaces = [{
 transform = Transform3D(-2.84124e-07, 0, 6.5, 0, 6.5, 0, -6.5, 0, -2.84124e-07, 224.82181, 3.084739, -55.868004)
 
 [node name="komachiya_西_01" parent="." unique_id=134993351 instance=ExtResource("2_2j7dc")]
-transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 226.43536, 3.364968, -47.09187)
+transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 226.43536, 3.364968, -47.09187)
 
 [node name="machiya_西_02" parent="." unique_id=2069911143 instance=ExtResource("1_6o8s7")]
 transform = Transform3D(-2.84124e-07, 0, 6.5, 0, 6.5, 0, -6.5, 0, -2.84124e-07, 224.82181, 3.084739, -38.194775)
@@ -52,7 +51,7 @@ transform = Transform3D(-2.84124e-07, 0, 6.5, 0, 6.5, 0, -6.5, 0, -2.84124e-07, 
 transform = Transform3D(-2.7538175e-07, 0, 6.3, 0, 6.3, 0, -6.3, 0, -2.7538175e-07, 228.3688, 2.0832639, -2.501997)
 
 [node name="komachiya_西_06" parent="." unique_id=970804282 instance=ExtResource("2_2j7dc")]
-transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 226.43536, 3.364968, 48.78552)
+transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 226.43536, 3.364968, 48.78552)
 
 [node name="machiya_西_07" parent="." unique_id=646208293 instance=ExtResource("1_6o8s7")]
 transform = Transform3D(-2.84124e-07, 0, 6.5, 0, 6.5, 0, -6.5, 0, -2.84124e-07, 224.82181, 3.084739, 57.682613)
@@ -72,9 +71,6 @@ transform = Transform3D(-2.84124e-07, 0, -6.5, 0, 6.5, 0, 6.5, 0, -2.84124e-07, 
 [node name="shouka_東_02" parent="." unique_id=1589658520 instance=ExtResource("3_mnaft")]
 transform = Transform3D(-2.2729921e-07, 0, -5.2, 0, 5.2, 0, 5.2, 0, -2.2729921e-07, 243.8358, 3.652915, -19.857107)
 
-[node name="machiya_東_03" parent="." unique_id=1255591493 instance=ExtResource("1_6o8s7")]
-transform = Transform3D(-2.84124e-07, 0, -6.5, 0, 6.5, 0, 6.5, 0, -2.84124e-07, 245.17819, 3.084739, -6.223463)
-
 [node name="nagaya_東_04" parent="." unique_id=1889935184 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, -6.3, 0, 6.3, 0, 6.3, 0, -2.7538175e-07, 241.6312, 2.0832639, 5.4137497)
 
@@ -90,26 +86,17 @@ transform = Transform3D(-2.797529e-07, 0, -6.4, 0, 6.4, 0, 6.4, 0, -2.797529e-07
 [node name="machiya_東_08" parent="." unique_id=610004763 instance=ExtResource("1_6o8s7")]
 transform = Transform3D(-2.84124e-07, 0, -6.5, 0, 6.5, 0, 6.5, 0, -2.84124e-07, 245.17819, 3.084739, 51.39553)
 
-[node name="kura_東_09" parent="." unique_id=564740572 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, -3.3, 0, 3.3, 0, 3.3, 0, -1.4424758e-07, 241.92105, -0.019419873, 63.36712)
-
 [node name="komachiya_東_10" parent="." unique_id=269695466 instance=ExtResource("2_2j7dc")]
-transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 243.56464, 3.364968, 71.27093)
+transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 243.56464, 3.364968, 71.27093)
 
 [node name="machiya_東_11" parent="." unique_id=748552963 instance=ExtResource("1_6o8s7")]
 transform = Transform3D(-2.84124e-07, 0, -6.5, 0, 6.5, 0, 6.5, 0, -2.84124e-07, 245.17819, 3.084739, 80.04706)
-
-[node name="kura_西裏_00" parent="." unique_id=345599677 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, 3.3, 0, 3.3, 0, -3.3, 0, -1.4424758e-07, 211.57895, -0.019419873, -46.861286)
 
 [node name="nagaya_西裏_01" parent="." unique_id=611396603 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, 6.3, 0, 6.3, 0, -6.3, 0, -2.7538175e-07, 211.8688, 2.0832639, -36.228065)
 
 [node name="komachiya_西裏_02" parent="." unique_id=1355072299 instance=ExtResource("2_2j7dc")]
 transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 209.93536, 3.364968, -25.437332)
-
-[node name="kura_西裏_03" parent="." unique_id=1393480454 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, 3.3, 0, 3.3, 0, -3.3, 0, -1.4424758e-07, 211.57895, -0.019419873, -14.333524)
 
 [node name="nagaya_西裏_04" parent="." unique_id=1845870762 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, 6.3, 0, 6.3, 0, -6.3, 0, -2.7538175e-07, 211.8688, 2.0832639, -3.700301)
@@ -121,10 +108,7 @@ transform = Transform3D(-2.2729921e-07, 0, 5.2, 0, 5.2, 0, -5.2, 0, -2.2729921e-
 transform = Transform3D(-2.2729921e-07, 0, 5.2, 0, 5.2, 0, -5.2, 0, -2.2729921e-07, 209.6642, 3.652915, 30.028952)
 
 [node name="komachiya_西裏_07" parent="." unique_id=396438703 instance=ExtResource("2_2j7dc")]
-transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 209.93536, 3.364968, 39.757362)
-
-[node name="kura_西裏_08" parent="." unique_id=1702722266 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, 3.3, 0, 3.3, 0, -3.3, 0, -1.4424758e-07, 211.57895, -0.019419873, 54.638714)
+transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 209.93536, 3.364968, 39.757362)
 
 [node name="nagaya_西裏_09" parent="." unique_id=1101884763 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, 6.3, 0, 6.3, 0, -6.3, 0, -2.7538175e-07, 211.8688, 2.0832639, 68.47193)
@@ -132,14 +116,8 @@ transform = Transform3D(-2.7538175e-07, 0, 6.3, 0, 6.3, 0, -6.3, 0, -2.7538175e-
 [node name="komachiya_西裏_10" parent="." unique_id=1060739192 instance=ExtResource("2_2j7dc")]
 transform = Transform3D(-2.0981467e-07, 0, 4.8, 0, 4.8, 0, -4.8, 0, -2.0981467e-07, 209.93536, 3.364968, 79.262665)
 
-[node name="kura_東裏_00" parent="." unique_id=1835143928 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, -3.3, 0, 3.3, 0, 3.3, 0, -1.4424758e-07, 258.42105, -0.019419873, -36.860405)
-
 [node name="nagaya_東裏_01" parent="." unique_id=1893709477 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, -6.3, 0, 6.3, 0, 6.3, 0, -2.7538175e-07, 258.1312, 2.0832639, -26.21648)
-
-[node name="kura_東裏_02" parent="." unique_id=249572415 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, -3.3, 0, 3.3, 0, 3.3, 0, -1.4424758e-07, 258.42105, -0.019419873, -15.583258)
 
 [node name="komachiya_東裏_03" parent="." unique_id=287006434 instance=ExtResource("2_2j7dc")]
 transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 260.06464, 3.364968, 4.7650976)
@@ -147,17 +125,11 @@ transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-
 [node name="nagaya_東裏_04" parent="." unique_id=415497625 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, -6.3, 0, 6.3, 0, 6.3, 0, -2.7538175e-07, 258.1312, 2.0832639, 15.55583)
 
-[node name="kura_東裏_05" parent="." unique_id=1889498755 instance=ExtResource("6_2w7c2")]
-transform = Transform3D(-1.4424758e-07, 0, -3.3, 0, 3.3, 0, 3.3, 0, -1.4424758e-07, 258.42105, -0.019419873, 26.189053)
-
 [node name="nagaya_東裏_06" parent="." unique_id=1741910803 instance=ExtResource("4_u8fn5")]
 transform = Transform3D(-2.7538175e-07, 0, -6.3, 0, 6.3, 0, 6.3, 0, -2.7538175e-07, 258.1312, 2.0832639, 59.505215)
 
 [node name="komachiya_東裏_07" parent="." unique_id=1838883002 instance=ExtResource("2_2j7dc")]
 transform = Transform3D(-2.0981467e-07, 0, -4.8, 0, 4.8, 0, 4.8, 0, -2.0981467e-07, 260.06464, 3.364968, 70.26394)
-
-[node name="ToriGate" parent="." unique_id=581658563 instance=ExtResource("7_2j7dc")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 235.59573, -0.14819765, -85.498375)
 
 [node name="StreetPaving" type="MeshInstance3D" parent="." unique_id=1529036772]
 material_override = ExtResource("8_8x4hv")
@@ -244,5 +216,14 @@ transform = Transform3D(-0.10022907, 0, -1.1456239, 0, 1.15, 0, 1.1456239, 0, -0
 [node name="zatsu_06" parent="PlazaMarket" unique_id=1184141358 instance=ExtResource("16_aytt4")]
 transform = Transform3D(0.8546166, 0, -0.76950014, 0, 1.15, 0, 0.76950014, 0, 0.8546166, 216.3089, 0.39125, 41.89833)
 
+[node name="倉庫" parent="." unique_id=471179697 instance=ExtResource("18_2j7dc")]
+transform = Transform3D(-1.7484555e-07, 0, -4, 0, 4, 0, 4, 0, -1.7484555e-07, 243.88593, 0, 63.006493)
+
+[node name="倉庫2" parent="." unique_id=1537422964 instance=ExtResource("18_2j7dc")]
+transform = Transform3D(-1.7484555e-07, 0, -4, 0, 4, 0, 4, 0, -1.7484555e-07, 242.79738, 0, -34.47984)
+
 [node name="大鳥居" parent="." unique_id=2046923920 instance=ExtResource("7_lwccr")]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 235.3347, 7.11734, 102.04515)
+
+[node name="大鳥居2" parent="." unique_id=1086097204 instance=ExtResource("7_lwccr")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 234.497, 6.1383, -80.77024)

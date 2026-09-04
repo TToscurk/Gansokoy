@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw1bq188xaafd"
-path="res://.godot/imported/松樹_normal.jpg-45810d6e6be2d85a3495a00b488ad6a7.ctex"
+path.s3tc="res://.godot/imported/松樹_normal.jpg-45810d6e6be2d85a3495a00b488ad6a7.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "e33fd182f6300e42de4388bff672aef8"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/松樹_normal.jpg"
-dest_files=["res://.godot/imported/松樹_normal.jpg-45810d6e6be2d85a3495a00b488ad6a7.ctex"]
+dest_files=["res://.godot/imported/松樹_normal.jpg-45810d6e6be2d85a3495a00b488ad6a7.s3tc.ctex"]
 
 [params]
 

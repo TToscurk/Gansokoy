@@ -12,7 +12,10 @@ const START_MAP := "shrine"
 ## が実体（maps/shrine/shrine.tscn も blockout/shrine.glb も）が無いため、
 ## これが無いと起動が黒画面になる。shrine が建ったらこの退避は自然に
 ## 使われなくなる——START_MAP を書き換えて逃げないのはそのため。
-const BOOT_FALLBACK := "village"
+## 2026-09-03: village → slice。人間之里の実作業は maps/slice で進んでおり
+## （B1/B2 ラウンド、碰撞、緣一の実装確認）、F5 一発でそこに立ちたい。
+## village.tscn は凍結済みの旧基線。`--map=village` で今でも開ける。
+const BOOT_FALLBACK := "slice"
 ## 傳送落地後的冷卻，免得一落地就被同一個傳送區抓回去
 const PORTAL_COOLDOWN := 2.0
 ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
@@ -199,11 +202,28 @@ func load_map(id: String, from_id: String) -> void:
 		print("[map] Terrain override=", terr.material_override)
 
 	# 原生場景可以自帶 WorldEnvironment（霧、氛圍是每張圖的個性）——
-	# 有的話就讓 main 的預設環境讓位，離圖時還回來
-	var map_env := map_root.find_child("WorldEnvironment", true, false)
+	# 有的話就讓 main 的預設環境讓位，離圖時還回來。
+	#
+	# ⚠ 按**型別**找，不按名字。這裡原本是
+	#   find_child("WorldEnvironment", true, false)
+	# ——那是節點名比對。slice 的環境節點叫「天空環境」（天象系統底下，和
+	# 「太陽」「月亮」「降水」同一組中文命名），名字對不上，find_child 回傳
+	# null，main 就誤判「這張圖沒有自己的環境」而保留自己那份。結果場上同時
+	# 有兩個啟用中的 WorldEnvironment，Godot 只採用其中一個且順序無保證，
+	# 天象系統的天空、概念圖雲層與體積霧就這樣被蓋掉——F5 看不到太陽光影和
+	# 雲的真正原因。圖的節點是使用者命名的，程式不該假設它叫什麼。
+	var map_env := _find_first(map_root, "WorldEnvironment")
 	if _default_env == null:
 		_default_env = $WorldEnvironment.environment
 	$WorldEnvironment.environment = null if map_env else _default_env
+
+	# 同理，圖自帶日月時 main 的 Sun 必須讓位。兩盞 DirectionalLight3D 同時
+	# 亮著會互相沖淡、投出方向衝突的影子，而天象系統本來就會依時刻自己驅動
+	# 太陽與月亮。這盞燈留給沒有天象系統的舊圖當保底。
+	var map_sun := _find_first(map_root, "DirectionalLight3D")
+	$Sun.visible = map_sun == null
+	if map_sun != null:
+		print("[map] %s 自帶天象，main 的 WorldEnvironment 與 Sun 讓位" % id)
 
 	# 佈局重新生成的原生圖（如獸道的新森林）自帶碰撞，web 版碰撞箱對不上
 	var own: bool = map_root.get_meta("own_colliders", false)
@@ -236,6 +256,19 @@ func _on_interaction_message(text: String) -> void:
 	interaction_message.text = text
 	interaction_message.visible = not text.is_empty()
 
+## 依**型別**在子樹中找第一個節點。Node.find_child 只比對名字，對這個專案
+## 不適用：圖裡的節點是使用者用中文命名的（天空環境、太陽、月亮），程式不能
+## 假設它們叫英文類別名。
+func _find_first(n: Node, cls: String) -> Node:
+	if n.is_class(cls):
+		return n
+	for c in n.get_children():
+		var found := _find_first(c, cls)
+		if found != null:
+			return found
+	return null
+
+
 ## 大 mesh 做 trimesh 靜態碰撞。
 ##
 ## own_colliders 的原生圖只做地形 —— 它們的建物已經自己放了手做碰撞箱
@@ -251,6 +284,13 @@ func _build_trimesh_collision(root: Node, own_colliders: bool) -> int:
 			stack.push_back(c)
 		if n is MeshInstance3D:
 			if own_colliders and not (String(n.name) == "Terrain" or n.has_meta("needs_trimesh")):
+				continue
+			# A hidden mesh must not carry collision: slice hides its legacy
+			# Terrain (UnifiedGround replaced it) but this pass still baked
+			# Terrain_col, so the player stood on an invisible surface 1–3.5 m
+			# above the ground he could see (probe_ground_gap 2026-09-03:
+			# 123 / 675 samples > 10 cm, worst 3.5 m over the canal).
+			if not (n as Node3D).is_visible_in_tree():
 				continue
 			var aabb: AABB = n.get_aabb()
 			if maxf(aabb.size.x, aabb.size.z) >= TRIMESH_MIN_SPAN:

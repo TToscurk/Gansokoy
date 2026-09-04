@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://mbknu0wk543j"
-path="res://.godot/imported/櫻花樹_metallic_roughness.jpg-ded027b384dd41763163e1613cb7080d.ctex"
+path.s3tc="res://.godot/imported/櫻花樹_metallic_roughness.jpg-ded027b384dd41763163e1613cb7080d.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "c6781fdb21b40737774a612cc6c9f4ce"
@@ -14,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/landscape/櫻花樹_metallic_roughness.jpg"
-dest_files=["res://.godot/imported/櫻花樹_metallic_roughness.jpg-ded027b384dd41763163e1613cb7080d.ctex"]
+dest_files=["res://.godot/imported/櫻花樹_metallic_roughness.jpg-ded027b384dd41763163e1613cb7080d.s3tc.ctex"]
 
 [params]
 
