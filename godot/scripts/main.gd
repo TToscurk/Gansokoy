@@ -184,7 +184,10 @@ func _run_playtest() -> void:
 		fail += 1
 	for a in portals:
 		var n3 := a as Node3D
-		var gy := _pt_ground(space, n3.global_position.x, n3.global_position.z)
+		# 排除邊界牆：boundary() 的牆體高 40 m，傳送點就在圖緣附近時
+		# 射線會先打到牆頂，把「地面」量成 40.0（shrine 首跑就這樣）。
+		var gy := _pt_ground(space, n3.global_position.x, n3.global_position.z,
+			[] as Array[RID], true)
 		if gy == -INF:
 			print("[PLAYTEST] ✗ %s 底下沒有地面" % a.name)
 			fail += 1
@@ -229,30 +232,59 @@ func _run_playtest() -> void:
 		print("[PLAYTEST] ✗ 沒有玩家節點")
 		fail += 1
 
-	# 3) 主脊沿線可站立性
-	var route := [
-		[9.6, 320.0, "南端·人里口"], [6.2, 275.2, "界碑"], [3.6, 128.0, "地藏疏段"],
-		[-7.1, 6.4, "小溪"], [-15.9, -38.4, "大空地"], [21.3, -172.8, "夜雀屋台"],
-		[8.6, -313.6, "北端·神社口"],
-	]
-	var miss := 0
-	for r in route:
-		var gy := _pt_ground(space, r[0], r[1])
-		if gy == -INF:
-			miss += 1
-			print("[PLAYTEST] ✗ %s (%.1f, %.1f) 無地面" % [r[2], r[0], r[1]])
-	print("[PLAYTEST] 主脊 %d 個關卡點，%d 個無地面" % [route.size(), miss])
-	fail += miss
+	# 3) 沿線可站立性 —— 檢查點依地圖而定
+	# ⚠ 不能寫死成獸道座標。換張圖時每個點都會報「無地面」，
+	#   而那不是場景問題，是檢查表沒跟著換（shrine 第一次跑就 5/7 假失敗）。
+	var routes := {
+		"trail": [
+			[9.6, 320.0, "南端·人里口"], [6.2, 275.2, "界碑"], [3.6, 128.0, "地藏疏段"],
+			[-7.1, 6.4, "小溪"], [-15.9, -38.4, "大空地"], [21.3, -172.8, "夜雀屋台"],
+			[8.6, -313.6, "北端·神社口"],
+		],
+		"shrine": [
+			[0.0, 53.0, "南端·獸道口"], [0.0, 44.0, "主鳥居"], [0.0, 20.0, "參道中段"],
+			[0.0, -5.0, "石階"], [0.0, -20.0, "境內中央"], [0.0, -31.5, "拜殿正面"],
+			[-13.5, -22.0, "社務所"], [11.0, -14.5, "手水舍"],
+		],
+	}
+	var map_id := String(map_root.name).to_lower() if map_root else ""
+	var route: Array = routes.get(map_id, [])
+	if route.is_empty():
+		print("[PLAYTEST] （%s 沒有登記檢查點，略過可站立性測試）" % map_id)
+	else:
+		var miss := 0
+		for r in route:
+			var gy := _pt_ground(space, r[0], r[1])
+			if gy == -INF:
+				miss += 1
+				print("[PLAYTEST] ✗ %s (%.1f, %.1f) 無地面" % [r[2], r[0], r[1]])
+		print("[PLAYTEST] 沿線 %d 個關卡點，%d 個無地面" % [route.size(), miss])
+		fail += miss
 
 	print("[PLAYTEST] ══ %s（%d 項失敗）══" % ["通過" if fail == 0 else "有問題", fail])
 
 
 func _pt_ground(space: PhysicsDirectSpaceState3D, x: float, z: float,
-		exclude: Array[RID] = []) -> float:
+		exclude: Array[RID] = [], skip_boundary: bool = false) -> float:
 	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -100.0, z))
 	q.exclude = exclude
-	var hit := space.intersect_ray(q)
-	return hit.position.y if hit.has("position") else -INF
+	if not skip_boundary:
+		var hit := space.intersect_ray(q)
+		return hit.position.y if hit.has("position") else -INF
+	# 邊界牆（gen_lib.boundary）是 40 m 高的隱形擋牆，會被誤認成地面。
+	# 往下逐個排除，取第一個「不是邊界」的命中。
+	var ex: Array[RID] = exclude.duplicate()
+	for k in 8:
+		q.exclude = ex
+		var hit := space.intersect_ray(q)
+		if not hit.has("position"):
+			return -INF
+		var col: Object = hit.get("collider")
+		var nm := String(col.name) if col else ""
+		if not (nm.contains("Boundary") or nm.contains("邊界") or nm.contains("boundary")):
+			return hit.position.y
+		ex.append(hit.rid)
+	return -INF
 
 
 func _shot_tick() -> void:
