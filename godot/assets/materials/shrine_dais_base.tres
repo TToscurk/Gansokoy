@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_diff.jpg" id="1_sgj76"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_nor_gl.jpg" id="2_mdwv3"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_rough.jpg" id="3_jihbg"]
+
+[resource]
+albedo_color = Color(0.55, 0.54, 0.51, 1)
+albedo_texture = ExtResource("1_sgj76")
+roughness = 0.95
+roughness_texture = ExtResource("3_jihbg")
+normal_enabled = true
+normal_scale = 0.4
+normal_texture = ExtResource("2_mdwv3")
+uv1_scale = Vector3(0.33, 0.33, 0.33)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 5
