@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://cse1kir0enemy01"]
+
+[ext_resource type="Script" path="res://characters/combat/enemy_samurai.gd" id="1_enemy"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+height = 1.75
+radius = 0.34
+
+[sub_resource type="StandardMaterial3D" id="Mat_cloth"]
+albedo_color = Color(0.16, 0.14, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_skin"]
+albedo_color = Color(0.72, 0.58, 0.46, 1)
+roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="Mat_steel"]
+albedo_color = Color(0.62, 0.65, 0.7, 1)
+metallic = 0.9
+roughness = 0.25
+
+[sub_resource type="StandardMaterial3D" id="Mat_tell"]
+albedo_color = Color(1, 0.95, 0.8, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.8, 1)
+emission_energy_multiplier = 6.0
+shading_mode = 0
+
+[sub_resource type="CapsuleMesh" id="Mesh_torso"]
+material = SubResource("Mat_cloth")
+radius = 0.3
+height = 1.15
+
+[sub_resource type="SphereMesh" id="Mesh_head"]
+material = SubResource("Mat_skin")
+radius = 0.17
+height = 0.34
+
+[sub_resource type="BoxMesh" id="Mesh_blade"]
+material = SubResource("Mat_steel")
+size = Vector3(0.05, 0.95, 0.012)
+
+[sub_resource type="TorusMesh" id="Mesh_tell"]
+material = SubResource("Mat_tell")
+inner_radius = 0.42
+outer_radius = 0.5
+
+[node name="EnemySamurai" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("Shape_body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Torso" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("Mesh_torso")
+
+[node name="Head" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68, 0)
+mesh = SubResource("Mesh_head")
+
+[node name="Blade" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.94, -0.34, 0, 0.34, 0.94, 0, 0, 0, 1, 0.42, 1.15, 0.18)
+mesh = SubResource("Mesh_blade")
+
+[node name="Tell" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15, 0)
+material_override = SubResource("Mat_tell")
+mesh = SubResource("Mesh_tell")
+visible = false
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="HurtShape" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("Shape_body")

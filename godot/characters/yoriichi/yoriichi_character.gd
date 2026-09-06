@@ -80,11 +80,53 @@ extends CharacterBody3D
 ## Shift 按住 = 疾跑；按下後在此秒數內放開 = 翻滾。
 @export var shift_tap_time := 0.25
 
+## 玖ノ型 日暈龍・頭舞的火焰龍特效；關掉即回到原本純刀光的旋轉斬。
+@export var sun_dragon_enabled := true
+## 龍身直徑倍率：1.0 約 6 公尺寬，配合角色體型可自行調整。
+@export_range(0.2, 3.0, 0.05) var sun_dragon_scale := 1.0
+## 龍頭是否追著刀尖轉。使用者裁定不追的版本較好，預設關閉。
+@export var sun_dragon_head_tracking := false
+## 普通輕／重斬的閃避派生；不改日之呼吸或旋轉斬原有規則。
+@export var attack_dodge_cancel_enabled := true
+## 0 = 出招即可閃避；1 = 完整播完才可閃避。
+@export_range(0.0, 1.0) var attack_dodge_cancel_start := 0.45
+
+@export_group("Guard / Deflect")
+## 隻狼式格擋：按住即格擋，按下瞬間的短窗口內被打中 = 彈刀。
+@export var guard_enabled := true
+## 彈刀窗口（秒）。0.15 為隻狼原作水準；調大變簡單。
+@export_range(0.05, 0.5, 0.01) var deflect_window := 0.15
+## 彈刀：傷害全免，自己軀幹只漲一點，對方軀幹重挫。
+@export var deflect_self_posture := 5.0
+@export var deflect_attacker_posture := 22.0
+## 格擋：漏傷比例與軀幹代價。
+@export_range(0.0, 1.0, 0.01) var block_damage_ratio := 0.15
+@export var block_self_posture := 18.0
+@export var block_attacker_posture := 6.0
+## 未防禦時的軀幹累積倍率。
+@export var unguarded_posture_mult := 1.0
+## 危攻擊（不可格擋）硬架的代價：漏傷比例與軀幹爆量。
+@export_range(0.0, 1.0, 0.01) var perilous_block_damage_ratio := 0.6
+@export var perilous_block_posture := 40.0
+
+@export_group("Lock-on")
+@export var lock_on_enabled := true
+## 鎖定搜尋半徑。
+@export var lock_on_range := 22.0
+## 超過此距離自動解鎖。
+@export var lock_break_range := 30.0
+## 鎖定時角色轉向敵人的速率（rad/s）。
+@export var lock_turn_speed := 9.0
+## 忍殺可及距離：必須貼上去才能處決，不能隔空秒殺。
+@export_range(1.0, 6.0, 0.1) var deathblow_range := 3.5
+
 @export_group("Attack")
 @export var attack_combo_anim := "Attack_Combo"
 @export var attack_combo_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_combo.res")
 @export var attack_spin_anim := "Attack_Spin"
 @export var attack_spin_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_spin.res")
+@export var attack_continuous_spin_anim := "Attack_Continuous_Spin"
+@export var attack_continuous_spin_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_continuous_spin.res")
 @export var attack_judgment_anim := "Attack_Judgment"
 @export var attack_judgment_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_judgment.res")
 @export var attack_combo_1_anim := "Attack_Combo_1"
@@ -107,6 +149,8 @@ extends CharacterBody3D
 @export var combo_1_speed_scale := 2.2
 ## Axe_Spin 全身迴旋（貳型）。
 @export var spin_speed_scale := 1.7
+## 連續旋轉砍擊（Continuous Spin）。
+@export var continuous_spin_speed_scale := 1.8
 ## 360_Power_Spin_Jump（拾型）。
 @export var spin_jump_speed_scale := 2.0
 @export_range(0.0, 1.0) var combo_cancel_start := 0.35
@@ -117,15 +161,21 @@ extends CharacterBody3D
 ## MGR 式：攻擊不是 movement lock。Run 攻擊保留 100% 前進動量、Walk 70%；
 ## 全身技（heavy）50% —— 即使 full-body override，CharacterBody3D 也不停。
 @export var attack_move_factor_run := 1.0
-@export var attack_move_factor_walk := 0.7
+@export var attack_move_factor_walk := 1.0
 @export var attack_move_factor_heavy := 0.5
 
 const SunBreathing = preload("res://characters/yoriichi/sun_breathing.gd")
 const CombatVFX = preload("res://characters/yoriichi/vfx/combat_vfx.gd")
+const SunDragonVFX = preload("res://characters/yoriichi/vfx/sun_dragon.gd")
 const SwordTrail3D = preload("res://characters/yoriichi/vfx/sword_trail.gd")
+const PostureComponent = preload("res://characters/combat/posture.gd")
 
 ## Relayed from the camera/interaction adapter child so main.gd can keep
 ## connecting to the Player root exactly as it did with scenes/player.gd.
+## 格擋舉起／放下；HUD 用來顯示防禦姿態。
+signal guard_state_changed(guarding: bool)
+## 玩家受擊結果（含彈刀／格擋／未防禦），HUD 與音效用。
+signal player_was_hit(info: Dictionary)
 signal interaction_prompt_changed(text: String)
 signal interaction_message(text: String)
 const COMBO_SECTION_RANGES: Array[Vector2] = [
@@ -193,6 +243,8 @@ var _sector_hold := 0.0
 var _attack_after_roll := false
 
 var _attack_layer := "upper"          # "upper" | "full"
+var _active_attack_name := ""
+var _spin_buffered_cancel := ""
 ## 收勢（zanshin）：upper 層結束時的淡出時間，發招時依招式設定——
 ## 輕斬段短、第三斬與聚力單斬長（刀停了 → 身體穩下來 → 回架勢）。
 var _upper_finish_fade := 0.10
@@ -210,6 +262,7 @@ var _draw_elapsed := 0.0
 var _draw_real := 0.0
 var _draw_t := 0.0
 var _attack_after_draw := false
+var _draw_followup := "light"
 var _shift_pressed_msec := -1
 var _form13_queue: Array[int] = []
 var _blade_base: Marker3D = null
@@ -250,6 +303,7 @@ func _ready():
 	_add_animation_resource(jump_anim, jump_anim_resource)
 	_add_animation_resource(attack_combo_anim, attack_combo_resource)
 	_add_animation_resource(attack_spin_anim, attack_spin_resource)
+	_add_animation_resource(attack_continuous_spin_anim, attack_continuous_spin_resource)
 	_add_animation_resource(attack_judgment_anim, attack_judgment_resource)
 	_add_animation_resource(attack_combo_1_anim, attack_combo_1_resource)
 	_add_animation_resource(attack_spin_jump_anim, attack_spin_jump_resource)
@@ -258,7 +312,7 @@ func _ready():
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
-			attack_judgment_anim, attack_combo_1_anim, attack_spin_jump_anim]:
+			attack_continuous_spin_anim, attack_judgment_anim, attack_combo_1_anim, attack_spin_jump_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_sword_hand = _find_first("Sword_Hand")
@@ -271,7 +325,22 @@ func _find_first(n: String) -> Node3D:
 	var r := find_children(n, "", true, false)
 	return r[0] if r.size() > 0 else null
 
+var _character_audio: CharacterAudio
+## 隻狼式血量／軀幹；敵人共用同一份 posture.gd。
+var posture: Node = null
+var _guard_held := false
+var _guard_started_msec := -1
+## 目前鎖定的敵人；null = 未鎖定。
+var lock_target: Node3D = null
+
 func _setup_combat_extensions() -> void:
+	_character_audio = CharacterAudio.new()
+	_character_audio.name = "CharacterAudio"
+	add_child(_character_audio)
+
+	posture = PostureComponent.new()
+	posture.name = "Posture"
+	add_child(posture)
 	if _sword_hand:
 		_blade_base = Marker3D.new()
 		_blade_base.name = "BladeBase"
@@ -305,6 +374,186 @@ func _setup_combat_extensions() -> void:
 		_hitbox.body_entered.connect(_on_hit_target)
 		_hitbox.area_entered.connect(_on_hit_target)
 
+# ---------------------------------------------------------------------------
+# Lock-on（沒有鎖定，隻狼式讀招不成立）
+# ---------------------------------------------------------------------------
+
+signal lock_target_changed(target: Node3D)
+
+## 切換鎖定：已鎖定則解除，否則鎖最近的活敵人。
+func toggle_lock_on() -> void:
+	if not lock_on_enabled:
+		return
+	if lock_target != null:
+		set_lock_target(null)
+		return
+	set_lock_target(_nearest_enemy())
+
+
+func set_lock_target(t: Node3D) -> void:
+	if lock_target == t:
+		return
+	lock_target = t
+	lock_target_changed.emit(t)
+
+
+func _nearest_enemy() -> Node3D:
+	var best: Node3D = null
+	var best_d := lock_on_range
+	for n in get_tree().get_nodes_in_group("enemies"):
+		if not (n is Node3D) or not is_instance_valid(n):
+			continue
+		var e := n as Node3D
+		var p = e.get("posture")
+		if p != null and p.is_dead():
+			continue
+		var d := global_position.distance_to(e.global_position)
+		if d < best_d:
+			best_d = d
+			best = e
+	return best
+
+
+## 每個物理步維護鎖定：死亡或跑太遠自動解除，否則轉身面對。
+func _update_lock_on(delta: float) -> void:
+	if lock_target == null:
+		return
+	if not is_instance_valid(lock_target) or not lock_target.is_inside_tree():
+		set_lock_target(null)
+		return
+	var p = lock_target.get("posture")
+	if p != null and p.is_dead():
+		set_lock_target(null)
+		return
+	if global_position.distance_to(lock_target.global_position) > lock_break_range:
+		set_lock_target(null)
+		return
+
+	# 翻滾中不強制轉向，否則閃避方向會被鎖死。
+	if action_state == ActionState.DODGING:
+		return
+	var to := lock_target.global_position - global_position
+	to.y = 0.0
+	if to.length_squared() < 0.0004:
+		return
+	var want := atan2(to.x, to.z) + PI
+	if _visual != null:
+		_visual.global_rotation.y = rotate_toward(_visual.global_rotation.y, want, lock_turn_speed * delta)
+	global_rotation.y = rotate_toward(global_rotation.y, want, lock_turn_speed * delta)
+
+
+## 忍殺：對鎖定中（或最近）的破綻敵人發動處決。
+func try_deathblow() -> bool:
+	var t: Node3D = lock_target if lock_target != null else _nearest_enemy()
+	if t == null or not t.has_method("execute_deathblow"):
+		return false
+	if global_position.distance_to(t.global_position) > deathblow_range:
+		return false
+	if not t.execute_deathblow():
+		return false
+	if _character_audio != null and _character_audio.has_method("play_heavy_swing"):
+		_character_audio.play_heavy_swing()
+	return true
+
+
+# ---------------------------------------------------------------------------
+# Guard / Deflect（隻狼式防禦）
+# ---------------------------------------------------------------------------
+
+## 舉刀格擋。按下的瞬間開啟彈刀窗口。
+func begin_guard() -> void:
+	if not guard_enabled or posture == null:
+		return
+	# 出招、翻滾、收刀狀態下架不起來 —— 攻防不能同時。
+	if action_state != ActionState.FREE:
+		return
+	if sword_state != SwordState.DRAWN:
+		return
+	if posture.is_dead() or posture.is_broken():
+		return
+	if _guard_held:
+		return
+	_guard_held = true
+	_guard_started_msec = Time.get_ticks_msec()
+	guard_state_changed.emit(true)
+
+
+func end_guard() -> void:
+	if not _guard_held:
+		return
+	_guard_held = false
+	_guard_started_msec = -1
+	guard_state_changed.emit(false)
+
+
+func is_guarding() -> bool:
+	return _guard_held
+
+
+## 彈刀窗口是否還開著（按下格擋後的極短時間）。
+func in_deflect_window() -> bool:
+	if not _guard_held or _guard_started_msec < 0:
+		return false
+	return (Time.get_ticks_msec() - _guard_started_msec) <= int(deflect_window * 1000.0)
+
+
+## 受擊入口。回傳 {result, damage, posture, attacker_posture}。
+## result: "deflect" | "block" | "hit"
+func take_hit(hit_data: Dictionary) -> Dictionary:
+	if posture == null or posture.is_dead():
+		return {"result": "hit", "damage": 0.0, "posture": 0.0, "attacker_posture": 0.0}
+
+	var damage: float = float(hit_data.get("damage", 10.0))
+	var posture_damage: float = float(hit_data.get("posture_damage", damage * 0.6))
+	var perilous: bool = bool(hit_data.get("perilous", false))
+	var hit_pos: Vector3 = hit_data.get("hit_pos", global_position + Vector3(0, 1.1, 0))
+	var hit_dir: Vector3 = hit_data.get("hit_dir", -global_transform.basis.z)
+
+	var result := "hit"
+	var dealt := damage
+	var self_posture := posture_damage * unguarded_posture_mult
+	var attacker_posture := 0.0
+
+	if _guard_held:
+		if perilous:
+			# 危攻擊架得住，但代價極高 —— 逼玩家改用見切／跳躍／閃避。
+			result = "block"
+			dealt = damage * perilous_block_damage_ratio
+			self_posture = perilous_block_posture
+		elif in_deflect_window():
+			result = "deflect"
+			dealt = 0.0
+			self_posture = deflect_self_posture
+			attacker_posture = deflect_attacker_posture
+		else:
+			result = "block"
+			dealt = damage * block_damage_ratio
+			self_posture = block_self_posture
+			attacker_posture = block_attacker_posture
+
+	posture.apply_damage(dealt, self_posture)
+
+	# 回饋：彈刀是金屬火花與清脆撞擊，格擋是悶響，未防禦是受擊。
+	if _character_audio != null:
+		if result == "deflect" and _character_audio.has_method("play_deflect"):
+			_character_audio.play_deflect()
+		elif result == "block" and _character_audio.has_method("play_block"):
+			_character_audio.play_block()
+	if result == "deflect":
+		CombatVFX.spawn_hit_spark(self, hit_pos, hit_dir, true)
+	elif result == "block":
+		CombatVFX.spawn_hit_spark(self, hit_pos, hit_dir, false)
+
+	var out := {
+		"result": result,
+		"damage": dealt,
+		"posture": self_posture,
+		"attacker_posture": attacker_posture,
+	}
+	player_was_hit.emit(out)
+	return out
+
+
 func _on_hit_target(node: Node) -> void:
 	if action_state != ActionState.ATTACKING or _hit_targets_this_swing.has(node):
 		return
@@ -313,6 +562,7 @@ func _on_hit_target(node: Node) -> void:
 	_hit_targets_this_swing[node] = true
 
 	var is_heavy: bool = (_attack_layer == "full" or combo_stage == 0)
+	var is_spin: bool = (_active_attack_name == attack_continuous_spin_anim or _active_attack_name == attack_spin_anim)
 	_hitstop_time = 0.07 if is_heavy else 0.05
 
 	var hit_pos: Vector3 = _blade_tip.global_position if _blade_tip != null else global_position + Vector3(0, 1, 0)
@@ -325,8 +575,10 @@ func _on_hit_target(node: Node) -> void:
 	}
 	if node.has_method("take_hit"):
 		node.take_hit(hit_data)
+		_character_audio.play_fire_hit(is_heavy, is_spin, combo_stage)
 	elif node.get_parent() != null and node.get_parent().has_method("take_hit"):
 		node.get_parent().take_hit(hit_data)
+		_character_audio.play_fire_hit(is_heavy, is_spin, combo_stage)
 	else:
 		CombatVFX.spawn_hit_spark(self, hit_pos, -fwd, is_heavy)
 
@@ -433,6 +685,7 @@ func _build_tree() -> void:
 	var full_inputs := {
 		"roll": _anim_node(roll_anim),
 		"spin": _anim_node(attack_spin_anim),
+		"continuous_spin": _anim_node(attack_continuous_spin_anim),
 		"judgment": _anim_node(attack_judgment_anim),
 		"combo1": _anim_node(attack_combo_1_anim),
 		"spinjump": _anim_node(attack_spin_jump_anim),
@@ -484,7 +737,8 @@ func _fire_upper(input_name: String, time_scale: float) -> void:
 		_upper_node.fadeout_time = _upper_finish_fade
 	_tree.set("parameters/upper_sel/transition_request", input_name)
 	_tree.set("parameters/ts_upper/scale", time_scale)
-	_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	if not _tree.get("parameters/upper/active"):
+		_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 ## 全身技的 fadeout 就是「收勢」：結束後姿勢停留在收尾幀、按此時間淡回
 ## locomotion —— Judgment / Combo_1 收勢長，Roll 要能立刻接行動。
@@ -497,6 +751,8 @@ func _fire_full(input_name: String, time_scale: float) -> void:
 				_full_node.fadeout_time = 0.30
 			"spin":
 				_full_node.fadeout_time = 0.20
+			"continuous_spin":
+				_full_node.fadeout_time = 0.22
 			"spinjump":
 				_full_node.fadeout_time = 0.16
 			_:
@@ -515,10 +771,13 @@ func _fade_full() -> void:
 # Physics
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
+	_update_lock_on(delta)
+	var input_dir := _read_input_dir()
 	if _hitstop_time > 0.0:
 		_hitstop_time = maxf(_hitstop_time - delta, 0.0)
+		if input_dir.length_squared() > 0.0 and _attack_layer == "upper":
+			move_and_slide()
 		return
-	var input_dir := _read_input_dir()
 	var grounded := is_on_floor()
 	var running := Input.is_action_pressed("sprint")
 	var cur_speed := run_speed if running else speed
@@ -530,8 +789,7 @@ func _physics_process(delta):
 	elif not grounded:
 		_apply_air_control(input_dir, cur_speed, delta)
 	elif action_state == ActionState.ATTACKING:
-		var f := attack_move_factor_heavy if _attack_layer == "full" \
-			else (attack_move_factor_run if running else attack_move_factor_walk)
+		var f := attack_move_factor_heavy if _attack_layer == "full" else 1.0
 		velocity.x = input_dir.x * cur_speed * f
 		velocity.z = input_dir.z * cur_speed * f
 	else:
@@ -677,7 +935,7 @@ func _update_visual_yaw(delta: float, input_dir: Vector3, moving: bool, running:
 	var target_yaw := atan2(input_dir.x, input_dir.z)
 	var diff := wrapf(target_yaw - _visual.rotation.y, -PI, PI)
 	var max_rate := turn_speed * (run_turn_multiplier if running else 1.0)
-	if action_state == ActionState.ATTACKING:
+	if action_state == ActionState.ATTACKING and _attack_layer == "full":
 		max_rate *= attack_turn_control
 	var step := minf(absf(diff), max_rate * delta) * signf(diff)
 	_visual.rotation.y += step
@@ -756,19 +1014,69 @@ func _unhandled_input(event):
 	# Actions from project.godot [input]; the camera / interaction adapter
 	# (player_yoriichi.gd) handles mouse-look and "interact" on top of this.
 	if event.is_action_pressed("draw_sword"):
-		request_sword_toggle()
+		if _active_attack_name == attack_continuous_spin_anim:
+			if can_cancel_continuous_spin():
+				cancel_continuous_spin()
+				request_sword_toggle()
+		else:
+			request_sword_toggle()
 	elif event.is_action_pressed("jump"):
-		request_jump()
+		if _active_attack_name == attack_continuous_spin_anim:
+			if can_cancel_continuous_spin():
+				cancel_continuous_spin()
+				request_jump()
+			else:
+				_spin_buffered_cancel = "jump"
+		else:
+			request_jump()
 	elif event.is_action_pressed("sprint"):
 		_shift_pressed_msec = Time.get_ticks_msec()
 	elif event.is_action_released("sprint") and _shift_pressed_msec >= 0:
 		if (Time.get_ticks_msec() - _shift_pressed_msec) / 1000.0 <= shift_tap_time:
-			request_dodge()
+			if _active_attack_name == attack_continuous_spin_anim:
+				if can_cancel_continuous_spin():
+					cancel_continuous_spin()
+					request_dodge()
+				else:
+					_spin_buffered_cancel = "dodge"
+			else:
+				request_dodge()
 		_shift_pressed_msec = -1
 	elif event.is_action_pressed("attack_light"):
-		request_primary_attack()
+		if _active_attack_name == attack_continuous_spin_anim:
+			if can_cancel_continuous_spin():
+				cancel_continuous_spin()
+				_start_combo()
+			else:
+				_spin_buffered_cancel = "light"
+		else:
+			request_primary_attack()
 	elif event.is_action_pressed("attack_heavy"):
-		request_heavy_cut()
+		if _active_attack_name == attack_continuous_spin_anim:
+			if can_cancel_continuous_spin():
+				cancel_continuous_spin()
+				request_heavy_cut()
+			else:
+				_spin_buffered_cancel = "heavy"
+		else:
+			request_heavy_cut()
+	elif event.is_action_pressed("guard"):
+		begin_guard()
+	elif event.is_action_released("guard"):
+		end_guard()
+	elif event.is_action_pressed("lock_on"):
+		toggle_lock_on()
+	elif event.is_action_pressed("deathblow"):
+		try_deathblow()
+	elif event.is_action_pressed("attack_special"):
+		if _active_attack_name == attack_continuous_spin_anim:
+			if can_cancel_continuous_spin():
+				cancel_continuous_spin()
+				request_continuous_spin()
+			else:
+				_spin_buffered_cancel = "special"
+		else:
+			request_continuous_spin()
 
 # ---------------------------------------------------------------------------
 # Jump
@@ -781,6 +1089,8 @@ func request_jump() -> void:
 		return
 	if action_state == ActionState.DODGING or not is_on_floor() or _jump_charge >= 0.0:
 		return
+	if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
+		cancel_continuous_spin()
 	_jump_charge = (JUMP_TAKEOFF_CLIP - jump_start_skip) / jump_start_speed
 	_air_t = 0.0
 	if action_state != ActionState.ATTACKING or _attack_layer != "full":
@@ -792,8 +1102,18 @@ func request_jump() -> void:
 func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	if sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
 		return
-	if action_state != ActionState.FREE or not is_on_floor():
+	# 先判斷能否翻滾，避免空中輸入吃掉原本的攻擊。
+	if not is_on_floor():
 		return
+	if action_state != ActionState.FREE:
+		if can_cancel_continuous_spin():
+			cancel_continuous_spin()
+		elif _can_dodge_cancel_attack():
+			# 明確閃避優先於先前排隊的收刀，不留下延遲觸發。
+			pending_sheathe = false
+			_finish_attack()
+		else:
+			return
 	var horizontal_override := Vector3(direction_override.x, 0.0, direction_override.z)
 	_dodge_dir = horizontal_override.normalized() if not horizontal_override.is_zero_approx() else _read_input_dir()
 	if _dodge_dir.is_zero_approx():
@@ -808,6 +1128,15 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	_roll_duration = roll_anim_resource.length / roll_animation_speed
 	_fire_full("roll", roll_animation_speed)
 	CombatVFX.spawn_roll_dust(self, global_position, _dodge_dir)
+
+func _can_dodge_cancel_attack() -> bool:
+	if not attack_dodge_cancel_enabled or action_state != ActionState.ATTACKING:
+		return false
+	if sword_state != SwordState.DRAWN or _attack_layer != "upper" or active_form != 0:
+		return false
+	if combo_stage <= 0 and _active_attack_name != "Heavy_Cut":
+		return false
+	return _action_real <= 0.0 or _action_elapsed >= _action_real * attack_dodge_cancel_start
 
 func _update_roll_movement(delta: float) -> void:
 	var previous_t := clampf(_action_elapsed / _roll_duration, 0.0, 1.0) if _roll_duration > 0.0 else 1.0
@@ -839,33 +1168,30 @@ func _finish_roll() -> void:
 # Attack（LMB 輕連段 = upper layer 邊跑邊斬；RMB/型 heavy = full-body override）
 # ---------------------------------------------------------------------------
 func request_primary_attack() -> void:
-	if sword_state == SwordState.SHEATHED and action_state == ActionState.FREE:
-		# quick-draw：收刀狀態直接 LMB = 拔刀，刀離鞘（t=0.65）瞬間接第一段。
-		_attack_after_draw = true
-		request_draw()
+	if _queue_draw_attack("light"):
 		return
 	if action_state == ActionState.DODGING and sword_state == SwordState.DRAWN:
 		_attack_after_roll = true   # dodge counter：roll 結束自動接反擊斬
 		return
-	if sword_state == SwordState.DRAWING:
-		_attack_after_draw = true   # 拔刀中按 LMB：buffer 成拔刀斬（離鞘瞬間出刀）
-		return
 	if sword_state != SwordState.DRAWN:
 		return
 	if action_state == ActionState.ATTACKING and combo_stage > 0:
-		# 段間 buffer 只到第三段為止——三連斬乾淨收尾，不自動接大招。
-		var remaining := COMBO_SECTION_RANGES.size() - combo_stage
-		_combo_queued_inputs = mini(_combo_queued_inputs + 1, remaining)
-		combo_input_buffered = _combo_queued_inputs > 0
+		_combo_queued_inputs = 1
+		combo_input_buffered = true
 		_combo_buffer_remaining = combo_input_buffer_time
 		return
 	if action_state != ActionState.FREE:
-		return
+		if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
+			cancel_continuous_spin()
+		else:
+			return
 	_start_combo()
 
 func _start_combo() -> void:
 	action_state = ActionState.ATTACKING
 	_attack_layer = "upper"
+	_active_attack_name = attack_combo_anim
+	_spin_buffered_cancel = ""
 	active_form = 0
 	combo_stage = 1
 	_combo_queued_inputs = 0
@@ -879,9 +1205,10 @@ func _start_light_section(stage: int) -> void:
 	var section_len := attack_combo_resource.length * (range.y - range.x)
 	_action_real = section_len / spd
 	_action_elapsed = 0.0
-	# 第三斬結束要明確收勢；前兩段快速接續。
-	_upper_finish_fade = 0.20 if stage >= COMBO_SECTION_RANGES.size() else 0.10
+	var is_moving := velocity.length_squared() > 0.5
+	_upper_finish_fade = 0.08 if is_moving else (0.20 if stage >= COMBO_SECTION_RANGES.size() else 0.10)
 	_fire_upper("atk%d" % stage, spd)
+	_character_audio.play_swing(stage)
 	if _sword_trail != null:
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
@@ -903,13 +1230,18 @@ func request_special_attack(animation_name: String) -> void:
 	if sword_state != SwordState.DRAWN:
 		return
 	if action_state != ActionState.FREE:
-		return
+		if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
+			cancel_continuous_spin()
+		else:
+			return
 	var key := _full_input_for(animation_name)
 	if key == "":
 		push_warning("yoriichi_character: attack animation is unavailable: " + animation_name)
 		return
 	action_state = ActionState.ATTACKING
 	_attack_layer = "full"
+	_active_attack_name = animation_name
+	_spin_buffered_cancel = ""
 	active_form = 0
 	combo_stage = 0
 	_combo_queued_inputs = 0
@@ -918,6 +1250,7 @@ func request_special_attack(animation_name: String) -> void:
 	_action_real = _full_anim_length(animation_name) / spd
 	_action_elapsed = 0.0
 	_fire_full(key, spd)
+	_character_audio.play_heavy_swing()
 	if _sword_trail != null:
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
@@ -933,6 +1266,8 @@ func _special_speed_for(animation_name: String) -> float:
 			return combo_1_speed_scale
 		attack_spin_anim:
 			return spin_speed_scale
+		attack_continuous_spin_anim:
+			return continuous_spin_speed_scale
 		attack_spin_jump_anim:
 			return spin_jump_speed_scale
 	return attack_speed_scale
@@ -940,6 +1275,7 @@ func _special_speed_for(animation_name: String) -> float:
 func _full_input_for(animation_name: String) -> String:
 	match animation_name:
 		attack_spin_anim: return "spin"
+		attack_continuous_spin_anim: return "continuous_spin"
 		attack_judgment_anim: return "judgment"
 		attack_combo_1_anim: return "combo1"
 		attack_spin_jump_anim: return "spinjump"
@@ -956,12 +1292,32 @@ func _update_attack(delta: float, _input_dir: Vector3) -> void:
 			_combo_queued_inputs = 0
 			combo_input_buffered = false
 	var progress := clampf(_action_elapsed / _action_real, 0.0, 1.0) if _action_real > 0.0 else 1.0
+	if _active_attack_name == attack_continuous_spin_anim and _spin_buffered_cancel != "":
+		if progress >= SPIN_CANCEL_WINDOW_START:
+			var act := _spin_buffered_cancel
+			_spin_buffered_cancel = ""
+			cancel_continuous_spin()
+			match act:
+				"light":
+					_start_combo()
+				"heavy":
+					request_heavy_cut()
+				"dodge":
+					request_dodge()
+				"jump":
+					request_jump()
+				"special":
+					request_continuous_spin()
+			return
 	if combo_stage > 0:
-		if _combo_queued_inputs > 0 and progress >= combo_cancel_start and progress <= combo_cancel_end \
-				and combo_stage < COMBO_SECTION_RANGES.size():
+		var running_or_moving: bool = Input.is_action_pressed("sprint") or _input_dir.length_squared() > 0.0
+		var holding_lmb: bool = Input.is_action_pressed("attack_light")
+		var auto_loop: bool = running_or_moving and holding_lmb
+		var should_advance: bool = (_combo_queued_inputs > 0 or auto_loop)
+		if should_advance and progress >= combo_cancel_start:
 			_advance_combo()
 		elif progress >= 1.0:
-			if _combo_queued_inputs > 0 and combo_stage < COMBO_SECTION_RANGES.size():
+			if should_advance:
 				_advance_combo()
 			else:
 				_finish_attack()
@@ -973,18 +1329,27 @@ func _advance_combo() -> void:
 	combo_input_buffered = _combo_queued_inputs > 0
 	_combo_buffer_remaining = combo_input_buffer_time if combo_input_buffered else 0.0
 	combo_stage += 1
+	if combo_stage > COMBO_SECTION_RANGES.size():
+		combo_stage = 1
 	_start_light_section(combo_stage)
 
 ## RMB 聚力單斬：同一刀素材（Weapon_Combo 第一斬）的慎重版——
 ## 倍率較低（1.5）、收勢較長（0.24 s）。走 upper 層：腳步不受限、
 ## 沒有全身技的跳動與旋轉，強大感來自「精準與從容」。空中亦可用。
 func request_heavy_cut() -> void:
+	if _queue_draw_attack("heavy"):
+		return
 	if sword_state != SwordState.DRAWN:
 		return
 	if action_state != ActionState.FREE:
-		return
+		if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
+			cancel_continuous_spin()
+		else:
+			return
 	action_state = ActionState.ATTACKING
 	_attack_layer = "upper"
+	_active_attack_name = "Heavy_Cut"
+	_spin_buffered_cancel = ""
 	active_form = 0
 	combo_stage = 0
 	_combo_queued_inputs = 0
@@ -994,17 +1359,72 @@ func request_heavy_cut() -> void:
 	_action_elapsed = 0.0
 	_upper_finish_fade = 0.24
 	_fire_upper("atk1", heavy_cut_speed)
+	_character_audio.play_heavy_swing()
 	if _sword_trail != null:
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
 		_hitbox.monitoring = true
 
+## 特殊技：連續旋轉砍擊（Continuous Spinning Slash）——
+## Meshy AI 衍生全身體技，高速迴旋連擊並展開刀光。
+func request_continuous_spin() -> void:
+	if _queue_draw_attack("special"):
+		return
+	var before := action_state
+	request_special_attack(attack_continuous_spin_anim)
+	# 招式真的發動才生龍：被擋下的輸入不得留下特效。
+	if action_state == ActionState.ATTACKING and before != ActionState.ATTACKING:
+		_spawn_sun_dragon()
+
+## 玖ノ型 日暈龍・頭舞：龍身以角色為圓心掃出，頭部朝面向方向。
+func _spawn_sun_dragon() -> void:
+	if not sun_dragon_enabled:
+		return
+	var basis_node: Node3D = _visual if _visual != null else self
+	var facing := -basis_node.global_transform.basis.z
+	facing.y = 0.0
+	if facing.length_squared() < 0.0001:
+		facing = Vector3.FORWARD
+	facing = facing.normalized()
+	var xform := Transform3D(Basis.looking_at(facing, Vector3.UP), global_position)
+	xform = xform.scaled_local(Vector3.ONE * sun_dragon_scale)
+	var dragon := SunDragonVFX.spawn(self, xform)
+	if dragon != null and sun_dragon_head_tracking:
+		# 龍頭追刀尖。使用者裁定：不追比較好看，預設關閉。
+		dragon.track_node = _blade_tip
+
+## 旋轉攻擊中途換招窗口：在第一刀斬出接觸判定後（10% 進度，約 0.22 秒），隨時可切換其他招式。
+const SPIN_CANCEL_WINDOW_START := 0.10
+
+func can_cancel_continuous_spin() -> bool:
+	if action_state != ActionState.ATTACKING or sword_state != SwordState.DRAWN:
+		return false
+	if _active_attack_name != attack_continuous_spin_anim:
+		return false
+	var progress := (_action_elapsed / _action_real) if _action_real > 0.0 else 1.0
+	return progress >= SPIN_CANCEL_WINDOW_START
+
+func cancel_continuous_spin() -> void:
+	if _sword_trail != null:
+		_sword_trail.stop_trail()
+	if _hitbox != null:
+		_hitbox.monitoring = false
+	_hit_targets_this_swing.clear()
+	_fade_full()
+	action_state = ActionState.FREE
+	_active_attack_name = ""
+	_spin_buffered_cancel = ""
+	_action_elapsed = 0.0
+	_action_real = 0.0
+
 func _finish_attack() -> void:
 	var was_layer := _attack_layer
 	action_state = ActionState.FREE
 	combo_stage = 0
 	active_form = 0
+	_active_attack_name = ""
+	_spin_buffered_cancel = ""
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
 	_action_elapsed = 0.0
@@ -1040,18 +1460,40 @@ func request_sword_toggle():
 			elif action_state == ActionState.FREE:
 				_start_sheathe()
 
+## 拔刀期間只保留最後一個攻擊意圖；沿用既有快速拔刀時序。
+func _queue_draw_attack(kind: String) -> bool:
+	if sword_state != SwordState.DRAWING and not (
+		sword_state == SwordState.SHEATHED and action_state == ActionState.FREE
+	):
+		return false
+	_attack_after_draw = true
+	_draw_followup = kind
+	if sword_state == SwordState.SHEATHED:
+		request_draw()
+	return true
+
+func _execute_draw_followup() -> void:
+	var kind := _draw_followup
+	_attack_after_draw = false
+	_draw_followup = "light"
+	match kind:
+		"heavy": request_heavy_cut()
+		"special": request_continuous_spin()
+		_: _start_combo()
+
 func request_draw():
 	if sword_state != SwordState.SHEATHED:
 		return
 	if action_state == ActionState.DODGING or action_state == ActionState.ATTACKING:
 		return
 	sword_state = SwordState.DRAWING
-	_draw_real = draw_anim_resource.length / draw_speed_scale
+	var spd := (draw_speed_scale * 2.2) if _attack_after_draw else draw_speed_scale
+	_draw_real = draw_anim_resource.length / spd
 	_draw_elapsed = 0.0
 	_draw_t = 0.0
 	_apply_sword_visibility()
 	_upper_finish_fade = 0.16
-	_fire_upper("draw", draw_speed_scale)
+	_fire_upper("draw", spd)
 
 func _start_sheathe() -> void:
 	sword_state = SwordState.SHEATHING
@@ -1068,19 +1510,18 @@ func _update_sword(delta: float) -> void:
 		_draw_elapsed += delta
 		_draw_t = clampf(_draw_elapsed / _draw_real, 0.0, 1.0) if _draw_real > 0.0 else 1.0
 		_apply_sword_visibility()
-		if _attack_after_draw and _draw_t >= t_unsheathe:
+		var threshold := 0.35 if _attack_after_draw else t_unsheathe
+		if _attack_after_draw and _draw_t >= threshold:
 			# 拔刀斬（居合）：刀一離鞘立即取消剩餘 draw、接第一段斬擊。
 			sword_state = SwordState.DRAWN
 			_apply_sword_visibility()
-			_attack_after_draw = false
-			_start_combo()
+			_execute_draw_followup()
 			return
 		if _draw_t >= 1.0:
 			sword_state = SwordState.DRAWN
 			_apply_sword_visibility()
 			if _attack_after_draw:
-				_attack_after_draw = false
-				_start_combo()
+				_execute_draw_followup()
 	elif sword_state == SwordState.SHEATHING:
 		_draw_elapsed += delta
 		_draw_t = 1.0 - (clampf(_draw_elapsed / _draw_real, 0.0, 1.0) if _draw_real > 0.0 else 1.0)
@@ -1125,10 +1566,15 @@ func execute_form(id: int) -> bool:
 	if sword_state != SwordState.DRAWN or not can_use_form(id):
 		return false
 	if action_state != ActionState.FREE:
-		return false
+		if _active_attack_name == attack_continuous_spin_anim and can_cancel_continuous_spin():
+			cancel_continuous_spin()
+		else:
+			return false
 	var def: Dictionary = SunBreathing.FORMS[id]
 	action_state = ActionState.ATTACKING
 	active_form = id
+	_active_attack_name = def.anim
+	_spin_buffered_cancel = ""
 	combo_stage = 0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false

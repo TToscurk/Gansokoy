@@ -1,8 +1,8 @@
 extends MeshInstance3D
 class_name SwordTrail3D
 ## Procedural ribbon slash trail for Yoriichi's katana.
-## Uses ImmediateMesh with additive blending, emitting fiery sun-breathing
-## gradient arcs along the blade's sweep path.
+## Uses the existing blade ribbon with a layered-color procedural flame shader.
+## UV distance remains stable as old samples expire.
 
 @export var base_node: Node3D
 @export var tip_node: Node3D
@@ -14,7 +14,8 @@ class_name SwordTrail3D
 var is_emitting := false
 var _segments: Array[Dictionary] = []
 var _imm_mesh: ImmediateMesh
-var _mat: StandardMaterial3D
+var _mat: ShaderMaterial
+var _travel := 0.0
 
 
 func _ready() -> void:
@@ -22,23 +23,21 @@ func _ready() -> void:
 	global_transform = Transform3D.IDENTITY
 	_imm_mesh = ImmediateMesh.new()
 	mesh = _imm_mesh
-	_mat = StandardMaterial3D.new()
-	_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
-	_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	_mat.vertex_color_use_as_albedo = true
+	_mat = ShaderMaterial.new()
+	_mat.shader = preload("res://characters/yoriichi/vfx/sun_flame_trail.gdshader")
 	material_override = _mat
 
 
 func start_trail() -> void:
 	is_emitting = true
 	_segments.clear()
+	_travel = 0.0
 	if tip_node and base_node:
 		_segments.append({
 			"tip": tip_node.global_position,
 			"base": base_node.global_position,
-			"age": 0.0
+			"age": 0.0,
+			"travel": _travel
 		})
 
 
@@ -47,6 +46,8 @@ func stop_trail() -> void:
 
 
 func _process(delta: float) -> void:
+	_mat.set_shader_parameter("core_color", tip_color)
+	_mat.set_shader_parameter("flame_color", base_color)
 	# Age points
 	var i := 0
 	while i < _segments.size():
@@ -66,10 +67,13 @@ func _process(delta: float) -> void:
 			if cur_tip.distance_squared_to(last_tip) < (min_distance * min_distance):
 				should_add = false
 		if should_add:
+			if not _segments.is_empty():
+				_travel += cur_tip.distance_to(_segments.back().tip)
 			_segments.append({
 				"tip": cur_tip,
 				"base": cur_base,
-				"age": 0.0
+				"age": 0.0,
+				"travel": _travel
 			})
 
 	# Rebuild mesh
@@ -90,11 +94,11 @@ func _process(delta: float) -> void:
 		c_base.a *= alpha
 
 		_imm_mesh.surface_set_color(c_base)
-		_imm_mesh.surface_set_uv(Vector2(float(idx) / float(n - 1), 0.0))
+		_imm_mesh.surface_set_uv(Vector2(seg.travel, 0.0))
 		_imm_mesh.surface_add_vertex(seg.base)
 
 		_imm_mesh.surface_set_color(c_tip)
-		_imm_mesh.surface_set_uv(Vector2(float(idx) / float(n - 1), 1.0))
+		_imm_mesh.surface_set_uv(Vector2(seg.travel, 1.0))
 		_imm_mesh.surface_add_vertex(seg.tip)
 
 	_imm_mesh.surface_end()

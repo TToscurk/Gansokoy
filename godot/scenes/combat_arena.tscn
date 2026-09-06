@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://cse1kir0arena01"]
+
+[ext_resource type="Script" path="res://scenes/combat_arena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/player_yoriichi.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://characters/combat/enemy_samurai.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" path="res://ui/combat_hud.tscn" id="4_hud"]
+
+[sub_resource type="BoxShape3D" id="Shape_floor"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="Mat_ground"]
+albedo_color = Color(0.3, 0.29, 0.27, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="Mesh_ground"]
+material = SubResource("Mat_ground")
+size = Vector3(60, 1, 60)
+
+[node name="CombatArena" type="Node3D"]
+script = ExtResource("1_arena")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_layer = 1
+
+[node name="GroundShape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("Shape_floor")
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("Mesh_ground")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.86, -0.35, 0.37, 0, 0.72, 0.69, -0.51, -0.6, 0.62, 0, 12, 0)
+light_energy = 1.1
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 4)
+
+[node name="EnemySamurai" parent="." instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -3)
+
+[node name="CombatHUD" parent="." instance=ExtResource("4_hud")]
