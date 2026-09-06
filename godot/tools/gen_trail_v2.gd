@@ -1711,6 +1711,6 @@ func _build_markers() -> void:
 	var v := _spine_pos(0.0)
 	var vm := Marker3D.new()
 	vm.position = Vector3(v.x, height_at(v.x, v.y) + 1.0, v.y)
-	vm.set_meta("portal", "village")
+	vm.set_meta("portal", "slice")
 	lib.add(g, vm, "傳送點_南_人里")
 	print("[TRAIL] 出生點 %s；傳送 北 %s 南 %s" % [sm.position, nm.position, vm.position])

@@ -8,7 +8,7 @@ extends SceneTree
 ##
 ## Matching is by source-GLB basename, taken from the mesh resource_path
 ## ("res://assets/machiya/小町家1.glb::ArrayMesh_1waij"), because the LOD tree is
-## flat while the sources are spread across assets/ and maps/village/gen/.
+## flat while the sources are spread across assets/ and assets/landmark/.
 
 const WARMUP := 90
 const SAMPLE := 150

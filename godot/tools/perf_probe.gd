@@ -8,7 +8,7 @@ func _run() -> void:
 	var main = packed.instantiate()
 	root.add_child(main)
 	await process_frame
-	for m in ["village", "trail", "kourindou"]:
+	for m in ["slice", "trail", "kourindou"]:
 		main.load_map(m, "")
 		for i in WARMUP: await process_frame
 		var t0 := Time.get_ticks_usec()

@@ -25,7 +25,7 @@ var _root: Node3D
 
 
 func _init() -> void:
-	_root = (load("res://maps/village/village.tscn") as PackedScene).instantiate()
+	_root = (load("res://maps/slice/slice.tscn") as PackedScene).instantiate()
 	_check_footprint()
 	_check_content()
 	_check_river()

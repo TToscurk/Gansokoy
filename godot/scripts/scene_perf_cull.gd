@@ -116,11 +116,11 @@ func _run() -> void:
 ## Replace each heavy building's mesh with its decimated twin from 減面資料夾.
 ##
 ## Runtime swap, not a scene edit: the buildings live inside instanced
-## sub-scenes (b1_street.tscn, maps/village/gen/*), where PackedScene.pack()
+## sub-scenes (b1_street.tscn, assets/landmark/*), where PackedScene.pack()
 ## silently drops per-node overrides -- measured earlier in this project.
 ## Matching is by source GLB basename pulled from mesh.resource_path
 ## ("res://assets/machiya/小町家1.glb::ArrayMesh_xxx"), because the LOD tree is
-## flat while sources are scattered across assets/ and maps/village/gen/.
+## flat while sources are scattered across assets/ and assets/landmark/.
 ## Dictionary mapping base -> {
 ##   "by_name": Dictionary[String, Dictionary], # node_name -> { "mesh": Mesh, "xform": Transform3D }
 ##   "default": Dictionary,                     # { "mesh": Mesh, "xform": Transform3D }

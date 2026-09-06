@@ -8,13 +8,13 @@ extends Node3D
 ## 座標系：three / glTF / Godot 都是右手系 y-up，座標原樣通用。
 
 const START_MAP := "shrine"
-## START_MAP が未構築のときの退避先。shrine は mapRegistry には載っている
-## が実体（maps/shrine/shrine.tscn も blockout/shrine.glb も）が無いため、
-## これが無いと起動が黒画面になる。shrine が建ったらこの退避は自然に
-## 使われなくなる——START_MAP を書き換えて逃げないのはそのため。
+## 起動図が未構築ならこの退避先へ落とす。黙って落とさない——START_MAP は
+## 「本来ここから始まる」という意思表示なので、書き換えて隠すのではなく、
+## 毎回うるさく言いながら遊べる状態にしておく。
 ## 2026-09-03: village → slice。人間之里の実作業は maps/slice で進んでおり
 ## （B1/B2 ラウンド、碰撞、緣一の実装確認）、F5 一発でそこに立ちたい。
-## village.tscn は凍結済みの旧基線。`--map=village` で今でも開ける。
+## 2026-09-06: 凍結基線 maps/village は削除済み（村人 NPC・地標 glb は slice／
+## assets/landmark へ移設）。人間之里は slice 一枚のみ。
 const BOOT_FALLBACK := "slice"
 ## 傳送落地後的冷卻，免得一落地就被同一個傳送區抓回去
 const PORTAL_COOLDOWN := 2.0
@@ -409,11 +409,23 @@ func load_map(id: String, from_id: String) -> void:
 
 
 func _spawn_vertical_slice_npc(map_id: String) -> void:
-	if map_id != "village":
+	# 2026-09-06: village 凍結基線已刪除；測試村人改由 maps/slice 提供。
+	# 位置不再寫死 — 錨在 slice.meta.json 的保留 portal（主街出生標記）北側 3 m，
+	# 面向村內。座標跟著 meta 走，重新對點時不用改程式。
+	if map_id != "slice":
+		return
+	var marker := Vector3.INF
+	for p in _load_json("res://data/slice.meta.json").get("portals", []):
+		var t: Variant = p.get("target")
+		if t == null or String(t).is_empty():
+			marker = Vector3(float(p.x), float(p.y), float(p.z))
+			break
+	if marker == Vector3.INF:
+		push_warning("[npc] slice.meta.json 沒有保留 portal 標記，村人未生成")
 		return
 	var npc := VERTICAL_SLICE_NPC.instantiate() as Node3D
 	npc.name = "VerticalSliceNPC"
-	npc.position = Vector3(2.5, 0.3, -158.0)
+	npc.position = marker + Vector3(-4.0, 0.3, -3.0)
 	map_root.add_child(npc)
 
 

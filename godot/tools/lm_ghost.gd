@@ -33,7 +33,7 @@ func _wxf(n: Node) -> Transform3D:
 	return t
 
 func _init() -> void:
-	var root: Node3D = (load("res://maps/village/village.tscn") as PackedScene).instantiate()
+	var root: Node3D = (load("res://maps/slice/slice.tscn") as PackedScene).instantiate()
 	get_root().add_child(root)
 	await physics_frame
 	await physics_frame

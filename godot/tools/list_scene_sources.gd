@@ -3,7 +3,7 @@ extends SceneTree
 ## instance count, so decimation targets the files the scene really loads.
 ##
 ## Needed because the buildings are referenced through nested sub-scenes
-## (maps/village/gen/..., maps/slice/gen/b1_street.tscn), so grepping slice.tscn
+## (assets/landmark/..., maps/slice/gen/b1_street.tscn), so grepping slice.tscn
 ## for "assets/machiya" finds almost nothing and would send the batch job at the
 ## wrong files.
 

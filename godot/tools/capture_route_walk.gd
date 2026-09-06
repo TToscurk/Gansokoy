@@ -118,7 +118,7 @@ func _run() -> void:
 		_frames += 1
 
 	# 30 fps 錄影下的模擬時間比無頭慢，給足上限免得半路收工。
-	var ok2: bool = await _walk_to(_portal_xyz("village"), "village", 400.0)
+	var ok2: bool = await _walk_to(_portal_xyz("slice"), "slice", 400.0)
 	for i in 120:
 		_follow_cam()
 		await physics_frame

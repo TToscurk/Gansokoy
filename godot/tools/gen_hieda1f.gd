@@ -659,7 +659,7 @@ func _write_meta() -> void:
 		# 串接（2026-08-07）：室外 = village 圖裡的稗田邸院落（獨立室外圖
 		# 仍未建）。玄関 portal ↔ village 的玄関前 portal；階段口 → 2F。
 		"portals": [
-			{"x": 0.0, "y": DOMA_Y, "z": 6.2, "target": "village"},
+			{"x": 0.0, "y": DOMA_Y, "z": 6.2, "target": "slice"},
 			{"x": -8.2, "y": 0.0, "z": -4.9, "target": "hieda2f"},
 		],
 		"colliders": [],
