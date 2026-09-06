@@ -1,80 +1,17 @@
 # CLAUDE.md — Repository Entry Rules
 
-Project: 幻想鄉 / 博麗神社, a Godot 4.7 3D fan project. The live game is under `godot/`.
-`src/` is the frozen three.js line and is not the default implementation target.
-The 170-house village generator pipeline was retired 2026-08-25; the village is a frozen committed scene.
+## 核心紅線
 
-## Start Every Task
+核心紅線只有一份權威：repo 根目錄的 `AGENT_CONSTITUTION.md`。
 
-1. Read `AGENT_CONSTITUTION.md` (使用者審定精簡版，含 MCP 證據優先政策).
-2. **Godot 任務起手先確認 godot-ai MCP 是否可用**（`editor_state` 起手）。
-   可用即以 MCP 為場景檢查／除錯／編輯／驗證的主要手段；不可用要先明講再改用替代方法。
-   截圖不是除錯手段，只用於最終視覺驗收。完整政策與強制除錯順序見
-   `AGENT_CONSTITUTION.md` §證據優先 — Godot MCP 政策。
-3. Read `docs/PROJECT_STATE.md`、相關 `.claude/rules/` 檔，與至多一份子系統文件。
-4. Inspect `git status`, `git diff`, and relevant code before expanding context.
-   (Git is initialized on branch `main`, local only — not yet pushed to GitHub.
-   Commit each approved round before handing work to another agent.)
+**開工前必讀該檔並遵守**，除非使用者當下的指令明確凌駕某條。
+本檔（以及 `.hermes.md`、`AGENTS.md`）一律不得複製紅線條文，
+避免副本漏改造成「照哪份走」的歧義。
 
-Do **not** automatically read all of `docs/`, `docs/archive/`, old review notes, or unrelated subsystem files.
-`docs/archive/` is historical evidence only; read it only when a past decision is disputed.
+---
 
-## Project Skill Discovery
+Project: 幻想鄉 / 博麗神社 (Godot 4.7 3D)。主要遊戲專案位於 `godot/`。
 
-The canonical project skills live in `.claude/skills/` (real files; `.agents/skills/` is a junction mirror for Codex so the two never drift). Load skills **on demand, not as a ritual** — one skill, one reference file at a time.
-
-| Task | Skill |
-|---|---|
-| Godot 4.7 API / node / pattern lookup | `godot-master` (router — load one reference only) |
-| In-engine visual acceptance, before/after renders | `godot-visual-review` |
-| Human Village architecture, streets, props, composition | `human-village-art-direction` |
-| Stylized asset judgment, ART_REVIEW verdicts | `gensokyo-3d-art-director` |
-| Blender→GLB generators, terrain/water, scatter, export/import | `blender-asset-production` |
-| Level layout, blockout, pacing, critical path | `level-design` |
-| Hard bugs, crashes, performance regressions | `diagnosing-bugs` |
-| Finalize / validate / commit one subsystem | `safe-production-commit` |
-
-New **visible** 3D assets come from the image-AI → Meshy 7 route, not
-LLM-written procedural generators (user ruling 2026-08-26).
-
-## Working Rules
-
-- Subagents for scan/inventory/audit work default to the **haiku** model, and their
-  task prompt must name an explicit whitelist of files or directories to read —
-  never "scan everything". Repo-wide deep scans are one-off; their conclusions live
-  in `docs/PROJECT_STATE.md` and are not re-run.
-- Work only on the requested deliverable; no opportunistic repo-wide refactors.
-- Preserve approved production baselines and validated pipelines.
-- Ask before destructive changes with no safe rollback, changing village/road structure, moving major landmarks, changing approved art direction, or changing gameplay/worldbuilding.
-- Visual work follows: prototype/slice → render → Human Art Review → rollout.
-- Prefer targeted reads and targeted edits over broad audits.
-- Update documentation only when the canonical state actually changed.
-
-## Canonical Context Map
-
-| Need | Read |
-|---|---|
-| Current state | `docs/PROJECT_STATE.md` |
-| Next priorities | `docs/ROADMAP.md` |
-| Human Village rules | `docs/ningen-no-sato.md` |
-| Village art direction | `docs/village-art-direction.md` |
-| Generator domain / ADR | `docs/domain-model.md` |
-| Godot environment | `docs/godot-migration.md` |
-| Map horizons / geography | `docs/border-vistas.md` |
-| 稗田邸 | `docs/hieda-estate-features.md` |
-| Yoriichi runtime | `docs/yoriichi-runtime.md` |
-
-`docs/README.md` is the document index.
-
-## Git / Reporting
-
-- **This repo uses Git LFS for binary assets.** After any clone or machine move, run
-  `git lfs pull` (or `git lfs checkout` if objects are already local) BEFORE opening
-  the project in Godot. Opening with un-smudged LFS pointers makes every texture/GLB
-  import fail and stamps sticky `valid=false` into the `.import` files — recovery
-  then requires stripping those flags and a full headless reimport (2026-08-29 incident).
-- Git rules below apply only once the repository is initialized (pre-GitHub upload).
-- Commit and push work to the assigned branch.
-- Never open a pull request unless explicitly asked.
-- Never write the model identifier into commits, PRs, code, or docs.
-- Final reports should be short: Changed · Validation · Art Review · Known Risks · Status.
+## 核心防護 (避免損壞專案)
+- **Git LFS 保護**：本專案大量使用 Git LFS。在 Godot 載入前必須確保二進位資產已 pull/checkout 完畢，避免因未解開的 LFS pointer 導致紋理/GLB 損壞並烙印 `valid=false`。
+- **編輯器控制**：涉及場景/節點狀態時，以 godot-ai MCP 實況為準，同時僅允許單一實體控制編輯器。

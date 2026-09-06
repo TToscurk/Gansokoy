@@ -1,0 +1,91 @@
+[gd_scene load_steps=4 format=3 uid="uid://cse1kir0hud001"]
+
+[ext_resource type="Script" path="res://ui/combat_hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://ui/player_bars.gd" id="2_pbars"]
+[ext_resource type="Script" path="res://ui/enemy_bars.gd" id="3_ebars"]
+
+[node name="CombatHUD" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="PlayerBars" type="Control" parent="Root"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -80.0
+offset_right = 400.0
+offset_bottom = -30.0
+mouse_filter = 2
+script = ExtResource("2_pbars")
+
+[node name="EnemyPanel" type="Control" parent="Root"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.0
+offset_top = 40.0
+offset_right = 210.0
+offset_bottom = 110.0
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="Root/EnemyPanel"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 22.0
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.92, 0.89, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="Bars" type="Control" parent="Root/EnemyPanel"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 26.0
+offset_bottom = 60.0
+mouse_filter = 2
+script = ExtResource("3_ebars")
+
+[node name="Perilous" type="Label" parent="Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -110.0
+offset_right = 60.0
+offset_bottom = -10.0
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "危"
+theme_override_colors/font_color = Color(1, 0.22, 0.16, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 84
+
+[node name="Deathblow" type="Label" parent="Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 60.0
+offset_right = 90.0
+offset_bottom = 100.0
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "忍殺"
+theme_override_colors/font_color = Color(1, 0.92, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30

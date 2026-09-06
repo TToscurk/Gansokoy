@@ -25,9 +25,37 @@ const PROBES: Array = [
 	Vector2(330, -150),
 ]
 
+const CANAL_TRENCH_PROBES: Array[Vector2] = [
+	Vector2(287.0, -40.0),
+	Vector2(287.0, 16.0),
+	Vector2(287.0, 72.0),
+]
+const CANAL_TERRAIN_MAX_Y := -3.0
+
+
 func _init() -> void:
 	var ps: PackedScene = load("res://maps/slice/slice.tscn")
 	var root: Node = ps.instantiate()
+	if not _audit_canal_trench(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
+	if not _audit_feeder_outfall(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
+	if not _audit_paddy_support(root):
+		root.free()
+		ps = null
+		quit(1)
+		return
+	if OS.get_cmdline_user_args().has("--canal-only"):
+		root.free()
+		ps = null
+		quit()
+		return
 	var targets: Array = []
 	_collect(root, targets)
 
@@ -94,6 +122,215 @@ func _init() -> void:
 	ps = null
 	quit()
 
+
+func _audit_canal_trench(root: Node) -> bool:
+	var ground: MeshInstance3D = root.get_node_or_null("UnifiedGround") as MeshInstance3D
+	if ground == null:
+		push_error("CANAL_TRENCH: UnifiedGround missing")
+		return false
+	var ok := true
+	for probe in CANAL_TRENCH_PROBES:
+		var top_y: float = _mesh_top_y_at(ground, probe)
+		print("CANAL_TRENCH probe=%s terrain_top=%.3f max=%.3f" % [
+			str(probe), top_y, CANAL_TERRAIN_MAX_Y])
+		if top_y > CANAL_TERRAIN_MAX_Y:
+			push_error("CANAL_TRENCH blocked at %s: terrain %.3f is above %.3f" % [
+				str(probe), top_y, CANAL_TERRAIN_MAX_Y])
+			ok = false
+	return ok
+
+
+## 田區排水鏈必須在三維上連續：水平排水渠要碰到幹渠東緣，且自身最低點
+## 必須落到該處下游水面；只在 XZ 重疊但懸在水面上方仍視為失敗。
+## ❗ 接水面必須取「實際看得見」的那一層。舊版寫死 DownstreamWater，
+## 而它在正式場景是 visible=false 的廢棄 box；它的 y 恰巧與新水面
+## 相同，於是 vertical_gap=0.000 假通過，而實機畫面裡跌水根本沒接到水。
+func _visible_receiver(root: Node) -> MeshInstance3D:
+	var candidates: Array[String] = [
+		"MachiCanal/ChannelGeometry/CanalWater/Reach_Lower",
+		"MachiCanal/ChannelGeometry/DownstreamWater",
+	]
+	for p in candidates:
+		var node: MeshInstance3D = root.get_node_or_null(p) as MeshInstance3D
+		if node == null:
+			continue
+		var shown: bool = node.visible
+		var walker: Node = node.get_parent()
+		while shown and walker != null and walker != root:
+			var as_v3d: Node3D = walker as Node3D
+			if as_v3d != null and not as_v3d.visible:
+				shown = false
+			walker = walker.get_parent()
+		if shown:
+			print("FEEDER_OUTFALL receiver=%s" % p)
+			return node
+		print("FEEDER_OUTFALL skip hidden receiver=%s" % p)
+	return null
+
+
+func _audit_feeder_outfall(root: Node) -> bool:
+	var feeder: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederWater") as MeshInstance3D
+	var receiver: MeshInstance3D = _visible_receiver(root)
+	if feeder == null or receiver == null:
+		push_error("FEEDER_OUTFALL: FeederWater or a VISIBLE canal water surface missing")
+		return false
+	var feeder_ab: AABB = _world_xform(feeder) * feeder.get_aabb()
+	var receiver_ab: AABB = _world_xform(receiver) * receiver.get_aabb()
+	var receiver_east: float = receiver_ab.position.x + receiver_ab.size.x
+	var receiver_top: float = receiver_ab.position.y + receiver_ab.size.y
+	# 排水鏈是三段：水平渠 → 水舌 → 幹渠水面。水舌已拆成獨立節點，所以
+	# 不能再拿 FeederWater 直接比幹渠水面（那樣它必然懸空 2.5m）。
+	# 逐段檢查銜接：水平渠底 ↔ 水舌頂、水舌底 ↔ 幹渠水面。
+	var nappe: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederNappe") as MeshInstance3D
+	if nappe == null:
+		push_error("FEEDER_OUTFALL: FeederNappe (the drop) missing — feeder would hang over the canal")
+		return false
+	var nab: AABB = _world_xform(nappe) * nappe.get_aabb()
+	var nappe_top: float = nab.position.y + nab.size.y
+	var nappe_bot: float = nab.position.y
+	# 銜接 1：水舌頂端必須接到水平渠的水面高度。
+	var link_up: float = absf(nappe_top - feeder_ab.position.y)
+	# 銜接 2：水舌底端必須落到幹渠水面（不得懸空）。
+	var vertical_gap: float = nappe_bot - receiver_top
+	# 銜接 3：水舌必須向西越過幹渠東緣。
+	var x_gap: float = nab.position.x - receiver_east
+	var old_trough: Node = root.get_node_or_null("MachiCanal/PaddyFields/Irrigation/木樋_北")
+	var old_pump: Node = root.get_node_or_null("MachiCanal/Waterworks/田泵水口_北")
+	print("FEEDER_OUTFALL link_up=%.3f x_gap=%.3f vertical_gap=%.3f nappe_y=%.3f..%.3f feeder_y=%.3f receiver_top=%.3f old_trough=%s old_pump=%s" % [
+		link_up, x_gap, vertical_gap, nappe_bot, nappe_top,
+		feeder_ab.position.y, receiver_top, str(old_trough != null), str(old_pump != null)])
+	if link_up > 0.05:
+		push_error("FEEDER_OUTFALL drop detached from the horizontal drain by %.3f m" % link_up)
+		return false
+	if x_gap > 0.01:
+		push_error("FEEDER_OUTFALL dry XZ break %.3f m" % x_gap)
+		return false
+	if vertical_gap > 0.05:
+		push_error("FEEDER_OUTFALL hangs %.3f m above canal water" % vertical_gap)
+		return false
+	if old_trough != null:
+		push_error("FEEDER_OUTFALL obsolete 木樋_北 still present")
+		return false
+	if old_pump != null:
+		push_error("FEEDER_OUTFALL obsolete 田泵水口_北 blocks the drop mouth")
+		return false
+	# 落點必須有泡沫舌，且鋪在下游（西）側。
+	# 泡沫扇形必須鋪在落點的下游（西）側。cos 符號寫錯會讓它整片往東
+	# 鋪回上游的田裡，而長度、面積、材質全部照樣通過——只有方向能抓到。
+	# 註：舊的 FEEDER_APRON west_reach 檢查已移除——泡沫舌已拆成獨立的
+	# FeederSplash 節點，不再是 FeederWater mesh 的一部分，那條會恆為 0。
+	var splash: MeshInstance3D = root.get_node_or_null("EastBankDressing/FeederSplash") as MeshInstance3D
+	if splash == null:
+		push_error("FEEDER_SPLASH node missing")
+		return false
+	var sab: AABB = _world_xform(splash) * splash.get_aabb()
+	var splash_w: float = sab.position.x
+	var splash_e: float = sab.position.x + sab.size.x
+	print("FEEDER_SPLASH x=%.2f..%.2f (mouth=292.40)" % [splash_w, splash_e])
+	if splash_w > 292.0:
+		push_error("FEEDER_SPLASH points upstream: west edge %.2f never reaches the canal" % splash_w)
+		return false
+	if splash_e > 292.9:
+		push_error("FEEDER_SPLASH spills %.2f m east onto the paddy side" % (splash_e - 292.4))
+		return false
+	# 水舌與泡沫都必須用有 shred 的專屬材質。若被合回 canal_water_upper
+	# （shore_alpha=0.62、shred=0），輪廓就淡不掉，重新變回硬邊平板——
+	# 位置、尺寸、連續性全部照樣通過，只有材質參數能抓到這個退化。
+	for spec in [["EastBankDressing/FeederNappe", "nappe"], ["EastBankDressing/FeederSplash", "splash"]]:
+		var mi: MeshInstance3D = root.get_node_or_null(spec[0]) as MeshInstance3D
+		if mi == null:
+			push_error("FEEDER_SHRED %s node missing" % spec[1])
+			return false
+		var mat: ShaderMaterial = mi.material_override as ShaderMaterial
+		if mat == null:
+			push_error("FEEDER_SHRED %s has no ShaderMaterial override" % spec[1])
+			return false
+		var sh: float = float(mat.get_shader_parameter("shred"))
+		var sa2: float = float(mat.get_shader_parameter("shore_alpha"))
+		print("FEEDER_SHRED %s shred=%.2f shore_alpha=%.2f" % [spec[1], sh, sa2])
+		if sh < 0.3:
+			push_error("FEEDER_SHRED %s shred=%.2f — edges will read as a hard plate" % [spec[1], sh])
+			return false
+		if sa2 > 0.05:
+			push_error("FEEDER_SHRED %s shore_alpha=%.2f floors ALPHA; edge cannot fade" % [spec[1], sa2])
+			return false
+	return true
+
+
+## 水田支撐面審計：每格水田中心下方，UnifiedGround 的地形頂必須低於
+## 該格泥面底，否則地形會把田面埋掉。
+## 注意：實例化但未加入 SceneTree 時，global_transform 是 IDENTITY——
+## 必須手動累加 transform 鏈（本檔 _mesh_top_y_at 曾犯過同一個錯）。
+func _audit_paddy_support(root: Node) -> bool:
+	var ground: MeshInstance3D = root.get_node_or_null("UnifiedGround") as MeshInstance3D
+	var paddy: Node = root.get_node_or_null("MachiCanal/PaddyFields/PaddyWater")
+	if ground == null or paddy == null:
+		push_error("PADDY_SUPPORT: UnifiedGround or PaddyWater missing")
+		return false
+	var ok := true
+	var mesh_arrays: Array = ground.mesh.surface_get_arrays(0)
+	var verts: PackedVector3Array = mesh_arrays[Mesh.ARRAY_VERTEX]
+	for child in paddy.get_children():
+		var mi: MeshInstance3D = child as MeshInstance3D
+		if mi == null or mi.mesh == null:
+			continue
+		var ab: AABB = _world_xform(mi) * mi.get_aabb()
+		var probe: Vector2 = Vector2(ab.position.x + ab.size.x * 0.5, ab.position.z + ab.size.z * 0.5)
+		var paddy_bottom: float = ab.position.y
+		var terrain_top: float = -INF
+		for v in verts:
+			var d: float = Vector2(v.x - probe.x, v.z - probe.y).length_squared()
+			if d < 9.0 and v.y > terrain_top:  # 3m 半徑內取最高點
+				terrain_top = v.y
+		if terrain_top == -INF:
+			push_warning("PADDY_SUPPORT %s: no terrain sample near %s" % [child.name, str(probe)])
+			continue
+		var clearance: float = paddy_bottom - terrain_top
+		if clearance < 0.0:
+			push_error("PADDY_SUPPORT buried %s probe=(%.1f,%.1f): terrain %.3f above paddy bottom %.3f (%.3f m)" % [
+				child.name, probe.x, probe.y, terrain_top, paddy_bottom, -clearance])
+			ok = false
+		else:
+			print("PADDY_SUPPORT %s probe=(%.1f,%.1f) terrain=%.3f paddy_bottom=%.3f clearance=%.3f" % [
+				child.name, probe.x, probe.y, terrain_top, paddy_bottom, clearance])
+	return ok
+
+
+func _world_xform(n: Node3D) -> Transform3D:
+	var t: Transform3D = n.transform
+	var cur: Node = n.get_parent()
+	while cur != null:
+		if cur is Node3D:
+			t = (cur as Node3D).transform * t
+		cur = cur.get_parent()
+	return t
+
+
+func _mesh_top_y_at(mi: MeshInstance3D, world_xz: Vector2) -> float:
+	var mesh: ArrayMesh = mi.mesh as ArrayMesh
+	if mesh == null:
+		return INF
+	# The audit instantiates the scene without adding it to SceneTree, so use
+	# the node's local transform. UnifiedGround is a direct child of slice.
+	var local_probe: Vector3 = mi.transform.affine_inverse() * Vector3(world_xz.x, 0.0, world_xz.y)
+	var top_y := -INF
+	for surface in range(mesh.get_surface_count()):
+		var arrays: Array = mesh.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var raw_indices = arrays[Mesh.ARRAY_INDEX]
+		var indices: PackedInt32Array = raw_indices if raw_indices != null else PackedInt32Array()
+		var count: int = indices.size() if not indices.is_empty() else vertices.size()
+		for face in range(0, count, 3):
+			var a: Vector3 = vertices[indices[face]] if not indices.is_empty() else vertices[face]
+			var b: Vector3 = vertices[indices[face + 1]] if not indices.is_empty() else vertices[face + 1]
+			var c: Vector3 = vertices[indices[face + 2]] if not indices.is_empty() else vertices[face + 2]
+			var local_y: float = _tri_y_at(a, b, c, Vector2(local_probe.x, local_probe.z))
+			if local_y > -1e8:
+				var world_y: float = (mi.transform * Vector3(local_probe.x, local_y, local_probe.z)).y
+				top_y = maxf(top_y, world_y)
+	return top_y
+
+
 func _collect(n: Node, out: Array) -> void:
 	if n is MeshInstance3D:
 		var mi: MeshInstance3D = n
@@ -106,9 +343,11 @@ func _collect(n: Node, out: Array) -> void:
 	for c in n.get_children():
 		_collect(c, out)
 
+
 func _aabb_covers_xz(aabb: AABB, lp: Vector3) -> bool:
 	return lp.x >= aabb.position.x and lp.x <= aabb.position.x + aabb.size.x \
 		and lp.z >= aabb.position.z and lp.z <= aabb.position.z + aabb.size.z
+
 
 func _tri_y_at(a: Vector3, b: Vector3, c: Vector3, p: Vector2) -> float:
 	var p0 := Vector2(a.x, a.z)
@@ -124,9 +363,11 @@ func _tri_y_at(a: Vector3, b: Vector3, c: Vector3, p: Vector2) -> float:
 		return -1e9
 	return a.y * w0 + b.y * w1 + c.y * w2
 
+
 func _percentile(values: PackedFloat32Array, ratio: float) -> float:
 	var index: int = clampi(roundi(float(values.size() - 1) * ratio), 0, values.size() - 1)
 	return values[index]
+
 
 func _count_above(values: PackedFloat32Array, threshold: float) -> int:
 	var count: int = 0

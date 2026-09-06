@@ -1,6 +1,6 @@
 # PROJECT STATE
 
-Last updated: 2026-08-27.
+Last updated: 2026-09-04.
 
 This file is intentionally short. It contains only facts that should affect the next task. Load subsystem details only when that subsystem is being edited.
 
@@ -9,17 +9,74 @@ This file is intentionally short. It contains only facts that should affect the 
 - Live game: **Godot 4.7** under `godot/` (`project.godot` features = 4.7; older docs saying 4.4 are historical).
 - `src/` is the frozen three.js line.
 - Human Village scene: `godot/maps/village/village.tscn` plus committed artifacts in `godot/maps/village/gen/`.
-- Git repository initialized (branch `main`); not yet pushed to GitHub. Commit each approved round before handing work to another agent.
+- **Active work happens in `godot/maps/slice/slice.tscn`**, not `village.tscn`. The slice
+  is where B1/B2/B3 rounds, the canal, the east river and the collision work live; it is
+  hand-tuned by the user between rounds and is now ~27 MB of scene text.
+- Git repository initialized. Branch `main` is ahead 18 of origin; active branch
+  `village-rebuild-b1-b2` has diverged (ahead/behind vs its own remote) — reconcile
+  before pushing. Not yet on GitHub.
+
+## Slice status (2026-09-04)
+
+- Content is at capacity: 13,001 nodes / 6,483 visible meshes / ~44 M triangles.
+  70 machiya, 14 landmarks, 2 torii, 415 water pieces, 208 trees, 3,118 ground-cover,
+  2,609 rocks, 14 street lamps. `tools/survey_slice_content.gd` regenerates this census.
+- Performance on a GTX 1070: main street 43-44 fps, riverside 44, village overview 31.
+  **24.3 M triangles are still shadow casters after culling** — the real bottleneck.
+  Top sources: `B1_Street` 5.1 M, `MachiCanal/TakeFence` (141 bamboo fences) 1.6 M,
+  `VillageTrees`×5 at 2.36 M each. Cutting these is a visual trade-off and needs a
+  user ruling, not an agent decision.
+- Collision is complete and verified: 23/23 probe audit, 17/17 real-controller walk,
+  675-sample ground-gap probe at zero deviation. Bodies: 71 convex hulls (avg 83 verts),
+  15 cylinders (14 lamps), 10 trimeshes.
+- Collision scenes are **binary `.scn`** (`gen/ground_collision.scn`,
+  `building_collision.scn`, `lamp_collision.scn`). Text `.tscn` has no import cache, so
+  it is re-parsed from decimal on every launch; the switch took F5 from 30.1 s to 19.3 s.
+- Generators bake from **disk**, so `slice.tscn` must be saved in the editor before any
+  `gen_*_collision.gd` run — otherwise hand-tuned positions bake at their old coordinates
+  (this happened: 鯢吞亭 was 90 m out).
+- Unused assets remaining: `assets/riverbank/` 9 (the paddy-field set: 稻作株, 水田一格,
+  畦道, 洗物石段, 水車小屋, 木樋支撐棚架, 水車(窄), 收頭件大/小) and `assets/bridges/` 3
+  (the live bridge is `imported_models/Stonebound Wooden Bri_1`). Using the paddy set
+  means opening a whole new field area, not dressing the existing one.
+- `check_map.gd -- slice` reports 12 issues; `tools/triage_check_map.gd` shows 10 of the
+  11 "water buried underground" hits are false — the canal is a *dug* channel, so its
+  water sits below village grade by design. The 2 empty MultiMesh layers
+  (`GrassFlower`/`GrassTall`, 0 instances) are real leftovers superseded by `草筆刷_*`.
 
 ## Human Village — new baseline (user ruling 2026-08-26)
 
 - The 170-house era is **fully retired and deleted (2026-08-25)** — generator pipeline (`gen_town.gd`, `tools/town/`, `make_town.py`, `make_machiya.py`, `town_modules.json`) **and the machiya assets, market, village gates, and portals**. None of these exist in the repo. Do not look for them, restore them, or treat docs describing them as current.
 - **The current `village.tscn` IS the new baseline** (user ruling): landmarks 鎮守之杜, 稗田邸(+後院), 鈴奈庵, 寺子屋, 霧雨店, 鯢吞亭, 龍神像; 14 路燈; vegetation; vista; terrain; boundary. ~221 nodes. Future village content builds on top of this.
 - The village is a **frozen, committed scene**: edit `village.tscn` / its `gen/` artifacts directly, following normal art-review gates.
-- Remaining live generators: `gen_hieda*.gd`, `gen_kourindou.gd`, `gen_trail.gd`, `gen_textures.gd`, `gen_charpreview.gd` + Blender `make_hieda/shourou/trees/props/hedge/chars.py`.
+- Remaining live generators: `gen_hieda*.gd`, `gen_kourindou.gd`, `gen_trail_v2.gd`, `gen_textures.gd`, `gen_charpreview.gd` + Blender `make_hieda/shourou/trees/props/hedge/chars.py`.
 - Known naming wart: scene nodes and `gen/` folder use 「裨田邸」 (typo) for 稗田邸. Renaming touches scene references — leave as-is unless a task explicitly fixes it.
 - Visual changes still require prototype → render → Human Art Review → rollout.
 - Next major art direction is lighting / cel-shading.
+
+## Beast Trail (獸道) v2 重構完成 (2026-09-04)
+
+- **定位與規格**：南端（人里入口）至北端（神社傳送點）全線蛇行漸窄（路寬 2.8m → 1.3m），劃分 10 個張弛段落（農田/柵欄 → 界碑森林 → 密林1 → 疏段地藏 → 密林2 → 小溪木橋 → 獸道大空地 → 密林3妖怪痕跡 → 夜雀屋台 → 深處妖怪領域）。
+- **產生器**：`godot/tools/gen_trail_v2.gd` 產出 `maps/trail/trail.tscn`（節點約 30,700 個、樹幹碰撞 1,080+ 根）。
+- **自然與美術校正**：
+  1. 樹種分配：闊葉 42%、松 33%、杉 20%、老歪樹 3%、枯樹 2%。前半段老樹全面覆寫綠葉，僅深處極稀疏紅葉。
+  2. 密林感：樹木重兵配置在路沿 3.2m ~ 55m 帶狀區（路沿樹達 3,840+ 棵），營造林蔭穹頂。
+  3. 空地與視線保護：空地半徑擴至 17m，古樹偏心置放並採自然綠葉闊葉巨木（CommonTree_1）；路心、屋台周圍與大空地完全禁入高草/大灌木，路面結實清晰。
+  4. 螢火蟲粒子：白晝 `emitting = false`，光色柔綠微縮，消除黃色發光方塊。
+- **測試驗收**：`walk_test.gd -- trail` 通過（0 條路線不通，BFS 全線暢通）；`check_map.gd -- trail` 水面正常開挖；截圖集存於 `docs/art_review/trail_v2/`。
+- **傳送點**：`data/trail.meta.json` 的 portals 已改成新主脊兩端 —— 北 (8.64, 9.06, −313.6) → `shrine`、南 (9.56, 0.29, 320.0) → `village`，各帶 `arrival_ground_y`（玩家落在傳送點往圖心退 4 m 處，該處地面較高）。`connections` 與 `mapRegistry.json` 同步線性化；舊的 1,635 筆樹幹碰撞已清空（場景帶 `own_colliders`）。
+- **實機自檢**：`main.gd --playtest`（走完整開機流程後驗傳送區生成與貼地、玩家出生落地、主脊 7 點可站立性）。獸道結果 0 項失敗。⚠ 不能用獨立 `--script` 工具做這件事：那模式下 autoload 不建立，`main.gd._ready` 中途即斷。
+- **狀態：可接受、未定版**（使用者 2026-09-04 裁決，**非** `ART_APPROVED`）。之後可能回頭改。
+- **Meshy 待補件**：界碑×2、警告牌、夜雀小木牌、地藏×7、石燈籠、路標×3、倒木×7、古樹 Hero、屋台 Hero、木橋。全部有 `Marker3D` + `meshy` meta 寫好尺寸與風化要求，資產到位可直接替換。
+
+## check_map 誤報修正 (2026-09-04)
+
+`check_map.gd` 兩個誤報來源已修，slice 從 11 個問題降到 1 個真問題：
+
+- **地面高度場只讀 `Terrain`**。slice 同時有 `Terrain`（舊地形，河床沒挖，水路一帶 +0.3 m）與 `UnifiedGround`（`gen_terrain_river.gd` 產出，含河床 −3.4 m）。只讀前者導致 11 個水面全被報「100% 埋在地下」，而實拍水路正常。改成 `GROUND_MESHES` 列出的網格全部併入同一高度場。
+- **刻意清空的 MultiMesh 被當成漏做**。`GrassTall`／`GrassFlower` 是使用者 2026-08-29 判定「彩度過高、尺寸過大」後由 `tools/clear_bright_grass.gd` 清成 0 實例的，節點保留以便還原。加 `INTENTIONALLY_EMPTY` 白名單。
+
+**slice 剩下的 1 個真問題（使用者裁決本輪不修）**：幹渠上游 z≈104 附近渠道沒挖到底 —— `UpstreamWater` 水面 −2.29 m、該處地面僅 −0.47 m，實拍確認畫面上水渠斷掉、草地蓋過。`Reach_Lower` 在 (287, −20) 同樣是平地上的水面。屬水路整合當時的既有缺口。診斷工具：`probe_slice_ground_pair.gd`、`probe_slice_water_gap.gd`。
 
 ## Yoriichi
 
@@ -32,7 +89,13 @@ This file is intentionally short. It contains only facts that should affect the 
 
 ## Village Rebuild — active work (2026-08-26)
 
-- Visual authority for the rebuild: `docs/village-concept-reference.md` (user-supplied concept art: dragon plaza center, market axis south, residential west, Hieda estate + rice fields east, graveyard north, **wide open-U river along the south edge**).
+- 視覺基準：`docs/reference/人間之里概念圖/村落農村概念俯視.png`（使用者裁決 2026-08-30，
+  **圖本身是權威**）。圖上實況：市集主街貫穿村心、北面林丘社寺為視覺終點、
+  西半住宅、東半農田＋大宅、東北河中平台立龍神像、細渠與水車穿行村內。
+  `docs/village-concept-reference.md` 已於 2026-08-30 依圖校正（舊版有多處錯誤轉錄，
+  含虛構的中央龍神廣場、北緣墓地、南緣 U 形河，已作廢）。
+  ⚠️ slice 現行沿南緣的 U 形河**在概念圖上沒有依據**，出自使用者 2026-08-26 的
+  獨立裁決，屬刻意偏離。
 - River rework in progress on `maps/slice/slice.tscn`: ring/narrow versions v1–v5 were **rejected by the user (too narrow, not U-shaped)**; current candidate is `river_open_u` v6b (`shots2/river_open_u_v6b_*_20260826`), awaiting Human Art Review.
 - River art card (user, 2026-08-26): **deep moat-like channel, stone-textured revetment, vegetation + trees along the banks**. The procedurally generated bridge is **placeholder only — do not treat it as final**; the user will replace it with a Meshy-made bridge.
 - v7 pass applied on slice (2026-08-26 afternoon): 22 bank trees (round/pine/sakura mix at the three bridge areas, node `RiverV3_Candidate/RiverBankTrees`), stone revetment materials assigned (`river_ishigaki_dry.tres` on Dry banks, `river_ishigaki_wet.tres` on Wet banks; shared `2F岸石.tres` untouched). Shots: `shots2/river_open_u_v7*_20260826`.
@@ -76,6 +139,23 @@ This file is intentionally short. It contains only facts that should affect the 
 1. Keep the working copy clean and avoid reviving obsolete prototype/review workflows or the retired village generator.
 2. Continue Human Village lighting / cel-shading and remaining visible art-quality work.
 3. Integrate the finished Yoriichi runtime into the formal game Player only when that task is explicitly started.
+
+## Open decisions (waiting on the user)
+
+- **圍牆 scale.** `imported_models/Japanese Castle Wall` is placed at scale 20 =
+  8.18 m tall / 5.10 m thick / 37.98 m per segment. Real 築地塀 is 2.2-3.0 m; the user
+  picked 2.41 m (scale 5.9) but the scene still holds scale 20. Four segments sit at
+  (210.5, 93.8), (263.1, 93.8), (209.1, -76.2), (261.7, -76.2) — two rows flanking the
+  north and south torii. **These are deliberate placements, not duplicates** (an agent
+  misread them as a 4× stack and nearly deleted them).
+- **Shadow budget.** 24.3 M casting triangles is what holds the frame at 31-44 fps.
+  Turning off casting for `TakeFence` / `VillageTrees` would buy the most, but that is a
+  look decision. Street lamps were already switched off and bought nothing (0.7 % of the
+  total, 44→43 fps, inside noise) — recorded so it is not retried as a fix.
+- **Play boundary.** `tools/probe_play_bounds.gd`: 15 of 16 compass headings run 420 m+
+  with no terrain stopping the player. A plan exists at
+  `docs/plans/2026-09-04-圍牆佈局規劃.md` (invisible `StaticBody3D` bounds for movement,
+  wall segments only as gate dressing) but has not been approved or built.
 
 ## Do Not Reopen Without Evidence
 

@@ -97,8 +97,21 @@ const AMBIENT_DUSK := Color(0.42, 0.38, 0.42)
 const AMBIENT_NIGHT := Color(0.20, 0.26, 0.40)
 
 func _apply_ambient() -> void:
+	# 若地圖已有「天象系統」，環境光、霧色、空色與天頂貢獻均由天象系統獨佔驅動，
+	# 此處不得覆寫，避免雙系統每秒數值跳變造成天空／陰影閃爍。
+	var current_map: Node = _current_map()
+	if current_map != null and _has_sky_system(current_map):
+		return
+	# 室內圖（稗田邸等）由 interior_lighting.gd 獨佔驅動環境光：屋內看不到
+	# 天空，把 sky_contribution 拉回 0.43 等於把近半亮度交給一片看不見的天空，
+	# 實測畫面平均亮度掉到 0.17（室外 slice 是 0.46），天花板整片死黑。
+	# 這裡不覆寫，室內就沒有日夜——那本來就對：屋裡看不到太陽。
+	if current_map != null and current_map.has_meta("interior_lighting"):
+		return
 	var env := _active_environment()
 	if env == null:
+		return
+	if _env_node != null and (_env_node.name == "天空環境" or _has_sky_system(_env_node.get_parent())):
 		return
 	# 0 = 真夜中、1 = 正午。日の出前後 1.2h でなめらかに渡す。
 	var k := clampf((sin(PI * (hour - 6.0) / 12.0) + 0.18) / 1.18, 0.0, 1.0)
@@ -143,6 +156,17 @@ func _find_world_environment(node: Node) -> WorldEnvironment:
 		if found != null:
 			return found
 	return null
+
+
+func _has_sky_system(node: Node) -> bool:
+	if node == null:
+		return false
+	if node.name == "天象系統" or node is 天象系統:
+		return true
+	for child in node.get_children():
+		if _has_sky_system(child):
+			return true
+	return false
 
 
 ## ── 行灯 ───────────────────────────────────────────────────

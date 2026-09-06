@@ -31,3 +31,15 @@ godot/.mcp.json
 godot/.cursor/
 .codex/
 godot/*.log
+
+# 手動備份與暫存 —— 本機保險，不進版控。
+# slice.tscn 是 27MB 的手調場景，每次動它之前都會複製一份到 backups/；
+# 那是本機回退用的，不是專案內容。project.godot.bak_* 與 *.bak.res 同理。
+godot/maps/*/backups/
+godot/project.godot.bak_*
+*.bak.res
+
+# 審圖產物：截圖、錄影、探測腳本、驗收報告（634MB）。
+# 這是「給人看的證據」，不是專案內容 —— 每輪都會重生，不進版控。
+_review/
+

@@ -1,9 +1,54 @@
 {
-  "id": "slice",
-  "note": "人間之里環村河道獨立灰盒；僅供 Human Art Review，不是正式村落場景。",
-  "playSize": [1100, 1100],
-  "safe": true,
-  "connections": [],
-  "colliders": [],
-  "portals": []
+ "_note": "portals 空陣列時 main.gd 的 _place_player() 會退回預設 spawn (0,40,0)，但村子在 x≈235，玩家會落在 235m 外的空草地上。這裡放一個 target 為空的保留 portal：_spawn_portals() 對 reserved portal 只建 Area3D、不畫光柱、不觸發傳送，純粹當出生點標記（村人 NPC 也錨在它附近）。⚠ _arrival_for_portal() 會把落點朝世界原點再推 4m，所以 x 要預先往東補償：填 239 才會落在主街中線 235。實機量測該處 UnifiedGround 地面 y=0.000。（2026-09-06：凍結的 maps/village 基線已刪除，人間之里自此只有一張圖。）",
+ "portals": [
+  {
+   "x": 239.0,
+   "y": 0.0,
+   "z": 16.0,
+   "target": "",
+   "arrival_y_offset": 1.2,
+   "arrival_yaw": 0.0
+  },
+  {
+   "x": 236.0,
+   "y": 0.0,
+   "z": 112.0,
+   "target": "trail",
+   "arrival_ground_y": 0.0,
+   "arrival_y_offset": 1.2,
+   "arrival_yaw": 3.14159265358979,
+   "note": "南側大鳥居外（草地與石列）。獸道由此進出。"
+  },
+  {
+   "x": 234.0,
+   "y": 0.0,
+   "z": -120.0,
+   "target": "hieda1f",
+   "arrival_ground_y": 0.0,
+   "arrival_y_offset": 1.2,
+   "arrival_yaw": 0.0,
+   "note": "北側大鳥居盡頭、稗田邸門前。z=-120：z=-130 時回程落點陷進宅殼（portal_test 實測）。"
+  },
+  {
+   "x": 456.0,
+   "y": -0.08,
+   "z": -144.0,
+   "target": "kourindou",
+   "arrival_ground_y": -0.08,
+   "arrival_y_offset": 1.2,
+   "arrival_yaw": 1.5707963267949,
+   "note": "龍石像橋東岸（龍神像在西側 x≈362）。過橋往香霖堂。"
+  }
+ ],
+ "id": "slice",
+ "safe": true,
+ "connections": [
+  "trail",
+  "hieda1f",
+  "kourindou"
+ ],
+ "playSize": [
+  460,
+  460
+ ]
 }

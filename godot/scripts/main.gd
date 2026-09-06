@@ -8,22 +8,31 @@ extends Node3D
 ## 座標系：three / glTF / Godot 都是右手系 y-up，座標原樣通用。
 
 const START_MAP := "shrine"
-## START_MAP が未構築のときの退避先。shrine は mapRegistry には載っている
-## が実体（maps/shrine/shrine.tscn も blockout/shrine.glb も）が無いため、
-## これが無いと起動が黒画面になる。shrine が建ったらこの退避は自然に
-## 使われなくなる——START_MAP を書き換えて逃げないのはそのため。
-const BOOT_FALLBACK := "village"
+## 起動図が未構築ならこの退避先へ落とす。黙って落とさない——START_MAP は
+## 「本来ここから始まる」という意思表示なので、書き換えて隠すのではなく、
+## 毎回うるさく言いながら遊べる状態にしておく。
+## 2026-09-03: village → slice。人間之里の実作業は maps/slice で進んでおり
+## （B1/B2 ラウンド、碰撞、緣一の実装確認）、F5 一発でそこに立ちたい。
+## 2026-09-06: 凍結基線 maps/village は削除済み（村人 NPC・地標 glb は slice／
+## assets/landmark へ移設）。人間之里は slice 一枚のみ。
+const BOOT_FALLBACK := "slice"
 ## 傳送落地後的冷卻，免得一落地就被同一個傳送區抓回去
 const PORTAL_COOLDOWN := 2.0
 ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
 ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
 const TRIMESH_MIN_SPAN := 15.0
 const VERTICAL_SLICE_NPC := preload("res://scenes/test_npc.tscn")
+const InteriorLightingRig = preload("res://scripts/interior_lighting.gd")
+## 密閉室內圖：屋頂擋住太陽，環境光又靠天空貢獻近半，實測畫面平均亮度
+## 只有 0.08（六成像素接近純黑）。這些圖載入後補一層室內光。
+const INTERIOR_MAPS := ["hieda1f", "hieda2f", "hieda3f"]
 
 var registry: Dictionary = {}
 var current_id := ""
 var map_root: Node3D = null
 var portal_cooldown := 0.0
+## 目前圖上可用的傳送區；冷卻結束時要重新檢查佇留其中的玩家。
+var _live_portals: Array = []
 
 @onready var player: CharacterBody3D = $Player
 @onready var map_label: Label = $UI/MapLabel
@@ -49,6 +58,8 @@ func _ready() -> void:
 			_shots_file = a.substr(8)
 		elif a.begins_with("--shotdir="):
 			_shot_dir = a.substr(10)
+		elif a == "--playtest":            # 實機自檢：傳送區/出生點/可站立性
+			_playtest = true
 	# 起動図が未構築なら、構築済みの図へ落とす。黙って落とさない——
 	# START_MAP は「本来ここから始まる」という意思表示なので、書き換えて
 	# 隠すのではなく、毎回うるさく言いながら遊べる状態にしておく。
@@ -79,15 +90,32 @@ func _ready() -> void:
 		_shot_cam_node.current = true
 		_aim_shot(0)
 	if _shot_cam != "":
-		var v := _shot_cam.split_floats(",")
+		# y / ly 可寫成 "+1.7"：表示「該 xz 的地面高度 + 1.7」。
+		# 獸道整體往北抬 9 m，固定 y=1.7 的鏡位在密林段直接掉進地底看天。
+		# 地形 trimesh 這一幀才建，物理要下一幀才查得到 → 相對高度在
+		# _shot_tick 第 2 幀才解算（_shot_cam_pending）。
 		var cam := Camera3D.new()
-		cam.position = Vector3(v[0], v[1], v[2])
 		add_child(cam)
-		cam.look_at(Vector3(v[3], v[4], v[5]))
 		cam.current = true
+		_shot_cam_pending = cam
 
 var _shot_path := ""
 var _shot_cam := ""
+var _playtest := false
+var _playtest_frames := 0
+
+## "+h" → 該 xz 射線打到的地面 + h；純數字 → 絕對 y。
+func _shot_xyz(xs: String, ys: String, zs: String) -> Vector3:
+	var x := xs.to_float()
+	var z := zs.to_float()
+	if ys.begins_with("+"):
+		var h := ys.substr(1).to_float()
+		var space := get_viewport().get_world_3d().direct_space_state
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 500.0, z), Vector3(x, -500.0, z))
+		var hit := space.intersect_ray(q)
+		var gy: float = hit.position.y if hit.has("position") else 0.0
+		return Vector3(x, gy + h, z)
+	return Vector3(x, ys.to_float(), z)
 var _shot_player := ""
 var _shot_frames := 0
 ## ── 資產正面照（ADR-016）──
@@ -138,8 +166,140 @@ func _shotlist_tick() -> void:
 	_aim_shot(_shot_i)
 var _default_env: Environment = null
 
+var _shot_cam_pending: Camera3D = null
+
+## 實機自檢（--playtest）：走完整開機流程之後，驗玩家真的能玩。
+##
+## ⚠ 不能用獨立的 --script 工具跑這件事：那模式下 autoload（DayNight）
+##   不會建立，main.gd 的 _ready 中途就斷了，拿到的 map_root 是空殼。
+##   掛在這裡才是「遊戲實際跑起來的樣子」。
+func _run_playtest() -> void:
+	print("[PLAYTEST] 地圖：%s" % (map_root.name if map_root else "null"))
+	var space := get_viewport().get_world_3d().direct_space_state
+	var fail := 0
+
+	# 1) 傳送區（⚠ 掛在 map_root 底下，不是 Main —— 見 _spawn_portals()）
+	var portals := []
+	if map_root != null:
+		for c in map_root.get_children():
+			if String(c.name).begins_with("Portal_"):
+				portals.append(c)
+	print("[PLAYTEST] 傳送區 %d 個" % portals.size())
+	if portals.is_empty():
+		print("[PLAYTEST] ✗ 一個傳送區都沒生成 —— 檢查 data/<map>.meta.json 的 portals")
+		fail += 1
+	for a in portals:
+		var n3 := a as Node3D
+		# 排除邊界牆：boundary() 的牆體高 40 m，傳送點就在圖緣附近時
+		# 射線會先打到牆頂，把「地面」量成 40.0（shrine 首跑就這樣）。
+		var gy := _pt_ground(space, n3.global_position.x, n3.global_position.z,
+			[] as Array[RID], true)
+		if gy == -INF:
+			print("[PLAYTEST] ✗ %s 底下沒有地面" % a.name)
+			fail += 1
+			continue
+		var dy := n3.global_position.y - gy
+		var ok := absf(dy - 1.0) < 0.8
+		if not ok:
+			fail += 1
+		print("[PLAYTEST] %s %-20s xz=(%.1f, %.1f) 地面 %.2f 離地 %+.2f m"
+			% ["✓" if ok else "✗", a.name, n3.global_position.x, n3.global_position.z, gy, dy])
+
+	# 2) 玩家出生
+	if player != null:
+		var p: Vector3 = player.global_position
+		# ⚠ 射線要排除玩家自己。玩家膠囊高約 1.7 m，從上往下打會先命中
+		#   自己的頭頂，於是「地面」被算成 p.y + 1.7，看起來像埋在地下 1.7 m。
+		var gy := _pt_ground(space, p.x, p.z, [player.get_rid()] as Array[RID])
+		var dy: float = p.y - gy if gy != -INF else INF
+		var ok: bool = gy != -INF and dy > -0.3 and dy < 3.0
+		if not ok:
+			fail += 1
+		print("[PLAYTEST] %s 玩家出生 (%.1f, %.2f, %.1f) 地面 %.2f 離地 %+.2f m"
+			% ["✓" if ok else "✗", p.x, p.y, p.z, gy, dy])
+		if not ok:
+			# 出生失敗時報出「射線到底打到誰」——地形高度對得上卻站不住，
+			# 通常是某個碰撞體疊在上面（樹幹代理、岩石、遺跡碰撞…）。
+			var q := PhysicsRayQueryParameters3D.create(
+				Vector3(p.x, 400.0, p.z), Vector3(p.x, -100.0, p.z))
+			var ex: Array[RID] = []
+			var chain := []
+			for k in 6:
+				q.exclude = ex
+				var h := space.intersect_ray(q)
+				if not h.has("position"):
+					break
+				var col: Object = h.get("collider")
+				chain.append("%s[%s] y=%.2f" % [
+					col.name if col else "?", col.get_class() if col else "?", h.position.y])
+				ex.append(h.rid)
+			print("[PLAYTEST]   射線由上而下打到：%s" % " ← ".join(chain))
+	else:
+		print("[PLAYTEST] ✗ 沒有玩家節點")
+		fail += 1
+
+	# 3) 沿線可站立性 —— 檢查點依地圖而定
+	# ⚠ 不能寫死成獸道座標。換張圖時每個點都會報「無地面」，
+	#   而那不是場景問題，是檢查表沒跟著換（shrine 第一次跑就 5/7 假失敗）。
+	var routes := {
+		"trail": [
+			[9.6, 320.0, "南端·人里口"], [6.2, 275.2, "界碑"], [3.6, 128.0, "地藏疏段"],
+			[-7.1, 6.4, "小溪"], [-15.9, -38.4, "大空地"], [21.3, -172.8, "夜雀屋台"],
+			[8.6, -313.6, "北端·神社口"],
+		],
+		"shrine": [
+			[0.0, 53.0, "南端·獸道口"], [0.0, 44.0, "主鳥居"], [0.0, 20.0, "參道中段"],
+			[0.0, -5.0, "石階"], [0.0, -20.0, "境內中央"], [0.0, -31.5, "拜殿正面"],
+			[-13.5, -22.0, "社務所"], [11.0, -14.5, "手水舍"],
+		],
+	}
+	var map_id := String(map_root.name).to_lower() if map_root else ""
+	var route: Array = routes.get(map_id, [])
+	if route.is_empty():
+		print("[PLAYTEST] （%s 沒有登記檢查點，略過可站立性測試）" % map_id)
+	else:
+		var miss := 0
+		for r in route:
+			var gy := _pt_ground(space, r[0], r[1])
+			if gy == -INF:
+				miss += 1
+				print("[PLAYTEST] ✗ %s (%.1f, %.1f) 無地面" % [r[2], r[0], r[1]])
+		print("[PLAYTEST] 沿線 %d 個關卡點，%d 個無地面" % [route.size(), miss])
+		fail += miss
+
+	print("[PLAYTEST] ══ %s（%d 項失敗）══" % ["通過" if fail == 0 else "有問題", fail])
+
+
+func _pt_ground(space: PhysicsDirectSpaceState3D, x: float, z: float,
+		exclude: Array[RID] = [], skip_boundary: bool = false) -> float:
+	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -100.0, z))
+	q.exclude = exclude
+	if not skip_boundary:
+		var hit := space.intersect_ray(q)
+		return hit.position.y if hit.has("position") else -INF
+	# 邊界牆（gen_lib.boundary）是 40 m 高的隱形擋牆，會被誤認成地面。
+	# 往下逐個排除，取第一個「不是邊界」的命中。
+	var ex: Array[RID] = exclude.duplicate()
+	for k in 8:
+		q.exclude = ex
+		var hit := space.intersect_ray(q)
+		if not hit.has("position"):
+			return -INF
+		var col: Object = hit.get("collider")
+		var nm := String(col.name) if col else ""
+		if not (nm.contains("Boundary") or nm.contains("邊界") or nm.contains("boundary")):
+			return hit.position.y
+		ex.append(hit.rid)
+	return -INF
+
+
 func _shot_tick() -> void:
 	_shot_frames += 1
+	if _shot_cam_pending != null and _shot_frames == 2:
+		var parts := _shot_cam.split(",")
+		_shot_cam_pending.position = _shot_xyz(parts[0], parts[1], parts[2])
+		_shot_cam_pending.look_at(_shot_xyz(parts[3], parts[4], parts[5]))
+		_shot_cam_pending = null
 	if _shot_frames == 45:
 		var img := get_viewport().get_texture().get_image()
 		img.save_png(_shot_path)
@@ -147,7 +307,17 @@ func _shot_tick() -> void:
 		get_tree().quit()
 
 func _process(delta: float) -> void:
+	if _playtest:
+		_playtest_frames += 1
+		if _playtest_frames == 40:
+			_run_playtest()
+			get_tree().quit()
+		portal_cooldown = maxf(0.0, portal_cooldown - delta)
+		return
+	var was_cooling := portal_cooldown > 0.0
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
+	if was_cooling and portal_cooldown <= 0.0:
+		_recheck_portal_overlap()
 	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":
 		_shot_tick()
@@ -190,6 +360,8 @@ func load_map(id: String, from_id: String) -> void:
 
 	if map_root:
 		map_root.queue_free()
+	# 傳送區掛在 map_root 底下，隨舊圖一起釋放；清掉舊清單免得留下無效引用。
+	_live_portals.clear()
 	current_id = id
 	print("[map] %s → %s" % [id, path])
 	map_root = packed.instantiate()
@@ -199,11 +371,28 @@ func load_map(id: String, from_id: String) -> void:
 		print("[map] Terrain override=", terr.material_override)
 
 	# 原生場景可以自帶 WorldEnvironment（霧、氛圍是每張圖的個性）——
-	# 有的話就讓 main 的預設環境讓位，離圖時還回來
-	var map_env := map_root.find_child("WorldEnvironment", true, false)
+	# 有的話就讓 main 的預設環境讓位，離圖時還回來。
+	#
+	# ⚠ 按**型別**找，不按名字。這裡原本是
+	#   find_child("WorldEnvironment", true, false)
+	# ——那是節點名比對。slice 的環境節點叫「天空環境」（天象系統底下，和
+	# 「太陽」「月亮」「降水」同一組中文命名），名字對不上，find_child 回傳
+	# null，main 就誤判「這張圖沒有自己的環境」而保留自己那份。結果場上同時
+	# 有兩個啟用中的 WorldEnvironment，Godot 只採用其中一個且順序無保證，
+	# 天象系統的天空、概念圖雲層與體積霧就這樣被蓋掉——F5 看不到太陽光影和
+	# 雲的真正原因。圖的節點是使用者命名的，程式不該假設它叫什麼。
+	var map_env := _find_first(map_root, "WorldEnvironment")
 	if _default_env == null:
 		_default_env = $WorldEnvironment.environment
 	$WorldEnvironment.environment = null if map_env else _default_env
+
+	# 同理，圖自帶日月時 main 的 Sun 必須讓位。兩盞 DirectionalLight3D 同時
+	# 亮著會互相沖淡、投出方向衝突的影子，而天象系統本來就會依時刻自己驅動
+	# 太陽與月亮。這盞燈留給沒有天象系統的舊圖當保底。
+	var map_sun := _find_first(map_root, "DirectionalLight3D")
+	$Sun.visible = map_sun == null
+	if map_sun != null:
+		print("[map] %s 自帶天象，main 的 WorldEnvironment 與 Sun 讓位" % id)
 
 	# 佈局重新生成的原生圖（如獸道的新森林）自帶碰撞，web 版碰撞箱對不上
 	var own: bool = map_root.get_meta("own_colliders", false)
@@ -212,6 +401,7 @@ func load_map(id: String, from_id: String) -> void:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
 	_spawn_vertical_slice_npc(id)
+	_apply_interior_lighting(id)
 	_place_player(meta, from_id)
 
 	var info: Dictionary = registry.get(id, {})
@@ -219,11 +409,23 @@ func load_map(id: String, from_id: String) -> void:
 
 
 func _spawn_vertical_slice_npc(map_id: String) -> void:
-	if map_id != "village":
+	# 2026-09-06: village 凍結基線已刪除；測試村人改由 maps/slice 提供。
+	# 位置不再寫死 — 錨在 slice.meta.json 的保留 portal（主街出生標記）北側 3 m，
+	# 面向村內。座標跟著 meta 走，重新對點時不用改程式。
+	if map_id != "slice":
+		return
+	var marker := Vector3.INF
+	for p in _load_json("res://data/slice.meta.json").get("portals", []):
+		var t: Variant = p.get("target")
+		if t == null or String(t).is_empty():
+			marker = Vector3(float(p.x), float(p.y), float(p.z))
+			break
+	if marker == Vector3.INF:
+		push_warning("[npc] slice.meta.json 沒有保留 portal 標記，村人未生成")
 		return
 	var npc := VERTICAL_SLICE_NPC.instantiate() as Node3D
 	npc.name = "VerticalSliceNPC"
-	npc.position = Vector3(2.5, 0.3, -158.0)
+	npc.position = marker + Vector3(-4.0, 0.3, -3.0)
 	map_root.add_child(npc)
 
 
@@ -235,6 +437,19 @@ func _on_interaction_prompt_changed(text: String) -> void:
 func _on_interaction_message(text: String) -> void:
 	interaction_message.text = text
 	interaction_message.visible = not text.is_empty()
+
+## 依**型別**在子樹中找第一個節點。Node.find_child 只比對名字，對這個專案
+## 不適用：圖裡的節點是使用者用中文命名的（天空環境、太陽、月亮），程式不能
+## 假設它們叫英文類別名。
+func _find_first(n: Node, cls: String) -> Node:
+	if n.is_class(cls):
+		return n
+	for c in n.get_children():
+		var found := _find_first(c, cls)
+		if found != null:
+			return found
+	return null
+
 
 ## 大 mesh 做 trimesh 靜態碰撞。
 ##
@@ -251,6 +466,13 @@ func _build_trimesh_collision(root: Node, own_colliders: bool) -> int:
 			stack.push_back(c)
 		if n is MeshInstance3D:
 			if own_colliders and not (String(n.name) == "Terrain" or n.has_meta("needs_trimesh")):
+				continue
+			# A hidden mesh must not carry collision: slice hides its legacy
+			# Terrain (UnifiedGround replaced it) but this pass still baked
+			# Terrain_col, so the player stood on an invisible surface 1–3.5 m
+			# above the ground he could see (probe_ground_gap 2026-09-03:
+			# 123 / 675 samples > 10 cm, worst 3.5 m over the canal).
+			if not (n as Node3D).is_visible_in_tree():
 				continue
 			var aabb: AABB = n.get_aabb()
 			if maxf(aabb.size.x, aabb.size.z) >= TRIMESH_MIN_SPAN:
@@ -347,7 +569,41 @@ func _spawn_portals(meta: Dictionary) -> void:
 			area.body_entered.connect(_on_portal_reserved.bind(area.name))
 		else:
 			area.body_entered.connect(_on_portal_entered.bind(String(tgt)))
+			# `body_entered` 只在「進入的那一幀」發一次。落地冷卻若還沒退完，
+			# 這一次就被吞掉，玩家站在傳送區裡也不會有第二次通知 —— 神社出生點
+			# 離獸道傳送區只有 4.1 m，疾跑 0.6 秒就到，遠短於 2 秒冷卻，於是
+			# 「走到門口卻進不去」。改為冷卻結束後重新檢查誰還站在裡面。
+			_live_portals.append({"area": area, "target": String(tgt)})
 		map_root.add_child(area)
+
+## 冷卻結束的那一幀：玩家若還站在某個傳送區裡，補送一次觸發。
+## 沒有這段，`body_entered` 的一次性語意會讓「冷卻中走進去」變成永久卡住。
+func _recheck_portal_overlap() -> void:
+	for entry in _live_portals:
+		var area: Area3D = entry.get("area")
+		if not is_instance_valid(area):
+			continue
+		if area.get_overlapping_bodies().has(player):
+			_on_portal_entered(player, String(entry.get("target")))
+			return
+
+
+## 密閉室內圖補光。只碰 INTERIOR_MAPS 裡的圖，戶外圖完全不動。
+## 既有燈具（床の間灯、聚光、裂縫光…）一律保留，這裡只加環境光與散射補燈。
+func _apply_interior_lighting(id: String) -> void:
+	if not INTERIOR_MAPS.has(id) or map_root == null:
+		return
+	# 標記給 daynight.gd：這張圖的環境光歸室內補光獨佔，日夜循環不得覆寫。
+	# 少了這行，_apply_ambient() 每秒把 ambient 打回 0.73 / sky 0.43，
+	# 補燈照樣加了卻看不出效果（實測平均亮度只有室外的三分之一）。
+	map_root.set_meta("interior_lighting", true)
+	var rig = InteriorLightingRig.new()
+	map_root.add_child(rig)
+	var mwe := get_node_or_null("WorldEnvironment") as WorldEnvironment
+	var fallback: Environment = mwe.environment if mwe != null else null
+	var n: int = rig.apply(map_root, fallback)
+	print("[light] %s 室內補光：ambient=%.2f + %d 盞散射補燈" % [id, rig.ambient_energy, n])
+
 
 ## 保留中的觸發區：偵測邏輯已經接好，只差目的地。
 func _on_portal_reserved(body: Node3D, who: String) -> void:

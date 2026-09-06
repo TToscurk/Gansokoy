@@ -34,42 +34,13 @@
     "mobTheme": "fairy",
     "connections": [
       "shrine",
-      "village",
-      "bamboo",
-      "sunflower"
+      "slice"
     ],
     "entry": "maps/trail/",
     "zh": "獸道",
     "en": "BEAST TRAIL",
     "x": 240,
     "z": 270
-  },
-  "village": {
-    "id": "village",
-    "zh": "人間之里",
-    "en": "HUMAN VILLAGE",
-    "dir": "中央",
-    "x": -80,
-    "z": 150,
-    "elev": 15,
-    "radius": 205,
-    "rough": 0.8,
-    "fog": 12109008,
-    "accent": 14266986,
-    "built": true,
-    "safe": true,
-    "playSize": [
-      460,
-      460
-    ],
-    "mobTheme": null,
-    "connections": [
-      "trail",
-      "kourindou",
-      "myouren",
-      "lake"
-    ],
-    "entry": "maps/village/"
   },
   "bamboo": {
     "id": "bamboo",
@@ -191,7 +162,7 @@
     ],
     "mobTheme": null,
     "connections": [
-      "village",
+      "slice",
       "forest"
     ],
     "entry": "maps/kourindou/"
@@ -264,7 +235,7 @@
     ],
     "mobTheme": "iceFairy",
     "connections": [
-      "village",
+      "slice",
       "youkaiMountain",
       "sdm"
     ]
@@ -397,7 +368,7 @@
     ],
     "mobTheme": null,
     "connections": [
-      "village"
+      "slice"
     ]
   },
   "netherworld": {
@@ -468,5 +439,32 @@
     ],
     "mobTheme": null,
     "connections": []
+  },
+  "slice": {
+    "id": "slice",
+    "zh": "人間之里",
+    "en": "HUMAN VILLAGE",
+    "dir": "中央",
+    "x": -80,
+    "z": 150,
+    "elev": 15,
+    "radius": 205,
+    "rough": 0.8,
+    "fog": 12109008,
+    "accent": 14266986,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      460,
+      460
+    ],
+    "mobTheme": null,
+    "connections": [
+      "trail",
+      "hieda1f",
+      "kourindou"
+    ],
+    "entry": "maps/slice/",
+    "note": "B1/B2 ラウンドの実作業図。凍結済みの旧基線 village は 2026-09-06 削除済みで、人間之里はこの図のみ。"
   }
 }

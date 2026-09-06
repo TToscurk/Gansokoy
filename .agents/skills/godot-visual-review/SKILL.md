@@ -21,3 +21,25 @@ Treat rendered images as required evidence. Read `CLAUDE.md`, `.claude/rules/art
 9. **Stop at `ART_REVIEW`.** Present the BEFORE/AFTER evidence and wait for Human Art Review. Never declare visual work complete or approved on your own judgement (AGENT_CONSTITUTION 紅線 6); rollout happens only after explicit user approval.
 
 Use the existing capture wrapper; do not invent another screenshot system. Do not expand into lighting, gameplay, NPCs, vegetation, or another subsystem unless explicitly included.
+
+## What screenshots cannot settle
+
+Screenshots prove *rendering* (culling, winding, moiré, lighting, composition). They do **not** settle geometry, and vision judgement of a small or low-resolution model is actively misleading — asked to describe a single 300px asset it will confidently return the wrong object.
+
+Before placing any GLB, and again after placing it, settle these with numbers:
+
+| Question | Wrong tool | Right tool |
+|---|---|---|
+| Where is the origin? | assume geometric centre | `godot/tools/asset_probe.py` |
+| How high is the walkable surface? | AABB height | `asset_probe.py --profile` |
+| Which way does a slope fall? | AABB corners | the node's `basis`, not its bounds |
+| Did it land on the ground? | eyeball the render | `model_bottom + y × scale == surface` |
+
+`asset_probe.py` talks to Blender over MCP and reads GLB vertices directly (it scans ports 9875-9880; the addon panel often reports a different port than it listens on).
+
+Two traps this repo has already hit:
+
+- **Origins are usually centred, but not always.** Every riverbank/landscape GLB measured so far is centred except `盆樹.glb`, whose origin is at its base. Placing it as if centred left it floating.
+- **AABB height ≠ walkable rise.** `降台石5段.glb` has an AABB of 0.85m but only 0.59m of actual step rise; the remainder is base hollow and a top ridge. Sizing `scale` from the AABB made it miss both the bank top and the platform.
+
+Also beware double-applying `scale`: viewport-reported AABB sizes are already scaled, so `aabb_size * scale` counts it twice.

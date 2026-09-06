@@ -19,6 +19,7 @@ Permanent agent policy lives in repo-root `CLAUDE.md`, `AGENTS.md`, `AGENT_CONST
 | Human Village art direction | `village-art-direction.md` |
 | Village rebuild concept (zones, river spec, machiya types) | `village-concept-reference.md` |
 | Basin vista plan (DESIGN merged proposal, awaiting review) | `vista-basin-plan.md` |
+| 新版人里規劃提案（DESIGN，等審查）：密度／水系四級／遠景視差實測 | `新人里規劃提案.md` |
 | Generator domain vocabulary (village-generator ADRs superseded) | `domain-model.md` |
 | Godot migration history (historical; current version is 4.7) | `godot-migration.md` |
 | Border / horizon geography | `border-vistas.md` |

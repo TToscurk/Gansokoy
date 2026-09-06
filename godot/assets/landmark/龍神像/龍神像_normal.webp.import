@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bc57d42i0xsqp"
+path.s3tc="res://.godot/imported/龍神像_normal.webp-c51eb47bcc736f0f9f52e1f6c49df850.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "f3102542481a86bd8ab944a036866257"
+}
+
+[deps]
+
+source_file="res://assets/landmark/龍神像/龍神像_normal.webp"
+dest_files=["res://.godot/imported/龍神像_normal.webp-c51eb47bcc736f0f9f52e1f6c49df850.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://maps/village/gen/龍神像/龍神像_normal.webp"
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=2048
+detect_3d/compress_to=0

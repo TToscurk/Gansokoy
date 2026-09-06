@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://bah0ha6b5bdvb"]
+
+[ext_resource type="PackedScene" uid="uid://tty8wlxc1tcj" path="res://characters/yoriichi/yoriichi_body.fbx" id="1_fbx"]
+[ext_resource type="Script" uid="uid://uvqmbikil5ud" path="res://characters/yoriichi/yoriichi_character.gd" id="2_controller"]
+[ext_resource type="PackedScene" uid="uid://ex8kaifqd4cv" path="res://characters/yoriichi/yoriichi_sword.glb" id="3_sword"]
+[ext_resource type="Script" uid="uid://citxkgc8bcrbi" path="res://characters/yoriichi/player_camera_adapter.gd" id="4_adapter"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.3
+height = 1.7
+
+[node name="Player" type="CharacterBody3D" unique_id=983313881 node_paths=PackedStringArray("input_yaw_node")]
+floor_max_angle = 0.907571
+script = ExtResource("2_controller")
+input_yaw_node = NodePath("Pivot")
+
+[node name="BodyVisual" parent="." unique_id=500352667 instance=ExtResource("1_fbx")]
+
+[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1288089896) index="1" unique_id=2000542006]
+transform = Transform3D(0.5078579, -0.3426841, 0.7903464, -0.7450698, 0.2857646, 0.6026685, -0.43237805, -0.8949335, -0.110195905, -0.4274863, -0.013478717, 0.89399266)
+bone_name = "RightHand"
+bone_idx = 19
+
+[node name="Sword_Hand" parent="BodyVisual/Armature/Skeleton3D/HandSocket" unique_id=317976090 instance=ExtResource("3_sword")]
+transform = Transform3D(-0.14443, 0.844425, 0.515836, -0.9884, -0.0983786, -0.115699, -0.0469521, -0.526563, 0.848839, 0.126589, 0.0809044, -0.0618592)
+visible = false
+
+[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1288089896) index="2" unique_id=1601920064]
+transform = Transform3D(0.99902606, 0.04398527, 0.0035014467, -0.016628135, 0.44879583, -0.89347947, -0.04087138, 0.89255106, 0.44909015, 0.0034064495, -0.07671502, 0.9895311)
+bone_name = "Hips"
+bone_idx = 0
+
+[node name="Sword_Sheathed" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" unique_id=1002003241 instance=ExtResource("3_sword")]
+transform = Transform3D(0.057647, -0.065052, 0.996215, -0.978981, 0.191859, 0.069177, -0.195633, -0.979264, -0.052624, 0.272761, -0.062122, 0.027695)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=357429528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=1926967171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot" unique_id=1057773750]
+spring_length = 7.5
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D" unique_id=339939692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.090482235, -1.0391102)
+
+[node name="InteractionRay" type="RayCast3D" parent="Pivot" unique_id=2086420576]
+target_position = Vector3(0, 0, -4)
+collide_with_areas = true
+
+[node name="CameraAdapter" type="Node" parent="." unique_id=1515007360 node_paths=PackedStringArray("pivot", "arm", "interaction_ray")]
+script = ExtResource("4_adapter")
+pivot = NodePath("../Pivot")
+arm = NodePath("../Pivot/SpringArm3D")
+interaction_ray = NodePath("../Pivot/InteractionRay")
+
+[editable path="BodyVisual"]

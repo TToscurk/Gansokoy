@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.3.0",
+  "status": "LAYOUT_PROTOTYPE",
+  "approval": {
+    "layout_approved": false,
+    "approved_by": null,
+    "approved_at": null
+  },
+  "authority": {
+    "primary_image": "docs/reference/人間之里概念圖/村落農村概念俯視.png",
+    "zoning_image": "docs/reference/人間之里概念圖/村落農村概念俯視區域分隔.png",
+    "image_dimensions_px": [
+      1672,
+      941
+    ],
+    "rule": "Images are authoritative; text is an index only."
+  },
+  "calibration": {
+    "state": "uncalibrated",
+    "concept_is_orthographic": false,
+    "concept_to_world_transform": null,
+    "fixed_godot_camera": null,
+    "note": "The source is an oblique aerial illustration. Pixel positions must not be treated as exact world coordinates."
+  },
+  "anchors": {
+    "south_grand_torii": {
+      "role": "southern village entrance",
+      "concept_position": null,
+      "world_position": null,
+      "confidence": "high",
+      "evidence": "visible in primary image; marks the south end of the principal approach",
+      "approved": false
+    },
+    "market_main_street": {
+      "role": "the village spine: one continuous street from the south grand torii to the dragon-statue bridge; buildings and market stalls line BOTH sides along its whole length",
+      "concept_path": null,
+      "world_path": null,
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31 (v0.3): market is not a separate block; it is the frontage of the spine street",
+      "approved": false
+    },
+    "north_forested_shrine_hill": {
+      "role": "northern forested shrine; reached by a small lane out of the commercial belt, or by a long loop around to the back",
+      "concept_position": null,
+      "world_position": null,
+      "access_paths": [
+        {
+          "type": "lane",
+          "from": "street_frontage_belt (mid section)",
+          "confidence": "high"
+        },
+        {
+          "type": "long_loop",
+          "from": "street north section, around the back of the hill",
+          "confidence": "high"
+        }
+      ],
+      "is_main_street_terminus": false,
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31 (v0.3)",
+      "approved": false
+    },
+    "northeast_dragon_statue": {
+      "role": "distant northeast water landmark",
+      "concept_position": null,
+      "world_position": null,
+      "confidence": "high",
+      "evidence": "statue stands on a platform or island within the northeast water system",
+      "approved": false
+    },
+    "dragon_statue_bridge": {
+      "role": "eastern terminus of the market main street; crossing to the dragon statue",
+      "concept_position": null,
+      "world_position": null,
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31",
+      "approved": false
+    }
+  },
+  "zones": {
+    "street_frontage_belt": {
+      "relative_location": "continuous band on both sides of the spine street, south torii to dragon bridge",
+      "contains": [
+        "machiya shopfronts",
+        "market stalls",
+        "mixed commercial-residential"
+      ],
+      "polygon_concept": null,
+      "polygon_world": null,
+      "density": "highest in the village",
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31 (v0.3)",
+      "approved": false
+    },
+    "residential_west": {
+      "relative_location": "WEST of the spine street, between the street frontage and the western forest",
+      "features": [
+        "small channel branches running through it"
+      ],
+      "polygon_concept": null,
+      "polygon_world": null,
+      "density_gradient": "dense near street, sparse toward forest",
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31 (v0.3): left side = residential + small channel branches",
+      "approved": false
+    },
+    "farmland_east": {
+      "relative_location": "EAST of the spine street, inside the main-river bend",
+      "polygon_concept": null,
+      "polygon_world": null,
+      "openness": "large continuous open field grid",
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31: farmland on the right is correct",
+      "approved": false
+    },
+    "dense_forest": {
+      "relative_location": "north belt, west slopes, south foreground",
+      "polygon_concept": null,
+      "polygon_world": null,
+      "canopy": "overlapping continuous masses",
+      "confidence": "high",
+      "approved": false
+    },
+    "sparse_forest_edge": {
+      "relative_location": "transition between residential west and dense forest",
+      "polygon_concept": null,
+      "polygon_world": null,
+      "confidence": "medium",
+      "approved": false
+    }
+  },
+  "water_system": {
+    "main_river": {
+      "relative_location": "north then down the FAR EAST side, wrapping the farmland; dragon statue and bridge at the street terminus",
+      "concept_path": null,
+      "world_path": null,
+      "confidence": "high",
+      "approved": false
+    },
+    "west_channel_branches": {
+      "relative_location": "small channels descending from the western forest THROUGH the residential zone",
+      "concept_paths": null,
+      "world_paths": null,
+      "confidence": "high",
+      "evidence": "user ruling 2026-08-31 (v0.3): left side has residential plus small channel branches",
+      "approved": false
+    },
+    "east_boundary_channel": {
+      "relative_location": "between the street frontage belt and the farmland",
+      "concept_paths": null,
+      "world_paths": null,
+      "confidence": "medium",
+      "approved": false
+    }
+  },
+  "required_relations": [
+    {
+      "type": "spine",
+      "subject": "market_main_street",
+      "from": "south_grand_torii",
+      "to": "dragon_statue_bridge",
+      "confidence": "high",
+      "source": "user ruling 2026-08-31"
+    },
+    {
+      "type": "lines_both_sides_of",
+      "subject": "street_frontage_belt",
+      "object": "market_main_street",
+      "confidence": "high",
+      "source": "user ruling 2026-08-31"
+    },
+    {
+      "type": "west_of",
+      "subject": "residential_west",
+      "object": "market_main_street",
+      "confidence": "high"
+    },
+    {
+      "type": "passes_through",
+      "subject": "west_channel_branches",
+      "object": "residential_west",
+      "confidence": "high",
+      "source": "user ruling 2026-08-31"
+    },
+    {
+      "type": "east_of",
+      "subject": "farmland_east",
+      "object": "market_main_street",
+      "confidence": "high"
+    },
+    {
+      "type": "east_of",
+      "subject": "main_river",
+      "object": "farmland_east",
+      "confidence": "high"
+    },
+    {
+      "type": "not_terminus",
+      "subject": "north_forested_shrine_hill",
+      "object": "market_main_street",
+      "confidence": "high",
+      "source": "user ruling 2026-08-31"
+    },
+    {
+      "type": "accessed_by",
+      "subject": "north_forested_shrine_hill",
+      "object": [
+        "commercial_belt_lane",
+        "rear_loop_path"
+      ],
+      "confidence": "high",
+      "source": "user ruling 2026-08-31"
+    }
+  ],
+  "protected_sightlines": [
+    {
+      "from": "south_grand_torii",
+      "to": "market_main_street",
+      "purpose": "principal arrival composition",
+      "approved": false
+    },
+    {
+      "from": "market_main_street",
+      "to": "dragon_statue_bridge",
+      "purpose": "main-street visual terminus (user ruling 2026-08-31)",
+      "approved": false
+    },
+    {
+      "from": "village_east_edge",
+      "to": "farmland_east",
+      "purpose": "open-field release after dense village streets",
+      "approved": false
+    }
+  ],
+  "known_deliberate_deviations": [
+    {
+      "id": "current_slice_u_river",
+      "scope": "existing slice prototype only",
+      "description": "The current slice U-shaped river came from a separate 2026-08-26 user ruling and is not derived from the authoritative overview image.",
+      "carry_into_new_layout": "unresolved",
+      "note": "Do not silently preserve or remove it. A concept-faithful blockout must show the conflict for Human Layout Review."
+    }
+  ],
+  "unresolved": [
+    "Concept-to-world scale, rotation and origin",
+    "Position and curvature of the street bend",
+    "Which stretch of the street is densest market (south / middle)",
+    "Whether a second channel is needed between residential and farmland",
+    "Whether the rear loop to the shrine goes east or west around the hill",
+    "Exact main-river centerline and the farmland bend",
+    "Fixed Godot review camera",
+    "Fate of the existing slice U-shaped river"
+  ],
+  "next_gate": "User reviews topology candidate v0.3; on agreement, build pure blockout candidates and enter LAYOUT_REVIEW.",
+  "user_rulings": [
+    {
+      "date": "2026-08-31",
+      "ruling": "Main street bends right/east from the market and terminates at the dragon-statue bridge, not straight to the shrine hill."
+    },
+    {
+      "date": "2026-08-31",
+      "ruling": "Farmland on the east side is correct."
+    },
+    {
+      "date": "2026-08-31",
+      "ruling": "Village channels were untidy; make them regular and aligned."
+    },
+    {
+      "date": "2026-08-31",
+      "ruling": "Western residential zone sat too far north; move it south."
+    },
+    {
+      "date": "2026-08-31",
+      "ruling": "The main street runs unbroken from the south grand torii to the dragon-statue bridge; buildings and market line both sides of it. West of it: residential plus small channel branches. East of it: farmland and the main river. The north shrine is reached by a small lane out of the commercial belt, or by looping round to the back and climbing."
+    }
+  ]
+}
