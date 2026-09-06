@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/stone_flag_diff.jpg" id="1_o4pm4"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone_flag_nor_gl.jpg" id="2_w10in"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone_flag_rough.jpg" id="3_ndpnk"]
+
+[resource]
+albedo_color = Color(1.28, 1.27, 1.22, 1)
+albedo_texture = ExtResource("1_o4pm4")
+roughness = 0.82
+roughness_texture = ExtResource("3_ndpnk")
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_w10in")
+uv1_scale = Vector3(0.55, 0.55, 0.55)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 5
