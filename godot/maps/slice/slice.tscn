@@ -37,6 +37,9 @@
 [ext_resource type="PackedScene" path="res://maps/slice/gen/river_vegetation.tscn" id="35_k7yef"]
 [ext_resource type="PackedScene" uid="uid://cdg24btawu5ep" path="res://maps/slice/gen/b1_street.tscn" id="36_sronm"]
 [ext_resource type="PackedScene" path="res://maps/slice/gen/b2_canal.tscn" id="37_dkw4w"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/ground_collision.scn" id="900_gndcol"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/building_collision.scn" id="901_bldcol"]
+[ext_resource type="PackedScene" path="res://maps/slice/gen/lamp_collision.scn" id="902_lmpcol"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2222y"]
 resource_name = "VillageTerrain_RiverV3Clipped"
@@ -846,3 +849,9 @@ mesh = ExtResource("34_ww6k3")
 
 [node name="B2_Canal" parent="." unique_id=1311059145 instance=ExtResource("37_dkw4w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021362305, 0.005129099, 0.00389719)
+
+[node name="地面碰撞_刷筆用" parent="." instance=ExtResource("900_gndcol")]
+
+[node name="建物碰撞" parent="." instance=ExtResource("901_bldcol")]
+
+[node name="路燈碰撞" parent="." instance=ExtResource("902_lmpcol")]

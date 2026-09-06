@@ -46,6 +46,17 @@ const TARGET_SUBTREES := [
 	"MachiCanal/VillageStoneBank",
 	"MachiCanal/Waterworks",
 	"MachiCanal/ChannelGeometry",
+	# B2 r18-r20 把運河改成獨立子場景 B2_Canal（MachiCanal 已不在場上）。
+	# 只烘玩家踩得到的：河床、步道、親水階梯、平台、橋。
+	# 石砌護岸不烘——那是 ~100 塊 Meshy 牆磚、每塊 14 465 三角面，合計 140 萬，
+	# 而玩家站不上去（垂直牆面）；烘了只會把碰撞檔撐爆四倍。
+	"B2_Canal/CanalBed",
+	"B2_Canal/BayBed",
+	"B2_Canal/濱水步道_W",
+	"B2_Canal/濱水步道_E",
+	"B2_Canal/親水階梯",
+	"B2_Canal/濱水平台",
+	"B2_Canal/清河橋",
 ]
 
 # Name fragments inside those subtrees that must stay collision-free: water
@@ -118,6 +129,12 @@ func _init() -> void:
 			continue
 		if not (node is MeshInstance3D):
 			print("[skip] 不是 MeshInstance3D: %s" % target_name)
+			continue
+		# 隱藏的 mesh 不烘。B2 挖東河時把 BasinHills 藏起來（河床由 UnifiedGround
+		# 接手，y=-6.10），但這裡照烘，結果舊丘陵的碰撞面（y≈-0.3）浮在河床上方
+		# 6 m，玩家踩在空氣上。玩家看不到的面，物理也不該有。
+		if not (node as MeshInstance3D).visible:
+			print("[skip] 已隱藏，不烘: %s" % target_name)
 			continue
 		_bake(node as MeshInstance3D, src, target_name)
 
