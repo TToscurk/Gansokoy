@@ -101,7 +101,10 @@ extends CharacterBody3D
 @export var deflect_attacker_posture := 22.0
 ## 格擋：漏傷比例與軀幹代價。
 @export_range(0.0, 1.0, 0.01) var block_damage_ratio := 0.15
-@export var block_self_posture := 18.0
+## 32 不是拍的：试玩機實測 18 時每循環淨 +9.2，敵人 1.4 s/刀，
+## 6 秒爆不了 —— 「一直龜會自己爆」的支柱被再生吃掉。32 → 淨 +15/循環，
+## 約 7 刀（10 秒）爆，龟得住前 5 秒、撐不過 15 秒。
+@export var block_self_posture := 32.0
 @export var block_attacker_posture := 6.0
 ## 未防禦時的軀幹累積倍率。
 @export var unguarded_posture_mult := 1.0
