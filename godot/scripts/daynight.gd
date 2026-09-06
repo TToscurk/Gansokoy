@@ -102,6 +102,12 @@ func _apply_ambient() -> void:
 	var current_map: Node = _current_map()
 	if current_map != null and _has_sky_system(current_map):
 		return
+	# 室內圖（稗田邸等）由 interior_lighting.gd 獨佔驅動環境光：屋內看不到
+	# 天空，把 sky_contribution 拉回 0.43 等於把近半亮度交給一片看不見的天空，
+	# 實測畫面平均亮度掉到 0.17（室外 slice 是 0.46），天花板整片死黑。
+	# 這裡不覆寫，室內就沒有日夜——那本來就對：屋裡看不到太陽。
+	if current_map != null and current_map.has_meta("interior_lighting"):
+		return
 	var env := _active_environment()
 	if env == null:
 		return

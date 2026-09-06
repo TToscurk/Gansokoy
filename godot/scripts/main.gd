@@ -22,6 +22,10 @@ const PORTAL_COOLDOWN := 2.0
 ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
 const TRIMESH_MIN_SPAN := 15.0
 const VERTICAL_SLICE_NPC := preload("res://scenes/test_npc.tscn")
+const InteriorLightingRig = preload("res://scripts/interior_lighting.gd")
+## 密閉室內圖：屋頂擋住太陽，環境光又靠天空貢獻近半，實測畫面平均亮度
+## 只有 0.08（六成像素接近純黑）。這些圖載入後補一層室內光。
+const INTERIOR_MAPS := ["hieda1f", "hieda2f", "hieda3f"]
 
 var registry: Dictionary = {}
 var current_id := ""
@@ -397,6 +401,7 @@ func load_map(id: String, from_id: String) -> void:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
 	_spawn_vertical_slice_npc(id)
+	_apply_interior_lighting(id)
 	_place_player(meta, from_id)
 
 	var info: Dictionary = registry.get(id, {})
@@ -570,6 +575,22 @@ func _recheck_portal_overlap() -> void:
 			_on_portal_entered(player, String(entry.get("target")))
 			return
 
+
+## 密閉室內圖補光。只碰 INTERIOR_MAPS 裡的圖，戶外圖完全不動。
+## 既有燈具（床の間灯、聚光、裂縫光…）一律保留，這裡只加環境光與散射補燈。
+func _apply_interior_lighting(id: String) -> void:
+	if not INTERIOR_MAPS.has(id) or map_root == null:
+		return
+	# 標記給 daynight.gd：這張圖的環境光歸室內補光獨佔，日夜循環不得覆寫。
+	# 少了這行，_apply_ambient() 每秒把 ambient 打回 0.73 / sky 0.43，
+	# 補燈照樣加了卻看不出效果（實測平均亮度只有室外的三分之一）。
+	map_root.set_meta("interior_lighting", true)
+	var rig = InteriorLightingRig.new()
+	map_root.add_child(rig)
+	var mwe := get_node_or_null("WorldEnvironment") as WorldEnvironment
+	var fallback: Environment = mwe.environment if mwe != null else null
+	var n: int = rig.apply(map_root, fallback)
+	print("[light] %s 室內補光：ambient=%.2f + %d 盞散射補燈" % [id, rig.ambient_energy, n])
 
 
 ## 保留中的觸發區：偵測邏輯已經接好，只差目的地。
