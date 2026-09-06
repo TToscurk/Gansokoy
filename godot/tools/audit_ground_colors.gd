@@ -1,56 +1,23 @@
 extends SceneTree
-## 量產出物：抽樣 slice_unified_ground.res 的 COLOR.r（草權重），
-## 回報村落平台內「草 / 裸土」的實際比例與幾個定點取樣。
-
-const PROBES: Array = [
-	["街心 z=0", 235.0, 0.0],
-	["街心 z=60", 235.0, 60.0],
-	["廣場中心", 223.0, 25.0],
-	["西裏路地", 216.6, -20.0],
-	["街廓外 40m", 275.0, 0.0],
-	["街廓外 80m", 315.0, 0.0],
-	["平台西側空地", 120.0, 0.0],
-	["平台北側空地", 0.0, -240.0],
-	["鳥居腳下", 235.0, 101.0],
-	["寺子屋腳下", 314.8, 34.6],
-	["鯢吞亭腳下", 361.2, -143.8],
-	["稗田邸腳下", 233.2, -138.6],
-	["護岸外 60m", 300.0, -60.0],
-]
-
 func _init() -> void:
-	var mesh: ArrayMesh = load("res://maps/slice/gen/slice_unified_ground.res")
-	if mesh == null:
-		push_error("ground mesh load failed")
-		quit()
-		return
-	var arr: Array = mesh.surface_get_arrays(0)
+	var m: ArrayMesh = load("res://maps/slice/gen/slice_unified_ground.res")
+	if m == null:
+		print("LOAD_FAIL"); quit(); return
+	var arr: Array = m.surface_get_arrays(0)
 	var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
-	var cols: PackedColorArray = arr[Mesh.ARRAY_COLOR]
-	print("VERTS %d" % verts.size())
-	var inside: int = 0
-	var grassy: int = 0
-	var bare: int = 0
-	var best: Array = []
-	for p in PROBES:
-		best.append([1e9, 0.0, 0.0])
+	var cols = arr[Mesh.ARRAY_COLOR]
+	print("surfaces=%d verts=%d has_color=%s" % [m.get_surface_count(), verts.size(), str(cols != null)])
+	if cols == null:
+		quit(); return
+	# 取樣村台區域 (|x|,|z| < 300) 的 COLOR.r 分布
+	var buckets: Array = [0, 0, 0, 0, 0]
+	var n: int = 0
 	for i in range(verts.size()):
 		var v: Vector3 = verts[i]
-		var g: float = cols[i].r
 		if absf(v.x) < 300.0 and absf(v.z) < 300.0:
-			inside += 1
-			if g > 0.6:
-				grassy += 1
-			elif g < 0.25:
-				bare += 1
-		for k in range(PROBES.size()):
-			var d: float = Vector2(v.x - PROBES[k][1], v.z - PROBES[k][2]).length()
-			if d < best[k][0]:
-				best[k] = [d, g, v.y]
-	print("PLATEAU_VERTS %d  grass>0.6 %d (%.1f%%)  bare<0.25 %d (%.1f%%)" % [
-		inside, grassy, 100.0 * float(grassy) / float(maxi(inside, 1)),
-		bare, 100.0 * float(bare) / float(maxi(inside, 1))])
-	for k in range(PROBES.size()):
-		print("PROBE %-14s grass=%.2f  y=%+.2f  (取樣點距離 %.1fm)" % [
-			PROBES[k][0], best[k][1], best[k][2], best[k][0]])
+			var r: float = cols[i].r
+			var b: int = clampi(int(r * 5.0), 0, 4)
+			buckets[b] += 1
+			n += 1
+	print("village verts=%d  COLOR.r buckets [0-.2,.2-.4,.4-.6,.6-.8,.8-1]=%s" % [n, str(buckets)])
 	quit()

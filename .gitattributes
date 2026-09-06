@@ -52,3 +52,4 @@ godot/assets/textures/street_earth_diff.png filter=lfs diff=lfs merge=lfs -text
 # 產生式碰撞場景：二進位 PackedScene，ground_collision.scn 約 30 MB 且每次
 # 重烘都整檔換新，走 LFS 才不會把 repo 撐爆。
 godot/maps/slice/gen/*.scn filter=lfs diff=lfs merge=lfs -text
+docs/reference/河岸部件/*.png filter=lfs diff=lfs merge=lfs -text

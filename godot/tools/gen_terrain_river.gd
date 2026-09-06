@@ -13,15 +13,30 @@ const CELL := 6.0
 const R_EXT := 1250.0
 const SEED := 20260827
 const VILLAGE_HALF := 300.0
-# 地標前庭：Vector3(x, z, 半徑)
-const APRONS: Array = [
-	Vector3(225.2, -65.5, 26.0),   # 鈴奈庵
-	Vector3(246.6, -35.5, 18.0),   # 霧雨店
-	Vector3(233.2, -138.6, 46.0),  # 稗田邸
-	Vector3(314.8, 34.6, 30.0),    # 寺子屋
-	Vector3(361.2, -143.8, 20.0),  # 鯢吞亭
-]
 const VILLAGE_BLEND_END := 440.0
+# 主街走廊參數（與 tools/gen_b1_street.gd 對齊）
+const STREET_AXIS_X := 235.0
+const STREET_MID_Z := 16.0
+const STREET_HALF_LEN := 76.0
+# B2 小河（用水路）樣板段：村核與農田之間的直渠（2026-08-29，使用者批准）
+const CANAL_X := 340.0
+const CANAL_MID := 0.0
+const CANAL_HALF_LEN := 46.0
+# 地形刻槽必須比「砌好的渠床」更深：地形格點 6m，渠寬僅 5.4m，
+# 內插後牆邊地面 h≈0.575×中線深度。要讓地形全程低於渠床，中線需挖到 1.75 倍。
+# r12：v2 剖面為單一水位（砌床 -2.80），地形一律挖到 -4.30 讓砌床有餘裕。
+# 舊值 -9.60 是 4m 落差時代的殘留，落差取消後下游會留一個看不見的深坑。
+const CANAL_BED_Y := -4.30
+const CANAL_BED_DN := -4.30
+const CANAL_WEIR_Z := 3.0
+# r15：平底必須寬過護岸（WALL_FACE 4.0），否則 V 形斜面在 ±3.6 以外
+# 就爬高過水面 -1.80，沿整條渠道兩側露出一條褐色裸土帶。
+const CANAL_BED_HALF := 4.2
+const CANAL_TOP_HALF := 6.5          # 4.8 太陡：6m 格點畫不出崖，地形會穿過護岸
+# 磨坊池：渠道在磨坊處往西鼓出，小屋才能立在水裡而不是埋進岸土
+const BAY_X0 := 329.5
+const BAY_Z0 := 3.3
+const BAY_Z1 := 9.7
 
 # B scale selected by the user: about 44 m water, 68 m valley top, 6 m drop.
 const WATER_HALF := 22.0
@@ -32,56 +47,6 @@ const BED_Y := WATER_Y - 0.95
 const REVETMENT_RUN := 5.5
 const RIVER_Z0 := -R_EXT + CELL
 const RIVER_Z1 := R_EXT - CELL
-
-# 正式場景穿村幹渠。座標來自 waterway_art_review 以
-# (287, -2.868, 10) 整體搬入後的實機 AABB；底層地形必須低於原型渠床，
-# 否則 UnifiedGround 會把整條渠道蓋住。兩岸寬度不同，跟隨原型石岸外緣，
-# 不另造第二套地台。
-const CANAL_CENTER_X := 287.0
-const CANAL_Z0 := -72.0
-const CANAL_Z1 := 104.0
-const CANAL_WEST_INNER_HALF := 6.4
-const CANAL_WEST_OUTER_HALF := 12.0
-const CANAL_EAST_INNER_HALF := 6.4
-const CANAL_EAST_OUTER_HALF := 14.5
-const CANAL_TERRAIN_Y := -3.45
-# 正式幹渠在 slice 內停止；南北端各用 8m 地形坡收回地表，避免
-# UnifiedGround 在 z=-72 / 104 形成垂直硬切口。中央 160m 保持原深度。
-const CANAL_END_BLEND := 8.0
-
-# 水田整平區。原型水田世界 AABB（x 291.0..340.5、z -26.1..46.1）向外留
-# 3m 緩衝，田面底 -0.032 再下沉 0.10，保證泥面不會被村域緩坡（最高 2m）
-# 從下方穿出。邊界用 6m（=1 個地形格距）緩坡過渡。
-const PADDY_X0 := 288.0
-const PADDY_X1 := 343.5
-const PADDY_Z0 := -29.0
-const PADDY_Z1 := 49.0
-const PADDY_FLAT_Y := -0.132
-const PADDY_BLEND := 6.0
-
-# 東岸田區排水渠（2026-09-02，2026-09-02 接河口修正）。田區水由東往西流，
-# 經 suimon_feeder 出水閥排入穿村幹渠；水平水面止於幹渠東緣 x=293，
-# 再以 0.6m 長跌水面落到該處下游水位 -2.778m，避免只做 XZ 重疊卻
-# 懸在幹渠上方。地形沿線壓到 FEEDER_BED_Y（比田面 -0.032 低 0.52），
-# 寬 1.2m，兩側 1m 緩坡。
-const FEEDER_Z := 22.9
-const FEEDER_X0 := 293.0
-# 跌水與泡沫舌。注意：接水面是 CanalWater/Reach_Lower（y=-2.778），
-# 不是已經 visible=false 的舊 DownstreamWater box——兩者 y 碰巧相同，
-# 曾讓稽核拿看不見的 mesh 假通過。
-const FEEDER_MOUTH_X := 292.4
-const FEEDER_APRON_X := 291.0
-const FEEDER_NAPPE_SEGS := 6
-# 水舌落到底時的半寬倍率。1.0 = 等寬（讀成長方形板子），這裡張到 1.9。
-const FEEDER_NAPPE_FLARE := 1.9
-# 落水泡沫扇形的基準半徑與沿流向的拉長倍率。
-const FEEDER_SPLASH_R := 1.15
-const FEEDER_SPLASH_TAIL := 2.1
-const FEEDER_RECEIVER_Y := -2.778
-const FEEDER_X1 := 341.0
-const FEEDER_HALF := 0.6
-const FEEDER_BED_Y := -0.55
-const FEEDER_BLEND := 1.0
 
 var _n := FastNoiseLite.new()
 
@@ -103,6 +68,25 @@ func _widths(z: float) -> Vector2:
 	return Vector2(water_half, water_half + (TOP_HALF - WATER_HALF))
 
 
+
+## 村內地被分區（2026-08-29，使用者選定「用地面材質分區」取代撒草）。
+## 依據概念圖：草地是預設，踏み固めた土是例外——主街走廊與建物群周邊被踩實。
+## 注意頂點間距 = CELL(6m)，雜訊尺度必須夠大才畫得出來。
+func _village_cover(x: float, z: float) -> float:
+	# 主街走廊：夯土，不長草
+	var street_d: float = absf(x - STREET_AXIS_X)
+	var along: float = 1.0 - smoothstep(STREET_HALF_LEN * 0.90, STREET_HALF_LEN * 1.35,
+		absf(z - STREET_MID_Z))
+	var street_pack: float = (1.0 - smoothstep(13.0, 30.0, street_d)) * along
+	# 建物群周邊踩實，範圍收斂在村心 ~90m 內
+	var core: float = 1.0 - smoothstep(16.0, 58.0, Vector2(x - 250.0, z - 10.0).length())
+	# 有機斑塊，讓草地邊界不是同心圓
+	var patch: float = _n.get_noise_2d(x * 0.55 + 300.0, z * 0.55 - 120.0) * 0.5 + 0.5
+	var cover: float = smoothstep(0.28, 0.62, patch)
+	var base: float = lerpf(0.55, 1.0, cover)   # 底線 0.55，開闊地不會整片光禿
+	return clampf(base * (1.0 - street_pack) * (1.0 - 0.55 * core), 0.0, 1.0)
+
+
 func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
 	var wx: float = x + _n.get_noise_2d(x * 0.5, z * 0.5 + 999.0) * 220.0
 	var wz: float = z + _n.get_noise_2d(x * 0.5 - 777.0, z * 0.5) * 220.0
@@ -119,17 +103,10 @@ func _hills(x: float, z: float, r: float, theta_deg: float) -> float:
 func _add_tri(
 		tool: SurfaceTool,
 		a: Vector3, b: Vector3, c: Vector3,
-		ca: Color, cb: Color, cc: Color,
-		na: Vector3 = Vector3.ZERO, nb: Vector3 = Vector3.ZERO,
-		nc: Vector3 = Vector3.ZERO) -> void:
-	if na == Vector3.ZERO:
-		tool.set_color(ca); tool.add_vertex(a)
-		tool.set_color(cb); tool.add_vertex(b)
-		tool.set_color(cc); tool.add_vertex(c)
-		return
-	tool.set_normal(na); tool.set_color(ca); tool.add_vertex(a)
-	tool.set_normal(nb); tool.set_color(cb); tool.add_vertex(b)
-	tool.set_normal(nc); tool.set_color(cc); tool.add_vertex(c)
+		ca: Color, cb: Color, cc: Color) -> void:
+	tool.set_color(ca); tool.add_vertex(a)
+	tool.set_color(cb); tool.add_vertex(b)
+	tool.set_color(cc); tool.add_vertex(c)
 
 
 func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
@@ -142,80 +119,6 @@ func _grid_height(hs: PackedFloat32Array, n: int, x: float, z: float) -> float:
 	var h0: float = lerpf(hs[iz * n + ix], hs[iz * n + ix + 1], tx)
 	var h1: float = lerpf(hs[(iz + 1) * n + ix], hs[(iz + 1) * n + ix + 1], tx)
 	return lerpf(h0, h1, tz)
-
-
-func _canal_cut(x: float, z: float) -> float:
-	if z < CANAL_Z0 or z > CANAL_Z1:
-		return 0.0
-	var offset_x: float = x - CANAL_CENTER_X
-	var inner_half: float = CANAL_WEST_INNER_HALF if offset_x < 0.0 else CANAL_EAST_INNER_HALF
-	var outer_half: float = CANAL_WEST_OUTER_HALF if offset_x < 0.0 else CANAL_EAST_OUTER_HALF
-	var cross_weight: float = 1.0 - smoothstep(inner_half, outer_half, absf(offset_x))
-	var end_weight: float = smoothstep(CANAL_Z0, CANAL_Z0 + CANAL_END_BLEND, z) \
-			* (1.0 - smoothstep(CANAL_Z1 - CANAL_END_BLEND, CANAL_Z1, z))
-	return cross_weight * end_weight
-
-
-## 水田整平權重 0..1：矩形足跡內部 = 1，四周以緩坡淡出。
-## 與寺子屋（x 304..325、z 24..45）重疊無妨——寺子屋照 y≈0 擺，
-## 整平頂 -0.132 在其基座下方。
-func _paddy_flatten(x: float, z: float) -> float:
-	if x < PADDY_X0 - PADDY_BLEND or x > PADDY_X1 + PADDY_BLEND \
-			or z < PADDY_Z0 - PADDY_BLEND or z > PADDY_Z1 + PADDY_BLEND:
-		return 0.0
-	var fx: float = smoothstep(PADDY_X0 - PADDY_BLEND, PADDY_X0, x) \
-			* (1.0 - smoothstep(PADDY_X1, PADDY_X1 + PADDY_BLEND, x))
-	var fz: float = smoothstep(PADDY_Z0 - PADDY_BLEND, PADDY_Z0, z) \
-			* (1.0 - smoothstep(PADDY_Z1, PADDY_Z1 + PADDY_BLEND, z))
-	return fx * fz
-
-
-## 引水溝開挖權重 0..1，只作用於東岸帶以東；渠道溝槽（-3.45）不受影響。
-func _feeder_cut(x: float, z: float) -> float:
-	if x < FEEDER_X0 - FEEDER_BLEND or x > FEEDER_X1 + FEEDER_BLEND:
-		return 0.0
-	var fx: float = smoothstep(FEEDER_X0 - FEEDER_BLEND, FEEDER_X0, x) \
-			* (1.0 - smoothstep(FEEDER_X1, FEEDER_X1 + FEEDER_BLEND, x))
-	var fz: float = 1.0 - smoothstep(FEEDER_HALF, FEEDER_HALF + FEEDER_BLEND, absf(z - FEEDER_Z))
-	return fx * fz
-
-
-## 建成區平坦遮罩 0..1（1 = 必須維持水平）。街廓與地標都是照 y=0 擺的，
-## 平台起伏若灌進來會讓 42 棟町家與地標浮空或陷地。
-func _settled(x: float, z: float) -> float:
-	var blk: float = (1.0 - smoothstep(42.0, 88.0, absf(x - 235.0))) 		* (1.0 - smoothstep(105.0, 158.0, absf(z - 14.0)))
-	var m: float = blk
-	for a in APRONS:
-		var d: float = Vector2(x - a.x, z - a.y).length()
-		m = maxf(m, 1.0 - smoothstep(a.z * 1.15, a.z * 2.1, d))
-	return clampf(m, 0.0, 1.0)
-
-
-## 踏實裸土權重 0..1（1 = 全裸土）。街廓數據來自 gen_b1_street.gd 的實測範圍：
-## 主街中線 x=235、街廓 x 204.9..264.6、中央広場 x 214.5..231 / z 6..44。
-func _bare(x: float, z: float) -> float:
-	# 主街走廊：最硬的一條，南北兩端淡出
-	var street: float = (1.0 - smoothstep(6.0, 17.0, absf(x - 235.0))) 		* (1.0 - smoothstep(86.0, 116.0, absf(z - 16.0)))
-	# 街廓本體（含裏路地與後院）：踏實但沒有街道那麼死
-	var block: float = 0.85 		* (1.0 - smoothstep(28.0, 42.0, absf(x - 235.0))) 		* (1.0 - smoothstep(76.0, 98.0, absf(z - 14.0)))
-	# 中央広場
-	var plaza: float = (1.0 - smoothstep(9.0, 16.0, absf(x - 223.0))) 		* (1.0 - smoothstep(19.0, 27.0, absf(z - 25.0)))
-	var b: float = maxf(street, maxf(block, plaza))
-	# 地標前庭（鈴奈庵／霧雨店／稗田邸／寺子屋／鯢吞亭）。
-	# 半徑隨方位擾動——正圓形前庭在俯視圖裡像隕石坑。
-	for a in APRONS:
-		var dx: float = x - a.x
-		var dz: float = z - a.y
-		var d: float = Vector2(dx, dz).length()
-		var ang: float = atan2(dz, dx)
-		var rr: float = a.z * (0.70 + 0.44 * (
-			_n.get_noise_2d(cos(ang) * 34.0 + a.x, sin(ang) * 34.0 + a.y) * 0.5 + 0.5))
-		b = maxf(b, 0.8 * (1.0 - smoothstep(rr * 0.55, rr, d)))
-	# 有機邊界：門檻被雜訊推擠，避免出現方正的色塊邊。
-	# 只在「已經有一點裸土」的地方擾動——否則整片開闊草地都被摻進最多
-	# 30% 的土，草色被拉髒，6 m 取樣網格也跟著現形。
-	b += _n.get_noise_2d(x * 0.9 + 310.0, z * 0.9) * 0.30 * smoothstep(0.02, 0.32, b)
-	return clampf(b, 0.0, 1.0)
 
 
 func _init() -> void:
@@ -248,14 +151,6 @@ func _init() -> void:
 			var valley_clear: float = smoothstep(widths.y + 48.0, widths.y + 155.0, d)
 			g += _hills(x, z, r, theta) * valley_clear
 
-			# r7: 平台內部原本是嚴格的 y=0，遠看像高爾夫球場。加一層只往上長
-			# 的緩坡（0..2.0 m，週期約 285 m / 111 m），但三處不准動：
-			# 建成區（建築照 y=0 擺）、已 ART_APPROVED 的河谷、以及外圈
-			# （交給既有的 natural_ground 與 hills，避免疊加兩套起伏）。
-			var roll: float = (_n.get_noise_2d(x * 0.35 + 1200.0, z * 0.35) * 0.5 + 0.5) * 1.55 				+ (_n.get_noise_2d(x * 0.9 - 640.0, z * 0.9) * 0.5 + 0.5) * 0.45
-			var river_keep: float = smoothstep(widths.y + 10.0, widths.y + 92.0, d)
-			g += roll * (1.0 - _settled(x, z)) * (1.0 - village_blend) * river_keep
-
 			# A continuous, conservative under-slope seals the terrain below the
 			# river-aligned revetment cap generated later.
 			var revetment_top: float = widths.x + REVETMENT_RUN
@@ -266,30 +161,29 @@ func _init() -> void:
 				else:
 					var bank_t: float = (d - widths.x) / (widths.y - widths.x)
 					g = lerpf(BED_Y, bank_top, smoothstep(0.0, 1.0, bank_t))
-			# 水田整平必須先於渠道開挖：兩者在東岸帶（x 288..301）重疊，
-			# 渠道 -3.45 必須贏過田面底 -0.132，否則地形會從東側堵進水面。
-			var paddy_w: float = _paddy_flatten(x, z)
-			g = lerpf(g, PADDY_FLAT_Y, paddy_w)
-			# 引水溝在整平之後、渠道之前：溝比田面低，但渠道更深要贏。
-			var feeder_w: float = _feeder_cut(x, z)
-			g = lerpf(g, minf(g, FEEDER_BED_Y), feeder_w)
-			var canal_cut: float = _canal_cut(x, z)
-			g = lerpf(g, CANAL_TERRAIN_Y, canal_cut)
+			# B2 小河：淺槽直渠，兩端漸收回地表；牆體與水面由 b2_canal 場景供給
+			var canal_d: float = absf(x - CANAL_X)
+			var canal_z: float = absf(z - CANAL_MID)
+			if canal_d < CANAL_TOP_HALF and canal_z < CANAL_HALF_LEN + 10.0:
+				var canal_end: float = 1.0 - smoothstep(CANAL_HALF_LEN - 8.0, CANAL_HALF_LEN + 10.0, canal_z)
+				var canal_prof: float = 1.0 - smoothstep(CANAL_BED_HALF, CANAL_TOP_HALF, canal_d)
+				var canal_bed: float = lerpf(CANAL_BED_Y, CANAL_BED_DN,
+					smoothstep(CANAL_WEIR_Z - 1.0, CANAL_WEIR_Z + 5.0, z))
+				var canal_cut: float = (g - canal_bed) * canal_prof * canal_end
+				if canal_cut > 0.0:
+					g -= canal_cut
+			# 磨坊池挖方：西側方形凹槽，邊緣漸收避免硬崖
+			if x > BAY_X0 and x < CANAL_X and z > BAY_Z0 - 1.5 and z < BAY_Z1 + 1.5:
+				var bfx: float = smoothstep(BAY_X0, BAY_X0 + 1.2, x)
+				var bfz: float = smoothstep(BAY_Z0 - 1.5, BAY_Z0, z) 					* (1.0 - smoothstep(BAY_Z1, BAY_Z1 + 1.5, z))
+				var bay_cut: float = (g - CANAL_BED_Y) * bfx * bfz
+				if bay_cut > 0.0:
+					g -= bay_cut
 			hs[i] = g
 
 			# Ground uses COLOR.r for dirt/grass and COLOR.g for aerial fade.
-			# r6 (2026-08-30): the plateau interior was hard-coded bare —
-			# smoothstep(270, 455, pl) is zero everywhere inside it, so with the
-			# bright grass MultiMeshes emptied the whole village floor read as
-			# one featureless orange plain. Ground is now grass by default and
-			# only goes bare where feet actually wear it: the main street, the
-			# 市集 block footprint, the plaza, and small landmark aprons.
-			var grass_weight: float = maxf(
-				smoothstep(270.0, 455.0, pl),
-				1.0 - _bare(x, z))
+			var grass_weight: float = maxf(smoothstep(270.0, 455.0, pl), _village_cover(x, z))
 			if g < WATER_Y - 0.2:
-				grass_weight = 0.0
-			if canal_cut > 0.001:
 				grass_weight = 0.0
 			# A packed ochre maintenance path sits behind the wall, like the
 			# reference's continuous top access band.
@@ -299,24 +193,14 @@ func _init() -> void:
 			# Submerged bed reads as wet stone, not bright ochre dirt — the
 			# semi-transparent shallow band otherwise glows with the dirt
 			# texture underneath and that IS the bright waterline stripe.
-			var bed_stone: float = maxf(
-				1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g),
-				canal_cut)
+			var bed_stone: float = 1.0 - smoothstep(WATER_Y - 0.05, WATER_Y + 0.55, g)
+			if canal_z < CANAL_HALF_LEN + 10.0:
+				grass_weight *= smoothstep(CANAL_TOP_HALF - 1.0, CANAL_TOP_HALF + 3.0, canal_d)
+				if canal_d < CANAL_TOP_HALF and g < -0.7:
+					bed_stone = maxf(bed_stone, 1.0 - smoothstep(-1.6, -0.7, g) * 0.4)
 			cols[i] = Color(grass_weight, aerial_fade, bed_stone, bed_stone)
 
 	# One continuous ground mesh seals village, hills, and the river bed.
-	# r7: _add_tri 送的是非索引三角形，generate_normals() 因此給的是「每面」
-	# 法線——6 m 的網格於是在斜射光下顯出規則的對角刻紋（俯視最明顯）。
-	# 改由高度場中央差分算「每頂點」法線，網格條紋才會真正消失。
-	var nrm := PackedVector3Array(); nrm.resize(n * n)
-	for iz in range(n):
-		for ix in range(n):
-			var hl: float = hs[iz * n + maxi(ix - 1, 0)]
-			var hr: float = hs[iz * n + mini(ix + 1, n - 1)]
-			var hd: float = hs[maxi(iz - 1, 0) * n + ix]
-			var hu: float = hs[mini(iz + 1, n - 1) * n + ix]
-			nrm[iz * n + ix] = Vector3(hl - hr, 2.0 * CELL, hd - hu).normalized()
-
 	var gst := SurfaceTool.new()
 	gst.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for iz in range(n - 1):
@@ -330,11 +214,10 @@ func _init() -> void:
 			var v01 := Vector3(x0 + ix * CELL, hs[i01], x0 + (iz + 1) * CELL)
 			var v11 := Vector3(x0 + (ix + 1) * CELL, hs[i11], x0 + (iz + 1) * CELL)
 
-			_add_tri(gst, v00, v10, v01, cols[i00], cols[i10], cols[i01],
-				nrm[i00], nrm[i10], nrm[i01])
-			_add_tri(gst, v10, v11, v01, cols[i10], cols[i11], cols[i01],
-				nrm[i10], nrm[i11], nrm[i01])
+			_add_tri(gst, v00, v10, v01, cols[i00], cols[i10], cols[i01])
+			_add_tri(gst, v10, v11, v01, cols[i10], cols[i11], cols[i01])
 
+	gst.generate_normals()
 	var ground: ArrayMesh = gst.commit()
 	var ground_arrays: Array = ground.surface_get_arrays(0)
 	if (ground_arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:
@@ -517,133 +400,6 @@ func _init() -> void:
 	var steps_mesh: ArrayMesh = sst.commit()
 	var e4: int = ResourceSaver.save(steps_mesh, "res://maps/slice/gen/east_river_steps.res", ResourceSaver.FLAG_COMPRESS)
 	print("steps err=", e4, " steps n=", n_steps, " top=(%.1f, %.2f, %.1f)" % [scx - s_top_d, s_top_y, szc])
-
-	# ── 東岸引水溝：水面 + 兩側疊石溝緣 ─────────────────────────────
-	# 水面照 water.gdshader 頂點色契約：COLOR.r 靠岸、COLOR.gb 流向(-x 入幹渠)。
-	# 水面 y = 溝底 + 0.30，低於田面 -0.032，溝緣石頂 = 田面 +0.08。
-	var fw_y: float = FEEDER_BED_Y + 0.30
-	var f_steps: int = int((FEEDER_X1 - FEEDER_X0) / 1.5)
-	var fst := SurfaceTool.new()
-	fst.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var flow := Color(0.0, 0.0, 0.5)   # dir (-1, 0) → g=0.0, b=0.5
-	for k in range(f_steps):
-		var xa: float = lerpf(FEEDER_X0, FEEDER_X1, float(k) / float(f_steps))
-		var xb: float = lerpf(FEEDER_X0, FEEDER_X1, float(k + 1) / float(f_steps))
-		var zn: float = FEEDER_Z - FEEDER_HALF
-		var zm: float = FEEDER_Z
-		var zs2: float = FEEDER_Z + FEEDER_HALF
-		var cb := Color(0.8, flow.g, flow.b)   # 靠岸
-		var cm := Color(0.0, flow.g, flow.b)   # 溝心
-		# 兩條帶：北半 (zn..zm)、南半 (zm..zs2)，上面朝 +y
-		_add_tri(fst, Vector3(xa, fw_y, zn), Vector3(xb, fw_y, zn), Vector3(xa, fw_y, zm), cb, cb, cm)
-		_add_tri(fst, Vector3(xb, fw_y, zn), Vector3(xb, fw_y, zm), Vector3(xa, fw_y, zm), cb, cm, cm)
-		_add_tri(fst, Vector3(xa, fw_y, zm), Vector3(xb, fw_y, zm), Vector3(xa, fw_y, zs2), cm, cm, cb)
-		_add_tri(fst, Vector3(xb, fw_y, zm), Vector3(xb, fw_y, zs2), Vector3(xa, fw_y, zs2), cm, cb, cb)
-	fst.generate_normals()
-	var feeder_water: ArrayMesh = fst.commit()
-	if (feeder_water.surface_get_arrays(0)[Mesh.ARRAY_NORMAL] as PackedVector3Array)[0].y < 0.0:
-		push_error("feeder water winding flipped")
-	var e5: int = ResourceSaver.save(feeder_water, "res://maps/slice/gen/feeder_water.res", ResourceSaver.FLAG_COMPRESS)
-
-	# ── 河口水舌（獨立 mesh + feeder_nappe.tres）───────────────────
-	# 上緣承接水平排水渠，下緣伸入幹渠並落到下游水位。拆成獨立 mesh 的
-	# 理由與泡沫相同：水平段的 canal_water_upper shore_alpha=0.62 是
-	# ALPHA 下限，水舌邊緣淡不掉 → 讀成一片硬邊玻璃板。
-	# quadratic nappe：出口近水平、往下漸陡；同時向兩側張開（上窄下寬）。
-	# 但形狀只解決一半——真正把輪廓打散的是材質的 shred（fragment 噪聲）。
-	var nst := SurfaceTool.new()
-	nst.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var mouth_zm: float = FEEDER_Z
-	for k in range(FEEDER_NAPPE_SEGS):
-		var t0: float = float(k) / float(FEEDER_NAPPE_SEGS)
-		var t1: float = float(k + 1) / float(FEEDER_NAPPE_SEGS)
-		var xa: float = lerpf(FEEDER_X0, FEEDER_MOUTH_X, t0)
-		var xb: float = lerpf(FEEDER_X0, FEEDER_MOUTH_X, t1)
-		var ya: float = lerpf(fw_y, FEEDER_RECEIVER_Y, t0 * t0)
-		var yb: float = lerpf(fw_y, FEEDER_RECEIVER_Y, t1 * t1)
-		var ha: float = FEEDER_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t0 * t0)
-		var hb: float = FEEDER_HALF * lerpf(1.0, FEEDER_NAPPE_FLARE, t1 * t1)
-		var zna: float = FEEDER_Z - ha
-		var zsa: float = FEEDER_Z + ha
-		var znb: float = FEEDER_Z - hb
-		var zsb: float = FEEDER_Z + hb
-		# 越接近落點 bank 越高 → shred 咬得越兇，底部散成飛沫。
-		var ba := Color(lerpf(0.8, 1.0, t0), flow.g, flow.b)
-		var bb := Color(lerpf(0.8, 1.0, t1), flow.g, flow.b)
-		var ma := Color(lerpf(0.0, 1.0, t0 * t0), flow.g, flow.b)
-		var mb := Color(lerpf(0.0, 1.0, t1 * t1), flow.g, flow.b)
-		_add_tri(nst, Vector3(xa, ya, zna), Vector3(xb, yb, znb), Vector3(xa, ya, mouth_zm), ba, bb, ma)
-		_add_tri(nst, Vector3(xb, yb, znb), Vector3(xb, yb, mouth_zm), Vector3(xa, ya, mouth_zm), bb, mb, ma)
-		_add_tri(nst, Vector3(xa, ya, mouth_zm), Vector3(xb, yb, mouth_zm), Vector3(xa, ya, zsa), ma, mb, ba)
-		_add_tri(nst, Vector3(xb, yb, mouth_zm), Vector3(xb, yb, zsb), Vector3(xa, ya, zsa), mb, bb, ba)
-	nst.generate_normals()
-	var nappe: ArrayMesh = nst.commit()
-	var e8: int = ResourceSaver.save(nappe, "res://maps/slice/gen/feeder_nappe.res", ResourceSaver.FLAG_COMPRESS)
-	print("feeder nappe err=", e8, " flare=%.2f segs=%d" % [FEEDER_NAPPE_FLARE, FEEDER_NAPPE_SEGS])
-
-	# ── 落水泡沫舌（獨立 mesh + 專屬材質）──────────────────────────
-	# 為什麼不併進 feeder_water：feeder 用 canal_water_upper，其
-	# shore_alpha=0.62 是 ALPHA 的下限，外緣永遠淡不到 0 →
-	# 泡沫讀成「一張磨砂玻璃長方形貼在水上」。feeder_splash.tres 把
-	# shore_alpha 設 0，外緣才真的消失。
-	# 形狀用扇形而非矩形：以落點為心、往下游張開的半橢圓，外圍頂點色
-	# 依角度抖動製造毛邊，並沿流向拖出尾巴。
-	var pst := SurfaceTool.new()
-	pst.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var splash_y: float = FEEDER_RECEIVER_Y + 0.012
-	var hub := Vector3(FEEDER_MOUTH_X, splash_y, FEEDER_Z)
-	var c_hub := Color(1.0, flow.g, flow.b)
-	var rings: int = 16
-	for k in range(rings):
-		# 角度掃過下游半圈（+z → -x → -z），泡沫只往幹渠那側鋪。
-		var a0: float = PI * 0.5 + PI * float(k) / float(rings)
-		var a1: float = PI * 0.5 + PI * float(k + 1) / float(rings)
-		var r0: float = FEEDER_SPLASH_R * (0.62 + 0.38 * sin(a0 * 3.7 + 1.1) * 0.5 + 0.19)
-		var r1: float = FEEDER_SPLASH_R * (0.62 + 0.38 * sin(a1 * 3.7 + 1.1) * 0.5 + 0.19)
-		# 沿 -x（下游）方向把扇形拉長成拖尾。cos 在此區間為負，
-		# 所以直接加（不再取負號），否則扇形會往東鋪到上游側。
-		var p0 := hub + Vector3(cos(a0) * r0 * FEEDER_SPLASH_TAIL, 0.0, sin(a0) * r0)
-		var p1 := hub + Vector3(cos(a1) * r1 * FEEDER_SPLASH_TAIL, 0.0, sin(a1) * r1)
-		# 外圍 bank 抖動 → 有的頂點淡光、有的還留白，邊緣就不是一條線。
-		var edge0 := Color(clampf(0.30 + 0.34 * sin(a0 * 5.3), 0.0, 1.0), flow.g, flow.b)
-		var edge1 := Color(clampf(0.30 + 0.34 * sin(a1 * 5.3), 0.0, 1.0), flow.g, flow.b)
-		_add_tri(pst, hub, p0, p1, c_hub, edge0, edge1)
-	pst.generate_normals()
-	var splash: ArrayMesh = pst.commit()
-	var e7: int = ResourceSaver.save(splash, "res://maps/slice/gen/feeder_splash.res", ResourceSaver.FLAG_COMPRESS)
-	print("feeder splash err=", e7, " r=%.2fm tail=%.2f" % [FEEDER_SPLASH_R, FEEDER_SPLASH_TAIL])
-
-	# 溝緣疊石：每側一道 0.35m 寬 × (溝底→田面+0.08) 的階狀石帶，用
-	# unified_terrain 的石頭分支頂點色 (0,0,1,a)。內側面貼溝、頂面 +0.08 露出。
-	var rst2 := SurfaceTool.new()
-	rst2.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var rim_top: float = PADDY_FLAT_Y + 0.08
-	var rim_w: float = 0.35
-	var c_st := Color(0, 0, 1, 0)
-	var c_stw := Color(0, 0, 1, 1)
-	for side in [-1.0, 1.0]:
-		var z_in: float = FEEDER_Z + side * FEEDER_HALF
-		var z_out: float = z_in + side * rim_w
-		for k in range(f_steps):
-			var xa: float = lerpf(FEEDER_X0, FEEDER_X1, float(k) / float(f_steps))
-			var xb: float = lerpf(FEEDER_X0, FEEDER_X1, float(k + 1) / float(f_steps))
-			# 內側立面 (溝底 → 頂)
-			var i0 := Vector3(xa, FEEDER_BED_Y, z_in); var i1 := Vector3(xb, FEEDER_BED_Y, z_in)
-			var t0 := Vector3(xa, rim_top, z_in);      var t1 := Vector3(xb, rim_top, z_in)
-			var o0 := Vector3(xa, rim_top, z_out);     var o1 := Vector3(xb, rim_top, z_out)
-			var g0 := Vector3(xa, PADDY_FLAT_Y, z_out); var g1 := Vector3(xb, PADDY_FLAT_Y, z_out)
-			if side < 0.0:
-				_add_tri(rst2, i0, t0, i1, c_stw, c_st, c_stw); _add_tri(rst2, i1, t0, t1, c_stw, c_st, c_st)
-				_add_tri(rst2, t0, o0, t1, c_st, c_st, c_st);   _add_tri(rst2, t1, o0, o1, c_st, c_st, c_st)
-				_add_tri(rst2, o0, g0, o1, c_st, c_st, c_st);   _add_tri(rst2, o1, g0, g1, c_st, c_st, c_st)
-			else:
-				_add_tri(rst2, i0, i1, t0, c_stw, c_stw, c_st); _add_tri(rst2, i1, t1, t0, c_stw, c_st, c_st)
-				_add_tri(rst2, t0, t1, o0, c_st, c_st, c_st);   _add_tri(rst2, t1, o1, o0, c_st, c_st, c_st)
-				_add_tri(rst2, o0, o1, g0, c_st, c_st, c_st);   _add_tri(rst2, o1, g1, g0, c_st, c_st, c_st)
-	rst2.generate_normals()
-	var feeder_rim: ArrayMesh = rst2.commit()
-	var e6: int = ResourceSaver.save(feeder_rim, "res://maps/slice/gen/feeder_rim.res", ResourceSaver.FLAG_COMPRESS)
-	print("feeder water err=", e5, " rim err=", e6, " water_y=%.2f rim_top=%.2f x %.1f..%.1f z=%.1f" % [fw_y, rim_top, FEEDER_X0, FEEDER_X1, FEEDER_Z])
 
 	print("ground err=", e1, " water err=", e2, " revetment err=", e3,
 		" grid=", n, "x", n, " water_width~=", WATER_HALF * 2.0,

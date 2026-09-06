@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://08g1pmc28k81"
-path.s3tc="res://.godot/imported/ishigaki_old_stone_nor_gl_2k.jpg-21e15184239c031ab73df2ebc1d052d9.s3tc.ctex"
+uid="uid://btlgr6d5s6ull"
+path.s3tc="res://.godot/imported/木樋（引水槽）支撐棚架_normal.jpg-96d0c1ddd63bdb0b27efb54a53bdf0c2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "c5d11e65a236d518a643380f7ca37777"
+}
 
 [deps]
 
-source_file="res://assets/textures/ishigaki_old_stone_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/ishigaki_old_stone_nor_gl_2k.jpg-21e15184239c031ab73df2ebc1d052d9.s3tc.ctex"]
+source_file="res://assets/riverbank/木樋（引水槽）支撐棚架_normal.jpg"
+dest_files=["res://.godot/imported/木樋（引水槽）支撐棚架_normal.jpg-96d0c1ddd63bdb0b27efb54a53bdf0c2.s3tc.ctex"]
 
 [params]
 
@@ -27,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/textures/ishigaki_old_stone_nor_gl_2k.jpg"
+roughness/src_normal="res://assets/riverbank/木樋（引水槽）支撐棚架_normal.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
