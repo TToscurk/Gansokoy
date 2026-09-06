@@ -27,6 +27,8 @@ var registry: Dictionary = {}
 var current_id := ""
 var map_root: Node3D = null
 var portal_cooldown := 0.0
+## 目前圖上可用的傳送區；冷卻結束時要重新檢查佇留其中的玩家。
+var _live_portals: Array = []
 
 @onready var player: CharacterBody3D = $Player
 @onready var map_label: Label = $UI/MapLabel
@@ -308,7 +310,10 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 		portal_cooldown = maxf(0.0, portal_cooldown - delta)
 		return
+	var was_cooling := portal_cooldown > 0.0
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
+	if was_cooling and portal_cooldown <= 0.0:
+		_recheck_portal_overlap()
 	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":
 		_shot_tick()
@@ -351,6 +356,8 @@ func load_map(id: String, from_id: String) -> void:
 
 	if map_root:
 		map_root.queue_free()
+	# 傳送區掛在 map_root 底下，隨舊圖一起釋放；清掉舊清單免得留下無效引用。
+	_live_portals.clear()
 	current_id = id
 	print("[map] %s → %s" % [id, path])
 	map_root = packed.instantiate()
@@ -545,7 +552,25 @@ func _spawn_portals(meta: Dictionary) -> void:
 			area.body_entered.connect(_on_portal_reserved.bind(area.name))
 		else:
 			area.body_entered.connect(_on_portal_entered.bind(String(tgt)))
+			# `body_entered` 只在「進入的那一幀」發一次。落地冷卻若還沒退完，
+			# 這一次就被吞掉，玩家站在傳送區裡也不會有第二次通知 —— 神社出生點
+			# 離獸道傳送區只有 4.1 m，疾跑 0.6 秒就到，遠短於 2 秒冷卻，於是
+			# 「走到門口卻進不去」。改為冷卻結束後重新檢查誰還站在裡面。
+			_live_portals.append({"area": area, "target": String(tgt)})
 		map_root.add_child(area)
+
+## 冷卻結束的那一幀：玩家若還站在某個傳送區裡，補送一次觸發。
+## 沒有這段，`body_entered` 的一次性語意會讓「冷卻中走進去」變成永久卡住。
+func _recheck_portal_overlap() -> void:
+	for entry in _live_portals:
+		var area: Area3D = entry.get("area")
+		if not is_instance_valid(area):
+			continue
+		if area.get_overlapping_bodies().has(player):
+			_on_portal_entered(player, String(entry.get("target")))
+			return
+
+
 
 ## 保留中的觸發區：偵測邏輯已經接好，只差目的地。
 func _on_portal_reserved(body: Node3D, who: String) -> void:
