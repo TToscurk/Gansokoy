@@ -8,6 +8,47 @@
       "target": "",
       "arrival_y_offset": 1.2,
       "arrival_yaw": 0.0
+    },
+    {
+      "x": 236.0,
+      "y": 0.0,
+      "z": 112.0,
+      "target": "trail",
+      "arrival_ground_y": 0.0,
+      "arrival_y_offset": 1.2,
+      "arrival_yaw": 3.14159265358979,
+      "note": "南側大鳥居外（草地與石列）。獸道由此進出。"
+    },
+    {
+      "x": 234.0,
+      "y": 0.0,
+      "z": -130.0,
+      "target": "hieda1f",
+      "arrival_ground_y": 0.0,
+      "arrival_y_offset": 1.2,
+      "arrival_yaw": 0.0,
+      "note": "北側大鳥居盡頭、稗田邸門前。"
+    },
+    {
+      "x": 456.0,
+      "y": -0.08,
+      "z": -144.0,
+      "target": "kourindou",
+      "arrival_ground_y": -0.08,
+      "arrival_y_offset": 1.2,
+      "arrival_yaw": 1.5707963267949,
+      "note": "龍石像橋東岸（龍神像在西側 x≈362）。過橋往香霖堂。"
     }
+  ],
+  "id": "slice",
+  "safe": true,
+  "connections": [
+    "trail",
+    "hieda1f",
+    "kourindou"
+  ],
+  "playSize": [
+    460,
+    460
   ]
 }

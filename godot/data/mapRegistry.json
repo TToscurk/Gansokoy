@@ -34,7 +34,7 @@
     "mobTheme": "fairy",
     "connections": [
       "shrine",
-      "village"
+      "slice"
     ],
     "entry": "maps/trail/",
     "zh": "獸道",
@@ -189,7 +189,7 @@
     ],
     "mobTheme": null,
     "connections": [
-      "village",
+      "slice",
       "forest"
     ],
     "entry": "maps/kourindou/"
@@ -466,5 +466,32 @@
     ],
     "mobTheme": null,
     "connections": []
+  },
+  "slice": {
+    "id": "slice",
+    "zh": "人間之里",
+    "en": "HUMAN VILLAGE",
+    "dir": "中央",
+    "x": -80,
+    "z": 150,
+    "elev": 15,
+    "radius": 205,
+    "rough": 0.8,
+    "fog": 12109008,
+    "accent": 14266986,
+    "built": true,
+    "safe": true,
+    "playSize": [
+      460,
+      460
+    ],
+    "mobTheme": null,
+    "connections": [
+      "trail",
+      "hieda1f",
+      "kourindou"
+    ],
+    "entry": "maps/slice/",
+    "note": "B1/B2 ラウンドの実作業図。village.tscn は凍結済みの旧基線で、--map=village でのみ開く。"
   }
 }

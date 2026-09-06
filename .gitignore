@@ -38,3 +38,8 @@ godot/*.log
 godot/maps/*/backups/
 godot/project.godot.bak_*
 *.bak.res
+
+# 審圖產物：截圖、錄影、探測腳本、驗收報告（634MB）。
+# 這是「給人看的證據」，不是專案內容 —— 每輪都會重生，不進版控。
+_review/
+

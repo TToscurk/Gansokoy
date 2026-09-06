@@ -8,7 +8,7 @@
   "mobTheme": "fairy",
   "connections": [
     "shrine",
-    "village"
+    "slice"
   ],
   "portals": [
     {
@@ -23,7 +23,7 @@
       "x": 9.56,
       "y": 0.29,
       "z": 320.0,
-      "target": "village",
+      "target": "slice",
       "arrival_ground_y": 0.47,
       "arrival_y_offset": 1.2
     }
