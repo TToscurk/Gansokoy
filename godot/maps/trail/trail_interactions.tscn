@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
+
+[sub_resource type="BoxShape3D" id="wake"]
+size = Vector3(30, 8, 30)
+
+[sub_resource type="BoxShape3D" id="ring"]
+size = Vector3(60, 10, 60)
+
+[sub_resource type="BoxShape3D" id="strip"]
+size = Vector3(30, 8, 10)
+
+[node name="獸道互動點" type="Node3D"]
+
+[node name="醒來獨白" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 5, -17.6)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_wake"
+dialogue_id = "yoriichi_wake"
+auto_trigger = true
+once_flag = "woke_in_trail"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="醒來獨白"]
+shape = SubResource("wake")
+
+[node name="離開空地_南" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 4, 18)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_leave_clearing_s"
+quest_event_type = "REACH"
+quest_target_id = "trail_leave_clearing"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="離開空地_南"]
+shape = SubResource("strip")
+
+[node name="離開空地_北" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 6, -50)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_leave_clearing_n"
+quest_event_type = "REACH"
+quest_target_id = "trail_leave_clearing"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="離開空地_北"]
+shape = SubResource("strip")
+
+[node name="妖怪氣息" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 8, -70)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_presence"
+dialogue_id = "yoriichi_presence"
+auto_trigger = true
+once_flag = "sensed_presence_played"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="妖怪氣息"]
+shape = SubResource("strip")
+
+[node name="人里口_未開放" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 98)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_village_locked"
+dialogue_id = "yoriichi_village_locked"
+auto_trigger = true
+once_flag = "village_locked_hint_played"
+skip_flag = "met_reimu"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="人里口_未開放"]
+shape = SubResource("strip")

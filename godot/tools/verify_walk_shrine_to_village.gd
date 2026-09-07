@@ -35,6 +35,18 @@ func _hold(action: String, down: bool) -> void:
 	e.pressed = down
 	Input.parse_input_event(e)
 
+## 傳送語意：站進區內後按 ↑（portal_enter）才換圖。
+func _press_up() -> void:
+	var ev := InputEventKey.new()
+	ev.keycode = KEY_UP
+	ev.pressed = true
+	Input.parse_input_event(ev)
+	await physics_frame
+	ev = InputEventKey.new()
+	ev.keycode = KEY_UP
+	ev.pressed = false
+	Input.parse_input_event(ev)
+
 
 ## 直線撞到東西（獸道有 7000 棵個別樹）時，往旁邊繞。
 ## 這模擬玩家會做的事：看到樹就繞過去，而不是站著推它。
@@ -86,51 +98,66 @@ func _blocked_ahead(dir: Vector3) -> bool:
 
 
 ## 走向一個世界座標直到換圖（expect_map）或抵達。
-## 回傳 {arrived, seconds, distance, reason}。
+## 回傳 {arrived, seconds, game_seconds, distance, reason}。
+## ⚠ seconds 是 process delta 累加，headless 下跑得比真實快（313 m 報 23 s =
+##   13.5 m/s，超過緣一 run_speed 7.0）。game_seconds 用物理幀數 ÷ tick rate，
+##   才是玩家實際會等的時間。
 func _walk_to(target: Vector3, label: String, expect_map: String = "") -> Dictionary:
 	var t := 0.0
+	var ticks := 0
+	var tps := float(Engine.physics_ticks_per_second)
 	var last_check := 0.0
 	var last_pos: Vector3 = player.global_position
 	var best := INF
+	var next_press := 0.0
+	var path_len := 0.0
+	var prev: Vector3 = player.global_position
 	_hold("sprint", true)
 	_hold("move_forward", true)
 	while t < RUN_TIMEOUT:
 		_steer(target)
 		await physics_frame
 		await process_frame
+		ticks += 1
 		t += get_root().get_process_delta_time()
+		path_len += prev.distance_to(player.global_position)
+		prev = player.global_position
 		var flat: Vector3 = player.global_position
 		var to := Vector3(target.x - flat.x, 0.0, target.z - flat.z)
 		var dist := to.length()
 		best = minf(best, dist)
+		# 傳送區半徑 1.6 m：進到 1.5 m 內且冷卻退了，就按 ↑ 觸發傳送。
+		if expect_map != "" and dist < 1.5 and t >= next_press and main.portal_cooldown <= 0.0:
+			next_press = t + 0.5
+			await _press_up()
 		# 換圖才算真的過去了；只是站到傳送區旁邊不算。
 		if expect_map != "" and main.current_id == expect_map:
 			_hold("move_forward", false)
 			_hold("sprint", false)
-			return {"arrived": true, "seconds": t, "distance": dist, "reason": "transitioned to %s" % expect_map}
+			return {"arrived": true, "seconds": t, "game_seconds": ticks / tps, "path_len": path_len, "distance": dist, "reason": "transitioned to %s" % expect_map}
 		if expect_map == "" and dist <= ARRIVE_RADIUS:
 			_hold("move_forward", false)
 			_hold("sprint", false)
-			return {"arrived": true, "seconds": t, "distance": dist, "reason": "reached"}
+			return {"arrived": true, "seconds": t, "game_seconds": ticks / tps, "path_len": path_len, "distance": dist, "reason": "reached"}
 		# 掉出世界
 		if player.global_position.y < -80.0:
 			_hold("move_forward", false)
 			_hold("sprint", false)
-			return {"arrived": false, "seconds": t, "distance": dist, "reason": "fell out of the world at y=%.1f" % player.global_position.y}
+			return {"arrived": false, "seconds": t, "game_seconds": ticks / tps, "path_len": path_len, "distance": dist, "reason": "fell out of the world at y=%.1f" % player.global_position.y}
 		# 卡住偵測
 		if t - last_check >= STUCK_WINDOW:
 			var moved := last_pos.distance_to(player.global_position)
 			if moved < STUCK_DIST:
 				_hold("move_forward", false)
 				_hold("sprint", false)
-				return {"arrived": false, "seconds": t, "distance": dist,
+				return {"arrived": false, "seconds": t, "game_seconds": ticks / tps, "path_len": path_len, "distance": dist,
 					"reason": "stuck at %s (moved %.2f m in %.1f s)" % [_v(player.global_position), moved, STUCK_WINDOW]}
 			last_pos = player.global_position
 			last_check = t
 			_log.append("  %s t=%5.1f pos=%s dist=%6.1f" % [label, t, _v(player.global_position), dist])
 	_hold("move_forward", false)
 	_hold("sprint", false)
-	return {"arrived": false, "seconds": t, "distance": best, "reason": "timed out after %.0f s" % RUN_TIMEOUT}
+	return {"arrived": false, "seconds": t, "game_seconds": ticks / tps, "path_len": path_len, "distance": best, "reason": "timed out after %.0f s" % RUN_TIMEOUT}
 
 
 func _v(p: Vector3) -> String:
@@ -214,6 +241,8 @@ func _run() -> void:
 			% [_v(p2), player.global_position.distance_to(p2)])
 		var r2: Dictionary = await _walk_to(p2, "trail", "slice")
 		print("[WALK] 段2 %s (%.1f s, 剩 %.1f m)" % [r2.reason, r2.seconds, r2.distance])
+		print("[WALK] 段2 遊戲時間 %.1f s（物理幀），實走路徑 %.0f m，平均 %.2f m/s"
+			% [r2.game_seconds, r2.path_len, r2.path_len / maxf(r2.game_seconds, 0.01)])
 		check("能從獸道走到人里傳送區：%s" % r2.reason, r2.arrived)
 
 		for i in 30:

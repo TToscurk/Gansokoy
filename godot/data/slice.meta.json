@@ -22,12 +22,12 @@
     {
       "x": 234.0,
       "y": 0.0,
-      "z": -130.0,
+      "z": -120.0,
       "target": "hieda1f",
       "arrival_ground_y": 0.0,
       "arrival_y_offset": 1.2,
       "arrival_yaw": 0.0,
-      "note": "北側大鳥居盡頭、稗田邸門前。"
+      "note": "北側大鳥居盡頭、稗田邸門前。z=-120：z=-130 時回程落點陷進宅殼（portal_test 實測）。"
     },
     {
       "x": 456.0,

@@ -1,0 +1,2 @@
+import bpy, json
+print(json.dumps({'version': bpy.app.version_string, 'filepath': bpy.data.filepath, 'scene': bpy.context.scene.name, 'scenes': [s.name for s in bpy.data.scenes], 'objects': [(o.name, o.type) for o in bpy.context.scene.objects], 'engines': [x.identifier for x in bpy.types.RenderSettings.bl_rna.properties['engine'].enum_items], 'mesh_from_pydata': bpy.types.Mesh.from_pydata.__doc__, 'save_as': bpy.ops.wm.save_as_mainfile.get_rna_type().description, 'render': bpy.ops.render.render.get_rna_type().description}, ensure_ascii=False))

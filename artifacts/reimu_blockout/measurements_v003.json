@@ -1,0 +1,66 @@
+{
+  "version": "v003",
+  "status": "ART_REVIEW",
+  "scene": "Reimu_Refined_v003",
+  "saved_file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\reimu_8head_v003.blend",
+  "sha256": "b59cba9052977745de3e0c6421311dc3792d803f51f474d85c02fd9b6e623e05",
+  "sole_to_crown_m": 1.649999976158142,
+  "head_height_m": 0.20624995231628418,
+  "head_ratio": 8.000001733953704,
+  "object_count": 252,
+  "base_mesh_vertices": 56190,
+  "base_mesh_faces": 50942,
+  "evaluated_triangles": 904204,
+  "covered_crown_probe": {
+    "region": "anatomical head vertices, 1.615 < Z < 1.640 m; outward horizontal ray into hair cap",
+    "hits": 960,
+    "misses": 0,
+    "min_clearance_m": 0.008929089643061161
+  },
+  "covered_ankle_probes": {
+    "L": {
+      "region": ".110 < Z < .175 m calf vertices",
+      "hits": 64,
+      "misses": 0,
+      "min_clearance_m": 0.009379035793244839
+    },
+    "R": {
+      "region": ".110 < Z < .175 m calf vertices",
+      "hits": 64,
+      "misses": 0,
+      "min_clearance_m": 0.009377042762935162
+    }
+  },
+  "original_scene_preserved": true,
+  "saved_datablocks_read_back": true,
+  "outputs": [
+    {
+      "path": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\reimu_8head_v003.blend",
+      "bytes": 3327972
+    },
+    {
+      "path": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\v003_front.png",
+      "bytes": 662965
+    },
+    {
+      "path": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\v003_side.png",
+      "bytes": 541832
+    },
+    {
+      "path": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\v003_back.png",
+      "bytes": 641223
+    },
+    {
+      "path": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\v003_face.png",
+      "bytes": 882005
+    }
+  ],
+  "limits": [
+    "Targeted ray probes are not a complete cloth/body intersection audit",
+    "Face and body still separate meshes; no animation-ready retopology",
+    "Hands are still anatomical proxies",
+    "No UV paint, rigging or skin weights",
+    "Not imported or benchmarked in Godot",
+    "Reference likeness remains subject to user review"
+  ]
+}

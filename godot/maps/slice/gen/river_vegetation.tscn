@@ -12,7 +12,7 @@
 
 [sub_resource type="Resource" id="Resource_71wga"]
 script = ExtResource("4_r1r0l")
-spacing = 1.9
+spacing = 3.8
 
 [sub_resource type="Resource" id="Resource_y3auo"]
 script = ExtResource("5_iq0qu")
@@ -51,7 +51,7 @@ curve = SubResource("Curve3D_gj7bp")
 
 [sub_resource type="Resource" id="Resource_b42wh"]
 script = ExtResource("4_r1r0l")
-spacing = 1.9
+spacing = 3.8
 
 [sub_resource type="Resource" id="Resource_8k03i"]
 script = ExtResource("5_iq0qu")
@@ -90,7 +90,7 @@ curve = SubResource("Curve3D_mfske")
 
 [sub_resource type="Resource" id="Resource_tx4qm"]
 script = ExtResource("4_r1r0l")
-spacing = 1.7
+spacing = 3.4
 
 [sub_resource type="Resource" id="Resource_xec1t"]
 script = ExtResource("5_iq0qu")
@@ -129,7 +129,7 @@ curve = SubResource("Curve3D_r6xd5")
 
 [sub_resource type="Resource" id="Resource_e24ky"]
 script = ExtResource("4_r1r0l")
-spacing = 1.7
+spacing = 3.4
 
 [sub_resource type="Resource" id="Resource_ssmr5"]
 script = ExtResource("5_iq0qu")
@@ -168,7 +168,7 @@ curve = SubResource("Curve3D_psx74")
 
 [sub_resource type="Resource" id="Resource_1q65c"]
 script = ExtResource("4_r1r0l")
-spacing = 2.6
+spacing = 5.2
 
 [sub_resource type="Resource" id="Resource_ki1un"]
 script = ExtResource("5_iq0qu")
@@ -207,7 +207,7 @@ curve = SubResource("Curve3D_qcl6r")
 
 [sub_resource type="Resource" id="Resource_hcfgu"]
 script = ExtResource("4_r1r0l")
-spacing = 2.6
+spacing = 5.2
 
 [sub_resource type="Resource" id="Resource_ahywx"]
 script = ExtResource("5_iq0qu")
@@ -246,7 +246,7 @@ curve = SubResource("Curve3D_rm2ey")
 
 [sub_resource type="Resource" id="Resource_2asm7"]
 script = ExtResource("4_r1r0l")
-spacing = 8.0
+spacing = 16.0
 
 [sub_resource type="Resource" id="Resource_h0cub"]
 script = ExtResource("5_iq0qu")
@@ -285,7 +285,7 @@ curve = SubResource("Curve3D_7ms2g")
 
 [sub_resource type="Resource" id="Resource_ptlyd"]
 script = ExtResource("4_r1r0l")
-spacing = 8.0
+spacing = 16.0
 
 [sub_resource type="Resource" id="Resource_v2r3s"]
 script = ExtResource("5_iq0qu")
@@ -324,7 +324,7 @@ curve = SubResource("Curve3D_7aeh7")
 
 [sub_resource type="Resource" id="Resource_4a1hv"]
 script = ExtResource("4_r1r0l")
-spacing = 13.0
+spacing = 26.0
 
 [sub_resource type="Resource" id="Resource_jgx54"]
 script = ExtResource("5_iq0qu")
@@ -363,7 +363,7 @@ curve = SubResource("Curve3D_nw4mo")
 
 [sub_resource type="Resource" id="Resource_x44xn"]
 script = ExtResource("4_r1r0l")
-spacing = 13.0
+spacing = 26.0
 
 [sub_resource type="Resource" id="Resource_v2ljd"]
 script = ExtResource("5_iq0qu")
@@ -478,9 +478,9 @@ script = ExtResource("7_wut72")
 closed = false
 curve = SubResource("Curve3D_1f03g")
 
-[node name="RiverVegetation" type="Node3D" unique_id=1367531162]
+[node name="RiverVegetation" type="Node3D" unique_id=1867400857]
 
-[node name="West_reed_00" type="Node3D" parent="." unique_id=211805134]
+[node name="West_reed_00" type="Node3D" parent="." unique_id=509842557]
 script = ExtResource("1_2salv")
 global_seed = 20260838
 dbg_disable_thread = true
@@ -488,15 +488,15 @@ modifier_stack = SubResource("Resource_a0ech")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_reed_00" unique_id=1337102303]
+[node name="Crest0" type="Node3D" parent="West_reed_00" unique_id=1301753376]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_e0hxa")
 
-[node name="Crest1" type="Node3D" parent="West_reed_00" unique_id=2077205860]
+[node name="Crest1" type="Node3D" parent="West_reed_00" unique_id=524145223]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_jux6j")
 
-[node name="ReedA" type="Node3D" parent="West_reed_00" unique_id=583173784]
+[node name="ReedA" type="Node3D" parent="West_reed_00" unique_id=1580549169]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -507,7 +507,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="West_reed_00" unique_id=190627592]
+[node name="ReedB" type="Node3D" parent="West_reed_00" unique_id=671885377]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -518,7 +518,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="East_reed_00" type="Node3D" parent="." unique_id=1283584025]
+[node name="East_reed_00" type="Node3D" parent="." unique_id=544915082]
 script = ExtResource("1_2salv")
 global_seed = 20261338
 dbg_disable_thread = true
@@ -526,15 +526,15 @@ modifier_stack = SubResource("Resource_ptrx6")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_reed_00" unique_id=773036316]
+[node name="Crest0" type="Node3D" parent="East_reed_00" unique_id=144522814]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_xul8v")
 
-[node name="Crest1" type="Node3D" parent="East_reed_00" unique_id=1226557486]
+[node name="Crest1" type="Node3D" parent="East_reed_00" unique_id=54880138]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_qbkft")
 
-[node name="ReedA" type="Node3D" parent="East_reed_00" unique_id=205997642]
+[node name="ReedA" type="Node3D" parent="East_reed_00" unique_id=1460315625]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -545,7 +545,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="East_reed_00" unique_id=48703610]
+[node name="ReedB" type="Node3D" parent="East_reed_00" unique_id=988444573]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -556,7 +556,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="West_reed_01" type="Node3D" parent="." unique_id=1222650992]
+[node name="West_reed_01" type="Node3D" parent="." unique_id=506887800]
 script = ExtResource("1_2salv")
 global_seed = 20260850
 dbg_disable_thread = true
@@ -564,15 +564,15 @@ modifier_stack = SubResource("Resource_rlmi4")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_reed_01" unique_id=1956701627]
+[node name="Crest0" type="Node3D" parent="West_reed_01" unique_id=509283461]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_jdyck")
 
-[node name="Crest1" type="Node3D" parent="West_reed_01" unique_id=1748006261]
+[node name="Crest1" type="Node3D" parent="West_reed_01" unique_id=1652564413]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_2eeaj")
 
-[node name="ReedA" type="Node3D" parent="West_reed_01" unique_id=926568866]
+[node name="ReedA" type="Node3D" parent="West_reed_01" unique_id=1221112463]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -583,7 +583,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="West_reed_01" unique_id=126672806]
+[node name="ReedB" type="Node3D" parent="West_reed_01" unique_id=1443729379]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -594,7 +594,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="East_reed_01" type="Node3D" parent="." unique_id=1013673723]
+[node name="East_reed_01" type="Node3D" parent="." unique_id=556605115]
 script = ExtResource("1_2salv")
 global_seed = 20261350
 dbg_disable_thread = true
@@ -602,15 +602,15 @@ modifier_stack = SubResource("Resource_ubtsy")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_reed_01" unique_id=1891565135]
+[node name="Crest0" type="Node3D" parent="East_reed_01" unique_id=1866855158]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_jkip8")
 
-[node name="Crest1" type="Node3D" parent="East_reed_01" unique_id=1023438300]
+[node name="Crest1" type="Node3D" parent="East_reed_01" unique_id=1536020540]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_4q134")
 
-[node name="ReedA" type="Node3D" parent="East_reed_01" unique_id=2109291542]
+[node name="ReedA" type="Node3D" parent="East_reed_01" unique_id=1561459550]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -621,7 +621,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="East_reed_01" unique_id=1617896465]
+[node name="ReedB" type="Node3D" parent="East_reed_01" unique_id=166606581]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -632,7 +632,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="West_reed_02" type="Node3D" parent="." unique_id=1652793797]
+[node name="West_reed_02" type="Node3D" parent="." unique_id=1965681470]
 script = ExtResource("1_2salv")
 global_seed = 20260864
 dbg_disable_thread = true
@@ -640,15 +640,15 @@ modifier_stack = SubResource("Resource_asoyf")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_reed_02" unique_id=355380447]
+[node name="Crest0" type="Node3D" parent="West_reed_02" unique_id=514042523]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_1u425")
 
-[node name="Crest1" type="Node3D" parent="West_reed_02" unique_id=1976630603]
+[node name="Crest1" type="Node3D" parent="West_reed_02" unique_id=1892241655]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_wfxxv")
 
-[node name="ReedA" type="Node3D" parent="West_reed_02" unique_id=603936161]
+[node name="ReedA" type="Node3D" parent="West_reed_02" unique_id=2481885]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -659,7 +659,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="West_reed_02" unique_id=333755358]
+[node name="ReedB" type="Node3D" parent="West_reed_02" unique_id=1380921724]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -670,7 +670,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="East_reed_02" type="Node3D" parent="." unique_id=1916003500]
+[node name="East_reed_02" type="Node3D" parent="." unique_id=157654917]
 script = ExtResource("1_2salv")
 global_seed = 20261364
 dbg_disable_thread = true
@@ -678,15 +678,15 @@ modifier_stack = SubResource("Resource_v5yrn")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_reed_02" unique_id=743278349]
+[node name="Crest0" type="Node3D" parent="East_reed_02" unique_id=904356692]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_dlc0g")
 
-[node name="Crest1" type="Node3D" parent="East_reed_02" unique_id=1056949819]
+[node name="Crest1" type="Node3D" parent="East_reed_02" unique_id=173943248]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_sq2dd")
 
-[node name="ReedA" type="Node3D" parent="East_reed_02" unique_id=129030744]
+[node name="ReedA" type="Node3D" parent="East_reed_02" unique_id=2125403691]
 script = ExtResource("8_mfyqj")
 proportion = 60
 source_scale_multiplier = 0.22
@@ -697,7 +697,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_a.res"
 
-[node name="ReedB" type="Node3D" parent="East_reed_02" unique_id=115233419]
+[node name="ReedB" type="Node3D" parent="East_reed_02" unique_id=784028192]
 script = ExtResource("8_mfyqj")
 proportion = 40
 source_scale_multiplier = 0.19
@@ -708,7 +708,7 @@ visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/reed_b.res"
 
-[node name="West_bush_03" type="Node3D" parent="." unique_id=1212363302]
+[node name="West_bush_03" type="Node3D" parent="." unique_id=623900140]
 script = ExtResource("1_2salv")
 global_seed = 20260880
 dbg_disable_thread = true
@@ -716,145 +716,145 @@ modifier_stack = SubResource("Resource_scqk5")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_bush_03" unique_id=1210454400]
+[node name="Crest0" type="Node3D" parent="West_bush_03" unique_id=2093802481]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_igtqu")
 
-[node name="Crest1" type="Node3D" parent="West_bush_03" unique_id=1868550512]
+[node name="Crest1" type="Node3D" parent="West_bush_03" unique_id=966878955]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_iwxty")
 
-[node name="shrub0" type="Node3D" parent="West_bush_03" unique_id=1246842003]
+[node name="shrub0" type="Node3D" parent="West_bush_03" unique_id=987815725]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 30
 source_scale_multiplier = 2.0
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_shrub_0.res"
 
-[node name="nettle0" type="Node3D" parent="West_bush_03" unique_id=1694075274]
+[node name="nettle0" type="Node3D" parent="West_bush_03" unique_id=590601926]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_0.res"
 
-[node name="nettle1" type="Node3D" parent="West_bush_03" unique_id=237476919]
+[node name="nettle1" type="Node3D" parent="West_bush_03" unique_id=2003217040]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_1.res"
 
-[node name="periwinkle0" type="Node3D" parent="West_bush_03" unique_id=1277487380]
+[node name="periwinkle0" type="Node3D" parent="West_bush_03" unique_id=974953571]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_0.res"
 
-[node name="periwinkle1" type="Node3D" parent="West_bush_03" unique_id=1814611699]
+[node name="periwinkle1" type="Node3D" parent="West_bush_03" unique_id=537522689]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_1.res"
 
-[node name="periwinkle2" type="Node3D" parent="West_bush_03" unique_id=370384344]
+[node name="periwinkle2" type="Node3D" parent="West_bush_03" unique_id=330317867]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_2.res"
 
-[node name="periwinkle3" type="Node3D" parent="West_bush_03" unique_id=98212774]
+[node name="periwinkle3" type="Node3D" parent="West_bush_03" unique_id=1511077609]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_3.res"
 
-[node name="periwinkle4" type="Node3D" parent="West_bush_03" unique_id=689104727]
+[node name="periwinkle4" type="Node3D" parent="West_bush_03" unique_id=218586131]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_4.res"
 
-[node name="periwinkle5" type="Node3D" parent="West_bush_03" unique_id=786570253]
+[node name="periwinkle5" type="Node3D" parent="West_bush_03" unique_id=1946330419]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_5.res"
 
-[node name="fern0" type="Node3D" parent="West_bush_03" unique_id=947536088]
+[node name="fern0" type="Node3D" parent="West_bush_03" unique_id=796765433]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_0.res"
 
-[node name="fern1" type="Node3D" parent="West_bush_03" unique_id=377226658]
+[node name="fern1" type="Node3D" parent="West_bush_03" unique_id=1857304375]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_1.res"
 
-[node name="fern2" type="Node3D" parent="West_bush_03" unique_id=1128083739]
+[node name="fern2" type="Node3D" parent="West_bush_03" unique_id=1130483931]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_2.res"
 
-[node name="fern3" type="Node3D" parent="West_bush_03" unique_id=1827237211]
+[node name="fern3" type="Node3D" parent="West_bush_03" unique_id=1092375363]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_3.res"
 
-[node name="East_bush_03" type="Node3D" parent="." unique_id=1886792181]
+[node name="East_bush_03" type="Node3D" parent="." unique_id=1704973968]
 script = ExtResource("1_2salv")
 global_seed = 20261380
 dbg_disable_thread = true
@@ -862,145 +862,145 @@ modifier_stack = SubResource("Resource_i2flt")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_bush_03" unique_id=1732546514]
+[node name="Crest0" type="Node3D" parent="East_bush_03" unique_id=114580232]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_qp50c")
 
-[node name="Crest1" type="Node3D" parent="East_bush_03" unique_id=844744248]
+[node name="Crest1" type="Node3D" parent="East_bush_03" unique_id=1601518551]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_a4qft")
 
-[node name="shrub0" type="Node3D" parent="East_bush_03" unique_id=524572374]
+[node name="shrub0" type="Node3D" parent="East_bush_03" unique_id=1819344624]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 30
 source_scale_multiplier = 2.0
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_shrub_0.res"
 
-[node name="nettle0" type="Node3D" parent="East_bush_03" unique_id=210715945]
+[node name="nettle0" type="Node3D" parent="East_bush_03" unique_id=1247343066]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_0.res"
 
-[node name="nettle1" type="Node3D" parent="East_bush_03" unique_id=331878483]
+[node name="nettle1" type="Node3D" parent="East_bush_03" unique_id=1862000427]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_1.res"
 
-[node name="periwinkle0" type="Node3D" parent="East_bush_03" unique_id=304534283]
+[node name="periwinkle0" type="Node3D" parent="East_bush_03" unique_id=1121429477]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_0.res"
 
-[node name="periwinkle1" type="Node3D" parent="East_bush_03" unique_id=2127226321]
+[node name="periwinkle1" type="Node3D" parent="East_bush_03" unique_id=2118827796]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_1.res"
 
-[node name="periwinkle2" type="Node3D" parent="East_bush_03" unique_id=1935282929]
+[node name="periwinkle2" type="Node3D" parent="East_bush_03" unique_id=193192606]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_2.res"
 
-[node name="periwinkle3" type="Node3D" parent="East_bush_03" unique_id=61674020]
+[node name="periwinkle3" type="Node3D" parent="East_bush_03" unique_id=1948266319]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_3.res"
 
-[node name="periwinkle4" type="Node3D" parent="East_bush_03" unique_id=1964415091]
+[node name="periwinkle4" type="Node3D" parent="East_bush_03" unique_id=1890601114]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_4.res"
 
-[node name="periwinkle5" type="Node3D" parent="East_bush_03" unique_id=1156213814]
+[node name="periwinkle5" type="Node3D" parent="East_bush_03" unique_id=352627821]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_5.res"
 
-[node name="fern0" type="Node3D" parent="East_bush_03" unique_id=630542832]
+[node name="fern0" type="Node3D" parent="East_bush_03" unique_id=1649867239]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_0.res"
 
-[node name="fern1" type="Node3D" parent="East_bush_03" unique_id=442532010]
+[node name="fern1" type="Node3D" parent="East_bush_03" unique_id=1053873085]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_1.res"
 
-[node name="fern2" type="Node3D" parent="East_bush_03" unique_id=954553514]
+[node name="fern2" type="Node3D" parent="East_bush_03" unique_id=1235476622]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_2.res"
 
-[node name="fern3" type="Node3D" parent="East_bush_03" unique_id=1518213993]
+[node name="fern3" type="Node3D" parent="East_bush_03" unique_id=1565411926]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_3.res"
 
-[node name="West_bush_04" type="Node3D" parent="." unique_id=1449737596]
+[node name="West_bush_04" type="Node3D" parent="." unique_id=1704124682]
 script = ExtResource("1_2salv")
 global_seed = 20260898
 dbg_disable_thread = true
@@ -1008,145 +1008,145 @@ modifier_stack = SubResource("Resource_7112w")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_bush_04" unique_id=561487533]
+[node name="Crest0" type="Node3D" parent="West_bush_04" unique_id=44829224]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_1quwp")
 
-[node name="Crest1" type="Node3D" parent="West_bush_04" unique_id=532144917]
+[node name="Crest1" type="Node3D" parent="West_bush_04" unique_id=1920204423]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_njfy0")
 
-[node name="shrub0" type="Node3D" parent="West_bush_04" unique_id=1781907824]
+[node name="shrub0" type="Node3D" parent="West_bush_04" unique_id=1134046207]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 30
 source_scale_multiplier = 2.0
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_shrub_0.res"
 
-[node name="nettle0" type="Node3D" parent="West_bush_04" unique_id=1662478323]
+[node name="nettle0" type="Node3D" parent="West_bush_04" unique_id=2144334341]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_0.res"
 
-[node name="nettle1" type="Node3D" parent="West_bush_04" unique_id=167921203]
+[node name="nettle1" type="Node3D" parent="West_bush_04" unique_id=1764336982]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_1.res"
 
-[node name="periwinkle0" type="Node3D" parent="West_bush_04" unique_id=2050036415]
+[node name="periwinkle0" type="Node3D" parent="West_bush_04" unique_id=1683394486]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_0.res"
 
-[node name="periwinkle1" type="Node3D" parent="West_bush_04" unique_id=1041963895]
+[node name="periwinkle1" type="Node3D" parent="West_bush_04" unique_id=41124067]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_1.res"
 
-[node name="periwinkle2" type="Node3D" parent="West_bush_04" unique_id=1369528182]
+[node name="periwinkle2" type="Node3D" parent="West_bush_04" unique_id=23591174]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_2.res"
 
-[node name="periwinkle3" type="Node3D" parent="West_bush_04" unique_id=1336581986]
+[node name="periwinkle3" type="Node3D" parent="West_bush_04" unique_id=976300121]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_3.res"
 
-[node name="periwinkle4" type="Node3D" parent="West_bush_04" unique_id=828549177]
+[node name="periwinkle4" type="Node3D" parent="West_bush_04" unique_id=188615272]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_4.res"
 
-[node name="periwinkle5" type="Node3D" parent="West_bush_04" unique_id=1788546323]
+[node name="periwinkle5" type="Node3D" parent="West_bush_04" unique_id=1937086364]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_5.res"
 
-[node name="fern0" type="Node3D" parent="West_bush_04" unique_id=1712784582]
+[node name="fern0" type="Node3D" parent="West_bush_04" unique_id=1161815990]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_0.res"
 
-[node name="fern1" type="Node3D" parent="West_bush_04" unique_id=38695057]
+[node name="fern1" type="Node3D" parent="West_bush_04" unique_id=1816704053]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_1.res"
 
-[node name="fern2" type="Node3D" parent="West_bush_04" unique_id=1974293049]
+[node name="fern2" type="Node3D" parent="West_bush_04" unique_id=767767539]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_2.res"
 
-[node name="fern3" type="Node3D" parent="West_bush_04" unique_id=2086227498]
+[node name="fern3" type="Node3D" parent="West_bush_04" unique_id=1697639493]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_3.res"
 
-[node name="East_bush_04" type="Node3D" parent="." unique_id=1673883108]
+[node name="East_bush_04" type="Node3D" parent="." unique_id=1317833970]
 script = ExtResource("1_2salv")
 global_seed = 20261398
 dbg_disable_thread = true
@@ -1154,145 +1154,145 @@ modifier_stack = SubResource("Resource_mayyp")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_bush_04" unique_id=106952190]
+[node name="Crest0" type="Node3D" parent="East_bush_04" unique_id=1120551734]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_yg7ug")
 
-[node name="Crest1" type="Node3D" parent="East_bush_04" unique_id=794970802]
+[node name="Crest1" type="Node3D" parent="East_bush_04" unique_id=1920586202]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_gbmth")
 
-[node name="shrub0" type="Node3D" parent="East_bush_04" unique_id=1955936284]
+[node name="shrub0" type="Node3D" parent="East_bush_04" unique_id=1534795683]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 30
 source_scale_multiplier = 2.0
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_shrub_0.res"
 
-[node name="nettle0" type="Node3D" parent="East_bush_04" unique_id=435294074]
+[node name="nettle0" type="Node3D" parent="East_bush_04" unique_id=601040594]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_0.res"
 
-[node name="nettle1" type="Node3D" parent="East_bush_04" unique_id=1012612706]
+[node name="nettle1" type="Node3D" parent="East_bush_04" unique_id=140253939]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 12
 source_scale_multiplier = 2.2
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_nettle_1.res"
 
-[node name="periwinkle0" type="Node3D" parent="East_bush_04" unique_id=1008675083]
+[node name="periwinkle0" type="Node3D" parent="East_bush_04" unique_id=811280669]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_0.res"
 
-[node name="periwinkle1" type="Node3D" parent="East_bush_04" unique_id=1674030461]
+[node name="periwinkle1" type="Node3D" parent="East_bush_04" unique_id=1157076604]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_1.res"
 
-[node name="periwinkle2" type="Node3D" parent="East_bush_04" unique_id=421344908]
+[node name="periwinkle2" type="Node3D" parent="East_bush_04" unique_id=1279775978]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_2.res"
 
-[node name="periwinkle3" type="Node3D" parent="East_bush_04" unique_id=1942365017]
+[node name="periwinkle3" type="Node3D" parent="East_bush_04" unique_id=1764143725]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_3.res"
 
-[node name="periwinkle4" type="Node3D" parent="East_bush_04" unique_id=1206061887]
+[node name="periwinkle4" type="Node3D" parent="East_bush_04" unique_id=1020796597]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_4.res"
 
-[node name="periwinkle5" type="Node3D" parent="East_bush_04" unique_id=1263451290]
+[node name="periwinkle5" type="Node3D" parent="East_bush_04" unique_id=1361469915]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 3
 source_scale_multiplier = 1.55
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_periwinkle_5.res"
 
-[node name="fern0" type="Node3D" parent="East_bush_04" unique_id=1189823722]
+[node name="fern0" type="Node3D" parent="East_bush_04" unique_id=609560011]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_0.res"
 
-[node name="fern1" type="Node3D" parent="East_bush_04" unique_id=1529988680]
+[node name="fern1" type="Node3D" parent="East_bush_04" unique_id=504202653]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_1.res"
 
-[node name="fern2" type="Node3D" parent="East_bush_04" unique_id=1344973314]
+[node name="fern2" type="Node3D" parent="East_bush_04" unique_id=197547935]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_2.res"
 
-[node name="fern3" type="Node3D" parent="East_bush_04" unique_id=212725142]
+[node name="fern3" type="Node3D" parent="East_bush_04" unique_id=1372621984]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 6
 source_scale_multiplier = 1.6
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_fern_3.res"
 
-[node name="West_rock_05" type="Node3D" parent="." unique_id=595474264]
+[node name="West_rock_05" type="Node3D" parent="." unique_id=992925323]
 script = ExtResource("1_2salv")
 global_seed = 20260916
 dbg_disable_thread = true
@@ -1300,75 +1300,75 @@ modifier_stack = SubResource("Resource_07exk")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="West_rock_05" unique_id=72979440]
+[node name="Crest0" type="Node3D" parent="West_rock_05" unique_id=1478717034]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_fbon3")
 
-[node name="Crest1" type="Node3D" parent="West_rock_05" unique_id=613258646]
+[node name="Crest1" type="Node3D" parent="West_rock_05" unique_id=465896996]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_725cq")
 
-[node name="MossRock0" type="Node3D" parent="West_rock_05" unique_id=2061300633]
+[node name="MossRock0" type="Node3D" parent="West_rock_05" unique_id=644087270]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_0.res"
 
-[node name="MossRock1" type="Node3D" parent="West_rock_05" unique_id=46272508]
+[node name="MossRock1" type="Node3D" parent="West_rock_05" unique_id=1820878640]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_1.res"
 
-[node name="MossRock2" type="Node3D" parent="West_rock_05" unique_id=250546089]
+[node name="MossRock2" type="Node3D" parent="West_rock_05" unique_id=217280674]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_2.res"
 
-[node name="MossRock3" type="Node3D" parent="West_rock_05" unique_id=174432910]
+[node name="MossRock3" type="Node3D" parent="West_rock_05" unique_id=2126853046]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_3.res"
 
-[node name="MossRock4" type="Node3D" parent="West_rock_05" unique_id=2067648483]
+[node name="MossRock4" type="Node3D" parent="West_rock_05" unique_id=530845056]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_4.res"
 
-[node name="MossRock5" type="Node3D" parent="West_rock_05" unique_id=946899438]
+[node name="MossRock5" type="Node3D" parent="West_rock_05" unique_id=281630076]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_5.res"
 
-[node name="East_rock_05" type="Node3D" parent="." unique_id=380696838]
+[node name="East_rock_05" type="Node3D" parent="." unique_id=1223185673]
 script = ExtResource("1_2salv")
 global_seed = 20261416
 dbg_disable_thread = true
@@ -1376,69 +1376,69 @@ modifier_stack = SubResource("Resource_wn705")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
-[node name="Crest0" type="Node3D" parent="East_rock_05" unique_id=1716775840]
+[node name="Crest0" type="Node3D" parent="East_rock_05" unique_id=634792402]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_jpp6c")
 
-[node name="Crest1" type="Node3D" parent="East_rock_05" unique_id=1170067267]
+[node name="Crest1" type="Node3D" parent="East_rock_05" unique_id=462219097]
 script = ExtResource("6_tnmqf")
 shape = SubResource("Resource_8ho77")
 
-[node name="MossRock0" type="Node3D" parent="East_rock_05" unique_id=634542103]
+[node name="MossRock0" type="Node3D" parent="East_rock_05" unique_id=801783879]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_0.res"
 
-[node name="MossRock1" type="Node3D" parent="East_rock_05" unique_id=452980513]
+[node name="MossRock1" type="Node3D" parent="East_rock_05" unique_id=1593528557]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_1.res"
 
-[node name="MossRock2" type="Node3D" parent="East_rock_05" unique_id=1096511485]
+[node name="MossRock2" type="Node3D" parent="East_rock_05" unique_id=1099612243]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_2.res"
 
-[node name="MossRock3" type="Node3D" parent="East_rock_05" unique_id=2140641794]
+[node name="MossRock3" type="Node3D" parent="East_rock_05" unique_id=1425334990]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_3.res"
 
-[node name="MossRock4" type="Node3D" parent="East_rock_05" unique_id=1048166598]
+[node name="MossRock4" type="Node3D" parent="East_rock_05" unique_id=250449854]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false
 path = "res://maps/slice/gen/ph_rock_4.res"
 
-[node name="MossRock5" type="Node3D" parent="East_rock_05" unique_id=1429744168]
+[node name="MossRock5" type="Node3D" parent="East_rock_05" unique_id=175721568]
 script = ExtResource("8_mfyqj")
-override_cast_shadow = 0
 proportion = 16
 source_scale_multiplier = 1.25
+override_cast_shadow = 0
 visibility_range_end = 320.0
 visibility_range_end_margin = 40.0
 lod_generate = false

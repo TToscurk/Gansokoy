@@ -12,13 +12,13 @@ func _init() -> void:
 	var arr: Array = terrain.mesh.surface_get_arrays(0)
 	var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
 	var res := int(round(sqrt(float(vs.size()))))
-	var half := 340.0
+	var half := 120.0
 	var step := 2.0 * half / float(res - 1)
 
-	# 與 meta.json 的 portals 同步
+	# 與 meta.json 的 portals 同步（2026-09-07 220 m 版）
 	var portals := [
-		{"x": 8.64, "z": -313.6, "name": "北·神社"},
-		{"x": 9.56, "z": 320.0, "name": "南·人里"},
+		{"x": 3.00, "z": -107.8, "name": "北·神社"},
+		{"x": 3.19, "z": 106.0, "name": "南·人里"}   # 使用者手調邊界牆至 z=108.2，傳送點退進牆內,
 	]
 	for p in portals:
 		var px: float = p.x

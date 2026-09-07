@@ -115,8 +115,8 @@ func _add_fill_lights(map_root: Node3D) -> int:
 			l.omni_attenuation = 0.8
 			# 補光不投影：它代表的是散射光，投影會讓室內出現假陰影。
 			l.shadow_enabled = false
-			l.global_position = Vector3(fx, floor_y + fill_height, fz)
 			holder.add_child(l)
+			l.global_position = Vector3(fx, floor_y + fill_height, fz)
 			count += 1
 
 			# 天花板補燈：裝在人高之上、貼近梁架，把室內最大片的暗面抬起來。
@@ -128,10 +128,10 @@ func _add_fill_lights(map_root: Node3D) -> int:
 				cl.omni_range = ceiling_range
 				cl.omni_attenuation = 1.0
 				cl.shadow_enabled = false
+				holder.add_child(cl)
 				# 房間頂高由 AABB 決定，略低於天花板免得燈嵌進屋瓦。
 				var ceil_y: float = minf(bounds.position.y + bounds.size.y - 0.4,
 					floor_y + fill_height + 2.6)
 				cl.global_position = Vector3(fx, ceil_y, fz)
-				holder.add_child(cl)
 				count += 1
 	return count

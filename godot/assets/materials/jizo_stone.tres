@@ -1,8 +1,8 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dqtr646nyug5b"]
 
-[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_diff.jpg" id="1_ljb76"]
-[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_nor_gl.jpg" id="2_g3glm"]
-[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_rough.jpg" id="3_d6gvl"]
+[ext_resource type="Texture2D" uid="uid://c3psomdrb2or7" path="res://assets/textures/stone_wall_diff.jpg" id="1_ljb76"]
+[ext_resource type="Texture2D" uid="uid://csaw5csu6avkv" path="res://assets/textures/stone_wall_nor_gl.jpg" id="2_g3glm"]
+[ext_resource type="Texture2D" uid="uid://os61o62y0yn8" path="res://assets/textures/stone_wall_rough.jpg" id="3_d6gvl"]
 
 [resource]
 albedo_color = Color(0.72, 0.72, 0.68, 1)

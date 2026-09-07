@@ -1,8 +1,8 @@
 {
   "id": "trail",
   "playSize": [
-    680,
-    680
+    240,
+    240
   ],
   "safe": false,
   "mobTheme": "fairy",
@@ -12,21 +12,29 @@
   ],
   "portals": [
     {
-      "x": 8.64,
-      "y": 9.06,
-      "z": -313.6,
+      "x": 3.0,
+      "y": 8.66,
+      "z": -107.8,
       "target": "shrine",
-      "arrival_ground_y": 9.45,
+      "arrival_ground_y": 8.42,
       "arrival_y_offset": 1.2
     },
     {
-      "x": 9.56,
-      "y": 0.29,
-      "z": 320.0,
+      "x": 3.19,
+      "y": 0.34,
+      "z": 106.0,
       "target": "slice",
-      "arrival_ground_y": 0.47,
-      "arrival_y_offset": 1.2
+      "arrival_ground_y": 0.59,
+      "arrival_y_offset": 1.2,
+      "require_flag": "met_reimu",
+      "locked_note": "序章：見過靈夢才開放人里"
     }
   ],
-  "colliders": []
+  "colliders": [],
+  "spawn": {
+    "x": -6.0,
+    "z": -17.6,
+    "yaw": 3.14159,
+    "note": "序章醒來點：獸道大空地中心（MQ00）"
+  }
 }

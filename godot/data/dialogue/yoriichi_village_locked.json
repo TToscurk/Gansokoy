@@ -1,0 +1,7 @@
+{
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "（山下有人煙……但那位巫女說得對，先弄清這裡是何處。）", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "normal", "text": "（山上似乎有建築。先去看看。）", "next": null }
+  }
+}

@@ -63,12 +63,20 @@ func _run() -> void:
 	check("entering during the cooldown does not teleport yet",
 		main.current_id == "shrine" or main.current_id == "trail")
 
-	# Now simply stand still and let the cooldown expire. The transition must
-	# happen on its own — the player should never have to walk out and back in.
+	# 冷卻結束只解鎖按鍵，不可自動傳送；站在原地按 ↑ 即可。
 	await _wait(240)
 	print("[PORTAL] after standing still: map=%s cooldown=%.2f" % [main.current_id, main.portal_cooldown])
-	check("standing in a portal transports you once the cooldown ends",
-		main.current_id == "trail")
+	check("cooldown expiry alone must not transport", main.current_id == "shrine")
+	var event := InputEventKey.new()
+	event.keycode = KEY_UP
+	event.pressed = true
+	Input.parse_input_event(event)
+	await _wait(5)
+	event = InputEventKey.new()
+	event.keycode = KEY_UP
+	event.pressed = false
+	Input.parse_input_event(event)
+	check("pressing up after cooldown transports without re-entering", main.current_id == "trail")
 
 	print("[PORTAL] failures=%d" % failures)
 	quit(failures)

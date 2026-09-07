@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
+
+[sub_resource type="BoxShape3D" id="gate"]
+size = Vector3(44, 8, 6)
+
+[node name="人里互動點" type="Node3D"]
+
+[node name="里口抵達" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 3, 101)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "human_village_gate"
+interaction_label = ""
+quest_event_type = "REACH"
+quest_target_id = "human_village_gate"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="里口抵達"]
+shape = SubResource("gate")

@@ -16,7 +16,7 @@ func _init() -> void:
 	var arr: Array = terrain.mesh.surface_get_arrays(0)
 	var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
 	var res := int(round(sqrt(float(vs.size()))))
-	var half := 340.0
+	var half := 120.0
 	var step := 2.0 * half / float(res - 1)
 
 	var mk := root.get_node_or_null("標記")

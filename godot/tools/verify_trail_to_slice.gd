@@ -39,15 +39,32 @@ func _blocked(dir: Vector3) -> bool:
 	var hit: Dictionary = space.intersect_ray(q)
 	return hit.has("normal") and absf(Vector3(hit.normal).y) < 0.55
 
+## 傳送語意已改為「站進區內按 ↑」：走到位後送一次按鍵事件。
+func _press_up() -> void:
+	var ev := InputEventKey.new()
+	ev.keycode = KEY_UP
+	ev.pressed = true
+	Input.parse_input_event(ev)
+	await physics_frame
+	ev = InputEventKey.new()
+	ev.keycode = KEY_UP
+	ev.pressed = false
+	Input.parse_input_event(ev)
+
 func _walk_to(target: Vector3, expect: String, limit: float) -> Dictionary:
 	var t := 0.0
 	var last: Vector3 = player.global_position
 	var last_t := 0.0
+	var next_press := 0.0
 	_hold("sprint", true)
 	_hold("move_forward", true)
 	while t < limit:
 		var delta := get_root().get_process_delta_time()
 		var d: Vector3 = target - player.global_position
+		# 傳送區半徑 1.6 m：進到 1.5 m 內才按，且每 0.5 s 重試直到真的換圖。
+		if d.length() < 1.5 and t >= next_press and main.portal_cooldown <= 0.0:
+			next_press = t + 0.5
+			await _press_up()
 		d.y = 0.0
 		if d.length_squared() > 0.0001:
 			d = d.normalized()

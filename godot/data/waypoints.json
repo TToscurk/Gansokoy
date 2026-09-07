@@ -1,0 +1,30 @@
+{
+  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。",
+  "targets": {
+    "trail_leave_clearing":    { "map": "trail",  "x": -6.0,  "z": -50.0, "label": "沿道路前進" },
+    "trail_presence":          { "map": "trail",  "x": 7.0,   "z": -70.0, "label": "獸道深處" },
+    "hakurei_shrine_approach": { "map": "shrine", "x": 0.0,   "z": 40.0,  "label": "山上的建築" },
+    "reimu_hakurei_shrine":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
+    "reimu_gensokyo_intro":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
+    "human_village_gate":      { "map": "slice",  "x": 234.0, "z": 101.0, "label": "人間之里" }
+  },
+  "maps": {
+    "trail":  { "half_x": 120, "half_z": 120, "name": "獸道",
+                "landmarks": [
+                  { "x": -6, "z": -17.6, "label": "大空地" },
+                  { "x": -4.8, "z": 19.8, "label": "小溪" },
+                  { "x": 11.5, "z": -59.5, "label": "夜雀屋台" },
+                  { "x": 3.0, "z": -107.8, "label": "→ 神社" },
+                  { "x": 3.2, "z": 106.0, "label": "→ 人里" } ],
+                "path": [[3.2,110],[2.1,94.6],[1.2,44],[-4.8,19.8],[-6,-17.6],[7.3,-59.4],[3,-107.8]] },
+    "shrine": { "half_x": 75, "half_z": 55, "name": "博麗神社",
+                "landmarks": [
+                  { "x": 0, "z": 53, "label": "→ 獸道" },
+                  { "x": 0, "z": 44, "label": "鳥居" },
+                  { "x": 0, "z": -28, "label": "拜殿" } ],
+                "path": [[0,53],[0,44],[0,-5],[0,-21]] },
+    "slice":  { "half_x": 230, "half_z": 230, "name": "人間之里",
+                "landmarks": [ { "x": 236, "z": 112, "label": "→ 獸道" } ],
+                "path": [] }
+  }
+}

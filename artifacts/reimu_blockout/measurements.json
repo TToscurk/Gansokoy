@@ -1,0 +1,49 @@
+{
+  "status": "ART_REVIEW",
+  "scene": "Reimu_Blockout_v001",
+  "saved_file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\reimu_8head_v002.blend",
+  "head_height_m": 0.20624995231628418,
+  "sole_to_crown_m": 1.649999976158142,
+  "head_ratio": 8.000001733953704,
+  "accessorized_bounds_z_m": [
+    0.0,
+    1.7608141899108887
+  ],
+  "scene_object_count": 193,
+  "base_mesh_vertices": 22389,
+  "base_mesh_faces": 19699,
+  "evaluated_triangles": 285548,
+  "finite_coordinates": true,
+  "saved_scene_verified": true,
+  "original_scene_preserved": true,
+  "outputs": [
+    {
+      "file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\reimu_8head_v002.blend",
+      "bytes": 2580819
+    },
+    {
+      "file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\front.png",
+      "bytes": 666104
+    },
+    {
+      "file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\side.png",
+      "bytes": 542947
+    },
+    {
+      "file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\back.png",
+      "bytes": 674623
+    },
+    {
+      "file": "D:\\神社\\shrine\\artifacts\\reimu_blockout\\reimu_turnaround_v002.jpg",
+      "bytes": 189522
+    }
+  ],
+  "not_done": [
+    "facial sculpt and deformation topology",
+    "natural flowing hair silhouette",
+    "cloth thickness and collision audit",
+    "UVs and painted textures",
+    "rigging and skin weights",
+    "Godot import and performance validation"
+  ]
+}

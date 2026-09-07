@@ -45,6 +45,10 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 DayNight="*res://scripts/daynight.gd"
+StoryFlags="*res://systems/story/story_flags.gd"
+QuestManager="*res://systems/quest/quest_manager.gd"
+DialogueManager="*res://systems/dialogue/dialogue_manager.gd"
+WaypointResolver="*res://systems/nav/waypoint_resolver.gd"
 Weather="*res://scripts/weather.gd"
 CyclopsAutoload="*uid://4siqre3jhe80"
 SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
@@ -52,7 +56,7 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg")
+enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [filesystem]
 
@@ -60,6 +64,11 @@ import/blender/enabled=false
 
 [input]
 
+portal_enter={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194320,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 move_forward={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -107,6 +116,11 @@ descend={
 interact={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+]
+}
+map_toggle={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":77,"key_label":0,"unicode":109,"location":0,"echo":false,"script":null)
 ]
 }
 draw_sword={

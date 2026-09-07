@@ -1318,7 +1318,7 @@ material_override = ExtResource("1_odrsu")
 mesh = SubResource("BoxMesh_ba12t")
 
 [node name="FieldBankUpper" type="MeshInstance3D" parent="ChannelGeometry" unique_id=1819367622]
-transform = Transform3D(0.9376465, -0.34759036, 0, 0.34759036, 0.9376465, 0, 0, 0, 1, 10, 1.25, 6)
+transform = Transform3D(0.9376465, -0.34759036, 0, 0.34759036, 0.9376465, 0, 0, 0, 1, 10, 0.33374715, 6)
 material_override = ExtResource("2_7cbqh")
 mesh = SubResource("BoxMesh_8cf0r")
 
@@ -1479,7 +1479,7 @@ transform = Transform3D(5.284853e-07, 0, 7, 0, 11.647613, 0, -7, 0, 5.284853e-07
 transform = Transform3D(6.039832e-07, 0, 8, 0, 8, 0, -8, 0, 6.039832e-07, -4.7, 1.05, -5)
 
 [node name="水車" parent="Waterworks" unique_id=286831243 instance=ExtResource("12_87yqb")]
-transform = Transform3D(5.3832856e-08, -4.1175414e-07, 5.5, 5.4538484, 0.7130466, 0, -0.7130466, 5.4538484, 4.1523845e-07, -4.25, 2.8, 20.5)
+transform = Transform3D(-3.7106923e-07, 1.8645214e-07, 5.5, -2.4696233, -4.914968, 0, 4.914968, -2.4696233, 4.1523845e-07, -4.25, 2.8, 20.5)
 script = ExtResource("21_fkqe5")
 
 [node name="分水堰" parent="Waterworks" unique_id=1930810237 instance=ExtResource("13_feyty")]
@@ -2693,19 +2693,19 @@ scale_base = 0.75
 [node name="BankMasonry" type="Node3D" parent="." unique_id=546635176]
 script = ExtResource("51_ww5ki")
 
-[node name="CopingStones" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=246467697]
+[node name="CopingStones" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1074275061]
 material_override = ExtResource("5_q4par")
 multimesh = SubResource("MultiMesh_jywof")
 
-[node name="Piers" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=363106725]
+[node name="Piers" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1112201021]
 material_override = ExtResource("5_q4par")
 multimesh = SubResource("MultiMesh_k7l42")
 
-[node name="WeepHoles" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=869769916]
+[node name="WeepHoles" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=1017442214]
 material_override = ExtResource("1_odrsu")
 multimesh = SubResource("MultiMesh_u0h61")
 
-[node name="WeepStreaks" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=478102906]
+[node name="WeepStreaks" type="MultiMeshInstance3D" parent="BankMasonry" unique_id=721159387]
 material_override = ExtResource("1_odrsu")
 multimesh = SubResource("MultiMesh_iilrs")
 

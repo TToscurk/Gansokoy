@@ -43,3 +43,8 @@ godot/project.godot.bak_*
 # 這是「給人看的證據」，不是專案內容 —— 每輪都會重生，不進版控。
 _review/
 
+
+# 減面前的原始網格備份（tools/decimate_meshes.gd）
+*.orig.res
+godot/assets/_lod/_orig/
+godot/assets/landscape/_orig/

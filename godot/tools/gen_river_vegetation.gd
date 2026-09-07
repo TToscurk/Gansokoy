@@ -21,6 +21,11 @@ extends SceneTree
 ##
 ## Output: maps/slice/gen/river_vegetation.tscn (instanced once from slice.tscn)
 ## Run: godot --headless --path godot --script tools/gen_river_vegetation.gd
+##
+## ⚠ 重跑本檔會把 ph_*.res / reed_*.res **重新烤成原始高模**，覆蓋掉
+##   tools/decimate_meshes.gd 減過的版本。跑完務必接著跑：
+##     godot --headless --path godot --script tools/decimate_meshes.gd -- river
+##   （decimate 讀的是 .orig.res 備份，所以順序只要是「先產生、後減面」就正確。）
 
 const CELL := 6.0
 const R_EXT := 1250.0
@@ -89,12 +94,15 @@ var _baked := {}
 # row carries its own exact terrain height. Lateral jitter stays small for the
 # same reason (the bank still falls away ~0.22 m per metre just inside the seam).
 # offset is metres outward from the seam; negative = towards the water.
+## spacing = 沿岸每隔幾公尺種一株。**加倍 spacing = 株數減半**。
+## 2026-09-07：全面加倍（蘆葦 1.9/1.7/2.6 → 3.8/3.4/5.2、灌木 8/13 → 16/26），
+## 河岸植被從 537 萬面砍到約一半。苔石列不動——它只有 10 株、是地標不是植被。
 const ROWS := [
-	{"offset": -2.6, "spacing": 1.9, "kind": "reed", "row_seed": 11},
-	{"offset": -0.9, "spacing": 1.7, "kind": "reed", "row_seed": 23},
-	{"offset": 0.8, "spacing": 2.6, "kind": "reed", "row_seed": 37},
-	{"offset": 3.4, "spacing": 8.0, "kind": "bush", "row_seed": 53},
-	{"offset": 7.2, "spacing": 13.0, "kind": "bush", "row_seed": 71},
+	{"offset": -2.6, "spacing": 3.8, "kind": "reed", "row_seed": 11},
+	{"offset": -0.9, "spacing": 3.4, "kind": "reed", "row_seed": 23},
+	{"offset": 0.8, "spacing": 5.2, "kind": "reed", "row_seed": 37},
+	{"offset": 3.4, "spacing": 16.0, "kind": "bush", "row_seed": 53},
+	{"offset": 7.2, "spacing": 26.0, "kind": "bush", "row_seed": 71},
 	# Mossy photoscan boulders half-buried in the grass shoulder; very sparse
 	# so they read as survivors, not decoration. y_sink buries the flat base.
 	{"offset": 5.0, "spacing": 42.0, "kind": "rock", "row_seed": 89, "y_sink": 0.3},

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
+[ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
+
+[sub_resource type="Resource" id="obj_0"]
+script = ExtResource("obj")
+type = 0
+target_id = "trail_leave_clearing"
+description = "沿著道路前進"
+required_amount = 1
+
+[resource]
+script = ExtResource("qd")
+id = "MQ00"
+title = "陌生之地"
+description = "……這裡，不是我所知的地方。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
+next_quest_id = "MQ01"
+complete_flags = PackedStringArray()

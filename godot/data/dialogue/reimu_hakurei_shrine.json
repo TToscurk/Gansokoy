@@ -1,0 +1,33 @@
+{
+  "start": [
+    { "if": { "not": "met_reimu" }, "node": "first_1" },
+    { "if": "met_reimu", "node": "repeat_1" }
+  ],
+  "nodes": {
+    "first_1":  { "speaker": "reimu", "portrait": "normal",  "text": "「……你誰？」", "next": "first_2" },
+    "first_2":  { "speaker": "yoriichi", "portrait": "normal", "text": "「繼國緣一。」", "next": "first_3" },
+    "first_3":  { "speaker": "yoriichi", "portrait": "normal", "text": "「醒來時，我便已身處山下。」", "next": "first_4" },
+    "first_4":  { "speaker": "reimu", "portrait": "annoyed", "text": "「啊——外來人。」", "next": "first_5" },
+    "first_5":  { "speaker": "reimu", "portrait": "annoyed", "text": "「難怪。」", "next": "first_6" },
+    "first_6":  { "speaker": "yoriichi", "portrait": "normal", "text": "「這裡是何處？」", "next": "first_7" },
+    "first_7":  { "speaker": "reimu", "portrait": "normal",  "text": "「幻想鄉。」", "next": "first_8",
+                  "quest_event": { "type": "TALK", "target": "reimu_hakurei_shrine" } },
+    "first_8":  { "speaker": "reimu", "portrait": "normal",  "text": "「人類、妖怪、神明……」", "next": "first_9" },
+    "first_9":  { "speaker": "reimu", "portrait": "smile",   "text": "「反正什麼奇怪的東西都有。」", "next": "first_10" },
+    "first_10": { "speaker": "reimu", "portrait": "smile",   "text": "「包括你。」", "next": "intro_1" },
+
+    "intro_1":  { "speaker": "reimu", "portrait": "serious", "text": "「還有一件事。」", "next": "intro_2" },
+    "intro_2":  { "speaker": "reimu", "portrait": "serious", "text": "「看到妖怪，別馬上拔刀。」", "next": "intro_3" },
+    "intro_3":  { "speaker": "yoriichi", "portrait": "normal", "text": "「若它危害人呢？」", "next": "intro_4" },
+    "intro_4":  { "speaker": "reimu", "portrait": "serious", "text": "「那是另一回事。」", "next": "intro_5" },
+    "intro_5":  { "speaker": "reimu", "portrait": "serious", "text": "「但在幻想鄉——」", "next": "intro_6" },
+    "intro_6":  { "speaker": "reimu", "portrait": "serious", "text": "「妖怪，不代表它該死。」", "next": "intro_7",
+                  "quest_event": { "type": "TALK", "target": "reimu_gensokyo_intro" } },
+    "intro_7":  { "speaker": "reimu", "portrait": "normal",  "text": "「你想搞清楚這裡的話，就先去人里吧。」", "next": "intro_8" },
+    "intro_8":  { "speaker": "reimu", "portrait": "normal",  "text": "「至少那裡的人看起來比較像你。」", "next": null,
+                  "set_flags": ["met_reimu", "visited_hakurei_shrine"] },
+
+    "repeat_1": { "speaker": "reimu", "portrait": "annoyed", "text": "「又來了？」", "next": "repeat_2" },
+    "repeat_2": { "speaker": "reimu", "portrait": "normal",  "text": "「人里在山下。別在這裡晃。」", "next": null }
+  }
+}

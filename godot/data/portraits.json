@@ -1,0 +1,24 @@
+{
+  "reimu": {
+    "name": "博麗靈夢",
+    "portraits": {
+      "normal": "res://assets/portraits/reimu_normal.png",
+      "annoyed": "res://assets/portraits/reimu_annoyed.png",
+      "surprised": "res://assets/portraits/reimu_surprised.png",
+      "smile": "res://assets/portraits/reimu_smile.png",
+      "serious": "res://assets/portraits/reimu_serious.png",
+      "confused": "res://assets/portraits/reimu_confused.png"
+    }
+  },
+  "yoriichi": {
+    "name": "繼國緣一",
+    "portraits": {
+      "normal": "res://assets/portraits/yoriichi_normal.png",
+      "smile": "res://assets/portraits/yoriichi_smile.png",
+      "serious": "res://assets/portraits/yoriichi_serious.png",
+      "sad": "res://assets/portraits/yoriichi_sad.png",
+      "surprised": "res://assets/portraits/yoriichi_surprised.png",
+      "angry": "res://assets/portraits/yoriichi_angry.png"
+    }
+  }
+}

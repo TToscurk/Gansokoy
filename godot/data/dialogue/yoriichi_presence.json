@@ -1,0 +1,8 @@
+{
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "「……有東西。」", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "normal", "text": "（看不見。但確實有什麼在。）", "next": null,
+            "quest_event": { "type": "REACH", "target": "trail_presence" } }
+  }
+}

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://y6fsu1pk4ro5"]
 
 [ext_resource type="Shader" uid="uid://p48kc4u75ind" path="res://assets/shaders/terrain_pbr.gdshader" id="1_k6qbj"]
+[ext_resource type="PackedScene" path="res://maps/shrine/shrine_interactions.tscn" id="story_wi"]
 [ext_resource type="Texture2D" uid="uid://bjhlq0fw1thkp" path="res://assets/textures/terrain_forest_diff.jpg" id="2_gms0f"]
 [ext_resource type="Texture2D" uid="uid://cqwag56d3ae7m" path="res://assets/textures/terrain_forest_nor_gl.jpg" id="3_x3m31"]
 [ext_resource type="Texture2D" uid="uid://cskkyqgdy2y0f" path="res://assets/textures/terrain_grass_diff.jpg" id="4_saoy0"]
@@ -110,10 +111,10 @@ size = Vector3(106, 52, 1)
 size = Vector3(106, 52, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vpijg"]
-size = Vector3(1, 52, 106)
+size = Vector3(1, 52, 114.69739)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kwaq0"]
-size = Vector3(1, 52, 106)
+size = Vector3(1, 52, 116.39447)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih0te"]
 albedo_color = Color(0.56, 0.62, 0.42, 1)
@@ -748,7 +749,7 @@ shader_parameter/cloud_lit = Color(1, 0.97, 0.93, 1)
 shader_parameter/cloud_shadow = Color(0.42, 0.46, 0.55, 1)
 shader_parameter/painted_clouds = ExtResource("63_saoy0")
 shader_parameter/painted_mix = 1.0
-shader_parameter/painted_yaw = 50.0
+shader_parameter/painted_yaw = -90.9789957715025
 shader_parameter/painted_drift = 0.0025
 shader_parameter/painted_base = 1.0
 
@@ -810,15 +811,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -53.5)
 shape = SubResource("BoxShape3D_ocp4b")
 
 [node name="@CollisionShape3D@3" type="CollisionShape3D" parent="Boundary" unique_id=1354615673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 53.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 62.014404)
 shape = SubResource("BoxShape3D_ffups")
 
 [node name="@CollisionShape3D@4" type="CollisionShape3D" parent="Boundary" unique_id=8139945]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5, 14, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5, 14, 4.348694)
 shape = SubResource("BoxShape3D_vpijg")
 
 [node name="@CollisionShape3D@5" type="CollisionShape3D" parent="Boundary" unique_id=1901785172]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 14, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.5, 14, 3.3866272)
 shape = SubResource("BoxShape3D_kwaq0")
 
 [node name="Vista" type="MeshInstance3D" parent="." unique_id=981260347]
@@ -1237,7 +1238,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.448512, -38)
 shape = SubResource("BoxShape3D_gqml6")
 
 [node name="@CollisionShape3D@31" type="CollisionShape3D" parent="建築/建築碰撞" unique_id=157569804]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5, 5.5278873, -22)
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, -13.5, 5.5278873, -22)
 shape = SubResource("BoxShape3D_8iue6")
 
 [node name="@CollisionShape3D@32" type="CollisionShape3D" parent="建築/建築碰撞" unique_id=1328600828]
@@ -1253,11 +1254,11 @@ transform = Transform3D(6.5, 0, 0, 0, 6.5, 0, 0, 0, 6.5, 0, 3.2, -38)
 metadata/scale_source = "單位化 0.667 x 1.000 x 0.755 × scale 6.50 = 4.33 寬 / 4.91 深 / 6.50 高 m"
 
 [node name="社務所" parent="建築" unique_id=41554535 instance=ExtResource("19_1m36w")]
-transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -13.5, 3.92, -22)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -13.5, 3.92, -22)
 metadata/scale_source = "單位化 0.981 x 0.459 x 0.830 × scale 7.00 = 6.87 寬 / 5.81 深 / 3.22 高 m"
 
 [node name="手水舍" parent="建築" unique_id=125874792 instance=ExtResource("20_3xs3m")]
-transform = Transform3D(3.2, 0, 0, 0, 3.2, 0, 0, 0, 3.2, 11, 3.92, -23.071434)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 11, 3.92, -23.071434)
 metadata/scale_source = "單位化 0.997 x 0.826 x 0.908 × scale 3.20 = 3.19 寬 / 2.90 深 / 2.64 高 m"
 
 [node name="陰陽玉" parent="建築" unique_id=1453905354 instance=ExtResource("21_g2mjm")]
@@ -7942,7 +7943,7 @@ transform = Transform3D(11.582693, -0.16693988, -5.478279, 0.2000128, 13.950545,
 transform = Transform3D(8.022529, 0.3017003, 11.903839, -0.12126336, 13.397998, -0.30807054, -11.907609, 0.0668239, 8.023126, -59.627953, 7.1460466, 12.574971)
 
 [node name="針葉樹2glb_0104" parent="植被/外圍森林/針葉樹2glb" unique_id=2015666285 instance=ExtResource("40_fao25")]
-transform = Transform3D(-13.329034, 0.2741891, 6.323023, 0.34600455, 13.682679, 0.039726656, -6.3204656, 0.17080918, -13.332252, 59.22429, 7.491027, 14.325191)
+transform = Transform3D(-13.329034, 0.2741891, 6.3230233, 0.34600455, 13.682679, 0.039726663, -6.320465, 0.17080918, -13.332252, 59.22429, 7.491027, 14.325191)
 
 [node name="針葉樹2glb_0107" parent="植被/外圍森林/針葉樹2glb" unique_id=504039139 instance=ExtResource("40_fao25")]
 transform = Transform3D(8.659833, 0.1240363, -12.207045, 0.026662283, 14.712753, 0.17360818, 12.207667, -0.12012197, 8.659012, -63.676014, 10.81859, -20.008564)
@@ -31594,3 +31595,5 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -
 [node name="傳送點_南_獸道" type="Marker3D" parent="標記" unique_id=1669232291]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34948468, 53)
 metadata/portal = "trail"
+
+[node name="神社互動點" parent="." instance=ExtResource("story_wi")]

@@ -7,7 +7,7 @@ extends Node3D
 ##
 ## 座標系：three / glTF / Godot 都是右手系 y-up，座標原樣通用。
 
-const START_MAP := "shrine"
+const START_MAP := "trail"          # 序章：緣一醒在獸道大空地（MQ00）
 ## START_MAP が未構築のときの退避先。shrine は mapRegistry には載っている
 ## が実体（maps/shrine/shrine.tscn も blockout/shrine.glb も）が無いため、
 ## これが無いと起動が黒画面になる。shrine が建ったらこの退避は自然に
@@ -21,7 +21,6 @@ const PORTAL_COOLDOWN := 2.0
 ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
 ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
 const TRIMESH_MIN_SPAN := 15.0
-const VERTICAL_SLICE_NPC := preload("res://scenes/test_npc.tscn")
 const InteriorLightingRig = preload("res://scripts/interior_lighting.gd")
 ## 密閉室內圖：屋頂擋住太陽，環境光又靠天空貢獻近半，實測畫面平均亮度
 ## 只有 0.08（六成像素接近純黑）。這些圖載入後補一層室內光。
@@ -31,7 +30,7 @@ var registry: Dictionary = {}
 var current_id := ""
 var map_root: Node3D = null
 var portal_cooldown := 0.0
-## 目前圖上可用的傳送區；冷卻結束時要重新檢查佇留其中的玩家。
+## 目前圖上可用的傳送區；只有區內按下 portal_enter 才傳送。
 var _live_portals: Array = []
 
 @onready var player: CharacterBody3D = $Player
@@ -42,6 +41,7 @@ var _live_portals: Array = []
 func _ready() -> void:
 	player.interaction_prompt_changed.connect(_on_interaction_prompt_changed)
 	player.interaction_message.connect(_on_interaction_message)
+	_setup_story_systems()
 	registry = _load_json("res://data/mapRegistry.json")
 	# godot -- --map=trail 直接跳到指定圖（測試 / 開發用）
 	var start := START_MAP
@@ -70,7 +70,11 @@ func _ready() -> void:
 	if _shot_player != "":
 		var shot_spawn := _shot_player.split_floats(",")
 		player.global_position = Vector3(shot_spawn[0], shot_spawn[1], shot_spawn[2])
-		player.rotation.y = shot_spawn[3]
+		var shot_yaw := shot_spawn[3]
+		if player.has_method("snap_yaw"):
+			player.snap_yaw(shot_yaw)
+		else:
+			player.rotation.y = shot_yaw
 		player.velocity = Vector3.ZERO
 	# ⚠ 撮影モードではプレイヤーを隠す。
 	# `$Player` は未テクスチャの白いカプセル。スポーン地点に立ったまま
@@ -243,9 +247,10 @@ func _run_playtest() -> void:
 	#   而那不是場景問題，是檢查表沒跟著換（shrine 第一次跑就 5/7 假失敗）。
 	var routes := {
 		"trail": [
-			[9.6, 320.0, "南端·人里口"], [6.2, 275.2, "界碑"], [3.6, 128.0, "地藏疏段"],
-			[-7.1, 6.4, "小溪"], [-15.9, -38.4, "大空地"], [21.3, -172.8, "夜雀屋台"],
-			[8.6, -313.6, "北端·神社口"],
+			# 2026-09-07 220 m 版（緣一跑步單程 40 s）；座標取自 gen_trail_v2 的 [TRAIL] 關鍵點輸出
+			[3.2, 106.0, "南端·人里口"], [2.1, 94.6, "界碑"], [1.2, 44.0, "地藏疏段"],
+			[-4.8, 19.8, "小溪"], [-6.0, -17.6, "大空地"], [7.3, -59.4, "夜雀屋台"],
+			[3.0, -107.8, "北端·神社口"],
 		],
 		"shrine": [
 			[0.0, 53.0, "南端·獸道口"], [0.0, 44.0, "主鳥居"], [0.0, 20.0, "參道中段"],
@@ -314,10 +319,7 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 		portal_cooldown = maxf(0.0, portal_cooldown - delta)
 		return
-	var was_cooling := portal_cooldown > 0.0
 	portal_cooldown = maxf(0.0, portal_cooldown - delta)
-	if was_cooling and portal_cooldown <= 0.0:
-		_recheck_portal_overlap()
 	$UI/ClockLabel.text = DayNight.clock_text()
 	if _shot_path != "":
 		_shot_tick()
@@ -400,21 +402,12 @@ func load_map(id: String, from_id: String) -> void:
 	if not own:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
-	_spawn_vertical_slice_npc(id)
 	_apply_interior_lighting(id)
 	_place_player(meta, from_id)
+	_wire_world_interactions()
 
 	var info: Dictionary = registry.get(id, {})
 	map_label.text = "%s  %s" % [info.get("zh", id), info.get("en", "")]
-
-
-func _spawn_vertical_slice_npc(map_id: String) -> void:
-	if map_id != "village":
-		return
-	var npc := VERTICAL_SLICE_NPC.instantiate() as Node3D
-	npc.name = "VerticalSliceNPC"
-	npc.position = Vector3(2.5, 0.3, -158.0)
-	map_root.add_child(npc)
 
 
 func _on_interaction_prompt_changed(text: String) -> void:
@@ -490,7 +483,7 @@ func _build_game_colliders(meta: Dictionary) -> void:
 		shape.position = Vector3(c.x, y + h * 0.5, c.z)
 		body.add_child(shape)
 
-## 傳送點：光柱示意 + Area3D 觸發
+## 傳送點：流動藍白光門 + Area3D 範圍內按 ↑ 傳送
 ##
 ## target 為 null／空字串 = **保留中的觸發區**：Area3D 與偵測照樣建起來，
 ## 只是不執行場景切換、也不畫光柱（還不能走的出口不該亮著邀請玩家）。
@@ -498,7 +491,69 @@ func _build_game_colliders(meta: Dictionary) -> void:
 ## 就會自動變成正常傳送點。
 ## （首例：稗田邸後院小徑終點的木戶，座標見 data/hieda_garden.markers.json，
 ## 由 make_hieda.py 跟幾何一起產出，不是手抄的。）
+## 故事系統接線：對話 UI／任務追蹤 UI 掛進來；對話中鎖玩家；
+## 圖上的 WorldInteraction（group "world_interaction"）提示走同一個 Label。
+## 系統本身不認識 main —— 這裡是唯一的接線點。
+const DIALOGUE_UI := preload("res://ui/dialogue/dialogue_ui.tscn")
+const QUEST_TRACKER_UI := preload("res://ui/quest/quest_tracker.tscn")
+const NAV_UI := preload("res://ui/nav/nav_waypoint.tscn")
+const MAP_UI := preload("res://ui/map/world_map.tscn")
+
+func _setup_story_systems() -> void:
+	player.add_to_group("player")
+	add_child(DIALOGUE_UI.instantiate())
+	add_child(QUEST_TRACKER_UI.instantiate())
+	DialogueManager.dialogue_started.connect(func(_id: String) -> void:
+		player.set("input_locked", true)
+		interaction_prompt.visible = false)
+	DialogueManager.dialogue_ended.connect(func(_id: String) -> void:
+		player.set("input_locked", false)
+		_refresh_world_prompt())
+	# 序章任務鏈起點：還沒有任何任務時，從 MQ02 開始（獸道→神社）。
+	# MQ00/MQ01 的開場演出尚未做，先讓神社 slice 可測。
+	if QuestManager.get_active_quest().is_empty():
+		QuestManager.start_quest("MQ00")
+	add_child(NAV_UI.instantiate())
+	add_child(MAP_UI.instantiate())
+
+
+## 提示只能被「目前持有者」清掉：同一幀離開 A 區、進入 B 區時，A 的空字串
+## 不得蓋掉 B 的提示（驗收 T2 第一次就是這樣失敗的）。
+var _prompt_owner: Node = null
+
+## 目前圖的傳送點清單（meta 原始 dict）——nav / 地圖用來找出口。
+var _current_portal_meta: Array = []
+
+func current_portals() -> Array:
+	return _current_portal_meta
+
+
+func _wire_world_interactions() -> void:
+	_prompt_owner = null
+	for wi in get_tree().get_nodes_in_group("world_interaction"):
+		if not wi.prompt_changed.is_connected(_on_world_prompt):
+			wi.prompt_changed.connect(_on_world_prompt.bind(wi))
+
+
+func _on_world_prompt(text: String, wi: Node) -> void:
+	if text.is_empty():
+		if _prompt_owner != wi:
+			return
+		_prompt_owner = null
+	else:
+		_prompt_owner = wi
+	_on_interaction_prompt_changed(text)
+
+
+func _refresh_world_prompt() -> void:
+	for wi in get_tree().get_nodes_in_group("world_interaction"):
+		if wi.get("_player_inside"):
+			_on_interaction_prompt_changed(wi.prompt_text())
+			return
+
+
 func _spawn_portals(meta: Dictionary) -> void:
+	_current_portal_meta = meta.get("portals", [])
 	for p in meta.get("portals", []):
 		var tgt: Variant = p.get("target")
 		var reserved: bool = tgt == null or String(tgt).is_empty()
@@ -539,41 +594,82 @@ func _spawn_portals(meta: Dictionary) -> void:
 			ring.material_override = mat
 			area.add_child(ring)
 
-			var core := MeshInstance3D.new()
-			var core_mesh := CylinderMesh.new()
-			core_mesh.top_radius = 0.62
-			core_mesh.bottom_radius = 0.82
-			core_mesh.height = 0.62
-			core.mesh = core_mesh
-			core.position.y = -0.64
-			core.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			var core_mat := mat.duplicate() as StandardMaterial3D
-			core_mat.albedo_color.a = 0.10
-			core_mat.emission_energy_multiplier = 0.45
-			core.material_override = core_mat
-			area.add_child(core)
+			var gate := MeshInstance3D.new()
+			gate.name = "GlowGate"
+			var quad := QuadMesh.new()
+			quad.size = Vector2(3.0, 3.4)
+			gate.mesh = quad
+			gate.position.y = 0.30
+			gate.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			var glow := ShaderMaterial.new()
+			glow.shader = preload("res://shaders/portal_gate.gdshader")
+			gate.material_override = glow
+			area.add_child(gate)
 
-		if reserved:
-			area.body_entered.connect(_on_portal_reserved.bind(area.name))
-		else:
-			area.body_entered.connect(_on_portal_entered.bind(String(tgt)))
-			# `body_entered` 只在「進入的那一幀」發一次。落地冷卻若還沒退完，
-			# 這一次就被吞掉，玩家站在傳送區裡也不會有第二次通知 —— 神社出生點
-			# 離獸道傳送區只有 4.1 m，疾跑 0.6 秒就到，遠短於 2 秒冷卻，於是
-			# 「走到門口卻進不去」。改為冷卻結束後重新檢查誰還站在裡面。
-			_live_portals.append({"area": area, "target": String(tgt)})
+			var prompt := Label3D.new()
+			prompt.name = "PortalPrompt"
+			prompt.text = "↑ 傳送"
+			prompt.position.y = 2.1
+			prompt.font_size = 48
+			prompt.pixel_size = 0.008
+			prompt.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			prompt.modulate = Color(0.72, 0.92, 1.0)
+			prompt.outline_size = 10
+			prompt.visible = false
+			area.add_child(prompt)
+
+		if not reserved:
+			_live_portals.append({"area": area, "target": String(tgt),
+				"require_flag": String(p.get("require_flag", ""))})
 		map_root.add_child(area)
 
-## 冷卻結束的那一幀：玩家若還站在某個傳送區裡，補送一次觸發。
-## 沒有這段，`body_entered` 的一次性語意會讓「冷卻中走進去」變成永久卡住。
-func _recheck_portal_overlap() -> void:
+
+func _physics_process(_delta: float) -> void:
 	for entry in _live_portals:
-		var area: Area3D = entry.get("area")
-		if not is_instance_valid(area):
+		var area: Area3D = entry.area
+		if is_instance_valid(area):
+			var prompt := area.get_node_or_null("PortalPrompt") as Label3D
+			if prompt != null:
+				prompt.visible = area.overlaps_body(player)
+				if not _portal_unlocked(entry):
+					prompt.text = "（尚未開放）"
+				else:
+					prompt.text = "稍候…" if portal_cooldown > 0.0 else "↑ 傳送"
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("portal_enter") and not event.is_echo():
+		if _try_portal_interaction():
+			get_viewport().set_input_as_handled()
+
+
+## 傳送點可帶 require_flag（meta.json）：劇情旗標未立就不能傳送。
+## 序章用：見過靈夢（met_reimu）之前人里不開放。
+func _portal_unlocked(entry: Dictionary) -> bool:
+	var f := String(entry.get("require_flag", ""))
+	return f.is_empty() or StoryFlags.get_flag(f)
+
+
+## 選最近的重疊傳送區；一次按鍵至多排入一次切圖。
+func _try_portal_interaction() -> bool:
+	if portal_cooldown > 0.0:
+		return false
+	var target := ""
+	var nearest := INF
+	for entry in _live_portals:
+		var area: Area3D = entry.area
+		if not is_instance_valid(area) or not area.overlaps_body(player):
 			continue
-		if area.get_overlapping_bodies().has(player):
-			_on_portal_entered(player, String(entry.get("target")))
-			return
+		if not _portal_unlocked(entry):
+			continue
+		var distance := area.global_position.distance_squared_to(player.global_position)
+		if distance < nearest:
+			nearest = distance
+			target = String(entry.target)
+	if target.is_empty():
+		return false
+	_on_portal_entered(player, target)
+	return true
 
 
 ## 密閉室內圖補光。只碰 INTERIOR_MAPS 裡的圖，戶外圖完全不動。
@@ -608,6 +704,7 @@ func _on_portal_entered(body: Node3D, target: String) -> void:
 	# 這裡先把光留著當 TODO 標記
 	if not FileAccess.file_exists("res://data/%s.meta.json" % target):
 		return
+	portal_cooldown = PORTAL_COOLDOWN
 	var from := current_id
 	call_deferred("load_map", target, from)
 
@@ -617,6 +714,23 @@ func _place_player(meta: Dictionary, from_id: String) -> void:
 	var spawn := Vector3(0.0, 40.0, 0.0)
 	var portals: Array = meta.get("portals", [])
 	var arrival_portal: Dictionary = {}
+	# meta.spawn：首次進圖（沒有來源圖）的指定出生點，序章醒來點用。
+	# y 不手填：從 40 m 高落下，地形碰撞接住。
+	if from_id == "" and meta.has("spawn"):
+		var sp: Dictionary = meta["spawn"]
+		player.velocity = Vector3.ZERO
+		# 地面用射線量（trimesh 這一幀剛建好，可查）；量不到才退回 40 m 落下
+		var gy := _pt_ground(get_viewport().get_world_3d().direct_space_state,
+			float(sp.x), float(sp.z), [player.get_rid()] as Array[RID], true)
+		var y := gy + 0.3 if gy != -INF else 40.0
+		player.global_position = Vector3(float(sp.x), y, float(sp.z))
+		var spawn_yaw := float(sp.get("yaw", 0.0))
+		if player.has_method("snap_yaw"):
+			player.snap_yaw(spawn_yaw)
+		else:
+			player.rotation.y = spawn_yaw
+		portal_cooldown = PORTAL_COOLDOWN
+		return
 	if from_id == "" and portals.size() > 0:
 		var p0: Dictionary = portals[0]
 		arrival_portal = p0
@@ -629,7 +743,11 @@ func _place_player(meta: Dictionary, from_id: String) -> void:
 	player.velocity = Vector3.ZERO
 	player.global_position = spawn
 	if arrival_portal.has("arrival_yaw"):
-		player.rotation.y = float(arrival_portal.arrival_yaw)
+		var arr_yaw := float(arrival_portal.arrival_yaw)
+		if player.has_method("snap_yaw"):
+			player.snap_yaw(arr_yaw)
+		else:
+			player.rotation.y = arr_yaw
 	portal_cooldown = PORTAL_COOLDOWN
 
 

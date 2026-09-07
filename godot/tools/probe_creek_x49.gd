@@ -12,7 +12,7 @@ func _init() -> void:
 	var tv: PackedVector3Array = ta[Mesh.ARRAY_VERTEX]
 	# 地形是規則網格：res × res，直接反推索引
 	var res := int(round(sqrt(float(tv.size()))))
-	var half := 340.0
+	var half := 120.0
 	var step := 2.0 * half / float(res - 1)
 	print("[X49] 地形 %d×%d 格距 %.2f" % [res, res, step])
 

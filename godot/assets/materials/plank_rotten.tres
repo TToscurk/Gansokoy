@@ -1,8 +1,8 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://kkdmwi5rrplv"]
 
-[ext_resource type="Texture2D" path="res://assets/textures/planks_diff.jpg" id="1_se313"]
-[ext_resource type="Texture2D" path="res://assets/textures/planks_nor_gl.jpg" id="2_ro00d"]
-[ext_resource type="Texture2D" path="res://assets/textures/planks_rough.jpg" id="3_fi0hg"]
+[ext_resource type="Texture2D" uid="uid://cdf4l5c8pekll" path="res://assets/textures/planks_diff.jpg" id="1_se313"]
+[ext_resource type="Texture2D" uid="uid://dlk7nb6bxh5km" path="res://assets/textures/planks_nor_gl.jpg" id="2_ro00d"]
+[ext_resource type="Texture2D" uid="uid://dmbr1gg7n7jw" path="res://assets/textures/planks_rough.jpg" id="3_fi0hg"]
 
 [resource]
 albedo_color = Color(0.46, 0.44, 0.38, 1)

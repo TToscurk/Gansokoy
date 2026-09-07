@@ -72,6 +72,14 @@ func _ready() -> void:
 		interaction_message.connect(func(t: String) -> void: _body.emit_signal("interaction_message", t))
 
 
+## Snap camera yaw (e.g. on map spawn or portal arrival)
+func snap_yaw(yaw: float) -> void:
+	_target_yaw = yaw
+	_current_yaw = yaw
+	if pivot != null:
+		pivot.rotation = Vector3(_current_pitch, _current_yaw, 0.0)
+
+
 ## Kept for signal/interface compatibility (no-op; screen shake removed per user request)
 func add_trauma(_amount: float) -> void:
 	pass
@@ -100,6 +108,9 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# 對話中：不轉視角、不互動（Esc 仍可放滑鼠）
+	if _body != null and bool(_body.get("input_locked")) and not event.is_action_pressed("ui_cancel"):
+		return
 	if event.is_action_pressed("interact"):
 		_interact()
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

@@ -35,14 +35,24 @@ func _portal(meta: Dictionary, target: String) -> Dictionary:
 			return p
 	return {}
 
-## 站上傳送區並等它觸發，回傳最後的圖 id。
+## 站上傳送區，再用實際 ↑ 事件傳送，回傳最後的圖 id。
 func _enter(area_pos: Vector3) -> String:
 	while main.portal_cooldown > 0.0:
 		await physics_frame
 		await process_frame
 	player.global_position = area_pos + Vector3(0, 0.5, 0)
 	player.velocity = Vector3.ZERO
-	await _wait(40)
+	await _wait(4)
+	var event := InputEventKey.new()
+	event.keycode = KEY_UP
+	event.pressed = true
+	Input.parse_input_event(event)
+	await _wait(2)
+	event = InputEventKey.new()
+	event.keycode = KEY_UP
+	event.pressed = false
+	Input.parse_input_event(event)
+	await _wait(34)
 	return main.current_id
 
 func _run() -> void:

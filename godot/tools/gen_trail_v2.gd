@@ -15,6 +15,13 @@ extends SceneTree
 ## 南 = +z（人里入口），北 = -z（深處）。深度參數 t∈[0,1] 沿主脊由南到北。
 ## 路寬 2.8 m → 1.3 m 隨 t 縮窄；蛇行由三層正弦疊加，振幅隨 t 放大。
 ##
+## ⚠ 2026-09-07 使用者裁定：緣一跑步（7 m/s）單程 40 s 內到下一張圖。
+##   實測機器人繞樹路徑 ≈ 主脊 ×1.28 → 主脊 220 m，圖 240×240（原 640 / 680）。
+##   沿長度分布的東西（樹、地被、碎石、苔石叢、磷光菌）數量跟著減半，
+##   保持每公尺密度不變；蛇行振幅也減半，彎的角度才不會變成兩倍尖。
+##   **局部地物尺寸不縮**：路寬、空地半徑、溪谷寬、地藏/屋台/木橋照舊。
+##   小溪與大空地在 t 軸上拉開到 0.41 / 0.58（相距 37 m；空地 R17 + 溪谷帶 14 = 31 m 是硬下限）。
+##
 ## ══ 資產 ══
 ## 自然層 Quaternius nature/（BASE 原點，公尺單位，實測 probe_trail_assets.gd）
 ##   樹 6 種：CommonTree(闊葉)、Pine(松)、DeadTree(枯)、TwistedTree(歪/老) 各多變體
@@ -34,9 +41,9 @@ const NAT := "res://assets/nature/"
 const LP := "res://assets/lowpoly_scene/"
 const GOB := "res://assets/_incoming/gobkit_nature/"
 
-const HALF := 340.0                 # 680×680，跟登錄表一致
-const SPINE_Z0 := 320.0             # 南端（人里入口）
-const SPINE_Z1 := -320.0            # 北端（神社傳送點）
+const HALF := 120.0                 # 240×240，跟登錄表一致（原 680 → 340 → 240）
+const SPINE_Z0 := 110.0             # 南端（人里入口）
+const SPINE_Z1 := -110.0            # 北端（神社傳送點）—— 全長 220 m（使用者裁定：緣一跑步單程 40 s）
 const NEAR_BAND := 30.0             # 路沿個別高模帶
 const SEED := 20260904
 
@@ -47,19 +54,26 @@ const BEATS := [
 	{ "t0": 0.06, "t1": 0.12, "dens": 0.45, "tag": "界碑・普通森林" },
 	{ "t0": 0.12, "t1": 0.26, "dens": 0.80, "tag": "密林1" },
 	{ "t0": 0.26, "t1": 0.34, "dens": 0.40, "tag": "疏・地藏舊路標" },
-	{ "t0": 0.34, "t1": 0.46, "dens": 0.92, "tag": "密林2" },
-	{ "t0": 0.46, "t1": 0.52, "dens": 0.30, "tag": "小溪・木橋" },
-	{ "t0": 0.52, "t1": 0.60, "dens": 0.05, "tag": "大空地" },
-	{ "t0": 0.60, "t1": 0.74, "dens": 0.95, "tag": "密林3・妖怪痕跡" },
+	{ "t0": 0.34, "t1": 0.37, "dens": 0.92, "tag": "密林2" },
+	{ "t0": 0.37, "t1": 0.47, "dens": 0.30, "tag": "小溪・木橋" },
+	{ "t0": 0.47, "t1": 0.67, "dens": 0.05, "tag": "大空地" },
+	{ "t0": 0.67, "t1": 0.74, "dens": 0.95, "tag": "密林3・妖怪痕跡" },
 	{ "t0": 0.74, "t1": 0.80, "dens": 0.35, "tag": "夜雀屋台" },
 	{ "t0": 0.80, "t1": 1.00, "dens": 1.00, "tag": "更深的妖怪領域" },
 ]
 const T_ENTRANCE := 0.07
 const T_JIZO := 0.30
-const T_CREEK := 0.49
-const T_CLEARING := 0.56
+const T_CREEK := 0.41               # 220 m 版：與空地中心相距 0.17 = 37 m（空地 R17 + 溪谷帶 14 = 31 m 是硬下限）
+const T_CLEARING := 0.58
 const T_STALL := 0.77
 const CLEARING_R := 17.0            # 直徑 ~34 m（規格 20-30，放寬以展現開闊感）
+## 路面壓平帶：路緣外多少公尺內地形貼著路心高度、再漸回自然起伏。
+## 6 m 時（減半版格距 1.7 m 畫得出細節）路兩側土坡貼著路面像走溝，
+## 使用者要更寬 → 12 m。
+const ROAD_FLAT_BAND := 12.0
+## 泥潭（密林 2 裡兩處）：[沿主脊 t, 側向偏移 m]。height_at 與 mask_at 共用，
+## 不可各寫一份。t 要離溪心（T_CREEK）至少 0.05 = 16 m，溪谷抹平帶才不會蓋掉它。
+const MUD_SPECS := [[0.28, Vector2(-9.0, 3.0)], [0.34, Vector2(11.0, -2.0)]]
 
 var lib: Lib
 var _nh: FastNoiseLite       # 地形起伏
@@ -83,7 +97,7 @@ const JIZO_SPECS := [
 	[0.07, 1, 1.0],           # 入口
 	[0.19, 1, -1.0],
 	[T_JIZO, 3, 1.0],         # 疏段三尊（規格的「地藏／舊路標」節點）
-	[0.41, 1, -1.0],
+	[0.34, 1, -1.0],          # 離溪心 0.07 = 15 m，避開溪岸抹平帶（14 m）
 	[0.71, 1, 1.0],
 ]
 
@@ -99,11 +113,13 @@ func _build_spine() -> void:
 		var t := float(i) / float(n - 1)
 		var z := lerpf(SPINE_Z0, SPINE_Z1, t)
 		# 三層正弦 + 噪聲：長波給大方向、短波給蛇行、噪聲給不規則
-		var amp := lerpf(18.0, 42.0, t)     # 越深越蜿蜒
+		# 振幅與全長同比（640→320 m 時 18–42 → 9–21）：彎的**個數**由 t 頻率
+		# 決定不變，振幅不縮的話每個彎的轉角會變成兩倍尖。
+		var amp := lerpf(6.0, 14.5, t)      # 越深越蜿蜒（220/320 同比）
 		var x := sin(t * TAU * 1.3 + 0.7) * amp * 0.6 \
 			+ sin(t * TAU * 3.7 + 2.1) * amp * 0.3 \
 			+ sin(t * TAU * 9.1 + 4.4) * amp * 0.12 \
-			+ _nm.get_noise_1d(t * 900.0) * 9.0
+			+ _nm.get_noise_1d(t * 900.0) * 3.0
 		# 大空地與屋台附近把路拉直一點，讓空地是「路穿過的」而不是路繞開
 		_spine[i] = Vector2(x, z)
 		_spine_t[i] = t
@@ -159,8 +175,8 @@ func _build_branches() -> void:
 	var specs := [
 		# t 起點、方向(左右)、長度、是否消失
 		[0.18, 1, 46.0, true], [0.23, -1, 30.0, true],
-		[0.38, -1, 60.0, true], [0.42, 1, 24.0, true],
-		[0.57, 1, 38.0, true],      # 空地側隱藏獸徑（規格 §7）
+		[0.33, -1, 40.0, true], [0.36, 1, 20.0, true],
+		[T_CLEARING + 0.01, 1, 38.0, true],      # 空地側隱藏獸徑（規格 §7）
 		[0.66, -1, 52.0, true], [0.70, 1, 28.0, true],
 		[0.85, -1, 70.0, true], [0.91, 1, 40.0, true],
 	]
@@ -230,7 +246,7 @@ func height_at(x: float, z: float) -> float:
 	# 整體往北緩升 — 「深處」有高度感
 	h += t * 9.0
 	# 路面壓平：路上取路心高度的平滑版；路外漸回自然起伏
-	var flat := smoothstep(0.0, 6.0, ed)
+	var flat := smoothstep(0.0, ROAD_FLAT_BAND, ed)
 	var road_h := sin(z * 0.03) * 0.8 + t * 9.0 + _nh.get_noise_2d(x * 0.15, z * 0.15) * 1.2
 	h = lerpf(road_h, h, flat)
 	# 路面本身的細碎起伏（樹根/石頭感）
@@ -258,9 +274,16 @@ func height_at(x: float, z: float) -> float:
 	var pond := _spine_pos(T_CLEARING) + Vector2(6.0, -7.0)
 	h -= 1.4 * (1.0 - smoothstep(0.0, 6.0, p.distance_to(pond)))
 	# 泥潭：密林 2 裡兩處
-	for m in [_spine_pos(0.40) + Vector2(-9.0, 3.0), _spine_pos(0.44) + Vector2(11.0, -2.0)]:
+	for m in _mud_sites():
 		h -= 0.35 * (1.0 - smoothstep(2.0, 5.5, p.distance_to(m)))
 	return h
+
+
+func _mud_sites() -> Array:
+	var out := []
+	for s in MUD_SPECS:
+		out.append(_spine_pos(s[0]) + (s[1] as Vector2))
+	return out
 
 
 ## 地表混合遮罩：R=路面、G=林床(腐葉土)、B=巨觀變化、(A=泥/濕)
@@ -294,8 +317,7 @@ func mask_at(x: float, z: float) -> Color:
 	var macro := clampf(_nh.get_noise_2d(x * 0.4, z * 0.4) * 0.5 + 0.5, 0.0, 1.0)
 	# 濕/泥：溪邊、泥潭、水潭
 	var wet := 1.0 - smoothstep(2.5, 7.0, _creek_dist(p))
-	for m in [_spine_pos(0.40) + Vector2(-9.0, 3.0), _spine_pos(0.44) + Vector2(11.0, -2.0),
-			_spine_pos(T_CLEARING) + Vector2(6.0, -7.0)]:
+	for m in _mud_sites() + [_spine_pos(T_CLEARING) + Vector2(6.0, -7.0)]:
 		wet = maxf(wet, 1.0 - smoothstep(2.0, 6.0, p.distance_to(m)))
 	# ⚠ A 通道（dirt 層）才是路面真正畫得出來的地方。
 	#
@@ -455,20 +477,34 @@ func _build_creek_water() -> void:
 
 	# ── 1. 水位剖面：沿 x 掃，每站取溪心附近地形最低點，再平滑 ──
 	var n := 81
-	var x0 := c.x - 130.0
-	var x1 := c.x + 130.0
+	# ⚠ 溪帶不得超出地形：圖縮到 240 後 ±130 m 會伸出圖緣，terrain_y 在圖外
+	#   回傳夾住的邊界值 → check_map 報 11% 埋地（最深 1.24 m @ x=73）。
+	var x0 := maxf(c.x - 130.0, -HALF + 3.0)
+	var x1 := minf(c.x + 130.0, HALF - 3.0)
 	var zc_of := func(x: float) -> float:
 		return c.y + sin(x * 0.045 + 1.3) * 6.0 + _nm.get_noise_1d(x * 2.0) * 3.0
 	var bed := PackedFloat32Array()
 	bed.resize(n)
+	# ⚠ 每站的水面中心要用**地形網格實際谷底**，不是解析式 zc。
+	#   兩者差最多半格（1.2 m 格距 → 0.6 m），而 240 m 版東段谷壁每格升 1.4 m，
+	#   從 zc 往兩側找寬度時第一步就撞牆，水面 9 條全擠在坡上
+	#   （check_map 13% 埋地，最深 1.29 m @ x=67）。
+	var trough := PackedFloat32Array()
+	trough.resize(n)
 	for i in n:
 		var x: float = lerpf(x0, x1, float(i) / float(n - 1))
 		var zc: float = zc_of.call(x)
-		# 溪心橫斷面最低點（±4 m，涵蓋谷底）
+		# 溪心橫斷面最低點（±4 m，0.25 m 步長，涵蓋谷底）
 		var lo := INF
-		for k in 9:
-			lo = minf(lo, terrain_y(x, zc - 4.0 + float(k)))
+		var lo_z := zc
+		for k in 33:
+			var zz := zc - 4.0 + float(k) * 0.25
+			var yy := terrain_y(x, zz)
+			if yy < lo:
+				lo = yy
+				lo_z = zz
 		bed[i] = lo
+		trough[i] = lo_z
 	# 平滑水位：只抹掉河床的小坑，不能跨越溪的縱向坡度。
 	# ⚠ ±4 站 = 26 m 範圍，而這條溪全長 260 m 落差 5.3 m（約 2%）——
 	#   26 m 窗口會把上下游差 0.5 m 的高度混在一起，東端因此埋進土裡 3 m。
@@ -491,7 +527,7 @@ func _build_creek_water() -> void:
 	var rows := []
 	for i in n:
 		var x: float = lerpf(x0, x1, float(i) / float(n - 1))
-		var zc: float = zc_of.call(x)
+		var zc: float = trough[i]          # 實測谷底，不是解析式溪心
 		var y: float = level[i]
 		# 這一站水面實際能鋪多寬：往兩側找到地形升過水位的地方。
 		# ⚠ 步長要細，且**兩側各自算**——溪谷斷面不對稱，用單一半寬會讓
@@ -660,7 +696,9 @@ func _build_forest() -> void:
 	var groups := {}
 	var count := [0, 0]
 	var tries := 0
-	var target := 7000
+	# 減半版：路沿帶 2100 + 外圍 700 = 2800（原 4200 + 2800 = 7000）。
+	# 主脊 320 m、圖 340×340 → 面積都是原來的一半，棵數減半密度才不變。
+	var target := 2400              # 220 m 版（面積 240²/340² ≈ 0.5，路沿帶 ≈ 0.69）
 	var made := 0
 	_placed_trunks = PackedVector2Array()
 	# 用格子加速樹幹間距檢查
@@ -670,7 +708,7 @@ func _build_forest() -> void:
 		tries += 1
 		var x := 0.0
 		var z := 0.0
-		if made < 4200:
+		if made < 1450:
 			# 重兵集中在路沿 3.2m ~ 55m 帶狀區，形成林蔭穹頂與密林壓迫感
 			var t_sample := lib.rr(0.01, 0.99)
 			var sp_pos := _spine_pos(t_sample)
@@ -864,15 +902,16 @@ func _audit_corridor(logs: Array) -> void:
 # ══════════════════════════════════════════════════════════════════
 const COVER := [
 	# [名, 變體, 目標**最大邊** m 範圍, 數量, 路緣偏好(0-1), 林床偏好, 濕地偏好, 只在深處?]
-	["蕨", ["Fern_1"], [0.6, 1.1], 1400, 0.85, 0.7, 0.9, false],
-	["芒草", ["Grass_Wispy_Tall", "Grass_Common_Tall"], [0.6, 1.0], 1200, 0.9, 0.3, 0.5, false],
-	["矮草", ["Grass_Common_Short", "Grass_Wispy_Short"], [0.35, 0.65], 1600, 0.8, 0.5, 0.6, false],
-	["灌木", ["Bush_Common", "Bush_Common_Flowers"], [1.0, 1.8], 520, 0.6, 0.5, 0.3, false],
-	["矮竹", ["Plant_7", "Plant_7_Big", "Plant_1_Big"], [0.6, 1.2], 380, 0.5, 0.6, 0.2, false],
-	["苔", ["Clover_1", "Clover_2"], [0.15, 0.3], 700, 0.3, 0.9, 0.9, false],
-	["菇", ["Mushroom_Common"], [0.2, 0.4], 320, 0.2, 0.9, 0.8, false],
-	["靈芝", ["Mushroom_Laetiporus"], [0.3, 0.55], 90, 0.1, 0.9, 0.6, true],
-	["野花", ["Flower_3_Group", "Flower_4_Group", "Flower_3_Single"], [0.25, 0.4], 260, 0.7, 0.1, 0.2, false],
+	# 數量為 220 m 版（原 640 m 的 ×0.34）；沿路 40 m 帶的面積是原來一半，每公尺密度不變。
+	["蕨", ["Fern_1"], [0.6, 1.1], 483, 0.85, 0.7, 0.9, false],
+	["芒草", ["Grass_Wispy_Tall", "Grass_Common_Tall"], [0.6, 1.0], 414, 0.9, 0.3, 0.5, false],
+	["矮草", ["Grass_Common_Short", "Grass_Wispy_Short"], [0.35, 0.65], 552, 0.8, 0.5, 0.6, false],
+	["灌木", ["Bush_Common", "Bush_Common_Flowers"], [1.0, 1.8], 179, 0.6, 0.5, 0.3, false],
+	["矮竹", ["Plant_7", "Plant_7_Big", "Plant_1_Big"], [0.6, 1.2], 131, 0.5, 0.6, 0.2, false],
+	["苔", ["Clover_1", "Clover_2"], [0.15, 0.3], 241, 0.3, 0.9, 0.9, false],
+	["菇", ["Mushroom_Common"], [0.2, 0.4], 110, 0.2, 0.9, 0.8, false],
+	["靈芝", ["Mushroom_Laetiporus"], [0.3, 0.55], 31, 0.1, 0.9, 0.6, true],
+	["野花", ["Flower_3_Group", "Flower_4_Group", "Flower_3_Single"], [0.25, 0.4], 90, 0.7, 0.1, 0.2, false],
 ]
 
 
@@ -914,7 +953,7 @@ func _build_ground_cover() -> void:
 			if name in ["芒草", "蕨", "矮竹", "灌木"] and d < hw * 1.15:
 				continue
 			# 3. 入口拍照點與空地視角周邊保護（避免極近前景大草貼鏡頭）
-			if z > 265.0 and d < hw + 1.5:
+			if z > SPINE_Z0 - 55.0 and d < hw + 1.5:
 				continue
 			# 屋台區完全淨空，避免穿模桌椅與阻擋視野
 			if p.distance_to(_stall_pos()) < 7.0:
@@ -976,7 +1015,7 @@ func _build_rocks_and_logs() -> void:
 	var made := 0
 	var tries := 0
 	var clusters := []
-	for i in 28:
+	for i in 10:                     # 220 m 版
 		var t := lib.rr(0.05, 0.98)
 		var side := 1.0 if lib.rand() < 0.5 else -1.0
 		var c := _spine_pos(t) + Vector2(-_spine_dir(t).y, _spine_dir(t).x) * side * lib.rr(2.5, 18.0)
@@ -1008,7 +1047,7 @@ func _build_rocks_and_logs() -> void:
 			made += 1
 	# 路面碎石（規格：路面有碎石）
 	var pm := 0
-	for i in 900:
+	for i in 310:                    # 220 m 版
 		var t := lib.rr(0.0, 1.0)
 		var d := _spine_dir(t)
 		var hw := _half_w(t)
@@ -1027,7 +1066,7 @@ func _build_rocks_and_logs() -> void:
 		pm += 1
 	# 倒木：Meshy 缺件 → 用 Log_Cluster 暫代 + 佔位標記；規格：部分倒木橫跨小路
 	var lm := 0
-	for spec in [[0.20, true], [0.36, false], [0.44, true], [0.63, false], [0.68, true], [0.83, false], [0.9, true]]:
+	for spec in [[0.20, true], [0.31, false], [0.35, true], [0.66, false], [0.70, true], [0.83, false], [0.9, true]]:
 		var t: float = spec[0]
 		var across: bool = spec[1]
 		var d := _spine_dir(t)
@@ -1606,7 +1645,7 @@ func _build_youkai_traces() -> void:
 	gm.emission = Color(0.35, 0.9, 0.55)
 	gm.emission_energy_multiplier = 1.6
 	var gn := 0
-	for i in 120:
+	for i in 40:                     # 220 m 版
 		var t := lib.rr(0.58, 0.99)
 		var d := _spine_dir(t)
 		var p := _spine_pos(t) + Vector2(-d.y, d.x) * lib.rr(_half_w(t) + 0.5, 14.0) * (1.0 if lib.rand() < 0.5 else -1.0)

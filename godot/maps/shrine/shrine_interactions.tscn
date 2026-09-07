@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
+
+[sub_resource type="BoxShape3D" id="approach"]
+size = Vector3(16, 6, 6)
+
+[sub_resource type="BoxShape3D" id="haiden"]
+size = Vector3(10, 4, 6)
+
+[node name="神社互動點" type="Node3D"]
+
+[node name="參道抵達" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 40)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "hakurei_shrine_approach"
+interaction_label = ""
+quest_event_type = "REACH"
+quest_target_id = "hakurei_shrine_approach"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="參道抵達"]
+shape = SubResource("approach")
+
+[node name="拜殿拜訪" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -21)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "hakurei_shrine_visit"
+interaction_label = "拜訪"
+place_name = "博麗神社"
+dialogue_id = "reimu_hakurei_shrine"
+quest_event_type = "TALK"
+quest_target_id = "reimu_hakurei_shrine"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="拜殿拜訪"]
+shape = SubResource("haiden")

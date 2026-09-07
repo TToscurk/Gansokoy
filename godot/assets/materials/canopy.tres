@@ -1,6 +1,6 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://tve4e5ggr7qr"]
 
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_forest_diff.jpg" id="1_6tj2f"]
+[ext_resource type="Texture2D" uid="uid://bjhlq0fw1thkp" path="res://assets/textures/terrain_forest_diff.jpg" id="1_6tj2f"]
 
 [resource]
 vertex_color_use_as_albedo = true

@@ -1,6 +1,6 @@
 # Portal and map-transition regression test.
 #
-# Run with the project-approved Godot 4.4 executable:
+# Run with the project-approved Godot 4.7 executable:
 #   Godot --headless --path godot --script tools/portal_test.gd
 extends SceneTree
 
@@ -13,19 +13,19 @@ const TRIMESH_MIN_SPAN := 15.0
 const META_Y_TOLERANCE := 2.5
 
 const HOPS := [
-	["trail", "village"],
-	["village", "trail"],
-	["village", "kourindou"],
-	["kourindou", "village"],
-	["village", "hieda1f"],
-	["hieda1f", "village"],
+	["trail", "slice"],
+	["slice", "trail"],
+	["slice", "kourindou"],
+	["kourindou", "slice"],
+	["slice", "hieda1f"],
+	["hieda1f", "slice"],
 	["hieda1f", "hieda2f"],
 	["hieda2f", "hieda1f"],
 	["hieda2f", "hieda3f"],
 	["hieda3f", "hieda2f"],
 ]
 
-const SMOKE_ROUTE := ["trail", "village", "kourindou", "village", "trail"]
+const SMOKE_ROUTE := ["trail", "slice", "kourindou", "slice", "trail"]
 
 var _failures: Array[String] = []
 var _arrivals: Dictionary = {}
@@ -39,8 +39,9 @@ func _init() -> void:
 	_capsule.height = PLAYER_HEIGHT
 
 	var version := Engine.get_version_info()
-	if int(version.get("major", -1)) != 4 or int(version.get("minor", -1)) != 4:
-		_fail("environment", "expected Godot 4.4.x, got %s" % Engine.get_version_info().get("string", "unknown"))
+	# 專案基準從 4.4 換到 4.7.2；這條防的是誤用舊版執行檔，不是鎖死版本。
+	if int(version.get("major", -1)) != 4 or int(version.get("minor", -1)) != 7:
+		_fail("environment", "expected Godot 4.7.x, got %s" % String(version.get("string", "unknown")))
 
 	var arrivals_by_target: Dictionary = {}
 	for hop in HOPS:

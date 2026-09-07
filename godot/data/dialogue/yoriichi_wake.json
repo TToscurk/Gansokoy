@@ -1,0 +1,7 @@
+{
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "「……這裡，不是我所知的地方。」", "next": null,
+            "set_flags": ["woke_in_trail"] }
+  }
+}

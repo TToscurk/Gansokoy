@@ -101,7 +101,10 @@ extends CharacterBody3D
 @export var deflect_attacker_posture := 22.0
 ## 格擋：漏傷比例與軀幹代價。
 @export_range(0.0, 1.0, 0.01) var block_damage_ratio := 0.15
-@export var block_self_posture := 18.0
+## 32 不是拍的：试玩機實測 18 時每循環淨 +9.2，敵人 1.4 s/刀，
+## 6 秒爆不了 —— 「一直龜會自己爆」的支柱被再生吃掉。32 → 淨 +15/循環，
+## 約 7 刀（10 秒）爆，龟得住前 5 秒、撐不過 15 秒。
+@export var block_self_posture := 32.0
 @export var block_attacker_posture := 6.0
 ## 未防禦時的軀幹累積倍率。
 @export var unguarded_posture_mult := 1.0
@@ -283,6 +286,15 @@ var _hit_targets_this_swing: Dictionary = {}
 ## standalone test level leaves it empty and reads world axes.
 @export var input_yaw_node: Node3D
 
+## 對話／過場鎖定：為真時不讀移動與動作輸入，只跑重力與動畫落地。
+## 這是 DialogueManager 等上層鎖玩家的正式接口（player_camera_adapter 同步看它）。
+var input_locked := false:
+	set(v):
+		input_locked = v
+		if v:
+			velocity.x = 0.0
+			velocity.z = 0.0
+
 # ---------------------------------------------------------------------------
 # Setup
 # ---------------------------------------------------------------------------
@@ -293,6 +305,8 @@ func _ready():
 		return
 	_anim = aps[0]
 	_visual = _anim.get_parent()
+	if _visual != null and is_zero_approx(_visual.rotation.y):
+		_visual.rotation.y = PI
 	_fl_anim = "Run_FL"
 	_fr_anim = "Run_FR"
 	_add_animation_resource("Idle_Grounded", idle_grounded_resource)
@@ -436,7 +450,7 @@ func _update_lock_on(delta: float) -> void:
 	to.y = 0.0
 	if to.length_squared() < 0.0004:
 		return
-	var want := atan2(to.x, to.z) + PI
+	var want := atan2(to.x, to.z)
 	if _visual != null:
 		_visual.global_rotation.y = rotate_toward(_visual.global_rotation.y, want, lock_turn_speed * delta)
 	global_rotation.y = rotate_toward(global_rotation.y, want, lock_turn_speed * delta)
@@ -566,7 +580,7 @@ func _on_hit_target(node: Node) -> void:
 	_hitstop_time = 0.07 if is_heavy else 0.05
 
 	var hit_pos: Vector3 = _blade_tip.global_position if _blade_tip != null else global_position + Vector3(0, 1, 0)
-	var fwd := -_visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
+	var fwd := _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
 	var hit_data := {
 		"damage": 35.0 if is_heavy else 15.0,
 		"hit_pos": hit_pos,
@@ -637,8 +651,7 @@ func _build_tree() -> void:
 		states["RunFL"] = _anim_node(_fl_anim)
 	if _fr_anim != "" and _anim.has_animation(_fr_anim):
 		states["RunFR"] = _anim_node(_fr_anim)
-	# 後退步：Walking 是零位移的完美循環（inventory 實測 start_end_diff 0.0°），
-	# 反播即為合法 backpedal，不需新動畫。
+	# 後退步：Walking 是零位移的完美循環，反播即為合法 backpedal，不需新動畫。
 	states["BackPedal"] = _anim_node(walk_anim, true)
 	for s in states:
 		sm.add_node(s, states[s])
@@ -779,7 +792,7 @@ func _physics_process(delta):
 			move_and_slide()
 		return
 	var grounded := is_on_floor()
-	var running := Input.is_action_pressed("sprint")
+	var running := Input.is_action_pressed("sprint") and not input_locked
 	var cur_speed := run_speed if running else speed
 	var moving := input_dir.length_squared() > 0.0
 
@@ -909,6 +922,8 @@ func _read_input_dir() -> Vector3:
 	# InputMap actions (project.godot [input]), not raw keycodes, so the main
 	# game's bindings / gamepad apply. Rotated into the camera's yaw when
 	# input_yaw_node is set.
+	if input_locked:
+		return Vector3.ZERO
 	var v := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var input_dir := Vector3(v.x, 0.0, v.y)
 	if input_yaw_node != null:
@@ -925,20 +940,33 @@ func _apply_air_control(input_dir: Vector3, cur_speed: float, delta: float) -> v
 	velocity.x = h.x
 	velocity.z = h.y
 
+## 出生或傳送時對齊面向：保持 CharacterBody3D 根節點 rotation.y 乾淨（為 0），
+## 將模型視覺朝向對齊 yaw，並通知相機適配器同步對齊。
+func snap_yaw(yaw: float) -> void:
+	rotation.y = 0.0
+	if _visual != null:
+		_visual.global_rotation.y = wrapf(yaw + PI, -PI, PI)
+	var adapter := get_node_or_null("CameraAdapter")
+	if adapter != null and adapter.has_method("snap_yaw"):
+		adapter.snap_yaw(yaw)
+
 ## 視覺轉向：速率上限（不是指數 lerp）——180° 急轉需要時間走完，不會瞬間
 ## snap；走路慢（沉穩）、疾跑快（×run_turn_multiplier）、攻擊中再降
 ## （×attack_turn_control）。腳下的扇區動畫（FL/FR/BackPedal）同步提供
 ## 對應步法，避免「轉盤式」原地旋轉。
+## ⚠ 一律使用世界旋轉 global_rotation.y，避免地圖或父節點帶旋轉時內外疊加導致 180° 反轉。
 func _update_visual_yaw(delta: float, input_dir: Vector3, moving: bool, running: bool) -> void:
 	if not moving or _visual == null or action_state == ActionState.DODGING:
 		return
+	# input_dir 前進為 -Z、後退為 +Z（Godot 慣例）。
+	# BodyVisual 模型正面朝向本體 +Z，因此以 atan2(input_dir.x, input_dir.z) 使前進 (-Z) 為 180°(PI)，後退 (+Z) 為 0°。
 	var target_yaw := atan2(input_dir.x, input_dir.z)
-	var diff := wrapf(target_yaw - _visual.rotation.y, -PI, PI)
+	var diff := wrapf(target_yaw - _visual.global_rotation.y, -PI, PI)
 	var max_rate := turn_speed * (run_turn_multiplier if running else 1.0)
 	if action_state == ActionState.ATTACKING and _attack_layer == "full":
 		max_rate *= attack_turn_control
 	var step := minf(absf(diff), max_rate * delta) * signf(diff)
-	_visual.rotation.y += step
+	_visual.global_rotation.y = wrapf(_visual.global_rotation.y + step, -PI, PI)
 
 # --- locomotion 狀態選擇 ----------------------------------------------------
 func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving: bool, running: bool) -> void:
@@ -987,9 +1015,11 @@ func _locomotion_target(running: bool) -> String:
 	var forward_state := "Run" if running else "Walk"
 	if lv.length() < 0.5 or _visual == null:
 		return forward_state
-	var yaw: float = _visual.rotation.y
+	var yaw: float = _visual.global_rotation.y
+	# BodyVisual 模型本體正面為 +Z、左側為 -X。
+	# 旋轉世界 yaw 後世界座標：fwd = (sin(yaw), cos(yaw))，left = (-cos(yaw), sin(yaw))。
 	var fwd := Vector2(sin(yaw), cos(yaw))
-	var left := Vector2(cos(yaw), -sin(yaw))
+	var left := Vector2(-cos(yaw), sin(yaw))
 	var nd := lv.normalized()
 	var ang := rad_to_deg(atan2(nd.dot(left), nd.dot(fwd)))
 	var target := forward_state
@@ -1013,6 +1043,8 @@ func _locomotion_target(running: bool) -> String:
 func _unhandled_input(event):
 	# Actions from project.godot [input]; the camera / interaction adapter
 	# (player_yoriichi.gd) handles mouse-look and "interact" on top of this.
+	if input_locked:
+		return
 	if event.is_action_pressed("draw_sword"):
 		if _active_attack_name == attack_continuous_spin_anim:
 			if can_cancel_continuous_spin():
@@ -1117,10 +1149,10 @@ func request_dodge(direction_override: Vector3 = Vector3.ZERO) -> void:
 	var horizontal_override := Vector3(direction_override.x, 0.0, direction_override.z)
 	_dodge_dir = horizontal_override.normalized() if not horizontal_override.is_zero_approx() else _read_input_dir()
 	if _dodge_dir.is_zero_approx():
-		var yaw := _visual.rotation.y if _visual else rotation.y
+		var yaw := _visual.global_rotation.y if _visual else global_rotation.y
 		_dodge_dir = Vector3(sin(yaw), 0.0, cos(yaw)).normalized()
 	elif _visual:
-		_visual.rotation.y = atan2(_dodge_dir.x, _dodge_dir.z)
+		_visual.global_rotation.y = atan2(_dodge_dir.x, _dodge_dir.z)
 	action_state = ActionState.DODGING
 	_action_elapsed = 0.0
 	_attack_after_roll = false
@@ -1382,7 +1414,7 @@ func _spawn_sun_dragon() -> void:
 	if not sun_dragon_enabled:
 		return
 	var basis_node: Node3D = _visual if _visual != null else self
-	var facing := -basis_node.global_transform.basis.z
+	var facing := basis_node.global_transform.basis.z if basis_node == _visual else -basis_node.global_transform.basis.z
 	facing.y = 0.0
 	if facing.length_squared() < 0.0001:
 		facing = Vector3.FORWARD
@@ -1579,7 +1611,7 @@ func execute_form(id: int) -> bool:
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
 	if def.impulse > 0.0 and _visual:
-		var yaw: float = _visual.rotation.y
+		var yaw: float = _visual.global_rotation.y
 		velocity.x += sin(yaw) * def.impulse
 		velocity.z += cos(yaw) * def.impulse
 	if def.layer == "upper":
