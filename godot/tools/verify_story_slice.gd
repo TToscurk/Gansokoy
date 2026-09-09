@@ -59,6 +59,32 @@ func _run() -> void:
 	prompt = main.interaction_prompt
 	# ── 序章：獸道醒來 ──
 	check("P0 開局在獸道", main.current_id == "trail")
+	# 開場淡入：黑幕 1.4 s + 淡入 2.2 s，期間玩家鎖定、獨白未起
+	var fade: Node = main.get_node_or_null("OpeningFade")
+	check("P0 開場淡入存在", fade != null)
+	check("P0 淡入期間玩家鎖定", bool(player.get("input_locked")))
+	check("P0 淡入期間獨白未起（黑畫面不該有對話框）", not dm.is_active())
+	if fade != null:
+		var black: ColorRect = fade.get_node("Black")
+		check("P0 黑幕全黑（a=%.2f）" % black.color.a, black.color.a > 0.99)
+		# 等它自然淡完（不 skip，驗證真的會結束）
+		var waited := 0
+		while is_instance_valid(fade) and waited < 400:
+			await physics_frame
+			waited += 1
+		check("P0 淡入 %.1f s 內結束（實 %d 幀）" % [4.5, waited], not is_instance_valid(fade))
+	await _settle(4)
+	# 淡完立刻起獨白，對話會再把玩家鎖回去 —— 所以驗「獨白起了」而不是「解鎖了」
+	check("P0 淡完才起醒來獨白", dm.is_active())
+	var ui_o: CanvasLayer = null
+	for c in main.get_children():
+		if c.name == "DialogueUI":
+			ui_o = c
+	if ui_o != null:
+		var first_line: RichTextLabel = ui_o.get_node("Panel/VBox/Text")
+		check("P0 第一句是「……」", first_line.text == "「……」")
+		await _press("ui_accept"); await _press("ui_accept")
+		check("P0 第二句是「這是……哪裡？」", first_line.text == "「這是……哪裡？」")
 	await _settle(60)
 	var pp: Vector3 = player.global_position
 	check("P0 醒來點在大空地 (-6, -17.6) 附近且落地 y≈3.9（實 %.1f,%.1f,%.1f）" % [pp.x, pp.y, pp.z],

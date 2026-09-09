@@ -1,7 +1,10 @@
 {
+  "_doc": "序章開場獨白。由 OpeningFade 淡入完成後觸發，不再靠踏區。第一句是沉默，第二句才問。",
   "start": "l1",
   "nodes": {
-    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "「……這裡，不是我所知的地方。」", "next": null,
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "「……」", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "normal", "text": "「這是……哪裡？」", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "serious", "text": "「這裡，不是我所知的地方。」", "next": null,
             "set_flags": ["woke_in_trail"] }
   }
 }

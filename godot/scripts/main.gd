@@ -67,6 +67,14 @@ func _ready() -> void:
 	if map_root == null:
 		push_error("[map] 起動図 '%s' が未構築。BOOT_FALLBACK へ退避する。" % start)
 		load_map(BOOT_FALLBACK, "")
+	# 序章開場：黑畫面停留 → 淡入 → 才起獨白。
+	# 只在「真的從 START_MAP 開局、還沒醒過」時演；--map= 跳圖、拍照、自檢都不演，
+	# 否則每次跑工具都要等 3.6 秒黑畫面。
+	var is_cold_start: bool = start == START_MAP and current_id == START_MAP \
+		and not StoryFlags.get_flag("woke_in_trail") \
+		and _shot_path == "" and _shots_file == "" and not _playtest and _shot_player == ""
+	if is_cold_start:
+		_play_opening()
 	if _shot_player != "":
 		var shot_spawn := _shot_player.split_floats(",")
 		player.global_position = Vector3(shot_spawn[0], shot_spawn[1], shot_spawn[2])
@@ -515,6 +523,27 @@ func _setup_story_systems() -> void:
 		QuestManager.start_quest("MQ00")
 	add_child(NAV_UI.instantiate())
 	add_child(MAP_UI.instantiate())
+
+
+const OPENING_FADE := preload("res://ui/opening/opening_fade.gd")
+
+## 開場淡入。淡入期間鎖玩家（黑畫面裡不該能跑），淡完起醒來獨白。
+## 獨白由這裡起，不再靠獸道的「醒來獨白」踏區 —— 那個區保留當保底
+## （once_flag 同一個，淡入起過就不會重播）。
+func _play_opening() -> void:
+	var fade := OPENING_FADE.new()
+	fade.name = "OpeningFade"
+	add_child(fade)
+	player.set("input_locked", true)
+	# 立這個旗標讓獸道的「醒來獨白」踏區在黑幕期間閉嘴（它有 skip_flag）。
+	# 淡完再清掉 —— 之後那個區只是保底，因為 once_flag 早就被本函式起的對話立了。
+	StoryFlags.set_flag("opening_fade_active", true)
+	fade.fade_finished.connect(func() -> void:
+		StoryFlags.set_flag("opening_fade_active", false)
+		player.set("input_locked", false)
+		if not DialogueManager.is_active():
+			DialogueManager.start("yoriichi_wake"))
+	fade.play()
 
 
 ## 提示只能被「目前持有者」清掉：同一幀離開 A 區、進入 B 區時，A 的空字串

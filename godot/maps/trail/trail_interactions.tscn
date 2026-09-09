@@ -34,6 +34,7 @@ interaction_id = "trail_wake"
 dialogue_id = "yoriichi_wake"
 auto_trigger = true
 once_flag = "woke_in_trail"
+skip_flag = "opening_fade_active"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="醒來獨白"]
 shape = SubResource("wake")
