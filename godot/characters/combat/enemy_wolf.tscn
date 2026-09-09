@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://cse1kir0enemywolf"]
+
+[ext_resource type="Script" path="res://characters/combat/enemy_wolf.gd" id="1_wolf"]
+[ext_resource type="PackedScene" uid="uid://dnnklou2p61ud" path="res://assets/enemies/wolf/wolf_twin_tail.glb" id="2_mesh"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+height = 1.45
+radius = 0.45
+
+[sub_resource type="StandardMaterial3D" id="Mat_tell"]
+albedo_color = Color(1, 0.95, 0.8, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.8, 1)
+emission_energy_multiplier = 6.0
+shading_mode = 0
+
+[sub_resource type="TorusMesh" id="Mesh_tell"]
+material = SubResource("Mat_tell")
+inner_radius = 0.5
+outer_radius = 0.6
+
+[node name="EnemyWolf" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_wolf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+shape = SubResource("Shape_body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="wolf_twin_tail" parent="Visual" instance=ExtResource("2_mesh")]
+transform = Transform3D(2.06, 0, 0, 0, 2.06, 0, 0, 0, 2.06, 0, 0, 0)
+
+[node name="Tell" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = SubResource("Mat_tell")
+mesh = SubResource("Mesh_tell")
+visible = false
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="HurtShape" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+shape = SubResource("Shape_body")
