@@ -5,16 +5,16 @@
 
 [sub_resource type="Resource" id="obj_0"]
 script = ExtResource("obj")
-type = 0
-target_id = "human_village_gate"
-description = "前往山下的人類聚落"
+type = 2
+target_id = "reimu_hakurei_shrine"
+description = "與博麗神社的巫女交談"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ05"
-title = "人間之里"
-description = "前往山下的人類聚落。"
+title = "博麗的巫女"
+description = "尋找居住在山上神社的人。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
-next_quest_id = ""
-complete_flags = PackedStringArray("visited_human_village")
+next_quest_id = "MQ06"
+complete_flags = PackedStringArray()

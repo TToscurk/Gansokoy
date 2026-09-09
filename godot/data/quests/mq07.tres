@@ -6,15 +6,15 @@
 [sub_resource type="Resource" id="obj_0"]
 script = ExtResource("obj")
 type = 0
-target_id = "trail_fleeing_yokai"
-description = "調查逃離的妖怪"
+target_id = "human_village_gate"
+description = "前往山下的人類聚落"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
-id = "MQ03"
-title = "不要追"
-description = "有東西躲在樹叢裡，一靠近就跑了。"
+id = "MQ07"
+title = "人間之里"
+description = "前往山下的人類聚落。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
-next_quest_id = "MQ04"
-complete_flags = PackedStringArray("saw_fleeing_yokai")
+next_quest_id = ""
+complete_flags = PackedStringArray("visited_human_village")

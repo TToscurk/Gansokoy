@@ -1,0 +1,7 @@
+{
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "serious", "text": "（低吼。）", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "serious", "text": "「……妖怪。」", "next": null }
+  }
+}

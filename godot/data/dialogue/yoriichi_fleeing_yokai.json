@@ -1,0 +1,13 @@
+{
+  "_doc": "MQ03 不要追。玩家第一次體驗「幻想鄉不是鬼滅世界」——小妖怪逃走、留下的不是武器而是食物。這一幕讓靈夢後面那句話成立。",
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "surprised", "text": "（有什麼東西……跑掉了。）", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "normal", "text": "「……逃走了。」", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "normal", "text": "（地上落著一顆小果實。）", "next": "l4" },
+    "l4": { "speaker": "yoriichi", "portrait": "serious", "text": "（不是武器。）", "next": "l5" },
+    "l5": { "speaker": "yoriichi", "portrait": "sad", "text": "（它們……不是來殺人的。）", "next": null,
+            "set_flags": ["saw_fleeing_yokai"],
+            "quest_event": { "type": "REACH", "target": "trail_fleeing_yokai" } }
+  }
+}

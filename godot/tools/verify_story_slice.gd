@@ -89,14 +89,51 @@ func _run() -> void:
 	check("P2 感知獨白自動播放", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
-	check("P2 MQ01 完成 → MQ02", qm.is_completed("MQ01") and qm.is_active("MQ02"))
+	check("P2 MQ01 完成 → MQ02（山犬）", qm.is_completed("MQ01") and qm.is_active("MQ02"))
+
+	# ── MQ02 山犬：第一場戰鬥 ──
+	await _teleport(Vector3(5.3, 8.0, -82))
+	await _settle(8)
+	check("P2b 踏入遭遇區播「……妖怪。」", dm.is_active())
+	while dm.is_active():
+		await _press("ui_accept"); await _press("ui_accept")
+	var enc: Node = null
+	for e in main.get_tree().get_nodes_in_group("combat_encounter"):
+		enc = e
+	check("P2b 遭遇區存在", enc != null)
+	var wolves := main.get_tree().get_nodes_in_group("enemies")
+	check("P2b 山犬已生成（%d 隻）" % wolves.size(), wolves.size() >= 1)
+	if wolves.size() > 0:
+		var w: Node = wolves[0]
+		check("P2b 山犬鎖定玩家", w.get("target") != null)
+		# 直接處決，跳過實戰
+		w.posture.apply_damage(9999.0, 0.0)
+	# 戰後停頓 1.6 s + 對話
+	await _settle(160)
+	check("P2b 戰後獨白播放", dm.is_active())
+	while dm.is_active():
+		await _press("ui_accept"); await _press("ui_accept")
+	await _settle(4)
+	check("P2b defeated_first_yokai 旗標", sf.get_flag("defeated_first_yokai"))
+	check("P2b MQ02 完成 → MQ03（不要追）", qm.is_completed("MQ02") and qm.is_active("MQ03"))
+
+	# ── MQ03 不要追 ──
+	await _teleport(Vector3(4.2, 8.0, -95))
+	await _settle(6)
+	check("P2c 逃跑妖怪獨白播放", dm.is_active())
+	while dm.is_active():
+		await _press("ui_accept"); await _press("ui_accept")
+	await _settle(4)
+	check("P2c saw_fleeing_yokai 旗標", sf.get_flag("saw_fleeing_yokai"))
+	check("P2c MQ03 完成 → MQ04（山上的神社）", qm.is_completed("MQ03") and qm.is_active("MQ04"))
+
 	# nav 指路
 	var nav: Node = null
 	for c in main.get_children():
 		if c.name == "NavWaypoint": nav = c
 	check("P3 NavWaypoint 存在", nav != null)
 	var wp: Dictionary = root.get_node("/root/WaypointResolver").resolve("trail", main.current_portals())
-	check("P3 MQ02 目標在神社 → 指向北傳送點 (3,-107.8)：%s" % str(wp),
+	check("P3 MQ04 目標在神社 → 指向北傳送點 (3,-107.8)：%s" % str(wp),
 		not wp.is_empty() and wp.via_portal and (wp.pos as Vector2).distance_to(Vector2(3.0, -107.8)) < 1.0)
 	# 進神社
 	main.load_map("shrine", "trail")
@@ -104,11 +141,11 @@ func _run() -> void:
 	# Test 1
 	check("T1 神社載入、Player 存在、無錯", main.current_id == "shrine" and player != null)
 	check("T1 Player 在 group player", player.is_in_group("player"))
-	check("T1 序章任務鏈（MQ02 active）", qm.is_active("MQ02"))
+	check("T1 序章任務鏈（MQ04 active）", qm.is_active("MQ04"))
 
 	# REACH：走過參道抵達區 → MQ02 完成 → MQ03 開始
 	await _teleport(Vector3(0, 1.0, 40))
-	check("MQ02 REACH 完成、MQ03 開始", qm.is_completed("MQ02") and qm.is_active("MQ03"))
+	check("MQ04 REACH 完成、MQ05 開始", qm.is_completed("MQ04") and qm.is_active("MQ05"))
 
 	# Test 2：靠近拜殿
 	await _teleport(Vector3(0, 4.5, -21))
@@ -120,7 +157,7 @@ func _run() -> void:
 	await _teleport(Vector3(0, 4.5, -21))
 	check("T4 再次進入提示重新出現", prompt.visible and prompt.text.contains("拜訪"))
 	# Test 13 前置：來回進出不該動進度
-	var before: int = qm.get_objective_progress("MQ03")
+	var before: int = qm.get_objective_progress("MQ05")
 
 	# Test 5：按 E → 對話開、玩家鎖
 	await _press("interact")
@@ -160,9 +197,9 @@ func _run() -> void:
 
 	# Test 8/9/10
 	check("T8 met_reimu = true", sf.get_flag("met_reimu"))
-	check("T9 MQ03 完成", qm.is_completed("MQ03"))
-	check("T9b MQ04 也在同一對話完成", qm.is_completed("MQ04"))
-	check("T10 下一任務 MQ05 開始", qm.is_active("MQ05"))
+	check("T9 MQ05 完成", qm.is_completed("MQ05"))
+	check("T9b MQ06 也在同一對話完成", qm.is_completed("MQ06"))
+	check("T10 下一任務 MQ07 開始", qm.is_active("MQ07"))
 
 	# Test 11：恢復控制
 	await _settle(2)
@@ -177,11 +214,11 @@ func _run() -> void:
 		await _press("ui_accept"); await _press("ui_accept")
 
 	# Test 13：來回進出不增加進度
-	var mq05_before: int = qm.get_objective_progress("MQ05")
+	var mq07_before: int = qm.get_objective_progress("MQ07")
 	for i in 3:
 		await _teleport(Vector3(0, 4.5, -8))
 		await _teleport(Vector3(0, 4.5, -21))
-	check("T13 重複進出拜殿區不動任務進度", qm.get_objective_progress("MQ05") == mq05_before and before == 0)
+	check("T13 重複進出拜殿區不動任務進度", qm.get_objective_progress("MQ07") == mq07_before and before == 0)
 
 	# 見過靈夢後人里開放
 	main.load_map("trail", "shrine")
@@ -192,10 +229,10 @@ func _run() -> void:
 	await _press("portal_enter")
 	await _settle(30)
 	check("P4 見過靈夢後可傳送到人里", main.current_id == "slice")
-	# P5：人里門口 REACH → MQ05 完成（序章終點）
+	# P5：人里門口 REACH → MQ07 完成（序章終點）
 	await _teleport(Vector3(234.0, 2.0, 101.0))
 	await _settle(6)
-	check("P5 抵達人里門口 → MQ05 完成", qm.is_completed("MQ05"))
+	check("P5 抵達人里門口 → MQ07 完成", qm.is_completed("MQ07"))
 	check("P5 visited_human_village 旗標", sf.get_flag("visited_human_village"))
 	# P6：見過靈夢後回獸道，人里口不得再播「先去山上看看」
 	main.load_map("trail", "slice")

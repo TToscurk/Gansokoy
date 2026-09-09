@@ -20,7 +20,7 @@ const CombatVFX = preload("res://characters/yoriichi/vfx/combat_vfx.gd")
 const DissolveFX = preload("res://characters/combat/wolf_dissolve_fx.gd")
 const GatsugaFX = preload("res://characters/combat/wolf_gatsuga_fx.gd")
 
-enum State { IDLE, APPROACH, WINDUP, STRIKE, RECOVER, BACKSTEP, BREAK, DEAD }
+enum State { IDLE, APPROACH, WINDUP, STRIKE, RECOVER, BACKSTEP, BREAK, DEAD, DODGE }
 enum Attack { CHARGE, SLAM, GATSUGA }
 
 signal attack_windup(perilous: bool)
@@ -32,10 +32,13 @@ signal became_vulnerable
 signal died
 
 @export_group("Stats")
-## 序章第一隻怪：比武士脆，玩家 3–4 刀能解決。
-@export var max_health := 55.0
-@export var max_posture := 70.0
-@export var posture_regen := 14.0
+## 序章第一隻怪。設計目標：整場 20–40 秒。
+## 2026-09-08 實測：55 血 + 只會挨打 ≈ 5 秒結束，太快。
+## 血量拉到 90，並加上閃避（見 Dodge 群組）—— 拉長靠的是「打不中」而不是「打不動」，
+## 純加血會變成砍木樁。
+@export var max_health := 90.0
+@export var max_posture := 85.0
+@export var posture_regen := 16.0
 @export var posture_regen_delay := 1.4
 @export var break_time := 3.0
 
@@ -48,6 +51,27 @@ signal died
 @export var charge_speed := 11.0
 @export var turn_speed := 7.0
 @export var gravity := 20.0
+
+@export_group("Dodge")
+## 看到玩家揮刀就側躍閃開。序章第一隻怪如果只會挨打，戰鬥 5 秒就結束了。
+## GLB 沒有閃避動畫 —— 用 Run 加速 + 程序化側躍合成，四足獸的急停轉向本來就是這樣。
+@export var dodge_enabled := true
+## 玩家在這個距離內揮刀才閃（太遠沒必要閃，會顯得神經質）
+@export var dodge_react_range := 4.5
+@export var dodge_time := 0.42
+@export var dodge_speed := 9.5
+## 起跳高度：四足獸側躍會離地，純水平滑動看起來像溜冰
+@export var dodge_hop := 3.2
+## 兩次閃避之間的冷卻，避免玩家連揮時狼一直跳
+@export var dodge_cooldown := 1.6
+## 閃避成功率。1.0 = 每次揮刀都閃得掉，玩家會打不到而煩躁
+@export_range(0.0, 1.0, 0.05) var dodge_chance := 0.55
+
+@export_group("Animation")
+## Run 的播放倍速。原動畫 0.67 s 一循環，1.0 倍看起來像慢跑。
+@export_range(0.25, 3.0, 0.05) var run_anim_speed := 1.5
+## 閃避時 Run 再加速，做出急竄感
+@export_range(0.5, 4.0, 0.05) var dodge_anim_speed := 2.2
 
 @export_group("Attack")
 ## 衝撞：刨地前搖 → 撞。README 的 Charge 全長 3.67 s，這裡只取前段做前搖。
@@ -63,7 +87,8 @@ signal died
 ## 砸地的半徑（範圍攻擊，比 attack_range 大）。
 @export var slam_radius := 4.0
 @export var recover_time := 0.7
-@export var attack_cooldown := 0.45
+## 出招間隔。太短玩家沒有反擊窗口，太長狼會發呆。
+@export var attack_cooldown := 0.55
 ## 出招時選擇砸地（危攻擊）的機率，其餘為衝撞。
 @export_range(0.0, 1.0, 0.05) var slam_chance := 0.3
 ## 牙通牙（旋轉突進）：距離較遠時才用，是拉近距離的招。
@@ -91,6 +116,11 @@ var _visual: Node3D = null
 var _tell: MeshInstance3D = null
 var _anim: AnimationPlayer = null
 var _charge_dir := Vector3.ZERO
+## 閃避
+var _dodge_dir := Vector3.ZERO
+var _dodge_cd := 0.0
+## 上一幀玩家是否在攻擊 —— 用來抓「揮刀的那一瞬間」而不是整段攻擊
+var _player_was_attacking := false
 ## 死亡溶解：換上的 shader 材質、光點粒子、經過秒數
 var _dissolve_mats: Array = []
 var _motes: GPUParticles3D = null
@@ -164,9 +194,16 @@ func _find_anim(n: Node) -> AnimationPlayer:
 func _play(anim: String, speed: float = 1.0) -> void:
 	if _anim == null or not _anim.has_animation(anim):
 		return
+	# ⚠ 只用 speed_scale 控速，play() 的 custom_speed 一律給 1.0。
+	#   兩個都給會相乘（實際倍速 = speed_scale × custom_speed = speed²）。
 	if _anim.current_animation == anim and _anim.is_playing():
+		# ⚠ 同一段動畫換速度時不能直接 return —— 閃避是「Run 再加速」，
+		#   早退會讓 dodge_anim_speed 永遠不生效（看起來跟一般跑步一樣）。
+		if not is_equal_approx(_anim.speed_scale, speed):
+			_anim.speed_scale = speed
 		return
-	_anim.play(anim, 0.18, speed)
+	_anim.speed_scale = speed
+	_anim.play(anim, 0.18, 1.0)
 
 
 func _set_state(s: State) -> void:
@@ -192,6 +229,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0.0
 
 	_timer += delta
+	_dodge_cd = maxf(0.0, _dodge_cd - delta)
+	_check_dodge()
 
 	match state:
 		State.IDLE:
@@ -202,7 +241,7 @@ func _physics_process(delta: float) -> void:
 				_set_state(State.APPROACH)
 		State.APPROACH:
 			_chase(delta)
-			_play("Run")
+			_play("Run", run_anim_speed)
 			var d := _target_distance()
 			if d > detect_range * 1.4:
 				_set_state(State.IDLE)
@@ -274,11 +313,65 @@ func _physics_process(delta: float) -> void:
 			_face_target(delta)
 			if _timer >= 0.55:
 				_set_state(State.APPROACH)
+		State.DODGE:
+			# 側躍：水平推進 + 一個小跳。動畫沒有 root motion，位移全靠這裡。
+			velocity.x = _dodge_dir.x * dodge_speed
+			velocity.z = _dodge_dir.z * dodge_speed
+			_play("Run", dodge_anim_speed)
+			# 面向玩家，讓閃避看起來是「繞著打」而不是逃跑
+			_face_target(delta)
+			if _timer >= dodge_time:
+				_set_state(State.APPROACH)
 		State.BREAK:
 			velocity.x = 0.0
 			velocity.z = 0.0
 
 	move_and_slide()
+
+
+## 玩家揮刀的那一瞬間，決定要不要側躍閃開。
+##
+## 只在「上一幀沒攻擊、這一幀開始攻擊」時判定 —— 用整段 ATTACKING 判定的話，
+## 一次揮刀會觸發數十幀，狼會連跳到天邊。
+func _check_dodge() -> void:
+	if not dodge_enabled or not is_instance_valid(target):
+		_player_was_attacking = false
+		return
+	# ⚠ 不能寫 int(target.get(...))：目標沒有這個屬性時 get() 回 null，
+	#   int(null) 會噴「Nonexistent 'int' constructor」每幀洗版。
+	var st: Variant = target.get("action_state")
+	var attacking: bool = st != null and int(st) == 1   # ActionState.ATTACKING
+	var just_started := attacking and not _player_was_attacking
+	_player_was_attacking = attacking
+	if not just_started or _dodge_cd > 0.0:
+		return
+	# 這些狀態不能中斷：出招中、破綻中、死亡
+	if state in [State.STRIKE, State.BREAK, State.DEAD, State.DODGE]:
+		return
+	if _target_distance() > dodge_react_range:
+		return
+	if randf() > dodge_chance:
+		return
+	_begin_dodge()
+
+
+func _begin_dodge() -> void:
+	# 前搖被自己的閃避打斷時要收乾淨（牙通牙的鑽體不能留在場上）
+	_end_gatsuga()
+	if _tell:
+		_tell.visible = false
+	var to := _target_position() - global_position
+	to.y = 0.0
+	if to.length() < 0.01:
+		to = -global_transform.basis.z
+	to = to.normalized()
+	# 側向為主、略微後退：純側移會繞圈，純後退會拉開距離變成放風箏
+	var side := Vector3(-to.z, 0.0, to.x) * (1.0 if randf() < 0.5 else -1.0)
+	_dodge_dir = (side * 0.85 - to * 0.35).normalized()
+	_dodge_cd = dodge_cooldown
+	_set_state(State.DODGE)
+	if is_on_floor():
+		velocity.y = dodge_hop
 
 
 func _target_position() -> Vector3:

@@ -1,0 +1,11 @@
+{
+  "_doc": "MQ02 山犬 戰後停頓。怪死了不要馬上跳 Quest Complete —— 先讓緣一看著屍體說一句。這句是整個序章主題的第一顆種子，之後靈夢那句「妖怪不代表它該死」才站得住。",
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "「……」", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "serious", "text": "「和鬼……不同。」", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "sad", "text": "「但也是生命。」", "next": null,
+            "set_flags": ["defeated_first_yokai"],
+            "quest_event": { "type": "DEFEAT", "target": "trail_wolf" } }
+  }
+}

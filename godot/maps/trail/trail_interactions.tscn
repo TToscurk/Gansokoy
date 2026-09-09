@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
+[ext_resource type="Script" path="res://components/combat/combat_encounter.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cse1kir0enemywolf" path="res://characters/combat/enemy_wolf.tscn" id="3"]
 
 [sub_resource type="BoxShape3D" id="wake"]
 size = Vector3(30, 8, 30)
 
-[sub_resource type="BoxShape3D" id="ring"]
-size = Vector3(60, 10, 60)
-
 [sub_resource type="BoxShape3D" id="strip"]
 size = Vector3(30, 8, 10)
+
+[sub_resource type="BoxShape3D" id="arena"]
+size = Vector3(22, 10, 14)
 
 [node name="獸道互動點" type="Node3D"]
 
@@ -61,6 +63,36 @@ auto_trigger = true
 once_flag = "sensed_presence_played"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="妖怪氣息"]
+shape = SubResource("strip")
+
+[node name="山犬遭遇" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3, 8, -82)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+spawn_offsets = Array[Vector3]([Vector3(0, 0, -7)])
+quest_target_id = "trail_wolf"
+clear_flag = "defeated_first_yokai"
+skip_flag = "defeated_first_yokai"
+intro_dialogue = "yoriichi_wolf_encounter"
+clear_dialogue = "yoriichi_wolf_aftermath"
+clear_delay = 1.6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="山犬遭遇"]
+shape = SubResource("arena")
+
+[node name="逃跑妖怪" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 8, -95)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "trail_fleeing_yokai"
+dialogue_id = "yoriichi_fleeing_yokai"
+auto_trigger = true
+once_flag = "saw_fleeing_yokai_played"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="逃跑妖怪"]
 shape = SubResource("strip")
 
 [node name="人里口_未開放" type="Area3D" parent="."]

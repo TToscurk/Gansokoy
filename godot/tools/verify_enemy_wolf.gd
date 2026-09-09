@@ -100,7 +100,9 @@ func _run() -> void:
 
 	# ── 追擊 ──
 	var fake := CharacterBody3D.new()
-	fake.add_to_group("player")
+	# ⚠ 用有腳本的假玩家：裸 CharacterBody3D 用 set("action_state", 1)
+	#   不會建立屬性，狼的閃避判定永遠讀到 null。
+	fake.set_script(load("res://tools/_fake_player.gd"))
 	var pc := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
 	cap.height = 1.7
@@ -133,6 +135,56 @@ func _run() -> void:
 	# ── 前搖長度：必須讀得出來 ──
 	check("衝撞前搖 ≥0.4 s（實 %.2f）" % wolf.charge_windup, wolf.charge_windup >= 0.4)
 	check("砸地前搖 ≥0.4 s（實 %.2f）" % wolf.slam_windup, wolf.slam_windup >= 0.4)
+
+	# ── 跑步動畫倍速 ──
+	check("Run 倍速 = 1.5（實 %.2f）" % wolf.run_anim_speed,
+		is_equal_approx(wolf.run_anim_speed, 1.5))
+	wolf.global_position = fake.global_position + Vector3(0, 0, 9.0)
+	wolf._set_state(1)          # APPROACH
+	await _settle(12)
+	if anim != null:
+		check("追擊時 speed_scale 套用 1.5（實 %.2f）" % anim.speed_scale,
+			is_equal_approx(anim.speed_scale, 1.5))
+
+	# ── 閃避：玩家揮刀 → 側躍 ──
+	check("閃避預設開啟", wolf.dodge_enabled)
+	wolf.global_position = fake.global_position + Vector3(0, 0, 3.0)
+	wolf._dodge_cd = 0.0
+	wolf.dodge_chance = 1.0     # 測試要確定會閃
+	await _settle(6)
+	var p_before: Vector3 = wolf.global_position
+	# 假玩家進入 ATTACKING（ActionState.ATTACKING = 1）
+	fake.set("action_state", 0)
+	await physics_frame
+	fake.set("action_state", 1)
+	var saw_dodge := false
+	for i in 40:
+		await physics_frame
+		if wolf.state == 8:      # DODGE
+			saw_dodge = true
+			break
+	check("玩家揮刀 → 進入 DODGE", saw_dodge)
+	if saw_dodge and anim != null:
+		check("閃避時 speed_scale 加速到 2.2（實 %.2f）" % anim.speed_scale,
+			is_equal_approx(anim.speed_scale, 2.2))
+	for i in 40:
+		await physics_frame
+	var moved := p_before.distance_to(wolf.global_position)
+	check("閃避有實際位移（%.2f m）" % moved, moved > 1.0)
+	check("閃避後回到 APPROACH（實 %d）" % wolf.state, wolf.state == 1)
+	# 冷卻：連續揮刀不該一直跳
+	wolf.global_position = fake.global_position + Vector3(0, 0, 3.0)
+	await _settle(4)
+	fake.set("action_state", 0)
+	await physics_frame
+	fake.set("action_state", 1)
+	var dodged_again := false
+	for i in 30:
+		await physics_frame
+		if wolf.state == 8:
+			dodged_again = true
+	check("冷卻中不再閃（cd=%.2f）" % wolf._dodge_cd, not dodged_again)
+	wolf.dodge_enabled = false   # 後面的死亡測試不要被閃避打斷
 
 	# ── 牙通牙特效節點 ──
 	check("鑽體已建立", wolf.get("_drill") != null)
