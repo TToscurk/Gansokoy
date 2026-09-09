@@ -5,6 +5,7 @@
     "trail_presence":          { "map": "trail",  "x": 7.0,   "z": -70.0, "label": "獸道深處" },
     "trail_wolf":              { "map": "trail",  "x": 5.3,   "z": -84.0, "label": "擋路的山犬" },
     "trail_fleeing_yokai":     { "map": "trail",  "x": 4.2,   "z": -95.0, "label": "樹叢的動靜" },
+    "trail_wounded_yokai":     { "map": "trail",  "x": 3.7,   "z": -101.0, "label": "微弱的聲音" },
     "hakurei_shrine_approach": { "map": "shrine", "x": 0.0,   "z": 40.0,  "label": "山上的建築" },
     "reimu_hakurei_shrine":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
     "reimu_gensokyo_intro":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },

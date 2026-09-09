@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
 [ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
@@ -10,11 +10,18 @@ target_id = "trail_fleeing_yokai"
 description = "調查逃離的妖怪"
 required_amount = 1
 
+[sub_resource type="Resource" id="obj_1"]
+script = ExtResource("obj")
+type = 0
+target_id = "trail_wounded_yokai"
+description = "循著聲音查看"
+required_amount = 1
+
 [resource]
 script = ExtResource("qd")
 id = "MQ03"
 title = "不要追"
 description = "有東西躲在樹叢裡，一靠近就跑了。"
-objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
+objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
 next_quest_id = "MQ04"
 complete_flags = PackedStringArray("saw_fleeing_yokai")

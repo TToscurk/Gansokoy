@@ -1,0 +1,27 @@
+{
+  "_doc": "受傷妖怪。序章唯一的選擇。靠近 → 緣一收刀、毛玉害怕地逃走；離開 → 毛玉留著。兩條路都完成任務，差別在旗標與緣一的最後一句。設計要求：不做複雜選項，只有兩個。",
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "（……有聲音。）", "next": "l2" },
+    "l2": { "speaker": "kedama", "portrait": "normal", "text": "「……不要……」", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "surprised", "text": "（一隻小妖怪。縮在樹根旁，身上有傷。）", "next": "l4" },
+    "l4": { "speaker": "kedama", "portrait": "scared", "text": "「別過來……」", "next": "choice" },
+    "choice": { "speaker": "yoriichi", "portrait": "normal", "text": "（……）",
+                "choices": [
+                  { "text": "靠近", "next": "a1" },
+                  { "text": "離開", "next": "b1" }
+                ] },
+
+    "a1": { "speaker": "yoriichi", "portrait": "normal", "text": "（緣一把刀收回鞘中。）", "next": "a2",
+            "set_flags": ["spared_wounded_yokai"] },
+    "a2": { "speaker": "yoriichi", "portrait": "normal", "text": "「我不會傷你。」", "next": "a3" },
+    "a3": { "speaker": "kedama", "portrait": "scared", "text": "「……」", "next": "a4" },
+    "a4": { "speaker": "yoriichi", "portrait": "normal", "text": "（它不相信。慢慢往後退——）", "next": "a5" },
+    "a5": { "speaker": "yoriichi", "portrait": "normal", "text": "（然後逃走了。）", "next": "a6" },
+    "a6": { "speaker": "yoriichi", "portrait": "sad", "text": "「……它在害怕我。」", "next": null },
+
+    "b1": { "speaker": "yoriichi", "portrait": "normal", "text": "（緣一轉身離開。）", "next": "b2",
+            "set_flags": ["left_wounded_yokai"] },
+    "b2": { "speaker": "yoriichi", "portrait": "normal", "text": "（身後傳來細微的、鬆了一口氣的聲音。）", "next": null }
+  }
+}

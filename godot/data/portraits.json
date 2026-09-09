@@ -20,5 +20,12 @@
       "surprised": "res://assets/portraits/yoriichi_surprised.png",
       "angry": "res://assets/portraits/yoriichi_angry.png"
     }
+  },
+  "kedama": {
+    "name": "毛玉",
+    "portraits": {
+      "normal": "res://assets/portraits/kedama_normal.png",
+      "scared": "res://assets/portraits/kedama_scared.png"
+    }
   }
 }

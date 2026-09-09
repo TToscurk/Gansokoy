@@ -117,15 +117,86 @@ func _run() -> void:
 	check("P2b defeated_first_yokai 旗標", sf.get_flag("defeated_first_yokai"))
 	check("P2b MQ02 完成 → MQ03（不要追）", qm.is_completed("MQ02") and qm.is_active("MQ03"))
 
-	# ── MQ03 不要追 ──
+	# ── MQ03 不要追：毛玉真的要跑 ──
+	var kedamas := main.get_tree().get_nodes_in_group("kedama")
+	check("P2c 毛玉已擺好（%d 隻，含受傷的）" % kedamas.size(), kedamas.size() >= 4)
+	# 站在毛玉群旁邊（notice_range 7 m 內），它們要開始逃
+	await _teleport(Vector3(4.2, 8.0, -90))
+	await _settle(30)
+	var fleeing := 0
+	for k in main.get_tree().get_nodes_in_group("kedama"):
+		if int(k.get("mode")) == 1 and bool(k.get("_noticed")):
+			fleeing += 1
+	check("P2c 靠近後毛玉開始逃（%d 隻在逃）" % fleeing, fleeing >= 2)
+	# 等它們跑光（flee_distance 18 m / 6.5 m/s ≈ 3 s）
+	await _settle(240)
+	var left_flee := 0
+	for k in main.get_tree().get_nodes_in_group("kedama"):
+		if int(k.get("mode")) == 1:
+			left_flee += 1
+	check("P2c 逃跑毛玉全部消失（剩 %d）" % left_flee, left_flee == 0)
+	check("P2c 逃光後留下果實", main.get_tree().get_nodes_in_group("kedama").size() >= 1 \
+		and main.map_root.find_child("DroppedFruit", true, false) != null)
+	# 走到果實旁 → 獨白
 	await _teleport(Vector3(4.2, 8.0, -95))
-	await _settle(6)
-	check("P2c 逃跑妖怪獨白播放", dm.is_active())
+	await _settle(8)
+	check("P2c 果實獨白播放", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
 	await _settle(4)
 	check("P2c saw_fleeing_yokai 旗標", sf.get_flag("saw_fleeing_yokai"))
-	check("P2c MQ03 完成 → MQ04（山上的神社）", qm.is_completed("MQ03") and qm.is_active("MQ04"))
+	check("P2c MQ03 第一目標完成、仍 active", qm.is_active("MQ03") and qm.get_objective_progress("MQ03") == 0)
+
+	# ── 受傷妖怪：序章唯一的選擇 ──
+	await _teleport(Vector3(3.7, 8.0, -101))
+	await _settle(8)
+	check("P2d 受傷妖怪對話播放", dm.is_active())
+	var ui_d: CanvasLayer = null
+	for c in main.get_children():
+		if c.name == "DialogueUI":
+			ui_d = c
+	var choices_box: VBoxContainer = ui_d.get_node("Panel/VBox/Choices")
+	# 推到選項節點
+	var guard := 0
+	while dm.is_active() and not choices_box.visible and guard < 20:
+		await _press("ui_accept"); await _press("ui_accept")
+		guard += 1
+	check("P2d 出現選項（%d 個）" % choices_box.get_child_count(), choices_box.visible and choices_box.get_child_count() == 2)
+	if choices_box.visible:
+		check("P2d 選項是「靠近」「離開」",
+			(choices_box.get_child(0) as Button).text == "靠近" and (choices_box.get_child(1) as Button).text == "離開")
+	# 先拔刀，這樣才能驗證「靠近 → 收刀」。
+	# ⚠ 對話中 input_locked，request_draw 可能被擋；先解鎖再拔，拔完（DRAWN=2）再鎖回。
+	player.set("input_locked", false)
+	if player.has_method("request_draw"):
+		player.request_draw()
+	var g2 := 0
+	while int(player.get("sword_state")) != 2 and g2 < 120:
+		await physics_frame
+		g2 += 1
+	player.set("input_locked", true)
+	var drawn_before: int = int(player.get("sword_state"))
+	check("P2d 前置：刀已拔出（state=%d）" % drawn_before, drawn_before == 2)
+	# 選「靠近」（index 0）
+	dm.advance(0)
+	await _settle(4)
+	check("P2d 選靠近 → spared_wounded_yokai 旗標", sf.get_flag("spared_wounded_yokai"))
+	while dm.is_active():
+		await _press("ui_accept"); await _press("ui_accept")
+	# 收刀動畫要跑完（SHEATHING=3 → SHEATHED=0）
+	var g3 := 0
+	while int(player.get("sword_state")) in [2, 3] and g3 < 180:
+		await physics_frame
+		g3 += 1
+	var sword_after: int = int(player.get("sword_state"))
+	check("P2d 靠近後緣一收刀（%d → %d）" % [drawn_before, sword_after], sword_after == 0)
+	# 毛玉要逃走（2.2 s 後起跑 + 3 s 跑完）
+	await _settle(360)
+	var wounded_left := 0
+	for k in main.get_tree().get_nodes_in_group("kedama"):
+		wounded_left += 1
+	check("P2d 受傷毛玉已逃離（場上剩 %d 隻）" % wounded_left, wounded_left == 0)
+	check("P2d MQ03 完成 → MQ04（山上的神社）", qm.is_completed("MQ03") and qm.is_active("MQ04"))
 
 	# nav 指路
 	var nav: Node = null

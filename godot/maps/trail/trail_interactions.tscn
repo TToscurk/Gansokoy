@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
 [ext_resource type="Script" path="res://components/combat/combat_encounter.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cse1kir0enemywolf" path="res://characters/combat/enemy_wolf.tscn" id="3"]
+[ext_resource type="Script" path="res://components/story/fleeing_yokai_group.gd" id="4"]
+[ext_resource type="Script" path="res://components/story/wounded_yokai_event.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://kedama0000000001" path="res://characters/yokai/kedama.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://droppedfruit0001" path="res://components/story/dropped_fruit.tscn" id="7"]
 
 [sub_resource type="BoxShape3D" id="wake"]
 size = Vector3(30, 8, 30)
@@ -12,6 +16,12 @@ size = Vector3(30, 8, 10)
 
 [sub_resource type="BoxShape3D" id="arena"]
 size = Vector3(22, 10, 14)
+
+[sub_resource type="BoxShape3D" id="fruit"]
+size = Vector3(6, 4, 6)
+
+[sub_resource type="BoxShape3D" id="wounded"]
+size = Vector3(14, 8, 10)
 
 [node name="獸道互動點" type="Node3D"]
 
@@ -82,8 +92,17 @@ clear_delay = 1.6
 [node name="CollisionShape3D" type="CollisionShape3D" parent="山犬遭遇"]
 shape = SubResource("arena")
 
-[node name="逃跑妖怪" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 8, -95)
+[node name="逃跑妖怪群" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 7.8, -95)
+script = ExtResource("4")
+kedama_scene = ExtResource("6")
+count = 3
+spread = 2.5
+flee_dir = Vector3(1, 0, -0.3)
+drop_scene = ExtResource("7")
+reveal_interaction = "果實獨白"
+
+[node name="果實獨白" type="Area3D" parent="逃跑妖怪群"]
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")
@@ -91,9 +110,26 @@ interaction_id = "trail_fleeing_yokai"
 dialogue_id = "yoriichi_fleeing_yokai"
 auto_trigger = true
 once_flag = "saw_fleeing_yokai_played"
+enabled = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="逃跑妖怪"]
-shape = SubResource("strip")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="逃跑妖怪群/果實獨白"]
+shape = SubResource("fruit")
+
+[node name="受傷妖怪" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 8, -101)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("5")
+kedama_scene = ExtResource("6")
+kedama_offset = Vector3(2.4, -0.2, -2.0)
+dialogue_id = "yoriichi_wounded_yokai"
+once_flag = "wounded_yokai_played"
+approach_flag = "spared_wounded_yokai"
+leave_flag = "left_wounded_yokai"
+quest_target_id = "trail_wounded_yokai"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="受傷妖怪"]
+shape = SubResource("wounded")
 
 [node name="人里口_未開放" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 98)
