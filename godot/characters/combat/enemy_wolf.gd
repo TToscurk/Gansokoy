@@ -1,27 +1,41 @@
 extends CharacterBody3D
 class_name EnemyWolf
-## 獸道山犬（雙尾狼）—— 序章 MQ02 的第一場戰鬥。
+## 獸道山犬 —— 序章 MQ02 的第一場戰鬥。
 ##
 ## 與 enemy_samurai 共用同一套戰鬥契約：軀幹（posture）、take_hit()、
 ## can_deathblow()、execute_deathblow()。玩家那邊一行都不用改。
 ##
-## 差別在三點：
-## 1. **有真動畫**（Idle/Walk/Run/Charge/Slam/Gatsuga/Dissolve），前搖靠動畫本身讀，
-##    不是靠頭頂光環。光環仍保留成可選，預設關。
-## 2. **原地動畫、無 root motion** —— 位移全部由本腳本驅動（README 明載）。
-##    衝撞的推進必須自己算，否則狼會在原地跑步。
-## 3. **死亡是 Dissolve 上浮化光點**，不是倒地。所以 _on_died 不做倒地 tween。
+## 2026-09-10 換模型：舊雙尾狼（wolf_twin_tail.glb，58 骨）換成新單尾狼
+## （wolf_pounce.glb，46 骨）。兩隻骨架不相容，動畫不能互用，整套攻擊
+## 鏈改成對應新模型自帶的 6 個動作：
+##   Wolf_Idle / Wolf_Walk / Wolf_Run / Wolf_Attack_Claw / Wolf_Attack_Lunge
+##   / Wolf_Attack_Pounce
+## 舊的 Charge → Attack_Lunge（直線突進咬擊）、Slam → Attack_Claw（近身爪擊）、
+## Gatsuga（舊旋轉突進特效）→ Attack_Pounce（新模型自帶旋風+滑行煞車，
+## 不再需要 wolf_gatsuga_fx.gd 的鑽體遮蔽方案）。
+## Dissolve 死亡動畫已完成：新模型的 Wolf_Death（96 幀 / 4.0 s）——中招 →
+##   挺直抬頭 → 四腳離地 → 緩緩浮空 72 cm，全程不倒地。
+##   wolf_dissolve_fx.gd／dissolve_fx.json 已接回，逐幀曲線重新由該動畫量測產生。
 ##
-## 設計紅線同武士：**前搖必須看得見**。Charge 前搖 1.2 s（刨地），
-## Slam 前搖 1.0 s（蹲身）—— 玩家輸掉必須是讀錯招，不是被偷。
+## 差別在三點：
+## 1. **有真動畫**，前搖靠動畫本身讀，不是靠頭頂光環。光環仍保留成可選，預設關。
+## 2. **原地動畫、無 root motion** —— 位移全部由本腳本驅動。
+##    衝撞的推進必須自己算，否則狼會在原地跑步。
+##    （Attack_Pounce 例外：旋風段的旋轉與滑行煞車已烘進動畫本身，
+##    但推進量仍由本腳本的 velocity 驅動，動畫只負責姿態與视覺旋轉。）
+## 3. 死亡流程見上方 ⚠ 備註，暫時簡化。
+##
+## 設計紅線同武士：**前搖必須看得見**。Lunge 前搖 1.2 s（蓄力後突進），
+## Claw 前搖 1.0 s（收爪蓄力）—— 玩家輸掉必須是讀錯招，不是被偷。
 
 const PostureComponent = preload("res://characters/combat/posture.gd")
 const CombatVFX = preload("res://characters/yoriichi/vfx/combat_vfx.gd")
+const VortexFX = preload("res://characters/combat/wolf_vortex_fx.gd")
+const WindStreakFX = preload("res://characters/combat/wolf_windstreak_fx.gd")
 const DissolveFX = preload("res://characters/combat/wolf_dissolve_fx.gd")
-const GatsugaFX = preload("res://characters/combat/wolf_gatsuga_fx.gd")
 
 enum State { IDLE, APPROACH, WINDUP, STRIKE, RECOVER, BACKSTEP, BREAK, DEAD, DODGE }
-enum Attack { CHARGE, SLAM, GATSUGA }
+enum Attack { LUNGE, CLAW, POUNCE }
 
 signal attack_windup(perilous: bool)
 signal attack_struck(damage: float)
@@ -47,8 +61,8 @@ signal died
 ## 四足獸的攻擊距離比人長。
 @export var attack_range := 3.2
 @export var move_speed := 4.2
-## 衝撞時的推進速度。
-@export var charge_speed := 11.0
+## 突進咬擊（Lunge）時的推進速度。
+@export var lunge_speed := 11.0
 @export var turn_speed := 7.0
 @export var gravity := 20.0
 
@@ -68,38 +82,48 @@ signal died
 @export_range(0.0, 1.0, 0.05) var dodge_chance := 0.55
 
 @export_group("Animation")
-## Run 的播放倍速。原動畫 0.67 s 一循環，1.0 倍看起來像慢跑。
+## Run 的播放倍速。
 @export_range(0.25, 3.0, 0.05) var run_anim_speed := 1.5
 ## 閃避時 Run 再加速，做出急竄感
 @export_range(0.5, 4.0, 0.05) var dodge_anim_speed := 2.2
 
 @export_group("Attack")
-## 衝撞：刨地前搖 → 撞。README 的 Charge 全長 3.67 s，這裡只取前段做前搖。
-@export_range(0.4, 2.0, 0.05) var charge_windup := 1.2
-@export var charge_dash_time := 0.55
-@export var charge_damage := 16.0
-@export var charge_posture_damage := 13.0
-## 砸地：蹲身 → 跳 → 砸。範圍攻擊，不可安全格擋（危）。
-@export_range(0.4, 2.0, 0.05) var slam_windup := 1.0
-@export var slam_strike_time := 0.18
-@export var slam_damage := 24.0
-@export var slam_posture_damage := 22.0
-## 砸地的半徑（範圍攻擊，比 attack_range 大）。
-@export var slam_radius := 4.0
+## 突進咬擊（Lunge）：蓄力前搖 → 直線突進咬擊。
+@export_range(0.4, 2.0, 0.05) var lunge_windup := 1.2
+@export var lunge_dash_time := 0.55
+@export var lunge_damage := 16.0
+@export var lunge_posture_damage := 13.0
+## 近身爪擊（Claw）：收爪蓄力 → 揮爪。範圍小、出招快。
+@export_range(0.4, 2.0, 0.05) var claw_windup := 1.0
+@export var claw_strike_time := 0.18
+@export var claw_damage := 24.0
+@export var claw_posture_damage := 22.0
 @export var recover_time := 0.7
 ## 出招間隔。太短玩家沒有反擊窗口，太長狼會發呆。
 @export var attack_cooldown := 0.55
-## 出招時選擇砸地（危攻擊）的機率，其餘為衝撞。
-@export_range(0.0, 1.0, 0.05) var slam_chance := 0.3
-## 牙通牙（旋轉突進）：距離較遠時才用，是拉近距離的招。
-## 前搖 = 動畫起旋前的 f0–30（1.25 s），旋轉段 f30–73。
-@export_range(0.0, 1.0, 0.05) var gatsuga_chance := 0.25
-## 超過這個距離才考慮牙通牙（近身用衝撞／砸地）。
-@export var gatsuga_min_range := 4.5
-@export var gatsuga_damage := 20.0
-@export var gatsuga_posture_damage := 18.0
-## 旋轉段的推進速度。
-@export var gatsuga_speed := 9.0
+## 出招時選擇爪擊的機率，其餘為突進咬擊。
+@export_range(0.0, 1.0, 0.05) var claw_chance := 0.3
+## 撲擊（Pounce）：距離較遠時才用，是拉近距離＋大傷害的招。
+## 動畫自帶旋風加速與落地滑行煞車（見 wolf_pounce.README），
+## 前搖由動畫本身決定，不用額外參數。
+@export_range(0.0, 1.0, 0.05) var pounce_chance := 0.25
+## 超過這個距離才考慮撲擊（近身用突進咬擊／爪擊）。
+## ⚠ 這個值必須大於 attack_range，且撲擊的擲骰在 APPROACH 獨立進行——
+##   撲擊是「拉近距離」的招，發動帶在近身攻擊範圍之外。
+@export var pounce_min_range := 4.5
+## 撲擊發動距離帶的上限。超過這個距離就純追擊，不撲。
+@export var pounce_max_range := 9.0
+@export var pounce_damage := 20.0
+@export var pounce_posture_damage := 18.0
+## 撲擊蓄力後的突進速度（對應動畫 frame 30–52 的衝刺段）。
+@export var pounce_speed := 9.0
+## 撲擊衝刺段長度，對應 Blender 動畫 f30–52 = 0.92 s。
+## 之後交給 RECOVER 的指數滑行煞車（動畫 f52–84 的滑停段）。
+@export var pounce_dash_time := 0.92
+## 撲擊收招後的滑行煞車：每幀（24fps 基準）速度衰減倍率，數值取自
+## Blender Root 骨骼滑行曲線實測（0.88/frame 指數衰減，非等速煞車）。
+## 越接近 1.0 滑得越遠、越接近 0.5 停得越快。
+@export_range(0.5, 0.99, 0.01) var pounce_slide_decay := 0.88
 
 @export_group("Visual")
 ## 頭頂前搖光環。狼的動畫本身就讀得出前搖，預設關；除錯時可開。
@@ -110,7 +134,7 @@ var target: Node3D = null
 var state: State = State.IDLE
 
 var _timer := 0.0
-var _attack: Attack = Attack.CHARGE
+var _attack: Attack = Attack.LUNGE
 var _hit_this_strike := false
 var _visual: Node3D = null
 var _tell: MeshInstance3D = null
@@ -121,19 +145,24 @@ var _dodge_dir := Vector3.ZERO
 var _dodge_cd := 0.0
 ## 上一幀玩家是否在攻擊 —— 用來抓「揮刀的那一瞬間」而不是整段攻擊
 var _player_was_attacking := false
+## 狼的網格根節點
+var _wolf_mesh: Node3D = null
+## 撲擊旋風特效：靜態管狀網格 + shader trim（見 wolf_vortex_fx.gd 註解）
+var _vortex_root: Node3D = null
+var _vortex_mats: Array = []
+## 撲擊動畫經過秒數，驅動旋風 trim 曲線。-1 = 未在撲擊中。
+var _pounce_t := -1.0
+## 跑步風線：靜態管狀網格 + shader trim，16 幀循環（見 wolf_windstreak_fx.gd）
+var _streak_root: Node3D = null
+var _streak_mats: Array = []
+## 跑步風線的循環計時器（一直累加，由 shader 端取模循環）
+var _streak_t := 0.0
 ## 死亡溶解：換上的 shader 材質、光點粒子、經過秒數
 var _dissolve_mats: Array = []
 var _motes: GPUParticles3D = null
 var _dissolve_t := -1.0
 ## 溶解掃描的底線，死亡當下鎖定（身體會上浮，底線不能跟著跑）
 var _sweep_floor := INF
-## 牙通牙特效：旋轉段用不透明鑽體取代狼的網格（見 wolf_gatsuga_fx.gd 註解）
-var _drill: MeshInstance3D = null
-var _dust: GPUParticles3D = null
-var _streaks: GPUParticles3D = null
-var _gatsuga_t := -1.0
-## 狼的網格根節點（旋轉段要整個藏起來）
-var _wolf_mesh: Node3D = null
 
 
 func _ready() -> void:
@@ -163,17 +192,27 @@ func _ready() -> void:
 	if _anim == null:
 		push_warning("[狼] 找不到 AnimationPlayer，動畫不會播")
 	else:
-		_play("Idle")
-	# 牙通牙的鑽體與粒子，建好先關著
+		# glTF 匯出/匯入沒有把循環旗標帶進來，Idle/Walk/Run 這三個要循環播放的
+		# 動作在此手動強制設成 LOOP_LINEAR，其餘攻擊動作維持 LOOP_NONE（播一次）。
+		for loop_anim in ["Wolf_Idle", "Wolf_Walk", "Wolf_Run"]:
+			if _anim.has_animation(loop_anim):
+				_anim.get_animation(loop_anim).loop_mode = Animation.LOOP_LINEAR
+		_play("Wolf_Idle")
 	if _visual != null:
-		_drill = GatsugaFX.make_drill(_visual)
-		_dust = GatsugaFX.make_dust(self)
-		_streaks = GatsugaFX.make_streaks(self)
-		# 狼的 GLB 實例是 Visual 的子節點（見 enemy_wolf.tscn）
 		for c in _visual.get_children():
 			if c is Node3D and String(c.name).begins_with("wolf"):
 				_wolf_mesh = c
 				break
+		# 撲擊旋風：掛在 Visual 底下、與狼網格共用同一個變換（見 wolf_vortex_fx.gd
+		# 的註解 —— 縮放與朝向寫在 wolf_pounce 子節點上，不是 Visual 上）。
+		# 必須在 _wolf_mesh 找到之後才建。
+		var fx: Dictionary = VortexFX.make(_visual, _wolf_mesh)
+		_vortex_root = fx.get("root")
+		_vortex_mats = fx.get("mats", [])
+		# 跑步／撲擊風線，同樣共用狼網格的變換
+		var sfx: Dictionary = WindStreakFX.make(_visual, _wolf_mesh)
+		_streak_root = sfx.get("root")
+		_streak_mats = sfx.get("mats", [])
 
 	if target == null:
 		var players := get_tree().get_nodes_in_group("player")
@@ -216,7 +255,7 @@ func _set_state(s: State) -> void:
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
-		# 死亡動畫是上浮化光點，不受重力
+		# 死亡動畫是上浮化光點，不受重力；上浮位移烘在動畫的 Root 曲線裡
 		if _dissolve_t >= 0.0:
 			_dissolve_t += delta
 			_tick_dissolve()
@@ -231,72 +270,97 @@ func _physics_process(delta: float) -> void:
 	_timer += delta
 	_dodge_cd = maxf(0.0, _dodge_cd - delta)
 	_check_dodge()
+	_tick_streaks(delta)
 
 	match state:
 		State.IDLE:
 			velocity.x = 0.0
 			velocity.z = 0.0
-			_play("Idle")
+			_play("Wolf_Idle")
 			if _target_distance() <= detect_range:
 				_set_state(State.APPROACH)
 		State.APPROACH:
 			_chase(delta)
-			_play("Run", run_anim_speed)
+			_play("Wolf_Run", run_anim_speed)
 			var d := _target_distance()
 			if d > detect_range * 1.4:
 				_set_state(State.IDLE)
 			elif d <= attack_range and _timer >= attack_cooldown:
 				_begin_windup()
+			elif d >= pounce_min_range and d <= pounce_max_range \
+					and _timer >= attack_cooldown and randf() < pounce_chance * delta * 4.0:
+				# ⚠ 撲擊是「拉近距離」的招，發動帶在近身攻擊範圍之外。
+				#   舊版把它跟近身招放在同一個 _begin_windup() 裡擲骰，條件
+				#   （d <= attack_range 才進來，卻要求 d >= pounce_min_range）
+				#   永不同時成立，撲擊整段是死碼、一次都沒發動過。
+				_begin_pounce()
 		State.WINDUP:
 			_face_target(delta)
 			velocity.x = 0.0
 			velocity.z = 0.0
-			var wind: float = charge_windup
-			if _attack == Attack.SLAM:
-				wind = slam_windup
-			elif _attack == Attack.GATSUGA:
-				# 牙通牙的前搖由動畫決定：起旋在 f30 = 1.25 s
-				wind = GatsugaFX.spin_window().x
-				# ⚠ _gatsuga_t 必須跟著 Gatsuga 動畫的播放時間走，從 WINDUP 就開始累加。
-				#   只在 STRIKE 累加會讓曲線落後一整個前搖（1.25 s），
-				#   結果旋轉段還沒到就出招、特效整段不顯示。
-				_gatsuga_t += delta
-				GatsugaFX.tick(_drill, _dust, _streaks, self, _wolf_mesh, _gatsuga_t,
-					-global_transform.basis.z, _visual_scale())
+			var wind: float = lunge_windup
+			if _attack == Attack.CLAW:
+				wind = claw_windup
+			elif _attack == Attack.POUNCE:
+				# 撲擊前搖由動畫決定：起跳在 f30 = 1.25 s（24 fps）
+				wind = 30.0 / 24.0
+				# ⚠ _pounce_t 必須跟著撲擊動畫的播放時間走，從 WINDUP 就開始累加。
+				#   只在 STRIKE 累加會讓 trim 曲線落後一整個前搖（1.25 s），
+				#   結果旋風活躍區間（f30–61）還沒到就收招、整段特效不顯示。
+				_pounce_t += delta
+				VortexFX.tick(_vortex_root, _vortex_mats, _pounce_t, _visual_scale())
 			if _timer >= wind:
 				_begin_strike()
 		State.STRIKE:
-			if _attack == Attack.GATSUGA:
-				# 旋轉突進：推進 + 特效逐幀更新
-				_gatsuga_t += delta
-				velocity.x = _charge_dir.x * gatsuga_speed
-				velocity.z = _charge_dir.z * gatsuga_speed
-				GatsugaFX.tick(_drill, _dust, _streaks, self, _wolf_mesh, _gatsuga_t,
-					_charge_dir, _visual_scale())
+			if _attack == Attack.POUNCE:
+				# 撲擊：推進交給腳本，旋風 trim 由 shader 逐幀重現。
+				_pounce_t += delta
+				VortexFX.tick(_vortex_root, _vortex_mats, _pounce_t, _visual_scale())
+				velocity.x = _charge_dir.x * pounce_speed
+				velocity.z = _charge_dir.z * pounce_speed
 				if not _hit_this_strike:
 					_do_strike()
-				if _gatsuga_t >= GatsugaFX.spin_window().y:
-					_end_gatsuga()
+				# ⚠ 不能用 not _anim.is_playing() 判定結束：WINDUP 已經播了
+				#   1.25 s，動畫可能在 STRIKE 期間就播完，會提早跳出衝刺段。
+				#   改用明確的衝刺秒數（對應動畫 f30–52）。
+				if _timer >= pounce_dash_time:
 					_set_state(State.RECOVER)
-			elif _attack == Attack.CHARGE:
+			elif _attack == Attack.LUNGE:
 				# 原地動畫沒有 root motion：推進要自己給，否則狼在原地跑步。
-				velocity.x = _charge_dir.x * charge_speed
-				velocity.z = _charge_dir.z * charge_speed
+				velocity.x = _charge_dir.x * lunge_speed
+				velocity.z = _charge_dir.z * lunge_speed
 				if not _hit_this_strike:
 					_do_strike()
-				if _timer >= charge_dash_time:
+				if _timer >= lunge_dash_time:
 					_set_state(State.RECOVER)
 			else:
 				velocity.x = 0.0
 				velocity.z = 0.0
 				if not _hit_this_strike:
 					_do_strike()
-				if _timer >= slam_strike_time:
+				if _timer >= claw_strike_time:
 					_set_state(State.RECOVER)
 		State.RECOVER:
-			velocity.x = move_toward(velocity.x, 0.0, 22.0 * delta)
-			velocity.z = move_toward(velocity.z, 0.0, 22.0 * delta)
-			_play("Idle")
+			if _attack == Attack.POUNCE:
+				# 撲擊收招是滑行煞車，不是硬停——速度逐幀乘衰減率，
+				# 跟 Blender Root 骨骼滑行曲線（0.88/frame @ 24fps）對齊，
+				# 而非 LUNGE/CLAW 那種等速 move_toward 急煞。
+				var decay: float = pow(pounce_slide_decay, delta * 24.0)
+				velocity.x *= decay
+				velocity.z *= decay
+				if velocity.length() < 0.05:
+					velocity.x = 0.0
+					velocity.z = 0.0
+				# 旋風在滑行段淡出（trim 曲線 f52–61 尾段），播完自動關掉
+				if _pounce_t >= 0.0:
+					_pounce_t += delta
+					VortexFX.tick(_vortex_root, _vortex_mats, _pounce_t, _visual_scale())
+					if _pounce_t > VortexFX.active_window().y:
+						_end_pounce()
+			else:
+				velocity.x = move_toward(velocity.x, 0.0, 22.0 * delta)
+				velocity.z = move_toward(velocity.z, 0.0, 22.0 * delta)
+			_play("Wolf_Idle")
 			if _timer >= recover_time:
 				if randf() < 0.4:
 					_set_state(State.BACKSTEP)
@@ -309,7 +373,7 @@ func _physics_process(delta: float) -> void:
 				away = away.normalized() * move_speed * 0.9
 				velocity.x = away.x
 				velocity.z = away.z
-			_play("Walk")
+			_play("Wolf_Walk")
 			_face_target(delta)
 			if _timer >= 0.55:
 				_set_state(State.APPROACH)
@@ -317,7 +381,7 @@ func _physics_process(delta: float) -> void:
 			# 側躍：水平推進 + 一個小跳。動畫沒有 root motion，位移全靠這裡。
 			velocity.x = _dodge_dir.x * dodge_speed
 			velocity.z = _dodge_dir.z * dodge_speed
-			_play("Run", dodge_anim_speed)
+			_play("Wolf_Run", dodge_anim_speed)
 			# 面向玩家，讓閃避看起來是「繞著打」而不是逃跑
 			_face_target(delta)
 			if _timer >= dodge_time:
@@ -356,8 +420,8 @@ func _check_dodge() -> void:
 
 
 func _begin_dodge() -> void:
-	# 前搖被自己的閃避打斷時要收乾淨（牙通牙的鑽體不能留在場上）
-	_end_gatsuga()
+	# 前搖被自己的閃避打斷時要收乾淨（旋風不能留在場上）
+	_end_pounce()
 	if _tell:
 		_tell.visible = false
 	var to := _target_position() - global_position
@@ -414,40 +478,52 @@ func _chase(delta: float) -> void:
 
 
 func _begin_windup() -> void:
-	# 遠距離才用牙通牙（它是拉近距離的招）；近身用衝撞／砸地。
-	var d := _target_distance()
+	# 近身二選一：突進咬擊／爪擊。撲擊走 _begin_pounce()，不在這裡擲骰。
 	var roll := randf()
-	if d >= gatsuga_min_range and roll < gatsuga_chance:
-		_attack = Attack.GATSUGA
-	elif roll < slam_chance:
-		_attack = Attack.SLAM
+	if roll < claw_chance:
+		_attack = Attack.CLAW
 	else:
-		_attack = Attack.CHARGE
+		_attack = Attack.LUNGE
 	_hit_this_strike = false
 	_set_state(State.WINDUP)
 	match _attack:
-		Attack.SLAM:
-			_play("Slam")
-		Attack.GATSUGA:
-			_play("Gatsuga")
-			_gatsuga_t = 0.0
+		Attack.CLAW:
+			_play("Wolf_Attack_Claw")
 		_:
-			_play("Charge")
+			_play("Wolf_Attack_Lunge")
 	if _tell and show_tell_ring:
 		_tell.visible = true
 		var mat := _tell.material_override as StandardMaterial3D
 		if mat:
-			mat.albedo_color = Color(1.0, 0.15, 0.1) if _attack == Attack.SLAM else Color(1.0, 0.95, 0.8)
+			mat.albedo_color = Color(1.0, 0.15, 0.1) if _attack == Attack.CLAW else Color(1.0, 0.95, 0.8)
 			mat.emission = mat.albedo_color
-	# 砸地是危攻擊（不可安全格擋）
-	attack_windup.emit(_attack == Attack.SLAM)
+	# 撲擊命中面較大、傷害較高，算危攻擊
+	attack_windup.emit(_attack == Attack.POUNCE)
+
+
+func _begin_pounce() -> void:
+	# 撲擊：中距離發動的拉近招。前搖是動畫 f0–30（1.25 s 蓄力），
+	# 衝刺 f30–52，落地滑行煞車 f52–84 由 RECOVER 的指數衰減接手。
+	# 旋風活躍區間 f30–61，由 _pounce_t 驅動 shader trim。
+	_attack = Attack.POUNCE
+	_hit_this_strike = false
+	_pounce_t = 0.0
+	_set_state(State.WINDUP)
+	_play("Wolf_Attack_Pounce")
+	if _tell and show_tell_ring:
+		_tell.visible = true
+		var mat := _tell.material_override as StandardMaterial3D
+		if mat:
+			mat.albedo_color = Color(1.0, 0.15, 0.1)
+			mat.emission = mat.albedo_color
+	attack_windup.emit(true)
 
 
 func _begin_strike() -> void:
 	_set_state(State.STRIKE)
 	if _tell:
 		_tell.visible = false
-	if _attack == Attack.CHARGE or _attack == Attack.GATSUGA:
+	if _attack == Attack.LUNGE or _attack == Attack.POUNCE:
 		# 衝撞方向在出招瞬間鎖定：鎖定後玩家閃得開，才是可讀的攻擊。
 		var to := _target_position() - global_position
 		to.y = 0.0
@@ -461,38 +537,74 @@ func _visual_scale() -> float:
 	return 1.0
 
 
-func _end_gatsuga() -> void:
-	_gatsuga_t = -1.0
-	GatsugaFX.stop(_drill, _dust, _streaks, _wolf_mesh)
+## 收掉撲擊旋風。所有中斷路徑（被打斷前搖、自己閃避、破防、死亡）都必須呼叫，
+## 否則旋風會留在場上。
+func _end_pounce() -> void:
+	_pounce_t = -1.0
+	VortexFX.stop(_vortex_root, _vortex_mats)
+
+
+## 速度風線：撲擊時播撲擊版，否則依實際水平速度決定跑步版強度。
+##
+## 強度接速度而不是接狀態，是因為「看起來跑多快」才是風線該表達的東西 ——
+## 綁狀態的話，BACKSTEP 慢走與 APPROACH 全速衝會噴一樣多的速度線。
+func _tick_streaks(delta: float) -> void:
+	if _streak_root == null:
+		return
+	# 撲擊期間走專用曲線（更誇張、一次性）
+	if _attack == Attack.POUNCE and _pounce_t >= 0.0:
+		WindStreakFX.tick_pounce(_streak_root, _streak_mats, _pounce_t)
+		return
+
+	var speed := Vector2(velocity.x, velocity.z).length()
+	# ⚠ 強度區間的下界要低於 move_speed，否則正常追擊（速度 = move_speed）
+	#   只會落在區間開頭、風線幾乎看不見（實測 intensity 只有 0.23）。
+	#   設計意圖：走路（BACKSTEP，0.9×move_speed）微微帶線，
+	#   全速追擊已經相當明顯，衝刺／撲擊才拉到滿。
+	var strength := clampf(
+		inverse_lerp(move_speed * 0.5, lunge_speed * 0.6, speed), 0.0, 1.0)
+	# 讓中段更飽和：純線性會讓「跑步」這個最常見的狀態一直偏淡
+	strength = sqrt(strength)
+	if strength <= 0.01:
+		_streak_t = 0.0
+		WindStreakFX.stop(_streak_root, _streak_mats)
+		return
+	_streak_t += delta
+	WindStreakFX.tick_run(_streak_root, _streak_mats, _streak_t, strength)
 
 
 func _do_strike() -> void:
-	_hit_this_strike = true
-	var slam := _attack == Attack.SLAM
-	var damage := charge_damage
-	var pdmg := charge_posture_damage
-	if slam:
-		damage = slam_damage
-		pdmg = slam_posture_damage
-	elif _attack == Attack.GATSUGA:
-		damage = gatsuga_damage
-		pdmg = gatsuga_posture_damage
-	attack_struck.emit(damage)
+	# ⚠ 距離不夠時不可以鎖 _hit_this_strike —— 衝撞／撲擊在 STRIKE 的第一幀
+	#   還沒衝到玩家面前，此時判定必定超出 reach。舊寫法在函式開頭就把旗標
+	#   設 true，等於「衝刺還沒開始就判定落空、整段攻擊再也不會命中」。
+	#   改成命中判定成功（或目標失效）才鎖旗標，讓衝刺途中每幀都能重試。
+	var reach: float = attack_range * 1.3
+	if _attack == Attack.POUNCE:
+		reach = attack_range * 1.5
 
 	if not is_instance_valid(target) or not target.has_method("take_hit"):
+		_hit_this_strike = true
 		return
-	# 砸地是範圍攻擊，衝撞是接觸判定
-	var reach: float = slam_radius if slam else attack_range * 1.3
-	if _attack == Attack.GATSUGA:
-		reach = attack_range * 1.5
 	if _target_distance() > reach:
 		return
+
+	_hit_this_strike = true
+	var claw := _attack == Attack.CLAW
+	var damage := lunge_damage
+	var pdmg := lunge_posture_damage
+	if claw:
+		damage = claw_damage
+		pdmg = claw_posture_damage
+	elif _attack == Attack.POUNCE:
+		damage = pounce_damage
+		pdmg = pounce_posture_damage
+	attack_struck.emit(damage)
 
 	var hit_dir := (_target_position() - global_position).normalized()
 	var result: Variant = target.take_hit({
 		"damage": damage,
 		"posture_damage": pdmg,
-		"perilous": slam,
+		"perilous": _attack == Attack.POUNCE,
 		"hit_pos": _target_position() + Vector3(0, 1.0, 0),
 		"hit_dir": hit_dir,
 		"attacker": self,
@@ -517,10 +629,10 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 	posture.apply_damage(damage, posture_damage)
 	CombatVFX.spawn_hit_spark(self, hit_pos, -hit_dir, heavy)
 
-	# 打斷前搖：衝撞蓄力被打斷，玩家搶到節奏
+	# 打斷前搖：蓄力被打斷，玩家搶到節奏
 	if state == State.WINDUP:
 		_set_state(State.RECOVER)
-		_end_gatsuga()
+		_end_pounce()
 		if _tell:
 			_tell.visible = false
 
@@ -539,8 +651,8 @@ func execute_deathblow() -> bool:
 
 func _on_posture_broken() -> void:
 	_set_state(State.BREAK)
-	_play("Idle", 0.35)
-	_end_gatsuga()
+	_play("Wolf_Idle", 0.35)
+	_end_pounce()
 	if _tell:
 		_tell.visible = false
 	became_vulnerable.emit()
@@ -551,18 +663,21 @@ func _on_posture_recovered() -> void:
 		_set_state(State.APPROACH)
 
 
-## 死亡：Dissolve 是「仰頭上浮 40 cm 後化為光點」，不倒地。
-## 動畫本身無 root motion，上浮位移在此驅動。
+## 死亡：Wolf_Death 是「中招 → 挺直抬頭 → 四腳離地緩緩浮空 72 cm」，不倒地。
+## 上浮位移烘進動畫的 Root 曲線（in-place 例外），本腳本只餵溶解曲線。
 func _on_died() -> void:
 	_set_state(State.DEAD)
 	velocity = Vector3.ZERO
-	_end_gatsuga()
-	_play("Dissolve")
-	# 碰撞立刻關掉：屍體不該擋路，且 4 秒的化光過程玩家會想走過去
+	_end_pounce()
+	WindStreakFX.stop(_streak_root, _streak_mats)
+	_play("Wolf_Death")
 	set_collision_layer_value(2, false)
 	var col := get_node_or_null("CollisionShape3D")
 	if col:
-		(col as CollisionShape3D).disabled = true
+		# ⚠ 必須 set_deferred：_on_died() 是從 take_hit() → posture.apply_damage()
+		#   一路同步呼叫下來的，此時物理引擎正在 flush queries，直接改 disabled
+		#   會噴「Can't change this state while flushing queries」（實機日誌實證）。
+		(col as CollisionShape3D).set_deferred("disabled", true)
 	died.emit()
 	# 化光：材質換成溶解 shader、生出光點粒子，逐幀由 dissolve_fx.json 驅動
 	if _visual != null:
@@ -582,10 +697,8 @@ func _tick_dissolve() -> void:
 	var s: Dictionary = DissolveFX.sample(_dissolve_t)
 	var sc := _visual_scale()
 	var base_y := global_position.y
-	# ⚠ 掃描範圍要用「該幀的實際身體上下界」，但 zmin 會隨上浮抬高。
-	#   直接用 zmin 當底，溶解線的 0 點會跟著身體一起往上跑，
-	#   結果是溶解進度看起來比曲線快（實測 dissolve=0.73 時身體幾乎沒了）。
-	#   底部鎖在腳的起始高度，只讓頂部跟著上浮，掃描才與 dissolve 對得上。
+	# ⚠ 掃描底部鎖在死亡當下的腳高。zmin 會隨上浮抬高，若拿它當底，
+	#   溶解線的 0 點會跟著身體往上跑，進度看起來比曲線快。
 	if _sweep_floor == INF:
 		_sweep_floor = base_y + float(s["ymin"]) * sc
 	var ymin: float = _sweep_floor

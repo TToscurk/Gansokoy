@@ -113,6 +113,20 @@ func _run() -> void:
 		stats["lod"], stats["lod_tris_saved"] / 10000])
 
 
+## Visual streaming adds B1 chunks after this node's initial deferred walk.
+## Apply the identical LOD/cull policy to the just-instantiated subtree instead
+## of leaving streamed buildings at their original mesh cost.
+func apply_to_subtree(subtree: Node) -> void:
+	if not 啟用 or subtree == null:
+		return
+	var stats := {"vis": 0, "shadow": 0, "protected": 0, "lod": 0, "lod_tris_saved": 0}
+	if 使用減面建築:
+		_swap_lod_meshes(subtree, stats)
+	_walk(subtree, stats)
+	print("[效能裁剪] 串流 %s：可見距離 %d，關閉投影 %d，減面建築 %d（省 %d 萬面）" % [
+		subtree.name, stats["vis"], stats["shadow"], stats["lod"], stats["lod_tris_saved"] / 10000])
+
+
 ## Replace each heavy building's mesh with its decimated twin from 減面資料夾.
 ##
 ## Runtime swap, not a scene edit: the buildings live inside instanced

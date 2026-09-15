@@ -11,12 +11,12 @@
   ],
   "portals": [
     {
-      "arrival_ground_y": -1.32,
+      "arrival_ground_y": -4.45,
       "arrival_y_offset": 1.2,
       "target": "trail",
       "x": 0.0,
-      "y": -1.35,
-      "z": 53.0
+      "y": -4.45,
+      "z": 72.4
     }
   ],
   "safe": true

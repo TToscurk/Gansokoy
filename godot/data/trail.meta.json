@@ -12,19 +12,21 @@
   ],
   "portals": [
     {
-      "x": 3.0,
-      "y": 8.66,
-      "z": -107.8,
+      "_note": "北：神社。y 必須是**該點的地面高**——main.gd 的 _spawn_portals 拿它當 ground_y 擺光環（ring 在 y-0.93、gate 在 y+1.30）。填成 地面+1.2 的話整個門會浮在半空。實測地面 8.74（tools/probe_trail_anchors.gd）。",
+      "x": -2.08,
+      "y": 8.74,
+      "z": -108.87,
       "target": "shrine",
-      "arrival_ground_y": 8.42,
+      "arrival_ground_y": 8.74,
       "arrival_y_offset": 1.2
     },
     {
-      "x": 3.19,
-      "y": 0.34,
-      "z": 106.0,
+      "_note": "南：人里。實測地面 0.12。",
+      "x": 1.65,
+      "y": 0.12,
+      "z": 108.81,
       "target": "slice",
-      "arrival_ground_y": 0.59,
+      "arrival_ground_y": 0.12,
       "arrival_y_offset": 1.2,
       "require_flag": "met_reimu",
       "locked_note": "序章：見過靈夢才開放人里"
@@ -32,9 +34,9 @@
   ],
   "colliders": [],
   "spawn": {
-    "x": -6.0,
-    "z": -17.6,
+    "x": -13.78,
+    "z": -26.82,
     "yaw": 3.14159,
-    "note": "序章醒來點：獸道大空地中心（MQ00）"
+    "note": "序章醒來點：獸道大空地中心（MQ00）。2026-09-15 r3 路線重排後由 tools/probe_trail_anchors.gd 實測，地面 y=5.19"
   }
 }

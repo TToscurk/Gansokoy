@@ -4,6 +4,7 @@ extends Control
 @export var bar_width := 320.0
 @export var health_height := 14.0
 @export var posture_height := 10.0
+@export var breath_height := 6.0
 @export var gap := 8.0
 
 var _hud: Node = null
@@ -44,3 +45,12 @@ func _draw() -> void:
 	draw_rect(Rect2(0.0, y, bar_width, posture_height), Color(0, 0, 0, 0.85), false, 1.0)
 	# 中線刻度，讓「往兩側長」讀得出來。
 	draw_line(Vector2(mid, y - 2.0), Vector2(mid, y + posture_height + 2.0), Color(1, 1, 1, 0.35), 1.0)
+
+	# --- 呼吸：左往右長，火色 ------------------------------------------
+	# 型選單的資源條。刻意比軀幹細、顏色偏暖，不與軀幹的「燙」混淆。
+	var by := y + posture_height + gap
+	draw_rect(Rect2(0.0, by, bar_width, breath_height), Color(0, 0, 0, 0.55))
+	var bw: float = bar_width * _hud.player_breath_ratio
+	if bw > 0.0:
+		draw_rect(Rect2(0.0, by, bw, breath_height), Color(1.0, 0.68, 0.22))
+	draw_rect(Rect2(0.0, by, bar_width, breath_height), Color(0, 0, 0, 0.85), false, 1.0)

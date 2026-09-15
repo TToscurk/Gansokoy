@@ -1476,7 +1476,8 @@ func _audit_paving() -> void:
 #   全域均勻亂灑，而是先撒 cluster 種子再繞著種子長，中間留出空隙。
 #
 # ⚠ 原點不一致，兩種資產不能共用落地公式（probe_shrine_flora.gd 實測）：
-#     assets/landscape/*.glb（Meshy）  單位化、原點 CENTRE，min.y = −0.500
+#     assets/landscape/*.glb（r7 Tripo）單位化、原點 BASE，min.y = 0.000
+#       （r6 以前的 Meshy／Tripo 批是 CENTRE，min.y = −0.500）
 #     assets/nature/*.gltf（Quaternius）公尺單位、多半 BASE，少數帶小 offset
 #   統一用 `y − box.position.y × scale`，兩種都對。
 #
@@ -1495,9 +1496,10 @@ var _keepout: Array = []
 
 ## §8 Hero Tree 12–18 m、背景樹 8–14 m。
 ##
-## ⚠ `landscape/松樹.glb` 名字叫松，實際是**橘紅楓樹**（probe_flora_color.gd
-##   實測葉面平均 H=17.1、S=0.68，轉台圖確認整棵橘紅）。§0 明列「禁止過度
-##   櫻花化」，成片出現會把神社變成賞楓景點——所以整批樹池不收它。
+## ⚠ r7 起 landscape/ 換成使用者第二批 Tripo 資產（前批備份在
+##   assets/landscape/_tripo_r6_backup/、assets/_lod/_r6_tree_backup/）。
+##   `松樹.glb` 在 r6 是橘紅楓（H=17.1 / S=0.68），r7 已是綠針葉樹
+##   （H=63.7 / S=0.58），但樹池仍不收它——秋色改用 `楓樹.glb`。
 ##   檔名不是資產的權威，貼圖平均色才是。
 ##
 ## ⚠ 全圖只用 Meshy landscape 樹，**不混 Quaternius**。兩套的葉色飽和度差
@@ -1589,12 +1591,13 @@ func _in_vista_corridor(p: Vector2) -> bool:
 
 ## 放一棵樹。tall = 目標高（公尺）。回傳實際樹冠水平半徑。
 ## 樹的 LOD 距離門檻（m，離境內中心）。境內看得到的近景保高模，
-## 遠處換 _lod（gltfpack -si 0.30 -sa：11.5k → 2.9k tris，砍 75%）。
+## 遠處換 _lod。
 ##
-## ⚠ -sa（aggressive）會讓葉片破碎、樹幹變暗一階，轉台圖看得出來。
-##   所以**不能全場替換** —— 只用在 LOD_DIST 以外，那個距離下差異
-##   被大氣與樹冠重疊蓋掉。近處 120 棵維持原模。
-##   （-si 不加 -sa 只砍得掉 10-15%：葉片是分離小面片，簡化器動不了。）
+## ⚠ r7 起 _lod/ 的樹是**與 landscape/ 同一份檔案**：新批出廠就是
+##   3.2k–4.9k 面／棵，再砍沒有意義（r6 的 gltfpack -si 0.30 -sa 是為了
+##   43k–48k 面的舊批才存在的）。這條路徑保留著，之後若換回高模資產
+##   只要把簡化版丟回 _lod/ 就會重新生效。
+##   實測面數：本圖樹合計 12.59M → 8.59M（−32%）。
 const TREE_LOD_DIST := 46.0
 
 func _tree(parent: Node3D, path: String, p: Vector2, tall: float,

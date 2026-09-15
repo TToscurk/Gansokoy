@@ -1,0 +1,112 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/landscape/櫻花樹.glb" id="1_hrqh4"]
+[ext_resource type="PackedScene" path="res://assets/landscape/普通樹.glb" id="2_84cgy"]
+[ext_resource type="PackedScene" path="res://assets/landscape/盆樹.glb" id="3_aeote"]
+
+[node name="VillageInfillTrees" type="Node3D" unique_id=446816744]
+
+[node name="櫻花樹_01" type="Node3D" parent="." unique_id=1571103595 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(-0.5818518, 0, -7.468428, 0, 7.4910593, 0, 7.468428, 0, -0.5818518, 271.61057, -0.08, 113.31072)
+
+[node name="櫻花樹_02" type="Node3D" parent="." unique_id=164293502 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(-7.5232897, 0, 2.3965845, 0, 7.8957906, 0, -2.3965845, 0, -7.5232897, 263.1399, -0.08, -11.133505)
+
+[node name="櫻花樹_03" type="Node3D" parent="." unique_id=1314234676 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(-7.9021535, 0, 0.34050155, 0, 7.9094863, 0, -0.34050155, 0, -7.9021535, 271.647, -0.08, -78.43865)
+
+[node name="櫻花樹_04" type="Node3D" parent="." unique_id=2126214096 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(3.8499107, 0, -6.074844, 0, 7.192047, 0, 6.074844, 0, 3.8499107, 261.00308, -0.08, -62.884075)
+
+[node name="櫻花樹_05" type="Node3D" parent="." unique_id=1190621689 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(8.079439, 0, -1.0555079, 0, 8.148094, 0, 1.0555079, 0, 8.079439, 262.6873, -0.08, 37.6838)
+
+[node name="櫻花樹_06" type="Node3D" parent="." unique_id=297102417 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(-7.481618, 0, 2.9495912, 0, 8.042058, 0, -2.9495912, 0, -7.481618, 262.7337, -0.08, 85.5339)
+
+[node name="櫻花樹_07" type="Node3D" parent="." unique_id=1704769559 instance=ExtResource("1_hrqh4")]
+transform = Transform3D(-3.7143843, 0, 6.968937, 0, 7.8970075, 0, -6.968937, 0, -3.7143843, 262.98306, -0.08, -42.499683)
+
+[node name="普通樹_01" type="Node3D" parent="." unique_id=1602803958 instance=ExtResource("2_84cgy")]
+transform = Transform3D(-0.24554512, 0, 5.7736716, 0, 5.7788906, 0, -5.7736716, 0, -0.24554512, 208.51271, -0.08, 53.216976)
+
+[node name="普通樹_02" type="Node3D" parent="." unique_id=1322503504 instance=ExtResource("2_84cgy")]
+transform = Transform3D(5.0513606, 0, 1.2652447, 0, 5.207407, 0, -1.2652447, 0, 5.0513606, 204.36288, -0.08, -50.970642)
+
+[node name="普通樹_03" type="Node3D" parent="." unique_id=729923427 instance=ExtResource("2_84cgy")]
+transform = Transform3D(-6.0363245, 0, -3.0580523, 0, 6.7667494, 0, 3.0580523, 0, -6.0363245, 203.46967, -0.08, 116.545616)
+
+[node name="普通樹_04" type="Node3D" parent="." unique_id=1627693541 instance=ExtResource("2_84cgy")]
+transform = Transform3D(-5.7820225, 0, -4.163025, 0, 7.124785, 0, 4.163025, 0, -5.7820225, 203.05585, -0.08, 97.78121)
+
+[node name="普通樹_05" type="Node3D" parent="." unique_id=2062993284 instance=ExtResource("2_84cgy")]
+transform = Transform3D(-5.6382318, 0, -2.2273967, 0, 6.0622563, 0, 2.2273967, 0, -5.6382318, 214.82631, -0.08, -66.93288)
+
+[node name="盆樹_01" type="Node3D" parent="." unique_id=439122709 instance=ExtResource("3_aeote")]
+transform = Transform3D(3.5368888, 0, -1.8059604, 0, 3.9712813, 0, 1.8059604, 0, 3.5368888, 202.89992, -0.08, 66.813675)
+
+[node name="盆樹_02" type="Node3D" parent="." unique_id=953668676 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.3672717, 0, -2.4269953, 0, 4.150762, 0, 2.4269953, 0, -3.3672717, 266.98605, -0.08, 20.583513)
+
+[node name="盆樹_03" type="Node3D" parent="." unique_id=1036672597 instance=ExtResource("3_aeote")]
+transform = Transform3D(1.5480546, 0, 3.428271, 0, 3.761584, 0, -3.428271, 0, 1.5480546, 209.17453, -0.08, 104.951)
+
+[node name="盆樹_04" type="Node3D" parent="." unique_id=741764239 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.0210536, 0, -2.78058, 0, 4.105897, 0, 2.78058, 0, -3.0210536, 209.37534, -0.08, 88.52364)
+
+[node name="盆樹_05" type="Node3D" parent="." unique_id=699403304 instance=ExtResource("3_aeote")]
+transform = Transform3D(0.7392971, 0, -4.0945053, 0, 4.160713, 0, 4.0945053, 0, 0.7392971, 203.53004, -0.08, 1.5668209)
+
+[node name="盆樹_06" type="Node3D" parent="." unique_id=445687022 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.715635, 0, -0.1849813, 0, 3.720237, 0, 0.1849813, 0, -3.715635, 211.13824, -0.08, -16.537237)
+
+[node name="盆樹_07" type="Node3D" parent="." unique_id=1066580753 instance=ExtResource("3_aeote")]
+transform = Transform3D(-0.15008801, 0, 3.7270586, 0, 3.7300794, 0, -3.7270586, 0, -0.15008801, 250.27432, -0.08, 6.6235566)
+
+[node name="盆樹_08" type="Node3D" parent="." unique_id=169456292 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.1461616, 0, -2.4883375, 0, 4.011254, 0, 2.4883375, 0, -3.1461616, 201.05063, -0.08, -35.414906)
+
+[node name="盆樹_09" type="Node3D" parent="." unique_id=1968933563 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.7936015, 0, 0.7715503, 0, 3.8712664, 0, -0.7715503, 0, -3.7936015, 258.82642, -0.05427368, 124.37957)
+
+[node name="盆樹_10" type="Node3D" parent="." unique_id=740399291 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.5979552, 0, 1.4203364, 0, 2.960866, 0, -1.4203364, 0, 2.5979552, 203.40762, -0.08, -14.591721)
+
+[node name="盆樹_11" type="Node3D" parent="." unique_id=1229660454 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.801334, 0, -0.744792, 0, 2.8986526, 0, 0.744792, 0, 2.801334, 201.15848, -0.08, -20.207386)
+
+[node name="盆樹_12" type="Node3D" parent="." unique_id=1224998097 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.3274214, 0, 1.3907228, 0, 2.711273, 0, -1.3907228, 0, 2.3274214, 200.45242, -0.08, 81.49439)
+
+[node name="盆樹_13" type="Node3D" parent="." unique_id=922949464 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.6470008, 0, 0.8229942, 0, 2.7719908, 0, -0.8229942, 0, 2.6470008, 200.29805, -0.08, 57.085648)
+
+[node name="盆樹_14" type="Node3D" parent="." unique_id=2015671380 instance=ExtResource("3_aeote")]
+transform = Transform3D(-2.8651354, 0, 1.4495057, 0, 3.2109294, 0, -1.4495057, 0, -2.8651354, 213.22624, -0.08, -54.31856)
+
+[node name="盆樹_15" type="Node3D" parent="." unique_id=259009296 instance=ExtResource("3_aeote")]
+transform = Transform3D(0.66108006, 0, 3.747611, 0, 3.8054717, 0, -3.747611, 0, 0.66108006, 266.90323, -0.08, 55.475674)
+
+[node name="盆樹_16" type="Node3D" parent="." unique_id=1698921609 instance=ExtResource("3_aeote")]
+transform = Transform3D(-3.5317657, 0, 0.81874895, 0, 3.6254268, 0, -0.81874895, 0, -3.5317657, 201.4038, -0.08, -28.874409)
+
+[node name="盆樹_17" type="Node3D" parent="." unique_id=1104480841 instance=ExtResource("3_aeote")]
+transform = Transform3D(1.9768515, 0, -2.5816538, 0, 3.2515962, 0, 2.5816538, 0, 1.9768515, 203.66368, -0.08, -7.1604753)
+
+[node name="盆樹_18" type="Node3D" parent="." unique_id=1616158045 instance=ExtResource("3_aeote")]
+transform = Transform3D(1.6137421, 0, -2.456311, 0, 2.938984, 0, 2.456311, 0, 1.6137421, 220.2831, -0.08, -3.272377)
+
+[node name="盆樹_19" type="Node3D" parent="." unique_id=2047327340 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.3226583, 0, -2.0482466, 0, 3.0967815, 0, 2.0482466, 0, 2.3226583, 267.01486, -0.08, 61.649143)
+
+[node name="盆樹_20" type="Node3D" parent="." unique_id=1658426745 instance=ExtResource("3_aeote")]
+transform = Transform3D(-0.31487542, 0, 2.916716, 0, 2.9336631, 0, -2.916716, 0, -0.31487542, 247.55197, -0.08, 90.85239)
+
+[node name="盆樹_21" type="Node3D" parent="." unique_id=406075471 instance=ExtResource("3_aeote")]
+transform = Transform3D(2.1290066, 0, 2.5088575, 0, 3.290446, 0, -2.5088575, 0, 2.1290066, 251.23357, -0.08, -85.15941)
+
+[node name="盆樹_22" type="Node3D" parent="." unique_id=1221808295 instance=ExtResource("3_aeote")]
+transform = Transform3D(0.71465784, 0, -2.60524, 0, 2.7014832, 0, 2.60524, 0, 0.71465784, 267.41125, -0.08, 14.540654)
+
+[node name="盆樹_23" type="Node3D" parent="." unique_id=1178118376 instance=ExtResource("3_aeote")]
+transform = Transform3D(1.6062344, 0, 2.456782, 0, 2.9352627, 0, -2.456782, 0, 1.6062344, 201.78188, -0.08, 72.77194)

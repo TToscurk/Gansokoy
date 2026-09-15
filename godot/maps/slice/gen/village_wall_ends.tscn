@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/landscape/竹垣.glb" id="2_sg47q"]
+[ext_resource type="PackedScene" path="res://assets/riverbank/塊石疊砌牆一段.glb" id="3_pks7e"]
+
+[node name="圍牆端頭" type="Node3D" unique_id=2073033051]
+
+[node name="南西_塊石疊砌牆一段_0" type="Node3D" parent="." unique_id=696152644 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 208.89928, 0.88, 97.5149)
+
+[node name="南西_竹垣_0" type="Node3D" parent="." unique_id=398713999 instance=ExtResource("2_sg47q")]
+transform = Transform3D(-6.7913206e-08, 0, 1.553673, 0, 1.553673, 0, -1.553673, 0, -6.7913206e-08, 205.03691, -0.12, 97.51707)
+
+[node name="南東_塊石疊砌牆一段_0" type="Node3D" parent="." unique_id=1566398787 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 263.46072, 0.88, 97.5149)
+
+[node name="南東_塊石疊砌牆一段_1" type="Node3D" parent="." unique_id=1749769746 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 270.2422, 0.88, 97.5149)
+
+[node name="南東_竹垣_0" type="Node3D" parent="." unique_id=240014592 instance=ExtResource("2_sg47q")]
+transform = Transform3D(-6.7913206e-08, 0, 1.553673, 0, 1.553673, 0, -1.553673, 0, -6.7913206e-08, 274.10373, -0.12, 97.51707)
+
+[node name="北西_塊石疊砌牆一段_0" type="Node3D" parent="." unique_id=1870413830 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 209.36928, 0.88, -76.8851)
+
+[node name="北西_竹垣_0" type="Node3D" parent="." unique_id=1153051686 instance=ExtResource("2_sg47q")]
+transform = Transform3D(-6.7913206e-08, 0, 1.553673, 0, 1.553673, 0, -1.553673, 0, -6.7913206e-08, 205.50691, -0.12, -76.882935)
+
+[node name="北東_塊石疊砌牆一段_0" type="Node3D" parent="." unique_id=786433059 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 261.41074, 0.88, -76.8851)
+
+[node name="北東_塊石疊砌牆一段_1" type="Node3D" parent="." unique_id=321245175 instance=ExtResource("3_pks7e")]
+transform = Transform3D(6.781454, 0, 0, 0, 6.781454, 0, 0, 0, 6.781454, 268.19217, 0.88, -76.8851)

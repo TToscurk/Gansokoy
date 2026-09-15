@@ -27,7 +27,10 @@ func _run() -> void:
 		var entry: Dictionary = data[character_id]
 		var table: Dictionary = entry.get("portraits", {})
 		check("%s 有名字" % character_id, not String(entry.get("name", "")).is_empty())
-		check("%s 至少一種表情" % character_id, table.size() > 0)
+		# portraits 可以是空的 —— 刻意不給立繪的角色（如毛玉）只顯示名字。
+		if table.is_empty():
+			check("%s 無立繪（只顯示名字）" % character_id, true)
+			continue
 		for state in table.keys():
 			var path := String(table[state])
 			var tex: Texture2D = dm.call("_portrait", String(character_id), String(state))

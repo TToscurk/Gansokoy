@@ -2,13 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dodsquuejqle0"
+uid="uid://cdr2ke66ukecq"
 path="res://.godot/imported/鎮守之杜_base_color.jpg-fd30570a0523ca13022c920b63f94cae.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "b197d7bfb7fe7b873255def7241ed686"
 }
 
 [deps]
@@ -26,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

@@ -48,3 +48,19 @@ _review/
 *.orig.res
 godot/assets/_lod/_orig/
 godot/assets/landscape/_orig/
+
+# 2026-09-16 追加
+# 本機工作區與審圖暫存（400MB／截圖），不進版控。
+work/
+.hermes/
+
+# 樹資產換代前的本機備份（r6 Tripo、Meshy 初版，共約 300MB）。
+godot/assets/_lod/_r6_tree_backup/
+godot/assets/landscape/_meshy_backup/
+godot/assets/landscape/_tripo_r6_backup/
+
+# B1 街區分塊：由 tools/split_b1_chunks.gd 從已入庫的 b1_street.tscn 重生，
+# 展平實例後共 600MB，且單檔超過 GitHub 100MB 上限。原始碼在庫內即可。
+godot/maps/slice/gen/b1_north.tscn
+godot/maps/slice/gen/b1_central.tscn
+godot/maps/slice/gen/b1_south.tscn

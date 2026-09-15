@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl8pu0rynp70c"
+uid="uid://bhnn00cxti8bw"
 path.s3tc="res://.godot/imported/櫻花樹_base_color.jpg-2bb464fa9c58b5ae2738666463aeb9e3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "096353cdc4ff0a5c15a841b70c11b07b"
 }
 
 [deps]

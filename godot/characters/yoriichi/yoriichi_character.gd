@@ -136,6 +136,9 @@ extends CharacterBody3D
 @export var attack_combo_1_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_combo_1.res")
 @export var attack_spin_jump_anim := "Attack_Spin_Jump"
 @export var attack_spin_jump_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_spin_jump.res")
+## 捌ノ型 陽華突：自製直線突刺（tools/blender/make_form08_thrust.py）。
+@export var attack_thrust_anim := "Attack_Thrust"
+@export var attack_thrust_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form08_thrust.res")
 ## 速度分級（緣一風格：出刀突然且快、收勢清楚，不是一致的機械倍率）。
 ## 輕連段第一斬：突然、快。
 @export var attack_speed_scale := 2.2
@@ -156,6 +159,9 @@ extends CharacterBody3D
 @export var continuous_spin_speed_scale := 1.8
 ## 360_Power_Spin_Jump（拾型）。
 @export var spin_jump_speed_scale := 2.0
+## 捌型 陽華突。動畫本身 1.25 s；1.6 倍 → 約 0.78 s，
+## 蓄力看得見、突刺仍然突然（動畫內部的爆發比已經是 4.6x）。
+@export var thrust_speed_scale := 1.6
 @export_range(0.0, 1.0) var combo_cancel_start := 0.35
 @export_range(0.0, 1.0) var combo_cancel_end := 0.65
 @export var combo_input_buffer_time := 0.30
@@ -350,12 +356,14 @@ func _ready():
 	_add_animation_resource(attack_judgment_anim, attack_judgment_resource)
 	_add_animation_resource(attack_combo_1_anim, attack_combo_1_resource)
 	_add_animation_resource(attack_spin_jump_anim, attack_spin_jump_resource)
+	_add_animation_resource(attack_thrust_anim, attack_thrust_resource)
 	_add_animation_resource(draw_anim, draw_anim_resource)
 	for n in [walk_anim, run_fast_anim, _fl_anim, _fr_anim, "Idle_Grounded"]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
-			attack_continuous_spin_anim, attack_judgment_anim, attack_combo_1_anim, attack_spin_jump_anim]:
+			attack_continuous_spin_anim, attack_judgment_anim, attack_combo_1_anim,
+			attack_spin_jump_anim, attack_thrust_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_sword_hand = _find_first("Sword_Hand")
@@ -761,6 +769,7 @@ func _build_tree() -> void:
 		"judgment": _anim_node(attack_judgment_anim),
 		"combo1": _anim_node(attack_combo_1_anim),
 		"spinjump": _anim_node(attack_spin_jump_anim),
+		"thrust": _anim_node(attack_thrust_anim),
 	}
 	_setup_transition(root, full_sel, "full_sel", full_inputs)
 	var ts_full := AnimationNodeTimeScale.new()
@@ -827,6 +836,9 @@ func _fire_full(input_name: String, time_scale: float) -> void:
 				_full_node.fadeout_time = 0.22
 			"spinjump":
 				_full_node.fadeout_time = 0.16
+			"thrust":
+				# 突刺的收勢：刀尖停住 → 慢慢收回架勢，不能急切
+				_full_node.fadeout_time = 0.28
 			_:
 				_full_node.fadeout_time = 0.12
 	_tree.set("parameters/full_sel/transition_request", input_name)
@@ -1415,10 +1427,13 @@ func _special_speed_for(animation_name: String) -> float:
 			return continuous_spin_speed_scale
 		attack_spin_jump_anim:
 			return spin_jump_speed_scale
+		attack_thrust_anim:
+			return thrust_speed_scale
 	return attack_speed_scale
 
 func _full_input_for(animation_name: String) -> String:
 	match animation_name:
+		attack_thrust_anim: return "thrust"
 		attack_spin_anim: return "spin"
 		attack_continuous_spin_anim: return "continuous_spin"
 		attack_judgment_anim: return "judgment"

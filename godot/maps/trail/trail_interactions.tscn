@@ -1,21 +1,39 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=11 format=3]
+
+; 獸道互動點 —— 2026-09-15 r3 重排。
+;
+; ⚠ 座標全部重錨到**重排後的主脊**（tools/probe_trail_anchors.gd 實測）：
+;     入口界碑 ( 0.99,  95.27) y=0.99      岩壁隘口 (-14.85, 61.36) y=2.93
+;     地藏三尊 (-13.96,  41.75) y=3.59     溪谷木橋 (  9.12,  7.05) y=1.92
+;     大空地   (-13.78, -26.82) y=5.19     空地北緣 (-14.08,-40.03) y=5.19
+;     妖怪痕跡 ( -6.03, -49.74) y=5.52     夜雀屋台 (  3.78,-71.60) y=6.54
+;     更深     ( -1.54, -90.74) y=7.62     北端神社口 (-2.08,-108.87) y=8.74
+;   舊版座標停在已經不存在的路線上（例：醒來獨白 (-6,-17.6) 現在是林子，
+;   山犬遭遇 (5.3,-82) 現在是屋台區）。Area3D 的 y 取「地面 y + 半高」。
+;
+; ⚠ 2026-09-15 使用者裁定：取消緣一遇到狼的即時戰鬥事件。
+;   「山犬遭遇」CombatEncounter 節點與 enemy_wolf 依賴整個移除，
+;   改成非戰鬥的「獵食者痕跡」。戰鬥系統將改為回合制（最終幻想式遭遇），
+;   屆時在此重新加入遭遇節點，不要沿用即時戰鬥的 CombatEncounter。
+;
+; 事件順序（南 → 北，與新節奏一致）：
+;   人里口_未開放(z95) → 醒來獨白(空地 z-27) → 離開空地(南 z-13 / 北 z-40)
+;   → 妖怪氣息(z-50) → 獵食者痕跡(z-62) → 逃跑妖怪群(z-78) → 受傷妖怪(z-91)
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
-[ext_resource type="Script" path="res://components/combat/combat_encounter.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://cse1kir0enemywolf" path="res://characters/combat/enemy_wolf.tscn" id="3"]
 [ext_resource type="Script" path="res://components/story/fleeing_yokai_group.gd" id="4"]
 [ext_resource type="Script" path="res://components/story/wounded_yokai_event.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://kedama0000000001" path="res://characters/yokai/kedama.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://droppedfruit0001" path="res://components/story/dropped_fruit.tscn" id="7"]
 
 [sub_resource type="BoxShape3D" id="wake"]
-size = Vector3(30, 8, 30)
+size = Vector3(26, 8, 26)
 
 [sub_resource type="BoxShape3D" id="strip"]
 size = Vector3(30, 8, 10)
 
-[sub_resource type="BoxShape3D" id="arena"]
-size = Vector3(22, 10, 14)
+[sub_resource type="BoxShape3D" id="sign"]
+size = Vector3(16, 8, 10)
 
 [sub_resource type="BoxShape3D" id="fruit"]
 size = Vector3(6, 4, 6)
@@ -26,7 +44,7 @@ size = Vector3(14, 8, 10)
 [node name="獸道互動點" type="Node3D"]
 
 [node name="醒來獨白" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 5, -17.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.78, 9.2, -26.82)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")
@@ -40,7 +58,7 @@ skip_flag = "opening_fade_active"
 shape = SubResource("wake")
 
 [node name="離開空地_南" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 4, 18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 9.2, -13.0)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")
@@ -52,7 +70,7 @@ quest_target_id = "trail_leave_clearing"
 shape = SubResource("strip")
 
 [node name="離開空地_北" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 6, -50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.08, 9.2, -40.03)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")
@@ -64,7 +82,7 @@ quest_target_id = "trail_leave_clearing"
 shape = SubResource("strip")
 
 [node name="妖怪氣息" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 8, -70)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03, 9.5, -49.74)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")
@@ -76,25 +94,21 @@ once_flag = "sensed_presence_played"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="妖怪氣息"]
 shape = SubResource("strip")
 
-[node name="山犬遭遇" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3, 8, -82)
+[node name="獵食者痕跡" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 9.9, -62.0)
 collision_layer = 0
 collision_mask = 1
-script = ExtResource("2")
-enemy_scene = ExtResource("3")
-spawn_offsets = Array[Vector3]([Vector3(0, 0, -7)])
-quest_target_id = "trail_wolf"
-clear_flag = "defeated_first_yokai"
-skip_flag = "defeated_first_yokai"
-intro_dialogue = "yoriichi_wolf_encounter"
-clear_dialogue = "yoriichi_wolf_aftermath"
-clear_delay = 1.6
+script = ExtResource("1")
+interaction_id = "trail_predator_sign"
+dialogue_id = "yoriichi_predator_sign"
+auto_trigger = true
+once_flag = "saw_predator_sign_played"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="山犬遭遇"]
-shape = SubResource("arena")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="獵食者痕跡"]
+shape = SubResource("sign")
 
 [node name="逃跑妖怪群" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 7.8, -95)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 6.9, -78.0)
 script = ExtResource("4")
 kedama_scene = ExtResource("6")
 count = 3
@@ -117,7 +131,7 @@ enabled = false
 shape = SubResource("fruit")
 
 [node name="受傷妖怪" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 8, -101)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54, 11.6, -90.74)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("5")
@@ -133,7 +147,7 @@ quest_target_id = "trail_wounded_yokai"
 shape = SubResource("wounded")
 
 [node name="人里口_未開放" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 98)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99, 5.0, 95.27)
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1")

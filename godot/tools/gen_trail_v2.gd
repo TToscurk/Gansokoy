@@ -35,11 +35,28 @@ extends SceneTree
 ## 外圍仍是個別節點但共用 _lod 低面數網格（若 _lod 沒有就直接用原網格——
 ## 先求正確，效能實測後再壓）。
 
+## ══ 2026-09-15 r3：路線重排 + 樹全面換 Tripo GLB ══
+## 使用者裁定（三選一皆取第一項）：
+##   1. 主脊走向、分段順序/長度、關鍵點位置全部重來。
+##   2. 全部樹（路沿＋外圍＋空地古樹）換 assets/landscape/ 的 GLB，
+##      Quaternius nature/ 只留地表草／灌木／石頭。
+##   3. 獸道另訂樹種配比：杉／針葉為骨幹，深處加枯木與楓，入口段較明亮。
+##
+## 路線改用**控制點 + Catmull-Rom**，不再是三層正弦。正弦版的問題是整條路
+## 看起來都一樣（同一組頻率從頭鋪到尾），玩家沒有「這裡轉了個彎」的記憶點。
+## 控制點版每個彎都是為某個地物存在的：西偏繞岩壁 → 隘口收窄 → 東折下切溪谷
+## → 過橋爬升 → 西折進空地 → 出空地急轉北 → 屋台平台 → 收窄直行入深處。
+##
+## 新節奏（南 t=0 → 北 t=1）：
+##   農田柵欄 / 界碑疏林 / 雜木林 / **岩壁隘口**(新) / 地藏舊路標 /
+##   杉林 / 溪谷木橋 / 濕林 / 大空地古樹 / 密林妖怪痕跡 / 屋台平台 / 更深
+
 const Lib := preload("res://tools/gen_lib.gd")
 const OUT := "res://maps/trail/"
 const NAT := "res://assets/nature/"
 const LP := "res://assets/lowpoly_scene/"
 const GOB := "res://assets/_incoming/gobkit_nature/"
+const LS := "res://assets/landscape/"
 
 const HALF := 120.0                 # 240×240，跟登錄表一致（原 680 → 340 → 240）
 const SPINE_Z0 := 110.0             # 南端（人里入口）
@@ -48,32 +65,58 @@ const NEAR_BAND := 30.0             # 路沿個別高模帶
 const SEED := 20260904
 
 # ── 場景節奏（沿 t 的關鍵段落）──
-# 每段：t 範圍、樹密度（0-1）、備註。密→疏→密→開闊→密。
+# r3 重排：密→疏的交替更明確，並新增「岩壁隘口」這個最窄最壓迫的段落。
 const BEATS := [
-	{ "t0": 0.00, "t1": 0.06, "dens": 0.15, "tag": "農田/柵欄" },
-	{ "t0": 0.06, "t1": 0.12, "dens": 0.45, "tag": "界碑・普通森林" },
-	{ "t0": 0.12, "t1": 0.26, "dens": 0.80, "tag": "密林1" },
-	{ "t0": 0.26, "t1": 0.34, "dens": 0.40, "tag": "疏・地藏舊路標" },
-	{ "t0": 0.34, "t1": 0.37, "dens": 0.92, "tag": "密林2" },
-	{ "t0": 0.37, "t1": 0.47, "dens": 0.30, "tag": "小溪・木橋" },
-	{ "t0": 0.47, "t1": 0.67, "dens": 0.05, "tag": "大空地" },
-	{ "t0": 0.67, "t1": 0.74, "dens": 0.95, "tag": "密林3・妖怪痕跡" },
-	{ "t0": 0.74, "t1": 0.80, "dens": 0.35, "tag": "夜雀屋台" },
-	{ "t0": 0.80, "t1": 1.00, "dens": 1.00, "tag": "更深的妖怪領域" },
+	{ "t0": 0.00, "t1": 0.05, "dens": 0.15, "tag": "農田/柵欄" },
+	{ "t0": 0.05, "t1": 0.11, "dens": 0.40, "tag": "界碑・疏林" },
+	{ "t0": 0.11, "t1": 0.18, "dens": 0.72, "tag": "雜木林" },
+	{ "t0": 0.18, "t1": 0.24, "dens": 0.95, "tag": "岩壁隘口（最窄）" },
+	{ "t0": 0.24, "t1": 0.34, "dens": 0.38, "tag": "疏・地藏舊路標" },
+	{ "t0": 0.34, "t1": 0.42, "dens": 0.92, "tag": "杉林" },
+	{ "t0": 0.42, "t1": 0.50, "dens": 0.28, "tag": "溪谷・木橋" },
+	{ "t0": 0.50, "t1": 0.58, "dens": 0.70, "tag": "濕林" },
+	{ "t0": 0.58, "t1": 0.70, "dens": 0.05, "tag": "大空地・古樹" },
+	{ "t0": 0.70, "t1": 0.79, "dens": 0.98, "tag": "密林・妖怪痕跡" },
+	{ "t0": 0.79, "t1": 0.88, "dens": 0.33, "tag": "夜雀屋台平台" },
+	{ "t0": 0.88, "t1": 1.00, "dens": 1.00, "tag": "更深的妖怪領域" },
 ]
-const T_ENTRANCE := 0.07
-const T_JIZO := 0.30
-const T_CREEK := 0.41               # 220 m 版：與空地中心相距 0.17 = 37 m（空地 R17 + 溪谷帶 14 = 31 m 是硬下限）
-const T_CLEARING := 0.58
-const T_STALL := 0.77
+const T_ENTRANCE := 0.06
+const T_GATE := 0.21                # 岩壁隘口（新節點）
+const T_JIZO := 0.29
+const T_CREEK := 0.46               # 與空地中心相距 0.17 = 38 m（空地 R17 + 溪谷帶 14 = 31 m 是硬下限）
+const T_CLEARING := 0.63
+const T_STALL := 0.84
 const CLEARING_R := 17.0            # 直徑 ~34 m（規格 20-30，放寬以展現開闊感）
 ## 路面壓平帶：路緣外多少公尺內地形貼著路心高度、再漸回自然起伏。
 ## 6 m 時（減半版格距 1.7 m 畫得出細節）路兩側土坡貼著路面像走溝，
 ## 使用者要更寬 → 12 m。
 const ROAD_FLAT_BAND := 12.0
-## 泥潭（密林 2 裡兩處）：[沿主脊 t, 側向偏移 m]。height_at 與 mask_at 共用，
-## 不可各寫一份。t 要離溪心（T_CREEK）至少 0.05 = 16 m，溪谷抹平帶才不會蓋掉它。
-const MUD_SPECS := [[0.28, Vector2(-9.0, 3.0)], [0.34, Vector2(11.0, -2.0)]]
+## 泥潭（杉林段裡兩處）：[沿主脊 t, 側向偏移 m]。height_at 與 mask_at 共用，
+## 不可各寫一份。t 要離溪心（T_CREEK）至少 0.05 = 11 m，溪谷抹平帶才不會蓋掉它。
+const MUD_SPECS := [[0.36, Vector2(-9.0, 3.0)], [0.55, Vector2(11.0, -2.0)]]
+
+## ── 主脊控制點（南 +z → 北 -z）──
+## 每個彎都為一個地物服務，不是為了蛇行而蛇行。
+## z 必須單調遞減（線性前進、不回頭）；x 幅度控制在 ±20 m 內，
+## 否則彎太急、玩家用跑的會一直撞樹。
+const SPINE_PTS := [
+	Vector2(  2.0,  110.0),   # 南端：人里入口，直
+	Vector2(  1.0,   95.0),   # 界碑
+	Vector2( -6.0,   77.0),   # 開始往西偏（繞開岩壁）
+	Vector2(-16.0,   58.0),   # 岩壁隘口，最窄
+	Vector2(-13.0,   40.0),   # 出隘口
+	Vector2(  2.0,   25.0),   # 東折 —— 地藏三尊在這個彎的外側
+	Vector2(  9.0,    8.0),   # 下切溪谷
+	Vector2(  6.0,   -6.0),   # 過橋後爬升
+	Vector2( -8.0,  -20.0),   # 西折進空地
+	Vector2(-17.0,  -34.0),   # 空地（路從中央偏西穿過）
+	Vector2( -6.0,  -50.0),   # 出空地，急轉北
+	Vector2(  4.0,  -66.0),   # 最暗的密林
+	Vector2(  1.0,  -82.0),   # 屋台平台
+	Vector2( -3.0,  -97.0),
+	Vector2( -2.0, -110.0),   # 北端：神社傳送點
+]
+
 
 var lib: Lib
 var _nh: FastNoiseLite       # 地形起伏
@@ -94,35 +137,74 @@ var _jizo_sites: Array = []
 ## 這份表同時被 _plan_jizo_sites()（植被讓位）與 _build_human_traces()
 ## （實際擺放）使用，兩邊不可各寫一份。
 const JIZO_SPECS := [
-	[0.07, 1, 1.0],           # 入口
-	[0.19, 1, -1.0],
-	[T_JIZO, 3, 1.0],         # 疏段三尊（規格的「地藏／舊路標」節點）
-	[0.34, 1, -1.0],          # 離溪心 0.07 = 15 m，避開溪岸抹平帶（14 m）
-	[0.71, 1, 1.0],
+	[0.06, 1, 1.0],           # 入口（＝T_ENTRANCE）
+	[0.16, 1, -1.0],          # 雜木林起點
+	[T_JIZO, 3, 1.0],         # 疏段三尊，落在東折彎的外側（規格的「地藏／舊路標」節點）
+	[0.40, 1, -1.0],          # 杉林段；離溪心 0.06 = 13 m，避開溪岸抹平帶（14 m 帶邊緣）
+	[0.76, 1, 1.0],           # 密林妖怪痕跡段
 ]
 
 
 # ══════════════════════════════════════════════════════════════════
 # 主脊：由南到北的蛇行折線
 # ══════════════════════════════════════════════════════════════════
+## Catmull-Rom 取一段（p1→p2）
+func _cr(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, u: float) -> Vector2:
+	var u2 := u * u
+	var u3 := u2 * u
+	return 0.5 * ((2.0 * p1) + (-p0 + p2) * u
+		+ (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * u2
+		+ (-p0 + 3.0 * p1 - 3.0 * p2 + p3) * u3)
+
+
+## 主脊：控制點 Catmull-Rom → 依**弧長**等距重取樣。
+##
+## ⚠ 一定要按弧長重取樣。t 在這支腳本裡被當成「沿路走了多遠」使用
+## （節奏 BEATS、地藏、溪、空地全部吃 t）；若 t 只是控制點索引，
+## 彎多的段落會在 t 軸上被壓縮，節奏長度就對不上實際公尺數。
 func _build_spine() -> void:
+	# 1. 密取樣（每段 60 點）
+	var raw := PackedVector2Array()
+	var n_ctrl := SPINE_PTS.size()
+	for i in n_ctrl - 1:
+		var p0: Vector2 = SPINE_PTS[maxi(i - 1, 0)]
+		var p1: Vector2 = SPINE_PTS[i]
+		var p2: Vector2 = SPINE_PTS[i + 1]
+		var p3: Vector2 = SPINE_PTS[mini(i + 2, n_ctrl - 1)]
+		for k in 60:
+			raw.append(_cr(p0, p1, p2, p3, float(k) / 60.0))
+	raw.append(SPINE_PTS[n_ctrl - 1])
+	# 2. 微幅噪聲讓曲線不要太「設計感」（±0.9 m，不改變大方向）
+	for i in range(1, raw.size() - 1):
+		var f := float(i) / float(raw.size() - 1)
+		raw[i] += Vector2(_nm.get_noise_1d(f * 620.0), 0.0) * 0.9
+	# 3. 累積弧長
+	var acc := PackedFloat32Array()
+	acc.resize(raw.size())
+	acc[0] = 0.0
+	for i in range(1, raw.size()):
+		acc[i] = acc[i - 1] + raw[i].distance_to(raw[i - 1])
+	var total: float = acc[raw.size() - 1]
+	# 4. 等弧長重取樣成 400 點
 	var n := 400
 	_spine.resize(n)
 	_spine_t.resize(n)
+	var cur := 0
 	for i in n:
 		var t := float(i) / float(n - 1)
-		var z := lerpf(SPINE_Z0, SPINE_Z1, t)
-		# 三層正弦 + 噪聲：長波給大方向、短波給蛇行、噪聲給不規則
-		# 振幅與全長同比（640→320 m 時 18–42 → 9–21）：彎的**個數**由 t 頻率
-		# 決定不變，振幅不縮的話每個彎的轉角會變成兩倍尖。
-		var amp := lerpf(6.0, 14.5, t)      # 越深越蜿蜒（220/320 同比）
-		var x := sin(t * TAU * 1.3 + 0.7) * amp * 0.6 \
-			+ sin(t * TAU * 3.7 + 2.1) * amp * 0.3 \
-			+ sin(t * TAU * 9.1 + 4.4) * amp * 0.12 \
-			+ _nm.get_noise_1d(t * 900.0) * 3.0
-		# 大空地與屋台附近把路拉直一點，讓空地是「路穿過的」而不是路繞開
-		_spine[i] = Vector2(x, z)
+		var want := t * total
+		while cur < raw.size() - 2 and acc[cur + 1] < want:
+			cur += 1
+		var seg: float = maxf(acc[cur + 1] - acc[cur], 0.0001)
+		var u: float = clampf((want - acc[cur]) / seg, 0.0, 1.0)
+		_spine[i] = raw[cur].lerp(raw[cur + 1], u)
 		_spine_t[i] = t
+	_spine_len = total
+	print("[TRAIL] 主脊弧長 %.1f m（控制點 %d）" % [total, n_ctrl])
+
+
+var _spine_len := 0.0
+
 
 
 func _spine_pos(t: float) -> Vector2:
@@ -149,7 +231,86 @@ func _half_w(t: float) -> float:
 	w += 0.6 * exp(-pow((t - T_CLEARING) / 0.03, 2.0))
 	w += 0.4 * exp(-pow((t - T_STALL) / 0.02, 2.0))
 	w += 0.4 * (1.0 - smoothstep(0.0, 0.08, t))     # 入口段還是人走的土路
-	return w * 0.5
+	# 岩壁隘口：路被兩側岩體夾窄。
+	# ⚠ 不能窄到 1.5 m。緣一跑步 7 m/s，1.5 m 寬的通道在那個速度下等於
+	#   一路刮牆；下限取全寬 2.2 m（半寬 1.1），壓迫感靠兩側 6.5 m 岩脊給，
+	#   不靠把路收到過不去。
+	#   ⚠ maxf 夾的是**全寬** w，不是半寬——return 才乘 0.5。
+	w -= 1.1 * exp(-pow((t - T_GATE) / 0.022, 2.0))
+	return maxf(w, 2.2) * 0.5
+
+
+
+## ══ 玩家可動範圍（走廊）══
+## 2026-09-15 使用者裁定：
+##   「兩側做碰撞牆；不要把全部樹木做碰撞，只做玩家可動範圍兩側的樹木；
+##     超過的部分加上高碰撞牆包圍。」
+##
+## 可動半寬沿主脊變化：基本 20 m，大空地要整個含進來（R17 + 角度擾動最大
+## 1.4× ≈ 23.8 m）所以那一段鼓到 27 m；屋台在路側 4.4 m 處，22 m 夠用。
+## 隘口段**不收窄**——牆若跟著岩壁一起夾進來，玩家會卡在岩石與牆之間。
+const PLAY_HALF_BASE := 20.0
+const PLAY_WALL_H := 14.0        # 牆高：樹冠 26 m，但玩家跳不了那麼高；14 m 足夠且省
+const PLAY_WALL_STEP := 4.0      # 每段牆的長度（沿主脊取樣間距）
+
+func play_half(t: float) -> float:
+	var w := PLAY_HALF_BASE
+	# 大空地：牆要在空地外圈，否則玩家走到空地邊就撞牆
+	w = maxf(w, 27.0 * exp(-pow((t - T_CLEARING) / 0.075, 2.0)))
+	# 屋台平台略放寬
+	w = maxf(w, 23.0 * exp(-pow((t - T_STALL) / 0.03, 2.0)))
+	return w
+
+
+## ══ 傳送點淨空 ══
+## 傳送點座標**從 data/trail.meta.json 讀**，不在這裡再寫一份——
+## main.gd 生成傳送區用的是那一份，兩邊各寫一份遲早會對不上。
+##
+## ⚠ 為什麼要淨空：雜草地毯把傳送點埋了。實測北傳送點 1.3 m 外有一叢
+##   草頂到 y=9.64，而傳送門的光環在 y=8.81、門面下緣 8.34 —— 草直接
+##   蓋住整個下半部，玩家看到的只有樹葉縫裡一段藍色弧線。
+const PORTAL_CLEAR_R := 4.5      # 這個半徑內不長草、不長樹
+
+var _portals: Array = []         # [Vector2]
+
+func _load_portals() -> void:
+	_portals.clear()
+	var f := FileAccess.open("res://data/trail.meta.json", FileAccess.READ)
+	if f == null:
+		push_warning("讀不到 trail.meta.json —— 傳送點淨空不會生效")
+		return
+	var j: Variant = JSON.parse_string(f.get_as_text())
+	if typeof(j) != TYPE_DICTIONARY:
+		return
+	for p in (j as Dictionary).get("portals", []):
+		_portals.append(Vector2(float(p.get("x", 0.0)), float(p.get("z", 0.0))))
+	print("[TRAIL] 傳送點淨空：%d 處，半徑 %.1f m" % [_portals.size(), PORTAL_CLEAR_R])
+
+
+## 這個點是否落在傳送點淨空圈內
+func _in_portal_clear(p: Vector2, extra: float = 0.0) -> bool:
+	for q in _portals:
+		if p.distance_to(q) < PORTAL_CLEAR_R + extra:
+			return true
+	return false
+
+
+## 主脊每個取樣點的路半寬（與 _spine 同索引），烘進場景 meta 供體檢使用
+func _half_w_table() -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(_spine.size())
+	for i in _spine.size():
+		out[i] = _half_w(_spine_t[i])
+	return out
+
+
+## 可動範圍半寬表（同索引），一併烘進 meta 供體檢／導航使用
+func _play_half_table() -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(_spine.size())
+	for i in _spine.size():
+		out[i] = play_half(_spine_t[i])
+	return out
 
 
 ## 到主脊距離、最近 t
@@ -174,11 +335,13 @@ func _spine_info(p: Vector2) -> Array:
 func _build_branches() -> void:
 	var specs := [
 		# t 起點、方向(左右)、長度、是否消失
-		[0.18, 1, 46.0, true], [0.23, -1, 30.0, true],
-		[0.33, -1, 40.0, true], [0.36, 1, 20.0, true],
+		# r3：岔路重排到新節奏的「疏」段與空地、屋台附近——密林段本來就看不到
+		# 岔路，開在那裡等於白開。
+		[0.13, 1, 40.0, true], [0.27, -1, 34.0, true],
+		[0.31, 1, 22.0, true], [0.38, -1, 44.0, true],
 		[T_CLEARING + 0.01, 1, 38.0, true],      # 空地側隱藏獸徑（規格 §7）
-		[0.66, -1, 52.0, true], [0.70, 1, 28.0, true],
-		[0.85, -1, 70.0, true], [0.91, 1, 40.0, true],
+		[0.72, -1, 50.0, true], [0.80, 1, 26.0, true],
+		[0.90, -1, 66.0, true], [0.95, 1, 38.0, true],
 	]
 	for s in specs:
 		var t0: float = s[0]
@@ -220,10 +383,34 @@ func _branch_info(p: Vector2) -> Array:
 # 地形
 # ══════════════════════════════════════════════════════════════════
 ## 小溪：橫穿主脊於 T_CREEK，走向大致東西、帶一點蛇行
+##
+## ⚠ 溪心的 z 是「x 的函數」（帶蛇行），所以主脊在 T_CREEK 的點**不等於**
+##   實際的路／溪交會點。r3 之前直接拿 _spine_pos(T_CREEK) 當橋位，
+##   結果橋離真正的過水點 7 m（實測 spine z=7.05、溪心 z=14.4）。
+##   現在改成：溪的基準 z 用「主脊在 T_CREEK 的 z 扣掉該處的蛇行量」，
+##   使溪心恰好通過主脊那一點；橋位另外用 _creek_crossing() 解出來。
+var _creek_z0 := 0.0
+
+func _creek_wiggle(x: float) -> float:
+	return sin(x * 0.045 + 1.3) * 6.0 + _nm.get_noise_1d(x * 2.0) * 3.0
+
+
 func _creek_dist(p: Vector2) -> float:
-	var c := _spine_pos(T_CREEK)
-	var zc := c.y + sin(p.x * 0.045 + 1.3) * 6.0 + _nm.get_noise_1d(p.x * 2.0) * 3.0
-	return absf(p.y - zc)
+	return absf(p.y - (_creek_z0 + _creek_wiggle(p.x)))
+
+
+## 路與溪真正的交會點（沿主脊掃最小距離）
+func _creek_crossing() -> Array:
+	var bt := T_CREEK
+	var best := INF
+	for i in 400:
+		var t := float(i) / 399.0
+		var d := _creek_dist(_spine_pos(t))
+		if d < best:
+			best = d
+			bt = t
+	return [bt, _spine_pos(bt), best]
+
 
 
 func _clearing_dist(p: Vector2) -> float:
@@ -276,6 +463,16 @@ func height_at(x: float, z: float) -> float:
 	# 泥潭：密林 2 裡兩處
 	for m in _mud_sites():
 		h -= 0.35 * (1.0 - smoothstep(2.0, 5.5, p.distance_to(m)))
+	# 岩壁隘口：路兩側各一道岩脊，路心不動。
+	# ⚠ 不能整片抬高，否則路也跟著升上去看不出「夾」。這裡用「離路心距離」
+	#   當作抬升量：路緣 3 m 外開始升，9 m 處到頂 6.5 m，再往外回落。
+	var gp := _spine_pos(T_GATE)
+	var gate_along := 1.0 - smoothstep(6.0, 22.0, p.distance_to(gp))
+	if gate_along > 0.0:
+		var gi := _spine_info(p)
+		var gd: float = gi[0]
+		var ridge := smoothstep(2.6, 9.0, gd) * (1.0 - smoothstep(9.0, 20.0, gd))
+		h += 6.5 * ridge * gate_along
 	return h
 
 
@@ -361,10 +558,16 @@ func _init() -> void:
 	lib.setup(root, SEED)
 	_build_spine()
 	_build_branches()
+	_load_portals()
+	# 溪心基準：讓溪恰好通過主脊在 T_CREEK 的那一點
+	var _cp := _spine_pos(T_CREEK)
+	_creek_z0 = _cp.y - _creek_wiggle(_cp.x)
+	var _cx := _creek_crossing()
+	print("[TRAIL] 溪／路交會：t=%.3f 位置 %s 殘差 %.2f m" % [_cx[0], _cx[1], _cx[2]])
 
 	print("[TRAIL] 主脊 %d 點，南 %s → 北 %s" % [_spine.size(), _spine_pos(0.0), _spine_pos(1.0)])
-	print("[TRAIL] 關鍵點：入口 %s 地藏 %s 小溪 %s 空地 %s 屋台 %s" % [
-		_spine_pos(T_ENTRANCE), _spine_pos(T_JIZO), _spine_pos(T_CREEK), _spine_pos(T_CLEARING), _spine_pos(T_STALL)])
+	print("[TRAIL] 關鍵點：入口 %s 隘口 %s 地藏 %s 小溪 %s 空地 %s 屋台 %s" % [
+		_spine_pos(T_ENTRANCE), _spine_pos(T_GATE), _spine_pos(T_JIZO), _spine_pos(T_CREEK), _spine_pos(T_CLEARING), _spine_pos(T_STALL)])
 
 	# 地形：路面走土徑貼圖、第四層「濕泥」——沒有專屬泥貼圖，先用林床貼圖
 	# 疊深色 tint 當濕土；Meshy/貼圖到位後換 dirt_set 即可
@@ -378,7 +581,10 @@ func _init() -> void:
 	_build_forest()
 	_plan_jizo_sites()          # 先定位置，讓地表植被知道要讓開哪裡
 	_build_ground_cover()
+	_build_weed_carpet()
+	_build_play_walls()
 	_build_rocks_and_logs()
+	_build_gate()
 	_build_human_traces()
 	_build_clearing()
 	_build_stall_site()
@@ -386,12 +592,41 @@ func _init() -> void:
 	_build_vista()
 	_build_sky()
 	_build_markers()
+	_attach_interactions(root)
 
 	var packed := PackedScene.new()
+	# 把主脊折線烘進場景 meta：體檢腳本要能量「離路心多遠」，
+	# 而它拿不到產生器的 _spine。沒有這份資料的話只能用群中心之類的
+	# 近似，第一版就是這樣量出 x=-0.14（實際隘口在 x=-14.8）的假結果。
+	lib.root.set_meta("spine", _spine)
+	lib.root.set_meta("spine_half_w", _half_w_table())
+	lib.root.set_meta("play_half", _play_half_table())
 	packed.pack(root)
 	var err := ResourceSaver.save(packed, OUT + "trail.tscn")
 	print("[TRAIL] saved trail.tscn err=%d  節點 %d" % [err, _count(root)])
 	quit(0)
+
+
+## 劇情互動點：把 trail_interactions.tscn 掛回場景。
+##
+## ⚠ 這個節點**不是**產生器造的，是手工場景，但它必須每次重建都掛回去。
+##   r3 重跑產生器時整組掉了 → verify_story_slice 一次 FAIL 20 項
+##   （醒來獨白、妖怪氣息、毛玉、受傷妖怪全部沒觸發，任務鏈卡在 MQ00）。
+##   同樣的坑 gen_village_trees.gd 對櫻花樹群也踩過，做法一致：
+##   產生器負責重新掛回，不靠人記得。
+func _attach_interactions(root: Node3D) -> void:
+	var ps := load("res://maps/trail/trail_interactions.tscn") as PackedScene
+	if ps == null:
+		push_error("找不到 trail_interactions.tscn —— 劇情事件會整組消失")
+		return
+	var inst := ps.instantiate() as Node3D
+	root.add_child(inst)
+	inst.owner = root
+	inst.name = "獸道互動點"
+	var n := 0
+	for c in inst.get_children():
+		n += 1
+	print("[TRAIL] 劇情互動點已掛回：%d 個事件節點" % n)
 
 
 func _count(n: Node) -> int:
@@ -479,10 +714,20 @@ func _build_creek_water() -> void:
 	var n := 81
 	# ⚠ 溪帶不得超出地形：圖縮到 240 後 ±130 m 會伸出圖緣，terrain_y 在圖外
 	#   回傳夾住的邊界值 → check_map 報 11% 埋地（最深 1.24 m @ x=73）。
-	var x0 := maxf(c.x - 130.0, -HALF + 3.0)
-	var x1 := minf(c.x + 130.0, HALF - 3.0)
+	# ⚠ 溪帶長度：以**交會點**為中心 ±58 m，不是整張圖寬。
+	#
+	#   原本是 ±130 m（幾乎全圖 234 m）。但這條溪跟著地形往北爬升，
+	#   實測水面從 y=0.34 一路升到 y=5.05 —— 站在木橋上（相機 y=6.2）
+	#   往西看，100 m 外的水面幾乎跟眼睛同高，於是在畫面上三分之一
+	#   拉出一條橫貫全寬的深色波紋帶，看起來像一片浮空的錯位平面。
+	#   （視覺複檢兩輪都抓到這片，是真缺陷。）
+	#   縮到 ±58 m 後水面高差降到約 1 m 級，兩端沒入林子裡。
+	var ccx := _creek_crossing()
+	var cx_at: Vector2 = ccx[1]
+	var x0 := maxf(cx_at.x - 58.0, -HALF + 3.0)
+	var x1 := minf(cx_at.x + 58.0, HALF - 3.0)
 	var zc_of := func(x: float) -> float:
-		return c.y + sin(x * 0.045 + 1.3) * 6.0 + _nm.get_noise_1d(x * 2.0) * 3.0
+		return _creek_z0 + _creek_wiggle(x)
 	var bed := PackedFloat32Array()
 	bed.resize(n)
 	# ⚠ 每站的水面中心要用**地形網格實際谷底**，不是解析式 zc。
@@ -593,16 +838,30 @@ func _build_creek_water() -> void:
 # ══════════════════════════════════════════════════════════════════
 # 森林：個別節點；路沿高模、外圍 LOD（若有）
 # ══════════════════════════════════════════════════════════════════
+## ══ 樹種表（r3：全面改用 assets/landscape/ 的 Tripo GLB）══
+## 實測（tools/probe_trail_glb.gd）：12 件全部 min.y = 0（BASE）、本地高 0.96–0.99 m、
+## 3.1k–4.9k 面／棵、單一材質 → 目標高 ÷ 本地高 ≈ 目標高，縮放直接是公尺數。
+##
+## 獸道配比（使用者裁定：另訂一套，不延用村緣）：
+##   骨幹 = 杉／針葉（大衫、2大衫、針葉樹1/2、針葉林樹3/4）約 72%
+##   點綴 = 普通樹（雜木）、楓樹（深處妖異暖色）、鎮守之杜（老樹、面數最低當遠景）
+##   入口段另外強制混入較多普通樹，才有「還算明亮的人間邊界」感。
+##
+## ⚠ landscape/ 沒有枯樹。深處的枯木是使用者明確要的節奏元素，
+##   這裡是全場唯一保留 Quaternius 的樹（DeadTree_*，見 DEAD_TREES）；
+##   有 GLB 枯木之後直接換掉這一張表即可。
 const TREES := {
-	# 名稱 → [變體清單, 目標高度範圍 m, 權重]
-	"闊葉": [["CommonTree_1", "CommonTree_2", "CommonTree_3", "CommonTree_4", "CommonTree_5"], [12.0, 18.0], 0.42],
-	"松":   [["Pine_1", "Pine_2", "Pine_3", "Pine_4", "Pine_5"], [14.0, 22.0], 0.33],
-	"杉":   [["Pine_3", "Pine_1"], [18.0, 26.0], 0.20],          # 高瘦松當杉用（規格要杉木；Quaternius 沒有杉，先以高松代）
-	"歪":   [["TwistedTree_1", "TwistedTree_2", "TwistedTree_3", "TwistedTree_4", "TwistedTree_5"], [11.0, 16.0], 0.03],
-	"枯":   [["DeadTree_1", "DeadTree_2", "DeadTree_3", "DeadTree_4", "DeadTree_5"], [9.0, 14.0], 0.02],
+	# 名稱 → [GLB 檔名清單, 目標高度範圍 m, 權重]
+	"大杉":   [["大衫", "2大衫"], [17.0, 24.0], 0.30],
+	"針葉":   [["針葉樹1", "針葉樹2glb"], [11.0, 16.0], 0.26],
+	"針葉林": [["針葉林樹3", "針葉林樹4"], [13.0, 18.0], 0.16],
+	"雜木":   [["普通樹"], [8.5, 13.0], 0.16],
+	"老樹":   [["鎮守之杜"], [12.0, 17.0], 0.07],
+	"楓":     [["楓樹"], [9.0, 13.0], 0.05],
 }
-# 實測本地高度（probe_trail_assets.gd）— 每個變體不同，這裡用每種的代表值，
-# 產生器內會再實際讀 AABB 校正，所以這張表只是備援。
+## 枯樹（唯一保留的 Quaternius 樹，路徑走 NAT 而非 LS）
+const DEAD_TREES := ["DeadTree_1", "DeadTree_2", "DeadTree_3", "DeadTree_4", "DeadTree_5"]
+
 
 
 func _mesh_h(ps: PackedScene) -> float:
@@ -677,6 +936,11 @@ func _ps(path: String) -> PackedScene:
 	return _scene_cache[path]
 
 
+## 樹的資產路徑：枯樹走 Quaternius（.gltf），其餘全是 landscape 的 .glb
+func _tree_path(kind: String, variant: String) -> String:
+	return NAT + variant + ".gltf" if kind == "枯" else LS + variant + ".glb"
+
+
 func _pick_tree() -> Array:
 	var r := lib.rand()
 	var acc := 0.0
@@ -696,9 +960,11 @@ func _build_forest() -> void:
 	var groups := {}
 	var count := [0, 0]
 	var tries := 0
-	# 減半版：路沿帶 2100 + 外圍 700 = 2800（原 4200 + 2800 = 7000）。
-	# 主脊 320 m、圖 340×340 → 面積都是原來的一半，棵數減半密度才不變。
-	var target := 2400              # 220 m 版（面積 240²/340² ≈ 0.5，路沿帶 ≈ 0.69）
+	# ⚠ 棵數必須隨資產面數重算。Quaternius 樹約 0.4k 面／棵，2400 棵 ≈ 96 萬面；
+	#   換成 Tripo GLB（3.1k–4.9k 面／棵）同樣 2400 棵會是 1,080 萬面，只有樹。
+	#   村緣林（gen_village_trees）258 棵 ≈ 60 萬面是已驗收的量級 →
+	#   這裡取 1500 棵 ≈ 650 萬面，並把外圍帶限縮成最低面數的兩種樹。
+	var target := 1500
 	var made := 0
 	_placed_trunks = PackedVector2Array()
 	# 用格子加速樹幹間距檢查
@@ -708,7 +974,7 @@ func _build_forest() -> void:
 		tries += 1
 		var x := 0.0
 		var z := 0.0
-		if made < 1450:
+		if made < 1150:
 			# 重兵集中在路沿 3.2m ~ 55m 帶狀區，形成林蔭穹頂與密林壓迫感
 			var t_sample := lib.rr(0.01, 0.99)
 			var sp_pos := _spine_pos(t_sample)
@@ -742,6 +1008,9 @@ func _build_forest() -> void:
 		if _creek_dist(p) < 3.5:
 			continue
 		if p.distance_to(_stall_pos()) < 9.0:
+			continue
+		# 傳送點淨空：門是玩家的出口，不能被樹擋住
+		if _in_portal_clear(p, 1.5):
 			continue
 		var bi := _branch_info(p)
 		if bi[0] < 0.9 and bi[1] < 0.8:
@@ -777,22 +1046,31 @@ func _build_forest() -> void:
 		var kind: String = pick[0]
 		var variant: String = pick[1]
 		var hr: Array = pick[2]
-		# 深處 (t > 0.7) 少量增加枯樹與歪樹，但維持松杉為骨幹，不讓紅葉氾濫
-		if t > 0.72 and kind in ["闊葉", "松"] and lib.rand() < (t - 0.72) * 0.35:
-			pick = ["枯", TREES["枯"][0][int(lib.rand() * 5) % 5], TREES["枯"][1]] if lib.rand() < 0.7 \
-				else ["歪", TREES["歪"][0][int(lib.rand() * 5) % 5], TREES["歪"][1]]
-			kind = pick[0]; variant = pick[1]; hr = pick[2]
-		var path := NAT + variant + ".gltf"
+		# 入口段（t < 0.12）：人間邊界要明亮，雜木（普通樹）比例拉高、大杉退場
+		if t < 0.12 and kind == "大杉" and lib.rand() < 0.6:
+			kind = "雜木"; variant = "普通樹"; hr = TREES["雜木"][1]
+		# 外圍背景帶（離路緣 45 m 外）一律用面數最低的鎮守之杜（3.1k vs 4.9k），
+		# 玩家根本走不到那裡，省下來的面數留給路沿。
+		if ed >= 45.0:
+			kind = "老樹"; variant = "鎮守之杜"; hr = TREES["老樹"][1]
+		# 深處 (t > 0.70)：加入枯木與楓 —— 使用者裁定的「深處陰森」訊號。
+		# 枯木是全場唯一的 Quaternius 樹（landscape/ 沒有枯樹資產）。
+		if t > 0.70 and kind in ["大杉", "針葉", "針葉林"] and lib.rand() < (t - 0.70) * 1.1:
+			if lib.rand() < 0.65:
+				kind = "枯"; variant = DEAD_TREES[int(lib.rand() * 5) % 5]; hr = [9.0, 14.0]
+			else:
+				kind = "楓"; variant = "楓樹"; hr = TREES["楓"][1]
+		var path := _tree_path(kind, variant)
 		var ps := _ps(path)
 		var local_h: float = _h_cache[path]
 		var target_h := lib.rr(hr[0], hr[1])
 		# 林冠遮光：讓「路兩側稍遠」的樹高一點，形成拱頂而不是把路封死。
 		# 拱頂只能由「離路心 14 m 以外」的樹撐起——樹冠水平半徑約高度 ×0.45，
 		# 12 m 樹 = 5.4 m 冠幅，從 8 m 外伸過來仍蓋住路心（自檢 25/41 三重覆蓋）。
-		if dc > 14.0 and dc < 30.0 and kind in ["闊葉", "松", "杉"]:
+		if dc > 14.0 and dc < 30.0 and kind in ["大杉", "針葉", "針葉林", "老樹"]:
 			target_h = maxf(target_h, 13.0)
 		# ⚠ 走廊旁那一圈**不能靠矮化**來讓出視線。
-		# Quaternius 的樹冠佔全高的比例是固定的，矮化 = 冠也跟著縮小，
+		# 樹冠佔全高的比例是固定的，矮化 = 冠也跟著縮小，
 		# 結果中景變成一整片光禿樹幹的柱林（v7_屋台.png）。
 		# 正確做法是保持樹高、改用「抬高樹冠」——把整棵往下沉，讓樹冠
 		# 位置相對上移，視線從樹幹之間穿過去，天際線仍然有葉子。
@@ -805,26 +1083,10 @@ func _build_forest() -> void:
 		var y := height_at(x, z)
 		inst.position = Vector3(x, y - 0.05 - trunk_lift, z)
 		inst.rotation.y = lib.rand() * TAU
-		# 歪斜（規格：歪斜樹木）— 深處更歪
-		var lean := lib.rr(0.0, 0.05 + t * 0.10) if kind in ["歪", "枯"] else lib.rr(0.0, 0.03)
+		# 歪斜（規格：歪斜樹木）— 深處更歪；枯木最歪
+		var lean := lib.rr(0.0, 0.05 + t * 0.10) if kind == "枯" else lib.rr(0.0, 0.03)
 		inst.rotation.x = lean * (1.0 if lib.rand() < 0.5 else -1.0)
 		inst.scale = Vector3(s, s * lib.rr(0.92, 1.1), s)
-		# 紅葉配額：TwistedTree 的原生葉貼圖是深紅，成片出現會讓整座森林
-		# 看起來「異常」而不是「妖怪的」。深處保留少量當妖異訊號。
-		#
-		# ⚠ 前兩次都失敗，原因相同：GLB 是 instance=ExtResource，
-		#   它的**內部**節點不會被序列化。所以
-		#     set_surface_override_material() → 丟掉（257 棵全紅）
-		#     替換 mi.mesh                    → 也丟掉（257 棵全紅）
-		#   唯一存得下來的是「實例根自己的屬性」。這裡改成不用 GLB 實例，
-		#   而是自建 MeshInstance3D 掛一份改好材質的共用 mesh。
-		var keep_red := kind == "歪" and t > 0.72 and lib.rand() < 0.25
-		if kind == "歪" and not keep_red:
-			inst = _green_twisted(variant)
-			inst.position = Vector3(x, y - 0.05 - trunk_lift, z)
-			inst.rotation.y = lib.rand() * TAU
-			inst.rotation.x = lean * (1.0 if lib.rand() < 0.5 else -1.0)
-			inst.scale = Vector3(s, s * lib.rr(0.92, 1.1), s)
 		var band := 0 if ed < 45.0 else 1
 		var parent: Node3D = near if band == 0 else far
 		var gname := "%s_%s" % [kind, "近" if band == 0 else "遠"]
@@ -841,10 +1103,15 @@ func _build_forest() -> void:
 			grid[key2] = PackedVector2Array()
 		grid[key2].append(p)
 		count[band] += 1
-		if ed < 14.0:
+		# ⚠ 樹幹碰撞**只給玩家走得到的樹**（使用者裁定：不要全部樹木做碰撞）。
+		#   判準是「在走廊牆以內」，不是固定的 14 m —— 牆在大空地鼓到 27 m，
+		#   用 14 m 的話空地外圈那一圈樹會變成可以穿過去的幽靈樹。
+		#   牆外的樹一律不給碰撞：玩家根本到不了，碰撞體純浪費。
+		#   留 1.2 m 餘裕，站在牆邊也不會看到手伸進樹裡。
+		if dc < play_half(t) + 1.2:
 			_placed_trunks.append(p)
 		made += 1
-	# 近路樹幹碰撞
+	# 走廊內樹幹碰撞
 	var body := StaticBody3D.new()
 	lib.add(lib.root, body, "樹幹碰撞")
 	for q in _placed_trunks:
@@ -855,7 +1122,8 @@ func _build_forest() -> void:
 		sh.position = Vector3(q.x, height_at(q.x, q.y) + 2.5, q.y)
 		body.add_child(sh)
 		sh.owner = lib.root
-	print("[TRAIL] 森林：路沿 %d / 外圍 %d（共 %d 棵，%d 根近路樹幹碰撞）" % [count[0], count[1], made, _placed_trunks.size()])
+	print("[TRAIL] 森林：路沿 %d / 外圍 %d（共 %d 棵，走廊內 %d 根樹幹碰撞，牆外 %d 棵無碰撞）"
+		% [count[0], count[1], made, _placed_trunks.size(), made - _placed_trunks.size()])
 	_audit_corridor(_trunk_log)
 
 
@@ -898,21 +1166,103 @@ func _audit_corridor(logs: Array) -> void:
 
 
 # ══════════════════════════════════════════════════════════════════
+# 走廊碰撞牆：沿主脊兩側各一道連續牆 + 南北兩端封口
+# ══════════════════════════════════════════════════════════════════
+## 使用者裁定：可動範圍兩側做碰撞牆，超出的部分用高牆包圍。
+##
+## 做法：沿主脊每 PLAY_WALL_STEP 公尺取一段，兩側各放一個 BoxShape3D，
+## 盒子**沿路的切線方向**擺（不是軸對齊），所以彎道處牆也跟著彎。
+##
+## ⚠ 相鄰兩段之間會有縫（外側轉彎處弧長比中心線長）。盒長要比取樣間距
+##   長一點（×1.35）讓相鄰段重疊，否則玩家貼著牆走會從縫裡鑽出去。
+##   這是實際會發生的：主脊 254 m、最大曲率半徑約 18 m，
+##   外側 20 m 處一段 4 m 的直線盒子兩端各短少約 0.5 m。
+##
+## ⚠ 牆**不給網格**。視覺是樹與岩壁的事，牆只負責擋人；
+##   給了網格反而會在林子裡看到一片灰板。
+func _build_play_walls() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "走廊碰撞牆") as Node3D
+	var body := StaticBody3D.new()
+	lib.add(g, body, "牆體")
+	var n := 0
+	var steps := int(ceil(_spine_len / PLAY_WALL_STEP))
+	var lo := INF
+	var hi := -INF
+	for i in steps + 1:
+		var t := float(i) / float(steps)
+		var c := _spine_pos(t)
+		var d := _spine_dir(t)
+		var perp := Vector2(-d.y, d.x)
+		var ph := play_half(t)
+		lo = minf(lo, ph)
+		hi = maxf(hi, ph)
+		for side in [-1.0, 1.0]:
+			var p: Vector2 = c + perp * float(side) * ph
+			var sh := CollisionShape3D.new()
+			var bx := BoxShape3D.new()
+			# x = 厚度、z = 沿路長度（盒子自己的座標系，靠 rotation.y 轉到切線方向）
+			bx.size = Vector3(1.0, PLAY_WALL_H, PLAY_WALL_STEP * 1.35)
+			sh.shape = bx
+			# 牆腳埋進地形 2 m，地形起伏時不會出現可以鑽過去的縫
+			sh.position = Vector3(p.x, height_at(p.x, p.y) - 2.0 + PLAY_WALL_H * 0.5, p.y)
+			sh.rotation.y = atan2(d.x, d.y)
+			body.add_child(sh)
+			sh.owner = lib.root
+			n += 1
+	# 南北兩端封口：擋在傳送點**外側**，玩家走得到傳送點但走不出圖。
+	# ⚠ 方向要算對。_spine_dir 一律指向北（−z），所以
+	#     南端（t=0）圖外是 −dir 方向、北端（t=1）圖外是 +dir 方向。
+	#   兩端都用 +dir 的話，南端封口會落在傳送點**內側** 2.5 m，
+	#   玩家永遠走不到南傳送點（實際座標：牆 z=107.5 vs 傳送點 z=108.8）。
+	for e in [[0.0, -1.0], [1.0, 1.0]]:
+		var t: float = e[0]
+		var outward: float = e[1]
+		var c := _spine_pos(t)
+		var d := _spine_dir(t)
+		var ph := play_half(t)
+		var p: Vector2 = c + d * outward * 4.0
+		var sh := CollisionShape3D.new()
+		var bx := BoxShape3D.new()
+		bx.size = Vector3(ph * 2.0 + 2.0, PLAY_WALL_H, 1.0)
+		sh.shape = bx
+		sh.position = Vector3(p.x, height_at(p.x, p.y) - 2.0 + PLAY_WALL_H * 0.5, p.y)
+		sh.rotation.y = atan2(d.x, d.y)
+		body.add_child(sh)
+		sh.owner = lib.root
+		n += 1
+		print("[TRAIL] 端封口 t=%.0f 位置 (%.1f, %.1f)" % [t, p.x, p.y])
+	print("[TRAIL] 走廊碰撞牆：%d 段（每側 %d），可動半寬 %.0f–%.0f m，牆高 %.0f m"
+		% [n, steps + 1, lo, hi, PLAY_WALL_H])
+
+
+# ══════════════════════════════════════════════════════════════════
 # 地表植被：蕨/芒草/灌木/菇/苔/花 —— 大量侵入路緣
 # ══════════════════════════════════════════════════════════════════
+## ══ 地表植被 ══
+## [名, 變體, 目標**最大邊** m 範圍, 數量, 路緣偏好(0-1), 林床偏好, 濕地偏好, 只在深處?]
+##
+## 2026-09-15 使用者裁定：「地上增加許多雜草」。
+##   雜草層（矮草／芒草／蕨）數量大幅提高，並新增一層「亂雜草」把林床鋪滿。
+##   面數帳：Quaternius 草 155–622 面／株，+3600 株 ≈ +110 萬面，
+##   相對場景 766 萬可接受；樹不動。
+##   ⚠ 只加在「玩家看得到的帶」內（見 _build_ground_cover 的 ed > COVER_BAND），
+##     外圍交給林床貼圖，否則面數翻倍卻看不到。
 const COVER := [
-	# [名, 變體, 目標**最大邊** m 範圍, 數量, 路緣偏好(0-1), 林床偏好, 濕地偏好, 只在深處?]
-	# 數量為 220 m 版（原 640 m 的 ×0.34）；沿路 40 m 帶的面積是原來一半，每公尺密度不變。
-	["蕨", ["Fern_1"], [0.6, 1.1], 483, 0.85, 0.7, 0.9, false],
-	["芒草", ["Grass_Wispy_Tall", "Grass_Common_Tall"], [0.6, 1.0], 414, 0.9, 0.3, 0.5, false],
-	["矮草", ["Grass_Common_Short", "Grass_Wispy_Short"], [0.35, 0.65], 552, 0.8, 0.5, 0.6, false],
-	["灌木", ["Bush_Common", "Bush_Common_Flowers"], [1.0, 1.8], 179, 0.6, 0.5, 0.3, false],
-	["矮竹", ["Plant_7", "Plant_7_Big", "Plant_1_Big"], [0.6, 1.2], 131, 0.5, 0.6, 0.2, false],
-	["苔", ["Clover_1", "Clover_2"], [0.15, 0.3], 241, 0.3, 0.9, 0.9, false],
-	["菇", ["Mushroom_Common"], [0.2, 0.4], 110, 0.2, 0.9, 0.8, false],
+	["蕨", ["Fern_1"], [0.6, 1.1], 760, 0.85, 0.7, 0.9, false],
+	["芒草", ["Grass_Wispy_Tall", "Grass_Common_Tall"], [0.6, 1.0], 900, 0.9, 0.3, 0.5, false],
+	["矮草", ["Grass_Common_Short", "Grass_Wispy_Short"], [0.35, 0.65], 1500, 0.8, 0.5, 0.6, false],
+	# 亂雜草：貼著地面的細碎草叢，鋪中距離林床（近距離交給 _build_weed_carpet）
+	["雜草", ["Grass_Common_Short", "Grass_Common_Tall", "Grass_Wispy_Short"], [0.25, 0.55], 900, 0.95, 0.85, 0.7, false],
+	["灌木", ["Bush_Common", "Bush_Common_Flowers"], [1.0, 1.8], 220, 0.6, 0.5, 0.3, false],
+	["矮竹", ["Plant_7", "Plant_7_Big", "Plant_1_Big"], [0.6, 1.2], 180, 0.5, 0.6, 0.2, false],
+	["苔", ["Clover_1", "Clover_2"], [0.15, 0.3], 430, 0.3, 0.9, 0.9, false],
+	["菇", ["Mushroom_Common"], [0.2, 0.4], 130, 0.2, 0.9, 0.8, false],
 	["靈芝", ["Mushroom_Laetiporus"], [0.3, 0.55], 31, 0.1, 0.9, 0.6, true],
-	["野花", ["Flower_3_Group", "Flower_4_Group", "Flower_3_Single"], [0.25, 0.4], 90, 0.7, 0.1, 0.2, false],
+	["野花", ["Flower_3_Group", "Flower_4_Group", "Flower_3_Single"], [0.25, 0.4], 150, 0.7, 0.1, 0.2, false],
 ]
+## 地表植被只長在離路緣多少公尺內（外圍交給貼圖）
+const COVER_BAND := 46.0
+
 
 
 func _build_ground_cover() -> void:
@@ -942,8 +1292,8 @@ func _build_ground_cover() -> void:
 			var ed := maxf(0.0, d - hw)
 			if deep_only and t < 0.5:
 				continue
-			# 只在玩家看得到的帶內（路沿 40 m），外圍交給林床貼圖
-			if ed > 40.0:
+			# 只在玩家看得到的帶內（路沿 COVER_BAND），外圍交給林床貼圖
+			if ed > COVER_BAND:
 				continue
 			# 路面與路緣淨空：
 			# 1. 任何草木不得侵入路心（d < hw * 0.95 禁入）
@@ -958,6 +1308,9 @@ func _build_ground_cover() -> void:
 			# 屋台區完全淨空，避免穿模桌椅與阻擋視野
 			if p.distance_to(_stall_pos()) < 7.0:
 				continue
+			# 傳送點淨空：草會把傳送門的光環整個埋掉
+			if _in_portal_clear(p):
+				continue
 			# 地藏周圍淨空 —— 不然 1 m 高的芒草會把 1.1 m 的地藏整個埋掉
 			# （使用者回報：「地藏我根本看不到在哪裡」）
 			var near_jizo := false
@@ -971,7 +1324,8 @@ func _build_ground_cover() -> void:
 			if _clearing_dist(p) < 2.0:
 				if name in ["矮竹", "灌木", "芒草", "蕨"]:
 					continue
-				if _clearing_dist(p) < -2.0 and name not in ["矮草", "苔"]:
+				# 空地內只留貼地的草（雜草／矮草／苔），其餘退到空地外
+				if _clearing_dist(p) < -2.0 and name not in ["矮草", "苔", "雜草"]:
 					continue
 			var m := mask_at(x, z)
 			var w := 0.0
@@ -981,7 +1335,7 @@ func _build_ground_cover() -> void:
 				w = floor_pref * (0.4 + m.g * 0.6)
 			w = maxf(w, wet_pref * m.a)
 			if _clearing_dist(p) < 0.0:
-				w *= 0.3 if name in ["矮草", "野花", "苔"] else 0.05
+				w *= 0.3 if name in ["矮草", "野花", "苔", "雜草"] else 0.05
 			if lib.rand() > w:
 				continue
 			var variant: String = vars[int(lib.rand() * vars.size()) % vars.size()]
@@ -989,9 +1343,15 @@ func _build_ground_cover() -> void:
 			var ps := _ps(path)
 			var s := lib.rr(hr[0], hr[1]) / maxf(_w_cache[path], 0.05)
 			var inst := ps.instantiate() as Node3D
+			# 雜草壓扁一點、傾角隨機 —— 同一份網格重複 1700 次，
+			# 不做形變會整片看起來是同一株複製貼上。
+			var sy := s * (lib.rr(0.7, 1.25) if name == "雜草" else 1.0)
 			inst.position = Vector3(x, height_at(x, z) - 0.02, z)
 			inst.rotation.y = lib.rand() * TAU
-			inst.scale = Vector3(s, s, s)
+			if name == "雜草":
+				inst.rotation.x = lib.rr(-0.14, 0.14)
+				inst.rotation.z = lib.rr(-0.14, 0.14)
+			inst.scale = Vector3(s, sy, s)
 			for mn in _mesh_nodes(inst):
 				(mn as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			lib.add(g, inst, "%s_%04d" % [variant, made])
@@ -999,6 +1359,85 @@ func _build_ground_cover() -> void:
 		total += made
 		print("[TRAIL] 地表 %-4s %5d" % [name, made])
 	print("[TRAIL] 地表植被共 %d" % total)
+
+
+## ══════════════════════════════════════════════════════════════════
+## 雜草地毯：路兩側近距離的密集草皮
+## ══════════════════════════════════════════════════════════════════
+## 使用者要「地上增加許多雜草」。第一次只把 COVER 的數量調高沒有用——
+## 那些草平均散在路緣外 46 m 的帶子裡（≈23,000 m²），6000 株算下來
+## 每 4 m² 才一叢，實拍還是「大片裸露泥土」（視覺複檢原話）。
+##
+## 密度要看得出來只能靠**近距離**：這一層專攻路緣外 0–18 m，
+## 沿主脊等距鋪點而不是全圖亂撒，命中率高、面數花在玩家看得到的地方。
+##
+## 面數：Grass_Common_Short 只有 155 面／株（全場最便宜的網格），
+## Grass_Wispy_Short 494。取 8:2 混合 ≈ 223 面／株。
+##
+## ⚠ 密度不能只看「幾叢/m²」，要看**覆蓋率**＝叢數 × 單叢佔地。
+##   第一版 6000 叢 / ±18 m 帶 = 0.66 叢/m²，聽起來很密，但每叢只有
+##   0.22–0.5 m 寬（佔地 ≈0.09 m²）→ 覆蓋率僅 6%，實拍仍是「大片裸露泥土」。
+##   這一版把帶寬收到 ±14 m、叢放大到 0.35–0.85 m，
+##   1.27 叢/m² × 0.3 m²/叢 ≈ 38% 覆蓋，才讀得出是草地。
+const WEED_BAND := 14.0
+const WEED_COUNT := 9000
+const WEED_SIZE := [0.35, 0.85]
+
+func _build_weed_carpet() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "雜草地毯") as Node3D
+	var made := 0
+	var tries := 0
+	while made < WEED_COUNT and tries < WEED_COUNT * 12:
+		tries += 1
+		# 沿主脊取點 + 側向偏移：直接生在走廊帶上，不用全圖亂撒再篩
+		var t := lib.rr(0.002, 0.998)
+		var sp := _spine_pos(t)
+		var d := _spine_dir(t)
+		var perp := Vector2(-d.y, d.x)
+		var side := 1.0 if lib.rand() < 0.5 else -1.0
+		var hw := _half_w(t)
+		# 偏移分佈偏向路緣（sqrt 讓靠近路的密一點）
+		var off := hw + 0.35 + sqrt(lib.rand()) * WEED_BAND
+		var p := sp + perp * side * off + Vector2(lib.rr(-1.0, 1.0), lib.rr(-1.0, 1.0))
+		if absf(p.x) > HALF - 3.0 or absf(p.y) > HALF - 3.0:
+			continue
+		# 路面淨空：草不進路心，也不貼著路緣擋路
+		var info := _spine_info(p)
+		if info[0] < _half_w(info[1]) * 1.05:
+			continue
+		# 溪、屋台、地藏讓位（與 _build_ground_cover 同一套規則）
+		if _creek_dist(p) < 1.2:
+			continue
+		if p.distance_to(_stall_pos()) < 6.0:
+			continue
+		# 傳送點淨空（與 _build_ground_cover 同一套規則）
+		if _in_portal_clear(p):
+			continue
+		var near_jizo := false
+		for jq in _jizo_sites:
+			if p.distance_to(jq) < 1.6:
+				near_jizo = true
+				break
+		if near_jizo:
+			continue
+		var variant := "Grass_Common_Short" if lib.rand() < 0.8 else "Grass_Wispy_Short"
+		var path := NAT + variant + ".gltf"
+		var ps := _ps(path)
+		var s: float = lib.rr(WEED_SIZE[0], WEED_SIZE[1]) / maxf(float(_w_cache[path]), 0.05)
+		var inst := ps.instantiate() as Node3D
+		inst.position = Vector3(p.x, height_at(p.x, p.y) - 0.03, p.y)
+		inst.rotation = Vector3(lib.rr(-0.12, 0.12), lib.rand() * TAU, lib.rr(-0.12, 0.12))
+		inst.scale = Vector3(s, s * lib.rr(0.7, 1.3), s)
+		for mn in _mesh_nodes(inst):
+			(mn as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		lib.add(g, inst, "雜草_%04d" % made)
+		made += 1
+	var area := _spine_len * WEED_BAND * 2.0
+	# 覆蓋率估算：叢數 × 單叢佔地（平均邊長的平方 × 0.7 圓形係數）／帶面積
+	var avg: float = (WEED_SIZE[0] + WEED_SIZE[1]) * 0.5
+	var cover := float(made) * avg * avg * 0.7 / maxf(area, 1.0)
+	print("[TRAIL] 雜草地毯：%d 叢，帶寬 ±%.0f m，密度 %.2f 叢/m²，估覆蓋率 %.0f%%"
+		% [made, WEED_BAND, float(made) / maxf(area, 1.0), cover * 100.0])
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -1031,6 +1470,14 @@ func _build_rocks_and_logs() -> void:
 			var ps := _ps(path)
 			var target_h := lib.rr(0.5, 1.6)
 			var s := target_h / maxf(_h_cache[path], 0.1)
+			# ⚠ 苔石叢是「路旁」的，不是路上的。cluster 中心撒在離路心
+			#   2.5 m 起，再 ±4 m 抖動 → 石頭中心可能落在路心上；
+			#   體檢實測有 6 顆淨空為負（最深 −0.54 m）。
+			#   用石頭自己的水平半徑 + 走廊淨空判斷，不夠就丟掉這顆。
+			var ri := _spine_info(p)
+			var rrad: float = 0.5 * float(_w_cache[path]) * s * 1.3
+			if ri[0] - rrad < maxf(1.5, _half_w(ri[1]) + 0.4):
+				continue
 			var inst := ps.instantiate() as Node3D
 			var bury := lib.rr(0.15, 0.45)           # 半埋
 			inst.position = Vector3(p.x, height_at(p.x, p.y) - target_h * bury, p.y)
@@ -1066,7 +1513,7 @@ func _build_rocks_and_logs() -> void:
 		pm += 1
 	# 倒木：Meshy 缺件 → 用 Log_Cluster 暫代 + 佔位標記；規格：部分倒木橫跨小路
 	var lm := 0
-	for spec in [[0.20, true], [0.31, false], [0.35, true], [0.66, false], [0.70, true], [0.83, false], [0.9, true]]:
+	for spec in [[0.16, true], [0.30, false], [0.39, true], [0.55, false], [0.74, true], [0.86, false], [0.93, true]]:
 		var t: float = spec[0]
 		var across: bool = spec[1]
 		var d := _spine_dir(t)
@@ -1102,6 +1549,78 @@ func _build_rocks_and_logs() -> void:
 			body.add_child(sh); sh.owner = lib.root
 		lm += 1
 	print("[TRAIL] 苔石 %d、碎石 %d、倒木 %d（%d 橫跨）" % [made, pm, lm, 4])
+
+
+# ══════════════════════════════════════════════════════════════════
+# 岩壁隘口（r3 新節點）：路被兩道岩脊夾到 1.5 m 寬
+# ══════════════════════════════════════════════════════════════════
+## 地形已經在 height_at() 把兩側抬成岩脊；這裡在脊面上實鋪岩塊，
+## 讓它讀起來是「岩壁」而不是「土坡」。
+##
+## ⚠ r3 第一版把岩塊撒在「離路心 3.2 m 起」，但隘口的路半寬只有 0.82 m，
+##   而近路那批岩塊目標高 3.4 m、水平半徑同量級（≈1.7 m）再乘隨機 1.3×
+##   → 岩體邊緣壓到離路心 1.0 m，比路緣還內側，路被整個堵死。
+##   這裡改成**用岩塊自己的水平半徑反推擺放距離**：
+##       離路心 = 需要的淨空(CLEAR) + 這顆岩塊的水平半徑
+##   淨空由路半寬決定，不是寫死的常數，改路寬時不會又撞回來。
+const GATE_CLEAR := 1.9          # 路心兩側保證淨空（玩家膠囊 0.4 + 體檢門檻 1.5 + 餘裕）
+
+func _build_gate() -> void:
+	var g := lib.add(lib.root, Node3D.new(), "岩壁隘口") as Node3D
+	var body := StaticBody3D.new()
+	lib.add(g, body, "岩壁碰撞")
+	var n := 0
+	var closest := INF
+	for i in 46:
+		# 沿主脊 T_GATE ± 0.05 撒點
+		var t := T_GATE + lib.rr(-0.05, 0.05)
+		var d := _spine_dir(t)
+		var perp := Vector2(-d.y, d.x)
+		var side := 1.0 if i % 2 == 0 else -1.0
+		var v := "Rock_Medium_%d" % (1 + i % 3)
+		var path := NAT + v + ".gltf"
+		var ps := _ps(path)
+		# 先決定大小：外層小、內層大，由 rank 決定（0 = 貼著路的那一圈）
+		var rank := lib.rand()
+		var th := lerpf(3.2, 1.0, rank) * lib.rr(0.85, 1.2)
+		var s := th / maxf(_h_cache[path], 0.1)
+		var sx := s * lib.rr(0.85, 1.3)
+		var sz := s * lib.rr(0.85, 1.3)
+		var sy := s * lib.rr(0.9, 1.4)
+		var yaw := lib.rand() * TAU
+		var tilt_x := lib.rr(-0.3, 0.3)
+		var tilt_z := lib.rr(-0.3, 0.3)
+		# ⚠ 半徑要用**旋轉後的實際 AABB**算，不是本地寬 × 縮放。
+		#   第一版用 0.5 * w_cache * scale * 1.05 估，忽略了 yaw 讓對角線
+		#   伸出去、以及岩塊原點不在 AABB 中心 → 仍有 12 顆侵入走廊
+		#   （體檢實測最小淨空 −0.20 m）。這裡直接把實際 basis 套上去量。
+		var basis := Basis.from_euler(Vector3(tilt_x, yaw, tilt_z)).scaled(Vector3(sx, sy, sz))
+		var wb: AABB = Transform3D(basis, Vector3.ZERO) * _aabb_of(ps)
+		# 岩塊原點不一定在 AABB 中心 → 取「原點到 AABB 最遠邊」
+		var rad := maxf(
+			maxf(absf(wb.position.x), absf(wb.position.x + wb.size.x)),
+			maxf(absf(wb.position.z), absf(wb.position.z + wb.size.z)))
+		# 擺放距離 = 保證淨空 + 路半寬 + 自己的半徑 + 隨機外推
+		var off := maxf(GATE_CLEAR, _half_w(t)) + rad + lib.rr(0.0, 5.0) * rank
+		var p := _spine_pos(t) + perp * side * off
+		var inst := ps.instantiate() as Node3D
+		inst.position = Vector3(p.x, height_at(p.x, p.y) - th * lib.rr(0.1, 0.3), p.y)
+		inst.rotation = Vector3(tilt_x, yaw, tilt_z)
+		inst.scale = Vector3(sx, sy, sz)
+		lib.add(g, inst, "隘口岩_%02d" % n)
+		closest = minf(closest, off - rad)
+		if off - rad < 4.0:
+			var sh := CollisionShape3D.new()
+			var sp := SphereShape3D.new()
+			sp.radius = rad
+			sh.shape = sp
+			sh.position = inst.position + Vector3(0, th * 0.35, 0)
+			body.add_child(sh); sh.owner = lib.root
+		n += 1
+	print("[TRAIL] 岩壁隘口：t=%.2f 位置 %s，岩塊 %d，路半寬 %.2f m，岩體最近邊緣離路心 %.2f m"
+		% [T_GATE, _spine_pos(T_GATE), n, _half_w(T_GATE), closest])
+	if closest < GATE_CLEAR - 0.01:
+		push_error("隘口被岩塊堵死：岩體邊緣離路心 %.2f m < %.2f m" % [closest, GATE_CLEAR])
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -1186,10 +1705,10 @@ func _build_human_traces() -> void:
 	# ⚠ 橋面高度要讀**兩岸的實際地形**，不能用 height_at(溪心)+固定值。
 	#   舊公式 +0.9 是溪谷還只切 0.9 m 時寫的；谷加深到 2.2 m 之後，
 	#   橋整個浮在旱地上、離水面老遠（v10_小溪.png）。
-	var cc := _spine_pos(T_CREEK)
-	var cd := _spine_dir(T_CREEK)
-	# 溪心在主脊上的實際 z（溪是東西向、有蛇行）
-	var creek_z: float = cc.y + sin(cc.x * 0.045 + 1.3) * 6.0 + _nm.get_noise_1d(cc.x * 2.0) * 3.0
+	# 橋位：用實際解出的路／溪交會點，不是 _spine_pos(T_CREEK)
+	var cx := _creek_crossing()
+	var cc: Vector2 = cx[1]
+	var creek_z: float = _creek_z0 + _creek_wiggle(cc.x)
 	# 橋跨在溪上：取南北兩岸（各離溪心 4 m）地形的較高者當橋面
 	var bank_n := terrain_y(cc.x, creek_z - 4.5)
 	var bank_s := terrain_y(cc.x, creek_z + 4.5)
@@ -1218,6 +1737,17 @@ func _build_human_traces() -> void:
 
 func _lantern(parent: Node3D, p: Vector2, intact: bool, body: StaticBody3D) -> void:
 	var ps := _ps(LP + "StoneLantern.gltf")
+	# ⚠ 燈籠底座半徑約 0.5 m，呼叫端只給「路緣 + 0.8~2.2 m」的中心距離，
+	#   窄路段（隘口半寬 1.1 m）會讓燈體壓進走廊（體檢實測 1.04 m < 1.5）。
+	#   這裡統一把燈籠往路外推到走廊之外，不改呼叫端的意圖。
+	var li := _spine_info(p)
+	var need: float = maxf(1.5, _half_w(li[1]) + 0.4) + 0.55
+	if li[0] < need:
+		var dir := (p - _spine_pos(li[1])).normalized()
+		if dir.length() < 0.01:
+			var sd := _spine_dir(li[1])
+			dir = Vector2(-sd.y, sd.x)
+		p = _spine_pos(li[1]) + dir * need
 	var inst := ps.instantiate() as Node3D
 	inst.position = Vector3(p.x, height_at(p.x, p.y) - (0.0 if intact else 0.25), p.y)
 	inst.rotation.y = lib.rand() * TAU
@@ -1352,7 +1882,7 @@ func _build_clearing() -> void:
 	mk.position = Vector3(tp.x, height_at(tp.x, tp.y), tp.y)
 	mk.set_meta("meshy", "Hero：巨大古老神木，高 20-22 m，樹冠直徑 18 m，樹洞，樹根隆起，掛舊紅布")
 	lib.add(g, mk, "古樹_Hero佔位")
-	var path := NAT + "CommonTree_1.gltf"
+	var path := LS + "鎮守之杜.glb"
 	var ps := _ps(path)
 	var inst := ps.instantiate() as Node3D
 	var s := 21.0 / maxf(_h_cache[path], 1.0)

@@ -36,10 +36,32 @@ func _ready() -> void:
 		if k.has_signal("fled"):
 			k.fled.connect(_on_one_fled)
 		_alive += 1
+	# ⚠ 毛玉要**貼地**擺，不能照抄群節點的 y。
+	#   群節點是手填的單一高度，而三隻毛玉散在半徑 2.5 m 的圓上，
+	#   地形在那個範圍內就有高低差 —— 照抄的話有的浮空、有的埋進土裡。
+	#   射線要等物理世界就緒，所以 deferred 到下一幀再做。
+	call_deferred("_ground_all")
 	# 果實與獨白區先關著
 	var wi := get_node_or_null(reveal_interaction)
 	if wi != null:
 		wi.set("enabled", false)
+
+
+## 把每隻毛玉放到自己腳下的地面上
+func _ground_all() -> void:
+	if not is_inside_tree():
+		return
+	var space := get_world_3d().direct_space_state
+	for k in get_children():
+		if not (k is Node3D) or not k.is_in_group("kedama"):
+			continue
+		var n := k as Node3D
+		var q := PhysicsRayQueryParameters3D.create(
+			n.global_position + Vector3(0, 30, 0), n.global_position - Vector3(0, 40, 0))
+		q.collision_mask = 0xFFFFFFFF
+		var hit := space.intersect_ray(q)
+		if hit.has("position"):
+			n.global_position.y = hit.position.y
 
 
 func _on_one_fled() -> void:

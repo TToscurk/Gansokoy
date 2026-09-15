@@ -1,20 +1,29 @@
 [gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
 
+; MQ02 山犬 —— 2026-09-15 使用者裁定：取消「緣一遇到狼」的即時戰鬥事件。
+; 戰鬥系統將改為回合制（最終幻想式遭遇），在那之前這一格**不做戰鬥**：
+; 改成「山犬留下的痕跡」——爪痕、咬殘的獸骨、還熱的血跡，只有獨白。
+; 玩家得到的資訊不變（這條路上有東西在獵食），但不需要打。
+;
+; ⚠ 回合制戰鬥實作後，這裡換回 type=3(DEFEAT) / target_id="trail_wolf" 即可；
+;   trail_interactions.tscn 的「山犬遭遇」CombatEncounter 節點已移除，
+;   要一併復原（git 4e40db8 之前的版本有）。
+
 [ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
 [ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
 
 [sub_resource type="Resource" id="obj_0"]
 script = ExtResource("obj")
-type = 3
-target_id = "trail_wolf"
-description = "擊退襲來的山犬"
+type = 0
+target_id = "trail_predator_sign"
+description = "查看路上的痕跡"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ02"
-title = "山犬"
-description = "獸道深處有東西擋在路上。"
+title = "獵食者"
+description = "有什麼在這條路上獵食，而且不久前才離開。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
 next_quest_id = "MQ03"
-complete_flags = PackedStringArray("defeated_first_yokai")
+complete_flags = PackedStringArray("saw_predator_sign")

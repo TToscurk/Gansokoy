@@ -23,9 +23,11 @@ uniform float dissolve : hint_range(0.0, 1.0) = 0.0;
 uniform float sweep_min = 0.0;
 uniform float sweep_max = 1.2;
 // 溶解邊緣的發光帶寬度（世界公尺）
-uniform float edge_width : hint_range(0.005, 0.4) = 0.09;
+uniform float edge_width : hint_range(0.005, 0.4) = 0.055;
 uniform vec4 edge_color : source_color = vec4(0.62, 0.86, 1.0, 1.0);
-uniform float edge_energy : hint_range(0.0, 12.0) = 5.0;
+// ⚠ 5.0 會過曝：溶解末段身體只剩頭時，整顆頭被 bloom 糊成一團白，
+//   看起來像「身體提早消失」。2.6 才看得出是狼頭在化。
+uniform float edge_energy : hint_range(0.0, 12.0) = 2.6;
 // 噪聲讓溶解線不是一條水平直線
 uniform float noise_scale : hint_range(1.0, 40.0) = 11.0;
 uniform float noise_amount : hint_range(0.0, 0.5) = 0.16;

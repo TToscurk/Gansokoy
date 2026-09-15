@@ -32,17 +32,14 @@ const TARGETS := {
 		["res://maps/slice/gen/ph_fern_0.res", 0.40],
 		["res://maps/slice/gen/ph_fern_1.res", 0.40],
 	],
-	"trees": [
-		["res://maps/slice/gen/tree_普通樹.res", 0.22],
-		["res://maps/slice/gen/tree_大衫.res", 0.22],
-		["res://maps/slice/gen/tree_2大衫.res", 0.22],
-		["res://maps/slice/gen/tree_針葉樹1.res", 0.22],
-		["res://maps/slice/gen/tree_針葉樹2glb.res", 0.22],
-		["res://maps/slice/gen/tree_針葉林樹3.res", 0.22],
-		["res://maps/slice/gen/tree_針葉林樹4.res", 0.22],
-		["res://maps/slice/gen/tree_盆樹.res", 0.22],
-		["res://maps/slice/gen/tree_櫻花樹.res", 0.22],
-	],
+	# r6：村緣樹改用 Tripo 資產。Tripo 原始 43k–48k 面／棵，但 Godot 的
+	# ImporterMesh.generate_lods() 在這批網格上減到 ~30% 就不肯再降
+	# （目標 7% 只拿到 31%，2.6M 面）——與 Meshy 版 0.22 目標只拿到
+	# 92% 是同一道牆。改成在**匯入前**用 gltfpack -si 0.067 -sa 預先簡化
+	# 到每棵 2.5k–3k 面（見 assets/landscape/ 的 GLB 本身），所以這裡
+	# 不再需要對樹減面；比例設 1.0 等同 no-op，保留條目只為記錄。
+	# 針葉樹2glb 新批次沒有這個模型，已從樹種清單移除。
+	"trees": [],
 }
 
 var dry := false

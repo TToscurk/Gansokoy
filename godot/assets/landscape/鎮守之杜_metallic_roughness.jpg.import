@@ -2,13 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnwy7d0co3u7f"
+uid="uid://c6lovpsyr6t2h"
 path="res://.godot/imported/鎮守之杜_metallic_roughness.jpg-4169342f20bbab037b42492171603aed.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "94a7e491d082fc6feac5d556efa7d679"
 }
 
 [deps]
@@ -26,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

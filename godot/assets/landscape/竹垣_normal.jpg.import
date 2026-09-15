@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co3gpv5o65uhk"
+uid="uid://cb504bnk2023e"
 path.s3tc="res://.godot/imported/竹垣_normal.jpg-72085b707628dcc50f869f55251ef2b1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "5c314147382da6c02d0e3411cb827060"
 }
 
 [deps]

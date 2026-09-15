@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chj52ck7hfsht"
+uid="uid://d4j0cv7gv3oxd"
 path.s3tc="res://.godot/imported/竹垣_base_color.jpg-1c38b30168f90cddd6cb7cd6ad93de1e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "7bb0e41cb1ff6952de0e315fc0532294"
 }
 
 [deps]

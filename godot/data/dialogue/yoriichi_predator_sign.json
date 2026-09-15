@@ -1,0 +1,11 @@
+{
+  "_doc": "MQ02 獵食者痕跡（2026-09-15）。取代原本的山犬即時戰鬥；戰鬥改回合制之後再議。",
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "serious", "text": "（獸骨。咬痕還新。）", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "serious", "text": "「……不是野狗的齒列。」", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "normal", "text": "（土是濕的。牠走得不遠。）", "next": "l4" },
+    "l4": { "speaker": "yoriichi", "portrait": "normal", "text": "（刀留在身邊。走。）", "next": null,
+            "quest_event": { "type": "REACH", "target": "trail_predator_sign" } }
+  }
+}

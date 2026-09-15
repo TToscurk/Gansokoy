@@ -84,6 +84,12 @@ func _begin() -> void:
 		_spawned.append(e)
 		_alive += 1
 	encounter_started.emit()
+	# 生出來的敵人要接上 HUD（鎖定條、危字、忍殺提示）。
+	# 敵人是執行期生的，載圖時掃一次不夠。
+	var runtimes := get_tree().get_nodes_in_group("combat_runtime")
+	for r in runtimes:
+		if r.has_method("rescan_enemies"):
+			r.rescan_enemies()
 	if not intro_dialogue.is_empty() and not DialogueManager.is_active():
 		DialogueManager.start(intro_dialogue)
 

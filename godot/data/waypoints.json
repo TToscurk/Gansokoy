@@ -1,11 +1,11 @@
 {
-  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。",
+  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。座標於 2026-09-15 r3 路線重排後，依 tools/probe_trail_anchors.gd 實測值更新。",
   "targets": {
-    "trail_leave_clearing":    { "map": "trail",  "x": -6.0,  "z": -50.0, "label": "沿道路前進" },
-    "trail_presence":          { "map": "trail",  "x": 7.0,   "z": -70.0, "label": "獸道深處" },
-    "trail_wolf":              { "map": "trail",  "x": 5.3,   "z": -84.0, "label": "擋路的山犬" },
-    "trail_fleeing_yokai":     { "map": "trail",  "x": 4.2,   "z": -95.0, "label": "樹叢的動靜" },
-    "trail_wounded_yokai":     { "map": "trail",  "x": 3.7,   "z": -101.0, "label": "微弱的聲音" },
+    "trail_leave_clearing":    { "map": "trail",  "x": -14.1, "z": -40.0, "label": "沿道路前進" },
+    "trail_presence":          { "map": "trail",  "x": -6.0,  "z": -49.7, "label": "獸道深處" },
+    "trail_predator_sign":     { "map": "trail",  "x": 0.9,   "z": -62.0, "label": "路上的痕跡" },
+    "trail_fleeing_yokai":     { "map": "trail",  "x": 2.6,   "z": -78.0, "label": "樹叢的動靜" },
+    "trail_wounded_yokai":     { "map": "trail",  "x": -1.5,  "z": -90.7, "label": "微弱的聲音" },
     "hakurei_shrine_approach": { "map": "shrine", "x": 0.0,   "z": 40.0,  "label": "山上的建築" },
     "reimu_hakurei_shrine":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
     "reimu_gensokyo_intro":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
@@ -14,12 +14,14 @@
   "maps": {
     "trail":  { "half_x": 120, "half_z": 120, "name": "獸道",
                 "landmarks": [
-                  { "x": -6, "z": -17.6, "label": "大空地" },
-                  { "x": -4.8, "z": 19.8, "label": "小溪" },
-                  { "x": 11.5, "z": -59.5, "label": "夜雀屋台" },
-                  { "x": 3.0, "z": -107.8, "label": "→ 神社" },
-                  { "x": 3.2, "z": 106.0, "label": "→ 人里" } ],
-                "path": [[3.2,110],[2.1,94.6],[1.2,44],[-4.8,19.8],[-6,-17.6],[7.3,-59.4],[3,-107.8]] },
+                  { "x": -13.8, "z": -26.8, "label": "大空地" },
+                  { "x": -14.9, "z": 61.4, "label": "岩壁隘口" },
+                  { "x": -14.0, "z": 41.7, "label": "地藏" },
+                  { "x": 9.1, "z": 7.1, "label": "小溪" },
+                  { "x": 3.8, "z": -71.6, "label": "夜雀屋台" },
+                  { "x": -2.1, "z": -108.9, "label": "→ 神社" },
+                  { "x": 1.7, "z": 108.8, "label": "→ 人里" } ],
+                "path": [[1.7,108.8],[1.0,95.3],[-7.3,74.4],[-14.9,61.4],[-14.0,41.7],[1.7,25.5],[9.1,7.1],[2.1,-10.7],[-13.8,-26.8],[-14.1,-40.0],[-6.0,-49.7],[3.8,-71.6],[-1.5,-90.7],[-2.1,-108.9]] },
     "shrine": { "half_x": 75, "half_z": 55, "name": "博麗神社",
                 "landmarks": [
                   { "x": 0, "z": 53, "label": "→ 獸道" },

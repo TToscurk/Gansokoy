@@ -39,6 +39,11 @@ func _init() -> void:
 		print("%-56s %5dx%-5d %14s %9s %5d" % [
 			_short(r["path"]), r["w"], r["h"], r["fmt"], _mb(r["bytes"]), r["users"]])
 
+	print("\n--- 全部 2048x2048 貼圖（不截斷）---")
+	for r in rows:
+		if r["w"] == 2048 and r["h"] == 2048:
+			print("%s" % r["path"])
+
 	# Which top-level scene groups own the most texture bytes?
 	print("\n--- 依場景群組（同一貼圖只算一次，歸給第一個用者）---")
 	var by_group := {}

@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfy513ha6rgdv"
+uid="uid://b4l0ck41pgj2c"
 path.s3tc="res://.godot/imported/鯢吞亭_metallic_roughness.webp-02a7968808b9645c88f4b87ba495943d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "4fd75bcc249e4e32ad0d898d849f8992"
 }
 
 [deps]

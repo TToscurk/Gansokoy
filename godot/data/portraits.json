@@ -22,10 +22,8 @@
     }
   },
   "kedama": {
+    "_doc": "毛玉不用立繪：對話只顯示名字，畫面上看得到那隻毛玉本體。",
     "name": "毛玉",
-    "portraits": {
-      "normal": "res://assets/portraits/kedama_normal.png",
-      "scared": "res://assets/portraits/kedama_scared.png"
-    }
+    "portraits": {}
   }
 }

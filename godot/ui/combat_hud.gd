@@ -12,6 +12,8 @@ const PERILOUS_GLYPH := "危"
 
 var player_health_ratio := 1.0
 var player_posture_ratio := 0.0
+## 日之呼吸量（0~1）。型選單的資源，滿了才發得出大型。
+var player_breath_ratio := 0.0
 var enemy_health_ratio := 1.0
 var enemy_posture_ratio := 0.0
 ## 彈刀閃光強度，1 → 0 自動衰減。
@@ -73,6 +75,10 @@ func set_player_health(current: float, maximum: float) -> void:
 
 func set_player_posture(current: float, maximum: float) -> void:
 	player_posture_ratio = clampf(current / maxf(maximum, 0.001), 0.0, 1.0)
+
+
+func set_player_breath(current: float, maximum: float) -> void:
+	player_breath_ratio = clampf(current / maxf(maximum, 0.001), 0.0, 1.0)
 
 
 func show_enemy(display_name: String, health: float, max_health: float, posture: float, max_posture: float) -> void:

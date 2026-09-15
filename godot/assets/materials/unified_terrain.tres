@@ -22,3 +22,5 @@ shader_parameter/stone_tint = Color(0.47, 0.47, 0.44, 1)
 shader_parameter/wet_stone_tint = Color(0.22, 0.28, 0.27, 1)
 shader_parameter/texture_scale = 0.18
 shader_parameter/stone_texture_scale = 0.32
+shader_parameter/entry_strength = 1.0
+shader_parameter/street_strength = 1.0
