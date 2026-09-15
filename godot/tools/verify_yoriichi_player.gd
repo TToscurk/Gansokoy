@@ -67,6 +67,29 @@ func _run() -> void:
 	fails += _check("沒掉穿地面（y > -5）", y1 > -5.0)
 
 	# Drive it: simulate 1 s of move_forward and confirm it moved and stayed up.
+	# ⚠ 開場會鎖住玩家，鎖有**兩層**，只解一層仍然不動（位移 0.00 m，看起來像
+	#   「緣一不會走路」，實測獨立場景同一個 move_forward 走 4.00 m）：
+	#   1) OpeningFade 黑幕（1.4 s 停留 + 2.2 s 淡入）期間 input_locked = true。
+	#      不能只 await physics_frame 等它跑完 —— 淡入是 Tween，走 process_frame，
+	#      純 physics 迴圈等 600 幀也不會前進。用它自備的 skip()。
+	#   2) skip() 會立刻發 fade_finished → main 起 yoriichi_wake 獨白 → 又鎖一次。
+	#      所以還要把對話推完。
+	var fade := _main.get_node_or_null("OpeningFade")
+	if fade != null and fade.has_method("skip"):
+		fade.call("skip")
+	await process_frame
+	var dm: Node = root.get_node_or_null("/root/DialogueManager")
+	var g := 0
+	while dm != null and dm.call("is_active") and g < 120:
+		dm.call("advance")
+		await process_frame
+		g += 1
+	var wait := 0
+	while bool(p.get("input_locked")) and wait < 240:
+		await physics_frame
+		await process_frame
+		wait += 1
+	print("  開場已跳過（推了 %d 句對話，等 %d 幀）input_locked=%s" % [g, wait, p.get("input_locked")])
 	Input.action_press("move_forward")
 	var p0 := p.global_position
 	for i in 60:
