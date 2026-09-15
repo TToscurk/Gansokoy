@@ -290,6 +290,65 @@ func _to_type(v: Variant) -> int:
 	return -1
 
 
+## ── 存檔 ──
+## 只吐純資料：進度字典、追蹤中的任務、未消化的早到事件。
+## **不存 QuestData 本身** —— 定義在 res:// 裡，跟著版本走，存進檔案只會讓
+## 改任務內容時舊檔全爆。存 id 與索引，載入時重新對照定義。
+func serialize() -> Dictionary:
+	var prog := {}
+	for id in _progress:
+		var p: Dictionary = _progress[id]
+		prog[String(id)] = {
+			"objective_index": int(p["objective_index"]),
+			"current": int(p["current"]),
+			"state": int(p["state"]),
+		}
+	return {"progress": prog, "tracked": _tracked, "pending": _pending.duplicate()}
+
+
+## 從存檔還原。**不發任何 signal** —— UI 會在載入完成後統一 refresh，
+## 逐筆重放 quest_started／objective_updated 會讓追蹤器連跳好幾格、
+## 甚至讓 WorldInteraction 的前置閘在場景重建到一半時誤觸發。
+##
+## 每一筆都對照現行定義驗證：任務被刪掉、目標數量變少（改版）時直接丟棄該筆，
+## 不讓壞資料進到 _progress —— 存檔是使用者可編輯的檔案。
+func deserialize(data: Dictionary) -> void:
+	_progress.clear()
+	_pending.clear()
+	_tracked = ""
+	var prog: Dictionary = data.get("progress", {})
+	for raw_id in prog:
+		var id := _norm(String(raw_id))
+		var q := load_definition(id)
+		if q == null:
+			push_warning("[Quest] 存檔含已不存在的任務 %s，略過" % id)
+			continue
+		var e: Dictionary = prog[raw_id]
+		var state := int(e.get("state", State.INACTIVE))
+		if state != State.ACTIVE and state != State.COMPLETED:
+			continue
+		var oi := clampi(int(e.get("objective_index", 0)), 0, maxi(q.objectives.size(), 1))
+		# ACTIVE 但索引已越界 = 定義改短了；當成已完成處理，不留一個推不動的任務。
+		if state == State.ACTIVE and oi >= q.objectives.size():
+			state = State.COMPLETED
+			oi = q.objectives.size()
+		var cur := 0
+		if state == State.ACTIVE and oi < q.objectives.size():
+			cur = clampi(int(e.get("current", 0)), 0, q.objectives[oi].required_amount)
+		_progress[id] = {"objective_index": oi, "current": cur, "state": state}
+	var t := _norm(String(data.get("tracked", "")))
+	_tracked = t if is_active(t) else _first_active()
+	# pending 照樣驗：型別與 target 對不上現行任務就不收（避免舊檔的殘骸復活）。
+	for key in data.get("pending", {}):
+		var parts := String(key).split("|", true, 1)
+		if parts.size() != 2:
+			continue
+		var cap := _future_required(int(parts[0]), String(parts[1]))
+		if cap <= 0:
+			continue
+		_pending[String(key)] = clampi(int(data["pending"][key]), 1, cap)
+
+
 ## 測試用
 func reset() -> void:
 	_progress.clear()

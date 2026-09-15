@@ -54,6 +54,26 @@ func all_flags() -> Dictionary:
 	return _flags.duplicate()
 
 
+## ── 存檔 ──
+## 只吐純資料（String → bool）。SaveManager 負責寫檔，本節點不碰檔案系統。
+func serialize() -> Dictionary:
+	var out := {}
+	for k in _flags:
+		if bool(_flags[k]):
+			out[String(k)] = true          # 只存為真的旗標；false 等同不存在
+	return out
+
+
+## 從存檔還原。**不發 flag_changed** —— 還原時世界物件都還沒建好（或正要重建），
+## 逐一發訊號會讓監聽者（WorldInteraction 的前置閘、受傷妖怪事件）在半成品
+## 狀態下誤觸發演出。載入完成後由 SaveManager 統一重建場景。
+func deserialize(data: Dictionary) -> void:
+	_flags.clear()
+	for k in data:
+		if bool(data[k]):
+			_flags[String(k)] = true
+
+
 ## 測試用：清空
 func reset() -> void:
 	_flags.clear()

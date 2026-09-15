@@ -179,6 +179,15 @@ const PostureComponent = preload("res://characters/combat/posture.gd")
 signal guard_state_changed(guarding: bool)
 ## 玩家受擊結果（含彈刀／格擋／未防禦），HUD 與音效用。
 signal player_was_hit(info: Dictionary)
+## 呼吸量變動；型選單與 HUD 用。
+signal breath_changed(current: float, maximum: float)
+## 成功發動某一型（已扣呼吸、已起算冷卻）。
+signal form_executed(id: int)
+## 玩家軀幹被打爆（硬直開始）／恢復。
+signal player_posture_broken
+signal player_posture_recovered
+## 玩家死亡。
+signal player_died
 signal interaction_prompt_changed(text: String)
 signal interaction_message(text: String)
 const COMBO_SECTION_RANGES: Array[Vector2] = [
@@ -215,10 +224,26 @@ enum ActionState { FREE, ATTACKING, DODGING }
 ## 拔刀動畫進度（0~1）中「刀離開刀鞘」的時間點。反播跨過同一點刀即回鞘。
 @export_range(0.0, 1.0) var t_unsheathe := 0.65
 
+@export_group("Attack Damage")
+## 輕連段單段傷害。型的 FORMS.damage 倍率會乘在這上面。
+@export var light_attack_damage := 15.0
+@export var light_posture_damage := 12.0
+## 聚力單斬／全身技傷害。
+@export var heavy_attack_damage := 35.0
+@export var heavy_posture_damage := 28.0
+## 敵人破綻（Stagger）中的傷害倍率 —— FF7R 式「壓制期灌爆發」。
+@export_range(1.0, 4.0, 0.1) var stagger_damage_multiplier := 1.8
+
 @export_group("Sun Breathing")
-## 呼吸量（之後由命中回饋累積；先提供 add_breath() API）。
+## 呼吸量。命中與彈刀累積，發型時消耗。
 @export var sun_breath_gauge := 0.0
 @export var sun_breath_max := 100.0
+## 每次刀刃命中累積的呼吸量。
+@export var breath_gain_on_hit := 6.0
+## 彈刀成功累積的呼吸量 —— 彈刀比硬砍更「順呼吸」，給得比命中多。
+@export var breath_gain_on_deflect := 14.0
+## 格擋（非彈刀）累積的呼吸量。
+@export var breath_gain_on_block := 3.0
 ## 型的解鎖熟練度（0=初期）。required_mastery 高於此值的型不可用。
 @export var sun_mastery := 0
 ## 拾參ノ型解鎖開關與啟動所需呼吸量（data parameter，先不綁輸入）。
@@ -274,6 +299,10 @@ var _sword_trail: SwordTrail3D = null
 var _hitbox: Area3D = null
 var _hitstop_time := 0.0
 var _hit_targets_this_swing: Dictionary = {}
+## 型 id → 冷卻剩餘秒數。空 = 全部就緒。
+var _form_cooldowns: Dictionary = {}
+## 軀幹被打爆後的硬直剩餘秒數（>0 = 不能動）。
+var _stagger_left := 0.0
 
 ## Step-up for ledges and stone edges up to this height (metres). The east
 ## river revetment top (coping lip 0.22 m proud, walk_slice 2026-09-03) and
@@ -355,6 +384,11 @@ func _setup_combat_extensions() -> void:
 	posture = PostureComponent.new()
 	posture.name = "Posture"
 	add_child(posture)
+	# ⚠ 玩家自己的軀幹爆掉／死亡以前沒有任何接收端：血歸零只是靜靜地
+	#   把 _dead 設 true，玩家照樣能跑能砍。這裡把它接起來。
+	posture.posture_broken.connect(_on_self_posture_broken)
+	posture.posture_recovered.connect(_on_self_posture_recovered)
+	posture.died.connect(_on_self_died)
 	if _sword_hand:
 		_blade_base = Marker3D.new()
 		_blade_base.name = "BladeBase"
@@ -547,6 +581,12 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 
 	posture.apply_damage(dealt, self_posture)
 
+	# 彈刀／格擋累積呼吸 —— 防禦不是純挨打，是攢下一型的資源。
+	if result == "deflect":
+		add_breath(breath_gain_on_deflect)
+	elif result == "block":
+		add_breath(breath_gain_on_block)
+
 	# 回饋：彈刀是金屬火花與清脆撞擊，格擋是悶響，未防禦是受擊。
 	if _character_audio != null:
 		if result == "deflect" and _character_audio.has_method("play_deflect"):
@@ -579,10 +619,27 @@ func _on_hit_target(node: Node) -> void:
 	var is_spin: bool = (_active_attack_name == attack_continuous_spin_anim or _active_attack_name == attack_spin_anim)
 	_hitstop_time = 0.07 if is_heavy else 0.05
 
+	# 傷害 = 基礎（輕／重）× 型倍率 × 破綻加成。
+	# 型倍率讀 FORMS.damage —— 柒型 1.8 要真的比壹型 1.0 痛，
+	# 否則選單挑招只是換動畫，沒有取捨。
+	var damage: float = heavy_attack_damage if is_heavy else light_attack_damage
+	var pdmg: float = heavy_posture_damage if is_heavy else light_posture_damage
+	if active_form != 0 and SunBreathing.FORMS.has(active_form):
+		var mult: float = float(SunBreathing.FORMS[active_form].damage)
+		damage *= mult
+		pdmg *= mult
+	# FF7R 式壓制期：敵人軀幹爆了就是灌爆發傷害的窗口。
+	var tgt_posture: Variant = node.get("posture")
+	if tgt_posture == null and node.get_parent() != null:
+		tgt_posture = node.get_parent().get("posture")
+	if tgt_posture != null and tgt_posture.has_method("is_broken") and tgt_posture.is_broken():
+		damage *= stagger_damage_multiplier
+
 	var hit_pos: Vector3 = _blade_tip.global_position if _blade_tip != null else global_position + Vector3(0, 1, 0)
 	var fwd := _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
 	var hit_data := {
-		"damage": 35.0 if is_heavy else 15.0,
+		"damage": damage,
+		"posture_damage": pdmg,
 		"hit_pos": hit_pos,
 		"hit_dir": fwd,
 		"heavy": is_heavy
@@ -590,9 +647,11 @@ func _on_hit_target(node: Node) -> void:
 	if node.has_method("take_hit"):
 		node.take_hit(hit_data)
 		_character_audio.play_fire_hit(is_heavy, is_spin, combo_stage)
+		add_breath(breath_gain_on_hit)
 	elif node.get_parent() != null and node.get_parent().has_method("take_hit"):
 		node.get_parent().take_hit(hit_data)
 		_character_audio.play_fire_hit(is_heavy, is_spin, combo_stage)
+		add_breath(breath_gain_on_hit)
 	else:
 		CombatVFX.spawn_hit_spark(self, hit_pos, -fwd, is_heavy)
 
@@ -780,10 +839,53 @@ func _fade_upper() -> void:
 func _fade_full() -> void:
 	_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
+## 玩家軀幹被打爆：硬直，攻防全斷。隻狼的規則是此時可被忍殺 ——
+## 敵人的處決動畫還沒有，先做成「動不了的懲罰窗口」，破綻結束自動恢復。
+func _on_self_posture_broken() -> void:
+	_stagger_left = posture.break_time
+	end_guard()
+	if action_state == ActionState.ATTACKING:
+		_finish_attack()
+	velocity.x = 0.0
+	velocity.z = 0.0
+	player_posture_broken.emit()
+
+
+func _on_self_posture_recovered() -> void:
+	_stagger_left = 0.0
+	player_posture_recovered.emit()
+
+
+func _on_self_died() -> void:
+	_stagger_left = 0.0
+	end_guard()
+	input_locked = true
+	player_died.emit()
+
+
 # ---------------------------------------------------------------------------
 # Physics
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
+	# 型冷卻：與 ActionState 無關，永遠在跑。
+	if not _form_cooldowns.is_empty():
+		for id in _form_cooldowns.keys():
+			var left: float = float(_form_cooldowns[id]) - delta
+			if left <= 0.0:
+				_form_cooldowns.erase(id)
+			else:
+				_form_cooldowns[id] = left
+	# 軀幹爆掉的硬直：只跑重力，不讀輸入、不動作。
+	if _stagger_left > 0.0:
+		_stagger_left = maxf(_stagger_left - delta, 0.0)
+		velocity.x = 0.0
+		velocity.z = 0.0
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		else:
+			velocity.y = 0.0
+		move_and_slide()
+		return
 	_update_lock_on(delta)
 	var input_dir := _read_input_dir()
 	if _hitstop_time > 0.0:
@@ -949,6 +1051,17 @@ func snap_yaw(yaw: float) -> void:
 	var adapter := get_node_or_null("CameraAdapter")
 	if adapter != null and adapter.has_method("snap_yaw"):
 		adapter.snap_yaw(yaw)
+
+
+## snap_yaw 的反函式 —— 目前的面向，與 snap_yaw 吃的座標系一致。
+##
+## ⚠ 存檔一定要用這個，不要讀 rotation.y。本節點刻意把根節點的 rotation.y
+##   固定在 0（面向只存在 _visual 上），所以 player.rotation.y 永遠是 0 ——
+##   直接存它等於根本沒存朝向，讀檔後緣一一律面向同一邊。
+func current_yaw() -> float:
+	if _visual == null:
+		return rotation.y
+	return wrapf(_visual.global_rotation.y - PI, -PI, PI)
 
 ## 視覺轉向：速率上限（不是指數 lerp）——180° 急轉需要時間走完，不會瞬間
 ## snap；走路慢（沉穩）、疾跑快（×run_turn_multiplier）、攻擊中再降
@@ -1581,19 +1694,39 @@ func _apply_sword_visibility():
 # Sun Breathing（data-driven；定義見 sun_breathing.gd）
 # ---------------------------------------------------------------------------
 func add_breath(amount: float) -> void:
+	var before := sun_breath_gauge
 	sun_breath_gauge = clampf(sun_breath_gauge + amount, 0.0, sun_breath_max)
+	if not is_equal_approx(before, sun_breath_gauge):
+		breath_changed.emit(sun_breath_gauge, sun_breath_max)
+
+## 型的冷卻剩餘秒數；0 = 就緒。由 _physics_process 每步遞減。
+func form_cooldown_left(id: int) -> float:
+	return float(_form_cooldowns.get(id, 0.0))
+
+## 型目前不可用的原因（給選單顯示用）。"" = 可用。
+## 順序即嚴重度：未修得 > 缺動畫 > 冷卻 > 呼吸不足 > 空中限制。
+func form_block_reason(id: int) -> String:
+	if not SunBreathing.FORMS.has(id):
+		return "unknown"
+	var def: Dictionary = SunBreathing.FORMS[id]
+	if int(def.required_mastery) > sun_mastery:
+		return "mastery"
+	if String(def.anim) == "":
+		return "no_anim"
+	if form_cooldown_left(id) > 0.0:
+		return "cooldown"
+	if sun_breath_gauge < float(def.breath_cost):
+		return "breath"
+	if not bool(def.allowed_airborne) and not is_on_floor():
+		return "airborne"
+	return ""
+
 
 func can_use_form(id: int) -> bool:
-	if not SunBreathing.FORMS.has(id):
-		return false
-	var def: Dictionary = SunBreathing.FORMS[id]
-	if def.anim == "" or def.required_mastery > sun_mastery:
-		return false
-	if not def.allowed_airborne and not is_on_floor():
-		return false
-	return true
+	return form_block_reason(id) == ""
 
 ## 執行單一型。缺動畫的型誠實回傳 false，不播假內容。
+## 成功發動才扣呼吸與起算冷卻 —— 被擋下的輸入不得付出代價。
 func execute_form(id: int) -> bool:
 	if sword_state != SwordState.DRAWN or not can_use_form(id):
 		return false
@@ -1632,6 +1765,11 @@ func execute_form(id: int) -> bool:
 		_action_real = _full_anim_length(def.anim) / def.speed
 		_action_elapsed = 0.0
 		_fire_full(key, def.speed)
+	# 真的發動了才付代價。
+	add_breath(-float(def.breath_cost))
+	if float(def.cooldown) > 0.0:
+		_form_cooldowns[id] = float(def.cooldown)
+	form_executed.emit(id)
 	if _sword_trail != null:
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()

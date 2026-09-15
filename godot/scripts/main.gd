@@ -22,9 +22,13 @@ const PORTAL_COOLDOWN := 2.0
 ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
 const TRIMESH_MIN_SPAN := 15.0
 const InteriorLightingRig = preload("res://scripts/interior_lighting.gd")
+const COMBAT_RUNTIME = preload("res://systems/combat/combat_runtime.gd")
 ## 密閉室內圖：屋頂擋住太陽，環境光又靠天空貢獻近半，實測畫面平均亮度
 ## 只有 0.08（六成像素接近純黑）。這些圖載入後補一層室內光。
 const INTERIOR_MAPS := ["hieda1f", "hieda2f", "hieda3f"]
+## 環境音自檢（--playtest）用：載圖後等這麼多幀再讀 Ambience 狀態，
+## 讓對淡 tween（2.5 s ≒ 150 幀）至少走到聽得出音量的地方。
+const AMBIENCE_SETTLE_FRAMES := 20
 
 var registry: Dictionary = {}
 var current_id := ""
@@ -32,6 +36,8 @@ var map_root: Node3D = null
 var portal_cooldown := 0.0
 ## 目前圖上可用的傳送區；只有區內按下 portal_enter 才傳送。
 var _live_portals: Array = []
+## 戰鬥接線層（HUD ＋ 型選單）。_setup_story_systems() 建立。
+var combat: Node = null
 
 @onready var player: CharacterBody3D = $Player
 @onready var map_label: Label = $UI/MapLabel
@@ -42,9 +48,11 @@ func _ready() -> void:
 	player.interaction_prompt_changed.connect(_on_interaction_prompt_changed)
 	player.interaction_message.connect(_on_interaction_message)
 	_setup_story_systems()
+	SaveManager.load_requested.connect(_on_load_requested)
 	registry = _load_json("res://data/mapRegistry.json")
 	# godot -- --map=trail 直接跳到指定圖（測試 / 開發用）
 	var start := START_MAP
+	var want_continue := false
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--map="):
 			start = a.substr(6)
@@ -60,6 +68,8 @@ func _ready() -> void:
 			_shot_dir = a.substr(10)
 		elif a == "--playtest":            # 實機自檢：傳送區/出生點/可站立性
 			_playtest = true
+		elif a == "--continue":           # 開局直接讀快速槽（存讀檔測試用）
+			want_continue = true
 	# 起動図が未構築なら、構築済みの図へ落とす。黙って落とさない——
 	# START_MAP は「本来ここから始まる」という意思表示なので、書き換えて
 	# 隠すのではなく、毎回うるさく言いながら遊べる状態にしておく。
@@ -70,11 +80,20 @@ func _ready() -> void:
 	# 序章開場：黑畫面停留 → 淡入 → 才起獨白。
 	# 只在「真的從 START_MAP 開局、還沒醒過」時演；--map= 跳圖、拍照、自檢都不演，
 	# 否則每次跑工具都要等 3.6 秒黑畫面。
+	# 讀檔續玩也不演 —— 玩家早就醒過了。
 	var is_cold_start: bool = start == START_MAP and current_id == START_MAP \
 		and not StoryFlags.get_flag("woke_in_trail") \
-		and _shot_path == "" and _shots_file == "" and not _playtest and _shot_player == ""
+		and _shot_path == "" and _shots_file == "" and not _playtest and _shot_player == "" \
+		and not want_continue
 	if is_cold_start:
 		_play_opening()
+	# --continue：載圖與序章判定都做完之後才讀檔，讓 _on_load_requested 的
+	# load_map 成為最後一次切圖（否則開場流程會蓋掉存檔的位置）。
+	if want_continue:
+		if SaveManager.has_save(QUICK_SLOT):
+			SaveManager.load_game(QUICK_SLOT)
+		else:
+			push_warning("[Save] --continue 但快速槽沒有存檔，照正常開局")
 	if _shot_player != "":
 		var shot_spawn := _shot_player.split_floats(",")
 		player.global_position = Vector3(shot_spawn[0], shot_spawn[1], shot_spawn[2])
@@ -139,6 +158,7 @@ var _shots: Array = []
 var _shot_i := 0
 var _shot_cam_node: Camera3D = null
 var _shot_wait := 0
+var _shot_hidden: Array[Node3D] = []
 
 func _load_json_array(path: String) -> Array:
 	var txt := FileAccess.get_file_as_string(path)
@@ -160,6 +180,16 @@ func _aim_shot(i: int) -> void:
 	if e.has("time"):
 		DayNight.flowing = false
 		DayNight.set_hour(float(e["time"]))
+	# "hide": ["植被", "鋪石/參道鋪石"] —— 拍地形／收邊 A/B 用，該張拍完自動還原。
+	for p in _shot_hidden:
+		p.visible = true
+	_shot_hidden.clear()
+	if map_root != null:
+		for hp in e.get("hide", []):
+			var hn := map_root.get_node_or_null(String(hp))
+			if hn is Node3D:
+				hn.visible = false
+				_shot_hidden.append(hn)
 	_shot_wait = 0
 
 func _shotlist_tick() -> void:
@@ -283,6 +313,36 @@ func _run_playtest() -> void:
 	print("[PLAYTEST] ══ %s（%d 項失敗）══" % ["通過" if fail == 0 else "有問題", fail])
 
 
+## 環境音自檢：不用耳朵，讀 Ambience 的實際狀態。
+## 「有沒有聲音」在無頭模式下唯一可驗的是：曲子選對了、player 真的在
+## playing、音量不在 -60 dB 的靜音底。
+func _run_ambience_check() -> void:
+	var amb := get_tree().root.get_node_or_null("Ambience")
+	if amb == null:
+		print("[AMBIENCE] ✗ autoload 未載入")
+		return
+	var s: Dictionary = amb.debug_state()
+	var hour: float = s.get("hour", -1.0)
+	var stream := String(s.get("stream", ""))
+	var playing: bool = s.get("playing", false)
+	var db: float = s.get("db", -60.0)
+	var bus_idx: int = s.get("bus_index", -1)
+	print("[AMBIENCE] 地圖 %s  時刻 %.1f h" % [s.get("map", "?"), hour])
+	print("[AMBIENCE] 匯流排 %s（index %d）" % [s.get("bus", "?"), bus_idx])
+	if bus_idx < 0:
+		print("[AMBIENCE] ✗ 匯流排沒建起來")
+	# 白天（5–19 h）該有聲；其餘時段本來就靜音，不算失敗。
+	var day := hour >= 5.0 and hour < 19.0
+	if stream.is_empty():
+		print("[AMBIENCE] %s 無音軌%s"
+			% ["✓" if not day else "✗", "（夜間，預期如此）" if not day else "（白天該有蟲鳴）"])
+		return
+	print("[AMBIENCE] %s 播放中：%s  %+.1f dB（%s）"
+		% ["✓" if playing else "✗", stream.get_file(), db, s.get("active", "?")])
+	if not playing:
+		print("[AMBIENCE] ✗ 選到曲子但 player 沒在播")
+
+
 func _pt_ground(space: PhysicsDirectSpaceState3D, x: float, z: float,
 		exclude: Array[RID] = [], skip_boundary: bool = false) -> float:
 	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -100.0, z))
@@ -324,6 +384,7 @@ func _process(delta: float) -> void:
 		_playtest_frames += 1
 		if _playtest_frames == 40:
 			_run_playtest()
+			_run_ambience_check()
 			get_tree().quit()
 		portal_cooldown = maxf(0.0, portal_cooldown - delta)
 		return
@@ -523,6 +584,11 @@ func _setup_story_systems() -> void:
 		QuestManager.start_quest("MQ00")
 	add_child(NAV_UI.instantiate())
 	add_child(MAP_UI.instantiate())
+	# 戰鬥接線：HUD（血／軀幹／呼吸）與日之呼吸型選單。
+	# 純程式掛載，不寫進 main.tscn —— 編輯器可能正開著未存檔。
+	combat = COMBAT_RUNTIME.new()
+	add_child(combat)
+	combat.bind_player(player)
 
 
 const OPENING_FADE := preload("res://ui/opening/opening_fade.gd")
@@ -670,6 +736,81 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("portal_enter") and not event.is_echo():
 		if _try_portal_interaction():
 			get_viewport().set_input_as_handled()
+		return
+	# 存讀檔：F5 存、F9 讀（單一快速槽 0）。對話中不受理 —— 存到半段對話中間，
+	# 讀回來會是「玩家被鎖住、但沒有對話在跑」的死狀態（DialogueManager 不存）。
+	if event.is_action_pressed("quick_save") and not event.is_echo():
+		if not DialogueManager.is_active():
+			_quick_save()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("quick_load") and not event.is_echo():
+		if not DialogueManager.is_active():
+			_quick_load()
+		get_viewport().set_input_as_handled()
+
+
+const QUICK_SLOT := 0
+
+
+func _quick_save() -> void:
+	var ok: bool = SaveManager.save_game(QUICK_SLOT, current_id,
+		player.global_position, _player_yaw())
+	_flash_message("已存檔" if ok else "存檔失敗")
+
+
+## 玩家目前的面向。緣一把根節點 rotation.y 固定在 0（面向在 _visual 上），
+## 所以不能直接讀 rotation.y —— 那永遠是 0，存檔會把朝向整個丟掉。
+func _player_yaw() -> float:
+	if player.has_method("current_yaw"):
+		return float(player.call("current_yaw"))
+	return player.rotation.y
+
+
+func _quick_load() -> void:
+	if not SaveManager.has_save(QUICK_SLOT):
+		_flash_message("沒有存檔")
+		return
+	if not SaveManager.load_game(QUICK_SLOT):
+		_flash_message("讀檔失敗")
+
+
+## 存讀檔的畫面提示。借用既有的 interaction_message Label，不另開 UI。
+func _flash_message(text: String) -> void:
+	interaction_message.text = text
+	interaction_message.visible = true
+	var t := create_tween()
+	t.tween_interval(1.6)
+	t.tween_callback(func() -> void: interaction_message.visible = false)
+
+
+## SaveManager 讀完檔、資料已就位 → 這裡負責重建世界。
+##
+## ⚠ 順序很重要：先切圖（load_map 會重建互動點、傳送區、碰撞），**再**擺玩家。
+##   反過來的話 load_map 裡的 _place_player 會把玩家丟回出生點／傳送點旁，
+##   存檔座標就被蓋掉了。
+## ⚠ from_id 傳 "__load__"（不等於任何 map id）讓 _place_player 的兩條分支都不成立，
+##   免得它自己動玩家位置 —— 存檔的座標才是權威。
+func _on_load_requested(map_id: String, pos: Vector3, yaw: float) -> void:
+	if map_id.is_empty():
+		push_error("[Save] 存檔沒有記錄所在地圖，無法還原")
+		return
+	load_map(map_id, "__load__")
+	if map_root == null:
+		push_error("[Save] 存檔的地圖 '%s' 載不起來" % map_id)
+		return
+	player.velocity = Vector3.ZERO
+	player.global_position = pos
+	if player.has_method("snap_yaw"):
+		player.snap_yaw(yaw)
+	else:
+		player.rotation.y = yaw
+	player.set("input_locked", false)
+	portal_cooldown = PORTAL_COOLDOWN
+	# 任務／旗標已經換成存檔內容，但 UI 是靠 signal 更新的，而 deserialize 刻意
+	# 不發 signal（半成品狀態下重放會誤觸發）。這裡統一戳一次。
+	QuestManager.tracked_quest_changed.emit(QuestManager.get_active_quest())
+	_refresh_world_prompt()
+	_flash_message("已讀取存檔")
 
 
 ## 傳送點可帶 require_flag（meta.json）：劇情旗標未立就不能傳送。

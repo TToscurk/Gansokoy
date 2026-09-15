@@ -45,8 +45,10 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 DayNight="*res://scripts/daynight.gd"
+Ambience="*res://scripts/ambience.gd"
 StoryFlags="*res://systems/story/story_flags.gd"
 QuestManager="*res://systems/quest/quest_manager.gd"
+SaveManager="*res://systems/save/save_manager.gd"
 DialogueManager="*res://systems/dialogue/dialogue_manager.gd"
 WaypointResolver="*res://systems/nav/waypoint_resolver.gd"
 Weather="*res://scripts/weather.gd"
@@ -121,6 +123,16 @@ interact={
 map_toggle={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":77,"key_label":0,"unicode":109,"location":0,"echo":false,"script":null)
+]
+}
+quick_save={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194336,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+quick_load={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194340,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 draw_sword={
