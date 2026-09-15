@@ -1,8 +1,77 @@
 # PROJECT STATE
 
-Last updated: 2026-09-04.
+Last updated: 2026-09-15.
 
 This file is intentionally short. It contains only facts that should affect the next task. Load subsystem details only when that subsystem is being edited.
+
+## Save / load (2026-09-15)
+
+- `systems/save/save_manager.gd` (autoload `SaveManager`): `user://save_<slot>.json`,
+  3 slots + rolling `.bak`. Stores **plain data only** — story flags, quest progress
+  (id + objective index + state), current map / position / yaw. It deliberately does
+  NOT store `QuestData`: definitions live in `res://` and travel with the build, so
+  serialising them would break every old save whenever a quest is edited.
+  `Vector3` is split into x/y/z (JSON does not round-trip Vector3).
+- `version` field + `_migrate()` hook. A file with no `version` is treated as corrupt;
+  a *newer* version is read anyway (fields are read with defaults). Overwrite copies
+  the old file to `.bak` first; a corrupt primary falls back to the backup.
+- `deserialize` validates every entry (saves are user-editable text): missing quest →
+  dropped; objective index past the end (definition got shorter) → marked completed so
+  no un-advanceable quest is left; negative progress clamped to 0; orphan pending dropped.
+- ⚠ `StoryFlags.deserialize` / `QuestManager.deserialize` emit **no signals**. Measured
+  reason: setting `spared_wounded_yokai` makes `WoundedYokaiEvent` believe the player just
+  chose 靠近 — it replays the kedama flee and re-reports the quest event with the player
+  20 m away. `main._on_load_requested` pokes the UI once after the data is in place.
+- UI: `ui/save/save_menu.tscn` — Esc opens, ↑↓ select, Enter act, Tab save/load, Del delete.
+  Overwriting an existing save needs a second Enter (slot turns red-brown). F5/F9 = quick
+  save/load on slot 1. `main.save_to_slot()` / `load_from_slot()` are the single path.
+- ⚠ The Esc contest with the map UI is solved by the group `modal_ui`, **not** by mount
+  order. `_unhandled_input` reaches the LAST-added node first, so ordering gave the wrong
+  result in practice (map would not close, menu opened on top of it).
+- Gates: `tools/verify_save_load.gd` (30, API/corruption/tamper/migration/signal isolation),
+  `tools/verify_save_menu.gd` (44, incl. an InputMap-action existence check — a typo'd
+  action name silently does nothing), `tools/verify_save_live.gd` (11, two-phase: real save,
+  then a separate process with `--continue`; drift 0.000 m, yaw error 0.000 rad).
+- Not built: no save UI beyond this menu; combat state (health/posture/breath) is not saved.
+
+## Prologue quest bugs fixed (2026-09-15)
+
+Found by simulating real player movement, not scripted happy paths. All six have regression
+tests in `tools/verify_quest_flow.gd` (now 31 checks):
+
+- **Core dialogue was skippable.** The 拜殿 interaction had no prerequisite, so a player
+  could reach the shrine during MQ00 and burn Reimu's whole `first_*` branch; `met_reimu`
+  then let early-arriving events instantly complete MQ05/MQ06, and a revisit only showed the
+  2-line `repeat` branch — the prologue's thematic pivot («妖怪，不代表它該死» plus the
+  wounded-kedama callback) was lost silently. `WorldInteraction` gained `require_flag` /
+  `require_quest`; 拜殿 is gated on MQ05. The guard sits inside `interact()` itself, not
+  just `_unhandled_input` — that method is public and story scripts call it directly.
+- **`_pending` never expired or de-duplicated** (walking back retained 3 entries, repeat
+  dialogue accumulated to amount=3). Now only events that `_event_index` says a future quest
+  still needs are stored, capped at that objective's `required_amount`.
+- **`_tracked` could stick on a completed quest** when `next_quest_id` pointed at something
+  already done. Broken chains now fall back to `_first_active()`.
+- **Input hygiene**: `amount=-3` used to subtract from progress, `amount=0` counted as
+  handled, `report_event(99, …)` left permanent debris in `_pending`, and `MQ00`/`mq00` built
+  two separate active entries. All rejected at the entry point.
+- **Wounded-yokai deadlock**: with `wounded_yokai_played` already set, `_on_enter` returned
+  early while that area is the only source of `trail_wounded_yokai` — MQ03 stuck forever.
+  Re-entry now re-reports (QuestManager de-duplicates).
+
+## Test-suite notes (2026-09-15)
+
+Two long-standing gate failures turned out to be **test bugs, not product bugs**. Recorded so
+they are not "fixed" in the engine again:
+
+- `verify_story_slice` P2d was intermittent (~1/7). It drove dialogue with
+  `_press("ui_accept")`, but `DialogueUI` treats `ui_accept` as *confirm this choice* when
+  choices are visible, so it selected 靠近/離開 before the assertion could count them.
+  Use `dm.advance()` to step dialogue in tests. Now 6/6 clean.
+- `verify_yoriichi_player` reported "緣一不會走路" (0.00 m). The player is locked twice at
+  cold start: OpeningFade's black hold/fade, then the `yoriichi_wake` monologue it triggers.
+  The fade is a Tween on `process_frame`, so a pure `physics_frame` loop never advances it —
+  call `OpeningFade.skip()` then drain the dialogue. In an isolated scene the same input
+  moves 4.00 m (= walk speed).
 
 ## Current Build
 
@@ -12,19 +81,22 @@ This file is intentionally short. It contains only facts that should affect the 
 - **Active work happens in `godot/maps/slice/slice.tscn`**, not `village.tscn`. The slice
   is where B1/B2/B3 rounds, the canal, the east river and the collision work live; it is
   hand-tuned by the user between rounds and is now ~27 MB of scene text.
-- Git repository initialized. Branch `main` is ahead 18 of origin; active branch
-  `village-rebuild-b1-b2` has diverged (ahead/behind vs its own remote) — reconcile
-  before pushing. Not yet on GitHub.
+- **Published on GitHub**: `origin` = `https://github.com/TToscurk/Gansokoy.git`. Active branch
+  is `yoriichi-combat-and-village-routing` (in sync with its remote as of 2026-09-09).
+  Multiple sessions push this same branch: local is authoritative, push with
+  `--force-with-lease`; fallback `origin/backup/remote-before-force-push-20260907`.
+  Git LFS is in use — binaries must be pulled/checked out before Godot opens the project.
 
 ## Slice status (2026-09-04)
 
 - Content is at capacity: 13,001 nodes / 6,483 visible meshes / ~44 M triangles.
   70 machiya, 14 landmarks, 2 torii, 415 water pieces, 208 trees, 3,118 ground-cover,
   2,609 rocks, 14 street lamps. `tools/survey_slice_content.gd` regenerates this census.
-- Performance on a GTX 1070: main street 43-44 fps, riverside 44, village overview 31.
-  **24.3 M triangles are still shadow casters after culling** — the real bottleneck.
-  Top sources: `B1_Street` 5.1 M, `MachiCanal/TakeFence` (141 bamboo fences) 1.6 M,
-  `VillageTrees`×5 at 2.36 M each. Cutting these is a visual trade-off and needs a
+- Performance after the decimation pass (2026-09-09): visible triangles down to **18.77 M**
+  and main street to **58 fps** (was 44 M / 43-44 fps on 09-04). Remaining hot spots are
+  `B1_Street` and `MachiCanal` at ~27 % each. Tools: `tools/decimate_meshes.gd`,
+  `tools/gen_manual_collision.gd`, `tools/bench_slice.gd`, `tools/probe_glb.gd`, and
+  `data/slice_manual_collision.json`. Further cuts are a visual trade-off and need a
   user ruling, not an agent decision.
 - Collision is complete and verified: 23/23 probe audit, 17/17 real-controller walk,
   675-sample ground-gap probe at zero deviation. Bodies: 71 convex hulls (avg 83 verts),
@@ -77,6 +149,41 @@ This file is intentionally short. It contains only facts that should affect the 
 - **刻意清空的 MultiMesh 被當成漏做**。`GrassTall`／`GrassFlower` 是使用者 2026-08-29 判定「彩度過高、尺寸過大」後由 `tools/clear_bright_grass.gd` 清成 0 實例的，節點保留以便還原。加 `INTENTIONALLY_EMPTY` 白名單。
 
 **slice 剩下的 1 個真問題（使用者裁決本輪不修）**：幹渠上游 z≈104 附近渠道沒挖到底 —— `UpstreamWater` 水面 −2.29 m、該處地面僅 −0.47 m，實拍確認畫面上水渠斷掉、草地蓋過。`Reach_Lower` 在 (287, −20) 同樣是平地上的水面。屬水路整合當時的既有缺口。診斷工具：`probe_slice_ground_pair.gd`、`probe_slice_water_gap.gd`。
+
+## Prologue / story systems (2026-09-06 - 09-09)
+
+- Main-quest data lives in `godot/data/quests/mq00.tres` - `mq07.tres`, chained by
+  `next_quest_id`: MQ00 陌生之地 -> MQ01 獸道 -> MQ02 獵食者 -> MQ03 不要追 ->
+  MQ04 山上的神社 -> MQ05 博麗的巫女 -> MQ06 幻想鄉 -> MQ07 人間之里.
+  ⚠ MQ02 is **not a fight** any more (user ruling 2026-09-15): the wolf encounter was cut
+  because combat is moving to turn-based (FF-style), so MQ02 is a REACH on
+  `trail_predator_sign` (claw marks, gnawed bone, warm blood — monologue only). The
+  `CombatEncounter` node was removed from `trail_interactions.tscn`; restore it (and swap the
+  objective back to DEFEAT / `trail_wolf`) only when turn-based combat exists — do not revive
+  the real-time encounter. `data/dialogue/yoriichi_wolf_{encounter,aftermath}.json` are kept
+  for that future round.
+- Systems: `systems/quest/{quest_manager,quest_data,quest_objective}.gd`,
+  `systems/dialogue/dialogue_manager.gd`, `systems/story/story_flags.gd` (autoload, bool only),
+  `systems/save/save_manager.gd`. Dependency direction is one-way:
+  WorldInteraction -> DialogueManager -> QuestManager -> StoryFlags; SaveManager sits above
+  QuestManager/StoryFlags and calls their serialize/deserialize. Persistence exists as of
+  2026-09-15 (see the Save / load section) — older notes saying "no save-file" are historical.
+- UI: `ui/quest/quest_tracker.gd`, `ui/dialogue/dialogue_ui.gd`, `ui/opening/opening_fade.gd`
+  (black hold 1.4 s, fade 2.2 s, monologue starts only after the fade completes).
+- Story props: `components/story/{fleeing_yokai_group,wounded_yokai_event,dropped_fruit}.gd`;
+  `characters/yokai/kedama.gd` FLEE state serves MQ03.
+- Verification helpers: `tools/verify_story_slice.gd`, `tools/shot_opening.gd`, `tools/_shot_story.gd`.
+- Design docs: `docs/plans/2026-09-07-角色NPC任務UI規劃.md`, `docs/plans/sekiro_combat_spec.md`.
+
+## Combat (2026-09-06 - 09-09)
+
+- Sekiro-style posture system `characters/combat/posture.gd`; enemies
+  `enemy_samurai`, `enemy_wolf`, `training_dummy` under `characters/combat/`.
+- 山犬 (twin-tail wolf): `assets/enemies/wolf/wolf_twin_tail.glb`, scaled x2.06 to a 2 m
+  body length, faces +z, 7 animations, 92 k triangles. Three-move AI plus a dodge.
+- Dissolve death (`wolf_dissolve.gdshader`) is accepted. The 牙通牙 spin VFX
+  (`wolf_gatsuga.gdshader`) **failed agent self-review** — the semi-transparent cone does not
+  hide the body underneath. Not yet wired into the beast trail for MQ02.
 
 ## Yoriichi
 
