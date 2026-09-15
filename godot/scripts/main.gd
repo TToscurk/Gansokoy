@@ -567,6 +567,7 @@ const DIALOGUE_UI := preload("res://ui/dialogue/dialogue_ui.tscn")
 const QUEST_TRACKER_UI := preload("res://ui/quest/quest_tracker.tscn")
 const NAV_UI := preload("res://ui/nav/nav_waypoint.tscn")
 const MAP_UI := preload("res://ui/map/world_map.tscn")
+const SAVE_UI := preload("res://ui/save/save_menu.tscn")
 
 func _setup_story_systems() -> void:
 	player.add_to_group("player")
@@ -584,6 +585,11 @@ func _setup_story_systems() -> void:
 		QuestManager.start_quest("MQ00")
 	add_child(NAV_UI.instantiate())
 	add_child(MAP_UI.instantiate())
+	# 存檔選單（Esc）。與地圖 UI 的 Esc 爭用**不靠掛載順序**解決 ——
+	# 兩者都在 group "modal_ui"，選單開之前會先問「別的面板開著嗎」。
+	# （實測過順序解法會壞：_unhandled_input 是後加入者先收到，選單會搶先
+	#   吃掉 Esc 讓地圖關不掉。）順序在這裡無所謂。
+	add_child(SAVE_UI.instantiate())
 	# 戰鬥接線：HUD（血／軀幹／呼吸）與日之呼吸型選單。
 	# 純程式掛載，不寫進 main.tscn —— 編輯器可能正開著未存檔。
 	combat = COMBAT_RUNTIME.new()
@@ -752,10 +758,27 @@ func _unhandled_input(event: InputEvent) -> void:
 const QUICK_SLOT := 0
 
 
-func _quick_save() -> void:
-	var ok: bool = SaveManager.save_game(QUICK_SLOT, current_id,
+## 存到指定槽位。UI 與 F5 共用這一條路 —— 朝向的取法只有這裡一份。
+func save_to_slot(slot: int) -> bool:
+	var ok: bool = SaveManager.save_game(slot, current_id,
 		player.global_position, _player_yaw())
 	_flash_message("已存檔" if ok else "存檔失敗")
+	return ok
+
+
+## 從指定槽位讀檔。實際的世界重建在 _on_load_requested（由 load_requested 觸發）。
+func load_from_slot(slot: int) -> bool:
+	if not SaveManager.has_save(slot):
+		_flash_message("沒有存檔")
+		return false
+	if not SaveManager.load_game(slot):
+		_flash_message("讀檔失敗")
+		return false
+	return true
+
+
+func _quick_save() -> void:
+	save_to_slot(QUICK_SLOT)
 
 
 ## 玩家目前的面向。緣一把根節點 rotation.y 固定在 0（面向在 _visual 上），
@@ -767,11 +790,7 @@ func _player_yaw() -> float:
 
 
 func _quick_load() -> void:
-	if not SaveManager.has_save(QUICK_SLOT):
-		_flash_message("沒有存檔")
-		return
-	if not SaveManager.load_game(QUICK_SLOT):
-		_flash_message("讀檔失敗")
+	load_from_slot(QUICK_SLOT)
 
 
 ## 存讀檔的畫面提示。借用既有的 interaction_message Label，不另開 UI。

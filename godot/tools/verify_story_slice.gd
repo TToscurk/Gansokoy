@@ -87,20 +87,21 @@ func _run() -> void:
 		check("P0 第二句是「這是……哪裡？」", first_line.text == "「這是……哪裡？」")
 	await _settle(60)
 	var pp: Vector3 = player.global_position
-	check("P0 醒來點在大空地 (-6, -17.6) 附近且落地 y≈3.9（實 %.1f,%.1f,%.1f）" % [pp.x, pp.y, pp.z],
-		Vector2(pp.x + 6.0, pp.z + 17.6).length() < 2.0 and pp.y > 2.0 and pp.y < 6.0)
+	# r3 重排後的空地中心（tools/probe_trail_anchors.gd 實測 (-13.78,-26.82) 地面 y=5.19）
+	check("P0 醒來點在大空地 (-13.8, -26.8) 附近且落地 y≈5.2（實 %.1f,%.1f,%.1f）" % [pp.x, pp.y, pp.z],
+		Vector2(pp.x + 13.78, pp.z + 26.82).length() < 2.0 and pp.y > 3.5 and pp.y < 7.5)
 	check("P0 MQ00 active", qm.is_active("MQ00"))
 	check("P0 醒來獨白自動播放", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
 	check("P0 woke_in_trail 旗標", sf.get_flag("woke_in_trail"))
 	# 先往南試人里口：未開放
-	await _teleport(Vector3(3, 2.0, 98))
+	await _teleport(Vector3(0.99, 2.0, 95.27))
 	await _settle(4)
 	check("P1 人里口未開放獨白", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
-	await _teleport(Vector3(3.2, 1.5, 106))
+	await _teleport(Vector3(1.65, 1.5, 108.81))
 	main.portal_cooldown = 0.0
 	await _settle(6)
 	var before_map: String = main.current_id
@@ -108,46 +109,37 @@ func _run() -> void:
 	await _settle(10)
 	check("P1 未見靈夢前 ↑ 不能傳送到人里", main.current_id == before_map and main.current_id == "trail")
 	# 走北：離開空地 → MQ00 完成、MQ01 開始
-	await _teleport(Vector3(-6, 6.0, -50))
+	# 座標：2026-09-15 r3 路線重排後的實測錨點（tools/probe_trail_anchors.gd）
+	await _teleport(Vector3(-14.08, 7.0, -40.03))
 	check("P2 MQ00 REACH 完成 → MQ01", qm.is_completed("MQ00") and qm.is_active("MQ01"))
-	await _teleport(Vector3(7, 8.0, -70))
+	await _teleport(Vector3(-6.03, 7.4, -49.74))
 	await _settle(4)
 	check("P2 感知獨白自動播放", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
-	check("P2 MQ01 完成 → MQ02（山犬）", qm.is_completed("MQ01") and qm.is_active("MQ02"))
+	check("P2 MQ01 完成 → MQ02（獵食者）", qm.is_completed("MQ01") and qm.is_active("MQ02"))
 
-	# ── MQ02 山犬：第一場戰鬥 ──
-	await _teleport(Vector3(5.3, 8.0, -82))
+	# ── MQ02 獵食者痕跡 ──
+	# ⚠ 2026-09-15 使用者裁定：取消緣一遇到狼的即時戰鬥。
+	#   原本這一段是第一場戰鬥（生成 enemy_wolf、處決、戰後獨白）。
+	#   戰鬥系統改回合制之後再重做，屆時這段測試要一併換成回合制流程。
+	await _teleport(Vector3(0.9, 8.0, -62.0))
 	await _settle(8)
-	check("P2b 踏入遭遇區播「……妖怪。」", dm.is_active())
-	while dm.is_active():
-		await _press("ui_accept"); await _press("ui_accept")
-	var enc: Node = null
-	for e in main.get_tree().get_nodes_in_group("combat_encounter"):
-		enc = e
-	check("P2b 遭遇區存在", enc != null)
-	var wolves := main.get_tree().get_nodes_in_group("enemies")
-	check("P2b 山犬已生成（%d 隻）" % wolves.size(), wolves.size() >= 1)
-	if wolves.size() > 0:
-		var w: Node = wolves[0]
-		check("P2b 山犬鎖定玩家", w.get("target") != null)
-		# 直接處決，跳過實戰
-		w.posture.apply_damage(9999.0, 0.0)
-	# 戰後停頓 1.6 s + 對話
-	await _settle(160)
-	check("P2b 戰後獨白播放", dm.is_active())
+	check("P2b 踏入痕跡區播獨白", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
 	await _settle(4)
-	check("P2b defeated_first_yokai 旗標", sf.get_flag("defeated_first_yokai"))
+	check("P2b saw_predator_sign 旗標", sf.get_flag("saw_predator_sign"))
+	check("P2b 序章不再生成山犬", main.get_tree().get_nodes_in_group("enemies").is_empty())
 	check("P2b MQ02 完成 → MQ03（不要追）", qm.is_completed("MQ02") and qm.is_active("MQ03"))
 
 	# ── MQ03 不要追：毛玉真的要跑 ──
 	var kedamas := main.get_tree().get_nodes_in_group("kedama")
 	check("P2c 毛玉已擺好（%d 隻，含受傷的）" % kedamas.size(), kedamas.size() >= 4)
-	# 站在毛玉群旁邊（notice_range 7 m 內），它們要開始逃
-	await _teleport(Vector3(4.2, 8.0, -90))
+	# 站在毛玉群旁邊（notice_range 7 m 內），它們要開始逃。
+	# 站在果實區內是**正常玩法**（要靠近才會觸發逃跑），
+	# 區域啟用時玩家已在裡面也必須照樣播獨白 —— 見 world_interaction._set_enabled。
+	await _teleport(Vector3(2.6, 7.4, -76.0))
 	await _settle(30)
 	var fleeing := 0
 	for k in main.get_tree().get_nodes_in_group("kedama"):
@@ -164,7 +156,7 @@ func _run() -> void:
 	check("P2c 逃光後留下果實", main.get_tree().get_nodes_in_group("kedama").size() >= 1 \
 		and main.map_root.find_child("DroppedFruit", true, false) != null)
 	# 走到果實旁 → 獨白
-	await _teleport(Vector3(4.2, 8.0, -95))
+	await _teleport(Vector3(2.6, 7.4, -78.0))
 	await _settle(8)
 	check("P2c 果實獨白播放", dm.is_active())
 	while dm.is_active():
@@ -174,18 +166,35 @@ func _run() -> void:
 	check("P2c MQ03 第一目標完成、仍 active", qm.is_active("MQ03") and qm.get_objective_progress("MQ03") == 0)
 
 	# ── 受傷妖怪：序章唯一的選擇 ──
-	await _teleport(Vector3(3.7, 8.0, -101))
+	# ⚠ 這一段的時序很容易寫錯，踩過兩次：
+	#   1) 只 _settle(4) 就傳送 → 果實獨白偶爾還在跑（實測約 1/7），
+	#      WoundedYokaiEvent 走「對話中先等等」的補演路徑，後續 ui_accept
+	#      全打在果實獨白上 → P2d 間歇失敗。所以要先確認前一段真的結束。
+	#   2) 排空／推進時用 _press("ui_accept") → DialogueUI 在選項顯示時把
+	#      ui_accept 當成「確定這個選項」（見 dialogue_ui.gd），連按會直接
+	#      把「靠近／離開」選掉，選項還沒被檢查就消失（0 個選項）。
+	#   結論：排空用 dm.advance()，推進到選項也用 dm.advance()，
+	#   而且**推進前先檢查有沒有選項**，有就停手。
+	var settle_guard := 0
+	while dm.is_active() and settle_guard < 60:
+		dm.advance()
+		await _settle(1)
+		settle_guard += 1
 	await _settle(8)
-	check("P2d 受傷妖怪對話播放", dm.is_active())
+	await _teleport(Vector3(-1.54, 8.8, -90.74))
+	await _settle(12)
+	check("P2d 受傷妖怪對話播放（id=%s）" % str(dm.get("_dialogue_id")), dm.is_active())
 	var ui_d: CanvasLayer = null
 	for c in main.get_children():
 		if c.name == "DialogueUI":
 			ui_d = c
 	var choices_box: VBoxContainer = ui_d.get_node("Panel/VBox/Choices")
-	# 推到選項節點
+	# 推到選項節點。用 dm.advance()，不要送 ui_accept —— DialogueUI 在選項
+	# 顯示時把 ui_accept 當成「確定這個選項」，會在檢查之前就把選項選掉。
 	var guard := 0
 	while dm.is_active() and not choices_box.visible and guard < 20:
-		await _press("ui_accept"); await _press("ui_accept")
+		dm.advance()
+		await _settle(2)
 		guard += 1
 	check("P2d 出現選項（%d 個）" % choices_box.get_child_count(), choices_box.visible and choices_box.get_child_count() == 2)
 	if choices_box.visible:
@@ -230,8 +239,8 @@ func _run() -> void:
 		if c.name == "NavWaypoint": nav = c
 	check("P3 NavWaypoint 存在", nav != null)
 	var wp: Dictionary = root.get_node("/root/WaypointResolver").resolve("trail", main.current_portals())
-	check("P3 MQ04 目標在神社 → 指向北傳送點 (3,-107.8)：%s" % str(wp),
-		not wp.is_empty() and wp.via_portal and (wp.pos as Vector2).distance_to(Vector2(3.0, -107.8)) < 1.0)
+	check("P3 MQ04 目標在神社 → 指向北傳送點 (-2.08,-108.87)：%s" % str(wp),
+		not wp.is_empty() and wp.via_portal and (wp.pos as Vector2).distance_to(Vector2(-2.08, -108.87)) < 1.0)
 	# 進神社
 	main.load_map("shrine", "trail")
 	await _settle(30)
@@ -320,7 +329,7 @@ func _run() -> void:
 	# 見過靈夢後人里開放
 	main.load_map("trail", "shrine")
 	await _settle(30)
-	await _teleport(Vector3(3.2, 1.5, 106))
+	await _teleport(Vector3(1.65, 1.5, 108.81))
 	main.portal_cooldown = 0.0
 	await _settle(6)
 	await _press("portal_enter")

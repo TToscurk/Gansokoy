@@ -10,6 +10,8 @@ var _main: Node = null
 func _ready() -> void:
 	_main = get_parent()
 	visible = false
+	# 全螢幕面板互斥用（存檔選單靠這個群組判斷「別的面板開著就別搶 Esc」）
+	add_to_group("modal_ui")
 	_canvas.draw.connect(_draw_map)
 
 
