@@ -17,7 +17,7 @@ signal interacted(interaction_id: String)
 ## 沒對話時直接回報任務事件；有對話則交給對話節點的 quest_event
 @export_enum("NONE", "REACH", "INTERACT", "TALK", "DEFEAT") var quest_event_type := "NONE"
 @export var quest_target_id := ""
-@export var enabled := true
+@export var enabled := true: set = _set_enabled
 ## 進區即自動觸發（獨白／事件），不需按 E；prompt 不顯示
 @export var auto_trigger := false
 ## 設了就只觸發一次：觸發後立 flag，flag 為真時整個互動區停用
@@ -25,8 +25,21 @@ signal interacted(interaction_id: String)
 ## 設了就「這個旗標為真時整區停用」——劇情推進後就不該再演的台詞用。
 ## 例：見過靈夢後，人里口的「先去山上看看」獨白已經過時。
 @export var skip_flag := ""
+## 設了就「這個旗標為真**之前**整區停用」——劇情順序保護。
+##
+## ⚠ 為什麼需要：獸道北端的傳送點沒有任何前置條件，玩家在 MQ00 階段就能走到
+##   博麗神社按 E 跟靈夢把 first_* 全段演完。met_reimu 一立，之後 MQ05／MQ06
+##   由早到事件瞬間補完，玩家回頭找靈夢只剩 repeat 兩句 —— 序章核心對話
+##   （「妖怪，不代表它該死」與受傷毛玉的回照）就這樣永久消失，而且玩家不會知道。
+@export var require_flag := ""
+## 設了就「這個任務尚未開始之前整區停用」（active 或已完成都算達成）。
+## 比 require_flag 直接：劇情順序本來就是任務鏈定義的，不必另立一個旗標。
+## 例：拜殿的靈夢對話設 "MQ05" —— 序章走到「博麗的巫女」那一關才談得起來。
+@export var require_quest := ""
 
 var _player_inside := false
+## 正在等目前這段對話結束、好補播自己的 auto_trigger 獨白
+var _waiting_for_dialogue := false
 
 
 func _ready() -> void:
@@ -34,6 +47,25 @@ func _ready() -> void:
 	monitoring = true
 	body_entered.connect(_on_enter)
 	body_exited.connect(_on_exit)
+	# ⚠ require_flag / require_quest 解除的那一刻，玩家**可能已經站在區內**。
+	#   Area3D 的 body_entered 只在跨越邊界那一幀發出，所以跟 _set_enabled 一樣
+	#   需要主動重判一次，否則前置一解除這區就永遠不會再發動。
+	if not require_flag.is_empty() or not require_quest.is_empty():
+		StoryFlags.flag_changed.connect(_on_gate_changed)
+		QuestManager.quest_started.connect(_on_gate_changed)
+		QuestManager.quest_completed.connect(_on_gate_changed)
+
+
+## 前置條件可能剛剛解除 —— 玩家站在區內就補發動（或至少把提示字亮出來）。
+func _on_gate_changed(_a: Variant = null, _b: Variant = null) -> void:
+	if not _player_inside or not enabled or _suppressed():
+		return
+	if auto_trigger:
+		_try_auto_trigger()
+	elif quest_event_type == "REACH":
+		QuestManager.report_event("REACH", quest_target_id)
+	else:
+		_refresh_prompt()
 
 
 func _on_enter(body: Node3D) -> void:
@@ -43,13 +75,61 @@ func _on_enter(body: Node3D) -> void:
 	if _suppressed():
 		return
 	if auto_trigger:
-		if enabled and not DialogueManager.is_active():
-			interact()
+		if enabled:
+			_try_auto_trigger()
 		return
 	_refresh_prompt()
 	# REACH 型：進區即回報（QuestManager 自己防重複）
 	if quest_event_type == "REACH" and enabled:
 		QuestManager.report_event("REACH", quest_target_id)
+
+
+## auto_trigger 的實際發動。對話中不能插隊，但**不得就此丟掉**——
+## 玩家常在前一段獨白還沒讀完就走進下一區，之前那一幕會永遠消失
+## （once_flag 沒立、事件沒回報，回頭再走也不會重播）。
+## 這裡改成：對話中就等它結束，玩家若還站在區內就補播。
+func _try_auto_trigger() -> void:
+	if _suppressed():
+		return
+	if not DialogueManager.is_active():
+		interact()
+		return
+	if _waiting_for_dialogue:
+		return
+	_waiting_for_dialogue = true
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended_retry, CONNECT_ONE_SHOT)
+
+
+func _on_dialogue_ended_retry(_id: String) -> void:
+	_waiting_for_dialogue = false
+	# 玩家已經離開這一區就不補了——他人都走了還硬跳獨白更怪。
+	if not _player_inside or not enabled or _suppressed():
+		return
+	# 同一幀可能又有別的對話接著起，交給 call_deferred 再判一次。
+	call_deferred("_try_auto_trigger")
+
+
+## enabled 由 false 翻成 true 時，**玩家可能已經站在區內**。
+##
+## ⚠ Area3D 的 body_entered 只在「跨越邊界的那一幀」發出；區域是後來才啟用的，
+##   站在裡面的人不會再觸發一次。MQ03 的果實獨白就是這樣永遠不播：
+##   毛玉逃走時玩家本來就站在群旁邊（要靠近才會觸發逃跑），
+##   FleeingYokaiGroup 逃光後把果實區 enabled 翻 true，但玩家人已在裡面
+##   → 獨白不播、saw_fleeing_yokai 不立、MQ03 永久卡住。
+##   （測試裡看起來像「站位沒站好」，實際是任何正常玩法都會踩到。）
+func _set_enabled(v: bool) -> void:
+	var was := enabled
+	enabled = v
+	if not v or was == v or not is_inside_tree() or not _player_inside:
+		return
+	if _suppressed():
+		return
+	if auto_trigger:
+		_try_auto_trigger()
+	elif quest_event_type == "REACH":
+		QuestManager.report_event("REACH", quest_target_id)
+	else:
+		_refresh_prompt()
 
 
 func _on_exit(body: Node3D) -> void:
@@ -70,6 +150,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func interact() -> void:
+	# ⚠ 守衛放在這裡，不是只放在 _unhandled_input。這個方法是公開的——劇情腳本、
+	#   _set_enabled、auto_trigger 補播都會直接呼叫它。少了這一行，前置條件
+	#   （require_quest / require_flag）就只擋得住按鍵，擋不住程式路徑。
+	if not enabled or _suppressed():
+		return
 	interacted.emit(interaction_id)
 	if not once_flag.is_empty():
 		StoryFlags.set_flag(once_flag, true)
@@ -97,8 +182,13 @@ func _has_interact_payload() -> bool:
 	return quest_event_type != "NONE" and quest_event_type != "REACH"
 
 
-## 這一區現在該不該完全沉默（已觸發過，或劇情已推進過去）。
+## 這一區現在該不該完全沉默（前置未達、已觸發過，或劇情已推進過去）。
 func _suppressed() -> bool:
+	if not require_flag.is_empty() and not StoryFlags.get_flag(require_flag):
+		return true
+	if not require_quest.is_empty() \
+			and not (QuestManager.is_active(require_quest) or QuestManager.is_completed(require_quest)):
+		return true
 	if not once_flag.is_empty() and StoryFlags.get_flag(once_flag):
 		return true
 	if not skip_flag.is_empty() and StoryFlags.get_flag(skip_flag):

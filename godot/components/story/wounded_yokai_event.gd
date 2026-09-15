@@ -27,6 +27,8 @@ class_name WoundedYokaiEvent
 
 var _kedama: Node3D = null
 var _started := false
+## 正在等目前這段對話結束，好補演這一幕
+var _waiting := false
 
 
 func _ready() -> void:
@@ -45,6 +47,17 @@ func _place_kedama() -> void:
 	if _kedama == null:
 		return
 	_kedama.global_position = global_position + kedama_offset
+	# ⚠ 貼地：kedama_offset 是手填的相對位移，地形不是平的。
+	#   受傷毛玉是蜷在地上的，浮空或半埋都會很明顯。
+	if is_inside_tree():
+		var space := get_world_3d().direct_space_state
+		var q := PhysicsRayQueryParameters3D.create(
+			_kedama.global_position + Vector3(0, 30, 0),
+			_kedama.global_position - Vector3(0, 40, 0))
+		q.collision_mask = 0xFFFFFFFF
+		var hit := space.intersect_ray(q)
+		if hit.has("position"):
+			_kedama.global_position.y = hit.position.y
 	_kedama.set("mode", 2)   # Kedama.Mode.WOUNDED
 
 
@@ -52,11 +65,55 @@ func _on_enter(body: Node3D) -> void:
 	if _started or not body.is_in_group("player"):
 		return
 	if StoryFlags.get_flag(once_flag):
+		# 這一幕已經演過了。但任務事件**可能還沒被任何人接收**
+		# （例：玩家在 MQ03 第一目標還沒完成時就先撞到這裡 —— 那時 QuestManager
+		#   會把事件存進 _pending，通常救得回來；但若 pending 因故沒留下，
+		#   這一區就是 trail_wounded_yokai 的唯一來源，任務會永久卡在 MQ03）。
+		#   重踩時無條件補回報一次：QuestManager 自己防重複計。
+		_report()
 		return
+	# 對話中不能插隊。但**不能就這樣算演過了** —— 舊版在這裡照樣立 once_flag，
+	# 結果玩家如果邊讀前一段獨白邊走進來，序章唯一的選擇就永久消失。
+	# 改成等對話結束再補演；玩家離開了就等他下次再踏進來。
+	if DialogueManager.is_active():
+		if not _waiting:
+			_waiting = true
+			DialogueManager.dialogue_ended.connect(_on_dialogue_ended_retry, CONNECT_ONE_SHOT)
+		return
+	_begin()
+
+
+func _on_dialogue_ended_retry(_id: String) -> void:
+	_waiting = false
+	if _started or StoryFlags.get_flag(once_flag):
+		return
+	# 玩家還站在區內才補演
+	if overlaps_body_in_group_player():
+		call_deferred("_retry")
+
+
+func _retry() -> void:
+	if _started or StoryFlags.get_flag(once_flag):
+		return
+	if DialogueManager.is_active():
+		if not _waiting:
+			_waiting = true
+			DialogueManager.dialogue_ended.connect(_on_dialogue_ended_retry, CONNECT_ONE_SHOT)
+		return
+	_begin()
+
+
+func overlaps_body_in_group_player() -> bool:
+	for b in get_overlapping_bodies():
+		if b.is_in_group("player"):
+			return true
+	return false
+
+
+func _begin() -> void:
 	_started = true
 	StoryFlags.set_flag(once_flag, true)
-	if not DialogueManager.is_active():
-		DialogueManager.start(dialogue_id)
+	DialogueManager.start(dialogue_id)
 
 
 func _on_flag(flag: String, value: bool) -> void:
@@ -96,5 +153,9 @@ func _do_leave() -> void:
 
 
 func _finish() -> void:
+	_report()
+
+
+func _report() -> void:
 	if not quest_target_id.is_empty():
 		QuestManager.report_event("REACH", quest_target_id)
