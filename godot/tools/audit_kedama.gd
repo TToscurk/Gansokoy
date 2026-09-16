@@ -70,11 +70,14 @@ func _init() -> void:
 	else:
 		print("   ✓ 眼睛露出毛層")
 
-	print("── 3. 逃跑路線上的障礙物（樹幹碰撞）──")
+	print("── 3. 逃跑路線上的障礙物 ──")
+	# 2026-09-16 碰撞重排（使用者：「用正方形把能夠移動的範圍框起來就好」）之後，
+	# 獸道只剩「可動範圍框」＋木橋面：樹幹／岩石／地藏／屋台都不再有碰撞，
+	# 所以逃跑直線上本來就不該有障礙物。這裡改成量框離逃跑線多遠。
 	var trunk: Node = null
 	for c in root.get_children():
-		if str(c.name) == "樹幹碰撞":
-			trunk = c
+		if str(c.name) == "走廊碰撞牆":
+			trunk = (c as Node).get_node_or_null("可動範圍框")
 	var hits := 0
 	if trunk != null:
 		for sh in trunk.get_children():
@@ -87,5 +90,8 @@ func _init() -> void:
 			var u := clampf((q - a).dot(ab) / maxf(ab.length_squared(), 0.0001), 0.0, 1.0)
 			if q.distance_to(a + ab * u) < 0.7:
 				hits += 1
-	print("   逃跑直線 %.0f m 上會穿過 %d 根有碰撞的樹幹" % [FLEE_DIST, hits])
+		print("   逃跑直線 %.0f m 上有碰撞的物件 %d 個（可動範圍框 %d 塊離線 <0.7 m）"
+			% [FLEE_DIST, hits, trunk.get_child_count()])
+	else:
+		print("   找不到可動範圍框 —— 獸道碰撞請跑 tools/rework_trail_collision.gd")
 	quit(0)
