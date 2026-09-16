@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
+[ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
+
+[sub_resource type="Resource" id="obj_0"]
+script = ExtResource("obj")
+type = 2
+target_id = "gatekeeper_gate"
+description = "跟村門的守衛說話"
+required_amount = 1
+
+[sub_resource type="Resource" id="obj_1"]
+script = ExtResource("obj")
+type = 0
+target_id = "village_temple_school"
+description = "去寺子屋找慧音老師"
+required_amount = 1
+
+[resource]
+script = ExtResource("qd")
+id = "MQ08"
+title = "進不去的村門"
+description = "佩刀的外來人被村門擋了下來。守衛說，去找寺子屋的慧音老師。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
+next_quest_id = "MQ09"
+complete_flags = PackedStringArray("met_gatekeeper")

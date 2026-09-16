@@ -1,0 +1,33 @@
+{
+  "_doc": "MQ12 慧音裁定。慧音像老師，不像任務發放機：信任線會承認自己在測人；觀察線維持強硬，但都把緣一推進村子的日常。她理解人與妖怪的處境，不是讀心。",
+  "start": [
+    { "if": "has_village_lodging", "node": "repeat_1" },
+    { "if": "keine_trusts_yoriichi", "node": "t1" },
+    { "if": "keine_watches_yoriichi", "node": "w1" },
+    { "node": "t1" }
+  ],
+  "nodes": {
+    "t1": { "speaker": "keine", "portrait": "normal", "text": "「小鈴說你不會客套。阿求說你讓她答不出來。」", "next": "t2" },
+    "t2": { "speaker": "yoriichi", "portrait": "normal", "text": "「我給她們添麻煩了。」", "next": "t3" },
+    "t3": { "speaker": "keine", "portrait": "smile", "text": "「不。你讓她們記住你了。這才是我要的。」", "next": "t4" },
+    "t4": { "speaker": "yoriichi", "portrait": "normal", "text": "「那些差事，是試探。」", "next": "t5" },
+    "t5": { "speaker": "keine", "portrait": "smile", "text": "「是功課。試探通常不會告訴你答案。」", "next": "t6" },
+    "t6": { "speaker": "keine", "portrait": "serious", "text": "「你的來歷查不到。但人不能因為沒有過去，就連今晚也沒有。」", "next": "t7" },
+    "t7": { "speaker": "keine", "portrait": "normal", "text": "「去鯢吞亭。美宵替你留了房。」", "next": "t8",
+            "quest_event": { "type": "TALK", "target": "keine_verdict" } },
+    "t8": { "speaker": "yoriichi", "portrait": "normal", "text": "「為什麼幫我？」", "next": "t9" },
+    "t9": { "speaker": "keine", "portrait": "smile", "text": "「因為那隻毛玉還活著。也因為老師總得先替學生留個座位。」", "next": null },
+
+    "w1": { "speaker": "keine", "portrait": "serious", "text": "「差事做完了。規矩你也守了。」", "next": "w2" },
+    "w2": { "speaker": "keine", "portrait": "serious", "text": "「但別誤會。我還不信你。」", "next": "w3" },
+    "w3": { "speaker": "yoriichi", "portrait": "normal", "text": "「不必急著信。」", "next": "w4" },
+    "w4": { "speaker": "keine", "portrait": "surprised", "text": "「……你倒很會挑讓人接不下去的話。」", "next": "w5" },
+    "w5": { "speaker": "keine", "portrait": "normal", "text": "「去鯢吞亭。美宵會給你房間。」", "next": "w6",
+            "quest_event": { "type": "TALK", "target": "keine_verdict" } },
+    "w6": { "speaker": "keine", "portrait": "serious", "text": "「住下來。讓我慢慢看清楚你。」", "next": "w7" },
+    "w7": { "speaker": "keine", "portrait": "serious", "text": "「別讓我後悔。」", "next": null },
+
+    "repeat_1": { "speaker": "keine", "portrait": "annoyed", "text": "「有房間就去睡。明天第一堂課，我不接受『來自四百年前』當遲到理由。」", "next": null,
+                  "quest_event": { "type": "TALK", "target": "keine_verdict" } }
+  }
+}

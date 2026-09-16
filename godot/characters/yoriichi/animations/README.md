@@ -12,10 +12,11 @@ loco  (AnimationNodeStateMachine)         下半身 / 一般 locomotion
   ↓
 upper (AnimationNodeOneShot, bone filter = Spine02 以上 15 根上半身骨)
 	  draw / sheathe(Draw_Sword 反播) / atk1 / atk2 / atk3（輕連段三段）
-	  → 腿繼續 locomotion：邊跑邊拔刀、邊跑邊斬、空中斬
+	  guard（Idle→架勢 0.5 s）/ guard_hold（架勢末段循環）/ block / deflect
+	  → 腿繼續 locomotion：邊跑邊拔刀、邊跑邊斬、空中斬、邊走邊架
   ↓
 full  (AnimationNodeOneShot, 無 filter)   全身 override
-	  roll / spin / judgment / combo1 / spinjump
+	  roll / spin / judgment / combo1 / spinjump / thrust / hit / stagger / dead
   ↓
 output
 ```
@@ -73,6 +74,55 @@ output
 | Attack_Spin_Jump | `animations/yoriichi_attack_spin_jump.res` | Hips XY 凍結在 rest＋垂直 −0.048＋垂直 clamp；**已從預設空中 RMB 下線**，僅拾型通道 |
 | Jump | `animations/yoriichi_jump.res` | Hips XY 凍結在 rest（源首幀帶 −0.07 側偏）；垂直 −0.028；垂直弧線 clamp，上升由物理提供；**手臂 keys 向 Running 首幀 slerp（保留 35%），最大偏差 148.8°→52.1°，起跳不再雙手高舉** |
 | Draw_Sword | `Animation_拔刀_withSkin.fbx`（裁切 0–1.0 s） | 正播拔刀 1.15x；**反播收刀 0.95x（納刀較慢，儀式感）** |
+
+| Dead | `Meshy…Dead_withSkin.fbx` → `animations/yoriichi_dead.res` | `build_jump.gd -- only=dead`：freeze_rest、z_shift −0.0435（首幀腳底 0.082→0.039）＋ **floor_clamp 0.030**（躺平段源腳骨沉到 −0.098，只抬不壓、5 key 平滑，max_lift 0.128）。2.97 s。死亡後 Tree 關掉、AnimationPlayer speed_scale 0 定格末幀 |
+
+### 反應動畫組（2026-09-16，自製，非 Meshy）
+
+| 遊戲內名稱 | 來源 | 層 | 長度 | 遊戲倍率 | 內容 |
+|---|---|---|---|---|---|
+| Guard_Hold | `anim_src/react_mcp.glb`（Blender MCP 手調，`tools/blender/react_lib.py`） | upper | 0.50 s | 1.6 | Idle→中段架勢：雙手握柄於臍前、刀尖前上 (0.03,−0.92,+0.39)、髖沉 4 cm、雙膝微屈。f7 後全是架勢幀，`guard_hold` 由 7/12 起循環 |
+| Block_Impact | 同上 | upper | 0.33 s | 1.2 | 架勢→雙手後下壓 6/3 cm、上身後仰 12°、頭後甩 14°→回架勢 |
+| Deflect | 同上 | upper | 0.42 s | 1.8 | 架勢→刀往右上外撥：右手 Δ(−0.26,−0.02,+0.14)、刀向 (−0.77,−0.36,+0.53)、腰轉 10°→回架勢 |
+| Hit_React | `anim_src/react_clips.glb`（`tools/blender/make_react_clips.py` 姿勢表） | full | 0.42 s | 1.5 | 上身後仰 22°、頭甩 18°、右腳後踉蹌；Head 後移 0.19 m、下移 0.12 m |
+| Stagger | 同上 | full | 2.00 s | 2.0／break_time | 膝軟髖沉 12 cm、上身前傾 30°、刀垂；f8~40 2 Hz 顫抖；長度自動等比縮到 `posture.break_time` |
+
+- 全部首尾幀 = Idle_11 首幀姿（不是 T-pose rest），Hips 錨在 Idle_Grounded 髖高 0.9475；
+  Blender 端實測腳底 0.029~0.030（Walk 基準 0.027~0.039）、水平 root 漂移 0.00 mm。
+- 握刀量測（Blender 內用 Godot HandSocket/Sword_Hand 矩陣換算掛刀）：右手骨中點離刀軸 5.5 cm
+  （= Idle 實測，socket 校準值），左手照抄同偏移沿柄退 13 cm；Guard 左手 6.0 cm、Deflect 8.5 cm、Block 3.1 cm。
+- 接線：`begin_guard()` → guard 進場 → 0.31 s 後切 `guard_hold` 循環（同一 OneShot、fadeout 0 防止自結束）；
+  `take_hit()` 依結果播 block／deflect（播完切回 guard_hold）或 hit（full）；
+  `_on_self_posture_broken()` 播 stagger；`_on_self_died()` 播 dead → `_freeze_dead_pose()`。
+- 重建：`blender -b --python tools/blender/make_react_clips.py`（含量測＋連拍）→
+  `godot --headless -s tools/build_react_clips.gd`；架勢三支要進 Blender 用 react_lib 重存 pose 後 `export_react_glb`。
+- 驗證：`tools/verify_react_anims.gd`（41 項）、實機連拍 `tools/capture_react_ingame.gd`。
+
+### 日之呼吸缺件四型（2026-09-16，自製，Blender MCP 手調）
+
+| 遊戲內名稱 | 型 | 長度 | 倍率 | 內容 |
+|---|---|---|---|---|
+| Attack_Form05_Turn | 伍 斜陽轉身 | 0.58 s | 1.7 | 腰擰→刀由右下往左上撩斬，刀尖最高 2.07 m |
+| Attack_Form06_Wheel | 陸 飛輪陽炎 | 0.67 s | 1.8 | 前弓步、雙手水平橫掃（刀尖前 1.2 m、高 1.04 m），起手前衝 5 m/s |
+| Attack_Form11_Halo | 拾壹 幻日虹 | 0.67 s | 1.8 | 上身後仰、刀舉頂（2.5 m）→ 斜下反斬；起手後撤 1.5 m/s |
+| Attack_Form12_Dance | 拾貳 炎舞 | 0.92 s | 1.9 | 過頂直劈（2.6 m → 0.08 m）→ 右下蓄 → 左上撩，兩段一氣；0.55 進度第二刀重判命中 |
+
+- 身體／腿／髖照 `tools/blender/make_form_clips.py` 姿勢表；**手臂由 IK 對刀尖**
+  （`tools/blender/form_mcp.py` 在開著的 Blender 裡 exec，接 react_lib）——
+  右手 IK 到指定座標、`aim_sword` 搜刀向、左手貼柄，bake 成 FK 存 pose，`author_clip` → `export_react_glb`
+  → `anim_src/form_clips.glb` → `tools/build_react_clips.gd`。工作檔 `anim_src/form_mcp_work.blend`。
+- 每個 key 都量過：刀尖全程 z ≥ 0.01 m（不穿地）、腳底 0.01–0.06 m、水平 root 0。
+- **左右鍵互搭**（`yoriichi_character.gd` @export_group "Combo Branches"）：LMB 段1/2/3 取消窗口內按 RMB → 陸／伍／拾貳；
+  RMB 聚力單斬中按 LMB → 拾壹；疾跑 RMB → 捌；型的 cancel.x 之後 LMB 回段1、RMB 接聚力單斬。
+  分支不扣呼吸、不看熟練度，冷卻照算。型起手：`CombatVFX.spawn_form_ignite` 火光＋`play_form` 音效＋刀光 0.34 s。
+- 驗證：`tools/verify_combo_branches.gd`（70 項）；連拍 `tools/capture_combo_branches.gd`。
+
+### ⚠ GLB → FBX 骨架的兩個必修校正（`build_react_clips.gd`／`build_form08_thrust.gd`）
+
+1. **Hips 根骨旋轉乘 X+90°**：Blender 匯出 GLB 把 Armature 的 X−90° 烘進根骨鍵，Godot FBX 骨架把它留在
+   Skeleton 父節點。漏掉 = 整個人躺著播（2026-09-16 前所有反應 clip 與捌型皆如此：Stagger 腳趾離地 0.84 m）。
+   同 `build_spin_slash.gd` 的 `rot_x90`。門檻：`verify_react_anims`／`verify_combo_branches` 比對 Hips f0 與 Idle_Grounded。
+2. **GLB Hips 位置軌的垂直在 v.y**（Y-up），不是 v.z。漏掉 = 髖沉全部消失。基準取末 key（匯出器滑掉約 1 幀）。
 
 **骨架空間軸向（Meshy 24-bone rig）**：Hips position track 的 **Z 是垂直軸**
 （rest ≈ 0.986 = 髖高），X/Y 是水平軸。清 root motion 必須凍結 X/Y、保留 Z。
@@ -149,8 +199,8 @@ output
   伍（dodge counter 已實裝）、陸（居合 quick-draw 已實裝，缺 dash 版）、
   拾貳（quick-draw→段1→段2 鏈已可操作）。
 - **MISSING**（真缺專用動畫）：捌（直線突刺）、玖（dash 連斬鏈）、拾壹（殘影反擊）。
-- 未接入素材（全專案僅剩這兩支未使用）：`Dead`（完整倒地，留給死亡狀態）、
-  `Double_Blade_Spin`（5.7 s 雙刀大迴旋，留給雙刀系統）。
+- 未接入素材（全專案僅剩一支未使用）：`Double_Blade_Spin`（5.7 s 雙刀大迴旋，留給雙刀系統）。
+  `Dead` 已於 2026-09-16 接入死亡狀態。
 - 刀 socket：`Sword_Hand` 第一輪以幾何計算初值（刀長軸 = local +Y、
   刃軸 = local X、厚度軸 = local Z，AABB 實測；刀刃在刀本地 −X 側），
   再經肉眼驗收**手動微調**成目前 tscn 中的值（未動 Skeleton3D rest pose、
@@ -177,4 +227,4 @@ output
   解鎖條件 `form13_unlocked` / `form13_gauge_cost` 為 export data，尚未綁輸入）。
 - 型的選型輸入（方向派生 / mastery 映射）尚未實裝；目前僅左右鍵 + quick-draw。
 
-死亡、雙刀類動畫暫未接入。
+雙刀類動畫暫未接入；死亡／受擊／格擋／彈刀／軀幹爆已接（見「反應動畫組」）。

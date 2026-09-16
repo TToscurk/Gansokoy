@@ -16,5 +16,5 @@ id = "MQ00"
 title = "陌生之地"
 description = "……這裡，不是我所知的地方。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
-next_quest_id = "MQ01"
+next_quest_id = "MQ02"
 complete_flags = PackedStringArray()

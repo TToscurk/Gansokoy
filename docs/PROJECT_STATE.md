@@ -1,6 +1,6 @@
 # PROJECT STATE
 
-Last updated: 2026-09-15.
+Last updated: 2026-09-16.
 
 This file is intentionally short. It contains only facts that should affect the next task. Load subsystem details only when that subsystem is being edited.
 
@@ -67,6 +67,10 @@ they are not "fixed" in the engine again:
   `_press("ui_accept")`, but `DialogueUI` treats `ui_accept` as *confirm this choice* when
   choices are visible, so it selected 靠近/離開 before the assertion could count them.
   Use `dm.advance()` to step dialogue in tests. Now 6/6 clean.
+- `verify_hud_autohide` reported "交手後 HUD 浮出 alpha=0.859". The headless frame delta
+  is not 1/60, so waiting a fixed 40 frames never reaches alpha 1.0 (the fade is
+  `delta/hud_fade_time`). Test now waits until the alpha saturates or times out.
+  A/B verified: the failure predates the 2026-09-16 combat work (baseline = 0.859).
 - `verify_yoriichi_player` reported "緣一不會走路" (0.00 m). The player is locked twice at
   cold start: OpeningFade's black hold/fade, then the `yoriichi_wake` monologue it triggers.
   The fade is a Tween on `process_frame`, so a pure `physics_frame` loop never advances it —
@@ -152,16 +156,13 @@ they are not "fixed" in the engine again:
 
 ## Prologue / story systems (2026-09-06 - 09-09)
 
-- Main-quest data lives in `godot/data/quests/mq00.tres` - `mq07.tres`, chained by
-  `next_quest_id`: MQ00 陌生之地 -> MQ01 獸道 -> MQ02 獵食者 -> MQ03 不要追 ->
-  MQ04 山上的神社 -> MQ05 博麗的巫女 -> MQ06 幻想鄉 -> MQ07 人間之里.
-  ⚠ MQ02 is **not a fight** any more (user ruling 2026-09-15): the wolf encounter was cut
-  because combat is moving to turn-based (FF-style), so MQ02 is a REACH on
-  `trail_predator_sign` (claw marks, gnawed bone, warm blood — monologue only). The
-  `CombatEncounter` node was removed from `trail_interactions.tscn`; restore it (and swap the
-  objective back to DEFEAT / `trail_wolf`) only when turn-based combat exists — do not revive
-  the real-time encounter. `data/dialogue/yoriichi_wolf_{encounter,aftermath}.json` are kept
-  for that future round.
+- Main-quest data lives in `godot/data/quests/mq00.tres` - `mq04.tres`, `mq07.tres`,
+  chained by `next_quest_id`: MQ00 陌生之地 -> MQ02 攔路的野獸 -> MQ03 害怕我的東西 ->
+  MQ04 山上的巫女 -> MQ07 人間之里. 純走路的 MQ01，以及同一場靈夢對話拆出的
+  MQ05／MQ06 已刪除；MQ04 現在以兩個目標完成「抵達神社 → 與靈夢初見」。
+  MQ02 **is a fight again** (user ruling 2026-09-16: real-time combat stays). It uses one
+  objective, `DEFEAT trail_wolf` (the 山犬遭遇 `CombatEncounter` at the clearing's north rim).
+  戰後獸骨只作非任務環境觀察，不再要求玩家再踩一次痕跡區。
 - Systems: `systems/quest/{quest_manager,quest_data,quest_objective}.gd`,
   `systems/dialogue/dialogue_manager.gd`, `systems/story/story_flags.gd` (autoload, bool only),
   `systems/save/save_manager.gd`. Dependency direction is one-way:
@@ -175,15 +176,52 @@ they are not "fixed" in the engine again:
 - Verification helpers: `tools/verify_story_slice.gd`, `tools/shot_opening.gd`, `tools/_shot_story.gd`.
 - Design docs: `docs/plans/2026-09-07-角色NPC任務UI規劃.md`, `docs/plans/sekiro_combat_spec.md`.
 
-## Combat (2026-09-06 - 09-09)
+## Combat (2026-09-06 - 09-16)
 
+- **2026-09-16 user ruling: the combat system stays REAL-TIME (Sekiro-style) and is
+  deepened. The 2026-09-15 "moving to turn-based (FF-style)" note is VOID** — it had
+  been written into `mq02.tres`, `trail_interactions.tscn`, `PROJECT_STATE`,
+  `verify_quest_flow.gd` and `verify_story_slice.gd`; all five are updated. Nothing
+  turn-based was ever designed or built.
 - Sekiro-style posture system `characters/combat/posture.gd`; enemies
   `enemy_samurai`, `enemy_wolf`, `training_dummy` under `characters/combat/`.
-- 山犬 (twin-tail wolf): `assets/enemies/wolf/wolf_twin_tail.glb`, scaled x2.06 to a 2 m
-  body length, faces +z, 7 animations, 92 k triangles. Three-move AI plus a dodge.
+- 山犬 is now `assets/enemies/wolf/wolf_pounce.glb` (single tail, 46 bones, 6 clips).
+  Live enemy in the world as of 2026-09-16: `CombatEncounter`
+  (`components/combat/combat_encounter.gd`, runtime spawner with quest/dialogue hooks)
+  is instanced in `maps/trail/trail_interactions.tscn` as 山犬遭遇 at
+  **(-14.08, -40.03)** — the clearing's north rim. `main.gd` now calls
+  `combat.rescan_enemies()` after every `load_map`, so runtime-spawned enemies reach
+  the HUD. MQ02 is again `DEFEAT trail_wolf` → then `REACH trail_predator_sign`.
+- ⚠ **遭遇區的邊界要用「膠囊半徑」算，不是用中心點算。** 第一版 `arena`
+  盒深 26 m（南緣 z=-27.03）與序章醒來點 z=-26.82 只差 0.21 m —— 玩家膠囊
+  r=0.3 一伸就重疊，`body_entered` 在**開機那一**觸發：狼在醒來獨白之前撲上來，
+  HUD 一亮、序章 P0 四項（淡入期間不得有對話框、第一／二句台詞、woke_in_trail）
+  全部失敗。盒深改 18 m（南緣 z=-31.03，離醒來點 4.2 m）後 12/12 全過。
+  診斷手法：開機 60 幀後印 `get_nodes_in_group("enemies").size()` 與 HUD alpha。
+- **Where a fight can actually happen is a measured quantity.** Tool:
+  `tools/probe_combat_space.gd` (真碰撞體、玩家膠囊、二分搜尋最大淨空圓), output
+  `data/combat_spaces.json`. Measured after the 2026-09-16 venue pass:
+  | 場地 | 淨空半徑（改前 → 改後） |
+  |---|---|
+  | 獸道大空地中心 | **0.00 m → 12.00 m** ✓ |
+  | 獸道空地北緣 | 7.00 → **12.50 m** ✓ |
+  | 獵食者痕跡 (z-62) | 5.50 → 9.75 m（戰鬥袋中心 3.75 m，見下） |
+  | 神社前庭南帶 / 東翼 / 參道 | 3.75 / 1.75 / 4.75 m ✗ |
+  | 人里 寺子屋南外（村內最大） | 9.75 m ✗ |
+  | 人里 村門內 / 火見櫓南 / 東岸農地 / 龍石像橋西岸 | 4.75 / 1.75 / 4.75 / 0.00 m ✗ |
+  **人里目前沒有任何一處符合規格（R12）** — 這是「遇到敵人的位置很尷尬」的根因。
+  Spec: see `.hermes/plans/2026-09-16_031308-緣一戰鬥落地.md` §2.
+- 空地為什麼改得動：古樹 Hero 的碰撞（CylinderShape r1.6 h8.0）原本距空地中心
+  **1.80 m** → 淨空半徑 0.20 m；`gen_trail_v2.gd` 新增 `COMBAT_CORE_R = 15.0`
+  與 `_push_out_of_core()`，把古樹／地藏／燈籠／陶罐／苔石／倒木沿方位角推到核心外
+  （古樹不刪，只搬家）。CLEARING_R 17 → 22、角度擾動 0.25/0.15 → 0.12/0.08。
+- 獵食者戰鬥袋（`T_FIGHT = 0.7719`, `FIGHT_R = 13.0`）**未完成**：已壓平（起伏 0.00 m）
+  但袋內仍有一尊地藏（4.46 m）與一段走廊碰撞牆（12.9 m），袋中心淨空只有 3.75 m。
+  待下一輪：`_jizo_base()` 的擺放點要一起過 `_push_out_of_core()`（`_plan_jizo_sites`
+  已改，`_build_human_traces` 的實際擺放尚未），走廊牆的 `play_half` 在該段與實測不符。
 - Dissolve death (`wolf_dissolve.gdshader`) is accepted. The 牙通牙 spin VFX
   (`wolf_gatsuga.gdshader`) **failed agent self-review** — the semi-transparent cone does not
-  hide the body underneath. Not yet wired into the beast trail for MQ02.
+  hide the body underneath. Superseded by the new model's own Pounce (per project notes).
 
 ## Yoriichi
 
@@ -191,8 +229,24 @@ they are not "fixed" in the engine again:
 - Active character prefab: `角色/緣一動作/yoriichi_character_meshy_full.tscn`.
 - Body and Haori use the same 24-bone Meshy skeleton.
 - Runtime locomotion, draw/sheathe, attacks, dodge/roll, jump/fall/land, sword sockets, and the current AnimationTree controller have been implemented and validated at the character-project level.
-- Yoriichi has **not yet replaced the formal Player in the main `godot/` game project**.
-- Read `docs/yoriichi-runtime.md` only when working on Yoriichi.
+- Yoriichi **is** the formal Player in `godot/` (since 2026-09-03 — the line above was
+  stale). Read `docs/yoriichi-runtime.md` only when working on Yoriichi.
+- **2026-09-16 gap fixes (both verified)**: (1) the project had **zero invincibility
+  frames** (`grep invuln|i_frame|無敵` = 0 hits) — rolling gave no protection even though
+  the dodge-counter (伍ノ型) depends on it. `yoriichi_character.gd` gained
+  `dodge_invuln_start/end` (roll progress, half-open `[start, end)`, so `end = 0` really
+  disables it) and `in_dodge_invuln()`; gate `tools/verify_dodge_iframes.gd` (17 checks,
+  including both endpoints). (2) getting hit had no feedback beyond numbers —
+  `_apply_hit_reaction()` + `vfx/hit_feedback.gd` now do knockback (1.6 / 0.6 / 0.15 m for
+  hit / block / deflect), hitstun (0.25 s, its own timer — `input_locked` is left alone as
+  the dialogue/transition control), and camera shake via `Camera3D.h_offset/v_offset`
+  (never the transform, which the user hand-tunes). Gate: `tools/verify_hit_feedback.gd`
+  (22 checks incl. endpoints). `character_audio.gd` also gained `play_deflect` /
+  `play_block` / `play_hurt` — `take_hit()` had been calling `has_method("play_deflect")`
+  for months, so **deflects had never made a sound**.
+- Deathblow now spawns `CombatVFX.spawn_deathblow_burst()` (white-gold, 48 particles) on
+  both enemies and shakes the player camera; `enemy_samurai.take_hit()` interrupts
+  `STRIKE` as well as `WINDUP` (previously a struck samurai mid-swing simply ignored it).
 
 ## Village Rebuild — active work (2026-08-26)
 

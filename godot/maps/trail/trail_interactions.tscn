@@ -11,16 +11,23 @@
 ;   舊版座標停在已經不存在的路線上（例：醒來獨白 (-6,-17.6) 現在是林子，
 ;   山犬遭遇 (5.3,-82) 現在是屋台區）。Area3D 的 y 取「地面 y + 半高」。
 ;
-; ⚠ 2026-09-15 使用者裁定：取消緣一遇到狼的即時戰鬥事件。
-;   「山犬遭遇」CombatEncounter 節點與 enemy_wolf 依賴整個移除，
-;   改成非戰鬥的「獵食者痕跡」。戰鬥系統將改為回合制（最終幻想式遭遇），
-;   屆時在此重新加入遭遇節點，不要沿用即時戰鬥的 CombatEncounter。
+; ⚠ 2026-09-16 使用者裁定：**即時（隻狼風）戰鬥保留、繼續深化**，
+;   2026-09-15 的「改回合制」指示作廢。老爺的 CombatEncounter 由此復活，
+;   位置**重錨**：舊座標 (5.3,-82) 在 r3 重排後已是屋台區，不能沿用。
 ;
-; 事件順序（南 → 北，與新節奏一致）：
-;   人里口_未開放(z95) → 醒來獨白(空地 z-27) → 離開空地(南 z-13 / 北 z-40)
-;   → 妖怪氣息(z-50) → 獵食者痕跡(z-62) → 逃跑妖怪群(z-78) → 受傷妖怪(z-91)
+; 遭遇放在「空地北緣」(-14.08,-40.03)：那裡是探針
+;   （tools/probe_combat_space.gd）實測**淨空半徑 12.50 m** 的位置 ——
+;   戰鬥要在有 24 m 直徑的地方打。狼生在觸發點往南 8 m（空地內），
+;   玩家在空地上應戰，不是被逼到 1.3 m 寬的林道上。
+;   （獵食者痕跡 z-62 那一段實測淨空只有 5.50 m，不適合開打。）
+;
+; 事件順序（南 → 北）：
+;   人里口_未開放(z95) → 醒來(空地 z-27) → 山犬遭遇(空地北緣 z-40)
+;   → 獸骨環境觀察(z-62) → 逃跑妖怪群(z-78) → 受傷妖怪(z-91)
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
+[ext_resource type="Script" path="res://components/combat/combat_encounter.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cse1kir0enemywolf" path="res://characters/combat/enemy_wolf.tscn" id="3"]
 [ext_resource type="Script" path="res://components/story/fleeing_yokai_group.gd" id="4"]
 [ext_resource type="Script" path="res://components/story/wounded_yokai_event.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://kedama0000000001" path="res://characters/yokai/kedama.tscn" id="6"]
@@ -35,8 +42,22 @@ size = Vector3(30, 8, 10)
 [sub_resource type="BoxShape3D" id="sign"]
 size = Vector3(16, 8, 10)
 
+[sub_resource type="BoxShape3D" id="arena"]
+; ⚠ 深 18 不是 26：26 的時候南緣落在 z=-27.03，而緣一醒來點是 z=-26.82 ——
+;   玩家膠囊半徑 0.3 一伸進去就重疊，遭遇在**開機那一幀**就觸發，
+;   狼在醒來獨白之前撲上來（實測：開機 60 幀內 enemy=1、HUD alpha=1.000，
+;   序章 P0 四項因此失敗）。深 18 的南緣在 z=-31.03，離醒來點 4.2 m。
+size = Vector3(26, 8, 18)
+
+; ⚠ 2026-09-16 由 6×4×6 放大到 16×6×14。實測（tools/probe_prologue_flow.gd，走位不傳送）：
+;   這區是「三隻毛玉跑完 flee_distance 18 m 消失」才 enabled 的，18 m / 6.5 m/s ≈ 2.8 s，
+;   而玩家走路約 4 m/s —— 啟用那一刻他已經走出 6×4×6 的盒子 2.4 m（實測 z=-83.40 才啟用，
+;   盒子北緣 -81）。結果是果實獨白**用走的根本不會播**，而全 repo 只有這一段對話在回報
+;   REACH trail_fleeing_yokai → MQ03 第一格永遠不會完成。
+;   放大後 z 蓋到 -85..-71、x 蓋到 -5.4..10.6，啟用當下玩家仍在區內；
+;   WorldInteraction._set_enabled 會對「已經站在裡面」的玩家補觸發，所以照原設計立刻播。
 [sub_resource type="BoxShape3D" id="fruit"]
-size = Vector3(6, 4, 6)
+size = Vector3(16, 6, 14)
 
 [sub_resource type="BoxShape3D" id="wounded"]
 size = Vector3(14, 8, 10)
@@ -81,18 +102,27 @@ quest_target_id = "trail_leave_clearing"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="離開空地_北"]
 shape = SubResource("strip")
 
-[node name="妖怪氣息" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03, 9.5, -49.74)
+[node name="山犬遭遇" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.08, 9.2, -40.03)
 collision_layer = 0
 collision_mask = 1
-script = ExtResource("1")
-interaction_id = "trail_presence"
-dialogue_id = "yoriichi_presence"
-auto_trigger = true
-once_flag = "sensed_presence_played"
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+; ⚠ 2026-09-16：原本是 (0, 0, 8) ＝ 觸發點往南 8 m，也就是**玩家的來向** ——
+;   實測玩家一踏進南緣 (z=-31.03)，狼就在 1.25 m 處。改成側前方 12.6 m
+;   （世界 (-10.08, -43.03)，仍在探針實測的淨空圓 12.5 m 內）：
+;   玩家進場先看到牠在空地另一側，「（低吼。）」讀完之後牠才開始追。
+spawn_offsets = Array[Vector3]([Vector3(4, 0, -3)])
+ground_probe_height = 20.0
+quest_target_id = "trail_wolf"
+clear_flag = "defeated_first_yokai"
+skip_flag = "defeated_first_yokai"
+intro_dialogue = "yoriichi_wolf_encounter"
+clear_dialogue = "yoriichi_wolf_aftermath"
+clear_delay = 1.6
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="妖怪氣息"]
-shape = SubResource("strip")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="山犬遭遇"]
+shape = SubResource("arena")
 
 [node name="獵食者痕跡" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 9.9, -62.0)

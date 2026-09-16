@@ -112,6 +112,25 @@ extends CharacterBody3D
 @export_range(0.0, 1.0, 0.01) var perilous_block_damage_ratio := 0.6
 @export var perilous_block_posture := 40.0
 
+@export_group("Hit Reaction")
+## 翻滾無敵幀窗口（以翻滾進度比例表示）。0 = 一起翻就有；1 = 全程。
+## 窗口是半開區間 [start, end)：end = 0 或 start > end 都是合法的「無敵幀全關」。
+@export_range(0.0, 1.0, 0.01) var dodge_invuln_start := 0.05
+@export_range(0.0, 1.0, 0.01) var dodge_invuln_end := 0.75
+## 受擊硬直（秒）。0 = 不中斷操作，只保留位移與鏡頭回饋。
+## ⚠ 硬直走自己的計時器，不動 input_locked —— 那是對話／過場的介面，
+##   硬直期間 HUD 與對話必須照常運作。
+@export_range(0.0, 1.0, 0.01) var hit_stun_time := 0.25
+## 受擊後退距離（公尺，程式位移，非 root motion）。
+@export var hit_knockback := 1.6
+@export var block_knockback := 0.6
+@export var deflect_knockback := 0.15
+## 鏡頭震動：振幅（公尺）與時間（秒）。振幅 0 = 關掉。
+@export_range(0.0, 0.4, 0.01) var hit_shake_strength := 0.16
+@export var hit_shake_time := 0.35
+@export_range(0.0, 0.4, 0.01) var deflect_shake_strength := 0.05
+@export var deflect_shake_time := 0.18
+
 @export_group("Lock-on")
 @export var lock_on_enabled := true
 ## 鎖定搜尋半徑。
@@ -139,6 +158,64 @@ extends CharacterBody3D
 ## 捌ノ型 陽華突：自製直線突刺（tools/blender/make_form08_thrust.py）。
 @export var attack_thrust_anim := "Attack_Thrust"
 @export var attack_thrust_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form08_thrust.res")
+## 日之呼吸缺件四型：自製姿勢表動畫（tools/blender/make_form_clips.py → build_react_clips.gd）。
+@export var attack_form05_anim := "Attack_Form05_Turn"
+@export var attack_form05_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form05_turn.res")
+@export var attack_form06_anim := "Attack_Form06_Wheel"
+@export var attack_form06_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form06_wheel.res")
+@export var attack_form11_anim := "Attack_Form11_Halo"
+@export var attack_form11_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form11_halo.res")
+@export var attack_form12_anim := "Attack_Form12_Dance"
+@export var attack_form12_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form12_dance.res")
+
+@export_group("Combo Branches")
+## 滑鼠左右鍵互搭：輕連段（LMB）某一段的取消窗口內按 RMB → 接對應的型；
+## 聚力單斬（RMB）取消窗口內按 LMB → 接 heavy_branch_form；疾跑中 RMB → sprint_heavy_form。
+## 0 = 該分支關閉。分支型不扣呼吸、不看熟練度（它們是累積呼吸的手段），冷卻照算。
+@export var branch_after_stage1 := 6
+@export var branch_after_stage2 := 5
+@export var branch_after_stage3 := 12
+@export var heavy_branch_form := 11
+@export var sprint_heavy_form := 8
+## 型結束前可接下一招的窗口（進度比例）：型表 cancel.x 之後，LMB 回連段段1、RMB 接聚力單斬。
+@export var form_followup_enabled := true
+## 日之呼吸起手火光（型發動瞬間的爆閃）與火焰刀光增幅。
+@export var form_ignite_vfx := true
+@export var form_trail_lifetime := 0.34
+## 型的起手位移（impulse）持續時間（秒）：起手瞬間全速、線性衰減到 0。
+## ⚠ 之前 execute_form 只做 velocity += impulse，下一個 physics 幀就被輸入速度蓋掉，
+##   捌型 6 m/s 從來沒真的衝出去；改成有時長的 dash 才會有位移。
+@export var form_impulse_time := 0.22
+
+@export_group("Reaction Animations")
+## 反應動畫組（tools/blender/make_react_clips.py → build_react_clips.gd）。
+## 架勢／格擋受衝／彈刀走 upper 層（腿由 locomotion 提供，可邊走邊架）；
+## 受擊／軀幹爆／死亡走 full 層。首尾幀 = Idle 姿，與 loco Idle 髖高一致（0.9475）。
+@export var guard_anim := "Guard_Hold"
+@export var guard_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_guard_hold.res")
+@export var block_anim := "Block_Impact"
+@export var block_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_block_impact.res")
+@export var deflect_anim := "Deflect"
+@export var deflect_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_deflect.res")
+@export var hit_react_anim := "Hit_React"
+@export var hit_react_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_hit_react.res")
+@export var stagger_anim := "Stagger"
+@export var stagger_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_stagger.res")
+## 死亡倒地：Meshy Dead clip 衍生版（角色/緣一動作/animations/build_jump.gd，floor_clamp）。
+@export var dead_anim := "Dead"
+@export var dead_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_dead.res")
+## Guard_Hold clip 從這個比例起全是架勢幀（f7/f12），持續架勢循環由此切入。
+const GUARD_HOLD_FROM := 7.0 / 12.0
+## 架勢進場 0.5 s clip；1.6x ≈ 0.31 s 到位（比 deflect_window 稍長，刀先舉起來才算彈）。
+@export var guard_anim_speed := 1.6
+## 格擋受衝 0.33 s clip；1.2x ≈ 0.28 s，對上 block 位移 0.18 s＋回架。
+@export var block_anim_speed := 1.2
+## 彈刀 0.42 s clip；1.8x ≈ 0.23 s —— 彈刀要比格擋更快、更脆。
+@export var deflect_anim_speed := 1.8
+## 受擊 0.42 s clip；1.5x ≈ 0.28 s ≈ hit_stun_time 0.25。
+@export var hit_react_speed := 1.5
+## 死亡倒地播放倍率（clip 2.97 s）。播完停在最後一幀，不淡回 locomotion。
+@export var dead_anim_speed := 1.0
 ## 速度分級（緣一風格：出刀突然且快、收勢清楚，不是一致的機械倍率）。
 ## 輕連段第一斬：突然、快。
 @export var attack_speed_scale := 2.2
@@ -177,6 +254,7 @@ const SunBreathing = preload("res://characters/yoriichi/sun_breathing.gd")
 const CombatVFX = preload("res://characters/yoriichi/vfx/combat_vfx.gd")
 const SunDragonVFX = preload("res://characters/yoriichi/vfx/sun_dragon.gd")
 const SwordTrail3D = preload("res://characters/yoriichi/vfx/sword_trail.gd")
+const HitFeedback = preload("res://characters/yoriichi/vfx/hit_feedback.gd")
 const PostureComponent = preload("res://characters/combat/posture.gd")
 
 ## Relayed from the camera/interaction adapter child so main.gd can keep
@@ -237,8 +315,6 @@ enum ActionState { FREE, ATTACKING, DODGING }
 ## 聚力單斬／全身技傷害。
 @export var heavy_attack_damage := 35.0
 @export var heavy_posture_damage := 28.0
-## 敵人破綻（Stagger）中的傷害倍率 —— FF7R 式「壓制期灌爆發」。
-@export_range(1.0, 4.0, 0.1) var stagger_damage_multiplier := 1.8
 
 @export_group("Sun Breathing")
 ## 呼吸量。命中與彈刀累積，發型時消耗。
@@ -299,6 +375,13 @@ var _attack_after_draw := false
 var _draw_followup := "light"
 var _shift_pressed_msec := -1
 var _form13_queue: Array[int] = []
+## 左右鍵互搭的排隊：連段中按 RMB 排的型 id（0 = 無）；型中按 LMB/RMB 排的後續（"light"/"heavy"/""）。
+var _branch_queued := 0
+var _form_followup := ""
+var _trail_default_lifetime := 0.20
+var _form_dash := Vector3.ZERO
+var _form_dash_total := 0.0
+var _form_dash_left := 0.0
 var _blade_base: Marker3D = null
 var _blade_tip: Marker3D = null
 var _sword_trail: SwordTrail3D = null
@@ -309,6 +392,17 @@ var _hit_targets_this_swing: Dictionary = {}
 var _form_cooldowns: Dictionary = {}
 ## 軀幹被打爆後的硬直剩餘秒數（>0 = 不能動）。
 var _stagger_left := 0.0
+## 受擊硬直剩餘秒數（>0 = 讀不到輸入，但 input_locked 保持 false）。
+var _hitstun_left := 0.0
+## 受擊／格擋的後退速度（m/s，線性衰減）與它的總時長。
+var _knockback := Vector3.ZERO
+var _knockback_total := 0.0
+var _knockback_left := 0.0
+var _hit_feedback: Node = null
+## 格擋／彈刀 one-shot 剩餘秒數：歸零且仍按著格擋 → 切回 Guard_Hold 循環。
+var _guard_react_left := -1.0
+## 死亡倒地剩餘秒數：歸零 → 關 AnimationTree、AnimationPlayer 停在最後一幀。
+var _dead_left := -1.0
 
 ## Step-up for ledges and stone edges up to this height (metres). The east
 ## river revetment top (coping lip 0.22 m proud, walk_slice 2026-09-03) and
@@ -357,13 +451,25 @@ func _ready():
 	_add_animation_resource(attack_combo_1_anim, attack_combo_1_resource)
 	_add_animation_resource(attack_spin_jump_anim, attack_spin_jump_resource)
 	_add_animation_resource(attack_thrust_anim, attack_thrust_resource)
+	_add_animation_resource(attack_form05_anim, attack_form05_resource)
+	_add_animation_resource(attack_form06_anim, attack_form06_resource)
+	_add_animation_resource(attack_form11_anim, attack_form11_resource)
+	_add_animation_resource(attack_form12_anim, attack_form12_resource)
 	_add_animation_resource(draw_anim, draw_anim_resource)
-	for n in [walk_anim, run_fast_anim, _fl_anim, _fr_anim, "Idle_Grounded"]:
+	_add_animation_resource(guard_anim, guard_anim_resource)
+	_add_animation_resource(block_anim, block_anim_resource)
+	_add_animation_resource(deflect_anim, deflect_anim_resource)
+	_add_animation_resource(hit_react_anim, hit_react_anim_resource)
+	_add_animation_resource(stagger_anim, stagger_anim_resource)
+	_add_animation_resource(dead_anim, dead_anim_resource)
+	for n in [walk_anim, run_fast_anim, _fl_anim, _fr_anim, "Idle_Grounded", guard_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
 			attack_continuous_spin_anim, attack_judgment_anim, attack_combo_1_anim,
-			attack_spin_jump_anim, attack_thrust_anim]:
+			attack_spin_jump_anim, attack_thrust_anim,
+			attack_form05_anim, attack_form06_anim, attack_form11_anim, attack_form12_anim,
+			block_anim, deflect_anim, hit_react_anim, stagger_anim, dead_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_sword_hand = _find_first("Sword_Hand")
@@ -389,6 +495,10 @@ func _setup_combat_extensions() -> void:
 	_character_audio.name = "CharacterAudio"
 	add_child(_character_audio)
 
+	_hit_feedback = HitFeedback.new()
+	_hit_feedback.name = "HitFeedback"
+	add_child(_hit_feedback)
+
 	posture = PostureComponent.new()
 	posture.name = "Posture"
 	add_child(posture)
@@ -413,6 +523,7 @@ func _setup_combat_extensions() -> void:
 		_sword_trail.base_node = _blade_base
 		_sword_trail.tip_node = _blade_tip
 		add_child(_sword_trail)
+		_trail_default_lifetime = _sword_trail.lifetime
 
 		_hitbox = Area3D.new()
 		_hitbox.name = "BladeHitbox"
@@ -507,8 +618,11 @@ func try_deathblow() -> bool:
 		return false
 	if not t.execute_deathblow():
 		return false
-	if _character_audio != null and _character_audio.has_method("play_heavy_swing"):
-		_character_audio.play_heavy_swing()
+	if _character_audio != null:
+		_character_audio.play_deathblow()
+	# 忍殺的份量：鏡頭震動比任何一刀都大（走既有 HitFeedback，不新增系統）。
+	if _hit_feedback != null:
+		_hit_feedback.shake(hit_shake_strength * 0.9, 0.3)
 	return true
 
 
@@ -531,7 +645,50 @@ func begin_guard() -> void:
 		return
 	_guard_held = true
 	_guard_started_msec = Time.get_ticks_msec()
+	_guard_react_left = -1.0
+	_play_guard_pose()
 	guard_state_changed.emit(true)
+
+
+## 架勢：upper 層 one-shot 播 Guard_Hold（idle→架勢 0.5 s），播完停在最後一幀
+## 直到放開。格擋／彈刀 one-shot 結束後也由此切回。
+func _play_guard_pose() -> void:
+	if _tree == null or not _anim.has_animation(guard_anim):
+		return
+	# fadeout 0：OneShot 在「剩餘時間 < fadeout」就開始淡出並結束，會在切到
+	# guard_hold 之前把整層收掉（實測 block 切換後 5 幀 active=false）。
+	# 放開格擋時 end_guard 再把 fadeout 設回 0.16 才請求 FADE_OUT。
+	if _upper_node:
+		_upper_node.fadeout_time = 0.0
+	_tree.set("parameters/upper_sel/transition_request", "guard")
+	_tree.set("parameters/ts_upper/scale", guard_anim_speed)
+	_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	# 進場段播完 → 切到 guard_hold 循環（同一個 OneShot，不重新 FIRE，不跳姿勢）。
+	_guard_react_left = guard_anim_resource.length * GUARD_HOLD_FROM / maxf(guard_anim_speed, 0.01)
+
+
+## 持續架勢循環（進場或格擋／彈刀之後）。
+func _hold_guard_pose() -> void:
+	if _tree == null:
+		return
+	_tree.set("parameters/upper_sel/transition_request", "guard_hold")
+	_tree.set("parameters/ts_upper/scale", 1.0)
+	if not _tree.get("parameters/upper/active"):
+		_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+
+## 格擋受衝／彈刀：upper 層短 one-shot，結束後回 Guard_Hold（若仍按著）。
+func _play_guard_react(input_name: String, speed: float, clip_len: float) -> void:
+	if _tree == null:
+		return
+	if _upper_node:
+		_upper_node.fadeout_time = 0.0
+	_tree.set("parameters/upper_sel/transition_request", input_name)
+	_tree.set("parameters/ts_upper/scale", speed)
+	if not _tree.get("parameters/upper/active"):
+		_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	# 稍早於 clip 結束切回 guard_hold（xfade 0.035 s），避免 OneShot 先結束淡回 loco。
+	_guard_react_left = clip_len / maxf(speed, 0.01) - 0.05
 
 
 func end_guard() -> void:
@@ -539,6 +696,11 @@ func end_guard() -> void:
 		return
 	_guard_held = false
 	_guard_started_msec = -1
+	_guard_react_left = -1.0
+	if _tree != null and _tree.get("parameters/upper/active") and action_state == ActionState.FREE:
+		if _upper_node:
+			_upper_node.fadeout_time = 0.16
+		_fade_upper()
 	guard_state_changed.emit(false)
 
 
@@ -553,11 +715,29 @@ func in_deflect_window() -> bool:
 	return (Time.get_ticks_msec() - _guard_started_msec) <= int(deflect_window * 1000.0)
 
 
+## 翻滾無敵幀：隻狼式戰鬥裡翻滾是「解法」而不是「位移」。
+## 窗口以翻滾進度比例表示（0 = 起翻、1 = 收招），改 roll_animation_speed
+## 不會讓無敵幀跟著跑掉。半開區間 [start, end)，故 end = 0 就是全關。
+func in_dodge_invuln() -> bool:
+	if action_state != ActionState.DODGING or _roll_duration <= 0.0:
+		return false
+	var t := clampf(_action_elapsed / _roll_duration, 0.0, 1.0)
+	return t >= dodge_invuln_start and t < dodge_invuln_end
+
+
 ## 受擊入口。回傳 {result, damage, posture, attacker_posture}。
 ## result: "deflect" | "block" | "hit"
 func take_hit(hit_data: Dictionary) -> Dictionary:
 	if posture == null or posture.is_dead():
 		return {"result": "hit", "damage": 0.0, "posture": 0.0, "attacker_posture": 0.0}
+
+	# 翻滾無敵幀先於一切防禦判定 —— 這是隻狼式戰鬥的第三種解法。
+	if in_dodge_invuln():
+		if _character_audio != null:
+			_character_audio.play_roll()
+		var dodged := {"result": "dodge", "damage": 0.0, "posture": 0.0, "attacker_posture": 0.0}
+		player_was_hit.emit(dodged)
+		return dodged
 
 	var damage: float = float(hit_data.get("damage", 10.0))
 	var posture_damage: float = float(hit_data.get("posture_damage", damage * 0.6))
@@ -612,8 +792,76 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 		"posture": self_posture,
 		"attacker_posture": attacker_posture,
 	}
+	_apply_hit_reaction(result, hit_dir)
 	player_was_hit.emit(out)
 	return out
+
+
+## 受擊／格擋／彈刀的反應。三種結果的代價差很多，回饋也要差很多 ——
+## 玩家必須在 0.2 秒內分辨自己彈到了、擋住了、還是被打到。
+## 素材未到位（緣一沒有受擊動作），全部是程式演出：位移＋硬直＋鏡頭震動。
+func _apply_hit_reaction(result: String, hit_dir: Vector3) -> void:
+	var dir := Vector3(hit_dir.x, 0.0, hit_dir.z)
+	if dir.length_squared() < 0.0001:
+		var f := -global_transform.basis.z
+		dir = Vector3(f.x, 0.0, f.z)
+	dir = dir.normalized()
+	var distance := hit_knockback
+	var stun := hit_stun_time
+	var shake := hit_shake_strength
+	var shake_time := hit_shake_time
+	match result:
+		"deflect":
+			distance = deflect_knockback
+			stun = 0.0
+			shake = deflect_shake_strength
+			shake_time = deflect_shake_time
+		"block":
+			distance = block_knockback
+			stun = 0.0
+	# 動畫：彈刀／格擋走 upper 層（腿照常），受擊走 full 層。
+	match result:
+		"deflect":
+			if _anim.has_animation(deflect_anim):
+				_play_guard_react("deflect", deflect_anim_speed, _anim.get_animation(deflect_anim).length)
+		"block":
+			if _anim.has_animation(block_anim):
+				_play_guard_react("block", block_anim_speed, _anim.get_animation(block_anim).length)
+		"hit":
+			# apply_damage 已先跑：若這一下打爆軀幹或致死，stagger/dead 已在 full 層，不要蓋掉。
+			if _anim.has_animation(hit_react_anim) and not posture.is_broken() and not posture.is_dead():
+				_fire_full("hit", hit_react_speed)
+	# 硬直：中斷攻擊與翻滾。不碰 input_locked（那是對話／過場的介面）。
+	if stun > 0.0:
+		if action_state == ActionState.ATTACKING:
+			_finish_attack()
+		elif action_state == ActionState.DODGING:
+			_finish_roll()
+		_hitstun_left = maxf(_hitstun_left, stun)
+	# 位移：線性衰減下總位移 = ½·v·t，故 v = 2·d / t。
+	# 格擋／彈刀沒有硬直，但一樣要有位移，否則防禦看起來像「穿過去」。
+	if distance > 0.0:
+		var dur := maxf(stun, 0.18)
+		_knockback = dir * (2.0 * distance / dur)
+		_knockback_total = dur
+		_knockback_left = dur
+	if _hit_feedback != null:
+		_hit_feedback.shake(shake, shake_time)
+	if _character_audio != null and result == "hit":
+		_character_audio.play_hurt()
+
+
+## 受擊位移。回傳本幀是否有受擊位移（呼叫端據此決定誰覆寫速度）。
+func _apply_knockback(delta: float) -> bool:
+	if _knockback_left <= 0.0:
+		return false
+	_knockback_left = maxf(_knockback_left - delta, 0.0)
+	var k: float = _knockback_left / maxf(_knockback_total, 0.001)
+	velocity.x = _knockback.x * k
+	velocity.z = _knockback.z * k
+	if _knockback_left <= 0.0:
+		_knockback = Vector3.ZERO
+	return true
 
 
 func _on_hit_target(node: Node) -> void:
@@ -636,12 +884,6 @@ func _on_hit_target(node: Node) -> void:
 		var mult: float = float(SunBreathing.FORMS[active_form].damage)
 		damage *= mult
 		pdmg *= mult
-	# FF7R 式壓制期：敵人軀幹爆了就是灌爆發傷害的窗口。
-	var tgt_posture: Variant = node.get("posture")
-	if tgt_posture == null and node.get_parent() != null:
-		tgt_posture = node.get_parent().get("posture")
-	if tgt_posture != null and tgt_posture.has_method("is_broken") and tgt_posture.is_broken():
-		damage *= stagger_damage_multiplier
 
 	var hit_pos: Vector3 = _blade_tip.global_position if _blade_tip != null else global_position + Vector3(0, 1, 0)
 	var fwd := _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
@@ -744,6 +986,11 @@ func _build_tree() -> void:
 		"atk1": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[0].x, combo_len * COMBO_SECTION_RANGES[0].y),
 		"atk2": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[1].x, combo_len * COMBO_SECTION_RANGES[1].y),
 		"atk3": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[2].x, combo_len * COMBO_SECTION_RANGES[2].y),
+		"guard": _anim_node(guard_anim),
+		# 持續架勢：Guard_Hold 末段（f7~f12 全是架勢幀）循環 —— OneShot 有循環子節點就不會自己結束。
+		"guard_hold": _clip_node(guard_anim, guard_anim_resource.length * GUARD_HOLD_FROM, guard_anim_resource.length, true),
+		"block": _anim_node(block_anim),
+		"deflect": _anim_node(deflect_anim),
 	}
 	_setup_transition(root, upper_sel, "upper_sel", upper_inputs)
 	var ts_upper := AnimationNodeTimeScale.new()
@@ -770,6 +1017,13 @@ func _build_tree() -> void:
 		"combo1": _anim_node(attack_combo_1_anim),
 		"spinjump": _anim_node(attack_spin_jump_anim),
 		"thrust": _anim_node(attack_thrust_anim),
+		"form05": _anim_node(attack_form05_anim),
+		"form06": _anim_node(attack_form06_anim),
+		"form11": _anim_node(attack_form11_anim),
+		"form12": _anim_node(attack_form12_anim),
+		"hit": _anim_node(hit_react_anim),
+		"stagger": _anim_node(stagger_anim),
+		"dead": _anim_node(dead_anim),
 	}
 	_setup_transition(root, full_sel, "full_sel", full_inputs)
 	var ts_full := AnimationNodeTimeScale.new()
@@ -839,6 +1093,16 @@ func _fire_full(input_name: String, time_scale: float) -> void:
 			"thrust":
 				# 突刺的收勢：刀尖停住 → 慢慢收回架勢，不能急切
 				_full_node.fadeout_time = 0.28
+			"form05", "form06", "form11":
+				_full_node.fadeout_time = 0.22
+			"form12":
+				_full_node.fadeout_time = 0.26
+			"hit":
+				_full_node.fadeout_time = 0.14
+			"stagger":
+				_full_node.fadeout_time = 0.30
+			"dead":
+				_full_node.fadeout_time = 0.0
 			_:
 				_full_node.fadeout_time = 0.12
 	_tree.set("parameters/full_sel/transition_request", input_name)
@@ -858,9 +1122,55 @@ func _on_self_posture_broken() -> void:
 	end_guard()
 	if action_state == ActionState.ATTACKING:
 		_finish_attack()
+	elif action_state == ActionState.DODGING:
+		_finish_roll()
 	velocity.x = 0.0
 	velocity.z = 0.0
+	# 軀幹爆動畫 2.0 s 對上 break_time；break_time 被改時等比縮放，破綻結束正好站回。
+	if _tree != null and _anim.has_animation(stagger_anim):
+		var clip_len := _anim.get_animation(stagger_anim).length
+		_fire_full("stagger", clip_len / maxf(posture.break_time, 0.05))
 	player_posture_broken.emit()
+
+
+## 重生：還原死亡定格（Tree 重開、播放倍率還原、回 Idle）、血量全滿、解除鎖輸入。
+## 位置由呼叫端（main.gd）決定。
+func revive() -> void:
+	_dead_left = -1.0
+	_hitstun_left = 0.0
+	_stagger_left = 0.0
+	_knockback = Vector3.ZERO
+	_knockback_left = 0.0
+	velocity = Vector3.ZERO
+	end_guard()
+	if action_state == ActionState.ATTACKING:
+		_finish_attack()
+	elif action_state == ActionState.DODGING:
+		_finish_roll()
+	if _anim != null:
+		_anim.speed_scale = 1.0
+		_anim.stop()
+	if _tree != null:
+		_tree.active = true
+		_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+		_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+		_playback().start("Idle")
+	if posture != null:
+		posture.heal_full()
+	set_lock_target(null)
+	input_locked = false
+
+
+## 倒地定格：關掉 AnimationTree，AnimationPlayer 直接 seek 到 Dead 最後一幀。
+func _freeze_dead_pose() -> void:
+	if _tree != null:
+		_tree.active = false
+	if _anim != null and _anim.has_animation(dead_anim):
+		_anim.play(dead_anim)
+		_anim.seek(_anim.get_animation(dead_anim).length, true)
+		# 不用 pause()（會清掉 current_animation，存讀檔／除錯看不出停在哪）：
+		# 以 speed_scale 0 定格在末幀；復活流程要記得還原 speed_scale 與 Tree.active。
+		_anim.speed_scale = 0.0
 
 
 func _on_self_posture_recovered() -> void:
@@ -871,7 +1181,20 @@ func _on_self_posture_recovered() -> void:
 func _on_self_died() -> void:
 	_stagger_left = 0.0
 	end_guard()
+	if action_state == ActionState.ATTACKING:
+		_finish_attack()
+	elif action_state == ActionState.DODGING:
+		_finish_roll()
 	input_locked = true
+	velocity.x = 0.0
+	velocity.z = 0.0
+	if _character_audio != null:
+		_character_audio.play_death_collapse()
+	# 死亡倒地：full 層播 Dead，播完由 _physics_process 關掉 AnimationTree，
+	# 讓 AnimationPlayer 停在倒地最後一幀（OneShot 結束會淡回 locomotion，不能靠它）。
+	if _tree != null and _anim.has_animation(dead_anim):
+		_fire_full("dead", dead_anim_speed)
+		_dead_left = _anim.get_animation(dead_anim).length / maxf(dead_anim_speed, 0.01)
 	player_died.emit()
 
 
@@ -879,6 +1202,27 @@ func _on_self_died() -> void:
 # Physics
 # ---------------------------------------------------------------------------
 func _physics_process(delta):
+	# 死亡：倒地動畫播到底就凍住，之後什麼都不做。
+	if _dead_left >= 0.0:
+		_dead_left -= delta
+		if _dead_left <= 0.0:
+			_dead_left = -1.0
+			_freeze_dead_pose()
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
+	if posture != null and posture.is_dead():
+		return
+	# 格擋／彈刀 one-shot 播完 → 仍按著就回架勢。
+	if _guard_react_left >= 0.0:
+		_guard_react_left -= delta
+		if _guard_react_left <= 0.0:
+			_guard_react_left = -1.0
+			if _guard_held:
+				_hold_guard_pose()
 	# 型冷卻：與 ActionState 無關，永遠在跑。
 	if not _form_cooldowns.is_empty():
 		for id in _form_cooldowns.keys():
@@ -897,6 +1241,21 @@ func _physics_process(delta):
 		else:
 			velocity.y = 0.0
 		move_and_slide()
+		return
+	# 受擊硬直：只跑重力與受擊位移，不讀輸入、不動作 —— 但 HUD 與對話照常。
+	if _hitstun_left > 0.0:
+		_hitstun_left = maxf(_hitstun_left - delta, 0.0)
+		if not _apply_knockback(delta):
+			velocity.x = 0.0
+			velocity.z = 0.0
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		else:
+			velocity.y = 0.0
+		move_and_slide()
+		_update_sword(delta)
+		if _tree:
+			_update_locomotion(delta, Vector3.ZERO, is_on_floor(), false, false)
 		return
 	_update_lock_on(delta)
 	var input_dir := _read_input_dir()
@@ -917,11 +1276,21 @@ func _physics_process(delta):
 		_apply_air_control(input_dir, cur_speed, delta)
 	elif action_state == ActionState.ATTACKING:
 		var f := attack_move_factor_heavy if _attack_layer == "full" else 1.0
-		velocity.x = input_dir.x * cur_speed * f
-		velocity.z = input_dir.z * cur_speed * f
+		if _form_dash_left > 0.0 and _form_dash_total > 0.0:
+			# 型的起手衝刺：dash 佔比線性衰減，輸入慢慢接手。
+			_form_dash_left = maxf(_form_dash_left - delta, 0.0)
+			var k := _form_dash_left / _form_dash_total
+			velocity.x = _form_dash.x * k + input_dir.x * cur_speed * f * (1.0 - k)
+			velocity.z = _form_dash.z * k + input_dir.z * cur_speed * f * (1.0 - k)
+		else:
+			velocity.x = input_dir.x * cur_speed * f
+			velocity.z = input_dir.z * cur_speed * f
 	else:
 		velocity.x = input_dir.x * cur_speed
 		velocity.z = input_dir.z * cur_speed
+
+	# 受擊位移優先於一切水平控制：被打退時不能靠輸入走回來。
+	_apply_knockback(delta)
 
 	if not grounded:
 		velocity.y -= gravity * delta
@@ -1332,6 +1701,21 @@ func request_primary_attack() -> void:
 		return
 	if sword_state != SwordState.DRAWN:
 		return
+	# 型進行中按 LMB：取消窗口內直接回連段段1，窗口前先排隊。
+	if action_state == ActionState.ATTACKING and active_form != 0 and form_followup_enabled:
+		if _in_form_cancel_window():
+			_finish_attack()
+			_start_combo()
+		else:
+			_form_followup = "light"
+		return
+	# 聚力單斬中按 LMB：接 heavy_branch_form（拾壹型 幻日虹）。
+	if action_state == ActionState.ATTACKING and _active_attack_name == "Heavy_Cut" and heavy_branch_form != 0:
+		if _attack_progress() >= combo_cancel_start:
+			_branch_to_form(heavy_branch_form)
+		else:
+			_branch_queued = heavy_branch_form
+		return
 	if action_state == ActionState.ATTACKING and combo_stage > 0:
 		_combo_queued_inputs = 1
 		combo_input_buffered = true
@@ -1434,6 +1818,10 @@ func _special_speed_for(animation_name: String) -> float:
 func _full_input_for(animation_name: String) -> String:
 	match animation_name:
 		attack_thrust_anim: return "thrust"
+		attack_form05_anim: return "form05"
+		attack_form06_anim: return "form06"
+		attack_form11_anim: return "form11"
+		attack_form12_anim: return "form12"
 		attack_spin_anim: return "spin"
 		attack_continuous_spin_anim: return "continuous_spin"
 		attack_judgment_anim: return "judgment"
@@ -1452,6 +1840,28 @@ func _update_attack(delta: float, _input_dir: Vector3) -> void:
 			_combo_queued_inputs = 0
 			combo_input_buffered = false
 	var progress := clampf(_action_elapsed / _action_real, 0.0, 1.0) if _action_real > 0.0 else 1.0
+	# 型：二段技的第二刀重新判定命中；取消窗口內執行排隊的後續。
+	if active_form != 0 and SunBreathing.FORMS.has(active_form):
+		var def: Dictionary = SunBreathing.FORMS[active_form]
+		var rehit: float = float(def.get("rehit", 0.0))
+		if rehit > 0.0 and progress >= rehit and _hit_targets_this_swing.get("_rehit_done", false) == false:
+			_hit_targets_this_swing.clear()
+			_hit_targets_this_swing["_rehit_done"] = true
+		if _form_followup != "" and progress >= float(def.cancel.x):
+			var act := _form_followup
+			_form_followup = ""
+			_finish_attack()
+			if act == "light":
+				_start_combo()
+			else:
+				request_heavy_cut()
+			return
+	# 連段／聚力單斬中排隊的型：進取消窗口就切。
+	if _branch_queued != 0 and active_form == 0 and progress >= combo_cancel_start:
+		var id := _branch_queued
+		if _branch_to_form(id):
+			return
+		_branch_queued = 0
 	if _active_attack_name == attack_continuous_spin_anim and _spin_buffered_cancel != "":
 		if progress >= SPIN_CANCEL_WINDOW_START:
 			var act := _spin_buffered_cancel
@@ -1501,6 +1911,30 @@ func request_heavy_cut() -> void:
 		return
 	if sword_state != SwordState.DRAWN:
 		return
+	# 輕連段中按 RMB：依段數接型（壹段→陸 飛輪陽炎、貳段→伍 斜陽轉身、參段→拾貳 炎舞）。
+	if action_state == ActionState.ATTACKING and combo_stage > 0 and active_form == 0:
+		var id := _branch_form_for_stage(combo_stage)
+		if id != 0:
+			if _attack_progress() >= combo_cancel_start:
+				_branch_to_form(id)
+			else:
+				_branch_queued = id
+				_combo_queued_inputs = 0   # RMB 蓋掉先前排隊的 LMB
+				combo_input_buffered = false
+			return
+	# 型進行中按 RMB：取消窗口內接聚力單斬。
+	if action_state == ActionState.ATTACKING and active_form != 0 and form_followup_enabled:
+		if _in_form_cancel_window():
+			_finish_attack()
+			request_heavy_cut()
+		else:
+			_form_followup = "heavy"
+		return
+	# 疾跑中 RMB：捌型 陽華突（衝刺突刺）。
+	if action_state == ActionState.FREE and sprint_heavy_form != 0 and is_on_floor() \
+			and Input.is_action_pressed("sprint") and Vector2(velocity.x, velocity.z).length() > speed + 0.5:
+		if _branch_to_form(sprint_heavy_form):
+			return
 	if action_state != ActionState.FREE:
 		if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
 			cancel_continuous_spin()
@@ -1525,6 +1959,36 @@ func request_heavy_cut() -> void:
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
 		_hitbox.monitoring = true
+
+func _attack_progress() -> float:
+	return clampf(_action_elapsed / _action_real, 0.0, 1.0) if _action_real > 0.0 else 1.0
+
+func _branch_form_for_stage(stage: int) -> int:
+	match stage:
+		1: return branch_after_stage1
+		2: return branch_after_stage2
+		3: return branch_after_stage3
+	return 0
+
+## 型的取消窗口：型表 cancel.x 之後。
+func _in_form_cancel_window() -> bool:
+	if active_form == 0 or not SunBreathing.FORMS.has(active_form):
+		return false
+	var c: Vector2 = SunBreathing.FORMS[active_form].cancel
+	return _attack_progress() >= c.x
+
+## 從目前招式切到某一型（左右鍵互搭）。分支不扣呼吸、不看熟練度；冷卻與著地限制照算。
+func _branch_to_form(id: int) -> bool:
+	_branch_queued = 0
+	if not SunBreathing.FORMS.has(id) or String(SunBreathing.FORMS[id].anim) == "":
+		return false
+	if form_cooldown_left(id) > 0.0:
+		return false
+	if not bool(SunBreathing.FORMS[id].allowed_airborne) and not is_on_floor():
+		return false
+	if action_state == ActionState.ATTACKING:
+		_finish_attack()
+	return execute_form(id, true)
 
 ## 特殊技：連續旋轉砍擊（Continuous Spinning Slash）——
 ## Meshy AI 衍生全身體技，高速迴旋連擊並展開刀光。
@@ -1585,12 +2049,16 @@ func _finish_attack() -> void:
 	active_form = 0
 	_active_attack_name = ""
 	_spin_buffered_cancel = ""
+	_branch_queued = 0
+	_form_followup = ""
+	_form_dash_left = 0.0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
 	_action_elapsed = 0.0
 	_action_real = 0.0
 	if _sword_trail != null:
 		_sword_trail.stop_trail()
+		_sword_trail.lifetime = _trail_default_lifetime
 	if _hitbox != null:
 		_hitbox.monitoring = false
 	_hit_targets_this_swing.clear()
@@ -1742,8 +2210,14 @@ func can_use_form(id: int) -> bool:
 
 ## 執行單一型。缺動畫的型誠實回傳 false，不播假內容。
 ## 成功發動才扣呼吸與起算冷卻 —— 被擋下的輸入不得付出代價。
-func execute_form(id: int) -> bool:
-	if sword_state != SwordState.DRAWN or not can_use_form(id):
+## free = 左右鍵互搭的連段分支：不扣呼吸、不看熟練度（呼吸夠不夠也不看），冷卻照算。
+func execute_form(id: int, free := false) -> bool:
+	if sword_state != SwordState.DRAWN:
+		return false
+	if not free and not can_use_form(id):
+		return false
+	if free and (not SunBreathing.FORMS.has(id) or String(SunBreathing.FORMS[id].anim) == "" \
+			or form_cooldown_left(id) > 0.0):
 		return false
 	if action_state != ActionState.FREE:
 		if _active_attack_name == attack_continuous_spin_anim and can_cancel_continuous_spin():
@@ -1758,10 +2232,13 @@ func execute_form(id: int) -> bool:
 	combo_stage = 0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
-	if def.impulse > 0.0 and _visual:
+	if not is_zero_approx(float(def.impulse)) and _visual:
 		var yaw: float = _visual.global_rotation.y
-		velocity.x += sin(yaw) * def.impulse
-		velocity.z += cos(yaw) * def.impulse
+		_form_dash = Vector3(sin(yaw), 0.0, cos(yaw)) * float(def.impulse)
+		_form_dash_total = maxf(form_impulse_time, 0.001)
+		_form_dash_left = _form_dash_total
+		velocity.x = _form_dash.x
+		velocity.z = _form_dash.z
 	if def.layer == "upper":
 		_attack_layer = "upper"
 		var clip_len: float = _full_anim_length(def.anim) * (def.section.y - def.section.x)
@@ -1781,11 +2258,21 @@ func execute_form(id: int) -> bool:
 		_action_elapsed = 0.0
 		_fire_full(key, def.speed)
 	# 真的發動了才付代價。
-	add_breath(-float(def.breath_cost))
+	if not free:
+		add_breath(-float(def.breath_cost))
 	if float(def.cooldown) > 0.0:
 		_form_cooldowns[id] = float(def.cooldown)
 	form_executed.emit(id)
+	# 日之呼吸演出：起手火光＋型專用音效＋加長火焰刀光。
+	if String(def.get("vfx", "")) == "ignite" and form_ignite_vfx:
+		var origin: Vector3 = _blade_base.global_position if _blade_base != null else global_position + Vector3(0, 1.0, 0)
+		var fwd: Vector3 = _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
+		CombatVFX.spawn_form_ignite(self, origin, fwd)
+	if _character_audio != null:
+		_character_audio.play_form(id)
 	if _sword_trail != null:
+		if String(def.get("vfx", "")) == "ignite":
+			_sword_trail.lifetime = form_trail_lifetime
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:

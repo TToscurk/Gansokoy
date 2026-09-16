@@ -1,9 +1,39 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
 
 [sub_resource type="BoxShape3D" id="gate"]
 size = Vector3(44, 8, 6)
+
+; MQ08 村門守衛。座標為 2026-09-16 tools/probe_village_arc.gd 實測：
+; (240, 92) 地面 y=0.168，距里口抵達區 2.5m（不重疊），大鳥居 10.8m、路燈 5.9m。
+[sub_resource type="BoxShape3D" id="guard"]
+size = Vector3(7, 6, 7)
+
+; MQ08 寺子屋抵達。西南向緩衝，涵蓋由村門過來的兩個方向
+; （tools/probe_village_route.gd 實測：村門 → 寺子屋南側 107m、西側 93m，皆可走）
+[sub_resource type="BoxShape3D" id="school_approach"]
+size = Vector3(30, 8, 20)
+
+; MQ09／MQ12 慧音。位在寺子屋南牆外 1.7m（建築世界外框 z 最大 42.31）
+[sub_resource type="BoxShape3D" id="school_keine"]
+size = Vector3(8, 6, 6)
+
+; MQ10 鈴奈庵小鈴。店面朝東北（2026-09-16 tools/probe_village_facades.gd 比對
+; 東北與西南兩張斜視：西南面是素牆，店面招牌／暖簾只出現在東北面）。
+; 站位 (236,-68) 離店面東緣 1.3m，可走（村門 → 165m）。
+[sub_resource type="BoxShape3D" id="suzunaan"]
+size = Vector3(8, 6, 8)
+
+; MQ10／MQ11 稗田邸阿求。邸前門樓外側 —— 立面探針確認是正面（門樓＋圍牆＋主屋）。
+; 站位 (233,-122) 在邸外框南緣 (-126.92) 外 4.9m，可走（村門 → 251m）。
+[sub_resource type="BoxShape3D" id="hieda"]
+size = Vector3(10, 6, 8)
+
+; MQ12 鯢吞亭美宵。亭正面（燈籠與魚形飾）朝南 ——
+; 站位 (213,-82) 在外框南緣 (-86.83) 外 0.8m，可走（198m）。
+[sub_resource type="BoxShape3D" id="inn"]
+size = Vector3(8, 6, 8)
 
 [node name="人里互動點" type="Node3D"]
 
@@ -19,3 +49,116 @@ quest_target_id = "human_village_gate"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="里口抵達"]
 shape = SubResource("gate")
+
+[node name="村門守衛" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240, 2.2, 92)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_gate_guard"
+interaction_label = "交談"
+place_name = "人間之里・村門"
+dialogue_id = "village_gatekeeper"
+quest_event_type = "TALK"
+quest_target_id = "gatekeeper_gate"
+require_quest = "MQ08"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="村門守衛"]
+shape = SubResource("guard")
+
+[node name="寺子屋抵達" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 305, 2, 42)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_temple_school_arrive"
+interaction_label = ""
+quest_event_type = "REACH"
+quest_target_id = "village_temple_school"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="寺子屋抵達"]
+shape = SubResource("school_approach")
+
+[node name="寺子屋慧音" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 2, 47)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_temple_school_keine"
+interaction_label = "交談"
+place_name = "人間之里・寺子屋"
+dialogue_id = "keine_temple_school"
+quest_event_type = "TALK"
+quest_target_id = "keine_first"
+require_quest = "MQ09"
+; MQ09 用的互動在 MQ10 完成、MQ12 開始時退場，讓同座標的裁定互動接手。
+skip_flag = "did_keine_errands"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="寺子屋慧音"]
+shape = SubResource("school_keine")
+
+[node name="寺子屋慧音裁定" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315, 2, 47)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_temple_school_verdict"
+interaction_label = "交談"
+place_name = "人間之里・寺子屋"
+dialogue_id = "keine_verdict"
+quest_event_type = "TALK"
+quest_target_id = "keine_verdict"
+require_quest = "MQ12"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="寺子屋慧音裁定"]
+shape = SubResource("school_keine")
+
+[node name="鈴奈庵小鈴" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 236, 2, -68)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_suzunaan_kosuzu"
+interaction_label = "交談"
+place_name = "人間之里・鈴奈庵"
+dialogue_id = "kosuzu_suzunaan"
+quest_event_type = "TALK"
+quest_target_id = "kosuzu_lending"
+require_quest = "MQ10"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="鈴奈庵小鈴"]
+shape = SubResource("suzunaan")
+
+[node name="稗田邸阿求" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 233, 2, -122)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_hieda_akyuu"
+interaction_label = "交談"
+place_name = "人間之里・稗田邸"
+dialogue_id = "akyuu_hieda"
+quest_event_type = "TALK"
+quest_target_id = "akyuu_record"
+require_quest = "MQ10"
+; MQ10 完成後退場；阿求的查冊結果已合併在同一場對話，不再生第二個互動區。
+skip_flag = "did_keine_errands"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="稗田邸阿求"]
+shape = SubResource("hieda")
+
+[node name="鯢吞亭美宵" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 213, 2, -82)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+interaction_id = "village_inn_keeper"
+interaction_label = "投宿"
+place_name = "人間之里・鯢吞亭"
+dialogue_id = "miyoi_kujiratei"
+quest_event_type = "INTERACT"
+quest_target_id = "inn_room"
+require_quest = "MQ12"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="鯢吞亭美宵"]
+shape = SubResource("inn")

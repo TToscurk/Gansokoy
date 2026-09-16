@@ -1,6 +1,6 @@
 extends Node3D
 class_name FleeingYokaiGroup
-## MQ03 不要追 —— 2～3 隻毛玉躲在路邊，玩家一靠近就逃進樹叢。
+## MQ03 害怕我的東西 —— 2～3 隻毛玉躲在路邊，玩家一靠近就逃進樹叢。
 ## 全部逃光後在原地留下一顆果實（不是武器），觸發獨白。
 ##
 ## 不認識任務；果實本身是 WorldInteraction，由它回報。

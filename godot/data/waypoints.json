@@ -1,15 +1,21 @@
 {
-  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。座標於 2026-09-15 r3 路線重排後，依 tools/probe_trail_anchors.gd 實測值更新。",
+  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。座標於 2026-09-15 r3 路線重排後，依 tools/probe_trail_anchors.gd 實測值更新。trail_wolf 於 2026-09-16 追加，座標取 trail_interactions.tscn「山犬遭遇」Area3D 原點。",
   "targets": {
     "trail_leave_clearing":    { "map": "trail",  "x": -14.1, "z": -40.0, "label": "沿道路前進" },
-    "trail_presence":          { "map": "trail",  "x": -6.0,  "z": -49.7, "label": "獸道深處" },
-    "trail_predator_sign":     { "map": "trail",  "x": 0.9,   "z": -62.0, "label": "路上的痕跡" },
+    "trail_wolf":              { "map": "trail",  "x": -14.08, "z": -40.03, "label": "野獸" },
     "trail_fleeing_yokai":     { "map": "trail",  "x": 2.6,   "z": -78.0, "label": "樹叢的動靜" },
     "trail_wounded_yokai":     { "map": "trail",  "x": -1.5,  "z": -90.7, "label": "微弱的聲音" },
     "hakurei_shrine_approach": { "map": "shrine", "x": 0.0,   "z": 40.0,  "label": "山上的建築" },
     "reimu_hakurei_shrine":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
     "reimu_gensokyo_intro":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },
-    "human_village_gate":      { "map": "slice",  "x": 234.0, "z": 101.0, "label": "人間之里" }
+    "human_village_gate":      { "map": "slice",  "x": 234.0, "z": 101.0, "label": "人間之里" },
+    "gatekeeper_gate":         { "map": "slice",  "x": 240.0, "z": 92.0,  "label": "村門的守衛" },
+    "village_temple_school":   { "map": "slice",  "x": 305.0, "z": 42.0,  "label": "寺子屋" },
+    "keine_first":             { "map": "slice",  "x": 315.0, "z": 47.0,  "label": "寺子屋的慧音" },
+    "kosuzu_lending":          { "map": "slice",  "x": 236.0, "z": -68.0, "label": "鈴奈庵" },
+    "akyuu_record":            { "map": "slice",  "x": 233.0, "z": -122.0, "label": "稗田邸" },
+    "keine_verdict":           { "map": "slice",  "x": 315.0, "z": 47.0,  "label": "寺子屋" },
+    "inn_room":                { "map": "slice",  "x": 213.0, "z": -82.0, "label": "鯢吞亭" }
   },
   "maps": {
     "trail":  { "half_x": 120, "half_z": 120, "name": "獸道",

@@ -1,0 +1,25 @@
+{
+  "_doc": "MQ12 落腳鯢吞亭。修正原本美宵自我介紹節點 i2b 永遠走不到的錯誤；語氣表面輕鬆，實際很會觀察人。",
+  "start": [
+    { "if": "has_village_lodging", "node": "repeat_1" },
+    { "node": "i1" }
+  ],
+  "nodes": {
+    "i1": { "speaker": "miyoi", "portrait": "normal", "text": "「你就是慧音老師說的——安靜、很高、很麻煩的那位？」", "next": "i2" },
+    "i2": { "speaker": "yoriichi", "portrait": "normal", "text": "「繼國緣一。」", "next": "i2b" },
+    "i2b": { "speaker": "miyoi", "portrait": "smile", "text": "「奧野田美宵。鯢吞亭的看板娘，偶爾也收留迷路的人。」", "next": "i3" },
+    "i3": { "speaker": "miyoi", "portrait": "serious", "text": "「先說好。刀放樓下。」", "next": "i4",
+            "if": "keine_watches_yoriichi" },
+    "i4": { "speaker": "miyoi", "portrait": "normal", "text": "「放心，架子比客人可靠。從沒丟過東西。」", "next": "i5" },
+    "i5": { "speaker": "yoriichi", "portrait": "normal", "text": "「……有人丟過嗎？」", "next": "i6" },
+    "i6": { "speaker": "miyoi", "portrait": "smile", "text": "「記性算不算？」", "next": "i7" },
+    "i7": { "speaker": "miyoi", "portrait": "normal", "text": "「二樓最裡面。鑰匙掛在門上。」", "next": "i8",
+            "quest_event": { "type": "INTERACT", "target": "inn_room" } },
+    "i8": { "speaker": "miyoi", "portrait": "smile", "text": "「明早有粥。晚來就只剩我說『早就叫你起床了』。」", "next": "i9" },
+    "i9": { "speaker": "yoriichi", "portrait": "normal", "text": "「我會準時。」", "next": "i10" },
+    "i10": { "speaker": "miyoi", "portrait": "surprised", "text": "「……慧音老師沒說你把玩笑也當規矩。」", "next": null },
+
+    "repeat_1": { "speaker": "miyoi", "portrait": "smile", "text": "「回來啦。房間記得你，比你自己記得的還多。」", "next": null,
+                  "quest_event": { "type": "INTERACT", "target": "inn_room" } }
+  }
+}

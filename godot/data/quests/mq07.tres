@@ -7,14 +7,14 @@
 script = ExtResource("obj")
 type = 0
 target_id = "human_village_gate"
-description = "前往山下的人類聚落"
+description = "前往山下的人間之里"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ07"
 title = "人間之里"
-description = "前往山下的人類聚落。"
+description = "前往山下的人間之里。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
-next_quest_id = ""
+next_quest_id = "MQ08"
 complete_flags = PackedStringArray("visited_human_village")

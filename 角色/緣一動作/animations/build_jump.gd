@@ -39,7 +39,20 @@ const JOBS := [
 	# Idle 落地版：實測 Idle 腳趾懸空 0.123 m（vs Walk 接觸幀），Hips Z 下移補正。
 	# 水平不凍結（Idle 原本就零漂移，凍結會殺掉呼吸晃動）。
 	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Idle_11_withSkin.fbx", "out": "res://animations/yoriichi_idle_grounded.res", "clamp_z": false, "keep_xy": true, "z_shift": -0.123},
+	# 死亡倒地：全身技規則（Hips 水平凍在 rest），垂直保留（倒下要真的往下）。
+	# floor_clamp：源 clip 躺平段腳骨沉到 -0.098（Meshy 慣例），只准往上抬、不准往下壓，
+	# 逐 key 把最低腳骨抬回 0.030（5 key 取最大值平滑，避免逐幀抖動）。
+	# z_shift 依 Walk 邊界腳底 0.0386 對齊首幀站姿（實測首幀腳底 0.0821 → -0.0435）。
+	{"src": "res://Meshy_AI_Yoriichi_atlas_mcp_ra_biped_Animation_Dead_withSkin.fbx", "out": "res://animations/yoriichi_dead.res", "clamp_z": false, "xy": "freeze_rest", "z_shift": -0.0435,
+		"floor_clamp": 0.030},
 ]
+
+# `-- only=<substring>`：只重建 out 路徑含該字串的 job（避免無關 .res 被重新產生）。
+func _only_filter() -> String:
+	for a in OS.get_cmdline_user_args():
+		if String(a).begins_with("only="):
+			return String(a).trim_prefix("only=")
+	return ""
 
 # Jump 手臂抑制：雙手大幅上舉改為貼近跑姿。arm bones 的每個 rotation key
 # 向 Running 首幀參考姿勢 slerp（保留 35% 原始擺動）。
@@ -180,9 +193,31 @@ func _ground_window_pass(a: Animation, hips_track: int, gw: Dictionary) -> void:
 		a.track_set_key_value(hips_track, k, v)
 	print("  ground_window: max_shift=%.4f (target foot=%.3f)" % [worst, target])
 
+# --- floor_clamp：只抬不壓的地面夾制（目前用於 Dead 的躺平段）----------------
+func _floor_clamp_pass(a: Animation, hips_track: int, target: float) -> void:
+	_setup_measurer()
+	var n := a.track_get_key_count(hips_track)
+	var lifts: Array[float] = []
+	for k in n:
+		var foot := _measure_foot_at(a, a.track_get_key_time(hips_track, k))
+		lifts.append(maxf(target - foot, 0.0))
+	var worst := 0.0
+	for k in n:
+		var l := 0.0
+		for j in range(maxi(k - 2, 0), mini(k + 3, n)):
+			l = maxf(l, lifts[j])
+		worst = maxf(worst, l)
+		var v: Vector3 = a.track_get_key_value(hips_track, k)
+		v.z += l
+		a.track_set_key_value(hips_track, k, v)
+	print("  floor_clamp: max_lift=%.4f (target foot=%.3f)" % [worst, target])
+
 func _init():
 	var rest_xy := _rest_hips_xy()
+	var only := _only_filter()
 	for job in JOBS:
+		if only != "" and not String(job.out).contains(only):
+			continue
 		var a := _anim_from_fbx(job.src)
 		if a == null:
 			continue
@@ -227,6 +262,17 @@ func _init():
 			_damp_arms(a)
 		if job.has("ground_window"):
 			_ground_window_pass(a, t, job["ground_window"])
+		if job.has("floor_clamp"):
+			_floor_clamp_pass(a, t, float(job["floor_clamp"]))
+		# 每支都印首／末幀腳底高度（Walk 邊界基準 0.0386），z_shift 憑這個數定。
+		_setup_measurer()
+		var fmin := 1e9; var fmin_t := 0.0
+		for k in a.track_get_key_count(t):
+			var kt := a.track_get_key_time(t, k)
+			var fh := _measure_foot_at(a, kt)
+			if fh < fmin:
+				fmin = fh; fmin_t = kt
+		print("  foot: first=%.4f last=%.4f min=%.4f@%.2fs (target 0.0386)" % [_measure_foot_at(a, 0.0), _measure_foot_at(a, a.length), fmin, fmin_t])
 		var err := ResourceSaver.save(a, job.out)
 		print("[%s] xy=%s len=%.4f keys=%d first_xy=(%.3f, %.3f)->anchor(%.3f, %.3f) drift_removed=(%.3f, %.3f) z_range=[%.3f, %.3f] z_shift=%.3f save=%d" % [
 			String(job.out).get_file(), xy_mode, a.length, n, first.x, first.y,

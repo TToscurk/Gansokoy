@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+
+; MQ12 一個落腳的地方 —— 人里段的情感終點。到這裡是一個完整可交付的章節。
+; 奧野田美宵收不收留由 MQ09 的 keine_trusts_yoriichi / keine_watches_yoriichi 決定語氣，
+; 但兩條路都住得下來（差別在台詞，不在結果）。
+; ⚠ 「進房間」目前是敘事：鯢吞亭沒有室內場景，這是門口交付鑰匙的互動，不是換場景。
+
+[ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
+[ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
+
+[sub_resource type="Resource" id="obj_0"]
+script = ExtResource("obj")
+type = 2
+target_id = "keine_verdict"
+description = "聽慧音的裁定"
+required_amount = 1
+
+[sub_resource type="Resource" id="obj_1"]
+script = ExtResource("obj")
+type = 1
+target_id = "inn_room"
+description = "在鯢吞亭落腳"
+required_amount = 1
+
+[resource]
+script = ExtResource("qd")
+id = "MQ12"
+title = "一個落腳的地方"
+description = "慧音替緣一打了招呼。人留下來，才看得清楚。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
+; TODO(C 批)：村內的支線接取點做好後，這裡可以接下一章。
+next_quest_id = ""
+complete_flags = PackedStringArray("has_village_lodging", "village_arc_done")

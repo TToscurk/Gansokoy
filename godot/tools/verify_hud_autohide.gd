@@ -38,29 +38,9 @@ func _initialize() -> void:
 		quit(1)
 		return
 
-	# --- 1. 按鍵不撞 ---
+	# --- 1. 型選單已移除（FF7R 式，2026-09-16 裁定）---
 	print("-- 按鍵 --")
-	check("form_menu 已註冊", InputMap.has_action("form_menu"))
-	var menu_keys: Array[int] = _keys_of("form_menu")
-	var lock_keys: Array[int] = _keys_of("lock_on")
-	print("     form_menu = %s、lock_on = %s" % [
-		_names(menu_keys), _names(lock_keys)])
-	var clash: Array[int] = []
-	for k in menu_keys:
-		if lock_keys.has(k):
-			clash.append(k)
-	check("型選單不與 lock_on 撞鍵", clash.is_empty(), _names(clash))
-
-	# 全表掃一次，確認沒和任何其他 action 撞
-	var all_clash: Array[String] = []
-	for a in InputMap.get_actions():
-		if String(a) == "form_menu" or String(a).begins_with("ui_"):
-			continue
-		for k in _keys_of(String(a)):
-			if menu_keys.has(k):
-				all_clash.append(String(a))
-				break
-	check("型選單不與任何既有 action 撞鍵", all_clash.is_empty(), str(all_clash))
+	check("form_menu 未註冊", not InputMap.has_action("form_menu"))
 
 	# --- 2. 探索時隱藏 ---
 	print("-- 探索時 --")
@@ -76,10 +56,16 @@ func _initialize() -> void:
 	# --- 3. 交手後浮出 ---
 	print("-- 交手後 --")
 	combat.mark_combat()
-	for i in 40:
+	# 淡入是以真實 delta 推進（hud_fade_time 0.35 s）；headless 幀率不固定
+	# （實測 40 幀只走到 α 0.86），所以等「可觀測的完成條件」而不是猜幀數。
+	var fade_frames := 0
+	var fade_t0 := Time.get_ticks_msec()
+	while root != null and root.modulate.a < 0.99 and Time.get_ticks_msec() - fade_t0 < 2000:
 		await process_frame
+		fade_frames += 1
 	if root != null:
-		check("交手後 HUD 浮出", root.modulate.a > 0.9, "alpha=%.3f" % root.modulate.a)
+		check("交手後 HUD 浮出", root.modulate.a > 0.9,
+			"alpha=%.3f（%d 幀 / %d ms）" % [root.modulate.a, fade_frames, Time.get_ticks_msec() - fade_t0])
 		check("交手後 HUD 可見", root.visible)
 
 	# --- 4. 停手後自己收掉 ---
@@ -91,14 +77,6 @@ func _initialize() -> void:
 	if root != null:
 		check("停手後 HUD 淡出",
 			root.modulate.a < 0.02, "alpha=%.3f" % root.modulate.a)
-
-	# --- 5. 提示密度 ---
-	print("-- 提示 --")
-	var hint: Label = combat.menu.get_node_or_null("Root/Panel/Hint")
-	if hint != null:
-		print("     選單提示文字 = 「%s」" % hint.text)
-		check("選單提示夠精簡（≤ 16 字）", hint.text.length() <= 16,
-			"%d 字" % hint.text.length())
 
 	print("=== %d passed, %d failed ===" % [_pass, _fail])
 	quit(1 if _fail > 0 else 0)

@@ -88,7 +88,10 @@ func _ready() -> void:
 	if _tell:
 		_tell.visible = false
 
-	if target == null:
+	# ⚠ encounter_dormant：遭遇區生的敵人要等登場對話讀完才開打
+	#   （CombatEncounter 負責武裝）。不尊重這個標記的話，這裡會自己抓玩家
+	#   當 target —— 玩家被 input_locked 鎖著、對話框還開著就被追打。
+	if target == null and not has_meta("encounter_dormant"):
 		var players := get_tree().get_nodes_in_group("player")
 		if players.size() > 0:
 			target = players[0]
@@ -269,8 +272,11 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 	posture.apply_damage(damage, posture_damage)
 	CombatVFX.spawn_hit_spark(self, hit_pos, -hit_dir, heavy)
 
-	# 被打斷前搖：攻擊取消，玩家搶到節奏。
-	if state == State.WINDUP:
+	# 被打斷出招：前搖與判定段都取消，玩家搶到節奏。
+	# ⚠ 原本只中斷 WINDUP —— 判定段（STRIKE）打中他毫無反應，手感上等於
+	#    「這刀已經出去了，認命」。判定本身是單次（_do_strike 只發一次），
+	#    中斷 STRIKE 不會讓已送出的傷害回溯。
+	if state == State.WINDUP or state == State.STRIKE:
 		_set_state(State.RECOVER)
 		if _tell:
 			_tell.visible = false
@@ -282,10 +288,11 @@ func can_deathblow() -> bool:
 	return posture != null and not posture.is_dead() and posture.is_broken()
 
 
-## 忍殺：無視剩餘血量處決。
+## 忍殺：無視剩餘血量處決。爆發是為了讓「處決」與「普通一刀」在畫面上不同。
 func execute_deathblow() -> bool:
 	if not can_deathblow():
 		return false
+	CombatVFX.spawn_deathblow_burst(self, global_position + Vector3(0, 1.0, 0))
 	return posture.deathblow()
 
 

@@ -5,7 +5,7 @@ class_name Kedama
 ##
 ## 行為只有三種，由 mode 決定：
 ##   IDLE     原地飄浮呼吸
-##   FLEE     看到玩家就往 flee_dir 跑，跑出 flee_distance 後消失（MQ03 不要追）
+##   FLEE     看到玩家就往 flee_dir 跑，跑出 flee_distance 後消失（MQ03 害怕我的東西）
 ##   WOUNDED  縮在地上發抖，不動（受傷妖怪事件；離開由劇情腳本呼叫 flee_away()）
 ##
 ## 不認識任務、不認識對話；只發訊號。

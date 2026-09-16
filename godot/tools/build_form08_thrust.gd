@@ -87,27 +87,32 @@ func _init() -> void:
 			#   兩邊的骨架基準不同（實測 GLB Hips Z ≈ 5.73、FBX rest ≈ 0.99），
 			#   直接搬會讓角色浮在 4.7 m 高空。做法與既有 build_spin_slash.gd
 			#   一致：取 GLB 首幀當 0 點，只把「相對起伏」疊到 FBX rest 上。
+			# ⚠ GLB 是 Y-up：垂直在 v.y（form08_thrust.glb 實測 x/z 常數、y 跨度 = 起伏）。
+			#   初版讀 v.z（常數）→ 蓄力沉腰整段消失。
 			var base_z: float = 0.0
 			if src.track_get_key_count(t) > 0:
 				var first: Vector3 = src.track_get_key_value(t, 0)
-				base_z = first.z
+				base_z = first.y
 			for k in src.track_get_key_count(t):
 				var time := src.track_get_key_time(t, k)
 				var v: Vector3 = src.track_get_key_value(t, k)
-				# 本 rig 的 Hips position：Z 是垂直軸（README 記載、偵察實證）。
 				out_anim.track_insert_key(nt, time, Vector3(
 					hips_rest.origin.x,
 					hips_rest.origin.y,
-					hips_rest.origin.z + (v.z - base_z)))
+					hips_rest.origin.z + (v.y - base_z)))
 			n_pos += 1
 
 		elif ttype == Animation.TYPE_ROTATION_3D:
 			var nt := out_anim.add_track(Animation.TYPE_ROTATION_3D)
 			out_anim.track_set_path(nt, new_path)
 			out_anim.track_set_interpolation_type(nt, src.track_get_interpolation_type(t))
+			# ⚠ Hips 根骨：GLB 把 Armature 的 X−90° 烘進根骨鍵，FBX 骨架把它留在父節點 →
+			#   Hips 鍵要乘 X+90°（同 build_spin_slash.gd 的 rot_x90、build_react_clips.gd）。
+			#   沒校正的實測：突刺全程腳趾離地 1.05 m、頭在髖後 0.41 m（整個人躺著）。
+			var fix := Quaternion(Vector3(1, 0, 0), PI / 2.0) if bone == "Hips" else Quaternion.IDENTITY
 			for k in src.track_get_key_count(t):
 				out_anim.track_insert_key(nt, src.track_get_key_time(t, k),
-					src.track_get_key_value(t, k))
+					(fix * (src.track_get_key_value(t, k) as Quaternion)).normalized())
 			n_rot += 1
 
 	var err := ResourceSaver.save(out_anim, OUT)

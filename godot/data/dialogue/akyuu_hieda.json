@@ -1,0 +1,30 @@
+{
+  "_doc": "MQ10 第二站。把原本『登記一次、立刻再按一次聽查閱結果』的 MQ11 合併成一場：阿求當面查冊，節奏不斷。阿求說話精準、冷靜；真正失控只露一瞬。",
+  "start": [
+    { "if": "met_akyuu", "node": "repeat_1" },
+    { "node": "a1" }
+  ],
+  "nodes": {
+    "a1": { "speaker": "akyuu", "portrait": "normal", "text": "「外來人。刀留在門邊，人進來。」", "next": "a2" },
+    "a2": { "speaker": "yoriichi", "portrait": "normal", "text": "「繼國緣一。」", "next": "a3" },
+    "a3": { "speaker": "akyuu", "portrait": "normal", "text": "「我知道。村門到寺子屋，半條街都在談你。」", "next": "a4" },
+    "a4": { "speaker": "akyuu", "portrait": "normal", "text": "「稗田阿求。我的工作，是替幻想鄉記住它自己。」", "next": "a5" },
+    "a5": { "speaker": "akyuu", "portrait": "normal", "text": "「哪裡來的？」", "next": "a6" },
+    "a6": { "speaker": "yoriichi", "portrait": "sad", "text": "「不記得了。」", "next": "a7" },
+    "a7": { "speaker": "akyuu", "portrait": "normal", "text": "「哪一年？」", "next": "a8" },
+    "a8": { "speaker": "yoriichi", "portrait": "normal", "text": "「……也不記得。」", "next": "a9" },
+    "a9": { "speaker": "akyuu", "portrait": "serious", "text": "「那就查名字。」", "next": "a10" },
+    "a10": { "speaker": "akyuu", "portrait": "normal", "text": "（紙頁翻動。很久。）", "next": "a11" },
+    "a11": { "speaker": "akyuu", "portrait": "serious", "text": "「沒有。」", "next": "a12" },
+    "a12": { "speaker": "yoriichi", "portrait": "normal", "text": "「外來人，本就不在你的記錄裡。」", "next": "a13" },
+    "a13": { "speaker": "akyuu", "portrait": "serious", "text": "「不。就算是從外面來的人，只要在幻想鄉留下過足夠的痕跡，通常也會進記錄。」", "next": "a14" },
+    "a14": { "speaker": "akyuu", "portrait": "serious", "text": "「你什麼都沒有。」", "next": "a15" },
+    "a15": { "speaker": "yoriichi", "portrait": "surprised", "text": "「那代表什麼？」", "next": "a16" },
+    "a16": { "speaker": "akyuu", "portrait": "surprised", "text": "「代表——我第一次答不出來。」", "next": "a17" },
+    "a17": { "speaker": "akyuu", "portrait": "normal", "text": "「坐好。既然查不到舊的，我就從今天開始記。」", "next": null,
+             "quest_event": { "type": "TALK", "target": "akyuu_record" } },
+
+    "repeat_1": { "speaker": "akyuu", "portrait": "serious", "text": "「繼國緣一。舊冊沒有，今天以後有了。」", "next": null,
+                  "quest_event": { "type": "TALK", "target": "akyuu_record" } }
+  }
+}

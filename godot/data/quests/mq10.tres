@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+
+; MQ10 在村裡露面。刪掉沒有角色、沒有選擇、只有踩點的火見櫓巡視，
+; 保留小鈴與阿求兩場真正能塑造人物、推進主謎題的會面。
+
+[ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
+[ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
+
+[sub_resource type="Resource" id="obj_0"]
+script = ExtResource("obj")
+type = 2
+target_id = "kosuzu_lending"
+description = "把寺子屋的書還給鈴奈庵"
+required_amount = 1
+
+[sub_resource type="Resource" id="obj_1"]
+script = ExtResource("obj")
+type = 2
+target_id = "akyuu_record"
+description = "讓稗田邸記下你的來歷"
+required_amount = 1
+
+[resource]
+script = ExtResource("qd")
+id = "MQ10"
+title = "讓村子記住你"
+description = "慧音不要保證。她要你去見兩個最會記住人的人。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
+next_quest_id = "MQ12"
+complete_flags = PackedStringArray("did_keine_errands", "met_kosuzu", "met_akyuu", "name_not_in_record")

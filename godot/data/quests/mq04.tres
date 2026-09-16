@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
 [ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
@@ -10,11 +10,18 @@ target_id = "hakurei_shrine_approach"
 description = "前往山上的建築"
 required_amount = 1
 
+[sub_resource type="Resource" id="obj_1"]
+script = ExtResource("obj")
+type = 2
+target_id = "reimu_gensokyo_intro"
+description = "向神社的巫女問清這是什麼地方"
+required_amount = 1
+
 [resource]
 script = ExtResource("qd")
 id = "MQ04"
-title = "山上的神社"
-description = "山上似乎存在建築。"
-objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
-next_quest_id = "MQ05"
-complete_flags = PackedStringArray()
+title = "山上的巫女"
+description = "山上有人居住。她或許知道這裡是什麼地方。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
+next_quest_id = "MQ07"
+complete_flags = PackedStringArray("met_reimu", "visited_hakurei_shrine")

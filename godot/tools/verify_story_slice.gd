@@ -108,21 +108,32 @@ func _run() -> void:
 	await _press("portal_enter")
 	await _settle(10)
 	check("P1 未見靈夢前 ↑ 不能傳送到人里", main.current_id == before_map and main.current_id == "trail")
-	# 走北：離開空地 → MQ00 完成、MQ01 開始
+	# 走北：離開空地 → MQ00 完成、直接開始 MQ02 山犬事件
 	# 座標：2026-09-15 r3 路線重排後的實測錨點（tools/probe_trail_anchors.gd）
+	# ⚠ 2026-09-16：這一點同時是「山犬遭遇」（CombatEncounter）的觸發區 ——
+	#   走出空地就被撲上來，是刻意的（探針實測該處淨空半徑 12.50 m 才打得起）。
 	await _teleport(Vector3(-14.08, 7.0, -40.03))
-	check("P2 MQ00 REACH 完成 → MQ01", qm.is_completed("MQ00") and qm.is_active("MQ01"))
-	await _teleport(Vector3(-6.03, 7.4, -49.74))
-	await _settle(4)
-	check("P2 感知獨白自動播放", dm.is_active())
+	check("P2 MQ00 REACH 完成 → MQ02", qm.is_completed("MQ00") and qm.is_active("MQ02"))
+	await _settle(20)
+	var wolves := main.get_tree().get_nodes_in_group("enemies")
+	check("P2 踏出空地生成山犬（%d）" % wolves.size(), wolves.size() == 1)
+	check("P2 山犬開場獨白播放", dm.is_active())
 	while dm.is_active():
 		await _press("ui_accept"); await _press("ui_accept")
-	check("P2 MQ01 完成 → MQ02（獵食者）", qm.is_completed("MQ01") and qm.is_active("MQ02"))
+	# 走真的戰鬥規則：軀幹打爆 → 破綻 → 忍殺（不是直接砍血）。
+	if wolves.size() > 0:
+		var wolf: Node = wolves[0]
+		wolf.get("posture").apply_damage(0.0, 999.0)
+		await _settle(4)
+		check("P2 軀幹爆 → 可忍殺", bool(wolf.call("can_deathblow")))
+		check("P2 忍殺成功", bool(wolf.call("execute_deathblow")))
+	await _settle(90)                       # clear_delay 1.6 s ＋ 戰後獨白 ＋ 化光
+	while dm.is_active():
+		await _press("ui_accept"); await _press("ui_accept")
+	await _settle(6)
+	check("P2 山犬擊退事件已送出", qm.is_active("MQ02") or qm.is_active("MQ03"))
 
-	# ── MQ02 獵食者痕跡 ──
-	# ⚠ 2026-09-15 使用者裁定：取消緣一遇到狼的即時戰鬥。
-	#   原本這一段是第一場戰鬥（生成 enemy_wolf、處決、戰後獨白）。
-	#   戰鬥系統改回合制之後再重做，屆時這段測試要一併換成回合制流程。
+	# 獸骨現在只是非任務環境觀察，不再阻塞流程。
 	await _teleport(Vector3(0.9, 8.0, -62.0))
 	await _settle(8)
 	check("P2b 踏入痕跡區播獨白", dm.is_active())
@@ -130,10 +141,11 @@ func _run() -> void:
 		await _press("ui_accept"); await _press("ui_accept")
 	await _settle(4)
 	check("P2b saw_predator_sign 旗標", sf.get_flag("saw_predator_sign"))
-	check("P2b 序章不再生成山犬", main.get_tree().get_nodes_in_group("enemies").is_empty())
-	check("P2b MQ02 完成 → MQ03（不要追）", qm.is_completed("MQ02") and qm.is_active("MQ03"))
+	check("P2b 山犬已死透（不再留屍體在場上）",
+		main.get_tree().get_nodes_in_group("enemies").size() <= 1)
+	check("P2b 獸骨觀察不改變 MQ03 進度", qm.is_active("MQ03"))
 
-	# ── MQ03 不要追：毛玉真的要跑 ──
+	# ── MQ03 害怕我的東西：毛玉真的要跑 ──
 	var kedamas := main.get_tree().get_nodes_in_group("kedama")
 	check("P2c 毛玉已擺好（%d 隻，含受傷的）" % kedamas.size(), kedamas.size() >= 4)
 	# 站在毛玉群旁邊（notice_range 7 m 內），它們要開始逃。
@@ -249,9 +261,9 @@ func _run() -> void:
 	check("T1 Player 在 group player", player.is_in_group("player"))
 	check("T1 序章任務鏈（MQ04 active）", qm.is_active("MQ04"))
 
-	# REACH：走過參道抵達區 → MQ02 完成 → MQ03 開始
+	# REACH：走過參道只完成 MQ04 第一格，仍等待完整靈夢初見。
 	await _teleport(Vector3(0, 1.0, 40))
-	check("MQ04 REACH 完成、MQ05 開始", qm.is_completed("MQ04") and qm.is_active("MQ05"))
+	check("MQ04 REACH 後仍 active、等待靈夢", qm.is_active("MQ04") and qm.get_current_objective("MQ04").target_id == "reimu_gensokyo_intro")
 
 	# Test 2：靠近拜殿
 	await _teleport(Vector3(0, 4.5, -21))
@@ -263,7 +275,7 @@ func _run() -> void:
 	await _teleport(Vector3(0, 4.5, -21))
 	check("T4 再次進入提示重新出現", prompt.visible and prompt.text.contains("拜訪"))
 	# Test 13 前置：來回進出不該動進度
-	var before: int = qm.get_objective_progress("MQ05")
+	var before: int = qm.get_objective_progress("MQ04")
 
 	# Test 5：按 E → 對話開、玩家鎖
 	await _press("interact")
@@ -303,8 +315,8 @@ func _run() -> void:
 
 	# Test 8/9/10
 	check("T8 met_reimu = true", sf.get_flag("met_reimu"))
-	check("T9 MQ05 完成", qm.is_completed("MQ05"))
-	check("T9b MQ06 也在同一對話完成", qm.is_completed("MQ06"))
+	check("T9 一場初見完成 MQ04", qm.is_completed("MQ04"))
+	check("T9b 不再建立 MQ05／MQ06", not qm.is_active("MQ05") and not qm.is_active("MQ06"))
 	check("T10 下一任務 MQ07 開始", qm.is_active("MQ07"))
 
 	# Test 11：恢復控制

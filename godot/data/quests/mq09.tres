@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
+[ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
+
+[sub_resource type="Resource" id="obj_0"]
+script = ExtResource("obj")
+type = 2
+target_id = "keine_first"
+description = "向慧音說明來歷"
+required_amount = 1
+
+[resource]
+script = ExtResource("qd")
+id = "MQ09"
+title = "半人半獸"
+description = "寺子屋的老師自稱是半人半獸。她先問的，是緣一打算對妖怪做什麼。"
+objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
+next_quest_id = "MQ10"
+complete_flags = PackedStringArray("met_keine")

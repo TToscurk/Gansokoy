@@ -1,29 +1,25 @@
 extends Node
 class_name CombatRuntime
-## 把戰鬥系統接進主世界 —— HUD、型選單、玩家數值、場上敵人。
+## 把戰鬥系統接進主世界 —— HUD、死亡演出、玩家數值、場上敵人。
 ##
 ## 為什麼是程式掛而不是寫進 main.tscn：
 ##   使用者常開著 Godot 編輯器手拖 transform 而不存檔。agent 寫 .tscn 會
 ##   互相覆蓋。這一層純 .gd，載入時自己生 HUD 與選單，不動任何場景檔。
 ##
 ## 這個節點只做接線 —— 規則全在 posture.gd / yoriichi_character.gd /
-## enemy_*.gd / combat_hud.gd / form_menu.gd 裡，這裡不重複實作戰鬥邏輯。
+## enemy_*.gd / combat_hud.gd 裡，這裡不重複實作戰鬥邏輯。
 ## 對照 scenes/combat_arena.gd（測試場的同等接線），行為刻意保持一致。
 
-const FormMenuScript = preload("res://ui/form_menu.gd")
+const DeathScreenScript = preload("res://ui/death_screen.gd")
 const HUD_SCENE := "res://ui/combat_hud.tscn"
 
-## 型選單的按鍵。project.godot 由使用者管理，agent 不寫入 ——
-## 這個 action 在執行期註冊，缺了就自己補。
-##
-## ⚠ 不可用 Tab：project.godot 裡 Tab 已經綁給 lock_on（鎖定敵人），
-##   兩個 action 綁同一顆鍵會同時觸發（實測：按 Tab 開選單的同時也切了鎖定）。
-##   C 鍵目前未被任何 action 使用（實測 project.godot 的 [input] 全表）。
-const FORM_MENU_ACTION := "form_menu"
-const FORM_MENU_KEY := KEY_C
+## 使用者 2026-09-16 裁定移除 FF7R 式型選單（時間放慢選招）；
+## 十二型只剩 `execute_form()` 通道，暫無選招鍵。
+
+signal respawn_requested
 
 var hud: Node = null
-var menu: Node = null
+var death_screen: Node = null
 
 var _player: Node = null
 var _bound: Array[Node] = []
@@ -32,20 +28,9 @@ var _bound: Array[Node] = []
 func _ready() -> void:
 	name = "CombatRuntime"
 	add_to_group("combat_runtime")
-	_ensure_form_menu_action()
 
 
-## Tab 開型選單。註冊在 InputMap（執行期），不改 project.godot。
-func _ensure_form_menu_action() -> void:
-	if InputMap.has_action(FORM_MENU_ACTION):
-		return
-	InputMap.add_action(FORM_MENU_ACTION)
-	var ev := InputEventKey.new()
-	ev.physical_keycode = FORM_MENU_KEY
-	InputMap.action_add_event(FORM_MENU_ACTION, ev)
-
-
-## 由 main.gd 呼叫：接上玩家，生出 HUD 與型選單。
+## 由 main.gd 呼叫：接上玩家，生出 HUD 與死亡演出。
 func bind_player(p: Node) -> void:
 	if p == null or _player == p:
 		return
@@ -54,7 +39,7 @@ func bind_player(p: Node) -> void:
 		_player.add_to_group("player")
 
 	_spawn_hud()
-	_spawn_menu()
+	_spawn_death_screen()
 	_bind_player_signals()
 	# 起始隱藏：探索時畫面要乾淨，第一次交手才浮出來。
 	_hud_alpha = 0.0
@@ -72,15 +57,13 @@ func _spawn_hud() -> void:
 	add_child(hud)
 
 
-func _spawn_menu() -> void:
-	if menu != null:
+func _spawn_death_screen() -> void:
+	if death_screen != null:
 		return
-	menu = FormMenuScript.new()
-	menu.name = "FormMenu"
-	add_child(menu)
-	menu.bind_player(_player)
-	menu.menu_opened.connect(_on_menu_opened)
-	menu.menu_closed.connect(_on_menu_closed)
+	death_screen = DeathScreenScript.new()
+	death_screen.name = "DeathScreen"
+	add_child(death_screen)
+	death_screen.respawn_requested.connect(func() -> void: respawn_requested.emit())
 
 
 func _bind_player_signals() -> void:
@@ -92,6 +75,8 @@ func _bind_player_signals() -> void:
 		hud.set_player_posture(p.posture, p.max_posture)
 	if _player.has_signal("player_was_hit"):
 		_player.player_was_hit.connect(_on_player_was_hit)
+	if _player.has_signal("player_died"):
+		_player.player_died.connect(_on_player_died)
 	if _player.has_signal("lock_target_changed"):
 		_player.lock_target_changed.connect(_on_lock_target_changed)
 	if _player.has_signal("breath_changed") and hud != null and hud.has_method("set_player_breath"):
@@ -101,14 +86,11 @@ func _bind_player_signals() -> void:
 		hud.set_player_breath(float(_player.get("sun_breath_gauge")), float(_player.get("sun_breath_max")))
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if menu == null or _player == null:
-		return
-	if event.is_action_pressed(FORM_MENU_ACTION):
-		# 選單自己處理「開著時再按 C = 關」，這裡只負責開。
-		if not menu.open:
-			menu.toggle()
-			get_viewport().set_input_as_handled()
+## 玩家死亡 → 隻狼式「死」演出 → respawn_requested → main.gd 搬人＋ revive()。
+func _on_player_died() -> void:
+	mark_combat()
+	if death_screen != null and not death_screen.is_running():
+		death_screen.play()
 
 
 # ---------------------------------------------------------------------------
@@ -118,8 +100,7 @@ func _unhandled_input(event: InputEvent) -> void:
 # 判定「在戰鬥中」的條件（任一成立）：
 #   * 附近有活著的敵人（in_combat_range 內）
 #   * 剛受過傷 / 剛出過手（combat_linger 秒內）
-#   * 型選單開著
-# 三者皆不成立 → 淡出。拔刀本身**不算**戰鬥：緣一可以只是握著刀走路。
+# 兩者皆不成立 → 淡出。拔刀本身**不算**戰鬥：緣一可以只是握著刀走路。
 # ---------------------------------------------------------------------------
 
 ## 多近算「捲入戰鬥」。
@@ -143,8 +124,7 @@ func _process(delta: float) -> void:
 	if hud == null or _player == null:
 		return
 	_combat_timer = maxf(_combat_timer - delta, 0.0)
-	var want: bool = _combat_timer > 0.0 or _enemy_near() \
-		or (menu != null and menu.open)
+	var want: bool = _combat_timer > 0.0 or _enemy_near()
 	if want != _hud_shown:
 		_hud_shown = want
 	var target: float = 1.0 if _hud_shown else 0.0
@@ -177,17 +157,6 @@ func _enemy_near() -> bool:
 	return false
 
 
-## 選單開著時鎖住玩家輸入，否則 WASD 會同時移動角色與移動游標。
-func _on_menu_opened() -> void:
-	if _player != null:
-		_player.set("input_locked", true)
-
-
-func _on_menu_closed() -> void:
-	if _player != null:
-		_player.set("input_locked", false)
-
-
 # ---------------------------------------------------------------------------
 # 敵人：進場時自動接線（CombatEncounter 是執行期生怪，不能只在 _ready 掃一次）
 # ---------------------------------------------------------------------------
@@ -203,7 +172,12 @@ func _bind_enemy(e: Node) -> void:
 		return
 	_bound.append(e)
 	if _player != null and "target" in e:
-		e.set("target", _player)
+		# ⚠ 遭遇生的敵人可能還在「登場對話」裡（CombatEncounter 會標
+		#   encounter_dormant）。那時候給 target ＝ 玩家被 input_locked
+		#   鎖著挨打（實測：狼在對話框還開著時走完 APPROACH→WINDUP→STRIKE）。
+		#   武裝由 CombatEncounter 在對話結束後自己做。
+		if not e.has_meta("encounter_dormant"):
+			e.set("target", _player)
 	if e.has_signal("attack_windup"):
 		e.attack_windup.connect(_on_enemy_windup.bind(e))
 	if e.has_signal("attack_struck"):

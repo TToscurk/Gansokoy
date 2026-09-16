@@ -86,7 +86,26 @@ const T_JIZO := 0.29
 const T_CREEK := 0.46               # 與空地中心相距 0.17 = 38 m（空地 R17 + 溪谷帶 14 = 31 m 是硬下限）
 const T_CLEARING := 0.63
 const T_STALL := 0.84
-const CLEARING_R := 17.0            # 直徑 ~34 m（規格 20-30，放寬以展現開闊感）
+const CLEARING_R := 22.0            # 直徑 ~44 m（原 17；2026-09-16 為戰鬥淨空加大）
+## 戰鬥核心：空地中央這塊必須全空。使用者 2026-09-16 裁定「場地太小、遇到敵人
+## 的位置很尷尬」，規格＝平坦淨空圓 ≥ 24 m 直徑（R12）、中央 10 m 內 0 碰撞體
+## （.hermes/plans/2026-09-16_031308-緣一戰鬥落地.md §2.1）。
+## 量測（tools/probe_combat_space.gd，改動前）：空地中心淨空半徑 0.00 m ——
+## 中央 1.8 m 處站著一棵半徑 1.6 m 的古樹碰撞，另有地藏 ×4（r0.28）在 7.0–9.2 m、
+## 一座破損燈籠在 3.95 m。這些全部被推到核心之外，古樹不刪、只搬家。
+## 15.0 而不是 13.5：古樹碰撞半徑 1.6 m，站在 13.5 m 會侵入到 11.6 m，
+## 淨空只剩 11.25 m（探針實測）。15.0 − 1.6 − 0.3（玩家半徑）= 13.1 m。
+const COMBAT_CORE_R := 15.0
+
+## MQ02 獵食者戰鬥袋。痕跡那一段本來是密林＋斜坡 —— 探針實測（tools/probe_combat_space.gd）
+## 淨空半徑只有 5.50 m、起伏 1.23 m，隻狼式的戰鬥需要 24 m 直徑（R12）。
+## ⚠ 中心放在 t=0.7719（z≈-56）而不是痕跡所在的 0.7995（z=-62）：
+##   夜雀屋台（t=0.84）的碰撞箱離痕跡只有 9.6 m，圓心放在痕跡上的話
+##   淨空半徑被屋台壓到 8 m（探針實測）。往北挪 6 m 後圓心離屋台 16.2 m，
+##   R13 的圓在屋台方向還留 1.7 m 餘裕，痕跡仍在圓內（距圓心 6.2 m）。
+## t 由場景 meta 的主脊反查（trail.tscn metadata/spine 第 308/399 點）。
+const T_FIGHT := 0.7719
+const FIGHT_R := 13.0
 ## 路面壓平帶：路緣外多少公尺內地形貼著路心高度、再漸回自然起伏。
 ## 6 m 時（減半版格距 1.7 m 畫得出細節）路兩側土坡貼著路面像走溝，
 ## 使用者要更寬 → 12 m。
@@ -259,6 +278,11 @@ func play_half(t: float) -> float:
 	w = maxf(w, 27.0 * exp(-pow((t - T_CLEARING) / 0.075, 2.0)))
 	# 屋台平台略放寬
 	w = maxf(w, 23.0 * exp(-pow((t - T_STALL) / 0.03, 2.0)))
+	# 獵食者戰鬥袋：牆必須退到袋外，否則 13 m 的圓裡只走得到 11 m
+	# （探針實測：袋中心 r=12 的取樣點撞到「走廊碰撞牆/牆體」）。
+	# 30 m / 0.07：牆段是 5.4 m 長的盒子，兩端會往內縮約 2.7 m
+	#（24 m 時實測牆體離袋心只有 13.8 m，13 m 的圓裡走不到 12 m）。
+	w = maxf(w, 30.0 * exp(-pow((t - T_FIGHT) / 0.07, 2.0)))
 	return w
 
 
@@ -417,8 +441,35 @@ func _clearing_dist(p: Vector2) -> float:
 	var c := _spine_pos(T_CLEARING)
 	# 不規則：半徑隨角度擾動
 	var ang := atan2(p.y - c.y, p.x - c.x)
-	var r := CLEARING_R * (1.0 + 0.25 * sin(ang * 3.0 + 0.6) + 0.15 * sin(ang * 5.0 + 2.2))
+	# 擾動 0.25/0.15 → 0.12/0.08：原本最小瓣只有 10.2 m 半徑，空地最窄的方向
+	# 放不下一個 24 m 的圓（探針實測「空地北緣」淨空只有 7.0 m）。
+	var r := CLEARING_R * (1.0 + 0.12 * sin(ang * 3.0 + 0.6) + 0.08 * sin(ang * 5.0 + 2.2))
 	return p.distance_to(c) - r
+
+
+## 距離戰鬥袋中心多遠（負 = 袋內）。與 _clearing_dist 同一個契約。
+func _fight_dist(p: Vector2) -> float:
+	return _spine_pos(T_FIGHT).distance_to(p) - FIGHT_R
+
+
+func _push_out_of(centre: Vector2, radius: float, p: Vector2) -> Vector2:
+	var d := p - centre
+	var len := d.length()
+	if len >= radius:
+		return p
+	if len < 0.001:
+		return centre + Vector2(radius, 0.0)
+	return centre + d / len * radius
+
+
+## 把地物沿自己的方位角推出「不能站人的兩個圈」：大空地的戰鬥核心、獵食者戰鬥袋。
+##
+## ⚠ 這不是全域過濾器：只給這兩個圈附近的呼叫點用。整條獸道的地物
+##   （界碑、祭物、燈籠）不該因為場地要能打而搬家。
+func _push_out_of_core(p: Vector2) -> Vector2:
+	p = _push_out_of(_spine_pos(T_CLEARING), COMBAT_CORE_R, p)
+	p = _push_out_of(_spine_pos(T_FIGHT), FIGHT_R, p)
+	return p
 
 
 func height_at(x: float, z: float) -> float:
@@ -457,6 +508,12 @@ func height_at(x: float, z: float) -> float:
 	var in_cl := 1.0 - smoothstep(-2.0, 4.0, cl)
 	var cl_h := _spine_pos(T_CLEARING).y * 0.03
 	h = lerpf(h, T_CLEARING * 9.0 + sin(cl_h) * 0.8 + 0.1, in_cl)
+	# 獵食者戰鬥袋：壓平。與空地同一手法 —— 目標高度用該處路心的公式，
+	## 免得袋緣出現斷差（袋中心 6.11 m，袋外路心 6.0 ± 1.2 m，6 m 內漸變）。
+	var fc := _spine_pos(T_FIGHT)
+	var fd := _fight_dist(p)
+	var in_f := 1.0 - smoothstep(-2.0, 4.0, fd)
+	h = lerpf(h, T_FIGHT * 9.0 + sin(fc.y * 0.03) * 0.8 + 0.1, in_f)
 	# 小水潭：同樣要夠深夠寬才畫得進 3.4 m 格距的網格（0.5 m / 4 m 太淺）
 	var pond := _spine_pos(T_CLEARING) + Vector2(6.0, -7.0)
 	h -= 1.4 * (1.0 - smoothstep(0.0, 6.0, p.distance_to(pond)))
@@ -604,6 +661,11 @@ func _init() -> void:
 	packed.pack(root)
 	var err := ResourceSaver.save(packed, OUT + "trail.tscn")
 	print("[TRAIL] saved trail.tscn err=%d  節點 %d" % [err, _count(root)])
+	# ⚠ 碰撞框不在本產生器裡（2026-09-16 使用者裁定：只留一圈正方形框住可動範圍）。
+	#   本產生器照舊會把樹幹／岩石／隘口岩體／地藏／屋台／舊走廊牆的碰撞一起生出來，
+	#   重跑之後請接著執行 tools/rework_trail_collision.gd —— 那支會拆掉這些零散
+	#   碰撞、沿可動範圍邊界重鋪正方形框，而且可以重複執行（先拆舊框再重鋪）。
+	print("[TRAIL]  碰撞尚未整理：請接著跑 tools/rework_trail_collision.gd（冪等）")
 	quit(0)
 
 
@@ -875,33 +937,6 @@ func _mesh_h(ps: PackedScene) -> float:
 	return (box as AABB).size.y if box != null else 1.0
 
 
-
-## 綠葉版歪樹：自建 MeshInstance3D（不是 GLB 實例），這樣 mesh 與材質
-## 都是節點自己的屬性，pack() 存得下來。同一 variant 共用一份 mesh。
-var _green_cache := {}
-func _green_twisted(variant: String) -> Node3D:
-	if not _green_cache.has(variant):
-		var src := (_ps(NAT + variant + ".gltf")).instantiate() as Node3D
-		var found: ArrayMesh = null
-		for mn in _mesh_nodes(src):
-			found = (mn as MeshInstance3D).mesh as ArrayMesh
-			break
-		var dup := found.duplicate() as ArrayMesh
-		var leaf := StandardMaterial3D.new()
-		leaf.albedo_texture = load("res://assets/nature/Leaves_NormalTree_C.png")
-		leaf.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-		leaf.alpha_scissor_threshold = 0.5
-		leaf.cull_mode = BaseMaterial3D.CULL_DISABLED
-		leaf.roughness = 0.95
-		dup.surface_set_material(1, leaf)
-		ResourceSaver.save(dup, OUT + "gen/twisted_green_%s.res" % variant)
-		dup.take_over_path(OUT + "gen/twisted_green_%s.res" % variant)
-		_green_cache[variant] = dup
-		src.free()
-	var mi := MeshInstance3D.new()
-	mi.mesh = _green_cache[variant]
-	return mi
-
 func _mesh_nodes(n: Node) -> Array:
 	var out := []
 	if n is MeshInstance3D and (n as MeshInstance3D).mesh != null:
@@ -1003,7 +1038,7 @@ func _build_forest() -> void:
 			continue
 		if t < 0.09 and dc < 8.0:
 			continue
-		if _clearing_dist(p) < 4.5:
+		if _clearing_dist(p) < 4.5 or _fight_dist(p) < 4.5:
 			continue
 		if _creek_dist(p) < 3.5:
 			continue
@@ -1080,7 +1115,18 @@ func _build_forest() -> void:
 			trunk_lift = lerpf(2.6, 0.0, (dc - 5.5) / 4.5)
 		var s := target_h / maxf(local_h, 0.1)
 		var inst := ps.instantiate() as Node3D
+		# ⚠ 接地用「底座足跡內的最低地面」，不是原點那一點的高度。
+		#   樹資產的底部是一塊外張的根盤；單點接地在斜地上會讓下坡側懸空
+		#   （實測 206/1500 棵露 >0.10 m、路沿最大 1.55 m）。
+		#   取八方向 + 中心的最低值 → 根盤外緣一定碰到土，只多沉不會浮。
+		#   ⚠ 半徑不能用「資產根盤半徑 × 縮放」：那會到 5 m 以上，等於拿
+		#     10 m 跨距的地形落差去沉樹，實測最深沉到 −7.5 m（樹整棵不見）。
+		#     視覺上要顧的是**樹幹周圍那一圈**的接觸，所以用封頂的小環。
 		var y := height_at(x, z)
+		var br: float = clampf(0.8 * s, 0.5, 1.6)
+		for k in 8:
+			var a2 := TAU * float(k) / 8.0
+			y = minf(y, height_at(x + cos(a2) * br, z + sin(a2) * br))
 		inst.position = Vector3(x, y - 0.05 - trunk_lift, z)
 		inst.rotation.y = lib.rand() * TAU
 		# 歪斜（規格：歪斜樹木）— 深處更歪；枯木最歪
@@ -1327,6 +1373,12 @@ func _build_ground_cover() -> void:
 				# 空地內只留貼地的草（雜草／矮草／苔），其餘退到空地外
 				if _clearing_dist(p) < -2.0 and name not in ["矮草", "苔", "雜草"]:
 					continue
+			# 戰鬥袋內同一套規則
+			if _fight_dist(p) < 2.0:
+				if name in ["矮竹", "灌木", "芒草", "蕨"]:
+					continue
+				if _fight_dist(p) < -2.0 and name not in ["矮草", "苔", "雜草"]:
+					continue
 			var m := mask_at(x, z)
 			var w := 0.0
 			if d < hw + 2.5:
@@ -1335,6 +1387,8 @@ func _build_ground_cover() -> void:
 				w = floor_pref * (0.4 + m.g * 0.6)
 			w = maxf(w, wet_pref * m.a)
 			if _clearing_dist(p) < 0.0:
+				w *= 0.3 if name in ["矮草", "野花", "苔", "雜草"] else 0.05
+			if _fight_dist(p) < 0.0:
 				w *= 0.3 if name in ["矮草", "野花", "苔", "雜草"] else 0.05
 			if lib.rand() > w:
 				continue
@@ -1463,7 +1517,9 @@ func _build_rocks_and_logs() -> void:
 		var n := 2 + int(lib.rand() * 4)
 		for k in n:
 			var p: Vector2 = c + Vector2(lib.rr(-4.0, 4.0), lib.rr(-4.0, 4.0))
-			if _clearing_dist(p) < -8.0 or _creek_dist(p) < 1.0:
+			# 苔石會擋人：空地核心內一粒都不留（原本的 -8.0 會讓石頭長進核心）。
+			if _spine_pos(T_CLEARING).distance_to(p) < COMBAT_CORE_R + 2.0 \
+					or _fight_dist(p) < 2.0 or _creek_dist(p) < 1.0:
 				continue
 			var v := "Rock_Medium_%d" % (1 + int(lib.rand() * 3) % 3)
 			var path := NAT + v + ".gltf"
@@ -1519,6 +1575,11 @@ func _build_rocks_and_logs() -> void:
 		var d := _spine_dir(t)
 		var c := _spine_pos(t)
 		var p: Vector2 = c if across else c + Vector2(-d.y, d.x) * lib.rr(4.0, 9.0) * (1.0 if lib.rand() < 0.5 else -1.0)
+		# 戰鬥袋／空地核心附近的倒木不擺：橫跨的那根碰撞箱是 5.0×1.2 m，
+		# 會把淨空直接切掉（探針實測：痕跡點淨空卡在 11.00 m，
+		# 擋住的正是 t=0.74 那根橫跨倒木的碰撞箱）。
+		if _fight_dist(p) < 3.0 or _spine_pos(T_CLEARING).distance_to(p) < COMBAT_CORE_R + 4.0:
+			continue
 		var mk := Marker3D.new()
 		mk.position = Vector3(p.x, height_at(p.x, p.y), p.y)
 		mk.rotation.y = atan2(d.x, d.y) + (PI * 0.5 if across else lib.rr(-0.6, 0.6))
@@ -1748,6 +1809,8 @@ func _lantern(parent: Node3D, p: Vector2, intact: bool, body: StaticBody3D) -> v
 			var sd := _spine_dir(li[1])
 			dir = Vector2(-sd.y, sd.x)
 		p = _spine_pos(li[1]) + dir * need
+	# 戰鬥核心：燈籠是實心碰撞（遺跡碰撞）——空地裡那一座原本在中心 3.95 m。
+	p = _push_out_of_core(p)
 	var inst := ps.instantiate() as Node3D
 	inst.position = Vector3(p.x, height_at(p.x, p.y) - (0.0 if intact else 0.25), p.y)
 	inst.rotation.y = lib.rand() * TAU
@@ -1784,7 +1847,10 @@ func _plan_jizo_sites() -> void:
 		var base: Vector2 = _jizo_base(t, spec[2])
 		var rng := _jizo_rng(base)
 		for i in cnt:
-			_jizo_sites.append(base + Vector2(rng.randf_range(-0.75, 0.75), rng.randf_range(-0.5, 0.5)) * float(i))
+			#  地藏帶實心碰撞（遺跡碰撞）。戰鬥袋裡那一尊原本離袋心 4.46 m，
+			#   是袋中央量到「落差 1.10 m」的真兇（探針實測）。一併推出去。
+			_jizo_sites.append(_push_out_of_core(
+				base + Vector2(rng.randf_range(-0.75, 0.75), rng.randf_range(-0.5, 0.5)) * float(i)))
 	print("[TRAIL] 地藏預定 %d 尊（植被讓開 1.7 m）" % _jizo_sites.size())
 
 
@@ -1877,7 +1943,9 @@ func _build_clearing() -> void:
 	# 古樹 Hero 佔位 + 暫代：古老神木（使用闊葉巨木，蒼翠深綠），置於空地偏西北側
 	# 古樹是這張圖的視覺錨點，要在空地正中央附近——偏太多的話從路上走進來
 	# 看不到它。前一版偏 6 m，俯瞰圖裡整棵消失在邊緣。
-	var tp := c + Vector2(-1.5, 1.0)
+	# ⚠ 古樹原本在中心 1.8 m 處（半徑 1.6 m 的碰撞）—— 空地淨空因此是 0.2 m。
+	#   不刪，改推到戰鬥核心邊上（13.5 m）：從路上走進來仍看得到它。
+	var tp := _push_out_of_core(c + Vector2(-1.5, 1.0))
 	var mk := Marker3D.new()
 	mk.position = Vector3(tp.x, height_at(tp.x, tp.y), tp.y)
 	mk.set_meta("meshy", "Hero：巨大古老神木，高 20-22 m，樹冠直徑 18 m，樹洞，樹根隆起，掛舊紅布")
@@ -1893,8 +1961,8 @@ func _build_clearing() -> void:
 	var sh := CollisionShape3D.new(); var cy := CylinderShape3D.new(); cy.radius = 1.6; cy.height = 8.0
 	sh.shape = cy; sh.position = mk.position + Vector3(0, 4.0, 0); body.add_child(sh); sh.owner = lib.root
 	# 3–5 尊地藏、一座倒塌燈籠
-	_jizo(g, c + Vector2(6.5, 4.0), 4, body)
-	_lantern(g, c + Vector2(-7.0, -4.5), false, body)
+	_jizo(g, _push_out_of_core(c + Vector2(6.5, 4.0)), 4, body)
+	_lantern(g, _push_out_of_core(c + Vector2(-7.0, -4.5)), false, body)
 	# 水潭（小）—— 同小溪：連續放射網格，不用逐格挑或圓盤。
 	# 圓盤試過 2.6/1.9/1.4 都埋地；逐格挑不埋了但邊界成方塊。
 	var pond := c + Vector2(6.0, -7.0)
@@ -1948,7 +2016,7 @@ func _build_clearing() -> void:
 	# 苔石、倒木（空地邊緣）
 	for i in 6:
 		var a := lib.rr(0.0, TAU)
-		var r := CLEARING_R * lib.rr(0.6, 0.95)
+		var r := maxf(CLEARING_R * lib.rr(0.6, 0.95), COMBAT_CORE_R + 1.0)
 		var p := c + Vector2(cos(a), sin(a)) * r
 		var v := "Rock_Medium_%d" % (1 + i % 3)
 		var rp := NAT + v + ".gltf"
@@ -1963,7 +2031,7 @@ func _build_clearing() -> void:
 	# 妖怪留下的酒瓶與碗（lowpoly 暫代）
 	var yk := lib.add(g, Node3D.new(), "妖怪遺留物") as Node3D
 	for i in 5:
-		var p := tp + Vector2(lib.rr(-4.0, 4.0), lib.rr(2.0, 6.0))
+		var p := _push_out_of_core(tp + Vector2(lib.rr(-4.0, 4.0), lib.rr(2.0, 6.0)))
 		var v: String = ["CeremicPot", "Basket_S", "CeremicPot", "Barrel", "CeremicPot"][i]
 		var ps2 := _ps(LP + v + ".gltf")
 		var it := ps2.instantiate() as Node3D
@@ -2135,7 +2203,7 @@ func _build_youkai_traces() -> void:
 	for i in 14:
 		var t := lib.rr(0.55, 0.98)
 		var d := _spine_dir(t)
-		var p := _spine_pos(t) + Vector2(-d.y, d.x) * (_half_w(t) + lib.rr(0.5, 2.5)) * (1.0 if lib.rand() < 0.5 else -1.0)
+		var p := _push_out_of_core(_spine_pos(t) + Vector2(-d.y, d.x) * (_half_w(t) + lib.rr(0.5, 2.5)) * (1.0 if lib.rand() < 0.5 else -1.0))
 		var v: String = ["CeremicPot", "Basket_S", "CeremicPot"][i % 3]
 		var it := _ps(LP + v + ".gltf").instantiate() as Node3D
 		it.position = Vector3(p.x, height_at(p.x, p.y), p.y)

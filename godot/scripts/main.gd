@@ -474,6 +474,10 @@ func load_map(id: String, from_id: String) -> void:
 	_apply_interior_lighting(id)
 	_place_player(meta, from_id)
 	_wire_world_interactions()
+	# 敵人：CombatEncounter 是**執行期**生怪，載圖時掃一次不夠 ——
+	# 存讀檔／傳送回來後生出來的敵人也必須接上 HUD（鎖定條、危字、忍殺提示）。
+	if combat != null and combat.has_method("rescan_enemies"):
+		combat.rescan_enemies()
 
 	var info: Dictionary = registry.get(id, {})
 	map_label.text = "%s  %s" % [info.get("zh", id), info.get("en", "")]
@@ -590,11 +594,12 @@ func _setup_story_systems() -> void:
 	# （實測過順序解法會壞：_unhandled_input 是後加入者先收到，選單會搶先
 	#   吃掉 Esc 讓地圖關不掉。）順序在這裡無所謂。
 	add_child(SAVE_UI.instantiate())
-	# 戰鬥接線：HUD（血／軀幹／呼吸）與日之呼吸型選單。
+	# 戰鬥接線：HUD（血／軀幹／呼吸）與死亡演出。
 	# 純程式掛載，不寫進 main.tscn —— 編輯器可能正開著未存檔。
 	combat = COMBAT_RUNTIME.new()
 	add_child(combat)
 	combat.bind_player(player)
+	combat.respawn_requested.connect(_respawn_player)
 
 
 const OPENING_FADE := preload("res://ui/opening/opening_fade.gd")
@@ -800,6 +805,20 @@ func _flash_message(text: String) -> void:
 	var t := create_tween()
 	t.tween_interval(1.6)
 	t.tween_callback(func() -> void: interaction_message.visible = false)
+
+
+## 死亡重生（黑幕中被呼叫）：回本圖的出生點（meta.spawn，地面用射線量）
+## 或第一個傳送點旁，血量全滿。不重載地圖、不回存檔 —— 隻狼式「原地再來一次」。
+func _respawn_player() -> void:
+	if player.has_method("revive"):
+		player.revive()
+	var meta := _load_json("res://data/%s.meta.json" % current_id)
+	if meta.has("spawn"):
+		_place_player(meta, "")
+	elif not _live_portals.is_empty():
+		player.global_position = _arrival_for_portal(_live_portals[0])
+		portal_cooldown = PORTAL_COOLDOWN
+	print("[死] 重生於 %s (%.1f, %.1f, %.1f)" % [current_id, player.global_position.x, player.global_position.y, player.global_position.z])
 
 
 ## SaveManager 讀完檔、資料已就位 → 這裡負責重建世界。

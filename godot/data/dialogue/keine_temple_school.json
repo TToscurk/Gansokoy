@@ -1,0 +1,56 @@
+{
+  "_doc": "MQ09 半人半獸。慧音是全篇第一個讓緣一看見「非人者也能選擇保護人類」的人，但她的自白必須壓在緣一先表態之後——順序顛倒就沒有衝擊力。兩條分支由序章的 spared_wounded_yokai / left_wounded_yokai 決定，不是對話選項。兩條都完成 MQ09，差別在 keine_trusts_yoriichi / keine_watches_yoriichi 這顆旗標，MQ12 奧野田美宵收不收留會用到。",
+  "start": [
+    { "if": "met_keine", "node": "repeat_1" },
+    { "if": "spared_wounded_yokai", "node": "s1" },
+    { "if": "left_wounded_yokai", "node": "c1" },
+    { "node": "n1" }
+  ],
+  "nodes": {
+    "s1": { "speaker": "keine", "portrait": "normal", "text": "「你就是那個在獸道放過一隻妖怪的人。」", "next": "s2" },
+    "s2": { "speaker": "yoriichi", "portrait": "surprised", "text": "「……」", "next": "s3" },
+    "s3": { "speaker": "keine", "portrait": "normal", "text": "「村裡的人在傳。說有個佩刀的，明明能動手卻沒有。」", "next": "s4" },
+    "s4": { "speaker": "yoriichi", "portrait": "normal", "text": "「我只是沒有拔刀。」", "next": "s5" },
+    "s5": { "speaker": "keine", "portrait": "smile", "text": "「在這裡，那就夠了。」", "next": "s6",
+            "set_flags": ["keine_trusts_yoriichi"] },
+    "s6": { "speaker": "keine", "portrait": "normal", "text": "「我叫上白澤慧音。寺子屋的老師。」", "next": "s7" },
+    "s7": { "speaker": "yoriichi", "portrait": "normal", "text": "「老師。」", "next": "s8" },
+    "s8": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。」", "next": "s9" },
+    "s9": { "speaker": "keine", "portrait": "serious", "text": "「我是半人半獸。所以兩邊的事，都得管。」", "next": "s10",
+            "quest_event": { "type": "TALK", "target": "keine_first" } },
+    "s10": { "speaker": "yoriichi", "portrait": "surprised", "text": "（……半人半獸。）", "next": "s11" },
+    "s11": { "speaker": "keine", "portrait": "normal", "text": "「人類怎麼怕妖怪，妖怪怎麼看人類，我都看過。」", "next": "s12" },
+    "s12": { "speaker": "keine", "portrait": "normal", "text": "「說吧。你是誰，從哪裡來。」", "next": "s13" },
+    "s13": { "speaker": "yoriichi", "portrait": "sad", "text": "「……我不記得了。」", "next": "s14" },
+    "s14": { "speaker": "keine", "portrait": "surprised", "text": "「不記得。」", "next": "s15" },
+    "s15": { "speaker": "keine", "portrait": "normal", "text": "「那就先別急著想起來。」", "next": "s16" },
+    "s16": { "speaker": "keine", "portrait": "normal", "text": "「明天再來。今天先讓村裡的人看見你一次。」", "next": null },
+
+    "c1": { "speaker": "keine", "portrait": "annoyed", "text": "「佩刀的。站在我門口做什麼。」", "next": "c2" },
+    "c2": { "speaker": "yoriichi", "portrait": "normal", "text": "「守衛說，要你同意。」", "next": "c3" },
+    "c3": { "speaker": "keine", "portrait": "annoyed", "text": "「他倒是會把事推給別人。」", "next": "c4" },
+    "c4": { "speaker": "keine", "portrait": "serious", "text": "「獸道上有一隻受傷的小妖怪。」", "next": "c5" },
+    "c5": { "speaker": "keine", "portrait": "serious", "text": "「有人經過。聽說沒有管。」", "next": "c6" },
+    "c6": { "speaker": "yoriichi", "portrait": "normal", "text": "「……」", "next": "c7" },
+    "c7": { "speaker": "keine", "portrait": "normal", "text": "「我不是在怪你。」", "next": "c8",
+            "set_flags": ["keine_watches_yoriichi"] },
+    "c8": { "speaker": "keine", "portrait": "normal", "text": "「但這裡的規矩不是那樣的。」", "next": "c9" },
+    "c9": { "speaker": "keine", "portrait": "normal", "text": "「我叫上白澤慧音。寺子屋的老師。」", "next": "c10" },
+    "c10": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。我是半人半獸，所以兩邊的事都得管。」", "next": "c11",
+             "quest_event": { "type": "TALK", "target": "keine_first" } },
+    "c11": { "speaker": "yoriichi", "portrait": "surprised", "text": "（……妖怪，在保護人。）", "next": "c12" },
+    "c12": { "speaker": "keine", "portrait": "serious", "text": "「要拔刀嗎？」", "next": "c13" },
+    "c13": { "speaker": "yoriichi", "portrait": "normal", "text": "「不。」", "next": "c14" },
+    "c14": { "speaker": "keine", "portrait": "normal", "text": "「……那就先站著吧。」", "next": "c15" },
+    "c15": { "speaker": "keine", "portrait": "normal", "text": "「別急著證明什麼。」", "next": null },
+
+    "n1": { "speaker": "keine", "portrait": "normal", "text": "「外來人。慧音。寺子屋的老師。」", "next": "n2" },
+    "n2": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。我是半人半獸，所以兩邊的事都得管。」", "next": null,
+            "quest_event": { "type": "TALK", "target": "keine_first" } },
+
+    "repeat_1": { "speaker": "keine", "portrait": "normal", "text": "「回來了。」", "next": "repeat_2",
+                  "_doc": "回訪分支照樣回報 TALK：玩家可能在第一次對話中途離開，沒回報的話 MQ09 永遠完成不了，而 s1／c1 因旗標已立再也走不到。",
+                  "quest_event": { "type": "TALK", "target": "keine_first" } },
+    "repeat_2": { "speaker": "keine", "portrait": "smile", "text": "「先把村子走一圈。有名字的地方，都去記住。」", "next": null }
+  }
+}

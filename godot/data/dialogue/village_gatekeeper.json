@@ -1,0 +1,29 @@
+{
+  "_doc": "MQ08 村門。守衛不是惡人，是一個看過太多麻煩的普通人；嘴硬、務實，會被緣一過分認真的回答弄得接不上話。",
+  "start": [
+    { "if": { "not": "gatekeeper_pointed_way" }, "node": "g1" },
+    { "if": "met_keine", "node": "after_9" },
+    { "node": "repeat_1" }
+  ],
+  "nodes": {
+    "g1": { "speaker": "gatekeeper", "portrait": "normal", "text": "「站住。人可以進，麻煩不行。」", "next": "g2" },
+    "g2": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「你看起來兩樣都占了。」", "next": "g3" },
+    "g3": { "speaker": "yoriichi", "portrait": "normal", "text": "「我只占前者。」", "next": "g4" },
+    "g4": { "speaker": "gatekeeper", "portrait": "surprised", "text": "「……你還真敢自己說。」", "next": "g5" },
+    "g5": { "speaker": "gatekeeper", "portrait": "normal", "text": "「外來人，村裡沒人替你作保，腰上還一把刀。照規矩，我不能放。」", "next": "g6" },
+    "g6": { "speaker": "yoriichi", "portrait": "normal", "text": "「刀不離身。」", "next": "g7" },
+    "g7": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「那你也別離開這塊地。」", "next": "g8",
+            "quest_event": { "type": "TALK", "target": "gatekeeper_gate" } },
+    "g8": { "speaker": "yoriichi", "portrait": "normal", "text": "「你在保護裡面的人。應當如此。」", "next": "g9" },
+    "g9": { "speaker": "gatekeeper", "portrait": "surprised", "text": "「……少來這套。」", "next": "g10" },
+    "g10": { "speaker": "gatekeeper", "portrait": "normal", "text": "「去寺子屋。找慧音老師。」", "next": "g11" },
+    "g11": { "speaker": "gatekeeper", "portrait": "normal", "text": "「她說你不是麻煩，我就當自己看走眼。」", "next": null,
+             "set_flags": ["gatekeeper_pointed_way"] },
+
+    "repeat_1": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「寺子屋。直走，聽見孩子背書就是了。」", "next": null,
+                  "quest_event": { "type": "TALK", "target": "gatekeeper_gate" } },
+
+    "after_9": { "speaker": "gatekeeper", "portrait": "normal", "text": "「慧音老師傳話了。你可以進。」", "next": "after_9b" },
+    "after_9b": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「我沒看走眼。是規矩看走眼——少得意。」", "next": null }
+  }
+}

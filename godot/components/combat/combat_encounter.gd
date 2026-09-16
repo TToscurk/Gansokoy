@@ -40,6 +40,8 @@ var _spawned: Array = []
 var _alive := 0
 var _started := false
 var _cleared := false
+## 遭遇開場獨白播過了沒（用來判斷「擋在前面的對話結束後要不要補播」）
+var _intro_played := false
 
 
 func _ready() -> void:
@@ -69,16 +71,20 @@ func _begin() -> void:
 	if offsets.is_empty():
 		offsets = [Vector3.ZERO] as Array[Vector3]
 	var players := get_tree().get_nodes_in_group("player")
-	var player: Node3D = players[0] if players.size() > 0 else null
 	for off in offsets:
 		var e: Node3D = enemy_scene.instantiate()
 		# 掛在本區的父節點下，而不是本區底下 —— Area3D 的 monitoring
 		# 會把生在裡面的敵人也當成進入事件來源，徒增噪音。
+		#  「還沒輪到牠上場」的標記必須在 add_child **之前**設 —— 敵人會在
+		#   自己的 _ready() 裡自動找玩家當 target（enemy_wolf.gd:217、
+		#   enemy_samurai.gd:94），add_child 那一刻 _ready 就跑掉了，
+		#   之後再補標記已經來不及（實測：就是這條路讓延後武裝失效）。
+		e.set_meta("encounter_dormant", true)
 		get_parent().add_child(e)
 		var world_pos := global_position + off
 		e.global_position = Vector3(world_pos.x, _ground_y(world_pos), world_pos.z)
-		if player != null and "target" in e:
-			e.set("target", player)
+		# ⚠ target 不在這裡給 —— 見 _after_dialogue 的說明。沒 target 的敵人
+		#   會停在 IDLE（_target_distance() 回 INF），不會追人也不會出錯。
 		if e.has_signal("died"):
 			e.died.connect(_on_enemy_died)
 		_spawned.append(e)
@@ -90,8 +96,50 @@ func _begin() -> void:
 	for r in runtimes:
 		if r.has_method("rescan_enemies"):
 			r.rescan_enemies()
-	if not intro_dialogue.is_empty() and not DialogueManager.is_active():
-		DialogueManager.start(intro_dialogue)
+	if not intro_dialogue.is_empty():
+		# ⚠ 2026-09-16 實測修正：武裝（給敵人 target）必須等對話結束。
+		#   原因：main.gd 在 dialogue_started 就把玩家 input_locked = true，
+		#   而 spawn_offsets 是「往南 8 m」＝玩家的來向 —— 玩家一踏進區，
+		#   狼就在 1.25 m 處，對話框還開著、玩家被鎖著，牠已經走完
+		#   WINDUP→STRIKE（實測 state 2→3，玩家被推 1.45 m/次）。
+		#   現在：先現身 → 讀完台詞 → 才開打。
+		#   另一件事：別的對話正在播時，這一段要**排隊**而不是丟掉 ——
+		#   舊版 `if not DialogueManager.is_active()` 直接丟掉，
+		#   玩家會遇到一隻無聲撲上來、沒有任何預警的狼。
+		# 已有別段對話時才排隊；空閒時直接起 intro。舊版先 connect 再直接呼叫，
+		# _after_dialogue() 起完 intro 又 connect 同一個 Callable，第一個 one-shot 還沒觸發，
+		# Godot 因此報「already connected」。
+		if DialogueManager.is_active():
+			DialogueManager.dialogue_ended.connect(_after_dialogue, CONNECT_ONE_SHOT)
+		else:
+			_after_dialogue()
+	else:
+		_arm_enemies()
+
+
+## 對話（自己那一段，或擋在前面的那一段）結束後：先補播 intro，補完才武裝。
+func _after_dialogue(_id: String = "") -> void:
+	if not _intro_played and not intro_dialogue.is_empty() and not DialogueManager.is_active():
+		_intro_played = true
+		if not DialogueManager.start(intro_dialogue):
+			_arm_enemies()          # 起不來就不要卡著不開打
+			return
+		DialogueManager.dialogue_ended.connect(_after_dialogue, CONNECT_ONE_SHOT)
+		return
+	_arm_enemies()
+
+
+## 把玩家交給剛生出來的敵人 —— 從這一刻牠們才會追人。
+func _arm_enemies() -> void:
+	var players := get_tree().get_nodes_in_group("player")
+	if players.is_empty():
+		return
+	var player: Node3D = players[0]
+	for e in _spawned:
+		if is_instance_valid(e) and "target" in e:
+			e.set("target", player)
+			if e.has_meta("encounter_dormant"):
+				e.remove_meta("encounter_dormant")
 
 
 ## 生成點的地面高度。射線排除邊界牆（40 m 高的隱形擋牆會被誤認成地面）。

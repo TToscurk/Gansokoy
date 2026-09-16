@@ -214,7 +214,10 @@ func _ready() -> void:
 		_streak_root = sfx.get("root")
 		_streak_mats = sfx.get("mats", [])
 
-	if target == null:
+	# ⚠ encounter_dormant：遭遇區生的敵人要等登場對話讀完才開打
+	#   （CombatEncounter 負責武裝）。不尊重這個標記的話，這裡會自己抓玩家
+	#   當 target —— 玩家被 input_locked 鎖著、對話框還開著就被追打。
+	if target == null and not has_meta("encounter_dormant"):
 		var players := get_tree().get_nodes_in_group("player")
 		if players.size() > 0:
 			target = players[0]
@@ -643,9 +646,11 @@ func can_deathblow() -> bool:
 	return posture != null and not posture.is_dead() and posture.is_broken()
 
 
+## 忍殺：爆發必須與化光死亡錯開 —— 先炸再溶解，不然兩種特效糊在一起。
 func execute_deathblow() -> bool:
 	if not can_deathblow():
 		return false
+	CombatVFX.spawn_deathblow_burst(self, global_position + Vector3(0, 0.8, 0))
 	return posture.deathblow()
 
 
