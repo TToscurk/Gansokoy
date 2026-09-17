@@ -64,3 +64,6 @@ godot/assets/landscape/_tripo_r6_backup/
 godot/maps/slice/gen/b1_north.tscn
 godot/maps/slice/gen/b1_central.tscn
 godot/maps/slice/gen/b1_south.tscn
+
+# 樹木清理等一次性備份（tools/purge_dirty_trees.py），不進版控
+_backup/
