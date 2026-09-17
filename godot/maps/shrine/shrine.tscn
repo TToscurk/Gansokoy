@@ -31,9 +31,6 @@
 [ext_resource type="Texture2D" uid="uid://bt23sl6ap2wrm" path="res://assets/_lod/踏石_Baked_BaseColor.png" id="28_3hq4i"]
 [ext_resource type="Texture2D" uid="uid://xvwtwdc71i3d" path="res://assets/_lod/踏石_Baked_MetallicRoughness.png" id="29_5sey5"]
 [ext_resource type="PackedScene" uid="uid://dkjnpybpp80xw" path="res://assets/landscape/大衫.glb" id="30_ff5aw"]
-[ext_resource type="PackedScene" uid="uid://337s47cfgf4m" path="res://assets/landscape/2大衫.glb" id="31_i04fv"]
-[ext_resource type="PackedScene" uid="uid://db3m7kuqkp50u" path="res://assets/landscape/針葉林樹4.glb" id="32_de84v"]
-[ext_resource type="PackedScene" uid="uid://k25li3c5ewea" path="res://assets/landscape/普通樹.glb" id="33_77l1h"]
 [ext_resource type="PackedScene" uid="uid://srtn6thryoko" path="res://assets/landscape/針葉林樹3.glb" id="34_2f543"]
 [ext_resource type="PackedScene" uid="uid://bmeweqxphe66g" path="res://assets/landscape/針葉樹2glb.glb" id="35_8ig3q"]
 [ext_resource type="PackedScene" uid="uid://cm27hy1wguju4" path="res://assets/landscape/針葉樹1.glb" id="36_2rgfx"]
@@ -71,6 +68,7 @@
 [ext_resource type="MultiMesh" path="res://maps/shrine/gen/vista_trees_r2/針葉林樹4.res" id="70_7bdo5"]
 [ext_resource type="MultiMesh" path="res://maps/shrine/gen/vista_trees_r2/普通樹.res" id="71_ifoyv"]
 [ext_resource type="PackedScene" path="res://maps/shrine/shrine_interactions.tscn" id="story_wi"]
+[ext_resource type="PackedScene" uid="uid://bwxlquti83b5a" path="res://assets/landscape/鎮守之杜.glb" id="9101_purge"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bnyri"]
 render_priority = 0
@@ -6885,24 +6883,24 @@ shape = SubResource("CylinderShape3D_8ejep")
 [node name="大衫_0000" parent="植被/境內主要樹" unique_id=412569856 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(15.1765, -0.348067, -4.74958, 0.386222, 17.1008, 0.150685, 4.7449, -0.278671, 15.1792, -14, 3.300333, -40)
 
-[node name="2大衫_0001" parent="植被/境內主要樹" unique_id=2119728452 instance=ExtResource("31_i04fv")]
+[node name="大衫_0001" parent="植被/境內主要樹" unique_id=2119728452 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-3.35753, 0.0838694, -12.0156, -0.271977, 12.5369, 0.162605, 12.0128, 0.307283, -3.35463, 19, 3.2360058, -31)
 
 [node name="境內邊緣林" type="Node3D" parent="植被" unique_id=200869748]
 
-[node name="針葉林樹4_0002" parent="植被/境內邊緣林" unique_id=292067532 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0002" parent="植被/境內邊緣林" unique_id=292067532 instance=ExtResource("34_2f543")]
 transform = Transform3D(-12.8131, 0.198662, -4.675, 0.242374, 13.7301, -0.0886125, 4.67288, -0.167423, -12.8143, 21.3944, 3.3522034, -27.1564)
 
-[node name="普通樹_0003" parent="植被/境內邊緣林" unique_id=1233882658 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0003" parent="植被/境內邊緣林" unique_id=1233882658 instance=ExtResource("9101_purge")]
 transform = Transform3D(-2.66303, -0.140432, 8.94168, 0.127437, 8.80382, 0.19318, -8.94201, 0.16729, -2.66017, -12.6238, -0.6991683, 1.61636)
 
 [node name="針葉林樹3_0004" parent="植被/境內邊緣林" unique_id=1780755789 instance=ExtResource("34_2f543")]
 transform = Transform3D(3.7312, 0.152251, 9.29333, -0.118696, 10.8996, -0.103077, -9.29363, -0.0780807, 3.7324, 20.6438, 3.1754532, -10.7823)
 
-[node name="針葉林樹4_0005" parent="植被/境內邊緣林" unique_id=951553647 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0005" parent="植被/境內邊緣林" unique_id=951553647 instance=ExtResource("34_2f543")]
 transform = Transform3D(3.9483, -0.0985987, 10.8178, -0.18815, 11.2436, 0.176128, -10.8166, -0.231567, 3.94566, -21.3104, 3.0913463, -15.108)
 
-[node name="針葉林樹4_0006" parent="植被/境內邊緣林" unique_id=1942827796 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0006" parent="植被/境內邊緣林" unique_id=1942827796 instance=ExtResource("34_2f543")]
 transform = Transform3D(3.2763, -0.0522804, 11.3142, 0.173239, 11.1076, 0.00754111, -11.313, 0.154953, 3.27676, 10.6798, 3.000121, -6.035)
 
 [node name="針葉樹2glb_0007" parent="植被/境內邊緣林" unique_id=26651133 instance=ExtResource("35_8ig3q")]
@@ -6923,10 +6921,10 @@ transform = Transform3D(-7.96841, -0.116665, 3.01449, -0.147604, 9.33021, -0.089
 [node name="針葉樹1_0012" parent="植被/境內邊緣林" unique_id=353541961 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(-8.39211, 0.020556, 2.41811, -0.0231074, 8.89082, -0.153102, -2.41808, -0.156302, -8.39073, 25.9564, 3.7098093, -29.0968)
 
-[node name="普通樹_0013" parent="植被/境內邊緣林" unique_id=24404773 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0013" parent="植被/境內邊緣林" unique_id=24404773 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(9.8463, 0.0355159, -0.797057, -0.0317493, 9.29925, 0.0753582, 0.797317, -0.0682979, 9.84608, -24.9892, 0.1672864, 0.772539)
 
-[node name="普通樹_0014" parent="植被/境內邊緣林" unique_id=1758138796 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0014" parent="植被/境內邊緣林" unique_id=1758138796 instance=ExtResource("9101_purge")]
 transform = Transform3D(-6.81613, -0.110133, 11.1084, 0.182253, 12.6733, 0.244647, -11.1075, 0.275529, -6.81268, 16.0392, 4.424454, -43.3217)
 
 [node name="針葉林樹3_0015" parent="植被/境內邊緣林" unique_id=1979518714 instance=ExtResource("34_2f543")]
@@ -6935,19 +6933,19 @@ transform = Transform3D(-1.63449, -0.198946, 11.1572, -0.139472, 12.0078, 0.1683
 [node name="針葉林樹3_0016" parent="植被/境內邊緣林" unique_id=183727792 instance=ExtResource("34_2f543")]
 transform = Transform3D(0.874902, 0.146634, 8.535, 0.06118, 9.08791, -0.14542, -8.5359, 0.080166, 0.873767, -27.5957, 2.6111956, -23.0402)
 
-[node name="針葉林樹4_0017" parent="植被/境內邊緣林" unique_id=914303375 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0017" parent="植被/境內邊緣林" unique_id=914303375 instance=ExtResource("34_2f543")]
 transform = Transform3D(5.05073, 0.0215839, 9.03166, -0.0073745, 9.93663, -0.0216294, -9.03168, 0.00395681, 5.05073, 26.0384, 4.08893, -37.938)
 
-[node name="普通樹_0018" parent="植被/境內邊緣林" unique_id=1279648632 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0018" parent="植被/境內邊緣林" unique_id=1279648632 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(9.40721, -0.123606, -0.0606139, 0.118311, 9.85705, 0.0535346, 0.0599369, -0.0568874, 9.4078, -16.7229, 3.1246448, -35.2019)
 
 [node name="針葉林樹3_0019" parent="植被/境內邊緣林" unique_id=331751740 instance=ExtResource("34_2f543")]
 transform = Transform3D(4.86442, -0.092182, 10.7145, -0.0388598, 11.5941, 0.120385, -10.7148, -0.0838984, 4.86383, -17.7403, 4.087805, -43.7982)
 
-[node name="針葉林樹4_0020" parent="植被/境內邊緣林" unique_id=347606588 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0020" parent="植被/境內邊緣林" unique_id=347606588 instance=ExtResource("34_2f543")]
 transform = Transform3D(-8.88049, 0.153404, -2.78639, 0.127223, 9.82999, 0.0796888, 2.78727, 0.0400727, -8.88132, -23.1798, 3.003746, -19.2454)
 
-[node name="針葉林樹4_0021" parent="植被/境內邊緣林" unique_id=1914028474 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0021" parent="植被/境內邊緣林" unique_id=1914028474 instance=ExtResource("34_2f543")]
 transform = Transform3D(-9.75986, -0.0460323, -2.60064, -0.0575539, 10.4219, 0.0427315, 2.60039, 0.057896, -9.75987, 18.8982, 3.1070523, -36.8804)
 
 [node name="針葉樹2glb_0022" parent="植被/境內邊緣林" unique_id=65685987 instance=ExtResource("35_8ig3q")]
@@ -6959,7 +6957,7 @@ transform = Transform3D(-8.3376, -0.0351974, 8.96757, -0.252619, 11.407, -0.1833
 [node name="針葉林樹3_0024" parent="植被/境內邊緣林" unique_id=1547562839 instance=ExtResource("34_2f543")]
 transform = Transform3D(-10.5159, 0.07324, 6.98292, -0.0287944, 12.2023, -0.180302, -6.98327, -0.160604, -10.5146, -28.043, 5.161446, -45.6124)
 
-[node name="針葉林樹4_0025" parent="植被/境內邊緣林" unique_id=286105347 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0025" parent="植被/境內邊緣林" unique_id=286105347 instance=ExtResource("34_2f543")]
 transform = Transform3D(-5.78125, 0.167893, -10.7009, 0.0263379, 12.4754, 0.171813, 10.7021, 0.0599936, -5.78101, 28.0279, 0.8936238, -0.233177)
 
 [node name="針葉樹2glb_0026" parent="植被/境內邊緣林" unique_id=584269705 instance=ExtResource("35_8ig3q")]
@@ -6968,22 +6966,22 @@ transform = Transform3D(3.56231, -0.0716641, -9.2655, 0.0506289, 10.2506, -0.054
 [node name="針葉樹1_0027" parent="植被/境內邊緣林" unique_id=1326610115 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(7.68259, 0.224344, -5.08251, -0.213556, 9.66283, 0.064795, 5.08253, 0.0668977, 7.68529, -27.5697, 2.633699, -18.2746)
 
-[node name="針葉林樹4_0028" parent="植被/境內邊緣林" unique_id=1937146879 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0028" parent="植被/境內邊緣林" unique_id=1937146879 instance=ExtResource("34_2f543")]
 transform = Transform3D(-3.43368, -0.00623159, -7.3619, -0.159133, 7.61947, 0.0668941, 7.36019, 0.161832, -3.43304, 13.9328, 3.0961175, -39.4489)
 
 [node name="針葉樹2glb_0029" parent="植被/境內邊緣林" unique_id=823860657 instance=ExtResource("35_8ig3q")]
 transform = Transform3D(9.76576, -0.0645482, 0.926594, 0.0748811, 10.5938, -0.156604, -0.925495, 0.176026, 9.76469, -14.0836, 2.7425501, -5.25988)
 
-[node name="普通樹_0030" parent="植被/境內邊緣林" unique_id=1800152586 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0030" parent="植被/境內邊緣林" unique_id=1800152586 instance=ExtResource("9101_purge")]
 transform = Transform3D(-0.12559201, -0.07197091, 8.43472, -0.09013601, 8.17683, 0.0729069, -8.43457, -0.08631011, -0.12637402, 10.140948, 2.986371, -5.329077)
 
-[node name="普通樹_0031" parent="植被/境內邊緣林" unique_id=1223281140 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0031" parent="植被/境內邊緣林" unique_id=1223281140 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(2.00135, -0.200261, -12.7603, 0.123131, 13.6167, -0.172959, 12.7611, -0.0999799, 2.00289, -8.0969, 3.4436378, -42.8314)
 
-[node name="針葉林樹4_0032" parent="植被/境內邊緣林" unique_id=1982044864 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0032" parent="植被/境內邊緣林" unique_id=1982044864 instance=ExtResource("34_2f543")]
 transform = Transform3D(12.5627, -0.162425, 3.39976, 0.112798, 13.3003, 0.191526, -3.4016, -0.158821, 12.5623, 28.605, 3.472093, -20.1773)
 
-[node name="普通樹_0033" parent="植被/境內邊緣林" unique_id=607015364 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0033" parent="植被/境內邊緣林" unique_id=607015364 instance=ExtResource("9101_purge")]
 transform = Transform3D(-7.18069, -0.0296754, -8.3997, -0.185987, 10.2064, 0.116741, 8.3977, 0.200671, -7.17981, 24.8016, 3.4198785, -11.3083)
 
 [node name="針葉樹1_0034" parent="植被/境內邊緣林" unique_id=443102084 instance=ExtResource("36_2rgfx")]
@@ -6995,10 +6993,10 @@ transform = Transform3D(6.74622, -0.317875, 10.44, 0.129775, 12.9925, 0.278217, 
 [node name="針葉林樹3_0036" parent="植被/境內邊緣林" unique_id=2080762967 instance=ExtResource("34_2f543")]
 transform = Transform3D(-5.53388, -0.0224498, -11.2025, -0.225078, 11.5316, 0.0840641, 11.2003, 0.220644, -5.53329, 23.3639, 2.710249, -5.0306)
 
-[node name="針葉林樹4_0037" parent="植被/境內邊緣林" unique_id=571601111 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0037" parent="植被/境內邊緣林" unique_id=571601111 instance=ExtResource("34_2f543")]
 transform = Transform3D(8.91591, -0.213394, 5.89153, 0.0833282, 10.6396, 0.262577, -5.89484, -0.172358, 8.91462, 28.8305, 2.1017866, -4.61033)
 
-[node name="普通樹_0038" parent="植被/境內邊緣林" unique_id=1884115199 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0038" parent="植被/境內邊緣林" unique_id=1884115199 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(6.9266, 0.091801, -8.28529, 0.14777, 10.5019, 0.246504, 8.28451, -0.264076, 6.92286, -24.2108, 2.2534184, -4.54598)
 
 [node name="針葉林樹3_0039" parent="植被/境內邊緣林" unique_id=1684111483 instance=ExtResource("34_2f543")]
@@ -7007,22 +7005,22 @@ transform = Transform3D(-13.0205, 0.0615867, -3.05725, 0.128142, 12.8539, -0.265
 [node name="針葉樹1_0040" parent="植被/境內邊緣林" unique_id=1801202561 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(7.27901, 0.114317, -6.79614, -0.224774, 9.86846, -0.0717782, 6.7934, 0.204031, 7.27957, -29.0515, -0.0834713, 1.56216)
 
-[node name="針葉林樹4_0041" parent="植被/境內邊緣林" unique_id=1667417530 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0041" parent="植被/境內邊緣林" unique_id=1667417530 instance=ExtResource("34_2f543")]
 transform = Transform3D(11.6802, -0.00156712, -5.72071, 0.153803, 13.7549, 0.31066, 5.71864, -0.366738, 11.6761, -21.9491, 5.348026, -44.9749)
 
-[node name="針葉林樹4_0042" parent="植被/境內邊緣林" unique_id=729535230 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0042" parent="植被/境內邊緣林" unique_id=729535230 instance=ExtResource("34_2f543")]
 transform = Transform3D(-0.44437, 0.216181, -9.29446, 0.120943, 9.95832, 0.19642, 9.29587, -0.119227, -0.446858, 9.88473, 0.9465518, 1.89118)
 
-[node name="針葉林樹4_0043" parent="植被/境內邊緣林" unique_id=1518120227 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0043" parent="植被/境內邊緣林" unique_id=1518120227 instance=ExtResource("34_2f543")]
 transform = Transform3D(2.2222, -0.325054, -11.5488, 0.188517, 12.3426, -0.279096, 11.5514, -0.138897, 2.22625, 7.05163, -0.059207857, 4.0299644)
 
-[node name="普通樹_0044" parent="植被/境內邊緣林" unique_id=1178666129 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0044" parent="植被/境內邊緣林" unique_id=1178666129 instance=ExtResource("9101_purge")]
 transform = Transform3D(3.61636, -0.0518725, 11.693, 0.0224353, 11.8809, 0.0489964, -11.6931, 0.00675292, 3.61643, -10.736397, 2.328034, -6.7025166)
 
 [node name="針葉樹2glb_0045" parent="植被/境內邊緣林" unique_id=1886926207 instance=ExtResource("35_8ig3q")]
 transform = Transform3D(-2.86216, 0.190387, 11.5482, 0.183896, 12.5459, -0.140405, -11.5481, 0.152599, -2.86441, -30.4663, 2.3620539, -9.20698)
 
-[node name="普通樹_0046" parent="植被/境內邊緣林" unique_id=1234550989 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0046" parent="植被/境內邊緣林" unique_id=1234550989 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(2.01408, -0.119619, -11.2064, -0.03169, 11.8769, -0.122204, 11.2069, 0.0550823, 2.01364, -20.0627, 3.0864563, -37.4804)
 
 [node name="針葉樹2glb_0047" parent="植被/境內邊緣林" unique_id=871196046 instance=ExtResource("35_8ig3q")]
@@ -7606,7 +7604,7 @@ transform = Transform3D(-13.734, 0.246297, 1.49068, 0.271175, 13.1098, 0.0933508
 [node name="針葉林樹4_0073" parent="植被/外圍森林/針葉林樹4" unique_id=1467256977 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-7.97629, -0.114062, -8.99339, -0.0695335, 13.1884, -0.0772931, 8.99372, 0.000805874, -7.97659, 62.5446, 0.020101786, 8.16406)
 
-[node name="針葉林樹4_0078" parent="植被/外圍森林/針葉林樹4" unique_id=1234188236 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0078" parent="植被/外圍森林/針葉林樹4" unique_id=1234188236 instance=ExtResource("34_2f543")]
 transform = Transform3D(1.46319, -0.0264271, -15.6377, -0.302093, 15.7742, -0.0546841, 15.6348, 0.307259, 1.4624, -40.3897, 2.3302426, -9.76443)
 
 [node name="針葉林樹4_0079" parent="植被/外圍森林/針葉林樹4" unique_id=312374559 instance=ExtResource("39_2oq4k")]
@@ -7636,19 +7634,19 @@ transform = Transform3D(-11.9822, -0.0180426, 12.844, 0.0504787, 18.7385, 0.0702
 [node name="針葉林樹4_0137" parent="植被/外圍森林/針葉林樹4" unique_id=352562809 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(14.5377, -0.173689, 8.79756, 0.0895743, 18.0154, 0.168399, -8.79863, -0.103575, 14.5376, -63.2604, -0.10321206, 21.5516)
 
-[node name="針葉林樹4_0142" parent="植被/外圍森林/針葉林樹4" unique_id=1009787218 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0142" parent="植被/外圍森林/針葉林樹4" unique_id=1009787218 instance=ExtResource("34_2f543")]
 transform = Transform3D(-4.04026, 0.145767, -13.8678, -0.197154, 14.9409, 0.204177, 13.8671, 0.25489, -4.03755, 45.0548, 2.8583179, -11.3218)
 
-[node name="針葉林樹4_0148" parent="植被/外圍森林/針葉林樹4" unique_id=153939446 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0148" parent="植被/外圍森林/針葉林樹4" unique_id=153939446 instance=ExtResource("34_2f543")]
 transform = Transform3D(-15.5413, 0.0715165, -2.97394, 0.0161836, 14.6392, 0.326555, 2.9749, 0.293976, -15.5381, 14.6719, 0.46962357, 8.71997)
 
-[node name="針葉林樹4_0150" parent="植被/外圍森林/針葉林樹4" unique_id=903949659 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0150" parent="植被/外圍森林/針葉林樹4" unique_id=903949659 instance=ExtResource("34_2f543")]
 transform = Transform3D(3.19443, -0.0521374, -15.724, 0.343966, 15.0963, 0.0133579, 15.7203, -0.319718, 3.19488, -39.839, -0.09043455, -1.19276)
 
 [node name="針葉林樹4_0151" parent="植被/外圍森林/針葉林樹4" unique_id=1147742987 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-0.383694, -0.279984, -16.9529, 0.400228, 17.4642, -0.280828, 16.9503, -0.418699, -0.377121, 40.8975, -0.42643148, 35.3631)
 
-[node name="針葉林樹4_0158" parent="植被/外圍森林/針葉林樹4" unique_id=2029062001 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0158" parent="植被/外圍森林/針葉林樹4" unique_id=2029062001 instance=ExtResource("34_2f543")]
 transform = Transform3D(-7.35872, 0.0852637, -8.9037, 0.0425018, 10.7539, 0.0836876, 8.90407, 0.0191342, -7.35881, 34.2057, 3.192955, -13.1839)
 
 [node name="針葉林樹4_0162" parent="植被/外圍森林/針葉林樹4" unique_id=1006920492 instance=ExtResource("39_2oq4k")]
@@ -7675,7 +7673,7 @@ transform = Transform3D(-0.737889, 0.30741, -13.6626, -0.277914, 13.0535, 0.3375
 [node name="針葉林樹4_0189" parent="植被/外圍森林/針葉林樹4" unique_id=1910492622 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-9.86325, 0.105648, -8.25337, 0.0283529, 13.5451, 0.122422, 8.25394, 0.0797184, -9.863, 44.6814, -0.28151524, 28.8562)
 
-[node name="針葉林樹4_0194" parent="植被/外圍森林/針葉林樹4" unique_id=1111510451 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0194" parent="植被/外圍森林/針葉林樹4" unique_id=1111510451 instance=ExtResource("34_2f543")]
 transform = Transform3D(-6.47803, 0.41224, -14.4276, 0.356061, 15.7482, 0.29386, 14.4291, -0.203535, -6.48459, -33.9802, 5.867322, -49.0808)
 
 [node name="針葉林樹4_0241" parent="植被/外圍森林/針葉林樹4" unique_id=189778345 instance=ExtResource("39_2oq4k")]
@@ -7693,7 +7691,7 @@ transform = Transform3D(-15.4056, 0.383517, -4.37384, 0.343737, 17.559, 0.06998,
 [node name="針葉林樹4_0264" parent="植被/外圍森林/針葉林樹4" unique_id=185058351 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(11.4359, 0.027042, 8.36765, -0.0917218, 13.2704, 0.0764575, -8.3672, -0.108512, 11.4357, 59.5701, -0.21772707, 22.2985)
 
-[node name="針葉林樹4_0268" parent="植被/外圍森林/針葉林樹4" unique_id=1717810006 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0268" parent="植被/外圍森林/針葉林樹4" unique_id=1717810006 instance=ExtResource("34_2f543")]
 transform = Transform3D(-10.671, -0.383165, 12.0211, -0.151421, 16.1469, 0.375591, -12.0262, 0.136684, -10.6712, 37.1455, 3.4416451, -29.5636)
 
 [node name="針葉林樹4_0271" parent="植被/外圍森林/針葉林樹4" unique_id=455702527 instance=ExtResource("39_2oq4k")]
@@ -7726,13 +7724,13 @@ transform = Transform3D(11.813, -0.0378388, 6.89109, -0.0392611, 13.4713, 0.1435
 [node name="針葉林樹4_0307" parent="植被/外圍森林/針葉林樹4" unique_id=859284423 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(6.40813, 0.127028, -10.6213, 0.162005, 13.6031, 0.232969, 10.6206, -0.284143, 6.40494, -13.0313, -0.252935, 49.0205)
 
-[node name="針葉林樹4_0317" parent="植被/外圍森林/針葉林樹4" unique_id=170548397 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0317" parent="植被/外圍森林/針葉林樹4" unique_id=170548397 instance=ExtResource("34_2f543")]
 transform = Transform3D(8.24331, -0.104316, 7.21419, 0.268963, 11.5462, -0.157164, -7.20986, 0.311463, 8.24241, -42.2414, 2.3654356, -18.8391)
 
-[node name="針葉林樹4_0320" parent="植被/外圍森林/針葉林樹4" unique_id=1589457994 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0320" parent="植被/外圍森林/針葉林樹4" unique_id=1589457994 instance=ExtResource("34_2f543")]
 transform = Transform3D(3.32098, 0.182396, 10.6395, -0.203344, 10.4545, -0.140199, -10.6393, -0.142879, 3.32371, -31.5688, 2.341743, -12.4751)
 
-[node name="針葉林樹4_0322" parent="植被/外圍森林/針葉林樹4" unique_id=96152479 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0322" parent="植被/外圍森林/針葉林樹4" unique_id=96152479 instance=ExtResource("34_2f543")]
 transform = Transform3D(-4.66441, 0.0324176, 15.4104, -0.0327777, 16.8263, -0.0423307, -15.4104, -0.0456014, -4.66432, 31.4358, 7.9752135, -44.3672)
 
 [node name="針葉林樹4_0328" parent="植被/外圍森林/針葉林樹4" unique_id=1734893314 instance=ExtResource("39_2oq4k")]
@@ -7747,22 +7745,22 @@ transform = Transform3D(-8.01208, 0.119522, 9.60717, 0.088156, 12.9376, -0.07696
 [node name="針葉林樹4_0345" parent="植被/外圍森林/針葉林樹4" unique_id=1881620354 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(4.09465, 0.0685451, -11.7057, -0.148019, 11.4375, 0.026951, 11.705, 0.120657, 4.09524, -53.125, -0.4367584, 41.4176)
 
-[node name="針葉林樹4_0352" parent="植被/外圍森林/針葉林樹4" unique_id=590366078 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0352" parent="植被/外圍森林/針葉林樹4" unique_id=590366078 instance=ExtResource("34_2f543")]
 transform = Transform3D(-10.6271, -0.00576789, 7.01161, 0.0431311, 12.7857, 0.0758, -7.01148, 0.0873933, -10.6268, 34.4231, 3.86298, -33.7514)
 
-[node name="針葉林樹4_0353" parent="植被/外圍森林/針葉林樹4" unique_id=1425124895 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0353" parent="植被/外圍森林/針葉林樹4" unique_id=1425124895 instance=ExtResource("34_2f543")]
 transform = Transform3D(-6.15888, -0.110321, -10.1933, -0.142052, 12.1935, -0.0400543, 10.1929, 0.103274, -6.15969, -38.278, 2.2975206, -12.175)
 
 [node name="針葉林樹4_0361" parent="植被/外圍森林/針葉林樹4" unique_id=979900263 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(12.6418, -0.0684237, 1.98233, 0.120854, 12.1705, -0.306617, -1.97995, 0.306001, 12.6383, -57.5956, 1.6097915, -5.29837)
 
-[node name="針葉林樹4_0367" parent="植被/外圍森林/針葉林樹4" unique_id=2084238741 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0367" parent="植被/外圍森林/針葉林樹4" unique_id=2084238741 instance=ExtResource("34_2f543")]
 transform = Transform3D(-2.50035, 0.0637478, 13.5208, 0.3013, 14.1644, -0.00718528, -13.5176, 0.303925, -2.5011, 24.8177, 0.63964844, 11.5745)
 
 [node name="針葉林樹4_0376" parent="植被/外圍森林/針葉林樹4" unique_id=278057970 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(15.5152, 0.268022, 3.32546, -0.281859, 16.8964, 0.114165, -3.32304, -0.181755, 15.5168, 62.9356, 9.706146, -37.9382)
 
-[node name="針葉林樹4_0386" parent="植被/外圍森林/針葉林樹4" unique_id=1993914091 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0386" parent="植被/外圍森林/針葉林樹4" unique_id=1993914091 instance=ExtResource("34_2f543")]
 transform = Transform3D(-15.5601, -0.100963, -0.223144, -0.0970743, 15.8881, -0.126772, 0.223938, -0.127999, -15.5599, 23.2077, 9.123007, -49.2749)
 
 [node name="針葉林樹4_0388" parent="植被/外圍森林/針葉林樹4" unique_id=27161125 instance=ExtResource("39_2oq4k")]
@@ -7783,7 +7781,7 @@ transform = Transform3D(-13.254, 0.333477, -5.73808, 0.2615, 15.3401, 0.186227, 
 [node name="針葉林樹4_0429" parent="植被/外圍森林/針葉林樹4" unique_id=1595957781 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-3.86704, 0.266512, -12.9097, 0.192138, 12.6365, 0.23913, 12.9114, -0.108224, -3.87009, -66.1212, 1.6270789, -3.09671)
 
-[node name="針葉林樹4_0435" parent="植被/外圍森林/針葉林樹4" unique_id=29744389 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0435" parent="植被/外圍森林/針葉林樹4" unique_id=29744389 instance=ExtResource("34_2f543")]
 transform = Transform3D(12.7835, 0.12729, -0.776134, -0.144029, 12.0772, -0.145222, 0.774504, 0.144927, 12.7834, 41.444, 4.115606, -34.3648)
 
 [node name="針葉林樹4_0440" parent="植被/外圍森林/針葉林樹4" unique_id=1076691675 instance=ExtResource("39_2oq4k")]
@@ -7795,7 +7793,7 @@ transform = Transform3D(17.8668, -0.0289261, -1.64965, 0.0611367, 17.588, 0.3413
 [node name="針葉林樹4_0450" parent="植被/外圍森林/針葉林樹4" unique_id=1568566422 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(9.8221, -0.40189, -12.2878, 0.313314, 15.3322, -0.27743, 12.2907, -0.0696786, 9.82684, -39.913, 0.08868709, 27.0872)
 
-[node name="針葉林樹4_0453" parent="植被/外圍森林/針葉林樹4" unique_id=98405636 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0453" parent="植被/外圍森林/針葉林樹4" unique_id=98405636 instance=ExtResource("34_2f543")]
 transform = Transform3D(9.84954, -0.00246639, 7.30582, 0.0160645, 11.6126, -0.0172858, -7.30581, 0.0222094, 9.84952, -10.0491, -0.17724323, 13.4678)
 
 [node name="針葉林樹4_0456" parent="植被/外圍森林/針葉林樹4" unique_id=1818032312 instance=ExtResource("39_2oq4k")]
@@ -7804,7 +7802,7 @@ transform = Transform3D(11.8101, -0.302142, 2.71865, 0.281511, 12.1654, 0.118794
 [node name="針葉林樹4_0461" parent="植被/外圍森林/針葉林樹4" unique_id=503122590 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(14.5668, 0.170171, -0.490061, -0.179366, 14.6468, -0.297439, 0.486467, 0.304842, 14.5647, -53.0856, -0.37468627, 33.8091)
 
-[node name="針葉林樹4_0462" parent="植被/外圍森林/針葉林樹4" unique_id=2045398669 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0462" parent="植被/外圍森林/針葉林樹4" unique_id=2045398669 instance=ExtResource("34_2f543")]
 transform = Transform3D(-6.69111, -0.287309, -14.5449, 0.174253, 16.1372, -0.393797, 14.5466, -0.325462, -6.68558, -43.4723, 2.441546, -22.3764)
 
 [node name="針葉林樹4_0463" parent="植被/外圍森林/針葉林樹4" unique_id=1314516822 instance=ExtResource("39_2oq4k")]
@@ -7822,13 +7820,13 @@ transform = Transform3D(-8.66191, 0.185735, 10.7735, 0.230989, 14.9851, -0.03410
 [node name="針葉林樹4_0488" parent="植被/外圍森林/針葉林樹4" unique_id=1665100263 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(9.44507, 0.0434575, 9.22196, -0.103881, 12.6919, 0.0416993, -9.22148, -0.0984646, 9.44509, -40.8166, -0.4586265, 39.4443)
 
-[node name="針葉林樹4_0492" parent="植被/外圍森林/針葉林樹4" unique_id=1526922539 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0492" parent="植被/外圍森林/針葉林樹4" unique_id=1526922539 instance=ExtResource("34_2f543")]
 transform = Transform3D(5.66485, -0.0881337, 9.42392, 0.156533, 10.7096, 0.0114673, -9.42305, 0.124922, 5.66556, -37.0784, 2.1273446, -8.95963)
 
 [node name="針葉林樹4_0504" parent="植被/外圍森林/針葉林樹4" unique_id=1786410363 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(16.3945, -0.179787, -1.23588, 0.216298, 15.8413, 0.38851, 1.23102, -0.389038, 16.3909, 69.8964, 5.421588, -25.3635)
 
-[node name="針葉林樹4_0508" parent="植被/外圍森林/針葉林樹4" unique_id=969938581 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0508" parent="植被/外圍森林/針葉林樹4" unique_id=969938581 instance=ExtResource("34_2f543")]
 transform = Transform3D(4.91372, -0.221674, -11.0595, -0.0238088, 11.8822, -0.257608, 11.0618, 0.124043, 4.91215, 37.488, 3.033825, -14.0014)
 
 [node name="針葉林樹4_0516" parent="植被/外圍森林/針葉林樹4" unique_id=1971582166 instance=ExtResource("39_2oq4k")]
@@ -7840,7 +7838,7 @@ transform = Transform3D(13.9645, -0.3493, 0.876487, 0.331829, 14.852, -0.0336615
 [node name="針葉林樹4_0531" parent="植被/外圍森林/針葉林樹4" unique_id=362118959 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-15.1674, 0.23662, 8.10185, 0.0638287, 18.0967, -0.357578, -8.10472, -0.300295, -15.1648, 22.7656, -0.35967067, 34.1967)
 
-[node name="針葉林樹4_0534" parent="植被/外圍森林/針葉林樹4" unique_id=886179879 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0534" parent="植被/外圍森林/針葉林樹4" unique_id=886179879 instance=ExtResource("34_2f543")]
 transform = Transform3D(-14.634, -0.131365, 4.25121, -0.15569, 15.6647, -0.077868, -4.25028, -0.121512, -14.6343, 45.4057, 2.7559638, -16.9842)
 
 [node name="針葉林樹4_0536" parent="植被/外圍森林/針葉林樹4" unique_id=1722005945 instance=ExtResource("39_2oq4k")]
@@ -7864,7 +7862,7 @@ transform = Transform3D(-10.0537, -0.25467, -9.56905, -0.0405321, 13.5436, -0.33
 [node name="針葉林樹4_0588" parent="植被/外圍森林/針葉林樹4" unique_id=2017381844 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-3.39043, -0.0834503, -13.9121, 0.325648, 13.3923, -0.171143, 13.9086, -0.333901, -3.38728, -55.7544, 2.718042, -21.4997)
 
-[node name="針葉林樹4_0591" parent="植被/外圍森林/針葉林樹4" unique_id=851636378 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0591" parent="植被/外圍森林/針葉林樹4" unique_id=851636378 instance=ExtResource("34_2f543")]
 transform = Transform3D(-7.53376, -0.214635, -14.0142, -0.0919299, 14.7356, -0.213698, 14.0159, -0.018719, -7.5343, 19.4308, 8.566983, -49.186)
 
 [node name="針葉林樹4_0609" parent="植被/外圍森林/針葉林樹4" unique_id=772810087 instance=ExtResource("39_2oq4k")]
@@ -7873,10 +7871,10 @@ transform = Transform3D(-6.27431, 0.288714, 16.5745, -0.348181, 18.8594, -0.4216
 [node name="針葉林樹4_0610" parent="植被/外圍森林/針葉林樹4" unique_id=1076418739 instance=ExtResource("39_2oq4k")]
 transform = Transform3D(-15.1479, -0.239925, -8.00419, -0.0956351, 16.2594, -0.359998, 8.00761, -0.259675, -15.1457, -31.2415, -0.28436598, 45.7682)
 
-[node name="針葉林樹4_0621" parent="植被/外圍森林/針葉林樹4" unique_id=233672062 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0621" parent="植被/外圍森林/針葉林樹4" unique_id=233672062 instance=ExtResource("34_2f543")]
 transform = Transform3D(-11.1213, -0.0405356, 6.82484, -0.128237, 12.989, -0.131126, -6.82375, -0.178034, -11.1206, 30.7544, 3.454276, -23.9868)
 
-[node name="針葉林樹4_0629" parent="植被/外圍森林/針葉林樹4" unique_id=1225216000 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_0629" parent="植被/外圍森林/針葉林樹4" unique_id=1225216000 instance=ExtResource("34_2f543")]
 transform = Transform3D(8.51961, 0.0029736, 12.1326, 0.105402, 15.883, -0.0774052, -12.1322, 0.140077, 8.51926, 11.6552, 7.912303, -49.2791)
 
 [node name="針葉林樹4_0663" parent="植被/外圍森林/針葉林樹4" unique_id=109654311 instance=ExtResource("39_2oq4k")]
@@ -8165,16 +8163,16 @@ transform = Transform3D(16.6346, -0.189671, 2.21566, 0.213997, 17.0787, -0.19530
 [node name="普通樹_0058" parent="植被/外圍森林/普通樹" unique_id=287357458 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-6.60547, -0.145565, 8.59624, -0.112763, 10.4648, 0.103527, -8.59682, -0.0254182, -6.60638, 54.7407, 3.0506785, -14.682)
 
-[node name="普通樹_0063" parent="植被/外圍森林/普通樹" unique_id=152185769 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0063" parent="植被/外圍森林/普通樹" unique_id=152185769 instance=ExtResource("9101_purge")]
 transform = Transform3D(2.07619, 0.106831, -14.5366, -0.345524, 13.8827, 0.0647364, 14.5329, 0.314803, 2.07825, 35.7831, 0.24138212, 4.59791)
 
-[node name="普通樹_0075" parent="植被/外圍森林/普通樹" unique_id=90323558 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0075" parent="植被/外圍森林/普通樹" unique_id=90323558 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(11.2746, -0.05755, -1.23626, 0.0452159, 11.5284, -0.107061, 1.23673, 0.103164, 11.2742, 43.1539, 3.2271113, -27.8161)
 
-[node name="普通樹_0081" parent="植被/外圍森林/普通樹" unique_id=1481131186 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0081" parent="植被/外圍森林/普通樹" unique_id=1481131186 instance=ExtResource("9101_purge")]
 transform = Transform3D(-13.0128, 0.249795, -5.2398, 0.23245, 13.4601, 0.119699, 5.24111, 0.0232258, -13.0148, 40.5873, 2.4284434, -7.68269)
 
-[node name="普通樹_0082" parent="植被/外圍森林/普通樹" unique_id=1512640060 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0082" parent="植被/外圍森林/普通樹" unique_id=1512640060 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(10.0605, 0.012126, 13.6012, -0.0288234, 15.9455, 0.00531776, -13.6012, -0.0248221, 10.0605, 38.7948, 0.71661544, -1.82444)
 
 [node name="普通樹_0108" parent="植被/外圍森林/普通樹" unique_id=1709817709 instance=ExtResource("41_lqrkq")]
@@ -8255,10 +8253,10 @@ transform = Transform3D(-1.91558, -0.336557, -16.5986, -0.188965, 17.0475, -0.31
 [node name="普通樹_0289" parent="植被/外圍森林/普通樹" unique_id=2098321050 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(9.97505, -0.320734, 9.81845, 0.115752, 14.6963, 0.317803, -9.82252, -0.152529, 9.97467, -48.1831, 0.1534831, 21.063)
 
-[node name="普通樹_0302" parent="植被/外圍森林/普通樹" unique_id=47963054 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0302" parent="植被/外圍森林/普通樹" unique_id=47963054 instance=ExtResource("9101_purge")]
 transform = Transform3D(2.85074, 0.186266, 13.9149, -0.0863903, 15.1255, -0.160849, -13.9158, -0.0557424, 2.85157, 34.2638, 3.3564558, -20.2817)
 
-[node name="普通樹_0304" parent="植被/外圍森林/普通樹" unique_id=736843925 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0304" parent="植被/外圍森林/普通樹" unique_id=736843925 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(7.13137, -0.0933159, 7.82874, -0.0125599, 10.6938, 0.136431, -7.82928, -0.102153, 7.13066, 37.609, 2.7730632, -8.61012)
 
 [node name="普通樹_0313" parent="植被/外圍森林/普通樹" unique_id=2012564085 instance=ExtResource("41_lqrkq")]
@@ -8312,7 +8310,7 @@ transform = Transform3D(-12.7792, -0.244146, -1.29564, -0.281311, 11.8319, 0.147
 [node name="普通樹_0506" parent="植被/外圍森林/普通樹" unique_id=433037281 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(6.51735, 0.00832434, -11.7327, -0.284956, 14.5069, -0.149484, 11.7292, 0.347813, 6.51564, -44.8684, 0.023818433, 27.2732)
 
-[node name="普通樹_0513" parent="植被/外圍森林/普通樹" unique_id=1242662527 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0513" parent="植被/外圍森林/普通樹" unique_id=1242662527 instance=ExtResource("9101_purge")]
 transform = Transform3D(6.33659, 0.2842, -9.97068, -0.0876973, 12.2706, 0.268456, 9.97404, -0.0726644, 6.33681, 8.85368, -0.4306628, 11.120755)
 
 [node name="普通樹_0522" parent="植被/外圍森林/普通樹" unique_id=1818991876 instance=ExtResource("41_lqrkq")]
@@ -8336,7 +8334,7 @@ transform = Transform3D(6.70018, -0.037638, 9.45051, 0.0510058, 11.3818, 0.01079
 [node name="普通樹_0567" parent="植被/外圍森林/普通樹" unique_id=48410103 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(8.90413, 0.00623576, -8.93448, 0.141161, 12.621, 0.149478, 8.93336, -0.205647, 8.90288, -19.8289, 0.001722753, 49.651)
 
-[node name="普通樹_0572" parent="植被/外圍森林/普通樹" unique_id=1188627595 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0572" parent="植被/外圍森林/普通樹" unique_id=1188627595 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(-11.3542, 0.0809975, -2.68256, 0.0289907, 10.7627, 0.258985, 2.68384, 0.226409, -11.3516, 36.8548, 8.742514, -44.5739)
 
 [node name="普通樹_0578" parent="植被/外圍森林/普通樹" unique_id=933828645 instance=ExtResource("41_lqrkq")]
@@ -8357,22 +8355,22 @@ transform = Transform3D(-0.144491, -0.0256707, 15.7415, 0.0599046, 16.0451, 0.02
 [node name="普通樹_0604" parent="植被/外圍森林/普通樹" unique_id=677773261 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(0.414202, -0.343767, -14.4724, 0.168499, 13.9629, -0.351739, 14.4758, -0.152692, 0.418199, -56.6843, 3.2336915, -12.1222)
 
-[node name="普通樹_0607" parent="植被/外圍森林/普通樹" unique_id=2128142734 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0607" parent="植被/外圍森林/普通樹" unique_id=2128142734 instance=ExtResource("9101_purge")]
 transform = Transform3D(9.91552, 0.286146, -7.90006, -0.248549, 12.5482, 0.151984, 7.90144, 0.0356342, 9.91857, 34.7646, 3.3507948, -17.0428)
 
 [node name="普通樹_0612" parent="植被/外圍森林/普通樹" unique_id=158723601 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-10.158, -0.18312, -14.5815, -0.0627782, 18.2318, -0.173798, 14.5825, -0.0490706, -10.1581, -46.1713, -0.44808573, 46.3904)
 
-[node name="普通樹_0615" parent="植被/外圍森林/普通樹" unique_id=386280792 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0615" parent="植被/外圍森林/普通樹" unique_id=386280792 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(0.756992, 0.20409, -14.185, -0.312595, 14.9016, 0.178059, 14.1829, 0.317543, 0.76103, -11.5876, -1.2393847, 7.5372)
 
-[node name="普通樹_0626" parent="植被/外圍森林/普通樹" unique_id=218188943 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_0626" parent="植被/外圍森林/普通樹" unique_id=218188943 instance=ExtResource("9101_purge")]
 transform = Transform3D(-8.55244, 0.0773443, -7.3355, 0.126963, 11.5993, -0.0326343, 7.33479, -0.110596, -8.55271, 35.9639, 1.7221708, -4.7275)
 
 [node name="普通樹_0627" parent="植被/外圍森林/普通樹" unique_id=607911424 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-14.5442, -0.148616, 7.36576, -0.0558192, 16.5459, 0.21386, -7.36701, 0.168037, -14.5434, -28.6319, -0.29159716, 49.7495)
 
-[node name="普通樹_0628" parent="植被/外圍森林/普通樹" unique_id=935615160 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_0628" parent="植被/外圍森林/普通樹" unique_id=935615160 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(-8.85414, 0.0553876, 11.0012, 0.198095, 13.4236, 0.0846546, -10.9995, 0.197166, -8.85392, 39.2955, 7.857028, -42.8043)
 
 [node name="普通樹_0634" parent="植被/外圍森林/普通樹" unique_id=1202157238 instance=ExtResource("41_lqrkq")]
@@ -8649,7 +8647,7 @@ transform = Transform3D(17.5034, 0.0639893, -0.275327, -0.0673995, 16.263, 0.094
 
 [node name="2大衫" type="Node3D" parent="植被/外圍森林" unique_id=1929343147]
 
-[node name="2大衫_0061" parent="植被/外圍森林/2大衫" unique_id=72648966 instance=ExtResource("31_i04fv")]
+[node name="大衫_0061" parent="植被/外圍森林/2大衫" unique_id=72648966 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(9.04074, 0.0639767, -11.2541, 0.132622, 14.8316, 0.186394, 11.2535, -0.226189, 9.03903, 42.5096, 5.1907663, -37.9624)
 
 [node name="2大衫_0065" parent="植被/外圍森林/2大衫" unique_id=1596077368 instance=ExtResource("43_tw1d2")]
@@ -8706,10 +8704,10 @@ transform = Transform3D(-12.2393, -0.361862, 10.6561, -0.304634, 16.2523, 0.2003
 [node name="2大衫_0239" parent="植被/外圍森林/2大衫" unique_id=1193007406 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-10.105, -0.173413, -9.33949, -0.309417, 13.1304, 0.0671317, 9.33613, 0.247472, -10.1064, 64.9528, 3.5078802, -13.9686)
 
-[node name="2大衫_0245" parent="植被/外圍森林/2大衫" unique_id=293105458 instance=ExtResource("31_i04fv")]
+[node name="大衫_0245" parent="植被/外圍森林/2大衫" unique_id=293105458 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-13.5463, -0.165821, -5.01113, -0.265595, 13.5915, 0.210268, 5.00719, 0.272321, -13.5458, 31.1695, 0.5287709, 1.22088)
 
-[node name="2大衫_0250" parent="植被/外圍森林/2大衫" unique_id=2032828080 instance=ExtResource("31_i04fv")]
+[node name="大衫_0250" parent="植被/外圍森林/2大衫" unique_id=2032828080 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-1.05218, 0.14689, -13.5938, -0.203712, 14.8653, 0.150864, 13.5929, 0.234151, -1.04998, -19.5905, -0.07870054, 10.4838)
 
 [node name="2大衫_0262" parent="植被/外圍森林/2大衫" unique_id=1556801354 instance=ExtResource("43_tw1d2")]
@@ -8718,7 +8716,7 @@ transform = Transform3D(11.5543, 0.116348, 1.96245, -0.131505, 12.3545, 0.115218
 [node name="2大衫_0266" parent="植被/外圍森林/2大衫" unique_id=1685697878 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(6.80614, 0.187895, 15.3017, -0.252383, 16.1404, -0.101088, -15.3009, -0.182651, 6.80818, -47.7909, 0.17188364, 9.96082)
 
-[node name="2大衫_0267" parent="植被/外圍森林/2大衫" unique_id=1677736894 instance=ExtResource("31_i04fv")]
+[node name="大衫_0267" parent="植被/外圍森林/2大衫" unique_id=1677736894 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-7.8562, 0.1805, 7.209, 0.206674, 10.042, -0.0582153, -7.20858, 0.0911933, -7.85832, -40.0876, 2.3275857, -23.5055)
 
 [node name="2大衫_0273" parent="植被/外圍森林/2大衫" unique_id=910666615 instance=ExtResource("43_tw1d2")]
@@ -8742,7 +8740,7 @@ transform = Transform3D(11.557, -0.336639, 13.2399, 0.164568, 18.8116, 0.273806,
 [node name="2大衫_0321" parent="植被/外圍森林/2大衫" unique_id=437332176 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(15.8531, -0.321995, -8.17585, 0.400136, 19.0787, 0.119262, 8.1716, -0.309543, 15.8555, 31.4057, 0.65973336, 16.6155)
 
-[node name="2大衫_0339" parent="植被/外圍森林/2大衫" unique_id=438287567 instance=ExtResource("31_i04fv")]
+[node name="大衫_0339" parent="植被/外圍森林/2大衫" unique_id=438287567 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(10.5731, 0.153568, -10.2801, -0.00097322, 15.2028, 0.212664, 10.2812, -0.156488, 10.572, -17.2487, -0.10288048, 8.45296)
 
 [node name="2大衫_0341" parent="植被/外圍森林/2大衫" unique_id=1322798003 instance=ExtResource("43_tw1d2")]
@@ -8760,13 +8758,13 @@ transform = Transform3D(-10.1987, -0.0736447, -8.46714, -0.236821, 12.8498, 0.16
 [node name="2大衫_0378" parent="植被/外圍森林/2大衫" unique_id=549951576 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-12.5321, 0.180075, 0.895398, 0.162131, 13.2739, -0.122261, -0.89694, -0.116627, -12.5326, -16.4749, 0.1593266, 30.4589)
 
-[node name="2大衫_0380" parent="植被/外圍森林/2大衫" unique_id=1138838285 instance=ExtResource("31_i04fv")]
+[node name="大衫_0380" parent="植被/外圍森林/2大衫" unique_id=1138838285 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(10.4519, 0.280031, -4.87306, -0.27222, 12.5331, 0.0258616, 4.87227, 0.0995196, 10.4551, 38.8165, 5.7231517, -39.8032)
 
 [node name="2大衫_0385" parent="植被/外圍森林/2大衫" unique_id=1894500008 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-10.9326, -0.154532, 6.51167, -0.157525, 13.5736, 0.0186229, -6.51138, -0.0689147, -10.9336, 13.023, 0.58771706, 31.8196)
 
-[node name="2大衫_0395" parent="植被/外圍森林/2大衫" unique_id=1956209119 instance=ExtResource("31_i04fv")]
+[node name="大衫_0395" parent="植被/外圍森林/2大衫" unique_id=1956209119 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(1.17318, -0.146937, -12.2608, -0.227535, 12.9195, -0.16244, 12.2595, 0.253845, 1.17029, 42.6007, 3.0501256, -22.4631)
 
 [node name="2大衫_0398" parent="植被/外圍森林/2大衫" unique_id=412853897 instance=ExtResource("43_tw1d2")]
@@ -8784,7 +8782,7 @@ transform = Transform3D(-0.399646, -0.213632, -13.9887, 0.120531, 15.1747, -0.20
 [node name="2大衫_0406" parent="植被/外圍森林/2大衫" unique_id=1402854272 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-10.3994, -0.220642, -13.8706, -0.0895778, 18.1172, -0.196717, 13.8719, -0.0484173, -10.3997, 56.4676, -0.1461702, 26.14)
 
-[node name="2大衫_0411" parent="植被/外圍森林/2大衫" unique_id=1803232096 instance=ExtResource("31_i04fv")]
+[node name="大衫_0411" parent="植被/外圍森林/2大衫" unique_id=1803232096 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-5.89609, -0.0199626, 13.7284, 0.249051, 14.3405, 0.12959, -13.7262, 0.268774, -5.89471, 18.0406, 0.5720835, 8.32223)
 
 [node name="2大衫_0414" parent="植被/外圍森林/2大衫" unique_id=793038297 instance=ExtResource("43_tw1d2")]
@@ -8796,7 +8794,7 @@ transform = Transform3D(11.4804, 0.0621526, -7.42259, -0.251648, 14.7228, -0.283
 [node name="2大衫_0430" parent="植被/外圍森林/2大衫" unique_id=514426933 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-13.8291, -0.341081, 10.5478, -0.420766, 18.2173, -0.0148335, -10.5445, -0.279615, -13.8329, -54.9371, 2.8692985, -17.4228)
 
-[node name="2大衫_0445" parent="植被/外圍森林/2大衫" unique_id=2120917090 instance=ExtResource("31_i04fv")]
+[node name="大衫_0445" parent="植被/外圍森林/2大衫" unique_id=2120917090 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-2.25006, 0.16087, -9.12499, 0.148618, 9.02189, 0.13593, 9.12532, -0.107267, -2.2522, 13.5162, 0.2816229, 13.2789)
 
 [node name="2大衫_0448" parent="植被/外圍森林/2大衫" unique_id=433765791 instance=ExtResource("43_tw1d2")]
@@ -8805,10 +8803,10 @@ transform = Transform3D(1.97253, -0.118868, 14.5955, 0.248258, 13.5733, 0.096570
 [node name="2大衫_0452" parent="植被/外圍森林/2大衫" unique_id=973067628 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(15.8838, 0.209693, -4.92849, -0.264312, 15.3284, -0.0841869, 4.92665, 0.146295, 15.8852, 57.5431, 5.3953037, -33.6124)
 
-[node name="2大衫_0464" parent="植被/外圍森林/2大衫" unique_id=1529517558 instance=ExtResource("31_i04fv")]
+[node name="大衫_0464" parent="植被/外圍森林/2大衫" unique_id=1529517558 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(7.54536, 0.2637, -9.5457, -0.181149, 11.4195, 0.214969, 9.54811, 0.00826462, 7.54752, -24.3775, 7.7869744, -49.2637)
 
-[node name="2大衫_0485" parent="植被/外圍森林/2大衫" unique_id=1569366759 instance=ExtResource("31_i04fv")]
+[node name="大衫_0485" parent="植被/外圍森林/2大衫" unique_id=1569366759 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-4.14855, 0.0821855, -12.5958, -0.155192, 12.9764, 0.139524, 12.5951, 0.186961, -4.14706, 32.5746, 5.9424267, -40.9581)
 
 [node name="2大衫_0496" parent="植被/外圍森林/2大衫" unique_id=891620513 instance=ExtResource("43_tw1d2")]
@@ -8838,7 +8836,7 @@ transform = Transform3D(12.0996, 0.00247029, -9.52675, -0.157502, 14.9563, -0.19
 [node name="2大衫_0552" parent="植被/外圍森林/2大衫" unique_id=1742256816 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-17.1978, 0.440694, -1.39516, 0.391716, 18.5075, 0.25171, 1.40064, 0.235087, -17.2008, -55.4616, -0.15839797, 44.9439)
 
-[node name="2大衫_0558" parent="植被/外圍森林/2大衫" unique_id=512283313 instance=ExtResource("31_i04fv")]
+[node name="大衫_0558" parent="植被/外圍森林/2大衫" unique_id=512283313 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-7.50323, -0.25289, -6.4656, -0.20215, 9.97914, -0.149919, 6.46731, 0.018522, -7.50593, -19.3603, 8.17384, -49.3048)
 
 [node name="2大衫_0564" parent="植被/外圍森林/2大衫" unique_id=1676664861 instance=ExtResource("43_tw1d2")]
@@ -8859,16 +8857,16 @@ transform = Transform3D(-6.14062, -0.287236, 15.3255, 0.0713992, 17.2171, 0.3252
 [node name="2大衫_0594" parent="植被/外圍森林/2大衫" unique_id=22326840 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-7.94597, 0.0444658, -8.17125, 0.0505856, 12.3143, 0.0082153, 8.1712, -0.0329944, -7.94607, 24.9656, 0.14970227, 25.2628)
 
-[node name="2大衫_0595" parent="植被/外圍森林/2大衫" unique_id=1598583397 instance=ExtResource("31_i04fv")]
+[node name="大衫_0595" parent="植被/外圍森林/2大衫" unique_id=1598583397 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(0.490811, -0.162617, -14.4146, -0.0479706, 15.1626, -0.156406, 14.4154, 0.0559939, 0.490265, 12.3609, 0.13848686, 18.8299)
 
-[node name="2大衫_0601" parent="植被/外圍森林/2大衫" unique_id=298886512 instance=ExtResource("31_i04fv")]
+[node name="大衫_0601" parent="植被/外圍森林/2大衫" unique_id=298886512 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-1.59736, 0.0124324, 11.5179, 0.0742231, 11.9397, -0.00192981, -11.5177, 0.0752183, -1.5974, -14.4707, -0.15753412, 10.5081)
 
 [node name="2大衫_0606" parent="植被/外圍森林/2大衫" unique_id=1228922033 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-6.66011, 0.0929383, 12.6981, -0.0150846, 13.2703, -0.121305, -12.6985, -0.0645082, -6.65977, -37.4194, -0.46170646, 42.684)
 
-[node name="2大衫_0620" parent="植被/外圍森林/2大衫" unique_id=412569743 instance=ExtResource("31_i04fv")]
+[node name="大衫_0620" parent="植被/外圍森林/2大衫" unique_id=412569743 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-5.40629, 0.311646, 10.1167, 0.100582, 11.9225, -0.286208, -10.1206, -0.0479871, -5.40703, -42.6305, 1.7695267, -7.37573)
 
 [node name="2大衫_0637" parent="植被/外圍森林/2大衫" unique_id=1143053259 instance=ExtResource("43_tw1d2")]
@@ -8889,7 +8887,7 @@ transform = Transform3D(9.24041, -0.0915283, -10.9276, 0.353597, 13.5142, 0.1721
 [node name="2大衫_0645" parent="植被/外圍森林/2大衫" unique_id=240292978 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(14.0345, 0.0462283, 9.54164, -0.144384, 18.0443, 0.135049, -9.54065, -0.205071, 14.0339, 36.4969, 11.957451, -49.9979)
 
-[node name="2大衫_0647" parent="植被/外圍森林/2大衫" unique_id=749011171 instance=ExtResource("31_i04fv")]
+[node name="大衫_0647" parent="植被/外圍森林/2大衫" unique_id=749011171 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(-14.6816, -0.145775, -2.41896, -0.190236, 15.0248, 0.266942, 2.41578, 0.297235, -14.6799, -27.3311, 8.258436, -49.8)
 
 [node name="2大衫_0650" parent="植被/外圍森林/2大衫" unique_id=1874327574 instance=ExtResource("43_tw1d2")]
@@ -8898,7 +8896,7 @@ transform = Transform3D(-11.175, -0.132693, -11.4484, 0.209913, 16.6199, -0.3832
 [node name="2大衫_0652" parent="植被/外圍森林/2大衫" unique_id=1538643483 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-14.083, -0.232767, -6.59412, -0.0727627, 16.1131, -0.37414, 6.59754, -0.319155, -14.0799, -52.8962, 0.091334134, 17.296)
 
-[node name="2大衫_0653" parent="植被/外圍森林/2大衫" unique_id=1281455316 instance=ExtResource("31_i04fv")]
+[node name="大衫_0653" parent="植被/外圍森林/2大衫" unique_id=1281455316 instance=ExtResource("30_ff5aw")]
 transform = Transform3D(6.85758, 0.0493891, 6.93926, -0.180091, 10.0778, 0.110781, -6.93709, -0.212801, 6.85686, 25.8653, 0.7214985, 8.51447)
 
 [node name="2大衫_0666" parent="植被/外圍森林/2大衫" unique_id=5373094 instance=ExtResource("43_tw1d2")]
@@ -12208,7 +12206,7 @@ transform = Transform3D(16.8441, 0.423439, 11.1954, -0.331035, 19.0177, -0.31547
 
 [node name="走廊疏林" type="Node3D" parent="植被" unique_id=121374761]
 
-[node name="普通樹_1772" parent="植被/走廊疏林" unique_id=1874986081 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_1772" parent="植被/走廊疏林" unique_id=1874986081 instance=ExtResource("9101_purge")]
 transform = Transform3D(5.32243, 0.011378, 4.00328, -0.00171208, 6.91039, -0.0159663, -4.00329, 0.0121719, 5.32242, -41.0132, 2.2072353, -38.7627)
 
 [node name="針葉樹1_1773" parent="植被/走廊疏林" unique_id=233633059 instance=ExtResource("36_2rgfx")]
@@ -12229,7 +12227,7 @@ transform = Transform3D(4.79159, -0.0499683, -0.0254464, 0.0515786, 4.65398, 0.0
 [node name="針葉樹2glb_1778" parent="植被/走廊疏林" unique_id=840627294 instance=ExtResource("40_fao25")]
 transform = Transform3D(7.83028, 0.21263, 2.46694, -0.186063, 8.02424, -0.133327, -2.46952, 0.0696229, 7.83217, -42.0944, 2.5491583, -47.9799)
 
-[node name="針葉林樹4_1779" parent="植被/走廊疏林" unique_id=1069407699 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_1779" parent="植被/走廊疏林" unique_id=1069407699 instance=ExtResource("34_2f543")]
 transform = Transform3D(-1.7918, -0.0876338, 5.2291, 0.0989166, 5.39038, 0.128831, -5.22894, 0.132, -1.78942, -33.7308, 2.277726, -30.3873)
 
 [node name="針葉樹1_1780" parent="植被/走廊疏林" unique_id=1559964559 instance=ExtResource("37_4m64b")]
@@ -12262,7 +12260,7 @@ transform = Transform3D(-7.83748, -0.229813, -4.34797, -0.118024, 9.81065, -0.21
 [node name="針葉樹2glb_1789" parent="植被/走廊疏林" unique_id=1362118443 instance=ExtResource("35_8ig3q")]
 transform = Transform3D(-6.31084, -0.0171353, -2.17797, -0.0640742, 7.09863, 0.136287, 2.17709, 0.15925, -6.30939, -30.988, 2.4225829, -34.6585)
 
-[node name="普通樹_1790" parent="植被/走廊疏林" unique_id=386211876 instance=ExtResource("33_77l1h")]
+[node name="針葉樹1_1790" parent="植被/走廊疏林" unique_id=386211876 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(3.84, 0.12315, 4.17571, -0.126979, 5.43815, -0.0577416, -4.17576, -0.0521198, 3.84172, -32.589, 2.7652326, -43.5242)
 
 [node name="針葉樹2glb_1791" parent="植被/走廊疏林" unique_id=1131896485 instance=ExtResource("35_8ig3q")]
@@ -12271,16 +12269,16 @@ transform = Transform3D(-0.678939, 0.144341, 5.15908, 0.0681881, 5.70909, -0.123
 [node name="針葉樹2glb_1792" parent="植被/走廊疏林" unique_id=992886502 instance=ExtResource("40_fao25")]
 transform = Transform3D(9.55399, -0.0788022, 1.43549, 0.108935, 8.91171, -0.150224, -1.43389, 0.151977, 9.55319, -60.0206, 2.5313454, -48.8322)
 
-[node name="針葉林樹4_1793" parent="植被/走廊疏林" unique_id=228976838 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_1793" parent="植被/走廊疏林" unique_id=228976838 instance=ExtResource("34_2f543")]
 transform = Transform3D(1.71372, -0.0842624, -5.05289, -0.102015, 5.27062, -0.124614, 5.05258, 0.134997, 1.71131, -43.3083, 2.2267897, -33.7351)
 
-[node name="普通樹_1794" parent="植被/走廊疏林" unique_id=1481187610 instance=ExtResource("33_77l1h")]
+[node name="鎮守之杜_1794" parent="植被/走廊疏林" unique_id=1481187610 instance=ExtResource("9101_purge")]
 transform = Transform3D(7.47167, -0.0791596, -0.929277, 0.0818935, 7.69084, 0.0305726, 0.928899, -0.0413129, 7.47201, -37.5452, 2.2406387, -34.0291)
 
 [node name="針葉林樹3_1795" parent="植被/走廊疏林" unique_id=308534294 instance=ExtResource("34_2f543")]
 transform = Transform3D(6.03138, -0.138484, 2.48459, 0.152892, 6.0608, 0.0201493, -2.48436, 0.0367892, 6.03319, -37.3475, 2.5937731, -45.1207)
 
-[node name="針葉林樹4_1796" parent="植被/走廊疏林" unique_id=468538674 instance=ExtResource("32_de84v")]
+[node name="針葉林樹3_1796" parent="植被/走廊疏林" unique_id=468538674 instance=ExtResource("34_2f543")]
 transform = Transform3D(1.84053, -0.105982, 4.5639, 0.0424021, 4.54899, 0.106522, -4.56515, -0.000476613, 1.84102, -24.9384, 2.8215547, -35.044)
 
 [node name="針葉樹2glb_1797" parent="植被/走廊疏林" unique_id=78104461 instance=ExtResource("40_fao25")]

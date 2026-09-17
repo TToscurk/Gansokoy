@@ -17,6 +17,9 @@ extends SceneTree
 ## Output: maps/slice/gen/sakura_trees.tscn
 ## Run: godot --headless --path godot --script tools/gen_sakura_nodes.gd
 
+## ⚠ 2026-09-17 使用者裁定：櫻花樹.glb 底部有土台底座，已全面下架。
+##   sakura_trees.tscn 內的 17 株已就地換成鎮守之杜（transform 不變）。
+##   本腳本若再執行會把櫻花樹種回去 —— 除非換掉下面的 GLB 常數，否則勿跑。
 const MM_SRC := "res://maps/slice/gen/treemm_櫻花樹.res"
 const GLB := "res://assets/landscape/櫻花樹.glb"
 const OUT := "res://maps/slice/gen/sakura_trees.tscn"

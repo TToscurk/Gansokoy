@@ -23,6 +23,8 @@ extends Node3D
 ##   所以**沒有自帶土台或地磚**，是板根直接張開。
 ##   原點在幾何中心（asset_probe 判定），底部在 −0.4851。
 
+## ⚠ 2026-09-17 使用者裁定：櫻花樹.glb 底部有土台底座，已全面下架。
+##   本腳本若再執行會把櫻花樹種回河岸 —— 除非換掉下面的 SCENE_PATH，否則勿跑。
 const SCENE_PATH := "res://assets/landscape/櫻花樹.glb"
 
 ## 模型本地底部 —— 座標由此推：position.y = 地面 − LOCAL_BOTTOM × scale

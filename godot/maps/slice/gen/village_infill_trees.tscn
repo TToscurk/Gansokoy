@@ -1,45 +1,45 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/landscape/櫻花樹.glb" id="1_hrqh4"]
-[ext_resource type="PackedScene" path="res://assets/landscape/普通樹.glb" id="2_84cgy"]
 [ext_resource type="PackedScene" path="res://assets/landscape/盆樹.glb" id="3_aeote"]
+[ext_resource type="PackedScene" uid="uid://cm27hy1wguju4" path="res://assets/landscape/針葉樹1.glb" id="9101_purge"]
+[ext_resource type="PackedScene" uid="uid://bwxlquti83b5a" path="res://assets/landscape/鎮守之杜.glb" id="9102_purge"]
 
 [node name="VillageInfillTrees" type="Node3D" unique_id=446816744]
 
-[node name="櫻花樹_01" type="Node3D" parent="." unique_id=1571103595 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_01" type="Node3D" parent="." unique_id=1571103595 instance=ExtResource("9102_purge")]
 transform = Transform3D(-0.5818518, 0, -7.468428, 0, 7.4910593, 0, 7.468428, 0, -0.5818518, 271.61057, -0.08, 113.31072)
 
-[node name="櫻花樹_02" type="Node3D" parent="." unique_id=164293502 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_02" type="Node3D" parent="." unique_id=164293502 instance=ExtResource("9102_purge")]
 transform = Transform3D(-7.5232897, 0, 2.3965845, 0, 7.8957906, 0, -2.3965845, 0, -7.5232897, 263.1399, -0.08, -11.133505)
 
-[node name="櫻花樹_03" type="Node3D" parent="." unique_id=1314234676 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_03" type="Node3D" parent="." unique_id=1314234676 instance=ExtResource("9102_purge")]
 transform = Transform3D(-7.9021535, 0, 0.34050155, 0, 7.9094863, 0, -0.34050155, 0, -7.9021535, 271.647, -0.08, -78.43865)
 
-[node name="櫻花樹_04" type="Node3D" parent="." unique_id=2126214096 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_04" type="Node3D" parent="." unique_id=2126214096 instance=ExtResource("9102_purge")]
 transform = Transform3D(3.8499107, 0, -6.074844, 0, 7.192047, 0, 6.074844, 0, 3.8499107, 261.00308, -0.08, -62.884075)
 
-[node name="櫻花樹_05" type="Node3D" parent="." unique_id=1190621689 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_05" type="Node3D" parent="." unique_id=1190621689 instance=ExtResource("9102_purge")]
 transform = Transform3D(8.079439, 0, -1.0555079, 0, 8.148094, 0, 1.0555079, 0, 8.079439, 262.6873, -0.08, 37.6838)
 
-[node name="櫻花樹_06" type="Node3D" parent="." unique_id=297102417 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_06" type="Node3D" parent="." unique_id=297102417 instance=ExtResource("9102_purge")]
 transform = Transform3D(-7.481618, 0, 2.9495912, 0, 8.042058, 0, -2.9495912, 0, -7.481618, 262.7337, -0.08, 85.5339)
 
-[node name="櫻花樹_07" type="Node3D" parent="." unique_id=1704769559 instance=ExtResource("1_hrqh4")]
+[node name="鎮守之杜_07" type="Node3D" parent="." unique_id=1704769559 instance=ExtResource("9102_purge")]
 transform = Transform3D(-3.7143843, 0, 6.968937, 0, 7.8970075, 0, -6.968937, 0, -3.7143843, 262.98306, -0.08, -42.499683)
 
-[node name="普通樹_01" type="Node3D" parent="." unique_id=1602803958 instance=ExtResource("2_84cgy")]
+[node name="鎮守之杜_01" type="Node3D" parent="." unique_id=1602803958 instance=ExtResource("9102_purge")]
 transform = Transform3D(-0.24554512, 0, 5.7736716, 0, 5.7788906, 0, -5.7736716, 0, -0.24554512, 208.51271, -0.08, 53.216976)
 
-[node name="普通樹_02" type="Node3D" parent="." unique_id=1322503504 instance=ExtResource("2_84cgy")]
+[node name="針葉樹1_02" type="Node3D" parent="." unique_id=1322503504 instance=ExtResource("9101_purge")]
 transform = Transform3D(5.0513606, 0, 1.2652447, 0, 5.207407, 0, -1.2652447, 0, 5.0513606, 204.36288, -0.08, -50.970642)
 
-[node name="普通樹_03" type="Node3D" parent="." unique_id=729923427 instance=ExtResource("2_84cgy")]
+[node name="鎮守之杜_03" type="Node3D" parent="." unique_id=729923427 instance=ExtResource("9102_purge")]
 transform = Transform3D(-6.0363245, 0, -3.0580523, 0, 6.7667494, 0, 3.0580523, 0, -6.0363245, 203.46967, -0.08, 116.545616)
 
-[node name="普通樹_04" type="Node3D" parent="." unique_id=1627693541 instance=ExtResource("2_84cgy")]
+[node name="針葉樹1_04" type="Node3D" parent="." unique_id=1627693541 instance=ExtResource("9101_purge")]
 transform = Transform3D(-5.7820225, 0, -4.163025, 0, 7.124785, 0, 4.163025, 0, -5.7820225, 203.05585, -0.08, 97.78121)
 
-[node name="普通樹_05" type="Node3D" parent="." unique_id=2062993284 instance=ExtResource("2_84cgy")]
+[node name="鎮守之杜_05" type="Node3D" parent="." unique_id=2062993284 instance=ExtResource("9102_purge")]
 transform = Transform3D(-5.6382318, 0, -2.2273967, 0, 6.0622563, 0, 2.2273967, 0, -5.6382318, 214.82631, -0.08, -66.93288)
 
 [node name="盆樹_01" type="Node3D" parent="." unique_id=439122709 instance=ExtResource("3_aeote")]
