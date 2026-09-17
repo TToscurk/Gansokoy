@@ -13,55 +13,59 @@
 ##   impulse         起手時沿面朝方向的 CharacterBody3D 前衝（m/s，程式位移，非 root motion；負值 = 後撤）
 ##   allowed_airborne 可否空中發動
 ##   required_mastery 解鎖所需熟練度
-##   vfx             VFX id："ignite" = 起手日之呼吸火光（CombatVFX.spawn_form_ignite）；"" = 無
+##   vfx             VFX id："ignite" = 起手刀身點燃（CombatVFX.spawn_form_ignite）；"" = 無
+##   trail           刀光側寫 {lifetime 秒, extend 刀尖外延 m, inset 刀根內縮 m, emission 倍率}。
+##                   火只從刀長出來，型的份量差異全在這裡：尾巴留多久、火扇多寬、多亮。
+##                   值對著 real 時長填（clip×section÷speed）：0.37 s 的橫斬配 0.50 s 尾巴，收招後火還掛著。
+##                   缺欄位＝退回普通刀光（0.20 s／0.55 m）。
 ##   cancel          可取消窗口（段落進度比例）
 ##   next            十三型循環中的下一型
 
 const FORMS := {
 	1: {status = "READY", name = "壹ノ型 圓舞", anim = "Attack_Combo", section = Vector2(0.0, 0.34), layer = "upper",
 		speed = 2.0, damage = 1.0, breath_cost = 10.0, cooldown = 0.0, impulse = 1.5,
-		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 2},
+		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 2, trail = {lifetime = 0.28, extend = 0.55}},
 	2: {status = "READY", name = "貳ノ型 碧羅天", anim = "Attack_Spin", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.7, damage = 1.3, breath_cost = 18.0, cooldown = 1.0, impulse = 0.0,
-		allowed_airborne = false, required_mastery = 1, vfx = "", cancel = Vector2(0.6, 0.9), next = 3},
+		allowed_airborne = false, required_mastery = 1, vfx = "", cancel = Vector2(0.6, 0.9), next = 3, trail = {lifetime = 0.60, extend = 0.70}},
 	3: {status = "READY", name = "參ノ型 烈日紅鏡", anim = "Attack_Combo", section = Vector2(0.30, 0.67), layer = "upper",
 		speed = 2.0, damage = 1.1, breath_cost = 12.0, cooldown = 0.0, impulse = 0.5,
-		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 4},
+		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 4, trail = {lifetime = 0.28, extend = 0.55}},
 	4: {status = "READY", name = "肆ノ型 灼骨炎陽", anim = "Attack_Combo_1", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 2.2, damage = 1.2, breath_cost = 15.0, cooldown = 0.5, impulse = 1.0,
-		allowed_airborne = false, required_mastery = 1, vfx = "", cancel = Vector2(0.5, 0.8), next = 5,
+		allowed_airborne = false, required_mastery = 1, vfx = "", cancel = Vector2(0.5, 0.8), next = 5, trail = {lifetime = 0.35, extend = 0.60},
 		note = "第二輪風格減法：已下線連段自動收尾；保留 execute_form 通道"},
 	5: {status = "READY", name = "伍ノ型 斜陽轉身", anim = "Attack_Form05_Turn", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.7, damage = 1.2, breath_cost = 14.0, cooldown = 1.0, impulse = 1.0,
-		allowed_airborne = false, required_mastery = 2, vfx = "ignite", cancel = Vector2(0.62, 0.95), next = 6,
+		allowed_airborne = false, required_mastery = 2, vfx = "ignite", cancel = Vector2(0.62, 0.95), next = 6, trail = {lifetime = 0.40, extend = 0.60},
 		note = "自製動畫（tools/blender/make_form_clips.py，14 幀）：腰擰→由右下往左上撩斬。連段分支：LMB 二段中按 RMB；dodge counter（翻滾中 LMB）仍走 Combo 段1"},
 	6: {status = "READY", name = "陸ノ型 飛輪陽炎", anim = "Attack_Form06_Wheel", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.8, damage = 1.4, breath_cost = 16.0, cooldown = 2.0, impulse = 5.0,
-		allowed_airborne = false, required_mastery = 2, vfx = "ignite", cancel = Vector2(0.60, 0.95), next = 7,
+		allowed_airborne = false, required_mastery = 2, vfx = "ignite", cancel = Vector2(0.60, 0.95), next = 7, trail = {lifetime = 0.50, extend = 0.85, emission = 1.15},
 		note = "自製動畫（16 幀）：前弓步水平橫斬，起手前衝 5 m/s。連段分支：LMB 一段中按 RMB。quick-draw（SHEATHED+LMB）仍走 Combo 段1"},
 	7: {status = "READY", name = "柒ノ型 輝輝恩光", anim = "Attack_Judgment", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 2.4, damage = 1.8, breath_cost = 25.0, cooldown = 3.0, impulse = 0.5,
-		allowed_airborne = false, required_mastery = 2, vfx = "", cancel = Vector2(0.7, 0.95), next = 8,
+		allowed_airborne = false, required_mastery = 2, vfx = "", cancel = Vector2(0.7, 0.95), next = 8, trail = {lifetime = 0.35, extend = 0.60},
 		note = "第二輪風格減法：已從預設 RMB 下線（過大幅度的縱劈）；保留 execute_form 通道"},
 	8: {status = "READY", name = "捌ノ型 陽華突", anim = "Attack_Thrust", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.6, damage = 1.5, breath_cost = 18.0, cooldown = 2.0, impulse = 6.0,
-		allowed_airborne = false, required_mastery = 3, vfx = "", cancel = Vector2(0.55, 0.85), next = 9,
+		allowed_airborne = false, required_mastery = 3, vfx = "", cancel = Vector2(0.55, 0.85), next = 9, trail = {lifetime = 0.22, extend = 0.25, inset = 0.0},
 		note = "直線突刺：自製動畫（tools/blender/make_form08_thrust.py，30 幀 @24fps）。蓄 f0-7 / 突 f8-12 / 留 f13-17 / 收 f18-30；突刺段爆發 4.6x 於收招段"},
 	9: {status = "READY", name = "玖ノ型 日暈龍・頭舞", anim = "Attack_Continuous_Spin", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.8, damage = 1.6, breath_cost = 22.0, cooldown = 3.0, impulse = 2.0,
-		allowed_airborne = false, required_mastery = 0, vfx = "", cancel = Vector2(0.7, 0.95), next = 10,
+		allowed_airborne = false, required_mastery = 0, vfx = "", cancel = Vector2(0.7, 0.95), next = 10, trail = {lifetime = 0.45, extend = 0.60},
 		note = "連續旋轉砍擊（Meshy AI 衍生）：高速迴旋連段"},
 	10: {status = "READY", name = "拾ノ型 火車", anim = "Attack_Spin_Jump", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 2.0, damage = 1.6, breath_cost = 24.0, cooldown = 3.0, impulse = 2.0,
-		allowed_airborne = true, required_mastery = 3, vfx = "", cancel = Vector2(0.7, 0.95), next = 11,
+		allowed_airborne = true, required_mastery = 3, vfx = "", cancel = Vector2(0.7, 0.95), next = 11, trail = {lifetime = 0.50, extend = 0.70},
 		note = "第二輪風格減法：已從預設空中 RMB 下線（旋轉幅度過大）；保留 execute_form 通道"},
 	11: {status = "READY", name = "拾壹ノ型 幻日虹", anim = "Attack_Form11_Halo", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.8, damage = 1.3, breath_cost = 20.0, cooldown = 4.0, impulse = -1.5,
-		allowed_airborne = false, required_mastery = 4, vfx = "ignite", cancel = Vector2(0.65, 0.95), next = 12,
+		allowed_airborne = false, required_mastery = 4, vfx = "ignite", cancel = Vector2(0.65, 0.95), next = 12, trail = {lifetime = 0.45, extend = 0.65},
 		note = "自製動畫（16 幀）：上身後仰閃身（起手後撤 1.5 m/s）→ 斜下反斬。連段分支：RMB 聚力單斬中按 LMB。殘影 VFX 尚未做"},
 	12: {status = "READY", name = "拾貳ノ型 炎舞", anim = "Attack_Form12_Dance", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.9, damage = 1.5, breath_cost = 20.0, cooldown = 2.5, impulse = 2.0,
-		allowed_airborne = false, required_mastery = 4, vfx = "ignite", cancel = Vector2(0.72, 0.95), next = 1, rehit = 0.55,
+		allowed_airborne = false, required_mastery = 4, vfx = "ignite", cancel = Vector2(0.72, 0.95), next = 1, trail = {lifetime = 0.45, extend = 0.60}, rehit = 0.55,
 		note = "自製動畫（22 幀）：高舉直劈 → 低位撩起兩段一氣（rehit 0.55 = 第二刀重新判定命中）。連段分支：LMB 三段中按 RMB（連段終結）"},
 }
 

@@ -13,6 +13,8 @@ var _fail := 0
 
 
 func _initialize() -> void:
+	# 看門狗：任何路徑卡住都不能讓 headless 永遠不退出。
+	create_timer(40.0).timeout.connect(func(): print("FAIL  watchdog 40s"); quit(2))
 	_run()
 
 
@@ -31,6 +33,10 @@ func _run() -> void:
 
 	# 2. SwordTrail3D 能實例化
 	var TrailScript := load("res://characters/yoriichi/vfx/sword_trail.gd")
+	if TrailScript == null or not TrailScript.can_instantiate():
+		print("FAIL  sword_trail.gd 解析失敗（load 非 null 但不可實例化）")
+		quit(1)
+		return
 	if TrailScript == null:
 		print("FAIL  sword_trail.gd 載入失敗")
 		quit(1)
@@ -111,7 +117,50 @@ func _run() -> void:
 	print("      刀身長 1.05 m；ribbon 最大跨距 ", snappedf(span, 0.01), " m")
 	print("      flame_extend = ", trail.flame_extend, " m（火舌往刀尖外的生長空間）")
 
-	# 6. stop 之後不再取樣
+	# 6. 多 run：型尾巴拉長後接招，上一刀的火不能當幀消失，也不能跟新招連成一片
+	trail.stop_trail()
+	trail.apply_form({"trail": {"lifetime": 0.6, "extend": 0.8}})
+	trail.start_trail()
+	for i in range(12):
+		var a2: float = float(i) / 12.0 * PI * 0.8
+		base_m.position = Vector3(3.0 + sin(a2) * 0.25, 1.0, cos(a2) * 0.25)
+		tip_m.position = Vector3(3.0 + sin(a2) * 1.30, 1.15, cos(a2) * 1.30)
+		trail._process(dt)
+	trail.stop_trail()
+	trail.reset_form()
+	if trail.lifetime != 0.2 or trail.flame_extend != 0.55:
+		print("FAIL  reset_form 沒還原預設（lifetime=", trail.lifetime, " extend=", trail.flame_extend, "）")
+		_fail += 1
+	else:
+		print("OK    apply_form/reset_form 往返正確")
+	# 第三段：再開一段普通刀光，此時第一段(0.2s)已燒完、第二段(0.6s)還在
+	trail.start_trail()
+	for i in range(6):
+		base_m.position = Vector3(-3.0, 1.0 + i * 0.05, 0)
+		tip_m.position = Vector3(-3.0, 2.05 + i * 0.05, 0.3 * i)
+		trail._process(dt)
+	var runs_now: int = trail._runs.size()
+	var surf_now: int = fm.get_surface_count()
+	print("OK    多 run：runs=", runs_now, " 外焰 surface=", surf_now, "（第一段 0.2s 應已淘汰、第二段 0.6s 仍在、第三段取樣中）")
+	if surf_now != 2:
+		print("FAIL  期望 2 段獨立 strip（舊尾巴保留且不與新招相連），實得 ", surf_now)
+		_fail += 1
+	var p2: Dictionary = trail._runs[0][0]
+	if absf(float(p2.life) - 0.6) > 0.001 or absf(float(p2.extend) - 0.8) > 0.001:
+		print("FAIL  舊 run 取樣點沒保住自己的 life/extend（", p2.life, "/", p2.extend, "）")
+		_fail += 1
+	else:
+		print("OK    舊 run 取樣點保住 life=0.6 extend=0.8，不受 reset 影響")
+	# 再推 0.7s：第二段燒完應被丟掉
+	trail.stop_trail()
+	for i in range(45):
+		trail._process(dt)
+	print("OK    0.75s 後 runs=", trail._runs.size(), "（應為 0）")
+	if trail._runs.size() != 0:
+		print("FAIL  燒完的 run 沒被回收")
+		_fail += 1
+
+	# 7. stop 之後不再取樣
 	trail.stop_trail()
 	if trail.is_emitting:
 		print("FAIL  stop_trail 沒有停止取樣")

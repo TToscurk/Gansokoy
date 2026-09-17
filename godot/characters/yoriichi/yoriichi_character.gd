@@ -179,9 +179,9 @@ extends CharacterBody3D
 @export var sprint_heavy_form := 8
 ## 型結束前可接下一招的窗口（進度比例）：型表 cancel.x 之後，LMB 回連段段1、RMB 接聚力單斬。
 @export var form_followup_enabled := true
-## 日之呼吸起手火光（型發動瞬間的爆閃）與火焰刀光增幅。
+## 日之呼吸起手：型發動瞬間刀身點燃。型的刀光側寫（尾巴長度／火扇寬度／亮度）
+## 已移到 sun_breathing.gd FORMS[id].trail，不在這裡調。
 @export var form_ignite_vfx := true
-@export var form_trail_lifetime := 0.34
 ## 型的起手位移（impulse）持續時間（秒）：起手瞬間全速、線性衰減到 0。
 ## ⚠ 之前 execute_form 只做 velocity += impulse，下一個 physics 幀就被輸入速度蓋掉，
 ##   捌型 6 m/s 從來沒真的衝出去；改成有時長的 dash 才會有位移。
@@ -504,6 +504,8 @@ func _find_first(n: String) -> Node3D:
 	return r[0] if r.size() > 0 else null
 
 var _character_audio: CharacterAudio
+## 腳步音效（依地表切音庫）。見 footstep_audio.gd。
+var _footstep_audio: FootstepAudio
 ## 隻狼式血量／軀幹；敵人共用同一份 posture.gd。
 var posture: Node = null
 var _guard_held := false
@@ -515,6 +517,12 @@ func _setup_combat_extensions() -> void:
 	_character_audio = CharacterAudio.new()
 	_character_audio.name = "CharacterAudio"
 	add_child(_character_audio)
+
+	# 腳步：以前完全不存在（全專案 grep 不到任何 footstep 實作）。
+	# 地表由腳下射線打到的 collider 名稱判定，見 footstep_audio.gd。
+	_footstep_audio = FootstepAudio.new()
+	_footstep_audio.name = "FootstepAudio"
+	add_child(_footstep_audio)
 
 	_hit_feedback = HitFeedback.new()
 	_hit_feedback.name = "HitFeedback"
@@ -1360,6 +1368,11 @@ func _physics_process(delta):
 	_update_visual_yaw(delta, input_dir, moving, running)
 	if _tree:
 		_update_locomotion(delta, input_dir, is_on_floor(), moving, running)
+	# 腳步：用實際水平速度而不是輸入 —— 撞牆、被擊退、踩斜坡時速度才是真的。
+	if _footstep_audio != null:
+		var flat := Vector2(velocity.x, velocity.z).length()
+		var can_step := action_state != ActionState.DODGING and _jump_charge < 0.0
+		_footstep_audio.tick(delta, is_on_floor() and can_step, flat, running)
 
 ## Stair / ledge step: if moving horizontally into something at foot level
 ## that we could stand on top of within step_height, lift the body onto it.
@@ -1800,6 +1813,8 @@ func _start_light_section(stage: int) -> void:
 	_fire_upper("atk%d" % stage, spd)
 	_character_audio.play_swing(stage)
 	if _sword_trail != null:
+		# 普通斬一律用預設側寫；型被硬直打斷時沒走 _finish_attack，不補這行會拖著型的長尾巴。
+		_sword_trail.reset_form()
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
@@ -1842,6 +1857,8 @@ func request_special_attack(animation_name: String) -> void:
 	_fire_full(key, spd)
 	_character_audio.play_heavy_swing()
 	if _sword_trail != null:
+		# 普通斬一律用預設側寫；型被硬直打斷時沒走 _finish_attack，不補這行會拖著型的長尾巴。
+		_sword_trail.reset_form()
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
@@ -2004,6 +2021,8 @@ func request_heavy_cut() -> void:
 	_fire_upper("atk1", heavy_cut_speed)
 	_character_audio.play_heavy_swing()
 	if _sword_trail != null:
+		# 普通斬一律用預設側寫；型被硬直打斷時沒走 _finish_attack，不補這行會拖著型的長尾巴。
+		_sword_trail.reset_form()
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
@@ -2081,6 +2100,7 @@ func can_cancel_continuous_spin() -> bool:
 func cancel_continuous_spin() -> void:
 	if _sword_trail != null:
 		_sword_trail.stop_trail()
+		_sword_trail.reset_form()
 	if _hitbox != null:
 		_hitbox.monitoring = false
 	_hit_targets_this_swing.clear()
@@ -2107,7 +2127,8 @@ func _finish_attack() -> void:
 	_action_real = 0.0
 	if _sword_trail != null:
 		_sword_trail.stop_trail()
-		_sword_trail.lifetime = _trail_default_lifetime
+		# 只還原「下一刀」的參數；已拖出來的尾巴帶著自己的 life/extend 燒完。
+		_sword_trail.reset_form()
 	if _hitbox != null:
 		_hitbox.monitoring = false
 	_hit_targets_this_swing.clear()
@@ -2318,13 +2339,19 @@ func execute_form(id: int, free := false) -> bool:
 	# 日之呼吸演出：起手火光＋型專用音效＋加長火焰刀光。
 	if String(def.get("vfx", "")) == "ignite" and form_ignite_vfx:
 		var origin: Vector3 = _blade_base.global_position if _blade_base != null else global_position + Vector3(0, 1.0, 0)
-		var fwd: Vector3 = _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
+		# 火星沿刀身（刀根→刀尖）噴，不是沿角色面朝：這是「刀被點燃」不是「腳下起火」。
+		var fwd: Vector3
+		if _blade_base != null and _blade_tip != null:
+			fwd = (_blade_tip.global_position - _blade_base.global_position).normalized()
+		else:
+			fwd = _visual.global_transform.basis.z if _visual != null else -global_transform.basis.z
 		CombatVFX.spawn_form_ignite(self, origin, fwd)
 	if _character_audio != null:
 		_character_audio.play_form(id)
 	if _sword_trail != null:
-		if String(def.get("vfx", "")) == "ignite":
-			_sword_trail.lifetime = form_trail_lifetime
+		# 型的刀光側寫（FORMS.trail）必須在 start_trail() 之前套，
+		# 否則第一個取樣點會拿到普通刀光的壽命與寬度。
+		_sword_trail.apply_form(def)
 		_sword_trail.start_trail()
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:

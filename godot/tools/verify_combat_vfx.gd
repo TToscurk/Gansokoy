@@ -16,11 +16,17 @@ var _fail := 0
 
 
 func _initialize() -> void:
+	# 看門狗：任何路徑卡住都不能讓 headless 永遠不退出。
+	create_timer(40.0).timeout.connect(func(): print("FAIL  watchdog 40s"); quit(2))
 	_run()
 
 
 func _run() -> void:
 	var CV := load("res://characters/yoriichi/vfx/combat_vfx.gd")
+	if CV == null or not CV.can_instantiate():
+		print("FAIL  combat_vfx.gd 解析失敗（load 非 null 但不可實例化）")
+		quit(1)
+		return
 	if CV == null:
 		print("FAIL  combat_vfx.gd 載入失敗（語法錯誤）")
 		quit(1)

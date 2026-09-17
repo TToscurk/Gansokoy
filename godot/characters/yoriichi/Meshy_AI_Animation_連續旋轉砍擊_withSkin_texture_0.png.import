@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cshwnqd4vv51a"
-path="res://.godot/imported/Meshy_AI_Animation_連續旋轉砍擊_withSkin_texture_0.png-d341a764c7cb6eaabd208ec316e0c2d8.ctex"
+path.s3tc="res://.godot/imported/Meshy_AI_Animation_連續旋轉砍擊_withSkin_texture_0.png-d341a764c7cb6eaabd208ec316e0c2d8.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "b521ae0be8d02b36d977bc304cb98c38"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://characters/yoriichi/Meshy_AI_Animation_連續旋轉砍擊_withSkin_texture_0.png"
-dest_files=["res://.godot/imported/Meshy_AI_Animation_連續旋轉砍擊_withSkin_texture_0.png-d341a764c7cb6eaabd208ec316e0c2d8.ctex"]
+dest_files=["res://.godot/imported/Meshy_AI_Animation_連續旋轉砍擊_withSkin_texture_0.png-d341a764c7cb6eaabd208ec316e0c2d8.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

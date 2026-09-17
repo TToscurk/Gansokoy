@@ -299,47 +299,7 @@ static func spawn_deathblow_burst(parent: Node, hit_pos: Vector3, normal: Vector
 	shards.process_material = sm
 	_emit_once(root, hit_pos, shards)
 
-	# --- 3. 水平衝擊環：貼地往外推，給「這一刀落定」的份量 ---
-	var ring := GPUParticles3D.new()
-	ring.top_level = true
-	ring.emitting = false
-	ring.one_shot = true
-	ring.explosiveness = 1.0
-	ring.lifetime = 0.34
-	ring.amount = 18
-	ring.transform_align = GPUParticles3D.TRANSFORM_ALIGN_Z_BILLBOARD_Y_TO_VELOCITY
-
-	var rm := ParticleProcessMaterial.new()
-	rm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_RING
-	rm.emission_ring_radius = 0.30
-	rm.emission_ring_inner_radius = 0.18
-	rm.emission_ring_axis = Vector3.UP
-	rm.emission_ring_height = 0.05
-	rm.direction = Vector3.ZERO      # 由環的法線往外
-	rm.spread = 12.0
-	rm.radial_velocity_min = 7.0
-	rm.radial_velocity_max = 12.0
-	rm.gravity = Vector3(0, -1.5, 0)
-	rm.damping_min = 6.0
-	rm.damping_max = 11.0
-	rm.scale_min = 0.8
-	rm.scale_max = 1.3
-	var rg := Gradient.new()
-	rg.set_color(0, C_GOLD)
-	rg.add_point(0.55, C_CRIMSON)
-	rg.set_color(1, Color(C_EMBER.r, C_EMBER.g, C_EMBER.b, 0.0))
-	var rgt := GradientTexture1D.new()
-	rgt.gradient = rg
-	rm.color_ramp = rgt
-
-	var rquad := QuadMesh.new()
-	rquad.size = Vector2(0.07, 0.40)
-	rquad.material = _make_draw_mat(_get_streak_texture(), false, true)
-	ring.draw_pass_1 = rquad
-	ring.process_material = rm
-	_emit_once(root, hit_pos, ring)
-
-	# --- 4. 補光：忍殺是全場最亮的一下 ---
+	# --- 3. 補光：忍殺是全場最亮的一下 ---
 	_flash_light(root, hit_pos + Vector3(0, 0.2, 0), Color(1.0, 0.82, 0.55), 6.5, 7.0, 0.28)
 
 
@@ -353,51 +313,7 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	var root := parent.get_tree().root
 	var fwd := forward.normalized() if forward.length_squared() > 0.0001 else Vector3.FORWARD
 
-	# --- 1. 火冠：環狀火舌往外展開並上揚（mix 保邊）---
-	var ring := GPUParticles3D.new()
-	ring.top_level = true
-	ring.emitting = false
-	ring.one_shot = true
-	ring.explosiveness = 1.0
-	ring.lifetime = 0.42
-	ring.amount = 26
-	ring.transform_align = GPUParticles3D.TRANSFORM_ALIGN_Z_BILLBOARD_Y_TO_VELOCITY
-
-	var rm := ParticleProcessMaterial.new()
-	rm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_RING
-	rm.emission_ring_radius = 0.24
-	rm.emission_ring_inner_radius = 0.10
-	rm.emission_ring_axis = Vector3.UP
-	rm.emission_ring_height = 0.06
-	rm.direction = Vector3(0, 1, 0)
-	rm.spread = 35.0
-	rm.initial_velocity_min = 2.0
-	rm.initial_velocity_max = 4.0
-	rm.radial_velocity_min = 2.5
-	rm.radial_velocity_max = 5.0
-	rm.gravity = Vector3(0, 2.6, 0)   # 火往上飄
-	rm.damping_min = 4.0
-	rm.damping_max = 7.0
-	rm.scale_min = 0.9
-	rm.scale_max = 1.6
-	var rg := Gradient.new()
-	rg.set_color(0, C_CORE)
-	rg.add_point(0.30, C_GOLD)
-	rg.add_point(0.62, C_AMBER)
-	rg.add_point(0.85, C_CRIMSON)
-	rg.set_color(1, Color(C_EMBER.r, C_EMBER.g, C_EMBER.b, 0.0))
-	var rgt := GradientTexture1D.new()
-	rgt.gradient = rg
-	rm.color_ramp = rgt
-
-	var rquad := QuadMesh.new()
-	rquad.size = Vector2(0.11, 0.52)
-	rquad.material = _make_draw_mat(_get_streak_texture(), false, true)
-	ring.draw_pass_1 = rquad
-	ring.process_material = rm
-	_emit_once(root, origin, ring)
-
-	# --- 2. 刀根白熱核心（add，進 bloom）---
+	# --- 1. 刀根白熱核心（add，進 bloom）---
 	var core := GPUParticles3D.new()
 	core.top_level = true
 	core.emitting = false
@@ -433,7 +349,7 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	core.process_material = cm
 	_emit_once(root, origin, core)
 
-	# --- 3. 前方火星噴流（沿刀向）---
+	# --- 2. 火星噴流（沿刀身方向）---
 	var jet := GPUParticles3D.new()
 	jet.top_level = true
 	jet.emitting = false
@@ -446,7 +362,7 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	var jm := ParticleProcessMaterial.new()
 	jm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
 	jm.emission_sphere_radius = 0.08
-	jm.direction = (fwd + Vector3(0, 0.30, 0)).normalized()
+	jm.direction = fwd
 	jm.spread = 24.0
 	jm.initial_velocity_min = 5.5
 	jm.initial_velocity_max = 9.5
@@ -470,8 +386,8 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	jet.process_material = jm
 	_emit_once(root, origin, jet)
 
-	# --- 4. 暖色閃光燈 ---
-	_flash_light(root, origin + Vector3(0, 0.3, 0), Color(1.0, 0.55, 0.18), 5.5, 5.0, 0.20)
+	# --- 3. 暖色閃光燈（短、小，打在地上也不能讀成一圈光）---
+	_flash_light(root, origin + Vector3(0, 0.3, 0), Color(1.0, 0.55, 0.18), 3.8, 3.6, 0.14)
 
 
 # ---------------------------------------------------------------------------
