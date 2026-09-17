@@ -313,43 +313,8 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	var root := parent.get_tree().root
 	var fwd := forward.normalized() if forward.length_squared() > 0.0001 else Vector3.FORWARD
 
-	# --- 1. 刀根白熱核心（add，進 bloom）---
-	var core := GPUParticles3D.new()
-	core.top_level = true
-	core.emitting = false
-	core.one_shot = true
-	core.explosiveness = 1.0
-	core.lifetime = 0.20
-	core.amount = 6
-
-	var cm := ParticleProcessMaterial.new()
-	cm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
-	cm.emission_sphere_radius = 0.10
-	cm.direction = Vector3.UP
-	cm.spread = 80.0
-	cm.initial_velocity_min = 0.4
-	cm.initial_velocity_max = 1.6
-	cm.gravity = Vector3(0, 1.0, 0)
-	cm.damping_min = 5.0
-	cm.damping_max = 9.0
-	cm.scale_min = 0.7
-	cm.scale_max = 1.4
-	var cg := Gradient.new()
-	cg.set_color(0, C_CORE)
-	cg.add_point(0.5, C_GOLD)
-	cg.set_color(1, Color(C_AMBER.r, C_AMBER.g, C_AMBER.b, 0.0))
-	var cgt := GradientTexture1D.new()
-	cgt.gradient = cg
-	cm.color_ramp = cgt
-
-	var cquad := QuadMesh.new()
-	cquad.size = Vector2(0.40, 0.40)
-	cquad.material = _make_draw_mat(_get_spark_texture(), true)
-	core.draw_pass_1 = cquad
-	core.process_material = cm
-	_emit_once(root, origin, core)
-
-	# --- 2. 火星噴流（沿刀身方向）---
+	# --- 1. 火星噴流（沿刀身方向）---
+	# 不做刀根白熱爆閃：它跟刀光內核在刀根疊成一顆獨立白球，讀成「手上發光」。
 	var jet := GPUParticles3D.new()
 	jet.top_level = true
 	jet.emitting = false
@@ -386,7 +351,7 @@ static func spawn_form_ignite(parent: Node, origin: Vector3, forward: Vector3 = 
 	jet.process_material = jm
 	_emit_once(root, origin, jet)
 
-	# --- 3. 暖色閃光燈（短、小，打在地上也不能讀成一圈光）---
+	# --- 2. 暖色閃光燈（短、小，打在地上也不能讀成一圈光）---
 	_flash_light(root, origin + Vector3(0, 0.3, 0), Color(1.0, 0.55, 0.18), 3.8, 3.6, 0.14)
 
 

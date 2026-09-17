@@ -42,10 +42,10 @@ func _initialize() -> void:
 	var pivot: Node3D = player.get_node_or_null("Pivot")
 	var arm: SpringArm3D = player.get_node_or_null("Pivot/SpringArm3D")
 	if arm != null:
-		arm.spring_length = 5.2
+		arm.spring_length = 3.2
 	if pivot != null:
 		pivot.rotation.y = player.global_rotation.y + PI * 0.75
-		pivot.rotation.x = deg_to_rad(-22.0)
+		pivot.rotation.x = deg_to_rad(-14.0)
 
 	player.set("sword_state", 2)
 	player.call("_apply_sword_visibility")
@@ -60,9 +60,10 @@ func _initialize() -> void:
 		for i in 30:
 			await process_frame
 		var ok: bool = player.call("execute_form", form_id, true)
-		print("[型%d] execute_form = %s（%s）" % [form_id, ok, player.call("form_block_reason", form_id)])
 		if not ok:
+			print("[型%d] 發不出來：%s" % [form_id, player.call("form_block_reason", form_id)])
 			continue
+		print("[型%d] execute_form OK" % form_id)
 		var elapsed := 0.0
 		var shot_i := 0
 		var times: Array = SHOTS[form_id]
@@ -73,7 +74,9 @@ func _initialize() -> void:
 				var img: Image = get_root().get_texture().get_image()
 				var path := "%s/form%02d_t%03d.png" % [OUT_DIR, form_id, int(round(float(times[shot_i]) * 100.0))]
 				img.save_png(path)
-				print("  t=%.2f  runs=%d  → %s" % [elapsed, player._sword_trail._runs.size(), ProjectSettings.globalize_path(path)])
+				var tr = player._sword_trail
+				var n_pts: int = tr._runs.back().size() if not tr._runs.is_empty() else 0
+				print("  t=%.2f  runs=%d  pts=%d  travel=%.2f m  → %s" % [elapsed, tr._runs.size(), n_pts, tr._travel, path.get_file()])
 				shot_i += 1
 			if elapsed > 3.0:
 				break

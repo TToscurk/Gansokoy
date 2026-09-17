@@ -32,6 +32,15 @@ class_name SwordTrail3D
 @export_range(0.15, 1.0, 0.01) var core_lifetime_ratio := 0.55
 ## ribbon 平滑細分：每兩個取樣點之間插入幾段。0 = 不平滑（快速揮刀會有折角）。
 @export_range(0, 4, 1) var smooth_subdiv := 2
+## 外焰保持全亮的壽命比例，之後才淡出。0 = 一出現就開始衰減（舊版 (1-t)²，
+## 半壽命只剩 25%，0.5 s 的尾巴視覺上 0.25 s 就沒了）。
+@export_range(0.0, 0.9, 0.01) var fade_hold := 0.40
+## 火舌隨年齡往上竄的高度（公尺）。ribbon 躺在揮刀平面裡，3/4 俯角看是一片薄板；
+## 舊尾巴往上翻成火幕，橫斬從任何相機角度都有厚度。0 = 關。
+@export_range(0.0, 1.0, 0.01) var flame_lift := 0.30
+## 內核從刀根往刀尖退多少（0..1，佔刀身比例）。刀根不動、刀尖大掃時
+## strip 在刀根縮成一束重疊三角形，ADD 疊成白球；讓核心避開刀根。
+@export_range(0.0, 0.5, 0.01) var core_root_skip := 0.22
 
 @export_group("Colors")
 ## 五層色階，預設取自參考圖：白熱 → 金黃 → 橙琥珀 → 朱紅 → 暗紅褐。
@@ -274,12 +283,13 @@ func _build_run(run: Array) -> void:
 		if dir.length_squared() < 0.000001:
 			dir = Vector3.UP
 		dir = dir.normalized()
-		var inner := base_p - dir * float(p.inset)
-		var outer := tip_p + dir * float(p.extend)
-
 		var t: float = clampf(p.age / maxf(float(p.life), 0.0001), 0.0, 1.0)
-		# 平方衰減：尾端收得快，刀光才有「甩出去」的錐形而不是等寬色帶。
-		var alpha: float = (1.0 - t) * (1.0 - t)
+		var inner := base_p - dir * float(p.inset)
+		# 火舌隨年齡上竄：新取樣貼著刀，舊尾巴往上翻成火幕。
+		var outer := tip_p + dir * float(p.extend) + Vector3.UP * flame_lift * t
+
+		# 前段保持、末段淡出：尾巴真的留到壽命結束，不是一出現就在消失。
+		var alpha: float = 1.0 - smoothstep(fade_hold, 1.0, t)
 		var c := Color(1, 1, 1, alpha)
 
 		_flame_mesh.surface_set_color(c)
@@ -307,9 +317,11 @@ func _build_run(run: Array) -> void:
 		var alpha: float = (1.0 - t) * (1.0 - t)
 		var c := Color(1, 1, 1, alpha)
 
+		var cdir: Vector3 = p.tip - p.base
+		var cbase: Vector3 = p.base + cdir * core_root_skip
 		_core_mesh.surface_set_color(c)
 		_core_mesh.surface_set_uv(Vector2(p.travel, 0.0))
-		_core_mesh.surface_add_vertex(p.base)
+		_core_mesh.surface_add_vertex(cbase)
 
 		_core_mesh.surface_set_color(c)
 		_core_mesh.surface_set_uv(Vector2(p.travel, 1.0))
