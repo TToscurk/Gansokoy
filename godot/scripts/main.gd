@@ -472,6 +472,7 @@ func load_map(id: String, from_id: String) -> void:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
 	_apply_interior_lighting(id)
+	_apply_wildlife_audio(id)
 	_place_player(meta, from_id)
 	_wire_world_interactions()
 	# 敵人：CombatEncounter 是**執行期**生怪，載圖時掃一次不夠 ——
@@ -895,6 +896,16 @@ func _apply_interior_lighting(id: String) -> void:
 	var fallback: Environment = mwe.environment if mwe != null else null
 	var n: int = rig.apply(map_root, fallback)
 	print("[light] %s 室內補光：ambient=%.2f + %d 盞散射補燈" % [id, rig.ambient_energy, n])
+
+
+## 戶外圖的環境生物音（鳥鳴／夜梟／蛙）。室內圖不掛 —— 在稗田家三樓
+## 聽到樹梢鳥叫只會出戲。素材與授權見 docs/audio_sources.md。
+func _apply_wildlife_audio(id: String) -> void:
+	if INTERIOR_MAPS.has(id) or map_root == null:
+		return
+	var wa := WildlifeAudio.new()
+	wa.name = "WildlifeAudio"
+	map_root.add_child(wa)
 
 
 ## 保留中的觸發區：偵測邏輯已經接好，只差目的地。

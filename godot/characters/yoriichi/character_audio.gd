@@ -20,6 +20,11 @@ const SND_HIT_FIRE_LIGHT_1 = preload("res://assets/audio/sfx/hit_fire_light_1.wa
 const SND_HIT_FIRE_LIGHT_2 = preload("res://assets/audio/sfx/hit_fire_light_2.wav")
 const SND_HIT_FIRE_HEAVY = preload("res://assets/audio/sfx/hit_fire_heavy.wav")
 const SND_HIT_FIRE_SPIN = preload("res://assets/audio/sfx/hit_fire_spin.wav")
+## 彈刀／格擋／受傷的專用素材（CC0 真實刀劍撞擊錄音切段而來）。
+## 2026-09-17 之前這三個沒有專用檔，全靠 hit_impact 調音高頂替。
+const SND_DEFLECT = preload("res://assets/audio/sfx/deflect_clang.wav")
+const SND_BLOCK = preload("res://assets/audio/sfx/block_thud.wav")
+const SND_HURT = preload("res://assets/audio/sfx/hurt_impact.wav")
 
 # Optional reviewed sound designs. Empty slots preserve the existing sound set.
 @export var designed_swings: Array[AudioStream] = []
@@ -34,7 +39,8 @@ const POOL_SIZE := 12
 func _ready() -> void:
 	for i in range(POOL_SIZE):
 		var p := AudioStreamPlayer3D.new()
-		p.bus = &"Master"
+		# 不走 Master：Master 留給最終限幅（見 scripts/audio_buses.gd）。
+		p.bus = AudioBuses.sfx()
 		p.max_distance = 35.0
 		p.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 		add_child(p)
@@ -120,22 +126,22 @@ func play_hit(heavy := false) -> void:
 	play_fire_hit(heavy)
 
 
-## 彈刀：清脆的金屬撞擊。沒有專用素材（assets/audio/sfx/ 只有 impact／swing），
-## 用既有 light impact 拉到高音域 —— 使用者 2026-09-16 裁定先用既有素材頂著。
+## 彈刀：清脆的金屬撞擊。2026-09-17 起有專用素材（CC0 刀刃互擊錄音切段，
+## 拉高音域 + ding 金屬泛音），不再拿 light impact 硬調音高頂替。
 ## ⚠ 這個方法以前不存在：yoriichi_character.gd 的 take_hit() 一直用
 ##   has_method("play_deflect") 擋著，所以彈刀從來沒有聲音。
 func play_deflect() -> void:
-	_play(SND_HIT_LIGHT, 3.0, 0.03, 0.55)
+	_play(SND_DEFLECT, 2.0, 0.03)
 
 
-## 格擋：悶響。低音域、音量壓低，與彈刀明確區隔。
+## 格擋：悶響。低通過的刀刃撞擊，與彈刀明確區隔。
 func play_block() -> void:
-	_play(SND_HIT_HEAVY, -1.5, 0.04, -0.25)
+	_play(SND_BLOCK, -1.5, 0.04)
 
 
 ## 玩家自己被打到。
 func play_hurt() -> void:
-	_play(SND_HIT_HEAVY, 0.0, 0.05, -0.12)
+	_play(SND_HURT, 0.0, 0.05)
 
 
 ## 倒地（Dead 動畫起手）。

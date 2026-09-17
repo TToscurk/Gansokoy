@@ -15,7 +15,39 @@ var _swimmers: Array = []
 const KIND_DUCK := 0
 const KIND_KOI := 1
 
+## 水花音效。⚠ 沒有鴨叫 —— CC0／PD 素材庫裡找不到，Wikimedia 上的鴨聲全是
+## CC BY-SA（傳染性授權，對遊戲資產有風險）已排除。鴨子只給划水／拍水聲，
+## 寧可沒有叫聲，也不用假的。
+const SND_SPLASH: Array[AudioStream] = [
+	preload("res://assets/audio/sfx/water_splash_1.wav"),
+	preload("res://assets/audio/sfx/water_splash_2.wav"),
+	preload("res://assets/audio/sfx/water_splash_3.wav"),
+]
+const SND_FISH = preload("res://assets/audio/sfx/fish_splash.wav")
+
+## 兩次水聲之間的隨機間隔（秒）。刻意稀疏 —— 一群鴨子每隻每秒拍一次水
+## 會變成噪音牆，遠景小物的聲音只該偶爾提醒你它在那裡。
+@export var splash_interval_min := 9.0
+@export var splash_interval_max := 26.0
+## 超過這個距離（公尺）就不播，免得整條水路幾十隻同時佔用 voices。
+@export var audible_range := 30.0
+@export var duck_volume_db := -14.0
+@export var fish_volume_db := -22.0
+
+var splashes_played := 0
+var _audio_players: Array[AudioStreamPlayer3D] = []
+var _rng := RandomNumberGenerator.new()
+const AUDIO_POOL := 3
+
 func _ready() -> void:
+	_rng.randomize()
+	for i in AUDIO_POOL:
+		var p := AudioStreamPlayer3D.new()
+		p.bus = AudioBuses.wildlife()
+		p.max_distance = audible_range
+		p.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
+		add_child(p)
+		_audio_players.append(p)
 	# 產生器在每個游動物件上標了 meta（swim_kind / swim_t / swim_speed），
 	# 這裡自動收集 —— 場景存檔只會帶 meta，帶不走執行期的陣列。
 	for c in get_children():
@@ -27,6 +59,9 @@ func register(node: Node3D, kind: int, path_i: int, t: float, speed: float) -> v
 	_swimmers.append({
 		"node": node, "kind": kind, "path_i": path_i, "t": t,
 		"speed": speed, "phase": randf() * TAU, "yaw": 0.0,
+		# 每隻自己的水聲倒數，初值隨機散開 —— 全部同時歸零的話
+		# 一群鴨子會整齊劃一地拍水，比沒有聲音更假。
+		"splash_t": randf_range(splash_interval_min, splash_interval_max * 2.0),
 	})
 
 func _path_point(pi: int, t: float) -> Dictionary:
@@ -88,3 +123,34 @@ func _process(delta: float) -> void:
 			# 鴨子：划水時船身前後點頭 + 左右微傾
 			node.rotation.x = sin(tt * 2.3 + s.phase) * 0.09
 			node.rotation.z = sin(tt * 1.9 + s.phase * 0.7) * 0.07
+		# 水聲：每隻自己倒數，稀疏觸發。
+		s.splash_t -= delta
+		if s.splash_t <= 0.0:
+			s.splash_t = _rng.randf_range(splash_interval_min, splash_interval_max)
+			_play_splash(node, s.kind)
+
+
+## 水花。太遠就不播 —— 一條水路上幾十隻，全播會吃光 voices。
+func _play_splash(node: Node3D, kind: int) -> void:
+	var listener := node.global_position
+	var players := get_tree().get_nodes_in_group("player")
+	if players.size() > 0 and players[0] is Node3D:
+		if node.global_position.distance_to((players[0] as Node3D).global_position) > audible_range:
+			return
+	var target: AudioStreamPlayer3D = null
+	for p in _audio_players:
+		if not p.playing:
+			target = p
+			break
+	if target == null:
+		return   # 全忙就跳過這次，遠景小物不值得搶佔發聲數
+	target.global_position = node.global_position
+	if kind == KIND_KOI:
+		target.stream = SND_FISH
+		target.volume_db = fish_volume_db
+	else:
+		target.stream = SND_SPLASH[_rng.randi_range(0, SND_SPLASH.size() - 1)]
+		target.volume_db = duck_volume_db
+	target.pitch_scale = maxf(0.05, 1.0 + _rng.randf_range(-0.14, 0.14))
+	target.play()
+	splashes_played += 1

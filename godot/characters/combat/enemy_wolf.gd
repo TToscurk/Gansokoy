@@ -156,6 +156,8 @@ var _dodge_cd := 0.0
 var _player_was_attacking := false
 ## 狼的網格根節點
 var _wolf_mesh: Node3D = null
+## 山犬音效（低吼／撲擊／受傷／死亡）。見 wolf_audio.gd。
+var _wolf_audio: WolfAudio = null
 ## 撲擊旋風特效：靜態管狀網格 + shader trim（見 wolf_vortex_fx.gd 註解）
 var _vortex_root: Node3D = null
 var _vortex_mats: Array = []
@@ -191,6 +193,11 @@ func _ready() -> void:
 	posture.died.connect(_on_died)
 	posture.posture_changed.connect(func(c, m): posture_changed.emit(c, m))
 	posture.health_changed.connect(func(c, m): health_changed.emit(c, m))
+
+	# 音效：這隻狼以前完全沒有聲音（全檔 grep 不到任何 AudioStream）。
+	_wolf_audio = WolfAudio.new()
+	_wolf_audio.name = "WolfAudio"
+	add_child(_wolf_audio)
 
 	_visual = get_node_or_null("Visual")
 	_tell = get_node_or_null("Visual/Tell")
@@ -289,11 +296,15 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0.0
 			velocity.z = 0.0
 			_play("Wolf_Idle")
+			if _wolf_audio != null:
+				_wolf_audio.tick_idle(delta, false)
 			if _target_distance() <= detect_range:
 				_set_state(State.APPROACH)
 		State.APPROACH:
 			_chase(delta)
 			_play("Wolf_Run", run_anim_speed)
+			if _wolf_audio != null:
+				_wolf_audio.tick_idle(delta, true)
 			var d := _target_distance()
 			if d > detect_range * 1.4:
 				_set_state(State.IDLE)
@@ -510,6 +521,8 @@ func _begin_windup() -> void:
 			mat.albedo_color = Color(1.0, 0.15, 0.1) if _attack == Attack.CLAW else Color(1.0, 0.95, 0.8)
 			mat.emission = mat.albedo_color
 	# 撲擊命中面較大、傷害較高，算危攻擊
+	if _wolf_audio != null:
+		_wolf_audio.play_windup(_attack == Attack.POUNCE)
 	attack_windup.emit(_attack == Attack.POUNCE)
 
 
@@ -533,6 +546,10 @@ func _begin_pounce() -> void:
 
 func _begin_strike() -> void:
 	_set_state(State.STRIKE)
+	# 出招聲綁在「出招」而不是「命中」：揮空也該有聲音，
+	# 否則玩家閃掉攻擊時整段是靜的，讀招失去聽覺回饋。
+	if _wolf_audio != null:
+		_wolf_audio.play_attack()
 	if _tell:
 		_tell.visible = false
 	if _attack == Attack.LUNGE or _attack == Attack.POUNCE:
@@ -643,6 +660,9 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 
 	posture.apply_damage(damage, posture_damage)
 	CombatVFX.spawn_hit_spark(self, hit_pos, -hit_dir, heavy)
+	# 挨打：軀幹沒爆、還沒死才叫 —— 死亡與破防各有自己的聲音，疊在一起會糊。
+	if _wolf_audio != null and not posture.is_dead() and not posture.is_broken():
+		_wolf_audio.play_hurt()
 
 	# 打斷前搖：蓄力被打斷，玩家搶到節奏
 	if state == State.WINDUP:
@@ -670,6 +690,8 @@ func _on_posture_broken() -> void:
 	_set_state(State.BREAK)
 	_play("Wolf_Idle", 0.35)
 	_end_pounce()
+	if _wolf_audio != null:
+		_wolf_audio.play_break()
 	if _tell:
 		_tell.visible = false
 	became_vulnerable.emit()
@@ -687,6 +709,8 @@ func _on_died() -> void:
 	velocity = Vector3.ZERO
 	_end_pounce()
 	WindStreakFX.stop(_streak_root, _streak_mats)
+	if _wolf_audio != null:
+		_wolf_audio.play_death()
 	_play("Wolf_Death")
 	set_collision_layer_value(2, false)
 	var col := get_node_or_null("CollisionShape3D")
