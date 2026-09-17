@@ -58,8 +58,10 @@ func _run() -> void:
 	await step(40)
 	check("B1 受傷妖怪事件已演出", sf.call("get_flag", "wounded_yokai_played"))
 	check("B2 早到沒有跳過 MQ02", qm.call("is_active", "MQ02"))
+	# 2026-09-17：MQ03 的果實那一格已刪，只剩 trail_wounded_yokai。
+	# 受傷妖怪的事件是在 MQ02 還沒完成時就發生的（早到）→ 進 _pending，
+	# 擊退山犬完成 MQ02、鏈到 MQ03 之後應該被自動補算掉。
 	qm.call("report_event", "DEFEAT", "trail_wolf")
-	qm.call("report_event", "REACH", "trail_fleeing_yokai")
 	await step(10)
 	check("B3 早到事件補算後完成 MQ03", qm.call("is_completed", "MQ03"))
 	check("B4 任務鏈進入 MQ04", qm.call("is_active", "MQ04"))

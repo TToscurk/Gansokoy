@@ -133,43 +133,8 @@ func _run() -> void:
 		str(mq.call("is_completed", "MQ00")), str(mq.call("is_active", "MQ01")),
 		str(mq.call("is_active", "MQ02"))])
 
-	# ── B. 毛玉：看到逃跑 vs 聽到獨白，差幾公尺 ──
-	print("[PF] ── B. 毛玉（逃跑妖怪群 z=-78，果實區 6×4×6）──")
-	(_player as Node3D).global_position = Vector3(2.6, 6.6, -70.0)
-	await _wait(20)
-	_t += 20
-	await _drain()
-	var group: Node = _main.find_child("逃跑妖怪群", true, false)
-	var fruit: Node = _main.find_child("果實獨白", true, false)
-	print("[PF] 群=%s 果實區=%s（初始 enabled=%s）" % [
-		group != null, fruit != null, str(fruit.get("enabled")) if fruit else "-"])
-	var flee_z := 0.0
-	var dlg_z := 0.0
-	var seen_fled := 0
-	Input.action_press("move_back")
-	for k in 400:
-		await _wait(TICK)
-		_t += TICK
-		var left := 0
-		for c in group.get_children():
-			if c.is_in_group("kedama") and is_instance_valid(c):
-				left += 1
-		var fled := 3 - left
-		if fled > seen_fled and seen_fled == 0:
-			flee_z = (_player as Node3D).global_position.z
-			print("[PF] 第一隻毛玉逃了：玩家 z=%.2f（距群 %.2f m），對話框=%s" % [
-				flee_z, absf(flee_z + 78.0), str(_dm.call("is_active"))])
-		if fled == 3 and seen_fled < 3:
-			seen_fled = 3
-			print("[PF] 三隻全逃：玩家 z=%.2f，t=%d，果實區 enabled=%s" % [
-				(_player as Node3D).global_position.z, _t, str(fruit.get("enabled"))])
-		if dlg_z == 0.0 and not _line().is_empty():
-			dlg_z = (_player as Node3D).global_position.z
-			print("[PF] 果實獨白觸發：玩家 z=%.2f「%s」" % [dlg_z, _line()])
-			print("[PF] → 從逃跑(%.2f) 到有對話(%.2f) 之間走了 %.2f m" % [
-				flee_z, dlg_z, absf(flee_z - dlg_z)])
-		if k % 60 == 0:
-			_sample("B走")
-	Input.action_release("move_back")
+	# ── B.（已移除）毛玉：看到逃跑 vs 聽到獨白 ──
+	# 2026-09-17：逃跑妖怪群／果實獨白（z=-78）已整條刪除，無標的可探。
+
 	print("[PF] ══ 探針結束 ══")
 	quit(0)

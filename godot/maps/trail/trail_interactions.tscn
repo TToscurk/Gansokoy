@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=10 format=3]
 
 ; 獸道互動點 —— 2026-09-15 r3 重排。
 ;
@@ -23,15 +23,18 @@
 ;
 ; 事件順序（南 → 北）：
 ;   人里口_未開放(z95) → 醒來(空地 z-27) → 山犬遭遇(空地北緣 z-40)
-;   → 獸骨環境觀察(z-62) → 逃跑妖怪群(z-78) → 受傷妖怪(z-91)
+;   → 獸骨環境觀察(z-62) → 受傷妖怪(z-91)
+;
+; ⚠ 2026-09-17 使用者裁定：獸道事件點過密，**刪掉「逃跑妖怪群／果實獨白」(z-78)**。
+;   z-62 獵食者痕跡、z-78 果實、z-91 受傷妖怪原本擠在 30 m 內，連續三段獨白。
+;   果實那一格連同 MQ03 第一目標 trail_fleeing_yokai、對話 yoriichi_fleeing_yokai、
+;   dropped_fruit 場景、fleeing_yokai_group.gd 一併移除；MQ03 只留受傷妖怪的選擇。
 
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="1"]
 [ext_resource type="Script" path="res://components/combat/combat_encounter.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cse1kir0enemywolf" path="res://characters/combat/enemy_wolf.tscn" id="3"]
-[ext_resource type="Script" path="res://components/story/fleeing_yokai_group.gd" id="4"]
 [ext_resource type="Script" path="res://components/story/wounded_yokai_event.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://kedama0000000001" path="res://characters/yokai/kedama.tscn" id="6"]
-[ext_resource type="PackedScene" uid="uid://droppedfruit0001" path="res://components/story/dropped_fruit.tscn" id="7"]
 
 [sub_resource type="BoxShape3D" id="wake"]
 size = Vector3(26, 8, 26)
@@ -48,16 +51,6 @@ size = Vector3(16, 8, 10)
 ;   狼在醒來獨白之前撲上來（實測：開機 60 幀內 enemy=1、HUD alpha=1.000，
 ;   序章 P0 四項因此失敗）。深 18 的南緣在 z=-31.03，離醒來點 4.2 m。
 size = Vector3(26, 8, 18)
-
-; ⚠ 2026-09-16 由 6×4×6 放大到 16×6×14。實測（tools/probe_prologue_flow.gd，走位不傳送）：
-;   這區是「三隻毛玉跑完 flee_distance 18 m 消失」才 enabled 的，18 m / 6.5 m/s ≈ 2.8 s，
-;   而玩家走路約 4 m/s —— 啟用那一刻他已經走出 6×4×6 的盒子 2.4 m（實測 z=-83.40 才啟用，
-;   盒子北緣 -81）。結果是果實獨白**用走的根本不會播**，而全 repo 只有這一段對話在回報
-;   REACH trail_fleeing_yokai → MQ03 第一格永遠不會完成。
-;   放大後 z 蓋到 -85..-71、x 蓋到 -5.4..10.6，啟用當下玩家仍在區內；
-;   WorldInteraction._set_enabled 會對「已經站在裡面」的玩家補觸發，所以照原設計立刻播。
-[sub_resource type="BoxShape3D" id="fruit"]
-size = Vector3(16, 6, 14)
 
 [sub_resource type="BoxShape3D" id="wounded"]
 size = Vector3(14, 8, 10)
@@ -136,29 +129,6 @@ once_flag = "saw_predator_sign_played"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="獵食者痕跡"]
 shape = SubResource("sign")
-
-[node name="逃跑妖怪群" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 6.9, -78.0)
-script = ExtResource("4")
-kedama_scene = ExtResource("6")
-count = 3
-spread = 2.5
-flee_dir = Vector3(1, 0, -0.3)
-drop_scene = ExtResource("7")
-reveal_interaction = "果實獨白"
-
-[node name="果實獨白" type="Area3D" parent="逃跑妖怪群"]
-collision_layer = 0
-collision_mask = 1
-script = ExtResource("1")
-interaction_id = "trail_fleeing_yokai"
-dialogue_id = "yoriichi_fleeing_yokai"
-auto_trigger = true
-once_flag = "saw_fleeing_yokai_played"
-enabled = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="逃跑妖怪群/果實獨白"]
-shape = SubResource("fruit")
 
 [node name="受傷妖怪" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54, 11.6, -90.74)

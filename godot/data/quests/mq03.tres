@@ -1,4 +1,9 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=4 format=3]
+
+; 2026-09-17 使用者裁定：刪掉「果實」那一格。
+; 原本 MQ03 有兩格（逃跑毛玉留下果實 → 受傷妖怪），而獸道 z=-62/-78/-91
+; 三十公尺內連續塞三個事件點，密度過高。果實那一格整條移除（互動區、
+; 對話、waypoint 一併刪），MQ03 只留「受傷妖怪」這個序章唯一的選擇。
 
 [ext_resource type="Script" path="res://systems/quest/quest_data.gd" id="qd"]
 [ext_resource type="Script" path="res://systems/quest/quest_objective.gd" id="obj"]
@@ -6,15 +11,8 @@
 [sub_resource type="Resource" id="obj_0"]
 script = ExtResource("obj")
 type = 0
-target_id = "trail_fleeing_yokai"
-description = "查看妖怪留下的東西"
-required_amount = 1
-
-[sub_resource type="Resource" id="obj_1"]
-script = ExtResource("obj")
-type = 0
 target_id = "trail_wounded_yokai"
-description = "循著聲音查看"
+description = "循著微弱的聲音查看"
 required_amount = 1
 
 [resource]
@@ -22,6 +20,6 @@ script = ExtResource("qd")
 id = "MQ03"
 title = "害怕我的東西"
 description = "它們不是在埋伏，而是在逃離持刀的我。"
-objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
+objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
 next_quest_id = "MQ04"
 complete_flags = PackedStringArray("saw_fleeing_yokai")

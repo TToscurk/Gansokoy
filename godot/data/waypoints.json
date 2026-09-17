@@ -1,9 +1,8 @@
 {
-  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。座標於 2026-09-15 r3 路線重排後，依 tools/probe_trail_anchors.gd 實測值更新。trail_wolf 於 2026-09-16 追加，座標取 trail_interactions.tscn「山犬遭遇」Area3D 原點。",
+  "_doc": "任務目標 target_id → 世界座標。nav 與地圖都讀這張表。跨圖時導向該圖的傳送點。座標於 2026-09-15 r3 路線重排後，依 tools/probe_trail_anchors.gd 實測值更新。trail_wolf 於 2026-09-16 追加，座標取 trail_interactions.tscn「山犬遭遇」Area3D 原點。2026-09-17 刪除 trail_fleeing_yokai：果實那一格整條移除（獸道事件點過密）。",
   "targets": {
     "trail_leave_clearing":    { "map": "trail",  "x": -14.1, "z": -40.0, "label": "沿道路前進" },
     "trail_wolf":              { "map": "trail",  "x": -14.08, "z": -40.03, "label": "野獸" },
-    "trail_fleeing_yokai":     { "map": "trail",  "x": 2.6,   "z": -78.0, "label": "樹叢的動靜" },
     "trail_wounded_yokai":     { "map": "trail",  "x": -1.5,  "z": -90.7, "label": "微弱的聲音" },
     "hakurei_shrine_approach": { "map": "shrine", "x": 0.0,   "z": 40.0,  "label": "山上的建築" },
     "reimu_hakurei_shrine":    { "map": "shrine", "x": 0.0,   "z": -21.0, "label": "拜殿" },

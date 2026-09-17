@@ -145,37 +145,13 @@ func _run() -> void:
 		main.get_tree().get_nodes_in_group("enemies").size() <= 1)
 	check("P2b 獸骨觀察不改變 MQ03 進度", qm.is_active("MQ03"))
 
-	# ── MQ03 害怕我的東西：毛玉真的要跑 ──
+	# ── MQ03 害怕我的東西 ──
+	# 2026-09-17：果實那一格（逃跑毛玉群 z=-78）已整條刪除，獸道事件點過密。
+	# 現在 MQ03 只有一個目標：受傷妖怪。場上毛玉只剩受傷的那一隻。
 	var kedamas := main.get_tree().get_nodes_in_group("kedama")
-	check("P2c 毛玉已擺好（%d 隻，含受傷的）" % kedamas.size(), kedamas.size() >= 4)
-	# 站在毛玉群旁邊（notice_range 7 m 內），它們要開始逃。
-	# 站在果實區內是**正常玩法**（要靠近才會觸發逃跑），
-	# 區域啟用時玩家已在裡面也必須照樣播獨白 —— 見 world_interaction._set_enabled。
-	await _teleport(Vector3(2.6, 7.4, -76.0))
-	await _settle(30)
-	var fleeing := 0
-	for k in main.get_tree().get_nodes_in_group("kedama"):
-		if int(k.get("mode")) == 1 and bool(k.get("_noticed")):
-			fleeing += 1
-	check("P2c 靠近後毛玉開始逃（%d 隻在逃）" % fleeing, fleeing >= 2)
-	# 等它們跑光（flee_distance 18 m / 6.5 m/s ≈ 3 s）
-	await _settle(240)
-	var left_flee := 0
-	for k in main.get_tree().get_nodes_in_group("kedama"):
-		if int(k.get("mode")) == 1:
-			left_flee += 1
-	check("P2c 逃跑毛玉全部消失（剩 %d）" % left_flee, left_flee == 0)
-	check("P2c 逃光後留下果實", main.get_tree().get_nodes_in_group("kedama").size() >= 1 \
-		and main.map_root.find_child("DroppedFruit", true, false) != null)
-	# 走到果實旁 → 獨白
-	await _teleport(Vector3(2.6, 7.4, -78.0))
-	await _settle(8)
-	check("P2c 果實獨白播放", dm.is_active())
-	while dm.is_active():
-		await _press("ui_accept"); await _press("ui_accept")
-	await _settle(4)
-	check("P2c saw_fleeing_yokai 旗標", sf.get_flag("saw_fleeing_yokai"))
-	check("P2c MQ03 第一目標完成、仍 active", qm.is_active("MQ03") and qm.get_objective_progress("MQ03") == 0)
+	check("P2c 場上只剩受傷毛玉那一隻（實得 %d）" % kedamas.size(), kedamas.size() == 1)
+	check("P2c MQ03 第一目標就是受傷妖怪", qm.is_active("MQ03") \
+		and qm.get_current_objective("MQ03").target_id == "trail_wounded_yokai")
 
 	# ── 受傷妖怪：序章唯一的選擇 ──
 	# ⚠ 這一段的時序很容易寫錯，踩過兩次：

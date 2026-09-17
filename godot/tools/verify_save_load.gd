@@ -42,7 +42,6 @@ func _run() -> void:
 	# ── A. 往返 ──
 	qm.call("reset"); sf.call("reset")
 	qm.call("start_quest", "MQ03")
-	qm.call("report_event", "REACH", "trail_fleeing_yokai")   # 推到第二目標
 	sf.call("set_flag", "woke_in_trail", true)
 	sf.call("set_flag", "spared_wounded_yokai", true)
 	qm.call("report_event", "REACH", "hakurei_shrine_approach")  # 早到事件 → pending
@@ -70,7 +69,8 @@ func _run() -> void:
 		and absf(float(seen[0][2]) - 1.25) < 0.001)
 	check("A6 旗標完全還原", sf.call("serialize") == want_flags)
 	check("A7 任務進度完全還原", qm.call("serialize") == want_quests)
-	check("A8 MQ03 仍在第二目標（不是從頭來）",
+	# MQ03 只剩「受傷妖怪」一格（果實那一格已於 2026-09-17 刪除）。
+	check("A8 MQ03 仍停在受傷妖怪那一格（不是從頭來）",
 		qm.call("is_active", "MQ03") \
 		and (qm.call("get_current_objective", "MQ03") as Object).get("target_id") == "trail_wounded_yokai")
 	check("A9 未消化的早到事件也還原", (qm.get("_pending") as Dictionary).has("0|hakurei_shrine_approach"))

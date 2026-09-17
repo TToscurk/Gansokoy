@@ -53,7 +53,6 @@ func _run() -> void:
 		qm.call("reset")
 		sf.call("reset")
 		qm.call("start_quest", "MQ03")
-		qm.call("report_event", "REACH", "trail_fleeing_yokai")
 		sf.call("set_flag", "woke_in_trail", true)
 		sf.call("set_flag", "spared_wounded_yokai", true)
 		await step(4)

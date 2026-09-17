@@ -43,7 +43,8 @@ func _run() -> void:
 	var player: Node3D = main.player
 
 	var all := main.get_tree().get_nodes_in_group("kedama")
-	check("毛玉已生成（%d 隻）" % all.size(), all.size() >= 4)
+	# 2026-09-17：逃跑群刪除後，獸道只剩受傷毛玉一隻。
+	check("毛玉已生成（%d 隻）" % all.size(), all.size() == 1)
 
 	# ── 1. 擺放時就要貼地 ──
 	var worst_place := 0.0
@@ -60,32 +61,37 @@ func _run() -> void:
 	check("初始擺放全部貼地（最大偏差 %.2f m @ %s）" % [worst_place, worst_name], worst_place < 0.35)
 
 	# ── 2. 逃跑全程貼地 ──
-	# 把玩家丟到逃跑毛玉群旁邊觸發逃跑
-	player.global_position = Vector3(2.6, _gy(2.6, -74.0) + 1.0, -74.0)
-	await _s(20)
-	var fleeing := []
-	for k in main.get_tree().get_nodes_in_group("kedama"):
-		if int(k.get("mode")) == 1 and bool(k.get("_noticed")):
-			fleeing.append(k)
-	check("靠近後毛玉起跑（%d 隻）" % fleeing.size(), fleeing.size() >= 2)
+	# 2026-09-17：逃跑毛玉群（果實那一格）已刪除。獸道只剩受傷毛玉，
+	# 它的「逃走」由 WoundedYokaiEvent 選『靠近』後呼叫 flee_away() 觸發，
+	# 這裡直接呼叫來驗同一條貼地路徑。
+	var wounded: Node3D = null
+	for k in all:
+		if int(k.get("mode")) == 2:
+			wounded = k as Node3D
+	check("場上有受傷毛玉", wounded != null)
+	if wounded == null:
+		print("[KEDAMA] failures=%d" % fails)
+		quit(1)
+		return
+	wounded.call("flee_away")
+	await _s(4)
+	check("呼叫 flee_away 後轉成逃跑", int(wounded.get("mode")) == 1)
 
 	var worst_run := 0.0
 	var worst_at := ""
 	var samples := 0
 	for f in 150:
 		await physics_frame
-		for k in fleeing:
-			if not is_instance_valid(k):
-				continue
-			var n := k as Node3D
-			var g := _gy(n.global_position.x, n.global_position.z)
-			if g == -INF:
-				continue
-			var d: float = n.global_position.y - g
-			samples += 1
-			if absf(d) > absf(worst_run):
-				worst_run = d
-				worst_at = "%s @ (%.1f, %.1f)" % [n.name, n.global_position.x, n.global_position.z]
+		if not is_instance_valid(wounded):
+			break
+		var g := _gy(wounded.global_position.x, wounded.global_position.z)
+		if g == -INF:
+			continue
+		var d: float = wounded.global_position.y - g
+		samples += 1
+		if absf(d) > absf(worst_run):
+			worst_run = d
+			worst_at = "(%.1f, %.1f)" % [wounded.global_position.x, wounded.global_position.z]
 	check("逃跑全程貼地（%d 次取樣，最大偏差 %+.2f m %s）" % [samples, worst_run, worst_at],
 		absf(worst_run) < 0.3)
 
@@ -96,9 +102,6 @@ func _run() -> void:
 		if int(k.get("mode")) == 1:
 			left += 1
 	check("逃跑毛玉全部消失（剩 %d）" % left, left == 0)
-
-	# ── 4. 果實有留下 ──
-	check("逃光後留下果實", main.map_root.find_child("DroppedFruit", true, false) != null)
 
 	print("[KEDAMA] failures=%d" % fails)
 	quit(1 if fails > 0 else 0)

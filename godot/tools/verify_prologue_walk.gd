@@ -7,7 +7,7 @@ extends SceneTree
 ##   2) 讓玩家「停在」某個位置，於是「區域啟用時人還在不在裡面」永遠成立。
 ##   2026-09-16 使用者實玩回報的兩個問題，就是這兩點掩蓋掉的：
 ##     A 還在對話框，狼就攻擊了
-##     B 三隻毛玉往右邊逃 → 走過去才有對話（果實獨白整個沒播 → MQ03 第一格卡住）
+##     B 三隻毛玉往右邊逃 → 走過去才有對話（該事件點已於 2026-09-17 刪除，B 段停用）
 ##
 ## 這支只走真的 main.tscn、只用走的（Input.action_*），不傳送玩家。
 
@@ -151,44 +151,11 @@ func _run() -> void:
 	await _drain()
 	print("[PWALK]   清場後場上敵人 = %d" % get_root().get_tree().get_nodes_in_group("enemies").size())
 
-	# ═ B. 走過毛玉現場：果實獨白必須在**不回頭**的情況下播 ══
-	#  前面 -29 → -70 那 40 m（妖怪氣息、獵食者痕跡兩段獨白）與本題無關，
-	#  壓掉以省幀數；B 驗的是「走過逃跑現場」這件事，仍然用走的、不回頭。
-	print("[PWALK] ── B：走過毛玉現場 ─")
-	(_player as Node3D).global_position = Vector3(2.6, 6.6, -70.0)
-	await _wait(20)
-	await _drain()
-	var fruit_line := ""
-	var started := (_player as Node3D).global_position.z
-	var last_z := started
-	var monotonic := true
-	var went_back := false
-	Input.action_press("move_back")
-	var g := 0
-	while g < 1500:
-		await _wait(TICK)
-		g += TICK
-		_t += TICK
-		var z: float = (_player as Node3D).global_position.z
-		if z > last_z + 0.3:
-			monotonic = false
-		last_z = z
-		if z < -86.0:
-			went_back = true     # 已經走過頭，還在等獨白 = 失敗
-		if _dm.call("is_active"):
-			var tx := _line()
-			if tx.contains("跑掉了"):
-				fruit_line = tx
-				break
-			await _accept()      # 其他獨白照常讀過去
-	Input.action_release("move_back")
-	check("B1 走過去就播了果實獨白（不回頭）「%s」" % fruit_line, not fruit_line.is_empty())
-	#  ⚠ saw_fleeing_yokai 是這一段獨白**最後一句**才立的（l5）。
-	#    只看到第一句就檢查旗標會誤判 —— 必須把整段讀完。
-	await _drain()
-	check("B2 玩家全程單向往北（沒有為了觸發而走回頭路）", monotonic and not went_back)
-	check("B3 saw_fleeing_yokai 旗標立起（讀完整段之後）", sf.call("get_flag", "saw_fleeing_yokai"))
-	print("[PWALK]   走到 z=%.2f（起點 %.2f）" % [(_player as Node3D).global_position.z, started])
+	# ═ B. （已移除）走過毛玉現場：果實獨白 ══
+	#  2026-09-17 使用者裁定刪掉果實那一格（獸道事件點過密），
+	#  z=-78 的逃跑毛玉群與果實獨白區都不存在了，本段無標的可驗。
+	#  「區域啟用時玩家已在裡面要補觸發」這個機制本身仍在
+	#  world_interaction._set_enabled，未來有新的延後啟用區時再補一支。
 
 	print("[PWALK] ══ 走位回歸結束：%d 項失敗 ══" % fails)
 	quit(1 if fails > 0 else 0)

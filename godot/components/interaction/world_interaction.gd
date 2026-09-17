@@ -112,11 +112,11 @@ func _on_dialogue_ended_retry(_id: String) -> void:
 ## enabled 由 false 翻成 true 時，**玩家可能已經站在區內**。
 ##
 ## ⚠ Area3D 的 body_entered 只在「跨越邊界的那一幀」發出；區域是後來才啟用的，
-##   站在裡面的人不會再觸發一次。MQ03 的果實獨白就是這樣永遠不播：
-##   毛玉逃走時玩家本來就站在群旁邊（要靠近才會觸發逃跑），
-##   FleeingYokaiGroup 逃光後把果實區 enabled 翻 true，但玩家人已在裡面
-##   → 獨白不播、saw_fleeing_yokai 不立、MQ03 永久卡住。
+##   站在裡面的人不會再觸發一次。歷史案例（該事件點已於 2026-09-17 移除）：
+##   MQ03 的果實獨白區是在毛玉逃光後才 enabled 的，但玩家本來就站在群旁邊，
+##   → 獨白不播、旗標不立、任務永久卡住。
 ##   （測試裡看起來像「站位沒站好」，實際是任何正常玩法都會踩到。）
+##   任何「先關著、事件發生後才開」的互動區都靠這段補觸發。
 func _set_enabled(v: bool) -> void:
 	var was := enabled
 	enabled = v

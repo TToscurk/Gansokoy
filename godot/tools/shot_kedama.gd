@@ -39,9 +39,8 @@ func _run() -> void:
 	if dn != null:
 		dn.set("flowing", false)
 		dn.call("set_hour", 11.0)
-	# ⚠ 2026-09-15：山犬戰鬥已取消，這裡不再需要避開遭遇區。
-	#   玩家放在逃跑群旁 8 m（notice_range 7 m 外），拍它們縮著的樣子。
-	#   座標是 r3 路線重排後的實測值（逃跑群 (2.6,-78)、受傷 (-1.5,-90.7)）。
+	# ⚠ 2026-09-17：逃跑毛玉群（果實那一格）已刪除，獸道只剩受傷毛玉那一隻。
+	#   玩家放在受傷點旁 8 m，避免踩進互動區觸發對話。
 	main.player.global_position = Vector3(6.0, 9.0, -84.0)
 	main.player.velocity = Vector3.ZERO
 	await _settle(30)
@@ -52,24 +51,6 @@ func _run() -> void:
 	main.add_child(cam)
 	cam.current = true
 	cam.far = 600.0
-	# 逃跑群：實際位置用 group 查，不用算的
-	var grp: Vector3 = Vector3(2.6, 7.0, -78.0)
-	for k in main.get_tree().get_nodes_in_group("kedama"):
-		if int(k.get("mode")) == 1:
-			grp = (k as Node3D).global_position
-			break
-	print("[KD] 逃跑毛玉實際位置 (%.1f, %.2f, %.1f)" % [grp.x, grp.y, grp.z])
-	cam.global_position = grp + Vector3(2.6, 1.1, 2.8)
-	cam.look_at(grp + Vector3(0, 0.55, 0))
-	await _settle(30)
-	main.get_viewport().get_texture().get_image().save_png(OUT + "1_fleeing_group.png")
-	print("[KD] shot 1_fleeing_group")
-	# 臉部特寫：確認眼睛沒被毛埋掉
-	cam.global_position = grp + Vector3(0.0, 0.62, 1.15)
-	cam.look_at(grp + Vector3(0, 0.58, 0))
-	await _settle(20)
-	main.get_viewport().get_texture().get_image().save_png(OUT + "3_face.png")
-	print("[KD] shot 3_face")
 	# 受傷毛玉：實際位置用 group 查，不用算的
 	var wounded: Node3D = null
 	for k in main.get_tree().get_nodes_in_group("kedama"):
@@ -84,6 +65,12 @@ func _run() -> void:
 	cam.global_position = wp + Vector3(2.2, 1.3, 2.4)
 	cam.look_at(wp + Vector3(0, 0.35, 0))
 	await _settle(30)
-	main.get_viewport().get_texture().get_image().save_png(OUT + "2_wounded.png")
-	print("[KD] shot 2_wounded")
+	main.get_viewport().get_texture().get_image().save_png(OUT + "1_wounded.png")
+	print("[KD] shot 1_wounded")
+	# 臉部特寫：確認眼睛沒被毛埋掉
+	cam.global_position = wp + Vector3(0.0, 0.62, 1.15)
+	cam.look_at(wp + Vector3(0, 0.45, 0))
+	await _settle(20)
+	main.get_viewport().get_texture().get_image().save_png(OUT + "2_face.png")
+	print("[KD] shot 2_face")
 	quit(0)

@@ -2,7 +2,7 @@ extends SceneTree
 ## 序章節奏探針 —— 用**真實玩法**（InputMap 動作走、對話逐句按掉）走一次獸道，
 ## 回答兩個症狀：
 ##   1 開場：還在對話框時山犬是不是已經撲上來了？
-##   2 毛玉：是不是先看到三隻逃走，之後才有獨白？
+##   2 毛玉：是不是先看到三隻逃走，之後才有獨白？（該事件點已於 2026-09-17 刪除，本段停用）
 ##
 ##   Godot --path godot --script tools/probe_prologue_timing.gd
 ##   （不用 headless：要看得到畫面才知道方向對不對；輸出全部走 stdout）
@@ -147,43 +147,10 @@ func _run() -> void:
 			enc.call("force_clear")
 	await _wait(60)
 	await _drain()
-	(_player as Node3D).global_position = Vector3(0.9, 7.6, -60.0)
-	await _wait(20)
-	print("[PROBE] 傳送到痕跡區前方 %s，對話=%s" % [str(_pos()), _dlg()])
-	await _drain()
-	# 往北（毛玉群在 z=-78）—— 先問相機朝哪邊
-	Input.action_press("move_forward")
-	await _wait(20)
-	if _pos().z - (-60.0) > 0.0:
-		Input.action_release("move_forward")
-		Input.action_press("move_back")
-		print("[PROBE] 改按 move_back 往北走")
-	var group_pos := Vector3(2.6, 6.9, -78.0)
-	var noticed := { }
-	var fruit_seen := ""
-	var g2 := 0
-	while g2 < 600:
-		g2 += 1
-		await _wait(5)
-		var kd := get_nodes_in_group("kedama")
-		for k in kd:
-			if not noticed.has(k) and int(k.get("mode")) == 1 and bool(k.get("_noticed")):
-				noticed[k] = true
-				print("[PROBE] 第 %d 幀：毛玉察覺玩家 —— 玩家距群中心 %.2f m、距該隻 %.2f m" % [
-					_f, _pos().distance_to(group_pos), _pos().distance_to((k as Node3D).global_position)])
-		if _dlg() != "-" and fruit_seen == "":
-			fruit_seen = _dlg()
-			print("[PROBE] 果實獨白起於第 %d ：id=%s、玩家距群中心 %.2f m" % [
-				_f, fruit_seen, _pos().distance_to(group_pos)])
-			break
-		if g2 % 4 == 0:
-			print("[PROBE]   幀%4d 距群 %.2f m 在逃 %d 隻 對話=%s" % [
-				_f, _pos().distance_to(group_pos), _count_fleeing(), _dlg()])
-	Input.action_release("move_forward")
-	Input.action_release("move_back")
-	print("[PROBE] 收尾：MQ03=%s  pending=%s  果實獨白 enabled=%s" % [
-		str(_qm.get("_progress").get("MQ03", "（無）")), str(_qm.get("_pending")),
-		str(_main.find_child("果實獨白", true, false).get("enabled"))])
+	# 2026-09-17：原本這一段往北走去探「毛玉逃跑 vs 果實獨白差幾公尺」，
+	# 果實那一格已整條刪除（獸道事件點過密），無標的可探，本段停用。
+	# 山犬那一題（症狀 1）在上面已經量完。
+
 	print("[PROBE] 結束")
 	quit(0)
 
