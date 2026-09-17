@@ -1,33 +1,165 @@
 {
-  "_doc": "MQ12 慧音裁定。慧音像老師，不像任務發放機：信任線會承認自己在測人；觀察線維持強硬，但都把緣一推進村子的日常。她理解人與妖怪的處境，不是讀心。",
+  "_doc": "MQ12 落腳安排。還書與登記由緣一親口回報，慧音不會憑空得知舊冊結果。信任與觀察皆合理提供住宿；各末節設 lodging_referred 並回報 keine_verdict，旅店據此開放。已轉介但尚未投宿時走 referred_1，不重播整段裁定。",
   "start": [
-    { "if": "has_village_lodging", "node": "repeat_1" },
-    { "if": "keine_trusts_yoriichi", "node": "t1" },
-    { "if": "keine_watches_yoriichi", "node": "w1" },
-    { "node": "t1" }
+    {
+      "if": "has_village_lodging",
+      "node": "repeat_1"
+    },
+    {
+      "if": "lodging_referred",
+      "node": "referred_1"
+    },
+    {
+      "if": "keine_trusts_yoriichi",
+      "node": "t1"
+    },
+    {
+      "if": "keine_watches_yoriichi",
+      "node": "w1"
+    },
+    {
+      "node": "t1"
+    }
   ],
   "nodes": {
-    "t1": { "speaker": "keine", "portrait": "normal", "text": "「小鈴說你不會客套。阿求說你讓她答不出來。」", "next": "t2" },
-    "t2": { "speaker": "yoriichi", "portrait": "normal", "text": "「我給她們添麻煩了。」", "next": "t3" },
-    "t3": { "speaker": "keine", "portrait": "smile", "text": "「不。你讓她們記住你了。這才是我要的。」", "next": "t4" },
-    "t4": { "speaker": "yoriichi", "portrait": "normal", "text": "「那些差事，是試探。」", "next": "t5" },
-    "t5": { "speaker": "keine", "portrait": "smile", "text": "「是功課。試探通常不會告訴你答案。」", "next": "t6" },
-    "t6": { "speaker": "keine", "portrait": "serious", "text": "「你的來歷查不到。但人不能因為沒有過去，就連今晚也沒有。」", "next": "t7" },
-    "t7": { "speaker": "keine", "portrait": "normal", "text": "「去鯢吞亭。美宵替你留了房。」", "next": "t8",
-            "quest_event": { "type": "TALK", "target": "keine_verdict" } },
-    "t8": { "speaker": "yoriichi", "portrait": "normal", "text": "「為什麼幫我？」", "next": "t9" },
-    "t9": { "speaker": "keine", "portrait": "smile", "text": "「因為那隻毛玉還活著。也因為老師總得先替學生留個座位。」", "next": null },
-
-    "w1": { "speaker": "keine", "portrait": "serious", "text": "「差事做完了。規矩你也守了。」", "next": "w2" },
-    "w2": { "speaker": "keine", "portrait": "serious", "text": "「但別誤會。我還不信你。」", "next": "w3" },
-    "w3": { "speaker": "yoriichi", "portrait": "normal", "text": "「不必急著信。」", "next": "w4" },
-    "w4": { "speaker": "keine", "portrait": "surprised", "text": "「……你倒很會挑讓人接不下去的話。」", "next": "w5" },
-    "w5": { "speaker": "keine", "portrait": "normal", "text": "「去鯢吞亭。美宵會給你房間。」", "next": "w6",
-            "quest_event": { "type": "TALK", "target": "keine_verdict" } },
-    "w6": { "speaker": "keine", "portrait": "serious", "text": "「住下來。讓我慢慢看清楚你。」", "next": "w7" },
-    "w7": { "speaker": "keine", "portrait": "serious", "text": "「別讓我後悔。」", "next": null },
-
-    "repeat_1": { "speaker": "keine", "portrait": "annoyed", "text": "「有房間就去睡。明天第一堂課，我不接受『來自四百年前』當遲到理由。」", "next": null,
-                  "quest_event": { "type": "TALK", "target": "keine_verdict" } }
+    "t1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「回來了。書交給小鈴，登記也辦妥了嗎？」",
+      "next": "t2"
+    },
+    "t2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「書已歸還。阿求記下了我的名字，舊冊裡未找到同名。」",
+      "next": "t3"
+    },
+    "t3": {
+      "speaker": "keine",
+      "portrait": "smile",
+      "text": "「那就好。新來的人不在舊冊裡，不奇怪。至少往後有事，知道能去哪裡找人。」",
+      "next": "t4"
+    },
+    "t4": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「今晚，我能留在村裡嗎？」",
+      "next": "t5"
+    },
+    "t5": {
+      "speaker": "keine",
+      "portrait": "smile",
+      "text": "「可以。你願意說明經過，也把託付的事辦好了，我願意先信任你。」",
+      "next": "t6"
+    },
+    "t6": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「不必等找回所有記憶，才有資格找個地方休息。」",
+      "next": "t7"
+    },
+    "t7": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「去鯢吞亭問奧野田美宵。我會替你擔保今晚的住宿，具體安排再和她確認。」",
+      "next": "t8"
+    },
+    "t8": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「多謝。村裡的規矩，我會遵守。」",
+      "next": "t9"
+    },
+    "t9": {
+      "speaker": "keine",
+      "portrait": "smile",
+      "text": "「那就去吧。告訴美宵是我請你去的。若住宿安排有困難，再回來找我。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_verdict"
+      },
+      "set_flags": [
+        "lodging_referred"
+      ]
+    },
+    "w1": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「回來了。還書和登記辦得如何？」",
+      "next": "w2"
+    },
+    "w2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「書還了。阿求已登記姓名，舊冊未找到同名。」",
+      "next": "w3"
+    },
+    "w3": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「今晚若能留下，我會遵守規矩。」",
+      "next": "w4"
+    },
+    "w4": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「可以。我們還不熟悉，往後需要慢慢了解；但這不妨礙先替你安排今晚的住處。」",
+      "next": "w5"
+    },
+    "w5": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「去鯢吞亭找奧野田美宵。我會替你擔保今晚的住宿，請她和你確認安排。」",
+      "next": "w6"
+    },
+    "w6": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「在村裡有事可以來找我。不必拿冒險證明自己，也不必為保持距離受責備。」",
+      "next": "w7"
+    },
+    "w7": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「告訴美宵是我請你去的。若安排不成，再回來，我們一起想辦法。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_verdict"
+      },
+      "set_flags": [
+        "lodging_referred"
+      ]
+    },
+    "referred_1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「話我已經替你帶到了。去鯢吞亭找奧野田美宵，今晚的住處她會安排。」",
+      "next": "referred_2"
+    },
+    "referred_2": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「若她那裡安排不成，再回來找我。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_verdict"
+      }
+    },
+    "repeat_1": {
+      "speaker": "keine",
+      "portrait": "annoyed",
+      "text": "「鯢吞亭的住宿安排好了就先休息。以後想起什麼，再找我或阿求談，不必急在今晚。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_verdict"
+      },
+      "set_flags": [
+        "lodging_referred"
+      ]
+    }
   }
 }

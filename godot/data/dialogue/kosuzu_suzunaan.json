@@ -1,28 +1,121 @@
 {
-  "_doc": "MQ10 第一站。小鈴話快、好奇心強，害怕只維持半句；她不是功能型借書員。最後保留『不該存在的書』作後續鉤子。",
+  "_doc": "MQ10 鈴奈庵還書。小鈴的資訊只來自眼前觀察與緣一自述；外界書籍是查找方向，不是憑空宣告核心謎團。初見末節設 met_kosuzu 並回報 kosuzu_lending。",
   "start": [
-    { "if": "met_kosuzu", "node": "repeat_1" },
-    { "node": "k1" }
+    {
+      "if": "met_kosuzu",
+      "node": "repeat_1"
+    },
+    {
+      "node": "k1"
+    }
   ],
   "nodes": {
-    "k1": { "speaker": "kosuzu", "portrait": "surprised", "text": "「歡迎——哇，你真的帶著刀。」", "next": "k2" },
-    "k2": { "speaker": "yoriichi", "portrait": "normal", "text": "「……真的？」", "next": "k3" },
-    "k3": { "speaker": "kosuzu", "portrait": "smile", "text": "「村口傳得比你走得快。有人說你一刀能劈開鳥居。」", "next": "k4" },
-    "k4": { "speaker": "yoriichi", "portrait": "serious", "text": "「我不會劈鳥居。」", "next": "k5" },
-    "k5": { "speaker": "kosuzu", "portrait": "smile", "text": "「太好了。那塊匾很貴。」", "next": "k6" },
-    "k6": { "speaker": "yoriichi", "portrait": "normal", "text": "「慧音老師要我還書。」", "next": "k7" },
-    "k7": { "speaker": "kosuzu", "portrait": "normal", "text": "「放這裡。寺子屋的書總是沾粉筆灰，一聞就知道。」", "next": "k8" },
-    "k8": { "speaker": "kosuzu", "portrait": "surprised", "text": "「你真是從外面來的？外面現在流行這種耳飾嗎？」", "next": "k9" },
-    "k9": { "speaker": "yoriichi", "portrait": "sad", "text": "「我不知道。」", "next": "k10" },
-    "k10": { "speaker": "kosuzu", "portrait": "normal", "text": "「不知道從哪裡來，也不知道自己為什麼來？」", "next": "k11" },
-    "k11": { "speaker": "kosuzu", "portrait": "smile", "text": "「那你來對地方了。書最會替人記得。」", "next": "k12",
-             "quest_event": { "type": "TALK", "target": "kosuzu_lending" } },
-    "k12": { "speaker": "kosuzu", "portrait": "normal", "text": "「鈴奈庵有妖怪的書、外面的書，還有幾本——」", "next": "k13" },
-    "k13": { "speaker": "kosuzu", "portrait": "smile", "text": "「照理說，不該存在的書。」", "next": "k14" },
-    "k14": { "speaker": "yoriichi", "portrait": "surprised", "text": "「請讓我看。」", "next": "k15" },
-    "k15": { "speaker": "kosuzu", "portrait": "surprised", "text": "「……你連客套都不會嗎？」", "next": null },
-
-    "repeat_1": { "speaker": "kosuzu", "portrait": "smile", "text": "「今天想找哪一種？妖怪、外界，還是你自己？」", "next": null,
-                  "quest_event": { "type": "TALK", "target": "kosuzu_lending" } }
+    "k1": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「歡迎光臨鈴奈庵！找書，還是還書？」",
+      "next": "k2"
+    },
+    "k2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「來還書。」",
+      "next": "k3"
+    },
+    "k3": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「交給我就好。我是本居小鈴。這包法……是寺子屋借的那本？」",
+      "next": "k4"
+    },
+    "k4": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "「是。繼國緣一，受慧音老師所託。」",
+      "next": "k5"
+    },
+    "k5": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「辛苦了，我找一下借閱簿。」",
+      "next": "k6"
+    },
+    "k6": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「書就在這裡。」",
+      "next": "k7"
+    },
+    "k7": {
+      "speaker": "kosuzu",
+      "portrait": "normal",
+      "text": "「收到了。頁數和封面都好，我替老師劃掉這筆。」",
+      "next": "k8"
+    },
+    "k8": {
+      "speaker": "kosuzu",
+      "portrait": "normal",
+      "text": "「你是初次來村裡吧？這耳飾的樣式，我還沒見過。是外面的東西嗎？」",
+      "next": "k9"
+    },
+    "k9": {
+      "speaker": "yoriichi",
+      "portrait": "sad",
+      "text": "「一直帶著。可我想不起是如何來到這裡的。」",
+      "next": "k10"
+    },
+    "k10": {
+      "speaker": "kosuzu",
+      "portrait": "normal",
+      "text": "「啊……對不起，我問得太急了。」",
+      "next": "k11"
+    },
+    "k11": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「若想找外面的事，可以來翻翻書。不保證有答案，不過我能幫你找。」",
+      "next": "k12"
+    },
+    "k12": {
+      "speaker": "kosuzu",
+      "portrait": "normal",
+      "text": "「店裡有些外界流入的書，寫的地名和這裡不同。」",
+      "next": "k13"
+    },
+    "k13": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「只是還沒全理好。我得先核對書名，免得拿錯了。」",
+      "next": "k14"
+    },
+    "k14": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "「請讓我看。」",
+      "next": "k15"
+    },
+    "k15": {
+      "speaker": "kosuzu",
+      "portrait": "normal",
+      "text": "「可以，不過那批還在後頭待整理的箱子裡，現在不在手邊。下次來，我們先從地名找起。還書已經記好了，你可以向慧音老師交代。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "kosuzu_lending"
+      },
+      "set_flags": [
+        "met_kosuzu"
+      ]
+    },
+    "repeat_1": {
+      "speaker": "kosuzu",
+      "portrait": "smile",
+      "text": "「緣一，寺子屋那本已還清了。要找外界的書，記得把想查的地名告訴我；我還在整理那批書。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "kosuzu_lending"
+      }
+    }
   }
 }

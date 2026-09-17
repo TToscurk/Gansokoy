@@ -1,56 +1,282 @@
 {
-  "_doc": "MQ09 半人半獸。慧音是全篇第一個讓緣一看見「非人者也能選擇保護人類」的人，但她的自白必須壓在緣一先表態之後——順序顛倒就沒有衝擊力。兩條分支由序章的 spared_wounded_yokai / left_wounded_yokai 決定，不是對話選項。兩條都完成 MQ09，差別在 keine_trusts_yoriichi / keine_watches_yoriichi 這顆旗標，MQ12 奧野田美宵收不收留會用到。",
+  "_doc": "MQ09 來歷詢問。山路經歷由緣一當面告知；靠近與離開均未傷害毛玉。信任與觀察是接待態度，不是善惡裁定。三條初見路徑共用完整詢問、交書與回訪指引，末節才回報 keine_first。",
   "start": [
-    { "if": "met_keine", "node": "repeat_1" },
-    { "if": "spared_wounded_yokai", "node": "s1" },
-    { "if": "left_wounded_yokai", "node": "c1" },
-    { "node": "n1" }
+    {
+      "if": "met_keine",
+      "node": "repeat_1"
+    },
+    {
+      "if": "spared_wounded_yokai",
+      "node": "s1"
+    },
+    {
+      "if": "left_wounded_yokai",
+      "node": "c1"
+    },
+    {
+      "node": "n1"
+    }
   ],
   "nodes": {
-    "s1": { "speaker": "keine", "portrait": "normal", "text": "「你就是那個在獸道放過一隻妖怪的人。」", "next": "s2" },
-    "s2": { "speaker": "yoriichi", "portrait": "surprised", "text": "「……」", "next": "s3" },
-    "s3": { "speaker": "keine", "portrait": "normal", "text": "「村裡的人在傳。說有個佩刀的，明明能動手卻沒有。」", "next": "s4" },
-    "s4": { "speaker": "yoriichi", "portrait": "normal", "text": "「我只是沒有拔刀。」", "next": "s5" },
-    "s5": { "speaker": "keine", "portrait": "smile", "text": "「在這裡，那就夠了。」", "next": "s6",
-            "set_flags": ["keine_trusts_yoriichi"] },
-    "s6": { "speaker": "keine", "portrait": "normal", "text": "「我叫上白澤慧音。寺子屋的老師。」", "next": "s7" },
-    "s7": { "speaker": "yoriichi", "portrait": "normal", "text": "「老師。」", "next": "s8" },
-    "s8": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。」", "next": "s9" },
-    "s9": { "speaker": "keine", "portrait": "serious", "text": "「我是半人半獸。所以兩邊的事，都得管。」", "next": "s10",
-            "quest_event": { "type": "TALK", "target": "keine_first" } },
-    "s10": { "speaker": "yoriichi", "portrait": "surprised", "text": "（……半人半獸。）", "next": "s11" },
-    "s11": { "speaker": "keine", "portrait": "normal", "text": "「人類怎麼怕妖怪，妖怪怎麼看人類，我都看過。」", "next": "s12" },
-    "s12": { "speaker": "keine", "portrait": "normal", "text": "「說吧。你是誰，從哪裡來。」", "next": "s13" },
-    "s13": { "speaker": "yoriichi", "portrait": "sad", "text": "「……我不記得了。」", "next": "s14" },
-    "s14": { "speaker": "keine", "portrait": "surprised", "text": "「不記得。」", "next": "s15" },
-    "s15": { "speaker": "keine", "portrait": "normal", "text": "「那就先別急著想起來。」", "next": "s16" },
-    "s16": { "speaker": "keine", "portrait": "normal", "text": "「明天再來。今天先讓村裡的人看見你一次。」", "next": null },
-
-    "c1": { "speaker": "keine", "portrait": "annoyed", "text": "「佩刀的。站在我門口做什麼。」", "next": "c2" },
-    "c2": { "speaker": "yoriichi", "portrait": "normal", "text": "「守衛說，要你同意。」", "next": "c3" },
-    "c3": { "speaker": "keine", "portrait": "annoyed", "text": "「他倒是會把事推給別人。」", "next": "c4" },
-    "c4": { "speaker": "keine", "portrait": "serious", "text": "「獸道上有一隻受傷的小妖怪。」", "next": "c5" },
-    "c5": { "speaker": "keine", "portrait": "serious", "text": "「有人經過。聽說沒有管。」", "next": "c6" },
-    "c6": { "speaker": "yoriichi", "portrait": "normal", "text": "「……」", "next": "c7" },
-    "c7": { "speaker": "keine", "portrait": "normal", "text": "「我不是在怪你。」", "next": "c8",
-            "set_flags": ["keine_watches_yoriichi"] },
-    "c8": { "speaker": "keine", "portrait": "normal", "text": "「但這裡的規矩不是那樣的。」", "next": "c9" },
-    "c9": { "speaker": "keine", "portrait": "normal", "text": "「我叫上白澤慧音。寺子屋的老師。」", "next": "c10" },
-    "c10": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。我是半人半獸，所以兩邊的事都得管。」", "next": "c11",
-             "quest_event": { "type": "TALK", "target": "keine_first" } },
-    "c11": { "speaker": "yoriichi", "portrait": "surprised", "text": "（……妖怪，在保護人。）", "next": "c12" },
-    "c12": { "speaker": "keine", "portrait": "serious", "text": "「要拔刀嗎？」", "next": "c13" },
-    "c13": { "speaker": "yoriichi", "portrait": "normal", "text": "「不。」", "next": "c14" },
-    "c14": { "speaker": "keine", "portrait": "normal", "text": "「……那就先站著吧。」", "next": "c15" },
-    "c15": { "speaker": "keine", "portrait": "normal", "text": "「別急著證明什麼。」", "next": null },
-
-    "n1": { "speaker": "keine", "portrait": "normal", "text": "「外來人。慧音。寺子屋的老師。」", "next": "n2" },
-    "n2": { "speaker": "keine", "portrait": "serious", "text": "「也是這裡的守衛。我是半人半獸，所以兩邊的事都得管。」", "next": null,
-            "quest_event": { "type": "TALK", "target": "keine_first" } },
-
-    "repeat_1": { "speaker": "keine", "portrait": "normal", "text": "「回來了。」", "next": "repeat_2",
-                  "_doc": "回訪分支照樣回報 TALK：玩家可能在第一次對話中途離開，沒回報的話 MQ09 永遠完成不了，而 s1／c1 因旗標已立再也走不到。",
-                  "quest_event": { "type": "TALK", "target": "keine_first" } },
-    "repeat_2": { "speaker": "keine", "portrait": "smile", "text": "「先把村子走一圈。有名字的地方，都去記住。」", "next": null }
+    "s1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「我是上白澤慧音，這裡的老師。你從山路來？途中有沒有遇上危險？」",
+      "next": "s2"
+    },
+    "s2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「遇過襲擊。也見到一隻受傷的小妖怪。」",
+      "next": "s3"
+    },
+    "s3": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「受傷的那隻……你怎麼做？」",
+      "next": "s4"
+    },
+    "s4": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「我收刀靠近，告訴牠不會傷牠。牠還是逃了。」",
+      "next": "s5"
+    },
+    "s5": {
+      "speaker": "keine",
+      "portrait": "smile",
+      "text": "「你願意收刀讓牠安心，這點我相信。不過牠的傷勢如何，還不能憑這些判斷。」",
+      "next": "s6",
+      "set_flags": [
+        "keine_trusts_yoriichi"
+      ]
+    },
+    "s6": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「你若還記得位置，稍後告訴我。也別為了找牠獨自折返。」",
+      "next": "s7"
+    },
+    "s7": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「在獸道的樹根旁。」",
+      "next": "s8"
+    },
+    "s8": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「我記下了。我在寺子屋教書，也幫忙照看村子的安全。」",
+      "next": "s9"
+    },
+    "s9": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「還有，我是半人半獸。這與我選擇保護誰，是兩回事。」",
+      "next": "s10"
+    },
+    "s10": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "（……她在守護這裡的人。）",
+      "next": "s11"
+    },
+    "s11": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「我會看一個人做了什麼，不只看他是什麼。也請你如此。」",
+      "next": "s12"
+    },
+    "s12": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「你的姓名呢？從哪裡來，又是怎麼走到這裡的？」",
+      "next": "s13"
+    },
+    "s13": {
+      "speaker": "yoriichi",
+      "portrait": "sad",
+      "text": "「繼國緣一。我在山裡醒來，沿路走到這裡。之前如何來的……不記得。」",
+      "next": "s14"
+    },
+    "s14": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「記得原先住在哪裡，或有誰能聯絡嗎？」",
+      "next": "origin_answer"
+    },
+    "s15": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「若一時想不起，就先不填。我們先處理眼下的事。」",
+      "next": "s16"
+    },
+    "s16": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「你需要落腳，也需要認識村裡能幫忙的人。我有一件還書的事，願意替我跑一趟嗎？」",
+      "next": "errand_accept"
+    },
+    "c1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「我是上白澤慧音，寺子屋的老師。你來找我，有什麼事？」",
+      "next": "c2"
+    },
+    "c2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「守衛讓我來說明來歷。我想找個落腳處。」",
+      "next": "c3"
+    },
+    "c3": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「可以先談談。你從山路過來，途中有沒有遇上危險？」",
+      "next": "c4"
+    },
+    "c4": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "「遇過襲擊。後來又見到一隻受傷的小妖怪。」",
+      "next": "c5"
+    },
+    "c5": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「受傷的那隻，你怎麼做？」",
+      "next": "c6"
+    },
+    "c6": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「牠叫我別靠近。我便離開了，沒有碰牠。」",
+      "next": "c7"
+    },
+    "c7": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「明白。保持距離，不再驚嚇牠，也是有分寸的做法。」",
+      "next": "c8",
+      "set_flags": [
+        "keine_watches_yoriichi"
+      ]
+    },
+    "c8": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「我們才剛見面，我仍要問清你的情況。這是接待陌生人的謹慎，不是責怪你離開。」",
+      "next": "c9"
+    },
+    "c9": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「除了教書，我也幫忙照看村子的安全。」",
+      "next": "c10"
+    },
+    "c10": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「我是半人半獸。保護村民是我的選擇，不是只憑身分就能說明的事。」",
+      "next": "c11"
+    },
+    "c11": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "（……她站在村民這一邊。）",
+      "next": "c12"
+    },
+    "c12": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「在村裡不要無故拔刀。有危險，先讓周圍的人避開。」",
+      "next": "c13"
+    },
+    "c13": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「明白。」",
+      "next": "c14"
+    },
+    "c14": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「至於那隻小妖怪的傷勢，現在還不知道。謝謝你把見到的事告訴我。」",
+      "next": "c15"
+    },
+    "c15": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「接下來，說說你自己吧。」",
+      "next": "s12"
+    },
+    "n1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「我是上白澤慧音，寺子屋的老師，也幫忙照看村子。你是來說明來歷的吧？」",
+      "next": "n2"
+    },
+    "n2": {
+      "speaker": "keine",
+      "portrait": "serious",
+      "text": "「我也是半人半獸。我在這裡保護村民；對初來的人，我會先問清情況，再安排需要的幫助。」",
+      "next": "s12",
+      "set_flags": [
+        "keine_watches_yoriichi"
+      ]
+    },
+    "repeat_1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「回來了。還書和登記都辦好了嗎？」",
+      "next": "repeat_2"
+    },
+    "repeat_2": {
+      "speaker": "keine",
+      "portrait": "smile",
+      "text": "「書交給鈴奈庵的小鈴，再去稗田邸找阿求登記。兩處都辦妥後，回來談落腳的安排。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_first"
+      }
+    },
+    "handoff_1": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "（慧音把包好的書交到緣一手中。）「請幫我把這本書還到鈴奈庵，交給本居小鈴。」",
+      "next": "handoff_2"
+    },
+    "handoff_2": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「再去稗田邸找稗田阿求，登記姓名和你還記得的事。不記得的就直說，不必勉強湊出答案。」",
+      "next": "handoff_3"
+    },
+    "handoff_3": {
+      "speaker": "keine",
+      "portrait": "normal",
+      "text": "「兩處都辦妥後，回寺子屋找我。我們再談今晚在哪裡落腳。」",
+      "next": null,
+      "set_flags": [
+        "met_keine"
+      ],
+      "quest_event": {
+        "type": "TALK",
+        "target": "keine_first"
+      }
+    },
+    "origin_answer": {
+      "speaker": "yoriichi",
+      "portrait": "sad",
+      "text": "「此刻想不起能投奔的地方，也無人可尋。」",
+      "next": "s15"
+    },
+    "errand_accept": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「好。我會送到。」",
+      "next": "handoff_1"
+    }
   }
 }

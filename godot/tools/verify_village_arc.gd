@@ -349,8 +349,10 @@ func _run() -> void:
 	await step(4)
 	await _drive(dm)
 	dm.disconnect("line_shown", _record_line)
-	check("S10 阿求對話同時完成查冊與『查無此人』劇情",
-		" ".join(_lines).contains("你什麼都沒有") and sf.call("get_flag", "name_not_in_record"))
+	# 阿求改口後不再說「你什麼都沒有」——她講的是冊子的收錄範圍，
+	# 並明說「查無記載 ≠ 判定來歷」。驗的是這個新結論，不是舊台詞。
+	check("S10 阿求對話完成登記，且說明查無記載不等於沒有來歷",
+		" ".join(_lines).contains("不能據此判定") and sf.call("get_flag", "name_not_in_record"))
 	check("S11 兩場有角色的會面後完成 MQ10", qm.call("is_completed", "MQ10"))
 	check("S12 三顆完成旗標都立起", sf.call("get_flag", "did_keine_errands")
 		and sf.call("get_flag", "met_kosuzu") and sf.call("get_flag", "met_akyuu"))
@@ -370,7 +372,30 @@ func _run() -> void:
 	await _drive(dm)
 	dm.disconnect("line_shown", _record_line)
 	check("S18 信任分支完成裁定那格", _obj_index(qm, "MQ12") == 1)
-	check("S19 信任分支不得出現觀察期的台詞", not " ".join(_lines).contains("別讓我後悔"))
+	check("S19 信任分支不得出現觀察線的保留語氣",
+		not " ".join(_lines).contains("我們還不熟悉"))
+	check("S19b 裁定完成後立起轉介旗標（旅店據此開放）", sf.call("get_flag", "lodging_referred"))
+
+	# ── S19c. 聽完裁定、還沒去鯢吞亭就回頭找慧音 ──
+	# 舊版 start 只認 has_village_lodging，於是慧音會把「書交了嗎／今晚能留下嗎／
+	# 去找美宵」整段九句重演一次，像沒認得剛才的人。改走 lodging_referred → referred_1。
+	_lines.clear()
+	dm.connect("line_shown", _record_line)
+	verdict.call("interact")
+	await step(4)
+	await _drive(dm)
+	dm.disconnect("line_shown", _record_line)
+	var replay := " ".join(_lines)
+	check("S19c 未投宿就回頭，不重播整段裁定", not replay.contains("書交給小鈴"))
+	check("S19d 改播簡短的轉介提醒", replay.contains("話我已經替你帶到了"))
+	check("S19e 重播不動 MQ12 進度（仍停在旅店那格）",
+		qm.call("is_active", "MQ12") and _obj_index(qm, "MQ12") == 1)
+	# ⚠ 這裡只能查 keine_verdict 自己的 key，不能斷言 _pending 整個為空：
+	#   S17 為了觸發裁定把玩家瞬移到寺子屋區，順帶留下一筆 REACH|village_temple_school
+	#   （當下 MQ08 未起且未完成，_future_required 判定將來用得到而存著）。
+	#   那是測試造景的副作用，與裁定重播無關。
+	check("S19f 重複的裁定事件不留存貨到 pending",
+		not (qm.get("_pending") as Dictionary).has("2|keine_verdict"))
 
 	player.global_position = Vector3(213, 2.5, -82)
 	await step(6)
@@ -384,7 +409,8 @@ func _run() -> void:
 	check("S21 美宵完成 MQ12", qm.call("is_completed", "MQ12"))
 	check("S22 落腳旗標立起（人里段完成）",
 		sf.call("get_flag", "has_village_lodging") and sf.call("get_flag", "village_arc_done"))
-	check("S23 信任分支的美宵不提『刀放樓下』", not " ".join(_lines).contains("刀放樓下"))
+	# 規矩改成對所有客人一致（刀留鞘內），只有「初次來先說明規矩」那句分線。
+	check("S23 信任分支的美宵不另外補說明規矩", not " ".join(_lines).contains("免得你不熟悉"))
 
 	# ── S24. 反向：觀察分支也要住得下來，且台詞不同 ──
 	qm.call("reset")
@@ -400,7 +426,7 @@ func _run() -> void:
 	await _drive(dm)
 	dm.disconnect("line_shown", _record_line)
 	check("S24 觀察分支同樣完成裁定那格", _obj_index(qm, "MQ12") == 1)
-	check("S25 觀察分支出現『別讓我後悔』", " ".join(_lines).contains("別讓我後悔"))
+	check("S25 觀察分支出現保留語氣", " ".join(_lines).contains("我們還不熟悉"))
 	player.global_position = Vector3(213, 2.5, -82)
 	await step(6)
 	_lines.clear()
@@ -409,8 +435,8 @@ func _run() -> void:
 	await step(4)
 	await _drive(dm)
 	dm.disconnect("line_shown", _record_line)
-	check("S26 觀察分支的美宵也收人（台詞含『刀放樓下』）",
-		qm.call("is_completed", "MQ12") and " ".join(_lines).contains("刀放樓下"))
+	check("S26 觀察分支的美宵也收人（含初次說明規矩那句）",
+		qm.call("is_completed", "MQ12") and " ".join(_lines).contains("免得你不熟悉"))
 
 	# ── S27. 早到：先見過阿求，再做小鈴那一站 ──
 	qm.call("reset")
@@ -427,6 +453,38 @@ func _run() -> void:
 	await _drive(dm)
 	check("S29 小鈴完成後補算阿求事件，直接完成 MQ10", qm.call("is_completed", "MQ10")
 		and qm.call("is_active", "MQ12"))
+
+	# ── S30. 順序保護：MQ12 一開始就跑去投宿，不得先拿到房間 ──
+	#  舊版鯢吞亭只設 require_quest="MQ12"，玩家在裁定之前就能觸發 INTERACT，
+	#  事件被存進 _pending；回頭聽裁定時「去鯢吞亭」一說完就連帶補算完住宿，
+	#  等於沒被介紹就住進去。現在改成等慧音的 lodging_referred。
+	qm.call("reset")
+	sf.call("reset")
+	qm.call("start_quest", "MQ12")
+	player.global_position = Vector3(213, 2.5, -82)
+	await step(8)
+	check("S30 裁定之前鯢吞亭沉默（不顯示提示）", String(inn.call("prompt_text")).is_empty())
+	inn.call("interact")
+	await step(4)
+	check("S31 裁定之前按 E 不起美宵對話", not dm.call("is_active"))
+	check("S32 裁定之前不留下投宿的早到事件", (qm.get("_pending") as Dictionary).is_empty())
+	check("S33 住宿旗標尚未立起", not sf.call("get_flag", "has_village_lodging"))
+	sf.call("set_flag", "keine_trusts_yoriichi", true)
+	player.global_position = Vector3(315, 2.5, 47)
+	await step(6)
+	verdict.call("interact")
+	await step(4)
+	await _drive(dm)
+	check("S34 聽完裁定本身不得完成住宿那一格", qm.call("is_active", "MQ12")
+		and _obj_index(qm, "MQ12") == 1 and not qm.call("is_completed", "MQ12"))
+	player.global_position = Vector3(213, 2.5, -82)
+	await step(8)
+	check("S35 裁定後鯢吞亭才開放", not String(inn.call("prompt_text")).is_empty())
+	inn.call("interact")
+	await step(4)
+	await _drive(dm)
+	check("S36 走正確順序仍能完成 MQ12", qm.call("is_completed", "MQ12")
+		and sf.call("get_flag", "has_village_lodging"))
 
 	print("[VARC] ══ 批次 A＋B（MQ08–MQ12）驗證結束：%d 項失敗 ══" % fails)
 	quit(1 if fails > 0 else 0)

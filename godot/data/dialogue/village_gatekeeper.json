@@ -15,7 +15,7 @@
     "g7": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「那你也別離開這塊地。」", "next": "g8",
             "quest_event": { "type": "TALK", "target": "gatekeeper_gate" } },
     "g8": { "speaker": "yoriichi", "portrait": "normal", "text": "「你在保護裡面的人。應當如此。」", "next": "g9" },
-    "g9": { "speaker": "gatekeeper", "portrait": "surprised", "text": "「……少來這套。」", "next": "g10" },
+    "g9": { "speaker": "gatekeeper", "portrait": "annoyed", "text": "「……少來這套。」", "next": "g10" },
     "g10": { "speaker": "gatekeeper", "portrait": "normal", "text": "「去寺子屋。找慧音老師。」", "next": "g11" },
     "g11": { "speaker": "gatekeeper", "portrait": "normal", "text": "「她說你不是麻煩，我就當自己看走眼。」", "next": null,
              "set_flags": ["gatekeeper_pointed_way"] },

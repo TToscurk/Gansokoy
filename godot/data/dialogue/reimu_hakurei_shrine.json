@@ -1,48 +1,199 @@
 {
   "start": [
-    { "if": { "not": "met_reimu" }, "node": "first_1" },
-    { "if": "met_reimu", "node": "repeat_1" }
+    {
+      "if": {
+        "not": "met_reimu"
+      },
+      "node": "first_1"
+    },
+    {
+      "if": "met_reimu",
+      "node": "repeat_1"
+    }
   ],
   "nodes": {
-    "first_1":  { "speaker": "reimu", "portrait": "normal",  "text": "「……你誰？」", "next": "first_2" },
-    "first_2":  { "speaker": "yoriichi", "portrait": "normal", "text": "「繼國緣一。」", "next": "first_3" },
-    "first_3":  { "speaker": "yoriichi", "portrait": "normal", "text": "「醒來時，我便已身處山裡。」", "next": "first_4" },
-    "first_4":  { "speaker": "reimu", "portrait": "annoyed", "text": "「那把刀、那身衣服……」", "next": "first_5" },
-    "first_5":  { "speaker": "reimu", "portrait": "annoyed", "text": "「你不是幻想鄉的人。外來人啊。」", "next": "first_6" },
-    "first_6":  { "speaker": "yoriichi", "portrait": "normal", "text": "「這裡是何處？」", "next": "first_7" },
-    "first_7":  { "speaker": "reimu", "portrait": "normal",  "text": "「幻想鄉。」", "next": "first_8",
-                  "quest_event": { "type": "TALK", "target": "reimu_hakurei_shrine" } },
-    "first_8":  { "speaker": "reimu", "portrait": "normal",  "text": "「人類、妖怪、神明……」", "next": "first_9" },
-    "first_9":  { "speaker": "reimu", "portrait": "smile",   "text": "「反正什麼奇怪的東西都有。」", "next": "first_10" },
-    "first_10": { "speaker": "reimu", "portrait": "smile",   "text": "「包括你。」", "next": "intro_1" },
-
-    "intro_1":  { "speaker": "reimu", "portrait": "serious", "text": "「還有一件事。」", "next": "intro_2" },
-    "intro_2":  { "speaker": "reimu", "portrait": "serious", "text": "「看到妖怪，先看牠要做什麼。」", "next": "intro_3" },
-    "intro_3":  { "speaker": "yoriichi", "portrait": "normal", "text": "「若它危害人呢？」", "next": "intro_4" },
-    "intro_4":  { "speaker": "reimu", "portrait": "serious", "text": "「那是另一回事。」", "next": "intro_5" },
-    "intro_5":  { "speaker": "reimu", "portrait": "serious", "text": "「但在幻想鄉——」", "next": "intro_6" },
-    "intro_6":  { "speaker": "reimu", "portrait": "serious", "text": "「妖怪，不代表一見面就該拔刀。」", "next": "intro_6b",
-                  "quest_event": { "type": "TALK", "target": "reimu_gensokyo_intro" } },
-    "intro_6b": { "speaker": "yoriichi", "portrait": "sad", "text": "（……那隻縮在樹根旁的小妖怪。）", "next": "why_1",
-                  "if": "spared_wounded_yokai",
-                  "_doc": "條件不成立時 DialogueManager 直接跳 next（why_1），所以不需要另寫 else 節點" },
-
-    "why_1":    { "speaker": "yoriichi", "portrait": "normal", "text": "「那麼……」", "next": "why_2" },
-    "why_2":    { "speaker": "yoriichi", "portrait": "serious", "text": "「我為什麼會在這裡？」", "next": "why_3" },
-    "why_3":    { "speaker": "reimu", "portrait": "normal",  "text": "「這個嘛……」", "next": "why_4" },
-    "why_4":    { "speaker": "reimu", "portrait": "smile",   "text": "「問對人了。」", "next": "why_5" },
-    "why_5":    { "speaker": "reimu", "portrait": "confused", "text": "「但我現在也不知道。」", "next": "intro_7" },
-
-    "intro_7":  { "speaker": "reimu", "portrait": "normal",  "text": "「先去人里吧。」", "next": "intro_8" },
-    "intro_8":  { "speaker": "reimu", "portrait": "normal",  "text": "「那裡至少有人能替你問路。」", "next": "intro_9" },
-    "intro_9":  { "speaker": "yoriichi", "portrait": "normal", "text": "「……正常？」", "next": "intro_10" },
-    "intro_10": { "speaker": "reimu", "portrait": "annoyed", "text": "「比這裡有耐心。」", "next": null,
-                  "set_flags": ["met_reimu", "visited_hakurei_shrine"] },
-
-    "repeat_1": { "speaker": "reimu", "portrait": "annoyed", "text": "「又來了？」", "next": "repeat_2",
-                  "_doc": "回訪分支保留 TALK 回報：玩家可能在第一次對話中途離開；即使 MQ04 已精簡，重訪也不能讓任務卡死。",
-                  "quest_event": { "type": "TALK", "target": "reimu_hakurei_shrine" } },
-    "repeat_2": { "speaker": "reimu", "portrait": "normal",  "text": "「人里在山下。別在這裡晃。」", "next": null,
-                  "quest_event": { "type": "TALK", "target": "reimu_gensokyo_intro" } }
+    "first_1": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「……你誰？」",
+      "next": "first_2"
+    },
+    "first_2": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「繼國緣一。」",
+      "next": "first_3"
+    },
+    "first_3": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「醒來時，我便已身處山裡。」",
+      "next": "first_4"
+    },
+    "first_4": {
+      "speaker": "reimu",
+      "portrait": "annoyed",
+      "text": "「那把刀、那身衣服……」",
+      "next": "first_5"
+    },
+    "first_5": {
+      "speaker": "reimu",
+      "portrait": "annoyed",
+      "text": "「你不是幻想鄉的人。外來人啊。」",
+      "next": "first_6"
+    },
+    "first_6": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「這裡是何處？」",
+      "next": "first_7"
+    },
+    "first_7": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「幻想鄉。」",
+      "next": "first_8"
+    },
+    "first_8": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「人類、妖怪、神明……」",
+      "next": "first_9"
+    },
+    "first_9": {
+      "speaker": "reimu",
+      "portrait": "smile",
+      "text": "「反正什麼奇怪的東西都有。」",
+      "next": "first_10"
+    },
+    "first_10": {
+      "speaker": "reimu",
+      "portrait": "smile",
+      "text": "「包括你。」",
+      "next": "intro_1"
+    },
+    "intro_1": {
+      "speaker": "reimu",
+      "portrait": "serious",
+      "text": "「還有一件事。」",
+      "next": "intro_2"
+    },
+    "intro_2": {
+      "speaker": "reimu",
+      "portrait": "serious",
+      "text": "「看到妖怪，先看牠要做什麼。」",
+      "next": "intro_3"
+    },
+    "intro_3": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「若它危害人呢？」",
+      "next": "intro_4"
+    },
+    "intro_4": {
+      "speaker": "reimu",
+      "portrait": "serious",
+      "text": "「那是另一回事。」",
+      "next": "intro_5"
+    },
+    "intro_5": {
+      "speaker": "reimu",
+      "portrait": "serious",
+      "text": "「但在幻想鄉——」",
+      "next": "intro_6"
+    },
+    "intro_6": {
+      "speaker": "reimu",
+      "portrait": "serious",
+      "text": "「妖怪，不代表一見面就該拔刀。」",
+      "next": "intro_6b",
+      "quest_event": {
+        "type": "TALK",
+        "target": "reimu_gensokyo_intro"
+      }
+    },
+    "intro_6b": {
+      "speaker": "yoriichi",
+      "portrait": "sad",
+      "text": "（……那隻縮在樹根旁的小妖怪。）",
+      "next": "why_1",
+      "if": "spared_wounded_yokai",
+      "_doc": "條件不成立時 DialogueManager 直接跳 next（why_1），所以不需要另寫 else 節點"
+    },
+    "why_1": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「那麼……」",
+      "next": "why_2"
+    },
+    "why_2": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "「我為什麼會在這裡？」",
+      "next": "why_3"
+    },
+    "why_3": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「這個嘛……」",
+      "next": "why_4"
+    },
+    "why_4": {
+      "speaker": "reimu",
+      "portrait": "smile",
+      "text": "「問對人了。」",
+      "next": "why_5"
+    },
+    "why_5": {
+      "speaker": "reimu",
+      "portrait": "confused",
+      "text": "「但我現在也不知道。」",
+      "next": "intro_7"
+    },
+    "intro_7": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「先下山去人里吧。順著石階走，過了鳥居往山下的路，到得了。」",
+      "next": "intro_8"
+    },
+    "intro_8": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「那裡有村子、有大夫，也有人肯替外來的人指路。你總得有地方吃飯睡覺。」",
+      "next": "intro_9"
+    },
+    "intro_9": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「多謝指點。那裡的人，會願意聽外來者說話嗎？」",
+      "next": "intro_10"
+    },
+    "intro_10": {
+      "speaker": "reimu",
+      "portrait": "annoyed",
+      "text": "「會啦。找寺子屋的慧音，她管這種事。比起賴在我這裡，那邊實在得多。」",
+      "next": null,
+      "set_flags": [
+        "met_reimu",
+        "visited_hakurei_shrine"
+      ]
+    },
+    "repeat_1": {
+      "speaker": "reimu",
+      "portrait": "annoyed",
+      "text": "「又來了？」",
+      "next": "repeat_2",
+      "_doc": "回訪分支保留 TALK 回報：玩家可能在第一次對話中途離開；即使 MQ04 已精簡，重訪也不能讓任務卡死。回報的是 MQ04 實際使用的 reimu_gensokyo_intro（見 repeat_2）；舊的 reimu_hakurei_shrine target 已無任務消費，2026-09-17 移除。"
+    },
+    "repeat_2": {
+      "speaker": "reimu",
+      "portrait": "normal",
+      "text": "「人里在山下。別在這裡晃。」",
+      "next": null,
+      "quest_event": {
+        "type": "TALK",
+        "target": "reimu_gensokyo_intro"
+      }
+    }
   }
 }

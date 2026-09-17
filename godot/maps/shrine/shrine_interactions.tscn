@@ -32,8 +32,6 @@ interaction_id = "hakurei_shrine_visit"
 interaction_label = "拜訪"
 place_name = "博麗神社"
 dialogue_id = "reimu_hakurei_shrine"
-quest_event_type = "TALK"
-quest_target_id = "reimu_hakurei_shrine"
 require_quest = "MQ04"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="拜殿拜訪"]
