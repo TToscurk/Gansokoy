@@ -159,6 +159,11 @@ dialogue_id = "miyoi_kujiratei"
 quest_event_type = "INTERACT"
 quest_target_id = "inn_room"
 require_quest = "MQ12"
+; ⚠ 光靠 require_quest 擋不住順序：MQ12 一開始（慧音裁定那一格還沒過）玩家就能
+;   先跑來投宿，INTERACT 被存進 _pending，回頭聽裁定時「去鯢吞亭」一說完就
+;   連帶補算完住宿 —— 玩家沒被介紹就拿到房間，順序整個顛倒。
+;   慧音兩條裁定分支的末節都會立 lodging_referred，這裡等它。
+require_flag = "lodging_referred"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="鯢吞亭美宵"]
 shape = SubResource("inn")

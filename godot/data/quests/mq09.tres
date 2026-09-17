@@ -7,14 +7,14 @@
 script = ExtResource("obj")
 type = 2
 target_id = "keine_first"
-description = "向慧音說明來歷"
+description = "向慧音說明來歷，聽完她交代的事"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ09"
-title = "半人半獸"
-description = "寺子屋的老師自稱是半人半獸。她先問的，是緣一打算對妖怪做什麼。"
+title = "寺子屋的老師"
+description = "守衛要緣一去找寺子屋的慧音老師，說明自己的來歷。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0")])
 next_quest_id = "MQ10"
 complete_flags = PackedStringArray("met_keine")

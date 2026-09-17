@@ -27,9 +27,15 @@
     "portraits": {}
   },
   "keine": {
-    "_doc": "MQ09 慧音。立繪未做，先只顯示名字。委製後把 portraits 填上即可，對話資料不用動。",
+    "_doc": "MQ09／MQ12 慧音。來源 慧音-立繪圖.png 右欄 5 格（tools/build_portraits.py，column 策略）；normal／smile 已辨識確認，serious／surprised／annoyed 為暫定對應，待使用者確認。",
     "name": "上白澤慧音",
-    "portraits": {}
+    "portraits": {
+      "normal": "res://assets/portraits/keine_normal.png",
+      "smile": "res://assets/portraits/keine_smile.png",
+      "serious": "res://assets/portraits/keine_serious.png",
+      "surprised": "res://assets/portraits/keine_surprised.png",
+      "annoyed": "res://assets/portraits/keine_annoyed.png"
+    }
   },
   "gatekeeper": {
     "_doc": "MQ08 村門自警團。無名功能性角色，不需要立繪。",
@@ -37,18 +43,31 @@
     "portraits": {}
   },
   "kosuzu": {
-    "_doc": "MQ10 鈴奈庵。立繪未做，先只顯示名字。",
+    "_doc": "MQ10 鈴奈庵。設定表只有兩種可辨識的表情（平靜／笑），對話用到的 surprised 會退回 normal。",
     "name": "本居小鈴",
-    "portraits": {}
+    "portraits": {
+      "normal": "res://assets/portraits/kosuzu_normal.png",
+      "smile": "res://assets/portraits/kosuzu_smile.png"
+    }
   },
   "akyuu": {
-    "_doc": "MQ10/MQ11 稗田邸。立繪未做，先只顯示名字。",
+    "_doc": "MQ10 稗田邸。缺 annoyed（設定表無慍怒差分），會退回 normal。",
     "name": "稗田阿求",
-    "portraits": {}
+    "portraits": {
+      "normal": "res://assets/portraits/akyuu_normal.png",
+      "smile": "res://assets/portraits/akyuu_smile.png",
+      "serious": "res://assets/portraits/akyuu_serious.png",
+      "surprised": "res://assets/portraits/akyuu_surprised.png"
+    }
   },
   "miyoi": {
-    "_doc": "MQ12 鯢吞亭。奧野田美宵 —— 東方醉蝶華（東方酔蝶華）初出，人里酒場「鯢吞亭」的看板娘（座敷童子）。立繪未做，先只顯示名字；委製後把 portraits 填上即可，對話資料不用動。",
+    "_doc": "MQ12 鯢吞亭。奧野田美宵 —— 東方醉蝶華初出，人里酒場「鯢吞亭」的看板娘（座敷童子）。缺 serious，會退回 normal。",
     "name": "奧野田美宵",
-    "portraits": {}
+    "portraits": {
+      "normal": "res://assets/portraits/miyoi_normal.png",
+      "smile": "res://assets/portraits/miyoi_smile.png",
+      "surprised": "res://assets/portraits/miyoi_surprised.png",
+      "annoyed": "res://assets/portraits/miyoi_annoyed.png"
+    }
   }
 }

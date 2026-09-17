@@ -153,7 +153,7 @@ func _run() -> void:
 	verdict.call("interact")
 	await _wait(40)
 	await _shoot("b08_keine_verdict_open")
-	print("[SHOT] 裁定關鍵句：%s" % await _drive_till("毛玉還活著"))
+	print("[SHOT] 裁定關鍵句：%s" % await _drive_till("我願意先信任你"))
 	await _shoot("b09_keine_marmot_line")
 	await _drain()
 
@@ -164,7 +164,7 @@ func _run() -> void:
 	await _shoot("b10_inn_prompt")
 	inn.call("interact")
 	await _wait(40)
-	print("[SHOT] 美宵關鍵句：%s" % await _drive_till("鑰匙在門上"))
+	print("[SHOT] 美宵關鍵句：%s" % await _drive_till("客房的鑰匙"))
 	await _shoot("b11_inn_key_line")
 	await _drain()
 	print("[SHOT] 收尾：MQ12 完成=%s 落腳=%s" % [

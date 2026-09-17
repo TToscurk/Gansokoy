@@ -72,21 +72,9 @@ func _initialize() -> void:
 		check("死亡鎖輸入", bool(player.get("input_locked")))
 		var respawned := [false]
 		combat.respawn_requested.connect(func() -> void: respawned[0] = true)
-		# 音效：倒地那一聲已由角色 CharacterAudio 播；「死」字浮現與重生淡入各一聲由 DeathScreen 播。
-		var audio: Node = player.get_node("CharacterAudio")
-		check("倒地音效 death_collapse 已載入", audio.call("_snd", "death_collapse.wav") != null)
-		var sfx: AudioStreamPlayer = ds.get_node("Sfx")
-		check("DeathScreen 有「死」字音效", ds.kanji_sound != null and ds.kanji_sound.resource_path.ends_with("death_kanji.wav"))
-		check("DeathScreen 有重生音效", ds.respawn_sound != null and ds.respawn_sound.resource_path.ends_with("respawn_breath.wav"))
-		var heard: Array[String] = []
 		var t0 := Time.get_ticks_msec()
 		while ds.is_running() and Time.get_ticks_msec() - t0 < 15000:
 			await process_frame
-			if sfx.playing and sfx.stream != null:
-				var nm := sfx.stream.resource_path.get_file()
-				if heard.is_empty() or heard.back() != nm:
-					heard.append(nm)
-		check("演出中依序播了 死字太鼓 → 重生吸氣", heard == ["death_kanji.wav", "respawn_breath.wav"], str(heard))
 		check("演出在 %.1f s 內結束" % (ds.total_time() + 1.0), not ds.is_running(), "%.2f s" % ((Time.get_ticks_msec() - t0) / 1000.0))
 		check("有發 respawn_requested", respawned[0])
 		check("重生後活著", not player.posture.is_dead())

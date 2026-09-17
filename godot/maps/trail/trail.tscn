@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cqwag56d3ae7m" path="res://assets/textures/terrain_forest_nor_gl.jpg" id="3_xm6n4"]
 [ext_resource type="Texture2D" uid="uid://cskkyqgdy2y0f" path="res://assets/textures/terrain_grass_diff.jpg" id="4_66a54"]
 [ext_resource type="Texture2D" uid="uid://duoxr267rc5km" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="5_gyik7"]
-[ext_resource type="Texture2D" path="res://maps/trail/gen/ground_tex.res" id="6_xnt57"]
+[ext_resource type="Texture2D" uid="uid://00nwxa3r4cep" path="res://maps/trail/gen/ground_tex.res" id="6_xnt57"]
 [ext_resource type="Texture2D" uid="uid://cks3rvqum3lfd" path="res://assets/textures/terrain_path_diff.jpg" id="7_2ucs3"]
 [ext_resource type="Texture2D" uid="uid://hhi85apgbwc2" path="res://assets/textures/terrain_path_nor_gl.jpg" id="8_jjkbr"]
 [ext_resource type="Material" uid="uid://cavaulekrc4du" path="res://assets/materials/east_river_water.tres" id="9_ltss0"]
@@ -60,7 +60,7 @@
 [ext_resource type="PackedScene" uid="uid://dge2cv7wbipab" path="res://assets/lowpoly_scene/Chair.gltf" id="58_27o61"]
 [ext_resource type="PackedScene" uid="uid://bm4jij4s4fxmq" path="res://assets/lowpoly_scene/WoodenBox.gltf" id="59_rhxtn"]
 [ext_resource type="PackedScene" uid="uid://bdwumul0g87fk" path="res://assets/nature/Pebble_Round_2.gltf" id="60_60nfg"]
-[ext_resource type="MultiMesh" path="res://maps/trail/gen/vista_trees.res" id="61_11olq"]
+[ext_resource type="MultiMesh" uid="uid://0sot4hxl8uai" path="res://maps/trail/gen/vista_trees.res" id="61_11olq"]
 [ext_resource type="PackedScene" uid="uid://dvoat5l4r514j" path="res://assets/_incoming/gobkit_nature/Mountain001.glb" id="62_tbl0m"]
 [ext_resource type="PackedScene" uid="uid://dkkt4s30c61uf" path="res://assets/_incoming/gobkit_nature/MountainFar001.glb" id="63_uyqi8"]
 [ext_resource type="PackedScene" uid="uid://bwnmnsf6bmcvm" path="res://assets/_incoming/gobkit_nature/Mountain002.glb" id="64_5rsks"]
@@ -632,6 +632,7 @@ tonemap_mode = 3
 tonemap_exposure = 0.98
 ssao_enabled = true
 ssao_intensity = 1.6
+sdfgi_enabled = true
 glow_enabled = true
 glow_intensity = 0.55
 glow_bloom = 0.05
@@ -656,6 +657,7 @@ ambient_light_source = 3
 ambient_light_energy = 0.42
 tonemap_mode = 3
 tonemap_exposure = 0.9
+ssr_enabled = true
 ssao_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.68, 0.72, 0.66, 1)

@@ -187,6 +187,19 @@ extends CharacterBody3D
 ##   捌型 6 m/s 從來沒真的衝出去；改成有時長的 dash 才會有位移。
 @export var form_impulse_time := 0.22
 
+@export_group("Counter & Reward")
+## 見切反擊：彈刀成功後 counter_window 秒內按 LMB → 直接接 counter_form（不扣呼吸、無視冷卻與熟練度）。
+## 0 = 關閉。
+@export var counter_form := 11
+@export_range(0.0, 2.0, 0.05) var counter_window := 0.5
+## 翻滾無敵幀真的閃過攻擊：呼吸回報 ＋ 短暫時間減速（隻狼式「見切」的爽感）。
+@export var dodge_success_breath := 10.0
+@export_range(0.0, 1.0, 0.05) var dodge_slowmo_scale := 0.4
+@export_range(0.0, 1.0, 0.01) var dodge_slowmo_time := 0.25
+## 拾參ノ型（form13 action，預設 C）：呼吸滿 form13_gauge_cost 時按下，把所有可用型連放。
+## 連放期間不看熟練度（十三型本身就是「把十二型全部打出來」）。
+@export var form13_key_enabled := true
+
 @export_group("Reaction Animations")
 ## 反應動畫組（tools/blender/make_react_clips.py → build_react_clips.gd）。
 ## 架勢／格擋受衝／彈刀走 upper 層（腿由 locomotion 提供，可邊走邊架）；
@@ -272,6 +285,11 @@ signal player_posture_broken
 signal player_posture_recovered
 ## 玩家死亡。
 signal player_died
+## 見切反擊成功發動（彈刀 → LMB）。
+signal counter_triggered(form_id: int)
+## 拾參ノ型開始／結束。
+signal form13_started
+signal form13_finished
 signal interaction_prompt_changed(text: String)
 signal interaction_message(text: String)
 const COMBO_SECTION_RANGES: Array[Vector2] = [
@@ -382,6 +400,9 @@ var _trail_default_lifetime := 0.20
 var _form_dash := Vector3.ZERO
 var _form_dash_total := 0.0
 var _form_dash_left := 0.0
+var _counter_until_msec := -1
+var _slowmo_left := 0.0
+var _form13_running := false
 var _blade_base: Marker3D = null
 var _blade_tip: Marker3D = null
 var _sword_trail: SwordTrail3D = null
@@ -735,6 +756,10 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 	if in_dodge_invuln():
 		if _character_audio != null:
 			_character_audio.play_roll()
+		add_breath(dodge_success_breath)
+		if dodge_slowmo_time > 0.0 and dodge_slowmo_scale < 1.0:
+			_slowmo_left = dodge_slowmo_time
+			Engine.time_scale = dodge_slowmo_scale
 		var dodged := {"result": "dodge", "damage": 0.0, "posture": 0.0, "attacker_posture": 0.0}
 		player_was_hit.emit(dodged)
 		return dodged
@@ -761,6 +786,8 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 			dealt = 0.0
 			self_posture = deflect_self_posture
 			attacker_posture = deflect_attacker_posture
+			if counter_form != 0:
+				_counter_until_msec = Time.get_ticks_msec() + int(counter_window * 1000.0)
 		else:
 			result = "block"
 			dealt = damage * block_damage_ratio
@@ -1137,6 +1164,11 @@ func _on_self_posture_broken() -> void:
 ## 位置由呼叫端（main.gd）決定。
 func revive() -> void:
 	_dead_left = -1.0
+	_slowmo_left = 0.0
+	Engine.time_scale = 1.0
+	_counter_until_msec = -1
+	_form13_queue.clear()
+	_form13_running = false
 	_hitstun_left = 0.0
 	_stagger_left = 0.0
 	_knockback = Vector3.ZERO
@@ -1223,6 +1255,12 @@ func _physics_process(delta):
 			_guard_react_left = -1.0
 			if _guard_held:
 				_hold_guard_pose()
+	# 閃避成功的時間減速：用真實時間倒數（delta 已被 time_scale 縮過）。
+	if _slowmo_left > 0.0:
+		_slowmo_left -= delta / maxf(Engine.time_scale, 0.01)
+		if _slowmo_left <= 0.0:
+			_slowmo_left = 0.0
+			Engine.time_scale = 1.0
 	# 型冷卻：與 ActionState 無關，永遠在跑。
 	if not _form_cooldowns.is_empty():
 		for id in _form_cooldowns.keys():
@@ -1594,6 +1632,9 @@ func _unhandled_input(event):
 		toggle_lock_on()
 	elif event.is_action_pressed("deathblow"):
 		try_deathblow()
+	elif event.is_action_pressed("form13"):
+		if form13_key_enabled:
+			start_form13()
 	elif event.is_action_pressed("attack_special"):
 		if _active_attack_name == attack_continuous_spin_anim:
 			if can_cancel_continuous_spin():
@@ -1701,6 +1742,14 @@ func request_primary_attack() -> void:
 		return
 	if sword_state != SwordState.DRAWN:
 		return
+	# 見切反擊：彈刀後 counter_window 內按 LMB → 直接接 counter_form。
+	if counter_form != 0 and _counter_until_msec >= 0 and Time.get_ticks_msec() <= _counter_until_msec \
+			and action_state == ActionState.FREE:
+		_counter_until_msec = -1
+		end_guard()
+		if execute_form(counter_form, true):
+			counter_triggered.emit(counter_form)
+			return
 	# 型進行中按 LMB：取消窗口內直接回連段段1，窗口前先排隊。
 	if action_state == ActionState.ATTACKING and active_form != 0 and form_followup_enabled:
 		if _in_form_cancel_window():
@@ -2068,9 +2117,12 @@ func _finish_attack() -> void:
 		_fade_full()
 	if not _form13_queue.is_empty():
 		var next_id: int = _form13_queue.pop_front()
-		if execute_form(next_id):
+		if execute_form(next_id, true):
 			return
 		_form13_queue.clear()
+	if _form13_running:
+		_form13_running = false
+		form13_finished.emit()
 	if pending_sheathe and sword_state == SwordState.DRAWN:
 		pending_sheathe = false
 		_start_sheathe()
@@ -2288,10 +2340,18 @@ func start_form13() -> bool:
 		return false
 	_form13_queue.clear()
 	for id in SunBreathing.FORM13_SEQUENCE:
-		if can_use_form(id):
+		# 十三型 = 十二型連放：只要有動畫、不在冷卻就排進去（不看熟練度／呼吸）。
+		if SunBreathing.FORMS.has(id) and String(SunBreathing.FORMS[id].anim) != "" and form_cooldown_left(id) <= 0.0 \
+				and (bool(SunBreathing.FORMS[id].allowed_airborne) or is_on_floor()):
 			_form13_queue.append(id)
 	if _form13_queue.is_empty():
 		return false
 	sun_breath_gauge = 0.0
+	breath_changed.emit(sun_breath_gauge, sun_breath_max)
 	var first: int = _form13_queue.pop_front()
-	return execute_form(first)
+	if not execute_form(first, true):
+		_form13_queue.clear()
+		return false
+	_form13_running = true
+	form13_started.emit()
+	return true

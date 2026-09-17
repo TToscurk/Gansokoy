@@ -41,7 +41,12 @@ func _run() -> void:
 				continue
 			var img := tex.get_image()
 			var key := "%s|%s" % [character_id, state]
-			digests[key] = img.get_data().slice(0, 4096).hex_encode()
+			# 透明胸像的前 4096 bytes 可能全是透明頂部；只比開頭會把不同表情
+			# 誤判成重複。SHA-256 必須吃完整像素資料。
+			var hashing := HashingContext.new()
+			hashing.start(HashingContext.HASH_SHA256)
+			hashing.update(img.get_data())
+			digests[key] = hashing.finish().hex_encode()
 	# 同角色的各表情不得是同一張圖（切錯格會全部一樣）
 	for character_id in (data as Dictionary).keys():
 		var seen: Dictionary = {}

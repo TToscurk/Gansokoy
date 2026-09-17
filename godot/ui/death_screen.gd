@@ -29,8 +29,7 @@ signal finished
 @export_range(0.1, 0.8, 0.05) var kanji_height_ratio := 0.42
 @export var kanji_color := Color(0.78, 0.08, 0.08)
 @export var kanji_text := "死"
-## 音效（tools/synth_sfx.py 合成）：「死」字浮現時的太鼓＋低鳴；重生淡入時的吸氣。
-## 用 load：檔案缺席就靜音，不擋演出。
+## 音效槽（預設空 = 靜音）：「死」字浮現、重生淡入。等正式素材再指定。
 @export var kanji_sound: AudioStream = null
 @export var respawn_sound: AudioStream = null
 @export var sound_bus: StringName = &"Master"
@@ -43,10 +42,7 @@ var _sfx: AudioStreamPlayer = null
 
 func _ready() -> void:
 	layer = 60   # 蓋在對話（1）、開場黑幕（50）之上
-	if kanji_sound == null and ResourceLoader.exists("res://assets/audio/sfx/death_kanji.wav"):
-		kanji_sound = load("res://assets/audio/sfx/death_kanji.wav")
-	if respawn_sound == null and ResourceLoader.exists("res://assets/audio/sfx/respawn_breath.wav"):
-		respawn_sound = load("res://assets/audio/sfx/respawn_breath.wav")
+	# 使用者裁定：合成的太鼓／吸氣太吵，預設不放；欄位保留給之後的正式素材。
 	_sfx = AudioStreamPlayer.new()
 	_sfx.name = "Sfx"
 	_sfx.bus = sound_bus

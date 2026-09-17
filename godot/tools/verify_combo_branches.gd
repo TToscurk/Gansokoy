@@ -268,20 +268,6 @@ func _run() -> void:
 	check("正常 execute_form(12) 成功", _player.execute_form(12))
 	check("正常路徑扣呼吸 100 → 80", is_equal_approx(_player.sun_breath_gauge, 80.0), "%.1f" % _player.sun_breath_gauge)
 
-	print("-- 音效接線（tools/synth_sfx.py 第二批）--")
-	for pair in [["play_deflect", "deflect_clang.wav"], ["play_block", "block_thud.wav"], ["play_hurt", "hurt_grunt_body.wav"],
-			["play_death_collapse", "death_collapse.wav"], ["play_deathblow", "deathblow_slash.wav"]]:
-		var stream: AudioStream = audio.call("_snd", pair[1])
-		check("%s → %s" % [pair[0], pair[1]], stream != null and stream.resource_path.ends_with(pair[1]))
-	for pair in [[8, "thrust_whoosh.wav"], [9, "spin_whoosh.wav"], [6, "form_ignite.wav"]]:
-		var before_n: int = audio.events_played
-		var seen := false
-		audio.call("play_form", pair[0])
-		for p in audio._players:
-			if p.playing and p.stream != null and p.stream.resource_path.ends_with(pair[1]):
-				seen = true
-		check("play_form(%d) 真的放了 %s" % [pair[0], pair[1]], seen and audio.events_played > before_n)
-
 	print("=== %d passed, %d failed ===" % [_pass, _fail])
 	quit(1 if _fail > 0 else 0)
 

@@ -753,6 +753,7 @@ tonemap_exposure = 0.98
 ssr_enabled = true
 ssao_enabled = true
 ssao_intensity = 1.6
+sdfgi_enabled = true
 sdfgi_use_occlusion = true
 glow_enabled = true
 glow_intensity = 0.55

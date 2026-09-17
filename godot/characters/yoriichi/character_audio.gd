@@ -20,18 +20,6 @@ const SND_HIT_FIRE_LIGHT_1 = preload("res://assets/audio/sfx/hit_fire_light_1.wa
 const SND_HIT_FIRE_LIGHT_2 = preload("res://assets/audio/sfx/hit_fire_light_2.wav")
 const SND_HIT_FIRE_HEAVY = preload("res://assets/audio/sfx/hit_fire_heavy.wav")
 const SND_HIT_FIRE_SPIN = preload("res://assets/audio/sfx/hit_fire_spin.wav")
-## 2026-09-16 第二批（tools/synth_sfx.py 重寫為分層合成：噪音掃頻＋非諧金屬泛音＋殘響）。
-## 用 load 而非 preload：檔案缺席時退回既有素材，不讓角色載不起來。
-const SFX_DIR := "res://assets/audio/sfx/"
-static var _extra: Dictionary = {}
-
-static func _snd(file: String) -> AudioStream:
-	if _extra.has(file):
-		return _extra[file]
-	var path := SFX_DIR + file
-	var s: AudioStream = load(path) if ResourceLoader.exists(path) else null
-	_extra[file] = s
-	return s
 
 # Optional reviewed sound designs. Empty slots preserve the existing sound set.
 @export var designed_swings: Array[AudioStream] = []
@@ -137,64 +125,36 @@ func play_hit(heavy := false) -> void:
 ## ⚠ 這個方法以前不存在：yoriichi_character.gd 的 take_hit() 一直用
 ##   has_method("play_deflect") 擋著，所以彈刀從來沒有聲音。
 func play_deflect() -> void:
-	var s := _snd("deflect_clang.wav")
-	if s != null:
-		_play(s, 2.0, 0.04)
-	else:
-		_play(SND_HIT_LIGHT, 3.0, 0.03, 0.55)
+	_play(SND_HIT_LIGHT, 3.0, 0.03, 0.55)
 
 
 ## 格擋：悶響。低音域、音量壓低，與彈刀明確區隔。
 func play_block() -> void:
-	var s := _snd("block_thud.wav")
-	if s != null:
-		_play(s, 0.0, 0.04)
-	else:
-		_play(SND_HIT_HEAVY, -1.5, 0.04, -0.25)
+	_play(SND_HIT_HEAVY, -1.5, 0.04, -0.25)
 
 
 ## 玩家自己被打到。
 func play_hurt() -> void:
-	var s := _snd("hurt_grunt_body.wav")
-	if s != null:
-		_play(s, 1.0, 0.05)
-	else:
-		_play(SND_HIT_HEAVY, 0.0, 0.05, -0.12)
+	_play(SND_HIT_HEAVY, 0.0, 0.05, -0.12)
 
 
 ## 倒地（Dead 動畫起手）。
 func play_death_collapse() -> void:
-	var s := _snd("death_collapse.wav")
-	if s != null:
-		_play(s, 2.0, 0.02)
-	else:
-		_play(SND_LAND, 3.0, 0.03, -0.3)
+	_play(SND_LAND, 0.0, 0.03, -0.3)
 
 
 ## 日之呼吸：型發動的專用音效。起手一律「點火」；依型再疊突刺／迴旋層。
+## 使用者裁定（2026-09-16）：合成第二批太重太吵，全部退回既有素材，只用音高／音量區分。
 func play_form(id: int) -> void:
-	var ignite := _snd("form_ignite.wav")
-	if ignite != null:
-		_play(ignite, 1.5, 0.03)
-	else:
-		_play(SND_SWING_FIRE_1, 1.0, 0.02, -0.15)
 	match id:
 		8:
-			var t := _snd("thrust_whoosh.wav")
-			if t != null:
-				_play(t, 0.5, 0.03)
+			_play(SND_SWING_FIRE_1, -2.0, 0.02, 0.25)   # 突刺：短、高
 		2, 9, 10:
-			var sp := _snd("spin_whoosh.wav")
-			if sp != null:
-				_play(sp, 0.0, 0.03)
+			_play(SND_SWING_FIRE_3, -2.0, 0.02, -0.15)  # 迴旋：長、低
 		_:
-			_play(SND_HEAVY, -1.0, 0.03)
+			_play(SND_SWING_FIRE_2, -2.0, 0.02, 0.0)
 
 
 ## 忍殺。
 func play_deathblow() -> void:
-	var s := _snd("deathblow_slash.wav")
-	if s != null:
-		_play(s, 3.0, 0.02)
-	else:
-		play_heavy_swing()
+	play_heavy_swing()

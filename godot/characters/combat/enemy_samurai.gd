@@ -33,6 +33,11 @@ signal died
 @export var detect_range := 14.0
 ## 進入此距離開始出招。
 @export var attack_range := 2.4
+## 命中判定：刀尖夠不夠到玩家身體表面。中心距 ≤ hit_reach + target_radius 才算中。
+## 使用者裁定（2026-09-16）：舊判定 attack_range×1.35 = 3.24 m，明顯打空也算中。
+## 武士臂＋刀約 1.6 m 從身體中心量起。
+@export_range(0.5, 3.0, 0.05) var hit_reach := 1.7
+@export var target_radius := 0.3
 @export var move_speed := 3.4
 @export var turn_speed := 6.0
 @export var gravity := 20.0
@@ -237,7 +242,7 @@ func _do_strike() -> void:
 
 	if not is_instance_valid(target) or not target.has_method("take_hit"):
 		return
-	if _target_distance() > attack_range * 1.35:
+	if _target_distance() > hit_reach + target_radius:
 		return
 
 	var hit_dir := (_target_position() - global_position).normalized()

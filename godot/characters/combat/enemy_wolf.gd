@@ -58,8 +58,17 @@ signal died
 
 @export_group("Senses")
 @export var detect_range := 16.0
-## 四足獸的攻擊距離比人長。
+## 四足獸的攻擊距離比人長（開始出招的中心距）。
 @export var attack_range := 3.2
+## 命中判定：**狼身表面到玩家身體表面**的間隙（m），不是中心距。
+## 使用者裁定（2026-09-16）：舊判定 attack_range×1.3 = 中心距 4.16 m，狼嘴與人之間空 2.8 m 也算打中。
+## 狼 2.0 m 長（半長 1.0）＋玩家膠囊 r 0.3 → 中心距 = gap + 1.3。
+@export_range(0.0, 2.0, 0.05) var claw_hit_gap := 0.35
+@export_range(0.0, 2.0, 0.05) var lunge_hit_gap := 0.6
+@export_range(0.0, 2.0, 0.05) var pounce_hit_gap := 0.8
+## 狼身半長（模型 +Z 前、實測 2.01 m）與玩家膠囊半徑，換算 gap 用。
+@export var body_half_length := 1.0
+@export var target_radius := 0.3
 @export var move_speed := 4.2
 ## 突進咬擊（Lunge）時的推進速度。
 @export var lunge_speed := 11.0
@@ -581,9 +590,12 @@ func _do_strike() -> void:
 	#   還沒衝到玩家面前，此時判定必定超出 reach。舊寫法在函式開頭就把旗標
 	#   設 true，等於「衝刺還沒開始就判定落空、整段攻擊再也不會命中」。
 	#   改成命中判定成功（或目標失效）才鎖旗標，讓衝刺途中每幀都能重試。
-	var reach: float = attack_range * 1.3
+	var gap: float = claw_hit_gap
 	if _attack == Attack.POUNCE:
-		reach = attack_range * 1.5
+		gap = pounce_hit_gap
+	elif _attack == Attack.LUNGE:
+		gap = lunge_hit_gap
+	var reach: float = gap + body_half_length + target_radius
 
 	if not is_instance_valid(target) or not target.has_method("take_hit"):
 		_hit_this_strike = true

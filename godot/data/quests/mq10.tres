@@ -10,21 +10,21 @@
 script = ExtResource("obj")
 type = 2
 target_id = "kosuzu_lending"
-description = "把寺子屋的書還給鈴奈庵"
+description = "把慧音託付的書還到鈴奈庵"
 required_amount = 1
 
 [sub_resource type="Resource" id="obj_1"]
 script = ExtResource("obj")
 type = 2
 target_id = "akyuu_record"
-description = "讓稗田邸記下你的來歷"
+description = "到稗田邸登記姓名與來歷"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ10"
-title = "讓村子記住你"
-description = "慧音不要保證。她要你去見兩個最會記住人的人。"
+title = "慧音的委託"
+description = "慧音託緣一還書，並到稗田邸登記。辦完兩件事，再回寺子屋談落腳。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
 next_quest_id = "MQ12"
 complete_flags = PackedStringArray("did_keine_errands", "met_kosuzu", "met_akyuu", "name_not_in_record")

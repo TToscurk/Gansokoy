@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://uvqmbikil5ud" path="res://characters/yoriichi/yoriichi_character.gd" id="2_controller"]
 [ext_resource type="PackedScene" uid="uid://ex8kaifqd4cv" path="res://characters/yoriichi/yoriichi_sword.glb" id="3_sword"]
 [ext_resource type="Script" uid="uid://citxkgc8bcrbi" path="res://characters/yoriichi/player_camera_adapter.gd" id="4_adapter"]
+[ext_resource type="PackedScene" uid="uid://tji6hthp13vc" path="res://characters/yoriichi/yoriichi_sheath.glb" id="5_sheath"]
+[ext_resource type="Script" uid="uid://gmnluve6fgu1" path="res://characters/yoriichi/sheath_sway.gd" id="6_sway"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.3
@@ -26,13 +28,17 @@ transform = Transform3D(-0.14443, 0.844425, 0.515836, -0.9884, -0.0983786, -0.11
 visible = false
 
 [node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1288089896) index="2" unique_id=1601920064]
-transform = Transform3D(0.99902606, 0.04398527, 0.0035014467, -0.016628135, 0.44879583, -0.89347947, -0.04087138, 0.89255106, 0.44909015, 0.0034064495, -0.07671502, 0.9895311)
+transform = Transform3D(0.94196403, -0.3328543, 0.043722518, 0.20839559, 0.47764087, -0.8534813, 0.2632013, 0.8130602, 0.5192859, 0.0529923, -0.040105492, 0.76089936)
 bone_name = "Hips"
 bone_idx = 0
 
 [node name="Sword_Sheathed" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" unique_id=1002003241 instance=ExtResource("3_sword")]
-transform = Transform3D(0.057647, -0.065052, 0.996215, -0.978981, 0.191859, 0.069177, -0.195633, -0.979264, -0.052624, 0.272761, -0.062122, 0.027695)
-visible = false
+transform = Transform3D(0.74237776, 0.13080549, -0.6570915, 0.6316089, -0.4637984, 0.62126005, -0.22349477, -0.8762327, -0.4269316, 0.19541046, 0.07245487, 0.26173294)
+
+[node name="Sheath" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" unique_id=649161892 instance=ExtResource("5_sheath")]
+transform = Transform3D(0.9833463, 0.10973569, -0.14487725, 0.17880073, -0.44121057, 0.8794117, 0.03258128, -0.8906696, -0.4534839, 0.19721806, 0.08149356, 0.29175115)
+script = ExtResource("6_sway")
+followers = Array[NodePath]([NodePath("../Sword_Sheathed")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=357429528]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)

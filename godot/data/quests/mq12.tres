@@ -12,21 +12,21 @@
 script = ExtResource("obj")
 type = 2
 target_id = "keine_verdict"
-description = "聽慧音的裁定"
+description = "回寺子屋向慧音回報"
 required_amount = 1
 
 [sub_resource type="Resource" id="obj_1"]
 script = ExtResource("obj")
 type = 1
 target_id = "inn_room"
-description = "在鯢吞亭落腳"
+description = "到鯢吞亭辦理住宿"
 required_amount = 1
 
 [resource]
 script = ExtResource("qd")
 id = "MQ12"
 title = "一個落腳的地方"
-description = "慧音替緣一打了招呼。人留下來，才看得清楚。"
+description = "把委託的兩件事回報慧音，再依她的指引安排今晚的住處。"
 objectives = Array[ExtResource("obj")]([SubResource("obj_0"), SubResource("obj_1")])
 ; TODO(C 批)：村內的支線接取點做好後，這裡可以接下一章。
 next_quest_id = ""

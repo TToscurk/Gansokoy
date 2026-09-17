@@ -52,5 +52,13 @@ func _draw() -> void:
 	draw_rect(Rect2(0.0, by, bar_width, breath_height), Color(0, 0, 0, 0.55))
 	var bw: float = bar_width * _hud.player_breath_ratio
 	if bw > 0.0:
-		draw_rect(Rect2(0.0, by, bw, breath_height), Color(1.0, 0.68, 0.22))
+		var bc := Color(1.0, 0.68, 0.22)
+		if _hud.player_breath_ratio >= 0.999:
+			# 滿了：拾參ノ型可發（C）。白金脈動，玩家不用看數字也知道。
+			var k: float = 0.55 + 0.45 * absf(sin(_hud._pulse * 3.0))
+			bc = Color(1.0, 0.95, 0.75).lerp(Color(1.0, 0.68, 0.22), 1.0 - k)
+		draw_rect(Rect2(0.0, by, bw, breath_height), bc)
 	draw_rect(Rect2(0.0, by, bar_width, breath_height), Color(0, 0, 0, 0.85), false, 1.0)
+	if _hud.player_breath_ratio >= 0.999:
+		var font := ThemeDB.fallback_font
+		draw_string(font, Vector2(bar_width + 8.0, by + breath_height + 1.0), "C 拾參ノ型", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1.0, 0.92, 0.7, 0.9))
