@@ -247,6 +247,20 @@ they are not "fixed" in the engine again:
 - Deathblow now spawns `CombatVFX.spawn_deathblow_burst()` (white-gold, 48 particles) on
   both enemies and shakes the player camera; `enemy_samurai.take_hit()` interrupts
   `STRIKE` as well as `WINDUP` (previously a struck samurai mid-swing simply ignored it).
+- **2026-09-18 RMB 長按 = 蓄力拔刀斬**（`yoriichi_character.gd` export group
+  `Heavy Charge (RMB 長按)`, `heavy_charge_*`; VFX `vfx/heavy_charge_fx.gd`）。短按仍是
+  原聚力單斬（同一支 clip、零延遲）；按住 → 舉刀到 clip 進度 0.27 用 `ts_upper` scale 0 凍住
+  （實測 OneShot 凍 3.3 s 不淡出）→ 蓄 3 s（刀身 emission override 升溫、內聚火星、中段暖光）
+  → 滿蓄閃光＋拔刀音 → 自動衝向鎖定／最近敵人（≤ 8 m、煞停 1.3 m、衝不到的不當目標；無敵人
+  朝面向衝 4 m）→ 抵達前 0.06 s 解凍以 2.6× 落刀，傷害 2.5× / 軀幹 2.0×、加長火焰刀光。
+  蓄力中可翻滾取消、慢走瞄準；受擊／死亡／對話鎖／跳躍／格擋／忍殺一律擋掉或收乾淨。
+  Gate `tools/verify_heavy_charge.gd`（77 checks，含端點與所有取消路徑）；實機連拍
+  `tools/capture_heavy_charge_ingame.gd`（要視窗，加 `--audio-driver Dummy`）。
+  **同輪兩個範圍較廣的修正**：(1) `_on_hit_target` 先解析 receiver 再去重 —— 敵人本體
+  body_entered ＋ Hurtbox area_entered 以前各算一次，**一刀打兩次**（實測 35 → 70），修掉後
+  所有帶 Hurtbox 的敵人（武士、山犬）受傷減半，平衡待使用者裁定；(2) `_fire_upper` 改看
+  `internal_active` 而非 `active`：上一招淡出期間 `active` 仍 true，只換段落不 FIRE 會讓新招跟著
+  淡掉（實拍：上一刀剛收就 RMB 蓄力，舉刀 0.24 s 後整層回 Idle）。
 
 ## Village Rebuild — active work (2026-08-26)
 
