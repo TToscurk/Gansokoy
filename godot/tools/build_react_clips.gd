@@ -19,6 +19,7 @@ const GLB := "res://characters/yoriichi/anim_src/react_clips.glb"
 const GLB_MCP := "res://characters/yoriichi/anim_src/react_mcp.glb"
 const FBX := "res://characters/yoriichi/yoriichi_body.fbx"
 const GLB_FORMS := "res://characters/yoriichi/anim_src/form_clips.glb"
+const GLB_IAI := "res://characters/yoriichi/anim_src/iai_clips.glb"
 const IDLE_HIPS_Z := 0.947505
 const JOBS := [
 	{"src": "Guard_Hold",   "out": "res://characters/yoriichi/animations/yoriichi_guard_hold.res",   "loop": false, "glb": GLB_MCP},
@@ -30,7 +31,12 @@ const JOBS := [
 	{"src": "Form05_Turn",  "out": "res://characters/yoriichi/animations/yoriichi_form05_turn.res",  "loop": false, "glb": GLB_FORMS},
 	{"src": "Form06_Wheel", "out": "res://characters/yoriichi/animations/yoriichi_form06_wheel.res", "loop": false, "glb": GLB_FORMS},
 	{"src": "Form11_Halo",  "out": "res://characters/yoriichi/animations/yoriichi_form11_halo.res",  "loop": false, "glb": GLB_FORMS},
-	{"src": "Form12_Dance", "out": "res://characters/yoriichi/animations/yoriichi_form12_dance.res", "loop": false, "glb": GLB_FORMS},
+	{"src": "Form12_Dance", "out": "res://characters/yoriichi/animations/yoriichi_form12_dance.res",  "loop": false, "glb": GLB_FORMS},
+	# 居合（RMB 蓄力）：Iai_Stance f0 Idle→f8 kamae→f32 循環；引擎用 custom timeline 只循環 f8 起。
+	#   ⚠ anchor_first：Hips 錨到「Idle 端」而不是固定錨末鍵 —— Stance 末鍵是 kamae（蹲低 12 cm），
+	#   錨末鍵會把蹲姿抬回 Idle 高度、f0 反而高出 12 cm。Slash 末鍵就是 Idle，照舊錨末。
+	{"src": "Iai_Stance",   "out": "res://characters/yoriichi/animations/yoriichi_iai_stance.res",    "loop": false, "glb": GLB_IAI, "anchor_first": true},
+	{"src": "Iai_Slash",    "out": "res://characters/yoriichi/animations/yoriichi_iai_slash.res",     "loop": false, "glb": GLB_IAI},
 ]
 
 
@@ -128,8 +134,9 @@ func _init() -> void:
 				#   末幀才是乾淨的 Idle 髖高 —— 淡回 loco 那一刻要對齊 0.9475，起手差 1 cm 被 fadein 吃掉。
 				var base_y: float = 0.0
 				if src.track_get_key_count(t) > 0:
-					var last: Vector3 = src.track_get_key_value(t, src.track_get_key_count(t) - 1)
-					base_y = last.y
+					var anchor_key: int = 0 if bool(job.get("anchor_first", false)) else src.track_get_key_count(t) - 1
+					var anchor_v: Vector3 = src.track_get_key_value(t, anchor_key)
+					base_y = anchor_v.y
 				for k in src.track_get_key_count(t):
 					var v: Vector3 = src.track_get_key_value(t, k)
 					out_anim.track_insert_key(nt, src.track_get_key_time(t, k), Vector3(
