@@ -4,11 +4,11 @@ extends SceneTree
 ## 執行：
 ##   godot --headless --path godot -s res://tools/verify_heavy_charge.gd
 ##
-## 驗的是整條路：按下 → 舉刀凍住 → 蓄力特效 → 放開／滿蓄 → 衝刺煞停 → 落刀命中倍率 → 收乾淨。
+## 驗的是整條路：按下 → 舉刀凍住 → 蓄力特效 → 滿蓄放開才衝 → 衝刺煞停 → 落刀命中倍率 → 收乾淨。
 ##   1. 短按 = 原本聚力單斬（時長、判定、不留特效）
 ##   2. 按住 → 凍住（ts_upper 0、刀尖不動、判定關、特效開、進度單調遞增）
 ##   3. 未滿放開 → 解凍續播普通聚力單斬、傷害不加倍
-##   4. 滿蓄 → 對武士衝刺、煞停在 stop_distance 前、武士真的掉 heavy×mult 的血、狀態回 FREE、材質／燈／粒子清空
+##   4. 滿蓄（2 s）→ 仍按住 = 停在架勢不衝 → 放開 → 對武士衝刺、煞停在 stop_distance 前、武士真的掉 heavy×mult 的血、狀態回 FREE、材質／燈／粒子清空
 ##   5. 無敵人 → 沿面向衝 dash_no_target 公尺；木人樁擋在路上會被砍到（傷害倍率）
 ##   6. 蓄力中翻滾／input_locked／受擊／死亡 → 同幀清乾淨
 ##   7. 端點：heavy_charge_enabled=false → 按住也只是普通斬；dash_max=0 → 原地落刀
@@ -151,37 +151,49 @@ func _run() -> void:
 	await _wait_free(2.0)
 	check("tap: settles clean", _state_clean())
 
-	# --- 2. 按住 → 凍住 -------------------------------------------------------
+	# --- 2. 按住 → 切入居合架勢（full 層 iai_in → iai_hold）------------------
+	var skel: Skeleton3D = player.find_children("*", "Skeleton3D", true, false)[0]
+	var hips_idx := skel.find_bone("Hips")
+	# 骨架空間是 Z-up（FBX 匯入慣例，Hips rest z≈0.99）——垂直在 .z 不是 .y。
+	var hips_idle_y: float = skel.get_bone_global_pose(hips_idx).origin.z
 	_progress_log.clear()
 	_press()
 	await _seconds(0.35)
-	check("hold: frozen by 0.35 s", player._heavy_frozen)
-	check("hold: ts_upper scale == 0", is_zero_approx(float(player._tree.get("parameters/ts_upper/scale"))))
-	check("hold: upper one-shot really playing (internal_active)", bool(player._tree.get("parameters/upper/internal_active")))
+	check("hold: stance entered by 0.35 s", player._heavy_frozen)
+	check("hold: attack layer switched to full", player._attack_layer == "full")
+	var full_state: String = String(player._tree.get("parameters/full_sel/current_state"))
+	check("hold: full_sel in iai_in/iai_hold (%s)" % full_state, full_state == "iai_in" or full_state == "iai_hold")
+	check("hold: full one-shot really playing (internal_active)", bool(player._tree.get("parameters/full/internal_active")))
 	check("hold: charge fx active", player._charge_fx.is_active() and player._charge_fx.visible)
 	check("hold: sword override material applied", player._charge_fx.sword_mesh.get_surface_override_material(0) != null)
+	await _seconds(0.5)
+	full_state = String(player._tree.get("parameters/full_sel/current_state"))
+	check("hold: iai_in timed out into iai_hold loop (%s)" % full_state, full_state == "iai_hold")
+	var hips_hold_y: float = skel.get_bone_global_pose(hips_idx).origin.z
+	check("hold: crouched — hips %.3f below idle %.3f" % [hips_idle_y - hips_hold_y, hips_idle_y], hips_idle_y - hips_hold_y > 0.05)
 	var tip0: Vector3 = player._blade_tip.global_position
 	var pos0: Vector3 = player.global_position
 	await _seconds(0.6)
 	var tip_moved: float = (player._blade_tip.global_position - tip0).length()
-	check("hold: blade tip frozen over 0.6 s (moved %.3f m)" % tip_moved, tip_moved < 0.05)
+	check("hold: blade tip steady in kamae over 0.6 s (moved %.3f m)" % tip_moved, tip_moved < 0.15)
 	check("hold: body does not drift (%.3f m)" % (player.global_position - pos0).length(), (player.global_position - pos0).length() < 0.05)
-	check("hold: hitbox off while frozen", not player._hitbox.monitoring)
+	check("hold: hitbox off while holding stance", not player._hitbox.monitoring)
 	var mono := true
 	for i in range(1, _progress_log.size()):
 		if _progress_log[i] < _progress_log[i - 1] - 0.0001:
 			mono = false
-	check("hold: progress monotonic (%d samples, last %.2f)" % [_progress_log.size(), _progress_log.back()], mono and _progress_log.back() > 0.25 and _progress_log.back() < 0.5)
+	check("hold: progress monotonic (%d samples, last %.2f)" % [_progress_log.size(), _progress_log.back()], mono and _progress_log.back() > 0.5 and _progress_log.back() < 0.9)
 	var light: OmniLight3D = player._charge_fx.get_node("ChargeLight")
 	check("hold: light energy scales with progress (%.2f)" % light.light_energy, light.light_energy > 0.0 and light.light_energy < player._charge_fx.light_energy_max)
 	var sparks: GPUParticles3D = player._charge_fx.get_node("PullSparks")
 	var pm: ParticleProcessMaterial = sparks.process_material
 	check("hold: sparks emitting and pulled inward (radial %.2f)" % pm.radial_velocity_max, sparks.emitting and pm.radial_velocity_max < 0.0)
 
-	# --- 3. 未滿放開 → 普通聚力單斬 ------------------------------------------
+	# --- 3. 未滿放開 → 淡掉架勢、重放普通聚力單斬 -----------------------------
 	_release()
 	await _frames(2)
-	check("early release: unfrozen", not player._heavy_frozen and not player._heavy_charging)
+	check("early release: stance exited", not player._heavy_frozen and not player._heavy_charging)
+	check("early release: back on upper layer", player._attack_layer == "upper")
 	check("early release: ts_upper back to heavy speed", is_equal_approx(float(player._tree.get("parameters/ts_upper/scale")), player.heavy_cut_speed))
 	check("early release: not charged", not player._iai_charged)
 	check("early release: hitbox on", player._hitbox.monitoring)
@@ -203,7 +215,7 @@ func _run() -> void:
 	var lost: float = hp0 - enemy.posture.health
 	check("early release: enemy lost plain heavy damage (%.1f vs %.1f)" % [lost, heavy_dmg], is_equal_approx(lost, heavy_dmg))
 
-	# --- 4. 滿蓄 → 衝刺 → 落刀 ----------------------------------------------
+	# --- 4. 滿蓄 → 放開才衝 → 煞停 → 落刀 ------------------------------------
 	enemy.global_position = Vector3(0, 0.1, 24)
 	enemy.posture.health = 1000.0
 	_place(Vector3(0, 0.1, 30), PI)     # visual yaw PI = 面朝 -Z
@@ -215,12 +227,19 @@ func _run() -> void:
 	hp0 = enemy.posture.health
 	_progress_log.clear()
 	_press()
-	await _seconds(3.2)
-	check("full: heavy_charge_released emitted with samurai", _released_target == enemy)
-	check("full: released without RMB release (auto)", player._iai_charged or player.action_state == 0)
+	await _seconds(2.3)
+	check("full: charged by 2.3 s", player._heavy_charge_ready and player._heavy_charging)
+	check("full: still held → no dash yet (auto_release off)", _released_target == null and not player._iai_charged and player._heavy_frozen)
+	var pos_full := player.global_position
+	await _seconds(0.4)
+	check("full: holding past 2 s keeps the stance (drift %.3f m)" % (player.global_position - pos_full).length(), (player.global_position - pos_full).length() < 0.05)
+	_release()
+	await _frames(2)
+	check("full: release fires the dash", player._iai_charged)
 	await _seconds(0.6)
 	var d1 := _flat_dist(player, enemy)
 	check("full: stopped in front of enemy (%.2f m, stop %.2f)" % [d1, player.heavy_charge_stop_distance], absf(d1 - player.heavy_charge_stop_distance) < 0.35)
+	check("full: heavy_charge_released emitted with samurai", _released_target == enemy)
 	var fwd: Vector3 = player._visual.global_transform.basis.z
 	var to: Vector3 = (enemy.global_position - player.global_position)
 	to.y = 0.0
@@ -231,6 +250,7 @@ func _run() -> void:
 	lost = hp0 - enemy.posture.health
 	check("full: enemy lost heavy × mult (%.1f vs %.1f)" % [lost, charged_dmg], is_equal_approx(lost, charged_dmg))
 	check("full: settles clean", _state_clean())
+	check("full: ts_full restored to 1.0", is_equal_approx(float(player._tree.get("parameters/ts_full/scale")), 1.0))
 	check("full: fx cleared", _fx_clean())
 	var streaks := player.get_node_or_null("IaiDashStreaks")
 	check("full: dash streaks stopped emitting", streaks == null or not (streaks as GPUParticles3D).emitting)
@@ -264,8 +284,9 @@ func _run() -> void:
 	var start := player.global_position
 	var dummy_hp0: float = dummy.health
 	_press()
-	await _seconds(4.0)
+	await _seconds(2.2)
 	_release()
+	await _seconds(0.6)   # 放開才衝：等衝刺（4 m ÷ 24 ≈ 0.17 s）與煞停結束
 	var travelled := (player.global_position - start).length()
 	check("no target: dashed ≈ %.1f m (%.2f)" % [player.heavy_charge_dash_no_target, travelled], absf(travelled - player.heavy_charge_dash_no_target) < 0.3)
 	check("no target: went forward (-Z)", player.global_position.z < start.z - 3.0)
@@ -341,8 +362,9 @@ func _run() -> void:
 	start = player.global_position
 	_released_target = null
 	_press()
-	await _seconds(4.0)
+	await _seconds(2.2)
 	_release()
+	await _seconds(0.6)   # 放開才衝
 	check("far enemy: not chosen as target", _released_target == null)
 	check("far enemy: forward dash %.2f m" % (player.global_position - start).length(), absf((player.global_position - start).length() - player.heavy_charge_dash_no_target) < 0.3)
 	await _wait_free(2.0)
@@ -364,8 +386,9 @@ func _run() -> void:
 	_place(Vector3(0, 0.1, 30), PI)
 	start = player.global_position
 	_press()
-	await _seconds(4.0)
+	await _seconds(2.2)
 	_release()
+	await _seconds(0.3)
 	check("dash_max 0: no travel (%.2f m)" % (player.global_position - start).length(), (player.global_position - start).length() < 0.15)
 	await _wait_free(2.0)
 	check("dash_max 0: settles clean", _state_clean())
@@ -414,10 +437,31 @@ func _run() -> void:
 			entered = true
 			break
 	check("sheathed: draw flows into charge while held", entered and player.sword_state == player.SwordState.DRAWN)
-	await _seconds(3.5)
+	await _seconds(2.2)
 	_release()
 	await _wait_free(2.0)
 	check("sheathed: settles clean", _state_clean())
+
+	# --- 10. 端點：heavy_charge_auto_release=true → 滿蓄自己衝 ---------------
+	enemy.global_position = Vector3(0, 0.1, 24)
+	enemy.posture.health = 1000.0
+	_place(Vector3(0, 0.1, 30), PI)
+	await _frames(2)
+	_released_target = null
+	_hit_count = 0
+	hp0 = enemy.posture.health
+	player.heavy_charge_auto_release = true
+	_press()
+	await _seconds(2.4)
+	check("auto: released without RMB release", _released_target == enemy or player._iai_charged)
+	await _seconds(0.8)
+	var d_auto := _flat_dist(player, enemy)
+	check("auto: dashed to stop distance (%.2f m)" % d_auto, absf(d_auto - player.heavy_charge_stop_distance) < 0.35)
+	_release()
+	await _wait_free(2.0)
+	check("auto: enemy took charged damage (%.1f vs %.1f)" % [hp0 - enemy.posture.health, charged_dmg], is_equal_approx(hp0 - enemy.posture.health, charged_dmg))
+	check("auto: settles clean", _state_clean())
+	player.heavy_charge_auto_release = false
 
 	print("[HEAVY_CHARGE] %s (%d failures)" % ["ALL PASS" if fails == 0 else "FAILED", fails])
 	quit(0 if fails == 0 else 1)

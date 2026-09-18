@@ -247,14 +247,20 @@ they are not "fixed" in the engine again:
 - Deathblow now spawns `CombatVFX.spawn_deathblow_burst()` (white-gold, 48 particles) on
   both enemies and shakes the player camera; `enemy_samurai.take_hit()` interrupts
   `STRIKE` as well as `WINDUP` (previously a struck samurai mid-swing simply ignored it).
-- **2026-09-18 RMB 長按 = 蓄力拔刀斬**（`yoriichi_character.gd` export group
+- **2026-09-18 RMB 長按 = 蓄力拔刀斬（居合）**（`yoriichi_character.gd` export group
   `Heavy Charge (RMB 長按)`, `heavy_charge_*`; VFX `vfx/heavy_charge_fx.gd`）。短按仍是
-  原聚力單斬（同一支 clip、零延遲）；按住 → 舉刀到 clip 進度 0.27 用 `ts_upper` scale 0 凍住
-  （實測 OneShot 凍 3.3 s 不淡出）→ 蓄 3 s（刀身 emission override 升溫、內聚火星、中段暖光）
-  → 滿蓄閃光＋拔刀音 → 自動衝向鎖定／最近敵人（≤ 8 m、煞停 1.3 m、衝不到的不當目標；無敵人
-  朝面向衝 4 m）→ 抵達前 0.06 s 解凍以 2.6× 落刀，傷害 2.5× / 軀幹 2.0×、加長火焰刀光。
-  蓄力中可翻滾取消、慢走瞄準；受擊／死亡／對話鎖／跳躍／格擋／忍殺一律擋掉或收乾淨。
-  Gate `tools/verify_heavy_charge.gd`（77 checks，含端點與所有取消路徑）；實機連拍
+  原聚力單斬（同一支 clip、零延遲）；按住 → atk1 舉刀到進度 0.27 → 切 **full 層居合架勢**
+  （`Iai_Stance`：Blender MCP 手調 `tools/blender/iai_lib.py`，沉腰 12 cm、雙手疊握低橫身前
+  的刀、頭平視；upper 層 filter 不含腿/Hips 所以蹲姿必須全身 clip）→ 蓄 **2 s**（刀身
+  emission override 升溫、內聚火星、中段暖光）→ 滿蓄閃光＋拔刀音 → **放開才衝**
+  （`heavy_charge_auto_release` 預設 false；自動衝是可選端點）→ 對鎖定／最近敵人衝刺
+  （≤ 8 m、煞停 1.3 m、衝不到的不當目標；無敵人朝面向衝 4 m）→ 抵達前 0.06 s 切
+  full 層 `Iai_Slash`（拔刀斬）以 2.6× 落刀，傷害 2.5× / 軀幹 2.0×、加長火焰刀光。
+  未滿放開 = 淡掉架勢、重放一段普通聚力單斬（atk1 在蓄力中早已播完，無「續播」可言）。
+  蓄力進姿段可慢走瞄準、架勢後腳步紮穩；翻滾取消、受擊／死亡／對話鎖／跳躍／格擋／
+  忍殺一律擋掉或收乾淨。動畫管線：`iai_clips.glb` → `build_react_clips.gd`（同反應 clip
+  管線；Stance 用 `anchor_first` 錨 Idle 端髖高）→ `yoriichi_iai_{stance,slash}.res`。
+  Gate `tools/verify_heavy_charge.gd`（93 checks，含端點、auto/manual、所有取消路徑）；實機連拍
   `tools/capture_heavy_charge_ingame.gd`（要視窗，加 `--audio-driver Dummy`）。
   **同輪兩個範圍較廣的修正**：(1) `_on_hit_target` 先解析 receiver 再去重 —— 敵人本體
   body_entered ＋ Hurtbox area_entered 以前各算一次，**一刀打兩次**（實測 35 → 70），修掉後

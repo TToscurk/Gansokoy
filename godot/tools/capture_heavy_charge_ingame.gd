@@ -5,23 +5,26 @@ extends SceneTree
 ##   godot --path godot -s tools/capture_heavy_charge_ingame.gd
 ##
 ## 在 main.tscn（正式光照／glow）裡把一隻站樁武士放到玩家正前方 6 m，
-## 按住 RMB 走完整段：舉刀凍住 → 蓄 3 s → 閃光 → 衝刺 → 落刀 → 刀光尾巴 → 收勢。
-## 兩個角度各拍一組：側面（看衝刺距離與腳步）、3/4 背視角（玩家實際看到的）。
-## 每張截圖旁邊印出：蓄力進度、與敵距離、刀尖速度、upper 層倍率 —— 圖是證據，數字是尺。
+## 按住 RMB 走完整段：舉刀 → 進居合架勢（沉腰疊握）→ 蓄 2 s → 滿蓄閃光 → 放開
+## → 衝刺 → 拔刀斬 → 刀光尾巴 → 收勢。
+## 兩個角度各拍一組：側面（看架勢蹲低與衝刺距離）、3/4 背視角（玩家實際看到的）。
+## 每張截圖旁邊印出：蓄力進度、與敵距離、刀尖速度、full 層狀態 —— 圖是證據，數字是尺。
 
 const OUT_DIR := "user://heavy_charge_ingame"
+## RELEASE_AT：滿蓄後放開才衝（heavy_charge_auto_release=false）。
+const RELEASE_AT := 2.35
 const SHOTS := [
 	{"t": 0.00, "name": "00_press",   "label": "按下"},
-	{"t": 0.35, "name": "01_freeze",  "label": "舉刀凍住"},
-	{"t": 1.00, "name": "02_charge1", "label": "蓄 1/3"},
-	{"t": 2.00, "name": "03_charge2", "label": "蓄 2/3"},
-	{"t": 2.90, "name": "04_almost",  "label": "快滿"},
-	{"t": 3.03, "name": "05_flash",   "label": "滿蓄閃光"},
-	{"t": 3.14, "name": "06_dash",    "label": "衝刺中"},
-	{"t": 3.26, "name": "07_arrive",  "label": "抵達落刀"},
-	{"t": 3.40, "name": "08_slash",   "label": "刀光"},
-	{"t": 3.70, "name": "09_tail",    "label": "尾巴"},
-	{"t": 4.30, "name": "10_recover", "label": "收勢"},
+	{"t": 0.35, "name": "01_raise",   "label": "舉刀"},
+	{"t": 0.75, "name": "02_kamae",   "label": "進居合架勢"},
+	{"t": 1.30, "name": "03_charge1", "label": "蓄 1/2"},
+	{"t": 1.85, "name": "04_charge2", "label": "蓄近滿"},
+	{"t": 2.10, "name": "05_flash",   "label": "滿蓄閃光"},
+	{"t": 2.45, "name": "06_dash",    "label": "放開衝刺"},
+	{"t": 2.62, "name": "07_arrive",  "label": "抵達落刀"},
+	{"t": 2.78, "name": "08_slash",   "label": "刀光"},
+	{"t": 3.05, "name": "09_tail",    "label": "尾巴"},
+	{"t": 3.60, "name": "10_recover", "label": "收勢"},
 ]
 const ANGLES := [
 	{"name": "side", "yaw_offset": PI * 0.5, "dist": 6.5, "pitch": -0.12},
@@ -110,12 +113,16 @@ func _initialize() -> void:
 
 		var elapsed := 0.0
 		var shot_i := 0
+		var released := false
 		var prev_tip: Vector3 = player.get("_blade_tip").global_position
 		var hp0: float = enemy.posture.health
 		while shot_i < SHOTS.size():
 			await RenderingServer.frame_post_draw
 			var dt: float = get_root().get_process_delta_time()
 			elapsed += dt
+			if not released and elapsed >= RELEASE_AT:
+				released = true
+				Input.action_release("attack_heavy")   # 放開才衝
 			var tip: Vector3 = player.get("_blade_tip").global_position
 			var tip_v: float = (tip - prev_tip).length() / maxf(dt, 0.0001)
 			prev_tip = tip
@@ -126,15 +133,16 @@ func _initialize() -> void:
 				img.save_png(path)
 				var d: Vector3 = player.global_position - enemy.global_position
 				d.y = 0.0
-				print("  %s  t=%.2f s  charge=%.2f  frozen=%s  dash_left=%.2f m  dist=%.2f m  tip_v=%.1f m/s  ts_upper=%.2f  enemy_hp=%.0f → %s" % [
+				print("  %s  t=%.2f s  charge=%.2f  stance=%s  full=%s  dash_left=%.2f m  dist=%.2f m  tip_v=%.1f m/s  enemy_hp=%.0f → %s" % [
 					SHOTS[shot_i]["label"], elapsed, player.call("heavy_charge_progress"), player.get("_heavy_frozen"),
+					String(player.get("_tree").get("parameters/full_sel/current_state")),
 					player.get("_iai_dash_remaining"), d.length(), tip_v,
-					float(player.get("_tree").get("parameters/ts_upper/scale")), enemy.posture.health,
-					ProjectSettings.globalize_path(path)])
+					enemy.posture.health, ProjectSettings.globalize_path(path)])
 				shot_i += 1
 			if elapsed > 5.0:
 				break
-		Input.action_release("attack_heavy")
+		if not released:
+			Input.action_release("attack_heavy")
 		print("[蓄力斬/%s] 敵人掉血 %.1f、剩餘 fx 節點：charge_fx active=%s、streaks=%s" % [
 			angle.name, hp0 - enemy.posture.health, player.get("_charge_fx").is_active(),
 			player.get_node_or_null("IaiDashStreaks") != null])

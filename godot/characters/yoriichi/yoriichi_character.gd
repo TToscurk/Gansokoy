@@ -168,6 +168,13 @@ extends CharacterBody3D
 @export var attack_form11_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form11_halo.res")
 @export var attack_form12_anim := "Attack_Form12_Dance"
 @export var attack_form12_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form12_dance.res")
+## 居合（RMB 蓄力）兩支：Blender MCP 手調（tools/blender/iai_lib.py → build_react_clips.gd）。
+## Stance f0=Idle 姿 → t≈0.33 進到 kamae（沉腰架勢）→ 末段呼吸循環；引擎拆兩節點：
+##   iai_in（0→KAMAE_T 進姿）＋ iai_hold（KAMAE_T→尾，loop）。Slash = 拔刀斬一整刀。
+@export var iai_stance_anim := "Iai_Stance"
+@export var iai_stance_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_iai_stance.res")
+@export var iai_slash_anim := "Iai_Slash"
+@export var iai_slash_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_iai_slash.res")
 
 @export_group("Combo Branches")
 ## 滑鼠左右鍵互搭：輕連段（LMB）某一段的取消窗口內按 RMB → 接對應的型；
@@ -268,11 +275,13 @@ const GUARD_HOLD_FROM := 7.0 / 12.0
 ## RMB 按住 = 蓄力拔刀斬；未滿放開 = 原本的聚力單斬（短按行為不變）。關掉即回到純聚力單斬。
 @export var heavy_charge_enabled := true
 ## 滿蓄所需秒數（從按下算起）。
-@export_range(0.2, 6.0, 0.05) var heavy_charge_time := 3.0
-## 蓄力姿勢凍在聚力單斬 clip 的這個進度（實測 0.27 = 刀舉到右上、尚未橫掃）。
+@export_range(0.2, 6.0, 0.05) var heavy_charge_time := 2.0
+## 聚力單斬 clip 播到這個進度時切入居合架勢（實測 0.27 = 刀舉到右上，接 iai 進姿順）。
 @export_range(0.05, 0.6, 0.01) var heavy_charge_freeze_progress := 0.27
-## 滿蓄自動發動；關掉 = 滿蓄後停在架勢，放開才衝。
-@export var heavy_charge_auto_release := true
+## Iai_Stance 進姿段結束點（秒，.res 實測 f8@24fps = 0.3333）：之後是 kamae 循環。
+@export_range(0.05, 1.0, 0.01) var iai_kamae_t := 0.3333
+## 滿蓄後停在架勢，放開才衝；打開 = 滿蓄立即發動（舊行為）。
+@export var heavy_charge_auto_release := false
 ## 衝刺距離上限（公尺）。0 = 不衝，原地落刀。
 @export_range(0.0, 12.0, 0.1) var heavy_charge_dash_max := 8.0
 ## 沒有敵人時朝面向衝的距離（公尺）。
@@ -447,7 +456,9 @@ var _hit_targets_this_swing: Dictionary = {}
 ## RMB 蓄力拔刀斬。蓄力期間 action_state 仍是 ATTACKING、_active_attack_name 仍是 "Heavy_Cut"
 ## （不加 ActionState：tools/_fake_player.gd 與多處 == 1 判斷依賴既有數值）。
 var _heavy_charging := false
-var _heavy_frozen := false          # upper 層 TimeScale 已設 0、姿勢凍在舉刀點
+var _heavy_frozen := false          # 已切入居合架勢（full 層 iai_in／iai_hold 播放中）
+var _iai_hold_in := 0.0             # >0 = iai_in 進姿段剩餘秒數，到點切 iai_hold 循環
+var _iai_full_active := false       # full 層目前是 iai 內容（架勢／落刀）；_finish_attack 據此淡出
 var _heavy_charge_elapsed := 0.0
 var _heavy_charge_ready := false
 var _iai_dash_dir := Vector3.ZERO
@@ -527,6 +538,8 @@ func _ready():
 	_add_animation_resource(attack_form06_anim, attack_form06_resource)
 	_add_animation_resource(attack_form11_anim, attack_form11_resource)
 	_add_animation_resource(attack_form12_anim, attack_form12_resource)
+	_add_animation_resource(iai_stance_anim, iai_stance_resource)
+	_add_animation_resource(iai_slash_anim, iai_slash_resource)
 	_add_animation_resource(draw_anim, draw_anim_resource)
 	_add_animation_resource(guard_anim, guard_anim_resource)
 	_add_animation_resource(block_anim, block_anim_resource)
@@ -541,6 +554,7 @@ func _ready():
 			attack_continuous_spin_anim, attack_judgment_anim, attack_combo_1_anim,
 			attack_spin_jump_anim, attack_thrust_anim,
 			attack_form05_anim, attack_form06_anim, attack_form11_anim, attack_form12_anim,
+			iai_stance_anim, iai_slash_anim,
 			block_anim, deflect_anim, hit_react_anim, stagger_anim, dead_anim]:
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
@@ -1134,6 +1148,11 @@ func _build_tree() -> void:
 		"form06": _anim_node(attack_form06_anim),
 		"form11": _anim_node(attack_form11_anim),
 		"form12": _anim_node(attack_form12_anim),
+		# 居合蓄力（RMB 長按）：iai_in = Stance 進姿段（0→kamae_t），iai_hold = kamae 呼吸循環
+		# （OneShot 有循環子節點就不會自己結束，同 guard_hold 的寫法），iai_slash = 拔刀斬。
+		"iai_in": _clip_node(iai_stance_anim, 0.0, iai_kamae_t),
+		"iai_hold": _clip_node(iai_stance_anim, iai_kamae_t, iai_stance_resource.length, true),
+		"iai_slash": _anim_node(iai_slash_anim),
 		"hit": _anim_node(hit_react_anim),
 		"stagger": _anim_node(stagger_anim),
 		"dead": _anim_node(dead_anim),
@@ -1213,6 +1232,15 @@ func _fire_full(input_name: String, time_scale: float) -> void:
 				_full_node.fadeout_time = 0.22
 			"form12":
 				_full_node.fadeout_time = 0.26
+			"iai_in":
+				# 進姿段結束即切 iai_hold（transition xfade 0.035 接手），OneShot 淡出用不到。
+				_full_node.fadeout_time = 0.06
+			"iai_hold":
+				# 蓄力取消／未滿放開：架勢淡回 locomotion，不能瞬切。
+				_full_node.fadeout_time = 0.18
+			"iai_slash":
+				# 殘心 → Idle：比聚力單斬收勢更長（拔刀斬的份量）。
+				_full_node.fadeout_time = 0.30
 			"hit":
 				_full_node.fadeout_time = 0.14
 			"stagger":
@@ -1230,6 +1258,22 @@ func _fade_upper() -> void:
 
 func _fade_full() -> void:
 	_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
+
+## 同 _fire_full，但 OneShot 播放中只換段落、不重啟（transition xfade 接手）。
+## iai_in → iai_hold 用：FIRE 會重播 fadein，架勢會被彈回 Idle 一下。
+## fadeout_time 也要跟著換：_fire_full 的表不會重跑，iai_in 的 0.06 殘值會讓
+## 取消／落刀結束的淡出變成瞬切。
+func _switch_full(input_name: String, time_scale: float) -> void:
+	if _full_node:
+		match input_name:
+			"iai_hold":
+				_full_node.fadeout_time = 0.18
+			"iai_slash":
+				_full_node.fadeout_time = 0.30
+	_tree.set("parameters/full_sel/transition_request", input_name)
+	_tree.set("parameters/ts_full/scale", time_scale)
+	if not _tree.get("parameters/full/internal_active"):
+		_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 ## 玩家軀幹被打爆：硬直，攻防全斷。隻狼的規則是此時可被忍殺 ——
 ## 敵人的處決動畫還沒有，先做成「動不了的懲罰窗口」，破綻結束自動恢復。
@@ -1406,9 +1450,14 @@ func _physics_process(delta):
 		if _apply_iai_dash(delta):
 			pass
 		elif _heavy_charging:
-			# 蓄力中只能慢走（瞄準用），不能跑。
-			velocity.x = input_dir.x * speed * 0.35
-			velocity.z = input_dir.z * speed * 0.35
+			# 蓄力進姿段（atk1 舉刀）還能慢走瞄準；切入居合架勢後腳要紮穩
+			# （full 層全身 override，腿是 clip 的弓步——再給移動速度會變成滑行）。
+			if _heavy_frozen:
+				velocity.x = 0.0
+				velocity.z = 0.0
+			else:
+				velocity.x = input_dir.x * speed * 0.35
+				velocity.z = input_dir.z * speed * 0.35
 		elif _form_dash_left > 0.0 and _form_dash_total > 0.0:
 			# 型的起手衝刺：dash 佔比線性衰減，輸入慢慢接手。
 			_form_dash_left = maxf(_form_dash_left - delta, 0.0)
@@ -2010,8 +2059,9 @@ func _update_attack(delta: float, _input_dir: Vector3) -> void:
 		return
 	if _iai_unfreeze_in >= 0.0:
 		_iai_unfreeze_in -= delta
+		_update_iai_stance(delta)   # 衝刺中架勢照樣走完進姿段切循環
 		if _iai_unfreeze_in > 0.0:
-			return   # 衝刺中、姿勢仍凍著
+			return   # 衝刺中、仍是居合架勢
 		_iai_unfreeze_in = -1.0
 		_unfreeze_iai_slash()
 	_action_elapsed += delta
@@ -2152,15 +2202,19 @@ func _attack_progress() -> float:
 	return clampf(_action_elapsed / _action_real, 0.0, 1.0) if _action_real > 0.0 else 1.0
 
 # ---------------------------------------------------------------------------
-# RMB 長按：蓄力拔刀斬
+# RMB 長按：蓄力拔刀斬（居合）
 #
 # 短按 = 原本的聚力單斬，一幀都不延遲：起手就是 request_heavy_cut()，同一支 clip。
-# 按住 → 刀舉到 heavy_charge_freeze_progress（實測 0.27＝右上舉刀）就把 upper 層
-# TimeScale 設 0 凍住（probe：OneShot 凍 3.3 s 不淡出、刀尖不動），這段就是蓄力姿勢。
-#   * 未滿放開 → 解凍、續播成普通聚力單斬。
-#   * 滿 heavy_charge_time → 閃光 → 對鎖定／最近敵人衝刺（程式位移，煞停在 stop_distance）
-#     → 抵達前 slash_lead 秒解凍、以 heavy_charge_slash_speed 落刀、加強版火焰刀光、傷害倍率。
-# 蓄力／衝刺期間 action_state 仍是 ATTACKING、_active_attack_name 仍是 "Heavy_Cut"。
+# 按住 → atk1 播到 heavy_charge_freeze_progress（實測 0.27）就切 **full 層**居合架勢：
+# iai_in（進姿 0.33 s：沉腰、雙手疊握低橫身前的刀）→ iai_hold（kamae 呼吸循環）。
+# 蓄力姿勢是全身 clip（upper 層 filter 不含腿/Hips，蹲姿會被 locomotion 吃掉——
+# 這就是舊版「凍 atk1 舉刀」讀不出蹲的原因）。
+#   * 未滿放開 → 淡掉架勢、重放一段普通聚力單斬（atk1 在蓄力中早已播完，無法「續播」）。
+#   * 滿 heavy_charge_time → 閃光＋拔刀音 → 放開（或 auto_release）→ 對鎖定／最近敵人
+#     衝刺（架勢循環中衝，程式位移，煞停在 stop_distance）→ 抵達前 slash_lead 秒
+#     切 full 層 iai_slash（拔刀斬，slash_speed 倍率）、加強版火焰刀光、傷害倍率。
+# 蓄力／衝刺期間 action_state 仍是 ATTACKING、_active_attack_name 仍是 "Heavy_Cut"、
+# _attack_layer 切入架勢後是 "full"。
 # 放開是每個物理步輪詢 Input（選單／對話會吃掉 release 事件，只靠事件會卡住）。
 # ---------------------------------------------------------------------------
 
@@ -2200,14 +2254,30 @@ func heavy_charge_progress() -> float:
 	return clampf(_heavy_charge_elapsed / maxf(heavy_charge_time, 0.001), 0.0, 1.0)
 
 
+## iai_in（進姿）→ iai_hold（kamae 循環）的計時切換。蓄力中與衝刺中都要跑
+## （放開後 _heavy_charging 已是 false，架勢得自己走完進姿段）。
+func _update_iai_stance(delta: float) -> void:
+	if _iai_hold_in <= 0.0:
+		return
+	_iai_hold_in -= delta
+	if _iai_hold_in <= 0.0:
+		_iai_hold_in = 0.0
+		if _iai_full_active and _tree != null:
+			_switch_full("iai_hold", 1.0)
+
+
 func _update_heavy_charge(delta: float) -> void:
 	_heavy_charge_elapsed += delta
+	_update_iai_stance(delta)
 	if not _heavy_frozen:
 		_action_elapsed += delta
 		if _attack_progress() >= heavy_charge_freeze_progress:
-			# 舉刀到位：凍住。特效此刻才開 —— 短按（<0.2 s 放開）不該閃一下火星。
+			# 舉刀到位：切 full 層居合架勢。特效此刻才開 —— 短按（<0.2 s 放開）不該閃一下火星。
 			_heavy_frozen = true
-			_tree.set("parameters/ts_upper/scale", 0.0)
+			_attack_layer = "full"
+			_iai_full_active = true
+			_iai_hold_in = iai_kamae_t
+			_fire_full("iai_in", 1.0)
 			if _charge_fx != null:
 				_charge_fx.start()
 	var t := heavy_charge_progress()
@@ -2246,6 +2316,7 @@ func release_heavy_charge() -> void:
 
 
 ## 取消（受擊硬直／死亡／翻滾／對話鎖）：同幀清乾淨，不留材質 override、燈、粒子。
+## full 層架勢的淡出由呼叫端 _finish_attack 依 _attack_layer 處理（was_layer=="full" → _fade_full）。
 func cancel_heavy_charge() -> void:
 	if not _heavy_charging:
 		return
@@ -2253,19 +2324,29 @@ func cancel_heavy_charge() -> void:
 	_heavy_charge_ready = false
 	if _heavy_frozen:
 		_heavy_frozen = false
-		if _tree != null:
-			_tree.set("parameters/ts_upper/scale", heavy_cut_speed)
+	_iai_hold_in = 0.0
+	_iai_full_active = false
 	if _charge_fx != null:
 		_charge_fx.stop(true)
 	heavy_charge_changed.emit(-1.0)
 
 
-## 未滿蓄放開：從凍住點解凍，剩下的就是原本的聚力單斬。
-## 短按（還沒凍住就放開）也走這裡：把 begin 時關掉的判定／刀光／音效補開。
+## 未滿蓄放開：淡掉居合架勢、重放一段普通聚力單斬。
+## （atk1 在蓄力中早已於 upper 層播完淡出，沒有「續播」可言——重放才是同一刀。）
+## 短按（還沒進架勢就放開）也走這裡：atk1 還在播，把 begin 時關掉的判定／刀光／音效補開。
 func _resume_heavy_cut() -> void:
 	if _heavy_frozen:
 		_heavy_frozen = false
-		_tree.set("parameters/ts_upper/scale", heavy_cut_speed)
+		_iai_hold_in = 0.0
+		if _iai_full_active:
+			_iai_full_active = false
+			_fade_full()
+		_attack_layer = "upper"
+		var section_len := attack_combo_resource.length * (COMBO_SECTION_RANGES[0].y - COMBO_SECTION_RANGES[0].x)
+		_action_real = section_len / heavy_cut_speed
+		_action_elapsed = 0.0
+		_upper_finish_fade = 0.24
+		_fire_upper("atk1", heavy_cut_speed)
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
 		_hitbox.monitoring = true
@@ -2276,14 +2357,17 @@ func _resume_heavy_cut() -> void:
 		_character_audio.play_heavy_swing()
 
 
-## 滿蓄發動：選目標、算衝刺距離、排定落刀時點。姿勢仍凍著，抵達前才解凍落刀。
+## 滿蓄發動：選目標、算衝刺距離、排定落刀時點。架勢循環中衝刺，抵達前才切拔刀斬。
 func _launch_iai() -> void:
 	_iai_charged = true
 	_hit_targets_this_swing.clear()
 	if not _heavy_frozen:
-		# heavy_charge_time 調得比舉刀段還短：滿蓄先到，這裡補凍，衝刺時姿勢才不會自己播完。
+		# heavy_charge_time 調得比舉刀段還短：滿蓄先到，這裡直接進架勢，衝刺時姿勢才不會自己播完。
 		_heavy_frozen = true
-		_tree.set("parameters/ts_upper/scale", 0.0)
+		_attack_layer = "full"
+		_iai_full_active = true
+		_iai_hold_in = iai_kamae_t
+		_fire_full("iai_in", 1.0)
 	var target: Node3D = null
 	if lock_target != null and is_instance_valid(lock_target) and lock_target.is_inside_tree():
 		target = lock_target
@@ -2315,19 +2399,14 @@ func _launch_iai() -> void:
 	heavy_charge_released.emit(target)
 
 
-## 抵達（或到時）：解凍、以 slash_speed 落刀、加強版刀光、開判定。
+## 抵達（或到時）：切 full 層 iai_slash（拔刀斬）、slash_speed 倍率、加強版刀光、開判定。
 func _unfreeze_iai_slash() -> void:
-	if _heavy_frozen:
-		_heavy_frozen = false
-		_tree.set("parameters/ts_upper/scale", heavy_charge_slash_speed)
-	# 剩餘段落依新倍率重算真實時長：clip 已播 elapsed×1.5 秒，剩下的用 slash_speed 播。
-	var section_len := attack_combo_resource.length * (COMBO_SECTION_RANGES[0].y - COMBO_SECTION_RANGES[0].x)
-	var clip_pos := minf(_action_elapsed * heavy_cut_speed, section_len)
-	_action_real = _action_elapsed + (section_len - clip_pos) / maxf(heavy_charge_slash_speed, 0.01)
-	_upper_finish_fade = 0.30   # 蓄力斬的收勢比聚力單斬更長
-	if _upper_node != null:
-		_upper_node.fadeout_time = _upper_finish_fade
-	_hit_targets_this_swing.clear()
+	_heavy_frozen = false
+	_iai_hold_in = 0.0
+	_switch_full("iai_slash", heavy_charge_slash_speed)
+	# 落刀段真實時長 = clip 全長 ÷ 倍率（.res 0.958 s ÷ 2.6 ≈ 0.37 s）。
+	_action_elapsed = 0.0
+	_action_real = iai_slash_resource.length / maxf(heavy_charge_slash_speed, 0.01)
 	if _hitbox != null:
 		_hitbox.monitoring = true
 	if _sword_trail != null:
@@ -2454,13 +2533,20 @@ func cancel_continuous_spin() -> void:
 
 func _finish_attack() -> void:
 	var was_layer := _attack_layer
+	# ⚠ 先擷取再 cancel：cancel_heavy_charge() 會把 _heavy_frozen 清成 false，
+	#   之後才判斷就永遠落空，ts_full 的 slash_speed 殘值會帶進下一招。
+	var was_iai := _heavy_frozen or _iai_charged
 	if _heavy_charging:
 		cancel_heavy_charge()
-	if _heavy_frozen or _iai_charged:
-		# 凍住（scale 0）或蓄力落刀（slash_speed）都要把 upper 倍率還原，下一招才不會吃到殘值。
+	if was_iai:
+		# 居合架勢（full 層）與蓄力落刀（ts_full=slash_speed）都要把倍率還原，
+		# 下一招才不會吃到殘值（ts_upper 已不再被蓄力寫 0，還原是保險）。
 		_heavy_frozen = false
 		if _tree != null:
 			_tree.set("parameters/ts_upper/scale", heavy_cut_speed)
+			_tree.set("parameters/ts_full/scale", 1.0)
+	_iai_hold_in = 0.0
+	_iai_full_active = false
 	_iai_dash_remaining = 0.0
 	_iai_unfreeze_in = -1.0
 	_iai_charged = false
