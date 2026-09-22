@@ -9,7 +9,7 @@ metadata={
 "vram_texture": true
 }
 generator_parameters={
-"md5": "8a28984f086bd8f28eedbd46a84d5d45"
+"md5": "85ab701c0a03a1290f8254c4f7c5040a"
 }
 
 [deps]
@@ -22,6 +22,8 @@ dest_files=["res://.godot/imported/yoriichi_sword_normal.jpg-2442db33d1d938b6e72
 compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=1
 compress/channel_pack=0
@@ -29,6 +31,10 @@ mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
 roughness/src_normal="res://yoriichi_sword_normal.jpg"
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
