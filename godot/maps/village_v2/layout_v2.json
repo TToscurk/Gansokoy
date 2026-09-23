@@ -51,6 +51,18 @@
 		"south_h": 5, "south_z0": 165, "south_z1": 220,
 		"noise_amp": 1.6, "noise_freq": 0.012, "seed": 20260923
 	},
+	"terrain": {
+		"_note": "P1 Terrain 參數（不在 Macro 凍結範圍）。建成區各分區外擴 platform_close_gap、聯集、再內縮成平台外框；外框外再留 platform_apron 平地；平台高＝heights 的基準面（built＋built_slope）。平台外是填挖坡：填方 bank_fill_deg、挖方 bank_cut_deg（西肩離平台 29.8 m、高出 26.45 m，挖方需 ≥ 41.6° 才不削到峰頂）。approach：參道延長到社殿 pad 外緣，縱坡 ≤ max_deg（石段 P4／P5 再放）。算法：godot/tools/village_v2_terrain_lib.gd。",
+		"platform_close_gap": 6.0,
+		"platform_apron": 3.0,
+		"bank_fill_deg": 33.7,
+		"bank_cut_deg": 45.0,
+		"approach": {
+			"road": "HillApproach",
+			"pad": "LANDMARK_NORTH_HILL",
+			"max_deg": 30.0
+		}
+	},
 	"hill": {
 		"label": "北丘（林丘社寺）",
 		"center": [258, -226], "radius": 67.5, "height": 34.7,

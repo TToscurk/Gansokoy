@@ -19,9 +19,12 @@ extends SceneTree
 ## 最後一次產生的 Variant 就是場景現況。
 ##
 ## 施工順序照 §1：大地形 → 水系（刻進地形）→ 道路 → 地塊整平 → placeholder。
-## 地形分三類（§6）：Natural（丘陵噪訊）／Built（村內整平）／Transition（10 m 羽化）。
+## 地形分三類（§6）：Natural（丘陵噪訊）／Built（建成區平台＝基準面）／Transition（平台外填挖坡）。
+## P1 Terrain：平台外框、填挖坡、參道縱坡的算法在 tools/village_v2_terrain_lib.gd（與驗證共用）；
+##   參數在 layout_v2.json 的 terrain（不在 Macro 凍結範圍）。驗收：tools/verify_village_v2_terrain.gd。
 
 const Freeze := preload("res://tools/village_v2_freeze.gd")
+const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
@@ -74,6 +77,8 @@ var polys := {}
 var pbox := {}
 var built: Array[String] = []
 var pads: Array[Vector4] = []    # x, z, 半徑, 整平高度
+var outlines: Array = []         # 建成區平台外框（TLib.built_outlines）
+var apron := 3.0                 # 平台在外框外多留的平地（m）
 var river_pts := PackedVector2Array()
 var river_hw := PackedFloat32Array()
 ## 水渠與細渠：{name,label,pts,hw,margin,wdepth,cap,below,cum,lv}
@@ -174,6 +179,8 @@ func _setup() -> void:
 		_add_poly(k, D[k]["poly"])
 		if String(D[k]["kind"]) == "built":
 			built.append(k)
+	outlines = TLib.built_outlines(L)
+	apron = TLib.param(L, "platform_apron")
 	var FO: Dictionary = L["forests"]
 	for k in FO:
 		if typeof(FO[k]) == TYPE_DICTIONARY and FO[k].has("poly"):
@@ -304,12 +311,10 @@ func _land(x: float, z: float, with_pads := true) -> float:
 			_did = bi
 	# 建成區（如農田中的大宅庭園）優先於農田
 	_wf = _pw("Farmland", p, feather) * (1.0 - _wb)
-	var bh := float(H["built"]) + (float(H["built_z_ref"]) - z) * float(H["built_slope"])
-	var fh := float(H["farm"])
-	var h := nat
-	if _wb + _wf > 0.0:
-		var flat := (bh * _wb + fh * _wf) / (_wb + _wf)
-		h = lerpf(nat, flat, clampf(maxf(_wb, _wf), 0.0, 1.0))
+	var h := lerpf(nat, float(H["farm"]), clampf(_wf, 0.0, 1.0))
+	# Built Terrain（P1）：建成區平台（分區 closing 聯集＋apron）＝基準面；平台外是填挖坡（Transition），
+	# 坡夾不到的地方維持原本的 Natural／農田地面。取代 r3 的「分區內 10 m 羽化」——那會讓村內隨噪訊起伏。
+	h = TLib.bank(L, h, TLib.plane(L, z), -TLib.outline_sd(outlines, p) - apron)
 	if with_pads:
 		# 地塊整平＝平台＋限坡填挖：離平台邊 s 公尺處最多高出／低於平台 s·tan35°。
 		# 原本固定 5 m feather：坡上平台（丘腳社寺，自然坡約 31°）挖出 6 m 高、68° 的牆。
@@ -353,6 +358,11 @@ func _carve(x: float, z: float, h: float) -> float:
 ## 再 3 m 羽化回原地面。路面網格用同一條縱坡 → 地形不會從路面底下刺出來。
 func _grade(x: float, z: float, h: float) -> float:
 	var p := Vector2(x, z)
+	# 地塊 pad 內維持 pad 高度：參道接到山頂社殿 pad 外緣，路面橫向拉平不得把 pad 內緣往下拉
+	# （P1 首跑實測：主丘地面 34.17 → 34.08 m）。
+	for pd in pads:
+		if p.distance_to(Vector2(pd.x, pd.y)) <= pd.z:
+			return h
 	for r in roads:
 		var bb: Rect2 = r["bb"]
 		if not bb.has_point(p):
@@ -365,8 +375,10 @@ func _grade(x: float, z: float, h: float) -> float:
 
 
 ## 縱坡：沿中心線每 1 m 取地面高度，±8 m 移動平均（緩坡，不跟著噪訊起伏）。
+## 參道（terrain.approach）另外延長到社殿 pad 外緣，縱坡改用 _approach_profile。
 func _road_prep(r: Dictionary) -> void:
-	var pts: PackedVector2Array = r["pts"]
+	var pts: PackedVector2Array = TLib.approach_line(L, r["pts"], String(r["name"]))
+	r["pts"] = pts
 	var cum := PackedFloat32Array([0.0])
 	var bb := Rect2(pts[0], Vector2.ZERO)
 	for k in range(1, pts.size()):
@@ -388,7 +400,21 @@ func _road_prep(r: Dictionary) -> void:
 			s += raw[j]
 			n += 1
 		prof[i] = s / n
+	var A: Dictionary = L.get("terrain", {}).get("approach", {})
+	if String(A.get("road", "")) == String(r["name"]):
+		prof[prof.size() - 1] = raw[raw.size() - 1]
+		_approach_profile(prof, float(A["max_deg"]))
 	r["lv"] = prof
+
+
+## 參道縱坡（P1）：終點釘在社殿 pad 高度；由後往前、再由前往後各掃一次，
+## 每公尺升降都不超過 tan(max_deg)。原本 ±8 m 平均跟著丘坡走，接 pad 那段 57.8°（玩家上限 52°）。
+func _approach_profile(prof: PackedFloat32Array, max_deg: float) -> void:
+	var g := tan(deg_to_rad(max_deg))
+	for i in range(prof.size() - 2, -1, -1):
+		prof[i] = maxf(prof[i], prof[i + 1] - g)
+	for i in range(1, prof.size()):
+		prof[i] = maxf(prof[i], prof[i - 1] - g)
 
 
 func _channel_prep(ch: Dictionary) -> void:
@@ -809,6 +835,35 @@ func _terrain() -> void:
 	cs.name = "Shape"
 	cs.shape = shape
 	body.add_child(cs)
+	vroot.get_node("Collision").add_child(body)
+	_boundary()
+
+
+## 世界邊界（P1，§6「世界邊界」）：frame 四邊外側各一道 1 m 厚的牆，y −10…80（地形 −3.2…49 m）。
+## 不用 gen_lib.boundary()：那個假設地圖以原點為中心、牆高只到 y 40，V2 的 frame 是 x 0…560、z −340…220。
+func _boundary() -> void:
+	var F: Dictionary = L["frame"]
+	var fx0 := float(F["x0"])
+	var fx1 := float(F["x1"])
+	var fz0 := float(F["z0"])
+	var fz1 := float(F["z1"])
+	var cx := (fx0 + fx1) * 0.5
+	var cz := (fz0 + fz1) * 0.5
+	var w := fx1 - fx0 + 2.0
+	var d := fz1 - fz0 + 2.0
+	var body := StaticBody3D.new()
+	body.name = "Boundary"
+	for e in [["N", Vector3(cx, 35.0, fz0 - 0.5), Vector3(w, 90.0, 1.0)],
+			["S", Vector3(cx, 35.0, fz1 + 0.5), Vector3(w, 90.0, 1.0)],
+			["W", Vector3(fx0 - 0.5, 35.0, cz), Vector3(1.0, 90.0, d)],
+			["E", Vector3(fx1 + 0.5, 35.0, cz), Vector3(1.0, 90.0, d)]]:
+		var cs := CollisionShape3D.new()
+		cs.name = "Wall_" + String(e[0])
+		var b := BoxShape3D.new()
+		b.size = e[2]
+		cs.shape = b
+		cs.position = e[1]
+		body.add_child(cs)
 	vroot.get_node("Collision").add_child(body)
 
 
