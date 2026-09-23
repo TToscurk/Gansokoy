@@ -1,0 +1,1937 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://scripts/sky_system.gd" id="1_og8e1"]
+[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="2_jj05v"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/terrain_mainterrain.res" id="3_ulrmh"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/terrain_northhill.res" id="4_uiidh"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/terrain_farmlandterrain.res" id="5_46rv4"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/terrain_riverterrain.res" id="6_7uma7"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/water_weststream.res" id="7_k8ton"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/water_main_river.res" id="8_o8rwy"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/water_canal.res" id="9_5l8fv"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_entranceroad.res" id="10_301wb"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_mainstreet.res" id="11_xhn6r"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_hillfootstreet.res" id="12_pn8m0"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_hillapproach.res" id="13_e48wv"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_rivernorthpath.res" id="14_bfkqs"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_dragonbridgeroad.res" id="15_v32kn"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_crossstreetmid.res" id="16_vqwgo"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_crossstreetsouth.res" id="17_ls14t"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_riversidepath.res" id="18_h8hu2"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_westalley.res" id="19_je4js"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_westlane.res" id="20_2q6x5"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_farmpath_1.res" id="21_u5kwi"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_farmpath_2.res" id="22_3egvy"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_farmpath_3.res" id="23_v14w0"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_farmpath_4.res" id="24_m7jwk"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/road_farmpath_5.res" id="25_f0h10"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_southw.res" id="26_iqcbk"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_southe.res" id="27_gx66h"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_west.res" id="28_pdbju"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_northw.res" id="29_bwlqh"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_northe.res" id="30_vimvh"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/canopy_forest_hillcrown.res" id="31_q0w0m"]
+[ext_resource type="Shape3D" path="res://maps/village_v2/gen/terrain_col.res" id="32_erbdm"]
+[ext_resource type="FontFile" path="res://assets/fonts/NotoSerifTC-VF.ttf" id="33_c1l3d"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_market.res" id="34_u5bgj"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_mixedcommercial.res" id="35_w5u34"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_residentialwest.res" id="36_eimln"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_residentialne.res" id="37_jmrhy"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_mansionestate.res" id="38_qg25e"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_southgate.res" id="39_ms1id"]
+[ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_farmland.res" id="40_71ail"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pjdsm"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66ic4"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.0924, 0.17639999, 0.231, 0.8)
+metallic_specular = 0.6
+roughness = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x87ej"]
+albedo_color = Color(0.231, 0.336, 0.42, 1)
+roughness = 0.95
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_e8xly"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mrhqo"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81e8b"]
+cull_mode = 2
+albedo_color = Color(0.3612, 0.336, 0.2772, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6qf7"]
+cull_mode = 2
+albedo_color = Color(0.3192, 0.294, 0.2394, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxado"]
+cull_mode = 2
+albedo_color = Color(0.2856, 0.2604, 0.2184, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8o5fm"]
+cull_mode = 2
+albedo_color = Color(0.2352, 0.2058, 0.1554, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gaic"]
+albedo_color = Color(0.21839999, 0.15120001, 0.1008, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_4iojd"]
+size = Vector3(6.8, 0.6, 15.584104)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_irf7k"]
+size = Vector3(6.8, 0.6, 15.584104)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1brds"]
+size = Vector3(5.8, 0.6, 41.000084)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ge3ot"]
+size = Vector3(5.8, 0.6, 41.000084)
+
+[sub_resource type="BoxMesh" id="BoxMesh_btvvr"]
+size = Vector3(6.8, 0.6, 15.004172)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3hih8"]
+size = Vector3(6.8, 0.6, 15.004172)
+
+[sub_resource type="BoxMesh" id="BoxMesh_el3lf"]
+size = Vector3(6.8, 0.6, 14.00001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_the06"]
+size = Vector3(6.8, 0.6, 14.00001)
+
+[sub_resource type="BoxMesh" id="BoxMesh_26neb"]
+size = Vector3(3.8, 0.6, 11.50003)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7clkb"]
+size = Vector3(3.8, 0.6, 11.50003)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4u7kf"]
+albedo_color = Color(0.42587999, 0.10919999, 0.07644, 1.3)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_mmpmm"]
+size = Vector3(1, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cawio"]
+size = Vector3(1, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_obgbt"]
+size = Vector3(1, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8xnir"]
+size = Vector3(1, 10, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubk13"]
+albedo_color = Color(0.075600006, 0.0672, 0.063, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_b5rnd"]
+size = Vector3(13.5, 0.8, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lju6y"]
+size = Vector3(11, 0.55, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_koln5"]
+albedo_color = Color(0.23099999, 0.17639999, 0.1344, 0.42)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_2et7s"]
+size = Vector3(14, 9, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hjym7"]
+size = Vector3(14, 9, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vuolb"]
+size = Vector3(0.7, 6, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6by1g"]
+size = Vector3(0.7, 6, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fh7a3"]
+size = Vector3(0.7, 6, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1qu6k"]
+size = Vector3(0.7, 6, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kx6bf"]
+size = Vector3(6.075, 0.56, 0.77)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kunsi"]
+size = Vector3(4.95, 0.385, 0.49)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ofsgo"]
+size = Vector3(18, 9, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_45t0k"]
+size = Vector3(18, 9, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2e8s"]
+albedo_color = Color(0.231, 0.22259998, 0.21, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_1k02i"]
+size = Vector3(10, 3.6694362, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8flbn"]
+size = Vector3(10, 3.6694362, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vfmoe"]
+albedo_color = Color(0.147, 0.189, 0.17639999, 1)
+roughness = 0.95
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m3l3u"]
+top_radius = 1.0
+bottom_radius = 2.0
+height = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7gbj2"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55474997, 0.47284997, 0.54109997, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_k0kcc"]
+_surfaces = [{
+"aabb": AABB(-8.000001, 0.08780521, -11, 16.000002, 10.912195, 22),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("////wDnTsz0AADBBAQAAwWLG5T0AADDB////wAAAMEEAADBBAQAAwQAAMEEAADDB////wDnTsz0AADBB////wAAAMEEAADBBAQAAwWLG5T0AADDB////QGHG5T0AADDBAQAAwQAAMEEAADDB////QAAAMEEAADDBAQAAwWLG5T0AADDBAQAAwQAAMEEAADDB////QGHG5T0AADDBAQAAQTjTsz0AADBB////QAAAMEEAADDBAQAAQQAAMEEAADBB////QGHG5T0AADDB////QAAAMEEAADDBAQAAQTjTsz0AADBB////wDnTsz0AADBBAQAAQQAAMEEAADBB////wAAAMEEAADBBAQAAQTjTsz0AADBBAQAAQQAAMEEAADBB")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7h4qo"]
+_surfaces = [{
+"aabb": AABB(-8.000001, 0.04780521, -11, 16.000002, 0.024389584, 22),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 456,
+"vertex_data": PackedByteArray("////wGjPQz0AADBB////wF8bcz0AACBB///vwCvFcz0AACBB////wGjPQz0AADBB///vwCvFcz0AACBB///vwFwJTT0AADBB////wF8bcz0AACBB////wPdudD0AABBB///vwN3DdD0AABBB////wF8bcz0AACBB///vwN3DdD0AABBB///vwCvFcz0AACBB////wPdudD0AABBB////wI/CdT0AAABB///vwI/CdT0AAABB////wPdudD0AABBB///vwI/CdT0AAABB///vwN3DdD0AABBB////wI/CdT0AAABB////wI/CdT0BAOBA///vwI/CdT0BAOBA////wI/CdT0AAABB///vwI/CdT0BAOBA///vwI/CdT0AAABB////wI/CdT0BAOBA////wI/CdT0BAMBA///vwI/CdT0BAMBA////wI/CdT0BAOBA///vwI/CdT0BAMBA///vwI/CdT0BAOBA////wI/CdT0BAMBAAAAAwY/CdT0BAKBAAADwwI/CdT0BAKBA////wI/CdT0BAMBAAADwwI/CdT0BAKBA///vwI/CdT0BAMBAAAAAwY/CdT0BAKBAAAAAwY/CdT0BAIBAAADwwI/CdT0BAIBAAAAAwY/CdT0BAKBAAADwwI/CdT0BAIBAAADwwI/CdT0BAKBAAAAAwY/CdT0BAIBAAAAAwY/CdT0BAEBAAADwwI/CdT0BAEBAAAAAwY/CdT0BAIBAAADwwI/CdT0BAEBAAADwwI/CdT0BAIBAAAAAwY/CdT0BAEBAAAAAwY/CdT0BAABAAADwwI/CdT0BAABAAAAAwY/CdT0BAEBAAADwwI/CdT0BAABAAADwwI/CdT0BAEBAAAAAwY/CdT0BAABAAAAAwY/CdT0DAIA/AADwwI/CdT0DAIA/AAAAwY/CdT0BAABAAADwwI/CdT0DAIA/AADwwI/CdT0BAABAAAAAwY/CdT0DAIA/AAAAwY/CdT0uvbs0AADwwI/CdT1bAbA0AAAAwY/CdT0DAIA/AADwwI/CdT1bAbA0AADwwI/CdT0DAIA/AAAAwY/CdT0uvbs0AAAAwY/CdT36/3+/AADwwI/CdT36/3+/AAAAwY/CdT0uvbs0AADwwI/CdT36/3+/AADwwI/CdT1bAbA0AAAAwY/CdT36/3+/AAAAwY/CdT31//+/AADwwI/CdT31//+/AAAAwY/CdT36/3+/AADwwI/CdT31//+/AADwwI/CdT36/3+/AAAAwY/CdT31//+/AAAAwY/CdT3//z/AAADwwI/CdT3//z/AAAAAwY/CdT31//+/AADwwI/CdT3//z/AAADwwI/CdT31//+/AAAAwY/CdT3//z/AAAAAwY/CdT3//3/AAADwwI/CdT3//3/AAAAAwY/CdT3//z/AAADwwI/CdT3//3/AAADwwI/CdT3//z/AAAAAwY/CdT3//3/AAAAAwY/CdT3//5/AAADwwI/CdT3//5/AAAAAwY/CdT3//3/AAADwwI/CdT3//5/AAADwwI/CdT3//3/AAAAAwY/CdT3//5/AAAAAwY/CdT3//7/AAQDwwI/CdT3//7/AAAAAwY/CdT3//5/AAQDwwI/CdT3//7/AAADwwI/CdT3//5/AAAAAwY/CdT3//7/AAAAAwY/CdT3//9/AAQDwwI/CdT3//9/AAAAAwY/CdT3//7/AAQDwwI/CdT3//9/AAQDwwI/CdT3//7/AAAAAwY/CdT3//9/AAAAAwY/CdT3////AAQDwwI/CdT3////AAAAAwY/CdT3//9/AAQDwwI/CdT3////AAQDwwI/CdT3//9/AAAAAwY/CdT3////AAAAAwScWdz0AABDBAQDwwEHBdj0AABDBAAAAwY/CdT3////AAQDwwEHBdj0AABDBAQDwwI/CdT3////AAAAAwScWdz0AABDBAAAAwb9peD0AACDBAQDwwPO/dz0AACDBAAAAwScWdz0AABDBAQDwwPO/dz0AACDBAQDwwEHBdj0AABDBAAAAwb9peD0AACDBAQAAwd3akz0AADDBAQDwwOI9jz0AADDBAAAAwb9peD0AACDBAQDwwOI9jz0AADDBAQDwwPO/dz0AACDBAQAAwd3akz0AADDBAQDgwOigij0AADDBAQDgwP4Vgz0AACjBAQAAwd3akz0AADDBAQDgwP4Vgz0AACjBAAAAwd4HiD0AACjBAQDgwOigij0AADDBAQDAwPRmgT0AADDBAQDAwDxIfD0AACjBAQDgwOigij0AADDBAQDAwDxIfD0AACjBAQDgwP4Vgz0AACjBAQDAwPRmgT0AADDBAQCgwJh5fD0AADDBAQCgwBMeeT0AACjBAQDAwPRmgT0AADDBAQCgwBMeeT0AACjBAQDAwDxIfD0AACjBAQCgwJh5fD0AADDBAQCAwEgldj0AADDBAQCAwOvzdT0AACjBAQCgwJh5fD0AADDBAQCAwOvzdT0AACjBAQCgwBMeeT0AACjBAQCAwEgldj0AADDBAgBAwOvzdT0AADDBAgBAwD3bdT0AACjBAQCAwEgldj0AADDBAgBAwD3bdT0AACjBAQCAwOvzdT0AACjBAgBAwOvzdT0AADDBAgAAwI/CdT0AADDBAgAAwI/CdT0AACjBAgBAwOvzdT0AADDBAgAAwI/CdT0AACjBAgBAwD3bdT0AACjBAgAAwI/CdT0AADDBBACAv4/CdT0AADDBBACAv4/CdT0AACjBAgAAwI/CdT0AADDBBACAv4/CdT0AACjBAgAAwI/CdT0AACjBBACAv4/CdT0AADDBEBIBtY/CdT0AADDBTGj2tI/CdT0AACjBBACAv4/CdT0AADDBTGj2tI/CdT0AACjBBACAv4/CdT0AACjBEBIBtY/CdT0AADDB+P9/P4/CdT0AADDB+P9/P4/CdT0AACjBEBIBtY/CdT0AADDB+P9/P4/CdT0AACjBTGj2tI/CdT0AACjB+P9/P4/CdT0AADDB/P//P4/CdT0AADDB/P//P4/CdT0AACjB+P9/P4/CdT0AADDB/P//P4/CdT0AACjB+P9/P4/CdT0AACjB/P//P4/CdT0AADDB/v8/QOvzdT0AADDB/v8/QD3bdT0AACjB/P//P4/CdT0AADDB/v8/QD3bdT0AACjB/P//P4/CdT0AACjB/v8/QOvzdT0AADDB/v9/QEcldj0AADDB/v9/QOvzdT0AACjB/v8/QOvzdT0AADDB/v9/QOvzdT0AACjB/v8/QD3bdT0AACjB/v9/QEcldj0AADDB//+fQJd5fD0AADDB//+fQBMeeT0AACjB/v9/QEcldj0AADDB//+fQBMeeT0AACjB/v9/QOvzdT0AACjB//+fQJd5fD0AADDB//+/QPRmgT0AADDB//+/QDtIfD0AACjB//+fQJd5fD0AADDB//+/QDtIfD0AACjB//+fQBMeeT0AACjB//+/QPRmgT0AADDB///fQOegij0AADDB///fQP4Vgz0AACjB//+/QPRmgT0AADDB///fQP4Vgz0AACjB//+/QDtIfD0AACjB///fQOegij0AADDB////QNvakz0AADDB////QN4HiD0AACjB///fQOegij0AADDB////QN4HiD0AACjB///fQP4Vgz0AACjB////QNvakz0AADDB////QL9peD0AACDB///vQPO/dz0AACDB////QNvakz0AADDB///vQPO/dz0AACDB///vQOE9jz0AADDB////QL9peD0AACDB////QCcWdz0AABDB///vQEHBdj0AABDB////QL9peD0AACDB///vQEHBdj0AABDB///vQPO/dz0AACDB////QCcWdz0AABDB////QI/CdT0AAADB///vQI/CdT0AAADB////QCcWdz0AABDB///vQI/CdT0AAADB///vQEHBdj0AABDB////QI/CdT0AAADB////QI/CdT0BAODA///vQI/CdT0BAODA////QI/CdT0AAADB///vQI/CdT0BAODA///vQI/CdT0AAADB////QI/CdT0BAODA////QI/CdT0BAMDA///vQI/CdT0BAMDA////QI/CdT0BAODA///vQI/CdT0BAMDA///vQI/CdT0BAODA////QI/CdT0BAMDAAAAAQY/CdT0BAKDAAADwQI/CdT0BAKDA////QI/CdT0BAMDAAADwQI/CdT0BAKDA///vQI/CdT0BAMDAAAAAQY/CdT0BAKDAAAAAQY/CdT0BAIDAAADwQI/CdT0BAIDAAAAAQY/CdT0BAKDAAADwQI/CdT0BAIDAAADwQI/CdT0BAKDAAAAAQY/CdT0BAIDAAAAAQY/CdT0BAEDAAADwQI/CdT0BAEDAAAAAQY/CdT0BAIDAAADwQI/CdT0BAEDAAADwQI/CdT0BAIDAAAAAQY/CdT0BAEDAAAAAQY/CdT0BAADAAADwQI/CdT0BAADAAAAAQY/CdT0BAEDAAADwQI/CdT0BAADAAADwQI/CdT0BAEDAAAAAQY/CdT0BAADAAAAAQY/CdT0DAIC/AADwQI/CdT0DAIC/AAAAQY/CdT0BAADAAADwQI/CdT0DAIC/AADwQI/CdT0BAADAAAAAQY/CdT0DAIC/AAAAQY/CdT0uvbu0AADwQI/CdT1bAbC0AAAAQY/CdT0DAIC/AADwQI/CdT1bAbC0AADwQI/CdT0DAIC/AAAAQY/CdT0uvbu0AAAAQY/CdT36/38/AADwQI/CdT36/38/AAAAQY/CdT0uvbu0AADwQI/CdT36/38/AADwQI/CdT1bAbC0AAAAQY/CdT36/38/AAAAQY/CdT31//8/AADwQI/CdT31//8/AAAAQY/CdT36/38/AADwQI/CdT31//8/AADwQI/CdT36/38/AAAAQY/CdT31//8/AAAAQY/CdT3//z9AAADwQI/CdT3//z9AAAAAQY/CdT31//8/AADwQI/CdT3//z9AAADwQI/CdT31//8/AAAAQY/CdT3//z9AAAAAQY/CdT3//39AAADwQI/CdT3//39AAAAAQY/CdT3//z9AAADwQI/CdT3//39AAADwQI/CdT3//z9AAAAAQY/CdT3//39AAAAAQY/CdT3//59AAADwQI/CdT3//59AAAAAQY/CdT3//39AAADwQI/CdT3//59AAADwQI/CdT3//39AAAAAQY/CdT3//59AAAAAQY/CdT3//79AAQDwQI/CdT3//79AAAAAQY/CdT3//59AAQDwQI/CdT3//79AAADwQI/CdT3//59AAAAAQY/CdT3//79AAAAAQY/CdT3//99AAQDwQI/CdT3//99AAAAAQY/CdT3//79AAQDwQI/CdT3//99AAQDwQI/CdT3//79AAAAAQY/CdT3//99AAAAAQY/CdT3///9AAQDwQI/CdT3///9AAAAAQY/CdT3//99AAQDwQI/CdT3///9AAQDwQI/CdT3//99AAAAAQY/CdT3///9AAAAAQfdudD0AABBBAQDwQN3DdD0AABBBAAAAQY/CdT3///9AAQDwQN3DdD0AABBBAQDwQI/CdT3///9AAAAAQfdudD0AABBBAAAAQV8bcz0AACBBAQDwQCvFcz0AACBBAAAAQfdudD0AABBBAQDwQCvFcz0AACBBAQDwQN3DdD0AABBBAAAAQV8bcz0AACBBAQAAQWXPQz0AADBBAQDwQFsJTT0AADBBAAAAQV8bcz0AACBBAQDwQFsJTT0AADBBAQDwQCvFcz0AACBBAQAAQWXPQz0AADBBAQDgQE9DVj0AADBBAQDgQCNZZT0AAChBAQAAQWXPQz0AADBBAQDgQCNZZT0AAChBAAAAQWN1Wz0AAChBAQDgQE9DVj0AADBBAQDAQDe3aD0AADBBAQDAQOM8bz0AAChBAQDgQE9DVj0AADBBAQDAQOM8bz0AAChBAQDgQCNZZT0AAChBAQDAQDe3aD0AADBBAQCgQIcLbz0AADBBAQCgQAtncj0AAChBAQDAQDe3aD0AADBBAQCgQAtncj0AAChBAQDAQOM8bz0AAChBAQCgQIcLbz0AADBBAQCAQNdfdT0AADBBAQCAQDORdT0AAChBAQCgQIcLbz0AADBBAQCAQDORdT0AAChBAQCgQAtncj0AAChBAQCAQNdfdT0AADBBAgBAQDORdT0AADBBAgBAQOGpdT0AAChBAQCAQNdfdT0AADBBAgBAQOGpdT0AAChBAQCAQDORdT0AAChBAgBAQDORdT0AADBBAgAAQI/CdT0AADBBAgAAQI/CdT0AAChBAgBAQDORdT0AADBBAgAAQI/CdT0AAChBAgBAQOGpdT0AAChBAgAAQI/CdT0AADBBBACAP4/CdT0AADBBBACAP4/CdT0AAChBAgAAQI/CdT0AADBBBACAP4/CdT0AAChBAgAAQI/CdT0AAChBBACAP4/CdT0AADBBEBIBNY/CdT0AADBBTGj2NI/CdT0AAChBBACAP4/CdT0AADBBTGj2NI/CdT0AAChBBACAP4/CdT0AAChBEBIBNY/CdT0AADBB+P9/v4/CdT0AADBB+P9/v4/CdT0AAChBEBIBNY/CdT0AADBB+P9/v4/CdT0AAChBTGj2NI/CdT0AAChB+P9/v4/CdT0AADBB/P//v4/CdT0AADBB/P//v4/CdT0AAChB+P9/v4/CdT0AADBB/P//v4/CdT0AAChB+P9/v4/CdT0AAChB/P//v4/CdT0AADBB/v8/wDORdT0AADBB/v8/wOGpdT0AAChB/P//v4/CdT0AADBB/v8/wOGpdT0AAChB/P//v4/CdT0AAChB/v8/wDORdT0AADBB/v9/wNdfdT0AADBB/v9/wDORdT0AAChB/v8/wDORdT0AADBB/v9/wDORdT0AAChB/v8/wOGpdT0AAChB/v9/wNdfdT0AADBB//+fwIgLbz0AADBB//+fwAtncj0AAChB/v9/wNdfdT0AADBB//+fwAtncj0AAChB/v9/wDORdT0AAChB//+fwIgLbz0AADBB//+/wDi3aD0AADBB//+/wOM8bz0AAChB//+fwIgLbz0AADBB//+/wOM8bz0AAChB//+fwAtncj0AAChB//+/wDi3aD0AADBB///fwFBDVj0AADBB///fwCRZZT0AAChB//+/wDi3aD0AADBB///fwCRZZT0AAChB//+/wOM8bz0AAChB///fwFBDVj0AADBB////wGjPQz0AADBB////wGR1Wz0AAChB///fwFBDVj0AADBB////wGR1Wz0AAChB///fwCRZZT0AAChB/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uf5ow"]
+albedo_color = Color(0.252, 0.21, 0.168, 0.42)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk0ni"]
+size = Vector3(7, 18, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kerd"]
+size = Vector3(7, 18, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ex2d1"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55474997, 0.47284997, 0.54109997, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0w21f"]
+_surfaces = [{
+"aabb": AABB(-14, 0.05085633, -9, 28, 8.949143, 18),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AABgwbFlkj0AABDBAABgQaGchz0AABDBAABgwQAAEEEAABDBAABgQQAAEEEAABDBAABgwbFlkj0AABDBAABgwQAAEEEAABDBAABgQaGchz0AABDBAABgQbpOUD0AABBBAABgQQAAEEEAABDBAABgQQAAEEEAABBBAABgQaGchz0AABDBAABgQQAAEEEAABDBAABgQbpOUD0AABBBAABgwTriVT0AABBBAABgQQAAEEEAABBBAABgwQAAEEEAABBBAABgQbpOUD0AABBBAABgQQAAEEEAABBBAABgwTriVT0AABBBAABgwbFlkj0AABDBAABgwQAAEEEAABBBAABgwQAAEEEAABDBAABgwTriVT0AABBBAABgwQAAEEEAABBB")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gija5"]
+_surfaces = [{
+"aabb": AABB(-14, 0.010856328, -9, 28, 0.05171627, 18),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 552,
+"vertex_data": PackedByteArray("AABgwVf0AD0AABDBAABQwRAmgD0AABDBAABQwVcHez0AAAjBAABgwVf0AD0AABDBAABQwVcHez0AAAjBAABgwVuWFj0AAAjBAABQwRAmgD0AABDBAABAwVcHez0AABDBAABAwfNkeD0AAAjBAABQwRAmgD0AABDBAABAwfNkeD0AAAjBAABQwVcHez0AAAjBAABAwVcHez0AABDBAAAwwY/CdT0AABDBAAAwwY/CdT0AAAjBAABAwVcHez0AABDBAAAwwY/CdT0AAAjBAABAwfNkeD0AAAjBAAAwwY/CdT0AABDBAAAgwY/CdT0AABDBAAAgwY/CdT0AAAjBAAAwwY/CdT0AABDBAAAgwY/CdT0AAAjBAAAwwY/CdT0AAAjBAAAgwY/CdT0AABDBAAAQwY/CdT0AABDBAAAQwY/CdT0AAAjBAAAgwY/CdT0AABDBAAAQwY/CdT0AAAjBAAAgwY/CdT0AAAjBAAAQwY/CdT0AABDBAAAAwY/CdT0AABDBAAAAwY/CdT0AAAjBAAAQwY/CdT0AABDBAAAAwY/CdT0AAAjBAAAQwY/CdT0AAAjBAAAAwY/CdT0AABDBAADgwI/CdT0AABDBAADgwI/CdT0AAAjBAAAAwY/CdT0AABDBAADgwI/CdT0AAAjBAAAAwY/CdT0AAAjBAADgwI/CdT0AABDBAADAwI/CdT0AABDBAADAwI/CdT0AAAjBAADgwI/CdT0AABDBAADAwI/CdT0AAAjBAADgwI/CdT0AAAjBAADAwI/CdT0AABDBAACgwI/CdT0AABDBAACgwI/CdT0AAAjBAADAwI/CdT0AABDBAACgwI/CdT0AAAjBAADAwI/CdT0AAAjBAACgwI/CdT0AABDBAACAwI/CdT0AABDBAACAwI/CdT0AAAjBAACgwI/CdT0AABDBAACAwI/CdT0AAAjBAACgwI/CdT0AAAjBAACAwI/CdT0AABDBAABAwI/CdT0AABDBAABAwI/CdT0AAAjBAACAwI/CdT0AABDBAABAwI/CdT0AAAjBAACAwI/CdT0AAAjBAABAwI/CdT0AABDBAAAAwI/CdT0AABDBAAAAwI/CdT0AAAjBAABAwI/CdT0AABDBAAAAwI/CdT0AAAjBAABAwI/CdT0AAAjBAAAAwI/CdT0AABDBAACAv4/CdT0AABDBAACAv4/CdT0AAAjBAAAAwI/CdT0AABDBAACAv4/CdT0AAAjBAAAAwI/CdT0AAAjBAACAv4/CdT0AABDBAAAAAI/CdT0AABDBAAAAAI/CdT0AAAjBAACAv4/CdT0AABDBAAAAAI/CdT0AAAjBAACAv4/CdT0AAAjBAAAAAI/CdT0AABDBAACAP4/CdT0AABDBAACAP4/CdT0AAAjBAAAAAI/CdT0AABDBAACAP4/CdT0AAAjBAAAAAI/CdT0AAAjBAACAP4/CdT0AABDBAAAAQI/CdT0AABDBAAAAQI/CdT0AAAjBAACAP4/CdT0AABDBAAAAQI/CdT0AAAjBAACAP4/CdT0AAAjBAAAAQI/CdT0AABDBAABAQI/CdT0AABDBAABAQI/CdT0AAAjBAAAAQI/CdT0AABDBAABAQI/CdT0AAAjBAAAAQI/CdT0AAAjBAABAQI/CdT0AABDBAACAQI/CdT0AABDBAACAQI/CdT0AAAjBAABAQI/CdT0AABDBAACAQI/CdT0AAAjBAABAQI/CdT0AAAjBAACAQI/CdT0AABDBAACgQI/CdT0AABDBAACgQI/CdT0AAAjBAACAQI/CdT0AABDBAACgQI/CdT0AAAjBAACAQI/CdT0AAAjBAACgQI/CdT0AABDBAADAQI/CdT0AABDBAADAQI/CdT0AAAjBAACgQI/CdT0AABDBAADAQI/CdT0AAAjBAACgQI/CdT0AAAjBAADAQI/CdT0AABDBAADgQI/CdT0AABDBAADgQI/CdT0AAAjBAADAQI/CdT0AABDBAADgQI/CdT0AAAjBAADAQI/CdT0AAAjBAADgQI/CdT0AABDBAAAAQY/CdT0AABDBAAAAQY/CdT0AAAjBAADgQI/CdT0AABDBAAAAQY/CdT0AAAjBAADgQI/CdT0AAAjBAAAAQY/CdT0AABDBAAAQQY/CdT0AABDBAAAQQY/CdT0AAAjBAAAAQY/CdT0AABDBAAAQQY/CdT0AAAjBAAAAQY/CdT0AAAjBAAAQQY/CdT0AABDBAAAgQY/CdT0AABDBAAAgQY/CdT0AAAjBAAAQQY/CdT0AABDBAAAgQY/CdT0AAAjBAAAQQY/CdT0AAAjBAAAgQY/CdT0AABDBAAAwQY/CdT0AABDBAAAwQY/CdT0AAAjBAAAgQY/CdT0AABDBAAAwQY/CdT0AAAjBAAAgQY/CdT0AAAjB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AAAgQY/CdT0AABBBAAAQQY/CdT0AABBBAAAQQY/CdT0AAAhBAAAgQY/CdT0AABBBAAAQQY/CdT0AAAhBAAAgQY/CdT0AAAhBAAAQQY/CdT0AABBBAAAAQY/CdT0AABBBAAAAQY/CdT0AAAhBAAAQQY/CdT0AABBBAAAAQY/CdT0AAAhBAAAQQY/CdT0AAAhBAAAAQY/CdT0AABBBAADgQI/CdT0AABBBAADgQI/CdT0AAAhBAAAAQY/CdT0AABBBAADgQI/CdT0AAAhBAAAAQY/CdT0AAAhBAADgQI/CdT0AABBBAADAQI/CdT0AABBBAADAQI/CdT0AAAhBAADgQI/CdT0AABBBAADAQI/CdT0AAAhBAADgQI/CdT0AAAhBAADAQI/CdT0AABBBAACgQI/CdT0AABBBAACgQI/CdT0AAAhBAADAQI/CdT0AABBBAACgQI/CdT0AAAhBAADAQI/CdT0AAAhBAACgQI/CdT0AABBBAACAQI/CdT0AABBBAACAQI/CdT0AAAhBAACgQI/CdT0AABBBAACAQI/CdT0AAAhBAACgQI/CdT0AAAhBAACAQI/CdT0AABBBAABAQI/CdT0AABBBAABAQI/CdT0AAAhBAACAQI/CdT0AABBBAABAQI/CdT0AAAhBAACAQI/CdT0AAAhBAABAQI/CdT0AABBBAAAAQI/CdT0AABBBAAAAQI/CdT0AAAhBAABAQI/CdT0AABBBAAAAQI/CdT0AAAhBAABAQI/CdT0AAAhBAAAAQI/CdT0AABBBAACAP4/CdT0AABBBAACAP4/CdT0AAAhBAAAAQI/CdT0AABBBAACAP4/CdT0AAAhBAAAAQI/CdT0AAAhBAACAP4/CdT0AABBBAAAAAI/CdT0AABBBAAAAAI/CdT0AAAhBAACAP4/CdT0AABBBAAAAAI/CdT0AAAhBAACAP4/CdT0AAAhBAAAAAI/CdT0AABBBAACAv4/CdT0AABBBAACAv4/CdT0AAAhBAAAAAI/CdT0AABBBAACAv4/CdT0AAAhBAAAAAI/CdT0AAAhBAACAv4/CdT0AABBBAAAAwI/CdT0AABBBAAAAwI/CdT0AAAhBAACAv4/CdT0AABBBAAAAwI/CdT0AAAhBAACAv4/CdT0AAAhBAAAAwI/CdT0AABBBAABAwI/CdT0AABBBAABAwI/CdT0AAAhBAAAAwI/CdT0AABBBAABAwI/CdT0AAAhBAAAAwI/CdT0AAAhBAABAwI/CdT0AABBBAACAwI/CdT0AABBBAACAwI/CdT0AAAhBAABAwI/CdT0AABBBAACAwI/CdT0AAAhBAABAwI/CdT0AAAhBAACAwI/CdT0AABBBAACgwI/CdT0AABBBAACgwI/CdT0AAAhBAACAwI/CdT0AABBBAACgwI/CdT0AAAhBAACAwI/CdT0AAAhBAACgwI/CdT0AABBBAADAwI/CdT0AABBBAADAwI/CdT0AAAhBAACgwI/CdT0AABBBAADAwI/CdT0AAAhBAACgwI/CdT0AAAhBAADAwI/CdT0AABBBAADgwI/CdT0AABBBAADgwI/CdT0AAAhBAADAwI/CdT0AABBBAADgwI/CdT0AAAhBAADAwI/CdT0AAAhBAADgwI/CdT0AABBBAAAAwY/CdT0AABBBAAAAwY/CdT0AAAhBAADgwI/CdT0AABBBAAAAwY/CdT0AAAhBAADgwI/CdT0AAAhBAAAAwY/CdT0AABBBAAAQwY/CdT0AABBBAAAQwY/CdT0AAAhBAAAAwY/CdT0AABBBAAAQwY/CdT0AAAhBAAAAwY/CdT0AAAhBAAAQwY/CdT0AABBBAAAgwY/CdT0AABBBAAAgwY/CdT0AAAhBAAAQwY/CdT0AABBBAAAgwY/CdT0AAAhBAAAQwY/CdT0AAAhBAAAgwY/CdT0AABBBAAAwwY/CdT0AABBBAAAwwY/CdT0AAAhBAAAgwY/CdT0AABBBAAAwwY/CdT0AAAhBAAAgwY/CdT0AAAhBAAAwwY/CdT0AABBBAABAwcd9cD0AABBBAABAwSsgcz0AAAhBAAAwwY/CdT0AABBBAABAwSsgcz0AAAhBAAAwwY/CdT0AAAhBAABAwcd9cD0AABBBAABQwf84az0AABBBAABQwcd9cD0AAAhBAABAwcd9cD0AABBBAABQwcd9cD0AAAhBAABAwSsgcz0AAAhBAABQwf84az0AABBBAABgwb0sSDwAABBBAABgwX9ovDwAAAhBAABQwf84az0AABBBAABgwX9ovDwAAAhBAABQwcd9cD0AAAhBAABgwb0sSDwAABBBAABgwU9dCj0AAABBAABYwe8PQD0AAABBAABgwb0sSDwAABBBAABYwe8PQD0AAABBAABYwReiDj0AABBBAABgwU9dCj0AAABBAABgwfdxNT0AAOBAAABYwUOaVT0AAOBAAABgwU9dCj0AAABBAABYwUOaVT0AAOBAAABYwe8PQD0AAABBAABgwfdxNT0AAOBAAABgwZ+GYD0AAMBAAABYwZckaz0AAMBAAABgwfdxNT0AAOBAAABYwZckaz0AAMBAAABYwUOaVT0AAOBAAABgwZ+GYD0AAMBAAABgwYfQWT0AAKBAAABYwYvJZz0AAKBAAABgwZ+GYD0AAMBAAABYwYvJZz0AAKBAAABYwZckaz0AAMBAAABgwYfQWT0AAKBAAABgwW8aUz0AAIBAAABYwX9uZD0AAIBAAABgwYfQWT0AAKBAAABYwX9uZD0AAIBAAABYwYvJZz0AAKBAAABgwW8aUz0AAIBAAABgwX9uZD0AAEBAAABYwYcYbT0AAEBAAABgwW8aUz0AAIBAAABYwYcYbT0AAEBAAABYwX9uZD0AAIBAAABgwX9uZD0AAEBAAABgwY/CdT0AAABAAABYwY/CdT0AAABAAABgwX9uZD0AAEBAAABYwY/CdT0AAABAAABYwYcYbT0AAEBAAABgwY/CdT0AAABAAABgwY/CdT0AAIA/AABYwY/CdT0AAIA/AABgwY/CdT0AAABAAABYwY/CdT0AAIA/AABYwY/CdT0AAABAAABgwY/CdT0AAIA/AABgwY/CdT0AAAAAAABYwY/CdT0AAAAAAABgwY/CdT0AAIA/AABYwY/CdT0AAAAAAABYwY/CdT0AAIA/AABgwY/CdT0AAAAAAABgwY/CdT0AAIC/AABYwY/CdT0AAIC/AABgwY/CdT0AAAAAAABYwY/CdT0AAIC/AABYwY/CdT0AAAAAAABgwY/CdT0AAIC/AABgwY/CdT0AAADAAABYwY/CdT0AAADAAABgwY/CdT0AAIC/AABYwY/CdT0AAADAAABYwY/CdT0AAIC/AABgwY/CdT0AAADAAABgwX9uZD0AAEDAAABYwYcYbT0AAEDAAABgwY/CdT0AAADAAABYwYcYbT0AAEDAAABYwY/CdT0AAADAAABgwX9uZD0AAEDAAABgwW8aUz0AAIDAAABYwX9uZD0AAIDAAABgwX9uZD0AAEDAAABYwX9uZD0AAIDAAABYwYcYbT0AAEDAAABgwW8aUz0AAIDAAABgwZ9SXD0AAKDAAABYwZcKaT0AAKDAAABgwW8aUz0AAIDAAABYwZcKaT0AAKDAAABYwX9uZD0AAIDAAABgwZ9SXD0AAKDAAABgwc+KZT0AAMDAAABYwa+mbT0AAMDAAABgwZ9SXD0AAKDAAABYwa+mbT0AAMDAAABYwZcKaT0AAKDAAABgwc+KZT0AAMDAAABgwZfhSD0AAODAAABYwRNSXz0AAODAAABgwc+KZT0AAMDAAABYwRNSXz0AAODAAABYwa+mbT0AAMDAAABgwZfhSD0AAODAAABgwV84LD0AAADBAABYwXf9UD0AAADBAABgwZfhSD0AAODAAABYwXf9UD0AAADBAABYwRNSXz0AAODAAABgwV84LD0AAADBAABgwVf0AD0AABDBAABYwTugQD0AABDBAABgwV84LD0AAADBAABYwTugQD0AABDBAABYwXf9UD0AAADB/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7i0t"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.56294, 0.41006, 0.39368, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_at11v"]
+_surfaces = [{
+"aabb": AABB(-3.5, 0.035279687, -1, 7, 4.9647202, 2),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AABgwDXMYj4AAIC/AABgQAKQZD4AAIC/AABgwAAAoEAAAIC/AABgQAAAoEAAAIC/AABgwDXMYj4AAIC/AABgwAAAoEAAAIC/AABgQAKQZD4AAIC/AABgQG+BED0AAIA/AABgQAAAoEAAAIC/AABgQAAAoEAAAIA/AABgQAKQZD4AAIC/AABgQAAAoEAAAIC/AABgQG+BED0AAIA/AABgwCtXET0AAIA/AABgQAAAoEAAAIA/AABgwAAAoEAAAIA/AABgQG+BED0AAIA/AABgQAAAoEAAAIA/AABgwCtXET0AAIA/AABgwDXMYj4AAIC/AABgwAAAoEAAAIA/AABgwAAAoEAAAIC/AABgwCtXET0AAIA/AABgwAAAoEAAAIA/")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vmchg"]
+_surfaces = [{
+"aabb": AABB(-3.5, -0.0057250927, -1, 7, 0.18893069, 2),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 108,
+"vertex_data": PackedByteArray("AABgwHLWOT4AAIC/AAAgwE0eNz4AAIC/AAAgwEc59T0AAAC/AABgwHLWOT4AAIC/AAAgwEc59T0AAAC/AABgwEyf+T0AAAC/AAAgwE0eNz4AAIC/AADAv3ZLNT4AAIC/AADAv6ea8j0AAAC/AAAgwE0eNz4AAIC/AADAv6ea8j0AAAC/AAAgwEc59T0AAAC/AADAv3ZLNT4AAIC/AAAAv+1dND4AAIC/AAAAv2vD8T0AAAC/AADAv3ZLNT4AAIC/AAAAv2vD8T0AAAC/AADAv6ea8j0AAAC/AAAAv+1dND4AAIC/AAAAP7xTMz4AAIC/AAAAP6+78D0AAAC/AAAAv+1dND4AAIC/AAAAP6+78D0AAAC/AAAAv2vD8T0AAAC/AAAAP7xTMz4AAIC/AADAP+MsMj4AAIC/AADAP3SD7z0AAAC/AAAAP7xTMz4AAIC/AADAP3SD7z0AAAC/AAAAP6+78D0AAAC/AADAP+MsMj4AAIC/AAAgQA/vND4AAIC/AAAgQPns8j0AAAC/AADAP+MsMj4AAIC/AAAgQPns8j0AAAC/AADAP3SD7z0AAAC/AAAgQA/vND4AAIC/AABgQECaOz4AAIC/AABgQDz4+j0AAAC/AAAgQA/vND4AAIC/AABgQDz4+j0AAAC/AAAgQPns8j0AAAC/AABgQECaOz4AAIC/AABgQPF3fT0AAAAAAABAQMy3ej0AAAAAAABgQECaOz4AAIC/AABAQMy3ej0AAAAAAABAQKdEOD4AAIC/AABgQPF3fT0AAAAAAABgQNesmrsAAIA/AABAQGmtpbsAAIA/AABgQPF3fT0AAAAAAABAQGmtpbsAAIA/AABAQMy3ej0AAAAAAABgQNesmrsAAIA/AAAgQPutsLsAAIA/AAAgQOjh4TwAAAA/AABgQNesmrsAAIA/AAAgQOjh4TwAAAA/AABgQFYi6jwAAAA/AAAgQPutsLsAAIA/AADAP4Eju7sAAIA/AADAP9b13TwAAAA/AAAgQPutsLsAAIA/AADAP9b13TwAAAA/AAAgQOjh4TwAAAA/AADAP4Eju7sAAIA/AAAAP2kNursAAIA/AAAAPx9e3jwAAAA/AADAP4Eju7sAAIA/AAAAPx9e3jwAAAA/AADAP9b13TwAAAA/AAAAP2kNursAAIA/AAAAv8M0ursAAIA/AAAAv11P3jwAAAA/AAAAP2kNursAAIA/AAAAv11P3jwAAAA/AAAAPx9e3jwAAAA/AAAAv8M0ursAAIA/AADAv4+Zu7sAAIA/AADAv5HJ3TwAAAA/AAAAv8M0ursAAIA/AADAv5HJ3TwAAAA/AAAAv11P3jwAAAA/AADAv4+Zu7sAAIA/AAAgwPfcrrsAAIA/AAAgwEqQ4jwAAAA/AADAv4+Zu7sAAIA/AAAgwEqQ4jwAAAA/AADAv5HJ3TwAAAA/AAAgwPfcrrsAAIA/AABgwPv+k7sAAIA/AABgwIij7DwAAAA/AAAgwPfcrrsAAIA/AABgwIij7DwAAAA/AAAgwEqQ4jwAAAA/AABgwPv+k7sAAIA/AABgwGgjfz0AAAAAAABAwKjHez0AAAAAAABgwPv+k7sAAIA/AABAwKjHez0AAAAAAABAwPltobsAAIA/AABgwGgjfz0AAAAAAABgwHLWOT4AAIC/AABAwGB6OD4AAIC/AABgwGgjfz0AAAAAAABAwGB6OD4AAIC/AABAwKjHez0AAAAA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1lp1"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55474997, 0.47284997, 0.54109997, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sjhf7"]
+_surfaces = [{
+"aabb": AABB(-4.5, 0.06394001, -5, 9, 6.93606, 10),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AACQwClcjz0AAKBAAACQwLgeBT4AAKDAAACQwAAA4EAAAKBAAACQwAAA4EAAAKDAAACQwClcjz0AAKBAAACQwAAA4EAAAKBAAACQwLgeBT4AAKDAAACQQBkA+D0AAKDAAACQwAAA4EAAAKDAAACQQAAA4EAAAKDAAACQwLgeBT4AAKDAAACQwAAA4EAAAKDAAACQQBkA+D0AAKDAAACQQPvygj0AAKBAAACQQAAA4EAAAKDAAACQQAAA4EAAAKBAAACQQBkA+D0AAKDAAACQQAAA4EAAAKDAAACQQPvygj0AAKBAAACQwClcjz0AAKBAAACQQAAA4EAAAKBAAACQwAAA4EAAAKBAAACQQPvygj0AAKBAAACQQAAA4EAAAKBA")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_evcs3"]
+_surfaces = [{
+"aabb": AABB(-4.5, 0.020352703, -5, 9, 0.0696473, 10),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 228,
+"vertex_data": PackedByteArray("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//9fwI/C9TwAAKBAAACQwAMrBz0AAJBA//9fwAMrBz0AAJBA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgjb5"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55474997, 0.47284997, 0.54109997, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_twq70"]
+_surfaces = [{
+"aabb": AABB(-5.0000005, 0.06399999, -6, 10.000001, 7.936, 12),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AQCgQJZDCz4AAMDA//+fQG0Sgz0AAMBAAQCgQAAAAEEAAMDA//+fQAAAAEEAAMBAAQCgQJZDCz4AAMDAAQCgQAAAAEEAAMDA//+fQG0Sgz0AAMBAAQCgwA9Nkj0AAMBA//+fQAAAAEEAAMBAAQCgwAAAAEEAAMBA//+fQG0Sgz0AAMBA//+fQAAAAEEAAMBAAQCgwA9Nkj0AAMBA//+fwN6sED4AAMDAAQCgwAAAAEEAAMBA//+fwAAAAEEAAMDAAQCgwA9Nkj0AAMBAAQCgwAAAAEEAAMBA//+fwN6sED4AAMDAAQCgQJZDCz4AAMDA//+fwAAAAEEAAMDAAQCgQAAAAEEAAMDA//+fwN6sED4AAMDA//+fwAAAAEEAAMDA")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aggah"]
+_surfaces = [{
+"aabb": AABB(-5.0000005, 0.023999987, -6, 10.000001, 0.080587156, 12),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 264,
+"vertex_data": PackedByteArray("AQCgQKibxD0AAMDAAACgQPBRuD0AAKDAAACQQPBRuD0AAKDAAQCgQKibxD0AAMDAAACQQPBRuD0AAKDAAQCQQKibxD0AAMDAAACgQPBRuD0AAKDAAACgQDcIrD3//3/AAACQQDcIrD3//3/AAACgQPBRuD0AAKDAAACQQDcIrD3//3/AAACQQPBRuD0AAKDAAACgQDcIrD3//3/AAACgQH++nz3//z/AAACQQH++nz3//z/AAACgQDcIrD3//3/AAACQQH++nz3//z/AAACQQDcIrD3//3/AAACgQH++nz3//z/AAACgQMd0kz3+//+/AACQQMd0kz3+//+/AACgQH++nz3//z/AAACQQMd0kz3+//+/AACQQH++nz3//z/AAACgQMd0kz3+//+/AACgQAcrhz38/3+/AACQQAgrhz39/3+/AACgQMd0kz3+//+/AACQQAgrhz39/3+/AACQQMd0kz3+//+/AACgQAcrhz38/3+/AACgQI/CdT16rGo0AACQQI/CdT3UNFM0AACgQAcrhz38/3+/AACQQI/CdT3UNFM0AACQQAgrhz39/3+/AACgQI/CdT16rGo0AACgQB8vXT0CAIA/AACQQB8vXT0CAIA/AACgQI/CdT16rGo0AACQQB8vXT0CAIA/AACQQI/CdT3UNFM0AACgQB8vXT0CAIA/AACgQK+bRD0BAABAAACQQK+bRD0BAABAAACgQB8vXT0CAIA/AACQQK+bRD0BAABAAACQQB8vXT0CAIA/AACgQK+bRD0BAABAAACgQD8ILD0BAEBAAACQQD8ILD0BAEBAAACgQK+bRD0BAABAAACQQD8ILD0BAEBAAACQQK+bRD0BAABAAACgQD8ILD0BAEBAAACgQM90Ez0AAIBAAACQQM90Ez0AAIBAAACgQD8ILD0BAEBAAACQQM90Ez0AAIBAAACQQD8ILD0BAEBAAACgQM90Ez0AAIBAAACgQJ/C9TwAAKBAAACQQJ/C9TwAAKBAAACgQM90Ez0AAIBAAACQQJ/C9TwAAKBAAACQQM90Ez0AAIBAAACgQJ/C9TwAAKBA//+fQJ+bxDwAAMBA//+PQJ+bxDwAAMBAAACgQJ/C9TwAAKBA//+PQJ+bxDwAAMBAAACQQJ/C9TwAAKBA//+fQJ+bxDwAAMBA//9/QJ+bxDwAAMBA//9/QB8v3TwAALBA//+fQJ+bxDwAAMBA//9/QB8v3TwAALBA//+fQB8v3TwAALBA//9/QJ+bxDwAAMBA//8/QJ+bxDwAAMBA//8/QB8v3TwAALBA//9/QJ+bxDwAAMBA//8/QB8v3TwAALBA//9/QB8v3TwAALBA//8/QJ+bxDwAAMBA/v//P5+bxDwAAMBA/v//Px8v3TwAALBA//8/QJ+bxDwAAMBA/v//Px8v3TwAALBA//8/QB8v3TwAALBA/v//P5+bxDwAAMBA/P9/P5+bxDwAAMBA/P9/Px8v3TwAALBA/v//P5+bxDwAAMBA/P9/Px8v3TwAALBA/v//Px8v3TwAALBA/P9/P5+bxDwAAMBA4s2MtJ+bxDwAAMBAEBKBtB8v3TwAALBA/P9/P5+bxDwAAMBAEBKBtB8v3TwAALBA/P9/Px8v3TwAALBA4s2MtJ+bxDwAAMBAAgCAv5+bxDwAAMBAAgCAvyhr3TwAALBA4s2MtJ+bxDwAAMBAAgCAvyhr3TwAALBAEBKBtB8v3TwAALBAAgCAv5+bxDwAAMBAAQAAwJ+bxDwAAMBAAQAAwEAB3jwAALBAAgCAv5+bxDwAAMBAAQAAwEAB3jwAALBAAgCAvyhr3TwAALBAAQAAwJ+bxDwAAMBAAQBAwMdR0DwAAMBAAQBAwCa46jwAALBAAQAAwJ+bxDwAAMBAAQBAwCa46jwAALBAAQAAwEAB3jwAALBAAQBAwMdR0DwAAMBAAQCAwEeZ7TwAAMBAAQCAwC/QBD0AALBAAQBAwMdR0DwAAMBAAQCAwC/QBD0AALBAAQBAwCa46jwAALBAAQCAwEeZ7TwAAMBAAQCgwBXDAD0AAMBAAQCgwFWeDj0AALBAAQCAwEeZ7TwAAMBAAQCgwFWeDj0AALBAAQCAwC/QBD0AALBAAQCgwBXDAD0AAMBAAACgwJZ5HD0AAKBAAACQwPb1Gj0AAKBAAQCgwBXDAD0AAMBAAACQwPb1Gj0AAKBAAQCQwAc9/DwAAMBAAACgwJZ5HD0AAKBAAACgwBgwOD3//39AAACQwGrNNz3//39AAACgwJZ5HD0AAKBAAACQwGrNNz3//39AAACQwPb1Gj0AAKBAAACgwBgwOD3//39AAACgwG85UT3//z9AAACQwIqpUT3//z9AAACgwBgwOD3//39AAACQwIqpUT3//z9AAACQwGrNNz3//39AAACgwG85UT3//z9AAACgwMZCaj3+//8/AACQwKqFaz3+//8/AACgwG85UT3//z9AAACQwKqFaz3+//8/AACQwIqpUT3//z9AAACgwMZCaj3+//8/AACgwNR1gD38/38/AACQwOFPgT39/38/AACgwMZCaj3+//8/AACQwOFPgT39/38/AACQwKqFaz3+//8/AACgwNR1gD38/38/AACgwEbKiz16rGq0AACQwO7cjD3UNFO0AACgwNR1gD38/38/AACQwO7cjD3UNFO0AACQwOFPgT39/38/AACgwEbKiz16rGq0AACgwEAQlz0CAIC/AACQwGlRmD0CAIC/AACgwEbKiz16rGq0AACQwGlRmD0CAIC/AACQwO7cjD3UNFO0AACgwEAQlz0CAIC/AACgwDlWoj0BAADAAACQwOPFoz0BAADAAACgwEAQlz0CAIC/AACQwOPFoz0BAADAAACQwGlRmD0CAIC/AACgwDlWoj0BAADAAACgwDmcrT0BAEDAAACQwMMnrz0BAEDAAACgwDlWoj0BAADAAACQwMMnrz0BAEDAAACQwOPFoz0BAADAAACgwDmcrT0BAEDAAACgwDniuD0AAIDAAACQwKKJuj0AAIDAAACgwDmcrT0BAEDAAACQwKKJuj0AAIDAAACQwMMnrz0BAEDAAACgwDniuD0AAIDAAACgwDcoxD0AAKDAAACQwF/UxT0AAKDAAACgwDniuD0AAIDAAACQwF/UxT0AAKDAAACQwKKJuj0AAIDAAACgwDcoxD0AAKDA//+fwDZuzz0AAMDA//+PwB0f0T0AAMDAAACgwDcoxD0AAKDA//+PwB0f0T0AAMDAAACQwF/UxT0AAKDA//+fwDZuzz0AAMDA//9/wAHQ0j0AAMDA//9/wMgezT0AALDA//+fwDZuzz0AAMDA//9/wMgezT0AALDA//+fwDfLyT0AALDA//9/wAHQ0j0AAMDA//8/wMkx1j0AAMDA//8/wNxo0D0AALDA//9/wAHQ0j0AAMDA//8/wNxo0D0AALDA//9/wMgezT0AALDA//8/wMkx1j0AAMDA/v//v0QI1T0AAMDA/v//v8+kzj0AALDA//8/wMkx1j0AAMDA/v//v8+kzj0AALDA//8/wNxo0D0AALDA/v//v0QI1T0AAMDA/P9/vzzX0D0AAMDA/P9/vweCyT0AALDA/v//v0QI1T0AAMDA/P9/vweCyT0AALDA/v//v8+kzj0AALDA/P9/vzzX0D0AAMDA4s2MNE//yz0AAMDAEBKBNLjBxD0AALDA/P9/vzzX0D0AAMDAEBKBNLjBxD0AALDA/P9/vweCyT0AALDA4s2MNE//yz0AAMDAAgCAPx+4xj0AAMDAAgCAPw5DwD0AALDA4s2MNE//yz0AAMDAAgCAPw5DwD0AALDAEBKBNLjBxD0AALDAAgCAPx+4xj0AAMDAAQAAQKibxD0AAMDAAQAAQMx2vj0AALDAAgCAPx+4xj0AAMDAAQAAQMx2vj0AALDAAgCAPw5DwD0AALDAAQAAQKibxD0AAMDAAQBAQKibxD0AAMDAAQBAQMx2vj0AALDAAQAAQKibxD0AAMDAAQBAQMx2vj0AALDAAQAAQMx2vj0AALDAAQBAQKibxD0AAMDAAQCAQKibxD0AAMDAAQCAQMx2vj0AALDAAQBAQKibxD0AAMDAAQCAQMx2vj0AALDAAQBAQMx2vj0AALDAAQCAQKibxD0AAMDAAQCgQKibxD0AAMDAAQCgQMx2vj0AALDAAQCAQKibxD0AAMDAAQCgQMx2vj0AALDAAQCAQMx2vj0AALDA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhsts"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.55474997, 0.47284997, 0.54109997, 0.42)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_agdx1"]
+_surfaces = [{
+"aabb": AABB(-4, 0.069228336, -4.5, 8, 6.930772, 9),
+"format": 34359738369,
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("//9/wAiBlT0AAJBAAACAwLC0Aj4AAJDA//9/wAAA4EAAAJBAAACAwAAA4EAAAJDA//9/wAiBlT0AAJBA//9/wAAA4EAAAJBAAACAwLC0Aj4AAJDA//9/QHpr+z0AAJDAAACAwAAA4EAAAJDA//9/QAAA4EAAAJDAAACAwLC0Aj4AAJDAAACAwAAA4EAAAJDA//9/QHpr+z0AAJDAAACAQJbHjT0AAJBA//9/QAAA4EAAAJDAAACAQAAA4EAAAJBA//9/QHpr+z0AAJDA//9/QAAA4EAAAJDAAACAQJbHjT0AAJBA//9/wAiBlT0AAJBAAACAQAAA4EAAAJBA//9/wAAA4EAAAJBAAACAQJbHjT0AAJBAAACAQAAA4EAAAJBA")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ptic7"]
+_surfaces = [{
+"aabb": AABB(-4, 0.028465439, -4.5, 8, 0.059176963, 9),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 204,
+"vertex_data": PackedByteArray("//9/wAUrBz0AAJBA//9/wHe+Hz0BAGBA//9fwHe+Hz0BAGBA//9/wAUrBz0AAJBA//9fwHe+Hz0BAGBA//9fwAUrBz0AAJBA//9/wHe+Hz0BAGBAAACAwOdROD0BACBAAABgwOdROD0BACBA//9/wHe+Hz0BAGBAAABgwOdROD0BACBA//9fwHe+Hz0BAGBAAACAwOdROD0BACBAAACAwFvlUD0BAMA/AABgwFvlUD0BAMA/AACAwOdROD0BACBAAABgwFvlUD0BAMA/AABgwOdROD0BACBAAACAwFvlUD0BAMA/AACAwNN4aT0DAAA/AABgwNN4aT0DAAA/AACAwFvlUD0BAMA/AABgwNN4aT0DAAA/AABgwFvlUD0BAMA/AACAwNN4aT0DAAA/AACAwCYGgT36//++AABgwCYGgT37//++AACAwNN4aT0DAAA/AABgwCYGgT37//++AABgwNN4aT0DAAA/AACAwCYGgT36//++AACAwOJPjT3//7+/AABgwOJPjT3//7+/AACAwCYGgT36//++AABgwOJPjT3//7+/AABgwCYGgT37//++AACAwOJPjT3//7+/AACAwJuZmT3//x/AAABgwJuZmT3//x/AAACAwOJPjT3//7+/AABgwJuZmT3//x/AAABgwOJPjT3//7+/AACAwJuZmT3//x/AAACAwFPjpT3//1/AAQBgwFPjpT3//1/AAACAwJuZmT3//x/AAQBgwFPjpT3//1/AAABgwJuZmT3//x/AAACAwFPjpT3//1/AAACAwNx9sz0AAJDAAQBgwPdqsz0AAJDAAACAwFPjpT3//1/AAQBgwPdqsz0AAJDAAQBgwFPjpT3//1/AAACAwNx9sz0AAJDAAQBAwCpYsz0AAJDAAQBAwC8IrD3//3/AAACAwNx9sz0AAJDAAQBAwC8IrD3//3/AAACAwC8IrD3//3/AAQBAwCpYsz0AAJDAAQAAwJAysz0AAJDAAQAAwDAIrD0AAIDAAQBAwCpYsz0AAJDAAQAAwDAIrD0AAIDAAQBAwC8IrD3//3/AAQAAwJAysz0AAJDAAgCAv+4Psz0AAJDAAQCAvzAIrD0AAIDAAQAAwJAysz0AAJDAAQCAvzAIrD0AAIDAAQAAwDAIrD0AAIDAAgCAv+4Psz0AAJDA1DRTtJLusj0AAJDALr07tDAIrD0AAIDAAgCAv+4Psz0AAJDALr07tDAIrD0AAIDAAQCAvzAIrD0AAIDA1DRTtJLusj0AAJDA/f9/P4XxsD0AAJDA/f9/P80Aqj0AAIDA1DRTtJLusj0AAJDA/f9/P80Aqj0AAIDALr07tDAIrD0AAIDA/f9/P4XxsD0AAJDA/v//P5korj0AAJDA////P9Eapz0AAIDA/f9/P4XxsD0AAJDA////P9Eapz0AAIDA/f9/P80Aqj0AAIDA/v//P5korj0AAJDA//8/QLO/qz0AAJDA//8/QJPrpD0AAIDA/v//P5korj0AAJDA//8/QJPrpD0AAIDA////P9Eapz0AAIDA//8/QLO/qz0AAJDA//9/QPV/qT0AAJDA//9/QKcKoz0AAIDA//8/QLO/qz0AAJDA//9/QKcKoz0AAIDA//8/QJPrpD0AAIDA//9/QPV/qT0AAJDA//9/QJbznD0BAGDA//9fQF3BnT0BAGDA//9/QPV/qT0AAJDA//9fQF3BnT0BAGDA//9fQNSfqj0AAJDA//9/QJbznD0BAGDAAACAQHTFkD0BACDAAABgQN5NkT0BACDA//9/QJbznD0BAGDAAABgQN5NkT0BACDA//9fQF3BnT0BAGDAAACAQHTFkD0BACDAAACAQKqZhD0BAMC/AABgQJ7ghD0BAMC/AACAQHTFkD0BACDAAABgQJ7ghD0BAMC/AABgQN5NkT0BACDAAACAQKqZhD0BAMC/AACAQHTgcD0DAAC/AABgQDzzcD0DAAC/AACAQKqZhD0BAMC/AABgQDzzcD0DAAC/AABgQJ7ghD0BAMC/AACAQHTgcD0DAAC/AACAQJyUWD36//8+AABgQPw3WD37//8+AACAQHTgcD0DAAC/AABgQPw3WD37//8+AABgQDzzcD0DAAC/AACAQJyUWD36//8+AACAQMxPQD3//78/AABgQHyPPz3//78/AACAQJyUWD36//8+AABgQHyPPz3//78/AABgQPw3WD37//8+AACAQMxPQD3//78/AACAQOETKD3//x9AAABgQLr+Jj3//x9AAACAQMxPQD3//78/AABgQLr+Jj3//x9AAABgQHyPPz3//78/AACAQOETKD3//x9AAACAQNrgDz3//19AAQBgQLWFDj3//19AAACAQOETKD3//x9AAQBgQLWFDj3//19AAABgQLr+Jj3//x9AAACAQNrgDz3//19AAACAQERw7zwAAJBAAQBgQE9Q7DwAAJBAAACAQNrgDz3//19AAQBgQE9Q7DwAAJBAAQBgQLWFDj3//19AAACAQERw7zwAAJBAAQBAQFow6TwAAJBAAQBAQA7LAD3//39AAACAQERw7zwAAJBAAQBAQA7LAD3//39AAACAQFbHAz3//39AAQBAQFow6TwAAJBAAQAAQPXv6TwAAJBAAQAAQAxgAT0AAIBAAQBAQFow6TwAAJBAAQAAQAxgAT0AAIBAAQBAQA7LAD3//39AAQAAQPXv6TwAAJBAAgCAP7kD+zwAAJBAAQCAP/xHCj0AAIBAAQAAQPXv6TwAAJBAAQCAP/xHCj0AAIBAAQAAQAxgAT0AAIBAAgCAP7kD+zwAAJBA1DRTNG8JBD0AAJBALr07NNz0ED0AAIBAAgCAP7kD+zwAAJBALr07NNz0ED0AAIBAAQCAP/xHCj0AAIBA1DRTNG8JBD0AAJBA/f9/v/XgBT0AAJBA/f9/v0RtEj0AAIBA1DRTNG8JBD0AAJBA/f9/v0RtEj0AAIBALr07NNz0ED0AAIBA/f9/v/XgBT0AAJBA/v//vwUrBz0AAJBA////v790Ez0AAIBA/f9/v/XgBT0AAJBA////v790Ez0AAIBA/f9/v0RtEj0AAIBA/v//vwUrBz0AAJBA//8/wAUrBz0AAJBA//8/wL90Ez0AAIBA/v//vwUrBz0AAJBA//8/wL90Ez0AAIBA////v790Ez0AAIBA//8/wAUrBz0AAJBA//9/wAUrBz0AAJBA//9/wL90Ez0AAIBA//8/wAUrBz0AAJBA//9/wL90Ez0AAIBA//8/wL90Ez0AAIBA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lv4c6"]
+albedo_color = Color(0.189, 0.1344, 0.084, 1)
+roughness = 0.95
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_267v0"]
+top_radius = 3.2
+bottom_radius = 3.2
+height = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ukpt7"]
+top_radius = 3.2
+bottom_radius = 3.2
+height = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iywg8"]
+top_radius = 3.2
+bottom_radius = 3.2
+height = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjlff"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ouvhx"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kq1uf"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wdbca"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hryr3"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ku3c3"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vq0tw"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_eltto"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whomq"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_um7hq"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rrkjo"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7hdkw"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gl4wv"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a0qkb"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28j7a"]
+albedo_color = Color(0.95, 0.25, 0.85, 1)
+emission_enabled = true
+emission = Color(0.95, 0.25, 0.85, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mx1ty"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58d14"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gs3ng"]
+transparency = 1
+albedo_color = Color(0.3, 0.85, 1, 0.55)
+emission_enabled = true
+emission = Color(0.3, 0.85, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3668n"]
+top_radius = 2.5
+bottom_radius = 2.5
+height = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1e01"]
+transparency = 1
+albedo_color = Color(0.3, 0.85, 1, 0.55)
+emission_enabled = true
+emission = Color(0.3, 0.85, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h7kil"]
+top_radius = 2.5
+bottom_radius = 2.5
+height = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6cwyc"]
+transparency = 1
+albedo_color = Color(0.3, 0.85, 1, 0.55)
+emission_enabled = true
+emission = Color(0.3, 0.85, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_10g0b"]
+top_radius = 2.5
+bottom_radius = 2.5
+height = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msl60"]
+cull_mode = 2
+albedo_color = Color(0.502, 0.439, 0.376, 0.42)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msj8k"]
+cull_mode = 2
+albedo_color = Color(0.439, 0.44529998, 0.4768, 0.42)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_222u4"]
+cull_mode = 2
+albedo_color = Color(0.4516, 0.46420002, 0.4138, 0.42)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pfqe1"]
+cull_mode = 2
+albedo_color = Color(0.5083, 0.4831, 0.4264, 0.42)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a74ya"]
+cull_mode = 2
+albedo_color = Color(0.4831, 0.45790002, 0.4138, 0.42)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyf1w"]
+cull_mode = 2
+albedo_color = Color(0.439, 0.4768, 0.39174998, 0.42)
+roughness = 0.95
+
+[node name="VillageV2" type="Node3D" unique_id=131252028]
+metadata/own_colliders = true
+metadata/layout_version = "v2-layout-0.3"
+metadata/layout_status = "LAYOUT_FREEZE"
+metadata/main_street_variant = "W80"
+
+[node name="Lighting" type="Node3D" parent="." unique_id=1456402511]
+
+[node name="天象系統" type="Node3D" parent="Lighting" unique_id=1615793758]
+script = ExtResource("1_og8e1")
+"時刻" = 17.2
+"一日長度分鐘" = 60.0
+"方位角" = 20.0
+"正午高度" = 90.0
+"天氣過渡秒數" = 30.0
+"星星密度" = 0.1
+"銀河強度" = 0.5
+"概念圖雲層" = ExtResource("2_jj05v")
+"概念圖雲層比例" = 0.5
+"概念圖雲層方位" = -31.0
+"概念圖雲層漂移" = 0.0
+"陰影距離" = 160.0
+
+[node name="Terrain" type="Node3D" parent="." unique_id=1095251163]
+
+[node name="MainTerrain" type="MeshInstance3D" parent="Terrain" unique_id=2063964647]
+material_override = SubResource("StandardMaterial3D_pjdsm")
+mesh = ExtResource("3_ulrmh")
+
+[node name="NorthHill" type="MeshInstance3D" parent="Terrain" unique_id=1855790013]
+material_override = SubResource("StandardMaterial3D_pjdsm")
+mesh = ExtResource("4_uiidh")
+
+[node name="FarmlandTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1566958625]
+material_override = SubResource("StandardMaterial3D_pjdsm")
+mesh = ExtResource("5_46rv4")
+
+[node name="RiverTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1857846153]
+material_override = SubResource("StandardMaterial3D_pjdsm")
+mesh = ExtResource("6_7uma7")
+
+[node name="Water" type="Node3D" parent="." unique_id=720265089]
+
+[node name="Streams" type="Node3D" parent="Water" unique_id=179600437]
+
+[node name="WestStream" type="MeshInstance3D" parent="Water/Streams" unique_id=446846312]
+material_override = SubResource("StandardMaterial3D_66ic4")
+cast_shadow = 0
+mesh = ExtResource("7_k8ton")
+metadata/label = "西側細渠"
+metadata/water_y_range = [-1.2, 8.09]
+
+[node name="Waterfalls" type="Node3D" parent="Water" unique_id=564292085]
+
+[node name="WATERFALL_B7" type="Marker3D" parent="Water/Waterfalls" unique_id=748943783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, -0.29654294, 42)
+metadata/label = "跌水（西渠）"
+metadata/src = "B7"
+metadata/conf = "medium"
+
+[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_B7" unique_id=1766147208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = SubResource("StandardMaterial3D_x87ej")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_e8xly")
+
+[node name="WATERFALL_F7" type="Marker3D" parent="Water/Waterfalls" unique_id=9848056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, -2.4108555, 70)
+metadata/label = "跌水（水車旁）"
+metadata/src = "F7"
+metadata/conf = "low"
+
+[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_F7" unique_id=354952751]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = SubResource("StandardMaterial3D_x87ej")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_mrhqo")
+
+[node name="MainRiver" type="MeshInstance3D" parent="Water" unique_id=904385798]
+material_override = SubResource("StandardMaterial3D_66ic4")
+cast_shadow = 0
+mesh = ExtResource("8_o8rwy")
+metadata/label = "主河"
+metadata/water_y = -0.8
+
+[node name="Canal" type="MeshInstance3D" parent="Water" unique_id=52430694]
+material_override = SubResource("StandardMaterial3D_66ic4")
+cast_shadow = 0
+mesh = ExtResource("9_5l8fv")
+metadata/label = "穿村水渠"
+metadata/water_y_range = [-1.6300000000000001, -1.1300000000000001]
+
+[node name="Roads" type="Node3D" parent="." unique_id=2074718932]
+
+[node name="MainStreet" type="Node3D" parent="Roads" unique_id=75991288]
+
+[node name="EntranceRoad" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=372759325]
+material_override = SubResource("StandardMaterial3D_81e8b")
+cast_shadow = 0
+mesh = ExtResource("10_301wb")
+metadata/label = "入口道路"
+metadata/width_m = 7.0
+metadata/class = "main"
+
+[node name="MainStreet" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=1193759273]
+material_override = SubResource("StandardMaterial3D_81e8b")
+cast_shadow = 0
+mesh = ExtResource("11_xhn6r")
+metadata/label = "主街"
+metadata/width_m = 7.2
+metadata/class = "main"
+
+[node name="SecondaryRoads" type="Node3D" parent="Roads" unique_id=1678895613]
+
+[node name="HillFootStreet" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=586531725]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("12_pn8m0")
+metadata/label = "丘腳街"
+metadata/width_m = 6.0
+metadata/class = "secondary"
+
+[node name="HillApproach" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1126939276]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("13_e48wv")
+metadata/label = "參道"
+metadata/width_m = 5.0
+metadata/class = "secondary"
+
+[node name="RiverNorthPath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=362291995]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("14_bfkqs")
+metadata/label = "龍神道"
+metadata/width_m = 4.0
+metadata/class = "secondary"
+
+[node name="DragonBridgeRoad" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=329557696]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("15_v32kn")
+metadata/label = "龍神橋"
+metadata/width_m = 5.0
+metadata/class = "secondary"
+
+[node name="CrossStreetMid" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=797114976]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("16_vqwgo")
+metadata/label = "中橫街"
+metadata/width_m = 6.0
+metadata/class = "secondary"
+
+[node name="CrossStreetSouth" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=799722179]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("17_ls14t")
+metadata/label = "南橫街"
+metadata/width_m = 6.0
+metadata/class = "secondary"
+
+[node name="RiversidePath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=159296034]
+material_override = SubResource("StandardMaterial3D_a6qf7")
+cast_shadow = 0
+mesh = ExtResource("18_h8hu2")
+metadata/label = "河岸小徑"
+metadata/width_m = 3.0
+metadata/class = "secondary"
+
+[node name="Alleys" type="Node3D" parent="Roads" unique_id=1270761674]
+
+[node name="WestAlley" type="MeshInstance3D" parent="Roads/Alleys" unique_id=118009653]
+material_override = SubResource("StandardMaterial3D_uxado")
+cast_shadow = 0
+mesh = ExtResource("19_je4js")
+metadata/label = "西巷"
+metadata/width_m = 3.0
+metadata/class = "alley"
+
+[node name="WestLane" type="MeshInstance3D" parent="Roads/Alleys" unique_id=299876943]
+material_override = SubResource("StandardMaterial3D_uxado")
+cast_shadow = 0
+mesh = ExtResource("20_2q6x5")
+metadata/label = "西渠巷"
+metadata/width_m = 3.0
+metadata/class = "alley"
+
+[node name="FarmPaths" type="Node3D" parent="Roads" unique_id=1412873147]
+
+[node name="FarmPath_1" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=896232466]
+material_override = SubResource("StandardMaterial3D_8o5fm")
+cast_shadow = 0
+mesh = ExtResource("21_u5kwi")
+metadata/label = "田埂道"
+metadata/width_m = 2.4
+metadata/class = "farm"
+
+[node name="FarmPath_2" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=1753549534]
+material_override = SubResource("StandardMaterial3D_8o5fm")
+cast_shadow = 0
+mesh = ExtResource("22_3egvy")
+metadata/label = "田埂道"
+metadata/width_m = 2.4
+metadata/class = "farm"
+
+[node name="FarmPath_3" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=107352616]
+material_override = SubResource("StandardMaterial3D_8o5fm")
+cast_shadow = 0
+mesh = ExtResource("23_v14w0")
+metadata/label = "田埂道"
+metadata/width_m = 2.4
+metadata/class = "farm"
+
+[node name="FarmPath_4" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=902983034]
+material_override = SubResource("StandardMaterial3D_8o5fm")
+cast_shadow = 0
+mesh = ExtResource("24_m7jwk")
+metadata/label = "田埂道"
+metadata/width_m = 2.4
+metadata/class = "farm"
+
+[node name="FarmPath_5" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=1947377811]
+material_override = SubResource("StandardMaterial3D_8o5fm")
+cast_shadow = 0
+mesh = ExtResource("25_f0h10")
+metadata/label = "田埂道"
+metadata/width_m = 2.4
+metadata/class = "farm"
+
+[node name="Bridges" type="Node3D" parent="Roads" unique_id=287915912]
+
+[node name="Bridge_01_HillFootStreet_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=1496034651]
+transform = Transform3D(-4.371139e-08, 0.10375149, 0.9946033, 0, 0.9946033, -0.10375149, -1, -4.5351216e-09, -4.347549e-08, 355.85, 0.17416409, -128)
+metadata/label = "丘腳街 × Canal"
+metadata/length_m = 15.5
+metadata/end_heights = [-0.03, 1.58]
+metadata/cross_deg = 62.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=945647036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_4gaic")
+mesh = SubResource("BoxMesh_4iojd")
+
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=382148910]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_irf7k")
+
+[node name="Bridge_02_DragonBridgeRoad_River" type="StaticBody3D" parent="Roads/Bridges" unique_id=2069625333]
+transform = Transform3D(-4.371139e-08, -0.002044372, 0.9999979, 0, 0.9999979, 0.002044372, -1, 8.936234e-11, -4.3711296e-08, 399.1, -0.18349417, -205)
+metadata/label = "龍神橋 × River"
+metadata/length_m = 41.0
+metadata/end_heights = [0.46, 0.37]
+metadata/cross_deg = 72.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=61414674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_4gaic")
+mesh = SubResource("BoxMesh_1brds")
+
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=868890358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_ge3ot")
+
+[node name="Bridge_03_CrossStreetMid_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=116553293]
+transform = Transform3D(-0.18589161, 0.023246467, 0.9822952, 0, 0.9997201, -0.023658834, -0.98257023, -0.004397979, -0.18583958, 335.91876, -0.5416392, -33.98463)
+metadata/label = "中橫街 × Canal"
+metadata/length_m = 15.0
+metadata/end_heights = [-0.12, 0.24]
+metadata/cross_deg = 75.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=752751450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_4gaic")
+mesh = SubResource("BoxMesh_btvvr")
+
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=1427233657]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_3hih8")
+
+[node name="Bridge_04_CrossStreetSouth_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=1622783]
+transform = Transform3D(-0.037011676, 9.7824086e-05, 0.99931484, 0, 1, -9.7891156e-05, -0.99931484, -3.6231156e-06, -0.037011676, 321.0566, -0.26418024, 41.88679)
+metadata/label = "南橫街 × Canal"
+metadata/length_m = 14.0
+metadata/end_heights = [0.34, 0.34]
+metadata/cross_deg = 61.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=494785780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_4gaic")
+mesh = SubResource("BoxMesh_el3lf")
+
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=761282248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_the06")
+
+[node name="Bridge_05_WestLane_WestStream" type="StaticBody3D" parent="Roads/Bridges" unique_id=1575455975]
+transform = Transform3D(0.29408586, -0.0016838071, -0.9557775, 0, 0.99999845, -0.0017617118, 0.955779, 0.0005180945, 0.2940854, 159.88388, 0.4116183, -10.271968)
+metadata/label = "西渠巷 × WestStream"
+metadata/length_m = 11.5
+metadata/end_heights = [1.0, 1.02]
+metadata/cross_deg = 53.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=1675241792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_4gaic")
+mesh = SubResource("BoxMesh_26neb")
+
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=1795681674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_7clkb")
+
+[node name="Districts" type="Node3D" parent="." unique_id=756884425]
+
+[node name="Market" type="Node3D" parent="Districts" unique_id=1738704392]
+metadata/label = "市集"
+metadata/src = "區域圖橙色 C-F 列4-9；底圖主街兩側店面 E4-E6、南段 C7-E7"
+metadata/conf = "medium"
+metadata/kind = "built"
+
+[node name="MixedCommercial" type="Node3D" parent="Districts" unique_id=2082132919]
+metadata/label = "住商混合"
+metadata/src = "區域圖藍色 D-H 列2-5（主街北段、丘腳、往龍神像）"
+metadata/conf = "medium"
+metadata/kind = "built"
+
+[node name="ResidentialWest" type="Node3D" parent="Districts" unique_id=570102072]
+metadata/label = "西住宅區"
+metadata/src = "區域圖綠色 A-E 列1-9；底圖住宅＋庭園水道 B4-D7、西北疏村 B2-D3"
+metadata/conf = "medium"
+metadata/kind = "built"
+
+[node name="ResidentialNE" type="Node3D" parent="Districts" unique_id=1224625716]
+metadata/label = "東北住宅區"
+metadata/src = "區域圖綠色 G-J 列1-4；與底圖 I1-J3 森林衝突（底圖優先，縮小成龍神橋東側小聚落）"
+metadata/conf = "low"
+metadata/kind = "built"
+
+[node name="MansionEstate" type="Node3D" parent="Districts" unique_id=731843675]
+metadata/label = "大宅庭園"
+metadata/src = "底圖華麗大宅 H5-H6，庭園延至 G6-H7"
+metadata/conf = "medium"
+metadata/kind = "built"
+
+[node name="SouthGate" type="Node3D" parent="Districts" unique_id=1284070583]
+metadata/label = "南入口"
+metadata/src = "大鳥居 D9、入口道路 C10-D10"
+metadata/conf = "high"
+metadata/kind = "built"
+
+[node name="FarmlandEast" type="Node3D" parent="Districts" unique_id=1432055430]
+metadata/label = "東農田"
+metadata/src = "區域圖米白 F-J 列3-10；底圖田格 H3-J8 最清楚"
+metadata/conf = "medium"
+metadata/kind = "farm"
+
+[node name="NorthHill" type="Node3D" parent="Districts" unique_id=658647043]
+metadata/label = "北丘（林丘社寺）"
+metadata/src = "林丘 D1-F3；山頂主殿 E1-E2；左肩／右側次峰（參道鳥居稜）／右長肩降到河谷"
+
+[node name="Riverside" type="Node3D" parent="Districts" unique_id=1329324121]
+metadata/label = "河岸帶（主河兩岸 6 m 內；尚未分配用途）"
+
+[node name="Landmarks" type="Node3D" parent="." unique_id=519989252]
+
+[node name="LANDMARK_SOUTH_GATE" type="Node3D" parent="Landmarks" unique_id=895055843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 0.2517165, 100)
+metadata/label = "大鳥居"
+metadata/src = "D9"
+metadata/conf = "high"
+metadata/placeholder = true
+
+[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE" unique_id=1939375847]
+
+[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=2090819167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=1884931973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_mmpmm")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=71248465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_cawio")
+
+[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1652351108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=838026233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_obgbt")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=528579096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_8xnir")
+
+[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1183148902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Kasagi" unique_id=1861207191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+material_override = SubResource("StandardMaterial3D_ubk13")
+mesh = SubResource("BoxMesh_b5rnd")
+
+[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=2050997899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Nuki" unique_id=1286771160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_lju6y")
+
+[node name="LANDMARK_NORTH_HILL" type="Node3D" parent="Landmarks" unique_id=1131652345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 34.166138, -228)
+metadata/label = "山頂社殿"
+metadata/src = "E1-E2"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_NORTH_HILL" unique_id=324706895]
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=117807035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+material_override = SubResource("StandardMaterial3D_koln5")
+mesh = SubResource("BoxMesh_2et7s")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=658256804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+shape = SubResource("BoxShape3D_hjym7")
+
+[node name="LANDMARK_HILL_TORII" type="Node3D" parent="Landmarks" unique_id=887570864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.6, 0.9334475, -166)
+metadata/label = "參道鳥居"
+metadata/src = "E2"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII" unique_id=547690729]
+transform = Transform3D(0.92718387, 0, 0.37460658, 0, 1, 0, -0.37460658, 0, 0.92718387, 0, 0, 0)
+
+[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=708172759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=1137542134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_vuolb")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=1681205146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_6by1g")
+
+[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=596860093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=697169599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_fh7a3")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=73241136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_1qu6k")
+
+[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=1096748993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Kasagi" unique_id=1385159618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
+material_override = SubResource("StandardMaterial3D_ubk13")
+mesh = SubResource("BoxMesh_kx6bf")
+
+[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=219737072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.68, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Nuki" unique_id=1784911950]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1925, 0)
+material_override = SubResource("StandardMaterial3D_4u7kf")
+mesh = SubResource("BoxMesh_kunsi")
+
+[node name="LANDMARK_HILLFOOT_TEMPLE" type="Node3D" parent="Landmarks" unique_id=813224750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 228, 1.1980519, -170)
+metadata/label = "丘腳社寺"
+metadata/src = "D3-E3"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" unique_id=1271441979]
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=2104878643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+material_override = SubResource("StandardMaterial3D_koln5")
+mesh = SubResource("BoxMesh_ofsgo")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=918840853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+shape = SubResource("BoxShape3D_45t0k")
+
+[node name="LANDMARK_DRAGON" type="Node3D" parent="Landmarks" unique_id=1629536427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, -0.16943625, -188)
+metadata/label = "龍神像"
+metadata/src = "H2-H3（主河西岸、取水口北側）"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Base" type="StaticBody3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=81410890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+metadata/top_y = 2.5
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=1512824390]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8347181, 0)
+material_override = SubResource("StandardMaterial3D_v2e8s")
+mesh = SubResource("BoxMesh_1k02i")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=750952334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8347181, 0)
+shape = SubResource("BoxShape3D_8flbn")
+
+[node name="Statue" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=1395926482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.669436, 0)
+material_override = SubResource("StandardMaterial3D_vfmoe")
+mesh = SubResource("CylinderMesh_m3l3u")
+
+[node name="LANDMARK_TERAKOYA" type="Node3D" parent="Landmarks" unique_id=1630862787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188, 0.756, 24)
+metadata/label = "寺院式大屋（寺子屋候補）"
+metadata/src = "C6-D7 寺院式大屋頂；指定為寺子屋＝候補"
+metadata/conf = "low"
+metadata/placeholder = true
+metadata/display = "wire"
+metadata/footprint_m = [22.0, 16.0]
+metadata/height_m = 11.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=467416506]
+material_override = SubResource("StandardMaterial3D_7gbj2")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_k0kcc")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=278226569]
+material_override = SubResource("StandardMaterial3D_7gbj2")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_7h4qo")
+metadata/footprint_m = [22.0, 16.0]
+
+[node name="LANDMARK_TOWER" type="Node3D" parent="Landmarks" unique_id=790922248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.504, 66)
+metadata/label = "樓閣（火見櫓候補）"
+metadata/src = "E7-E8 多層塔式建築"
+metadata/conf = "low"
+metadata/placeholder = true
+
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_TOWER" unique_id=821091238]
+
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=1001331828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+material_override = SubResource("StandardMaterial3D_uf5ow")
+mesh = SubResource("BoxMesh_sk0ni")
+
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=9435540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+shape = SubResource("BoxShape3D_6kerd")
+
+[node name="LANDMARK_HIEDA" type="Node3D" parent="Landmarks" unique_id=1036431762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 1.14, -40)
+metadata/label = "華麗大宅（稗田邸候補）"
+metadata/src = "H5-H6 獨立庭園大宅；稗田邸東側候選位置，只留 footprint／quest anchor，P4 Full Greybox 再裁示（2026-09-23 裁示）"
+metadata/conf = "low"
+metadata/placeholder = true
+metadata/status = "PROVISIONAL"
+metadata/display = "wire"
+metadata/footprint_m = [28.0, 18.0]
+metadata/height_m = 9.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=1008566656]
+material_override = SubResource("StandardMaterial3D_ex2d1")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_0w21f")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=569964700]
+material_override = SubResource("StandardMaterial3D_ex2d1")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_gija5")
+metadata/footprint_m = [28.0, 18.0]
+
+[node name="LANDMARK_HIEDA_GATE" type="Node3D" parent="Landmarks" unique_id=1061809469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, -0.06867742, -10)
+metadata/label = "大宅門"
+metadata/src = "H6-G7 紅色曲頂門；隨稗田邸 PROVISIONAL"
+metadata/conf = "medium"
+metadata/placeholder = true
+metadata/status = "PROVISIONAL"
+metadata/display = "wire"
+metadata/footprint_m = [7.0, 2.0]
+metadata/height_m = 5.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=1237982092]
+material_override = SubResource("StandardMaterial3D_f7i0t")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_at11v")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=415515397]
+material_override = SubResource("StandardMaterial3D_f7i0t")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_vmchg")
+metadata/footprint_m = [7.0, 2.0]
+
+[node name="LANDMARK_SUZUNAAN" type="Node3D" parent="Landmarks" unique_id=815902229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 247.8, 0.936, -6)
+metadata/label = "鈴奈庵（候補）"
+metadata/src = "市集主街西側（概念圖無標示）"
+metadata/conf = "low"
+metadata/placeholder = true
+metadata/display = "wire"
+metadata/footprint_m = [10.0, 9.0]
+metadata/height_m = 7.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=97025893]
+material_override = SubResource("StandardMaterial3D_u1lp1")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_sjhf7")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=544343000]
+material_override = SubResource("StandardMaterial3D_u1lp1")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_evcs3")
+metadata/footprint_m = [10.0, 9.0]
+
+[node name="LANDMARK_GEIDONTEI" type="Node3D" parent="Landmarks" unique_id=1953637898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 284.6, 1.272, -62)
+metadata/label = "鯢吞亭（候補）"
+metadata/src = "市集主街東側（概念圖無標示）"
+metadata/conf = "low"
+metadata/placeholder = true
+metadata/display = "wire"
+metadata/footprint_m = [12.0, 10.0]
+metadata/height_m = 8.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=1651480530]
+material_override = SubResource("StandardMaterial3D_qgjb5")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_twq70")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=1706412687]
+material_override = SubResource("StandardMaterial3D_qgjb5")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_aggah")
+metadata/footprint_m = [12.0, 10.0]
+
+[node name="LANDMARK_KIRISAME" type="Node3D" parent="Landmarks" unique_id=837289392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 229.7, 0.528, 62)
+metadata/label = "霧雨店（候補）"
+metadata/src = "市集南段主街西側（概念圖無標示）"
+metadata/conf = "low"
+metadata/placeholder = true
+metadata/display = "wire"
+metadata/footprint_m = [9.0, 8.0]
+metadata/height_m = 7.0
+
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=1043811486]
+material_override = SubResource("StandardMaterial3D_lhsts")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_agdx1")
+metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
+
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=1060744929]
+material_override = SubResource("StandardMaterial3D_lhsts")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_ptic7")
+metadata/footprint_m = [9.0, 8.0]
+
+[node name="LANDMARK_WATERWHEEL_1" type="Node3D" parent="Landmarks" unique_id=536787609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, -1.4659108, -52)
+metadata/label = "水車"
+metadata/src = "F5-F7 水渠西岸水車群"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_1" unique_id=1710725035]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
+material_override = SubResource("StandardMaterial3D_lv4c6")
+mesh = SubResource("CylinderMesh_267v0")
+
+[node name="LANDMARK_WATERWHEEL_2" type="Node3D" parent="Landmarks" unique_id=2133454557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, -1.8864717, 0)
+metadata/label = "水車"
+metadata/src = "F5-F7"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_2" unique_id=826055348]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
+material_override = SubResource("StandardMaterial3D_lv4c6")
+mesh = SubResource("CylinderMesh_ukpt7")
+
+[node name="LANDMARK_WATERWHEEL_3" type="Node3D" parent="Landmarks" unique_id=957951495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, -2.1553032, 58)
+metadata/label = "水車"
+metadata/src = "F5-F7"
+metadata/conf = "medium"
+metadata/placeholder = true
+
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_3" unique_id=1910868486]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
+material_override = SubResource("StandardMaterial3D_lv4c6")
+mesh = SubResource("CylinderMesh_iywg8")
+
+[node name="QuestAnchors" type="Node3D" parent="." unique_id=1963173194]
+
+[node name="human_village_gate" type="Marker3D" parent="QuestAnchors" unique_id=1092444232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 0.1976301, 110)
+metadata/label = "人間之里"
+metadata/old_slice = [234.0, 101.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/human_village_gate" unique_id=478094017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_rjlff")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ouvhx")
+
+[node name="gatekeeper_gate" type="Marker3D" parent="QuestAnchors" unique_id=335441353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.5, 0.29196495, 98)
+metadata/label = "村門的守衛"
+metadata/old_slice = [240.0, 92.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/gatekeeper_gate" unique_id=2116775530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_kq1uf")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_wdbca")
+
+[node name="village_temple_school" type="Marker3D" parent="QuestAnchors" unique_id=561030457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.756, 24)
+metadata/label = "寺子屋"
+metadata/old_slice = [305.0, 42.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/village_temple_school" unique_id=1670131312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_hryr3")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ku3c3")
+
+[node name="keine_first" type="Marker3D" parent="QuestAnchors" unique_id=1300428766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.75433534, 30)
+metadata/label = "寺子屋的慧音"
+metadata/old_slice = [315.0, 47.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_first" unique_id=404745818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_vq0tw")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_eltto")
+
+[node name="keine_verdict" type="Marker3D" parent="QuestAnchors" unique_id=1289122496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.75433534, 30)
+metadata/label = "寺子屋（裁定）"
+metadata/old_slice = [315.0, 47.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_verdict" unique_id=154971282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_whomq")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_um7hq")
+
+[node name="kosuzu_lending" type="Marker3D" parent="QuestAnchors" unique_id=352944404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 253.5, 0.92910004, -6)
+metadata/label = "鈴奈庵"
+metadata/old_slice = [236.0, -68.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/kosuzu_lending" unique_id=1363473683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_rrkjo")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_7hdkw")
+
+[node name="akyuu_record" type="Marker3D" parent="QuestAnchors" unique_id=1330688514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, -0.2, -4)
+metadata/label = "稗田邸"
+metadata/old_slice = [233.0, -122.0]
+metadata/status = "PROVISIONAL"
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/akyuu_record" unique_id=2077447556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_gl4wv")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_a0qkb")
+
+[node name="inn_room" type="Marker3D" parent="QuestAnchors" unique_id=952267635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278.5, 1.2784402, -62)
+metadata/label = "鯢吞亭"
+metadata/old_slice = [213.0, -82.0]
+
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/inn_room" unique_id=2014787432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_28j7a")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_mx1ty")
+
+[node name="Vegetation" type="Node3D" parent="." unique_id=1731219390]
+
+[node name="Forest_SouthW" type="MeshInstance3D" parent="Vegetation" unique_id=1936897003]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("26_iqcbk")
+metadata/label = "南林（西）"
+metadata/src = "A8-D10（入口道路切開）"
+metadata/conf = "high"
+metadata/area_m2 = 18816.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Forest_SouthE" type="MeshInstance3D" parent="Vegetation" unique_id=1715519819]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("27_gx66h")
+metadata/label = "南林（東）"
+metadata/src = "E8-J10；水渠南段隱入此林"
+metadata/conf = "medium"
+metadata/area_m2 = 21408.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Forest_West" type="MeshInstance3D" parent="Vegetation" unique_id=244642866]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("28_pdbju")
+metadata/label = "西林／竹林"
+metadata/src = "A2-B9"
+metadata/conf = "high"
+metadata/area_m2 = 44448.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Forest_NorthW" type="MeshInstance3D" parent="Vegetation" unique_id=418129865]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("29_bwlqh")
+metadata/label = "北山林（西）"
+metadata/src = "A1-G2"
+metadata/conf = "high"
+metadata/area_m2 = 21712.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Forest_NorthE" type="MeshInstance3D" parent="Vegetation" unique_id=1632789569]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("30_vimvh")
+metadata/label = "北山林（東）"
+metadata/src = "I1-J3"
+metadata/conf = "medium"
+metadata/area_m2 = 15472.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Forest_HillCrown" type="MeshInstance3D" parent="Vegetation" unique_id=1313749592]
+material_override = SubResource("StandardMaterial3D_58d14")
+mesh = ExtResource("31_q0w0m")
+metadata/label = "北丘林冠"
+metadata/src = "林丘 D1-F3"
+metadata/conf = "medium"
+metadata/area_m2 = 12912.0
+metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
+
+[node name="Props" type="Node3D" parent="." unique_id=1104162781]
+
+[node name="Collision" type="Node3D" parent="." unique_id=1070926274]
+
+[node name="TerrainCollision" type="StaticBody3D" parent="Collision" unique_id=350536725]
+
+[node name="Shape" type="CollisionShape3D" parent="Collision/TerrainCollision" unique_id=2084502099]
+shape = ExtResource("32_erbdm")
+
+[node name="Navigation" type="Node3D" parent="." unique_id=854646601]
+
+[node name="Portals" type="Node3D" parent="." unique_id=1560957850]
+
+[node name="PORTAL_TRAIL" type="Marker3D" parent="Portals" unique_id=610096204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224, 0.21684733, 172)
+metadata/target = "trail"
+metadata/label = "→ 獸道"
+metadata/src = "C10-D10 入口道路南端"
+metadata/conf = "high"
+
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_TRAIL" unique_id=1770463513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_gs3ng")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_3668n")
+
+[node name="PORTAL_HIEDA1F" type="Marker3D" parent="Portals" unique_id=1373756203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, -0.2, 2)
+metadata/target = "hieda1f"
+metadata/label = "→ 稗田邸"
+metadata/src = "隨稗田邸候補（low）"
+metadata/conf = "low"
+metadata/status = "PROVISIONAL"
+
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_HIEDA1F" unique_id=1858797052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_f1e01")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_h7kil")
+
+[node name="PORTAL_KOURINDOU" type="Marker3D" parent="Portals" unique_id=1427290765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 428, 0.65896887, -205)
+metadata/target = "kourindou"
+metadata/label = "→ 香霖堂"
+metadata/src = "龍神橋東端（舊 slice 亦在龍石像橋東岸）"
+metadata/conf = "medium"
+
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_KOURINDOU" unique_id=1924669802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_6cwyc")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_10g0b")
+
+[node name="Debug" type="Node3D" parent="." unique_id=1985531711]
+metadata/note = "LAYOUT_PROTOTYPE：只有 placeholder。座標來源 maps/village_v2/layout_v2.json"
+
+[node name="Labels" type="Node3D" parent="Debug" unique_id=974340419]
+
+[node name="MainRiver_Label" type="Label3D" parent="Debug/Labels" unique_id=961971831]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 385, 17.2, -256)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.12
+billboard = 1
+modulate = Color(0.7, 0.9, 1, 1)
+text = "主河"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="Canal_Label" type="Label3D" parent="Debug/Labels" unique_id=312398109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334, 14, -10)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.1
+billboard = 1
+modulate = Color(0.7, 0.9, 1, 1)
+text = "穿村水渠"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="WATERFALL_B7_Label" type="Label3D" parent="Debug/Labels" unique_id=34798079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, 4.203457, 42)
+visibility_range_end = 120.0
+pixel_size = 0.02
+billboard = 1
+text = "跌水（placeholder）"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="WATERFALL_F7_Label" type="Label3D" parent="Debug/Labels" unique_id=1439278569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 2.0891445, 70)
+visibility_range_end = 120.0
+pixel_size = 0.02
+billboard = 1
+text = "跌水（placeholder）"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="Market_Label" type="Label3D" parent="Debug/Labels" unique_id=1214976638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 262, 30.9606, -9)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "市集"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="MixedCommercial_Label" type="Label3D" parent="Debug/Labels" unique_id=1945592144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.63635, 31.674713, -130.90909)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "住商混合"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="ResidentialWest_Label" type="Label3D" parent="Debug/Labels" unique_id=670018648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.85715, 31.296, -66)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "西住宅區"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="ResidentialNE_Label" type="Label3D" parent="Debug/Labels" unique_id=2123508238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 463.66666, 32.125, -204.16667)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "東北住宅區"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="MansionEstate_Label" type="Label3D" parent="Debug/Labels" unique_id=1357211926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 31.14, -36)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "大宅庭園"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="SouthGate_Label" type="Label3D" parent="Debug/Labels" unique_id=325404969]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 178, 30.697687, 150)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "南入口"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="FarmlandEast_Label" type="Label3D" parent="Debug/Labels" unique_id=500334982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 470, 29.8, 40)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "東農田"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="NorthHill_Label" type="Label3D" parent="Debug/Labels" unique_id=439909304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 68.16614, -256)
+visibility_range_begin = 260.0
+visibility_range_end = 1400.0
+pixel_size = 0.16
+billboard = 1
+text = "北丘（林丘社寺）"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="LANDMARK_SOUTH_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=648044213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 14.051717, 100)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "大鳥居
+LANDMARK_SOUTH_GATE"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_NORTH_HILL_Label" type="Label3D" parent="Debug/Labels" unique_id=1762236282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 46.166138, -228)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "山頂社殿
+LANDMARK_NORTH_HILL"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_HILL_TORII_Label" type="Label3D" parent="Debug/Labels" unique_id=401745706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.6, 10.493448, -166)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "參道鳥居
+LANDMARK_HILL_TORII"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_HILLFOOT_TEMPLE_Label" type="Label3D" parent="Debug/Labels" unique_id=1379132086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 228, 13.198051, -170)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "丘腳社寺
+LANDMARK_HILLFOOT_TEMPLE"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_DRAGON_Label" type="Label3D" parent="Debug/Labels" unique_id=552092511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, 17.5, -188)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "龍神像
+LANDMARK_DRAGON"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_TERAKOYA_Label" type="Label3D" parent="Debug/Labels" unique_id=1196539175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188, 14.756, 24)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "寺院式大屋（寺子屋候補）
+LANDMARK_TERAKOYA"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_TOWER_Label" type="Label3D" parent="Debug/Labels" unique_id=360441475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 21.504, 66)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "樓閣（火見櫓候補）
+LANDMARK_TOWER"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_HIEDA_Label" type="Label3D" parent="Debug/Labels" unique_id=2052343439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 13.14, -40)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "華麗大宅（稗田邸候補）
+LANDMARK_HIEDA"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_HIEDA_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=428307726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 7.9313226, -10)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "大宅門
+LANDMARK_HIEDA_GATE"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_SUZUNAAN_Label" type="Label3D" parent="Debug/Labels" unique_id=1435044978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 247.8, 10.936, -6)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "鈴奈庵（候補）
+LANDMARK_SUZUNAAN"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_GEIDONTEI_Label" type="Label3D" parent="Debug/Labels" unique_id=628436603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 284.6, 12.272, -62)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "鯢吞亭（候補）
+LANDMARK_GEIDONTEI"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_KIRISAME_Label" type="Label3D" parent="Debug/Labels" unique_id=1427133955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 229.7, 10.528, 62)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "霧雨店（候補）
+LANDMARK_KIRISAME"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_WATERWHEEL_1_Label" type="Label3D" parent="Debug/Labels" unique_id=368771995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, 6.654089, -52)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "水車
+LANDMARK_WATERWHEEL_1"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_WATERWHEEL_2_Label" type="Label3D" parent="Debug/Labels" unique_id=1149851641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, 6.233528, 0)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "水車
+LANDMARK_WATERWHEEL_2"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="LANDMARK_WATERWHEEL_3_Label" type="Label3D" parent="Debug/Labels" unique_id=71217385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, 5.964697, 58)
+visibility_range_end = 300.0
+pixel_size = 0.035
+billboard = 1
+modulate = Color(1, 0.95, 0.75, 1)
+text = "水車
+LANDMARK_WATERWHEEL_3"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="human_village_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=661626451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 3.5976303, 110)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 人間之里"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="gatekeeper_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=534197341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.5, 3.691965, 98)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 村門的守衛"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="village_temple_school_Label" type="Label3D" parent="Debug/Labels" unique_id=21422553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.156, 24)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 寺子屋"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="keine_first_Label" type="Label3D" parent="Debug/Labels" unique_id=1848914603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.1543355, 30)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 寺子屋的慧音"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="keine_verdict_Label" type="Label3D" parent="Debug/Labels" unique_id=304331702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.1543355, 30)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 寺子屋（裁定）"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="kosuzu_lending_Label" type="Label3D" parent="Debug/Labels" unique_id=2031279513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 253.5, 4.3291, -6)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 鈴奈庵"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="akyuu_record_Label" type="Label3D" parent="Debug/Labels" unique_id=1331389713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 3.2, -4)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 稗田邸"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="inn_room_Label" type="Label3D" parent="Debug/Labels" unique_id=535256580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278.5, 4.67844, -62)
+visibility_range_end = 140.0
+pixel_size = 0.012
+billboard = 1
+modulate = Color(1, 0.7, 0.95, 1)
+text = "◆ 鯢吞亭"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="PORTAL_TRAIL_Label" type="Label3D" parent="Debug/Labels" unique_id=1661402577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224, 3.2168474, 172)
+visibility_range_end = 160.0
+pixel_size = 0.014
+billboard = 1
+modulate = Color(0.6, 0.95, 1, 1)
+text = "⇄ → 獸道"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="PORTAL_HIEDA1F_Label" type="Label3D" parent="Debug/Labels" unique_id=864516925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 2.8, 2)
+visibility_range_end = 160.0
+pixel_size = 0.014
+billboard = 1
+modulate = Color(0.6, 0.95, 1, 1)
+text = "⇄ → 稗田邸"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="PORTAL_KOURINDOU_Label" type="Label3D" parent="Debug/Labels" unique_id=170626113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 428, 3.658969, -205)
+visibility_range_end = 160.0
+pixel_size = 0.014
+billboard = 1
+modulate = Color(0.6, 0.95, 1, 1)
+text = "⇄ → 香霖堂"
+font = ExtResource("33_c1l3d")
+font_size = 96
+outline_size = 16
+
+[node name="Debug_Label" type="Label3D" parent="Debug/Labels" unique_id=479514378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 525, 70, -315)
+visibility_range_begin = 300.0
+visibility_range_end = 2000.0
+pixel_size = 0.3
+billboard = 1
+text = "北 N ↑"
+font = ExtResource("33_c1l3d")
+font_size = 128
+outline_size = 21
+
+[node name="DistrictOutlines" type="Node3D" parent="Debug" unique_id=1527723686]
+
+[node name="Market" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1456201018]
+material_override = SubResource("StandardMaterial3D_msl60")
+cast_shadow = 0
+mesh = ExtResource("34_u5bgj")
+
+[node name="MixedCommercial" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=225963307]
+material_override = SubResource("StandardMaterial3D_msj8k")
+cast_shadow = 0
+mesh = ExtResource("35_w5u34")
+
+[node name="ResidentialWest" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=168616180]
+material_override = SubResource("StandardMaterial3D_222u4")
+cast_shadow = 0
+mesh = ExtResource("36_eimln")
+
+[node name="ResidentialNE" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=199123412]
+material_override = SubResource("StandardMaterial3D_222u4")
+cast_shadow = 0
+mesh = ExtResource("37_jmrhy")
+
+[node name="MansionEstate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1997112602]
+material_override = SubResource("StandardMaterial3D_pfqe1")
+cast_shadow = 0
+mesh = ExtResource("38_qg25e")
+
+[node name="SouthGate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=487966014]
+material_override = SubResource("StandardMaterial3D_a74ya")
+cast_shadow = 0
+mesh = ExtResource("39_ms1id")
+
+[node name="Farmland" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=2008129563]
+material_override = SubResource("StandardMaterial3D_iyf1w")
+cast_shadow = 0
+mesh = ExtResource("40_71ail")

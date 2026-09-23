@@ -1,27 +1,40 @@
 {
   "schema_version": 1,
-  "contract_version": "0.3.0",
-  "status": "LAYOUT_PROTOTYPE",
+  "contract_version": "0.4.0",
+  "status": "LAYOUT_FREEZE",
   "approval": {
-    "layout_approved": false,
-    "approved_by": null,
-    "approved_at": null
+    "layout_approved": true,
+    "approved_by": "user",
+    "approved_at": "2026-09-24",
+    "phase": "P0 Reference / Layout (complete)",
+    "next_phase": "P1 Terrain",
+    "approved_layout": "godot/maps/village_v2/layout_v2.json",
+    "approved_layout_version": "v2-layout-0.3",
+    "main_street": "W80, full width 7.20 m",
+    "frozen_sha256": "88eee8a183105cdd3ae7c57430fdaf4a523c7c628f6da9b632ec8f89d3a1c4ff",
+    "freeze_module": "godot/tools/village_v2_freeze.gd",
+    "freeze_test": "godot/tools/verify_village_v2_freeze.gd",
+    "review_evidence": "docs/art_review/village_v2_r3/",
+    "coordinate_source": "All world coordinates live only in layout_v2.json. This contract records topology, rulings and the freeze; it does not duplicate coordinates, so concept_position/world_position stay null.",
+    "per_entry_flags": "LAYOUT_APPROVED covers every anchor, zone, water element and sightline below; their approved flags were set true at the freeze.",
+    "unfreeze_rule": "The frozen Macro Layout changes only for a measured, reproducible gameplay or terrain blocker, and only after the user re-reviews it."
   },
   "authority": {
-    "primary_image": "docs/reference/人間之里概念圖/村落農村概念俯視.png",
-    "zoning_image": "docs/reference/人間之里概念圖/村落農村概念俯視區域分隔.png",
+    "primary_image": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/村落農村概念俯視.png",
+    "zoning_image": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/村落農村概念俯視區域分隔.png",
     "image_dimensions_px": [
       1672,
       941
     ],
-    "rule": "Images are authoritative; text is an index only."
+    "rule": "Images are authoritative; text is an index only.",
+    "path_note": "Moved from docs/reference/人間之里概念圖/ on 2026-09-23; same image bytes (git blob ece66576 / 62c97d3d)."
   },
   "calibration": {
-    "state": "uncalibrated",
+    "state": "superseded_by_approved_layout",
     "concept_is_orthographic": false,
     "concept_to_world_transform": null,
-    "fixed_godot_camera": null,
-    "note": "The source is an oblique aerial illustration. Pixel positions must not be treated as exact world coordinates."
+    "fixed_godot_camera": "godot/tools/shots/village_v2_fixed_shots.json (7 shots, vertical FOV 75°, 1152×648; generated from layout_v2.json review_shots)",
+    "note": "The source is an oblique aerial illustration, so no pixel-to-world transform was derived. World coordinates were placed from the concept grid, reviewed through the fixed Godot cameras, and frozen in layout_v2.json v2-layout-0.3."
   },
   "anchors": {
     "south_grand_torii": {
@@ -30,7 +43,7 @@
       "world_position": null,
       "confidence": "high",
       "evidence": "visible in primary image; marks the south end of the principal approach",
-      "approved": false
+      "approved": true
     },
     "market_main_street": {
       "role": "the village spine: one continuous street from the south grand torii to the dragon-statue bridge; buildings and market stalls line BOTH sides along its whole length",
@@ -38,7 +51,7 @@
       "world_path": null,
       "confidence": "high",
       "evidence": "user ruling 2026-08-31 (v0.3): market is not a separate block; it is the frontage of the spine street",
-      "approved": false
+      "approved": true
     },
     "north_forested_shrine_hill": {
       "role": "northern forested shrine; reached by a small lane out of the commercial belt, or by a long loop around to the back",
@@ -59,7 +72,7 @@
       "is_main_street_terminus": false,
       "confidence": "high",
       "evidence": "user ruling 2026-08-31 (v0.3)",
-      "approved": false
+      "approved": true
     },
     "northeast_dragon_statue": {
       "role": "distant northeast water landmark",
@@ -67,7 +80,7 @@
       "world_position": null,
       "confidence": "high",
       "evidence": "statue stands on a platform or island within the northeast water system",
-      "approved": false
+      "approved": true
     },
     "dragon_statue_bridge": {
       "role": "eastern terminus of the market main street; crossing to the dragon statue",
@@ -75,7 +88,7 @@
       "world_position": null,
       "confidence": "high",
       "evidence": "user ruling 2026-08-31",
-      "approved": false
+      "approved": true
     }
   },
   "zones": {
@@ -91,7 +104,7 @@
       "density": "highest in the village",
       "confidence": "high",
       "evidence": "user ruling 2026-08-31 (v0.3)",
-      "approved": false
+      "approved": true
     },
     "residential_west": {
       "relative_location": "WEST of the spine street, between the street frontage and the western forest",
@@ -103,7 +116,7 @@
       "density_gradient": "dense near street, sparse toward forest",
       "confidence": "high",
       "evidence": "user ruling 2026-08-31 (v0.3): left side = residential + small channel branches",
-      "approved": false
+      "approved": true
     },
     "farmland_east": {
       "relative_location": "EAST of the spine street, inside the main-river bend",
@@ -112,7 +125,7 @@
       "openness": "large continuous open field grid",
       "confidence": "high",
       "evidence": "user ruling 2026-08-31: farmland on the right is correct",
-      "approved": false
+      "approved": true
     },
     "dense_forest": {
       "relative_location": "north belt, west slopes, south foreground",
@@ -120,14 +133,14 @@
       "polygon_world": null,
       "canopy": "overlapping continuous masses",
       "confidence": "high",
-      "approved": false
+      "approved": true
     },
     "sparse_forest_edge": {
       "relative_location": "transition between residential west and dense forest",
       "polygon_concept": null,
       "polygon_world": null,
       "confidence": "medium",
-      "approved": false
+      "approved": true
     }
   },
   "water_system": {
@@ -136,7 +149,7 @@
       "concept_path": null,
       "world_path": null,
       "confidence": "high",
-      "approved": false
+      "approved": true
     },
     "west_channel_branches": {
       "relative_location": "small channels descending from the western forest THROUGH the residential zone",
@@ -144,14 +157,14 @@
       "world_paths": null,
       "confidence": "high",
       "evidence": "user ruling 2026-08-31 (v0.3): left side has residential plus small channel branches",
-      "approved": false
+      "approved": true
     },
     "east_boundary_channel": {
       "relative_location": "between the street frontage belt and the farmland",
       "concept_paths": null,
       "world_paths": null,
       "confidence": "medium",
-      "approved": false
+      "approved": true
     }
   },
   "required_relations": [
@@ -218,19 +231,19 @@
       "from": "south_grand_torii",
       "to": "market_main_street",
       "purpose": "principal arrival composition",
-      "approved": false
+      "approved": true
     },
     {
       "from": "market_main_street",
       "to": "dragon_statue_bridge",
       "purpose": "main-street visual terminus (user ruling 2026-08-31)",
-      "approved": false
+      "approved": true
     },
     {
       "from": "village_east_edge",
       "to": "farmland_east",
       "purpose": "open-field release after dense village streets",
-      "approved": false
+      "approved": true
     }
   ],
   "known_deliberate_deviations": [
@@ -238,21 +251,12 @@
       "id": "current_slice_u_river",
       "scope": "existing slice prototype only",
       "description": "The current slice U-shaped river came from a separate 2026-08-26 user ruling and is not derived from the authoritative overview image.",
-      "carry_into_new_layout": "unresolved",
-      "note": "Do not silently preserve or remove it. A concept-faithful blockout must show the conflict for Human Layout Review."
+      "carry_into_new_layout": "no",
+      "note": "2026-09-23 ruling: V2 uses the concept river system (wide northeast river plus the canal east of the market), not the U-shaped river. slice keeps its own river until V2 replaces it."
     }
   ],
-  "unresolved": [
-    "Concept-to-world scale, rotation and origin",
-    "Position and curvature of the street bend",
-    "Which stretch of the street is densest market (south / middle)",
-    "Whether a second channel is needed between residential and farmland",
-    "Whether the rear loop to the shrine goes east or west around the hill",
-    "Exact main-river centerline and the farmland bend",
-    "Fixed Godot review camera",
-    "Fate of the existing slice U-shaped river"
-  ],
-  "next_gate": "User reviews topology candidate v0.3; on agreement, build pure blockout candidates and enter LAYOUT_REVIEW.",
+  "unresolved": [],
+  "next_gate": "P1 Terrain (Human Village V2 phases P0–P13 are the only official phase numbers). Terrain work must keep the Macro Layout freeze green.",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -273,6 +277,69 @@
     {
       "date": "2026-08-31",
       "ruling": "The main street runs unbroken from the south grand torii to the dragon-statue bridge; buildings and market line both sides of it. West of it: residential plus small channel branches. East of it: farmland and the main river. The north shrine is reached by a small lane out of the commercial belt, or by looping round to the back and climbing."
+    },
+    {
+      "date": "2026-09-23",
+      "ruling": "Main street W80 (7.20 m) adopted; r2 north-hill terrain passes; temporary canopy stays until P9 Vegetation; no further Macro changes to main street, north hill or main river."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "LAYOUT_APPROVED: freeze v2-layout-0.3 with W80 / 7.20 m as the approved P0 World Layout. Dragon Base stays a placeholder; shoreline integration deferred. Next phase: P1 Terrain."
+    }
+  ],
+  "resolved_at_freeze": [
+    {
+      "item": "Concept-to-world scale, rotation and origin",
+      "resolution": "No pixel transform; coordinates fixed directly in layout_v2.json frame (560 × 560 m)."
+    },
+    {
+      "item": "Position and curvature of the street bend",
+      "resolution": "roads[MainStreet] polyline in layout_v2.json v2-layout-0.3; width W80 (7.20 m)."
+    },
+    {
+      "item": "Which stretch of the street is densest market (south / middle)",
+      "resolution": "districts.Market polygon in layout_v2.json; frontage detail belongs to P6 Residential / Commercial."
+    },
+    {
+      "item": "Whether a second channel is needed between residential and farmland",
+      "resolution": "Yes: water.Canal east of the market (2026-09-23 ruling)."
+    },
+    {
+      "item": "Whether the rear loop to the shrine goes east or west around the hill",
+      "resolution": "v2-layout-0.3 has no separate rear loop road; the hill is reached by roads[HillApproach]."
+    },
+    {
+      "item": "Exact main-river centerline and the farmland bend",
+      "resolution": "water.MainRiver in layout_v2.json (r2 widths and bends; bridge positions unchanged)."
+    },
+    {
+      "item": "Fixed Godot review camera",
+      "resolution": "godot/tools/shots/village_v2_fixed_shots.json."
+    },
+    {
+      "item": "Fate of the existing slice U-shaped river",
+      "resolution": "Not carried into V2 (2026-09-23 ruling)."
+    }
+  ],
+  "deferred": [
+    {
+      "item": "LANDMARK_DRAGON/Base shoreline integration",
+      "stage": "P7 Riverbank",
+      "note": "10 × 10 m placeholder base; about 31 % of it sits inside the bank line. Kept as placeholder; do not move it for top-down appearance."
+    },
+    {
+      "item": "Temporary forest canopy on the north hill",
+      "stage": "P9 Vegetation"
+    },
+    {
+      "item": "Hieda mansion final footprint",
+      "stage": "P4 Greybox",
+      "note": "Provisional footprint / quest anchor only."
+    },
+    {
+      "item": "Main-street sightline to the dragon statue",
+      "stage": "P5 Hero Assets",
+      "note": "6 stations blocked by the solid LANDMARK_TOWER placeholder at freeze time."
     }
   ]
 }

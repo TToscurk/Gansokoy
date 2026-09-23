@@ -1,0 +1,219 @@
+{
+	"version": "v2-layout-0.3",
+	"status": "LAYOUT_FREEZE",
+	"approval": {
+		"layout_approved": true,
+		"approved_by": "user",
+		"approved_at": "2026-09-24",
+		"phase": "P0 Reference / Layout",
+		"next_phase": "P1 Terrain",
+		"ruling": "LAYOUT_APPROVED：凍結 v2-layout-0.3，主街 W80（全寬 7.20 m）為核可的 P0 World Layout。LANDMARK_DRAGON/Base 維持 placeholder，岸線最終整合延後到 P7 Riverbank。臨時林冠留到 P9 Vegetation。稗田邸維持 provisional。",
+		"review_evidence": "docs/art_review/village_v2_r3/",
+		"freeze": {
+			"_note": "Macro Layout 凍結雜湊。算法與範圍見 godot/tools/village_v2_freeze.gd；驗證 godot/tools/verify_village_v2_freeze.gd。只有經量測可重現的 gameplay／terrain blocker 才可提請使用者重審；不得自行改座標或改這個雜湊。",
+			"sha256": "88eee8a183105cdd3ae7c57430fdaf4a523c7c628f6da9b632ec8f89d3a1c4ff",
+			"module": "res://tools/village_v2_freeze.gd"
+		}
+	},
+	"revision_note": "LAYOUT_FREEZE（2026-09-24 使用者 LAYOUT_APPROVED）：P0 Reference / Layout 完成，Macro Layout 凍結（approval.freeze），下一階段 P1 Terrain。｜r3（2026-09-23 ART_REVIEW 裁示）：主街採 W80（全寬 7.20 m）；r2 北丘 Terrain 通過；臨時林冠不改，留到 P9 Vegetation；主街、北丘、主河 Macro Layout 此後不再修改。俯視／鳥瞰審圖只藏名牌（Debug/Labels）。未進 LAYOUT_FREEZE。｜r2（2026-09-23 ART_REVIEW Macro Layout 修正）：主街寬度 3 Variant（variants.main_street_width）、紫色候補地標改線框＋footprint（display=wire）、北丘改主丘＋西肩＋東次峰＋東長肩（hill.lobes）、主河加寬窄與彎曲（橋位不動）、稗田邸維持 PROVISIONAL。未進 LAYOUT_FREEZE。",
+	"authority": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/村落農村概念俯視.png",
+	"zones_reference": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/村落農村概念俯視區域分隔.png",
+	"contract": "docs/layout/human-village-layout-contract.json",
+	"_note": "V2 World Layout 候選座標（唯一座標來源）。概念圖是透視鳥瞰，不是正射圖：座標是由 10x10 格位（欄 A-J 西→東、列 1-10 北→南）估算，尚未經固定鏡頭校準。src = 概念圖格位；conf = 位置信心（high/medium/low）。2026-09-24 已 LAYOUT_APPROVED，contract 以本檔 v2-layout-0.3 為凍結座標來源。凍結後 Macro 範圍（見 approval.freeze）不得改；P1 Terrain 起只可改非凍結欄位 → 重跑 tools/gen_village_v2.gd。",
+	"frame": {
+		"unit": "m",
+		"north": "-z",
+		"east": "+x",
+		"x0": 0, "x1": 560, "z0": -340, "z1": 220,
+		"grid_step": 2.0,
+		"grid_to_world": "列9≈z+100、列3≈z-130、列2≈z-215、列1≈z-300（遠處列距被透視壓縮）；欄 D≈x234（列9）、欄距近處約 30 m、遠處約 45 m。與舊 slice 同一世界座標系（南門 x≈234），方便對照與日後 anchor 遷移。"
+	},
+	"heights": {
+		"built": 0.3,
+		"built_z_ref": 100,
+		"built_slope": 0.006,
+		"farm": -0.2,
+		"feather": 10,
+		"pad_feather": 5,
+		"river_water": -0.8,
+		"river_bed": -3.2,
+		"canal_max_water": -0.9,
+		"canal_depth_below_land": 1.0,
+		"canal_water_depth": 0.8,
+		"stream_water_below_land": 0.35,
+		"stream_bed_below_land": 0.9
+	},
+	"relief": {
+		"_note": "Natural Terrain：西丘、北山、東緣、南緣抬升＋噪訊；Built／Farm 區整平（Built Terrain），交界 feather 10 m（Transition）。",
+		"west_h": 22, "west_x": 120,
+		"north_h": 28, "north_z0": -340, "north_z1": -282,
+		"east_h": 10, "east_x0": 505, "east_x1": 560, "east_z_fade": [-180, -150],
+		"south_h": 5, "south_z0": 165, "south_z1": 220,
+		"noise_amp": 1.6, "noise_freq": 0.012, "seed": 20260923
+	},
+	"hill": {
+		"label": "北丘（林丘社寺）",
+		"center": [258, -226], "radius": 67.5, "height": 34.7,
+		"blend_k": 4.0,
+		"lobes": [
+			{"label": "西肩", "center": [213, -280], "radius": 41.5, "height": 28.7},
+			{"label": "東次峰", "center": [307, -241], "radius": 44.3, "height": 27.8},
+			{"label": "東長肩", "center": [342, -256], "radius": 42, "height": 8.9}
+		],
+		"_note": "Macro 輪廓：主丘＋西肩＋東次峰＋東長肩（smooth-max 合成，丘間留鞍）。r1 為單一圓丘（center 262,-215、radius 80、高 34）。參數在 Godot 迴圈搜尋：以兩個主街固定鏡位（mainstreet_north、gate_north）的地形天際線（不含林冠 placeholder）擬合概念圖層級（由南望：西肩 56%／西凹 47%／主峰 100%／東鞍 68%／東次峰 75%）。西肩往北後退到西住宅區（ResidentialWest，北界 z≈-251）之外：放在住宅區上方會被建成區整平，在交界切出 20 m 的牆（71°）。硬限制（無噪訊，含建成區整平）：坡度 ≤ 46°、參道縱坡 ≤ 38°、社殿地面 ≥ 32 m、丘腳街抬升 ≤ 6 m、建成區交界落差 ≤ 6 m、主河中線抬升 0。林冠團塊（Forest_HillCrown）不動。不含正式地形細節。",
+		"src": "林丘 D1-F3；山頂主殿 E1-E2；左肩／右側次峰（參道鳥居稜）／右長肩降到河谷", "conf": "medium"
+	},
+	"districts": {
+		"Market": {
+			"label": "市集", "kind": "built", "color": [0.80, 0.60, 0.40],
+			"poly": [[210, 96], [262, 96], [300, 48], [320, -20], [322, -90], [288, -100], [260, -100], [236, -60], [216, -10], [206, 50]],
+			"src": "區域圖橙色 C-F 列4-9；底圖主街兩側店面 E4-E6、南段 C7-E7", "conf": "medium"
+		},
+		"MixedCommercial": {
+			"label": "住商混合", "kind": "built", "color": [0.60, 0.62, 0.72],
+			"poly": [[236, -100], [322, -100], [340, -102], [352, -120], [380, -146], [372, -166], [330, -156], [300, -146], [250, -152], [214, -140], [222, -112]],
+			"src": "區域圖藍色 D-H 列2-5（主街北段、丘腳、往龍神像）", "conf": "medium"
+		},
+		"ResidentialWest": {
+			"label": "西住宅區", "kind": "built", "color": [0.64, 0.68, 0.52],
+			"poly": [[120, -250], [196, -252], [200, -160], [214, -140], [222, -112], [236, -100], [260, -100], [236, -60], [216, -10], [206, 50], [210, 96], [160, 104], [122, 70], [116, -60]],
+			"src": "區域圖綠色 A-E 列1-9；底圖住宅＋庭園水道 B4-D7、西北疏村 B2-D3", "conf": "medium"
+		},
+		"ResidentialNE": {
+			"label": "東北住宅區", "kind": "built", "color": [0.64, 0.68, 0.52],
+			"poly": [[420, -262], [500, -262], [520, -176], [478, -150], [440, -170], [424, -205]],
+			"src": "區域圖綠色 G-J 列1-4；與底圖 I1-J3 森林衝突（底圖優先，縮小成龍神橋東側小聚落）", "conf": "low"
+		},
+		"MansionEstate": {
+			"label": "大宅庭園", "kind": "built", "color": [0.82, 0.74, 0.56],
+			"poly": [[380, -64], [426, -64], [426, -8], [380, -8]],
+			"src": "底圖華麗大宅 H5-H6，庭園延至 G6-H7", "conf": "medium"
+		},
+		"SouthGate": {
+			"label": "南入口", "kind": "built", "color": [0.74, 0.66, 0.52],
+			"poly": [[212, 96], [256, 96], [256, 126], [212, 126]],
+			"label_at": [178, 150], "src": "大鳥居 D9、入口道路 C10-D10", "conf": "high"
+		},
+		"Farmland": {
+			"label": "東農田", "kind": "farm", "color": [0.60, 0.72, 0.45], "label_at": [470, 40],
+			"poly": [[340, -100], [356, -128], [392, -150], [418, -128], [470, -104], [560, -90], [560, 150], [330, 150], [316, 100], [326, 40], [340, -40]],
+			"paddy": {"x0": 350, "z0": -140, "dx": 24, "dz": 16, "bund": 1.2, "bund_color": [0.46, 0.39, 0.28]},
+			"src": "區域圖米白 F-J 列3-10；底圖田格 H3-J8 最清楚", "conf": "medium"
+		}
+	},
+	"forests": {
+		"_note": "林冠大型團塊（placeholder，不是樹）。避開道路、水道、建成區、農田與山頂平台。",
+		"canopy_h": 13, "canopy_var": 6, "cell": 4,
+		"Forest_SouthW": {"label": "南林（西）", "poly": [[0, 128], [214, 128], [216, 220], [0, 220]], "src": "A8-D10（入口道路切開）", "conf": "high"},
+		"Forest_SouthE": {"label": "南林（東）", "poly": [[246, 128], [316, 150], [560, 152], [560, 220], [244, 220]], "src": "E8-J10；水渠南段隱入此林", "conf": "medium"},
+		"Forest_West": {"label": "西林／竹林", "poly": [[0, -268], [112, -260], [116, -60], [118, 70], [112, 128], [0, 128]], "src": "A2-B9", "conf": "high"},
+		"Forest_NorthW": {"label": "北山林（西）", "poly": [[0, -340], [380, -340], [378, -298], [300, -298], [200, -296], [118, -262], [0, -268]], "src": "A1-G2", "conf": "high"},
+		"Forest_NorthE": {"label": "北山林（東）", "poly": [[410, -340], [560, -340], [560, -178], [522, -174], [502, -264], [418, -266], [410, -300]], "src": "I1-J3", "conf": "medium"},
+		"Forest_HillCrown": {"label": "北丘林冠", "circle": [262, -215, 72], "src": "林丘 D1-F3", "conf": "medium"}
+	},
+	"water": {
+		"MainRiver": {
+			"label": "主河",
+			"pts": [[392, -340], [399, -312], [390, -282], [385, -256], [391, -228], [398.6, -205], [405, -186], [414, -168], [430, -151], [456, -137], [484, -126], [520, -117], [560, -112]],
+			"half_w": [6.5, 7.0, 7.5, 8.5, 10.5, 12.0, 14.5, 14.5, 13.5, 12.0, 11.0, 13.5, 15.0],
+			"_note": "Macro 寬窄與彎曲（r2）：上游窄（全寬 13–17 m）且左右擺動 → 龍神像旁放寬成潭（29 m）→ 轉東的中段收窄（22 m）→ 出圖前放寬（30 m）。龍神橋交點 (398.6, -205) 保留為折點，橋位不動。r1 為 20–26 m、幾乎等寬的平順弧線。",
+			"src": "H2→H3→I3→I4→J4，J4-J5 出畫面；寬窄依概念圖（上游窄、龍神像旁寬、出圖處最寬）", "conf": "medium"
+		},
+		"Canal": {
+			"label": "穿村水渠",
+			"pts": [[388, -172], [362, -140], [346, -110], [338, -60], [334, -10], [322, 40], [302, 80], [292, 120], [288, 220]],
+			"half_w": 3.0,
+			"src": "H3 取水→G3→G4→G5→G6→F7→F8，南段隱入前景林", "conf": "medium"
+		},
+		"Streams": [
+			{
+				"name": "WestStream", "label": "西側細渠",
+				"pts": [[70, -178], [112, -165], [150, -150], [172, -95], [176, -55], [160, -10], [146, 30], [138, 60], [128, 120], [122, 220]],
+				"half_w": 1.6,
+				"src": "C4-D5、C5-C6、B6-C7 分岔細渠（先做主幹一條）", "conf": "low"
+			}
+		],
+		"Waterfalls": [
+			{"name": "WATERFALL_B7", "label": "跌水（西渠）", "at": [142.8, 42], "src": "B7", "conf": "medium"},
+			{"name": "WATERFALL_F7", "label": "跌水（水車旁）", "at": [307, 70], "src": "F7", "conf": "low"}
+		]
+	},
+	"roads": [
+		{"name": "EntranceRoad", "class": "main", "label": "入口道路", "half_w": 3.5, "pts": [[222, 220], [224, 172], [229, 132], [234, 104]], "src": "C10-D10→D9", "conf": "high"},
+		{"name": "MainStreet", "class": "main", "label": "主街", "half_w": 3.6, "pts": [[234, 104], [236, 80], [242, 40], [262, -20], [280, -80], [300, -130]], "src": "D8-D9→D7/E7→E6→E5→E4→F4→F3，北偏東、緩彎", "conf": "medium"},
+		{"name": "HillFootStreet", "class": "secondary", "label": "丘腳街", "half_w": 3.0, "pts": [[200, -148], [250, -150], [300, -130], [342, -128], [372, -128]], "src": "D3-G3；東端正交跨水渠（約 62°）接農田北緣", "conf": "medium"},
+		{"name": "HillApproach", "class": "secondary", "label": "參道", "half_w": 2.5, "pts": [[300, -130], [292, -160], [280, -190], [266, -208]], "src": "E2 參道鳥居", "conf": "medium"},
+		{"name": "RiverNorthPath", "class": "secondary", "label": "龍神道", "half_w": 2.0, "pts": [[342, -128], [356, -152], [372, -178], [378, -205]], "src": "G3→H2；沿水渠西側（距渠心 ≥11 m）到龍神像與龍神橋，不跨水渠", "conf": "low"},
+		{"name": "DragonBridgeRoad", "class": "secondary", "label": "龍神橋", "half_w": 2.5, "pts": [[378, -205], [428, -205]], "src": "H2 雕像北側橫河橋", "conf": "medium"},
+		{"name": "CrossStreetMid", "class": "secondary", "label": "中橫街", "half_w": 3.0, "pts": [[196, -20], [262, -20], [336, -34], [380, -36]], "src": "E5→G5 橋→H5 大宅", "conf": "low"},
+		{"name": "CrossStreetSouth", "class": "secondary", "label": "南橫街", "half_w": 3.0, "pts": [[170, 50], [241, 48], [318, 42], [372, 40]], "src": "C7→F6-G7 橋→H7", "conf": "low"},
+		{"name": "RiversidePath", "class": "secondary", "label": "河岸小徑", "half_w": 1.5, "pts": [[446, -118], [478, -104], [540, -86]], "src": "I4-J4 南岸", "conf": "low"},
+		{"name": "WestAlley", "class": "alley", "label": "西巷", "half_w": 1.5, "pts": [[176, -120], [204, -80], [198, -30], [210, 20], [204, 70], [234, 90]], "src": "B4-D7 住宅巷", "conf": "low"},
+		{"name": "WestLane", "class": "alley", "label": "西渠巷", "half_w": 1.5, "pts": [[196, -20], [172, -14], [146, -6]], "src": "C5-C6", "conf": "low"},
+		{"name": "FarmPath_1", "class": "farm", "label": "田埂道", "half_w": 1.2, "pts": [[372, -30], [372, 130]], "src": "H4-H8", "conf": "low"},
+		{"name": "FarmPath_2", "class": "farm", "label": "田埂道", "half_w": 1.2, "pts": [[440, -116], [440, 130]], "src": "I4-I8", "conf": "low"},
+		{"name": "FarmPath_3", "class": "farm", "label": "田埂道", "half_w": 1.2, "pts": [[500, -98], [500, 130]], "src": "J4-J8", "conf": "low"},
+		{"name": "FarmPath_4", "class": "farm", "label": "田埂道", "half_w": 1.2, "pts": [[340, 0], [556, 0]], "src": "H6-J6", "conf": "low"},
+		{"name": "FarmPath_5", "class": "farm", "label": "田埂道", "half_w": 1.2, "pts": [[330, 70], [556, 70]], "src": "H7-J7", "conf": "low"}
+	],
+	"landmarks": [
+		{"id": "LANDMARK_SOUTH_GATE", "label": "大鳥居", "type": "torii", "at": [234, 100], "span": 10, "h": 10, "yaw": 0, "src": "D9", "conf": "high"},
+		{"id": "LANDMARK_NORTH_HILL", "label": "山頂社殿", "type": "box", "at": [258, -228], "size": [14, 9, 10], "yaw": 0, "pad": true, "color": [0.55, 0.42, 0.32], "src": "E1-E2", "conf": "medium"},
+		{"id": "LANDMARK_HILL_TORII", "label": "參道鳥居", "type": "torii", "at": [289.6, -166], "span": 4.5, "h": 6, "yaw": 22, "src": "E2", "conf": "medium"},
+		{"id": "LANDMARK_HILLFOOT_TEMPLE", "label": "丘腳社寺", "type": "box", "at": [228, -170], "size": [18, 9, 12], "yaw": 0, "pad": true, "color": [0.55, 0.42, 0.32], "src": "D3-E3", "conf": "medium"},
+		{"id": "LANDMARK_DRAGON", "label": "龍神像", "type": "dragon", "at": [388, -188], "base": [10, 10], "base_top": 2.5, "statue_r": 2, "statue_h": 12, "src": "H2-H3（主河西岸、取水口北側）", "conf": "medium"},
+		{"id": "LANDMARK_TERAKOYA", "label": "寺院式大屋（寺子屋候補）", "type": "box", "display": "wire", "at": [188, 24], "size": [22, 11, 16], "yaw": 90, "pad": true, "color": [0.75, 0.45, 0.70], "src": "C6-D7 寺院式大屋頂；指定為寺子屋＝候補", "conf": "low"},
+		{"id": "LANDMARK_TOWER", "label": "樓閣（火見櫓候補）", "type": "box", "at": [250, 66], "size": [7, 18, 7], "yaw": 0, "pad": true, "color": [0.60, 0.50, 0.40], "src": "E7-E8 多層塔式建築", "conf": "low"},
+		{"id": "LANDMARK_HIEDA", "label": "華麗大宅（稗田邸候補）", "type": "box", "display": "wire", "status": "PROVISIONAL", "at": [403, -40], "size": [28, 9, 18], "yaw": 0, "pad": true, "color": [0.75, 0.45, 0.70], "src": "H5-H6 獨立庭園大宅；稗田邸東側候選位置，只留 footprint／quest anchor，P4 Full Greybox 再裁示（2026-09-23 裁示）", "conf": "low"},
+		{"id": "LANDMARK_HIEDA_GATE", "label": "大宅門", "type": "box", "display": "wire", "status": "PROVISIONAL", "at": [398, -10], "size": [7, 5, 2], "yaw": 0, "color": [0.78, 0.22, 0.16], "src": "H6-G7 紅色曲頂門；隨稗田邸 PROVISIONAL", "conf": "medium"},
+		{"id": "LANDMARK_SUZUNAAN", "label": "鈴奈庵（候補）", "type": "box", "display": "wire", "at": [247.8, -6], "size": [10, 7, 9], "yaw": 90, "color": [0.75, 0.45, 0.70], "src": "市集主街西側（概念圖無標示）", "conf": "low"},
+		{"id": "LANDMARK_GEIDONTEI", "label": "鯢吞亭（候補）", "type": "box", "display": "wire", "at": [284.6, -62], "size": [12, 8, 10], "yaw": -90, "color": [0.75, 0.45, 0.70], "src": "市集主街東側（概念圖無標示）", "conf": "low"},
+		{"id": "LANDMARK_KIRISAME", "label": "霧雨店（候補）", "type": "box", "display": "wire", "at": [229.7, 62], "size": [9, 7, 8], "yaw": 90, "color": [0.75, 0.45, 0.70], "src": "市集南段主街西側（概念圖無標示）", "conf": "low"},
+		{"id": "LANDMARK_WATERWHEEL_1", "label": "水車", "type": "wheel", "at": [334.8, -52], "r": 3.2, "src": "F5-F7 水渠西岸水車群", "conf": "medium"},
+		{"id": "LANDMARK_WATERWHEEL_2", "label": "水車", "type": "wheel", "at": [329.2, 0], "r": 3.2, "src": "F5-F7", "conf": "medium"},
+		{"id": "LANDMARK_WATERWHEEL_3", "label": "水車", "type": "wheel", "at": [310.6, 58], "r": 3.2, "src": "F5-F7", "conf": "medium"}
+	],
+	"quest_anchors": [
+		{"id": "human_village_gate", "label": "人間之里", "at": [234, 110], "old_slice": [234, 101]},
+		{"id": "gatekeeper_gate", "label": "村門的守衛", "at": [240.5, 98], "old_slice": [240, 92]},
+		{"id": "village_temple_school", "label": "寺子屋", "at": [199, 24], "old_slice": [305, 42]},
+		{"id": "keine_first", "label": "寺子屋的慧音", "at": [199, 30], "old_slice": [315, 47]},
+		{"id": "keine_verdict", "label": "寺子屋（裁定）", "at": [199, 30], "old_slice": [315, 47]},
+		{"id": "kosuzu_lending", "label": "鈴奈庵", "at": [253.5, -6], "old_slice": [236, -68]},
+		{"id": "akyuu_record", "label": "稗田邸", "status": "PROVISIONAL", "at": [398, -4], "old_slice": [233, -122]},
+		{"id": "inn_room", "label": "鯢吞亭", "at": [278.5, -62], "old_slice": [213, -82]}
+	],
+	"portals": [
+		{"id": "PORTAL_TRAIL", "label": "→ 獸道", "target": "trail", "at": [224, 172], "arrival_yaw": 0.0, "src": "C10-D10 入口道路南端", "conf": "high"},
+		{"id": "PORTAL_HIEDA1F", "label": "→ 稗田邸", "target": "hieda1f", "status": "PROVISIONAL", "at": [398, 2], "arrival_yaw": 3.14159265358979, "src": "隨稗田邸候補（low）", "conf": "low"},
+		{"id": "PORTAL_KOURINDOU", "label": "→ 香霖堂", "target": "kourindou", "at": [428, -205], "arrival_yaw": 1.5707963267949, "src": "龍神橋東端（舊 slice 亦在龍石像橋東岸）", "conf": "medium"}
+	],
+	"spawn": {"at": [224, 160], "yaw": 0.0},
+	"_review_shots_note": "固定鏡位＝r1 解算後的絕對座標（凍結）：每輪、每個 Variant 同機位、同 FOV（main.gd 審圖相機預設 75° 垂直，1152×648）。人眼機位藏整個 Debug（名牌／分區外框）；俯視與鳥瞰只藏名牌（Debug/Labels），保留分區外框供佈局比對。",
+	"review_shots": [
+		{"name": "v2_topdown", "cam": [280, 480, -40], "look": [280, 0, -60], "abs": true, "hide": ["Debug/Labels"]},
+		{"name": "v2_aerial_concept", "cam": [215, 230, 330], "look": [285, 0, -110], "abs": true, "hide": ["Debug/Labels"]},
+		{"name": "v2_p1_gate_north", "cam": [229, 2.7, 132], "look": [240, 3.66, 40], "abs": true, "hide": ["Debug"]},
+		{"name": "v2_p2_fields_to_hill", "cam": [420, 2.1, 70], "look": [300, 9.8, -150], "abs": true, "hide": ["Debug"]},
+		{"name": "v2_p3_reverse_hillfoot", "cam": [300, 3.94, -122], "look": [236, 2.42, 80], "abs": true, "hide": ["Debug"]},
+		{"name": "v2_river_dragon", "cam": [455, 1.77, -116], "look": [390, 1.59, -200], "abs": true, "hide": ["Debug"]},
+		{"name": "v2_mainstreet_north", "cam": [241, 2.91, 44], "look": [276, 4.32, -70], "abs": true, "hide": ["Debug"]}
+	],
+	"variants": {
+		"main_street_width": {
+			"_note": "2026-09-23 使用者採用 W80（縮窄約 20%，全寬 7.20 m）；產生器預設用 selected，W100／W65 只留作比較紀錄。只改 MainStreet 路面半寬（連帶路側整地帶）；沿街候補地標位置不動。人眼機位＝街心地面＋2.3 m（三個 Variant 機位相同）。",
+			"road": "MainStreet",
+			"selected": "W80",
+			"options": {
+				"W100": {"label": "目前寬度", "half_w": 4.5},
+				"W80": {"label": "縮窄約 20%", "half_w": 3.6},
+				"W65": {"label": "縮窄約 35%", "half_w": 2.925}
+			},
+			"shots": [
+				{"name": "ms_south_eye", "cam": [236.5, 2.3, 76], "look": [256, 2.3, -2], "hide": ["Debug"]},
+				{"name": "ms_mid_eye", "cam": [259, 2.3, -10], "look": [283, 2.3, -90], "hide": ["Debug"]},
+				{"name": "ms_elevated", "cam": [214, 30, 72], "look": [258, 0.8, -12], "abs": true, "hide": ["Debug"]}
+			]
+		}
+	}
+}

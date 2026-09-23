@@ -1,0 +1,45 @@
+{
+	"_note": "V2 blockout 開發用（--map=village_v2）。由 tools/gen_village_v2.gd 產生，勿手改。正式遊戲的人間之里仍是 slice（計畫 §52）。",
+	"id": "village_v2",
+	"playSize": [
+		560.0,
+		560.0
+	],
+	"portals": [
+		{
+			"arrival_ground_y": 0.18,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 0.0,
+			"note": "→ 獸道（C10-D10 入口道路南端，conf=high）",
+			"target": "trail",
+			"x": 224.0,
+			"y": 0.22,
+			"z": 172.0
+		},
+		{
+			"arrival_ground_y": -0.2,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 3.14159265358979,
+			"note": "→ 稗田邸（隨稗田邸候補（low），conf=low）",
+			"target": "hieda1f",
+			"x": 398.0,
+			"y": -0.2,
+			"z": 2.0
+		},
+		{
+			"arrival_ground_y": 0.54,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 1.5707963267949,
+			"note": "→ 香霖堂（龍神橋東端（舊 slice 亦在龍石像橋東岸），conf=medium）",
+			"target": "kourindou",
+			"x": 428.0,
+			"y": 0.66,
+			"z": -205.0
+		}
+	],
+	"spawn": {
+		"x": 224.0,
+		"yaw": 0.0,
+		"z": 160.0
+	}
+}
