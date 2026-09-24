@@ -22,9 +22,13 @@ extends SceneTree
 ## 地形分三類（§6）：Natural（丘陵噪訊）／Built（建成區平台＝基準面）／Transition（平台外填挖坡）。
 ## P1 Terrain：平台外框、填挖坡、參道縱坡的算法在 tools/village_v2_terrain_lib.gd（與驗證共用）；
 ##   參數在 layout_v2.json 的 terrain（不在 Macro 凍結範圍）。驗收：tools/verify_village_v2_terrain.gd。
+## P2 Water：水線以下河床形態（tools/village_v2_water_lib.gd，參數 layout water_form）與貼岸線的網格水面。
+##   權限：只改水線以下與岸線縫；水線以上 P1 核准地形由 tools/verify_village_v2_p1_protect.gd 把關。
+##   驗收：tools/verify_village_v2_water.gd。
 
 const Freeze := preload("res://tools/village_v2_freeze.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
+const WLib := preload("res://tools/village_v2_water_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
@@ -83,6 +87,10 @@ var apron := 3.0                 # 平台在外框外多留的平地（m）
 var river_pts := PackedVector2Array()
 var river_hw := PackedFloat32Array()
 var polish := {}   # terrain.river_bank_polish
+var river_cum := PackedFloat32Array()
+var river_form := {}   # water_form.MainRiver（P2）
+var river_kap := PackedFloat32Array()
+var water_stats: Array = []
 ## 水渠與細渠：{name,label,pts,hw,margin,wdepth,cap,below,cum,lv}
 ## lv = 沿中心線每 1 m 的水位，取「上游累積最小值」→ 水只會往下游流，不會爬坡。
 var channels: Array = []
@@ -200,6 +208,11 @@ func _setup() -> void:
 	river_pts = _pts(W["MainRiver"]["pts"])
 	for v in W["MainRiver"]["half_w"]:
 		river_hw.append(float(v))
+	river_cum = WLib.cum_len(river_pts)
+	var WF: Dictionary = L.get("water_form", {})
+	river_form = WF.get("MainRiver", {})
+	if not river_form.is_empty():
+		river_kap = WLib.curvature(river_pts, float(river_form["curv_win"]))
 	polish = L.get("terrain", {}).get("river_bank_polish", {})
 	if not polish.is_empty():
 		print("[v2] 岸坡整修：(%s)→(%s) %s 岸，岸寬 %+.1f ±%.1f m、水線以上坡形指數 %.2f ±%.2f（下限 2）、坡寬下限 %.0f m、岸肩下降 %.2f ±%.2f m（離河中心 %.0f m 內）" % [
@@ -244,6 +257,9 @@ func _setup() -> void:
 			pads.append(Vector4(c.x, c.y, r, _land(c.x, c.y, false)))
 	for ch in channels:
 		_channel_prep(ch)
+		ch["form"] = WF.get(String(ch["name"]), {})
+		if not (ch["form"] as Dictionary).is_empty():
+			ch["kap"] = WLib.curvature(ch["pts"], float(ch["form"]["curv_win"]))
 	for r in roads:
 		_road_prep(r)
 
@@ -412,6 +428,13 @@ func _carve(x: float, z: float, h: float) -> float:
 		h = lerpf(h0, h1, wgt)
 	else:
 		h = h0
+	# P2 河道形態：只動水線以下（d0 ＝ P1 水深 > 0）；水線附近 blend_d0 內淡入，水線位置不動
+	if not river_form.is_empty() and r.x < outer and h < wl:
+		var k2 := int(r.y)
+		var sg := signf((river_pts[k2 + 1] - river_pts[k2]).cross(p - river_pts[k2]))
+		var st := WLib.station(river_cum, r)
+		var m := WLib.factor(river_form, WLib.bend(river_form, river_kap, st), sg * r.x / rhw, st, wl - bed, p)
+		h = wl - (wl - h) * WLib.blend(river_form, m, wl - h, p)
 	for ch in channels:
 		var q := _near(ch["pts"], p)
 		var hw: float = ch["hw"]
@@ -421,7 +444,16 @@ func _carve(x: float, z: float, h: float) -> float:
 		var lv := _level(ch, q)
 		var o := base + maxf(0.0, land - (lv + 2.0)) * 1.8
 		if q.x < o:
-			h = minf(h, lerpf(lv - float(ch["wdepth"]), land, _ss(hw * 0.7, o, q.x)))
+			var hc := lerpf(lv - float(ch["wdepth"]), land, _ss(hw * 0.7, o, q.x))
+			var F: Dictionary = ch["form"]
+			if not F.is_empty() and hc < lv:
+				var cp: PackedVector2Array = ch["pts"]
+				var k3 := int(q.y)
+				var sg := signf((cp[k3 + 1] - cp[k3]).cross(p - cp[k3]))
+				var st := WLib.station(ch["cum"], q)
+				var m := WLib.factor(F, WLib.bend(F, ch["kap"], st), sg * q.x / hw, st, float(ch["wdepth"]), p)
+				hc = lv - (lv - hc) * WLib.blend(F, m, lv - hc, p)
+			h = minf(h, hc)
 	return h
 
 
@@ -1060,24 +1092,30 @@ func _sub_mesh(idx: PackedInt32Array, verts: PackedVector3Array, nors: PackedVec
 
 func _water() -> void:
 	var g := vroot.get_node("Water")
-	var wm := _mat(_k(Color(0.22, 0.42, 0.55, 0.80)), true, true)
+	# P2：水面頂點色＝水深（淺處淡、透；深槽暗、濃），灰模階段讀得出主槽／淺灘。正式水體 shader 在 P13。
+	var wm := StandardMaterial3D.new()
+	wm.vertex_color_use_as_albedo = true
+	wm.vertex_color_is_srgb = true
+	wm.cull_mode = BaseMaterial3D.CULL_DISABLED
+	wm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	wm.roughness = 0.15
+	wm.metallic_specular = 0.6
 	var wl := float(H["river_water"])
-	var rm := _ribbon(river_pts,
-		func(p): return _hw_interp(river_hw, _near(river_pts, p)) + 3.0,
-		func(_p): return wl, Callable(), 0.0)
-	var river := _mi(g, "MainRiver", _save(rm, "water_main_river"), wm, false)
+	# P2：水面改成貼地形網格的水面（取代固定寬度帶狀水面：固定寬 → 低岸處水面邊浮空、端點與匯流口露底）
+	var bodies: Array = [{"name": "MainRiver", "pts": river_pts, "ch": {}}]
+	for ch in channels:
+		bodies.append({"name": String(ch["name"]), "pts": ch["pts"], "ch": ch})
+	var meshes := _grid_water(bodies)
+	var river := _mi(g, "MainRiver", _save(meshes[0], "water_main_river"), wm, false)
 	river.set_meta("label", "主河")
 	river.set_meta("water_y", wl)
 	_label(river, "主河", Vector3(river_pts[3].x, wl + 18.0, river_pts[3].y), 0.12, 128, 260.0, 1400.0, Color(0.7, 0.9, 1.0))
-	for ch in channels:
+	for ci in channels.size():
+		var ch: Dictionary = channels[ci]
 		var cpts: PackedVector2Array = ch["pts"]
-		var chw: float = ch["hw"]
-		# 水面比水道寬 0.8 m：邊緣藏進岸坡底下，不露出浮空的水面邊
-		var wmesh := _ribbon(cpts, func(_p): return chw + 0.8,
-			func(p): return _level(ch, _near(cpts, p)) + 0.001, Callable(), 0.0)
 		var is_canal: bool = ch["name"] == "Canal"
 		var parent: Node = g if is_canal else g.get_node("Streams")
-		var wn := _mi(parent, String(ch["name"]), _save(wmesh, "water_" + String(ch["name"]).to_lower()), wm, false)
+		var wn := _mi(parent, String(ch["name"]), _save(meshes[ci + 1], "water_" + String(ch["name"]).to_lower()), wm, false)
 		wn.set_meta("label", ch["label"])
 		var lvs: PackedFloat32Array = ch["lv"]
 		wn.set_meta("water_y_range", [snappedf(lvs[lvs.size() - 1], 0.01), snappedf(lvs[0], 0.01)])
@@ -1100,6 +1138,138 @@ func _water() -> void:
 		var mk := _mi(m, "Placeholder", cyl, _mat(_k(Color(0.55, 0.80, 1.0))), false)
 		mk.position.y = 1.5
 		_label(m, "跌水（placeholder）", Vector3(0, 4.5, 0), 0.02, 96, 0.0, 120.0)
+
+
+const WATER_WET_EPS := 0.03   # 頂點高出水位不到此值也算濕 → 水面外緣一律落在高出水位 ≥ 0.03 m 的岸上（埋進岸下）
+const WATER_REACH := 24.0     # 水面最遠到離中心線「半寬＋此值」
+
+
+## 淺水仍要讀成「水」（藍綠、較透），不能灰到像乾河床（r1 審圖：0.40/0.58/0.56 α0.42 在溪上讀成灰泥）
+const WATER_SHALLOW := Color(0.30, 0.56, 0.68, 0.62)
+const WATER_DEEP := Color(0.10, 0.27, 0.46, 0.93)
+
+
+## 水深 → 水面頂點色（0 m 淺藍綠半透明 → 2.2 m 以上深藍不透明）
+func _water_col(depth: float) -> Color:
+	var c := WATER_SHALLOW.lerp(WATER_DEEP, smoothstep(0.0, 2.2, maxf(depth, 0.0)))
+	return _k(c)
+
+
+func _body_hw(b: Dictionary, r: Vector3) -> float:
+	if (b["ch"] as Dictionary).is_empty():
+		return _hw_interp(river_hw, r)
+	return float(b["ch"]["hw"])
+
+
+func _body_level(b: Dictionary, r: Vector3) -> float:
+	if (b["ch"] as Dictionary).is_empty():
+		return float(H["river_water"])
+	return _level(b["ch"], r)
+
+
+## 網格水面（P2）：每個水體在自己的範圍（離岸最近者）內，從中心線附近的濕頂點（地形 < 水位 + WATER_WET_EPS）
+## 以 8 鄰接洪水填充；有任一角是濕頂點的 2 m 格整格鋪水面（高度＝各角的水位）。
+## → 水面外緣兩端頂點都高出水位，沿格線地形是線性 → 外緣整條埋在岸下（水面稍微伸進岸體下方）；
+##   與河道連通、低於水位的地面都有水（不露底）；不連通的窪地不鋪。
+## 兩水體相接（水渠取水口）：各自多鋪一格到對方範圍，低的水面邊藏在高的水面下，高的水面邊與低水面的落差＝水門落差。
+func _grid_water(bodies: Array) -> Array:
+	var n := nx * nz
+	var own := PackedInt32Array()
+	own.resize(n)
+	own.fill(-1)
+	var own_e := PackedFloat32Array()
+	own_e.resize(n)
+	own_e.fill(INF)
+	var lvv := PackedFloat32Array()
+	lvv.resize(n)
+	var core := PackedByteArray()
+	core.resize(n)
+	for bi in bodies.size():
+		var b: Dictionary = bodies[bi]
+		var pts: PackedVector2Array = b["pts"]
+		var bb := Rect2(pts[0], Vector2.ZERO)
+		for q in pts:
+			bb = bb.expand(q)
+		bb = bb.grow(20.0 + WATER_REACH)
+		var i0 := clampi(floori((bb.position.x - x0) / step), 0, nx - 1)
+		var i1 := clampi(ceili((bb.end.x - x0) / step), 0, nx - 1)
+		var j0 := clampi(floori((bb.position.y - z0) / step), 0, nz - 1)
+		var j1 := clampi(ceili((bb.end.y - z0) / step), 0, nz - 1)
+		for j in range(j0, j1 + 1):
+			for i in range(i0, i1 + 1):
+				var k := j * nx + i
+				var r := _near(pts, Vector2(x0 + i * step, z0 + j * step))
+				var hw := _body_hw(b, r)
+				var e := r.x - hw
+				if e > WATER_REACH or e >= own_e[k]:
+					continue
+				own_e[k] = e
+				own[k] = bi
+				lvv[k] = _body_level(b, r)
+				core[k] = 1 if r.x < hw * 0.5 else 0
+	var wet := PackedByteArray()
+	wet.resize(n)
+	var out: Array = []
+	for bi in bodies.size():
+		var queue: Array[int] = []
+		for k in n:
+			if own[k] == bi and core[k] == 1 and hg[k] < lvv[k] + WATER_WET_EPS:
+				wet[k] = 1
+				queue.append(k)
+		var qi := 0
+		var at_reach := 0
+		while qi < queue.size():
+			var k: int = queue[qi]
+			qi += 1
+			if own_e[k] > WATER_REACH - 2.0:
+				at_reach += 1
+			var i := k % nx
+			var j := k / nx
+			for dj in range(-1, 2):
+				for di in range(-1, 2):
+					var ii := i + di
+					var jj := j + dj
+					if ii < 0 or jj < 0 or ii >= nx or jj >= nz:
+						continue
+					var kk := jj * nx + ii
+					if wet[kk] == 0 and own[kk] == bi and hg[kk] < lvv[kk] + WATER_WET_EPS:
+						wet[kk] = 1
+						queue.append(kk)
+		# 鋪面
+		var b: Dictionary = bodies[bi]
+		var st := SurfaceTool.new()
+		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var cells := 0
+		var lv_cache := {}
+		for j in nz - 1:
+			for i in nx - 1:
+				var a := j * nx + i
+				var cs := [a, a + 1, a + nx, a + nx + 1]
+				var any := false
+				for c in cs:
+					if wet[c] == 1 and own[c] == bi:
+						any = true
+				if not any:
+					continue
+				var vs: Array[Vector3] = []
+				var cl: Array[Color] = []
+				for c in cs:
+					var y := lvv[c]
+					if own[c] != bi:
+						if not lv_cache.has(c):
+							lv_cache[c] = _body_level(b, _near(b["pts"], Vector2(x0 + (c % nx) * step, z0 + (c / nx) * step)))
+						y = lv_cache[c]
+					vs.append(Vector3(x0 + (c % nx) * step, y + 0.001 * float(bi > 0), z0 + (c / nx) * step))
+					cl.append(_water_col(y - hg[c]))
+				for t in [[0, 1, 2], [1, 3, 2]]:
+					for q in t:
+						st.set_normal(Vector3.UP)
+						st.set_color(cl[q])
+						st.add_vertex(vs[q])
+				cells += 1
+		out.append(st.commit())
+		water_stats.append([String(b["name"]), queue.size(), cells, at_reach])
+	return out
 
 
 # ─────────────────────────── 道路與橋 ───────────────────────────
@@ -1695,6 +1865,8 @@ func _report() -> void:
 		rhw_min = minf(rhw_min, v)
 		rhw_max = maxf(rhw_max, v)
 	print("[v2] 主河 %d 點，全寬 %.1f–%.1f m（寬窄比 %.2f）" % [river_pts.size(), rhw_min * 2.0, rhw_max * 2.0, rhw_max / rhw_min])
+	for ws in water_stats:
+		print("[v2] 水面 %-10s 濕頂點 %d、水面格 %d（%d 點碰到 %.0f m 範圍上限）" % [ws[0], ws[1], ws[2], ws[3], WATER_REACH])
 	var probes := {
 		"南門 LANDMARK_SOUTH_GATE": Vector2(234, 100), "主街中段": Vector2(250, 10),
 		"主街北端": Vector2(300, -130), "北丘頂": Vector2(262, -215),

@@ -48,7 +48,8 @@ vertex_color_is_srgb = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66ic4"]
 transparency = 1
 cull_mode = 2
-albedo_color = Color(0.0924, 0.17639999, 0.231, 0.8)
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
 metallic_specular = 0.6
 roughness = 0.15
 
@@ -549,15 +550,15 @@ cull_mode = 2
 albedo_color = Color(0.439, 0.4768, 0.39174998, 0.42)
 roughness = 0.95
 
-[node name="VillageV2" type="Node3D" unique_id=525825416]
+[node name="VillageV2" type="Node3D" unique_id=1116858437]
 metadata/own_colliders = true
 metadata/layout_version = "v2-layout-0.3"
 metadata/layout_status = "LAYOUT_FREEZE"
 metadata/main_street_variant = "W80"
 
-[node name="Lighting" type="Node3D" parent="." unique_id=1176921204]
+[node name="Lighting" type="Node3D" parent="." unique_id=41746593]
 
-[node name="天象系統" type="Node3D" parent="Lighting" unique_id=1097688689]
+[node name="天象系統" type="Node3D" parent="Lighting" unique_id=2055748333]
 script = ExtResource("1_og8e1")
 "時刻" = 17.2
 "一日長度分鐘" = 60.0
@@ -572,80 +573,80 @@ script = ExtResource("1_og8e1")
 "概念圖雲層漂移" = 0.0
 "陰影距離" = 160.0
 
-[node name="Terrain" type="Node3D" parent="." unique_id=1566036828]
+[node name="Terrain" type="Node3D" parent="." unique_id=1691515614]
 
-[node name="MainTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1665697017]
+[node name="MainTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1094902545]
 material_override = SubResource("StandardMaterial3D_pjdsm")
 mesh = ExtResource("3_ulrmh")
 
-[node name="NorthHill" type="MeshInstance3D" parent="Terrain" unique_id=866754917]
+[node name="NorthHill" type="MeshInstance3D" parent="Terrain" unique_id=1054973942]
 material_override = SubResource("StandardMaterial3D_pjdsm")
 mesh = ExtResource("4_uiidh")
 
-[node name="FarmlandTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1670907248]
+[node name="FarmlandTerrain" type="MeshInstance3D" parent="Terrain" unique_id=918216165]
 material_override = SubResource("StandardMaterial3D_pjdsm")
 mesh = ExtResource("5_46rv4")
 
-[node name="RiverTerrain" type="MeshInstance3D" parent="Terrain" unique_id=1970516463]
+[node name="RiverTerrain" type="MeshInstance3D" parent="Terrain" unique_id=170085542]
 material_override = SubResource("StandardMaterial3D_pjdsm")
 mesh = ExtResource("6_7uma7")
 
-[node name="Water" type="Node3D" parent="." unique_id=701990272]
+[node name="Water" type="Node3D" parent="." unique_id=1578498796]
 
-[node name="Streams" type="Node3D" parent="Water" unique_id=1145212987]
+[node name="Streams" type="Node3D" parent="Water" unique_id=1114706881]
 
-[node name="WestStream" type="MeshInstance3D" parent="Water/Streams" unique_id=1310250443]
+[node name="WestStream" type="MeshInstance3D" parent="Water/Streams" unique_id=1795437847]
 material_override = SubResource("StandardMaterial3D_66ic4")
 cast_shadow = 0
 mesh = ExtResource("7_k8ton")
 metadata/label = "西側細渠"
 metadata/water_y_range = [-1.2, 8.09]
 
-[node name="Waterfalls" type="Node3D" parent="Water" unique_id=1993279017]
+[node name="Waterfalls" type="Node3D" parent="Water" unique_id=1717467522]
 
-[node name="WATERFALL_B7" type="Marker3D" parent="Water/Waterfalls" unique_id=1262544223]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, -0.25141406, 42)
+[node name="WATERFALL_B7" type="Marker3D" parent="Water/Waterfalls" unique_id=1635018727]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, -0.2375964, 42)
 metadata/label = "跌水（西渠）"
 metadata/src = "B7"
 metadata/conf = "medium"
 
-[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_B7" unique_id=769675082]
+[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_B7" unique_id=1370744272]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 material_override = SubResource("StandardMaterial3D_x87ej")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_e8xly")
 
-[node name="WATERFALL_F7" type="Marker3D" parent="Water/Waterfalls" unique_id=157131916]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, -2.3224957, 70)
+[node name="WATERFALL_F7" type="Marker3D" parent="Water/Waterfalls" unique_id=1076406399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, -2.3141825, 70)
 metadata/label = "跌水（水車旁）"
 metadata/src = "F7"
 metadata/conf = "low"
 
-[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_F7" unique_id=902521685]
+[node name="Placeholder" type="MeshInstance3D" parent="Water/Waterfalls/WATERFALL_F7" unique_id=1256697810]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 material_override = SubResource("StandardMaterial3D_x87ej")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_mrhqo")
 
-[node name="MainRiver" type="MeshInstance3D" parent="Water" unique_id=1009575767]
+[node name="MainRiver" type="MeshInstance3D" parent="Water" unique_id=1598483741]
 material_override = SubResource("StandardMaterial3D_66ic4")
 cast_shadow = 0
 mesh = ExtResource("8_o8rwy")
 metadata/label = "主河"
 metadata/water_y = -0.8
 
-[node name="Canal" type="MeshInstance3D" parent="Water" unique_id=1437837213]
+[node name="Canal" type="MeshInstance3D" parent="Water" unique_id=945141487]
 material_override = SubResource("StandardMaterial3D_66ic4")
 cast_shadow = 0
 mesh = ExtResource("9_5l8fv")
 metadata/label = "穿村水渠"
 metadata/water_y_range = [-1.6300000000000001, -1.1300000000000001]
 
-[node name="Roads" type="Node3D" parent="." unique_id=840087163]
+[node name="Roads" type="Node3D" parent="." unique_id=1841189311]
 
-[node name="MainStreet" type="Node3D" parent="Roads" unique_id=1039538590]
+[node name="MainStreet" type="Node3D" parent="Roads" unique_id=825692953]
 
-[node name="EntranceRoad" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=604509698]
+[node name="EntranceRoad" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=92740518]
 material_override = SubResource("StandardMaterial3D_81e8b")
 cast_shadow = 0
 mesh = ExtResource("10_301wb")
@@ -653,7 +654,7 @@ metadata/label = "入口道路"
 metadata/width_m = 7.0
 metadata/class = "main"
 
-[node name="MainStreet" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=1634772255]
+[node name="MainStreet" type="MeshInstance3D" parent="Roads/MainStreet" unique_id=1560292157]
 material_override = SubResource("StandardMaterial3D_81e8b")
 cast_shadow = 0
 mesh = ExtResource("11_xhn6r")
@@ -661,9 +662,9 @@ metadata/label = "主街"
 metadata/width_m = 7.2
 metadata/class = "main"
 
-[node name="SecondaryRoads" type="Node3D" parent="Roads" unique_id=27301552]
+[node name="SecondaryRoads" type="Node3D" parent="Roads" unique_id=948124287]
 
-[node name="HillFootStreet" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1496926588]
+[node name="HillFootStreet" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1475254629]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("12_pn8m0")
@@ -671,7 +672,7 @@ metadata/label = "丘腳街"
 metadata/width_m = 6.0
 metadata/class = "secondary"
 
-[node name="HillApproach" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=853255532]
+[node name="HillApproach" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1858499574]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("13_e48wv")
@@ -679,7 +680,7 @@ metadata/label = "參道"
 metadata/width_m = 5.0
 metadata/class = "secondary"
 
-[node name="RiverNorthPath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1100885167]
+[node name="RiverNorthPath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1920883322]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("14_bfkqs")
@@ -687,7 +688,7 @@ metadata/label = "龍神道"
 metadata/width_m = 4.0
 metadata/class = "secondary"
 
-[node name="DragonBridgeRoad" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1061010252]
+[node name="DragonBridgeRoad" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=519193357]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("15_v32kn")
@@ -695,7 +696,7 @@ metadata/label = "龍神橋"
 metadata/width_m = 5.0
 metadata/class = "secondary"
 
-[node name="CrossStreetMid" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1334810334]
+[node name="CrossStreetMid" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=747438642]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("16_vqwgo")
@@ -703,7 +704,7 @@ metadata/label = "中橫街"
 metadata/width_m = 6.0
 metadata/class = "secondary"
 
-[node name="CrossStreetSouth" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1969389485]
+[node name="CrossStreetSouth" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=327489308]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("17_ls14t")
@@ -711,7 +712,7 @@ metadata/label = "南橫街"
 metadata/width_m = 6.0
 metadata/class = "secondary"
 
-[node name="RiversidePath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=1609104048]
+[node name="RiversidePath" type="MeshInstance3D" parent="Roads/SecondaryRoads" unique_id=858775132]
 material_override = SubResource("StandardMaterial3D_a6qf7")
 cast_shadow = 0
 mesh = ExtResource("18_h8hu2")
@@ -719,9 +720,9 @@ metadata/label = "河岸小徑"
 metadata/width_m = 3.0
 metadata/class = "secondary"
 
-[node name="Alleys" type="Node3D" parent="Roads" unique_id=1659797367]
+[node name="Alleys" type="Node3D" parent="Roads" unique_id=1755694683]
 
-[node name="WestAlley" type="MeshInstance3D" parent="Roads/Alleys" unique_id=1060065870]
+[node name="WestAlley" type="MeshInstance3D" parent="Roads/Alleys" unique_id=179853374]
 material_override = SubResource("StandardMaterial3D_uxado")
 cast_shadow = 0
 mesh = ExtResource("19_je4js")
@@ -729,7 +730,7 @@ metadata/label = "西巷"
 metadata/width_m = 3.0
 metadata/class = "alley"
 
-[node name="WestLane" type="MeshInstance3D" parent="Roads/Alleys" unique_id=1036443051]
+[node name="WestLane" type="MeshInstance3D" parent="Roads/Alleys" unique_id=1635279610]
 material_override = SubResource("StandardMaterial3D_uxado")
 cast_shadow = 0
 mesh = ExtResource("20_2q6x5")
@@ -737,9 +738,9 @@ metadata/label = "西渠巷"
 metadata/width_m = 3.0
 metadata/class = "alley"
 
-[node name="FarmPaths" type="Node3D" parent="Roads" unique_id=783473337]
+[node name="FarmPaths" type="Node3D" parent="Roads" unique_id=787238604]
 
-[node name="FarmPath_1" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=646459304]
+[node name="FarmPath_1" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=1977298488]
 material_override = SubResource("StandardMaterial3D_8o5fm")
 cast_shadow = 0
 mesh = ExtResource("21_u5kwi")
@@ -747,7 +748,7 @@ metadata/label = "田埂道"
 metadata/width_m = 2.4
 metadata/class = "farm"
 
-[node name="FarmPath_2" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=1389979775]
+[node name="FarmPath_2" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=883178236]
 material_override = SubResource("StandardMaterial3D_8o5fm")
 cast_shadow = 0
 mesh = ExtResource("22_3egvy")
@@ -755,7 +756,7 @@ metadata/label = "田埂道"
 metadata/width_m = 2.4
 metadata/class = "farm"
 
-[node name="FarmPath_3" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=1845439441]
+[node name="FarmPath_3" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=614773594]
 material_override = SubResource("StandardMaterial3D_8o5fm")
 cast_shadow = 0
 mesh = ExtResource("23_v14w0")
@@ -763,7 +764,7 @@ metadata/label = "田埂道"
 metadata/width_m = 2.4
 metadata/class = "farm"
 
-[node name="FarmPath_4" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=962813244]
+[node name="FarmPath_4" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=455289526]
 material_override = SubResource("StandardMaterial3D_8o5fm")
 cast_shadow = 0
 mesh = ExtResource("24_m7jwk")
@@ -771,7 +772,7 @@ metadata/label = "田埂道"
 metadata/width_m = 2.4
 metadata/class = "farm"
 
-[node name="FarmPath_5" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=589429530]
+[node name="FarmPath_5" type="MeshInstance3D" parent="Roads/FarmPaths" unique_id=310194426]
 material_override = SubResource("StandardMaterial3D_8o5fm")
 cast_shadow = 0
 mesh = ExtResource("25_f0h10")
@@ -779,302 +780,302 @@ metadata/label = "田埂道"
 metadata/width_m = 2.4
 metadata/class = "farm"
 
-[node name="Bridges" type="Node3D" parent="Roads" unique_id=944905416]
+[node name="Bridges" type="Node3D" parent="Roads" unique_id=1882487644]
 
-[node name="Bridge_01_HillFootStreet_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=881617875]
+[node name="Bridge_01_HillFootStreet_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=1489937239]
 transform = Transform3D(-4.371139e-08, 0.006842341, 0.9999766, 0, 0.9999766, -0.006842341, -1, -2.9908823e-10, -4.3710365e-08, 355.1, 1.0836356, -128)
 metadata/label = "丘腳街 × Canal"
 metadata/length_m = 17.0
 metadata/end_heights = [1.6300000000000001, 1.74]
 metadata/cross_deg = 62.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=1756278057]
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=1636168205]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_4gaic")
 mesh = SubResource("BoxMesh_4iojd")
 
-[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=361523835]
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_01_HillFootStreet_Canal" unique_id=1466277135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("BoxShape3D_irf7k")
 
-[node name="Bridge_02_DragonBridgeRoad_River" type="StaticBody3D" parent="Roads/Bridges" unique_id=1720564708]
+[node name="Bridge_02_DragonBridgeRoad_River" type="StaticBody3D" parent="Roads/Bridges" unique_id=310841850]
 transform = Transform3D(-4.371139e-08, -0.034611303, 0.99940085, 0, 0.99940085, 0.034611303, -1, 1.5129081e-09, -4.3685198e-08, 399.85, 0.51052725, -205)
 metadata/label = "龍神橋 × River"
 metadata/length_m = 42.5
 metadata/end_heights = [1.85, 0.37]
 metadata/cross_deg = 72.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=434454481]
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=1221473160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_4gaic")
 mesh = SubResource("BoxMesh_1brds")
 
-[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=607437550]
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_02_DragonBridgeRoad_River" unique_id=2070094552]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("BoxShape3D_ge3ot")
 
-[node name="Bridge_03_CrossStreetMid_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=23616731]
+[node name="Bridge_03_CrossStreetMid_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=1576096361]
 transform = Transform3D(-0.18589161, 0.046350703, 0.9814764, 0, 0.99888676, -0.047172915, -0.98257023, -0.008769049, -0.18568467, 335.91876, -0.22743104, -33.98463)
 metadata/label = "中橫街 × Canal"
 metadata/length_m = 15.0
 metadata/end_heights = [0.02, 0.73]
 metadata/cross_deg = 75.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=1815000566]
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=1594083780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_4gaic")
 mesh = SubResource("BoxMesh_btvvr")
 
-[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=1814649507]
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_03_CrossStreetMid_Canal" unique_id=1630749654]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("BoxShape3D_3hih8")
 
-[node name="Bridge_04_CrossStreetSouth_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=165645552]
+[node name="Bridge_04_CrossStreetSouth_Canal" type="StaticBody3D" parent="Roads/Bridges" unique_id=1182722528]
 transform = Transform3D(-0.037011676, -0.00040999064, 0.9993148, 0, 0.99999994, 0.00041027175, -0.99931484, 1.5184845e-05, -0.03701167, 321.0566, -0.13278532, 41.88679)
 metadata/label = "南橫街 × Canal"
 metadata/length_m = 14.0
 metadata/end_heights = [0.47000000000000003, 0.46]
 metadata/cross_deg = 61.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=1557466250]
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=1377089709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_4gaic")
 mesh = SubResource("BoxMesh_el3lf")
 
-[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=336645206]
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_04_CrossStreetSouth_Canal" unique_id=167600372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("BoxShape3D_the06")
 
-[node name="Bridge_05_WestLane_WestStream" type="StaticBody3D" parent="Roads/Bridges" unique_id=1239739605]
+[node name="Bridge_05_WestLane_WestStream" type="StaticBody3D" parent="Roads/Bridges" unique_id=890556351]
 transform = Transform3D(0.29408586, -0.0016838071, -0.9557775, 0, 0.99999845, -0.0017617118, 0.955779, 0.0005180945, 0.2940854, 159.88388, 0.4116183, -10.271968)
 metadata/label = "西渠巷 × WestStream"
 metadata/length_m = 11.5
 metadata/end_heights = [1.0, 1.02]
 metadata/cross_deg = 53.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=454810384]
+[node name="Mesh" type="MeshInstance3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=1706225334]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 material_override = SubResource("StandardMaterial3D_4gaic")
 mesh = SubResource("BoxMesh_26neb")
 
-[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=796342533]
+[node name="Shape" type="CollisionShape3D" parent="Roads/Bridges/Bridge_05_WestLane_WestStream" unique_id=1449598402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("BoxShape3D_7clkb")
 
-[node name="Districts" type="Node3D" parent="." unique_id=112332484]
+[node name="Districts" type="Node3D" parent="." unique_id=1089713155]
 
-[node name="Market" type="Node3D" parent="Districts" unique_id=1990179537]
+[node name="Market" type="Node3D" parent="Districts" unique_id=1010315566]
 metadata/label = "市集"
 metadata/src = "區域圖橙色 C-F 列4-9；底圖主街兩側店面 E4-E6、南段 C7-E7"
 metadata/conf = "medium"
 metadata/kind = "built"
 
-[node name="MixedCommercial" type="Node3D" parent="Districts" unique_id=822773411]
+[node name="MixedCommercial" type="Node3D" parent="Districts" unique_id=1490839653]
 metadata/label = "住商混合"
 metadata/src = "區域圖藍色 D-H 列2-5（主街北段、丘腳、往龍神像）"
 metadata/conf = "medium"
 metadata/kind = "built"
 
-[node name="ResidentialWest" type="Node3D" parent="Districts" unique_id=625754438]
+[node name="ResidentialWest" type="Node3D" parent="Districts" unique_id=1568388679]
 metadata/label = "西住宅區"
 metadata/src = "區域圖綠色 A-E 列1-9；底圖住宅＋庭園水道 B4-D7、西北疏村 B2-D3"
 metadata/conf = "medium"
 metadata/kind = "built"
 
-[node name="ResidentialNE" type="Node3D" parent="Districts" unique_id=1003321]
+[node name="ResidentialNE" type="Node3D" parent="Districts" unique_id=233575066]
 metadata/label = "東北住宅區"
 metadata/src = "區域圖綠色 G-J 列1-4；與底圖 I1-J3 森林衝突（底圖優先，縮小成龍神橋東側小聚落）"
 metadata/conf = "low"
 metadata/kind = "built"
 
-[node name="MansionEstate" type="Node3D" parent="Districts" unique_id=537251955]
+[node name="MansionEstate" type="Node3D" parent="Districts" unique_id=566986929]
 metadata/label = "大宅庭園"
 metadata/src = "底圖華麗大宅 H5-H6，庭園延至 G6-H7"
 metadata/conf = "medium"
 metadata/kind = "built"
 
-[node name="SouthGate" type="Node3D" parent="Districts" unique_id=1513546645]
+[node name="SouthGate" type="Node3D" parent="Districts" unique_id=1947023190]
 metadata/label = "南入口"
 metadata/src = "大鳥居 D9、入口道路 C10-D10"
 metadata/conf = "high"
 metadata/kind = "built"
 
-[node name="FarmlandEast" type="Node3D" parent="Districts" unique_id=1161153883]
+[node name="FarmlandEast" type="Node3D" parent="Districts" unique_id=952952349]
 metadata/label = "東農田"
 metadata/src = "區域圖米白 F-J 列3-10；底圖田格 H3-J8 最清楚"
 metadata/conf = "medium"
 metadata/kind = "farm"
 
-[node name="NorthHill" type="Node3D" parent="Districts" unique_id=521283361]
+[node name="NorthHill" type="Node3D" parent="Districts" unique_id=1813366356]
 metadata/label = "北丘（林丘社寺）"
 metadata/src = "林丘 D1-F3；山頂主殿 E1-E2；左肩／右側次峰（參道鳥居稜）／右長肩降到河谷"
 
-[node name="Riverside" type="Node3D" parent="Districts" unique_id=685147067]
+[node name="Riverside" type="Node3D" parent="Districts" unique_id=836136790]
 metadata/label = "河岸帶（主河兩岸 6 m 內；尚未分配用途）"
 
-[node name="Landmarks" type="Node3D" parent="." unique_id=1559363320]
+[node name="Landmarks" type="Node3D" parent="." unique_id=2126461902]
 
-[node name="LANDMARK_SOUTH_GATE" type="Node3D" parent="Landmarks" unique_id=987451540]
+[node name="LANDMARK_SOUTH_GATE" type="Node3D" parent="Landmarks" unique_id=105239495]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 0.31183434, 100)
 metadata/label = "大鳥居"
 metadata/src = "D9"
 metadata/conf = "high"
 metadata/placeholder = true
 
-[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE" unique_id=1222963038]
+[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE" unique_id=2039507736]
 
-[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=56504357]
+[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1758678493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=1668249239]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=1610958307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_mmpmm")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=901831009]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_L" unique_id=451233498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 shape = SubResource("BoxShape3D_cawio")
 
-[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1639520527]
+[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1193648073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=1405289145]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=888579537]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_obgbt")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=473820736]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Pillar_R" unique_id=1085663921]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 shape = SubResource("BoxShape3D_8xnir")
 
-[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1626954357]
+[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1222193290]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Kasagi" unique_id=176587536]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Kasagi" unique_id=102348771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 material_override = SubResource("StandardMaterial3D_ubk13")
 mesh = SubResource("BoxMesh_b5rnd")
 
-[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=861933466]
+[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii" unique_id=1428354965]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Nuki" unique_id=908525275]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_SOUTH_GATE/Torii/Nuki" unique_id=653806197]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_lju6y")
 
-[node name="LANDMARK_NORTH_HILL" type="Node3D" parent="Landmarks" unique_id=1159775115]
+[node name="LANDMARK_NORTH_HILL" type="Node3D" parent="Landmarks" unique_id=900807265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 34.166138, -228)
 metadata/label = "山頂社殿"
 metadata/src = "E1-E2"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_NORTH_HILL" unique_id=685389570]
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_NORTH_HILL" unique_id=554727934]
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=875746373]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=1750833890]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 material_override = SubResource("StandardMaterial3D_koln5")
 mesh = SubResource("BoxMesh_2et7s")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=1335308974]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_NORTH_HILL/Block" unique_id=2032455213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 shape = SubResource("BoxShape3D_hjym7")
 
-[node name="LANDMARK_HILL_TORII" type="Node3D" parent="Landmarks" unique_id=505851997]
+[node name="LANDMARK_HILL_TORII" type="Node3D" parent="Landmarks" unique_id=1838896314]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.6, 1.1606741, -166)
 metadata/label = "參道鳥居"
 metadata/src = "E2"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII" unique_id=794175166]
+[node name="Torii" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII" unique_id=1432562309]
 transform = Transform3D(0.92718387, 0, 0.37460658, 0, 1, 0, -0.37460658, 0, 0.92718387, 0, 0, 0)
 
-[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=1906039337]
+[node name="Pillar_L" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=937760362]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=440565412]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=649056538]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_vuolb")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=1160480729]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_L" unique_id=490659398]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 shape = SubResource("BoxShape3D_6by1g")
 
-[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=591706982]
+[node name="Pillar_R" type="StaticBody3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=888523290]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=891898632]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=403662740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_fh7a3")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=1253387178]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Pillar_R" unique_id=1432664636]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 shape = SubResource("BoxShape3D_1qu6k")
 
-[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=748604515]
+[node name="Kasagi" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=2079892073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Kasagi" unique_id=531439685]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Kasagi" unique_id=616686924]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
 material_override = SubResource("StandardMaterial3D_ubk13")
 mesh = SubResource("BoxMesh_kx6bf")
 
-[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=547652146]
+[node name="Nuki" type="Node3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii" unique_id=1868265370]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.68, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Nuki" unique_id=1454386731]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILL_TORII/Torii/Nuki" unique_id=1866024050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1925, 0)
 material_override = SubResource("StandardMaterial3D_4u7kf")
 mesh = SubResource("BoxMesh_kunsi")
 
-[node name="LANDMARK_HILLFOOT_TEMPLE" type="Node3D" parent="Landmarks" unique_id=1248903110]
+[node name="LANDMARK_HILLFOOT_TEMPLE" type="Node3D" parent="Landmarks" unique_id=86565569]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 228, 1.1980519, -170)
 metadata/label = "丘腳社寺"
 metadata/src = "D3-E3"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" unique_id=1564644973]
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" unique_id=405995262]
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=182733652]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=1298141242]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 material_override = SubResource("StandardMaterial3D_koln5")
 mesh = SubResource("BoxMesh_ofsgo")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=1937774325]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=37944089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 shape = SubResource("BoxShape3D_45t0k")
 
-[node name="LANDMARK_DRAGON" type="Node3D" parent="Landmarks" unique_id=1624893122]
+[node name="LANDMARK_DRAGON" type="Node3D" parent="Landmarks" unique_id=388167500]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, -0.16943625, -188)
 metadata/label = "龍神像"
 metadata/src = "H2-H3（主河西岸、取水口北側）"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Base" type="StaticBody3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=1542784211]
+[node name="Base" type="StaticBody3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=1341985223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 metadata/top_y = 2.5
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=1080635146]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=734095006]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8347181, 0)
 material_override = SubResource("StandardMaterial3D_v2e8s")
 mesh = SubResource("BoxMesh_1k02i")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=940215636]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_DRAGON/Base" unique_id=293141201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8347181, 0)
 shape = SubResource("BoxShape3D_8flbn")
 
-[node name="Statue" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=1206181531]
+[node name="Statue" type="MeshInstance3D" parent="Landmarks/LANDMARK_DRAGON" unique_id=1698345977]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.669436, 0)
 material_override = SubResource("StandardMaterial3D_vfmoe")
 mesh = SubResource("CylinderMesh_m3l3u")
 
-[node name="LANDMARK_TERAKOYA" type="Node3D" parent="Landmarks" unique_id=743107874]
+[node name="LANDMARK_TERAKOYA" type="Node3D" parent="Landmarks" unique_id=220633786]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188, 0.756, 24)
 metadata/label = "寺院式大屋（寺子屋候補）"
 metadata/src = "C6-D7 寺院式大屋頂；指定為寺子屋＝候補"
@@ -1084,37 +1085,37 @@ metadata/display = "wire"
 metadata/footprint_m = [22.0, 16.0]
 metadata/height_m = 11.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=870164738]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=1970481176]
 material_override = SubResource("StandardMaterial3D_7gbj2")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_k0kcc")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=1673306239]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_TERAKOYA" unique_id=1198489663]
 material_override = SubResource("StandardMaterial3D_7gbj2")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_7h4qo")
 metadata/footprint_m = [22.0, 16.0]
 
-[node name="LANDMARK_TOWER" type="Node3D" parent="Landmarks" unique_id=78440834]
+[node name="LANDMARK_TOWER" type="Node3D" parent="Landmarks" unique_id=1198326764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.504, 66)
 metadata/label = "樓閣（火見櫓候補）"
 metadata/src = "E7-E8 多層塔式建築"
 metadata/conf = "low"
 metadata/placeholder = true
 
-[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_TOWER" unique_id=312831587]
+[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_TOWER" unique_id=530757976]
 
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=1619169433]
+[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=1041288126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 material_override = SubResource("StandardMaterial3D_uf5ow")
 mesh = SubResource("BoxMesh_sk0ni")
 
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=1427848206]
+[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_TOWER/Block" unique_id=801307616]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 shape = SubResource("BoxShape3D_6kerd")
 
-[node name="LANDMARK_HIEDA" type="Node3D" parent="Landmarks" unique_id=1105967550]
+[node name="LANDMARK_HIEDA" type="Node3D" parent="Landmarks" unique_id=645087878]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 1.14, -40)
 metadata/label = "華麗大宅（稗田邸候補）"
 metadata/src = "H5-H6 獨立庭園大宅；稗田邸東側候選位置，只留 footprint／quest anchor，P4 Full Greybox 再裁示（2026-09-23 裁示）"
@@ -1125,19 +1126,19 @@ metadata/display = "wire"
 metadata/footprint_m = [28.0, 18.0]
 metadata/height_m = 9.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=540225873]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=508872935]
 material_override = SubResource("StandardMaterial3D_ex2d1")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_0w21f")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=1999174598]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA" unique_id=1190386265]
 material_override = SubResource("StandardMaterial3D_ex2d1")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_gija5")
 metadata/footprint_m = [28.0, 18.0]
 
-[node name="LANDMARK_HIEDA_GATE" type="Node3D" parent="Landmarks" unique_id=1600895136]
+[node name="LANDMARK_HIEDA_GATE" type="Node3D" parent="Landmarks" unique_id=470444198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 0.96, -10)
 metadata/label = "大宅門"
 metadata/src = "H6-G7 紅色曲頂門；隨稗田邸 PROVISIONAL"
@@ -1148,19 +1149,19 @@ metadata/display = "wire"
 metadata/footprint_m = [7.0, 2.0]
 metadata/height_m = 5.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=1925609978]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=1578157352]
 material_override = SubResource("StandardMaterial3D_f7i0t")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_at11v")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=941491635]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_HIEDA_GATE" unique_id=1295098959]
 material_override = SubResource("StandardMaterial3D_f7i0t")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_vmchg")
 metadata/footprint_m = [7.0, 2.0]
 
-[node name="LANDMARK_SUZUNAAN" type="Node3D" parent="Landmarks" unique_id=1695415160]
+[node name="LANDMARK_SUZUNAAN" type="Node3D" parent="Landmarks" unique_id=1626856267]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 247.8, 0.936, -6)
 metadata/label = "鈴奈庵（候補）"
 metadata/src = "市集主街西側（概念圖無標示）"
@@ -1170,19 +1171,19 @@ metadata/display = "wire"
 metadata/footprint_m = [10.0, 9.0]
 metadata/height_m = 7.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=1596189438]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=135359047]
 material_override = SubResource("StandardMaterial3D_u1lp1")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_sjhf7")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=490246797]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_SUZUNAAN" unique_id=376030792]
 material_override = SubResource("StandardMaterial3D_u1lp1")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_evcs3")
 metadata/footprint_m = [10.0, 9.0]
 
-[node name="LANDMARK_GEIDONTEI" type="Node3D" parent="Landmarks" unique_id=874277268]
+[node name="LANDMARK_GEIDONTEI" type="Node3D" parent="Landmarks" unique_id=1511161480]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 284.6, 1.272, -62)
 metadata/label = "鯢吞亭（候補）"
 metadata/src = "市集主街東側（概念圖無標示）"
@@ -1192,19 +1193,19 @@ metadata/display = "wire"
 metadata/footprint_m = [12.0, 10.0]
 metadata/height_m = 8.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=2070985779]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=642277665]
 material_override = SubResource("StandardMaterial3D_qgjb5")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_twq70")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=471417881]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_GEIDONTEI" unique_id=2144639496]
 material_override = SubResource("StandardMaterial3D_qgjb5")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_aggah")
 metadata/footprint_m = [12.0, 10.0]
 
-[node name="LANDMARK_KIRISAME" type="Node3D" parent="Landmarks" unique_id=976571241]
+[node name="LANDMARK_KIRISAME" type="Node3D" parent="Landmarks" unique_id=1217695924]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 229.7, 0.528, 62)
 metadata/label = "霧雨店（候補）"
 metadata/src = "市集南段主街西側（概念圖無標示）"
@@ -1214,148 +1215,148 @@ metadata/display = "wire"
 metadata/footprint_m = [9.0, 8.0]
 metadata/height_m = 7.0
 
-[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=1829703234]
+[node name="Wire" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=1899158044]
 material_override = SubResource("StandardMaterial3D_lhsts")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_agdx1")
 metadata/note = "量體線框（未定案地標；不擋視線、無碰撞）"
 
-[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=930375281]
+[node name="Footprint" type="MeshInstance3D" parent="Landmarks/LANDMARK_KIRISAME" unique_id=978930614]
 material_override = SubResource("StandardMaterial3D_lhsts")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_ptic7")
 metadata/footprint_m = [9.0, 8.0]
 
-[node name="LANDMARK_WATERWHEEL_1" type="Node3D" parent="Landmarks" unique_id=1402156352]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, -1.3010031, -52)
+[node name="LANDMARK_WATERWHEEL_1" type="Node3D" parent="Landmarks" unique_id=1995489180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, -1.490979, -52)
 metadata/label = "水車"
 metadata/src = "F5-F7 水渠西岸水車群"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_1" unique_id=1629909783]
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_1" unique_id=1667231509]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
 material_override = SubResource("StandardMaterial3D_lv4c6")
 mesh = SubResource("CylinderMesh_267v0")
 
-[node name="LANDMARK_WATERWHEEL_2" type="Node3D" parent="Landmarks" unique_id=1802399081]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, -1.8027302, 0)
+[node name="LANDMARK_WATERWHEEL_2" type="Node3D" parent="Landmarks" unique_id=1326724798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, -2.0806286, 0)
 metadata/label = "水車"
 metadata/src = "F5-F7"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_2" unique_id=2077283976]
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_2" unique_id=1202374246]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
 material_override = SubResource("StandardMaterial3D_lv4c6")
 mesh = SubResource("CylinderMesh_ukpt7")
 
-[node name="LANDMARK_WATERWHEEL_3" type="Node3D" parent="Landmarks" unique_id=774210357]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, -2.075482, 58)
+[node name="LANDMARK_WATERWHEEL_3" type="Node3D" parent="Landmarks" unique_id=1167477474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, -2.3716633, 58)
 metadata/label = "水車"
 metadata/src = "F5-F7"
 metadata/conf = "medium"
 metadata/placeholder = true
 
-[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_3" unique_id=797868170]
+[node name="Wheel" type="MeshInstance3D" parent="Landmarks/LANDMARK_WATERWHEEL_3" unique_id=1891883528]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.92, 0)
 material_override = SubResource("StandardMaterial3D_lv4c6")
 mesh = SubResource("CylinderMesh_iywg8")
 
-[node name="QuestAnchors" type="Node3D" parent="." unique_id=689841256]
+[node name="QuestAnchors" type="Node3D" parent="." unique_id=1488740184]
 
-[node name="human_village_gate" type="Marker3D" parent="QuestAnchors" unique_id=1873085201]
+[node name="human_village_gate" type="Marker3D" parent="QuestAnchors" unique_id=101643715]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 0.29678464, 110)
 metadata/label = "人間之里"
 metadata/old_slice = [234.0, 101.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/human_village_gate" unique_id=467237418]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/human_village_gate" unique_id=1742705508]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_rjlff")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_ouvhx")
 
-[node name="gatekeeper_gate" type="Marker3D" parent="QuestAnchors" unique_id=2016844314]
+[node name="gatekeeper_gate" type="Marker3D" parent="QuestAnchors" unique_id=498458565]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.5, 0.31807813, 98)
 metadata/label = "村門的守衛"
 metadata/old_slice = [240.0, 92.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/gatekeeper_gate" unique_id=248480935]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/gatekeeper_gate" unique_id=299906615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_kq1uf")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_wdbca")
 
-[node name="village_temple_school" type="Marker3D" parent="QuestAnchors" unique_id=913673179]
+[node name="village_temple_school" type="Marker3D" parent="QuestAnchors" unique_id=1468811981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.756, 24)
 metadata/label = "寺子屋"
 metadata/old_slice = [305.0, 42.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/village_temple_school" unique_id=147367406]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/village_temple_school" unique_id=1110292005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_hryr3")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_ku3c3")
 
-[node name="keine_first" type="Marker3D" parent="QuestAnchors" unique_id=308396931]
+[node name="keine_first" type="Marker3D" parent="QuestAnchors" unique_id=115873498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.75440764, 30)
 metadata/label = "寺子屋的慧音"
 metadata/old_slice = [315.0, 47.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_first" unique_id=136898282]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_first" unique_id=1943253850]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_vq0tw")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_eltto")
 
-[node name="keine_verdict" type="Marker3D" parent="QuestAnchors" unique_id=2063568067]
+[node name="keine_verdict" type="Marker3D" parent="QuestAnchors" unique_id=1840768355]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 0.75440764, 30)
 metadata/label = "寺子屋（裁定）"
 metadata/old_slice = [315.0, 47.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_verdict" unique_id=519227099]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/keine_verdict" unique_id=1926718879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_whomq")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_um7hq")
 
-[node name="kosuzu_lending" type="Marker3D" parent="QuestAnchors" unique_id=1027202059]
+[node name="kosuzu_lending" type="Marker3D" parent="QuestAnchors" unique_id=1759208076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 253.5, 0.92910004, -6)
 metadata/label = "鈴奈庵"
 metadata/old_slice = [236.0, -68.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/kosuzu_lending" unique_id=1570503392]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/kosuzu_lending" unique_id=1993573817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_rrkjo")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_7hdkw")
 
-[node name="akyuu_record" type="Marker3D" parent="QuestAnchors" unique_id=853770093]
+[node name="akyuu_record" type="Marker3D" parent="QuestAnchors" unique_id=785448614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 0.6060079, -4)
 metadata/label = "稗田邸"
 metadata/old_slice = [233.0, -122.0]
 metadata/status = "PROVISIONAL"
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/akyuu_record" unique_id=587651537]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/akyuu_record" unique_id=572542144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_gl4wv")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_a0qkb")
 
-[node name="inn_room" type="Marker3D" parent="QuestAnchors" unique_id=320105671]
+[node name="inn_room" type="Marker3D" parent="QuestAnchors" unique_id=410754539]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278.5, 1.2784402, -62)
 metadata/label = "鯢吞亭"
 metadata/old_slice = [213.0, -82.0]
 
-[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/inn_room" unique_id=113381203]
+[node name="Pole" type="MeshInstance3D" parent="QuestAnchors/inn_room" unique_id=1071389947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 material_override = SubResource("StandardMaterial3D_28j7a")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_mx1ty")
 
-[node name="Vegetation" type="Node3D" parent="." unique_id=1235846579]
+[node name="Vegetation" type="Node3D" parent="." unique_id=866383296]
 
-[node name="Forest_SouthW" type="MeshInstance3D" parent="Vegetation" unique_id=1351191773]
+[node name="Forest_SouthW" type="MeshInstance3D" parent="Vegetation" unique_id=1291392642]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("26_iqcbk")
 metadata/label = "南林（西）"
@@ -1364,7 +1365,7 @@ metadata/conf = "high"
 metadata/area_m2 = 18816.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Forest_SouthE" type="MeshInstance3D" parent="Vegetation" unique_id=1611180821]
+[node name="Forest_SouthE" type="MeshInstance3D" parent="Vegetation" unique_id=1584452392]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("27_gx66h")
 metadata/label = "南林（東）"
@@ -1373,7 +1374,7 @@ metadata/conf = "medium"
 metadata/area_m2 = 21408.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Forest_West" type="MeshInstance3D" parent="Vegetation" unique_id=679871554]
+[node name="Forest_West" type="MeshInstance3D" parent="Vegetation" unique_id=1345403142]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("28_pdbju")
 metadata/label = "西林／竹林"
@@ -1382,7 +1383,7 @@ metadata/conf = "high"
 metadata/area_m2 = 44448.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Forest_NorthW" type="MeshInstance3D" parent="Vegetation" unique_id=227754141]
+[node name="Forest_NorthW" type="MeshInstance3D" parent="Vegetation" unique_id=1491653092]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("29_bwlqh")
 metadata/label = "北山林（西）"
@@ -1391,7 +1392,7 @@ metadata/conf = "high"
 metadata/area_m2 = 21712.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Forest_NorthE" type="MeshInstance3D" parent="Vegetation" unique_id=1778699783]
+[node name="Forest_NorthE" type="MeshInstance3D" parent="Vegetation" unique_id=2051151437]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("30_vimvh")
 metadata/label = "北山林（東）"
@@ -1400,7 +1401,7 @@ metadata/conf = "medium"
 metadata/area_m2 = 15472.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Forest_HillCrown" type="MeshInstance3D" parent="Vegetation" unique_id=874584402]
+[node name="Forest_HillCrown" type="MeshInstance3D" parent="Vegetation" unique_id=942300955]
 material_override = SubResource("StandardMaterial3D_58d14")
 mesh = ExtResource("31_q0w0m")
 metadata/label = "北丘林冠"
@@ -1409,51 +1410,51 @@ metadata/conf = "medium"
 metadata/area_m2 = 12880.0
 metadata/placeholder = "林冠團塊（不是樹；§53 C 禁止正式種樹）"
 
-[node name="Props" type="Node3D" parent="." unique_id=693646520]
+[node name="Props" type="Node3D" parent="." unique_id=156427053]
 
-[node name="Collision" type="Node3D" parent="." unique_id=582970995]
+[node name="Collision" type="Node3D" parent="." unique_id=1811320303]
 
-[node name="TerrainCollision" type="StaticBody3D" parent="Collision" unique_id=161706134]
+[node name="TerrainCollision" type="StaticBody3D" parent="Collision" unique_id=137136547]
 
-[node name="Shape" type="CollisionShape3D" parent="Collision/TerrainCollision" unique_id=981125783]
+[node name="Shape" type="CollisionShape3D" parent="Collision/TerrainCollision" unique_id=1122242023]
 shape = ExtResource("32_erbdm")
 
-[node name="Boundary" type="StaticBody3D" parent="Collision" unique_id=1760962574]
+[node name="Boundary" type="StaticBody3D" parent="Collision" unique_id=1795941743]
 
-[node name="Wall_N" type="CollisionShape3D" parent="Collision/Boundary" unique_id=446761350]
+[node name="Wall_N" type="CollisionShape3D" parent="Collision/Boundary" unique_id=1104770134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 280, 35, -340.5)
 shape = SubResource("BoxShape3D_gs3ng")
 
-[node name="Wall_S" type="CollisionShape3D" parent="Collision/Boundary" unique_id=276716102]
+[node name="Wall_S" type="CollisionShape3D" parent="Collision/Boundary" unique_id=579751775]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 280, 35, 220.5)
 shape = SubResource("BoxShape3D_3668n")
 
-[node name="Wall_W" type="CollisionShape3D" parent="Collision/Boundary" unique_id=1693742409]
+[node name="Wall_W" type="CollisionShape3D" parent="Collision/Boundary" unique_id=797482925]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 35, -60)
 shape = SubResource("BoxShape3D_f1e01")
 
-[node name="Wall_E" type="CollisionShape3D" parent="Collision/Boundary" unique_id=953850232]
+[node name="Wall_E" type="CollisionShape3D" parent="Collision/Boundary" unique_id=1846246108]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 560.5, 35, -60)
 shape = SubResource("BoxShape3D_h7kil")
 
-[node name="Navigation" type="Node3D" parent="." unique_id=370031809]
+[node name="Navigation" type="Node3D" parent="." unique_id=1793417917]
 
-[node name="Portals" type="Node3D" parent="." unique_id=1957998827]
+[node name="Portals" type="Node3D" parent="." unique_id=1953708361]
 
-[node name="PORTAL_TRAIL" type="Marker3D" parent="Portals" unique_id=1511371194]
+[node name="PORTAL_TRAIL" type="Marker3D" parent="Portals" unique_id=879930401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224, 0.21684733, 172)
 metadata/target = "trail"
 metadata/label = "→ 獸道"
 metadata/src = "C10-D10 入口道路南端"
 metadata/conf = "high"
 
-[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_TRAIL" unique_id=1483573558]
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_TRAIL" unique_id=1376952265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
 material_override = SubResource("StandardMaterial3D_6cwyc")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_10g0b")
 
-[node name="PORTAL_HIEDA1F" type="Marker3D" parent="Portals" unique_id=747443725]
+[node name="PORTAL_HIEDA1F" type="Marker3D" parent="Portals" unique_id=900073073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 0.54265046, 2)
 metadata/target = "hieda1f"
 metadata/label = "→ 稗田邸"
@@ -1461,31 +1462,31 @@ metadata/src = "隨稗田邸候補（low）"
 metadata/conf = "low"
 metadata/status = "PROVISIONAL"
 
-[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_HIEDA1F" unique_id=976796163]
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_HIEDA1F" unique_id=1156792310]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
 material_override = SubResource("StandardMaterial3D_msl60")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_msj8k")
 
-[node name="PORTAL_KOURINDOU" type="Marker3D" parent="Portals" unique_id=2097553556]
+[node name="PORTAL_KOURINDOU" type="Marker3D" parent="Portals" unique_id=910803047]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 428, 2.1262145, -205)
 metadata/target = "kourindou"
 metadata/label = "→ 香霖堂"
 metadata/src = "龍神橋東端（舊 slice 亦在龍石像橋東岸）"
 metadata/conf = "medium"
 
-[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_KOURINDOU" unique_id=2005456072]
+[node name="Disc" type="MeshInstance3D" parent="Portals/PORTAL_KOURINDOU" unique_id=1770442081]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
 material_override = SubResource("StandardMaterial3D_222u4")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_pfqe1")
 
-[node name="Debug" type="Node3D" parent="." unique_id=1519503988]
+[node name="Debug" type="Node3D" parent="." unique_id=883427620]
 metadata/note = "LAYOUT_PROTOTYPE：只有 placeholder。座標來源 maps/village_v2/layout_v2.json"
 
-[node name="Labels" type="Node3D" parent="Debug" unique_id=511771598]
+[node name="Labels" type="Node3D" parent="Debug" unique_id=113338814]
 
-[node name="MainRiver_Label" type="Label3D" parent="Debug/Labels" unique_id=1830800584]
+[node name="MainRiver_Label" type="Label3D" parent="Debug/Labels" unique_id=224196136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 385, 17.2, -256)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1497,7 +1498,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="Canal_Label" type="Label3D" parent="Debug/Labels" unique_id=1904568862]
+[node name="Canal_Label" type="Label3D" parent="Debug/Labels" unique_id=1622360647]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334, 14, -10)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1509,8 +1510,8 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="WATERFALL_B7_Label" type="Label3D" parent="Debug/Labels" unique_id=7380047]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, 4.2485857, 42)
+[node name="WATERFALL_B7_Label" type="Label3D" parent="Debug/Labels" unique_id=1489248087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.8, 4.2624035, 42)
 visibility_range_end = 120.0
 pixel_size = 0.02
 billboard = 1
@@ -1519,8 +1520,8 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="WATERFALL_F7_Label" type="Label3D" parent="Debug/Labels" unique_id=1963549948]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 2.1775043, 70)
+[node name="WATERFALL_F7_Label" type="Label3D" parent="Debug/Labels" unique_id=765594685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307, 2.1858175, 70)
 visibility_range_end = 120.0
 pixel_size = 0.02
 billboard = 1
@@ -1529,7 +1530,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="Market_Label" type="Label3D" parent="Debug/Labels" unique_id=1673184905]
+[node name="Market_Label" type="Label3D" parent="Debug/Labels" unique_id=521872813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 262, 30.9606, -9)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1540,7 +1541,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="MixedCommercial_Label" type="Label3D" parent="Debug/Labels" unique_id=652475023]
+[node name="MixedCommercial_Label" type="Label3D" parent="Debug/Labels" unique_id=406827085]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 301.63635, 31.705181, -130.90909)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1551,7 +1552,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="ResidentialWest_Label" type="Label3D" parent="Debug/Labels" unique_id=972333107]
+[node name="ResidentialWest_Label" type="Label3D" parent="Debug/Labels" unique_id=1782168683]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.85715, 31.296, -66)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1562,7 +1563,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="ResidentialNE_Label" type="Label3D" parent="Debug/Labels" unique_id=1049897395]
+[node name="ResidentialNE_Label" type="Label3D" parent="Debug/Labels" unique_id=424733689]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 463.66666, 32.125, -204.16667)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1573,7 +1574,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="MansionEstate_Label" type="Label3D" parent="Debug/Labels" unique_id=719188364]
+[node name="MansionEstate_Label" type="Label3D" parent="Debug/Labels" unique_id=747074550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 31.14, -36)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1584,7 +1585,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="SouthGate_Label" type="Label3D" parent="Debug/Labels" unique_id=416082220]
+[node name="SouthGate_Label" type="Label3D" parent="Debug/Labels" unique_id=1134638541]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 178, 30.697687, 150)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1595,7 +1596,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="FarmlandEast_Label" type="Label3D" parent="Debug/Labels" unique_id=394839373]
+[node name="FarmlandEast_Label" type="Label3D" parent="Debug/Labels" unique_id=276471728]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 470, 29.8, 40)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1606,7 +1607,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="NorthHill_Label" type="Label3D" parent="Debug/Labels" unique_id=552723790]
+[node name="NorthHill_Label" type="Label3D" parent="Debug/Labels" unique_id=1926859618]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 68.16614, -256)
 visibility_range_begin = 260.0
 visibility_range_end = 1400.0
@@ -1617,7 +1618,7 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="LANDMARK_SOUTH_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=2028368950]
+[node name="LANDMARK_SOUTH_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=80388971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 14.111835, 100)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1629,7 +1630,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_NORTH_HILL_Label" type="Label3D" parent="Debug/Labels" unique_id=1189177860]
+[node name="LANDMARK_NORTH_HILL_Label" type="Label3D" parent="Debug/Labels" unique_id=1983596616]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 258, 46.166138, -228)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1641,7 +1642,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_HILL_TORII_Label" type="Label3D" parent="Debug/Labels" unique_id=395434935]
+[node name="LANDMARK_HILL_TORII_Label" type="Label3D" parent="Debug/Labels" unique_id=843249629]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.6, 10.7206745, -166)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1653,7 +1654,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_HILLFOOT_TEMPLE_Label" type="Label3D" parent="Debug/Labels" unique_id=1970661161]
+[node name="LANDMARK_HILLFOOT_TEMPLE_Label" type="Label3D" parent="Debug/Labels" unique_id=851461656]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 228, 13.198051, -170)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1665,7 +1666,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_DRAGON_Label" type="Label3D" parent="Debug/Labels" unique_id=1823785304]
+[node name="LANDMARK_DRAGON_Label" type="Label3D" parent="Debug/Labels" unique_id=1738650374]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, 17.5, -188)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1677,7 +1678,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_TERAKOYA_Label" type="Label3D" parent="Debug/Labels" unique_id=1458632925]
+[node name="LANDMARK_TERAKOYA_Label" type="Label3D" parent="Debug/Labels" unique_id=1972502147]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188, 14.756, 24)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1689,7 +1690,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_TOWER_Label" type="Label3D" parent="Debug/Labels" unique_id=1474306150]
+[node name="LANDMARK_TOWER_Label" type="Label3D" parent="Debug/Labels" unique_id=1431842914]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 21.504, 66)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1701,7 +1702,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_HIEDA_Label" type="Label3D" parent="Debug/Labels" unique_id=1575242012]
+[node name="LANDMARK_HIEDA_Label" type="Label3D" parent="Debug/Labels" unique_id=70065611]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 13.14, -40)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1713,7 +1714,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_HIEDA_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=448241296]
+[node name="LANDMARK_HIEDA_GATE_Label" type="Label3D" parent="Debug/Labels" unique_id=255404613]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 8.96, -10)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1725,7 +1726,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_SUZUNAAN_Label" type="Label3D" parent="Debug/Labels" unique_id=1586719037]
+[node name="LANDMARK_SUZUNAAN_Label" type="Label3D" parent="Debug/Labels" unique_id=1539074205]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 247.8, 10.936, -6)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1737,7 +1738,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_GEIDONTEI_Label" type="Label3D" parent="Debug/Labels" unique_id=1823459061]
+[node name="LANDMARK_GEIDONTEI_Label" type="Label3D" parent="Debug/Labels" unique_id=627283509]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 284.6, 12.272, -62)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1749,7 +1750,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_KIRISAME_Label" type="Label3D" parent="Debug/Labels" unique_id=213913670]
+[node name="LANDMARK_KIRISAME_Label" type="Label3D" parent="Debug/Labels" unique_id=608139942]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 229.7, 10.528, 62)
 visibility_range_end = 300.0
 pixel_size = 0.035
@@ -1761,8 +1762,8 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_WATERWHEEL_1_Label" type="Label3D" parent="Debug/Labels" unique_id=1220978148]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, 6.818997, -52)
+[node name="LANDMARK_WATERWHEEL_1_Label" type="Label3D" parent="Debug/Labels" unique_id=1771650302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.8, 6.6290207, -52)
 visibility_range_end = 300.0
 pixel_size = 0.035
 billboard = 1
@@ -1773,8 +1774,8 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_WATERWHEEL_2_Label" type="Label3D" parent="Debug/Labels" unique_id=2036649667]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, 6.31727, 0)
+[node name="LANDMARK_WATERWHEEL_2_Label" type="Label3D" parent="Debug/Labels" unique_id=2265722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.2, 6.0393715, 0)
 visibility_range_end = 300.0
 pixel_size = 0.035
 billboard = 1
@@ -1785,8 +1786,8 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="LANDMARK_WATERWHEEL_3_Label" type="Label3D" parent="Debug/Labels" unique_id=552675397]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, 6.044518, 58)
+[node name="LANDMARK_WATERWHEEL_3_Label" type="Label3D" parent="Debug/Labels" unique_id=1694096281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.6, 5.748337, 58)
 visibility_range_end = 300.0
 pixel_size = 0.035
 billboard = 1
@@ -1797,7 +1798,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="human_village_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=542088907]
+[node name="human_village_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=1287581276]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234, 3.6967847, 110)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1808,7 +1809,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="gatekeeper_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=1286363649]
+[node name="gatekeeper_gate_Label" type="Label3D" parent="Debug/Labels" unique_id=430323417]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.5, 3.7180781, 98)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1819,7 +1820,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="village_temple_school_Label" type="Label3D" parent="Debug/Labels" unique_id=589939443]
+[node name="village_temple_school_Label" type="Label3D" parent="Debug/Labels" unique_id=1186626086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.156, 24)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1830,7 +1831,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="keine_first_Label" type="Label3D" parent="Debug/Labels" unique_id=1302134864]
+[node name="keine_first_Label" type="Label3D" parent="Debug/Labels" unique_id=269223767]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.1544075, 30)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1841,7 +1842,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="keine_verdict_Label" type="Label3D" parent="Debug/Labels" unique_id=1608138972]
+[node name="keine_verdict_Label" type="Label3D" parent="Debug/Labels" unique_id=1402191148]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199, 4.1544075, 30)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1852,7 +1853,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="kosuzu_lending_Label" type="Label3D" parent="Debug/Labels" unique_id=1907968190]
+[node name="kosuzu_lending_Label" type="Label3D" parent="Debug/Labels" unique_id=1678891252]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 253.5, 4.3291, -6)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1863,7 +1864,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="akyuu_record_Label" type="Label3D" parent="Debug/Labels" unique_id=717926091]
+[node name="akyuu_record_Label" type="Label3D" parent="Debug/Labels" unique_id=1364135801]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 4.006008, -4)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1874,7 +1875,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="inn_room_Label" type="Label3D" parent="Debug/Labels" unique_id=698685479]
+[node name="inn_room_Label" type="Label3D" parent="Debug/Labels" unique_id=1391765280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278.5, 4.67844, -62)
 visibility_range_end = 140.0
 pixel_size = 0.012
@@ -1885,7 +1886,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="PORTAL_TRAIL_Label" type="Label3D" parent="Debug/Labels" unique_id=1870376158]
+[node name="PORTAL_TRAIL_Label" type="Label3D" parent="Debug/Labels" unique_id=1793005456]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224, 3.2168474, 172)
 visibility_range_end = 160.0
 pixel_size = 0.014
@@ -1896,7 +1897,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="PORTAL_HIEDA1F_Label" type="Label3D" parent="Debug/Labels" unique_id=806950196]
+[node name="PORTAL_HIEDA1F_Label" type="Label3D" parent="Debug/Labels" unique_id=761506392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 398, 3.5426505, 2)
 visibility_range_end = 160.0
 pixel_size = 0.014
@@ -1907,7 +1908,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="PORTAL_KOURINDOU_Label" type="Label3D" parent="Debug/Labels" unique_id=1616081723]
+[node name="PORTAL_KOURINDOU_Label" type="Label3D" parent="Debug/Labels" unique_id=635704770]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 428, 5.1262145, -205)
 visibility_range_end = 160.0
 pixel_size = 0.014
@@ -1918,7 +1919,7 @@ font = ExtResource("33_c1l3d")
 font_size = 96
 outline_size = 16
 
-[node name="Debug_Label" type="Label3D" parent="Debug/Labels" unique_id=1717206867]
+[node name="Debug_Label" type="Label3D" parent="Debug/Labels" unique_id=1439914979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 525, 70, -315)
 visibility_range_begin = 300.0
 visibility_range_end = 2000.0
@@ -1929,39 +1930,39 @@ font = ExtResource("33_c1l3d")
 font_size = 128
 outline_size = 21
 
-[node name="DistrictOutlines" type="Node3D" parent="Debug" unique_id=233553345]
+[node name="DistrictOutlines" type="Node3D" parent="Debug" unique_id=424761686]
 
-[node name="Market" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=196901253]
+[node name="Market" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=202678383]
 material_override = SubResource("StandardMaterial3D_a74ya")
 cast_shadow = 0
 mesh = ExtResource("34_u5bgj")
 
-[node name="MixedCommercial" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1305076348]
+[node name="MixedCommercial" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=892392845]
 material_override = SubResource("StandardMaterial3D_iyf1w")
 cast_shadow = 0
 mesh = ExtResource("35_w5u34")
 
-[node name="ResidentialWest" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=732733124]
+[node name="ResidentialWest" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=2091829358]
 material_override = SubResource("StandardMaterial3D_fqe08")
 cast_shadow = 0
 mesh = ExtResource("36_eimln")
 
-[node name="ResidentialNE" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=402464848]
+[node name="ResidentialNE" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=312395093]
 material_override = SubResource("StandardMaterial3D_fqe08")
 cast_shadow = 0
 mesh = ExtResource("37_jmrhy")
 
-[node name="MansionEstate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1582795775]
+[node name="MansionEstate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1961786940]
 material_override = SubResource("StandardMaterial3D_yjss4")
 cast_shadow = 0
 mesh = ExtResource("38_qg25e")
 
-[node name="SouthGate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1702036930]
+[node name="SouthGate" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=2042411751]
 material_override = SubResource("StandardMaterial3D_lh6yo")
 cast_shadow = 0
 mesh = ExtResource("39_ms1id")
 
-[node name="Farmland" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=4091348]
+[node name="Farmland" type="MeshInstance3D" parent="Debug/DistrictOutlines" unique_id=1457176082]
 material_override = SubResource("StandardMaterial3D_0xvdw")
 cast_shadow = 0
 mesh = ExtResource("40_71ail")

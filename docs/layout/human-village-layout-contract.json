@@ -256,7 +256,7 @@
     }
   ],
   "unresolved": [],
-  "next_gate": "P2 Water (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain is ART_APPROVED and closed; every generator change must keep the Macro Layout freeze and all P1 regression tests green (godot/tools/run_village_v2_regression.sh).",
+  "next_gate": "P2 Water ART_REVIEW (awaiting user). Human Village V2 phases P0–P13 are the only official phase numbers. P1 Terrain is ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh).",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -289,6 +289,10 @@
     {
       "date": "2026-09-24",
       "ruling": "P1 Terrain ART_APPROVED (commit 59cedbc). No further P1 Terrain changes; the Dragon Bridge east-bank polish area is not widened. South-gate soft shoulder goes to P4 retaining structure; 9-step farm macro elevation stays, visible bunds go to P8. All P1 regression tests stay mandatory. Next phase: P2 Water."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P2 Water may change only below-waterline riverbed (main river, canal, west stream), depth / thalweg distribution, the water-surface mesh, and a narrow shoreline seam (waterline ±0.20–0.30 m or within 1–2 m of the bank). P1-approved above-waterline macro terrain and bank silhouette are protected (|Δh| ≤ 0.03 m outside the seam mask). Main-river depth follows river form (outer bend deep, inner bend shallow, straight-reach channel), no random noise; the canal stays engineered; the west stream gets natural pool/riffle variation."
     }
   ],
   "resolved_at_freeze": [
@@ -359,6 +363,15 @@
       "item": "Main-street sightline to the dragon statue",
       "stage": "P5 Hero Assets",
       "note": "6 stations blocked by the solid LANDMARK_TOWER placeholder at freeze time."
+    },
+    {
+      "item": "Water-surface outline follows the 2 m terrain grid (stepped shoreline, buried under the bank)",
+      "stage": "P7 Riverbank / P13 Final Art",
+      "note": "Hide with bank modules / gravel beaches in P7; edge softening and the final water shader in P13."
+    },
+    {
+      "item": "Bridge_05 greybox box bottom sits 0.20 m under the west-stream surface (deck freeboard 0.40 m passes)",
+      "stage": "P4 Greybox"
     }
   ]
 }

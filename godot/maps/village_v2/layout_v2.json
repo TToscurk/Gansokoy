@@ -51,6 +51,110 @@
 		"south_h": 5, "south_z0": 165, "south_z1": 220,
 		"noise_amp": 1.6, "noise_freq": 0.012, "seed": 20260923
 	},
+	"water_form": {
+		"_note": "P2 Water（2026-09-24）：水線以下河床形態。P1 核准水深 d0 × 倍率 m（由河道幾何決定，不用噪訊）；d0 < blend_d0[0] 的水線帶不改（水線不動），到 blend_d0[1] 全量。深度單位 m（相對水位）。keep_clear：地標基座周圍不改。產生器 gen_village_v2.gd、共用算法 tools/village_v2_water_lib.gd、驗收 tools/verify_village_v2_water.gd＋verify_village_v2_p1_protect.gd。",
+		"MainRiver": {
+			"_note": "天然河：彎道深潭、直段主槽、深槽偏外岸、內岸淺灘（留給 P7 砂洲／礫石）。曲率窗 ±14 m；半徑 ≤ bend_r_full 視為全量彎道。",
+			"curv_win": 14.0,
+			"bend_r_full": 70.0,
+			"depth_shallow": 1.9,
+			"depth_pool": 3.4,
+			"thalweg_shift": 0.35,
+			"channel_w": 0.45,
+			"shoulder": 0.55,
+			"bar": 0.55,
+			"m_min": 0.3,
+			"m_max": 1.6,
+			"blend_d0": [
+				0.25,
+				0.9
+			],
+			"keep_clear": [
+				{
+					"_note": "LANDMARK_DRAGON/Base 10×10 m：基座腳下河床不動",
+					"at": [
+						388,
+						-188
+					],
+					"r": 9.0
+				}
+			]
+		},
+		"Canal": {
+			"_note": "人工水渠：工程深度 0.8 m 穩定；彎角只小幅加深，水車輪坑與取水口加深。",
+			"curv_win": 10.0,
+			"bend_r_full": 90.0,
+			"depth_shallow": 0.8,
+			"depth_pool": 0.95,
+			"thalweg_shift": 0.1,
+			"channel_w": 0.9,
+			"shoulder": 0.9,
+			"bar": 0.0,
+			"m_min": 0.6,
+			"m_max": 2.0,
+			"blend_d0": [
+				0.2,
+				0.5
+			],
+			"pits": [
+				{
+					"_note": "取水口（主河→水渠）",
+					"at": [
+						388,
+						-172
+					],
+					"r": 6.0,
+					"depth": 1.1
+				},
+				{
+					"_note": "LANDMARK_WATERWHEEL_1 輪坑",
+					"at": [
+						334.8,
+						-52
+					],
+					"r": 5.0,
+					"depth": 1.3
+				},
+				{
+					"_note": "LANDMARK_WATERWHEEL_2 輪坑",
+					"at": [
+						329.2,
+						0
+					],
+					"r": 5.0,
+					"depth": 1.3
+				},
+				{
+					"_note": "LANDMARK_WATERWHEEL_3 輪坑",
+					"at": [
+						310.6,
+						58
+					],
+					"r": 5.0,
+					"depth": 1.3
+				}
+			]
+		},
+		"WestStream": {
+			"_note": "天然細溪：潭瀨節奏（pool_spacing ≈ 7 倍河寬）＋彎道潭；瀨是小型淺灘。",
+			"curv_win": 10.0,
+			"bend_r_full": 50.0,
+			"depth_shallow": 0.2,
+			"depth_pool": 0.85,
+			"pool_spacing": 24.0,
+			"rhythm_w": 1.0,
+			"thalweg_shift": 0.3,
+			"channel_w": 0.5,
+			"shoulder": 0.5,
+			"bar": 0.5,
+			"m_min": 0.3,
+			"m_max": 1.8,
+			"blend_d0": [
+				0.15,
+				0.4
+			]
+		}
+	},
 	"terrain": {
 		"_note": "P1 Terrain 參數（不在 Macro 凍結範圍）。建成區各分區外擴 platform_close_gap、聯集、再內縮成平台外框；外框外再留 platform_apron 平地；平台高＝heights 的基準面（built＋built_slope）。平台外是填挖坡：填方 bank_fill_deg、挖方 bank_cut_deg（西肩離平台 29.8 m、高出 26.45 m，挖方需 ≥ 41.6° 才不削到峰頂）。approach：參道延長到社殿 pad 外緣，縱坡 ≤ max_deg（石段 P4／P5 再放）。算法：godot/tools/village_v2_terrain_lib.gd。",
 		"platform_close_gap": 6.0,
