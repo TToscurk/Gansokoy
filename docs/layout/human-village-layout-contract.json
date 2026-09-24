@@ -256,7 +256,7 @@
     }
   ],
   "unresolved": [],
-  "next_gate": "P2 Water ART_REVIEW (awaiting user). Human Village V2 phases P0–P13 are the only official phase numbers. P1 Terrain is ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh).",
+  "next_gate": "P3 Roads / Parcels (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain and P2 Water are ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh). Master spec: docs/plans/人間之里V2全面重製計畫.md.",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -293,6 +293,10 @@
     {
       "date": "2026-09-24",
       "ruling": "P2 Water may change only below-waterline riverbed (main river, canal, west stream), depth / thalweg distribution, the water-surface mesh, and a narrow shoreline seam (waterline ±0.20–0.30 m or within 1–2 m of the bank). P1-approved above-waterline macro terrain and bank silhouette are protected (|Δh| ≤ 0.03 m outside the seam mask). Main-river depth follows river form (outer bend deep, inner bend shallow, straight-reach channel), no random noise; the canal stays engineered; the west stream gets natural pool/riffle variation."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P2 Water ART_APPROVED (commit 034d5e4). Keep all P1/P2 gates; no further shoreline visual polish. Next phase: P3 Roads / Parcels, following the master spec order."
     }
   ],
   "resolved_at_freeze": [
