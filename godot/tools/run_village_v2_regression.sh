@@ -26,6 +26,7 @@ run "terrain gate（含鋸齒坡、東岸、橋端、農田）" TERRAIN --headle
 run "5 bridge checks"                      BRIDGE  --headless --path . --script res://tools/verify_village_v2_bridges.gd
 run "sightline checks"                     SL      --headless --path . --script res://tools/verify_village_v2_sightlines.gd
 run "P3 roads / parcels gate"               PARCEL  --headless --path . --script res://tools/verify_village_v2_parcels.gd
+run "P4 greybox gate"                       GB      --headless --path . --script res://tools/verify_village_v2_greybox.gd
 run "19-point walk"                        WALK    --rendering-method gl_compatibility --path . --script res://tools/walk_village_v2.gd
 echo "回歸失敗項目：$fail"
 exit $fail

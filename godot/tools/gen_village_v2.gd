@@ -33,12 +33,14 @@ const Freeze := preload("res://tools/village_v2_freeze.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const WLib := preload("res://tools/village_v2_water_lib.gd")
 const PLib := preload("res://tools/village_v2_parcel_lib.gd")
+const GLib := preload("res://tools/village_v2_greybox_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const META := "res://data/village_v2.meta.json"
 const EDGES := "res://maps/village_v2/gen/terrain_edges.json"
 const PARCELS := "res://maps/village_v2/gen/parcels.json"
+const GREYBOX := "res://maps/village_v2/gen/greybox.json"
 const LANE_LIFT := 0.06        # 巷道路面高出 P1 地形（不整地；比道路 +0.10 低，接頭處道路蓋在上面）
 const PARCEL_LINE_LIFT := 0.07
 const PARCEL_COL := {
@@ -116,6 +118,8 @@ var variant := ""                # 主街寬度 Variant（空＝layout 的 selec
 var span_errors: Array[String] = []   # 橋長超出 terrain.bridge_spans 容許範圍
 var tri_stats := {"quads": 0, "flip": 0, "fan": 0}
 var edge_stats := {}
+var parcel_recs: Array = []     # P3 地塊紀錄（_parcels 產生，P4 _greybox 用）
+var _gb_mesh := {}              # P4 灰盒：同尺寸 mesh 共用
 
 
 func _init() -> void:
@@ -169,6 +173,7 @@ func _init() -> void:
 	_parcels()
 	_forests()
 	_landmarks()
+	_greybox()
 	_anchors()
 	_portals()
 	_debug()
@@ -1501,6 +1506,7 @@ func _parcels() -> void:
 		var mi := _mi(parent, lname, _save(mesh, "parcels_" + String(key).to_lower()),
 			_mat(_k(PARCEL_COL.get(key, Color(0.8, 0.8, 0.8))), true), false)
 		mi.set_meta("phase", "P3")
+	parcel_recs = recs
 	var pf := FileAccess.open(PARCELS, FileAccess.WRITE)
 	pf.store_string(JSON.stringify({"_note": "P3 地塊紀錄（§11）。由 tools/gen_village_v2.gd 產生，勿手改。",
 		"layout_version": L["version"], "stats": res["stats"], "parcels": recs}, "\t") + "\n")
@@ -1741,7 +1747,9 @@ func _landmarks() -> void:
 			"box":
 				var s3: Array = lm["size"]
 				var size := Vector3(float(s3[0]), float(s3[1]), float(s3[2]))
-				if String(lm.get("display", "solid")) == "wire":
+				if L.get("greybox", {}).get("landmarks", {}).has(String(lm["id"])):
+					n.set_meta("p4_greybox", true)   # P4 灰盒量體取代 P0 線框（_greybox）；P0 at／size／yaw 不動
+				elif String(lm.get("display", "solid")) == "wire":
 					_wire_box(n, size, float(lm.get("yaw", 0.0)), _c(lm["color"]))
 				else:
 					_box(n, "Block", size, Vector3.ZERO, float(lm.get("yaw", 0.0)), _c(lm["color"]))
@@ -1858,6 +1866,212 @@ func _torii(parent: Node3D, span: float, h: float, yaw_deg: float) -> float:
 		_k(Color(0.18, 0.16, 0.15)), false)
 	_box(t, "Nuki", Vector3(span * 1.1, pr * 1.1, pr * 1.4), Vector3(0, h * 0.78, 0), 0.0, red, false)
 	return h + pr * 1.6
+
+
+# ─────────────────────────── P4 建築灰盒 ───────────────────────────
+
+## 灰盒色（乘 ALBEDO_K）：牆淺灰、屋頂深灰、台基石灰、入口近黑；地標牆混 35 % P0 候補色
+const GB_WALL := Color(0.80, 0.78, 0.74)
+const GB_ROOF := Color(0.34, 0.35, 0.38)
+const GB_FOUND := Color(0.56, 0.55, 0.52)
+const GB_DOOR := Color(0.16, 0.13, 0.11)
+const GB_KURA := Color(0.92, 0.91, 0.88)
+const GB_KOYA := Color(0.58, 0.49, 0.38)
+const GB_YARD := {"machiya_yard": Color(0.55, 0.50, 0.40), "aux_yard": Color(0.47, 0.53, 0.37)}
+const YARD_LIFT := 0.05   # 院子地面：貼地 +0.05 m（地塊線 +0.07 在上）
+
+## P4 Greybox（總計畫 §12）：寬、深、高、屋脊、屋簷、入口、院子。
+## 輸入是 P3 已核准的地塊紀錄；正式町家一塊一棟，aux 只有「倉／小屋」放小附屬棟，庭院／後院只有院子地面，空地不放。
+## 鈴奈庵／鯢吞亭／霧雨店：P0 位置不動，灰盒正面平行主街、退縮後完整落在固定地塊內（layout greybox.landmarks）。
+func _greybox() -> void:
+	if not L.has("greybox"):
+		return
+	var t0 := Time.get_ticks_msec()
+	var net := PLib.network(L)
+	var res: Dictionary = GLib.plan(L, parcel_recs, net, func(p: Vector2) -> float: return _hgrid(p.x, p.y))
+	var G: Dictionary = L["greybox"]
+	var out: Array = []
+	var by_kind := {}
+	for b in res["buildings"]:
+		var parent: Node
+		if b["kind"] == "landmark":
+			parent = vroot.get_node("Landmarks/" + String(b["landmark"]))
+		else:
+			var dg := vroot.get_node("Districts/" + String(b["district"]))
+			parent = dg.get_node_or_null("Buildings")
+			if parent == null:
+				parent = _group(dg, "Buildings")
+		_gb_building(parent, b, G)
+		by_kind[b["kind"]] = int(by_kind.get(b["kind"], 0)) + 1
+		out.append(_gb_rec(b))
+	var fills := {}
+	for y in res["yards"]:
+		var key: String = "%s|%s" % [y["district"], y["kind"]]
+		if not fills.has(key):
+			var st := SurfaceTool.new()
+			st.begin(Mesh.PRIMITIVE_TRIANGLES)
+			fills[key] = st
+		_fill(fills[key], y["poly"], YARD_LIFT)
+	for key in fills:
+		var parts: PackedStringArray = String(key).split("|")
+		var dg := vroot.get_node("Districts/" + parts[0])
+		var mi := _mi(dg, "Yards" if parts[1] == "machiya_yard" else "AuxYards",
+			_save((fills[key] as SurfaceTool).commit(), "yards_%s_%s" % [parts[0].to_lower(), parts[1]]),
+			_mat(_k(GB_YARD[parts[1]]), true), false)
+		mi.set_meta("phase", "P4")
+		mi.set_meta("note", "院子地面（町家背面院子／aux 庭院・後院）；aux 空地不鋪")
+	var gf := FileAccess.open(GREYBOX, FileAccess.WRITE)
+	gf.store_string(JSON.stringify({"_note": "P4 灰盒紀錄。由 tools/gen_village_v2.gd 產生，勿手改。",
+		"layout_version": L["version"], "buildings": out, "notes": res["notes"],
+		"yards": res["yards"].size()}, "\t") + "\n")
+	gf.close()
+	for nt in res["notes"]:
+		print("[v2] P4 ", nt)
+	print("[v2] P4 灰盒 %d 棟 %s、院子 %d 塊、%d ms → %s" % [out.size(), by_kind, res["yards"].size(),
+		Time.get_ticks_msec() - t0, GREYBOX])
+
+
+## 一棟灰盒：StaticBody3D（原點＝footprint 中心、y＝footprint 內最高地面；+Z 朝路）
+##   Foundation 台基（最低地面下 embed → 最高地面＋plinth）、Building_Main 牆體（到簷高）、Roof 切妻、
+##   Hisashi 1F 庇（有的話）、Door 入口；碰撞只有牆體＋台基（屋簷下可走）。
+func _gb_building(parent: Node, b: Dictionary, G: Dictionary) -> void:
+	var body := StaticBody3D.new()
+	body.name = String(b["id"]) if b["kind"] != "landmark" else "Greybox"
+	var c: Vector2 = b["center"]
+	var base := float(b["base"])
+	var wpos := Vector3(c.x, base, c.y)
+	if parent is Node3D and parent.get_parent() != null and String(parent.get_parent().name) == "Landmarks":
+		wpos -= (parent as Node3D).position
+	body.position = wpos
+	body.rotation.y = GLib.yaw_of(b["dir"])
+	parent.add_child(body)
+	var w := float(b["width"])
+	var d := float(b["depth"])
+	var eave := float(b["eave"])
+	var bot := float(b["ground_lo"]) - float(b["embed"]) - base
+	var plinth := float(b["plinth"])
+	var wall := GB_WALL
+	if b["kind"] == "aux_kura":
+		wall = GB_KURA
+	elif b["kind"] == "aux_koya":
+		wall = GB_KOYA
+	elif b["kind"] == "landmark":
+		var lcol := Color(0.75, 0.45, 0.7)
+		for lm in L["landmarks"]:
+			if String(lm["id"]) == String(b["landmark"]):
+				lcol = Color(float(lm["color"][0]), float(lm["color"][1]), float(lm["color"][2]))
+		wall = GB_WALL.lerp(lcol, 0.35)
+	var f := _mi(body, "Foundation", _gb_box(Vector3(w, plinth - bot, d)), _mat(_k(GB_FOUND)))
+	f.position.y = (bot + plinth) * 0.5
+	var m := _mi(body, "Building_Main", _gb_box(Vector3(w, eave - plinth, d)), _mat(_k(wall)))
+	m.position.y = (eave + plinth) * 0.5
+	# 切妻：PrismMesh 三角形在 XY、沿 Z 擠出；底＝簷口高（簷高−出簷×pitch），頂＝屋脊
+	var hira: bool = b["roof"] == "hira"
+	var ove := float(b["ov_eave"])
+	var ovg := float(b["ov_gable"])
+	var span := (d if hira else w) + ove * 2.0
+	var length := (w if hira else d) + ovg * 2.0
+	var ee := float(b["eave_edge"])
+	var rh := float(b["ridge"]) - ee
+	var pm: Mesh = _gb_cached("prism_%.2f_%.2f_%.2f" % [span, rh, length], func() -> Mesh:
+		var pr := PrismMesh.new()
+		pr.size = Vector3(span, rh, length)
+		return pr)
+	var r := _mi(body, "Roof", pm, _mat(_k(GB_ROOF)))
+	r.position.y = ee + rh * 0.5
+	if hira:
+		r.rotation.y = PI * 0.5
+	var hs := float(b["hisashi"])
+	if hs > 0.0:
+		var hd := minf(float(G["hisashi_depth"]), float(b["setback"]) + float(L["parcel_rules"]["front_gap"]) - 0.05)
+		if hd > 0.2:
+			var ang := atan(float(b["pitch"]))
+			var hl := hd / cos(ang)
+			var h := _mi(body, "Hisashi", _gb_box(Vector3(w, 0.12, hl)), _mat(_k(GB_ROOF)))
+			h.position = Vector3(0, hs - hd * 0.5 * tan(ang), d * 0.5 + hd * 0.5)
+			h.rotation.x = ang
+			b["hisashi_depth"] = hd
+	var dw: Array = G["door"]
+	var dwid := minf(float(dw[0]), w - 0.6)
+	var door := _mi(body, "Door", _gb_box(Vector3(dwid, float(dw[1]), 0.1)), _mat(_k(GB_DOOR)))
+	var u := float(b["door_u"])
+	var dx := clampf((0.5 - u) * w, -(w - dwid) * 0.5 + 0.3, (w - dwid) * 0.5 - 0.3)
+	door.position = Vector3(dx, float(dw[1]) * 0.5, d * 0.5 + 0.04)
+	b["door_local_x"] = dx
+	var cs := CollisionShape3D.new()
+	cs.name = "Shape"
+	var sh := BoxShape3D.new()
+	sh.size = Vector3(w, eave - bot, d)
+	cs.shape = sh
+	cs.position.y = (eave + bot) * 0.5
+	body.add_child(cs)
+	for k in ["kind", "parcel", "district", "road", "type", "type_label", "roof"]:
+		body.set_meta(k, b[k])
+	body.set_meta("phase", "P4")
+	body.set_meta("width_m", snappedf(w, 0.01))
+	body.set_meta("depth_m", snappedf(d, 0.01))
+	body.set_meta("eave_m", eave)
+	body.set_meta("ridge_m", snappedf(float(b["ridge"]), 0.01))
+	body.set_meta("base_h", snappedf(base, 0.01))
+	body.set_meta("setback_m", float(b["setback"]))
+	if b["kind"] == "landmark":
+		body.set_meta("landmark", b["landmark"])
+		body.set_meta("p0_size", b["p0_size"])
+		body.set_meta("p0_yaw", b["p0_yaw"])
+
+
+func _gb_box(size: Vector3) -> Mesh:
+	return _gb_cached("box_%.2f_%.2f_%.2f" % [size.x, size.y, size.z], func() -> Mesh:
+		var bm := BoxMesh.new()
+		bm.size = size
+		return bm)
+
+
+func _gb_cached(key: String, make: Callable) -> Mesh:
+	if not _gb_mesh.has(key):
+		_gb_mesh[key] = make.call()
+	return _gb_mesh[key]
+
+
+func _gb_rec(b: Dictionary) -> Dictionary:
+	var poly: PackedVector2Array = b["poly"]
+	var pa: Array = []
+	for p in poly:
+		pa.append([snappedf(p.x, 0.01), snappedf(p.y, 0.01)])
+	var rec := {"id": b["id"], "kind": b["kind"], "parcel": b["parcel"], "district": b["district"], "road": b["road"],
+		"type": b["type"], "roof": b["roof"], "footprint": pa, "front_dir": [snappedf(b["dir"].x, 0.0001), snappedf(b["dir"].y, 0.0001)],
+		"width_m": snappedf(b["width"], 0.01), "depth_m": snappedf(b["depth"], 0.01), "setback_m": b["setback"],
+		"base_h": snappedf(b["base"], 0.01), "ground_lo": snappedf(b["ground_lo"], 0.01), "plinth_m": b["plinth"],
+		"eave_m": b["eave"], "eave_edge_m": snappedf(b["eave_edge"], 0.01), "ridge_m": snappedf(b["ridge"], 0.01),
+		"ov_eave_m": snappedf(b["ov_eave"], 0.01), "ov_gable_m": snappedf(b["ov_gable"], 0.01), "pitch": b["pitch"],
+		"hisashi_m": b["hisashi"], "hisashi_depth_m": snappedf(float(b.get("hisashi_depth", 0.0)), 0.01),
+		"door_local_x": snappedf(float(b.get("door_local_x", 0.0)), 0.01)}
+	if b["kind"] == "landmark":
+		rec["landmark"] = b["landmark"]
+		rec["shift_m"] = b["shift_m"]
+		rec["p0_size"] = b["p0_size"]
+		rec["p0_yaw"] = b["p0_yaw"]
+	return rec
+
+
+## 平面四邊形（院子）貼地填面：1.5 m 格、每點取地形高＋lift；正面朝上
+func _fill(st: SurfaceTool, poly: PackedVector2Array, lift: float) -> void:
+	var a := poly[0]
+	var u := poly[1] - poly[0]
+	var v := poly[3] - poly[0]
+	var nu := maxi(1, int(ceil(u.length() / 1.5)))
+	var nv := maxi(1, int(ceil(v.length() / 1.5)))
+	for i in nu:
+		for j in nv:
+			var q: Array[Vector2] = [a + u * (float(i) / nu) + v * (float(j) / nv), a + u * (float(i + 1) / nu) + v * (float(j) / nv),
+				a + u * (float(i + 1) / nu) + v * (float(j + 1) / nv), a + u * (float(i) / nu) + v * (float(j + 1) / nv)]
+			var V: Array[Vector3] = []
+			for p in q:
+				V.append(Vector3(p.x, _hgrid(p.x, p.y) + lift, p.y))
+			if (q[1] - q[0]).cross(q[2] - q[0]) < 0.0:
+				V.reverse()
+			_tri_up(st, V[0], V[1], V[2])
+			_tri_up(st, V[0], V[2], V[3])
 
 
 # ─────────────────────────── 任務錨點與傳送點 ───────────────────────────

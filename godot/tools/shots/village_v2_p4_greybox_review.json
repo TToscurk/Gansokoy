@@ -1,0 +1,222 @@
+[
+ {
+  "cam": [
+   236.5,
+   2.74,
+   76.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   256.0,
+   3.21,
+   -2.0
+  ],
+  "name": "v2p4_ms_south_eye",
+  "time": 11
+ },
+ {
+  "cam": [
+   259.0,
+   3.26,
+   -10.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   283.0,
+   3.74,
+   -90.0
+  ],
+  "name": "v2p4_ms_mid_eye",
+  "time": 11
+ },
+ {
+  "cam": [
+   252.5,
+   2.52,
+   14.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   247.0,
+   2.65,
+   -8.0
+  ],
+  "name": "v2p4_suzunaan_eye",
+  "time": 11
+ },
+ {
+  "cam": [
+   265.0,
+   2.81,
+   -36.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   282.0,
+   2.99,
+   -64.0
+  ],
+  "name": "v2p4_geidontei_eye",
+  "time": 11
+ },
+ {
+  "cam": [
+   298.0,
+   3.4,
+   -126.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   388.0,
+   13.53,
+   -188.0
+  ],
+  "name": "v2p4_north_end_to_dragon",
+  "time": 11
+ },
+ {
+  "cam": [
+   336.0,
+   3.37,
+   -127.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   388.0,
+   13.53,
+   -188.0
+  ],
+  "name": "v2p4_hillfoot_east_to_dragon",
+  "time": 11
+ },
+ {
+  "cam": [
+   300.0,
+   3.94,
+   -122.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   236.0,
+   2.72,
+   80.0
+  ],
+  "name": "v2p4_reverse_hillfoot",
+  "time": 11
+ },
+ {
+  "cam": [
+   206.0,
+   3.08,
+   -80.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "look": [
+   250.0,
+   3.1,
+   -84.0
+  ],
+  "name": "v2p4_west_lane_eye",
+  "time": 11
+ },
+ {
+  "cam": [
+   214.0,
+   30.0,
+   72.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "look": [
+   258.0,
+   0.8,
+   -12.0
+  ],
+  "name": "v2p4_elevated_south",
+  "time": 11
+ },
+ {
+  "cam": [
+   265.0,
+   190.0,
+   0.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "look": [
+   265.0,
+   0.0,
+   -2.0
+  ],
+  "name": "v2p4_topdown_market",
+  "time": 11
+ },
+ {
+  "cam": [
+   215.0,
+   260.0,
+   -60.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "look": [
+   215.0,
+   0.0,
+   -62.0
+  ],
+  "name": "v2p4_topdown_west",
+  "time": 11
+ },
+ {
+  "cam": [
+   215.0,
+   230.0,
+   330.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "look": [
+   285.0,
+   0.0,
+   -110.0
+  ],
+  "name": "v2p4_aerial",
+  "time": 11
+ }
+]

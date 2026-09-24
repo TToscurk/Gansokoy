@@ -1,0 +1,9186 @@
+{
+	"_note": "P4 灰盒紀錄。由 tools/gen_village_v2.gd 產生，勿手改。",
+	"buildings": [
+		{
+			"base_h": 0.39,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.4,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					239.09,
+					92.28
+				],
+				[
+					239.67,
+					85.31
+				],
+				[
+					250.55,
+					86.22
+				],
+				[
+					249.97,
+					93.19
+				]
+			],
+			"front_dir": [
+				-0.9965,
+				-0.0834
+			],
+			"ground_lo": 0.34,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_001",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_001",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.45,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					240.07,
+					80.51
+				],
+				[
+					240.85,
+					75.37
+				],
+				[
+					249.84,
+					76.73
+				],
+				[
+					249.06,
+					81.88
+				]
+			],
+			"front_dir": [
+				-0.9887,
+				-0.15
+			],
+			"ground_lo": 0.41,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_002",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.45,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 0.72,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					246.87,
+					38.36
+				],
+				[
+					249.37,
+					30.86
+				],
+				[
+					258.86,
+					34.03
+				],
+				[
+					256.37,
+					41.52
+				]
+			],
+			"front_dir": [
+				-0.9487,
+				-0.3162
+			],
+			"ground_lo": 0.63,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_003",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_003",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 0.76,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.53,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					249.43,
+					30.68
+				],
+				[
+					251.36,
+					24.88
+				],
+				[
+					261.72,
+					28.33
+				],
+				[
+					259.79,
+					34.12
+				]
+			],
+			"front_dir": [
+				-0.9488,
+				-0.3158
+			],
+			"ground_lo": 0.7,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_004",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_004",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.82,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -2.2,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					251.74,
+					23.75
+				],
+				[
+					254.52,
+					15.39
+				],
+				[
+					264.88,
+					18.84
+				],
+				[
+					262.1,
+					27.19
+				]
+			],
+			"front_dir": [
+				-0.9489,
+				-0.3156
+			],
+			"ground_lo": 0.74,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_005",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_005",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 0.85,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					254.58,
+					15.21
+				],
+				[
+					256.23,
+					10.27
+				],
+				[
+					265.72,
+					13.45
+				],
+				[
+					264.08,
+					18.38
+				]
+			],
+			"front_dir": [
+				-0.9485,
+				-0.3168
+			],
+			"ground_lo": 0.79,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_006",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 0.88,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.22,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					256.45,
+					9.62
+				],
+				[
+					258.38,
+					3.82
+				],
+				[
+					268.74,
+					7.27
+				],
+				[
+					266.81,
+					13.06
+				]
+			],
+			"front_dir": [
+				-0.9488,
+				-0.3158
+			],
+			"ground_lo": 0.82,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_007",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_007",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.93,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					258.44,
+					3.64
+				],
+				[
+					260.66,
+					-3.01
+				],
+				[
+					271.02,
+					0.45
+				],
+				[
+					268.8,
+					7.09
+				]
+			],
+			"front_dir": [
+				-0.9485,
+				-0.3166
+			],
+			"ground_lo": 0.86,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_008",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_008",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.96,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					261.04,
+					-4.14
+				],
+				[
+					262.56,
+					-8.7
+				],
+				[
+					271.19,
+					-5.82
+				],
+				[
+					269.67,
+					-1.27
+				]
+			],
+			"front_dir": [
+				-0.9487,
+				-0.3162
+			],
+			"ground_lo": 0.91,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_009",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_009",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.45,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 1.02,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.98,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					262.62,
+					-8.88
+				],
+				[
+					265.12,
+					-16.39
+				],
+				[
+					275.48,
+					-12.94
+				],
+				[
+					272.98,
+					-5.44
+				]
+			],
+			"front_dir": [
+				-0.9488,
+				-0.3159
+			],
+			"ground_lo": 0.93,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_010",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_010",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.14,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 1.4,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					269.69,
+					-31.37
+				],
+				[
+					271.7,
+					-38.07
+				],
+				[
+					281.29,
+					-35.2
+				],
+				[
+					279.28,
+					-28.49
+				]
+			],
+			"front_dir": [
+				-0.9578,
+				-0.2873
+			],
+			"ground_lo": 1.05,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_011",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_011",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.65,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.17,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					271.76,
+					-38.27
+				],
+				[
+					273.25,
+					-43.24
+				],
+				[
+					283.71,
+					-40.11
+				],
+				[
+					282.22,
+					-35.13
+				]
+			],
+			"front_dir": [
+				-0.9579,
+				-0.2872
+			],
+			"ground_lo": 1.11,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_012",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_012",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 1.22,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					273.6,
+					-44.4
+				],
+				[
+					275.87,
+					-51.96
+				],
+				[
+					286.33,
+					-48.82
+				],
+				[
+					284.06,
+					-41.26
+				]
+			],
+			"front_dir": [
+				-0.9578,
+				-0.2876
+			],
+			"ground_lo": 1.15,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_013",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_013",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.42,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.53,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					284.22,
+					-79.5
+				],
+				[
+					286.48,
+					-85.17
+				],
+				[
+					296.62,
+					-81.11
+				],
+				[
+					294.36,
+					-75.45
+				]
+			],
+			"front_dir": [
+				-0.9285,
+				-0.3714
+			],
+			"ground_lo": 1.35,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_014",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_014",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.47,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -2.2,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					286.74,
+					-85.81
+				],
+				[
+					290.01,
+					-93.99
+				],
+				[
+					300.15,
+					-89.93
+				],
+				[
+					296.87,
+					-81.75
+				]
+			],
+			"front_dir": [
+				-0.9282,
+				-0.372
+			],
+			"ground_lo": 1.39,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_015",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_015",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 8.81
+		},
+		{
+			"base_h": 1.5,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					290.09,
+					-94.17
+				],
+				[
+					292.01,
+					-99.0
+				],
+				[
+					301.31,
+					-95.29
+				],
+				[
+					299.38,
+					-90.46
+				]
+			],
+			"front_dir": [
+				-0.9287,
+				-0.3708
+			],
+			"ground_lo": 1.44,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_016",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_016",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.54,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 1.22,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					292.46,
+					-100.11
+				],
+				[
+					294.72,
+					-105.78
+				],
+				[
+					304.86,
+					-101.72
+				],
+				[
+					302.6,
+					-96.06
+				]
+			],
+			"front_dir": [
+				-0.9285,
+				-0.3714
+			],
+			"ground_lo": 1.48,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MXC_001",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_001",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.58,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.4,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					294.8,
+					-105.96
+				],
+				[
+					297.4,
+					-112.46
+				],
+				[
+					307.54,
+					-108.39
+				],
+				[
+					304.93,
+					-101.9
+				]
+			],
+			"front_dir": [
+				-0.9281,
+				-0.3723
+			],
+			"ground_lo": 1.51,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_002",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.61,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					297.66,
+					-113.11
+				],
+				[
+					299.44,
+					-117.57
+				],
+				[
+					307.89,
+					-114.18
+				],
+				[
+					306.1,
+					-109.73
+				]
+			],
+			"front_dir": [
+				-0.9282,
+				-0.3721
+			],
+			"ground_lo": 1.56,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MXC_003",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_003",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.45,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 1.7,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 1.98,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					299.89,
+					-118.68
+				],
+				[
+					302.82,
+					-126.02
+				],
+				[
+					312.96,
+					-121.96
+				],
+				[
+					310.03,
+					-114.62
+				]
+			],
+			"front_dir": [
+				-0.9284,
+				-0.3716
+			],
+			"ground_lo": 1.59,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_004",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_004",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 0.46,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					232.74,
+					74.15
+				],
+				[
+					231.96,
+					79.29
+				],
+				[
+					222.07,
+					77.81
+				],
+				[
+					222.84,
+					72.67
+				]
+			],
+			"front_dir": [
+				0.989,
+				0.1482
+			],
+			"ground_lo": 0.41,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_017",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_017",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.65,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 0.72,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					240.07,
+					32.82
+				],
+				[
+					238.14,
+					38.61
+				],
+				[
+					227.78,
+					35.15
+				],
+				[
+					229.71,
+					29.37
+				]
+			],
+			"front_dir": [
+				0.9487,
+				0.3162
+			],
+			"ground_lo": 0.66,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_018",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_018",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.09
+		},
+		{
+			"base_h": 0.76,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.75,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					242.35,
+					25.99
+				],
+				[
+					240.13,
+					32.64
+				],
+				[
+					229.77,
+					29.18
+				],
+				[
+					231.99,
+					22.54
+				]
+			],
+			"front_dir": [
+				0.9485,
+				0.3166
+			],
+			"ground_lo": 0.7,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_019",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_019",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.8,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					244.25,
+					20.29
+				],
+				[
+					242.73,
+					24.86
+				],
+				[
+					234.1,
+					21.98
+				],
+				[
+					235.61,
+					17.42
+				]
+			],
+			"front_dir": [
+				0.9489,
+				0.3156
+			],
+			"ground_lo": 0.74,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_020",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_020",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 4.81
+		},
+		{
+			"base_h": 0.85,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.58,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					246.81,
+					12.61
+				],
+				[
+					244.31,
+					20.11
+				],
+				[
+					233.95,
+					16.65
+				],
+				[
+					236.45,
+					9.16
+				]
+			],
+			"front_dir": [
+				0.9487,
+				0.3162
+			],
+			"ground_lo": 0.77,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_021",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_021",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 0.89,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.4,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					249.24,
+					5.3
+				],
+				[
+					247.03,
+					11.96
+				],
+				[
+					236.67,
+					8.52
+				],
+				[
+					238.87,
+					1.87
+				]
+			],
+			"front_dir": [
+				0.9491,
+				0.315
+			],
+			"ground_lo": 0.82,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_022",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_022",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.01
+		},
+		{
+			"base_h": 1.09,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					260.46,
+					-29.12
+				],
+				[
+					258.96,
+					-24.15
+				],
+				[
+					248.5,
+					-27.3
+				],
+				[
+					250.01,
+					-32.28
+				]
+			],
+			"front_dir": [
+				0.9574,
+				0.2889
+			],
+			"ground_lo": 1.02,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_023",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_023",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 1.15,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.98,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					263.07,
+					-37.84
+				],
+				[
+					260.8,
+					-30.28
+				],
+				[
+					250.34,
+					-33.42
+				],
+				[
+					252.61,
+					-40.98
+				]
+			],
+			"front_dir": [
+				0.9578,
+				0.2876
+			],
+			"ground_lo": 1.07,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_024",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_024",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.18,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.52,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					264.88,
+					-43.87
+				],
+				[
+					263.13,
+					-38.04
+				],
+				[
+					252.67,
+					-41.18
+				],
+				[
+					254.42,
+					-47.01
+				]
+			],
+			"front_dir": [
+				0.9578,
+				0.2875
+			],
+			"ground_lo": 1.12,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_025",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_025",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.24,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.76,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					267.61,
+					-52.97
+				],
+				[
+					265.09,
+					-44.55
+				],
+				[
+					254.63,
+					-47.68
+				],
+				[
+					257.15,
+					-56.11
+				]
+			],
+			"front_dir": [
+				0.958,
+				0.2867
+			],
+			"ground_lo": 1.16,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_026",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_026",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 1.27,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					269.16,
+					-58.15
+				],
+				[
+					267.67,
+					-53.17
+				],
+				[
+					258.08,
+					-56.04
+				],
+				[
+					259.57,
+					-61.02
+				]
+			],
+			"front_dir": [
+				0.958,
+				0.2867
+			],
+			"ground_lo": 1.21,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_027",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_027",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.65,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.21
+		},
+		{
+			"base_h": 1.31,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					271.26,
+					-65.14
+				],
+				[
+					269.51,
+					-59.3
+				],
+				[
+					259.05,
+					-62.43
+				],
+				[
+					260.8,
+					-68.28
+				]
+			],
+			"front_dir": [
+				0.9579,
+				0.2871
+			],
+			"ground_lo": 1.25,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_028",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_028",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.11
+		},
+		{
+			"base_h": 1.35,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.75,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					273.33,
+					-72.03
+				],
+				[
+					271.32,
+					-65.34
+				],
+				[
+					260.86,
+					-68.48
+				],
+				[
+					262.87,
+					-75.18
+				]
+			],
+			"front_dir": [
+				0.9577,
+				0.2877
+			],
+			"ground_lo": 1.28,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_029",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_029",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.99
+		},
+		{
+			"base_h": 1.38,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					274.91,
+					-77.3
+				],
+				[
+					273.53,
+					-72.71
+				],
+				[
+					263.07,
+					-75.85
+				],
+				[
+					264.45,
+					-80.45
+				]
+			],
+			"front_dir": [
+				0.9577,
+				0.2879
+			],
+			"ground_lo": 1.33,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_030",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_030",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 1.5,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.58,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					281.76,
+					-95.45
+				],
+				[
+					278.83,
+					-88.11
+				],
+				[
+					268.69,
+					-92.17
+				],
+				[
+					271.62,
+					-99.51
+				]
+			],
+			"front_dir": [
+				0.9284,
+				0.3716
+			],
+			"ground_lo": 1.42,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_031",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_031",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.54,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.75,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					284.81,
+					-103.07
+				],
+				[
+					282.21,
+					-96.56
+				],
+				[
+					272.07,
+					-100.62
+				],
+				[
+					274.68,
+					-107.13
+				]
+			],
+			"front_dir": [
+				0.9283,
+				0.3719
+			],
+			"ground_lo": 1.47,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MXC_005",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_005",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.01
+		},
+		{
+			"base_h": 1.57,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					286.81,
+					-108.08
+				],
+				[
+					284.89,
+					-103.25
+				],
+				[
+					276.44,
+					-106.63
+				],
+				[
+					278.36,
+					-111.45
+				]
+			],
+			"front_dir": [
+				0.9287,
+				0.3708
+			],
+			"ground_lo": 1.51,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MXC_006",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.45,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.62,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.58,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					290.01,
+					-116.06
+				],
+				[
+					287.08,
+					-108.72
+				],
+				[
+					276.94,
+					-112.78
+				],
+				[
+					279.87,
+					-120.12
+				]
+			],
+			"front_dir": [
+				0.9284,
+				0.3716
+			],
+			"ground_lo": 1.54,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_007",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_007",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.66,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					292.72,
+					-122.84
+				],
+				[
+					290.46,
+					-117.17
+				],
+				[
+					280.32,
+					-121.23
+				],
+				[
+					282.58,
+					-126.89
+				]
+			],
+			"front_dir": [
+				0.9285,
+				0.3714
+			],
+			"ground_lo": 1.59,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MXC_008",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_008",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.2,
+			"depth_m": 9.1,
+			"district": "SouthGate",
+			"door_local_x": 1.2,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					234.73,
+					122.71
+				],
+				[
+					235.77,
+					116.81
+				],
+				[
+					244.73,
+					118.4
+				],
+				[
+					243.69,
+					124.3
+				]
+			],
+			"front_dir": [
+				-0.9846,
+				-0.1747
+			],
+			"ground_lo": 0.15,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_SGT_001",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.1,
+			"parcel": "P_SGT_001",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "EntranceRoad",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 6.0
+		},
+		{
+			"base_h": 0.19,
+			"depth_m": 9.1,
+			"district": "SouthGate",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					226.97,
+					120.62
+				],
+				[
+					226.15,
+					125.24
+				],
+				[
+					217.19,
+					123.64
+				],
+				[
+					218.02,
+					119.02
+				]
+			],
+			"front_dir": [
+				0.9844,
+				0.1761
+			],
+			"ground_lo": 0.15,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_SGT_002",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.1,
+			"parcel": "P_SGT_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.45,
+			"road": "EntranceRoad",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 4.7
+		},
+		{
+			"base_h": 0.24,
+			"depth_m": 10.01,
+			"district": "SouthGate",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					228.48,
+					112.15
+				],
+				[
+					227.11,
+					119.83
+				],
+				[
+					217.25,
+					118.07
+				],
+				[
+					218.63,
+					110.38
+				]
+			],
+			"front_dir": [
+				0.9843,
+				0.1764
+			],
+			"ground_lo": 0.18,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_SGT_003",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.1,
+			"parcel": "P_SGT_003",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "EntranceRoad",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.81
+		},
+		{
+			"base_h": 1.02,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.08,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					207.45,
+					-15.59
+				],
+				[
+					212.85,
+					-15.59
+				],
+				[
+					212.85,
+					-4.67
+				],
+				[
+					207.45,
+					-4.67
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"ground_lo": 0.92,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_001",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_001",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.02,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.4,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					216.4,
+					-16.5
+				],
+				[
+					223.4,
+					-16.5
+				],
+				[
+					223.4,
+					-5.58
+				],
+				[
+					216.4,
+					-5.58
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"ground_lo": 0.93,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_032",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_032",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.02,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					224.6,
+					-16.5
+				],
+				[
+					229.4,
+					-16.5
+				],
+				[
+					229.4,
+					-7.4
+				],
+				[
+					224.6,
+					-7.4
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"ground_lo": 0.94,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_033",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_033",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 1.02,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					229.6,
+					-16.5
+				],
+				[
+					237.5,
+					-16.5
+				],
+				[
+					237.5,
+					-5.58
+				],
+				[
+					229.6,
+					-5.58
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"ground_lo": 0.93,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_034",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_034",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.68,
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.05,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.75,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					279.45,
+					-19.74
+				],
+				[
+					286.33,
+					-21.04
+				],
+				[
+					288.36,
+					-10.31
+				],
+				[
+					281.48,
+					-9.01
+				]
+			],
+			"front_dir": [
+				-0.186,
+				-0.9826
+			],
+			"ground_lo": 0.95,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_035",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_035",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.01
+		},
+		{
+			"base_h": 1.05,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					286.53,
+					-21.08
+				],
+				[
+					291.63,
+					-22.04
+				],
+				[
+					293.32,
+					-13.1
+				],
+				[
+					288.22,
+					-12.14
+				]
+			],
+			"front_dir": [
+				-0.1854,
+				-0.9827
+			],
+			"ground_lo": 0.97,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_036",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_036",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.06,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.58,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					292.82,
+					-22.27
+				],
+				[
+					300.58,
+					-23.74
+				],
+				[
+					302.62,
+					-13.01
+				],
+				[
+					294.85,
+					-11.54
+				]
+			],
+			"front_dir": [
+				-0.1864,
+				-0.9825
+			],
+			"ground_lo": 0.97,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_037",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_037",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.07,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.22,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					300.78,
+					-23.78
+				],
+				[
+					306.77,
+					-24.91
+				],
+				[
+					308.8,
+					-14.18
+				],
+				[
+					302.81,
+					-13.05
+				]
+			],
+			"front_dir": [
+				-0.1857,
+				-0.9826
+			],
+			"ground_lo": 0.98,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_038",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_038",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.27,
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.11,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					206.95,
+					-24.41
+				],
+				[
+					202.45,
+					-24.41
+				],
+				[
+					202.45,
+					-35.33
+				],
+				[
+					206.95,
+					-35.33
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"ground_lo": 1.02,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_002",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.11,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					218.05,
+					-24.41
+				],
+				[
+					210.85,
+					-24.41
+				],
+				[
+					210.85,
+					-35.33
+				],
+				[
+					218.05,
+					-35.33
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"ground_lo": 1.02,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_003",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_003",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.11,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.35,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					226.35,
+					-24.41
+				],
+				[
+					220.95,
+					-24.41
+				],
+				[
+					220.95,
+					-35.33
+				],
+				[
+					226.35,
+					-35.33
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"ground_lo": 1.02,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_004",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_004",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.11,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					239.7,
+					-23.5
+				],
+				[
+					230.9,
+					-23.5
+				],
+				[
+					230.9,
+					-34.42
+				],
+				[
+					239.7,
+					-34.42
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"ground_lo": 1.02,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_039",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_039",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 1.14,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					299.96,
+					-30.74
+				],
+				[
+					294.86,
+					-29.78
+				],
+				[
+					293.0,
+					-39.61
+				],
+				[
+					298.11,
+					-40.58
+				]
+			],
+			"front_dir": [
+				0.1854,
+				0.9827
+			],
+			"ground_lo": 1.06,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_040",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_040",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.16,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.52,
+			"eave_edge_m": 5.38,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					307.14,
+					-32.1
+				],
+				[
+					301.15,
+					-30.97
+				],
+				[
+					299.12,
+					-41.7
+				],
+				[
+					305.11,
+					-42.83
+				]
+			],
+			"front_dir": [
+				0.1857,
+				0.9826
+			],
+			"ground_lo": 1.07,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_041",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_041",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.77,
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.17,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.4,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					314.21,
+					-33.44
+				],
+				[
+					307.34,
+					-32.14
+				],
+				[
+					305.3,
+					-42.87
+				],
+				[
+					312.18,
+					-44.17
+				]
+			],
+			"front_dir": [
+				0.1862,
+				0.9825
+			],
+			"ground_lo": 1.07,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_042",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_042",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.16,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					319.61,
+					-34.46
+				],
+				[
+					314.9,
+					-33.57
+				],
+				[
+					313.2,
+					-42.51
+				],
+				[
+					317.92,
+					-43.4
+				]
+			],
+			"front_dir": [
+				0.1861,
+				0.9825
+			],
+			"ground_lo": 1.05,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_043",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_043",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 0.6,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.8,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					171.58,
+					54.37
+				],
+				[
+					178.77,
+					54.16
+				],
+				[
+					179.08,
+					65.08
+				],
+				[
+					171.89,
+					65.28
+				]
+			],
+			"front_dir": [
+				-0.0284,
+				-0.9996
+			],
+			"ground_lo": 0.51,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_005",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_005",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.19
+		},
+		{
+			"base_h": 0.6,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.26,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					182.17,
+					54.07
+				],
+				[
+					188.47,
+					53.89
+				],
+				[
+					188.77,
+					64.81
+				],
+				[
+					182.47,
+					64.98
+				]
+			],
+			"front_dir": [
+				-0.0278,
+				-0.9996
+			],
+			"ground_lo": 0.51,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_006",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 0.6,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					190.87,
+					53.83
+				],
+				[
+					195.37,
+					53.69
+				],
+				[
+					195.69,
+					64.61
+				],
+				[
+					191.19,
+					64.74
+				]
+			],
+			"front_dir": [
+				-0.0296,
+				-0.9996
+			],
+			"ground_lo": 0.51,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_007",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_007",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 0.61,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					208.88,
+					52.41
+				],
+				[
+					216.78,
+					52.18
+				],
+				[
+					217.09,
+					63.1
+				],
+				[
+					209.19,
+					63.32
+				]
+			],
+			"front_dir": [
+				-0.0284,
+				-0.9996
+			],
+			"ground_lo": 0.52,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_044",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_044",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 0.61,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.53,
+			"eave_edge_m": 2.88,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					216.98,
+					52.18
+				],
+				[
+					223.08,
+					52.0
+				],
+				[
+					223.39,
+					62.92
+				],
+				[
+					217.29,
+					63.09
+				]
+			],
+			"front_dir": [
+				-0.0286,
+				-0.9996
+			],
+			"ground_lo": 0.52,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_045",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_045",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.27,
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.62,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -2.2,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					255.33,
+					50.39
+				],
+				[
+					264.1,
+					49.71
+				],
+				[
+					264.95,
+					60.59
+				],
+				[
+					256.18,
+					61.28
+				]
+			],
+			"front_dir": [
+				-0.0778,
+				-0.997
+			],
+			"ground_lo": 0.52,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_046",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_046",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 0.63,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					264.3,
+					49.69
+				],
+				[
+					269.49,
+					49.29
+				],
+				[
+					270.27,
+					59.27
+				],
+				[
+					265.08,
+					59.67
+				]
+			],
+			"front_dir": [
+				-0.0777,
+				-0.997
+			],
+			"ground_lo": 0.54,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_047",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_047",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.65,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 5.21
+		},
+		{
+			"base_h": 0.63,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.22,
+			"eave_edge_m": 2.88,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					270.68,
+					49.2
+				],
+				[
+					276.76,
+					48.73
+				],
+				[
+					277.61,
+					59.61
+				],
+				[
+					271.53,
+					60.09
+				]
+			],
+			"front_dir": [
+				-0.0778,
+				-0.997
+			],
+			"ground_lo": 0.54,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_048",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_048",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.27,
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.63,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					276.96,
+					48.71
+				],
+				[
+					283.94,
+					48.17
+				],
+				[
+					284.79,
+					59.05
+				],
+				[
+					277.81,
+					59.6
+				]
+			],
+			"front_dir": [
+				-0.0778,
+				-0.997
+			],
+			"ground_lo": 0.54,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_049",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_049",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.69,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 2.2,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					219.78,
+					45.09
+				],
+				[
+					210.99,
+					45.35
+				],
+				[
+					210.73,
+					36.25
+				],
+				[
+					219.52,
+					36.0
+				]
+			],
+			"front_dir": [
+				0.0289,
+				0.9996
+			],
+			"ground_lo": 0.61,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_050",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_050",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.79
+		},
+		{
+			"base_h": 0.71,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					270.94,
+					42.16
+				],
+				[
+					265.75,
+					42.56
+				],
+				[
+					264.97,
+					32.58
+				],
+				[
+					270.16,
+					32.18
+				]
+			],
+			"front_dir": [
+				0.0777,
+				0.997
+			],
+			"ground_lo": 0.62,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_051",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_051",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 5.21
+		},
+		{
+			"base_h": 0.72,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.22,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					278.21,
+					41.59
+				],
+				[
+					272.13,
+					42.06
+				],
+				[
+					271.28,
+					31.18
+				],
+				[
+					277.36,
+					30.7
+				]
+			],
+			"front_dir": [
+				0.0778,
+				0.997
+			],
+			"ground_lo": 0.63,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_052",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_052",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.27,
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 0.72,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.4,
+			"eave_edge_m": 5.2,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					285.39,
+					41.03
+				],
+				[
+					278.41,
+					41.57
+				],
+				[
+					277.56,
+					30.69
+				],
+				[
+					284.54,
+					30.14
+				]
+			],
+			"front_dir": [
+				0.0778,
+				0.997
+			],
+			"ground_lo": 0.63,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_053",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_053",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 7.86,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.71,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					290.88,
+					40.61
+				],
+				[
+					286.09,
+					40.97
+				],
+				[
+					285.4,
+					31.9
+				],
+				[
+					290.19,
+					31.53
+				]
+			],
+			"front_dir": [
+				0.0759,
+				0.9971
+			],
+			"ground_lo": 0.63,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_054",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_054",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 0.73,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": 1.97,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					298.95,
+					39.98
+				],
+				[
+					291.08,
+					40.59
+				],
+				[
+					290.23,
+					29.71
+				],
+				[
+					298.1,
+					29.09
+				]
+			],
+			"front_dir": [
+				0.0778,
+				0.997
+			],
+			"ground_lo": 0.63,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_055",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_055",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.68,
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.89
+		},
+		{
+			"base_h": 1.79,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					200.63,
+					-143.61
+				],
+				[
+					207.82,
+					-143.9
+				],
+				[
+					208.26,
+					-132.99
+				],
+				[
+					201.07,
+					-132.7
+				]
+			],
+			"front_dir": [
+				-0.0408,
+				-0.9992
+			],
+			"ground_lo": 1.7,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_008",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_008",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.8,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 1.22,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					233.31,
+					-145.83
+				],
+				[
+					239.41,
+					-146.08
+				],
+				[
+					239.84,
+					-135.16
+				],
+				[
+					233.74,
+					-134.92
+				]
+			],
+			"front_dir": [
+				-0.0397,
+				-0.9992
+			],
+			"ground_lo": 1.71,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_009",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_009",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.8,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.76,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					240.11,
+					-146.1
+				],
+				[
+					248.9,
+					-146.46
+				],
+				[
+					249.34,
+					-135.54
+				],
+				[
+					240.55,
+					-135.19
+				]
+			],
+			"front_dir": [
+				-0.04,
+				-0.9992
+			],
+			"ground_lo": 1.71,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_010",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_010",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.88,
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 1.78,
+			"depth_m": 10.01,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					255.29,
+					-144.11
+				],
+				[
+					260.12,
+					-142.19
+				],
+				[
+					256.41,
+					-132.89
+				],
+				[
+					251.58,
+					-134.82
+				]
+			],
+			"front_dir": [
+				0.3708,
+				-0.9287
+			],
+			"ground_lo": 1.7,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_011",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_011",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.77,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 1.53,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					260.3,
+					-142.11
+				],
+				[
+					265.97,
+					-139.85
+				],
+				[
+					261.91,
+					-129.71
+				],
+				[
+					256.25,
+					-131.97
+				]
+			],
+			"front_dir": [
+				0.3714,
+				-0.9285
+			],
+			"ground_lo": 1.68,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_012",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_012",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 6.1
+		},
+		{
+			"base_h": 1.76,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.75,
+			"eave_edge_m": 2.88,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					266.15,
+					-139.77
+				],
+				[
+					272.66,
+					-137.17
+				],
+				[
+					268.6,
+					-127.03
+				],
+				[
+					262.09,
+					-129.64
+				]
+			],
+			"front_dir": [
+				0.3719,
+				-0.9283
+			],
+			"ground_lo": 1.66,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_013",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_013",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.48,
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.01
+		},
+		{
+			"base_h": 1.74,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					273.3,
+					-136.91
+				],
+				[
+					277.76,
+					-135.13
+				],
+				[
+					274.37,
+					-126.68
+				],
+				[
+					269.92,
+					-128.47
+				]
+			],
+			"front_dir": [
+				0.3721,
+				-0.9282
+			],
+			"ground_lo": 1.66,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_014",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_014",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 1.67,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.58,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					318.91,
+					-125.6
+				],
+				[
+					326.8,
+					-125.21
+				],
+				[
+					326.27,
+					-114.31
+				],
+				[
+					318.38,
+					-114.69
+				]
+			],
+			"front_dir": [
+				0.0482,
+				-0.9988
+			],
+			"ground_lo": 1.59,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_015",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_015",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.68,
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.67,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					327.0,
+					-125.21
+				],
+				[
+					333.99,
+					-124.87
+				],
+				[
+					333.47,
+					-113.97
+				],
+				[
+					326.48,
+					-114.3
+				]
+			],
+			"front_dir": [
+				0.0472,
+				-0.9989
+			],
+			"ground_lo": 1.58,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_016",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_016",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.69,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					334.19,
+					-124.87
+				],
+				[
+					339.39,
+					-124.62
+				],
+				[
+					338.97,
+					-115.53
+				],
+				[
+					333.77,
+					-115.78
+				]
+			],
+			"front_dir": [
+				0.0462,
+				-0.9989
+			],
+			"ground_lo": 1.59,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_017",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_017",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.21
+		},
+		{
+			"base_h": 1.76,
+			"depth_m": 10.01,
+			"district": "MixedCommercial",
+			"door_local_x": -1.75,
+			"eave_edge_m": 2.88,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					310.25,
+					-133.01
+				],
+				[
+					303.26,
+					-133.35
+				],
+				[
+					303.73,
+					-143.34
+				],
+				[
+					310.72,
+					-143.01
+				]
+			],
+			"front_dir": [
+				-0.0472,
+				0.9989
+			],
+			"ground_lo": 1.68,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_018",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_018",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.47,
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.75,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					315.75,
+					-132.75
+				],
+				[
+					310.95,
+					-132.99
+				],
+				[
+					311.39,
+					-142.07
+				],
+				[
+					316.19,
+					-141.84
+				]
+			],
+			"front_dir": [
+				-0.0479,
+				0.9988
+			],
+			"ground_lo": 1.68,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_019",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_019",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 4.81
+		},
+		{
+			"base_h": 1.76,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.58,
+			"eave_edge_m": 3.88,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					324.84,
+					-132.32
+				],
+				[
+					316.95,
+					-132.7
+				],
+				[
+					317.46,
+					-143.6
+				],
+				[
+					325.35,
+					-143.23
+				]
+			],
+			"front_dir": [
+				-0.0469,
+				0.9989
+			],
+			"ground_lo": 1.67,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_020",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_020",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.68,
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.9
+		},
+		{
+			"base_h": 1.76,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					332.03,
+					-131.97
+				],
+				[
+					325.04,
+					-132.32
+				],
+				[
+					325.57,
+					-143.22
+				],
+				[
+					332.56,
+					-142.88
+				]
+			],
+			"front_dir": [
+				-0.0486,
+				0.9988
+			],
+			"ground_lo": 1.67,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_021",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_021",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 1.75,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					337.42,
+					-131.72
+				],
+				[
+					332.23,
+					-131.97
+				],
+				[
+					332.65,
+					-141.06
+				],
+				[
+					337.84,
+					-140.81
+				]
+			],
+			"front_dir": [
+				-0.0463,
+				0.9989
+			],
+			"ground_lo": 1.67,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MXC_022",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_022",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 5.2
+		},
+		{
+			"base_h": 1.81,
+			"depth_m": 10.92,
+			"district": "MixedCommercial",
+			"door_local_x": -1.75,
+			"eave_edge_m": 2.88,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					349.46,
+					-145.75
+				],
+				[
+					345.94,
+					-139.72
+				],
+				[
+					336.51,
+					-145.22
+				],
+				[
+					340.03,
+					-151.25
+				]
+			],
+			"front_dir": [
+				0.8639,
+				0.5036
+			],
+			"ground_lo": 1.73,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_023",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MXC_023",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.47,
+			"road": "RiverNorthPath",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 6.99
+		},
+		{
+			"base_h": 1.83,
+			"depth_m": 9.1,
+			"district": "MixedCommercial",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					352.19,
+					-150.42
+				],
+				[
+					349.56,
+					-145.93
+				],
+				[
+					341.7,
+					-150.52
+				],
+				[
+					344.33,
+					-155.02
+				]
+			],
+			"front_dir": [
+				0.8633,
+				0.5047
+			],
+			"ground_lo": 1.77,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MXC_024",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MXC_024",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "RiverNorthPath",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 5.21
+		},
+		{
+			"base_h": 1.49,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 2.02,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					188.78,
+					-96.66
+				],
+				[
+					193.43,
+					-90.03
+				],
+				[
+					185.23,
+					-84.29
+				],
+				[
+					180.58,
+					-90.92
+				]
+			],
+			"front_dir": [
+				0.8192,
+				-0.5735
+			],
+			"ground_lo": 1.41,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_009",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_009",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.72,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 1.43,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					195.38,
+					-87.24
+				],
+				[
+					197.96,
+					-83.56
+				],
+				[
+					189.01,
+					-77.3
+				],
+				[
+					186.43,
+					-80.98
+				]
+			],
+			"front_dir": [
+				0.8196,
+				-0.573
+			],
+			"ground_lo": 1.36,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_010",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_010",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.49
+		},
+		{
+			"base_h": 1.34,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 1.08,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					200.22,
+					-72.95
+				],
+				[
+					199.58,
+					-67.59
+				],
+				[
+					189.64,
+					-68.78
+				],
+				[
+					190.28,
+					-74.14
+				]
+			],
+			"front_dir": [
+				0.9929,
+				0.119
+			],
+			"ground_lo": 1.3,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_011",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_011",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.12,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.29,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.26,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					199.11,
+					-63.71
+				],
+				[
+					198.36,
+					-57.47
+				],
+				[
+					187.52,
+					-58.77
+				],
+				[
+					188.27,
+					-65.02
+				]
+			],
+			"front_dir": [
+				0.9928,
+				0.1196
+			],
+			"ground_lo": 1.24,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_012",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_012",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.29
+		},
+		{
+			"base_h": 1.24,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					198.02,
+					-54.58
+				],
+				[
+					197.53,
+					-50.52
+				],
+				[
+					186.69,
+					-51.83
+				],
+				[
+					187.18,
+					-55.89
+				]
+			],
+			"front_dir": [
+				0.9928,
+				0.1201
+			],
+			"ground_lo": 1.2,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_013",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_013",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 1.18,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					196.94,
+					-45.64
+				],
+				[
+					196.09,
+					-38.49
+				],
+				[
+					185.25,
+					-39.79
+				],
+				[
+					186.1,
+					-46.94
+				]
+			],
+			"front_dir": [
+				0.9929,
+				0.1186
+			],
+			"ground_lo": 1.13,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_014",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_014",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.12,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					195.68,
+					-35.12
+				],
+				[
+					195.16,
+					-30.8
+				],
+				[
+					184.32,
+					-32.1
+				],
+				[
+					184.84,
+					-36.43
+				]
+			],
+			"front_dir": [
+				0.9928,
+				0.1198
+			],
+			"ground_lo": 1.08,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_015",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_015",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.36
+		},
+		{
+			"base_h": 1.08,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					195.28,
+					-28.88
+				],
+				[
+					196.33,
+					-24.51
+				],
+				[
+					185.71,
+					-21.96
+				],
+				[
+					184.66,
+					-26.33
+				]
+			],
+			"front_dir": [
+				0.9724,
+				-0.2334
+			],
+			"ground_lo": 1.01,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_016",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_016",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.01,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.44,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					198.4,
+					-15.85
+				],
+				[
+					200.08,
+					-8.86
+				],
+				[
+					189.46,
+					-6.31
+				],
+				[
+					187.78,
+					-13.3
+				]
+			],
+			"front_dir": [
+				0.9724,
+				-0.2335
+			],
+			"ground_lo": 0.94,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_017",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_017",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.19
+		},
+		{
+			"base_h": 0.94,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					200.76,
+					-6.03
+				],
+				[
+					202.02,
+					-0.79
+				],
+				[
+					191.4,
+					1.77
+				],
+				[
+					190.14,
+					-3.48
+				]
+			],
+			"front_dir": [
+				0.9723,
+				-0.2336
+			],
+			"ground_lo": 0.89,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_018",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_018",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.11,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.39
+		},
+		{
+			"base_h": 0.44,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -2.2,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					213.79,
+					78.94
+				],
+				[
+					221.12,
+					83.81
+				],
+				[
+					215.06,
+					92.9
+				],
+				[
+					207.74,
+					88.02
+				]
+			],
+			"front_dir": [
+				0.5544,
+				-0.8322
+			],
+			"ground_lo": 0.34,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_056",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_056",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.8
+		},
+		{
+			"base_h": 0.41,
+			"depth_m": 10.01,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					221.28,
+					83.93
+				],
+				[
+					225.61,
+					86.8
+				],
+				[
+					220.06,
+					95.14
+				],
+				[
+					215.73,
+					92.26
+				]
+			],
+			"front_dir": [
+				0.5543,
+				-0.8323
+			],
+			"ground_lo": 0.33,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_057",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_057",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 5.19
+		},
+		{
+			"base_h": 1.67,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					182.77,
+					-115.4
+				],
+				[
+					178.64,
+					-121.3
+				],
+				[
+					187.59,
+					-127.56
+				],
+				[
+					191.72,
+					-121.66
+				]
+			],
+			"front_dir": [
+				-0.8197,
+				0.5728
+			],
+			"ground_lo": 1.58,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_019",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_019",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.61,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.58,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					188.34,
+					-107.45
+				],
+				[
+					184.72,
+					-112.61
+				],
+				[
+					193.67,
+					-118.88
+				],
+				[
+					197.28,
+					-113.71
+				]
+			],
+			"front_dir": [
+				-0.8192,
+				0.5735
+			],
+			"ground_lo": 1.54,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_020",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_020",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.32,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.57,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					192.29,
+					-101.8
+				],
+				[
+					189.71,
+					-105.49
+				],
+				[
+					197.92,
+					-111.22
+				],
+				[
+					200.5,
+					-107.53
+				]
+			],
+			"front_dir": [
+				-0.8202,
+				0.5721
+			],
+			"ground_lo": 1.5,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_021",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_021",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.53,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.44,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					198.66,
+					-92.71
+				],
+				[
+					194.52,
+					-98.6
+				],
+				[
+					203.46,
+					-104.87
+				],
+				[
+					207.6,
+					-98.98
+				]
+			],
+			"front_dir": [
+				-0.8187,
+				0.5742
+			],
+			"ground_lo": 1.45,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_022",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_022",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.48,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					203.42,
+					-85.91
+				],
+				[
+					200.32,
+					-90.33
+				],
+				[
+					209.27,
+					-96.59
+				],
+				[
+					212.37,
+					-92.17
+				]
+			],
+			"front_dir": [
+				-0.8194,
+				0.5732
+			],
+			"ground_lo": 1.41,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_023",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_023",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.11,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.37,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 2.03,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					205.75,
+					-70.17
+				],
+				[
+					206.72,
+					-78.21
+				],
+				[
+					217.56,
+					-76.9
+				],
+				[
+					216.59,
+					-68.86
+				]
+			],
+			"front_dir": [
+				-0.9928,
+				-0.1199
+			],
+			"ground_lo": 1.31,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_024",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_024",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 1.3,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					204.81,
+					-62.33
+				],
+				[
+					205.35,
+					-66.79
+				],
+				[
+					216.19,
+					-65.48
+				],
+				[
+					215.65,
+					-61.01
+				]
+			],
+			"front_dir": [
+				-0.9927,
+				-0.1204
+			],
+			"ground_lo": 1.27,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_025",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_025",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.26,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.08,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					203.88,
+					-54.58
+				],
+				[
+					204.52,
+					-59.94
+				],
+				[
+					215.36,
+					-58.65
+				],
+				[
+					214.72,
+					-53.28
+				]
+			],
+			"front_dir": [
+				-0.9929,
+				-0.119
+			],
+			"ground_lo": 1.22,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_026",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_026",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 0.89,
+			"depth_m": 10.92,
+			"district": "Market",
+			"door_local_x": -1.4,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					210.01,
+					11.44
+				],
+				[
+					208.37,
+					4.64
+				],
+				[
+					218.99,
+					2.09
+				],
+				[
+					220.63,
+					8.89
+				]
+			],
+			"front_dir": [
+				-0.9724,
+				0.2334
+			],
+			"ground_lo": 0.83,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.7,
+			"id": "B_P_MKT_058",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_058",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "zushi",
+			"width_m": 7.0
+		},
+		{
+			"base_h": 0.84,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 5.38,
+			"eave_m": 5.4,
+			"footprint": [
+				[
+					211.29,
+					16.79
+				],
+				[
+					210.16,
+					12.13
+				],
+				[
+					219.01,
+					10.0
+				],
+				[
+					220.13,
+					14.66
+				]
+			],
+			"front_dir": [
+				-0.9722,
+				0.2341
+			],
+			"ground_lo": 0.8,
+			"hisashi_depth_m": 0.45,
+			"hisashi_m": 2.9,
+			"id": "B_P_MKT_059",
+			"kind": "machiya",
+			"ov_eave_m": 0.05,
+			"ov_gable_m": 0.3,
+			"parcel": "P_MKT_059",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.48,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 0.0,
+			"type": "nikai",
+			"width_m": 4.8
+		},
+		{
+			"base_h": 2.2,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.26,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					184.54,
+					-205.78
+				],
+				[
+					181.37,
+					-211.22
+				],
+				[
+					190.81,
+					-216.71
+				],
+				[
+					193.98,
+					-211.27
+				]
+			],
+			"front_dir": [
+				-0.8643,
+				0.503
+			],
+			"ground_lo": 2.13,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_027",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_027",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.32,
+			"road": "NWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.23,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					180.16,
+					-213.29
+				],
+				[
+					177.89,
+					-217.18
+				],
+				[
+					186.54,
+					-222.22
+				],
+				[
+					188.81,
+					-218.32
+				]
+			],
+			"front_dir": [
+				-0.8641,
+				0.5033
+			],
+			"ground_lo": 2.18,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_028",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_028",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 2.33,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					173.05,
+					-224.49
+				],
+				[
+					166.98,
+					-228.36
+				],
+				[
+					172.84,
+					-237.57
+				],
+				[
+					178.92,
+					-233.7
+				]
+			],
+			"front_dir": [
+				-0.5372,
+				0.8435
+			],
+			"ground_lo": 2.25,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_029",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_029",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "NWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.35,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.35,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					164.53,
+					-229.91
+				],
+				[
+					159.97,
+					-232.81
+				],
+				[
+					165.82,
+					-242.02
+				],
+				[
+					170.38,
+					-239.13
+				]
+			],
+			"front_dir": [
+				-0.5363,
+				0.8441
+			],
+			"ground_lo": 2.28,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_030",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_030",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 2.38,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					155.84,
+					-235.44
+				],
+				[
+					151.81,
+					-238.01
+				],
+				[
+					157.18,
+					-246.45
+				],
+				[
+					161.22,
+					-243.88
+				]
+			],
+			"front_dir": [
+				-0.5371,
+				0.8435
+			],
+			"ground_lo": 2.31,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_031",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_031",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.78
+		},
+		{
+			"base_h": 1.84,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					195.25,
+					-156.03
+				],
+				[
+					196.34,
+					-151.68
+				],
+				[
+					185.75,
+					-149.02
+				],
+				[
+					184.65,
+					-153.38
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.243
+			],
+			"ground_lo": 1.79,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_032",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_032",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "NWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.49
+		},
+		{
+			"base_h": 1.88,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					193.36,
+					-163.6
+				],
+				[
+					194.67,
+					-158.37
+				],
+				[
+					184.07,
+					-155.71
+				],
+				[
+					182.76,
+					-160.95
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.2429
+			],
+			"ground_lo": 1.83,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_033",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_033",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.97,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.57,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					189.47,
+					-177.67
+				],
+				[
+					191.33,
+					-171.65
+				],
+				[
+					180.89,
+					-168.44
+				],
+				[
+					179.04,
+					-174.46
+				]
+			],
+			"front_dir": [
+				0.9557,
+				-0.2945
+			],
+			"ground_lo": 1.91,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_034",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_034",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.01,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					187.41,
+					-184.36
+				],
+				[
+					188.62,
+					-180.44
+				],
+				[
+					178.18,
+					-177.23
+				],
+				[
+					176.97,
+					-181.15
+				]
+			],
+			"front_dir": [
+				0.9558,
+				-0.2939
+			],
+			"ground_lo": 1.96,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_035",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_035",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 2.17,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.44,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					175.31,
+					-211.04
+				],
+				[
+					178.94,
+					-204.82
+				],
+				[
+					169.5,
+					-199.32
+				],
+				[
+					165.88,
+					-205.54
+				]
+			],
+			"front_dir": [
+				0.864,
+				-0.5036
+			],
+			"ground_lo": 2.1,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_036",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_036",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "NWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.22,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.26,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					170.42,
+					-219.42
+				],
+				[
+					173.6,
+					-213.98
+				],
+				[
+					164.17,
+					-208.48
+				],
+				[
+					160.99,
+					-213.92
+				]
+			],
+			"front_dir": [
+				0.8637,
+				-0.504
+			],
+			"ground_lo": 2.15,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_037",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_037",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.26,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					160.49,
+					-226.17
+				],
+				[
+					164.28,
+					-223.75
+				],
+				[
+					158.9,
+					-215.31
+				],
+				[
+					155.11,
+					-217.73
+				]
+			],
+			"front_dir": [
+				0.5375,
+				-0.8433
+			],
+			"ground_lo": 2.19,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_038",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_038",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.91,
+			"road": "NWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 2.29,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					151.12,
+					-232.13
+				],
+				[
+					157.2,
+					-228.26
+				],
+				[
+					151.34,
+					-219.05
+				],
+				[
+					145.26,
+					-222.92
+				]
+			],
+			"front_dir": [
+				0.5366,
+				-0.8438
+			],
+			"ground_lo": 2.21,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_039",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_039",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.21
+		},
+		{
+			"base_h": 2.17,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					150.18,
+					-200.36
+				],
+				[
+					145.14,
+					-202.3
+				],
+				[
+					149.05,
+					-212.49
+				],
+				[
+					154.09,
+					-210.55
+				]
+			],
+			"front_dir": [
+				-0.3588,
+				0.9334
+			],
+			"ground_lo": 2.1,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_040",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_040",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWBranch",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 2.06,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					167.04,
+					-192.65
+				],
+				[
+					171.09,
+					-193.27
+				],
+				[
+					172.75,
+					-182.48
+				],
+				[
+					168.7,
+					-181.86
+				]
+			],
+			"front_dir": [
+				-0.1521,
+				-0.9884
+			],
+			"ground_lo": 1.99,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_041",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_041",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.82,
+			"road": "NWBranch",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 2.07,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.44,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					151.99,
+					-194.5
+				],
+				[
+					158.71,
+					-191.91
+				],
+				[
+					154.79,
+					-181.72
+				],
+				[
+					148.07,
+					-184.31
+				]
+			],
+			"front_dir": [
+				0.3592,
+				-0.9333
+			],
+			"ground_lo": 1.99,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_042",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_042",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWBranch",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.09,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					142.94,
+					-197.98
+				],
+				[
+					148.82,
+					-195.72
+				],
+				[
+					144.91,
+					-185.53
+				],
+				[
+					139.03,
+					-187.78
+				]
+			],
+			"front_dir": [
+				0.3584,
+				-0.9336
+			],
+			"ground_lo": 2.01,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_043",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_043",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NWBranch",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.1,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					136.5,
+					-200.46
+				],
+				[
+					140.7,
+					-198.84
+				],
+				[
+					137.11,
+					-189.5
+				],
+				[
+					132.91,
+					-191.12
+				]
+			],
+			"front_dir": [
+				0.3592,
+				-0.9332
+			],
+			"ground_lo": 2.04,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_044",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_044",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "NWBranch",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.05,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					145.34,
+					-16.77
+				],
+				[
+					143.68,
+					-21.9
+				],
+				[
+					153.21,
+					-24.97
+				],
+				[
+					154.87,
+					-19.84
+				]
+			],
+			"front_dir": [
+				-0.9518,
+				0.3067
+			],
+			"ground_lo": 1.0,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_045",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_045",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.11,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.39
+		},
+		{
+			"base_h": 1.11,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.26,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					142.49,
+					-25.62
+				],
+				[
+					140.56,
+					-31.61
+				],
+				[
+					150.96,
+					-34.95
+				],
+				[
+					152.89,
+					-28.96
+				]
+			],
+			"front_dir": [
+				-0.9521,
+				0.3058
+			],
+			"ground_lo": 1.05,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_046",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_046",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.29
+		},
+		{
+			"base_h": 1.14,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					139.53,
+					-35.66
+				],
+				[
+					139.19,
+					-39.75
+				],
+				[
+					150.08,
+					-40.64
+				],
+				[
+					150.41,
+					-36.56
+				]
+			],
+			"front_dir": [
+				-0.9966,
+				0.0821
+			],
+			"ground_lo": 1.11,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_047",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_047",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.82,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 1.22,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					138.78,
+					-44.63
+				],
+				[
+					138.18,
+					-51.81
+				],
+				[
+					149.07,
+					-52.71
+				],
+				[
+					149.66,
+					-45.54
+				]
+			],
+			"front_dir": [
+				-0.9966,
+				0.0827
+			],
+			"ground_lo": 1.17,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_048",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_048",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.27,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.58,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					137.9,
+					-55.19
+				],
+				[
+					137.38,
+					-61.48
+				],
+				[
+					148.27,
+					-62.37
+				],
+				[
+					148.78,
+					-56.09
+				]
+			],
+			"front_dir": [
+				-0.9966,
+				0.0819
+			],
+			"ground_lo": 1.23,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_049",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_049",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.32,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					137.18,
+					-63.86
+				],
+				[
+					136.8,
+					-68.36
+				],
+				[
+					146.78,
+					-69.19
+				],
+				[
+					147.15,
+					-64.7
+				]
+			],
+			"front_dir": [
+				-0.9965,
+				0.0832
+			],
+			"ground_lo": 1.28,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_050",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_050",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.51
+		},
+		{
+			"base_h": 1.38,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.44,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					136.93,
+					-72.12
+				],
+				[
+					137.77,
+					-79.28
+				],
+				[
+					148.62,
+					-78.0
+				],
+				[
+					147.77,
+					-70.84
+				]
+			],
+			"front_dir": [
+				-0.9931,
+				-0.1172
+			],
+			"ground_lo": 1.33,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_051",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_051",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.21
+		},
+		{
+			"base_h": 1.43,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.08,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					138.11,
+					-82.15
+				],
+				[
+					138.74,
+					-87.52
+				],
+				[
+					149.59,
+					-86.23
+				],
+				[
+					148.95,
+					-80.87
+				]
+			],
+			"front_dir": [
+				-0.9931,
+				-0.1174
+			],
+			"ground_lo": 1.39,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_052",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_052",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.5,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					139.32,
+					-92.38
+				],
+				[
+					140.26,
+					-100.43
+				],
+				[
+					151.11,
+					-99.15
+				],
+				[
+					150.16,
+					-91.11
+				]
+			],
+			"front_dir": [
+				-0.9932,
+				-0.1166
+			],
+			"ground_lo": 1.45,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_053",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_053",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 1.57,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					140.56,
+					-104.85
+				],
+				[
+					139.87,
+					-109.31
+				],
+				[
+					150.66,
+					-110.98
+				],
+				[
+					151.35,
+					-106.53
+				]
+			],
+			"front_dir": [
+				-0.9881,
+				0.1536
+			],
+			"ground_lo": 1.53,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_054",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_054",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.61,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					139.49,
+					-111.67
+				],
+				[
+					138.66,
+					-117.01
+				],
+				[
+					149.45,
+					-118.69
+				],
+				[
+					150.28,
+					-113.36
+				]
+			],
+			"front_dir": [
+				-0.9881,
+				0.1541
+			],
+			"ground_lo": 1.57,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_055",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_055",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.67,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.26,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					138.06,
+					-120.86
+				],
+				[
+					137.09,
+					-127.09
+				],
+				[
+					147.88,
+					-128.77
+				],
+				[
+					148.85,
+					-122.55
+				]
+			],
+			"front_dir": [
+				-0.988,
+				0.1542
+			],
+			"ground_lo": 1.63,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_056",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_056",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.32,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.71,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					136.64,
+					-129.95
+				],
+				[
+					136.01,
+					-134.01
+				],
+				[
+					146.8,
+					-135.69
+				],
+				[
+					147.43,
+					-131.64
+				]
+			],
+			"front_dir": [
+				-0.9881,
+				0.154
+			],
+			"ground_lo": 1.68,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_057",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_057",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 0.96,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					141.65,
+					-10.85
+				],
+				[
+					143.03,
+					-6.57
+				],
+				[
+					133.5,
+					-3.51
+				],
+				[
+					132.12,
+					-7.79
+				]
+			],
+			"front_dir": [
+				0.9521,
+				-0.3056
+			],
+			"ground_lo": 0.92,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_058",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_058",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.03,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 3.72,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					138.25,
+					-21.41
+				],
+				[
+					140.46,
+					-14.56
+				],
+				[
+					130.06,
+					-11.22
+				],
+				[
+					127.86,
+					-18.07
+				]
+			],
+			"front_dir": [
+				0.952,
+				-0.3062
+			],
+			"ground_lo": 0.97,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_059",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_059",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.52,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.08,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.35,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					135.71,
+					-29.32
+				],
+				[
+					137.37,
+					-24.18
+				],
+				[
+					126.97,
+					-20.84
+				],
+				[
+					125.32,
+					-25.98
+				]
+			],
+			"front_dir": [
+				0.952,
+				-0.3062
+			],
+			"ground_lo": 1.03,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_060",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_060",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.15,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.62,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					133.64,
+					-42.3
+				],
+				[
+					134.32,
+					-34.22
+				],
+				[
+					123.43,
+					-33.31
+				],
+				[
+					122.76,
+					-41.39
+				]
+			],
+			"front_dir": [
+				0.9965,
+				-0.0833
+			],
+			"ground_lo": 1.1,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_061",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_061",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 1.2,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					132.98,
+					-50.18
+				],
+				[
+					133.36,
+					-45.68
+				],
+				[
+					122.47,
+					-44.77
+				],
+				[
+					122.1,
+					-49.27
+				]
+			],
+			"front_dir": [
+				0.9965,
+				-0.0832
+			],
+			"ground_lo": 1.17,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_062",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_062",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.51
+		},
+		{
+			"base_h": 1.25,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					132.33,
+					-57.95
+				],
+				[
+					132.79,
+					-52.56
+				],
+				[
+					121.9,
+					-51.64
+				],
+				[
+					121.45,
+					-57.03
+				]
+			],
+			"front_dir": [
+				0.9965,
+				-0.0841
+			],
+			"ground_lo": 1.21,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_063",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_063",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.12,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.31,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.57,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					131.49,
+					-68.11
+				],
+				[
+					132.02,
+					-61.83
+				],
+				[
+					121.13,
+					-60.92
+				],
+				[
+					120.61,
+					-67.2
+				]
+			],
+			"front_dir": [
+				0.9965,
+				-0.0834
+			],
+			"ground_lo": 1.27,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_064",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_064",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.36,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					131.89,
+					-74.83
+				],
+				[
+					131.41,
+					-70.75
+				],
+				[
+					120.57,
+					-72.04
+				],
+				[
+					121.05,
+					-76.12
+				]
+			],
+			"front_dir": [
+				0.993,
+				0.1179
+			],
+			"ground_lo": 1.32,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_065",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_065",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.82,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.1
+		},
+		{
+			"base_h": 1.43,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.44,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					133.3,
+					-86.85
+				],
+				[
+					132.46,
+					-79.69
+				],
+				[
+					121.61,
+					-80.97
+				],
+				[
+					122.46,
+					-88.13
+				]
+			],
+			"front_dir": [
+				0.9931,
+				0.1172
+			],
+			"ground_lo": 1.38,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_066",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_066",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.21
+		},
+		{
+			"base_h": 1.49,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.26,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					134.43,
+					-96.48
+				],
+				[
+					133.7,
+					-90.22
+				],
+				[
+					122.85,
+					-91.5
+				],
+				[
+					123.59,
+					-97.75
+				]
+			],
+			"front_dir": [
+				0.9932,
+				0.1167
+			],
+			"ground_lo": 1.44,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_067",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_067",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.53,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					135.24,
+					-103.33
+				],
+				[
+					134.72,
+					-98.86
+				],
+				[
+					124.78,
+					-100.03
+				],
+				[
+					125.3,
+					-104.5
+				]
+			],
+			"front_dir": [
+				0.9932,
+				0.1167
+			],
+			"ground_lo": 1.49,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_068",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_068",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.59,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.8,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					133.57,
+					-115.09
+				],
+				[
+					134.68,
+					-107.98
+				],
+				[
+					123.89,
+					-106.3
+				],
+				[
+					122.78,
+					-113.41
+				]
+			],
+			"front_dir": [
+				0.988,
+				-0.1544
+			],
+			"ground_lo": 1.54,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_069",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_069",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 1.64,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.35,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					132.29,
+					-123.31
+				],
+				[
+					133.12,
+					-117.96
+				],
+				[
+					122.33,
+					-116.28
+				],
+				[
+					121.5,
+					-121.63
+				]
+			],
+			"front_dir": [
+				0.9881,
+				-0.1538
+			],
+			"ground_lo": 1.6,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_070",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_070",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "WestBankLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.41
+		},
+		{
+			"base_h": 1.42,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.44,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					229.68,
+					-86.34
+				],
+				[
+					236.65,
+					-84.6
+				],
+				[
+					234.01,
+					-74.0
+				],
+				[
+					227.03,
+					-75.74
+				]
+			],
+			"front_dir": [
+				0.2422,
+				-0.9702
+			],
+			"ground_lo": 1.34,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_071",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_071",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MidLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.19
+		},
+		{
+			"base_h": 1.4,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.26,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					239.96,
+					-83.77
+				],
+				[
+					246.06,
+					-82.24
+				],
+				[
+					243.41,
+					-71.64
+				],
+				[
+					237.3,
+					-73.18
+				]
+			],
+			"front_dir": [
+				0.2432,
+				-0.97
+			],
+			"ground_lo": 1.33,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_072",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_072",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.32,
+			"road": "MidLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 1.51,
+			"depth_m": 10.01,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					224.49,
+					-92.23
+				],
+				[
+					219.69,
+					-90.05
+				],
+				[
+					215.56,
+					-99.17
+				],
+				[
+					220.36,
+					-101.35
+				]
+			],
+			"front_dir": [
+				0.4132,
+				0.9106
+			],
+			"ground_lo": 1.44,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_073",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_073",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.15,
+			"road": "MidLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.27
+		},
+		{
+			"base_h": 1.52,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					231.44,
+					-91.38
+				],
+				[
+					227.08,
+					-92.47
+				],
+				[
+					229.73,
+					-103.07
+				],
+				[
+					234.09,
+					-101.98
+				]
+			],
+			"front_dir": [
+				-0.2425,
+				0.9701
+			],
+			"ground_lo": 1.45,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_074",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_074",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "MidLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 1.51,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					239.01,
+					-89.49
+				],
+				[
+					233.78,
+					-90.79
+				],
+				[
+					236.41,
+					-101.39
+				],
+				[
+					241.65,
+					-100.09
+				]
+			],
+			"front_dir": [
+				-0.2414,
+				0.9704
+			],
+			"ground_lo": 1.44,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_075",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_075",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "MidLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 1.49,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.26,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					248.91,
+					-87.01
+				],
+				[
+					242.8,
+					-88.54
+				],
+				[
+					245.45,
+					-99.14
+				],
+				[
+					251.57,
+					-97.61
+				]
+			],
+			"front_dir": [
+				-0.2429,
+				0.9701
+			],
+			"ground_lo": 1.42,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_076",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_076",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "MidLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.31
+		},
+		{
+			"base_h": 1.47,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					258.78,
+					-86.29
+				],
+				[
+					253.98,
+					-86.0
+				],
+				[
+					253.42,
+					-95.08
+				],
+				[
+					258.22,
+					-95.38
+				]
+			],
+			"front_dir": [
+				0.0619,
+				0.9981
+			],
+			"ground_lo": 1.42,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_MKT_060",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.05,
+			"parcel": "P_MKT_060",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.95,
+			"road": "MidLane",
+			"roof": "hira",
+			"setback_m": 0.0,
+			"type": "hiraya",
+			"width_m": 4.81
+		},
+		{
+			"base_h": 0.6,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": -1.44,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					166.26,
+					53.59
+				],
+				[
+					164.37,
+					60.54
+				],
+				[
+					153.84,
+					57.66
+				],
+				[
+					155.73,
+					50.72
+				]
+			],
+			"front_dir": [
+				0.9648,
+				0.2631
+			],
+			"ground_lo": 0.54,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_077",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_077",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "SWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 0.54,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					163.6,
+					63.33
+				],
+				[
+					162.18,
+					68.55
+				],
+				[
+					151.65,
+					65.67
+				],
+				[
+					153.07,
+					60.46
+				]
+			],
+			"front_dir": [
+				0.9647,
+				0.2634
+			],
+			"ground_lo": 0.49,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_078",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_078",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "SWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 0.46,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 2.03,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					161.95,
+					73.75
+				],
+				[
+					166.12,
+					80.7
+				],
+				[
+					156.75,
+					86.32
+				],
+				[
+					152.59,
+					79.37
+				]
+			],
+			"front_dir": [
+				0.8576,
+				-0.5143
+			],
+			"ground_lo": 0.38,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_079",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_079",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "SWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 0.4,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					167.87,
+					83.61
+				],
+				[
+					170.18,
+					87.47
+				],
+				[
+					160.81,
+					93.08
+				],
+				[
+					158.5,
+					89.22
+				]
+			],
+			"front_dir": [
+				0.8581,
+				-0.5134
+			],
+			"ground_lo": 0.34,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_080",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_080",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "SWLane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 0.46,
+			"depth_m": 10.92,
+			"district": "ResidentialWest",
+			"door_local_x": 1.26,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					174.9,
+					85.0
+				],
+				[
+					171.66,
+					79.59
+				],
+				[
+					181.03,
+					73.98
+				],
+				[
+					184.27,
+					79.39
+				]
+			],
+			"front_dir": [
+				-0.858,
+				0.5137
+			],
+			"ground_lo": 0.39,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RSW_081",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RSW_081",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.32,
+			"road": "SWLane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.17,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					433.08,
+					-208.74
+				],
+				[
+					436.61,
+					-211.53
+				],
+				[
+					443.37,
+					-202.95
+				],
+				[
+					439.83,
+					-200.17
+				]
+			],
+			"front_dir": [
+				-0.6188,
+				-0.7855
+			],
+			"ground_lo": 2.1,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_001",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_001",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 2.25,
+			"depth_m": 10.01,
+			"district": "ResidentialNE",
+			"door_local_x": -1.08,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					445.63,
+					-220.5
+				],
+				[
+					449.24,
+					-224.52
+				],
+				[
+					456.68,
+					-217.81
+				],
+				[
+					453.06,
+					-213.8
+				]
+			],
+			"front_dir": [
+				-0.7427,
+				-0.6697
+			],
+			"ground_lo": 2.18,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_002",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.12,
+			"road": "NELane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 2.29,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					451.85,
+					-227.42
+				],
+				[
+					456.06,
+					-232.1
+				],
+				[
+					464.18,
+					-224.79
+				],
+				[
+					459.96,
+					-220.11
+				]
+			],
+			"front_dir": [
+				-0.7429,
+				-0.6693
+			],
+			"ground_lo": 2.22,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_003",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_003",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.32,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					463.9,
+					-235.83
+				],
+				[
+					467.8,
+					-237.12
+				],
+				[
+					471.25,
+					-226.76
+				],
+				[
+					467.35,
+					-225.47
+				]
+			],
+			"front_dir": [
+				-0.3156,
+				-0.9489
+			],
+			"ground_lo": 2.25,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_004",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_004",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.11
+		},
+		{
+			"base_h": 2.35,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": -1.8,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					472.44,
+					-238.68
+				],
+				[
+					479.28,
+					-240.95
+				],
+				[
+					482.73,
+					-230.59
+				],
+				[
+					475.89,
+					-228.32
+				]
+			],
+			"front_dir": [
+				-0.3159,
+				-0.9488
+			],
+			"ground_lo": 2.27,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_005",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_005",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "NELane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.36,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					482.51,
+					-242.03
+				],
+				[
+					486.41,
+					-243.33
+				],
+				[
+					489.87,
+					-232.98
+				],
+				[
+					485.96,
+					-231.67
+				]
+			],
+			"front_dir": [
+				-0.3168,
+				-0.9485
+			],
+			"ground_lo": 2.29,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_006",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 4.12
+		},
+		{
+			"base_h": 2.41,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": -1.26,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					461.57,
+					-240.66
+				],
+				[
+					455.59,
+					-238.67
+				],
+				[
+					452.13,
+					-249.02
+				],
+				[
+					458.11,
+					-251.02
+				]
+			],
+			"front_dir": [
+				0.3166,
+				0.9485
+			],
+			"ground_lo": 2.33,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_007",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_007",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.41,
+			"depth_m": 10.01,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					468.1,
+					-242.84
+				],
+				[
+					463.84,
+					-241.42
+				],
+				[
+					460.67,
+					-250.91
+				],
+				[
+					464.93,
+					-252.34
+				]
+			],
+			"front_dir": [
+				0.3168,
+				0.9485
+			],
+			"ground_lo": 2.35,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_008",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_008",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.15,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 2.44,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 1.8,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					478.64,
+					-246.35
+				],
+				[
+					471.81,
+					-244.08
+				],
+				[
+					468.36,
+					-254.44
+				],
+				[
+					475.18,
+					-256.71
+				]
+			],
+			"front_dir": [
+				0.3162,
+				0.9487
+			],
+			"ground_lo": 2.36,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_009",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_009",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.52,
+			"road": "NELane",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.39,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": -1.35,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					438.18,
+					-244.33
+				],
+				[
+					435.98,
+					-239.39
+				],
+				[
+					426.0,
+					-243.83
+				],
+				[
+					428.2,
+					-248.76
+				]
+			],
+			"front_dir": [
+				0.9138,
+				0.4061
+			],
+			"ground_lo": 2.34,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_010",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_010",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NENorth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.4
+		},
+		{
+			"base_h": 2.15,
+			"depth_m": 10.01,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					450.52,
+					-208.4
+				],
+				[
+					454.7,
+					-206.72
+				],
+				[
+					450.98,
+					-197.43
+				],
+				[
+					446.8,
+					-199.11
+				]
+			],
+			"front_dir": [
+				0.3717,
+				-0.9283
+			],
+			"ground_lo": 2.08,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_011",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_011",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.91,
+			"road": "NESouth",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.51
+		},
+		{
+			"base_h": 2.11,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": -1.44,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					460.15,
+					-202.44
+				],
+				[
+					465.24,
+					-197.35
+				],
+				[
+					457.52,
+					-189.63
+				],
+				[
+					452.43,
+					-194.71
+				]
+			],
+			"front_dir": [
+				0.7065,
+				-0.7077
+			],
+			"ground_lo": 2.04,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_012",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_012",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 7.2
+		},
+		{
+			"base_h": 2.07,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					467.29,
+					-195.3
+				],
+				[
+					471.11,
+					-191.48
+				],
+				[
+					463.39,
+					-183.76
+				],
+				[
+					459.57,
+					-187.58
+				]
+			],
+			"front_dir": [
+				0.7071,
+				-0.7071
+			],
+			"ground_lo": 2.0,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_013",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_013",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 5.39
+		},
+		{
+			"base_h": 2.04,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 2.02,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					473.8,
+					-189.55
+				],
+				[
+					481.62,
+					-187.42
+				],
+				[
+					478.74,
+					-176.89
+				],
+				[
+					470.93,
+					-179.02
+				]
+			],
+			"front_dir": [
+				0.2634,
+				-0.9647
+			],
+			"ground_lo": 1.96,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_014",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_014",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 4.72,
+			"road": "NESouth",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 8.1
+		},
+		{
+			"base_h": 2.02,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					484.89,
+					-186.53
+				],
+				[
+					489.24,
+					-185.35
+				],
+				[
+					486.37,
+					-174.81
+				],
+				[
+					482.02,
+					-176.0
+				]
+			],
+			"front_dir": [
+				0.263,
+				-0.9648
+			],
+			"ground_lo": 1.95,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_015",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_015",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.5
+		},
+		{
+			"base_h": 2.19,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 1.08,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					465.97,
+					-203.44
+				],
+				[
+					462.14,
+					-207.27
+				],
+				[
+					469.86,
+					-214.99
+				],
+				[
+					473.69,
+					-211.16
+				]
+			],
+			"front_dir": [
+				-0.7071,
+				0.7071
+			],
+			"ground_lo": 2.12,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_016",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_016",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 5.41
+		},
+		{
+			"base_h": 2.15,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": -1.26,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					473.18,
+					-196.23
+				],
+				[
+					468.72,
+					-200.69
+				],
+				[
+					476.44,
+					-208.41
+				],
+				[
+					480.9,
+					-203.95
+				]
+			],
+			"front_dir": [
+				-0.7071,
+				0.7071
+			],
+			"ground_lo": 2.08,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_017",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_017",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 6.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "zushi",
+			"width_m": 6.3
+		},
+		{
+			"base_h": 2.12,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.72,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					484.82,
+					-191.55
+				],
+				[
+					480.85,
+					-192.63
+				],
+				[
+					483.73,
+					-203.16
+				],
+				[
+					487.69,
+					-202.08
+				]
+			],
+			"front_dir": [
+				-0.2636,
+				0.9646
+			],
+			"ground_lo": 2.05,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_018",
+			"kind": "machiya",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_018",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 3.82,
+			"road": "NESouth",
+			"roof": "tsuma",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 4.11
+		},
+		{
+			"base_h": 2.1,
+			"depth_m": 10.92,
+			"district": "ResidentialNE",
+			"door_local_x": 1.72,
+			"eave_edge_m": 2.7,
+			"eave_m": 2.9,
+			"footprint": [
+				[
+					496.2,
+					-188.45
+				],
+				[
+					489.54,
+					-190.26
+				],
+				[
+					492.42,
+					-200.8
+				],
+				[
+					499.07,
+					-198.98
+				]
+			],
+			"front_dir": [
+				-0.263,
+				0.9648
+			],
+			"ground_lo": 2.03,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "B_P_RNE_019",
+			"kind": "machiya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "P_RNE_019",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.36,
+			"road": "NESouth",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"type": "hiraya",
+			"width_m": 6.89
+		},
+		{
+			"base_h": 1.36,
+			"depth_m": 5.46,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 4.02,
+			"eave_m": 4.2,
+			"footprint": [
+				[
+					284.38,
+					-71.69
+				],
+				[
+					285.43,
+					-75.18
+				],
+				[
+					290.66,
+					-73.61
+				],
+				[
+					289.61,
+					-70.12
+				]
+			],
+			"front_dir": [
+				-0.9577,
+				-0.2879
+			],
+			"ground_lo": 1.32,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_MKT_002",
+			"kind": "aux_kura",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "A_MKT_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.02,
+			"road": "MainStreet",
+			"roof": "tsuma",
+			"setback_m": 2.49,
+			"type": "kura",
+			"width_m": 3.64
+		},
+		{
+			"base_h": 0.67,
+			"depth_m": 1.82,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					174.69,
+					40.63
+				],
+				[
+					171.96,
+					40.71
+				],
+				[
+					171.91,
+					38.89
+				],
+				[
+					174.64,
+					38.82
+				]
+			],
+			"front_dir": [
+				0.0278,
+				0.9996
+			],
+			"ground_lo": 0.66,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RSW_002",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RSW_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"setback_m": 5.73,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 0.89,
+			"depth_m": 1.82,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					194.48,
+					2.15
+				],
+				[
+					195.11,
+					4.81
+				],
+				[
+					193.34,
+					5.23
+				],
+				[
+					192.71,
+					2.57
+				]
+			],
+			"front_dir": [
+				0.9727,
+				-0.2322
+			],
+			"ground_lo": 0.87,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RSW_006",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RSW_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "WestAlley",
+			"roof": "hira",
+			"setback_m": 8.93,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 0.36,
+			"depth_m": 5.46,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 4.02,
+			"eave_m": 4.2,
+			"footprint": [
+				[
+					223.66,
+					90.91
+				],
+				[
+					226.69,
+					92.92
+				],
+				[
+					223.66,
+					97.47
+				],
+				[
+					220.63,
+					95.45
+				]
+			],
+			"front_dir": [
+				0.5542,
+				-0.8324
+			],
+			"ground_lo": 0.32,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_MKT_006",
+			"kind": "aux_kura",
+			"ov_eave_m": 0.4,
+			"ov_gable_m": 0.3,
+			"parcel": "A_MKT_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.02,
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"setback_m": 4.49,
+			"type": "kura",
+			"width_m": 3.64
+		},
+		{
+			"base_h": 2.13,
+			"depth_m": 1.82,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					192.58,
+					-202.36
+				],
+				[
+					191.2,
+					-204.72
+				],
+				[
+					192.77,
+					-205.63
+				],
+				[
+					194.15,
+					-203.27
+				]
+			],
+			"front_dir": [
+				-0.8638,
+				0.5039
+			],
+			"ground_lo": 2.11,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RSW_010",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RSW_010",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "NWLane",
+			"roof": "hira",
+			"setback_m": 6.13,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 2.14,
+			"depth_m": 1.82,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					156.76,
+					-203.52
+				],
+				[
+					154.21,
+					-204.51
+				],
+				[
+					154.87,
+					-206.21
+				],
+				[
+					157.42,
+					-205.22
+				]
+			],
+			"front_dir": [
+				-0.3596,
+				0.9331
+			],
+			"ground_lo": 2.12,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RSW_014",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RSW_014",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "NWBranch",
+			"roof": "hira",
+			"setback_m": 6.23,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 0.35,
+			"depth_m": 1.82,
+			"district": "ResidentialWest",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					164.17,
+					92.25
+				],
+				[
+					165.57,
+					94.59
+				],
+				[
+					164.01,
+					95.53
+				],
+				[
+					162.6,
+					93.19
+				]
+			],
+			"front_dir": [
+				0.8576,
+				-0.5143
+			],
+			"ground_lo": 0.33,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RSW_018",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RSW_018",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "SWLane",
+			"roof": "hira",
+			"setback_m": 8.53,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 2.32,
+			"depth_m": 1.82,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					444.56,
+					-235.06
+				],
+				[
+					442.73,
+					-233.04
+				],
+				[
+					441.38,
+					-234.26
+				],
+				[
+					443.21,
+					-236.28
+				]
+			],
+			"front_dir": [
+				0.7422,
+				0.6702
+			],
+			"ground_lo": 2.3,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RNE_002",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RNE_002",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "NELane",
+			"roof": "hira",
+			"setback_m": 6.13,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 2.32,
+			"depth_m": 1.82,
+			"district": "ResidentialNE",
+			"door_local_x": 0.0,
+			"eave_edge_m": 2.1,
+			"eave_m": 2.3,
+			"footprint": [
+				[
+					430.77,
+					-236.15
+				],
+				[
+					430.77,
+					-233.42
+				],
+				[
+					428.95,
+					-233.42
+				],
+				[
+					428.95,
+					-236.15
+				]
+			],
+			"front_dir": [
+				1.0,
+				0.0
+			],
+			"ground_lo": 2.3,
+			"hisashi_depth_m": 0.0,
+			"hisashi_m": 0.0,
+			"id": "S_A_RNE_006",
+			"kind": "aux_koya",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.3,
+			"parcel": "A_RNE_006",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 2.71,
+			"road": "NENorth",
+			"roof": "hira",
+			"setback_m": 5.73,
+			"type": "koya",
+			"width_m": 2.73
+		},
+		{
+			"base_h": 0.97,
+			"depth_m": 8.19,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					252.51,
+					-9.23
+				],
+				[
+					249.63,
+					-0.59
+				],
+				[
+					241.86,
+					-3.18
+				],
+				[
+					244.74,
+					-11.82
+				]
+			],
+			"front_dir": [
+				0.9487,
+				0.3162
+			],
+			"ground_lo": 0.89,
+			"hisashi_depth_m": 0.91,
+			"hisashi_m": 2.7,
+			"id": "B_P_LM_SUZUNAAN",
+			"kind": "landmark",
+			"landmark": "LANDMARK_SUZUNAAN",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.25,
+			"p0_size": [
+				10.0,
+				7.0,
+				9.0
+			],
+			"p0_yaw": 90.0,
+			"parcel": "P_LM_SUZUNAAN",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.74,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 1.5,
+			"shift_m": 0.0,
+			"type": "zushi",
+			"width_m": 9.1
+		},
+		{
+			"base_h": 1.32,
+			"depth_m": 9.1,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					279.22,
+					-57.91
+				],
+				[
+					282.36,
+					-68.37
+				],
+				[
+					291.07,
+					-65.76
+				],
+				[
+					287.94,
+					-55.3
+				]
+			],
+			"front_dir": [
+				-0.9578,
+				-0.2873
+			],
+			"ground_lo": 1.23,
+			"hisashi_depth_m": 0.91,
+			"hisashi_m": 2.7,
+			"id": "B_P_LM_GEIDONTEI",
+			"kind": "landmark",
+			"landmark": "LANDMARK_GEIDONTEI",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.25,
+			"p0_size": [
+				12.0,
+				8.0,
+				10.0
+			],
+			"p0_yaw": -90.0,
+			"parcel": "P_LM_GEIDONTEI",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.95,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 1.5,
+			"shift_m": 0.0,
+			"type": "zushi",
+			"width_m": 10.92
+		},
+		{
+			"base_h": 0.56,
+			"depth_m": 7.28,
+			"district": "Market",
+			"door_local_x": 0.0,
+			"eave_edge_m": 3.7,
+			"eave_m": 3.9,
+			"footprint": [
+				[
+					234.15,
+					58.53
+				],
+				[
+					232.94,
+					66.63
+				],
+				[
+					225.74,
+					65.55
+				],
+				[
+					226.96,
+					57.45
+				]
+			],
+			"front_dir": [
+				0.9889,
+				0.1483
+			],
+			"ground_lo": 0.5,
+			"hisashi_depth_m": 0.91,
+			"hisashi_m": 2.7,
+			"id": "B_P_LM_KIRISAME",
+			"kind": "landmark",
+			"landmark": "LANDMARK_KIRISAME",
+			"ov_eave_m": 0.45,
+			"ov_gable_m": 0.25,
+			"p0_size": [
+				9.0,
+				7.0,
+				8.0
+			],
+			"p0_yaw": 90.0,
+			"parcel": "P_LM_KIRISAME",
+			"pitch": 0.45,
+			"plinth_m": 0.32,
+			"ridge_m": 5.54,
+			"road": "MainStreet",
+			"roof": "hira",
+			"setback_m": 0.91,
+			"shift_m": 0.0,
+			"type": "zushi",
+			"width_m": 8.19
+		}
+	],
+	"layout_version": "v2-layout-0.3",
+	"notes": [],
+	"yards": 207
+}

@@ -536,6 +536,195 @@
 			}
 		]
 	},
+	"greybox": {
+		"_note": "P4 Greybox 量體規則（2026-09-24 r2：主街 main_seq 提高總二階比例＋平屋點綴，D/H 中位 2.10→1.76）。算法 godot/tools/village_v2_greybox_lib.gd；輸入是 P3 已核准的 parcels.json（不重算地塊）。全部公尺；module＝京間半間 0.91 m。types 的簷高（軒高，從 footprint 內最高地面起算）取自町家 production kit 實測總高（平屋 4.17–4.87、厨子二階 5.42–6.42、總二階 7.67–8.55 m，docs/archive/machiya-production-kit-2026-08.md）反推，屋脊高＝簷高＋半跨距×pitch，由量體算出、不另外指定。使用者裁示：正式町家一塊一棟；aux 只有 use＝倉／小屋 放一棟小附屬棟，庭院／後院只鋪院子地面，空地不放；鈴奈庵／鯢吞亭在 P4 以退縮＋平行主街解壓街，不動 P0。",
+		"module": 0.91,
+		"pitch": 0.45,
+		"eave_overhang": 0.45,
+		"gable_overhang": 0.3,
+		"plinth": 0.32,
+		"embed": 0.3,
+		"main_depth": [
+			7.28,
+			10.92
+		],
+		"rear_min": 2.73,
+		"hisashi_depth": 0.91,
+		"door": [
+			1.82,
+			2.1
+		],
+		"door_pos_seq": [
+			0.3,
+			0.7,
+			0.5,
+			0.25,
+			0.75
+		],
+		"main_roads": [
+			"MainStreet",
+			"EntranceRoad"
+		],
+		"types": {
+			"hiraya": {
+				"label": "平屋",
+				"eave": 2.9,
+				"hisashi": 0.0
+			},
+			"zushi": {
+				"label": "厨子二階",
+				"eave": 3.9,
+				"hisashi": 2.7
+			},
+			"nikai": {
+				"label": "總二階",
+				"eave": 5.4,
+				"hisashi": 2.9
+			},
+			"temple": {
+				"label": "寺院式大屋",
+				"eave": 5.0,
+				"hisashi": 0.0,
+				"pitch": 0.6
+			}
+		},
+		"districts": {
+			"_note": "setback＝主屋正面離地塊臨路線（地塊臨路線本身已離路緣 front_gap 0.5 m＝犬走り＋側溝）；side_inset＝兩側內縮；shopfront＝1F 庇（平屋沒有）；main_seq 給主街／入口道路、seq 給其他路，依序循環（無亂數）；tsuma_seq＝1 為妻入（主街一律平入）。",
+			"Market": {
+				"setback": 0.0,
+				"side_inset": 0.1,
+				"shopfront": true,
+				"main_seq": ["nikai", "nikai", "zushi", "nikai", "nikai", "zushi", "nikai", "hiraya", "nikai", "zushi"],
+				"seq": [
+					"zushi",
+					"hiraya",
+					"zushi",
+					"nikai",
+					"hiraya",
+					"zushi"
+				],
+				"tsuma_seq": [
+					0,
+					0,
+					1,
+					0,
+					0,
+					0,
+					1
+				]
+			},
+			"MixedCommercial": {
+				"setback": 0.0,
+				"side_inset": 0.1,
+				"shopfront": true,
+				"main_seq": ["nikai", "zushi", "nikai", "hiraya", "nikai"],
+				"seq": [
+					"hiraya",
+					"zushi",
+					"hiraya",
+					"zushi",
+					"hiraya"
+				],
+				"tsuma_seq": [
+					0,
+					1,
+					0,
+					0,
+					1
+				]
+			},
+			"SouthGate": {
+				"setback": 0.0,
+				"side_inset": 0.15,
+				"shopfront": true,
+				"main_seq": [
+					"zushi",
+					"nikai",
+					"zushi"
+				],
+				"seq": [
+					"zushi",
+					"hiraya"
+				],
+				"tsuma_seq": [
+					0
+				]
+			},
+			"default": {
+				"setback": 0.91,
+				"side_inset": 0.45,
+				"shopfront": false,
+				"seq": [
+					"hiraya",
+					"hiraya",
+					"zushi",
+					"hiraya",
+					"hiraya",
+					"zushi",
+					"hiraya"
+				],
+				"tsuma_seq": [
+					0,
+					1,
+					0,
+					0,
+					1,
+					0,
+					0,
+					0,
+					1
+				]
+			}
+		},
+		"aux": {
+			"_note": "只有 use＝倉／小屋 放一棟（商業區土藏、其他小屋，靠背面角落、離地塊線 margin）；庭院／後院只鋪院子地面；空地不放任何東西。",
+			"use_build": "倉／小屋",
+			"yard_uses": [
+				"庭院",
+				"後院"
+			],
+			"margin": 0.45,
+			"kura": {
+				"label": "土藏",
+				"w": 3.64,
+				"d": 5.46,
+				"eave": 4.2,
+				"districts": [
+					"Market",
+					"MixedCommercial",
+					"SouthGate"
+				]
+			},
+			"koya": {
+				"label": "小屋",
+				"w": 2.73,
+				"d": 1.82,
+				"eave": 2.3
+			}
+		},
+		"landmarks": {
+			"_note": "P0 凍結的 landmarks（at／size／yaw）不動；這裡是 P4 灰盒量體：正面平行 road、正面離路緣 front_gap＋setback，完整落在 P3 固定地塊 P_LM_* 內（沿街平移 ≤ 4 m 找位置，放不下才每次縮 module）。鈴奈庵／鯢吞亭：P0 box 壓主街路幅 0.27／0.52 m²、7／8 m 高平頂方塊直接貼路緣 → 退縮 1.5 m（正面離路緣 2.0 m，比兩側町家街牆退 1.5 m）＋切妻屋頂。鯢吞亭用厨子二階（簷 3.9 m）而非總二階：總二階（簷 5.4 m）在主街南段擋南大鳥居 1 站，厨子二階 0 站。",
+			"LANDMARK_SUZUNAAN": {
+				"road": "MainStreet",
+				"type": "zushi",
+				"frontage": 9.1,
+				"depth": 8.19,
+				"setback": 1.5,
+				"min_frontage": 7.28,
+				"min_depth": 7.28
+			},
+			"LANDMARK_GEIDONTEI": {"road": "MainStreet", "type": "zushi", "frontage": 10.92, "depth": 9.1, "setback": 1.5, "min_frontage": 9.1, "min_depth": 7.28},
+			"LANDMARK_KIRISAME": {
+				"road": "MainStreet",
+				"type": "zushi",
+				"frontage": 8.19,
+				"depth": 7.28,
+				"setback": 0.91,
+				"min_frontage": 7.28,
+				"min_depth": 7.28
+			}
+		}
+	},
 	"water_form": {
 		"_note": "P2 Water（2026-09-24）：水線以下河床形態。P1 核准水深 d0 × 倍率 m（由河道幾何決定，不用噪訊）；d0 < blend_d0[0] 的水線帶不改（水線不動），到 blend_d0[1] 全量。深度單位 m（相對水位）。keep_clear：地標基座周圍不改。產生器 gen_village_v2.gd、共用算法 tools/village_v2_water_lib.gd、驗收 tools/verify_village_v2_water.gd＋verify_village_v2_p1_protect.gd。",
 		"MainRiver": {
