@@ -256,7 +256,7 @@
     }
   ],
   "unresolved": [],
-  "next_gate": "P3 Roads / Parcels (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain and P2 Water are ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh). Master spec: docs/plans/人間之里V2全面重製計畫.md.",
+  "next_gate": "P4 Greybox (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain, P2 Water and P3 Roads / Parcels are ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate, the P3 roads / parcels gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh). Master spec: docs/plans/人間之里V2全面重製計畫.md.",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -313,6 +313,10 @@
     {
       "date": "2026-09-24",
       "ruling": "P3 parcels r2 result: machiya depth 12.0–25.0 m with zero shallow parcels (187 machiya, 14 of them deepened by merging, +80.0 m total); 38 auxiliary/yard parcels 8–12 m (kind `aux`, with a `use` field); 9 landmark parcels. Frontage coverage is now measured over BUILDABLE frontage only (a sample counts only if a minimum machiya 5 × 12 m fits there), so the metric can never be raised by adding shallow or auxiliary parcels."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P3 Roads / Parcels ART_APPROVED (commit a969e0a). Keep every P0–P3 gate. Enter P4 Greybox. The Suzunaan / Geidontei landmark bodies overlapping the main-street carriageway (0.27 / 0.52 m²) are solved in P4 greybox (setback or footprint), not by reopening the P0 freeze. Auxiliary parcels (kind `aux`) stay candidates for back yard, storehouse, shed, courtyard or open ground; they are not required to carry a building."
     }
   ],
   "resolved_at_freeze": [
