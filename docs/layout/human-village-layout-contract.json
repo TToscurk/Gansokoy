@@ -237,7 +237,10 @@
       "from": "market_main_street",
       "to": "dragon_statue_bridge",
       "purpose": "main-street visual terminus (user ruling 2026-08-31)",
-      "approved": true
+      "approved": true,
+      "mode": "progressive_reveal",
+      "gate": "verify_village_v2_sightlines.gd REVEAL_ZONE：HillFootStreet（RiverNorthPath 路口以東）＋RiverNorthPath＋DragonBridgeRoad，全建築計入、被擋上限 0 站；主街 62 站與山腳街轉角揭露段只報 INFO",
+      "ruling_2026_09_24": "使用者裁示（P4 r1 後）：保留主街→龍神像設計意圖，改為漸進式揭露、不要求主街全程可見。P4 放入 187 棟町家後主街 62 站僅 1 站可見，舊 gate（只算地標）與實際街廓不相容；不為舊 gate 把鯢吞亭改回線框。"
     },
     {
       "from": "village_east_edge",
@@ -256,7 +259,7 @@
     }
   ],
   "unresolved": [],
-  "next_gate": "P4 Greybox (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain, P2 Water and P3 Roads / Parcels are ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate, the P3 roads / parcels gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh). Master spec: docs/plans/人間之里V2全面重製計畫.md.",
+  "next_gate": "P5 Hero Assets (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain, P2 Water, P3 Roads / Parcels and P4 Greybox are ART_APPROVED and closed; every generator change must keep the Macro Layout freeze, the P1 Approved Terrain Protection Gate, the P2 water gate, the P3 roads / parcels gate, the P4 greybox gate, the progressive-reveal dragon sightline gate and all P1 regression tests green (godot/tools/run_village_v2_regression.sh). Carried into P5: LANDMARK_TOWER 7×7×18 m solid placeholder. Master spec: docs/plans/人間之里V2全面重製計畫.md.",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -317,6 +320,16 @@
     {
       "date": "2026-09-24",
       "ruling": "P3 Roads / Parcels ART_APPROVED (commit a969e0a). Keep every P0–P3 gate. Enter P4 Greybox. The Suzunaan / Geidontei landmark bodies overlapping the main-street carriageway (0.27 / 0.52 m²) are solved in P4 greybox (setback or footprint), not by reopening the P0 freeze. Auxiliary parcels (kind `aux`) stay candidates for back yard, storehouse, shed, courtyard or open ground; they are not required to carry a building."
+    },
+    {
+      "date": "2026-09-24",
+      "phase": "P4 Greybox",
+      "ruling": "主街→龍神像視線改為漸進式揭露：硬 gate 移到終點接近區並計入全部建築；保留鯢吞亭實體灰盒；P4 調主街 D/H 與高度節奏（增加二階比例）。"
+    },
+    {
+      "date": "2026-09-24",
+      "phase": "P4 Greybox",
+      "ruling": "P4 Greybox = ART_APPROVED。保留目前 massing、D/H（主街中位 1.76）與 progressive reveal sightline 設計，不再為了概念圖比例繼續提高整排建築。18 m 樓閣 placeholder 留 P5，洋紅線照既定階段處理。保留全部 P0–P4 regression gates，正式進入 P5 Hero Assets。"
     }
   ],
   "resolved_at_freeze": [
