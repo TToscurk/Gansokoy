@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 人間之里 V2 回歸總表（P1 Terrain ART_APPROVED 2026-09-24 起，任何 gen_village_v2.gd／terrain lib／water lib／layout 修改後都要全跑）。
 # P2 起加：P1 Approved Terrain Protection（水線以上 |Δh| ≤ 0.03 m、岸線縫 ≤ 0.30 m）與 P2 water gate。
+# P3 起加：roads / parcels gate（巷道層、單棟地塊 §11 紀錄、覆蓋率）。
 # 用法（repo 根目錄，git-bash）：  bash godot/tools/run_village_v2_regression.sh [--gen]
 #   --gen   先重新產生場景再驗證
 # 任一項非 0 退出 → 整體退出碼 = 失敗項目數。固定鏡位擷取另見 docs/plans/2026-09-23-人間之里V2重製規劃.md §9.5。
@@ -24,6 +25,7 @@ run "P2 water gate"                        WATER   --headless --path . --script 
 run "terrain gate（含鋸齒坡、東岸、橋端、農田）" TERRAIN --headless --path . --script res://tools/verify_village_v2_terrain.gd
 run "5 bridge checks"                      BRIDGE  --headless --path . --script res://tools/verify_village_v2_bridges.gd
 run "sightline checks"                     SL      --headless --path . --script res://tools/verify_village_v2_sightlines.gd
+run "P3 roads / parcels gate"               PARCEL  --headless --path . --script res://tools/verify_village_v2_parcels.gd
 run "19-point walk"                        WALK    --rendering-method gl_compatibility --path . --script res://tools/walk_village_v2.gd
 echo "回歸失敗項目：$fail"
 exit $fail

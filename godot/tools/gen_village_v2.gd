@@ -25,15 +25,27 @@ extends SceneTree
 ## P2 Water：水線以下河床形態（tools/village_v2_water_lib.gd，參數 layout water_form）與貼岸線的網格水面。
 ##   權限：只改水線以下與岸線縫；水線以上 P1 核准地形由 tools/verify_village_v2_p1_protect.gd 把關。
 ##   驗收：tools/verify_village_v2_water.gd。
+## P3 Roads / Parcels：巷道層（layout lanes，獨立於凍結的 roads，路面貼 P1 平台、不整地）與單棟地塊
+##   （layout parcel_rules；算法 tools/village_v2_parcel_lib.gd）。產出 Roads/Alleys/Lanes、Districts/<區>/Parcels、
+##   maps/village_v2/gen/parcels.json（§11 地塊紀錄）。驗收：tools/verify_village_v2_parcels.gd。
 
 const Freeze := preload("res://tools/village_v2_freeze.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const WLib := preload("res://tools/village_v2_water_lib.gd")
+const PLib := preload("res://tools/village_v2_parcel_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const META := "res://data/village_v2.meta.json"
 const EDGES := "res://maps/village_v2/gen/terrain_edges.json"
+const PARCELS := "res://maps/village_v2/gen/parcels.json"
+const LANE_LIFT := 0.06        # 巷道路面高出 P1 地形（不整地；比道路 +0.10 低，接頭處道路蓋在上面）
+const PARCEL_LINE_LIFT := 0.07
+const PARCEL_COL := {
+	"Market": Color(0.93, 0.62, 0.30), "MixedCommercial": Color(0.55, 0.62, 0.86),
+	"ResidentialWest": Color(0.52, 0.74, 0.40), "ResidentialNE": Color(0.36, 0.70, 0.62),
+	"MansionEstate": Color(0.86, 0.72, 0.36), "SouthGate": Color(0.80, 0.56, 0.44),
+	"landmark": Color(0.86, 0.32, 0.78)}
 const SHOT_FILE := "res://tools/shots/village_v2_fixed_shots.json"
 const VARIANT_SHOT_FILE := "res://tools/shots/village_v2_mainstreet_variant_shots.json"
 const FONT := "res://assets/fonts/NotoSerifTC-VF.ttf"
@@ -154,6 +166,7 @@ func _init() -> void:
 		quit(3)
 		return
 	_districts()
+	_parcels()
 	_forests()
 	_landmarks()
 	_anchors()
@@ -1290,7 +1303,24 @@ func _roads() -> void:
 		mi.set_meta("label", r["label"])
 		mi.set_meta("width_m", hw * 2.0)
 		mi.set_meta("class", cls)
+	_lanes()
 	_bridges()
+
+
+## P3 巷道層：路面貼 P1 地形＋LANE_LIFT（不整地，所以 P1 protection 不變）；不跨水（layout 已保證離水 ≥ 5 m）
+func _lanes() -> void:
+	var grp := _group(vroot.get_node("Roads/Alleys"), "Lanes")
+	for r in PLib.lanes(L):
+		var hw: float = r["hw"]
+		var mesh := _ribbon(r["pts"], func(_p): return hw, Callable(), func(p): return not _carved(p), LANE_LIFT)
+		if mesh == null:
+			continue
+		var mi := _mi(grp, String(r["name"]), _save(mesh, "lane_" + String(r["name"]).to_lower()),
+			_mat(ROAD_COL["alley"].darkened(0.06), true), false)
+		mi.set_meta("label", r["label"])
+		mi.set_meta("width_m", hw * 2.0)
+		mi.set_meta("class", "lane")
+		mi.set_meta("phase", "P3")
 
 
 func _bridges() -> void:
@@ -1395,6 +1425,108 @@ func _districts() -> void:
 	_label(hn, hill["label"], Vector3(hc.x, _hgrid(hc.x, hc.y) + 34.0, hc.y - 30.0), 0.16, 128, 260.0, 1400.0)
 	var rv := _group(g, "Riverside")
 	rv.set_meta("label", "河岸帶（主河兩岸 6 m 內；尚未分配用途）")
+
+
+# ─────────────────────────── P3 地塊 ───────────────────────────
+
+func _parcels() -> void:
+	var net := PLib.network(L)
+	var t0 := Time.get_ticks_msec()
+	var res: Dictionary = PLib.parcels(L, net, func(p: Vector2) -> float: return _hgrid(p.x, p.y))
+	var byname := {}
+	for r in roads:
+		byname[r["name"]] = r
+	var road_h := func(name: String, p: Vector2) -> float:
+		if byname.has(name):
+			var rr: Dictionary = byname[name]
+			return _level(rr, _near(rr["pts"], p)) + 0.1
+		return _hgrid(p.x, p.y) + LANE_LIFT
+	var all: Array = []
+	for fx in res["fixed"]:
+		var fdn := "NorthHill"
+		for k in built:
+			if Geometry2D.is_point_in_polygon(fx["at"], polys[k]):
+				fdn = k
+		fx["district"] = fdn
+		all.append(fx)
+	all.append_array(res["parcels"])
+	var all_polys: Array = []
+	for pc in all:
+		all_polys.append(pc["poly"])
+	var recs: Array = []
+	var lines := {}   # district → SurfaceTool
+	for pc in all:
+		var rec := PLib.record(pc, all_polys, net, func(p: Vector2) -> float: return _hgrid(p.x, p.y), road_h)
+		recs.append(rec)
+		var dn: String = pc["district"]
+		var dg := vroot.get_node("Districts/" + dn)
+		var pg := dg.get_node_or_null("Parcels")
+		if pg == null:
+			pg = _group(dg, "Parcels")
+		var m := Marker3D.new()
+		m.name = String(rec["id"])
+		m.position = Vector3(float(rec["center"][0]), float(rec["ground_h"]), float(rec["center"][1]))
+		for k in rec:
+			if k != "id":
+				m.set_meta(k, rec[k])
+		pg.add_child(m)
+		var key := "landmark" if pc["kind"] == "landmark" else dn
+		if not lines.has(key):
+			var st := SurfaceTool.new()
+			st.begin(Mesh.PRIMITIVE_TRIANGLES)
+			lines[key] = [st, dg]
+		_outline(lines[key][0], pc["poly"], 0.35 if pc["kind"] == "machiya" else 0.5)
+		if pc["kind"] == "machiya":
+			var fa: Vector2 = pc["front_a"]
+			var fb: Vector2 = pc["front_b"]
+			var dir: Vector2 = pc["dir"]
+			_outline(lines[key][0], PackedVector2Array([fa - dir * 0.05, fb - dir * 0.05, fb - dir * 1.2, fa - dir * 1.2]), 0.6)
+	for key in lines:
+		var st: SurfaceTool = lines[key][0]
+		var dg: Node = lines[key][1]
+		var mesh := st.commit()
+		var lname := "LandmarkParcelLines" if key == "landmark" else "ParcelLines"
+		var mi := _mi(dg if key != "landmark" else vroot.get_node("Districts"), lname, _save(mesh, "parcels_" + String(key).to_lower()),
+			_mat(_k(PARCEL_COL.get(key, Color(0.8, 0.8, 0.8))), true), false)
+		mi.set_meta("phase", "P3")
+	var pf := FileAccess.open(PARCELS, FileAccess.WRITE)
+	pf.store_string(JSON.stringify({"_note": "P3 地塊紀錄（§11）。由 tools/gen_village_v2.gd 產生，勿手改。",
+		"layout_version": L["version"], "stats": res["stats"], "parcels": recs}, "\t") + "\n")
+	pf.close()
+	var n_m := 0
+	for r in recs:
+		if r["kind"] == "machiya":
+			n_m += 1
+	print("[v2] P3 地塊 %d（町家 %d、地標 %d）、%d ms → %s；拒絕 %s" % [recs.size(), n_m, recs.size() - n_m,
+		Time.get_ticks_msec() - t0, PARCELS, res["stats"]])
+
+
+## 地塊外框線（沿地形、每 1.5 m 取樣；四邊各自一條帶，寬 w、朝內）
+func _outline(st: SurfaceTool, poly: PackedVector2Array, w: float) -> void:
+	var cw := Geometry2D.is_polygon_clockwise(poly)
+	for i in poly.size():
+		var a := poly[i]
+		var b := poly[(i + 1) % poly.size()]
+		var t := (b - a).normalized()
+		var n := Vector2(-t.y, t.x) * (-1.0 if cw else 1.0)   # 朝多邊形內
+		var cnt := maxi(1, int(ceil(a.distance_to(b) / 1.5)))
+		for k in cnt:
+			var p0 := a.lerp(b, float(k) / cnt)
+			var p1 := a.lerp(b, float(k + 1) / cnt)
+			var q0 := p0 + n * w
+			var q1 := p1 + n * w
+			var v := [p0, p1, q1, q0]
+			var y: Array = []
+			for p in v:
+				y.append(_hgrid(p.x, p.y) + PARCEL_LINE_LIFT)
+			var V: Array[Vector3] = []
+			for j in 4:
+				V.append(Vector3(v[j].x, y[j], v[j].y))
+			# 正面朝上（Godot 正面＝從上往下看順時針；x·z 叉積 > 0）。繞錯的面在 cull 關閉時會以背面光照變黑。
+			if (v[1] - v[0]).cross(v[2] - v[0]) < 0.0:
+				V.reverse()
+			_tri_up(st, V[0], V[1], V[2])
+			_tri_up(st, V[0], V[2], V[3])
 
 
 # ─────────────────────────── 林冠團塊 ───────────────────────────

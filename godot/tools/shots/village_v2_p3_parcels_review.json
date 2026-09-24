@@ -1,0 +1,113 @@
+[
+ {
+  "name": "v2p3_topdown_west",
+  "cam": [
+   215.0,
+   260.0,
+   -60.0
+  ],
+  "look": [
+   215.0,
+   0.0,
+   -62.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3_topdown_market",
+  "cam": [
+   265.0,
+   190.0,
+   0.0
+  ],
+  "look": [
+   265.0,
+   0.0,
+   -2.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3_topdown_ne",
+  "cam": [
+   455.0,
+   150.0,
+   -215.0
+  ],
+  "look": [
+   455.0,
+   0.0,
+   -217.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3_street_midlane",
+  "cam": [
+   206.0,
+   2.95,
+   -80.0
+  ],
+  "look": [
+   250.0,
+   1.6,
+   -84.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3_street_westbank",
+  "cam": [
+   146.0,
+   2.9,
+   -8.0
+  ],
+  "look": [
+   134.0,
+   1.6,
+   -70.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3_street_nelane",
+  "cam": [
+   426.0,
+   3.9,
+   -207.0
+  ],
+  "look": [
+   458.0,
+   2.6,
+   -234.0
+  ],
+  "hide": [
+   "Debug"
+  ],
+  "hud": false,
+  "time": 11
+ }
+]

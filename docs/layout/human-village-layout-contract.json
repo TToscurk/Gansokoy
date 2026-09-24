@@ -297,6 +297,14 @@
     {
       "date": "2026-09-24",
       "ruling": "P2 Water ART_APPROVED (commit 034d5e4). Keep all P1/P2 gates; no further shoreline visual polish. Next phase: P3 Roads / Parcels, following the master spec order."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P3 lanes: a separate P3 lane layer (layout_v2.json `lanes`, outside the freeze; frozen roads and freeze SHA untouched). Lanes stay inside built platforms, 2.0–3.0 m wide, with turns; the surface drapes the P1 platform with no grading (P1 protection ≤ 0.03 m)."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P3 parcels: one parcel per building. Machiya frontage about 5–9 m, depth 12–25 m, generated deterministically from the frontage; landmark buildings use fixed parcels. P4 greybox places one building per parcel."
     }
   ],
   "resolved_at_freeze": [
@@ -376,6 +384,16 @@
     {
       "item": "Bridge_05 greybox box bottom sits 0.20 m under the west-stream surface (deck freeboard 0.40 m passes)",
       "stage": "P4 Greybox"
+    },
+    {
+      "item": "LANDMARK_SUZUNAAN / LANDMARK_GEIDONTEI footprints (P0 frozen positions) overlap the main-street carriageway by 0.27 / 0.52 m²",
+      "stage": "P4 Greybox",
+      "note": "Set back or shrink the greybox footprint; do not move the frozen landmark anchor."
+    },
+    {
+      "item": "Lane surfaces and parcel outlines are greybox markers only",
+      "stage": "P13 Final Art",
+      "note": "Surface, edge and drainage per layout_v2.json `road_classes`."
     }
   ]
 }

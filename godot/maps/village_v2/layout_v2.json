@@ -51,6 +51,479 @@
 		"south_h": 5, "south_z0": 165, "south_z1": 220,
 		"noise_amp": 1.6, "noise_freq": 0.012, "seed": 20260923
 	},
+	"_lanes_note": "P3 Roads / Parcels 巷道層（2026-09-24 使用者裁示：獨立於凍結的 roads，不動 freeze SHA）。只在建成區平台內、寬 2.0–2.5 m、有轉折；路面貼 P1 平台，不整地（P1 protection ≤ 0.03 m）。產生器放 Roads/Alleys/Lanes；驗收 tools/verify_village_v2_parcels.gd。",
+	"lanes": [
+		{
+			"name": "NWLane",
+			"label": "西北巷",
+			"half_w": 1.25,
+			"pts": [
+				[
+					200,
+					-148
+				],
+				[
+					194,
+					-172
+				],
+				[
+					186,
+					-198
+				],
+				[
+					172,
+					-222
+				],
+				[
+					150,
+					-236
+				]
+			],
+			"why": "丘腳街西端北上進西北住宅（西住宅區北突出部 43% 離路 > 30 m）"
+		},
+		{
+			"name": "NWBranch",
+			"label": "西北支巷",
+			"half_w": 1.0,
+			"pts": [
+				[
+					186,
+					-198
+				],
+				[
+					160,
+					-194
+				],
+				[
+					134,
+					-204
+				]
+			],
+			"why": "西北巷分支往西"
+		},
+		{
+			"name": "WestBankLane",
+			"label": "西溪巷",
+			"half_w": 1.25,
+			"pts": [
+				[
+					146,
+					-6
+				],
+				[
+					137,
+					-34
+				],
+				[
+					134,
+					-70
+				],
+				[
+					138,
+					-104
+				],
+				[
+					133,
+					-136
+				]
+			],
+			"why": "西渠巷西端沿西溪東岸北上（離溪岸 ≥ 5 m）"
+		},
+		{
+			"name": "MidLane",
+			"label": "中巷",
+			"half_w": 1.25,
+			"pts": [
+				[
+					204,
+					-80
+				],
+				[
+					226,
+					-90
+				],
+				[
+					250,
+					-84
+				],
+				[
+					282.4,
+					-86
+				]
+			],
+			"why": "西巷→主街，串起丘腳街與中橫街之間的街區"
+		},
+		{
+			"name": "SWLane",
+			"label": "南巷",
+			"half_w": 1.25,
+			"pts": [
+				[
+					170,
+					50
+				],
+				[
+					164,
+					72
+				],
+				[
+					176,
+					92
+				],
+				[
+					213.9,
+					76.6
+				]
+			],
+			"why": "南橫街西端南下繞回西巷，兩折"
+		},
+		{
+			"name": "NELane",
+			"label": "東北巷",
+			"half_w": 1.25,
+			"pts": [
+				[
+					424,
+					-205
+				],
+				[
+					438,
+					-216
+				],
+				[
+					456,
+					-236
+				],
+				[
+					486,
+					-246
+				]
+			],
+			"why": "龍神橋東岸進東北住宅區（80% 離路 > 30 m）"
+		},
+		{
+			"name": "NENorth",
+			"label": "東北北巷",
+			"half_w": 1.0,
+			"pts": [
+				[
+					438,
+					-216
+				],
+				[
+					438,
+					-238
+				],
+				[
+					446,
+					-256
+				]
+			],
+			"why": "東北巷分支往北"
+		},
+		{
+			"name": "NESouth",
+			"label": "東北南巷",
+			"half_w": 1.0,
+			"pts": [
+				[
+					438,
+					-216
+				],
+				[
+					458,
+					-208
+				],
+				[
+					474,
+					-192
+				],
+				[
+					496,
+					-186
+				]
+			],
+			"why": "東北巷分支往東南"
+		}
+	],
+	"road_classes": {
+		"_note": "P3 道路分級（總計畫 §10：寬度、材質、邊界、排水、使用目的各不相同）。寬度＝layout roads/lanes 的 half_w×2（凍結值，不在此改）；材質只是 P13 的指定，P3–P12 灰盒用顏色區分。",
+		"main": {
+			"label": "主街 Main Street",
+			"width_m": [
+				7.0,
+				7.2
+			],
+			"surface": "版築土＋細砂利（中央微拱 2%）",
+			"edge": "兩側石組側溝＋町家軒下犬走り",
+			"drain": "兩側側溝 0.35 m",
+			"purpose": "商業主軸、祭禮、南大鳥居→社殿視線軸"
+		},
+		"secondary": {
+			"label": "次要街道 Secondary Street",
+			"width_m": [
+				3.0,
+				6.0
+			],
+			"surface": "踏み固め土",
+			"edge": "土羽或低石積",
+			"drain": "單側側溝 0.30 m",
+			"purpose": "街區之間的連結、橋頭、參道"
+		},
+		"alley": {
+			"label": "住宅巷 Residential Alley",
+			"width_m": [
+				3.0,
+				3.0
+			],
+			"surface": "土、局部飛石",
+			"edge": "板塀、生垣",
+			"drain": "單側素掘り溝 0.25 m",
+			"purpose": "住宅進出、生活巷"
+		},
+		"lane": {
+			"label": "P3 巷道 Residential Lane",
+			"width_m": [
+				2.0,
+				3.0
+			],
+			"surface": "土",
+			"edge": "板塀、生垣、町家側壁",
+			"drain": "單側素掘り溝 0.20 m",
+			"purpose": "住宅地塊的臨路面；轉折遮視線"
+		},
+		"farm": {
+			"label": "田埂道 Farm Road",
+			"width_m": [
+				2.4,
+				2.4
+			],
+			"surface": "土、草",
+			"edge": "草",
+			"drain": "田溝",
+			"purpose": "農作通行"
+		}
+	},
+	"parcel_rules": {
+		"_note": "P3 地塊規則（2026-09-24）。算法 godot/tools/village_v2_parcel_lib.gd；序列式確定生成（無亂數）。frontage_seq 臨路面寬（m）依序循環；depth 依分區 [最小, 最大]、depth_pattern 取 0–1 內插；放不下先縮縱深 1.5 m、再往前挪 1 m。",
+		"frontage_seq": [
+			7.2,
+			5.4,
+			8.1,
+			6.3,
+			9.0,
+			5.4,
+			6.3,
+			7.2,
+			5.0,
+			8.1
+		],
+		"frontage_min": 5.0,
+		"depth": {
+			"Market": [
+				12.0,
+				18.0
+			],
+			"MixedCommercial": [
+				12.0,
+				18.0
+			],
+			"ResidentialWest": [
+				14.0,
+				22.0
+			],
+			"ResidentialNE": [
+				14.0,
+				22.0
+			],
+			"SouthGate": [
+				12.0,
+				14.0
+			],
+			"MansionEstate": [
+				14.0,
+				20.0
+			],
+			"default": [
+				12.0,
+				18.0
+			]
+		},
+		"infill_depth": [
+			8.0,
+			12.0
+		],
+		"depth_pattern": [
+			0.5,
+			0.0,
+			1.0,
+			0.3,
+			0.8,
+			0.2,
+			0.6,
+			0.9,
+			0.1,
+			0.7
+		],
+		"side_gap": {
+			"_note": "相鄰地塊間距（m）：市集／住商接近連續街牆（≤ 1 m）；南門入口道路是門前町，也接近連續（≤ 1.5 m）；住宅區留側院。",
+			"Market": [
+				0.0,
+				0.5,
+				0.0,
+				1.0
+			],
+			"MixedCommercial": [
+				0.0,
+				0.5,
+				1.0,
+				0.0
+			],
+			"SouthGate": [
+				0.5,
+				1.0,
+				0.5,
+				1.5
+			],
+			"default": [
+				1.5,
+				3.0,
+				2.0,
+				4.0,
+				2.5
+			]
+		},
+		"front_gap": 0.5,
+		"road_gap": 0.5,
+		"outline_margin": 0.5,
+		"water_margin": {
+			"MainRiver": 6.0,
+			"Canal": 3.0,
+			"WestStream": 3.0,
+			"default": 3.0
+		},
+		"max_relief": 0.6,
+		"anchor_clear": 3.0,
+		"portal_clear": 5.0,
+		"bridge_clear": 6.0,
+		"keep_clear": [
+			{
+				"why": "水車 1 輪與維修空間",
+				"at": [
+					334.8,
+					-52
+				],
+				"r": 6.0
+			},
+			{
+				"why": "水車 2 輪與維修空間",
+				"at": [
+					329.2,
+					0
+				],
+				"r": 6.0
+			},
+			{
+				"why": "水車 3 輪與維修空間",
+				"at": [
+					310.6,
+					58
+				],
+				"r": 6.0
+			},
+			{
+				"why": "龍神像基座與參拜空間",
+				"at": [
+					388,
+					-188
+				],
+				"r": 12.0
+			},
+			{
+				"why": "大鳥居前廣場",
+				"at": [
+					234,
+					100
+				],
+				"r": 9.0
+			},
+			{
+				"why": "參道鳥居",
+				"at": [
+					289.6,
+					-166
+				],
+				"r": 6.0
+			}
+		],
+		"road_order": [
+			"MainStreet",
+			"EntranceRoad",
+			"CrossStreetMid",
+			"CrossStreetSouth",
+			"HillFootStreet",
+			"RiverNorthPath",
+			"DragonBridgeRoad",
+			"RiversidePath",
+			"WestAlley",
+			"WestLane"
+		],
+		"district_code": {
+			"Market": "MKT",
+			"MixedCommercial": "MXC",
+			"ResidentialWest": "RSW",
+			"ResidentialNE": "RNE",
+			"MansionEstate": "MAN",
+			"SouthGate": "SGT"
+		},
+		"fixed": [
+			{
+				"id": "P_LM_TERAKOYA",
+				"landmark": "LANDMARK_TERAKOYA",
+				"yard": 4.0
+			},
+			{
+				"id": "P_LM_TOWER",
+				"landmark": "LANDMARK_TOWER",
+				"yard": 2.0
+			},
+			{
+				"id": "P_LM_HIEDA",
+				"landmark": "LANDMARK_HIEDA",
+				"yard": 3.0
+			},
+			{
+				"id": "P_LM_HIEDA_GATE",
+				"landmark": "LANDMARK_HIEDA_GATE",
+				"yard": 1.0
+			},
+			{
+				"id": "P_LM_SUZUNAAN",
+				"landmark": "LANDMARK_SUZUNAAN",
+				"yard": 1.5
+			},
+			{
+				"id": "P_LM_GEIDONTEI",
+				"landmark": "LANDMARK_GEIDONTEI",
+				"yard": 1.5
+			},
+			{
+				"id": "P_LM_KIRISAME",
+				"landmark": "LANDMARK_KIRISAME",
+				"yard": 1.5
+			},
+			{
+				"id": "P_LM_HILLFOOT_TEMPLE",
+				"landmark": "LANDMARK_HILLFOOT_TEMPLE",
+				"yard": 3.0
+			},
+			{
+				"id": "P_LM_NORTH_HILL",
+				"landmark": "LANDMARK_NORTH_HILL",
+				"yard": 3.0
+			}
+		]
+	},
 	"water_form": {
 		"_note": "P2 Water（2026-09-24）：水線以下河床形態。P1 核准水深 d0 × 倍率 m（由河道幾何決定，不用噪訊）；d0 < blend_d0[0] 的水線帶不改（水線不動），到 blend_d0[1] 全量。深度單位 m（相對水位）。keep_clear：地標基座周圍不改。產生器 gen_village_v2.gd、共用算法 tools/village_v2_water_lib.gd、驗收 tools/verify_village_v2_water.gd＋verify_village_v2_p1_protect.gd。",
 		"MainRiver": {

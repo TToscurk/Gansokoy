@@ -1,0 +1,12366 @@
+{
+	"_note": "P3 地塊紀錄（§11）。由 tools/gen_village_v2.gd 產生，勿手改。",
+	"layout_version": "v2-layout-0.3",
+	"parcels": [
+		{
+			"area_m2": 720.0,
+			"center": [
+				188.0,
+				24.0
+			],
+			"clearance": {
+				"front_gap_m": 5.66,
+				"nearest_parcel_m": 0.07
+			},
+			"district": "ResidentialWest",
+			"entrance_h": 0.76,
+			"footprint": [
+				[
+					200.0,
+					39.0
+				],
+				[
+					176.0,
+					39.0
+				],
+				[
+					176.0,
+					9.0
+				],
+				[
+					200.0,
+					9.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 0.76,
+			"id": "P_LM_TERAKOYA",
+			"kind": "landmark",
+			"label": "寺院式大屋（寺子屋候補）",
+			"landmark": "LANDMARK_TERAKOYA",
+			"landmark_at": [
+				188.0,
+				24.0
+			],
+			"relief_m": 0.18,
+			"road": "WestAlley",
+			"road_h": 0.84,
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 121.0,
+			"center": [
+				250.0,
+				66.0
+			],
+			"clearance": {
+				"front_gap_m": 1.91,
+				"nearest_parcel_m": 0.15
+			},
+			"district": "Market",
+			"entrance_h": 0.5,
+			"footprint": [
+				[
+					255.5,
+					71.5
+				],
+				[
+					244.5,
+					71.5
+				],
+				[
+					244.5,
+					60.5
+				],
+				[
+					255.5,
+					60.5
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 0.51,
+			"id": "P_LM_TOWER",
+			"kind": "landmark",
+			"label": "樓閣（火見櫓候補）",
+			"landmark": "LANDMARK_TOWER",
+			"landmark_at": [
+				250.0,
+				66.0
+			],
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_h": 0.61,
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 816.0,
+			"center": [
+				403.0,
+				-40.0
+			],
+			"clearance": {
+				"front_gap_m": 3.0,
+				"nearest_parcel_m": 99.0
+			},
+			"district": "MansionEstate",
+			"entrance_h": 1.14,
+			"footprint": [
+				[
+					420.0,
+					-28.0
+				],
+				[
+					386.0,
+					-28.0
+				],
+				[
+					386.0,
+					-52.0
+				],
+				[
+					420.0,
+					-52.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 1.14,
+			"id": "P_LM_HIEDA",
+			"kind": "landmark",
+			"label": "華麗大宅（稗田邸候補）",
+			"landmark": "LANDMARK_HIEDA",
+			"landmark_at": [
+				403.0,
+				-40.0
+			],
+			"relief_m": 0.17,
+			"road": "CrossStreetMid",
+			"road_h": 1.11,
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 36.0,
+			"center": [
+				398.0,
+				-10.0
+			],
+			"clearance": {
+				"front_gap_m": 6.8,
+				"nearest_parcel_m": 99.0
+			},
+			"district": "MansionEstate",
+			"entrance_h": 0.96,
+			"footprint": [
+				[
+					402.5,
+					-8.0
+				],
+				[
+					393.5,
+					-8.0
+				],
+				[
+					393.5,
+					-12.0
+				],
+				[
+					402.5,
+					-12.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 0.96,
+			"id": "P_LM_HIEDA_GATE",
+			"kind": "landmark",
+			"label": "大宅門",
+			"landmark": "LANDMARK_HIEDA_GATE",
+			"landmark_at": [
+				398.0,
+				-10.0
+			],
+			"relief_m": 0.02,
+			"road": "FarmPath_4",
+			"road_h": 0.64,
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 142.9,
+			"center": [
+				248.41,
+				-6.47
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.11
+			},
+			"district": "Market",
+			"entrance_h": 0.94,
+			"footprint": [
+				[
+					253.8,
+					-8.37
+				],
+				[
+					250.84,
+					0.5
+				],
+				[
+					241.8,
+					0.5
+				],
+				[
+					241.8,
+					-12.5
+				],
+				[
+					253.8,
+					-12.5
+				]
+			],
+			"footprint_road_overlap_m": 0.27,
+			"ground_h": 0.94,
+			"id": "P_LM_SUZUNAAN",
+			"kind": "landmark",
+			"label": "鈴奈庵（候補）",
+			"landmark": "LANDMARK_SUZUNAAN",
+			"landmark_at": [
+				247.8,
+				-6.0
+			],
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_h": 1.02,
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 179.7,
+			"center": [
+				283.91,
+				-61.48
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.07
+			},
+			"district": "Market",
+			"entrance_h": 1.27,
+			"footprint": [
+				[
+					291.1,
+					-54.5
+				],
+				[
+					278.1,
+					-54.5
+				],
+				[
+					278.1,
+					-59.4
+				],
+				[
+					281.13,
+					-69.5
+				],
+				[
+					291.1,
+					-69.5
+				]
+			],
+			"footprint_road_overlap_m": 0.52,
+			"ground_h": 1.27,
+			"id": "P_LM_GEIDONTEI",
+			"kind": "landmark",
+			"label": "鯢吞亭（候補）",
+			"landmark": "LANDMARK_GEIDONTEI",
+			"landmark_at": [
+				284.6,
+				-62.0
+			],
+			"relief_m": 0.1,
+			"road": "MainStreet",
+			"road_h": 1.39,
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 124.0,
+			"center": [
+				230.49,
+				61.14
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.63
+			},
+			"district": "Market",
+			"entrance_h": 0.53,
+			"footprint": [
+				[
+					235.2,
+					57.69
+				],
+				[
+					233.65,
+					68.0
+				],
+				[
+					224.2,
+					68.0
+				],
+				[
+					224.2,
+					56.0
+				],
+				[
+					235.2,
+					56.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 0.53,
+			"id": "P_LM_KIRISAME",
+			"kind": "landmark",
+			"label": "霧雨店（候補）",
+			"landmark": "LANDMARK_KIRISAME",
+			"landmark_at": [
+				229.7,
+				62.0
+			],
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_h": 0.62,
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 432.0,
+			"center": [
+				228.0,
+				-170.0
+			],
+			"clearance": {
+				"front_gap_m": 8.39,
+				"nearest_parcel_m": 99.0
+			},
+			"district": "NorthHill",
+			"entrance_h": 1.2,
+			"footprint": [
+				[
+					240.0,
+					-161.0
+				],
+				[
+					216.0,
+					-161.0
+				],
+				[
+					216.0,
+					-179.0
+				],
+				[
+					240.0,
+					-179.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 1.41,
+			"id": "P_LM_HILLFOOT_TEMPLE",
+			"kind": "landmark",
+			"label": "丘腳社寺",
+			"landmark": "LANDMARK_HILLFOOT_TEMPLE",
+			"landmark_at": [
+				228.0,
+				-170.0
+			],
+			"relief_m": 4.33,
+			"road": "HillFootStreet",
+			"road_h": 1.83,
+			"slope_pct": 20.8
+		},
+		{
+			"area_m2": 320.0,
+			"center": [
+				258.0,
+				-228.0
+			],
+			"clearance": {
+				"front_gap_m": 9.5,
+				"nearest_parcel_m": 99.0
+			},
+			"district": "NorthHill",
+			"entrance_h": 34.17,
+			"footprint": [
+				[
+					268.0,
+					-220.0
+				],
+				[
+					248.0,
+					-220.0
+				],
+				[
+					248.0,
+					-236.0
+				],
+				[
+					268.0,
+					-236.0
+				]
+			],
+			"footprint_road_overlap_m": 0.0,
+			"ground_h": 33.09,
+			"id": "P_LM_NORTH_HILL",
+			"kind": "landmark",
+			"label": "山頂社殿",
+			"landmark": "LANDMARK_NORTH_HILL",
+			"landmark_at": [
+				258.0,
+				-228.0
+			],
+			"relief_m": 2.62,
+			"road": "HillApproach",
+			"road_h": 33.81,
+			"slope_pct": 14.7
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				246.86,
+				89.42
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.83
+			},
+			"depth_m": 15.0,
+			"district": "Market",
+			"entrance": [
+				239.38,
+				88.79
+			],
+			"entrance_h": 0.37,
+			"footprint": [
+				[
+					239.08,
+					92.38
+				],
+				[
+					239.68,
+					85.21
+				],
+				[
+					254.63,
+					86.45
+				],
+				[
+					254.03,
+					93.63
+				]
+			],
+			"front_dir": [
+				-1.0,
+				-0.08
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.36,
+			"id": "P_MKT_001",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.47,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				246.39,
+				78.83
+			],
+			"clearance": {
+				"front_gap_m": 0.49,
+				"nearest_parcel_m": 3.83
+			},
+			"depth_m": 12.0,
+			"district": "Market",
+			"entrance": [
+				240.46,
+				77.94
+			],
+			"entrance_h": 0.44,
+			"footprint": [
+				[
+					240.05,
+					80.61
+				],
+				[
+					240.86,
+					75.27
+				],
+				[
+					252.72,
+					77.05
+				],
+				[
+					251.92,
+					82.39
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.15
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.43,
+			"id": "P_MKT_002",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.54,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 109.4,
+			"center": [
+				254.52,
+				36.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.5,
+			"district": "Market",
+			"entrance": [
+				248.12,
+				34.61
+			],
+			"entrance_h": 0.7,
+			"footprint": [
+				[
+					246.84,
+					38.45
+				],
+				[
+					249.4,
+					30.77
+				],
+				[
+					262.21,
+					35.04
+				],
+				[
+					259.65,
+					42.72
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.68,
+			"id": "P_MKT_003",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.8,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				256.94,
+				29.96
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.8,
+			"district": "Market",
+			"entrance": [
+				250.4,
+				27.78
+			],
+			"entrance_h": 0.74,
+			"footprint": [
+				[
+					249.4,
+					30.77
+				],
+				[
+					251.39,
+					24.79
+				],
+				[
+					264.48,
+					29.15
+				],
+				[
+					262.49,
+					35.13
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.72,
+			"id": "P_MKT_004",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.84,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				261.1,
+				22.23
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				253.13,
+				19.57
+			],
+			"entrance_h": 0.79,
+			"footprint": [
+				[
+					251.71,
+					23.84
+				],
+				[
+					254.55,
+					15.3
+				],
+				[
+					270.49,
+					20.62
+				],
+				[
+					267.65,
+					29.15
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.77,
+			"id": "P_MKT_005",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.89,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				261.67,
+				14.83
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				255.41,
+				12.74
+			],
+			"entrance_h": 0.83,
+			"footprint": [
+				[
+					254.55,
+					15.3
+				],
+				[
+					256.26,
+					10.18
+				],
+				[
+					268.78,
+					14.35
+				],
+				[
+					267.08,
+					19.48
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.81,
+			"id": "P_MKT_006",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.93,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				264.82,
+				9.18
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				257.42,
+				6.72
+			],
+			"entrance_h": 0.87,
+			"footprint": [
+				[
+					256.42,
+					9.71
+				],
+				[
+					258.41,
+					3.73
+				],
+				[
+					273.21,
+					8.66
+				],
+				[
+					271.22,
+					14.64
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.85,
+			"id": "P_MKT_007",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.97,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				267.8,
+				3.06
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				259.55,
+				0.31
+			],
+			"entrance_h": 0.91,
+			"footprint": [
+				[
+					258.41,
+					3.73
+				],
+				[
+					260.69,
+					-3.1
+				],
+				[
+					277.2,
+					2.4
+				],
+				[
+					274.92,
+					9.23
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.88,
+			"id": "P_MKT_008",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.01,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				267.77,
+				-4.43
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				261.8,
+				-6.42
+			],
+			"entrance_h": 0.95,
+			"footprint": [
+				[
+					261.01,
+					-4.05
+				],
+				[
+					262.59,
+					-8.79
+				],
+				[
+					274.54,
+					-4.81
+				],
+				[
+					272.96,
+					-0.07
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.93,
+			"id": "P_MKT_009",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.05,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				271.55,
+				-10.07
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "Market",
+			"entrance": [
+				263.87,
+				-12.64
+			],
+			"entrance_h": 0.99,
+			"footprint": [
+				[
+					262.59,
+					-8.79
+				],
+				[
+					265.15,
+					-16.48
+				],
+				[
+					280.52,
+					-11.36
+				],
+				[
+					277.96,
+					-3.67
+				]
+			],
+			"front_dir": [
+				-0.95,
+				-0.32
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.97,
+			"id": "P_MKT_010",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.08,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 86.4,
+			"center": [
+				276.44,
+				-33.0
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "Market",
+			"entrance": [
+				270.7,
+				-34.72
+			],
+			"entrance_h": 1.12,
+			"footprint": [
+				[
+					269.66,
+					-31.27
+				],
+				[
+					271.73,
+					-38.17
+				],
+				[
+					283.23,
+					-34.72
+				],
+				[
+					281.16,
+					-27.83
+				]
+			],
+			"front_dir": [
+				-0.96,
+				-0.29
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.09,
+			"id": "P_MKT_011",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.22,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				278.25,
+				-39.03
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "Market",
+			"entrance": [
+				272.51,
+				-40.76
+			],
+			"entrance_h": 1.15,
+			"footprint": [
+				[
+					271.73,
+					-38.17
+				],
+				[
+					273.28,
+					-43.34
+				],
+				[
+					284.78,
+					-39.89
+				],
+				[
+					283.23,
+					-34.72
+				]
+			],
+			"front_dir": [
+				-0.96,
+				-0.29
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.14,
+			"id": "P_MKT_012",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.25,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 145.8,
+			"center": [
+				283.35,
+				-45.59
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.39
+			},
+			"depth_m": 18.0,
+			"district": "Market",
+			"entrance": [
+				274.73,
+				-48.18
+			],
+			"entrance_h": 1.2,
+			"footprint": [
+				[
+					273.57,
+					-44.3
+				],
+				[
+					275.9,
+					-52.06
+				],
+				[
+					293.14,
+					-46.89
+				],
+				[
+					290.81,
+					-39.13
+				]
+			],
+			"front_dir": [
+				-0.96,
+				-0.29
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.18,
+			"id": "P_MKT_013",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.3,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				291.75,
+				-79.77
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 13.8,
+			"district": "Market",
+			"entrance": [
+				285.35,
+				-82.33
+			],
+			"entrance_h": 1.4,
+			"footprint": [
+				[
+					284.18,
+					-79.41
+				],
+				[
+					286.52,
+					-85.26
+				],
+				[
+					299.33,
+					-80.13
+				],
+				[
+					296.99,
+					-74.28
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.38,
+			"id": "P_MKT_014",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.5,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				296.17,
+				-86.78
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				288.37,
+				-89.9
+			],
+			"entrance_h": 1.45,
+			"footprint": [
+				[
+					286.7,
+					-85.72
+				],
+				[
+					290.05,
+					-94.08
+				],
+				[
+					305.64,
+					-87.84
+				],
+				[
+					302.3,
+					-79.48
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.42,
+			"id": "P_MKT_015",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.55,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				297.18,
+				-94.13
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				291.05,
+				-96.58
+			],
+			"entrance_h": 1.49,
+			"footprint": [
+				[
+					290.05,
+					-94.08
+				],
+				[
+					292.05,
+					-99.09
+				],
+				[
+					304.31,
+					-94.19
+				],
+				[
+					302.3,
+					-89.17
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.47,
+			"id": "P_MKT_016",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.59,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				300.84,
+				-100.05
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "MixedCommercial",
+			"entrance": [
+				293.59,
+				-102.94
+			],
+			"entrance_h": 1.53,
+			"footprint": [
+				[
+					292.42,
+					-100.02
+				],
+				[
+					294.76,
+					-105.87
+				],
+				[
+					309.25,
+					-100.07
+				],
+				[
+					306.91,
+					-94.22
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.5,
+			"id": "P_MXC_001",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.63,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				304.18,
+				-105.98
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "MixedCommercial",
+			"entrance": [
+				296.1,
+				-109.21
+			],
+			"entrance_h": 1.56,
+			"footprint": [
+				[
+					294.76,
+					-105.87
+				],
+				[
+					297.44,
+					-112.55
+				],
+				[
+					313.59,
+					-106.09
+				],
+				[
+					310.92,
+					-99.41
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.54,
+			"id": "P_MXC_002",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.66,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				304.4,
+				-113.0
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "MixedCommercial",
+			"entrance": [
+				298.55,
+				-115.34
+			],
+			"entrance_h": 1.6,
+			"footprint": [
+				[
+					297.62,
+					-113.02
+				],
+				[
+					299.48,
+					-117.66
+				],
+				[
+					311.18,
+					-112.98
+				],
+				[
+					309.32,
+					-108.34
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.58,
+			"id": "P_MXC_003",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.7,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				308.88,
+				-119.34
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.65
+			},
+			"depth_m": 16.2,
+			"district": "MixedCommercial",
+			"entrance": [
+				301.35,
+				-122.35
+			],
+			"entrance_h": 1.64,
+			"footprint": [
+				[
+					299.85,
+					-118.59
+				],
+				[
+					302.86,
+					-126.11
+				],
+				[
+					317.9,
+					-120.09
+				],
+				[
+					314.89,
+					-112.57
+				]
+			],
+			"front_dir": [
+				-0.93,
+				-0.37
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.63,
+			"id": "P_MXC_004",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.74,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				225.82,
+				75.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				232.35,
+				76.72
+			],
+			"entrance_h": 0.44,
+			"footprint": [
+				[
+					218.89,
+					77.43
+				],
+				[
+					219.69,
+					72.09
+				],
+				[
+					232.75,
+					74.05
+				],
+				[
+					231.95,
+					79.39
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.15
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.44,
+			"id": "P_MKT_017",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.54,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				231.71,
+				33.25
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				239.11,
+				35.72
+			],
+			"entrance_h": 0.68,
+			"footprint": [
+				[
+					223.31,
+					33.77
+				],
+				[
+					225.3,
+					27.79
+				],
+				[
+					240.1,
+					32.73
+				],
+				[
+					238.11,
+					38.7
+				]
+			],
+			"front_dir": [
+				0.95,
+				0.32
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.7,
+			"id": "P_MKT_018",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.78,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				232.99,
+				26.56
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				241.24,
+				29.31
+			],
+			"entrance_h": 0.72,
+			"footprint": [
+				[
+					223.6,
+					27.22
+				],
+				[
+					225.87,
+					20.39
+				],
+				[
+					242.38,
+					25.9
+				],
+				[
+					240.1,
+					32.73
+				]
+			],
+			"front_dir": [
+				0.95,
+				0.32
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.74,
+			"id": "P_MKT_019",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.82,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				237.51,
+				20.58
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				243.49,
+				22.58
+			],
+			"entrance_h": 0.76,
+			"footprint": [
+				[
+					230.74,
+					20.96
+				],
+				[
+					232.32,
+					16.22
+				],
+				[
+					244.28,
+					20.2
+				],
+				[
+					242.7,
+					24.95
+				]
+			],
+			"front_dir": [
+				0.95,
+				0.32
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.77,
+			"id": "P_MKT_020",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.86,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				237.87,
+				13.8
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "Market",
+			"entrance": [
+				245.56,
+				16.36
+			],
+			"entrance_h": 0.79,
+			"footprint": [
+				[
+					228.91,
+					15.08
+				],
+				[
+					231.47,
+					7.4
+				],
+				[
+					246.84,
+					12.52
+				],
+				[
+					244.28,
+					20.2
+				]
+			],
+			"front_dir": [
+				0.95,
+				0.32
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.81,
+			"id": "P_MKT_021",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.89,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				241.02,
+				6.26
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 15.0,
+			"district": "Market",
+			"entrance": [
+				248.13,
+				8.63
+			],
+			"entrance_h": 0.84,
+			"footprint": [
+				[
+					232.77,
+					7.3
+				],
+				[
+					235.04,
+					0.47
+				],
+				[
+					249.27,
+					5.21
+				],
+				[
+					247.0,
+					12.05
+				]
+			],
+			"front_dir": [
+				0.95,
+				0.32
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.86,
+			"id": "P_MKT_022",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.94,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				253.96,
+				-28.36
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.0
+			},
+			"depth_m": 12.0,
+			"district": "Market",
+			"entrance": [
+				259.71,
+				-26.64
+			],
+			"entrance_h": 1.04,
+			"footprint": [
+				[
+					247.44,
+					-27.5
+				],
+				[
+					248.99,
+					-32.67
+				],
+				[
+					260.49,
+					-29.22
+				],
+				[
+					258.93,
+					-24.05
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.06,
+			"id": "P_MKT_023",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.15,
+			"side": "R",
+			"slope_pct": 1.1
+		},
+		{
+			"area_m2": 145.8,
+			"center": [
+				253.32,
+				-36.65
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 18.0,
+			"district": "Market",
+			"entrance": [
+				261.94,
+				-34.06
+			],
+			"entrance_h": 1.1,
+			"footprint": [
+				[
+					243.53,
+					-35.35
+				],
+				[
+					245.86,
+					-43.11
+				],
+				[
+					263.1,
+					-37.94
+				],
+				[
+					260.77,
+					-30.18
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.12,
+			"id": "P_MKT_024",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.2,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				257.4,
+				-42.94
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.8,
+			"district": "Market",
+			"entrance": [
+				264.01,
+				-40.96
+			],
+			"entrance_h": 1.14,
+			"footprint": [
+				[
+					249.88,
+					-41.91
+				],
+				[
+					251.69,
+					-47.94
+				],
+				[
+					264.91,
+					-43.97
+				],
+				[
+					263.1,
+					-37.94
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.16,
+			"id": "P_MKT_025",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.24,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				258.3,
+				-51.18
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				266.35,
+				-48.76
+			],
+			"entrance_h": 1.19,
+			"footprint": [
+				[
+					248.96,
+					-49.28
+				],
+				[
+					251.55,
+					-57.9
+				],
+				[
+					267.64,
+					-53.07
+				],
+				[
+					265.06,
+					-44.45
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.2,
+			"id": "P_MKT_026",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.29,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				262.1,
+				-57.56
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				268.42,
+				-55.66
+			],
+			"entrance_h": 1.23,
+			"footprint": [
+				[
+					255.0,
+					-56.87
+				],
+				[
+					256.55,
+					-62.04
+				],
+				[
+					269.19,
+					-58.25
+				],
+				[
+					267.64,
+					-53.07
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.24,
+			"id": "P_MKT_027",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.33,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				262.91,
+				-64.46
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				270.39,
+				-62.22
+			],
+			"entrance_h": 1.27,
+			"footprint": [
+				[
+					254.54,
+					-63.69
+				],
+				[
+					256.35,
+					-69.72
+				],
+				[
+					271.29,
+					-65.24
+				],
+				[
+					269.48,
+					-59.2
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.28,
+			"id": "P_MKT_028",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.37,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				263.99,
+				-71.19
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				272.33,
+				-68.69
+			],
+			"entrance_h": 1.31,
+			"footprint": [
+				[
+					254.62,
+					-70.24
+				],
+				[
+					256.69,
+					-77.13
+				],
+				[
+					273.36,
+					-72.13
+				],
+				[
+					271.29,
+					-65.24
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.32,
+			"id": "P_MKT_029",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.41,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				268.19,
+				-76.82
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				274.22,
+				-75.01
+			],
+			"entrance_h": 1.34,
+			"footprint": [
+				[
+					261.43,
+					-76.23
+				],
+				[
+					262.87,
+					-81.02
+				],
+				[
+					274.94,
+					-77.4
+				],
+				[
+					273.5,
+					-72.61
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.29
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.36,
+			"id": "P_MKT_030",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.44,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				272.78,
+				-94.79
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.34
+			},
+			"depth_m": 16.2,
+			"district": "Market",
+			"entrance": [
+				280.3,
+				-91.78
+			],
+			"entrance_h": 1.44,
+			"footprint": [
+				[
+					263.75,
+					-94.04
+				],
+				[
+					266.76,
+					-101.56
+				],
+				[
+					281.8,
+					-95.54
+				],
+				[
+					278.79,
+					-88.02
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.47,
+			"id": "P_MKT_031",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.54,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				276.55,
+				-102.6
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				283.51,
+				-99.81
+			],
+			"entrance_h": 1.49,
+			"footprint": [
+				[
+					268.25,
+					-102.04
+				],
+				[
+					270.92,
+					-108.73
+				],
+				[
+					284.85,
+					-103.16
+				],
+				[
+					282.17,
+					-96.47
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.51,
+			"id": "P_MXC_005",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.59,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				280.28,
+				-107.89
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				285.85,
+				-105.66
+			],
+			"entrance_h": 1.52,
+			"footprint": [
+				[
+					273.7,
+					-107.61
+				],
+				[
+					275.71,
+					-112.63
+				],
+				[
+					286.85,
+					-108.17
+				],
+				[
+					284.85,
+					-103.16
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.54,
+			"id": "P_MXC_006",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.62,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 145.8,
+			"center": [
+				280.19,
+				-115.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 18.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				288.54,
+				-112.39
+			],
+			"entrance_h": 1.57,
+			"footprint": [
+				[
+					270.33,
+					-115.32
+				],
+				[
+					273.33,
+					-122.84
+				],
+				[
+					290.05,
+					-116.15
+				],
+				[
+					287.04,
+					-108.63
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.59,
+			"id": "P_MXC_007",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.67,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				285.18,
+				-122.57
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 13.8,
+			"district": "MixedCommercial",
+			"entrance": [
+				291.59,
+				-120.01
+			],
+			"entrance_h": 1.61,
+			"footprint": [
+				[
+					277.6,
+					-122.21
+				],
+				[
+					279.94,
+					-128.06
+				],
+				[
+					292.76,
+					-122.93
+				],
+				[
+					290.42,
+					-117.08
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.63,
+			"id": "P_MXC_008",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.71,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 79.4,
+			"center": [
+				241.45,
+				120.87
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 12.6,
+			"district": "SouthGate",
+			"entrance": [
+				235.25,
+				119.76
+			],
+			"entrance_h": 0.19,
+			"footprint": [
+				[
+					234.7,
+					122.86
+				],
+				[
+					235.8,
+					116.66
+				],
+				[
+					248.21,
+					118.87
+				],
+				[
+					247.1,
+					125.07
+				]
+			],
+			"front_dir": [
+				-0.98,
+				-0.18
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.18,
+			"id": "P_SGT_001",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "EntranceRoad",
+			"road_cls": "main",
+			"road_h": 0.29,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 61.0,
+			"center": [
+				220.55,
+				121.86
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.2,
+			"district": "SouthGate",
+			"entrance": [
+				226.56,
+				122.93
+			],
+			"entrance_h": 0.16,
+			"footprint": [
+				[
+					214.11,
+					123.25
+				],
+				[
+					214.99,
+					118.32
+				],
+				[
+					227.0,
+					120.47
+				],
+				[
+					226.12,
+					125.39
+				]
+			],
+			"front_dir": [
+				0.98,
+				0.18
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.17,
+			"id": "P_SGT_002",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "EntranceRoad",
+			"road_cls": "main",
+			"road_h": 0.26,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 108.5,
+			"center": [
+				221.2,
+				114.81
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 13.4,
+			"district": "SouthGate",
+			"entrance": [
+				227.8,
+				115.99
+			],
+			"entrance_h": 0.2,
+			"footprint": [
+				[
+					213.89,
+					117.62
+				],
+				[
+					215.32,
+					109.65
+				],
+				[
+					228.51,
+					112.0
+				],
+				[
+					227.08,
+					119.98
+				]
+			],
+			"front_dir": [
+				0.98,
+				0.18
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.21,
+			"id": "P_SGT_003",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "EntranceRoad",
+			"road_cls": "main",
+			"road_h": 0.3,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 90.1,
+			"center": [
+				210.15,
+				-9.35
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 14.3,
+			"district": "ResidentialWest",
+			"entrance": [
+				210.15,
+				-16.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					207.0,
+					-16.5
+				],
+				[
+					213.3,
+					-16.5
+				],
+				[
+					213.3,
+					-2.2
+				],
+				[
+					207.0,
+					-2.2
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.96,
+			"id": "P_RSW_001",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				219.9,
+				-7.8
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				219.9,
+				-16.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					216.3,
+					-16.5
+				],
+				[
+					223.5,
+					-16.5
+				],
+				[
+					223.5,
+					0.9
+				],
+				[
+					216.3,
+					0.9
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.95,
+			"id": "P_MKT_032",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				227.0,
+				-10.2
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				227.0,
+				-16.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					224.5,
+					-16.5
+				],
+				[
+					229.5,
+					-16.5
+				],
+				[
+					229.5,
+					-3.9
+				],
+				[
+					224.5,
+					-3.9
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.97,
+			"id": "P_MKT_033",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				233.55,
+				-8.4
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "Market",
+			"entrance": [
+				233.55,
+				-16.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					229.5,
+					-16.5
+				],
+				[
+					237.6,
+					-16.5
+				],
+				[
+					237.6,
+					-0.3
+				],
+				[
+					229.5,
+					-0.3
+				]
+			],
+			"front_dir": [
+				0.0,
+				-1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.96,
+			"id": "P_MKT_034",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				284.29,
+				-13.02
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.0,
+			"district": "Market",
+			"entrance": [
+				282.89,
+				-20.39
+			],
+			"entrance_h": 1.04,
+			"footprint": [
+				[
+					279.35,
+					-19.72
+				],
+				[
+					286.43,
+					-21.06
+				],
+				[
+					289.22,
+					-6.32
+				],
+				[
+					282.14,
+					-4.98
+				]
+			],
+			"front_dir": [
+				-0.19,
+				-0.98
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.99,
+			"id": "P_MKT_035",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.14,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				290.2,
+				-15.67
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "Market",
+			"entrance": [
+				289.08,
+				-21.56
+			],
+			"entrance_h": 1.05,
+			"footprint": [
+				[
+					286.43,
+					-21.06
+				],
+				[
+					291.73,
+					-22.06
+				],
+				[
+					293.97,
+					-10.27
+				],
+				[
+					288.66,
+					-9.27
+				]
+			],
+			"front_dir": [
+				-0.19,
+				-0.98
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.0,
+			"id": "P_MKT_036",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.15,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 145.8,
+			"center": [
+				298.37,
+				-14.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 18.0,
+			"district": "Market",
+			"entrance": [
+				296.7,
+				-23.0
+			],
+			"entrance_h": 1.06,
+			"footprint": [
+				[
+					292.72,
+					-22.25
+				],
+				[
+					300.68,
+					-23.76
+				],
+				[
+					304.02,
+					-6.07
+				],
+				[
+					296.06,
+					-4.56
+				]
+			],
+			"front_dir": [
+				-0.19,
+				-0.98
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.99,
+			"id": "P_MKT_037",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.14,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.16,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				305.05,
+				-17.56
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.8,
+			"district": "Market",
+			"entrance": [
+				303.77,
+				-24.34
+			],
+			"entrance_h": 1.07,
+			"footprint": [
+				[
+					300.68,
+					-23.76
+				],
+				[
+					306.87,
+					-24.93
+				],
+				[
+					309.43,
+					-11.37
+				],
+				[
+					303.24,
+					-10.2
+				]
+			],
+			"front_dir": [
+				-0.19,
+				-0.98
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.01,
+			"id": "P_MKT_038",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.17,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				204.7,
+				-30.5
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.49
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				204.7,
+				-23.5
+			],
+			"entrance_h": 1.03,
+			"footprint": [
+				[
+					202.0,
+					-37.5
+				],
+				[
+					207.4,
+					-37.5
+				],
+				[
+					207.4,
+					-23.5
+				],
+				[
+					202.0,
+					-23.5
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.08,
+			"id": "P_RSW_002",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				214.45,
+				-34.5
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.08
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				214.45,
+				-23.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					210.4,
+					-45.5
+				],
+				[
+					218.5,
+					-45.5
+				],
+				[
+					218.5,
+					-23.5
+				],
+				[
+					210.4,
+					-23.5
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.1,
+			"id": "P_RSW_003",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.15,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				223.65,
+				-31.7
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				223.65,
+				-23.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					220.5,
+					-39.9
+				],
+				[
+					226.8,
+					-39.9
+				],
+				[
+					226.8,
+					-23.5
+				],
+				[
+					220.5,
+					-23.5
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.08,
+			"id": "P_RSW_004",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				235.3,
+				-31.9
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				235.3,
+				-23.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					230.8,
+					-40.3
+				],
+				[
+					239.8,
+					-40.3
+				],
+				[
+					239.8,
+					-23.5
+				],
+				[
+					230.8,
+					-23.5
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.08,
+			"id": "P_MKT_039",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				296.18,
+				-36.75
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.39
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				297.41,
+				-30.26
+			],
+			"entrance_h": 1.06,
+			"footprint": [
+				[
+					292.3,
+					-42.73
+				],
+				[
+					297.61,
+					-43.73
+				],
+				[
+					300.06,
+					-30.76
+				],
+				[
+					294.76,
+					-29.76
+				]
+			],
+			"front_dir": [
+				0.19,
+				0.98
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.11,
+			"id": "P_MKT_040",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.16,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				302.69,
+				-39.2
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				304.14,
+				-31.53
+			],
+			"entrance_h": 1.07,
+			"footprint": [
+				[
+					298.15,
+					-46.28
+				],
+				[
+					304.34,
+					-47.45
+				],
+				[
+					307.24,
+					-32.12
+				],
+				[
+					301.05,
+					-30.95
+				]
+			],
+			"front_dir": [
+				0.19,
+				0.98
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.13,
+			"id": "P_MKT_041",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.17,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				309.16,
+				-41.34
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				310.77,
+				-32.79
+			],
+			"entrance_h": 1.08,
+			"footprint": [
+				[
+					304.0,
+					-49.22
+				],
+				[
+					311.08,
+					-50.56
+				],
+				[
+					314.31,
+					-33.46
+				],
+				[
+					307.24,
+					-32.12
+				]
+			],
+			"front_dir": [
+				0.19,
+				0.98
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.14,
+			"id": "P_MKT_042",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.18,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				316.09,
+				-40.21
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				317.26,
+				-34.02
+			],
+			"entrance_h": 1.07,
+			"footprint": [
+				[
+					312.46,
+					-45.93
+				],
+				[
+					317.37,
+					-46.86
+				],
+				[
+					319.71,
+					-34.48
+				],
+				[
+					314.8,
+					-33.55
+				]
+			],
+			"front_dir": [
+				0.19,
+				0.98
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.13,
+			"id": "P_MKT_043",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.14,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.18,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 158.8,
+			"center": [
+				175.42,
+				63.15
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.18
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				175.15,
+				53.36
+			],
+			"entrance_h": 0.6,
+			"footprint": [
+				[
+					171.1,
+					53.47
+				],
+				[
+					179.19,
+					53.24
+				],
+				[
+					179.75,
+					72.83
+				],
+				[
+					171.65,
+					73.06
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.53,
+			"id": "P_RSW_005",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.14,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.7,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				185.55,
+				62.07
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				185.29,
+				53.07
+			],
+			"entrance_h": 0.6,
+			"footprint": [
+				[
+					181.69,
+					53.17
+				],
+				[
+					188.89,
+					52.97
+				],
+				[
+					189.4,
+					70.96
+				],
+				[
+					182.2,
+					71.16
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.53,
+			"id": "P_RSW_006",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.7,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				193.29,
+				59.85
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				193.09,
+				52.85
+			],
+			"entrance_h": 0.6,
+			"footprint": [
+				[
+					190.39,
+					52.93
+				],
+				[
+					195.79,
+					52.77
+				],
+				[
+					196.18,
+					66.77
+				],
+				[
+					190.78,
+					66.92
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.55,
+			"id": "P_RSW_007",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.7,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 145.8,
+			"center": [
+				213.09,
+				61.29
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 18.0,
+			"district": "Market",
+			"entrance": [
+				212.83,
+				52.29
+			],
+			"entrance_h": 0.61,
+			"footprint": [
+				[
+					208.78,
+					52.41
+				],
+				[
+					216.88,
+					52.18
+				],
+				[
+					217.39,
+					70.17
+				],
+				[
+					209.29,
+					70.4
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.54,
+			"id": "P_MKT_044",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.15,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.71,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				220.22,
+				58.99
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.8,
+			"district": "Market",
+			"entrance": [
+				220.03,
+				52.09
+			],
+			"entrance_h": 0.61,
+			"footprint": [
+				[
+					216.88,
+					52.18
+				],
+				[
+					223.18,
+					52.0
+				],
+				[
+					223.57,
+					65.8
+				],
+				[
+					217.27,
+					65.98
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.55,
+			"id": "P_MKT_045",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.71,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				260.37,
+				58.43
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				259.72,
+				50.05
+			],
+			"entrance_h": 0.62,
+			"footprint": [
+				[
+					255.23,
+					50.4
+				],
+				[
+					264.2,
+					49.7
+				],
+				[
+					265.51,
+					66.45
+				],
+				[
+					256.53,
+					67.15
+				]
+			],
+			"front_dir": [
+				-0.08,
+				-1.0
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.56,
+			"id": "P_MKT_046",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.72,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				267.41,
+				56.07
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				266.89,
+				49.49
+			],
+			"entrance_h": 0.62,
+			"footprint": [
+				[
+					264.2,
+					49.7
+				],
+				[
+					269.59,
+					49.28
+				],
+				[
+					270.61,
+					62.44
+				],
+				[
+					265.23,
+					62.86
+				]
+			],
+			"front_dir": [
+				-0.08,
+				-1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.57,
+			"id": "P_MKT_047",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.72,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				274.33,
+				56.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				273.72,
+				48.96
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					270.58,
+					49.21
+				],
+				[
+					276.86,
+					48.72
+				],
+				[
+					278.08,
+					64.27
+				],
+				[
+					271.79,
+					64.76
+				]
+			],
+			"front_dir": [
+				-0.08,
+				-1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.57,
+			"id": "P_MKT_048",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				281.13,
+				57.11
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				280.45,
+				48.44
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					276.86,
+					48.72
+				],
+				[
+					284.04,
+					48.16
+				],
+				[
+					285.39,
+					65.5
+				],
+				[
+					278.22,
+					66.06
+				]
+			],
+			"front_dir": [
+				-0.08,
+				-1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.56,
+			"id": "P_MKT_049",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 110.7,
+			"center": [
+				215.21,
+				39.07
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 12.3,
+			"district": "Market",
+			"entrance": [
+				215.38,
+				45.22
+			],
+			"entrance_h": 0.61,
+			"footprint": [
+				[
+					210.54,
+					33.05
+				],
+				[
+					219.54,
+					32.8
+				],
+				[
+					219.88,
+					45.09
+				],
+				[
+					210.89,
+					45.35
+				]
+			],
+			"front_dir": [
+				0.03,
+				1.0
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.66,
+			"id": "P_MKT_050",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.71,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				267.83,
+				35.78
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.02
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				268.34,
+				42.36
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					264.63,
+					29.41
+				],
+				[
+					270.01,
+					28.99
+				],
+				[
+					271.04,
+					42.15
+				],
+				[
+					265.65,
+					42.57
+				]
+			],
+			"front_dir": [
+				0.08,
+				1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.68,
+			"id": "P_MKT_051",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.72,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				274.57,
+				34.05
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "Market",
+			"entrance": [
+				275.17,
+				41.83
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					270.82,
+					26.52
+				],
+				[
+					277.1,
+					26.03
+				],
+				[
+					278.31,
+					41.58
+				],
+				[
+					272.03,
+					42.07
+				]
+			],
+			"front_dir": [
+				0.08,
+				1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.69,
+			"id": "P_MKT_052",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				281.23,
+				32.63
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				281.9,
+				41.3
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					276.96,
+					24.23
+				],
+				[
+					284.14,
+					23.68
+				],
+				[
+					285.49,
+					41.02
+				],
+				[
+					278.31,
+					41.58
+				]
+			],
+			"front_dir": [
+				0.08,
+				1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.7,
+			"id": "P_MKT_053",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				287.99,
+				34.51
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				288.48,
+				40.79
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					285.01,
+					28.42
+				],
+				[
+					290.0,
+					28.03
+				],
+				[
+					290.98,
+					40.6
+				],
+				[
+					285.99,
+					40.98
+				]
+			],
+			"front_dir": [
+				0.08,
+				1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.68,
+			"id": "P_MKT_054",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				294.38,
+				32.21
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "Market",
+			"entrance": [
+				295.01,
+				40.28
+			],
+			"entrance_h": 0.64,
+			"footprint": [
+				[
+					289.72,
+					24.44
+				],
+				[
+					297.79,
+					23.81
+				],
+				[
+					299.05,
+					39.97
+				],
+				[
+					290.98,
+					40.6
+				]
+			],
+			"front_dir": [
+				0.08,
+				1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.7,
+			"id": "P_MKT_055",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.74,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				204.63,
+				-133.67
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.94
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				204.19,
+				-144.66
+			],
+			"entrance_h": 1.79,
+			"footprint": [
+				[
+					200.14,
+					-144.5
+				],
+				[
+					208.23,
+					-144.83
+				],
+				[
+					209.11,
+					-122.84
+				],
+				[
+					201.02,
+					-122.52
+				]
+			],
+			"front_dir": [
+				-0.04,
+				-1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.7,
+			"id": "P_RSW_008",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.15,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.89,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 86.9,
+			"center": [
+				236.64,
+				-139.06
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 13.8,
+			"district": "MixedCommercial",
+			"entrance": [
+				236.36,
+				-145.95
+			],
+			"entrance_h": 1.79,
+			"footprint": [
+				[
+					233.21,
+					-145.83
+				],
+				[
+					239.51,
+					-146.08
+				],
+				[
+					240.06,
+					-132.29
+				],
+				[
+					233.76,
+					-132.04
+				]
+			],
+			"front_dir": [
+				-0.04,
+				-1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.74,
+			"id": "P_MXC_009",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.89,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				244.84,
+				-137.88
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 16.8,
+			"district": "MixedCommercial",
+			"entrance": [
+				244.5,
+				-146.28
+			],
+			"entrance_h": 1.8,
+			"footprint": [
+				[
+					240.01,
+					-146.1
+				],
+				[
+					249.0,
+					-146.46
+				],
+				[
+					249.67,
+					-129.67
+				],
+				[
+					240.68,
+					-129.31
+				]
+			],
+			"front_dir": [
+				-0.04,
+				-1.0
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.73,
+			"id": "P_MXC_010",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.9,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				255.26,
+				-137.02
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "MixedCommercial",
+			"entrance": [
+				257.71,
+				-143.15
+			],
+			"entrance_h": 1.78,
+			"footprint": [
+				[
+					255.2,
+					-144.15
+				],
+				[
+					260.21,
+					-142.15
+				],
+				[
+					255.31,
+					-129.89
+				],
+				[
+					250.3,
+					-131.89
+				]
+			],
+			"front_dir": [
+				0.37,
+				-0.93
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.73,
+			"id": "P_MXC_011",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.88,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 98.3,
+			"center": [
+				260.24,
+				-133.73
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.6,
+			"district": "MixedCommercial",
+			"entrance": [
+				263.14,
+				-140.98
+			],
+			"entrance_h": 1.77,
+			"footprint": [
+				[
+					260.21,
+					-142.15
+				],
+				[
+					266.06,
+					-139.81
+				],
+				[
+					260.27,
+					-125.32
+				],
+				[
+					254.42,
+					-127.66
+				]
+			],
+			"front_dir": [
+				0.37,
+				-0.93
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.71,
+			"id": "P_MXC_012",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.87,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				266.17,
+				-130.39
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "MixedCommercial",
+			"entrance": [
+				269.41,
+				-138.47
+			],
+			"entrance_h": 1.75,
+			"footprint": [
+				[
+					266.06,
+					-139.81
+				],
+				[
+					272.75,
+					-137.13
+				],
+				[
+					266.29,
+					-120.98
+				],
+				[
+					259.6,
+					-123.65
+				]
+			],
+			"front_dir": [
+				0.37,
+				-0.93
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.69,
+			"id": "P_MXC_013",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.85,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				273.19,
+				-130.17
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "MixedCommercial",
+			"entrance": [
+				275.53,
+				-136.02
+			],
+			"entrance_h": 1.73,
+			"footprint": [
+				[
+					273.21,
+					-136.95
+				],
+				[
+					277.85,
+					-135.09
+				],
+				[
+					273.17,
+					-123.39
+				],
+				[
+					268.53,
+					-125.25
+				]
+			],
+			"front_dir": [
+				0.37,
+				-0.93
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.69,
+			"id": "P_MXC_014",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.84,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				322.47,
+				-117.32
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "MixedCommercial",
+			"entrance": [
+				322.86,
+				-125.41
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					318.81,
+					-125.6
+				],
+				[
+					326.9,
+					-125.21
+				],
+				[
+					326.13,
+					-109.03
+				],
+				[
+					318.04,
+					-109.42
+				]
+			],
+			"front_dir": [
+				0.05,
+				-1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.61,
+			"id": "P_MXC_015",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				330.14,
+				-117.55
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				330.5,
+				-125.04
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					326.9,
+					-125.21
+				],
+				[
+					334.09,
+					-124.87
+				],
+				[
+					333.38,
+					-109.89
+				],
+				[
+					326.19,
+					-110.23
+				]
+			],
+			"front_dir": [
+				0.05,
+				-1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.61,
+			"id": "P_MXC_016",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				336.51,
+				-118.75
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				336.79,
+				-124.74
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					334.09,
+					-124.87
+				],
+				[
+					339.49,
+					-124.62
+				],
+				[
+					338.92,
+					-112.63
+				],
+				[
+					333.52,
+					-112.89
+				]
+			],
+			"front_dir": [
+				0.05,
+				-1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.62,
+			"id": "P_MXC_017",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 92.9,
+			"center": [
+				307.07,
+				-139.62
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.9,
+			"district": "MixedCommercial",
+			"entrance": [
+				306.76,
+				-133.18
+			],
+			"entrance_h": 1.68,
+			"footprint": [
+				[
+					303.78,
+					-146.24
+				],
+				[
+					310.97,
+					-145.9
+				],
+				[
+					310.35,
+					-133.01
+				],
+				[
+					303.16,
+					-133.35
+				]
+			],
+			"front_dir": [
+				-0.05,
+				1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.73,
+			"id": "P_MXC_018",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.78,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				313.65,
+				-139.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "MixedCommercial",
+			"entrance": [
+				313.35,
+				-132.87
+			],
+			"entrance_h": 1.68,
+			"footprint": [
+				[
+					311.45,
+					-145.57
+				],
+				[
+					316.45,
+					-145.33
+				],
+				[
+					315.85,
+					-132.75
+				],
+				[
+					310.85,
+					-132.99
+				]
+			],
+			"front_dir": [
+				-0.05,
+				1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.73,
+			"id": "P_MXC_019",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.78,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 131.2,
+			"center": [
+				321.28,
+				-140.6
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.2,
+			"district": "MixedCommercial",
+			"entrance": [
+				320.89,
+				-132.51
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					317.62,
+					-148.88
+				],
+				[
+					325.71,
+					-148.5
+				],
+				[
+					324.94,
+					-132.32
+				],
+				[
+					316.85,
+					-132.7
+				]
+			],
+			"front_dir": [
+				-0.05,
+				1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.74,
+			"id": "P_MXC_020",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				328.89,
+				-139.64
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				328.53,
+				-132.15
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					325.65,
+					-147.3
+				],
+				[
+					332.84,
+					-146.96
+				],
+				[
+					332.13,
+					-131.97
+				],
+				[
+					324.94,
+					-132.32
+				]
+			],
+			"front_dir": [
+				-0.05,
+				1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.73,
+			"id": "P_MXC_021",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				335.11,
+				-137.84
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				334.83,
+				-131.85
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					332.7,
+					-143.96
+				],
+				[
+					338.09,
+					-143.7
+				],
+				[
+					337.52,
+					-131.72
+				],
+				[
+					332.13,
+					-131.97
+				]
+			],
+			"front_dir": [
+				-0.05,
+				1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.72,
+			"id": "P_MXC_022",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "HillFootStreet",
+			"road_cls": "secondary",
+			"road_h": 1.77,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				341.22,
+				-146.51
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 15.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				347.7,
+				-142.73
+			],
+			"entrance_h": 1.75,
+			"footprint": [
+				[
+					332.93,
+					-147.18
+				],
+				[
+					336.56,
+					-153.4
+				],
+				[
+					349.51,
+					-145.84
+				],
+				[
+					345.89,
+					-139.63
+				]
+			],
+			"front_dir": [
+				0.86,
+				0.5
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.78,
+			"id": "P_MXC_023",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "RiverNorthPath",
+			"road_cls": "secondary",
+			"road_h": 1.85,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 64.8,
+			"center": [
+				345.69,
+				-151.2
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				350.88,
+				-148.18
+			],
+			"entrance_h": 1.78,
+			"footprint": [
+				[
+					339.15,
+					-151.89
+				],
+				[
+					341.87,
+					-156.56
+				],
+				[
+					352.24,
+					-150.51
+				],
+				[
+					349.51,
+					-145.84
+				]
+			],
+			"front_dir": [
+				0.86,
+				0.5
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.8,
+			"id": "P_MXC_024",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "RiverNorthPath",
+			"road_cls": "secondary",
+			"road_h": 1.88,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				185.95,
+				-89.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 14.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				191.85,
+				-93.87
+			],
+			"entrance_h": 1.47,
+			"footprint": [
+				[
+					189.27,
+					-97.55
+				],
+				[
+					194.43,
+					-90.18
+				],
+				[
+					182.64,
+					-81.92
+				],
+				[
+					177.47,
+					-89.3
+				]
+			],
+			"front_dir": [
+				0.82,
+				-0.57
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.44,
+			"id": "P_RSW_009",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.57,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				191.02,
+				-81.45
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				197.41,
+				-85.92
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					195.87,
+					-88.13
+				],
+				[
+					198.96,
+					-83.71
+				],
+				[
+					186.18,
+					-74.76
+				],
+				[
+					183.09,
+					-79.19
+				]
+			],
+			"front_dir": [
+				0.82,
+				-0.57
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.39,
+			"id": "P_RSW_010",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.52,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 90.1,
+			"center": [
+				193.71,
+				-71.01
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.15
+			},
+			"depth_m": 14.3,
+			"district": "ResidentialWest",
+			"entrance": [
+				200.8,
+				-70.16
+			],
+			"entrance_h": 1.32,
+			"footprint": [
+				[
+					201.18,
+					-73.29
+				],
+				[
+					200.43,
+					-67.03
+				],
+				[
+					186.23,
+					-68.74
+				],
+				[
+					186.98,
+					-74.99
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.33,
+			"id": "P_RSW_011",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.42,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 131.0,
+			"center": [
+				190.61,
+				-61.56
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 18.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				199.64,
+				-60.48
+			],
+			"entrance_h": 1.26,
+			"footprint": [
+				[
+					200.07,
+					-64.05
+				],
+				[
+					199.21,
+					-56.91
+				],
+				[
+					181.14,
+					-59.07
+				],
+				[
+					182.0,
+					-66.22
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.27,
+			"id": "P_RSW_012",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.36,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				191.33,
+				-53.32
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				198.68,
+				-52.44
+			],
+			"entrance_h": 1.21,
+			"footprint": [
+				[
+					198.98,
+					-54.92
+				],
+				[
+					198.38,
+					-49.96
+				],
+				[
+					183.69,
+					-51.72
+				],
+				[
+					184.28,
+					-56.68
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.22,
+			"id": "P_RSW_013",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.31,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 146.6,
+			"center": [
+				188.44,
+				-43.04
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 18.1,
+			"district": "ResidentialWest",
+			"entrance": [
+				197.42,
+				-41.96
+			],
+			"entrance_h": 1.15,
+			"footprint": [
+				[
+					197.9,
+					-45.98
+				],
+				[
+					196.94,
+					-37.94
+				],
+				[
+					178.97,
+					-40.1
+				],
+				[
+					179.93,
+					-48.14
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.16,
+			"id": "P_RSW_014",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.25,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 94.7,
+			"center": [
+				187.39,
+				-33.92
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.71
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				196.33,
+				-32.85
+			],
+			"entrance_h": 1.1,
+			"footprint": [
+				[
+					196.64,
+					-35.46
+				],
+				[
+					196.01,
+					-30.24
+				],
+				[
+					178.14,
+					-32.38
+				],
+				[
+					178.77,
+					-37.6
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 5.26,
+			"ground_h": 1.1,
+			"id": "P_RSW_015",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.2,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				189.88,
+				-25.27
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.32
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				196.69,
+				-26.91
+			],
+			"entrance_h": 1.06,
+			"footprint": [
+				[
+					196.06,
+					-29.53
+				],
+				[
+					197.32,
+					-24.28
+				],
+				[
+					183.7,
+					-21.02
+				],
+				[
+					182.44,
+					-26.27
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.23
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.04,
+			"id": "P_RSW_016",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.16,
+			"side": "L",
+			"slope_pct": 1.0
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				189.43,
+				-10.0
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				200.13,
+				-12.57
+			],
+			"entrance_h": 0.98,
+			"footprint": [
+				[
+					199.18,
+					-16.5
+				],
+				[
+					201.07,
+					-8.63
+				],
+				[
+					179.68,
+					-3.49
+				],
+				[
+					177.79,
+					-11.37
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.23
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.97,
+			"id": "P_RSW_017",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.08,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				194.3,
+				-1.71
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				202.27,
+				-3.62
+			],
+			"entrance_h": 0.92,
+			"footprint": [
+				[
+					201.54,
+					-6.68
+				],
+				[
+					203.01,
+					-0.56
+				],
+				[
+					187.06,
+					3.27
+				],
+				[
+					185.59,
+					-2.85
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.23
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.91,
+			"id": "P_RSW_018",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.02,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 151.2,
+			"center": [
+				212.79,
+				88.36
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.8,
+			"district": "Market",
+			"entrance": [
+				217.45,
+				81.37
+			],
+			"entrance_h": 0.42,
+			"footprint": [
+				[
+					213.71,
+					78.88
+				],
+				[
+					221.2,
+					83.87
+				],
+				[
+					211.88,
+					97.85
+				],
+				[
+					204.39,
+					92.85
+				]
+			],
+			"front_dir": [
+				0.55,
+				-0.83
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.37,
+			"id": "P_MKT_056",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.52,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 71.3,
+			"center": [
+				219.78,
+				90.86
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 13.2,
+			"district": "Market",
+			"entrance": [
+				223.44,
+				85.37
+			],
+			"entrance_h": 0.4,
+			"footprint": [
+				[
+					221.2,
+					83.87
+				],
+				[
+					225.69,
+					86.86
+				],
+				[
+					218.37,
+					97.85
+				],
+				[
+					213.87,
+					94.85
+				]
+			],
+			"front_dir": [
+				0.55,
+				-0.83
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.36,
+			"id": "P_MKT_057",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.5,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 158.8,
+			"center": [
+				187.99,
+				-123.45
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				179.96,
+				-117.83
+			],
+			"entrance_h": 1.59,
+			"footprint": [
+				[
+					193.7,
+					-132.39
+				],
+				[
+					198.34,
+					-125.75
+				],
+				[
+					182.28,
+					-114.51
+				],
+				[
+					177.64,
+					-121.15
+				]
+			],
+			"front_dir": [
+				-0.82,
+				0.57
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.64,
+			"id": "P_RSW_019",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.69,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				193.15,
+				-114.67
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				185.78,
+				-109.51
+			],
+			"entrance_h": 1.55,
+			"footprint": [
+				[
+					198.46,
+					-122.79
+				],
+				[
+					202.59,
+					-116.89
+				],
+				[
+					187.85,
+					-106.56
+				],
+				[
+					183.72,
+					-112.46
+				]
+			],
+			"front_dir": [
+				-0.82,
+				0.57
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.59,
+			"id": "P_RSW_020",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.65,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				195.99,
+				-107.14
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				190.25,
+				-103.12
+			],
+			"entrance_h": 1.51,
+			"footprint": [
+				[
+					200.18,
+					-113.36
+				],
+				[
+					203.27,
+					-108.94
+				],
+				[
+					191.8,
+					-100.91
+				],
+				[
+					188.71,
+					-105.34
+				]
+			],
+			"front_dir": [
+				-0.82,
+				0.57
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.54,
+			"id": "P_RSW_021",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.61,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				204.86,
+				-101.44
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.44
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				195.85,
+				-95.14
+			],
+			"entrance_h": 1.46,
+			"footprint": [
+				[
+					211.55,
+					-111.07
+				],
+				[
+					216.19,
+					-104.43
+				],
+				[
+					198.17,
+					-91.82
+				],
+				[
+					193.52,
+					-98.45
+				]
+			],
+			"front_dir": [
+				-0.82,
+				0.57
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.51,
+			"id": "P_RSW_022",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.56,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				207.84,
+				-92.3
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.78
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				201.12,
+				-87.6
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					212.75,
+					-99.58
+				],
+				[
+					216.36,
+					-94.42
+				],
+				[
+					202.93,
+					-85.02
+				],
+				[
+					199.32,
+					-90.18
+				]
+			],
+			"front_dir": [
+				-0.82,
+				0.57
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.45,
+			"id": "P_RSW_023",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.52,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 183.6,
+			"center": [
+				215.46,
+				-73.09
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.11
+			},
+			"depth_m": 20.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				205.33,
+				-74.3
+			],
+			"entrance_h": 1.35,
+			"footprint": [
+				[
+					226.12,
+					-76.34
+				],
+				[
+					225.05,
+					-67.4
+				],
+				[
+					204.79,
+					-69.83
+				],
+				[
+					205.87,
+					-78.77
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.34,
+			"id": "P_RSW_024",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.45,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				211.92,
+				-63.74
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				204.17,
+				-64.67
+			],
+			"entrance_h": 1.29,
+			"footprint": [
+				[
+					219.99,
+					-65.49
+				],
+				[
+					219.34,
+					-60.13
+				],
+				[
+					203.85,
+					-61.99
+				],
+				[
+					204.5,
+					-67.35
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.28,
+			"id": "P_RSW_025",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.39,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.4,
+			"center": [
+				212.63,
+				-56.25
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 18.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				203.3,
+				-57.37
+			],
+			"entrance_h": 1.25,
+			"footprint": [
+				[
+					222.34,
+					-58.26
+				],
+				[
+					221.59,
+					-52.0
+				],
+				[
+					202.92,
+					-54.24
+				],
+				[
+					203.67,
+					-60.5
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.24,
+			"id": "P_RSW_026",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.35,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 125.3,
+			"center": [
+				217.65,
+				6.01
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 17.4,
+			"district": "Market",
+			"entrance": [
+				209.19,
+				8.04
+			],
+			"entrance_h": 0.85,
+			"footprint": [
+				[
+					225.27,
+					0.48
+				],
+				[
+					226.95,
+					7.48
+				],
+				[
+					210.03,
+					11.54
+				],
+				[
+					208.35,
+					4.54
+				]
+			],
+			"front_dir": [
+				-0.97,
+				0.23
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.86,
+			"id": "P_MKT_058",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.95,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				216.85,
+				12.99
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.5
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				210.73,
+				14.46
+			],
+			"entrance_h": 0.81,
+			"footprint": [
+				[
+					222.4,
+					9.09
+				],
+				[
+					223.56,
+					13.95
+				],
+				[
+					211.31,
+					16.89
+				],
+				[
+					210.14,
+					12.03
+				]
+			],
+			"front_dir": [
+				-0.97,
+				0.23
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.82,
+			"id": "P_MKT_059",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.91,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 108.0,
+			"center": [
+				188.65,
+				-211.82
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				182.17,
+				-208.04
+			],
+			"entrance_h": 2.15,
+			"footprint": [
+				[
+					183.98,
+					-204.93
+				],
+				[
+					180.36,
+					-211.15
+				],
+				[
+					193.31,
+					-218.71
+				],
+				[
+					196.94,
+					-212.49
+				]
+			],
+			"front_dir": [
+				-0.86,
+				0.5
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.17,
+			"id": "P_RSW_027",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.2,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				184.29,
+				-218.3
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				178.24,
+				-214.78
+			],
+			"entrance_h": 2.19,
+			"footprint": [
+				[
+					179.6,
+					-212.44
+				],
+				[
+					176.88,
+					-217.11
+				],
+				[
+					188.97,
+					-224.16
+				],
+				[
+					191.69,
+					-219.5
+				]
+			],
+			"front_dir": [
+				-0.86,
+				0.5
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.21,
+			"id": "P_RSW_028",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.24,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				175.43,
+				-234.93
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.83
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				169.52,
+				-225.65
+			],
+			"entrance_h": 2.26,
+			"footprint": [
+				[
+					172.94,
+					-223.48
+				],
+				[
+					166.11,
+					-227.83
+				],
+				[
+					177.92,
+					-246.39
+				],
+				[
+					184.75,
+					-242.04
+				]
+			],
+			"front_dir": [
+				-0.54,
+				0.84
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.31,
+			"id": "P_RSW_029",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.14,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.3,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				166.16,
+				-237.51
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				161.76,
+				-230.59
+			],
+			"entrance_h": 2.29,
+			"footprint": [
+				[
+					164.42,
+					-228.9
+				],
+				[
+					159.1,
+					-232.28
+				],
+				[
+					167.91,
+					-246.12
+				],
+				[
+					173.22,
+					-242.73
+				]
+			],
+			"front_dir": [
+				-0.54,
+				0.84
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.33,
+			"id": "P_RSW_030",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.33,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 81.7,
+			"center": [
+				157.2,
+				-242.03
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.5
+			},
+			"depth_m": 14.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				153.33,
+				-235.95
+			],
+			"entrance_h": 2.32,
+			"footprint": [
+				[
+					155.73,
+					-234.43
+				],
+				[
+					150.94,
+					-237.48
+				],
+				[
+					158.67,
+					-249.63
+				],
+				[
+					163.46,
+					-246.58
+				]
+			],
+			"front_dir": [
+				-0.54,
+				0.84
+			],
+			"frontage_m": 5.68,
+			"ground_h": 2.35,
+			"id": "P_RSW_031",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.36,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				189.11,
+				-152.18
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				196.68,
+				-154.08
+			],
+			"entrance_h": 1.82,
+			"footprint": [
+				[
+					182.2,
+					-147.67
+				],
+				[
+					180.89,
+					-152.91
+				],
+				[
+					196.02,
+					-156.69
+				],
+				[
+					197.33,
+					-151.46
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.24
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.81,
+			"id": "P_RSW_032",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 1.87,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.4,
+			"center": [
+				185.78,
+				-158.93
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 18.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				194.89,
+				-161.21
+			],
+			"entrance_h": 1.87,
+			"footprint": [
+				[
+					177.42,
+					-153.59
+				],
+				[
+					175.89,
+					-159.7
+				],
+				[
+					194.13,
+					-164.26
+				],
+				[
+					195.66,
+					-158.15
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.24
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.85,
+			"id": "P_RSW_033",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 1.93,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 152.6,
+			"center": [
+				181.14,
+				-171.81
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 21.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				191.27,
+				-174.93
+			],
+			"entrance_h": 1.95,
+			"footprint": [
+				[
+					172.06,
+					-165.25
+				],
+				[
+					169.95,
+					-172.13
+				],
+				[
+					190.21,
+					-178.37
+				],
+				[
+					192.33,
+					-171.49
+				]
+			],
+			"front_dir": [
+				0.96,
+				-0.29
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.93,
+			"id": "P_RSW_034",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.01,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				181.81,
+				-180.49
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				188.89,
+				-182.67
+			],
+			"entrance_h": 2.0,
+			"footprint": [
+				[
+					175.48,
+					-175.93
+				],
+				[
+					174.01,
+					-180.7
+				],
+				[
+					188.15,
+					-185.06
+				],
+				[
+					189.62,
+					-180.28
+				]
+			],
+			"front_dir": [
+				0.96,
+				-0.29
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.98,
+			"id": "P_RSW_035",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.06,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 134.5,
+			"center": [
+				170.74,
+				-204.21
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 16.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				177.91,
+				-208.39
+			],
+			"entrance_h": 2.15,
+			"footprint": [
+				[
+					165.61,
+					-196.53
+				],
+				[
+					161.53,
+					-203.52
+				],
+				[
+					175.87,
+					-211.89
+				],
+				[
+					179.95,
+					-204.89
+				]
+			],
+			"front_dir": [
+				0.86,
+				-0.5
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.13,
+			"id": "P_RSW_036",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.22,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				165.02,
+				-212.62
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				172.8,
+				-217.16
+			],
+			"entrance_h": 2.2,
+			"footprint": [
+				[
+					159.06,
+					-204.98
+				],
+				[
+					155.44,
+					-211.2
+				],
+				[
+					170.98,
+					-220.27
+				],
+				[
+					174.61,
+					-214.05
+				]
+			],
+			"front_dir": [
+				0.86,
+				-0.5
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.18,
+			"id": "P_RSW_037",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.27,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				159.12,
+				-219.83
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				162.88,
+				-225.73
+			],
+			"entrance_h": 2.25,
+			"footprint": [
+				[
+					157.64,
+					-212.47
+				],
+				[
+					153.08,
+					-215.37
+				],
+				[
+					160.6,
+					-227.18
+				],
+				[
+					165.15,
+					-224.28
+				]
+			],
+			"front_dir": [
+				0.54,
+				-0.84
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.22,
+			"id": "P_RSW_038",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.33,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				148.75,
+				-221.69
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				154.65,
+				-230.97
+			],
+			"entrance_h": 2.28,
+			"footprint": [
+				[
+					146.26,
+					-210.23
+				],
+				[
+					139.42,
+					-214.58
+				],
+				[
+					151.23,
+					-233.14
+				],
+				[
+					158.07,
+					-228.79
+				]
+			],
+			"front_dir": [
+				0.54,
+				-0.84
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.23,
+			"id": "P_RSW_039",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.14,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.36,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 93.9,
+			"center": [
+				150.01,
+				-207.43
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 14.9,
+			"district": "ResidentialWest",
+			"entrance": [
+				147.33,
+				-200.48
+			],
+			"entrance_h": 2.11,
+			"footprint": [
+				[
+					150.27,
+					-199.35
+				],
+				[
+					144.39,
+					-201.61
+				],
+				[
+					149.74,
+					-215.52
+				],
+				[
+					155.62,
+					-213.26
+				]
+			],
+			"front_dir": [
+				-0.36,
+				0.93
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.14,
+			"id": "P_RSW_040",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.15,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				170.06,
+				-186.54
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				168.93,
+				-193.86
+			],
+			"entrance_h": 2.06,
+			"footprint": [
+				[
+					173.65,
+					-179.61
+				],
+				[
+					168.71,
+					-178.85
+				],
+				[
+					166.46,
+					-193.48
+				],
+				[
+					171.4,
+					-194.24
+				]
+			],
+			"front_dir": [
+				-0.15,
+				-0.99
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.02,
+			"id": "P_RSW_041",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.14,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 158.8,
+			"center": [
+				152.16,
+				-184.91
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.78
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				155.68,
+				-194.05
+			],
+			"entrance_h": 2.06,
+			"footprint": [
+				[
+					152.43,
+					-174.31
+				],
+				[
+					144.87,
+					-177.21
+				],
+				[
+					151.9,
+					-195.51
+				],
+				[
+					159.46,
+					-192.6
+				]
+			],
+			"front_dir": [
+				0.36,
+				-0.93
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.01,
+			"id": "P_RSW_042",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.14,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				142.98,
+				-189.3
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				146.21,
+				-197.7
+			],
+			"entrance_h": 2.08,
+			"footprint": [
+				[
+					143.11,
+					-179.6
+				],
+				[
+					136.39,
+					-182.19
+				],
+				[
+					142.85,
+					-198.99
+				],
+				[
+					149.57,
+					-196.41
+				]
+			],
+			"front_dir": [
+				0.36,
+				-0.93
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.04,
+			"id": "P_RSW_043",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.16,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				136.42,
+				-193.96
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				138.93,
+				-200.5
+			],
+			"entrance_h": 2.1,
+			"footprint": [
+				[
+					136.42,
+					-186.46
+				],
+				[
+					131.38,
+					-188.4
+				],
+				[
+					136.41,
+					-201.47
+				],
+				[
+					141.45,
+					-199.53
+				]
+			],
+			"front_dir": [
+				0.36,
+				-0.93
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.06,
+			"id": "P_RSW_044",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.18,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 90.1,
+			"center": [
+				150.45,
+				-21.24
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 14.3,
+			"district": "ResidentialWest",
+			"entrance": [
+				143.64,
+				-19.05
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					144.61,
+					-16.06
+				],
+				[
+					142.68,
+					-22.05
+				],
+				[
+					156.29,
+					-26.43
+				],
+				[
+					158.22,
+					-20.43
+				]
+			],
+			"front_dir": [
+				-0.95,
+				0.31
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.03,
+			"id": "P_RSW_045",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.07,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 152.6,
+			"center": [
+				150.75,
+				-31.58
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.15
+			},
+			"depth_m": 21.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				140.66,
+				-28.34
+			],
+			"entrance_h": 1.07,
+			"footprint": [
+				[
+					141.76,
+					-24.91
+				],
+				[
+					139.56,
+					-31.76
+				],
+				[
+					159.74,
+					-38.25
+				],
+				[
+					161.94,
+					-31.4
+				]
+			],
+			"front_dir": [
+				-0.95,
+				0.31
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.09,
+			"id": "P_RSW_046",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.12,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				145.83,
+				-38.25
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.15
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				138.45,
+				-37.63
+			],
+			"entrance_h": 1.13,
+			"footprint": [
+				[
+					138.66,
+					-35.14
+				],
+				[
+					138.25,
+					-40.12
+				],
+				[
+					152.99,
+					-41.35
+				],
+				[
+					153.41,
+					-36.37
+				]
+			],
+			"front_dir": [
+				-1.0,
+				0.08
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.13,
+			"id": "P_RSW_047",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.18,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 158.8,
+			"center": [
+				147.34,
+				-48.96
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				137.58,
+				-48.15
+			],
+			"entrance_h": 1.19,
+			"footprint": [
+				[
+					137.91,
+					-44.11
+				],
+				[
+					137.24,
+					-52.18
+				],
+				[
+					156.77,
+					-53.81
+				],
+				[
+					157.45,
+					-45.74
+				]
+			],
+			"front_dir": [
+				-1.0,
+				0.08
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.19,
+			"id": "P_RSW_048",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.25,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				145.7,
+				-59.01
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				136.73,
+				-58.26
+			],
+			"entrance_h": 1.25,
+			"footprint": [
+				[
+					137.03,
+					-54.67
+				],
+				[
+					136.44,
+					-61.85
+				],
+				[
+					154.37,
+					-63.34
+				],
+				[
+					154.97,
+					-56.17
+				]
+			],
+			"front_dir": [
+				-1.0,
+				0.08
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.25,
+			"id": "P_RSW_049",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.31,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				143.06,
+				-66.62
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.26
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				136.09,
+				-66.03
+			],
+			"entrance_h": 1.3,
+			"footprint": [
+				[
+					136.31,
+					-63.34
+				],
+				[
+					135.86,
+					-68.73
+				],
+				[
+					149.81,
+					-69.89
+				],
+				[
+					150.26,
+					-64.51
+				]
+			],
+			"front_dir": [
+				-1.0,
+				0.08
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.3,
+			"id": "P_RSW_050",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.35,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				147.37,
+				-74.52
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.26
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				136.44,
+				-75.8
+			],
+			"entrance_h": 1.35,
+			"footprint": [
+				[
+					135.97,
+					-71.78
+				],
+				[
+					136.92,
+					-79.83
+				],
+				[
+					158.77,
+					-77.26
+				],
+				[
+					157.82,
+					-69.21
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.35,
+			"id": "P_RSW_051",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.42,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				145.66,
+				-83.98
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				137.52,
+				-84.94
+			],
+			"entrance_h": 1.41,
+			"footprint": [
+				[
+					137.15,
+					-81.81
+				],
+				[
+					137.89,
+					-88.07
+				],
+				[
+					154.18,
+					-86.15
+				],
+				[
+					153.44,
+					-79.9
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.4,
+			"id": "P_RSW_052",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.47,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 183.6,
+			"center": [
+				149.01,
+				-95.32
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.31
+			},
+			"depth_m": 20.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				138.88,
+				-96.51
+			],
+			"entrance_h": 1.48,
+			"footprint": [
+				[
+					138.36,
+					-92.04
+				],
+				[
+					139.41,
+					-100.98
+				],
+				[
+					159.67,
+					-98.6
+				],
+				[
+					158.62,
+					-89.66
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.47,
+			"id": "P_RSW_053",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.54,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				147.02,
+				-108.14
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				139.31,
+				-106.94
+			],
+			"entrance_h": 1.54,
+			"footprint": [
+				[
+					139.73,
+					-104.27
+				],
+				[
+					138.9,
+					-109.61
+				],
+				[
+					154.31,
+					-112.01
+				],
+				[
+					155.14,
+					-106.68
+				]
+			],
+			"front_dir": [
+				-0.99,
+				0.15
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.55,
+			"id": "P_RSW_054",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.6,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.4,
+			"center": [
+				147.46,
+				-115.65
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				138.18,
+				-114.2
+			],
+			"entrance_h": 1.59,
+			"footprint": [
+				[
+					138.66,
+					-111.09
+				],
+				[
+					137.69,
+					-117.31
+				],
+				[
+					156.27,
+					-120.21
+				],
+				[
+					157.24,
+					-113.99
+				]
+			],
+			"front_dir": [
+				-0.99,
+				0.15
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.59,
+			"id": "P_RSW_055",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.64,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 120.2,
+			"center": [
+				144.92,
+				-125.12
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.7,
+			"district": "ResidentialWest",
+			"entrance": [
+				136.67,
+				-123.83
+			],
+			"entrance_h": 1.64,
+			"footprint": [
+				[
+					137.23,
+					-120.28
+				],
+				[
+					136.12,
+					-127.39
+				],
+				[
+					152.62,
+					-129.97
+				],
+				[
+					153.73,
+					-122.85
+				]
+			],
+			"front_dir": [
+				-0.99,
+				0.15
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.65,
+			"id": "P_RSW_056",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.7,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				142.73,
+				-132.98
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				135.42,
+				-131.84
+			],
+			"entrance_h": 1.69,
+			"footprint": [
+				[
+					135.81,
+					-129.37
+				],
+				[
+					135.04,
+					-134.31
+				],
+				[
+					149.66,
+					-136.59
+				],
+				[
+					150.43,
+					-131.65
+				]
+			],
+			"front_dir": [
+				-0.99,
+				0.15
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.7,
+			"id": "P_RSW_057",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.75,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				136.54,
+				-6.84
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				143.2,
+				-8.99
+			],
+			"entrance_h": 0.95,
+			"footprint": [
+				[
+					130.7,
+					-2.13
+				],
+				[
+					129.05,
+					-7.27
+				],
+				[
+					142.38,
+					-11.56
+				],
+				[
+					144.03,
+					-6.42
+				]
+			],
+			"front_dir": [
+				0.95,
+				-0.31
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.94,
+			"id": "P_RSW_058",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.0,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 166.1,
+			"center": [
+				130.46,
+				-15.13
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 20.5,
+			"district": "ResidentialWest",
+			"entrance": [
+				140.22,
+				-18.27
+			],
+			"entrance_h": 1.01,
+			"footprint": [
+				[
+					121.94,
+					-8.14
+				],
+				[
+					119.46,
+					-15.85
+				],
+				[
+					138.98,
+					-22.12
+				],
+				[
+					141.46,
+					-14.41
+				]
+			],
+			"front_dir": [
+				0.95,
+				-0.31
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.99,
+			"id": "P_RSW_059",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.08,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				129.6,
+				-24.52
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				137.4,
+				-27.03
+			],
+			"entrance_h": 1.06,
+			"footprint": [
+				[
+					122.75,
+					-19.01
+				],
+				[
+					120.83,
+					-25.01
+				],
+				[
+					136.44,
+					-30.03
+				],
+				[
+					138.37,
+					-24.03
+				]
+			],
+			"front_dir": [
+				0.95,
+				-0.31
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.05,
+			"id": "P_RSW_060",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.13,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 143.1,
+			"center": [
+				126.96,
+				-37.68
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 15.9,
+			"district": "ResidentialWest",
+			"entrance": [
+				134.88,
+				-38.34
+			],
+			"entrance_h": 1.13,
+			"footprint": [
+				[
+					119.41,
+					-32.53
+				],
+				[
+					118.66,
+					-41.5
+				],
+				[
+					134.51,
+					-42.82
+				],
+				[
+					135.26,
+					-33.85
+				]
+			],
+			"front_dir": [
+				1.0,
+				-0.08
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.13,
+			"id": "P_RSW_061",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.19,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				126.3,
+				-47.36
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				134.08,
+				-48.01
+			],
+			"entrance_h": 1.19,
+			"footprint": [
+				[
+					118.75,
+					-44.02
+				],
+				[
+					118.31,
+					-49.4
+				],
+				[
+					133.85,
+					-50.7
+				],
+				[
+					134.3,
+					-45.31
+				]
+			],
+			"front_dir": [
+				1.0,
+				-0.08
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.18,
+			"id": "P_RSW_062",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.25,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 99.5,
+			"center": [
+				125.59,
+				-54.67
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 15.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				133.47,
+				-55.33
+			],
+			"entrance_h": 1.23,
+			"footprint": [
+				[
+					117.98,
+					-50.88
+				],
+				[
+					117.46,
+					-57.16
+				],
+				[
+					133.2,
+					-58.47
+				],
+				[
+					133.73,
+					-52.19
+				]
+			],
+			"front_dir": [
+				1.0,
+				-0.08
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.23,
+			"id": "P_RSW_063",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.29,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 109.4,
+			"center": [
+				125.08,
+				-64.42
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.57
+			},
+			"depth_m": 15.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				132.66,
+				-65.05
+			],
+			"entrance_h": 1.29,
+			"footprint": [
+				[
+					117.81,
+					-60.2
+				],
+				[
+					117.21,
+					-67.37
+				],
+				[
+					132.36,
+					-68.63
+				],
+				[
+					132.96,
+					-61.46
+				]
+			],
+			"front_dir": [
+				1.0,
+				-0.08
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.29,
+			"id": "P_RSW_064",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.35,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				125.2,
+				-73.55
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.57
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				132.55,
+				-72.69
+			],
+			"entrance_h": 1.34,
+			"footprint": [
+				[
+					117.56,
+					-71.93
+				],
+				[
+					118.15,
+					-76.9
+				],
+				[
+					132.85,
+					-75.17
+				],
+				[
+					132.26,
+					-70.2
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.34,
+			"id": "P_RSW_065",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.39,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 122.3,
+			"center": [
+				126.29,
+				-84.05
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 15.1,
+			"district": "ResidentialWest",
+			"entrance": [
+				133.79,
+				-83.17
+			],
+			"entrance_h": 1.4,
+			"footprint": [
+				[
+					118.32,
+					-80.91
+				],
+				[
+					119.26,
+					-88.95
+				],
+				[
+					134.26,
+					-87.19
+				],
+				[
+					133.31,
+					-79.14
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.4,
+			"id": "P_RSW_066",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.46,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.8,
+			"center": [
+				126.78,
+				-94.21
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 16.5,
+			"district": "ResidentialWest",
+			"entrance": [
+				134.97,
+				-93.25
+			],
+			"entrance_h": 1.46,
+			"footprint": [
+				[
+					118.17,
+					-91.6
+				],
+				[
+					119.01,
+					-98.75
+				],
+				[
+					135.39,
+					-96.82
+				],
+				[
+					134.55,
+					-89.67
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.47,
+			"id": "P_RSW_067",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.52,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				128.93,
+				-101.81
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.28
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				135.88,
+				-100.99
+			],
+			"entrance_h": 1.51,
+			"footprint": [
+				[
+					121.66,
+					-99.95
+				],
+				[
+					122.3,
+					-105.31
+				],
+				[
+					136.2,
+					-103.67
+				],
+				[
+					135.57,
+					-98.31
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.51,
+			"id": "P_RSW_068",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.56,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				127.12,
+				-110.45
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.28
+			},
+			"depth_m": 16.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				135.03,
+				-111.68
+			],
+			"entrance_h": 1.57,
+			"footprint": [
+				[
+					119.85,
+					-105.21
+				],
+				[
+					118.59,
+					-113.21
+				],
+				[
+					134.4,
+					-115.68
+				],
+				[
+					135.65,
+					-107.68
+				]
+			],
+			"front_dir": [
+				0.99,
+				-0.15
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.56,
+			"id": "P_RSW_069",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.63,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 93.9,
+			"center": [
+				126.25,
+				-119.62
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 14.9,
+			"district": "ResidentialWest",
+			"entrance": [
+				133.61,
+				-120.77
+			],
+			"entrance_h": 1.62,
+			"footprint": [
+				[
+					119.37,
+					-115.36
+				],
+				[
+					118.4,
+					-121.59
+				],
+				[
+					133.12,
+					-123.89
+				],
+				[
+					134.09,
+					-117.66
+				]
+			],
+			"front_dir": [
+				0.99,
+				-0.15
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.62,
+			"id": "P_RSW_070",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.69,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 122.3,
+			"center": [
+				231.55,
+				-79.03
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.11
+			},
+			"depth_m": 15.1,
+			"district": "ResidentialWest",
+			"entrance": [
+				233.39,
+				-86.35
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					229.46,
+					-87.33
+				],
+				[
+					237.31,
+					-85.37
+				],
+				[
+					233.65,
+					-70.72
+				],
+				[
+					225.79,
+					-72.68
+				]
+			],
+			"front_dir": [
+				0.24,
+				-0.97
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.37,
+			"id": "P_RSW_071",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.5,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				241.05,
+				-75.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				243.23,
+				-83.89
+			],
+			"entrance_h": 1.4,
+			"footprint": [
+				[
+					239.74,
+					-84.76
+				],
+				[
+					246.72,
+					-83.01
+				],
+				[
+					242.36,
+					-65.55
+				],
+				[
+					235.37,
+					-67.3
+				]
+			],
+			"front_dir": [
+				0.24,
+				-0.97
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.35,
+			"id": "P_RSW_072",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.48,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 88.8,
+			"center": [
+				219.49,
+				-96.87
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.44
+			},
+			"depth_m": 14.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				222.47,
+				-90.32
+			],
+			"entrance_h": 1.44,
+			"footprint": [
+				[
+					213.7,
+					-102.15
+				],
+				[
+					219.32,
+					-104.7
+				],
+				[
+					225.28,
+					-91.59
+				],
+				[
+					219.66,
+					-89.04
+				]
+			],
+			"front_dir": [
+				0.41,
+				0.91
+			],
+			"frontage_m": 6.17,
+			"ground_h": 1.48,
+			"id": "P_RSW_073",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.49,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				230.94,
+				-98.61
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.15
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				229.04,
+				-91.04
+			],
+			"entrance_h": 1.45,
+			"footprint": [
+				[
+					230.21,
+					-106.83
+				],
+				[
+					235.45,
+					-105.52
+				],
+				[
+					231.66,
+					-90.39
+				],
+				[
+					226.42,
+					-91.7
+				]
+			],
+			"front_dir": [
+				-0.24,
+				0.97
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.49,
+			"id": "P_RSW_074",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.49,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.4,
+			"center": [
+				238.45,
+				-98.38
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				236.17,
+				-89.26
+			],
+			"entrance_h": 1.44,
+			"footprint": [
+				[
+					237.68,
+					-108.26
+				],
+				[
+					243.79,
+					-106.73
+				],
+				[
+					239.23,
+					-88.5
+				],
+				[
+					233.12,
+					-90.02
+				]
+			],
+			"front_dir": [
+				-0.24,
+				0.97
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.49,
+			"id": "P_RSW_075",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.48,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 152.6,
+			"center": [
+				248.2,
+				-97.18
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.82
+			},
+			"depth_m": 21.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				245.63,
+				-86.9
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					247.28,
+					-108.34
+				],
+				[
+					254.27,
+					-106.59
+				],
+				[
+					249.13,
+					-86.02
+				],
+				[
+					242.14,
+					-87.77
+				]
+			],
+			"front_dir": [
+				-0.24,
+				0.97
+			],
+			"frontage_m": 7.2,
+			"ground_h": 1.48,
+			"id": "P_RSW_076",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.46,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 63.0,
+			"center": [
+				255.99,
+				-92.44
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 12.6,
+			"district": "Market",
+			"entrance": [
+				256.38,
+				-86.15
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					253.11,
+					-98.57
+				],
+				[
+					258.1,
+					-98.88
+				],
+				[
+					258.88,
+					-86.3
+				],
+				[
+					253.88,
+					-85.99
+				]
+			],
+			"front_dir": [
+				0.06,
+				1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.45,
+			"id": "P_MKT_060",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.46,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 166.1,
+			"center": [
+				156.3,
+				54.61
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 20.5,
+			"district": "ResidentialWest",
+			"entrance": [
+				166.19,
+				57.31
+			],
+			"entrance_h": 0.56,
+			"footprint": [
+				[
+					167.26,
+					53.4
+				],
+				[
+					165.13,
+					61.21
+				],
+				[
+					145.35,
+					55.82
+				],
+				[
+					147.48,
+					48.0
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.26
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.57,
+			"id": "P_RSW_077",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.61,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				155.86,
+				64.02
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.0
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				163.77,
+				66.18
+			],
+			"entrance_h": 0.5,
+			"footprint": [
+				[
+					164.6,
+					63.14
+				],
+				[
+					162.94,
+					69.22
+				],
+				[
+					147.12,
+					64.91
+				],
+				[
+					148.78,
+					58.83
+				]
+			],
+			"front_dir": [
+				0.96,
+				0.26
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.52,
+			"id": "P_RSW_078",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.56,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 183.6,
+			"center": [
+				156.07,
+				82.01
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 20.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				164.81,
+				76.76
+			],
+			"entrance_h": 0.44,
+			"footprint": [
+				[
+					162.5,
+					72.9
+				],
+				[
+					167.13,
+					80.62
+				],
+				[
+					149.64,
+					91.11
+				],
+				[
+					145.01,
+					83.4
+				]
+			],
+			"front_dir": [
+				0.86,
+				-0.51
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.41,
+			"id": "P_RSW_079",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.51,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				163.12,
+				89.09
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				169.81,
+				85.08
+			],
+			"entrance_h": 0.39,
+			"footprint": [
+				[
+					168.42,
+					82.76
+				],
+				[
+					171.19,
+					87.39
+				],
+				[
+					157.82,
+					95.42
+				],
+				[
+					155.04,
+					90.79
+				]
+			],
+			"front_dir": [
+				0.86,
+				-0.51
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.37,
+			"id": "P_RSW_080",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.46,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 120.2,
+			"center": [
+				179.66,
+				78.47
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 16.7,
+			"district": "ResidentialWest",
+			"entrance": [
+				172.5,
+				82.76
+			],
+			"entrance_h": 0.4,
+			"footprint": [
+				[
+					184.97,
+					71.08
+				],
+				[
+					188.67,
+					77.26
+				],
+				[
+					174.35,
+					85.85
+				],
+				[
+					170.65,
+					79.67
+				]
+			],
+			"front_dir": [
+				-0.86,
+				0.51
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.43,
+			"id": "P_RSW_081",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.45,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				439.1,
+				-204.72
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.69
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialNE",
+			"entrance": [
+				434.28,
+				-210.85
+			],
+			"entrance_h": 2.16,
+			"footprint": [
+				[
+					432.16,
+					-209.18
+				],
+				[
+					436.4,
+					-212.52
+				],
+				[
+					446.04,
+					-200.25
+				],
+				[
+					441.8,
+					-196.92
+				]
+			],
+			"front_dir": [
+				-0.62,
+				-0.79
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.13,
+			"id": "P_RNE_001",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.24,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 90.1,
+			"center": [
+				452.07,
+				-218.33
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 14.3,
+			"district": "ResidentialNE",
+			"entrance": [
+				446.76,
+				-223.12
+			],
+			"entrance_h": 2.24,
+			"footprint": [
+				[
+					444.65,
+					-220.78
+				],
+				[
+					448.87,
+					-225.46
+				],
+				[
+					459.5,
+					-215.89
+				],
+				[
+					455.28,
+					-211.21
+				]
+			],
+			"front_dir": [
+				-0.74,
+				-0.67
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.21,
+			"id": "P_RNE_002",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.31,
+			"side": "L",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 152.6,
+			"center": [
+				461.16,
+				-223.27
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.33
+			},
+			"depth_m": 21.2,
+			"district": "ResidentialNE",
+			"entrance": [
+				453.28,
+				-230.36
+			],
+			"entrance_h": 2.28,
+			"footprint": [
+				[
+					450.87,
+					-227.69
+				],
+				[
+					455.69,
+					-233.04
+				],
+				[
+					471.45,
+					-218.86
+				],
+				[
+					466.63,
+					-213.51
+				]
+			],
+			"front_dir": [
+				-0.74,
+				-0.67
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.24,
+			"id": "P_RNE_003",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.35,
+			"side": "L",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				467.91,
+				-230.32
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.33
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialNE",
+			"entrance": [
+				465.57,
+				-237.34
+			],
+			"entrance_h": 2.32,
+			"footprint": [
+				[
+					463.19,
+					-236.55
+				],
+				[
+					467.94,
+					-238.13
+				],
+				[
+					472.62,
+					-224.09
+				],
+				[
+					467.87,
+					-222.51
+				]
+			],
+			"front_dir": [
+				-0.32,
+				-0.95
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.28,
+			"id": "P_RNE_004",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.4,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 158.8,
+			"center": [
+				478.67,
+				-231.38
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialNE",
+			"entrance": [
+				475.57,
+				-240.68
+			],
+			"entrance_h": 2.34,
+			"footprint": [
+				[
+					471.73,
+					-239.4
+				],
+				[
+					479.42,
+					-241.96
+				],
+				[
+					485.61,
+					-223.37
+				],
+				[
+					477.93,
+					-220.81
+				]
+			],
+			"front_dir": [
+				-0.32,
+				-0.95
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.29,
+			"id": "P_RNE_005",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.42,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 90.4,
+			"center": [
+				487.02,
+				-235.01
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 2.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				484.17,
+				-243.55
+			],
+			"entrance_h": 2.36,
+			"footprint": [
+				[
+					481.79,
+					-242.75
+				],
+				[
+					486.55,
+					-244.34
+				],
+				[
+					492.25,
+					-227.26
+				],
+				[
+					487.48,
+					-225.68
+				]
+			],
+			"front_dir": [
+				-0.32,
+				-0.95
+			],
+			"frontage_m": 5.02,
+			"ground_h": 2.31,
+			"id": "P_RNE_006",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.44,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				456.02,
+				-247.34
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 18.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				458.86,
+				-238.8
+			],
+			"entrance_h": 2.34,
+			"footprint": [
+				[
+					449.75,
+					-254.74
+				],
+				[
+					456.58,
+					-257.01
+				],
+				[
+					462.28,
+					-239.94
+				],
+				[
+					455.45,
+					-237.66
+				]
+			],
+			"front_dir": [
+				0.32,
+				0.95
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.38,
+			"id": "P_RNE_007",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.38,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				464.05,
+				-247.91
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				466.26,
+				-241.27
+			],
+			"entrance_h": 2.35,
+			"footprint": [
+				[
+					459.27,
+					-253.69
+				],
+				[
+					464.4,
+					-255.4
+				],
+				[
+					468.82,
+					-242.12
+				],
+				[
+					463.7,
+					-240.41
+				]
+			],
+			"front_dir": [
+				0.32,
+				0.95
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.39,
+			"id": "P_RNE_008",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.39,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 129.6,
+			"center": [
+				472.98,
+				-251.94
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 16.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				475.51,
+				-244.35
+			],
+			"entrance_h": 2.37,
+			"footprint": [
+				[
+					466.61,
+					-258.25
+				],
+				[
+					474.29,
+					-260.81
+				],
+				[
+					479.35,
+					-245.63
+				],
+				[
+					471.67,
+					-243.07
+				]
+			],
+			"front_dir": [
+				0.32,
+				0.95
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.41,
+			"id": "P_RNE_009",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.41,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 93.9,
+			"center": [
+				431.1,
+				-244.51
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 14.9,
+			"district": "ResidentialNE",
+			"entrance": [
+				437.91,
+				-241.49
+			],
+			"entrance_h": 2.35,
+			"footprint": [
+				[
+					423.01,
+					-244.66
+				],
+				[
+					425.57,
+					-250.42
+				],
+				[
+					439.19,
+					-244.37
+				],
+				[
+					436.63,
+					-238.61
+				]
+			],
+			"front_dir": [
+				0.91,
+				0.41
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.37,
+			"id": "P_RNE_010",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NENorth",
+			"road_cls": "lane",
+			"road_h": 2.4,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 75.6,
+			"center": [
+				450.35,
+				-201.91
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.69
+			},
+			"depth_m": 14.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				452.95,
+				-208.41
+			],
+			"entrance_h": 2.15,
+			"footprint": [
+				[
+					450.44,
+					-209.41
+				],
+				[
+					455.46,
+					-207.4
+				],
+				[
+					450.26,
+					-194.4
+				],
+				[
+					445.24,
+					-196.41
+				]
+			],
+			"front_dir": [
+				0.37,
+				-0.93
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.11,
+			"id": "P_RNE_011",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.23,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 178.2,
+			"center": [
+				455.56,
+				-192.76
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.86
+			},
+			"depth_m": 22.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				463.34,
+				-200.54
+			],
+			"entrance_h": 2.1,
+			"footprint": [
+				[
+					460.47,
+					-203.4
+				],
+				[
+					466.2,
+					-197.68
+				],
+				[
+					450.65,
+					-182.12
+				],
+				[
+					444.92,
+					-187.85
+				]
+			],
+			"front_dir": [
+				0.71,
+				-0.71
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.06,
+			"id": "P_RNE_012",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.18,
+			"side": "L",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 103.3,
+			"center": [
+				464.05,
+				-188.24
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.98
+			},
+			"depth_m": 16.4,
+			"district": "ResidentialNE",
+			"entrance": [
+				469.84,
+				-194.03
+			],
+			"entrance_h": 2.06,
+			"footprint": [
+				[
+					467.62,
+					-196.26
+				],
+				[
+					472.07,
+					-191.81
+				],
+				[
+					460.47,
+					-180.21
+				],
+				[
+					456.02,
+					-184.67
+				]
+			],
+			"front_dir": [
+				0.71,
+				-0.71
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.03,
+			"id": "P_RNE_013",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.14,
+			"side": "L",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 183.6,
+			"center": [
+				475.26,
+				-179.53
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.98
+			},
+			"depth_m": 20.4,
+			"district": "ResidentialNE",
+			"entrance": [
+				477.95,
+				-189.37
+			],
+			"entrance_h": 2.03,
+			"footprint": [
+				[
+					473.61,
+					-190.55
+				],
+				[
+					482.29,
+					-188.18
+				],
+				[
+					476.92,
+					-168.5
+				],
+				[
+					468.24,
+					-170.87
+				]
+			],
+			"front_dir": [
+				0.26,
+				-0.96
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.98,
+			"id": "P_RNE_014",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.11,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 84.2,
+			"center": [
+				485.25,
+				-179.29
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 15.6,
+			"district": "ResidentialNE",
+			"entrance": [
+				487.3,
+				-186.82
+			],
+			"entrance_h": 2.02,
+			"footprint": [
+				[
+					484.7,
+					-187.53
+				],
+				[
+					489.91,
+					-186.11
+				],
+				[
+					485.81,
+					-171.06
+				],
+				[
+					480.6,
+					-172.48
+				]
+			],
+			"front_dir": [
+				0.26,
+				-0.96
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.98,
+			"id": "P_RNE_015",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.1,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.1,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 118.4,
+			"center": [
+				470.06,
+				-211.36
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.79
+			},
+			"depth_m": 18.8,
+			"district": "ResidentialNE",
+			"entrance": [
+				463.41,
+				-204.71
+			],
+			"entrance_h": 2.13,
+			"footprint": [
+				[
+					474.48,
+					-220.23
+				],
+				[
+					478.93,
+					-215.78
+				],
+				[
+					465.64,
+					-202.48
+				],
+				[
+					461.18,
+					-206.94
+				]
+			],
+			"front_dir": [
+				-0.71,
+				0.71
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.17,
+			"id": "P_RNE_016",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.18,
+			"side": "R",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 152.6,
+			"center": [
+				477.8,
+				-205.31
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.25
+			},
+			"depth_m": 21.2,
+			"district": "ResidentialNE",
+			"entrance": [
+				470.3,
+				-197.82
+			],
+			"entrance_h": 2.09,
+			"footprint": [
+				[
+					482.75,
+					-215.35
+				],
+				[
+					487.84,
+					-210.26
+				],
+				[
+					472.85,
+					-195.27
+				],
+				[
+					467.76,
+					-200.36
+				]
+			],
+			"front_dir": [
+				-0.71,
+				0.71
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.13,
+			"id": "P_RNE_017",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.12,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.13,
+			"side": "R",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 74.0,
+			"center": [
+				484.54,
+				-198.35
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.25
+			},
+			"depth_m": 14.8,
+			"district": "ResidentialNE",
+			"entrance": [
+				482.6,
+				-191.21
+			],
+			"entrance_h": 2.05,
+			"footprint": [
+				[
+					484.08,
+					-206.15
+				],
+				[
+					488.9,
+					-204.83
+				],
+				[
+					485.01,
+					-190.55
+				],
+				[
+					480.18,
+					-191.87
+				]
+			],
+			"front_dir": [
+				-0.26,
+				0.96
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.09,
+			"id": "P_RNE_018",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.09,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 152.9,
+			"center": [
+				495.21,
+				-197.93
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 19.6,
+			"district": "ResidentialNE",
+			"entrance": [
+				492.63,
+				-188.47
+			],
+			"entrance_h": 2.03,
+			"footprint": [
+				[
+					494.02,
+					-208.41
+				],
+				[
+					501.55,
+					-206.36
+				],
+				[
+					496.39,
+					-187.45
+				],
+				[
+					488.87,
+					-189.5
+				]
+			],
+			"front_dir": [
+				-0.26,
+				0.96
+			],
+			"frontage_m": 7.8,
+			"ground_h": 2.09,
+			"id": "P_RNE_019",
+			"infill": false,
+			"kind": "machiya",
+			"relief_m": 0.13,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.07,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 72.7,
+			"center": [
+				248.85,
+				56.04
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.15
+			},
+			"depth_m": 10.1,
+			"district": "Market",
+			"entrance": [
+				243.85,
+				55.29
+			],
+			"entrance_h": 0.58,
+			"footprint": [
+				[
+					243.32,
+					58.85
+				],
+				[
+					244.39,
+					51.73
+				],
+				[
+					254.37,
+					53.23
+				],
+				[
+					253.31,
+					60.35
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.15
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.57,
+			"id": "P_MKT_061",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.11,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 0.67,
+			"side": "L",
+			"slope_pct": 1.3
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				286.62,
+				-73.17
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.07
+			},
+			"depth_m": 8.4,
+			"district": "Market",
+			"entrance": [
+				282.59,
+				-74.38
+			],
+			"entrance_h": 1.35,
+			"footprint": [
+				[
+					281.87,
+					-71.98
+				],
+				[
+					283.31,
+					-76.77
+				],
+				[
+					291.36,
+					-74.36
+				],
+				[
+					289.92,
+					-69.57
+				]
+			],
+			"front_dir": [
+				-0.96,
+				-0.29
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.34,
+			"id": "P_MKT_062",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.45,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 60.0,
+			"center": [
+				288.26,
+				-127.85
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 12.0,
+			"district": "MixedCommercial",
+			"entrance": [
+				293.83,
+				-125.63
+			],
+			"entrance_h": 1.67,
+			"footprint": [
+				[
+					281.76,
+					-127.76
+				],
+				[
+					283.62,
+					-132.4
+				],
+				[
+					294.76,
+					-127.95
+				],
+				[
+					292.91,
+					-123.3
+				]
+			],
+			"front_dir": [
+				0.93,
+				0.37
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.68,
+			"id": "P_MXC_025",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "MainStreet",
+			"road_cls": "main",
+			"road_h": 1.74,
+			"side": "R",
+			"slope_pct": 1.0
+		},
+		{
+			"area_m2": 50.0,
+			"center": [
+				241.2,
+				114.88
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 10.0,
+			"district": "SouthGate",
+			"entrance": [
+				236.28,
+				114.0
+			],
+			"entrance_h": 0.22,
+			"footprint": [
+				[
+					235.84,
+					116.46
+				],
+				[
+					236.72,
+					111.54
+				],
+				[
+					246.56,
+					113.3
+				],
+				[
+					245.68,
+					118.22
+				]
+			],
+			"front_dir": [
+				-0.98,
+				-0.18
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.21,
+			"id": "P_SGT_004",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "EntranceRoad",
+			"road_cls": "main",
+			"road_h": 0.32,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 58.0,
+			"center": [
+				310.82,
+				-20.99
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 9.2,
+			"district": "Market",
+			"entrance": [
+				309.96,
+				-25.51
+			],
+			"entrance_h": 1.07,
+			"footprint": [
+				[
+					306.87,
+					-24.93
+				],
+				[
+					313.06,
+					-26.1
+				],
+				[
+					314.77,
+					-17.06
+				],
+				[
+					308.58,
+					-15.89
+				]
+			],
+			"front_dir": [
+				-0.19,
+				-0.98
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.04,
+			"id": "P_MKT_063",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.17,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				242.5,
+				-27.7
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 8.4,
+			"district": "Market",
+			"entrance": [
+				242.5,
+				-23.5
+			],
+			"entrance_h": 1.02,
+			"footprint": [
+				[
+					240.0,
+					-31.9
+				],
+				[
+					245.0,
+					-31.9
+				],
+				[
+					245.0,
+					-23.5
+				],
+				[
+					240.0,
+					-23.5
+				]
+			],
+			"front_dir": [
+				0.0,
+				1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.06,
+			"id": "P_MKT_064",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.12,
+			"side": "R",
+			"slope_pct": 0.9
+		},
+		{
+			"area_m2": 75.3,
+			"center": [
+				289.03,
+				-33.41
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 9.3,
+			"district": "Market",
+			"entrance": [
+				289.89,
+				-28.84
+			],
+			"entrance_h": 1.05,
+			"footprint": [
+				[
+					284.18,
+					-37.22
+				],
+				[
+					292.14,
+					-38.73
+				],
+				[
+					293.87,
+					-29.59
+				],
+				[
+					285.91,
+					-28.09
+				]
+			],
+			"front_dir": [
+				0.19,
+				0.98
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.09,
+			"id": "P_MKT_065",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "CrossStreetMid",
+			"road_cls": "secondary",
+			"road_h": 1.15,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 65.5,
+			"center": [
+				199.38,
+				57.88
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 10.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				199.24,
+				52.68
+			],
+			"entrance_h": 0.6,
+			"footprint": [
+				[
+					196.09,
+					52.77
+				],
+				[
+					202.39,
+					52.59
+				],
+				[
+					202.68,
+					62.98
+				],
+				[
+					196.38,
+					63.16
+				]
+			],
+			"front_dir": [
+				-0.03,
+				-1.0
+			],
+			"frontage_m": 6.3,
+			"ground_h": 0.56,
+			"id": "P_RSW_082",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.7,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 61.9,
+			"center": [
+				288.07,
+				52.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 8.6,
+			"district": "Market",
+			"entrance": [
+				287.73,
+				47.87
+			],
+			"entrance_h": 0.63,
+			"footprint": [
+				[
+					284.14,
+					48.15
+				],
+				[
+					291.32,
+					47.59
+				],
+				[
+					291.99,
+					56.16
+				],
+				[
+					284.81,
+					56.72
+				]
+			],
+			"front_dir": [
+				-0.08,
+				-1.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.6,
+			"id": "P_MKT_066",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.73,
+			"side": "L",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 43.2,
+			"center": [
+				172.49,
+				42.43
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.91
+			},
+			"depth_m": 8.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				172.6,
+				46.43
+			],
+			"entrance_h": 0.6,
+			"footprint": [
+				[
+					169.68,
+					38.5
+				],
+				[
+					175.07,
+					38.35
+				],
+				[
+					175.3,
+					46.35
+				],
+				[
+					169.9,
+					46.5
+				]
+			],
+			"front_dir": [
+				0.03,
+				1.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.63,
+			"id": "P_RSW_083",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.7,
+			"side": "R",
+			"slope_pct": 0.9
+		},
+		{
+			"area_m2": 72.9,
+			"center": [
+				224.2,
+				40.47
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 9.0,
+			"district": "Market",
+			"entrance": [
+				224.33,
+				44.97
+			],
+			"entrance_h": 0.61,
+			"footprint": [
+				[
+					220.03,
+					36.09
+				],
+				[
+					228.12,
+					35.86
+				],
+				[
+					228.38,
+					44.85
+				],
+				[
+					220.28,
+					45.08
+				]
+			],
+			"front_dir": [
+				0.03,
+				1.0
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.65,
+			"id": "P_MKT_067",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "CrossStreetSouth",
+			"road_cls": "secondary",
+			"road_h": 0.71,
+			"side": "R",
+			"slope_pct": 0.8
+		},
+		{
+			"area_m2": 43.2,
+			"center": [
+				176.07,
+				-109.43
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 8.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				179.35,
+				-111.73
+			],
+			"entrance_h": 1.58,
+			"footprint": [
+				[
+					177.8,
+					-113.94
+				],
+				[
+					180.9,
+					-109.51
+				],
+				[
+					174.35,
+					-104.93
+				],
+				[
+					171.25,
+					-109.35
+				]
+			],
+			"front_dir": [
+				0.82,
+				-0.57
+			],
+			"frontage_m": 5.4,
+			"ground_h": 1.56,
+			"id": "P_RSW_084",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.68,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 72.9,
+			"center": [
+				181.26,
+				-101.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 3.0
+			},
+			"depth_m": 9.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				184.94,
+				-103.74
+			],
+			"entrance_h": 1.53,
+			"footprint": [
+				[
+					182.62,
+					-107.06
+				],
+				[
+					187.26,
+					-100.42
+				],
+				[
+					179.89,
+					-95.26
+				],
+				[
+					175.25,
+					-101.89
+				]
+			],
+			"front_dir": [
+				0.82,
+				-0.57
+			],
+			"frontage_m": 8.1,
+			"ground_h": 1.51,
+			"id": "P_RSW_085",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.63,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 46.0,
+			"center": [
+				196.69,
+				-78.94
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 9.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				200.45,
+				-81.58
+			],
+			"entrance_h": 1.4,
+			"footprint": [
+				[
+					199.02,
+					-83.63
+				],
+				[
+					201.89,
+					-79.53
+				],
+				[
+					194.35,
+					-74.25
+				],
+				[
+					191.48,
+					-78.35
+				]
+			],
+			"front_dir": [
+				0.82,
+				-0.57
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.38,
+			"id": "P_RSW_086",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.5,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 56.0,
+			"center": [
+				198.19,
+				3.38
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 11.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				203.64,
+				2.07
+			],
+			"entrance_h": 0.89,
+			"footprint": [
+				[
+					203.06,
+					-0.36
+				],
+				[
+					204.22,
+					4.5
+				],
+				[
+					193.33,
+					7.11
+				],
+				[
+					192.17,
+					2.25
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.23
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.88,
+			"id": "P_RSW_087",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.99,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 47.5,
+			"center": [
+				200.88,
+				42.27
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.07
+			},
+			"depth_m": 8.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				205.25,
+				42.8
+			],
+			"entrance_h": 0.64,
+			"footprint": [
+				[
+					205.57,
+					40.12
+				],
+				[
+					204.93,
+					45.48
+				],
+				[
+					196.19,
+					44.43
+				],
+				[
+					196.83,
+					39.07
+				]
+			],
+			"front_dir": [
+				0.99,
+				0.12
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.64,
+			"id": "P_RSW_088",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.74,
+			"side": "L",
+			"slope_pct": 1.0
+		},
+		{
+			"area_m2": 52.0,
+			"center": [
+				224.97,
+				92.63
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 10.4,
+			"district": "Market",
+			"entrance": [
+				227.85,
+				88.31
+			],
+			"entrance_h": 0.38,
+			"footprint": [
+				[
+					225.77,
+					86.92
+				],
+				[
+					229.93,
+					89.69
+				],
+				[
+					224.16,
+					98.35
+				],
+				[
+					220.0,
+					95.57
+				]
+			],
+			"front_dir": [
+				0.55,
+				-0.83
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.35,
+			"id": "P_MKT_068",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.48,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 65.5,
+			"center": [
+				207.68,
+				-50.2
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 10.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				202.51,
+				-50.82
+			],
+			"entrance_h": 1.21,
+			"footprint": [
+				[
+					213.21,
+					-52.71
+				],
+				[
+					212.46,
+					-46.45
+				],
+				[
+					202.14,
+					-47.69
+				],
+				[
+					202.89,
+					-53.95
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 6.3,
+			"ground_h": 1.2,
+			"id": "P_RSW_089",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.31,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 43.0,
+			"center": [
+				205.75,
+				-41.72
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.08
+			},
+			"depth_m": 8.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				201.48,
+				-42.23
+			],
+			"entrance_h": 1.15,
+			"footprint": [
+				[
+					210.32,
+					-43.69
+				],
+				[
+					209.72,
+					-38.72
+				],
+				[
+					201.18,
+					-39.75
+				],
+				[
+					201.78,
+					-44.71
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.15,
+			"id": "P_RSW_090",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 1.25,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				211.85,
+				1.13
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 8.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				207.76,
+				2.11
+			],
+			"entrance_h": 0.88,
+			"footprint": [
+				[
+					215.35,
+					-2.28
+				],
+				[
+					216.51,
+					2.58
+				],
+				[
+					208.35,
+					4.54
+				],
+				[
+					207.18,
+					-0.32
+				]
+			],
+			"front_dir": [
+				-0.97,
+				0.23
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.89,
+			"id": "P_RSW_091",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.98,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 87.5,
+			"center": [
+				216.86,
+				24.9
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.56
+			},
+			"depth_m": 10.8,
+			"district": "Market",
+			"entrance": [
+				211.5,
+				24.26
+			],
+			"entrance_h": 0.76,
+			"footprint": [
+				[
+					222.71,
+					21.53
+				],
+				[
+					221.74,
+					29.57
+				],
+				[
+					211.02,
+					28.28
+				],
+				[
+					211.99,
+					20.24
+				]
+			],
+			"front_dir": [
+				-0.99,
+				-0.12
+			],
+			"frontage_m": 8.1,
+			"ground_h": 0.75,
+			"id": "P_MKT_069",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "WestAlley",
+			"road_cls": "alley",
+			"road_h": 0.86,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 100.8,
+			"center": [
+				178.15,
+				-23.37
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.32
+			},
+			"depth_m": 11.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				179.51,
+				-17.94
+			],
+			"entrance_h": 1.0,
+			"footprint": [
+				[
+					183.87,
+					-19.03
+				],
+				[
+					175.14,
+					-16.85
+				],
+				[
+					172.43,
+					-27.71
+				],
+				[
+					181.16,
+					-29.9
+				]
+			],
+			"front_dir": [
+				0.24,
+				0.97
+			],
+			"frontage_m": 9.0,
+			"ground_h": 1.03,
+			"id": "P_RSW_092",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.09,
+			"road": "WestLane",
+			"road_cls": "alley",
+			"road_h": 1.1,
+			"side": "L",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 54.0,
+			"center": [
+				171.79,
+				-6.19
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 4.25
+			},
+			"depth_m": 10.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				170.2,
+				-11.35
+			],
+			"entrance_h": 0.98,
+			"footprint": [
+				[
+					175.76,
+					-1.77
+				],
+				[
+					170.99,
+					-0.3
+				],
+				[
+					167.81,
+					-10.62
+				],
+				[
+					172.59,
+					-12.09
+				]
+			],
+			"front_dir": [
+				-0.29,
+				-0.96
+			],
+			"frontage_m": 5.0,
+			"ground_h": 0.94,
+			"id": "P_RSW_093",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "WestLane",
+			"road_cls": "alley",
+			"road_h": 1.08,
+			"side": "R",
+			"slope_pct": 0.7
+		},
+		{
+			"area_m2": 61.9,
+			"center": [
+				192.84,
+				-196.34
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 8.6,
+			"district": "ResidentialWest",
+			"entrance": [
+				188.73,
+				-195.07
+			],
+			"entrance_h": 2.07,
+			"footprint": [
+				[
+					189.79,
+					-191.63
+				],
+				[
+					187.67,
+					-198.51
+				],
+				[
+					195.89,
+					-201.04
+				],
+				[
+					198.01,
+					-194.16
+				]
+			],
+			"front_dir": [
+				-0.96,
+				0.29
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.08,
+			"id": "P_RSW_094",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.13,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				189.88,
+				-203.16
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 8.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				186.25,
+				-201.04
+			],
+			"entrance_h": 2.11,
+			"footprint": [
+				[
+					187.51,
+					-198.88
+				],
+				[
+					184.99,
+					-203.2
+				],
+				[
+					192.25,
+					-207.43
+				],
+				[
+					194.77,
+					-203.11
+				]
+			],
+			"front_dir": [
+				-0.86,
+				0.5
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.12,
+			"id": "P_RSW_095",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.16,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 67.9,
+			"center": [
+				179.76,
+				-222.89
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 10.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				175.1,
+				-220.17
+			],
+			"entrance_h": 2.22,
+			"footprint": [
+				[
+					176.68,
+					-217.45
+				],
+				[
+					173.51,
+					-222.88
+				],
+				[
+					182.84,
+					-228.32
+				],
+				[
+					186.01,
+					-222.89
+				]
+			],
+			"front_dir": [
+				-0.86,
+				0.5
+			],
+			"frontage_m": 6.28,
+			"ground_h": 2.24,
+			"id": "P_RSW_096",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.27,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 60.0,
+			"center": [
+				187.63,
+				-165.52
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 12.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				193.45,
+				-166.98
+			],
+			"entrance_h": 1.9,
+			"footprint": [
+				[
+					182.42,
+					-161.64
+				],
+				[
+					181.2,
+					-166.49
+				],
+				[
+					192.85,
+					-169.4
+				],
+				[
+					194.06,
+					-164.55
+				]
+			],
+			"front_dir": [
+				0.97,
+				-0.24
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.89,
+			"id": "P_RSW_097",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 1.97,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 58.0,
+			"center": [
+				182.74,
+				-187.0
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 9.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				187.14,
+				-188.35
+			],
+			"entrance_h": 2.03,
+			"footprint": [
+				[
+					179.27,
+					-182.64
+				],
+				[
+					177.42,
+					-188.66
+				],
+				[
+					186.21,
+					-191.37
+				],
+				[
+					188.06,
+					-185.34
+				]
+			],
+			"front_dir": [
+				0.96,
+				-0.29
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.02,
+			"id": "P_RSW_098",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NWLane",
+			"road_cls": "lane",
+			"road_h": 2.1,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 42.5,
+			"center": [
+				155.06,
+				-202.06
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.05
+			},
+			"depth_m": 8.5,
+			"district": "ResidentialWest",
+			"entrance": [
+				153.54,
+				-198.09
+			],
+			"entrance_h": 2.09,
+			"footprint": [
+				[
+					155.87,
+					-197.19
+				],
+				[
+					151.21,
+					-198.99
+				],
+				[
+					154.26,
+					-206.92
+				],
+				[
+					158.92,
+					-205.13
+				]
+			],
+			"front_dir": [
+				-0.36,
+				0.93
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.11,
+			"id": "P_RSW_099",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.13,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 43.2,
+			"center": [
+				143.12,
+				-206.38
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 8.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				141.68,
+				-202.65
+			],
+			"entrance_h": 2.12,
+			"footprint": [
+				[
+					144.2,
+					-201.68
+				],
+				[
+					139.16,
+					-203.62
+				],
+				[
+					142.04,
+					-211.09
+				],
+				[
+					147.08,
+					-209.15
+				]
+			],
+			"front_dir": [
+				-0.36,
+				0.93
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.14,
+			"id": "P_RSW_100",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.16,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 44.0,
+			"center": [
+				174.54,
+				-190.27
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 8.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				173.87,
+				-194.62
+			],
+			"entrance_h": 2.06,
+			"footprint": [
+				[
+					177.68,
+					-186.3
+				],
+				[
+					172.74,
+					-185.54
+				],
+				[
+					171.4,
+					-194.24
+				],
+				[
+					176.34,
+					-195.0
+				]
+			],
+			"front_dir": [
+				-0.15,
+				-0.99
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.04,
+			"id": "P_RSW_101",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.15,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 65.5,
+			"center": [
+				164.14,
+				-187.86
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 10.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				163.35,
+				-193.0
+			],
+			"entrance_h": 2.06,
+			"footprint": [
+				[
+					168.04,
+					-183.2
+				],
+				[
+					161.82,
+					-182.24
+				],
+				[
+					160.23,
+					-192.52
+				],
+				[
+					166.46,
+					-193.48
+				]
+			],
+			"front_dir": [
+				-0.15,
+				-0.99
+			],
+			"frontage_m": 6.3,
+			"ground_h": 2.03,
+			"id": "P_RSW_102",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NWBranch",
+			"road_cls": "lane",
+			"road_h": 2.14,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				128.57,
+				-125.81
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 8.4,
+			"district": "ResidentialWest",
+			"entrance": [
+				132.72,
+				-126.45
+			],
+			"entrance_h": 1.66,
+			"footprint": [
+				[
+					124.81,
+					-122.69
+				],
+				[
+					124.04,
+					-127.63
+				],
+				[
+					132.33,
+					-128.92
+				],
+				[
+					133.11,
+					-123.98
+				]
+			],
+			"front_dir": [
+				0.99,
+				-0.15
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.65,
+			"id": "P_RSW_103",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "WestBankLane",
+			"road_cls": "lane",
+			"road_h": 1.72,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 44.5,
+			"center": [
+				252.88,
+				-77.97
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.01
+			},
+			"depth_m": 8.9,
+			"district": "Market",
+			"entrance": [
+				252.6,
+				-82.41
+			],
+			"entrance_h": 1.39,
+			"footprint": [
+				[
+					250.11,
+					-82.25
+				],
+				[
+					255.1,
+					-82.56
+				],
+				[
+					255.65,
+					-73.68
+				],
+				[
+					250.66,
+					-73.37
+				]
+			],
+			"front_dir": [
+				-0.06,
+				-1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.37,
+			"id": "P_MKT_070",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.47,
+			"side": "L",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 40.0,
+			"center": [
+				261.12,
+				-90.45
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 8.0,
+			"district": "Market",
+			"entrance": [
+				261.37,
+				-86.46
+			],
+			"entrance_h": 1.42,
+			"footprint": [
+				[
+					258.38,
+					-94.29
+				],
+				[
+					263.37,
+					-94.59
+				],
+				[
+					263.87,
+					-86.61
+				],
+				[
+					258.88,
+					-86.3
+				]
+			],
+			"front_dir": [
+				0.06,
+				1.0
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.44,
+			"id": "P_MKT_071",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "MidLane",
+			"road_cls": "lane",
+			"road_h": 1.46,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 68.3,
+			"center": [
+				168.24,
+				92.97
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 10.8,
+			"district": "ResidentialWest",
+			"entrance": [
+				172.87,
+				90.19
+			],
+			"entrance_h": 0.36,
+			"footprint": [
+				[
+					171.25,
+					87.48
+				],
+				[
+					174.5,
+					92.9
+				],
+				[
+					165.24,
+					98.46
+				],
+				[
+					161.98,
+					93.03
+				]
+			],
+			"front_dir": [
+				0.86,
+				-0.51
+			],
+			"frontage_m": 6.32,
+			"ground_h": 0.34,
+			"id": "P_RSW_104",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.43,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 61.2,
+			"center": [
+				186.69,
+				94.13
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 8.5,
+			"district": "ResidentialWest",
+			"entrance": [
+				185.09,
+				90.2
+			],
+			"entrance_h": 0.36,
+			"footprint": [
+				[
+					181.75,
+					91.55
+				],
+				[
+					188.42,
+					88.84
+				],
+				[
+					191.62,
+					96.72
+				],
+				[
+					184.95,
+					99.43
+				]
+			],
+			"front_dir": [
+				-0.38,
+				-0.93
+			],
+			"frontage_m": 7.2,
+			"ground_h": 0.34,
+			"id": "P_RSW_105",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.44,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 43.2,
+			"center": [
+				193.82,
+				90.97
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 8.0,
+			"district": "ResidentialWest",
+			"entrance": [
+				192.32,
+				87.26
+			],
+			"entrance_h": 0.37,
+			"footprint": [
+				[
+					189.81,
+					88.28
+				],
+				[
+					194.82,
+					86.24
+				],
+				[
+					197.83,
+					93.65
+				],
+				[
+					192.83,
+					95.69
+				]
+			],
+			"front_dir": [
+				-0.38,
+				-0.93
+			],
+			"frontage_m": 5.4,
+			"ground_h": 0.35,
+			"id": "P_RSW_106",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.45,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 100.8,
+			"center": [
+				193.61,
+				76.91
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.21
+			},
+			"depth_m": 11.2,
+			"district": "ResidentialWest",
+			"entrance": [
+				195.72,
+				82.1
+			],
+			"entrance_h": 0.41,
+			"footprint": [
+				[
+					187.34,
+					73.41
+				],
+				[
+					195.68,
+					70.03
+				],
+				[
+					199.89,
+					80.4
+				],
+				[
+					191.55,
+					83.79
+				]
+			],
+			"front_dir": [
+				0.38,
+				0.93
+			],
+			"frontage_m": 9.0,
+			"ground_h": 0.44,
+			"id": "P_RSW_107",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "SWLane",
+			"road_cls": "lane",
+			"road_h": 0.45,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 61.9,
+			"center": [
+				429.38,
+				-216.92
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 8.6,
+			"district": "ResidentialNE",
+			"entrance": [
+				432.04,
+				-213.54
+			],
+			"entrance_h": 2.18,
+			"footprint": [
+				[
+					423.9,
+					-218.08
+				],
+				[
+					429.56,
+					-222.53
+				],
+				[
+					434.87,
+					-215.77
+				],
+				[
+					429.21,
+					-211.32
+				]
+			],
+			"front_dir": [
+				0.62,
+				0.79
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.2,
+			"id": "P_RNE_020",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.08,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.23,
+			"side": "R",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				444.62,
+				-232.24
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 8.4,
+			"district": "ResidentialNE",
+			"entrance": [
+				447.74,
+				-229.44
+			],
+			"entrance_h": 2.28,
+			"footprint": [
+				[
+					439.82,
+					-233.2
+				],
+				[
+					443.17,
+					-236.91
+				],
+				[
+					449.41,
+					-231.29
+				],
+				[
+					446.06,
+					-227.58
+				]
+			],
+			"front_dir": [
+				0.74,
+				0.67
+			],
+			"frontage_m": 5.0,
+			"ground_h": 2.29,
+			"id": "P_RNE_021",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.32,
+			"side": "R",
+			"slope_pct": 0.4
+		},
+		{
+			"area_m2": 66.1,
+			"center": [
+				480.83,
+				-251.81
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.3
+			},
+			"depth_m": 10.8,
+			"district": "ResidentialNE",
+			"entrance": [
+				482.54,
+				-246.69
+			],
+			"entrance_h": 2.38,
+			"footprint": [
+				[
+					476.22,
+					-255.97
+				],
+				[
+					482.03,
+					-257.91
+				],
+				[
+					485.45,
+					-247.66
+				],
+				[
+					479.64,
+					-245.72
+				]
+			],
+			"front_dir": [
+				0.32,
+				0.95
+			],
+			"frontage_m": 6.12,
+			"ground_h": 2.41,
+			"id": "P_RNE_022",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NELane",
+			"road_cls": "lane",
+			"road_h": 2.42,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 47.5,
+			"center": [
+				445.1,
+				-239.44
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.4
+			},
+			"depth_m": 8.8,
+			"district": "ResidentialNE",
+			"entrance": [
+				441.08,
+				-241.23
+			],
+			"entrance_h": 2.35,
+			"footprint": [
+				[
+					439.98,
+					-238.76
+				],
+				[
+					442.17,
+					-243.7
+				],
+				[
+					450.21,
+					-240.12
+				],
+				[
+					448.02,
+					-235.19
+				]
+			],
+			"front_dir": [
+				-0.91,
+				-0.41
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.34,
+			"id": "P_RNE_023",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.05,
+			"road": "NENorth",
+			"road_cls": "lane",
+			"road_h": 2.41,
+			"side": "L",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 72.0,
+			"center": [
+				431.5,
+				-226.1
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.0
+			},
+			"depth_m": 10.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				436.5,
+				-226.1
+			],
+			"entrance_h": 2.26,
+			"footprint": [
+				[
+					426.5,
+					-222.5
+				],
+				[
+					426.5,
+					-229.7
+				],
+				[
+					436.5,
+					-229.7
+				],
+				[
+					436.5,
+					-222.5
+				]
+			],
+			"front_dir": [
+				1.0,
+				0.0
+			],
+			"frontage_m": 7.2,
+			"ground_h": 2.26,
+			"id": "P_RNE_024",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.04,
+			"road": "NENorth",
+			"road_cls": "lane",
+			"road_h": 2.32,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 43.2,
+			"center": [
+				432.5,
+				-233.9
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 1.5
+			},
+			"depth_m": 8.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				436.5,
+				-233.9
+			],
+			"entrance_h": 2.3,
+			"footprint": [
+				[
+					428.5,
+					-231.2
+				],
+				[
+					428.5,
+					-236.6
+				],
+				[
+					436.5,
+					-236.6
+				],
+				[
+					436.5,
+					-231.2
+				]
+			],
+			"front_dir": [
+				1.0,
+				0.0
+			],
+			"frontage_m": 5.4,
+			"ground_h": 2.3,
+			"id": "P_RNE_025",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.03,
+			"road": "NENorth",
+			"road_cls": "lane",
+			"road_h": 2.36,
+			"side": "R",
+			"slope_pct": 0.6
+		},
+		{
+			"area_m2": 97.2,
+			"center": [
+				435.43,
+				-250.69
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.2
+			},
+			"depth_m": 12.0,
+			"district": "ResidentialNE",
+			"entrance": [
+				440.91,
+				-248.25
+			],
+			"entrance_h": 2.39,
+			"footprint": [
+				[
+					428.3,
+					-249.42
+				],
+				[
+					431.59,
+					-256.82
+				],
+				[
+					442.56,
+					-251.95
+				],
+				[
+					439.27,
+					-244.55
+				]
+			],
+			"front_dir": [
+				0.91,
+				0.41
+			],
+			"frontage_m": 8.1,
+			"ground_h": 2.4,
+			"id": "P_RNE_026",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.07,
+			"road": "NENorth",
+			"road_cls": "lane",
+			"road_h": 2.44,
+			"side": "R",
+			"slope_pct": 0.5
+		},
+		{
+			"area_m2": 42.0,
+			"center": [
+				491.31,
+				-181.37
+			],
+			"clearance": {
+				"front_gap_m": 0.5,
+				"nearest_parcel_m": 0.1
+			},
+			"depth_m": 8.4,
+			"district": "ResidentialNE",
+			"entrance": [
+				492.42,
+				-185.42
+			],
+			"entrance_h": 2.01,
+			"footprint": [
+				[
+					490.01,
+					-186.08
+				],
+				[
+					494.83,
+					-184.76
+				],
+				[
+					492.62,
+					-176.66
+				],
+				[
+					487.8,
+					-177.98
+				]
+			],
+			"front_dir": [
+				0.26,
+				-0.96
+			],
+			"frontage_m": 5.0,
+			"ground_h": 1.99,
+			"id": "P_RNE_027",
+			"infill": true,
+			"kind": "machiya",
+			"relief_m": 0.06,
+			"road": "NESouth",
+			"road_cls": "lane",
+			"road_h": 2.09,
+			"side": "L",
+			"slope_pct": 0.5
+		}
+	],
+	"stats": {
+		"keep": 3333,
+		"outline": 5127,
+		"overlap": 19857,
+		"relief": 0,
+		"road": 2014,
+		"tried": 32000,
+		"water": 1435
+	}
+}
