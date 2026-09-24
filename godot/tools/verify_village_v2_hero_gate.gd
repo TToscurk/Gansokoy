@@ -1165,12 +1165,27 @@ func _shot_spots(xf: Transform3D) -> Array:
 		var zf := float(gs["body"]["d"]) * 0.5
 		for s in [["front", 0.0, 9.0], ["front_l", 28.0, 12.0], ["front_r", -28.0, 12.0], ["street_far", 55.0, 26.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
-			out.append([s[0], xf * (Vector3(0, 0, zf) + dir * float(s[2]))])
+			out.append([s[0], xf * (Vector3(0, 0, zf) + dir * _clear_dist(xf, zf, dir, float(s[2])))])
 	else:
 		for s in [["south", 0.0, 16.0], ["north", 180.0, 14.0], ["south_far", 0.0, 34.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
 			out.append([s[0], xf * (dir * float(s[2]))])
 	return out
+
+
+## 斜向鏡位在窄街上會越過對街、連同後方 3P 相機（約 4.5 m）一起塞進對面建築 → 畫面被別棟屋頂整片擋住（R2 鯢吞亭 front_l）。
+## 從正面 1 m 外、離地 1.6 m 沿視線方向打射線（排除本資產、玩家、地形），把距離縮到「擋到的地方 − 5 m」，下限 5 m。
+func _clear_dist(xf: Transform3D, zf: float, dir: Vector3, want: float) -> float:
+	if space == null:
+		return want
+	var a := xf * (Vector3(0, 1.6, zf + 1.0))
+	var b := xf * (Vector3(0, 1.6, zf + 1.0) + dir * (want + 5.0))
+	var q := PhysicsRayQueryParameters3D.create(a, b)
+	q.exclude = [hero_rid, player_rid, terrain_rid]
+	var hit := space.intersect_ray(q)
+	if hit.is_empty():
+		return want
+	return clampf(a.distance_to(hit["position"]) + 1.0 - 5.0, 5.0, want)
 
 
 func _img_std(img: Image) -> float:

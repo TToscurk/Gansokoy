@@ -1,0 +1,339 @@
+{
+ "_note": "霧雨店 Hero 資產規格（build_kirisame.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。尺寸 authority＝P4 greybox B_P_LM_KIRISAME。設計依參考圖：一樓店面＋屋根裏（不加樓層）、中央＋左側千鳥破風。",
+ "id": "kirisame",
+ "landmark": "LANDMARK_KIRISAME",
+ "kind": "hero",
+ "budget_class": "霧雨店",
+ "glb": "res://assets/village_v2/kirisame/src/kirisame.glb",
+ "scene": "res://assets/village_v2/kirisame/kirisame.scn",
+ "lod_objects": [
+  "Kirisame_LOD0",
+  "Kirisame_LOD1",
+  "Kirisame_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  40,
+  110,
+  600
+ ],
+ "budget": {
+  "lod0": 60000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Kirisame": "res://assets/village_v2/kirisame/V2_Kirisame.tres"
+ },
+ "spec": {
+  "width_m": 8.19,
+  "depth_m": 7.28,
+  "eave_m": 3.9,
+  "ridge_m": 5.538,
+  "plinth_m": 0.32,
+  "foundation_bottom_m": -0.38,
+  "hisashi_m": 2.7,
+  "hisashi_depth_m": 0.91,
+  "ov_eave_m": 0.45,
+  "ov_gable_m": 0.25,
+  "door_m": [
+   1.75,
+   2.1
+  ],
+  "floor_m": 0.32,
+  "door_clear_m": [
+   1.75,
+   2.07
+  ],
+  "design": {
+   "storeys": "一樓店面＋屋根裏（無二樓窗）",
+   "cross_gables": [
+    "中央（額）",
+    "左小"
+   ],
+   "bays": 5
+  }
+ },
+ "gate_spec": {
+  "placement": "greybox",
+  "anchor": "Landmarks/LANDMARK_KIRISAME",
+  "replaces": "Greybox",
+  "p4_id": "B_P_LM_KIRISAME",
+  "parcel": "P_LM_KIRISAME",
+  "road": "MainStreet",
+  "size": {
+   "x_half_max": 4.465,
+   "z_min": -4.21,
+   "z_max": 4.67,
+   "top": [
+    5.538,
+    5.838
+   ],
+   "bottom": -0.38
+  },
+  "body": {
+   "w": 8.19,
+   "d": 7.28,
+   "eave": 3.9,
+   "ridge": 5.538,
+   "plinth": 0.32
+  },
+  "door_clear": {
+   "h": 2.07,
+   "w": 1.75,
+   "min_h": 1.9,
+   "min_w": 1.2
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -4.095,
+     -3.64,
+     4.095,
+     3.64
+    ],
+    "bottom": -0.38,
+    "top": 0.32,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -0.85,
+     3.64,
+     0.85,
+     4.09
+    ],
+    "bottom": -0.14,
+    "top": 0.14,
+    "embed_max": 0.25
+   },
+   {
+    "name": "展示台腳",
+    "rect": [
+     1.065,
+     3.7350000000000003,
+     2.635,
+     4.165
+    ],
+    "bottom": -0.1,
+    "top": 0.7,
+    "embed_max": 0.25
+   },
+   {
+    "name": "花桶",
+    "rect": [
+     3.18,
+     3.7,
+     3.72,
+     4.24
+    ],
+    "bottom": -0.12,
+    "top": 0.62,
+    "embed_max": 0.25
+   },
+   {
+    "name": "黑板腳",
+    "rect": [
+     -3.63,
+     3.7600000000000002,
+     -2.97,
+     4.2
+    ],
+    "bottom": -0.1,
+    "top": 0.02,
+    "embed_max": 0.25
+   },
+   {
+    "name": "木箱",
+    "rect": [
+     -2.55,
+     3.74,
+     -2.05,
+     4.19
+    ],
+    "bottom": -0.1,
+    "top": 0.46,
+    "embed_max": 0.25
+   },
+   {
+    "name": "勝手口踏石",
+    "rect": [
+     1.6,
+     -4.05,
+     2.4,
+     -3.65
+    ],
+    "bottom": -0.12,
+    "top": 0.14,
+    "embed_max": 0.25
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -4.095,
+    4.29,
+    4.095,
+    4.85
+   ],
+   "head": 1.95,
+   "min_clear": 2.0,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   4.59
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Body",
+   "center": [
+    0,
+    1.76,
+    0.1
+   ],
+   "size": [
+    8.19,
+    4.28,
+    7.48
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Step",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -0.85,
+     -0.14,
+     3.64
+    ],
+    [
+     -0.85,
+     0.14,
+     3.64
+    ],
+    [
+     -0.85,
+     0.14,
+     4.0200000000000005
+    ],
+    [
+     -0.85,
+     -0.14,
+     4.26
+    ],
+    [
+     0.85,
+     -0.14,
+     3.64
+    ],
+    [
+     0.85,
+     0.14,
+     3.64
+    ],
+    [
+     0.85,
+     0.14,
+     4.0200000000000005
+    ],
+    [
+     0.85,
+     -0.14,
+     4.26
+    ]
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Table",
+   "center": [
+    1.85,
+    0.31,
+    3.95
+   ],
+   "size": [
+    1.62,
+    0.82,
+    0.48
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Barrel",
+   "center": [
+    3.45,
+    0.39,
+    3.97
+   ],
+   "size": [
+    0.56,
+    0.98,
+    0.54
+   ]
+  },
+  {
+   "type": "box",
+   "name": "ChalkCrate",
+   "center": [
+    -2.84,
+    0.48,
+    3.975
+   ],
+   "size": [
+    1.6,
+    1.16,
+    0.51
+   ]
+  },
+  {
+   "type": "box",
+   "name": "BackStep",
+   "center": [
+    2.0,
+    0.0,
+    -3.85
+   ],
+   "size": [
+    0.8,
+    0.26,
+    0.4
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 27034,
+  "aabb": [
+   [
+    -4.395,
+    -0.38,
+    -4.151
+   ],
+   [
+    4.395,
+    5.728,
+    4.611
+   ]
+  ],
+  "LOD1": 2026,
+  "LOD2": 136
+ }
+}

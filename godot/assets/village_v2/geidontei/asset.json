@@ -1,0 +1,311 @@
+{
+ "_note": "鯢吞亭 Hero 資產規格（build_geidontei.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。尺寸 authority＝P4 greybox B_P_LM_GEIDONTEI。山椒魚頭＝入口上方突出的門框浮雕（使用者 2026-09-24 裁示），不改地塊。size.z_max 含前庭石燈籠（在地塊內，parcel_fit 另驗）。",
+ "id": "geidontei",
+ "landmark": "LANDMARK_GEIDONTEI",
+ "kind": "hero",
+ "budget_class": "鯢吞亭",
+ "glb": "res://assets/village_v2/geidontei/src/geidontei.glb",
+ "scene": "res://assets/village_v2/geidontei/geidontei.scn",
+ "lod_objects": [
+  "Geidontei_LOD0",
+  "Geidontei_LOD1",
+  "Geidontei_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  40,
+  110,
+  600
+ ],
+ "budget": {
+  "lod0": 100000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Geidontei": "res://assets/village_v2/geidontei/V2_Geidontei.tres"
+ },
+ "spec": {
+  "width_m": 10.92,
+  "depth_m": 9.1,
+  "eave_m": 3.9,
+  "ridge_m": 5.947,
+  "plinth_m": 0.32,
+  "foundation_bottom_m": -0.38,
+  "hisashi_m": 2.7,
+  "hisashi_depth_m": 0.91,
+  "ov_eave_m": 0.45,
+  "ov_gable_m": 0.25,
+  "door_m": [
+   2.75,
+   2.07
+  ],
+  "floor_m": 0.32,
+  "door_clear_m": [
+   2.75,
+   2.07
+  ],
+  "design": {
+   "salamander_head": {
+    "type": "門框浮雕／突出上顎",
+    "width_m": 3.7,
+    "front_m": 1.15,
+    "top_m": 3.3699999999999997,
+    "jaw_m": 2.55
+   },
+   "cross_gables": [
+    "中央（金破風、「鯢吞亭」大提燈；破風面退到 HD−0.90 保南大鳥居視線）"
+   ],
+   "lanterns": {
+    "red_1f": 6,
+    "red_2f": 2,
+    "name": 1,
+    "stone": 2
+   }
+  }
+ },
+ "gate_spec": {
+  "placement": "greybox",
+  "anchor": "Landmarks/LANDMARK_GEIDONTEI",
+  "replaces": "Greybox",
+  "p4_id": "B_P_LM_GEIDONTEI",
+  "parcel": "P_LM_GEIDONTEI",
+  "road": "MainStreet",
+  "size": {
+   "x_half_max": 5.83,
+   "z_min": -5.12,
+   "z_max": 5.83,
+   "top": [
+    5.947,
+    6.247
+   ],
+   "bottom": -0.38
+  },
+  "body": {
+   "w": 10.92,
+   "d": 9.1,
+   "eave": 3.9,
+   "ridge": 5.947,
+   "plinth": 0.32
+  },
+  "door_clear": {
+   "h": 2.07,
+   "w": 2.75,
+   "min_h": 1.9,
+   "min_w": 1.2
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -5.46,
+     -4.55,
+     5.46,
+     4.55
+    ],
+    "bottom": -0.38,
+    "top": 0.32,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -1.4,
+     4.55,
+     1.4,
+     5.05
+    ],
+    "bottom": -0.14,
+    "top": 0.14,
+    "embed_max": 0.25
+   },
+   {
+    "name": "石燈籠左",
+    "rect": [
+     -4.98,
+     5.319999999999999,
+     -4.52,
+     5.78
+    ],
+    "bottom": -0.12,
+    "top": 0.18,
+    "embed_max": 0.25
+   },
+   {
+    "name": "石燈籠右",
+    "rect": [
+     4.52,
+     5.319999999999999,
+     4.98,
+     5.78
+    ],
+    "bottom": -0.12,
+    "top": 0.18,
+    "embed_max": 0.25
+   },
+   {
+    "name": "勝手口踏石",
+    "rect": [
+     1.55,
+     -4.96,
+     2.45,
+     -4.56
+    ],
+    "bottom": -0.12,
+    "top": 0.14,
+    "embed_max": 0.25
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -3.95,
+    5.2,
+    3.95,
+    5.76
+   ],
+   "head": 1.95,
+   "min_clear": 2.0,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   5.5
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Body",
+   "center": [
+    0,
+    1.76,
+    0.1
+   ],
+   "size": [
+    10.92,
+    4.28,
+    9.299999999999999
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Step",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -1.4,
+     -0.14,
+     4.55
+    ],
+    [
+     -1.4,
+     0.14,
+     4.55
+    ],
+    [
+     -1.4,
+     0.14,
+     4.97
+    ],
+    [
+     -1.4,
+     -0.14,
+     5.2299999999999995
+    ],
+    [
+     1.4,
+     -0.14,
+     4.55
+    ],
+    [
+     1.4,
+     0.14,
+     4.55
+    ],
+    [
+     1.4,
+     0.14,
+     4.97
+    ],
+    [
+     1.4,
+     -0.14,
+     5.2299999999999995
+    ]
+   ]
+  },
+  {
+   "type": "box",
+   "name": "ToroL",
+   "center": [
+    -4.75,
+    0.74,
+    5.55
+   ],
+   "size": [
+    0.5,
+    1.72,
+    0.5
+   ]
+  },
+  {
+   "type": "box",
+   "name": "ToroR",
+   "center": [
+    4.75,
+    0.74,
+    5.55
+   ],
+   "size": [
+    0.5,
+    1.72,
+    0.5
+   ]
+  },
+  {
+   "type": "box",
+   "name": "BackStep",
+   "center": [
+    2.0,
+    0.0,
+    -4.76
+   ],
+   "size": [
+    0.9,
+    0.26,
+    0.4
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 41234,
+  "aabb": [
+   [
+    -5.76,
+    -0.38,
+    -5.061
+   ],
+   [
+    5.76,
+    6.138,
+    5.78
+   ]
+  ],
+  "LOD1": 2949,
+  "LOD2": 163
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "asset": "kirisame",
+ "entry": "res://assets/village_v2/kirisame/kirisame.scn",
+ "entry_sha256": "80aa64eecfbdc1a961e3e4acc4c7f2c11de4ad272edd479b10048cc34639844d",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±4.39（≤ 4.46）、z -4.15～4.61（容許 -4.21～4.67）、頂 5.73（5.54～5.84）、底 -0.38（-0.38）",
+    "規格＝P4 灰盒 B_P_LM_KIRISAME：面寬 8.19／縱深 7.28／簷 3.90／屋脊 5.54／台基 0.32 m",
+    "射線實測：牆面寬 8.15（P4 8.19）、牆縱深 7.26（P4 7.28）、屋脊頂 5.72（屋脊 5.54）、背面簷口 3.76（P4 簷口 3.70）m",
+    "人物比例：入口淨高 2.07 m（門檻 0.35→鴨居 2.42；≥ 1.90，1.7 m 人）、淨寬 1.75 m（≥ 1.20）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "7 個地面接觸件：在 P_LM_KIRISAME 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0",
+    "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "7 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.32、踏石 埋 0.10、展示台腳 埋 0.07、花桶 埋 0.10、黑板腳 埋 0.04、木箱 埋 0.05、勝手口踏石 埋 0.10",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Greybox：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）",
+    "入口段差：路面 0.52 → 踏石 0.70（0.18 m）→ 台基 0.88（0.18 m），每階 ≤ 0.30"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Plaster\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42, \"V2_Kirisame\": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 27034 面：退化 0、NaN 0、繞向反 0、LOD1 2026 面：退化 0、NaN 0、繞向反 0、LOD2 136 面：退化 0、NaN 0、繞向反 0；LOD0 27034 ≤ §14.8「霧雨店」上限 60000；與 Blender 建置紀錄 27034 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點 (229.95, 0.56, 62.04)＝P4 footprint 中心 (229.95, 62.04)、base_h 0.56；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.38～5.73）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 31 點被擋 0",
+    "步行帶頭頂淨空：31 點中 0 點 < 1.95 m；最低淨空 2.35 m（≥ 2.00）",
+    "周邊 470 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 27034 → 2026（7.5 %，≤ 35 %）→ 136（0.5 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 600.0] m、最後一級 600 m（地圖框最遠 520 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「霧雨店」LOD0 上限 60000（asset.json 自報 60000）：實測 27034（45 %）；每級 surface ≤ 5（實測 5）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T04:06:52"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 4 張：kirisame_front.png（亮度標準差 0.270、資產在畫面內、鏡頭到資產無遮擋）；kirisame_front_l.png（亮度標準差 0.276、資產在畫面內、鏡頭到資產無遮擋）；kirisame_front_r.png（亮度標準差 0.202、資產在畫面內、鏡頭到資產無遮擋）；kirisame_street_far.png（亮度標準差 0.285、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-25T04:07:19"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 4.14（牆面 3.64，被擋在外）、最大離地 0.15 m"
+   ],
+   "part": "render",
+   "date": "2026-09-25T04:07:19"
+  }
+ },
+ "render_info": {
+  "f6_png": "kirisame_f6.png",
+  "perf": [
+   "front：1208687 三角面／560 draw call",
+   "front_l：1025538 三角面／480 draw call",
+   "front_r：1082686 三角面／855 draw call",
+   "street_far：1224599 三角面／480 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

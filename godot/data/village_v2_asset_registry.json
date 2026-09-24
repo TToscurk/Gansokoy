@@ -1,5 +1,5 @@
 {
- "version": "p5-r1",
+ "version": "p5-r2",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -53,6 +53,62 @@
    },
    "gate_date": "2026-09-25T01:52:53",
    "status": "ART_REVIEW"
+  },
+  {
+   "id": "geidontei",
+   "kind": "hero",
+   "path": "res://assets/village_v2/geidontei",
+   "entry": "res://assets/village_v2/geidontei/geidontei.scn",
+   "entry_sha256": "71a55eb52e71eadd183090ba3bab91b1a70293213203fc369ddee31161adc734",
+   "gate_json": "res://assets/village_v2/geidontei/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T04:06:48",
+   "status": "ART_REVIEW",
+   "label": "鯢吞亭",
+   "landmark": "LANDMARK_GEIDONTEI",
+   "asset_json": "res://assets/village_v2/geidontei/asset.json",
+   "replaces": "Landmarks/LANDMARK_GEIDONTEI/Greybox",
+   "lod0_tris": 41234
+  },
+  {
+   "id": "kirisame",
+   "kind": "hero",
+   "path": "res://assets/village_v2/kirisame",
+   "entry": "res://assets/village_v2/kirisame/kirisame.scn",
+   "entry_sha256": "80aa64eecfbdc1a961e3e4acc4c7f2c11de4ad272edd479b10048cc34639844d",
+   "gate_json": "res://assets/village_v2/kirisame/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T04:07:19",
+   "status": "ART_REVIEW",
+   "label": "霧雨店",
+   "landmark": "LANDMARK_KIRISAME",
+   "asset_json": "res://assets/village_v2/kirisame/asset.json",
+   "replaces": "Landmarks/LANDMARK_KIRISAME/Greybox",
+   "lod0_tris": 27034
   },
   {
    "id": "south_torii",
