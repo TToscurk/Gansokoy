@@ -7,7 +7,7 @@
     "approved_by": "user",
     "approved_at": "2026-09-24",
     "phase": "P0 Reference / Layout (complete)",
-    "next_phase": "P1 Terrain",
+    "next_phase": "P2 Water",
     "approved_layout": "godot/maps/village_v2/layout_v2.json",
     "approved_layout_version": "v2-layout-0.3",
     "main_street": "W80, full width 7.20 m",
@@ -256,7 +256,7 @@
     }
   ],
   "unresolved": [],
-  "next_gate": "P1 Terrain (Human Village V2 phases P0–P13 are the only official phase numbers). Terrain work must keep the Macro Layout freeze green.",
+  "next_gate": "P2 Water (Human Village V2 phases P0–P13 are the only official phase numbers). P1 Terrain is ART_APPROVED and closed; every generator change must keep the Macro Layout freeze and all P1 regression tests green (godot/tools/run_village_v2_regression.sh).",
   "user_rulings": [
     {
       "date": "2026-08-31",
@@ -285,6 +285,10 @@
     {
       "date": "2026-09-24",
       "ruling": "LAYOUT_APPROVED: freeze v2-layout-0.3 with W80 / 7.20 m as the approved P0 World Layout. Dragon Base stays a placeholder; shoreline integration deferred. Next phase: P1 Terrain."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P1 Terrain ART_APPROVED (commit 59cedbc). No further P1 Terrain changes; the Dragon Bridge east-bank polish area is not widened. South-gate soft shoulder goes to P4 retaining structure; 9-step farm macro elevation stays, visible bunds go to P8. All P1 regression tests stay mandatory. Next phase: P2 Water."
     }
   ],
   "resolved_at_freeze": [
@@ -326,6 +330,21 @@
       "item": "LANDMARK_DRAGON/Base shoreline integration",
       "stage": "P7 Riverbank",
       "note": "10 × 10 m placeholder base; about 31 % of it sits inside the bank line. Kept as placeholder; do not move it for top-down appearance."
+    },
+    {
+      "item": "Dragon Bridge east bank must not read as one continuous, uniform, artificially cut slope band",
+      "stage": "P7 Riverbank",
+      "note": "Acceptance criterion (2026-09-24 user ruling): P7 breaks the continuity with natural-bank / revetment segments, erosion shapes, gravel beaches, vegetation, bank materials and local landscape rhythm. These elements must not hide clipping or broken terrain, and P7 must not substantially rework the P1-approved macro terrain."
+    },
+    {
+      "item": "South-gate soft platform shoulder / 60 m retaining edge",
+      "stage": "P4 Greybox",
+      "note": "Keep the P1 terrain as is; resolve with a retaining structure."
+    },
+    {
+      "item": "Visible farm bunds, narrow slopes, channels and water surfaces",
+      "stage": "P8 Farmland",
+      "note": "P1 9-step macro elevation (0.30 to -0.50 m) is fixed; do not enlarge steps. Water-wheel lift 1.93 m <= 2.0 m and drainage 0.30 m must hold."
     },
     {
       "item": "Temporary forest canopy on the north hill",
