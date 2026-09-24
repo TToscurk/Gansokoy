@@ -1,0 +1,179 @@
+{
+ "_note": "南大門鳥居 資產規格（build_south_torii.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。",
+ "id": "south_torii",
+ "landmark": "LANDMARK_SOUTH_GATE",
+ "kind": "landmark",
+ "budget_class": "鳥居",
+ "glb": "res://assets/village_v2/south_torii/src/south_torii.glb",
+ "scene": "res://assets/village_v2/south_torii/south_torii.scn",
+ "lod_objects": [
+  "South_Torii_LOD0",
+  "South_Torii_LOD1",
+  "South_Torii_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  60,
+  160,
+  700
+ ],
+ "budget": {
+  "lod0": 5000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_WoodRed": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+  "V2_Metal": "res://assets/village_v2/_matlib/V2_Metal.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres"
+ },
+ "spec": {
+  "span_m": 10.0,
+  "height_m": 10.0,
+  "envelope_top_m": 10.8,
+  "kasagi_len_m": 13.5,
+  "nuki_y_m": 7.75,
+  "embed_m": 0.25,
+  "top_center_m": 10.3,
+  "top_end_m": 10.72,
+  "tolerance_m": 0.3
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_SOUTH_GATE",
+  "replaces": "Torii",
+  "p4_id": "",
+  "parcel": "",
+  "road": "EntranceRoad",
+  "size": {
+   "x_half_max": 7.05,
+   "z_min": -0.95,
+   "z_max": 0.95,
+   "top": [
+    10.0,
+    10.8
+   ],
+   "bottom": -0.25
+  },
+  "span": {
+   "axis_m": 10.0,
+   "clear_min": 8.5
+  },
+  "ground": [
+   {
+    "name": "台座左",
+    "rect": [
+     -5.85,
+     -0.85,
+     -4.15,
+     0.85
+    ],
+    "bottom": -0.25,
+    "top": 0.2,
+    "embed_max": 0.4
+   },
+   {
+    "name": "台座右",
+    "rect": [
+     4.15,
+     -0.85,
+     5.85,
+     0.85
+    ],
+    "bottom": -0.25,
+    "top": 0.2,
+    "embed_max": 0.4
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -3.9,
+    -1.2,
+    3.9,
+    1.2
+   ],
+   "head": 1.95,
+   "min_clear": 6.0,
+   "step": 0.5
+  },
+  "entry": [
+   0.0,
+   3.0
+  ],
+  "inside": [
+   -5.0,
+   0.0
+  ]
+ },
+ "collision": [
+  {
+   "type": "cylinder",
+   "center": [
+    -5.0,
+    3.75,
+    0
+   ],
+   "radius": 0.5,
+   "height": 8.0,
+   "name": "Pillar_L"
+  },
+  {
+   "type": "cylinder",
+   "center": [
+    5.0,
+    3.75,
+    0
+   ],
+   "radius": 0.5,
+   "height": 8.0,
+   "name": "Pillar_R"
+  },
+  {
+   "type": "box",
+   "center": [
+    -5.0,
+    0.11499999999999999,
+    0
+   ],
+   "size": [
+    1.7,
+    0.73,
+    1.7
+   ],
+   "name": "Base_L"
+  },
+  {
+   "type": "box",
+   "center": [
+    5.0,
+    0.11499999999999999,
+    0
+   ],
+   "size": [
+    1.7,
+    0.73,
+    1.7
+   ],
+   "name": "Base_R"
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 1542,
+  "aabb": [
+   [
+    -6.91,
+    -0.25,
+    -0.85
+   ],
+   [
+    6.91,
+    10.72,
+    0.85
+   ]
+  ],
+  "LOD1": 346,
+  "LOD2": 150
+ }
+}

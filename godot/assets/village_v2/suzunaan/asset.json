@@ -1,0 +1,343 @@
+{
+ "_note": "鈴奈庵 Hero 資產規格（build_suzunaan.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。尺寸 authority＝P4 greybox B_P_LM_SUZUNAAN。",
+ "id": "suzunaan",
+ "landmark": "LANDMARK_SUZUNAAN",
+ "kind": "hero",
+ "budget_class": "鈴奈庵",
+ "glb": "res://assets/village_v2/suzunaan/src/suzunaan.glb",
+ "scene": "res://assets/village_v2/suzunaan/suzunaan.scn",
+ "lod_objects": [
+  "Suzunaan_LOD0",
+  "Suzunaan_LOD1",
+  "Suzunaan_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  40,
+  110,
+  600
+ ],
+ "budget": {
+  "lod0": 60000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Suzunaan": "res://assets/village_v2/suzunaan/V2_Suzunaan.tres"
+ },
+ "spec": {
+  "width_m": 9.1,
+  "depth_m": 8.19,
+  "eave_m": 3.9,
+  "ridge_m": 5.743,
+  "plinth_m": 0.32,
+  "foundation_bottom_m": -0.38,
+  "hisashi_m": 2.7,
+  "hisashi_depth_m": 0.91,
+  "ov_eave_m": 0.45,
+  "ov_gable_m": 0.25,
+  "door_m": [
+   1.82,
+   2.1
+  ],
+  "floor_m": 0.32,
+  "door_clear_m": [
+   1.82,
+   2.1
+  ]
+ },
+ "gate_spec": {
+  "placement": "greybox",
+  "anchor": "Landmarks/LANDMARK_SUZUNAAN",
+  "replaces": "Greybox",
+  "p4_id": "B_P_LM_SUZUNAAN",
+  "parcel": "P_LM_SUZUNAAN",
+  "road": "MainStreet",
+  "size": {
+   "x_half_max": 4.92,
+   "z_min": -4.665,
+   "z_max": 5.125,
+   "top": [
+    5.743,
+    6.043
+   ],
+   "bottom": -0.38
+  },
+  "body": {
+   "w": 9.1,
+   "d": 8.19,
+   "eave": 3.9,
+   "ridge": 5.743,
+   "plinth": 0.32
+  },
+  "door_clear": {
+   "h": 2.1,
+   "w": 3.49,
+   "min_h": 1.9,
+   "min_w": 1.2
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -4.55,
+     -4.095,
+     4.55,
+     4.095
+    ],
+    "bottom": -0.38,
+    "top": 0.32,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -0.85,
+     4.095,
+     0.85,
+     4.545
+    ],
+    "bottom": -0.14,
+    "top": 0.14,
+    "embed_max": 0.25
+   },
+   {
+    "name": "縁台前板",
+    "rect": [
+     1.895,
+     4.295,
+     4.3999999999999995,
+     4.345
+    ],
+    "bottom": -0.08,
+    "top": 0.62,
+    "embed_max": 0.25
+   },
+   {
+    "name": "花盆",
+    "rect": [
+     -4.45,
+     4.194999999999999,
+     -3.35,
+     4.615
+    ],
+    "bottom": -0.14,
+    "top": 0.34,
+    "embed_max": 0.25
+   },
+   {
+    "name": "木箱",
+    "rect": [
+     -3.2,
+     4.194999999999999,
+     -2.15,
+     4.715
+    ],
+    "bottom": -0.14,
+    "top": 0.52,
+    "embed_max": 0.25
+   },
+   {
+    "name": "勝手口踏石",
+    "rect": [
+     1.6,
+     -4.505,
+     2.4,
+     -4.1049999999999995
+    ],
+    "bottom": -0.12,
+    "top": 0.14,
+    "embed_max": 0.25
+   },
+   {
+    "name": "竪樋左",
+    "rect": [
+     -4.82,
+     4.545,
+     -4.68,
+     4.725
+    ],
+    "bottom": -0.18,
+    "top": 0.3,
+    "embed_max": 0.3
+   },
+   {
+    "name": "竪樋右",
+    "rect": [
+     4.68,
+     4.545,
+     4.82,
+     4.725
+    ],
+    "bottom": -0.18,
+    "top": 0.3,
+    "embed_max": 0.3
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -4.55,
+    4.745,
+    4.55,
+    5.305
+   ],
+   "head": 1.95,
+   "min_clear": 2.0,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   5.045
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Body",
+   "center": [
+    0,
+    1.76,
+    0
+   ],
+   "size": [
+    9.1,
+    4.28,
+    8.19
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Step",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -0.85,
+     -0.14,
+     4.095
+    ],
+    [
+     -0.85,
+     0.14,
+     4.095
+    ],
+    [
+     -0.85,
+     0.14,
+     4.475
+    ],
+    [
+     -0.85,
+     -0.14,
+     4.715
+    ],
+    [
+     0.85,
+     -0.14,
+     4.095
+    ],
+    [
+     0.85,
+     0.14,
+     4.095
+    ],
+    [
+     0.85,
+     0.14,
+     4.475
+    ],
+    [
+     0.85,
+     -0.14,
+     4.715
+    ]
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Counter",
+   "center": [
+    3.1475,
+    0.27,
+    4.22
+   ],
+   "size": [
+    2.504999999999999,
+    0.7,
+    0.25
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Planter",
+   "center": [
+    -3.9,
+    0.18,
+    4.404999999999999
+   ],
+   "size": [
+    1.1,
+    0.64,
+    0.42
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Chest",
+   "center": [
+    -2.675,
+    0.2,
+    4.455
+   ],
+   "size": [
+    1.05,
+    0.68,
+    0.52
+   ]
+  },
+  {
+   "type": "box",
+   "name": "BackStep",
+   "center": [
+    2.0,
+    0.0,
+    -4.305
+   ],
+   "size": [
+    0.8,
+    0.26,
+    0.4
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 31978,
+  "aabb": [
+   [
+    -4.86,
+    -0.38,
+    -4.606
+   ],
+   [
+    4.86,
+    5.933,
+    5.066
+   ]
+  ],
+  "LOD1": 2286,
+  "LOD2": 50
+ }
+}

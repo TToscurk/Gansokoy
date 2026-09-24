@@ -34,6 +34,7 @@ const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const WLib := preload("res://tools/village_v2_water_lib.gd")
 const PLib := preload("res://tools/village_v2_parcel_lib.gd")
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
+const HLib := preload("res://tools/village_v2_hero_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
@@ -174,6 +175,7 @@ func _init() -> void:
 	_forests()
 	_landmarks()
 	_greybox()
+	_heroes()
 	_anchors()
 	_portals()
 	_debug()
@@ -736,7 +738,8 @@ func _group(parent: Node, name: String) -> Node3D:
 func _own(n: Node, owner_node: Node) -> void:
 	for c in n.get_children():
 		c.owner = owner_node
-		_own(c, owner_node)
+		if c.scene_file_path == "":   # P5 Hero 是實例化的 .scn：場景只存引用，不把內部節點攤進 tscn
+			_own(c, owner_node)
 
 
 func _save(res: Resource, name: String) -> Resource:
@@ -1866,6 +1869,28 @@ func _torii(parent: Node3D, span: float, h: float, yaw_deg: float) -> float:
 		_k(Color(0.18, 0.16, 0.15)), false)
 	_box(t, "Nuki", Vector3(span * 1.1, pr * 1.1, pr * 1.4), Vector3(0, h * 0.78, 0), 0.0, red, false)
 	return h + pr * 1.6
+
+
+# ─────────────────────────── P5 Hero Assets ───────────────────────────
+
+## registry v2_assets 裡 Asset Gate 11 項全 PASS、且 .scn 雜湊與 gate 當時一致的 Hero／地標資產，
+## 用 village_v2_hero_lib.gd（Asset Gate 同一段放置）取代 P4 灰盒／P0 placeholder。
+## 灰盒節點保留（P4 gate 讀它的位置與台基）但外觀、碰撞全關；地標 placeholder（鳥居方塊）直接不留。
+## 未登記、gate 未過或 .scn 在 gate 之後被改過 → 什麼都不做，維持灰盒（不合格資產直接退回灰盒）。
+func _heroes() -> void:
+	var n := 0
+	for a: Dictionary in HLib.approved(HLib.registry()):
+		var S := HLib.spec(String(a["asset_json"]))
+		var scn := load(String(a["entry"])) as PackedScene
+		if S.is_empty() or scn == null:
+			push_error("[v2] P5 Hero %s：asset.json 或 .scn 讀不到，維持灰盒" % a.get("id", "?"))
+			continue
+		var h := HLib.place(vroot, S, scn, true)
+		if h == null:
+			continue
+		n += 1
+		print("[v2] P5 Hero %s → %s（取代 %s）" % [a["id"], S["gate_spec"]["anchor"], S["gate_spec"]["replaces"]])
+	print("[v2] P5 Hero 資產 %d 件（其餘維持 P4 灰盒）" % n)
 
 
 # ─────────────────────────── P4 建築灰盒 ───────────────────────────

@@ -1,0 +1,225 @@
+{
+ "_note": "人間之里 V2 共享材質庫 v1（P5 R1）。由 tools/build_village_v2_textures.py 產生，勿手改。",
+ "version": "v1",
+ "albedo_k": 0.42,
+ "size": 2048,
+ "license": "CC0 1.0（Poly Haven）",
+ "materials": {
+  "V2_Wood": {
+   "tres": "res://assets/village_v2/_matlib/V2_Wood.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_Wood_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_Wood_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_Wood_rough.jpg"
+   },
+   "tile_m": 1.2,
+   "albedo_k": 0.42,
+   "source": {
+    "polyhaven_id": "rough_wood",
+    "url": "https://polyhaven.com/a/rough_wood",
+    "license": "CC0",
+    "sha256": {
+     "diff": "0bd2b3195db9b54d55aa0f842801220ec5e1d389f5fc1e670b378bdaca3f8e7b",
+     "nor": "b75cb1e989407e442c3255f3e05ea8c40162c0e5dc2efc9ef2515fce61319194",
+     "rough": "38343cb062e7fadcda513ded0b17271c9d7f1da56765d03508dc84c8ff1bd475"
+    }
+   },
+   "processing": {
+    "rot90": false,
+    "mode": "gain",
+    "target": "#7A6445",
+    "desat": 0.15,
+    "rough": [
+     0.78,
+     0.95
+    ],
+    "normal_strength": 1.0
+   },
+   "target_srgb": "#7A6445",
+   "albedo_mean_srgb": "#7A6445",
+   "note": "結構木（柱、梁、板、格子）。頂點色：結構深木 0.60、下見板 0.88、看板木另走 atlas。"
+  },
+  "V2_Plaster": {
+   "tres": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_Plaster_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_Plaster_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_Plaster_rough.jpg"
+   },
+   "tile_m": 2.0,
+   "albedo_k": 0.42,
+   "source": {
+    "polyhaven_id": "clay_plaster",
+    "url": "https://polyhaven.com/a/clay_plaster",
+    "license": "CC0",
+    "sha256": {
+     "diff": "e7ed1892b319d8a1ddb8b95242cc8b9d627bd2a558ec107da174a463f3dbc561",
+     "nor": "126f8d299022ed26fa70e0fa213d2b34db58e1f9aced1ee571902b575dced754",
+     "rough": "56bb3e5a38f5d58227d53bde1b7423a72169511d491f2c057b5d6be153bef51a"
+    }
+   },
+   "processing": {
+    "rot90": false,
+    "mode": "luma",
+    "target": "#C9BEA6",
+    "contrast": 0.55,
+    "rough": [
+     0.85,
+     0.97
+    ],
+    "normal_strength": 0.6
+   },
+   "target_srgb": "#C9BEA6",
+   "albedo_mean_srgb": "#C9BFA6",
+   "note": "灰泥／土壁。頂點色 0.97 ＝ #C4B9A1（概念圖二樓灰泥）；乘 (0.86,0.76,0.58) ≈ 黃土色 #A88A5E。"
+  },
+  "V2_Kawara": {
+   "tres": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_Kawara_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_Kawara_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_Kawara_rough.jpg"
+   },
+   "tile_m": 2.4,
+   "albedo_k": 0.42,
+   "source": {
+    "polyhaven_id": "grey_roof_tiles",
+    "url": "https://polyhaven.com/a/grey_roof_tiles",
+    "license": "CC0",
+    "sha256": {
+     "diff": "f0ccddb07c8b21cd7825fd2c4cdf04cff23ec9fc52a92578122036ccf22a8a90",
+     "nor": "e91134466a2aec440eae42ccef20f7055d87bf8caac208555eb1f069578eb29a",
+     "rough": "404d04cfdb77f2537d5cf4f9249bd7c8d265a303c73b7bf362af1f109c88299c"
+    }
+   },
+   "processing": {
+    "rot90": false,
+    "mode": "gain",
+    "target": "#66645B",
+    "desat": 0.45,
+    "tile_u_m": 4.24,
+    "columns": 16,
+    "courses": 10,
+    "downslope": "+v",
+    "rough": [
+     0.55,
+     0.85
+    ],
+    "normal_strength": 1.0
+   },
+   "target_srgb": "#66645B",
+   "albedo_mean_srgb": "#66645B",
+   "note": "桟瓦：貼圖 16 欄 × 10 段（法線／反照率 FFT 實測）。U 用 tile_u_m 4.24 → 欄寬 0.265 m（桟瓦働き幅），V 用 tile_m 2.4 → 段長 0.24 m；瓦唇朝 +v（貼圖下方＝簷側，法線 G 尖峰 p1 −0.31）。屋面網格波峰對齊 crest_u（每欄一波）。",
+   "crest_u": 0.01088,
+   "tile_u_m": 4.24,
+   "columns": 16,
+   "courses": 10,
+   "downslope": "+v"
+  },
+  "V2_Stone": {
+   "tres": "res://assets/village_v2/_matlib/V2_Stone.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_Stone_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_Stone_rough.jpg"
+   },
+   "tile_m": 1.5,
+   "albedo_k": 0.42,
+   "source": {
+    "polyhaven_id": "rock_01",
+    "url": "https://polyhaven.com/a/rock_01",
+    "license": "CC0",
+    "sha256": {
+     "diff": "fe9013368539b5604602e64bfa48bef1a2a4c452fcb6894868fb556d0b14501c",
+     "nor": "70427a2c81f85c0e1ee4a147e273d028c3d0188bad2583f2509d6df9a3d55b89",
+     "rough": "fad2e7353b9af032a36d394d33b23154ec7bce3371f9e9436cf318c5f863d64d"
+    }
+   },
+   "processing": {
+    "rot90": false,
+    "mode": "gain",
+    "target": "#99917C",
+    "desat": 0.5,
+    "rough": [
+     0.8,
+     0.97
+    ],
+    "normal_strength": 1.0
+   },
+   "target_srgb": "#99917C",
+   "albedo_mean_srgb": "#99917C",
+   "note": "台基石、踏石、鳥居台座。"
+  },
+  "V2_Metal": {
+   "tres": "res://assets/village_v2/_matlib/V2_Metal.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_Metal_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_Metal_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_Metal_rough.jpg"
+   },
+   "tile_m": 1.0,
+   "albedo_k": 0.42,
+   "source": {
+    "polyhaven_id": "rusty_metal_sheet",
+    "url": "https://polyhaven.com/a/rusty_metal_sheet",
+    "license": "CC0",
+    "sha256": {
+     "diff": "1bba003f3da47728b7108fb54a8f51fec17b3d62d89eefb2bf711688e2e929b6",
+     "nor": "dbcdb93c3cd9d332ed29e144540ef81798f637a8c5ccd057e52cad28b60f3750",
+     "rough": "f1fc8d5cfb6c6b55712c07b326934d94eb7aeb4f146b67c1823348af69cfddd4"
+    }
+   },
+   "processing": {
+    "rot90": false,
+    "mode": "gain",
+    "target": "#454238",
+    "desat": 0.75,
+    "rough": [
+     0.55,
+     0.8
+    ],
+    "normal_strength": 0.8,
+    "metallic": 0.35
+   },
+   "target_srgb": "#454238",
+   "albedo_mean_srgb": "#454238",
+   "note": "暗銅／鐵：鳥居笠木包板、柱箍、飾金具。"
+  },
+  "V2_WoodRed": {
+   "tres": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+   "files": {
+    "albedo": "res://assets/village_v2/_matlib/V2_WoodRed_albedo.jpg",
+    "normal": "res://assets/village_v2/_matlib/V2_WoodRed_normal.jpg",
+    "rough": "res://assets/village_v2/_matlib/V2_WoodRed_rough.jpg"
+   },
+   "tile_m": 1.5,
+   "albedo_k": 0.8,
+   "source": {
+    "polyhaven_id": "wood_peeling_paint_weathered",
+    "url": "https://polyhaven.com/a/wood_peeling_paint_weathered",
+    "license": "CC0",
+    "sha256": {
+     "diff": "2f8930d993cee4f46d49513fb5434f8b01e4f5ba43f8b4db9e756b7f20dd370c",
+     "nor": "4363dd4f92564c8714a78da333ccfa302bd23b1d63c2fb2ee82675a61365f774",
+     "rough": "388be4af42ade4366312683c4443f2abb148069a6d71b25c13528a9f925e1ce2"
+    }
+   },
+   "processing": {
+    "rot90": true,
+    "mode": "paint",
+    "paint": "#A8462E",
+    "wood": "#5E4A38",
+    "rough": [
+     0.65,
+     0.92
+    ],
+    "normal_strength": 0.7,
+    "albedo_k": 0.8
+   },
+   "target_srgb": "#A8462E",
+   "albedo_mean_srgb": "#93442D",
+   "note": "朱漆木（剝落處露木）：鳥居柱、貫、島木、額束。來源木紋橫向 → 轉 90°。albedo_k 0.80：飽和朱色照 0.42 會壓成暗褐（r1 預覽 vision 判讀「dark brown-maroon」），露木改暗 #5E4A38 免得淡色條紋搶畫面。",
+   "exposed_wood_fraction": 0.148
+  }
+ }
+}

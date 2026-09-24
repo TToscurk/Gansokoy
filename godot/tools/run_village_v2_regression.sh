@@ -3,6 +3,7 @@
 # P2 起加：P1 Approved Terrain Protection（水線以上 |Δh| ≤ 0.03 m、岸線縫 ≤ 0.30 m）與 P2 water gate。
 # P3 起加：roads / parcels gate（巷道層、單棟地塊 §11 紀錄、覆蓋率）。
 # P5 Asset Reset 起加：asset reset gate（V2 只能引用白名單／已過 Asset Gate 的新資產；Protected 資產雜湊不變；封存不等於刪除）。
+# P5 R1 起加：Hero Asset Gate 回歸（v2_assets 已登記的 Hero／地標在場景裡重驗尺寸～效能 9 項；截圖與 F5/F6 另跑 --render，見規劃 §15）。
 # 用法（repo 根目錄，git-bash）：  bash godot/tools/run_village_v2_regression.sh [--gen]
 #   --gen   先重新產生場景再驗證
 # 任一項非 0 退出 → 整體退出碼 = 失敗項目數。固定鏡位擷取另見 docs/plans/2026-09-23-人間之里V2重製規劃.md §9.5。
@@ -29,6 +30,7 @@ run "sightline checks"                     SL      --headless --path . --script 
 run "P3 roads / parcels gate"               PARCEL  --headless --path . --script res://tools/verify_village_v2_parcels.gd
 run "P4 greybox gate"                       GB      --headless --path . --script res://tools/verify_village_v2_greybox.gd
 run "P5 asset reset gate（白名單／Protected／封存）" ASSET --headless --path . --script res://tools/verify_village_v2_asset_reset.gd
+run "P5 Hero Asset Gate 回歸（已登記資產 1–9 項重驗＋gate.json 雜湊）" HERO --headless --path . --script res://tools/verify_village_v2_hero_gate.gd -- --all
 run "19-point walk"                        WALK    --rendering-method gl_compatibility --path . --script res://tools/walk_village_v2.gd
 echo "回歸失敗項目：$fail"
 exit $fail

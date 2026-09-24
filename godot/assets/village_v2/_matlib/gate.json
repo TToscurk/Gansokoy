@@ -1,0 +1,36 @@
+{
+ "asset": "_matlib",
+ "entry": "res://assets/village_v2/_matlib/matlib.json",
+ "entry_sha256": "188a12d71c04f4ef674c003c0702cb15414dd73cf1823cbfef531afb5b559bc0",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "license": {
+   "result": "PASS",
+   "detail": [
+    "6 組材質來源全是 Poly Haven CC0 且有 URL／原檔雜湊"
+   ],
+   "date": "2026-09-25T01:52:53"
+  },
+  "texture_size": {
+   "result": "PASS",
+   "detail": [
+    "18 張貼圖全是 2048²"
+   ],
+   "date": "2026-09-25T01:52:53"
+  },
+  "vram_compressed": {
+   "result": "PASS",
+   "detail": [
+    "全部 VRAM 壓縮（法線標 normal_map）、匯入檔存在"
+   ],
+   "date": "2026-09-25T01:52:53"
+  },
+  "tres_valid": {
+   "result": "PASS",
+   "detail": [
+    ".tres 可載入、albedo_k＝材質庫登記值（預設 0.42）、頂點色、三張貼圖齊全"
+   ],
+   "date": "2026-09-25T01:52:53"
+  }
+ }
+}

@@ -9,12 +9,14 @@ extends SceneTree
 ##   4 Protected（龍神像、火見櫓、神社關聯）：狀態不得為 RETIRE；每個模型檔 sha256 不變（lock=exists 的共用原始檔只驗存在）；
 ##     受保護目錄的非 .import 檔數與總位元組不變；專案外素材庫存在時一併驗（不存在則 SKIP，不算失敗）。
 ##   5 archived_moved：封存位置雜湊相符、原位置已不存在（封存 ≠ 刪除）。
-##   6 v2_assets：每件新資產的 Asset Gate 11 項都要 PASS 才算登記有效。
+##   6 v2_assets：每件新資產的 Asset Gate 11 項（共享材質庫 4 項）都要 PASS、entry 雜湊與 gate.json 一致才算登記有效
+##     （gate：tools/verify_village_v2_hero_gate.gd；登記：tools/build_village_v2_asset_registry.py）。
 ## 每項一行 [ASSET] PASS/FAIL；結尾 quit(失敗項數)。
 
 const REG := "res://data/village_v2_asset_registry.json"
 const GATE_KEYS: Array[String] = ["size", "parcel_fit", "grounding", "materials", "geometry", "pivot_scale",
 	"collision", "lod", "performance", "player_screenshot", "f5_f6"]
+const MATLIB_KEYS: Array[String] = ["license", "texture_size", "vram_compressed", "tres_valid"]
 
 var fails := 0
 var repo_root := ""
@@ -231,15 +233,32 @@ func _init() -> void:
 		reg["archived_moved"].size(), mbad.size(), ", ".join(mbad.slice(0, 4))], mbad.is_empty())
 
 	# ── 6 v2_assets 登記有效性
+	#    hero／landmark＝11 項、material_library＝4 項；entry 雜湊＝登記值＝gate.json（gate 之後改過檔就失效）；
+	#    path 必須是 res://assets/village_v2/<id>（白名單只放行登記的目錄，不是整個 village_v2/）
 	var abad := PackedStringArray()
 	for a: Dictionary in reg["v2_assets"]:
+		var lib := String(a.get("kind", "")) == "material_library"
+		var keys: Array[String] = MATLIB_KEYS if lib else GATE_KEYS
 		var gate: Dictionary = a.get("gate", {})
-		for k: String in GATE_KEYS:
+		for k: String in keys:
 			if String(gate.get(k, "")) != "PASS":
-				abad.append("%s.%s" % [a.get("path", "?"), k])
-		if not ResourceLoader.exists(String(a.get("path", ""))):
-			abad.append("缺檔 " + String(a.get("path", "")))
-	check("v2_assets %d 件，Asset Gate 11 項全 PASS（問題 %d：%s）" % [
+				abad.append("%s.%s" % [a.get("id", "?"), k])
+		var entry := String(a.get("entry", ""))
+		var p := String(a.get("path", ""))
+		if p != "res://assets/village_v2/" + String(a.get("id", "?")) or not entry.begins_with(p + "/"):
+			abad.append("%s 路徑不合規約（%s）" % [a.get("id", "?"), p])
+		if not FileAccess.file_exists(entry):
+			abad.append("缺檔 " + entry)
+		elif FileAccess.get_sha256(entry) != String(a.get("entry_sha256", "")):
+			abad.append("%s entry 雜湊與登記不一致（gate 之後改過）" % a.get("id", "?"))
+		var gj: Variant = JSON.parse_string(FileAccess.get_file_as_string(String(a.get("gate_json", ""))))
+		if not gj is Dictionary or String(gj.get("entry_sha256", "")) != String(a.get("entry_sha256", "")):
+			abad.append("%s gate.json 缺或雜湊不符" % a.get("id", "?"))
+		else:
+			for k: String in keys:
+				if String(gj["checks"].get(k, {}).get("result", "")) != "PASS":
+					abad.append("%s gate.json %s 不是 PASS" % [a.get("id", "?"), k])
+	check("v2_assets %d 件（hero／landmark 11 項、材質庫 4 項）全 PASS、雜湊與 gate.json 一致（問題 %d：%s）" % [
 		reg["v2_assets"].size(), abad.size(), ", ".join(abad.slice(0, 4))], abad.is_empty())
 
 	print("[ASSET] 結果：%d 項失敗" % fails)

@@ -4,7 +4,7 @@
   --move：把 archived_moved 清單搬到 archive/reference_old_assets/（先驗雜湊、不覆蓋既有檔、不刪任何檔），並寫 MANIFEST.json。
 不動 git index。驗證：godot/tools/verify_village_v2_asset_reset.gd（已在 run_village_v2_regression.sh）。
 Protected 資產（龍神像、火見櫓、神社關聯）的原檔不得修改；REWORK 產物另存 godot/assets/village_v2/<名>/，
-過 Asset Gate 11 項後才登記到 v2_assets。
+過 Asset Gate 11 項後才登記到 v2_assets（依 godot/tools/verify_village_v2_hero_gate.gd 寫的 gate.json）。
 """
 import hashlib, json, os, shutil, sys, glob
 from pathlib import Path
@@ -185,8 +185,45 @@ external_reference_only = [
 for e in external_reference_only:
     e['why_not_moved'] = '專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。'
 
+# ── P5 新資產登記（R1 起）：只收 gate.json 與目前 entry 雜湊一致、且每項 PASS 的資產（不合格＝不登記＝V2 維持灰盒）
+GATE_KEYS = ['size', 'parcel_fit', 'grounding', 'materials', 'geometry', 'pivot_scale',
+             'collision', 'lod', 'performance', 'player_screenshot', 'f5_f6']
+MATLIB_KEYS = ['license', 'texture_size', 'vram_compressed', 'tres_valid']
+V2A = G + '/assets/village_v2'
+v2_assets, v2_rejected = [], []
+for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
+    gp = f'{V2A}/{name}/gate.json'
+    if not os.path.exists(gp):
+        continue
+    with open(gp, encoding='utf-8') as f:
+        gj = json.load(f)
+    entry = gj['entry']
+    ep = G + '/' + entry[len('res://'):]
+    lib = name == '_matlib'
+    keys = MATLIB_KEYS if lib else GATE_KEYS
+    checks = gj.get('checks', {})
+    why = []
+    if not os.path.exists(ep) or sha(ep) != gj.get('entry_sha256'):
+        why.append('entry 雜湊與 gate.json 不一致（gate 之後改過，需重跑 gate）')
+    why += [f'{k}={checks.get(k, {}).get("result", "缺")}' for k in keys if checks.get(k, {}).get('result') != 'PASS']
+    if why:
+        v2_rejected.append({'id': name, 'why': why})
+        continue
+    e = {'id': name, 'kind': 'material_library' if lib else None, 'path': f'res://assets/village_v2/{name}',
+         'entry': entry, 'entry_sha256': gj['entry_sha256'], 'gate_json': res(gp),
+         'gate': {k: checks[k]['result'] for k in keys},
+         'gate_date': max(checks[k]['date'] for k in keys), 'status': 'ART_REVIEW'}
+    if not lib:
+        with open(f'{V2A}/{name}/asset.json', encoding='utf-8') as f:
+            aj = json.load(f)
+        e.update({'kind': aj['kind'], 'label': aj['budget_class'], 'landmark': aj['landmark'],
+                  'asset_json': f'res://assets/village_v2/{name}/asset.json',
+                  'replaces': aj['gate_spec']['anchor'] + '/' + aj['gate_spec']['replaces'],
+                  'lod0_tris': aj['measured_blender']['LOD0']})
+    v2_assets.append(e)
+
 registry = {
-    'version': 'p5-asset-reset-2',
+    'version': 'p5-r1',
     'created': '2026-09-24',
     'authority': 'P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。',
     'rules': [
@@ -195,20 +232,23 @@ registry = {
         'Protected 原檔不得覆寫：任何 REWORK／重製一律另存新資產（res://assets/village_v2/<名>/），再登記 v2_assets。',
         'protected 內檔案不得移、不得刪；模型與貼圖另鎖 sha256（位元組不得變），標 lock=exists 的共用原始檔（產生腳本、神社材質）只驗存在。可 KEEP／REWORK／REFERENCE ONLY，禁止 RETIRE。',
         '封存檔不刪除；archived_moved 在 archive/reference_old_assets/，其餘原地登記。',
+        'v2_assets 由本腳本從 res://assets/village_v2/<名>/gate.json 產生：gate.json 的 entry 雜湊與目前檔案一致、每項 PASS 才登記；'
+        '產生器（gen_village_v2.gd _heroes）只放登記有效且雜湊一致的資產，否則維持 P4 灰盒。status＝ART_REVIEW 直到使用者核准。',
     ],
     'v2_scene': 'res://maps/village_v2/village_v2.tscn',
     'v2_generator_sources': ['res://tools/gen_village_v2.gd', 'res://tools/village_v2_freeze.gd',
                              'res://tools/village_v2_greybox_lib.gd', 'res://tools/village_v2_parcel_lib.gd',
                              'res://tools/village_v2_terrain_lib.gd', 'res://tools/village_v2_water_lib.gd',
-                             'res://maps/village_v2/layout_v2.json'],
+                             'res://tools/village_v2_hero_lib.gd', 'res://maps/village_v2/layout_v2.json'],
     'v2_allowed': {
         'prefixes': ['res://maps/village_v2/', 'res://tools/village_v2_',
                      'res://tools/gen_village_v2.gd', 'res://tools/shots/village_v2_'],
         'shared_runtime': ['res://scripts/sky_system.gd', 'res://assets/textures/skybox_jinri.png',
                            'res://assets/fonts/NotoSerifTC-VF.ttf', 'res://data/village_v2.meta.json',
-                           'res://scenes/main.tscn'],
+                           'res://scenes/main.tscn', 'res://data/village_v2_asset_registry.json'],
     },
-    'v2_assets': [],
+    'v2_assets': v2_assets,
+    'v2_rejected': v2_rejected,
     'protected': protected,
     'archived_moved': archived_moved,
     'archived_in_place': archived_in_place,
@@ -243,3 +283,4 @@ print('protected model files (repo):', pf, ' external:', pe,
 done = sum(1 for a in archived_moved if os.path.exists(R + '/' + a['to']))
 print('archived_moved:', len(archived_moved), f'（已在 archive/：{done}）', '本次搬移' if MOVE else '')
 print('archived_in_place:', len(archived_in_place), ' external_reference_only:', len(external_reference_only))
+print('v2_assets:', [(e['id'], e['kind']) for e in v2_assets], ' 未登記:', v2_rejected)

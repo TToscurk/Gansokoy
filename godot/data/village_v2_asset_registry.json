@@ -1,5 +1,5 @@
 {
- "version": "p5-asset-reset-2",
+ "version": "p5-r1",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -7,7 +7,8 @@
   "新資產放 res://assets/village_v2/<名>/，但**不是**白名單前綴：必須在 v2_assets 登記、Asset Gate 11 項（尺寸、地塊、接地、材質、幾何、Pivot/Scale、碰撞、LOD、效能、玩家視角截圖、F5/F6）全 PASS 才能被 V2 引用。",
   "Protected 原檔不得覆寫：任何 REWORK／重製一律另存新資產（res://assets/village_v2/<名>/），再登記 v2_assets。",
   "protected 內檔案不得移、不得刪；模型與貼圖另鎖 sha256（位元組不得變），標 lock=exists 的共用原始檔（產生腳本、神社材質）只驗存在。可 KEEP／REWORK／REFERENCE ONLY，禁止 RETIRE。",
-  "封存檔不刪除；archived_moved 在 archive/reference_old_assets/，其餘原地登記。"
+  "封存檔不刪除；archived_moved 在 archive/reference_old_assets/，其餘原地登記。",
+  "v2_assets 由本腳本從 res://assets/village_v2/<名>/gate.json 產生：gate.json 的 entry 雜湊與目前檔案一致、每項 PASS 才登記；產生器（gen_village_v2.gd _heroes）只放登記有效且雜湊一致的資產，否則維持 P4 灰盒。status＝ART_REVIEW 直到使用者核准。"
  ],
  "v2_scene": "res://maps/village_v2/village_v2.tscn",
  "v2_generator_sources": [
@@ -17,6 +18,7 @@
   "res://tools/village_v2_parcel_lib.gd",
   "res://tools/village_v2_terrain_lib.gd",
   "res://tools/village_v2_water_lib.gd",
+  "res://tools/village_v2_hero_lib.gd",
   "res://maps/village_v2/layout_v2.json"
  ],
  "v2_allowed": {
@@ -31,10 +33,85 @@
    "res://assets/textures/skybox_jinri.png",
    "res://assets/fonts/NotoSerifTC-VF.ttf",
    "res://data/village_v2.meta.json",
-   "res://scenes/main.tscn"
+   "res://scenes/main.tscn",
+   "res://data/village_v2_asset_registry.json"
   ]
  },
- "v2_assets": [],
+ "v2_assets": [
+  {
+   "id": "_matlib",
+   "kind": "material_library",
+   "path": "res://assets/village_v2/_matlib",
+   "entry": "res://assets/village_v2/_matlib/matlib.json",
+   "entry_sha256": "188a12d71c04f4ef674c003c0702cb15414dd73cf1823cbfef531afb5b559bc0",
+   "gate_json": "res://assets/village_v2/_matlib/gate.json",
+   "gate": {
+    "license": "PASS",
+    "texture_size": "PASS",
+    "vram_compressed": "PASS",
+    "tres_valid": "PASS"
+   },
+   "gate_date": "2026-09-25T01:52:53",
+   "status": "ART_REVIEW"
+  },
+  {
+   "id": "south_torii",
+   "kind": "landmark",
+   "path": "res://assets/village_v2/south_torii",
+   "entry": "res://assets/village_v2/south_torii/south_torii.scn",
+   "entry_sha256": "1fbda697534ec0f873b4d5fe2d3dda52566b6644103edf550271f0a49cf10259",
+   "gate_json": "res://assets/village_v2/south_torii/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T01:53:58",
+   "status": "ART_REVIEW",
+   "label": "鳥居",
+   "landmark": "LANDMARK_SOUTH_GATE",
+   "asset_json": "res://assets/village_v2/south_torii/asset.json",
+   "replaces": "Landmarks/LANDMARK_SOUTH_GATE/Torii",
+   "lod0_tris": 1542
+  },
+  {
+   "id": "suzunaan",
+   "kind": "hero",
+   "path": "res://assets/village_v2/suzunaan",
+   "entry": "res://assets/village_v2/suzunaan/suzunaan.scn",
+   "entry_sha256": "53483e7d6f592944aee180739fe9f5a02c1ebcc7663b83e412c83eeafc9ef75c",
+   "gate_json": "res://assets/village_v2/suzunaan/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T01:54:24",
+   "status": "ART_REVIEW",
+   "label": "鈴奈庵",
+   "landmark": "LANDMARK_SUZUNAAN",
+   "asset_json": "res://assets/village_v2/suzunaan/asset.json",
+   "replaces": "Landmarks/LANDMARK_SUZUNAAN/Greybox",
+   "lod0_tris": 31978
+  }
+ ],
+ "v2_rejected": [],
  "protected": [
   {
    "group": "龍神像",
