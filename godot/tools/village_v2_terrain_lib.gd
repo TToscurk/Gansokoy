@@ -201,3 +201,40 @@ static func resample(line: PackedVector2Array, step: float) -> PackedVector2Arra
 	if out[out.size() - 1].distance_to(line[line.size() - 1]) > 0.01:
 		out.append(line[line.size() - 1])
 	return out
+
+
+## 主河岸坡局部整修（terrain.river_bank_polish，P1）：只在 from→to 弦上、指定一側生效。
+## 沿河座標 s 取「投影到 from→to 弦」——折線中心線的最近段弧長在彎內側會跳，波會變鋸齒。
+## 兩端各 fade 公尺淡入；離 keep_clear 點 r0 內完全不動（橋台），r0–r1 淡入。
+## 回傳 [岸寬增減 m（已乘權重）, 水線以上坡形指數 p（≥ 2）, 權重 0–1, 岸肩下降 m（≥ 0）, 坡面鼓凹 m, 岸腳前伸 m（≥ 0，只往河裡伸，水面不外露）]；呼叫端以權重混合新舊岸坡。
+## 岸寬、形狀、岸頂高都是少數幾個長波長正弦（數十公尺），不是細碎 noise；p ≥ 2 讓坡頂是寬圓肩、不成折線。
+static func bank_polish(P: Dictionary, side: float, p: Vector2) -> Array:
+	if P.is_empty() or signf(side) != signf(float(P["side"])):
+		return [0.0, 2.0, 0.0, 0.0, 0.0, 0.0]
+	var a := Vector2(float(P["from"][0]), float(P["from"][1]))
+	var b := Vector2(float(P["to"][0]), float(P["to"][1]))
+	var span := a.distance_to(b)
+	var s := (p - a).dot((b - a) / span)
+	var fd := float(P["fade"])
+	var w := smoothstep(0.0, fd, s) * (1.0 - smoothstep(span - fd, span, s))
+	var kc: Dictionary = P["keep_clear"]
+	var c := Vector2(float(kc["at"][0]), float(kc["at"][1]))
+	w *= smoothstep(float(kc["r0"]), float(kc["r1"]), p.distance_to(c))
+	if w <= 0.0:
+		return [0.0, 2.0, 0.0, 0.0, 0.0, 0.0]
+	var dw := float(P["width_bias"])
+	for wv in P["width_waves"]:
+		dw += float(wv[1]) * sin(TAU * s / float(wv[0]) + float(wv[2]))
+	var k := float(P["shape_k"])
+	for wv in P["shape_waves"]:
+		k += float(wv[1]) * sin(TAU * s / float(wv[0]) + float(wv[2]))
+	var dr := float(P["top_drop"])
+	for wv in P["top_waves"]:
+		dr += float(wv[1]) * sin(TAU * s / float(wv[0]) + float(wv[2]))
+	var fb := 0.0
+	for wv in P["face_waves"]:
+		fb += float(wv[1]) * sin(TAU * s / float(wv[0]) + float(wv[2]))
+	var jt := float(P["toe_bias"])
+	for wv in P["toe_waves"]:
+		jt += float(wv[1]) * sin(TAU * s / float(wv[0]) + float(wv[2]))
+	return [dw * w, maxf(k, 2.0), w, maxf(dr, 0.0), fb, maxf(jt, 0.0)]

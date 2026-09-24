@@ -82,6 +82,7 @@ var outlines: Array = []         # 建成區平台外框（TLib.built_outlines�
 var apron := 3.0                 # 平台在外框外多留的平地（m）
 var river_pts := PackedVector2Array()
 var river_hw := PackedFloat32Array()
+var polish := {}   # terrain.river_bank_polish
 ## 水渠與細渠：{name,label,pts,hw,margin,wdepth,cap,below,cum,lv}
 ## lv = 沿中心線每 1 m 的水位，取「上游累積最小值」→ 水只會往下游流，不會爬坡。
 var channels: Array = []
@@ -199,6 +200,13 @@ func _setup() -> void:
 	river_pts = _pts(W["MainRiver"]["pts"])
 	for v in W["MainRiver"]["half_w"]:
 		river_hw.append(float(v))
+	polish = L.get("terrain", {}).get("river_bank_polish", {})
+	if not polish.is_empty():
+		print("[v2] 岸坡整修：(%s)→(%s) %s 岸，岸寬 %+.1f ±%.1f m、水線以上坡形指數 %.2f ±%.2f（下限 2）、坡寬下限 %.0f m、岸肩下降 %.2f ±%.2f m（離河中心 %.0f m 內）" % [
+			str(polish["from"]), str(polish["to"]), "右" if float(polish["side"]) < 0.0 else "左",
+			float(polish["width_bias"]), _amp(polish["width_waves"]), float(polish["shape_k"]), _amp(polish["shape_waves"]),
+			float(polish["bank_min_w"]),
+			float(polish["top_drop"]), _amp(polish["top_waves"]), float(polish["rim_r"])])
 	channels.append({"name": "Canal", "label": String(W["Canal"]["label"]),
 		"pts": _pts(W["Canal"]["pts"]), "hw": float(W["Canal"]["half_w"]), "margin": 1.4,
 		"wdepth": float(H["canal_water_depth"]), "cap": float(H["canal_max_water"]),
@@ -238,6 +246,13 @@ func _setup() -> void:
 		_channel_prep(ch)
 	for r in roads:
 		_road_prep(r)
+
+
+func _amp(waves: Array) -> float:
+	var s := 0.0
+	for wv in waves:
+		s += absf(float(wv[1]))
+	return s
 
 
 func _add_poly(name: String, a: Array) -> void:
@@ -349,8 +364,54 @@ func _carve(x: float, z: float, h: float) -> float:
 	var r := _near(river_pts, p)
 	var rhw := _hw_interp(river_hw, r)
 	var outer := rhw + 6.0 + maxf(0.0, land - 1.0) * 1.8
+	# P1 岸坡整修（龍神橋東岸，terrain.river_bank_polish）：水線以下完全照舊；水線以上的坡面
+	# 沿河改寬度（dw）、改坡形（k ≤ 1 → 坡頂圓），岸頂在平台外再加淺窪（只降不升）。
+	var pk: Array = [0.0, 2.0, 0.0, 0.0, 0.0, 0.0]
+	if not polish.is_empty() and r.x < float(polish["rim_r"]) + 1.0:
+		var k := int(r.y)
+		pk = TLib.bank_polish(polish, signf((river_pts[k + 1] - river_pts[k]).cross(p - river_pts[k])), p)
+	var a0 := rhw * 0.45
+	var bed := float(H["river_bed"])
+	var h0 := h
 	if r.x < outer:
-		h = minf(h, lerpf(float(H["river_bed"]), land, _ss(rhw * 0.45, outer, r.x)))
+		h0 = minf(h, lerpf(bed, land, _ss(a0, outer, r.x)))
+	var wgt := float(pk[2])
+	var wl := float(H["river_water"])
+	if wgt > 0.0 and land > wl:
+		# 整修後的岸坡 h1，與原岸坡 h0 依權重混合（兩者皆連續 → 淡入淡出處無縫）。
+		# 水線以下完全照舊；水線以上改成 1−(1−v)^p（p ≥ 2）：水線處斜、往上曲率遞減，坡頂是寬圓肩。
+		# 坡寬沿河隨 dw 變化，下限 bank_min_w（坡面 ≤ 40°）。
+		# 岸肩高低（pk[3]，只降不升、不低於水面 +1.5 m）。固定鏡頭眼高 1.77 m、東岸平台約 1.9–2.0 m：
+		# 坡頂幾乎就在視平線上，平面上左右擺動看不出來，只有岸肩高低讀得出起伏。
+		# 岸肩在 rim_r（離河中心）前以 smoothstep 接回原地面；rim_r 在驗證的河岸帶（28 m）內，外面的平台不動。
+		var yw := clampf((wl - bed) / (land - bed), 0.0, 1.0)
+		var uw := 0.5 - sin(asin(1.0 - 2.0 * yw) / 3.0)   # smoothstep 反函數：原岸坡水線位置
+		var xw := a0 + (outer - a0) * uw
+		var rim := float(polish["rim_r"])
+		# 坡頂離 rim 至少 rim_gap，岸肩才有空間降下再接回
+		var lw := clampf(outer - xw + float(pk[0]) / wgt, float(polish["bank_min_w"]), rim - float(polish["rim_gap"]) - xw)
+		var crest := xw + lw
+		# 淺窪深度受回升距離限制：smootherstep 最大曲率 5.77·d/L²，d ≤ 0.02·L² → 曲率 ≤ 0.12 /m，接回處不起肩線
+		var top := maxf(land - minf(float(pk[3]), 0.02 * pow(rim - crest, 2.0)), minf(land, wl + float(polish["top_min"])))
+		# 岸腳前伸：整條岸坡往河心平移 jut（只伸不縮 → 水線只往河裡走，水面網格邊不外露）。
+		# 水線從此不再是一條直線；坡頂同步前移，坡寬不變。
+		var jut := float(pk[5])
+		var rx := r.x + jut
+		var h1 := h
+		if rx <= xw:
+			h1 = minf(h, lerpf(bed, land, _ss(a0, outer, rx)))
+		elif r.x < xw - jut + lw:
+			var v := (rx - xw) / lw
+			# 坡面鼓凹：sin²(πv) 兩端值與斜率皆 0（水線、坡頂不起折），沿河隨 face_waves 正負交替
+			# 鼓起處可能略高過原地面：用 soft min 貼回（硬 min 會在交點留一條折線）
+			h1 = TLib.smin(h, wl + (top - wl) * (1.0 - pow(1.0 - v, float(pk[1]))) + float(pk[4]) * pow(sin(PI * v), 2.0) * (top - wl) / 2.8, 0.8)
+		elif r.x < rim:
+			# 岸肩接回原地面用 smootherstep（兩端二階導數也為 0，接縫不起線）
+			var q := clampf((r.x - (crest - jut)) / (rim - (crest - jut)), 0.0, 1.0)
+			h1 = minf(h, lerpf(top, land, q * q * q * (q * (q * 6.0 - 15.0) + 10.0)))
+		h = lerpf(h0, h1, wgt)
+	else:
+		h = h0
 	for ch in channels:
 		var q := _near(ch["pts"], p)
 		var hw: float = ch["hw"]

@@ -19,6 +19,8 @@ extends SceneTree
 ##   接坡     Natural edge 站（gen/terrain_edges.json）往外 0–20 m 坡度 ≤ NATURAL_MAX_DEG
 ##   梯田     各田面＝farm_level ±FLAT_TOL、至少 3 階；灌溉揚程、排水出水高（terrain.farm_terraces）
 ##   橋長     Bridge_* 長度在 terrain.bridge_spans 容許範圍內
+##   東岸     terrain.river_bank_polish 段：坡頂線不得筆直（沿河擺動 ≥ CREST_RANGE_MIN）、無局部尖峰／凹坑、
+##            水面邊緣不外露（水面帶外地面 ≥ 水位）；五座橋兩端與地面無斷層
 
 const Freeze := preload("res://tools/village_v2_freeze.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
@@ -49,6 +51,13 @@ const EDGE_DEPART := 0.3         # 地面離開平台基準面多少算「坡開
 const BANK_LEVEL := 0.6          # 河岸等高線＝主河水位 + 0.6 m
 const DRAGON_EAST := Rect2(400, -215, 70, 90)   # a056297 審圖指出的龍神橋東岸（x 400–470）
 const EDGES := "res://maps/village_v2/gen/terrain_edges.json"
+const CREST_DROP := 0.25         # 坡頂＝地面離「岸頂（離河 40 m 處地面）」只差 0.25 m 的第一點
+const CREST_RANGE_MIN := 3.0      # 審圖段（DRAGON_EAST）坡頂線離水邊距離扣線性趨勢的沿河擺動下限（m）
+const TOP_RANGE_MIN := 0.3        # 審圖段坡面高（水邊外 5 m）扣線性趨勢的沿河起伏下限（m）。岸頂＝建成區平台，依規則須平
+const CREST_BEND_MAX := 0.16      # 坡頂 ±3 m 內坡度變化率上限（1/m）＝坡頂圓度；e1931d7 是折線
+const EXTREMUM_TOL := 0.05        # 比 8 鄰點都高（低）超過此值＝尖峰（凹坑）
+const BANK_FACE_MAX_DEG := 45.0
+const ABUT_TOL := 0.15            # 橋端與地面高差
 const NATURAL_MAX_DEG := 40.0   # 產生器把接坡 > blend_deg 35° 的站標成 Retaining；實測（網格內插、轉角）留 5° 餘裕
 
 var L: Dictionary
@@ -110,6 +119,8 @@ func _run() -> void:
 	_check_natural_edges()
 	_check_farm()
 	_check_bridges()
+	_check_bank_polish()
+	_check_abutments()
 	print("[TERRAIN] 結果：%d 項失敗" % fails)
 	quit(fails)
 
@@ -627,3 +638,195 @@ func _check_bridges() -> void:
 			continue
 		check("%s 長 %.1f m（preferred %.1f，容許 %.1f–%.1f）" % [b.name, len_m, float(span[0]), float(span[1]), float(span[2])],
 			len_m >= float(span[1]) and len_m <= float(span[2]))
+
+
+## 主河：中心線、半寬、累積弧長；回傳 [距離, 弧長, 側別(+1 左／−1 右), 半寬]
+func _river_q(p: Vector2) -> Array:
+	var R: Dictionary = L["water"]["MainRiver"]
+	var pts := TLib.pts(R["pts"])
+	var hw: Array = R["half_w"]
+	var best := INF
+	var out: Array = []
+	var cum := 0.0
+	for k in pts.size() - 1:
+		var a := pts[k]
+		var ab := pts[k + 1] - a
+		var tt := clampf((p - a).dot(ab) / ab.length_squared(), 0.0, 1.0)
+		var d := p.distance_to(a + ab * tt)
+		if d < best:
+			best = d
+			out = [d, cum + tt * ab.length(), signf(ab.cross(p - a)), lerpf(float(hw[k]), float(hw[k + 1]), tt)]
+		cum += ab.length()
+	return out
+
+
+func _check_bank_polish() -> void:
+	var P: Dictionary = L.get("terrain", {}).get("river_bank_polish", {})
+	check("layout 有 terrain.river_bank_polish", not P.is_empty())
+	if P.is_empty():
+		return
+	var pa := Vector2(float(P["from"][0]), float(P["from"][1]))
+	var pb := Vector2(float(P["to"][0]), float(P["to"][1]))
+	var span := pa.distance_to(pb)
+	var cd := (pb - pa) / span
+	var fd := float(P["fade"])
+	var side := float(P["side"])
+	var kc: Dictionary = P["keep_clear"]
+	var bridge_c := Vector2(float(kc["at"][0]), float(kc["at"][1]))
+	var wl := float(L["heights"]["river_water"])
+	var rl := TLib.resample(TLib.pts(L["water"]["MainRiver"]["pts"]), 1.0)
+	# 1) 坡頂線：沿河每 1 m 量到 CREST_LEVEL 等高線的距離；扣掉線性趨勢後看擺動（筆直＝0）
+	var ss := PackedFloat32Array()
+	var crest := PackedFloat32Array()
+	var bends := PackedFloat32Array()
+	var tops := PackedFloat32Array()
+	var wet_bad := 0
+	var wet_n := 0
+	var wet_worst := 0.0
+	var wet_at := Vector2.ZERO
+	for i in rl.size():
+		var c: Vector2 = rl[i]
+		var s := (c - pa).dot(cd)
+		if s < fd or s > span - fd or c.distance_to(bridge_c) < float(kc["r1"]):
+			continue
+		var tg := (rl[mini(i + 1, rl.size() - 1)] - rl[maxi(i - 1, 0)]).normalized()
+		var nrm: Vector2 = Vector2(-tg.y, tg.x) * side
+		var land := _ground(c.x + nrm.x * 40.0, c.y + nrm.y * 40.0)
+		if not is_nan(land) and land > wl + 1.5 and not _near_road(c + nrm * 20.0, 8.0):
+			var tc := _first_cross(c, nrm, 40.0, land - CREST_DROP, true)
+			if not is_nan(tc):
+				var tw := _first_cross(c, nrm, 40.0, wl, true)
+				var qt: Vector2 = c + nrm * (tw + 5.0)
+				var yt := _ground(qt.x, qt.y)
+				if DRAGON_EAST.has_point(c) and not is_nan(tw) and not is_nan(yt) and not _near_road(qt, 6.0):
+					ss.append(s)
+					crest.append(tc - tw)
+					tops.append(yt)
+				# 坡頂圓度：t_c−3 … t_c+3 每 1 m 的坡度，取相鄰坡度差最大值
+				var sl: Array = []
+				for dd in range(-3, 4):
+					var q0: Vector2 = c + nrm * (tc + float(dd) - 0.5)
+					var q1: Vector2 = c + nrm * (tc + float(dd) + 0.5)
+					sl.append(_ground(q1.x, q1.y) - _ground(q0.x, q0.y))
+				var bend := 0.0
+				for k in range(1, sl.size()):
+					bend = maxf(bend, absf(float(sl[k]) - float(sl[k - 1])))
+				bends.append(bend)
+		# 3) 水面帶（半寬＋3 m）外到岸頂：地面不得低於水位（否則是沒有水的坑、水面邊外露）
+		var rq: Array = _river_q(c + nrm * 0.01)
+		var d := float(rq[3]) + 3.0
+		while d <= float(rq[3]) + 20.0:
+			var q: Vector2 = c + nrm * d
+			d += 1.0
+			if _near_road(q, 4.0) or TLib.polyline_d(water_lines[1][0], q) < 10.0:
+				continue
+			var y := _ground(q.x, q.y)
+			if is_nan(y):
+				continue
+			wet_n += 1
+			if y < wl - 0.02:
+				wet_bad += 1
+				if wl - y > wet_worst:
+					wet_worst = wl - y
+					wet_at = q
+	var crest_rng := _detrended_range(ss, crest)
+	var top_rng := _detrended_range(ss, tops)
+	var bs := bends.duplicate()
+	bs.sort()
+	var bend95 := float(bs[int(0.95 * (bs.size() - 1))]) if bs.size() > 0 else INF
+	check("東岸坡頂線（岸頂 −%.2f m）離水邊距離扣線性趨勢後沿河擺動 %.1f m（≥ %.1f，審圖段 %d 站）" % [
+		CREST_DROP, crest_rng, CREST_RANGE_MIN, ss.size()],
+		ss.size() > 20 and crest_rng >= CREST_RANGE_MIN)
+	check("東岸坡面高（水邊外 5 m）扣線性趨勢後沿河起伏 %.2f m（≥ %.2f）" % [top_rng, TOP_RANGE_MIN],
+		ss.size() > 20 and top_rng >= TOP_RANGE_MIN)
+	check("東岸坡頂圓度：±3 m 內坡度變化 p95 %.3f /m（≤ %.2f）" % [bend95, CREST_BEND_MAX], bend95 <= CREST_BEND_MAX)
+	check("東岸水面帶外 %d 點中 %d 點低於水位 %.2f m（最深 %.2f m @ (%.0f, %.0f)）" % [
+		wet_n, wet_bad, wl, wet_worst, wet_at.x, wet_at.y], wet_n > 0 and wet_bad == 0)
+	# 2) 尖峰／凹坑、坡面最陡：整修段岸坡 1 m 網格
+	var bb := Rect2(rl[0], Vector2.ZERO)
+	for q in rl:
+		bb = bb.expand(q)
+	var n := 0
+	var ext := 0
+	var ext_at := Vector2.ZERO
+	var steep := 0.0
+	var steep_at := Vector2.ZERO
+	var x := floorf(bb.position.x) - 40.0
+	while x <= bb.end.x + 40.0:
+		var z := floorf(bb.position.y) - 40.0
+		while z <= bb.end.y + 40.0:
+			var p := Vector2(x, z)
+			z += 1.0
+			var rq: Array = _river_q(p)
+			var sp := (p - pa).dot(cd)
+			if rq.is_empty() or float(rq[2]) != side or sp < fd or sp > span - fd or float(rq[0]) > 40.0:
+				continue
+			if p.distance_to(bridge_c) < float(kc["r1"]) or _near_road(p, 4.0) or TLib.polyline_d(water_lines[1][0], p) < 10.0:
+				continue
+			var y := _ground(p.x, p.y)
+			if is_nan(y) or y < float(L["heights"]["river_bed"]) + 0.05:
+				continue
+			n += 1
+			var hi := true
+			var lo := true
+			for o in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+				var yn := _ground(p.x + o.x, p.y + o.y)
+				if is_nan(yn):
+					continue
+				hi = hi and y > yn + EXTREMUM_TOL
+				lo = lo and y < yn - EXTREMUM_TOL
+				steep = maxf(steep, rad_to_deg(atan(absf(y - yn) / o.length())))
+				if steep == rad_to_deg(atan(absf(y - yn) / o.length())):
+					steep_at = p
+			if hi or lo:
+				ext += 1
+				ext_at = p
+		x += 1.0
+	check("東岸坡面 %d 點：局部尖峰／凹坑 %d 個（> %.2f m @ (%.0f, %.0f)）" % [n, ext, EXTREMUM_TOL, ext_at.x, ext_at.y],
+		n > 0 and ext == 0)
+	check("東岸坡面最陡 %.1f°（≤ %.0f° @ (%.0f, %.0f)）" % [steep, BANK_FACE_MAX_DEG, steep_at.x, steep_at.y],
+		steep <= BANK_FACE_MAX_DEG)
+
+
+## 橋端：橋面兩端（meta end_heights）與橋外 0.5 m 的地面高差
+func _check_abutments() -> void:
+	for b in v.get_node("Roads/Bridges").get_children():
+		var n3 := b as Node3D
+		var len_m := float(b.get_meta("length_m"))
+		var eh: Array = b.get_meta("end_heights")
+		var fwd := Vector3(n3.global_basis.z.x, 0.0, n3.global_basis.z.z).normalized()
+		var c := n3.global_position
+		var worst := 0.0
+		for e in 2:
+			var sg := 1.0 if e == 0 else -1.0
+			var q := Vector3(c.x, 0.0, c.z) + fwd * sg * (len_m * 0.5 + 0.5)
+			var y := _ground(q.x, q.z)
+			# end_heights 的順序與 basis.z 的正負對應不固定：取兩端中較接近者
+			var d := minf(absf(y - float(eh[0])), absf(y - float(eh[1])))
+			worst = maxf(worst, d)
+		check("%s 橋端與地面高差最大 %.2f m（≤ %.2f）" % [b.name, worst, ABUT_TOL], worst <= ABUT_TOL)
+
+
+## 最小平方直線扣除後的 max − min
+func _detrended_range(xs: PackedFloat32Array, ys: PackedFloat32Array) -> float:
+	var n := float(xs.size())
+	if n < 3.0:
+		return 0.0
+	var mx := 0.0
+	var my := 0.0
+	for k in xs.size():
+		mx += xs[k] / n
+		my += ys[k] / n
+	var sxy := 0.0
+	var sxx := 0.0
+	for k in xs.size():
+		sxy += (xs[k] - mx) * (ys[k] - my)
+		sxx += (xs[k] - mx) * (xs[k] - mx)
+	var b := sxy / maxf(sxx, 1e-6)
+	var lo := INF
+	var hi := -INF
+	for k in xs.size():
+		var r := ys[k] - (my + b * (xs[k] - mx))
+		lo = minf(lo, r)
+		hi = maxf(hi, r)
+	return hi - lo
