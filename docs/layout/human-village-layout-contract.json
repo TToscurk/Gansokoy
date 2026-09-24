@@ -305,6 +305,14 @@
     {
       "date": "2026-09-24",
       "ruling": "P3 parcels: one parcel per building. Machiya frontage about 5–9 m, depth 12–25 m, generated deterministically from the frontage; landmark buildings use fixed parcels. P4 greybox places one building per parcel."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P3 parcels r1 NOT approved, shallow-parcel correction only: the 47 infill parcels 8–12 m deep still counted as machiya, which violates the 12–25 m ruling and would push P4 to shrink buildings until the village looks like a model house. Keep the lanes; do not touch P0/P1. Merge those parcels into adjacent ones where possible, keeping machiya at 12–25 m; where merging is unreasonable, relabel them auxiliary/yard parcels (garden, storehouse, shed, backyard, open ground) that are NOT formal machiya building plots. Do not stuff buildings in to chase land coverage — about 4% of land far from a road is acceptable, a village should have backyards and gaps. Do not redo the rest of P3."
+    },
+    {
+      "date": "2026-09-24",
+      "ruling": "P3 parcels r2 result: machiya depth 12.0–25.0 m with zero shallow parcels (187 machiya, 14 of them deepened by merging, +80.0 m total); 38 auxiliary/yard parcels 8–12 m (kind `aux`, with a `use` field); 9 landmark parcels. Frontage coverage is now measured over BUILDABLE frontage only (a sample counts only if a minimum machiya 5 × 12 m fits there), so the metric can never be raised by adding shallow or auxiliary parcels."
     }
   ],
   "resolved_at_freeze": [
@@ -394,6 +402,11 @@
       "item": "Lane surfaces and parcel outlines are greybox markers only",
       "stage": "P13 Final Art",
       "note": "Surface, edge and drainage per layout_v2.json `road_classes`."
+    },
+    {
+      "item": "38 auxiliary/yard parcels (kind `aux`, ids A_*) carry a suggested `use` (garden / backyard / storehouse-shed / open ground)",
+      "stage": "P4 Greybox",
+      "note": "No main building on these; they are yards, sheds and deliberate gaps. `use` is a suggestion, not a fixed assignment."
     }
   ]
 }

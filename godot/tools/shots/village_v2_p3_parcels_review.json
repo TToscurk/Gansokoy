@@ -109,5 +109,43 @@
   ],
   "hud": false,
   "time": 11
+ },
+ {
+  "name": "v2p3r2_topdown_merge_west",
+  "cam": [
+   205.0,
+   120.0,
+   -30.0
+  ],
+  "look": [
+   205.0,
+   0.0,
+   -32.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "time": 11
+ },
+ {
+  "name": "v2p3r2_topdown_aux_swest",
+  "cam": [
+   198.0,
+   105.0,
+   70.0
+  ],
+  "look": [
+   198.0,
+   0.0,
+   68.0
+  ],
+  "hide": [
+   "Debug/Labels",
+   "Vegetation"
+  ],
+  "hud": false,
+  "time": 11
  }
 ]

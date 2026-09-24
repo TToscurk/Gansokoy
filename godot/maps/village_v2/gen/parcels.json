@@ -461,7 +461,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.36,
 			"id": "P_MKT_001",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "MainStreet",
@@ -512,7 +511,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.43,
 			"id": "P_MKT_002",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "MainStreet",
@@ -563,7 +561,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.68,
 			"id": "P_MKT_003",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "MainStreet",
@@ -614,7 +611,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.72,
 			"id": "P_MKT_004",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -665,7 +661,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 0.77,
 			"id": "P_MKT_005",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MainStreet",
@@ -716,7 +711,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.81,
 			"id": "P_MKT_006",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "MainStreet",
@@ -767,7 +761,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.85,
 			"id": "P_MKT_007",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -818,7 +811,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.88,
 			"id": "P_MKT_008",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -869,7 +861,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.93,
 			"id": "P_MKT_009",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "MainStreet",
@@ -920,7 +911,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.97,
 			"id": "P_MKT_010",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "MainStreet",
@@ -930,16 +920,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 86.4,
+			"area_m2": 93.6,
 			"center": [
-				276.44,
-				-33.0
+				276.92,
+				-32.85
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 12.0,
+			"depth_m": 13.0,
 			"district": "Market",
 			"entrance": [
 				270.7,
@@ -956,12 +946,12 @@
 					-38.17
 				],
 				[
-					283.23,
-					-34.72
+					284.18,
+					-34.43
 				],
 				[
-					281.16,
-					-27.83
+					282.11,
+					-27.54
 				]
 			],
 			"front_dir": [
@@ -971,26 +961,26 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.09,
 			"id": "P_MKT_011",
-			"infill": false,
 			"kind": "machiya",
+			"merged_m": 1.0,
 			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.22,
 			"side": "L",
-			"slope_pct": 0.7
+			"slope_pct": 0.8
 		},
 		{
-			"area_m2": 64.8,
+			"area_m2": 110.7,
 			"center": [
-				278.25,
-				-39.03
+				282.33,
+				-37.81
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 12.0,
+			"depth_m": 20.5,
 			"district": "Market",
 			"entrance": [
 				272.51,
@@ -1007,12 +997,12 @@
 					-43.34
 				],
 				[
-					284.78,
-					-39.89
+					292.92,
+					-37.45
 				],
 				[
-					283.23,
-					-34.72
+					291.37,
+					-32.28
 				]
 			],
 			"front_dir": [
@@ -1020,11 +1010,11 @@
 				-0.29
 			],
 			"frontage_m": 5.4,
-			"ground_h": 1.14,
+			"ground_h": 1.13,
 			"id": "P_MKT_012",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.06,
+			"merged_m": 8.5,
+			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.25,
@@ -1073,7 +1063,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.18,
 			"id": "P_MKT_013",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -1124,7 +1113,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.38,
 			"id": "P_MKT_014",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -1175,7 +1163,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.42,
 			"id": "P_MKT_015",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "MainStreet",
@@ -1226,7 +1213,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.47,
 			"id": "P_MKT_016",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -1277,7 +1263,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.5,
 			"id": "P_MXC_001",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -1328,7 +1313,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.54,
 			"id": "P_MXC_002",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MainStreet",
@@ -1379,7 +1363,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.58,
 			"id": "P_MXC_003",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -1430,7 +1413,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.63,
 			"id": "P_MXC_004",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "MainStreet",
@@ -1481,7 +1463,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.44,
 			"id": "P_MKT_017",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "MainStreet",
@@ -1491,16 +1472,16 @@
 			"slope_pct": 0.8
 		},
 		{
-			"area_m2": 98.3,
+			"area_m2": 155.0,
 			"center": [
-				231.71,
-				33.25
+				227.44,
+				31.83
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 15.6,
+			"depth_m": 24.6,
 			"district": "Market",
 			"entrance": [
 				239.11,
@@ -1509,12 +1490,12 @@
 			"entrance_h": 0.68,
 			"footprint": [
 				[
-					223.31,
-					33.77
+					214.77,
+					30.92
 				],
 				[
-					225.3,
-					27.79
+					216.77,
+					24.95
 				],
 				[
 					240.1,
@@ -1530,11 +1511,11 @@
 				0.32
 			],
 			"frontage_m": 6.3,
-			"ground_h": 0.7,
+			"ground_h": 0.71,
 			"id": "P_MKT_018",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.07,
+			"merged_m": 9.0,
+			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 0.78,
@@ -1542,16 +1523,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 125.3,
+			"area_m2": 179.3,
 			"center": [
-				232.99,
-				26.56
+				229.43,
+				25.37
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 17.4,
+			"depth_m": 24.9,
 			"district": "Market",
 			"entrance": [
 				241.24,
@@ -1560,12 +1541,12 @@
 			"entrance_h": 0.72,
 			"footprint": [
 				[
-					223.6,
-					27.22
+					216.48,
+					24.85
 				],
 				[
-					225.87,
-					20.39
+					218.76,
+					18.02
 				],
 				[
 					242.38,
@@ -1581,11 +1562,11 @@
 				0.32
 			],
 			"frontage_m": 7.2,
-			"ground_h": 0.74,
+			"ground_h": 0.75,
 			"id": "P_MKT_019",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.08,
+			"merged_m": 7.5,
+			"relief_m": 0.1,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 0.82,
@@ -1634,7 +1615,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.77,
 			"id": "P_MKT_020",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "MainStreet",
@@ -1685,7 +1665,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.81,
 			"id": "P_MKT_021",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -1736,7 +1715,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.86,
 			"id": "P_MKT_022",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -1746,16 +1724,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 64.8,
+			"area_m2": 105.3,
 			"center": [
-				253.96,
-				-28.36
+				250.37,
+				-29.44
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 1.0
+				"nearest_parcel_m": 0.46
 			},
-			"depth_m": 12.0,
+			"depth_m": 19.5,
 			"district": "Market",
 			"entrance": [
 				259.71,
@@ -1764,12 +1742,12 @@
 			"entrance_h": 1.04,
 			"footprint": [
 				[
-					247.44,
-					-27.5
+					240.26,
+					-29.65
 				],
 				[
-					248.99,
-					-32.67
+					241.81,
+					-34.83
 				],
 				[
 					260.49,
@@ -1785,16 +1763,16 @@
 				0.29
 			],
 			"frontage_m": 5.4,
-			"ground_h": 1.06,
+			"ground_h": 1.07,
 			"id": "P_MKT_023",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.07,
+			"merged_m": 7.5,
+			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.15,
 			"side": "R",
-			"slope_pct": 1.1
+			"slope_pct": 0.9
 		},
 		{
 			"area_m2": 145.8,
@@ -1838,7 +1816,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.12,
 			"id": "P_MKT_024",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -1889,7 +1866,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.16,
 			"id": "P_MKT_025",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -1940,7 +1916,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.2,
 			"id": "P_MKT_026",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MainStreet",
@@ -1991,7 +1966,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.24,
 			"id": "P_MKT_027",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "MainStreet",
@@ -2042,7 +2016,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.28,
 			"id": "P_MKT_028",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -2052,16 +2025,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 125.3,
+			"area_m2": 164.9,
 			"center": [
-				263.99,
-				-71.19
+				261.36,
+				-71.98
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 17.4,
+			"depth_m": 22.9,
 			"district": "Market",
 			"entrance": [
 				272.33,
@@ -2070,12 +2043,12 @@
 			"entrance_h": 1.31,
 			"footprint": [
 				[
-					254.62,
-					-70.24
+					249.36,
+					-71.82
 				],
 				[
-					256.69,
-					-77.13
+					251.43,
+					-78.71
 				],
 				[
 					273.36,
@@ -2091,11 +2064,11 @@
 				0.29
 			],
 			"frontage_m": 7.2,
-			"ground_h": 1.32,
+			"ground_h": 1.33,
 			"id": "P_MKT_029",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.08,
+			"merged_m": 5.5,
+			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.41,
@@ -2103,16 +2076,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 63.0,
+			"area_m2": 90.5,
 			"center": [
-				268.19,
-				-76.82
+				265.55,
+				-77.61
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.5
 			},
-			"depth_m": 12.6,
+			"depth_m": 18.1,
 			"district": "Market",
 			"entrance": [
 				274.22,
@@ -2121,12 +2094,12 @@
 			"entrance_h": 1.34,
 			"footprint": [
 				[
-					261.43,
-					-76.23
+					256.17,
+					-77.81
 				],
 				[
-					262.87,
-					-81.02
+					257.6,
+					-82.6
 				],
 				[
 					274.94,
@@ -2144,9 +2117,9 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.36,
 			"id": "P_MKT_030",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.06,
+			"merged_m": 5.5,
+			"relief_m": 0.07,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.44,
@@ -2195,7 +2168,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.47,
 			"id": "P_MKT_031",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MainStreet",
@@ -2246,7 +2218,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.51,
 			"id": "P_MXC_005",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -2297,7 +2268,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.54,
 			"id": "P_MXC_006",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "MainStreet",
@@ -2348,7 +2318,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.59,
 			"id": "P_MXC_007",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MainStreet",
@@ -2399,7 +2368,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.63,
 			"id": "P_MXC_008",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MainStreet",
@@ -2450,7 +2418,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.18,
 			"id": "P_SGT_001",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "EntranceRoad",
@@ -2501,7 +2468,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.17,
 			"id": "P_SGT_002",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "EntranceRoad",
@@ -2552,7 +2518,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.21,
 			"id": "P_SGT_003",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "EntranceRoad",
@@ -2562,16 +2527,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 90.1,
+			"area_m2": 96.4,
 			"center": [
 				210.15,
-				-9.35
+				-8.85
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.4
+				"nearest_parcel_m": 3.0
 			},
-			"depth_m": 14.3,
+			"depth_m": 15.3,
 			"district": "ResidentialWest",
 			"entrance": [
 				210.15,
@@ -2589,11 +2554,11 @@
 				],
 				[
 					213.3,
-					-2.2
+					-1.2
 				],
 				[
 					207.0,
-					-2.2
+					-1.2
 				]
 			],
 			"front_dir": [
@@ -2603,9 +2568,9 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.96,
 			"id": "P_RSW_001",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.11,
+			"merged_m": 1.0,
+			"relief_m": 0.12,
 			"road": "CrossStreetMid",
 			"road_cls": "secondary",
 			"road_h": 1.12,
@@ -2654,7 +2619,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.95,
 			"id": "P_MKT_032",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "CrossStreetMid",
@@ -2705,7 +2669,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.97,
 			"id": "P_MKT_033",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetMid",
@@ -2756,7 +2719,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.96,
 			"id": "P_MKT_034",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetMid",
@@ -2807,7 +2769,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.99,
 			"id": "P_MKT_035",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetMid",
@@ -2858,7 +2819,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.0,
 			"id": "P_MKT_036",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetMid",
@@ -2909,7 +2869,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.99,
 			"id": "P_MKT_037",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.14,
 			"road": "CrossStreetMid",
@@ -2960,7 +2919,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.01,
 			"id": "P_MKT_038",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "CrossStreetMid",
@@ -2970,16 +2928,16 @@
 			"slope_pct": 0.7
 		},
 		{
-			"area_m2": 75.6,
+			"area_m2": 124.2,
 			"center": [
 				204.7,
-				-30.5
+				-35.0
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 1.49
+				"nearest_parcel_m": 3.0
 			},
-			"depth_m": 14.0,
+			"depth_m": 23.0,
 			"district": "ResidentialWest",
 			"entrance": [
 				204.7,
@@ -2989,11 +2947,11 @@
 			"footprint": [
 				[
 					202.0,
-					-37.5
+					-46.5
 				],
 				[
 					207.4,
-					-37.5
+					-46.5
 				],
 				[
 					207.4,
@@ -3009,11 +2967,11 @@
 				1.0
 			],
 			"frontage_m": 5.4,
-			"ground_h": 1.08,
+			"ground_h": 1.11,
 			"id": "P_RSW_002",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.11,
+			"merged_m": 9.0,
+			"relief_m": 0.16,
 			"road": "CrossStreetMid",
 			"road_cls": "secondary",
 			"road_h": 1.12,
@@ -3021,16 +2979,16 @@
 			"slope_pct": 0.7
 		},
 		{
-			"area_m2": 178.2,
+			"area_m2": 198.5,
 			"center": [
 				214.45,
-				-34.5
+				-35.75
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.08
+				"nearest_parcel_m": 2.0
 			},
-			"depth_m": 22.0,
+			"depth_m": 24.5,
 			"district": "ResidentialWest",
 			"entrance": [
 				214.45,
@@ -3040,11 +2998,11 @@
 			"footprint": [
 				[
 					210.4,
-					-45.5
+					-48.0
 				],
 				[
 					218.5,
-					-45.5
+					-48.0
 				],
 				[
 					218.5,
@@ -3060,11 +3018,11 @@
 				1.0
 			],
 			"frontage_m": 8.1,
-			"ground_h": 1.1,
+			"ground_h": 1.11,
 			"id": "P_RSW_003",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.15,
+			"merged_m": 2.5,
+			"relief_m": 0.17,
 			"road": "CrossStreetMid",
 			"road_cls": "secondary",
 			"road_h": 1.12,
@@ -3113,7 +3071,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.08,
 			"id": "P_RSW_004",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetMid",
@@ -3130,7 +3087,7 @@
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.2
+				"nearest_parcel_m": 0.46
 			},
 			"depth_m": 16.8,
 			"district": "Market",
@@ -3164,7 +3121,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.08,
 			"id": "P_MKT_039",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetMid",
@@ -3181,7 +3137,7 @@
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.39
+				"nearest_parcel_m": 0.38
 			},
 			"depth_m": 13.2,
 			"district": "Market",
@@ -3215,7 +3171,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.11,
 			"id": "P_MKT_040",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetMid",
@@ -3266,7 +3221,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.13,
 			"id": "P_MKT_041",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetMid",
@@ -3317,7 +3271,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.14,
 			"id": "P_MKT_042",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "CrossStreetMid",
@@ -3368,7 +3321,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.13,
 			"id": "P_MKT_043",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.14,
 			"road": "CrossStreetMid",
@@ -3419,7 +3371,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.53,
 			"id": "P_RSW_005",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.14,
 			"road": "CrossStreetSouth",
@@ -3470,7 +3421,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.53,
 			"id": "P_RSW_006",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "CrossStreetSouth",
@@ -3480,16 +3430,16 @@
 			"slope_pct": 0.7
 		},
 		{
-			"area_m2": 75.6,
+			"area_m2": 135.0,
 			"center": [
-				193.29,
-				59.85
+				193.44,
+				65.35
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.3
+				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 14.0,
+			"depth_m": 25.0,
 			"district": "ResidentialWest",
 			"entrance": [
 				193.09,
@@ -3506,12 +3456,12 @@
 					52.77
 				],
 				[
-					196.18,
-					66.77
+					196.49,
+					77.77
 				],
 				[
-					190.78,
-					66.92
+					191.09,
+					77.92
 				]
 			],
 			"front_dir": [
@@ -3519,11 +3469,11 @@
 				-1.0
 			],
 			"frontage_m": 5.4,
-			"ground_h": 0.55,
+			"ground_h": 0.51,
 			"id": "P_RSW_007",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.11,
+			"merged_m": 11.0,
+			"relief_m": 0.17,
 			"road": "CrossStreetSouth",
 			"road_cls": "secondary",
 			"road_h": 0.7,
@@ -3572,7 +3522,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.54,
 			"id": "P_MKT_044",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.15,
 			"road": "CrossStreetSouth",
@@ -3623,7 +3572,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.55,
 			"id": "P_MKT_045",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetSouth",
@@ -3674,7 +3622,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 0.56,
 			"id": "P_MKT_046",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetSouth",
@@ -3725,7 +3672,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.57,
 			"id": "P_MKT_047",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetSouth",
@@ -3776,7 +3722,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.57,
 			"id": "P_MKT_048",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetSouth",
@@ -3827,7 +3772,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.56,
 			"id": "P_MKT_049",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "CrossStreetSouth",
@@ -3844,7 +3788,7 @@
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.4
+				"nearest_parcel_m": 0.27
 			},
 			"depth_m": 12.3,
 			"district": "Market",
@@ -3878,7 +3822,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 0.66,
 			"id": "P_MKT_050",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetSouth",
@@ -3929,7 +3872,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.68,
 			"id": "P_MKT_051",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetSouth",
@@ -3980,7 +3922,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.69,
 			"id": "P_MKT_052",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetSouth",
@@ -4031,7 +3972,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.7,
 			"id": "P_MKT_053",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "CrossStreetSouth",
@@ -4082,7 +4022,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.68,
 			"id": "P_MKT_054",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "CrossStreetSouth",
@@ -4133,7 +4072,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.7,
 			"id": "P_MKT_055",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "CrossStreetSouth",
@@ -4184,7 +4122,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.7,
 			"id": "P_RSW_008",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.15,
 			"road": "HillFootStreet",
@@ -4235,7 +4172,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.74,
 			"id": "P_MXC_009",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "HillFootStreet",
@@ -4286,7 +4222,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.73,
 			"id": "P_MXC_010",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "HillFootStreet",
@@ -4337,7 +4272,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.73,
 			"id": "P_MXC_011",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "HillFootStreet",
@@ -4388,7 +4322,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.71,
 			"id": "P_MXC_012",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "HillFootStreet",
@@ -4439,7 +4372,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.69,
 			"id": "P_MXC_013",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "HillFootStreet",
@@ -4490,7 +4422,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.69,
 			"id": "P_MXC_014",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "HillFootStreet",
@@ -4541,7 +4472,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.61,
 			"id": "P_MXC_015",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "HillFootStreet",
@@ -4592,7 +4522,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.61,
 			"id": "P_MXC_016",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "HillFootStreet",
@@ -4643,7 +4572,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.62,
 			"id": "P_MXC_017",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "HillFootStreet",
@@ -4694,7 +4622,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.73,
 			"id": "P_MXC_018",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "HillFootStreet",
@@ -4745,7 +4672,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.73,
 			"id": "P_MXC_019",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "HillFootStreet",
@@ -4796,7 +4722,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.74,
 			"id": "P_MXC_020",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "HillFootStreet",
@@ -4847,7 +4772,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.73,
 			"id": "P_MXC_021",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "HillFootStreet",
@@ -4898,7 +4822,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.72,
 			"id": "P_MXC_022",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "HillFootStreet",
@@ -4949,7 +4872,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.78,
 			"id": "P_MXC_023",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "RiverNorthPath",
@@ -5000,7 +4922,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.8,
 			"id": "P_MXC_024",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "RiverNorthPath",
@@ -5051,7 +4972,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.44,
 			"id": "P_RSW_009",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "WestAlley",
@@ -5102,7 +5022,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.39,
 			"id": "P_RSW_010",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "WestAlley",
@@ -5153,7 +5072,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.33,
 			"id": "P_RSW_011",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestAlley",
@@ -5204,7 +5122,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.27,
 			"id": "P_RSW_012",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestAlley",
@@ -5255,7 +5172,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.22,
 			"id": "P_RSW_013",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestAlley",
@@ -5306,7 +5222,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.16,
 			"id": "P_RSW_014",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestAlley",
@@ -5357,7 +5272,6 @@
 			"frontage_m": 5.26,
 			"ground_h": 1.1,
 			"id": "P_RSW_015",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestAlley",
@@ -5367,16 +5281,16 @@
 			"slope_pct": 0.6
 		},
 		{
-			"area_m2": 75.6,
+			"area_m2": 124.2,
 			"center": [
-				189.88,
-				-25.27
+				185.5,
+				-24.22
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.32
+				"nearest_parcel_m": 0.71
 			},
-			"depth_m": 14.0,
+			"depth_m": 23.0,
 			"district": "ResidentialWest",
 			"entrance": [
 				196.69,
@@ -5393,12 +5307,12 @@
 					-24.28
 				],
 				[
-					183.7,
-					-21.02
+					174.95,
+					-18.91
 				],
 				[
-					182.44,
-					-26.27
+					173.69,
+					-24.17
 				]
 			],
 			"front_dir": [
@@ -5408,14 +5322,14 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.04,
 			"id": "P_RSW_016",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.07,
+			"merged_m": 9.0,
+			"relief_m": 0.08,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 1.16,
 			"side": "L",
-			"slope_pct": 1.0
+			"slope_pct": 0.9
 		},
 		{
 			"area_m2": 178.2,
@@ -5459,7 +5373,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.97,
 			"id": "P_RSW_017",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "WestAlley",
@@ -5510,7 +5423,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.91,
 			"id": "P_RSW_018",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestAlley",
@@ -5561,7 +5473,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 0.37,
 			"id": "P_MKT_056",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "WestAlley",
@@ -5612,7 +5523,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.36,
 			"id": "P_MKT_057",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "WestAlley",
@@ -5663,7 +5573,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.64,
 			"id": "P_RSW_019",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "WestAlley",
@@ -5714,7 +5623,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.59,
 			"id": "P_RSW_020",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "WestAlley",
@@ -5765,7 +5673,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.54,
 			"id": "P_RSW_021",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "WestAlley",
@@ -5816,7 +5723,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.51,
 			"id": "P_RSW_022",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "WestAlley",
@@ -5867,7 +5773,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.45,
 			"id": "P_RSW_023",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "WestAlley",
@@ -5918,7 +5823,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.34,
 			"id": "P_RSW_024",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "WestAlley",
@@ -5969,7 +5873,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.28,
 			"id": "P_RSW_025",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestAlley",
@@ -5986,7 +5889,7 @@
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.3
+				"nearest_parcel_m": 1.5
 			},
 			"depth_m": 18.8,
 			"district": "ResidentialWest",
@@ -6020,7 +5923,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.24,
 			"id": "P_RSW_026",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestAlley",
@@ -6071,7 +5973,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.86,
 			"id": "P_MKT_058",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "WestAlley",
@@ -6122,7 +6023,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 0.82,
 			"id": "P_MKT_059",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestAlley",
@@ -6173,7 +6073,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 2.17,
 			"id": "P_RSW_027",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "NWLane",
@@ -6224,7 +6123,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.21,
 			"id": "P_RSW_028",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "NWLane",
@@ -6275,7 +6173,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.31,
 			"id": "P_RSW_029",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.14,
 			"road": "NWLane",
@@ -6326,7 +6223,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.33,
 			"id": "P_RSW_030",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "NWLane",
@@ -6377,7 +6273,6 @@
 			"frontage_m": 5.68,
 			"ground_h": 2.35,
 			"id": "P_RSW_031",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NWLane",
@@ -6428,7 +6323,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.81,
 			"id": "P_RSW_032",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "NWLane",
@@ -6479,7 +6373,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.85,
 			"id": "P_RSW_033",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "NWLane",
@@ -6530,7 +6423,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.93,
 			"id": "P_RSW_034",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "NWLane",
@@ -6581,7 +6473,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.98,
 			"id": "P_RSW_035",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "NWLane",
@@ -6632,7 +6523,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.13,
 			"id": "P_RSW_036",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NWLane",
@@ -6642,16 +6532,16 @@
 			"slope_pct": 0.5
 		},
 		{
-			"area_m2": 129.6,
+			"area_m2": 133.2,
 			"center": [
-				165.02,
-				-212.62
+				164.81,
+				-212.5
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 18.0,
+			"depth_m": 18.5,
 			"district": "ResidentialWest",
 			"entrance": [
 				172.8,
@@ -6660,12 +6550,12 @@
 			"entrance_h": 2.2,
 			"footprint": [
 				[
-					159.06,
-					-204.98
+					158.63,
+					-204.73
 				],
 				[
-					155.44,
-					-211.2
+					155.0,
+					-210.95
 				],
 				[
 					170.98,
@@ -6681,10 +6571,10 @@
 				-0.5
 			],
 			"frontage_m": 7.2,
-			"ground_h": 2.18,
+			"ground_h": 2.17,
 			"id": "P_RSW_037",
-			"infill": false,
 			"kind": "machiya",
+			"merged_m": 0.5,
 			"relief_m": 0.09,
 			"road": "NWLane",
 			"road_cls": "lane",
@@ -6734,7 +6624,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.22,
 			"id": "P_RSW_038",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NWLane",
@@ -6744,16 +6633,16 @@
 			"slope_pct": 0.5
 		},
 		{
-			"area_m2": 178.2,
+			"area_m2": 198.5,
 			"center": [
-				148.75,
-				-221.69
+				148.07,
+				-220.63
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
 				"nearest_parcel_m": 0.1
 			},
-			"depth_m": 22.0,
+			"depth_m": 24.5,
 			"district": "ResidentialWest",
 			"entrance": [
 				154.65,
@@ -6762,12 +6651,12 @@
 			"entrance_h": 2.28,
 			"footprint": [
 				[
-					146.26,
-					-210.23
+					144.91,
+					-208.12
 				],
 				[
-					139.42,
-					-214.58
+					138.08,
+					-212.47
 				],
 				[
 					151.23,
@@ -6783,11 +6672,11 @@
 				-0.84
 			],
 			"frontage_m": 8.1,
-			"ground_h": 2.23,
+			"ground_h": 2.22,
 			"id": "P_RSW_039",
-			"infill": false,
 			"kind": "machiya",
-			"relief_m": 0.14,
+			"merged_m": 2.5,
+			"relief_m": 0.15,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 2.36,
@@ -6802,7 +6691,7 @@
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.1
+				"nearest_parcel_m": 0.0
 			},
 			"depth_m": 14.9,
 			"district": "ResidentialWest",
@@ -6836,7 +6725,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.14,
 			"id": "P_RSW_040",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "NWBranch",
@@ -6887,7 +6775,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 2.02,
 			"id": "P_RSW_041",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NWBranch",
@@ -6938,7 +6825,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.01,
 			"id": "P_RSW_042",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "NWBranch",
@@ -6989,7 +6875,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 2.04,
 			"id": "P_RSW_043",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "NWBranch",
@@ -7040,7 +6925,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.06,
 			"id": "P_RSW_044",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NWBranch",
@@ -7091,7 +6975,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.03,
 			"id": "P_RSW_045",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7142,7 +7025,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.09,
 			"id": "P_RSW_046",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "WestBankLane",
@@ -7193,7 +7075,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.13,
 			"id": "P_RSW_047",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -7244,7 +7125,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.19,
 			"id": "P_RSW_048",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7295,7 +7175,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.25,
 			"id": "P_RSW_049",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -7346,7 +7225,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.3,
 			"id": "P_RSW_050",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -7397,7 +7275,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.35,
 			"id": "P_RSW_051",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7448,7 +7325,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.4,
 			"id": "P_RSW_052",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -7499,7 +7375,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.47,
 			"id": "P_RSW_053",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "WestBankLane",
@@ -7550,7 +7425,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.55,
 			"id": "P_RSW_054",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -7601,7 +7475,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.59,
 			"id": "P_RSW_055",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -7652,7 +7525,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.65,
 			"id": "P_RSW_056",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7703,7 +7575,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.7,
 			"id": "P_RSW_057",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -7754,7 +7625,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.94,
 			"id": "P_RSW_058",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7805,7 +7675,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.99,
 			"id": "P_RSW_059",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "WestBankLane",
@@ -7856,7 +7725,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.05,
 			"id": "P_RSW_060",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "WestBankLane",
@@ -7907,7 +7775,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.13,
 			"id": "P_RSW_061",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -7958,7 +7825,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.18,
 			"id": "P_RSW_062",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -8009,7 +7875,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.23,
 			"id": "P_RSW_063",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -8060,7 +7925,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.29,
 			"id": "P_RSW_064",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -8111,7 +7975,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.34,
 			"id": "P_RSW_065",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -8162,7 +8025,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.4,
 			"id": "P_RSW_066",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -8213,7 +8075,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.47,
 			"id": "P_RSW_067",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -8264,7 +8125,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.51,
 			"id": "P_RSW_068",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
@@ -8315,7 +8175,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.56,
 			"id": "P_RSW_069",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "WestBankLane",
@@ -8366,7 +8225,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.62,
 			"id": "P_RSW_070",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.05,
 			"road": "WestBankLane",
@@ -8417,7 +8275,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 1.37,
 			"id": "P_RSW_071",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "MidLane",
@@ -8468,7 +8325,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.35,
 			"id": "P_RSW_072",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "MidLane",
@@ -8519,7 +8375,6 @@
 			"frontage_m": 6.17,
 			"ground_h": 1.48,
 			"id": "P_RSW_073",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "MidLane",
@@ -8570,7 +8425,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.49,
 			"id": "P_RSW_074",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "MidLane",
@@ -8621,7 +8475,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 1.49,
 			"id": "P_RSW_075",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "MidLane",
@@ -8672,7 +8525,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 1.48,
 			"id": "P_RSW_076",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "MidLane",
@@ -8723,7 +8575,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 1.45,
 			"id": "P_MKT_060",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "MidLane",
@@ -8774,7 +8625,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 0.57,
 			"id": "P_RSW_077",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "SWLane",
@@ -8825,7 +8675,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 0.52,
 			"id": "P_RSW_078",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.06,
 			"road": "SWLane",
@@ -8876,7 +8725,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 0.41,
 			"id": "P_RSW_079",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "SWLane",
@@ -8927,7 +8775,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 0.37,
 			"id": "P_RSW_080",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.08,
 			"road": "SWLane",
@@ -8978,7 +8825,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 0.43,
 			"id": "P_RSW_081",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "SWLane",
@@ -9029,7 +8875,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.13,
 			"id": "P_RNE_001",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NELane",
@@ -9080,7 +8925,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.21,
 			"id": "P_RNE_002",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NELane",
@@ -9131,7 +8975,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 2.24,
 			"id": "P_RNE_003",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "NELane",
@@ -9182,7 +9025,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 2.28,
 			"id": "P_RNE_004",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NELane",
@@ -9233,7 +9075,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.29,
 			"id": "P_RNE_005",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "NELane",
@@ -9284,7 +9125,6 @@
 			"frontage_m": 5.02,
 			"ground_h": 2.31,
 			"id": "P_RNE_006",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "NELane",
@@ -9335,7 +9175,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 2.38,
 			"id": "P_RNE_007",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "NELane",
@@ -9386,7 +9225,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.39,
 			"id": "P_RNE_008",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NELane",
@@ -9437,7 +9275,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.41,
 			"id": "P_RNE_009",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "NELane",
@@ -9488,7 +9325,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.37,
 			"id": "P_RNE_010",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.07,
 			"road": "NENorth",
@@ -9539,7 +9375,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 2.11,
 			"id": "P_RNE_011",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NESouth",
@@ -9590,7 +9425,6 @@
 			"frontage_m": 8.1,
 			"ground_h": 2.06,
 			"id": "P_RNE_012",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "NESouth",
@@ -9641,7 +9475,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.03,
 			"id": "P_RNE_013",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "NESouth",
@@ -9692,7 +9525,6 @@
 			"frontage_m": 9.0,
 			"ground_h": 1.98,
 			"id": "P_RNE_014",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "NESouth",
@@ -9743,7 +9575,6 @@
 			"frontage_m": 5.4,
 			"ground_h": 1.98,
 			"id": "P_RNE_015",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.1,
 			"road": "NESouth",
@@ -9794,7 +9625,6 @@
 			"frontage_m": 6.3,
 			"ground_h": 2.17,
 			"id": "P_RNE_016",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.11,
 			"road": "NESouth",
@@ -9845,7 +9675,6 @@
 			"frontage_m": 7.2,
 			"ground_h": 2.13,
 			"id": "P_RNE_017",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.12,
 			"road": "NESouth",
@@ -9896,7 +9725,6 @@
 			"frontage_m": 5.0,
 			"ground_h": 2.09,
 			"id": "P_RNE_018",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.09,
 			"road": "NESouth",
@@ -9947,7 +9775,6 @@
 			"frontage_m": 7.8,
 			"ground_h": 2.09,
 			"id": "P_RNE_019",
-			"infill": false,
 			"kind": "machiya",
 			"relief_m": 0.13,
 			"road": "NESouth",
@@ -9997,15 +9824,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 0.57,
-			"id": "P_MKT_061",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_001",
+			"kind": "aux",
 			"relief_m": 0.11,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 0.67,
 			"side": "L",
-			"slope_pct": 1.3
+			"slope_pct": 1.3,
+			"use": "後院"
 		},
 		{
 			"area_m2": 42.0,
@@ -10048,15 +9875,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.34,
-			"id": "P_MKT_062",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_002",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.45,
 			"side": "L",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 60.0,
@@ -10099,15 +9926,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.68,
-			"id": "P_MXC_025",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MXC_001",
+			"kind": "aux",
 			"relief_m": 0.09,
 			"road": "MainStreet",
 			"road_cls": "main",
 			"road_h": 1.74,
 			"side": "R",
-			"slope_pct": 1.0
+			"slope_pct": 1.0,
+			"use": "後院"
 		},
 		{
 			"area_m2": 50.0,
@@ -10150,15 +9977,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 0.21,
-			"id": "P_SGT_004",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_SGT_001",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "EntranceRoad",
 			"road_cls": "main",
 			"road_h": 0.32,
 			"side": "L",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 58.0,
@@ -10201,117 +10028,15 @@
 			],
 			"frontage_m": 6.3,
 			"ground_h": 1.04,
-			"id": "P_MKT_063",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_003",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "CrossStreetMid",
 			"road_cls": "secondary",
 			"road_h": 1.17,
 			"side": "L",
-			"slope_pct": 0.8
-		},
-		{
-			"area_m2": 42.0,
-			"center": [
-				242.5,
-				-27.7
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.2
-			},
-			"depth_m": 8.4,
-			"district": "Market",
-			"entrance": [
-				242.5,
-				-23.5
-			],
-			"entrance_h": 1.02,
-			"footprint": [
-				[
-					240.0,
-					-31.9
-				],
-				[
-					245.0,
-					-31.9
-				],
-				[
-					245.0,
-					-23.5
-				],
-				[
-					240.0,
-					-23.5
-				]
-			],
-			"front_dir": [
-				0.0,
-				1.0
-			],
-			"frontage_m": 5.0,
-			"ground_h": 1.06,
-			"id": "P_MKT_064",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.07,
-			"road": "CrossStreetMid",
-			"road_cls": "secondary",
-			"road_h": 1.12,
-			"side": "R",
-			"slope_pct": 0.9
-		},
-		{
-			"area_m2": 75.3,
-			"center": [
-				289.03,
-				-33.41
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.2
-			},
-			"depth_m": 9.3,
-			"district": "Market",
-			"entrance": [
-				289.89,
-				-28.84
-			],
-			"entrance_h": 1.05,
-			"footprint": [
-				[
-					284.18,
-					-37.22
-				],
-				[
-					292.14,
-					-38.73
-				],
-				[
-					293.87,
-					-29.59
-				],
-				[
-					285.91,
-					-28.09
-				]
-			],
-			"front_dir": [
-				0.19,
-				0.98
-			],
-			"frontage_m": 8.1,
-			"ground_h": 1.09,
-			"id": "P_MKT_065",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.08,
-			"road": "CrossStreetMid",
-			"road_cls": "secondary",
-			"road_h": 1.15,
-			"side": "R",
-			"slope_pct": 0.8
+			"slope_pct": 0.8,
+			"use": "空地"
 		},
 		{
 			"area_m2": 65.5,
@@ -10354,15 +10079,15 @@
 			],
 			"frontage_m": 6.3,
 			"ground_h": 0.56,
-			"id": "P_RSW_082",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_001",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "CrossStreetSouth",
 			"road_cls": "secondary",
 			"road_h": 0.7,
 			"side": "L",
-			"slope_pct": 0.8
+			"slope_pct": 0.8,
+			"use": "後院"
 		},
 		{
 			"area_m2": 61.9,
@@ -10405,15 +10130,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 0.6,
-			"id": "P_MKT_066",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_004",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "CrossStreetSouth",
 			"road_cls": "secondary",
 			"road_h": 0.73,
 			"side": "L",
-			"slope_pct": 0.8
+			"slope_pct": 0.8,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 43.2,
@@ -10456,15 +10181,15 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 0.63,
-			"id": "P_RSW_083",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_002",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "CrossStreetSouth",
 			"road_cls": "secondary",
 			"road_h": 0.7,
 			"side": "R",
-			"slope_pct": 0.9
+			"slope_pct": 0.9,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 72.9,
@@ -10507,15 +10232,15 @@
 			],
 			"frontage_m": 8.1,
 			"ground_h": 0.65,
-			"id": "P_MKT_067",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_005",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "CrossStreetSouth",
 			"road_cls": "secondary",
 			"road_h": 0.71,
 			"side": "R",
-			"slope_pct": 0.8
+			"slope_pct": 0.8,
+			"use": "後院"
 		},
 		{
 			"area_m2": 43.2,
@@ -10558,15 +10283,15 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 1.56,
-			"id": "P_RSW_084",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_003",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 1.68,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "空地"
 		},
 		{
 			"area_m2": 72.9,
@@ -10609,15 +10334,15 @@
 			],
 			"frontage_m": 8.1,
 			"ground_h": 1.51,
-			"id": "P_RSW_085",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_004",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 1.63,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 46.0,
@@ -10660,15 +10385,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.38,
-			"id": "P_RSW_086",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_005",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 1.5,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "後院"
 		},
 		{
 			"area_m2": 56.0,
@@ -10711,15 +10436,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 0.88,
-			"id": "P_RSW_087",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_006",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 0.99,
 			"side": "L",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 47.5,
@@ -10762,15 +10487,15 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 0.64,
-			"id": "P_RSW_088",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_007",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 0.74,
 			"side": "L",
-			"slope_pct": 1.0
+			"slope_pct": 1.0,
+			"use": "空地"
 		},
 		{
 			"area_m2": 52.0,
@@ -10813,270 +10538,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 0.35,
-			"id": "P_MKT_068",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_006",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "WestAlley",
 			"road_cls": "alley",
 			"road_h": 0.48,
 			"side": "L",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 65.5,
-			"center": [
-				207.68,
-				-50.2
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.3
-			},
-			"depth_m": 10.4,
-			"district": "ResidentialWest",
-			"entrance": [
-				202.51,
-				-50.82
-			],
-			"entrance_h": 1.21,
-			"footprint": [
-				[
-					213.21,
-					-52.71
-				],
-				[
-					212.46,
-					-46.45
-				],
-				[
-					202.14,
-					-47.69
-				],
-				[
-					202.89,
-					-53.95
-				]
-			],
-			"front_dir": [
-				-0.99,
-				-0.12
-			],
-			"frontage_m": 6.3,
-			"ground_h": 1.2,
-			"id": "P_RSW_089",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.05,
-			"road": "WestAlley",
-			"road_cls": "alley",
-			"road_h": 1.31,
-			"side": "R",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 43.0,
-			"center": [
-				205.75,
-				-41.72
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.08
-			},
-			"depth_m": 8.6,
-			"district": "ResidentialWest",
-			"entrance": [
-				201.48,
-				-42.23
-			],
-			"entrance_h": 1.15,
-			"footprint": [
-				[
-					210.32,
-					-43.69
-				],
-				[
-					209.72,
-					-38.72
-				],
-				[
-					201.18,
-					-39.75
-				],
-				[
-					201.78,
-					-44.71
-				]
-			],
-			"front_dir": [
-				-0.99,
-				-0.12
-			],
-			"frontage_m": 5.0,
-			"ground_h": 1.15,
-			"id": "P_RSW_090",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.04,
-			"road": "WestAlley",
-			"road_cls": "alley",
-			"road_h": 1.25,
-			"side": "R",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 42.0,
-			"center": [
-				211.85,
-				1.13
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.0
-			},
-			"depth_m": 8.4,
-			"district": "ResidentialWest",
-			"entrance": [
-				207.76,
-				2.11
-			],
-			"entrance_h": 0.88,
-			"footprint": [
-				[
-					215.35,
-					-2.28
-				],
-				[
-					216.51,
-					2.58
-				],
-				[
-					208.35,
-					4.54
-				],
-				[
-					207.18,
-					-0.32
-				]
-			],
-			"front_dir": [
-				-0.97,
-				0.23
-			],
-			"frontage_m": 5.0,
-			"ground_h": 0.89,
-			"id": "P_RSW_091",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.04,
-			"road": "WestAlley",
-			"road_cls": "alley",
-			"road_h": 0.98,
-			"side": "R",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 87.5,
-			"center": [
-				216.86,
-				24.9
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 1.56
-			},
-			"depth_m": 10.8,
-			"district": "Market",
-			"entrance": [
-				211.5,
-				24.26
-			],
-			"entrance_h": 0.76,
-			"footprint": [
-				[
-					222.71,
-					21.53
-				],
-				[
-					221.74,
-					29.57
-				],
-				[
-					211.02,
-					28.28
-				],
-				[
-					211.99,
-					20.24
-				]
-			],
-			"front_dir": [
-				-0.99,
-				-0.12
-			],
-			"frontage_m": 8.1,
-			"ground_h": 0.75,
-			"id": "P_MKT_069",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.06,
-			"road": "WestAlley",
-			"road_cls": "alley",
-			"road_h": 0.86,
-			"side": "R",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 100.8,
-			"center": [
-				178.15,
-				-23.37
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.32
-			},
-			"depth_m": 11.2,
-			"district": "ResidentialWest",
-			"entrance": [
-				179.51,
-				-17.94
-			],
-			"entrance_h": 1.0,
-			"footprint": [
-				[
-					183.87,
-					-19.03
-				],
-				[
-					175.14,
-					-16.85
-				],
-				[
-					172.43,
-					-27.71
-				],
-				[
-					181.16,
-					-29.9
-				]
-			],
-			"front_dir": [
-				0.24,
-				0.97
-			],
-			"frontage_m": 9.0,
-			"ground_h": 1.03,
-			"id": "P_RSW_092",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.09,
-			"road": "WestLane",
-			"road_cls": "alley",
-			"road_h": 1.1,
-			"side": "L",
-			"slope_pct": 0.7
+			"slope_pct": 0.6,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 54.0,
@@ -11119,15 +10589,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 0.94,
-			"id": "P_RSW_093",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_008",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "WestLane",
 			"road_cls": "alley",
 			"road_h": 1.08,
 			"side": "R",
-			"slope_pct": 0.7
+			"slope_pct": 0.7,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 61.9,
@@ -11170,15 +10640,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 2.08,
-			"id": "P_RSW_094",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_009",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 2.13,
 			"side": "L",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 42.0,
@@ -11221,15 +10691,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 2.12,
-			"id": "P_RSW_095",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_010",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 2.16,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 67.9,
@@ -11272,15 +10742,15 @@
 			],
 			"frontage_m": 6.28,
 			"ground_h": 2.24,
-			"id": "P_RSW_096",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_011",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 2.27,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "空地"
 		},
 		{
 			"area_m2": 60.0,
@@ -11323,15 +10793,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.89,
-			"id": "P_RSW_097",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_012",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 1.97,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 58.0,
@@ -11374,49 +10844,49 @@
 			],
 			"frontage_m": 6.3,
 			"ground_h": 2.02,
-			"id": "P_RSW_098",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_013",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "NWLane",
 			"road_cls": "lane",
 			"road_h": 2.1,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 42.5,
 			"center": [
-				155.06,
-				-202.06
+				154.13,
+				-202.42
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.05
+				"nearest_parcel_m": 0.0
 			},
 			"depth_m": 8.5,
 			"district": "ResidentialWest",
 			"entrance": [
-				153.54,
-				-198.09
+				152.61,
+				-198.45
 			],
 			"entrance_h": 2.09,
 			"footprint": [
 				[
-					155.87,
-					-197.19
+					154.94,
+					-197.55
 				],
 				[
-					151.21,
-					-198.99
+					150.27,
+					-199.35
 				],
 				[
-					154.26,
-					-206.92
+					153.32,
+					-207.28
 				],
 				[
-					158.92,
-					-205.13
+					157.99,
+					-205.49
 				]
 			],
 			"front_dir": [
@@ -11425,66 +10895,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 2.11,
-			"id": "P_RSW_099",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_014",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "NWBranch",
 			"road_cls": "lane",
 			"road_h": 2.13,
 			"side": "L",
-			"slope_pct": 0.5
-		},
-		{
-			"area_m2": 43.2,
-			"center": [
-				143.12,
-				-206.38
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.2
-			},
-			"depth_m": 8.0,
-			"district": "ResidentialWest",
-			"entrance": [
-				141.68,
-				-202.65
-			],
-			"entrance_h": 2.12,
-			"footprint": [
-				[
-					144.2,
-					-201.68
-				],
-				[
-					139.16,
-					-203.62
-				],
-				[
-					142.04,
-					-211.09
-				],
-				[
-					147.08,
-					-209.15
-				]
-			],
-			"front_dir": [
-				-0.36,
-				0.93
-			],
-			"frontage_m": 5.4,
-			"ground_h": 2.14,
-			"id": "P_RSW_100",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.06,
-			"road": "NWBranch",
-			"road_cls": "lane",
-			"road_h": 2.16,
-			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 44.0,
@@ -11527,15 +10946,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 2.04,
-			"id": "P_RSW_101",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_015",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "NWBranch",
 			"road_cls": "lane",
 			"road_h": 2.15,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "空地"
 		},
 		{
 			"area_m2": 65.5,
@@ -11578,15 +10997,15 @@
 			],
 			"frontage_m": 6.3,
 			"ground_h": 2.03,
-			"id": "P_RSW_102",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_016",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "NWBranch",
 			"road_cls": "lane",
 			"road_h": 2.14,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 42.0,
@@ -11629,66 +11048,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.65,
-			"id": "P_RSW_103",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_017",
+			"kind": "aux",
 			"relief_m": 0.04,
 			"road": "WestBankLane",
 			"road_cls": "lane",
 			"road_h": 1.72,
 			"side": "R",
-			"slope_pct": 0.6
-		},
-		{
-			"area_m2": 44.5,
-			"center": [
-				252.88,
-				-77.97
-			],
-			"clearance": {
-				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.01
-			},
-			"depth_m": 8.9,
-			"district": "Market",
-			"entrance": [
-				252.6,
-				-82.41
-			],
-			"entrance_h": 1.39,
-			"footprint": [
-				[
-					250.11,
-					-82.25
-				],
-				[
-					255.1,
-					-82.56
-				],
-				[
-					255.65,
-					-73.68
-				],
-				[
-					250.66,
-					-73.37
-				]
-			],
-			"front_dir": [
-				-0.06,
-				-1.0
-			],
-			"frontage_m": 5.0,
-			"ground_h": 1.37,
-			"id": "P_MKT_070",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.06,
-			"road": "MidLane",
-			"road_cls": "lane",
-			"road_h": 1.47,
-			"side": "L",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 40.0,
@@ -11731,15 +11099,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.44,
-			"id": "P_MKT_071",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_MKT_007",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "MidLane",
 			"road_cls": "lane",
 			"road_h": 1.46,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "空地"
 		},
 		{
 			"area_m2": 68.3,
@@ -11782,15 +11150,15 @@
 			],
 			"frontage_m": 6.32,
 			"ground_h": 0.34,
-			"id": "P_RSW_104",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_018",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "SWLane",
 			"road_cls": "lane",
 			"road_h": 0.43,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 61.2,
@@ -11833,15 +11201,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 0.34,
-			"id": "P_RSW_105",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_019",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "SWLane",
 			"road_cls": "lane",
 			"road_h": 0.44,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "空地"
 		},
 		{
 			"area_m2": 43.2,
@@ -11884,66 +11252,66 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 0.35,
-			"id": "P_RSW_106",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RSW_020",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "SWLane",
 			"road_cls": "lane",
 			"road_h": 0.45,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "庭院"
 		},
 		{
-			"area_m2": 100.8,
+			"area_m2": 41.0,
 			"center": [
-				193.61,
-				76.91
+				200.2,
+				75.85
 			],
 			"clearance": {
 				"front_gap_m": 0.5,
-				"nearest_parcel_m": 0.21
+				"nearest_parcel_m": 0.0
 			},
-			"depth_m": 11.2,
+			"depth_m": 8.2,
 			"district": "ResidentialWest",
 			"entrance": [
-				195.72,
-				82.1
+				201.74,
+				79.65
 			],
-			"entrance_h": 0.41,
+			"entrance_h": 0.42,
 			"footprint": [
 				[
-					187.34,
-					73.41
+					196.34,
+					72.99
 				],
 				[
-					195.68,
-					70.03
+					200.97,
+					71.11
 				],
 				[
-					199.89,
-					80.4
+					204.06,
+					78.71
 				],
 				[
-					191.55,
-					83.79
+					199.43,
+					80.59
 				]
 			],
 			"front_dir": [
 				0.38,
 				0.93
 			],
-			"frontage_m": 9.0,
-			"ground_h": 0.44,
-			"id": "P_RSW_107",
-			"infill": true,
-			"kind": "machiya",
-			"relief_m": 0.08,
+			"frontage_m": 5.0,
+			"ground_h": 0.45,
+			"id": "A_RSW_021",
+			"kind": "aux",
+			"relief_m": 0.07,
 			"road": "SWLane",
 			"road_cls": "lane",
-			"road_h": 0.45,
+			"road_h": 0.47,
 			"side": "R",
-			"slope_pct": 0.5
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 61.9,
@@ -11986,15 +11354,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 2.2,
-			"id": "P_RNE_020",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_001",
+			"kind": "aux",
 			"relief_m": 0.08,
 			"road": "NELane",
 			"road_cls": "lane",
 			"road_h": 2.23,
 			"side": "R",
-			"slope_pct": 0.4
+			"slope_pct": 0.4,
+			"use": "後院"
 		},
 		{
 			"area_m2": 42.0,
@@ -12037,15 +11405,15 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 2.29,
-			"id": "P_RNE_021",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_002",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "NELane",
 			"road_cls": "lane",
 			"road_h": 2.32,
 			"side": "R",
-			"slope_pct": 0.4
+			"slope_pct": 0.4,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 66.1,
@@ -12088,15 +11456,15 @@
 			],
 			"frontage_m": 6.12,
 			"ground_h": 2.41,
-			"id": "P_RNE_022",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_003",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "NELane",
 			"road_cls": "lane",
 			"road_h": 2.42,
 			"side": "R",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "空地"
 		},
 		{
 			"area_m2": 47.5,
@@ -12139,15 +11507,15 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 2.34,
-			"id": "P_RNE_023",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_004",
+			"kind": "aux",
 			"relief_m": 0.05,
 			"road": "NENorth",
 			"road_cls": "lane",
 			"road_h": 2.41,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "庭院"
 		},
 		{
 			"area_m2": 72.0,
@@ -12190,15 +11558,15 @@
 			],
 			"frontage_m": 7.2,
 			"ground_h": 2.26,
-			"id": "P_RNE_024",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_005",
+			"kind": "aux",
 			"relief_m": 0.04,
 			"road": "NENorth",
 			"road_cls": "lane",
 			"road_h": 2.32,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "後院"
 		},
 		{
 			"area_m2": 43.2,
@@ -12241,15 +11609,15 @@
 			],
 			"frontage_m": 5.4,
 			"ground_h": 2.3,
-			"id": "P_RNE_025",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_006",
+			"kind": "aux",
 			"relief_m": 0.03,
 			"road": "NENorth",
 			"road_cls": "lane",
 			"road_h": 2.36,
 			"side": "R",
-			"slope_pct": 0.6
+			"slope_pct": 0.6,
+			"use": "倉／小屋"
 		},
 		{
 			"area_m2": 97.2,
@@ -12292,15 +11660,15 @@
 			],
 			"frontage_m": 8.1,
 			"ground_h": 2.4,
-			"id": "P_RNE_026",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_007",
+			"kind": "aux",
 			"relief_m": 0.07,
 			"road": "NENorth",
 			"road_cls": "lane",
 			"road_h": 2.44,
 			"side": "R",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "空地"
 		},
 		{
 			"area_m2": 42.0,
@@ -12343,24 +11711,27 @@
 			],
 			"frontage_m": 5.0,
 			"ground_h": 1.99,
-			"id": "P_RNE_027",
-			"infill": true,
-			"kind": "machiya",
+			"id": "A_RNE_008",
+			"kind": "aux",
 			"relief_m": 0.06,
 			"road": "NESouth",
 			"road_cls": "lane",
 			"road_h": 2.09,
 			"side": "L",
-			"slope_pct": 0.5
+			"slope_pct": 0.5,
+			"use": "庭院"
 		}
 	],
 	"stats": {
-		"keep": 3333,
-		"outline": 5127,
-		"overlap": 19857,
+		"gaps": 51,
+		"keep": 5773,
+		"merged": 14,
+		"merged_m": 80.0,
+		"outline": 8935,
+		"overlap": 36279,
 		"relief": 0,
-		"road": 2014,
-		"tried": 32000,
-		"water": 1435
+		"road": 3137,
+		"tried": 56678,
+		"water": 2278
 	}
 }

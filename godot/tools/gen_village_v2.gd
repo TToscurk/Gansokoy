@@ -45,7 +45,7 @@ const PARCEL_COL := {
 	"Market": Color(0.93, 0.62, 0.30), "MixedCommercial": Color(0.55, 0.62, 0.86),
 	"ResidentialWest": Color(0.52, 0.74, 0.40), "ResidentialNE": Color(0.36, 0.70, 0.62),
 	"MansionEstate": Color(0.86, 0.72, 0.36), "SouthGate": Color(0.80, 0.56, 0.44),
-	"landmark": Color(0.86, 0.32, 0.78)}
+	"aux": Color(0.62, 0.60, 0.52), "landmark": Color(0.86, 0.32, 0.78)}
 const SHOT_FILE := "res://tools/shots/village_v2_fixed_shots.json"
 const VARIANT_SHOT_FILE := "res://tools/shots/village_v2_mainstreet_variant_shots.json"
 const FONT := "res://assets/fonts/NotoSerifTC-VF.ttf"
@@ -1470,12 +1470,17 @@ func _parcels() -> void:
 			if k != "id":
 				m.set_meta(k, rec[k])
 		pg.add_child(m)
-		var key := "landmark" if pc["kind"] == "landmark" else dn
+		var key := "landmark" if pc["kind"] == "landmark" else ("aux" if pc["kind"] == "aux" else dn)
 		if not lines.has(key):
 			var st := SurfaceTool.new()
 			st.begin(Mesh.PRIMITIVE_TRIANGLES)
 			lines[key] = [st, dg]
-		_outline(lines[key][0], pc["poly"], 0.35 if pc["kind"] == "machiya" else 0.5)
+		var lw := 0.35
+		if pc["kind"] == "landmark":
+			lw = 0.5
+		elif pc["kind"] == "aux":
+			lw = 0.22   # 附屬用地：細框、不同色，一眼分得出不是正式町家建築地塊
+		_outline(lines[key][0], pc["poly"], lw)
 		if pc["kind"] == "machiya":
 			var fa: Vector2 = pc["front_a"]
 			var fb: Vector2 = pc["front_b"]
@@ -1485,8 +1490,15 @@ func _parcels() -> void:
 		var st: SurfaceTool = lines[key][0]
 		var dg: Node = lines[key][1]
 		var mesh := st.commit()
-		var lname := "LandmarkParcelLines" if key == "landmark" else "ParcelLines"
-		var mi := _mi(dg if key != "landmark" else vroot.get_node("Districts"), lname, _save(mesh, "parcels_" + String(key).to_lower()),
+		var lname := "ParcelLines"
+		var parent: Node = dg
+		if key == "landmark":
+			lname = "LandmarkParcelLines"
+			parent = vroot.get_node("Districts")
+		elif key == "aux":
+			lname = "AuxParcelLines"   # 附屬用地（庭院／後院／倉小屋／空地）一層，不是町家建築地塊
+			parent = vroot.get_node("Districts")
+		var mi := _mi(parent, lname, _save(mesh, "parcels_" + String(key).to_lower()),
 			_mat(_k(PARCEL_COL.get(key, Color(0.8, 0.8, 0.8))), true), false)
 		mi.set_meta("phase", "P3")
 	var pf := FileAccess.open(PARCELS, FileAccess.WRITE)
@@ -1494,11 +1506,14 @@ func _parcels() -> void:
 		"layout_version": L["version"], "stats": res["stats"], "parcels": recs}, "\t") + "\n")
 	pf.close()
 	var n_m := 0
+	var n_a := 0
 	for r in recs:
 		if r["kind"] == "machiya":
 			n_m += 1
-	print("[v2] P3 地塊 %d（町家 %d、地標 %d）、%d ms → %s；拒絕 %s" % [recs.size(), n_m, recs.size() - n_m,
-		Time.get_ticks_msec() - t0, PARCELS, res["stats"]])
+		elif r["kind"] == "aux":
+			n_a += 1
+	print("[v2] P3 地塊 %d（町家 %d、附屬用地 %d、地標 %d）、%d ms → %s；拒絕 %s" % [recs.size(), n_m, n_a,
+		recs.size() - n_m - n_a, Time.get_ticks_msec() - t0, PARCELS, res["stats"]])
 
 
 ## 地塊外框線（沿地形、每 1.5 m 取樣；四邊各自一條帶，寬 w、朝內）

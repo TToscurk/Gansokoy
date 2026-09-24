@@ -8,7 +8,13 @@ extends RefCounted
 ##         全部由序列與道路幾何決定（沒有亂數）。依 road_order 逐條、逐段、兩側鋪；
 ##         每塊必須：在平台外框內、不壓任何道路／巷道路幅、離水道有餘裕、不進 keep_clear、
 ##         不與地標固定地塊或其他地塊重疊、地塊內高低差 ≤ max_relief。放不下先縮縱深，再往前挪 1 m。
-##         第二輪補縫：縱深 infill_depth、前進 0.5 m，補第一輪留下的淺空隙（其他路地塊的背面、轉角）。
+##   三輪（2026-09-24 使用者裁示 r2：正式町家一律 machiya_depth 12–25 m，不得有淺町家）：
+##     1 町家輪：分區縱深，缺口前進 1 m。
+##     2 合併輪：掃描第一輪留下的空隙，優先把空隙「合併」進背面的相鄰町家——該町家縱深以
+##       merge_step 加深到剛好吃掉空隙，上限 merge_depth_max（25 m）。町家仍是單棟、仍在 12–25 m。
+##     3 附屬輪：合併不掉的空隙改成 auxiliary／yard 附屬用地（kind "aux"、縱深 aux_depth 4–10 m，
+##       用途取 aux_use_seq：庭院／後院／倉小屋／空地）。附屬用地不是正式町家建築地塊，
+##       P4 灰盒不在上面放主建築；也不為覆蓋率硬塞建築。
 ##   地標固定地塊：box 類地標 footprint（依 yaw 旋轉）外擴 yard，扣掉道路路幅；或直接用 layout 指定的 poly。
 
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
@@ -249,21 +255,85 @@ static func parcels(L: Dictionary, net: Array, h_fn: Callable) -> Dictionary:
 			order.append(r["name"])
 	var out: Array = []
 	var counts := {}
-	var stats := {"tried": 0, "outline": 0, "road": 0, "water": 0, "keep": 0, "overlap": 0, "relief": 0}
+	var stats := {"tried": 0, "outline": 0, "road": 0, "water": 0, "keep": 0, "overlap": 0, "relief": 0,
+		"gaps": 0, "merged": 0, "merged_m": 0.0}
 	var ctx := {"R": R, "outlines": outlines, "net": net, "ws": ws, "keep": keep, "acc": acc, "h_fn": h_fn,
-		"dpolys": dpolys, "out": out, "counts": counts, "stats": stats}
-	# 第一輪：正常縱深（district depth），缺口前進 1 m
+		"dpolys": dpolys, "out": out, "counts": counts, "stats": stats, "gaps": []}
+	# 第一輪 町家：分區縱深（machiya_depth 12–25 m 內），缺口前進 1 m
 	for oi in order.size():
-		_pass(ctx, byname[order[oi]], oi, false)
-	# 第二輪補縫：淺地塊（infill_depth），前進 0.5 m；只補第一輪留下的臨路面空隙（背面、轉角、窄帶）
-	if R.has("infill_depth"):
-		for oi in order.size():
-			_pass(ctx, byname[order[oi]], oi, true)
+		_pass(ctx, byname[order[oi]], oi, 0)
+	# 第二輪 掃描：找出第一輪留下的空隙（不落地，只收集多邊形）
+	for oi in order.size():
+		_pass(ctx, byname[order[oi]], oi, 1)
+	stats["gaps"] = (ctx["gaps"] as Array).size()
+	# 第三輪 合併：空隙優先併進背面的相鄰町家（加深縱深，上限 merge_depth_max）
+	_merge(ctx)
+	# 第四輪 附屬用地：併不掉的空隙改成 auxiliary／yard（庭院、後院、倉小屋、空地），不是正式町家
+	for oi in order.size():
+		_pass(ctx, byname[order[oi]], oi, 2)
+	for pc in out:
+		pc.erase("acc_i")
 	return {"parcels": out, "fixed": fixed, "stats": stats, "keep": keep}
 
 
-## 沿一條路兩側鋪地塊。infill＝補縫輪（縱深 infill_depth、前進 0.5 m、寬度退到 frontage_min）
-static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void:
+## 空隙併進背面町家：沿背面方向以 merge_step 加深，只在「背面 dmax 內還有掃描輪標出的空隙」時才繼續，
+## 空隙吃完（或碰到既有地塊／路／水／平台外／keep_clear）就停。町家縱深上限 merge_depth_max
+## （＝ machiya_depth 上限 25 m），所以正式町家永遠在 12–25 m，也不會無限往空地長。
+static func _merge(ctx: Dictionary) -> void:
+	var R: Dictionary = ctx["R"]
+	var gaps: Array = ctx["gaps"]
+	if gaps.is_empty():
+		return
+	var step := float(R["merge_step"])
+	var dmax := float(R["merge_depth_max"])
+	var min_gap := float(R.get("merge_min_gap_m2", 2.0))
+	var acc: Array = ctx["acc"]
+	var stats: Dictionary = ctx["stats"]
+	for pc in ctx["out"]:
+		if pc["kind"] != "machiya":
+			continue
+		var f0: Vector2 = pc["front_a"]
+		var f1: Vector2 = pc["front_b"]
+		var n: Vector2 = -(pc["dir"] as Vector2)
+		var side := 1.0 if String(pc["side"]) == "L" else -1.0
+		var ai := int(pc["acc_i"])
+		var d := float(pc["depth"])
+		var d0 := d
+		while d + step <= dmax + 0.001:
+			# 背面 [d, dmax] 帶狀範圍內還有空隙才繼續（沒有＝背面是刻意留白的空地／後院）
+			var band := PackedVector2Array([f0 + n * d, f1 + n * d, f1 + n * dmax, f0 + n * dmax])
+			if _gap_area(gaps, band) < min_gap:
+				break
+			var cand := PackedVector2Array([f0, f1, f1 + n * (d + step), f0 + n * (d + step)])
+			if side < 0.0:
+				cand.reverse()
+			var self_e: Array = acc[ai]
+			acc[ai] = [PackedVector2Array(), Rect2(1e7, 1e7, 0.0, 0.0)]   # 測試時排除自己（bbox 放到遠處，不會被命中）
+			var why := _reject(cand, R, ctx["outlines"], ctx["net"], ctx["ws"], ctx["keep"], acc, ctx["h_fn"])
+			acc[ai] = self_e
+			if why != "":
+				break
+			d += step
+			pc["poly"] = cand
+			acc[ai] = [cand, _bbox(cand)]
+		if d > d0:
+			pc["depth"] = d
+			pc["merged_m"] = snappedf(d - d0, 0.01)
+			stats["merged"] += 1
+			stats["merged_m"] = snappedf(float(stats["merged_m"]) + d - d0, 0.01)
+
+
+static func _gap_area(gaps: Array, band: PackedVector2Array) -> float:
+	var bb := _bbox(band)
+	var a := 0.0
+	for g in gaps:
+		if (g[1] as Rect2).intersects(bb):
+			a += overlap_area(band, g[0])
+	return a
+
+
+## 沿一條路兩側鋪地塊。mode 0＝町家輪；1＝掃描輪（只收集空隙，不落地）；2＝附屬用地輪（aux）。
+static func _pass(ctx: Dictionary, r: Dictionary, oi: int, mode: int) -> void:
 	var R: Dictionary = ctx["R"]
 	var fseq: Array = R["frontage_seq"]
 	var dpat: Array = R["depth_pattern"]
@@ -272,8 +342,9 @@ static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void
 	var stats: Dictionary = ctx["stats"]
 	var pts: PackedVector2Array = r["pts"]
 	var hw := float(r["hw"])
+	var small := mode != 0
 	for side: float in [1.0, -1.0]:
-		var idx := oi * 3 + (0 if side > 0.0 else 5) + (7 if infill else 0)
+		var idx := oi * 3 + (0 if side > 0.0 else 5) + (7 if small else 0)
 		for k in pts.size() - 1:
 			var a := pts[k]
 			var b := pts[k + 1]
@@ -283,7 +354,7 @@ static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void
 			var s := 0.0
 			while s + fmin <= seg_len:
 				var widths: Array = [minf(float(fseq[idx % fseq.size()]), seg_len - s)]
-				if infill and widths[0] > fmin:
+				if small and widths[0] > fmin:
 					widths.append(fmin)
 				var placed := false
 				var w := 0.0
@@ -293,7 +364,7 @@ static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void
 					var f0: Vector2 = a + t * s + n * (hw + front_gap)
 					var f1: Vector2 = a + t * (s + w) + n * (hw + front_gap)
 					dist = _district(ctx["dpolys"], (f0 + f1) * 0.5 + n * 6.0)
-					var dr: Array = R["infill_depth"] if infill else R["depth"].get(dist, R["depth"]["default"])
+					var dr: Array = R["aux_depth"] if small else R["depth"].get(dist, R["depth"]["default"])
 					var d: float = lerpf(float(dr[0]), float(dr[1]), float(dpat[idx % dpat.size()]))
 					while d >= float(dr[0]) - 0.01:
 						stats["tried"] += 1
@@ -302,15 +373,26 @@ static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void
 							poly.reverse()
 						var why := _reject(poly, R, ctx["outlines"], ctx["net"], ctx["ws"], ctx["keep"], ctx["acc"], ctx["h_fn"])
 						if why == "":
-							(ctx["acc"] as Array).append([poly, _bbox(poly)])
-							var code: String = R["district_code"].get(dist, "XXX")
-							var counts: Dictionary = ctx["counts"]
-							counts[code] = int(counts.get(code, 0)) + 1
-							(ctx["out"] as Array).append({"id": "P_%s_%03d" % [code, counts[code]], "kind": "machiya",
-								"district": dist, "road": r["name"], "road_cls": r["cls"], "infill": infill,
-								"side": "L" if side > 0.0 else "R", "poly": poly,
-								"frontage": w, "depth": d, "front_a": f0, "front_b": f1, "dir": -n,
-								"s": float(k) + s / maxf(seg_len, 1e-6)})
+							if mode == 1:
+								(ctx["gaps"] as Array).append([poly, _bbox(poly)])
+							else:
+								var counts: Dictionary = ctx["counts"]
+								var code: String = R["district_code"].get(dist, "XXX")
+								var aux := mode == 2
+								var ckey: String = ("A_" if aux else "") + code
+								counts[ckey] = int(counts.get(ckey, 0)) + 1
+								var rec := {"id": "%s_%03d" % [("A_" + code) if aux else ("P_" + code), counts[ckey]],
+									"kind": "aux" if aux else "machiya",
+									"district": dist, "road": r["name"], "road_cls": r["cls"],
+									"side": "L" if side > 0.0 else "R", "poly": poly,
+									"frontage": w, "depth": d, "front_a": f0, "front_b": f1, "dir": -n,
+									"s": float(k) + s / maxf(seg_len, 1e-6),
+									"acc_i": (ctx["acc"] as Array).size()}
+								if aux:
+									var useq: Array = R["aux_use_seq"]
+									rec["use"] = String(useq[counts[ckey] % useq.size()])
+								(ctx["acc"] as Array).append([poly, _bbox(poly)])
+								(ctx["out"] as Array).append(rec)
 							placed = true
 							break
 						stats[why] += 1
@@ -322,7 +404,7 @@ static func _pass(ctx: Dictionary, r: Dictionary, oi: int, infill: bool) -> void
 					s += w + float(gp[idx % gp.size()])
 					idx += 1
 				else:
-					s += 0.5 if infill else 1.0
+					s += 0.5 if small else 1.0
 
 
 static func _is_hole(pp: PackedVector2Array, parts: Array) -> bool:
@@ -413,7 +495,7 @@ static func record(pc: Dictionary, all_polys: Array, net: Array, h_fn: Callable,
 			continue
 		nb = minf(nb, _poly_poly_d(poly, q))
 	rec["clearance"] = {"nearest_parcel_m": snappedf(minf(nb, 99.0), 0.01)}
-	if pc["kind"] == "machiya":
+	if pc["kind"] == "machiya" or pc["kind"] == "aux":
 		var fm: Vector2 = (pc["front_a"] + pc["front_b"]) * 0.5
 		var dir: Vector2 = pc["dir"]   # 朝道路
 		var ent: float = h_fn.call(fm - dir * 0.5)
@@ -423,7 +505,10 @@ static func record(pc: Dictionary, all_polys: Array, net: Array, h_fn: Callable,
 		var fb: float = h_fn.call((pc["front_b"] as Vector2) - dir * float(pc["depth"]) * 0.5)
 		rec["road"] = pc["road"]
 		rec["road_cls"] = pc["road_cls"]
-		rec["infill"] = pc.get("infill", false)
+		if pc.has("merged_m"):
+			rec["merged_m"] = pc["merged_m"]
+		if pc.has("use"):
+			rec["use"] = pc["use"]
 		rec["side"] = pc["side"]
 		rec["frontage_m"] = snappedf(pc["frontage"], 0.01)
 		rec["depth_m"] = snappedf(pc["depth"], 0.01)

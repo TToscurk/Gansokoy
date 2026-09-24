@@ -9,7 +9,9 @@ extends SceneTree
 ## 地塊（maps/village_v2/gen/parcels.json＋場景 Districts/*/Parcels）
 ##   §11 欄位齊全；檔案與目前 layout 同步（重算結果一致）；場景 Marker 與檔案一一對應；
 ##   互不重疊；不壓道路／巷道路幅；在平台外框內；離水道、keep_clear（水車、龍神像、傳送點、任務錨點、橋頭）；
-##   町家臨路面 5–9 m、縱深在規則範圍；地塊內高低差 ≤ max_relief、坡度 ≤ SLOPE_MAX；
+##   町家臨路面 5–9 m、縱深 machiya_depth 12–25 m（2026-09-24 r2 裁示：正式町家不得有淺地塊）；
+##   附屬用地（kind "aux"：庭院／後院／倉小屋／空地）縱深 aux_depth，另計、不算正式町家建築地塊；
+##   地塊內高低差 ≤ max_relief、坡度 ≤ SLOPE_MAX；
 ##   入口與路面高差 ≤ ENTRY_ROAD_MAX；記錄的地面高與目前地形一致（≤ GROUND_TOL）。
 ##   地標固定地塊 9 塊：各含其地標中心；地標本體壓到路幅的面積另列 INFO（P0 凍結位置，交 P4）。
 ## 覆蓋：住宅／市集各區建成地離最近路緣 > 30 m 的比例 ≤ FAR_MAX；主街兩側臨路面地塊覆蓋率 ≥ MAIN_FILL_MIN。
@@ -229,10 +231,12 @@ func _check_parcels() -> void:
 		for f in FIELDS:
 			if not r.has(f):
 				nf += 1
-		if r["kind"] == "machiya":
+		if r["kind"] == "machiya" or r["kind"] == "aux":
 			for f in MACHIYA_FIELDS:
 				if not r.has(f):
 					nf += 1
+			if r["kind"] == "aux" and not r.has("use"):
+				nf += 1
 		elif not (r["clearance"] as Dictionary).has("front_gap_m"):
 			nf += 1
 	check("§11 欄位（Parcel ID／Ground Height／Footprint／Entrance Height／Road Height／Slope／Frontage／Clearance）缺 %d 項" % nf, nf == 0)
@@ -259,6 +263,9 @@ func _check_parcels() -> void:
 	var cnt := {"road": 0, "outline": 0, "water": 0, "keep": 0, "size": 0, "relief": 0, "slope": 0, "entry": 0, "ground": 0}
 	var ex := {}
 	var nmach := 0
+	var naux := 0
+	var mach_d := [INF, -INF]
+	var aux_d := [INF, -INF]
 	var ground_max := 0.0
 	var entry_max := 0.0
 	var slope_max := 0.0
@@ -268,9 +275,13 @@ func _check_parcels() -> void:
 		var id: String = r["id"]
 		var c := Vector2(float(r["center"][0]), float(r["center"][1]))
 		var gdel := absf(float(r["ground_h"]) - _ground(c.x, c.y))
-		if r["kind"] != "machiya":
+		var aux: bool = r["kind"] == "aux"
+		if r["kind"] != "machiya" and not aux:
 			continue
-		nmach += 1
+		if aux:
+			naux += 1
+		else:
+			nmach += 1
 		ground_max = maxf(ground_max, gdel)
 		if gdel > GROUND_TOL + float(r["relief_m"]):
 			_bump(cnt, ex, "ground", id)
@@ -293,9 +304,13 @@ func _check_parcels() -> void:
 		for kc in keep:
 			if PLib.poly_point_d(poly, kc["at"]) < float(kc["r"]) - 0.02:
 				_bump(cnt, ex, "keep", id + "/" + String(kc["why"]))
-		var dr: Array = R["infill_depth"] if bool(r.get("infill", false)) else R["depth"].get(r["district"], R["depth"]["default"])
+		var dr: Array = R["aux_depth"] if aux else R["machiya_depth"]
 		var fw := float(r["frontage_m"])
 		var dp := float(r["depth_m"])
+		if aux:
+			aux_d = [minf(aux_d[0], dp), maxf(aux_d[1], dp)]
+		else:
+			mach_d = [minf(mach_d[0], dp), maxf(mach_d[1], dp)]
 		if fw < FRONTAGE[0] - 0.01 or fw > FRONTAGE[1] + 0.01 or dp < float(dr[0]) - 0.02 or dp > float(dr[1]) + 0.02:
 			_bump(cnt, ex, "size", "%s %.1f×%.1f" % [id, fw, dp])
 		if float(r["relief_m"]) > float(R["max_relief"]):
@@ -307,11 +322,26 @@ func _check_parcels() -> void:
 		entry_max = maxf(entry_max, ed)
 		if ed > ENTRY_ROAD_MAX:
 			_bump(cnt, ex, "entry", id)
-	check("町家地塊 %d 塊不壓道路／巷道路幅（留 %.1f m）：%d 違規%s" % [nmach, float(R["road_gap"]), cnt["road"], _ex(ex, "road")], cnt["road"] == 0)
-	check("町家地塊在建成區平台內（外框內縮 %.1f m）：%d 違規%s" % [float(R["outline_margin"]), cnt["outline"], _ex(ex, "outline")], cnt["outline"] == 0)
-	check("町家地塊離水道（主河 %.0f m／渠、溪 %.0f m）：%d 違規%s" % [float(wm["MainRiver"]), float(wm["default"]), cnt["water"], _ex(ex, "water")], cnt["water"] == 0)
-	check("町家地塊避開 keep_clear（水車、龍神像、大鳥居、參道鳥居、傳送點、任務錨點、橋頭，共 %d 處）：%d 違規%s" % [keep.size(), cnt["keep"], _ex(ex, "keep")], cnt["keep"] == 0)
-	check("町家臨路面 %.0f–%.0f m、縱深在分區範圍：%d 違規%s" % [FRONTAGE[0], FRONTAGE[1], cnt["size"], _ex(ex, "size")], cnt["size"] == 0)
+	check("地塊 %d 塊（町家 %d、附屬用地 %d）不壓道路／巷道路幅（留 %.1f m）：%d 違規%s" % [nmach + naux, nmach, naux, float(R["road_gap"]), cnt["road"], _ex(ex, "road")], cnt["road"] == 0)
+	check("地塊在建成區平台內（外框內縮 %.1f m）：%d 違規%s" % [float(R["outline_margin"]), cnt["outline"], _ex(ex, "outline")], cnt["outline"] == 0)
+	check("地塊離水道（主河 %.0f m／渠、溪 %.0f m）：%d 違規%s" % [float(wm["MainRiver"]), float(wm["default"]), cnt["water"], _ex(ex, "water")], cnt["water"] == 0)
+	check("地塊避開 keep_clear（水車、龍神像、大鳥居、參道鳥居、傳送點、任務錨點、橋頭，共 %d 處）：%d 違規%s" % [keep.size(), cnt["keep"], _ex(ex, "keep")], cnt["keep"] == 0)
+	check("臨路面 %.0f–%.0f m；正式町家縱深 %.0f–%.0f m（實測 %.1f–%.1f m）、附屬用地 %.0f–%.0f m（實測 %.1f–%.1f m）：%d 違規%s" % [
+		FRONTAGE[0], FRONTAGE[1], float(R["machiya_depth"][0]), float(R["machiya_depth"][1]),
+		mach_d[0] if nmach > 0 else 0.0, mach_d[1] if nmach > 0 else 0.0,
+		float(R["aux_depth"][0]), float(R["aux_depth"][1]),
+		aux_d[0] if naux > 0 else 0.0, aux_d[1] if naux > 0 else 0.0,
+		cnt["size"], _ex(ex, "size")], cnt["size"] == 0)
+	# 2026-09-24 r2 裁示：不得有 machiya_depth 下限以下的「淺町家」；淺地塊一律 kind aux（非正式建築地塊）
+	var shallow := 0
+	var shallow_ex := ""
+	for r in recs:
+		if r["kind"] == "machiya" and float(r["depth_m"]) < float(R["machiya_depth"][0]) - 0.02:
+			shallow += 1
+			if shallow_ex == "":
+				shallow_ex = "%s %.1f m" % [r["id"], float(r["depth_m"])]
+	check("無淺町家（kind machiya 全部 ≥ %.0f m）：%d 塊違規%s" % [float(R["machiya_depth"][0]), shallow,
+		"（例 " + shallow_ex + "）" if shallow > 0 else ""], shallow == 0)
 	check("地塊內高低差 ≤ %.1f m、坡度 ≤ %.0f%%（最大 %.1f%%）：%d／%d 違規" % [float(R["max_relief"]), SLOPE_MAX, slope_max, cnt["relief"], cnt["slope"]],
 		cnt["relief"] == 0 and cnt["slope"] == 0)
 	check("入口與路面高差 ≤ %.1f m（最大 %.2f m）：%d 違規%s" % [ENTRY_ROAD_MAX, entry_max, cnt["entry"], _ex(ex, "entry")], cnt["entry"] == 0)
@@ -394,18 +424,32 @@ func _check_coverage() -> void:
 		var fr := float(far) / maxf(tot, 1)
 		check("%s 建成地 %.2f ha，離最近路緣 > %.0f m 佔 %.1f%%（≤ %.0f%%）" % [k, tot * 4.0 / 10000.0, FAR_DIST, fr * 100.0, FAR_MAX * 100.0],
 			fr <= FAR_MAX)
-	# 主街臨路面：兩側每 1 m 取樣路緣外 1.5 m，建成區內（扣路口、keep_clear）有多少落在地塊內
+	# 主街臨路面：兩側每 1 m 取樣路緣外 1.5 m，建成區內（扣路口、keep_clear）有多少落在建築地塊內。
+	# 2026-09-24 r2 裁示：門檻只看「建築地塊」（町家＋地標），附屬用地（庭院／後院／倉小屋／空地）不算，
+	# 也不為覆蓋率硬塞建築。因此分母改成「可建臨路面」：該點放得下一塊最小正式町家（5 m × machiya_depth
+	# 下限 12 m）才計入；放不下的（大鳥居前廣場退縮、平台邊界、水岸、側院窄縫）是刻意留白，不算缺口。
 	var recs: Array = (JSON.parse_string(FileAccess.get_file_as_string(PARCELS)) as Dictionary)["parcels"]
 	var polys: Array = []
+	var aux_polys: Array = []
+	var acc: Array = []   # 只放建築地塊：測「這塊地本來放不放得下町家」，附屬用地不佔位
 	for r in recs:
-		polys.append(TLib.pts(r["footprint"]))
+		var pp := TLib.pts(r["footprint"])
+		if String(r["kind"]) == "aux":
+			aux_polys.append(pp)
+		else:
+			polys.append(pp)
+			acc.append([pp, _bbox(pp)])
 	var keep := PLib.keep_clear(L, net, ws)
+	var dmin := float(R["machiya_depth"][0])
+	var fmin := float(R["frontage_min"])
 	for rd in net:
 		if rd["cls"] != "main":
 			continue
 		var pts: PackedVector2Array = rd["pts"]
 		var hit := 0
 		var gap := 0
+		var aux_hit := 0
+		var unbuildable := 0
 		for side: float in [1.0, -1.0]:
 			for k in pts.size() - 1:
 				var t := (pts[k + 1] - pts[k]).normalized()
@@ -423,10 +467,30 @@ func _check_coverage() -> void:
 							break
 					if inside:
 						hit += 1
-					else:
-						gap += 1
-		var fr := float(hit) / maxf(hit + gap, 1)
-		check("%s（%s）兩側臨路面地塊覆蓋 %.0f%%（≥ %.0f%%；扣路口、keep_clear、平台外）" % [rd["name"], rd["label"], fr * 100.0, MAIN_FILL_MIN * 100.0],
+						continue
+					var is_aux := false
+					for pp in aux_polys:
+						if Geometry2D.is_point_in_polygon(p, pp):
+							is_aux = true
+							break
+					# 這個位置放得下最小正式町家嗎？（5 m 臨路面 × 12 m 縱深，同一套 _reject）
+					var f0 := p - t * (fmin * 0.5) - n * 1.0
+					var f1 := p + t * (fmin * 0.5) - n * 1.0
+					var box := PackedVector2Array([f0, f1, f1 + n * dmin, f0 + n * dmin])
+					if side < 0.0:
+						box.reverse()
+					if PLib._reject(box, R, outlines, net, ws, keep, acc, _hv) != "":
+						unbuildable += 1
+						if is_aux:
+							aux_hit += 1
+						continue
+					gap += 1
+					if is_aux:
+						aux_hit += 1
+		var tot := maxi(hit + gap, 1)
+		var fr := float(hit) / tot
+		check("%s（%s）可建臨路面上建築地塊覆蓋 %.0f%%（≥ %.0f%%；另有 %d 點放不下最小町家 5×%.0f m＝刻意留白，%d 點是附屬用地）" % [
+			rd["name"], rd["label"], fr * 100.0, MAIN_FILL_MIN * 100.0, unbuildable, dmin, aux_hit],
 			fr >= MAIN_FILL_MIN)
 
 

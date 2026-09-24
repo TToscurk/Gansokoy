@@ -305,7 +305,7 @@
 		}
 	},
 	"parcel_rules": {
-		"_note": "P3 地塊規則（2026-09-24）。算法 godot/tools/village_v2_parcel_lib.gd；序列式確定生成（無亂數）。frontage_seq 臨路面寬（m）依序循環；depth 依分區 [最小, 最大]、depth_pattern 取 0–1 內插；放不下先縮縱深 1.5 m、再往前挪 1 m。",
+		"_note": "P3 地塊規則（2026-09-24，r2）。算法 godot/tools/village_v2_parcel_lib.gd；序列式確定生成（無亂數）。frontage_seq 臨路面寬（m）依序循環；depth 依分區 [最小, 最大]、depth_pattern 取 0–1 內插；放不下先縮縱深 1.5 m、再往前挪 1 m。r2 使用者裁示：正式町家縱深一律 machiya_depth 12–25 m；第一輪之後先做合併輪（相鄰空隙往背面併進既有町家，上限 merge_depth_max），併不掉的空隙改成 auxiliary／yard 附屬用地（aux_depth，庭院、後院、倉庫、小棚、空地），不算正式町家建築地塊，也不為覆蓋率硬塞建築。",
 		"frontage_seq": [
 			7.2,
 			5.4,
@@ -349,9 +349,21 @@
 				18.0
 			]
 		},
-		"infill_depth": [
+		"machiya_depth": [
+			12.0,
+			25.0
+		],
+		"merge_depth_max": 25.0,
+		"merge_step": 0.5,
+		"aux_depth": [
 			8.0,
 			12.0
+		],
+		"aux_use_seq": [
+			"庭院",
+			"後院",
+			"倉／小屋",
+			"空地"
 		],
 		"depth_pattern": [
 			0.5,
