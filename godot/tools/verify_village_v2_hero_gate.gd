@@ -379,7 +379,25 @@ func _apply_neg() -> void:
 		"parcel":
 			hero.position += hero.basis.z * 3.0
 		"greybox":
-			if g0 != null:
+			if g0 == null:
+				# 產生器已不建 placeholder（anchor 型）：另建一個 1 × 10 × 1 m 有碰撞的灰盒柱，模擬「墊在灰盒上」
+				var sb := StaticBody3D.new()
+				sb.name = String(gs["replaces"])
+				var gm := MeshInstance3D.new()
+				var bm := BoxMesh.new()
+				bm.size = Vector3(1.0, 10.0, 1.0)
+				gm.mesh = bm
+				gm.position.y = 5.0
+				sb.add_child(gm)
+				var gc := CollisionShape3D.new()
+				var bs := BoxShape3D.new()
+				bs.size = bm.size
+				gc.shape = bs
+				gc.position.y = 5.0
+				sb.add_child(gc)
+				anchor.add_child(sb)
+				hero.position.y += 0.4
+			else:
 				(g0 as Node3D).visible = true
 				for c in g0.find_children("*", "", true, false):
 					if c is MeshInstance3D:
