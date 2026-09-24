@@ -1,0 +1,844 @@
+{
+ "version": "p5-asset-reset-2",
+ "created": "2026-09-24",
+ "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
+ "rules": [
+  "V2 場景與產生器只能引用 v2_allowed 與 v2_assets；其他一律 FAIL（預設封存所有舊資產）。",
+  "新資產放 res://assets/village_v2/<名>/，但**不是**白名單前綴：必須在 v2_assets 登記、Asset Gate 11 項（尺寸、地塊、接地、材質、幾何、Pivot/Scale、碰撞、LOD、效能、玩家視角截圖、F5/F6）全 PASS 才能被 V2 引用。",
+  "Protected 原檔不得覆寫：任何 REWORK／重製一律另存新資產（res://assets/village_v2/<名>/），再登記 v2_assets。",
+  "protected 內檔案不得移、不得刪；模型與貼圖另鎖 sha256（位元組不得變），標 lock=exists 的共用原始檔（產生腳本、神社材質）只驗存在。可 KEEP／REWORK／REFERENCE ONLY，禁止 RETIRE。",
+  "封存檔不刪除；archived_moved 在 archive/reference_old_assets/，其餘原地登記。"
+ ],
+ "v2_scene": "res://maps/village_v2/village_v2.tscn",
+ "v2_generator_sources": [
+  "res://tools/gen_village_v2.gd",
+  "res://tools/village_v2_freeze.gd",
+  "res://tools/village_v2_greybox_lib.gd",
+  "res://tools/village_v2_parcel_lib.gd",
+  "res://tools/village_v2_terrain_lib.gd",
+  "res://tools/village_v2_water_lib.gd",
+  "res://maps/village_v2/layout_v2.json"
+ ],
+ "v2_allowed": {
+  "prefixes": [
+   "res://maps/village_v2/",
+   "res://tools/village_v2_",
+   "res://tools/gen_village_v2.gd",
+   "res://tools/shots/village_v2_"
+  ],
+  "shared_runtime": [
+   "res://scripts/sky_system.gd",
+   "res://assets/textures/skybox_jinri.png",
+   "res://assets/fonts/NotoSerifTC-VF.ttf",
+   "res://data/village_v2.meta.json",
+   "res://scenes/main.tscn"
+  ]
+ },
+ "v2_assets": [],
+ "protected": [
+  {
+   "group": "龍神像",
+   "status": "REWORK",
+   "note": "可 REWORK／拆件／重做基座／減面／修材質；原檔不得改、不得移。REWORK 產物另存新檔（assets/village_v2/）。make_props.py＝dragon_statue.glb（與 komainu_a、stone_lantern）的原始產生腳本。",
+   "files": [
+    {
+     "path": "res://maps/village/gen/龍神像/龍神像.glb",
+     "bytes": 14439240,
+     "sha256": "2a254068114a4ec7390f613d6de8767eaf13ca17663228c63474ddc9a380dbb3"
+    },
+    {
+     "path": "res://maps/village/gen/龍神像/龍神像_base_color.webp",
+     "bytes": 3083094,
+     "sha256": "f27923da5076fbae8f2017162c71c1477989e0323562026182ba72a98b5db852"
+    },
+    {
+     "path": "res://maps/village/gen/龍神像/龍神像_metallic_roughness.webp",
+     "bytes": 215682,
+     "sha256": "606b3289d5b6750330b128e1470f991b16bb45f8dc3492adf054c7cf537ebe49"
+    },
+    {
+     "path": "res://maps/village/gen/龍神像/龍神像_normal.webp",
+     "bytes": 1016896,
+     "sha256": "28fe964f7310f6ac445ecc65c0ebadb928962d347bac3c19c4e782e937326bbc"
+    },
+    {
+     "path": "res://assets/_lod/龍神像.glb",
+     "bytes": 6554740,
+     "sha256": "286a8ae7e708842c5cc22d2369d608436f2c7400b8feef574aee30c9566274be"
+    },
+    {
+     "path": "res://assets/_lod/龍神像_base_color.webp",
+     "bytes": 3083094,
+     "sha256": "f27923da5076fbae8f2017162c71c1477989e0323562026182ba72a98b5db852"
+    },
+    {
+     "path": "res://assets/_lod/龍神像_metallic_roughness.webp",
+     "bytes": 215682,
+     "sha256": "606b3289d5b6750330b128e1470f991b16bb45f8dc3492adf054c7cf537ebe49"
+    },
+    {
+     "path": "res://assets/_lod/龍神像_normal.webp",
+     "bytes": 1016896,
+     "sha256": "28fe964f7310f6ac445ecc65c0ebadb928962d347bac3c19c4e782e937326bbc"
+    },
+    {
+     "path": "res://assets/models/dragon_statue.glb",
+     "bytes": 59312,
+     "sha256": "05d3119489175abf966c06a934a5557475e1085483459e3870fa869750f60db5"
+    },
+    {
+     "path": "res://assets/blender/make_props.py",
+     "bytes": 28915,
+     "sha256": "0439627ba481e009847f35fba6c00f37a56e685a918537d2e34d152614d8fb59",
+     "lock": "exists"
+    }
+   ],
+   "dirs": [
+    {
+     "path": "res://maps/village/gen/龍神像",
+     "files": 4,
+     "bytes": 18754912
+    }
+   ],
+   "external_files": [
+    {
+     "path": "D:/資產glb/地標/龍神像.glb",
+     "bytes": 35310364,
+     "sha256": "7c511ba269b3e790a490b21665cfd0b890eb2571b8832c9fe7ab94616dce16ee"
+    }
+   ],
+   "external_dirs": [
+    {
+     "path": "D:/資產glb/Gansokoy/village-gen/龍神像",
+     "files": 4,
+     "bytes": 18754912
+    }
+   ]
+  },
+  {
+   "group": "火見櫓",
+   "status": "REFERENCE ONLY",
+   "note": "現有 Tripo 模型與舊程序塔樓（tower_fire/bell/bell_p/mill，同一個 LANDMARK_TOWER 槽位的候選）全數保留；木構新版另做新檔。make_shourou.py＝tower_bell_p.glb 的原始產生腳本。",
+   "files": [
+    {
+     "path": "res://assets/landmark/火見櫓.glb",
+     "bytes": 16285016,
+     "sha256": "a3a4862397e90b9fa219b4f66341ee8ca9bb637539fee67441624a05adced358"
+    },
+    {
+     "path": "res://assets/landmark/火見櫓_base_color.jpg",
+     "bytes": 3298243,
+     "sha256": "20fc44fca8d8bcde739fb962b9ba1f5107a8bbeef641d906a7bc2a10b8537c35"
+    },
+    {
+     "path": "res://assets/landmark/火見櫓_metallic_roughness.jpg",
+     "bytes": 1905340,
+     "sha256": "dc33dc309e144f7f936243b258dba20c37a7b6f21b8efd82b24be19ba7cb5531"
+    },
+    {
+     "path": "res://assets/landmark/火見櫓_normal.jpg",
+     "bytes": 2779453,
+     "sha256": "be90e55ab4ce09e24a765b4e5fa28b08dd8574ca24406c55f17757d629bb0519"
+    },
+    {
+     "path": "res://assets/_lod/火見櫓.glb",
+     "bytes": 9882096,
+     "sha256": "940936866ba698b67f900d7dad424778aacedfcdba256e1e1b2b893ea1f61125"
+    },
+    {
+     "path": "res://assets/_lod/火見櫓_base_color.jpg",
+     "bytes": 3298243,
+     "sha256": "20fc44fca8d8bcde739fb962b9ba1f5107a8bbeef641d906a7bc2a10b8537c35"
+    },
+    {
+     "path": "res://assets/_lod/火見櫓_metallic_roughness.jpg",
+     "bytes": 1905340,
+     "sha256": "dc33dc309e144f7f936243b258dba20c37a7b6f21b8efd82b24be19ba7cb5531"
+    },
+    {
+     "path": "res://assets/_lod/火見櫓_normal.jpg",
+     "bytes": 2779453,
+     "sha256": "be90e55ab4ce09e24a765b4e5fa28b08dd8574ca24406c55f17757d629bb0519"
+    },
+    {
+     "path": "res://assets/models/tower_bell.glb",
+     "bytes": 23456,
+     "sha256": "d4a5e1153213cf2b2d13918c1d9493804d669548c5920c39edb27ca825b948a0"
+    },
+    {
+     "path": "res://assets/models/tower_bell_p.glb",
+     "bytes": 172348,
+     "sha256": "ecc881402a3bed4bdf3d46cf1051018cc21c6a650a5b7b2a956dbf9b7c062a29"
+    },
+    {
+     "path": "res://assets/models/tower_fire.glb",
+     "bytes": 59148,
+     "sha256": "f1a720a250e80710bef358b12a865b1a83d7995f0e81d9e84602be58ff56d414"
+    },
+    {
+     "path": "res://assets/models/tower_mill.glb",
+     "bytes": 89968,
+     "sha256": "15fe41ea1bca2f4e207d9ddd7d943deebd793ee5b4bc29b98344aa56432fdb8d"
+    },
+    {
+     "path": "res://assets/blender/make_shourou.py",
+     "bytes": 21026,
+     "sha256": "e30915a0b7130a6e327ccb609fd63a2f5a5a1bdc33769759f47ae43f42ab19e6",
+     "lock": "exists"
+    }
+   ],
+   "dirs": [],
+   "external_files": [
+    {
+     "path": "D:/資產glb/地標/火見橹.glb",
+     "bytes": 16285016,
+     "sha256": "a3a4862397e90b9fa219b4f66341ee8ca9bb637539fee67441624a05adced358"
+    }
+   ],
+   "external_dirs": []
+  },
+  {
+   "group": "神社：鳥居／大鳥居",
+   "status": "博麗鳥居 REFERENCE ONLY（參道鳥居暫用參考；額牌不清版不得定稿）／大鳥居 REFERENCE ONLY／ToriGate 未評估",
+   "note": "大鳥居依 Asset Reset 由 RETIRE 改為 REFERENCE ONLY（Protected 禁止 RETIRE）。",
+   "files": [
+    {
+     "path": "res://assets/shrine/博麗鳥居.glb",
+     "bytes": 2413348,
+     "sha256": "246100d48cdc7c6e085c3a0e9402c792cb5627760b60927e2d9a9da5a3a67f28"
+    },
+    {
+     "path": "res://assets/landmark/大鳥居.glb",
+     "bytes": 7890696,
+     "sha256": "4830bf92473d8d6720cbe91559ebe08b5b3670a1a5b2403ff7289e312409fb04"
+    },
+    {
+     "path": "res://assets/landmark/大鳥居_base_color.jpg",
+     "bytes": 3236293,
+     "sha256": "05bdbc97ad867a42031babde97c94075bc71a5ee684e960ecba3d89723fa1dc7"
+    },
+    {
+     "path": "res://assets/landmark/大鳥居_metallic_roughness.jpg",
+     "bytes": 1521235,
+     "sha256": "bb8c040def00ab52c68df2476a7014b21851b37584429dcf898b13a47ed5e842"
+    },
+    {
+     "path": "res://assets/landmark/大鳥居_normal.jpg",
+     "bytes": 2314261,
+     "sha256": "8fa75014647743c934ae7f73c0340a7ecdca856e0ed89acae8c51ed4c96b30c2"
+    },
+    {
+     "path": "res://assets/lowpoly_scene/ToriGate.bin",
+     "bytes": 55032,
+     "sha256": "3f8f0f5bf8d4bc4de4ebe8ca6b3b486b59dc8b3c0f352cb1f26d573a97770b91"
+    },
+    {
+     "path": "res://assets/lowpoly_scene/ToriGate.gltf",
+     "bytes": 2046,
+     "sha256": "06739b41421a94e678002d74fe7f82c32e41633980d05ff5eeb3749139c5a7ce"
+    }
+   ],
+   "dirs": [],
+   "external_files": [
+    {
+     "path": "D:/資產glb/地標/大鳥居.glb",
+     "bytes": 7890696,
+     "sha256": "4830bf92473d8d6720cbe91559ebe08b5b3670a1a5b2403ff7289e312409fb04"
+    },
+    {
+     "path": "D:/資產glb/博麗神社/博麗鳥居.glb",
+     "bytes": 2413348,
+     "sha256": "246100d48cdc7c6e085c3a0e9402c792cb5627760b60927e2d9a9da5a3a67f28"
+    },
+    {
+     "path": "D:/資產glb/場景低模素材/GLTF/ToriGate.bin",
+     "bytes": 55032,
+     "sha256": "3f8f0f5bf8d4bc4de4ebe8ca6b3b486b59dc8b3c0f352cb1f26d573a97770b91"
+    },
+    {
+     "path": "D:/資產glb/場景低模素材/GLTF/ToriGate.gltf",
+     "bytes": 2046,
+     "sha256": "06739b41421a94e678002d74fe7f82c32e41633980d05ff5eeb3749139c5a7ce"
+    }
+   ],
+   "external_dirs": []
+  },
+  {
+   "group": "神社：社殿與附屬（拜殿含賽錢箱／注連繩部件、本殿、手水舍、社務所、陰陽玉、石階模組、石燈籠、狛犬）",
+   "status": "拜殿 REWORK（村內待 ART_REVIEW）／本殿 REFERENCE ONLY（村內）／其餘 V2 未評估",
+   "note": "賽錢箱與注連繩沒有獨立模型，只存在於 拜殿.glb 內與參考圖 docs/reference/神社/。整個 assets/shrine/ 與 D:/資產glb/博麗神社/ 目錄受保護。",
+   "files": [
+    {
+     "path": "res://assets/shrine/平台石.glb",
+     "bytes": 18379948,
+     "sha256": "57fd21485bc19e7ede22d6660594f1e378ee3de532443591e5d7656ec3fd83df"
+    },
+    {
+     "path": "res://assets/shrine/手水舍.glb",
+     "bytes": 32340240,
+     "sha256": "73291c7df788d6c2e359532f6892ddd0c2fb676a4e2feae8fbf78d47037534d6"
+    },
+    {
+     "path": "res://assets/shrine/拜殿.glb",
+     "bytes": 21751936,
+     "sha256": "c2f282e5e0f04a6dadbd2b732de02d9ccb4a59e7977c436ff54e677bdec60881"
+    },
+    {
+     "path": "res://assets/shrine/收頭石.glb",
+     "bytes": 17053948,
+     "sha256": "4e19f4aa2245a87b491dedf57d6aeee28c3641a3b27ef2a332b8efd28aa3895a"
+    },
+    {
+     "path": "res://assets/shrine/本殿.glb",
+     "bytes": 8594400,
+     "sha256": "5234d20baa6bcebf07cf39407196b26eed837ce337170eb2adf137b0959113bc"
+    },
+    {
+     "path": "res://assets/shrine/社務所.glb",
+     "bytes": 30203888,
+     "sha256": "f7c45b1e9cbd87e87d3e3ff691a6170292011674fc9ed4e0a8a0776bc16de573"
+    },
+    {
+     "path": "res://assets/shrine/袖石垣.glb",
+     "bytes": 19567008,
+     "sha256": "7280f5cc341ab6cecb6ac8f400890c2863740ee2057ac31eaedfceb81d8a1cbc"
+    },
+    {
+     "path": "res://assets/shrine/踏石.glb",
+     "bytes": 16599180,
+     "sha256": "707f95509075ac9cd74bcceb79299144927bfefdf082516ef6a2ec8d52352b2f"
+    },
+    {
+     "path": "res://assets/shrine/陰陽玉.glb",
+     "bytes": 4667044,
+     "sha256": "2f6d3448cacb67ef0d64eff360c67812e9d52d72b5a0d5db741f6ca1fce84976"
+    },
+    {
+     "path": "res://assets/shrine/props/StoneLantern.bin",
+     "bytes": 17412,
+     "sha256": "976fd759033d6c49af38c18a969edd60ba83c08f32b15c6c6e23e2fe7e537b4a"
+    },
+    {
+     "path": "res://assets/shrine/props/StoneLantern.gltf",
+     "bytes": 2052,
+     "sha256": "4ebcfafaab8ad787f7c713dc99cc1655ce6d7e0c32f92fd128a41ed76b8290d6"
+    },
+    {
+     "path": "res://assets/_lod/平台石.glb",
+     "bytes": 17770048,
+     "sha256": "c788ff2c6f3f96363cf333f07f3fec4f4ce579d6bfb01783c511d4ec103a6a68"
+    },
+    {
+     "path": "res://assets/_lod/平台石_Baked_BaseColor.png",
+     "bytes": 7317968,
+     "sha256": "cd605ec37192c5256880e7e71056267e471bf6f2109d9ab809b2b77aacdb01b1"
+    },
+    {
+     "path": "res://assets/_lod/平台石_Baked_MetallicRoughness.png",
+     "bytes": 9781879,
+     "sha256": "39c5504f0cb7877674d9313af7d79a5f4b1ab9048436cd2bb6968eff487c0380"
+    },
+    {
+     "path": "res://assets/_lod/收頭石.glb",
+     "bytes": 16358976,
+     "sha256": "8cedf375c6dc16add667a58b21e6c95e0701115ad8d7556a09d1f705913f752f"
+    },
+    {
+     "path": "res://assets/_lod/收頭石_Baked_BaseColor.png",
+     "bytes": 7151268,
+     "sha256": "39b70df35126590b669f1a59b1503f6aeaf46f3a64bd50499957a8ce4066c0b7"
+    },
+    {
+     "path": "res://assets/_lod/收頭石_Baked_MetallicRoughness.png",
+     "bytes": 8946290,
+     "sha256": "9619c4a35a3ef661068a6e68172e4b326c169a6a33f46f4bf38a37c8df291dc8"
+    },
+    {
+     "path": "res://assets/_lod/袖石垣.glb",
+     "bytes": 18886380,
+     "sha256": "9726b5112d50ac7618a31e6f56def1785786eaf56b41f7688f3bb17157d8d42b"
+    },
+    {
+     "path": "res://assets/_lod/袖石垣_Baked_BaseColor.png",
+     "bytes": 7511807,
+     "sha256": "0cc47cbb00ca3167e529d2b5bde84c9a305929e399fde60d19d50776d29628d7"
+    },
+    {
+     "path": "res://assets/_lod/袖石垣_Baked_MetallicRoughness.png",
+     "bytes": 10988645,
+     "sha256": "273a28e0c632c9819022f0eda8054db9ed116d76c6e4d6d1ad3639d7e67abfdf"
+    },
+    {
+     "path": "res://assets/_lod/踏石.glb",
+     "bytes": 15887200,
+     "sha256": "a3f5e11f518fd7d6f010013729f588dd7c16783da2c6fbc45138dc5eca7813b2"
+    },
+    {
+     "path": "res://assets/_lod/踏石_Baked_BaseColor.png",
+     "bytes": 6549908,
+     "sha256": "95b497a1d6544be9c815a8615aeee65aed226d29b44420ac287d899a51c59e21"
+    },
+    {
+     "path": "res://assets/_lod/踏石_Baked_MetallicRoughness.png",
+     "bytes": 9132970,
+     "sha256": "b326bb5c6497cd836f43ac31f7cb0afe1433a61950ec99b57cc7213f19becb27"
+    },
+    {
+     "path": "res://assets/lowpoly_scene/StoneLantern.bin",
+     "bytes": 17412,
+     "sha256": "976fd759033d6c49af38c18a969edd60ba83c08f32b15c6c6e23e2fe7e537b4a"
+    },
+    {
+     "path": "res://assets/lowpoly_scene/StoneLantern.gltf",
+     "bytes": 2052,
+     "sha256": "4ebcfafaab8ad787f7c713dc99cc1655ce6d7e0c32f92fd128a41ed76b8290d6"
+    },
+    {
+     "path": "res://assets/models/stone_lantern.glb",
+     "bytes": 16524,
+     "sha256": "5c581e099b619f6fece9d04cf1fd377127d372ea9a9dff82ff532f15e84fa7fe"
+    },
+    {
+     "path": "res://assets/models/komainu_a.glb",
+     "bytes": 43308,
+     "sha256": "4e0ecf29400b145025c2ee28c99ed1efe73bc26de5be395781bdfeb7ea3e4562"
+    },
+    {
+     "path": "res://assets/lowpoly_scene/textures/ColorAtlas.png",
+     "bytes": 17078,
+     "sha256": "57a0abaa2026effb356458cbbccce32f292451c47ee8815d449e16cd66694f08"
+    }
+   ],
+   "dirs": [
+    {
+     "path": "res://assets/shrine",
+     "files": 400,
+     "bytes": 279907440
+    }
+   ],
+   "external_files": [
+    {
+     "path": "D:/資產glb/場景低模素材/GLTF/StoneLantern.bin",
+     "bytes": 17412,
+     "sha256": "976fd759033d6c49af38c18a969edd60ba83c08f32b15c6c6e23e2fe7e537b4a"
+    },
+    {
+     "path": "D:/資產glb/場景低模素材/GLTF/StoneLantern.gltf",
+     "bytes": 2052,
+     "sha256": "4ebcfafaab8ad787f7c713dc99cc1655ce6d7e0c32f92fd128a41ed76b8290d6"
+    }
+   ],
+   "external_dirs": [
+    {
+     "path": "D:/資產glb/博麗神社",
+     "files": 10,
+     "bytes": 171570940
+    }
+   ]
+  },
+  {
+   "group": "神社：專用材質（注連繩、紙垂、鳥居朱、參道石、社殿台基／石階／鋪面）",
+   "status": "REFERENCE ONLY（V2 未評估）",
+   "note": "神社專用部件的材質資源（.tres）；神社／稗田邸地圖仍在用，只驗存在不鎖雜湊。引用的通用石材／木材貼圖不在此列。",
+   "files": [
+    {
+     "path": "res://assets/materials/shide.tres",
+     "bytes": 150,
+     "sha256": "7ca9baf5859aca496cdf245ebeaa17a5c07ec097a13e9b63eec68c8ef3f46009",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shimenawa.tres",
+     "bytes": 758,
+     "sha256": "d405a707f8d33f9176efbf1982cbb83af9b77132e6c9e81f64db36ca8135fddb",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_dais_base.tres",
+     "bytes": 693,
+     "sha256": "ed960691eac699a07fdf499a21d7e4ce6405a25690f7b162a15f79c87550eb95",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_dais_side.tres",
+     "bytes": 686,
+     "sha256": "e178941a7e2863fab243505c29fddb688a38806c2fed15be7be6120a33ecef92",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_dais_top.tres",
+     "bytes": 693,
+     "sha256": "0a63d975d4edeb89a61e80315d068d5ae9a9ff62c3b0d2f52fd21cefed45f1ec",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_gravel.tres",
+     "bytes": 734,
+     "sha256": "6d9fef0f99b8d6b2254955ab790478d7ed8b1126e35f5c54c4d88a57b99675de",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_slab.tres",
+     "bytes": 692,
+     "sha256": "a39882264905fbb40a581c576596ac8b88bff36c0e926f1648b19c1d52fd3cfc",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_slab_moss.tres",
+     "bytes": 692,
+     "sha256": "ba32da81123047939b4612efeceb16f8fab478ca6526f84772157bf274c83fb8",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_slab_wet.tres",
+     "bytes": 693,
+     "sha256": "1f423c8872d9393f123eb8b3a87909cc82cd7e6d2367275f4f7855e1bec77452",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/shrine_step.tres",
+     "bytes": 629,
+     "sha256": "146dec6da8da753b2116f2b02304a6c32d64ca1e86db625c883591dbc6e7d345",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/參道石.tres",
+     "bytes": 637,
+     "sha256": "e4c5d8416da513c7e82e4aae356de56f4148a0b67752ae4e8f12f8d589a193b8",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/祠木.tres",
+     "bytes": 641,
+     "sha256": "87feddd64a16452c05b6bb393b581b18a7524108ff5be7c125902c5a448dfd5f",
+     "lock": "exists"
+    },
+    {
+     "path": "res://assets/materials/鳥居朱.tres",
+     "bytes": 126,
+     "sha256": "0164c6e5da71558f6d8b01558f408b92929240600a3f4c40697da401e67689f6",
+     "lock": "exists"
+    }
+   ],
+   "dirs": [],
+   "external_files": [],
+   "external_dirs": []
+  }
+ ],
+ "archived_moved": [
+  {
+   "from": "res://assets/models/hieda_main.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_main.glb",
+   "sha256": "1159e7dfdcf2b4808f9851685db09e343002a694523b953f42bbfdc8f653c48f",
+   "bytes": 259284,
+   "what": "舊程序稗田邸主屋（28.9×13.2×22.0 m，2.5k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_main.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_main.glb.import",
+   "sha256": "2e83cafacb5f160fd69904316344b99a8a15632201725734f445dbc3579fd75f",
+   "bytes": 1159,
+   "what": "舊程序稗田邸主屋（28.9×13.2×22.0 m，2.5k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_blockout.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_blockout.glb",
+   "sha256": "2cd2a3157004f78b70bd41f37411215af5b8f14828f920d0981e117bbe3adb7a",
+   "bytes": 2441964,
+   "what": "舊程序稗田邸整區 blockout（75.6×14.4×110.5 m，22.6k 面）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_blockout.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_blockout.glb.import",
+   "sha256": "21c4c37c2e733dadcd5e9b4fee1d1089154fa2343d89df768925e4f7ac37b8df",
+   "bytes": 1171,
+   "what": "舊程序稗田邸整區 blockout（75.6×14.4×110.5 m，22.6k 面）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/unomitei.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/unomitei.glb",
+   "sha256": "37e59910da1d89a7c6323d5ff54cd7c857ffa4d85f67e337b251757d72fde3c6",
+   "bytes": 161568,
+   "what": "舊程序酒館（15.1×9.5×17.5 m，1.6k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/unomitei.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/unomitei.glb.import",
+   "sha256": "45507d78e88b0b35735859366f6c7fd8e1515a6bdea03b1e1b03eea5a6cb1f41",
+   "bytes": 1152,
+   "what": "舊程序酒館（15.1×9.5×17.5 m，1.6k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_balcony.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_balcony.glb",
+   "sha256": "04f30a1b1adfb4a888175d60dd8176bbab055bdd416ab0346f678e327b3603be",
+   "bytes": 15324,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_balcony.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_balcony.glb.import",
+   "sha256": "e1d40fc8c93a67a7318e3a814e827e6230955b995d47d8a7546c231330eccbe9",
+   "bytes": 1176,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_gable.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_gable.glb",
+   "sha256": "ab52d7010a0df2e859f18b5053b8ed2df169a00c1d9ac32dfeb7842058bd9a14",
+   "bytes": 12580,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_gable.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_gable.glb.import",
+   "sha256": "fd4c6402ab999f552584fc8257ff4c9d4398ea1e527f86ef093d095a5538a273",
+   "bytes": 1171,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_store.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_store.glb",
+   "sha256": "dd1419c2283bed0ab6b3c7d7be2610b7e4418cd1cff94c18604e229abe770006",
+   "bytes": 13420,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_store.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_store.glb.import",
+   "sha256": "16609b40d5049654a3c29241f181e67a17d62d83eb9e235ef3d37737bfa246be",
+   "bytes": 1171,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_udatsu.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_udatsu.glb",
+   "sha256": "250843a511b874610e0e439f43c409f253d5913bd7293c18e6f1762c2657e8bc",
+   "bytes": 18248,
+   "what": "舊程序町家屋簷線模組（6.52 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_udatsu.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_udatsu.glb.import",
+   "sha256": "6b77a1e2fc45009328256913af9a12aa4cf097f32e86726c5a375eaa911b2253",
+   "bytes": 1173,
+   "what": "舊程序町家屋簷線模組（6.52 m 段）",
+   "classification": "REFERENCE ONLY"
+  }
+ ],
+ "archived_in_place": [
+  {
+   "path": "res://assets/machiya/",
+   "classification": "REFERENCE ONLY（未逐件審；依 Asset Reset 一律退出 V2）",
+   "contents": "大町家、小町家1、市集商家、町家、農舍、長屋、倉庫",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn（倉庫：tools/gen_b1_street.gd 等舊產生器）"
+   ],
+   "why_not_moved": "舊 slice／村地圖仍引用；搬走會讓舊 slice 缺建築（總計畫 §52：舊 slice 保持可玩）。"
+  },
+  {
+   "path": "res://maps/village/gen/鈴奈庵/",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn"
+   ],
+   "why_not_moved": "NTFS junction → D:/資產glb/Gansokoy/village-gen/鈴奈庵；舊 slice 引用。"
+  },
+  {
+   "path": "res://maps/village/gen/霧雨店/",
+   "classification": "RETIRE",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn"
+   ],
+   "why_not_moved": "junction；舊 slice 引用。"
+  },
+  {
+   "path": "res://maps/village/gen/鯢吞亭/",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn"
+   ],
+   "why_not_moved": "junction；舊 slice 引用。"
+  },
+  {
+   "path": "res://maps/village/gen/寺子屋/",
+   "classification": "RETIRE（減面版）",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn"
+   ],
+   "why_not_moved": "junction；舊 slice 引用。"
+  },
+  {
+   "path": "res://maps/village/gen/稗田邸/",
+   "classification": "RETIRE（減面版）",
+   "legacy_users": [
+    "maps/slice/slice.tscn",
+    "maps/village/village.tscn"
+   ],
+   "why_not_moved": "junction；舊 slice 引用。"
+  },
+  {
+   "path": "res://assets/_lod/大町家.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/小町家1.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/市集商家.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/町家.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/農舍.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/長屋.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/倉庫.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/寺子屋.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/稗田底新版.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/鈴奈庵.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/霧雨店.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/_lod/鯢吞亭.glb",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [
+    "maps/slice/slice.tscn（scene_perf_cull.gd 執行期依檔名換減面模型，使用減面建築=true）"
+   ],
+   "why_not_moved": "動態載入；搬走舊 slice 會退回高模。"
+  },
+  {
+   "path": "res://assets/lowpoly_scene/House_4x5.gltf",
+   "classification": "REFERENCE ONLY",
+   "legacy_users": [],
+   "why_not_moved": "素材包內件，與共用 ColorAtlas.png 綁在一起；V2 白名單已擋。"
+  }
+ ],
+ "external_reference_only": [
+  {
+   "path": "D:/資產glb/地標/鈴奈庵.glb",
+   "classification": "REFERENCE ONLY",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/地標/霧雨店.glb",
+   "classification": "RETIRE",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/地標/鯢吞亭.glb",
+   "classification": "REFERENCE ONLY",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/地標/寺子屋.glb",
+   "classification": "REFERENCE ONLY",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/地標/裨田邸.glb",
+   "classification": "REFERENCE ONLY",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/地標/後院.glb",
+   "classification": "RETIRE",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/町家/",
+   "classification": "REFERENCE ONLY（大町家、小町家1、市集商家、町家、長屋、倉庫、農舍、稗田底新版）",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  },
+  {
+   "path": "D:/資產glb/Gansokoy/village-gen/{鈴奈庵,霧雨店,鯢吞亭,寺子屋,稗田邸}/",
+   "classification": "同 junction 那 5 件",
+   "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
+  }
+ ],
+ "not_in_scope": "市集、河岸、橋、植被、自然素材等舊 kit 不在本次房屋封存範圍；V2 白名單預設不允許，分別到 P7／P9／P10 走 Asset Gate。maps/shrine/ 整張神社地圖不動。"
+}

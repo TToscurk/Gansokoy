@@ -1,0 +1,118 @@
+{
+ "created": "2026-09-24",
+ "reason": "P5 Asset Reset：舊人間之里房屋資產退出正式流程，只作造型／比例／屋頂結構參考。",
+ "files": [
+  {
+   "from": "res://assets/models/hieda_main.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_main.glb",
+   "sha256": "1159e7dfdcf2b4808f9851685db09e343002a694523b953f42bbfdc8f653c48f",
+   "bytes": 259284,
+   "what": "舊程序稗田邸主屋（28.9×13.2×22.0 m，2.5k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_main.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_main.glb.import",
+   "sha256": "2e83cafacb5f160fd69904316344b99a8a15632201725734f445dbc3579fd75f",
+   "bytes": 1159,
+   "what": "舊程序稗田邸主屋（28.9×13.2×22.0 m，2.5k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_blockout.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_blockout.glb",
+   "sha256": "2cd2a3157004f78b70bd41f37411215af5b8f14828f920d0981e117bbe3adb7a",
+   "bytes": 2441964,
+   "what": "舊程序稗田邸整區 blockout（75.6×14.4×110.5 m，22.6k 面）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/hieda_blockout.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/hieda_blockout.glb.import",
+   "sha256": "21c4c37c2e733dadcd5e9b4fee1d1089154fa2343d89df768925e4f7ac37b8df",
+   "bytes": 1171,
+   "what": "舊程序稗田邸整區 blockout（75.6×14.4×110.5 m，22.6k 面）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/unomitei.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/unomitei.glb",
+   "sha256": "37e59910da1d89a7c6323d5ff54cd7c857ffa4d85f67e337b251757d72fde3c6",
+   "bytes": 161568,
+   "what": "舊程序酒館（15.1×9.5×17.5 m，1.6k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/unomitei.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/unomitei.glb.import",
+   "sha256": "45507d78e88b0b35735859366f6c7fd8e1515a6bdea03b1e1b03eea5a6cb1f41",
+   "bytes": 1152,
+   "what": "舊程序酒館（15.1×9.5×17.5 m，1.6k 面，無材質）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_balcony.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_balcony.glb",
+   "sha256": "04f30a1b1adfb4a888175d60dd8176bbab055bdd416ab0346f678e327b3603be",
+   "bytes": 15324,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_balcony.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_balcony.glb.import",
+   "sha256": "e1d40fc8c93a67a7318e3a814e827e6230955b995d47d8a7546c231330eccbe9",
+   "bytes": 1176,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_gable.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_gable.glb",
+   "sha256": "ab52d7010a0df2e859f18b5053b8ed2df169a00c1d9ac32dfeb7842058bd9a14",
+   "bytes": 12580,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_gable.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_gable.glb.import",
+   "sha256": "fd4c6402ab999f552584fc8257ff4c9d4398ea1e527f86ef093d095a5538a273",
+   "bytes": 1171,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_store.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_store.glb",
+   "sha256": "dd1419c2283bed0ab6b3c7d7be2610b7e4418cd1cff94c18604e229abe770006",
+   "bytes": 13420,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_store.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_store.glb.import",
+   "sha256": "16609b40d5049654a3c29241f181e67a17d62d83eb9e235ef3d37737bfa246be",
+   "bytes": 1171,
+   "what": "舊程序町家屋簷線模組（6.35 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_udatsu.glb",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_udatsu.glb",
+   "sha256": "250843a511b874610e0e439f43c409f253d5913bd7293c18e6f1762c2657e8bc",
+   "bytes": 18248,
+   "what": "舊程序町家屋簷線模組（6.52 m 段）",
+   "classification": "REFERENCE ONLY"
+  },
+  {
+   "from": "res://assets/models/roofline_udatsu.glb.import",
+   "to": "archive/reference_old_assets/godot/assets/models/roofline_udatsu.glb.import",
+   "sha256": "6b77a1e2fc45009328256913af9a12aa4cf097f32e86726c5a375eaa911b2253",
+   "bytes": 1173,
+   "what": "舊程序町家屋簷線模組（6.52 m 段）",
+   "classification": "REFERENCE ONLY"
+  }
+ ]
+}

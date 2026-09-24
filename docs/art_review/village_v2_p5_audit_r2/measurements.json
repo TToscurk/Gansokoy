@@ -1,0 +1,781 @@
+{
+ "大鳥居_landmark": {
+  "source": "D:/神社/shrine/godot/assets/landmark/大鳥居.glb",
+  "scale_basis": "柱心距 0.5 → P0 span 10 m",
+  "size_m_wdh": [
+   20.0,
+   3.12,
+   14.53
+  ],
+  "tris": 14430,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 35,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0576,
+  "nonmanifold_edges": 20,
+  "degenerate_tris": 44,
+  "base_contact_frac": 0.387,
+  "perim_gap_p90_m": 0.859,
+  "perim_gap_max_m": 0.977,
+  "base_unevenness_m": 0.043,
+  "texel_px_per_m_p50": 82.0,
+  "metallic_mean_per_material": [
+   0.005
+  ],
+  "origin_height_frac": 0.503
+ },
+ "博麗鳥居_shrine": {
+  "source": "D:/神社/shrine/godot/assets/shrine/博麗鳥居.glb",
+  "scale_basis": "shrine.tscn 核准比例 9.6",
+  "size_m_wdh": [
+   9.58,
+   1.85,
+   7.17
+  ],
+  "tris": 46368,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 2,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0,
+  "nonmanifold_edges": 0,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.981,
+  "perim_gap_p90_m": 0.006,
+  "perim_gap_max_m": 0.011,
+  "base_unevenness_m": 0.011,
+  "texel_px_per_m_p50": 136.6,
+  "metallic_mean_per_material": [
+   0.023
+  ],
+  "origin_height_frac": -0.0
+ },
+ "火見櫓_landmark": {
+  "source": "D:/神社/shrine/godot/assets/landmark/火見櫓.glb",
+  "scale_basis": "r1 梯子橫檔間距校驗 ×7.5",
+  "size_m_wdh": [
+   4.55,
+   4.83,
+   14.24
+  ],
+  "tris": 204670,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0,
+  "nonmanifold_edges": 0,
+  "degenerate_tris": 1,
+  "base_contact_frac": 0.812,
+  "perim_gap_p90_m": 0.148,
+  "perim_gap_max_m": 0.746,
+  "base_unevenness_m": 0.154,
+  "texel_px_per_m_p50": 97.7,
+  "metallic_mean_per_material": [
+   0.003
+  ],
+  "origin_height_frac": 0.501
+ },
+ "鈴奈庵_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/鈴奈庵/鈴奈庵.glb",
+  "scale_basis": "r1：一樓庇 → 2.7 m（面寬 9.0 m）",
+  "size_m_wdh": [
+   9.0,
+   6.56,
+   6.04
+  ],
+  "tris": 280673,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 7,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0037,
+  "nonmanifold_edges": 1491,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.833,
+  "perim_gap_p90_m": 0.058,
+  "perim_gap_max_m": 0.862,
+  "base_unevenness_m": 0.254,
+  "texel_px_per_m_p50": 133.9,
+  "metallic_mean_per_material": [
+   0.005
+  ],
+  "origin_height_frac": 0.501
+ },
+ "霧雨店_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/霧雨店/霧雨店.glb",
+  "scale_basis": "原檔公尺",
+  "size_m_wdh": [
+   10.98,
+   8.25,
+   4.34
+  ],
+  "tris": 319423,
+  "materials": 3,
+  "tex_mem_mb_uncompressed": 512.0,
+  "islands": 59,
+  "floating_pieces": 12,
+  "floating_tris": 5484,
+  "boundary_edge_frac": 0.0082,
+  "nonmanifold_edges": 1141,
+  "degenerate_tris": 1,
+  "base_contact_frac": 0.149,
+  "perim_gap_p90_m": 0.347,
+  "perim_gap_max_m": 0.579,
+  "base_unevenness_m": 0.301,
+  "texel_px_per_m_p50": 96.6,
+  "metallic_mean_per_material": [
+   0.058,
+   0.002,
+   0.004
+  ],
+  "origin_height_frac": -0.001
+ },
+ "稗田邸_町家版": {
+  "source": "D:/資產glb/町家/稗田底新版.glb",
+  "scale_basis": "面寬 28 m（暫定）",
+  "size_m_wdh": [
+   28.0,
+   22.8,
+   14.0
+  ],
+  "tris": 921273,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 18221,
+  "floating_pieces": 595,
+  "floating_tris": 11602,
+  "boundary_edge_frac": 0.5257,
+  "nonmanifold_edges": 2,
+  "degenerate_tris": 8,
+  "base_contact_frac": 0.634,
+  "perim_gap_p90_m": 0.209,
+  "perim_gap_max_m": 0.983,
+  "base_unevenness_m": 0.277,
+  "texel_px_per_m_p50": 40.7,
+  "metallic_mean_per_material": [
+   0.005
+  ],
+  "origin_height_frac": 0.501
+ },
+ "後院_地標": {
+  "source": "D:/資產glb/地標/後院.glb",
+  "scale_basis": "最大邊 20 m（用途不明，暫定）",
+  "size_m_wdh": [
+   20.0,
+   14.94,
+   5.83
+  ],
+  "tris": 2921131,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 2,
+  "floating_pieces": 1,
+  "floating_tris": 16176,
+  "boundary_edge_frac": 0.0001,
+  "nonmanifold_edges": 337,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.002,
+  "perim_gap_p90_m": 0.437,
+  "perim_gap_max_m": 0.833,
+  "base_unevenness_m": 0.191,
+  "texel_px_per_m_p50": 57.0,
+  "metallic_mean_per_material": [
+   0.004
+  ],
+  "origin_height_frac": 0.496
+ },
+ "水車_riverbank": {
+  "source": "D:/神社/shrine/godot/assets/riverbank/水車.glb",
+  "scale_basis": "slice machi_waterworks 比例 5.5",
+  "size_m_wdh": [
+   5.5,
+   1.82,
+   5.5
+  ],
+  "tris": 13925,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 203,
+  "floating_pieces": 7,
+  "floating_tris": 310,
+  "boundary_edge_frac": 0.0617,
+  "nonmanifold_edges": 7,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.053,
+  "perim_gap_p90_m": 0.741,
+  "perim_gap_max_m": 0.816,
+  "base_unevenness_m": 0.239,
+  "texel_px_per_m_p50": 102.2,
+  "metallic_mean_per_material": [
+   0.009
+  ],
+  "origin_height_frac": 0.5
+ },
+ "龍神像_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/龍神像/龍神像.glb",
+  "scale_basis": "台座踏步級高 0.0304 → 0.152 m",
+  "size_m_wdh": [
+   8.99,
+   8.84,
+   9.51
+  ],
+  "tris": 312858,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0001,
+  "nonmanifold_edges": 21,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.246,
+  "perim_gap_p90_m": 0.895,
+  "perim_gap_max_m": 0.991,
+  "base_unevenness_m": 0.244,
+  "texel_px_per_m_p50": 145.4,
+  "metallic_mean_per_material": [
+   0.004
+  ],
+  "origin_height_frac": -0.046
+ },
+ "鈴奈庵_地標": {
+  "source": "D:/資產glb/地標/鈴奈庵.glb",
+  "scale_basis": "面寬 9.0 m（暫定）",
+  "size_m_wdh": [
+   9.0,
+   6.56,
+   6.04
+  ],
+  "tris": 280673,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 7,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0037,
+  "nonmanifold_edges": 1491,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.835,
+  "perim_gap_p90_m": 0.059,
+  "perim_gap_max_m": 0.862,
+  "base_unevenness_m": 0.251,
+  "texel_px_per_m_p50": 133.8,
+  "metallic_mean_per_material": [
+   0.003
+  ],
+  "origin_height_frac": 0.501
+ },
+ "鯢吞亭_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/鯢吞亭/鯢吞亭.glb",
+  "scale_basis": "原檔公尺",
+  "size_m_wdh": [
+   15.21,
+   15.87,
+   8.0
+  ],
+  "tris": 317007,
+  "materials": 2,
+  "tex_mem_mb_uncompressed": 448.0,
+  "islands": 51,
+  "floating_pieces": 47,
+  "floating_tris": 12157,
+  "boundary_edge_frac": 0.0031,
+  "nonmanifold_edges": 126,
+  "degenerate_tris": 1,
+  "base_contact_frac": 0.001,
+  "perim_gap_p90_m": 0.889,
+  "perim_gap_max_m": 0.995,
+  "base_unevenness_m": 0.24,
+  "texel_px_per_m_p50": 75.6,
+  "metallic_mean_per_material": [
+   0.004,
+   0.209
+  ],
+  "origin_height_frac": 0.0
+ },
+ "寺子屋_地標": {
+  "source": "D:/資產glb/地標/寺子屋.glb",
+  "scale_basis": "最大邊 22 m（暫定）",
+  "size_m_wdh": [
+   22.0,
+   21.9,
+   11.63
+  ],
+  "tris": 2965546,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0001,
+  "nonmanifold_edges": 285,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.148,
+  "perim_gap_p90_m": 0.951,
+  "perim_gap_max_m": 0.996,
+  "base_unevenness_m": 0.256,
+  "texel_px_per_m_p50": 39.4,
+  "metallic_mean_per_material": [
+   0.003
+  ],
+  "origin_height_frac": 0.012
+ },
+ "裨田邸_地標": {
+  "source": "D:/資產glb/地標/裨田邸.glb",
+  "scale_basis": "面寬 28 m（暫定）",
+  "size_m_wdh": [
+   28.0,
+   28.22,
+   11.79
+  ],
+  "tris": 733686,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0001,
+  "nonmanifold_edges": 147,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.305,
+  "perim_gap_p90_m": 0.884,
+  "perim_gap_max_m": 0.999,
+  "base_unevenness_m": 0.256,
+  "texel_px_per_m_p50": 41.6,
+  "metallic_mean_per_material": [
+   0.005
+  ],
+  "origin_height_frac": -0.006
+ },
+ "本殿_shrine": {
+  "source": "D:/神社/shrine/godot/assets/shrine/本殿.glb",
+  "scale_basis": "shrine.tscn 核准比例 6.5",
+  "size_m_wdh": [
+   4.33,
+   4.91,
+   6.5
+  ],
+  "tris": 182773,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 256.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0,
+  "nonmanifold_edges": 6,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.989,
+  "perim_gap_p90_m": 0.002,
+  "perim_gap_max_m": 0.251,
+  "base_unevenness_m": 0.25,
+  "texel_px_per_m_p50": 213.8,
+  "metallic_mean_per_material": [
+   0.135
+  ],
+  "origin_height_frac": -0.0
+ },
+ "水車窄_riverbank": {
+  "source": "D:/神社/shrine/godot/assets/riverbank/水車(窄).glb",
+  "scale_basis": "最大邊 6.8 m（r3.2 輪＋軸，暫定）",
+  "size_m_wdh": [
+   6.8,
+   0.94,
+   6.8
+  ],
+  "tris": 15198,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 206,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0436,
+  "nonmanifold_edges": 7,
+  "degenerate_tris": 3,
+  "base_contact_frac": 0.09,
+  "perim_gap_p90_m": 0.883,
+  "perim_gap_max_m": 0.996,
+  "base_unevenness_m": 0.279,
+  "texel_px_per_m_p50": 144.6,
+  "metallic_mean_per_material": [
+   0.004
+  ],
+  "origin_height_frac": 0.5
+ },
+ "龍神像_地標": {
+  "source": "D:/資產glb/地標/龍神像.glb",
+  "scale_basis": "寬對齊 village-gen 版 9.0 m（暫定）",
+  "size_m_wdh": [
+   9.0,
+   8.85,
+   9.52
+  ],
+  "tris": 312858,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 1,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.0001,
+  "nonmanifold_edges": 21,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.243,
+  "perim_gap_p90_m": 0.949,
+  "perim_gap_max_m": 0.996,
+  "base_unevenness_m": 0.243,
+  "texel_px_per_m_p50": 145.3,
+  "metallic_mean_per_material": [
+   0.002
+  ],
+  "origin_height_frac": -0.046
+ },
+ "霧雨店_地標": {
+  "source": "D:/資產glb/地標/霧雨店.glb",
+  "scale_basis": "原檔已是公尺（最大邊 11.0）",
+  "size_m_wdh": [
+   10.98,
+   8.25,
+   4.34
+  ],
+  "tris": 319423,
+  "materials": 3,
+  "tex_mem_mb_uncompressed": 768.0,
+  "islands": 59,
+  "floating_pieces": 12,
+  "floating_tris": 5484,
+  "boundary_edge_frac": 0.0082,
+  "nonmanifold_edges": 1141,
+  "degenerate_tris": 1,
+  "base_contact_frac": 0.149,
+  "perim_gap_p90_m": 0.347,
+  "perim_gap_max_m": 0.579,
+  "base_unevenness_m": 0.301,
+  "texel_px_per_m_p50": 193.2,
+  "metallic_mean_per_material": [
+   0.057,
+   0.001,
+   0.002
+  ],
+  "origin_height_frac": -0.001
+ },
+ "鯢吞亭_地標": {
+  "source": "D:/資產glb/地標/鯢吞亭.glb",
+  "scale_basis": "原檔已是公尺（最大邊 15.9）",
+  "size_m_wdh": [
+   15.21,
+   15.87,
+   8.0
+  ],
+  "tris": 317007,
+  "materials": 2,
+  "tex_mem_mb_uncompressed": 704.0,
+  "islands": 51,
+  "floating_pieces": 47,
+  "floating_tris": 12157,
+  "boundary_edge_frac": 0.0031,
+  "nonmanifold_edges": 126,
+  "degenerate_tris": 1,
+  "base_contact_frac": 0.001,
+  "perim_gap_p90_m": 0.889,
+  "perim_gap_max_m": 0.995,
+  "base_unevenness_m": 0.24,
+  "texel_px_per_m_p50": 151.1,
+  "metallic_mean_per_material": [
+   0.002,
+   0.208
+  ],
+  "origin_height_frac": 0.0
+ },
+ "寺子屋_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/寺子屋/寺子屋.glb",
+  "scale_basis": "最大邊 22 m（P0 寬）",
+  "size_m_wdh": [
+   22.0,
+   21.9,
+   11.63
+  ],
+  "tris": 1037940,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 124,
+  "floating_pieces": 3,
+  "floating_tris": 1288,
+  "boundary_edge_frac": 0.202,
+  "nonmanifold_edges": 206,
+  "degenerate_tris": 2,
+  "base_contact_frac": 0.156,
+  "perim_gap_p90_m": 0.95,
+  "perim_gap_max_m": 0.997,
+  "base_unevenness_m": 0.293,
+  "texel_px_per_m_p50": 39.0,
+  "metallic_mean_per_material": [
+   0.005
+  ],
+  "origin_height_frac": 0.012
+ },
+ "稗田邸_villagegen": {
+  "source": "D:/資產glb/Gansokoy/village-gen/稗田邸/稗田底新版.glb",
+  "scale_basis": "面寬 28 m（P0 寬）",
+  "size_m_wdh": [
+   28.0,
+   22.79,
+   14.0
+  ],
+  "tris": 460636,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 192.0,
+  "islands": 44000,
+  "floating_pieces": 27933,
+  "floating_tris": 188605,
+  "boundary_edge_frac": 0.5824,
+  "nonmanifold_edges": 0,
+  "degenerate_tris": 8,
+  "base_contact_frac": 0.571,
+  "perim_gap_p90_m": 0.249,
+  "perim_gap_max_m": 0.989,
+  "base_unevenness_m": 0.298,
+  "texel_px_per_m_p50": 40.8,
+  "metallic_mean_per_material": [
+   0.008
+  ],
+  "origin_height_frac": 0.501
+ },
+ "拜殿_shrine": {
+  "source": "D:/神社/shrine/godot/assets/shrine/拜殿.glb",
+  "scale_basis": "shrine.tscn 核准比例 9.0",
+  "size_m_wdh": [
+   9.0,
+   7.66,
+   6.1
+  ],
+  "tris": 502280,
+  "materials": 121,
+  "tex_mem_mb_uncompressed": 88.2,
+  "islands": 2,
+  "floating_pieces": 0,
+  "floating_tris": 0,
+  "boundary_edge_frac": 0.021,
+  "nonmanifold_edges": 10,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.937,
+  "perim_gap_p90_m": 0.804,
+  "perim_gap_max_m": 0.904,
+  "base_unevenness_m": 0.025,
+  "texel_px_per_m_p50": 68.8,
+  "metallic_mean_per_material": [
+   0.028,
+   0.055,
+   0.028,
+   0.046,
+   0.054,
+   0.06,
+   0.034,
+   0.073,
+   0.068,
+   0.038,
+   0.038,
+   0.067,
+   0.044,
+   0.071,
+   0.04,
+   0.02,
+   0.059,
+   0.067,
+   0.043,
+   0.077,
+   0.074,
+   0.04,
+   0.088,
+   0.08,
+   0.081,
+   0.036,
+   0.076,
+   0.036,
+   0.042,
+   0.034,
+   0.082,
+   0.04,
+   0.088,
+   0.041,
+   0.027,
+   0.037,
+   0.034,
+   0.077,
+   0.034,
+   0.046,
+   0.037,
+   0.034,
+   0.081,
+   0.077,
+   0.034,
+   0.049,
+   0.017,
+   0.073,
+   0.067,
+   0.017,
+   0.033,
+   0.049,
+   0.021,
+   0.087,
+   0.061,
+   0.079,
+   0.034,
+   0.057,
+   0.053,
+   0.048,
+   0.04,
+   0.054,
+   0.028,
+   0.063,
+   0.07,
+   0.033,
+   0.032,
+   0.055,
+   0.034,
+   0.058,
+   0.034,
+   0.056,
+   0.037,
+   0.092,
+   0.027,
+   0.056,
+   0.059,
+   0.025,
+   0.064,
+   0.046,
+   0.151,
+   0.037,
+   0.047,
+   0.038,
+   0.117,
+   0.034,
+   0.041,
+   0.088,
+   0.093,
+   0.034,
+   0.092,
+   0.033,
+   0.032,
+   0.032,
+   0.067,
+   0.074,
+   0.069,
+   0.054,
+   0.026,
+   0.033,
+   0.085,
+   0.059,
+   0.046,
+   0.027,
+   0.054,
+   0.043,
+   0.046,
+   0.039,
+   0.065,
+   0.024,
+   0.081,
+   0.035,
+   0.027,
+   0.044,
+   0.095,
+   0.053,
+   0.109,
+   0.046,
+   0.046,
+   0.042,
+   0.0
+  ],
+  "origin_height_frac": -0.0
+ },
+ "水車小屋_riverbank": {
+  "source": "D:/神社/shrine/godot/assets/riverbank/水車小屋.glb",
+  "scale_basis": "最大邊 8 m（暫定）",
+  "size_m_wdh": [
+   8.0,
+   6.5,
+   5.52
+  ],
+  "tris": 13795,
+  "materials": 1,
+  "tex_mem_mb_uncompressed": 64.0,
+  "islands": 631,
+  "floating_pieces": 609,
+  "floating_tris": 12720,
+  "boundary_edge_frac": 0.0206,
+  "nonmanifold_edges": 21,
+  "degenerate_tris": 0,
+  "base_contact_frac": 0.021,
+  "perim_gap_p90_m": 0.406,
+  "perim_gap_max_m": 0.594,
+  "base_unevenness_m": 0.316,
+  "texel_px_per_m_p50": 69.0,
+  "metallic_mean_per_material": [
+   0.002
+  ],
+  "origin_height_frac": 0.499
+ },
+ "_torii_span": {
+  "博麗鳥居": {
+   "objects": [
+    "tripo_node_3a104812-02b2-49c4-8b8a-596703a8ba6a"
+   ],
+   "H": 7.17,
+   "z0.3": {
+    "z_m": 2.15,
+    "clear_opening_m": 4.62,
+    "pillar_centre_span_m": 5.43,
+    "pillar_dia_m": [
+     0.81,
+     0.81
+    ]
+   },
+   "z0.45": {
+    "z_m": 3.23,
+    "clear_opening_m": 4.61,
+    "pillar_centre_span_m": 5.38,
+    "pillar_dia_m": [
+     0.77,
+     0.77
+    ]
+   }
+  },
+  "大鳥居": {
+   "objects": [
+    "mesh_node"
+   ],
+   "H": 14.53,
+   "z0.3": {
+    "z_m": 4.36,
+    "clear_opening_m": 8.46,
+    "pillar_centre_span_m": 9.93,
+    "pillar_dia_m": [
+     1.46,
+     1.46
+    ]
+   },
+   "z0.45": {
+    "z_m": 6.54,
+    "clear_opening_m": 8.48,
+    "pillar_centre_span_m": 9.87,
+    "pillar_dia_m": [
+     1.39,
+     1.39
+    ]
+   }
+  }
+ },
+ "_site_probe": [
+  "[PROBE] HILL_TORII pillar -1.0 @(287.5139, -165.1571) y=7.16(Torii/Pillar_L) 1.22(Collision/TerrainCollision) ",
+  "[PROBE] HILL_TORII pillar 1.0 @(291.6862, -166.8429) y=7.16(Torii/Pillar_R) 1.25(Collision/TerrainCollision) ",
+  "[PROBE] DRAGON (0.0, 0.0) y=2.50(LANDMARK_DRAGON/Base) -0.17(Collision/TerrainCollision) ",
+  "[PROBE] DRAGON (-5.0, -5.0) y=2.50(LANDMARK_DRAGON/Base) 0.68(Collision/TerrainCollision) ",
+  "[PROBE] DRAGON (5.0, -5.0) y=2.50(LANDMARK_DRAGON/Base) -2.62(Collision/TerrainCollision) ",
+  "[PROBE] DRAGON (-5.0, 5.0) y=2.50(LANDMARK_DRAGON/Base) 0.67(Collision/TerrainCollision) ",
+  "[PROBE] DRAGON (5.0, 5.0) y=2.50(LANDMARK_DRAGON/Base) -1.78(Collision/TerrainCollision) "
+ ]
+}
