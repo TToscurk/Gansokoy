@@ -57,6 +57,33 @@
 		"platform_apron": 3.0,
 		"bank_fill_deg": 33.7,
 		"bank_cut_deg": 45.0,
+		"platform_blend": 12.0,
+		"platform_blend_max": 20.0,
+		"blend_deg": 35.0,
+		"bank_soft_k": 3.0,
+		"retaining_min_h": 0.3,
+		"farm_terraces": {
+			"_note": "東農田梯田（低地水田，概念圖為平田＋田埂，不是山坡棚田）：以田間路為梯田邊，西南（水車取水側）最高，往東、往北（主河）逐段降。斷線對齊 2 m 網格。灌溉：最高田面 − 水渠最低水位 ≤ irrigation_lift_max（水車揚程）；排水：最低田面 − 主河水位 ≥ freeboard_min。",
+			"top": 0.3,
+			"x_breaks": [372, 440, 500],
+			"riser_x": 0.2,
+			"z_breaks": [0, 70],
+			"riser_z": 0.1,
+			"riser_w": 2.0,
+			"irrigation_lift_max": 2.0,
+			"freeboard_min": 0.3
+		},
+		"bridge_spans": {
+			"_note": "橋長不隨地形無限伸縮：preferred＝P0 核可（d2cbe0a）橋長，容許 ±tolerance；超出範圍產生器拒絕產生——改河岸，不拉長橋（正式 Blender 橋資產不能靠 scale 修）。",
+			"tolerance": 0.1,
+			"preferred": {
+				"Bridge_01_HillFootStreet_Canal": 15.5,
+				"Bridge_02_DragonBridgeRoad_River": 41.0,
+				"Bridge_03_CrossStreetMid_Canal": 15.0,
+				"Bridge_04_CrossStreetSouth_Canal": 14.0,
+				"Bridge_05_WestLane_WestStream": 11.5
+			}
+		},
 		"approach": {
 			"road": "HillApproach",
 			"pad": "LANDMARK_NORTH_HILL",

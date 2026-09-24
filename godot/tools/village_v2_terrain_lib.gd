@@ -6,8 +6,10 @@ extends RefCounted
 ##
 ## Built Terrain：各 built 分區做 closing（外擴 g → 聯集 → 內縮 g）得到平台外框；
 ##   外框內＋外框外 apron 公尺＝平台，高度＝基準面 plane(z)（沿 z 的 0.6 % 緩坡，排水用）。
-## Transition Terrain：apron 以外是填挖坡，離坡腳 d 公尺處地形被夾在
-##   plane − d·tan(填方角) … plane + d·tan(挖方角) 之間；夾不到的地方就是原本的 Natural Terrain。
+## Transition Terrain：apron 以外 platform_blend 公尺內，地面由平台高 smoothstep 接回原地面（Natural edge）；
+##   接不回來（高差太大）的地方被夾在 plane − d·tan(填方角) … plane + d·tan(挖方角) 之間（Retaining edge，
+##   P4 可放擋土）。夾限用 polynomial soft min/max（寬 bank_soft_k）倒圓角，不留 2 m 網格會走樣的折線。
+## Farmland：梯田面高＝farm_level（依 terrain.farm_terraces 的 x／z 斷線逐段降，斷線與 2 m 網格對齊）。
 ## 參數在 layout_v2.json 的 terrain（不在凍結範圍），缺省值見 DEFAULTS。
 
 const DEFAULTS := {
@@ -15,6 +17,11 @@ const DEFAULTS := {
 	"platform_apron": 3.0,       # 平台在分區外框外多留的平地（≥ 1.5 格網格，避免坡腳三角形斜進平台）
 	"bank_fill_deg": 33.7,       # 填方坡 1:1.5
 	"bank_cut_deg": 45.0,        # 挖方坡 1:1（西肩離平台 29.8 m、高出 26.45 m，需 ≥ 41.6° 才不削到峰頂）
+	"platform_blend": 12.0,      # Natural edge：平台高接回原地面的距離（最短）
+	"platform_blend_max": 20.0,  # 高差大時接坡距離放寬到此（smoothstep 坡度 ≈ 1.5·Δ/W ≤ tan blend_deg）
+	"blend_deg": 35.0,
+	"bank_soft_k": 3.0,          # 填挖坡夾限的圓角寬
+	"retaining_min_h": 0.3,      # 夾限比自然接坡低／高 ≥ 此值的站＝Retaining edge
 }
 
 
@@ -28,12 +35,60 @@ static func plane(L: Dictionary, z: float) -> float:
 	return float(H["built"]) + (float(H["built_z_ref"]) - z) * float(H["built_slope"])
 
 
-## 填挖坡：base＝平台不存在時的地面；d＝離坡腳（apron 外緣）的水平距離（≤ 0 ＝在平台上）。
+## 平台外自然接坡（未夾限）：d＝離坡腳（apron 外緣）的水平距離（≤ 0 ＝在平台上）。
+static func blend(L: Dictionary, base: float, plane_h: float, d: float) -> float:
+	if d <= 0.0:
+		return plane_h
+	var w := clampf(1.5 * absf(base - plane_h) / tan(deg_to_rad(param(L, "blend_deg"))),
+		param(L, "platform_blend"), param(L, "platform_blend_max"))
+	return lerpf(plane_h, base, smoothstep(0.0, w, d))
+
+
+## 填挖坡＝自然接坡再夾進填挖限（soft，倒圓角）。base＝平台不存在時的地面。
 static func bank(L: Dictionary, base: float, plane_h: float, d: float) -> float:
 	if d <= 0.0:
 		return plane_h
-	return clampf(base, plane_h - d * tan(deg_to_rad(param(L, "bank_fill_deg"))),
-		plane_h + d * tan(deg_to_rad(param(L, "bank_cut_deg"))))
+	var k := minf(param(L, "bank_soft_k"), 0.5 * d)
+	var h := blend(L, base, plane_h, d)
+	h = smin(h, plane_h + d * tan(deg_to_rad(param(L, "bank_cut_deg"))), k)
+	return smax(h, plane_h - d * tan(deg_to_rad(param(L, "bank_fill_deg"))), k)
+
+
+static func smin(a: float, b: float, k: float) -> float:
+	if k <= 0.0:
+		return minf(a, b)
+	var hh := maxf(k - absf(a - b), 0.0) / k
+	return minf(a, b) - hh * hh * k * 0.25
+
+
+static func smax(a: float, b: float, k: float) -> float:
+	return -smin(-a, -b, k)
+
+
+## 梯田面高（terrain.farm_terraces）：由 top 起，往東每過一條 x 斷線降 riser_x、往北每過一條 z 斷線降 riser_z；
+## 斷線處是 riser_w 寬的直坡（田埂位置）。沒設定就回 heights.farm（r3 的平田）。
+static func farm_level(L: Dictionary, p: Vector2) -> float:
+	var T: Dictionary = L.get("terrain", {}).get("farm_terraces", {})
+	if T.is_empty():
+		return float(L["heights"]["farm"])
+	var h := float(T["top"])
+	var w := float(T["riser_w"])
+	for b in T["x_breaks"]:
+		h -= float(T["riser_x"]) * clampf((p.x - (float(b) - w * 0.5)) / w, 0.0, 1.0)
+	for b in T["z_breaks"]:
+		h -= float(T["riser_z"]) * clampf(((float(b) + w * 0.5) - p.y) / w, 0.0, 1.0)
+	return h
+
+
+## 橋長容許範圍 [min, max]（terrain.bridge_spans；preferred ×(1 ∓ tolerance)）。沒設定回 []。
+static func bridge_span(L: Dictionary, bridge_name: String) -> Array:
+	var S: Dictionary = L.get("terrain", {}).get("bridge_spans", {})
+	var pref: Dictionary = S.get("preferred", {})
+	if not pref.has(bridge_name):
+		return []
+	var pv := float(pref[bridge_name])
+	var tol := float(S["tolerance"])
+	return [pv, pv * (1.0 - tol), pv * (1.0 + tol)]
 
 
 static func pts(a: Array) -> PackedVector2Array:

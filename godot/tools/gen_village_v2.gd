@@ -29,6 +29,7 @@ const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const META := "res://data/village_v2.meta.json"
+const EDGES := "res://maps/village_v2/gen/terrain_edges.json"
 const SHOT_FILE := "res://tools/shots/village_v2_fixed_shots.json"
 const VARIANT_SHOT_FILE := "res://tools/shots/village_v2_mainstreet_variant_shots.json"
 const FONT := "res://assets/fonts/NotoSerifTC-VF.ttf"
@@ -91,6 +92,9 @@ var _wb := 0.0
 var _wf := 0.0
 var _did := -1
 var variant := ""                # 主街寬度 Variant（空＝layout 的 selected）
+var span_errors: Array[String] = []   # 橋長超出 terrain.bridge_spans 容許範圍
+var tri_stats := {"quads": 0, "flip": 0, "fan": 0}
+var edge_stats := {}
 
 
 func _init() -> void:
@@ -134,6 +138,12 @@ func _init() -> void:
 	_terrain()
 	_water()
 	_roads()
+	if not span_errors.is_empty():
+		for e in span_errors:
+			push_error("[v2] " + e)
+		vroot.free()
+		quit(3)
+		return
 	_districts()
 	_forests()
 	_landmarks()
@@ -311,7 +321,7 @@ func _land(x: float, z: float, with_pads := true) -> float:
 			_did = bi
 	# 建成區（如農田中的大宅庭園）優先於農田
 	_wf = _pw("Farmland", p, feather) * (1.0 - _wb)
-	var h := lerpf(nat, float(H["farm"]), clampf(_wf, 0.0, 1.0))
+	var h := lerpf(nat, TLib.farm_level(L, p), clampf(_wf, 0.0, 1.0))
 	# Built Terrain（P1）：建成區平台（分區 closing 聯集＋apron）＝基準面；平台外是填挖坡（Transition），
 	# 坡夾不到的地方維持原本的 Natural／農田地面。取代 r3 的「分區內 10 m 羽化」——那會讓村內隨噪訊起伏。
 	h = TLib.bank(L, h, TLib.plane(L, z), -TLib.outline_sd(outlines, p) - apron)
@@ -791,16 +801,12 @@ func _terrain() -> void:
 	var i_hill := PackedInt32Array()
 	var i_farm := PackedInt32Array()
 	var i_river := PackedInt32Array()
-	var faces := PackedVector3Array()
-	faces.resize((nx - 1) * (nz - 1) * 6)
-	var f := 0
+	# P1：每格依真實地面挑對角線；兩條都差 > FAN_TOL 就在格心加一點拆 4 三角（局部加密），
+	# 不整張網格加密。原本固定 b–c 對角線，斜向坡腳在 2 m 網格上走樣成鋸齒（a056297 審圖）。
 	for j in nz - 1:
 		for i in nx - 1:
 			var a := j * nx + i
-			var tri := PackedInt32Array([a, a + 1, a + nx, a + 1, a + nx + 1, a + nx])
-			for t in 6:
-				faces[f + t] = verts[tri[t]]
-			f += 6
+			var tri := _quad_tris(a, verts, nors, cols)
 			var wet := false
 			for v in [a, a + 1, a + nx, a + nx + 1]:
 				if hg[v] < hl[v] - 0.3:
@@ -813,6 +819,13 @@ func _terrain() -> void:
 				i_farm.append_array(tri)
 			else:
 				i_main.append_array(tri)
+	var faces := PackedVector3Array()
+	for idx in [i_main, i_hill, i_farm, i_river]:
+		for g in idx:
+			faces.append(verts[g])
+	print("[v2] 地形三角化：%d 格、換對角線 %d、格心加密 %d（+%d 三角）" % [
+		tri_stats["quads"], tri_stats["flip"], tri_stats["fan"], tri_stats["fan"] * 2])
+	_edge_kinds()
 	var tm := StandardMaterial3D.new()
 	tm.vertex_color_use_as_albedo = true
 	tm.vertex_color_is_srgb = true
@@ -837,6 +850,92 @@ func _terrain() -> void:
 	body.add_child(cs)
 	vroot.get_node("Collision").add_child(body)
 	_boundary()
+
+
+const FAN_TOL := 0.08    # 格心真實高度與兩條對角線中點都差 > 此值 → 格心加點
+const TWIST_TOL := 0.02  # 四角近乎共面的格不必判斷
+
+
+## 一格（左上角索引 a）的三角形索引。可能在 verts／nors／cols 尾端加一個格心頂點。
+func _quad_tris(a: int, verts: PackedVector3Array, nors: PackedVector3Array, cols: PackedColorArray) -> PackedInt32Array:
+	tri_stats["quads"] += 1
+	var b := a + 1
+	var c := a + nx
+	var d := a + nx + 1
+	var bc := PackedInt32Array([a, b, c, b, d, c])
+	var twist := absf(hg[a] + hg[d] - hg[b] - hg[c])
+	if twist < TWIST_TOL:
+		return bc
+	var cx := (verts[a].x + verts[d].x) * 0.5
+	var cz := (verts[a].z + verts[d].z) * 0.5
+	var hc := _carve(cx, cz, _grade(cx, cz, _land(cx, cz)))
+	var e_bc := absf((hg[b] + hg[c]) * 0.5 - hc)
+	var e_ad := absf((hg[a] + hg[d]) * 0.5 - hc)
+	if minf(e_bc, e_ad) > FAN_TOL:
+		tri_stats["fan"] += 1
+		var e := verts.size()
+		verts.append(Vector3(cx, hc, cz))
+		nors.append((nors[a] + nors[b] + nors[c] + nors[d]).normalized())
+		cols.append((cols[a] + cols[b] + cols[c] + cols[d]) * 0.25)
+		return PackedInt32Array([a, b, e, b, d, e, d, c, e, c, a, e])
+	if e_ad < e_bc:
+		tri_stats["flip"] += 1
+		return PackedInt32Array([a, d, c, a, b, d])
+	return bc
+
+
+## 平台邊分類（§6 Transition）：沿平台外框每 2 m 一站，比較「自然接坡」與「夾限後」的地面；
+## 差 ≥ retaining_min_h ＝ Retaining edge（高差大，P4 可放擋土），否則 Natural edge（已是平順接坡）。
+## 結果寫進 meta.terrain_edges，驗證腳本對 Natural 站量坡度。
+func _edge_kinds() -> void:
+	var rmin := TLib.param(L, "retaining_min_h")
+	var blend_d := TLib.param(L, "platform_blend_max")
+	var stations: Array = []
+	var ret_m := 0.0
+	var nat_m := 0.0
+	for poly in outlines:
+		for e in poly.size():
+			var a: Vector2 = poly[e]
+			var b: Vector2 = poly[(e + 1) % poly.size()]
+			var seg := a.distance_to(b)
+			if seg < 0.01:
+				continue
+			var tg := (b - a) / seg
+			var nrm := Vector2(-tg.y, tg.x)
+			if TLib.outline_sd(outlines, (a + b) * 0.5 + nrm * 0.5) > 0.0:
+				nrm = -nrm
+			var s := 1.0
+			while s < seg:
+				var o := a + tg * s
+				s += 2.0
+				var worst := 0.0
+				var steep := 0.0
+				var prev := TLib.plane(L, o.y)
+				for dd in range(1, int(blend_d) + 1):
+					var q := o + nrm * (apron + float(dd))
+					if TLib.outline_sd(outlines, q) > -apron:
+						prev = NAN
+						continue
+					var nat := _natural(q.x, q.y)
+					var wf := _pw("Farmland", q, feather)
+					var base := lerpf(nat, TLib.farm_level(L, q), clampf(wf, 0.0, 1.0))
+					var pl := TLib.plane(L, q.y)
+					var soft := TLib.blend(L, base, pl, float(dd))
+					var hb := TLib.bank(L, base, pl, float(dd))
+					worst = maxf(worst, absf(soft - hb))
+					if not is_nan(prev):
+						steep = maxf(steep, rad_to_deg(atan(absf(hb - prev))))
+					prev = hb
+				# 夾限有作用，或接坡本身就比 blend_deg 陡（高差大、距離不夠，如西肩旁的挖方）＝Retaining
+				var kind := "retaining" if (worst >= rmin or steep > TLib.param(L, "blend_deg")) else "natural"
+				if kind == "retaining":
+					ret_m += 2.0
+				else:
+					nat_m += 2.0
+				stations.append([snappedf(o.x, 0.01), snappedf(o.y, 0.01), snappedf(nrm.x, 0.001), snappedf(nrm.y, 0.001),
+					kind, snappedf(worst, 0.01), snappedf(steep, 0.1)])
+	edge_stats = {"station_m": 2.0, "apron": apron, "retaining_m": ret_m, "natural_m": nat_m, "stations": stations}
+	print("[v2] 平台邊：Natural %.0f m、Retaining %.0f m（夾限差 ≥ %.1f m 或接坡 > %.0f°）" % [nat_m, ret_m, rmin, TLib.param(L, "blend_deg")])
 
 
 ## 世界邊界（P1，§6「世界邊界」）：frame 四邊外側各一道 1 m 厚的牆，y −10…80（地形 −3.2…49 m）。
@@ -1001,6 +1100,12 @@ func _bridges() -> void:
 					var mid := (e1 + e2) * 0.5
 					var width := float(r["hw"]) * 2.0 + 0.8
 					var name := "Bridge_%02d_%s_%s" % [bridges.size(), r["name"], w[0]]
+					var span := TLib.bridge_span(L, name)
+					if span.is_empty():
+						span_errors.append("%s 沒有 terrain.bridge_spans.preferred" % name)
+					elif horiz < float(span[1]) or horiz > float(span[2]):
+						span_errors.append("%s 橋長 %.1f m 超出容許 %.1f–%.1f m（preferred %.1f）——改河岸，不拉長橋" % [
+							name, horiz, float(span[1]), float(span[2]), float(span[0])])
 					var node := _box(bg, name, Vector3(width, 0.6, sqrt(horiz * horiz + dh * dh)),
 						Vector3(mid.x, (h1 + h2) * 0.5 - 0.6, mid.y), rad_to_deg(atan2(rd.x, rd.y)),
 						_k(Color(0.52, 0.36, 0.24)))
@@ -1469,6 +1574,11 @@ func _write_meta() -> void:
 	f.store_string(JSON.stringify(meta, "\t") + "\n")
 	f.close()
 	print("[v2] meta → ", META)
+	# 平台邊分類（Natural／Retaining）：P4 放擋土、驗證量坡度用；不放進 runtime meta。
+	var ef := FileAccess.open(EDGES, FileAccess.WRITE)
+	ef.store_string(JSON.stringify(edge_stats) + "\n")
+	ef.close()
+	print("[v2] 平台邊分類 → ", EDGES)
 
 
 func _write_shots() -> void:

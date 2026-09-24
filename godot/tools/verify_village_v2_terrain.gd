@@ -15,6 +15,10 @@ extends SceneTree
 ##   面       地形碰撞面最陡 ≤ FACE_MAX_DEG（P0 基準：北丘 63°，無 > 65° 的面）
 ##   邊界     四邊腰高射線都打到 Collision/Boundary
 ##   預算     可見三角面 ≤ 600 萬；場景 load＋instantiate ≤ 3 秒（headless 參考值）
+##   鋸齒     平台外框、河岸的等高線沿邊走不得鋸齒（網格走樣回歸：a056297 龍神橋東岸、平台斜邊）
+##   接坡     Natural edge 站（gen/terrain_edges.json）往外 0–20 m 坡度 ≤ NATURAL_MAX_DEG
+##   梯田     各田面＝farm_level ±FLAT_TOL、至少 3 階；灌溉揚程、排水出水高（terrain.farm_terraces）
+##   橋長     Bridge_* 長度在 terrain.bridge_spans 容許範圍內
 
 const Freeze := preload("res://tools/village_v2_freeze.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
@@ -36,6 +40,16 @@ const BUDGET_LOAD_MS := 3000.0
 ## P0 凍結基準（v2-layout-0.3，2026-09-24 量測）：北丘各峰地面高。P1 不得改變北丘 Macro 輪廓。
 const HILL_BASE := {"主丘": 34.166, "西肩": 29.028, "東次峰": 27.990, "東長肩": 9.184}
 const HILL_TOL := 0.05
+## 鋸齒回歸：沿邊每 0.5 m 一站，往外量「地面離開平台／到達河岸等高線」的距離 t；
+## t 減去前後 ±3 m 的中位數＝走樣造成的來回擺動（直邊上應 ≈ 0）。取 95 百分位。
+const WOBBLE_STATION := 0.5
+const WOBBLE_WIN := 6            # ±6 站＝±3 m
+const WOBBLE_P95_MAX := 0.25     # m
+const EDGE_DEPART := 0.3         # 地面離開平台基準面多少算「坡開始」
+const BANK_LEVEL := 0.6          # 河岸等高線＝主河水位 + 0.6 m
+const DRAGON_EAST := Rect2(400, -215, 70, 90)   # a056297 審圖指出的龍神橋東岸（x 400–470）
+const EDGES := "res://maps/village_v2/gen/terrain_edges.json"
+const NATURAL_MAX_DEG := 40.0   # 產生器把接坡 > blend_deg 35° 的站標成 Retaining；實測（網格內插、轉角）留 5° 餘裕
 
 var L: Dictionary
 var fails := 0
@@ -92,6 +106,10 @@ func _run() -> void:
 	_check_faces(tc)
 	_check_boundary()
 	_check_budget(load_ms)
+	_check_wobble()
+	_check_natural_edges()
+	_check_farm()
+	_check_bridges()
 	print("[TERRAIN] 結果：%d 項失敗" % fails)
 	quit(fails)
 
@@ -367,3 +385,245 @@ func _check_faces(tc: StaticBody3D) -> void:
 			worst_at = (f[i] + f[i + 1] + f[i + 2]) / 3.0
 	check("地形碰撞面 %d 面，最陡 %.1f°、> %.0f° 的面 %d（@ (%.0f, %.0f)）" % [
 		f.size() / 3, worst, FACE_MAX_DEG, steep, worst_at.x, worst_at.z], steep == 0)
+
+
+# ─────────────── 鋸齒回歸 ───────────────
+
+## 沿 dir 往外走，回傳第一個 f(地面) 過零的距離（線性內插）；沒過零回 NAN。
+func _first_cross(o: Vector2, dir: Vector2, max_t: float, level: float, above: bool) -> float:
+	var prev := NAN
+	var t := 0.0
+	while t <= max_t:
+		var q := o + dir * t
+		var y := _ground(q.x, q.y)
+		if is_nan(y):
+			return NAN
+		var f := (y - level) if above else (level - y)
+		if f >= 0.0:
+			if is_nan(prev) or t == 0.0:
+				return t
+			return t - 0.25 * f / (f - prev)
+		prev = f
+		t += 0.25
+	return NAN
+
+
+## ts：沿邊依序的 t（NAN＝該站排除）。回傳 [p95, max, max 所在索引]；只算前後窗都有值的站。
+func _wobble(ts: PackedFloat32Array) -> Array:
+	var dev := PackedFloat32Array()
+	var idx := PackedInt32Array()
+	for i in range(WOBBLE_WIN, ts.size() - WOBBLE_WIN):
+		var win: Array = []
+		for j in range(i - WOBBLE_WIN, i + WOBBLE_WIN + 1):
+			if not is_nan(ts[j]):
+				win.append(ts[j])
+		if is_nan(ts[i]) or win.size() < 2 * WOBBLE_WIN + 1:
+			continue
+		win.sort()
+		dev.append(absf(ts[i] - float(win[WOBBLE_WIN])))
+		idx.append(i)
+	if dev.is_empty():
+		return [0.0, 0.0, -1, 0]
+	var s := dev.duplicate()
+	s.sort()
+	var mi := 0
+	for k in dev.size():
+		if dev[k] > dev[mi]:
+			mi = k
+	return [s[int(0.95 * (s.size() - 1))], dev[mi], idx[mi], dev.size()]
+
+
+func _excluded(p: Vector2, water_ok: bool) -> bool:
+	if _near_road(p, 6.0) or _near_pad(p, 6.0):
+		return true
+	return (not water_ok) and _near_water(p)
+
+
+func _check_wobble() -> void:
+	var F: Dictionary = L["frame"]
+	var frame := Rect2(float(F["x0"]), float(F["z0"]), float(F["x1"]) - float(F["x0"]), float(F["z1"]) - float(F["z0"])).grow(-2.0)
+	# 平台外框：每條直邊獨立算（轉角處 t 本來就會變）
+	var all_t := PackedFloat32Array()
+	var worst := [0.0, 0.0, -1, 0]
+	var worst_at := Vector2.ZERO
+	for poly in outlines:
+		for e in poly.size():
+			var a: Vector2 = poly[e]
+			var b: Vector2 = poly[(e + 1) % poly.size()]
+			var seg := a.distance_to(b)
+			if seg < 2.0 * WOBBLE_WIN * WOBBLE_STATION + 6.0:
+				continue
+			var tg := (b - a) / seg
+			var nrm := Vector2(-tg.y, tg.x)
+			if TLib.outline_sd(outlines, (a + b) * 0.5 + nrm * 0.5) > 0.0:
+				nrm = -nrm
+			var ts := PackedFloat32Array()
+			var pos: Array = []
+			var s := 3.0
+			while s < seg - 3.0:
+				var o := a + tg * s
+				s += WOBBLE_STATION
+				pos.append(o)
+				var bad := not frame.has_point(o + nrm * 15.0)
+				for d in [0.0, 5.0, 10.0, 15.0]:
+					bad = bad or _excluded(o + nrm * d, false)
+				if bad:
+					ts.append(NAN)
+					continue
+				var y0 := TLib.plane(L, o.y)
+				var up := _first_cross(o, nrm, 15.0, y0 + EDGE_DEPART, true)
+				var dn := _first_cross(o, nrm, 15.0, y0 - EDGE_DEPART, false)
+				ts.append(minf(up if not is_nan(up) else INF, dn if not is_nan(dn) else INF))
+				if is_inf(ts[ts.size() - 1]):
+					ts[ts.size() - 1] = NAN
+			var w := _wobble(ts)
+			all_t.append(w[0])
+			if float(w[0]) > float(worst[0]):
+				worst = w
+				worst_at = pos[int(w[2])] if int(w[2]) >= 0 else Vector2.ZERO
+	var edge_p95 := 0.0
+	for x in all_t:
+		edge_p95 = maxf(edge_p95, x)
+	check("鋸齒：平台外框坡腳線擺動 p95 最差邊 %.2f m（≤ %.2f，該邊最大 %.2f m @ (%.0f, %.0f)）" % [
+		edge_p95, WOBBLE_P95_MAX, float(worst[1]), worst_at.x, worst_at.y], edge_p95 <= WOBBLE_P95_MAX)
+	# 主河兩岸：沿中心線，每側量到「水位＋BANK_LEVEL」等高線的距離
+	var rl := TLib.resample(TLib.pts(L["water"]["MainRiver"]["pts"]), WOBBLE_STATION)
+	var lvl := float(L["heights"]["river_water"]) + BANK_LEVEL
+	for side in [1.0, -1.0]:
+		var ts := PackedFloat32Array()
+		var ts_de := PackedFloat32Array()
+		for i in rl.size():
+			var tg := (rl[mini(i + 1, rl.size() - 1)] - rl[maxi(i - 1, 0)]).normalized()
+			var nrm: Vector2 = Vector2(-tg.y, tg.x) * float(side)
+			var o: Vector2 = rl[i]
+			var t := _first_cross(o, nrm, 45.0, lvl, true)
+			var q: Vector2 = o + nrm * (t if not is_nan(t) else 0.0)
+			if is_nan(t) or not frame.has_point(q) or _near_road(q, 8.0) or _near_pad(q, 8.0) \
+					or TLib.polyline_d(water_lines[1][0], q) < 12.0:
+				ts.append(NAN)
+			else:
+				ts.append(t)
+			ts_de.append(ts[i] if DRAGON_EAST.has_point(o) else NAN)
+		var w := _wobble(ts)
+		var wd := _wobble(ts_de)
+		var at: Vector2 = rl[int(w[2])] if int(w[2]) >= 0 else Vector2.ZERO
+		check("鋸齒：主河%s岸等高線（水位+%.1f m）擺動 p95 %.2f m（≤ %.2f，最大 %.2f m @ (%.0f, %.0f)，%d 站）" % [
+			"左" if side > 0.0 else "右", BANK_LEVEL, float(w[0]), WOBBLE_P95_MAX, float(w[1]), at.x, at.y, int(w[3])],
+			float(w[0]) <= WOBBLE_P95_MAX)
+		check("鋸齒：龍神橋東岸段（%s側）擺動 p95 %.2f m、最大 %.2f m（≤ %.2f，%d 站）" % [
+			"左" if side > 0.0 else "右", float(wd[0]), float(wd[1]), WOBBLE_P95_MAX, int(wd[3])],
+			int(wd[3]) == 0 or float(wd[0]) <= WOBBLE_P95_MAX)
+
+
+func _check_natural_edges() -> void:
+	var E = JSON.parse_string(FileAccess.get_file_as_string(EDGES))
+	check("平台邊分類檔 %s 存在" % EDGES, typeof(E) == TYPE_DICTIONARY)
+	if typeof(E) != TYPE_DICTIONARY:
+		return
+	var apron := float(E["apron"])
+	var n := 0
+	var worst := 0.0
+	var worst_at := Vector2.ZERO
+	for st in E["stations"]:
+		if String(st[4]) != "natural":
+			continue
+		var o := Vector2(float(st[0]), float(st[1]))
+		var nrm := Vector2(float(st[2]), float(st[3]))
+		var prev := NAN
+		# 只量平台接坡帶（blend_max 內）；再往外是原本的 Natural Terrain（北丘自身最陡 63°，另有面坡度檢查）
+		for d in range(0, int(TLib.param(L, "platform_blend_max")) + 1):
+			var q := o + nrm * (apron + float(d))
+			if _near_road(q, 5.0) or _near_water(q) or _near_pad(q, 5.0):
+				prev = NAN
+				continue
+			var y := _ground(q.x, q.y)
+			if not is_nan(prev) and not is_nan(y):
+				n += 1
+				var deg := rad_to_deg(atan(absf(y - prev)))
+				if deg > worst:
+					worst = deg
+					worst_at = q
+			prev = y
+	check("Natural edge %.0f m／Retaining edge %.0f m；Natural 站接坡帶：%d 段最大坡度 %.1f°（≤ %.0f° @ (%.0f, %.0f)）" % [
+		float(E["natural_m"]), float(E["retaining_m"]), n, worst, NATURAL_MAX_DEG, worst_at.x, worst_at.y],
+		n > 0 and worst <= NATURAL_MAX_DEG)
+
+
+func _check_farm() -> void:
+	var T: Dictionary = L.get("terrain", {}).get("farm_terraces", {})
+	check("layout 有 terrain.farm_terraces", not T.is_empty())
+	if T.is_empty():
+		return
+	var farm := TLib.pts(L["districts"]["Farmland"]["poly"])
+	var levels := {}
+	var n := 0
+	var bad := 0
+	var worst := 0.0
+	var worst_at := Vector2.ZERO
+	var w := float(T["riser_w"])
+	var xb: Array = T["x_breaks"]
+	var zb: Array = T["z_breaks"]
+	var x := 330.0
+	while x <= 558.0:
+		var z := -150.0
+		while z <= 150.0:
+			var p := Vector2(x, z)
+			z += 2.0
+			if not Geometry2D.is_point_in_polygon(p, farm) or Geometry2D.is_point_in_polygon(p, farm) == false:
+				continue
+			var inner := true
+			for poly in [farm]:
+				for k in poly.size():
+					if p.distance_to(Geometry2D.get_closest_point_to_segment(p, poly[k], poly[(k + 1) % poly.size()])) < 14.0:
+						inner = false
+			for b in xb:
+				if absf(p.x - float(b)) < w:
+					inner = false
+			for b in zb:
+				if absf(p.y - float(b)) < w:
+					inner = false
+			if not inner or _near_road(p, 5.0) or _near_water(p) or _near_pad(p, 5.0) or TLib.outline_sd(outlines, p) > -30.0:
+				continue
+			var y := _ground(p.x, p.y)
+			if is_nan(y):
+				continue
+			var want := TLib.farm_level(L, p)
+			n += 1
+			levels[snappedf(want, 0.01)] = true
+			var dv := absf(y - want)
+			if dv > FLAT_TOL:
+				bad += 1
+			if dv > worst:
+				worst = dv
+				worst_at = p
+		x += 2.0
+	var lv: Array = levels.keys()
+	lv.sort()
+	check("梯田田面：%d 點中 %d 點偏離田面高 > %.2f m（最大 %.2f m @ (%.0f, %.0f)）；田面 %d 階 %s" % [
+		n, bad, FLAT_TOL, worst, worst_at.x, worst_at.y, lv.size(), str(lv)], n > 0 and bad == 0 and lv.size() >= 3)
+	# 灌溉／排水：水渠最低水位 → 最高田面的揚程；最低田面 − 主河水位
+	var canal := v.get_node_or_null("Water/Canal")
+	var canal_min := NAN
+	if canal != null and canal.has_meta("water_y_range"):
+		canal_min = float(canal.get_meta("water_y_range")[0])
+	var top := float(lv[lv.size() - 1]) if not lv.is_empty() else NAN
+	var low := float(lv[0]) if not lv.is_empty() else NAN
+	var lift := top - canal_min
+	check("灌溉：最高田面 %.2f − 水渠最低水位 %.2f ＝ 揚程 %.2f m（≤ %.1f，水車）" % [
+		top, canal_min, lift, float(T["irrigation_lift_max"])], not is_nan(lift) and lift <= float(T["irrigation_lift_max"]))
+	var fb := low - float(L["heights"]["river_water"])
+	check("排水：最低田面 %.2f − 主河水位 %.2f ＝ %.2f m（≥ %.1f）" % [
+		low, float(L["heights"]["river_water"]), fb, float(T["freeboard_min"])], fb >= float(T["freeboard_min"]) - 0.001)
+
+
+func _check_bridges() -> void:
+	var bs := v.get_node("Roads/Bridges").get_children()
+	check("橋 %d 座（P0 凍結 5 座）" % bs.size(), bs.size() == 5)
+	for b in bs:
+		var span := TLib.bridge_span(L, String(b.name))
+		var len_m := float(b.get_meta("length_m", -1.0))
+		if span.is_empty():
+			check("%s 有 terrain.bridge_spans.preferred" % b.name, false)
+			continue
+		check("%s 長 %.1f m（preferred %.1f，容許 %.1f–%.1f）" % [b.name, len_m, float(span[0]), float(span[1]), float(span[2])],
+			len_m >= float(span[1]) and len_m <= float(span[2]))

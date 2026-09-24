@@ -17,23 +17,23 @@
 			"z": 172.0
 		},
 		{
-			"arrival_ground_y": -0.2,
+			"arrival_ground_y": 0.54,
 			"arrival_y_offset": 1.2,
 			"arrival_yaw": 3.14159265358979,
 			"note": "→ 稗田邸（隨稗田邸候補（low），conf=low）",
 			"target": "hieda1f",
 			"x": 398.0,
-			"y": -0.2,
+			"y": 0.54,
 			"z": 2.0
 		},
 		{
-			"arrival_ground_y": 1.58,
+			"arrival_ground_y": 2.02,
 			"arrival_y_offset": 1.2,
 			"arrival_yaw": 1.5707963267949,
 			"note": "→ 香霖堂（龍神橋東端（舊 slice 亦在龍石像橋東岸），conf=medium）",
 			"target": "kourindou",
 			"x": 428.0,
-			"y": 2.06,
+			"y": 2.13,
 			"z": -205.0
 		}
 	],
