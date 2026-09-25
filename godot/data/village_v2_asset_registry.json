@@ -187,7 +187,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-25T11:45:22",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-25，R3）",
    "label": "寺子屋",
    "landmark": "LANDMARK_TERAKOYA",
    "asset_json": "res://assets/village_v2/terakoya/asset.json",
