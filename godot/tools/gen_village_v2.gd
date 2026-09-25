@@ -35,6 +35,7 @@ const WLib := preload("res://tools/village_v2_water_lib.gd")
 const PLib := preload("res://tools/village_v2_parcel_lib.gd")
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
 const HLib := preload("res://tools/village_v2_hero_lib.gd")
+const KLib := preload("res://tools/village_v2_machiya_kit_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
@@ -176,6 +177,7 @@ func _init() -> void:
 	_landmarks()
 	_greybox()
 	_heroes()
+	_kits()
 	_anchors()
 	_portals()
 	_debug()
@@ -1893,6 +1895,40 @@ func _heroes() -> void:
 			n += 1
 			print("[v2] P5 Hero %s → %s（取代 %s）" % [a["id"], gss[gi]["anchor"], gss[gi]["replaces"]])
 	print("[v2] P5 Hero 資產 %d 件（其餘維持 P4 灰盒）" % n)
+
+
+## P6 模組化町家 Kit：registry v2_assets 中 kind＝kit、11 項全 PASS、manifest 雜湊與 gate 當時一致才套用；
+## 依 P4 灰盒紀錄（greybox.json）逐棟組裝，灰盒網格隱藏、節點與 BoxShape 碰撞保留。否則維持 P4 灰盒。
+func _kits() -> void:
+	var kit_ok := false
+	for a: Dictionary in HLib.registry().get("v2_assets", []):
+		if String(a.get("id", "")) != "machiya_kit" or String(a.get("kind", "")) != "kit":
+			continue
+		var g: Dictionary = a.get("gate", {})
+		var ok := true
+		for k in HLib.GATE_KEYS:
+			ok = ok and String(g.get(k, "")) == "PASS"
+		var entry := String(a.get("entry", ""))
+		kit_ok = ok and FileAccess.file_exists(entry) and FileAccess.get_sha256(entry) == String(a.get("entry_sha256", ""))
+	if not kit_ok:
+		print("[v2] P6 町家 Kit 未登記或 gate 之後改過：町家維持 P4 灰盒")
+		return
+	var GB: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(GREYBOX))
+	var lib := KLib.load_lib()
+	var embed := float(L["greybox"]["embed"])
+	var n := 0
+	var tris := 0
+	for b: Dictionary in GB["buildings"]:
+		if String(b["kind"]) != "machiya":
+			continue
+		var body := vroot.get_node_or_null("Districts/%s/Buildings/%s" % [b["district"], b["id"]]) as Node3D
+		if body == null:
+			push_error("[v2] P6 Kit：找不到灰盒 %s" % b["id"])
+			continue
+		var kit := KLib.apply(body, b, lib, embed)
+		tris += KLib.lod_tris(kit, 0)
+		n += 1
+	print("[v2] P6 町家 Kit 套用 %d 棟（LOD0 合計 %d 三角面）" % [n, tris])
 
 
 # ─────────────────────────── P4 建築灰盒 ───────────────────────────

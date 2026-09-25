@@ -231,7 +231,8 @@ for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
             aj = json.load(f)
         e.update({'kind': aj['kind'], 'label': aj['budget_class'], 'landmark': aj['landmark'],
                   'asset_json': f'res://assets/village_v2/{name}/asset.json',
-                  'replaces': aj['gate_spec']['anchor'] + '/' + aj['gate_spec']['replaces'],
+                  'replaces': aj['replaces'] if aj['kind'] == 'kit'
+                  else aj['gate_spec']['anchor'] + '/' + aj['gate_spec']['replaces'],
                   'lod0_tris': aj['measured_blender']['LOD0']})
     v2_assets.append(e)
 

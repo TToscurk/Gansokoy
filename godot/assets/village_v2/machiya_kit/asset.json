@@ -1,0 +1,22 @@
+{
+ "id": "machiya_kit",
+ "kind": "kit",
+ "phase": "P6",
+ "round": "P6 R1",
+ "budget_class": "町家",
+ "landmark": null,
+ "label": "模組化町家 Kit（平屋／厨子二階／總二階 × 平入／妻入 × 住宅／店先）",
+ "entry": "res://assets/village_v2/machiya_kit/machiya_kit_manifest.json",
+ "assembler": "res://tools/village_v2_machiya_kit_lib.gd",
+ "prefab": "res://tools/village_v2_machiya_kit_prefab.gd",
+ "gate": "res://tools/verify_village_v2_machiya_kit_gate.gd",
+ "source_blender": "res://assets/blender/village_v2/build_machiya_kit.py",
+ "atlas_script": "tools/build_village_v2_p6_kit_atlas.py",
+ "replaces": "Districts/*/Buildings/<greybox.json kind=machiya>",
+ "size_authority": "P4 灰盒紀錄 res://maps/village_v2/gen/greybox.json（width／depth／eave／ridge／pitch／ov_eave／ov_gable／hisashi／door_local_x／ground_lo／base_h）；P4 灰盒 BoxShape 碰撞沿用",
+ "look_authority": "docs/reference/民宅/（普町1–4、商家、長屋）；暖簾／招牌只用幾何紋，不放可讀文字",
+ "not_reused": "不引用任何封存的舊房屋資產（archive/reference_old_assets、maps/village/gen、assets/machiya 等）；構件全部由 build_machiya_kit.py 新建",
+ "applies_to": {"machiya": 187, "aux_koya": 0, "aux_kura": 0, "note": "aux 納屋／土藏（倉庫.PNG）不在 R1，維持 P4 灰盒"},
+ "lod_ranges_m": [0, 40, 110, 600],
+ "measured_blender": {"modules": 119, "LOD0": 20050, "note": "LOD0 為 187 棟組裝後每棟最大值（gate 實測）；119 構件合計 26899 三角面"}
+}

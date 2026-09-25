@@ -1629,7 +1629,7 @@ func _all() -> void:
 	var reg := HLib.registry()
 	var n := 0
 	for a: Dictionary in reg.get("v2_assets", []):
-		if String(a.get("kind", "")) == "material_library":
+		if String(a.get("kind", "")) in ["material_library", "kit"]:   # kit 由 verify_village_v2_machiya_kit_gate.gd --regress 重驗
 			continue
 		n += 1
 		R.clear()

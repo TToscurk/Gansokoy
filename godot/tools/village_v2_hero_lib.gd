@@ -30,7 +30,7 @@ static func registry() -> Dictionary:
 static func approved(reg: Dictionary) -> Array:
 	var out: Array = []
 	for a: Dictionary in reg.get("v2_assets", []):
-		if String(a.get("kind", "")) == "material_library":
+		if String(a.get("kind", "")) in ["material_library", "kit"]:   # kit（P6 町家 Kit）走 village_v2_machiya_kit_lib.gd
 			continue
 		var g: Dictionary = a.get("gate", {})
 		var ok := true

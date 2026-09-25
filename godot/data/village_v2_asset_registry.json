@@ -251,6 +251,34 @@
    "lod0_tris": 27034
   },
   {
+   "id": "machiya_kit",
+   "kind": "kit",
+   "path": "res://assets/village_v2/machiya_kit",
+   "entry": "res://assets/village_v2/machiya_kit/machiya_kit_manifest.json",
+   "entry_sha256": "9a83b5ec75535784675faea1efef2f40cbbc1916663d30c6b5030792bad064c8",
+   "gate_json": "res://assets/village_v2/machiya_kit/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-26T06:55:00",
+   "status": "ART_REVIEW",
+   "label": "町家",
+   "landmark": null,
+   "asset_json": "res://assets/village_v2/machiya_kit/asset.json",
+   "replaces": "Districts/*/Buildings/<greybox.json kind=machiya>",
+   "lod0_tris": 20050
+  },
+  {
    "id": "sando_torii",
    "kind": "landmark",
    "path": "res://assets/village_v2/sando_torii",
