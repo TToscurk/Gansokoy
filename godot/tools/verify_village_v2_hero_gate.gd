@@ -195,6 +195,20 @@ func _xf() -> Transform3D:
 	return hero.global_transform
 
 
+## 建築量體：P4 灰盒 body（greybox 放置）或 P0 地標 building（anchor 放置的建築，R3 寺子屋起）。
+## 回傳 {w, d, zf（正面牆 z）, plinth}；鳥居等非建築回傳 {}。
+func _bld() -> Dictionary:
+	if gs.has("body"):
+		var B: Dictionary = gs["body"]
+		return {"w": float(B["w"]), "d": float(B["d"]), "zf": float(B["d"]) * 0.5, "plinth": float(B["plinth"])}
+	if gs.has("building"):
+		# zf＝入口面（玄關前緣）；主屋牆仍以原點為中心（w × d）
+		var B2: Dictionary = gs["building"]
+		return {"w": float(B2["w"]), "d": float(B2["d"]), "zf": float(B2.get("zf", float(B2["d"]) * 0.5)),
+			"plinth": float(B2["plinth"])}
+	return {}
+
+
 func _to_local(p: Vector3) -> Vector3:
 	return hero.global_transform.affine_inverse() * p
 
@@ -377,7 +391,8 @@ func _apply_neg() -> void:
 		"float":
 			hero.position.y += 0.3
 		"parcel":
-			hero.position += hero.basis.z * 3.0
+			# 町家地塊前緣只留 1–2 m → 3 m 就出界；地標地塊（寺子屋 yard 4 m、前庭道具到地塊邊 3.9 m）要 8 m 才真的出界
+			hero.position += hero.basis.z * (8.0 if gs.has("building") else 3.0)
 		"greybox":
 			if g0 == null:
 				# 產生器已不建 placeholder（anchor 型）：另建一個 1 × 10 × 1 m 有碰撞的灰盒柱，模擬「墊在灰盒上」
@@ -477,9 +492,38 @@ func _c_size() -> void:
 			and absf(ee - float(rec["eave_edge_m"])) <= 0.15
 		_res("size", ok2, "射線實測：牆面寬 %.2f（P4 %.2f）、牆縱深 %.2f（P4 %.2f）、屋脊頂 %.2f（屋脊 %.2f）、背面簷口 %.2f（P4 簷口 %.2f）m" % [
 			w, rec["width_m"], d, rec["depth_m"], rr, rec["ridge_m"], ee, rec["eave_edge_m"]])
+	if gs.has("building"):
+		# anchor 放置的建築（沒有 P4 灰盒）：規格對 P0 地標量體（size＝寬×高×深，只能小於等於）與自身 building 規格
+		var Bb: Dictionary = gs["building"]
+		var lm := _lm(String(S["landmark"]))
+		var ls: Array = lm.get("size", [0, 0, 0])
+		var pr: Dictionary = Bb["probe"]
+		var py := float(pr["y"])
+		var xr := 30.0 - _vis_dist(Vector3(30, py, float(pr["z"])), Vector3(-30, py, float(pr["z"])), _tris_along_x(float(pr["z"])))
+		var xl := -30.0 + _vis_dist(Vector3(-30, py, float(pr["z"])), Vector3(30, py, float(pr["z"])), _tris_along_x(float(pr["z"])))
+		var zb := -30.0 + _vis_dist(Vector3(float(pr["x"]), py, -30), Vector3(float(pr["x"]), py, 30), _tris_along_z(float(pr["x"])))
+		var zfr := 30.0 - _vis_dist(Vector3(float(pr["x"]), py, 30), Vector3(float(pr["x"]), py, -30), _tris_along_z(float(pr["x"])))
+		var ridge := 30.0 - _vis_dist(Vector3(0.137, 30, 0.043), Vector3(0.137, -5, 0.043), _tris_at(0.137, 0.043))
+		var ze := float(Bb["d"]) * 0.5 + float(Bb["ov_eave"]) - 0.05
+		var eave := 30.0 - _vis_dist(Vector3(float(pr["x"]), 30, -ze), Vector3(float(pr["x"]), -5, -ze), _tris_at(float(pr["x"]), -ze))
+		var w := (xr - xl) * sc.x
+		var d := (zfr - zb) * sc.z
+		var gx := float(pr["gx"])
+		var zg := 30.0 - _vis_dist(Vector3(gx, py, 30), Vector3(gx, py, -30), _tris_along_z(gx))
+		var zgb := -30.0 + _vis_dist(Vector3(gx, py, -30), Vector3(gx, py, 30), _tris_along_z(gx))
+		var d_tot := (zg - zgb) * sc.z
+		var top_all := ab.end.y * sc.y
+		var p0_ok := ls.size() == 3 and w <= float(ls[0]) + 0.005 and d_tot <= float(ls[2]) + 0.005 \
+			and top_all <= float(ls[1]) + 0.005
+		_res("size", p0_ok, "P0 地標量體 %s（寬×高×深）：主屋牆寬 %.2f、含玄關總深 %.2f（射線 x %.2f）、最高點 %.2f m，都不超過" % [
+			ls, w, d_tot, gx, top_all])
+		var ok3 := absf(w - float(Bb["w"])) <= 0.10 and absf(d - float(Bb["d"])) <= 0.10 \
+			and absf(ridge * sc.y - float(Bb["ridge"])) <= 0.35 and absf(eave * sc.y - float(Bb["eave_edge"])) <= 0.15
+		_res("size", ok3, "射線實測：牆面寬 %.2f（規格 %.2f）、牆縱深 %.2f（%.2f）、屋脊頂 %.2f（棟 %.2f）、背面簷口 %.2f（%.2f）m" % [
+			w, Bb["w"], d, Bb["d"], ridge * sc.y, Bb["ridge"], eave * sc.y, Bb["eave_edge"]])
 	if gs.has("door_clear"):
 		var dc: Dictionary = gs["door_clear"]
-		var zf := float(gs["body"]["d"]) * 0.5
+		var zf := float(_bld()["zf"])
 		var zr := zf - 0.031
 		var sill := 1.213 - _vis_dist(Vector3(0.037, 1.213, zr), Vector3(0.037, -1, zr), _tris_at(0.037, zr))
 		var lintel := 1.213 + _vis_dist(Vector3(0.037, 1.213, zr), Vector3(0.037, 6, zr), _tris_at(0.037, zr))
@@ -643,8 +687,11 @@ func _c_ground() -> void:
 	var ph: Node = anchor.get_node_or_null(String(gs["replaces"]))
 	var vis := 0
 	var live := 0
-	if ph != null:
-		for c in ph.find_children("*", "", true, false) + [ph]:
+	for nm: String in [String(gs["replaces"])] + Array(gs.get("also_retire", [])):
+		var pn: Node = anchor.get_node_or_null(nm)
+		if pn == null:
+			continue
+		for c in pn.find_children("*", "", true, false) + [pn]:
 			if c is MeshInstance3D and (c as MeshInstance3D).visible:
 				vis += 1
 			elif c is CollisionShape3D and not (c as CollisionShape3D).disabled:
@@ -654,7 +701,7 @@ func _c_ground() -> void:
 	_res("grounding", vis == 0 and live == 0, "被取代的 %s：%s（可見網格 %d、有效碰撞 %d）" % [gs["replaces"],
 		"已移除" if ph == null else "保留節點（P4 gate 紀錄用）但已退場", vis, live])
 	# 入口段差（有台基的建築）
-	if gs.has("body") and gs.has("entry"):
+	if not _bld().is_empty() and gs.has("entry"):
 		var step: Dictionary = {}
 		for g: Dictionary in gs["ground"]:
 			if String(g["name"]) == "踏石":
@@ -662,7 +709,7 @@ func _c_ground() -> void:
 		var e := xf * Vector3(float(gs["entry"][0]), 0, float(gs["entry"][1]))
 		var eg := _ground(e.x, e.z)
 		var st := oy + float(step.get("top", 0.0))
-		var pl := oy + float(gs["body"]["plinth"])
+		var pl := oy + float(_bld()["plinth"])
 		var r1 := st - eg
 		var r2 := pl - st
 		_res("grounding", r1 >= 0.0 and r1 <= 0.30 and r2 >= 0.0 and r2 <= 0.30,
@@ -1161,8 +1208,8 @@ func _render(id: String, out: String) -> void:
 ## 玩家鏡位：[名稱, 世界 XZ（Vector3，y 由地面決定）]
 func _shot_spots(xf: Transform3D) -> Array:
 	var out: Array = []
-	if String(gs["placement"]) == "greybox":
-		var zf := float(gs["body"]["d"]) * 0.5
+	if not _bld().is_empty():
+		var zf := float(_bld()["zf"])
 		for s in [["front", 0.0, 9.0], ["front_l", 28.0, 12.0], ["front_r", -28.0, 12.0], ["street_far", 55.0, 26.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
 			out.append([s[0], xf * (Vector3(0, 0, zf) + dir * _clear_dist(xf, zf, dir, float(s[2])))])
@@ -1185,7 +1232,9 @@ func _clear_dist(xf: Transform3D, zf: float, dir: Vector3, want: float) -> float
 	var hit := space.intersect_ray(q)
 	if hit.is_empty():
 		return want
-	return clampf(a.distance_to(hit["position"]) + 1.0 - 5.0, 5.0, want)
+	# 鏡頭在玩家後方 SpringArm 5 m；SpringArm 只躲碰撞體，對面屋簷（無碰撞、出簷 1–1.5 m）會蓋住鏡頭
+	# → 擋點往回退 arm 5 m＋屋簷餘裕 3 m（R3 寺子屋 front_l／street_far 鏡頭鑽進對街屋簷下）
+	return clampf(a.distance_to(hit["position"]) + 1.0 - 8.0, 5.0, want)
 
 
 func _img_std(img: Image) -> float:
@@ -1206,8 +1255,9 @@ func _img_std(img: Image) -> float:
 func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 	var start: Vector3
 	var goal: Vector3
-	if String(gs["placement"]) == "greybox":
-		start = xf * Vector3(0.9, 0, float(gs["body"]["d"]) * 0.5 + 3.0)
+	var bd := _bld()
+	if not bd.is_empty():
+		start = xf * Vector3(0.9, 0, float(bd["zf"]) + 3.0)
 		goal = xf * Vector3(0.9, 0, 0)
 	else:
 		start = xf * Vector3(0, 0, 12.0)
@@ -1231,15 +1281,15 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 			var g := _ground(p.x, p.z)
 			if not is_nan(g):
 				max_gap = maxf(max_gap, absf(player.global_position.y - g))
-		if String(gs["placement"]) == "greybox" and Time.get_ticks_msec() - t0 > 4000:
+		if not bd.is_empty() and Time.get_ticks_msec() - t0 > 4000:
 			break
 	Input.action_release("move_forward")
 	for i in 6:
 		await physics_frame
 	var lp := _to_local(player.global_position)
-	if String(gs["placement"]) == "greybox":
-		var hw := float(gs["body"]["w"]) * 0.5
-		var hd := float(gs["body"]["d"]) * 0.5
+	if not bd.is_empty():
+		var hw := float(bd["w"]) * 0.5
+		var hd := float(bd["d"]) * 0.5
 		var inside := absf(lp.x) < hw - 0.05 and absf(lp.z) < hd - 0.05
 		var ok := not inside and max_gap <= 0.35
 		return [ok, "實走：正面 3 m 外朝台基走 4 秒，停在局部 z %.2f（牆面 %.2f，%s）、最大離地 %.2f m" % [

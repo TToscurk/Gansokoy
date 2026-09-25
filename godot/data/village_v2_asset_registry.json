@@ -1,5 +1,5 @@
 {
- "version": "p5-r2",
+ "version": "p5-r3",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -75,7 +75,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-25T04:06:48",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-25，R2）",
    "label": "鯢吞亭",
    "landmark": "LANDMARK_GEIDONTEI",
    "asset_json": "res://assets/village_v2/geidontei/asset.json",
@@ -103,7 +103,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-25T04:07:19",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-25，R2）",
    "label": "霧雨店",
    "landmark": "LANDMARK_KIRISAME",
    "asset_json": "res://assets/village_v2/kirisame/asset.json",
@@ -165,6 +165,34 @@
    "asset_json": "res://assets/village_v2/suzunaan/asset.json",
    "replaces": "Landmarks/LANDMARK_SUZUNAAN/Greybox",
    "lod0_tris": 31978
+  },
+  {
+   "id": "terakoya",
+   "kind": "hero",
+   "path": "res://assets/village_v2/terakoya",
+   "entry": "res://assets/village_v2/terakoya/terakoya.scn",
+   "entry_sha256": "11a7987d453f1e9a7e2157d6abb065d67d908a6b4b25d328f591e008cd8d9490",
+   "gate_json": "res://assets/village_v2/terakoya/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T11:45:22",
+   "status": "ART_REVIEW",
+   "label": "寺子屋",
+   "landmark": "LANDMARK_TERAKOYA",
+   "asset_json": "res://assets/village_v2/terakoya/asset.json",
+   "replaces": "Landmarks/LANDMARK_TERAKOYA/Wire",
+   "lod0_tris": 64079
   }
  ],
  "v2_rejected": [],

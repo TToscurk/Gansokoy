@@ -9,6 +9,9 @@ extends RefCounted
 ##              ——灰盒只剩「P4 規格紀錄」，不再提供外觀或碰撞；資產自己接地（禁止墊在灰盒上）。
 ##   "anchor"： 資產原點＝P0 地標節點原點；placeholder 子節點（例 Torii）的 transform 給旋轉；
 ##              產生器直接不建 placeholder，gate 在未登記前則隱藏＋停用它。
+##              gate_spec.yaw_deg（R3 起）：P0 線框（_wire_box）把 yaw 烘進頂點、節點本身沒旋轉 → 旋轉由這裡給
+##              （gate pivot 項另對 layout P0 yaw 驗，不是自報）。
+##   gate_spec.also_retire（R3 起）：其他要一起退場的 placeholder 子節點（例 P0 線框的 Footprint 地面框）。
 ## 路徑一律從 registry／asset.json 讀，原始碼不寫資產 res:// 字串（P5 asset reset gate 掃描產生器原始碼）。
 
 const REG := "res://data/village_v2_asset_registry.json"
@@ -63,6 +66,8 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 	elif String(gs["placement"]) == "greybox":
 		push_error("[hero] %s 沒有灰盒節點 %s" % [gs["anchor"], gs["replaces"]])
 		return null
+	if gs.has("yaw_deg"):
+		xf.basis = Basis(Vector3.UP, deg_to_rad(float(gs["yaw_deg"])))
 	var hero := scene.instantiate() as Node3D
 	hero.name = "Hero"
 	hero.transform = xf
@@ -75,6 +80,15 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 			ph.free()
 		else:
 			retire(ph)
+	for extra: String in gs.get("also_retire", []):
+		var e := anchor.get_node_or_null(extra)
+		if e == null:
+			continue
+		if remove_placeholder:
+			anchor.remove_child(e)
+			e.free()
+		else:
+			retire(e)
 	anchor.set_meta("hero_asset", String(S["id"]))
 	return hero
 

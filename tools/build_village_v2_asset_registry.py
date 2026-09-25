@@ -190,6 +190,11 @@ GATE_KEYS = ['size', 'parcel_fit', 'grounding', 'materials', 'geometry', 'pivot_
              'collision', 'lod', 'performance', 'player_screenshot', 'f5_f6']
 MATLIB_KEYS = ['license', 'texture_size', 'vram_compressed', 'tres_valid']
 V2A = G + '/assets/village_v2'
+# 使用者親自給的 ART_APPROVED（agent 不得自行加入；每筆附日期與出處）。status 只是紀錄，產生器放不放仍只看 gate＋雜湊。
+ART_APPROVED = {
+    'geidontei': 'ART_APPROVED（使用者 2026-09-25，R2）',
+    'kirisame': 'ART_APPROVED（使用者 2026-09-25，R2）',
+}
 v2_assets, v2_rejected = [], []
 for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
     gp = f'{V2A}/{name}/gate.json'
@@ -212,7 +217,7 @@ for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
     e = {'id': name, 'kind': 'material_library' if lib else None, 'path': f'res://assets/village_v2/{name}',
          'entry': entry, 'entry_sha256': gj['entry_sha256'], 'gate_json': res(gp),
          'gate': {k: checks[k]['result'] for k in keys},
-         'gate_date': max(checks[k]['date'] for k in keys), 'status': 'ART_REVIEW'}
+         'gate_date': max(checks[k]['date'] for k in keys), 'status': ART_APPROVED.get(name, 'ART_REVIEW')}
     if not lib:
         with open(f'{V2A}/{name}/asset.json', encoding='utf-8') as f:
             aj = json.load(f)
@@ -223,7 +228,7 @@ for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
     v2_assets.append(e)
 
 registry = {
-    'version': 'p5-r2',
+    'version': 'p5-r3',
     'created': '2026-09-24',
     'authority': 'P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。',
     'rules': [
