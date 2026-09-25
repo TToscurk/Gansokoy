@@ -195,6 +195,9 @@ ART_APPROVED = {
     'geidontei': 'ART_APPROVED（使用者 2026-09-25，R2）',
     'kirisame': 'ART_APPROVED（使用者 2026-09-25，R2）',
     'terakoya': 'ART_APPROVED（使用者 2026-09-25，R3）',
+    'dragon_statue': 'ART_APPROVED（使用者 2026-09-25，R4）',
+    'sando_torii': 'ART_APPROVED（使用者 2026-09-25，R4）',
+    'waterwheel': 'ART_APPROVED（使用者 2026-09-25，R4）',
 }
 v2_assets, v2_rejected = [], []
 for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
