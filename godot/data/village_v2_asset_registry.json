@@ -103,7 +103,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-25T16:08:03",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-25，R5）",
    "label": "火見櫓",
    "landmark": "LANDMARK_TOWER",
    "asset_json": "res://assets/village_v2/fire_tower/asset.json",
@@ -159,7 +159,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-25T16:08:05",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-25，R5）",
    "label": "社殿",
    "landmark": "LANDMARK_NORTH_HILL",
    "asset_json": "res://assets/village_v2/hilltop_shrine/asset.json",
