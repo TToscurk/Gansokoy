@@ -159,7 +159,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-26T01:07:29",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-26，R6）",
    "label": "稗田邸",
    "landmark": "LANDMARK_HIEDA_GATE",
    "asset_json": "res://assets/village_v2/hieda_gate/asset.json",
@@ -187,7 +187,7 @@
     "f5_f6": "PASS"
    },
    "gate_date": "2026-09-26T01:07:32",
-   "status": "ART_REVIEW",
+   "status": "ART_APPROVED（使用者 2026-09-26，R6）",
    "label": "稗田邸",
    "landmark": "LANDMARK_HIEDA",
    "asset_json": "res://assets/village_v2/hieda_house/asset.json",

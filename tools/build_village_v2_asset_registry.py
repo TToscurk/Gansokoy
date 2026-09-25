@@ -200,6 +200,8 @@ ART_APPROVED = {
     'waterwheel': 'ART_APPROVED（使用者 2026-09-25，R4）',
     'fire_tower': 'ART_APPROVED（使用者 2026-09-25，R5）',
     'hilltop_shrine': 'ART_APPROVED（使用者 2026-09-25，R5）',
+    'hieda_house': 'ART_APPROVED（使用者 2026-09-26，R6）',
+    'hieda_gate': 'ART_APPROVED（使用者 2026-09-26，R6）',
 }
 v2_assets, v2_rejected = [], []
 for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
