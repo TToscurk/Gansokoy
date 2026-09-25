@@ -1,0 +1,281 @@
+{
+ "_note": "水車 資產規格（build_waterwheel.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。 一件資產放三處（gate_spec.instances）；輪子是轉動部件（rotors），prefab 以 AnimationPlayer 轉。",
+ "id": "waterwheel",
+ "landmark": "LANDMARK_WATERWHEEL_1",
+ "kind": "landmark",
+ "budget_class": "水車",
+ "glb": "res://assets/village_v2/waterwheel/src/waterwheel.glb",
+ "scene": "res://assets/village_v2/waterwheel/waterwheel.scn",
+ "lod_objects": [
+  "Waterwheel_LOD0",
+  "Waterwheel_LOD1",
+  "Waterwheel_LOD2"
+ ],
+ "rotors": [
+  {
+   "name": "Wheel",
+   "pivot": [
+    1.6,
+    2.65,
+    0.0
+   ],
+   "axis": "x",
+   "dir": -1.0,
+   "period_s": 14.0,
+   "lod_objects": [
+    "Waterwheel_Rotor_LOD0",
+    "Waterwheel_Rotor_LOD1",
+    "Waterwheel_Rotor_LOD2"
+   ]
+  }
+ ],
+ "lod_ranges_m": [
+  0,
+  50,
+  140,
+  600
+ ],
+ "budget": {
+  "lod0": 15000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Metal": "res://assets/village_v2/_matlib/V2_Metal.tres"
+ },
+ "spec": {
+  "radius_m": 3.0,
+  "radius_p0_max_m": 3.2,
+  "width_m": 1.1,
+  "hub_y_m": 2.65,
+  "dip_m": 0.35,
+  "paddles": 16,
+  "spokes_per_side": 10,
+  "period_s": 14.0,
+  "type": "下掛式（undershot）",
+  "front": "+z＝水流方向；+x＝水渠中心",
+  "sites": [
+   {
+    "landmark": "LANDMARK_WATERWHEEL_1",
+    "yaw_deg": -4.574,
+    "water_above_origin_m": 0.094
+   },
+   {
+    "landmark": "LANDMARK_WATERWHEEL_2",
+    "yaw_deg": -13.496,
+    "water_above_origin_m": 0.5596
+   },
+   {
+    "landmark": "LANDMARK_WATERWHEEL_3",
+    "yaw_deg": -26.565,
+    "water_above_origin_m": 0.8507
+   }
+  ]
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_WATERWHEEL_1",
+  "replaces": "Wheel",
+  "p4_id": "",
+  "parcel": "",
+  "road": "",
+  "water_ref": "Canal",
+  "size": {
+   "x_half_max": 2.95,
+   "z_min": -3.05,
+   "z_max": 3.05,
+   "top": [
+    5.6,
+    5.7
+   ],
+   "bottom": -1.6
+  },
+  "ground": [
+   {
+    "name": "西岸石積橋台",
+    "rect": [
+     -2.9,
+     -0.75,
+     -1.7,
+     0.75
+    ],
+    "bottom": 0.3,
+    "top": 2.45,
+    "embed_max": 1.3
+   },
+   {
+    "name": "東側軸承柱",
+    "rect": [
+     2.4,
+     -0.15,
+     2.7,
+     0.15
+    ],
+    "bottom": -1.6,
+    "top": 3.1,
+    "embed_max": 0.6
+   }
+  ],
+  "dip": [
+   0.15,
+   0.6
+  ],
+  "walkway": {
+   "rect": [
+    -5.6,
+    -2.5,
+    -4.6,
+    2.5
+   ],
+   "head": 1.95,
+   "min_clear": 3.0,
+   "step": 0.5
+  },
+  "entry": [
+   -5.0,
+   3.5
+  ],
+  "inside": [
+   -2.3,
+   0.0
+  ],
+  "shots": [
+   [
+    "bank",
+    -9.0,
+    6.0
+   ],
+   [
+    "bank_up",
+    -8.0,
+    -7.0
+   ],
+   [
+    "bank_far",
+    -16.0,
+    16.0
+   ]
+  ],
+  "walk": {
+   "from": [
+    -7.5,
+    0.0
+   ],
+   "to": [
+    1.6,
+    0.0
+   ],
+   "box": [
+    -2.9,
+    -3.0,
+    2.8,
+    3.0
+   ]
+  },
+  "instances": [
+   {
+    "anchor": "Landmarks/LANDMARK_WATERWHEEL_1",
+    "landmark": "LANDMARK_WATERWHEEL_1",
+    "yaw_deg": -4.574,
+    "dy": 0.094
+   },
+   {
+    "anchor": "Landmarks/LANDMARK_WATERWHEEL_2",
+    "landmark": "LANDMARK_WATERWHEEL_2",
+    "yaw_deg": -13.496,
+    "dy": 0.5596
+   },
+   {
+    "anchor": "Landmarks/LANDMARK_WATERWHEEL_3",
+    "landmark": "LANDMARK_WATERWHEEL_3",
+    "yaw_deg": -26.565,
+    "dy": 0.8507
+   }
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Pier",
+   "center": [
+    -2.3,
+    1.375,
+    0
+   ],
+   "size": [
+    1.2,
+    2.1500000000000004,
+    1.5
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Bearing",
+   "center": [
+    -2.3,
+    2.75,
+    0
+   ],
+   "size": [
+    1.1800000000000002,
+    0.5999999999999996,
+    1.1800000000000002
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Axle",
+   "center": [
+    0.475,
+    2.65,
+    0
+   ],
+   "size": [
+    4.45,
+    0.28,
+    0.28
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Post",
+   "center": [
+    2.55,
+    0.75,
+    0
+   ],
+   "size": [
+    0.5000000000000002,
+    4.7,
+    0.54
+   ]
+  },
+  {
+   "type": "cylinder",
+   "name": "WheelHull",
+   "center": [
+    1.6,
+    2.65,
+    0.0
+   ],
+   "radius": 3.01,
+   "height": 1.2399999999999998,
+   "roll_deg": 90.0
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 2056,
+  "LOD0_body": 228,
+  "LOD0_rotor": 1828,
+  "LOD1": 618,
+  "LOD1_body": 46,
+  "LOD1_rotor": 572,
+  "LOD2": 106,
+  "LOD2_body": 46,
+  "LOD2_rotor": 60
+ }
+}

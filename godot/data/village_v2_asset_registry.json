@@ -1,5 +1,5 @@
 {
- "version": "p5-r3",
+ "version": "p5-r4",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -53,6 +53,34 @@
    },
    "gate_date": "2026-09-25T01:52:53",
    "status": "ART_REVIEW"
+  },
+  {
+   "id": "dragon_statue",
+   "kind": "landmark",
+   "path": "res://assets/village_v2/dragon_statue",
+   "entry": "res://assets/village_v2/dragon_statue/dragon_statue.scn",
+   "entry_sha256": "7045fda81d6b3ce5becb9868ad081fe360ab63afbb73b4ae1db86a764c50c51e",
+   "gate_json": "res://assets/village_v2/dragon_statue/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T15:09:17",
+   "status": "ART_REVIEW",
+   "label": "龍神像",
+   "landmark": "LANDMARK_DRAGON",
+   "asset_json": "res://assets/village_v2/dragon_statue/asset.json",
+   "replaces": "Landmarks/LANDMARK_DRAGON/Statue",
+   "lod0_tris": 87676
   },
   {
    "id": "geidontei",
@@ -109,6 +137,34 @@
    "asset_json": "res://assets/village_v2/kirisame/asset.json",
    "replaces": "Landmarks/LANDMARK_KIRISAME/Greybox",
    "lod0_tris": 27034
+  },
+  {
+   "id": "sando_torii",
+   "kind": "landmark",
+   "path": "res://assets/village_v2/sando_torii",
+   "entry": "res://assets/village_v2/sando_torii/sando_torii.scn",
+   "entry_sha256": "4c5387a9153b3a490444375bb3d0be430a89fad2f29d4f1e6d8fe59691555bfb",
+   "gate_json": "res://assets/village_v2/sando_torii/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T15:08:51",
+   "status": "ART_REVIEW",
+   "label": "鳥居",
+   "landmark": "LANDMARK_HILL_TORII",
+   "asset_json": "res://assets/village_v2/sando_torii/asset.json",
+   "replaces": "Landmarks/LANDMARK_HILL_TORII/Torii",
+   "lod0_tris": 1342
   },
   {
    "id": "south_torii",
@@ -193,6 +249,34 @@
    "asset_json": "res://assets/village_v2/terakoya/asset.json",
    "replaces": "Landmarks/LANDMARK_TERAKOYA/Wire",
    "lod0_tris": 64079
+  },
+  {
+   "id": "waterwheel",
+   "kind": "landmark",
+   "path": "res://assets/village_v2/waterwheel",
+   "entry": "res://assets/village_v2/waterwheel/waterwheel.scn",
+   "entry_sha256": "ad99cc31d92ef84ae49e7dc236e07d52dabf051d05fc7cbd339e099e8d8c7b0e",
+   "gate_json": "res://assets/village_v2/waterwheel/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T15:10:01",
+   "status": "ART_REVIEW",
+   "label": "水車",
+   "landmark": "LANDMARK_WATERWHEEL_1",
+   "asset_json": "res://assets/village_v2/waterwheel/asset.json",
+   "replaces": "Landmarks/LANDMARK_WATERWHEEL_1/Wheel",
+   "lod0_tris": 2056
   }
  ],
  "v2_rejected": [],

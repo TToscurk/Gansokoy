@@ -1,0 +1,207 @@
+{
+ "_note": "參道鳥居 資產規格（build_sando_torii.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。",
+ "id": "sando_torii",
+ "landmark": "LANDMARK_HILL_TORII",
+ "kind": "landmark",
+ "budget_class": "鳥居",
+ "glb": "res://assets/village_v2/sando_torii/src/sando_torii.glb",
+ "scene": "res://assets/village_v2/sando_torii/sando_torii.scn",
+ "lod_objects": [
+  "Sando_Torii_LOD0",
+  "Sando_Torii_LOD1",
+  "Sando_Torii_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  60,
+  160,
+  700
+ ],
+ "budget": {
+  "lod0": 5000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_WoodRed": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+  "V2_Metal": "res://assets/village_v2/_matlib/V2_Metal.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_SandoTorii": "res://assets/village_v2/sando_torii/V2_SandoTorii.tres"
+ },
+ "spec": {
+  "span_m": 4.5,
+  "height_m": 6.0,
+  "kasagi_len_m": 6.3,
+  "nuki_y_m": 3.95,
+  "embed_m": 0.45,
+  "top_center_m": 6.02,
+  "top_end_m": 6.26,
+  "plaque_m": [
+   0.56,
+   0.9
+  ],
+  "plaque_text": "龍神社",
+  "clear_inner_half_m": 1.8900000000000001,
+  "road": "HillApproach 寬 5.0 m（half_w 2.5）"
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_HILL_TORII",
+  "replaces": "Torii",
+  "yaw_deg": 22.0,
+  "p4_id": "",
+  "parcel": "",
+  "road": "HillApproach",
+  "size": {
+   "x_half_max": 3.3,
+   "z_min": -0.45,
+   "z_max": 0.45,
+   "top": [
+    6.0,
+    6.35
+   ],
+   "bottom": -0.45
+  },
+  "span": {
+   "axis_m": 4.5,
+   "clear_min": 3.5,
+   "inner_half": 1.8900000000000001,
+   "shoulder_max": 0.63
+  },
+  "ground": [
+   {
+    "name": "台座左",
+    "rect": [
+     -2.61,
+     -0.36,
+     -1.8900000000000001,
+     0.36
+    ],
+    "bottom": -0.45,
+    "top": 0.42,
+    "embed_max": 0.4,
+    "road_ok": "HillApproach"
+   },
+   {
+    "name": "台座右",
+    "rect": [
+     1.8900000000000001,
+     -0.36,
+     2.61,
+     0.36
+    ],
+    "bottom": -0.45,
+    "top": 0.42,
+    "embed_max": 0.4,
+    "road_ok": "HillApproach"
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -1.84,
+    -1.2,
+    1.84,
+    1.2
+   ],
+   "head": 1.95,
+   "min_clear": 2.6,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   3.0
+  ],
+  "inside": [
+   -2.25,
+   0.0
+  ],
+  "shots": [
+   [
+    "south",
+    0.0,
+    16.0
+   ],
+   [
+    "south_near",
+    0.0,
+    8.0
+   ],
+   [
+    "south_far",
+    0.0,
+    34.0
+   ]
+  ]
+ },
+ "collision": [
+  {
+   "type": "cylinder",
+   "center": [
+    -2.25,
+    1.75,
+    0
+   ],
+   "radius": 0.24,
+   "height": 4.4,
+   "name": "Pillar_L"
+  },
+  {
+   "type": "cylinder",
+   "center": [
+    2.25,
+    1.75,
+    0
+   ],
+   "radius": 0.24,
+   "height": 4.4,
+   "name": "Pillar_R"
+  },
+  {
+   "type": "box",
+   "center": [
+    -2.25,
+    0.06499999999999997,
+    0
+   ],
+   "size": [
+    0.72,
+    1.03,
+    0.72
+   ],
+   "name": "Base_L"
+  },
+  {
+   "type": "box",
+   "center": [
+    2.25,
+    0.06499999999999997,
+    0
+   ],
+   "size": [
+    0.72,
+    1.03,
+    0.72
+   ],
+   "name": "Base_R"
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 1342,
+  "aabb": [
+   [
+    -3.25,
+    -0.45,
+    -0.36
+   ],
+   [
+    3.25,
+    6.26,
+    0.36
+   ]
+  ],
+  "LOD1": 404,
+  "LOD2": 120
+ }
+}

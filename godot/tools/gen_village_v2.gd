@@ -1885,11 +1885,13 @@ func _heroes() -> void:
 		if S.is_empty() or scn == null:
 			push_error("[v2] P5 Hero %s：asset.json 或 .scn 讀不到，維持灰盒" % a.get("id", "?"))
 			continue
-		var h := HLib.place(vroot, S, scn, true)
-		if h == null:
-			continue
-		n += 1
-		print("[v2] P5 Hero %s → %s（取代 %s）" % [a["id"], S["gate_spec"]["anchor"], S["gate_spec"]["replaces"]])
+		var gss := HLib.instances(S)
+		for gi in gss.size():
+			var h := HLib.place(vroot, S, scn, true, gi)
+			if h == null:
+				continue
+			n += 1
+			print("[v2] P5 Hero %s → %s（取代 %s）" % [a["id"], gss[gi]["anchor"], gss[gi]["replaces"]])
 	print("[v2] P5 Hero 資產 %d 件（其餘維持 P4 灰盒）" % n)
 
 

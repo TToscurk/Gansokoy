@@ -9,6 +9,8 @@ extends SceneTree
 ##   <Id>（Node3D，meta asset_id／asset_json）
 ##     LOD0／LOD1／LOD2（MeshInstance3D，visibility_range 硬切＋margin 遲滯；材質＝共享材質庫／Hero atlas 的 .tres）
 ##     Collision（StaticBody3D）＋ asset.json 列的簡化形狀（box／cylinder／convex；禁止 trimesh）
+##     <Rotor>（R4 水車起，asset.json rotors）：Node3D 放在 pivot，底下 LOD0–2 同距離切換；
+##       RotorAnim（AnimationPlayer，autoplay「spin」）以 period_s 一圈、線性循環轉 rotation:<axis>。
 ## 只負責「組裝」；是否合格由 verify_village_v2_hero_gate.gd 驗收。
 
 var fails := 0
@@ -105,6 +107,68 @@ func _init() -> void:
 		var cols: PackedColorArray = am.surface_get_arrays(0)[Mesh.ARRAY_COLOR] if am.get_surface_count() > 0 else PackedColorArray()
 		_p("%s ← %s（%s）：%d 三角面、%d surface、AABB %s、顏色樣本 %s" % [mi.name, on, found[on][2], tris,
 			am.get_surface_count(), am.get_aabb(), cols[0] if not cols.is_empty() else "無"])
+	# 轉動部件（水車輪）：網格頂點在 Blender 端已以 pivot 為原點 → 節點放在 pivot、LOD 子節點 identity
+	var ap: AnimationPlayer = null
+	var alib := AnimationLibrary.new()
+	var spin := Animation.new()
+	for rt: Dictionary in S.get("rotors", []):
+		var rn := Node3D.new()
+		rn.name = String(rt["name"])
+		var pv: Array = rt["pivot"]
+		rn.position = Vector3(float(pv[0]), float(pv[1]), float(pv[2]))
+		rn.set_meta("rotor", true)
+		root.add_child(rn)
+		var objs: Array = rt["lod_objects"]
+		for li in objs.size():
+			var on := String(objs[li])
+			if not found.has(on):
+				_fail("GLB 缺轉動物件 %s" % on)
+				continue
+			var src: Mesh = found[on][0]
+			var xf: Transform3D = found[on][1]
+			if not xf.is_equal_approx(Transform3D.IDENTITY):
+				_fail("%s 節點 transform 不是 identity：%s" % [on, xf])
+			var am := ArrayMesh.new()
+			for si in src.get_surface_count():
+				var mat: Material = src.surface_get_material(si)
+				var mname := mat.resource_name if mat != null else ""
+				if not mats.has(mname):
+					_fail("%s surface %d 材質「%s」不在 asset.json materials" % [on, si, mname])
+					continue
+				am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, src.surface_get_arrays(si))
+				am.surface_set_name(am.get_surface_count() - 1, mname)
+				am.surface_set_material(am.get_surface_count() - 1, load(String(mats[mname])))
+			am.resource_name = "%s_%s_LOD%d" % [S["id"], rt["name"], li]
+			var mi := MeshInstance3D.new()
+			mi.name = "LOD%d" % li
+			mi.mesh = am
+			var b := float(ranges[li])
+			var e := float(ranges[li + 1])
+			mi.visibility_range_begin = b
+			mi.visibility_range_begin_margin = margin if b > 0.0 else 0.0
+			mi.visibility_range_end = e
+			mi.visibility_range_end_margin = margin if e > 0.0 else 0.0
+			mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
+			rn.add_child(mi)
+			_p("%s/%s ← %s：%d 三角面" % [rn.name, mi.name, on, am.get_faces().size() / 3])
+		var period := float(rt["period_s"])
+		spin.length = period
+		spin.loop_mode = Animation.LOOP_LINEAR
+		var t := spin.add_track(Animation.TYPE_VALUE)
+		spin.track_set_path(t, NodePath("%s:rotation:%s" % [rn.name, String(rt["axis"])]))
+		spin.track_set_interpolation_type(t, Animation.INTERPOLATION_LINEAR)
+		spin.value_track_set_update_mode(t, Animation.UPDATE_CONTINUOUS)
+		spin.track_insert_key(t, 0.0, 0.0)
+		spin.track_insert_key(t, period, float(rt["dir"]) * TAU)
+		if ap == null:
+			ap = AnimationPlayer.new()
+			ap.name = "RotorAnim"
+	if ap != null:
+		alib.add_animation("spin", spin)
+		ap.add_animation_library("", alib)
+		ap.autoplay = "spin"
+		root.add_child(ap)
+		_p("轉動：%d 個 rotor、RotorAnim autoplay spin（%.1f s 一圈）" % [S["rotors"].size(), spin.length])
 	var body := StaticBody3D.new()
 	body.name = "Collision"
 	root.add_child(body)
@@ -115,6 +179,8 @@ func _init() -> void:
 		cs.position = Vector3(float(ctr[0]), float(ctr[1]), float(ctr[2]))
 		if c.has("yaw_deg"):
 			cs.rotation.y = deg_to_rad(float(c["yaw_deg"]))
+		if c.has("roll_deg"):
+			cs.rotation.z = deg_to_rad(float(c["roll_deg"]))   # 圓柱軸改水平（水車輪、軸）
 		match String(c["type"]):
 			"box":
 				var bs := BoxShape3D.new()

@@ -157,7 +157,7 @@ func _load_spec(id: String) -> bool:
 		fails += 1
 		return false
 	S = s
-	gs = S["gate_spec"]
+	gs = HLib.instances(S)[0]   # 單一放置＝gate_spec 本身（加 landmark 鍵）；多點（instances）＝第一筆
 	return true
 
 
@@ -269,7 +269,7 @@ func _capsule_hits_hero(p: Vector3) -> bool:
 
 
 func _index_faces() -> void:
-	f0 = (hero.get_node("LOD0") as MeshInstance3D).mesh.get_faces()
+	f0 = _lod_faces(0)
 	cells.clear()
 	col_x.clear()
 	col_z.clear()
@@ -318,6 +318,89 @@ func _tris_at(x: float, z: float) -> PackedInt32Array:
 	return PackedInt32Array(cells.get(Vector2i(floori(x / CELL), floori(z / CELL)), []))
 
 
+## 每一級 LOD 的 MeshInstance3D：本體 LOD<li>＋轉動部件（asset.json rotors，R4 水車起）底下的 LOD<li>
+func _lod_mis(li: int, h: Node3D = null) -> Array:
+	var top := h if h != null else hero
+	var out: Array = []
+	var mi := top.get_node_or_null("LOD%d" % li)
+	if mi != null:
+		out.append(mi)
+	for rt: Dictionary in S.get("rotors", []):
+		var r := top.get_node_or_null("%s/LOD%d" % [rt["name"], li])
+		if r != null:
+			out.append(r)
+	return out
+
+
+## n 相對 top 的 transform；轉動部件一律取靜止姿勢（只留 yaw、位置），量測不隨動畫相位變
+func _rel(n: Node3D, top: Node3D) -> Transform3D:
+	var t := Transform3D.IDENTITY
+	var c: Node = n
+	while c != null and c != top:
+		var c3 := c as Node3D
+		var lt := c3.transform
+		if c3.has_meta("rotor"):
+			lt = Transform3D(Basis(Vector3.UP, c3.rotation.y), c3.position)
+		t = lt * t
+		c = c.get_parent()
+	return t
+
+
+## LOD<li> 三角面（top 局部）；沒有轉動部件時＝LOD<li>.mesh.get_faces()（R1–R3 行為不變）
+func _lod_faces(li: int, h: Node3D = null) -> PackedVector3Array:
+	var top := h if h != null else hero
+	var out := PackedVector3Array()
+	for mi: MeshInstance3D in _lod_mis(li, top):
+		var xf := _rel(mi, top)
+		var fs := mi.mesh.get_faces()
+		if xf.is_equal_approx(Transform3D.IDENTITY):
+			out.append_array(fs)
+		else:
+			for p in fs:
+				out.append(xf * p)
+	return out
+
+
+func _lod_aabb(li: int, h: Node3D = null) -> AABB:
+	var fs := _lod_faces(li, h)
+	var ab := AABB(fs[0], Vector3.ZERO)
+	for p in fs:
+		ab = ab.expand(p)
+	return ab
+
+
+## 水面高度：水面網格（P2 MainRiver／Canal）離 xz 最近的頂點 y
+func _water_y(name: String, x: float, z: float) -> float:
+	var best := INF
+	var by := NAN
+	for mi in v.find_children(name, "MeshInstance3D", true, false):
+		var m := mi as MeshInstance3D
+		var gx := m.global_transform
+		for p: Vector3 in m.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]:
+			var w := gx * p
+			var d := Vector2(w.x - x, w.z - z).length()
+			if d < best:
+				best = d
+				by = w.y
+	return by
+
+
+## 世界 xz 最近的水道中心線方向（layout water；name＝MainRiver／Canal）
+func _water_dir(name: String, x: float, z: float) -> Vector2:
+	var pts: Array = L["water"][name]["pts"]
+	var best := INF
+	var dir := Vector2.ZERO
+	for i in pts.size() - 1:
+		var a := Vector2(float(pts[i][0]), float(pts[i][1]))
+		var b := Vector2(float(pts[i + 1][0]), float(pts[i + 1][1]))
+		var q := Geometry2D.get_closest_point_to_segment(Vector2(x, z), a, b)
+		var d := q.distance_to(Vector2(x, z))
+		if d < best:
+			best = d
+			dir = (b - a).normalized()
+	return dir
+
+
 ## hero 局部線段對 LOD0 的第一個交點距離（INF＝沒打到）
 func _vis_dist(from: Vector3, to: Vector3, tris: PackedInt32Array) -> float:
 	var best := INF
@@ -348,39 +431,46 @@ func _poly_area(polys: Array) -> float:
 func _headless(id: String, write: bool) -> void:
 	if not _load_spec(id):
 		return
-	v = (load(SCENE) as PackedScene).instantiate()
-	root.add_child(v)
 	var scn := load(String(S["scene"])) as PackedScene
-	hero = HLib.place(v, S, scn, false)
-	if hero == null:
-		_p("FAIL 放置失敗")
-		fails += 1
-		return
-	anchor = hero.get_parent() as Node3D
-	if neg != "":
-		_apply_neg()
-	await physics_frame
-	await physics_frame
-	space = v.get_world_3d().direct_space_state
-	terrain_rid = (v.get_node("Collision/TerrainCollision") as CollisionObject3D).get_rid()
-	hero_rid = (hero.get_node("Collision") as CollisionObject3D).get_rid()
-	_index_faces()
-	_p("%s：%s 放在 %s（%s），原點 %s、LOD0 %d 三角面%s" % [id, S["scene"], gs["anchor"], gs["placement"],
-		hero.global_position, f0.size() / 3, ("、反向測試 --neg=" + neg) if neg != "" else ""])
-	_c_size()
-	_c_parcel()
-	_c_ground()
-	_c_materials()
-	_c_geometry()
-	_c_pivot()
-	_c_collision()
-	_c_lod()
-	_c_perf()
+	# gate_spec.instances（R4 水車起）：同一件資產的每個放置點各跑一次 1–9 項，結果併在同一份 gate.json
+	var gss := HLib.instances(S)
+	for gi in gss.size():
+		gs = gss[gi]
+		v = (load(SCENE) as PackedScene).instantiate()
+		root.add_child(v)
+		hero = HLib.place(v, S, scn, false, gi)
+		if hero == null:
+			_p("FAIL 放置失敗")
+			fails += 1
+			return
+		anchor = hero.get_parent() as Node3D
+		if neg != "":
+			_apply_neg()
+		await physics_frame
+		await physics_frame
+		space = v.get_world_3d().direct_space_state
+		terrain_rid = (v.get_node("Collision/TerrainCollision") as CollisionObject3D).get_rid()
+		hero_rid = (hero.get_node("Collision") as CollisionObject3D).get_rid()
+		_index_faces()
+		_p("%s：%s 放在 %s（%s），原點 %s、LOD0 %d 三角面%s" % [id, S["scene"], gs["anchor"], gs["placement"],
+			hero.global_position, f0.size() / 3, ("、反向測試 --neg=" + neg) if neg != "" else ""])
+		if gss.size() > 1:
+			for k in HEADLESS_KEYS:
+				_res(k, true, "【%s】" % String(gs["anchor"]).get_file())
+		_c_size()
+		_c_parcel()
+		_c_ground()
+		_c_materials()
+		_c_geometry()
+		_c_pivot()
+		_c_collision()
+		_c_lod()
+		_c_perf()
+		v.queue_free()
+		await process_frame
 	_flush(HEADLESS_KEYS, id)
 	if write:
 		_write_gate(id, "headless", HEADLESS_KEYS, String(S["scene"]))
-	v.queue_free()
-	await process_frame
 
 
 func _apply_neg() -> void:
@@ -392,7 +482,10 @@ func _apply_neg() -> void:
 			hero.position.y += 0.3
 		"parcel":
 			# 町家地塊前緣只留 1–2 m → 3 m 就出界；地標地塊（寺子屋 yard 4 m、前庭道具到地塊邊 3.9 m）要 8 m 才真的出界
-			hero.position += hero.basis.z * (8.0 if gs.has("building") else 3.0)
+			if gs.has("water_ref"):
+				hero.position -= hero.basis.x * 3.0   # 水車：往岸上推 3 m（輪子離開水道）
+			else:
+				hero.position += hero.basis.z * (8.0 if gs.has("building") else 3.0)
 		"greybox":
 			if g0 == null:
 				# 產生器已不建 placeholder（anchor 型）：另建一個 1 × 10 × 1 m 有碰撞的灰盒柱，模擬「墊在灰盒上」
@@ -454,7 +547,7 @@ func _apply_neg() -> void:
 
 ## 1 尺寸
 func _c_size() -> void:
-	var ab: AABB = (hero.get_node("LOD0") as MeshInstance3D).mesh.get_aabb()
+	var ab: AABB = _lod_aabb(0)
 	var sz: Dictionary = gs["size"]
 	var sc := hero.global_transform.basis.get_scale()
 	var xh := maxf(absf(ab.position.x), absf(ab.end.x)) * sc.x
@@ -495,7 +588,7 @@ func _c_size() -> void:
 	if gs.has("building"):
 		# anchor 放置的建築（沒有 P4 灰盒）：規格對 P0 地標量體（size＝寬×高×深，只能小於等於）與自身 building 規格
 		var Bb: Dictionary = gs["building"]
-		var lm := _lm(String(S["landmark"]))
+		var lm := _lm(_lm_id())
 		var ls: Array = lm.get("size", [0, 0, 0])
 		var pr: Dictionary = Bb["probe"]
 		var py := float(pr["y"])
@@ -534,6 +627,20 @@ func _c_size() -> void:
 		_res("size", dh >= float(dc["min_h"]) and dw >= float(dc["min_w"]) and dh <= 2.6,
 			"人物比例：入口淨高 %.2f m（門檻 %.2f→鴨居 %.2f；≥ %.2f，1.7 m 人）、淨寬 %.2f m（≥ %.2f）" % [
 				dh, sill, lintel, dc["min_h"], dw, dc["min_w"]])
+	if gs.has("water_ref"):
+		# 水車（R4）：輪半徑、輪寬由轉動部件 LOD0 外框量；半徑不超過 P0 地標 r
+		var lmw := _lm(_lm_id())
+		for rt: Dictionary in S.get("rotors", []):
+			var rm := hero.get_node_or_null("%s/LOD0" % rt["name"]) as MeshInstance3D
+			if rm == null:
+				_res("size", false, "缺轉動部件 %s/LOD0" % rt["name"])
+				continue
+			var rb := rm.mesh.get_aabb()
+			var rr := maxf(maxf(absf(rb.position.y), absf(rb.end.y)), maxf(absf(rb.position.z), absf(rb.end.z)))
+			var pv: Array = rt["pivot"]
+			_res("size", rr <= float(lmw.get("r", 0.0)) + 0.005 and absf(rb.size.y - rb.size.z) <= 0.05,
+				"輪（%s）半徑 %.2f m（P0 %s r %.1f，不超過）、輪寬 %.2f m、輪心離原點（水面）%.2f m、軸向 %s" % [
+					rt["name"], rr, _lm_id(), float(lmw.get("r", -1.0)), rb.size.x, float(pv[1]), rt["axis"]])
 	if gs.has("span"):
 		var sp: Dictionary = gs["span"]
 		var y := 1.537
@@ -546,7 +653,7 @@ func _c_size() -> void:
 		# 垂直射線避開接縫（x＝0、z＝0 常是三角形共邊，邊上命中會被兩側都判不中）
 		var nuki := _vis_dist(Vector3(0.137, 0.3, 0.043), Vector3(0.137, 30, 0.043), _tris_at(0.137, 0.043)) + 0.3
 		var kas := 40.0 - _vis_dist(Vector3(0.137, 40, 0.043), Vector3(0.137, -5, 0.043), _tris_at(0.137, 0.043))
-		var lm := _lm(String(S["landmark"]))
+		var lm := _lm(_lm_id())
 		_res("size", absf(axis - float(sp["axis_m"])) <= 0.05 and clear >= float(sp["clear_min"])
 			and nuki * sc.y >= float(gs["walkway"]["min_clear"]) and absf(float(lm.get("span", -1)) - float(sp["axis_m"])) <= 0.01
 			and kas * sc.y >= float(lm.get("h", 0)) and kas * sc.y <= float(sz["top"][1]) + 0.005,
@@ -572,6 +679,7 @@ func _c_parcel() -> void:
 	var bad: Array = []
 	var worst_out := 0.0
 	var road_hit := 0.0
+	var shoulder: Array = []   # 使用者裁示允許壓路肩的接地件（ground.road_ok）：報量、上限另驗
 	for g: Dictionary in gs["ground"]:
 		var wp := _world_poly(g["rect"])
 		if not own.is_empty():
@@ -586,11 +694,15 @@ func _c_parcel() -> void:
 		for rr in roads:
 			var a := _poly_area(Geometry2D.intersect_polygons(wp, rr[1]))
 			if a > 0.005:
+				if String(g.get("road_ok", "")) == String(rr[0]):
+					shoulder.append("%s 壓 %s 路肩 %.2f m²" % [g["name"], rr[0], a])
+					continue
 				bad.append("%s 壓到道路 %s %.3f m²" % [g["name"], rr[0], a])
 				road_hit += a
-	_res("parcel_fit", bad.is_empty(), "%d 個地面接觸件：%s地塊外 %.3f m²、壓道路 %.3f m²、壓其他地塊 0%s" % [
+	_res("parcel_fit", bad.is_empty(), "%d 個地面接觸件：%s地塊外 %.3f m²、壓道路 %.3f m²、壓其他地塊 0%s%s" % [
 		gs["ground"].size(), ("在 " + String(gs["parcel"]) + " 內、") if not own.is_empty() else "（地標，無地塊）",
-		worst_out, road_hit, ("；" + "、".join(bad.slice(0, 4))) if bad else ""])
+		worst_out, road_hit, ("；（使用者裁示允許）" + "、".join(shoulder)) if shoulder else "",
+		("；" + "、".join(bad.slice(0, 4))) if bad else ""])
 	if not own.is_empty():
 		# 整棟 LOD0（含屋簷）投影：不得伸進任何道路／巷道
 		var verts := PackedVector2Array()
@@ -607,7 +719,31 @@ func _c_parcel() -> void:
 					ex = "%s (%.2f, %.2f)" % [rr[0], p.x, p.y]
 					break
 		_res("parcel_fit", in_road == 0, "LOD0 全部頂點（含屋簷、庇）不進道路：%d 點%s" % [in_road, ("，例 " + ex) if ex != "" else ""])
-	else:
+	elif gs.has("water_ref"):
+		# 水車（R4）：輪子（外框投影）整個在水渠水面範圍內，不壓道路
+		var wpts: Array = L["water"][String(gs["water_ref"])]["pts"]
+		var cl := PackedVector2Array()
+		for p in wpts:
+			cl.append(Vector2(float(p[0]), float(p[1])))
+		var hw := float(L["water"][String(gs["water_ref"])]["half_w"])
+		var polys := Geometry2D.offset_polyline(cl, hw, Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND)
+		var outside := 0.0
+		var in_road := 0.0
+		for rt: Dictionary in S.get("rotors", []):
+			var rb := (hero.get_node("%s/LOD0" % rt["name"]) as MeshInstance3D).mesh.get_aabb()
+			var pv: Array = rt["pivot"]
+			var rc := [float(pv[0]) + rb.position.x, float(pv[2]) + rb.position.z, float(pv[0]) + rb.end.x, float(pv[2]) + rb.end.z]
+			var wp := _world_poly(rc)
+			var area := PLib.area(wp)
+			var inside := 0.0
+			for poly in polys:
+				inside += _poly_area(Geometry2D.intersect_polygons(wp, poly))
+			outside += maxf(0.0, area - inside)
+			for rr in roads:
+				in_road += _poly_area(Geometry2D.intersect_polygons(wp, rr[1]))
+		_res("parcel_fit", outside <= 0.005 and in_road <= 0.005, "輪子外框投影在 %s 水面（半寬 %.1f m）內：水面外 %.3f m²、壓道路 %.3f m²" % [
+			gs["water_ref"], hw, outside, in_road])
+	elif gs.has("span"):
 		# 鳥居：道路斷面必須落在柱間淨寬內（沿柱心線）
 		var xf := _xf()
 		var inner := float(gs["span"]["axis_m"]) * 0.5 - 0.5
@@ -623,8 +759,18 @@ func _c_parcel() -> void:
 					var lp := _to_local(Vector3(p.x, xf.origin.y, p.y))
 					worst = maxf(worst, absf(lp.x))
 		var clear_half := inner
-		_res("parcel_fit", worst <= clear_half + 0.001, "柱心線上的道路斷面 %s：離中心最遠 %.2f m ≤ 柱內緣 %.2f m（道路整寬從兩柱之間通過）" % [
-			"、".join(names), worst, clear_half])
+		var sp: Dictionary = gs["span"]
+		if sp.has("shoulder_max"):
+			# 使用者 2026-09-25（參道鳥居）：維持 P0 柱心距、柱腳壓路肩——台座內緣以內的淨寬 ≥ clear_min，
+			# 壓路肩量＝道路斷面半寬 − 台座內緣（每側），≤ shoulder_max
+			var ih := float(sp["inner_half"])
+			var over := worst - ih
+			_res("parcel_fit", ih * 2.0 >= float(sp["clear_min"]) and over <= float(sp["shoulder_max"]) + 0.001,
+				"柱心線上的道路斷面 %s：半寬 %.2f m；台座內緣 ±%.2f → 中間淨寬 %.2f m（≥ %.1f）；台座壓路肩每側 %.2f m（≤ %.2f，使用者裁示）" % [
+					"、".join(names), worst, ih, ih * 2.0, sp["clear_min"], maxf(over, 0.0), sp["shoulder_max"]])
+		else:
+			_res("parcel_fit", worst <= clear_half + 0.001, "柱心線上的道路斷面 %s：離中心最遠 %.2f m ≤ 柱內緣 %.2f m（道路整寬從兩柱之間通過）" % [
+				"、".join(names), worst, clear_half])
 
 
 func _gb_record() -> Dictionary:
@@ -633,6 +779,11 @@ func _gb_record() -> Dictionary:
 		if String(b["id"]) == String(gs["p4_id"]):
 			return b
 	return {}
+
+
+## 本次驗的 P0 地標 id（instances 可逐筆覆寫；預設 asset.json landmark）
+func _lm_id() -> String:
+	return String(gs.get("landmark", S["landmark"]))
 
 
 func _lm(id: String) -> Dictionary:
@@ -700,6 +851,23 @@ func _c_ground() -> void:
 				live += 1
 	_res("grounding", vis == 0 and live == 0, "被取代的 %s：%s（可見網格 %d、有效碰撞 %d）" % [gs["replaces"],
 		"已移除" if ph == null else "保留節點（P4 gate 紀錄用）但已退場", vis, live])
+	# 水車（R4）：輪下緣泡進水渠水面、不碰渠底（沿輪寬取 5 點）
+	if gs.has("water_ref"):
+		for rt: Dictionary in S.get("rotors", []):
+			var rb := (hero.get_node("%s/LOD0" % rt["name"]) as MeshInstance3D).mesh.get_aabb()
+			var pv: Array = rt["pivot"]
+			var bot := xf * Vector3(float(pv[0]), float(pv[1]) + rb.position.y, float(pv[2]))
+			var wy := _water_y(String(gs["water_ref"]), bot.x, bot.z)
+			var bed := INF
+			for k in 5:
+				var lx := float(pv[0]) + lerpf(rb.position.x, rb.end.x, k / 4.0)
+				var w := xf * Vector3(lx, 0, float(pv[2]))
+				bed = minf(bed, bot.y - _ground(w.x, w.z, true))
+			var dip := wy - bot.y
+			var wr: Array = gs.get("dip", [0.15, 0.6])
+			_res("grounding", dip >= float(wr[0]) and dip <= float(wr[1]) and bed >= 0.10,
+				"輪下緣 y %.2f：泡進 %s 水面 %.2f m（%.2f～%.2f）、離渠底最近 %.2f m（≥ 0.10）" % [
+					bot.y, gs["water_ref"], dip, float(wr[0]), float(wr[1]), bed])
 	# 入口段差（有台基的建築）
 	if not _bld().is_empty() and gs.has("entry"):
 		var step: Dictionary = {}
@@ -725,17 +893,15 @@ func _c_materials() -> void:
 	var used := {}
 	var ks := {}
 	for li in 3:
-		var mi := hero.get_node_or_null("LOD%d" % li) as MeshInstance3D
-		if mi == null:
-			continue
-		for si in mi.mesh.get_surface_count():
-			var m := mi.mesh.surface_get_material(si)
-			if mi.get_surface_override_material(si) != null or mi.material_override != null:
-				bad.append("LOD%d surface %d 有 override 材質" % [li, si])
-			if m == null or not mats.values().has(m.resource_path) or not mats.has(m.resource_name):
-				bad.append("LOD%d surface %d 材質 %s 不在登記清單" % [li, si, m.resource_path if m else "null"])
-				continue
-			used[m.resource_path] = m
+		for mi: MeshInstance3D in _lod_mis(li):
+			for si in mi.mesh.get_surface_count():
+				var m := mi.mesh.surface_get_material(si)
+				if mi.get_surface_override_material(si) != null or mi.material_override != null:
+					bad.append("LOD%d surface %d 有 override 材質" % [li, si])
+				if m == null or not mats.values().has(m.resource_path) or not mats.has(m.resource_name):
+					bad.append("LOD%d surface %d 材質 %s 不在登記清單" % [li, si, m.resource_path if m else "null"])
+					continue
+				used[m.resource_path] = m
 	var tex_info: Array = []
 	for path: String in used:
 		if not (path.begins_with(V2_DIR + "_matlib/") or path.begins_with(V2_DIR + String(S["id"]) + "/")):
@@ -788,8 +954,8 @@ func _c_geometry() -> void:
 	var lines: Array = []
 	var ok := true
 	for li in 3:
-		var mi := hero.get_node_or_null("LOD%d" % li) as MeshInstance3D
-		if mi == null:
+		var mis := _lod_mis(li)
+		if mis.is_empty():
 			ok = false
 			continue
 		var tris := 0
@@ -797,41 +963,42 @@ func _c_geometry() -> void:
 		var nan := 0
 		var flip := 0
 		var miss := PackedStringArray()
-		for si in mi.mesh.get_surface_count():
-			var arr := mi.mesh.surface_get_arrays(si)
-			var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
-			var nn: Variant = arr[Mesh.ARRAY_NORMAL]
-			var uv: Variant = arr[Mesh.ARRAY_TEX_UV]
-			var tg: Variant = arr[Mesh.ARRAY_TANGENT]
-			var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
-			if nn == null or (nn as PackedVector3Array).size() != vv.size():
-				miss.append("s%d 法線" % si)
-			if uv == null or (uv as PackedVector2Array).size() != vv.size():
-				miss.append("s%d UV" % si)
-			if tg == null or (tg as PackedFloat32Array).size() != vv.size() * 4:
-				miss.append("s%d 切線" % si)
-			var n3: PackedVector3Array = nn if nn != null else PackedVector3Array()
-			var cnt := idx.size() if not idx.is_empty() else vv.size()
-			for t in range(0, cnt, 3):
-				var i0 := idx[t] if not idx.is_empty() else t
-				var i1 := idx[t + 1] if not idx.is_empty() else t + 1
-				var i2 := idx[t + 2] if not idx.is_empty() else t + 2
-				var a := vv[i0]
-				var b := vv[i1]
-				var c := vv[i2]
-				tris += 1
-				if not (a.is_finite() and b.is_finite() and c.is_finite()):
-					nan += 1
-					continue
-				var cr := (b - a).cross(c - a)
-				if cr.length() < 1e-7:
-					degen += 1
-					continue
-				if not n3.is_empty():
-					# Godot 正面＝順時針（從正面看）：幾何法線 (b−a)×(c−a) 與頂點法線反向
-					var vn := n3[i0] + n3[i1] + n3[i2]
-					if vn.length() > 1e-6 and cr.normalized().dot(vn.normalized()) > 0.2:
-						flip += 1
+		for mi: MeshInstance3D in mis:
+			for si in mi.mesh.get_surface_count():
+				var arr := mi.mesh.surface_get_arrays(si)
+				var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+				var nn: Variant = arr[Mesh.ARRAY_NORMAL]
+				var uv: Variant = arr[Mesh.ARRAY_TEX_UV]
+				var tg: Variant = arr[Mesh.ARRAY_TANGENT]
+				var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+				if nn == null or (nn as PackedVector3Array).size() != vv.size():
+					miss.append("s%d 法線" % si)
+				if uv == null or (uv as PackedVector2Array).size() != vv.size():
+					miss.append("s%d UV" % si)
+				if tg == null or (tg as PackedFloat32Array).size() != vv.size() * 4:
+					miss.append("s%d 切線" % si)
+				var n3: PackedVector3Array = nn if nn != null else PackedVector3Array()
+				var cnt := idx.size() if not idx.is_empty() else vv.size()
+				for t in range(0, cnt, 3):
+					var i0 := idx[t] if not idx.is_empty() else t
+					var i1 := idx[t + 1] if not idx.is_empty() else t + 1
+					var i2 := idx[t + 2] if not idx.is_empty() else t + 2
+					var a := vv[i0]
+					var b := vv[i1]
+					var c := vv[i2]
+					tris += 1
+					if not (a.is_finite() and b.is_finite() and c.is_finite()):
+						nan += 1
+						continue
+					var cr := (b - a).cross(c - a)
+					if cr.length() < 1e-7:
+						degen += 1
+						continue
+					if not n3.is_empty():
+						# Godot 正面＝順時針（從正面看）：幾何法線 (b−a)×(c−a) 與頂點法線反向
+						var vn := n3[i0] + n3[i1] + n3[i2]
+						if vn.length() > 1e-6 and cr.normalized().dot(vn.normalized()) > 0.2:
+							flip += 1
 		var lok := degen == 0 and nan == 0 and flip == 0 and miss.is_empty()
 		ok = ok and lok
 		lines.append("LOD%d %d 面：退化 %d、NaN %d、繞向反 %d%s" % [li, tris, degen, nan, flip,
@@ -854,8 +1021,13 @@ func _c_pivot() -> void:
 		var c := hero.get_node_or_null(n) as Node3D
 		if c == null or not c.transform.is_equal_approx(Transform3D.IDENTITY):
 			ident = false
+	for rt: Dictionary in S.get("rotors", []):   # 轉動部件：LOD 子節點 identity（節點本身在 pivot）
+		for li in 3:
+			var c := hero.get_node_or_null("%s/LOD%d" % [rt["name"], li]) as Node3D
+			if c == null or not c.transform.is_equal_approx(Transform3D.IDENTITY):
+				ident = false
 	_res("pivot_scale", ok_s and ident, "縮放 %s（應 1,1,1）、LOD／Collision 節點 identity：%s" % [sc, "是" if ident else "否"])
-	var ab: AABB = (hero.get_node("LOD0") as MeshInstance3D).mesh.get_aabb()
+	var ab: AABB = _lod_aabb(0)
 	var y_ok := ab.position.y <= 0.0 and ab.end.y > 0.0
 	if String(gs["placement"]) == "greybox":
 		var rec := _gb_record()
@@ -869,14 +1041,26 @@ func _c_pivot() -> void:
 			and dang <= 1.0 and y_ok,
 			"原點 (%.2f, %.2f, %.2f)＝P4 footprint 中心 (%.2f, %.2f)、base_h %.2f；+z 與 P4 正面方向差 %.2f°；原點在底面（LOD0 y %.2f～%.2f）" % [
 				o.x, o.y, o.z, c.x, c.y, rec["base_h"], dang, ab.position.y, ab.end.y])
+	elif gs.has("water_ref"):
+		# 水車（R4）：xz＝P0 地標原點；y＝水渠水面（原點在水面，輪下緣泡水）；+z＝水渠流向
+		var o := xf.origin
+		var a0 := anchor.global_position
+		var wy := _water_y(String(gs["water_ref"]), o.x, o.z)
+		var wd := _water_dir(String(gs["water_ref"]), o.x, o.z)
+		var want := rad_to_deg(atan2(wd.x, wd.y))
+		var yaw := rad_to_deg(xf.basis.get_euler().y)
+		var dy := absf(wrapf(yaw - want, -180.0, 180.0))
+		_res("pivot_scale", Vector2(o.x, o.z).distance_to(Vector2(a0.x, a0.z)) <= 0.02 and absf(o.y - wy) <= 0.03 and dy <= 1.0 and y_ok,
+			"原點 xz＝P0 地標 %s (%.2f, %.2f)；原點 y %.3f＝%s 水面 %.3f（差 %.3f）；+z 與水流方向差 %.2f°（yaw %.1f°）；LOD0 y %.2f～%.2f" % [
+				_lm_id(), o.x, o.z, o.y, gs["water_ref"], wy, o.y - wy, dy, yaw, ab.position.y, ab.end.y])
 	else:
-		var lm := _lm(String(S["landmark"]))
+		var lm := _lm(_lm_id())
 		var yaw := rad_to_deg(xf.basis.get_euler().y)
 		var dy := absf(wrapf(yaw - float(lm.get("yaw", 0.0)), -180.0, 180.0))
 		var o := xf.origin
 		_res("pivot_scale", o.is_equal_approx(anchor.global_position) and dy <= 0.5 and y_ok,
 			"原點＝P0 地標 %s 原點 (%.2f, %.2f, %.2f)、yaw %.1f°（P0 %.1f°）；原點在底面（LOD0 y %.2f～%.2f）" % [
-				S["landmark"], o.x, o.y, o.z, yaw, lm.get("yaw", 0.0), ab.position.y, ab.end.y])
+				_lm_id(), o.x, o.y, o.z, yaw, lm.get("yaw", 0.0), ab.position.y, ab.end.y])
 
 
 ## 7 碰撞
@@ -940,7 +1124,7 @@ func _c_collision() -> void:
 	_res("collision", head_bad == 0 and min_clear >= float(wk["min_clear"]),
 		"步行帶頭頂淨空：%d 點中 %d 點 < %.2f m；最低淨空 %.2f m（≥ %.2f）" % [n_w, head_bad, wk["head"], min_clear, wk["min_clear"]])
 	# 周邊射線：可見網格不可比碰撞面突出 > POKE_TOL（三個高度，四個方向）
-	var ab: AABB = (hero.get_node("LOD0") as MeshInstance3D).mesh.get_aabb()
+	var ab: AABB = _lod_aabb(0)
 	var rays := 0
 	var poke := 0
 	var worst := 0.0
@@ -1000,7 +1184,11 @@ func _c_lod() -> void:
 			ok = false
 			lines.append("缺 LOD%d" % li)
 			continue
-		var n := mi.mesh.get_faces().size() / 3
+		for rm: MeshInstance3D in _lod_mis(li).slice(1):   # 轉動部件：距離與本體同級
+			if not is_equal_approx(rm.visibility_range_begin, mi.visibility_range_begin) or not is_equal_approx(rm.visibility_range_end, mi.visibility_range_end):
+				ok = false
+				lines.append("%s 距離與本體 LOD%d 不同" % [rm.get_path(), li])
+		var n := _lod_faces(li).size() / 3
 		t.append(n)
 		var b := mi.visibility_range_begin
 		var e := mi.visibility_range_end
@@ -1012,7 +1200,7 @@ func _c_lod() -> void:
 			if not is_equal_approx(prev.visibility_range_end, b):
 				ok = false
 				lines.append("LOD%d–%d 距離不相接（%.1f vs %.1f）" % [li - 1, li, prev.visibility_range_end, b])
-			var ab := mi.mesh.get_aabb()
+			var ab := _lod_aabb(li)
 			var dp := (ab.position - ab0.position).abs()
 			var de := (ab.end - ab0.end).abs()
 			var dmax := maxf(maxf(dp.x, maxf(dp.y, dp.z)), maxf(de.x, maxf(de.y, de.z)))
@@ -1020,7 +1208,7 @@ func _c_lod() -> void:
 				ok = false
 				lines.append("LOD%d 外框與 LOD0 差 %.2f m" % [li, dmax])
 		else:
-			ab0 = mi.mesh.get_aabb()
+			ab0 = _lod_aabb(0)
 	var bud: Dictionary = S["budget"]
 	if t.size() == 3:
 		var r1 := float(t[1]) / float(t[0])
@@ -1050,29 +1238,33 @@ func _c_perf() -> void:
 	var bud: Dictionary = S["budget"]
 	var surf := 0
 	for li in 3:
-		surf = maxi(surf, (hero.get_node("LOD%d" % li) as MeshInstance3D).mesh.get_surface_count())
+		var used_s := {}
+		for mi: MeshInstance3D in _lod_mis(li):
+			for si in mi.mesh.get_surface_count():
+				used_s[mi.mesh.surface_get_material(si)] = true
+		surf = maxi(surf, used_s.size())   # 每級材質數（轉動部件與本體共用材質：draw call 仍 ≤ 材質數×節點數）
 	var shapes := hero.find_children("*", "CollisionShape3D", true, false).size()
 	# 貼圖 VRAM 估算（DXT1/BC1 0.5 B/px；BC3/BC7/法線 1 B/px；mip ×1.33）
 	var own_mb := 0.0
 	var shared_mb := 0.0
 	var seen := {}
 	for li in 3:
-		var mi := hero.get_node("LOD%d" % li) as MeshInstance3D
-		for si in mi.mesh.get_surface_count():
-			var m := mi.mesh.surface_get_material(si) as StandardMaterial3D
-			if m == null:
-				continue
-			for prop in ["albedo_texture", "normal_texture", "roughness_texture", "emission_texture"]:
-				var t := m.get(prop) as Texture2D
-				if t == null or seen.has(t.resource_path):
+		for mi: MeshInstance3D in _lod_mis(li):
+			for si in mi.mesh.get_surface_count():
+				var m := mi.mesh.surface_get_material(si) as StandardMaterial3D
+				if m == null:
 					continue
-				seen[t.resource_path] = true
-				var bpp := 1.0 if (prop == "normal_texture" or t.resource_path.ends_with(".png")) else 0.5
-				var mb := t.get_width() * t.get_height() * bpp * 1.333 / 1048576.0
-				if t.resource_path.begins_with(V2_DIR + "_matlib/"):
-					shared_mb += mb
-				else:
-					own_mb += mb
+				for prop in ["albedo_texture", "normal_texture", "roughness_texture", "emission_texture"]:
+					var t := m.get(prop) as Texture2D
+					if t == null or seen.has(t.resource_path):
+						continue
+					seen[t.resource_path] = true
+					var bpp := 1.0 if (prop == "normal_texture" or t.resource_path.ends_with(".png")) else 0.5
+					var mb := t.get_width() * t.get_height() * bpp * 1.333 / 1048576.0
+					if t.resource_path.begins_with(V2_DIR + "_matlib/"):
+						shared_mb += mb
+					else:
+						own_mb += mb
 	_res("performance", int(bud["lod0"]) == cap and t0 <= cap and surf <= MAX_MATS and shapes <= MAX_SHAPES and own_mb <= 8.0,
 		"§14.8「%s」LOD0 上限 %d（asset.json 自報 %d）：實測 %d（%.0f %%）；每級 surface ≤ %d（實測 %d）；碰撞 %d ≤ %d；貼圖 VRAM 估算：本資產專屬 %.1f MB（≤ 8）、共用材質庫 %.1f MB（全村共用一次）" % [
 			cls, cap, bud["lod0"], t0, 100.0 * t0 / maxf(1.0, cap), MAX_MATS, surf, shapes, MAX_SHAPES, own_mb, shared_mb])
@@ -1108,7 +1300,7 @@ func _render(id: String, out: String) -> void:
 	f6.add_child(env)
 	var inst := (load(String(S["scene"])) as PackedScene).instantiate() as Node3D
 	f6.add_child(inst)
-	var ab: AABB = (inst.get_node("LOD0") as MeshInstance3D).mesh.get_aabb()
+	var ab: AABB = _lod_aabb(0, inst)
 	var cam := Camera3D.new()
 	f6.add_child(cam)
 	var rad := ab.size.length() * 0.9
@@ -1150,12 +1342,88 @@ func _render(id: String, out: String) -> void:
 		dbg.visible = false
 	var player: CharacterBody3D = main.player
 	player_rid = player.get_rid()
+	var shot_lines: Array = []
+	var shot_ok := true
+	var perf: Array = []
+	var walk_ok := true
+	var walk_lines: Array = []
+	var n_shots := 0
+	# gate_spec.instances（R4 水車起）：每個放置點各拍、各走；單一放置的資產只跑一輪（R1–R3 行為不變）
+	var gss := HLib.instances(S)
+	for gi in gss.size():
+		if gi > 0:
+			gs = gss[gi]
+			hero = HLib.place(v, S, load(String(S["scene"])) as PackedScene, false, gi)
+			anchor = hero.get_parent() as Node3D
+			baked = baked and hero.owner == v
+			await physics_frame
+			hero_rid = (hero.get_node("Collision") as CollisionObject3D).get_rid()
+		var res := await _render_one(player, id, out, gss.size() > 1)
+		shot_ok = shot_ok and res[0]
+		shot_lines.append_array(res[1])
+		perf.append_array(res[2])
+		n_shots += int(res[3])
+		walk_ok = walk_ok and res[4]
+		walk_lines.append(res[5])
+	var rot := await _rotor_check()
+	_res("player_screenshot", shot_ok and n_shots >= 3 * gss.size(), "main.tscn 載 village_v2（Hero %s）、玩家鏡頭 %d 張：%s" % [
+		"已烘焙在場景" if baked else "執行期以產生器同一段放置", n_shots, "；".join(shot_lines)])
+	if neg == "error":
+		push_error("反向測試：刻意的錯誤")
+	var f5_err := logger.errors.size() - e1
+	var errs: Array = logger.errors.slice(0, 3)
+	_res("f5_f6", f6_err == 0 and f5_err == 0 and walk_ok and rot[0], "F6（資產單獨場景 120 幀）錯誤 %d；F5（main.tscn → village_v2、%d 張鏡位＋實走）錯誤 %d、警告 %d；%s%s%s" % [
+		f6_err, n_shots, f5_err, logger.warnings.size(), "；".join(walk_lines), rot[1], ("；錯誤例：" + " | ".join(errs)) if errs else ""])
+	OS.remove_logger(logger)
+	_flush(RENDER_KEYS, id)
+	if neg == "":
+		_write_gate(id, "render", RENDER_KEYS, String(S["scene"]),
+			{"render_info": {"f6_png": f6_png.get_file(), "perf": perf, "warnings": logger.warnings.slice(0, 10),
+				"renderer": RenderingServer.get_current_rendering_method()}})
+	_p("F6 截圖 %s；效能（畫面內總量，非本資產）：%s" % [f6_png, "；".join(perf)])
+
+
+## 轉動部件（asset.json rotors）：F5 實際跑 1 秒，量 rotor 節點角度變化 ≈ 2π／period_s（±25 %）
+func _rotor_check() -> Array:
+	var rts: Array = S.get("rotors", [])
+	if rts.is_empty():
+		return [true, ""]
+	var lines: Array = []
+	var ok := true
+	for rt: Dictionary in rts:
+		var rn := hero.get_node_or_null(String(rt["name"])) as Node3D
+		var ap := hero.get_node_or_null("RotorAnim") as AnimationPlayer
+		if rn == null or ap == null:
+			ok = false
+			lines.append("✗ 缺 %s 或 RotorAnim" % rt["name"])
+			continue
+		if neg == "nospin":
+			ap.stop()   # 反向測試：輪子不轉 → f5_f6 必須 FAIL
+		var ax := String(rt["axis"])
+		var a0: float = rn.rotation[ax]
+		var t0 := Time.get_ticks_msec()
+		for i in 60:
+			await process_frame
+		var dt := (Time.get_ticks_msec() - t0) / 1000.0
+		var da := absf(wrapf(float(rn.rotation[ax]) - a0, -PI, PI))
+		var want := TAU / float(rt["period_s"]) * dt
+		var r_ok := ap.is_playing() and ap.current_animation == "spin" and absf(da - want) <= want * 0.25
+		ok = ok and r_ok
+		lines.append("%s轉動：%s 在 %.2f s 內轉 %.1f°（應 %.1f°，一圈 %.0f s；AnimationPlayer %s 播 spin）" % [
+			"" if r_ok else "✗ ", rt["name"], dt, rad_to_deg(da), rad_to_deg(want), float(rt["period_s"]),
+			"正在" if ap.is_playing() else "沒有"])
+	return [ok, "；" + "；".join(lines)]
+
+
+## 單一放置點的玩家鏡位＋實走。回傳 [鏡位全過, 鏡位說明, 效能, 張數, 實走過, 實走說明]
+func _render_one(player: CharacterBody3D, id: String, out: String, tag: bool) -> Array:
 	var xf := hero.global_transform
-	var center := xf * (hero.get_node("LOD0") as MeshInstance3D).mesh.get_aabb().get_center()
+	var center := xf * _lod_aabb(0).get_center()
 	var shots := _shot_spots(xf)
 	var shot_lines: Array = []
 	var shot_ok := true
 	var perf: Array = []
+	var pre := (String(gs["anchor"]).get_file() + "_") if tag else ""
 	for s: Array in shots:
 		var p: Vector3 = s[1]
 		var gy := _ground(p.x, p.z)
@@ -1166,7 +1434,7 @@ func _render(id: String, out: String) -> void:
 		for i in 75:
 			await process_frame
 		var img := root.get_texture().get_image()
-		var png := out.path_join("%s_%s.png" % [id, s[0]])
+		var png := out.path_join("%s_%s%s.png" % [id, pre, s[0]])
 		img.save_png(png)
 		var c3 := root.get_viewport().get_camera_3d()
 		var sd := _img_std(img)
@@ -1183,26 +1451,12 @@ func _render(id: String, out: String) -> void:
 		shot_ok = shot_ok and ok
 		shot_lines.append("%s%s（亮度標準差 %.3f、%s、%s）" % ["" if ok else "✗ ", png.get_file(), sd,
 			"資產在畫面內" if in_frame else "資產不在畫面內", "鏡頭到資產無遮擋" if occ == "" else "被 %s 擋" % occ])
-		perf.append("%s：%d 三角面／%d draw call" % [s[0],
+		perf.append("%s%s：%d 三角面／%d draw call" % [pre, s[0],
 			RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME),
 			RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)])
-	_res("player_screenshot", shot_ok and shots.size() >= 3, "main.tscn 載 village_v2（Hero %s）、玩家鏡頭 %d 張：%s" % [
-		"已烘焙在場景" if baked else "執行期以產生器同一段放置", shots.size(), "；".join(shot_lines)])
 	# F5 實走：朝資產走 4 秒 → 必須被碰撞擋在外面（鳥居：穿過去）
 	var walk := await _walk(player, xf)
-	if neg == "error":
-		push_error("反向測試：刻意的錯誤")
-	var f5_err := logger.errors.size() - e1
-	var errs: Array = logger.errors.slice(0, 3)
-	_res("f5_f6", f6_err == 0 and f5_err == 0 and walk[0], "F6（資產單獨場景 120 幀）錯誤 %d；F5（main.tscn → village_v2、%d 張鏡位＋實走）錯誤 %d、警告 %d；%s%s" % [
-		f6_err, shots.size(), f5_err, logger.warnings.size(), walk[1], ("；錯誤例：" + " | ".join(errs)) if errs else ""])
-	OS.remove_logger(logger)
-	_flush(RENDER_KEYS, id)
-	if neg == "":
-		_write_gate(id, "render", RENDER_KEYS, String(S["scene"]),
-			{"render_info": {"f6_png": f6_png.get_file(), "perf": perf, "warnings": logger.warnings.slice(0, 10),
-				"renderer": RenderingServer.get_current_rendering_method()}})
-	_p("F6 截圖 %s；效能（畫面內總量，非本資產）：%s" % [f6_png, "；".join(perf)])
+	return [shot_ok and shots.size() >= 3, shot_lines, perf, shots.size(), walk[0], pre + String(walk[1])]
 
 
 ## 玩家鏡位：[名稱, 世界 XZ（Vector3，y 由地面決定）]
@@ -1213,6 +1467,10 @@ func _shot_spots(xf: Transform3D) -> Array:
 		for s in [["front", 0.0, 9.0], ["front_l", 28.0, 12.0], ["front_r", -28.0, 12.0], ["street_far", 55.0, 26.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
 			out.append([s[0], xf * (Vector3(0, 0, zf) + dir * _clear_dist(xf, zf, dir, float(s[2])))])
+	elif gs.has("shots"):
+		# 資產自訂鏡位（局部 xz；R4 龍神像／水車：河岸、水渠邊不能照鳥居的南北直線）
+		for s: Array in gs["shots"]:
+			out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2]))])
 	else:
 		for s in [["south", 0.0, 16.0], ["north", 180.0, 14.0], ["south_far", 0.0, 34.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
@@ -1256,7 +1514,13 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 	var start: Vector3
 	var goal: Vector3
 	var bd := _bld()
-	if not bd.is_empty():
+	var wk: Dictionary = gs.get("walk", {})
+	if not wk.is_empty():
+		# 資產自訂實走（R4 龍神像／水車）：from → to 走 4 秒，結束時不得在 box（局部 x0,z0,x1,z1）內
+		start = xf * Vector3(float(wk["from"][0]), 0, float(wk["from"][1]))
+		goal = xf * Vector3(float(wk["to"][0]), 0, float(wk["to"][1]))
+		bd = {"box": wk["box"]}
+	elif not bd.is_empty():
 		start = xf * Vector3(0.9, 0, float(bd["zf"]) + 3.0)
 		goal = xf * Vector3(0.9, 0, 0)
 	else:
@@ -1287,6 +1551,13 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 	for i in 6:
 		await physics_frame
 	var lp := _to_local(player.global_position)
+	if bd.has("box"):
+		var bx: Array = bd["box"]
+		var ins := lp.x > float(bx[0]) + 0.05 and lp.x < float(bx[2]) - 0.05 and lp.z > float(bx[1]) + 0.05 and lp.z < float(bx[3]) - 0.05
+		var okb := not ins and max_gap <= 0.35
+		return [okb, "實走：局部 (%.1f, %.1f) → (%.1f, %.1f) 走 4 秒，停在局部 (%.2f, %.2f)（%s）、最大離地 %.2f m" % [
+			float(wk["from"][0]), float(wk["from"][1]), float(wk["to"][0]), float(wk["to"][1]), lp.x, lp.z,
+			"✗ 穿進資產" if ins else "被擋在外", max_gap]]
 	if not bd.is_empty():
 		var hw := float(bd["w"]) * 0.5
 		var hd := float(bd["d"]) * 0.5

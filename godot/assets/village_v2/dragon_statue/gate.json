@@ -1,0 +1,112 @@
+{
+ "asset": "dragon_statue",
+ "entry": "res://assets/village_v2/dragon_statue/dragon_statue.scn",
+ "entry_sha256": "7045fda81d6b3ce5becb9868ad081fe360ab63afbb73b4ae1db86a764c50c51e",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±5.00（≤ 5.00）、z -5.00～5.00（容許 -5.00～5.00）、頂 12.62（12.32～14.67）、底 -3.80（-3.80）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "1 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "1 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：河岸基壇 埋 1.42",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Statue：已移除（可見網格 0、有效碰撞 0）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "2 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Stone\": 0.42, \"V2_DragonStatue\": 0.42 }、4 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 87676 面：退化 0、NaN 0、繞向反 0、LOD1 29971 面：退化 0、NaN 0、繞向反 0、LOD2 8212 面：退化 0、NaN 0、繞向反 0；LOD0 87676 ≤ §14.8「龍神像」上限 100000；與 Blender 建置紀錄 87676 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點＝P0 地標 LANDMARK_DRAGON 原點 (388.00, -0.17, -188.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -3.80～12.62）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 30 點被擋 0",
+    "步行帶頭頂淨空：30 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 3.00）",
+    "周邊 577 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 87676 → 29971（34.2 %，≤ 35 %）→ 8212（9.4 %，≤ 10 %）；距離 [0.0, 70.0, 200.0, 800.0] m、最後一級 800 m（地圖框最遠 563 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「龍神像」LOD0 上限 100000（asset.json 自報 100000）：實測 87676（88 %）；每級 surface ≤ 5（實測 2）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 10.7 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T15:08:54"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 3 張：dragon_statue_south.png（亮度標準差 0.220、資產在畫面內、鏡頭到資產無遮擋）；dragon_statue_north.png（亮度標準差 0.280、資產在畫面內、鏡頭到資產無遮擋）；dragon_statue_south_far.png（亮度標準差 0.251、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-25T15:09:17"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、3 張鏡位＋實走）錯誤 0、警告 0；實走：局部 (-9.5, 0.0) → (0.0, 0.0) 走 4 秒，停在局部 (-5.30, 0.00)（被擋在外）、最大離地 0.00 m"
+   ],
+   "part": "render",
+   "date": "2026-09-25T15:09:17"
+  }
+ },
+ "render_info": {
+  "f6_png": "dragon_statue_f6.png",
+  "perf": [
+   "south：1505240 三角面／795 draw call",
+   "north：2829798 三角面／1428 draw call",
+   "south_far：1575328 三角面／915 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

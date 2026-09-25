@@ -12,6 +12,8 @@ extends RefCounted
 ##              gate_spec.yaw_deg（R3 起）：P0 線框（_wire_box）把 yaw 烘進頂點、節點本身沒旋轉 → 旋轉由這裡給
 ##              （gate pivot 項另對 layout P0 yaw 驗，不是自報）。
 ##   gate_spec.also_retire（R3 起）：其他要一起退場的 placeholder 子節點（例 P0 線框的 Footprint 地面框）。
+##   gate_spec.instances（R4 水車起）：同一件資產放在多個 P0 地標；每筆覆寫 gate_spec 同名欄位（anchor、yaw_deg…），
+##              instances(S) 展開後產生器與 gate 逐筆放置、逐筆驗。
 ## 路徑一律從 registry／asset.json 讀，原始碼不寫資產 res:// 字串（P5 asset reset gate 掃描產生器原始碼）。
 
 const REG := "res://data/village_v2_asset_registry.json"
@@ -46,10 +48,25 @@ static func spec(asset_json: String) -> Dictionary:
 	return s if s is Dictionary else {}
 
 
+## gate_spec 依實例展開：沒有 instances → [gate_spec]；有 → 每筆覆寫同名欄位。landmark 預設取 asset.json landmark。
+static func instances(S: Dictionary) -> Array:
+	var gs: Dictionary = S["gate_spec"]
+	var out: Array = []
+	for i: Dictionary in gs.get("instances", [{}]):
+		var g := gs.duplicate(true)
+		g.erase("instances")
+		g["landmark"] = String(S.get("landmark", ""))
+		for k in i:
+			g[k] = i[k]
+		out.append(g)
+	return out
+
+
 ## 放一件資產到 vroot（VillageV2 根）。回傳 Hero 節點（名為 "Hero"，掛在 anchor 下）；失敗回 null。
 ## remove_placeholder：true＝anchor 型的 placeholder 直接 free（產生器用）；false＝隱藏＋停用（gate 用）。
-static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_placeholder: bool) -> Node3D:
-	var gs: Dictionary = S["gate_spec"]
+## inst：gate_spec.instances 第幾筆（單一放置的資產＝0）。
+static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_placeholder: bool, inst := 0) -> Node3D:
+	var gs: Dictionary = instances(S)[inst]
 	var anchor := vroot.get_node_or_null(String(gs["anchor"])) as Node3D
 	if anchor == null:
 		push_error("[hero] 找不到 anchor %s" % gs["anchor"])
@@ -68,6 +85,8 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 		return null
 	if gs.has("yaw_deg"):
 		xf.basis = Basis(Vector3.UP, deg_to_rad(float(gs["yaw_deg"])))
+	if gs.has("dy"):
+		xf.origin.y += float(gs["dy"])   # 水車：原點＝水渠水面（asset.json 逐點登記；gate 對水面網格實測驗）
 	var hero := scene.instantiate() as Node3D
 	hero.name = "Hero"
 	hero.transform = xf
