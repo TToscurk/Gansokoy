@@ -1,0 +1,117 @@
+{
+ "asset": "hilltop_shrine",
+ "entry": "res://assets/village_v2/hilltop_shrine/hilltop_shrine.scn",
+ "entry_sha256": "6c23b92205863aa9f779b9bf7b9b55fc172931d9598bac8f626e2d85ea434bce",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 4 張：hilltop_shrine_front.png（亮度標準差 0.262、資產在畫面內、鏡頭到資產無遮擋）；hilltop_shrine_front_l.png（亮度標準差 0.267、資產在畫面內、鏡頭到資產無遮擋）；hilltop_shrine_front_r.png（亮度標準差 0.243、資產在畫面內、鏡頭到資產無遮擋）；hilltop_shrine_approach.png（亮度標準差 0.231、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-25T16:04:57"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.37（牆面 3.10，被擋在外）、最大離地 0.00 m"
+   ],
+   "part": "render",
+   "date": "2026-09-25T16:04:57"
+  },
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±6.83（≤ 7.00）、z -4.53～4.97（容許 -5.00～5.00）、頂 8.52（8.50～9.00）、底 -0.40（-0.40）",
+    "P0 地標量體 [14.0, 9.0, 10.0]（寬×高×深）：主屋牆寬 10.74、含玄關總深 7.97（射線 x -1.85）、最高點 8.52 m，都不超過",
+    "射線實測：牆面寬 10.74（規格 10.80）、牆縱深 6.10（6.20）、屋脊頂 8.14（棟 8.15）、背面簷口 4.36（4.37）m"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "4 個地面接觸件：在 P_LM_NORTH_HILL 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0",
+    "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "4 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、踏石 埋 0.20、向拝礎石左 埋 0.15、向拝礎石右 埋 0.15",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Block：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）",
+    "入口段差：路面 34.17 → 踏石 34.34（0.17 m）→ 台基 34.47（0.13 m），每階 ≤ 0.30"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42, \"V2_WoodRed\": 0.8, \"V2_HilltopShrine\": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 29939 面：退化 0、NaN 0、繞向反 0、LOD1 2664 面：退化 0、NaN 0、繞向反 0、LOD2 533 面：退化 0、NaN 0、繞向反 0；LOD0 29939 ≤ §14.8「社殿」上限 60000；與 Blender 建置紀錄 29939 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點＝P0 地標 LANDMARK_NORTH_HILL 原點 (258.00, 34.17, -228.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～8.52）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "1 個簡化形狀（≤ 8；asset.json 列 1）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 28 點被擋 0",
+    "步行帶頭頂淨空：28 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.50）",
+    "周邊 476 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 29939 → 2664（8.9 %，≤ 35 %）→ 533（1.8 %，≤ 10 %）；距離 [0.0, 45.0, 130.0, 700.0] m、最後一級 700 m（地圖框最遠 540 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「社殿」LOD0 上限 60000（asset.json 自報 60000）：實測 29939（50 %）；每級 surface ≤ 5（實測 5）；碰撞 1 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:05"
+  }
+ },
+ "render_info": {
+  "f6_png": "hilltop_shrine_f6.png",
+  "perf": [
+   "front：1178881 三角面／184 draw call",
+   "front_l：1076836 三角面／212 draw call",
+   "front_r：1393069 三角面／763 draw call",
+   "approach：1076400 三角面／188 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

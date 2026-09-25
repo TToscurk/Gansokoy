@@ -1,0 +1,113 @@
+{
+ "asset": "fire_tower",
+ "entry": "res://assets/village_v2/fire_tower/fire_tower.scn",
+ "entry_sha256": "c8f751028c081b015e93c8984c981ba8597cd5db4428b7d481895b30d9147b6e",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 3 張：fire_tower_street_w.png（亮度標準差 0.199、資產在畫面內、鏡頭到資產無遮擋）；fire_tower_north.png（亮度標準差 0.265、資產在畫面內、鏡頭到資產無遮擋）；fire_tower_street_n.png（亮度標準差 0.233、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-25T16:07:01"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、3 張鏡位＋實走）錯誤 0、警告 0；實走：局部 (-8.0, -2.5) → (-2.5, -2.5) 走 4 秒，停在局部 (-4.00, -2.55)（被擋在外）、最大離地 0.00 m"
+   ],
+   "part": "render",
+   "date": "2026-09-25T16:07:01"
+  },
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±3.25（≤ 3.50）、z -3.07～3.07（容許 -3.50～3.50）、頂 17.79（17.74～18.00）、底 -0.40（-0.40）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "5 個地面接觸件：在 P_LM_TOWER 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0",
+    "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "5 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石基礎西北 埋 0.40、石基礎西南 埋 0.40、石基礎東北 埋 0.40、石基礎東南 埋 0.40、梯腳 埋 0.05",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Block：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Stone\": 0.42, \"V2_Metal\": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 3074 面：退化 0、NaN 0、繞向反 0、LOD1 980 面：退化 0、NaN 0、繞向反 0、LOD2 292 面：退化 0、NaN 0、繞向反 0；LOD0 3074 ≤ §14.8「火見櫓」上限 20000；與 Blender 建置紀錄 3074 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點＝P0 地標 LANDMARK_TOWER 原點 (250.00, 0.50, 66.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～17.79）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 49 點被擋 0",
+    "步行帶頭頂淨空：49 點中 0 點 < 1.95 m；最低淨空 12.60 m（≥ 2.30）",
+    "周邊 76 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 3074 → 980（31.9 %，≤ 35 %）→ 292（9.5 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 700.0] m、最後一級 700 m（地圖框最遠 511 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「火見櫓」LOD0 上限 20000（asset.json 自報 20000）：實測 3074（15 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-25T16:08:03"
+  }
+ },
+ "render_info": {
+  "f6_png": "fire_tower_f6.png",
+  "perf": [
+   "street_w：1358154 三角面／1189 draw call",
+   "north：1362469 三角面／371 draw call",
+   "street_n：2405968 三角面／350 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

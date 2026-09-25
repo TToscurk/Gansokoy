@@ -1,0 +1,236 @@
+{
+ "_note": "山頂社殿 Hero 資產規格（build_hilltop_shrine.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。沒有 P4 灰盒：放在 P0 地標原點（anchor），取代 P0 佔位 Block；尺寸以 P0 量體 14 × 9 × 10 為上限、地塊 P_LM_NORTH_HILL 為界。全新建模，Protected 舊拜殿未讀取、未改動。",
+ "id": "hilltop_shrine",
+ "landmark": "LANDMARK_NORTH_HILL",
+ "kind": "hero",
+ "budget_class": "社殿",
+ "glb": "res://assets/village_v2/hilltop_shrine/src/hilltop_shrine.glb",
+ "scene": "res://assets/village_v2/hilltop_shrine/hilltop_shrine.scn",
+ "lod_objects": [
+  "HilltopShrine_LOD0",
+  "HilltopShrine_LOD1",
+  "HilltopShrine_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  45,
+  130,
+  700
+ ],
+ "budget": {
+  "lod0": 60000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_WoodRed": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+  "V2_HilltopShrine": "res://assets/village_v2/hilltop_shrine/V2_HilltopShrine.tres"
+ },
+ "spec": {
+  "width_m": 10.8,
+  "depth_m": 6.2,
+  "floor_m": 0.85,
+  "keta_m": 4.65,
+  "eave_m": 4.3,
+  "ridge_m": 7.82,
+  "ridge_top_m": 8.15,
+  "top_m": 8.52,
+  "kidan_m": 0.3,
+  "foundation_bottom_m": -0.4,
+  "pitch": 0.8,
+  "ov_eave_m": 1.3,
+  "design": {
+   "roof": "入母屋（下半寄棟 XE 6.70 × ZE 4.40、上半切妻 破風面 x ±4.28、y 6.24）",
+   "karahafu": "唐破風向拝（半寬 2.35、簷 3.20、中央 3.90、柱心 z 4.70、虹梁下 2.60）",
+   "chidori": "千鳥破風（面 z 2.70、棟 7.10）＋頂飾",
+   "front": "三間：中央 3.56 m（格子戶 4 扉）、兩側 3.26 m（各 2 扉）；縁 0.80 m＋褪朱高欄",
+   "props": "石段 5 踏（蹴上 0.17）＋袖石＋朱手摺、注連繩（房 3、紙垂 2）、賽錢箱「奉納」"
+  }
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_NORTH_HILL",
+  "replaces": "Block",
+  "p4_id": "",
+  "parcel": "P_LM_NORTH_HILL",
+  "road": "HillApproach",
+  "size": {
+   "x_half_max": 7.0,
+   "z_min": -5.0,
+   "z_max": 5.0,
+   "top": [
+    8.5,
+    9.0
+   ],
+   "bottom": -0.4
+  },
+  "building": {
+   "w": 10.8,
+   "d": 6.2,
+   "zf": 4.7,
+   "plinth": 0.3,
+   "ridge": 8.15,
+   "eave_edge": 4.37,
+   "ov_eave": 1.3,
+   "probe": {
+    "x": -3.6,
+    "y": 2.0,
+    "z": -1.0,
+    "gx": -1.85
+   }
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -5.75,
+     -3.45,
+     5.75,
+     4.050000000000001
+    ],
+    "bottom": -0.4,
+    "top": 0.3,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -1.45,
+     4.050000000000001,
+     1.45,
+     4.94
+    ],
+    "bottom": -0.2,
+    "top": 0.17,
+    "embed_max": 0.25
+   },
+   {
+    "name": "向拝礎石左",
+    "rect": [
+     -2.08,
+     4.47,
+     -1.62,
+     4.930000000000001
+    ],
+    "bottom": -0.15,
+    "top": 0.2,
+    "embed_max": 0.25
+   },
+   {
+    "name": "向拝礎石右",
+    "rect": [
+     1.62,
+     4.47,
+     2.08,
+     4.930000000000001
+    ],
+    "bottom": -0.15,
+    "top": 0.2,
+    "embed_max": 0.25
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -2.0,
+    5.5,
+    2.0,
+    6.5
+   ],
+   "head": 1.95,
+   "min_clear": 2.5,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   6.2
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ],
+  "shots": [
+   [
+    "front",
+    0.0,
+    8.0
+   ],
+   [
+    "front_l",
+    6.0,
+    7.5
+   ],
+   [
+    "front_r",
+    -6.0,
+    7.5
+   ],
+   [
+    "approach",
+    8.0,
+    20.0
+   ]
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Body",
+   "center": [
+    0,
+    2.125,
+    0.7500000000000001
+   ],
+   "size": [
+    11.62,
+    5.050000000000001,
+    8.600000000000001
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 29939,
+  "LOD1": 2664,
+  "LOD2": 533,
+  "aabb": [
+   [
+    -6.83,
+    -0.4,
+    -4.53
+   ],
+   [
+    6.83,
+    8.52,
+    4.97
+   ]
+  ],
+  "aabb_lod1": [
+   [
+    -6.83,
+    -0.4,
+    -4.53
+   ],
+   [
+    6.83,
+    8.52,
+    4.97
+   ]
+  ],
+  "aabb_lod2": [
+   [
+    -6.83,
+    -0.4,
+    -4.53
+   ],
+   [
+    6.83,
+    8.52,
+    4.962
+   ]
+  ]
+ }
+}

@@ -39,7 +39,8 @@ const RENDER_KEYS: Array[String] = ["player_screenshot", "f5_f6"]
 const MATLIB_KEYS: Array[String] = ["license", "texture_size", "vram_compressed", "tres_valid"]
 ## §14.8（使用者 2026-09-24 核准）LOD0 上限；gate 以此為準，不信 asset.json 自報
 const BUDGET_LOD0 := {"鈴奈庵": 60000, "霧雨店": 60000, "鯢吞亭": 100000, "寺子屋": 100000, "龍神像": 100000,
-	"稗田邸": 150000, "鳥居": 5000, "火見櫓": 20000, "水車": 15000, "町家": 25000}
+	"稗田邸": 150000, "鳥居": 5000, "火見櫓": 20000, "水車": 15000, "町家": 25000,
+	"社殿": 60000}
 const MAX_MATS := 5
 const MAX_SHAPES := 8
 const TEX_MAX := 2048
@@ -1462,15 +1463,15 @@ func _render_one(player: CharacterBody3D, id: String, out: String, tag: bool) ->
 ## 玩家鏡位：[名稱, 世界 XZ（Vector3，y 由地面決定）]
 func _shot_spots(xf: Transform3D) -> Array:
 	var out: Array = []
-	if not _bld().is_empty():
+	if gs.has("shots"):
+		# 資產自訂鏡位（局部 xz）：R4 龍神像／水車／參道鳥居；R5 山頂社殿（建築，但正面下坡、兩側是北丘林）、火見櫓（市場內）
+		for s: Array in gs["shots"]:
+			out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2]))])
+	elif not _bld().is_empty():
 		var zf := float(_bld()["zf"])
 		for s in [["front", 0.0, 9.0], ["front_l", 28.0, 12.0], ["front_r", -28.0, 12.0], ["street_far", 55.0, 26.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))
 			out.append([s[0], xf * (Vector3(0, 0, zf) + dir * _clear_dist(xf, zf, dir, float(s[2])))])
-	elif gs.has("shots"):
-		# 資產自訂鏡位（局部 xz；R4 龍神像／水車：河岸、水渠邊不能照鳥居的南北直線）
-		for s: Array in gs["shots"]:
-			out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2]))])
 	else:
 		for s in [["south", 0.0, 16.0], ["north", 180.0, 14.0], ["south_far", 0.0, 34.0]]:
 			var dir := Vector3(sin(deg_to_rad(float(s[1]))), 0, cos(deg_to_rad(float(s[1]))))

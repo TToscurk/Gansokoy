@@ -1,5 +1,5 @@
 {
- "version": "p5-r4",
+ "version": "p5-r5",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -83,6 +83,34 @@
    "lod0_tris": 87676
   },
   {
+   "id": "fire_tower",
+   "kind": "landmark",
+   "path": "res://assets/village_v2/fire_tower",
+   "entry": "res://assets/village_v2/fire_tower/fire_tower.scn",
+   "entry_sha256": "c8f751028c081b015e93c8984c981ba8597cd5db4428b7d481895b30d9147b6e",
+   "gate_json": "res://assets/village_v2/fire_tower/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T16:08:03",
+   "status": "ART_REVIEW",
+   "label": "火見櫓",
+   "landmark": "LANDMARK_TOWER",
+   "asset_json": "res://assets/village_v2/fire_tower/asset.json",
+   "replaces": "Landmarks/LANDMARK_TOWER/Block",
+   "lod0_tris": 3074
+  },
+  {
    "id": "geidontei",
    "kind": "hero",
    "path": "res://assets/village_v2/geidontei",
@@ -109,6 +137,34 @@
    "asset_json": "res://assets/village_v2/geidontei/asset.json",
    "replaces": "Landmarks/LANDMARK_GEIDONTEI/Greybox",
    "lod0_tris": 41234
+  },
+  {
+   "id": "hilltop_shrine",
+   "kind": "hero",
+   "path": "res://assets/village_v2/hilltop_shrine",
+   "entry": "res://assets/village_v2/hilltop_shrine/hilltop_shrine.scn",
+   "entry_sha256": "6c23b92205863aa9f779b9bf7b9b55fc172931d9598bac8f626e2d85ea434bce",
+   "gate_json": "res://assets/village_v2/hilltop_shrine/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-25T16:08:05",
+   "status": "ART_REVIEW",
+   "label": "社殿",
+   "landmark": "LANDMARK_NORTH_HILL",
+   "asset_json": "res://assets/village_v2/hilltop_shrine/asset.json",
+   "replaces": "Landmarks/LANDMARK_NORTH_HILL/Block",
+   "lod0_tris": 29939
   },
   {
    "id": "kirisame",

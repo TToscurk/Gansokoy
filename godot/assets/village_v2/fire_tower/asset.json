@@ -1,0 +1,337 @@
+{
+ "_note": "火見櫓 資產規格（build_fire_tower.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。沒有 P4 灰盒：放在 P0 地標原點（anchor），取代 P0 佔位 Block；尺寸以 P0 量體 7 × 18 × 7 為上限、地塊 P_LM_TOWER 為界。舊 Tripo 火見櫓（Protected）未讀取、未改動。",
+ "id": "fire_tower",
+ "landmark": "LANDMARK_TOWER",
+ "kind": "landmark",
+ "budget_class": "火見櫓",
+ "glb": "res://assets/village_v2/fire_tower/src/fire_tower.glb",
+ "scene": "res://assets/village_v2/fire_tower/fire_tower.scn",
+ "lod_objects": [
+  "FireTower_LOD0",
+  "FireTower_LOD1",
+  "FireTower_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  60,
+  160,
+  700
+ ],
+ "budget": {
+  "lod0": 20000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Metal": "res://assets/village_v2/_matlib/V2_Metal.tres"
+ },
+ "spec": {
+  "p0_box_m": [
+   7,
+   18,
+   7
+  ],
+  "leg_half_span_m": [
+   2.55,
+   1.6
+  ],
+  "deck_y_m": 12.799999999999999,
+  "deck_m": 4.5,
+  "eave_y_m": 15.35,
+  "ridge_y_m": 17.35,
+  "top_m": 17.790000000000003,
+  "bell_d_m": 1.08,
+  "bell_y_m": [
+   14.3,
+   15.05
+  ],
+  "ladder": "−x 面（朝 MainStreet）",
+  "design": "四柱外八、三段 X 斜撐、獨立石基礎、出挑方台＋兩道扶欄、陡切妻板葺（露垂木、開放山牆）、半鐘"
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_TOWER",
+  "replaces": "Block",
+  "p4_id": "",
+  "parcel": "P_LM_TOWER",
+  "road": "MainStreet",
+  "size": {
+   "x_half_max": 3.5,
+   "z_min": -3.5,
+   "z_max": 3.5,
+   "top": [
+    17.74,
+    18.0
+   ],
+   "bottom": -0.4
+  },
+  "ground": [
+   {
+    "name": "石基礎西北",
+    "rect": [
+     -3.0749999999999997,
+     -3.0749999999999997,
+     -2.025,
+     -2.025
+    ],
+    "bottom": -0.4,
+    "top": 0.45,
+    "embed_max": 0.5
+   },
+   {
+    "name": "石基礎西南",
+    "rect": [
+     -3.0749999999999997,
+     2.025,
+     -2.025,
+     3.0749999999999997
+    ],
+    "bottom": -0.4,
+    "top": 0.45,
+    "embed_max": 0.5
+   },
+   {
+    "name": "石基礎東北",
+    "rect": [
+     2.025,
+     -3.0749999999999997,
+     3.0749999999999997,
+     -2.025
+    ],
+    "bottom": -0.4,
+    "top": 0.45,
+    "embed_max": 0.5
+   },
+   {
+    "name": "石基礎東南",
+    "rect": [
+     2.025,
+     2.025,
+     3.0749999999999997,
+     3.0749999999999997
+    ],
+    "bottom": -0.4,
+    "top": 0.45,
+    "embed_max": 0.5
+   },
+   {
+    "name": "梯腳",
+    "rect": [
+     -3.2800000000000002,
+     -0.36,
+     -3.12,
+     0.36
+    ],
+    "bottom": -0.05,
+    "top": 0.3,
+    "embed_max": 0.2
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -1.4,
+    -1.4,
+    1.4,
+    1.4
+   ],
+   "head": 1.95,
+   "min_clear": 2.3,
+   "step": 0.35
+  },
+  "entry": [
+   0.0,
+   5.0
+  ],
+  "inside": [
+   2.55,
+   2.55
+  ],
+  "shots": [
+   [
+    "street_w",
+    -24.0,
+    0.0
+   ],
+   [
+    "north",
+    0.0,
+    -24.0
+   ],
+   [
+    "street_n",
+    -11.5,
+    -28.0
+   ]
+  ],
+  "walk": {
+   "from": [
+    -8.0,
+    -2.55
+   ],
+   "to": [
+    -2.55,
+    -2.55
+   ],
+   "box": [
+    -3.0749999999999997,
+    -3.0749999999999997,
+    -2.025,
+    -2.025
+   ]
+  }
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Foot0",
+   "center": [
+    -2.55,
+    1.3,
+    -2.55
+   ],
+   "size": [
+    1.21,
+    3.4,
+    1.21
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Foot1",
+   "center": [
+    2.55,
+    1.3,
+    -2.55
+   ],
+   "size": [
+    1.21,
+    3.4,
+    1.21
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Foot2",
+   "center": [
+    2.55,
+    1.3,
+    2.55
+   ],
+   "size": [
+    1.21,
+    3.4,
+    1.21
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Foot3",
+   "center": [
+    -2.55,
+    1.3,
+    2.55
+   ],
+   "size": [
+    1.21,
+    3.4,
+    1.21
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Ladder",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -3.2800000000000002,
+     -0.05,
+     -0.36
+    ],
+    [
+     -3.2800000000000002,
+     -0.05,
+     0.36
+    ],
+    [
+     -3.12,
+     -0.05,
+     -0.36
+    ],
+    [
+     -3.12,
+     -0.05,
+     0.36
+    ],
+    [
+     -2.41,
+     13.8,
+     -0.36
+    ],
+    [
+     -2.41,
+     13.8,
+     0.36
+    ],
+    [
+     -2.25,
+     13.8,
+     -0.36
+    ],
+    [
+     -2.25,
+     13.8,
+     0.36
+    ]
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 3074,
+  "LOD1": 980,
+  "LOD2": 292,
+  "aabb": [
+   [
+    -3.25,
+    -0.4,
+    -3.075
+   ],
+   [
+    3.075,
+    17.79,
+    3.075
+   ]
+  ],
+  "aabb_lod1": [
+   [
+    -3.25,
+    -0.4,
+    -3.075
+   ],
+   [
+    3.075,
+    17.79,
+    3.075
+   ]
+  ],
+  "aabb_lod2": [
+   [
+    -3.25,
+    -0.4,
+    -3.075
+   ],
+   [
+    3.075,
+    17.79,
+    3.075
+   ]
+  ]
+ }
+}
