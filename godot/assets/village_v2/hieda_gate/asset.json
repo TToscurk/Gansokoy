@@ -1,0 +1,328 @@
+{
+ "_note": "稗田邸 大宅門 Hero 資產規格（build_hieda_gate.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。沒有 P4 灰盒：放在 P0 地標原點（anchor），取代 P0 線框；尺寸以 P0 量體 7 × 5 × 2 為上限、地塊 P_LM_HIEDA_GATE 為界。造型依使用者裁示 B（裨田邸正面.PNG）、木色＋灰瓦、不做紅色；只做門＋門地塊內兩側短袖牆（整圈圍牆延 P6／P10）。",
+ "id": "hieda_gate",
+ "landmark": "LANDMARK_HIEDA_GATE",
+ "kind": "hero",
+ "budget_class": "稗田邸",
+ "glb": "res://assets/village_v2/hieda_gate/src/hieda_gate.glb",
+ "scene": "res://assets/village_v2/hieda_gate/hieda_gate.scn",
+ "lod_objects": [
+  "HiedaGate_LOD0",
+  "HiedaGate_LOD1",
+  "HiedaGate_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  45,
+  120,
+  600
+ ],
+ "budget": {
+  "lod0": 150000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_Metal": "res://assets/village_v2/_matlib/V2_Metal.tres"
+ },
+ "spec": {
+  "p0_box_m": [
+   7,
+   5,
+   2
+  ],
+  "opening_clear_w_m": 2.24,
+  "opening_clear_h_m": 2.62,
+  "post_m": 0.26,
+  "eave_m": 3.3,
+  "ridge_m": 3.975,
+  "top_m": 4.515,
+  "side_bay_w_m": 0.73,
+  "side_roof_eave_m": 2.66,
+  "sleeve_wall_m": {
+   "x": [
+    2.29,
+    3.42
+   ],
+   "h": 2.255,
+   "coping_eave": 1.84
+  },
+  "design": "棟門系：主柱 2（石礎）＋外柱 2、冠木、腕木承簷桁、切妻灰瓦＋熨斗棟＋鬼瓦＋懸魚；兩側窄間板戶＋灰泥小壁＋較低小屋根；灰泥袖牆（石積腰、瓦頂）；兩扉向內全開；木色，不塗朱"
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_HIEDA_GATE",
+  "replaces": "Wire",
+  "also_retire": [
+   "Footprint"
+  ],
+  "p4_id": "",
+  "parcel": "P_LM_HIEDA_GATE",
+  "road": "FarmPath_4",
+  "size": {
+   "x_half_max": 3.5,
+   "z_min": -1.0,
+   "z_max": 1.0,
+   "top": [
+    4.465,
+    5.0
+   ],
+   "bottom": -0.3
+  },
+  "ground": [
+   {
+    "name": "礎石左",
+    "rect": [
+     -1.48,
+     -0.23,
+     -1.02,
+     0.23
+    ],
+    "bottom": -0.25,
+    "top": 0.08,
+    "embed_max": 0.35
+   },
+   {
+    "name": "礎石右",
+    "rect": [
+     1.02,
+     -0.23,
+     1.48,
+     0.23
+    ],
+    "bottom": -0.25,
+    "top": 0.08,
+    "embed_max": 0.35
+   },
+   {
+    "name": "敷石",
+    "rect": [
+     -1.1,
+     -0.95,
+     1.1,
+     0.95
+    ],
+    "bottom": -0.15,
+    "top": 0.035,
+    "embed_max": 0.2
+   },
+   {
+    "name": "側間地覆左",
+    "rect": [
+     -2.1100000000000003,
+     -0.14,
+     -1.38,
+     0.14
+    ],
+    "bottom": -0.2,
+    "top": 0.12,
+    "embed_max": 0.25
+   },
+   {
+    "name": "側間地覆右",
+    "rect": [
+     1.38,
+     -0.14,
+     2.1100000000000003,
+     0.14
+    ],
+    "bottom": -0.2,
+    "top": 0.12,
+    "embed_max": 0.25
+   },
+   {
+    "name": "袖牆腰石左",
+    "rect": [
+     -3.42,
+     -0.24,
+     -2.29,
+     0.24
+    ],
+    "bottom": -0.3,
+    "top": 0.45,
+    "embed_max": 0.4
+   },
+   {
+    "name": "袖牆腰石右",
+    "rect": [
+     2.29,
+     -0.24,
+     3.42,
+     0.24
+    ],
+    "bottom": -0.3,
+    "top": 0.45,
+    "embed_max": 0.4
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -0.95,
+    -0.9,
+    0.95,
+    0.9
+   ],
+   "head": 1.95,
+   "min_clear": 2.5,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   3.0
+  ],
+  "inside": [
+   2.8,
+   0.0
+  ],
+  "shots": [
+   [
+    "front",
+    0.0,
+    9.0
+   ],
+   [
+    "front_far",
+    -3.0,
+    17.0
+   ],
+   [
+    "back",
+    1.5,
+    -9.0
+   ]
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "PostL",
+   "center": [
+    -1.25,
+    1.45,
+    0
+   ],
+   "size": [
+    0.36,
+    3.4,
+    0.36
+   ]
+  },
+  {
+   "type": "box",
+   "name": "PostR",
+   "center": [
+    1.25,
+    1.45,
+    0
+   ],
+   "size": [
+    0.36,
+    3.4,
+    0.36
+   ]
+  },
+  {
+   "type": "box",
+   "name": "SideL",
+   "center": [
+    -2.4299999999999997,
+    0.9999999999999999,
+    0
+   ],
+   "size": [
+    2.1,
+    2.6,
+    0.58
+   ]
+  },
+  {
+   "type": "box",
+   "name": "SideR",
+   "center": [
+    2.4299999999999997,
+    0.9999999999999999,
+    0
+   ],
+   "size": [
+    2.1,
+    2.6,
+    0.58
+   ]
+  },
+  {
+   "type": "box",
+   "name": "LeafL",
+   "center": [
+    -1.0750000000000002,
+    1.33,
+    -0.5
+   ],
+   "size": [
+    0.1100000000000001,
+    2.6,
+    1.02
+   ]
+  },
+  {
+   "type": "box",
+   "name": "LeafR",
+   "center": [
+    1.0750000000000002,
+    1.33,
+    -0.5
+   ],
+   "size": [
+    0.1100000000000001,
+    2.6,
+    1.02
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 8470,
+  "LOD1": 1374,
+  "LOD2": 174,
+  "aabb": [
+   [
+    -3.465,
+    -0.3,
+    -0.979
+   ],
+   [
+    3.465,
+    4.515,
+    0.979
+   ]
+  ],
+  "aabb_lod1": [
+   [
+    -3.465,
+    -0.3,
+    -0.97
+   ],
+   [
+    3.465,
+    4.496,
+    0.95
+   ]
+  ],
+  "aabb_lod2": [
+   [
+    -3.44,
+    -0.3,
+    -0.95
+   ],
+   [
+    3.44,
+    4.515,
+    0.95
+   ]
+  ]
+ }
+}

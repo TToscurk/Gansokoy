@@ -234,7 +234,7 @@ for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
     v2_assets.append(e)
 
 registry = {
-    'version': 'p5-r5',
+    'version': 'p5-r6',
     'created': '2026-09-24',
     'authority': 'P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。',
     'rules': [

@@ -1,0 +1,311 @@
+{
+ "_note": "稗田邸 本屋 Hero 資產規格（build_hieda_house.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。沒有 P4 灰盒：放在 P0 地標原點（anchor），取代 P0 線框；尺寸以 P0 量體 28 × 9 × 18 為上限、地塊 P_LM_HIEDA 為界。使用者 2026-09-26 裁示：只做本屋本體（池庭 P9／P10、整圈圍牆 P6／P10）；位置照 layout provisional。",
+ "id": "hieda_house",
+ "landmark": "LANDMARK_HIEDA",
+ "kind": "hero",
+ "budget_class": "稗田邸",
+ "glb": "res://assets/village_v2/hieda_house/src/hieda_house.glb",
+ "scene": "res://assets/village_v2/hieda_house/hieda_house.scn",
+ "lod_objects": [
+  "HiedaHouse_LOD0",
+  "HiedaHouse_LOD1",
+  "HiedaHouse_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  55,
+  140,
+  700
+ ],
+ "budget": {
+  "lod0": 150000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_HiedaHouse": "res://assets/village_v2/hieda_house/V2_HiedaHouse.tres"
+ },
+ "spec": {
+  "width_m": 24.0,
+  "depth_wing_m": 10.0,
+  "depth_center_m": 13.2,
+  "center_w_m": 9.0,
+  "floor_m": 0.5,
+  "floor2_m": 3.45,
+  "keta_m": [
+   5.25,
+   5.75
+  ],
+  "ridge_m": {
+   "center": 8.46,
+   "wing": 7.26
+  },
+  "top_m": 8.91,
+  "eave_m": {
+   "center": 5.6,
+   "wing": 5.1
+  },
+  "pitch": {
+   "center": 0.52,
+   "wing": 0.36
+  },
+  "ov_eave_m": 1.0,
+  "foundation_bottom_m": -0.4,
+  "design": {
+   "roof": "中央棟 入母屋（棟沿 z，正面／背面山牆）＋兩翼 入母屋（棟沿 x，外端山牆、內端插入中央棟屋根）",
+   "front": "中央棟正面：一樓玄關（凹入 0.7 m、開口 2.4 m）＋千本格子、玄關庇；二樓格子窗；翼屋：一樓千本格子、二樓木欄の縁（出 1.0 m）＋格子窗",
+   "back": "翼屋一樓緣側（出 1.2 m）＋柱受け庇、障子；二樓格子窗；中央棟背面障子＋短庇",
+   "side": "翼屋外側面：腰板＋灰泥、障子窗、二樓格子窗、一樓庇；入母屋妻（露明木構＋灰泥）",
+   "scope": "池庭、圍牆、燈籠不在本輪（P6／P9／P10）"
+  }
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_HIEDA",
+  "replaces": "Wire",
+  "also_retire": [
+   "Footprint"
+  ],
+  "p4_id": "",
+  "parcel": "P_LM_HIEDA",
+  "road": "CrossStreetMid",
+  "size": {
+   "x_half_max": 14.0,
+   "z_min": -9.0,
+   "z_max": 9.0,
+   "top": [
+    8.86,
+    9.0
+   ],
+   "bottom": -0.4
+  },
+  "building": {
+   "w": 23.9,
+   "d": 9.9,
+   "zf": 7.0,
+   "plinth": 0.5,
+   "ridge": 8.64,
+   "eave_edge": 5.148,
+   "ov_eave": 1.0,
+   "probe": {
+    "x": 8.0,
+    "y": 4.5,
+    "z": 2.0,
+    "gx": -2.4
+   }
+  },
+  "door_clear": {
+   "h": 2.05,
+   "w": 2.4,
+   "min_h": 1.9,
+   "min_w": 1.2
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -12.35,
+     -6.25,
+     12.35,
+     5.4
+    ],
+    "bottom": -0.4,
+    "top": 0.5,
+    "embed_max": 0.5
+   },
+   {
+    "name": "台基（玄關）",
+    "rect": [
+     -4.7,
+     5.4,
+     4.7,
+     7.3
+    ],
+    "bottom": -0.4,
+    "top": 0.5,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -1.5,
+     7.28,
+     1.5,
+     7.95
+    ],
+    "bottom": -0.2,
+    "top": 0.25,
+    "embed_max": 0.25
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -1.0,
+    8.05,
+    1.0,
+    9.05
+   ],
+   "head": 1.95,
+   "min_clear": 2.5,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   10.0
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ],
+  "shots": [
+   [
+    "front",
+    0.0,
+    21.0
+   ],
+   [
+    "front_r",
+    15.0,
+    19.0
+   ],
+   [
+    "street_w",
+    -23.0,
+    5.0
+   ],
+   [
+    "back",
+    -9.0,
+    -20.0
+   ]
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Wings",
+   "center": [
+    0,
+    2.425,
+    -0.4249999999999999
+   ],
+   "size": [
+    24.86,
+    5.65,
+    11.81
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Center",
+   "center": [
+    0,
+    2.675,
+    0.5249999999999999
+   ],
+   "size": [
+    9.56,
+    6.15,
+    13.71
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Steps",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -1.52,
+     -0.2,
+     7.25
+    ],
+    [
+     -1.52,
+     0.5,
+     7.25
+    ],
+    [
+     -1.52,
+     -0.2,
+     8.0
+    ],
+    [
+     -1.52,
+     0.02,
+     8.0
+    ],
+    [
+     1.52,
+     -0.2,
+     7.25
+    ],
+    [
+     1.52,
+     0.5,
+     7.25
+    ],
+    [
+     1.52,
+     -0.2,
+     8.0
+    ],
+    [
+     1.52,
+     0.02,
+     8.0
+    ]
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 107132,
+  "LOD1": 7390,
+  "LOD2": 438,
+  "aabb": [
+   [
+    -13.115,
+    -0.4,
+    -7.321
+   ],
+   [
+    13.115,
+    8.91,
+    8.369
+   ]
+  ],
+  "aabb_lod1": [
+   [
+    -13.115,
+    -0.4,
+    -7.321
+   ],
+   [
+    13.115,
+    8.91,
+    8.343
+   ]
+  ],
+  "aabb_lod2": [
+   [
+    -13.115,
+    -0.4,
+    -7.321
+   ],
+   [
+    13.115,
+    8.91,
+    8.121
+   ]
+  ]
+ }
+}

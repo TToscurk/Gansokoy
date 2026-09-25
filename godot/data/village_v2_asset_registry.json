@@ -1,5 +1,5 @@
 {
- "version": "p5-r5",
+ "version": "p5-r6",
  "created": "2026-09-24",
  "authority": "P5 Asset Reset 指令（使用者 2026-09-24）＋《人間之里V2全面重製計畫》；P4 Greybox 為尺寸／位置 authority，參考圖為外觀 authority。",
  "rules": [
@@ -137,6 +137,62 @@
    "asset_json": "res://assets/village_v2/geidontei/asset.json",
    "replaces": "Landmarks/LANDMARK_GEIDONTEI/Greybox",
    "lod0_tris": 41234
+  },
+  {
+   "id": "hieda_gate",
+   "kind": "hero",
+   "path": "res://assets/village_v2/hieda_gate",
+   "entry": "res://assets/village_v2/hieda_gate/hieda_gate.scn",
+   "entry_sha256": "c69e61e3464681cbfc58d0bebb1935a91a7498ea974fbbf77ff4a3e9c365f1a7",
+   "gate_json": "res://assets/village_v2/hieda_gate/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-26T01:07:29",
+   "status": "ART_REVIEW",
+   "label": "稗田邸",
+   "landmark": "LANDMARK_HIEDA_GATE",
+   "asset_json": "res://assets/village_v2/hieda_gate/asset.json",
+   "replaces": "Landmarks/LANDMARK_HIEDA_GATE/Wire",
+   "lod0_tris": 8470
+  },
+  {
+   "id": "hieda_house",
+   "kind": "hero",
+   "path": "res://assets/village_v2/hieda_house",
+   "entry": "res://assets/village_v2/hieda_house/hieda_house.scn",
+   "entry_sha256": "cbd0df9fad55e93a7646366d049834e6f860e42d5ca71858e53ddfb648226692",
+   "gate_json": "res://assets/village_v2/hieda_house/gate.json",
+   "gate": {
+    "size": "PASS",
+    "parcel_fit": "PASS",
+    "grounding": "PASS",
+    "materials": "PASS",
+    "geometry": "PASS",
+    "pivot_scale": "PASS",
+    "collision": "PASS",
+    "lod": "PASS",
+    "performance": "PASS",
+    "player_screenshot": "PASS",
+    "f5_f6": "PASS"
+   },
+   "gate_date": "2026-09-26T01:07:32",
+   "status": "ART_REVIEW",
+   "label": "稗田邸",
+   "landmark": "LANDMARK_HIEDA",
+   "asset_json": "res://assets/village_v2/hieda_house/asset.json",
+   "replaces": "Landmarks/LANDMARK_HIEDA/Wire",
+   "lod0_tris": 107132
   },
   {
    "id": "hilltop_shrine",

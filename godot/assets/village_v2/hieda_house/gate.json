@@ -1,0 +1,118 @@
+{
+ "asset": "hieda_house",
+ "entry": "res://assets/village_v2/hieda_house/hieda_house.scn",
+ "entry_sha256": "cbd0df9fad55e93a7646366d049834e6f860e42d5ca71858e53ddfb648226692",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±13.11（≤ 14.00）、z -7.32～8.37（容許 -9.00～9.00）、頂 8.91（8.86～9.00）、底 -0.40（-0.40）",
+    "P0 地標量體 [28.0, 9.0, 18.0]（寬×高×深）：主屋牆寬 23.90、含玄關總深 13.10（射線 x -2.40）、最高點 8.91 m，都不超過",
+    "射線實測：牆面寬 23.90（規格 23.90）、牆縱深 9.90（9.90）、屋脊頂 8.64（棟 8.64）、背面簷口 5.15（5.15）m",
+    "人物比例：入口淨高 1.95 m（門檻 0.60→鴨居 2.55；≥ 1.90，1.7 m 人）、淨寬 2.40 m（≥ 1.20）"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "3 個地面接觸件：在 P_LM_HIEDA 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0",
+    "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、台基（玄關） 埋 0.40、踏石 埋 0.20",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Wire：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）",
+    "入口段差：路面 1.14 → 踏石 1.39（0.25 m）→ 台基 1.64（0.25 m），每階 ≤ 0.30"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42, \"V2_Plaster\": 0.42, \"V2_HiedaHouse\": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 107132 面：退化 0、NaN 0、繞向反 0、LOD1 7390 面：退化 0、NaN 0、繞向反 0、LOD2 438 面：退化 0、NaN 0、繞向反 0；LOD0 107132 ≤ §14.8「稗田邸」上限 150000；與 Blender 建置紀錄 107132 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點＝P0 地標 LANDMARK_HIEDA 原點 (403.00, 1.14, -40.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～8.91）"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 12 點被擋 0",
+    "步行帶頭頂淨空：12 點中 0 點 < 1.95 m；最低淨空 2.99 m（≥ 2.50）",
+    "周邊 1142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 107132 → 7390（6.9 %，≤ 35 %）→ 438（0.4 %，≤ 10 %）；距離 [0.0, 55.0, 140.0, 700.0] m、最後一級 700 m（地圖框最遠 502 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「稗田邸」LOD0 上限 150000（asset.json 自報 150000）：實測 107132（71 %）；每級 surface ≤ 5（實測 5）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-26T01:07:32"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 4 張：hieda_house_front.png（亮度標準差 0.252、資產在畫面內、鏡頭到資產無遮擋）；hieda_house_front_r.png（亮度標準差 0.266、資產在畫面內、鏡頭到資產無遮擋）；hieda_house_street_w.png（亮度標準差 0.243、資產在畫面內、鏡頭到資產無遮擋）；hieda_house_back.png（亮度標準差 0.268、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-26T01:04:15"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 7.68（牆面 4.95，被擋在外）、最大離地 0.28 m"
+   ],
+   "part": "render",
+   "date": "2026-09-26T01:04:15"
+  }
+ },
+ "render_info": {
+  "f6_png": "hieda_house_f6.png",
+  "perf": [
+   "front：1671901 三角面／1321 draw call",
+   "front_r：1702531 三角面／1270 draw call",
+   "street_w：1699855 三角面／1304 draw call",
+   "back：1564342 三角面／365 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}
