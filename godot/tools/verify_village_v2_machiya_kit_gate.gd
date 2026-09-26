@@ -167,6 +167,12 @@ func _setup(parent: Node, vroot: Node3D = null) -> void:
 		if body == null:
 			continue
 		bodies[b["id"]] = body
+		if not regress:
+			# 非回歸：場景裡已烘焙的舊 Kit 丟掉，用目前構件庫＋組裝腳本重組（驗的是這一版）
+			var old := body.get_node_or_null("Kit")
+			if old != null:
+				body.remove_child(old)
+				old.free()
 		kits[b["id"]] = KLib.apply(body, b, lib, embed)
 	await physics_frame
 	await physics_frame

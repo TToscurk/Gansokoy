@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""人間之里 V2 P6 R1：模組化町家 Kit atlas 產生器。
+"""人間之里 V2 P6 R1／R2：模組化町家 Kit atlas 產生器（R2 Variation Pass 在未用區加變體圖塊，R1 圖塊不動）。
 
   python tools/build_village_v2_p6_kit_atlas.py
 
@@ -39,9 +39,17 @@ REGIONS = {
     'kanban': (512, 1024, 1024, 1280),      # 看板（無字；木框＋家紋）
     'noren_c': (0, 1280, 512, 1536),        # 暖簾 鼠（2 幅、白抜き井桁）
     'goods': (512, 1280, 1024, 1536),       # 店頭台上商品（籠、俵、壺）正面
-    'interior': (1024, 1024, 1536, 1536),   # 土間內：暗、遠處行燈微光（emit）
+    'mushiko_b': (1024, 1024, 1536, 1280),  # R2：蟲籠窓 變體（土壁色、粗格子）
+    'sudare_b': (1024, 1280, 1536, 1536),   # R2：簾 變體（舊竹、上捲）
     'swatch': (1536, 1024, 2048, 1280),
     'koshi_b': (1536, 1280, 2048, 1536),    # 1F 格子 變體（粗格子＝米屋格子、暗紙背）
+    # ── P6 R2 Variation Pass（原未用的第 4 列 y 1536–2048）──
+    'koshi_r': (0, 1536, 512, 2048),        # 弁柄格子（紅褐、細密、淺紙背）
+    'noren_d': (512, 1536, 1024, 1792),     # 暖簾 生成（米白 2 幅、藍 亀甲）
+    'noren_e': (512, 1792, 1024, 2048),     # 暖簾 弁柄（4 幅短、白 菱）
+    'kanban_b': (1024, 1536, 1536, 1792),   # 看板 黑漆＋金 亀甲（無字）
+    'kanban_c': (1024, 1792, 1536, 2048),   # 看板 白木＋墨 菱（無字）
+    'window_b': (1536, 1536, 2048, 2048),   # 2F 窓 變體：弁柄粗格子＋障子
 }
 SW = ['#2E2119', '#4A3526', '#E8E0CF', '#6B6F70', '#8C7A5A', '#3B3F40', '#9A7B55', '#C9BFA8']
 SW_NOTE = ['深褐（木構暗部）', '褐（格子）', '米白（灰泥）', '瓦邊灰', '古銅（金具）', '暗灰（瓦影）', '淺褐（新木）', '紙色']
@@ -247,19 +255,92 @@ def build():
             d.rectangle((x + gw * 0.3, int(h * 0.22), x + gw * 0.7, int(h * 0.34)), fill=(80, 60, 48))
         x += gw + int(rng.integers(4, 14))
     atlas.paste(gd, R['goods'][:2])
-    # 土間內：暗＋遠處行燈微光
-    w, h = sz('interior')
-    it = Image.new('RGB', (w, h), (24, 19, 15))
-    glow = Image.new('L', (w, h), 0)
-    ImageDraw.Draw(glow).ellipse((w * 0.36, h * 0.40, w * 0.64, h * 0.66), fill=80)
-    glow = glow.filter(ImageFilter.GaussianBlur(50))
-    it = Image.composite(Image.new('RGB', (w, h), (150, 104, 56)), it, glow)
-    atlas.paste(it, R['interior'][:2])
-    A._emit_box(emit, R['interior'], (36, 24, 12))
+    # ── P6 R2 Variation Pass ──
+    # 弁柄格子：紅褐細格子、淺紙背，下 16 % 腰板（同 koshi 構圖，色與密度不同）
+    w, h = sz('koshi_r')
+    beng, beng_d = A._hex255('#6E2F22'), A._hex255('#4A1F17')
+    kr = T._paper(w, h, 721, tone='#D8CBB0')
+    d = ImageDraw.Draw(kr)
+    kh = int(h * 0.84)
+    for x in range(4, w, 17):
+        d.rectangle((x, 0, x + 8, kh), fill=beng)
+    for x in range(4, w, 68):                                     # 親子格子：每 4 本一條長子（較粗）
+        d.rectangle((x - 2, 0, x + 11, kh), fill=beng_d)
+    d.rectangle((0, int(h * 0.12), w, int(h * 0.12) + 7), fill=beng_d)
+    kr.paste(T._wood_patch(w, h - kh, '#5A2A1E', 731), (0, kh))
+    d.rectangle((0, kh - 8, w, kh), fill=beng_d)
+    d.rectangle((0, 0, w - 1, h - 1), outline=beng_d, width=14)
+    atlas.paste(kr, R['koshi_r'][:2])
+    # 蟲籠窓 B：土壁（黃土）＋粗縱格子
+    w, h = sz('mushiko_b')
+    mb = T._paper(w, h, 722, tone='#B49A76')
+    d = ImageDraw.Draw(mb)
+    d.rectangle((18, 30, w - 19, h - 31), fill=A._hex255('#2A2119'))
+    nb = 10
+    pitch = (w - 36 - 24) / nb                                          # 等距：左右留同寬暗縫
+    for i in range(nb):
+        x = int(18 + (pitch - 24) / 2 + 12 + i * pitch)
+        d.rectangle((x, 30, x + 24, h - 31), fill=A._hex255('#A38A66'))
+    d.rectangle((18, 30, w - 19, h - 31), outline=A._hex255('#8C7456'), width=10)
+    atlas.paste(mb, R['mushiko_b'][:2])
+    # 簾 B：舊竹（灰綠褐）、上 22 % 捲起、兩條吊繩
+    w, h = sz('sudare_b')
+    sb = Image.new('RGB', (w, h), (36, 30, 24))
+    d = ImageDraw.Draw(sb)
+    top = int(h * 0.22)
+    d.rectangle((0, top, w, h), fill=A._hex255('#7A7250'))
+    for y in range(top, h, 5):
+        d.line((0, y, w, y), fill=A._hex255('#5A5238'), width=2)
+    for yy in range(4, top - 4, 8):                                 # 捲起的簾（橫條圓筒感）
+        c = int(90 + 40 * np.sin((yy - 4) / max(1, top - 8) * np.pi))
+        d.line((0, yy, w, yy), fill=(c, int(c * 0.92), int(c * 0.66)), width=6)
+    for x in (w // 5, 4 * w // 5):
+        d.line((x, 0, x, h), fill=A._hex255('#2E2418'), width=5)
+    d.rectangle((0, h - 8, w, h), fill=A._hex255('#3E3222'))
+    atlas.paste(sb, R['sudare_b'][:2])
+    # 暖簾 D（生成＝米白、藍亀甲、2 幅）／E（弁柄、白菱、4 幅短暖簾）
+    for key, col, n, crest, seed, cc in (('noren_d', '#D8CFBA', 2, 'kikko', 723, (46, 63, 92)),
+                                          ('noren_e', '#6E2F22', 4, 'hishi', 724, (226, 220, 204))):
+        w, h = sz(key)
+        img = T._cloth(w, h, col, seed)
+        d = ImageDraw.Draw(img)
+        pw = w / n
+        for i in range(n):
+            x0 = int(i * pw)
+            if i:
+                d.rectangle((x0 - 3, int(h * 0.10), x0 + 3, h), fill=(20, 18, 16))
+            _crest(d, int(x0 + pw / 2), int(h * 0.52), int(min(pw, h) * 0.26), crest, cc)
+        d.rectangle((0, 0, w, int(h * 0.10)), fill=tuple(int(c * 0.55) for c in A._hex255(col)))
+        atlas.paste(img, R[key][:2])
+    # 看板 B（黑漆、金亀甲）／C（白木、墨菱）；無字
+    for key, base, frm, crest, cc, seed in (('kanban_b', '#1E1A18', '#5C4A2E', 'kikko', '#B89A5A', 725),
+                                             ('kanban_c', '#B8A07A', '#2E2119', 'hishi', '#2A2018', 726)):
+        w, h = sz(key)
+        kb = T._wood_patch(w, h, base, seed)
+        d = ImageDraw.Draw(kb)
+        d.rectangle((0, 0, w - 1, h - 1), outline=A._hex255(frm), width=18)
+        d.rectangle((26, 26, w - 27, h - 27), outline=A._hex255(cc), width=4)
+        _crest(d, w // 2, h // 2, int(h * 0.28), crest, A._hex255(cc))
+        atlas.paste(kb, R[key][:2])
+    # 2F 窓 B：弁柄粗格子（縱 5 條＋橫 2 條）後面障子
+    w, h = sz('window_b')
+    wb = T._paper(w, h, 727, tone='#E3DCCB')
+    d = ImageDraw.Draw(wb)
+    nv = 5                                                              # 弁柄縱格子 5 條，等距；障子桟只走橫向（不和粗格子錯位）
+    for i in range(1, nv + 1):
+        x = int(w * i / (nv + 1))
+        d.rectangle((x - 11, 0, x + 11, h), fill=beng)
+    for y in range(40, h, 72):
+        d.rectangle((0, y, w, y + 4), fill=A._hex255('#5A4432'))
+    for y in (h // 3, 2 * h // 3):
+        d.rectangle((0, y - 8, w, y + 8), fill=beng)
+    d.rectangle((0, 0, w - 1, h - 1), outline=beng_d, width=24)
+    atlas.paste(wb, R['window_b'][:2])
     sws = A._swatches(atlas, R['swatch'], SW, SW_NOTE)
     A._write('machiya_kit', 'V2_MachiyaKit', atlas, emit, R, sws,
              ' P6 R1 模組化町家 Kit（tools/build_village_v2_p6_kit_atlas.py）：千本格子×2、蟲籠窓、小窓、2F 格子窓、障子、'
-             '格子引戶、店先內、雨戶、妻面、暖簾×3（幾何家紋）、簾、無字看板、店頭商品、土間內；無文字。')
+             '格子引戶、店先內、雨戶、妻面、暖簾×3（幾何家紋）、簾、無字看板、店頭商品；'
+             'P6 R2 加：弁柄格子、蟲籠窓 B、舊簾、暖簾 D／E、看板 B／C、2F 窓 B；無文字。')
 
 
 if __name__ == '__main__':

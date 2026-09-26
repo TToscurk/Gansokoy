@@ -2,7 +2,7 @@
  "id": "machiya_kit",
  "kind": "kit",
  "phase": "P6",
- "round": "P6 R1",
+ "round": "P6 R2",
  "budget_class": "町家",
  "landmark": null,
  "label": "模組化町家 Kit（平屋／厨子二階／總二階 × 平入／妻入 × 住宅／店先）",
@@ -18,5 +18,6 @@
  "not_reused": "不引用任何封存的舊房屋資產（archive/reference_old_assets、maps/village/gen、assets/machiya 等）；構件全部由 build_machiya_kit.py 新建",
  "applies_to": {"machiya": 187, "aux_koya": 0, "aux_kura": 0, "note": "aux 納屋／土藏（倉庫.PNG）不在 R1，維持 P4 灰盒"},
  "lod_ranges_m": [0, 40, 110, 600],
- "measured_blender": {"modules": 119, "LOD0": 20050, "note": "LOD0 為 187 棟組裝後每棟最大值（gate 實測）；119 構件合計 26899 三角面"}
+ "measured_blender": {"modules": 598, "modules_used": 459, "LOD0": 20050, "note": "LOD0 為 187 棟組裝後每棟最大值（gate 實測）；598 構件合計 96157 三角面（R2：R1 構件＋新構件＋頂點色色變體，實際被組裝引用 459 個）"},
+ "variation": "P6 R2 Variation Pass：以棟 id 決定性指派風格計畫（牆色 5／瓦色 3／一樓主題 9／上層窓 8／庇 瓦・板／卯建／看板／切妻庇／犬矢来／煙出し／鬼瓦 2／半間柱割），同側相鄰 13 m 與對街 28 m 內避開同值"
 }

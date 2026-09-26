@@ -1,5 +1,5 @@
 {
- "_note": "machiya_kit Hero atlas（UV 左上原點；Blender 端 v 要 1−v）。由 tools/build_village_v2_r2_atlases.py 產生。 P6 R1 模組化町家 Kit（tools/build_village_v2_p6_kit_atlas.py）：千本格子×2、蟲籠窓、小窓、2F 格子窓、障子、格子引戶、店先內、雨戶、妻面、暖簾×3（幾何家紋）、簾、無字看板、店頭商品、土間內；無文字。",
+ "_note": "machiya_kit Hero atlas（UV 左上原點；Blender 端 v 要 1−v）。由 tools/build_village_v2_r2_atlases.py 產生。 P6 R1 模組化町家 Kit（tools/build_village_v2_p6_kit_atlas.py）：千本格子×2、蟲籠窓、小窓、2F 格子窓、障子、格子引戶、店先內、雨戶、妻面、暖簾×3（幾何家紋）、簾、無字看板、店頭商品；P6 R2 加：弁柄格子、蟲籠窓 B、舊簾、暖簾 D／E、看板 B／C、2F 窓 B；無文字。",
  "size": 2048,
  "regions": {
   "koshi": [
@@ -92,9 +92,15 @@
    0.5,
    0.75
   ],
-  "interior": [
+  "mushiko_b": [
    0.5,
    0.5,
+   0.75,
+   0.625
+  ],
+  "sudare_b": [
+   0.5,
+   0.625,
    0.75,
    0.75
   ],
@@ -109,6 +115,42 @@
    0.625,
    1.0,
    0.75
+  ],
+  "koshi_r": [
+   0.0,
+   0.75,
+   0.25,
+   1.0
+  ],
+  "noren_d": [
+   0.25,
+   0.75,
+   0.5,
+   0.875
+  ],
+  "noren_e": [
+   0.25,
+   0.875,
+   0.5,
+   1.0
+  ],
+  "kanban_b": [
+   0.5,
+   0.75,
+   0.75,
+   0.875
+  ],
+  "kanban_c": [
+   0.5,
+   0.875,
+   0.75,
+   1.0
+  ],
+  "window_b": [
+   0.75,
+   0.75,
+   1.0,
+   1.0
   ]
  },
  "swatches": {
