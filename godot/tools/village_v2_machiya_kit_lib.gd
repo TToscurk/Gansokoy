@@ -27,6 +27,9 @@ extends RefCounted
 ## apply(body, rec, lib, embed)：把一棟灰盒換成 Kit——灰盒網格逐一 visible＝false（節點保留，P4 gate 讀位置），
 ##   碰撞不動；body 下加 "Kit"（LOD0／LOD1／LOD2 三組 MeshInstance3D，visibility_range 硬切＋margin）。
 
+const GLib := preload("res://tools/village_v2_greybox_lib.gd")
+const PLib := preload("res://tools/village_v2_parcel_lib.gd")
+const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const MESH_DIR := "res://assets/village_v2/machiya_kit/mesh/"
 const P := 0.45
 const FL := 0.32
@@ -930,6 +933,10 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 		pl["dormer"], (pl["udh"] as Array).size(), pl["cut"], (pl["corner"] as Array).size(), pl["hero"]])
 	kit.set_meta("bays", widths.size())
 	kit.set_meta("bay_scale", snappedf(k, 0.001))
+	# R4 門前帶（frontage）依開間佈置：開間邊界 x、1F 種類、入口開間
+	kit.set_meta("bay_x", xs)
+	kit.set_meta("bay_kind", kinds)
+	kit.set_meta("door_i", int(B["door"]))
 	return kit
 
 
@@ -957,3 +964,248 @@ static func lod_tris(kit: Node3D, lod: int) -> int:
 			var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
 			t += (idx.size() if not idx.is_empty() else (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()) / 3
 	return t
+
+
+
+# ─────────────────────────── P6 R4 門前／街道過渡（Frontage）───────────────────────────
+# 範圍＝牆線（z＝d/2）到路緣（地塊臨路線＋front_gap，P3 本來就留給犬走り＋側溝）；x＝地塊臨路邊兩角。
+# 不改 parcel／道路／P4 量體：只在這條帶裡鋪地面構件（視覺專用、不加碰撞；踏段碰撞歸 P11）。
+# 高度：每段兩端取帶內地形最高點＋FR_LIFT（≈ 道路面；路面本來就高出兩側地形 0.1 m → 補掉路緣唇），
+# 段間線性；帶狀構件往下埋 0.24（底一定在地形下）。門前踏段頂＝帶頂與地板中點（一段 0.11–0.16 m）。
+const PARCELS := "res://maps/village_v2/gen/parcels.json"
+const FR_LIFT := 0.10
+const FR_EDGE := 0.01        # 側溝外緣離路緣
+const FR_MIN := 0.3          # 地塊臨路邊比建築多出 ≥ 0.3 m 才自成一段（否則併入端開間）
+const FR_INU := 0.45         # 退縮住宅的犬走り（含見切り石 0.08）
+const FR_MK := 0.08
+const FR_STEP_D := 0.34      # 門前踏段／店前踏段深
+const FR_BURY := 0.12        # 踏段底在帶頂下
+static var _fr: Dictionary = {}
+
+
+static func _fr_data() -> Dictionary:
+	if _fr.is_empty():
+		var PJ: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(PARCELS))
+		var polys := {}
+		var boxes := {}
+		var prs := {}
+		for r: Dictionary in PJ["parcels"]:
+			var pp := TLib.pts(r["footprint"])
+			polys[String(r["id"])] = pp
+			var bx := Rect2(pp[0], Vector2.ZERO)
+			for q in pp:
+				bx = bx.expand(q)
+			boxes[String(r["id"])] = bx
+			prs[String(r["id"])] = r
+		var LY: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
+		var roads: Array = []
+		for r: Dictionary in PLib.network(LY):
+			for poly: PackedVector2Array in Geometry2D.offset_polyline(r["pts"], float(r["hw"]), Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND):
+				var bx := Rect2(poly[0], Vector2.ZERO)
+				for q in poly:
+					bx = bx.expand(q)
+				roads.append([poly, bx])
+		_fr = {"polys": polys, "boxes": boxes, "recs": prs, "roads": roads}
+	return _fr
+
+
+## 這一點落在道路／巷道或別人的地塊裡 → 該段不鋪
+static func _fr_blocked(p: Vector2, own: String) -> bool:
+	var D := _fr_data()
+	for rb: Array in D["roads"]:
+		if (rb[1] as Rect2).has_point(p) and Geometry2D.is_point_in_polygon(p, rb[0]):
+			return true
+	for pid: String in D["polys"]:
+		if pid != own and (D["boxes"][pid] as Rect2).has_point(p) and Geometry2D.is_point_in_polygon(p, D["polys"][pid]):
+			return true
+	return false
+
+
+## 單位構件放進 [x0,x1]×[z0,z0+dz]，頂面在 x0 高 t0、x1 高 t1（剪切 basis 順坡），y 伸縮 sy
+static func _fr_put(g: Node3D, lib: Dictionary, mod: String, x0: float, x1: float, t0: float, t1: float, z0: float,
+		dz: float, lod: int, sy := 1.0) -> MeshInstance3D:
+	return _mi(g, lib, mod, Transform3D(Basis(Vector3(x1 - x0, t1 - t0, 0), Vector3(0, sy, 0), Vector3(0, 0, dz)),
+		Vector3(x0, t0, z0)), lod)
+
+
+## 灰盒 body 前加門前帶（body 局部座標；h_fn(Vector2 世界 xz) → 地形高）。kit＝已組好的 Kit（開間資訊）。
+static func frontage(body: Node3D, rec: Dictionary, lib: Dictionary, kit: Node3D, h_fn: Callable) -> Node3D:
+	var old := body.get_node_or_null("Frontage")
+	if old != null:
+		return old as Node3D
+	var D := _fr_data()
+	var id := String(rec["id"])
+	var pid := String(rec["parcel"])
+	var pr: Dictionary = D["recs"][pid]
+	var d := float(rec["depth_m"])
+	var X := body.transform
+	var Xi := X.affine_inverse()
+	var fe := GLib.front_edge(pr)
+	var pa: Vector3 = Xi * Vector3((fe[0] as Vector2).x, 0, (fe[0] as Vector2).y)
+	var pb: Vector3 = Xi * Vector3((fe[1] as Vector2).x, 0, (fe[1] as Vector2).y)
+	var zw := d * 0.5
+	var zp := (pa.z + pb.z) * 0.5
+	var zc := zp + float(pr["clearance"]["front_gap_m"]) - FR_EDGE
+	var dz := zc - zw
+	var xa := minf(pa.x, pb.x)
+	var xb := maxf(pa.x, pb.x)
+	var xs: Array = kit.get_meta("bay_x")
+	var kinds: Array = kit.get_meta("bay_kind")
+	var door := int(kit.get_meta("door_i"))
+	var door_c := float(kit.get_meta("door_cx"))
+	# 段：開間＋兩側地塊餘邊（< FR_MIN 併入端開間）
+	var segs: Array = []
+	for i in kinds.size():
+		segs.append({"x0": float(xs[i]), "x1": float(xs[i + 1]), "k": String(kinds[i]), "door": i == door})
+	if float(xs[0]) - xa >= FR_MIN:
+		segs.push_front({"x0": xa, "x1": float(xs[0]), "k": "margin", "door": false})
+	else:
+		segs[0]["x0"] = minf(xa, float(xs[0]))
+	if xb - float(xs[-1]) >= FR_MIN:
+		segs.append({"x0": float(xs[-1]), "x1": xb, "k": "margin", "door": false})
+	else:
+		segs[-1]["x1"] = maxf(xb, float(xs[-1]))
+	# 帶頂高（body 局部 y）：邊界 x 處取牆線／中／路緣三點地形最高＋FR_LIFT；段中點若更高就把兩端一起抬
+	var hx := func(x: float) -> float:
+		var m := -INF
+		for z in [zw + 0.02, (zw + zc) * 0.5, zc - 0.02]:
+			var wp: Vector3 = X * Vector3(x, 0, z)
+			m = maxf(m, float(h_fn.call(Vector2(wp.x, wp.z))))
+		return m - X.origin.y + FR_LIFT
+	var shop := float(rec.get("hisashi_m", 0.0)) > 0.0
+	var deep := dz > 1.0                  # 退縮 0.91 的住宅（前帶 1.39）；否則 0.49
+	var road_cls := String(pr.get("road_cls", ""))
+	var gw := (0.26 if road_cls == "lane" else 0.36) if deep else 0.30
+	var inu: String = ["ishi", "jari", "tataki"][_h(id, 60) % 3] if deep else ("ishi" if shop else "jari")
+	var fr := Node3D.new()
+	fr.name = "Frontage"
+	fr.set_meta("asset_id", "machiya_kit")
+	fr.set_meta("phase", "P6 R4")
+	var g0 := Node3D.new()
+	g0.name = "LOD0"
+	var g1 := Node3D.new()
+	g1.name = "LOD1"
+	fr.add_child(g0)
+	fr.add_child(g1)
+	var kept: Array = []
+	var dropped := 0
+	for s: Dictionary in segs:
+		var x0 := float(s["x0"])
+		var x1 := float(s["x1"])
+		var bad := false
+		for x in [x0 + 0.05, (x0 + x1) * 0.5, x1 - 0.05]:
+			for z in [zw + 0.05, zc - 0.03]:
+				var wp: Vector3 = X * Vector3(x, 0, z)
+				bad = bad or _fr_blocked(Vector2(wp.x, wp.z), pid)
+		if bad:
+			dropped += 1
+			continue
+		kept.append(s)
+	# 邊界高：相鄰段共用同一個邊界值（避免段間高低差）；段中點地形若高於兩端內插，把兩端邊界一起抬
+	var hb := {}
+	for s: Dictionary in kept:
+		for key in ["x0", "x1"]:
+			var xk := snappedf(float(s[key]), 0.001)
+			if not hb.has(xk):
+				hb[xk] = float(hx.call(xk))
+	var hu := {}
+	for s: Dictionary in kept:
+		var a := snappedf(float(s["x0"]), 0.001)
+		var c := snappedf(float(s["x1"]), 0.001)
+		var up := maxf(0.0, float(hx.call((a + c) * 0.5)) - (float(hb[a]) + float(hb[c])) * 0.5)
+		hu[a] = maxf(float(hu.get(a, 0.0)), up)
+		hu[c] = maxf(float(hu.get(c, 0.0)), up)
+	for s: Dictionary in kept:
+		var a := snappedf(float(s["x0"]), 0.001)
+		var c := snappedf(float(s["x1"]), 0.001)
+		s["h0"] = float(hb[a]) + float(hu.get(a, 0.0))
+		s["h1"] = float(hb[c]) + float(hu.get(c, 0.0))
+	var gut_mod := "fr_guto_%d" % int(round(gw * 100))
+	var open_run: Array = []
+	for s: Dictionary in kept:
+		var x0 := float(s["x0"])
+		var x1 := float(s["x1"])
+		var h0 := float(s["h0"])
+		var h1 := float(s["h1"])
+		var k := String(s["k"])
+		var covered := shop or (not deep and bool(s["door"]))
+		# ── LOD0 ──
+		if deep:
+			_fr_put(g0, lib, "fr_band_" + inu, x0, x1, h0, h1, zw, FR_INU - FR_MK, 0)
+			_fr_put(g0, lib, "fr_mikiri", x0, x1, h0, h1, zw + FR_INU - FR_MK, 1.0, 0)
+			_fr_put(g0, lib, "fr_band_tsuchi", x0, x1, h0, h1, zw + FR_INU, dz - FR_INU - gw, 0)
+		elif shop:
+			_fr_put(g0, lib, "fr_band_ishi", x0, x1, h0, h1, zw, dz - gw, 0)
+		else:
+			_fr_put(g0, lib, "fr_band_jari", x0, x1, h0, h1, zw, dz - gw - FR_MK, 0)
+			_fr_put(g0, lib, "fr_mikiri", x0, x1, h0, h1, zw + dz - gw - FR_MK, 1.0, 0)
+		if covered:
+			var n := 3 if x1 - x0 > 1.2 else 2
+			_fr_put(g0, lib, "fr_gutc_%d_%d" % [int(round(gw * 100)), n], x0, x1, h0, h1, zc - gw, 1.0, 0)
+		else:
+			_fr_put(g0, lib, gut_mod, x0, x1, h0, h1, zc - gw, 1.0, 0)
+		s["open"] = not covered
+		# 店前踏段：開放店面開間沿牆（半段高）
+		if k == "shop_o":
+			var r0 := FL - h0
+			var r1 := FL - h1
+			_fr_put(g0, lib, "fr_dan", x0 + 0.03, x1 - 0.03, h0 + r0 * 0.45, h1 + r1 * 0.45, zw, FR_STEP_D, 0,
+				(r0 + r1) * 0.5 * 0.45 + FR_BURY)
+		# ── LOD1：地面帶＋遠景側溝 ──
+		_fr_put(g1, lib, "fr_band_tsuchi" if deep else ("fr_band_ishi" if shop else "fr_band_jari"), x0, x1, h0, h1, zw, dz - gw, 1)
+		_fr_put(g1, lib, "fr_gutl_%d" % int(round(gw * 100)), x0, x1, h0, h1, zc - gw, 1.0, 1)
+	# 開渠端部封口（連續開渠段的兩端）
+	for i in kept.size():
+		var s: Dictionary = kept[i]
+		if not bool(s["open"]):
+			continue
+		var prev_open := i > 0 and bool(kept[i - 1]["open"]) and is_equal_approx(float(kept[i - 1]["x1"]), float(s["x0"]))
+		var next_open := i + 1 < kept.size() and bool(kept[i + 1]["open"]) and is_equal_approx(float(kept[i + 1]["x0"]), float(s["x1"]))
+		var cap := "fr_gutk_%d" % int(round(gw * 100))
+		# 封口面朝溝內：左端朝 +x（原樣），右端轉 180°
+		if not prev_open:
+			_mi(g0, lib, cap, Transform3D(Basis.IDENTITY, Vector3(float(s["x0"]), float(s["h0"]), zc - gw)), 0)
+		if not next_open:
+			_mi(g0, lib, cap, Transform3D(Basis(Vector3.UP, PI), Vector3(float(s["x1"]), float(s["h1"]), zc)), 0)
+	# 入口：沓脱石（門前小台階）＋入口前地面＋跨溝
+	var ds: Dictionary = {}
+	for s: Dictionary in kept:
+		if bool(s["door"]):
+			ds = s
+	var apron := "none"
+	if not ds.is_empty() and String(ds["k"]) != "shop_o":
+		var x0 := float(ds["x0"])
+		var x1 := float(ds["x1"])
+		var t := clampf((door_c - x0) / maxf(0.01, x1 - x0), 0.0, 1.0)
+		var hc := lerpf(float(ds["h0"]), float(ds["h1"]), t)
+		var rise := FL - hc
+		var sw := minf(1.2, (x1 - x0) * 0.75)
+		_mi(g0, lib, "fr_step", Transform3D(Basis(Vector3(sw, 0, 0), Vector3(0, rise * 0.5 + FR_BURY, 0), Vector3(0, 0, FR_STEP_D)),
+			Vector3(door_c, hc + rise * 0.5, zw)), 0)
+		if deep:
+			var zone := dz - FR_INU - gw
+			var z0 := zw + FR_INU
+			match _h(id, 61) % 3:
+				0:
+					apron = "shiki"
+					_mi(g0, lib, "fr_shiki", Transform3D(Basis(Vector3.RIGHT, Vector3.UP, Vector3(0, 0, zone / 0.6)), Vector3(door_c, hc + 0.015, z0)), 0)
+				1:
+					apron = "fumi"
+					var st: Array = ["a", "b", "c"]
+					for j in 2:
+						var sk := String(st[(_h(id, 62) + j) % 3])
+						var ang := float(_h(id, 63 + j) % 360) * PI / 180.0
+						_mi(g0, lib, "fr_fumi_" + sk, Transform3D(Basis(Vector3.UP, ang), Vector3(door_c + (0.07 if j == 0 else -0.06),
+							hc + 0.02, z0 + zone * (0.3 if j == 0 else 0.74))), 0)
+				_:
+					apron = "tataki"
+					_fr_put(g0, lib, "fr_band_tataki", door_c - 0.5, door_c + 0.5, hc + 0.012, hc + 0.012, z0, zone, 0)
+			_mi(g0, lib, "fr_hashi_%d" % int(round(gw * 100)), Transform3D(Basis(Vector3(0.8, 0, 0), Vector3.UP, Vector3.BACK),
+				Vector3(door_c, hc + 0.006, zc - gw)), 0)
+	fr.set_meta("zone", [snappedf(zw, 0.001), snappedf(zc, 0.001)])
+	fr.set_meta("gutter", "%s %.2f" % ["covered" if shop else ("open" if deep else "open+door_cover"), gw])
+	fr.set_meta("style", "%s/%s/%s" % ["deep" if deep else "shallow", inu, apron])
+	fr.set_meta("segs", kept.size())
+	fr.set_meta("dropped", dropped)
+	body.add_child(fr)
+	return fr

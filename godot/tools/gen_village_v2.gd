@@ -1927,8 +1927,11 @@ func _kits() -> void:
 			continue
 		var kit := KLib.apply(body, b, lib, embed)
 		tris += KLib.lod_tris(kit, 0)
+		# P6 R4 門前帶（排水溝／犬走り／踏石／入口前地面／牆腳／門前小台階／店前過渡）：牆線到路緣，高度取最終地形網格
+		var fr := KLib.frontage(body, b, lib, kit, func(p: Vector2) -> float: return _hgrid(p.x, p.y))
+		tris += KLib.lod_tris(fr, 0)
 		n += 1
-	print("[v2] P6 町家 Kit 套用 %d 棟（LOD0 合計 %d 三角面）" % [n, tris])
+	print("[v2] P6 町家 Kit＋門前帶 套用 %d 棟（LOD0 合計 %d 三角面）" % [n, tris])
 
 
 # ─────────────────────────── P4 建築灰盒 ───────────────────────────

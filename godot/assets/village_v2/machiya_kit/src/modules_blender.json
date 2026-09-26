@@ -1392,6 +1392,122 @@
    "tris": 60,
    "note": "懸魚（妻飾り）"
   },
+  "fr_band_ishi": {
+   "tris": 8,
+   "note": "R4 門前地面帶 ishi（單位長×單位寬）"
+  },
+  "fr_band_jari": {
+   "tris": 8,
+   "note": "R4 門前地面帶 jari（單位長×單位寬）"
+  },
+  "fr_band_tataki": {
+   "tris": 8,
+   "note": "R4 門前地面帶 tataki（單位長×單位寬）"
+  },
+  "fr_band_tsuchi": {
+   "tris": 8,
+   "note": "R4 門前地面帶 tsuchi（單位長×單位寬）"
+  },
+  "fr_mikiri": {
+   "tris": 8,
+   "note": "R4 犬走り見切り石（0.08 寬）"
+  },
+  "fr_guto_26": {
+   "tris": 20,
+   "note": "R4 側溝（開渠，寬 0.26）"
+  },
+  "fr_gutk_26": {
+   "tris": 2,
+   "note": "R4 側溝端部封口（寬 0.26）"
+  },
+  "fr_gutl_26": {
+   "tris": 18,
+   "note": "R4 側溝遠景（寬 0.26）"
+  },
+  "fr_hashi_26": {
+   "tris": 10,
+   "note": "R4 渡り石（跨開渠 0.26）"
+  },
+  "fr_gutc_26_2": {
+   "tris": 28,
+   "note": "R4 側溝（蓋石 2 枚，寬 0.26）"
+  },
+  "fr_gutc_26_3": {
+   "tris": 38,
+   "note": "R4 側溝（蓋石 3 枚，寬 0.26）"
+  },
+  "fr_guto_30": {
+   "tris": 20,
+   "note": "R4 側溝（開渠，寬 0.30）"
+  },
+  "fr_gutk_30": {
+   "tris": 2,
+   "note": "R4 側溝端部封口（寬 0.30）"
+  },
+  "fr_gutl_30": {
+   "tris": 18,
+   "note": "R4 側溝遠景（寬 0.30）"
+  },
+  "fr_hashi_30": {
+   "tris": 10,
+   "note": "R4 渡り石（跨開渠 0.30）"
+  },
+  "fr_gutc_30_2": {
+   "tris": 28,
+   "note": "R4 側溝（蓋石 2 枚，寬 0.30）"
+  },
+  "fr_gutc_30_3": {
+   "tris": 38,
+   "note": "R4 側溝（蓋石 3 枚，寬 0.30）"
+  },
+  "fr_guto_36": {
+   "tris": 20,
+   "note": "R4 側溝（開渠，寬 0.36）"
+  },
+  "fr_gutk_36": {
+   "tris": 2,
+   "note": "R4 側溝端部封口（寬 0.36）"
+  },
+  "fr_gutl_36": {
+   "tris": 18,
+   "note": "R4 側溝遠景（寬 0.36）"
+  },
+  "fr_hashi_36": {
+   "tris": 10,
+   "note": "R4 渡り石（跨開渠 0.36）"
+  },
+  "fr_gutc_36_2": {
+   "tris": 28,
+   "note": "R4 側溝（蓋石 2 枚，寬 0.36）"
+  },
+  "fr_gutc_36_3": {
+   "tris": 38,
+   "note": "R4 側溝（蓋石 3 枚，寬 0.36）"
+  },
+  "fr_step": {
+   "tris": 16,
+   "note": "R4 門前踏段（花崗石；單位寬深高）"
+  },
+  "fr_dan": {
+   "tris": 16,
+   "note": "R4 店前踏段（單位長、深、高）"
+  },
+  "fr_shiki": {
+   "tris": 20,
+   "note": "R4 入口前敷石（兩枚）"
+  },
+  "fr_fumi_a": {
+   "tris": 33,
+   "note": "R4 踏石 a"
+  },
+  "fr_fumi_b": {
+   "tris": 28,
+   "note": "R4 踏石 b"
+  },
+  "fr_fumi_c": {
+   "tris": 28,
+   "note": "R4 踏石 c"
+  },
   "f1_plain_182_h27_c1": {
    "tris": 40,
    "note": "1F 正面開間 plain 寬 1.82 上緣 2.7｜R2 色變體 c1"
@@ -5073,5 +5189,5 @@
    "note": "LOD1 2F 雨戶"
   }
  },
- "total_tris": 322617
+ "total_tris": 323146
 }

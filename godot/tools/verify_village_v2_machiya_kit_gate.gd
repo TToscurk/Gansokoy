@@ -73,6 +73,7 @@ var GB: Dictionary
 var recs: Array = []           # machiya 灰盒紀錄
 var bodies := {}               # id → StaticBody3D
 var kits := {}                 # id → Kit Node3D
+var fronts := {}               # id → Frontage Node3D（P6 R4 門前帶）
 var v: Node3D
 var space: PhysicsDirectSpaceState3D
 var terrain_rid := RID()
@@ -180,6 +181,18 @@ func _setup(parent: Node, vroot: Node3D = null) -> void:
 	await physics_frame
 	space = v.get_world_3d().direct_space_state
 	terrain_rid = (v.get_node("Collision/TerrainCollision") as CollisionObject3D).get_rid()
+	# P6 R4 門前帶：非回歸時丟掉場景烘焙的舊 Frontage、用目前 lib 重鋪（高度取地形碰撞）；回歸時驗烘焙的那份
+	var hf := func(p: Vector2) -> float: return _terrain(p.x, p.y)
+	for b: Dictionary in recs:
+		var body: Node3D = bodies.get(b["id"])
+		if body == null or not kits.has(b["id"]):
+			continue
+		if not regress:
+			var oldf := body.get_node_or_null("Frontage")
+			if oldf != null:
+				body.remove_child(oldf)
+				oldf.free()
+		fronts[b["id"]] = KLib.frontage(body, b, lib, kits[b["id"]], hf)
 
 
 func _apply_neg() -> void:
@@ -203,6 +216,10 @@ func _apply_neg() -> void:
 			(bodies[b0["id"]].get_node("Shape") as CollisionShape3D).disabled = true
 		"lod":
 			k0.get_node("LOD2").free()
+		"frontage":
+			# 門前帶整條推進道路 1.5 m、抬 0.4 m → parcel_fit（壓路）與 grounding（浮起）都要抓到
+			var f0: Node3D = fronts[b0["id"]]
+			f0.position += Vector3(0, 0.4, 1.5)
 		"perf":
 			for i in 3:
 				for mi: MeshInstance3D in l0.get_children():
@@ -227,6 +244,7 @@ func _headless() -> void:
 	_c_collision()
 	_c_lod()
 	_c_perf()
+	_c_frontage()
 	_flush(HEADLESS_KEYS)
 	if regress:
 		var gj: Variant = JSON.parse_string(FileAccess.get_file_as_string(GATE))
@@ -743,7 +761,7 @@ func _c_perf() -> void:
 	var mats_max := 0
 	var meshes := {}
 	for id: String in kits:
-		var t := _tris(kits[id], 0)
+		var t := _tris(kits[id], 0) + (_tris(fronts[id], 0) if fronts.has(id) else 0)
 		sum += t
 		if t > mx:
 			mx = t
@@ -767,6 +785,108 @@ func _c_perf() -> void:
 		"§14.8「町家」LOD0 上限 %d：每棟實測最大 %d（%s，%.0f %%）、平均 %d；每棟材質 ≤ %d（實測 %d）、碰撞 1；Kit 專屬貼圖 VRAM 估算 %.1f MB（≤ 8）；全村 %d 棟 LOD0 合計 %d 三角面（同時可見受 LOD 距離 40 m 限制）、Kit MeshInstance %d 個、共用構件 mesh %d 個（磁碟 %d KB，只存一次）" % [
 			CAP_LOD0, mx, mx_id, 100.0 * mx / CAP_LOD0, sum / maxi(1, kits.size()), MAX_MATS, mats_max, own_mb, kits.size(), sum,
 			nodes, meshes.size(), mesh_kb])
+
+
+# ─────────────────────────── P6 R4 門前帶（併入 parcel_fit／grounding／materials／lod）───────────────────────────
+## 每棟 Frontage：只鋪在牆線到路緣之間（不壓道路、不壓鄰地、不超出地塊臨路邊兩角）；帶狀構件底在地形下、頂高出地形
+## 0–0.20 m、與路面接縫 ≤ 0.06 m；踏段頂介於帶頂與地板；材質白名單、無 override；LOD0／LOD1 可見距離接續。
+func _c_frontage() -> void:
+	var PJ: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(PARCELS))
+	var polys := {}
+	for r in PJ["parcels"]:
+		polys[String(r["id"])] = TLib.pts(r["footprint"])
+	var roads: Array = []
+	for r in PLib.network(L):
+		for poly in Geometry2D.offset_polyline(r["pts"], float(r["hw"]), Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND):
+			roads.append(poly)
+	var bad_fit: Array = []
+	var bad_gnd: Array = []
+	var bad_mat: Array = []
+	var bad_lod: Array = []
+	var w_road := 0.0
+	var w_nb := 0.0
+	var w_float := -INF
+	var w_lift := [INF, -INF]
+	var w_step := [INF, -INF]
+	var n_mi := 0
+	var n := 0
+	for b: Dictionary in recs:
+		var id := String(b["id"])
+		var fr: Node3D = fronts.get(id)
+		if fr == null:
+			bad_fit.append("%s 沒有 Frontage" % id)
+			continue
+		n += 1
+		var body: Node3D = bodies[id]
+		var xf := body.global_transform
+		var own := String(b["parcel"])
+		var road := 0.0
+		var nb := 0.0
+		# 承托面：地面帶／側溝／見切り的 LOD0 外框（敷石、渡り石、踏石壓在它們上面，不是直接落在地形）
+		var sup: Array = []
+		for mi: MeshInstance3D in _mis(fr, 0):
+			var sn := String(mi.name)
+			if sn.begins_with("fr_band") or sn.begins_with("fr_gut") or sn.begins_with("fr_mikiri"):
+				sup.append(fr.transform * mi.transform * mi.mesh.get_aabb())
+		for li in 2:
+			for mi: MeshInstance3D in _mis(fr, li):
+				n_mi += 1
+				if not is_equal_approx(mi.visibility_range_begin, float(KLib.LOD_RANGES[li])) \
+						or not is_equal_approx(mi.visibility_range_end, float(KLib.LOD_RANGES[li + 1])):
+					bad_lod.append("%s %s" % [id, mi.name])
+				if mi.material_override != null:
+					bad_mat.append("%s %s override" % [id, mi.name])
+				for si in mi.mesh.get_surface_count():
+					var m := mi.mesh.surface_get_material(si)
+					if m == null or not MATS.has(m.resource_path):
+						bad_mat.append("%s 材質不在白名單" % mi.mesh.resource_path.get_file())
+				if li != 0:
+					continue
+				var lab: AABB = fr.transform * (mi.get_parent() as Node3D).transform * mi.transform * mi.mesh.get_aabb()
+				var sh := lab.grow(-0.01)
+				var fp := _rect(xf, sh)
+				var hb := _box2(fp)
+				for rr: PackedVector2Array in roads:
+					if hb.intersects(_box2(rr)):
+						road += _area(Geometry2D.intersect_polygons(fp, rr))
+				for pid: String in polys:
+					if pid == own:
+						continue
+					var pp: PackedVector2Array = polys[pid]
+					if hb.intersects(_box2(pp)):
+						nb += _area(Geometry2D.intersect_polygons(fp, pp))
+				var nm := String(mi.name)
+				var c := lab.get_center()
+				var wc: Vector3 = xf * Vector3(c.x, 0, c.z)
+				var gy := _terrain(wc.x, wc.z) - xf.origin.y
+				var base_y := gy
+				if not (nm.begins_with("fr_band") or nm.begins_with("fr_gut") or nm.begins_with("fr_mikiri")):
+					for sa: AABB in sup:
+						if c.x >= sa.position.x and c.x <= sa.end.x and c.z >= sa.position.z and c.z <= sa.end.z:
+							base_y = maxf(base_y, sa.end.y)
+				var fl := lab.position.y - base_y
+				w_float = maxf(w_float, fl)
+				if is_nan(gy) or fl > 0.0:
+					bad_gnd.append("%s %s 底浮 %.3f" % [id, nm, fl])
+				if nm.begins_with("fr_band") or nm.begins_with("fr_gut"):
+					var lift := lab.end.y - gy
+					w_lift = [minf(w_lift[0], lift), maxf(w_lift[1], lift)]
+					if lift < 0.0 or lift > 0.20:
+						bad_gnd.append("%s %s 頂高出地形 %.3f" % [id, nm, lift])
+				if nm.begins_with("fr_step") or nm.begins_with("fr_dan"):
+					w_step = [minf(w_step[0], KLib.FL - lab.end.y), maxf(w_step[1], KLib.FL - lab.end.y)]
+					if lab.end.y > KLib.FL + 0.001:
+						bad_gnd.append("%s %s 踏段高過地板" % [id, nm])
+		w_road = maxf(w_road, road)
+		w_nb = maxf(w_nb, nb)
+		if road > 0.02 or nb > 0.02:
+			bad_fit.append("%s 門前帶壓路 %.3f／壓鄰地 %.3f m²" % [id, road, nb])
+	_res("parcel_fit", bad_fit.is_empty() and n == recs.size(), "P6 R4 門前帶 %d／%d 棟：LOD0 構件外框（內縮 1 cm）壓道路最大 %.3f m²、壓鄰地最大 %.3f m²（各 ≤ 0.02）%s" % [
+		n, recs.size(), w_road, w_nb, ("；✗ " + _worst(bad_fit, 4)) if bad_fit else ""])
+	_res("grounding", bad_gnd.is_empty(), "P6 R4 門前帶：構件底都在地形下（敷石／渡り石／踏石＝在承托的地面帶／側溝頂面下；最淺 %.3f m）；地面帶／側溝頂高出地形 %.3f–%.3f m（0–0.20）；門前踏段頂到地板 %.3f–%.3f m%s" % [
+		w_float, w_lift[0], w_lift[1], w_step[0], w_step[1], ("；✗ " + _worst(bad_gnd, 4)) if bad_gnd else ""])
+	_res("materials", bad_mat.is_empty(), "P6 R4 門前帶 %d 個 MeshInstance 全用白名單材質、無 override%s" % [n_mi, ("；✗ " + _worst(bad_mat, 4)) if bad_mat else ""])
+	_res("lod", bad_lod.is_empty(), "P6 R4 門前帶 LOD0／LOD1 可見距離 %s m 接續（LOD2 不鋪）%s" % [KLib.LOD_RANGES, ("；✗ " + _worst(bad_lod, 4)) if bad_lod else ""])
 
 
 # ─────────────────────────── gate.json ───────────────────────────

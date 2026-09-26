@@ -839,6 +839,162 @@ def l_face(name, reg, y0, y1, note):
     return m
 
 
+# ─────────────────────────── P6 R4 門前／街道過渡（Frontage）───────────────────────────
+# 座標：x＝沿牆 0..1（lib 以剪切 basis 伸縮到段長並跟地形坡）；z＝牆線 0 往道路 +；y＝頂面 0（lib 放在路面高）。
+# 帶狀構件 z 也是 0..1（lib 伸縮到帶寬）；石材 V2_KitStoneTri 是世界座標 triplanar → 伸縮不拉貼圖。
+# 視覺專用、不做碰撞（踏段碰撞歸 P11 Collision / Navigation）。
+FR_DEPTH = 0.24              # 帶狀構件往下埋深（路面高比地形高 ≈0.10 → 底一定在地形下）
+FR_GUT = (0.26, 0.30, 0.36)  # 側溝寬：住宅開渠 0.26（前隙 0.5）／蓋石 0.30（店・主街）／住宅開渠 0.36（前隙 1.41）
+GRANITE, WET = 1.25, 0.30
+GRAVEL = (1.55, 1.52, 1.42)      # 砂利：淺灰白（比石敷亮，雨落ち帶要讀得出來）
+TATAKI = (1.55, 1.22, 0.85)      # 三和土：淺土黃
+TSUCHI = (1.15, 0.92, 0.66)      # 門前土：土褐（比三和土暗，踏石／敷石壓在上面才分得開）
+
+
+def fr_strip(m, z0, z1, top, mat, col, uvs=None):
+    """x 0..1、z z0..z1 的帶：頂面＋道路側立面＋兩端面（牆側與底不做：牆側貼台基、底埋地形）。"""
+    a, b = (0.0, top, z0), (1.0, top, z0)
+    c, d = (1.0, top, z1), (0.0, top, z1)
+    lo = -FR_DEPTH
+    kw = {'uvs': uvs} if uvs else {}
+    m.quad(d, c, b, a, mat, col, **kw)
+    m.quad((0, lo, z1), (1, lo, z1), c, d, mat, col, **kw)
+    m.quad((1, lo, z1), (1, lo, z0), b, c, mat, col, **kw)
+    m.quad((0, lo, z0), (0, lo, z1), d, a, mat, col, **kw)
+
+
+def fr_band(kind):
+    """地面帶（z 單位寬）：ishi 石敷／jari 砂利（雨落ち）／tataki 三和土／tsuchi 門前土。"""
+    m = new('fr_band_%s' % kind, 'R4 門前地面帶 %s（單位長×單位寬）' % kind)
+    # 全用 triplanar 石材＋vertex tint（atlas 純色 swatch 在村子的暮色光下幾乎全黑、沒紋理 → 不用）
+    if kind == 'ishi':
+        fr_strip(m, 0.0, 1.0, 0.0, 'V2_KitStoneTri', GRANITE)
+    elif kind == 'jari':
+        fr_strip(m, 0.0, 1.0, -0.012, 'V2_KitStoneTri', GRAVEL)
+    elif kind == 'tataki':
+        fr_strip(m, 0.0, 1.0, 0.0, 'V2_KitStoneTri', TATAKI)
+    else:
+        fr_strip(m, 0.0, 1.0, 0.0, 'V2_KitStoneTri', TSUCHI)
+    return m
+
+
+def fr_mikiri():
+    """犬走り外緣見切り石（0.08 寬、高出 0.015）。"""
+    m = new('fr_mikiri', 'R4 犬走り見切り石（0.08 寬）')
+    fr_strip(m, 0.0, 0.08, 0.025, 'V2_KitStoneTri', GRANITE * 1.25)
+    return m
+
+
+def fr_gut_open(wd):
+    """開渠側溝：兩側石縁（0.07）＋濕暗溝底（−0.09）；x 單位長。"""
+    m = new('fr_guto_%d' % round(wd * 100), 'R4 側溝（開渠，寬 %.2f）' % wd)
+    lip, bed = 0.07, -0.09
+    fr_strip(m, 0.0, lip, 0.0, 'V2_KitStoneTri', GRANITE * 0.95)
+    fr_strip(m, wd - lip, wd, 0.0, 'V2_KitStoneTri', GRANITE * 0.95)
+    m.quad((0, bed, wd - lip), (1, bed, wd - lip), (1, bed, lip), (0, bed, lip), 'V2_KitStoneTri', WET)
+    # 牆側石縁的溝內壁＝上面 fr_strip 的道路側立面；道路側石縁的溝內壁（朝 −z）另補
+    m.quad((1, bed, wd - lip), (0, bed, wd - lip), (0, 0.0, wd - lip), (1, 0.0, wd - lip), 'V2_KitStoneTri', 0.62)
+    return m
+
+
+def fr_gut_cap(wd):
+    """開渠端部封口（溝底到地面、朝 +x）；lib 在不與鄰棟相接的端各放一片（左端轉 180°）。"""
+    m = new('fr_gutk_%d' % round(wd * 100), 'R4 側溝端部封口（寬 %.2f）' % wd)
+    lip, bed = 0.07, -0.09
+    # 封口一路埋到帶底（溝底只比地形高幾 cm → 封口不能停在溝底，否則端部下緣浮空）
+    m.quad((0, -FR_DEPTH, wd - lip), (0, -FR_DEPTH, lip), (0, 0.0, lip), (0, 0.0, wd - lip), 'V2_KitStoneTri', 0.62)
+    return m
+
+
+def fr_gut_cover(wd, n):
+    """蓋石側溝（店前・主街）：溝面 −0.075 暗色、上蓋 n 枚石板（0.06 厚，石間 1 cm 縫）；x 單位長。"""
+    m = new('fr_gutc_%d_%d' % (round(wd * 100), n), 'R4 側溝（蓋石 %d 枚，寬 %.2f）' % (n, wd))
+    fr_strip(m, 0.0, wd, -0.075, 'V2_KitStoneTri', WET)
+    g = 0.012 * n        # x 單位長裡的縫比例（lib 段長 0.9–2.0 m → 縫 ≈ 0.5–1.1 cm）
+    L = (1.0 - g) / n
+    for i in range(n):
+        x0 = g / n * 0.5 + i * (L + g / n)
+        c = GRANITE * (1.0, 0.93, 1.05)[i % 3]
+        m.box((x0, -0.06, 0.004), (x0 + L, 0.0, wd - 0.004), 'V2_KitStoneTri', c, skip=('-y',))
+    return m
+
+
+def fr_gut_far(wd):
+    """遠景側溝（40–110 m）：兩條石縁＋中間暗帶，平面。"""
+    m = new('fr_gutl_%d' % round(wd * 100), 'R4 側溝遠景（寬 %.2f）' % wd)
+    fr_strip(m, 0.0, 0.07, 0.0, 'V2_KitStoneTri', GRANITE * 0.95)
+    m.quad((0, -0.03, wd - 0.07), (1, -0.03, wd - 0.07), (1, -0.03, 0.07), (0, -0.03, 0.07), 'V2_KitStoneTri', WET)
+    fr_strip(m, wd - 0.07, wd, 0.0, 'V2_KitStoneTri', GRANITE * 0.95)
+    return m
+
+
+def fr_step():
+    """門前小台階（沓脱石）：x −0.5..0.5、z 0..1、y −1..0（lib 伸縮：寬、深、頂到埋入地形下）；
+    上 2 cm 另一塊稍內縮的石板，石緣讀得出。"""
+    m = new('fr_step', 'R4 門前踏段（花崗石；單位寬深高）')
+    m.box((-0.5, -1.0, 0.0), (0.5, -0.02, 1.0), 'V2_KitStoneTri', GRANITE * 0.86, skip=('-y', '-z'))
+    m.box((-0.485, -0.02, 0.0), (0.485, 0.0, 0.97), 'V2_KitStoneTri', GRANITE, skip=('-y', '-z'))
+    return m
+
+
+def fr_dan():
+    """店前踏段（開放開間沿線的框石）：x 0..1、z 0..1、y −1..0，前緣 2 cm 出鼻。"""
+    m = new('fr_dan', 'R4 店前踏段（單位長、深、高）')
+    m.box((0.0, -0.035, 0.0), (1.0, 0.0, 1.0), 'V2_KitStoneTri', GRANITE, skip=('-y', '-z'))
+    m.box((0.0, -1.0, 0.0), (1.0, -0.035, 0.9), 'V2_KitStoneTri', GRANITE * 0.8, skip=('-z', '+y'))
+    return m
+
+
+def fr_hashi(wd):
+    """渡り石（開渠上、入口前）：x −0.5..0.5（lib 伸縮寬）、z −0.05..wd−0.005、厚 0.08。"""
+    m = new('fr_hashi_%d' % round(wd * 100), 'R4 渡り石（跨開渠 %.2f）' % wd)
+    m.box((-0.5, -0.08, -0.05), (0.5, 0.0, wd - 0.005), 'V2_KitStoneTri', GRANITE * 1.05, skip=('-y',))
+    return m
+
+
+def fr_fumi(key, pts, col):
+    """踏石：不規則多邊形平石（頂 0、厚 0.16、頂緣 1.5 cm 內縮）。"""
+    m = new('fr_fumi_%s' % key, 'R4 踏石 %s' % key)
+    top = [(x * 0.94, 0.0, z * 0.94) for (x, z) in pts]
+    mid = [(x, -0.015, z) for (x, z) in pts]
+    bot = [(x, -0.16, z) for (x, z) in pts]
+    m.poly(facing(top, Y), 'V2_KitStoneTri', col)
+    n = len(pts)
+    for i in range(n):
+        j = (i + 1) % n
+        out = ((pts[i][0] + pts[j][0]) * 0.5, 0.0, (pts[i][1] + pts[j][1]) * 0.5)
+        m.quad(*facing([mid[i], mid[j], top[j], top[i]], add(out, (0.0, 0.3, 0.0))), 'V2_KitStoneTri', col * 0.95)
+        m.quad(*facing([bot[i], bot[j], mid[j], mid[i]], out), 'V2_KitStoneTri', col * 0.85)
+    return m
+
+
+def fr_shiki():
+    """入口前敷石（兩枚平石 0.6×0.25，頂 0、厚 0.08）：z 0..0.6。"""
+    m = new('fr_shiki', 'R4 入口前敷石（兩枚）')
+    for (z0, z1, c) in ((0.03, 0.28, GRANITE * 1.2), (0.33, 0.58, GRANITE * 1.1)):
+        m.box((-0.3, -0.08, z0), (0.3, 0.0, z1), 'V2_KitStoneTri', c, skip=('-y',))
+    return m
+
+
+def frontage_all():
+    for kind in ('ishi', 'jari', 'tataki', 'tsuchi'):
+        fr_band(kind)
+    fr_mikiri()
+    for wd in FR_GUT:
+        fr_gut_open(wd)
+        fr_gut_cap(wd)
+        fr_gut_far(wd)
+        fr_hashi(wd)
+        for n in (2, 3):
+            fr_gut_cover(wd, n)
+    fr_step()
+    fr_dan()
+    fr_shiki()
+    fr_fumi('a', [(-0.24, -0.02), (-0.14, -0.19), (0.12, -0.2), (0.25, -0.05), (0.2, 0.15), (-0.05, 0.2), (-0.21, 0.13)], GRANITE * 1.2)
+    fr_fumi('b', [(-0.2, -0.1), (0.02, -0.22), (0.21, -0.12), (0.23, 0.1), (0.05, 0.19), (-0.19, 0.12)], GRANITE * 1.1)
+    fr_fumi('c', [(-0.27, 0.0), (-0.16, -0.16), (0.1, -0.17), (0.28, -0.02), (0.14, 0.16), (-0.12, 0.17)], GRANITE * 1.28)
+
+
 def build_all():
     for hk in Y1:
         for wn in BAYS:
@@ -903,6 +1059,7 @@ def build_all():
         for dk in DEPTHS:
             side_open(dk, ek)
     gegyo()
+    frontage_all()            # R4（fr_ 前綴不在 WALL_PFX／ROOF_PFX → 不出色變體）
     variants()                # 牆類 ×4 色、屋根類 ×2 瓦色（base／LOD 另外做）
     unit_box('base', 'V2_KitStoneTri', 1.0, '台基（單位方塊 y 0..1；triplanar 石）')
     unit_box('l_box', AM, 1.0, 'LOD1/2 牆體（單位方塊，atlas 灰泥色票）', '#E8E0CF')
