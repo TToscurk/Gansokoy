@@ -1,18 +1,18 @@
 {
  "asset": "machiya_kit",
  "entry": "res://assets/village_v2/machiya_kit/machiya_kit_manifest.json",
- "entry_sha256": "fcd9bd1ad66ecedf706ab34a240aa4ec8e7257651f7b4f8cdbc386a7c3395edc",
+ "entry_sha256": "4a4e77402c32606d733052de6c7a9785ea409bd439ef6c724a6736f28463b405",
  "godot": "4.7.2-stable (official)",
  "checks": {
   "size": {
    "result": "PASS",
    "detail": [
     "P4 machiya 187 棟、套 Kit 187 棟",
-    "射線實測 187 棟 vs P4：側牆差最大 0.000 m、背牆差最大 0.030（≤ 0.06）；瓦面離 P4 屋根面最大 0.02（0～0.20）；棟高出 P4 屋脊最大 0.27（0.15～0.40）；外框超出 P4 灰盒網格外框（含屋根、庇）最大 +0.002（≤ 0.06）",
+    "射線實測 187 棟 vs P4：側牆差最大 0.000 m、背牆差最大 0.030（≤ 0.06）；瓦面離 Kit 屋根面（前後坡各一）最大 0.02（0～0.20）；棟瓦高出棟線最大 0.27（0.15～0.40）；R3 棟高全部 ≤ P4 屋脊（最多降 0.71 m）、勾配 ≤ P4 0.45、兩側簷高＝P4；最高點離 P4 屋脊最大 +0.48（≤ 0.55）；外框超出 P4 灰盒網格外框（含屋根、庇）最大 +0.032（≤ 0.06）",
     "人物比例：入口開間最小淨高 1.93 m（≥ 1.90，1.7 m 人）、最小淨寬 1.60 m（≥ 1.20）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "parcel_fit": {
    "result": "PASS",
@@ -20,7 +20,7 @@
     "187 棟：台基出自己地塊最大 0.002 m²（≤ 0.005）；整棟 LOD0 外框（含屋簷、庇）比 P4 灰盒外框多壓道路最大 0.000 m²（≤ 0.05）、多壓鄰地最大 0.000 m²（≤ 0.05；P4 屋簷本來就可出牆線）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "grounding": {
    "result": "PASS",
@@ -28,7 +28,7 @@
     "187 棟台基：底＝P4 ground_lo−embed、頂＝地板 0.32（差最大 0.000 m ≤ 0.01）；四角＋中心地形都在台基高度區間內，台基底最淺埋 -0.29 m（< 0 ＝在地形下）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "materials": {
    "result": "PASS",
@@ -36,23 +36,23 @@
     "5 個材質（≤ 5）：V2_KitStoneTri.tres, V2_Wood.tres, V2_Plaster.tres, V2_MachiyaKit.tres, V2_Kawara.tres；全是共享材質庫／Kit atlas、無 override、albedo_k 一致；14 張貼圖 ≤ 2048²、VRAM 壓縮"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "geometry": {
    "result": "PASS",
    "detail": [
-    "459 個共用構件 mesh：退化三角形 0、NaN／缺法線 UV 0；開間 x 縮放 0.901～1.057（±12 % 內）、屋面／螻羽 y＝z 同比、妻壁 x＝y 同比（違規 0）"
+    "836 個共用構件 mesh：退化三角形 0、NaN／缺法線 UV 0；開間 x 縮放 0.901～1.057（±12 % 內）、屋面／螻羽 y＝z 同比、妻壁 x＝y 同比（違規 0）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "pivot_scale": {
    "result": "PASS",
    "detail": [
-    "187 棟：Kit 節點 identity（原點＝P4 灰盒原點：footprint 中心、base 高、+z 正面）；灰盒節點與 P4 紀錄位置差最大 0.005 m、朝向一致；正面構件都在 +z 牆面"
+    "187 棟：Kit 節點 identity（原點＝P4 灰盒原點：footprint 中心、base 高、+z 正面）；灰盒節點與 P4 紀錄位置差最大 0.005 m、朝向一致；正面構件都在 +z 牆面（R3 退縮開間＝牆面−退縮深）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "collision": {
    "result": "PASS",
@@ -60,31 +60,31 @@
     "187 棟：沿用 P4 灰盒 BoxShape（1 個、啟用、layer≠0、尺寸＝P4 寬×(簷−台基底)×深）；牆體構件（含出格子）突出碰撞面最大 0.140 m（≤ 0.15）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "lod": {
    "result": "PASS",
    "detail": [
-    "187 棟 LOD0／1／2 齊全、可見距離 [0.0, 40.0, 110.0, 600.0] m 接續（margin 4）；LOD1／LOD0 最大 0.5 %（≤ 35）、LOD2／LOD0 最大 0.4 %（≤ 10）；LOD1／2 外框與 LOD0 差最大 0.48 m（≤ 0.6）"
+    "187 棟 LOD0／1／2 齊全、可見距離 [0.0, 40.0, 110.0, 600.0] m 接續（margin 4）；LOD1／LOD0 最大 4.4 %（≤ 35）、LOD2／LOD0 最大 4.2 %（≤ 10）；LOD1／2 外框與 LOD0 差最大 0.22 m（≤ 0.6）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "performance": {
    "result": "PASS",
    "detail": [
-    "§14.8「町家」LOD0 上限 25000：每棟實測最大 20050（B_P_MKT_046，80 %）、平均 13320；每棟材質 ≤ 5（實測 5）、碰撞 1；Kit 專屬貼圖 VRAM 估算 5.7 MB（≤ 8）；全村 187 棟 LOD0 合計 2491012 三角面（同時可見受 LOD 距離 40 m 限制）、Kit MeshInstance 8844 個、共用構件 mesh 459 個（磁碟 1147 KB，只存一次）"
+    "§14.8「町家」LOD0 上限 25000：每棟實測最大 20304（B_P_MKT_056，81 %）、平均 13031；每棟材質 ≤ 5（實測 5）、碰撞 1；Kit 專屬貼圖 VRAM 估算 5.7 MB（≤ 8）；全村 187 棟 LOD0 合計 2436822 三角面（同時可見受 LOD 距離 40 m 限制）、Kit MeshInstance 11406 個、共用構件 mesh 836 個（磁碟 3197 KB，只存一次）"
    ],
    "part": "headless",
-   "date": "2026-09-26T12:11:51"
+   "date": "2026-09-26T16:49:51"
   },
   "player_screenshot": {
    "result": "PASS",
    "detail": [
-    "main.tscn 載 village_v2（Kit 已烘焙在場景 187 棟）、代表棟 8 棟 × 3 張＝24 張：machiya_kit_B_P_MKT_001_front.png（nikai hira／店先，第 2 個候選，亮度標準差 0.213、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_l.png（nikai hira／店先，第 1 個候選，亮度標準差 0.221、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_r.png（nikai hira／店先，第 1 個候選，亮度標準差 0.194、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front.png（zushi hira／店先，第 1 個候選，亮度標準差 0.169、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_l.png（zushi hira／店先，第 2 個候選，亮度標準差 0.136、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_r.png（zushi hira／店先，第 3 個候選，亮度標準差 0.196、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front.png（hiraya hira／住宅，第 2 個候選，亮度標準差 0.217、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_l.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.175、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_r.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.235、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.221、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_l.png（zushi tsuma／店先，第 2 個候選，亮度標準差 0.204、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_r.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.260、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.238、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_l.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.166、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_r.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.251、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.161、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_l.png（zushi hira／住宅，第 4 個候選，亮度標準差 0.207、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_r.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.182、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.182、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_l.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.271、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_r.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.135、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.224、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_l.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.225、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_r.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.220、在畫面內、無遮擋）"
+    "main.tscn 載 village_v2（Kit 執行期以產生器同一段套用）、代表棟 8 棟 × 3 張＝24 張：machiya_kit_B_P_MKT_001_front.png（nikai hira／店先，第 2 個候選，亮度標準差 0.214、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_l.png（nikai hira／店先，第 1 個候選，亮度標準差 0.221、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_r.png（nikai hira／店先，第 1 個候選，亮度標準差 0.194、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front.png（zushi hira／店先，第 1 個候選，亮度標準差 0.166、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_l.png（zushi hira／店先，第 1 個候選，亮度標準差 0.214、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_r.png（zushi hira／店先，第 3 個候選，亮度標準差 0.194、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front.png（hiraya hira／住宅，第 2 個候選，亮度標準差 0.220、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_l.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.175、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_r.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.238、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.227、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_l.png（zushi tsuma／店先，第 2 個候選，亮度標準差 0.210、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_r.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.263、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.244、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_l.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.229、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_r.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.251、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.173、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_l.png（zushi hira／住宅，第 4 個候選，亮度標準差 0.210、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_r.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.238、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.180、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_l.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.275、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_r.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.130、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.224、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_l.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.225、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_r.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.221、在畫面內、無遮擋）"
    ],
    "part": "render",
-   "date": "2026-09-26T12:13:29"
+   "date": "2026-09-26T16:51:26"
   },
   "f5_f6": {
    "result": "PASS",
@@ -92,36 +92,36 @@
     "F6（代表 8 棟單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、24 張鏡位＋8 棟實走）錯誤 0、警告 0；B_P_MKT_001 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_MKT_003 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.31（牆面 5.00，被擋在外）、最大離地 0.00 m；B_P_MKT_008 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_MKT_034 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_002 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_003 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_MKT_041 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_020 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m"
    ],
    "part": "render",
-   "date": "2026-09-26T12:13:29"
+   "date": "2026-09-26T16:51:26"
   }
  },
  "render_info": {
   "f6_png": "machiya_kit_f6.png",
   "perf": [
-   "B_P_MKT_001_front：1735779 三角面／1927 draw call",
-   "B_P_MKT_001_front_l：1830072 三角面／2044 draw call",
-   "B_P_MKT_001_front_r：1649733 三角面／1568 draw call",
-   "B_P_MKT_003_front：3165194 三角面／3074 draw call",
-   "B_P_MKT_003_front_l：2654206 三角面／3449 draw call",
-   "B_P_MKT_003_front_r：2859940 三角面／2280 draw call",
-   "B_P_MKT_008_front：2422788 三角面／3414 draw call",
-   "B_P_MKT_008_front_l：2592544 三角面／3889 draw call",
-   "B_P_MKT_008_front_r：2270396 三角面／2601 draw call",
-   "B_P_MKT_034_front：2076358 三角面／1426 draw call",
-   "B_P_MKT_034_front_l：1534901 三角面／1581 draw call",
-   "B_P_MKT_034_front_r：2095181 三角面／1453 draw call",
-   "B_P_RSW_002_front：1762914 三角面／1741 draw call",
-   "B_P_RSW_002_front_l：1478699 三角面／1233 draw call",
-   "B_P_RSW_002_front_r：2207661 三角面／2314 draw call",
-   "B_P_RSW_003_front：1945103 三角面／2032 draw call",
-   "B_P_RSW_003_front_l：1880619 三角面／1671 draw call",
-   "B_P_RSW_003_front_r：2592874 三角面／2476 draw call",
-   "B_P_MKT_041_front：2937265 三角面／2037 draw call",
-   "B_P_MKT_041_front_l：1646580 三角面／1952 draw call",
-   "B_P_MKT_041_front_r：2919621 三角面／2661 draw call",
-   "B_P_RSW_020_front：1847520 三角面／2020 draw call",
-   "B_P_RSW_020_front_l：1837076 三角面／2147 draw call",
-   "B_P_RSW_020_front_r：1920117 三角面／2318 draw call"
+   "B_P_MKT_001_front：1756538 三角面／2715 draw call",
+   "B_P_MKT_001_front_l：1859595 三角面／3028 draw call",
+   "B_P_MKT_001_front_r：1652040 三角面／1970 draw call",
+   "B_P_MKT_003_front：3166051 三角面／4082 draw call",
+   "B_P_MKT_003_front_l：2707001 三角面／4877 draw call",
+   "B_P_MKT_003_front_r：2868411 三角面／2962 draw call",
+   "B_P_MKT_008_front：2426884 三角面／4595 draw call",
+   "B_P_MKT_008_front_l：2600962 三角面／5429 draw call",
+   "B_P_MKT_008_front_r：2269298 三角面／3508 draw call",
+   "B_P_MKT_034_front：2088134 三角面／2001 draw call",
+   "B_P_MKT_034_front_l：1539945 三角面／2224 draw call",
+   "B_P_MKT_034_front_r：2108156 三角面／2040 draw call",
+   "B_P_RSW_002_front：1760951 三角面／2680 draw call",
+   "B_P_RSW_002_front_l：1468698 三角面／1829 draw call",
+   "B_P_RSW_002_front_r：2211741 三角面／3530 draw call",
+   "B_P_RSW_003_front：1949744 三角面／3129 draw call",
+   "B_P_RSW_003_front_l：1870294 三角面／2488 draw call",
+   "B_P_RSW_003_front_r：2601240 三角面／3780 draw call",
+   "B_P_MKT_041_front：2956752 三角面／3038 draw call",
+   "B_P_MKT_041_front_l：1671607 三角面／2872 draw call",
+   "B_P_MKT_041_front_r：2953791 三角面／3868 draw call",
+   "B_P_RSW_020_front：1850006 三角面／3099 draw call",
+   "B_P_RSW_020_front_l：1836074 三角面／3198 draw call",
+   "B_P_RSW_020_front_r：1918522 三角面／3524 draw call"
   ],
   "warnings": [],
   "renderer": "forward_plus"

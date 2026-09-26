@@ -6,6 +6,8 @@ extends SceneTree
 ## gate.json 記 entry 雜湊，任何一檔改動 → registry 不登記 → 產生器維持 P4 灰盒。
 ## 尺寸 authority＝P4 灰盒紀錄（greybox.json）；每棟都驗，彙總最差值。
 ##   1 尺寸     牆面／背面／屋面（P4 屋根面）／屋脊射線實測 vs P4；LOD0 外框在 P4 量體＋出簷內；入口淨高 ≥ 1.90、淨寬 ≥ 1.20
+##              R3：屋根型（兩坡勾配 ≤ 0.45、兩側簷高＝P4）→ 前後坡各一條射線驗 Kit 自己的屋根面，且棟高 ≤ P4 屋脊、
+##              屋根面處處不高於 P4 屋根面（勾配 ≤ P4）；入口退縮時量測點跟著退
 ##   2 地塊     台基在自己地塊內；整棟 LOD0 外框（含屋簷、庇）不進道路、不壓鄰地
 ##   3 接地     台基底＝ground_lo−embed、頂＝地板 0.32；台基四角＋中心地形都在台基高度區間內（不浮、不整棟埋）
 ##   4 材質     只用共享材質庫＋Kit atlas（≤ 5）、無 override、albedo_k 一致、貼圖 ≤ 2K VRAM 壓縮
@@ -40,7 +42,7 @@ const MAX_MATS := 5
 const TEX_MAX := 2048
 const POKE_TOL := 0.15
 const FRONT_OUT := 0.25      # 無庇棟：出格子／柱等正面細部可出牆面的上限
-const WALL_PREFIX := ["f1_", "u_", "bk_", "sd_", "post_", "base"]
+const WALL_PREFIX := ["f1_", "u_", "bk_", "sd_", "sdo_", "post_", "fp_", "fb_", "rt_", "rtu", "base"]
 const MATS := ["res://assets/village_v2/_matlib/V2_Wood.tres", "res://assets/village_v2/_matlib/V2_Plaster.tres",
 	"res://assets/village_v2/_matlib/V2_Kawara.tres", DIR + "/V2_KitStoneTri.tres", DIR + "/V2_MachiyaKit.tres"]
 
@@ -330,32 +332,48 @@ func _c_size() -> void:
 			bz = minf(bz, 30.0 - _ray(f, Vector3(xx, 1.5, -30), Vector3(xx, 1.5, 0)))
 		var e_side := absf(sx - w * 0.5)
 		var e_back := absf(bz - d * 0.5)
-		# 屋面：簷側中段（離棟 half＋ove/2）垂直射線 → P4 屋根面＋瓦厚
+		# 屋面：R3 屋根型（kit meta：兩坡勾配 pa／pb、棟位置 cr、棟高 H）。前後坡簷側中段各一條垂直射線 → Kit 屋根面＋瓦厚；
+		# 屋根座標（棟沿 rx、A 坡朝 +rz）→ 建物座標：平入 rx＝+x、rz＝+z；妻入 rx＝+z、rz＝−x。
 		var half := (d if hira else w) * 0.5
-		var hx := half + ove * 0.5 - 0.3
-		var pv := Vector3(0.137, 40, -hx) if hira else Vector3(hx, 40, 0.137)
-		var ry := 40.0 - _ray(f, pv, Vector3(pv.x, -5, pv.z))
-		var want := ridge - (half + ove * 0.5 - 0.3) * KLib.P
-		var e_roof := ry - want      # 瓦面在 P4 屋根面上方 0～0.2
-		var top := 40.0 - _ray(f, Vector3(0.043, 40, 0.043), Vector3(0.043, -5, 0.043))   # 棟線上（平入沿 x、妻入沿 z；兩向都離棟心 0.043）
-		var e_ridge := top - ridge   # 棟（熨斗瓦＋冠瓦）0.2～0.4
+		var ps: Array = kit.get_meta("roof_ps", [KLib.P, KLib.P])
+		var cr := float(kit.get_meta("roof_cr", 0.0))
+		var H := float(kit.get_meta("roof_h", ridge))
+		var e_roof := -INF
+		var e_roof_lo := INF
+		for side in [0, 1]:
+			var sg := 1.0 if side == 0 else -1.0
+			var hz := cr + sg * (half + sg * -cr + ove * 0.5 - 0.3)     # 屋根座標 z（離棟水平 half∓cr＋ove/2−0.3）
+			var pv := Vector3(0.137, 40, hz) if hira else Vector3(-hz, 40, 0.137)
+			var ry := 40.0 - _ray(f, pv, Vector3(pv.x, -5, pv.z))
+			var want := H - float(ps[side]) * absf(hz - cr)
+			e_roof = maxf(e_roof, ry - want)       # 瓦面在 Kit 屋根面上方 0～0.2
+			e_roof_lo = minf(e_roof_lo, ry - want)
+		var pr := Vector3(0.043, 40, cr + 0.043) if hira else Vector3(-cr + 0.043, 40, 0.043)
+		var top := 40.0 - _ray(f, pr, Vector3(pr.x, -5, pr.z))   # 棟線上（離棟心 0.043）
+		var e_ridge := top - H       # 棟（熨斗瓦＋冠瓦）0.2～0.4
+		var e_h := H - ridge         # 棟高不高於 P4 屋脊
+		var pmax: float = maxf(float(ps[0]), float(ps[1]))
+		dmax["drop"] = maxf(float(dmax.get("drop", 0.0)), ridge - H)
 		# 外框：與 P4 灰盒網格（Foundation／Building_Main／Roof／Hisashi／Door，已隱藏但仍在）外框比，各向超出量
 		var ab := _aabb(kit)
 		var gb := _gb_aabb(bodies[b["id"]])
 		var ex := [gb.position.x - ab.position.x, ab.end.x - gb.end.x, gb.position.z - ab.position.z, ab.end.z - gb.end.z]
 		var e_box: float = ex.max()
-		var ok := e_side <= 0.06 and e_back <= 0.06 and e_roof >= -0.02 and e_roof <= 0.2 and e_ridge >= 0.15 \
-			and e_ridge <= 0.4 and e_box <= 0.06
+		var e_top := ab.end.y - ridge     # R3：最高點（棟瓦／煙出し／本卯建）離 P4 屋脊 ≤ 0.55（R2 煙出し 0.48 同級）
+		dmax["top"] = maxf(float(dmax.get("top", -INF)), e_top)
+		var ok := e_side <= 0.06 and e_back <= 0.06 and e_roof_lo >= -0.02 and e_roof <= 0.2 and e_ridge >= 0.15 \
+			and e_ridge <= 0.4 and e_box <= 0.06 and e_h <= 0.001 and pmax <= KLib.P + 1e-4 and e_top <= 0.55
 		if not ok:
-			bad.append("%s 側 %.2f／背 %.2f／屋面 %+.2f／棟 %+.2f／外框 %+.2f（−x %+.2f +x %+.2f −z %+.2f +z %+.2f）" % [id, e_side, e_back, e_roof, e_ridge, e_box, ex[0], ex[1], ex[2], ex[3]])
+			bad.append("%s 側 %.2f／背 %.2f／屋面 %+.2f..%+.2f／棟 %+.2f／棟高−P4 %+.2f／勾配 %.2f／頂 %+.2f／外框 %+.2f（−x %+.2f +x %+.2f −z %+.2f +z %+.2f）" % [
+				id, e_side, e_back, e_roof_lo, e_roof, e_ridge, e_h, pmax, e_top, e_box, ex[0], ex[1], ex[2], ex[3]])
 		dmax["side"] = maxf(dmax["side"], e_side)
 		dmax["back"] = maxf(dmax["back"], e_back)
-		dmax["roof"] = maxf(dmax["roof"], absf(e_roof))
+		dmax["roof"] = maxf(dmax["roof"], maxf(absf(e_roof), absf(e_roof_lo)))
 		dmax["ridge"] = maxf(dmax["ridge"], e_ridge)
 		dmax["box"] = maxf(dmax["box"], e_box)
 		# 入口：Kit 入口開間中心、開口內 0.3 m（通行路徑；暖簾是布，不算淨高），地板上往上到第一個面（淨高）；y 1.0 往左右（淨寬）
 		var dx := float(kit.get_meta("door_cx", 0.0))
-		var z0 := d * 0.5 - 0.3
+		var z0 := d * 0.5 - float(kit.get_meta("door_rec", 0.0)) - 0.3
 		var up := _ray(f, Vector3(dx, KLib.FL + 0.05, z0), Vector3(dx, 6, z0)) + 0.05
 		var lw := _ray(f, Vector3(dx, 1.0, z0), Vector3(dx - 3, 1.0, z0))
 		var rw := _ray(f, Vector3(dx, 1.0, z0), Vector3(dx + 3, 1.0, z0))
@@ -363,8 +381,8 @@ func _c_size() -> void:
 		door_w = minf(door_w, lw + rw)
 		if up < 1.90 or lw + rw < 1.20:
 			bad.append("%s 入口淨高 %.2f／淨寬 %.2f" % [id, up, lw + rw])
-	_res("size", bad.is_empty(), "射線實測 %d 棟 vs P4：側牆差最大 %.3f m、背牆差最大 %.3f（≤ 0.06）；瓦面離 P4 屋根面最大 %.2f（0～0.20）；棟高出 P4 屋脊最大 %.2f（0.15～0.40）；外框超出 P4 灰盒網格外框（含屋根、庇）最大 %+.3f（≤ 0.06）%s" % [
-		recs.size(), dmax["side"], dmax["back"], dmax["roof"], dmax["ridge"], dmax["box"], ("；" + _worst(bad)) if bad else ""])
+	_res("size", bad.is_empty(), "射線實測 %d 棟 vs P4：側牆差最大 %.3f m、背牆差最大 %.3f（≤ 0.06）；瓦面離 Kit 屋根面（前後坡各一）最大 %.2f（0～0.20）；棟瓦高出棟線最大 %.2f（0.15～0.40）；R3 棟高全部 ≤ P4 屋脊（最多降 %.2f m）、勾配 ≤ P4 0.45、兩側簷高＝P4；最高點離 P4 屋脊最大 %+.2f（≤ 0.55）；外框超出 P4 灰盒網格外框（含屋根、庇）最大 %+.3f（≤ 0.06）%s" % [
+		recs.size(), dmax["side"], dmax["back"], dmax["roof"], dmax["ridge"], float(dmax.get("drop", 0.0)), float(dmax.get("top", 0.0)), dmax["box"], ("；" + _worst(bad)) if bad else ""])
 	_res("size", door_h >= 1.90 and door_w >= 1.20, "人物比例：入口開間最小淨高 %.2f m（≥ 1.90，1.7 m 人）、最小淨寬 %.2f m（≥ 1.20）" % [door_h, door_w])
 
 
@@ -588,8 +606,11 @@ func _c_geometry() -> void:
 				elif li == 0 and (nm.begins_with("rf_") or nm.begins_with("vg_")):
 					if absf(s.y - s.z) > 1e-4 or s.y < 0.85 or s.y > 1.15:
 						sc_bad += 1
-				elif li == 0 and nm.begins_with("gb_"):
+				elif li == 0 and (nm.begins_with("gb_") or nm.begins_with("gbh_")):
 					if absf(s.x - s.y) > 1e-4 or s.x < 0.85 or s.x > 1.15:
+						sc_bad += 1
+				elif li == 0 and nm.begins_with("udh_"):
+					if s.x < 0.9 or s.x > 1.1 or absf(s.y - 1.0) > 1e-4 or absf(s.z - 1.0) > 1e-4:
 						sc_bad += 1
 				if seen.has(mi.mesh):
 					continue
@@ -631,11 +652,11 @@ func _c_pivot() -> void:
 		var fz := INF
 		for mi: MeshInstance3D in _mis(kit, 0):
 			if String(mi.name).begins_with("f1_"):
-				fz = minf(fz, absf(mi.position.z - float(b["depth_m"]) * 0.5))
+				fz = minf(fz, absf(mi.position.z + float(mi.get_meta("rec", 0.0)) - float(b["depth_m"]) * 0.5))
 		worst = maxf(worst, e)
 		if not kit.transform.is_equal_approx(Transform3D.IDENTITY) or e > 0.02 or yaw_e > 0.002 or fz > 0.001:
 			bad.append("%s 位置差 %.3f／朝向差 %.4f／正面構件離牆 %.3f" % [b["id"], e, yaw_e, fz])
-	_res("pivot_scale", bad.is_empty(), "%d 棟：Kit 節點 identity（原點＝P4 灰盒原點：footprint 中心、base 高、+z 正面）；灰盒節點與 P4 紀錄位置差最大 %.3f m、朝向一致；正面構件都在 +z 牆面%s" % [
+	_res("pivot_scale", bad.is_empty(), "%d 棟：Kit 節點 identity（原點＝P4 灰盒原點：footprint 中心、base 高、+z 正面）；灰盒節點與 P4 紀錄位置差最大 %.3f m、朝向一致；正面構件都在 +z 牆面（R3 退縮開間＝牆面−退縮深）%s" % [
 		recs.size(), worst, ("；" + _worst(bad)) if bad else ""])
 
 

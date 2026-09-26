@@ -1,4 +1,8 @@
-"""人間之里 V2 P6 R1／R2：模組化町家 Kit（共用構件）— 新資產，不重用任何舊房屋資產。
+"""人間之里 V2 P6 R1／R2／R3：模組化町家 Kit（共用構件）— 新資產，不重用任何舊房屋資產。
+
+R3 Silhouette / Depth Pass（大輪廓，不再以顏色／窗型為主）：屋面／螻羽／妻壁半片出緩勾配 0.38／0.32（棟偏移、
+低棟用；都在 P4 屋根面之下）、小山牆（千鳥破風形）、本卯建（屋根上防火袖壁）、1F 退縮用正面線柱／差鴨居／天井／
+袖壁、2F セットバック用深庇、角地臨街側牆（開口）、懸魚、LOD 半屋根。
 
 R2 Variation Pass：牆類 4 色變體、瓦 2 色、1F 格子／雨戶／店先新型、上層蟲籠窓／2F 窓新型、暖簾×5／簾×2 另拆構件、
 板庇、袖卯建、屋根／袖看板（無字）、霧除け、犬矢来、煙出し、低棟、板鬼（lib 依 id 決定性配置、相鄰不重複）。
@@ -24,7 +28,7 @@ import bpy
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v2_kit as K  # noqa: E402
-from v2_kit import X, Y, Z, add, mul, norm  # noqa: E402
+from v2_kit import X, Y, Z, add, cross, dot, mul, norm, sub  # noqa: E402
 
 G = K.repo_paths(__file__)
 OUT = G + '/assets/village_v2/machiya_kit'
@@ -50,7 +54,7 @@ DARK, BOARD, PL = 0.60, 0.88, 0.97
 Y1 = {'h27': 2.7, 'h29': 2.9}          # 1F 上緣（厨子二階 2.7／平屋・總二階 2.9）
 EAVES = {'e29': 2.9, 'e39': 3.9, 'e54': 5.4}
 DEPTHS = {'d910': 9.10, 'd1001': 10.01, 'd1092': 10.92}
-SPANS = [2.0 + 0.5 * i for i in range(9)]     # 屋面／破風／妻壁水平跨距分級 2.0–6.0（y、z 同比伸縮 ≤ 12 %，pitch 不變）
+SPANS = [1.5 + 0.5 * i for i in range(12)]    # 屋面／破風／妻壁水平跨距分級 1.5–7.0（y、z 同比伸縮 ≤ 12 %，pitch 不變；R3 棟偏移後前坡可達 6.8、背坡最短 1.7）
 HIS_S = 0.45                                  # P4 庇出（hisashi_depth，63 棟全是 0.45）
 POST_W = 0.12
 KOSHI_OUT = 0.12             # 出格子外凸（≤ gate 碰撞容許 0.15）
@@ -65,8 +69,15 @@ FIN = {
 }
 # 屋根類構件（rf_／vg_／his_／rg_／oni／kemu）各出 2 個瓦色 _t1／_t2：瓦 × T（頂點色上限 1.0）
 TONE = {1: (1.14, 1.20, 1.25), 2: (1.25, 0.84, 0.52)}   # いぶし銀（明るい冷灰）／風化（暖褐）；夕照下靠明度差才讀得出
-WALL_PFX = ('f1_', 'u_', 'bk_', 'sd_', 'post_', 'gb_', 'ud_')
-ROOF_PFX = ('rf_', 'vg_', 'his_', 'rg_', 'oni', 'kemu')
+WALL_PFX = ('f1_', 'u_', 'bk_', 'sd_', 'post_', 'gb_', 'ud_',
+            'gbh_', 'dmg', 'fp_', 'fb_', 'sf_', 'rt_', 'rtu', 'sdo_', 'gyo', 'udh_', 'udk')   # R3 新增
+ROOF_PFX = ('rf_', 'vg_', 'his_', 'rg_', 'oni', 'kemu', 'dmr_', 'hisx_')
+# ── P6 R3 Silhouette Pass：屋根勾配（P4 0.45；R3 在 P4 屋根面之下降坡／棟偏移，名稱後綴）──
+PITCHES = {'': 0.45, '_p38': 0.38, '_p32': 0.32}
+DM_A, DM_PD, DM_OVD, DM_OVS, DM_LIFT = 0.95, 0.8, 0.3, 0.1, 0.08     # 小山牆：半寬、破風勾配、前出、側出、抬高（坐在瓦面上）
+UDH_H = 0.34                 # 本卯建：屋面線上高（棟上合掌塊頂＝屋面線上 0.51，與 R2 煙出し 0.48 同級）
+HISX_S = 0.9                 # R3 2F セットバック用深庇（從退縮 2F 牆面到庇先，出 0.45＋退 0.45）
+UDH_L = [3.0 + 0.5 * i for i in range(11)]   # 本卯建沿坡長分級 3.0–8.0（lib x 伸縮 ≤ 8 %）
 
 MODS = {}                    # 名稱 → Mesh
 INFO = {}                    # 名稱 → 附註（manifest）
@@ -331,12 +342,12 @@ def gable(s):
 
 # ─────────────────────────── 屋根構件 ───────────────────────────
 
-def eave_caps(m, x0, x1, s):
+def eave_caps(m, x0, x1, s, p=P):
     """簷口瓦當：每欄波峰一個（tile_roof 內建版左右各留 0.12 → 模組接縫處會缺；這裡只留 0.01）。"""
     tu, cols, crest = KW['tile_u_m'], KW['columns'], KW['crest_u']
-    dsl = norm((0.0, -P, 1.0))
-    n = norm((0.0, 1.0, P))
-    S = s * math.sqrt(1 + P * P)
+    dsl = norm((0.0, -p, 1.0))
+    n = norm((0.0, 1.0, p))
+    S = s * math.sqrt(1 + p * p)
     amp, step = 0.022, 0.028
     k = math.ceil((x0 / tu - crest) * cols)
     while True:
@@ -349,17 +360,18 @@ def eave_caps(m, x0, x1, s):
         k += 1
 
 
-def roof_unit(s, nh, name=None):
-    """屋面：x 0..nh·HU、原點＝屋面板面的棟線（P4 屋根面），往 +z 下坡到水平 s；含瓦、瓦當、軒裏、茅負。"""
+def roof_unit(s, nh, name=None, p=P, suf=''):
+    """屋面：x 0..nh·HU、原點＝屋面板面的棟線（P4 屋根面），往 +z 下坡到水平 s；含瓦、瓦當、軒裏、茅負。
+    R3：p＝勾配（0.45＝P4；後綴 _p40／_p35／_p30 是 P4 屋根面之下的緩勾配）。"""
     L = nh * HU
-    m = new(name or 'rf_%d_%d' % (round(s * 100), nh), '屋面 %.2f m × 水平 %.2f' % (L, s))
-    dsl = norm((0.0, -P, 1.0))
-    n = norm((0.0, 1.0, P))
-    S = s * math.sqrt(1 + P * P)
+    m = new(name or 'rf_%d_%d%s' % (round(s * 100), nh, suf), '屋面 %.2f m × 水平 %.2f 勾配 %.2f' % (L, s, p))
+    dsl = norm((0.0, -p, 1.0))
+    n = norm((0.0, 1.0, p))
+    S = s * math.sqrt(1 + p * p)
     K.tile_roof(m, (0.0, 0.0, 0.0), dsl, n, 0.0, L, S, KW, 0, seg_per_col=2, ends=False)
-    eave_caps(m, 0.0, L, s)
+    eave_caps(m, 0.0, L, s, p)
     th = 0.12
-    e = (0.0, -s * P, s)
+    e = (0.0, -s * p, s)
     down = mul(n, -th)
     m.quad(add((0, 0, 0), down), add((L, 0, 0), down), add((L, e[1], e[2]), down), add(e, down),
            'V2_Wood', BOARD * 0.9, grain=Z)
@@ -381,6 +393,20 @@ def hisashi_unit(nh):
     return m
 
 
+def hisashi_deep(nh):
+    """R3：2F セットバック用深庇：原點＝退縮 2F 牆面上的屋面線（y 0），往 +z 出 HISX_S（0.45 退＋0.45 出）；
+    腕木從 1F 牆線（z 0.45）起。lib 放在 z＝d/2−0.45、y＝庇高＋0.45·p（過 1F 牆線時＝P4 庇高）。"""
+    L = nh * HU
+    m = roof_unit(HISX_S, nh, 'hisx_%d' % nh)
+    INFO[m.name] = 'R3 深庇 %.2f m（2F 退縮 0.45＋出 0.45、腕木從 1F 牆線起）' % L
+    y0 = -0.45 * P - 0.16
+    for xb in [HU * (i + 0.5) for i in range(nh)][::2]:
+        m.beam((xb, y0, 0.43), (xb, y0 - 0.45 * P * 0.2, HISX_S - 0.04), 0.07, 0.09, 'V2_Wood', DARK)
+    m.box((0.0, -HISX_S * P - 0.2, HISX_S - 0.12), (L, -HISX_S * P - 0.1, HISX_S - 0.02), 'V2_Wood', DARK, grain=X)
+    m.box((0.0, -0.05, -0.04), (L, 0.06, 0.02), 'V2_Kawara', 0.75, grain=X)
+    return m
+
+
 def ridge_unit():
     """棟：x 0..RU（節點 x 縮放到棟長）；熨斗瓦＋冠瓦，頂在屋面線上 0.29。"""
     m = new('rg_u', '棟單元 x 0..%.2f：熨斗瓦＋冠瓦' % RU)
@@ -397,11 +423,11 @@ def oni():
     return m
 
 
-def verge(s):
+def verge(s, p=P, suf=''):
     """螻羽（妻側屋緣）：x 0 對稱；破風板（木）＋袖瓦捲，從棟 (0,0,0) 到簷 (0,−s·p,s)。"""
-    m = new('vg_%d' % round(s * 100), '螻羽 水平 %.2f' % s)
+    m = new('vg_%d%s' % (round(s * 100), suf), '螻羽 水平 %.2f 勾配 %.2f' % (s, p))
     top = (0.0, 0.0, 0.0)
-    e = (0.0, -s * P, s)
+    e = (0.0, -s * p, s)
     m.beam(add(top, (0, -0.14, 0)), add(e, (0, -0.14, 0)), 0.05, 0.26, 'V2_Wood', DARK)
     m.cyl(add(top, (0, 0.06, 0)), add(e, (0, 0.06, 0)), 0.075, 0.075, 8, 'V2_Kawara', 0.66, caps=(False, True))
     return m
@@ -558,6 +584,201 @@ def kemuri():
     return m
 
 
+# ─────────────────────────── P6 R3 Silhouette / Depth 構件 ───────────────────────────
+
+def facing(pts, want):
+    """頂點順序依法線朝向 want 調整（繞序＝(v1−v0)×(v2−v0)）。"""
+    n = cross(sub(pts[1], pts[0]), sub(pts[2], pts[0]))
+    return pts if dot(n, want) > 0 else pts[::-1]
+
+
+def gable_half(s, p, suf):
+    """R3：妻壁半片（直角三角形）：底 x 0..s 在 y 0（簷高）、頂 (0, s·p)，x＝0 在棟下；另一半由 lib 以 x 鏡射。
+    棟偏移時前後半片跨距不同、勾配不同，但頂高相同（都到棟）→ 束、貫在中線對齊。x、y 同比伸縮保持勾配。"""
+    m = new('gbh_%d%s' % (round(s * 100), suf), '妻壁半片 水平 %.2f 勾配 %.2f（兩面）' % (s, p))
+    h = s * p
+    m.poly([(0.0, 0.0, 0.0), (s, 0.0, 0.0), (0.0, h, 0.0)], 'V2_Plaster', PL)
+    m.poly([(0.0, 0.0, 0.0), (0.0, h, 0.0), (s, 0.0, 0.0)], 'V2_Plaster', PL)       # 背面：lib 轉 180° 當另一側半片用
+    beam_x(m, 0.0, s, 0.0, 0.16, -0.04, 0.04)
+    m.box((0.0, 0.16, -0.035), (0.06, h - 0.12, 0.035), 'V2_Wood', DARK, grain=Y, skip=('-x',))
+    yb = h * 0.45
+    # 貫：端點要在破風板（屋根線下 0.01–0.27）下緣之下 0.05 → 不被斜板切成尖楔（R3 眼高審圖）
+    xe = s * (1.0 - (yb + 0.1 + 0.32) / h)
+    if xe >= 0.3:
+        beam_x(m, 0.0, xe, yb, yb + 0.1, -0.035, 0.035)
+    return m
+
+
+def dormer_roof(p, suf):
+    """R3：小山牆（千鳥破風形）屋根：原點＝破風面底中心（在主屋前坡屋面線上），+z 向街；主屋面 y＝−z·p。
+    破風勾配 DM_PD、半寬 DM_A、前出 DM_OVD、側出 DM_OVS；左右屋面（瓦材平貼）＋出簷下面＋破風板＋冠瓦；
+    整體抬 DM_LIFT（坐在瓦面上，谷線落在主屋面）。棟後端＝破風棟高與主屋面交點。"""
+    m = new('dmr%s' % (suf or '_p45'), '小山牆屋根（主屋勾配 %.2f）' % p)
+    a, pd, ovd, ovs, lf = DM_A, DM_PD, DM_OVD, DM_OVS, DM_LIFT
+    yr = a * pd + lf
+    zk = -yr / p
+    ae = a + ovs
+    ye = yr - ae * pd
+    z5 = max(0.0, -ye / p)
+    for sx in (1.0, -1.0):
+        want = (sx * pd, 1.0, 0.0)
+        m.poly(facing([(0.0, yr, ovd), (sx * ae, ye, ovd), (sx * ae, ye, z5), (0.0, yr, zk)], want), 'V2_Kawara', 0.85, grain=X)
+        m.poly(facing([(0.0, yr - 0.05, 0.0), (sx * ae, ye - 0.05, 0.0), (sx * ae, ye - 0.05, ovd), (0.0, yr - 0.05, ovd)],
+                      (-sx * pd, -1.0, 0.0)), 'V2_Wood', BOARD * 0.7, grain=Z)
+        m.beam((0.0, yr + 0.02, ovd + 0.01), (sx * (ae + 0.02), ye + 0.02 - 0.015, ovd + 0.01), 0.05, 0.2, 'V2_Wood', DARK)   # 破風板
+        m.poly(facing([(sx * ae, ye - 0.05, ovd), (sx * ae, ye, ovd), (sx * ae, ye, z5), (sx * ae, ye - 0.05, max(0.0, z5 - 0.05))],
+                      (sx, 0.0, 0.0)), 'V2_Wood', DARK, grain=Z)                                                         # 側簷口
+    m.cyl((0.0, yr + 0.04, zk + 0.15), (0.0, yr + 0.04, ovd + 0.03), 0.055, 0.055, 8, 'V2_Kawara', 0.62, caps=(False, True))
+    m.box((-0.05, yr - 0.1, ovd - 0.02), (0.05, yr + 0.12, ovd + 0.05), 'V2_Kawara', 0.58, grain=Y)                         # 小鬼
+    return m
+
+
+def dormer_face():
+    """R3：小山牆破風面（灰泥三角＋束＋貫）：與 dmr 同原點；底邊半寬 DM_A＋抬高／勾配（接屋面下緣）。"""
+    m = new('dmg', '小山牆破風面（灰泥＋束）')
+    a2 = DM_A + DM_LIFT / DM_PD
+    yr = DM_A * DM_PD + DM_LIFT
+    m.poly([(-a2, 0.0, 0.0), (a2, 0.0, 0.0), (0.0, yr, 0.0)], 'V2_Plaster', PL)
+    m.box((-0.04, 0.04, -0.03), (0.04, yr - 0.06, 0.02), 'V2_Wood', DARK, grain=Y)
+    beam_x(m, -a2 * 0.55, a2 * 0.55, yr * 0.4, yr * 0.4 + 0.07, -0.03, 0.02)
+    return m
+
+
+def udatsu_main(Ls):
+    """R3：本卯建（主屋妻側的防火袖壁，沿屋面）：x 0（棟）..Ls（簷）沿坡、y 屋面線下 0.12..上 UDH_H、z ±0.12；上緣瓦笠＋冠瓦。
+    lib 依勾配轉角放在屋根端（只給 ov_gable ≤ 0.1 的平入棟：屋根端＝牆線）。"""
+    m = new('udh_%d' % round(Ls * 100), '本卯建（沿坡長 %.2f、高出屋面 %.2f）' % (Ls, UDH_H))
+    t = 0.12
+    m.box((0.0, -0.12, -t), (Ls, UDH_H, t), 'V2_Plaster', PL, grain=X, skip=('-y',))
+    m.box((-0.02, UDH_H, -t - 0.03), (Ls + 0.04, UDH_H + 0.06, t + 0.03), 'V2_Kawara', 0.7, grain=X)
+    m.cyl((-0.02, UDH_H + 0.09, 0.0), (Ls + 0.04, UDH_H + 0.09, 0.0), 0.045, 0.045, 8, 'V2_Kawara', 0.62, caps=(False, True))
+    m.box((Ls - 0.02, -0.12, -t - 0.01), (Ls + 0.02, UDH_H, t + 0.01), 'V2_Wood', DARK, grain=Y)           # 簷端見切り
+    return m
+
+
+def udatsu_apex():
+    """R3：本卯建棟上的合掌塊（兩坡本卯建在棟上會合處）：x ±0.14、z ±0.24（沿棟直交）、y −0.12..UDH_H＋0.1。"""
+    m = new('udk', '本卯建棟上合掌塊')
+    m.box((-0.14, -0.12, -0.24), (0.14, UDH_H + 0.1, 0.24), 'V2_Plaster', PL, grain=Y, skip=('-y',))
+    m.box((-0.16, UDH_H + 0.1, -0.27), (0.16, UDH_H + 0.17, 0.27), 'V2_Kawara', 0.66, grain=Z)
+    return m
+
+
+def facade_post(hk):
+    """R3：1F 退縮時留在正面線的柱（x 0..0.12、z −0.09..0.03；地板到 1F 上緣）。"""
+    m = new('fp_%s' % hk, '1F 正面線柱（退縮用）到 %.1f' % Y1[hk])
+    post(m, 0.0, FL, Y1[hk])
+    return m
+
+
+def facade_beam(wn, hk):
+    """R3：1F 退縮時正面線的差鴨居（x 0..wn、y Y1−0.2..Y1、z −0.06..0.05；lib 與開間同 x 縮放）。"""
+    m = new('fb_%d_%s' % (round(wn * 100), hk), '1F 正面線差鴨居 寬 %.2f' % wn)
+    beam_x(m, 0.0, wn, Y1[hk] - 0.2, Y1[hk])
+    return m
+
+
+def soffit(hk):
+    """R3：退縮開間的天井（朝下）：x 0..1.82（lib x 縮放＝開間寬）、z 0..−1（lib z 縮放＝退縮深）、y＝Y1−0.2。"""
+    m = new('sf_%s' % hk, '退縮天井（單位深 1）')
+    y = Y1[hk] - 0.2
+    m.quad((0.0, y, 0.0), (0.0, y, -1.0), (1.82, y, -1.0), (1.82, y, 0.0), 'V2_Wood', BOARD * 0.75, grain=Z)   # 朝下
+    return m
+
+
+def ret_unit():
+    """R3：2F セットバック兩端袖壁（單位：x ±0.012、y 0..1、z 0..−1；lib 縮放 y＝簷−庇、z＝退縮深）。"""
+    m = new('rtu', '2F 退縮袖壁（單位）')
+    m.box((-0.012, 0.0, -1.0), (0.012, 1.0, 0.0), 'V2_Plaster', PL * 0.93, grain=Y)
+    return m
+
+
+def ret(hk):
+    """R3：退縮段差的袖壁（薄板，兩面可見）：x ±0.012、y 地板..Y1−0.2、z 0..−1（lib z 縮放＝段差深）。"""
+    m = new('rt_%s' % hk, '退縮袖壁（單位深 1）')
+    m.box((-0.012, FL, -1.0), (0.012, Y1[hk] - 0.2, 0.0), 'V2_Plaster', PL * 0.93, grain=Y)
+    m.box((-0.02, FL, -1.0), (0.02, 1.0, 0.0), 'V2_Wood', BOARD, grain=Z)          # 腰板
+    return m
+
+
+def wall_holes(m, x0, x1, y0, y1, holes, z=0.0):
+    """灰泥矩形扣掉 holes（[(xa, xb, ya, yb)]）：依 x 斷點分欄，每欄扣掉洞的 y 區間。"""
+    xs = sorted(set([x0, x1] + [h[0] for h in holes] + [h[1] for h in holes]))
+    for i in range(len(xs) - 1):
+        a, b = xs[i], xs[i + 1]
+        if b - a < 1e-4:
+            continue
+        cut = sorted((h[2], h[3]) for h in holes if h[0] <= a + 1e-6 and h[1] >= b - 1e-6)
+        y = y0
+        for (ya, yb) in cut:
+            wall(m, a, b, y, max(y, ya), z=z)
+            y = max(y, yb)
+        wall(m, a, b, y, y1, z=z)
+
+
+def side_open(dk, ek):
+    """R3：角地臨街側牆：同 sd_（腰板＋灰泥＋真壁柱＋梁），兩端柱間 1F 開平格子窓（前後各 1）；簷 3.9 兩端開蟲籠、
+    5.4 兩端開 2F 格子窓。前後對稱 → lib 左右側都用同一件（不鏡射）。開口內退 0.04（gate 側牆射線容許 0.06）。"""
+    d, e = DEPTHS[dk], EAVES[ek]
+    m = new('sdo_%s_%s' % (dk, ek), '角地側牆（開口）長 %.2f 到簷 %.1f' % (d, e))
+    x0, x1 = -d / 2, d / 2
+    n = max(1, int(round(d / 1.82)))
+    px = [x0 + (d - POST_W) * i / n for i in range(n + 1)]
+    holes, wins = [], []
+    b1 = sorted(set([0, n - 1]))                                  # 兩端開間（前後對稱：lib 左右側不必鏡射）
+    for i in b1:
+        xa, xb = px[i] + POST_W + 0.14, px[i + 1] - 0.14
+        holes.append((xa, xb, 1.12, 2.05))
+        wins.append((xa, xb, 1.12, 2.05, RG['koshi_b']))
+    if e > 3.5:
+        for i in sorted(set([0, n - 1])):
+            xa, xb = px[i] + POST_W + 0.2, px[i + 1] - 0.2
+            if e < 4.5:
+                holes.append((xa, xb, 3.1, 3.52))
+                wins.append((xa, xb, 3.1, 3.52, RG['mushiko']))
+            else:
+                holes.append((xa, xb, 3.55, 4.75))
+                wins.append((xa, xb, 3.55, 4.75, RG['window_2f']))
+    koshiita(m, x0, x1)
+    wall_holes(m, x0, x1, 1.02, e - 0.22, holes)
+    for (xa, xb, ya, yb, reg) in wins:
+        m.rect_uv((xa, ya, -0.04), (xb, ya, -0.04), (xb, yb, -0.04), (xa, yb, -0.04), AM, reg)
+        reveal(m, xa, xb, ya, yb, -0.04, col=DARK)
+        beam_x(m, xa - 0.04, xb + 0.04, ya - 0.05, ya, -0.04, 0.035)
+        beam_x(m, xa - 0.04, xb + 0.04, yb, yb + 0.05, -0.04, 0.03)
+    beam_x(m, x0, x1, e - 0.22, e)
+    if e > 3.5:
+        beam_x(m, x0, x1, 2.75, 2.87, -0.03, 0.03)
+    for x in px:
+        post(m, x, FL, e, -0.05, 0.025)
+    return m
+
+
+def gegyo():
+    """R3：懸魚（妻の破風合掌下の飾り板）：原點＝破風合掌點下（lib 放在螻羽線上），板 z 0.02..0.05、下垂 0.6。"""
+    m = new('gyo', '懸魚（妻飾り）')
+    pts = [(-0.16, -0.08), (0.16, -0.08), (0.26, -0.32), (0.13, -0.6), (-0.13, -0.6), (-0.26, -0.32)]
+    for z, want in ((0.05, (0, 0, 1)), (0.02, (0, 0, -1))):
+        m.poly(facing([(x, y, z) for (x, y) in pts], want), 'V2_Wood', BOARD * 0.85, grain=Y)
+    for i in range(len(pts)):
+        (xa, ya), (xb, yb) = pts[i], pts[(i + 1) % len(pts)]
+        m.quad(*facing([(xa, ya, 0.02), (xb, yb, 0.02), (xb, yb, 0.05), (xa, ya, 0.05)], ((xa + xb) / 2, (ya + yb) / 2 + 0.3, 0.0)),
+               'V2_Wood', DARK, grain=Y)
+    m.cyl((0.0, -0.3, 0.05), (0.0, -0.3, 0.075), 0.05, 0.05, 8, 'V2_Wood', DARK * 0.8)
+    m.box((-0.03, -0.1, -0.03), (0.03, 0.02, 0.03), 'V2_Wood', DARK, grain=Y)
+    return m
+
+
+def l_rh(name, tk):
+    """R3 LOD1/2 半屋根（單位）：棟 (y 1, z 0) → 簷 (y 0, z 1)、x −0.5..0.5；坡面瓦色票、兩端半妻灰泥、軒裏。"""
+    m = new(name, 'LOD1/2 半屋根（單位；前後坡各一，勾配＝y/z 縮放）')
+    m.quad((-0.5, 0, 1), (0.5, 0, 1), (0.5, 1, 0), (-0.5, 1, 0), AM, tk, uvs=sw('#6B6F70'))
+    m.poly([(0.5, 0, 1), (0.5, 0, 0), (0.5, 1, 0)], AM, uvs=[SW['#E8E0CF']] * 3)
+    m.poly([(-0.5, 0, 0), (-0.5, 0, 1), (-0.5, 1, 0)], AM, uvs=[SW['#E8E0CF']] * 3)
+    m.quad((-0.5, 0, 0), (0.5, 0, 0), (0.5, 0, 1), (-0.5, 0, 1), AM, uvs=sw('#4A3526'))
+    return m
+
+
 def tinted(src, name, tints, note):
     """色變體：同幾何、同 UV，只把指定材質面的頂點色乘上 tint（上限 1.0）。"""
     m = K.Mesh(name, MATS, TILE)
@@ -640,12 +861,14 @@ def build_all():
         for dk in DEPTHS:
             side(dk, ek)
     for s in SPANS:
-        for nh in ROOF_N:
-            roof_unit(s, nh)
-        verge(s)
-        gable(s)
+        for suf, p in PITCHES.items():
+            for nh in ROOF_N:
+                roof_unit(s, nh, p=p, suf=suf)
+            verge(s, p, suf)
+            gable_half(s, p, suf)
     for nh in ROOF_N:
         hisashi_unit(nh)
+        hisashi_deep(nh)
     ridge_unit()
     oni()
     # ── R2 變化構件 ──
@@ -662,6 +885,24 @@ def build_all():
     for wn in BAYS:
         inuyarai(wn)
     kemuri()
+    # ── R3 Silhouette / Depth 構件 ──
+    for suf, p in PITCHES.items():
+        dormer_roof(p, suf)
+    dormer_face()
+    for L_ in UDH_L:
+        udatsu_main(L_)
+    udatsu_apex()
+    ret_unit()
+    for hk in Y1:
+        facade_post(hk)
+        soffit(hk)
+        ret(hk)
+        for wn in BAYS:
+            facade_beam(wn, hk)
+    for ek in EAVES:
+        for dk in DEPTHS:
+            side_open(dk, ek)
+    gegyo()
     variants()                # 牆類 ×4 色、屋根類 ×2 瓦色（base／LOD 另外做）
     unit_box('base', 'V2_KitStoneTri', 1.0, '台基（單位方塊 y 0..1；triplanar 石）')
     unit_box('l_box', AM, 1.0, 'LOD1/2 牆體（單位方塊，atlas 灰泥色票）', '#E8E0CF')
@@ -670,6 +911,9 @@ def build_all():
     l_roof()
     for t, tk in TONE.items():
         l_roof('l_roof_t%d' % t, tk)
+    l_rh('l_rh', (1.0, 1.0, 1.0))
+    for t, tk in TONE.items():
+        l_rh('l_rh_t%d' % t, tk)
     l_slab()
     for hk, y in (('h27', 2.5), ('h29', 2.7)):
         l_face('l_f1_res_%s' % hk, RG['koshi'], FL, y, 'LOD1 1F 住宅立面（koshi）')
@@ -700,7 +944,8 @@ def main():
     K.write_json(OUT + '/src/modules_blender.json', {
         '_note': 'build_machiya_kit.py 產生；Godot prefab（tools/village_v2_machiya_kit_prefab.gd）讀此表逐一轉成 mesh/<名>.res。',
         'constants': {'pitch': P, 'floor': FL, 'ru': RU, 'hu': HU, 'roof_n': list(ROOF_N), 'bays': list(BAYS), 'y1': Y1, 'eaves': EAVES,
-                      'depths': DEPTHS, 'spans': SPANS, 'his_s': HIS_S, 'post_w': POST_W, 'koshi_out': KOSHI_OUT},
+                      'depths': DEPTHS, 'spans': SPANS, 'his_s': HIS_S, 'post_w': POST_W, 'koshi_out': KOSHI_OUT,
+                      'pitches': PITCHES, 'dormer': [DM_A, DM_PD, DM_OVD, DM_OVS, DM_LIFT], 'udh_h': UDH_H, 'udh_l': UDH_L},
         'materials': MATS, 'modules': manifest, 'total_tris': total})
     print('[KIT] %d 構件、合計 %d 三角面 → %s' % (len(manifest), total, OUT + '/src/machiya_kit.glb'))
 

@@ -1,5 +1,15 @@
 extends RefCounted
-## 人間之里 V2 P6 R1／R2：模組化町家 Kit 組裝（新資產；不引用任何舊房屋資產）。
+## 人間之里 V2 P6 R1／R2／R3：模組化町家 Kit 組裝（新資產；不引用任何舊房屋資產）。
+##
+## R3 Silhouette / Depth Pass（大輪廓與前後凹凸；不再以顏色／窗型為主）：
+##   屋根型 8 種（兩坡勾配 0.45／0.38／0.32 組合 → 棟前後／左右偏移、棟高下降；兩側簷高＝P4，屋根面都在 P4 屋根面之下）、
+##   出簷減 0.2（屋簷深度）、庇形式（瓦庇／板庇／2F 退縮用深庇）、小山牆（前坡）、本卯建（屋根端）、煙出し、懸魚；
+##   1F 前後凹凸（入口退縮 0.6／0.9、店先退縮 0.45／0.9、格子以外開間退縮 0.35 → 出格子相對突出）、2F セットバック 0.45。
+##   權重依街區（district）× 街道（road）不同；角地（側牆臨另一條路／巷 5 m 內）與 Hero／地標周邊 16 m 內提高辨識度
+##   （小山牆、本卯建、懸魚、臨街側牆開口）。屋根型分層避同：同側緊鄰 13 m 不同「族」（標準／棟偏前／棟偏後／低棟）、
+##   同側 20 m 與對街 28 m 不同型；同側 13 m 內不取同一上層節奏（窓型＋白壁週期＋退縮），小山牆、本卯建不連棟。
+##   小山牆／本卯建／棟／煙出し也進 LOD1／2（高處俯視看得到大輪廓）；2F セットバック也進 LOD1／2 外殼。
+##   量體（寬深簷高、台基、碰撞）仍 100 % 依 P4；棟只降不升。
 ##
 ## R2 Variation Pass：每棟依 id 做決定性「風格計畫」（plan_for）：牆色 5 種（原色＋c1–c4）、瓦色 3 種、1F 立面主題、
 ##   上層窓型與節奏、暖簾／簾、板庇／瓦庇、袖卯建、屋根／袖看板、霧除け、犬矢来、煙出し、低棟／板鬼、開間分割。
@@ -11,7 +21,7 @@ extends RefCounted
 ## 座標＝P4 灰盒 StaticBody3D 的局部座標：原點＝footprint 中心、y 0＝base（footprint 內最高地面）、+z＝正面（臨路）。
 ## 尺寸 authority 是 P4：牆面＝Building_Main 外皮（±w/2、±d/2）、簷高＝eave_m、屋面＝P4 屋根面（脊 ridge_m、
 ## 出簷 ov_eave_m、螻羽出 ov_gable_m、pitch 0.45）、台基＝plinth 0.32 並從 ground_lo−embed 起（與灰盒 Foundation 同）。
-## 構件只沿設計好的方向伸縮：開間 x ±12 % 內；屋面／螻羽／妻壁 y、z 同比（pitch 不變）；台基與 LOD 外殼單位方塊。
+## 構件只沿設計好的方向伸縮：開間 x ±12 % 內；屋面／螻羽／妻壁 y、z 同比（勾配不變）；本卯建沿坡 ±10 %；台基與 LOD 外殼單位方塊。
 ## 碰撞：沿用 P4 灰盒 BoxShape3D（不另建；P4 碰撞已核准）。
 ##
 ## apply(body, rec, lib, embed)：把一棟灰盒換成 Kit——灰盒網格逐一 visible＝false（節點保留，P4 gate 讀位置），
@@ -22,7 +32,7 @@ const P := 0.45
 const FL := 0.32
 const HU := 0.53
 const RU := 2.12
-const SPANS := [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
+const SPANS := [1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0]
 const DEPTHS := {"d910": 9.10, "d1001": 10.01, "d1092": 10.92}
 const EAVES := {"e29": 2.9, "e39": 3.9, "e54": 5.4}
 const LOD_RANGES := [0.0, 40.0, 110.0, 600.0]
@@ -34,6 +44,7 @@ const END_TRIM := 0.03      # 屋面瓦列兩端多出 ≈0.025 m：屋面長內
 const HIS_TRIM := 0.04      # 庇瓦當同理
 const GB_MESHES := ["Foundation", "Building_Main", "Roof", "Hisashi", "Door"]
 const GREYBOX := "res://maps/village_v2/gen/greybox.json"
+const LAYOUT := "res://maps/village_v2/layout_v2.json"
 
 ## ── P6 R2 Variation Pass ──
 ## 1F 立面主題（寬開間依序循環；入口開間另定）
@@ -59,6 +70,64 @@ const ROW_R := 13.0       # 同側相鄰
 const ACROSS_R := 28.0    # 對街
 const KIRI_Y := 2.42      # 霧除け：入口鴨居（2.37）上
 const IY_MIN := -0.2      # 犬矢来：正面最低地面（ground_lo − base_h）不低於此才放（底 −0.30 埋入）
+
+## ── P6 R3 Silhouette / Depth Pass ──
+## 屋根型：[前坡 p_A, 後坡 p_B]（平入＝街側／背側；妻入＝屋根座標 +c／−c 側）。兩側簷高＝P4 → 棟位置 c_r＝half·(p_A−p_B)/(p_A+p_B)、
+## 棟高 H＝簷＋p_A·(half−c_r)；p ≤ 0.45 → 整個屋根面在 P4 屋根面（0.45）之下。
+const ROOF_CLS := {
+	"std": [0.45, 0.45],      # R2 同（P4 屋根面）
+	"low": [0.38, 0.38],      # 緩勾配（棟降 0.07·half）
+	"flat": [0.32, 0.32],     # 更緩（棟降 0.13·half）
+	"offf": [0.45, 0.38],     # 棟偏前（前坡短陡、後坡長緩）
+	"offf2": [0.45, 0.32],
+	"offb": [0.38, 0.45],     # 棟偏後（前坡長緩）
+	"offb2": [0.32, 0.45],
+	"lowoff": [0.32, 0.38],
+}
+const Y1_OF := {"h27": 2.7, "h29": 2.9}
+const POST_W := 0.12
+const EAVE_CUT := 0.2       # 出簷減（P4 出簷 0.4／0.45 才減 → 0.2／0.25）
+const DM_BACK := 0.7        # 小山牆破風面在前牆線內 0.7（前出 0.3 → 仍在牆線內 0.4）
+const DM_HALF := 1.05       # 小山牆半寬（含側出）
+const UDH_IN := 0.13        # 本卯建中心離屋根端
+const UDH_L := [3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0]
+const SB_D := 0.45          # 2F セットバック（＝P4 庇出）
+const HISX_S := 0.9         # 深庇構件水平長（退 0.45＋出 0.45）
+const CORNER_D := 5.0       # 側牆外 0.5 m 點離另一條路／巷邊 < 5 m → 角地
+const HERO_R := 16.0        # Hero／地標中心 16 m 內（24 m 會蓋到主街半數 → 辨識度被稀釋）
+const ROOF_R := 20.0        # 同側屋根型不重複半徑
+## 屋根型「族」：同側緊鄰（ROW_R）不同族——主街審圖：棟偏前／棟偏前2 在眼高下是同一個輪廓
+const ROOF_FAM := {"std": "std", "offf": "front", "offf2": "front", "offb": "back", "offb2": "back",
+	"low": "low", "flat": "low", "lowoff": "low"}
+## 街區權重（屋根型權重；其餘為機率）。rec_*＝1F 凹凸型權重（none／door 入口退縮／shop 店先退縮／koshi 格子以外退縮）
+const DIST_W := {
+	"Market": {"roof": {"std": 2.0, "offf": 3.0, "offb": 2.0, "low": 1.5, "offb2": 1.0},
+		"dormer": 0.2, "udh": 0.4, "sb": 0.35, "cut": 0.2, "kemuri": 0.1,
+		"rec_shop": {"none": 2.0, "door": 2.0, "shop": 3.0}, "rec_res": {"none": 2.0, "door": 3.0, "koshi": 2.0}},
+	"MixedCommercial": {"roof": {"std": 1.0, "offf": 2.0, "offb": 1.0, "low": 2.0, "lowoff": 1.0, "offf2": 1.0},
+		"dormer": 0.35, "udh": 0.25, "sb": 0.25, "cut": 0.3, "kemuri": 0.2,
+		"rec_shop": {"none": 2.0, "door": 1.0, "shop": 2.0}, "rec_res": {"none": 2.0, "door": 2.0, "koshi": 2.0}},
+	"ResidentialWest": {"roof": {"std": 1.0, "low": 2.0, "flat": 2.0, "offb": 2.0, "offb2": 1.0, "lowoff": 2.0},
+		"dormer": 0.12, "udh": 0.1, "sb": 0.2, "cut": 0.4, "kemuri": 0.35,
+		"rec_shop": {"none": 1.0, "door": 1.0, "shop": 1.0}, "rec_res": {"none": 2.0, "door": 3.0, "koshi": 3.0}},
+	"ResidentialNE": {"roof": {"std": 2.0, "offf": 1.0, "offb2": 2.0, "flat": 1.0, "low": 1.0},
+		"dormer": 0.3, "udh": 0.15, "sb": 0.2, "cut": 0.3, "kemuri": 0.4,
+		"rec_shop": {"none": 1.0, "door": 1.0, "shop": 1.0}, "rec_res": {"none": 3.0, "door": 2.0, "koshi": 2.0}},
+	"SouthGate": {"roof": {"std": 2.0, "offf": 2.0, "low": 1.0},
+		"dormer": 0.5, "udh": 0.5, "sb": 0.5, "cut": 0.1, "kemuri": 0.1,
+		"rec_shop": {"none": 1.0, "door": 1.0, "shop": 2.0}, "rec_res": {"none": 1.0, "door": 2.0, "koshi": 1.0}},
+}
+## 街道修正（roof_x＝屋根型權重倍率；其餘加到機率）
+const ROAD_MOD := {
+	"MainStreet": {"roof_x": {"offf": 1.5, "low": 1.0, "std": 0.5}, "udh": 0.15, "sb": 0.1},
+	"HillFootStreet": {"roof_x": {"low": 2.0, "lowoff": 2.0}, "dormer": 0.15},
+	"CrossStreetMid": {"roof_x": {"offb": 2.0}, "cut": 0.2},
+	"CrossStreetSouth": {"roof_x": {"offb2": 2.0, "std": 1.5}},
+	"WestBankLane": {"roof_x": {"flat": 2.0}, "kemuri": 0.1},
+	"WestAlley": {"roof_x": {"offb": 2.0, "flat": 1.5}, "dormer": -0.08},
+	"NWLane": {"roof_x": {"flat": 2.0, "low": 1.5}},
+}
+const IDENT_ADD := {"dormer": 0.45, "udh": 0.2}
 
 static var _plan: Dictionary = {}
 
@@ -160,6 +229,74 @@ static func _pick(id: String, salt: int, opts: Array, avoid: Array) -> Variant:
 	return opts[st]
 
 
+## R3：加權決定性選擇（避開 avoid；全被避開時不避）
+static func _wpick(id: String, salt: int, wts: Dictionary, avoid: Array) -> String:
+	var keys: Array = wts.keys()
+	keys.sort()
+	var cand: Array = []
+	for k: String in keys:
+		if float(wts[k]) > 0.0 and not avoid.has(k):
+			cand.append(k)
+	if cand.is_empty():
+		for k: String in keys:
+			if float(wts[k]) > 0.0:
+				cand.append(k)
+	var tot := 0.0
+	for k: String in cand:
+		tot += float(wts[k])
+	var r := float(_h(id, salt) % 100000) / 100000.0 * tot
+	for k: String in cand:
+		r -= float(wts[k])
+		if r < 0.0:
+			return k
+	return String(cand[-1])
+
+
+static func _chance(id: String, salt: int, p: float) -> bool:
+	return float(_h(id, salt) % 10000) < clampf(p, 0.0, 1.0) * 10000.0
+
+
+## R3：角地——側牆外 0.5 m 的點離另一條路／巷（農路除外）邊緣 < CORNER_D → 回傳該側（局部 ±x）
+static func _corner_sides(b: Dictionary, c: Vector2, f: Vector2, nets: Array) -> Array:
+	var rx := Vector2(f.y, -f.x)
+	var out: Array = []
+	for e in [-1.0, 1.0]:
+		var p := c + rx * float(e) * (float(b["width_m"]) * 0.5 + 0.5)
+		for n: Array in nets:
+			if String(n[0]) == String(b["road"]):
+				continue
+			var pts: PackedVector2Array = n[1]
+			var best := INF
+			for k in pts.size() - 1:
+				best = minf(best, p.distance_to(Geometry2D.get_closest_point_to_segment(p, pts[k], pts[k + 1])))
+			if best - float(n[2]) < CORNER_D:
+				out.append(e)
+				break
+	return out
+
+
+## R3：街區 × 街道 × 類型 × 辨識度 → 權重
+static func _weights(b: Dictionary, ident: bool) -> Dictionary:
+	var dw: Dictionary = DIST_W.get(String(b["district"]), DIST_W["ResidentialWest"])
+	var rm: Dictionary = ROAD_MOD.get(String(b["road"]), {})
+	var rx: Dictionary = rm.get("roof_x", {})
+	var typ := String(b["type"])
+	var roof := {}
+	for k: String in dw["roof"]:
+		var v := float(dw["roof"][k]) * float(rx.get(k, 1.0))
+		if typ == "hiraya" and k in ["flat", "low", "lowoff"]:
+			v *= 2.0
+		if typ == "nikai" and k == "flat":
+			v = 0.0
+		if ident and k in ["std", "offf"]:
+			v *= 2.0
+		roof[k] = v
+	var out := {"roof": roof, "rec_shop": dw["rec_shop"], "rec_res": dw["rec_res"]}
+	for k: String in ["dormer", "udh", "sb", "cut", "kemuri"]:
+		out[k] = float(dw[k]) + float(rm.get(k, 0.0)) + (float(IDENT_ADD.get(k, 0.0)) if ident else 0.0)
+	return out
+
+
 ## 全村風格計畫（依 id 排序貪婪指派；同一份 greybox.json → 永遠同一結果）
 static func _build_plan() -> void:
 	var G: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(GREYBOX))
@@ -176,10 +313,24 @@ static func _build_plan() -> void:
 			c += Vector2(float(p[0]), float(p[1]))
 		cen[b["id"]] = c / float(b["footprint"].size())
 		fr[b["id"]] = Vector2(float(b["front_dir"][0]), float(b["front_dir"][1])).normalized()
+	var LY: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
+	var nets: Array = []
+	for r: Dictionary in LY["roads"] + LY["lanes"]:
+		if String(r.get("class", "")) == "farm":
+			continue
+		var pts := PackedVector2Array()
+		for q in r["pts"]:
+			pts.append(Vector2(float(q[0]), float(q[1])))
+		nets.append([String(r["name"]), pts, float(r["half_w"])])
+	var marks: Array = []
+	for lm: Dictionary in LY["landmarks"]:
+		if lm.has("at"):
+			marks.append(Vector2(float(lm["at"][0]), float(lm["at"][1])))
 	for b: Dictionary in recs:
 		var id := String(b["id"])
 		var row: Array = []
 		var acr: Array = []
+		var row2: Array = []
 		for o: Dictionary in recs:
 			var oid := String(o["id"])
 			if oid == id or not _plan.has(oid):
@@ -190,6 +341,8 @@ static func _build_plan() -> void:
 				row.append(_plan[oid])
 			elif dd < ACROSS_R and dt < -0.7:
 				acr.append(_plan[oid])
+			if dd < ROOF_R and dt > 0.7:
+				row2.append(_plan[oid])
 		var shop := float(b.get("hisashi_m", 0.0)) > 0.0
 		var typ := String(b["type"])
 		var pl := {}
@@ -199,7 +352,8 @@ static func _build_plan() -> void:
 		pl["theme"] = _pick(id, 13, themes, row.map(func(q): return q["theme"]) + acr.map(func(q): return q["theme"]))
 		var ups: Array = UP_ZUSHI if typ == "zushi" else (UP_NIKAI if typ == "nikai" else [""])
 		pl["up"] = _pick(id, 14, ups, row.map(func(q): return q["up"]))
-		pl["up_period"] = [0, 2, 3][_h(id, 15) % 3]
+		# R3：上層白壁週期也避開同側相鄰同窓型的週期（窓型＋週期＝上層節奏）
+		pl["up_period"] = _pick(id, 15, [0, 2, 3], row.filter(func(q): return q["up"] == pl["up"]).map(func(q): return q["up_period"]))
 		pl["hang"] = _pick(id, 16, HANGS, row.map(func(q): return q["hang"]) + acr.map(func(q): return q["hang"]))
 		pl["his_wood"] = shop and _h(id, 17) % 10 < 3
 		var ud := -1
@@ -213,8 +367,81 @@ static func _build_plan() -> void:
 		pl["inuyarai"] = not shop and _h(id, 23) % 10 < 4 and float(b["ground_lo"]) - float(b["base_h"]) >= IY_MIN
 		pl["ridge_low"] = _h(id, 24) % (2 if typ == "hiraya" else 4) == 0
 		pl["oni_b"] = _h(id, 25) % 2 == 0
-		pl["kemuri"] = typ != "nikai" and _h(id, 26) % 5 == 0
 		pl["split"] = _h(id, 27) % 100 < (35 if shop else 45)   # 半間柱割（店也可；入口開間不拆）
+		# ── R3 Silhouette / Depth ──
+		var hira := String(b["roof"]) == "hira"
+		var corner: Array = _corner_sides(b, cen[id], fr[id], nets)
+		var hero := false
+		for mk: Vector2 in marks:
+			hero = hero or (cen[id] as Vector2).distance_to(mk) < HERO_R
+		var ident := not corner.is_empty() or hero
+		var W := _weights(b, ident)
+		pl["corner"] = corner
+		pl["hero"] = hero
+		pl["district"] = String(b["district"])
+		pl["kemuri"] = typ != "nikai" and _chance(id, 26, float(W["kemuri"]))
+		var half := (float(b["depth_m"]) if hira else float(b["width_m"])) * 0.5
+		# 屋根型：分層避同——①同側緊鄰（13 m）不同族＋同側 20 m 不同型＋對街不同型 → ②去掉對街 → ③只留緊鄰不同族
+		#   → ④只避同側 20 m 同型；取第一個還有候選的層
+		var fam_row: Array = row.map(func(q): return ROOF_FAM[q["roof"]])
+		var fam_av: Array = []
+		for k: String in ROOF_CLS:
+			if fam_row.has(ROOF_FAM[k]):
+				fam_av.append(k)
+		var r2: Array = row2.map(func(q): return q["roof"])
+		var ac: Array = acr.map(func(q): return q["roof"])
+		var avoid_r: Array = []
+		for tier: Array in [fam_av + r2 + ac, fam_av + r2, fam_av, r2]:
+			var free := false
+			for k: String in W["roof"]:
+				free = free or (float(W["roof"][k]) > 0.0 and not tier.has(k))
+			if free:
+				avoid_r = tier
+				break
+		pl["roof"] = _wpick(id, 50, W["roof"], avoid_r)
+		var ps: Array = ROOF_CLS[pl["roof"]]
+		var cr := half * (float(ps[0]) - float(ps[1])) / (float(ps[0]) + float(ps[1]))
+		# 本卯建：平入、螻羽出 ≤ 0.1（屋根端≈側牆線）、兩坡水平都 ≥ 2.8 m、棟比 P4 低 ≥ 0.11（合掌塊頂 ≤ P4 屋脊＋0.40）
+		var udh: Array = []
+		var drop := P * half - float(ps[0]) * (half - cr)          # 棟比 P4 屋脊低多少（std＝0）
+		var udh_near := row.any(func(q): return not (q["udh"] as Array).is_empty())
+		if hira and float(b["ov_gable_m"]) <= 0.1 and half - absf(cr) >= 2.8 and drop >= 0.11 and not udh_near \
+				and _chance(id, 51, float(W["udh"])):
+			var m3 := _h(id, 52) % 10
+			udh = [-1.0, 1.0] if m3 < 6 else ([-1.0] if m3 < 8 else [1.0])
+		pl["udh"] = udh
+		pl["cut"] = float(b["ov_eave_m"]) >= 0.4 and _chance(id, 53, float(W["cut"]))
+		# 小山牆：平入前坡；破風面後的棟與前坡交點要在棟之前（(c_d−c_r)·p_A ≥ 1.0）；同側 13 m 內已有小山牆則不放
+		var dm_near := row.any(func(q): return q["dormer"])
+		pl["dormer"] = hira and float(b["width_m"]) >= 4.6 and (half - DM_BACK - cr) * float(ps[0]) >= 1.0 \
+			and not dm_near and _chance(id, 54, float(W["dormer"]) * (0.5 if typ == "hiraya" else 1.0))
+		var gyo: Array = []
+		if not hira and (ident or _chance(id, 55, 0.45)):
+			gyo.append(1.0)                                   # 妻入：臨街妻面（屋根座標 +x）
+		if hira:
+			for e in corner:
+				if not udh.has(e):
+					gyo.append(e)                             # 平入角地：臨側街的妻面
+		pl["gyo"] = gyo
+		# 2F セットバック（店・平入・厨子／總二階）；同側 13 m 內上層節奏（窓型／週期／退縮）相同 → 翻轉
+		var sb_ok := shop and hira and typ != "hiraya"
+		pl["sb"] = sb_ok and _chance(id, 56, float(W["sb"]))
+		var usig := "%s/%d/%s" % [pl["up"], int(pl["up_period"]), pl["sb"]]
+		if typ != "hiraya" and sb_ok and row.any(func(q): return "%s/%d/%s" % [q["up"], int(q["up_period"]), q["sb"]] == usig):
+			pl["sb"] = not pl["sb"]
+		if pl["sb"]:
+			pl["udatsu"] = -1
+			pl["his_wood"] = false
+		pl["rec"] = _wpick(id, 57, W["rec_shop"] if shop else W["rec_res"], [])
+		match String(pl["rec"]):
+			"door":
+				pl["rec_d"] = [0.6, 0.9][_h(id, 58) % 2]
+			"shop":
+				pl["rec_d"] = [0.45, 0.9][_h(id, 58) % 2]
+			"koshi":
+				pl["rec_d"] = 0.35
+			_:
+				pl["rec_d"] = 0.0
 		_plan[id] = pl
 
 
@@ -223,7 +450,8 @@ static func plan_for(rec: Dictionary) -> Dictionary:
 		_build_plan()
 	return _plan.get(String(rec["id"]), {"fin": 0, "tone": 0, "theme": "koshi", "up": "", "up_period": 0, "hang": "noren_a",
 		"his_wood": false, "udatsu": -1, "sign": "", "sign_key": "kanban", "kiri": false, "inuyarai": false,
-		"ridge_low": false, "oni_b": false, "kemuri": false, "split": false})
+		"ridge_low": false, "oni_b": false, "kemuri": false, "split": false, "corner": [], "hero": false, "district": "",
+		"roof": "std", "udh": [], "cut": false, "dormer": false, "gyo": [], "sb": false, "rec": "none", "rec_d": 0.0})
 
 
 ## 牆類構件加色變體後綴
@@ -299,27 +527,64 @@ static func _xf(rot_y: float, pos: Vector3, sc := Vector3.ONE) -> Transform3D:
 
 ## 一排開間（正面或背面）：front＝true 時在 z＝+d/2 面向 +z、由左（−x）往右；背面 z＝−d/2 轉 180°。
 static func _row(g: Node3D, lib: Dictionary, names: Array, widths: Array, k: float, w: float, zf: float, front: bool,
-		y := 0.0) -> void:
+		y := 0.0, rec: Array = []) -> void:
 	var x := -w * 0.5
 	for i in widths.size():
 		var bw: float = widths[i] * k
 		if front:
-			_mi(g, lib, names[i], _xf(0.0, Vector3(x, y, zf), Vector3(k, 1, 1)), 0)
+			var r := float(rec[i]) if i < rec.size() else 0.0
+			var mi := _mi(g, lib, names[i], _xf(0.0, Vector3(x, y, zf - r), Vector3(k, 1, 1)), 0)
+			if mi != null and r > 0.0:
+				mi.set_meta("rec", r)
 		else:
 			_mi(g, lib, names[i], _xf(PI, Vector3(-x, y, zf), Vector3(k, 1, 1)), 0)
 		x += bw
 
 
-## 屋面、螻羽、棟、鬼瓦、妻壁（屋根座標 F：棟沿 F.x；平入 F＝I，妻入 F＝Ry(−90°)→棟沿 +z）
-static func _roof(g: Node3D, lib: Dictionary, rec: Dictionary, F: Basis, wall_len: float, half: float, pl: Dictionary) -> void:
-	var ridge := float(rec["ridge_m"])
+## R3 屋根幾何（屋根座標：棟沿 +x；A＝+z 側（平入＝街側）、B＝−z 側）。兩側簷高＝P4 簷高 → 棟位置 cr、棟高 H；
+## std 型直接用 P4 ridge_m（與 R2 相同）。ove＝出簷（cut 時減 EAVE_CUT）。
+static func roof_geo(rec: Dictionary, pl: Dictionary) -> Dictionary:
+	var hira := String(rec["roof"]) == "hira"
+	var half := (float(rec["depth_m"]) if hira else float(rec["width_m"])) * 0.5
 	var eave := float(rec["eave_m"])
-	var ove := float(rec["ov_eave_m"])
+	var cls := String(pl.get("roof", "std"))
+	var ps: Array = ROOF_CLS.get(cls, [P, P])
+	var pa := float(ps[0])
+	var pb := float(ps[1])
+	var cr := half * (pa - pb) / (pa + pb)
+	var H := float(rec["ridge_m"]) if cls == "std" else eave + pa * (half - cr)
+	var ove := float(rec["ov_eave_m"]) - (EAVE_CUT if bool(pl.get("cut", false)) else 0.0)
+	return {"pa": pa, "pb": pb, "cr": cr, "H": H, "half": half, "ove": ove, "cls": cls}
+
+
+static func _psuf(p: float) -> String:
+	if absf(p - 0.38) < 0.001:
+		return "_p38"
+	if absf(p - 0.32) < 0.001:
+		return "_p32"
+	return ""
+
+
+static func _nearest_in(arr: Array, v: float) -> float:
+	var best := float(arr[0])
+	for a: float in arr:
+		if absf(a - v) < absf(best - v):
+			best = a
+	return best
+
+
+## 屋面、螻羽、棟、鬼瓦、妻壁（屋根座標 F：棟沿 F.x；平入 F＝I，妻入 F＝Ry(−90°)→棟沿 +z）
+## R3：兩坡勾配可不同（棟偏移）、出簷可減；本卯建取代該端螻羽／鬼瓦；小山牆（平入前坡）；懸魚。
+static func _roof(g: Node3D, lib: Dictionary, rec: Dictionary, F: Basis, wall_len: float, half: float, pl: Dictionary) -> void:
+	var R := roof_geo(rec, pl)
+	var H := float(R["H"])
+	var cr := float(R["cr"])
+	var ove := float(R["ove"])
+	var eave := float(rec["eave_m"])
 	var ovg := float(rec["ov_gable_m"])
+	var id := String(rec["id"])
+	var FX := Transform3D(F, Vector3.ZERO)
 	var L := wall_len + ovg * 2.0
-	var S := half + ove - EAVE_TRIM
-	var sg := _nearest_span(S)
-	var kz := S / sg
 	var Lp := L - END_TRIM * 2.0
 	var n := maxi(1, int(round(Lp / HU)))
 	var kx := Lp / (n * HU)
@@ -329,32 +594,123 @@ static func _roof(g: Node3D, lib: Dictionary, rec: Dictionary, F: Basis, wall_le
 		while left >= u:
 			units.append(u)
 			left -= u
-	var sgk := "%d" % int(round(sg * 100))
+	var udh: Array = pl.get("udh", [])
 	for side in [0, 1]:
+		var p := float(R["pa"]) if side == 0 else float(R["pb"])
+		var sp := (half - cr) if side == 0 else (half + cr)     # 棟 → 牆線水平
+		var S := sp + ove - EAVE_TRIM
+		var sg := _nearest_span(S)
+		var kz := S / sg
+		var suf := _psuf(p)
+		var sgk := "%d" % int(round(sg * 100))
+		var sgn := 1.0 if side == 0 else -1.0
 		var x := -Lp * 0.5
 		for u: int in units:
-			var ln := u * HU * kx
 			var lx := x if side == 0 else -x
-			var loc := Transform3D(Basis(Vector3.UP, PI * side).scaled_local(Vector3(kx, kz, kz)), Vector3(lx, ridge, 0))
-			_mi(g, lib, _rn("rf_%s_%d" % [sgk, u], pl), Transform3D(F, Vector3.ZERO) * loc, 0)
-			x += ln
+			var loc := Transform3D(Basis(Vector3.UP, PI * side).scaled_local(Vector3(kx, kz, kz)), Vector3(lx, H, cr))
+			_mi(g, lib, _rn("rf_%s_%d%s" % [sgk, u, suf], pl), FX * loc, 0)
+			x += u * HU * kx
 		for e in [-1.0, 1.0]:
+			if udh.has(e):
+				continue
 			# 螻羽（袖瓦半徑 0.075）內縮：外緣＝屋面端（不超出 P4 屋根，出簷 0.05 的鄰棟側不越地塊線）
-			var loc := Transform3D(Basis(Vector3.UP, PI * side).scaled_local(Vector3(1, kz, kz)), Vector3(e * (L * 0.5 - VERGE_IN), ridge, 0))
-			_mi(g, lib, _rn("vg_%s" % sgk, pl), Transform3D(F, Vector3.ZERO) * loc, 0)
-	_mi(g, lib, _rn("rg_l" if pl["ridge_low"] else "rg_u", pl), Transform3D(F, Vector3.ZERO) * Transform3D(Basis().scaled_local(Vector3((L - 2.0 * ONI_IN) / RU, 1, 1)),
-		Vector3(-L * 0.5 + ONI_IN, ridge, 0)), 0)
+			var loc := Transform3D(Basis(Vector3.UP, PI * side).scaled_local(Vector3(1, kz, kz)), Vector3(e * (L * 0.5 - VERGE_IN), H, cr))
+			_mi(g, lib, _rn("vg_%s%s" % [sgk, suf], pl), FX * loc, 0)
+		# 妻壁半片：棟下（z＝cr）到牆線；A 半片 local x→+z、B 半片 local x→−z（兩面，法線朝向不影響）
+		var gs := _nearest_span(sp)
+		var kg := sp / gs
+		for e in [-1.0, 1.0]:
+			var loc := Transform3D(Basis(Vector3.UP, -PI * 0.5 * sgn).scaled_local(Vector3(kg, kg, 1)), Vector3(e * wall_len * 0.5, eave, cr))
+			_mi(g, lib, _wn("gbh_%d%s" % [int(round(gs * 100)), suf], pl), FX * loc, 0)
+	_roof_acc(g, lib, rec, F, wall_len, pl, 0)
+
+
+## R3 屋根上的輪廓構件（棟、鬼瓦／本卯建、小山牆、煙出し、懸魚）：LOD0 全部；LOD1／2 也放（遠景與高處俯視的
+## 大輪廓靠這些——R3a 審圖：40 m 外 LOD1 只有兩片半屋根，R3 屋根變化在高處俯視幾乎看不到）。
+static func _roof_acc(g: Node3D, lib: Dictionary, rec: Dictionary, F: Basis, wall_len: float, pl: Dictionary, lod: int) -> void:
+	var R := roof_geo(rec, pl)
+	var H := float(R["H"])
+	var cr := float(R["cr"])
+	var half := float(R["half"])
+	var ove := float(R["ove"])
+	var eave := float(rec["eave_m"])
+	var ovg := float(rec["ov_gable_m"])
+	var id := String(rec["id"])
+	var FX := Transform3D(F, Vector3.ZERO)
+	var L := wall_len + ovg * 2.0
+	var udh: Array = pl.get("udh", [])
+	# 本卯建：沿坡從棟到簷（local x＝下坡、y＝屋面法線）
+	for side in [0, 1]:
+		var p := float(R["pa"]) if side == 0 else float(R["pb"])
+		var sp := (half - cr) if side == 0 else (half + cr)
+		var S := sp + ove - EAVE_TRIM
+		var sgn := 1.0 if side == 0 else -1.0
+		var r := sqrt(1.0 + p * p)
+		var dv := Vector3(0, -p, sgn) / r
+		var nv := Vector3(0, 1, sgn * p) / r
+		for e in udh:
+			# 簷端：瓦笠頂（法線上 0.48）隨法線外傾 → 最外點水平＝(Ls＋0.04＋0.48·p)/r；控制在屋面簷緣內 0.03
+			var Ls := (S - 0.03) * r - 0.04 - 0.48 * p
+			var lq := _nearest_in(UDH_L, Ls)
+			var bas := Basis(dv, nv, dv.cross(nv)).scaled_local(Vector3(Ls / lq, 1, 1))
+			_mi(g, lib, _wn("udh_%d" % int(round(lq * 100)), pl), FX * Transform3D(bas, Vector3(float(e) * (L * 0.5 - UDH_IN), H, cr)), lod)
+	_mi(g, lib, _rn("rg_l" if pl["ridge_low"] else "rg_u", pl), FX * Transform3D(Basis().scaled_local(Vector3((L - 2.0 * ONI_IN) / RU, 1, 1)),
+		Vector3(-L * 0.5 + ONI_IN, H, cr)), lod)
 	for e in [-1.0, 1.0]:
-		_mi(g, lib, _rn("oni_b" if pl["oni_b"] else "oni", pl), Transform3D(F, Vector3.ZERO) * Transform3D(Basis(), Vector3(e * (L * 0.5 - ONI_IN), ridge, 0)), 0)
+		if udh.has(e):
+			_mi(g, lib, _wn("udk", pl), FX * Transform3D(Basis(), Vector3(e * (L * 0.5 - UDH_IN), H, cr)), lod)
+		elif lod == 0:
+			_mi(g, lib, _rn("oni_b" if pl["oni_b"] else "oni", pl), FX * Transform3D(Basis(), Vector3(e * (L * 0.5 - ONI_IN), H, cr)), 0)
+	# 小山牆（平入前坡）：破風面在前牆線內 DM_BACK
+	var dmx := 0.0
+	var has_dm := bool(pl.get("dormer", false))
+	if has_dm:
+		var lim := maxf(0.0, wall_len * 0.5 - DM_HALF - 0.3)
+		dmx = clampf(float(_h(id, 59) % 3 - 1) * wall_len * 0.25, -lim, lim)
+		var zd := half - DM_BACK
+		var yd := H - float(R["pa"]) * (zd - cr)
+		var dsuf := _psuf(float(R["pa"]))
+		_mi(g, lib, _rn("dmr%s" % (dsuf if dsuf != "" else "_p45"), pl), FX * Transform3D(Basis(), Vector3(dmx, yd, zd)), lod)
+		_mi(g, lib, _wn("dmg", pl), FX * Transform3D(Basis(), Vector3(dmx, yd, zd)), lod)
 	if pl["kemuri"]:
-		var kmx := (1.0 if _h(String(rec["id"]), 29) % 2 == 0 else -1.0) * L * 0.2
-		_mi(g, lib, _rn("kemu", pl), Transform3D(F, Vector3.ZERO) * Transform3D(Basis(), Vector3(kmx, ridge, 0)), 0)
-	# 妻壁：牆線上方、簷高起；面向 ±F.x
-	var gs := _nearest_span(half)
-	var kg := half / gs
-	for e in [-1.0, 1.0]:
-		var loc := Transform3D(Basis(Vector3.UP, e * PI * 0.5).scaled_local(Vector3(kg, kg, 1)), Vector3(e * wall_len * 0.5, eave, 0))
-		_mi(g, lib, _wn("gb_%d" % int(round(gs * 100)), pl), Transform3D(F, Vector3.ZERO) * loc, 0)
+		var kmx := (1.0 if _h(id, 29) % 2 == 0 else -1.0) * L * 0.2
+		if has_dm and absf(kmx - dmx) < DM_HALF + 0.5:
+			kmx = -kmx
+		_mi(g, lib, _rn("kemu", pl), FX * Transform3D(Basis(), Vector3(kmx, H, cr)), lod)
+	# 懸魚（妻面、破風合掌下）：妻三角要夠高
+	if lod == 0 and H - eave >= 0.85:
+		for e: float in pl.get("gyo", []):
+			if udh.has(e):
+				continue
+			_mi(g, lib, _wn("gyo", pl), FX * Transform3D(Basis(Vector3.UP, e * PI * 0.5), Vector3(e * (L * 0.5 - 0.055), H - 0.12, cr)), 0)
+
+
+## R3 1F 前後凹凸：每開間退縮深（0＝正面線）
+static func _recess(pl: Dictionary, kinds: Array, door: int) -> Array:
+	var out: Array = []
+	for i in kinds.size():
+		out.append(0.0)
+	var rd := float(pl.get("rec_d", 0.0))
+	match String(pl.get("rec", "none")):
+		"door":
+			if door >= 0:
+				out[door] = rd
+		"shop":
+			for i in kinds.size():
+				if String(kinds[i]) in ["shop_o", "shop_c"]:
+					out[i] = rd
+		"koshi":
+			var nk := 0
+			for kd in kinds:
+				if String(kd) in ["koshi", "koshir"]:
+					nk += 1
+			if nk > 0 and nk < kinds.size():
+				for i in kinds.size():
+					if not String(kinds[i]) in ["koshi", "koshir"]:
+						out[i] = rd
+			elif door >= 0:
+				out[door] = 0.6
+	return out
 
 
 ## 組一棟（回傳 "Kit" Node3D；不掛到樹上）
@@ -374,7 +730,6 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 	var w := float(rec["width_m"])
 	var d := float(rec["depth_m"])
 	var eave := float(rec["eave_m"])
-	var ridge := float(rec["ridge_m"])
 	var hira := String(rec["roof"]) == "hira"
 	var T: Dictionary = TYPES[String(rec["type"])]
 	var ek := _nearest_key(EAVES, eave)
@@ -399,6 +754,9 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 	var kinds := _front_kinds(rec, B, pl)
 	var ups := _upper_kinds(rec, widths, pl) if T["up"] != "" else []
 	var shop := float(rec.get("hisashi_m", 0.0)) > 0.0
+	var rec1 := _recess(pl, kinds, int(B["door"]))       # R3：1F 各開間退縮深
+	var sb: bool = bool(pl.get("sb", false)) and String(T["up"]) != ""   # R3：2F セットバック
+	var zu := d * 0.5 - (SB_D if sb else 0.0)
 	# ── LOD0 ──
 	_mi(l0, lib, "base", _xf(0.0, Vector3(0, bot, 0), Vector3(w, FL - bot, d)), 0)
 	var f1: Array = []
@@ -417,20 +775,49 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 			hg.append("nr_sudare_%s" % wc)
 		else:
 			hg.append("")
-	_row(l0, lib, f1, widths, k, w, d * 0.5, true)
+	_row(l0, lib, f1, widths, k, w, d * 0.5, true, 0.0, rec1)
 	if not up.is_empty():
-		_row(l0, lib, up, widths, k, w, d * 0.5, true)
+		_row(l0, lib, up, widths, k, w, zu, true)
 	_row(l0, lib, bk, widths, k, w, -d * 0.5, false)
 	var xh := -w * 0.5
 	for i in widths.size():
 		if hg[i] != "":
-			_mi(l0, lib, hg[i], _xf(0.0, Vector3(xh, 0, d * 0.5), Vector3(k, 1, 1)), 0)
+			_mi(l0, lib, hg[i], _xf(0.0, Vector3(xh, 0, d * 0.5 - float(rec1[i])), Vector3(k, 1, 1)), 0)
 		xh += float(widths[i]) * k
+	# R3：1F 退縮段——正面線留柱＋差鴨居、退縮面上方天井、段差兩端袖壁
+	var xs: Array = [-w * 0.5]
+	for i in widths.size():
+		xs.append(float(xs[i]) + float(widths[i]) * k)
+	var h1 := String(T["h1"])
+	for i in widths.size():
+		var r := float(rec1[i])
+		if r <= 0.0:
+			continue
+		var bw := float(widths[i]) * k
+		_mi(l0, lib, _wn("fp_%s" % h1, pl), _xf(0.0, Vector3(xs[i], 0, d * 0.5)), 0)
+		_mi(l0, lib, _wn("fb_%d_%s" % [int(round(widths[i] * 100)), h1], pl), _xf(0.0, Vector3(xs[i], 0, d * 0.5), Vector3(k, 1, 1)), 0)
+		_mi(l0, lib, _wn("sf_%s" % h1, pl), _xf(0.0, Vector3(xs[i], 0, d * 0.5 - 0.06), Vector3(bw / 1.82, 1, r - 0.06)), 0)
+		var rl := float(rec1[i - 1]) if i > 0 else 0.0
+		var rr := float(rec1[i + 1]) if i + 1 < widths.size() else 0.0
+		if r > rl:
+			_mi(l0, lib, _wn("rt_%s" % h1, pl), _xf(0.0, Vector3(float(xs[i]) + 0.06, 0, d * 0.5 - rl), Vector3(1, 1, r - rl)), 0)
+		if r > rr:
+			_mi(l0, lib, _wn("rt_%s" % h1, pl), _xf(0.0, Vector3(float(xs[i + 1]) - 0.012, 0, d * 0.5 - rr), Vector3(1, 1, r - rr)), 0)
 	_mi(l0, lib, _wn("post_%s" % ek, pl), _xf(0.0, Vector3(w * 0.5, 0, d * 0.5)), 0)
 	_mi(l0, lib, _wn("post_%s" % ek, pl), _xf(PI, Vector3(-w * 0.5, 0, -d * 0.5)), 0)
+	if sb:
+		# R3：2F セットバック——左前角也留通柱、兩端袖壁、上緣小壁（退縮牆頂到屋根下）
+		_mi(l0, lib, _wn("post_%s" % ek, pl), _xf(0.0, Vector3(-w * 0.5 + POST_W, 0, d * 0.5)), 0)
+		var hy := float(rec.get("hisashi_m", Y1_OF[h1]))
+		for e in [-1.0, 1.0]:
+			_mi(l0, lib, _wn("rtu", pl), _xf(0.0, Vector3(e * (w * 0.5 - POST_W - 0.012), hy, d * 0.5), Vector3(1, eave - hy, SB_D)), 0)
+		var pa := float(roof_geo(rec, pl)["pa"])
+		_mi(l0, lib, _wn("rtu", pl), _xf(PI * 0.5, Vector3(w * 0.5, eave - 0.05, zu), Vector3(1, pa * SB_D + 0.07, w)), 0)
 	var kd := d / float(DEPTHS[dk])
+	var corner: Array = pl.get("corner", [])
 	for e in [-1.0, 1.0]:
-		_mi(l0, lib, _wn("sd_%s_%s" % [dk, ek], pl), _xf(e * PI * 0.5, Vector3(e * w * 0.5, 0, 0), Vector3(kd, 1, 1)), 0)
+		var sdn := ("sdo_%s_%s" if corner.has(e) else "sd_%s_%s") % [dk, ek]
+		_mi(l0, lib, _wn(sdn, pl), _xf(e * PI * 0.5, Vector3(e * w * 0.5, 0, 0), Vector3(kd, 1, 1)), 0)
 	var F := Basis() if hira else Basis(Vector3.UP, -PI * 0.5)
 	_roof(l0, lib, rec, F, w if hira else d, (d if hira else w) * 0.5, pl)
 	var his := float(rec.get("hisashi_m", 0.0))
@@ -445,10 +832,15 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 		var kx := w / (n * HU)
 		var x := -w * 0.5
 		var left := n
+		var ks := (SB_D + hd - HIS_TRIM) / HISX_S
 		for u in [4, 2, 1]:
 			while left >= u:
-				var hn := ("hisw_%d" % u) if pl["his_wood"] else _rn("his_%d" % u, pl)
-				_mi(l0, lib, hn, _xf(0.0, Vector3(x, his, d * 0.5), Vector3(kx, (hd - HIS_TRIM) / 0.45, (hd - HIS_TRIM) / 0.45)), 0)
+				if sb:
+					# R3：深庇（原點＝退縮 2F 牆面，過 1F 牆線時＝P4 庇高）
+					_mi(l0, lib, _rn("hisx_%d" % u, pl), _xf(0.0, Vector3(x, his + SB_D * P, zu), Vector3(kx, ks, ks)), 0)
+				else:
+					var hn := ("hisw_%d" % u) if pl["his_wood"] else _rn("his_%d" % u, pl)
+					_mi(l0, lib, hn, _xf(0.0, Vector3(x, his, d * 0.5), Vector3(kx, (hd - HIS_TRIM) / 0.45, (hd - HIS_TRIM) / 0.45)), 0)
 				x += u * HU * kx
 				left -= u
 		# 袖卯建（庇上、牆端內）：總二階右端上層是窓時不放（避開手摺）
@@ -473,7 +865,7 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 			var sx := (w * 0.5 - 0.45) * (-1.0 if door_c > 0.0 else 1.0)
 			_mi(l0, lib, "kbs_%s" % pl["sign_key"], _xf(0.0, Vector3(sx, his, d * 0.5)), 0)
 	elif not shop:
-		if pl["kiri"] and int(B["door"]) >= 0:
+		if pl["kiri"] and int(B["door"]) >= 0 and float(rec1[int(B["door"])]) <= 0.0:
 			var bw := float(widths[int(B["door"])]) * k
 			_mi(l0, lib, "kiri", _xf(0.0, Vector3(door_c, KIRI_Y, d * 0.5), Vector3(bw / 2.0, 1, 1)), 0)
 		if pl["inuyarai"]:
@@ -481,22 +873,31 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 			for i in widths.size():
 				var bw2 := float(widths[i]) * k
 				if String(kinds[i]) in ["plain", "koshib", "mado", "amado"]:
-					_mi(l0, lib, "iy_%d" % int(round(widths[i] * 100)), _xf(0.0, Vector3(xi, 0, d * 0.5), Vector3(k, 1, 1)), 0)
+					_mi(l0, lib, "iy_%d" % int(round(widths[i] * 100)), _xf(0.0, Vector3(xi, 0, d * 0.5 - float(rec1[i])), Vector3(k, 1, 1)), 0)
 				xi += bw2
 	# ── LOD1：台基＋牆體方塊＋立面貼片＋屋根三角柱＋庇板 ──
-	var ee := float(rec["eave_edge_m"])
-	var ove := float(rec["ov_eave_m"])
+	# R3：LOD1/2 屋根＝前後兩個半屋根（勾配、棟位置、出簷與 LOD0 同）
+	var RG := roof_geo(rec, pl)
 	var ovg := float(rec["ov_gable_m"])
-	var span := ((d if hira else w) * 0.5 + ove) * 2.0
 	var rl := (w if hira else d) + ovg * 2.0
-	var roof_xf := Transform3D(F, Vector3.ZERO) * _xf(0.0, Vector3(0, ee, 0), Vector3(rl, ridge - ee, span))
 	var lbox := "l_box" if int(pl["fin"]) == 0 else "l_box_c%d" % int(pl["fin"])
-	var lroof := "l_roof" if int(pl["tone"]) == 0 else "l_roof_t%d" % int(pl["tone"])
+	var lrh := "l_rh" if int(pl["tone"]) == 0 else "l_rh_t%d" % int(pl["tone"])
+	var hy1 := float(rec.get("hisashi_m", Y1_OF[h1]))
 	for li in [1, 2]:
 		var g: Node3D = l1 if li == 1 else l2
 		_mi(g, lib, "base", _xf(0.0, Vector3(0, bot, 0), Vector3(w, FL - bot, d)), li)
-		_mi(g, lib, lbox, _xf(0.0, Vector3(0, FL, 0), Vector3(w, eave - FL, d)), li)
-		_mi(g, lib, lroof, roof_xf, li)
+		if sb:
+			# R3：2F セットバック也進 LOD1／2（1F 全深＋2F 退 SB_D）
+			_mi(g, lib, lbox, _xf(0.0, Vector3(0, FL, 0), Vector3(w, hy1 - FL, d)), li)
+			_mi(g, lib, lbox, _xf(0.0, Vector3(0, hy1, -SB_D * 0.5), Vector3(w, eave - hy1, d - SB_D)), li)
+		else:
+			_mi(g, lib, lbox, _xf(0.0, Vector3(0, FL, 0), Vector3(w, eave - FL, d)), li)
+		_roof_acc(g, lib, rec, F, w if hira else d, pl, li)
+		for side in [0, 1]:
+			var pp := float(RG["pa"]) if side == 0 else float(RG["pb"])
+			var spn := float(RG["half"]) + (-1.0 if side == 0 else 1.0) * float(RG["cr"]) + float(RG["ove"])
+			var ee := eave - pp * float(RG["ove"])
+			_mi(g, lib, lrh, Transform3D(F, Vector3.ZERO) * _xf(PI * side, Vector3(0, ee, float(RG["cr"])), Vector3(rl, float(RG["H"]) - ee, spn)), li)
 	var x1 := -w * 0.5
 	for i in widths.size():
 		var bw: float = widths[i] * k
@@ -508,13 +909,25 @@ static func build(rec: Dictionary, lib: Dictionary, embed: float) -> Node3D:
 			var uk := String(ups[i])
 			var lu: String = {"mushi": "l_u_mushi", "mushis": "l_u_mushi", "mushib": "l_u_mushib", "win": "l_u_win", "wins": "l_u_win",
 				"winb": "l_u_winb", "amado": "l_u_amado"}[uk]
-			_mi(l1, lib, lu, _xf(0.0, Vector3(x1, 0, d * 0.5), s), 1)
+			_mi(l1, lib, lu, _xf(0.0, Vector3(x1, 0, zu), s), 1)
 		x1 += bw
 	if his > 0.0 and hd > 0.2:
-		_mi(l1, lib, "l_slab", _xf(0.0, Vector3(-w * 0.5, his, d * 0.5), Vector3(w, hd, hd)), 1)
+		if sb:
+			_mi(l1, lib, "l_slab", _xf(0.0, Vector3(-w * 0.5, his + SB_D * P, zu), Vector3(w, SB_D + hd, SB_D + hd)), 1)
+		else:
+			_mi(l1, lib, "l_slab", _xf(0.0, Vector3(-w * 0.5, his, d * 0.5), Vector3(w, hd, hd)), 1)
 	kit.set_meta("door_cx", snappedf(door_c, 0.001))
 	kit.set_meta("door_w", snappedf(float(widths[int(B["door"])]) * k, 0.001) if int(B["door"]) >= 0 else 0.0)
 	kit.set_meta("style", "%s/c%d/t%d/%s" % [pl["theme"], int(pl["fin"]), int(pl["tone"]), pl["up"]])
+	# R3 紀錄（gate 依此驗屋根與退縮；皆在 P4 外框內）
+	kit.set_meta("roof_cls", String(RG["cls"]))
+	kit.set_meta("roof_ps", [float(RG["pa"]), float(RG["pb"])])
+	kit.set_meta("roof_cr", snappedf(float(RG["cr"]), 0.0001))
+	kit.set_meta("roof_h", snappedf(float(RG["H"]), 0.0001))
+	kit.set_meta("roof_ove", float(RG["ove"]))
+	kit.set_meta("door_rec", float(rec1[int(B["door"])]) if int(B["door"]) >= 0 else 0.0)
+	kit.set_meta("r3", "%s/rec=%s:%.2f/sb=%s/dm=%s/udh=%d/cut=%s/corner=%d/hero=%s" % [RG["cls"], pl["rec"], float(pl["rec_d"]), sb,
+		pl["dormer"], (pl["udh"] as Array).size(), pl["cut"], (pl["corner"] as Array).size(), pl["hero"]])
 	kit.set_meta("bays", widths.size())
 	kit.set_meta("bay_scale", snappedf(k, 0.001))
 	return kit
