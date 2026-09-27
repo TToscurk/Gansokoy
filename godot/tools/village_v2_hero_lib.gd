@@ -14,6 +14,9 @@ extends RefCounted
 ##   gate_spec.also_retire（R3 起）：其他要一起退場的 placeholder 子節點（例 P0 線框的 Footprint 地面框）。
 ##   gate_spec.instances（R4 水車起）：同一件資產放在多個 P0 地標；每筆覆寫 gate_spec 同名欄位（anchor、yaw_deg…），
 ##              instances(S) 展開後產生器與 gate 逐筆放置、逐筆驗。
+##   "body"（P6 aux 納屋／土藏起）：anchor＝P4 灰盒 StaticBody3D 本身（Districts/<區>/Buildings/S_*）；資產以 identity 掛在它下面
+##              （原點＝灰盒原點＝footprint 中心、y＝base_h、+z＝正面）。灰盒節點保留（P4 gate 讀它的位置與 Foundation），
+##              灰盒自己的網格隱藏、Shape 停用、collision_layer 0（retire_body）；Hero 子樹不受影響。
 ## 路徑一律從 registry／asset.json 讀，原始碼不寫資產 res:// 字串（P5 asset reset gate 掃描產生器原始碼）。
 
 const REG := "res://data/village_v2_asset_registry.json"
@@ -74,9 +77,12 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 	var old := anchor.get_node_or_null("Hero")
 	if old != null:
 		return old as Node3D   # 已放（產生器烘焙過）
-	var ph := anchor.get_node_or_null(String(gs["replaces"])) as Node3D
+	var body_mode := String(gs["placement"]) == "body"
+	var ph := null if body_mode else anchor.get_node_or_null(String(gs["replaces"])) as Node3D
 	var xf := Transform3D.IDENTITY
-	if ph != null:
+	if body_mode:
+		pass   # 資產原點＝灰盒節點原點（identity）
+	elif ph != null:
 		xf = ph.transform
 		if String(gs["placement"]) == "anchor":
 			xf.origin = Vector3.ZERO   # 地標原點＝資產原點；placeholder 只給旋轉
@@ -93,6 +99,8 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 	hero.set_meta("asset_id", String(S["id"]))
 	hero.set_meta("phase", "P5")
 	anchor.add_child(hero)
+	if body_mode:
+		retire_body(anchor)
 	if ph != null:
 		if String(gs["placement"]) == "anchor" and remove_placeholder:
 			anchor.remove_child(ph)
@@ -125,3 +133,18 @@ static func retire(n: Node) -> void:
 	if n is Node3D:
 		(n as Node3D).visible = false
 	n.set_meta("retired_by_hero", true)
+
+
+## "body" 放置的灰盒退場：灰盒節點本身與 Hero 子樹保留可見；灰盒自己的網格隱藏、Shape 停用、collision_layer 0。
+static func retire_body(body: Node3D) -> void:
+	var hero := body.get_node_or_null("Hero")
+	for c in body.find_children("*", "", true, false):
+		if hero != null and (c == hero or hero.is_ancestor_of(c)):
+			continue
+		if c is MeshInstance3D:
+			(c as MeshInstance3D).visible = false
+		elif c is CollisionShape3D:
+			(c as CollisionShape3D).disabled = true
+	if body is CollisionObject3D:
+		(body as CollisionObject3D).collision_layer = 0
+	body.set_meta("retired_by_hero", true)

@@ -1,0 +1,327 @@
+{
+ "_note": "納屋（build_aux.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。尺寸 authority＝P4 greybox kind aux_koya（同型逐棟同尺寸）；placement body＝掛在 P4 灰盒節點下，灰盒網格隱藏、碰撞停用（village_v2_hero_lib.gd retire_body）。",
+ "id": "aux_koya",
+ "landmark": "",
+ "kind": "hero",
+ "budget_class": "町家",
+ "glb": "res://assets/village_v2/aux_koya/src/aux_koya.glb",
+ "scene": "res://assets/village_v2/aux_koya/aux_koya.scn",
+ "lod_objects": [
+  "Koya_LOD0",
+  "Koya_LOD1",
+  "Koya_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  40,
+  110,
+  700
+ ],
+ "budget": {
+  "lod0": 25000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+  "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres"
+ },
+ "spec": {
+  "kind_p4": "aux_koya",
+  "width_m": 2.73,
+  "depth_m": 1.82,
+  "eave_m": 2.3,
+  "ridge_m": 2.709,
+  "plinth_m": 0.32,
+  "foundation_bottom_m": -0.4,
+  "ov_eave_m": 0.45,
+  "ov_gable_m": 0.3,
+  "roof": "hira",
+  "door_m": [
+   0.9,
+   1.7
+  ],
+  "design": {
+   "reference": "參考圖無小屋（倉庫.PNG 只有土藏）；依村內語彙設計",
+   "features": [
+    "石台＋土台",
+    "焦茶縦板＋押縁",
+    "角柱",
+    "灰瓦平入切妻",
+    "半開板戸（引戸）",
+    "側面連子窓",
+    "左側薪棚"
+   ]
+  }
+ },
+ "gate_spec": {
+  "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_002",
+  "p4_id": "S_A_RSW_002",
+  "parcel": "A_RSW_002",
+  "road": "CrossStreetSouth",
+  "placement": "body",
+  "replaces": "(灰盒本體)",
+  "instances": [
+   {
+    "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_002",
+    "p4_id": "S_A_RSW_002",
+    "parcel": "A_RSW_002",
+    "road": "CrossStreetSouth"
+   },
+   {
+    "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_006",
+    "p4_id": "S_A_RSW_006",
+    "parcel": "A_RSW_006",
+    "road": "WestAlley",
+    "shots": [
+     [
+      "front",
+      0.0,
+      9.91
+     ],
+     [
+      "near_l",
+      3.0,
+      6.11
+     ],
+     [
+      "near_r",
+      -3.0,
+      6.11
+     ]
+    ]
+   },
+   {
+    "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_010",
+    "p4_id": "S_A_RSW_010",
+    "parcel": "A_RSW_010",
+    "road": "NWLane"
+   },
+   {
+    "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_014",
+    "p4_id": "S_A_RSW_014",
+    "parcel": "A_RSW_014",
+    "road": "NWBranch"
+   },
+   {
+    "anchor": "Districts/ResidentialWest/Buildings/S_A_RSW_018",
+    "p4_id": "S_A_RSW_018",
+    "parcel": "A_RSW_018",
+    "road": "SWLane",
+    "shots": [
+     [
+      "front",
+      0.0,
+      9.91
+     ],
+     [
+      "front_near",
+      0.0,
+      6.41
+     ],
+     [
+      "near_r",
+      -3.0,
+      6.11
+     ]
+    ]
+   },
+   {
+    "anchor": "Districts/ResidentialNE/Buildings/S_A_RNE_002",
+    "p4_id": "S_A_RNE_002",
+    "parcel": "A_RNE_002",
+    "road": "NELane"
+   },
+   {
+    "anchor": "Districts/ResidentialNE/Buildings/S_A_RNE_006",
+    "p4_id": "S_A_RNE_006",
+    "parcel": "A_RNE_006",
+    "road": "NENorth"
+   }
+  ],
+  "size": {
+   "x_half_max": 2.165,
+   "z_min": -1.48,
+   "z_max": 1.48,
+   "top": [
+    2.709,
+    3.009
+   ],
+   "bottom": -0.4
+  },
+  "body": {
+   "w": 2.73,
+   "d": 1.82,
+   "eave": 2.3,
+   "ridge": 2.709,
+   "plinth": 0.32,
+   "roof": "hira",
+   "probe": {
+    "y": 1.9,
+    "z": -0.6,
+    "xb": -0.62,
+    "xf": -1.0,
+    "yf": 1.6
+   }
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -1.365,
+     -0.91,
+     1.365,
+     0.91
+    ],
+    "bottom": -0.4,
+    "top": 0.32,
+    "embed_max": 0.5
+   },
+   {
+    "name": "踏石",
+    "rect": [
+     -0.45,
+     0.91,
+     0.45,
+     1.31
+    ],
+    "bottom": -0.14,
+    "top": 0.16,
+    "embed_max": 0.25
+   },
+   {
+    "name": "薪棚",
+    "rect": [
+     -2.045,
+     -0.75,
+     -1.445,
+     0.75
+    ],
+    "bottom": -0.25,
+    "top": 0.08,
+    "embed_max": 0.35
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -1.1,
+    1.56,
+    1.1,
+    2.16
+   ],
+   "head": 1.95,
+   "min_clear": 2.0,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   1.8599999999999999
+  ],
+  "inside": [
+   0.0,
+   0.0
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Body",
+   "center": [
+    0,
+    0.95,
+    0.05
+   ],
+   "size": [
+    2.79,
+    2.6999999999999997,
+    2.02
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Step",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -0.45,
+     -0.14,
+     0.91
+    ],
+    [
+     -0.45,
+     0.16,
+     0.91
+    ],
+    [
+     -0.45,
+     0.16,
+     1.25
+    ],
+    [
+     -0.45,
+     -0.14,
+     1.49
+    ],
+    [
+     0.45,
+     -0.14,
+     0.91
+    ],
+    [
+     0.45,
+     0.16,
+     0.91
+    ],
+    [
+     0.45,
+     0.16,
+     1.25
+    ],
+    [
+     0.45,
+     -0.14,
+     1.49
+    ]
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Woodpile",
+   "center": [
+    -1.745,
+    0.325,
+    0.0
+   ],
+   "size": [
+    0.5999999999999999,
+    1.15,
+    1.5
+   ]
+  }
+ ],
+ "measured_blender": {
+  "LOD0": 4734,
+  "aabb": [
+   [
+    -2.015,
+    -0.4,
+    -1.421
+   ],
+   [
+    1.715,
+    2.899,
+    1.421
+   ]
+  ],
+  "LOD1": 528,
+  "LOD2": 84
+ }
+}

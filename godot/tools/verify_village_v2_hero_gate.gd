@@ -483,12 +483,26 @@ func _apply_neg() -> void:
 			hero.position.y += 0.3
 		"parcel":
 			# 町家地塊前緣只留 1–2 m → 3 m 就出界；地標地塊（寺子屋 yard 4 m、前庭道具到地塊邊 3.9 m）要 8 m 才真的出界
-			if gs.has("water_ref"):
+			# aux 附屬棟（body 放置）：正面前有 2.5–9 m 院子、背面離地塊線只有 margin 0.45 → 往後推 3 m 才真的出界
+			if String(gs["placement"]) == "body":
+				hero.position -= hero.basis.z * 3.0
+			elif gs.has("water_ref"):
 				hero.position -= hero.basis.x * 3.0   # 水車：往岸上推 3 m（輪子離開水道）
 			else:
 				hero.position += hero.basis.z * (8.0 if gs.has("building") else 3.0)
 		"greybox":
-			if g0 == null:
+			if String(gs["placement"]) == "body":
+				# aux：灰盒就是 anchor 本身 → 把它的網格與碰撞恢復，資產墊高 0.4 m
+				for c in anchor.find_children("*", "", true, false):
+					if hero.is_ancestor_of(c) or c == hero:
+						continue
+					if c is MeshInstance3D:
+						(c as MeshInstance3D).visible = true
+					elif c is CollisionShape3D:
+						(c as CollisionShape3D).disabled = false
+				(anchor as CollisionObject3D).collision_layer = 1
+				hero.position.y += 0.4
+			elif g0 == null:
 				# 產生器已不建 placeholder（anchor 型）：另建一個 1 × 10 × 1 m 有碰撞的灰盒柱，模擬「墊在灰盒上」
 				var sb := StaticBody3D.new()
 				sb.name = String(gs["replaces"])
@@ -569,14 +583,24 @@ func _c_size() -> void:
 		_res("size", spec_ok, "規格＝P4 灰盒 %s：面寬 %.2f／縱深 %.2f／簷 %.2f／屋脊 %.2f／台基 %.2f m" % [
 			gs["p4_id"], rec.get("width_m", -1), rec.get("depth_m", -1), rec.get("eave_m", -1), rec.get("ridge_m", -1),
 			rec.get("plinth_m", -1)])
-		var y := 1.537
-		var xr := 20.0 - _vis_dist(Vector3(20, y, 0.313), Vector3(-20, y, 0.313), _tris_along_x(0.313))
-		var xl := -20.0 + _vis_dist(Vector3(-20, y, 0.313), Vector3(20, y, 0.313), _tris_along_x(0.313))
-		var zb := -20.0 + _vis_dist(Vector3(-1.037, y, -20), Vector3(-1.037, y, 20), _tris_along_z(-1.037))
-		var zfr := 20.0 - _vis_dist(Vector3(-4.037, 3.313, 20), Vector3(-4.037, 3.313, -20), _tris_along_z(-4.037))
+		# 射線位置：預設是町家尺寸 Hero（R1–R6）；小建築（P6 aux 納屋／土藏）由 body.probe 指定，避開門、窗、庇
+		var pr: Dictionary = B.get("probe", {})
+		var y := float(pr.get("y", 1.537))
+		var yf := float(pr.get("yf", 3.313))
+		var pz := float(pr.get("z", 0.313))
+		var pbx := float(pr.get("xb", -1.037))
+		var pfx := float(pr.get("xf", -4.037))
+		var xr := 20.0 - _vis_dist(Vector3(20, y, pz), Vector3(-20, y, pz), _tris_along_x(pz))
+		var xl := -20.0 + _vis_dist(Vector3(-20, y, pz), Vector3(20, y, pz), _tris_along_x(pz))
+		var zb := -20.0 + _vis_dist(Vector3(pbx, y, -20), Vector3(pbx, y, 20), _tris_along_z(pbx))
+		var zfr := 20.0 - _vis_dist(Vector3(pfx, yf, 20), Vector3(pfx, yf, -20), _tris_along_z(pfx))
 		var ridge := 30.0 - _vis_dist(Vector3(0.137, 30, 0.043), Vector3(0.137, -5, 0.043), _tris_at(0.137, 0.043))
-		var ze := float(B["d"]) * 0.5 + float(rec.get("ov_eave_m", 0.45)) - 0.05
-		var eave := 30.0 - _vis_dist(Vector3(-4.037, 30, -ze), Vector3(-4.037, -5, -ze), _tris_at(-4.037, -ze))
+		# 簷口：平入＝背面（x pfx、z −ze）；妻入（body.roof＝tsuma）＝右側（x ＋ze、z pz）
+		var tsuma := String(B.get("roof", "hira")) == "tsuma"
+		var ze := (float(B["w"]) if tsuma else float(B["d"])) * 0.5 + float(rec.get("ov_eave_m", 0.45)) - 0.05
+		var ex := ze if tsuma else pfx
+		var ez := pz if tsuma else -ze
+		var eave := 30.0 - _vis_dist(Vector3(ex, 30, ez), Vector3(ex, -5, ez), _tris_at(ex, ez))
 		var w := (xr - xl) * sc.x
 		var d := (zfr - zb) * sc.z
 		var ee := eave * sc.y
@@ -584,8 +608,8 @@ func _c_size() -> void:
 		var ok2 := absf(w - float(rec["width_m"])) <= 0.10 and absf(d - float(rec["depth_m"])) <= 0.10 \
 			and rr >= float(sz["top"][0]) - 0.1 and rr <= float(sz["top"][1]) + 0.005 \
 			and absf(ee - float(rec["eave_edge_m"])) <= 0.15
-		_res("size", ok2, "射線實測：牆面寬 %.2f（P4 %.2f）、牆縱深 %.2f（P4 %.2f）、屋脊頂 %.2f（屋脊 %.2f）、背面簷口 %.2f（P4 簷口 %.2f）m" % [
-			w, rec["width_m"], d, rec["depth_m"], rr, rec["ridge_m"], ee, rec["eave_edge_m"]])
+		_res("size", ok2, "射線實測：牆面寬 %.2f（P4 %.2f）、牆縱深 %.2f（P4 %.2f）、屋脊頂 %.2f（屋脊 %.2f）、%s簷口 %.2f（P4 簷口 %.2f）m" % [
+			w, rec["width_m"], d, rec["depth_m"], rr, rec["ridge_m"], "側面" if tsuma else "背面", ee, rec["eave_edge_m"]])
 	if gs.has("building"):
 		# anchor 放置的建築（沒有 P4 灰盒）：規格對 P0 地標量體（size＝寬×高×深，只能小於等於）與自身 building 規格
 		var Bb: Dictionary = gs["building"]
@@ -836,10 +860,22 @@ func _c_ground() -> void:
 	_res("grounding", not_terrain == 0, "接地件正下方第一個碰撞體是地形：%d 點不是%s" % [not_terrain,
 		("（" + nt_ex + "）") if nt_ex != "" else ""])
 	# 被取代的灰盒／placeholder：不可見、碰撞停用（禁止把資產墊在灰盒上）
-	var ph: Node = anchor.get_node_or_null(String(gs["replaces"]))
+	var body_mode := String(gs["placement"]) == "body"
+	var ph: Node = anchor if body_mode else anchor.get_node_or_null(String(gs["replaces"]))
 	var vis := 0
 	var live := 0
-	for nm: String in [String(gs["replaces"])] + Array(gs.get("also_retire", [])):
+	if body_mode:
+		# aux：灰盒＝anchor 本身；它自己的網格／Shape（不含 Hero 子樹）都要退場、collision_layer 0
+		for c in anchor.find_children("*", "", true, false):
+			if c == hero or hero.is_ancestor_of(c):
+				continue
+			if c is MeshInstance3D and (c as MeshInstance3D).visible:
+				vis += 1
+			elif c is CollisionShape3D and not (c as CollisionShape3D).disabled:
+				live += 1
+		if (anchor as CollisionObject3D).collision_layer != 0:
+			live += 1
+	for nm: String in ([] if body_mode else [String(gs["replaces"])] + Array(gs.get("also_retire", []))):
 		var pn: Node = anchor.get_node_or_null(nm)
 		if pn == null:
 			continue
@@ -850,7 +886,8 @@ func _c_ground() -> void:
 				live += 1
 			if c is CollisionObject3D and (c as CollisionObject3D).collision_layer != 0:
 				live += 1
-	_res("grounding", vis == 0 and live == 0, "被取代的 %s：%s（可見網格 %d、有效碰撞 %d）" % [gs["replaces"],
+	_res("grounding", vis == 0 and live == 0, "被取代的 %s：%s（可見網格 %d、有效碰撞 %d）" % [
+		String(anchor.name) + " 灰盒" if body_mode else gs["replaces"],
 		"已移除" if ph == null else "保留節點（P4 gate 紀錄用）但已退場", vis, live])
 	# 水車（R4）：輪下緣泡進水渠水面、不碰渠底（沿輪寬取 5 點）
 	if gs.has("water_ref"):
@@ -1030,7 +1067,7 @@ func _c_pivot() -> void:
 	_res("pivot_scale", ok_s and ident, "縮放 %s（應 1,1,1）、LOD／Collision 節點 identity：%s" % [sc, "是" if ident else "否"])
 	var ab: AABB = _lod_aabb(0)
 	var y_ok := ab.position.y <= 0.0 and ab.end.y > 0.0
-	if String(gs["placement"]) == "greybox":
+	if String(gs["placement"]) in ["greybox", "body"]:
 		var rec := _gb_record()
 		var fp := TLib.pts(rec["footprint"])
 		var c := (fp[0] + fp[1] + fp[2] + fp[3]) * 0.25
@@ -1142,7 +1179,8 @@ func _c_collision() -> void:
 			var inner := 0.0
 			var edge := Vector3(s, 0, outer) if along_z else Vector3(outer, 0, s)
 			var we := xf * edge
-			var gl := _ground(we.x, we.z) - xf.origin.y
+			# 地形高（terrain_only）：外側起點落在鄰棟碰撞頂上時（P6 aux 與鄰家牆距 < 0.5 m），不可把鄰家屋頂當地面
+			var gl := _ground(we.x, we.z, true) - xf.origin.y
 			if is_nan(gl):
 				s += 0.2
 				continue
