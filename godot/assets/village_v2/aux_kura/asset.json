@@ -26,7 +26,7 @@
  },
  "materials": {
   "V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
-  "V2_Plaster": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+  "V2_KuraShikkui": "res://assets/village_v2/aux_kura/V2_KuraShikkui.tres",
   "V2_Kawara": "res://assets/village_v2/_matlib/V2_Kawara.tres",
   "V2_Stone": "res://assets/village_v2/_matlib/V2_Stone.tres"
  },

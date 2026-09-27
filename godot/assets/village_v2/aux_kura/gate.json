@@ -1,7 +1,7 @@
 {
  "asset": "aux_kura",
  "entry": "res://assets/village_v2/aux_kura/aux_kura.scn",
- "entry_sha256": "bbcd4edfaaaa39a996b44fee04fd1795803d49de0df186182ce26cb37457d791",
+ "entry_sha256": "90764c33a4faa460e063a8e8e22dcbc36edeab246c6d3614e2e3232b0d6f92df",
  "godot": "4.7.2-stable (official)",
  "checks": {
   "size": {
@@ -19,7 +19,7 @@
     "人物比例：入口淨高 1.98 m（門檻 0.32→鴨居 2.30；≥ 1.90，1.7 m 人）、淨寬 1.24 m（≥ 1.20）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "parcel_fit": {
    "result": "PASS",
@@ -32,7 +32,7 @@
     "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "grounding": {
    "result": "PASS",
@@ -49,18 +49,18 @@
     "入口段差：路面 0.36 → 踏石 0.52（0.16 m）→ 台基 0.68（0.16 m），每階 ≤ 0.30"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "materials": {
    "result": "PASS",
    "detail": [
     "【S_A_MKT_002】",
-    "4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Plaster\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮",
+    "4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_KuraShikkui\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮",
     "【S_A_MKT_006】",
-    "4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Plaster\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮"
+    "4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_KuraShikkui\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "geometry": {
    "result": "PASS",
@@ -71,7 +71,7 @@
     "LOD0 12578 面：退化 0、NaN 0、繞向反 0、LOD1 1090 面：退化 0、NaN 0、繞向反 0、LOD2 62 面：退化 0、NaN 0、繞向反 0；LOD0 12578 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 12578 一致"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "pivot_scale": {
    "result": "PASS",
@@ -84,7 +84,7 @@
     "原點 (223.66, 0.36, 94.19)＝P4 footprint 中心 (223.66, 94.19)、base_h 0.36；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～5.21）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "collision": {
    "result": "PASS",
@@ -101,7 +101,7 @@
     "周邊 279 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "lod": {
    "result": "PASS",
@@ -112,26 +112,26 @@
     "面數 12578 → 1090（8.7 %，≤ 35 %）→ 62（0.5 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 549 m）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "performance": {
    "result": "PASS",
    "detail": [
     "【S_A_MKT_002】",
-    "§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）",
+    "§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 40.0 MB（全村共用一次）",
     "【S_A_MKT_006】",
-    "§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）"
+    "§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 40.0 MB（全村共用一次）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:06"
+   "date": "2026-09-27T11:57:37"
   },
   "player_screenshot": {
    "result": "PASS",
    "detail": [
-    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 7 張：aux_kura_S_A_MKT_002_front.png（亮度標準差 0.225、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_front_l.png（亮度標準差 0.159、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_front_r.png（亮度標準差 0.229、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_street_far.png（亮度標準差 0.206、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_front.png（亮度標準差 0.242、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_front_near.png（亮度標準差 0.276、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_near_r.png（亮度標準差 0.289、資產在畫面內、鏡頭到資產無遮擋）"
+    "main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 7 張：aux_kura_S_A_MKT_002_front.png（亮度標準差 0.225、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_front_l.png（亮度標準差 0.159、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_front_r.png（亮度標準差 0.229、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_002_street_far.png（亮度標準差 0.206、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_front.png（亮度標準差 0.242、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_front_near.png（亮度標準差 0.276、資產在畫面內、鏡頭到資產無遮擋）；aux_kura_S_A_MKT_006_near_r.png（亮度標準差 0.289、資產在畫面內、鏡頭到資產無遮擋）"
    ],
    "part": "render",
-   "date": "2026-09-27T11:28:47"
+   "date": "2026-09-27T11:58:31"
   },
   "f5_f6": {
    "result": "PASS",
@@ -139,19 +139,19 @@
     "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、7 張鏡位＋實走）錯誤 0、警告 0；S_A_MKT_002_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 3.23（牆面 2.73，被擋在外）、最大離地 0.05 m；S_A_MKT_006_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 3.23（牆面 2.73，被擋在外）、最大離地 0.02 m"
    ],
    "part": "render",
-   "date": "2026-09-27T11:28:47"
+   "date": "2026-09-27T11:58:31"
   }
  },
  "render_info": {
   "f6_png": "aux_kura_f6.png",
   "perf": [
-   "S_A_MKT_002_front：2394983 三角面／4623 draw call",
-   "S_A_MKT_002_front_l：2586303 三角面／5360 draw call",
-   "S_A_MKT_002_front_r：1895947 三角面／3145 draw call",
-   "S_A_MKT_002_street_far：2739483 三角面／5631 draw call",
-   "S_A_MKT_006_front：1188741 三角面／1046 draw call",
-   "S_A_MKT_006_front_near：1153686 三角面／802 draw call",
-   "S_A_MKT_006_near_r：1163368 三角面／935 draw call"
+   "S_A_MKT_002_front：2395401 三角面／4616 draw call",
+   "S_A_MKT_002_front_l：2586869 三角面／5346 draw call",
+   "S_A_MKT_002_front_r：1896263 三角面／3142 draw call",
+   "S_A_MKT_002_street_far：2741475 三角面／5626 draw call",
+   "S_A_MKT_006_front：1190677 三角面／1042 draw call",
+   "S_A_MKT_006_front_near：1155622 三角面／798 draw call",
+   "S_A_MKT_006_near_r：1165304 三角面／931 draw call"
   ],
   "warnings": [],
   "renderer": "forward_plus"

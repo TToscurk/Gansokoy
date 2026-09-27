@@ -1,7 +1,7 @@
 {
  "asset": "aux_koya",
  "entry": "res://assets/village_v2/aux_koya/aux_koya.scn",
- "entry_sha256": "416d4c59047153964ef9500a0b31e5afd2dda39c5def6c577a3f9b969db386ae",
+ "entry_sha256": "adff5643ee4167c5b71f64ac2d06a5aea773c030b1b1351568bff7f4974d4248",
  "godot": "4.7.2-stable (official)",
  "checks": {
   "size": {
@@ -37,7 +37,7 @@
     "射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "parcel_fit": {
    "result": "PASS",
@@ -65,7 +65,7 @@
     "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "grounding": {
    "result": "PASS",
@@ -107,7 +107,7 @@
     "入口段差：路面 2.31 → 踏石 2.48（0.17 m）→ 台基 2.64（0.16 m），每階 ≤ 0.30"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "materials": {
    "result": "PASS",
@@ -128,7 +128,7 @@
     "3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "geometry": {
    "result": "PASS",
@@ -149,7 +149,7 @@
     "LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "pivot_scale": {
    "result": "PASS",
@@ -177,7 +177,7 @@
     "原點 (429.86, 2.32, -234.79)＝P4 footprint 中心 (429.86, -234.79)、base_h 2.32；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "collision": {
    "result": "PASS",
@@ -219,7 +219,7 @@
     "周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "lod": {
    "result": "PASS",
@@ -240,7 +240,7 @@
     "面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 626 m）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "performance": {
    "result": "PASS",
@@ -261,15 +261,15 @@
     "§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）"
    ],
    "part": "headless",
-   "date": "2026-09-27T11:25:24"
+   "date": "2026-09-27T11:57:56"
   },
   "player_screenshot": {
    "result": "PASS",
    "detail": [
-    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 26 張：aux_koya_S_A_RSW_002_front.png（亮度標準差 0.052、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_front_l.png（亮度標準差 0.214、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_front_r.png（亮度標準差 0.085、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_street_far.png（亮度標準差 0.250、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_front.png（亮度標準差 0.281、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_near_l.png（亮度標準差 0.296、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_near_r.png（亮度標準差 0.265、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front.png（亮度標準差 0.143、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front_l.png（亮度標準差 0.155、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front_r.png（亮度標準差 0.171、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_street_far.png（亮度標準差 0.176、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front.png（亮度標準差 0.147、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front_l.png（亮度標準差 0.197、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front_r.png（亮度標準差 0.171、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_street_far.png（亮度標準差 0.208、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_front.png（亮度標準差 0.273、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_front_near.png（亮度標準差 0.272、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_near_r.png（亮度標準差 0.276、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front.png（亮度標準差 0.214、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front_l.png（亮度標準差 0.278、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front_r.png（亮度標準差 0.218、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_street_far.png（亮度標準差 0.270、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front.png（亮度標準差 0.315、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front_l.png（亮度標準差 0.317、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front_r.png（亮度標準差 0.265、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_street_far.png（亮度標準差 0.297、資產在畫面內、鏡頭到資產無遮擋）"
+    "main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 26 張：aux_koya_S_A_RSW_002_front.png（亮度標準差 0.052、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_front_l.png（亮度標準差 0.214、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_front_r.png（亮度標準差 0.085、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_002_street_far.png（亮度標準差 0.250、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_front.png（亮度標準差 0.281、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_near_l.png（亮度標準差 0.296、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_006_near_r.png（亮度標準差 0.265、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front.png（亮度標準差 0.143、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front_l.png（亮度標準差 0.155、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_front_r.png（亮度標準差 0.171、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_010_street_far.png（亮度標準差 0.177、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front.png（亮度標準差 0.147、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front_l.png（亮度標準差 0.197、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_front_r.png（亮度標準差 0.171、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_014_street_far.png（亮度標準差 0.208、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_front.png（亮度標準差 0.273、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_front_near.png（亮度標準差 0.272、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RSW_018_near_r.png（亮度標準差 0.276、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front.png（亮度標準差 0.214、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front_l.png（亮度標準差 0.278、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_front_r.png（亮度標準差 0.218、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_002_street_far.png（亮度標準差 0.270、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front.png（亮度標準差 0.315、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front_l.png（亮度標準差 0.317、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_front_r.png（亮度標準差 0.265、資產在畫面內、鏡頭到資產無遮擋）；aux_koya_S_A_RNE_006_street_far.png（亮度標準差 0.297、資產在畫面內、鏡頭到資產無遮擋）"
    ],
    "part": "render",
-   "date": "2026-09-27T11:27:02"
+   "date": "2026-09-27T11:59:35"
   },
   "f5_f6": {
    "result": "PASS",
@@ -277,38 +277,38 @@
     "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、26 張鏡位＋實走）錯誤 0、警告 0；S_A_RSW_002_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RSW_006_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RSW_010_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RSW_014_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RSW_018_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RNE_002_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m；S_A_RNE_006_實走：正面 3 m 外朝台基走 4 秒，停在局部 z 1.44（牆面 0.91，被擋在外）、最大離地 0.00 m"
    ],
    "part": "render",
-   "date": "2026-09-27T11:27:02"
+   "date": "2026-09-27T11:59:35"
   }
  },
  "render_info": {
   "f6_png": "aux_koya_f6.png",
   "perf": [
-   "S_A_RSW_002_front：1533363 三角面／1253 draw call",
-   "S_A_RSW_002_front_l：1350639 三角面／963 draw call",
-   "S_A_RSW_002_front_r：1939512 三角面／2432 draw call",
-   "S_A_RSW_002_street_far：1411525 三角面／1129 draw call",
-   "S_A_RSW_006_front：1322921 三角面／932 draw call",
-   "S_A_RSW_006_near_l：1320530 三角面／660 draw call",
+   "S_A_RSW_002_front：1535091 三角面／1248 draw call",
+   "S_A_RSW_002_front_l：1352735 三角面／957 draw call",
+   "S_A_RSW_002_front_r：1951666 三角面／2424 draw call",
+   "S_A_RSW_002_street_far：1413189 三角面／1136 draw call",
+   "S_A_RSW_006_front：1324373 三角面／923 draw call",
+   "S_A_RSW_006_near_l：1321982 三角面／651 draw call",
    "S_A_RSW_006_near_r：1350344 三角面／964 draw call",
-   "S_A_RSW_010_front：1901926 三角面／3198 draw call",
-   "S_A_RSW_010_front_l：1823511 三角面／2846 draw call",
-   "S_A_RSW_010_front_r：1983760 三角面／3426 draw call",
-   "S_A_RSW_010_street_far：1547935 三角面／1702 draw call",
-   "S_A_RSW_014_front：1720280 三角面／2364 draw call",
-   "S_A_RSW_014_front_l：1471619 三角面／1754 draw call",
-   "S_A_RSW_014_front_r：1832879 三角面／2972 draw call",
+   "S_A_RSW_010_front：1920922 三角面／3192 draw call",
+   "S_A_RSW_010_front_l：1842541 三角面／2843 draw call",
+   "S_A_RSW_010_front_r：2002780 三角面／3416 draw call",
+   "S_A_RSW_010_street_far：1549915 三角面／1702 draw call",
+   "S_A_RSW_014_front：1720412 三角面／2363 draw call",
+   "S_A_RSW_014_front_l：1471631 三角面／1754 draw call",
+   "S_A_RSW_014_front_r：1833097 三角面／2967 draw call",
    "S_A_RSW_014_street_far：1357739 三角面／1562 draw call",
    "S_A_RSW_018_front：1031044 三角面／536 draw call",
    "S_A_RSW_018_front_near：997772 三角面／403 draw call",
    "S_A_RSW_018_near_r：1028248 三角面／513 draw call",
-   "S_A_RNE_002_front：1232740 三角面／977 draw call",
-   "S_A_RNE_002_front_l：1350441 三角面／936 draw call",
-   "S_A_RNE_002_front_r：1150993 三角面／718 draw call",
-   "S_A_RNE_002_street_far：1672346 三角面／2514 draw call",
-   "S_A_RNE_006_front：1386704 三角面／1306 draw call",
-   "S_A_RNE_006_front_l：1487658 三角面／1680 draw call",
+   "S_A_RNE_002_front：1246810 三角面／971 draw call",
+   "S_A_RNE_002_front_l：1369213 三角面／927 draw call",
+   "S_A_RNE_002_front_r：1169797 三角面／715 draw call",
+   "S_A_RNE_002_street_far：1675000 三角面／2513 draw call",
+   "S_A_RNE_006_front：1386758 三角面／1306 draw call",
+   "S_A_RNE_006_front_l：1487748 三角面／1680 draw call",
    "S_A_RNE_006_front_r：1238272 三角面／751 draw call",
-   "S_A_RNE_006_street_far：2733583 三角面／1587 draw call"
+   "S_A_RNE_006_street_far：2727605 三角面／1588 draw call"
   ],
   "warnings": [],
   "renderer": "forward_plus"

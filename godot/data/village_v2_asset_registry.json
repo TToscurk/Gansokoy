@@ -59,7 +59,7 @@
    "kind": "hero",
    "path": "res://assets/village_v2/aux_koya",
    "entry": "res://assets/village_v2/aux_koya/aux_koya.scn",
-   "entry_sha256": "416d4c59047153964ef9500a0b31e5afd2dda39c5def6c577a3f9b969db386ae",
+   "entry_sha256": "adff5643ee4167c5b71f64ac2d06a5aea773c030b1b1351568bff7f4974d4248",
    "gate_json": "res://assets/village_v2/aux_koya/gate.json",
    "gate": {
     "size": "PASS",
@@ -74,7 +74,7 @@
     "player_screenshot": "PASS",
     "f5_f6": "PASS"
    },
-   "gate_date": "2026-09-27T11:27:02",
+   "gate_date": "2026-09-27T11:59:35",
    "status": "ART_REVIEW",
    "label": "町家",
    "landmark": "",
@@ -87,7 +87,7 @@
    "kind": "hero",
    "path": "res://assets/village_v2/aux_kura",
    "entry": "res://assets/village_v2/aux_kura/aux_kura.scn",
-   "entry_sha256": "bbcd4edfaaaa39a996b44fee04fd1795803d49de0df186182ce26cb37457d791",
+   "entry_sha256": "90764c33a4faa460e063a8e8e22dcbc36edeab246c6d3614e2e3232b0d6f92df",
    "gate_json": "res://assets/village_v2/aux_kura/gate.json",
    "gate": {
     "size": "PASS",
@@ -102,7 +102,7 @@
     "player_screenshot": "PASS",
     "f5_f6": "PASS"
    },
-   "gate_date": "2026-09-27T11:28:47",
+   "gate_date": "2026-09-27T11:58:31",
    "status": "ART_REVIEW",
    "label": "町家",
    "landmark": "",

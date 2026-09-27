@@ -11,7 +11,8 @@
         參考圖入口在平側；P4 灰盒是妻入、正面（+z）＝山牆，入口改在山牆正面（妻入り土藏）。
   納屋＝參考圖沒有小屋（倉庫.PNG 只有土藏）；依村內既有語彙設計：石台＋土台、焦茶縦板＋押縁、角柱、灰瓦平入切妻、
         半開的板戸（引戸）、側面連子窓、左側薪棚。
-材質：只用共享材質庫 V2_Wood／V2_Plaster／V2_Kawara／V2_Stone（不新增貼圖；頂點色給色調）。
+材質：共享材質庫 V2_Wood／V2_Plaster／V2_Kawara／V2_Stone（頂點色給色調）；土藏的漆喰面改用資產目錄內的專用
+      V2_KuraShikkui（自然暖白 #E6E0D2，tools/build_village_v2_textures.py --kura-shikkui；共享 V2_Plaster 不動）。
 座標：Godot；原點＝footprint 中心、y 0＝footprint 內最高地面（base_h）、+z＝正面（P4 front_dir）。
 """
 import math
@@ -31,7 +32,9 @@ MATS = ['V2_Wood', 'V2_Plaster', 'V2_Kawara', 'V2_Stone']
 NO_ATLAS = {'regions': {}, 'swatches': {}}
 BOT = -0.40
 PLINTH = 0.32
-WHITE = 1.0          # 白漆喰＝V2_Plaster 原色（glTF 頂點色上限 1.0；與町家 Kit／霧雨店灰泥同一色，不另做貼圖）
+WHITE = 1.0          # 白漆喰：土藏的 V2_Plaster 面在 build_kura 結尾換成 V2_KuraShikkui（暖白貼圖）；納屋不用
+KURA_SHIKKUI = 'V2_KuraShikkui'
+KURA_SHIKKUI_TRES = 'res://assets/village_v2/aux_kura/V2_KuraShikkui.tres'
 NAMAKO_TILE = 0.20   # なまこ瓦片的深灰（V2_Stone × 0.20）
 
 
@@ -252,6 +255,8 @@ def build_kura(lod):
     # 石段
     m.box((-0.75, -0.14, KZF), (0.75, 0.16, KZF + 0.45), 'V2_Stone', 0.72, skip=('-y',))
     merge(m, kura_roof(lod), True)
+    # 漆喰面（牆、目地、框、鉢巻、山牆、紋章、屋根的漆喰部分）整槽改用土藏專用白漆喰；UV 已用同 tile_m 2.0 算好
+    m.mats[m.mats.index('V2_Plaster')] = KURA_SHIKKUI
     return m
 
 
@@ -416,8 +421,10 @@ def stats_of(objs_meshes):
 def emit(aid, label, build, spec, gate_spec, collision):
     out = G + '/assets/village_v2/' + aid
     K.clear_scene(bpy)
-    bm = K.blender_mats(bpy, MATS)
     meshes = [build(lod) for lod in (0, 1, 2)]
+    mats = meshes[0].mats
+    assert all(mm.mats == mats for mm in meshes), [mm.mats for mm in meshes]
+    bm = K.blender_mats(bpy, mats)
     objs = [mm.to_blender(bpy, bmats=bm) for mm in meshes]
     K.export_glb(bpy, out + '/src/%s.glb' % aid, objs)
     st = stats_of(meshes)
@@ -431,7 +438,7 @@ def emit(aid, label, build, spec, gate_spec, collision):
         'lod_objects': [mm.name for mm in meshes],
         'lod_ranges_m': [0, 40, 110, 700],
         'budget': {'lod0': 25000, 'lod1_ratio': 0.35, 'lod2_ratio': 0.10, 'materials': 5, 'collision': 8},
-        'materials': {k: ML[k]['tres'] for k in MATS},
+        'materials': {k: (KURA_SHIKKUI_TRES if k == KURA_SHIKKUI else ML[k]['tres']) for k in mats},
         'spec': spec,
         'gate_spec': gate_spec,
         'collision': collision,

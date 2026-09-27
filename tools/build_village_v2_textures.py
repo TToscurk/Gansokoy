@@ -2,6 +2,7 @@
 """人間之里 V2 共享材質庫 v1 ＋ 鈴奈庵 Hero atlas 產生器（P5 R1）。
 
   python tools/build_village_v2_textures.py [--cache=<dir>]
+  python tools/build_village_v2_textures.py --kura-shikkui   # 只產土藏專用白漆喰（P6 aux）
 
 來源：Poly Haven CC0（2K jpg：diffuse／nor_gl／rough）。原檔只放下載快取（預設
 %LOCALAPPDATA%/hermes/cache/scratch/p5_r1/ph_src），缺檔自動下載；輸出才進 repo。
@@ -537,6 +538,48 @@ def build_atlas():
     print('atlas →', f'{SZ}/suzunaan_atlas.png')
 
 
+# ───────────────────────── 土藏專用白漆喰（P6 aux）─────────────────────────
+# 共享 V2_Plaster（#C9BEA6 米色）不動；土藏另存資產目錄內材質。反照率由已入庫的 V2_Plaster_albedo.jpg 取亮度紋理
+# 重新著色（同一張 clay_plaster 紋理、無新來源），法線／粗糙度直接引用共享庫。自然暖白，不用純白。
+KURA_SHIKKUI = {'target': '#E6E0D2', 'contrast': 0.35,
+                'note': '土藏白漆喰（自然暖白 #E6E0D2，非 #FFFFFF）。反照率＝V2_Plaster_albedo.jpg 亮度紋理重新著色'
+                        '（對比 0.35，比町家灰泥平滑）；法線／粗糙度引用 _matlib/V2_Plaster_*；albedo_color＝ALBEDO_K。'}
+
+
+def build_kura_shikkui():
+    d = G + '/assets/village_v2/aux_kura'
+    src = f'{LIB}/V2_Plaster_albedo.jpg'
+    a = np.asarray(Image.open(src).convert('RGB'), dtype=np.float32) / 255.0
+    # 逐通道二分：找線性增益使 sRGB 平均＝目標（亮色目標會觸到 1.0 截斷，二分仍單調）。
+    # 平均一律 float64：float32 沿 axis 0 的 mean 在 4M 像素上偏差可達 +8/255。
+    lin = srgb2lin(a)
+    lum = (lin * np.array([0.2126, 0.7152, 0.0722])).sum(-1, keepdims=True)
+    rel = np.power(lum / lum.mean(), KURA_SHIKKUI['contrast'])[..., 0]
+    tgt = hexrgb(KURA_SHIKKUI['target'])
+    res = np.empty_like(a)
+    for c in range(3):
+        lo, hi = 0.0, 2.0
+        for _ in range(30):
+            g = (lo + hi) / 2
+            if lin2srgb(rel * g).mean(dtype=np.float64) < tgt[c]:
+                lo = g
+            else:
+                hi = g
+        res[..., c] = lin2srgb(rel * (lo + hi) / 2)
+    fn = 'V2_KuraShikkui_albedo.jpg'
+    save_jpg(res, f'{d}/{fn}', 90)
+    rp = f'res://assets/village_v2/aux_kura/{fn}'
+    write_import(rp, False)
+    write_tres(f'{d}/V2_KuraShikkui.tres', 'V2_KuraShikkui',
+               {'albedo': rp, 'normal': 'res://assets/village_v2/_matlib/V2_Plaster_normal.jpg',
+                'rough': 'res://assets/village_v2/_matlib/V2_Plaster_rough.jpg'}, ['roughness = 1.0'])
+    mean = res.reshape(-1, 3).astype(np.float64).mean(0)
+    print('V2_KuraShikkui: mean', rgbhex(mean), '（目標', KURA_SHIKKUI['target'], '）src sha256', sha256(src)[:12])
+
+
 if __name__ == '__main__':
+    if '--kura-shikkui' in sys.argv[1:]:
+        build_kura_shikkui()
+        sys.exit(0)
     build_matlib()
     build_atlas()
