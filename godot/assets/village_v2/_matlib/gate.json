@@ -1,36 +1,36 @@
 {
  "asset": "_matlib",
  "entry": "res://assets/village_v2/_matlib/matlib.json",
- "entry_sha256": "188a12d71c04f4ef674c003c0702cb15414dd73cf1823cbfef531afb5b559bc0",
+ "entry_sha256": "022150446fb5c0c180ac1557c9d319cbd01b7183480c17b8265a11cb974db91a",
  "godot": "4.7.2-stable (official)",
  "checks": {
   "license": {
    "result": "PASS",
    "detail": [
-    "6 組材質來源全是 Poly Haven CC0 且有 URL／原檔雜湊"
+    "6 組材質來源全是 Poly Haven CC0 且有 URL／原檔雜湊；地面 7 層（CC0）：Texture2DArray 2 張（albedo 2048²、nrh 1024²）＋雜訊 512²"
    ],
-   "date": "2026-09-25T01:52:53"
+   "date": "2026-09-27T20:10:12"
   },
   "texture_size": {
    "result": "PASS",
    "detail": [
-    "18 張貼圖全是 2048²"
+    "18 張材質貼圖全是 2048²；地面 7 層（CC0）：Texture2DArray 2 張（albedo 2048²、nrh 1024²）＋雜訊 512²"
    ],
-   "date": "2026-09-25T01:52:53"
+   "date": "2026-09-27T20:10:12"
   },
   "vram_compressed": {
    "result": "PASS",
    "detail": [
     "全部 VRAM 壓縮（法線標 normal_map）、匯入檔存在"
    ],
-   "date": "2026-09-25T01:52:53"
+   "date": "2026-09-27T20:10:12"
   },
   "tres_valid": {
    "result": "PASS",
    "detail": [
     ".tres 可載入、albedo_k＝材質庫登記值（預設 0.42）、頂點色、三張貼圖齊全"
    ],
-   "date": "2026-09-25T01:52:53"
+   "date": "2026-09-27T20:10:12"
   }
  }
 }

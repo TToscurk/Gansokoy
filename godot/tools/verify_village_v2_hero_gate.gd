@@ -1121,6 +1121,26 @@ func _tex_check(t: Texture2D, normal: bool) -> String:
 	return ""
 
 
+## Texture2DArray（2d_array_texture 匯入）：須 VRAM 壓縮、有 mipmap、匯入檔存在。
+func _layered_check(p: String) -> String:
+	var cf := ConfigFile.new()
+	if cf.load(p + ".import") != OK:
+		return "%s 沒有 .import" % p.get_file()
+	if String(cf.get_value("remap", "importer", "")) != "2d_array_texture":
+		return "%s 匯入器不是 2d_array_texture" % p.get_file()
+	if int(cf.get_value("params", "compress/mode", -1)) != 2:
+		return "%s 未 VRAM 壓縮（compress/mode=%s）" % [p.get_file(), cf.get_value("params", "compress/mode", "?")]
+	if not bool(cf.get_value("params", "mipmaps/generate", false)):
+		return "%s 未產生 mipmap" % p.get_file()
+	var dests: Array = cf.get_value("deps", "dest_files", [])
+	if dests.is_empty():
+		return "%s 尚未匯入（無 dest_files）" % p.get_file()
+	for d: String in dests:
+		if not FileAccess.file_exists(d):
+			return "%s 匯入檔不存在 %s" % [p.get_file(), d]
+	return ""
+
+
 ## 5 幾何
 func _c_geometry() -> void:
 	var lines: Array = []
@@ -1785,10 +1805,72 @@ func _matlib() -> void:
 			var err := _tex_check(t, slot == "normal")
 			if err != "":
 				vram_bad.append(err)
+	# P7 地面材質（matlib.json ground 段）：各層 CC0＋原檔雜湊；兩張 Texture2DArray 層數＝登記層數、
+	# 每層 ≤ TEX_MAX 且 2 的次方（albedo 須＝TEX_MAX）；VRAM 壓縮；shader 可載入且 uniform 齊全。
+	if ML.has("ground"):
+		var G: Dictionary = ML["ground"]
+		var nl: int = (G["layers"] as Array).size()
+		for lname: String in G["layers"]:
+			var li: Dictionary = G["layer_info"].get(lname, {})
+			var ls: Dictionary = li.get("source", {})
+			if String(ls.get("license", "")) != "CC0" or String(ls.get("url", "")) == "" or (ls.get("sha256", {}) as Dictionary).is_empty():
+				lic_bad.append("ground/" + lname)
+		if String(G["noise"].get("license", "")) != "CC0":
+			lic_bad.append("ground/noise")
+		for key: String in G["arrays"]:
+			var ta := load(String(G["arrays"][key])) as TextureLayered
+			n_tex += 1
+			if ta == null:
+				size_bad.append("%s 讀不到" % G["arrays"][key])
+				continue
+			var tw := ta.get_width()
+			var th := ta.get_height()
+			if ta.get_layers() != nl:
+				size_bad.append("%s 層數 %d（登記 %d）" % [String(G["arrays"][key]).get_file(), ta.get_layers(), nl])
+			if tw > TEX_MAX or th > TEX_MAX or tw & (tw - 1) != 0 or th & (th - 1) != 0 or (key == "albedo" and tw != TEX_MAX):
+				size_bad.append("%s %d×%d" % [String(G["arrays"][key]).get_file(), tw, th])
+			var err := _layered_check(String(G["arrays"][key]))
+			if err != "":
+				vram_bad.append(err)
+		var nt := load(String(G["noise"]["path"])) as Texture2D
+		n_tex += 1
+		if nt == null:
+			size_bad.append("%s 讀不到" % G["noise"]["path"])
+		else:
+			var err := _tex_check(nt, false)
+			if err != "":
+				vram_bad.append(err)
+		var sh := load(String(G["shader"])) as Shader
+		if sh == null:
+			tres_bad.append("ground.gdshader 讀不到")
+		else:
+			var names := {}
+			for u: Dictionary in sh.get_shader_uniform_list():
+				names[String(u["name"])] = true
+			for need in ["albedo_arr", "nrh_arr", "noise_tex", "ground_k", "mode", "use_vertex_weights"]:
+				if not names.has(need):
+					tres_bad.append("ground.gdshader 缺 uniform %s" % need)
+			if not sh.get_code().contains("ground_k = %s" % String.num(float(G["albedo_k"]))):
+				tres_bad.append("ground.gdshader ground_k 與 matlib.json albedo_k（%s）不一致" % G["albedo_k"])
+		# 產物雜湊（shader／兩張 array／雜訊）：手改任何一個都不得 PASS
+		var fsha: Dictionary = G.get("files_sha256", {})
+		if fsha.is_empty():
+			tres_bad.append("ground 缺 files_sha256")
+		for fp: String in fsha:
+			if FileAccess.get_sha256(fp) != String(fsha[fp]):
+				tres_bad.append("%s 雜湊與 matlib.json 不符" % fp.get_file())
+	var n_mat_tex := n_tex
+	var ground_note := ""
+	if ML.has("ground"):
+		ground_note = "；地面 %d 層（CC0）：Texture2DArray %d 張（albedo %d²、nrh %d²）＋雜訊 %d²" % [
+			(ML["ground"]["layers"] as Array).size(), (ML["ground"]["arrays"] as Dictionary).size(),
+			int(ML["ground"]["size"]["albedo"]), int(ML["ground"]["size"]["nrh"]), int(ML["ground"]["noise"]["size"])]
+		n_mat_tex = n_tex - (ML["ground"]["arrays"] as Dictionary).size() - 1
 	R.clear()
-	_res("license", lic_bad.is_empty(), "%d 組材質來源全是 Poly Haven CC0 且有 URL／原檔雜湊%s" % [ML["materials"].size(),
-		("；✗ " + "、".join(lic_bad)) if lic_bad else ""])
-	_res("texture_size", size_bad.is_empty(), "%d 張貼圖全是 %d²%s" % [n_tex, TEX_MAX, ("；✗ " + "、".join(size_bad)) if size_bad else ""])
+	_res("license", lic_bad.is_empty(), "%d 組材質來源全是 Poly Haven CC0 且有 URL／原檔雜湊%s%s" % [ML["materials"].size(),
+		ground_note, ("；✗ " + "、".join(lic_bad)) if lic_bad else ""])
+	_res("texture_size", size_bad.is_empty(), "%d 張材質貼圖全是 %d²%s%s" % [n_mat_tex, TEX_MAX, ground_note,
+		("；✗ " + "、".join(size_bad)) if size_bad else ""])
 	_res("vram_compressed", vram_bad.is_empty(), "全部 VRAM 壓縮（法線標 normal_map）、匯入檔存在%s" % [
 		("；✗ " + "、".join(vram_bad.slice(0, 4))) if vram_bad else ""])
 	_res("tres_valid", tres_bad.is_empty(), ".tres 可載入、albedo_k＝材質庫登記值（預設 %.2f）、頂點色、三張貼圖齊全%s" % [k,

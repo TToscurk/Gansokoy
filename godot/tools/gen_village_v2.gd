@@ -122,6 +122,9 @@ var tri_stats := {"quads": 0, "flip": 0, "fan": 0}
 var edge_stats := {}
 var parcel_recs: Array = []     # P3 地塊紀錄（_parcels 產生，P4 _greybox 用）
 var _gb_mesh := {}              # P4 灰盒：同尺寸 mesh 共用
+var _ground_sh: Shader = null   # P7 地面材質 shader（registry _matlib 通過 gate 才有；否則維持頂點色灰模）
+var _ground_tex := {}           # albedo／nrh（Texture2DArray）、noise
+var ground_stats := {}          # P7 地表分層統計（_report 用）
 
 
 func _init() -> void:
@@ -162,6 +165,7 @@ func _init() -> void:
 	_group(vroot.get_node("Debug"), "Labels")
 	for g in ["Streams", "Waterfalls"]:
 		_group(vroot.get_node("Water"), g)
+	_ground_load()
 	_terrain()
 	_water()
 	_roads()
@@ -691,9 +695,14 @@ func _ribbon(pts: PackedVector2Array, hw_fn: Callable, y_fn: Callable, ok_fn: Ca
 	var prev_ok := false
 	var pl := Vector3()
 	var pr := Vector3()
+	var ps := 0.0
+	var phw := 0.0
+	var s := 0.0
 	var tris := 0
 	for k in dp.size():
 		var p := dp[k]
+		if k > 0:
+			s += p.distance_to(dp[k - 1])
 		var t := (dp[mini(k + 1, dp.size() - 1)] - dp[maxi(k - 1, 0)]).normalized()
 		var n := Vector2(-t.y, t.x)
 		var hw: float = hw_fn.call(p)
@@ -711,15 +720,26 @@ func _ribbon(pts: PackedVector2Array, hw_fn: Callable, y_fn: Callable, ok_fn: Ca
 		var cl := Vector3(a.x, ya, a.y)
 		var cr := Vector3(b.x, yb, b.y)
 		if ok and prev_ok:
-			_tri_up(st, pl, pr, cl)
-			_tri_up(st, pr, cr, cl)
+			# P7：UV.x＝橫向（左 +1／右 −1，相對半寬）、UV.y＝沿路公尺、UV2.x＝半寬（地面 shader 道路帶模式用）
+			_tri_uv(st, [pl, pr, cl], [Vector2(1, ps), Vector2(-1, ps), Vector2(1, s)], [phw, phw, hw])
+			_tri_uv(st, [pr, cr, cl], [Vector2(-1, ps), Vector2(-1, s), Vector2(1, s)], [phw, hw, hw])
 			tris += 2
 		prev_ok = ok
 		pl = cl
 		pr = cr
+		ps = s
+		phw = hw
 	if tris == 0:
 		return null
 	return st.commit()
+
+
+func _tri_uv(st: SurfaceTool, v: Array, uv: Array, hw: Array) -> void:
+	for i in 3:
+		st.set_normal(Vector3.UP)
+		st.set_uv(uv[i])
+		st.set_uv2(Vector2(float(hw[i]), 0.0))
+		st.add_vertex(v[i])
 
 
 func _tri_up(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3) -> void:
@@ -751,6 +771,97 @@ func _save(res: Resource, name: String) -> Resource:
 		push_error("[v2] 存 %s 失敗 %s" % [path, error_string(err)])
 	res.take_over_path(path)
 	return res
+
+
+## P7 地面材質：registry v2_assets 的 _matlib（material_library）gate 全 PASS、matlib.json 雜湊一致，
+## 且 matlib.json 有 ground 段 → 載入 ground shader 與三張貼圖。路徑一律從 registry／matlib.json 讀（不寫 res:// 字串）。
+func _ground_load() -> void:
+	for a: Dictionary in HLib.registry().get("v2_assets", []):
+		if String(a.get("kind", "")) != "material_library":
+			continue
+		var g: Dictionary = a.get("gate", {})
+		var ok := not g.is_empty()
+		for k in g:
+			ok = ok and String(g[k]) == "PASS"
+		var entry := String(a.get("entry", ""))
+		if not ok or entry == "" or FileAccess.get_sha256(entry) != String(a.get("entry_sha256", "")):
+			print("[v2] P7 地面材質：_matlib gate 未全 PASS 或 matlib.json 雜湊不符 → 地表維持頂點色灰模")
+			return
+		var ML: Variant = JSON.parse_string(FileAccess.get_file_as_string(entry))
+		if not (ML is Dictionary) or not (ML as Dictionary).has("ground"):
+			return
+		var G: Dictionary = ML["ground"]
+		var fsha: Dictionary = G.get("files_sha256", {})
+		for fp: String in fsha:
+			if FileAccess.get_sha256(fp) != String(fsha[fp]):
+				print("[v2] P7 地面材質：%s 雜湊與 matlib.json 不符 → 地表維持頂點色灰模" % fp.get_file())
+				return
+		if fsha.is_empty():
+			print("[v2] P7 地面材質：matlib.json ground 缺 files_sha256 → 地表維持頂點色灰模")
+			return
+		_ground_sh = load(String(G["shader"])) as Shader
+		_ground_tex = {"albedo": load(String(G["arrays"]["albedo"])), "nrh": load(String(G["arrays"]["nrh"])),
+			"noise": load(String(G["noise"]["path"]))}
+		for k in _ground_tex:
+			if _ground_tex[k] == null:
+				push_error("[v2] P7 地面材質：%s 載入失敗" % k)
+				_ground_sh = null
+		return
+
+
+## 地面材質實例。params 覆寫 shader uniform（mode、fix_a／fix_b、道路參數等）；同參數共用一份（_mats 快取）。
+func _ground_mat(params: Dictionary) -> Material:
+	var key := "ground_" + JSON.stringify(params)
+	if _mats.has(key):
+		return _mats[key]
+	var m := ShaderMaterial.new()
+	m.shader = _ground_sh
+	m.set_shader_parameter("albedo_arr", _ground_tex["albedo"])
+	m.set_shader_parameter("nrh_arr", _ground_tex["nrh"])
+	m.set_shader_parameter("noise_tex", _ground_tex["noise"])
+	var pd: Dictionary = L["districts"]["Farmland"]["paddy"]
+	m.set_shader_parameter("paddy", Vector4(float(pd["x0"]), float(pd["z0"]), float(pd["dx"]), float(pd["dz"])))
+	m.set_shader_parameter("bund_w", float(pd["bund"]))
+	for k in params:
+		m.set_shader_parameter(k, params[k])
+	_mats[key] = m
+	return m
+
+
+# P7 道路分級 → 地面層（ground.gdshader mode 1）。層：0 grass 1 street 2 trodden 3 gravel 4 mud 5 rock 6 forest
+# 路面一律 street（版築土，比町家地面的 trodden 亮，俯視才分得出巷道；P3 灰模同樣是路比地面亮）：
+# main＝細砂利路肩＋中央踩磨＋兩道車轍；secondary＝車轍兩道；alley／lane＝中央踩磨、路肩接 trodden（與町家地面連續）；
+# farm＝中央草帶（兩道輪跡）、路肩接草。
+const ROAD_GROUND := {
+	"main": {"mode": 1, "road_layer": 1, "shoulder_layer": 2, "shoulder_start": 0.82, "edge_gravel": 0.55,
+		"wear_center": 0.35, "rut_offset": 1.25, "rut_strength": 0.45},
+	"secondary": {"mode": 1, "road_layer": 1, "shoulder_layer": 2, "shoulder_start": 0.78, "edge_gravel": 0.25,
+		"wear_center": 0.0, "rut_offset": 0.85, "rut_strength": 0.4},
+	"alley": {"mode": 1, "road_layer": 1, "shoulder_layer": 2, "shoulder_start": 0.72, "edge_gravel": 0.0,
+		"wear_center": 0.3, "rut_offset": 0.0, "rut_strength": 0.0},
+	"lane": {"mode": 1, "road_layer": 1, "shoulder_layer": 2, "shoulder_start": 0.7, "edge_gravel": 0.0,
+		"wear_center": 0.3, "rut_offset": 0.0, "rut_strength": 0.0},
+	"farm": {"mode": 1, "road_layer": 1, "shoulder_layer": 0, "shoulder_start": 0.62, "edge_gravel": 0.0,
+		"center_grass": 0.8, "rut_offset": 0.55, "rut_strength": 0.3}}
+# 院子地面（固定配比，mode 0 use_vertex_weights=false）：fix_a＝trodden,gravel,mud,rock；fix_b＝forest,farm,wet,street
+const YARD_GROUND := {
+	"machiya_yard": {"fix_a": Vector4(0.62, 0.18, 0.0, 0.0), "fix_b": Vector4(0.0, 0.0, 0.0, 0.12)},
+	"aux_yard": {"fix_a": Vector4(0.38, 0.0, 0.0, 0.0), "fix_b": Vector4(0.0, 0.0, 0.0, 0.0)}}
+
+
+## 道路／巷道材質：地面 shader 可用 → ROAD_GROUND[cls] 道路帶模式；否則 P3 頂點色灰模（原 _mat）
+func _road_mat(cls: String, fallback: Color) -> Material:
+	if _ground_sh == null or not ROAD_GROUND.has(cls):
+		return _mat(fallback, true)
+	return _ground_mat(ROAD_GROUND[cls])
+
+
+## 院子地面材質：固定配比（YARD_GROUND）；否則 P4 灰模色
+func _yard_mat(kind: String) -> Material:
+	if _ground_sh == null or not YARD_GROUND.has(kind):
+		return _mat(_k(GB_YARD[kind]), true)
+	var y: Dictionary = YARD_GROUND[kind]
+	return _ground_mat({"use_vertex_weights": false, "fix_a": y["fix_a"], "fix_b": y["fix_b"]})
 
 
 func _mat(c: Color, cull_off := false, alpha := false) -> StandardMaterial3D:
@@ -942,17 +1053,25 @@ func _terrain() -> void:
 	print("[v2] 地形三角化：%d 格、換對角線 %d、格心加密 %d（+%d 三角）" % [
 		tri_stats["quads"], tri_stats["flip"], tri_stats["fan"], tri_stats["fan"] * 2])
 	_edge_kinds()
-	var tm := StandardMaterial3D.new()
-	tm.vertex_color_use_as_albedo = true
-	tm.vertex_color_is_srgb = true
-	tm.roughness = 1.0
+	var tm: Material
+	var gw: Array = []
+	if _ground_sh != null:
+		# P7：地表改地面 shader（splat 權重寫進 COLOR／UV／UV2）；頂點色灰模只在 _matlib 未過 gate 時保留
+		gw = _ground_weights(verts, nors)
+		tm = _ground_mat({})
+	else:
+		var sm := StandardMaterial3D.new()
+		sm.vertex_color_use_as_albedo = true
+		sm.vertex_color_is_srgb = true
+		sm.roughness = 1.0
+		tm = sm
 	var tg := vroot.get_node("Terrain")
 	for pair in [["MainTerrain", i_main], ["NorthHill", i_hill],
 			["FarmlandTerrain", i_farm], ["RiverTerrain", i_river]]:
 		var idx: PackedInt32Array = pair[1]
 		if idx.is_empty():
 			continue
-		var mesh := _sub_mesh(idx, verts, nors, cols)
+		var mesh := _sub_mesh(idx, verts, nors, cols, gw)
 		_mi(tg, pair[0], _save(mesh, "terrain_" + String(pair[0]).to_lower()), tm)
 	var shape := ConcavePolygonShape3D.new()
 	shape.set_faces(faces)
@@ -966,6 +1085,188 @@ func _terrain() -> void:
 	body.add_child(cs)
 	vroot.get_node("Collision").add_child(body)
 	_boundary()
+
+
+# ─────────────────────────── P7 地面分層（splat 權重） ───────────────────────────
+# 層：0 grass 1 street 2 trodden 3 gravel 4 mud 5 rock 6 forest（ground.gdshader mode 0）
+# 頂點寫入：COLOR＝trodden,gravel,mud,rock；UV＝forest,farm；UV2＝wet,street；草地＝其餘（shader 補滿）。
+# 交界的不規則（非直線）由 shader 用世界座標雜訊擾動中間權重＋高度混合完成，這裡只給平滑的分區權重。
+
+const BANK_SEG_FREQ := 0.45    # 河岸段落雜訊縮放（noise2 頻率 0.035 × 0.45 → 約 60 m 一段：礫灘／侵蝕土岸／岩岸輪替）
+const ROAD_HALO := 1.6         # 路緣外踩踏帶寬（m）：道路帶外的地形從踩實土漸變回草
+
+
+## 每頂點地面分層權重（含 _quad_tris 追加的格心點）。回傳 [COLOR, UV, UV2]。
+func _ground_weights(verts: PackedVector3Array, nors: PackedVector3Array) -> Array:
+	var n := verts.size()
+	var ng := nx * nz
+	var col := PackedColorArray()
+	var uv := PackedVector2Array()
+	var uv2 := PackedVector2Array()
+	col.resize(n)
+	uv.resize(n)
+	uv2.resize(n)
+	var halo := _road_halo()
+	var fcell := _forest_cells()
+	var wl_river := float(H["river_water"])
+	var st := {"grass": 0, "built": 0, "road_halo": 0, "bank": 0, "bed": 0, "rock": 0, "forest": 0, "farm": 0, "pad": 0,
+		"bank_gravel": 0, "bank_rock": 0, "bank_soil": 0}
+	for k in n:
+		var v := verts[k]
+		var p := Vector2(v.x, v.z)
+		var grid := k < ng
+		var hl0: float = hl[k] if grid else _sample(hl, p.x, p.y)
+		var wb: float = wbv[k] if grid else _sample(wbv, p.x, p.y)
+		var wf: float = wfv[k] if grid else _sample(wfv, p.x, p.y)
+		var hr: float = halo[k] if grid else _sample(halo, p.x, p.y)
+		var ny := nors[k].y
+		var tr := wb * 0.72
+		var gr := 0.0
+		var md := 0.0
+		# 岩面：坡度漸變帶放寬（ny 0.62–0.9）→ 部分權重交給 shader 高度混合，岩石從草裡「露頭」成塊，
+		# 不再沿網格三角面切成整片方塊（r2 俯視審圖：陡坡出現格狀色塊）
+		var rk := 1.0 - smoothstep(0.62, 0.9, ny)
+		var fo := _forest_at(fcell, p) * 0.92
+		var fa := smoothstep(0.35, 0.75, wf)
+		var wt := 0.0
+		var sr := 0.0
+		tr = maxf(tr, hr * 0.85)
+		for pd in pads:
+			var d := p.distance_to(Vector2(pd.x, pd.y))
+			if d < pd.z + 2.0:
+				var pw := 1.0 - smoothstep(pd.z - 1.0, pd.z + 2.0, d)
+				sr = maxf(sr, pw * 0.62)
+				gr = maxf(gr, pw * 0.16)
+				st["pad"] += 1
+		var cd := hl0 - v.y
+		if cd > 0.05:
+			# 水道內（河床＋岸坡）：找最近水體取水位
+			var rr := _near(river_pts, p)
+			var e := rr.x - _hw_interp(river_hw, rr)
+			var wl := wl_river
+			for ch in channels:
+				var rc := _near(ch["pts"], p)
+				var ec := rc.x - float(ch["hw"])
+				if ec < e:
+					e = ec
+					wl = _level(ch, rc)
+			var rel := v.y - wl
+			var seg := noise2.get_noise_2d(p.x * BANK_SEG_FREQ + 517.0, p.y * BANK_SEG_FREQ - 211.0)
+			var gb := smoothstep(0.05, 0.3, -seg)        # 礫灘段
+			var rf := smoothstep(0.12, 0.38, seg)        # 岩岸段
+			var slope := 1.0 - smoothstep(0.9, 0.975, ny)
+			fo = 0.0
+			fa = 0.0
+			tr *= 1.0 - smoothstep(0.05, 0.6, cd)
+			if rel < -0.05:
+				var deep := smoothstep(0.45, 1.6, -rel)
+				md = 0.2 + deep * 0.7
+				gr = maxf(gr, (1.0 - deep) * 0.8)
+				rk = maxf(rk, rf * 0.35 * (1.0 - deep))
+				wt = 1.0
+				st["bed"] += 1
+			else:
+				var toe := 1.0 - smoothstep(0.0, 0.45, rel)
+				md = maxf(md, toe * (0.65 - gb * 0.45))
+				gr = maxf(gr, toe * (0.35 + gb * 0.5))
+				gr = maxf(gr, gb * (1.0 - smoothstep(0.35 + gb * 0.9, 0.7 + gb * 1.2, rel)))
+				rk = maxf(rk, rf * 0.8 * smoothstep(0.05, 0.4, rel) * slope)
+				var soil := clampf(1.0 - gb - rf, 0.0, 1.0)
+				# 侵蝕土岸：緩岸也露土（坡度係數下限 0.45），水線上 0.1–2.4 m；否則緩岸整片是草、讀成平滑草坡（r2 審圖）
+				tr = maxf(tr, soil * 0.75 * smoothstep(0.1, 0.45, rel) * maxf(slope, 0.45) * (1.0 - smoothstep(1.0, 2.4, rel)))
+				wt = 1.0 - smoothstep(0.0, 0.5, rel)
+				st["bank"] += 1
+				if gb > 0.5:
+					st["bank_gravel"] += 1
+				elif rf > 0.5:
+					st["bank_rock"] += 1
+				else:
+					st["bank_soil"] += 1
+		col[k] = Color(clampf(tr, 0.0, 1.0), clampf(gr, 0.0, 1.0), clampf(md, 0.0, 1.0), clampf(rk, 0.0, 1.0))
+		uv[k] = Vector2(clampf(fo, 0.0, 1.0), clampf(fa, 0.0, 1.0))
+		uv2[k] = Vector2(clampf(wt, 0.0, 1.0), clampf(sr, 0.0, 1.0))
+		if cd > 0.05:
+			pass
+		elif rk > 0.5:
+			st["rock"] += 1
+		elif fo > 0.5:
+			st["forest"] += 1
+		elif fa > 0.5:
+			st["farm"] += 1
+		elif wb > 0.5:
+			st["built"] += 1
+		elif hr > 0.5:
+			st["road_halo"] += 1
+		else:
+			st["grass"] += 1
+	ground_stats = st
+	print("[v2] P7 地面分層（頂點）：%s" % JSON.stringify(st))
+	return [col, uv, uv2]
+
+
+## 道路／巷道外緣踩踏帶（高度網格頂點上的 0–1 權重）：路面下＝1，路緣外 ROAD_HALO m 內漸變到 0。
+func _road_halo() -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(nx * nz)
+	var lines: Array = []
+	for r in roads:
+		lines.append([r["pts"], float(r["hw"])])
+	for r in PLib.lanes(L):
+		lines.append([r["pts"], float(r["hw"])])
+	for ln in lines:
+		var hw: float = ln[1]
+		var rad := hw + ROAD_HALO + 0.5
+		var dp := _dense(ln[0], 1.0)
+		for q in dp:
+			var i0 := clampi(floori((q.x - rad - x0) / step), 0, nx - 1)
+			var i1 := clampi(ceili((q.x + rad - x0) / step), 0, nx - 1)
+			var j0 := clampi(floori((q.y - rad - z0) / step), 0, nz - 1)
+			var j1 := clampi(ceili((q.y + rad - z0) / step), 0, nz - 1)
+			for j in range(j0, j1 + 1):
+				for i in range(i0, i1 + 1):
+					var d := q.distance_to(Vector2(x0 + i * step, z0 + j * step))
+					var w := 1.0 - smoothstep(hw - 0.3, hw + ROAD_HALO, d)
+					var k := j * nx + i
+					if w > out[k]:
+						out[k] = w
+	return out
+
+
+## 林帶格（同 _forests 的歸屬規則：在林帶內且 _forest_ok）→ 0/1 格陣列，_forest_at 雙線性取樣成平滑林緣。
+func _forest_cells() -> Dictionary:
+	var F: Dictionary = L["forests"]
+	var cell := maxi(1, int(round(float(F["cell"]) / step)))
+	var names: Array[String] = []
+	for k in F:
+		if typeof(F[k]) == TYPE_DICTIONARY:
+			names.append(k)
+	var ncx := (nx - 1) / cell
+	var ncz := (nz - 1) / cell
+	var m := PackedFloat32Array()
+	m.resize(ncx * ncz)
+	for cj in ncz:
+		for ci in ncx:
+			var p := Vector2(x0 + (ci + 0.5) * cell * step, z0 + (cj + 0.5) * cell * step)
+			for b in names.size():
+				if _in_belt(F[names[b]], names[b], p):
+					if _forest_ok(p):
+						m[cj * ncx + ci] = 1.0
+					break
+	return {"m": m, "ncx": ncx, "ncz": ncz, "cs": cell * step}
+
+
+func _forest_at(fc: Dictionary, p: Vector2) -> float:
+	var cs: float = fc["cs"]
+	var ncx: int = fc["ncx"]
+	var ncz: int = fc["ncz"]
+	var m: PackedFloat32Array = fc["m"]
+	var fx := clampf((p.x - x0) / cs - 0.5, 0.0, ncx - 1.001)
+	var fz := clampf((p.y - z0) / cs - 0.5, 0.0, ncz - 1.001)
+	var i := int(fx)
+	var j := int(fz)
+	var a := lerpf(m[j * ncx + i], m[j * ncx + i + 1], fx - i)
+	var b := lerpf(m[(j + 1) * ncx + i], m[(j + 1) * ncx + i + 1], fx - i)
+	return smoothstep(0.15, 0.85, lerpf(a, b, fz - j))
 
 
 const FAN_TOL := 0.08    # 格心真實高度與兩條對角線中點都差 > 此值 → 格心加點
@@ -1083,13 +1384,16 @@ func _boundary() -> void:
 
 
 func _sub_mesh(idx: PackedInt32Array, verts: PackedVector3Array, nors: PackedVector3Array,
-		cols: PackedColorArray) -> ArrayMesh:
+		cols: PackedColorArray, gw: Array = []) -> ArrayMesh:
 	var remap := PackedInt32Array()
 	remap.resize(verts.size())
 	remap.fill(-1)
 	var v2 := PackedVector3Array()
 	var n2 := PackedVector3Array()
 	var c2 := PackedColorArray()
+	var u1 := PackedVector2Array()
+	var u2 := PackedVector2Array()
+	var use_w := not gw.is_empty()
 	var i2 := PackedInt32Array()
 	i2.resize(idx.size())
 	for t in idx.size():
@@ -1098,13 +1402,21 @@ func _sub_mesh(idx: PackedInt32Array, verts: PackedVector3Array, nors: PackedVec
 			remap[g] = v2.size()
 			v2.append(verts[g])
 			n2.append(nors[g])
-			c2.append(cols[g])
+			if use_w:
+				c2.append((gw[0] as PackedColorArray)[g])
+				u1.append((gw[1] as PackedVector2Array)[g])
+				u2.append((gw[2] as PackedVector2Array)[g])
+			else:
+				c2.append(cols[g])
 		i2[t] = remap[g]
 	var arr := []
 	arr.resize(Mesh.ARRAY_MAX)
 	arr[Mesh.ARRAY_VERTEX] = v2
 	arr[Mesh.ARRAY_NORMAL] = n2
 	arr[Mesh.ARRAY_COLOR] = c2
+	if use_w:
+		arr[Mesh.ARRAY_TEX_UV] = u1
+		arr[Mesh.ARRAY_TEX_UV2] = u2
 	arr[Mesh.ARRAY_INDEX] = i2
 	var m := ArrayMesh.new()
 	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
@@ -1309,7 +1621,7 @@ func _roads() -> void:
 		if mesh == null:
 			continue
 		var mi := _mi(grp, String(r["name"]), _save(mesh, "road_" + String(r["name"]).to_lower()),
-			_mat(ROAD_COL[cls], true), false)
+			_road_mat(cls, ROAD_COL[cls]), false)
 		mi.set_meta("label", r["label"])
 		mi.set_meta("width_m", hw * 2.0)
 		mi.set_meta("class", cls)
@@ -1326,7 +1638,7 @@ func _lanes() -> void:
 		if mesh == null:
 			continue
 		var mi := _mi(grp, String(r["name"]), _save(mesh, "lane_" + String(r["name"]).to_lower()),
-			_mat(ROAD_COL["alley"].darkened(0.06), true), false)
+			_road_mat("lane", ROAD_COL["alley"].darkened(0.06)), false)
 		mi.set_meta("label", r["label"])
 		mi.set_meta("width_m", hw * 2.0)
 		mi.set_meta("class", "lane")
@@ -1983,7 +2295,7 @@ func _greybox() -> void:
 		var dg := vroot.get_node("Districts/" + parts[0])
 		var mi := _mi(dg, "Yards" if parts[1] == "machiya_yard" else "AuxYards",
 			_save((fills[key] as SurfaceTool).commit(), "yards_%s_%s" % [parts[0].to_lower(), parts[1]]),
-			_mat(_k(GB_YARD[parts[1]]), true), false)
+			_yard_mat(parts[1]), false)
 		mi.set_meta("phase", "P4")
 		mi.set_meta("note", "院子地面（町家背面院子／aux 庭院・後院）；aux 空地不鋪")
 	var gf := FileAccess.open(GREYBOX, FileAccess.WRITE)

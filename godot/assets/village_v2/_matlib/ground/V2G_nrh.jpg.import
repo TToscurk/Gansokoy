@@ -1,0 +1,29 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://cmwh354y0s23"
+path.bptc="res://.godot/imported/V2G_nrh.jpg-d1884f19290e9f377c420edfc9ee7194.bptc.ctexarray"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://assets/village_v2/_matlib/ground/V2G_nrh.jpg"
+dest_files=["res://.godot/imported/V2G_nrh.jpg-d1884f19290e9f377c420edfc9ee7194.bptc.ctexarray"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=true
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical=7

@@ -221,5 +221,227 @@
    "note": "朱漆木（剝落處露木）：鳥居柱、貫、島木、額束。來源木紋橫向 → 轉 90°。albedo_k 0.80：飽和朱色照 0.42 會壓成暗褐（r1 預覽 vision 判讀「dark brown-maroon」），露木改暗 #5E4A38 免得淡色條紋搶畫面。",
    "exposed_wood_fraction": 0.148
   }
+ },
+ "ground": {
+  "_note": "P7 地面材質：兩張 Texture2DArray（層序＝layers，不得重排）；shader＝ground.gdshader（地形 splat／道路帶共用）。由 tools/build_village_v2_textures.py --ground 產生，勿手改。",
+  "layers": [
+   "grass",
+   "street",
+   "trodden",
+   "gravel",
+   "mud",
+   "rock",
+   "forest"
+  ],
+  "arrays": {
+   "albedo": "res://assets/village_v2/_matlib/ground/V2G_albedo.jpg",
+   "nrh": "res://assets/village_v2/_matlib/ground/V2G_nrh.jpg"
+  },
+  "size": {
+   "albedo": 2048,
+   "nrh": 1024
+  },
+  "nrh_channels": "R,G＝切線空間法線 x,y（OpenGL）；B＝高度 0–1（p2–p98 正規化）",
+  "noise": {
+   "path": "res://assets/village_v2/_matlib/ground/V2G_noise.png",
+   "size": 512,
+   "source": "procedural（本腳本 _fbm，seed 701–704）",
+   "license": "CC0",
+   "compress": "VRAM high_quality（BPTC）；A 為資料通道（fix_alpha_border 關）",
+   "channels": "R 大斑塊 4 格／G 中 8 格／B 細 32 格／A 大斑塊 4 格（各 fBm、名次轉均勻分布）"
+  },
+  "shader": "res://assets/village_v2/_matlib/ground/ground.gdshader",
+  "albedo_k": 0.19,
+  "albedo_k_note": "線性係數；對齊 P1–P6 核准地形亮度（sRGB 頂點色×0.42 解碼 ≈ 線性×0.15），見 GROUND_K 註解",
+  "files_sha256": {
+   "res://assets/village_v2/_matlib/ground/ground.gdshader": "0c030a3d9a9a8392c024967fcec234196f9e7a828b8b58200c5e3f12e672fa89",
+   "res://assets/village_v2/_matlib/ground/V2G_albedo.jpg": "0e71f65607764478d1a29e83f5a878f9e832024f06d6c4a7105b0de435d51882",
+   "res://assets/village_v2/_matlib/ground/V2G_nrh.jpg": "f3795a7405efc688e4407d3b9846ef13f87c59e146e823ffab6c58be0172f96c",
+   "res://assets/village_v2/_matlib/ground/V2G_noise.png": "fe40e4ceca17787f25825d1d241dd187c97a35cca51b64fb3dd3723ec3106a3a"
+  },
+  "layer_info": {
+   "grass": {
+    "tile_m": 2.51,
+    "rough": [
+     0.82,
+     0.98
+    ],
+    "target_srgb": "#6E7D4B",
+    "albedo_mean_srgb": "#6E7D4B",
+    "note": "草地（基底）：短草、少落葉。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.12,
+     "normal_strength": 0.9
+    },
+    "source": {
+     "polyhaven_id": "grass_ground",
+     "url": "https://polyhaven.com/a/grass_ground",
+     "license": "CC0",
+     "sha256": {
+      "diff": "4272bddc71a7fa659d1deeb13a9df8c42e68a5ac8cde7523187e4a081e028258",
+      "nor": "effa95c06af273c974476d9a74a234668a1c9292f60fffb4fa40348d638ee7f3",
+      "rough": "afaed95537e894b8054db38c81712a6d9504b05b560274526621d91d5a95fbe7",
+      "disp": "7871dd774df740647f16341196f60b6680c69f8073046ae9129f4a319685f2db"
+     }
+    }
+   },
+   "street": {
+    "tile_m": 2.07,
+    "rough": [
+     0.8,
+     0.96
+    ],
+    "target_srgb": "#B09A74",
+    "albedo_mean_srgb": "#AE9A74",
+    "note": "主街版築土＋細砂利（road_classes.main）；黃土參考 #A4875D～#B99D74 之間。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.2,
+     "normal_strength": 0.8
+    },
+    "source": {
+     "polyhaven_id": "dirt_floor",
+     "url": "https://polyhaven.com/a/dirt_floor",
+     "license": "CC0",
+     "sha256": {
+      "diff": "1afaf974bc016e5019f48f6590a53e3e3730f48ae2eb5a1717519ad89038f661",
+      "nor": "da70ddc5c7d53d905d842ec189afbf7e2a7da84f281e94041346829b65f29786",
+      "rough": "56d3faa1f0624c3e366d057596f50fe3264415a64c967830f61ca139b9a94bfc",
+      "disp": "51ec6654074625a205f29e07e4c928ebfa5a892036303b6eb921c2791cc88403"
+     }
+    }
+   },
+   "trodden": {
+    "tile_m": 2.11,
+    "rough": [
+     0.82,
+     0.97
+    ],
+    "target_srgb": "#978566",
+    "albedo_mean_srgb": "#988566",
+    "note": "踏み固め土：次要街道、巷、院子、建成區地面、河岸侵蝕面。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.25,
+     "normal_strength": 0.8
+    },
+    "source": {
+     "polyhaven_id": "forest_ground_06",
+     "url": "https://polyhaven.com/a/forest_ground_06",
+     "license": "CC0",
+     "sha256": {
+      "diff": "7e40f1a8e8a84db5f69f084d4fcbe962fe85da81c63ddc929964b5ae6a40b3c5",
+      "nor": "b7c5d560661ca9948f9bc01d4c619bfb9ceaab14df8ba27fcc0ee3056e3645c6",
+      "rough": "0d9a0c6c93862fd59e10a5b5829833a5fe1458c8d38a05afb7c2f88519de2821",
+      "disp": "811204f484d9fd5123b04d0ae8e5132cf62bd609c7f5bfa8761042cefb63af89"
+     }
+    }
+   },
+   "gravel": {
+    "tile_m": 2.16,
+    "rough": [
+     0.62,
+     0.92
+    ],
+    "target_srgb": "#918B7B",
+    "albedo_mean_srgb": "#918B7B",
+    "note": "河灘礫石：內岸砂洲、岸腳、淺水河床。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.35,
+     "normal_strength": 1.0
+    },
+    "source": {
+     "polyhaven_id": "ganges_river_pebbles",
+     "url": "https://polyhaven.com/a/ganges_river_pebbles",
+     "license": "CC0",
+     "sha256": {
+      "diff": "4284c19b6a546c8536a2d5383e5dcdbbae83ab6c2c337c7a0fb25284b0bea419",
+      "nor": "c73e2ea059f50f25d7f8dd719048d26bc0ca355d3009b0ef806898531231d03b",
+      "rough": "b8ba7e5c7ed6f9c52d537a945d044b0d9e547459087c62829cef56d7fac11fce",
+      "disp": "b94d0412ba92f1dba019a73f915b2aaffd2737111c605dd9a6ff166f3cb3b536"
+     }
+    }
+   },
+   "mud": {
+    "tile_m": 1.3,
+    "rough": [
+     0.45,
+     0.85
+    ],
+    "target_srgb": "#5C5546",
+    "albedo_mean_srgb": "#5C5546",
+    "note": "濕泥／淤泥：水線帶、深槽河床、水田土。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.2,
+     "normal_strength": 0.7
+    },
+    "source": {
+     "polyhaven_id": "brown_mud",
+     "url": "https://polyhaven.com/a/brown_mud",
+     "license": "CC0",
+     "sha256": {
+      "diff": "726a0f5222fdf8b2bcdbec56fee8ea55150c217eab35a893ad5831f28cee3a5f",
+      "nor": "a3df5f6f7493a1762626c6d0d47872d969744a49931de50fe79f71a5eae8f857",
+      "rough": "7f37ed5a6d6d6206ea263df37393715883b491a2dff1c8cfa67239922db29ee4",
+      "disp": "cd42cf5e42a77ce272c4d5a1ec32fc67008854664c072f1206a6a4946d0e754d"
+     }
+    }
+   },
+   "rock": {
+    "tile_m": 2.0,
+    "rough": [
+     0.7,
+     0.95
+    ],
+    "target_srgb": "#7B786C",
+    "albedo_mean_srgb": "#7B786C",
+    "note": "露岩：陡坡、切岸、岸邊岩段。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.3,
+     "normal_strength": 1.0
+    },
+    "source": {
+     "polyhaven_id": "lichen_rock",
+     "url": "https://polyhaven.com/a/lichen_rock",
+     "license": "CC0",
+     "sha256": {
+      "diff": "f2ec7a10c6cb929653278e00dcfb0e7e07aea178136a37eac7478d2b9cdd5e96",
+      "nor": "89b28336282a07492080a20725d18c7649ae69b1d8e10187ffe143c804bd6d2c",
+      "rough": "ad8a3ffad3cc15e8781958179db56dbcc9c82b50021076a0068c9e62d494a4c2",
+      "disp": "f1e7b11ae7f95250b62fb39006b5ae7f5e46db800bfa4a6cccc3f9d320132443"
+     }
+    }
+   },
+   "forest": {
+    "tile_m": 1.5,
+    "rough": [
+     0.85,
+     0.98
+    ],
+    "target_srgb": "#6A6447",
+    "albedo_mean_srgb": "#6A6447",
+    "note": "林床：落葉＋針葉＋土（林帶內，P9 樹木落地前的地面）。",
+    "processing": {
+     "mode": "gain",
+     "desat": 0.15,
+     "normal_strength": 0.8
+    },
+    "source": {
+     "polyhaven_id": "forest_leaves_04",
+     "url": "https://polyhaven.com/a/forest_leaves_04",
+     "license": "CC0",
+     "sha256": {
+      "diff": "a4f964eb32909ef9b41dbf4000bde142995711b7b755850f6523eb4d99c4a5d4",
+      "nor": "4870de640c043377b2f992337477cab9ff26f915b6cd5302cf2cb41d94b0c339",
+      "rough": "80db3af88b964a24fbe3f9e2c1284c5d8426e51a0b776d8f1fca5a4e0fdd8b2f",
+      "disp": "cfca13ba1645f66ef675592bfad553330845d96d0ebbf634b689459f111b8216"
+     }
+    }
+   }
+  }
  }
 }

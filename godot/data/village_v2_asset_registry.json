@@ -43,7 +43,7 @@
    "kind": "material_library",
    "path": "res://assets/village_v2/_matlib",
    "entry": "res://assets/village_v2/_matlib/matlib.json",
-   "entry_sha256": "188a12d71c04f4ef674c003c0702cb15414dd73cf1823cbfef531afb5b559bc0",
+   "entry_sha256": "022150446fb5c0c180ac1557c9d319cbd01b7183480c17b8265a11cb974db91a",
    "gate_json": "res://assets/village_v2/_matlib/gate.json",
    "gate": {
     "license": "PASS",
@@ -51,7 +51,7 @@
     "vram_compressed": "PASS",
     "tres_valid": "PASS"
    },
-   "gate_date": "2026-09-25T01:52:53",
+   "gate_date": "2026-09-27T20:10:12",
    "status": "ART_REVIEW"
   },
   {

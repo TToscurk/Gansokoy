@@ -3,6 +3,7 @@
 
   python tools/build_village_v2_textures.py [--cache=<dir>]
   python tools/build_village_v2_textures.py --kura-shikkui   # 只產土藏專用白漆喰（P6 aux）
+  python tools/build_village_v2_textures.py --ground         # 只產 P7 地面材質 Texture2DArray（_matlib/ground/）
 
 來源：Poly Haven CC0（2K jpg：diffuse／nor_gl／rough）。原檔只放下載快取（預設
 %LOCALAPPDATA%/hermes/cache/scratch/p5_r1/ph_src），缺檔自動下載；輸出才進 repo。
@@ -577,9 +578,413 @@ def build_kura_shikkui():
     print('V2_KuraShikkui: mean', rgbhex(mean), '（目標', KURA_SHIKKUI['target'], '）src sha256', sha256(src)[:12])
 
 
+# ───────────────────────── P7 地面材質（Ground Material / Transition）─────────────────────────
+# 7 層地面貼圖 → 兩張 Texture2DArray（層序＝shader 權重序＝GROUND 順序，不得重排）：
+#   V2G_albedo.jpg  每層 2048²，直向疊 7 層（反照率，照「看起來對」的顏色；shader 乘 albedo_k）
+#   V2G_nrh.jpg     每層 1024²，直向疊 7 層；R,G＝切線空間法線 x,y（OpenGL，綠朝 −v），B＝高度（height blend）
+# 目標色＝參考圖取色：docs/reference/紋理/黃土質感色.png（mean #A4875D、light #B99D74）→ 主街版築土；
+# 人間之里村落概念設計圖V2最終參考版.PNG（草地、踏み固め土、河灘礫石）；新版水護岸概念圖.png（岸腳礫石／泥）。
+# tile_m＝Poly Haven 標示的實際尺寸（dim_m），不縮放 → 石粒／草葉維持真實比例。
+GROUND_SIZE = 2048
+GROUND_NRH = 1024
+GROUND_DIR = LIB + '/ground'
+GROUND = [
+    ('grass', {'src': 'grass_ground', 'tile_m': 2.51, 'mode': 'gain', 'target': '#6E7D4B', 'desat': 0.12,
+               'rough': (0.82, 0.98), 'normal_strength': 0.9,
+               'note': '草地（基底）：短草、少落葉。'}),
+    ('street', {'src': 'dirt_floor', 'tile_m': 2.07, 'mode': 'gain', 'target': '#B09A74', 'desat': 0.20,
+                'rough': (0.80, 0.96), 'normal_strength': 0.8,
+                'note': '主街版築土＋細砂利（road_classes.main）；黃土參考 #A4875D～#B99D74 之間。'}),
+    ('trodden', {'src': 'forest_ground_06', 'tile_m': 2.11, 'mode': 'gain', 'target': '#978566', 'desat': 0.25,
+                 'rough': (0.82, 0.97), 'normal_strength': 0.8,
+                 'note': '踏み固め土：次要街道、巷、院子、建成區地面、河岸侵蝕面。'}),
+    ('gravel', {'src': 'ganges_river_pebbles', 'tile_m': 2.16, 'mode': 'gain', 'target': '#918B7B', 'desat': 0.35,
+                'rough': (0.62, 0.92), 'normal_strength': 1.0,
+                'note': '河灘礫石：內岸砂洲、岸腳、淺水河床。'}),
+    ('mud', {'src': 'brown_mud', 'tile_m': 1.3, 'mode': 'gain', 'target': '#5C5546', 'desat': 0.20,
+             'rough': (0.45, 0.85), 'normal_strength': 0.7,
+             'note': '濕泥／淤泥：水線帶、深槽河床、水田土。'}),
+    ('rock', {'src': 'lichen_rock', 'tile_m': 2.0, 'mode': 'gain', 'target': '#7B786C', 'desat': 0.30,
+              'rough': (0.70, 0.95), 'normal_strength': 1.0,
+              'note': '露岩：陡坡、切岸、岸邊岩段。'}),
+    ('forest', {'src': 'forest_leaves_04', 'tile_m': 1.5, 'mode': 'gain', 'target': '#6A6447', 'desat': 0.15,
+                'rough': (0.85, 0.98), 'normal_strength': 0.8,
+                'note': '林床：落葉＋針葉＋土（林帶內，P9 樹木落地前的地面）。'}),
+]
+
+LAYERED_IMPORT = '''[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+
+[deps]
+
+source_file="{src}"
+
+[params]
+
+compress/mode=2
+compress/high_quality={hq}
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical={n}
+'''
+
+
+def fetch_ground(src):
+    """同 fetch()，另抓 Displacement（高度，height blend 用）。"""
+    out = fetch(src)
+    p = f'{CACHE}/{src}_disp_2k.jpg'
+    if not os.path.exists(p):
+        req = urllib.request.Request(f'https://api.polyhaven.com/files/{src}',
+                                     headers={'User-Agent': 'Mozilla/5.0 shrine-asset-pipeline'})
+        files = json.loads(urllib.request.urlopen(req, timeout=60).read())
+        url = files['Displacement']['2k']['jpg']['url']
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 shrine-asset-pipeline'})
+        with open(p, 'wb') as f:
+            f.write(urllib.request.urlopen(req, timeout=120).read())
+    out['disp'] = p
+    return out
+
+
+# 地面反照率係數（線性空間）：P1–P6 核准的地形是「sRGB 頂點色 × ALBEDO_K 再解碼」，
+# 等效線性係數 ≈ ALBEDO_K^2.2 ≈ 0.15（草地線性亮度實算：舊 0.032、新貼圖均值 0.20）。
+# 取 0.19：草地比核准版亮約 19 %、主街比舊奶油色暗約 30 %（概念圖主街／草地亮度比 ≈ 2.0，舊版 ≈ 3.0 過亮）。
+GROUND_K = 0.19
+
+GROUND_SHADER = '''// 人間之里 V2 P7 地面材質（Ground Material / Transition）。
+// 由 tools/build_village_v2_textures.py --ground 產生，勿手改；層序＝matlib.json ground.layers：
+// 0 grass 1 street 2 trodden 3 gravel 4 mud 5 rock 6 forest
+// mode 0：權重來自頂點（COLOR＝trodden,gravel,mud,rock；UV＝forest,farm；UV2＝wet,street；grass＝其餘）；
+//         use_vertex_weights=false → 改用 fix_a／fix_b（院子等固定配比）。
+// mode 1：道路帶——UV.x＝橫向（−1…1，相對半寬）、UV.y＝沿路 m、UV2.x＝半寬 m；路面層→路肩層＋車轍／中央草帶。
+// 高度混合（nrh.b）＋世界座標雜訊擾動 → 土石交界不規則、不成直線；遠處雙尺度取樣壓平鋪重複感。
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2DArray nrh_arr : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D noise_tex : filter_linear_mipmap, repeat_enable;
+uniform float ground_k = __K__;
+uniform int mode = 0;
+uniform bool use_vertex_weights = true;
+uniform vec4 fix_a = vec4(0.0);
+uniform vec4 fix_b = vec4(0.0);
+uniform int road_layer = 1;
+uniform int shoulder_layer = 2;
+uniform float shoulder_start = 0.8;
+uniform float edge_gravel = 0.0;
+uniform float center_grass = 0.0;
+uniform float wear_center = 0.0;
+uniform float rut_offset = 0.0;
+uniform float rut_strength = 0.0;
+uniform vec4 paddy = vec4(350.0, -140.0, 24.0, 16.0);
+uniform float bund_w = 1.2;
+
+const float TILE[7] = float[7](__TILE__);
+const vec2 ROUGH[7] = vec2[7](__ROUGH__);
+const float NSTR[7] = float[7](__NSTR__);
+const float HB = 0.55;
+const float HB_DEPTH = 0.22;
+
+// 色彩空間：Forward+／Mobile 以線性空間算光，source_color 取樣已轉線性；Compatibility（OUTPUT_IS_SRGB）
+// 以 sRGB 空間算光、取樣不轉換、ALBEDO 視為 sRGB 值 → 取樣先轉線性、以線性算完再編回 sRGB，
+// 兩個渲染器的地面亮度才與 StandardMaterial3D（albedo_color／頂點色）的行為一致（P7 探針實測：
+// 未處理時 Compatibility 下同一線性 ALBEDO 比 StandardMaterial3D 暗約 2.3 倍 sRGB 值）。
+vec3 s2l(vec3 c) {
+	return mix(pow((c + vec3(0.055)) * (1.0 / 1.055), vec3(2.4)), c * (1.0 / 12.92), lessThan(c, vec3(0.04045)));
+}
+
+vec3 l2s(vec3 c) {
+	return mix(vec3(1.055) * pow(c, vec3(1.0 / 2.4)) - vec3(0.055), c * 12.92, lessThan(c, vec3(0.0031308)));
+}
+
+varying vec3 wpos;
+varying vec3 wnrm;
+
+void vertex() {
+	wpos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	wnrm = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
+}
+
+void fragment() {
+	vec2 p = wpos.xz;
+	vec2 dpx = dFdx(p);
+	vec2 dpy = dFdy(p);
+	vec4 nb = texture(noise_tex, p / 61.0);
+	vec4 nm = texture(noise_tex, p / 13.0 + vec2(0.31, 0.77));
+	float nf = texture(noise_tex, p / 3.7 + vec2(0.53, 0.11)).b;
+	float w[7] = float[7](0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+	float wet = 0.0;
+	float rut = 0.0;
+	if (mode == 1) {
+		float ax = abs(UV.x);
+		float hw = max(UV2.x, 0.5);
+		float xm = ax * hw;
+		float edge = smoothstep(shoulder_start, 1.0, ax + (nm.g - 0.5) * 0.30 + (nf - 0.5) * 0.14);
+		w[road_layer] += 1.0 - edge;
+		w[shoulder_layer] += edge;
+		w[3] += edge_gravel * smoothstep(0.5, 0.95, ax) * smoothstep(0.45, 0.75, nf);
+		w[0] += center_grass * (1.0 - smoothstep(0.22, 0.42, xm + (nf - 0.5) * 0.2));
+		if (rut_offset > 0.0) {
+			rut = rut_strength * exp(-(xm - rut_offset) * (xm - rut_offset) / 0.035);
+		}
+		rut += wear_center * (1.0 - smoothstep(0.25, 0.55, ax + (nm.b - 0.5) * 0.2)) * 0.5;
+	} else {
+		vec4 a = use_vertex_weights ? COLOR : fix_a;
+		vec4 b = use_vertex_weights ? vec4(UV.x, UV.y, UV2.x, UV2.y) : fix_b;
+		float pert = (nm.g - 0.5) * 1.1 + (nf - 0.5) * 0.45;
+		a = clamp(a + pert * a * (1.0 - a) * 2.2, 0.0, 1.0);
+		b.r = clamp(b.r + pert * b.r * (1.0 - b.r) * 2.2, 0.0, 1.0);
+		b.a = clamp(b.a + pert * b.a * (1.0 - b.a) * 2.2, 0.0, 1.0);
+		w[2] = a.r;
+		w[3] = a.g;
+		w[4] = a.b;
+		w[5] = a.a;
+		w[6] = b.r;
+		w[1] = b.a;
+		wet = b.b;
+		if (b.g > 0.001) {
+			// 田（P7 底色；水面／稻作屬 P8）：田面＝草（秧苗綠）＋泥（高度混合落在低處），畦＝踏み固め土。
+			// 畦寬 = bund_w（P2 灰模頂點色以 2 m 網格取樣，實際讀成約 2 m 寬帶）→ 這裡加寬 0.6 m、
+			// 並讓畦幾乎全是土（草不再從畦中長出），俯視網格與灰模同等可讀（r3 俯視審圖：網格變弱）。
+			vec2 q = mod(p - paddy.xy, paddy.zw);
+			float bd = min(min(q.x, paddy.z - q.x), min(q.y, paddy.w - q.y));
+			float bh = bund_w * 0.5 + 0.3;
+			float bund = 1.0 - smoothstep(bh - 0.12, bh + 0.12, bd + (nf - 0.5) * 0.14);
+			w[4] += b.g * (1.0 - bund) * 0.35;
+			w[2] += b.g * bund * 1.6;
+			wet = max(wet, b.g * (1.0 - bund) * 0.12);
+		}
+	}
+	float s = 0.0;
+	for (int i = 1; i < 7; i++) {
+		s += w[i];
+	}
+	w[0] += max(1.0 - s, 0.0);
+	vec4 nv[7];
+	float sc[7];
+	float smax = -10.0;
+	for (int i = 0; i < 7; i++) {
+		sc[i] = -10.0;
+		nv[i] = vec4(0.5, 0.5, 0.5, 0.0);
+		if (w[i] > 0.015) {
+			vec2 uv = p / TILE[i];
+			nv[i] = textureGrad(nrh_arr, vec3(uv, float(i)), dpx / TILE[i], dpy / TILE[i]);
+			sc[i] = w[i] + nv[i].b * HB;
+			smax = max(smax, sc[i]);
+		}
+	}
+	float bw[7];
+	float bsum = 0.0;
+	for (int i = 0; i < 7; i++) {
+		bw[i] = max(sc[i] - (smax - HB_DEPTH), 0.0);
+		bsum += bw[i];
+	}
+	bsum = max(bsum, 1e-5);
+	float fd = smoothstep(14.0, 55.0, length(wpos - CAMERA_POSITION_WORLD));
+	vec3 alb = vec3(0.0);
+	vec2 nxy = vec2(0.0);
+	float rough = 0.0;
+	for (int i = 0; i < 7; i++) {
+		if (bw[i] > 0.0) {
+			float f = bw[i] / bsum;
+			vec2 uv = p / TILE[i];
+			vec3 c = textureGrad(albedo_arr, vec3(uv, float(i)), dpx / TILE[i], dpy / TILE[i]).rgb;
+			if (OUTPUT_IS_SRGB) {
+				c = s2l(c);
+			}
+			if (fd > 0.0) {
+				vec2 uv2 = uv * 0.29 + vec2(0.37, 0.61);
+				vec3 c2 = textureGrad(albedo_arr, vec3(uv2, float(i)), dpx / TILE[i] * 0.29, dpy / TILE[i] * 0.29).rgb;
+				if (OUTPUT_IS_SRGB) {
+					c2 = s2l(c2);
+				}
+				c = mix(c, (c + c2) * 0.5, fd);
+			}
+			alb += c * f;
+			nxy += (nv[i].rg * 2.0 - 1.0) * NSTR[i] * f;
+			rough += mix(ROUGH[i].x, ROUGH[i].y, clamp(0.5 + (nf - 0.5) * 0.8, 0.0, 1.0)) * f;
+		}
+	}
+	float g0 = bw[0] / bsum;
+	alb *= mix(0.9, 1.09, nb.r) * (1.0 - rut * 0.22);
+	alb = mix(alb, alb * vec3(1.09, 1.03, 0.84), g0 * smoothstep(0.55, 0.85, nb.a) * 0.55);
+	alb *= mix(1.0, 0.6, wet);
+	vec3 N = normalize(wnrm);
+	vec3 nw = normalize(vec3(nxy.x, 0.0, -nxy.y) + N);
+	nw = normalize(mix(nw, N, clamp(rut * 0.6, 0.0, 1.0)));
+	vec3 lin_out = alb * ground_k;
+	ALBEDO = OUTPUT_IS_SRGB ? l2s(lin_out) : lin_out;
+	ROUGHNESS = clamp(rough * mix(1.0, 0.5, wet) * (1.0 - rut * 0.25), 0.05, 1.0);
+	SPECULAR = 0.35;
+	NORMAL = normalize((VIEW_MATRIX * vec4(nw, 0.0)).xyz);
+}
+'''
+
+
+def write_ground_shader():
+    f = lambda v: ('%.4f' % v).rstrip('0').rstrip('.') if '.' in '%.4f' % v else '%.4f' % v
+    fl = lambda v: f(v) if '.' in f(v) else f(v) + '.0'
+    txt = (GROUND_SHADER.replace('__K__', fl(GROUND_K))
+           .replace('__TILE__', ', '.join(fl(m['tile_m']) for _, m in GROUND))
+           .replace('__ROUGH__', ', '.join(f'vec2({fl(m["rough"][0])}, {fl(m["rough"][1])})' for _, m in GROUND))
+           .replace('__NSTR__', ', '.join(fl(m.get('normal_strength', 1.0)) for _, m in GROUND)))
+    with open(f'{GROUND_DIR}/ground.gdshader', 'w', encoding='utf-8', newline='\n') as fh:
+        fh.write(txt)
+    return 'res://assets/village_v2/_matlib/ground/ground.gdshader'
+
+
+NOISE_SIZE = 512
+# 雜訊遮罩：VRAM 壓縮（gate 規則）但用 high_quality → 桌面 BPTC（BC7，8-bit 端點、無 565 色階），門檻處不出區塊階；
+# fix_alpha_border／premult 必須關：A 通道是資料（大斑塊），不是透明度。
+NOISE_IMPORT = '''[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+
+[deps]
+
+source_file="{src}"
+
+[params]
+
+compress/mode=2
+compress/high_quality=true
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=2
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=false
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
+'''
+
+
+def _periodic_noise(n, cells, rng):
+    """可無縫平鋪的 value noise（週期＝整張圖），smoothstep 內插。"""
+    lat = rng.random((cells, cells))
+    t = np.arange(n) * cells / n
+    i0 = np.floor(t).astype(int)
+    f = t - i0
+    f = f * f * (3.0 - 2.0 * f)
+    i1 = (i0 + 1) % cells
+    a = lat[np.ix_(i0, i0)] * (1 - f)[None, :] + lat[np.ix_(i0, i1)] * f[None, :]
+    b = lat[np.ix_(i1, i0)] * (1 - f)[None, :] + lat[np.ix_(i1, i1)] * f[None, :]
+    return a * (1 - f)[:, None] + b * f[:, None]
+
+
+def _fbm(n, cells, octaves, seed):
+    rng = np.random.default_rng(seed)
+    acc, amp, tot = np.zeros((n, n)), 1.0, 0.0
+    for o in range(octaves):
+        acc += amp * _periodic_noise(n, cells * 2 ** o, rng)
+        tot += amp
+        amp *= 0.5
+    acc /= tot
+    # 名次轉換 → 均勻分布 0–1（shader 門檻值才有可預期的覆蓋率）
+    r = np.empty(acc.size)
+    r[np.argsort(acc, axis=None)] = np.linspace(0.0, 1.0, acc.size)
+    return r.reshape(n, n)
+
+
+def build_ground_noise():
+    """地面遮罩雜訊（程序生成、無授權問題）：R 大斑塊、G 中斑塊、B 細碎、A 另一組大斑塊。"""
+    chans = [_fbm(NOISE_SIZE, 4, 4, 701), _fbm(NOISE_SIZE, 8, 4, 702), _fbm(NOISE_SIZE, 32, 3, 703),
+             _fbm(NOISE_SIZE, 4, 4, 704)]
+    img = np.clip(np.round(np.stack(chans, -1) * 255.0), 0, 255).astype(np.uint8)
+    p = f'{GROUND_DIR}/V2G_noise.png'
+    Image.fromarray(img, 'RGBA').save(p, optimize=True)
+    rp = 'res://assets/village_v2/_matlib/ground/V2G_noise.png'
+    with open(p + '.import', 'w', encoding='utf-8', newline='\n') as f:
+        f.write(NOISE_IMPORT.format(src=rp))
+    return {'path': rp, 'size': NOISE_SIZE, 'source': 'procedural（本腳本 _fbm，seed 701–704）', 'license': 'CC0',
+            'compress': 'VRAM high_quality（BPTC）；A 為資料通道（fix_alpha_border 關）',
+            'channels': 'R 大斑塊 4 格／G 中 8 格／B 細 32 格／A 大斑塊 4 格（各 fBm、名次轉均勻分布）'}
+
+
+def build_ground():
+    os.makedirs(GROUND_DIR, exist_ok=True)
+    alb_layers, nrh_layers, info = [], [], {}
+    for name, m in GROUND:
+        src = fetch_ground(m['src'])
+        a = np.asarray(Image.open(src['diff']).convert('RGB').resize((GROUND_SIZE, GROUND_SIZE), Image.LANCZOS),
+                       dtype=np.float32) / 255.0
+        alb = albedo(a, m)
+        nor = normal(np.asarray(Image.open(src['nor']).convert('RGB').resize((GROUND_NRH, GROUND_NRH), Image.LANCZOS),
+                                dtype=np.float32) / 255.0, m)
+        d = np.asarray(Image.open(src['disp']).convert('L').resize((GROUND_NRH, GROUND_NRH), Image.LANCZOS),
+                       dtype=np.float32) / 255.0
+        lo, hi = np.percentile(d, 2), np.percentile(d, 98)
+        d = np.clip((d - lo) / max(hi - lo, 1e-4), 0.0, 1.0)
+        nrh = np.stack([nor[..., 0], nor[..., 1], d], -1)
+        alb_layers.append(alb)
+        nrh_layers.append(nrh)
+        mean = alb.reshape(-1, 3).astype(np.float64).mean(0)
+        info[name] = {'tile_m': m['tile_m'], 'rough': list(m['rough']), 'target_srgb': m['target'],
+                      'albedo_mean_srgb': rgbhex(mean), 'note': m['note'],
+                      'processing': {k: m[k] for k in ('mode', 'desat', 'normal_strength') if k in m},
+                      'source': {'polyhaven_id': m['src'], 'url': f'https://polyhaven.com/a/{m["src"]}', 'license': 'CC0',
+                                 'sha256': {k: sha256(v) for k, v in src.items()}}}
+        print(f'ground {name}: {m["src"]} → mean {rgbhex(mean)}（目標 {m["target"]}）')
+    noise = build_ground_noise()
+    shader = write_ground_shader()
+    files = {}
+    for key, layers, q in (('albedo', alb_layers, 90), ('nrh', nrh_layers, 95)):
+        fn = f'V2G_{key}.jpg'
+        save_jpg(np.concatenate(layers, 0), f'{GROUND_DIR}/{fn}', q)
+        rp = f'res://assets/village_v2/_matlib/ground/{fn}'
+        with open(f'{GROUND_DIR}/{fn}.import', 'w', encoding='utf-8', newline='\n') as f:
+            f.write(LAYERED_IMPORT.format(src=rp, n=len(layers), hq='true' if key == 'nrh' else 'false'))
+        files[key] = rp
+    # 產物雜湊：registry 的 entry_sha256 只涵蓋 matlib.json；shader／貼圖任何位元組變更都要讓 gate 與 gen 拒用
+    #（避免手改 ground.gdshader 繞過 gate）。
+    res2fs = lambda rp: G + '/' + rp[len('res://'):]
+    files_sha = {rp: sha256(res2fs(rp)) for rp in [shader, files['albedo'], files['nrh'], noise['path']]}
+    with open(f'{LIB}/matlib.json', encoding='utf-8') as f:
+        meta = json.load(f)
+    meta['ground'] = {
+        '_note': 'P7 地面材質：兩張 Texture2DArray（層序＝layers，不得重排）；shader＝ground.gdshader（地形 splat／道路帶共用）。'
+                 '由 tools/build_village_v2_textures.py --ground 產生，勿手改。',
+        'layers': [n for n, _ in GROUND], 'arrays': files, 'size': {'albedo': GROUND_SIZE, 'nrh': GROUND_NRH},
+        'nrh_channels': 'R,G＝切線空間法線 x,y（OpenGL）；B＝高度 0–1（p2–p98 正規化）',
+        'noise': noise,
+        'shader': shader, 'albedo_k': GROUND_K,
+        'albedo_k_note': '線性係數；對齊 P1–P6 核准地形亮度（sRGB 頂點色×0.42 解碼 ≈ 線性×0.15），見 GROUND_K 註解',
+        'files_sha256': files_sha,
+        'layer_info': info}
+    with open(f'{LIB}/matlib.json', 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(meta, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+    return meta['ground']
+
+
 if __name__ == '__main__':
     if '--kura-shikkui' in sys.argv[1:]:
         build_kura_shikkui()
+        sys.exit(0)
+    if '--ground' in sys.argv[1:]:
+        build_ground()
         sys.exit(0)
     build_matlib()
     build_atlas()
