@@ -17,6 +17,8 @@ extends RefCounted
 ##   "body"（P6 aux 納屋／土藏起）：anchor＝P4 灰盒 StaticBody3D 本身（Districts/<區>/Buildings/S_*）；資產以 identity 掛在它下面
 ##              （原點＝灰盒原點＝footprint 中心、y＝base_h、+z＝正面）。灰盒節點保留（P4 gate 讀它的位置與 Foundation），
 ##              灰盒自己的網格隱藏、Shape 停用、collision_layer 0（retire_body）；Hero 子樹不受影響。
+##   gate_spec.node（P6 稗田邸圍牆起）：Hero 節點名（預設 "Hero"）。同一個 P0 地標掛第二件資產時用（圍牆＝"HeroWall"，
+##              掛在大宅門地標下）；replaces 空字串＝沒有要退場的 placeholder。hero_asset meta 只由預設 "Hero" 寫。
 ## 路徑一律從 registry／asset.json 讀，原始碼不寫資產 res:// 字串（P5 asset reset gate 掃描產生器原始碼）。
 
 const REG := "res://data/village_v2_asset_registry.json"
@@ -74,11 +76,13 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 	if anchor == null:
 		push_error("[hero] 找不到 anchor %s" % gs["anchor"])
 		return null
-	var old := anchor.get_node_or_null("Hero")
+	var nm := node_name(gs)
+	var old := anchor.get_node_or_null(nm)
 	if old != null:
 		return old as Node3D   # 已放（產生器烘焙過）
 	var body_mode := String(gs["placement"]) == "body"
-	var ph := null if body_mode else anchor.get_node_or_null(String(gs["replaces"])) as Node3D
+	var rep := String(gs.get("replaces", ""))
+	var ph := null if (body_mode or rep == "") else anchor.get_node_or_null(rep) as Node3D
 	var xf := Transform3D.IDENTITY
 	if body_mode:
 		pass   # 資產原點＝灰盒節點原點（identity）
@@ -87,14 +91,14 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 		if String(gs["placement"]) == "anchor":
 			xf.origin = Vector3.ZERO   # 地標原點＝資產原點；placeholder 只給旋轉
 	elif String(gs["placement"]) == "greybox":
-		push_error("[hero] %s 沒有灰盒節點 %s" % [gs["anchor"], gs["replaces"]])
+		push_error("[hero] %s 沒有灰盒節點 %s" % [gs["anchor"], rep])
 		return null
 	if gs.has("yaw_deg"):
 		xf.basis = Basis(Vector3.UP, deg_to_rad(float(gs["yaw_deg"])))
 	if gs.has("dy"):
 		xf.origin.y += float(gs["dy"])   # 水車：原點＝水渠水面（asset.json 逐點登記；gate 對水面網格實測驗）
 	var hero := scene.instantiate() as Node3D
-	hero.name = "Hero"
+	hero.name = nm
 	hero.transform = xf
 	hero.set_meta("asset_id", String(S["id"]))
 	hero.set_meta("phase", "P5")
@@ -116,8 +120,14 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 			e.free()
 		else:
 			retire(e)
-	anchor.set_meta("hero_asset", String(S["id"]))
+	if nm == "Hero":
+		anchor.set_meta("hero_asset", String(S["id"]))
 	return hero
+
+
+## Hero 節點名（gate_spec.node；預設 "Hero"）
+static func node_name(gs: Dictionary) -> String:
+	return String(gs.get("node", "Hero"))
 
 
 ## 灰盒／placeholder 退場：保留節點（P4 gate 讀 Foundation AABB），外觀與碰撞全關。

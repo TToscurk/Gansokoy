@@ -475,7 +475,7 @@ func _headless(id: String, write: bool) -> void:
 
 
 func _apply_neg() -> void:
-	var g0: Node = anchor.get_node_or_null(String(gs["replaces"]))
+	var g0: Node = anchor.get_node_or_null(String(gs["replaces"])) if String(gs.get("replaces", "")) != "" else null
 	match neg:
 		"scale":
 			hero.scale = Vector3.ONE * 1.1
@@ -505,7 +505,7 @@ func _apply_neg() -> void:
 			elif g0 == null:
 				# 產生器已不建 placeholder（anchor 型）：另建一個 1 × 10 × 1 m 有碰撞的灰盒柱，模擬「墊在灰盒上」
 				var sb := StaticBody3D.new()
-				sb.name = String(gs["replaces"])
+				sb.name = String(gs["replaces"]) if String(gs.get("replaces", "")) != "" else "NegGreybox"
 				var gm := MeshInstance3D.new()
 				var bm := BoxMesh.new()
 				bm.size = Vector3(1.0, 10.0, 1.0)
@@ -541,6 +541,11 @@ func _apply_neg() -> void:
 			mi.mesh = m2
 		"lod":
 			(hero.get_node("LOD1") as MeshInstance3D).visibility_range_begin += 15.0
+		"wallgap":
+			# 稗田邸圍牆：關掉東牆碰撞 → 宅邸邊界封閉（碰撞缺口）必須 FAIL
+			for c in hero.get_node("Collision").find_children("*", "CollisionShape3D", true, false):
+				if String(c.name).ends_with("E") and not String(c.name).contains("S_"):
+					(c as CollisionShape3D).disabled = true
 		"winding":
 			var mi := hero.get_node("LOD0") as MeshInstance3D
 			var src := mi.mesh as ArrayMesh
@@ -685,6 +690,120 @@ func _c_size() -> void:
 			"射線實測：柱心距 %.2f m（P0 span %.1f）、柱間淨寬 %.2f（≥ %.1f）、通行淨高（貫下）%.2f（≥ %.1f）、笠木中央頂 %.2f（P0 h %.1f～%.2f）" % [
 				axis, lm.get("span", -1), clear, sp["clear_min"], nuki * sc.y, gs["walkway"]["min_clear"], kas * sc.y,
 				lm.get("h", -1), sz["top"][1]])
+	if gs.has("wall"):
+		_c_size_wall()
+
+
+## P6 稗田邸圍牆（gate_spec.wall）：沿每段牆心線每 step m 實測——牆頂離地高、牆厚（離地 1.0 m 兩側水平射線）、
+## 封閉（可見網格與碰撞都不能有缺口；只留大宅門開口）；門旁銜接對大宅門 Hero LOD0 實測瓦頂高差與牆面齊平。
+func _c_size_wall() -> void:
+	var W: Dictionary = gs["wall"]
+	var xf := _xf()
+	var oy := xf.origin.y
+	var stp := float(W["step"])
+	var n_st := 0
+	var gaps_v := 0
+	var gaps_c := 0
+	var g_ex := ""
+	var hmin := INF
+	var hmax := -INF
+	var tmin := INF
+	var tmax := -INF
+	var h_ex := ""
+	for sd: Dictionary in W["sides"]:
+		var p0 := Vector2(float(sd["from"][0]), float(sd["from"][1]))
+		var p1 := Vector2(float(sd["to"][0]), float(sd["to"][1]))
+		var L := p0.distance_to(p1)
+		var d := (p1 - p0) / L
+		var nrm := Vector2(-d.y, d.x)
+		var t := float(sd.get("skip0", 0.0))
+		var t_end := L - float(sd.get("skip1", 0.0))
+		while t <= t_end + 0.001:
+			var c := p0 + d * t
+			n_st += 1
+			var w := xf * Vector3(c.x, 0, c.y)
+			var gl := _ground(w.x, w.z, true) - oy
+			var top := 30.0 - _vis_dist(Vector3(c.x + 0.013, 30, c.y + 0.017), Vector3(c.x + 0.013, -5, c.y + 0.017),
+				_tris_at(c.x + 0.013, c.y + 0.017))
+			var hh := top - gl
+			if hh < hmin:
+				h_ex = "%s t %.1f" % [sd["name"], t]
+			hmin = minf(hmin, hh)
+			hmax = maxf(hmax, hh)
+			var y := gl + 1.0
+			var tris := _tris_along_z(c.x) if absf(nrm.y) > 0.5 else _tris_along_x(c.y)
+			var a := Vector3(c.x + nrm.x * 1.5, y, c.y + nrm.y * 1.5)
+			var b := Vector3(c.x - nrm.x * 1.5, y, c.y - nrm.y * 1.5)
+			var d1 := _vis_dist(a, b, tris)
+			var d2 := _vis_dist(b, a, tris)
+			if d1 == INF or d2 == INF:
+				gaps_v += 1
+				g_ex = "%s t %.2f 可見缺口" % [sd["name"], t]
+			elif t >= 0.6 and t <= L - 0.6:   # 端部（轉角、門旁）射線會進到相鄰段牆端，不量厚度
+				var th := 3.0 - d1 - d2
+				tmin = minf(tmin, th)
+				tmax = maxf(tmax, th)
+			if not _capsule_hits_hero(Vector3(w.x, gl + oy, w.z)):
+				gaps_c += 1
+				g_ex = "%s t %.2f 碰撞缺口" % [sd["name"], t]
+			t += stp
+	_res("size", hmin >= float(W["h_min"]) and hmax <= float(W["h_max"]) and tmin >= float(W["t_min"]) and tmax <= float(W["t_max"]),
+		"圍牆 %d 站（每 %.1f m）射線實測：牆頂離地 %.2f～%.2f m（%.2f～%.2f；最低在 %s）、離地 1.0 m 牆厚 %.2f～%.2f m（%.2f～%.2f，含柱）" % [
+			n_st, stp, hmin, hmax, W["h_min"], W["h_max"], h_ex, tmin, tmax, W["t_min"], W["t_max"]])
+	_res("size", gaps_v == 0 and gaps_c == 0, "宅邸邊界封閉（除大宅門開口）：%d 站中 可見網格缺口 %d、碰撞缺口 %d%s" % [
+		n_st, gaps_v, gaps_c, ("，例 " + g_ex) if g_ex != "" else ""])
+	# 門旁銜接：大宅門 Hero（同一地標）LOD0 換到本資產局部
+	var gh := anchor.get_node_or_null("Hero") as Node3D
+	if gh == null:
+		_res("size", false, "找不到大宅門 Hero（%s/Hero），無法驗門旁銜接" % anchor.name)
+		return
+	var gt := xf.affine_inverse() * gh.global_transform
+	var gf := PackedVector3Array()
+	for q in _lod_faces(0, gh):
+		gf.append(gt * q)
+	var jx := float(W["junction_x"])
+	var lines: Array = []
+	var ok := true
+	for sg: float in [-1.0, 1.0]:
+		var xg := sg * (jx - 0.08)
+		var xw := sg * (jx + 0.10)
+		var tg := 30.0 - _ray_faces(Vector3(xg, 30, 0.017), Vector3(xg, -5, 0.017), gf)
+		var tw := 30.0 - _vis_dist(Vector3(xw, 30, 0.017), Vector3(xw, -5, 0.017), _tris_at(xw, 0.017))
+		var wj := xf * Vector3(xw, 0, 0)
+		var gl := _ground(wj.x, wj.z, true) - oy
+		var fg := 2.0 - _ray_faces(Vector3(xg, gl + 1.0, 2.0), Vector3(xg, gl + 1.0, -2.0), gf)
+		var fw := 2.0 - _vis_dist(Vector3(xw, gl + 1.0, 2.0), Vector3(xw, gl + 1.0, -2.0), _tris_along_z(xw))
+		# 接縫：x＝±jx 兩側 1 cm，前後牆面都要有網格（大宅門或圍牆任一），且牆面在灰泥面 ±3 cm
+		var seam := 0
+		for xs: float in [sg * (jx - 0.01), sg * (jx + 0.01)]:
+			for zz: float in [2.0, -2.0]:
+				var hv := minf(_ray_faces(Vector3(xs, gl + 1.0, zz), Vector3(xs, gl + 1.0, 0.0), gf),
+					_vis_dist(Vector3(xs, gl + 1.0, zz), Vector3(xs, gl + 1.0, 0.0), _tris_along_z(xs)))
+				if hv == INF or absf(absf(zz) - hv - float(W["plaster_half"])) > 0.03:
+					seam += 1
+		var okj := absf(tg - tw) <= 0.03 and absf(fg - fw) <= 0.01 and seam == 0
+		ok = ok and okj
+		lines.append("%s 側：瓦頂 大宅門袖牆 %.3f／圍牆 %.3f（差 %.3f ≤ 0.03）、牆面 z %.3f／%.3f（差 %.3f ≤ 0.01）、接縫前後牆面缺 %d" % [
+			"西" if sg < 0 else "東", tg, tw, absf(tg - tw), fg, fw, absf(fg - fw), seam])
+	_res("size", ok, "門旁銜接（x ±%.2f 接大宅門袖牆端）：%s" % [jx, "；".join(lines)])
+
+
+## 射線打任意三角面列表（局部座標），回傳距離（打不到 INF）
+func _ray_faces(from: Vector3, to: Vector3, fs: PackedVector3Array) -> float:
+	var best := INF
+	var lo := Vector3(minf(from.x, to.x), minf(from.y, to.y), minf(from.z, to.z)) - Vector3.ONE * 0.01
+	var hi := Vector3(maxf(from.x, to.x), maxf(from.y, to.y), maxf(from.z, to.z)) + Vector3.ONE * 0.01
+	for t in range(0, fs.size(), 3):
+		var a := fs[t]
+		var b := fs[t + 1]
+		var c := fs[t + 2]
+		if maxf(a.x, maxf(b.x, c.x)) < lo.x or minf(a.x, minf(b.x, c.x)) > hi.x \
+				or maxf(a.z, maxf(b.z, c.z)) < lo.z or minf(a.z, minf(b.z, c.z)) > hi.z:
+			continue
+		var hit: Variant = Geometry3D.segment_intersects_triangle(from, to, a, b, c)
+		if hit != null:
+			best = minf(best, from.distance_to(hit))
+	return best
 
 
 ## 2 地塊
@@ -692,11 +811,17 @@ func _c_parcel() -> void:
 	var PJ: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(PARCELS))
 	var own := PackedVector2Array()
 	var others: Array = []
+	# 稗田邸圍牆（P6）：範圍＝P0 district（gate_spec.district）；同一宅邸的地塊（estate_parcels）不算「其他地塊」
+	var estate: Array = gs.get("estate_parcels", [])
 	for r in PJ["parcels"]:
 		if String(r["id"]) == String(gs["parcel"]):
 			own = TLib.pts(r["footprint"])
-		else:
+		elif not estate.has(String(r["id"])):
 			others.append([String(r["id"]), TLib.pts(r["footprint"])])
+	if gs.has("district"):
+		own = PackedVector2Array()
+		for q: Array in L["districts"][String(gs["district"])]["poly"]:
+			own.append(Vector2(float(q[0]), float(q[1])))
 	var roads: Array = []
 	for r in PLib.network(L):
 		for poly in Geometry2D.offset_polyline(r["pts"], float(r["hw"]), Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND):
@@ -725,7 +850,8 @@ func _c_parcel() -> void:
 				bad.append("%s 壓到道路 %s %.3f m²" % [g["name"], rr[0], a])
 				road_hit += a
 	_res("parcel_fit", bad.is_empty(), "%d 個地面接觸件：%s地塊外 %.3f m²、壓道路 %.3f m²、壓其他地塊 0%s%s" % [
-		gs["ground"].size(), ("在 " + String(gs["parcel"]) + " 內、") if not own.is_empty() else "（地標，無地塊）",
+		gs["ground"].size(), ("在 " + (("district " + String(gs["district"])) if gs.has("district") else String(gs["parcel"]))
+			+ (("（同宅邸地塊 " + "、".join(estate) + " 不算他人地塊）") if estate else "") + " 內、") if not own.is_empty() else "（地標，無地塊）",
 		worst_out, road_hit, ("；（使用者裁示允許）" + "、".join(shoulder)) if shoulder else "",
 		("；" + "、".join(bad.slice(0, 4))) if bad else ""])
 	if not own.is_empty():
@@ -744,6 +870,12 @@ func _c_parcel() -> void:
 					ex = "%s (%.2f, %.2f)" % [rr[0], p.x, p.y]
 					break
 		_res("parcel_fit", in_road == 0, "LOD0 全部頂點（含屋簷、庇）不進道路：%d 點%s" % [in_road, ("，例 " + ex) if ex != "" else ""])
+		if gs.has("district"):
+			var outd := 0
+			for p in verts:
+				if not Geometry2D.is_point_in_polygon(p, own):
+					outd += 1
+			_res("parcel_fit", outd == 0, "LOD0 全部頂點（含瓦頂出簷）在 district %s 內：界外 %d 點" % [gs["district"], outd])
 	elif gs.has("water_ref"):
 		# 水車（R4）：輪子（外框投影）整個在水渠水面範圍內，不壓道路
 		var wpts: Array = L["water"][String(gs["water_ref"])]["pts"]
@@ -876,6 +1008,8 @@ func _c_ground() -> void:
 		if (anchor as CollisionObject3D).collision_layer != 0:
 			live += 1
 	for nm: String in ([] if body_mode else [String(gs["replaces"])] + Array(gs.get("also_retire", []))):
+		if nm == "":
+			continue   # replaces 空字串＝沒有 placeholder（稗田邸圍牆：掛在大宅門地標下的第二件）
 		var pn: Node = anchor.get_node_or_null(nm)
 		if pn == null:
 			continue
@@ -1198,6 +1332,11 @@ func _c_collision() -> void:
 				var dv := _vis_dist(a, b, tris)
 				if dv == INF:
 					continue
+				# 命中點在玩家膠囊頂（離該處地面 1.7 m）以上＝屋簷／瓦頂懸挑，身體碰不到（P6 稗田邸圍牆：沿牆擦過的簷口列）
+				var hp: Vector3 = xf * (a + (b - a).normalized() * dv)
+				var gh := _ground(hp.x, hp.z, true)
+				if not is_nan(gh) and hp.y - gh > 1.7:
+					continue
 				rays += 1
 				var d := (dc - dv) if dc != INF else absf(outer - inner) - dv
 				if d > POKE_TOL:
@@ -1465,10 +1604,11 @@ func _render_one(player: CharacterBody3D, id: String, out: String, tag: bool) ->
 	var pre := (String(gs["anchor"]).get_file() + "_") if tag else ""
 	for s: Array in shots:
 		var p: Vector3 = s[1]
+		var tgt: Vector3 = s[2] if s.size() > 2 else center
 		var gy := _ground(p.x, p.z)
 		player.global_position = Vector3(p.x, gy + 0.05, p.z)
 		player.velocity = Vector3.ZERO
-		var d := Vector2(center.x - p.x, center.z - p.z)
+		var d := Vector2(tgt.x - p.x, tgt.z - p.z)
 		player.snap_yaw(atan2(-d.x, -d.y))
 		for i in 75:
 			await process_frame
@@ -1477,11 +1617,11 @@ func _render_one(player: CharacterBody3D, id: String, out: String, tag: bool) ->
 		img.save_png(png)
 		var c3 := root.get_viewport().get_camera_3d()
 		var sd := _img_std(img)
-		var in_frame := c3 != null and not c3.is_position_behind(center) \
-			and Rect2(Vector2.ZERO, Vector2(img.get_size())).has_point(c3.unproject_position(center))
+		var in_frame := c3 != null and not c3.is_position_behind(tgt) \
+			and Rect2(Vector2.ZERO, Vector2(img.get_size())).has_point(c3.unproject_position(tgt))
 		var occ := ""
 		if c3 != null:
-			var q := PhysicsRayQueryParameters3D.create(c3.global_position, center)
+			var q := PhysicsRayQueryParameters3D.create(c3.global_position, tgt)
 			q.exclude = [player.get_rid()]
 			var hit := space.intersect_ray(q)
 			if not hit.is_empty() and hit["rid"] != hero_rid:
@@ -1504,7 +1644,11 @@ func _shot_spots(xf: Transform3D) -> Array:
 	if gs.has("shots"):
 		# 資產自訂鏡位（局部 xz）：R4 龍神像／水車／參道鳥居；R5 山頂社殿（建築，但正面下坡、兩側是北丘林）、火見櫓（市場內）
 		for s: Array in gs["shots"]:
-			out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2]))])
+			# 第 4、5 欄（P6 稗田邸圍牆起）：看向的局部 xz（離原點 1.2 m 高）；沒有＝看 LOD0 外框中心
+			if s.size() >= 5:
+				out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2])), xf * Vector3(float(s[3]), 1.2, float(s[4]))])
+			else:
+				out.append([s[0], xf * Vector3(float(s[1]), 0, float(s[2]))])
 	elif not _bld().is_empty():
 		var zf := float(_bld()["zf"])
 		for s in [["front", 0.0, 9.0], ["front_l", 28.0, 12.0], ["front_r", -28.0, 12.0], ["street_far", 55.0, 26.0]]:
