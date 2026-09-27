@@ -58,7 +58,7 @@
 
 | 候選 | 來源／授權 | 格式 | 面數 | 貼圖 | 尺寸 | 判定 | 階段 |
 |---|---|---|---|---|---|---|---|
-| Rocky Stone Path Scan（23 個岩地模組＋2 片底板） | PersScans／CC-BY | FBX＋blend＋4K albedo/normal/roughness/ao（本機齊全） | 13,517–35,139／模組（共 448,320） | 4K | 模組 2.3–8.4 m、起伏 0.31–0.88 m | **REWORK（採用，限岩地補丁）**：實測每個模組是**一整片連續開放曲面**（連通分量 1–3、邊界邊 320–735），是「土中嵌石」的地面，不是可分離的單顆石 → 用途限 P7 粗石徑／河岸邊緣補丁（減面至 2–4k、4K→1K、色調對齊 V2_Stone）。**單顆踏石／飛石不從此抽**（需切割＋封底＋重 UV，手工量大）→ 改 Blender 自建 | P7 |
+| Rocky Stone Path Scan（23 個岩地模組＋2 片底板） | PersScans／CC-BY | FBX＋blend＋4K albedo/normal/roughness/ao（本機齊全） | 13,517–35,139／模組（共 448,320；25 物件、3 材質；無 LOD、無 collision） | 4K | 模組 2.3–8.4 m、起伏 0.31–0.88 m | **REWORK（採用，限岩地補丁）**：實測每個模組是**一整片連續開放曲面**（連通分量 1–3、邊界邊 320–735），是「土中嵌石」的地面，不是可分離的單顆石 → 用途限 P7 粗石徑／河岸邊緣補丁（減面至 2–4k、4K→1K、色調對齊 V2_Stone）。**單顆踏石／飛石不從此抽**（需切割＋封底＋重 UV，手工量大）→ 改 Blender 自建 | P7 |
 | GroundStone 01–06、Stone_Big 01–03、RockSculpted、SmallStone | Cicitoon | UE | 1.8k–8.3k | 2K | 0.17–1.15 | 品質好但**授權不明→不使用** | — |
 | StoneCluster Round／Pond／Wall | Cicitoon | UE | 30k–145k | 2K | 3.6–6.0 | 觀光庭園圓環石組＋授權不明 | — |
 | SM_LS_Rock_00A–03A | Normandy | UE（Nanite） | 2.5k–3.9k | 4K | 6.4–18.4 | REWORK 候選（北丘露岩） | P9 |
@@ -70,7 +70,7 @@
 
 | 候選 | 來源／授權 | 解析度 | 判定 | 階段 |
 |---|---|---|---|---|
-| Forest trail path 掃描 | Punttulanbro／CC-BY，FBX＋2×8K（本機齊全） | 8K | REWORK 候選：可烘 tileable 林道土；**P7 預設仍用 Poly Haven CC0 管線**（`build_village_v2_textures.py`，已有 sha256 溯源） | P7 備援 |
+| Forest trail path 掃描 | Punttulanbro／CC-BY，FBX＋2×8K（本機齊全）；Blender 實測 1 物件、1,413,393 面、2 材質、6.77×2.91×0.81 m、無 LOD、無 collision（Nanite 級，不原樣搬進 Godot，只當烘貼圖來源） | 8K | REWORK 候選：可烘 tileable 林道土；**P7 預設仍用 Poly Haven CC0 管線**（`build_village_v2_textures.py`，已有 sha256 溯源） | P7 備援 |
 | Tileable Pine Forest Road | Serkan CINAR／CC-BY，UE | 4K×3 | REWORK 候選（需 UE 匯出） | P7 備援 |
 | T_LC_Ground*（Dry／GrassGravel／GrassMoss／GrassSoil／Mossy／RockyRoad／SoilExcavated） | Normandy／Fab Standard，UE | 4K | REFERENCE ONLY：寫實歐式地表，與 Poly Haven 同類、無額外價值且需 UE 匯出 | — |
 
@@ -89,7 +89,7 @@
 |---|---|---|---|
 | BarrelTris、WineBarrel | Stylized Env | REJECT | 西式鐵箍桶／酒桶（需日式樽，另做） |
 | CrateLarge、Logpile、Log1–3、Campfire | Stylized Env | REFERENCE ONLY | 手繪金黃木；柴堆輪廓可參考 |
-| otsuga1 室內 kit（書、層架、矮櫃、坐墊） | FabTrial RawAssets，listing 未確認 | 授權待確認→不使用 | 86 物件、3,041,328 面、每本書 67,584 面、尺度疑似 ×10 |
+| otsuga1 室內 kit（書、層架、矮櫃、坐墊） | FabTrial RawAssets，listing 未確認 | 授權待確認→不使用 | 86 物件、3,041,328 面、49 材質、外框 299.4×299.4×11.5 m、每本書 67,584 面、尺度疑似 ×10 |
 | 農具、手推車、板車、市集攤位、布棚 | — | — | **UE／Fab 內無合用資產** → 用專案 `market/`（屋台絲綢／蔬果／陶瓷攤、平台攤、雜物堆木桶／瓢盆／草捆、水井、旗子）＋自建 |
 
 ### 3.6 燈籠、招牌、旗幟、布料／水岸農田灌溉小件
