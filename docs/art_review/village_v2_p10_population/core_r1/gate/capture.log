@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[CORESHOT] 1_market_tps_after size (1920, 1080) player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[CORESHOT] 1_market_tps_before size (1920, 1080) player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[CORESHOT] 2_market_west_tps_after size (1920, 1080) player (216.0, 1.198198, -44.7) cam (211.5734, 3.683852, -44.3)
+[CORESHOT] 2_market_west_tps_before size (1920, 1080) player (216.0, 1.198198, -44.7) cam (211.5734, 3.683852, -44.3)
+[CORESHOT] 3_main_street_tps_after size (1920, 1080) player (265.0, 1.115506, -31.0) cam (263.8494, 4.405643, -22.72526)
+[CORESHOT] 3_main_street_tps_before size (1920, 1080) player (265.0, 1.115506, -31.0) cam (263.8494, 4.405643, -22.72526)
+[CORESHOT] 4_market_high_after size (1920, 1080) player (244.0, 1.145997, -36.0) cam (244.4, 8.907826, -24.51524)
+[CORESHOT] 4_market_high_before size (1920, 1080) player (244.0, 1.145997, -36.0) cam (244.4, 8.907826, -24.51524)
+[CORESHOT] 5_walk_through_00 size (1920, 1080) player (242.788, 1.047668, -26.92776) cam (243.1877, 4.3571, -18.04988)
+[CORESHOT] 5_walk_through_01 size (1920, 1080) player (242.788, 1.078614, -29.79387) cam (243.188, 4.395698, -20.91582)
+[CORESHOT] 5_walk_through_02 size (1920, 1080) player (242.477, 1.092865, -32.3013) cam (242.877, 4.410743, -23.42323)
+[CORESHOT] 5_walk_through_03 size (1920, 1080) player (242.477, 1.427948, -35.09265) cam (242.877, 4.42789, -26.2804)
+[CORESHOT] 5_walk_through_04 size (1920, 1080) player (242.477, 1.128011, -37.95882) cam (242.877, 4.444686, -29.08078)
+[CORESHOT] 5_walk_through_05 size (1920, 1080) player (242.477, 1.145206, -40.82521) cam (242.877, 4.461883, -31.94719)
+[COREWALK] travelled 16.3259372711182
+[CORESHOT] 6_mouth_from_south_after size (1920, 1080) player (258.0, 0.967199, -6.0) cam (260.711, 3.307343, -2.979633)
+[CORESHOT] 6_mouth_from_south_before size (1920, 1080) player (258.0, 0.967199, -6.0) cam (260.711, 3.307343, -2.979633)
+[CORESHOT] 7_mouth_from_north_after size (1920, 1080) player (268.0, 1.192018, -44.0) cam (271.2646, 4.147156, -51.75311)
+[CORESHOT] 7_mouth_from_north_before size (1920, 1080) player (268.0, 1.192018, -44.0) cam (271.2646, 4.147156, -51.75311)
+[CORESHOT] 8_izakaya_after size (1920, 1080) player (274.2, 1.272714, -56.8) cam (269.96, 3.878994, -52.63883)
+[CORESHOT] 8_izakaya_before size (1920, 1080) player (274.2, 1.272714, -56.8) cam (269.96, 3.878994, -52.63883)
+[CORESHOT] 9_terakoya_after size (1920, 1080) player (213.0, 0.788018, 24.0) cam (218.8876, 3.394299, 23.2066)
+[CORESHOT] 9_terakoya_before size (1920, 1080) player (213.0, 0.788018, 24.0) cam (218.8876, 3.394299, 23.2066)

@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[CORE] PASS 掛載：Population の PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10（各 1 つ、この順；位置 [7200651, 7200742, 7200829, 7200908]）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[CORE] PASS 人數：CoreP10 23（＝配役 23）、Population 全体 39（R3b 16＋R3d）
+[CORE] PASS Activity：10 件（＝割り当て 10）が承認 clip を再生、道具が見える（違反 []）
+[CORE] PASS 道具が体に付いている（木箱中心↔両手 ≤ 0.32・杯↔左手 ≤ 0.12・縁台↔腰 水平 ≤ 0.45 m；違反 []）
+[CORE] PASS 縁台・木箱が屋台・建物の衝突體と重ならない（違反 []）
+[CORE] PASS 逐フレーム（30 fps・clip 全長、R3c と同じ基準）：clip／道具が妥当・足の rest 誤差 < 0.012・道具が描画三角形に入らない・木箱／縁台の食い込み < 0.02・縁台の脚が床に乗る < 0.055 m（C2_shufu_f01 310 f, C5_shufu_f01 310 f, C23_yakusou_f01 180 f, C12_yaoya_m01 191 f, C11_nunoya_f01 310 f, C13_shufu_f01 310 f, C17_chaya_f01 267 f, C20_kozo_m01 34 f, C21_nunoya_f01 310 f, C22_yakusou_f01 1350 f；違反 []）
+[CORE] PASS 審圖鏡位 9：同一モデルが同じ鏡頭に 3 人以上いない、各鏡位に人が見える（1_market_tps 4 人、2_market_west_tps 6 人、3_main_street_tps 9 人、4_market_high 10 人、5_walk_through 8 人、6_mouth_from_south 11 人、7_mouth_from_north 8 人、8_izakaya 2 人、9_terakoya 3 人；違反 []）
+[CORE] PASS 歩く人 2：30 秒で移動・折返し・路線 XZ ≤ 0.05・高さ ≤ 0.03 m（違反 []）
+[CORE] 結果：0 項失敗（scene）

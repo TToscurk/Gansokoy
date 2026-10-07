@@ -1,0 +1,34 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] PASS plan Market/M2_shufu_f01 
+[ACT] PASS plan Market/M7_kozo_m01 
+[ACT] PASS plan MarketWest/W1_nunoya_f01 
+[ACT] PASS plan MarketWest/W2_shufu_f01 
+[ACT] PASS plan MarketWest/W3_chaya_f01 
+[ACT] PASS plan MarketWest/W4_yakusou_f01 
+[ACT] PASS plan MainStreet/S2_yaoya_m01 
+[ACT] PASS plan MainStreet/S3_yakusou_f01 
+[ACT] PASS scope16/8 assignments/5 types ["Talk", "YouthShortStep", "Drink", "Sit", "Carry"]
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT] PASS runtime16/no duplicates 
+[ACT] PASS real runtime animation advance 8
+[ACT] PASS evaluated30fps Market/M2_shufu_f01 {"actor":"Market/M2_shufu_f01","foot_rest_error_m":0.000459641218185425,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS evaluated30fps Market/M7_kozo_m01 {"actor":"Market/M7_kozo_m01","foot_rest_error_m":0.000883288681507111,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":34,"stool_support_gap_m":0.0,"type":"YouthShortStep"}
+[ACT] PASS evaluated30fps MarketWest/W1_nunoya_f01 {"actor":"MarketWest/W1_nunoya_f01","foot_rest_error_m":0.00046190619468689,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS evaluated30fps MarketWest/W2_shufu_f01 {"actor":"MarketWest/W2_shufu_f01","foot_rest_error_m":0.000459641218185425,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS evaluated30fps MarketWest/W3_chaya_f01 {"actor":"MarketWest/W3_chaya_f01","foot_rest_error_m":0.000440970063209534,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":267,"stool_support_gap_m":0.0,"type":"Drink"}
+[ACT] PASS evaluated30fps MarketWest/W4_yakusou_f01 {"actor":"MarketWest/W4_yakusou_f01","foot_rest_error_m":0.0014178454875946,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":1350,"stool_support_gap_m":0.0,"type":"Sit"}
+[ACT] PASS evaluated30fps MainStreet/S2_yaoya_m01 {"actor":"MainStreet/S2_yaoya_m01","foot_rest_error_m":0.000908404588699341,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":191,"stool_support_gap_m":0.0,"type":"Carry"}
+[ACT] PASS evaluated30fps MainStreet/S3_yakusou_f01 {"actor":"MainStreet/S3_yakusou_f01","foot_rest_error_m":0.000190351158380508,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":180,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS negative stopped/Tpose 
+[ACT] PASS negative wrong animation root 
+[ACT] PASS negative zero-track clip 
+[ACT] PASS negative zero-length clip 
+[ACT] PASS negative detached cup 
+[ACT] PASS negative hidden cup 
+[ACT] PASS negative hidden stool 
+[ACT] PASS negative detached crate 
+[ACT] PASS negative hidden crate 
+[ACT] PASS negative added population 

@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+ERROR: [ACT-CORE] missing Population/CoreP10
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] initialize (res://scripts/npc_activity_core.gd:11)
+[CORE] PASS 反向 twin → 「twin」必須 FAIL（失敗項 ["twin", "vocab"]）
+[CORE] PASS 反向 role → 「role」必須 FAIL（失敗項 ["role"]）
+[CORE] PASS 反向 body → 「body」必須 FAIL（失敗項 ["body"]）
+[CORE] PASS 反向 path → 「path」必須 FAIL（失敗項 ["path"]）
+[CORE] PASS 反向 zone → 「zone」必須 FAIL（失敗項 ["zone"]）
+[CORE] PASS 反向 anchor → 「anchor」必須 FAIL（失敗項 ["anchor", "body"]）
+[CORE] PASS 反向 walk_rule → 「walk_rule」必須 FAIL（失敗項 ["walk_rule", "path", "vocab"]）
+[CORE] PASS 反向 count → 「count」必須 FAIL（失敗項 ["count", "twin"]）
+[CORE] PASS 反向 compose → 「compose」必須 FAIL（失敗項 ["twin", "compose", "body"]）
+[CORE] PASS 反向 ground → 「ground」必須 FAIL（失敗項 ["ground"]）
+[CORE] PASS 反向 speed → 「speed」必須 FAIL（失敗項 ["speed"]）
+[CORE] PASS 反向 vocab → 「vocab」必須 FAIL（失敗項 ["vocab"]）
+[CORE] 結果：0 項失敗（negatives）

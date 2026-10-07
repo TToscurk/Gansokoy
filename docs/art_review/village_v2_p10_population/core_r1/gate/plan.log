@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+ERROR: [ACT-CORE] missing Population/CoreP10
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] initialize (res://scripts/npc_activity_core.gd:11)
+[CORE] INFO 追加 23 人（725 ms）
+[CORE] MAP C1   market     chaya_f01    dango    idle   (255.2, 1.26, -52.2) yaw  -85  最近 C2 2.4 m  同モデル 13.0 m
+[CORE] MAP C2   market     shufu_f01    customer idle   (252.8, 1.26, -52.0) yaw   95  最近 C1 2.4 m  同モデル 19.2 m
+[CORE] MAP C3   market     takigi_m01   porter   idle   (231.4, 1.20, -43.8) yaw  -90  最近 M5 3.9 m  同モデル 18.8 m
+[CORE] MAP C4   market     nunoya_f01   gofuku   idle   (234.4, 1.18, -38.2) yaw   44  最近 C5 3.2 m  同モデル 27.4 m
+[CORE] MAP C5   market     shufu_f01    customer idle   (236.6, 1.17, -35.9) yaw -136  最近 C4 3.2 m  同モデル 10.9 m
+[CORE] MAP C7   market     sakanaya_m01 customer idle   (250.4, 1.16, -44.0) yaw   73  最近 C23 3.6 m  同モデル 14.5 m
+[CORE] MAP C12  market     yaoya_m01    porter   idle   (241.5, 1.03, -25.6) yaw   17  最近 M7 2.4 m  同モデル 11.6 m
+[CORE] MAP C23  market     yakusou_f01  customer idle   (247.4, 1.20, -42.0) yaw -128  最近 C24 1.6 m  同モデル 18.6 m
+[CORE] MAP C24  market     chaya_f01    customer idle   (246.1, 1.21, -43.0) yaw   52  最近 C23 1.6 m  同モデル 13.0 m
+[CORE] MAP C8   market_west setomono_f01 meshi    idle   (230.6, 1.08, -29.6) yaw  -90  最近 C5 8.7 m  同モデル 17.0 m
+[CORE] MAP C9   market_west sakanaya_m01 customer idle   (215.7, 1.26, -45.4) yaw  180  最近 W5 0.8 m  同モデル 34.7 m
+[CORE] MAP C10  market_west chonin_m01   porter   idle   (232.0, 1.24, -49.9) yaw -180  最近 M5 4.5 m  同モデル 9.4 m
+[CORE] MAP C6   main_street sakanaya_m01 customer patrol (259.0, 1.12, -19.0) yaw -106  最近 S1 4.9 m  同モデル 10.8 m
+[CORE] MAP C11  main_street nunoya_f01   barker   idle   (260.6, 1.14, -23.9) yaw   73  最近 C6 5.2 m  同モデル 29.8 m
+[CORE] MAP C13  main_street shufu_f01    customer idle   (263.5, 1.19, -31.7) yaw  -88  最近 S4 1.5 m  同モデル 16.3 m
+[CORE] MAP C14  main_street setomono_f01 seto     idle   (261.5, 1.18, -31.6) yaw   92  最近 C13 2.0 m  同モデル 30.7 m
+[CORE] MAP C16  main_street takigi_m01   zakka    idle   (270.7, 1.22, -35.7) yaw -107  最近 S4 4.5 m  同モデル 36.4 m
+[CORE] MAP C19  main_street chonin_m01   customer idle   (272.1, 1.28, -45.4) yaw   73  最近 S4 5.2 m  同モデル 22.1 m
+[CORE] MAP C17  izakaya    chaya_f01    guest    idle   (276.4, 1.36, -59.0) yaw  146  最近 C18 2.2 m  同モデル 22.2 m
+[CORE] MAP C18  izakaya    sakanaya_m01 guest    idle   (277.6, 1.37, -60.8) yaw  -34  最近 C17 2.2 m  同モデル 20.6 m
+[CORE] MAP C20  terakoya   kozo_m01     pupil    patrol (202.0, 0.76, 20.4) yaw   40  最近 C21 2.4 m  同モデル 63.1 m
+[CORE] MAP C21  terakoya   nunoya_f01   parent   idle   (207.8, 0.83, 27.6) yaw  -54  最近 C22 2.2 m  同モデル 71.0 m
+[CORE] MAP C22  terakoya   yakusou_f01  parent   idle   (206.0, 0.72, 28.9) yaw  126  最近 C21 2.2 m  同モデル 77.3 m
+[CORE] PASS 人數：R3b 16＋R3d 23＝39（30–40）、區域 { "market": 16, "market_west": 8, "main_street": 10, "izakaya": 2, "terakoya": 3 }（市集＞主街＞裏通り、居酒屋 ≤ 3・寺子屋 ≤ 4）
+[CORE] PASS 範圍：全員が自分の核心區の箱の中（農田・河岸・森林へ出ない；違反 []）
+[CORE] PASS anchor：封存 overlay の Marker を読めた（欠落 []）、R3b・互いと重複しない（重複 []）
+[CORE] PASS 職業對位：外見→商い（違反 []）
+[CORE] PASS 歩く人 5（≤ 7）：婆婆は Walk 0（違反 []）、少年 ≤ 2（2）
+[CORE] PASS 同一モデルは隣接しない：追加分が絡む同モデル間の最短 9.4 m（≥ 8 m；違反 []）
+[CORE] PASS 構圖：追加分の小群 5 組（≥ 4：["g_dango", "g_square", "g_kame", "g_izakaya", "g_terakoya"]）、全体の単独 18（≥ 6）、最近傍距離の変動係數 0.59（≥ 0.5）
+[CORE] PASS 接地：追加 Idle の足元と見えている最上面の差 最大 0.000 m（≤ 0.03；違反 []）
+[CORE] PASS 體の衝突：追加 Idle の capsule が屋台・棚・建物（描画三角形＋衝突體）に入らない（違反 []）、NPC 間 ≥ 0.55 m（[]）
+[CORE] PASS 往復路 2 本：衝突體・描畫三角形に入らない・Idle から ≥ 0.6 m・段差 ≤ 0.10 m・長さ 6–20 m（違反 []）
+[CORE] PASS 歩速＝Walk clip の足の接地速度（滑り ≤ 3 %、違反 []）
+[CORE] PASS Activity：10 件・{ "Talk": 6, "Carry": 1, "Drink": 1, "YouthShortStep": 1, "Sit": 1 } がすべて R3c／R3c.1 封存 vocabulary（type・model・clip・slot・options 一致）で追加分の実在の住人（違反 []）
+[CORE] PASS 封存は読むだけ：R3b population scene／generator／actor・R3c overlay の雜湊＝封存時（違い []）
+[CORE] 結果：0 項失敗
