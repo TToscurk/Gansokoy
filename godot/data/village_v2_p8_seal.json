@@ -1,0 +1,126 @@
+{
+ "phase": "P8 Farmland",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-01",
+ "note": "P8 封存：凍結來源／overlay／ART_REVIEW 圖片的 sha256。任何一項雜湊改變 → verify_village_v2_farmland_seal.gd FAIL；只有真正 regression 才重開 P8（同 P7 慣例）。",
+ "runtime_budget": {
+  "gpu_delta_ms_general": 4.0,
+  "gpu_delta_ms_worst": 6.0,
+  "worst_view": "T1_eye",
+  "render_cpu_delta_ms": 4.0,
+  "views": [
+   "T1_eye",
+   "N2_eye",
+   "S2_road",
+   "Hieda_front",
+   "High_overlook"
+  ],
+  "measured_2026_10_01": {
+   "T1_eye": {
+    "gpu": 5.87,
+    "cpu": 0.63
+   },
+   "N2_eye": {
+    "gpu": 2.32,
+    "cpu": 0.66
+   },
+   "S2_road": {
+    "gpu": 2.42,
+    "cpu": 0.94
+   },
+   "Hieda_front": {
+    "gpu": 1.59,
+    "cpu": 1.1
+   },
+   "High_overlook": {
+    "gpu": 1.36,
+    "cpu": 1.43
+   }
+  },
+  "conditions": "1920x1061、vsync off、GTX 1070、Vulkan Forward+、10:00；ON/OFF 交替 3 輪取中位數；量測前 GPU 須閒置（nvidia-smi）",
+  "p12_targets": [
+   "T1_eye +5.87 ms 接近 6 ms 上限：water 約 +2.5 ms、seedlings 約 +2.1 ms（P8 不為此降視覺品質）"
+  ],
+  "p12_p13_dynamic_checks": [
+   "移動中 grass／seedling LOD popping、fade、chunk transition"
+  ],
+  "measured_2026_10_01_seal_run": {
+   "T1_eye": {
+    "gpu": 5.26,
+    "cpu": 0.85
+   },
+   "N2_eye": {
+    "gpu": 1.79,
+    "cpu": 1.01
+   },
+   "S2_road": {
+    "gpu": 2.34,
+    "cpu": 1.04
+   },
+   "Hieda_front": {
+    "gpu": 1.62,
+    "cpu": 1.41
+   },
+   "High_overlook": {
+    "gpu": 1.39,
+    "cpu": 1.61
+   }
+  }
+ },
+ "frozen": {
+  "tools/village_v2_farmland_lib.gd": "382f57c430389f8373ecfa88927d90c75c4beb14537dece44e5776e9229b7ec7",
+  "tools/village_v2_farmland_visual.gd": "46527a6c6beee8801373d65e0941905998957a4a9bce65e5960046116527736f",
+  "tools/village_v2_farmland_zone.gd": "1491f159d966df5b8484ced0ec4ffcdcc7c7ec0769fdc65b57c03da4c0dad0e8",
+  "maps/village_v2/shaders/p8_paddy_water.gdshader": "fc81fcda517a6172c20592146dfd9b47f2ba12f347ea9a9f2afa23fb6ff25200",
+  "maps/village_v2/shaders/p8_paddy_plant.gdshader": "1ebe4557fee7f88edd6584444f6942b7649ef038a6dda98b817f53377b2494c9",
+  "data/village_v2_p8_blocks.json": "e40c487c58c41a2e97486e4e1f91589af6bb4687769424e5e7b2fc0a4d79a5aa",
+  "data/village_v2_p8_ground.json": "39366a7f1937d873a527e17f01f4b8a1d2e1c091b290a51c51e263b0d1ca009b",
+  "maps/village_v2/gen/farmland_p8.scn": "0b995c38feee7b94fd6db1097bd50ca776cd19482b7157a8346878887fcf7f0c"
+ },
+ "art_review_images": {
+  "pilot_supply_tps_FP1_siphon.png": "d575480603048376195ea15126a7f5695b895a0f35744f4ad44063f840fdb82e",
+  "pilot_supply_tps_chute_side.png": "1ee55af8a072d6ce48708519abc390e2a3f1a86b1ecb965043d245cf5b7ce106",
+  "pilot_supply_tps_portal.png": "e3fc5a410c942efeacbb39347c03cced35c3bfb26d0fda10f2091d3083a0c128",
+  "pilot_supply_tps_trough_mid.png": "43b2b306ff55bc364e0d7ab6813a77127f16f76f3bc6e5db42edbb51e47ce6ce",
+  "r6_tps_N0_feeder_WW1.png": "5f43a4f2a43e0460fb74370fc92e1d176011877f97c5d3c7c60f6900c085f187",
+  "r6_tps_N1_paddies.png": "8000086cad3f578e9dbac8373032d4f2fcb3d0e5e66bb4f5dc9407b7509bd81d",
+  "r6_tps_N2_from_FarmPath4.png": "73af85e1ff2d287d8de1e66a6c44ca972535950f868135a13d142fd2e6442254",
+  "r6_tps_N2_outfall.png": "b3ed2424577ac67673b18cc0282f3c7098b1717fb5a2fcfbf8baf7c74b06abed",
+  "r6_tps_N3_fallow.png": "7271fb74d2d90178faa7baa6549ff99324176dc4d63a767416baee0861fa4efc",
+  "r6_tps_N3_outfall.png": "e1e145b0a939296d0f6517c7e42e321fa2ee3e623dcbefe06cb3833351c1d65f",
+  "r6_tps_S0_dryfield.png": "ac1cdd7cc3987bfb0bbfb1dcad118e874ed255e65cfe1b33922d75d5da7ae4ae",
+  "r6_tps_S2_from_road.png": "38cab747b428c3a04c1abe15a5b3d34ebf4fb1f0269e5dda4a50344ec29f3eea",
+  "r6_tps_S3N3_siphon_FarmPath4.png": "8a36a66f26dd206ea4451dd85fa61576017a6a86306967f79ebad43f7ec05acc",
+  "r6_tps_S3_paddies.png": "3e8989afdd22db81713d45e729dbd443686c60d19b1d22b42c6d054fbb27d4d1",
+  "r6_tps_T0_feeder_WW3.png": "9b9697f859f8ae5c3c2b6bf5e1b98860b0001eed75b2720f7018392651fbf841",
+  "r6_tps_T0_paddies.png": "aeb78bf1cf2058668d729ca0413d5c6517b08f5d87ee452befe6112717ec197a",
+  "r6_tps_T1T2_siphon_FarmPath2.png": "16135edaa9efddb6d5623eeae3177fb7eaf42ae3f9bf8b90db4e10f74ea47830",
+  "r6_tps_T1_bund.png": "0c3b941289cf5dcb208c0dfc710fd604cdc73a856127d403acf14999146577c6",
+  "r6_tps_T2_lateral.png": "d5d4bb94d7d03fb7e0979d49d15a75f064b3cbfcc7faf98b0e40d9b359cb5681",
+  "r6_tps_T3_dropweir.png": "c9a2022618ee125b7dc14e089850ccdade181f004d427ae9a6cfaf51931dabcf",
+  "r7_grass_ab_N2_from_FarmPath4.png": "fd4b9488c3372e90f061c64e2acc9c17c98a5b8b7f606afa20fa96b130d1c8e1",
+  "r7_grass_ab_N3_fallow.png": "1ae992981352fea4a77f86b00fb0de5638f4c3fe7ddb1f78eeb546c0a590999a",
+  "r7_grass_ab_S2_from_road.png": "5af0b9a77ec1b0d5f18b811390abfae837b71a1c70d79bed766f084a0fe26525",
+  "r7_grass_ab_T1_bund.png": "8b124f53d5a9a5267c6c35994a749b529e6cc950bd8257e0c1f88d0c969b8be1"
+ },
+ "evidence": {
+  "evidence/ab_benchmark_after_grass_chunk.log": "df3ca2638f511033811069fcb893ecb3f38eee686df3b842b72036a21ad264fd",
+  "evidence/ab_benchmark_before_grass_chunk.log": "c0363fa1a77375f2b980fecf853858bb881ebf957e6d307d8386788c48de9ba5",
+  "evidence/full_regression.log": "64aa20671e7552488f43fc9dbb295e4e0c67b8de751e3c6231904155acbd5470",
+  "evidence/p8_local_gates.log": "e88ef0c6c56efb999884ea445466c057e0e5ba8613134801a1ff42950d00368b",
+  "evidence/p8_seal_budget_gate_run.log": "9faa7c67dd610d532c992d83af6600e597f749789a1c66f8a9d7fc59162a51bc",
+  "evidence/zone_walk_tps_camera.log": "fdd65e93cae5911d9f82a0fd8a54155ea57ba6393a4ffa21f4f3d6e25ea4b0a7"
+ },
+ "known_external_issue": "P5 asset reset gate 的 res://shaders/sky_daynight.gdshader 違規為既有獨立問題，不影響 P8 ART_APPROVED，不為 P8 放寬 P5 gate。",
+ "rerendered": {
+  "date": "2026-10-01",
+  "files": [
+   "pilot_supply_tps_FP1_siphon.png",
+   "pilot_supply_tps_chute_side.png",
+   "pilot_supply_tps_portal.png",
+   "pilot_supply_tps_trough_mid.png"
+  ],
+  "reason": "封存後第一次全回歸的 --feeder 步驟未帶 --no-shots，以同一凍結場景＋同一鏡位重拍覆寫；原圖未進 git、無備份。已改 run_village_v2_regression.sh 第 47 行加 --no-shots，雜湊更新為重拍版（內容＝目前核准場景）。"
+ }
+}

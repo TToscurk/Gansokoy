@@ -1,0 +1,19 @@
+# P8 ART_APPROVED 封存後驗證（2026-10-01）：--zone --no-shots（封存圖 md5 前後一致）＋ --cost 預算 gate
+0513661c1790b6d0886861ebfef5eb9c *../docs/art_review/village_v2_p8_farmland/r6_tps_T1_bund.png
+zone exit 0
+[ZONE] result: 0 failed
+25
+cost exit 0
+[COST] 解析度 (1920.0, 1061.0)、vsync off、max_fps 0、10:00；ON／OFF 交替 3 輪，每態暖機 60 幀、量 150 幀；GPU／frame 取中位數，Δ 取 3 輪中位數
+[COST] T1_eye        Δ(P8) frame +5.22  renderCPU +0.85  GPU +5.26（3 輪 +5.25／+5.26／+6.05）  prims +810409  draws +587
+[COST] PASS budget T1_eye        GPU Δ +5.26（上限 6 ms）  renderCPU Δ +0.85（上限 4 ms）
+[COST] N2_eye        Δ(P8) frame +1.64  renderCPU +1.01  GPU +1.79（3 輪 +1.75／+1.79／+1.94）  prims +943611  draws +995
+[COST] PASS budget N2_eye        GPU Δ +1.79（上限 4 ms）  renderCPU Δ +1.01（上限 4 ms）
+[COST] S2_road       Δ(P8) frame +2.29  renderCPU +1.04  GPU +2.34（3 輪 +2.33／+2.34／+2.47）  prims +1331168  draws +918
+[COST] PASS budget S2_road       GPU Δ +2.34（上限 4 ms）  renderCPU Δ +1.04（上限 4 ms）
+[COST] Hieda_front   Δ(P8) frame +1.73  renderCPU +1.41  GPU +1.62（3 輪 +1.54／+1.62／+1.63）  prims +1395290  draws +1313
+[COST] PASS budget Hieda_front   GPU Δ +1.62（上限 4 ms）  renderCPU Δ +1.41（上限 4 ms）
+[COST] High_overlook Δ(P8) frame +1.44  renderCPU +1.61  GPU +1.39（3 輪 +1.38／+1.39／+1.42）  prims +1861668  draws +1526
+[COST] PASS budget High_overlook GPU Δ +1.39（上限 4 ms）  renderCPU Δ +1.61（上限 4 ms）
+[COST] 結果：0 項失敗（P8 runtime budget）
+0513661c1790b6d0886861ebfef5eb9c *../docs/art_review/village_v2_p8_farmland/r6_tps_T1_bund.png

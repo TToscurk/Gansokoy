@@ -1,0 +1,24 @@
+[FARM] result: 0 failed; pilot=7 + zone=67 fields; water err=0.0000m spread=0.045–0.045, path clearance=1.106m
+[FARM] FAIL water +0.045m on frozen terrace (max err 0.5000 < 0.002)
+[FARM_PLACE] bund=23165 water=666 samples, max |ground gap| 0.069m, max water intrusion -0.046m, 0 failures
+[FEEDER] result: 0 failed
+regress exit 1
+✓ freeze check
+✓ P1 Approved Terrain Protection
+✓ P2 water gate
+✓ terrain gate（含鋸齒坡、東岸、橋端、農田）
+✓ 5 bridge checks
+✓ sightline checks
+✓ P3 roads / parcels gate
+✓ P4 greybox gate
+✗ P5 asset reset gate（白名單／Protected／封存）（exit 1）
+✓ P5 Hero Asset Gate 回歸（已登記資產 1–9 項重驗＋gate.json 雜湊）
+✓ P6 町家 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊）
+✓ P7 R2 河岸 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊＋烘焙＝重排）
+✓ P7 R3 河岸石砌 Cleanup Gate（4 條規則：覆蓋空窗／可見 40–70%／浮空與過度外露／2–4 層）
+✓ 場景擺放／碰撞稽核＋永久反向案例（clean 全 PASS；float／sink／clash→FAIL、aabbfp→PASS、noproxy→REVIEW）
+✓ 19-point walk
+[ASSET] FAIL V2 場景依賴 1136 個全在白名單內（違規 1：res://shaders/sky_daynight.gdshader）
+[RBG] 結果：0 項失敗
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，2452 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 16086 ms）

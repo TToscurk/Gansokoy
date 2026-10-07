@@ -1,0 +1,36 @@
+[COST] 解析度 (1920.0, 1061.0)、vsync off、max_fps 0、10:00；ON／OFF 交替 3 輪，每態暖機 60 幀、量 150 幀；GPU／frame 取中位數，Δ 取 3 輪中位數
+[COST] T1_eye        ON  frame 12.21 ms (p95 13.01)  renderCPU 1.38  GPU 11.92  prims 2268694  draws 562
+[COST] T1_eye        OFF frame 6.53 ms (p95 7.23)  renderCPU 0.74  GPU 6.05  prims 1179041  draws 34
+[COST] T1_eye        Δ(P8) frame +5.68  renderCPU +0.63  GPU +5.87（3 輪 +5.86／+5.87／+6.16）  prims +1089653  draws +528
+[COST] N2_eye        ON  frame 9.11 ms (p95 9.85)  renderCPU 1.90  GPU 8.73  prims 2424439  draws 1083
+[COST] N2_eye        OFF frame 6.88 ms (p95 7.17)  renderCPU 1.24  GPU 6.44  prims 1439983  draws 468
+[COST] N2_eye        Δ(P8) frame +2.23  renderCPU +0.66  GPU +2.32（3 輪 +2.28／+2.32／+2.34）  prims +984456  draws +615
+[COST] S2_road       ON  frame 9.14 ms (p95 9.85)  renderCPU 2.13  GPU 8.72  prims 2748130  draws 1282
+[COST] S2_road       OFF frame 6.86 ms (p95 7.06)  renderCPU 1.19  GPU 6.35  prims 1416962  draws 364
+[COST] S2_road       Δ(P8) frame +2.30  renderCPU +0.94  GPU +2.42（3 輪 +2.37／+2.42／+2.45）  prims +1331168  draws +918
+[COST] Hieda_front   ON  frame 8.14 ms (p95 8.41)  renderCPU 2.08  GPU 7.64  prims 2696042  draws 1515
+[COST] Hieda_front   OFF frame 6.50 ms (p95 6.89)  renderCPU 0.94  GPU 6.00  prims 1300752  draws 202
+[COST] Hieda_front   Δ(P8) frame +1.63  renderCPU +1.10  GPU +1.59（3 輪 +1.54／+1.59／+1.64）  prims +1395290  draws +1313
+[COST] High_overlook ON  frame 8.12 ms (p95 11.01)  renderCPU 3.52  GPU 7.61  prims 3085630  draws 2284
+[COST] High_overlook OFF frame 6.67 ms (p95 7.05)  renderCPU 1.61  GPU 6.18  prims 1223962  draws 758
+[COST] High_overlook Δ(P8) frame +1.45  renderCPU +1.43  GPU +1.36（3 輪 +1.35／+1.36／+1.42）  prims +1861668  draws +1526
+[COST] split T1_eye        grass      節點   561  GPU +0.27 ms（3 輪 +0.24／+0.27／+0.30）  prims +81012  draws +36
+[COST] split T1_eye        bund_soil  節點     1  GPU +0.01 ms（3 輪 -0.03／+0.01／+0.03）  prims +392260  draws +210
+[COST] split T1_eye        water      節點   119  GPU +2.52 ms（3 輪 +2.50／+2.52／+2.54）  prims +82023  draws +34
+[COST] split T1_eye        seedlings  節點  1272  GPU +2.05 ms（3 輪 +2.02／+2.05／+2.06）  prims +442020  draws +116
+[COST] split N2_eye        grass      節點   561  GPU +0.50 ms（3 輪 +0.42／+0.50／+0.51）  prims +53829  draws +29
+[COST] split N2_eye        bund_soil  節點     1  GPU +0.01 ms（3 輪 -0.06／+0.01／+0.02）  prims +447348  draws +246
+[COST] split N2_eye        water      節點   119  GPU +0.30 ms（3 輪 +0.24／+0.30／+0.35）  prims +84760  draws +29
+[COST] split N2_eye        seedlings  節點  1272  GPU +1.19 ms（3 輪 +1.15／+1.19／+1.22）  prims +296394  draws +158
+[COST] split S2_road       grass      節點   561  GPU +0.31 ms（3 輪 +0.24／+0.31／+0.32）  prims +35880  draws +36
+[COST] split S2_road       bund_soil  節點     1  GPU +0.16 ms（3 輪 +0.02／+0.16／+0.23）  prims +689260  draws +367
+[COST] split S2_road       water      節點   119  GPU +0.31 ms（3 輪 +0.31／+0.31／+0.42）  prims +130755  draws +113
+[COST] split S2_road       seedlings  節點  1272  GPU +1.40 ms（3 輪 +1.33／+1.40／+1.43）  prims +299790  draws +146
+[COST] split Hieda_front   grass      節點   561  GPU +0.24 ms（3 輪 +0.14／+0.24／+0.25）  prims +41931  draws +29
+[COST] split Hieda_front   bund_soil  節點     1  GPU +0.22 ms（3 輪 +0.04／+0.22／+0.45）  prims +681340  draws +344
+[COST] split Hieda_front   water      節點   119  GPU +0.23 ms（3 輪 +0.16／+0.23／+0.36）  prims +142647  draws +277
+[COST] split Hieda_front   seedlings  節點  1272  GPU +0.55 ms（3 輪 +0.53／+0.55／+0.76）  prims +251739  draws +180
+[COST] split High_overlook grass      節點   561  GPU +0.03 ms（3 輪 -0.04／+0.03／+0.13）  prims +18975  draws +28
+[COST] split High_overlook bund_soil  節點     1  GPU +0.40 ms（3 輪 +0.38／+0.40／+0.40）  prims +1036970  draws +547
+[COST] split High_overlook water      節點   119  GPU +0.08 ms（3 輪 +0.06／+0.08／+0.11）  prims +196388  draws +285
+[COST] split High_overlook seedlings  節點  1272  GPU +0.42 ms（3 輪 +0.38／+0.42／+0.42）  prims +297567  draws +144

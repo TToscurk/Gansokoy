@@ -1,0 +1,33 @@
+[FREEZE] 結果：0 項失敗
+✓ freeze check
+[PROTECT] 結果：0 項失敗
+✓ P1 Approved Terrain Protection
+[WATER] 結果：0 項失敗
+✓ P2 water gate
+[TERRAIN] 結果：0 項失敗
+✓ terrain gate（含鋸齒坡、東岸、橋端、農田）
+[BRIDGE] 結果：0 項失敗
+✓ 5 bridge checks
+[SL] 結果：0 項失敗
+✓ sightline checks
+[PARCEL] 結果：0 項失敗
+✓ P3 roads / parcels gate
+[GB] 結果：0 項失敗
+✓ P4 greybox gate
+[ASSET] FAIL V2 場景依賴 1136 個全在白名單內（違規 1：res://shaders/sky_daynight.gdshader）
+[ASSET] 結果：1 項失敗
+✗ P5 asset reset gate（白名單／Protected／封存）（exit 1）
+[HERO] 結果：0 項失敗
+✓ P5 Hero Asset Gate 回歸（已登記資產 1–9 項重驗＋gate.json 雜湊）
+[KIT] 結果：0 項失敗
+✓ P6 町家 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊）
+[RBG] 結果：0 項失敗
+✓ P7 R2 河岸 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊＋烘焙＝重排）
+[RBSW] 結果：0 項失敗（共 5 項）
+✓ P7 R3 河岸石砌 Cleanup Gate（4 條規則：覆蓋空窗／可見 40–70%／浮空與過度外露／2–4 層）
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，2452 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 16086 ms）
+✓ 場景擺放／碰撞稽核＋永久反向案例（clean 全 PASS；float／sink／clash→FAIL、aabbfp→PASS、noproxy→REVIEW）
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.05 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+回歸失敗項目：1
