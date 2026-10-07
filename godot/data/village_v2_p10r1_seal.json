@@ -23,19 +23,19 @@
  "frozen": {
   "godot/tools/village_v2_market_lib.gd": "5dd2e4c7928afa9469b3966c8203c2e51ccb7c9c3575fe739726deecfa5d2c54",
   "godot/tools/verify_village_v2_market.gd": "68856484923753bb6653f85c6d03dded80fef00233b2f75417184d635fe40096",
-  "godot/assets/blender/village_v2/build_market_kit.py": "7e9c637df63dd6eba0b4489b3dc61b7ba236ebccd6808b75b1371184b2f660a1",
+  "godot/assets/blender/village_v2/build_market_kit.py": "aa8be8434e8d0134e9379af1e5204e597bcb27e1d3bcd4635809e551b8cd5e3a",
   "tools/build_village_v2_market_atlas.py": "d5cf5365df91e18c68501951aab352bb3368b3d4b919fd756e9175479bf4b98f",
   "godot/assets/village_v2/market_kit/atlas.json": "df4537c6cb777a6f1aca002d97d5658fa5c2ff9021e2e3b54c9be3ddc717e46e",
   "godot/assets/village_v2/market_kit/market_kit_atlas.png": "7df4278231af6b197afd8abf7bbf395c187355321345957966c3a9d15126fa03",
-  "godot/assets/village_v2/market_kit/market_kit_manifest.json": "2ac65f4554de7bce7487dc616abfb54583c6a1c45d71fdb0c555583e8cbc900e",
+  "godot/assets/village_v2/market_kit/market_kit_manifest.json": "108b751a2e7bcbbb9f1e427ed1f92ce547b7dcb2856796036174695670bb7d57",
   "godot/assets/village_v2/market_kit/MK_Market.tres": "e9486de39d2fff7906f143716836e2aca178e78d432ea5b57578f363cec822ed",
   "godot/assets/village_v2/market_kit/src/modules_blender.json": "724f2b6c2957a3e59ccfbf8bfd30e556e8a258fd77f942de458e697bd18ec86a",
   "godot/maps/village_v2/gen/market_p10.scn": "2eda2277896d52756f993c106b1af749c89e89c330b78ed95014fe5180f31270",
   "godot/tools/shot_village_v2_market_views.json": "04a9adcb2577c019529f0cd76611a1a358bbe0d7771d8e82cc4fd647dbcaf4fc",
   "godot/assets/village_v2/market_kit/mesh/mk_bangasa.res": "94950bbe9e452b637798ba5b3a8e3e91df48a034bb284eb2dda52624bf9f68d8",
   "godot/assets/village_v2/market_kit/mesh/mk_bangasa_l1.res": "349addb284234f03ec65973a84e269735c16b67904eccbf49c26cd1a13f31f62",
-  "godot/assets/village_v2/market_kit/mesh/mk_chochin_line.res": "5ca7e71fa203d248660b204979ef79db41cc5da4ee711009d240bc3bd870a75e",
-  "godot/assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res": "2b0b621ae66aa5f28ca151210d45bbc553688188968b35712bce4cdbbbd4669b",
+  "godot/assets/village_v2/market_kit/mesh/mk_chochin_line.res": "1bf92ed16514d39065ded6b6b785f455704a4f067b4f7a3d11ad4be0b116a01e",
+  "godot/assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res": "b96e70a6c87eb21d1b608e7f411421c6773862e406a75d3f75376300132ce1fd",
   "godot/assets/village_v2/market_kit/mesh/mk_endai_uri.res": "ed384a3c9eef4559cafa6d18373827166ccbd98c1a116b0c11ff509c81c95214",
   "godot/assets/village_v2/market_kit/mesh/mk_endai_uri_l1.res": "d583fe30c13fba5683b0b08c6a34d991e5ac7216a107003538cbf92d5208512a",
   "godot/assets/village_v2/market_kit/mesh/mk_hoshimono.res": "3c0a1af66120928860589d499b6621af03c8190dfa4a2b707df4150e6b700379",
@@ -58,16 +58,16 @@
   "godot/assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res": "13e13c5d2108699947bd297646ef7e9bd4c655547760b4b7f2a5747288adc520",
   "godot/assets/village_v2/market_kit/mesh/mk_mushiro_yasai.res": "af22b22163d5167b37b4ba92fe7f6076eaa6ff1f941af484d059014e9c048295",
   "godot/assets/village_v2/market_kit/mesh/mk_mushiro_yasai_l1.res": "5eb77a5630c855e1b7865f54cc346d5dcc393a965e8e17d42dec45a1b56ba45d",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha.res": "33237837cd8b38ce965670a71635f650b0456a1a00a51635fd2cae7fca2adb82",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res": "f301b372f0bfd3a1921ffcb0b71344bc6013cd18353dff16d415a1a51f32c958",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi.res": "f6ae2505eed748ae4bc374a7522f2a10d63fac17104e3e107aab4f788aefe56e",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res": "7ffe19d8655518d142c6fa2aec743d2d252dbdfe67180ab40c0ef6a686d8f5b6",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto.res": "0d3ed9337907a3eab15eb166d646601b9eb5055a1a4e4c245b06632de2e7c824",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res": "9ffa98d5d965653c69711a3509d77e9ce8ae89b657c9dc68109e039208ce70f8",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res": "97f5e928b79419c44d3143009a962112315fef7f7600a6320093514d70990e55",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res": "ebe6330a0f263fcb54a886bec7c3c17a7f91e3de6641d12af1c6e8d1869eb604",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai.res": "49dced7eb7af519203cbf93a3333779fd7418e6f24b63a427c43b972108d7e7a",
-  "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res": "36d4b92d49d052af05224dcebef8d9061e653368f50124629b2c84bc9782bf89",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha.res": "da118da2c3ad000352d0337e446715775d9333c3ef7ec58caed1d48893cef156",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res": "e30b686c25be6245da3d37d418841b09004ac032d52f63dd561052501d063ec7",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi.res": "37b945ffb125ece5440333375f6076a05b9a0fa922407a7d1b83b89d7855e6ef",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res": "aaee2276366b6cc374dd19808e8408b15c0255cef4f6da257ddebceee7010c4c",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto.res": "c9bfaf1eb431ddb9a111af2f705f717547e23d4f623d75f5f703078d32fd279c",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res": "92213ed3d9e4d278b5920f5d18c4680a00907b6941e9e5647b483c9257cf5524",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res": "12caed60fa9ecca7e2a7cdb2c007f61c43b9c3d706e5deb320f32f4137e753bf",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res": "52c07f7d613a92281864ff4288d0e599420329cd3d440e5cd1f027b3b1660ce4",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai.res": "38f88f527cfacdeef035b13a1653ed93def382f29995b058a20b809895ec1cea",
+  "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res": "aba82825d71597528a18fa9654b11f8a12316cc40088ab7dd7faad93c83c7c0f",
   "godot/assets/village_v2/market_kit/mesh/mk_tana_kasa.res": "fd215c31df5708c4c7ed75b84c5e40fe83b39501fc27de617d9bf493766f5a44",
   "godot/assets/village_v2/market_kit/mesh/mk_tana_kasa_l1.res": "33eeb8dbc3417969e5f91050bc80ebf23cc971aea2b68d0b81eea2a04d9ac78d",
   "godot/assets/village_v2/market_kit/mesh/mk_tana_nuno.res": "514cbdcf6fece920795cdee0b991d7e39e281b8d3519d82aad1a54180615f410",
@@ -84,8 +84,8 @@
   "godot/assets/village_v2/market_kit/mesh/mk_tsumini_l1.res": "b5e9a38cffabf4c935ea3423fd50f7c150154e45222892114ad6a296074e2abb",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_ame.res": "49580ac046298adfe64c82dd51d28ec1e85eb738b99df94fe8866ba1f2868879",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res": "537837e408e44dcc942df9f92e6dea1177e921649bd691fb8c5bfbff0ce4c803",
-  "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha.res": "ef03eaefb332fea077040413a61b0fc83f6d595fd750ada4a79337edd4128be6",
-  "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res": "ea15fb55289f93e75a8b047f55c9aaf14574fdb9efc6260226b1a38472887b13",
+  "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha.res": "1011b98abb052bcc80818186ebe343675dd05a60019b17ecaecfe165c87e69b0",
+  "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res": "d7366aa321107ec7368e6c4c9af98749fee66cdbf36f6fc0855d72911f3ae62f",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_dango.res": "c685bf9d46574ad398824b284c934d23ec4319f3775326a585c8405dab631761",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_dango_l1.res": "79b8390310cb844a4de17e39ef860a9c8c9c7a2dc3e96b688d18d651e982d0a2",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_meshi.res": "074426b6ca5ebf3c98cb9b332bf8e0396868ed68b19d76e13f6376eb5a190435",
@@ -93,7 +93,12 @@
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_sakana.res": "7058c5f9c186c215f2e93f93871ec9a0538cd82161dd506e39afdf33de0de1f7",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res": "d03f0d9ccce414a1656a3fccbbff601c416f5059061714aa8d1794dc7eef6515",
   "godot/assets/village_v2/market_kit/mesh/mk_yatai_yasai.res": "be9048ff856c557e153927b6af2687de65ead68a80fb1e7f6b42173a0f51f942",
-  "godot/assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res": "e13dd8d71c903db326ee6589f426d902e53145a444be56160d897630d7287dbf"
+  "godot/assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res": "e13dd8d71c903db326ee6589f426d902e53145a444be56160d897630d7287dbf",
+  "godot/tools/village_v2_text_facing_lib.gd": "72a0585ed1701e36a8879327a50a9699288e91b043d84773ead52d110ef0a94e",
+  "godot/tools/audit_village_v2_text_facing.gd": "6bc31dd869cf0087033bbb0ddff255175bdd716e62825006b9d46ca9cd9b4d5e",
+  "godot/tools/shot_village_v2_text_facing.gd": "80eff5cfec61607352d70bf29603be7032e3b5495f0670beb2a94753eede3809",
+  "godot/tools/probe_village_v2_text_back.gd": "42106f91df75820e0499e308beff339dd91a7ea2d822f6bde156e278807e3410",
+  "tools/reseal_p10_text_facing.py": "f5d93794e8241b22b72e310280c2489384acb1d4fcb9d7c701848d2ad0035938"
  },
  "art_review_images": {
   "r1/p10r1_after_center_cross.jpg": "ab7951f908dc773b2dd4acb097309adf6cacdd28b0ea8764d74885bbdfc32408",
@@ -108,6 +113,103 @@
   "evidence/market_negatives.log": "8cf090ea8f8ea4f360fe96aed726344506c6ce82bfe7d959fe2cb96d8426470c",
   "evidence/market_scene.log": "a2a0a6e6b61f7e9d2f660ec4f795218ac52a44477d8674b8ba9d25ffe33f7c50",
   "evidence/mmbake_p10r1.log": "7966c0fa4615665e1265f0707a78bd21e720e9fa1f8641ef50c377ce90953e53",
-  "evidence/p10r1_sealed_regression.log": "fde2cc899ead878dea4f467da85ecf5a2fb1f9317908ccf4f85b74ee0aa49900"
- }
+  "evidence/p10r1_sealed_regression.log": "fde2cc899ead878dea4f467da85ecf5a2fb1f9317908ccf4f85b74ee0aa49900",
+  "text_facing/audit_before_full.log": "9f79174a4f22b3fc11a65f93942fe0effe8fe00e409e825b43b1112ef67cd8dc",
+  "text_facing/audit_after_kits.log": "c25891e7820745982f26f203df41e0206ef2e9bc1820bf8fe8007e451aee2539",
+  "text_facing/audit_after_kits.json": "8b3fa0b619cef70f7294c7353c90eef18344db7ce72d7edf100bd2377e569cc8",
+  "text_facing/before_fix_sheet.jpg": "9e879d307200fe073a33301a07477cbd95e20fa216516e1e3fc14364b2102035",
+  "text_facing/before_fix_lanterns.jpg": "f7d59328d03641480eb8b1d33787455e5e791bf43cbcaee7754078c8e395af48",
+  "text_facing/after_fix_sheet.jpg": "46b98bfae3bb1462b751d62e531a2678f305e32e218dc08527b8426afcc0671b"
+ },
+ "reseal_history": [
+  {
+   "at": "2026-10-07",
+   "kind": "TEXT_FACING_FIX",
+   "approved_by": "user",
+   "reason": "使用者 2026-10-07 指示「旗子或其他物件字樣再看向反面的時候字會是反的 請修正」。字の向き監査（audit_village_v2_text_facing.gd：字の領域の三角形ごとに (dP/du × dP/dv)·n で鏡像、dP/dv の上下で逆さまを判定）で見つかった不具合を Blender 生成側で修正：①幟の表の quad が鏡像（表裏が同じ UV）→ 表の u を反轉、裏はそのまま＝表裏とも正しく読める；②下屋の暖簾（だんご・めし）の裏が鏡像 → 裏の u を u0+u1−u；③提灯の紙の胴を上→下で作っていたため上下半分ずつ逆さま＋左右逆で字が割れていた（中央に黒帯が出る）→ 下→上で作る。構図・配置・overlay・材質・atlas・他の構件は不変（再ビルドで変わった構件は字の面を持つものだけ、雜湊で確認）。",
+   "changed_files": {
+    "godot/assets/blender/village_v2/build_market_kit.py": {
+     "sealed": "7e9c637df63dd6eba0b4489b3dc61b7ba236ebccd6808b75b1371184b2f660a1",
+     "now": "aa8be8434e8d0134e9379af1e5204e597bcb27e1d3bcd4635809e551b8cd5e3a"
+    },
+    "godot/assets/village_v2/market_kit/market_kit_manifest.json": {
+     "sealed": "2ac65f4554de7bce7487dc616abfb54583c6a1c45d71fdb0c555583e8cbc900e",
+     "now": "108b751a2e7bcbbb9f1e427ed1f92ce547b7dcb2856796036174695670bb7d57"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_chochin_line.res": {
+     "sealed": "5ca7e71fa203d248660b204979ef79db41cc5da4ee711009d240bc3bd870a75e",
+     "now": "1bf92ed16514d39065ded6b6b785f455704a4f067b4f7a3d11ad4be0b116a01e"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res": {
+     "sealed": "2b0b621ae66aa5f28ca151210d45bbc553688188968b35712bce4cdbbbd4669b",
+     "now": "b96e70a6c87eb21d1b608e7f411421c6773862e406a75d3f75376300132ce1fd"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha.res": {
+     "sealed": "33237837cd8b38ce965670a71635f650b0456a1a00a51635fd2cae7fca2adb82",
+     "now": "da118da2c3ad000352d0337e446715775d9333c3ef7ec58caed1d48893cef156"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res": {
+     "sealed": "f301b372f0bfd3a1921ffcb0b71344bc6013cd18353dff16d415a1a51f32c958",
+     "now": "e30b686c25be6245da3d37d418841b09004ac032d52f63dd561052501d063ec7"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi.res": {
+     "sealed": "f6ae2505eed748ae4bc374a7522f2a10d63fac17104e3e107aab4f788aefe56e",
+     "now": "37b945ffb125ece5440333375f6076a05b9a0fa922407a7d1b83b89d7855e6ef"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res": {
+     "sealed": "7ffe19d8655518d142c6fa2aec743d2d252dbdfe67180ab40c0ef6a686d8f5b6",
+     "now": "aaee2276366b6cc374dd19808e8408b15c0255cef4f6da257ddebceee7010c4c"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto.res": {
+     "sealed": "0d3ed9337907a3eab15eb166d646601b9eb5055a1a4e4c245b06632de2e7c824",
+     "now": "c9bfaf1eb431ddb9a111af2f705f717547e23d4f623d75f5f703078d32fd279c"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res": {
+     "sealed": "9ffa98d5d965653c69711a3509d77e9ce8ae89b657c9dc68109e039208ce70f8",
+     "now": "92213ed3d9e4d278b5920f5d18c4680a00907b6941e9e5647b483c9257cf5524"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res": {
+     "sealed": "97f5e928b79419c44d3143009a962112315fef7f7600a6320093514d70990e55",
+     "now": "12caed60fa9ecca7e2a7cdb2c007f61c43b9c3d706e5deb320f32f4137e753bf"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res": {
+     "sealed": "ebe6330a0f263fcb54a886bec7c3c17a7f91e3de6641d12af1c6e8d1869eb604",
+     "now": "52c07f7d613a92281864ff4288d0e599420329cd3d440e5cd1f027b3b1660ce4"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai.res": {
+     "sealed": "49dced7eb7af519203cbf93a3333779fd7418e6f24b63a427c43b972108d7e7a",
+     "now": "38f88f527cfacdeef035b13a1653ed93def382f29995b058a20b809895ec1cea"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res": {
+     "sealed": "36d4b92d49d052af05224dcebef8d9061e653368f50124629b2c84bc9782bf89",
+     "now": "aba82825d71597528a18fa9654b11f8a12316cc40088ab7dd7faad93c83c7c0f"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha.res": {
+     "sealed": "ef03eaefb332fea077040413a61b0fc83f6d595fd750ada4a79337edd4128be6",
+     "now": "1011b98abb052bcc80818186ebe343675dd05a60019b17ecaecfe165c87e69b0"
+    },
+    "godot/assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res": {
+     "sealed": "ea15fb55289f93e75a8b047f55c9aaf14574fdb9efc6260226b1a38472887b13",
+     "now": "d7366aa321107ec7368e6c4c9af98749fee66cdbf36f6fc0855d72911f3ae62f"
+    }
+   },
+   "added_frozen": {
+    "godot/tools/village_v2_text_facing_lib.gd": "72a0585ed1701e36a8879327a50a9699288e91b043d84773ead52d110ef0a94e",
+    "godot/tools/audit_village_v2_text_facing.gd": "6bc31dd869cf0087033bbb0ddff255175bdd716e62825006b9d46ca9cd9b4d5e",
+    "godot/tools/shot_village_v2_text_facing.gd": "80eff5cfec61607352d70bf29603be7032e3b5495f0670beb2a94753eede3809",
+    "godot/tools/probe_village_v2_text_back.gd": "42106f91df75820e0499e308beff339dd91a7ea2d822f6bde156e278807e3410",
+    "tools/reseal_p10_text_facing.py": "f5d93794e8241b22b72e310280c2489384acb1d4fcb9d7c701848d2ad0035938"
+   },
+   "added_evidence": [
+    "text_facing/audit_before_full.log",
+    "text_facing/audit_after_kits.log",
+    "text_facing/audit_after_kits.json",
+    "text_facing/before_fix_sheet.jpg",
+    "text_facing/before_fix_lanterns.jpg",
+    "text_facing/after_fix_sheet.jpg"
+   ],
+   "dependency_updates": {},
+   "previous_seal_sha256": "cbcb29963bc012e7c9bd3326b204f8642e5023c4d580965fda31afaba19463ec"
+  }
+ ]
 }

@@ -336,7 +336,22 @@
     "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
   },
   "child_seals": {
-    "godot/data/village_v2_p10r3b_seal.json": "d181d6385bb79132bf90f191c61dbd69513f91d226a1da01a43b3c0ba79ec7fc",
+    "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
-  }
+  },
+  "reseal_history": [
+    {
+      "at": "2026-10-07",
+      "kind": "CHILD_SEAL_UPDATE",
+      "approved_by": "user",
+      "reason": "R3b child seal 更新（P10 R1／R1b の字の向き修正 reseal に伴う連鎖）のみ。Activity 指派・參數は不変。",
+      "children": {
+        "godot/data/village_v2_p10r3b_seal.json": {
+          "sealed": "d181d6385bb79132bf90f191c61dbd69513f91d226a1da01a43b3c0ba79ec7fc",
+          "now": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef"
+        }
+      },
+      "previous_seal_sha256": "33222bb8a165c55f7236986b979d345610b7048230caf0aca22f4fd26bd9d8bb"
+    }
+  ]
 }

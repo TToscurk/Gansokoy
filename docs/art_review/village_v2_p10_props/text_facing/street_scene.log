@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[STR] PASS 場景已掛 Props/MarketP10 → Props/StreetP10（res://maps/village_v2/gen/street_p10.scn、各 1 個）、P9 Vegetation 掛載順序不變
+[STR] PASS MarketP10 封存：gen/market_p10.scn 雜湊＝封存時（2eda2277…）
+[ACT] private overlay 8 assignments; population 16
+[STR] PASS 接地射線：124 件の原點と地形・路面（衝突體）の差 ≤ 0.20 m 違反 0 
+[STR] PASS LOD：124 件に LOD0／LOD1 mesh（欠 0）
+[STR] PASS 碰撞 127 shapes、NPC anchors 65（group npc_activity_anchor＋activity meta）
+[STR] PASS MultiMesh を使わない（節點ごとに選べる；MMBAKE 対象外）：0
+[STR] 結果：0 項失敗（scene）

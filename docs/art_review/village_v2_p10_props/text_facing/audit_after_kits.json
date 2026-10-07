@@ -1,0 +1,1228 @@
+{
+  "res://assets/village_v2/market_kit/mesh/mk_chochin_line.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "chochin": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 240,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "chochin": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 160,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_dango.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_dango_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_furugi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_furugi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_seto.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_seto": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_seto_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_seto": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_yasai": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "kanban_yasai": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_cha.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_cha": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_cha": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_seto.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_seto": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_seto": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_tanmono": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_tanmono": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_yasai": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "nobori_yasai": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_ame.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_cha.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "chochin": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      },
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "chochin": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 0
+      },
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_dango.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_dango_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_geya_dango.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_geya_dango_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_dango": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_26.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_26.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_26_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_26_l1.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_37.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      },
+      "ichi_big": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 2,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_37_l1.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 0
+      },
+      "ichi_big": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 2,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 16,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 16,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res#3": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 48,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 32,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 48,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 32,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai.res#0": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 112,
+        "upside_down": 64
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai_l1.res#0": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/market_kit/MK_Market.tres",
+    "regions": {
+      "noren_mon": {
+        "area_mirrored": 0.105627067387104,
+        "mirrored": 8,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 40
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 144,
+        "upside_down": 0
+      },
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin_l1.res#2": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      },
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 64,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_kusuri.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_kusuri": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_kusuri_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_kusuri": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_meshi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_meshi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_yasumi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_yasumi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_andon_yasumi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "andon_yasumi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_chochin_aka.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 72,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_chochin_aka_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 48,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_chochin_shiro.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 72,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_chochin_shiro_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_shiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 48,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_ichi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_ichi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_kawa.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_kawa": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_kawa_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_kawa": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_ta.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_ta": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_ta_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_ta": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_yashiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "fuda_yashiro": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_ichi_kanban.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 144,
+        "upside_down": 0
+      },
+      "ichi_big": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_ichi_kanban_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "chochin_aka": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 96,
+        "upside_down": 0
+      },
+      "ichi_big": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_abura.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_abura": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_abura_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_abura": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_kome.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_kome": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_kome_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_kome": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_kusuri": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_kusuri": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_sake.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_sake": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_kanban_sake_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "kanban_sake": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_kome.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_kome": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_kome_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_kome": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_meshi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_meshi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_meshi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_sake.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_sake": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 12,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_nobori_sake_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "nobori_sake": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_onobori_ichi.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "onobori_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 16,
+        "upside_down": 0
+      }
+    }
+  },
+  "res://assets/village_v2/street_kit/mesh/st_onobori_ichi_l1.res#1": {
+    "double_sided": false,
+    "material": "res://assets/village_v2/street_kit/ST_Street.tres",
+    "regions": {
+      "onobori_ichi": {
+        "area_mirrored": 0.0,
+        "mirrored": 0,
+        "no_back_double": 0,
+        "readable": 4,
+        "upside_down": 0
+      }
+    }
+  }
+}

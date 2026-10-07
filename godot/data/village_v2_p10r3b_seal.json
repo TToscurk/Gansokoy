@@ -103,8 +103,8 @@
   },
   "child_seals": {
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
-    "godot/data/village_v2_p10r1_seal.json": "cbcb29963bc012e7c9bd3326b204f8642e5023c4d580965fda31afaba19463ec",
-    "godot/data/village_v2_p10r1b_seal.json": "6e4278b9b5a270ede8db6148b963bf3b88c3c63b9315209752dd213e805cb5d5",
+    "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
+    "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
     "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8"
   },
   "verification": "Final gate source hash computed after all code writes. Post-final verification logs and manifest itself intentionally excluded to avoid self-reference. Existing review/evidence manifests remain historical and untouched.",
@@ -118,6 +118,23 @@
       "sealed": "039964754d74aebb079200c95a22bb0d8b7e231f6b7d541942901a8d392818e4",
       "now": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
       "previous_seal_sha256": "55a928d069568cc218e68b4e3f31afe912cc07bc16bfd972efb2cec8e729a5a5"
+    },
+    {
+      "at": "2026-10-07",
+      "kind": "CHILD_SEAL_UPDATE",
+      "approved_by": "user",
+      "reason": "P10 R1／R1b reseal（TEXT_FACING_FIX：幟の表裏・暖簾の裏・提灯の字の向き修正、使用者指示 2026-10-07）に伴う child seal 雜湊の更新のみ。R3b baseline（16 人・位置・朝向・モード・patrol）は不変。",
+      "children": {
+        "godot/data/village_v2_p10r1_seal.json": {
+          "sealed": "cbcb29963bc012e7c9bd3326b204f8642e5023c4d580965fda31afaba19463ec",
+          "now": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67"
+        },
+        "godot/data/village_v2_p10r1b_seal.json": {
+          "sealed": "6e4278b9b5a270ede8db6148b963bf3b88c3c63b9315209752dd213e805cb5d5",
+          "now": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e"
+        }
+      },
+      "previous_seal_sha256": "d181d6385bb79132bf90f191c61dbd69513f91d226a1da01a43b3c0ba79ec7fc"
     }
   ]
 }

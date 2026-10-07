@@ -486,8 +486,9 @@ def lantern(m, x, y, z, r, h, lod):
     seg = 8 if lod else 12
     u0, v0, u1, v1 = REG['chochin']
     cy(m, (x, y, z), (x, y - 0.03, z), r * 0.55, r * 0.6, seg, 'urushi', caps=(True, False))
-    m.cyl((x, y - 0.03, z), (x, y - 0.03 - h * 0.5, z), r * 0.6, r, seg, MK, 1.0, caps=(False, False), uv_atlas=[u0, v0, u1, (v0 + v1) / 2])
-    m.cyl((x, y - 0.03 - h * 0.5, z), (x, y - 0.03 - h, z), r, r * 0.6, seg, MK, 1.0, caps=(False, False), uv_atlas=[u0, (v0 + v1) / 2, u1, v1])
+    # 紙の胴は下→上へ作る（cyl は p0 に v1・p1 に v0；上→下だと半分ずつ上下逆＋左右逆になり字が割れていた、2026-10-07 修正）
+    m.cyl((x, y - 0.03 - h, z), (x, y - 0.03 - h * 0.5, z), r * 0.6, r, seg, MK, 1.0, caps=(False, False), uv_atlas=[u0, (v0 + v1) / 2, u1, v1])
+    m.cyl((x, y - 0.03 - h * 0.5, z), (x, y - 0.03, z), r, r * 0.6, seg, MK, 1.0, caps=(False, False), uv_atlas=[u0, v0, u1, (v0 + v1) / 2])
     cy(m, (x, y - 0.03 - h, z), (x, y - 0.06 - h, z), r * 0.6, r * 0.55, seg, 'urushi', caps=(False, True))
 
 
@@ -867,8 +868,8 @@ def nobori(key, lod):
         a, b, c, d = (xb, yb, zb), (xb + 0.45, yb, zb + 0.04), (xa + 0.45, ya, za + 0.04), (xa, ya, za)
         va = v0 + (v1 - v0) * ta
         vb = v0 + (v1 - v0) * tb
-        m.quad(a, b, c, d, MK, 1.0, uvs=[(u1, vb), (u0, vb), (u0, va), (u1, va)])
-        m.quad(b, a, d, c, MK, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])
+        m.quad(a, b, c, d, MK, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 表：a（竿側）＝u0（2026-10-07 修正：表が鏡像だった）
+        m.quad(b, a, d, c, MK, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 裏：b＝u0（表と位置ごとに左右反転＝裏からも正しく読める、2026-10-07）
     return m
 
 

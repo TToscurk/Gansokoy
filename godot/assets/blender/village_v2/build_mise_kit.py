@@ -110,8 +110,9 @@ def lantern(m, x, y, z, r, h, lod, region):
     seg = 8 if lod else 12
     u0, v0, u1, v1 = region
     cy(m, (x, y, z), (x, y - 0.03, z), r * 0.55, r * 0.62, seg, 'urushi', caps=(True, False))
-    m.cyl((x, y - 0.03, z), (x, y - 0.03 - h * 0.5, z), r * 0.62, r, seg, ST, 1.0, caps=(False, False), uv_atlas=[u0, v0, u1, (v0 + v1) / 2])
-    m.cyl((x, y - 0.03 - h * 0.5, z), (x, y - 0.03 - h, z), r, r * 0.62, seg, ST, 1.0, caps=(False, False), uv_atlas=[u0, (v0 + v1) / 2, u1, v1])
+    # 紙の胴は下→上へ作る（cyl は p0 に v1・p1 に v0；上→下だと半分ずつ上下逆＋左右逆になり字が割れていた、2026-10-07 修正）
+    m.cyl((x, y - 0.03 - h, z), (x, y - 0.03 - h * 0.5, z), r * 0.62, r, seg, ST, 1.0, caps=(False, False), uv_atlas=[u0, (v0 + v1) / 2, u1, v1])
+    m.cyl((x, y - 0.03 - h * 0.5, z), (x, y - 0.03, z), r, r * 0.62, seg, ST, 1.0, caps=(False, False), uv_atlas=[u0, v0, u1, (v0 + v1) / 2])
     cy(m, (x, y - 0.03 - h, z), (x, y - 0.06 - h, z), r * 0.62, r * 0.55, seg, 'urushi', caps=(False, True))
 
 
@@ -309,7 +310,7 @@ def geya(kind, lod):
         ua = u0 + (u1 - u0) * i / 3
         ub = u0 + (u1 - u0) * (i + 1) / 3
         m.quad((xa, yt - 0.42, D - 0.0), (xb, yt - 0.42, D - 0.0), (xb, yt, D - 0.02), (xa, yt, D - 0.02), MK, 1.0, uvs=[(ua, v1), (ub, v1), (ub, v0), (ua, v0)])
-        m.quad((xb, yt - 0.42, D - 0.015), (xa, yt - 0.42, D - 0.015), (xa, yt, D - 0.035), (xb, yt, D - 0.035), MK, 0.85, uvs=[(ub, v1), (ua, v1), (ua, v0), (ub, v0)])
+        m.quad((xb, yt - 0.42, D - 0.015), (xa, yt - 0.42, D - 0.015), (xa, yt, D - 0.035), (xb, yt, D - 0.035), MK, 0.85, uvs=[(u0 + u1 - ub, v1), (u0 + u1 - ua, v1), (u0 + u1 - ua, v0), (u0 + u1 - ub, v0)])   # 裏：u を左右反轉（字の順も裏から正しく、2026-10-07 修正）
     # 売り台
     m.box((-hw + 0.15, 0.74, D - 0.5), (hw - 0.15, 0.78, D - 0.05), WD, WOODC)
     m.box((-hw + 0.18, 0.0, D - 0.1), (hw - 0.18, 0.74, D - 0.06), WD, OLD)

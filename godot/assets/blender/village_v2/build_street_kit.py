@@ -384,8 +384,8 @@ def nobori(key, lod):
         a, b, c, d = (xb, yb, zb), (xb + 0.45, yb, zb + 0.04), (xa + 0.45, ya, za + 0.04), (xa, ya, za)
         va = v0 + (v1 - v0) * ta
         vb = v0 + (v1 - v0) * tb
-        m.quad(a, b, c, d, ST, 1.0, uvs=[(u1, vb), (u0, vb), (u0, va), (u1, va)])
-        m.quad(b, a, d, c, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])
+        m.quad(a, b, c, d, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 表：a（竿側）＝u0（2026-10-07 修正：表が鏡像だった）
+        m.quad(b, a, d, c, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 裏：b＝u0（表と位置ごとに左右反転＝裏からも正しく読める、2026-10-07）
     return m
 
 
@@ -700,8 +700,8 @@ def onobori(lod):
         a, b, c, d = (0.07, yb, zb), (0.87, yb, zb + 0.05), (0.87, ya, za + 0.05), (0.07, ya, za)
         va = v0 + (v1 - v0) * ta
         vb = v0 + (v1 - v0) * tb
-        m.quad(a, b, c, d, ST, 1.0, uvs=[(u1, vb), (u0, vb), (u0, va), (u1, va)])
-        m.quad(b, a, d, c, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])
+        m.quad(a, b, c, d, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 表：a（竿側）＝u0（2026-10-07 修正：表が鏡像だった）
+        m.quad(b, a, d, c, ST, 1.0, uvs=[(u0, vb), (u1, vb), (u1, va), (u0, va)])   # 裏：b＝u0（表と位置ごとに左右反転＝裏からも正しく読める、2026-10-07）
     return m
 
 
