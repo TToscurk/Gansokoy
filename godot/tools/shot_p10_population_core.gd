@@ -113,6 +113,32 @@ func run() -> void:
 		yaw.rotation.y = atan2(-f.x, -f.y)
 		player.rotation.y = yaw.rotation.y
 		camera_at(vw)
+		if vw.has("motion"):
+			# 動態走訪：玩家が実際の入力で口へ歩き、住人は通常どおり動く（相位凍結なし）。fps 枚/秒で seconds 秒。
+			if only == "" or only != String(vw.name):
+				continue
+			for b in actors:
+				b.set_physics_process(String(b.get("mode")) == "patrol")
+			freeze(actors, false)
+			player.set_physics_process(true)
+			Input.action_press("move_forward")
+			var mo: Dictionary = vw["motion"]
+			var nf := int(float(mo["seconds"]) * float(mo["fps"]))
+			var step := int(60.0 / float(mo["fps"]))
+			for k in nf:
+				for j in step:
+					await physics_frame
+					camera_at(vw)
+				if k == int(nf * 0.45):
+					Input.action_release("move_forward")
+				var em: int = await snap("%s_%02d" % [vw.name, k])
+				if em != OK:
+					helper.free()
+					quit(em)
+					return
+			Input.action_release("move_forward")
+			player.set_physics_process(false)
+			continue
 		if vw.has("walk"):
 			for b in actors:
 				b.set_physics_process(String(b.get("mode")) == "patrol")

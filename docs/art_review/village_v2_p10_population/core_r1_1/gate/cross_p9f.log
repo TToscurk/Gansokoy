@@ -1,0 +1,10 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P9F] PASS P9 狀態＝P9_CLOSED（使用者 2026-10-05 裁定）
+[P9F] PASS P9 子封存 14 檔（R1–R5）の封存檔雜湊＝FINAL 時（不符 0：）
+[P9F] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9 → MeadowP9
+[P9F] PASS village_v2.tscn 掛載 Props/MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9
+[P9F] PASS R5 final seal 狀態＝ART_APPROVED_FINAL、R5-3／R5-4 子封存＝ART_APPROVED
+[P9F] PASS 反向：竄改 R1_tree_kit の封存檔雜湊 → 偵測到 1 筆不符（實際 1）
+[P9F] 結果：0 項失敗

@@ -8,8 +8,10 @@ extends SceneTree
 ##   -- --map  配役一覧（位置・最近傍・同モデル距離）
 const PL := preload("res://tools/village_v2_population_lib.gd")
 const CL := preload("res://tools/village_v2_population_core_lib.gd")
+const CUE := preload("res://tools/village_v2_entrance_cue_lib.gd")
 const VG := preload("res://tools/verify_village_v2_population.gd")
 const VA := preload("res://tools/verify_p10_activity.gd")
+const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const VIEWS := "res://tools/shot_village_v2_population_core_views.json"
 const R3C_SEAL := "res://data/village_v2_p10r3c_seal.json"
@@ -18,7 +20,7 @@ const R3B_SEAL := "res://data/village_v2_p10r3b_seal.json"
 const ZONE_BOX := {
 	"market": Rect2(229.0, -61.0, 28.0, 41.0),
 	"market_west": Rect2(200.0, -57.0, 34.0, 31.0),
-	"main_street": Rect2(245.0, -50.0, 32.0, 36.0),
+	"main_street": Rect2(245.0, -50.0, 32.0, 45.0),
 	"izakaya": Rect2(270.0, -68.0, 18.0, 16.0),
 	"terakoya": Rect2(196.0, 14.0, 18.0, 20.0),
 }
@@ -263,6 +265,33 @@ func _gate(v: Node3D, P: Dictionary, B: Array, assign: Dictionary) -> int:
 		if FileAccess.get_sha256("res://" + k.trim_prefix("godot/")) != String(c_seal["frozen"].get(k, "")):
 			hb.append(k.get_file())
 	check("封存は読むだけ：R3b population scene／generator／actor・R3c overlay の雜湊＝封存時（違い %s）" % str(hb), hb.is_empty(), "sealed")
+	# 13 入口 cue（r1.1）：≤ 2 件、既存 Kit の mesh だけ、地面に立つ、道の上に立てない、建物・屋台・人・往復路に当たらない、口の通路 ≥ 8 m
+	var cue: Array = P.get("cue", [])
+	var qbad := []
+	for c: Dictionary in cue:
+		var p: Vector3 = c["p"]
+		var p2 := Vector2(p.x, p.z)
+		if not ResourceLoader.exists(CUE.KIT + String(c["mesh"]) + ".res"):
+			qbad.append("%s mesh" % c["name"])
+		if absf(p.y - PL.top_h(C, p2)) > 0.03:
+			qbad.append("%s 接地 %.2f" % [c["name"], p.y - PL.top_h(C, p2)])
+		if not is_nan((C["R"] as RLib.TriSampler).h(p2.x, p2.y)):
+			qbad.append("%s 道の上" % c["name"])
+		var h := (C["RI"] as PL.RenderIndex).body_hits(p, 3.6, 0.14)
+		h.append_array(_hits(v, sp, p, 3.6))
+		if not h.is_empty():
+			qbad.append("%s→%s" % [c["name"], str(h.slice(0, 1))])
+		for a: Dictionary in ALL:
+			var dq := INF
+			for q in _pts(a):
+				dq = minf(dq, q.distance_to(p2))
+			if dq < 0.6:
+				qbad.append("%s と %s %.2f m" % [c["name"], a["id"], dq])
+	var gap := INF
+	if cue.size() == 2:
+		gap = Vector2((cue[0]["p"] as Vector3).x, (cue[0]["p"] as Vector3).z).distance_to(Vector2((cue[1]["p"] as Vector3).x, (cue[1]["p"] as Vector3).z))
+	check("入口 cue %d 件（≤ 2）：既存 Kit mesh・接地・道の上でない・建物／屋台／人／往復路に当たらない・口の通路 %.1f m（≥ 8；違反 %s）" % [cue.size(), gap, str(qbad)],
+		cue.size() <= 2 and qbad.is_empty() and (cue.size() < 2 or gap >= 8.0), "cue")
 	return fails - f0
 
 
@@ -348,18 +377,24 @@ func _negatives(v: Node3D, B: Array) -> int:
 		"ground": func(P: Dictionary) -> void: pby.call(P, "C4")["p"] += Vector3(0, 0.2, 0),                                  # 浮かせる
 		"speed": func(P: Dictionary) -> void: pby.call(P, "C6")["walk_speed"] *= 1.3,                                         # 足が滑る
 	}
+	var cue_cases := {
+		"cue": func(P: Dictionary) -> void: P["cue"][0]["p"] = Vector3(248.0, 1.12, -20.5),   # 幟を中橫街の真ん中へ
+	}
 	var assign_cases := {
 		"vocab": func(d: Dictionary) -> void: d["Market/C5_shufu_f01"] = ["Inspect", "shufu_f01", "browse_looking_down_a030", "idle"],   # 未承認の候補 clip
 	}
 	var mism := 0
 	quiet = true
-	for key: String in cases.keys() + post.keys() + assign_cases.keys():
+	for key: String in cases.keys() + post.keys() + assign_cases.keys() + cue_cases.keys():
 		var cast: Array = CL.CAST.duplicate(true)
 		if cases.has(key):
 			(cases[key] as Callable).call(cast)
 		var P := CL.plan(v, cast)
 		if post.has(key):
 			(post[key] as Callable).call(P)
+		P["cue"] = CUE.plan(P["C"])
+		if cue_cases.has(key):
+			(cue_cases[key] as Callable).call(P)
 		var assign: Dictionary = CL.ASSIGN.duplicate(true)
 		if assign_cases.has(key):
 			(assign_cases[key] as Callable).call(assign)
@@ -414,9 +449,42 @@ func _attach() -> int:
 	return 0
 
 
+func _attach_cue() -> int:
+	var txt := FileAccess.get_file_as_string(SCENE)
+	if not FileAccess.file_exists(CUE.OUTPUT):
+		push_error("找不到 %s（先 --build）" % CUE.OUTPUT)
+		return 1
+	if txt.contains("gen/entrance_cue_p10.tscn"):
+		push_error("已經掛過 EntranceCueP10")
+		return 1
+	var nl := "\r\n" if txt.contains("\r\n") else "\n"
+	var key := "[node name=\"%s\" type=\"Node3D\" parent=\"Population\"]" % CL.ACT_NODE
+	var i := txt.find(key)
+	if i < 0 or txt.count(key) != 1:
+		push_error("ActivityCoreP10 の掛載行が 1 つではない（cue は ActivityCoreP10 の後）")
+		return 1
+	var j := txt.find(nl + "[", i + 1)
+	var block_end := txt.length() if j < 0 else j + nl.length()
+	var ins := "[node name=\"%s\" parent=\"Population\" instance=ExtResource(\"p10r3d_cue\")]%s%s" % [CUE.NODE_NAME, nl, nl]
+	if j < 0:
+		ins = nl + ins
+	txt = txt.substr(0, block_end) + ins + txt.substr(block_end)
+	var lines := txt.split(nl)
+	var last_ext := -1
+	for k in lines.size():
+		if lines[k].begins_with("[ext_resource"):
+			last_ext = k
+	lines.insert(last_ext + 1, "[ext_resource type=\"PackedScene\" path=\"%s\" id=\"p10r3d_cue\"]" % CUE.OUTPUT)
+	var f := FileAccess.open(SCENE, FileAccess.WRITE)
+	f.store_string(nl.join(lines))
+	f.close()
+	print("[CORE] attach：Population/%s（ActivityCoreP10 の後）→ %s" % [CUE.NODE_NAME, SCENE])
+	return 0
+
+
 func _scene(v: Node3D) -> void:
 	var txt := FileAccess.get_file_as_string(SCENE)
-	var order := ["PopulationP10", "ActivityP10", CL.NODE_NAME, CL.ACT_NODE]
+	var order := ["PopulationP10", "ActivityP10", CL.NODE_NAME, CL.ACT_NODE, CUE.NODE_NAME]
 	var idx := []
 	var once := true
 	for nm: String in order:
@@ -426,7 +494,9 @@ func _scene(v: Node3D) -> void:
 	var ord_ok: bool = int(idx[0]) >= 0
 	for k in range(1, idx.size()):
 		ord_ok = ord_ok and int(idx[k]) > int(idx[k - 1])
-	check("掛載：Population の PopulationP10 → ActivityP10 → %s → %s（各 1 つ、この順；位置 %s）" % [CL.NODE_NAME, CL.ACT_NODE, str(idx)], ord_ok and once, "mount")
+	var cue_n := v.get_node_or_null("Population/" + CUE.NODE_NAME)
+	check("掛載：Population の PopulationP10 → ActivityP10 → %s → %s → %s（各 1 つ、この順；位置 %s）、入口 cue %d 件" % [CL.NODE_NAME, CL.ACT_NODE, CUE.NODE_NAME, str(idx),
+		cue_n.get_child_count() if cue_n else -1], ord_ok and once and cue_n != null and cue_n.get_child_count() == CUE.ITEMS.size(), "mount")
 	for i in 30:
 		await process_frame
 	var core := v.get_node_or_null("Population/" + CL.NODE_NAME)
@@ -618,6 +688,11 @@ func _scene(v: Node3D) -> void:
 func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	helper = VG.new()
+	if "--attach-cue" in args:
+		var rc := _attach_cue()
+		helper.free()
+		quit(rc)
+		return
 	if "--attach" in args:
 		var r := _attach()
 		helper.free()
@@ -645,10 +720,32 @@ func _run() -> void:
 		quit(r2)
 		return
 	var P := CL.plan(v)
+	P["cue"] = CUE.plan(P["C"])
 	print("[CORE] INFO 追加 %d 人（%d ms）" % [(P["actors"] as Array).size(), P["ms"]])
 	if "--map" in args:
 		_map(P, B)
 	for a0: String in args:
+		if a0.begins_with("--scan="):
+			# 調査用：x0,z0,x1,z1,step の線上で、立てるか（capsule）・高さ・道か
+			var q := a0.trim_prefix("--scan=").split(",")
+			var p0 := Vector2(float(q[0]), float(q[1]))
+			var p1 := Vector2(float(q[2]), float(q[3]))
+			var st := float(q[4])
+			var n := int(p0.distance_to(p1) / st) + 1
+			var sp := v.get_world_3d().direct_space_state
+			var row := []
+			for i in n:
+				var pp := p0.lerp(p1, float(i) / maxf(n - 1, 1))
+				var h := PL.top_h(P["C"], pp)
+				var hit := (P["C"]["RI"] as PL.RenderIndex).body_hits(Vector3(pp.x, h, pp.y), 1.6, PL.CAP_R)
+				hit.append_array(_hits(v, sp, Vector3(pp.x, h, pp.y), 1.6))
+				var road := not is_nan((P["C"]["R"] as RLib.TriSampler).h(pp.x, pp.y))
+				row.append("(%.1f,%.1f) h%.2f %s%s" % [pp.x, pp.y, h, "R" if road else "-", "" if hit.is_empty() else " X" + str(hit.slice(0, 1))])
+			print("[CORE] SCAN ", "
+[CORE] SCAN ".join(row))
+			helper.free()
+			quit(0)
+			return
 		if a0.begins_with("--probe="):
 			_probe(v, P, a0.trim_prefix("--probe=").split(","))
 			helper.free()
@@ -664,6 +761,13 @@ func _run() -> void:
 		var e2 := ResourceSaver.save(ps, CL.OUTPUT) if e == OK else e
 		check("save %s（%d 人）" % [CL.OUTPUT, r.get_meta("actors")], e2 == OK)
 		holder.free()
+		var cr := CUE.build(P["cue"])
+		var h2 := Node3D.new()
+		h2.add_child(cr)
+		var ps2 := PackedScene.new()
+		var e3 := ps2.pack(cr)
+		check("save %s（cue %d 件）" % [CUE.OUTPUT, (P["cue"] as Array).size()], e3 == OK and ResourceSaver.save(ps2, CUE.OUTPUT) == OK)
+		h2.free()
 	print("[CORE] 結果：%d 項失敗" % fails)
 	helper.free()
 	quit(fails)

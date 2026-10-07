@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res" id="1_sko6b"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res" id="2_je34s"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_smi0d"]
+height = 3.7
+radius = 0.09
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x5nmv"]
+height = 3.7
+radius = 0.09
+
+[node name="EntranceCueP10" type="Node3D" unique_id=1158873127]
+metadata/art_revision = "P10 R3d r1.1 Market South Entrance Cue ART_REVIEW"
+
+[node name="nobori_ichi_east" type="Node3D" parent="." unique_id=71954837]
+transform = Transform3D(-0.7986355, 0, -0.60181504, 0, 1, 0, 0.60181504, 0, -0.7986355, 250.9, 1.02, -23.4)
+
+[node name="LOD0" type="MeshInstance3D" parent="nobori_ichi_east" unique_id=185110340]
+visibility_range_end = 32.0
+mesh = ExtResource("1_sko6b")
+
+[node name="LOD1" type="MeshInstance3D" parent="nobori_ichi_east" unique_id=599307059]
+visibility_range_begin = 32.0
+visibility_range_end = 220.0
+mesh = ExtResource("2_je34s")
+
+[node name="Collision" type="StaticBody3D" parent="nobori_ichi_east" unique_id=568605995]
+
+[node name="@CollisionShape3D@32" type="CollisionShape3D" parent="nobori_ichi_east/Collision" unique_id=170277640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+shape = SubResource("CylinderShape3D_smi0d")
+
+[node name="nobori_ichi_west" type="Node3D" parent="." unique_id=1474641834]
+transform = Transform3D(0.79863554, 0, 0.601815, 0, 1, 0, -0.601815, 0, 0.79863554, 240.2, 1.02, -23.6)
+
+[node name="LOD0" type="MeshInstance3D" parent="nobori_ichi_west" unique_id=975141832]
+visibility_range_end = 32.0
+mesh = ExtResource("1_sko6b")
+
+[node name="LOD1" type="MeshInstance3D" parent="nobori_ichi_west" unique_id=1449266581]
+visibility_range_begin = 32.0
+visibility_range_end = 220.0
+mesh = ExtResource("2_je34s")
+
+[node name="Collision" type="StaticBody3D" parent="nobori_ichi_west" unique_id=415505463]
+
+[node name="@CollisionShape3D@33" type="CollisionShape3D" parent="nobori_ichi_west/Collision" unique_id=464624933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+shape = SubResource("CylinderShape3D_x5nmv")

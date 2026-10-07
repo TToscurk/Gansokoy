@@ -7,7 +7,9 @@ extends RefCounted
 ##   立ち位置・高さ・patrol の高さ焼き・walk 速度・RenderIndex は封存 R3b lib の関数を只讀で呼ぶ（同じ規則）。
 ## 動作＝R3c／R3c.1 で承認・封存された Activity vocabulary だけ（Talk／Drink／Sit／Carry／YouthShortStep、各モデルの承認済み clip）。
 ##   新しい clip・新しい種類は作らない。割り当ては scripts/npc_activity_core.gd（封存 overlay を継承、封存ファイルは不変）。
-## 南側から「市」が読みにくい件（R2 non-blocking）はここで人の流れで補う：市の口へ向かう買い物客の往復、口の呼び込み、荷を抱える運び手。
+## 南側から「市」が読みにくい件（R2 non-blocking）は人の流れで補う。r1.1（使用者指示 2026-10-07 Market South Entrance Cue）：
+##   南の主街→辻→市の口の買い物客の往復（C6；往きは入る、帰りは出る）、口の東の幟の脇で辻を向いて呼ぶ布屋（C11、通路は塞がない）、
+##   口の内側から木箱を抱えて出てくる八百屋（C12）＋口の両脇の小さな「市」の幟 2 本（village_v2_entrance_cue_lib.gd、既存 market_kit mesh の重用）。人数は 39 のまま。
 const PL := preload("res://tools/village_v2_population_lib.gd")
 
 const OUTPUT := "res://maps/village_v2/gen/population_core_p10.tscn"
@@ -15,7 +17,7 @@ const NODE_NAME := "CoreP10"
 const ACT_NODE := "ActivityCoreP10"
 const ACT_SCRIPT := "res://scripts/npc_activity_core.gd"
 const PARENT := "Population"
-const ART_REVISION := "P10 R3d Village Core Population r1 ART_REVIEW"
+const ART_REVISION := "P10 R3d Village Core Population r1.1 ART_REVIEW"
 const ZONE_NODE := {"market": "Market", "market_west": "MarketWest", "main_street": "MainStreet", "izakaya": "Izakaya", "terakoya": "Terakoya"}
 ## R3b の職業対位＋R3d の追加（居酒屋の客、寺子屋の子・付き添い）
 const ROLE_OK := {
@@ -41,7 +43,8 @@ const CAST := [
 	{"id": "C4", "zone": "market", "model": "nunoya_f01", "trade": "gofuku", "anchor": "MarketP10/vendor_tana_nuno", "off": [0.0, -0.6], "face": "partner:C5", "group": "g_nuno"},
 	{"id": "C5", "zone": "market", "model": "shufu_f01", "trade": "customer", "anchor": "MarketP10/customer_tana_nuno_a", "face": "partner:C4", "group": "g_nuno"},
 	{"id": "C7", "zone": "market", "model": "sakanaya_m01", "trade": "customer", "anchor": "MarketP10/customer_yatai_meshi_a", "face": "anchor"},
-	{"id": "C12", "zone": "market", "model": "yaoya_m01", "trade": "porter", "anchor": "MarketP10/peddler", "face": "anchor", "group": "g_mouth"},
+	# r1.1：市の口のすぐ内側で木箱を抱えて出てくる八百屋（中橫街＝南を向く）
+	{"id": "C12", "zone": "market", "model": "yaoya_m01", "trade": "porter", "at": [244.6, -26.8, 20.0], "group": "g_mouth"},
 	# 市集の真ん中で立ち話する二人（通りの中央に人の溜まりを作る；R3b の M7 往復路から ≥ 0.6 m）
 	{"id": "C23", "zone": "market", "model": "yakusou_f01", "trade": "customer", "anchor": "MarketP10/walker_b", "face": "partner:C24", "group": "g_square"},
 	{"id": "C24", "zone": "market", "model": "chaya_f01", "trade": "customer", "at": [246.1, -43.0, 0.0], "face": "partner:C23", "group": "g_square"},
@@ -51,8 +54,8 @@ const CAST := [
 	{"id": "C10", "zone": "market_west", "model": "chonin_m01", "trade": "porter", "anchor": "MarketWestP10/mw_porter_crank", "face": "anchor"},
 	# ── 主街 +6（4 → 10）：市の口の呼び込み、市へ向かう買い物客の往復、甕の店（売り手＋客の会話）、荒物の店、薬の看板の客
 	{"id": "C6", "zone": "main_street", "model": "sakanaya_m01", "trade": "customer", "mode": "patrol", "group": "g_mouth",
-		"path": [[259.0, -19.0], [253.5, -20.6], [249.5, -21.0]], "wait": [2.0, 4.5]},
-	{"id": "C11", "zone": "main_street", "model": "nunoya_f01", "trade": "barker", "anchor": "StreetP10/st_barker_ichi", "face": "anchor", "group": "g_mouth"},
+		"path": [[259.1, -11.5], [258.6, -19.0], [251.0, -21.4], [247.2, -22.7]], "wait": [2.0, 4.5]},
+	{"id": "C11", "zone": "main_street", "model": "nunoya_f01", "trade": "barker", "at": [249.9, -24.5, 50.0], "group": "g_mouth"},
 	{"id": "C13", "zone": "main_street", "model": "shufu_f01", "trade": "customer", "anchor": "StreetP10/st_customer_MKT_024", "face": "partner:C14", "group": "g_kame"},
 	{"id": "C14", "zone": "main_street", "model": "setomono_f01", "trade": "seto", "anchor": "StreetP10/st_vendor_MKT_024", "off": [0.0, 0.25], "face": "partner:C13", "group": "g_kame"},
 	{"id": "C16", "zone": "main_street", "model": "takigi_m01", "trade": "zakka", "anchor": "StreetP10/st_vendor_MKT_011", "off": [-0.08, -0.12], "face": "anchor"},

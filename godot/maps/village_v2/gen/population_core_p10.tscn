@@ -104,13 +104,13 @@ height = 1.55
 radius = 0.22
 height = 1.41
 
-[node name="CoreP10" type="Node3D" unique_id=1077077219]
-metadata/art_revision = "P10 R3d Village Core Population r1 ART_REVIEW"
+[node name="CoreP10" type="Node3D" unique_id=619096166]
+metadata/art_revision = "P10 R3d Village Core Population r1.1 ART_REVIEW"
 metadata/actors = 23
 
-[node name="Market" type="Node3D" parent="." unique_id=610116202]
+[node name="Market" type="Node3D" parent="." unique_id=1295224290]
 
-[node name="C1_chaya_f01" type="AnimatableBody3D" parent="Market" unique_id=420134250]
+[node name="C1_chaya_f01" type="AnimatableBody3D" parent="Market" unique_id=368438673]
 transform = Transform3D(0.080710225, 0, -0.9967376, 0, 1, 0, 0.9967376, 0, 0.080710225, 255.21089, 1.2632918, -52.216156)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -123,14 +123,14 @@ metadata/zone = "market"
 metadata/group = "g_dango"
 metadata/anchor = "MarketP10/vendor_yatai_dango"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C1_chaya_f01" unique_id=1236519154]
+[node name="Body" type="CollisionShape3D" parent="Market/C1_chaya_f01" unique_id=182117367]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
 shape = SubResource("CapsuleShape3D_kekpw")
 
-[node name="NPC" parent="Market/C1_chaya_f01" unique_id=760951751 instance=ExtResource("2_djm1q")]
+[node name="NPC" parent="Market/C1_chaya_f01" unique_id=550760313 instance=ExtResource("2_djm1q")]
 start_time = 2.84
 
-[node name="C2_shufu_f01" type="AnimatableBody3D" parent="Market" unique_id=1847932726]
+[node name="C2_shufu_f01" type="AnimatableBody3D" parent="Market" unique_id=1632408054]
 transform = Transform3D(-0.08071031, 0, 0.9967376, 0, 1, 0, -0.9967376, 0, -0.08071031, 252.83745, 1.2621483, -52.023968)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -143,15 +143,15 @@ metadata/zone = "market"
 metadata/group = "g_dango"
 metadata/anchor = "MarketP10/customer_yatai_dango_b"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C2_shufu_f01" unique_id=578683186]
+[node name="Body" type="CollisionShape3D" parent="Market/C2_shufu_f01" unique_id=175032660]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_djm1q")
 
-[node name="NPC" parent="Market/C2_shufu_f01" unique_id=131369711 instance=ExtResource("3_0daqf")]
+[node name="NPC" parent="Market/C2_shufu_f01" unique_id=539026308 instance=ExtResource("3_0daqf")]
 speed_scale = 0.97
 start_time = 1.1400000000000001
 
-[node name="C3_takigi_m01" type="AnimatableBody3D" parent="Market" unique_id=1415045506]
+[node name="C3_takigi_m01" type="AnimatableBody3D" parent="Market" unique_id=1705915773]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 231.37512, 1.2027762, -43.796017)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -164,15 +164,15 @@ metadata/zone = "market"
 metadata/group = ""
 metadata/anchor = "MarketP10/porter"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C3_takigi_m01" unique_id=2078508493]
+[node name="Body" type="CollisionShape3D" parent="Market/C3_takigi_m01" unique_id=1205030171]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87, 0)
 shape = SubResource("CapsuleShape3D_0daqf")
 
-[node name="NPC" parent="Market/C3_takigi_m01" unique_id=656403339 instance=ExtResource("4_4nhgd")]
+[node name="NPC" parent="Market/C3_takigi_m01" unique_id=1058263280 instance=ExtResource("4_4nhgd")]
 speed_scale = 0.9400000000000001
 start_time = 4.23
 
-[node name="C4_nunoya_f01" type="AnimatableBody3D" parent="Market" unique_id=23124322]
+[node name="C4_nunoya_f01" type="AnimatableBody3D" parent="Market" unique_id=1148049532]
 transform = Transform3D(0.72264224, 0, 0.69122225, 0, 1, 0, -0.69122225, 0, 0.72264224, 234.45, 1.1792285, -38.2)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -185,15 +185,15 @@ metadata/zone = "market"
 metadata/group = "g_nuno"
 metadata/anchor = "MarketP10/vendor_tana_nuno"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C4_nunoya_f01" unique_id=1452203573]
+[node name="Body" type="CollisionShape3D" parent="Market/C4_nunoya_f01" unique_id=899733026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.815, 0)
 shape = SubResource("CapsuleShape3D_4nhgd")
 
-[node name="NPC" parent="Market/C4_nunoya_f01" unique_id=98283960 instance=ExtResource("5_c04dr")]
+[node name="NPC" parent="Market/C4_nunoya_f01" unique_id=664752894 instance=ExtResource("5_c04dr")]
 speed_scale = 1.02
 start_time = 4.53
 
-[node name="C5_shufu_f01" type="AnimatableBody3D" parent="Market" unique_id=1266014983]
+[node name="C5_shufu_f01" type="AnimatableBody3D" parent="Market" unique_id=531037818]
 transform = Transform3D(-0.7226423, 0, -0.6912222, 0, 1, 0, 0.6912222, 0, -0.7226423, 236.65, 1.1653606, -35.9)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -206,15 +206,15 @@ metadata/zone = "market"
 metadata/group = "g_nuno"
 metadata/anchor = "MarketP10/customer_tana_nuno_a"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C5_shufu_f01" unique_id=920895068]
+[node name="Body" type="CollisionShape3D" parent="Market/C5_shufu_f01" unique_id=236612613]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_c04dr")
 
-[node name="NPC" parent="Market/C5_shufu_f01" unique_id=1673740640 instance=ExtResource("3_0daqf")]
+[node name="NPC" parent="Market/C5_shufu_f01" unique_id=1770630677 instance=ExtResource("3_0daqf")]
 speed_scale = 1.02
 start_time = 0.44
 
-[node name="C7_sakanaya_m01" type="AnimatableBody3D" parent="Market" unique_id=1804457220]
+[node name="C7_sakanaya_m01" type="AnimatableBody3D" parent="Market" unique_id=1125952866]
 transform = Transform3D(0.2869811, 0, 0.9579362, 0, 1, 0, -0.9579362, 0, 0.2869811, 250.38828, 1.1642145, -44.035736)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -227,16 +227,16 @@ metadata/zone = "market"
 metadata/group = ""
 metadata/anchor = "MarketP10/customer_yatai_meshi_a"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C7_sakanaya_m01" unique_id=2057204766]
+[node name="Body" type="CollisionShape3D" parent="Market/C7_sakanaya_m01" unique_id=2080891878]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
 shape = SubResource("CapsuleShape3D_v8y7k")
 
-[node name="NPC" parent="Market/C7_sakanaya_m01" unique_id=485799855 instance=ExtResource("6_v8y7k")]
+[node name="NPC" parent="Market/C7_sakanaya_m01" unique_id=1030012190 instance=ExtResource("6_v8y7k")]
 speed_scale = 1.01
 start_time = 5.26
 
-[node name="C12_yaoya_m01" type="AnimatableBody3D" parent="Market" unique_id=1641398492]
-transform = Transform3D(0.9578263, 0, 0.28734788, 0, 1, 0, -0.28734788, 0, 0.9578263, 241.52817, 1.0274453, -25.595425)
+[node name="C12_yaoya_m01" type="AnimatableBody3D" parent="Market" unique_id=1844011633]
+transform = Transform3D(0.9396926, 0, 0.34202012, 0, 1, 0, -0.34202012, 0, 0.9396926, 244.6, 1.0447999, -26.8)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
 path_xz = PackedVector2Array()
@@ -246,17 +246,17 @@ metadata/model = "yaoya_m01"
 metadata/trade = "porter"
 metadata/zone = "market"
 metadata/group = "g_mouth"
-metadata/anchor = "MarketP10/peddler"
+metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Market/C12_yaoya_m01" unique_id=1256056236]
+[node name="Body" type="CollisionShape3D" parent="Market/C12_yaoya_m01" unique_id=1699289230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83000004, 0)
 shape = SubResource("CapsuleShape3D_kmfu1")
 
-[node name="NPC" parent="Market/C12_yaoya_m01" unique_id=1091783118 instance=ExtResource("7_kmfu1")]
+[node name="NPC" parent="Market/C12_yaoya_m01" unique_id=1226974146 instance=ExtResource("7_kmfu1")]
 speed_scale = 0.9400000000000001
 start_time = 3.44
 
-[node name="C23_yakusou_f01" type="AnimatableBody3D" parent="Market" unique_id=1945140744]
+[node name="C23_yakusou_f01" type="AnimatableBody3D" parent="Market" unique_id=142239330]
 transform = Transform3D(-0.6097143, 0, -0.79262125, 0, 1, 0, 0.79262125, 0, -0.6097143, 247.4, 1.2020112, -42)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -269,15 +269,15 @@ metadata/zone = "market"
 metadata/group = "g_square"
 metadata/anchor = "MarketP10/walker_b"
 
-[node name="Body" type="CollisionShape3D" parent="Market/C23_yakusou_f01" unique_id=1986672335]
+[node name="Body" type="CollisionShape3D" parent="Market/C23_yakusou_f01" unique_id=353232552]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745, 0)
 shape = SubResource("CapsuleShape3D_0upqn")
 
-[node name="NPC" parent="Market/C23_yakusou_f01" unique_id=50660667 instance=ExtResource("11_ctr4j")]
+[node name="NPC" parent="Market/C23_yakusou_f01" unique_id=1520322029 instance=ExtResource("11_ctr4j")]
 speed_scale = 1.05
 start_time = 0.42
 
-[node name="C24_chaya_f01" type="AnimatableBody3D" parent="Market" unique_id=1484558153]
+[node name="C24_chaya_f01" type="AnimatableBody3D" parent="Market" unique_id=361117574]
 transform = Transform3D(0.6097143, 0, 0.7926212, 0, 1, 0, -0.7926212, 0, 0.6097143, 246.1, 1.2080083, -43)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -290,17 +290,17 @@ metadata/zone = "market"
 metadata/group = "g_square"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Market/C24_chaya_f01" unique_id=1759972110]
+[node name="Body" type="CollisionShape3D" parent="Market/C24_chaya_f01" unique_id=1124546637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
 shape = SubResource("CapsuleShape3D_go3m8")
 
-[node name="NPC" parent="Market/C24_chaya_f01" unique_id=550808971 instance=ExtResource("2_djm1q")]
+[node name="NPC" parent="Market/C24_chaya_f01" unique_id=1009204566 instance=ExtResource("2_djm1q")]
 speed_scale = 1.06
 start_time = 3.2800000000000002
 
-[node name="MarketWest" type="Node3D" parent="." unique_id=505420394]
+[node name="MarketWest" type="Node3D" parent="." unique_id=107344069]
 
-[node name="C8_setomono_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=156044582]
+[node name="C8_setomono_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=1991586762]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 230.59999, 1.0776, -29.6)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -313,15 +313,15 @@ metadata/zone = "market_west"
 metadata/group = ""
 metadata/anchor = "MarketWestP10/mw_meshi_vendor"
 
-[node name="Body" type="CollisionShape3D" parent="MarketWest/C8_setomono_f01" unique_id=809140070]
+[node name="Body" type="CollisionShape3D" parent="MarketWest/C8_setomono_f01" unique_id=2014132426]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.755, 0)
 shape = SubResource("CapsuleShape3D_jwru1")
 
-[node name="NPC" parent="MarketWest/C8_setomono_f01" unique_id=1328508174 instance=ExtResource("8_0upqn")]
+[node name="NPC" parent="MarketWest/C8_setomono_f01" unique_id=460521999 instance=ExtResource("8_0upqn")]
 speed_scale = 0.97
 start_time = 0.85
 
-[node name="C9_sakanaya_m01" type="AnimatableBody3D" parent="MarketWest" unique_id=1182915556]
+[node name="C9_sakanaya_m01" type="AnimatableBody3D" parent="MarketWest" unique_id=1970690384]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 215.7, 1.2624, -45.4)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -334,15 +334,15 @@ metadata/zone = "market_west"
 metadata/group = ""
 metadata/anchor = "MarketWestP10/mw_n3_customer"
 
-[node name="Body" type="CollisionShape3D" parent="MarketWest/C9_sakanaya_m01" unique_id=69824279]
+[node name="Body" type="CollisionShape3D" parent="MarketWest/C9_sakanaya_m01" unique_id=966661756]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
 shape = SubResource("CapsuleShape3D_ctr4j")
 
-[node name="NPC" parent="MarketWest/C9_sakanaya_m01" unique_id=1740898111 instance=ExtResource("6_v8y7k")]
+[node name="NPC" parent="MarketWest/C9_sakanaya_m01" unique_id=420682178 instance=ExtResource("6_v8y7k")]
 speed_scale = 0.9400000000000001
 start_time = 0.46
 
-[node name="C10_chonin_m01" type="AnimatableBody3D" parent="MarketWest" unique_id=1658834234]
+[node name="C10_chonin_m01" type="AnimatableBody3D" parent="MarketWest" unique_id=441410619]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 232, 1.2394, -49.9)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -355,23 +355,23 @@ metadata/zone = "market_west"
 metadata/group = ""
 metadata/anchor = "MarketWestP10/mw_porter_crank"
 
-[node name="Body" type="CollisionShape3D" parent="MarketWest/C10_chonin_m01" unique_id=1383485284]
+[node name="Body" type="CollisionShape3D" parent="MarketWest/C10_chonin_m01" unique_id=2033610333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("CapsuleShape3D_m7xnl")
 
-[node name="NPC" parent="MarketWest/C10_chonin_m01" unique_id=1830748853 instance=ExtResource("9_go3m8")]
+[node name="NPC" parent="MarketWest/C10_chonin_m01" unique_id=874877208 instance=ExtResource("9_go3m8")]
 speed_scale = 0.9500000000000001
 start_time = 3.64
 
-[node name="MainStreet" type="Node3D" parent="." unique_id=1133767161]
+[node name="MainStreet" type="Node3D" parent="." unique_id=221624029]
 
-[node name="C6_sakanaya_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=761583861]
-transform = Transform3D(-0.27932963, 0, -0.96019524, 0, 1, 0, 0.96019524, 0, -0.27932963, 259, 1.12105, -19)
+[node name="C6_sakanaya_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=691287025]
+transform = Transform3D(-0.99778515, 0, -0.066518895, 0, 1, 0, 0.066518895, 0, -0.99778515, 259.1, 1.0689071, -11.5)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
 mode = "patrol"
-path_xz = PackedVector2Array(259, -19, 253.5, -20.6, 249.5, -21)
-path_y = PackedFloat32Array(1.12105, 1.120966, 1.1208819, 1.120798, 1.120714, 1.1206499, 1.1205899, 1.1205299, 1.1204699, 1.1204098, 1.1203498, 1.1202898, 1.1202297, 1.1201879, 1.1201639, 1.1201398, 1.1201159, 1.1200919, 1.1200678, 1.1200439, 1.1200199, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12)
+path_xz = PackedVector2Array(259.1, -11.5, 258.6, -19, 251, -21.4, 247.2, -22.7)
+path_y = PackedFloat32Array(1.0689071, 1.0702183, 1.0715295, 1.0728407, 1.074152, 1.0754673, 1.0767902, 1.0781132, 1.0794362, 1.080759, 1.082082, 1.083405, 1.0847279, 1.0860509, 1.0873643, 1.0886755, 1.0899867, 1.091298, 1.0926092, 1.0939205, 1.0952317, 1.0965428, 1.0978572, 1.1209512, 1.1209453, 1.1209395, 1.1209337, 1.1209278, 1.1209221, 1.1209162, 1.1209104, 1.1208321, 1.1207486, 1.1206752, 1.1206156, 1.120556, 1.1204964, 1.1204368, 1.1203772, 1.1203175, 1.1202579, 1.1201993, 1.1201755, 1.1201516, 1.1201278, 1.120104, 1.1200801, 1.1200563, 1.1200324, 1.1200086, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12)
 walk_speed = 1.323
 wait_max = 4.5
 seed_i = 1780393
@@ -382,16 +382,16 @@ metadata/zone = "main_street"
 metadata/group = "g_mouth"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C6_sakanaya_m01" unique_id=673114889]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C6_sakanaya_m01" unique_id=2127974191]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
 shape = SubResource("CapsuleShape3D_w62b8")
 
-[node name="NPC" parent="MainStreet/C6_sakanaya_m01" unique_id=1306195478 instance=ExtResource("6_v8y7k")]
+[node name="NPC" parent="MainStreet/C6_sakanaya_m01" unique_id=279344973 instance=ExtResource("6_v8y7k")]
 animation = &"walk"
 start_time = 2.04
 
-[node name="C11_nunoya_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=932176518]
-transform = Transform3D(0.28887606, 0, 0.9573665, 0, 1, 0, -0.9573665, 0, 0.28887606, 260.62994, 1.139235, -23.902765)
+[node name="C11_nunoya_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=1217265065]
+transform = Transform3D(0.64278764, 0, 0.76604444, 0, 1, 0, -0.76604444, 0, 0.64278764, 249.9, 1.0223334, -24.5)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
 path_xz = PackedVector2Array()
@@ -401,17 +401,17 @@ metadata/model = "nunoya_f01"
 metadata/trade = "barker"
 metadata/zone = "main_street"
 metadata/group = "g_mouth"
-metadata/anchor = "StreetP10/st_barker_ichi"
+metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C11_nunoya_f01" unique_id=934064019]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C11_nunoya_f01" unique_id=752624318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.815, 0)
 shape = SubResource("CapsuleShape3D_av8st")
 
-[node name="NPC" parent="MainStreet/C11_nunoya_f01" unique_id=1138346970 instance=ExtResource("5_c04dr")]
+[node name="NPC" parent="MainStreet/C11_nunoya_f01" unique_id=225551955 instance=ExtResource("5_c04dr")]
 speed_scale = 1.02
 start_time = 2.84
 
-[node name="C13_shufu_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=783616372]
+[node name="C13_shufu_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=1597490125]
 transform = Transform3D(0.039734468, 0, -0.9992103, 0, 1, 0, 0.9992103, 0, 0.039734468, 263.50684, 1.1869738, -31.714437)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -424,15 +424,15 @@ metadata/zone = "main_street"
 metadata/group = "g_kame"
 metadata/anchor = "StreetP10/st_customer_MKT_024"
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C13_shufu_f01" unique_id=184438214]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C13_shufu_f01" unique_id=1225426612]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_g1ro0")
 
-[node name="NPC" parent="MainStreet/C13_shufu_f01" unique_id=1753224596 instance=ExtResource("3_0daqf")]
+[node name="NPC" parent="MainStreet/C13_shufu_f01" unique_id=1762512651 instance=ExtResource("3_0daqf")]
 speed_scale = 1.06
 start_time = 3.93
 
-[node name="C14_setomono_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=960407805]
+[node name="C14_setomono_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=1943141455]
 transform = Transform3D(-0.039734554, 0, 0.9992103, 0, 1, 0, -0.9992103, 0, -0.039734554, 261.54337, 1.1833146, -31.636358)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -445,15 +445,15 @@ metadata/zone = "main_street"
 metadata/group = "g_kame"
 metadata/anchor = "StreetP10/st_vendor_MKT_024"
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C14_setomono_f01" unique_id=1412475182]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C14_setomono_f01" unique_id=293218044]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.755, 0)
 shape = SubResource("CapsuleShape3D_tejs8")
 
-[node name="NPC" parent="MainStreet/C14_setomono_f01" unique_id=1400723071 instance=ExtResource("8_0upqn")]
+[node name="NPC" parent="MainStreet/C14_setomono_f01" unique_id=1014194438 instance=ExtResource("8_0upqn")]
 speed_scale = 1.06
 start_time = 0.05
 
-[node name="C16_takigi_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=571405810]
+[node name="C16_takigi_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=1716579772]
 transform = Transform3D(-0.28734887, 0, -0.957826, 0, 1, 0, 0.957826, 0, -0.28734887, 270.6749, 1.2209435, -35.735565)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -466,15 +466,15 @@ metadata/zone = "main_street"
 metadata/group = ""
 metadata/anchor = "StreetP10/st_vendor_MKT_011"
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C16_takigi_m01" unique_id=1102540888]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C16_takigi_m01" unique_id=1674008741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87, 0)
 shape = SubResource("CapsuleShape3D_cy5dj")
 
-[node name="NPC" parent="MainStreet/C16_takigi_m01" unique_id=1183264907 instance=ExtResource("4_4nhgd")]
+[node name="NPC" parent="MainStreet/C16_takigi_m01" unique_id=1183513669 instance=ExtResource("4_4nhgd")]
 speed_scale = 0.9400000000000001
 start_time = 3.95
 
-[node name="C19_chonin_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=1219895256]
+[node name="C19_chonin_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=607287538]
 transform = Transform3D(0.2875728, 0, 0.9577588, 0, 1, 0, -0.9577588, 0, 0.2875728, 272.07956, 1.2762026, -45.35195)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -487,17 +487,17 @@ metadata/zone = "main_street"
 metadata/group = ""
 metadata/anchor = "StreetP10/st_customer_MKT_013"
 
-[node name="Body" type="CollisionShape3D" parent="MainStreet/C19_chonin_m01" unique_id=1575246604]
+[node name="Body" type="CollisionShape3D" parent="MainStreet/C19_chonin_m01" unique_id=1420837073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("CapsuleShape3D_03o4d")
 
-[node name="NPC" parent="MainStreet/C19_chonin_m01" unique_id=1382626671 instance=ExtResource("9_go3m8")]
+[node name="NPC" parent="MainStreet/C19_chonin_m01" unique_id=755571244 instance=ExtResource("9_go3m8")]
 speed_scale = 0.97
 start_time = 3.41
 
-[node name="Izakaya" type="Node3D" parent="." unique_id=1588382788]
+[node name="Izakaya" type="Node3D" parent="." unique_id=748840472]
 
-[node name="C17_chaya_f01" type="AnimatableBody3D" parent="Izakaya" unique_id=387372579]
+[node name="C17_chaya_f01" type="AnimatableBody3D" parent="Izakaya" unique_id=1741090838]
 transform = Transform3D(-0.8320475, 0, 0.55470437, 0, 1, 0, -0.55470437, 0, -0.8320475, 276.4, 1.3584986, -59)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -510,15 +510,15 @@ metadata/zone = "izakaya"
 metadata/group = "g_izakaya"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Izakaya/C17_chaya_f01" unique_id=181660004]
+[node name="Body" type="CollisionShape3D" parent="Izakaya/C17_chaya_f01" unique_id=1646083298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
 shape = SubResource("CapsuleShape3D_6tveb")
 
-[node name="NPC" parent="Izakaya/C17_chaya_f01" unique_id=661166813 instance=ExtResource("2_djm1q")]
+[node name="NPC" parent="Izakaya/C17_chaya_f01" unique_id=1898466905 instance=ExtResource("2_djm1q")]
 speed_scale = 1.02
 start_time = 0.84
 
-[node name="C18_sakanaya_m01" type="AnimatableBody3D" parent="Izakaya" unique_id=1912412091]
+[node name="C18_sakanaya_m01" type="AnimatableBody3D" parent="Izakaya" unique_id=1685583796]
 transform = Transform3D(0.8320476, 0, -0.55470425, 0, 1, 0, 0.55470425, 0, 0.8320476, 277.6, 1.370361, -60.8)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -531,17 +531,17 @@ metadata/zone = "izakaya"
 metadata/group = "g_izakaya"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Izakaya/C18_sakanaya_m01" unique_id=525091304]
+[node name="Body" type="CollisionShape3D" parent="Izakaya/C18_sakanaya_m01" unique_id=402420869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
 shape = SubResource("CapsuleShape3D_3gkq6")
 
-[node name="NPC" parent="Izakaya/C18_sakanaya_m01" unique_id=1216938563 instance=ExtResource("6_v8y7k")]
+[node name="NPC" parent="Izakaya/C18_sakanaya_m01" unique_id=731252851 instance=ExtResource("6_v8y7k")]
 speed_scale = 0.98
 start_time = 3.3000000000000003
 
-[node name="Terakoya" type="Node3D" parent="." unique_id=1065345382]
+[node name="Terakoya" type="Node3D" parent="." unique_id=2117820418]
 
-[node name="C20_kozo_m01" type="AnimatableBody3D" parent="Terakoya" unique_id=1558682293]
+[node name="C20_kozo_m01" type="AnimatableBody3D" parent="Terakoya" unique_id=1873616439]
 transform = Transform3D(0.7682213, 0, 0.64018434, 0, 1, 0, -0.64018434, 0, 0.7682213, 202, 0.7636996, 20.4)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -559,15 +559,15 @@ metadata/zone = "terakoya"
 metadata/group = "g_terakoya"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Terakoya/C20_kozo_m01" unique_id=1300817856]
+[node name="Body" type="CollisionShape3D" parent="Terakoya/C20_kozo_m01" unique_id=1455444472]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77000004, 0)
 shape = SubResource("CapsuleShape3D_wwfyk")
 
-[node name="NPC" parent="Terakoya/C20_kozo_m01" unique_id=451839240 instance=ExtResource("10_jwru1")]
+[node name="NPC" parent="Terakoya/C20_kozo_m01" unique_id=302633114 instance=ExtResource("10_jwru1")]
 animation = &"walk"
 start_time = 2.77
 
-[node name="C21_nunoya_f01" type="AnimatableBody3D" parent="Terakoya" unique_id=248116449]
+[node name="C21_nunoya_f01" type="AnimatableBody3D" parent="Terakoya" unique_id=478345238]
 transform = Transform3D(0.5854897, 0, -0.81067985, 0, 1, 0, 0.81067985, 0, 0.5854897, 207.8, 0.8334409, 27.6)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -580,15 +580,15 @@ metadata/zone = "terakoya"
 metadata/group = "g_terakoya"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Terakoya/C21_nunoya_f01" unique_id=1648126977]
+[node name="Body" type="CollisionShape3D" parent="Terakoya/C21_nunoya_f01" unique_id=474335525]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.815, 0)
 shape = SubResource("CapsuleShape3D_y01u0")
 
-[node name="NPC" parent="Terakoya/C21_nunoya_f01" unique_id=815173720 instance=ExtResource("5_c04dr")]
+[node name="NPC" parent="Terakoya/C21_nunoya_f01" unique_id=1237139037 instance=ExtResource("5_c04dr")]
 speed_scale = 1.05
 start_time = 1.18
 
-[node name="C22_yakusou_f01" type="AnimatableBody3D" parent="Terakoya" unique_id=2126084462]
+[node name="C22_yakusou_f01" type="AnimatableBody3D" parent="Terakoya" unique_id=2045859436]
 transform = Transform3D(-0.58548963, 0, 0.8106799, 0, 1, 0, -0.8106799, 0, -0.58548963, 206, 0.7245189, 28.9)
 sync_to_physics = false
 script = ExtResource("1_kekpw")
@@ -601,9 +601,9 @@ metadata/zone = "terakoya"
 metadata/group = "g_terakoya"
 metadata/anchor = ""
 
-[node name="Body" type="CollisionShape3D" parent="Terakoya/C22_yakusou_f01" unique_id=513605493]
+[node name="Body" type="CollisionShape3D" parent="Terakoya/C22_yakusou_f01" unique_id=1605517629]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745, 0)
 shape = SubResource("CapsuleShape3D_ya8v4")
 
-[node name="NPC" parent="Terakoya/C22_yakusou_f01" unique_id=358117688 instance=ExtResource("11_ctr4j")]
+[node name="NPC" parent="Terakoya/C22_yakusou_f01" unique_id=933496997 instance=ExtResource("11_ctr4j")]
 start_time = 0.81
