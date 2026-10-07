@@ -1,0 +1,16 @@
+[STR] INFO 規劃 124 件、anchors 65、主街の店 35（4194 ms）；置けなかった候補 12
+[STR] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1：接地：124）
+[STR] PASS 反向 n_building → 「建物」必須 FAIL（失敗項 2：接地：124, 建物：足元が）
+[STR] PASS 反向 n_frontage → 「店先帯」必須 FAIL（失敗項 2：建物：足元が, 店先帯：足元）
+[STR] PASS 反向 n_sealed → 「封存」必須 FAIL（失敗項 1：封存：足元が）
+[STR] PASS 反向 n_overlap → 「互不重疊」必須 FAIL（失敗項 1：互不重疊：足）
+[STR] PASS 反向 n_door → 「戸口」必須 FAIL（失敗項 1：戸口：門口の）
+[STR] PASS 反向 n_road → 「通行」必須 FAIL（失敗項 1：通行：主街の）
+[STR] PASS 反向 n_clone → 「構圖」必須 FAIL（失敗項 1：構圖：主街の）
+[STR] PASS 反向 n_entrance → 「市の入口」必須 FAIL（失敗項 2：構圖：主街の, 市の入口：大）
+[STR] PASS 反向 n_cross → 「巷口」必須 FAIL（失敗項 1：巷口・路口：）
+[STR] PASS 反向 n_farm → 「農田」必須 FAIL（失敗項 1：農田→住宅の）
+[STR] PASS 反向 n_anchor → 「NPC」必須 FAIL（失敗項 1：NPC an）
+[STR] PASS 反向 n_life → 「暮らし」必須 FAIL（失敗項 1：暮らし：井戸）
+[STR] PASS 反向 n_water → 「水際」必須 FAIL（失敗項 2：接地：124, 水際：足元が）
+[STR] 結果：0 項失敗（negatives）

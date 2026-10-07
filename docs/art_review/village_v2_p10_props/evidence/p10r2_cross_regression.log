@@ -1,0 +1,51 @@
+[FARM] 結果：0 項失敗（seal）
+✓ P8 封存
+[VEG] 結果：0 項失敗（seal）
+✓ P9 R1 封存
+[FOREST] 結果：0 項失敗（seal）
+✓ P9 R2 封存
+[BPLACE] 結果：0 項失敗（seal）
+✓ P9 R3 封存
+[GARDEN] 結果：0 項失敗（seal）
+✓ P9 R4 稗田邸 封存
+[SHRINE] 結果：0 項失敗（seal）
+✓ P9 R4-2 神社 封存
+[SCHOOL] 結果：0 項失敗（seal）
+✓ P9 R4-3 寺子屋 封存
+[WATER] 結果：0 項失敗（seal）
+✓ P9 R4-4 水車 封存
+[TOWER] 結果：0 項失敗（seal）
+✓ P9 R4-5 火見櫓 封存
+[SUZU] 結果：0 項失敗（seal）
+✓ P9 R4-6 鈴奈庵 封存
+[GEID] 結果：0 項失敗（seal）
+✓ P9 R4-7 鯢吞亭 封存
+[KIRI] 結果：0 項失敗（seal）
+✓ P9 R4-8 霧雨店 封存
+[GC] 結果：0 項失敗（seal）
+✓ P9 R5 Groundcover 封存
+[MKT] 結果：0 項失敗（seal）
+✓ P10 R1 市集 封存
+[MKT] 結果：0 項失敗
+✓ P10 R1 市集 plan gate
+[MKT] 結果：0 項失敗（negatives）
+✓ P10 R1 市集 反向 8
+[MKT] 結果：0 項失敗（scene）
+✓ P10 R1 市集 scene
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，4061 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 26863 ms）
+✓ 場景擺放／碰撞稽核＋永久反向
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.05 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+[STR] 結果：0 項失敗
+✓ P10 R2 主街 plan gate
+[STR] 結果：0 項失敗（negatives）
+✓ P10 R2 主街 反向 14
+[STR] 結果：0 項失敗（scene）
+✓ P10 R2 主街 scene
+[MMBAKE] 結果：0 項失敗
+✓ MMBAKE 全場景 MultiMesh
+[ASSET] FAIL V2 場景依賴 1663 個全在白名單內（違規 296：res://shaders/sky_daynight.gdshader, res://assets/village_v2/street_kit/mesh/st_shibagaki_l1.res, res://assets/village_v2/street_kit/ST_Street.tres, res://assets/village_v2/street_kit/street_kit_atlas.png, res://assets/village_v2/street_kit/mesh/st_shibagaki.res, res://assets/village_v2/street_kit/mesh/st_warazuka_l1.res）
+[ASSET] 結果：1 項失敗
+✗ P5 asset reset gate（既存 FAIL：P9 kit／market_kit／meadow／sky shader 未登記）（exit 1）
+回歸失敗項目：1
