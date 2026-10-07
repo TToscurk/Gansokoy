@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[NPCANIM] PASS sit_talk_a_a030 len 45.00s keys 106 接地誤差 before -0.001〜0.001 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/yakusou_f01/sit_talk_a_a030_grounded.res
+[NPCANIM] PASS sit_talk_b_a030 len 44.10s keys 162 接地誤差 before -0.001〜0.001 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/yakusou_f01/sit_talk_b_a030_grounded.res
+[NPCANIM] PASS talk_twohands_a030 len 3.97s keys 99 接地誤差 before -0.000〜0.000 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/yakusou_f01/talk_twohands_a030_grounded.res
+[NPCANIM] PASS argue_a030 len 20.83s keys 467 接地誤差 before -0.000〜0.002 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/yakusou_f01/argue_a030_grounded.res
+[NPCANIM] PASS talk_funny_a030 len 5.97s keys 128 接地誤差 before -0.000〜0.000 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/yakusou_f01/talk_funny_a030_grounded.res

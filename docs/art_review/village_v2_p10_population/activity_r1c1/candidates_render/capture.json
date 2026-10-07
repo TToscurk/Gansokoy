@@ -1,0 +1,1460 @@
+[
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__2_market_west_tps__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "",
+    "file": "W4_yakusou_f01__R3b__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p1.jpg",
+    "phase": 1,
+    "time": 7.5,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 7.5,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p2.jpg",
+    "phase": 2,
+    "time": 15.0,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 15.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p3.jpg",
+    "phase": 3,
+    "time": 22.5,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 22.5,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p4.jpg",
+    "phase": 4,
+    "time": 30.0,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 30.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__2_market_west_tps__p5.jpg",
+    "phase": 5,
+    "time": 37.5,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_a_a030",
+    "file": "W4_yakusou_f01__sit_talk_a_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 37.5,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p1.jpg",
+    "phase": 1,
+    "time": 7.34999974568685,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 7.34999974568685,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p2.jpg",
+    "phase": 2,
+    "time": 14.6999994913737,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 14.6999994913737,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p3.jpg",
+    "phase": 3,
+    "time": 22.0499992370605,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 22.0499992370605,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p4.jpg",
+    "phase": 4,
+    "time": 29.3999989827474,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 29.3999989827474,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__2_market_west_tps__p5.jpg",
+    "phase": 5,
+    "time": 36.7499987284342,
+    "view": "2_market_west_tps"
+  },
+  {
+    "actor": "MarketWest/W4_yakusou_f01",
+    "camera": "[X: (0.866025, 0.0, -0.5), Y: (-0.105877, 0.977323, -0.183384), Z: (0.488662, 0.211753, 0.846387), O: (223.7, 3.634301, -41.75385)]",
+    "clip": "sit_talk_b_a030",
+    "file": "W4_yakusou_f01__sit_talk_b_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 36.7499987284342,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "",
+    "file": "S3_yakusou_f01__R3b__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 0.661111116409302,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 0.661111116409302,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 1.3222222328186,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 1.3222222328186,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 1.98333334922791,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 1.98333334922791,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 2.64444446563721,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 2.64444446563721,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 3.30555558204651,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_twohands_a030",
+    "file": "S3_yakusou_f01__talk_twohands_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 3.30555558204651,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 3.47222232818604,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 3.47222232818604,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 6.94444465637207,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 6.94444465637207,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 10.4166669845581,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 10.4166669845581,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 13.8888893127441,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 13.8888893127441,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 17.3611116409302,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "argue_a030",
+    "file": "S3_yakusou_f01__argue_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 17.3611116409302,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 0.994444449742635,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 0.994444449742635,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 1.98888889948527,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 1.98888889948527,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 2.98333334922791,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 2.98333334922791,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 3.97777779897054,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 3.97777779897054,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 4.97222224871318,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S3_yakusou_f01",
+    "camera": "[X: (0.636299, 0.0, 0.771442), Y: (0.163355, 0.977323, -0.134738), Z: (-0.753948, 0.211753, 0.62187), O: (261.3708, 3.548498, -38.32091)]",
+    "clip": "talk_funny_a030",
+    "file": "S3_yakusou_f01__talk_funny_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 4.97222224871318,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 1.46666669845581,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 2.93333339691162,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 4.40000009536743,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 5.86666679382324,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__1_market_tps__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__4_market_high__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "",
+    "file": "M2_shufu_f01__R3b__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 7.33333349227905,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p1.jpg",
+    "phase": 1,
+    "time": 1.71666669845581,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p1.jpg",
+    "phase": 1,
+    "time": 1.71666669845581,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 1.71666669845581,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p2.jpg",
+    "phase": 2,
+    "time": 3.43333339691162,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p2.jpg",
+    "phase": 2,
+    "time": 3.43333339691162,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 3.43333339691162,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p3.jpg",
+    "phase": 3,
+    "time": 5.15000009536743,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p3.jpg",
+    "phase": 3,
+    "time": 5.15000009536743,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 5.15000009536743,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p4.jpg",
+    "phase": 4,
+    "time": 6.86666679382324,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p4.jpg",
+    "phase": 4,
+    "time": 6.86666679382324,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 6.86666679382324,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__1_market_tps__p5.jpg",
+    "phase": 5,
+    "time": 8.58333349227905,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__4_market_high__p5.jpg",
+    "phase": 5,
+    "time": 8.58333349227905,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_general_a030",
+    "file": "M2_shufu_f01__talk_general_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 8.58333349227905,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p1.jpg",
+    "phase": 1,
+    "time": 0.661111116409302,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p1.jpg",
+    "phase": 1,
+    "time": 0.661111116409302,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 0.661111116409302,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p2.jpg",
+    "phase": 2,
+    "time": 1.3222222328186,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p2.jpg",
+    "phase": 2,
+    "time": 1.3222222328186,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 1.3222222328186,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p3.jpg",
+    "phase": 3,
+    "time": 1.98333334922791,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p3.jpg",
+    "phase": 3,
+    "time": 1.98333334922791,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 1.98333334922791,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p4.jpg",
+    "phase": 4,
+    "time": 2.64444446563721,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p4.jpg",
+    "phase": 4,
+    "time": 2.64444446563721,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 2.64444446563721,
+    "view": "tps6m"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__1_market_tps__p5.jpg",
+    "phase": 5,
+    "time": 3.30555558204651,
+    "view": "1_market_tps"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__4_market_high__p5.jpg",
+    "phase": 5,
+    "time": 3.30555558204651,
+    "view": "4_market_high"
+  },
+  {
+    "actor": "Market/M2_shufu_f01",
+    "camera": "[X: (-0.230435, 0.0, -0.973088), Y: (-0.206054, 0.977323, 0.048795), Z: (0.951021, 0.211753, -0.225209), O: (253.156, 3.401744, -35.00658)]",
+    "clip": "talk_twohands_a030",
+    "file": "M2_shufu_f01__talk_twohands_a030__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 3.30555558204651,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 0.200000007947286,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 0.200000007947286,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 0.400000015894572,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 0.400000015894572,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 0.600000023841858,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 0.600000023841858,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 0.800000031789144,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 0.800000031789144,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 1.00000003973643,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "",
+    "file": "S4_sakanaya_m01__R3b__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 1.00000003973643,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p0.jpg",
+    "phase": 0,
+    "time": 0.0,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p1.jpg",
+    "phase": 1,
+    "time": 0.18924161935219,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p1.jpg",
+    "phase": 1,
+    "time": 0.18924161935219,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p2.jpg",
+    "phase": 2,
+    "time": 0.378483238704381,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p2.jpg",
+    "phase": 2,
+    "time": 0.378483238704381,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p3.jpg",
+    "phase": 3,
+    "time": 0.567724858056571,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p3.jpg",
+    "phase": 3,
+    "time": 0.567724858056571,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p4.jpg",
+    "phase": 4,
+    "time": 0.756966477408761,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p4.jpg",
+    "phase": 4,
+    "time": 0.756966477408761,
+    "view": "tps6m"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__3_main_street_tps__p5.jpg",
+    "phase": 5,
+    "time": 0.946208096760952,
+    "view": "3_main_street_tps"
+  },
+  {
+    "actor": "MainStreet/S4_sakanaya_m01",
+    "camera": "[X: (-0.953002, 0.0, 0.302963), Y: (0.064153, 0.977323, 0.201801), Z: (-0.296093, 0.211753, -0.931391), O: (265.4706, 3.54645, -47.09628)]",
+    "clip": "holding_walk_a038",
+    "file": "S4_sakanaya_m01__holding_walk_a038__tps6m__p5.jpg",
+    "phase": 5,
+    "time": 0.946208096760952,
+    "view": "tps6m"
+  }
+]

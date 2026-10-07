@@ -39,6 +39,10 @@ func run():
  var manifest=[]
  for path in overlay.ASSIGN:
   if "--cup-only" in OS.get_cmdline_user_args() and not path.ends_with("W3_chaya_f01"): continue
+  var only_arg=""
+  for ua in OS.get_cmdline_user_args():
+   if ua.begins_with("--only="): only_arg=ua.trim_prefix("--only=")
+  if only_arg!="" and not path.contains(only_arg): continue
   var assignment=overlay.ASSIGN[path]
   var cid=assignment[1]
   var actor: Node3D=pop.get_node(path)

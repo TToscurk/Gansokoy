@@ -1,0 +1,41 @@
+{
+  "character": "sakanaya_m01",
+  "clip": "holding_walk_rm_a038",
+  "product": "c9cda1e7-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.38,
+  "ok": true,
+  "job_uuid": "4e7262fe-f216-4bec-beaf-7ab2b704456f",
+  "character_uuid": "e63ec18d-d4fe-43a2-a580-886f25781b38",
+  "motion": {
+    "model-id": 126880901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0",
+    "arm-space": 0.38,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Holding Walk",
+  "supports_inplace": true,
+  "mixamo_frames": 41,
+  "mixamo_duration": 1.37,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "purpose": "Carry: same clip with root motion, stride measurement only",
+  "file": "godot/animations/npc_activity_p10/sakanaya_m01/src/holding_walk_rm_a038.fbx",
+  "bytes": 412480,
+  "sha256": "b1b6d5c33b21ebf88edb146af7ed18295873616c7c11bd74d37cd81504623018"
+}

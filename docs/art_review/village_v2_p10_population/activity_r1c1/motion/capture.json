@@ -1,0 +1,866 @@
+[
+  {
+    "file": "R3b__1_market_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__1_market_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3b",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__2_market_west_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3b",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3b__3_main_street_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3b",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__1_market_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3c1",
+    "view": "1_market_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__2_market_west_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3c1",
+    "view": "2_market_west_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__00.jpg",
+    "frame": 0,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__01.jpg",
+    "frame": 1,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__02.jpg",
+    "frame": 2,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__03.jpg",
+    "frame": 3,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__04.jpg",
+    "frame": 4,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__05.jpg",
+    "frame": 5,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__06.jpg",
+    "frame": 6,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__07.jpg",
+    "frame": 7,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__08.jpg",
+    "frame": 8,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__09.jpg",
+    "frame": 9,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__10.jpg",
+    "frame": 10,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__11.jpg",
+    "frame": 11,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__12.jpg",
+    "frame": 12,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__13.jpg",
+    "frame": 13,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__14.jpg",
+    "frame": 14,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__15.jpg",
+    "frame": 15,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__16.jpg",
+    "frame": 16,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__17.jpg",
+    "frame": 17,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__18.jpg",
+    "frame": 18,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__19.jpg",
+    "frame": 19,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__20.jpg",
+    "frame": 20,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__21.jpg",
+    "frame": 21,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__22.jpg",
+    "frame": 22,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  },
+  {
+    "file": "R3c1__3_main_street_tps__23.jpg",
+    "frame": 23,
+    "mode": "R3c1",
+    "view": "3_main_street_tps"
+  }
+]

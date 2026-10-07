@@ -1,5 +1,5 @@
 extends SceneTree
-## ACT coverage: 16 identities, 7 private assignments, 5 types, evaluated animation and small prop placement.
+## ACT coverage: 16 identities, 8 private assignments (R3c.1), 5 types, evaluated animation and small prop placement.
 const ACT=preload("res://scripts/npc_activity_overlay.gd")
 const POP=preload("res://tools/verify_village_v2_population.gd")
 const PL=preload("res://tools/village_v2_population_lib.gd")
@@ -21,10 +21,16 @@ func valid(e: Dictionary) -> bool:
   # (R3c Drink A/B 2026-10-07) puts the axis ~4.5 cm outside the palm skin, centre 0.088 m from LeftMiddleProximal.
   if e.prop_kind=="cup" and (e.prop.global_position+e.prop.global_basis.y*0.036).distance_to((e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone("LeftMiddleProximal"))).origin)>0.10: return false
   if e.prop_kind=="crate":
+   # Left palm must sit where the overlay put it: crate +x end, minus the crate_forward / crate_up / crate_inset
+   # offsets of the assignment (R3c.1). 6 cm tolerance; a moved / detached crate fails.
    var palm=(e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone("LeftMiddleProximal"))).origin
    var bounds: AABB=e.prop.mesh.get_aabb()
-   var local=e.prop.global_transform.affine_inverse()*palm
-   if local.distance_to(bounds.position+Vector3(bounds.size.x,bounds.size.y*0.5,bounds.size.z*0.5))>0.06: return false
+   var bx: Basis=e.prop.global_basis
+   var c=e.prop.global_transform*bounds.get_center()
+   var opt: Dictionary=e.get("opt",{})
+   var inset=float(opt.get("crate_inset",0.0))
+   var expect=c-bx.z.normalized()*float(opt.get("crate_forward",0.0))-bx.y.normalized()*float(opt.get("crate_up",0.0))+bx.x.normalized()*(bx.x.length()*bounds.size.x+inset)*0.5
+   if palm.distance_to(expect)>0.06: return false
  return true
 func triangle_box(a: Vector3,b: Vector3,c: Vector3,box: AABB) -> bool:
  var center=box.get_center()
@@ -64,7 +70,7 @@ func run():
  var known=[]
  for a in snapshot.actors: known.append(a.node_path)
  var types={}
- var plan_ok=snapshot.count==16 and ACT.ASSIGN.size()==7
+ var plan_ok=snapshot.count==16 and ACT.ASSIGN.size()==8
  for path in ACT.ASSIGN:
   var a=ACT.ASSIGN[path]
   types[a[0]]=true
@@ -72,7 +78,7 @@ func run():
   var good=path in known and clip!=null and clip.length>0.5 and clip.get_track_count()>30 and a[3] in ["idle","walk"]
   check("plan "+path,good)
   plan_ok=plan_ok and good
- check("scope16/7 assignments/5 types",plan_ok and types.size()==5,str(types.keys()))
+ check("scope16/8 assignments/5 types",plan_ok and types.size()==5,str(types.keys()))
  if not "--plan" in args:
   var world: Node3D=load("res://maps/village_v2/village_v2.tscn").instantiate()
   root.add_child(world)
@@ -85,14 +91,14 @@ func run():
    world.get_node("Population").add_child(overlay)
    for i in 4: await process_frame
   var actors=pop.find_children("*","AnimatableBody3D",true,false)
-  check("runtime16/no duplicates",actors.size()==16 and overlay.entries.size()==7)
+  check("runtime16/no duplicates",actors.size()==16 and overlay.entries.size()==8)
   var phases={}
   for e in overlay.entries: phases[e.path]=e.ap.current_animation_position
   for i in 24: await physics_frame
   var advanced=0
   for e in overlay.entries:
    if e.ap.is_playing() and absf(float(phases[e.path])-e.ap.current_animation_position)>0.05: advanced+=1
-  check("real runtime animation advance",advanced==7,str(advanced))
+  check("real runtime animation advance",advanced==8,str(advanced))
   var excluded: Array[RID]=[]
   for b in actors:
    b.set_physics_process(false)
@@ -144,12 +150,19 @@ func run():
        print("[ACTCONTACT] ",e.path," ",shape_node.get_path()," ",shape_node.global_transform," bounds ",shape_node.shape.get_debug_mesh().get_aabb())
      for j in range(0,contacts.size(),2): clash_depth=maxf(clash_depth,contacts[j].distance_to(contacts[j+1]))
     if e.prop_kind=="stool" and frame==0:
-     for x in [-0.18,0.18]:
-      for z in [-0.13,0.13]:
-       var pos=e.body.global_transform*Vector3(x,0,z)
-       var q=PhysicsRayQueryParameters3D.create(pos+Vector3.UP*0.2,pos-Vector3.UP*0.3,1,excluded)
-       var hit=sp.intersect_ray(q)
-       support_gap=maxf(support_gap,99.0 if hit.is_empty() else absf(pos.y-hit.position.y))
+     # Each of the 4 seat legs (collision shapes 1–4) must stand on the floor the residents stand on: the higher of
+     # terrain collision and the visible render floor (RenderIndex.floor_y — the same bed R3b grounded its actors on;
+     # e.g. the Market West lane floor is ~0.15 m above TerrainCollision).
+     var legs=e.body.get_children()
+     for li in range(1,5):
+      var lp: Vector3=legs[li].global_position
+      var pos=Vector3(lp.x,e.body.global_position.y,lp.z)
+      var q=PhysicsRayQueryParameters3D.create(pos+Vector3.UP*0.2,pos-Vector3.UP*0.3,1,excluded)
+      var hit=sp.intersect_ray(q)
+      var fy=-INF if hit.is_empty() else hit.position.y
+      var ry: float=render_index.floor_y(Vector2(pos.x,pos.z),pos.y+0.2)
+      if not is_nan(ry): fy=maxf(fy,ry)
+      support_gap=maxf(support_gap,99.0 if fy==-INF else absf(pos.y-fy))
    # Feet rest grounding and prop clearance are technical coverage, not garment certification.
    var ok=errors==0 and max_ground<0.012 and render_hits.is_empty() and support_gap<0.055
    records.append({"actor":e.path,"type":e.type,"samples30fps":samples,"invalid_frames":errors,"foot_rest_error_m":max_ground,"prop_coarse_proxy_depth_m":clash_depth,"prop_render_triangle_hits":render_hits.keys(),"stool_support_gap_m":support_gap})

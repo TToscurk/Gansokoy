@@ -1,0 +1,45 @@
+BlenderMCP addon registered
+[Tripo3D] Log file: C:\Users\B365\AppData\Local\Temp\tripo3d_blender_bridge.log
+BlenderMCP addon unregistered
+14:23:50 | INFO: Data are loaded, start creating Blender stuff
+14:23:50 | INFO: Blender create Mesh node NPC_Body
+14:23:50 | INFO: glTF import finished in 0.34s
+FBX version: 7700
+BAKED sit_talk_a_a030 1 1350
+FBX version: 7700
+BAKED sit_talk_b_a030 1 1323
+FBX version: 7700
+BAKED talk_twohands_a030 1 119
+FBX version: 7700
+BAKED argue_a030 1 625
+FBX version: 7700
+BAKED talk_funny_a030 1 179
+INFO Draco is available, use library at D:\Blender\blender-5.2.1-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\Blender\blender-5.2.1-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+14:23:58 | INFO: Starting glTF 2.0 export
+14:24:15 | INFO: Finished glTF 2.0 export in 17.229235649108887 s
+
+DONE [('sit_talk_a_a030', 1, 1350), ('sit_talk_b_a030', 1, 1323), ('talk_twohands_a030', 1, 119), ('argue_a030', 1, 625), ('talk_funny_a030', 1, 179)]
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:38:20)
+
+Blender quit
+14:23:48 - tripo_addon - [task.py:21] - INFO - WebSocket server started on port 60600
+INFO:tripo_addon:WebSocket server started on port 60600
+INFO:websockets.server:server listening on 127.0.0.1:60600
+14:23:48 - tripo_addon - [ws_server.py:126] - INFO - WebSocket server running on ws://127.0.0.1:60600
+INFO:tripo_addon:WebSocket server running on ws://127.0.0.1:60600
+14:23:48 - tripo_addon - [ws_server.py:133] - INFO - Heartbeat monitoring started (timeout: 120s)
+INFO:tripo_addon:Heartbeat monitoring started (timeout: 120s)
+14:23:48 - tripo_addon - [ws_server.py:90] - INFO - Stopping WebSocket server...
+INFO:tripo_addon:Stopping WebSocket server...
+14:23:48 - tripo_addon - [task.py:27] - INFO - WebSocket server stop requested
+INFO:tripo_addon:WebSocket server stop requested
+INFO:websockets.server:server closing
+INFO:websockets.server:server closed
+14:23:48 - tripo_addon - [ws_server.py:77] - INFO - Event loop closed
+INFO:tripo_addon:Event loop closed
+INFO:glTFImporter:Data are loaded, start creating Blender stuff
+INFO:glTFImporter:Blender create Mesh node NPC_Body
+INFO:glTFImporter:glTF import finished in 0.34s
+INFO:glTFImporter:Starting glTF 2.0 export
+INFO:glTFImporter:Finished glTF 2.0 export in 17.229235649108887 s

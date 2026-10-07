@@ -1,0 +1,38 @@
+{
+  "MainStreet/S4_sakanaya_m01": {
+    "crate_width_m": [
+      0.705841958522797,
+      0.79112720489502
+    ],
+    "frames": 34,
+    "inside_frames": {
+      "arms_sleeves": 34,
+      "hands": 34,
+      "legs_feet": 34,
+      "torso_head": 34
+    },
+    "inside_max_m": {
+      "arms_sleeves": 0.0608648657798767,
+      "hands": 0.0722856223583221,
+      "legs_feet": 0.129957973957062,
+      "torso_head": 0.128295004367828
+    },
+    "palm_gap_max_m": 0.0
+  },
+  "MarketWest/W4_yakusou_f01": {
+    "frames": 450,
+    "hip_gap_max_m": -0.111225247383118,
+    "hip_gap_min_m": -0.167037725448608,
+    "seat_height_m": 0.395043849945068,
+    "through_seat_frames": {
+      "arms_sleeves": 446,
+      "legs_feet": 450,
+      "torso_head": 450
+    },
+    "through_seat_max_m": {
+      "arms_sleeves": 0.0857751965522766,
+      "legs_feet": 0.119010239839554,
+      "torso_head": 0.167037725448608
+    }
+  }
+}

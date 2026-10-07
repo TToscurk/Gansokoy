@@ -1,0 +1,59 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 專案初始化中 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在掃描檔案結構…[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在載入全域類別名稱…[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在驗證 GDExtension…[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在建立自動載入腳本…[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 初始化外掛程式...[39m[0m
+MCP | plugin disabled in headless mode
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 開始掃描檔案...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 註冊全域類別中... (5 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started 掃描動作中... (2 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | box_idle_a030.fbx[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | readability_candidates.glb[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started （重新）匯入素材 (2 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在準備重新匯入檔案…[39m[0m
+[  33% ] [90m[1mreimport[22m | 正在準備重新匯入檔案…[39m[0m
+[   0% ] [90m[1mreimport[22m | 執行預先重新匯入作業…[39m[0m
+[   0% ] [90m[1mreimport[22m | readability_candidates.glb[39m[0m
+[   0% ] [90m[1mimport[22m | Started 匯入場景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 正在匯入場景…[39m[0m
+[   1% ] [90m[1mimport[22m | 正在執行自訂腳本...[39m[0m
+[  99% ] [90m[1mimport[22m | 正在儲存…[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  33% ] [90m[1mreimport[22m | box_idle_a030.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 匯入場景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 正在匯入場景…[39m[0m
+[   1% ] [90m[1mimport[22m | 正在執行自訂腳本...[39m[0m
+[  99% ] [90m[1mimport[22m | 正在儲存…[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  66% ] [90m[1mreimport[22m | 完成素材匯入...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started （重新）匯入素材 (2 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 執行重新匯入後續處理作業…[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在載入編輯器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在載入編輯器佈局…[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在載入面板…[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新開啟場景…[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | 正在載入中央編輯器佈局…[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在載入外掛視窗佈局…[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 編輯器佈局就緒。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

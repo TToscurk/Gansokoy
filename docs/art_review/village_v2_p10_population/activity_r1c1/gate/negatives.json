@@ -1,0 +1,233 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "label": "plan Market/M2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M7_kozo_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W1_nunoya_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W3_chaya_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W4_yakusou_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MainStreet/S2_yaoya_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MainStreet/S3_yakusou_f01",
+      "pass": true
+    },
+    {
+      "detail": "[\"Talk\", \"YouthShortStep\", \"Drink\", \"Sit\", \"Carry\"]",
+      "label": "scope16/8 assignments/5 types",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "runtime16/no duplicates",
+      "pass": true
+    },
+    {
+      "detail": "8",
+      "label": "real runtime animation advance",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M2_shufu_f01\",\"foot_rest_error_m\":0.000459641218185425,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":310,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps Market/M2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M7_kozo_m01\",\"foot_rest_error_m\":0.000883288681507111,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":34,\"stool_support_gap_m\":0.0,\"type\":\"YouthShortStep\"}",
+      "label": "evaluated30fps Market/M7_kozo_m01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W1_nunoya_f01\",\"foot_rest_error_m\":0.00046190619468689,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":310,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps MarketWest/W1_nunoya_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W2_shufu_f01\",\"foot_rest_error_m\":0.000459641218185425,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":310,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps MarketWest/W2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W3_chaya_f01\",\"foot_rest_error_m\":0.000440970063209534,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":267,\"stool_support_gap_m\":0.0,\"type\":\"Drink\"}",
+      "label": "evaluated30fps MarketWest/W3_chaya_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W4_yakusou_f01\",\"foot_rest_error_m\":0.0014178454875946,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1350,\"stool_support_gap_m\":0.0,\"type\":\"Sit\"}",
+      "label": "evaluated30fps MarketWest/W4_yakusou_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MainStreet/S2_yaoya_m01\",\"foot_rest_error_m\":0.000908404588699341,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":191,\"stool_support_gap_m\":0.0,\"type\":\"Carry\"}",
+      "label": "evaluated30fps MainStreet/S2_yaoya_m01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MainStreet/S3_yakusou_f01\",\"foot_rest_error_m\":0.000190351158380508,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":180,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps MainStreet/S3_yakusou_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative stopped/Tpose",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative wrong animation root",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative zero-track clip",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative zero-length clip",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative detached cup",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative hidden cup",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative hidden stool",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative detached crate",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative hidden crate",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "negative added population",
+      "pass": true
+    }
+  ],
+  "samples": [
+    {
+      "actor": "Market/M2_shufu_f01",
+      "foot_rest_error_m": 0.000459641218185425,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 310,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "Market/M7_kozo_m01",
+      "foot_rest_error_m": 0.000883288681507111,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 34,
+      "stool_support_gap_m": 0.0,
+      "type": "YouthShortStep"
+    },
+    {
+      "actor": "MarketWest/W1_nunoya_f01",
+      "foot_rest_error_m": 0.00046190619468689,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 310,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "MarketWest/W2_shufu_f01",
+      "foot_rest_error_m": 0.000459641218185425,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 310,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "MarketWest/W3_chaya_f01",
+      "foot_rest_error_m": 0.000440970063209534,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 267,
+      "stool_support_gap_m": 0.0,
+      "type": "Drink"
+    },
+    {
+      "actor": "MarketWest/W4_yakusou_f01",
+      "foot_rest_error_m": 0.0014178454875946,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1350,
+      "stool_support_gap_m": 0.0,
+      "type": "Sit"
+    },
+    {
+      "actor": "MainStreet/S2_yaoya_m01",
+      "foot_rest_error_m": 0.000908404588699341,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 191,
+      "stool_support_gap_m": 0.0,
+      "type": "Carry"
+    },
+    {
+      "actor": "MainStreet/S3_yakusou_f01",
+      "foot_rest_error_m": 0.000190351158380508,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 180,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    }
+  ],
+  "status": "TECHNICAL_PASS",
+  "visual": "ART_REVIEW only; numerical foot/prop tests do not certify clothing"
+}

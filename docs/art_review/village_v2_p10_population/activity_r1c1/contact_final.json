@@ -1,0 +1,32 @@
+{
+  "MainStreet/S2_yaoya_m01": {
+    "body_front_z_max_m": -0.0394085496664047,
+    "body_z_min_m": -0.6169553399086,
+    "crate_forward": 0.14,
+    "crate_up": 0.09,
+    "crate_width_m": [
+      0.592983901500702,
+      0.597881734371185
+    ],
+    "deepest_last_frame_crate_local": {},
+    "frames": 190,
+    "hands_z_range_m": [
+      -0.0735363364219666,
+      0.0497466176748276
+    ],
+    "head_z": -0.36569607257843,
+    "inside_frames": {},
+    "inside_max_m": {},
+    "palm_gap_max_m": 0.01210474409163,
+    "toes_z": -0.0945570766925812
+  },
+  "MarketWest/W4_yakusou_f01": {
+    "frames": 450,
+    "hip_gap_max_m": -0.00112965703010559,
+    "hip_gap_min_m": -0.00901025533676147,
+    "seat_drop_m": 0.22,
+    "seat_height_m": 0.285043865442276,
+    "through_seat_frames": {},
+    "through_seat_max_m": {}
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "character": "sakanaya_m01",
+  "clip": "bag_walk_a038",
+  "product": "c9c64027-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.38,
+  "ok": true,
+  "job_uuid": "2d7ccbcd-c146-4a7a-b788-13b684c14cb0",
+  "character_uuid": "e63ec18d-d4fe-43a2-a580-886f25781b38",
+  "motion": {
+    "model-id": 101600901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0,0,0,0",
+    "arm-space": 0.38,
+    "inplace": true
+  },
+  "raw_params": [
+    [
+      "Bag Weight",
+      0
+    ],
+    [
+      "Speed",
+      0
+    ],
+    [
+      "Stride",
+      0
+    ],
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Walking With Shopping Bag",
+  "supports_inplace": true,
+  "mixamo_frames": 37,
+  "mixamo_duration": 1.23,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "purpose": "Carry readability: walking with a bag/bucket in one hand (in place)",
+  "file": "godot/animations/npc_activity_p10/sakanaya_m01/src/bag_walk_a038.fbx",
+  "bytes": 379360,
+  "sha256": "ca53e10738937960daed9d1e00cd8fa5140cf91dfa05e1a26cd09b2d43ca61e9"
+}

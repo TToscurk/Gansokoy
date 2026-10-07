@@ -1,0 +1,41 @@
+{
+  "character": "sakanaya_m01",
+  "clip": "holding_walk_a038",
+  "product": "c9cda1e7-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.38,
+  "ok": true,
+  "job_uuid": "4fdcfc8a-b023-435b-b955-1ed6f8e0c21d",
+  "character_uuid": "e63ec18d-d4fe-43a2-a580-886f25781b38",
+  "motion": {
+    "model-id": 126880901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0",
+    "arm-space": 0.38,
+    "inplace": true
+  },
+  "raw_params": [
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Holding Walk",
+  "supports_inplace": true,
+  "mixamo_frames": 41,
+  "mixamo_duration": 1.37,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "purpose": "Carry readability: walking while holding goods (in place)",
+  "file": "godot/animations/npc_activity_p10/sakanaya_m01/src/holding_walk_a038.fbx",
+  "bytes": 412480,
+  "sha256": "a1cd0dd96dd487f118ca35bcae71ad4c8a2d98e5088f134db1c27586470db3cd"
+}

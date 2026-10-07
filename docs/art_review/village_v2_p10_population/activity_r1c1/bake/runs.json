@@ -1,0 +1,67 @@
+{
+  "runs": [
+    {
+      "name": "bake_yaoya_m01",
+      "command": [
+        "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+        "-b",
+        "-P",
+        "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+        "--",
+        "D:\\神社\\shrine\\godot\\characters\\npc\\yaoya_m01\\yaoya_m01.glb",
+        "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\yaoya_m01\\readability_candidates.glb",
+        "box_idle_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\yaoya_m01\\src\\box_idle_a030.fbx"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "import",
+      "command": [
+        "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "D:\\神社\\shrine\\godot",
+        "--import"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "ground_yaoya_m01",
+      "command": [
+        "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "D:\\神社\\shrine\\godot",
+        "--script",
+        "res://tools/build_npc_anim_grounded.gd",
+        "--",
+        "--dir=res://animations/npc_activity_p10/yaoya_m01",
+        "--npc=res://characters/npc/yaoya_m01/yaoya_m01.glb",
+        "--clips=box_idle_a030"
+      ],
+      "exit": 0
+    }
+  ],
+  "sha256": {
+    "godot/animations/npc_activity_p10/yakusou_f01/readability_candidates.glb": "057fcbcf37b74466a40d561902f4ea97a73387a59bf9ae6ffe7cb6180708dc9b",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/sit_talk_a_a030.fbx": "e2e9e1de595c876db5744d950e1e17304c65ff7f1515a8bfa56ec7ed01fab8b4",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/sit_talk_b_a030.fbx": "9a3ad85c6a413a9e5a13d46aafecf94a5732ede198d26fe8eb165c902749858d",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/talk_twohands_a030.fbx": "df9b1702bfcd267f870f7f4b2416885c2a9fae903c474141ea381c1ba03d53fc",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/argue_a030.fbx": "f0aeced3f7987227b5ab092e9980689349f6a87026a1832b5c51b81e4d619d07",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/talk_funny_a030.fbx": "eb0968d43edbfc47294589dda1cdb80c9a950ac83f93493b2170c7cc1234b6ab",
+    "godot/animations/npc_activity_p10/yakusou_f01/sit_talk_a_a030_grounded.res": "92ea8874a29d572399820c64a4d7a11bf7f134abc5d7d8eff552aa2d79fa51cf",
+    "godot/animations/npc_activity_p10/yakusou_f01/sit_talk_b_a030_grounded.res": "30906e60567b76e9c16371626db27181641d9035f1d392ae4a2b0a412575e882",
+    "godot/animations/npc_activity_p10/yakusou_f01/talk_twohands_a030_grounded.res": "1a4ce2b46411b230eef370038eec1f51c66061ebcf6c13b877ab3f0ccfb2cdf3",
+    "godot/animations/npc_activity_p10/yakusou_f01/argue_a030_grounded.res": "243ab1a7aabba0fa7a1280bf95a7a41a97e381b8a40f5f0e6d51d936c4f058c7",
+    "godot/animations/npc_activity_p10/yakusou_f01/talk_funny_a030_grounded.res": "165f241dc1f872a84c7dc24b8da65994ab9494a0fbd175fa2b12385c5f8343e3",
+    "godot/animations/npc_activity_p10/shufu_f01/readability_candidates.glb": "ac177cba1d3ff17c3ff98c15a2519c4903183c3b73bc3f220b7a68c6cf8e9e9d",
+    "godot/animations/npc_activity_p10/shufu_f01/src/talk_twohands_a030.fbx": "1b77e779cb1e2c80625271b05e6d939ab2f87133aa3f6a4fecbee141728f2e0e",
+    "godot/animations/npc_activity_p10/shufu_f01/talk_twohands_a030_grounded.res": "2fb5e4553ae21e401f9b4945598478793051df1c69aeb3f1bcbeb7569fe42033",
+    "godot/animations/npc_activity_p10/sakanaya_m01/readability_candidates.glb": "19405455f7953a9ba89fcc25e04913f6cd4fcea88bedd9e48ccc683024b2962c",
+    "godot/animations/npc_activity_p10/sakanaya_m01/src/holding_walk_a038.fbx": "a1cd0dd96dd487f118ca35bcae71ad4c8a2d98e5088f134db1c27586470db3cd",
+    "godot/animations/npc_activity_p10/sakanaya_m01/holding_walk_a038_grounded.res": "5c5eaeeec2a05e8e02e943dd7c4b1ddeceec2d1779df23d0272a03417d31e595",
+    "godot/animations/npc_activity_p10/yaoya_m01/readability_candidates.glb": "fb5f24b81e904df231d73bbda4ee4fac6de582989a764c98bdae7f1d4fbb1056",
+    "godot/animations/npc_activity_p10/yaoya_m01/src/box_idle_a030.fbx": "6e7608d686d79168e26d93d21d58ecbb077082282830170ab1c3f1bb00aa6faf",
+    "godot/animations/npc_activity_p10/yaoya_m01/box_idle_a030_grounded.res": "04e00018892da90abbbdbb4a867f02032b5342b965f65c66c7aead4f8deb612e"
+  }
+}
