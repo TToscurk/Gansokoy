@@ -52,3 +52,11 @@ godot/assets/textures/street_earth_diff.png filter=lfs diff=lfs merge=lfs -text
 # 產生式碰撞場景：二進位 PackedScene，ground_collision.scn 約 30 MB 且每次
 # 重烘都整檔換新，走 LFS 才不會把 repo 撐爆。
 godot/maps/slice/gen/*.scn filter=lfs diff=lfs merge=lfs -text
+# P8 農田 overlay：單一二進位（全區秧苗／埂草 MultiMesh 內嵌）約 55 MB，每次 --build 整檔換新
+godot/maps/village_v2/gen/farmland_p8.scn filter=lfs diff=lfs merge=lfs -text
+# 人間之里 V2 雜湊輸入（gate.json／registry／kit manifest／matlib.json 記錄的是 LF 位元組的 sha256）：
+# core.autocrlf=true 的 checkout 會轉成 CRLF → 雜湊不符、gate FAIL、地面材質退回灰模。這些檔固定 LF。
+godot/assets/village_v2/**/*.json eol=lf
+godot/assets/village_v2/**/*.tres eol=lf
+godot/assets/village_v2/**/*.gdshader eol=lf
+godot/assets/materials/shrine_step.tres eol=lf

@@ -19,6 +19,9 @@ extends RefCounted
 ##              灰盒自己的網格隱藏、Shape 停用、collision_layer 0（retire_body）；Hero 子樹不受影響。
 ##   gate_spec.node（P6 稗田邸圍牆起）：Hero 節點名（預設 "Hero"）。同一個 P0 地標掛第二件資產時用（圍牆＝"HeroWall"，
 ##              掛在大宅門地標下）；replaces 空字串＝沒有要退場的 placeholder。hero_asset meta 只由預設 "Hero" 寫。
+##   "bridge"（P7 R2 正式橋起）：anchor＝Roads/Bridges/Bridge_* 灰盒橋（StaticBody3D，產生器依地形傾斜 rotation.x）。
+##              資產原點＝灰盒橋面頂中心（兩端橋面高的平均）、只取 yaw（+z＝道路方向、往 end_heights[0] 那端）、不傾斜：
+##              橋面坡度與拱度在資產幾何裡按實際長度建好（bridge_frame）。灰盒退場同 "body"（retire_body）。
 ## 路徑一律從 registry／asset.json 讀，原始碼不寫資產 res:// 字串（P5 asset reset gate 掃描產生器原始碼）。
 
 const REG := "res://data/village_v2_asset_registry.json"
@@ -80,11 +83,16 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 	var old := anchor.get_node_or_null(nm)
 	if old != null:
 		return old as Node3D   # 已放（產生器烘焙過）
-	var body_mode := String(gs["placement"]) == "body"
+	var body_mode := String(gs["placement"]) in ["body", "bridge"]
 	var rep := String(gs.get("replaces", ""))
 	var ph := null if (body_mode or rep == "") else anchor.get_node_or_null(rep) as Node3D
 	var xf := Transform3D.IDENTITY
-	if body_mode:
+	if String(gs["placement"]) == "bridge":
+		xf = bridge_frame(anchor)
+		if xf == Transform3D.IDENTITY:
+			push_error("[hero] %s 不是灰盒橋（缺 Shape／BoxShape3D）" % gs["anchor"])
+			return null
+	elif body_mode:
 		pass   # 資產原點＝灰盒節點原點（identity）
 	elif ph != null:
 		xf = ph.transform
@@ -128,6 +136,26 @@ static func place(vroot: Node3D, S: Dictionary, scene: PackedScene, remove_place
 ## Hero 節點名（gate_spec.node；預設 "Hero"）
 static func node_name(gs: Dictionary) -> String:
 	return String(gs.get("node", "Hero"))
+
+
+## 灰盒橋 b（產生器 _bridges：holder 在箱底中心、yaw＝道路方向、rotation.x＝兩端高差的傾角）→ 正式橋的局部 transform
+## （相對 b）：世界原點＝箱頂中心（＝兩端橋面高的平均）、basis 只有 yaw。回傳 IDENTITY＝不是灰盒橋。
+static func bridge_frame(b: Node3D) -> Transform3D:
+	var cs := b.get_node_or_null("Shape") as CollisionShape3D
+	if cs == null or not cs.shape is BoxShape3D:
+		return Transform3D.IDENTITY
+	var box_h := (cs.shape as BoxShape3D).size.y
+	var world := Transform3D(Basis(Vector3.UP, b.rotation.y), b.position + Vector3(0, box_h, 0))
+	return b.transform.affine_inverse() * world
+
+
+## 灰盒橋的水平橋長與兩端高差（+z 端減 −z 端）：由箱長與傾角還原（產生器 horiz／dh，未經 meta 四捨五入）
+static func bridge_dims(b: Node3D) -> Dictionary:
+	var cs := b.get_node_or_null("Shape") as CollisionShape3D
+	if cs == null or not cs.shape is BoxShape3D:
+		return {}
+	var sz := (cs.shape as BoxShape3D).size
+	return {"L": sz.z * cos(b.rotation.x), "dh": sz.z * sin(-b.rotation.x), "W": sz.x, "box_h": sz.y}
 
 
 ## 灰盒／placeholder 退場：保留節點（P4 gate 讀 Foundation AABB），外觀與碰撞全關。

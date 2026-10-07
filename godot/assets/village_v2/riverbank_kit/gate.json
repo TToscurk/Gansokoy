@@ -1,0 +1,126 @@
+{
+ "asset": "riverbank_kit",
+ "entry": "res://assets/village_v2/riverbank_kit/riverbank_kit_manifest.json",
+ "entry_sha256": "6206eb08e878053a2ac295eb23ee20fb26df1e9f24c7e5594a25ba5518fd8382",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "構件 64 個 AABB vs Blender 設計尺寸最大差 0.000 m（rb_pile_r；≤ 0.02）",
+    "擺放縮放在設計範圍（護岸 x 0.8–1.36／沿坡 0.45–1.8、巨石 0.44–1.81、河原石 0.54–1.36、石段／平台／木樁 1:1）：違規 0",
+    "親水石段（雁木）3 處：MainRiver/stair_1 5 級：級高 0.23–0.23、級間水平距 0.65–0.99、末級→平台 0.00、平台頂＝水位＋0.13；Canal/stair_1 6 級：級高 0.24–0.24、級間水平距 0.43–0.47、末級→平台 0.00、平台頂＝水位＋0.13；Canal/stair_2 10 級：級高 0.26–0.26、級間水平距 0.47–0.52、末級→平台 0.00、平台頂＝水位＋0.13（級高 ≤ 0.27 且差 ≤ 0.02；雁木沿岸 0.44＋緩岸往水側外移 → 級間水平距 0.38–1.00、踏石 1.3 m 長保證相鄰級重疊 ≥ 0.3；平台頂＝水位＋0.13±0.05；可走性由 11 項實走驗）"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "件（AABB 內縮 20 %）不壓建築／地標／橋／圍牆碰撞體：2766 件、違規 0",
+    "巨石／河原石／木樁／しがらみ／矮欄／笠石 中心不在路帶上：違規 0",
+    "5 座橋面矩形內（橋面以下 0.6 m 以上）沒有河岸件：0"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "2766 件：底 ≤ 地面＋0.05（不浮）違規 0",
+    "頂 ≥ 地面（不整顆埋）違規 0",
+    "橋頭鋪石／見切り石 頂−路面 −0.03～+0.08（平貼路面）違規 0、最大偏差 0.049",
+    "木樁埋入 ≥ 0.30 m：違規 0",
+    "親水平台基石底在水位下 ≥ 0.30（不懸在水面）：違規 0"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "構件材質只用 V2_KitStoneTri／V2_Wood（町家 Kit 已過 gate 的 world triplanar 石材＋共享材質庫木材，未新增貼圖）：違規 0；區塊材質 [\"V2_KitStoneTri\", \"V2_Wood\"]；override 0",
+    "濕石／苔頂點色：水線 −0.05～+0.2 m 平均亮度 0.464（24436 點）vs 水面上 1.3 m 以上 0.884（27124 點）＝ 52 %（< 85 %）"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "構件 64 個：退化三角形 0、NaN 0、缺法線／UV 0；擺放 basis 行列式 ≤ 0：0"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "Riverbank／65 區塊／LOD 節點全 identity（頂點已是世界座標）：違規 0；件所在 32 m 分格都有區塊：缺 0"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "BoxShape 107（應 107：石段／平台／矮欄／大巨石）、停用 0、layer 0 的 body 0；護岸面板／鋪石／河原石不給碰撞（地形碰撞不變）",
+    "石段／平台 24 面：碰撞頂 vs 踏面最大差 0.000 m（≤ 0.03）、打不到 0"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "65 區塊：LOD0（0–75 m）／LOD1（–420 m）齊全且接續；LOD1／LOD0 最大 25 %（≤ 35 %）"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "區塊 LOD0 最大 34766（RB_10_0；≤ 40000）、全村 LOD0 628463（≤ 650000）、LOD1 102364；每區塊 surface ≤ 2（draw call）違規 0；構件庫 64 個（每件只存一次、合併進區塊網格）"
+   ],
+   "part": "headless",
+   "date": "2026-09-29T02:53:01"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Riverbank 已烘焙在場景）、玩家鏡位 13 張（5 橋 × 2 端＋親水點 3）：riverbank_Bridge_01_s.png（亮度標準差 0.243、鏡頭離地 3.14 m、在畫面內、遠距橋體 0.032）；riverbank_Bridge_01_n.png（亮度標準差 0.297、鏡頭離地 4.12 m、在畫面內、遠距橋體 0.032）；riverbank_Bridge_02_s.png（亮度標準差 0.263、鏡頭離地 3.62 m、在畫面內、遠距橋體 0.036）；riverbank_Bridge_02_n.png（亮度標準差 0.278、鏡頭離地 1.67 m、在畫面內、遠距橋體 0.076）；riverbank_Bridge_03_s.png（亮度標準差 0.267、鏡頭離地 3.06 m、在畫面內、遠距橋體 0.028）；riverbank_Bridge_03_n.png（亮度標準差 0.302、鏡頭離地 3.14 m、在畫面內、遠距橋體 0.036）；riverbank_Bridge_04_s.png（亮度標準差 0.286、鏡頭離地 3.02 m、在畫面內、遠距橋體 0.032）；riverbank_Bridge_04_n.png（亮度標準差 0.294、鏡頭離地 3.22 m、在畫面內、遠距橋體 0.029）；riverbank_Bridge_05_s.png（亮度標準差 0.285、鏡頭離地 3.11 m、在畫面內、遠距橋體 0.016）；riverbank_Bridge_05_n.png（亮度標準差 0.224、鏡頭離地 3.24 m、在畫面內、遠距橋體 0.016）；riverbank_stair_1.png（亮度標準差 0.263、鏡頭離地 3.42 m、在畫面內、遠距橋體 1.000）；riverbank_stair_2.png（亮度標準差 0.306、鏡頭離地 3.00 m、在畫面內、遠距橋體 1.000）；riverbank_stair_3.png（亮度標準差 0.320、鏡頭離地 3.02 m、在畫面內、遠距橋體 1.000）"
+   ],
+   "part": "render",
+   "date": "2026-09-29T02:58:12"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（32 構件單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、13 張鏡位＋實走 13 段）錯誤 0、警告 0；Bridge_01_s 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_01_n 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_02_s 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_02_n 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_03_s 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_03_n 走 1／1 點、著地時離可見面最大 0.01、連續騰空最長 0 幀；Bridge_04_s 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_04_n 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_05_s 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；Bridge_05_n 走 1／1 點、著地時離可見面最大 0.00、連續騰空最長 0 幀；stair_1 走 6／6 點、著地時離可見面最大 0.23、連續騰空最長 8 幀、終點離平台 0.00；stair_2 走 7／7 點、著地時離可見面最大 0.10、連續騰空最長 15 幀、終點離平台 0.00；stair_3 走 11／11 點、著地時離可見面最大 0.25、連續騰空最長 16 幀、終點離平台 0.00"
+   ],
+   "part": "render",
+   "date": "2026-09-29T02:58:12"
+  }
+ },
+ "render_info": {
+  "f6_png": "riverbank_kit_f6.png",
+  "perf": [
+   "Bridge_01_s：2599009 三角面／4595 draw call",
+   "Bridge_01_n：1711052 三角面／2585 draw call",
+   "Bridge_02_s：2133213 三角面／1710 draw call",
+   "Bridge_02_n：1923717 三角面／573 draw call",
+   "Bridge_03_s：2462082 三角面／4040 draw call",
+   "Bridge_03_n：1626650 三角面／2242 draw call",
+   "Bridge_04_s：2243244 三角面／3179 draw call",
+   "Bridge_04_n：1475548 三角面／1561 draw call",
+   "Bridge_05_s：960187 三角面／518 draw call",
+   "Bridge_05_n：1686525 三角面／2696 draw call",
+   "stair_1：1595476 三角面／1259 draw call",
+   "stair_2：1496577 三角面／1269 draw call",
+   "stair_3：1748535 三角面／2420 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

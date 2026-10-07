@@ -36,6 +36,7 @@ const PLib := preload("res://tools/village_v2_parcel_lib.gd")
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
 const HLib := preload("res://tools/village_v2_hero_lib.gd")
 const KLib := preload("res://tools/village_v2_machiya_kit_lib.gd")
+const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
 const SCENE := "res://maps/village_v2/village_v2.tscn"
@@ -182,6 +183,7 @@ func _init() -> void:
 	_greybox()
 	_heroes()
 	_kits()
+	_riverbank()
 	_anchors()
 	_portals()
 	_debug()
@@ -2244,6 +2246,29 @@ func _kits() -> void:
 		tris += KLib.lod_tris(fr, 0)
 		n += 1
 	print("[v2] P6 町家 Kit＋門前帶 套用 %d 棟（LOD0 合計 %d 三角面）" % [n, tris])
+
+
+## P7 R2 河岸 Kit（護岸石張り／笠石／巨石／河原石／橋頭鋪石＋見切り石／木樁／しがらみ／矮欄／雁木石段＋親水平台）：
+## registry 登記 riverbank_kit（kind kit）且 gate 全 PASS、manifest 雜湊一致才放；否則河岸維持 P7 R1（只有地面材質）。
+## 不改 P1 地形、P2 水面、河道中心線、P3 路網：全部只讀場景內已產生的核准資料擺放。
+func _riverbank() -> void:
+	var ok := false
+	for a: Dictionary in HLib.registry().get("v2_assets", []):
+		if String(a.get("id", "")) != "riverbank_kit" or String(a.get("kind", "")) != "kit":
+			continue
+		var g: Dictionary = a.get("gate", {})
+		var all_pass := true
+		for k in HLib.GATE_KEYS:
+			all_pass = all_pass and String(g.get(k, "")) == "PASS"
+		var entry := String(a.get("entry", ""))
+		ok = all_pass and FileAccess.file_exists(entry) and FileAccess.get_sha256(entry) == String(a.get("entry_sha256", ""))
+	if not ok:
+		print("[v2] P7 R2 河岸 Kit 未登記或 gate 之後改過：河岸維持 P7 R1")
+		return
+	var P: Dictionary = RLib.plan(vroot, L)
+	var rb := RLib.bake(vroot, P["items"], RLib.load_lib(), _save)
+	print("[v2] P7 R2 河岸 Kit：%d 件、%d 區塊、LOD0 %d／LOD1 %d 三角面、親水點 %d" % [int(rb.get_meta("items")),
+		rb.get_child_count(), int(rb.get_meta("lod0_tris")), int(rb.get_meta("lod1_tris")), (P["stairs"] as Array).size()])
 
 
 # ─────────────────────────── P4 建築灰盒 ───────────────────────────

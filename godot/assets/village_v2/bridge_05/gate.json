@@ -1,0 +1,118 @@
+{
+ "asset": "bridge_05",
+ "entry": "res://assets/village_v2/bridge_05/bridge_05.scn",
+ "entry_sha256": "fa9b194c1017c0071b947f71726c238dfdd3455ec9434e1d2b1d145d9e25433f",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±2.06（≤ 2.08）、z -5.76～5.76（容許 -5.80～5.80）、頂 1.44（1.39～1.49）、底 -1.15（-1.15）",
+    "規格＝P4 灰盒橋 Bridge_05_WestLane_WestStream：長 11.50／寬 3.80／兩端高差 -0.020 m（asset.json 11.50／3.80／-0.020）；P0 橋長 11.5（容許 10.35～12.65）",
+    "射線實測橋面長 11.50 m（z -5.75～5.75；灰盒 11.50、P0 容許 10.35～12.65）",
+    "橋端與地形高差：−z端 橋面 1.03／地形 0.97（0.06）、+z端 橋面 1.01／地形 0.95（0.06）；最大 0.06 m（≤ 0.15）",
+    "橋面縱坡：10 m 視窗最大 1.5%（≤ 12%）、1 m 局部最大 9.9%（≤ 20%）；拱度（扣兩端連線）0.29 m @ z 0.1（規格 0.30）",
+    "欄杆內淨寬 3.52 m（道路寬 3.0、橋寬 3.8）、架木頂離橋面 0.94 m（0.85～1.10）",
+    "結構底離 WestStream 水面：10 站最小 0.56 m @ z 2.3（≥ 0.15；河中支撐 ±0.9 m 除外）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 WestLane 路肩 7.96 m²、石橋台＋z 壓 WestLane 路肩 22.13 m²"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.22、石橋台＋z 埋 0.34",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Bridge_05_WestLane_WestStream 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Stone\": 0.42, \"V2_Metal\": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 2148 面：退化 0、NaN 0、繞向反 0、LOD1 508 面：退化 0、NaN 0、繞向反 0、LOD2 148 面：退化 0、NaN 0、繞向反 0；LOD0 2148 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 2148 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點 (159.88, 1.01, -10.27)＝灰盒橋 Bridge_05_WestLane_WestStream 箱頂中心 (159.88, 1.01, -10.27)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -1.15～1.44"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "橋面 69 點（道路寬內 x ±1.20、每 0.5 m）：有碰撞 69、膠囊站得住 69、碰撞頂與可見橋板差最大 0.009 m（≤ 0.10）",
+    "欄杆擋得住：橋面上 0.5／1.0 m 往兩側 44 條射線，在 x ±2.00 內打到碰撞的 44 條",
+    "周邊 176 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 2148 → 508（23.6 %，≤ 35 %）→ 148（6.9 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 518 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 2148（14 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:39"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 3 張：bridge_05_approach.png（亮度標準差 0.282、資產在畫面內、鏡頭到資產無遮擋）；bridge_05_approach_far.png（亮度標準差 0.214、資產在畫面內、鏡頭到資產無遮擋）；bridge_05_diag.png（亮度標準差 0.283、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-28T03:03:15"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、3 張鏡位＋實走）錯誤 0、警告 0；實走：局部 z -10.8 → 10.8 過橋，到達局部 (-0.00, 9.30)（過橋）、最大離腳下面 0.01 m、最低 y 0.95（≥ 兩端路面低者 −0.5 = 0.45，沒掉進水道）"
+   ],
+   "part": "render",
+   "date": "2026-09-28T03:03:15"
+  }
+ },
+ "render_info": {
+  "f6_png": "bridge_05_f6.png",
+  "perf": [
+   "approach：968213 三角面／402 draw call",
+   "approach_far：1603024 三角面／2489 draw call",
+   "diag：982824 三角面／659 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}

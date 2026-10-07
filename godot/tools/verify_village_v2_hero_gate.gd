@@ -40,7 +40,7 @@ const MATLIB_KEYS: Array[String] = ["license", "texture_size", "vram_compressed"
 ## §14.8（使用者 2026-09-24 核准）LOD0 上限；gate 以此為準，不信 asset.json 自報
 const BUDGET_LOD0 := {"鈴奈庵": 60000, "霧雨店": 60000, "鯢吞亭": 100000, "寺子屋": 100000, "龍神像": 100000,
 	"稗田邸": 150000, "鳥居": 5000, "火見櫓": 20000, "水車": 15000, "町家": 25000,
-	"社殿": 60000}
+	"社殿": 60000, "水渠橋": 15000, "龍神橋": 30000}   # 橋：使用者 2026-09-28 核准（P7 R2）
 const MAX_MATS := 5
 const MAX_SHAPES := 8
 const TEX_MAX := 2048
@@ -486,13 +486,15 @@ func _apply_neg() -> void:
 			# aux 附屬棟（body 放置）：正面前有 2.5–9 m 院子、背面離地塊線只有 margin 0.45 → 往後推 3 m 才真的出界
 			if String(gs["placement"]) == "body":
 				hero.position -= hero.basis.z * 3.0
+			elif gs.has("bridge"):
+				hero.position += hero.basis.x * 3.0   # 橋：往側面推 3 m（道路斷面跑出欄杆內淨寬）
 			elif gs.has("water_ref"):
 				hero.position -= hero.basis.x * 3.0   # 水車：往岸上推 3 m（輪子離開水道）
 			else:
 				hero.position += hero.basis.z * (8.0 if gs.has("building") else 3.0)
 		"greybox":
-			if String(gs["placement"]) == "body":
-				# aux：灰盒就是 anchor 本身 → 把它的網格與碰撞恢復，資產墊高 0.4 m
+			if String(gs["placement"]) in ["body", "bridge"]:
+				# aux／橋：灰盒就是 anchor 本身 → 把它的網格與碰撞恢復，資產墊高 0.4 m
 				for c in anchor.find_children("*", "", true, false):
 					if hero.is_ancestor_of(c) or c == hero:
 						continue
@@ -546,6 +548,11 @@ func _apply_neg() -> void:
 			for c in hero.get_node("Collision").find_children("*", "CollisionShape3D", true, false):
 				if String(c.name).ends_with("E") and not String(c.name).contains("S_"):
 					(c as CollisionShape3D).disabled = true
+		"deckgap":
+			# P7 R2 橋：關掉橋面碰撞 → 橋面走不上去（碰撞＝可見橋面、膠囊站得住）必須 FAIL
+			var dk := hero.get_node_or_null("Collision/Deck") as CollisionShape3D
+			if dk != null:
+				dk.disabled = true
 		"winding":
 			var mi := hero.get_node("LOD0") as MeshInstance3D
 			var src := mi.mesh as ArrayMesh
@@ -692,6 +699,142 @@ func _c_size() -> void:
 				lm.get("h", -1), sz["top"][1]])
 	if gs.has("wall"):
 		_c_size_wall()
+	if gs.has("bridge"):
+		_c_size_bridge()
+
+
+## hero 局部 (lx, lz) 由上往下第一個 LOD0 可見面的局部 y（NAN＝沒打到）。橋板之間有 2 cm 縫 → 取 lz ±0.07 三點最高
+func _deck_vis(lx: float, lz: float) -> float:
+	var best := NAN
+	for dz: float in [0.0, -0.07, 0.07]:
+		var d := _vis_dist(Vector3(lx, 12.0, lz + dz), Vector3(lx, -12.0, lz + dz), _tris_at(lx, lz + dz))
+		if d != INF and (is_nan(best) or 12.0 - d > best):
+			best = 12.0 - d
+	return best
+
+
+## 世界 (x, z) 由上往下第一個 hero 碰撞面的世界 y（NAN＝沒打到）
+func _hero_top(x: float, z: float) -> float:
+	var d := _col_dist(Vector3(x, 400.0, z), Vector3(x, -80.0, z))
+	return 400.0 - d if d != INF else NAN
+
+
+## layout 水道中心線（MainRiver／Canal／Streams[].name）
+func _water_line(name: String) -> PackedVector2Array:
+	var W: Dictionary = L["water"]
+	var pts: Array = []
+	if W.has(name) and W[name] is Dictionary:
+		pts = W[name]["pts"]
+	else:
+		for s: Dictionary in W.get("Streams", []):
+			if String(s["name"]) == name:
+				pts = s["pts"]
+	var out := PackedVector2Array()
+	for p in pts:
+		out.append(Vector2(float(p[0]), float(p[1])))
+	return out
+
+
+## P7 R2 正式橋（gate_spec.bridge）：規格＝P4 灰盒橋（長、寬、兩端高差；不信 asset.json 自報）＋P0 橋長 ±10 %；
+## LOD0 射線實測橋長、橋端與地形高差、縱坡（10 m 視窗）、拱度、欄杆內淨寬 vs 道路寬、欄杆高、結構底離水面（淨空）。
+func _c_size_bridge() -> void:
+	var B: Dictionary = gs["bridge"]
+	var xf := _xf()
+	var oy := xf.origin.y
+	var dims := HLib.bridge_dims(anchor)
+	var sp := TLib.bridge_span(L, String(anchor.name))
+	var bl := float(B["L"])
+	_res("size", not dims.is_empty() and not sp.is_empty() and absf(float(dims["L"]) - bl) <= 0.05
+		and absf(float(dims["dh"]) - float(B["dh"])) <= 0.02 and absf(float(dims["W"]) - float(B["W"])) <= 0.02
+		and bl >= float(sp[1]) - 0.005 and bl <= float(sp[2]) + 0.005,
+		"規格＝P4 灰盒橋 %s：長 %.2f／寬 %.2f／兩端高差 %+.3f m（asset.json %.2f／%.2f／%+.3f）；P0 橋長 %.1f（容許 %.2f～%.2f）" % [
+			anchor.name, dims.get("L", -1), dims.get("W", -1), dims.get("dh", 0), bl, B["W"], B["dh"],
+			sp[0] if sp else -1.0, sp[1] if sp else -1.0, sp[2] if sp else -1.0])
+	# 沿中線（x 0.137 避開接縫）每 0.1 m 量橋面頂
+	var zs := PackedFloat32Array()
+	var ys := PackedFloat32Array()
+	var lz := -bl * 0.5 - 1.0
+	while lz <= bl * 0.5 + 1.0:
+		var y := _deck_vis(0.137, lz)
+		if not is_nan(y):
+			zs.append(lz)
+			ys.append(y)
+		lz += 0.1
+	if zs.size() < 10:
+		_res("size", false, "橋面射線沒打到（%d 點）" % zs.size())
+		return
+	var lm := zs[zs.size() - 1] - zs[0]
+	_res("size", absf(lm - bl) <= 0.15 and lm >= float(sp[1]) - 0.1 and lm <= float(sp[2]) + 0.1,
+		"射線實測橋面長 %.2f m（z %.2f～%.2f；灰盒 %.2f、P0 容許 %.2f～%.2f）" % [lm, zs[0], zs[zs.size() - 1], bl, sp[1], sp[2]])
+	# 橋端與地形高差（橋面端點 vs 橋端外 0.5 m 地形）
+	var worst_end := 0.0
+	var ends: Array = []
+	for e in 2:
+		var ze := zs[0] if e == 0 else zs[zs.size() - 1]
+		var ye := oy + (ys[0] if e == 0 else ys[ys.size() - 1])
+		var g := xf * Vector3(0.137, 0, ze + (-0.5 if e == 0 else 0.5))
+		var gy := _ground(g.x, g.z, true)
+		var d := absf(ye - gy) if not is_nan(gy) else INF
+		worst_end = maxf(worst_end, d)
+		ends.append("%s端 橋面 %.2f／地形 %.2f（%.2f）" % ["−z" if e == 0 else "+z", ye, gy, d])
+	_res("size", worst_end <= float(B["end_tol"]), "橋端與地形高差：%s；最大 %.2f m（≤ %.2f）" % ["、".join(ends), worst_end, B["end_tol"]])
+	# 縱坡：10 m 視窗（道路縱坡 gate 同一口徑）＋1 m 局部
+	var g10 := 0.0
+	var g1 := 0.0
+	for i in zs.size():
+		for j in range(i + 1, zs.size()):
+			var dz := zs[j] - zs[i]
+			if absf(dz - 10.0) < 0.05 or (absf(dz - 1.0) < 0.05):
+				var gg := absf(ys[j] - ys[i]) / dz
+				if dz > 5.0:
+					g10 = maxf(g10, gg)
+				else:
+					g1 = maxf(g1, gg)
+	var ymax := -INF
+	var zmax := 0.0
+	for i in ys.size():
+		var lin := ys[0] + (ys[ys.size() - 1] - ys[0]) * (zs[i] - zs[0]) / lm
+		if ys[i] - lin > ymax:
+			ymax = ys[i] - lin
+			zmax = zs[i]
+	_res("size", g10 <= float(B["grade_max"]) and g1 <= 0.20 and absf(ymax - float(B["rise"])) <= 0.06,
+		"橋面縱坡：10 m 視窗最大 %.1f%%（≤ %.0f%%）、1 m 局部最大 %.1f%%（≤ 20%%）；拱度（扣兩端連線）%.2f m @ z %.1f（規格 %.2f）" % [
+			g10 * 100.0, float(B["grade_max"]) * 100.0, g1 * 100.0, ymax, zmax, B["rise"]])
+	# 欄杆：內淨寬（橋面上 0.5 m 水平射線）≥ 道路寬；架木頂離橋面
+	var zc := 0.37
+	var yc := _deck_vis(0.137, zc)
+	var inr := _vis_dist(Vector3(0.137, yc + 0.5, zc), Vector3(12, yc + 0.5, zc), _tris_along_x(zc))
+	var inl := _vis_dist(Vector3(0.137, yc + 0.5, zc), Vector3(-12, yc + 0.5, zc), _tris_along_x(zc))
+	var clear := inr + inl
+	var xr := float(B["rail_x"])
+	var rt := 12.0 - _vis_dist(Vector3(xr, 12.0, zc), Vector3(xr, -12.0, zc), _tris_at(xr, zc))
+	var rh := rt - yc
+	_res("size", clear >= 2.0 * float(B["road_hw"]) and clear <= float(B["W"]) and rh >= 0.85 and rh <= 1.10,
+		"欄杆內淨寬 %.2f m（道路寬 %.1f、橋寬 %.1f）、架木頂離橋面 %.2f m（0.85～1.10）" % [clear, 2.0 * float(B["road_hw"]), B["W"], rh])
+	# 結構底離水面（水面上方、避開河中支撐 ±0.9 m）
+	var fb_min := INF
+	var fb_at := 0.0
+	var n_w := 0
+	for i in range(0, zs.size(), 5):
+		var z := zs[i]
+		var near := false
+		for s: float in B["supports"]:
+			near = near or absf(z - s) < 0.9
+		if near:
+			continue
+		var w := xf * Vector3(0.137, 0, z)
+		var wy := _water_y(String(B["water_node"]), w.x, w.z)
+		var gy := _ground(w.x, w.z, true)
+		if is_nan(wy) or is_nan(gy) or gy >= wy - 0.05:
+			continue
+		n_w += 1
+		for lx: float in [0.137, float(B["W"]) * 0.25, -float(B["W"]) * 0.25]:
+			var d := _vis_dist(Vector3(lx, wy - oy, z), Vector3(lx, 12.0, z), _tris_at(lx, z))
+			if d < fb_min:
+				fb_min = d
+				fb_at = z
+	_res("size", n_w > 0 and fb_min >= float(B["freeboard_min"]),
+		"結構底離 %s 水面：%d 站最小 %.2f m @ z %.1f（≥ %.2f；河中支撐 ±0.9 m 除外）" % [B["water_node"], n_w, fb_min, fb_at, B["freeboard_min"]])
 
 
 ## P6 稗田邸圍牆（gate_spec.wall）：沿每段牆心線每 step m 實測——牆頂離地高、牆厚（離地 1.0 m 兩側水平射線）、
@@ -844,7 +987,8 @@ func _c_parcel() -> void:
 		for rr in roads:
 			var a := _poly_area(Geometry2D.intersect_polygons(wp, rr[1]))
 			if a > 0.005:
-				if String(g.get("road_ok", "")) == String(rr[0]):
+				var rok: Variant = g.get("road_ok", "")
+				if (rok is Array and (rok as Array).has(String(rr[0]))) or String(rok) == String(rr[0]):
 					shoulder.append("%s 壓 %s 路肩 %.2f m²" % [g["name"], rr[0], a])
 					continue
 				bad.append("%s 壓到道路 %s %.3f m²" % [g["name"], rr[0], a])
@@ -992,7 +1136,7 @@ func _c_ground() -> void:
 	_res("grounding", not_terrain == 0, "接地件正下方第一個碰撞體是地形：%d 點不是%s" % [not_terrain,
 		("（" + nt_ex + "）") if nt_ex != "" else ""])
 	# 被取代的灰盒／placeholder：不可見、碰撞停用（禁止把資產墊在灰盒上）
-	var body_mode := String(gs["placement"]) == "body"
+	var body_mode := String(gs["placement"]) in ["body", "bridge"]   # 橋（P7 R2）：灰盒＝anchor 本身，同 aux
 	var ph: Node = anchor if body_mode else anchor.get_node_or_null(String(gs["replaces"]))
 	var vis := 0
 	var live := 0
@@ -1233,6 +1377,16 @@ func _c_pivot() -> void:
 			and dang <= 1.0 and y_ok,
 			"原點 (%.2f, %.2f, %.2f)＝P4 footprint 中心 (%.2f, %.2f)、base_h %.2f；+z 與 P4 正面方向差 %.2f°；原點在底面（LOD0 y %.2f～%.2f）" % [
 				o.x, o.y, o.z, c.x, c.y, rec["base_h"], dang, ab.position.y, ab.end.y])
+	elif String(gs["placement"]) == "bridge":
+		# P7 R2 橋：原點＝灰盒橋箱頂中心（HLib.bridge_frame）、只有 yaw（橋面縱斷做在網格裡，不靠傾斜節點）
+		var want := anchor.global_transform * HLib.bridge_frame(anchor)
+		var o := xf.origin
+		var tilt := rad_to_deg(xf.basis.y.normalized().angle_to(Vector3.UP))
+		var dyaw := rad_to_deg(xf.basis.z.normalized().angle_to(want.basis.z.normalized()))
+		_res("pivot_scale", o.distance_to(want.origin) <= 0.02 and tilt <= 0.1 and dyaw <= 0.5 and y_ok,
+			"原點 (%.2f, %.2f, %.2f)＝灰盒橋 %s 箱頂中心 (%.2f, %.2f, %.2f)（差 %.3f m）；傾斜 %.2f°（應 0）、+z 與灰盒道路方向差 %.2f°；LOD0 y %.2f～%.2f" % [
+				o.x, o.y, o.z, anchor.name, want.origin.x, want.origin.y, want.origin.z, o.distance_to(want.origin), tilt, dyaw,
+				ab.position.y, ab.end.y])
 	elif gs.has("water_ref"):
 		# 水車（R4）：xz＝P0 地標原點；y＝水渠水面（原點在水面，輪下緣泡水）；+z＝水渠流向
 		var o := xf.origin
@@ -1270,6 +1424,69 @@ func _c_collision() -> void:
 			shapes.size(), MAX_SHAPES, S["collision"].size(), bodies.size(),
 			"是" if bad_type.is_empty() else "否 " + "、".join(bad_type)])
 	var xf := _xf()
+	if gs.has("bridge"):
+		_c_collision_bridge(xf)
+	else:
+		_c_collision_walk(xf)
+	_c_collision_poke(xf)
+
+
+## P7 R2 橋：橋面碰撞＝可見橋面（膠囊站得住、腳底與可見橋板差 ≤ 0.10）、欄杆擋得住（橋面上 0.5／1.0 m 往外射線）
+func _c_collision_bridge(xf: Transform3D) -> void:
+	var B: Dictionary = gs["bridge"]
+	var bl := float(B["L"])
+	var hw := float(B["road_hw"]) - CAP_R
+	var n := 0
+	var miss := 0
+	var stuck := 0
+	var worst := 0.0
+	var ex := ""
+	var lz := -bl * 0.5 + 0.2
+	while lz <= bl * 0.5 - 0.2 + 0.001:
+		for lx: float in [-hw, 0.0, hw]:
+			n += 1
+			var w := xf * Vector3(lx, 0, lz)
+			var ct := _hero_top(w.x, w.z)
+			var vy := _deck_vis(lx, lz)
+			if is_nan(ct) or is_nan(vy):
+				miss += 1
+				ex = "(%.2f, %.2f) 沒有橋面碰撞" % [lx, lz]
+				continue
+			var d := absf(ct - (xf.origin.y + vy))
+			if d > worst:
+				worst = d
+				if d > 0.10:
+					ex = "(%.2f, %.2f) 碰撞 %.2f／可見 %.2f" % [lx, lz, ct, xf.origin.y + vy]
+			if _capsule_hits_hero(Vector3(w.x, ct + 0.02, w.z)):
+				stuck += 1
+				ex = "(%.2f, %.2f) 膠囊卡住" % [lx, lz]
+		lz += 0.5
+	_res("collision", miss == 0 and stuck == 0 and worst <= 0.10,
+		"橋面 %d 點（道路寬內 x ±%.2f、每 0.5 m）：有碰撞 %d、膠囊站得住 %d、碰撞頂與可見橋板差最大 %.3f m（≤ 0.10）%s" % [
+			n, hw, n - miss, n - miss - stuck, worst, ("；✗ " + ex) if ex != "" and (miss or stuck or worst > 0.10) else ""])
+	var rn := 0
+	var rbad := 0
+	var rex := ""
+	var xr := float(B["rail_x"])
+	lz = -bl * 0.5 + 0.6
+	while lz <= bl * 0.5 - 0.6:
+		var vy := _deck_vis(0.137, lz)
+		if not is_nan(vy):
+			for sx: float in [-1.0, 1.0]:
+				for hh: float in [0.5, 1.0]:
+					rn += 1
+					var a := xf * Vector3(0.0, vy + hh, lz)
+					var b := xf * Vector3(sx * (xr + 1.0), vy + hh, lz)
+					var d := _col_dist(a, b)
+					if d == INF or d > xr + 0.20:
+						rbad += 1
+						rex = "z %.1f %s側 離橋面 %.1f m" % [lz, "右" if sx > 0 else "左", hh]
+		lz += 1.0
+	_res("collision", rn > 0 and rbad == 0, "欄杆擋得住：橋面上 0.5／1.0 m 往兩側 %d 條射線，在 x ±%.2f 內打到碰撞的 %d 條%s" % [
+		rn, xr + 0.20, rn - rbad, ("；✗ " + rex) if rex != "" else ""])
+
+
+func _c_collision_walk(xf: Transform3D) -> void:
 	# 膠囊：入口站得住、台基內進不去、步行帶走得過
 	var e := xf * Vector3(float(gs["entry"][0]), 0, float(gs["entry"][1]))
 	var e_hit := _capsule_hits_hero(Vector3(e.x, _ground(e.x, e.z), e.z))
@@ -1315,6 +1532,9 @@ func _c_collision() -> void:
 		("（例 " + b_ex + "）") if b_ex != "" else ""])
 	_res("collision", head_bad == 0 and min_clear >= float(wk["min_clear"]),
 		"步行帶頭頂淨空：%d 點中 %d 點 < %.2f m；最低淨空 %.2f m（≥ %.2f）" % [n_w, head_bad, wk["head"], min_clear, wk["min_clear"]])
+
+
+func _c_collision_poke(xf: Transform3D) -> void:
 	# 周邊射線：可見網格不可比碰撞面突出 > POKE_TOL（三個高度，四個方向）
 	var ab: AABB = _lod_aabb(0)
 	var rays := 0
@@ -1722,7 +1942,7 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 		# 資產自訂實走（R4 龍神像／水車）：from → to 走 4 秒，結束時不得在 box（局部 x0,z0,x1,z1）內
 		start = xf * Vector3(float(wk["from"][0]), 0, float(wk["from"][1]))
 		goal = xf * Vector3(float(wk["to"][0]), 0, float(wk["to"][1]))
-		bd = {"box": wk["box"]}
+		bd = {"box": wk["box"]} if wk.has("box") else {"cross": true}
 	elif not bd.is_empty():
 		start = xf * Vector3(0.9, 0, float(bd["zf"]) + 3.0)
 		goal = xf * Vector3(0.9, 0, 0)
@@ -1735,8 +1955,10 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 		await physics_frame
 	var max_gap := 0.0
 	var t0 := Time.get_ticks_msec()
+	var crossing := bd.has("cross")   # P7 R2 橋：from → to 走過橋面（腳下是橋碰撞，不是河床）
+	var min_y := INF
 	Input.action_press("move_forward")
-	for f in 60 * 8:
+	for f in 60 * (16 if crossing else 8):   # 龍神橋 52 m／步行約 4 m/s → 8 秒不夠
 		var p := player.global_position
 		var d := Vector2(goal.x - p.x, goal.z - p.z)
 		if d.length() < 1.5:
@@ -1746,14 +1968,26 @@ func _walk(player: CharacterBody3D, xf: Transform3D) -> Array:
 		await physics_frame
 		if f % 20 == 0:
 			var g := _ground(p.x, p.z)
+			if crossing:
+				var ht := _hero_top(p.x, p.z)
+				if not is_nan(ht) and (is_nan(g) or ht > g):
+					g = ht
+				min_y = minf(min_y, p.y)
 			if not is_nan(g):
 				max_gap = maxf(max_gap, absf(player.global_position.y - g))
-		if not bd.is_empty() and Time.get_ticks_msec() - t0 > 4000:
+		if not crossing and not bd.is_empty() and Time.get_ticks_msec() - t0 > 4000:
 			break
 	Input.action_release("move_forward")
 	for i in 6:
 		await physics_frame
 	var lp := _to_local(player.global_position)
+	if crossing:
+		var gz := _to_local(goal).z
+		var floor_y := minf(_ground(start.x, start.z), _ground(goal.x, goal.z)) - 0.5
+		var okc := absf(lp.z - gz) < 2.0 and max_gap <= 0.35 and min_y >= floor_y
+		return [okc, "實走：局部 z %.1f → %.1f 過橋，到達局部 (%.2f, %.2f)（%s）、最大離腳下面 %.2f m、最低 y %.2f（≥ 兩端路面低者 −0.5 = %.2f，沒掉進水道）" % [
+			float(wk["from"][1]), float(wk["to"][1]), lp.x, lp.z, "過橋" if absf(lp.z - gz) < 2.0 else "✗ 沒走過去",
+			max_gap, min_y, floor_y]]
 	if bd.has("box"):
 		var bx: Array = bd["box"]
 		var ins := lp.x > float(bx[0]) + 0.05 and lp.x < float(bx[2]) - 0.05 and lp.z > float(bx[1]) + 0.05 and lp.z < float(bx[3]) - 0.05

@@ -1,0 +1,118 @@
+{
+ "asset": "bridge_04",
+ "entry": "res://assets/village_v2/bridge_04/bridge_04.scn",
+ "entry_sha256": "a7c50bcf515ea4388d09532e36bcd7bf17ccdd8c46625e3836baef4c01a535b5",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±3.56（≤ 3.58）、z -7.02～7.02（容許 -7.05～7.05）、頂 1.43（1.38～1.48）、底 -3.26（-3.26）",
+    "規格＝P4 灰盒橋 Bridge_04_CrossStreetSouth_Canal：長 14.00／寬 6.80／兩端高差 +0.006 m（asset.json 14.00／6.80／+0.006）；P0 橋長 14.0（容許 12.60～15.40）",
+    "射線實測橋面長 14.00 m（z -7.00～7.00；灰盒 14.00、P0 容許 12.60～15.40）",
+    "橋端與地形高差：−z端 橋面 0.47／地形 0.42（0.05）、+z端 橋面 0.48／地形 0.41（0.06）；最大 0.06 m（≤ 0.15）",
+    "橋面縱坡：10 m 視窗最大 2.9%（≤ 12%）、1 m 局部最大 9.6%（≤ 20%）；拱度（扣兩端連線）0.34 m @ z -0.1（規格 0.35）",
+    "欄杆內淨寬 6.52 m（道路寬 6.0、橋寬 6.8）、架木頂離橋面 0.94 m（0.85～1.10）",
+    "結構底離 Canal 水面：10 站最小 2.18 m @ z -3.0（≥ 0.15；河中支撐 ±0.9 m 除外）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "3 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 CrossStreetSouth 路肩 57.75 m²、石橋台＋z 壓 CrossStreetSouth 路肩 8.34 m²、橋脚1 壓 CrossStreetSouth 路肩 7.44 m²"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.32、石橋台＋z 埋 0.20、橋脚1 埋 0.30",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Bridge_04_CrossStreetSouth_Canal 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Stone\": 0.42, \"V2_Metal\": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 3022 面：退化 0、NaN 0、繞向反 0、LOD1 656 面：退化 0、NaN 0、繞向反 0、LOD2 158 面：退化 0、NaN 0、繞向反 0；LOD0 3022 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 3022 一致"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點 (321.06, 0.47, 41.89)＝灰盒橋 Bridge_04_CrossStreetSouth_Canal 箱頂中心 (321.06, 0.47, 41.89)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -3.26～1.43"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "橋面 84 點（道路寬內 x ±2.70、每 0.5 m）：有碰撞 84、膠囊站得住 84、碰撞頂與可見橋板差最大 0.008 m（≤ 0.10）",
+    "欄杆擋得住：橋面上 0.5／1.0 m 往兩側 52 條射線，在 x ±3.50 內打到碰撞的 52 條",
+    "周邊 175 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 3022 → 656（21.7 %，≤ 35 %）→ 158（5.2 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 499 m）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 3022（20 %）；每級 surface ≤ 5（實測 3）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-09-28T02:59:35"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 3 張：bridge_04_approach.png（亮度標準差 0.285、資產在畫面內、鏡頭到資產無遮擋）；bridge_04_approach_far.png（亮度標準差 0.295、資產在畫面內、鏡頭到資產無遮擋）；bridge_04_diag.png（亮度標準差 0.284、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-09-28T03:02:50"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、3 張鏡位＋實走）錯誤 0、警告 0；實走：局部 z -12.0 → 12.0 過橋，到達局部 (0.00, 10.51)（過橋）、最大離腳下面 0.01 m、最低 y 0.39（≥ 兩端路面低者 −0.5 = -0.16，沒掉進水道）"
+   ],
+   "part": "render",
+   "date": "2026-09-28T03:02:50"
+  }
+ },
+ "render_info": {
+  "f6_png": "bridge_04_f6.png",
+  "perf": [
+   "approach：1760859 三角面／3084 draw call",
+   "approach_far：1163849 三角面／1402 draw call",
+   "diag：2088305 三角面／2914 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}
