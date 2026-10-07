@@ -1,0 +1,342 @@
+{
+  "schema": 1,
+  "phase": "P10 R3c Mixamo Activity Pack + R3c.1 Readability Pass",
+  "status": "ART_APPROVED",
+  "approved_by": "user",
+  "approved_date": "2026-10-07",
+  "approval_source": "使用者 2026-10-07：「P10 R3c.1 Readability Pass = ART_APPROVED」＋「可以將 R3c / R3c.1 作為目前核准的 Activity baseline 封存」",
+  "scope": "封存的是目前的 Activity vocabulary 與使用規則（指派・動作資產・Mixamo 來源・arm-space・道具與握持參數・可讀性擺位・淘汰清單・gate 證據），不代表未來每個 NPC 永久固定在這個動作。R3d 起可沿用此 vocabulary 指派給新人口；改動既有指派／參數需使用者授權並 reseal。",
+  "baseline": {
+    "population": 16,
+    "r3b_seal": "godot/data/village_v2_p10r3b_seal.json",
+    "r3b_unchanged": true,
+    "mount": "village_v2.tscn Population/ActivityP10（Population/PopulationP10 之後，exactly 1）"
+  },
+  "verdicts": [
+    "Sit：約 10 m 直接讀取，通過（W4 藥草婆婆＋紅毛氈縁台）",
+    "Carry／Talk：約 19 m 單張靜態較弱、動態可讀出捧貨＋交談＝可接受的 distance-dependent readability",
+    "不要求每個 Activity 在 19 m 靜態截圖像 icon 一樣可辨識",
+    "W3 Drink 保留 B1（drinking_im1_a030＋新杯握持），不再磨",
+    "S4 walking carry 維持淘汰，不再嘗試救",
+    "縁台座高 0.285 m 接受，不因理論座高重做",
+    "W1／W2 不在主要 review view 不構成 blocker"
+  ],
+  "assignments": {
+    "Market/M2_shufu_f01": {
+      "type": "Talk",
+      "npc": "shufu_f01",
+      "clip": "talk_general_a030",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Talking",
+        "product": "c9c88301-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "122e40ca-882a-4fb6-8977-657a5a7873ec",
+        "model_id": 110090902,
+        "params": "0,0,0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    },
+    "Market/M7_kozo_m01": {
+      "type": "YouthShortStep",
+      "npc": "kozo_m01",
+      "clip": "light_walk_s100_a030",
+      "slot": "walk",
+      "options": {},
+      "mixamo": {
+        "name": "Female Walk",
+        "product": "c9c68b91-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "47bea6f9-7e55-4f7b-afa5-8710982ff0c3",
+        "model_id": 102520901,
+        "params": "0,-1,0",
+        "inplace": true
+      },
+      "arm_space": 0.3
+    },
+    "MarketWest/W1_nunoya_f01": {
+      "type": "Talk",
+      "npc": "nunoya_f01",
+      "clip": "talk_general_a040",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Talking",
+        "product": "c9c88301-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "f305f7d4-c2b2-4a4b-8877-280de29a1ccc",
+        "model_id": 110090902,
+        "params": "0,0,0",
+        "inplace": false
+      },
+      "arm_space": 0.4
+    },
+    "MarketWest/W2_shufu_f01": {
+      "type": "Talk",
+      "npc": "shufu_f01",
+      "clip": "talk_general_a030",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Talking",
+        "product": "c9c88301-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "122e40ca-882a-4fb6-8977-657a5a7873ec",
+        "model_id": 110090902,
+        "params": "0,0,0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    },
+    "MarketWest/W3_chaya_f01": {
+      "type": "Drink",
+      "npc": "chaya_f01",
+      "clip": "drinking_im1_a030",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Drinking",
+        "product": "c9c63255-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+        "model_id": 101330902,
+        "params": "-1,0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    },
+    "MarketWest/W4_yakusou_f01": {
+      "type": "Sit",
+      "npc": "yakusou_f01",
+      "clip": "sit_talk_a_a030",
+      "slot": "idle",
+      "options": {
+        "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+        "seat_drop": 0.22,
+        "seat_back": -0.09,
+        "seat_depth": 0.34,
+        "seat_len": 1.2,
+        "seat_shift": -0.1
+      },
+      "mixamo": {
+        "name": "Sitting Talking",
+        "product": "c9cd7793-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "eada89a7-1521-4409-a5cd-bde5a36c0239",
+        "model_id": 126490902,
+        "params": "0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    },
+    "MainStreet/S2_yaoya_m01": {
+      "type": "Carry",
+      "npc": "yaoya_m01",
+      "clip": "box_idle_a030",
+      "slot": "idle",
+      "options": {
+        "crate": [
+          "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+          0.3,
+          0.2
+        ],
+        "crate_forward": 0.14,
+        "crate_up": 0.09,
+        "crate_inset": 0.09
+      },
+      "mixamo": {
+        "name": "Box Idle",
+        "product": "c9cd8d90-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "ad732041-6237-4e5e-9ea7-a1a2c18b4c37",
+        "model_id": 127050901,
+        "params": "0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    },
+    "MainStreet/S3_yakusou_f01": {
+      "type": "Talk",
+      "npc": "yakusou_f01",
+      "clip": "talk_funny_a030",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Talking",
+        "product": "c9c6ddb2-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "eada89a7-1521-4409-a5cd-bde5a36c0239",
+        "model_id": 108420901,
+        "params": "-1,0,0",
+        "inplace": false
+      },
+      "arm_space": 0.3
+    }
+  },
+  "props": {
+    "cup": {
+      "grip_LeftHand_axes": [
+        0.04,
+        -0.02,
+        0.09
+      ],
+      "axis_LeftHand_axes": [
+        -0.9624,
+        0.2634,
+        -0.0662
+      ],
+      "mesh": "overlay tea_cup()（lathed yunomi 0.027→0.036 × 0.072 m、底蓋あり）"
+    },
+    "crate_S2": {
+      "crate": [
+        "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+        0.3,
+        0.2
+      ],
+      "crate_forward": 0.14,
+      "crate_up": 0.09,
+      "crate_inset": 0.09
+    },
+    "bench_W4": {
+      "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+      "seat_drop": 0.22,
+      "seat_back": -0.09,
+      "seat_depth": 0.34,
+      "seat_len": 1.2,
+      "seat_shift": -0.1
+    }
+  },
+  "readability_placement": {
+    "probe": "godot/tools/probe_p10_readability.gd",
+    "baseline": "docs/art_review/village_v2_p10_population/activity_r1c1/readability_baseline.json",
+    "rule": "Activity は六類審圖鏡位で実際に見える住人へ（被擋・畫面外の住人には付けない）"
+  },
+  "rejected_candidates": [
+    {
+      "what": "W3 drinking_a030（A）",
+      "why": "喝時低頭 48°、上臂 104°、杯進臉 3.1 cm、杯到眼高 1.30 s／循環"
+    },
+    {
+      "what": "W3 watercooler_a030（B2）",
+      "why": "杯距嘴 4.6 cm（沒真的喝）、臉／袖／軀幹命中、hold 段前傾"
+    },
+    {
+      "what": "舊杯握持（0.020,0,0.022／−hand.x）",
+      "why": "杯進臉、指陷杯 1.9 cm、喝時杯轉過水平"
+    },
+    {
+      "what": "M6 takigi box_idle",
+      "why": "道具貫穿三角形（R3c）"
+    },
+    {
+      "what": "M4 Carry／M5 Sit／W1・W2 Talk の位置",
+      "why": "審圖鏡位で被擋・畫面外（27–69 px）→ R3c.1 で回 baseline／移設"
+    },
+    {
+      "what": "S4 Holding Walk＋木箱",
+      "why": "重定向後雙手在腰側，木箱穿骨盆 13 cm"
+    },
+    {
+      "what": "S4 Walking With Shopping Bag",
+      "why": "步速 0.92 m/s、patrol 1.32 m/s → 要快 44% 才不滑腳；patrol 速度不改"
+    },
+    {
+      "what": "M2 talk_twohands",
+      "why": "遠距反而比 talk_general 不明顯"
+    }
+  ],
+  "frozen": {
+    "godot/scripts/npc_activity_overlay.gd": "a72689bcf2ce90507afee48808290f0d946a7bd3fa5f589d079d327d23e63e30",
+    "godot/maps/village_v2/activity_p10.tscn": "3e53a1038199422785157ff083bb2a7f9dbdfd3f16bb3e04296a5ac4d13ae496",
+    "godot/tools/verify_p10_activity.gd": "83a20a678b83085069604eb9a17a08f57f8deae94dceacdaa213b10932913149",
+    "godot/tools/probe_p10_drink_ab2.gd": "fda5eea06f30986b2e9af0c96c2e9189a8755fa346731b4b09c175d975cb2596",
+    "godot/tools/probe_p10_drink_dump.gd": "431ae512bc5ae2c539c61a11f4874ec6f455fb3661ec778f232b8a61113d8a3a",
+    "godot/tools/probe_p10_r3c1_contact.gd": "011415ee4cc26f6efde7922114d94efa7e1f2a91f75681b5d18659e6be89b336",
+    "godot/tools/probe_p10_readability.gd": "314504f3e8d06e6bd35bebaad899c42075b54e4af23d91756eb6af49cce3c5af",
+    "godot/tools/shot_p10_r3c1_motion.gd": "e301d26695891097dfba500d4553140ee1b9f105df06e3e3922148f418076d7b",
+    "godot/tools/shot_p10_drink_ab.gd": "61a9db27add1ca1db86021c908dbecc891cb0e94a64178ff4682274fa0c5a98d",
+    "tools/fit_p10_drink_cup.py": "57544d9311be688bb9efb389e230150a6902ed153793126f7f00282e62803e18",
+    "tools/build_p10_activity_r1.py": "3f5a62348721611c333dcead3a4bcc7fba7eeab8c367f4a4d42ae81e97f74bfa",
+    "tools/build_p10_drink_ab.py": "0a7bee36a3b1aa2307c4d0878fd60fab3e7b44da4ed972f2590ec0cc6af686b2",
+    "tools/build_p10_r3c1.py": "ee4a6aa1dcce5c720f5851b83cfc9083c99d808729b2935bb770cc30b0712901",
+    "tools/mixamo_fetch_r3c1.py": "008b702e9385b315ae3e3177105cac9342e5130d6fe44efa13c53b7b4c650b27",
+    "tools/seal_p10r3c.py": "43efc95c835da04ee5327791f3ff4c7ec013b0137c8f23ba62f63ff02643d705",
+    "godot/animations/npc_activity_p10/shufu_f01/talk_general_a030_grounded.res": "8e5168c671be1aab21e10d959fc115fe0590efa0a3804245a102688789ef21c1",
+    "godot/animations/npc_activity_p10/shufu_f01/src/talk_general_a030.fbx": "1b3749f3da05e8e10bd5bfb755496ff92afa1280cd17b3448ce28b9977855a1f",
+    "docs/art_review/village_v2_p10_population/activity_candidates_r1/shufu_f01_talk_general_a030_download.json": "9380e69731297aa9ca1cd99a70e629658a60f8af284d0b9c9cbc730ad44a1e1f",
+    "godot/animations/npc_activity_p10/shufu_f01/activity_candidates.glb": "a1877bd74b35b8fa37b8d848f2938f5988908b4b1e6c44520520cc9915f3cb9d",
+    "godot/animations/npc_activity_p10/shufu_f01/readability_candidates.glb": "ac177cba1d3ff17c3ff98c15a2519c4903183c3b73bc3f220b7a68c6cf8e9e9d",
+    "godot/animations/npc_activity_p10/kozo_m01/light_walk_s100_a030_grounded.res": "851b112557109223f60d291e5ad14bf7483d63fd37551eeed38961290a34f84e",
+    "godot/animations/npc_activity_p10/kozo_m01/src/light_walk_s100_a030.fbx": "028a723638224d14bea1843e73316806430044b691e26e083f564011d2f92444",
+    "docs/art_review/village_v2_p10_population/activity_candidates_r1/kozo_m01_light_walk_s100_a030_download.json": "9cdf48ccebc32ad3e9c6709404434ba48869d4d82ae13b90d8eb44662774a625",
+    "godot/animations/npc_activity_p10/kozo_m01/activity_candidates.glb": "d3f3a4d53ab1040b2d6f8e1c2c4cf4cddf8b7a758c5f37d4a536f46665ae7f48",
+    "godot/animations/npc_activity_p10/nunoya_f01/talk_general_a040_grounded.res": "9921ab3f45763d0ee61fcbd00d276106248fcb04bd270413d80288dd11c7bba7",
+    "godot/animations/npc_activity_p10/nunoya_f01/src/talk_general_a040.fbx": "14b00cdfca09f37294edb961878d1d67fc785f759339fb3e05f24884abafbbf9",
+    "docs/art_review/village_v2_p10_population/activity_candidates_r1/nunoya_f01_talk_general_a040_download.json": "3a047211d75314784bfc33866f3ec0fde5f69b1d291c1262399d4b612d59b40c",
+    "godot/animations/npc_activity_p10/nunoya_f01/activity_candidates.glb": "270702008c63d7ec25b100ba5306d5143df83ca8eadae3e59a1fa4344540a93b",
+    "godot/animations/npc_activity_p10/chaya_f01/drinking_im1_a030_grounded.res": "3426196ffc047f7a9d104e9cf42b2439e249fa9beb498f073a257e6a9f3a26a9",
+    "godot/animations/npc_activity_p10/chaya_f01/src/drinking_im1_a030.fbx": "77d723bd6eba47d3992f24cde03d84be0eb23fe9ecea61834c45de43dfe71e5d",
+    "docs/art_review/village_v2_p10_population/activity_candidates_r1/chaya_f01_drinking_im1_a030_download.json": "c264fec89434a15c5afae5ee75b865576b3edc3cc2d668c5c4f85484b71da975",
+    "godot/animations/npc_activity_p10/chaya_f01/activity_candidates.glb": "b79548f4653f237a009074a5f7367e6743a01aacef2e032c8fb9627134151431",
+    "godot/animations/npc_activity_p10/chaya_f01/drink_ab_candidates.glb": "2c8c1bdd1239782339fca5f890f837def3ed8e1481201f0ed1f27276510678c4",
+    "godot/animations/npc_activity_p10/yakusou_f01/sit_talk_a_a030_grounded.res": "92ea8874a29d572399820c64a4d7a11bf7f134abc5d7d8eff552aa2d79fa51cf",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/sit_talk_a_a030.fbx": "e2e9e1de595c876db5744d950e1e17304c65ff7f1515a8bfa56ec7ed01fab8b4",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/candidates/yakusou_f01_sit_talk_a_a030_download.json": "e0b4c3773d575db95270f96110bda627f5415eff4ccfde4e1d6f027ca68e6556",
+    "godot/animations/npc_activity_p10/yakusou_f01/activity_candidates.glb": "190913e392cd338ba3676ecbc252f77208922ee6d21425799bbf8497979a9f14",
+    "godot/animations/npc_activity_p10/yakusou_f01/readability_candidates.glb": "057fcbcf37b74466a40d561902f4ea97a73387a59bf9ae6ffe7cb6180708dc9b",
+    "godot/animations/npc_activity_p10/yaoya_m01/box_idle_a030_grounded.res": "04e00018892da90abbbdbb4a867f02032b5342b965f65c66c7aead4f8deb612e",
+    "godot/animations/npc_activity_p10/yaoya_m01/src/box_idle_a030.fbx": "6e7608d686d79168e26d93d21d58ecbb077082282830170ab1c3f1bb00aa6faf",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/candidates/yaoya_m01_box_idle_a030_download.json": "c754f5008e80e7eec5d29d0d9761b3676a99aceb7ba41f03b3e6ebaae0a12bd9",
+    "godot/animations/npc_activity_p10/yaoya_m01/readability_candidates.glb": "fb5f24b81e904df231d73bbda4ee4fac6de582989a764c98bdae7f1d4fbb1056",
+    "godot/animations/npc_activity_p10/yakusou_f01/talk_funny_a030_grounded.res": "165f241dc1f872a84c7dc24b8da65994ab9494a0fbd175fa2b12385c5f8343e3",
+    "godot/animations/npc_activity_p10/yakusou_f01/src/talk_funny_a030.fbx": "eb0968d43edbfc47294589dda1cdb80c9a950ac83f93493b2170c7cc1234b6ab",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/candidates/yakusou_f01_talk_funny_a030_download.json": "062db3c12ca330b50702fee59207e3767cc40a2afb670ed1f1075aa193ce7a5a"
+  },
+  "evidence": {
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/negatives.json": "ab6771069d35f745a8ea78198c3d8a076b721996e899cfdcf255978a46931aee",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/negatives.log": "b7de28c3fc16f1e20f557bcb88739eddcdcc138407c99d3a67c03156062f8296",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/npclib_seal.log": "463f991289d39657e740718844d99d099a0d9e8d799c5e1b50b1a34fe6a4ef14",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/plan.json": "df576648b1ee07da1b6eae5ff31aca8f93f1bb2c6ebb2113f0ba5ec49a9e6fa1",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/plan.log": "4542b0135bc8dc8a511f55f26cc0b006402e365bec88318b613f6b2dda74374d",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/r3b_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/scene.json": "5f0b4749cfe9751a80ab8fcafc4ad24159a84f1afe57218e88229478cfffbcb1",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/gate/scene.log": "fc3e16c7a4e392acc023cd04fd7873d2d9a3d21d48a1289562fb74f4df9692dd",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/contact_final.json": "a6a0d7433c72fd21c52b764ff9acc4b4b3143f3a2c28c2cd5e6989525b348564",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/readability_baseline.json": "95d6ca70245c73d9e067b364d1716e577f486c981a7188b399969f654fa67fd8",
+    "docs/art_review/village_v2_p10_population/activity_r1/drink_ab/drink_ab2_final.json": "02306d2937e4ae82067a29faf7f61e6a8a6b216c40bd7678b27d5a10cb98f0ff",
+    "docs/art_review/village_v2_p10_population/activity_r1/drink_ab/drink_ab2_old.json": "95608de726633996bec32438b71a12afff11e6da325d1c6258e84c2fc26019be",
+    "docs/art_review/village_v2_p10_population/activity_r1/drink_ab/cup_fit_B1.json": "a8226e308b552c02edc1b06ce0e977a79c4d0d532ff368e4a0b8f562e397d6b0",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/negatives.json": "76b2b4a917422eaa8783ed14e2bd6875281758f74c0e373ca70903c1bd5f5d9c",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/negatives.log": "d16aeacd1c5e2591a90f8307b47de8614c19c8b81fa26d8eecb00332b94d9225",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/npclib_seal.log": "463f991289d39657e740718844d99d099a0d9e8d799c5e1b50b1a34fe6a4ef14",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/plan.json": "6fc45c0f85cd1f9814272ba9229433ce08ac505e23d91bdda44e7a60724de9f9",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/plan.log": "19595c6ff7fcd59133426051b32fdf0214a0fa8015e7cbe04982c9a8ba9bdc1e",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/r3b_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/scene.json": "60995de8453a3448e36de4df9d7b5abac9d76281e3f240da33434241b982c0ae",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_gate/scene.log": "d6da599e2f93be9d2f18e698070b7a34e89fb83be5ddab5ceca3c3a9e5f70e6f"
+  },
+  "art_review_images": {
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/1_market_tps_R3b_vs_R3c1.jpg": "201d4d99f97c7462f9d6d3f89b74564a93840ba112d294eb6ef39637d0b50e64",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/2_market_west_tps_R3b_vs_R3c1.jpg": "3390d78f4afeeebdb587f556372cc119c1ef26365e83e052c2cc3343b279a4ae",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/3_main_street_tps_R3b_vs_R3c1.jpg": "45f061d627d46d8ab8b6c5ee160623ac704fa5c9f9f1e433f701d49b53982b57",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/4_market_high_R3b_vs_R3c1.jpg": "a9779ac42ac22c19039569471b063d72a3554e35bae1e950bb40ef32b23b1068",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/5_walk_through_R3b_vs_R3c1.jpg": "fe2356aff2cb0600ef61b456aa8db591a761385923f116bfb5c0a7c7c558bc5b",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/6_before_after_R3b_vs_R3c1.jpg": "3add6258c3159bb9f7faab609fb912531e765137fee48c2ea911f0a6eb13395f",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/README.md": "7f4ec840afd7acb0d5772e4b0c105a16bc52ebfaa24803d670206b4e2d67f864",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/motion_1_market_tps_R3b_vs_R3c1.gif": "94137d5ec19f028fe572d8cd29fa6fd9f8bdc0742f41c3788dfc6ac7af1cb330",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/motion_2_market_west_tps_R3b_vs_R3c1.gif": "20530ed713e13c85d851bbd0476b40a582501fa528159871c78fc29439373940",
+    "docs/art_review/village_v2_p10_population/activity_r1c1/review/motion_3_main_street_tps_R3b_vs_R3c1.gif": "d8239a727074ed3b192286747f26f3ddcf731ae94fe27f9bcff90be5117ee3d8",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/1_market_tps_R3b_vs_R3c.jpg": "50c2bfa98c651f9e152e1979dd3cb21623bc5d09ebe34c082090be9a985c94ba",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/2_market_west_tps_R3b_vs_R3c.jpg": "98456601d074fb1e69c6a73cad71efcf01db54a3d24c9e6aa65b6378a8a1824e",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/3_main_street_tps_R3b_vs_R3c.jpg": "58f50e43f3dc434f17de8e5565f9efa07bb00277d018eba2e341b9d7326876e6",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/4_market_high_R3b_vs_R3c.jpg": "78822b0782d7752fea372ad6c4afca84e8cc790b8ecc91e734befaaa24ad962d",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/5_walk_through_R3b_vs_R3c.jpg": "78af5e78f6a466474c2ef06862185a0ecef1864afb751fecea412c979d80c8bd",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/6_before_after_R3b_vs_R3c.jpg": "8b895a5c4709356af687f4bb227cd8596cd995d67582d1ecc63ccef0013ef977",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/README.md": "2cbde3ac1aa5bde6af9536a5d3d2ccb5bed6bce9f3d76134a09e49e6b2ce3e10",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/W3_drink_in_village_sheet.jpg": "37a6ae80be1528cffae25284f9689d96d07830e34039c977ed60456bc14af148",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/W3_drink_isolated_sheet.jpg": "ba250c7daded416ccc64a068d1b030cc65d1c3c852eedbd98ba3c9ab316c60fe",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_close_front34.jpg": "0fca63d71084a016c1a91ca5e2ea93e2f2597bb3f22de2c65106c93fc4520245",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_close_profileL.jpg": "66a7ae061067c9cddb324099639eb4f8c842a38ade488ae947efd35e8185c253",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_4m.jpg": "bc1879abcf41e4573925e5ea22f8cd03e0a07aced9f0e9a2b0e663831cb6c609",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_6m.jpg": "9c88e20018632c0ce44f2065baa28f542c949e2202dcb09c73cbc11900d1cc64",
+    "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
+  },
+  "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": "d181d6385bb79132bf90f191c61dbd69513f91d226a1da01a43b3c0ba79ec7fc",
+    "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
+  }
+}

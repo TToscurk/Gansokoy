@@ -61,8 +61,64 @@ func render_prop_hits(index,prop: MeshInstance3D) -> Array:
    if triangle_box(inv*faces[i],inv*faces[i+1],inv*faces[i+2],box):
     hits.append(item[3]); break
  return hits
+## --seal（P10 R3c／R3c.1 Activity baseline、使用者 ART_APPROVED 2026-10-07）：data/village_v2_p10r3c_seal.json の
+## 全雜湊（frozen／evidence／art_review_images／child_seals）・指派と道具參數が overlay と一致・掛載 1 つ＋順序・
+## 永久反向（in-memory 改竄で検出）。封存は vocabulary と使用規則であり、NPC を永久固定するものではない。
+func seal_mismatch(seal: Dictionary) -> Array:
+ var bad=[]
+ for group in ["frozen","evidence","art_review_images","child_seals"]:
+  var hashes: Dictionary=seal.get(group,{})
+  for path in hashes:
+   var full="res://../"+String(path)
+   if not FileAccess.file_exists(full) or FileAccess.get_sha256(full)!=String(hashes[path]): bad.append(path)
+ return bad
+func seal_assign_ok(seal: Dictionary) -> bool:
+ var sa: Dictionary=seal.get("assignments",{})
+ if sa.size()!=ACT.ASSIGN.size(): return false
+ for path in ACT.ASSIGN:
+  var a=ACT.ASSIGN[path]
+  if not sa.has(path): return false
+  var s: Dictionary=sa[path]
+  if s.type!=a[0] or s.npc!=a[1] or s.clip!=a[2] or s.slot!=a[3]: return false
+  if JSON.stringify(s.options)!=JSON.stringify(a[4] if a.size()>4 else {}): return false
+ var ov=ACT.new()
+ var cup: Dictionary=seal.props.cup
+ var ok=Vector3(cup.grip_LeftHand_axes[0],cup.grip_LeftHand_axes[1],cup.grip_LeftHand_axes[2]).is_equal_approx(ov.cup_grip) and Vector3(cup.axis_LeftHand_axes[0],cup.axis_LeftHand_axes[1],cup.axis_LeftHand_axes[2]).is_equal_approx(ov.cup_axis)
+ ov.free()
+ return ok
+func seal_mount_ok() -> bool:
+ var t=FileAccess.get_file_as_string("res://maps/village_v2/village_v2.tscn")
+ var a=t.count('[node name="ActivityP10" parent="Population"')
+ var i_pop=t.find('[node name="PopulationP10" parent="Population"')
+ var i_act=t.find('[node name="ActivityP10" parent="Population"')
+ return a==1 and i_pop>=0 and i_act>i_pop
+func run_seal() -> int:
+ var parsed=JSON.parse_string(FileAccess.get_file_as_string("res://data/village_v2_p10r3c_seal.json"))
+ if not parsed is Dictionary:
+  check("seal manifest exists and parses",false); return 2
+ var seal: Dictionary=parsed
+ check("status ART_APPROVED by user（2026-10-07）; agent does not approve art",seal.get("status","")=="ART_APPROVED" and seal.get("approved_by","")=="user")
+ var bad=seal_mismatch(seal)
+ var total=0
+ for group in ["frozen","evidence","art_review_images","child_seals"]: total+=(seal.get(group,{}) as Dictionary).size()
+ check("seal %d hashes incl. child seals（R3b／NPCLIB）: mismatch %d %s"%[total,bad.size(),str(bad)],bad.is_empty())
+ check("assignments %d + clip/slot/options + cup grip/axis == live overlay"%ACT.ASSIGN.size(),seal_assign_ok(seal))
+ check("mount Population/ActivityP10 exactly 1, after PopulationP10",seal_mount_ok())
+ check("baseline 16 residents unchanged（R3b child seal）",int(seal.baseline.population)==16)
+ var tam=seal.duplicate(true)
+ var k=(tam.frozen as Dictionary).keys()[0]
+ tam.frozen[k]="f".repeat(64)
+ check("permanent negative: in-memory frozen hash tamper detected exactly once",seal_mismatch(tam).size()==1)
+ var tam2=seal.duplicate(true)
+ var pk=(tam2.assignments as Dictionary).keys()[0]
+ tam2.assignments[pk].clip="tampered_clip"
+ check("permanent negative: in-memory assignment tamper rejected",not seal_assign_ok(tam2))
+ print("[ACT] 結果：%d 項失敗（seal）"%fails)
+ return 0 if fails==0 else 2
 func run():
  var args=OS.get_cmdline_user_args()
+ if "--seal" in args:
+  quit(run_seal()); return
  var out="res://../docs/art_review/village_v2_p10_population/activity_r1/act_gate.json"
  for a in args:
   if a.begins_with("--out="): out=a.trim_prefix("--out=")

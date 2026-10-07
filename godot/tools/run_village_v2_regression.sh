@@ -127,5 +127,8 @@ run "P10 R3b ART_APPROVED baseline seal（來源／snapshot／原圖／證據／
 run "P10 R3b Population Pilot plan（16 人、三區、職業／重複／婆婆／小群／接地／render geometry／patrol／步速／sealed overlays）" POP --headless --path . --script res://tools/verify_village_v2_population.gd
 run "P10 R3b Population Pilot 永久反向 9 案（各自瞄準項 FAIL）" POP --headless --path . --script res://tools/verify_village_v2_population.gd -- --negatives
 run "P10 R3b Population Pilot scene（掛載／NPC instance／TPS 同模型 ≤ 2／runtime／SpringArm）" POP --headless --path . --script res://tools/verify_village_v2_population.gd -- --scene
+run "P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍結・證據・審圖圖・子封存（R3b／NPCLIB）雜湊＋8 指派／道具參數＝overlay＋掛載 1 つ＋永久竄改反向" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --seal
+run "P10 R3c Activity plan（16 人・8 指派・5 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
+run "P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --negatives
 echo "回歸失敗項目：$fail"
 exit $fail
