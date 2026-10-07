@@ -6,6 +6,8 @@ extends SceneTree
 ##   godot --headless --path . --script res://tools/verify_village_v2_street.gd -- --build      gate PASS 時のみ gen/street_p10.scn を書く
 ##   godot --headless --path . --script res://tools/verify_village_v2_street.gd -- --attach     village_v2.tscn の Props/MarketP10 の後へ StreetP10 を掛ける（1 回だけ）
 ##   godot --path . --script res://tools/verify_village_v2_street.gd -- --scene                 場景級（掛載順・接地射線・碰撞・LOD・MarketP10 封存）
+##   godot --headless --path . --script res://tools/verify_village_v2_street.gd -- --seal       封存（data/village_v2_p10r2_seal.json 雜湊＋掛載＋字の向き 0＋竄改反向；R2 r5 ART_APPROVED 2026-10-07）
+##   封存中 --build は拒否（STR_ALLOW_REBAKE=1＝使用者が re-bake を承認したときだけ、その後 seal を更新）
 ## 每項一行 [STR] PASS/FAIL；結尾 quit(失敗項數)。
 const SL := preload("res://tools/village_v2_street_lib.gd")
 const MK := preload("res://tools/village_v2_market_lib.gd")
@@ -13,6 +15,8 @@ const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const VEG_ORDER := ["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9", "TowerYardP9", "SuzunaanP9", "GeidonteiP9", "KirisameP9", "GroundcoverP9"]
 const MARKET_SEAL := "res://data/village_v2_p10r1_seal.json"
+const SEAL := "res://data/village_v2_p10r2_seal.json"
+const TXT := preload("res://tools/village_v2_text_facing_lib.gd")
 ## 主街の視點（辻の手前・向こう）→ 市の大看板が見えること；中橫街の口の前 → 市集の色（提灯・屋台）が見えること
 const MS_VIEW := [Vector2(263.6, -12.0), Vector2(263.0, -27.0), Vector2(258.0, -6.0), Vector2(266.5, -36.0)]
 const MOUTH_VIEW := [Vector2(246.0, -20.6), Vector2(243.0, -20.4), Vector2(249.0, -20.8)]
@@ -46,6 +50,13 @@ func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	if "--attach" in args:
 		quit(_attach())
+		return
+	if "--seal" in args:
+		quit(_seal())
+		return
+	if "--build" in args and _sealed() and OS.get_environment("STR_ALLOW_REBAKE") != "1":
+		push_error("P10 R2 は ART_APPROVED・封存中：--build は拒否（使用者が re-bake を承認したら STR_ALLOW_REBAKE=1、その後 seal を更新）")
+		quit(1)
 		return
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
 	if "--scene" in args:
@@ -750,3 +761,61 @@ func _scene(v: Node3D) -> void:
 	check("碰撞 %d shapes、NPC anchors %d（group npc_activity_anchor＋activity meta）" % [ns, na], ns >= 100 and na >= 30 and grp_ok)
 	var mm := go.find_children("*", "MultiMeshInstance3D", true, false).size()
 	check("MultiMesh を使わない（節點ごとに選べる；MMBAKE 対象外）：%d" % mm, mm == 0)
+
+
+# ─────────────────────────── 封存（--seal，P10 R2 主街 r5 ART_APPROVED 2026-10-07） ───────────────────────────
+
+func _sealed() -> bool:
+	if not FileAccess.file_exists(SEAL):
+		return false
+	var j = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	return j is Dictionary and String(j.get("status", "")) == "ART_APPROVED"
+
+
+func _seal_mismatch(seal: Dictionary) -> PackedStringArray:
+	var repo := (ProjectSettings.globalize_path("res://") + "..").simplify_path() + "/"
+	var docs := repo + "docs/art_review/village_v2_p10_props/"
+	var bad := PackedStringArray()
+	for grp: String in ["frozen", "art_review_images", "evidence"]:
+		var d: Dictionary = seal[grp]
+		for k: String in d:
+			var path: String = (repo + k) if grp == "frozen" else (docs + k)
+			if not FileAccess.file_exists(path):
+				bad.append("%s 不存在" % k)
+			elif FileAccess.get_sha256(path) != String(d[k]):
+				bad.append("%s 雜湊變了" % k)
+	return bad
+
+
+func _seal() -> int:
+	var seal: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	check("status ART_APPROVED（使用者 2026-10-07；agent は美術を承認しない）", String(seal.get("status", "")) == "ART_APPROVED" and String(seal.get("approved_by", "")) == "user")
+	var bad := _seal_mismatch(seal)
+	var n: int = seal["frozen"].size() + seal["art_review_images"].size() + seal["evidence"].size()
+	check("P10 R2 封存 %d 檔雜湊一致（凍結 %d、ART_REVIEW 圖 %d、證據 %d；不符 %d：%s）" % [n, seal["frozen"].size(),
+		seal["art_review_images"].size(), seal["evidence"].size(), bad.size(), ", ".join(bad.slice(0, 4))], bad.is_empty())
+	var txt := FileAccess.get_file_as_string(SCENE)
+	var mk_line := "[node name=\"MarketP10\" parent=\"Props\" instance=ExtResource(\"p10r1_market\")]"
+	var st_line := "[node name=\"StreetP10\" parent=\"Props\" instance=ExtResource(\"p10r2_street\")]"
+	check("village_v2.tscn 掛載 Props/StreetP10 恰 1 個、MarketP10 の後", txt.count(st_line) == 1 and txt.count(mk_line) == 1 and txt.find(st_line) > txt.find(mk_line))
+	# 字の向き：street_kit の字の面（LOD0／LOD1）が表裏とも読める（鏡像・逆さま 0）
+	var lib = TXT.new()
+	var out := {}
+	for f: String in seal["frozen"]:
+		if f.begins_with("godot/assets/village_v2/street_kit/mesh/"):
+			lib.audit_mesh(load("res://" + f.trim_prefix("godot/")), f, out)
+	var mir := 0
+	var faces := 0
+	for k in out:
+		for rn in out[k].regions:
+			var r: Dictionary = out[k].regions[rn]
+			mir += int(r.mirrored) + int(r.upside_down) + int(r.no_back_double)
+			faces += int(r.readable) + int(r.mirrored)
+	check("street_kit 字の面 %d 三角（LOD0＋LOD1）：鏡像・逆さま・裏なし両面 %d" % [faces, mir], faces > 0 and mir == 0)
+	var neg_seal := seal.duplicate(true)
+	var k0: String = neg_seal["frozen"].keys()[0]
+	neg_seal["frozen"][k0] = "0".repeat(64)
+	var nb := _seal_mismatch(neg_seal)
+	check("反向：竄改 %s 期望雜湊 → 偵測到 1 筆不符（實際 %d）" % [k0, nb.size() - bad.size()], nb.size() == bad.size() + 1)
+	print("[STR] 結果：%d 項失敗（seal）" % fails)
+	return fails

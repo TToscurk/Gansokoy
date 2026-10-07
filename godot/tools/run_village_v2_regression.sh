@@ -107,6 +107,8 @@ run "P10 R1 市集廣場場景級驗證（掛載・接地射線・LOD・碰撞�
 run "P10 R2 主街 Street Life plan gate 16 項（Kit／接地／建物／店先帯／封存／戸口／水際／互不重疊／通行〔主街中央 ≥ 4.5 m〕／構圖／巷口／市の入口〔主街 4 視點・口の前 3 視點〕／作業場／農田交界／暮らし／NPC anchors）" STR --headless --path . --script res://tools/verify_village_v2_street.gd
 run "P10 R2 主街 Street Life 永久反向 14 案（各自瞄準項 FAIL）" STR --headless --path . --script res://tools/verify_village_v2_street.gd -- --negatives
 run "P10 R2 主街 Street Life 場景級驗證（掛載 MarketP10→StreetP10・MarketP10 封存雜湊・接地射線・LOD・碰撞・anchors・MultiMesh 0）" STR --path . --script res://tools/verify_village_v2_street.gd -- --scene
+run "P10 R2 主街 r5 封存（ART_APPROVED 2026-10-07：street_kit＋StreetP10 生成器／gate／網格／overlay／ART_REVIEW 圖 4／證據 sha256＋掛載＋字の向き 0＋竄改反向；封存中 --build 拒否）" STR --headless --path . --script res://tools/verify_village_v2_street.gd -- --seal
+run "字の向き監査（street_kit／market_kit／mise_kit：幟・暖簾・提灯・看板の字の面が表裏とも鏡像・逆さま 0；例外は測定理由つき）" TXT --headless --path . --script res://tools/audit_village_v2_text_facing.gd -- --strict --only=street_kit,market_kit,mise_kit
 run "P10 R1b Market West r3 封存（ART_APPROVED：雜湊 124 檔＋依存〔P10 R1・P9 R5 限定解封〕＋掛載＋裁定 10 項・店の灯 18＋竄改反向 2）" MW --headless --path . --script res://tools/verify_village_v2_market_west.gd -- --seal
 run "P10 R1b Market West（裏通り）r3 営業中 plan gate 21 項（Kit／建物／地塊／接地／掛け物／路面・店先帯／封存／水際／互不重疊／歩く通り／戸口／到達／視線〔主の口→茶屋・路地 1→呉服〕／構圖／NPC anchors／床／市集の北西角の視野／店内〔店台・奥の棚・店の灯〕／営業中〔北 ≥ 4・南 ≥ 2、店先の連続 ≥ 0.6〕／主次〔focal 2–3〕／入口の誘い）" MW --headless --path . --script res://tools/verify_village_v2_market_west.gd
 run "P10 R1b Market West r3 永久反向 19 案（各自瞄準項 FAIL）" MW --headless --path . --script res://tools/verify_village_v2_market_west.gd -- --negatives
