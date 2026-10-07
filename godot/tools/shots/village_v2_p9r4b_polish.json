@@ -1,0 +1,301 @@
+[
+ {
+  "name": "p9r4_genkan_back_w",
+  "cam": [
+   402.0,
+   2.84,
+   -31.2000007629395
+  ],
+  "look": [
+   389.0,
+   2.19,
+   -15.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_front_void",
+  "cam": [
+   396.600006103516,
+   2.84,
+   -27.7999992370605
+  ],
+  "look": [
+   387.0,
+   2.28,
+   -14.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_pond",
+  "cam": [
+   406.200012207031,
+   2.84,
+   -25.6000003814697
+  ],
+  "look": [
+   412.0,
+   1.3,
+   -16.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_pond_s",
+  "cam": [
+   409.5,
+   2.67,
+   -11.6000003814697
+  ],
+  "look": [
+   414.0,
+   1.65,
+   -23.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_stream",
+  "cam": [
+   417.299987792969,
+   2.84,
+   -38.0
+  ],
+  "look": [
+   418.600006103516,
+   1.06,
+   -27.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_rear_w",
+  "cam": [
+   398.600006103516,
+   2.84,
+   -50.2000007629395
+  ],
+  "look": [
+   418.0,
+   2.25,
+   -57.5999984741211
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_tsukubai",
+  "cam": [
+   395.100006103516,
+   2.14,
+   -49.7999992370605
+  ],
+  "look": [
+   395.0,
+   1.39,
+   -51.5999984741211
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4_rear_fall",
+  "cam": [
+   413.200012207031,
+   2.84,
+   -49.5999984741211
+  ],
+  "look": [
+   419.399993896484,
+   2.15,
+   -58.4000015258789
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4b_bank_close",
+  "cam": [
+   414.600006103516,
+   2.8,
+   -26.2000007629395
+  ],
+  "look": [
+   416.399993896484,
+   1.04,
+   -22.6000003814697
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4b_stream_close",
+  "cam": [
+   417.600006103516,
+   2.84,
+   -45.4000015258789
+  ],
+  "look": [
+   419.399993896484,
+   1.14,
+   -41.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4b_fall_close",
+  "cam": [
+   416.399993896484,
+   2.91,
+   -54.2000007629395
+  ],
+  "look": [
+   419.399993896484,
+   2.05,
+   -58.5999984741211
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4b_tsukubai_side",
+  "cam": [
+   396.299987792969,
+   2.14,
+   -50.2999992370605
+  ],
+  "look": [
+   395.0,
+   1.39,
+   -51.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ },
+ {
+  "name": "p9r4b_rake_rings",
+  "cam": [
+   395.899993896484,
+   2.84,
+   -27.2000007629395
+  ],
+  "look": [
+   390.600006103516,
+   1.04,
+   -22.7999992370605
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines",
+   "Portal_hieda1f"
+  ]
+ }
+]

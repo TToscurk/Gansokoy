@@ -1,0 +1,288 @@
+[
+ {
+  "name": "p9r42_torii_out",
+  "cam": [
+   296.5,
+   3.45,
+   -142.0
+  ],
+  "look": [
+   272.0,
+   31.44,
+   -200.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_torii_near",
+  "cam": [
+   292.200012207031,
+   2.82,
+   -156.0
+  ],
+  "look": [
+   278.0,
+   24.58,
+   -194.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_torii_in_back",
+  "cam": [
+   286.200012207031,
+   8.91,
+   -176.0
+  ],
+  "look": [
+   298.0,
+   3.32,
+   -136.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_approach_mid",
+  "cam": [
+   281.600006103516,
+   15.53,
+   -186.5
+  ],
+  "look": [
+   266.0,
+   35.74,
+   -212.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_shrine_front",
+  "cam": [
+   258.600006103516,
+   32.82,
+   -212.0
+  ],
+  "look": [
+   258.0,
+   37.57,
+   -228.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_goshinboku",
+  "cam": [
+   262.600006103516,
+   33.9,
+   -216.199996948242
+  ],
+  "look": [
+   271.0,
+   33.43,
+   -223.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_forecourt_back",
+  "cam": [
+   258.0,
+   35.87,
+   -221.5
+  ],
+  "look": [
+   270.0,
+   23.15,
+   -200.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_side_forest",
+  "cam": [
+   304.5,
+   4.43,
+   -190.0
+  ],
+  "look": [
+   290.0,
+   8.54,
+   -178.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_side_forest_w",
+  "cam": [
+   272.0,
+   15.35,
+   -186.0
+  ],
+  "look": [
+   262.0,
+   8.97,
+   -176.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_high",
+  "cam": [
+   345.0,
+   75.0,
+   -140.0
+  ],
+  "look": [
+   270.0,
+   14.0,
+   -195.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_high_w",
+  "cam": [
+   200.0,
+   70.0,
+   -150.0
+  ],
+  "look": [
+   268.0,
+   16.0,
+   -200.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_top",
+  "cam": [
+   272.0,
+   140.0,
+   -184.0
+  ],
+  "look": [
+   272.0,
+   0.0,
+   -185.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ },
+ {
+  "name": "p9r42_village_view",
+  "cam": [
+   318.0,
+   4.59999990463257,
+   -112.0
+  ],
+  "look": [
+   262.0,
+   28.0,
+   -222.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "QuestAnchors",
+   "Districts/LandmarkParcelLines",
+   "Districts/AuxParcelLines"
+  ]
+ }
+]

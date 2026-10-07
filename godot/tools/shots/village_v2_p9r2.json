@@ -1,0 +1,458 @@
+[
+ {
+  "name": "p9r2_main_north",
+  "cam": [
+   241,
+   2.23,
+   44
+  ],
+  "look": [
+   276,
+   5.0,
+   -70
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_west_edge",
+  "cam": [
+   125,
+   2.58,
+   -10
+  ],
+  "look": [
+   40,
+   9.0,
+   -10
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_west_edge_s",
+  "cam": [
+   118,
+   2.25,
+   45
+  ],
+  "look": [
+   40,
+   6.0,
+   90
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_south_entry",
+  "cam": [
+   234,
+   1.99,
+   92
+  ],
+  "look": [
+   234,
+   4.0,
+   170
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_sw_out",
+  "cam": [
+   200,
+   1.25,
+   110
+  ],
+  "look": [
+   100,
+   4.0,
+   170
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_hill_torii",
+  "cam": [
+   296,
+   3.23,
+   -150
+  ],
+  "look": [
+   262,
+   30.0,
+   -215
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_north_out",
+  "cam": [
+   300,
+   3.32,
+   -128
+  ],
+  "look": [
+   230,
+   22.0,
+   -280
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_farm_to_ne",
+  "cam": [
+   430,
+   1.52,
+   -90
+  ],
+  "look": [
+   470,
+   8.0,
+   -200
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_hieda_court",
+  "cam": [
+   395,
+   2.66,
+   -22
+  ],
+  "look": [
+   403,
+   2.5,
+   -40
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_overview_obl",
+  "cam": [
+   300,
+   121.62,
+   190
+  ],
+  "look": [
+   280,
+   0,
+   -60
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_top",
+  "cam": [
+   280,
+   431.62,
+   -40
+  ],
+  "look": [
+   280,
+   0,
+   -40.5
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_hill_approach",
+  "cam": [
+   289,
+   6.5,
+   -172
+  ],
+  "look": [
+   266,
+   26.0,
+   -222
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_west_in",
+  "cam": [
+   96,
+   3.0,
+   -40
+  ],
+  "look": [
+   60,
+   6.0,
+   -80
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_north_ridge",
+  "cam": [
+   360,
+   3.2,
+   -150
+  ],
+  "look": [
+   330,
+   14.0,
+   -270
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_bald_east_lobe",
+  "cam": [
+   430,
+   2.5,
+   -170
+  ],
+  "look": [
+   340,
+   12.0,
+   -265
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_bald_west_shoulder",
+  "cam": [
+   140,
+   2.6,
+   -205
+  ],
+  "look": [
+   205,
+   18.0,
+   -285
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_bald_ne_river",
+  "cam": [
+   470,
+   2.0,
+   -120
+  ],
+  "look": [
+   545,
+   6.0,
+   -170
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_view_hillfoot",
+  "cam": [
+   250,
+   2.4,
+   -150
+  ],
+  "look": [
+   262,
+   22.0,
+   -230
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_view_river_n",
+  "cam": [
+   395,
+   2.0,
+   -110
+  ],
+  "look": [
+   300,
+   16.0,
+   -250
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_view_farm_w",
+  "cam": [
+   470,
+   2.0,
+   40
+  ],
+  "look": [
+   300,
+   12.0,
+   -200
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_view_approach_top",
+  "cam": [
+   262,
+   22.0,
+   -196
+  ],
+  "look": [
+   258,
+   36.0,
+   -228
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_far_south",
+  "cam": [
+   280,
+   70.0,
+   300
+  ],
+  "look": [
+   270,
+   10.0,
+   -150
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_far_west",
+  "cam": [
+   -120,
+   80.0,
+   -40
+  ],
+  "look": [
+   300,
+   5.0,
+   -60
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ },
+ {
+  "name": "p9r2_far_east",
+  "cam": [
+   700,
+   90.0,
+   -40
+  ],
+  "look": [
+   250,
+   5.0,
+   -100
+  ],
+  "hide": [
+   "Debug",
+   "Portals"
+  ],
+  "hud": false,
+  "time": 10
+ }
+]

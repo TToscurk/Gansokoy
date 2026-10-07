@@ -1,0 +1,402 @@
+[
+ {
+  "name": "p9r3_a_entry",
+  "cam": [
+   133.0,
+   2.54,
+   10.8000001907349
+  ],
+  "look": [
+   93.0,
+   5.29,
+   -15.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_a_path_in",
+  "cam": [
+   118.800003051758,
+   2.59,
+   1.10000002384186
+  ],
+  "look": [
+   93.0,
+   4.49,
+   -15.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_a_inside",
+  "cam": [
+   106.0,
+   2.6,
+   -7.5
+  ],
+  "look": [
+   91.0,
+   5.19,
+   -17.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_a_inside_back",
+  "cam": [
+   91.5,
+   4.22,
+   -17.0
+  ],
+  "look": [
+   113.0,
+   3.05,
+   -3.20000004768372
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_a_clearing",
+  "cam": [
+   101.5,
+   2.86,
+   -23.0
+  ],
+  "look": [
+   89.5,
+   11.85,
+   -17.5
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_a_upslope",
+  "cam": [
+   50.0,
+   15.76,
+   -24.0
+  ],
+  "look": [
+   95.0,
+   6.04,
+   -26.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_edge_lane_mid",
+  "cam": [
+   136.0,
+   2.88,
+   -46.0
+  ],
+  "look": [
+   95.0,
+   6.03,
+   -30.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_edge_lane_n",
+  "cam": [
+   134.0,
+   3.37,
+   -128.0
+  ],
+  "look": [
+   100.0,
+   5.67,
+   -145.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_b_stream",
+  "cam": [
+   122.0,
+   3.5,
+   -150.0
+  ],
+  "look": [
+   92.0,
+   6.9,
+   -168.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_join_south",
+  "cam": [
+   112.0,
+   2.27,
+   12.0
+  ],
+  "look": [
+   85.0,
+   8.74,
+   -25.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_join_north",
+  "cam": [
+   110.0,
+   2.81,
+   -75.0
+  ],
+  "look": [
+   90.0,
+   7.75,
+   -40.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_sw_corner",
+  "cam": [
+   168.0,
+   1.98,
+   104.0
+  ],
+  "look": [
+   118.0,
+   3.86,
+   96.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_sw_stream",
+  "cam": [
+   140.0,
+   1.77,
+   60.0
+  ],
+  "look": [
+   112.0,
+   4.06,
+   95.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_crossmid",
+  "cam": [
+   200.0,
+   2.71,
+   -20.0
+  ],
+  "look": [
+   95.0,
+   8.06,
+   -28.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_south_field",
+  "cam": [
+   192.0,
+   1.24,
+   118.0
+  ],
+  "look": [
+   110.0,
+   7.03,
+   85.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_hill_lane",
+  "cam": [
+   140.0,
+   3.99,
+   -232.0
+  ],
+  "look": [
+   95.0,
+   7.72,
+   -165.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_upslope",
+  "cam": [
+   30.0,
+   19.82,
+   -40.0
+  ],
+  "look": [
+   105.0,
+   6.99,
+   -15.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_hillfoot",
+  "cam": [
+   250.0,
+   3.49,
+   -150.0
+  ],
+  "look": [
+   95.0,
+   8.27,
+   -150.0
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_far_air_w",
+  "cam": [
+   190,
+   55,
+   30
+  ],
+  "look": [
+   90,
+   4,
+   -45
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ },
+ {
+  "name": "p9r3_overview_w",
+  "cam": [
+   210,
+   110,
+   120
+  ],
+  "look": [
+   90,
+   0,
+   -50
+  ],
+  "hud": false,
+  "time": 10,
+  "hide": [
+   "Debug",
+   "Portals",
+   "Vegetation/BambooP9"
+  ]
+ }
+]
