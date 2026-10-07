@@ -1,0 +1,45 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\陶器雜貨商婆婆/tripo_convert_61976304-4540-4da3-94f5-0058194dca5c.fbx",
+ "target_height": 1.49,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   -4.371138828673793e-08,
+   0.0,
+   0.0
+  ]
+ },
+ "src_height": 0.9995,
+ "facing_fix_deg": -0.0,
+ "height_m": 1.49,
+ "feet_z": -0.0,
+ "scale": 1.49073,
+ "parts": {
+  "Body": {
+   "tris": 11598,
+   "verts": 6633,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\陶器雜貨商婆婆\\tripo_convert_61976304-4540-4da3-94f5-0058194dca5c.fbm\\tripo_rgb_8731e704-b933-4805-a4bb-5dc35ef7d542.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    -0.0,
+    1.49
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\陶器雜貨商婆婆\\tripo_convert_61976304-4540-4da3-94f5-0058194dca5c.fbm\\tripo_rgb_8731e704-b933-4805-a4bb-5dc35ef7d542.jpg",
+   "texture_sha256": "2e03660d1b17fc89bdff038f791471f6bbfc0fbba4793a1c0d8ab96302b1c408",
+   "texture_res": "characters/npc/setomono_f01/tex/setomono_f01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0
+ },
+ "total_tris": 11598,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}

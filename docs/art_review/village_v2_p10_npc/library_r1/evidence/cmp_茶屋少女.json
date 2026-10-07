@@ -1,0 +1,34 @@
+{
+ "tripo_767b891f_3aa1_4238_b7f5_590d08122649": "missing in rig",
+ "tripo_node_88cd4f11": {
+  "loops": [
+   21470,
+   21470
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9889375567436218,
+  "skin_loops": 10047,
+  "orig_img": "tripo_image_88cd4f11-8c8e-4ecf-96a9-6047ad511594_0_0.jpg",
+  "rig_img": "茶屋少女_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.922,
+   0.692,
+   0.586
+  ],
+  "skin_mean_rig_lin": [
+   0.916,
+   0.687,
+   0.584
+  ],
+  "all_mean_orig_lin": [
+   0.666,
+   0.446,
+   0.4
+  ],
+  "all_mean_rig_lin": [
+   0.666,
+   0.447,
+   0.401
+  ]
+ }
+}

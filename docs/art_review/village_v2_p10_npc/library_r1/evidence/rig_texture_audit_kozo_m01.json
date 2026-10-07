@@ -1,0 +1,43 @@
+{
+ "rig": "D:/參考圖概念圖/NCP模組\\跑腿少年/骨架/tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbx",
+ "threshold": 0.05,
+ "parts": {
+  "tripo_5a717a47_ae1b_4a81_9297_f8c3791d7052": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 7690,
+   "orig_img": "anime+character+3d+model_basecolor.jpg",
+   "rig_img": "跑腿少年_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.92,
+    0.654,
+    0.527
+   ],
+   "rig_rgb": [
+    0.914,
+    0.651,
+    0.527
+   ],
+   "max_channel_diff": 0.007
+  },
+  "tripo_5c3f9eca_5480_4d94_9cf2_b46ba6b78ff8": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 976,
+   "orig_img": "anime+headband+3d+model_basecolor.jpg",
+   "rig_img": "跑腿少年_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.842,
+    0.484,
+    0.345
+   ],
+   "rig_rgb": [
+    0.832,
+    0.481,
+    0.347
+   ],
+   "max_channel_diff": 0.01
+  }
+ },
+ "verdict": "OK"
+}

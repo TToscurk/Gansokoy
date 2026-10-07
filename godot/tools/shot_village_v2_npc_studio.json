@@ -1,0 +1,324 @@
+[
+ {
+  "name": "A1_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "A2_45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "A3_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "A4_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "B5_face",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    1.52,
+    1.6
+   ],
+   "at": [
+    0,
+    1.51,
+    0
+   ],
+   "fov": 16
+  }
+ },
+ {
+  "name": "B6_face45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -40,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    1.52,
+    1.6
+   ],
+   "at": [
+    0,
+    1.51,
+    0
+   ],
+   "fov": 16
+  }
+ },
+ {
+  "name": "B7_faceside",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "t": 2.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    1.52,
+    1.6
+   ],
+   "at": [
+    0,
+    1.51,
+    0
+   ],
+   "fov": 16
+  }
+ },
+ {
+  "name": "D13_side_by_side_studio",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    -0.5,
+    0
+   ],
+   "yaw": 0,
+   "t": 2.0
+  },
+  "yori": {
+   "pos": [
+    0.5,
+    0
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.98,
+    8.0
+   ],
+   "at": [
+    0,
+    0.95,
+    0
+   ],
+   "fov": 18
+  }
+ },
+ {
+  "name": "W_walk_side_000",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "anim": "walk",
+   "t": 0.0
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "W_walk_side_035",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "anim": "walk",
+   "t": 0.35
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "W_walk_side_070",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "anim": "walk",
+   "t": 0.7
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "W_walk_side_105",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "anim": "walk",
+   "t": 1.05
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ }
+]

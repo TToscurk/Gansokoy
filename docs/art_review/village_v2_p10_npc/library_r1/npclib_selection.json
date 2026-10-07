@@ -1,0 +1,127 @@
+{
+ "phase": "P10 NPC Asset Library — asset integration only（village_v2 未配置）",
+ "date": "2026-10-06",
+ "mixamo_export": {
+  "format": "fbx7_2019",
+  "skin": false,
+  "fps": 30,
+  "reducekf": 0,
+  "walk_inplace": true,
+  "hand_keyed_fixes": 0
+ },
+ "tested_per_npc": {
+  "idle": "Neutral Idle 115170901 × arm-space 0.15/0.30/0.45",
+  "walk": "Standard Walk 123500901 × 0.15/0.30/0.45"
+ },
+ "extra_tests": {
+  "chaya_f01/shufu_f01/nunoya_f01": "Female Walk 102520901（Stride 0／-0.5／-1.0、arm 0.15/0.30/0.40）・Walk 124540901・Feminine Walk Forward 117660901・Male Standard Walk 101410901",
+  "sakanaya_m01": "Standard Walk 0.38",
+  "takigi_m01": "Standard Walk 0.38／0.42"
+ },
+ "recorded_not_imported": {
+  "elderly_walk": "Old Man Walk 104350901（Slow Old Man Shuffle Walk、Stride／Hands パラメータあり）"
+ },
+ "npcs": [
+  {
+   "id": "yakusou_f01",
+   "name": "藥草婆婆",
+   "height": 1.47,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.3,
+   "walk_note": "接触のみ。老人らしさ不足（歩幅・背筋が若い）＝記録のみ、後で Mixamo 候補（Old Man Walk 104350901 等）"
+  },
+  {
+   "id": "setomono_f01",
+   "name": "陶器雜貨商婆婆",
+   "height": 1.49,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.3,
+   "walk_note": "接触のみ。老人らしさ不足＝記録のみ"
+  },
+  {
+   "id": "kozo_m01",
+   "name": "跑腿少年",
+   "height": 1.52,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.3,
+   "walk_note": "接触のみ（鞄に触れる）。少年には歩幅がやや大きい＝記録のみ"
+  },
+  {
+   "id": "chaya_f01",
+   "name": "茶屋少女",
+   "height": 1.55,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Female Walk 102520901（Stride -1.0）",
+   "walk_arm_space": 0.3,
+   "walk_note": "Standard Walk は歩幅の頂点で脚が裾を貫通 → 淘汰。Female Walk 最短歩幅で脚の貫通なし、手は接触のみ。腕がやや硬い"
+  },
+  {
+   "id": "shufu_f01",
+   "name": "主婦",
+   "height": 1.58,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Female Walk 102520901（Stride -1.0）",
+   "walk_arm_space": 0.3,
+   "walk_note": "未解決：試した 6 種（Standard／Female 3 歩幅／Walk 124540901／Feminine Walk／Male Standard）すべてで歩幅の頂点 2/8 位相に前の脚が前掛け下部を貫通。最も軽い Female Walk 最短歩幅を暫定。手修正はしない"
+  },
+  {
+   "id": "nunoya_f01",
+   "name": "布料老闆娘",
+   "height": 1.61,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Female Walk 102520901（Stride -1.0）",
+   "walk_arm_space": 0.4,
+   "walk_note": "Standard Walk は脚が裾を貫通 → 淘汰。Female Walk 最短歩幅で脚の貫通なし；arm 0.30 は右手が巾着に触れる → 0.40 で離れる"
+  },
+  {
+   "id": "yaoya_m01",
+   "name": "菜販人",
+   "height": 1.64,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.3,
+   "walk_note": "接触のみ（瓢箪に触れる）"
+  },
+  {
+   "id": "sakanaya_m01",
+   "name": "魚販",
+   "height": 1.67,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.38,
+   "walk_note": "0.30 は右手が腰の木札に沈む → 0.38 で接触のみ・腕は自然"
+  },
+  {
+   "id": "takigi_m01",
+   "name": "木柴攤販",
+   "height": 1.72,
+   "idle_mixamo": "Neutral Idle 115170901",
+   "idle_arm_space": 0.3,
+   "walk_mixamo": "Standard Walk 123500901",
+   "walk_arm_space": 0.42,
+   "walk_note": "0.30／0.38 は手首が腰の下げ物に沈む（側面）→ 0.42 で接触のみ。正面で腕がわずかに開く・縄束に指先が触れる"
+  }
+ ],
+ "mixamo_character_uploaded": [
+  "chaya_f01",
+  "kozo_m01",
+  "nunoya_f01",
+  "sakanaya_m01",
+  "setomono_f01",
+  "shufu_f01",
+  "takigi_m01",
+  "yakusou_f01",
+  "yaoya_m01"
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "phase": "P10 R3a NPC Animation Pass — Mixamo Only",
+ "date": "2026-10-05",
+ "character": "chonin_m01（Tripo NPC 本體 1.68 m を Mixamo へ上傳・自動 rig → 書き出し FBX＝同じ骨格。手修正 key 0）",
+ "export": {
+  "format": "fbx7_2019",
+  "skin": false,
+  "fps": 30,
+  "reducekf": 0,
+  "trim": [
+   0,
+   100
+  ],
+  "overdrive": 0,
+  "mirror": false
+ },
+ "pipeline": "Mixamo FBX → assets/blender/npc/build_npc_mixamo_anim.py（世界姿勢 bake、BoneRoot 床固定）→ _shared/anim/npc_anim_mixamo.glb → import retarget（npc_tripo_bonemap → GeneralSkeleton）→ tools/build_npc_anim_grounded.gd（Hips 高さのみ接地補正）→ mixamo/<clip>_grounded.res",
+ "idle": [
+  {
+   "name": "Neutral Idle",
+   "mixamo_id": "115170901",
+   "arm_space": 0.3,
+   "params": "default",
+   "loop_s": 8.8,
+   "clipping": "なし（側面で手が前掛け側布に接する程度、貫通なし）",
+   "naturalness": 4,
+   "verdict": "RECOMMENDED"
+  },
+  {
+   "name": "Weight Shift Idle",
+   "mixamo_id": "113410901",
+   "arm_space": 0.3,
+   "params": "default",
+   "loop_s": 16.6,
+   "clipping": "軽微（手が側布・巾着に接する）",
+   "naturalness": 3,
+   "verdict": "次点（腕が少し開きマネキン感）"
+  },
+  {
+   "name": "Breathing Idle",
+   "mixamo_id": "107900901",
+   "arm_space": 0.3,
+   "params": "sway 0（-1,0,1,0）",
+   "loop_s": 8.3,
+   "clipping": "なし",
+   "naturalness": 3,
+   "verdict": "次点（sway 0 で静止しすぎ）"
+  },
+  {
+   "name": "Standing Idle",
+   "mixamo_id": "131220901",
+   "arm_space": [
+    0.15,
+    0.3
+   ],
+   "verdict": "Blender 段階で落選（Godot 比較に入れず）"
+  }
+ ],
+ "walk": [
+  {
+   "name": "Standard Walk",
+   "mixamo_id": "123500901",
+   "arm_space": 0.3,
+   "in_place": true,
+   "loop_s": 1.2,
+   "params": "default",
+   "clipping": "軽微（45° で前に振った左手が太腿で膨らむ前掛けに接する、貫通なし）",
+   "naturalness": 4,
+   "verdict": "RECOMMENDED"
+  },
+  {
+   "name": "Male Standard Walk",
+   "mixamo_id": "101410901",
+   "arm_space": 0.3,
+   "in_place": true,
+   "loop_s": 1.27,
+   "params": "default",
+   "clipping": "ほぼなし",
+   "naturalness": 3,
+   "verdict": "次点（正面・背面で腕が開き A ポーズ気味）"
+  },
+  {
+   "name": "Male Hurried Walk",
+   "mixamo_id": "100650901",
+   "arm_space": [
+    0.15,
+    0.3
+   ],
+   "in_place": true,
+   "loop_s": 0.9,
+   "clipping": "明確（接地フレームで太腿が前掛け前後を貫通）",
+   "naturalness": 3,
+   "verdict": "淘汰"
+  },
+  {
+   "name": "Unarmed Walk Forward",
+   "mixamo_id": "128650947",
+   "arm_space": [
+    0.15,
+    0.3
+   ],
+   "verdict": "Blender 段階で落選（上腕外転 最大 39°、英雄的に開く）"
+  },
+  {
+   "name": "Careful Walk",
+   "mixamo_id": "113970901",
+   "verdict": "Blender 段階で落選（忍び足）"
+  }
+ ],
+ "arm_space_note": "0.15 は手が巾着・側布へ沈む（Blender 計測で手と体の重なり三角対 0.30 の約 1.3–2.2 倍）→ 全支 0.30 採用",
+ "bookmarks_not_imported": {
+  "carrying box": [
+   "Box Idle 127050901",
+   "Box Walk Arc 127070901",
+   "Box Turn 127100901"
+  ],
+  "talking": [
+   "Talking 101780903",
+   "Talking 108420901",
+   "Sitting Talking 126490901"
+  ],
+  "sitting": [
+   "Sitting Idle 123380901",
+   "Sitting Idle 116270901",
+   "Sitting 102890903"
+  ],
+  "drinking": [
+   "Drinking 101330902",
+   "Sitting Drinking 120890901"
+  ],
+  "inspecting": [
+   "Inspecting 130630901",
+   "Kneeling Inspecting 136350901"
+  ],
+  "lifting / carrying": [
+   "Lifting Object 136250901",
+   "Picking Up Object 104460901",
+   "Lifting 110150903"
+  ],
+  "sweeping": "Mixamo に該当なし",
+  "working / hammering": "Mixamo に該当なし"
+ },
+ "user_verdict": {
+  "date": "2026-10-05",
+  "status": "ART_APPROVED for NPC base locomotion",
+  "idle": "Neutral Idle 115170901",
+  "walk": "Standard Walk 123500901 (in place)",
+  "arm_space": 0.3,
+  "standard_walk_left_hand_apron": "acceptable contact / non-blocking（no mesh penetration）；key 手修正しない、Male Standard Walk に替えない",
+  "rule": "arm spacing は NPC ごとに再測定（0.30 は本 Prototype の値）；貫通時は ①arm spacing/height ②別候補 ③少量 cleanup；目標＝貫通ゼロ＋自然（接触ゼロではない）"
+ }
+}

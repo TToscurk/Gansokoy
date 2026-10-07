@@ -1,0 +1,1 @@
+{"mode": "clearance", "offset_m": 0.035, "front_y": -0.06, "front_ramp": 0.04, "top_z": 0.82, "peak_z": 0.52, "hem_keep": 0.8, "flat_x": 0.10, "edge_x": 0.22, "weights": {"mode": "side_split", "front_y": -0.06, "front_ramp": 0.03, "hem_z": 0.30, "waist_z": 0.95, "full_z": 0.75, "split_w": 0.22, "strength": 1.0}}

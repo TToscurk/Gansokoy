@@ -1,0 +1,122 @@
+[
+ {
+  "shot": "並排（左）",
+  "psnr_db": 40.99,
+  "max_abs_diff": 167,
+  "mean_rgb_before": [
+   148.9,
+   140.4,
+   135.8
+  ],
+  "mean_rgb_after": [
+   149.0,
+   140.4,
+   135.8
+  ]
+ },
+ {
+  "shot": "並排（右・chonin_m01 含む）",
+  "psnr_db": 41.76,
+  "max_abs_diff": 124,
+  "mean_rgb_before": [
+   141.4,
+   134.4,
+   130.7
+  ],
+  "mean_rgb_after": [
+   141.6,
+   134.5,
+   130.7
+  ]
+ },
+ {
+  "shot": "布料老闆娘 臉 正面",
+  "psnr_db": 45.89,
+  "max_abs_diff": 48,
+  "mean_rgb_before": [
+   150.7,
+   140.4,
+   135.9
+  ],
+  "mean_rgb_after": [
+   150.8,
+   140.4,
+   136.0
+  ]
+ },
+ {
+  "shot": "布料老闆娘 臉 45°",
+  "psnr_db": 48.26,
+  "max_abs_diff": 57,
+  "mean_rgb_before": [
+   147.3,
+   138.9,
+   135.2
+  ],
+  "mean_rgb_after": [
+   147.3,
+   138.9,
+   135.2
+  ]
+ },
+ {
+  "shot": "布料老闆娘 手臂・花紋",
+  "psnr_db": 46.03,
+  "max_abs_diff": 50,
+  "mean_rgb_before": [
+   160.6,
+   152.5,
+   148.8
+  ],
+  "mean_rgb_after": [
+   160.7,
+   152.5,
+   148.8
+  ]
+ },
+ {
+  "shot": "主婦 前掛 正面",
+  "psnr_db": 48.65,
+  "max_abs_diff": 84,
+  "mean_rgb_before": [
+   162.6,
+   157.9,
+   153.6
+  ],
+  "mean_rgb_after": [
+   162.6,
+   157.9,
+   153.6
+  ]
+ },
+ {
+  "shot": "主婦 前掛 側面",
+  "psnr_db": 48.46,
+  "max_abs_diff": 91,
+  "mean_rgb_before": [
+   162.8,
+   157.1,
+   152.6
+  ],
+  "mean_rgb_after": [
+   162.9,
+   157.1,
+   152.7
+  ]
+ },
+ {
+  "shot": "主婦 frame 20 45°",
+  "psnr_db": 46.66,
+  "max_abs_diff": 52,
+  "mean_rgb_before": [
+   159.9,
+   149.2,
+   145.5
+  ],
+  "mean_rgb_after": [
+   160.0,
+   149.2,
+   145.5
+  ]
+ }
+]

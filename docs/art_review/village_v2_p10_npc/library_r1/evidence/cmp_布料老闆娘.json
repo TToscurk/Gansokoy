@@ -1,0 +1,64 @@
+{
+ "tripo_node_00382c6c": {
+  "loops": [
+   21474,
+   21474
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9959272742271423,
+  "skin_loops": 9060,
+  "orig_img": "tripo_image_00382c6c-3cf8-4d3d-979c-0df35d6d3585_0_0.jpg",
+  "rig_img": "Diffuse Texture",
+  "skin_mean_orig_lin": [
+   0.929,
+   0.74,
+   0.636
+  ],
+  "skin_mean_rig_lin": [
+   0.628,
+   0.586,
+   0.565
+  ],
+  "all_mean_orig_lin": [
+   0.619,
+   0.457,
+   0.404
+  ],
+  "all_mean_rig_lin": [
+   0.462,
+   0.365,
+   0.335
+  ]
+ },
+ "tripo_node_d636ab5b": {
+  "loops": [
+   17358,
+   17358
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9817402958869934,
+  "skin_loops": 2304,
+  "orig_img": "tripo_image_d636ab5b-1a8a-4355-8e59-f938c3331220_0_0.jpg",
+  "rig_img": "Diffuse Texture",
+  "skin_mean_orig_lin": [
+   0.824,
+   0.618,
+   0.465
+  ],
+  "skin_mean_rig_lin": [
+   0.626,
+   0.517,
+   0.432
+  ],
+  "all_mean_orig_lin": [
+   0.437,
+   0.259,
+   0.2
+  ],
+  "all_mean_rig_lin": [
+   0.352,
+   0.194,
+   0.123
+  ]
+ }
+}

@@ -1,0 +1,10 @@
+[NPC] PASS 部位 5（Head／Hair／Upper／Lower／Feet）が同じ GeneralSkeleton に skin（["NPC_Feet", "NPC_Hair", "NPC_Head", "NPC_Lower", "NPC_Upper"]）
+[NPC] PASS 骨格＝SkeletonProfileHumanoid 名（Root・体幹・四肢・指 27 本確認、全 78 骨、欠 []）
+[NPC] PASS clip は共通 library の idle・walk の 2 本だけ・両方ループ（["idle", "walk"]）
+[NPC] PASS 三角 10903（10000–60000）
+[NPC] PASS 材質＝外部 m_skin／m_cloth／m_hair の 3 つ・albedo atlas 1 枚・emission なし（["m_skin.tres", "m_cloth.tres", "m_hair.tres"]）
+[NPC] PASS 身長（rest、髪の頂点まで）1.680 m（1.65–1.70）・足裏 0.000
+[NPC] PASS idle／walk 全フレーム接地：最も低い足骨の rest 差 最大 0.001 m（≤ 0.015）
+[NPC] PASS 首・胴が伸びない：Head 骨の rest 差 -0.048〜-0.003 m（−0.08〜+0.03）
+[NPC] PASS chonin_m01.tscn（npc_visual.gd）が既定で idle を再生
+[NPC] 結果：0 項失敗

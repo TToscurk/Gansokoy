@@ -1,0 +1,50 @@
+{
+ "_doc": "P10 NPC 骨格 family（2026-10-05 監査：assets/blender/npc/npc_skeleton_audit.py、骨名・親・rest 頭尾・骨軸を比較）。骨数が同じでも同じ骨格とは限らない：chonin_m01 の 78＝Tripo CC rig、菜販人の 78＝Mixamo rig＋_end 葉骨 13。最終的に全 family を同じ NPC humanoid interface（GeneralSkeleton＝SkeletonProfileHumanoid、clip 名 idle／walk）へ写す。Godot は glTF 骨名の ':' を '_' に置換する（mixamorig:Hips → mixamorig_Hips）。",
+ "interface": {
+  "skeleton": "GeneralSkeleton",
+  "profile": "SkeletonProfileHumanoid",
+  "clips": [
+   "idle",
+   "walk"
+  ]
+ },
+ "families": {
+  "tripo_cc78": {
+   "bones": 78,
+   "naming": "Tripo CC（BoneRoot, Hip, Pelvis, Waist, Spine01/02, NeckTwist01/02, L_/R_ …, twist・share 骨、指 3 節）",
+   "root": "BoneRoot（原本は腰の高さ → 床へ移動済み）",
+   "bone_map": "npc_tripo_bonemap",
+   "members": [
+    "chonin_m01"
+   ]
+  },
+  "mixamo65": {
+   "bones": 65,
+   "naming": "mixamorig:*（Hips 最上位、指 4 節＝4 は先端、HeadTop_End・Toe_End）",
+   "root": "Hips（床 root 骨なし；profile Root は未割当）",
+   "bone_map": "npc_tripo_65_map",
+   "members": [
+    "yakusou_f01",
+    "setomono_f01",
+    "kozo_m01",
+    "chaya_f01",
+    "shufu_f01",
+    "nunoya_f01",
+    "sakanaya_m01",
+    "takigi_m01"
+   ],
+   "audit": "原 FBX では 5 体（takigi・shufu・nunoya・chaya・kozo）が横（±X）向きで、骨ローカル軸が他 3 体と 57 骨で 0.35 以上ずれて見えた。正面合わせ（Z 軸 90°）後に再監査すると骨名・親子は 8 体完全一致、骨軸差は指・前腕の数骨（各モデルの rig の当て方の差）だけ → 1 family。布料老闆娘は髪の 2 頂点が重みゼロ（glTF 書き出しで neutral_bone が足され 66 骨に見えた）→ 最寄り頂点の重みを写して解消。"
+  },
+  "mixamo78": {
+   "bones": 78,
+   "naming": "mixamorig:*＋葉骨 *_end 13（重みなし；BoneMap では未割当）",
+   "root": "Hips",
+   "bone_map": "npc_tripo_78_map",
+   "rest_axes": "mixamo65 と同じ骨名＋葉骨 *_end 13（重みなし）。名前対応は同じだが葉骨を含む別骨格として扱う（BoneMap は別ファイル）。",
+   "members": [
+    "yaoya_m01"
+   ]
+  }
+ },
+ "rest_pose_note": "全員 T ポーズ系（上腕の下向き角 0°〜16°：kozo 0.0°、shufu −5.0°、nunoya −5.3°、chaya −6.5°、sakanaya −6.7°、takigi −7.1°、setomono −7.1°、yaoya −13.2°、yakusou −16.4°）。Mixamo の動作は各 NPC を Mixamo に上傳して各自の骨格で書き出す。"
+}

@@ -1,0 +1,172 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\布料老闆娘/骨架/tripo_convert_88097c4a-98a6-46bd-98cb-60e4a5dbb7c8.fbx",
+ "target_height": 1.61,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "ParentNode",
+  "scale": [
+   0.009999999776482582,
+   0.009999999776482582,
+   0.009999999776482582
+  ],
+  "rot": [
+   1.570796251296997,
+   -0.0,
+   0.0
+  ]
+ },
+ "uv_from": {
+  "blend": "D:/參考圖概念圖/NCP模組\\布料老闆娘/布料老闆娘.blend",
+  "parts": {
+   "tripo_node_d636ab5b": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\頭髮\\tripo_convert_d636ab5b-1a8a-4355-8e59-f938c3331220.fbm\\tripo_image_d636ab5b-1a8a-4355-8e59-f938c3331220_0_0.jpg",
+   "tripo_node_00382c6c": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\身體\\tripo_convert_00382c6c-3cf8-4d3d-979c-0df35d6d3585.fbm\\tripo_image_00382c6c-3cf8-4d3d-979c-0df35d6d3585_0_0.jpg"
+  },
+  "safety": {
+   "tripo_node_d636ab5b": {
+    "verts": [
+     5334,
+     5334
+    ],
+    "polys": [
+     4740,
+     4740
+    ],
+    "loops": [
+     17358,
+     17358
+    ],
+    "loop_vertex_order_equal": true,
+    "poly_loop_start_equal": true,
+    "face_edges": [
+     10030,
+     10030
+    ],
+    "face_edge_set_equal": true,
+    "components": [
+     59,
+     59
+    ],
+    "component_correspondence": true,
+    "dist_ratio_rel_std": 0.06412005424499512,
+    "affine_residual_rel": 1.5952895275122763e-07,
+    "loose_edges": {
+     "orig": [
+      [
+       2302,
+       2309
+      ],
+      [
+       2309,
+       2310
+      ],
+      [
+       2310,
+       2311
+      ]
+     ],
+     "rig": []
+    },
+    "loose_edge_len_orig_units": [
+     0.01355,
+     0.01572,
+     0.0181
+    ],
+    "loose_verts": {
+     "orig": [
+      2309,
+      2310
+     ],
+     "rig": [
+      2309,
+      2310
+     ]
+    },
+    "loose_only_differences": true
+   },
+   "tripo_node_00382c6c": {
+    "verts": [
+     5380,
+     5380
+    ],
+    "polys": [
+     5861,
+     5861
+    ],
+    "loops": [
+     21474,
+     21474
+    ],
+    "loop_vertex_order_equal": true,
+    "poly_loop_start_equal": true,
+    "face_edges": [
+     11195,
+     11195
+    ],
+    "face_edge_set_equal": true,
+    "components": [
+     68,
+     68
+    ],
+    "component_correspondence": true,
+    "dist_ratio_rel_std": 4.552485961539787e-07,
+    "affine_residual_rel": 3.109189038089653e-08,
+    "loose_edges": {
+     "orig": [],
+     "rig": []
+    },
+    "loose_edge_len_orig_units": [],
+    "loose_verts": {
+     "orig": [
+      3675
+     ],
+     "rig": [
+      3675
+     ]
+    },
+    "loose_only_differences": true
+   }
+  }
+ },
+ "src_height": 1.0,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.61,
+ "feet_z": -0.0,
+ "scale": 1.61,
+ "parts": {
+  "Body": {
+   "tris": 9752,
+   "verts": 5380,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\身體\\tripo_convert_00382c6c-3cf8-4d3d-979c-0df35d6d3585.fbm\\tripo_image_00382c6c-3cf8-4d3d-979c-0df35d6d3585_0_0.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    -0.0,
+    1.5406
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\身體\\tripo_convert_00382c6c-3cf8-4d3d-979c-0df35d6d3585.fbm\\tripo_image_00382c6c-3cf8-4d3d-979c-0df35d6d3585_0_0.jpg",
+   "texture_sha256": "c1892c475620c1e30692bbf374adc2a5a3b9233d6860b84866749931cec0074b",
+   "texture_res": "characters/npc/nunoya_f01/tex/nunoya_f01_body_albedo.jpg"
+  },
+  "Hair": {
+   "tris": 7878,
+   "verts": 5334,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\頭髮\\tripo_convert_d636ab5b-1a8a-4355-8e59-f938c3331220.fbm\\tripo_image_d636ab5b-1a8a-4355-8e59-f938c3331220_0_0.jpg",
+   "skinned": true,
+   "vgroups": 8,
+   "z": [
+    1.3016,
+    1.61
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\布料老闆娘\\頭髮\\tripo_convert_d636ab5b-1a8a-4355-8e59-f938c3331220.fbm\\tripo_image_d636ab5b-1a8a-4355-8e59-f938c3331220_0_0.jpg",
+   "texture_sha256": "5b14cc4046f735531e52214a9ee412d867485e0dba1a7864340de3e570dc59eb",
+   "texture_res": "characters/npc/nunoya_f01/tex/nunoya_f01_hair_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0,
+  "Hair": 2
+ },
+ "total_tris": 17630,
+ "texture_max_size": 2048,
+ "skeleton_family": "mixamo65"
+}

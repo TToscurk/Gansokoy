@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://characters/npc/npc_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/npc/nunoya_f01/nunoya_f01.glb" id="2_glb"]
+
+[node name="NPC_NunoyaF01" type="Node3D"]
+script = ExtResource("1_vis")
+idle_clip = "res://characters/npc/nunoya_f01/anim/idle_neutral_a030_grounded.res"
+walk_clip = "res://characters/npc/nunoya_f01/anim/walk_femaleS10_a040_grounded.res"
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]

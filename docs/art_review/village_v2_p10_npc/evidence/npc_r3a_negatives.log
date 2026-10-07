@@ -1,0 +1,5 @@
+[NPC] PASS 反向 part_missing → 「parts」が FAIL（落ちた項目 ["parts", "tris"]）
+[NPC] PASS 反向 scaled_110 → 「height」が FAIL（落ちた項目 ["height"]）
+[NPC] PASS 反向 neck_stretch → 「stretch」が FAIL（落ちた項目 ["stretch"]）
+[NPC] PASS 反向 float_10cm → 「ground」が FAIL（落ちた項目 ["ground", "stretch"]）
+[NPC] 結果：0 項失敗（negatives）

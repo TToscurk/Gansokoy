@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://characters/npc/npc_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/npc/chonin_m01/chonin_m01.glb" id="2_glb"]
+
+[node name="NPC_ChoninM01" type="Node3D"]
+script = ExtResource("1_vis")
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]

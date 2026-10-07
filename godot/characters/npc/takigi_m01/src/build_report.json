@@ -1,0 +1,60 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\木柴攤販/骨架/tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbx",
+ "target_height": 1.72,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   0.0,
+   -0.0,
+   0.0
+  ]
+ },
+ "src_height": 1.0,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.72,
+ "feet_z": 0.0,
+ "scale": 1.72,
+ "parts": {
+  "Hair": {
+   "tris": 7672,
+   "verts": 4468,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\木柴攤販\\骨架\\tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbm\\木柴攤販_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 5,
+   "z": [
+    1.4067,
+    1.72
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\木柴攤販\\骨架\\tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbm\\木柴攤販_fbx_basecolor.jpg",
+   "texture_sha256": "26204f074283ed12953fb23b0c94aecad5ba0c7c1c3520be1a37a49911dd986e",
+   "texture_res": "characters/npc/takigi_m01/tex/takigi_m01_albedo.jpg"
+  },
+  "Body": {
+   "tris": 7768,
+   "verts": 4346,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\木柴攤販\\骨架\\tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbm\\木柴攤販_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    0.0,
+    1.6438
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\木柴攤販\\骨架\\tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbm\\木柴攤販_fbx_basecolor.jpg",
+   "texture_sha256": "26204f074283ed12953fb23b0c94aecad5ba0c7c1c3520be1a37a49911dd986e",
+   "texture_res": "characters/npc/takigi_m01/tex/takigi_m01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Hair": 0,
+  "Body": 0
+ },
+ "total_tris": 15440,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}

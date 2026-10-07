@@ -1,0 +1,43 @@
+{
+ "rig": "D:/參考圖概念圖/NCP模組\\主婦/骨架/tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbx",
+ "threshold": 0.05,
+ "parts": {
+  "a6771bb2_310b_49fc_9498_264e3f106782": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 4996,
+   "orig_img": "traditional+kimono+outfit+3d+model_basecolor.jpg",
+   "rig_img": "主婦_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.931,
+    0.731,
+    0.626
+   ],
+   "rig_rgb": [
+    0.929,
+    0.727,
+    0.624
+   ],
+   "max_channel_diff": 0.003
+  },
+  "b56e53b0_059c_4de5_af6f_a211b437fb76": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 2487,
+   "orig_img": "floral+hair+accessory+3d+model_basecolor.jpg",
+   "rig_img": "主婦_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.963,
+    0.833,
+    0.732
+   ],
+   "rig_rgb": [
+    0.958,
+    0.829,
+    0.729
+   ],
+   "max_channel_diff": 0.005
+  }
+ },
+ "verdict": "OK"
+}

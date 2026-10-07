@@ -1,0 +1,22 @@
+02:26:49 - tripo_addon - [task.py:21] - INFO - WebSocket server started on port 60600
+INFO:tripo_addon:WebSocket server started on port 60600
+INFO:websockets.server:server listening on 127.0.0.1:60600
+02:26:49 - tripo_addon - [ws_server.py:126] - INFO - WebSocket server running on ws://127.0.0.1:60600
+INFO:tripo_addon:WebSocket server running on ws://127.0.0.1:60600
+02:26:49 - tripo_addon - [ws_server.py:133] - INFO - Heartbeat monitoring started (timeout: 120s)
+INFO:tripo_addon:Heartbeat monitoring started (timeout: 120s)
+02:26:49 - tripo_addon - [ws_server.py:90] - INFO - Stopping WebSocket server...
+INFO:websockets.server:server closing
+INFO:tripo_addon:Stopping WebSocket server...
+INFO:websockets.server:server closed
+02:26:49 - tripo_addon - [task.py:27] - INFO - WebSocket server stop requested
+INFO:tripo_addon:WebSocket server stop requested
+02:26:49 - tripo_addon - [ws_server.py:77] - INFO - Event loop closed
+INFO:tripo_addon:Event loop closed
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:38:20)
+uv-from STOP: tripo_node_d636ab5b の頂点数・頂点順・位相が原版と一致しない {'verts': [5334, 5334], 'polys': [4740, 4740], 'loops': [17358, 17358], 'loop_vertex_order_equal': True, 'poly_loop_start_equal': True, 'face_edges': [10030, 10030], 'face_edge_set_equal': True, 'components': [59, 59], 'component_correspondence': True, 'dist_ratio_rel_std': 0.06585852801799774, 'affine_residual_rel': 0.004256085679910628, 'loose_edges': {'orig': [[2302, 2309], [2309, 2310], [2310, 2311]], 'rig': []}, 'loose_edge_len_orig_units': [0.01355, 0.01572, 0.0181], 'loose_verts': {'orig': [2309, 2310], 'rig': [2309, 2310]}, 'loose_only_differences': True}
+BlenderMCP addon registered
+[Tripo3D] Log file: C:\Users\B365\AppData\Local\Temp\tripo3d_blender_bridge.log
+BlenderMCP addon unregistered
+FBX version: 7200
+UVFROM_SAFETY tripo_node_d636ab5b {"verts": [5334, 5334], "polys": [4740, 4740], "loops": [17358, 17358], "loop_vertex_order_equal": true, "poly_loop_start_equal": true, "face_edges": [10030, 10030], "face_edge_set_equal": true, "components": [59, 59], "component_correspondence": true, "dist_ratio_rel_std": 0.06585852801799774, "affine_residual_rel": 0.004256085679910628, "loose_edges": {"orig": [[2302, 2309], [2309, 2310], [2310, 2311]], "rig": []}, "loose_edge_len_orig_units": [0.01355, 0.01572, 0.0181], "loose_verts": {"orig": [2309, 2310], "rig": [2309, 2310]}, "loose_only_differences": true}

@@ -1,0 +1,45 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\魚販/tripo_convert_5eb18e63-a8f3-4fe1-857a-3c404df3e2a3.fbx",
+ "target_height": 1.67,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   -4.371138828673793e-08,
+   0.0,
+   0.0
+  ]
+ },
+ "src_height": 0.9995,
+ "facing_fix_deg": -0.0,
+ "height_m": 1.67,
+ "feet_z": -0.0,
+ "scale": 1.67082,
+ "parts": {
+  "Body": {
+   "tris": 9821,
+   "verts": 5882,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\魚販\\tripo_convert_5eb18e63-a8f3-4fe1-857a-3c404df3e2a3.fbm\\tripo_image_5eb18e63-a8f3-4fe1-857a-3c404df3e2a3_0_0.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    -0.0,
+    1.67
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\魚販\\tripo_convert_5eb18e63-a8f3-4fe1-857a-3c404df3e2a3.fbm\\tripo_image_5eb18e63-a8f3-4fe1-857a-3c404df3e2a3_0_0.jpg",
+   "texture_sha256": "81c453a73ada1cec9059fe7eb5b5cecdf03c5d9b15ce869dc7ac7113a3a3a9d8",
+   "texture_res": "characters/npc/sakanaya_m01/tex/sakanaya_m01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0
+ },
+ "total_tris": 9821,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}

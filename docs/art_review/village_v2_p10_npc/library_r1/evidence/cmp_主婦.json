@@ -1,0 +1,64 @@
+{
+ "a6771bb2_310b_49fc_9498_264e3f106782": {
+  "loops": [
+   9616,
+   9616
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9948925971984863,
+  "skin_loops": 4996,
+  "orig_img": "traditional+kimono+outfit+3d+model_basecolor.jpg",
+  "rig_img": "主婦_fbx_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.931,
+   0.731,
+   0.626
+  ],
+  "skin_mean_rig_lin": [
+   0.929,
+   0.727,
+   0.624
+  ],
+  "all_mean_orig_lin": [
+   0.721,
+   0.505,
+   0.448
+  ],
+  "all_mean_rig_lin": [
+   0.721,
+   0.504,
+   0.448
+  ]
+ },
+ "b56e53b0_059c_4de5_af6f_a211b437fb76": {
+  "loops": [
+   13947,
+   13947
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9958973526954651,
+  "skin_loops": 2487,
+  "orig_img": "floral+hair+accessory+3d+model_basecolor.jpg",
+  "rig_img": "主婦_fbx_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.963,
+   0.833,
+   0.732
+  ],
+  "skin_mean_rig_lin": [
+   0.958,
+   0.829,
+   0.729
+  ],
+  "all_mean_orig_lin": [
+   0.516,
+   0.333,
+   0.291
+  ],
+  "all_mean_rig_lin": [
+   0.515,
+   0.332,
+   0.291
+  ]
+ }
+}

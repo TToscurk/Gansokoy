@@ -1,0 +1,63 @@
+{
+ "note": "P10 R3a NPC（普通町人・男 chonin_m01）來源紀錄。模型＝使用者 Tripo 生成（D:/參考圖概念圖/NCP模組/普通町人/、複本 tripo_source/）。動作＝同じ Tripo 体型（1.68 m、骨なし GLB）に Meshy rigging を掛けて Meshy 動作庫 #244 Idle 4／#30 Casual Walk を取得し、Godot で SkeletonProfileHumanoid へ retarget。URL は去簽章。",
+ "meshy_rigging_request": {
+  "model_url": "<meshy_in.glb：Tripo メッシュ 1.68 m・テクスチャ 1k>",
+  "height_meters": 1.68
+ },
+ "meshy_rigging_result": {
+  "id": "01a10b52-4296-77f9-a34f-d56aceb1a341",
+  "type": "rig",
+  "name": "",
+  "status": "SUCCEEDED",
+  "created_at": 1791191307263,
+  "progress": 100,
+  "started_at": 1791191307275,
+  "finished_at": 1791191314960,
+  "expires_at": 1791450514960,
+  "task_error": null,
+  "result": {
+   "rigged_character_fbx_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Character_output.fbx",
+   "rigged_character_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Character_output.glb",
+   "basic_animations": {
+    "walking_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Walking_withSkin.glb",
+    "walking_fbx_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Walking_withSkin.fbx",
+    "walking_armature_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Walking_withSkin_armature.glb",
+    "running_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Running_withSkin.glb",
+    "running_fbx_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Running_withSkin.fbx",
+    "running_armature_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-4296-77f9-a34f-d56aceb1a341/output/Animation_Running_withSkin_armature.glb"
+   }
+  },
+  "consumed_credits": 5
+ },
+ "meshy_animation_request": {
+  "rig_task_id": "01a10b52-4296-77f9-a34f-d56aceb1a341",
+  "action_ids": [
+   244,
+   30
+  ]
+ },
+ "meshy_animation_result": {
+  "id": "01a10b52-84b5-7686-b276-cc6cfa3e0ae4",
+  "type": "animate",
+  "name": "",
+  "status": "SUCCEEDED",
+  "created_at": 1791191319812,
+  "progress": 100,
+  "started_at": 1791191319821,
+  "finished_at": 1791191332043,
+  "expires_at": 1791450532043,
+  "task_error": null,
+  "result": {
+   "animation_glb_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-84b5-7686-b276-cc6cfa3e0ae4/output/merged_animations.glb",
+   "animation_fbx_url": "https://assets.meshy.ai/a8788a3f-7671-415b-af4b-5d53ef085131/tasks/01a10b52-84b5-7686-b276-cc6cfa3e0ae4/output/merged_animations.fbx",
+   "processed_usdz_url": "",
+   "processed_armature_fbx_url": "",
+   "processed_animation_fps_fbx_url": ""
+  },
+  "consumed_credits": 6
+ },
+ "meshy_credits": {
+  "rigging": 5,
+  "animation": 6
+ }
+}

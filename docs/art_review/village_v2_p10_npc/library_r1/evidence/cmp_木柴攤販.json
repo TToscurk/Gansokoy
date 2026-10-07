@@ -1,0 +1,34 @@
+{
+ "aec9dd22_f673_41c6_918d_335385931e27": {
+  "loops": [
+   16492,
+   16492
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9864756464958191,
+  "skin_loops": 383,
+  "orig_img": "bandana+headband+3d+model_basecolor.jpg",
+  "rig_img": "木柴攤販_fbx_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.819,
+   0.645,
+   0.558
+  ],
+  "skin_mean_rig_lin": [
+   0.804,
+   0.639,
+   0.564
+  ],
+  "all_mean_orig_lin": [
+   0.387,
+   0.248,
+   0.22
+  ],
+  "all_mean_rig_lin": [
+   0.387,
+   0.248,
+   0.219
+  ]
+ },
+ "tripo_42e84a7f_15ef_4102_95f0_01425feb3955": "missing in rig"
+}

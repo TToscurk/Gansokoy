@@ -1,0 +1,95 @@
+{
+ "source": {
+  "tris": 10220,
+  "bones": 78,
+  "height_m": 0.9995
+ },
+ "parts": {
+  "Head": {
+   "tris": 1251,
+   "verts": 727,
+   "materials": {
+    "M_Skin": 567,
+    "M_Hair": 684
+   },
+   "z": [
+    1.385,
+    1.664
+   ]
+  },
+  "Hair": {
+   "tris": 2285,
+   "verts": 1198,
+   "materials": {
+    "M_Hair": 2285
+   },
+   "z": [
+    1.392,
+    1.68
+   ]
+  },
+  "Upper": {
+   "tris": 2524,
+   "verts": 1362,
+   "materials": {
+    "M_Skin": 963,
+    "M_Cloth": 1561
+   },
+   "z": [
+    1.037,
+    1.428
+   ]
+  },
+  "Lower": {
+   "tris": 3472,
+   "verts": 1969,
+   "materials": {
+    "M_Cloth": 2592,
+    "M_Skin": 880
+   },
+   "z": [
+    0.127,
+    1.055
+   ]
+  },
+  "Feet": {
+   "tris": 1372,
+   "verts": 697,
+   "materials": {
+    "M_Skin": 968,
+    "M_Cloth": 404
+   },
+   "z": [
+    0.0,
+    0.172
+   ]
+  }
+ },
+ "scale": 1.68082,
+ "height_m": 1.68,
+ "feet_z": 0.0,
+ "bone_root_z_before": 0.9483,
+ "bone_root_moved_to_floor": true,
+ "seams": {
+  "neck_z": 1.396,
+  "waist_z": 1.045,
+  "ankle_z": 0.122
+ },
+ "strand_faces_to_hair": 187,
+ "hair_components": [
+  1117,
+  109,
+  27,
+  24,
+  24,
+  24
+ ],
+ "head_value_quartiles": [
+  0.282,
+  0.298,
+  0.318,
+  0.376,
+  0.894
+ ],
+ "total_tris": 10904
+}

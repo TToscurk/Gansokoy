@@ -1,0 +1,60 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\跑腿少年/骨架/tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbx",
+ "target_height": 1.52,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   0.0,
+   -0.0,
+   0.0
+  ]
+ },
+ "src_height": 1.0,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.52,
+ "feet_z": 0.0,
+ "scale": 1.52,
+ "parts": {
+  "Body": {
+   "tris": 9959,
+   "verts": 5585,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\跑腿少年\\骨架\\tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbm\\跑腿少年_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    0.0,
+    1.4477
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\跑腿少年\\骨架\\tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbm\\跑腿少年_fbx_basecolor.jpg",
+   "texture_sha256": "a99a5e80b39acbd727e66ea12834a960735ff473833de3f1e9c414fa629eb228",
+   "texture_res": "characters/npc/kozo_m01/tex/kozo_m01_albedo.jpg"
+  },
+  "Hair": {
+   "tris": 7092,
+   "verts": 5352,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\跑腿少年\\骨架\\tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbm\\跑腿少年_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 4,
+   "z": [
+    1.23,
+    1.52
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\跑腿少年\\骨架\\tripo_convert_4f95a81c-a2a2-4ad5-b3d8-5fe04f238f10.fbm\\跑腿少年_fbx_basecolor.jpg",
+   "texture_sha256": "a99a5e80b39acbd727e66ea12834a960735ff473833de3f1e9c414fa629eb228",
+   "texture_res": "characters/npc/kozo_m01/tex/kozo_m01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0,
+  "Hair": 0
+ },
+ "total_tris": 17051,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}

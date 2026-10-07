@@ -1,0 +1,43 @@
+{
+ "rig": "D:/參考圖概念圖/NCP模組\\布料老闆娘/骨架/tripo_convert_88097c4a-98a6-46bd-98cb-60e4a5dbb7c8.fbx",
+ "threshold": 0.05,
+ "parts": {
+  "tripo_node_00382c6c": {
+   "verdict": "REBAKE_CORRUPTION",
+   "sample": "skin",
+   "n": 9060,
+   "orig_img": "tripo_image_00382c6c-3cf8-4d3d-979c-0df35d6d3585_0_0.jpg",
+   "rig_img": "Diffuse Texture",
+   "orig_rgb": [
+    0.929,
+    0.74,
+    0.636
+   ],
+   "rig_rgb": [
+    0.628,
+    0.586,
+    0.565
+   ],
+   "max_channel_diff": 0.301
+  },
+  "tripo_node_d636ab5b": {
+   "verdict": "REBAKE_CORRUPTION",
+   "sample": "skin",
+   "n": 2304,
+   "orig_img": "tripo_image_d636ab5b-1a8a-4355-8e59-f938c3331220_0_0.jpg",
+   "rig_img": "Diffuse Texture",
+   "orig_rgb": [
+    0.824,
+    0.618,
+    0.465
+   ],
+   "rig_rgb": [
+    0.626,
+    0.517,
+    0.432
+   ],
+   "max_channel_diff": 0.198
+  }
+ },
+ "verdict": "REBAKE_CORRUPTION"
+}

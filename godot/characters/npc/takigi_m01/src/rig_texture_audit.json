@@ -1,0 +1,43 @@
+{
+ "rig": "D:/參考圖概念圖/NCP模組\\木柴攤販/骨架/tripo_convert_131eff16-d394-4bd1-8e32-fd9c12937ca1.fbx",
+ "threshold": 0.05,
+ "parts": {
+  "aec9dd22_f673_41c6_918d_335385931e27": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 383,
+   "orig_img": "bandana+headband+3d+model_basecolor.jpg",
+   "rig_img": "木柴攤販_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.819,
+    0.645,
+    0.558
+   ],
+   "rig_rgb": [
+    0.804,
+    0.639,
+    0.564
+   ],
+   "max_channel_diff": 0.015
+  },
+  "tripo_42e84a7f_15ef_4102_95f0_01425feb3955": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 5444,
+   "orig_img": "monk+character+3d+model_basecolor.jpg",
+   "rig_img": "木柴攤販_fbx_basecolor.jpg",
+   "orig_rgb": [
+    0.904,
+    0.645,
+    0.522
+   ],
+   "rig_rgb": [
+    0.897,
+    0.641,
+    0.519
+   ],
+   "max_channel_diff": 0.007
+  }
+ },
+ "verdict": "OK"
+}

@@ -1,0 +1,45 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\菜販人/tripo_convert_91966f75-9605-4a1c-9b8c-d5f59a361382.fbx",
+ "target_height": 1.64,
+ "bones": 78,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   -1.6292067073209182e-07,
+   0.0,
+   0.0
+  ]
+ },
+ "src_height": 0.9995,
+ "facing_fix_deg": -0.0,
+ "height_m": 1.64,
+ "feet_z": -0.0,
+ "scale": 1.6408,
+ "parts": {
+  "Body": {
+   "tris": 8505,
+   "verts": 5325,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\菜販人\\tripo_convert_91966f75-9605-4a1c-9b8c-d5f59a361382.fbm\\tripo_image_91966f75-9605-4a1c-9b8c-d5f59a361382_0_0.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    -0.0,
+    1.64
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\菜販人\\tripo_convert_91966f75-9605-4a1c-9b8c-d5f59a361382.fbm\\tripo_image_91966f75-9605-4a1c-9b8c-d5f59a361382_0_0.jpg",
+   "texture_sha256": "dbdbdad201daf815dde19516b74cb74d72d4d93588f747ac8c482cdf3d6b01f9",
+   "texture_res": "characters/npc/yaoya_m01/tex/yaoya_m01_albedo.png"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0
+ },
+ "total_tris": 8505,
+ "skeleton_family": "mixamo78",
+ "texture_max_size": 0
+}

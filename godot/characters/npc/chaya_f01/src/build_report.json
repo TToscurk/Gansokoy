@@ -1,0 +1,60 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\茶屋少女/骨架/tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbx",
+ "target_height": 1.55,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   0.0,
+   -0.0,
+   0.0
+  ]
+ },
+ "src_height": 1.0,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.55,
+ "feet_z": 0.0,
+ "scale": 1.55,
+ "parts": {
+  "Hair": {
+   "tris": 7030,
+   "verts": 5329,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\茶屋少女\\骨架\\tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbm\\茶屋少女_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 7,
+   "z": [
+    1.211,
+    1.55
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\茶屋少女\\骨架\\tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbm\\茶屋少女_basecolor.jpg",
+   "texture_sha256": "45b5e22eb3d7988116923dfe50300eb3a7f74183d06581d07491a326859255c8",
+   "texture_res": "characters/npc/chaya_f01/tex/chaya_f01_albedo.jpg"
+  },
+  "Body": {
+   "tris": 9844,
+   "verts": 5397,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\茶屋少女\\骨架\\tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbm\\茶屋少女_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    0.0,
+    1.4875
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\茶屋少女\\骨架\\tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbm\\茶屋少女_basecolor.jpg",
+   "texture_sha256": "45b5e22eb3d7988116923dfe50300eb3a7f74183d06581d07491a326859255c8",
+   "texture_res": "characters/npc/chaya_f01/tex/chaya_f01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Hair": 0,
+  "Body": 0
+ },
+ "total_tris": 16874,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}

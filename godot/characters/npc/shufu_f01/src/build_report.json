@@ -1,0 +1,89 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\主婦/骨架/tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbx",
+ "target_height": 1.58,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   0.0,
+   -0.0,
+   0.0
+  ]
+ },
+ "src_height": 1.0,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.58,
+ "feet_z": 0.0,
+ "scale": 1.58,
+ "parts": {
+  "Body": {
+   "tris": 4320,
+   "verts": 2404,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\主婦\\骨架\\tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbm\\主婦_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    0.0,
+    1.5122
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\主婦\\骨架\\tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbm\\主婦_fbx_basecolor.jpg",
+   "texture_sha256": "521e8aa929e4c2aef4f4026bb37a454de45624561b8a3298b99cb47241bfa175",
+   "texture_res": "characters/npc/shufu_f01/tex/shufu_f01_albedo.jpg"
+  },
+  "Hair": {
+   "tris": 6225,
+   "verts": 5000,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\主婦\\骨架\\tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbm\\主婦_fbx_basecolor.jpg",
+   "skinned": true,
+   "vgroups": 7,
+   "z": [
+    1.2658,
+    1.58
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\主婦\\骨架\\tripo_convert_0174715e-581f-416d-b2e5-f43ad08c44a4.fbm\\主婦_fbx_basecolor.jpg",
+   "texture_sha256": "521e8aa929e4c2aef4f4026bb37a454de45624561b8a3298b99cb47241bfa175",
+   "texture_res": "characters/npc/shufu_f01/tex/shufu_f01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0,
+  "Hair": 0
+ },
+ "apron_fix": {
+  "weights": {
+   "changed_verts": 88,
+   "params": {
+    "mode": "side_split",
+    "front_y": -0.06,
+    "front_ramp": 0.03,
+    "hem_z": 0.3,
+    "waist_z": 0.95,
+    "full_z": 0.75,
+    "split_w": 0.22,
+    "strength": 1.0
+   }
+  },
+  "moved_verts": 60,
+  "max_offset_m": 0.0399,
+  "apron_hem_z": 0.367,
+  "params": {
+   "mode": "clearance",
+   "offset_m": 0.04,
+   "front_y": -0.06,
+   "front_ramp": 0.04,
+   "top_z": 0.82,
+   "peak_z": 0.52,
+   "hem_keep": 0.8,
+   "flat_x": 0.1,
+   "edge_x": 0.22
+  }
+ },
+ "total_tris": 10545,
+ "texture_max_size": 0,
+ "skeleton_family": "mixamo65"
+}

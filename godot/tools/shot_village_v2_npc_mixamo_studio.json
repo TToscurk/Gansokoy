@@ -1,0 +1,842 @@
+[
+ {
+  "name": "M_idle_weightshift_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_weightshift_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    4.168,
+    8.335,
+    12.503
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_weightshift_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_weightshift_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    4.168,
+    8.335,
+    12.503
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_weightshift_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_weightshift_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    4.168,
+    8.335,
+    12.503
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_weightshift_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_weightshift_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    4.168,
+    8.335,
+    12.503
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_breathing_s0_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_breathing_s0_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.083,
+    4.165,
+    6.248
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_breathing_s0_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_breathing_s0_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.083,
+    4.165,
+    6.248
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_breathing_s0_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_breathing_s0_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.083,
+    4.165,
+    6.248
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_breathing_s0_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_breathing_s0_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.083,
+    4.165,
+    6.248
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_neutral_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_neutral_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.2,
+    4.4,
+    6.6
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_neutral_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_neutral_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.2,
+    4.4,
+    6.6
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_neutral_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_neutral_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.2,
+    4.4,
+    6.6
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_idle_neutral_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/idle_neutral_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    2.2,
+    4.4,
+    6.6
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_standard_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_standard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.3,
+    0.6,
+    0.9
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_standard_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_standard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.3,
+    0.6,
+    0.9
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_standard_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_standard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.3,
+    0.6,
+    0.9
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_standard_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_standard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.3,
+    0.6,
+    0.9
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_malestandard_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_malestandard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.318,
+    0.635,
+    0.953
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_malestandard_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_malestandard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.318,
+    0.635,
+    0.953
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_malestandard_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_malestandard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.318,
+    0.635,
+    0.953
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_malestandard_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_malestandard_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.318,
+    0.635,
+    0.953
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_hurried_a030_front",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_hurried_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.225,
+    0.45,
+    0.675
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_hurried_a030_q45",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -45,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_hurried_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.225,
+    0.45,
+    0.675
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_hurried_a030_side",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": -90,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_hurried_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.225,
+    0.45,
+    0.675
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ },
+ {
+  "name": "M_walk_hurried_a030_back",
+  "mode": "studio",
+  "npc": {
+   "pos": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "clip_res": "res://characters/npc/_shared/anim/mixamo/walk_hurried_a030_grounded.res",
+   "t": 0.0
+  },
+  "seq": {
+   "times": [
+    0.0,
+    0.225,
+    0.45,
+    0.675
+   ]
+  },
+  "cam": {
+   "type": "look",
+   "eye": [
+    0,
+    0.88,
+    7.2
+   ],
+   "at": [
+    0,
+    0.86,
+    0
+   ],
+   "fov": 17
+  }
+ }
+]

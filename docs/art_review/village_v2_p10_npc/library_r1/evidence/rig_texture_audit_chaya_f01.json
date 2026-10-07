@@ -1,0 +1,43 @@
+{
+ "rig": "D:/參考圖概念圖/NCP模組\\茶屋少女/骨架/tripo_convert_1851f2eb-b271-4b89-a103-7e24cb739d8f.fbx",
+ "threshold": 0.05,
+ "parts": {
+  "tripo_767b891f_3aa1_4238_b7f5_590d08122649": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 3770,
+   "orig_img": "anime+hair+accessory+3d+model_basecolor.jpg",
+   "rig_img": "茶屋少女_basecolor.jpg",
+   "orig_rgb": [
+    0.838,
+    0.553,
+    0.448
+   ],
+   "rig_rgb": [
+    0.834,
+    0.552,
+    0.448
+   ],
+   "max_channel_diff": 0.003
+  },
+  "tripo_node_88cd4f11": {
+   "verdict": "OK",
+   "sample": "skin",
+   "n": 10047,
+   "orig_img": "tripo_image_88cd4f11-8c8e-4ecf-96a9-6047ad511594_0_0.jpg",
+   "rig_img": "茶屋少女_basecolor.jpg",
+   "orig_rgb": [
+    0.922,
+    0.692,
+    0.586
+   ],
+   "rig_rgb": [
+    0.916,
+    0.687,
+    0.584
+   ],
+   "max_channel_diff": 0.007
+  }
+ },
+ "verdict": "OK"
+}

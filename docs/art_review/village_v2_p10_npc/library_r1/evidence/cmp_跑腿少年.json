@@ -1,0 +1,64 @@
+{
+ "tripo_5a717a47_ae1b_4a81_9297_f8c3791d7052": {
+  "loops": [
+   21441,
+   21441
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9954149723052979,
+  "skin_loops": 7690,
+  "orig_img": "anime+character+3d+model_basecolor.jpg",
+  "rig_img": "跑腿少年_fbx_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.92,
+   0.654,
+   0.527
+  ],
+  "skin_mean_rig_lin": [
+   0.914,
+   0.651,
+   0.527
+  ],
+  "all_mean_orig_lin": [
+   0.58,
+   0.386,
+   0.324
+  ],
+  "all_mean_rig_lin": [
+   0.579,
+   0.386,
+   0.324
+  ]
+ },
+ "tripo_5c3f9eca_5480_4d94_9cf2_b46ba6b78ff8": {
+  "loops": [
+   15162,
+   15162
+  ],
+  "same_loop_vertex_order": true,
+  "uv_max_abs_diff": 0.9954914450645447,
+  "skin_loops": 976,
+  "orig_img": "anime+headband+3d+model_basecolor.jpg",
+  "rig_img": "跑腿少年_fbx_basecolor.jpg",
+  "skin_mean_orig_lin": [
+   0.842,
+   0.484,
+   0.345
+  ],
+  "skin_mean_rig_lin": [
+   0.832,
+   0.481,
+   0.347
+  ],
+  "all_mean_orig_lin": [
+   0.412,
+   0.244,
+   0.204
+  ],
+  "all_mean_rig_lin": [
+   0.411,
+   0.243,
+   0.203
+  ]
+ }
+}

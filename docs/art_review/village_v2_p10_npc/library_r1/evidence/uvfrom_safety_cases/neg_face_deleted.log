@@ -1,0 +1,22 @@
+02:26:48 - tripo_addon - [task.py:21] - INFO - WebSocket server started on port 60600
+INFO:tripo_addon:WebSocket server started on port 60600
+INFO:websockets.server:server listening on 127.0.0.1:60600
+02:26:48 - tripo_addon - [ws_server.py:126] - INFO - WebSocket server running on ws://127.0.0.1:60600
+INFO:tripo_addon:WebSocket server running on ws://127.0.0.1:60600
+02:26:48 - tripo_addon - [ws_server.py:133] - INFO - Heartbeat monitoring started (timeout: 120s)
+INFO:tripo_addon:Heartbeat monitoring started (timeout: 120s)
+02:26:48 - tripo_addon - [ws_server.py:90] - INFO - Stopping WebSocket server...
+INFO:tripo_addon:Stopping WebSocket server...
+02:26:48 - tripo_addon - [task.py:27] - INFO - WebSocket server stop requested
+INFO:websockets.server:server closing
+INFO:tripo_addon:WebSocket server stop requested
+INFO:websockets.server:server closed
+02:26:48 - tripo_addon - [ws_server.py:77] - INFO - Event loop closed
+INFO:tripo_addon:Event loop closed
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:38:20)
+uv-from STOP: tripo_node_d636ab5b の頂点数・頂点順・位相が原版と一致しない {'verts': [5334, 5334], 'polys': [4739, 4740], 'loops': [17355, 17358]}
+BlenderMCP addon registered
+[Tripo3D] Log file: C:\Users\B365\AppData\Local\Temp\tripo3d_blender_bridge.log
+BlenderMCP addon unregistered
+FBX version: 7200
+UVFROM_SAFETY tripo_node_d636ab5b {"verts": [5334, 5334], "polys": [4739, 4740], "loops": [17355, 17358]}

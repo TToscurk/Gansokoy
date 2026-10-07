@@ -1,0 +1,271 @@
+{
+ "action": "walk_femaleS10_a030",
+ "frames": [
+  {
+   "f": 0,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0315,
+   "hem_center_y": -0.355,
+   "pts": []
+  },
+  {
+   "f": 1,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.03,
+   "hem_center_y": -0.3508,
+   "pts": []
+  },
+  {
+   "f": 2,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0207,
+   "hem_center_y": -0.3282,
+   "pts": []
+  },
+  {
+   "f": 3,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0116,
+   "hem_center_y": -0.3043,
+   "pts": []
+  },
+  {
+   "f": 4,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0068,
+   "hem_center_y": -0.3007,
+   "pts": []
+  },
+  {
+   "f": 5,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0062,
+   "hem_center_y": -0.3037,
+   "pts": []
+  },
+  {
+   "f": 6,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0063,
+   "hem_center_y": -0.3044,
+   "pts": []
+  },
+  {
+   "f": 7,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0062,
+   "hem_center_y": -0.3096,
+   "pts": []
+  },
+  {
+   "f": 8,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0054,
+   "hem_center_y": -0.3158,
+   "pts": []
+  },
+  {
+   "f": 9,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0053,
+   "hem_center_y": -0.335,
+   "pts": []
+  },
+  {
+   "f": 10,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0106,
+   "hem_center_y": -0.3528,
+   "pts": []
+  },
+  {
+   "f": 11,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0174,
+   "hem_center_y": -0.3684,
+   "pts": []
+  },
+  {
+   "f": 12,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0166,
+   "hem_center_y": -0.3742,
+   "pts": []
+  },
+  {
+   "f": 13,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0119,
+   "hem_center_y": -0.3717,
+   "pts": []
+  },
+  {
+   "f": 14,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.01,
+   "hem_center_y": -0.3621,
+   "pts": []
+  },
+  {
+   "f": 15,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0106,
+   "hem_center_y": -0.3467,
+   "pts": []
+  },
+  {
+   "f": 16,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0131,
+   "hem_center_y": -0.3276,
+   "pts": []
+  },
+  {
+   "f": 17,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0177,
+   "hem_center_y": -0.3103,
+   "pts": []
+  },
+  {
+   "f": 18,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0219,
+   "hem_center_y": -0.3015,
+   "pts": []
+  },
+  {
+   "f": 19,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0246,
+   "hem_center_y": -0.2968,
+   "pts": []
+  },
+  {
+   "f": 20,
+   "n_pen": 1,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0252,
+   "hem_center_y": -0.3007,
+   "pts": [
+    [
+     1357,
+     0.028,
+     0.477,
+     0.0
+    ]
+   ]
+  },
+  {
+   "f": 21,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0262,
+   "hem_center_y": -0.3124,
+   "pts": []
+  },
+  {
+   "f": 22,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0277,
+   "hem_center_y": -0.3304,
+   "pts": []
+  },
+  {
+   "f": 23,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0271,
+   "hem_center_y": -0.3507,
+   "pts": []
+  },
+  {
+   "f": 24,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0259,
+   "hem_center_y": -0.3698,
+   "pts": []
+  },
+  {
+   "f": 25,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0271,
+   "hem_center_y": -0.3771,
+   "pts": []
+  },
+  {
+   "f": 26,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0313,
+   "hem_center_y": -0.3744,
+   "pts": []
+  },
+  {
+   "f": 27,
+   "n_pen": 0,
+   "max_depth": 0.0,
+   "hem_center_x": 0.0319,
+   "hem_center_y": -0.3592,
+   "pts": []
+  }
+ ],
+ "summary": {
+  "frames": 28,
+  "frames_with_pen": 1,
+  "max_depth": 0.0,
+  "worst": [
+   {
+    "f": 0,
+    "n_pen": 0,
+    "max_depth": 0.0,
+    "hem_center_x": 0.0315,
+    "hem_center_y": -0.355,
+    "pts": []
+   },
+   {
+    "f": 1,
+    "n_pen": 0,
+    "max_depth": 0.0,
+    "hem_center_x": 0.03,
+    "hem_center_y": -0.3508,
+    "pts": []
+   },
+   {
+    "f": 2,
+    "n_pen": 0,
+    "max_depth": 0.0,
+    "hem_center_x": 0.0207,
+    "hem_center_y": -0.3282,
+    "pts": []
+   }
+  ],
+  "hem_x_range": [
+   0.0053,
+   0.0319
+  ]
+ }
+}

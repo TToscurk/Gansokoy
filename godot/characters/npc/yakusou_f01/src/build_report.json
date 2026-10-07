@@ -1,0 +1,45 @@
+{
+ "src": "D:/參考圖概念圖/NCP模組\\藥草婆婆/tripo_convert_18085fab-f6dd-464c-8e11-7d33a7bf2869.fbx",
+ "target_height": 1.47,
+ "bones": 65,
+ "src_armature_obj": {
+  "name": "Armature",
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rot": [
+   -4.371138828673793e-08,
+   0.0,
+   0.0
+  ]
+ },
+ "src_height": 0.9995,
+ "facing_fix_deg": -0.0,
+ "height_m": 1.47,
+ "feet_z": -0.0,
+ "scale": 1.47072,
+ "parts": {
+  "Body": {
+   "tris": 9590,
+   "verts": 5504,
+   "texture": "D:\\參考圖概念圖\\NCP模組\\藥草婆婆\\tripo_convert_18085fab-f6dd-464c-8e11-7d33a7bf2869.fbm\\tripo_image_18085fab-f6dd-464c-8e11-7d33a7bf2869_0_0.jpg",
+   "skinned": true,
+   "vgroups": 52,
+   "z": [
+    -0.0,
+    1.47
+   ],
+   "texture_src": "D:\\參考圖概念圖\\NCP模組\\藥草婆婆\\tripo_convert_18085fab-f6dd-464c-8e11-7d33a7bf2869.fbm\\tripo_image_18085fab-f6dd-464c-8e11-7d33a7bf2869_0_0.jpg",
+   "texture_sha256": "172bbae93065ec384db9bbe33b3d4ceef0f188fca5ca8b2475810203c0ff155f",
+   "texture_res": "characters/npc/yakusou_f01/tex/yakusou_f01_albedo.jpg"
+  }
+ },
+ "unweighted_fixed": {
+  "Body": 0
+ },
+ "total_tris": 9590,
+ "skeleton_family": "mixamo65",
+ "texture_max_size": 0
+}
