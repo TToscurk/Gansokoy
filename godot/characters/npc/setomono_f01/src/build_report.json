@@ -39,7 +39,32 @@
  "unweighted_fixed": {
   "Body": 0
  },
+ "basket_fix": {
+  "bone": "Spine2",
+  "params": {
+   "bone": "Spine2",
+   "behind_m": 0.08,
+   "blend_m": 0.03,
+   "z_min": 0.86,
+   "z_max": 1.22,
+   "x_max": 0.24,
+   "mode": "component",
+   "_note": "2026-10-07 使用者裁定：竹籃是硬物 → 籠の UV island を 1 本の骨へ剛体化（basket_fix.py）"
+  },
+  "rigid_verts": 1063,
+  "blend_verts": 319,
+  "dominant_bones_before": {
+   "RightUpLeg": 386,
+   "LeftUpLeg": 376,
+   "RightArm": 253,
+   "LeftShoulder": 206,
+   "RightShoulder": 68,
+   "Spine1": 46,
+   "LeftArm": 38,
+   "Hips": 8
+  }
+ },
  "total_tris": 11598,
- "skeleton_family": "mixamo65",
- "texture_max_size": 0
+ "texture_max_size": 0,
+ "skeleton_family": "mixamo65"
 }

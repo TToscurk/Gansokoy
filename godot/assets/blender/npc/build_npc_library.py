@@ -75,6 +75,8 @@ for n in roster['npcs']:
             extra = ['--uv-from=' + os.path.join(roster['src_root'], n['uv_from'])]
         if n.get('apron_fix'):   # 前掛けの幾何クリアランス（roster に値を記録、build_npc_tripo.py → apron_fix.py）
             extra.append('--apron-fix=' + json.dumps(n['apron_fix']))
+        if n.get('basket_fix'):   # 背負い籠／腰籠の剛体化（roster に値を記録、build_npc_tripo.py → basket_fix.py；2026-10-07）
+            extra.append('--basket-fix=' + json.dumps(n['basket_fix']))
         r = subprocess.run([BLENDER, '-b', '-P', os.path.join(HERE, 'build_npc_tripo.py'), '--', src, str(n['height']),
                             os.path.join(d, cid + '.glb'), rep_p] + extra, capture_output=True, text=True, encoding='utf-8', errors='replace')
         if r.returncode != 0 or not os.path.exists(rep_p):

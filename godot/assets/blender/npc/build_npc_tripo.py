@@ -16,6 +16,8 @@ SRC, HEIGHT, OUT, REPORT = argv[0], float(argv[1]), argv[2], argv[3]
 UV_FROM = next((a.split('=', 1)[1] for a in argv[4:] if a.startswith('--uv-from=')), '')
 # 任意：--apron-fix=<json>：前掛けの幾何クリアランス＋左右対称の太腿重み（apron_fix.py、主婦 shufu_f01；使用者裁定 2026-10-06）
 APRON_FIX = next((a.split('=', 1)[1] for a in argv[4:] if a.startswith('--apron-fix=')), '')
+# 任意：--basket-fix=<json>：背負い籠／腰籠を 1 本の骨へ剛体化（basket_fix.py；使用者裁定 2026-10-07「竹籃是硬物，不是布」）
+BASKET_FIX = next((a.split('=', 1)[1] for a in argv[4:] if a.startswith('--basket-fix=')), '')
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.fbx(filepath=SRC)
 for o in list(bpy.data.objects):
@@ -258,6 +260,13 @@ if APRON_FIX:
     rep['apron_fix'] = apron_fix.apply(_body, apron_fix.regions(_body), _P)
     _body.data.calc_loop_triangles()
     print('APRONFIX', json.dumps(rep['apron_fix']))
+if BASKET_FIX:
+    import os as _os
+    sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+    import basket_fix
+    bpy.context.view_layer.update()
+    rep['basket_fix'] = basket_fix.apply(parts['Body'], arm, json.loads(BASKET_FIX))
+    print('BASKETFIX', json.dumps(rep['basket_fix']))
 rep['total_tris'] = sum(p['tris'] for p in rep['parts'].values())
 bpy.ops.object.select_all(action='DESELECT')
 arm.select_set(True)

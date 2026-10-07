@@ -1,0 +1,158 @@
+{
+  "sakanaya_m01": {
+    "basket_verts": 1618,
+    "bone": "Hips",
+    "idle": {
+      "frames": 264,
+      "new_max_cm": 0.000344865316037613,
+      "new_rms_cm": 0.000327807697431126,
+      "old_max_cm": 8.04266184568405,
+      "old_rms_cm": 1.57382432371378
+    },
+    "rigid_to": {
+      "Head": 65,
+      "Hips": 1618,
+      "LeftFoot": 2,
+      "LeftLowerLeg": 4,
+      "LeftUpperLeg": 46,
+      "Neck": 65,
+      "RightLowerLeg": 6,
+      "RightShoulder": 2,
+      "RightUpperArm": 2,
+      "RightUpperLeg": 6,
+      "Spine": 44
+    },
+    "unmatched": 0,
+    "walk": {
+      "frames": 36,
+      "new_max_cm": 0.00027501021122589,
+      "new_rms_cm": 0.000246929585046018,
+      "old_max_cm": 27.198126912117,
+      "old_rms_cm": 4.61109988391399
+    }
+  },
+  "setomono_f01": {
+    "basket_verts": 1673,
+    "bone": "Spine2",
+    "idle": {
+      "frames": 264,
+      "new_max_cm": 0.000311235453409608,
+      "new_rms_cm": 0.0002921297436842,
+      "old_max_cm": 12.0253436267376,
+      "old_rms_cm": 4.66716699302197
+    },
+    "rigid_to": {
+      "Head": 48,
+      "Hips": 1,
+      "LeftHand": 1,
+      "LeftThumbMetacarpal": 1,
+      "LeftUpperLeg": 3,
+      "Neck": 48,
+      "RightUpperLeg": 1,
+      "Spine": 3,
+      "UpperChest": 1673
+    },
+    "unmatched": 0,
+    "walk": {
+      "frames": 36,
+      "new_max_cm": 0.000250946345659031,
+      "new_rms_cm": 0.000236559480981668,
+      "old_max_cm": 12.2106865048409,
+      "old_rms_cm": 4.92441765964031
+    }
+  },
+  "takigi_m01": {
+    "basket_verts": 1197,
+    "bone": "Spine2",
+    "idle": {
+      "frames": 264,
+      "new_max_cm": 0.000398367319576209,
+      "new_rms_cm": 0.000379916968995531,
+      "old_max_cm": 36.019828915596,
+      "old_rms_cm": 10.1144060492516
+    },
+    "rigid_to": {
+      "Head": 3,
+      "LeftLowerLeg": 14,
+      "LeftUpperLeg": 14,
+      "Neck": 3,
+      "RightLowerLeg": 14,
+      "RightShoulder": 2,
+      "RightUpperArm": 2,
+      "RightUpperLeg": 17,
+      "Spine": 3,
+      "UpperChest": 1197
+    },
+    "unmatched": 0,
+    "walk": {
+      "frames": 36,
+      "new_max_cm": 0.00032695147638151,
+      "new_rms_cm": 0.000309559663946857,
+      "old_max_cm": 38.0940586328506,
+      "old_rms_cm": 9.81370881199837
+    }
+  },
+  "yakusou_f01": {
+    "basket_verts": 2946,
+    "bone": "Spine2",
+    "idle": {
+      "frames": 264,
+      "new_max_cm": 0.000625154780209414,
+      "new_rms_cm": 0.000601943929723348,
+      "old_max_cm": 7.32852295041084,
+      "old_rms_cm": 3.42406556010246
+    },
+    "rigid_to": {
+      "Head": 4,
+      "LeftLowerLeg": 5,
+      "LeftThumbMetacarpal": 3,
+      "LeftThumbProximal": 3,
+      "LeftUpperLeg": 5,
+      "Neck": 4,
+      "RightLowerArm": 3,
+      "RightUpperArm": 3,
+      "UpperChest": 2946
+    },
+    "unmatched": 0,
+    "walk": {
+      "frames": 36,
+      "new_max_cm": 0.000680309403833235,
+      "new_rms_cm": 0.00063851903178147,
+      "old_max_cm": 10.0295096635818,
+      "old_rms_cm": 4.17309813201427
+    }
+  },
+  "yaoya_m01": {
+    "basket_verts": 840,
+    "bone": "Spine2",
+    "idle": {
+      "frames": 264,
+      "new_max_cm": 0.000229095348913688,
+      "new_rms_cm": 0.000215464979191893,
+      "old_max_cm": 11.7824174463749,
+      "old_rms_cm": 5.78073747456074
+    },
+    "rigid_to": {
+      "Head": 34,
+      "LeftLittleDistal": 2,
+      "LeftLittleIntermediate": 2,
+      "LeftLowerArm": 1,
+      "LeftUpperArm": 1,
+      "Neck": 34,
+      "RightFoot": 1,
+      "RightLowerLeg": 6,
+      "RightToes": 1,
+      "RightUpperLeg": 11,
+      "Spine": 5,
+      "UpperChest": 840
+    },
+    "unmatched": 0,
+    "walk": {
+      "frames": 36,
+      "new_max_cm": 0.000162586627538985,
+      "new_rms_cm": 0.000139696862788696,
+      "old_max_cm": 15.3113752603531,
+      "old_rms_cm": 6.1110146343708
+    }
+  }
+}

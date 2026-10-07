@@ -507,7 +507,7 @@
   "godot/characters/npc/kozo_m01/src/rig_texture_audit.json": "fecce8d17bbf0ffbe93600cbc614560649be48429f3d5c54983fb073e8102bf7",
   "godot/characters/npc/kozo_m01/tex/kozo_m01_albedo.jpg": "a99a5e80b39acbd727e66ea12834a960735ff473833de3f1e9c414fa629eb228",
   "godot/characters/npc/kozo_m01/tex/kozo_m01_albedo.jpg.import": "dc99cd602652020d8e764b2a8f67bb9e2b6be597d69f50f2fe262b3c969e0442",
-  "godot/characters/npc/npc_roster.json": "f1bbf63b01364dccf376606f7209060aaf395776b7b4184c7be0807999bba18a",
+  "godot/characters/npc/npc_roster.json": "e30136a3c141853907a6de89f7a8cde476e803f56bc64b8c1edfe7781652b9d8",
   "godot/characters/npc/npc_visual.gd": "e82941b6552d11c3b0247f1e0e0081b457f3ae475c94ade65a592c7a72947d9f",
   "godot/characters/npc/nunoya_f01/anim/idle_neutral_a015.res": "9db303a5e301e8c08ce3e72cd259d452832747115e09f0a4435311a427849369",
   "godot/characters/npc/nunoya_f01/anim/idle_neutral_a015_grounded.res": "f130ce317878e50c26eeaddbfd4ab4a5e69dc202a5abade774c6d179f6fe630f",
@@ -593,10 +593,10 @@
   "godot/characters/npc/sakanaya_m01/anim/walk_standard_a045.res": "ee30bfe34167399ad9b42d7d391df7c91f15b7e73a782284ffd114d9e2b04ea9",
   "godot/characters/npc/sakanaya_m01/anim/walk_standard_a045_grounded.res": "a7de241451b994e45c36a02650f4bb6b72ecb22d02812f17456a1e829638241f",
   "godot/characters/npc/sakanaya_m01/m_body.tres": "ebf7efb20d6461fc067c358a1e9132b44ec225c30ed0bc3bc3dfffa47a7621c3",
-  "godot/characters/npc/sakanaya_m01/sakanaya_m01.glb": "dac17b5464fa2698d9221f97857843cc044465727dc5c1ccfd52995a6c79f3a4",
+  "godot/characters/npc/sakanaya_m01/sakanaya_m01.glb": "f60758b98d810e07a38941e2d90fffd5db11ccf2a2aedd601c998bef680f882b",
   "godot/characters/npc/sakanaya_m01/sakanaya_m01.glb.import": "575adea47d19aa4417c0ab9f7fd9d6c77e5593bc7f025947e388e13f41f1ec7f",
   "godot/characters/npc/sakanaya_m01/sakanaya_m01.tscn": "78cda4db2a35e51e78b69066cc15cb38e18947f69fb963e27272ed97e669c510",
-  "godot/characters/npc/sakanaya_m01/src/build_report.json": "7f829380791ae531356a330fc2065e8feb5acfbdc86d107915a6b814af0a04ab",
+  "godot/characters/npc/sakanaya_m01/src/build_report.json": "da0cbe248d177adba9a80e9b6ad0d98e35a89b366b5125ac25bed8822d43f21f",
   "godot/characters/npc/sakanaya_m01/tex/sakanaya_m01_albedo.jpg": "81c453a73ada1cec9059fe7eb5b5cecdf03c5d9b15ce869dc7ac7113a3a3a9d8",
   "godot/characters/npc/sakanaya_m01/tex/sakanaya_m01_albedo.jpg.import": "91bfe4daf37c83c48f030800a9f84574930c08e1349f4154e67660dbef116fde",
   "godot/characters/npc/setomono_f01/anim/idle_neutral_a015.res": "bb8c939d56190260197b486b20564865db5b4d5d66bdec4322ead400a19eb183",
@@ -621,10 +621,10 @@
   "godot/characters/npc/setomono_f01/anim/walk_standard_a045.res": "b6989547628ba638d1259a0349fc3b235ea5470393abd7f39de2a73a02c28f56",
   "godot/characters/npc/setomono_f01/anim/walk_standard_a045_grounded.res": "bef5e31d917a92a19a8b75ffb2a36e92f31f64ac0ded52fc2eb904df67104cc7",
   "godot/characters/npc/setomono_f01/m_body.tres": "2e20d11634573cfea1eb02fa74e5eaff8edf963d5d1487747f9b63768b28b61d",
-  "godot/characters/npc/setomono_f01/setomono_f01.glb": "d16167a4d73a279586d3e59a6272362b87842f44c1e53be260bf38439c276e29",
+  "godot/characters/npc/setomono_f01/setomono_f01.glb": "773b07d65040aff923b96e019f0db46a7f6beda7ec0ced26c4cdc6e08f8c55f3",
   "godot/characters/npc/setomono_f01/setomono_f01.glb.import": "0ae1b360835d1ecd5eb2cafa1f9146994b5169708e8c0cbbb3da1819cd09f552",
   "godot/characters/npc/setomono_f01/setomono_f01.tscn": "6fb15256a53ad828c1388fae3294e9be0243beae5a92a6d0ea433fb6e8658ae2",
-  "godot/characters/npc/setomono_f01/src/build_report.json": "ccb66b0079cca4f0fb616812ee0583e14815bf53719a985d0a2736b0fd9746b0",
+  "godot/characters/npc/setomono_f01/src/build_report.json": "cbbc025e65e1579f45b1c5d235b1aae945b900daf06e264acdf1860ae2c7dbd8",
   "godot/characters/npc/setomono_f01/tex/setomono_f01_albedo.jpg": "2e03660d1b17fc89bdff038f791471f6bbfc0fbba4793a1c0d8ab96302b1c408",
   "godot/characters/npc/setomono_f01/tex/setomono_f01_albedo.jpg.import": "0cc3de31111616f338ccd9d2199b1a13755202ef301cc2a65af8f229eb32721f",
   "godot/characters/npc/shufu_f01/anim/idle_neutral_a015.res": "ebfb2bc4fe33053db3dd4fd7b9a2fc1e5d15539cc6b9e164d888ae01f290539e",
@@ -710,9 +710,9 @@
   "godot/characters/npc/takigi_m01/anim/walk_standard_a045_grounded.res": "ef2950e26f2a5691f6735191c30455733d94fb08783a3c09fe9811b9a82253f3",
   "godot/characters/npc/takigi_m01/m_body.tres": "af32a95ad1c7af913dde929b50dbc7f862dc60dd2ebe962a7ed8774660fb66f6",
   "godot/characters/npc/takigi_m01/m_hair.tres": "b465dc79d0f6ef349ae70386747dfe8985bd0564aa220a1ad292a165c3b3d032",
-  "godot/characters/npc/takigi_m01/src/build_report.json": "bcca292f54c626f00382e97c1ef0135502087bc7606dbfd2f105dcae69b76249",
+  "godot/characters/npc/takigi_m01/src/build_report.json": "015acf4a006a12b443cc4677f2cfd1e9281e147adfc451aa67c85487c6619f73",
   "godot/characters/npc/takigi_m01/src/rig_texture_audit.json": "9ee21f04b5af53efe49c8da63d48c5ded97a6d6d0ba77a2a3c113eb9a2529af5",
-  "godot/characters/npc/takigi_m01/takigi_m01.glb": "0564d5403774450ce2cd6c005b10988cf1a1304f87e5e434ea1252dab3fe8f48",
+  "godot/characters/npc/takigi_m01/takigi_m01.glb": "80a1d643e40f0f11cf89cbbcee06bc8b11f7e8667f8f06f3a12818f24b9349f0",
   "godot/characters/npc/takigi_m01/takigi_m01.glb.import": "fbb57ae5dde004c3c42db8a46ac14b5c048b98af5204703aef69944d691bddbb",
   "godot/characters/npc/takigi_m01/takigi_m01.tscn": "f9dd4d8fdf8dbdfd949f5806c0a926496cd3d548ef552184e1f6d654099352aa",
   "godot/characters/npc/takigi_m01/tex/takigi_m01_albedo.jpg": "26204f074283ed12953fb23b0c94aecad5ba0c7c1c3520be1a37a49911dd986e",
@@ -739,10 +739,10 @@
   "godot/characters/npc/yakusou_f01/anim/yakusou_f01_anim.glb": "97534da42df19764522abb5d873c59787cc78a7ede0bbf3b2a04eb5743b9b4d3",
   "godot/characters/npc/yakusou_f01/anim/yakusou_f01_anim.glb.import": "c3113cf99edb82b43fa294c35dc5a6f9fcbdfc6ac8529446b3674539a5e76c98",
   "godot/characters/npc/yakusou_f01/m_body.tres": "e5f8873ac0776f7608492acff507086ef26dc06323b073c3082d6311a484584f",
-  "godot/characters/npc/yakusou_f01/src/build_report.json": "3d2847091b005f8a4485c42b299a899ae8108f19dcd4d5f8dd5ba463092f1c55",
+  "godot/characters/npc/yakusou_f01/src/build_report.json": "b8bbbf6e0c0d01201f2edb7a702548d7db2525c8b994cd5beef888e1d25903be",
   "godot/characters/npc/yakusou_f01/tex/yakusou_f01_albedo.jpg": "172bbae93065ec384db9bbe33b3d4ceef0f188fca5ca8b2475810203c0ff155f",
   "godot/characters/npc/yakusou_f01/tex/yakusou_f01_albedo.jpg.import": "e82e64e9e591fe270b40b74fe88323ef497bfdf988d2d2252f5f9c0ff600ee10",
-  "godot/characters/npc/yakusou_f01/yakusou_f01.glb": "f0113a84c059d92cc3261b55c7b2d4904bb23982a10bb3c6e6f5259e32b7ded0",
+  "godot/characters/npc/yakusou_f01/yakusou_f01.glb": "0aa10573b31ed62f41a782feefee3cd188bf239ace403e13823dd67659d36607",
   "godot/characters/npc/yakusou_f01/yakusou_f01.glb.import": "6ea711631ecb5265991cab4d3c9b047dd8100a3c399c499d7e9735ce818e85ff",
   "godot/characters/npc/yakusou_f01/yakusou_f01.tscn": "0405d59fe4cb20ea19a06bd21e3969ddce45030c615478e2fdf13567b2c03eb9",
   "godot/characters/npc/yaoya_m01/anim/idle_neutral_a015.res": "febe7f90ff95de11aa1fda90957e18c84182d92623d5a17c5fac8c0514adedfc",
@@ -767,18 +767,18 @@
   "godot/characters/npc/yaoya_m01/anim/yaoya_m01_anim.glb": "efef38219dff1071d12ca8f0ebae6878e020a89caba6e8a1dd58d95a982cd19e",
   "godot/characters/npc/yaoya_m01/anim/yaoya_m01_anim.glb.import": "473d6bc564f67d21e7617e08c199428ed5d6623113414e995c48b1304791241a",
   "godot/characters/npc/yaoya_m01/m_body.tres": "0ccee75d090faa61a79335309243214d0ce7ef07d257a883776e3ac655acf819",
-  "godot/characters/npc/yaoya_m01/src/build_report.json": "de15e39978f400ba66bddae1d9f117ac7b0fe8b4b34f0481872a7af091590d2a",
+  "godot/characters/npc/yaoya_m01/src/build_report.json": "04f4cc97b84a1d9703e5baafcb67ba5342e26c27baf2edde97dc45ab077bc77e",
   "godot/characters/npc/yaoya_m01/tex/yaoya_m01_albedo.png": "dbdbdad201daf815dde19516b74cb74d72d4d93588f747ac8c482cdf3d6b01f9",
   "godot/characters/npc/yaoya_m01/tex/yaoya_m01_albedo.png.import": "0d51a0f02385ce55e5c23c222e69a743a84ed1af22f0d57d5468821ba13eda6b",
-  "godot/characters/npc/yaoya_m01/yaoya_m01.glb": "faeb8cec1ccde6aed013fb431e90038204b836469e27aa909b2a912d241fa20f",
+  "godot/characters/npc/yaoya_m01/yaoya_m01.glb": "7f40f7d88dcf822ca7b6be498ad2d0c6de328446a02e587f99a88534d0f9ee34",
   "godot/characters/npc/yaoya_m01/yaoya_m01.glb.import": "61f7993535ab00b0ec1f78c04378a7ed540273a6ce0d19ee77e34821b6b61a8c",
   "godot/characters/npc/yaoya_m01/yaoya_m01.tscn": "c84916e376983d8ecfdebf0bd7481c3e822cc28a1c985a629f25585a30455f1a",
   "godot/assets/blender/npc/apron_fix.py": "eb76c289a94801c452984509b7baefb0c72606c4e2179d0d2507f8ef3b4ab1d4",
   "godot/assets/blender/npc/build_npc_chonin_m01.py": "305666c2d25b1eb24e9cca9bb0cc6022c2b1ba043df855d6ca52a9b924edf53a",
-  "godot/assets/blender/npc/build_npc_library.py": "61bc5a35fced65236c1ec08d8c1bd2234d1274dc6054bbf37052a60418be8926",
+  "godot/assets/blender/npc/build_npc_library.py": "f0fc310794835112b06e42bca7c6e90623fb79238eabfcb7eb7d580cd78f1b58",
   "godot/assets/blender/npc/build_npc_library_anim.py": "c14b7efa644039b7590e555e55fa5eaffff3636f2be773119a9b43e973254ab5",
   "godot/assets/blender/npc/build_npc_mixamo_anim.py": "496e8e0890e0d16b23a939e9f70d708a7c710c3ab048c9c39e0335fc56006014",
-  "godot/assets/blender/npc/build_npc_tripo.py": "a685b25b3913fe9327e5e9ac692e204f67ea56857701324bf70f6b8bdad99519",
+  "godot/assets/blender/npc/build_npc_tripo.py": "cf256c9cf532ae5b1e5a1d8bf13252dfa003eafa934839a8913d4e2beb66a160",
   "godot/assets/blender/npc/export_npc_mixamo_upload.py": "a954c9fbac32c141614133097535ec6fa68e44bfa66bf7bb5737924c7c3c40e2",
   "godot/assets/blender/npc/npc_rig_texture_audit.py": "a39b7e8de46c148c4653d82a1a9f95e1ec1ce03138830094fd5336a91ddfa8ac",
   "godot/assets/blender/npc/npc_skeleton_audit.py": "aa4ec80d9ac09adf8b8371b3387bdb9515148ef77a8c638d98b9c48d0b5ef571",
@@ -786,7 +786,9 @@
   "godot/tools/verify_npc_library.gd": "53fd215c0e9ba0923515d2713389a6c7a42f06e6d664ff07e24dc039fd38e998",
   "godot/tools/verify_npc_prototype.gd": "f74f22a6effcb59c2fdc12d78b8a0842cac5298b57dfec246d1b2fb70a52d309",
   "godot/tools/build_npc_anim_grounded.gd": "8690ef82dc5126669b594534920d4de770c772332437f0bfc0540ccb6f517d43",
-  "godot/tools/shot_npc_library.gd": "aec8b709b9973a61acfe5e444a3146afe048dae5bbb70627cc566f9184a60f96"
+  "godot/tools/shot_npc_library.gd": "aec8b709b9973a61acfe5e444a3146afe048dae5bbb70627cc566f9184a60f96",
+  "godot/assets/blender/npc/basket_fix.py": "b8eb2401d7d089fd026bd91911737fa926295736940af416fd5ff280b8603c68",
+  "godot/tools/probe_npc_basket_rigidity.gd": "45f080184d9401e6bb51adfcd45e58bdcc331d511b6e3fc763e22ad16e214d76"
  },
  "sources": {
   "D:/參考圖概念圖/NCP模組/藥草婆婆/tripo_convert_18085fab-f6dd-464c-8e11-7d33a7bf2869.fbx": "1afe4c420cf9e526ad80e82f9a79ca251b2de336d35cbe77298278ea1511696f",
@@ -930,7 +932,13 @@
   "library_r1/alt_walks/shufu_f01_walk_femwalk2_a030.jpg": "8f63542b05ad247cef8032a1dc4a1741dd3ae955fa4fa99234f0dfa34fb250f2",
   "library_r1/alt_walks/shufu_f01_walk_malestd_a030.jpg": "3f2f3f9816da661e18ae6b000116edbaee61b9bbf9d2c4569605f5282925f5a8",
   "library_r1/alt_walks/takigi_m01_walk_standard_a038.jpg": "b6bef2c7ba95018aced2fadc9eb83eb9af0d007c15584f49f1afae0290e9d933",
-  "library_r1/alt_walks/takigi_m01_walk_standard_a042.jpg": "57d40f31024b5f6d62ff2a11bf46f8863371b475443c5444b92dcc0d065bcad4"
+  "library_r1/alt_walks/takigi_m01_walk_standard_a042.jpg": "57d40f31024b5f6d62ff2a11bf46f8863371b475443c5444b92dcc0d065bcad4",
+  "basket_rigid/rigidity.json": "a819fab485fa1d784c914c641dc995b6a6f49ab7a154b1c35810770661182655",
+  "basket_rigid/sheet_yakusou_f01_walk_after.jpg": "70977085028de7d1f723ce52f3332b9a06dd9fa63d38b2e914dd25ed5fab7f9e",
+  "basket_rigid/sheet_setomono_f01_walk_after.jpg": "0ea887b1439092e8c912ed7291de259809838a8b4c34c47f62ac4be088d3c288",
+  "basket_rigid/sheet_yaoya_m01_walk_after.jpg": "d45e8c911fbe93cc6730e05c27bb010a93ef806c3442cef6c7f9538a790f6815",
+  "basket_rigid/sheet_sakanaya_m01_walk_after.jpg": "e160b0fa8f8e5c4c64b8ba1f89146812595c584b10247646b83cecf6942d64a1",
+  "basket_rigid/sheet_takigi_m01_walk_after.jpg": "1506d3a77cb9a4299027137ba07e2a10029ed3fdef2b8e2d051acf3f7542f525"
  },
  "reseal_history": [
   {
@@ -1042,6 +1050,126 @@
     }
    },
    "stability": "headless --import 後・rendered 撮影後とも .import の md5 不変"
+  },
+  {
+   "at": "2026-10-07",
+   "kind": "BASKET_RIGID_WEIGHTS",
+   "approved_by": "user",
+   "reason": "使用者指示 2026-10-07：「竹籃是硬物，不是布」——走路時背負い籠／腰籠が Spine／Shoulder／Arm／UpLeg の複数骨に引かれて捻れる。籠の UV island を 1 本の骨へ 100 % 剛体化（背負い＝Spine2→Godot UpperChest、魚販の腰籠＝Hips）。肩帯・衣服は元の蒙皮のまま。",
+   "pipeline": "npc_roster.json の basket_fix（選択パラメータ）→ build_npc_library.py → build_npc_tripo.py --basket-fix → basket_fix.py（重みの数値だけ変更）。再ビルドは決定的（無修正の再ビルドで glb バイト一致を確認済み）。",
+   "npcs": [
+    "yakusou_f01",
+    "setomono_f01",
+    "yaoya_m01",
+    "sakanaya_m01",
+    "takigi_m01"
+   ],
+   "unchanged": "原素材・メッシュ形状／頂点位置・UV・貼圖と .import・材質・骨格・全動作・roster の他項目・他 5 体",
+   "measured": {
+    "sakanaya_m01": {
+     "basket_verts": 1618,
+     "walk_bend_max_cm_before": 27.2,
+     "walk_bend_rms_cm_before": 4.6,
+     "walk_bend_max_cm_after": 0.0,
+     "idle_bend_max_cm_before": 8.0
+    },
+    "setomono_f01": {
+     "basket_verts": 1673,
+     "walk_bend_max_cm_before": 12.2,
+     "walk_bend_rms_cm_before": 4.9,
+     "walk_bend_max_cm_after": 0.0,
+     "idle_bend_max_cm_before": 12.0
+    },
+    "takigi_m01": {
+     "basket_verts": 1197,
+     "walk_bend_max_cm_before": 38.1,
+     "walk_bend_rms_cm_before": 9.8,
+     "walk_bend_max_cm_after": 0.0,
+     "idle_bend_max_cm_before": 36.0
+    },
+    "yakusou_f01": {
+     "basket_verts": 2946,
+     "walk_bend_max_cm_before": 10.0,
+     "walk_bend_rms_cm_before": 4.2,
+     "walk_bend_max_cm_after": 0.001,
+     "idle_bend_max_cm_before": 7.3
+    },
+    "yaoya_m01": {
+     "basket_verts": 840,
+     "walk_bend_max_cm_before": 15.3,
+     "walk_bend_rms_cm_before": 6.1,
+     "walk_bend_max_cm_after": 0.0,
+     "idle_bend_max_cm_before": 11.8
+    }
+   },
+   "visual_check": "basket_rigid/sheet_<id>_walk_after.jpg（walk 4 相位×正面／右側／背面／背 45°）：捻れ・伸び・背への貫通・浮き・裂け目なし（vision 確認）",
+   "changed_files": {
+    "godot/characters/npc/npc_roster.json": {
+     "sealed": "f1bbf63b01364dccf376606f7209060aaf395776b7b4184c7be0807999bba18a",
+     "now": "e30136a3c141853907a6de89f7a8cde476e803f56bc64b8c1edfe7781652b9d8"
+    },
+    "godot/characters/npc/sakanaya_m01/sakanaya_m01.glb": {
+     "sealed": "dac17b5464fa2698d9221f97857843cc044465727dc5c1ccfd52995a6c79f3a4",
+     "now": "f60758b98d810e07a38941e2d90fffd5db11ccf2a2aedd601c998bef680f882b"
+    },
+    "godot/characters/npc/sakanaya_m01/src/build_report.json": {
+     "sealed": "7f829380791ae531356a330fc2065e8feb5acfbdc86d107915a6b814af0a04ab",
+     "now": "da0cbe248d177adba9a80e9b6ad0d98e35a89b366b5125ac25bed8822d43f21f"
+    },
+    "godot/characters/npc/setomono_f01/setomono_f01.glb": {
+     "sealed": "d16167a4d73a279586d3e59a6272362b87842f44c1e53be260bf38439c276e29",
+     "now": "773b07d65040aff923b96e019f0db46a7f6beda7ec0ced26c4cdc6e08f8c55f3"
+    },
+    "godot/characters/npc/setomono_f01/src/build_report.json": {
+     "sealed": "ccb66b0079cca4f0fb616812ee0583e14815bf53719a985d0a2736b0fd9746b0",
+     "now": "cbbc025e65e1579f45b1c5d235b1aae945b900daf06e264acdf1860ae2c7dbd8"
+    },
+    "godot/characters/npc/takigi_m01/src/build_report.json": {
+     "sealed": "bcca292f54c626f00382e97c1ef0135502087bc7606dbfd2f105dcae69b76249",
+     "now": "015acf4a006a12b443cc4677f2cfd1e9281e147adfc451aa67c85487c6619f73"
+    },
+    "godot/characters/npc/takigi_m01/takigi_m01.glb": {
+     "sealed": "0564d5403774450ce2cd6c005b10988cf1a1304f87e5e434ea1252dab3fe8f48",
+     "now": "80a1d643e40f0f11cf89cbbcee06bc8b11f7e8667f8f06f3a12818f24b9349f0"
+    },
+    "godot/characters/npc/yakusou_f01/src/build_report.json": {
+     "sealed": "3d2847091b005f8a4485c42b299a899ae8108f19dcd4d5f8dd5ba463092f1c55",
+     "now": "b8bbbf6e0c0d01201f2edb7a702548d7db2525c8b994cd5beef888e1d25903be"
+    },
+    "godot/characters/npc/yakusou_f01/yakusou_f01.glb": {
+     "sealed": "f0113a84c059d92cc3261b55c7b2d4904bb23982a10bb3c6e6f5259e32b7ded0",
+     "now": "0aa10573b31ed62f41a782feefee3cd188bf239ace403e13823dd67659d36607"
+    },
+    "godot/characters/npc/yaoya_m01/src/build_report.json": {
+     "sealed": "de15e39978f400ba66bddae1d9f117ac7b0fe8b4b34f0481872a7af091590d2a",
+     "now": "04f4cc97b84a1d9703e5baafcb67ba5342e26c27baf2edde97dc45ab077bc77e"
+    },
+    "godot/characters/npc/yaoya_m01/yaoya_m01.glb": {
+     "sealed": "faeb8cec1ccde6aed013fb431e90038204b836469e27aa909b2a912d241fa20f",
+     "now": "7f40f7d88dcf822ca7b6be498ad2d0c6de328446a02e587f99a88534d0f9ee34"
+    },
+    "godot/assets/blender/npc/build_npc_library.py": {
+     "sealed": "61bc5a35fced65236c1ec08d8c1bd2234d1274dc6054bbf37052a60418be8926",
+     "now": "f0fc310794835112b06e42bca7c6e90623fb79238eabfcb7eb7d580cd78f1b58"
+    },
+    "godot/assets/blender/npc/build_npc_tripo.py": {
+     "sealed": "a685b25b3913fe9327e5e9ac692e204f67ea56857701324bf70f6b8bdad99519",
+     "now": "cf256c9cf532ae5b1e5a1d8bf13252dfa003eafa934839a8913d4e2beb66a160"
+    }
+   },
+   "added_frozen": {
+    "godot/assets/blender/npc/basket_fix.py": "b8eb2401d7d089fd026bd91911737fa926295736940af416fd5ff280b8603c68",
+    "godot/tools/probe_npc_basket_rigidity.gd": "45f080184d9401e6bb51adfcd45e58bdcc331d511b6e3fc763e22ad16e214d76"
+   },
+   "added_evidence": {
+    "basket_rigid/rigidity.json": "a819fab485fa1d784c914c641dc995b6a6f49ab7a154b1c35810770661182655",
+    "basket_rigid/sheet_yakusou_f01_walk_after.jpg": "70977085028de7d1f723ce52f3332b9a06dd9fa63d38b2e914dd25ed5fab7f9e",
+    "basket_rigid/sheet_setomono_f01_walk_after.jpg": "0ea887b1439092e8c912ed7291de259809838a8b4c34c47f62ac4be088d3c288",
+    "basket_rigid/sheet_yaoya_m01_walk_after.jpg": "d45e8c911fbe93cc6730e05c27bb010a93ef806c3442cef6c7f9538a790f6815",
+    "basket_rigid/sheet_sakanaya_m01_walk_after.jpg": "e160b0fa8f8e5c4c64b8ba1f89146812595c584b10247646b83cecf6942d64a1",
+    "basket_rigid/sheet_takigi_m01_walk_after.jpg": "1506d3a77cb9a4299027137ba07e2a10029ed3fdef2b8e2d051acf3f7542f525"
+   },
+   "previous_seal_sha256": "039964754d74aebb079200c95a22bb0d8b7e231f6b7d541942901a8d392818e4"
   }
  ],
  "first_sealed": "2026-10-06（初回）"
