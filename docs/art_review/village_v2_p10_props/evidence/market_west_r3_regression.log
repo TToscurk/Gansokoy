@@ -1,0 +1,24 @@
+[MW] 結果：0 項失敗
+✓ P10 R1b r3 plan gate 21
+[MW] 結果：0 項失敗（negatives）
+✓ P10 R1b r3 反向 19
+[MW] 結果：0 項失敗（scene）
+✓ P10 R1b r3 scene
+[MKT] 結果：0 項失敗（seal）
+✓ P10 R1 市集 封存
+[STR] 結果：0 項失敗
+✓ P10 R2 主街 plan gate
+[GC] 結果：0 項失敗（seal）
+✓ P9 R5 Groundcover 封存
+[MDW] 結果：0 項失敗
+✓ P9 R5-3 MeadowP9 plan gate（現在の Props で禁區照合、重烘しない）
+[MDW] 結果：0 項失敗（seal）
+✓ P9 R5-3 MeadowP9 封存
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，3409 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 23133 ms）
+✓ 場景擺放／碰撞稽核＋永久反向
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.05 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+[MMBAKE] 結果：0 項失敗
+✓ MMBAKE 全場景 MultiMesh
+回歸失敗項目：0

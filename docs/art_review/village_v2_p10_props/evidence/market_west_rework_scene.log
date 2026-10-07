@@ -1,0 +1,9 @@
+[MW] PASS 場景已掛 Props/MarketP10 → StreetP10 → MarketWestP10（各 1 個）
+[MW] PASS MarketP10 封存：gen/market_p10.scn 雜湊＝封存時
+[MW] PASS 接地射線：70 件（陳列・看板・入口・後場・敷石）の原點と地形（衝突體）の差 ≤ 0.22 m 違反 0 
+[MW] PASS LOD：構件の LOD0／LOD1 mesh（欠 0 ）
+[MW] PASS 建物：10 棟に町家 Kit（LOD0／1／2）・店先帯、原點が地形の上 0–0.3 m（違反 0 ）
+[MW] PASS 床：区域ごとの床 6（面・材質の欠 0 ）
+[MW] PASS 碰撞 59 shapes、NPC anchors 32（group＋activity meta）
+[MW] PASS MultiMesh を使わない：0
+[MW] 結果：0 項失敗（scene）

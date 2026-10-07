@@ -1,0 +1,7 @@
+[MW] PASS 場景已掛 Props/MarketP10 → StreetP10 → MarketWestP10（各 1 個）
+[MW] PASS MarketP10 封存：gen/market_p10.scn 雜湊＝封存時
+[MW] PASS 接地射線：25 件の原點と地形（衝突體）の差 ≤ 0.22 m 違反 0 
+[MW] PASS LOD：25 件に LOD0／LOD1 mesh（欠 0）
+[MW] PASS 碰撞 25 shapes、NPC anchors 25（group＋activity meta）
+[MW] PASS MultiMesh を使わない：0
+[MW] 結果：0 項失敗（scene）

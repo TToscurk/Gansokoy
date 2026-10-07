@@ -1,0 +1,11 @@
+[MW] INFO 規劃 25 件、anchors 25（827 ms）
+[MW] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1：接地：25）
+[MW] PASS 反向 n_building → 「建物」必須 FAIL（失敗項 2：接地：25, 建物：足元）
+[MW] PASS 反向 n_overlap → 「互不重疊」必須 FAIL（失敗項 1：互不重疊：）
+[MW] PASS 反向 n_lane → 「歩く通り」必須 FAIL（失敗項 1：歩く通り：）
+[MW] PASS 反向 n_market → 「封存」必須 FAIL（失敗項 1：封存：足元）
+[MW] PASS 反向 n_access → 「到達」必須 FAIL（失敗項 2：路面・店先, 到達：中橫）
+[MW] PASS 反向 n_compose → 「構圖」必須 FAIL（失敗項 1：構圖：小屋）
+[MW] PASS 反向 n_anchor → 「NPC」必須 FAIL（失敗項 1：NPC a）
+[MW] PASS 反向 n_water → 「水際」必須 FAIL（失敗項 2：接地：25, 水際：足元）
+[MW] 結果：0 項失敗（negatives）

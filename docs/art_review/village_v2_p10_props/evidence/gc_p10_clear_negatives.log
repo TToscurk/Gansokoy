@@ -1,0 +1,45 @@
+[GC] INFO 規劃 Pilot 3051＋全村 r5（林緣・溪岸）3961＋Macro Pilot 1551＋全村 Macro 6734 MultiMesh instance、Pilot 130＋全村 1293 節點（Pilot 6572 ms、全村 r5 27314 ms、Macro Pilot 14428 ms、全村 Macro 27538 ms）
+[GC] INFO 全村 Macro：壁 555 面、背戸 131、小径 58、作業地面・踏み荒らし 190、交差・巷口・轉角 35、街區 146、小區 205
+[GC] PASS 反向 sealed → 「禁區」必須 FAIL（失敗項 1）
+[GC] PASS 反向 road → 「禁區」必須 FAIL（失敗項 1）
+[GC] PASS 反向 grid → 「開闊草地」必須 FAIL（失敗項 3）
+[GC] PASS 反向 ring → 「牆腳」必須 FAIL（失敗項 2）
+[GC] PASS 反向 forest → 「林緣」必須 FAIL（失敗項 2）
+[GC] PASS 反向 water → 「水際」必須 FAIL（失敗項 2）
+[GC] PASS 反向 bare → 「樹根」必須 FAIL（失敗項 2）
+[GC] PASS 反向 dirt → 「地形語意」必須 FAIL（失敗項 1）
+[GC] PASS 反向 band → 「邊界」必須 FAIL（失敗項 2）
+[GC] PASS 反向 isolated → 「水際」必須 FAIL（失敗項 3）
+[GC] PASS 反向 flatbank → 「溪岸地面」必須 FAIL（失敗項 1）
+[GC] PASS 反向 nofloor → 「林床」必須 FAIL（失敗項 2）
+[GC] PASS 反向 lawnfill → 「土場語意」必須 FAIL（失敗項 1）
+[GC] PASS 反向 coredeep → 「溪岸 P7 核心淡入」必須 FAIL（失敗項 1）
+[GC] PASS 反向 v_sealed → 「[全村] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 v_farm → 「[全村] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 v_forest → 「[全村] 林緣」必須 FAIL（失敗項 1）
+[GC] PASS 反向 v_nofloor → 「[全村] 林床」必須 FAIL（失敗項 1）
+[GC] PASS 反向 v_isolated → 「[全村] 水際」必須 FAIL（失敗項 2）
+[GC] PASS 反向 v_coredeep → 「[全村] 溪岸 P7」必須 FAIL（失敗項 1）
+[GC] PASS 反向 v_freeze → 「[全村] Pilot r10f 凍結」必須 FAIL（失敗項 1）
+[GC] PASS 反向 v_p7piece → 「[全村] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 m_sealed → 「[Macro] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 m_p7 → 「[Macro] 禁區」必須 FAIL（失敗項 1）
+[GC] PASS 反向 m_fill → 「[Macro] 留白」必須 FAIL（失敗項 3）
+[GC] PASS 反向 m_tiny → 「[Macro] 主角＝地面」必須 FAIL（失敗項 2）
+[GC] PASS 反向 m_speckle → 「[Macro] 尺度」必須 FAIL（失敗項 3）
+[GC] PASS 反向 m_ring → 「[Macro] C 牆腳」必須 FAIL（失敗項 1）
+[GC] PASS 反向 m_noditch → 「[Macro] B 交界序列」必須 FAIL（失敗項 1）
+[GC] PASS 反向 m_nopath → 「[Macro] B 交界序列」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_sealed → 「[MV] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 mv_farm → 「[MV] 禁區」必須 FAIL（失敗項 2）
+[GC] PASS 反向 mv_road → 「[MV] 路肩」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_fill → 「[MV] 主角＝地面」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_tiny → 「[MV] 主角＝地面」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_speckle → 「[MV] 尺度」必須 FAIL（失敗項 5）
+[GC] PASS 反向 mv_ring → 「[MV] 後院牆腳」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_fixedband → 「[MV] 農田交界」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_noditch → 「[MV] 農田交界」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_uniform → 「[MV] 語意分類」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_nolift → 「[Surface] 可見最上面」必須 FAIL（失敗項 1）
+[GC] PASS 反向 mv_m9 → 「[Macro Pilot] m9 凍結」必須 FAIL（失敗項 1）
+[GC] 結果：0 項失敗（negatives）

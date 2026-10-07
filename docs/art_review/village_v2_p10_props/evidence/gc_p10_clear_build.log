@@ -1,0 +1,6 @@
+[GC] PASS 永久 build rule：MultiMesh build 需要 rendering display（--build 不可加 --headless）
+[GC] PASS [P10 限定解封] 路地 1 の歩く芯（[[P: (207.6, -42.7), S: (2.6, 19.9)]]）：烘焙後の地被 instance 0（= 0）、除いた instance Pilot 43・全村 r5 0・Macro Pilot 0・全村 Macro 58（規劃 digest は不變）
+[GC] PASS save res://maps/village_v2/gen/groundcover_p9.scn
+[GC] PASS 永久 build rule：存檔後回讀 overlay，全部 instance transform 非零（MultiMesh 節點 1920、instance 23798、零矩陣 0 ）
+[GC] INFO overlay 12.18 MB、instance 15196、節點 1423、MultiMesh 分塊節點 1920
+[GC] 結果：0 項失敗
