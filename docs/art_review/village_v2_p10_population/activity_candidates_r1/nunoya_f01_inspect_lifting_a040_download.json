@@ -1,0 +1,55 @@
+{
+  "character": "nunoya_f01",
+  "clip": "inspect_lifting_a040",
+  "product": "c9c6fe3b-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.4,
+  "ok": true,
+  "job_uuid": "2da4cce4-cc2c-467c-b9ff-92b70dedfb43",
+  "character_uuid": "f305f7d4-c2b2-4a4b-8877-280de29a1ccc",
+  "motion": {
+    "model-id": 110150903,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.4,
+    "params": "1,0,0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 250,
+    "duration": 8.33,
+    "gms_hash": {
+      "model-id": 110150903,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Posture",
+          1
+        ],
+        [
+          "Examine",
+          0
+        ],
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Lifting",
+  "file": "godot/animations/npc_activity_p10/nunoya_f01/src/inspect_lifting_a040.fbx",
+  "bytes": 904480,
+  "sha256": "295b5633c31b1a3e72e11cd0c6a697206e30e9c14dd0a18283d114e9078629e5"
+}

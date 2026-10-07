@@ -1,0 +1,48 @@
+[
+  {
+    "name": "act_plan",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/verify_p10_activity.gd",
+      "--",
+      "--plan",
+      "--out=D:\\\u795e\u793e\\shrine\\docs\\art_review\\village_v2_p10_population\\activity_r1\\act_plan.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "act_scene",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--rendering-method",
+      "forward_plus",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/verify_p10_activity.gd",
+      "--",
+      "--scene",
+      "--out=D:\\\u795e\u793e\\shrine\\docs\\art_review\\village_v2_p10_population\\activity_r1\\act_scene.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "act_negative",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/verify_p10_activity.gd",
+      "--",
+      "--negatives",
+      "--out=D:\\\u795e\u793e\\shrine\\docs\\art_review\\village_v2_p10_population\\activity_r1\\act_negative.json"
+    ],
+    "exit": 0
+  }
+]

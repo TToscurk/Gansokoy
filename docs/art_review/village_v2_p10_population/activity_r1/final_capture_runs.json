@@ -1,0 +1,65 @@
+[
+  {
+    "name": "selected",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--path",
+      "godot",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "res://tools/shot_p10_activity_selected.gd",
+      "--",
+      "D:/\u795e\u793e/shrine/docs/art_review/village_v2_p10_population/activity_r1/selected/"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "isolated",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--path",
+      "godot",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "res://tools/shot_p10_activity_selected.gd",
+      "--",
+      "D:/\u795e\u793e/shrine/docs/art_review/village_v2_p10_population/activity_r1/isolated/",
+      "--isolate"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "population",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--path",
+      "godot",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "res://tools/shot_p10_activity_population.gd",
+      "--",
+      "D:/\u795e\u793e/shrine/docs/art_review/village_v2_p10_population/activity_r1/population/"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "baseline_walk",
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--path",
+      "godot",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "res://tools/shot_p10_activity_population.gd",
+      "--",
+      "D:/\u795e\u793e/shrine/docs/art_review/village_v2_p10_population/activity_r1/baseline_walk/",
+      "--walk-only",
+      "--baseline-walk"
+    ],
+    "exit": 0
+  }
+]

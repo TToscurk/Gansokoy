@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bi66isbc8408f"]
 
+[ext_resource type="PackedScene" path="res://maps/village_v2/activity_p10.tscn" id="p10r3c_activity"]
+
 [ext_resource type="Script" uid="uid://cwqir46s2lxjk" path="res://scripts/sky_system.gd" id="1_3pqgi"]
 [ext_resource type="Texture2D" uid="uid://crstcha4xobxo" path="res://assets/textures/skybox_jinri.png" id="2_h7rei"]
 [ext_resource type="Shader" uid="uid://dpsr4w1uw8q1d" path="res://assets/village_v2/_matlib/ground/ground.gdshader" id="3_31sgc"]
@@ -143164,3 +143166,5 @@ mesh = ExtResource("1079_74ygr")
 [node name="Population" type="Node3D" parent="."]
 
 [node name="PopulationP10" parent="Population" instance=ExtResource("p10r3b_population")]
+
+[node name="ActivityP10" parent="Population" instance=ExtResource("p10r3c_activity")]

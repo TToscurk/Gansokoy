@@ -1,0 +1,47 @@
+{
+  "character": "shufu_f01",
+  "clip": "browse_looking_down_a030",
+  "product": "c9c91871-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "fb90379b-8db5-4c8e-996d-4967639b86df",
+  "character_uuid": "122e40ca-882a-4fb6-8977-657a5a7873ec",
+  "motion": {
+    "model-id": 117230901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 143,
+    "duration": 4.77,
+    "gms_hash": {
+      "model-id": 117230901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Looking Down",
+  "file": "godot/animations/npc_activity_p10/shufu_f01/src/browse_looking_down_a030.fbx",
+  "bytes": 692592,
+  "sha256": "5912e1357bfdfd46db2e74f59315bc153c1e4843a971d2951aa572de0dbf2479"
+}

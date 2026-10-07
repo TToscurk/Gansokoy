@@ -1,0 +1,122 @@
+[
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/chaya_f01",
+      "--npc=res://characters/npc/chaya_f01/chaya_f01.glb",
+      "--clips=drinking_a030,holding_idle_a030"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/kozo_m01",
+      "--npc=res://characters/npc/kozo_m01/kozo_m01.glb",
+      "--clips=light_walk_s100_a030"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/nunoya_f01",
+      "--npc=res://characters/npc/nunoya_f01/nunoya_f01.glb",
+      "--clips=inspect_lifting_a040,talk_general_a040"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/sakanaya_m01",
+      "--npc=res://characters/npc/sakanaya_m01/sakanaya_m01.glb",
+      "--clips=box_idle_a038"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/setomono_f01",
+      "--npc=res://characters/npc/setomono_f01/setomono_f01.glb",
+      "--clips=old_walk_s075_a030,sitting_breathing_a030"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/shufu_f01",
+      "--npc=res://characters/npc/shufu_f01/shufu_f01.glb",
+      "--clips=browse_looking_down_a030,talk_general_a030"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/takigi_m01",
+      "--npc=res://characters/npc/takigi_m01/takigi_m01.glb",
+      "--clips=box_idle_a042"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "godot",
+      "--script",
+      "res://tools/build_npc_anim_grounded.gd",
+      "--",
+      "--dir=res://animations/npc_activity_p10/yakusou_f01",
+      "--npc=res://characters/npc/yakusou_f01/yakusou_f01.glb",
+      "--clips=old_walk_s075_a030"
+    ],
+    "exit": 0
+  }
+]

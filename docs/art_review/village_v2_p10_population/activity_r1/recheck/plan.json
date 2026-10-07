@@ -1,0 +1,45 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "label": "plan Market/M2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M4_sakanaya_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M5_setomono_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M7_kozo_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W1_nunoya_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W3_chaya_f01",
+      "pass": true
+    },
+    {
+      "detail": "[\"Talk\", \"Carry\", \"Sit\", \"YouthShortStep\", \"Drink\"]",
+      "label": "scope16/7 assignments/5 types",
+      "pass": true
+    }
+  ],
+  "fails": 0
+}

@@ -1,0 +1,185 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "label": "plan Market/M2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M4_sakanaya_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M5_setomono_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M6_takigi_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan Market/M7_kozo_m01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W1_nunoya_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "plan MarketWest/W3_chaya_f01",
+      "pass": true
+    },
+    {
+      "detail": "[\"Talk\", \"Carry\", \"Sit\", \"YouthShortStep\", \"Drink\"]",
+      "label": "scope16/8 assignments/5 types",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "label": "runtime16/no duplicates",
+      "pass": true
+    },
+    {
+      "detail": "8",
+      "label": "real runtime animation advance",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M2_shufu_f01\",\"foot_rest_error_m\":0.0000000260770320892334,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps Market/M2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M4_sakanaya_m01\",\"foot_rest_error_m\":0.00000000745058059692383,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.126785278320313,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Carry\"}",
+      "label": "evaluated30fps Market/M4_sakanaya_m01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M5_setomono_f01\",\"foot_rest_error_m\":0.00000000745058059692383,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.00137510034255683,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.00108492374420166,\"type\":\"Sit\"}",
+      "label": "evaluated30fps Market/M5_setomono_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"Market/M6_takigi_m01\",\"foot_rest_error_m\":0.0,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.108341217041016,\"prop_render_triangle_hits\":[\"Props/MarketP10/Stalls/023_mk_tana_zakka/LOD0\"],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Carry\"}",
+      "label": "evaluated30fps Market/M6_takigi_m01",
+      "pass": false
+    },
+    {
+      "detail": "{\"actor\":\"Market/M7_kozo_m01\",\"foot_rest_error_m\":0.0,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"YouthShortStep\"}",
+      "label": "evaluated30fps Market/M7_kozo_m01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W1_nunoya_f01\",\"foot_rest_error_m\":0.0000000596046447753906,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps MarketWest/W1_nunoya_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W2_shufu_f01\",\"foot_rest_error_m\":0.0000000260770320892334,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Talk\"}",
+      "label": "evaluated30fps MarketWest/W2_shufu_f01",
+      "pass": true
+    },
+    {
+      "detail": "{\"actor\":\"MarketWest/W3_chaya_f01\",\"foot_rest_error_m\":0.0000000298023223876953,\"invalid_frames\":0,\"prop_coarse_proxy_depth_m\":0.0,\"prop_render_triangle_hits\":[],\"samples30fps\":1,\"stool_support_gap_m\":0.0,\"type\":\"Drink\"}",
+      "label": "evaluated30fps MarketWest/W3_chaya_f01",
+      "pass": true
+    }
+  ],
+  "samples": [
+    {
+      "actor": "Market/M2_shufu_f01",
+      "foot_rest_error_m": 0.0000000260770320892334,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "Market/M4_sakanaya_m01",
+      "foot_rest_error_m": 0.00000000745058059692383,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.126785278320313,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Carry"
+    },
+    {
+      "actor": "Market/M5_setomono_f01",
+      "foot_rest_error_m": 0.00000000745058059692383,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.00137510034255683,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.00108492374420166,
+      "type": "Sit"
+    },
+    {
+      "actor": "Market/M6_takigi_m01",
+      "foot_rest_error_m": 0.0,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.108341217041016,
+      "prop_render_triangle_hits": [
+        "Props/MarketP10/Stalls/023_mk_tana_zakka/LOD0"
+      ],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Carry"
+    },
+    {
+      "actor": "Market/M7_kozo_m01",
+      "foot_rest_error_m": 0.0,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "YouthShortStep"
+    },
+    {
+      "actor": "MarketWest/W1_nunoya_f01",
+      "foot_rest_error_m": 0.0000000596046447753906,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "MarketWest/W2_shufu_f01",
+      "foot_rest_error_m": 0.0000000260770320892334,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Talk"
+    },
+    {
+      "actor": "MarketWest/W3_chaya_f01",
+      "foot_rest_error_m": 0.0000000298023223876953,
+      "invalid_frames": 0,
+      "prop_coarse_proxy_depth_m": 0.0,
+      "prop_render_triangle_hits": [],
+      "samples30fps": 1,
+      "stool_support_gap_m": 0.0,
+      "type": "Drink"
+    }
+  ],
+  "status": "FAIL",
+  "visual": "ART_REVIEW only; numerical foot/prop tests do not certify clothing"
+}

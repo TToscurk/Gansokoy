@@ -1,0 +1,26 @@
+{
+  "character": "chaya_f01",
+  "clip": "drinking_im1_a030",
+  "product": "c9c63255-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "0a1cc9f5-20e3-44fd-8afc-8df39ae38555",
+  "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+  "motion": {
+    "model-id": 101330902,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "-1,0",
+    "overdrive": 0
+  },
+  "name": "Drinking",
+  "purpose": "R3c W3 Drink A/B vs drinking_a030 (lower hand / natural sip)",
+  "file": "godot/animations/npc_activity_p10/chaya_f01/src/drinking_im1_a030.fbx",
+  "bytes": 733344,
+  "sha256": "77d723bd6eba47d3992f24cde03d84be0eb23fe9ecea61834c45de43dfe71e5d"
+}

@@ -1,0 +1,51 @@
+{
+  "character": "chaya_f01",
+  "clip": "drinking_a030",
+  "product": "c9c63255-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "9387ba11-e92c-4c3f-8bb8-2b6b97e5d478",
+  "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+  "motion": {
+    "model-id": 101330902,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0,0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 266,
+    "duration": 8.87,
+    "gms_hash": {
+      "model-id": 101330902,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Intensity",
+          0
+        ],
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Drinking",
+  "file": "godot/animations/npc_activity_p10/chaya_f01/src/drinking_a030.fbx",
+  "bytes": 735008,
+  "sha256": "a6623babe36e76c957ebcd03fe2422acced8d492c14c85cfdbc0202c52831d2d"
+}

@@ -1,0 +1,47 @@
+{
+  "character": "setomono_f01",
+  "clip": "sitting_breathing_a030",
+  "product": "c9ccab1b-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "b2195364-3d6c-4b04-b784-e69ad0b11dbc",
+  "character_uuid": "23276433-975c-40af-b9ad-3ee4d2448e7d",
+  "motion": {
+    "model-id": 123380901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 128,
+    "duration": 4.27,
+    "gms_hash": {
+      "model-id": 123380901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Sitting Idle",
+  "file": "godot/animations/npc_activity_p10/setomono_f01/src/sitting_breathing_a030.fbx",
+  "bytes": 533808,
+  "sha256": "f095bace4da4509cb5577eb6c49e38506b3af2baa33fb5a3a6cfe92630c53669"
+}

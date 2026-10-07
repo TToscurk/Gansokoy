@@ -1,0 +1,47 @@
+{
+  "character": "takigi_m01",
+  "clip": "box_idle_a042",
+  "product": "c9cd8d90-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.42,
+  "ok": true,
+  "job_uuid": "cc42d01a-e0e0-4c5a-a8d3-bec5fef01a1c",
+  "character_uuid": "af05c5c3-8354-4bd3-8f27-3b67b9da47e0",
+  "motion": {
+    "model-id": 127050901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.42,
+    "params": "0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 189,
+    "duration": 6.3,
+    "gms_hash": {
+      "model-id": 127050901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Box Idle",
+  "file": "godot/animations/npc_activity_p10/takigi_m01/src/box_idle_a042.fbx",
+  "bytes": 773488,
+  "sha256": "9b28f7e978c7a64194ba8aa8650c4189090b1038634f32aa023333a44bc65ff5"
+}

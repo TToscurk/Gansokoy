@@ -1,0 +1,182 @@
+[
+  {
+    "cid": "chaya_f01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\chaya_f01\\chaya_f01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\activity_candidates.glb",
+      "drinking_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\src\\drinking_a030.fbx",
+      "holding_idle_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\src\\holding_idle_a030.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\chaya_f01\\src\\drinking_a030.fbx",
+        "sha256": "a6623babe36e76c957ebcd03fe2422acced8d492c14c85cfdbc0202c52831d2d"
+      },
+      {
+        "path": "godot\\animations\\npc_activity_p10\\chaya_f01\\src\\holding_idle_a030.fbx",
+        "sha256": "4ed581e82f4b972ce183db413f2bf17aad07949904452dc9b37ea7faf65dbd9e"
+      }
+    ]
+  },
+  {
+    "cid": "kozo_m01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\kozo_m01\\kozo_m01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\kozo_m01\\activity_candidates.glb",
+      "light_walk_s100_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\kozo_m01\\src\\light_walk_s100_a030.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\kozo_m01\\src\\light_walk_s100_a030.fbx",
+        "sha256": "028a723638224d14bea1843e73316806430044b691e26e083f564011d2f92444"
+      }
+    ]
+  },
+  {
+    "cid": "nunoya_f01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\nunoya_f01\\nunoya_f01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\nunoya_f01\\activity_candidates.glb",
+      "inspect_lifting_a040=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\nunoya_f01\\src\\inspect_lifting_a040.fbx",
+      "talk_general_a040=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\nunoya_f01\\src\\talk_general_a040.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\nunoya_f01\\src\\inspect_lifting_a040.fbx",
+        "sha256": "295b5633c31b1a3e72e11cd0c6a697206e30e9c14dd0a18283d114e9078629e5"
+      },
+      {
+        "path": "godot\\animations\\npc_activity_p10\\nunoya_f01\\src\\talk_general_a040.fbx",
+        "sha256": "14b00cdfca09f37294edb961878d1d67fc785f759339fb3e05f24884abafbbf9"
+      }
+    ]
+  },
+  {
+    "cid": "sakanaya_m01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\sakanaya_m01\\sakanaya_m01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\sakanaya_m01\\activity_candidates.glb",
+      "box_idle_a038=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\sakanaya_m01\\src\\box_idle_a038.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\sakanaya_m01\\src\\box_idle_a038.fbx",
+        "sha256": "28bd96e4fad1e033c55f8e88641578844f64f3277123b8e94fff529d8589c3ee"
+      }
+    ]
+  },
+  {
+    "cid": "setomono_f01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\setomono_f01\\setomono_f01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\setomono_f01\\activity_candidates.glb",
+      "old_walk_s075_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\setomono_f01\\src\\old_walk_s075_a030.fbx",
+      "sitting_breathing_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\setomono_f01\\src\\sitting_breathing_a030.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\setomono_f01\\src\\old_walk_s075_a030.fbx",
+        "sha256": "f06adabd3f395363cd465a9cd9eb435c38427dc80e6edf94a45aa046efd10cbb"
+      },
+      {
+        "path": "godot\\animations\\npc_activity_p10\\setomono_f01\\src\\sitting_breathing_a030.fbx",
+        "sha256": "f095bace4da4509cb5577eb6c49e38506b3af2baa33fb5a3a6cfe92630c53669"
+      }
+    ]
+  },
+  {
+    "cid": "shufu_f01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\shufu_f01\\shufu_f01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\shufu_f01\\activity_candidates.glb",
+      "browse_looking_down_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\shufu_f01\\src\\browse_looking_down_a030.fbx",
+      "talk_general_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\shufu_f01\\src\\talk_general_a030.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\shufu_f01\\src\\browse_looking_down_a030.fbx",
+        "sha256": "5912e1357bfdfd46db2e74f59315bc153c1e4843a971d2951aa572de0dbf2479"
+      },
+      {
+        "path": "godot\\animations\\npc_activity_p10\\shufu_f01\\src\\talk_general_a030.fbx",
+        "sha256": "1b3749f3da05e8e10bd5bfb755496ff92afa1280cd17b3448ce28b9977855a1f"
+      }
+    ]
+  },
+  {
+    "cid": "takigi_m01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\takigi_m01\\takigi_m01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\takigi_m01\\activity_candidates.glb",
+      "box_idle_a042=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\takigi_m01\\src\\box_idle_a042.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\takigi_m01\\src\\box_idle_a042.fbx",
+        "sha256": "9b28f7e978c7a64194ba8aa8650c4189090b1038634f32aa023333a44bc65ff5"
+      }
+    ]
+  },
+  {
+    "cid": "yakusou_f01",
+    "exit": 0,
+    "command": [
+      "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+      "-b",
+      "-P",
+      "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+      "--",
+      "D:\\神社\\shrine\\godot\\characters\\npc\\yakusou_f01\\yakusou_f01.glb",
+      "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\yakusou_f01\\activity_candidates.glb",
+      "old_walk_s075_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\yakusou_f01\\src\\old_walk_s075_a030.fbx"
+    ],
+    "sources": [
+      {
+        "path": "godot\\animations\\npc_activity_p10\\yakusou_f01\\src\\old_walk_s075_a030.fbx",
+        "sha256": "19be423e89b587b54fc93327cf5ac335e41be3d5ab423a78222f49a3f92060ee"
+      }
+    ]
+  }
+]

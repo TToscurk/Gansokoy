@@ -1,0 +1,55 @@
+{
+  "character": "shufu_f01",
+  "clip": "talk_general_a030",
+  "product": "c9c88301-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "95f30dbc-a6d3-4db4-824f-4be27899451b",
+  "character_uuid": "122e40ca-882a-4fb6-8977-657a5a7873ec",
+  "motion": {
+    "model-id": 110090902,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0,0,0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 312,
+    "duration": 10.4,
+    "gms_hash": {
+      "model-id": 110090902,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Movement",
+          0
+        ],
+        [
+          "Lean",
+          0
+        ],
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Talking",
+  "file": "godot/animations/npc_activity_p10/shufu_f01/src/talk_general_a030.fbx",
+  "bytes": 1127520,
+  "sha256": "1b3749f3da05e8e10bd5bfb755496ff92afa1280cd17b3448ce28b9977855a1f"
+}

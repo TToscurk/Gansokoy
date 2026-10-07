@@ -1,0 +1,47 @@
+{
+  "character": "sakanaya_m01",
+  "clip": "box_idle_a038",
+  "product": "c9cd8d90-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.38,
+  "ok": true,
+  "job_uuid": "7385e1de-0018-47a7-a3cf-fe91d22fe577",
+  "character_uuid": "e63ec18d-d4fe-43a2-a580-886f25781b38",
+  "motion": {
+    "model-id": 127050901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.38,
+    "params": "0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 189,
+    "duration": 6.3,
+    "gms_hash": {
+      "model-id": 127050901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Box Idle",
+  "file": "godot/animations/npc_activity_p10/sakanaya_m01/src/box_idle_a038.fbx",
+  "bytes": 768304,
+  "sha256": "28bd96e4fad1e033c55f8e88641578844f64f3277123b8e94fff529d8589c3ee"
+}

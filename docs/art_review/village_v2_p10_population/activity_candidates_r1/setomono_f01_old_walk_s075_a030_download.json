@@ -1,0 +1,59 @@
+{
+  "character": "setomono_f01",
+  "clip": "old_walk_s075_a030",
+  "product": "c9c6c0c2-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "inplace": true,
+  "params": {
+    "Stride": -0.75
+  },
+  "ok": true,
+  "job_uuid": "ee56824e-0eda-4570-af4d-4fd92897526b",
+  "character_uuid": "23276433-975c-40af-b9ad-3ee4d2448e7d",
+  "motion": {
+    "model-id": 104350901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": true,
+    "arm-space": 0.3,
+    "params": "0,-0.75,0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": true,
+    "loopable": true,
+    "default_frame_length": 37,
+    "duration": 1.23,
+    "gms_hash": {
+      "model-id": 104350901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Hands",
+          0
+        ],
+        [
+          "Stride",
+          0
+        ],
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Old Man Walk",
+  "file": "godot/animations/npc_activity_p10/setomono_f01/src/old_walk_s075_a030.fbx",
+  "bytes": 354736,
+  "sha256": "f06adabd3f395363cd465a9cd9eb435c38427dc80e6edf94a45aa046efd10cbb"
+}

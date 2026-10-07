@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] PASS plan Market/M2_shufu_f01 
+[ACT] PASS plan Market/M4_sakanaya_m01 
+[ACT] PASS plan Market/M5_setomono_f01 
+[ACT] PASS plan Market/M7_kozo_m01 
+[ACT] PASS plan MarketWest/W1_nunoya_f01 
+[ACT] PASS plan MarketWest/W2_shufu_f01 
+[ACT] PASS plan MarketWest/W3_chaya_f01 
+[ACT] PASS scope16/7 assignments/5 types ["Talk", "Carry", "Sit", "YouthShortStep", "Drink"]
+[ACT] private overlay 7 assignments; population 16
+[ACT] PASS runtime16/no duplicates 
+[ACT] PASS real runtime animation advance 7
+[ACT] PASS evaluated30fps Market/M2_shufu_f01 {"actor":"Market/M2_shufu_f01","foot_rest_error_m":0.000459641218185425,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACTCONTACT] Market/M4_sakanaya_m01 /root/VillageV2/Props/MarketP10/Collision/024_mk_yatai_sakana_c [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (248.4, 2.4896, -57.3)] bounds [P: (-1.25, -1.25, -0.7), S: (2.5, 2.5, 1.4)]
+[ACT] PASS evaluated30fps Market/M4_sakanaya_m01 {"actor":"Market/M4_sakanaya_m01","foot_rest_error_m":0.000945903360843658,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.14892578125,"prop_render_triangle_hits":[],"samples30fps":191,"stool_support_gap_m":0.0,"type":"Carry"}
+[ACTCONTACT] Market/M5_setomono_f01 /root/VillageV2/Collision/TerrainCollision/Shape [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (0.0, 0.0, 0.0)] bounds [P: (0.0, -4.199986, -340.0), S: (560.0, 53.23273, 560.0)]
+[ACT] PASS evaluated30fps Market/M5_setomono_f01 {"actor":"Market/M5_setomono_f01","foot_rest_error_m":0.000451207160949707,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.00137510034255683,"prop_render_triangle_hits":[],"samples30fps":131,"stool_support_gap_m":0.00108492374420166,"type":"Sit"}
+[ACT] PASS evaluated30fps Market/M7_kozo_m01 {"actor":"Market/M7_kozo_m01","foot_rest_error_m":0.000883288681507111,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":34,"stool_support_gap_m":0.0,"type":"YouthShortStep"}
+[ACT] PASS evaluated30fps MarketWest/W1_nunoya_f01 {"actor":"MarketWest/W1_nunoya_f01","foot_rest_error_m":0.00046190619468689,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS evaluated30fps MarketWest/W2_shufu_f01 {"actor":"MarketWest/W2_shufu_f01","foot_rest_error_m":0.000459641218185425,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":310,"stool_support_gap_m":0.0,"type":"Talk"}
+[ACT] PASS evaluated30fps MarketWest/W3_chaya_f01 {"actor":"MarketWest/W3_chaya_f01","foot_rest_error_m":0.00034390389919281,"invalid_frames":0,"prop_coarse_proxy_depth_m":0.0,"prop_render_triangle_hits":[],"samples30fps":267,"stool_support_gap_m":0.0,"type":"Drink"}

@@ -1,0 +1,26 @@
+{
+  "character": "chaya_f01",
+  "clip": "watercooler_a030",
+  "product": "c9c9f1c9-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "6750e3c4-cc9a-4f1d-991c-bca5ef4d36cf",
+  "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+  "motion": {
+    "model-id": 119000901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0",
+    "overdrive": 0
+  },
+  "name": "Talking At Watercooler",
+  "purpose": "R3c W3 Drink A/B vs drinking_a030 (lower hand / natural sip)",
+  "file": "godot/animations/npc_activity_p10/chaya_f01/src/watercooler_a030.fbx",
+  "bytes": 3103264,
+  "sha256": "77724c8827491ac0c3af4ae85d20db852241401cca242bec6dedf98450c56fdc"
+}

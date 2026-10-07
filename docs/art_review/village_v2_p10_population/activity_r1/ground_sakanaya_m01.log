@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[NPCANIM] PASS box_idle_a038 len 6.33s keys 104 接地誤差 before 0.003〜0.007 → after -0.0000〜0.0000 m → res://animations/npc_activity_p10/sakanaya_m01/box_idle_a038_grounded.res

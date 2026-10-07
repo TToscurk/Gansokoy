@@ -1,0 +1,61 @@
+{
+  "runs": [
+    {
+      "name": "bake",
+      "command": [
+        "D:/Blender/blender-5.2.1-windows-x64/blender.exe",
+        "-b",
+        "-P",
+        "D:\\神社\\shrine\\godot\\assets\\blender\\npc\\build_npc_mixamo_anim.py",
+        "--",
+        "D:\\神社\\shrine\\godot\\characters\\npc\\chaya_f01\\chaya_f01.glb",
+        "D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\drink_ab_candidates.glb",
+        "drinking_im1_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\src\\drinking_im1_a030.fbx",
+        "watercooler_a030=D:\\神社\\shrine\\godot\\animations\\npc_activity_p10\\chaya_f01\\src\\watercooler_a030.fbx"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "import",
+      "command": [
+        "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "D:\\神社\\shrine\\godot",
+        "--import"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "ground",
+      "command": [
+        "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "D:\\神社\\shrine\\godot",
+        "--script",
+        "res://tools/build_npc_anim_grounded.gd",
+        "--",
+        "--dir=res://animations/npc_activity_p10/chaya_f01",
+        "--npc=res://characters/npc/chaya_f01/chaya_f01.glb",
+        "--clips=drinking_im1_a030,watercooler_a030"
+      ],
+      "exit": 0
+    }
+  ],
+  "sha256": {
+    "godot/animations/npc_activity_p10/chaya_f01/drinking_a030.res": "6f129a4a64c2483d3aae2ea17fb8cc92a4849e7d501ab234378a43dbcad983c1",
+    "godot/animations/npc_activity_p10/chaya_f01/drinking_a030_grounded.res": "af3395a0e25b8295857bab1d86bcf0ee9ac2256be5340fcc21fe3dbd8fd3f4b5",
+    "godot/animations/npc_activity_p10/chaya_f01/drinking_im1_a030.res": "9177e62fcae47a260f84b5ed1a2c03a8b886209d5c48d49f4a11181c13dd92fd",
+    "godot/animations/npc_activity_p10/chaya_f01/drinking_im1_a030_grounded.res": "3426196ffc047f7a9d104e9cf42b2439e249fa9beb498f073a257e6a9f3a26a9",
+    "godot/animations/npc_activity_p10/chaya_f01/holding_idle_a030.res": "cd2f6dec9b95449d0dc39239a9a205c77b0c17d4393cee97d62a9d3faaeaba26",
+    "godot/animations/npc_activity_p10/chaya_f01/holding_idle_a030_grounded.res": "bc2c0159be449c353336e1d4fe95b6061f3bb7d1ce2a993991a976abc8cffec6",
+    "godot/animations/npc_activity_p10/chaya_f01/watercooler_a030.res": "dd3333ce41255c5129a4a61087d99cd39d380cd2574e0011aadd22b5b72c14dd",
+    "godot/animations/npc_activity_p10/chaya_f01/watercooler_a030_grounded.res": "224df40b61070bbdfd0a59d6b46d7fd4d77b84b04c71c6dfa0ba2ed0eaecc801",
+    "godot/animations/npc_activity_p10/chaya_f01/activity_candidates.glb": "b79548f4653f237a009074a5f7367e6743a01aacef2e032c8fb9627134151431",
+    "godot/animations/npc_activity_p10/chaya_f01/drink_ab_candidates.glb": "2c8c1bdd1239782339fca5f890f837def3ed8e1481201f0ed1f27276510678c4",
+    "godot/animations/npc_activity_p10/chaya_f01/src/drinking_im1_a030.fbx": "77d723bd6eba47d3992f24cde03d84be0eb23fe9ecea61834c45de43dfe71e5d",
+    "godot/animations/npc_activity_p10/chaya_f01/src/watercooler_a030.fbx": "77724c8827491ac0c3af4ae85d20db852241401cca242bec6dedf98450c56fdc",
+    "godot/animations/npc_activity_p10/chaya_f01/src/drinking_a030.fbx": "a6623babe36e76c957ebcd03fe2422acced8d492c14c85cfdbc0202c52831d2d"
+  }
+}

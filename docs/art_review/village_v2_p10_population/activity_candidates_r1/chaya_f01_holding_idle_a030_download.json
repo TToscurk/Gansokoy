@@ -1,0 +1,47 @@
+{
+  "character": "chaya_f01",
+  "clip": "holding_idle_a030",
+  "product": "c9cda11a-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "ok": true,
+  "job_uuid": "5aef49a1-c8cb-41a9-a635-d4e9f387fea7",
+  "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+  "motion": {
+    "model-id": 126870901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "inplace": false,
+    "arm-space": 0.3,
+    "params": "0",
+    "overdrive": 0
+  },
+  "details": {
+    "supports_inplace": false,
+    "loopable": true,
+    "default_frame_length": 180,
+    "duration": 6,
+    "gms_hash": {
+      "model-id": 126870901,
+      "mirror": false,
+      "trim": [
+        0,
+        100
+      ],
+      "inplace": false,
+      "arm-space": 0,
+      "params": [
+        [
+          "Overdrive",
+          0
+        ]
+      ]
+    }
+  },
+  "name": "Holding Idle",
+  "file": "godot/animations/npc_activity_p10/chaya_f01/src/holding_idle_a030.fbx",
+  "bytes": 791344,
+  "sha256": "4ed581e82f4b972ce183db413f2bf17aad07949904452dc9b37ea7faf65dbd9e"
+}
