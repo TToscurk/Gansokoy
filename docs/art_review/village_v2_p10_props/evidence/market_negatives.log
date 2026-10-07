@@ -1,0 +1,9 @@
+[MKT] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1）
+[MKT] PASS 反向 n_road → 「路面」必須 FAIL（失敗項 1）
+[MKT] PASS 反向 n_building → 「建物」必須 FAIL（失敗項 2）
+[MKT] PASS 反向 n_overlap → 「互不重疊」必須 FAIL（失敗項 1）
+[MKT] PASS 反向 n_open → 「歩く通り」必須 FAIL（失敗項 2）
+[MKT] PASS 反向 n_clone → 「構圖」必須 FAIL（失敗項 1）
+[MKT] PASS 反向 n_vendor → 「NPC anchors」必須 FAIL（失敗項 1）
+[MKT] PASS 反向 n_sealed → 「封存」必須 FAIL（失敗項 3）
+[MKT] 結果：0 項失敗（negatives）
