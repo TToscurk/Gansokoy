@@ -6,6 +6,9 @@ extends SceneTree
 ##   godot --headless --path godot --script res://tools/verify_village_v2_population_core.gd -- --attach     village_v2.tscn の Population へ CoreP10＋ActivityCoreP10（ActivityP10 の後）
 ##   godot --path godot --script res://tools/verify_village_v2_population_core.gd -- --scene                 場景級（掛載順・人数・Activity 再生・道具・歩行 30 秒・審圖鏡位の同モデル）
 ##   -- --map  配役一覧（位置・最近傍・同モデル距離）
+##   -- --snapshot=<json>  封存用の配役 snapshot（R3b 16＋R3d 23 の id／model／zone／trade／group／anchor／位置／朝向／mode／patrol／activity、入口 cue）
+##   -- --seal  封存（data/village_v2_p10r3d_seal.json：雜湊＋掛載順＋場景の住人と cue が snapshot と一致＋竄改反向；R3d ART_APPROVED 2026-10-07）
+##   封存中 --build／--attach／--attach-cue は拒否（CORE_ALLOW_REBAKE=1＝使用者が承認した collision／animation bug 修正のときだけ、その後 seal を更新）
 const PL := preload("res://tools/village_v2_population_lib.gd")
 const CL := preload("res://tools/village_v2_population_core_lib.gd")
 const CUE := preload("res://tools/village_v2_entrance_cue_lib.gd")
@@ -25,6 +28,8 @@ const ZONE_BOX := {
 	"terakoya": Rect2(196.0, 14.0, 18.0, 20.0),
 }
 const TWIN_MIN := 8.0
+const SEAL := "res://data/village_v2_p10r3d_seal.json"
+const SNAPSHOT := "res://data/village_v2_p10r3d_snapshot.json"
 
 var fails := 0
 var failed := []
@@ -449,6 +454,131 @@ func _attach() -> int:
 	return 0
 
 
+func _actor_rec(a: Dictionary, assign: Dictionary) -> Dictionary:
+	var p: Vector3 = a["p"]
+	var r := {"id": a["id"], "model": a["model"], "zone": a["zone"], "trade": a["trade"], "group": a["group"], "anchor": a["anchor"], "mode": a["mode"],
+		"position": [snappedf(p.x, 0.001), snappedf(p.y, 0.001), snappedf(p.z, 0.001)], "yaw_deg": snappedf(rad_to_deg(float(a["yaw"])), 0.01),
+		"idle_t": a["idle_t"], "speed_scale": a["speed_scale"], "seed": a["seed"]}
+	if a["mode"] == "patrol":
+		var pts: PackedVector2Array = a["path_xz"]
+		r["patrol"] = {"endpoints": [[pts[0].x, pts[0].y], [pts[pts.size() - 1].x, pts[pts.size() - 1].y]], "path": Array(pts).map(func(q: Vector2) -> Array: return [q.x, q.y]),
+			"length_m": snappedf(float(a["path_len"]), 0.01), "walk_speed": a["walk_speed"], "wait": a["wait"], "start_u": a["start_u"]}
+	var key := "%s/%s_%s" % [CL.ZONE_NODE.get(a["zone"], ""), a["id"], a["model"]]
+	if assign.has(key):
+		var e: Array = assign[key]
+		r["activity"] = {"type": e[0], "clip": e[2], "slot": e[3], "options": e[4] if e.size() > 4 else {}}
+	return r
+
+
+func _snapshot(P: Dictionary, B: Array, path: String) -> void:
+	var zc := {}
+	for a: Dictionary in B + P["actors"]:
+		zc[a["zone"]] = int(zc.get(a["zone"], 0)) + 1
+	var out := {"schema": 1, "scope": "P10 R3d 核心人口 39＝R3b 16（封存 baseline、再掲）＋R3d 23、入口 cue 2",
+		"zone_counts": zc, "total": B.size() + (P["actors"] as Array).size(),
+		"r3b_baseline": B.map(func(a: Dictionary) -> Dictionary: return _actor_rec(a, {})),
+		"r3d_added": (P["actors"] as Array).map(func(a: Dictionary) -> Dictionary: return _actor_rec(a, CL.ASSIGN)),
+		"south_entrance": ["C6", "C11", "C12"],
+		"entrance_cue": (P["cue"] as Array).map(func(c: Dictionary) -> Dictionary: return {"name": c["name"], "mesh": CUE.KIT + String(c["mesh"]) + ".res",
+			"position": [snappedf((c["p"] as Vector3).x, 0.001), snappedf((c["p"] as Vector3).y, 0.001), snappedf((c["p"] as Vector3).z, 0.001)], "yaw_deg": snappedf(rad_to_deg(float(c["yaw"])), 0.01)})}
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(out, " ", false) + "\n")
+	f.close()
+	print("[CORE] snapshot → %s（%d 人、cue %d）" % [path, out["total"], (P["cue"] as Array).size()])
+
+
+func _sealed() -> bool:
+	if not FileAccess.file_exists(SEAL):
+		return false
+	var j = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	return j is Dictionary and String(j.get("status", "")) == "ART_APPROVED"
+
+
+func _seal_mismatch(seal: Dictionary) -> Array:
+	var repo := (ProjectSettings.globalize_path("res://") + "..").simplify_path() + "/"
+	var bad := []
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		var d: Dictionary = seal.get(grp, {})
+		for k: String in d:
+			if not FileAccess.file_exists(repo + k) or FileAccess.get_sha256(repo + k) != String(d[k]):
+				bad.append(k)
+	return bad
+
+
+## 場景の住人・cue が snapshot と一致（位置 1 cm・朝向 0.5°・mode・patrol 端点）
+func _live_mismatch(v: Node3D, snap: Dictionary) -> Array:
+	var bad := []
+	var core := v.get_node_or_null("Population/" + CL.NODE_NAME)
+	if core == null:
+		return ["CoreP10 が無い"]
+	var bodies := {}
+	for b in core.find_children("*", "AnimatableBody3D", true, false):
+		bodies[String(b.name).split("_")[0]] = b
+	if bodies.size() != (snap["r3d_added"] as Array).size():
+		bad.append("人数 %d≠%d" % [bodies.size(), (snap["r3d_added"] as Array).size()])
+	for r: Dictionary in snap["r3d_added"]:
+		var b: Node3D = bodies.get(String(r["id"]))
+		if b == null:
+			bad.append(String(r["id"]) + " 無い")
+			continue
+		var pos: Array = r["position"]
+		var idle_off: bool = String(r["mode"]) == "idle" and (b.position.distance_to(Vector3(pos[0], pos[1], pos[2])) > 0.01 or absf(angle_difference(b.rotation.y, deg_to_rad(float(r["yaw_deg"])))) > deg_to_rad(0.5))
+		if idle_off or String(b.get("mode")) != String(r["mode"]) or String(b.get_meta("model")) != String(r["model"]):
+			bad.append(String(r["id"]))
+		if r.has("patrol"):
+			var pts: PackedVector2Array = b.get("path_xz")
+			var ep: Array = r["patrol"]["endpoints"]
+			if pts.size() < 2 or pts[0].distance_to(Vector2(ep[0][0], ep[0][1])) > 0.01 or pts[pts.size() - 1].distance_to(Vector2(ep[1][0], ep[1][1])) > 0.01:
+				bad.append(String(r["id"]) + " patrol")
+	var cue := v.get_node_or_null("Population/" + CUE.NODE_NAME)
+	for c: Dictionary in snap["entrance_cue"]:
+		var n: Node3D = cue.get_node_or_null(String(c["name"])) if cue else null
+		var pos: Array = c["position"]
+		if n == null or n.position.distance_to(Vector3(pos[0], pos[1], pos[2])) > 0.01 or absf(angle_difference(n.rotation.y, deg_to_rad(float(c["yaw_deg"])))) > deg_to_rad(0.5):
+			bad.append(String(c["name"]))
+	return bad
+
+
+func _seal(v: Node3D) -> int:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	if not parsed is Dictionary:
+		check("seal manifest が読める", false)
+		return 2
+	var seal: Dictionary = parsed
+	check("status ART_APPROVED（使用者 2026-10-07；agent は美術を承認しない）", String(seal.get("status", "")) == "ART_APPROVED" and String(seal.get("approved_by", "")) == "user")
+	var bad := _seal_mismatch(seal)
+	var n := 0
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		n += (seal.get(grp, {}) as Dictionary).size()
+	check("封存 %d 檔雜湊一致（凍結・證據・審圖・子封存 R3b／R3c／NPCLIB；不符 %d：%s）" % [n, bad.size(), str(bad.slice(0, 4))], bad.is_empty())
+	var txt := FileAccess.get_file_as_string(SCENE)
+	var order := ["PopulationP10", "ActivityP10", CL.NODE_NAME, CL.ACT_NODE, CUE.NODE_NAME]
+	var last := -1
+	var ok_m := true
+	for nm: String in order:
+		var lines := Array(txt.split("\n")).filter(func(l: String) -> bool: return l.begins_with("[node name=\"%s\"" % nm) and l.contains("parent=\"Population\""))
+		ok_m = ok_m and lines.size() == 1
+		var at := txt.find(String(lines[0])) if lines.size() == 1 else -1
+		ok_m = ok_m and at > last
+		last = at
+	check("掛載：Population の %s（各 1 つ、この順）" % " → ".join(order), ok_m)
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SNAPSHOT))
+	var zc: Dictionary = snap["zone_counts"]
+	check("snapshot：合計 %d（39）、五區 %s、R3b baseline 16・R3d 23・入口 cue 2" % [int(snap["total"]), str(zc)],
+		int(snap["total"]) == 39 and zc.size() == 5 and (snap["r3b_baseline"] as Array).size() == 16 and (snap["r3d_added"] as Array).size() == 23 and (snap["entrance_cue"] as Array).size() == 2)
+	var lb := _live_mismatch(v, snap)
+	check("場景の R3d 住人 23 と入口 cue 2 が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・mode・patrol 端点；不符 %s）" % str(lb), lb.is_empty())
+	var tam := seal.duplicate(true)
+	var k0: String = (tam["frozen"] as Dictionary).keys()[0]
+	tam["frozen"][k0] = "0".repeat(64)
+	check("反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（%d）" % (_seal_mismatch(tam).size() - bad.size()), _seal_mismatch(tam).size() == bad.size() + 1)
+	var snap2: Dictionary = snap.duplicate(true)
+	snap2["r3d_added"][0]["position"][0] = float(snap2["r3d_added"][0]["position"][0]) + 0.25
+	check("反向：snapshot の住人を 0.25 m ずらす → 不一致を検出", not _live_mismatch(v, snap2).is_empty())
+	print("[CORE] 結果：%d 項失敗（seal）" % fails)
+	return 0 if fails == 0 else 2
+
+
 func _attach_cue() -> int:
 	var txt := FileAccess.get_file_as_string(SCENE)
 	if not FileAccess.file_exists(CUE.OUTPUT):
@@ -688,6 +818,19 @@ func _scene(v: Node3D) -> void:
 func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	helper = VG.new()
+	if "--seal" in args:
+		var v0: Node3D = (load(SCENE) as PackedScene).instantiate()
+		root.add_child(v0)
+		await physics_frame
+		var rs := _seal(v0)
+		helper.free()
+		quit(rs)
+		return
+	if (("--build" in args) or ("--attach" in args) or ("--attach-cue" in args)) and _sealed() and OS.get_environment("CORE_ALLOW_REBAKE") != "1":
+		push_error("P10 R3d は ART_APPROVED・封存中：--build／--attach は拒否（collision／animation bug を使用者が承認したら CORE_ALLOW_REBAKE=1、その後 seal を更新）")
+		helper.free()
+		quit(1)
+		return
 	if "--attach-cue" in args:
 		var rc := _attach_cue()
 		helper.free()
@@ -724,6 +867,9 @@ func _run() -> void:
 	print("[CORE] INFO 追加 %d 人（%d ms）" % [(P["actors"] as Array).size(), P["ms"]])
 	if "--map" in args:
 		_map(P, B)
+	for a1: String in args:
+		if a1.begins_with("--snapshot="):
+			_snapshot(P, B, a1.trim_prefix("--snapshot="))
 	for a0: String in args:
 		if a0.begins_with("--scan="):
 			# 調査用：x0,z0,x1,z1,step の線上で、立てるか（capsule）・高さ・道か

@@ -1,0 +1,728 @@
+{
+ "schema": 1,
+ "phase": "P10 R3d Village Core Population Expansion r1 + r1.1 Market South Entrance Cue",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_date": "2026-10-07",
+ "approval_source": "使用者 2026-10-07：「P10 R3d = ART_APPROVED。r1 39 人核心人口配置＋r1.1 Market South Entrance Cue 正式通過。可以封存 R3d。」",
+ "rule": "封存後不再修改核心人口，除非後續出現真正 collision／animation bug（CORE_ALLOW_REBAKE=1＋使用者同意＋reseal）。",
+ "roster": {
+  "total": 39,
+  "zone_counts": {
+   "market": 16,
+   "market_west": 8,
+   "main_street": 10,
+   "izakaya": 2,
+   "terakoya": 3
+  },
+  "r3b_baseline": 16,
+  "r3d_added": 23,
+  "snapshot": "godot/data/village_v2_p10r3d_snapshot.json"
+ },
+ "r3b_baseline_unchanged": {
+  "child_seal": "godot/data/village_v2_p10r3b_seal.json",
+  "note": "R3b 16 人（generator／actor／Population scene／snapshot）不變；R3d は別 overlay Population/CoreP10"
+ },
+ "added": [
+  {
+   "id": "C1",
+   "model": "chaya_f01",
+   "zone": "market",
+   "trade": "dango",
+   "group": "g_dango",
+   "mode": "idle",
+   "position": [
+    255.211,
+    1.263,
+    -52.216
+   ],
+   "yaw_deg": -85.37
+  },
+  {
+   "id": "C2",
+   "model": "shufu_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_dango",
+   "mode": "idle",
+   "position": [
+    252.837,
+    1.262,
+    -52.024
+   ],
+   "yaw_deg": 94.63,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C3",
+   "model": "takigi_m01",
+   "zone": "market",
+   "trade": "porter",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    231.375,
+    1.203,
+    -43.796
+   ],
+   "yaw_deg": -90.0
+  },
+  {
+   "id": "C4",
+   "model": "nunoya_f01",
+   "zone": "market",
+   "trade": "gofuku",
+   "group": "g_nuno",
+   "mode": "idle",
+   "position": [
+    234.45,
+    1.179,
+    -38.2
+   ],
+   "yaw_deg": 43.73
+  },
+  {
+   "id": "C5",
+   "model": "shufu_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_nuno",
+   "mode": "idle",
+   "position": [
+    236.65,
+    1.165,
+    -35.9
+   ],
+   "yaw_deg": -136.27,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C7",
+   "model": "sakanaya_m01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    250.388,
+    1.164,
+    -44.036
+   ],
+   "yaw_deg": 73.32
+  },
+  {
+   "id": "C12",
+   "model": "yaoya_m01",
+   "zone": "market",
+   "trade": "porter",
+   "group": "g_mouth",
+   "mode": "idle",
+   "position": [
+    244.6,
+    1.045,
+    -26.8
+   ],
+   "yaw_deg": 20.0,
+   "activity": {
+    "type": "Carry",
+    "clip": "box_idle_a030",
+    "slot": "idle",
+    "options": {
+     "crate": [
+      "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+      0.3,
+      0.2
+     ],
+     "crate_forward": 0.14,
+     "crate_up": 0.09,
+     "crate_inset": 0.09
+    }
+   }
+  },
+  {
+   "id": "C23",
+   "model": "yakusou_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_square",
+   "mode": "idle",
+   "position": [
+    247.4,
+    1.202,
+    -42.0
+   ],
+   "yaw_deg": -127.57,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_funny_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C24",
+   "model": "chaya_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_square",
+   "mode": "idle",
+   "position": [
+    246.1,
+    1.208,
+    -43.0
+   ],
+   "yaw_deg": 52.43
+  },
+  {
+   "id": "C8",
+   "model": "setomono_f01",
+   "zone": "market_west",
+   "trade": "meshi",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    230.6,
+    1.078,
+    -29.6
+   ],
+   "yaw_deg": -90.0
+  },
+  {
+   "id": "C9",
+   "model": "sakanaya_m01",
+   "zone": "market_west",
+   "trade": "customer",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    215.7,
+    1.262,
+    -45.4
+   ],
+   "yaw_deg": 180.0
+  },
+  {
+   "id": "C10",
+   "model": "chonin_m01",
+   "zone": "market_west",
+   "trade": "porter",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    232.0,
+    1.239,
+    -49.9
+   ],
+   "yaw_deg": -180.0
+  },
+  {
+   "id": "C6",
+   "model": "sakanaya_m01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "g_mouth",
+   "mode": "patrol",
+   "position": [
+    259.1,
+    1.069,
+    -11.5
+   ],
+   "yaw_deg": -176.19,
+   "patrol_endpoints": [
+    [
+     259.100006103516,
+     -11.5
+    ],
+    [
+     247.199996948242,
+     -22.7000007629395
+    ]
+   ],
+   "patrol_path": [
+    [
+     259.100006103516,
+     -11.5
+    ],
+    [
+     258.600006103516,
+     -19.0
+    ],
+    [
+     251.0,
+     -21.3999996185303
+    ],
+    [
+     247.199996948242,
+     -22.7000007629395
+    ]
+   ]
+  },
+  {
+   "id": "C11",
+   "model": "nunoya_f01",
+   "zone": "main_street",
+   "trade": "barker",
+   "group": "g_mouth",
+   "mode": "idle",
+   "position": [
+    249.9,
+    1.022,
+    -24.5
+   ],
+   "yaw_deg": 50.0,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C13",
+   "model": "shufu_f01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "g_kame",
+   "mode": "idle",
+   "position": [
+    263.507,
+    1.187,
+    -31.714
+   ],
+   "yaw_deg": -87.72,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C14",
+   "model": "setomono_f01",
+   "zone": "main_street",
+   "trade": "seto",
+   "group": "g_kame",
+   "mode": "idle",
+   "position": [
+    261.543,
+    1.183,
+    -31.636
+   ],
+   "yaw_deg": 92.28
+  },
+  {
+   "id": "C16",
+   "model": "takigi_m01",
+   "zone": "main_street",
+   "trade": "zakka",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    270.675,
+    1.221,
+    -35.736
+   ],
+   "yaw_deg": -106.7
+  },
+  {
+   "id": "C19",
+   "model": "chonin_m01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "",
+   "mode": "idle",
+   "position": [
+    272.08,
+    1.276,
+    -45.352
+   ],
+   "yaw_deg": 73.29
+  },
+  {
+   "id": "C17",
+   "model": "chaya_f01",
+   "zone": "izakaya",
+   "trade": "guest",
+   "group": "g_izakaya",
+   "mode": "idle",
+   "position": [
+    276.4,
+    1.358,
+    -59.0
+   ],
+   "yaw_deg": 146.31,
+   "activity": {
+    "type": "Drink",
+    "clip": "drinking_im1_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C18",
+   "model": "sakanaya_m01",
+   "zone": "izakaya",
+   "trade": "guest",
+   "group": "g_izakaya",
+   "mode": "idle",
+   "position": [
+    277.6,
+    1.37,
+    -60.8
+   ],
+   "yaw_deg": -33.69
+  },
+  {
+   "id": "C20",
+   "model": "kozo_m01",
+   "zone": "terakoya",
+   "trade": "pupil",
+   "group": "g_terakoya",
+   "mode": "patrol",
+   "position": [
+    202.0,
+    0.764,
+    20.4
+   ],
+   "yaw_deg": 39.81,
+   "activity": {
+    "type": "YouthShortStep",
+    "clip": "light_walk_s100_a030",
+    "slot": "walk",
+    "options": {}
+   },
+   "patrol_endpoints": [
+    [
+     202.0,
+     20.3999996185303
+    ],
+    [
+     206.399993896484,
+     25.6000003814697
+    ]
+   ],
+   "patrol_path": [
+    [
+     202.0,
+     20.3999996185303
+    ],
+    [
+     205.0,
+     24.0
+    ],
+    [
+     206.399993896484,
+     25.6000003814697
+    ]
+   ]
+  },
+  {
+   "id": "C21",
+   "model": "nunoya_f01",
+   "zone": "terakoya",
+   "trade": "parent",
+   "group": "g_terakoya",
+   "mode": "idle",
+   "position": [
+    207.8,
+    0.833,
+    27.6
+   ],
+   "yaw_deg": -54.16,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C22",
+   "model": "yakusou_f01",
+   "zone": "terakoya",
+   "trade": "parent",
+   "group": "g_terakoya",
+   "mode": "idle",
+   "position": [
+    206.0,
+    0.725,
+    28.9
+   ],
+   "yaw_deg": 125.84,
+   "activity": {
+    "type": "Sit",
+    "clip": "sit_talk_a_a030",
+    "slot": "idle",
+    "options": {
+     "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+     "seat_drop": 0.22,
+     "seat_back": -0.09,
+     "seat_depth": 0.34,
+     "seat_len": 1.2,
+     "seat_shift": -0.1
+    }
+   }
+  }
+ ],
+ "south_entrance": {
+  "C6": {
+   "role": "南の主街 → 辻 → 市の口を往復する買い物客（往＝入る・返＝出る）",
+   "patrol_endpoints": [
+    [
+     259.100006103516,
+     -11.5
+    ],
+    [
+     247.199996948242,
+     -22.7000007629395
+    ]
+   ],
+   "path": [
+    [
+     259.100006103516,
+     -11.5
+    ],
+    [
+     258.600006103516,
+     -19.0
+    ],
+    [
+     251.0,
+     -21.3999996185303
+    ],
+    [
+     247.199996948242,
+     -22.7000007629395
+    ]
+   ]
+  },
+  "C11": {
+   "role": "口の東の幟の脇で辻を向く呼び込み（Talk、通路を塞がない）",
+   "position": [
+    249.9,
+    1.022,
+    -24.5
+   ],
+   "yaw_deg": 50.0
+  },
+  "C12": {
+   "role": "口のすぐ内側で木箱を抱えて中橫街を向く八百屋（Carry）",
+   "position": [
+    244.6,
+    1.045,
+    -26.8
+   ],
+   "yaw_deg": 20.0
+  }
+ },
+ "entrance_cue": {
+  "node": "Population/EntranceCueP10",
+  "scene": "godot/maps/village_v2/gen/entrance_cue_p10.tscn",
+  "items": [
+   {
+    "name": "nobori_ichi_east",
+    "mesh": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+    "position": [
+     250.9,
+     1.02,
+     -23.4
+    ],
+    "yaw_deg": 217.0
+   },
+   {
+    "name": "nobori_ichi_west",
+    "mesh": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+    "position": [
+     240.2,
+     1.02,
+     -23.6
+    ],
+    "yaw_deg": 37.0
+   }
+  ],
+  "note": "既存 market_kit の小幟「市」2 本（新資產なし、R2 不重開）、口の通路 10.7 m"
+ },
+ "mount": "village_v2.tscn Population：PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10（各 1 つ）",
+ "non_blocking": [
+  "遠距で幟の「市」の字が読めない＝expected distance limitation",
+  "静止画では個々の人の進出方向が完全には読めない（動態で読める）＝expected distance limitation",
+  "寺子屋の審圖鏡位で子と玩家角色が画面上で重なる（配置の問題ではない）"
+ ],
+ "verification": {
+  "plan": 14,
+  "negatives": 13,
+  "scene": 9,
+  "tag": "CORE"
+ },
+ "frozen": {
+  "godot/tools/village_v2_population_core_lib.gd": "a5351eb323f5a11ac7dd40bc748b103147ff7bd7d616d5e8c6ab813be5968a2d",
+  "godot/tools/village_v2_entrance_cue_lib.gd": "f5ad8ba7444aa156c41a87bfddaa6931254745c70ad9a2211595a532e2350636",
+  "godot/scripts/npc_activity_core.gd": "c3aea5a03e8858b5f86f9f3eed2f7b1fa29eee6f011a1d1e3e57514e6ea08a06",
+  "godot/tools/verify_village_v2_population_core.gd": "045fd6876aed79759204e364887a616a7ec7d4f19928520bcadcffae566478b2",
+  "godot/tools/shot_p10_population_core.gd": "3fb4d56193716dd68de62583dd6462a87c71392a84a3f84c20815c0a075d98b5",
+  "godot/tools/survey_village_v2_population_core.gd": "ff068ed874e3996daace068e53ebcf527851eba501ea28682a60fe66edee91ed",
+  "godot/tools/shot_village_v2_population_core_views.json": "9d85097d2cdbf8d319b80e2ede972c842b327aaf5b9f116b0a0092b780900e22",
+  "godot/maps/village_v2/gen/population_core_p10.tscn": "e595f1fa90755d3211770ca26d665dfaf892a4d30bba2f122b094c62c8139228",
+  "godot/maps/village_v2/gen/entrance_cue_p10.tscn": "7bcf6e69b78809d3131c7373c32d055dfa05a33767981a8164c8c04535728a77",
+  "godot/data/village_v2_p10r3d_snapshot.json": "a01ac93c7f9fd2260d3680b9805548261b2c52e4b84d9edc5136bf96ea1a1d70",
+  "tools/seal_p10r3d.py": "f15e366f7dbbf2e5574512ad31a19f09aa423dd7e5fbfa9593fb5468b024871e"
+ },
+ "evidence": {
+  "docs/art_review/village_v2_p10_population/core_r1/gate/capture.log": "dbcf0be31a4f5a10738da89340b00dbeb22032dce0009c20e72c83db909fcfc3",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_act_neg.log": "ef2586c77e80a705466e9f192b616a20c8a69cfc134ca445e5309c12cdbdd7e2",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_act_scene.log": "6a905ae55508a5a38ef5318b4d228cc7bb6120b9f73a67d89927cce2169e5655",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_act_seal.log": "55547fa4592df8b54b299c198fc7eaa1bbf844d54633cb7d040a8228fb31a1fc",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_mkt_seal.log": "20786a883028267c1997cc7bf10a2a5c19b35ae0095186f8114a14a281edb208",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_mmbake.log": "0be22d0f08fa4cd9016fa22fb984a17ee362e6a4edbabf17ba90b3f4bc3f96db",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_mw_seal.log": "7cd550b41be6d6e1a48cd551936ab08f9687dd408353b6143300e0726d358330",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_npclib_seal.log": "7d168b174a83bcef05384d163508c0e138105fa0eee84f05e39fd422dccbc368",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_p9f.log": "ad17c747fc5cc49cc14ce4b46b5f3ef28fadde8001202e4861828e6b5dd4f319",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_pop_scene.log": "6380c38219af2a0a568818f5196ea3e6f2320f8fe0d2dccc9c645963df664db2",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_pop_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_str_seal.log": "785bd3597e5183189fc8d0efb5c5469f3c0c3f72c37a6c235e8a215fc880c060",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/cross_txt.log": "82e8c9e811e45d289aada134af1d1bcb351f91ea3686e9aaa713c83075196ac5",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/negatives.log": "b22f9be6e2c8ee9799625642b93892bfbe27267e458e61bd99cd4fe511a6bec1",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/plan.log": "61471279d7b13b0850b89f7ed89eb81002856e0c0589c19f1ae009a4abacd306",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/scene.log": "f4a7a745d7dc0f3abc8f0671cb7f40930dd8066fb92d443e4ee460810cc8e256",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/verify_npc_library_seal.log": "7d168b174a83bcef05384d163508c0e138105fa0eee84f05e39fd422dccbc368",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/verify_p10_activity_plan.log": "4542b0135bc8dc8a511f55f26cc0b006402e365bec88318b613f6b2dda74374d",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/verify_p10_activity_seal.log": "55547fa4592df8b54b299c198fc7eaa1bbf844d54633cb7d040a8228fb31a1fc",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/verify_village_v2_population_.log": "cbeef3abec608d8c719d333d9ffd2bd46fe6dc084b46b74c6b23434e6047e0b8",
+  "docs/art_review/village_v2_p10_population/core_r1/gate/verify_village_v2_population_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+  "docs/art_review/village_v2_p10_population/core_r1/review/README.md": "1225d8f4997b87bd532c94596c75bdb927fa776c830d388062b8658035452eab",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_act_scene.log": "6a905ae55508a5a38ef5318b4d228cc7bb6120b9f73a67d89927cce2169e5655",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_act_seal.log": "55547fa4592df8b54b299c198fc7eaa1bbf844d54633cb7d040a8228fb31a1fc",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_mkt_seal.log": "20786a883028267c1997cc7bf10a2a5c19b35ae0095186f8114a14a281edb208",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_mmbake.log": "0be22d0f08fa4cd9016fa22fb984a17ee362e6a4edbabf17ba90b3f4bc3f96db",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_mw_seal.log": "7cd550b41be6d6e1a48cd551936ab08f9687dd408353b6143300e0726d358330",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_npclib_seal.log": "7d168b174a83bcef05384d163508c0e138105fa0eee84f05e39fd422dccbc368",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_p9f.log": "ad17c747fc5cc49cc14ce4b46b5f3ef28fadde8001202e4861828e6b5dd4f319",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_pop_scene.log": "15c4234dd99937d1a10f710033145c77a633905cc4d675c7011cf28f781c43c5",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_pop_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_str_seal.log": "785bd3597e5183189fc8d0efb5c5469f3c0c3f72c37a6c235e8a215fc880c060",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/cross_txt.log": "82e8c9e811e45d289aada134af1d1bcb351f91ea3686e9aaa713c83075196ac5",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/negatives.log": "94e04e2ee0fc68bc07407e22e6f33a70443d4b7225ff3cec528bee7b5712c8f7",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/plan.log": "4e0c196eeb1001a59d8ddabcc8edb8a1179ab7fbf1e6433662275b06e27b5121",
+  "docs/art_review/village_v2_p10_population/core_r1_1/gate/scene.log": "295f7b1497289fcd05a5c7c6ffa8d504e87a72d48af5fc79da36ef6c274ccdc3",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/README.md": "221c43c73968d12e846b3a0afaed484575a0ef45c8dac00e5745e9337f8a1b79"
+ },
+ "art_review_images": {
+  "docs/art_review/village_v2_p10_population/core_r1/render/1_market_tps_after.png": "79e372b6431db3f436ddd0e4f48e2dd2b9bfeefa75a15df4bd25cd3a29f29b82",
+  "docs/art_review/village_v2_p10_population/core_r1/render/1_market_tps_before.png": "7e8a8bb5742cce19893840773dfd9a1e8bf5ae9b283c09bf5009f401756cda87",
+  "docs/art_review/village_v2_p10_population/core_r1/render/2_market_west_tps_after.png": "e16296f894c6fd4f97b7a4dd6a78d781e80b606773d24402def7cd38697840e4",
+  "docs/art_review/village_v2_p10_population/core_r1/render/2_market_west_tps_before.png": "733cbb748d5fab5f2062c4d9bb0dbfb1a03b992ceadd98ed8bd68db6c23d258b",
+  "docs/art_review/village_v2_p10_population/core_r1/render/3_main_street_tps_after.png": "1988802e430885b26a2e951fc59613187a6da5867b734f1a2fc6f2a3c5dd407e",
+  "docs/art_review/village_v2_p10_population/core_r1/render/3_main_street_tps_before.png": "6994844d792f29357dd3ae227abe3a3fa7a1e25de050d42807257a7ecf55027a",
+  "docs/art_review/village_v2_p10_population/core_r1/render/4_market_high_after.png": "b94bbbd3604962b3b1c8021a0201752b2496bf9c2e1d582a0f3d88f9af5c73a6",
+  "docs/art_review/village_v2_p10_population/core_r1/render/4_market_high_before.png": "c011d34adad9401263eb7259b504a94f5ab91e9bcf02eae36af587989f9746a7",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_00.png": "7fe06d0e1f292f78febf2d94be679cecc7c08526a461679b09b76c6bd3ff7b8b",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_01.png": "15b43b94994ea1aaa291b55349bdc44d3044f11eddc2fa8b82b1408788eecbd2",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_02.png": "57685104ee2053563a25a3df294b0915c39fa3b16cb9e121c34f52dcbe82d182",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_03.png": "b49037467d48ef974b6a2742fa97c65fa7c748929cbaa5ab3e9de6dd54874e4e",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_04.png": "79e20918d882e260b670c02331310660e6f7ae6fbb06ddd35b99d204cb8d5292",
+  "docs/art_review/village_v2_p10_population/core_r1/render/5_walk_through_05.png": "96e937d03eb879abd414c390b5fc6858eaabe0bf79f1e1026d4ba531d0740eae",
+  "docs/art_review/village_v2_p10_population/core_r1/render/6_mouth_from_south_after.png": "696cef7e2024b69d0f65d61008f78dc1e688e065130a3d9fadb601c516020143",
+  "docs/art_review/village_v2_p10_population/core_r1/render/6_mouth_from_south_before.png": "2c122a375d7a0a87a5ee13d313571587d5dfec0d726e691457e57bbfca88b182",
+  "docs/art_review/village_v2_p10_population/core_r1/render/7_mouth_from_north_after.png": "9a3d8e8a429a83e4a7bb3b2f1328269315ab4a878b57f46fd53beeab284eae22",
+  "docs/art_review/village_v2_p10_population/core_r1/render/7_mouth_from_north_before.png": "15939b31916133e381704134f794c4fcde5fb9e24adcb281417144b8cdb2d693",
+  "docs/art_review/village_v2_p10_population/core_r1/render/8_izakaya_after.png": "8847cebcbb25bd17d0ef61d09d9fea907b3ca69b16f214d3fef177426493ee47",
+  "docs/art_review/village_v2_p10_population/core_r1/render/8_izakaya_before.png": "7b8c291eb541cc6a8a728eb3f3dc2eba873b63bb702bdcb46fbee21bfac1938c",
+  "docs/art_review/village_v2_p10_population/core_r1/render/9_terakoya_after.png": "ad274f6d4815f65eae6a82ea5843b96769157fcca96d504400cf90b77ce3921e",
+  "docs/art_review/village_v2_p10_population/core_r1/render/9_terakoya_before.png": "965c71ae5521b4230a1a4fb32d8ba725f0a53f9d215362fe0f459d7217a316ed",
+  "docs/art_review/village_v2_p10_population/core_r1/review/1_market_tps.jpg": "9c083e296c127d7e9cf33785b2d13e25c5544c15f483d8772e164efe1ac9a681",
+  "docs/art_review/village_v2_p10_population/core_r1/review/2_market_west_tps.jpg": "9fe7242c6090acf177abb363ed8ba94f0f15ffa1d12e16d47e35c4dc463aa3de",
+  "docs/art_review/village_v2_p10_population/core_r1/review/3_main_street_tps.jpg": "7b57035114f4809b47cc30944972e14f5b6da8f50858ae0ff6383f5099752c01",
+  "docs/art_review/village_v2_p10_population/core_r1/review/4_market_high.jpg": "5884550d634ba270ef96c0f598a95babe3ed2311c0aa1619e7848fb8f57e760c",
+  "docs/art_review/village_v2_p10_population/core_r1/review/5_walk_through.jpg": "cb7e2bfe344bd6327174b0ab733afde805473f682160ba496b53621c5467649a",
+  "docs/art_review/village_v2_p10_population/core_r1/review/6_mouth_from_south.jpg": "70b22f35a658e91c5fb0be298a254229fd40c6c165ce471828fcf66b8fd24b90",
+  "docs/art_review/village_v2_p10_population/core_r1/review/7_mouth_from_north.jpg": "ba1bd589b7f6871c6ddfd305bcd68d85829ec582985eb5b0b51bb4c6f39b3399",
+  "docs/art_review/village_v2_p10_population/core_r1/review/8_izakaya.jpg": "f3fb1dd602650025b5291479870ad9a7ecaf2f63cb8377615c13c0d9eb9327ea",
+  "docs/art_review/village_v2_p10_population/core_r1/review/9_terakoya.jpg": "df26bd143007c713f953d8cf3e62d108e6bf96e575947aa2c26674a0480656d1",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/10_mouth_close_after.png": "9bc6b00c0d5a2a0b4aeeea92b20748012f093942f9c7ef709b02307d2f17d0e9",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/10_mouth_close_before.png": "5ccb9d742e5fd0ea1f67601f6f1763dc9c0911573be84bf1dac35053b84d3c39",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_00.png": "6a36caab26c73cd8538e1f60039556336b8357918b02802bccc9680c5427e785",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_01.png": "7ad4687871dc28d433084fe33af6736778e2b6c7d6a6b25e526afe026a86231d",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_02.png": "2a5663498ce030ec35cc3f2ae28c1522b7a725f0212a35667691f4432081a638",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_03.png": "87d3c476f7550cc83971e2db4fa5edd49939a2a0eabef572fa56416b85618fa5",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_04.png": "b3812fd71afd46034ca294db1f74d453ad7486432bbf3e7ae4fb8372b1e5d9be",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_05.png": "2d7d2b8698ea0b494d6abdc6061027b0501cfa07570dffefa038650baf1691d8",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_06.png": "10edf9d248848c0f1c71104d565040beeba0b9b5dceaee9f451bf2e9aa5d8e8b",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_07.png": "029c641fcced40827d85f88e544958fd2da7da19f971184316f2005ec640854a",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_08.png": "26e606834a9d9520739b3a84d8baccf2a3849ff78d49daaae8b03f4467dd6ef3",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_09.png": "2f0557fe4f60a31e9fbe19dd65d82c9c9c5f77fb4f1369047f54d1acf2afc8bd",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_10.png": "de05ba7b1d9c5403af643599d7b2482bb3c2d9cbdb3f4aa07dc2fcfd0db347da",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_11.png": "cbe7118399c8772460a40de1adc766640879329e2fe939973fe80be105d77526",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_12.png": "67b9a740adcc04dcadde51a3fa5dad0f27874fe7b19a4eedba2ac24f1aeecede",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_13.png": "8cd42adba73bcb99a6007bcc1fe77c907cd6b304579c042de8dd1e2f139b16c9",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_14.png": "7d1df8deb8c139c9b4ed4099e8d8dd856892569c094202b75cfc8701e30f690b",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_15.png": "e86ddfb4f7cadfb319c7b1ad42760aac55678537037349ceb48498709f7bd7c7",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_16.png": "f7fdaa6c04530cc525814b37668e7e1da7136ec5ef4731a72e7c7739aadf4eeb",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_17.png": "76129a375d81d2b15068633d9c7040b1428203e1777cce73228cb43a8051b4c1",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_18.png": "fa22a8e5bc373b1df50b16a2f48893f64aa844a53f93b65a5c72aad8479f5388",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_19.png": "dc6293503911db672eb09180cacaa4e3caedf92c55aa58b9873357b787e41c22",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_20.png": "ce360dddb27409b9d1fef55aa94456492ee5f26471cf98ccd9a8ef9eef0336a6",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_21.png": "c4c3aab27a38756ea6d1ca7021cbce17710ad606aae88e8340d714551428d969",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_22.png": "3d1e46dfe74af8ab4ec3369a25c2b7c0881153ebabf5b38f513094dc6bcf3173",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_23.png": "28adc08f757a089e0d9440c4ee64f5ced1001423fb39fdeca56b21a683f8ec94",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_24.png": "593799b7c77e0ab8016d4497d36e5209fccf895a1017cb67c340c2209924768b",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_25.png": "1aee07fc2e29b36a31e0c06bc5a16296cf01c5c9b6f56f8c028449a9abb1c77f",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_26.png": "c37ade81d947703f677c35247e0f94010b3f9da7a7956e4f5dad05e66d699129",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/11_mouth_motion_27.png": "6625f07eba91932b0d8d5e23bcd1bfe5ac748726d7d71faad6ed145312c0fcca",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/6_mouth_from_south_after.png": "a9543e0e96e77b9373635f4530733e94b638a8d0dc667f308d5150a8705c7f13",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_1/6_mouth_from_south_before.png": "3655e5210aff11c4ca79557094ccdb6778e38b2f827b049649c373e6b77f2263",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/10_mouth_close_after.png": "4f0e0256dc66e3746fc183ae740ce9f8980e743c3e90f3374667dedfcc7091dd",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/10_mouth_close_before.png": "ca872cc26a671f78720f94f2ae00315b038417fabc72bf091a43aec3ea4d21fc",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_00.png": "02066cb5f6bc10e9d049f347a0881e7f65fb0d9d75558bf2eb56d79f6a497c9a",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_01.png": "da983dbc82bee160f5df309dd576144177e25f80dde567b72bedeb755ba67f4d",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_02.png": "870e48ae5858aa4685aa8653afb1b06e1b689ead99e3df5f3c3f5d373bcd9662",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_03.png": "37b88a2eca3165059a577077f217c62050067027135c338e836f31c4e4274271",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_04.png": "9dbe1c3db87f9c1c989dd8a23207f5757d17539dd93043d033844a89fc37399d",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_05.png": "3d586c53f21ff904410b9853c52339aa985c8b176cc875897a3bd527d69d1d17",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_06.png": "a920b7e2cbb4136ac0fb64ca78b85d16c06fa78d0d4ef1e10e39fa191a2968a0",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_07.png": "1a6c30eabc7188f4ed2a503e109f335678bb120ee9c0faf4b931b758aaab6485",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_08.png": "79f2e8c3898f2e02801e642e3fbe11f1b36e9f34ecc4887fd9510da89032b29f",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_09.png": "a7a6d9ddf0d75f2f04d80d25bb75640c12ee62b710a80f5849248011d8b7416f",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_10.png": "4a1528fdc02bcd776da279017c40e956c3dc8f6393e22a143d3a18ae7d633bb3",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_11.png": "52be43d39be93f76aba7efecdd98929abda48292ea3ee8b42bab8bf2b79edbc6",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_12.png": "c064155727ca30852c78bd88d4f934f5f4f7b56c89ed20940e61b53fc44b9cfe",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_13.png": "89f8145a7c7d3a8c24a8b920dc4d8e355e9a7a5c7eb67d42442d154e01937a39",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_14.png": "6b4882439e0bae234f7b6343e71fcededfb2ff720c2bb7d47e607df8f4bb248a",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_15.png": "d7c6e44f8b939a3166f745d3df3cdf4a121c81a21adae23d039a0c7ee0941e21",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_16.png": "69d651209f31996da3e5ace873646b834d4d1a33663dc6e2a5f71a6acbeb167b",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_17.png": "19081a2594f4ca91792e9a6132ad0c240e09dceac91b024b9ce82975cb79ec7c",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_18.png": "d44124855074aa46b1f06258014b7999a8fefca56c6c3fe6948259b4695f58e5",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_19.png": "11b1e0ec0593a89111a876338a13c3b5fe82e98c90d4460d8317ec6c02412098",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_20.png": "9bfa87ddff6becfeeb59c7c38b6a60a744cabd27107e12f84250e782bef9cbb1",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_21.png": "da71a940d8380ae2ed30f691d52ccf92c0b55d7e8c4935590f893e536fb77ef0",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_22.png": "79db77d533529bc4ead8d8d34c4a64ab95cab9ce0f6ac83762716f188ef33733",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_23.png": "b818d46e3d31a36d7bd596e9e83188a29208af97ebaf1d820493413d64fa4994",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_24.png": "1f336e3a82ad4f827e7dd5eafb0cca47ddd46a2097d29e58c993db694fc16dd0",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_25.png": "e0ba202e722855dab5440a5cd6a9cf4b9f080d6302fd14199c7447ae98855ffc",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_26.png": "5912c163fbfdf223c150f2c9915f85e61fc3ca7ed054f904771ac31c7c3c9b73",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/11_mouth_motion_27.png": "158d85edaf084d38429468fa77c1d1538c2cd3562e873eebc0ad8e04bb56e17a",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/6_mouth_from_south_after.png": "8b5fa4564b2a61db0144eafde859325794304d0197cff34e699630a166d44d55",
+  "docs/art_review/village_v2_p10_population/core_r1_1/r1_state/6_mouth_from_south_before.png": "bf7ae4a097efcd97b85f087ac06ccd6504292b8ae7b93a51904c11a29743d59f",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/10_mouth_close_r1_vs_r1_1.jpg": "db67fb47c336ee8ff88c1a04dfbcf5639f1ba1ad072c4f6e4e2046573e1eac7a",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/11_mouth_motion_r1.gif": "69ca8b3cd798376e1b851d76b1d5ae8e7d8370646f34c7835bd92239e2391910",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/11_mouth_motion_r1_1.gif": "8fb01dc74913c67ec7638d2552c181adae744d3b7ea27aa55b3ccaf315f8b5b9",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/11_mouth_motion_r1_1_sheet.jpg": "e680d8ad8949fa6d569af490ff95f2cadbf21a332cee3ed876df04e9443938c7",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/11_mouth_motion_r1_sheet.jpg": "837c517e11ef691d128412aa3a8f93ffff8ccd456356d99cfd47d01d85e71b63",
+  "docs/art_review/village_v2_p10_population/core_r1_1/review/6_mouth_from_south_r1_vs_r1_1.jpg": "8e1e803be546300ad0343b3a44e9965af15b4c8a915e4ca3444eb93d525b46f0"
+ },
+ "child_seals": {
+  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+  "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
+ }
+}

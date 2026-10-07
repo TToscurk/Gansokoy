@@ -1,0 +1,990 @@
+{
+ "schema": 1,
+ "scope": "P10 R3d 核心人口 39＝R3b 16（封存 baseline、再掲）＋R3d 23、入口 cue 2",
+ "zone_counts": {
+  "market": 16,
+  "market_west": 8,
+  "main_street": 10,
+  "izakaya": 2,
+  "terakoya": 3
+ },
+ "total": 39,
+ "r3b_baseline": [
+  {
+   "id": "M1",
+   "model": "yaoya_m01",
+   "zone": "market",
+   "trade": "yasai",
+   "group": "g_yasai",
+   "anchor": "MarketP10/vendor_yatai_yasai",
+   "mode": "idle",
+   "position": [
+    249.691,
+    1.153,
+    -33.816
+   ],
+   "yaw_deg": -106.68,
+   "idle_t": 0.82,
+   "speed_scale": 0.95,
+   "seed": 23757
+  },
+  {
+   "id": "M2",
+   "model": "shufu_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_yasai",
+   "anchor": "MarketP10/customer_yatai_yasai_b",
+   "mode": "idle",
+   "position": [
+    247.317,
+    1.102,
+    -33.624
+   ],
+   "yaw_deg": 73.32,
+   "idle_t": 1.5,
+   "speed_scale": 1.03,
+   "seed": 31676
+  },
+  {
+   "id": "M3",
+   "model": "chonin_m01",
+   "zone": "market",
+   "trade": "clerk",
+   "group": "",
+   "anchor": "MarketP10/vendor_yatai_cha",
+   "mode": "idle",
+   "position": [
+    251.071,
+    1.181,
+    -38.416
+   ],
+   "yaw_deg": -106.68,
+   "idle_t": 0.6,
+   "speed_scale": 0.96,
+   "seed": 39595
+  },
+  {
+   "id": "M4",
+   "model": "sakanaya_m01",
+   "zone": "market",
+   "trade": "sakana",
+   "group": "",
+   "anchor": "MarketP10/vendor_yatai_sakana",
+   "mode": "idle",
+   "position": [
+    248.4,
+    1.25,
+    -58.35
+   ],
+   "yaw_deg": 0.0,
+   "idle_t": 2.75,
+   "speed_scale": 0.95,
+   "seed": 47514
+  },
+  {
+   "id": "M5",
+   "model": "setomono_f01",
+   "zone": "market",
+   "trade": "seto",
+   "group": "",
+   "anchor": "MarketP10/vendor_tana_seto",
+   "mode": "idle",
+   "position": [
+    234.45,
+    1.177,
+    -46.15
+   ],
+   "yaw_deg": 90.0,
+   "idle_t": 1.39,
+   "speed_scale": 0.98,
+   "seed": 55433
+  },
+  {
+   "id": "M6",
+   "model": "takigi_m01",
+   "zone": "market",
+   "trade": "zakka",
+   "group": "",
+   "anchor": "MarketP10/vendor_tana_zakka",
+   "mode": "idle",
+   "position": [
+    242.6,
+    1.253,
+    -58.9
+   ],
+   "yaw_deg": 0.0,
+   "idle_t": 5.22,
+   "speed_scale": 1.04,
+   "seed": 63352
+  },
+  {
+   "id": "M7",
+   "model": "kozo_m01",
+   "zone": "market",
+   "trade": "errand",
+   "group": "",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    243.0,
+    1.058,
+    -27.5
+   ],
+   "yaw_deg": 180.0,
+   "idle_t": 3.66,
+   "speed_scale": 1.0,
+   "seed": 71271,
+   "patrol": {
+    "endpoints": [
+     [
+      243.0,
+      -27.5
+     ],
+     [
+      243.0,
+      -45.5
+     ]
+    ],
+    "path": [
+     [
+      243.0,
+      -27.5
+     ],
+     [
+      243.0,
+      -36.0
+     ],
+     [
+      243.0,
+      -45.5
+     ]
+    ],
+    "length_m": 18.0,
+    "walk_speed": 1.197,
+    "wait": [
+     1.5,
+     3.5
+    ],
+    "start_u": 0.33
+   }
+  },
+  {
+   "id": "W1",
+   "model": "nunoya_f01",
+   "zone": "market_west",
+   "trade": "gofuku",
+   "group": "g_gofuku",
+   "anchor": "MarketWestP10/mw_n2_vendor",
+   "mode": "idle",
+   "position": [
+    208.5,
+    1.334,
+    -46.95
+   ],
+   "yaw_deg": 44.0,
+   "idle_t": 1.87,
+   "speed_scale": 0.96,
+   "seed": 79190
+  },
+  {
+   "id": "W2",
+   "model": "shufu_f01",
+   "zone": "market_west",
+   "trade": "customer",
+   "group": "g_gofuku",
+   "anchor": "MarketWestP10/mw_n2_customer",
+   "mode": "idle",
+   "position": [
+    209.9,
+    1.213,
+    -45.5
+   ],
+   "yaw_deg": -136.0,
+   "idle_t": 5.66,
+   "speed_scale": 1.05,
+   "seed": 87109
+  },
+  {
+   "id": "W3",
+   "model": "chaya_f01",
+   "zone": "market_west",
+   "trade": "chaya",
+   "group": "",
+   "anchor": "MarketWestP10/mw_n6_vendor",
+   "mode": "idle",
+   "position": [
+    228.6,
+    1.284,
+    -46.95
+   ],
+   "yaw_deg": 0.0,
+   "idle_t": 1.06,
+   "speed_scale": 0.99,
+   "seed": 95028
+  },
+  {
+   "id": "W4",
+   "model": "yakusou_f01",
+   "zone": "market_west",
+   "trade": "kanbutsu",
+   "group": "",
+   "anchor": "MarketWestP10/mw_n4_vendor",
+   "mode": "idle",
+   "position": [
+    220.7,
+    1.334,
+    -46.95
+   ],
+   "yaw_deg": 0.0,
+   "idle_t": 1.36,
+   "speed_scale": 0.93,
+   "seed": 102947
+  },
+  {
+   "id": "W5",
+   "model": "chonin_m01",
+   "zone": "market_west",
+   "trade": "passer",
+   "group": "",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    208.6,
+    1.208,
+    -44.6
+   ],
+   "yaw_deg": 90.0,
+   "idle_t": 0.06,
+   "speed_scale": 1.0,
+   "seed": 110866,
+   "patrol": {
+    "endpoints": [
+     [
+      208.600006103516,
+      -44.5999984741211
+     ],
+     [
+      224.199996948242,
+      -44.5999984741211
+     ]
+    ],
+    "path": [
+     [
+      208.600006103516,
+      -44.5999984741211
+     ],
+     [
+      216.0,
+      -44.5999984741211
+     ],
+     [
+      224.199996948242,
+      -44.5999984741211
+     ]
+    ],
+    "length_m": 15.6,
+    "walk_speed": 1.406,
+    "wait": [
+     2.0,
+     5.0
+    ],
+    "start_u": 0.65
+   }
+  },
+  {
+   "id": "S1",
+   "model": "chonin_m01",
+   "zone": "main_street",
+   "trade": "porter",
+   "group": "",
+   "anchor": "StreetP10/st_porter_ichi",
+   "mode": "idle",
+   "position": [
+    253.181,
+    1.027,
+    -25.542
+   ],
+   "yaw_deg": 1.15,
+   "idle_t": 3.77,
+   "speed_scale": 0.94,
+   "seed": 118785
+  },
+  {
+   "id": "S2",
+   "model": "yaoya_m01",
+   "zone": "main_street",
+   "trade": "tenbin",
+   "group": "g_tenbin",
+   "anchor": "StreetP10/st_vendor_MKT_025",
+   "mode": "idle",
+   "position": [
+    264.572,
+    1.245,
+    -41.899
+   ],
+   "yaw_deg": 99.52,
+   "idle_t": 3.72,
+   "speed_scale": 0.98,
+   "seed": 126704
+  },
+  {
+   "id": "S3",
+   "model": "yakusou_f01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "g_tenbin",
+   "anchor": "StreetP10/st_customer_MKT_025",
+   "mode": "idle",
+   "position": [
+    266.0,
+    1.248,
+    -42.139
+   ],
+   "yaw_deg": -80.48,
+   "idle_t": 5.45,
+   "speed_scale": 0.96,
+   "seed": 134623
+  },
+  {
+   "id": "S4",
+   "model": "sakanaya_m01",
+   "zone": "main_street",
+   "trade": "passer",
+   "group": "",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    264.2,
+    1.17,
+    -28.5
+   ],
+   "yaw_deg": 165.58,
+   "idle_t": 1.41,
+   "speed_scale": 1.0,
+   "seed": 142542,
+   "patrol": {
+    "endpoints": [
+     [
+      264.200012207031,
+      -28.5
+     ],
+     [
+      267.600006103516,
+      -42.7999992370605
+     ]
+    ],
+    "path": [
+     [
+      264.200012207031,
+      -28.5
+     ],
+     [
+      266.0,
+      -35.5
+     ],
+     [
+      267.600006103516,
+      -42.7999992370605
+     ]
+    ],
+    "length_m": 14.7,
+    "walk_speed": 1.323,
+    "wait": [
+     2.5,
+     5.0
+    ],
+    "start_u": 0.82
+   }
+  }
+ ],
+ "r3d_added": [
+  {
+   "id": "C1",
+   "model": "chaya_f01",
+   "zone": "market",
+   "trade": "dango",
+   "group": "g_dango",
+   "anchor": "MarketP10/vendor_yatai_dango",
+   "mode": "idle",
+   "position": [
+    255.211,
+    1.263,
+    -52.216
+   ],
+   "yaw_deg": -85.37,
+   "idle_t": 2.84,
+   "speed_scale": 1.0,
+   "seed": 523645
+  },
+  {
+   "id": "C2",
+   "model": "shufu_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_dango",
+   "anchor": "MarketP10/customer_yatai_dango_b",
+   "mode": "idle",
+   "position": [
+    252.837,
+    1.262,
+    -52.024
+   ],
+   "yaw_deg": 94.63,
+   "idle_t": 1.14,
+   "speed_scale": 0.97,
+   "seed": 628374,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C3",
+   "model": "takigi_m01",
+   "zone": "market",
+   "trade": "porter",
+   "group": "",
+   "anchor": "MarketP10/porter",
+   "mode": "idle",
+   "position": [
+    231.375,
+    1.203,
+    -43.796
+   ],
+   "yaw_deg": -90.0,
+   "idle_t": 4.23,
+   "speed_scale": 0.94,
+   "seed": 733103
+  },
+  {
+   "id": "C4",
+   "model": "nunoya_f01",
+   "zone": "market",
+   "trade": "gofuku",
+   "group": "g_nuno",
+   "anchor": "MarketP10/vendor_tana_nuno",
+   "mode": "idle",
+   "position": [
+    234.45,
+    1.179,
+    -38.2
+   ],
+   "yaw_deg": 43.73,
+   "idle_t": 4.53,
+   "speed_scale": 1.02,
+   "seed": 837832
+  },
+  {
+   "id": "C5",
+   "model": "shufu_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_nuno",
+   "anchor": "MarketP10/customer_tana_nuno_a",
+   "mode": "idle",
+   "position": [
+    236.65,
+    1.165,
+    -35.9
+   ],
+   "yaw_deg": -136.27,
+   "idle_t": 0.44,
+   "speed_scale": 1.02,
+   "seed": 942561,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C7",
+   "model": "sakanaya_m01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "",
+   "anchor": "MarketP10/customer_yatai_meshi_a",
+   "mode": "idle",
+   "position": [
+    250.388,
+    1.164,
+    -44.036
+   ],
+   "yaw_deg": 73.32,
+   "idle_t": 5.26,
+   "speed_scale": 1.01,
+   "seed": 1047290
+  },
+  {
+   "id": "C12",
+   "model": "yaoya_m01",
+   "zone": "market",
+   "trade": "porter",
+   "group": "g_mouth",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    244.6,
+    1.045,
+    -26.8
+   ],
+   "yaw_deg": 20.0,
+   "idle_t": 3.44,
+   "speed_scale": 0.94,
+   "seed": 1152019,
+   "activity": {
+    "type": "Carry",
+    "clip": "box_idle_a030",
+    "slot": "idle",
+    "options": {
+     "crate": [
+      "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+      0.3,
+      0.2
+     ],
+     "crate_forward": 0.14,
+     "crate_up": 0.09,
+     "crate_inset": 0.09
+    }
+   }
+  },
+  {
+   "id": "C23",
+   "model": "yakusou_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_square",
+   "anchor": "MarketP10/walker_b",
+   "mode": "idle",
+   "position": [
+    247.4,
+    1.202,
+    -42.0
+   ],
+   "yaw_deg": -127.57,
+   "idle_t": 0.42,
+   "speed_scale": 1.05,
+   "seed": 1256748,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_funny_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C24",
+   "model": "chaya_f01",
+   "zone": "market",
+   "trade": "customer",
+   "group": "g_square",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    246.1,
+    1.208,
+    -43.0
+   ],
+   "yaw_deg": 52.43,
+   "idle_t": 3.28,
+   "speed_scale": 1.06,
+   "seed": 1361477
+  },
+  {
+   "id": "C8",
+   "model": "setomono_f01",
+   "zone": "market_west",
+   "trade": "meshi",
+   "group": "",
+   "anchor": "MarketWestP10/mw_meshi_vendor",
+   "mode": "idle",
+   "position": [
+    230.6,
+    1.078,
+    -29.6
+   ],
+   "yaw_deg": -90.0,
+   "idle_t": 0.85,
+   "speed_scale": 0.97,
+   "seed": 1466206
+  },
+  {
+   "id": "C9",
+   "model": "sakanaya_m01",
+   "zone": "market_west",
+   "trade": "customer",
+   "group": "",
+   "anchor": "MarketWestP10/mw_n3_customer",
+   "mode": "idle",
+   "position": [
+    215.7,
+    1.262,
+    -45.4
+   ],
+   "yaw_deg": 180.0,
+   "idle_t": 0.46,
+   "speed_scale": 0.94,
+   "seed": 1570935
+  },
+  {
+   "id": "C10",
+   "model": "chonin_m01",
+   "zone": "market_west",
+   "trade": "porter",
+   "group": "",
+   "anchor": "MarketWestP10/mw_porter_crank",
+   "mode": "idle",
+   "position": [
+    232.0,
+    1.239,
+    -49.9
+   ],
+   "yaw_deg": -180.0,
+   "idle_t": 3.64,
+   "speed_scale": 0.95,
+   "seed": 1675664
+  },
+  {
+   "id": "C6",
+   "model": "sakanaya_m01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "g_mouth",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    259.1,
+    1.069,
+    -11.5
+   ],
+   "yaw_deg": -176.19,
+   "idle_t": 2.04,
+   "speed_scale": 1.0,
+   "seed": 1780393,
+   "patrol": {
+    "endpoints": [
+     [
+      259.100006103516,
+      -11.5
+     ],
+     [
+      247.199996948242,
+      -22.7000007629395
+     ]
+    ],
+    "path": [
+     [
+      259.100006103516,
+      -11.5
+     ],
+     [
+      258.600006103516,
+      -19.0
+     ],
+     [
+      251.0,
+      -21.3999996185303
+     ],
+     [
+      247.199996948242,
+      -22.7000007629395
+     ]
+    ],
+    "length_m": 19.5,
+    "walk_speed": 1.323,
+    "wait": [
+     2.0,
+     4.5
+    ],
+    "start_u": 0.5
+   }
+  },
+  {
+   "id": "C11",
+   "model": "nunoya_f01",
+   "zone": "main_street",
+   "trade": "barker",
+   "group": "g_mouth",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    249.9,
+    1.022,
+    -24.5
+   ],
+   "yaw_deg": 50.0,
+   "idle_t": 2.84,
+   "speed_scale": 1.02,
+   "seed": 1885122,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C13",
+   "model": "shufu_f01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "g_kame",
+   "anchor": "StreetP10/st_customer_MKT_024",
+   "mode": "idle",
+   "position": [
+    263.507,
+    1.187,
+    -31.714
+   ],
+   "yaw_deg": -87.72,
+   "idle_t": 3.93,
+   "speed_scale": 1.06,
+   "seed": 1989851,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C14",
+   "model": "setomono_f01",
+   "zone": "main_street",
+   "trade": "seto",
+   "group": "g_kame",
+   "anchor": "StreetP10/st_vendor_MKT_024",
+   "mode": "idle",
+   "position": [
+    261.543,
+    1.183,
+    -31.636
+   ],
+   "yaw_deg": 92.28,
+   "idle_t": 0.05,
+   "speed_scale": 1.06,
+   "seed": 2094580
+  },
+  {
+   "id": "C16",
+   "model": "takigi_m01",
+   "zone": "main_street",
+   "trade": "zakka",
+   "group": "",
+   "anchor": "StreetP10/st_vendor_MKT_011",
+   "mode": "idle",
+   "position": [
+    270.675,
+    1.221,
+    -35.736
+   ],
+   "yaw_deg": -106.7,
+   "idle_t": 3.95,
+   "speed_scale": 0.94,
+   "seed": 2199309
+  },
+  {
+   "id": "C19",
+   "model": "chonin_m01",
+   "zone": "main_street",
+   "trade": "customer",
+   "group": "",
+   "anchor": "StreetP10/st_customer_MKT_013",
+   "mode": "idle",
+   "position": [
+    272.08,
+    1.276,
+    -45.352
+   ],
+   "yaw_deg": 73.29,
+   "idle_t": 3.41,
+   "speed_scale": 0.97,
+   "seed": 2304038
+  },
+  {
+   "id": "C17",
+   "model": "chaya_f01",
+   "zone": "izakaya",
+   "trade": "guest",
+   "group": "g_izakaya",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    276.4,
+    1.358,
+    -59.0
+   ],
+   "yaw_deg": 146.31,
+   "idle_t": 0.84,
+   "speed_scale": 1.02,
+   "seed": 2408767,
+   "activity": {
+    "type": "Drink",
+    "clip": "drinking_im1_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C18",
+   "model": "sakanaya_m01",
+   "zone": "izakaya",
+   "trade": "guest",
+   "group": "g_izakaya",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    277.6,
+    1.37,
+    -60.8
+   ],
+   "yaw_deg": -33.69,
+   "idle_t": 3.3,
+   "speed_scale": 0.98,
+   "seed": 2513496
+  },
+  {
+   "id": "C20",
+   "model": "kozo_m01",
+   "zone": "terakoya",
+   "trade": "pupil",
+   "group": "g_terakoya",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    202.0,
+    0.764,
+    20.4
+   ],
+   "yaw_deg": 39.81,
+   "idle_t": 2.77,
+   "speed_scale": 1.0,
+   "seed": 2618225,
+   "patrol": {
+    "endpoints": [
+     [
+      202.0,
+      20.3999996185303
+     ],
+     [
+      206.399993896484,
+      25.6000003814697
+     ]
+    ],
+    "path": [
+     [
+      202.0,
+      20.3999996185303
+     ],
+     [
+      205.0,
+      24.0
+     ],
+     [
+      206.399993896484,
+      25.6000003814697
+     ]
+    ],
+    "length_m": 6.81,
+    "walk_speed": 1.197,
+    "wait": [
+     1.5,
+     3.5
+    ],
+    "start_u": 0.69
+   },
+   "activity": {
+    "type": "YouthShortStep",
+    "clip": "light_walk_s100_a030",
+    "slot": "walk",
+    "options": {}
+   }
+  },
+  {
+   "id": "C21",
+   "model": "nunoya_f01",
+   "zone": "terakoya",
+   "trade": "parent",
+   "group": "g_terakoya",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    207.8,
+    0.833,
+    27.6
+   ],
+   "yaw_deg": -54.16,
+   "idle_t": 1.18,
+   "speed_scale": 1.05,
+   "seed": 2722954,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "C22",
+   "model": "yakusou_f01",
+   "zone": "terakoya",
+   "trade": "parent",
+   "group": "g_terakoya",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    206.0,
+    0.725,
+    28.9
+   ],
+   "yaw_deg": 125.84,
+   "idle_t": 0.81,
+   "speed_scale": 1.0,
+   "seed": 2827683,
+   "activity": {
+    "type": "Sit",
+    "clip": "sit_talk_a_a030",
+    "slot": "idle",
+    "options": {
+     "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+     "seat_drop": 0.22,
+     "seat_back": -0.09,
+     "seat_depth": 0.34,
+     "seat_len": 1.2,
+     "seat_shift": -0.1
+    }
+   }
+  }
+ ],
+ "south_entrance": [
+  "C6",
+  "C11",
+  "C12"
+ ],
+ "entrance_cue": [
+  {
+   "name": "nobori_ichi_east",
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+   "position": [
+    250.9,
+    1.02,
+    -23.4
+   ],
+   "yaw_deg": 217.0
+  },
+  {
+   "name": "nobori_ichi_west",
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+   "position": [
+    240.2,
+    1.02,
+    -23.6
+   ],
+   "yaw_deg": 37.0
+  }
+ ]
+}

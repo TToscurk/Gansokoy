@@ -6,7 +6,7 @@ ERROR: [ACT-CORE] missing Population/CoreP10
    at: push_error (core/variant/variant_utility.cpp:1023)
    GDScript backtrace (most recent call first):
        [0] initialize (res://scripts/npc_activity_core.gd:11)
-[CORE] INFO 追加 23 人（824 ms）
+[CORE] INFO 追加 23 人（1027 ms）
 [CORE] MAP C1   market     chaya_f01    dango    idle   (255.2, 1.26, -52.2) yaw  -85  最近 C2 2.4 m  同モデル 13.0 m
 [CORE] MAP C2   market     shufu_f01    customer idle   (252.8, 1.26, -52.0) yaw   95  最近 C1 2.4 m  同モデル 19.2 m
 [CORE] MAP C3   market     takigi_m01   porter   idle   (231.4, 1.20, -43.8) yaw  -90  最近 M5 3.9 m  同モデル 18.8 m
