@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD0.res" id="1_kgiyf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD1.res" id="2_ggojs"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD2.res" id="3_oqjwi"]
+
+[node name="shrub_a" type="Node3D" unique_id=361499468]
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=666943080]
+visibility_range_end = 20.611902
+instance_shader_parameters/lod_band = Vector4(0, 15, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("1_kgiyf")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=1240488368]
+visibility_range_begin = 9.388099
+visibility_range_end = 41.211903
+instance_shader_parameters/lod_band = Vector4(15, 35, 3, 4.2)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("2_ggojs")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=942684813]
+visibility_range_begin = 28.7881
+visibility_range_end = 70.0
+instance_shader_parameters/lod_band = Vector4(35, 0, 4.2, 0)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("3_oqjwi")

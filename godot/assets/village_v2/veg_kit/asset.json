@@ -1,0 +1,23 @@
+{
+ "id": "veg_kit",
+ "kind": "kit",
+ "phase": "P9",
+ "round": "P9 R1（ART_APPROVED 2026-10-01）＋R2 Forest Belts 擺放",
+ "budget_class": "植被",
+ "landmark": null,
+ "label": "植被庫（32 變體／10 組：杉／檜／赤松／黒松／闊葉／櫻／楓／柳／Hero 樹／幼樹／枯木／灌木地被）",
+ "entry": "res://assets/village_v2/veg_kit/veg_kit_manifest.json",
+ "assembler": "res://tools/village_v2_veg_lib.gd",
+ "placement": "res://tools/village_v2_forest_lib.gd（R2 林帶規劃＋MultiMesh 烘焙 → maps/village_v2/gen/forest_p9.scn）",
+ "prefab": "res://tools/village_v2_machiya_kit_prefab.gd --kit=veg_kit",
+ "gate": "res://tools/verify_village_v2_veg_gate.gd",
+ "placement_gate": "res://tools/verify_village_v2_forest.gd",
+ "source_blender": "res://assets/blender/village_v2/build_veg_kit.py",
+ "replaces": "Vegetation/Forest_*（P0 六塊林冠 placeholder：SouthW／SouthE／West／NorthW／NorthE／HillCrown）",
+ "species_policy": "檜（hinoki_a／b）＝secondary vegetation：不作 Hero、不作 skyline 主力、不在重要視線單獨展示；只混入林緣 ≥ 18 m 的中後層與神社鎮守林，各林帶針葉內 ≤ 15 %",
+ "measured_blender": {
+  "modules": 34,
+  "LOD0": 12125,
+  "note": "LOD0 欄＝單棵最大 LOD0（sugi_hero）；一般樹 ≤ 6k、Hero 樹 ≤ 12.2k"
+ }
+}

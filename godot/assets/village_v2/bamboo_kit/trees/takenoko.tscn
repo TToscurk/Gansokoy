@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/takenoko_LOD0.res" id="1_u3g4e"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/takenoko_LOD1.res" id="2_fnq4v"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/takenoko_LOD2.res" id="3_m71qc"]
+
+[node name="takenoko" type="Node3D" unique_id=588860076]
+metadata/veg_id = "takenoko"
+metadata/veg_group = "bamboo_under"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=8573080]
+visibility_range_end = 20.52729
+instance_shader_parameters/lod_band = Vector4(0, 15, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(-0.012986641, 0.15, 0.00036711246)
+mesh = ExtResource("1_u3g4e")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=1378634044]
+visibility_range_begin = 9.47271
+visibility_range_end = 41.12729
+instance_shader_parameters/lod_band = Vector4(15, 35, 3, 4.2)
+instance_shader_parameters/lod_ref = Vector3(-0.012986641, 0.15, 0.00036711246)
+mesh = ExtResource("2_fnq4v")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=1903578779]
+visibility_range_begin = 28.87271
+visibility_range_end = 70.0
+instance_shader_parameters/lod_band = Vector4(35, 0, 4.2, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.012986641, 0.15, 0.00036711246)
+mesh = ExtResource("3_m71qc")

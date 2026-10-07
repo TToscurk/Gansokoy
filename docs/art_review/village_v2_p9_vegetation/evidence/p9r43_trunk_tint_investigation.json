@@ -1,0 +1,35 @@
+{
+  "subject": "P9 R4-3 闊葉樹幹藍白 調查（R1 維持封存，未改 R1 texture／shader／mesh）",
+  "date": "2026-10-02",
+  "method": "Godot MCP：Inspector（editor）＋ F5 runtime game_eval（臨時相機／參考物件／Environment A/B，跑完還原、未存檔；village_v2.tscn mtime 未變）",
+  "target": "Vegetation/SchoolYardP9/Trees/000_enoki_a/LOD0（world 200.9, 0.79, 10.0）",
+  "material": {
+    "material_override": null, "material_overlay": null, "surface_material_override": [null, null],
+    "surface0": "res://assets/village_v2/veg_kit/mat/VK_Bark_hackberry.tres（veg_bark.gdshader，albedo VB_hackberry_albedo.jpg 平均 sRGB 119,117,106 中性灰，albedo_mul 1.0，roughness 0.92，specular 0.18，normal_depth 1.0）",
+    "surface1": "VK_Leaf_B.tres（veg_leaf.gdshader）",
+    "instance_uniform": "leaf_tint (1,1,1)、leaf_sat 1.0（樹皮不吃 leaf_tint）"
+  },
+  "vertex_data": {"bark_vertex_color_avg": [0.936, 0.941, 0.931], "bark_vertex_color_min": [0.541, 0.580, 0.498], "bad_normals": 0, "has_tangent": true},
+  "lighting": {
+    "sun": "天象系統/太陽 color (1, 0.97, 0.92) energy 1.55（暖白）",
+    "environment": "ambient_light_source=SKY、sky_contribution 1.0（sky_system.gd 每幀設）、reflected=SKY、tonemap AgX、exposure 0.98、fog＋volumetric fog、SSAO、adjustment sat 1.05",
+    "sky": "res://shaders/sky_daynight.gdshader zenith_day (0.18,0.38,0.72)、horizon_day (0.68,0.80,0.92)"
+  },
+  "rgb_probe_trunk_sun_vs_shade_side": {
+    "sun_side_base": [78, 95, 113], "shade_side_base": [63, 80, 94],
+    "sun_side_ambient_neutral_grey": [56, 55, 48], "shade_side_ambient_neutral_grey": [40, 39, 32],
+    "sun_side_no_ambient_no_reflection": [25, 23, 18],
+    "note": "樹幹 1.8 m 處大半在自身樹冠陰影內，直射光貢獻極小（關 ambient 後只剩 25,23,18）→ 樹幹顏色幾乎全由天空 ambient 決定"
+  },
+  "ab_test_trunk_vs_open_neutral_grey_box": {
+    "base":          {"trunk": [75, 93, 112], "grey_box_open": [134, 144, 162], "trunk_B_minus_R": 37, "box_B_minus_R": 28},
+    "horizon_grey":  {"trunk": [86, 91, 100], "grey_box_open": [141, 142, 152], "trunk_B_minus_R": 14, "box_B_minus_R": 11},
+    "sky_all_grey":  {"trunk": [96, 94, 84],  "grey_box_open": [147, 144, 140], "trunk_B_minus_R": -12, "box_B_minus_R": -7},
+    "sdfgi_on":      {"trunk": [31, 33, 32],  "grey_box_open": [111, 109, 107], "trunk_B_minus_R": 1, "box_B_minus_R": -4},
+    "linear_tonemap_trunk": [73, 84, 96], "fog_off_trunk": [82, 98, 115]
+  },
+  "conclusion": "根因＝全域天空環境光（sky_system.gd：ambient_light_source=SKY、sky_contribution=1.0；sky_daynight.gdshader 天頂／地平藍），不是 R1 樹皮 texture／shader／mesh／vertex color／normal。0.5 中性灰方塊在同場景開闊處同樣偏藍（B−R +28），天空改中性灰後樹幹與方塊同步回中性。樹幹特別明顯是因為它在樹冠陰影裡、只吃天空光，且 hackberry 樹皮本身是低飽和灰。tonemap／霧影響小。",
+  "decision": "不在 R4-3 修：唯一有效的修法是全域 Environment／天空 ambient（會同時改變 R1–R4-2 已封存內容與全村的觀感，屬 P13 lighting-material polish，需使用者裁定）；SchoolYardP9 局部無合法 override 管道（樹皮不吃 instance tint，R1 不改）。不阻塞 R4-3。登記為 P13 lighting debt（非 R1 debt）。",
+  "p13_candidate_fix": "sky_system.gd 對 village_v2 的 ambient：sky_contribution 約 0.5–0.6 ＋ 暖中性 ambient_light_color，或 SDFGI（效能另評）；須以全村 TPS 鏡位重審已封存區。",
+  "evidence_image": "docs/art_review/village_v2_p9_vegetation/r43/r43_trunk_tint_evidence.png"
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-02T19:47:36",
+  "items": 122,
+  "forecourt_cover": 0.00352422907488987,
+  "enclosure_gaps": [
+    "21L"
+  ],
+  "elements": {
+    "sugi_c": 5,
+    "shrub_a": 28,
+    "young_sugi": 13,
+    "sasa_a": 18,
+    "sugi_a": 5,
+    "sugi_b": 1,
+    "hinoki": 3,
+    "shii_a": 2,
+    "sugi_hero": 1,
+    "gk_toro_kasuga": 4,
+    "fern_a": 33,
+    "log_a": 2
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/shrine_grove_p9.scn",
+    "mb": 0.30162525177002,
+    "items": 122,
+    "shapes": 7
+  }
+}

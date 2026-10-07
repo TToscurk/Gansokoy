@@ -1,0 +1,134 @@
+{
+ "version": "p8",
+ "method": "vision model, unlabeled A/B, random left/right (seed 8808)",
+ "key": {
+  "edge_1_mid": "B",
+  "edge_1_near": "A",
+  "edge_2_near": "B",
+  "edge_3_mid": "B",
+  "edge_3_near": "A",
+  "farm_1_near": "A",
+  "farm_2_mid": "A",
+  "farm_2_near": "B",
+  "farm_3_mid": "A",
+  "farm_3_near": "B",
+  "forest_1_mid": "B",
+  "forest_1_near": "B",
+  "forest_2_mid": "A",
+  "forest_2_near": "B",
+  "forest_3_mid": "B",
+  "forest_3_near": "B",
+  "meadow_1_mid": "B",
+  "meadow_1_near": "A",
+  "meadow_2_near": "A",
+  "meadow_3_mid": "A",
+  "meadow_3_near": "B"
+ },
+ "answers": [
+  [
+   "meadow_1_near",
+   true,
+   5
+  ],
+  [
+   "meadow_1_mid",
+   true,
+   5
+  ],
+  [
+   "meadow_2_near",
+   true,
+   5
+  ],
+  [
+   "meadow_3_mid",
+   true,
+   4
+  ],
+  [
+   "meadow_3_near",
+   true,
+   5
+  ],
+  [
+   "edge_1_near",
+   true,
+   5
+  ],
+  [
+   "edge_1_mid",
+   true,
+   5
+  ],
+  [
+   "edge_2_near",
+   true,
+   5
+  ],
+  [
+   "edge_3_near",
+   true,
+   5
+  ],
+  [
+   "edge_3_mid",
+   true,
+   5
+  ],
+  [
+   "farm_1_near",
+   true,
+   4
+  ],
+  [
+   "farm_2_near",
+   true,
+   4
+  ],
+  [
+   "farm_2_mid",
+   true,
+   2
+  ],
+  [
+   "farm_3_near",
+   true,
+   4
+  ],
+  [
+   "farm_3_mid",
+   true,
+   2
+  ],
+  [
+   "forest_1_near",
+   true,
+   5
+  ],
+  [
+   "forest_1_mid",
+   true,
+   5
+  ],
+  [
+   "forest_2_near",
+   true,
+   5
+  ],
+  [
+   "forest_2_mid",
+   true,
+   5
+  ],
+  [
+   "forest_3_near",
+   true,
+   4
+  ],
+  [
+   "forest_3_mid",
+   true,
+   2
+  ]
+ ]
+}

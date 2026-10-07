@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD0.res" id="1_85l5u"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD1.res" id="2_imfo5"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD2.res" id="3_w65xa"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD3.res" id="4_joguj"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xs7bp"]
+height = 2.055286
+radius = 0.09182327
+
+[node name="momiji_a" type="Node3D" unique_id=902964042]
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=1549135582]
+visibility_range_end = 36.06037
+instance_shader_parameters/lod_band = Vector4(0, 30, 0, 3.6)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("1_85l5u")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=748033665]
+visibility_range_begin = 23.93963
+visibility_range_end = 78.46037
+instance_shader_parameters/lod_band = Vector4(30, 70, 3.6, 8.4)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("2_imfo5")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=1282518122]
+visibility_range_begin = 61.53963
+visibility_range_end = 163.26038
+instance_shader_parameters/lod_band = Vector4(70, 150, 8.4, 18)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("3_w65xa")
+
+[node name="LOD3" type="MeshInstance3D" parent="." unique_id=1356324727]
+visibility_range_begin = 136.73962
+visibility_range_end = 600.0
+instance_shader_parameters/lod_band = Vector4(150, 0, 18, 0)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("4_joguj")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=4255809]
+
+[node name="Trunk" type="CollisionShape3D" parent="Collision" unique_id=149882981]
+transform = Transform3D(-0.9807048, -0.19397853, 0.024297629, -0.19549435, 0.9731006, -0.12188997, 0, -0.124288134, -0.99224615, -0.19934067, 0.79999995, -0.12772383)
+shape = SubResource("CylinderShape3D_xs7bp")

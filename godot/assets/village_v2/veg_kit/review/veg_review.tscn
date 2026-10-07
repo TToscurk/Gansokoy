@@ -1,0 +1,3386 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/sky_system.gd" id="1_e53mu"]
+[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="2_nujtq"]
+[ext_resource type="Shader" path="res://shaders/sky_daynight.gdshader" id="3_vbnio"]
+[ext_resource type="Shader" path="res://assets/village_v2/_matlib/ground/ground.gdshader" id="4_p26mw"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_albedo.jpg" id="5_lu48o"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="6_chijv"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_nrh.jpg" id="7_p4u2w"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sugi_a.tscn" id="8_gyybx"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sugi_b.tscn" id="9_dpjx2"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sugi_c.tscn" id="10_mvm2b"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/hinoki_a.tscn" id="11_kkfyw"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/hinoki_b.tscn" id="12_obm27"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/konara_a.tscn" id="13_6dco5"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/konara_b.tscn" id="14_tb3dq"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/keyaki_a.tscn" id="15_1dv23"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/enoki_a.tscn" id="16_7h6pm"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/shii_a.tscn" id="17_fdpav"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sakura_yama.tscn" id="18_gb3f1"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sakura_somei.tscn" id="19_ndh4m"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sakura_shidare.tscn" id="20_bib7g"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/momiji_a.tscn" id="21_48abn"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/momiji_b.tscn" id="22_u8srk"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/momiji_c.tscn" id="23_xb0t0"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/akamatsu_a.tscn" id="24_xvd01"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/akamatsu_b.tscn" id="25_t40co"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/kuromatsu_a.tscn" id="26_lt66t"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/niwamatsu_a.tscn" id="27_ufbi5"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/yanagi_a.tscn" id="28_kp1vq"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/yanagi_b.tscn" id="29_gando"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/kusu_hero.tscn" id="30_6f7wr"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sugi_hero.tscn" id="31_72r1w"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/keyaki_hero.tscn" id="32_qpodw"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/young_sugi.tscn" id="33_h00t5"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/young_broad_a.tscn" id="34_svdr6"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/young_broad_b.tscn" id="35_k71ep"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/snag_a.tscn" id="36_u0mi1"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/log_a.tscn" id="37_4qxgo"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/shrub_a.tscn" id="38_cjtcb"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/tsutsuji_a.tscn" id="39_u5ovq"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/sasa_a.tscn" id="40_5ud7m"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/veg_kit/trees/fern_a.tscn" id="41_f67ra"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_a_LOD0.res" id="42_of3uq"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_a_LOD1.res" id="43_2lkjl"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_a_LOD2.res" id="44_23qe3"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_a_LOD3.res" id="45_xfyjk"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_b_LOD0.res" id="46_a2xwd"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_b_LOD1.res" id="47_pyfu1"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_b_LOD2.res" id="48_apdlx"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_b_LOD3.res" id="49_csoqf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_c_LOD0.res" id="50_242g5"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_c_LOD1.res" id="51_2h7rj"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_c_LOD2.res" id="52_2102m"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_c_LOD3.res" id="53_rfj4g"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_a_LOD0.res" id="54_ebi8u"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_a_LOD1.res" id="55_obgd3"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_a_LOD2.res" id="56_cryvs"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_a_LOD3.res" id="57_wy4nm"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_b_LOD0.res" id="58_cjagj"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_b_LOD1.res" id="59_bj1ol"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_b_LOD2.res" id="60_f8ygh"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/hinoki_b_LOD3.res" id="61_l8d1q"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_a_LOD0.res" id="62_264o8"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_a_LOD1.res" id="63_nwexf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_a_LOD2.res" id="64_gcrwq"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_a_LOD3.res" id="65_i6o2a"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_b_LOD0.res" id="66_awbla"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_b_LOD1.res" id="67_um0cv"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_b_LOD2.res" id="68_2cuey"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/konara_b_LOD3.res" id="69_sprj8"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_a_LOD0.res" id="70_e5nbu"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_a_LOD1.res" id="71_yx7n1"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_a_LOD2.res" id="72_g2t7p"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_a_LOD3.res" id="73_nhxbe"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/enoki_a_LOD0.res" id="74_5r705"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/enoki_a_LOD1.res" id="75_8ll66"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/enoki_a_LOD2.res" id="76_ovofk"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/enoki_a_LOD3.res" id="77_su2be"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shii_a_LOD0.res" id="78_5e1v4"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shii_a_LOD1.res" id="79_3q7oq"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shii_a_LOD2.res" id="80_j2p6s"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shii_a_LOD3.res" id="81_o5kkv"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_yama_LOD0.res" id="82_77016"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_yama_LOD1.res" id="83_n630g"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_yama_LOD2.res" id="84_tu6mg"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_yama_LOD3.res" id="85_2srcj"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_somei_LOD0.res" id="86_rx1ja"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_somei_LOD1.res" id="87_dtsnm"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_somei_LOD2.res" id="88_yl6d3"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_somei_LOD3.res" id="89_mf3ii"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_shidare_LOD0.res" id="90_q12hv"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_shidare_LOD1.res" id="91_tmy52"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_shidare_LOD2.res" id="92_3i8im"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sakura_shidare_LOD3.res" id="93_wjvku"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD0.res" id="94_rf10a"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD1.res" id="95_qah32"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD2.res" id="96_kdwi0"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_a_LOD3.res" id="97_6fpgt"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_b_LOD0.res" id="98_8ooer"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_b_LOD1.res" id="99_y20hf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_b_LOD2.res" id="100_oh35w"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_b_LOD3.res" id="101_mqccr"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_c_LOD0.res" id="102_u2khg"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_c_LOD1.res" id="103_l4tb0"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_c_LOD2.res" id="104_wsw0f"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/momiji_c_LOD3.res" id="105_hxba7"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_a_LOD0.res" id="106_iji1e"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_a_LOD1.res" id="107_y801u"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_a_LOD2.res" id="108_56duv"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_a_LOD3.res" id="109_a3d3s"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_b_LOD0.res" id="110_fnopm"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_b_LOD1.res" id="111_w5h5v"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_b_LOD2.res" id="112_gv3y5"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/akamatsu_b_LOD3.res" id="113_tnobr"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kuromatsu_a_LOD0.res" id="114_mxyk2"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kuromatsu_a_LOD1.res" id="115_8dp3p"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kuromatsu_a_LOD2.res" id="116_vfxu2"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kuromatsu_a_LOD3.res" id="117_sljcn"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/niwamatsu_a_LOD0.res" id="118_a47e2"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/niwamatsu_a_LOD1.res" id="119_lig72"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/niwamatsu_a_LOD2.res" id="120_u5qdw"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/niwamatsu_a_LOD3.res" id="121_56ia6"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_a_LOD0.res" id="122_4pod3"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_a_LOD1.res" id="123_hg313"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_a_LOD2.res" id="124_ymc53"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_a_LOD3.res" id="125_1uh0b"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_b_LOD0.res" id="126_icrog"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_b_LOD1.res" id="127_sefw4"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_b_LOD2.res" id="128_4my1m"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/yanagi_b_LOD3.res" id="129_7q35t"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kusu_hero_LOD0.res" id="130_posct"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kusu_hero_LOD1.res" id="131_hpahe"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kusu_hero_LOD2.res" id="132_wrfcl"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/kusu_hero_LOD3.res" id="133_dm4lx"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_hero_LOD0.res" id="134_ga1ej"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_hero_LOD1.res" id="135_j1p1h"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_hero_LOD2.res" id="136_0bly3"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sugi_hero_LOD3.res" id="137_loq75"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_hero_LOD0.res" id="138_tsycp"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_hero_LOD1.res" id="139_gl0fw"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_hero_LOD2.res" id="140_uu2r1"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/keyaki_hero_LOD3.res" id="141_8c732"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_sugi_LOD0.res" id="142_7nj20"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_sugi_LOD1.res" id="143_kc0q8"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_sugi_LOD2.res" id="144_icatx"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_sugi_LOD3.res" id="145_cjoy0"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_a_LOD0.res" id="146_bf3f6"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_a_LOD1.res" id="147_gcj17"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_a_LOD2.res" id="148_rfkh7"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_a_LOD3.res" id="149_k2rfd"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_b_LOD0.res" id="150_d547y"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_b_LOD1.res" id="151_pt05s"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_b_LOD2.res" id="152_pcidq"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/young_broad_b_LOD3.res" id="153_mgv3d"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/snag_a_LOD0.res" id="154_f1gl7"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/snag_a_LOD1.res" id="155_2o4wf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/snag_a_LOD2.res" id="156_ah1ep"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/snag_a_LOD3.res" id="157_vr0kp"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/log_a_LOD0.res" id="158_rcqlw"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/log_a_LOD1.res" id="159_bj2hl"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/log_a_LOD2.res" id="160_64nax"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD0.res" id="161_lhc35"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD1.res" id="162_edt4v"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/shrub_a_LOD2.res" id="163_75dwx"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD0.res" id="164_rifbi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD1.res" id="165_x2udp"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD2.res" id="166_3l88v"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD0.res" id="167_d6ih8"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD1.res" id="168_md71e"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD2.res" id="169_tcb3b"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/fern_a_LOD0.res" id="170_ghgob"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/fern_a_LOD1.res" id="171_tv4nb"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/fern_a_LOD2.res" id="172_jcpp3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjtfa"]
+shader = ExtResource("3_vbnio")
+shader_parameter/sun_dir = Vector3(0.96862835, 0.20791169, -0.13613184)
+shader_parameter/moon_dir = Vector3(-0.96862835, -0.20791169, 0.13613184)
+shader_parameter/day_amount = 1.0
+shader_parameter/golden = 0.1647231597877079
+shader_parameter/cloud_cover = 0.1
+shader_parameter/overcast = 0.0
+shader_parameter/star_density = 0.1
+shader_parameter/milkyway = 0.5
+shader_parameter/moon_visible = 1.0
+shader_parameter/zenith_day = Color(0.18, 0.38, 0.72, 1)
+shader_parameter/horizon_day = Color(0.68, 0.8, 0.92, 1)
+shader_parameter/zenith_night = Color(0.012, 0.022, 0.055, 1)
+shader_parameter/horizon_night = Color(0.045, 0.06, 0.11, 1)
+shader_parameter/golden_tint = Color(1, 0.52, 0.24, 1)
+shader_parameter/cloud_lit = Color(1, 0.97, 0.93, 1)
+shader_parameter/cloud_shadow = Color(0.42, 0.46, 0.55, 1)
+shader_parameter/painted_clouds = ExtResource("2_nujtq")
+shader_parameter/painted_mix = 0.5
+shader_parameter/painted_yaw = -31.0
+shader_parameter/painted_drift = 0.0
+shader_parameter/painted_base = 0.85
+
+[sub_resource type="Sky" id="Sky_a6unw"]
+sky_material = SubResource("ShaderMaterial_gjtfa")
+process_mode = 3
+
+[sub_resource type="Environment" id="Environment_35u2q"]
+background_mode = 2
+sky = SubResource("Sky_a6unw")
+ambient_light_source = 3
+ambient_light_energy = 0.54706794
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 0.98
+ssao_enabled = true
+ssao_intensity = 1.6
+glow_enabled = true
+glow_intensity = 0.55
+glow_bloom = 0.05
+glow_hdr_threshold = 1.1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.72536737, 0.76846933, 0.8207959, 1)
+fog_sun_scatter = 0.28
+fog_density = 0.000546
+fog_sky_affect = 0.25
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0023400001
+volumetric_fog_albedo = Color(0.72536737, 0.76846933, 0.8207959, 1)
+volumetric_fog_gi_inject = 0.4
+volumetric_fog_length = 320.0
+adjustment_enabled = true
+adjustment_saturation = 1.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_scjnm"]
+render_priority = 0
+shader = ExtResource("4_p26mw")
+shader_parameter/albedo_arr = ExtResource("5_lu48o")
+shader_parameter/nrh_arr = ExtResource("7_p4u2w")
+shader_parameter/noise_tex = ExtResource("6_chijv")
+shader_parameter/ground_k = 0.19
+shader_parameter/mode = 0
+shader_parameter/use_vertex_weights = false
+shader_parameter/fix_a = Vector4(0, 0, 0, 0)
+shader_parameter/fix_b = Vector4(0.35, 0, 0, 0)
+shader_parameter/road_layer = null
+shader_parameter/shoulder_layer = null
+shader_parameter/shoulder_start = null
+shader_parameter/edge_gravel = null
+shader_parameter/center_grass = null
+shader_parameter/wear_center = null
+shader_parameter/rut_offset = null
+shader_parameter/rut_strength = null
+shader_parameter/paddy = null
+shader_parameter/bund_w = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0n7oq"]
+size = Vector2(3000, 3000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0tie7"]
+size = Vector3(3000, 1, 3000)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7ct2q"]
+height = 3.4002657
+radius = 0.37233657
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jigov"]
+height = 3.4002657
+radius = 0.37233657
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nnjse"]
+height = 3.4002657
+radius = 0.37233657
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q337w"]
+height = 3.4002657
+radius = 0.37233657
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ggmp0"]
+height = 3.403303
+radius = 0.49555418
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ha07h"]
+height = 3.403303
+radius = 0.49555418
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vm06d"]
+height = 3.403303
+radius = 0.49555418
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7dlky"]
+height = 3.403303
+radius = 0.49555418
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8cvu1"]
+height = 3.4009235
+radius = 0.19351654
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ktyhf"]
+height = 3.4009235
+radius = 0.19351654
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hn02a"]
+height = 3.4009235
+radius = 0.19351654
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_viaot"]
+height = 3.4009235
+radius = 0.19351654
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f57t2"]
+height = 3.4006114
+radius = 0.28091615
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_llchf"]
+height = 3.4006114
+radius = 0.28091615
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_aeqv8"]
+height = 3.4006114
+radius = 0.28091615
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_p4i82"]
+height = 3.4006114
+radius = 0.28091615
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8daqv"]
+height = 3.40367
+radius = 0.42376617
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_54tub"]
+height = 3.40367
+radius = 0.42376617
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_28p0r"]
+height = 3.40367
+radius = 0.42376617
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d3a7a"]
+height = 3.40367
+radius = 0.42376617
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uq1d1"]
+height = 2.6097345
+radius = 0.20535591
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dk002"]
+height = 2.6097345
+radius = 0.20535591
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n7hta"]
+height = 2.6097345
+radius = 0.20535591
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ojl5d"]
+height = 2.6097345
+radius = 0.20535591
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7211y"]
+height = 3.294203
+radius = 0.17244875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gnnk4"]
+height = 3.294203
+radius = 0.17244875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mn3sq"]
+height = 3.294203
+radius = 0.17244875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u0h5r"]
+height = 3.294203
+radius = 0.17244875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_es3nh"]
+height = 3.4162633
+radius = 0.29732186
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wfrvb"]
+height = 3.4162633
+radius = 0.29732186
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yc2ak"]
+height = 3.4162633
+radius = 0.29732186
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v6l24"]
+height = 3.4162633
+radius = 0.29732186
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ob51d"]
+height = 3.241343
+radius = 0.28098992
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0ty2b"]
+height = 3.241343
+radius = 0.28098992
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fguut"]
+height = 3.241343
+radius = 0.28098992
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vvk5g"]
+height = 3.241343
+radius = 0.28098992
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b1io3"]
+height = 2.812935
+radius = 0.29755217
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j6jjk"]
+height = 2.812935
+radius = 0.29755217
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mj8uk"]
+height = 2.812935
+radius = 0.29755217
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mewrc"]
+height = 2.812935
+radius = 0.29755217
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ia5la"]
+height = 3.43023
+radius = 0.22711034
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0d4gv"]
+height = 3.43023
+radius = 0.22711034
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pvr7h"]
+height = 3.43023
+radius = 0.22711034
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f5ip3"]
+height = 3.43023
+radius = 0.22711034
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xk8bj"]
+height = 2.1733224
+radius = 0.27034616
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_07i1g"]
+height = 2.1733224
+radius = 0.27034616
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yx46g"]
+height = 2.1733224
+radius = 0.27034616
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ehj6k"]
+height = 2.1733224
+radius = 0.27034616
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f3kwp"]
+height = 3.2076414
+radius = 0.2697173
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kgt8y"]
+height = 3.2076414
+radius = 0.2697173
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kysd0"]
+height = 3.2076414
+radius = 0.2697173
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_npgf1"]
+height = 3.2076414
+radius = 0.2697173
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hn8n0"]
+height = 2.055286
+radius = 0.09182327
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gpt4k"]
+height = 2.055286
+radius = 0.09182327
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qkylx"]
+height = 2.055286
+radius = 0.09182327
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qo084"]
+height = 2.055286
+radius = 0.09182327
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7wppn"]
+height = 2.2180126
+radius = 0.16182674
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_svshe"]
+height = 2.2180126
+radius = 0.16182674
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v0wn0"]
+height = 2.2180126
+radius = 0.16182674
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_31gq3"]
+height = 2.2180126
+radius = 0.16182674
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jhsmq"]
+height = 2.4746242
+radius = 0.074649744
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5sfio"]
+height = 2.4746242
+radius = 0.074649744
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_w2va7"]
+height = 2.4746242
+radius = 0.074649744
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2u5gb"]
+height = 2.4746242
+radius = 0.074649744
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kwd0f"]
+height = 3.4147456
+radius = 0.21248487
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xm536"]
+height = 3.4147456
+radius = 0.21248487
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_e275h"]
+height = 3.4147456
+radius = 0.21248487
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_s8n5q"]
+height = 3.4147456
+radius = 0.21248487
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c6t0j"]
+height = 3.4350271
+radius = 0.20180875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_asil2"]
+height = 3.4350271
+radius = 0.20180875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6hf35"]
+height = 3.4350271
+radius = 0.20180875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t0obl"]
+height = 3.4350271
+radius = 0.20180875
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f62m6"]
+height = 3.4327445
+radius = 0.2715432
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ei3ff"]
+height = 3.4327445
+radius = 0.2715432
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_auglh"]
+height = 3.4327445
+radius = 0.2715432
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_smpbh"]
+height = 3.4327445
+radius = 0.2715432
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_54r57"]
+height = 2.0486097
+radius = 0.13343352
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cjmd1"]
+height = 2.0486097
+radius = 0.13343352
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7c766"]
+height = 2.0486097
+radius = 0.13343352
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lbel5"]
+height = 2.0486097
+radius = 0.13343352
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ovr57"]
+height = 2.6577044
+radius = 0.2698704
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_72igk"]
+height = 2.6577044
+radius = 0.2698704
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g8elq"]
+height = 2.6577044
+radius = 0.2698704
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n35vu"]
+height = 2.6577044
+radius = 0.2698704
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_p317x"]
+height = 2.2069104
+radius = 0.14004192
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_47ujj"]
+height = 2.2069104
+radius = 0.14004192
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wuvuj"]
+height = 2.2069104
+radius = 0.14004192
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wuwxm"]
+height = 2.2069104
+radius = 0.14004192
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_knuue"]
+height = 3.6280057
+radius = 1.3003757
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j0cwj"]
+height = 3.6280057
+radius = 1.3003757
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7eend"]
+height = 3.6280057
+radius = 1.3003757
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uhcdh"]
+height = 3.6280057
+radius = 1.3003757
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5p5sj"]
+height = 4.2168183
+radius = 1.0525638
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0b064"]
+height = 4.2168183
+radius = 1.0525638
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bxfnn"]
+height = 4.2168183
+radius = 1.0525638
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t60mg"]
+height = 4.2168183
+radius = 1.0525638
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1expt"]
+height = 4.2009673
+radius = 0.86680365
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f5ke5"]
+height = 4.2009673
+radius = 0.86680365
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_r2oue"]
+height = 4.2009673
+radius = 0.86680365
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1ed3v"]
+height = 4.2009673
+radius = 0.86680365
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jcihn"]
+height = 2.00141
+radius = 0.050512947
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fl43w"]
+height = 2.00141
+radius = 0.050512947
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_461nu"]
+height = 2.00141
+radius = 0.050512947
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sl45f"]
+height = 2.00141
+radius = 0.050512947
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1a2n7"]
+height = 2.0800478
+radius = 0.048217542
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xwkiq"]
+height = 2.0800478
+radius = 0.048217542
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rgbi6"]
+height = 2.0800478
+radius = 0.048217542
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0lw0a"]
+height = 2.0800478
+radius = 0.048217542
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xyvds"]
+height = 2.2343802
+radius = 0.025353627
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fykj8"]
+height = 2.2343802
+radius = 0.025353627
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qf52i"]
+height = 2.2343802
+radius = 0.025353627
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dt02v"]
+height = 2.2343802
+radius = 0.025353627
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8jaqo"]
+height = 3.400355
+radius = 0.17064
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8u7g4"]
+height = 3.400355
+radius = 0.17064
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_asgx7"]
+height = 3.400355
+radius = 0.17064
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ujdq5"]
+height = 3.400355
+radius = 0.17064
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tydu7"]
+height = 6.5020723
+radius = 0.279
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_66nbk"]
+height = 6.5020723
+radius = 0.279
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cdht4"]
+height = 6.5020723
+radius = 0.279
+
+[node name="VegReview" type="Node3D" unique_id=1843619392]
+
+[node name="Lighting" type="Node3D" parent="." unique_id=1672569399]
+
+[node name="天象系統" type="Node3D" parent="Lighting" unique_id=1006777969]
+script = ExtResource("1_e53mu")
+"時刻" = 17.2
+"一日長度分鐘" = 60.0
+"方位角" = 20.0
+"正午高度" = 90.0
+"天氣過渡秒數" = 30.0
+"星星密度" = 0.1
+"銀河強度" = 0.5
+"概念圖雲層" = ExtResource("2_nujtq")
+"概念圖雲層比例" = 0.5
+"概念圖雲層方位" = -31.0
+"概念圖雲層漂移" = 0.0
+"陰影距離" = 160.0
+
+[node name="太陽" type="DirectionalLight3D" parent="Lighting/天象系統" unique_id=734635712]
+transform = Transform3D(-0.13917308, -0.20588833, 0.96862835, 0, 0.9781476, 0.20791171, -0.99026805, 0.028935714, -0.13613181, 96.86283, 20.791168, -13.613184)
+light_color = Color(1, 0.9123469, 0.82446057, 1)
+light_energy = 0.9572793
+light_angular_distance = 0.6
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.4
+directional_shadow_split_1 = 0.06
+directional_shadow_split_2 = 0.16
+directional_shadow_split_3 = 0.42
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 260.0
+
+[node name="月亮" type="DirectionalLight3D" parent="Lighting/天象系統" unique_id=828494677]
+transform = Transform3D(0.1391731, -0.20588833, -0.96862835, 0, 0.9781476, -0.20791171, 0.99026805, 0.02893572, 0.13613184, -96.86283, -20.791168, 13.613184)
+visible = false
+light_color = Color(0.62, 0.72, 0.95, 1)
+light_energy = 0.0
+light_angular_distance = 1.2
+
+[node name="天空環境" type="WorldEnvironment" parent="Lighting/天象系統" unique_id=1047763180]
+environment = SubResource("Environment_35u2q")
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=88058044]
+material_override = SubResource("ShaderMaterial_scjnm")
+mesh = SubResource("PlaneMesh_0n7oq")
+
+[node name="GroundCollision" type="StaticBody3D" parent="." unique_id=1862283046]
+
+[node name="@CollisionShape3D@2" type="CollisionShape3D" parent="GroundCollision" unique_id=1179331075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_0tie7")
+
+[node name="Subjects" type="Node3D" parent="." unique_id=1273193584]
+
+[node name="Live" type="Node3D" parent="Subjects" unique_id=2039064860]
+
+[node name="conifer" type="Node3D" parent="Subjects/Live" unique_id=458233848]
+metadata/row_z = 0.0
+metadata/row_x = [-26.164506951325592, 26.164506951325592]
+
+[node name="sugi_a" type="Node3D" parent="Subjects/Live/conifer" unique_id=763350711 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.164507, 0, 0)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="sugi_b" type="Node3D" parent="Subjects/Live/conifer" unique_id=1814046009 instance=ExtResource("9_dpjx2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.991101, 0, 0)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="sugi_c" type="Node3D" parent="Subjects/Live/conifer" unique_id=2086237060 instance=ExtResource("10_mvm2b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.96330154, 0, 0)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="hinoki_a" type="Node3D" parent="Subjects/Live/conifer" unique_id=182688893 instance=ExtResource("11_kkfyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.469212, 0, 0)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="hinoki_b" type="Node3D" parent="Subjects/Live/conifer" unique_id=10691290 instance=ExtResource("12_obm27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.164507, 0, 0)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="broad" type="Node3D" parent="Subjects/Live" unique_id=462160945]
+metadata/row_z = -24.208465437773082
+metadata/row_x = [-35.31977331699839, 35.31977331699839]
+
+[node name="konara_a" type="Node3D" parent="Subjects/Live/broad" unique_id=616006156 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.319775, 0, -24.208466)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+
+[node name="konara_b" type="Node3D" parent="Subjects/Live/broad" unique_id=1009519208 instance=ExtResource("14_tb3dq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.211521, 0, -24.208466)
+metadata/veg_id = "konara_b"
+metadata/veg_group = "broad"
+
+[node name="keyaki_a" type="Node3D" parent="Subjects/Live/broad" unique_id=2057124199 instance=ExtResource("15_1dv23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.563116, 0, -24.208466)
+metadata/veg_id = "keyaki_a"
+metadata/veg_group = "broad"
+
+[node name="enoki_a" type="Node3D" parent="Subjects/Live/broad" unique_id=1651824112 instance=ExtResource("16_7h6pm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.427809, 0, -24.208466)
+metadata/veg_id = "enoki_a"
+metadata/veg_group = "broad"
+
+[node name="shii_a" type="Node3D" parent="Subjects/Live/broad" unique_id=918904772 instance=ExtResource("17_fdpav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.319775, 0, -24.208466)
+metadata/veg_id = "shii_a"
+metadata/veg_group = "broad"
+
+[node name="sakura" type="Node3D" parent="Subjects/Live" unique_id=691919222]
+metadata/row_z = -52.538636573836435
+metadata/row_x = [-17.11785767291579, 17.11785767291579]
+
+[node name="sakura_yama" type="Node3D" parent="Subjects/Live/sakura" unique_id=857484268 instance=ExtResource("18_gb3f1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.117857, 0, -52.538635)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+
+[node name="sakura_somei" type="Node3D" parent="Subjects/Live/sakura" unique_id=372835880 instance=ExtResource("19_ndh4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0419458, 0, -52.538635)
+metadata/veg_id = "sakura_somei"
+metadata/veg_group = "sakura"
+
+[node name="sakura_shidare" type="Node3D" parent="Subjects/Live/sakura" unique_id=383426125 instance=ExtResource("20_bib7g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.117857, 0, -52.538635)
+metadata/veg_id = "sakura_shidare"
+metadata/veg_group = "sakura"
+
+[node name="momiji" type="Node3D" parent="Subjects/Live" unique_id=1957630436]
+metadata/row_z = -80.56418208868861
+metadata/row_x = [-14.22622698839572, 14.22622698839572]
+
+[node name="momiji_a" type="Node3D" parent="Subjects/Live/momiji" unique_id=902964042 instance=ExtResource("21_48abn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.226227, 0, -80.56418)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="momiji_b" type="Node3D" parent="Subjects/Live/momiji" unique_id=1311776185 instance=ExtResource("22_u8srk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1648657, 0, -80.56418)
+metadata/veg_id = "momiji_b"
+metadata/veg_group = "momiji"
+
+[node name="momiji_c" type="Node3D" parent="Subjects/Live/momiji" unique_id=525654657 instance=ExtResource("23_xb0t0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.226227, 0, -80.56418)
+metadata/veg_id = "momiji_c"
+metadata/veg_group = "momiji"
+
+[node name="matsu" type="Node3D" parent="Subjects/Live" unique_id=1296874627]
+metadata/row_z = -104.71333756370124
+metadata/row_x = [-22.379376109436738, 22.379376109436738]
+
+[node name="akamatsu_a" type="Node3D" parent="Subjects/Live/matsu" unique_id=432795424 instance=ExtResource("24_xvd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.379375, 0, -104.71334)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="akamatsu_b" type="Node3D" parent="Subjects/Live/matsu" unique_id=1445953963 instance=ExtResource("25_t40co")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.94705, 0, -104.71334)
+metadata/veg_id = "akamatsu_b"
+metadata/veg_group = "matsu"
+
+[node name="kuromatsu_a" type="Node3D" parent="Subjects/Live/matsu" unique_id=2082248790 instance=ExtResource("26_lt66t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.441558, 0, -104.71334)
+metadata/veg_id = "kuromatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="niwamatsu_a" type="Node3D" parent="Subjects/Live/matsu" unique_id=533425859 instance=ExtResource("27_ufbi5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.379375, 0, -104.71334)
+metadata/veg_id = "niwamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="yanagi" type="Node3D" parent="Subjects/Live" unique_id=500786110]
+metadata/row_z = -130.9108774245331
+metadata/row_x = [-6.1307193435068434, 6.1307193435068434]
+
+[node name="yanagi_a" type="Node3D" parent="Subjects/Live/yanagi" unique_id=249191200 instance=ExtResource("28_kp1vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.130719, 0, -130.91087)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+
+[node name="yanagi_b" type="Node3D" parent="Subjects/Live/yanagi" unique_id=220623283 instance=ExtResource("29_gando")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.130719, 0, -130.91087)
+metadata/veg_id = "yanagi_b"
+metadata/veg_group = "yanagi"
+
+[node name="hero" type="Node3D" parent="Subjects/Live" unique_id=1344875507]
+metadata/row_z = -153.60948630190495
+metadata/row_x = [-22.220621390344032, 22.220621390344032]
+
+[node name="kusu_hero" type="Node3D" parent="Subjects/Live/hero" unique_id=1212570724 instance=ExtResource("30_6f7wr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.220621, 0, -153.60948)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+
+[node name="sugi_hero" type="Node3D" parent="Subjects/Live/hero" unique_id=1799329824 instance=ExtResource("31_72r1w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.014291997, 0, -153.60948)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="keyaki_hero" type="Node3D" parent="Subjects/Live/hero" unique_id=1288694638 instance=ExtResource("32_qpodw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.220621, 0, -153.60948)
+metadata/veg_id = "keyaki_hero"
+metadata/veg_group = "hero"
+
+[node name="young" type="Node3D" parent="Subjects/Live" unique_id=68672600]
+metadata/row_z = -190.04762326941
+metadata/row_x = [-9.413424581836747, 9.413424581836747]
+
+[node name="young_sugi" type="Node3D" parent="Subjects/Live/young" unique_id=2003432450 instance=ExtResource("33_h00t5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.4134245, 0, -190.04762)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+
+[node name="young_broad_a" type="Node3D" parent="Subjects/Live/young" unique_id=1263198087 instance=ExtResource("34_svdr6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875663, 0, -190.04762)
+metadata/veg_id = "young_broad_a"
+metadata/veg_group = "young"
+
+[node name="young_broad_b" type="Node3D" parent="Subjects/Live/young" unique_id=1764000143 instance=ExtResource("35_k71ep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4134245, 0, -190.04762)
+metadata/veg_id = "young_broad_b"
+metadata/veg_group = "young"
+
+[node name="dead" type="Node3D" parent="Subjects/Live" unique_id=1554290842]
+metadata/row_z = -209.14956764079875
+metadata/row_x = [-4.800131482876011, 4.800131482876011]
+
+[node name="snag_a" type="Node3D" parent="Subjects/Live/dead" unique_id=182780761 instance=ExtResource("36_u0mi1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8001313, 0, -209.14957)
+metadata/veg_id = "snag_a"
+metadata/veg_group = "dead"
+
+[node name="log_a" type="Node3D" parent="Subjects/Live/dead" unique_id=443115001 instance=ExtResource("37_4qxgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8001313, 0, -209.14957)
+metadata/veg_id = "log_a"
+metadata/veg_group = "dead"
+
+[node name="under" type="Node3D" parent="Subjects/Live" unique_id=240813534]
+metadata/row_z = -229.7285714822606
+metadata/row_x = [-10.899377016569307, 10.899377016569307]
+
+[node name="shrub_a" type="Node3D" parent="Subjects/Live/under" unique_id=361499468 instance=ExtResource("38_cjtcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.899377, 0, -229.72858)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+
+[node name="tsutsuji_a" type="Node3D" parent="Subjects/Live/under" unique_id=883395793 instance=ExtResource("39_u5ovq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9030101, 0, -229.72858)
+metadata/veg_id = "tsutsuji_a"
+metadata/veg_group = "under"
+
+[node name="sasa_a" type="Node3D" parent="Subjects/Live/under" unique_id=1033901922 instance=ExtResource("40_5ud7m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4948165, 0, -229.72858)
+metadata/veg_id = "sasa_a"
+metadata/veg_group = "under"
+
+[node name="fern_a" type="Node3D" parent="Subjects/Live/under" unique_id=331213163 instance=ExtResource("41_f67ra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.899377, 0, -229.72858)
+metadata/veg_id = "fern_a"
+metadata/veg_group = "under"
+
+[node name="LODs" type="Node3D" parent="Subjects" unique_id=1569454484]
+
+[node name="sugi_a" type="Node3D" parent="Subjects/LODs" unique_id=349709384]
+metadata/row_z = -306.42913758908315
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sugi_a" unique_id=1303626834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.20752, 0, -306.42914)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sugi_a/LOD0" unique_id=712343471]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.23485851, 12.099711, 0.68335474)
+mesh = ExtResource("42_of3uq")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_a/LOD0" unique_id=540556627]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_a/LOD0/Collision" unique_id=1669931261]
+transform = Transform3D(-0.999922, 0.0124931475, -5.2739274e-06, 0.012493148, 0.9999219, -0.00042211264, 0, -0.0004221456, -1, 0.02124001, 1.5, -0.0007177036)
+shape = SubResource("CylinderShape3D_7ct2q")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sugi_a" unique_id=1128836989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.069173, 0, -306.42914)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sugi_a/LOD1" unique_id=684953764]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.23485851, 12.099711, 0.68335474)
+mesh = ExtResource("43_2lkjl")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_a/LOD1" unique_id=1417147041]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_a/LOD1/Collision" unique_id=2130269537]
+transform = Transform3D(-0.999922, 0.0124931475, -5.2739274e-06, 0.012493148, 0.9999219, -0.00042211264, 0, -0.0004221456, -1, 0.02124001, 1.5, -0.0007177036)
+shape = SubResource("CylinderShape3D_jigov")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sugi_a" unique_id=1626024503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.069173, 0, -306.42914)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sugi_a/LOD2" unique_id=30702260]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.23485851, 12.099711, 0.68335474)
+mesh = ExtResource("44_23qe3")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_a/LOD2" unique_id=2095334157]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_a/LOD2/Collision" unique_id=995743944]
+transform = Transform3D(-0.999922, 0.0124931475, -5.2739274e-06, 0.012493148, 0.9999219, -0.00042211264, 0, -0.0004221456, -1, 0.02124001, 1.5, -0.0007177036)
+shape = SubResource("CylinderShape3D_nnjse")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sugi_a" unique_id=1259288475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.20752, 0, -306.42914)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sugi_a/LOD3" unique_id=94026100]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.23485851, 12.099711, 0.68335474)
+mesh = ExtResource("45_xfyjk")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_a/LOD3" unique_id=1555103039]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_a/LOD3/Collision" unique_id=919960941]
+transform = Transform3D(-0.999922, 0.0124931475, -5.2739274e-06, 0.012493148, 0.9999219, -0.00042211264, 0, -0.0004221456, -1, 0.02124001, 1.5, -0.0007177036)
+shape = SubResource("CylinderShape3D_q337w")
+
+[node name="sugi_b" type="Node3D" parent="Subjects/LODs" unique_id=3465355]
+metadata/row_z = -330.56748378071677
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sugi_b" unique_id=164569201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.312698, 0, -330.56747)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sugi_b/LOD0" unique_id=2118703957]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.09998, 8.611487, -0.19107723)
+mesh = ExtResource("46_a2xwd")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_b/LOD0" unique_id=1859440521]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_b/LOD0/Collision" unique_id=837201804]
+transform = Transform3D(-0.9991165, 0.0420234, -0.0005544431, 0.04202706, 0.9990295, -0.013180871, 0, -0.013192526, -0.999913, 0.07150918, 1.5, -0.022449082)
+shape = SubResource("CylinderShape3D_ggmp0")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sugi_b" unique_id=1408166819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.104233, 0, -330.56747)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sugi_b/LOD1" unique_id=490764345]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.09998, 8.611487, -0.19107723)
+mesh = ExtResource("47_pyfu1")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_b/LOD1" unique_id=1273220840]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_b/LOD1/Collision" unique_id=136202876]
+transform = Transform3D(-0.9991165, 0.0420234, -0.0005544431, 0.04202706, 0.9990295, -0.013180871, 0, -0.013192526, -0.999913, 0.07150918, 1.5, -0.022449082)
+shape = SubResource("CylinderShape3D_ha07h")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sugi_b" unique_id=92078273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.104233, 0, -330.56747)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sugi_b/LOD2" unique_id=1254896800]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.09998, 8.611487, -0.19107723)
+mesh = ExtResource("48_apdlx")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_b/LOD2" unique_id=2052228216]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_b/LOD2/Collision" unique_id=1831795161]
+transform = Transform3D(-0.9991165, 0.0420234, -0.0005544431, 0.04202706, 0.9990295, -0.013180871, 0, -0.013192526, -0.999913, 0.07150918, 1.5, -0.022449082)
+shape = SubResource("CylinderShape3D_vm06d")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sugi_b" unique_id=1702009573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.312698, 0, -330.56747)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sugi_b/LOD3" unique_id=1590364588]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.09998, 8.611487, -0.19107723)
+mesh = ExtResource("49_csoqf")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_b/LOD3" unique_id=863193641]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_b/LOD3/Collision" unique_id=582015524]
+transform = Transform3D(-0.9991165, 0.0420234, -0.0005544431, 0.04202706, 0.9990295, -0.013180871, 0, -0.013192526, -0.999913, 0.07150918, 1.5, -0.022449082)
+shape = SubResource("CylinderShape3D_7dlky")
+
+[node name="sugi_c" type="Node3D" parent="Subjects/LODs" unique_id=1837046161]
+metadata/row_z = -356.77594921848987
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sugi_c" unique_id=722336750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.550509, 0, -356.77594)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sugi_c/LOD0" unique_id=2059541045]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.8341745, 8.554063, 1.3403823)
+mesh = ExtResource("50_242g5")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_c/LOD0" unique_id=876819394]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_c/LOD0/Collision" unique_id=1459472094]
+transform = Transform3D(-0.99993944, 0.011004552, 0.0002260751, 0.011006874, 0.9997285, 0.020538203, 0, 0.020539448, -0.99978906, 0.01871282, 1.5, 0.034926545)
+shape = SubResource("CylinderShape3D_8cvu1")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sugi_c" unique_id=1822384041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.85017, 0, -356.77594)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sugi_c/LOD1" unique_id=119361428]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.8341745, 8.554063, 1.3403823)
+mesh = ExtResource("51_2h7rj")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_c/LOD1" unique_id=849931770]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_c/LOD1/Collision" unique_id=1455542214]
+transform = Transform3D(-0.99993944, 0.011004552, 0.0002260751, 0.011006874, 0.9997285, 0.020538203, 0, 0.020539448, -0.99978906, 0.01871282, 1.5, 0.034926545)
+shape = SubResource("CylinderShape3D_ktyhf")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sugi_c" unique_id=443548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85017, 0, -356.77594)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sugi_c/LOD2" unique_id=2046203031]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.8341745, 8.554063, 1.3403823)
+mesh = ExtResource("52_2102m")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_c/LOD2" unique_id=282147367]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_c/LOD2/Collision" unique_id=950814334]
+transform = Transform3D(-0.99993944, 0.011004552, 0.0002260751, 0.011006874, 0.9997285, 0.020538203, 0, 0.020539448, -0.99978906, 0.01871282, 1.5, 0.034926545)
+shape = SubResource("CylinderShape3D_hn02a")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sugi_c" unique_id=176435712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.550509, 0, -356.77594)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sugi_c/LOD3" unique_id=1799441843]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.8341745, 8.554063, 1.3403823)
+mesh = ExtResource("53_rfj4g")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_c/LOD3" unique_id=192437332]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_c/LOD3/Collision" unique_id=554726260]
+transform = Transform3D(-0.99993944, 0.011004552, 0.0002260751, 0.011006874, 0.9997285, 0.020538203, 0, 0.020539448, -0.99978906, 0.01871282, 1.5, 0.034926545)
+shape = SubResource("CylinderShape3D_viaot")
+
+[node name="hinoki_a" type="Node3D" parent="Subjects/LODs" unique_id=560155833]
+metadata/row_z = -378.4762891658624
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/hinoki_a" unique_id=1118969140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.967218, 0, -378.4763)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/hinoki_a/LOD0" unique_id=845463491]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.57652915, 8.911562, 0.7380761)
+mesh = ExtResource("54_ebi8u")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_a/LOD0" unique_id=2117095164]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_a/LOD0/Collision" unique_id=2077781196]
+transform = Transform3D(-0.99989134, 0.014742051, 0.0001758588, 0.0147431, 0.99982023, 0.011926915, 0, 0.011928211, -0.9999289, 0.025065994, 1.5, 0.020281605)
+shape = SubResource("CylinderShape3D_f57t2")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/hinoki_a" unique_id=1209127895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.65574, 0, -378.4763)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/hinoki_a/LOD1" unique_id=1986361563]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.57652915, 8.911562, 0.7380761)
+mesh = ExtResource("55_obgd3")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_a/LOD1" unique_id=1293733440]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_a/LOD1/Collision" unique_id=897553668]
+transform = Transform3D(-0.99989134, 0.014742051, 0.0001758588, 0.0147431, 0.99982023, 0.011926915, 0, 0.011928211, -0.9999289, 0.025065994, 1.5, 0.020281605)
+shape = SubResource("CylinderShape3D_llchf")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/hinoki_a" unique_id=1861129867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.65574, 0, -378.4763)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/hinoki_a/LOD2" unique_id=1851878396]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.57652915, 8.911562, 0.7380761)
+mesh = ExtResource("56_cryvs")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_a/LOD2" unique_id=1827238006]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_a/LOD2/Collision" unique_id=554495320]
+transform = Transform3D(-0.99989134, 0.014742051, 0.0001758588, 0.0147431, 0.99982023, 0.011926915, 0, 0.011928211, -0.9999289, 0.025065994, 1.5, 0.020281605)
+shape = SubResource("CylinderShape3D_aeqv8")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/hinoki_a" unique_id=467301478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.967218, 0, -378.4763)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/hinoki_a/LOD3" unique_id=1200075527]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.57652915, 8.911562, 0.7380761)
+mesh = ExtResource("57_wy4nm")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_a/LOD3" unique_id=179393366]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_a/LOD3/Collision" unique_id=2088273276]
+transform = Transform3D(-0.99989134, 0.014742051, 0.0001758588, 0.0147431, 0.99982023, 0.011926915, 0, 0.011928211, -0.9999289, 0.025065994, 1.5, 0.020281605)
+shape = SubResource("CylinderShape3D_p4i82")
+
+[node name="hinoki_b" type="Node3D" parent="Subjects/LODs" unique_id=1011990301]
+metadata/row_z = -401.7877686581024
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/hinoki_b" unique_id=704327249]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.118668, 0, -401.78778)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/hinoki_b/LOD0" unique_id=10996235]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.3852229, 10.348356, -0.6769178)
+mesh = ExtResource("58_cjagj")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_b/LOD0" unique_id=1080018002]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_b/LOD0/Collision" unique_id=920542447]
+transform = Transform3D(-0.9990827, 0.04281667, -0.00076849066, 0.042823564, 0.99892175, -0.017929047, 0, -0.01794551, -0.999839, 0.07286691, 1.5, -0.030540297)
+shape = SubResource("CylinderShape3D_8daqv")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/hinoki_b" unique_id=1547882170]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.039556, 0, -401.78778)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/hinoki_b/LOD1" unique_id=1098290435]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.3852229, 10.348356, -0.6769178)
+mesh = ExtResource("59_bj1ol")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_b/LOD1" unique_id=595765949]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_b/LOD1/Collision" unique_id=280338076]
+transform = Transform3D(-0.9990827, 0.04281667, -0.00076849066, 0.042823564, 0.99892175, -0.017929047, 0, -0.01794551, -0.999839, 0.07286691, 1.5, -0.030540297)
+shape = SubResource("CylinderShape3D_54tub")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/hinoki_b" unique_id=1562160055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.039556, 0, -401.78778)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/hinoki_b/LOD2" unique_id=1765885567]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.3852229, 10.348356, -0.6769178)
+mesh = ExtResource("60_f8ygh")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_b/LOD2" unique_id=1237351512]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_b/LOD2/Collision" unique_id=1389610434]
+transform = Transform3D(-0.9990827, 0.04281667, -0.00076849066, 0.042823564, 0.99892175, -0.017929047, 0, -0.01794551, -0.999839, 0.07286691, 1.5, -0.030540297)
+shape = SubResource("CylinderShape3D_28p0r")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/hinoki_b" unique_id=1964977733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.118668, 0, -401.78778)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/hinoki_b/LOD3" unique_id=901734394]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.3852229, 10.348356, -0.6769178)
+mesh = ExtResource("61_l8d1q")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/hinoki_b/LOD3" unique_id=798730105]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/hinoki_b/LOD3/Collision" unique_id=1404656784]
+transform = Transform3D(-0.9990827, 0.04281667, -0.00076849066, 0.042823564, 0.99892175, -0.017929047, 0, -0.01794551, -0.999839, 0.07286691, 1.5, -0.030540297)
+shape = SubResource("CylinderShape3D_d3a7a")
+
+[node name="konara_a" type="Node3D" parent="Subjects/LODs" unique_id=229806549]
+metadata/row_z = -427.8668805169999
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/konara_a" unique_id=226608203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.857056, 0, -427.86688)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/konara_a/LOD0" unique_id=1599928554]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.02425766, 7.0640345, -1.3978517)
+mesh = ExtResource("62_264o8")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_a/LOD0" unique_id=8158368]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_a/LOD0/Collision" unique_id=1976138420]
+transform = Transform3D(-0.99764615, 0.06847812, 0.0036004283, 0.068572715, 0.99626994, 0.052381672, 0, 0.052505255, -0.9986207, 0.089354865, 1.1, 0.06851239)
+shape = SubResource("CylinderShape3D_uq1d1")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/konara_a" unique_id=699926620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.285686, 0, -427.86688)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/konara_a/LOD1" unique_id=200299702]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.02425766, 7.0640345, -1.3978517)
+mesh = ExtResource("63_nwexf")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_a/LOD1" unique_id=1686370096]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_a/LOD1/Collision" unique_id=360309822]
+transform = Transform3D(-0.99764615, 0.06847812, 0.0036004283, 0.068572715, 0.99626994, 0.052381672, 0, 0.052505255, -0.9986207, 0.089354865, 1.1, 0.06851239)
+shape = SubResource("CylinderShape3D_dk002")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/konara_a" unique_id=181006928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.285686, 0, -427.86688)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/konara_a/LOD2" unique_id=1931463734]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.02425766, 7.0640345, -1.3978517)
+mesh = ExtResource("64_gcrwq")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_a/LOD2" unique_id=608479626]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_a/LOD2/Collision" unique_id=725911919]
+transform = Transform3D(-0.99764615, 0.06847812, 0.0036004283, 0.068572715, 0.99626994, 0.052381672, 0, 0.052505255, -0.9986207, 0.089354865, 1.1, 0.06851239)
+shape = SubResource("CylinderShape3D_n7hta")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/konara_a" unique_id=1792315394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.857056, 0, -427.86688)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/konara_a/LOD3" unique_id=1410573670]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.02425766, 7.0640345, -1.3978517)
+mesh = ExtResource("65_i6o2a")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_a/LOD3" unique_id=2133281260]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_a/LOD3/Collision" unique_id=1494697543]
+transform = Transform3D(-0.99764615, 0.06847812, 0.0036004283, 0.068572715, 0.99626994, 0.052381672, 0, 0.052505255, -0.9986207, 0.089354865, 1.1, 0.06851239)
+shape = SubResource("CylinderShape3D_ojl5d")
+
+[node name="konara_b" type="Node3D" parent="Subjects/LODs" unique_id=1547561604]
+metadata/row_z = -456.43825086730413
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/konara_b" unique_id=1269199638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4677, 0, -456.43826)
+metadata/veg_id = "konara_b"
+metadata/veg_group = "broad"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/konara_b/LOD0" unique_id=225025495]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.3793416, 5.230571, 2.5113108)
+mesh = ExtResource("66_awbla")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_b/LOD0" unique_id=122234944]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_b/LOD0/Collision" unique_id=2080204383]
+transform = Transform3D(-0.9972224, -0.07255242, -0.016838513, -0.0744808, 0.9714034, 0.2254506, 0, 0.22607854, -0.9741091, -0.119501196, 1.4, 0.3723743)
+shape = SubResource("CylinderShape3D_7211y")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/konara_b" unique_id=465773919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8225665, 0, -456.43826)
+metadata/veg_id = "konara_b"
+metadata/veg_group = "broad"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/konara_b/LOD1" unique_id=1091456552]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.3793416, 5.230571, 2.5113108)
+mesh = ExtResource("67_um0cv")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_b/LOD1" unique_id=1235325399]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_b/LOD1/Collision" unique_id=1109951195]
+transform = Transform3D(-0.9972224, -0.07255242, -0.016838513, -0.0744808, 0.9714034, 0.2254506, 0, 0.22607854, -0.9741091, -0.119501196, 1.4, 0.3723743)
+shape = SubResource("CylinderShape3D_gnnk4")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/konara_b" unique_id=1081950329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8225665, 0, -456.43826)
+metadata/veg_id = "konara_b"
+metadata/veg_group = "broad"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/konara_b/LOD2" unique_id=848061548]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.3793416, 5.230571, 2.5113108)
+mesh = ExtResource("68_2cuey")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_b/LOD2" unique_id=934496270]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_b/LOD2/Collision" unique_id=1534817246]
+transform = Transform3D(-0.9972224, -0.07255242, -0.016838513, -0.0744808, 0.9714034, 0.2254506, 0, 0.22607854, -0.9741091, -0.119501196, 1.4, 0.3723743)
+shape = SubResource("CylinderShape3D_mn3sq")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/konara_b" unique_id=21003190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.4677, 0, -456.43826)
+metadata/veg_id = "konara_b"
+metadata/veg_group = "broad"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/konara_b/LOD3" unique_id=1728885301]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.3793416, 5.230571, 2.5113108)
+mesh = ExtResource("69_sprj8")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/konara_b/LOD3" unique_id=743960600]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/konara_b/LOD3/Collision" unique_id=1866726179]
+transform = Transform3D(-0.9972224, -0.07255242, -0.016838513, -0.0744808, 0.9714034, 0.2254506, 0, 0.22607854, -0.9741091, -0.119501196, 1.4, 0.3723743)
+shape = SubResource("CylinderShape3D_u0h5r")
+
+[node name="keyaki_a" type="Node3D" parent="Subjects/LODs" unique_id=778672941]
+metadata/row_z = -482.08338408988436
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/keyaki_a" unique_id=737101910]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.477516, 0, -482.08337)
+metadata/veg_id = "keyaki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/keyaki_a/LOD0" unique_id=1935316705]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16891313, 8.989565, 1.3618226)
+mesh = ExtResource("70_e5nbu")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_a/LOD0" unique_id=1397233339]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_a/LOD0/Collision" unique_id=2020113326]
+transform = Transform3D(-0.99942535, -0.033755224, -0.0030991244, -0.033897195, 0.99523944, 0.09137462, 0, 0.091427155, -0.9958118, -0.05765837, 1.5, 0.15616962)
+shape = SubResource("CylinderShape3D_es3nh")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/keyaki_a" unique_id=1787037001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.825839, 0, -482.08337)
+metadata/veg_id = "keyaki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/keyaki_a/LOD1" unique_id=770945253]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16891313, 8.989565, 1.3618226)
+mesh = ExtResource("71_yx7n1")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_a/LOD1" unique_id=106767030]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_a/LOD1/Collision" unique_id=1826960211]
+transform = Transform3D(-0.99942535, -0.033755224, -0.0030991244, -0.033897195, 0.99523944, 0.09137462, 0, 0.091427155, -0.9958118, -0.05765837, 1.5, 0.15616962)
+shape = SubResource("CylinderShape3D_wfrvb")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/keyaki_a" unique_id=2095077230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.825839, 0, -482.08337)
+metadata/veg_id = "keyaki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/keyaki_a/LOD2" unique_id=2115014595]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16891313, 8.989565, 1.3618226)
+mesh = ExtResource("72_g2t7p")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_a/LOD2" unique_id=989840701]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_a/LOD2/Collision" unique_id=267818731]
+transform = Transform3D(-0.99942535, -0.033755224, -0.0030991244, -0.033897195, 0.99523944, 0.09137462, 0, 0.091427155, -0.9958118, -0.05765837, 1.5, 0.15616962)
+shape = SubResource("CylinderShape3D_yc2ak")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/keyaki_a" unique_id=1452020404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.477516, 0, -482.08337)
+metadata/veg_id = "keyaki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/keyaki_a/LOD3" unique_id=2047149480]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16891313, 8.989565, 1.3618226)
+mesh = ExtResource("73_nhxbe")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_a/LOD3" unique_id=1011279811]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_a/LOD3/Collision" unique_id=1850198237]
+transform = Transform3D(-0.99942535, -0.033755224, -0.0030991244, -0.033897195, 0.99523944, 0.09137462, 0, 0.091427155, -0.9958118, -0.05765837, 1.5, 0.15616962)
+shape = SubResource("CylinderShape3D_v6l24")
+
+[node name="enoki_a" type="Node3D" parent="Subjects/LODs" unique_id=1069299993]
+metadata/row_z = -511.73506171700666
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/enoki_a" unique_id=1747484880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.495256, 0, -511.73508)
+metadata/veg_id = "enoki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/enoki_a/LOD0" unique_id=2051327484]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.026263, 5.8934345, -1.5619941)
+mesh = ExtResource("74_5r705")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/enoki_a/LOD0" unique_id=700489842]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/enoki_a/LOD0/Collision" unique_id=73221146]
+transform = Transform3D(-0.9934918, -0.11318705, 0.012752986, -0.11390324, 0.9872451, -0.11123465, 0, -0.11196332, -0.99371237, -0.18343903, 1.4, -0.18145576)
+shape = SubResource("CylinderShape3D_ob51d")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/enoki_a" unique_id=79447091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.165086, 0, -511.73508)
+metadata/veg_id = "enoki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/enoki_a/LOD1" unique_id=153866670]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.026263, 5.8934345, -1.5619941)
+mesh = ExtResource("75_8ll66")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/enoki_a/LOD1" unique_id=568874768]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/enoki_a/LOD1/Collision" unique_id=2132567706]
+transform = Transform3D(-0.9934918, -0.11318705, 0.012752986, -0.11390324, 0.9872451, -0.11123465, 0, -0.11196332, -0.99371237, -0.18343903, 1.4, -0.18145576)
+shape = SubResource("CylinderShape3D_0ty2b")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/enoki_a" unique_id=686742247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.165086, 0, -511.73508)
+metadata/veg_id = "enoki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/enoki_a/LOD2" unique_id=1800354699]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.026263, 5.8934345, -1.5619941)
+mesh = ExtResource("76_ovofk")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/enoki_a/LOD2" unique_id=1763128893]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/enoki_a/LOD2/Collision" unique_id=1787463309]
+transform = Transform3D(-0.9934918, -0.11318705, 0.012752986, -0.11390324, 0.9872451, -0.11123465, 0, -0.11196332, -0.99371237, -0.18343903, 1.4, -0.18145576)
+shape = SubResource("CylinderShape3D_fguut")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/enoki_a" unique_id=1288634217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.495256, 0, -511.73508)
+metadata/veg_id = "enoki_a"
+metadata/veg_group = "broad"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/enoki_a/LOD3" unique_id=2143698669]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-1.026263, 5.8934345, -1.5619941)
+mesh = ExtResource("77_su2be")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/enoki_a/LOD3" unique_id=131153520]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/enoki_a/LOD3/Collision" unique_id=2132931480]
+transform = Transform3D(-0.9934918, -0.11318705, 0.012752986, -0.11390324, 0.9872451, -0.11123465, 0, -0.11196332, -0.99371237, -0.18343903, 1.4, -0.18145576)
+shape = SubResource("CylinderShape3D_vvk5g")
+
+[node name="shii_a" type="Node3D" parent="Subjects/LODs" unique_id=120776601]
+metadata/row_z = -542.06523285307
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/shii_a" unique_id=36166443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.18064, 0, -542.06525)
+metadata/veg_id = "shii_a"
+metadata/veg_group = "broad"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/shii_a/LOD0" unique_id=870035902]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.16999221, 6.6013503, -1.1227558)
+mesh = ExtResource("78_5e1v4")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/shii_a/LOD0" unique_id=1549050309]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/shii_a/LOD0/Collision" unique_id=443814296]
+transform = Transform3D(-0.9978314, 0.06566123, 0.004590733, 0.06582151, 0.99540156, 0.06959393, 0, 0.069745176, -0.99756485, 0.09235039, 1.1999999, 0.09809433)
+shape = SubResource("CylinderShape3D_b1io3")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/shii_a" unique_id=600753509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.726879, 0, -542.06525)
+metadata/veg_id = "shii_a"
+metadata/veg_group = "broad"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/shii_a/LOD1" unique_id=1812266647]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.16999221, 6.6013503, -1.1227558)
+mesh = ExtResource("79_3q7oq")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/shii_a/LOD1" unique_id=2118429290]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/shii_a/LOD1/Collision" unique_id=171367204]
+transform = Transform3D(-0.9978314, 0.06566123, 0.004590733, 0.06582151, 0.99540156, 0.06959393, 0, 0.069745176, -0.99756485, 0.09235039, 1.1999999, 0.09809433)
+shape = SubResource("CylinderShape3D_j6jjk")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/shii_a" unique_id=1794052393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.726879, 0, -542.06525)
+metadata/veg_id = "shii_a"
+metadata/veg_group = "broad"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/shii_a/LOD2" unique_id=762088436]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.16999221, 6.6013503, -1.1227558)
+mesh = ExtResource("80_j2p6s")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/shii_a/LOD2" unique_id=1810959533]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/shii_a/LOD2/Collision" unique_id=1959867377]
+transform = Transform3D(-0.9978314, 0.06566123, 0.004590733, 0.06582151, 0.99540156, 0.06959393, 0, 0.069745176, -0.99756485, 0.09235039, 1.1999999, 0.09809433)
+shape = SubResource("CylinderShape3D_mj8uk")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/shii_a" unique_id=2021522507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.18064, 0, -542.06525)
+metadata/veg_id = "shii_a"
+metadata/veg_group = "broad"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/shii_a/LOD3" unique_id=740798531]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.16999221, 6.6013503, -1.1227558)
+mesh = ExtResource("81_o5kkv")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/shii_a/LOD3" unique_id=535373127]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/shii_a/LOD3/Collision" unique_id=36335570]
+transform = Transform3D(-0.9978314, 0.06566123, 0.004590733, 0.06582151, 0.99540156, 0.06959393, 0, 0.069745176, -0.99756485, 0.09235039, 1.1999999, 0.09809433)
+shape = SubResource("CylinderShape3D_mewrc")
+
+[node name="sakura_yama" type="Node3D" parent="Subjects/LODs" unique_id=2088955020]
+metadata/row_z = -571.5189917992277
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sakura_yama" unique_id=176277232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.441092, 0, -571.519)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sakura_yama/LOD0" unique_id=1875278542]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.6392803, 6.5467777, 0.16589499)
+mesh = ExtResource("82_77016")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_yama/LOD0" unique_id=883584457]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_yama/LOD0/Collision" unique_id=1033038498]
+transform = Transform3D(-0.99135125, 0.13121356, 0.0023873232, 0.13123527, 0.9911872, 0.01803384, 0, 0.01819117, -0.99983454, 0.22504634, 1.5, 0.031199949)
+shape = SubResource("CylinderShape3D_ia5la")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sakura_yama" unique_id=712575098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.147031, 0, -571.519)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sakura_yama/LOD1" unique_id=139997357]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.6392803, 6.5467777, 0.16589499)
+mesh = ExtResource("83_n630g")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_yama/LOD1" unique_id=1800704057]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_yama/LOD1/Collision" unique_id=1639209083]
+transform = Transform3D(-0.99135125, 0.13121356, 0.0023873232, 0.13123527, 0.9911872, 0.01803384, 0, 0.01819117, -0.99983454, 0.22504634, 1.5, 0.031199949)
+shape = SubResource("CylinderShape3D_0d4gv")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sakura_yama" unique_id=1914499946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.147031, 0, -571.519)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sakura_yama/LOD2" unique_id=1405345448]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.6392803, 6.5467777, 0.16589499)
+mesh = ExtResource("84_tu6mg")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_yama/LOD2" unique_id=1420915147]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_yama/LOD2/Collision" unique_id=928029638]
+transform = Transform3D(-0.99135125, 0.13121356, 0.0023873232, 0.13123527, 0.9911872, 0.01803384, 0, 0.01819117, -0.99983454, 0.22504634, 1.5, 0.031199949)
+shape = SubResource("CylinderShape3D_pvr7h")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sakura_yama" unique_id=1278180890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.441092, 0, -571.519)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sakura_yama/LOD3" unique_id=1900975955]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.6392803, 6.5467777, 0.16589499)
+mesh = ExtResource("85_2srcj")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_yama/LOD3" unique_id=2067610364]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_yama/LOD3/Collision" unique_id=770960703]
+transform = Transform3D(-0.99135125, 0.13121356, 0.0023873232, 0.13123527, 0.9911872, 0.01803384, 0, 0.01819117, -0.99983454, 0.22504634, 1.5, 0.031199949)
+shape = SubResource("CylinderShape3D_f5ip3")
+
+[node name="sakura_somei" type="Node3D" parent="Subjects/LODs" unique_id=1501107132]
+metadata/row_z = -599.813053254071
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sakura_somei" unique_id=202550035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.038319, 0, -599.81305)
+metadata/veg_id = "sakura_somei"
+metadata/veg_group = "sakura"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sakura_somei/LOD0" unique_id=1141389054]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.5313804, 4.199405, 0.08712697)
+mesh = ExtResource("86_rx1ja")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_somei/LOD0" unique_id=1129906969]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_somei/LOD0/Collision" unique_id=105839470]
+transform = Transform3D(-0.9765558, 0.21299517, 0.031172328, 0.21526416, 0.96626246, 0.1414147, 0, 0.14480963, -0.9894596, 0.2314536, 0.84999996, 0.15735902)
+shape = SubResource("CylinderShape3D_xk8bj")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sakura_somei" unique_id=1192098926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.012773, 0, -599.81305)
+metadata/veg_id = "sakura_somei"
+metadata/veg_group = "sakura"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sakura_somei/LOD1" unique_id=1917425833]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.5313804, 4.199405, 0.08712697)
+mesh = ExtResource("87_dtsnm")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_somei/LOD1" unique_id=378867183]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_somei/LOD1/Collision" unique_id=1308374629]
+transform = Transform3D(-0.9765558, 0.21299517, 0.031172328, 0.21526416, 0.96626246, 0.1414147, 0, 0.14480963, -0.9894596, 0.2314536, 0.84999996, 0.15735902)
+shape = SubResource("CylinderShape3D_07i1g")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sakura_somei" unique_id=1429059836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.012773, 0, -599.81305)
+metadata/veg_id = "sakura_somei"
+metadata/veg_group = "sakura"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sakura_somei/LOD2" unique_id=1932447434]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.5313804, 4.199405, 0.08712697)
+mesh = ExtResource("88_yl6d3")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_somei/LOD2" unique_id=167466989]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_somei/LOD2/Collision" unique_id=1685015903]
+transform = Transform3D(-0.9765558, 0.21299517, 0.031172328, 0.21526416, 0.96626246, 0.1414147, 0, 0.14480963, -0.9894596, 0.2314536, 0.84999996, 0.15735902)
+shape = SubResource("CylinderShape3D_yx46g")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sakura_somei" unique_id=2011519637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.038319, 0, -599.81305)
+metadata/veg_id = "sakura_somei"
+metadata/veg_group = "sakura"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sakura_somei/LOD3" unique_id=1131028240]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.5313804, 4.199405, 0.08712697)
+mesh = ExtResource("89_mf3ii")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_somei/LOD3" unique_id=34689406]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_somei/LOD3/Collision" unique_id=1657866903]
+transform = Transform3D(-0.9765558, 0.21299517, 0.031172328, 0.21526416, 0.96626246, 0.1414147, 0, 0.14480963, -0.9894596, 0.2314536, 0.84999996, 0.15735902)
+shape = SubResource("CylinderShape3D_ehj6k")
+
+[node name="sakura_shidare" type="Node3D" parent="Subjects/LODs" unique_id=20259381]
+metadata/row_z = -629.8385987689231
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sakura_shidare" unique_id=29528679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.189417, 0, -629.8386)
+metadata/veg_id = "sakura_shidare"
+metadata/veg_group = "sakura"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sakura_shidare/LOD0" unique_id=1983279964]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.14847088, 5.038864, -0.5628985)
+mesh = ExtResource("90_q12hv")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_shidare/LOD0" unique_id=108244360]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_shidare/LOD0/Collision" unique_id=209076517]
+transform = Transform3D(-0.9988899, 0.047044806, -0.0023765757, 0.0471048, 0.9976178, -0.050396938, 0, -0.050452936, -0.9987265, 0.07545143, 1.4, -0.08091746)
+shape = SubResource("CylinderShape3D_f3kwp")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sakura_shidare" unique_id=1468780301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.063139, 0, -629.8386)
+metadata/veg_id = "sakura_shidare"
+metadata/veg_group = "sakura"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sakura_shidare/LOD1" unique_id=342561294]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.14847088, 5.038864, -0.5628985)
+mesh = ExtResource("91_tmy52")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_shidare/LOD1" unique_id=1878064683]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_shidare/LOD1/Collision" unique_id=1060220697]
+transform = Transform3D(-0.9988899, 0.047044806, -0.0023765757, 0.0471048, 0.9976178, -0.050396938, 0, -0.050452936, -0.9987265, 0.07545143, 1.4, -0.08091746)
+shape = SubResource("CylinderShape3D_kgt8y")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sakura_shidare" unique_id=1935333135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.063139, 0, -629.8386)
+metadata/veg_id = "sakura_shidare"
+metadata/veg_group = "sakura"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sakura_shidare/LOD2" unique_id=943778427]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.14847088, 5.038864, -0.5628985)
+mesh = ExtResource("92_3i8im")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_shidare/LOD2" unique_id=1021985703]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_shidare/LOD2/Collision" unique_id=135379608]
+transform = Transform3D(-0.9988899, 0.047044806, -0.0023765757, 0.0471048, 0.9976178, -0.050396938, 0, -0.050452936, -0.9987265, 0.07545143, 1.4, -0.08091746)
+shape = SubResource("CylinderShape3D_kysd0")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sakura_shidare" unique_id=604026416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.189417, 0, -629.8386)
+metadata/veg_id = "sakura_shidare"
+metadata/veg_group = "sakura"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sakura_shidare/LOD3" unique_id=2011761564]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.14847088, 5.038864, -0.5628985)
+mesh = ExtResource("93_wjvku")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sakura_shidare/LOD3" unique_id=1522090395]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sakura_shidare/LOD3/Collision" unique_id=965759496]
+transform = Transform3D(-0.9988899, 0.047044806, -0.0023765757, 0.0471048, 0.9976178, -0.050396938, 0, -0.050452936, -0.9987265, 0.07545143, 1.4, -0.08091746)
+shape = SubResource("CylinderShape3D_npgf1")
+
+[node name="momiji_a" type="Node3D" parent="Subjects/LODs" unique_id=2019678794]
+metadata/row_z = -653.9648769760387
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/momiji_a" unique_id=427686985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.96035, 0, -653.9649)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/momiji_a/LOD0" unique_id=1697258799]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("94_rf10a")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_a/LOD0" unique_id=1656232256]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_a/LOD0/Collision" unique_id=694919284]
+transform = Transform3D(-0.9807048, -0.19397853, 0.024297629, -0.19549435, 0.9731006, -0.12188997, 0, -0.124288134, -0.99224615, -0.19934067, 0.79999995, -0.12772383)
+shape = SubResource("CylinderShape3D_hn8n0")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/momiji_a" unique_id=1680104741]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9867835, 0, -653.9649)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/momiji_a/LOD1" unique_id=330235355]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("95_qah32")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_a/LOD1" unique_id=683441857]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_a/LOD1/Collision" unique_id=1345020243]
+transform = Transform3D(-0.9807048, -0.19397853, 0.024297629, -0.19549435, 0.9731006, -0.12188997, 0, -0.124288134, -0.99224615, -0.19934067, 0.79999995, -0.12772383)
+shape = SubResource("CylinderShape3D_gpt4k")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/momiji_a" unique_id=1050211651]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9867835, 0, -653.9649)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/momiji_a/LOD2" unique_id=2001985709]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("96_kdwi0")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_a/LOD2" unique_id=412575732]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_a/LOD2/Collision" unique_id=1729524722]
+transform = Transform3D(-0.9807048, -0.19397853, 0.024297629, -0.19549435, 0.9731006, -0.12188997, 0, -0.124288134, -0.99224615, -0.19934067, 0.79999995, -0.12772383)
+shape = SubResource("CylinderShape3D_qkylx")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/momiji_a" unique_id=1392089779]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.96035, 0, -653.9649)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/momiji_a/LOD3" unique_id=408063756]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.19609487, 2.9772718, 0.17184651)
+mesh = ExtResource("97_6fpgt")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_a/LOD3" unique_id=2028797181]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_a/LOD3/Collision" unique_id=2077505400]
+transform = Transform3D(-0.9807048, -0.19397853, 0.024297629, -0.19549435, 0.9731006, -0.12188997, 0, -0.124288134, -0.99224615, -0.19934067, 0.79999995, -0.12772383)
+shape = SubResource("CylinderShape3D_qo084")
+
+[node name="momiji_b" type="Node3D" parent="Subjects/LODs" unique_id=538980753]
+metadata/row_z = -677.9384440684297
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/momiji_b" unique_id=137650983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.223734, 0, -677.9384)
+metadata/veg_id = "momiji_b"
+metadata/veg_group = "momiji"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/momiji_b/LOD0" unique_id=1425773336]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-2.2368565, 4.4944487, 0.5197542)
+mesh = ExtResource("98_8ooer")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_b/LOD0" unique_id=21159937]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_b/LOD0/Collision" unique_id=1706939299]
+transform = Transform3D(-0.9999242, -0.012216507, -0.0015591177, -0.012315596, 0.991879, 0.12658742, 0, 0.126597, -0.99195427, -0.013548183, 0.9, 0.14039686)
+shape = SubResource("CylinderShape3D_7wppn")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/momiji_b" unique_id=1823656091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.074578, 0, -677.9384)
+metadata/veg_id = "momiji_b"
+metadata/veg_group = "momiji"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/momiji_b/LOD1" unique_id=2065765674]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-2.2368565, 4.4944487, 0.5197542)
+mesh = ExtResource("99_y20hf")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_b/LOD1" unique_id=288581527]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_b/LOD1/Collision" unique_id=1153884102]
+transform = Transform3D(-0.9999242, -0.012216507, -0.0015591177, -0.012315596, 0.991879, 0.12658742, 0, 0.126597, -0.99195427, -0.013548183, 0.9, 0.14039686)
+shape = SubResource("CylinderShape3D_svshe")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/momiji_b" unique_id=1422569728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.074578, 0, -677.9384)
+metadata/veg_id = "momiji_b"
+metadata/veg_group = "momiji"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/momiji_b/LOD2" unique_id=122466016]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-2.2368565, 4.4944487, 0.5197542)
+mesh = ExtResource("100_oh35w")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_b/LOD2" unique_id=2024078565]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_b/LOD2/Collision" unique_id=1417837929]
+transform = Transform3D(-0.9999242, -0.012216507, -0.0015591177, -0.012315596, 0.991879, 0.12658742, 0, 0.126597, -0.99195427, -0.013548183, 0.9, 0.14039686)
+shape = SubResource("CylinderShape3D_v0wn0")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/momiji_b" unique_id=26521497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.223734, 0, -677.9384)
+metadata/veg_id = "momiji_b"
+metadata/veg_group = "momiji"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/momiji_b/LOD3" unique_id=1703566829]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-2.2368565, 4.4944487, 0.5197542)
+mesh = ExtResource("101_mqccr")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_b/LOD3" unique_id=35273355]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_b/LOD3/Collision" unique_id=842977273]
+transform = Transform3D(-0.9999242, -0.012216507, -0.0015591177, -0.012315596, 0.991879, 0.12658742, 0, 0.126597, -0.99195427, -0.013548183, 0.9, 0.14039686)
+shape = SubResource("CylinderShape3D_31gq3")
+
+[node name="momiji_c" type="Node3D" parent="Subjects/LODs" unique_id=55939000]
+metadata/row_z = -704.0875995434424
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/momiji_c" unique_id=1381765020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.949545, 0, -704.0876)
+metadata/veg_id = "momiji_c"
+metadata/veg_group = "momiji"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/momiji_c/LOD0" unique_id=1423790036]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6383438, 3.4598854, 0.28450203)
+mesh = ExtResource("102_u2khg")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_c/LOD0" unique_id=408697032]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_c/LOD0/Collision" unique_id=1322336838]
+transform = Transform3D(-0.9698608, 0.24365541, 0.001424048, 0.24365957, 0.9698443, 0.0056682704, 0, 0.005844416, -0.99998295, 0.3014778, 1, 0.007231367)
+shape = SubResource("CylinderShape3D_jhsmq")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/momiji_c" unique_id=1250711164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.316515, 0, -704.0876)
+metadata/veg_id = "momiji_c"
+metadata/veg_group = "momiji"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/momiji_c/LOD1" unique_id=1959612207]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6383438, 3.4598854, 0.28450203)
+mesh = ExtResource("103_l4tb0")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_c/LOD1" unique_id=288320772]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_c/LOD1/Collision" unique_id=1740166525]
+transform = Transform3D(-0.9698608, 0.24365541, 0.001424048, 0.24365957, 0.9698443, 0.0056682704, 0, 0.005844416, -0.99998295, 0.3014778, 1, 0.007231367)
+shape = SubResource("CylinderShape3D_5sfio")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/momiji_c" unique_id=1781508705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.316515, 0, -704.0876)
+metadata/veg_id = "momiji_c"
+metadata/veg_group = "momiji"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/momiji_c/LOD2" unique_id=593630143]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6383438, 3.4598854, 0.28450203)
+mesh = ExtResource("104_wsw0f")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_c/LOD2" unique_id=1197853304]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_c/LOD2/Collision" unique_id=95901584]
+transform = Transform3D(-0.9698608, 0.24365541, 0.001424048, 0.24365957, 0.9698443, 0.0056682704, 0, 0.005844416, -0.99998295, 0.3014778, 1, 0.007231367)
+shape = SubResource("CylinderShape3D_w2va7")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/momiji_c" unique_id=2088038846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.949545, 0, -704.0876)
+metadata/veg_id = "momiji_c"
+metadata/veg_group = "momiji"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/momiji_c/LOD3" unique_id=1647826720]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6383438, 3.4598854, 0.28450203)
+mesh = ExtResource("105_hxba7")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/momiji_c/LOD3" unique_id=1443034663]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/momiji_c/LOD3/Collision" unique_id=233289375]
+transform = Transform3D(-0.9698608, 0.24365541, 0.001424048, 0.24365957, 0.9698443, 0.0056682704, 0, 0.005844416, -0.99998295, 0.3014778, 1, 0.007231367)
+shape = SubResource("CylinderShape3D_2u5gb")
+
+[node name="akamatsu_a" type="Node3D" parent="Subjects/LODs" unique_id=1233179655]
+metadata/row_z = -728.7206294546089
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/akamatsu_a" unique_id=1618972860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.29631, 0, -728.72064)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_a/LOD0" unique_id=1281207198]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.4188719, 8.260454, -0.19525313)
+mesh = ExtResource("106_iji1e")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_a/LOD0" unique_id=95472201]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_a/LOD0/Collision" unique_id=143163487]
+transform = Transform3D(-0.99587566, 0.09071084, -0.0017899292, 0.0907285, 0.9956818, -0.019647047, 0, -0.019728411, -0.9998054, 0.15487722, 1.5, -0.03368375)
+shape = SubResource("CylinderShape3D_kwd0f")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/akamatsu_a" unique_id=319537742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09877, 0, -728.72064)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_a/LOD1" unique_id=1672592031]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.4188719, 8.260454, -0.19525313)
+mesh = ExtResource("107_y801u")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_a/LOD1" unique_id=1308504200]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_a/LOD1/Collision" unique_id=550071847]
+transform = Transform3D(-0.99587566, 0.09071084, -0.0017899292, 0.0907285, 0.9956818, -0.019647047, 0, -0.019728411, -0.9998054, 0.15487722, 1.5, -0.03368375)
+shape = SubResource("CylinderShape3D_xm536")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/akamatsu_a" unique_id=994337408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09877, 0, -728.72064)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_a/LOD2" unique_id=73903785]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.4188719, 8.260454, -0.19525313)
+mesh = ExtResource("108_56duv")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_a/LOD2" unique_id=1762220450]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_a/LOD2/Collision" unique_id=887566861]
+transform = Transform3D(-0.99587566, 0.09071084, -0.0017899292, 0.0907285, 0.9956818, -0.019647047, 0, -0.019728411, -0.9998054, 0.15487722, 1.5, -0.03368375)
+shape = SubResource("CylinderShape3D_e275h")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/akamatsu_a" unique_id=1156179802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.29631, 0, -728.72064)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_a/LOD3" unique_id=1288591057]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.4188719, 8.260454, -0.19525313)
+mesh = ExtResource("109_a3d3s")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_a/LOD3" unique_id=1235577072]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_a/LOD3/Collision" unique_id=1418665502]
+transform = Transform3D(-0.99587566, 0.09071084, -0.0017899292, 0.0907285, 0.9956818, -0.019647047, 0, -0.019728411, -0.9998054, 0.15487722, 1.5, -0.03368375)
+shape = SubResource("CylinderShape3D_s8n5q")
+
+[node name="akamatsu_b" type="Node3D" parent="Subjects/LODs" unique_id=802263845]
+metadata/row_z = -756.9181693154408
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/akamatsu_b" unique_id=65599019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.000668, 0, -756.91815)
+metadata/veg_id = "akamatsu_b"
+metadata/veg_group = "matsu"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_b/LOD0" unique_id=818562597]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-3.243587, 8.267044, 1.5089242)
+mesh = ExtResource("110_fnopm")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_b/LOD0" unique_id=1305782763]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_b/LOD0/Collision" unique_id=493179150]
+transform = Transform3D(-0.99429315, -0.10620123, -0.010127184, -0.10668301, 0.98980296, 0.09438606, 0, 0.0949278, -0.9954842, -0.18240206, 1.5, 0.16303979)
+shape = SubResource("CylinderShape3D_c6t0j")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/akamatsu_b" unique_id=426260313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.333556, 0, -756.91815)
+metadata/veg_id = "akamatsu_b"
+metadata/veg_group = "matsu"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_b/LOD1" unique_id=1751803086]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-3.243587, 8.267044, 1.5089242)
+mesh = ExtResource("111_w5h5v")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_b/LOD1" unique_id=1182239626]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_b/LOD1/Collision" unique_id=1960650684]
+transform = Transform3D(-0.99429315, -0.10620123, -0.010127184, -0.10668301, 0.98980296, 0.09438606, 0, 0.0949278, -0.9954842, -0.18240206, 1.5, 0.16303979)
+shape = SubResource("CylinderShape3D_asil2")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/akamatsu_b" unique_id=444121690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.333556, 0, -756.91815)
+metadata/veg_id = "akamatsu_b"
+metadata/veg_group = "matsu"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_b/LOD2" unique_id=1426492605]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-3.243587, 8.267044, 1.5089242)
+mesh = ExtResource("112_gv3y5")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_b/LOD2" unique_id=1035064949]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_b/LOD2/Collision" unique_id=1965502096]
+transform = Transform3D(-0.99429315, -0.10620123, -0.010127184, -0.10668301, 0.98980296, 0.09438606, 0, 0.0949278, -0.9954842, -0.18240206, 1.5, 0.16303979)
+shape = SubResource("CylinderShape3D_6hf35")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/akamatsu_b" unique_id=5428584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.000668, 0, -756.91815)
+metadata/veg_id = "akamatsu_b"
+metadata/veg_group = "matsu"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/akamatsu_b/LOD3" unique_id=1388560660]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-3.243587, 8.267044, 1.5089242)
+mesh = ExtResource("113_tnobr")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/akamatsu_b/LOD3" unique_id=754119324]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/akamatsu_b/LOD3/Collision" unique_id=58132213]
+transform = Transform3D(-0.99429315, -0.10620123, -0.010127184, -0.10668301, 0.98980296, 0.09438606, 0, 0.0949278, -0.9954842, -0.18240206, 1.5, 0.16303979)
+shape = SubResource("CylinderShape3D_t0obl")
+
+[node name="kuromatsu_a" type="Node3D" parent="Subjects/LODs" unique_id=1965461898]
+metadata/row_z = -783.5852813687536
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/kuromatsu_a" unique_id=2106252623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.165155, 0, -783.58527)
+metadata/veg_id = "kuromatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/kuromatsu_a/LOD0" unique_id=1500371121]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.28611064, 5.8845506, -2.2765236)
+mesh = ExtResource("114_mxyk2")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kuromatsu_a/LOD0" unique_id=326161592]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kuromatsu_a/LOD0/Collision" unique_id=683817306]
+transform = Transform3D(-0.99407184, 0.108330265, -0.00925838, 0.108725175, 0.9904612, -0.08464916, 0, -0.08515397, -0.9963678, 0.18593507, 1.5, -0.14615591)
+shape = SubResource("CylinderShape3D_f62m6")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/kuromatsu_a" unique_id=2143586374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.055052, 0, -783.58527)
+metadata/veg_id = "kuromatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/kuromatsu_a/LOD1" unique_id=766130894]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.28611064, 5.8845506, -2.2765236)
+mesh = ExtResource("115_8dp3p")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kuromatsu_a/LOD1" unique_id=1445580043]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kuromatsu_a/LOD1/Collision" unique_id=1780934196]
+transform = Transform3D(-0.99407184, 0.108330265, -0.00925838, 0.108725175, 0.9904612, -0.08464916, 0, -0.08515397, -0.9963678, 0.18593507, 1.5, -0.14615591)
+shape = SubResource("CylinderShape3D_ei3ff")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/kuromatsu_a" unique_id=962057465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.055052, 0, -783.58527)
+metadata/veg_id = "kuromatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/kuromatsu_a/LOD2" unique_id=95183855]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.28611064, 5.8845506, -2.2765236)
+mesh = ExtResource("116_vfxu2")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kuromatsu_a/LOD2" unique_id=272093717]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kuromatsu_a/LOD2/Collision" unique_id=383411347]
+transform = Transform3D(-0.99407184, 0.108330265, -0.00925838, 0.108725175, 0.9904612, -0.08464916, 0, -0.08515397, -0.9963678, 0.18593507, 1.5, -0.14615591)
+shape = SubResource("CylinderShape3D_auglh")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/kuromatsu_a" unique_id=405748014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.165155, 0, -783.58527)
+metadata/veg_id = "kuromatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/kuromatsu_a/LOD3" unique_id=720459602]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.28611064, 5.8845506, -2.2765236)
+mesh = ExtResource("117_sljcn")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kuromatsu_a/LOD3" unique_id=725410072]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kuromatsu_a/LOD3/Collision" unique_id=885701181]
+transform = Transform3D(-0.99407184, 0.108330265, -0.00925838, 0.108725175, 0.9904612, -0.08464916, 0, -0.08515397, -0.9963678, 0.18593507, 1.5, -0.14615591)
+shape = SubResource("CylinderShape3D_smpbh")
+
+[node name="niwamatsu_a" type="Node3D" parent="Subjects/LODs" unique_id=404764401]
+metadata/row_z = -809.6953853458348
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/niwamatsu_a" unique_id=436959848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.648299, 0, -809.6954)
+metadata/veg_id = "niwamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/niwamatsu_a/LOD0" unique_id=2058928436]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16709471, 2.4488435, 1.0220289)
+mesh = ExtResource("118_a47e2")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/niwamatsu_a/LOD0" unique_id=2101490195]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/niwamatsu_a/LOD0/Collision" unique_id=378285864]
+transform = Transform3D(-0.9999907, -0.0042055305, -0.00093265163, -0.0043077054, 0.97627187, 0.21650574, 0, 0.21650775, -0.9762809, -0.0043077455, 0.79999995, 0.22176994)
+shape = SubResource("CylinderShape3D_54r57")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/niwamatsu_a" unique_id=168767425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8827662, 0, -809.6954)
+metadata/veg_id = "niwamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/niwamatsu_a/LOD1" unique_id=1560459039]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16709471, 2.4488435, 1.0220289)
+mesh = ExtResource("119_lig72")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/niwamatsu_a/LOD1" unique_id=369373190]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/niwamatsu_a/LOD1/Collision" unique_id=40756328]
+transform = Transform3D(-0.9999907, -0.0042055305, -0.00093265163, -0.0043077054, 0.97627187, 0.21650574, 0, 0.21650775, -0.9762809, -0.0043077455, 0.79999995, 0.22176994)
+shape = SubResource("CylinderShape3D_cjmd1")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/niwamatsu_a" unique_id=1153320960]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8827662, 0, -809.6954)
+metadata/veg_id = "niwamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/niwamatsu_a/LOD2" unique_id=73337828]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16709471, 2.4488435, 1.0220289)
+mesh = ExtResource("120_u5qdw")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/niwamatsu_a/LOD2" unique_id=861739441]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/niwamatsu_a/LOD2/Collision" unique_id=304602350]
+transform = Transform3D(-0.9999907, -0.0042055305, -0.00093265163, -0.0043077054, 0.97627187, 0.21650574, 0, 0.21650775, -0.9762809, -0.0043077455, 0.79999995, 0.22176994)
+shape = SubResource("CylinderShape3D_7c766")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/niwamatsu_a" unique_id=2013840254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.648299, 0, -809.6954)
+metadata/veg_id = "niwamatsu_a"
+metadata/veg_group = "matsu"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/niwamatsu_a/LOD3" unique_id=740729375]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.16709471, 2.4488435, 1.0220289)
+mesh = ExtResource("121_56ia6")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/niwamatsu_a/LOD3" unique_id=931431458]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/niwamatsu_a/LOD3/Collision" unique_id=730056327]
+transform = Transform3D(-0.9999907, -0.0042055305, -0.00093265163, -0.0043077054, 0.97627187, 0.21650574, 0, 0.21650775, -0.9762809, -0.0043077455, 0.79999995, 0.22176994)
+shape = SubResource("CylinderShape3D_lbel5")
+
+[node name="yanagi_a" type="Node3D" parent="Subjects/LODs" unique_id=2069230553]
+metadata/row_z = -831.4609178619617
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/yanagi_a" unique_id=2010133642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.047913, 0, -831.46094)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/yanagi_a/LOD0" unique_id=292809783]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.123291, 4.6658864, 0.7339456)
+mesh = ExtResource("122_4pod3")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_a/LOD0" unique_id=595195045]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_a/LOD0/Collision" unique_id=1625199849]
+transform = Transform3D(-0.97882897, 0.20456694, -0.006804306, 0.20468007, 0.97828794, -0.03253982, 0, -0.03324362, -0.99944735, 0.27183923, 1.1, -0.044175856)
+shape = SubResource("CylinderShape3D_ovr57")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/yanagi_a" unique_id=638888470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3493047, 0, -831.46094)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/yanagi_a/LOD1" unique_id=2079405312]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.123291, 4.6658864, 0.7339456)
+mesh = ExtResource("123_hg313")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_a/LOD1" unique_id=969037900]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_a/LOD1/Collision" unique_id=1506629229]
+transform = Transform3D(-0.97882897, 0.20456694, -0.006804306, 0.20468007, 0.97828794, -0.03253982, 0, -0.03324362, -0.99944735, 0.27183923, 1.1, -0.044175856)
+shape = SubResource("CylinderShape3D_72igk")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/yanagi_a" unique_id=165751305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3493047, 0, -831.46094)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/yanagi_a/LOD2" unique_id=1248263110]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.123291, 4.6658864, 0.7339456)
+mesh = ExtResource("124_ymc53")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_a/LOD2" unique_id=1519447728]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_a/LOD2/Collision" unique_id=1204698080]
+transform = Transform3D(-0.97882897, 0.20456694, -0.006804306, 0.20468007, 0.97828794, -0.03253982, 0, -0.03324362, -0.99944735, 0.27183923, 1.1, -0.044175856)
+shape = SubResource("CylinderShape3D_g8elq")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/yanagi_a" unique_id=1820108453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.047913, 0, -831.46094)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/yanagi_a/LOD3" unique_id=1423582048]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(2.123291, 4.6658864, 0.7339456)
+mesh = ExtResource("125_1uh0b")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_a/LOD3" unique_id=958880501]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_a/LOD3/Collision" unique_id=778271913]
+transform = Transform3D(-0.97882897, 0.20456694, -0.006804306, 0.20468007, 0.97828794, -0.03253982, 0, -0.03324362, -0.99944735, 0.27183923, 1.1, -0.044175856)
+shape = SubResource("CylinderShape3D_n35vu")
+
+[node name="yanagi_b" type="Node3D" parent="Subjects/LODs" unique_id=1889429391]
+metadata/row_z = -856.1595267393335
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/yanagi_b" unique_id=1673635662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7364025, 0, -856.15955)
+metadata/veg_id = "yanagi_b"
+metadata/veg_group = "yanagi"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/yanagi_b/LOD0" unique_id=312282768]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.47100663, 3.4818003, -0.09245753)
+mesh = ExtResource("126_icrog")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_b/LOD0" unique_id=137871330]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_b/LOD0/Collision" unique_id=2070923789]
+transform = Transform3D(-0.9997741, 0.021192733, 0.0016191734, 0.021254499, 0.9968688, 0.07616306, 0, 0.076180264, -0.9970941, 0.023385232, 0.9, 0.08406151)
+shape = SubResource("CylinderShape3D_p317x")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/yanagi_b" unique_id=701357943]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.912134, 0, -856.15955)
+metadata/veg_id = "yanagi_b"
+metadata/veg_group = "yanagi"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/yanagi_b/LOD1" unique_id=1616484511]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.47100663, 3.4818003, -0.09245753)
+mesh = ExtResource("127_sefw4")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_b/LOD1" unique_id=384340924]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_b/LOD1/Collision" unique_id=151858873]
+transform = Transform3D(-0.9997741, 0.021192733, 0.0016191734, 0.021254499, 0.9968688, 0.07616306, 0, 0.076180264, -0.9970941, 0.023385232, 0.9, 0.08406151)
+shape = SubResource("CylinderShape3D_47ujj")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/yanagi_b" unique_id=2055944211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.912134, 0, -856.15955)
+metadata/veg_id = "yanagi_b"
+metadata/veg_group = "yanagi"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/yanagi_b/LOD2" unique_id=546321873]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.47100663, 3.4818003, -0.09245753)
+mesh = ExtResource("128_4my1m")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_b/LOD2" unique_id=100476510]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_b/LOD2/Collision" unique_id=600973278]
+transform = Transform3D(-0.9997741, 0.021192733, 0.0016191734, 0.021254499, 0.9968688, 0.07616306, 0, 0.076180264, -0.9970941, 0.023385232, 0.9, 0.08406151)
+shape = SubResource("CylinderShape3D_wuvuj")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/yanagi_b" unique_id=1906420778]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7364025, 0, -856.15955)
+metadata/veg_id = "yanagi_b"
+metadata/veg_group = "yanagi"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/yanagi_b/LOD3" unique_id=407539811]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.47100663, 3.4818003, -0.09245753)
+mesh = ExtResource("129_7q35t")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/yanagi_b/LOD3" unique_id=967018151]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/yanagi_b/LOD3/Collision" unique_id=298635187]
+transform = Transform3D(-0.9997741, 0.021192733, 0.0016191734, 0.021254499, 0.9968688, 0.07616306, 0, 0.076180264, -0.9970941, 0.023385232, 0.9, 0.08406151)
+shape = SubResource("CylinderShape3D_wuwxm")
+
+[node name="kusu_hero" type="Node3D" parent="Subjects/LODs" unique_id=1679808009]
+metadata/row_z = -877.9837952359891
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/kusu_hero" unique_id=412688097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.571453, 0, -877.9838)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/kusu_hero/LOD0" unique_id=892025258]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.2571063, 9.848032, -2.1913214)
+mesh = ExtResource("130_posct")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kusu_hero/LOD0" unique_id=1536922449]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kusu_hero/LOD0/Collision" unique_id=611223746]
+transform = Transform3D(-0.9978505, -0.06516609, 0.0069142627, -0.06553187, 0.9922807, -0.105283126, 0, -0.105509914, -0.99441826, -0.11821148, 1.6, -0.19139528)
+shape = SubResource("CylinderShape3D_knuue")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/kusu_hero" unique_id=1864046855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.190484, 0, -877.9838)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/kusu_hero/LOD1" unique_id=83922329]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.2571063, 9.848032, -2.1913214)
+mesh = ExtResource("131_hpahe")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kusu_hero/LOD1" unique_id=417040385]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kusu_hero/LOD1/Collision" unique_id=1290335325]
+transform = Transform3D(-0.9978505, -0.06516609, 0.0069142627, -0.06553187, 0.9922807, -0.105283126, 0, -0.105509914, -0.99441826, -0.11821148, 1.6, -0.19139528)
+shape = SubResource("CylinderShape3D_j0cwj")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/kusu_hero" unique_id=1640393111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.190484, 0, -877.9838)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/kusu_hero/LOD2" unique_id=1301201142]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.2571063, 9.848032, -2.1913214)
+mesh = ExtResource("132_wrfcl")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kusu_hero/LOD2" unique_id=2142067407]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kusu_hero/LOD2/Collision" unique_id=1763338034]
+transform = Transform3D(-0.9978505, -0.06516609, 0.0069142627, -0.06553187, 0.9922807, -0.105283126, 0, -0.105509914, -0.99441826, -0.11821148, 1.6, -0.19139528)
+shape = SubResource("CylinderShape3D_7eend")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/kusu_hero" unique_id=1140255010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.571453, 0, -877.9838)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/kusu_hero/LOD3" unique_id=1697427693]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.2571063, 9.848032, -2.1913214)
+mesh = ExtResource("133_dm4lx")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/kusu_hero/LOD3" unique_id=1684242483]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/kusu_hero/LOD3/Collision" unique_id=678898986]
+transform = Transform3D(-0.9978505, -0.06516609, 0.0069142627, -0.06553187, 0.9922807, -0.105283126, 0, -0.105509914, -0.99441826, -0.11821148, 1.6, -0.19139528)
+shape = SubResource("CylinderShape3D_uhcdh")
+
+[node name="sugi_hero" type="Node3D" parent="Subjects/LODs" unique_id=2109155464]
+metadata/row_z = -916.3647642152716
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sugi_hero" unique_id=910616896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.047535, 0, -916.36475)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sugi_hero/LOD0" unique_id=451549972]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.9976492, 13.392242, 0.39591312)
+mesh = ExtResource("134_ga1ej")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_hero/LOD0" unique_id=78222434]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_hero/LOD0/Collision" unique_id=1905442932]
+transform = Transform3D(-0.99998766, 0.0049517658, 0.0004428948, 0.0049715335, 0.99601156, 0.08908505, 0, 0.089086145, -0.99602395, 0.010440349, 1.9, 0.18783005)
+shape = SubResource("CylinderShape3D_5p5sj")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sugi_hero" unique_id=742225636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.015845, 0, -916.36475)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sugi_hero/LOD1" unique_id=65420676]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.9976492, 13.392242, 0.39591312)
+mesh = ExtResource("135_j1p1h")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_hero/LOD1" unique_id=1027342761]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_hero/LOD1/Collision" unique_id=305068322]
+transform = Transform3D(-0.99998766, 0.0049517658, 0.0004428948, 0.0049715335, 0.99601156, 0.08908505, 0, 0.089086145, -0.99602395, 0.010440349, 1.9, 0.18783005)
+shape = SubResource("CylinderShape3D_0b064")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sugi_hero" unique_id=1745532431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.015845, 0, -916.36475)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sugi_hero/LOD2" unique_id=487006467]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.9976492, 13.392242, 0.39591312)
+mesh = ExtResource("136_0bly3")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_hero/LOD2" unique_id=1135934741]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_hero/LOD2/Collision" unique_id=1286733094]
+transform = Transform3D(-0.99998766, 0.0049517658, 0.0004428948, 0.0049715335, 0.99601156, 0.08908505, 0, 0.089086145, -0.99602395, 0.010440349, 1.9, 0.18783005)
+shape = SubResource("CylinderShape3D_bxfnn")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/sugi_hero" unique_id=970070884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.047535, 0, -916.36475)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/sugi_hero/LOD3" unique_id=1838535339]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.9976492, 13.392242, 0.39591312)
+mesh = ExtResource("137_loq75")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/sugi_hero/LOD3" unique_id=502334280]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/sugi_hero/LOD3/Collision" unique_id=2111861854]
+transform = Transform3D(-0.99998766, 0.0049517658, 0.0004428948, 0.0049715335, 0.99601156, 0.08908505, 0, 0.089086145, -0.99602395, 0.010440349, 1.9, 0.18783005)
+shape = SubResource("CylinderShape3D_t60mg")
+
+[node name="keyaki_hero" type="Node3D" parent="Subjects/LODs" unique_id=1590960742]
+metadata/row_z = -944.3964540225659
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/keyaki_hero" unique_id=1509538983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.657204, 0, -944.3965)
+metadata/veg_id = "keyaki_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/keyaki_hero/LOD0" unique_id=69899388]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6061544, 11.568528, -0.9400315)
+mesh = ExtResource("138_tsycp")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_hero/LOD0" unique_id=2093945736]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_hero/LOD0/Collision" unique_id=851542117]
+transform = Transform3D(-0.99992573, 0.012186601, -0.00021533921, 0.012188503, 0.9997697, -0.017666094, 0, -0.017667405, -0.99984396, 0.025597757, 1.9, -0.037110098)
+shape = SubResource("CylinderShape3D_1expt")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/keyaki_hero" unique_id=618592999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.219069, 0, -944.3965)
+metadata/veg_id = "keyaki_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/keyaki_hero/LOD1" unique_id=1442331175]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6061544, 11.568528, -0.9400315)
+mesh = ExtResource("139_gl0fw")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_hero/LOD1" unique_id=181794898]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_hero/LOD1/Collision" unique_id=1816102108]
+transform = Transform3D(-0.99992573, 0.012186601, -0.00021533921, 0.012188503, 0.9997697, -0.017666094, 0, -0.017667405, -0.99984396, 0.025597757, 1.9, -0.037110098)
+shape = SubResource("CylinderShape3D_f5ke5")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/keyaki_hero" unique_id=1749912212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.219069, 0, -944.3965)
+metadata/veg_id = "keyaki_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/keyaki_hero/LOD2" unique_id=706417741]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6061544, 11.568528, -0.9400315)
+mesh = ExtResource("140_uu2r1")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_hero/LOD2" unique_id=1004758324]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_hero/LOD2/Collision" unique_id=1799075333]
+transform = Transform3D(-0.99992573, 0.012186601, -0.00021533921, 0.012188503, 0.9997697, -0.017666094, 0, -0.017667405, -0.99984396, 0.025597757, 1.9, -0.037110098)
+shape = SubResource("CylinderShape3D_r2oue")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/keyaki_hero" unique_id=1244919994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.657204, 0, -944.3965)
+metadata/veg_id = "keyaki_hero"
+metadata/veg_group = "hero"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/keyaki_hero/LOD3" unique_id=660007147]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.6061544, 11.568528, -0.9400315)
+mesh = ExtResource("141_8c732")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/keyaki_hero/LOD3" unique_id=1529968605]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/keyaki_hero/LOD3/Collision" unique_id=722107469]
+transform = Transform3D(-0.99992573, 0.012186601, -0.00021533921, 0.012188503, 0.9997697, -0.017666094, 0, -0.017667405, -0.99984396, 0.025597757, 1.9, -0.037110098)
+shape = SubResource("CylinderShape3D_1ed3v")
+
+[node name="young_sugi" type="Node3D" parent="Subjects/LODs" unique_id=692368340]
+metadata/row_z = -982.8345909900709
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/young_sugi" unique_id=1491932750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.527519, 0, -982.8346)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/young_sugi/LOD0" unique_id=1473419582]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.19600153, 3.223616, -0.20071906)
+mesh = ExtResource("142_7nj20")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_sugi/LOD0" unique_id=1555262901]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_sugi/LOD0/Collision" unique_id=626452365]
+transform = Transform3D(-0.9998652, -0.016414518, 0.00055435207, -0.016423875, 0.9992955, -0.033748265, 0, -0.03375282, -0.99943024, -0.01642609, 0.79999995, -0.03377662)
+shape = SubResource("CylinderShape3D_jcihn")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/young_sugi" unique_id=1495996412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1758394, 0, -982.8346)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/young_sugi/LOD1" unique_id=120223474]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.19600153, 3.223616, -0.20071906)
+mesh = ExtResource("143_kc0q8")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_sugi/LOD1" unique_id=1861179094]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_sugi/LOD1/Collision" unique_id=681491723]
+transform = Transform3D(-0.9998652, -0.016414518, 0.00055435207, -0.016423875, 0.9992955, -0.033748265, 0, -0.03375282, -0.99943024, -0.01642609, 0.79999995, -0.03377662)
+shape = SubResource("CylinderShape3D_fl43w")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/young_sugi" unique_id=383344173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1758394, 0, -982.8346)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/young_sugi/LOD2" unique_id=1017299245]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.19600153, 3.223616, -0.20071906)
+mesh = ExtResource("144_icatx")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_sugi/LOD2" unique_id=1934476378]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_sugi/LOD2/Collision" unique_id=48693372]
+transform = Transform3D(-0.9998652, -0.016414518, 0.00055435207, -0.016423875, 0.9992955, -0.033748265, 0, -0.03375282, -0.99943024, -0.01642609, 0.79999995, -0.03377662)
+shape = SubResource("CylinderShape3D_461nu")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/young_sugi" unique_id=186371322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.527519, 0, -982.8346)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/young_sugi/LOD3" unique_id=683830752]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.19600153, 3.223616, -0.20071906)
+mesh = ExtResource("145_cjoy0")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_sugi/LOD3" unique_id=595775963]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_sugi/LOD3/Collision" unique_id=255467902]
+transform = Transform3D(-0.9998652, -0.016414518, 0.00055435207, -0.016423875, 0.9992955, -0.033748265, 0, -0.03375282, -0.99943024, -0.01642609, 0.79999995, -0.03377662)
+shape = SubResource("CylinderShape3D_sl45f")
+
+[node name="young_broad_a" type="Node3D" parent="Subjects/LODs" unique_id=32981770]
+metadata/row_z = -1003.186270184174
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/young_broad_a" unique_id=1454461401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.150056, 0, -1003.1863)
+metadata/veg_id = "young_broad_a"
+metadata/veg_group = "young"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/young_broad_a/LOD0" unique_id=672622464]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.145851, 2.4917917, -0.17931831)
+mesh = ExtResource("146_bf3f6")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_a/LOD0" unique_id=2147042069]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_a/LOD0/Collision" unique_id=1752587170]
+transform = Transform3D(-0.9700822, 0.24063306, -0.032191534, 0.2427768, 0.9615163, -0.12863022, 0, -0.13259724, -0.99117, 0.25026414, 0.79999995, -0.1379043)
+shape = SubResource("CylinderShape3D_1a2n7")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/young_broad_a" unique_id=1754529314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.050019, 0, -1003.1863)
+metadata/veg_id = "young_broad_a"
+metadata/veg_group = "young"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/young_broad_a/LOD1" unique_id=585760404]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.145851, 2.4917917, -0.17931831)
+mesh = ExtResource("147_gcj17")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_a/LOD1" unique_id=468147783]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_a/LOD1/Collision" unique_id=756161312]
+transform = Transform3D(-0.9700822, 0.24063306, -0.032191534, 0.2427768, 0.9615163, -0.12863022, 0, -0.13259724, -0.99117, 0.25026414, 0.79999995, -0.1379043)
+shape = SubResource("CylinderShape3D_xwkiq")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/young_broad_a" unique_id=409265968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.050019, 0, -1003.1863)
+metadata/veg_id = "young_broad_a"
+metadata/veg_group = "young"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/young_broad_a/LOD2" unique_id=1693894981]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.145851, 2.4917917, -0.17931831)
+mesh = ExtResource("148_rfkh7")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_a/LOD2" unique_id=381327473]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_a/LOD2/Collision" unique_id=1369481928]
+transform = Transform3D(-0.9700822, 0.24063306, -0.032191534, 0.2427768, 0.9615163, -0.12863022, 0, -0.13259724, -0.99117, 0.25026414, 0.79999995, -0.1379043)
+shape = SubResource("CylinderShape3D_rgbi6")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/young_broad_a" unique_id=830235889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.150056, 0, -1003.1863)
+metadata/veg_id = "young_broad_a"
+metadata/veg_group = "young"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/young_broad_a/LOD3" unique_id=1353903127]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(1.145851, 2.4917917, -0.17931831)
+mesh = ExtResource("149_k2rfd")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_a/LOD3" unique_id=1124268808]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_a/LOD3/Collision" unique_id=449061599]
+transform = Transform3D(-0.9700822, 0.24063306, -0.032191534, 0.2427768, 0.9615163, -0.12863022, 0, -0.13259724, -0.99117, 0.25026414, 0.79999995, -0.1379043)
+shape = SubResource("CylinderShape3D_0lw0a")
+
+[node name="young_broad_b" type="Node3D" parent="Subjects/LODs" unique_id=264740041]
+metadata/row_z = -1023.2863075651015
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/young_broad_b" unique_id=1272713472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.652917, 0, -1023.2863)
+metadata/veg_id = "young_broad_b"
+metadata/veg_group = "young"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/young_broad_b/LOD0" unique_id=2052180894]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.6574187, 2.3106294, 0.09331441)
+mesh = ExtResource("150_d547y")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_b/LOD0" unique_id=1289257536]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_b/LOD0/Collision" unique_id=1519981123]
+transform = Transform3D(-0.9391362, 0.3274372, -0.10396187, 0.34354505, 0.8951028, -0.28419667, 0, -0.30261493, -0.9531129, 0.3658096, 0.79999995, -0.3380784)
+shape = SubResource("CylinderShape3D_xyvds")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/young_broad_b" unique_id=1262692471]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.550972, 0, -1023.2863)
+metadata/veg_id = "young_broad_b"
+metadata/veg_group = "young"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/young_broad_b/LOD1" unique_id=101602139]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.6574187, 2.3106294, 0.09331441)
+mesh = ExtResource("151_pt05s")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_b/LOD1" unique_id=1049376392]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_b/LOD1/Collision" unique_id=2134066962]
+transform = Transform3D(-0.9391362, 0.3274372, -0.10396187, 0.34354505, 0.8951028, -0.28419667, 0, -0.30261493, -0.9531129, 0.3658096, 0.79999995, -0.3380784)
+shape = SubResource("CylinderShape3D_fykj8")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/young_broad_b" unique_id=281876205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.550972, 0, -1023.2863)
+metadata/veg_id = "young_broad_b"
+metadata/veg_group = "young"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/young_broad_b/LOD2" unique_id=428984196]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.6574187, 2.3106294, 0.09331441)
+mesh = ExtResource("152_pcidq")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_b/LOD2" unique_id=1858173663]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_b/LOD2/Collision" unique_id=1837670197]
+transform = Transform3D(-0.9391362, 0.3274372, -0.10396187, 0.34354505, 0.8951028, -0.28419667, 0, -0.30261493, -0.9531129, 0.3658096, 0.79999995, -0.3380784)
+shape = SubResource("CylinderShape3D_qf52i")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/young_broad_b" unique_id=542645573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.652917, 0, -1023.2863)
+metadata/veg_id = "young_broad_b"
+metadata/veg_group = "young"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/young_broad_b/LOD3" unique_id=79308234]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.6574187, 2.3106294, 0.09331441)
+mesh = ExtResource("153_mgv3d")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/young_broad_b/LOD3" unique_id=386179179]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/young_broad_b/LOD3/Collision" unique_id=1633906601]
+transform = Transform3D(-0.9391362, 0.3274372, -0.10396187, 0.34354505, 0.8951028, -0.28419667, 0, -0.30261493, -0.9531129, 0.3658096, 0.79999995, -0.3380784)
+shape = SubResource("CylinderShape3D_dt02v")
+
+[node name="snag_a" type="Node3D" parent="Subjects/LODs" unique_id=59829047]
+metadata/row_z = -1044.3882519364902
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/snag_a" unique_id=1344783966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.932283, 0, -1044.3883)
+metadata/veg_id = "snag_a"
+metadata/veg_group = "dead"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/snag_a/LOD0" unique_id=744969472]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.18156114, 4.292011, 0.10723692)
+mesh = ExtResource("154_f1gl7")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/snag_a/LOD0" unique_id=248743432]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/snag_a/LOD0/Collision" unique_id=1396208869]
+transform = Transform3D(-0.99989563, -0.014449036, -3.3632105e-06, -0.014449037, 0.9998956, 0.00023273936, 0, 0.00023276365, -1, -0.024565926, 1.5, 0.00039573954)
+shape = SubResource("CylinderShape3D_8jaqo")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/snag_a" unique_id=903734637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.310761, 0, -1044.3883)
+metadata/veg_id = "snag_a"
+metadata/veg_group = "dead"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/snag_a/LOD1" unique_id=868506346]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.18156114, 4.292011, 0.10723692)
+mesh = ExtResource("155_2o4wf")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/snag_a/LOD1" unique_id=717280497]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/snag_a/LOD1/Collision" unique_id=890456537]
+transform = Transform3D(-0.99989563, -0.014449036, -3.3632105e-06, -0.014449037, 0.9998956, 0.00023273936, 0, 0.00023276365, -1, -0.024565926, 1.5, 0.00039573954)
+shape = SubResource("CylinderShape3D_8u7g4")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/snag_a" unique_id=2033224902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.310761, 0, -1044.3883)
+metadata/veg_id = "snag_a"
+metadata/veg_group = "dead"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/snag_a/LOD2" unique_id=926954546]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.18156114, 4.292011, 0.10723692)
+mesh = ExtResource("156_ah1ep")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/snag_a/LOD2" unique_id=2060514640]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/snag_a/LOD2/Collision" unique_id=988250669]
+transform = Transform3D(-0.99989563, -0.014449036, -3.3632105e-06, -0.014449037, 0.9998956, 0.00023273936, 0, 0.00023276365, -1, -0.024565926, 1.5, 0.00039573954)
+shape = SubResource("CylinderShape3D_asgx7")
+
+[node name="LOD3" type="Node3D" parent="Subjects/LODs/snag_a" unique_id=2106310520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.932283, 0, -1044.3883)
+metadata/veg_id = "snag_a"
+metadata/veg_group = "dead"
+
+[node name="LOD3" type="MeshInstance3D" parent="Subjects/LODs/snag_a/LOD3" unique_id=279130194]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.18156114, 4.292011, 0.10723692)
+mesh = ExtResource("157_vr0kp")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/snag_a/LOD3" unique_id=1201194081]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/snag_a/LOD3/Collision" unique_id=1546625225]
+transform = Transform3D(-0.99989563, -0.014449036, -3.3632105e-06, -0.014449037, 0.9998956, 0.00023273936, 0, 0.00023276365, -1, -0.024565926, 1.5, 0.00039573954)
+shape = SubResource("CylinderShape3D_ujdq5")
+
+[node name="log_a" type="Node3D" parent="Subjects/LODs" unique_id=920851970]
+metadata/row_z = -1063.0097740265323
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/log_a" unique_id=1292154787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.579004, 0, -1063.0098)
+metadata/veg_id = "log_a"
+metadata/veg_group = "dead"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/log_a/LOD0" unique_id=1209693340]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.006991625, 0.59655875, -0.2508608)
+mesh = ExtResource("158_rcqlw")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/log_a/LOD0" unique_id=1674036839]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/log_a/LOD0/Collision" unique_id=100198649]
+transform = Transform3D(0.008711685, 0.9996813, -0.023696003, 0.99996203, -0.00870924, 0.00020643996, 0, -0.023696903, -0.9997192, 0, 0.20168595, 0.023937033)
+shape = SubResource("CylinderShape3D_tydu7")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/log_a" unique_id=1826238961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1063.0098)
+metadata/veg_id = "log_a"
+metadata/veg_group = "dead"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/log_a/LOD1" unique_id=1010856897]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.006991625, 0.59655875, -0.2508608)
+mesh = ExtResource("159_bj2hl")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/log_a/LOD1" unique_id=1412180206]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/log_a/LOD1/Collision" unique_id=1051683375]
+transform = Transform3D(0.008711685, 0.9996813, -0.023696003, 0.99996203, -0.00870924, 0.00020643996, 0, -0.023696903, -0.9997192, 0, 0.20168595, 0.023937033)
+shape = SubResource("CylinderShape3D_66nbk")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/log_a" unique_id=52369106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.579004, 0, -1063.0098)
+metadata/veg_id = "log_a"
+metadata/veg_group = "dead"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/log_a/LOD2" unique_id=261717081]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.006991625, 0.59655875, -0.2508608)
+mesh = ExtResource("160_64nax")
+
+[node name="Collision" type="StaticBody3D" parent="Subjects/LODs/log_a/LOD2" unique_id=758648605]
+
+[node name="Trunk" type="CollisionShape3D" parent="Subjects/LODs/log_a/LOD2/Collision" unique_id=1119542124]
+transform = Transform3D(0.008711685, 0.9996813, -0.023696003, 0.99996203, -0.00870924, 0.00020643996, 0, -0.023696903, -0.9997192, 0, 0.20168595, 0.023937033)
+shape = SubResource("CylinderShape3D_cdht4")
+
+[node name="shrub_a" type="Node3D" parent="Subjects/LODs" unique_id=104688308]
+metadata/row_z = -1085.5887778679942
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/shrub_a" unique_id=1773704079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8976464, 0, -1085.5887)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/shrub_a/LOD0" unique_id=267535971]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("161_lhc35")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/shrub_a" unique_id=1558461012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1085.5887)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/shrub_a/LOD1" unique_id=1453194568]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("162_edt4v")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/shrub_a" unique_id=1332146296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8976464, 0, -1085.5887)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/shrub_a/LOD2" unique_id=771245245]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.051347703, 0.61551225, 0.06611654)
+mesh = ExtResource("163_75dwx")
+
+[node name="tsutsuji_a" type="Node3D" parent="Subjects/LODs" unique_id=2049215638]
+metadata/row_z = -1103.486424136061
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/tsutsuji_a" unique_id=1045320575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0950875, 0, -1103.4865)
+metadata/veg_id = "tsutsuji_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/tsutsuji_a/LOD0" unique_id=1190945181]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("164_rifbi")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/tsutsuji_a" unique_id=410109130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1103.4865)
+metadata/veg_id = "tsutsuji_a"
+metadata/veg_group = "under"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/tsutsuji_a/LOD1" unique_id=1704603824]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("165_x2udp")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/tsutsuji_a" unique_id=249366691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0950875, 0, -1103.4865)
+metadata/veg_id = "tsutsuji_a"
+metadata/veg_group = "under"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/tsutsuji_a/LOD2" unique_id=99106429]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("166_3l88v")
+
+[node name="sasa_a" type="Node3D" parent="Subjects/LODs" unique_id=136678254]
+metadata/row_z = -1121.5815115771961
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/sasa_a" unique_id=1317112911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7005663, 0, -1121.5815)
+metadata/veg_id = "sasa_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/sasa_a/LOD0" unique_id=1402566300]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("167_d6ih8")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/sasa_a" unique_id=1492750905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1121.5815)
+metadata/veg_id = "sasa_a"
+metadata/veg_group = "under"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/sasa_a/LOD1" unique_id=598202155]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("168_md71e")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/sasa_a" unique_id=2116675658]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7005663, 0, -1121.5815)
+metadata/veg_id = "sasa_a"
+metadata/veg_group = "under"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/sasa_a/LOD2" unique_id=1372101661]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("169_tcb3b")
+
+[node name="fern_a" type="Node3D" parent="Subjects/LODs" unique_id=1044952926]
+metadata/row_z = -1140.2820776840188
+
+[node name="LOD0" type="Node3D" parent="Subjects/LODs/fern_a" unique_id=216289038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.108555, 0, -1140.2821)
+metadata/veg_id = "fern_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="Subjects/LODs/fern_a/LOD0" unique_id=1400190851]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.1326608, 0.3400508, -0.17654929)
+mesh = ExtResource("170_ghgob")
+
+[node name="LOD1" type="Node3D" parent="Subjects/LODs/fern_a" unique_id=1514850504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1140.2821)
+metadata/veg_id = "fern_a"
+metadata/veg_group = "under"
+
+[node name="LOD1" type="MeshInstance3D" parent="Subjects/LODs/fern_a/LOD1" unique_id=1788244086]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.1326608, 0.3400508, -0.17654929)
+mesh = ExtResource("171_tv4nb")
+
+[node name="LOD2" type="Node3D" parent="Subjects/LODs/fern_a" unique_id=1292087506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.108555, 0, -1140.2821)
+metadata/veg_id = "fern_a"
+metadata/veg_group = "under"
+
+[node name="LOD2" type="MeshInstance3D" parent="Subjects/LODs/fern_a/LOD2" unique_id=270329339]
+instance_shader_parameters/lod_band = Vector4(0, 0, 0, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.1326608, 0.3400508, -0.17654929)
+mesh = ExtResource("172_jcpp3")
+
+[node name="Lineup" type="Node3D" parent="Subjects" unique_id=2106256364]
+metadata/row_z = -1188.3906323863139
+
+[node name="sugi_c" type="Node3D" parent="Subjects/Lineup" unique_id=1248025851 instance=ExtResource("10_mvm2b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.257515, 0, -1188.3906)
+metadata/veg_id = "sugi_c"
+metadata/veg_group = "conifer"
+
+[node name="sugi_a" type="Node3D" parent="Subjects/Lineup" unique_id=1742132779 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.338171, 0, -1188.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+
+[node name="hinoki_a" type="Node3D" parent="Subjects/Lineup" unique_id=1919742622 instance=ExtResource("11_kkfyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.613259, 0, -1188.3906)
+metadata/veg_id = "hinoki_a"
+metadata/veg_group = "conifer"
+
+[node name="sugi_hero" type="Node3D" parent="Subjects/Lineup" unique_id=1842775016 instance=ExtResource("31_72r1w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.058326, 0, -1188.3906)
+metadata/veg_id = "sugi_hero"
+metadata/veg_group = "hero"
+
+[node name="hinoki_b" type="Node3D" parent="Subjects/Lineup" unique_id=525002919 instance=ExtResource("12_obm27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.113726, 0, -1188.3906)
+metadata/veg_id = "hinoki_b"
+metadata/veg_group = "conifer"
+
+[node name="sugi_b" type="Node3D" parent="Subjects/Lineup" unique_id=1534741289 instance=ExtResource("9_dpjx2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.257515, 0, -1188.3906)
+metadata/veg_id = "sugi_b"
+metadata/veg_group = "conifer"
+
+[node name="Colors" type="Node3D" parent="Subjects" unique_id=1019989535]
+
+[node name="conifer" type="Node3D" parent="Subjects/Colors" unique_id=1862029999]
+metadata/row_z = -1288.3906323863139
+metadata/tid = "sugi_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/conifer" unique_id=370603557 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.276691, 0, -1288.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/conifer" unique_id=719005767 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.138346, 0, -1288.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+metadata/veg_color = "young"
+
+[node name="yellow" type="Node3D" parent="Subjects/Colors/conifer" unique_id=1144942680 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1288.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+metadata/veg_color = "yellow"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/conifer" unique_id=1335631620 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.138346, 0, -1288.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+metadata/veg_color = "deep"
+
+[node name="shade" type="Node3D" parent="Subjects/Colors/conifer" unique_id=1065131779 instance=ExtResource("8_gyybx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.276691, 0, -1288.3906)
+metadata/veg_id = "sugi_a"
+metadata/veg_group = "conifer"
+metadata/veg_color = "shade"
+
+[node name="broad" type="Node3D" parent="Subjects/Colors" unique_id=824111744]
+metadata/row_z = -1312.5289785779476
+metadata/tid = "konara_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/broad" unique_id=647181100 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.14274, 0, -1312.5289)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/broad" unique_id=117859391 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.57137, 0, -1312.5289)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+metadata/veg_color = "young"
+
+[node name="yellow" type="Node3D" parent="Subjects/Colors/broad" unique_id=279695792 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1312.5289)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+metadata/veg_color = "yellow"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/broad" unique_id=766423723 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.57137, 0, -1312.5289)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+metadata/veg_color = "deep"
+
+[node name="shade" type="Node3D" parent="Subjects/Colors/broad" unique_id=1096611937 instance=ExtResource("13_6dco5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.14274, 0, -1312.5289)
+metadata/veg_id = "konara_a"
+metadata/veg_group = "broad"
+metadata/veg_color = "shade"
+
+[node name="sakura" type="Node3D" parent="Subjects/Colors" unique_id=700235859]
+metadata/row_z = -1341.1003489282518
+metadata/tid = "sakura_yama"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/sakura" unique_id=179856517 instance=ExtResource("18_gb3f1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.647031, 0, -1341.1003)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+metadata/veg_color = "mature"
+
+[node name="muted" type="Node3D" parent="Subjects/Colors/sakura" unique_id=32350114 instance=ExtResource("18_gb3f1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.647031, 0, -1341.1003)
+metadata/veg_id = "sakura_yama"
+metadata/veg_group = "sakura"
+metadata/veg_color = "muted"
+
+[node name="momiji" type="Node3D" parent="Subjects/Colors" unique_id=1945494442]
+metadata/row_z = -1369.394410383095
+metadata/tid = "momiji_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/momiji" unique_id=2042076237 instance=ExtResource("21_48abn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.973567, 0, -1369.3944)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+metadata/veg_color = "mature"
+
+[node name="muted" type="Node3D" parent="Subjects/Colors/momiji" unique_id=1621821869 instance=ExtResource("21_48abn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1369.3944)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+metadata/veg_color = "muted"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/momiji" unique_id=685860004 instance=ExtResource("21_48abn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.973567, 0, -1369.3944)
+metadata/veg_id = "momiji_a"
+metadata/veg_group = "momiji"
+metadata/veg_color = "deep"
+
+[node name="matsu" type="Node3D" parent="Subjects/Colors" unique_id=1197535412]
+metadata/row_z = -1393.367977475486
+metadata/tid = "akamatsu_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/matsu" unique_id=963356717 instance=ExtResource("24_xvd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.79631, 0, -1393.3679)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/matsu" unique_id=582055845 instance=ExtResource("24_xvd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59877, 0, -1393.3679)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+metadata/veg_color = "young"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/matsu" unique_id=382140170 instance=ExtResource("24_xvd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.59877, 0, -1393.3679)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+metadata/veg_color = "deep"
+
+[node name="shade" type="Node3D" parent="Subjects/Colors/matsu" unique_id=1379463465 instance=ExtResource("24_xvd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.79631, 0, -1393.3679)
+metadata/veg_id = "akamatsu_a"
+metadata/veg_group = "matsu"
+metadata/veg_color = "shade"
+
+[node name="yanagi" type="Node3D" parent="Subjects/Colors" unique_id=1785889481]
+metadata/row_z = -1421.565517336318
+metadata/tid = "yanagi_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/yanagi" unique_id=1844567437 instance=ExtResource("28_kp1vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.547913, 0, -1421.5656)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/yanagi" unique_id=1274685962 instance=ExtResource("28_kp1vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8493047, 0, -1421.5656)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+metadata/veg_color = "young"
+
+[node name="yellow" type="Node3D" parent="Subjects/Colors/yanagi" unique_id=327516692 instance=ExtResource("28_kp1vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8493047, 0, -1421.5656)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+metadata/veg_color = "yellow"
+
+[node name="shade" type="Node3D" parent="Subjects/Colors/yanagi" unique_id=2031826066 instance=ExtResource("28_kp1vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.547913, 0, -1421.5656)
+metadata/veg_id = "yanagi_a"
+metadata/veg_group = "yanagi"
+metadata/veg_color = "shade"
+
+[node name="hero" type="Node3D" parent="Subjects/Colors" unique_id=1933846875]
+metadata/row_z = -1446.26412621369
+metadata/tid = "kusu_hero"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/hero" unique_id=1605291819 instance=ExtResource("30_6f7wr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.690484, 0, -1446.2642)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+metadata/veg_color = "mature"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/hero" unique_id=569024997 instance=ExtResource("30_6f7wr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.690484, 0, -1446.2642)
+metadata/veg_id = "kusu_hero"
+metadata/veg_group = "hero"
+metadata/veg_color = "deep"
+
+[node name="young" type="Node3D" parent="Subjects/Colors" unique_id=985371169]
+metadata/row_z = -1484.6450951929723
+metadata/tid = "young_sugi"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/young" unique_id=1938449588 instance=ExtResource("33_h00t5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3516793, 0, -1484.6451)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/young" unique_id=994865063 instance=ExtResource("33_h00t5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1484.6451)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+metadata/veg_color = "young"
+
+[node name="yellow" type="Node3D" parent="Subjects/Colors/young" unique_id=1818145354 instance=ExtResource("33_h00t5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3516793, 0, -1484.6451)
+metadata/veg_id = "young_sugi"
+metadata/veg_group = "young"
+metadata/veg_color = "yellow"
+
+[node name="under" type="Node3D" parent="Subjects/Colors" unique_id=374909332]
+metadata/row_z = -1504.9967743870754
+metadata/tid = "shrub_a"
+
+[node name="mature" type="Node3D" parent="Subjects/Colors/under" unique_id=1725931996 instance=ExtResource("38_cjtcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8976464, 0, -1504.9968)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+metadata/veg_color = "mature"
+
+[node name="young" type="Node3D" parent="Subjects/Colors/under" unique_id=426793648 instance=ExtResource("38_cjtcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1504.9968)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+metadata/veg_color = "young"
+
+[node name="deep" type="Node3D" parent="Subjects/Colors/under" unique_id=161909895 instance=ExtResource("38_cjtcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8976464, 0, -1504.9968)
+metadata/veg_id = "shrub_a"
+metadata/veg_group = "under"
+metadata/veg_color = "deep"

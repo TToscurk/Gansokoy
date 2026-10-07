@@ -1,0 +1,13 @@
+[TOWER] INFO 規劃 31 件（314 ms）
+[TOWER] PASS 接地：31 件（構件環最低、雜草貼地、縁石半埋）：浮／偏 0（最大 0.00 m）、過深 0
+[TOWER] PASS 不穿：構件／低木 vs 火見櫓柱脚・梯子・建物：違規 0 
+[TOWER] PASS 動線淨空：進出路 MainStreet→梯子足元／巡回路帶／梯子足元 1.2 m 內障礙 0 
+[TOWER] PASS 開闊：高木／超高植生 0 []（植生 ≤ 1.3 m）、塔心 8 m 內植生被覆 2.8 %（≤ 6 %）、塔頂視線 7 機位×3 點被擋 0
+[TOWER] PASS 地塊：構件／植生 侵入他地塊 0 
+[TOWER] PASS 構圖：構件 8 件（≤ 10）、街側正面に構件 0 []、正面機位→梯子足元を遮る 0
+[TOWER] PASS 元素：齊備
+[TOWER] INFO 構件 8、植生 15（雜草 13）、排水縁石 8
+[TOWER] PASS pack overlay
+[TOWER] PASS save res://maps/village_v2/gen/tower_yard_p9.scn
+[TOWER] INFO overlay 0.04 MB、31 件、構件碰撞 6
+[TOWER] 結果：0 項失敗

@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-02T17:53:06",
+  "items": 319,
+  "front_void_cover": 0.179261862917399,
+  "pond": {
+    "area": 137.44846123457,
+    "water_y": 1.12374072759579,
+    "stream_drop": 0.157688004671234
+  },
+  "elements": {
+    "gk_nobe": 16,
+    "niwamatsu": 5,
+    "tsutsuji": 13,
+    "sakura": 1,
+    "gk_yotsume": 9,
+    "gk_amaochi": 67,
+    "gk_toro": 3,
+    "gk_kei_mid": 4,
+    "momiji": 5,
+    "gk_tobi": 58,
+    "gk_bridge": 1,
+    "gk_kei_tall": 1,
+    "gk_tsukubai": 1,
+    "gk_sodegaki": 1
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "mb": 0.347809791564941,
+    "items": 319,
+    "shapes": 154,
+    "water_y": 1.12374072759579
+  }
+}

@@ -256,7 +256,9 @@ func _init() -> void:
 			abad.append("%s gate.json 缺或雜湊不符" % a.get("id", "?"))
 		else:
 			for k: String in keys:
-				if String(gj["checks"].get(k, {}).get("result", "")) != "PASS":
+				# P9 veg_kit 的 gate.json 寫 perf（已封存不改）；與 tools/build_village_v2_asset_registry.py GATE_ALIAS 同一對應
+				var gk := "perf" if k == "performance" and not gj["checks"].has(k) and gj["checks"].has("perf") else k
+				if String(gj["checks"].get(gk, {}).get("result", "")) != "PASS":
 					abad.append("%s gate.json %s 不是 PASS" % [a.get("id", "?"), k])
 	check("v2_assets %d 件（hero／landmark 11 項、材質庫 4 項）全 PASS、雜湊與 gate.json 一致（問題 %d：%s）" % [
 		reg["v2_assets"].size(), abad.size(), ", ".join(abad.slice(0, 4))], abad.is_empty())

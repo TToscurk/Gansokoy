@@ -1,0 +1,7 @@
+[GC] PASS 場景已掛 Vegetation/GroundcoverP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9
+[GC] PASS MultiMesh 分塊 2464 節點（全部不投影＋visibility range）、碰撞 0（地被は碰撞なし）
+[GC] PASS [全村] 地面 overlay 區塊 396（一般／林緣／溪岸、全部不投影＋visibility range）、art_revision＝P9 R5 Macro Pilot m9（A 南の草地／B 水渠北段の農田→村落交界／C 東北聚落の後院；全村 r5 は三區を譲る；Pilot r10f 凍結；ART_REVIEW 前）
+[GC] PASS [Macro] 地面 overlay 3 區（A／B／C、gc_macro shader、不投影＋visibility range）
+[GC] PASS 永久 build rule：場景中 GroundcoverP9 全部 instance transform 非零（MultiMesh 節點 2464、instance 35769、零矩陣 0 ）
+[GC] INFO GroundcoverP9：instance 22957、植物節點 1407
+[GC] 結果：0 項失敗（scene）

@@ -1,0 +1,53 @@
+[FOREST] 結果：0 項失敗
+✓ P9 R2 forest gate
+[FOREST] negative=hinoki 失敗 5 項
+[FOREST] FAIL 接地：浮空 6 件（最大 0.02 m）、中心埋深 > 1.3 m 0 件（最大 0.83 m）
+[FOREST] FAIL 檜 secondary：檜／針葉 全區 78.0 %（5–15 %）、各林帶 ≤ 15 %（HillCrown 84%/232, NorthE 
+[FOREST] FAIL 視線：村道 62 視點 × 3 目標（山頂社殿, 山頂社殿屋身, 參道鳥居）＋參道 13 視�
+[FOREST] FAIL 天際線層級（村道 主街北望）：主峰最高、西肩 83 %（≤ 88）、東次峰 85 %（65–
+[FOREST] FAIL 天際線層級（入口 南大鳥居北望）：主峰最高、西肩 81 %（≤ 88）、東次峰 87 %�
+[FOREST] negative=uniform 失敗 5 項
+[FOREST] FAIL 接地：浮空 621 件（最大 0.43 m）、中心埋深 > 1.3 m 0 件（最大 0.46 m）
+[FOREST] FAIL 非均勻：林冠 Clark–Evans R = 2.01（規則格 ≈ 2.1；需 ≤ 1.45）、24 m 格密度變異係�
+[FOREST] FAIL 視線：村道 62 視點 × 3 目標（山頂社殿, 山頂社殿屋身, 參道鳥居）＋參道 13 視�
+[FOREST] FAIL 天際線層級（村道 主街北望）：主峰最高、西肩 74 %（≤ 88）、東次峰 100 %（65�
+[FOREST] FAIL 天際線層級（入口 南大鳥居北望）：主峰最高、西肩 72 %（≤ 88）、東次峰 94 %�
+[FOREST] negative=float 失敗 1 項
+[FOREST] FAIL 接地：浮空 1 件（最大 0.42 m）、中心埋深 > 1.3 m 0 件（最大 0.83 m）
+[FOREST] negative=road 失敗 5 項
+[FOREST] FAIL 禁區：8190 件樹幹落點全在林地內（建成區 +4／農田 +3／道路半寬 +3／主河 +7／�
+[FOREST] FAIL 接地：浮空 1 件（最大 23.51 m）、中心埋深 > 1.3 m 0 件（最大 0.83 m）
+[FOREST] FAIL 視線：村道 62 視點 × 3 目標（山頂社殿, 山頂社殿屋身, 參道鳥居）＋參道 13 視�
+[FOREST] FAIL 天際線層級（村道 主街北望）：主峰最高、西肩 70 %（≤ 88）、東次峰 100 %（65�
+[FOREST] FAIL 天際線層級（入口 南大鳥居北望）：主峰最高、西肩 77 %（≤ 88）、東次峰 100 %�
+[FOREST] negative=sightline 失敗 2 項
+[FOREST] FAIL 接地：浮空 1 件（最大 0.27 m）、中心埋深 > 1.3 m 0 件（最大 0.83 m）
+[FOREST] FAIL 視線：村道 62 視點 × 3 目標（山頂社殿, 山頂社殿屋身, 參道鳥居）＋參道 13 視�
+[FREEZE] 結果：0 項失敗
+✓ freeze
+[PROTECT] 結果：0 項失敗
+✓ P1 protect
+[TERRAIN] FAIL 可見三角面 30740996（≤ 6000000）
+[TERRAIN] 結果：1 項失敗
+✗ terrain（exit 1）
+[SL] 結果：0 項失敗
+✓ sightlines
+[ASSET] FAIL V2 場景依賴 1266 個全在白名單內（違規 1：res://shaders/sky_daynight.gdshader）
+[ASSET] 結果：1 項失敗
+✗ P5 asset reset（白名單）（exit 1）
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，3358 ms）——結論只適用於目前涵蓋範圍
+[PLACE] OK clean：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位）
+[PLACE] OK float：鈴奈庵抬高 0.3 m → 鈴奈庵 FAIL（FLOATING） → 鈴奈庵 FAIL FLOATING 最大懸空 0.260 m {"BackStep":0.186,"Chest":0.23,"Counter":0.26,"Planter":0.234,"Step":0.216}；INSUFFICIENT_SUPPORT 51%（3336 ms）
+[PLACE] OK sink：鈴奈庵下沉 0.8 m → 鈴奈庵 FAIL（TERRAIN_PENETRATION） → 鈴奈庵 FAIL TERRAIN_PENETRATION 地形高出基準面 0.795 m；SINK 最淺埋深 0.84 m（整棟下沉？）（3274 ms）
+[PLACE] OK clash：霧雨店推進鈴奈庵側面 6 m → 兩者 FAIL（OBJECT_PENETRATION） → 鈴奈庵 FAIL／霧雨店 FAIL OBJECT_PENETRATION 與 LANDMARK_SUZUNAAN/Hero 穿插 3.210 m（3225 ms）
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 22055 ms）
+✓ placement audit＋selftest
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.05 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+[FARM] 結果：0 項失敗（seal）
+✓ P8 seal
+[ZONE] result: 0 failed
+✓ P8 25 段實走＋TPS 相機
+[VEG] 結果：0 項失敗（seal）
+✓ P9 R1 seal
+子集失敗：2

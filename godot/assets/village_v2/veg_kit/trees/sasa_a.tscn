@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD0.res" id="1_5dfkf"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD1.res" id="2_37ts5"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/sasa_a_LOD2.res" id="3_8tppg"]
+
+[node name="sasa_a" type="Node3D" unique_id=1033901922]
+metadata/veg_id = "sasa_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=1404569058]
+visibility_range_end = 20.601624
+instance_shader_parameters/lod_band = Vector4(0, 15, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("1_5dfkf")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=1635958177]
+visibility_range_begin = 9.3983755
+visibility_range_end = 41.201626
+instance_shader_parameters/lod_band = Vector4(15, 35, 3, 4.2)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("2_37ts5")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=739767408]
+visibility_range_begin = 28.798376
+visibility_range_end = 70.0
+instance_shader_parameters/lod_band = Vector4(35, 0, 4.2, 0)
+instance_shader_parameters/lod_ref = Vector3(0.016773105, 0.46127957, 0.017781734)
+mesh = ExtResource("3_8tppg")

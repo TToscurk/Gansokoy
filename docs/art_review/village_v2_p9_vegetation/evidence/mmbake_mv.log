@@ -1,0 +1,13 @@
+[MMBAKE] PASS rendering display（Windows；headless 讀不到 MultiMesh 資料）
+[MMBAKE] PASS 反向：含 1 個零矩陣的 MultiMesh → audit 數到 1（必須 1）且判定不通過
+[MMBAKE] PASS 反向：無 MultiMesh 的節點樹不得判定通過
+[MMBAKE] INFO bamboo_p9.scn：MultiMesh 節點 459、instance 6369、零矩陣 0
+[MMBAKE] PASS bamboo_p9.scn 的 MultiMesh instance transform 全部非零（零矩陣 0 / 6369）
+[MMBAKE] INFO farmland_p8.scn：MultiMesh 節點 1844、instance 824095、零矩陣 0
+[MMBAKE] PASS farmland_p8.scn 的 MultiMesh instance transform 全部非零（零矩陣 0 / 824095）
+[MMBAKE] INFO forest_p9.scn：MultiMesh 節點 2423、instance 13179、零矩陣 0
+[MMBAKE] PASS forest_p9.scn 的 MultiMesh instance transform 全部非零（零矩陣 0 / 13179）
+[MMBAKE] INFO groundcover_p9.scn：MultiMesh 節點 1922、instance 23946、零矩陣 0
+[MMBAKE] PASS groundcover_p9.scn 的 MultiMesh instance transform 全部非零（零矩陣 0 / 23946）
+[MMBAKE] PASS 非空：場景 MultiMesh 節點 6648、instance 867589（> 0）
+[MMBAKE] 結果：0 項失敗

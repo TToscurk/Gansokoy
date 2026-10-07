@@ -1,0 +1,6 @@
+[SCHOOL] PASS 場景已掛 Vegetation/SchoolYardP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9"]
+[SCHOOL] PASS 場景接地（79／79 件 origin 向下射線只認地形；踏石上草履認踏石）：浮 > 0.06 m 0（最大 0.010）
+[SCHOOL] PASS 碰撞：構件箱／樹幹 vs 寺子屋本體・Hero 小物／鄰棟／其他植被 接觸 0
+[SCHOOL] PASS 實走：入口＋前庭＋南側院＋北側通路 膠囊 145 點被擋 0 
+[SCHOOL] INFO SchoolYardP9：79 件、MeshInstance 191、構件碰撞 11
+[SCHOOL] 結果：0 項失敗（scene）

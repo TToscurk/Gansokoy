@@ -1,0 +1,16 @@
+[WATER] INFO 規劃 213 件（42973 ms）
+[WATER] PASS 接地：213 件（御神木板根、濕石半埋、植物貼地、樹／構件環最低）：浮／偏 0（最大 0.00 m）、過深 0
+[WATER] PASS 不穿：樹幹／構件 vs Hero 碰撞・橋・建物・農地・河岸石積：違規 0 
+[WATER] PASS 動線淨空：道路／水車 walkway＋入口／龍神像參拜道＋walkway 內障礙 0 
+[WATER] PASS Hero 淨空：水車 r 6 m 內樹／構件 0、植物 ≥ 4.5 m；龍神像 r 12 m 內樹 0：違規 0 
+[WATER] PASS 視線：10 機位 → 龍神像／水車 3 點被新樹擋 0 
+[WATER] PASS 河岸植生：各 site 株數 { "dragon": 74, "ww1": 36, "ww2": 38, "ww3": 38 }（≥ 4，不足 []）、深水 0、大蘆連串（1.6 m 內 ≥ 2 鄰）0／7＝0 %（≤ 15 %，不成連續蘆壁）
+[WATER] PASS 植被語彙：高木 6（非水邊系 0 []）、柳 5（≥ 4）、御神木 1（≤ 1）
+[WATER] PASS 元素：齊備
+[WATER] PASS 注連繩：繩徑 0.36 m（≥ 0.30）、繩 96 點到樟樹皮面淨距 0.020–0.064 m（−0.03–0.15）、離根元地面 2.22 m（1.2–2.4）
+[WATER] PASS 作業場：米俵・石臼 7 件（原寸、水際 ≥ 2.5 m、柳樹冠外、1.2 m 內無植物、離水車 ≥ 7 m、俵↔臼 ≥ 2.0 m）：違規 0 
+[WATER] INFO 植物 186、高木 6、構件 10
+[WATER] PASS pack overlay
+[WATER] PASS save res://maps/village_v2/gen/waterside_p9.scn
+[WATER] INFO overlay 0.38 MB、213 件、構件碰撞 10
+[WATER] 結果：0 項失敗

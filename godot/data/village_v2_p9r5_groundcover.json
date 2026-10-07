@@ -1,0 +1,397 @@
+{
+  "date": "2026-10-05T13:55:02",
+  "items": 3051,
+  "nodes": 130,
+  "stats": {
+    "lawn/fine": 698,
+    "lawn/short": 465,
+    "lawn/dry": 134,
+    "lawn/stem": 59,
+    "lawn/flower_v": 8,
+    "lawn/rosette": 320,
+    "lawn/moss": 135,
+    "lawn/tallweed": 209,
+    "lawn/stone": 54,
+    "street/rosette": 153,
+    "street/tallweed": 119,
+    "street/fine": 198,
+    "street/stone": 27,
+    "street/moss": 58,
+    "street/short": 10,
+    "street/dry": 4,
+    "forest/stem": 46,
+    "forest/fine": 51,
+    "forest/short": 27,
+    "forest/dry": 16,
+    "forest/litter": 96,
+    "forest/root": 104,
+    "stream/pebble": 35,
+    "stream/dry": 2,
+    "stream/stem": 5,
+    "stream/fine": 15,
+    "stream/short": 3,
+    "forest/sasa_a": 26,
+    "forest/fern_a": 29,
+    "forest/shrub_a": 5,
+    "stream/wk_reed_s": 15,
+    "stream/wk_reed": 19,
+    "stream/wk_sedge": 29,
+    "stream/wk_iris": 7,
+    "v_forest/litter": 338,
+    "v_forest/stem": 729,
+    "v_forest/fine": 1133,
+    "v_forest/short": 583,
+    "v_forest/dry": 347,
+    "v_stream/pebble": 313,
+    "v_stream/fine": 197,
+    "v_stream/dry": 78,
+    "v_stream/short": 160,
+    "v_stream/stem": 83,
+    "v_forest/fern_a": 395,
+    "v_forest/sasa_a": 469,
+    "v_forest/shrub_a": 124,
+    "v_stream/wk_reed": 44,
+    "v_stream/wk_reed_s": 24,
+    "v_stream/wk_sedge": 184,
+    "v_stream/wk_iris": 53,
+    "m_A/rough": 482,
+    "m_A/drip": 10,
+    "m_A/pathedge": 49,
+    "m_B/drip": 15,
+    "m_B/pathedge": 15,
+    "m_B/rough": 642,
+    "m_C/drip": 93,
+    "m_C/invade": 105,
+    "m_C/rough": 140,
+    "mv_meadow/rough": 1891,
+    "mv_meadow/flower": 578,
+    "mv_wild/rough": 948,
+    "mv_blank/rough": 1794,
+    "mv_meadow/pathedge": 22,
+    "mv_meadow/drip": 34,
+    "mv_meadow/roadedge": 11,
+    "mv_meadow/invade": 20,
+    "mv_wild/drip": 44,
+    "mv_walk/drip": 39,
+    "mv_blank/drip": 175,
+    "mv_blank/invade": 228,
+    "mv_wild/invade": 42,
+    "mv_walk/pathedge": 59,
+    "mv_walk/roadedge": 16,
+    "mv_work/invade": 204,
+    "mv_work/drip": 136,
+    "mv_walk/invade": 45,
+    "mv_walk/rough": 57,
+    "mv_work/rough": 326,
+    "mv_blank/roadedge": 32,
+    "mv_work/pathedge": 2,
+    "mv_wild/pathedge": 5,
+    "mv_blank/pathedge": 12,
+    "mv_work/roadedge": 14
+  },
+  "lawn": {
+    "coverage": 0.378176382660688,
+    "nn_cv": 0.882523886937519
+  },
+  "wallfoot": {
+    "worst": 0.5375,
+    "buildings": 20
+  },
+  "forest": {
+    "density": [
+      0.000664819944598338,
+      0.0286480310130912,
+      0.0407937462535426
+    ],
+    "shrub_ratio": [
+      0.0,
+      0.0975962703914732,
+      0.953900799562626
+    ],
+    "band_area": [
+      361.0,
+      622.0,
+      787.0
+    ]
+  },
+  "roots": {
+    "edge_trees": 17,
+    "ring_ok": 17
+  },
+  "forest_floor": {
+    "cover": 0.977916666666667,
+    "spill_mean": 0.95652173913038,
+    "spill_sd": 0.800991823741822,
+    "cluster": 0.816666666666667
+  },
+  "stream": {
+    "mean_d": {
+      "reed": 2.49224687996473,
+      "bank": 3.5882355441489,
+      "tuft": 6.27629375757601
+    },
+    "colonies": [
+      7,
+      7,
+      8,
+      6,
+      6
+    ]
+  },
+  "stream_ground": {
+    "continuity": 0.883292383292383,
+    "order": [
+      0.495703826723152,
+      1.55697995727503,
+      3.45677555410761
+    ],
+    "mud_edge_sd": 0.752560987932204
+  },
+  "stream_core_fade": {
+    "deep": 0,
+    "on_p7": 0,
+    "seam_cover": 1.0
+  },
+  "edge": {
+    "ratio": 0.375,
+    "boundary_m": 112
+  },
+  "dirt_yard": {
+    "cover": 0.0937302089930336,
+    "green": 0.0918302723242559,
+    "tuft_edge_d": 1.24645007657301,
+    "cell_edge_d": 3.47259440306548
+  },
+  "village": {
+    "items": 3961,
+    "nodes": 1293,
+    "forest": {
+      "density": [
+        0.00192714453584019,
+        0.0244745756911397,
+        0.0377481505091277
+      ],
+      "shrub_ratio": [
+        0.0,
+        0.059087276837414,
+        0.77940467507005
+      ],
+      "band_area": [
+        5106.0,
+        7806.0,
+        17550.0
+      ]
+    },
+    "forest_floor": {
+      "cover": 0.957446808510638,
+      "cluster": 0.878542510121457,
+      "under": 988
+    },
+    "water": {
+      "reeds": 68,
+      "colonies": 11,
+      "cover": 0.0271412447597548
+    },
+    "core_fade": {
+      "deep": 0,
+      "on_p7": 0,
+      "seam": 0.775783174938402
+    }
+  },
+  "macro": {
+    "items": 1551,
+    "scale": {
+      "painted_m2": 2772.5,
+      "big_ratio": 0.875924256086564,
+      "tiny_ratio": 0.0335437330928765,
+      "big_patches": {
+        "A": 14,
+        "B": 15,
+        "C": 9
+      },
+      "by_class": {
+        "A.use": [
+          324.25,
+          310.0,
+          3.0
+        ],
+        "A.dry": [
+          330.25,
+          328.75,
+          0.0
+        ],
+        "A.lush": [
+          127.75,
+          86.75,
+          5.75
+        ],
+        "A.worn": [
+          129.25,
+          50.75,
+          22.5
+        ],
+        "B.use": [
+          307.25,
+          265.75,
+          8.75
+        ],
+        "B.dry": [
+          360.0,
+          359.0,
+          1.0
+        ],
+        "B.lush": [
+          260.25,
+          220.0,
+          13.25
+        ],
+        "B.worn": [
+          43.25,
+          20.0,
+          6.0
+        ],
+        "C.use": [
+          794.5,
+          775.75,
+          7.25
+        ],
+        "C.lush": [
+          95.75,
+          11.75,
+          25.5
+        ]
+      }
+    },
+    "blank_A": {
+      "ratio": 0.502055562476641,
+      "largest_m2": 620.0
+    },
+    "B_seq": {
+      "ditch_mean": 0.691822653105136,
+      "ditch_ratio": 1.0,
+      "yard_work_m2": 22.5,
+      "canal_path_m2": 27.5,
+      "doors": 8,
+      "doors_ok": 8
+    },
+    "C_wall": {
+      "back_walls": 11,
+      "foot_mean": 0.550706145706146,
+      "drip_mean": 0.879520202020202,
+      "ring_buildings": 0,
+      "path_m2": 264.75
+    }
+  },
+  "mvillage": {
+    "items": 6734,
+    "m9": [
+      "8970f376f036c24284897b290e0df4e8c335655b2a0cd01e57dfb27ba98e9dd4",
+      "3197fc9c200b9ffed53eed492253a8f85f0621b0d456b9de82ea9e54f0288425"
+    ],
+    "scale": {
+      "painted_m2": 22300.25,
+      "big_ratio": 0.92560621517696,
+      "tiny_ratio": 0.0137890830820282,
+      "by_class": {
+        "use": [
+          16204.25,
+          15748.75,
+          60.0
+        ],
+        "dry": [
+          2104.5,
+          2050.0,
+          6.25
+        ],
+        "lush": [
+          3232.5,
+          2451.75,
+          167.25
+        ],
+        "worn": [
+          759.0,
+          390.75,
+          74.0
+        ]
+      }
+    },
+    "classes": {
+      "area": {
+        "2": 6830.5,
+        "3": 7104.75,
+        "1": 5708.5,
+        "4": 2622.25,
+        "0": 2230.25
+      },
+      "n": {
+        "2": 12,
+        "3": 13,
+        "1": 9,
+        "4": 5,
+        "0": 5
+      },
+      "weak": [
+        "blank#16(blank 92%,lang 0)",
+        "blank#23(blank 94%,lang 0)",
+        "meadow#17(blank 95%,lang 0)",
+        "blank#43(blank 98%,lang 0)",
+        "blank#3(blank 96%,lang 0)",
+        "wild#6(blank 90%,lang 0)"
+      ]
+    },
+    "blank": {
+      "ratio": 0.442183934944129,
+      "largest_m2": 1569.5,
+      "lawn_m2": 17093.0
+    },
+    "tall": {
+      "grass": 5728,
+      "tiny": 470,
+      "tall": 5014,
+      "interior_tall": 0
+    },
+    "farm_edge": {
+      "samples": 256,
+      "direct": 167,
+      "canal": 89,
+      "strip": 0.77734375,
+      "strip_w_mean": 1.53015075376884,
+      "strip_w_cv": 0.352941176470588,
+      "near_houses": 57,
+      "track": 0.43859649122807,
+      "track_pos_mean": 4.78,
+      "sparse": 0.54296875
+    },
+    "backyard": {
+      "back_walls": 136,
+      "eave": 0.601678332567711,
+      "drip": 0.806464872788111,
+      "ring": 0,
+      "doors": 131,
+      "doors_conn": 0.931297709923664
+    },
+    "road": {
+      "deep": 0,
+      "edge_grass": 0,
+      "edge_pts": 4746,
+      "x_ok": 21,
+      "x_all": 21,
+      "shoulder_mean": 2.62785388127854,
+      "shoulder_cv": 0.756958922828265
+    }
+  },
+  "surface": {
+    "all": 16616,
+    "yard": 984,
+    "bad": 0
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/groundcover_p9.scn",
+    "mb": 12.1842908859253,
+    "items": 15196,
+    "nodes": 1423,
+    "multimesh_nodes": 1920,
+    "village_ground_chunks": 178,
+    "village_ground_verts": 154083
+  }
+}

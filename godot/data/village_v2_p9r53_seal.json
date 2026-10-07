@@ -1,0 +1,107 @@
+{
+ "phase": "P9 R5-3 Upright Grass / Meadow Layer（Pilot p8 → 全村 v5c → targeted rework r6c＋wind review）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-05",
+ "scope": "Vegetation/MeadowP9 overlay（gen/meadow_p9.scn）＋meadow_grass.gdshader；R5 Macro Ground（groundcover_p9.scn）は R5 v1 封存のまま不重畫。P9 は未結束（次＝R5-4 Existing Asset Environment Pass `Props/EnvironmentP9`；R5-4 ART_APPROVED 後に P9 final seal／closure）。",
+ "wind_strength": "0.7",
+ "wind_note": "P9 最終値 0.7（樹・竹 wind 0 のため 1.0 は動態差が大きすぎ、0.6 は保守的）。将来の全域風系統で樹／竹／草を統一する際に再バランス。",
+ "renderer": "Forward+",
+ "counts": {
+  "near_instances": 114105,
+  "mid_instances": 39667,
+  "multimesh_nodes": 1549,
+  "zero_matrices": 0,
+  "plan_gate_checks": 13,
+  "negatives": 12
+ },
+ "non_blocking": [
+  "部分近景偏稀（A_meadow_1_near・F_slope_2_near・D_farm_1_near・D_farm_2_mid）",
+  "G_yard_2_near の斜めの草列",
+  "叢の形の繰り返し（Kit 由来）"
+ ],
+ "frozen": {
+  "godot/tools/village_v2_meadow_lib.gd": "91b1a37812bf10ead4d7c4d62e15ccbdb9e0f717501d387668f1baaf5037478a",
+  "godot/tools/verify_village_v2_meadow.gd": "fd32a18babaa615a7e14971cd2b17c68397494e213c763e6292baf70160feb32",
+  "godot/assets/village_v2/meadow/meadow_grass.gdshader": "e3b9e0c18c90fb652de128b3404245d68bba2d3ee4d844002bec8da19a6d0e99",
+  "godot/maps/village_v2/gen/meadow_p9.scn": "4fca207ec740ae0b36d8119a68394d6cf5c5afa627850c32c99672e73c428def",
+  "godot/tools/shot_village_v2_meadow_views.json": "2267334518ec4674c2a1157f79a426fd9482e2fa262d4ad6925f6bcabfd9beac",
+  "godot/tools/shot_village_v2_meadow_wind.gd": "4fc0abb633f63d0e66eb51939a70ba7254630fbe6ba4d344e6de9046b3abf252",
+  "godot/data/village_v2_p9r53_meadow.json": "cf11d068b689263db487d3d986c518a11fd87923dc3ba5969abe3265923a80f4"
+ },
+ "art_review_images": {
+  "r5/r53_pilot/r53_p8_blind_ab.json": "2711aace107beb1ed3cbff145c8762692bf58979a6034fb6cd5a5720306066fa",
+  "r5/r53_pilot/r53_p8_edge.jpg": "ab1c1246af3832fde8ee431ca5505f61bf70a32225fb8cbaca24ae4d38ef8e44",
+  "r5/r53_pilot/r53_p8_farm.jpg": "388629e99c9bf1d9e29c9ee8ad8caa7c7b4926f7e93f56b3bcfbecc22d748e24",
+  "r5/r53_pilot/r53_p8_forest.jpg": "8357d4c893cd645da863743c8c005d50e4db280a5a7aa129da2bb26dd7bbab80",
+  "r5/r53_pilot/r53_p8_meadow.jpg": "b52c0197471294a29c4b0dbb7d64e7a9a7ecbc683c32779d9f487e0df3312783",
+  "r5/r53_village/r53_cmp_v5c_r6c_A_meadow.jpg": "030a4349cfed23d0d57d669d88c1913f5d06478e7e5796dc55e3e534306f7a0d",
+  "r5/r53_village/r53_cmp_v5c_r6c_B_edge.jpg": "64f7979decda7a5ce8b92fca2f98d3e1ceeee601dbf82977317e20e4903fd3ef",
+  "r5/r53_village/r53_cmp_v5c_r6c_C_forest.jpg": "cffb14e891066e6672e30ab89aee679c4ce1ca9990aa98b349b6fe94a966c9b3",
+  "r5/r53_village/r53_cmp_v5c_r6c_D_farm.jpg": "3fb8c598960c380170543adf3bf4592a4c706fbf90b4ad14e4068f2416aea2fd",
+  "r5/r53_village/r53_cmp_v5c_r6c_E_stream.jpg": "b2ed09eb6c5a942f39caeff4baba96a7581814b435ea587ed1e69ca2ee071c88",
+  "r5/r53_village/r53_cmp_v5c_r6c_F_slope.jpg": "9477863263784a28ef062d67bf7b4533a040f377bbb0bbb12db944cf1c919241",
+  "r5/r53_village/r53_cmp_v5c_r6c_G_yard.jpg": "a98641a972dda9aa1f6bc6d75d3c7752f8b240566a55eecde08987b831686639",
+  "r5/r53_village/r53_cmp_v5c_r6c_H_open.jpg": "426f21c8b928eece6d86db1db71768d8d738572d1211e946bb564d5152dee413",
+  "r5/r53_village/r53_r6c_A_meadow.jpg": "079aed0842e7cace8542a6a45619ae9d3f3d57167f92c299e1300cd8b4878c95",
+  "r5/r53_village/r53_r6c_B_edge.jpg": "9afacce9175557d819274ad26f853fb34e02a30f46ac34d7a62e7b68e214da04",
+  "r5/r53_village/r53_r6c_C_forest.jpg": "79f96fda72d0b7fadc32433e503a29004019b2c83b5eca2e9403e5d31493d2e6",
+  "r5/r53_village/r53_r6c_D_farm.jpg": "b8c8a2ec55a71c39079f1229e3b9679b3b3e7813b38b3b9eb739a06daeebe9c4",
+  "r5/r53_village/r53_r6c_E_stream.jpg": "06eb96fc35720d9384d502cdd8cc5600375b761f28c75ef0df23fb48bbcf6a40",
+  "r5/r53_village/r53_r6c_F_slope.jpg": "0343fa88525dc3f43d53ce594c4fe273878050d680576c24b9321c510e8a70b1",
+  "r5/r53_village/r53_r6c_G_yard.jpg": "c473eedfe7291df247540813220805bdcdd95bf402fb812c0dc568c883a60c61",
+  "r5/r53_village/r53_r6c_H_open.jpg": "d9f3f3e77c3f1d690877a2e394abf9ee8c82b49e7b6d8cae9bedb26f7c805539",
+  "r5/r53_village/wind/A_meadow_2_near_s0.6.gif": "b176162a948d6f9dee298bbf04fe57b93470e25dbb27181de2d3d0c541151162",
+  "r5/r53_village/wind/A_meadow_2_near_s0.7.gif": "bfaa2cded0e345327df0b4d16f94702ce7b7ab3b6616ffe058432590bd395084",
+  "r5/r53_village/wind/A_meadow_2_near_s1.0.gif": "4c509e6dd92774813e30b8f8713547a9ddc8dd9ad17e0c8099aa0961af1ef1d0",
+  "r5/r53_village/wind/B_edge_1_near_s0.6.gif": "15138d4d266da029c97adf3b36b41de2a8e004f4e6a82a140f71d8d493eda012",
+  "r5/r53_village/wind/B_edge_1_near_s0.7.gif": "b4766b3948928c0b75872748a1f32948775cbeccde19f34e6c1beba902900f31",
+  "r5/r53_village/wind/B_edge_1_near_s1.0.gif": "9e6769bbeeae2372c689c560a72ff3bef8dbb5abb1fce75ecb769f9a08894e78"
+ },
+ "evidence": {
+  "evidence/meadow_r6c_build.log": "1f8425be9a686ad5b289b5afd6c9bd8fd3d852090067d8ecd61b29eddc1a10ac",
+  "evidence/meadow_r6c_cost.log": "7ef39d9306be978d0050cfc464401b4906c121efbd187371f111a9686b226cf2",
+  "evidence/meadow_r6c_mmbake.log": "54b6991faa4129703b17fd7aaceb54080def3bd0a63a6783ee89b1195d295a68",
+  "evidence/meadow_r6c_negatives.log": "f0427fd0f74490e10fed40295ad114b117fc4baefe1e7779e5c20d0b5865cccb",
+  "evidence/meadow_r6c_p10_coexist.log": "1ff05215b53471f8047ba34995ef1e044a3581b452c06fe3dcac5c49be67fea1",
+  "evidence/meadow_r6c_plan.log": "4319b9408c0535461e950f253a2ff4cd21308eeb7d498e19a4a3dc2e6860beda",
+  "evidence/meadow_r6c_scene.log": "9d8ffce2a4d3aa9a7cfe17c61cf936ba9a8626bb5fee3b87b85dc9db42854391",
+  "evidence/meadow_r6c_sealed_regression.log": "3a8beee56e6952faa12a14d3c8ae7ebde5cfd10dad0d3390bf45d2d77976d9e8",
+  "evidence/meadow_r6c_wind_r6_s0.6.json": "fc26043782ac7d2aaf5bd98fac7daf303d4ac06983ada92c1d8b583ae9f0a1d3",
+  "evidence/meadow_r6c_wind_r6_s0.7.json": "e10518ef3ae9b888408ec73f2d799bd82ba1a4f08b3db9c66d3cf2440e399570",
+  "evidence/meadow_r6c_wind_r6_s1.0.json": "7dec81dc94f2e22ae5b065aea8c06d1dc5aa2541a461e3c9981a46ff6e46a778",
+  "evidence/meadow_r6c_wind_v5c_formula_s1.0.json": "7409eb112b3c99e6960a133a985f779bac001dddb1a68e0261c8d9724e240e65"
+ },
+ "reseal_history": [
+  {
+   "event": "RESEALED_AFTER_EQUIVALENT_REBAKE",
+   "at": "2026-10-05",
+   "detected": "R5-4 n1 回歸で `verify_village_v2_meadow.gd --seal` が meadow_p9.scn／build 報告の雜湊不一致を検出",
+   "rebake_time": "2026-10-05 02:45:17（封存 02:39:47 の後）",
+   "actor": "並行行程の `verify_village_v2_meadow.gd -- --build`（當時の .hermes.md「P10 變動後は meadow を重烘」規則に従った P10 側と推定、未確認）",
+   "original_hash": {
+    "godot/maps/village_v2/gen/meadow_p9.scn": "84443d5508d488f863aa6c33518ef5f75ed7dce91c2e390d73d6282f59f8af25",
+    "godot/data/village_v2_p9r53_meadow.json": "31239ef9c9b9806370ad6d7e597059dc1c6841744a6fbd35bfbbc867678102e8"
+   },
+   "rebaked_hash": {
+    "godot/maps/village_v2/gen/meadow_p9.scn": "4fca207ec740ae0b36d8119a68394d6cf5c5afa627850c32c99672e73c428def",
+    "godot/data/village_v2_p9r53_meadow.json": "cf11d068b689263db487d3d986c518a11fd87923dc3ba5969abe3265923a80f4"
+   },
+   "verifier_hash_change": {
+    "before": "d2ec6f7a99ea2462b91e7dfbdc883ecf74bc5bb1cdec78abc6ff59c3dda04c45",
+    "after": "fd32a18babaa615a7e14971cd2b17c68397494e213c763e6292baf70160feb32",
+    "why": "再發防止の build 拒否を追加"
+   },
+   "same_frozen_generator": {
+    "godot/tools/village_v2_meadow_lib.gd": "91b1a37812bf10ead4d7c4d62e15ccbdb9e0f717501d387668f1baaf5037478a",
+    "godot/assets/village_v2/meadow/meadow_grass.gdshader": "e3b9e0c18c90fb652de128b3404245d68bba2d3ee4d844002bec8da19a6d0e99"
+   },
+   "same_near_count": 114105,
+   "same_mid_count": 39667,
+   "independent_check": "R5-4 gate の同 seed 再計算 114,105 株＝封存近級數",
+   "reason": "封存後の並行行程による等價重烘（生成器・shader 不變、株數一致）",
+   "prevention_rule": "verify_village_v2_meadow.gd は R5-3 封存中 --build を拒否（MDW_ALLOW_REBAKE=1 は使用者の明確な授權時のみ）；P10 が Props を更新しても MeadowP9 を自動重建しない（.hermes.md）",
+   "user_ruling": "2026-10-05 使用者：受け入れ。P9 closure 時に RESEALED_AFTER_EQUIVALENT_REBAKE として記録、MeadowP9 は再作成しない"
+  }
+ ]
+}

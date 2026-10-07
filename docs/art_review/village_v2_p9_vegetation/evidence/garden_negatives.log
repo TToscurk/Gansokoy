@@ -1,0 +1,7 @@
+[GARDEN] INFO 規劃 335 件（294 ms）、池面 y 1.12
+[GARDEN] PASS 反向 float → 「接地」必須 FAIL（失敗項 1）
+[GARDEN] PASS 反向 clutter → 「留白」必須 FAIL（失敗項 1）
+[GARDEN] PASS 反向 axis → 「主軸」必須 FAIL（失敗項 1）
+[GARDEN] PASS 反向 pond → 「池泉」必須 FAIL（失敗項 1）
+[GARDEN] PASS 反向 wall → 「邊界」必須 FAIL（失敗項 1）
+[GARDEN] 結果：0 項失敗（negatives）

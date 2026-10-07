@@ -1,0 +1,57 @@
+{
+ "phase": "P9 R4-5 Hero Surroundings：火見櫓周邊（Fire Lookout Surroundings）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-03",
+ "scope": "tower_kit（用水桶積み／予備梯子／道具掛け／縄束）＋Vegetation/TowerYardP9 overlay（gen/tower_yard_p9.scn）；火見櫓 Hero 本體（P5 R5）未改",
+ "note": "使用者裁定：消防工具只在近中距可辨識屬合理層級，不要求放大。只有真正 regression 才重開 R4-5。",
+ "renderer": "Forward+",
+ "counts": {
+  "placements": 31,
+  "kit_modules": 8,
+  "kit_tris": 3412,
+  "gate_plan": "7/7",
+  "negatives": "6/6",
+  "scene": "4/4"
+ },
+ "non_blocking": [
+  "俯視巡視路方框感"
+ ],
+ "deferred_to_p9_r5": [
+  "火見櫓周邊空草地（groundcover／低層植被過渡）"
+ ],
+ "visual_debt_non_blocking": [
+  "火見櫓本體偏黑",
+  "X 撐過密",
+  "半鐘遠距辨識度——不重開 P5；待 P13 全域 lighting 完成後再判斷是否需 asset polish"
+ ],
+ "frozen": {
+  "godot/tools/village_v2_tower_yard_lib.gd": "7283af9a6ca31902305ee88bb785e08cd2cb88a69344f1b4abd4d11b2d70069d",
+  "godot/tools/verify_village_v2_tower_yard.gd": "0bd13cde2ecaa62a17795ab87796890ccb3091adeb5e932af84a02515f85c27e",
+  "godot/assets/blender/village_v2/build_tower_kit.py": "1f96f432764a03a0321775142c8844b99edd9d0122c1f6c95b2377c5ccfdcc36",
+  "godot/maps/village_v2/gen/tower_yard_p9.scn": "3fd60008e956e6deb4d464a0544cc14f553691a0c9cecd36251e23e5851f1fcb",
+  "godot/data/village_v2_p9r45_tower.json": "b5807e0a7d82a9018e041bc49d68e06861cae51ac2a6ee6dcd3383a513f3acbf",
+  "godot/assets/village_v2/tower_kit/mesh/tk_ladder.res": "563f2b3f01986d50386c7b7f736e99a9a32db3db42740440c6547cb16860066c",
+  "godot/assets/village_v2/tower_kit/mesh/tk_ladder_l1.res": "45b1503c085f8902411d1bdfbeb553a6406d78e3807afc32adc8b5da43543552",
+  "godot/assets/village_v2/tower_kit/mesh/tk_okeyama.res": "4fc62ac3e5567dfb931bbdfa69f62e1840a1008e33f1eca1f34e73292d70c0dd",
+  "godot/assets/village_v2/tower_kit/mesh/tk_okeyama_l1.res": "3033515c234786d7006c771845941e14fe1ab60318e6dfa14c31ef73e78be03c",
+  "godot/assets/village_v2/tower_kit/mesh/tk_rack.res": "364ea0d04fff0b6913e286857f9ff61a97b2197c92462551b45ffc5a67573121",
+  "godot/assets/village_v2/tower_kit/mesh/tk_rack_l1.res": "f73ad93a47a62da88d1d3103cfbe94b4943205ffb8ee6e58e54fd71a224d2ba3",
+  "godot/assets/village_v2/tower_kit/mesh/tk_rope.res": "0e8a27986c77bacdb003e9dc5def5fddecb9040ca690070d4f4522f7e3c06281",
+  "godot/assets/village_v2/tower_kit/mesh/tk_rope_l1.res": "adfebd736658feaf4d48f251e09823e778478a0e7f28c0273082ae7263f0c408",
+  "godot/assets/village_v2/tower_kit/src/modules_blender.json": "6f7b4d5d85cd2a429199fbfb609b85f9bfa10f82cba51ef037ec479a788e610b",
+  "godot/assets/village_v2/tower_kit/src/tower_kit.glb": "ea8c7bc8af1d35e3b010813ce6023767f75167eede41343ff05c326818efca50",
+  "godot/assets/village_v2/tower_kit/src/tower_kit.glb.import": "33cd2a79ee33da95c4493d327963469316e7234a994cccf05a315158ea0fa689",
+  "godot/assets/village_v2/tower_kit/tower_kit_manifest.json": "dd3a40c07e677f656aa9f0bb5b04f423a4183255082ca19da737dc1ab085ad91"
+ },
+ "art_review_images": {
+  "r45/r45_sheet_approach.png": "7f58f81b3fbccd8ac6d0dcfe2c23be762cca4ab957cb64f6f2e586f97061ade0",
+  "r45/r45_sheet_base.png": "ca1e968de2879fee1e7242d45662aa3a11a2646154ddf0f3e4528a2c026bb8c1",
+  "r45/r45_ground_ab.png": "651b3dde6d4b5512823df77134f95321bb8f6e9c69a5556436a3e1b55e6f5c75"
+ },
+ "evidence": {
+  "evidence/tower_gate.log": "d8932d10cb85cf07a3577128ee22814c7e2bd029dd68aa4dea02138e91f46670",
+  "evidence/tower_negatives.log": "6b669cf2fd14358432ded84cfbb2216c8dfec90423c1f3e42f821038a446b80a",
+  "evidence/tower_scene.log": "03e73b1528865422231481366b9046358b2e48464e4254b4daecc71580d59011"
+ }
+}

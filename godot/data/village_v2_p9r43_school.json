@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-02T22:23:51",
+  "items": 79,
+  "yard_cover": 0.0,
+  "elements": {
+    "enoki_a": 1,
+    "keyaki_a": 1,
+    "sakura_somei": 1,
+    "momiji_a": 1,
+    "momiji_c": 1,
+    "young_broad_a": 1,
+    "young_broad_b": 1,
+    "konara_b": 1,
+    "fern_a": 6,
+    "shrub_a": 5,
+    "sasa_a": 3,
+    "tsutsuji_a": 2,
+    "sk_getabako": 1,
+    "sk_zori": 3,
+    "sk_teoke": 2,
+    "sk_fuda": 1,
+    "sk_toban": 1,
+    "sk_bench": 1,
+    "sk_box": 1,
+    "sk_hanshi": 1,
+    "sk_temari": 1,
+    "sk_hoop": 1,
+    "sk_ishikeri": 1,
+    "sk_tensui": 1,
+    "sk_woodpile": 1,
+    "gk_amaochi": 39
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/school_yard_p9.scn",
+    "mb": 0.166655540466309,
+    "items": 79,
+    "shapes": 11
+  }
+}

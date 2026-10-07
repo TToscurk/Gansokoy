@@ -1,0 +1,78 @@
+{
+  "phase": "P9 R3 Bamboo／Village Edge（竹 Kit bamboo_kit＋西林／村緣竹林 BambooP9 overlay）",
+  "status": "ART_APPROVED",
+  "approved_by": "user",
+  "approved_at": "2026-10-02",
+  "scope": {
+    "kit": "竹 Kit 資產本體 ART_APPROVED（2026-10-02）：9 變體（真竹成竹／孟宗竹／淡竹／若竹／傾き竹／枯竹／折れ竹＋筍＋竹の落葉），Asset Gate 11/11、7 反向",
+    "placement": "西林 A 入口竹林／B 溪畔竹林＋C 村緣竹叢 ART_APPROVED（2026-10-02）：擺放 gate 8/8、5 反向、場景級驗證（射線接地／稈碰撞 shape 查詢／小徑實走／節點數）"
+  },
+  "note": "P9 R3 封存：竹 Kit 生成器／貼圖產生器／組裝 lib／審圖／gate、Kit manifest 與 gate.json、竹林擺放 lib／gate／烘焙 overlay／規劃報告／審圖鏡位、8 張 ART_REVIEW 總表、證據 log 的 sha256。任何一項改變 → verify_village_v2_bamboo_place.gd -- --seal FAIL；只有真正 regression 才重開 P9 R3。village_v2.tscn 不封（後續階段仍會編輯），--seal 另驗 Vegetation/BambooP9 仍掛載。R1／R2 封存不受影響（各自 seal 一致）。",
+  "renderer": "Forward+（ART_REVIEW）；效能 ART-FIRST，不量測，竹林成本記 P12 technical debt",
+  "counts": {
+    "culms": 1497,
+    "items": 2622,
+    "ids": {
+      "take_young": 182,
+      "take_thick": 262,
+      "take_mature": 634,
+      "take_thin": 266,
+      "take_dead": 62,
+      "take_lean": 55,
+      "take_broken": 36,
+      "takenoko": 69,
+      "take_litter": 1056
+    },
+    "overlay": {
+      "path": "res://maps/village_v2/gen/bamboo_p9.scn",
+      "mb": 0.546594619750977,
+      "near_mesh_nodes": 2994,
+      "multimesh_nodes": 459,
+      "multimesh_instances": 6369,
+      "culm_shapes": 1497
+    }
+  },
+  "polish_followups": [
+    "竹林與 R2 林帶銜接自然度（南側／上坡草地視角接縫、竹比周圍闊葉亮且高）",
+    "村西南角孤立竹叢",
+    "林緣近地層讀感（1.7 m 視角下竹稈直接從草地長出、林緣疏化讀感弱）",
+    "（R3 kit 審圖已列次要）折斷竹末端平切、仰視葉團成團、林內偏暗（光照屬 P13）"
+  ],
+  "p12_technical_debt": "竹林擺放未量 GPU；近級逐稈節點 2,994＋MultiMesh 459 節點（6,369 實例）＋稈碰撞圓柱 1,497；Vegetation instance uniform 節點 22,256／32,768；竹稈 LOD 換檔距離 ×1.5",
+  "frozen": {
+    "tools/build_village_v2_bamboo_textures.py": "9a9a94800129b1c7477337b24b3e0311dcaa12300ceca51230010379c539b80e",
+    "godot/assets/blender/village_v2/build_bamboo_kit.py": "3ac86ad1b3b6f49eb07fd03b96762f570a6282388d3d2511555bc58f91291e4c",
+    "godot/tools/village_v2_bamboo_lib.gd": "3d4d97352d53c749074c42edb6b4ea6a0056f82b4322852a21b83f3486dcb57b",
+    "godot/tools/village_v2_bamboo_review.gd": "c3f03173810ac5701dc64377a596679f5040d00424bc9905c02be007e1610078",
+    "godot/tools/verify_village_v2_bamboo_gate.gd": "2de3816a0e2302fa4307a4ce3a8224a71cb5897b8d604efe85a211f2943c4c25",
+    "godot/assets/village_v2/bamboo_kit/bamboo_kit_manifest.json": "9ebb69d3fcc8ee31bf135a74b6a0dc211a791f5885a885d2e242342bada35fba",
+    "godot/assets/village_v2/bamboo_kit/gate.json": "d7fd7a35eb87c8988c86871266c845d6715e8d016f5179407a60cb73de21d4b5",
+    "godot/assets/village_v2/bamboo_kit/asset.json": "fe80ad195bfc3cc04729c45af76c224d4737244f2725d1c4136e46aaef87bbdb",
+    "godot/assets/village_v2/bamboo_kit/src/modules_blender.json": "7c7fd585ab11c9d2f12a2707d8b231850f4e76b72b5a0ef599fd212e8d09c81a",
+    "godot/assets/village_v2/bamboo_kit/tex/bamboo_tex.json": "63846c4f92f3a53cc375393f728e18cf2016bbfc76f015269dbf42b2eab1b5f5",
+    "godot/tools/village_v2_bamboo_place_lib.gd": "b7d486838765539c1baaf8cdfaf66beb7dc82772f9afc9458133dc815afca7b9",
+    "godot/tools/verify_village_v2_bamboo_place.gd": "9ac3feb44922377fab1b783cbbcb5ce6f1b1327d441b41b5bcdb6a2e330ae8f8",
+    "godot/maps/village_v2/gen/bamboo_p9.scn": "72d693e85c021c73f39c368e76af380c6323f70be443a5d1752d59261c1c15ec",
+    "godot/data/village_v2_p9r3_bamboo.json": "e77e6d9e478e870a16c9056d08b1b7044a2c1115ff9f275b2e091972c0242627",
+    "godot/tools/shots/village_v2_p9r3_before.json": "ed31812749cafd765f7734a820326292ad3c2038f861523ed3dacaf3a85a87dc",
+    "godot/tools/shots/village_v2_p9r3_after.json": "26bfc796b0e2d4f16b97cd02aa42535158ce65779414eec7ecf6028e81d8d930"
+  },
+  "art_review_images": {
+    "r3/r3_sheet_grove.png": "83e56724eb600b903d5f0237db34658ae4aebef12d74c2cd802baab80a673f61",
+    "r3/r3_sheet_culms.png": "5f6b1d8c819119dabd3ff4408f35edfe5fd19d6e986e47de98aef0f37099c0cd",
+    "r3/r3_sheet_detail.png": "187252596a2434534e22826de36ed4bf6c2dfb4eab35a0eda243e1f4a7f26af1",
+    "r3/r3_sheet_textures.png": "eb34a1f554686434618a8acf0592889e1f5042a20e272a92032c1b605a78c804",
+    "r3p/r3p_sheet_entry.png": "e6d53acd042dbb9c7fc5421c29b92e0522556cde52e2388b77df9c68660423e9",
+    "r3p/r3p_sheet_edge.png": "195e6abaa06147505d083eb378662987017d03eaedde81e08ffaf989e85b3c1a",
+    "r3p/r3p_sheet_join.png": "a7733471e7843e69e96073543ae59184102e1cfccfeaff95eb907cc6f7c3bf06",
+    "r3p/r3p_sheet_far.png": "06179598182a3a7455ce4c74291e0b420846380210d8201afc9fea2d4f7fd6e3"
+  },
+  "evidence": {
+    "evidence/bamboo_kit_regress.log": "1c0eb4c5140df6f141bd161b853725c12d30abf9fe9537750cd6849ff5bcd9d8",
+    "evidence/bamboo_kit_negatives.log": "f21f1a17815dbb306602c3ec3ee464ddc8846a340b33c6c8e08cdfdbc7b5d1a4",
+    "evidence/bamboo_place_gate.log": "8ab8ce0a7bd2d881ff655027bcf67d0944c9c0e159bf6962d18c9cb6a395b1d3",
+    "evidence/bamboo_place_negatives.log": "69e73db6db5fe51d4d258475a49078b0fd4238819079f25c38d3916b10c2428a",
+    "evidence/bamboo_place_scene.log": "b23ef1a6178b20dd4815db651ba03262f14dba33594ab5809e6e9bed282ecbe8",
+    "evidence/r3_regress_subset.log": "cad6439121da9c4e27691bf9da4dd71a018cb37b06c014bd8d1f96bdd264b233"
+  }
+}

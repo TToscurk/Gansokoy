@@ -1,0 +1,7 @@
+[GARDEN] PASS 場景已掛 Vegetation/HiedaGardenP9，且 R2 ForestP9／R3 BambooP9 仍掛載
+[GARDEN] PASS 場景接地（266 件構件 origin 向下射線只認地形）：浮 > 0.06 m 0（最大 0.024）
+[GARDEN] PASS 碰撞：庭園構件／池／樹幹 vs 本屋／大宅門／圍牆／其他接觸 0
+[GARDEN] PASS 實走：主軸＋飛石路線膠囊 115 點被擋 0 
+[GARDEN] PASS 池擋人：池內膠囊撞到池碰撞
+[GARDEN] INFO HiedaGardenP9：319 件、碰撞 154、池面 y 1.12
+[GARDEN] 結果：0 項失敗（scene）

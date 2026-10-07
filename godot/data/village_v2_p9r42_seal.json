@@ -1,0 +1,45 @@
+{
+ "phase": "P9 R4-2 Hero Surroundings：神社周邊（鎮守之森／參道）（Vegetation/ShrineGroveP9 overlay）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-02",
+ "scope": "門杉一對＋鳥居線林緣、參道兩側鎮守林（杉主體、檜少量、椎）、村側 4 機位社殿視線保留、御神木杉（斜面板根接地＋依樹皮截面注連繩＋紙垂 5）、春日燈籠 4、林下叢＋倒木 2、地面 overlay（踏み固め土／苔／落葉、整平面玉砂利）、前庭留白",
+ "note": "P9 R4-2 封存：規劃 lib／gate／地面 shader／烘焙 overlay／規劃報告／審圖鏡位、4 張 ART_REVIEW 總表、證據 log 的 sha256。任何一項改變 → verify_village_v2_shrine_grove.gd -- --seal FAIL；只有真正 regression 才重開。village_v2.tscn 不封（--seal 另驗 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 掛載順序）。R1／R2／R3／R4 稗田邸封存未重開。",
+ "renderer": "Forward+（ART_REVIEW 10:00、1.7 m）；效能 ART-FIRST，不量測",
+ "counts": {
+  "items": 122,
+  "canopy": 31,
+  "under": 84,
+  "props": 7,
+  "overlay_mb": 0.3,
+  "mesh_instances": 392
+ },
+ "polish_followups": [
+  "鳥居外看社殿只見屋頂一角（P1 地形坡頂＋P5 社殿位置決定；本包只保證新樹不擋）",
+  "部分 R1 杉樹形本身傾斜（R1 封存）",
+  "參道 P7 道路 decal 上深色梯形塊與硬邊（既有道路材質）",
+  "前庭玉砂利色調偏冷灰",
+  "林下深陰影處地面讀感弱（光照屬 P13）"
+ ],
+ "p12_technical_debt": "神社周邊未量 GPU；樹 prefab 展開成自有節點（MeshInstance 392，未 MultiMesh）；地面 overlay 0.5 m 格；dither 外緣 discard",
+ "frozen": {
+  "godot/tools/village_v2_shrine_grove_lib.gd": "7fe417e5bb31d45b7ebc6298facc9e360defc10b762e79a26bf852aec56a812a",
+  "godot/tools/verify_village_v2_shrine_grove.gd": "87beec5f01c83a473e8c252e34c2d830ef7b1a79ea5f6b7d1f4e42cde348d395",
+  "godot/assets/village_v2/shrine_grove/sg_ground.gdshader": "14a9ab5906b0d80ac0227a8dbb32906b89b5d75ff7f9e7091fc7b58f0fb53e6e",
+  "godot/maps/village_v2/gen/shrine_grove_p9.scn": "a506996af9966965a15d71c498c100eca79c39d38cf056b0066b7862f618ff1c",
+  "godot/data/village_v2_p9r42_shrine.json": "77e1393a9a55595ad5c62d5cce04286a6f4afe594d93ccd7244fb7a06bca846a",
+  "godot/tools/shots/village_v2_p9r42_shrine_before.json": "1e38389fae49ebff5afc814a36ab7da77b7992c4c30050d3aee24fa1f9f4d62c",
+  "godot/tools/shots/village_v2_p9r42_shrine_after.json": "74fcb0e3358fd1ea5c3e211204e79fde4c8e0673327c33957a326fb0c3ecab05"
+ },
+ "art_review_images": {
+  "r42/r42_sheet_torii.png": "7725b2f14795ddbcf4bf4c8259a10789a52747d1cf5d2f90bb15fbf8ef45c0d0",
+  "r42/r42_sheet_shrine.png": "edc06348ccdee51f111d49da5bc123db9ad05623ca9561372f1de2b63b5eb29e",
+  "r42/r42_sheet_forest.png": "469edaeed9950774774352113601403df0bef3d732b7e4dfd53d3d1713111eb5",
+  "r42/r42_sheet_high.png": "e227ef7c93c95001c8a073de686116abcc20011300fdf89304323fac02840cab"
+ },
+ "evidence": {
+  "evidence/shrine_gate.log": "8b11e739a6a2fe62657af4fe1fb27e419ca8c53fae5a8c4ce5a6683ba6a72717",
+  "evidence/shrine_negatives.log": "20a5340a0bbc347c010dcdf10a7ed02854b0335ef18a80d9e17c2ca07235a6a3",
+  "evidence/shrine_scene.log": "f4b967f569bc3bf4fc959945f0ec21529e06ce7510b750df6a5536da32aa8c18"
+ }
+}

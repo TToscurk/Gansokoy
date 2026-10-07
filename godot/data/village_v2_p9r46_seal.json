@@ -1,0 +1,63 @@
+{
+ "phase": "P9 R4-6 Hero Surroundings：鈴奈庵周邊（Suzunaan Surroundings）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-03",
+ "scope": "suzu_kit（置き看板／掲示板／本箱／書冊束／腰掛け／虫干し縁台／背負い本箱／鉢植え）＋Vegetation/SuzunaanP9 overlay（gen/suzunaan_p9.scn）；鈴奈庵 Hero 本體（P5 R1）未改",
+ "note": "使用者裁定：封存目前版本（r7），不再追加微調；「貸本」只在近距可讀屬合理，不要求再放大。只有真正 regression 才重開 R4-6。",
+ "renderer": "Forward+",
+ "counts": {
+  "placements": 35,
+  "kit_modules": 9,
+  "kit_tris": 2284,
+  "gate_plan": "8/8",
+  "negatives": "6/6",
+  "scene": "4/4"
+ },
+ "deferred_to_p13": [
+  "北側（北妻・掲示板・腰掛け・本箱・背負い本箱）與正面在 10:00 陰影中偏暗——全域 lighting"
+ ],
+ "deferred_to_p9_r5": [
+  "北側空地與近地層（groundcover／低層植被過渡）"
+ ],
+ "frozen": {
+  "godot/tools/village_v2_suzunaan_yard_lib.gd": "811f57c9507ebf9c26c4f7c1698382043facf5b6cfe65947f35326b63ec5d096",
+  "godot/tools/verify_village_v2_suzunaan_yard.gd": "cf59e47c24d2509f251784a65207f352086c08e19acc4d3fe36e7bb3c41f612a",
+  "godot/assets/blender/village_v2/build_suzu_kit.py": "564692e0031bacd12597b21aac0a10a2da3d7be26f4daa6f73c817f4b0a064d8",
+  "godot/maps/village_v2/gen/suzunaan_p9.scn": "371fbe66cfa5eb7c1c635bd315857e67c1732a2fa6169bd749d64480a6c3fb0b",
+  "godot/data/village_v2_p9r46_suzunaan.json": "206ce6da3a0930cb274b5f85ad527413284b0853585b3f44d055da7d7ff4b4bc",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_bundle.res": "12eb86fd174a7e8b0d589671ae45d60625d8460916b6d1f007eda1818bdafe7a",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_bundle_l1.res": "359632d80533beff1d6365d732de68bded4ac9b30ed103793b62abdf89a3709a",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_dai.res": "c85b83f81d77149aa2fca41a1aadf9617c2ebd69de0e6e0d7926a774ab0d02d0",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_dai_l1.res": "365e9df30dbb425b7ad3a42cb000261ab3cdf0756f6ebf634928728b2ba3b2c5",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hachi.res": "6f09d9f317e8b3d91cecae7c3bd45f918c1eb826fc9b7c59c29781a01e44f891",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hachi_l1.res": "40404081de92a09a472590cba6f13f482a3c3fcc5a89924580d8244a721aed98",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hako.res": "6843bbddc69221b393380640b01aeafa07967df6f13366cf7c3d3aee95bb0762",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hako2.res": "e62725a11a7ed3c5f7907929ef30d3aa3266eb4ef8d11fad0c5dc6897c826f8e",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hako2_l1.res": "1a6583ee08f1205e56d15855ea5de913407686d741a3a61db56409a624a4c624",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_hako_l1.res": "6801d6a4f3dec3a3b752991d53cd6cdfe39314602171112572150d1b26810aa6",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_kanban.res": "ceddcf8b966bfafd96a3473ac4f75ff8bf95e1c5fa9f2223a86c858a7b24a343",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_kanban_l1.res": "47eaa836b9d00dabb44b162adc158e643dd13cd9c4e7215a877f87a22b4e699f",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_keiji.res": "39c37b98a0945bb1203904d20c18c7d3209d8434226679aa5356105441861387",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_keiji_l1.res": "2bf353b5a0ac06e45d03012520e9e9ba4eadd892d09742bb1c67c3bc0093e287",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_seoi.res": "c7450c5b56460e5ff59f892c22615fcad3dd9f57561205b7556cd94c8f488dda",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_seoi_l1.res": "f3b62658b7038203b44015dee1bdbb7d6bdea39024449a4ea15aeb8d8e2cc779",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_stool.res": "4e2b7d603fdd0aea0046d280bc14776595cb889991177465919ba7ff847f536a",
+  "godot/assets/village_v2/suzu_kit/mesh/sz_stool_l1.res": "039bec72137c071c38732973932f270cee747a3b4ce5c122a78950923f3824b6",
+  "godot/assets/village_v2/suzu_kit/src/modules_blender.json": "1310e4881aa7dca23ded2a32065fd7bc5884113d0f401163a52d5cb5adfaa5c6",
+  "godot/assets/village_v2/suzu_kit/src/suzu_kit.glb": "5a8fe58d0276b55901b4926c61fda206e423b4e5a327ee6c6fd698b43167b95f",
+  "godot/assets/village_v2/suzu_kit/src/suzu_kit.glb.import": "7df2f7803d3fd144bfdd21f60653d0f7097dea15bdc5e25f3e3b7a537c785f57",
+  "godot/assets/village_v2/suzu_kit/suzu_kit_manifest.json": "b70debe8dcfebf98c7a330e11c1df5b2bbca17b3099639f02be33d1cb285156b"
+ },
+ "art_review_images": {
+  "r46/r46_sheet_front.png": "95ba114ab8b487d5e3c7256ed1a53bc686ae410475e64ed7f605fa135d9ef214",
+  "r46/r46_sheet_side.png": "d1874a50753033ec75801cb8165b270de54b9a21b2db84ec220fd1a1a710a9b5",
+  "r46/r46_sheet_detail.png": "37b71ab5d6ed4ea0ecbab78fb0fed432ca263e86da8d95c15962b1cc94ea6048",
+  "r46/r46_ground_ab.png": "55a95f867221729a375fe163a7d5477ec29fbab8a8005293d55e1c7b012af5e3"
+ },
+ "evidence": {
+  "evidence/suzunaan_gate.log": "19d2c8af37c83d0614a8b73ef249bb1cadadcf3ad5f1f4df59daab3d03464132",
+  "evidence/suzunaan_negatives.log": "8e41581c8a4df2c7380c05ec72ab538eade80cd7f46b94b00b7ade977cc7f844",
+  "evidence/suzunaan_scene.log": "8769c4f16aa32d91085a667f2b5e1e05c014b018033f71f34cc3ebc37a0e672a"
+ }
+}

@@ -1,0 +1,32 @@
+{
+  "n": 114105,
+  "cats": [
+    52455,
+    13568,
+    36498,
+    27841,
+    1352,
+    20882,
+    2469,
+    10558,
+    27381,
+    7466,
+    348,
+    611,
+    11136
+  ],
+  "patch": {
+    "components": 58,
+    "round_share": 0.0172413793103448,
+    "solidity_median": 0.653696498054475,
+    "abrupt_share": 0.16516373991457
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/meadow_p9.scn",
+    "mb": 8.54481887817383,
+    "items": 114105,
+    "mid_items": 39667,
+    "near_nodes": 1148,
+    "mid_nodes": 401
+  }
+}

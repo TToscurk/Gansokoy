@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] INFO 封存 groundcover 規劃の再計算 88206 ms（讀み取り専用）
+[MDW] INFO meadow 文脈 6030 ms（Props・NPC 立ち位置 447、村外の距離場 1 m）
+[MDW] INFO 1 m 場 23866 ms（505×507、縁のこぼれ 4811 セル）
+[MDW] INFO 規劃 16828 ms：142097 株（short 5127、medium 46508、tall 41445、seed 20049、dry 4124、lean 19248、sparse 0、fern 3911、sasa 1685）
+[MDW] PASS 反向 n_road → 「禁區」必須 FAIL（失敗項 1：禁區：建物・軒下 0）
+[MDW] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1：接地：根元＝可見最上）
+[MDW] PASS 反向 n_tiny → 「立體」必須 FAIL（失敗項 4：立體：立ち草 142 ／ 群れ：4 m 窗の密 ／ 群落：40 株以上の ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_uniform → 「群れ」必須 FAIL（失敗項 5：群れ：4 m 窗の密 ／ 道路：路縁 0.2– ／ 農田の外緣：6 m  ／ 輪：樹 3035 本 ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_circle → 「斑の形」必須 FAIL（失敗項 7：禁區：建物・軒下 0 ／ 類別覆蓋（各 ≥ 下 ／ 群れ：4 m 窗の密 ／ 斑の形：密な斑 22 ／ 輪：樹 403 本の ／ 群落：40 株以上の ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_band → 「道路」必須 FAIL（失敗項 4：禁區：建物・軒下 0 ／ 道路：路縁 0.2– ／ 農田の外緣：6 m  ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_fixedfarm → 「農田の外緣」必須 FAIL（失敗項 2：禁區：建物・軒下 0 ／ 農田の外緣：6 m ）
+[MDW] PASS 反向 n_ring → 「輪」必須 FAIL（失敗項 3：禁區：建物・軒下 0 ／ 輪：樹 433 本の ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_treering → 「輪」必須 FAIL（失敗項 3：禁區：建物・軒下 0 ／ 輪：樹 3213 本 ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_evenmix → 「群落」必須 FAIL（失敗項 2：群れ：4 m 窗の密 ／ 群落：40 株以上の）
+[MDW] PASS 反向 n_nocorner → 「語意」必須 FAIL（失敗項 2：類別覆蓋（各 ≥ 下 ／ 語意：路・小径の脇の）
+[MDW] PASS 反向 n_nostream → 「類別覆蓋」必須 FAIL（失敗項 1：類別覆蓋（各 ≥ 下）
+[MDW] 結果：0 項失敗（negatives）

@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] INFO 封存 groundcover 規劃の再計算 73764 ms（讀み取り専用）
+[MDW] INFO 規劃 18801 ms：12837 株（short 109、medium 1231、tall 8800、seed 1154、dry 1059、lean 274、sparse 42、fern 138、sasa 30）
+[MDW] PASS Kit：立ち草 7 種＋羊歯＋笹（近級 20–80△、中級 ≤ 45 %、公稱高 0.15–0.62 m）：short 60/5△ 0.20m、medium 66/6△ 0.41m、tall 60/5△ 0.60m、seed 59/18△ 0.54m、dry 60/5△ 0.33m、lean 70/5△ 0.36m、sparse 27/5△ 0.25m、fern 42/9△ 0.38m、sasa 50/5△ 0.43m
+[MDW] PASS 禁區：建物・軒下 0.75 m・路面＋0.2 m・小径の芯・水面・P7 核心／構件・P8 農田・封存構圖・竹林・樹幹 0.55 m・Props・植物節點・區外 → 違反 0 {  }
+[MDW] PASS 接地：根元＝可見最上面（地形・路面・院子地面の max）−0.02 m、偏差 > 5 mm の株 0 / 12837
+[MDW] PASS 立體：立ち草 12669 株のうち丈 ≥ 0.30 m 94 %（≥ 40 %）、< 0.12 m 0（= 0）、區ごとの平均丈 meadow 0.43／edge 0.50／farm 0.46／forest 0.46 m（≥ 0.28）
+[MDW] PASS 留白：各區の草地 1 m 格子で無草 ≥ 25 %・最大の無草塊 ≥ 40 m²（草海にしない）；被覆：無草 ≤ 85 %（草層が成立）—— meadow：草地 1810 m² 無草 60 % 最大無草塊 931 m² 4m 窗 CV 1.15／edge：草地 1802 m² 無草 47 % 最大無草塊 721 m² 4m 窗 CV 0.88／farm：草地 923 m² 無草 80 % 最大無草塊 492 m² 4m 窗 CV 1.70／forest：草地 1290 m² 無草 67 % 最大無草塊 770 m² 4m 窗 CV 1.31
+[MDW] PASS 群れ：4 m 窗の株密度 變動係數 ≥ 0.60（均一 scatter 禁止）
+[MDW] PASS 語意：路縁・小径の密度 0.00 ≤ 草地 3.24 × 0.30、丈 0.00 ≤ 0.22 m；林緣・農田・水際・村邊草地の平均丈 0.48 ≥ 後場 0.00＋0.08 —— forest 0.65/m²・0.45m（1643 m²）、blank 1.50/m²・0.40m（484 m²）、wild 1.67/m²・0.38m（1341 m²）、yard 0.00/m²・0.00m（713 m²）、wall 0.00/m²・0.29m（260 m²）、road 0.00/m²・0.00m（89 m²）、open 0.38/m²・0.34m（700 m²）、corner 0.44/m²・0.38m（80 m²）、meadow 3.24/m²・0.50m（2309 m²）、path 0.00/m²・0.00m（144 m²）、water 2.07/m²・0.46m（121 m²）、farm 4.01/m²・0.50m（138 m²）、farm_tr 1.25/m²・0.35m（123 m²）、walk 0.20/m²・0.25m（370 m²）
+[MDW] PASS 後院荒角：路地・隅の株 35（≥ 20）平均丈 0.38 m（≥ 0.30）、後場の芯の密度 0.00/m²（≤ 0.15）
+[MDW] PASS 林緣：境（−2〜+3.5 m）の羊歯・笹 140（≥ 30）、林床の奥（> 4.6 m）の株 0（= 0）
+[MDW] PASS 農田外緣：野草帯 547 株の丈 ≥ 0.38 m 98 %（≥ 50 %）、田から 2–5 m の密度 3.13 > 12–20 m 0.36 × 1.3（住宅側へ疎ら）
+[MDW] PASS R5 Macro Ground 不重畫：groundcover_p9.scn の雜湊＝R5 封存時（立ち草は別 overlay meadow_p9.scn）
+[MDW] PASS 永久 build rule：MultiMesh build 需要 rendering display（--build 不可加 --headless）
+[MDW] PASS 三層距離：近級 12837 株（0–31 m で縮んで消える・影あり・16 m 分塊・緊 AABB）＋中級 5361 株（42 %、23–54 m・影なし・幅広の低面網格）＋54 m 以遠は 3D 草 0
+[MDW] PASS pack overlay
+[MDW] PASS save res://maps/village_v2/gen/meadow_p9.scn
+[MDW] PASS 永久 build rule：存檔後回讀 overlay，全部 instance transform 非零（MultiMesh 節點 296、instance 18198、零矩陣 0 ）
+[MDW] INFO overlay 0.76 MB、近級 instance 12837、近級節點 187、中級節點 109
+[MDW] 結果：0 項失敗

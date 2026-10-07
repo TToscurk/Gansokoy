@@ -1,0 +1,6 @@
+[WATER] PASS 場景已掛 Vegetation/WatersideP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9"]
+[WATER] PASS 場景接地（23／23 件樹／構件 origin 向下射線只認地形）：浮 > 0.06 m 0（最大 0.000）
+[WATER] PASS 碰撞：構件箱／樹幹 vs Hero／橋／建物／農地／河岸／其他植被 接觸 0
+[WATER] PASS 實走：龍神像參拜道＋水車入口→walkway 膠囊 56 點被本 overlay 擋 0 
+[WATER] INFO WatersideP9：213 件、MeshInstance 450、構件碰撞 10
+[WATER] 結果：0 項失敗（scene）

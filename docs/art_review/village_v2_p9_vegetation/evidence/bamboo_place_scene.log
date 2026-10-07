@@ -1,0 +1,7 @@
+[BPLACE] PASS 場景已掛 Vegetation/BambooP9
+[BPLACE] PASS 場景接地（1497 稈基向下射線只認地形）：浮 > 0.05 m 0（最大 0.000）、埋 > 0.6 m 0、射線落空 0
+[BPLACE] PASS 稈碰撞 shape 查詢：1497 根圓柱 vs 建物／R2 樹幹／橋／地標／河岸 接觸 0
+[BPLACE] PASS 實走：踏跡小徑膠囊探針 235 點（r 0.3、h 1.7、離地 5 cm）被擋 0 
+[BPLACE] PASS instance uniform 節點（Vegetation 下 GeometryInstance3D）22256 ≤ 32768
+[BPLACE] INFO BambooP9：稈 1497、近級節點 2994、MultiMesh 節點 459（實例 6369）
+[BPLACE] 結果：0 項失敗（scene）

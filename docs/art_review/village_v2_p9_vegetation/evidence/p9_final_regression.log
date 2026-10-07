@@ -1,0 +1,21 @@
+FARM 0  --headless --path . --script res://tools/verify_village_v2_farmland.gd -- --seal
+VEG 0  --headless --path . --script res://tools/verify_village_v2_veg_gate.gd -- --seal
+FOREST 0  --headless --path . --script res://tools/verify_village_v2_forest.gd -- --seal
+BPLACE 0  --headless --path . --script res://tools/verify_village_v2_bamboo_place.gd -- --seal
+GARDEN 0  --headless --path . --script res://tools/verify_village_v2_hieda_garden.gd -- --seal
+SHRINE 0  --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --seal
+SCHOOL 0  --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --seal
+WATER 0  --headless --path . --script res://tools/verify_village_v2_waterside.gd -- --seal
+TOWER 0  --headless --path . --script res://tools/verify_village_v2_tower_yard.gd -- --seal
+SUZU 0  --headless --path . --script res://tools/verify_village_v2_suzunaan_yard.gd -- --seal
+GEID 0  --headless --path . --script res://tools/verify_village_v2_geidontei_yard.gd -- --seal
+KIRI 0  --headless --path . --script res://tools/verify_village_v2_kirisame_yard.gd -- --seal
+GC 0  --headless --path . --script res://tools/verify_village_v2_groundcover.gd -- --seal
+MDW 0  --headless --path . --script res://tools/verify_village_v2_meadow.gd -- --seal
+MDW_SCENE 0  --path . --script res://tools/verify_village_v2_meadow.gd -- --scene
+ENV 0  --headless --path . --script res://tools/verify_village_v2_environment.gd -- --seal
+ENV_PLAN 0  --headless --path . --script res://tools/verify_village_v2_environment.gd
+ENV_SCENE 0  --path . --script res://tools/verify_village_v2_environment.gd -- --scene
+MMBAKE 0  --path . --script res://tools/verify_village_v2_multimesh_bake.gd
+P9F 0  --headless --path . --script res://tools/verify_village_v2_p9_final.gd
+DONE

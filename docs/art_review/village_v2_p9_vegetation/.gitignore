@@ -1,0 +1,30 @@
+# P9 植被審圖：版控只留核准證據——
+#   r1/r1_sheet_{near,mid,far,lods,colors,sweep}.png＋r1_vs_r1c.png（P9 R1 ART_APPROVED 7 張）
+#   baseline/ 只留 3 張代表圖（北丘／全村 placeholder skyline、玩家視角林緣黑牆、Hero 周邊裸地）
+#   evidence/ 封存 log
+# 重做輪的總表／前後對照、其餘 baseline 與 shots/ 原始截圖只留本機
+r1b/
+r1c/
+r1/r1_sheet_top.png
+baseline/*
+!baseline/p9b_overview_obl.png
+!baseline/p9b_west_edge.png
+!baseline/p9b_hieda_court.png
+# P9 R2：版控只留 4 張 ART_REVIEW 總表（r2/r2_sheet_*.png），單張 before／after 截圖只留本機
+r2/shots_before/
+r2/shots_after/
+# P9 R3：版控只留 ART_REVIEW 總表（r3/r3_sheet_*.png），shots/ 原始截圖只留本機（根 .gitignore 已擋 shots/）
+# P9 R3 擺放：版控只留 4 張 before/after 總表（r3p/r3p_sheet_*.png），單張截圖只留本機
+r3p/shots_before/
+r3p/shots_after/
+# P9 R4 稗田邸庭園：版控只留 5 張 before/after 總表（r4/r4_sheet_*.png），單張截圖只留本機
+r4/shots_before/
+r4/shots_after/
+# P9 R4 r2 targeted polish：版控只留 4 張 r1→r2 對照總表（r4/r4b_sheet_*.png），單張截圖只留本機
+r4/shots_r2/
+# P9 R4-2 神社周邊：版控只留 4 張 before/after 總表（r42/r42_sheet_*.png），單張截圖只留本機
+r42/shots_before/
+r42/shots_after/
+# P9 R4-3 寺子屋周邊：版控只留 before/after 總表＋實機 TPS 總表＋樹幹色調證據（r43/r43_*.png），單張截圖只留本機
+r43/shots_before/
+r43/shots_after/

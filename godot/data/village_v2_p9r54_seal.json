@@ -1,0 +1,86 @@
+{
+ "phase": "P9 R5-4 Existing Asset Environment Pass（audit → Pilot n1 → 全村 x1 → x2 targeted density & continuity）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-05",
+ "verdict": {
+  "forest_edge": "PASS",
+  "village_edge": "PASS",
+  "open_land": "PASS",
+  "waterside": "PASS",
+  "farm_edge": "PASS with non-blocking handoff（human-use readability → P10）"
+ },
+ "scope": "Props/EnvironmentP9 overlay（gen/environment_p9.scn）：既存 kit のみ（語彙 43 種）、自然・半自然・過渡・環境 anchor。P10（MarketP10／StreetP10／MarketWestP10／今後の P10 overlay／NPC anchors／作業區）優先・occupancy 除外。以後 EnvironmentP9 placement は変更しない（使用者 reopen 時のみ ENV_ALLOW_REBAKE=1）。",
+ "art_revision": "P9 R5-4 Existing Asset Environment Pass — 全村擴張 x2 targeted density & continuity（主 ≥ 3 件・satellite 2–4・杭は 2–5 本＋連れ・水邊は据え置き；ART_REVIEW）",
+ "renderer": "Forward+",
+ "counts": {
+  "anchors": 111,
+  "events": 74,
+  "items": 555,
+  "collision_shapes": 213,
+  "plan_gate_checks": 13,
+  "negatives": 19,
+  "scene_checks": 6,
+  "by_class_events": {
+   "forest": 27,
+   "edge": 20,
+   "farm": 9,
+   "water": 10,
+   "open": 8
+  }
+ },
+ "built_at": "2026-10-05 14:47:51（P10 R1b の GroundcoverP9 limited reopen ＝ 14:01:47 重烘・14:23:39 R5 seal 更新の後に build）",
+ "non_blocking": [
+  "少數村邊深色木杭仍較突出",
+  "少數林緣枯立木偏孤立",
+  "部分灌木 cluster 尺度相近，可看出一些排列節奏",
+  "物件底下缺少局部踩實土／濕痕過渡；R5 Macro Ground 已封存，不在本輪重開",
+  "Farm edge 的 human-use readability 移交 P10（Farm/Village Human-use Layer）"
+ ],
+ "handoff_p10": {
+  "name": "Farm/Village Human-use Layer",
+  "may_add": [
+   "農具",
+   "籃筐",
+   "作業暫放物",
+   "人為踩踏／使用點",
+   "農田出入口語意",
+   "NPC activity / work anchors"
+  ],
+  "rule": "P10 已存在內容優先；EnvironmentP9 不再為此加物件。"
+ },
+ "frozen": {
+  "godot/tools/village_v2_environment_lib.gd": "303460add7959ac77d9dd2b8fa995a4ddc01ac328793047f467e25d00d0b8464",
+  "godot/tools/verify_village_v2_environment.gd": "2176be31505ac41ca136fd13472eff02ee62736526320d9cb7eac0cc7e54ecbf",
+  "godot/tools/shot_village_v2_environment_views.json": "9e13cf17a84eb61a1345feed844599d9c2fab9cc602d30a273de6c44e47f9a1f",
+  "godot/maps/village_v2/gen/environment_p9.scn": "5fe520fea2693db656705a259ee3c023c33d3eb17174fcaa8e39d5ae7c4253e0",
+  "godot/tools/audit_village_v2_env_assets.gd": "5636d47cbbf8bf3be7771cc841e5523fa48b88c5eae7ef42b7112e12dfaa58fd",
+  "docs/asset_audit/env_2026-10-04/environment_asset_audit.csv": "63ea6d7777136e2feb7464f0b5a55fcd562f935273c8b0009972d23d812eaba6",
+  "docs/asset_audit/env_2026-10-04/environment_asset_audit.json": "03a1e7717e21050dc651d6a648dff0830b676b80aac9b65896aca8ab6dc65b2f",
+  "docs/asset_audit/env_2026-10-04/README.md": "8ea71f0573e2660b4b3ce11cf1e7158de6e1bc221c011b71c46e26ffc7e75925"
+ },
+ "art_review_images": {
+  "r5/r54_env_pilot/r54_e3_pilot_a.jpg": "2249975ddda9b6d29377f3cd1366ad0dbfea8573aa8920916e0f798052fbeac5",
+  "r5/r54_env_pilot/r54_e3_pilot_b.jpg": "11e0fcda6d66c0a698f830480c80abc6f1b2d966af939010ffe5199ac1941d09",
+  "r5/r54_environment/r54_n1_a.jpg": "f8b70529a2a3038b07874fddc4bf394b48091400b013c125c4ddd08a4b4a6cb3",
+  "r5/r54_environment/r54_n1_b.jpg": "e8e6e0d96d7c8761598480b5ebe303ac8f7d0314d034e3a80eed8f645eddcea8",
+  "r5/r54_environment/r54_x1_a.jpg": "37673a963869f0c5785be8c931752044eaef5de1cd8ae46218a07192f8972c84",
+  "r5/r54_environment/r54_x1_b.jpg": "de26f89ed40e79c33fb09872e4dead0142c896d0c83a40359dafc1218c3392ee",
+  "r5/r54_environment/r54_x1_c.jpg": "33fbba8bc590b2a5bc58a292e5248891dbbe7b1f7054bfad9dfe6780c6d4e91f",
+  "r5/r54_environment/r54_x1_d.jpg": "32db43eb9a595b37fd10c1c1cf82e5ab3c5fd99b63a2acfc7746994bfe55acd8",
+  "r5/r54_environment/r54_x1_plan_map.jpg": "9bcc11b67227ebd9620ea3112f5a0f2962c9a7b5c7520527223502d86be46a78",
+  "r5/r54_environment/r54_x2_a.jpg": "1b3ea8d3fb763d089411921b1c65a0960691e4ea4fe7d2befefa8890e23cf038",
+  "r5/r54_environment/r54_x2_b.jpg": "7b270ca985d93da711471fdb1ab5522486100107123d61b9ae187435b3a2ebbf",
+  "r5/r54_environment/r54_x2_c.jpg": "ab8e5458987ac6111c58ddbcbf77b55f99e62845ccb51c7c4759f2c640c5344e",
+  "r5/r54_environment/r54_x2_d.jpg": "cd3e72edc39b85689d5f425bccafc8b35518d07c8668a393d98a19a02061e8ba",
+  "r5/r54_environment/r54_x2_plan_map.jpg": "0d21fc52d79a3e9e76841274fea1e06a5e92532e27ffaee3a43ef7c1269c7ad9"
+ },
+ "evidence": {
+  "evidence/environment_x2_meadow_seal.log": "2eea57c94682ec038bcd7048fd142485db65d03b81f4d6380a3b9550ce1362a5",
+  "evidence/environment_x2_mmbake.log": "f0e5044c0d0942e6d3824a2ede231857d1c31eb4da3ce461e675935808aba322",
+  "evidence/environment_x2_negatives.log": "42c8e3f7e92788c9620f5482afa3d73401f868d3d8cd6c0a88d7b09ef9d4204e",
+  "evidence/environment_x2_p10_coexist.log": "500b2c18036ee38fbb346c2df7b4634dae0645017c40050099c8a22b13b831de",
+  "evidence/environment_x2_plan.log": "5cae37f07108445a0308d7b1f0c2af8c439df4dfd1b30c6d1efe8b8a84485277",
+  "evidence/environment_x2_scene.log": "db9695622ffd4daef3a894fb372a308d707434e305a7ae1948e3c7eb5168c711"
+ }
+}

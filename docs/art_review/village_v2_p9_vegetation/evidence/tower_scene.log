@@ -1,0 +1,6 @@
+[TOWER] PASS 場景已掛 Vegetation/TowerYardP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9", "TowerYardP9"]
+[TOWER] PASS 場景接地（10／10 件構件・低木 origin 向下射線只認地形）：浮 > 0.06 m 0（最大 0.000）
+[TOWER] PASS 碰撞：構件箱 vs 火見櫓／建物／道路／其他植被 接觸 0
+[TOWER] PASS 實走：進出路＋巡回路＋道具置き場への踏み跡 膠囊 74 點被本 overlay／火見櫓擋 0 
+[TOWER] INFO TowerYardP9：31 件、MeshInstance 65、構件碰撞 6
+[TOWER] 結果：0 項失敗（scene）

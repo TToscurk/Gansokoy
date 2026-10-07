@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] PASS 場景已掛 Vegetation/MeadowP9（1 個），順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9 → MeadowP9
+[MDW] PASS art_revision＝P9 R5-3 Upright Grass / Meadow Layer 全村擴張 v5（多尺度分布・縁の domain warp・閾値侵食・群落 dominant・村外草地；ART_REVIEW）、visible
+[MDW] PASS 近級 1207 節點（影あり）＋中級 430 節點（影なし）、meadow_grass shader、碰撞 0（立ち草は碰撞なし）
+[MDW] PASS 永久 build rule：場景中 MeadowP9 全部 instance transform 非零（MultiMesh 節點 1637、instance 191703、零矩陣 0 ）
+[MDW] PASS 封存 GroundcoverP9 仍掛載・visible・res://maps/village_v2/gen/groundcover_p9.scn
+[MDW] INFO Props/MarketP10（並行中の P10）：掛載中
+[MDW] 結果：0 項失敗（scene）

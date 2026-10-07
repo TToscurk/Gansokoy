@@ -1,0 +1,31 @@
+{
+ "assembler": "res://tools/village_v2_waterside_lib.gd",
+ "asset": "waterside_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres": "e9101d1fac8febcb696e32ce3c379b64613aae7a0b976199a0b6ccef5669cd19",
+  "res://assets/village_v2/school_kit/SK_School.tres": "0058f4073998760d9ac43e8952e94fe902197fe461b5310a9c05a84c0aaf6865",
+  "res://assets/village_v2/waterside_kit/WK_Plant.tres": "d3256d6396b2c606a0608864d709787ea7aa34421a696a9203dd0743cb1f953b",
+  "res://assets/village_v2/waterside_kit/mesh/wk_iris.res": "02ad9894f6bbe4673e141ee498dc11f1cacdee1cc9d5127fbfa8755a775a2ec3",
+  "res://assets/village_v2/waterside_kit/mesh/wk_iris_l1.res": "2ad65966b4ca1cc70652fb41a0a44eb64ca3b5a256e09b592d2180eb7ab72d0e",
+  "res://assets/village_v2/waterside_kit/mesh/wk_reed.res": "bcfe10e44fdecf49566ac1c7f9a47eda4b9491bd13df72e729bc98d99cd128f3",
+  "res://assets/village_v2/waterside_kit/mesh/wk_reed_l1.res": "e9746e96cdcfe870ba3e8a65504813970f37734fdf6589c39373b936a5abd95a",
+  "res://assets/village_v2/waterside_kit/mesh/wk_reed_s.res": "b9ff5f40dc8eccd7e297f7e0813dcd85198c1cc48cc8f1b76821f85b867d053d",
+  "res://assets/village_v2/waterside_kit/mesh/wk_reed_s_l1.res": "3bcfb822b02476465491f55fb4e8c7017e1d64c51c673977fbb53e37aded1561",
+  "res://assets/village_v2/waterside_kit/mesh/wk_sedge.res": "3b6c47ee4d6c55ed8a67913445072d5da571294034a99bbc194b1c68d0c057f1",
+  "res://assets/village_v2/waterside_kit/mesh/wk_sedge_l1.res": "da3ae80b46c47c9323c0f44275974fc304e0c031a34d1ddd8a727c9e1e85bd0c",
+  "res://assets/village_v2/waterside_kit/mesh/wk_sonae.res": "b9e507cebe6397cabc58fc299adecd89be3d076e95517bc0492dfc8d617d4953",
+  "res://assets/village_v2/waterside_kit/mesh/wk_sonae_l1.res": "b5356d379319f92f9c396eafb56775b53b0c0f2c2e0c6a58fa4d6d5b04eed36d",
+  "res://assets/village_v2/waterside_kit/mesh/wk_tawara.res": "336fd4055c2f4582fdc8964ccde664a120d7e99e136679c83241a2ee48eda599",
+  "res://assets/village_v2/waterside_kit/mesh/wk_tawara3.res": "d2399719a404319befa1aeddb29aef35f892ad48304f44363eae63afdabdbd3e",
+  "res://assets/village_v2/waterside_kit/mesh/wk_tawara3_l1.res": "f92b728f856505c7feec474602ff234471830eddbcbb3d857656a9acce0d5d41",
+  "res://assets/village_v2/waterside_kit/mesh/wk_tawara_l1.res": "fa4b187fb21ffb00ddd0c99c7b97e0d7f03963db6dfaceb919323e347f529a54",
+  "res://assets/village_v2/waterside_kit/mesh/wk_usu.res": "28229abf5e737729a4af87b54180af70bc224f09d301d7633e19ad2af34cf256",
+  "res://assets/village_v2/waterside_kit/mesh/wk_usu_l1.res": "f799b690e611514e9d80f963e3fbb107c03ab4ca1debf6ce07cbed2d18587694",
+  "res://assets/village_v2/waterside_kit/src/modules_blender.json": "a48964de47813aeca833a920d7f3cd1ca2d9903ef60dfc8f8dd6042ad62a1640",
+  "res://tools/village_v2_waterside_lib.gd": "bcb960c40c58abf4bd331cc16351a9dcea0e9ea9d51b09f45378c6ec63324010"
+ },
+ "mesh_dir": "res://assets/village_v2/waterside_kit/mesh",
+ "modules": 16,
+ "tris_total": 3279
+}

@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ENV] PASS 場景已掛 Props/EnvironmentP9（1 個、Props の子：MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9）、P9 Vegetation 掛載不變（MeadowP9 は GroundcoverP9 の後）
+[ENV] PASS art_revision＝P9 R5-4 Existing Asset Environment Pass — 全村擴張 x2 targeted density & continuity（主 ≥ 3 件・satellite 2–4・杭は 2–5 本＋連れ・水邊は据え置き；ART_REVIEW）、visible、scene_file_path＝res://maps/village_v2/gen/environment_p9.scn
+[ENV] PASS 個別ノード：MeshInstance 1110（MultiMesh 0）、mesh は全部既存 kit の .res
+[ENV] PASS 類／event の木構造：edge 20、farm 9、forest 27、water 10、open 8（5 類とも存在）
+[ENV] PASS 並行 P10：Props/MarketP10 仍掛載・visible
+[ENV] PASS 並行 P10：Props/StreetP10 仍掛載・visible
+[ENV] PASS 並行 P10：Props/MarketWestP10 仍掛載・visible
+[ENV] 結果：0 項失敗（scene）

@@ -1,0 +1,28 @@
+{
+ "assembler": "res://tools/village_v2_geidontei_yard_lib.gd",
+ "asset": "geidon_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/geidon_kit/mesh/gd_chochin.res": "539a5c134d5d02f888ffa88877a46faca8a69357eab62118194da6c1da25fff0",
+  "res://assets/village_v2/geidon_kit/mesh/gd_chochin_l1.res": "c8466955dc9a45cec3b9eec527aeca7ba16d0eeddcd8edd3be0b30010218ccbb",
+  "res://assets/village_v2/geidon_kit/mesh/gd_fuda.res": "68f7489e77d8329263ca7f80291ade88d39cae3ebdcde55fdc8093ec62a91948",
+  "res://assets/village_v2/geidon_kit/mesh/gd_fuda_l1.res": "11ec7fc64a8a398e9bdbd41bf0ca4e0bc29f565caec35347ad335371e488d481",
+  "res://assets/village_v2/geidon_kit/mesh/gd_morijio.res": "6e5001ec8060744b6623b8ed5147ed494d77aaf9bf8c452ef1e9ca51974707e7",
+  "res://assets/village_v2/geidon_kit/mesh/gd_morijio_l1.res": "814e0e720cfc941d47c8ce0fd6b718c24371a60533507782da07bcac73eea8a1",
+  "res://assets/village_v2/geidon_kit/mesh/gd_shogi.res": "32f6005b00d7e742abe8932ed0bfc40b851a3626ae5250112b0084073527600f",
+  "res://assets/village_v2/geidon_kit/mesh/gd_shogi_l1.res": "b408d74344209e0bd7b062a8130ffe92db61a74513e1d11c3c1088c7ba5156e3",
+  "res://assets/village_v2/geidon_kit/mesh/gd_taru.res": "28e9c8a6dba5feb57ba8846855264d041004285eaeb3e28a9351aa34d244e0ca",
+  "res://assets/village_v2/geidon_kit/mesh/gd_taru_l1.res": "416a8f1baa96c0e74a260977adf88b541b2a7b11bd1a2e91dfea96bc64afd2ba",
+  "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi.res": "b1ed5d475073050572c7c2ecacdf87ef6b8ce9c964e4cdfecf200da9f960a4f9",
+  "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi_l1.res": "20dbafad1083a0b23cb638d3e180c9f1b5473e79c379a91f3b853093f74752b4",
+  "res://assets/village_v2/geidon_kit/mesh/gd_tray.res": "33886f4d791b693b279c9f7b54f8a39bd31354b82f62549157223c2202e00505",
+  "res://assets/village_v2/geidon_kit/mesh/gd_tray_l1.res": "b93ed0f69f7d8850d620afabe2fd43a86839bf5bf4a260555a3b7452264f231c",
+  "res://assets/village_v2/geidon_kit/src/modules_blender.json": "94fa3ffb13745a987af902f45c60c83b6dd0a0c2888f48d3dd528b265274bacb",
+  "res://assets/village_v2/geidontei/V2_Geidontei.tres": "b5c3af7eaa41454853ca7bf62409764f808bea4961d37bc44fa6dcf12aca1199",
+  "res://assets/village_v2/school_kit/SK_School.tres": "0058f4073998760d9ac43e8952e94fe902197fe461b5310a9c05a84c0aaf6865",
+  "res://tools/village_v2_geidontei_yard_lib.gd": "fdb7a6843a656cb73796dc67d230d9bfabbf1e74569fbc8ddf548feeb221b4c7"
+ },
+ "mesh_dir": "res://assets/village_v2/geidon_kit/mesh",
+ "modules": 14,
+ "tris_total": 2352
+}

@@ -1,0 +1,337 @@
+{
+ "_note": "P9 R3 竹 Kit 貼圖。由 tools/build_village_v2_bamboo_textures.py 產生，勿手改。全部程序產生（無外部來源）。",
+ "culm": {
+  "green": {
+   "files": {
+    "albedo": "res://assets/village_v2/bamboo_kit/tex/BC_green_albedo.jpg",
+    "normal": "res://assets/village_v2/bamboo_kit/tex/BC_green_normal.jpg"
+   },
+   "albedo_mean_srgb": "#546939",
+   "size": [
+    512,
+    1024
+   ],
+   "uv": "u＝稈周 0–1；v＝一個節間（0＝上節、1＝下節）"
+  },
+  "dead": {
+   "files": {
+    "albedo": "res://assets/village_v2/bamboo_kit/tex/BC_dead_albedo.jpg",
+    "normal": "res://assets/village_v2/bamboo_kit/tex/BC_dead_normal.jpg"
+   },
+   "albedo_mean_srgb": "#807962",
+   "size": [
+    512,
+    1024
+   ],
+   "uv": "u＝稈周 0–1；v＝一個節間（0＝上節、1＝下節）"
+  }
+ },
+ "atlas": {
+  "A": {
+   "file": "res://assets/village_v2/bamboo_kit/tex/BL_A_albedo.png",
+   "normal": "res://assets/village_v2/bamboo_kit/tex/BL_A_normal.png",
+   "size": [
+    2048,
+    1024
+   ],
+   "regions": {
+    "spray_a": {
+     "px": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "uv": [
+      0.0,
+      0.0,
+      0.25,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#4B622E",
+     "coverage": 0.235,
+     "prims": 147,
+     "cm_per_px": 0.0991,
+     "anchor_uv": [
+      0.125,
+      0.3694318143088247
+     ],
+     "bbox_px": [
+      22,
+      2,
+      462,
+      510
+     ],
+     "bbox_uv": [
+      0.0107421875,
+      0.001953125,
+      0.2255859375,
+      0.498046875
+     ]
+    },
+    "spray_b": {
+     "px": [
+      512,
+      0,
+      1024,
+      512
+     ],
+     "uv": [
+      0.25,
+      0.0,
+      0.5,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#485F2D",
+     "coverage": 0.308,
+     "prims": 258,
+     "cm_per_px": 0.0868,
+     "anchor_uv": [
+      0.375,
+      0.38604910906417456
+     ],
+     "bbox_px": [
+      588,
+      3,
+      998,
+      510
+     ],
+     "bbox_uv": [
+      0.287109375,
+      0.0029296875,
+      0.4873046875,
+      0.498046875
+     ]
+    },
+    "spray_young": {
+     "px": [
+      1024,
+      0,
+      1536,
+      512
+     ],
+     "uv": [
+      0.5,
+      0.0,
+      0.75,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#5F7934",
+     "coverage": 0.164,
+     "prims": 128,
+     "cm_per_px": 0.0868,
+     "anchor_uv": [
+      0.625,
+      0.42161781947430205
+     ],
+     "bbox_px": [
+      1027,
+      3,
+      1404,
+      510
+     ],
+     "bbox_uv": [
+      0.50146484375,
+      0.0029296875,
+      0.685546875,
+      0.498046875
+     ]
+    },
+    "spray_dry": {
+     "px": [
+      1536,
+      0,
+      2048,
+      512
+     ],
+     "uv": [
+      0.75,
+      0.0,
+      1.0,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#7D673A",
+     "coverage": 0.124,
+     "prims": 92,
+     "cm_per_px": 0.0863,
+     "anchor_uv": [
+      0.875,
+      0.4565261042708801
+     ],
+     "bbox_px": [
+      1681,
+      2,
+      1994,
+      510
+     ],
+     "bbox_uv": [
+      0.82080078125,
+      0.001953125,
+      0.9736328125,
+      0.498046875
+     ]
+    },
+    "spray_hang": {
+     "px": [
+      0,
+      512,
+      512,
+      1024
+     ],
+     "uv": [
+      0.0,
+      0.5,
+      0.25,
+      1.0
+     ],
+     "anchor": "top",
+     "aspect": 1.0,
+     "mean_srgb": "#506832",
+     "coverage": 0.131,
+     "prims": 213,
+     "cm_per_px": 0.1414,
+     "anchor_uv": [
+      0.125,
+      0.5072898695040822
+     ],
+     "bbox_px": [
+      113,
+      515,
+      436,
+      1022
+     ],
+     "bbox_uv": [
+      0.05517578125,
+      0.5029296875,
+      0.212890625,
+      0.998046875
+     ]
+    },
+    "sheath": {
+     "px": [
+      512,
+      512,
+      1024,
+      1024
+     ],
+     "uv": [
+      0.25,
+      0.5,
+      0.5,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#6A5837",
+     "coverage": 0.28,
+     "prims": 119,
+     "cm_per_px": 0.1173,
+     "anchor_uv": [
+      0.375,
+      0.994140625
+     ],
+     "bbox_px": [
+      626,
+      515,
+      910,
+      1022
+     ],
+     "bbox_uv": [
+      0.3056640625,
+      0.5029296875,
+      0.4443359375,
+      0.998046875
+     ]
+    },
+    "sheath_dry": {
+     "px": [
+      1024,
+      512,
+      1536,
+      1024
+     ],
+     "uv": [
+      0.5,
+      0.5,
+      0.75,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#807155",
+     "coverage": 0.267,
+     "prims": 90,
+     "cm_per_px": 0.1227,
+     "anchor_uv": [
+      0.625,
+      0.994140625
+     ],
+     "bbox_px": [
+      1149,
+      515,
+      1411,
+      1022
+     ],
+     "bbox_uv": [
+      0.56103515625,
+      0.5029296875,
+      0.68896484375,
+      0.998046875
+     ]
+    },
+    "litter": {
+     "px": [
+      1536,
+      512,
+      2048,
+      1024
+     ],
+     "uv": [
+      0.75,
+      0.5,
+      1.0,
+      1.0
+     ],
+     "anchor": "center",
+     "aspect": 1.0,
+     "mean_srgb": "#807044",
+     "coverage": 0.142,
+     "prims": 516,
+     "cm_per_px": 0.2276,
+     "anchor_uv": [
+      0.875,
+      0.75
+     ],
+     "bbox_px": [
+      1611,
+      571,
+      2046,
+      962
+     ],
+     "bbox_uv": [
+      0.78662109375,
+      0.5576171875,
+      0.9990234375,
+      0.939453125
+     ]
+    }
+   }
+  }
+ },
+ "files_sha256": {
+  "res://assets/village_v2/bamboo_kit/tex/BC_green_albedo.jpg": "bfbec2ac0e47d69ca2c6858bf3398f4b277b58246f0cd592106e69a3cc74e925",
+  "res://assets/village_v2/bamboo_kit/tex/BC_green_normal.jpg": "6a38cbf4149e5df5a960e7c7586382a0d2abd0c8d7c8ecc367de8c84043479eb",
+  "res://assets/village_v2/bamboo_kit/tex/BC_dead_albedo.jpg": "30c55e5f12ea4b9e1bec926276f69ddd42e9d1bdfe98b5a7618639eae9aaf766",
+  "res://assets/village_v2/bamboo_kit/tex/BC_dead_normal.jpg": "6e96bc1b1c093d436f3304148b9b89ccc7bbca1270ce8805044585b5c9172b54",
+  "res://assets/village_v2/bamboo_kit/tex/BL_A_albedo.png": "1d403a21dcc326c9f7c9d7ae7839890bc17e2849cb4444973345053c09448d13",
+  "res://assets/village_v2/bamboo_kit/tex/BL_A_normal.png": "c77c0ff4a1ba6b426b10541a7fe23fd67805d644197b36bd237d7a92d44e8588"
+ }
+}

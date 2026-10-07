@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ENV] INFO MeadowP9 規劃株を同 seed で再計算 113867 ms：114105 株
+[ENV] INFO satellite 試行：{ "edge_try": 65, "edge_empty": 18, "farm_try": 24, "forest_try": 77, "forest_empty": 14, "water_try": 36, "water_empty": 13, "water_unfit": 13, "farm_unfit": 3, "open_try": 34, "open_empty": 10, "forest_unfit": 1, "farm_empty": 2, "edge_unfit": 18 }
+[ENV] INFO 規劃 32256 ms（距離場 2246 ms）：錨 111・event 74・件 555；類の候補セル { "forest": 4514, "water": 425, "open": 701, "edge": 754, "farm": 1025 }；落とした 700
+[ENV] INFO event 型：edge/fence_frag 6、edge/shrub_pair 1、edge/stake_shrub 6、edge/stepping_out 7、farm/boundary 4、farm/sedge_edge 3、farm/stone_pile 2、forest/deadwood 3、forest/sasa_patch 7、forest/snag 5、forest/stone_fern 5、forest/under 7、open/exposed_stone 3、open/grove_edge 1、open/low_shrub 1、open/rock_group 3、water/dry_transition 4、water/reed_bed 2、water/stone_shore 4
+[ENV] INFO 落とした理由：{ "bare": 141, "meadow": 47, "": 129, "trunk": 161, "far": 20, "sealed": 10, "overlap": 35, "p7": 123, "offline": 5, "water": 8, "inland": 19, "farm": 1, "terrain": 1 }
+[ENV] INFO 柴垣の落とした理由：{ "farm": 1 }
+[ENV] INFO 中尺度外の件：{ "gk_tobi_b": 10, "rb_cob_c": 1, "rb_cob_b": 1, "rb_cob_a": 1, "gk_tobi_a": 5, "gk_tobi_c": 11 }
+[ENV] PASS 反向 n_road → 「禁區」必須 FAIL（失敗項 3：分工：R5- ／ 禁區：路面・ ／ 階層（主 c）
+[ENV] PASS 反向 n_p10 → 「禁區」必須 FAIL（失敗項 3：分工：R5- ／ 禁區：路面・ ／ 階層（主 c）
+[ENV] PASS 反向 n_p10pad → 「禁區」必須 FAIL（失敗項 3：禁區：路面・ ／ 階層（主 c ／ 邊界邏輯：田）
+[ENV] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1：接地：浮き（）
+[ENV] PASS 反向 n_front → 「戸口」必須 FAIL（失敗項 4：分工：R5- ／ 禁區：路面・ ／ 戸口・表側： ／ 階層（主 c）
+[ENV] PASS 反向 n_micro → 「中尺度」必須 FAIL（失敗項 5：Meadow ／ 禁區：路面・ ／ 非展示：同じ ／ 邊界邏輯：田 ／ 中尺度：高さ）
+[ENV] PASS 反向 n_legacy → 「既存資產」必須 FAIL（失敗項 4：既存資產のみ ／ 分工：R5- ／ Meadow ／ 禁區：路面・）
+[ENV] PASS 反向 n_lifeprop → 「分工」必須 FAIL（失敗項 3：分工：R5- ／ Meadow ／ 禁區：路面・）
+[ENV] PASS 反向 n_grass → 「MeadowP9」必須 FAIL（失敗項 4：Meadow ／ 接地：浮き（ ／ 禁區：路面・ ／ 階層（主 c）
+[ENV] PASS 反向 n_scatter → 「階層」必須 FAIL（失敗項 4：接地：浮き（ ／ 禁區：路面・ ／ 階層（主 c ／ 邊界邏輯：田）
+[ENV] PASS 反向 n_nohier → 「階層」必須 FAIL（失敗項 1：階層（主 c）
+[ENV] PASS 反向 n_showcase → 「非展示」必須 FAIL（失敗項 4：Meadow ／ 接地：浮き（ ／ 禁區：路面・ ／ 非展示：同じ）
+[ENV] PASS 反向 n_logshrub → 「非展示」必須 FAIL（失敗項 2：禁區：路面・ ／ 非展示：同じ）
+[ENV] PASS 反向 n_equidistant → 「間隔」必須 FAIL（失敗項 4：接地：浮き（ ／ 禁區：路面・ ／ 間隔：錨の最 ／ 邊界邏輯：田）
+[ENV] PASS 反向 n_inland_reed → 「邊界邏輯」必須 FAIL（失敗項 1：邊界邏輯：田）
+[ENV] PASS 反向 n_fill → 「大留白」必須 FAIL（失敗項 5：接地：浮き（ ／ 禁區：路面・ ／ 階層（主 c ／ 間隔：錨の最 ／ 大留白：各類）
+[ENV] PASS 反向 n_fence_ring → 「村邊」必須 FAIL（失敗項 4：接地：浮き（ ／ 禁區：路面・ ／ 非展示：同じ ／ 村邊：四つ目）
+[ENV] PASS 反向 n_p10near → 「P10 優先」必須 FAIL（失敗項 1：P10 優先）
+[ENV] PASS 反向 n_lonestake → 「邊界邏輯」必須 FAIL（失敗項 3：接地：浮き（ ／ 階層（主 c ／ 邊界邏輯：田）
+[ENV] 結果：0 項失敗（negatives）

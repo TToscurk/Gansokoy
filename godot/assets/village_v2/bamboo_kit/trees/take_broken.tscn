@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_broken_LOD0.res" id="1_qhj4o"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_broken_LOD1.res" id="2_liqyd"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_broken_LOD2.res" id="3_rslmg"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_broken_LOD3.res" id="4_2wtnd"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vy7te"]
+height = 3.2032208
+radius = 0.04572271
+
+[node name="take_broken" type="Node3D" unique_id=552078109]
+metadata/veg_id = "take_broken"
+metadata/veg_group = "bamboo"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=1874533343]
+visibility_range_end = 30.82584
+instance_shader_parameters/lod_band = Vector4(0, 25, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(0.8940877, 3.400134, 0.20481816)
+mesh = ExtResource("1_qhj4o")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=1997168868]
+visibility_range_begin = 19.17416
+visibility_range_end = 67.92584
+instance_shader_parameters/lod_band = Vector4(25, 60, 3, 7.2)
+instance_shader_parameters/lod_ref = Vector3(0.8940877, 3.400134, 0.20481816)
+mesh = ExtResource("2_liqyd")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=1054580630]
+visibility_range_begin = 52.074158
+visibility_range_end = 152.72585
+instance_shader_parameters/lod_band = Vector4(60, 140, 7.2, 16.8)
+instance_shader_parameters/lod_ref = Vector3(0.8940877, 3.400134, 0.20481816)
+mesh = ExtResource("3_rslmg")
+
+[node name="LOD3" type="MeshInstance3D" parent="." unique_id=1549653320]
+visibility_range_begin = 127.27416
+visibility_range_end = 500.0
+instance_shader_parameters/lod_band = Vector4(140, 0, 16.8, 0)
+instance_shader_parameters/lod_ref = Vector3(0.8940877, 3.400134, 0.20481816)
+mesh = ExtResource("4_2wtnd")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=1958326943]
+
+[node name="Trunk" type="CollisionShape3D" parent="Collision" unique_id=581381665]
+transform = Transform3D(-0.9989945, 0.044832673, 0, 0.044832673, 0.9989945, 0, 0, 0, -1, 0.07180448, 1.4, 0)
+shape = SubResource("CylinderShape3D_vy7te")

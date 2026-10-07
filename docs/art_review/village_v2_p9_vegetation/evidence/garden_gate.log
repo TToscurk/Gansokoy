@@ -1,0 +1,10 @@
+[GARDEN] INFO 規劃 335 件（271 ms）、池面 y 1.12
+[GARDEN] PASS 邊界：335 件全在圍牆內（樹幹距牆 ≥ 0.6 m、構件 ≥ 0.6×半徑）、不進本屋台基／玄關、不擋大宅門開口；違規 0 
+[GARDEN] PASS 接地：構件／植栽 origin ≤ 環 8 點最低地面、埋 ≤ 0.45 m；延段貼地 ±5 cm：浮 0（最大 0.00 m）、過深 0
+[GARDEN] PASS 主軸：大宅門 → 玄關 延段 16 枚、最大板距 1.49 m（≤ 1.5）、鉤の手 1 處；主軸兩側 0.6 m 視廊內高物 0 
+[GARDEN] PASS 留白：前庭主軸以西 285 m² 實體覆蓋 17.4 %（≤ 18 %；砂利面刻意空著）
+[GARDEN] PASS 池泉：池 137 m²、池面 y 1.12（池底最高 1.04＋≥ 0.02；岸最低 0.98＋≤ 0.15）、中島在池內且離岸 ≥ 1 m true、曲水 101 站水面往下游不升 true、入池 true（落差 0.16 m）
+[GARDEN] PASS 飛石：58 枚、步距 0.55–1.5 m 違規 0、落水（非沢飛び）0
+[GARDEN] PASS 元素：{ "gk_nobe": 16, "niwamatsu": 4, "tsutsuji": 15, "sakura": 1, "gk_yotsume": 9, "gk_amaochi": 67, "gk_toro": 3, "gk_kei_mid": 4, "momiji": 5, "gk_tobi": 58, "gk_bridge": 1, "gk_kei_tall": 2, "gk_tsukubai": 1, "gk_sodegaki": 1 }
+[GARDEN] INFO 庭園：335 件（植栽 46、構件 289）
+[GARDEN] 結果：0 項失敗

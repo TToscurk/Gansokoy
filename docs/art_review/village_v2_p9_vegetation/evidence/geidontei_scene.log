@@ -1,0 +1,6 @@
+[GEID] PASS 場景已掛 Vegetation/GeidonteiP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9", "TowerYardP9", "SuzunaanP9", "GeidonteiP9"]
+[GEID] PASS 場景接地（15／15 件構件・低木 origin 向下射線只認地形；盆は床几・樽卓の上）：浮 > 0.06 m 0（最大 0.000）
+[GEID] PASS 碰撞：構件箱 vs 鯢吞亭 Hero／建物／道路／其他植被 接觸 0
+[GEID] PASS 實走：入口軸＋庇下通路＋南の踏み跡（主街→外の席→勝手口）膠囊 60 點被本 overlay／鯢吞亭擋 0 
+[GEID] INFO GeidonteiP9：33 件、MeshInstance 69、構件碰撞 10
+[GEID] 結果：0 項失敗（scene）

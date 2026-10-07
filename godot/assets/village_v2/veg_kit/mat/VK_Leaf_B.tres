@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_leaf.gdshader" id="1_ft2n5"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VL_B_albedo.png" id="2_chl6f"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VL_B_normal.png" id="3_k5hb6"]
+
+[resource]
+resource_name = "VK_Leaf_B"
+render_priority = 0
+shader = ExtResource("1_ft2n5")
+shader_parameter/albedo_tex = ExtResource("2_chl6f")
+shader_parameter/normal_tex = ExtResource("3_k5hb6")
+shader_parameter/albedo_mul = 1.0
+shader_parameter/normal_depth = 0.8
+shader_parameter/roughness = 0.82
+shader_parameter/specular = 0.22
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = null
+shader_parameter/flutter = null
+shader_parameter/alpha_cut = 0.5
+shader_parameter/alpha_mip_boost = 0.18
+shader_parameter/translucency = 0.35
+shader_parameter/crown_normal = null

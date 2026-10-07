@@ -1,0 +1,8 @@
+[SHRINE] INFO 規劃 122 件（1080 ms）；拒絕原因 { "building": 4, "sightline": 40, "landmark": 3, "own_under": 33, "sealed_under": 27, "sealed_trunk": 44, "steep": 12, "sealed_crown": 106, "own_crown": 11, "own_trunk": 10, "road": 6 }
+[SHRINE] PASS 反向 road → 「參道淨空」必須 FAIL（失敗項 2）
+[SHRINE] PASS 反向 sight → 「視線」必須 FAIL（失敗項 2）
+[SHRINE] PASS 反向 void → 「留白」必須 FAIL（失敗項 2）
+[SHRINE] PASS 反向 uniform → 「非均勻」必須 FAIL（失敗項 3）
+[SHRINE] PASS 反向 float → 「接地」必須 FAIL（失敗項 1）
+[SHRINE] PASS 反向 rope → 「注連繩」必須 FAIL（失敗項 1）
+[SHRINE] 結果：0 項失敗（negatives）

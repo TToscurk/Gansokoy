@@ -1,0 +1,59 @@
+{
+  "phase": "P9 R2 Forest Belts（ForestP9 overlay，取代 P0 六塊林冠 placeholder＋村落周邊坡地植被）",
+  "status": "ART_APPROVED",
+  "approved_by": "user",
+  "approved_at": "2026-10-02",
+  "note": "P9 R2 封存：規劃器／gate／效能量測腳本／烘焙 overlay／規劃報告／審圖鏡位、4 張 ART_REVIEW 總表、gate 證據的 sha256。任何一項改變 → verify_village_v2_forest.gd -- --seal FAIL；只有真正 regression 才重開 P9 R2。village_v2.tscn 不封（後續階段仍會編輯），以 ForestP9 掛載節點＋overlay 雜湊代表。（2026-10-02 封存後同日：verify_village_v2_forest.gd 加 --negatives 回歸模式＋quiet 旗標，規劃／gate 判定不變，重算此檔雜湊。）",
+  "renderer": "Forward+（ART_REVIEW 與正式 benchmark）；Compatibility 只作非視覺功能測試",
+  "decisions": {
+    "main_north": "intentionally occluded urban sightline：不改 terrain／building massing；P10／P13 可用街道端景、旗、燈籠、樹梢、霧氣／光照強化 vanishing point，不要求看到完整主峰或社殿",
+    "p1_gate_scope": "verify_village_v2_terrain.gd 可見三角面只計 Terrain 子樹、場景載入只計 P1／base（不含 Vegetation overlay）；門檻 6M／3000 ms 不變，overlay 成本另印 INFO",
+    "known_external_issue": "P5 asset reset gate 的 res://shaders/sky_daynight.gdshader 為既有獨立問題"
+  },
+  "p12_technical_debt": {
+    "forest_gpu_delta_ms_r2": {
+      "T1_eye": 2.64,
+      "N2_eye": 0.99,
+      "S2_road": 0.5,
+      "Hieda_front": 1.45,
+      "Main_north": 1.23,
+      "North_ridge": 3.19,
+      "Forest_overlook": 2.43,
+      "High_overlook": 7.29,
+      "West_edge": 8.14,
+      "West_edge_s": 9.69,
+      "SW_out": 6.89,
+      "Hill_approach": 4.68
+    },
+    "guardrail": "一般 ≤ 3 ms、forest-heavy ≤ 4.5 ms、render CPU ≤ 3 ms（不降低）",
+    "shadow_step1": "投影全關省 1.2–3.8 ms（林帶成本約 30–40 %）；只關遠級 LOD3 投影省 0.2–0.9 ms",
+    "lod": "林緣鏡位 50 m 外仍 LOD0/1 44–64 棵（80–117k 三角）",
+    "load_ms": "forest_p9.scn load 約 185–195 ms＋instantiate 約 250–260 ms（headless）",
+    "visible_tris": "Vegetation overlay 25.8 M（近級逐棵 LOD0／LOD1 節點全計）",
+    "order": "shadow → visibility range → LOD → 20–30 m spatial chunking（West_edge 先試）→ overdraw → material batching → density"
+  },
+  "gate": {
+    "local": "verify_village_v2_forest.gd 0 失敗",
+    "negatives": "hinoki／uniform／float／road／sightline 5/5 各自瞄準項 FAIL",
+    "seal_cmd": "verify_village_v2_forest.gd -- --seal"
+  },
+  "frozen": {
+    "godot/tools/village_v2_forest_lib.gd": "0dced6152f2817568298f908df499063dbd03ade804b9ff28e62f438afe2f22f",
+    "godot/tools/verify_village_v2_forest.gd": "72c83088c5bbd20125a7bcdd369b6e45ecb2c2cfdc0bef3ac937cd360fff4b27",
+    "godot/tools/verify_village_v2_forest_cost.gd": "bb4442488d880562086d5ecf0fbe1cc2910851a7ee376f2df8f90167857543c4",
+    "godot/maps/village_v2/gen/forest_p9.scn": "6e90022207be52f49488dd8ccdfe56a34dea271ba1fca6942bae384aa32b5a98",
+    "godot/data/village_v2_p9r2_forest.json": "4b45dab366d5d21e8ec9fef3993a48af1bf9c6fdb5e064fb65437df1ddc8d854",
+    "godot/tools/shots/village_v2_p9r2.json": "bb0502753bf8c997874e2a88bc25fc37e44a52197eb0267c8d91e81633dc280d"
+  },
+  "art_review_images": {
+    "r2/r2_sheet_bald.png": "7c847fd7b9335dbb013b2f045f78f984efbd00a57646d55c2a36a546fb905c13",
+    "r2/r2_sheet_village.png": "73a1cd5709a7efc7d647c6dc9201ddf619488bef2adb1c1d56f36217b877b666",
+    "r2/r2_sheet_far.png": "c62047410dac9ebbce27a26360fb906c2e2e669302f9c09a3aa35222c758b48f",
+    "r2/r2_sheet_edge.png": "0d93eeb1e8497b2e53853698cb55b6cae739f76f4a0f5fcb03d787eaadb9f99d"
+  },
+  "evidence": {
+    "evidence/forest_gate.log": "301c1100b3634e0f7aacb6f7087ca8229471b5dafa0ee000286f866015232222",
+    "evidence/forest_negatives.log": "c96e0a1d1ffbd2c335c396274111393928829d3f6941696f59ba1d786311f7a8",
+    "evidence/p1_terrain_gate_after_r2.log": "ced70e38881683f7424005fbeba777fd1d39ad6ac8d6ff8a6bca0994d42f0505"
+  }
+}

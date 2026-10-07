@@ -1,0 +1,144 @@
+{
+ "phase": "P9 Vegetation / Forest / Bamboo / Garden / Hero Surroundings / Groundcover / Meadow / Environment",
+ "status": "P9_CLOSED",
+ "closed_by": "user",
+ "closed_at": "2026-10-05",
+ "ruling": "使用者（2026-10-05）：R5-4 x2＝ART_APPROVED（forest／village edge／open／waterside PASS、farm edge PASS with non-blocking handoff）。不開 x3。封存 R5-4 → 更新 R5 final seal → P9 最終 regression → P9 FINAL SEAL → P9 CLOSED；P10 繼續生活層與田邊 human-use readability。",
+ "do_not_modify_without_user_reopen": [
+  "MeadowP9（R5-3）",
+  "EnvironmentP9（R5-4）",
+  "R5 Macro Ground（GroundcoverP9）",
+  "R1–R4 sealed content"
+ ],
+ "sub_seals": {
+  "R1_tree_kit": {
+   "file": "godot/data/village_v2_p9r1_seal.json",
+   "sha256": "6ddaa475d23a255a23563bef86056139de5ced835b8463fa8c4c4c517bfe208b",
+   "regression_tag": "VEG",
+   "verify": "verify_village_v2_veg_gate.gd --seal"
+  },
+  "R2_forest_belts": {
+   "file": "godot/data/village_v2_p9r2_seal.json",
+   "sha256": "adc5b76732bf0050d343d820257208704f7cc85313efa8b225fc2e3a483445c6",
+   "regression_tag": "FOREST",
+   "verify": "verify_village_v2_forest.gd --seal"
+  },
+  "R3_bamboo": {
+   "file": "godot/data/village_v2_p9r3_seal.json",
+   "sha256": "bec6fc99cb9934e72ad78a52ddad9e288626f66fb33b63f9662ed382bd7b7b6f",
+   "regression_tag": "BPLACE",
+   "verify": "verify_village_v2_bamboo_place.gd --seal"
+  },
+  "R4_hieda_garden": {
+   "file": "godot/data/village_v2_p9r4_seal.json",
+   "sha256": "912260e420d0f6df2d7d27de672411028284079dfea07eec432b66a947c27faa",
+   "regression_tag": "GARDEN",
+   "verify": "verify_village_v2_hieda_garden.gd --seal"
+  },
+  "R4_2_shrine_grove": {
+   "file": "godot/data/village_v2_p9r42_seal.json",
+   "sha256": "61d9d73d5fc7eeb83f526416c3bfd6ed213ebef5f362b62d5079d9035feb1a44",
+   "regression_tag": "SHRINE",
+   "verify": "verify_village_v2_shrine_grove.gd --seal"
+  },
+  "R4_3_school_yard": {
+   "file": "godot/data/village_v2_p9r43_seal.json",
+   "sha256": "f2a226d3164a9f18855b0f388ea2d2b02e574ce5c393a29056530e200277fce7",
+   "regression_tag": "SCHOOL",
+   "verify": "verify_village_v2_school_yard.gd --seal"
+  },
+  "R4_4_waterside": {
+   "file": "godot/data/village_v2_p9r44_seal.json",
+   "sha256": "12d3eeb99d65db5c1db6bb3364baf7e30bfe11f04b87b64248e356d69dcee6ba",
+   "regression_tag": "WATER",
+   "verify": "verify_village_v2_waterside.gd --seal"
+  },
+  "R4_5_tower_yard": {
+   "file": "godot/data/village_v2_p9r45_seal.json",
+   "sha256": "b98009da626e9c3ca3fe6b52f2047540d9102e3e2c04994b427e2752dcf3812a",
+   "regression_tag": "TOWER",
+   "verify": "verify_village_v2_tower_yard.gd --seal"
+  },
+  "R4_6_suzunaan": {
+   "file": "godot/data/village_v2_p9r46_seal.json",
+   "sha256": "d3b8ee4fdb1ecbe7da727391b9ae1105b2d5e402314352a756c770f571f6817b",
+   "regression_tag": "SUZU",
+   "verify": "verify_village_v2_suzunaan_yard.gd --seal"
+  },
+  "R4_7_geidontei": {
+   "file": "godot/data/village_v2_p9r47_seal.json",
+   "sha256": "0d720652985da741703ea6cc89ac0f9cdb326553dd1ba96ad4367e3bd2e6bf11",
+   "regression_tag": "GEID",
+   "verify": "verify_village_v2_geidontei_yard.gd --seal"
+  },
+  "R4_8_kirisame": {
+   "file": "godot/data/village_v2_p9r48_seal.json",
+   "sha256": "f5d77ac1b09916e53e892682656ae9229613fcefc83123efd5e1d0023f14499f",
+   "regression_tag": "KIRI",
+   "verify": "verify_village_v2_kirisame_yard.gd --seal"
+  },
+  "R5_final_macro_ground": {
+   "file": "godot/data/village_v2_p9r5_seal.json",
+   "sha256": "7c738108b794e24d6575f4d431e48b1b593222f6cc1dffffbfe5b6b687a0c667",
+   "regression_tag": "GC",
+   "verify": "verify_village_v2_groundcover.gd --seal"
+  },
+  "R5_3_meadow": {
+   "file": "godot/data/village_v2_p9r53_seal.json",
+   "sha256": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
+   "regression_tag": "MDW",
+   "verify": "verify_village_v2_meadow.gd --seal"
+  },
+  "R5_4_environment": {
+   "file": "godot/data/village_v2_p9r54_seal.json",
+   "sha256": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+   "regression_tag": "ENV",
+   "verify": "verify_village_v2_environment.gd --seal"
+  }
+ },
+ "mount_order": {
+  "Vegetation": [
+   "ForestP9",
+   "BambooP9",
+   "HiedaGardenP9",
+   "ShrineGroveP9",
+   "SchoolYardP9",
+   "WatersideP9",
+   "TowerYardP9",
+   "SuzunaanP9",
+   "GeidonteiP9",
+   "KirisameP9",
+   "GroundcoverP9",
+   "MeadowP9"
+  ],
+  "Props": [
+   "MarketP10",
+   "StreetP10",
+   "MarketWestP10",
+   "EnvironmentP9"
+  ]
+ },
+ "events": [
+  "R5-3 RESEALED_AFTER_EQUIVALENT_REBAKE（village_v2_p9r53_seal.json reseal_history[0]）",
+  "R5 Macro Ground LIMITED_REOPEN_P10R1B_ROJI1_CLEAR（使用者授權、14:01:47 重烘、14:23:39 R5 seal 更新；village_v2_p9r5_seal.json reseal_history／final.events）"
+ ],
+ "handoffs": {
+  "P10": [
+   "Farm/Village Human-use Layer（田邊的人為使用邊界：農具・籃筐・作業暫放物・踩踏／使用點・農田出入口・NPC work anchors）",
+   "後院生活 props・路口 props（R5 以來）"
+  ],
+  "P12": [
+   "P8 T1 田中 GPU、P9 performance debt（Compatibility 非 gate）"
+  ],
+  "P13": [
+   "global lighting／sky ambient（闊葉樹幹偏藍・暗部・偏色）、遠景地被存在感"
+  ]
+ },
+ "non_blocking_r5_4": [
+  "少數村邊深色木杭仍較突出",
+  "少數林緣枯立木偏孤立",
+  "部分灌木 cluster 尺度相近，可看出一些排列節奏",
+  "物件底下缺少局部踩實土／濕痕過渡；R5 Macro Ground 已封存，不在本輪重開",
+  "Farm edge 的 human-use readability 移交 P10（Farm/Village Human-use Layer）"
+ ]
+}

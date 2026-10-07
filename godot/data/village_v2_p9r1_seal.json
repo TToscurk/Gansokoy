@@ -1,0 +1,43 @@
+{
+ "phase": "P9 R1 Tree Asset Creation（veg_kit 樹庫）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-01",
+ "note": "P9 R1 封存：樹庫（manifest 遞移涵蓋全部 mesh／材質／shader／貼圖／prefab）、生成器、LOD 剪影指標、7 張核准總表與 gate 證據的 sha256。任何一項改變 → verify_village_v2_veg_gate.gd --seal FAIL；只有真正 regression 才重開 R1。",
+ "species_policy": {
+  "hinoki_a／hinoki_b": "secondary vegetation：不作 Hero、不作 skyline 主力、不在重要視線單獨展示；混入森林中後層與神社鎮守林，針葉配置約 5–15 %。不再重做，除非取得明顯更好的 foliage texture source。",
+  "R2 主林冠": "杉 A／B／C＋御神木杉＋赤松 A／B、黑松與闊葉等已通過樹種"
+ },
+ "gate": {
+  "asset_gate": "11/11 PASS（headless 9＋render 2）",
+  "negatives": "slab→grounding、lod→lod、collision→collision、material→materials、perf→perf、scale→size；6/6 如預期 FAIL",
+  "regress_cmd": "verify_village_v2_veg_gate.gd -- --regress",
+  "negatives_cmd": "verify_village_v2_veg_gate.gd -- --negatives",
+  "seal_cmd": "verify_village_v2_veg_gate.gd -- --seal"
+ },
+ "lod_metrics_ref": "godot/assets/village_v2/veg_kit/src/lod_silhouette.json（ART_REVIEW 參考，不是 gate）",
+ "frozen": {
+  "godot/assets/blender/village_v2/build_veg_kit.py": "9c676fa9a8c452054182fdfad72c38cb9de950443aab73920ee24607e99a3a8e",
+  "godot/assets/blender/village_v2/veg_sil.py": "e59b23938c87ff73af6fd7d81dce8d8439944b640da971dc79c2cfc49f61d759",
+  "tools/build_village_v2_veg_textures.py": "bc042a5aa9cb958fbf72e51b79ded1208e83e3efdad297712c92b2c8a22a6e13",
+  "godot/assets/village_v2/veg_kit/veg_kit_manifest.json": "7ee8d233a48a6678b398dc0c752591f59837223405cf251d4205575672635ea6",
+  "godot/assets/village_v2/veg_kit/gate.json": "6eef91a6aa88d4f3d351a7bce20457d14f85f1c55748f2ea6d9316d16fd6bdc7",
+  "godot/assets/village_v2/veg_kit/src/modules_blender.json": "742214f550aba32accfd3bd9697a59d9223db0927a9c4644d9dbdf9b538c84db",
+  "godot/assets/village_v2/veg_kit/src/lod_silhouette.json": "e6d59c560acfccc4ec2ba5a74542f688044ea79f05769b46cce135390178b3ab",
+  "godot/assets/village_v2/veg_kit/src/veg_kit.glb": "fc58b1c660242451dcec1f4642668c86dbe2fb0d6299fb888009b31c47f2da82"
+ },
+ "art_review_images": {
+  "r1/r1_sheet_near.png": "9d08a3162be0af090abb7b507222892b340595a953995c1d0a550d8d49a1a8f4",
+  "r1/r1_sheet_mid.png": "729fa9b398dbb7b1a48d85097cb9cb99df68f7fc617eb6d9f637013f643779ec",
+  "r1/r1_sheet_far.png": "19f16b26574deeae5c25ac973fe3f95c0693dcb3afe2969a9c22a12323ffeb4b",
+  "r1/r1_sheet_lods.png": "447a9f4b192be47f7fda3d0430d8e197b2a27b4cb20c7d4b7a0fd1533ad4a57d",
+  "r1/r1_sheet_colors.png": "d3796cc113b84d80f7e6d27c707d26a55edc516e3639040da47ad5695bced76a",
+  "r1/r1_sheet_sweep.png": "2c4d5a737335774fa17f70c35f58eb002bfcc91a9a711e9e5c246bd3e003cf86",
+  "r1_vs_r1c.png": "f6990a5d79e657799c9c6098075d610004177850ee88a7006a5cb1275e6dfd7f"
+ },
+ "evidence": {
+  "evidence/veg_gate_regress_headless.log": "b68d471371bd69d12ed2b584f3270d630d2b175e0290276577a780b22b6b0ed2",
+  "evidence/veg_gate_negatives.log": "152fe71f991c547d0acd7627afb2bbcffbfd054d624a2ea2e49548afd2328ee2",
+  "evidence/veg_gate_render.log": "8e925d62b9585617bd5b3f6cb7d4d8f559e440184fbda2c8b341ee613dbb0f05"
+ }
+}

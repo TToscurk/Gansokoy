@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] INFO cost A_meadow_1_near：GPU OFF 12.87 ms → ON 27.93 ms（+15.05 ms、3 回の中央値）
+[MDW] INFO cost A_meadow_1_mid：GPU OFF 12.10 ms → ON 20.57 ms（+8.47 ms、3 回の中央値）
+[MDW] INFO cost A_meadow_2_near：GPU OFF 16.22 ms → ON 25.52 ms（+9.30 ms、3 回の中央値）
+[MDW] INFO cost A_meadow_2_mid：GPU OFF 19.38 ms → ON 29.02 ms（+9.64 ms、3 回の中央値）
+[MDW] INFO cost B_edge_1_near：GPU OFF 14.71 ms → ON 16.90 ms（+2.19 ms、3 回の中央値）
+[MDW] INFO cost B_edge_1_mid：GPU OFF 16.17 ms → ON 20.48 ms（+4.30 ms、3 回の中央値）
+[MDW] INFO cost B_edge_2_near：GPU OFF 18.40 ms → ON 22.58 ms（+4.17 ms、3 回の中央値）
+[MDW] INFO cost B_edge_2_mid：GPU OFF 16.39 ms → ON 19.73 ms（+3.33 ms、3 回の中央値）
+[MDW] INFO cost C_forest_1_near：GPU OFF 20.90 ms → ON 29.10 ms（+8.21 ms、3 回の中央値）
+[MDW] INFO cost C_forest_1_mid：GPU OFF 23.21 ms → ON 24.09 ms（+0.88 ms、3 回の中央値）
+[MDW] INFO cost C_forest_2_near：GPU OFF 14.76 ms → ON 18.14 ms（+3.38 ms、3 回の中央値）
+[MDW] INFO cost C_forest_2_mid：GPU OFF 15.25 ms → ON 17.89 ms（+2.64 ms、3 回の中央値）
+[MDW] INFO cost D_farm_1_near：GPU OFF 21.58 ms → ON 30.06 ms（+8.48 ms、3 回の中央値）
+[MDW] INFO cost D_farm_1_mid：GPU OFF 18.10 ms → ON 25.14 ms（+7.04 ms、3 回の中央値）
+[MDW] INFO cost D_farm_2_near：GPU OFF 17.81 ms → ON 18.28 ms（+0.47 ms、3 回の中央値）
+[MDW] INFO cost D_farm_2_mid：GPU OFF 19.40 ms → ON 21.76 ms（+2.36 ms、3 回の中央値）
+[MDW] INFO cost E_stream_1_near：GPU OFF 12.68 ms → ON 19.73 ms（+7.05 ms、3 回の中央値）
+[MDW] INFO cost E_stream_1_mid：GPU OFF 11.11 ms → ON 19.42 ms（+8.31 ms、3 回の中央値）
+[MDW] INFO cost E_stream_2_near：GPU OFF 6.84 ms → ON 9.18 ms（+2.34 ms、3 回の中央値）
+[MDW] INFO cost E_stream_2_mid：GPU OFF 5.24 ms → ON 7.35 ms（+2.10 ms、3 回の中央値）
+[MDW] INFO cost F_slope_1_near：GPU OFF 17.58 ms → ON 22.61 ms（+5.03 ms、3 回の中央値）
+[MDW] INFO cost F_slope_1_mid：GPU OFF 18.32 ms → ON 24.17 ms（+5.86 ms、3 回の中央値）
+[MDW] INFO cost F_slope_2_near：GPU OFF 10.53 ms → ON 13.69 ms（+3.16 ms、3 回の中央値）
+[MDW] INFO cost F_slope_2_mid：GPU OFF 14.36 ms → ON 18.24 ms（+3.88 ms、3 回の中央値）
+[MDW] INFO cost G_yard_1_near：GPU OFF 15.70 ms → ON 16.61 ms（+0.91 ms、3 回の中央値）
+[MDW] INFO cost G_yard_1_mid：GPU OFF 13.64 ms → ON 15.20 ms（+1.56 ms、3 回の中央値）
+[MDW] INFO cost G_yard_2_near：GPU OFF 11.38 ms → ON 11.95 ms（+0.57 ms、3 回の中央値）
+[MDW] INFO cost G_yard_2_mid：GPU OFF 13.08 ms → ON 14.29 ms（+1.21 ms、3 回の中央値）
+[MDW] INFO cost H_open_1_near：GPU OFF 11.10 ms → ON 15.76 ms（+4.66 ms、3 回の中央値）
+[MDW] INFO cost H_open_1_mid：GPU OFF 12.66 ms → ON 16.22 ms（+3.56 ms、3 回の中央値）
+[MDW] INFO cost H_open_2_near：GPU OFF 16.99 ms → ON 18.55 ms（+1.56 ms、3 回の中央値）
+[MDW] INFO cost H_open_2_mid：GPU OFF 12.12 ms → ON 12.99 ms（+0.87 ms、3 回の中央値）
+[MDW] INFO cost：最差の機位 +15.05 ms（Forward+、(1152, 648)、VSync off；INFO＝P12 資料、catastrophic のみ阻止；並行する他の Godot 行程があると汚染される）

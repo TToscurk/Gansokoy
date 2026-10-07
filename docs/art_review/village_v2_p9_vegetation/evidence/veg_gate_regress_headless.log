@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[VEG] PASS veg_kit size：34 棵：LOD0 高 vs 設計最大差 0.0 %（fern_a）、冠幅最大差 0.0 %；違規 0
+[VEG] PASS veg_kit parcel_fit：R1 不植入 village_v2（規格：先獨立審圖場景）；審圖場景 34 棵 LOD0 外框（XZ 內縮 15 %）互穿 0；地塊／道路／建築於 P9 R2 植入時驗
+[VEG] PASS veg_kit grounding：pivot＝根部：樹幹基部（碰撞圓柱底）離原點 ≤ 0.15 m、接地交線中心最大偏 0.32 m（≤ 0.15＋0.6×dbh，板根不對稱）；無自帶土台：貼地 ≤ 0.15 m 朝上水平面最大 1.91 m²（sugi_hero；上限 0.6＋樹幹斷面積）；最低頂點 −0.8～+0.05；違規 0
+[VEG] PASS veg_kit materials：只用 veg_kit/mat 的 ShaderMaterial（11 種實際使用）、無 override：違規 0；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[VEG] PASS veg_kit geometry：全部 LOD 有法線／UV／UV2（風）／頂點色、無退化／NaN：違規 0；風遮罩分層 LOD0 平均：樹皮 0.12 < 葉卡 0.83
+[VEG] PASS veg_kit pivot_scale：34 棵 prefab 根 basis／LOD 節點 transform＝identity（縮放 1；擺放時才給旋轉縮放）：違規 0
+[VEG] PASS veg_kit collision：普通樹 1 根樹幹圓柱、Hero ≤ 7、地被 0、無 trimesh；樹幹圓柱共 30；膠囊探針 150 次（中心撞、半徑＋0.4 m 外不撞）；違規 0
+[VEG] PASS veg_kit lod：34 棵：級數（樹 4／地被 3）、LOD1 36–49 %、LOD2 13–23 %（規格 ≈ 40 %／10–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 0
+[VEG] PASS veg_kit perf：LOD0 類別上限：forest 最大 6000／6000、garden 最大 7162／12000、hero 最大 12125／15000、young 最大 2014／3500、dead 最大 1216／2500、under 最大 600／1000；每級 surface ≤ 2；全庫 LOD0 合計 152632（每種一棵）；Kit 貼圖 VRAM 估 45.2 MB（≤ 64）；違規 0
+[VEG] PASS gate.json 11 項 PASS 且 entry 雜湊一致
+[VEG] 結果：0 項失敗

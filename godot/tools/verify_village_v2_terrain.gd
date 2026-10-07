@@ -39,6 +39,8 @@ const GRADE_OUTSIDE := 0.15
 const GRADE_FARM := 0.05
 const BUDGET_TRIS := 6000000
 const BUDGET_LOAD_MS := 3000.0
+## 不計入 P1 載入／三角面 gate 的後期 Vegetation overlay（P9 起；成本由 P9／P12 自行驗證，這裡只印 INFO）
+const VEG_OVERLAYS := ["res://maps/village_v2/gen/forest_p9.scn", "res://maps/village_v2/gen/bamboo_p9.scn"]
 ## P0 凍結基準（v2-layout-0.3，2026-09-24 量測）：北丘各峰地面高。P1 不得改變北丘 Macro 輪廓。
 const HILL_BASE := {"主丘": 34.166, "西肩": 29.028, "東次峰": 27.990, "東長肩": 9.184}
 const HILL_TOL := 0.05
@@ -94,9 +96,28 @@ func _run() -> void:
 	for s in L["water"]["Streams"]:
 		water_lines.append([TLib.pts(s["pts"]), 7.0])
 	pad_list = TLib.pads(L)
+	# 載入 gate scope（使用者 2026-10-02 裁定）：≤ BUDGET_LOAD_MS 只量 P1／base scene 自己負責的內容。
+	# 後期階段的 Vegetation overlay（VEG_OVERLAYS）先單獨量 load＋instantiate（INFO，記 P12 technical debt），
+	# 載入結果留在 ResourceLoader 快取 → 量整個場景時 overlay 的 load 已不計；其 instantiate 再扣掉。
+	var ov_load := 0.0
+	var ov_inst := 0.0
+	for op: String in VEG_OVERLAYS:
+		if not ResourceLoader.exists(op):
+			continue
+		var ta := Time.get_ticks_msec()
+		var ops := ResourceLoader.load(op, "", ResourceLoader.CACHE_MODE_REUSE) as PackedScene
+		var tb := Time.get_ticks_msec()
+		var on := ops.instantiate()
+		var tc0 := Time.get_ticks_msec()
+		on.free()
+		ov_load += float(tb - ta)
+		ov_inst += float(tc0 - tb)
 	var t0 := Time.get_ticks_msec()
 	v = (load(SCENE) as PackedScene).instantiate()
-	var load_ms := float(Time.get_ticks_msec() - t0)
+	var full_ms := float(Time.get_ticks_msec() - t0)
+	var load_ms := maxf(0.0, full_ms - ov_inst)
+	print("[TERRAIN] INFO 場景載入：含 Vegetation overlay 的實際 load＋instantiate ≈ %.0f ms（base %.0f ＋ overlay load %.0f ＋ instantiate %.0f；overlay 成本記 P12 technical debt）" % [
+		load_ms + ov_load + ov_inst, load_ms, ov_load, ov_inst])
 	root.add_child(v)
 	for i in 3:
 		await physics_frame
@@ -135,10 +156,19 @@ func _ground(x: float, z: float, bridges := false) -> float:
 		if hit.is_empty():
 			return NAN
 		var col := hit["collider"] as CollisionObject3D
-		if col.get_rid() == terrain_rid or (bridges and String(col.name).begins_with("Bridge_")):
+		if col.get_rid() == terrain_rid or (bridges and _in_bridge(col)):
 			return float(hit["position"].y)
 		ex.append(col.get_rid())
 	return NAN
+
+
+## 碰撞體是灰盒橋 Bridge_* 本身，或掛在它底下的正式橋（P7 R2：Bridge_*/Hero/Collision）
+func _in_bridge(n: Node) -> bool:
+	while n != null:
+		if String(n.name).begins_with("Bridge_"):
+			return true
+		n = n.get_parent()
+	return false
 
 
 func _near_road(p: Vector2, extra: float) -> bool:
@@ -362,21 +392,43 @@ func _check_boundary() -> void:
 			sd[0], n, miss, miss_at.x, miss_at.y], n > 0 and miss == 0)
 
 
+## 可見三角面 gate scope（使用者 2026-10-02 裁定：修正 scope，不是放寬門檻；6M 不變）：
+##   只統計 P1 terrain-owned geometry＝場景 `Terrain` 子樹。ForestP9／Vegetation overlay 等其他階段的幾何與 runtime 成本
+##   由各自階段（P9／P12）驗證，不計入本項。全景（不含 Vegetation）三角面另印 INFO 供參考，不計失敗。
+const BUDGET_SCOPE := "Terrain"
+
+
+func _mesh_tris(mi: MeshInstance3D) -> int:
+	var m: Mesh = mi.mesh
+	if m == null or not mi.is_visible_in_tree():
+		return 0
+	var t := 0
+	for s in m.get_surface_count():
+		var arr := m.surface_get_arrays(s)
+		var idx = arr[Mesh.ARRAY_INDEX]
+		if idx != null and (idx as PackedInt32Array).size() > 0:
+			t += (idx as PackedInt32Array).size() / 3
+		else:
+			t += (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+	return t
+
+
 func _check_budget(load_ms: float) -> void:
 	var tris := 0
+	var rest := 0
+	var veg := 0
 	for mi in v.find_children("*", "MeshInstance3D", true, false):
-		var m: Mesh = (mi as MeshInstance3D).mesh
-		if m == null or not (mi as MeshInstance3D).is_visible_in_tree():
-			continue
-		for s in m.get_surface_count():
-			var arr := m.surface_get_arrays(s)
-			var idx = arr[Mesh.ARRAY_INDEX]
-			if idx != null and (idx as PackedInt32Array).size() > 0:
-				tris += (idx as PackedInt32Array).size() / 3
-			else:
-				tris += (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
-	check("可見三角面 %d（≤ %d）" % [tris, BUDGET_TRIS], tris <= BUDGET_TRIS)
-	check("village_v2.tscn load()+instantiate() %.0f ms（≤ %.0f ms，headless 參考值）" % [load_ms, BUDGET_LOAD_MS],
+		var rel := String(v.get_path_to(mi))
+		var t := _mesh_tris(mi as MeshInstance3D)
+		if rel.begins_with(BUDGET_SCOPE + "/"):
+			tris += t
+		elif rel.begins_with("Vegetation/"):
+			veg += t
+		else:
+			rest += t
+	check("可見三角面（P1 terrain-owned：%s 子樹）%d（≤ %d）" % [BUDGET_SCOPE, tris, BUDGET_TRIS], tris > 0 and tris <= BUDGET_TRIS)
+	print("[TERRAIN] INFO 可見三角面（不計入本項）：其他非植被 %d、Vegetation overlay %d（P9／P12 自行驗證）" % [rest, veg])
+	check("village_v2.tscn load()+instantiate()（P1／base，不含 Vegetation overlay）%.0f ms（≤ %.0f ms，headless 參考值）" % [load_ms, BUDGET_LOAD_MS],
 		load_ms <= BUDGET_LOAD_MS)
 
 

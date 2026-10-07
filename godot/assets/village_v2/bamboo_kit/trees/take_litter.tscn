@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_litter_LOD0.res" id="1_sv5mi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_litter_LOD1.res" id="2_qqxij"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/bamboo_kit/mesh/take_litter_LOD2.res" id="3_84ter"]
+
+[node name="take_litter" type="Node3D" unique_id=795845162]
+metadata/veg_id = "take_litter"
+metadata/veg_group = "bamboo_under"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=2079081574]
+cast_shadow = 0
+visibility_range_end = 17.794357
+instance_shader_parameters/lod_band = Vector4(0, 12, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(0.15674418, 0.015999999, 0.12313694)
+mesh = ExtResource("1_sv5mi")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=313476610]
+cast_shadow = 0
+visibility_range_begin = 6.205643
+visibility_range_end = 36.094357
+instance_shader_parameters/lod_band = Vector4(12, 30, 3, 3.6)
+instance_shader_parameters/lod_ref = Vector3(0.15674418, 0.015999999, 0.12313694)
+mesh = ExtResource("2_qqxij")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=1742247222]
+cast_shadow = 0
+visibility_range_begin = 23.905643
+visibility_range_end = 60.0
+instance_shader_parameters/lod_band = Vector4(30, 0, 3.6, 0)
+instance_shader_parameters/lod_ref = Vector3(0.15674418, 0.015999999, 0.12313694)
+mesh = ExtResource("3_84ter")

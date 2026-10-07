@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-02T13:57:49",
+  "items": 2622,
+  "culms": 1497,
+  "groves": {
+    "C_村緣竹叢": {
+      "core": 227,
+      "edge": 50,
+      "invade": 63,
+      "a_core": 0.0,
+      "a_edge": 0.0,
+      "lean_out": 10,
+      "lean": 10,
+      "ids": {
+        "take_young": 49,
+        "take_mature": 130,
+        "take_dead": 14,
+        "take_lean": 10,
+        "take_thick": 61,
+        "take_thin": 70,
+        "take_broken": 6
+      }
+    },
+    "B_溪畔竹林": {
+      "core": 187,
+      "edge": 61,
+      "invade": 66,
+      "a_core": 0.0,
+      "a_edge": 0.0,
+      "lean_out": 22,
+      "lean": 22,
+      "ids": {
+        "take_thick": 37,
+        "take_thin": 56,
+        "take_mature": 125,
+        "take_broken": 8,
+        "take_young": 52,
+        "take_dead": 14,
+        "take_lean": 22
+      }
+    },
+    "A_入口竹林": {
+      "core": 657,
+      "edge": 113,
+      "invade": 73,
+      "a_core": 0.0,
+      "a_edge": 0.0,
+      "lean_out": 23,
+      "lean": 23,
+      "ids": {
+        "take_mature": 379,
+        "take_thin": 140,
+        "take_thick": 164,
+        "take_dead": 34,
+        "take_young": 81,
+        "take_lean": 23,
+        "take_broken": 22
+      }
+    }
+  },
+  "ids": {
+    "take_young": 182,
+    "take_thick": 262,
+    "take_mature": 634,
+    "take_thin": 266,
+    "take_dead": 62,
+    "take_lean": 55,
+    "take_broken": 36,
+    "takenoko": 69,
+    "take_litter": 1056
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/bamboo_p9.scn",
+    "mb": 0.546594619750977,
+    "near_mesh_nodes": 2994,
+    "multimesh_nodes": 459,
+    "multimesh_instances": 6369,
+    "culm_shapes": 1497
+  }
+}

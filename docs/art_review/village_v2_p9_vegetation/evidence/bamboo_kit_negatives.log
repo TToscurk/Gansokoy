@@ -1,0 +1,9 @@
+[BAMBOO] PASS 反向 slab → grounding 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 lod → lod 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 collision → collision 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 material → materials 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 perf → perf 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 scale → size 必須 FAIL（實際 FAIL）
+[BAMBOO] PASS 反向 culm_d → size 必須 FAIL（實際 FAIL）
+[BAMBOO] 反向案例 7/7 如預期 FAIL
+[BAMBOO] 結果：0 項失敗

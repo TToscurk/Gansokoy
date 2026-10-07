@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ENV] INFO 規劃 16699 ms：45 件（落とした 1：sasa_a@(207.1,123.0) trunk [forest_edge]）
+[ENV] PASS 反向 n_road → 「禁區」必須 FAIL（失敗項 2：禁區：路面・店先 ／ cluster：）
+[ENV] PASS 反向 n_p10 → 「禁區」必須 FAIL（失敗項 2：禁區：路面・店先 ／ cluster：）
+[ENV] PASS 反向 n_float → 「接地」必須 FAIL（失敗項 1：接地：浮き（> ）
+[ENV] PASS 反向 n_front → 「戸口」必須 FAIL（失敗項 3：禁區：路面・店先 ／ 戸口・表側：建物 ／ cluster：）
+[ENV] PASS 反向 n_scatter → 「cluster」必須 FAIL（失敗項 3：接地：浮き（>  ／ 禁區：路面・店先 ／ cluster：）
+[ENV] PASS 反向 n_micro → 「中尺度」必須 FAIL（失敗項 2：cluster： ／ 中尺度：高さ 0）
+[ENV] PASS 反向 n_legacy → 「既存資產」必須 FAIL（失敗項 1：既存資產のみ：3）
+[ENV] 結果：0 項失敗（negatives）

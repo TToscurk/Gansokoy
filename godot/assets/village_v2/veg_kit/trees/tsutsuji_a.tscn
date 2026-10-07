@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD0.res" id="1_jqdda"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD1.res" id="2_86yyx"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/veg_kit/mesh/tsutsuji_a_LOD2.res" id="3_a3ql0"]
+
+[node name="tsutsuji_a" type="Node3D" unique_id=883395793]
+metadata/veg_id = "tsutsuji_a"
+metadata/veg_group = "under"
+
+[node name="LOD0" type="MeshInstance3D" parent="." unique_id=1637215523]
+visibility_range_end = 20.666466
+instance_shader_parameters/lod_band = Vector4(0, 15, 0, 3)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("1_jqdda")
+
+[node name="LOD1" type="MeshInstance3D" parent="." unique_id=1138473539]
+visibility_range_begin = 9.333533
+visibility_range_end = 41.266468
+instance_shader_parameters/lod_band = Vector4(15, 35, 3, 4.2)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("2_86yyx")
+
+[node name="LOD2" type="MeshInstance3D" parent="." unique_id=863011445]
+visibility_range_begin = 28.733534
+visibility_range_end = 70.0
+instance_shader_parameters/lod_band = Vector4(35, 0, 4.2, 0)
+instance_shader_parameters/lod_ref = Vector3(-0.07674864, 0.4195271, -0.062378794)
+mesh = ExtResource("3_a3ql0")

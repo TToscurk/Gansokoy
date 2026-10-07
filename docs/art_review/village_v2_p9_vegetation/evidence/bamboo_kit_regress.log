@@ -1,0 +1,11 @@
+[BAMBOO] PASS bamboo_kit size：9 種：LOD0 高 vs 設計最大差 0.0 %、寬最大差 0.0 %；稈徑實測 mature 9 cm、thick 17 cm、thin 5 cm、young 8 cm、lean 10 cm、dead 8 cm、broken 9 cm；違規 0
+[BAMBOO] PASS bamboo_kit parcel_fit：R3 竹 Kit 先獨立審圖（核准後才放進西林與村緣；地塊／道路／建築屆時驗）；審圖 Live 列 9 種外框（XZ 內縮 15 %）互穿 0；試作竹林 759 稈最小稈距 0.80 m（≥ 0.45）違規 0
+[BAMBOO] PASS bamboo_kit grounding：pivot＝稈基：碰撞圓柱底離原點 ≤ 0.05 m；最低頂點 −0.5～+0.03（稈淺埋 0.25 m、不浮）；無自帶土台：貼地 ≤ 0.15 m 朝上水平面最大 0.000 m²（—；上限 0.2）；落葉地被只有貼地卡片 ≤ 5 cm；違規 0
+[BAMBOO] PASS bamboo_kit materials：只用 bamboo_kit/mat 的 ShaderMaterial（3 種實際使用：BK_Culm_green、BK_Leaf_A、BK_Culm_dead）、無 override：違規 0；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[BAMBOO] PASS bamboo_kit geometry：全部 LOD 有法線／UV／UV2（風）／頂點色、無退化／NaN：違規 0；風分層 LOD0 平均：稈 0.29 < 葉卡 0.80；竹獨立 sway wind_speed（樹 1.0）：BK_Culm_green 1.35、BK_Culm_dead 1.35、BK_Leaf_A 1.35
+[BAMBOO] PASS bamboo_kit pivot_scale：9 種 prefab 根 basis／LOD 節點 transform＝identity（縮放 1；擺放時才給旋轉縮放）：違規 0
+[BAMBOO] PASS bamboo_kit collision：竹稈 1 根圓柱（半徑 0.4–0.75×稈徑）、筍／落葉 0、無 trimesh；圓柱 7；膠囊探針 63 次（中心撞、半徑＋0.4 m 外不撞＝稈間可走）；違規 0
+[BAMBOO] PASS bamboo_kit lod：9 種：級數（竹稈 4／筍與落葉 3）、LOD1 34–50 %、LOD2 8–23 %（竹稈 25–50 %／6–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 0
+[BAMBOO] PASS bamboo_kit perf：LOD0 類別上限：bamboo 最大 3738／4000、under 最大 82／500、litter 最大 52／200；每級 surface ≤ 2；全庫 LOD0 合計 15031（每種一稈）；Kit 貼圖 VRAM 估 8.0 MB（≤ 32）；違規 0（群植成本＝P12 technical debt，ART-FIRST）
+[BAMBOO] PASS gate.json 11 項 PASS 且 entry 雜湊一致
+[BAMBOO] 結果：0 項失敗

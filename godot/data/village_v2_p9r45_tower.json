@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-03T02:16:37",
+  "items": 31,
+  "open": {
+    "tall": 0,
+    "cover_8m": 0.0284867667279184,
+    "sight_blocked": 0
+  },
+  "elements": {
+    "tk_okeyama": 1,
+    "sk_tensui": 1,
+    "sk_teoke": 1,
+    "tk_rack": 1,
+    "tk_ladder": 1,
+    "sk_box": 2,
+    "tk_rope": 1,
+    "gk_amaochi": 8,
+    "fern_a": 2,
+    "wk_sedge": 13
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/tower_yard_p9.scn",
+    "mb": 0.0379514694213867,
+    "items": 31,
+    "shapes": 6
+  }
+}

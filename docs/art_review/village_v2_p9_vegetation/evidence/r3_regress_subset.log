@@ -1,0 +1,42 @@
+=== freeze [FREEZE] rc=0 (0s)
+[FREEZE] 結果：0 項失敗
+=== P1 protect [PROTECT] rc=0 (5s)
+[PROTECT] 結果：0 項失敗
+=== P2 water [WATER] rc=0 (7s)
+[WATER] 結果：0 項失敗
+=== terrain [TERRAIN] rc=0 (14s)
+[TERRAIN] 結果：0 項失敗
+=== bridges [BRIDGE] rc=0 (5s)
+[BRIDGE] 結果：0 項失敗
+=== sightlines [SL] rc=0 (10s)
+[SL] 結果：0 項失敗
+=== parcels [PARCEL] rc=0 (10s)
+[PARCEL] 結果：0 項失敗
+=== greybox [GB] rc=0 (9s)
+[GB] 結果：0 項失敗
+=== asset reset [ASSET] rc=1 (9s)
+[ASSET] FAIL V2 場景依賴 1310 個全在白名單內（違規 1：res://shaders/sky_daynight.gdshader）
+[ASSET] 結果：1 項失敗
+=== placement audit [PLACE] rc=0 (24s)
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，3623 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 23663 ms）
+=== 19-point walk [WALK] rc=0 (541s)
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.05 m（上限 0.30 m）；失敗 0
+=== P8 seal [FARM] rc=0 (2s)
+[FARM] 結果：0 項失敗（seal）
+=== P8 local [FARM] rc=0 (11s)
+=== P9 R1 seal [VEG] rc=0 (2s)
+[VEG] 結果：0 項失敗（seal）
+=== P9 R1 regress [VEG] rc=0 (2s)
+[VEG] 結果：0 項失敗
+=== P9 R2 seal [FOREST] rc=0 (1s)
+[FOREST] 結果：0 項失敗（seal）
+=== P9 R2 local [FOREST] rc=0 (23s)
+[FOREST] 結果：0 項失敗
+=== P9 R3 kit regress [BAMBOO] rc=0 (1s)
+[BAMBOO] 結果：0 項失敗
+=== P9 R3 place gate [BPLACE] rc=0 (16s)
+[BPLACE] 結果：0 項失敗
+=== P9 R3 place scene [BPLACE] rc=0 (5s)
+[BPLACE] 結果：0 項失敗（scene）
+DONE

@@ -1,0 +1,14 @@
+[SUZU] INFO 規劃 35 件（261 ms）
+[SUZU] PASS Hero 座標系：原點差 0.000 m、正面軸差 0.0000（≤ 0.01）
+[SUZU] PASS 接地：35 件（構件環最低、雜草・雨受け石貼地、縁石半埋、書冊束は腰掛けの座面）：浮／偏 0（最大 0.00 m）、過深 0
+[SUZU] PASS 不穿：構件／低木 vs 鈴奈庵 Hero（台基・踏石・縁台・花盆・木箱・竪樋・勝手口）／鄰家／構件どうし：違規 0 
+[SUZU] PASS 動線淨空：入口軸／庇下通路／北・横丁の踏み跡／勝手口前 障礙 0 
+[SUZU] PASS 門面：主街 5 機位→看板・暖簾・入口 7 點 被擋 0 ；植生超高 0 []
+[SUZU] PASS 地塊：構件／植生 侵入他地塊・道路 0 
+[SUZU] PASS 構圖：構件 9（≤ 12）、門前 1（≤ 1）、南の路地 0（= 0）、門前＋北側 89 %（≥ 80 %）、北側ゾーン占有 10.2 %（≤ 25 %）
+[SUZU] PASS 元素：齊備
+[SUZU] INFO 構件 9、植生 16（雜草 12）、雨受け石 2
+[SUZU] PASS pack overlay
+[SUZU] PASS save res://maps/village_v2/gen/suzunaan_p9.scn
+[SUZU] INFO overlay 0.03 MB、35 件、構件碰撞 7
+[SUZU] 結果：0 項失敗

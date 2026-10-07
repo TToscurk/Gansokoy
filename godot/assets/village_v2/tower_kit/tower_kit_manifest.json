@@ -1,0 +1,22 @@
+{
+ "assembler": "res://tools/village_v2_tower_yard_lib.gd",
+ "asset": "tower_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Metal.tres": "99881fdcf7fa177173c235ba58af7f09ffd134fa4285f27e0b79524a2c031002",
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/school_kit/SK_School.tres": "0058f4073998760d9ac43e8952e94fe902197fe461b5310a9c05a84c0aaf6865",
+  "res://assets/village_v2/tower_kit/mesh/tk_ladder.res": "563f2b3f01986d50386c7b7f736e99a9a32db3db42740440c6547cb16860066c",
+  "res://assets/village_v2/tower_kit/mesh/tk_ladder_l1.res": "45b1503c085f8902411d1bdfbeb553a6406d78e3807afc32adc8b5da43543552",
+  "res://assets/village_v2/tower_kit/mesh/tk_okeyama.res": "4fc62ac3e5567dfb931bbdfa69f62e1840a1008e33f1eca1f34e73292d70c0dd",
+  "res://assets/village_v2/tower_kit/mesh/tk_okeyama_l1.res": "3033515c234786d7006c771845941e14fe1ab60318e6dfa14c31ef73e78be03c",
+  "res://assets/village_v2/tower_kit/mesh/tk_rack.res": "364ea0d04fff0b6913e286857f9ff61a97b2197c92462551b45ffc5a67573121",
+  "res://assets/village_v2/tower_kit/mesh/tk_rack_l1.res": "f73ad93a47a62da88d1d3103cfbe94b4943205ffb8ee6e58e54fd71a224d2ba3",
+  "res://assets/village_v2/tower_kit/mesh/tk_rope.res": "0e8a27986c77bacdb003e9dc5def5fddecb9040ca690070d4f4522f7e3c06281",
+  "res://assets/village_v2/tower_kit/mesh/tk_rope_l1.res": "adfebd736658feaf4d48f251e09823e778478a0e7f28c0273082ae7263f0c408",
+  "res://assets/village_v2/tower_kit/src/modules_blender.json": "6f7b4d5d85cd2a429199fbfb609b85f9bfa10f82cba51ef037ec479a788e610b",
+  "res://tools/village_v2_tower_yard_lib.gd": "7283af9a6ca31902305ee88bb785e08cd2cb88a69344f1b4abd4d11b2d70069d"
+ },
+ "mesh_dir": "res://assets/village_v2/tower_kit/mesh",
+ "modules": 8,
+ "tris_total": 3412
+}

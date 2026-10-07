@@ -1,0 +1,6 @@
+[KIRI] PASS 場景已掛 Vegetation/KirisameP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9", "TowerYardP9", "SuzunaanP9", "GeidonteiP9", "KirisameP9"]
+[KIRI] PASS 場景接地（22／22 件構件・低木 origin 向下射線只認地形）：浮 > 0.06 m 0（最大 0.000）
+[KIRI] PASS 碰撞：構件箱 vs 霧雨店 Hero／建物／道路／其他植被 接觸 0
+[KIRI] PASS 實走：入口軸＋庇下通路＋北の踏み跡（南橫街→出しの脇→勝手口）＋表の角→側院＋搬運路 膠囊 85 點被本 overlay／霧雨店擋 0 
+[KIRI] INFO KirisameP9：47 件、MeshInstance 98、構件碰撞 17
+[KIRI] 結果：0 項失敗（scene）

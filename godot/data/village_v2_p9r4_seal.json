@@ -1,0 +1,70 @@
+{
+ "phase": "P9 R4 Garden／Hero Surroundings 第一包：稗田邸庭園（garden_kit＋Vegetation/HiedaGardenP9 overlay）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-02",
+ "scope": {
+  "r1": "composition ACCEPTED：大宅門→前庭→玄關主軸（延段 16 枚、鉤の手）、前庭白砂利留白（覆蓋 17.9 %）、四つ目垣分隔、側庭池泉（137 m²、中島、護岸石組 6 組、州浜、雪見燈籠）、曲水、後庭自然植栽、飛石 58、石橋、蹲踞＋織部燈籠、雨落ち／牆腳",
+  "r2": "targeted polish 達標：池岸／曲水接地（連續岸坡＋水面相交、濕土／苔／卵石帶、溪石嵌入）、滝石組主副層次＋背景庭松＋落水簾、前庭苔島／主景石環紋、蹲踞自然石化、枝垂櫻陰面（R4 場景層級 tint＋櫻專用補光，R1 不改）"
+ },
+ "note": "P9 R4 封存：garden_kit 生成器／shader／材質／manifest、庭園規劃 lib／gate／烘焙 overlay／規劃報告／審圖鏡位、9 張 ART_REVIEW 總表、證據 log 的 sha256。任何一項改變 → verify_village_v2_hieda_garden.gd -- --seal FAIL；只有真正 regression 才重開 P9 R4 稗田邸庭園。不改池位置／主軸／分區。village_v2.tscn 不封（--seal 另驗 ForestP9 → BambooP9 → HiedaGardenP9 掛載順序）。R1／R2／R3 封存未重開（各自 seal 一致）。",
+ "renderer": "Forward+（ART_REVIEW 10:00、1.7 m；蹲踞 1.0 m）；效能 ART-FIRST，不量測",
+ "counts": {
+  "items": 319,
+  "plants": 46,
+  "props": 273,
+  "collision_shapes": 154,
+  "overlay_mb": 0.35,
+  "tobi": 58,
+  "nobe": 16,
+  "pond_m2": 137,
+  "front_void_cover": 0.179
+ },
+ "polish_followups": [
+  "落水簾近看仍偏卡片感（硬邊、落ち口の石唇不明顯）",
+  "後庭西望東距離下滝只是小白點，次焦點主要靠庭松剪影；主石對牆面明度對比弱",
+  "曲水部分段濕土帶寬度均一、讀成描邊",
+  "前庭直線砂紋近景仍略帶波狀；苔島環紋在櫻影中偏弱",
+  "枝垂櫻陰面下垂枝略帶淡紫",
+  "蹲踞落水為直線、筧無節；玉石形狀單一；前石輪廓仍略見稜"
+ ],
+ "p12_technical_debt": "庭園未量 GPU；gk_tsukubai LOD0 9,448 面（近景物件，LOD 細分待 P12）；庭園地面 overlay 0.3 m 格全面網格（含池底）；水面 depth-texture 半透明 shader 2 種（池／滝）；櫻補光 OmniLight 1 盞（cull_mask 限櫻）",
+ "frozen": {
+  "godot/assets/blender/village_v2/build_garden_kit.py": "e45fcd539e8c3c82e74ee1d7c9737c37c3bb2be83a927168f25ad80afdb0f48d",
+  "godot/assets/village_v2/garden_kit/garden_kit_manifest.json": "c7221fd3414c1a22d94f9751eb46a2112e470bd7914abef112cb702bca7fb88a",
+  "godot/assets/village_v2/garden_kit/src/modules_blender.json": "c2e76ce4d954183adc74e21d67867d85b16d6cccaf21eb238964a610c6c16483",
+  "godot/assets/village_v2/garden_kit/hg_ground.gdshader": "943ba5d727e4ffed561ba26cb0764192074ff9fda01e6d9dc653aac5825db2f3",
+  "godot/assets/village_v2/garden_kit/hg_water.gdshader": "765a8e45a377bb9bc52ba008ca327ee44272058c777b993d15fa33ca2669cca8",
+  "godot/assets/village_v2/garden_kit/hg_falls.gdshader": "2176afb4245eb6c5b2e107a1a47340938c4d8b82c099e494a99fc9564e74c4ab",
+  "godot/assets/village_v2/garden_kit/GK_Water.tres": "8d59043f2b6b66d2c29ae2523020f0b67c2aa60abeb39efee1494a1d1eb77a55",
+  "godot/assets/village_v2/garden_kit/GK_Falls.tres": "413aeb94a2174652a75a3a2879c20e0f22e6bcdbd85c27bb727c897394c94f5c",
+  "godot/assets/village_v2/garden_kit/GK_PondWater.tres": "2c6f1b379d56d4bce45e4af21cc23fb1129d57bea20e01dc489bb87470ba5cf4",
+  "godot/assets/village_v2/garden_kit/GK_FallSheet.tres": "549a43a37e48c1086b951e743a2d8e5f44a3cf89625da536d9af4b7f174f5a9d",
+  "godot/tools/village_v2_hieda_garden_lib.gd": "92fec2df44c9020fb887276e9bffc0bafa47af9a9bcfdd3ed2659ae6b7cec822",
+  "godot/tools/verify_village_v2_hieda_garden.gd": "52294c6ae3c081e1e9afb5712bc276b68f8b89477e0f4582a0eb9cb6e191e79d",
+  "godot/maps/village_v2/gen/hieda_garden_p9.scn": "d09e834449383829745dfd72776e1280fa22f5347de942ea2392f335a6b6d934",
+  "godot/data/village_v2_p9r4_garden.json": "ef9df82059ff8be6f48d7453158200e7b72595b94195caef2af53e5bc5e2cb30",
+  "godot/tools/shots/village_v2_p9r4_garden_before.json": "2446cf60592c75f3ecf05b59619be5a037860cf64c7a2efcd598a78a95faf1f6",
+  "godot/tools/shots/village_v2_p9r4_garden_after.json": "763c131e6ea7efd5d8b149cea829e0886f28c0219447d1dc895cac6f1f062e87",
+  "godot/tools/shots/village_v2_p9r4b_polish.json": "f2a840768aa2e5a14e1abf5166ad6894d98e0d1694fa532c77e29a0933d840d7"
+ },
+ "art_review_images": {
+  "r4/r4_sheet_axis.png": "2a998341ca7f05c220188d3ba6ad400d67fef4883f491d7b173cce8fe4f8fc37",
+  "r4/r4_sheet_genkan.png": "6fe1411907d1c12b988688e71ad816676691cfb4073efc0510ccab1bc5cac3a1",
+  "r4/r4_sheet_pond.png": "c8624f18da0e0927a3dfcb61710635f41abe4521923cc3d318bbe9d29d6fad20",
+  "r4/r4_sheet_rear.png": "4afc9de82cae73864ebd6026bd7040e158c9ee9a10365b0a2862532bf8e19628",
+  "r4/r4_sheet_high.png": "08ead906e4eb9e504eb15fd23d9559a57a8a7f98a710f380dd0ffd1f874202aa",
+  "r4/r4b_sheet_pond.png": "6977cbcacdf4b513a9ae0f363a4809709c29a03f06ecd731d368a217deb13cda",
+  "r4/r4b_sheet_fall.png": "0795a7565172ab0db70694e37b896295512194ea49ebbd77139d1b61283f5f91",
+  "r4/r4b_sheet_tsukubai.png": "c1d2cd7ab35bf952c016814f6c8916d93cd518c1b23b0c32534c3b200588a797",
+  "r4/r4b_sheet_rake.png": "5175ea1671b00254c09b7b8322f874180682d0a504d415548fe9e09aac7a64f7"
+ },
+ "evidence": {
+  "evidence/garden_gate.log": "f2f5437d483d8098701833ea28356c04b48da94a6a18ae2031b384b98c2f35f8",
+  "evidence/garden_negatives.log": "30930a7975114885765d038758a504e5e118d024b1b2c7e4957ac630d09f0661",
+  "evidence/garden_scene.log": "adb2745f32ee55808f86ebb7fd470be489723b28efa7ce7b0a82a5ecbc99bb3b",
+  "evidence/garden_r2_gate.log": "6bfd8d90949700ce22587418048f707cc566de799694d8664f83ea7677da5dce",
+  "evidence/garden_r2_negatives.log": "ef87ac414c709afd9bd57acb3ded2b18caf38c354a33d3c15109d186bf143a46",
+  "evidence/garden_r2_scene.log": "ac351dfc91d6105bce29be90cb12e31a57f2e1b87289fa304dc01157fc116ecb"
+ }
+}

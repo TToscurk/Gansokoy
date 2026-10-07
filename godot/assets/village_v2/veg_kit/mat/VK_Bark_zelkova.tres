@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_bark.gdshader" id="1_3rgoq"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VB_zelkova_albedo.jpg" id="2_0ggex"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VB_zelkova_normal.jpg" id="3_7j5br"]
+
+[resource]
+resource_name = "VK_Bark_zelkova"
+render_priority = 0
+shader = ExtResource("1_3rgoq")
+shader_parameter/albedo_tex = ExtResource("2_0ggex")
+shader_parameter/normal_tex = ExtResource("3_7j5br")
+shader_parameter/albedo_mul = 1.0
+shader_parameter/normal_depth = 1.0
+shader_parameter/roughness = 0.92
+shader_parameter/specular = 0.18
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = null
+shader_parameter/flutter = null

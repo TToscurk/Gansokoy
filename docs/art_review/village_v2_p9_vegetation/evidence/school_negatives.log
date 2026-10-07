@@ -1,0 +1,8 @@
+[SCHOOL] INFO 規劃 79 件（274 ms）
+[SCHOOL] PASS 反向 float → 「接地」必須 FAIL（失敗項 1）
+[SCHOOL] PASS 反向 door → 「主入口」必須 FAIL（失敗項 1）
+[SCHOOL] PASS 反向 facade → 「視線」必須 FAIL（失敗項 1）
+[SCHOOL] PASS 反向 conifer → 「植被語彙」必須 FAIL（失敗項 1）
+[SCHOOL] PASS 反向 clip → 「不穿建築」必須 FAIL（失敗項 1）
+[SCHOOL] PASS 反向 clutter → 「留白」必須 FAIL（失敗項 1）
+[SCHOOL] 結果：0 項失敗（negatives）

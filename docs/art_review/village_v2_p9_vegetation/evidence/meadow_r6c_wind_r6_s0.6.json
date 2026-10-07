@@ -1,0 +1,62 @@
+{
+ "wind_strength": 0.6,
+ "weight": {
+  "root": 0.0,
+  "mid": 0.25,
+  "tip": 1.0
+ },
+ "tip_offset_m_0.5m_plant": {
+  "mean_min": 0.027,
+  "mean_max": 0.093,
+  "swing": 0.067,
+  "lean_deg_mean": 6.8,
+  "lean_deg_max": 10.5
+ },
+ "corr_vs_distance_m": {
+  "0.5": {
+   "along": 0.93,
+   "across": 0.98
+  },
+  "1": {
+   "along": 0.77,
+   "across": 0.94
+  },
+  "2": {
+   "along": 0.46,
+   "across": 0.87
+  },
+  "4": {
+   "along": -0.09,
+   "across": 0.58
+  },
+  "8": {
+   "along": -0.48,
+   "across": 0.16
+  },
+  "16": {
+   "along": 0.36,
+   "across": -0.12
+  },
+  "32": {
+   "along": 0.11,
+   "across": -0.06
+  }
+ },
+ "global_sync_mean_corr_far": -0.14,
+ "same_clump_blades_corr": 0.91,
+ "wave": {
+  "wavelength_m": [
+   15.0,
+   6.6
+  ],
+  "period_s": [
+   3.9,
+   2.7
+  ],
+  "speed_m_s": [
+   3.8,
+   2.4
+  ],
+  "flutter_period_s": 1.53
+ }
+}

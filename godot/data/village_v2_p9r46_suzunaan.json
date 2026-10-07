@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-03T03:39:24",
+  "items": 35,
+  "facade": {
+    "blocked": 0,
+    "tall": 0
+  },
+  "composition": {
+    "props": 9,
+    "front": 1,
+    "south": 0,
+    "concentration": 0.888888888888889,
+    "north_occupancy": 0.101928374655647
+  },
+  "elements": {
+    "sz_kanban": 1,
+    "gk_tobi_d": 2,
+    "gk_amaochi": 8,
+    "sz_keiji": 1,
+    "sz_hachi": 1,
+    "sz_stool": 1,
+    "sz_bundle": 1,
+    "sz_dai": 1,
+    "sz_hako2": 1,
+    "sz_hako": 1,
+    "sz_seoi": 1,
+    "fern_a": 3,
+    "shrub_a": 1,
+    "wk_sedge": 12,
+    "本箱": 2,
+    "低木": 4
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "mb": 0.0306301116943359,
+    "items": 35,
+    "shapes": 7
+  }
+}

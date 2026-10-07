@@ -1,0 +1,61 @@
+{
+ "phase": "P9 R4-7 Hero Surroundings：鯢吞亭周邊（Geidontei Surroundings）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-03",
+ "scope": "geidon_kit（菰樽積み／樽卓／緋毛氈の床几／盆＋徳利・猪口／品書き／盛り塩／赤提灯の柱）＋Vegetation/GeidonteiP9 overlay（gen/geidontei_p9.scn）；鯢吞亭 Hero 本體（P5 R2）未改",
+ "note": "使用者裁定：封存目前版本（r2），不再追加微調；鯢吞亭本體既有造型不重開 P5。只有真正 regression 才重開 R4-7。",
+ "renderer": "Forward+",
+ "counts": {
+  "placements": 33,
+  "kit_modules": 14,
+  "kit_tris": 2352,
+  "gate_plan": "8/8",
+  "negatives": "6/6",
+  "scene": "4/4"
+ },
+ "deferred_to_p13": [
+  "暗部與偏色（入口內部暗面、背面俵偏藍灰、薪棚遠看格柵感等）——全域 lighting／sky ambient"
+ ],
+ "deferred_to_p9_r5": [
+  "北側／後方空地與近地層（groundcover／低層植被過渡）"
+ ],
+ "not_reopened": [
+  "鯢吞亭本體既有造型（山椒魚の門遠看紫色圓頂等）不重開 P5"
+ ],
+ "frozen": {
+  "godot/tools/village_v2_geidontei_yard_lib.gd": "fdb7a6843a656cb73796dc67d230d9bfabbf1e74569fbc8ddf548feeb221b4c7",
+  "godot/tools/verify_village_v2_geidontei_yard.gd": "b122cf51db9941a1f1e1a931a3e486f7d2756e0d80bc8c0b99268d251408e545",
+  "godot/assets/blender/village_v2/build_geidon_kit.py": "b59ccbe1b05c4f2995c6847ff935cb3c8959729a53ad10aeae6d806e3960294f",
+  "godot/maps/village_v2/gen/geidontei_p9.scn": "9ef53b522edc42582daaf64009d2de4a20da3f6b6787095a854e035167543f1a",
+  "godot/data/village_v2_p9r47_geidontei.json": "2970c4969d11f3ac419a1e1521c9025bfafa4dc1530ac605d1d319300a20ec22",
+  "godot/assets/village_v2/geidon_kit/geidon_kit_manifest.json": "65e86efd7ed8fecbae7c10e6374bafdcb50cb768bcd22d5f789247a6607bee96",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_chochin.res": "539a5c134d5d02f888ffa88877a46faca8a69357eab62118194da6c1da25fff0",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_chochin_l1.res": "c8466955dc9a45cec3b9eec527aeca7ba16d0eeddcd8edd3be0b30010218ccbb",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_fuda.res": "68f7489e77d8329263ca7f80291ade88d39cae3ebdcde55fdc8093ec62a91948",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_fuda_l1.res": "11ec7fc64a8a398e9bdbd41bf0ca4e0bc29f565caec35347ad335371e488d481",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_morijio.res": "6e5001ec8060744b6623b8ed5147ed494d77aaf9bf8c452ef1e9ca51974707e7",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_morijio_l1.res": "814e0e720cfc941d47c8ce0fd6b718c24371a60533507782da07bcac73eea8a1",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_shogi.res": "32f6005b00d7e742abe8932ed0bfc40b851a3626ae5250112b0084073527600f",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_shogi_l1.res": "b408d74344209e0bd7b062a8130ffe92db61a74513e1d11c3c1088c7ba5156e3",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_taru.res": "28e9c8a6dba5feb57ba8846855264d041004285eaeb3e28a9351aa34d244e0ca",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_taru_l1.res": "416a8f1baa96c0e74a260977adf88b541b2a7b11bd1a2e91dfea96bc64afd2ba",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_taruzumi.res": "b1ed5d475073050572c7c2ecacdf87ef6b8ce9c964e4cdfecf200da9f960a4f9",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_taruzumi_l1.res": "20dbafad1083a0b23cb638d3e180c9f1b5473e79c379a91f3b853093f74752b4",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_tray.res": "33886f4d791b693b279c9f7b54f8a39bd31354b82f62549157223c2202e00505",
+  "godot/assets/village_v2/geidon_kit/mesh/gd_tray_l1.res": "b93ed0f69f7d8850d620afabe2fd43a86839bf5bf4a260555a3b7452264f231c",
+  "godot/assets/village_v2/geidon_kit/src/geidon_kit.glb": "af487708b20ee659b40e1f14775ecc856e976a39006390fe9d2fb6a2a21489a0",
+  "godot/assets/village_v2/geidon_kit/src/modules_blender.json": "94fa3ffb13745a987af902f45c60c83b6dd0a0c2888f48d3dd528b265274bacb"
+ },
+ "art_review_images": {
+  "r47/r47_sheet_front.png": "ecae1575b56e7b83c4e6ba8a37d347cbc9c1284db2eff9a21968d05264d28968",
+  "r47/r47_sheet_side.png": "6f216a39a2d701d058384f602b6df7841c56a5ea36f80bb5c402dfa46a3f595d",
+  "r47/r47_sheet_detail.png": "a3221dc6259d4a5e74a595b55baca4852306b225d3dcfdbb1e858f33789d17ad",
+  "r47/r47_ground_ab.png": "6b2c11c42519085055e04fa5788e0f22973728ce121f576cee136086d9f25793"
+ },
+ "evidence": {
+  "evidence/geidontei_gate.log": "21df95f9af5c1f99074684a83a79b002ddb991601731f3050d4153b41cb68aa1",
+  "evidence/geidontei_negatives.log": "67b842213ba3609039b68868efb418959f9bcf9adc4245beea91bc44b21cd825",
+  "evidence/geidontei_scene.log": "11a16135b219f14359e7bf81220b45b98847b8c91d8aa1e870f8b55c42e930cb"
+ }
+}

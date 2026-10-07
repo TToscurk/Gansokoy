@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "WK_Plant"
+cull_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(1, 1, 1, 1)
+roughness = 0.88
+specular_mode = 0
+metallic_specular = 0.25
+backlight_enabled = true
+backlight = Color(0.16, 0.19, 0.09, 1)

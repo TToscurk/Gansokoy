@@ -1,0 +1,24 @@
+{
+ "id": "bamboo_kit",
+ "kind": "kit",
+ "phase": "P9",
+ "round": "P9 R3 Bamboo／Village Edge（ART_REVIEW；核准前不植入 village_v2）",
+ "budget_class": "植被",
+ "landmark": null,
+ "label": "竹 Kit（9 變體：真竹成竹／孟宗竹／淡竹／若竹／傾き竹／枯竹／折れ竹＋筍＋竹の落葉；共用枝葉 atlas 5 種＋筍皮 2＋落葉 1）",
+ "entry": "res://assets/village_v2/bamboo_kit/bamboo_kit_manifest.json",
+ "assembler": "res://tools/village_v2_bamboo_lib.gd",
+ "placement": "（ART_APPROVED 後才做：西林與村緣竹林 overlay；R2 forest_p9.scn 已封存不改）",
+ "prefab": "res://tools/village_v2_machiya_kit_prefab.gd --kit=bamboo_kit",
+ "gate": "res://tools/verify_village_v2_bamboo_gate.gd",
+ "review": "res://tools/village_v2_bamboo_review.gd",
+ "source_blender": "res://assets/blender/village_v2/build_bamboo_kit.py",
+ "source_textures": "tools/build_village_v2_bamboo_textures.py（全程序產生，無外部貼圖來源）",
+ "shared": "shader 與 LOD／碰撞／色彩組裝重用 R1 veg_kit（veg_bark／veg_leaf／veg_common、village_v2_veg_lib.gd tree_node），只讀不改；竹獨立 sway＝BK 材質 wind_speed 1.35／flutter 0.1",
+ "replaces": "（新增；西林 Forest_West 竹林段與村緣竹叢，核准後擺放）",
+ "measured_blender": {
+  "modules": 34,
+  "LOD0": 3738,
+  "note": "LOD0 欄＝單稈最大 LOD0（take_thick 孟宗竹）；竹稈上限 4000、筍 500、落葉 200"
+ }
+}

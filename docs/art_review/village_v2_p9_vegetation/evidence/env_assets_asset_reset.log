@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[ASSET] PASS registry 可讀（res://data/village_v2_asset_registry.json）
+[ASSET] registry version = p5-r6
+[ASSET] FAIL V2 場景依賴 1705 個全在白名單內（違規 332：res://shaders/sky_daynight.gdshader, res://assets/village_v2/garden_kit/mesh/gk_kei_low_l1.res, res://assets/village_v2/garden_kit/mesh/gk_kei_low.res, res://assets/village_v2/garden_kit/mesh/gk_kei_mid_l1.res, res://assets/village_v2/garden_kit/mesh/gk_kei_mid.res, res://assets/village_v2/garden_kit/mesh/gk_tobi_d_l1.res）
+[ASSET] PASS 產生器／layout 9 檔的 res:// 字串全在白名單內（違規 0：）
+[ASSET] PASS V2 引用與 41 條封存登記交集 0（實際 0）
+[ASSET] PASS Protected「龍神像」狀態不是 RETIRE（REWORK）
+[ASSET] PASS Protected「龍神像」專案內 10 檔完好（鎖雜湊 9、只驗存在 1）、1 目錄完整（問題 0：）
+[ASSET] PASS Protected「龍神像」專案外 1 檔雜湊不變、1 目錄完整（問題 0：）
+[ASSET] PASS Protected「火見櫓」狀態不是 RETIRE（REFERENCE ONLY）
+[ASSET] PASS Protected「火見櫓」專案內 13 檔完好（鎖雜湊 12、只驗存在 1）、0 目錄完整（問題 0：）
+[ASSET] PASS Protected「火見櫓」專案外 1 檔雜湊不變、0 目錄完整（問題 0：）
+[ASSET] PASS Protected「神社：鳥居／大鳥居」狀態不是 RETIRE（博麗鳥居 REFERENCE ONLY（參道鳥居暫用參考；額牌不清版不得定稿）／大鳥居 REFERENCE ONLY／ToriGate 未評估）
+[ASSET] PASS Protected「神社：鳥居／大鳥居」專案內 7 檔完好（鎖雜湊 7、只驗存在 0）、0 目錄完整（問題 0：）
+[ASSET] PASS Protected「神社：鳥居／大鳥居」專案外 4 檔雜湊不變、0 目錄完整（問題 0：）
+[ASSET] PASS Protected「神社：社殿與附屬」狀態不是 RETIRE（拜殿 REWORK（村內待 ART_REVIEW）／本殿 REFERENCE ONLY（村內）／其餘 V2 未評估）
+[ASSET] PASS Protected「神社：社殿與附屬」專案內 28 檔完好（鎖雜湊 28、只驗存在 0）、1 目錄完整（問題 0：）
+[ASSET] PASS Protected「神社：社殿與附屬」專案外 2 檔雜湊不變、1 目錄完整（問題 0：）
+[ASSET] PASS Protected「神社：專用材質」狀態不是 RETIRE（REFERENCE ONLY（V2 未評估））
+[ASSET] PASS Protected「神社：專用材質」專案內 13 檔完好（鎖雜湊 0、只驗存在 13）、0 目錄完整（問題 0：）
+[ASSET] PASS archived_moved 14 檔已在 archive/ 且雜湊相符、原位置已清空（問題 0：）
+[ASSET] PASS v2_assets 25 件（hero／landmark 11 項、材質庫 4 項）全 PASS、雜湊與 gate.json 一致（問題 0：）
+[ASSET] 結果：1 項失敗
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)

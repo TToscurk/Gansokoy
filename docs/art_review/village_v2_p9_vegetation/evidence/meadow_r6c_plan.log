@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] INFO 封存 groundcover 規劃の再計算 78290 ms（讀み取り専用）
+[MDW] INFO meadow 文脈 5274 ms（Props・NPC 立ち位置 1205、村外の距離場 1 m）
+[MDW] INFO 1 m 場 20717 ms（505×507、縁のこぼれ 4442 セル）
+[MDW] INFO 規劃 13974 ms：114105 株（short 4400、medium 37494、tall 32126、seed 17315、dry 3208、lean 15486、sparse 0、fern 2848、sasa 1228）
+[MDW] PASS Kit（Pilot p8 と同一）：立ち草 7＋羊歯＋笹（近級 20–80△、中級 ≤ 45 %、丈 0.15–0.62 m）：short 60/5△ 0.20m、medium 66/6△ 0.41m、tall 60/5△ 0.60m、seed 59/18△ 0.54m、dry 60/5△ 0.33m、lean 70/5△ 0.36m、sparse 27/5△ 0.25m、fern 42/9△ 0.38m、sasa 50/5△ 0.43m
+[MDW] PASS 禁區：建物・軒下 0.75 m・路面＋0.2 m・小径の芯・水面・P7 核心／構件・P8 農田・封存構圖・竹林・樹幹 0.55 m・Props／NPC 立ち位置・植物節點 → 違反 0 {  }（114105 株）
+[MDW] PASS 接地：根元＝可見最上面 −0.02 m、偏差 > 5 mm の株 0
+[MDW] PASS 立體：立ち草 110029 株の丈 ≥ 0.30 m 94 %（≥ 40 %）、< 0.12 m 0（= 0）
+[MDW] PASS 類別覆蓋（各 ≥ 下限）：natural_meadow 52455、open_grassland 13568、village_edge 36498、forest_edge 27841、forest_clearing 1352、farm_edge 20882、irrigation_edge 2469、stream_bank 10558、slope 27381、unused_lot 7466、narrow_gap 348、backyard_corner 611、village_open 11136
+[MDW] PASS 群れ：4 m 窗の密度 變動係數 0.76（≥ 0.50、均一 scatter 禁止）・局所の平均丈 變動係數 0.13（≥ 0.12、高さ群）
+[MDW] PASS 斑の形：密な斑 58 個（≥ 20 m²）のうち円／楕円（凸包充足率 > 0.84）2 %（≤ 15 %、中央値 0.65）、dense → 2 m 先まで空の急な縁 17 %（≤ 30 %）
+[MDW] PASS 道路：路縁 0.2–1.5 m 0.00 ≤ 1.5–3 m 0.07×1.1 ≤ 3–6 m 0.36×1.2（單調・縁に峰なし）、1–3.5 m 帯の 6 m 区間 變動係數 4.51（≥ 0.6、等寬帶なし）
+[MDW] PASS 農田の外緣：6 m 区間 228 の帯の届く距離 變動係數 0.44（≥ 0.25）・沿線の密度 變動係數 0.50（≥ 0.35）・田縁 0.5–3 m の埋まり率 變動係數 0.41（≥ 0.35）＝固定幅・一定密度の帯なし
+[MDW] PASS 輪：樹 413 本のうち周りだけ全周に草 12（3 %、≤ 5 %）、建物 178 棟のうち壁沿い 1.7 m の 80 % 以上に草 0（= 0）
+[MDW] PASS 群落：40 株以上の群落 283 のうち dominant ≥ 50 %・10 % 以上の種 ≤ 3 が 92 %（≥ 85 %）、dominant の種類 6（≥ 3）・最多 43 %（≤ 60 %）
+[MDW] PASS 語意：路・小径の脇の最大丈 0.20 m（≤ 0.26）、作業地面の芯の株 0（≤ 20）、林緣・農田・水際の平均丈 0.49 ≥ 後場 0.31＋0.08、後院の隅・路地 584 株（≥ 100）
+[MDW] PASS R5 Macro Ground 不重畫：groundcover_p9.scn の雜湊＝R5 封存時（立ち草は別 overlay meadow_p9.scn）
+[MDW] 結果：0 項失敗

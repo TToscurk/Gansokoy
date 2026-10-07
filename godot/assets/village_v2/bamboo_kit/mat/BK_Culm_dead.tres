@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_bark.gdshader" id="1_wq6f4"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/bamboo_kit/tex/BC_dead_albedo.jpg" id="2_3bphu"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/bamboo_kit/tex/BC_dead_normal.jpg" id="3_pa0hk"]
+
+[resource]
+resource_name = "BK_Culm_dead"
+render_priority = 0
+shader = ExtResource("1_wq6f4")
+shader_parameter/albedo_tex = ExtResource("2_3bphu")
+shader_parameter/normal_tex = ExtResource("3_pa0hk")
+shader_parameter/albedo_mul = 1.0
+shader_parameter/normal_depth = 0.9
+shader_parameter/roughness = 0.62
+shader_parameter/specular = 0.34
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = 1.35
+shader_parameter/flutter = null

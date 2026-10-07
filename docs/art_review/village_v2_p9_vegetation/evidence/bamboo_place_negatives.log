@@ -1,0 +1,7 @@
+[BPLACE] INFO 規劃 2622 件（10351 ms）；拒絕原因 { "path": 1206, "r2_crown": 570, "channel": 1138, "r2_trunk": 206, "r2_under": 204 }
+[BPLACE] PASS 反向 road → 「禁區」必須 FAIL（失敗項 2：禁區：2622 件（竹稈 / 接地：竹稈／筍基不浮（≤）
+[BPLACE] PASS 反向 float → 「接地」必須 FAIL（失敗項 1：接地：竹稈／筍基不浮（≤）
+[BPLACE] PASS 反向 r2 → 「R2 共存」必須 FAIL（失敗項 2：接地：竹稈／筍基不浮（≤ / R2 共存：竹稈 vs ）
+[BPLACE] PASS 反向 path → 「踏跡小徑」必須 FAIL（失敗項 2：接地：竹稈／筍基不浮（≤ / 踏跡小徑：2 條路寬內竹）
+[BPLACE] PASS 反向 dome → 「頂線起伏」必須 FAIL（失敗項 1：頂線起伏（離地稈高）：C）
+[BPLACE] 結果：0 項失敗（negatives）

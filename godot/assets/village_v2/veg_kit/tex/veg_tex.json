@@ -1,0 +1,1476 @@
+{
+ "_note": "P9 R1 植被庫貼圖。由 tools/build_village_v2_veg_textures.py 產生，勿手改。樹皮＝Poly Haven CC0 校色；葉叢 atlas＝偽 3D 程序繪製（無外部來源）。",
+ "atlas": {
+  "A": {
+   "file": "res://assets/village_v2/veg_kit/tex/VL_A_albedo.png",
+   "normal": "res://assets/village_v2/veg_kit/tex/VL_A_normal.png",
+   "size": 2048,
+   "regions": {
+    "sugi_a": {
+     "px": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "uv": [
+      0.0,
+      0.0,
+      0.25,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#31472B",
+     "coverage": 0.174,
+     "prims": 9230,
+     "cm_per_px": 0.1496,
+     "anchor_uv": [
+      0.125,
+      0.24584221158075903
+     ],
+     "bbox_px": [
+      3,
+      175,
+      400,
+      510
+     ],
+     "bbox_uv": [
+      0.00146484375,
+      0.08544921875,
+      0.1953125,
+      0.2490234375
+     ]
+    },
+    "sugi_b": {
+     "px": [
+      512,
+      0,
+      1024,
+      512
+     ],
+     "uv": [
+      0.25,
+      0.0,
+      0.5,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#2C3E26",
+     "coverage": 0.099,
+     "prims": 9330,
+     "cm_per_px": 0.2077,
+     "anchor_uv": [
+      0.375,
+      0.2462451296992142
+     ],
+     "bbox_px": [
+      515,
+      256,
+      900,
+      510
+     ],
+     "bbox_uv": [
+      0.25146484375,
+      0.125,
+      0.439453125,
+      0.2490234375
+     ]
+    },
+    "sugi_dead": {
+     "px": [
+      1024,
+      0,
+      1536,
+      512
+     ],
+     "uv": [
+      0.5,
+      0.0,
+      0.75,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#5B482C",
+     "coverage": 0.148,
+     "prims": 10114,
+     "cm_per_px": 0.1743,
+     "anchor_uv": [
+      0.625,
+      0.2460253852576684
+     ],
+     "bbox_px": [
+      1084,
+      189,
+      1534,
+      510
+     ],
+     "bbox_uv": [
+      0.529296875,
+      0.09228515625,
+      0.7490234375,
+      0.2490234375
+     ]
+    },
+    "hinoki_a": {
+     "px": [
+      1536,
+      0,
+      2048,
+      512
+     ],
+     "uv": [
+      0.75,
+      0.0,
+      1.0,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#405E35",
+     "coverage": 0.302,
+     "prims": 6696,
+     "cm_per_px": 0.1237,
+     "anchor_uv": [
+      0.875,
+      0.20075419700260658
+     ],
+     "bbox_px": [
+      1552,
+      86,
+      2046,
+      510
+     ],
+     "bbox_uv": [
+      0.7578125,
+      0.0419921875,
+      0.9990234375,
+      0.2490234375
+     ]
+    },
+    "hinoki_b": {
+     "px": [
+      0,
+      512,
+      512,
+      1024
+     ],
+     "uv": [
+      0.0,
+      0.25,
+      0.25,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#385130",
+     "coverage": 0.219,
+     "prims": 4780,
+     "cm_per_px": 0.1263,
+     "anchor_uv": [
+      0.125,
+      0.4772998738368045
+     ],
+     "bbox_px": [
+      3,
+      702,
+      498,
+      1022
+     ],
+     "bbox_uv": [
+      0.00146484375,
+      0.3427734375,
+      0.2431640625,
+      0.4990234375
+     ]
+    },
+    "akamatsu": {
+     "px": [
+      512,
+      512,
+      1024,
+      1024
+     ],
+     "uv": [
+      0.25,
+      0.25,
+      0.5,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#50623A",
+     "coverage": 0.175,
+     "prims": 589,
+     "cm_per_px": 0.0753,
+     "anchor_uv": [
+      0.375,
+      0.49637298282497133
+     ],
+     "bbox_px": [
+      515,
+      606,
+      976,
+      1022
+     ],
+     "bbox_uv": [
+      0.25146484375,
+      0.2958984375,
+      0.4765625,
+      0.4990234375
+     ]
+    },
+    "kuromatsu": {
+     "px": [
+      1024,
+      512,
+      1536,
+      1024
+     ],
+     "uv": [
+      0.5,
+      0.25,
+      0.75,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#2A3B26",
+     "coverage": 0.265,
+     "prims": 775,
+     "cm_per_px": 0.0827,
+     "anchor_uv": [
+      0.625,
+      0.4952964187603551
+     ],
+     "bbox_px": [
+      1066,
+      515,
+      1534,
+      1022
+     ],
+     "bbox_uv": [
+      0.5205078125,
+      0.25146484375,
+      0.7490234375,
+      0.4990234375
+     ]
+    },
+    "matsu_pad": {
+     "px": [
+      1536,
+      512,
+      2048,
+      1024
+     ],
+     "uv": [
+      0.75,
+      0.25,
+      1.0,
+      0.5
+     ],
+     "anchor": "center",
+     "aspect": 1.0,
+     "mean_srgb": "#374B2E",
+     "coverage": 0.267,
+     "prims": 3987,
+     "cm_per_px": 0.146,
+     "anchor_uv": [
+      0.875,
+      0.375
+     ],
+     "bbox_px": [
+      1615,
+      573,
+      2046,
+      963
+     ],
+     "bbox_uv": [
+      0.78857421875,
+      0.27978515625,
+      0.9990234375,
+      0.47021484375
+     ]
+    },
+    "willow_a": {
+     "px": [
+      0,
+      1024,
+      256,
+      1536
+     ],
+     "uv": [
+      0.0,
+      0.5,
+      0.125,
+      0.75
+     ],
+     "anchor": "top",
+     "aspect": 2.0,
+     "mean_srgb": "#63773F",
+     "coverage": 0.108,
+     "prims": 306,
+     "cm_per_px": 0.1946,
+     "anchor_uv": [
+      0.0625,
+      0.5033230966277937
+     ],
+     "bbox_px": [
+      3,
+      1027,
+      140,
+      1520
+     ],
+     "bbox_uv": [
+      0.00146484375,
+      0.50146484375,
+      0.068359375,
+      0.7421875
+     ]
+    },
+    "willow_b": {
+     "px": [
+      256,
+      1024,
+      512,
+      1536
+     ],
+     "uv": [
+      0.125,
+      0.5,
+      0.25,
+      0.75
+     ],
+     "anchor": "top",
+     "aspect": 2.0,
+     "mean_srgb": "#5A713B",
+     "coverage": 0.131,
+     "prims": 598,
+     "cm_per_px": 0.2466,
+     "anchor_uv": [
+      0.1875,
+      0.5032455300254051
+     ],
+     "bbox_px": [
+      258,
+      1027,
+      447,
+      1439
+     ],
+     "bbox_uv": [
+      0.1259765625,
+      0.50146484375,
+      0.21826171875,
+      0.70263671875
+     ]
+    },
+    "sasa": {
+     "px": [
+      512,
+      1024,
+      1024,
+      1536
+     ],
+     "uv": [
+      0.25,
+      0.5,
+      0.5,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#4A6134",
+     "coverage": 0.196,
+     "prims": 222,
+     "cm_per_px": 0.136,
+     "anchor_uv": [
+      0.375,
+      0.746660878287045
+     ],
+     "bbox_px": [
+      565,
+      1099,
+      1022,
+      1534
+     ],
+     "bbox_uv": [
+      0.27587890625,
+      0.53662109375,
+      0.4990234375,
+      0.7490234375
+     ]
+    },
+    "twigs": {
+     "px": [
+      1024,
+      1024,
+      1536,
+      1536
+     ],
+     "uv": [
+      0.5,
+      0.5,
+      0.75,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#4C4640",
+     "coverage": 0.043,
+     "prims": 666,
+     "cm_per_px": 0.1169,
+     "anchor_uv": [
+      0.625,
+      0.7453795184831546
+     ],
+     "bbox_px": [
+      1027,
+      1156,
+      1308,
+      1534
+     ],
+     "bbox_uv": [
+      0.50146484375,
+      0.564453125,
+      0.638671875,
+      0.7490234375
+     ]
+    },
+    "azalea": {
+     "px": [
+      1536,
+      1024,
+      2048,
+      1536
+     ],
+     "uv": [
+      0.75,
+      0.5,
+      1.0,
+      0.75
+     ],
+     "anchor": "center",
+     "aspect": 1.0,
+     "mean_srgb": "#364128",
+     "coverage": 0.103,
+     "prims": 705,
+     "cm_per_px": 0.094,
+     "anchor_uv": [
+      0.875,
+      0.625
+     ],
+     "bbox_px": [
+      1591,
+      1177,
+      2046,
+      1457
+     ],
+     "bbox_uv": [
+      0.77685546875,
+      0.57470703125,
+      0.9990234375,
+      0.71142578125
+     ]
+    },
+    "fern_a": {
+     "px": [
+      0,
+      1536,
+      256,
+      2048
+     ],
+     "uv": [
+      0.0,
+      0.75,
+      0.125,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 2.0,
+     "mean_srgb": "#354F27",
+     "coverage": 0.217,
+     "prims": 190,
+     "cm_per_px": 0.1347,
+     "anchor_uv": [
+      0.0625,
+      0.9968611530313729
+     ],
+     "bbox_px": [
+      23,
+      1652,
+      254,
+      2046
+     ],
+     "bbox_uv": [
+      0.01123046875,
+      0.806640625,
+      0.1240234375,
+      0.9990234375
+     ]
+    },
+    "fern_b": {
+     "px": [
+      256,
+      1536,
+      512,
+      2048
+     ],
+     "uv": [
+      0.125,
+      0.75,
+      0.25,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 2.0,
+     "mean_srgb": "#314B27",
+     "coverage": 0.086,
+     "prims": 190,
+     "cm_per_px": 0.1118,
+     "anchor_uv": [
+      0.1875,
+      0.9967599693662298
+     ],
+     "bbox_px": [
+      259,
+      1856,
+      445,
+      2046
+     ],
+     "bbox_uv": [
+      0.12646484375,
+      0.90625,
+      0.21728515625,
+      0.9990234375
+     ]
+    },
+    "shrub": {
+     "px": [
+      512,
+      1536,
+      1024,
+      2048
+     ],
+     "uv": [
+      0.25,
+      0.75,
+      0.5,
+      1.0
+     ],
+     "anchor": "center",
+     "aspect": 1.0,
+     "mean_srgb": "#3A492A",
+     "coverage": 0.099,
+     "prims": 324,
+     "cm_per_px": 0.0987,
+     "anchor_uv": [
+      0.375,
+      0.875
+     ],
+     "bbox_px": [
+      654,
+      1712,
+      1022,
+      1961
+     ],
+     "bbox_uv": [
+      0.3193359375,
+      0.8359375,
+      0.4990234375,
+      0.95751953125
+     ]
+    },
+    "sugi_young": {
+     "px": [
+      1024,
+      1536,
+      1536,
+      2048
+     ],
+     "uv": [
+      0.5,
+      0.75,
+      0.75,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#3F5930",
+     "coverage": 0.18,
+     "prims": 4256,
+     "cm_per_px": 0.1011,
+     "anchor_uv": [
+      0.625,
+      0.995881790649332
+     ],
+     "bbox_px": [
+      1122,
+      1616,
+      1534,
+      2046
+     ],
+     "bbox_uv": [
+      0.5478515625,
+      0.7890625,
+      0.7490234375,
+      0.9990234375
+     ]
+    },
+    "moss": {
+     "px": [
+      1536,
+      1536,
+      2048,
+      2048
+     ],
+     "uv": [
+      0.75,
+      0.75,
+      1.0,
+      1.0
+     ],
+     "anchor": "center",
+     "aspect": 1.0,
+     "mean_srgb": "#2F411F",
+     "coverage": 0.373,
+     "prims": 822,
+     "cm_per_px": 0.0768,
+     "anchor_uv": [
+      0.875,
+      0.875
+     ],
+     "bbox_px": [
+      1546,
+      1597,
+      1998,
+      2046
+     ],
+     "bbox_uv": [
+      0.7548828125,
+      0.77978515625,
+      0.9755859375,
+      0.9990234375
+     ]
+    }
+   }
+  },
+  "B": {
+   "file": "res://assets/village_v2/veg_kit/tex/VL_B_albedo.png",
+   "normal": "res://assets/village_v2/veg_kit/tex/VL_B_normal.png",
+   "size": 2048,
+   "regions": {
+    "konara": {
+     "px": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "uv": [
+      0.0,
+      0.0,
+      0.25,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#41572E",
+     "coverage": 0.32,
+     "prims": 580,
+     "cm_per_px": 0.1039,
+     "anchor_uv": [
+      0.125,
+      0.24666720870954406
+     ],
+     "bbox_px": [
+      71,
+      21,
+      510,
+      510
+     ],
+     "bbox_uv": [
+      0.03466796875,
+      0.01025390625,
+      0.2490234375,
+      0.2490234375
+     ]
+    },
+    "shii": {
+     "px": [
+      512,
+      0,
+      1024,
+      512
+     ],
+     "uv": [
+      0.25,
+      0.0,
+      0.5,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#2C3D25",
+     "coverage": 0.137,
+     "prims": 460,
+     "cm_per_px": 0.1123,
+     "anchor_uv": [
+      0.375,
+      0.24631785246372204
+     ],
+     "bbox_px": [
+      636,
+      37,
+      1022,
+      510
+     ],
+     "bbox_uv": [
+      0.310546875,
+      0.01806640625,
+      0.4990234375,
+      0.2490234375
+     ]
+    },
+    "keyaki": {
+     "px": [
+      1024,
+      0,
+      1536,
+      512
+     ],
+     "uv": [
+      0.5,
+      0.0,
+      0.75,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#424F30",
+     "coverage": 0.097,
+     "prims": 460,
+     "cm_per_px": 0.1037,
+     "anchor_uv": [
+      0.625,
+      0.24632454167831241
+     ],
+     "bbox_px": [
+      1110,
+      3,
+      1495,
+      510
+     ],
+     "bbox_uv": [
+      0.5419921875,
+      0.00146484375,
+      0.72998046875,
+      0.2490234375
+     ]
+    },
+    "kusu_a": {
+     "px": [
+      1536,
+      0,
+      2048,
+      512
+     ],
+     "uv": [
+      0.75,
+      0.0,
+      1.0,
+      0.25
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#34482B",
+     "coverage": 0.083,
+     "prims": 539,
+     "cm_per_px": 0.1467,
+     "anchor_uv": [
+      0.875,
+      0.24644309015456559
+     ],
+     "bbox_px": [
+      1654,
+      201,
+      2046,
+      510
+     ],
+     "bbox_uv": [
+      0.8076171875,
+      0.09814453125,
+      0.9990234375,
+      0.2490234375
+     ]
+    },
+    "kusu_b": {
+     "px": [
+      0,
+      512,
+      512,
+      1024
+     ],
+     "uv": [
+      0.0,
+      0.25,
+      0.25,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#4B5C33",
+     "coverage": 0.123,
+     "prims": 525,
+     "cm_per_px": 0.1261,
+     "anchor_uv": [
+      0.125,
+      0.4960836203339196
+     ],
+     "bbox_px": [
+      204,
+      665,
+      510,
+      1022
+     ],
+     "bbox_uv": [
+      0.099609375,
+      0.32470703125,
+      0.2490234375,
+      0.4990234375
+     ]
+    },
+    "enoki": {
+     "px": [
+      512,
+      512,
+      1024,
+      1024
+     ],
+     "uv": [
+      0.25,
+      0.25,
+      0.5,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#415433",
+     "coverage": 0.086,
+     "prims": 469,
+     "cm_per_px": 0.1233,
+     "anchor_uv": [
+      0.375,
+      0.49622128214201144
+     ],
+     "bbox_px": [
+      671,
+      515,
+      888,
+      1022
+     ],
+     "bbox_uv": [
+      0.32763671875,
+      0.25146484375,
+      0.43359375,
+      0.4990234375
+     ]
+    },
+    "sakura_bloom": {
+     "px": [
+      1024,
+      512,
+      1536,
+      1024
+     ],
+     "uv": [
+      0.5,
+      0.25,
+      0.75,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#BAAAAB",
+     "coverage": 0.13,
+     "prims": 2008,
+     "cm_per_px": 0.14,
+     "anchor_uv": [
+      0.625,
+      0.49646517889081876
+     ],
+     "bbox_px": [
+      1027,
+      675,
+      1352,
+      1022
+     ],
+     "bbox_uv": [
+      0.50146484375,
+      0.32958984375,
+      0.66015625,
+      0.4990234375
+     ]
+    },
+    "sakura_yama": {
+     "px": [
+      1536,
+      512,
+      2048,
+      1024
+     ],
+     "uv": [
+      0.75,
+      0.25,
+      1.0,
+      0.5
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#B5ABA8",
+     "coverage": 0.1,
+     "prims": 1590,
+     "cm_per_px": 0.1407,
+     "anchor_uv": [
+      0.875,
+      0.49635274021539055
+     ],
+     "bbox_px": [
+      1539,
+      672,
+      1864,
+      1022
+     ],
+     "bbox_uv": [
+      0.75146484375,
+      0.328125,
+      0.91015625,
+      0.4990234375
+     ]
+    },
+    "sakura_leaf": {
+     "px": [
+      0,
+      1024,
+      512,
+      1536
+     ],
+     "uv": [
+      0.0,
+      0.5,
+      0.25,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#364928",
+     "coverage": 0.138,
+     "prims": 324,
+     "cm_per_px": 0.1103,
+     "anchor_uv": [
+      0.125,
+      0.7466852446297075
+     ],
+     "bbox_px": [
+      190,
+      1095,
+      510,
+      1534
+     ],
+     "bbox_uv": [
+      0.0927734375,
+      0.53466796875,
+      0.2490234375,
+      0.7490234375
+     ]
+    },
+    "momiji_g": {
+     "px": [
+      512,
+      1024,
+      1024,
+      1536
+     ],
+     "uv": [
+      0.25,
+      0.5,
+      0.5,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#547038",
+     "coverage": 0.233,
+     "prims": 828,
+     "cm_per_px": 0.109,
+     "anchor_uv": [
+      0.375,
+      0.7464045150215097
+     ],
+     "bbox_px": [
+      522,
+      1026,
+      965,
+      1534
+     ],
+     "bbox_uv": [
+      0.2548828125,
+      0.5009765625,
+      0.47119140625,
+      0.7490234375
+     ]
+    },
+    "momiji_turn": {
+     "px": [
+      1024,
+      1024,
+      1536,
+      1536
+     ],
+     "uv": [
+      0.5,
+      0.5,
+      0.75,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#866735",
+     "coverage": 0.183,
+     "prims": 810,
+     "cm_per_px": 0.1178,
+     "anchor_uv": [
+      0.625,
+      0.7467667272245971
+     ],
+     "bbox_px": [
+      1105,
+      1153,
+      1534,
+      1534
+     ],
+     "bbox_uv": [
+      0.53955078125,
+      0.56298828125,
+      0.7490234375,
+      0.7490234375
+     ]
+    },
+    "momiji_red": {
+     "px": [
+      1536,
+      1024,
+      2048,
+      1536
+     ],
+     "uv": [
+      0.75,
+      0.5,
+      1.0,
+      0.75
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#7F452B",
+     "coverage": 0.141,
+     "prims": 826,
+     "cm_per_px": 0.1382,
+     "anchor_uv": [
+      0.875,
+      0.7462807557769175
+     ],
+     "bbox_px": [
+      1757,
+      1169,
+      2046,
+      1534
+     ],
+     "bbox_uv": [
+      0.85791015625,
+      0.57080078125,
+      0.9990234375,
+      0.7490234375
+     ]
+    },
+    "shidare_a": {
+     "px": [
+      0,
+      1536,
+      256,
+      2048
+     ],
+     "uv": [
+      0.0,
+      0.75,
+      0.125,
+      1.0
+     ],
+     "anchor": "top",
+     "aspect": 2.0,
+     "mean_srgb": "#AA9899",
+     "coverage": 0.046,
+     "prims": 1836,
+     "cm_per_px": 0.2973,
+     "anchor_uv": [
+      0.0625,
+      0.7533500587369996
+     ],
+     "bbox_px": [
+      94,
+      1539,
+      254,
+      1886
+     ],
+     "bbox_uv": [
+      0.0458984375,
+      0.75146484375,
+      0.1240234375,
+      0.9208984375
+     ]
+    },
+    "shidare_b": {
+     "px": [
+      256,
+      1536,
+      512,
+      2048
+     ],
+     "uv": [
+      0.125,
+      0.75,
+      0.25,
+      1.0
+     ],
+     "anchor": "top",
+     "aspect": 2.0,
+     "mean_srgb": "#B4A0A0",
+     "coverage": 0.046,
+     "prims": 2381,
+     "cm_per_px": 0.2934,
+     "anchor_uv": [
+      0.1875,
+      0.7533704409322831
+     ],
+     "bbox_px": [
+      259,
+      1539,
+      411,
+      1780
+     ],
+     "bbox_uv": [
+      0.12646484375,
+      0.75146484375,
+      0.20068359375,
+      0.869140625
+     ]
+    },
+    "young_broad": {
+     "px": [
+      512,
+      1536,
+      1024,
+      2048
+     ],
+     "uv": [
+      0.25,
+      0.75,
+      0.5,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#53693A",
+     "coverage": 0.105,
+     "prims": 243,
+     "cm_per_px": 0.0982,
+     "anchor_uv": [
+      0.375,
+      0.9958752482642116
+     ],
+     "bbox_px": [
+      708,
+      1539,
+      997,
+      2046
+     ],
+     "bbox_uv": [
+      0.345703125,
+      0.75146484375,
+      0.48681640625,
+      0.9990234375
+     ]
+    },
+    "broad_yellow": {
+     "px": [
+      1024,
+      1536,
+      1536,
+      2048
+     ],
+     "uv": [
+      0.5,
+      0.75,
+      0.75,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#5D5E33",
+     "coverage": 0.125,
+     "prims": 294,
+     "cm_per_px": 0.1194,
+     "anchor_uv": [
+      0.625,
+      0.9964582162401673
+     ],
+     "bbox_px": [
+      1076,
+      1539,
+      1497,
+      2046
+     ],
+     "bbox_uv": [
+      0.525390625,
+      0.75146484375,
+      0.73095703125,
+      0.9990234375
+     ]
+    },
+    "momiji_g2": {
+     "px": [
+      1536,
+      1536,
+      2048,
+      2048
+     ],
+     "uv": [
+      0.75,
+      0.75,
+      1.0,
+      1.0
+     ],
+     "anchor": "base",
+     "aspect": 1.0,
+     "mean_srgb": "#506737",
+     "coverage": 0.132,
+     "prims": 594,
+     "cm_per_px": 0.0977,
+     "anchor_uv": [
+      0.875,
+      0.996037291660574
+     ],
+     "bbox_px": [
+      1575,
+      1595,
+      2046,
+      2046
+     ],
+     "bbox_uv": [
+      0.76904296875,
+      0.77880859375,
+      0.9990234375,
+      0.9990234375
+     ]
+    }
+   }
+  }
+ },
+ "files_sha256": {
+  "res://assets/village_v2/veg_kit/tex/VB_sugi_albedo.jpg": "59c47c28f2f92c3974913cc21dbb92be9b64a4b457b83bad001d0a3e94bea93b",
+  "res://assets/village_v2/veg_kit/tex/VB_sugi_normal.jpg": "2a01297072c9535c636894aca062e1deeebffe92e59afea1f35026fd2a74be1c",
+  "res://assets/village_v2/veg_kit/tex/VB_pine_albedo.jpg": "4c211393172c3e6dd4946aa3646ef3cc2e9f1d8cd17f029b4b6fc83978fb393d",
+  "res://assets/village_v2/veg_kit/tex/VB_pine_normal.jpg": "9e036c1884a22f84c781df7cf4f5f01ebba5acab8787eead942da770766a5872",
+  "res://assets/village_v2/veg_kit/tex/VB_sakura_albedo.jpg": "379619f7de7d5e291b0302a7787a73eed0b62181c7ced8e6f7462a3bde7b53d5",
+  "res://assets/village_v2/veg_kit/tex/VB_sakura_normal.jpg": "cb30ae4f842368b571157253249d85846318c46db15c72a60ee224dc85145584",
+  "res://assets/village_v2/veg_kit/tex/VB_maple_albedo.jpg": "d87869b784b6b3a1f362374bd2ac9af1d40b24c91722db72bd12dc0c1f190073",
+  "res://assets/village_v2/veg_kit/tex/VB_maple_normal.jpg": "043bf7c7f45a88f7687b3514ee6e335e5d0014744aeb1f9f05cf9471f519b95f",
+  "res://assets/village_v2/veg_kit/tex/VB_willow_albedo.jpg": "4c4860ab6f3989cf42e7a4e619df9c7d9300351eb98e02ac69b57744d4303732",
+  "res://assets/village_v2/veg_kit/tex/VB_willow_normal.jpg": "850656faf3a7a0ea4c25d4f9c4082bc9d263df267e50a8f3bfcc1e4fb6522602",
+  "res://assets/village_v2/veg_kit/tex/VB_zelkova_albedo.jpg": "1a7ac7095c975b34ac08ec34e0864335a6d515b0acaa8ecb1bc9d66d09168be3",
+  "res://assets/village_v2/veg_kit/tex/VB_zelkova_normal.jpg": "41bebed5e2734d5344b5933455ed3e77a1e742a07cf6445d0e4883c1770e52af",
+  "res://assets/village_v2/veg_kit/tex/VB_camphor_albedo.jpg": "30f4cb8d918cf229f715d24ec8f1e752a5796c1a5fd1f460dd40bcba360c8b50",
+  "res://assets/village_v2/veg_kit/tex/VB_camphor_normal.jpg": "9856ebaff5b4ca04386cc1bb98c1ce4ced38e5bdbbfa62728c67f3501454fc61",
+  "res://assets/village_v2/veg_kit/tex/VB_hackberry_albedo.jpg": "85f6cfae3281f9368d2ae2ec644196e1b166718b8262ddf4bd4f344d75e5b545",
+  "res://assets/village_v2/veg_kit/tex/VB_hackberry_normal.jpg": "afe29870ad06c98f382b6ba6a822578f23ef2d666298a93f66a3f656e149cea2",
+  "res://assets/village_v2/veg_kit/tex/VB_dead_albedo.jpg": "1b561ce68bc76eedd36d1f55f731b4e2459d905b2450530f9a0e9691f48dd388",
+  "res://assets/village_v2/veg_kit/tex/VB_dead_normal.jpg": "c25ba479f24b7d7f45e416a2fadbef1b9c2f223fee0e8a785d6d0910de272ddf",
+  "res://assets/village_v2/veg_kit/tex/VL_A_albedo.png": "b88e7e1f416f3b8568a6f397d58c7d32d2937ae6ffaa16ca379b3c3b1b45d1d8",
+  "res://assets/village_v2/veg_kit/tex/VL_A_normal.png": "f20fbdd3fdb3a1cb7576027cbcf5eb351c398c338f20b5efb070e7552e34f366",
+  "res://assets/village_v2/veg_kit/tex/VL_B_albedo.png": "56fded31cdf3bb2d970923845d448924efde1b795e238f630e955818d3c2c8aa",
+  "res://assets/village_v2/veg_kit/tex/VL_B_normal.png": "e463a50bedc61c96f78567bc7604c98b780c9fb597b7ebab31805f6c7cb0ce2d"
+ },
+ "bark": {
+  "sugi": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_sugi_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_sugi_normal.jpg"
+   },
+   "target_srgb": "#6A4E3C",
+   "albedo_mean_srgb": "#6A4E3C",
+   "note": "杉／檜：紅褐縱向纖維狀剝皮",
+   "source": {
+    "polyhaven_id": "japanese_cedar_bark",
+    "url": "https://polyhaven.com/a/japanese_cedar_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "5d6f2c86a4ecbfff032e5dbb09e4963a938f36d90d8fe744d2558ffd682c8111",
+     "nor": "5afcf17fcff6b893a104c423a7f1845b7b4334df8552031aebaef8484f192288",
+     "rough": "933db461bd550408278aec75c3eceb7b8d9e1441fcc392c6270b6e919b9e1a58"
+    }
+   }
+  },
+  "pine": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_pine_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_pine_normal.jpg"
+   },
+   "target_srgb": "#6E5646",
+   "albedo_mean_srgb": "#6E5646",
+   "note": "松：龜甲狀深裂（黑松下部、赤松下部）",
+   "source": {
+    "polyhaven_id": "pine_bark",
+    "url": "https://polyhaven.com/a/pine_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "741f333ab9f8a0996d8a53905b5ac792fab77d7ccb8cac5fbaed8c99b9f6abd5",
+     "nor": "e91d024441a698523472ef2001be2eade2f73005d798466c7acd3ec5d585667f",
+     "rough": "a86618f6358a97410b15d226d0b3d52bb203aed8d9a29cfa355769b95df94d03"
+    }
+   }
+  },
+  "sakura": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_sakura_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_sakura_normal.jpg"
+   },
+   "target_srgb": "#4D3E3A",
+   "albedo_mean_srgb": "#4D3E3A",
+   "note": "櫻：暗紫褐、橫向皮孔",
+   "source": {
+    "polyhaven_id": "sakura_bark",
+    "url": "https://polyhaven.com/a/sakura_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "b01a0d6ffaca341e5e8806cac2b1594e5d28177be06767d31aa04c1536b8fffe",
+     "nor": "d14fb8263319f92a03749cd6e8c12696717c7745077a0f61f58357372f7fbfd8",
+     "rough": "78ba4093ca89edcbbf1adeefee3ea3e276fb044fe8a1639df6a1b58e10d38dce"
+    }
+   }
+  },
+  "maple": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_maple_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_maple_normal.jpg"
+   },
+   "target_srgb": "#706A5E",
+   "albedo_mean_srgb": "#706A5E",
+   "note": "楓：灰褐平滑、細縱紋",
+   "source": {
+    "polyhaven_id": "trident_maple_bark",
+    "url": "https://polyhaven.com/a/trident_maple_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "f564984567db7f834898aaa69bfc902f8892ed33687e60e2d6c90e22beb0b8fc",
+     "nor": "2a439aca6ca91f36ee08da895ac67ed7720d091d822b07e154f4b1648eee6097",
+     "rough": "03aae97ee588815f67e3cfa2d9602f6e64a05cdd12e7addd445579a33d9c8e76"
+    }
+   }
+  },
+  "willow": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_willow_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_willow_normal.jpg"
+   },
+   "target_srgb": "#5E564B",
+   "albedo_mean_srgb": "#5E564B",
+   "note": "柳：灰褐縱深溝",
+   "source": {
+    "polyhaven_id": "bark_willow",
+    "url": "https://polyhaven.com/a/bark_willow",
+    "license": "CC0",
+    "sha256": {
+     "diff": "d87e97687eb0abd61031161f2895ab7eafc241c850380e978d011ef98a45a67b",
+     "nor": "2984fe9d23f2cfb9b235fc50eea85f514b27be3f4addc7c7142afba077c9970e",
+     "rough": "fc3cc861befbd9dcaec295d7ddb54b41c68ecf153a49a18fc8460c25b3f57c49"
+    }
+   }
+  },
+  "zelkova": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_zelkova_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_zelkova_normal.jpg"
+   },
+   "target_srgb": "#7A7264",
+   "albedo_mean_srgb": "#7A7264",
+   "note": "欅：灰色鱗片斑駁",
+   "source": {
+    "polyhaven_id": "japanese_zelkova_bark",
+    "url": "https://polyhaven.com/a/japanese_zelkova_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "143408857be7c593583e9a382988dca59b4043ab137b2444750fcb6f3ec0ea16",
+     "nor": "634f3009e6c326372878d8c95e1cb4a213c627f3e83701f3e3fb3a0f0aa93bdf",
+     "rough": "d848753c89fc45dea7fd9cc8d02773643103dc4851ed1335ddf7ce416e70aee9"
+    }
+   }
+  },
+  "camphor": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_camphor_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_camphor_normal.jpg"
+   },
+   "target_srgb": "#5C4C3E",
+   "albedo_mean_srgb": "#5C4C3E",
+   "note": "樟（Hero 古木）：褐色縱向細裂",
+   "source": {
+    "polyhaven_id": "japanese_camphor_bark",
+    "url": "https://polyhaven.com/a/japanese_camphor_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "a9b2dc4390705054193144699303a87eea29c5a483c26377b2b7a9e81c9969e6",
+     "nor": "aff753b974e08566b781af80884a2bd5b5f3a52c6e0f76036fdcb8d9e40b0ead",
+     "rough": "079a11c3e608a65a2d72ac7673c69a29d564fc4ece7846d7c7f72506ffca5380"
+    }
+   }
+  },
+  "hackberry": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_hackberry_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_hackberry_normal.jpg"
+   },
+   "target_srgb": "#77756A",
+   "albedo_mean_srgb": "#77756A",
+   "note": "榎／小楢／椎等一般雜木：灰色平滑帶苔",
+   "source": {
+    "polyhaven_id": "japanese_hackberry_bark",
+    "url": "https://polyhaven.com/a/japanese_hackberry_bark",
+    "license": "CC0",
+    "sha256": {
+     "diff": "eee9a370071932127e6a4665bb714ea8506c9a918eac3b87a0bc5c4854b76d56",
+     "nor": "d632db9e2fb854885b598b1b1091245b93f1b18cb4425deea4c08ac7dec225e8",
+     "rough": "b6634b6f859eded3127e6dc9d3fd65f0ca1396f5f9bf32cdd30d213e95b1ff3d"
+    }
+   }
+  },
+  "dead": {
+   "files": {
+    "albedo": "res://assets/village_v2/veg_kit/tex/VB_dead_albedo.jpg",
+    "normal": "res://assets/village_v2/veg_kit/tex/VB_dead_normal.jpg"
+   },
+   "target_srgb": "#6F6A62",
+   "albedo_mean_srgb": "#6F6A62",
+   "note": "枯木／倒木：灰白風化",
+   "source": {
+    "polyhaven_id": "bark_brown_02",
+    "url": "https://polyhaven.com/a/bark_brown_02",
+    "license": "CC0",
+    "sha256": {
+     "diff": "285051e34826ace29f4ab438ad35cc1201b2aae0a6157a5f3c0bf6667bbc539e",
+     "nor": "aaba4529c3167a7811b4dbf5b4327d054a166c2fc8ea08ebd249a2692adace41",
+     "rough": "adafcab150c1ca99150c77198329e251437dc00fa1f66019f75624366926996e"
+    }
+   }
+  }
+ }
+}

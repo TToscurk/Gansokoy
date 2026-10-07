@@ -1,0 +1,111 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[FARM] PASS P8 封存 38 檔雜湊一致（凍結 8、ART_REVIEW 圖 24、證據 6；不符 0：）
+[FARM] PASS 反向：竄改 tools/village_v2_farmland_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[FARM] 結果：0 項失敗（seal）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+seal farmland 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[VEG] PASS P9 R1 封存 18 檔雜湊一致（凍結 8、核准總表 7、證據 3；不符 0：）
+[VEG] PASS 反向：竄改 godot/assets/blender/village_v2/build_veg_kit.py 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[VEG] 結果：0 項失敗（seal）
+seal veg_gate 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[FOREST] PASS P9 R2 封存 13 檔雜湊一致（凍結 6、ART_REVIEW 總表 4、證據 3；不符 0：）
+[FOREST] PASS 反向：竄改 godot/tools/village_v2_forest_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[FOREST] 結果：0 項失敗（seal）
+seal forest 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[BPLACE] PASS P9 R3 封存 30 檔雜湊一致（凍結 16、ART_REVIEW 總表 8、證據 6；不符 0：）
+[BPLACE] PASS village_v2.tscn 掛載 Vegetation/BambooP9（res://maps/village_v2/gen/bamboo_p9.scn）
+[BPLACE] PASS 反向：竄改 tools/build_village_v2_bamboo_textures.py 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[BPLACE] 結果：0 項失敗（seal）
+seal bamboo_place 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[GARDEN] PASS P9 R4 封存 32 檔雜湊一致（凍結 17、ART_REVIEW 總表 9、證據 6；不符 0：）
+[GARDEN] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9（res://maps/village_v2/gen/hieda_garden_p9.scn）
+[GARDEN] PASS 反向：竄改 godot/assets/blender/village_v2/build_garden_kit.py 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[GARDEN] 結果：0 項失敗（seal）
+seal hieda_garden 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[SHRINE] PASS P9 R4-2 封存 14 檔雜湊一致（凍結 7、ART_REVIEW 總表 4、證據 3；不符 0：）
+[SHRINE] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9（res://maps/village_v2/gen/shrine_grove_p9.scn）
+[SHRINE] PASS 反向：竄改 godot/tools/village_v2_shrine_grove_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[SHRINE] 結果：0 項失敗（seal）
+seal shrine_grove 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[SCHOOL] PASS P9 R4-3 封存 52 檔雜湊一致（凍結 41、ART_REVIEW 總表 7、證據 4；不符 0：）
+[SCHOOL] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9（res://maps/village_v2/gen/school_yard_p9.scn）
+[SCHOOL] PASS 反向：竄改 godot/tools/village_v2_school_yard_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[SCHOOL] 結果：0 項失敗（seal）
+seal school_yard 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[WATER] PASS P9 R4-4 封存 32 檔雜湊一致（凍結 26、ART_REVIEW 總表 3、證據 3；不符 0：）
+[WATER] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9（res://maps/village_v2/gen/waterside_p9.scn）
+[WATER] PASS 反向：竄改 godot/tools/village_v2_waterside_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[WATER] 結果：0 項失敗（seal）
+seal waterside 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[TOWER] PASS P9 R4-5 封存 23 檔雜湊一致（凍結 17、ART_REVIEW 總表 3、證據 3；不符 0：）
+[TOWER] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9（res://maps/village_v2/gen/tower_yard_p9.scn）
+[TOWER] PASS 反向：竄改 godot/tools/village_v2_tower_yard_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[TOWER] 結果：0 項失敗（seal）
+seal tower_yard 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[SUZU] PASS P9 R4-6 封存 34 檔雜湊一致（凍結 27、ART_REVIEW 總表 4、證據 3；不符 0：）
+[SUZU] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9（res://maps/village_v2/gen/suzunaan_p9.scn）
+[SUZU] PASS 反向：竄改 godot/tools/village_v2_suzunaan_yard_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[SUZU] 結果：0 項失敗（seal）
+seal suzunaan_yard 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[GEID] PASS P9 R4-7 封存 29 檔雜湊一致（凍結 22、ART_REVIEW 總表 4、證據 3；不符 0：）
+[GEID] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9（res://maps/village_v2/gen/geidontei_p9.scn）
+[GEID] PASS 反向：竄改 godot/tools/village_v2_geidontei_yard_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[GEID] 結果：0 項失敗（seal）
+seal geidontei_yard 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[KIRI] PASS P9 R4-8 封存 54 檔雜湊一致（凍結 47、ART_REVIEW 總表 4、證據 3；不符 0：）
+[KIRI] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9（res://maps/village_v2/gen/kirisame_p9.scn）
+[KIRI] PASS 反向：竄改 godot/tools/village_v2_kirisame_yard_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[KIRI] 結果：0 項失敗（seal）
+seal kirisame_yard 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[GC] PASS P9 R5 封存 62 檔雜湊一致（凍結 11、ART_REVIEW 圖 35、證據 16；不符 0：）
+[GC] PASS village_v2.tscn 掛載 Vegetation/ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9（res://maps/village_v2/gen/groundcover_p9.scn）
+[GC] PASS 反向：竄改 godot/tools/village_v2_groundcover_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[GC] 結果：0 項失敗（seal）
+seal groundcover 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MKT] PASS 場景已掛 Props/MarketP10（res://maps/village_v2/gen/market_p10.scn）、P9 Vegetation 掛載順序不變（ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9）
+[MKT] PASS 接地射線：42 件の原點と地形（衝突體）の差 ≤ 0.20 m 違反 0 
+[MKT] PASS LOD：42 件に LOD0／LOD1 mesh（欠 0）
+[MKT] PASS 碰撞 44 shapes、NPC anchors 50（group npc_activity_anchor＋activity meta）
+[MKT] PASS MultiMesh を使わない（節點ごとに選べる；MMBAKE 対象外）：0
+[MKT] 結果：0 項失敗（scene）
+market scene(headless) 0

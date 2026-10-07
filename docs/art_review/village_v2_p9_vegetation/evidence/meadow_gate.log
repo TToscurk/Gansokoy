@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MDW] INFO 封存 groundcover 規劃の再計算 73817 ms（讀み取り専用）
+[MDW] INFO 規劃 18683 ms：12701 株（short 99、medium 1194、tall 8673、seed 1150、dry 1087、lean 278、sparse 55、fern 136、sasa 29）
+[MDW] PASS Kit：立ち草 7 種＋羊歯＋笹（近級 20–80△、中級 ≤ 45 %、公稱高 0.15–0.62 m）：short 60/5△ 0.20m、medium 66/6△ 0.41m、tall 60/5△ 0.60m、seed 59/18△ 0.54m、dry 60/5△ 0.33m、lean 70/5△ 0.36m、sparse 27/5△ 0.25m、fern 42/9△ 0.38m、sasa 50/5△ 0.43m
+[MDW] PASS 禁區：建物・軒下 0.75 m・路面＋0.2 m・小径の芯・水面・P7 核心／構件・P8 農田・封存構圖・竹林・樹幹 0.55 m・Props・植物節點・區外 → 違反 0 {  }
+[MDW] PASS 接地：根元＝可見最上面（地形・路面・院子地面の max）−0.02 m、偏差 > 5 mm の株 0 / 12701
+[MDW] PASS 立體：立ち草 12536 株のうち丈 ≥ 0.30 m 94 %（≥ 40 %）、< 0.12 m 0（= 0）、區ごとの平均丈 meadow 0.43／edge 0.50／farm 0.45／forest 0.46 m（≥ 0.28）
+[MDW] PASS 留白：各區の草地 1 m 格子で無草 ≥ 25 %・最大の無草塊 ≥ 40 m²（草海にしない）；被覆：無草 ≤ 85 %（草層が成立）—— meadow：草地 1810 m² 無草 61 % 最大無草塊 944 m² 4m 窗 CV 1.16／edge：草地 1802 m² 無草 47 % 最大無草塊 721 m² 4m 窗 CV 0.88／farm：草地 923 m² 無草 80 % 最大無草塊 492 m² 4m 窗 CV 1.67／forest：草地 1290 m² 無草 67 % 最大無草塊 773 m² 4m 窗 CV 1.32
+[MDW] PASS 群れ：4 m 窗の株密度 變動係數 ≥ 0.60（均一 scatter 禁止）
+[MDW] PASS 語意：路縁・小径の密度 0.00 ≤ 草地 3.27 × 0.30、丈 0.00 ≤ 0.22 m；林緣・農田・水際・村邊草地の平均丈 0.47 ≥ 後場 0.00＋0.08 —— forest 0.64/m²・0.46m（1643 m²）、blank 1.49/m²・0.41m（484 m²）、wild 1.68/m²・0.38m（1341 m²）、yard 0.00/m²・0.00m（727 m²）、wall 0.00/m²・0.00m（311 m²）、road 0.00/m²・0.00m（89 m²）、open 0.38/m²・0.34m（715 m²）、meadow 3.27/m²・0.50m（2309 m²）、path 0.00/m²・0.00m（144 m²）、water 0.79/m²・0.42m（121 m²）、farm 3.91/m²・0.50m（138 m²）、farm_tr 1.24/m²・0.36m（123 m²）、walk 0.19/m²・0.25m（370 m²）
+[MDW] PASS 林緣：境（−2〜+3.5 m）の羊歯・笹 139（≥ 30）、林床の奥（> 4.6 m）の株 0（= 0）
+[MDW] PASS 農田外緣：野草帯 545 株の丈 ≥ 0.38 m 98 %（≥ 50 %）、田から 2–5 m の密度 2.86 > 12–20 m 0.00 × 1.3（住宅側へ疎ら）
+[MDW] PASS R5 Macro Ground 不重畫：groundcover_p9.scn の雜湊＝R5 封存時（立ち草は別 overlay meadow_p9.scn）
+[MDW] 結果：0 項失敗

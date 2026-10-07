@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-03T13:16:18",
+  "items": 33,
+  "facade": {
+    "blocked": 0,
+    "tall": 0
+  },
+  "composition": {
+    "props": 15,
+    "front": 4,
+    "south": 0,
+    "concentration": 0.733333333333333,
+    "north_occupancy": 0.0725308641975309
+  },
+  "elements": {
+    "gk_amaochi": 6,
+    "gd_morijio": 2,
+    "gd_taruzumi": 1,
+    "sk_teoke": 1,
+    "gd_fuda": 1,
+    "gd_shogi": 1,
+    "gd_tray": 2,
+    "gd_taru": 1,
+    "sz_stool": 1,
+    "gd_chochin": 1,
+    "sk_woodpile": 1,
+    "sk_box": 1,
+    "wk_tawara3": 1,
+    "sk_tensui": 1,
+    "fern_a": 2,
+    "wk_sedge": 10,
+    "低木": 2
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/geidontei_p9.scn",
+    "mb": 0.0311861038208008,
+    "items": 33,
+    "shapes": 10
+  }
+}

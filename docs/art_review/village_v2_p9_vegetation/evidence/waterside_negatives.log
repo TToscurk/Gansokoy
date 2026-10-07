@@ -1,0 +1,10 @@
+[WATER] INFO 規劃 213 件（41879 ms）
+[WATER] PASS 反向 float → 「接地」必須 FAIL（失敗項 1）
+[WATER] PASS 反向 road → 「動線淨空」必須 FAIL（失敗項 1）
+[WATER] PASS 反向 hero → 「Hero 淨空」必須 FAIL（失敗項 2）
+[WATER] PASS 反向 sight → 「視線」必須 FAIL（失敗項 1）
+[WATER] PASS 反向 uniform → 「河岸植生」必須 FAIL（失敗項 2）
+[WATER] PASS 反向 conifer → 「植被語彙」必須 FAIL（失敗項 1）
+[WATER] PASS 反向 rope → 「注連繩」必須 FAIL（失敗項 1）
+[WATER] PASS 反向 mill → 「作業場」必須 FAIL（失敗項 1）
+[WATER] 結果：0 項失敗（negatives）

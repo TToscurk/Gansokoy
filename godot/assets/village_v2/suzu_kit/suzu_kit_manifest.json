@@ -1,0 +1,32 @@
+{
+ "assembler": "res://tools/village_v2_suzunaan_yard_lib.gd",
+ "asset": "suzu_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/school_kit/SK_School.tres": "0058f4073998760d9ac43e8952e94fe902197fe461b5310a9c05a84c0aaf6865",
+  "res://assets/village_v2/suzu_kit/mesh/sz_bundle.res": "12eb86fd174a7e8b0d589671ae45d60625d8460916b6d1f007eda1818bdafe7a",
+  "res://assets/village_v2/suzu_kit/mesh/sz_bundle_l1.res": "359632d80533beff1d6365d732de68bded4ac9b30ed103793b62abdf89a3709a",
+  "res://assets/village_v2/suzu_kit/mesh/sz_dai.res": "c85b83f81d77149aa2fca41a1aadf9617c2ebd69de0e6e0d7926a774ab0d02d0",
+  "res://assets/village_v2/suzu_kit/mesh/sz_dai_l1.res": "365e9df30dbb425b7ad3a42cb000261ab3cdf0756f6ebf634928728b2ba3b2c5",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hachi.res": "6f09d9f317e8b3d91cecae7c3bd45f918c1eb826fc9b7c59c29781a01e44f891",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hachi_l1.res": "40404081de92a09a472590cba6f13f482a3c3fcc5a89924580d8244a721aed98",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hako.res": "6843bbddc69221b393380640b01aeafa07967df6f13366cf7c3d3aee95bb0762",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hako2.res": "e62725a11a7ed3c5f7907929ef30d3aa3266eb4ef8d11fad0c5dc6897c826f8e",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hako2_l1.res": "1a6583ee08f1205e56d15855ea5de913407686d741a3a61db56409a624a4c624",
+  "res://assets/village_v2/suzu_kit/mesh/sz_hako_l1.res": "6801d6a4f3dec3a3b752991d53cd6cdfe39314602171112572150d1b26810aa6",
+  "res://assets/village_v2/suzu_kit/mesh/sz_kanban.res": "ceddcf8b966bfafd96a3473ac4f75ff8bf95e1c5fa9f2223a86c858a7b24a343",
+  "res://assets/village_v2/suzu_kit/mesh/sz_kanban_l1.res": "47eaa836b9d00dabb44b162adc158e643dd13cd9c4e7215a877f87a22b4e699f",
+  "res://assets/village_v2/suzu_kit/mesh/sz_keiji.res": "39c37b98a0945bb1203904d20c18c7d3209d8434226679aa5356105441861387",
+  "res://assets/village_v2/suzu_kit/mesh/sz_keiji_l1.res": "2bf353b5a0ac06e45d03012520e9e9ba4eadd892d09742bb1c67c3bc0093e287",
+  "res://assets/village_v2/suzu_kit/mesh/sz_seoi.res": "c7450c5b56460e5ff59f892c22615fcad3dd9f57561205b7556cd94c8f488dda",
+  "res://assets/village_v2/suzu_kit/mesh/sz_seoi_l1.res": "f3b62658b7038203b44015dee1bdbb7d6bdea39024449a4ea15aeb8d8e2cc779",
+  "res://assets/village_v2/suzu_kit/mesh/sz_stool.res": "4e2b7d603fdd0aea0046d280bc14776595cb889991177465919ba7ff847f536a",
+  "res://assets/village_v2/suzu_kit/mesh/sz_stool_l1.res": "039bec72137c071c38732973932f270cee747a3b4ce5c122a78950923f3824b6",
+  "res://assets/village_v2/suzu_kit/src/modules_blender.json": "1310e4881aa7dca23ded2a32065fd7bc5884113d0f401163a52d5cb5adfaa5c6",
+  "res://assets/village_v2/suzunaan/V2_Suzunaan.tres": "32950613286bc3bb14ad5fff356b4d28fa43afb2e882c0e7d93690ea9f1f3797",
+  "res://tools/village_v2_suzunaan_yard_lib.gd": "811f57c9507ebf9c26c4f7c1698382043facf5b6cfe65947f35326b63ec5d096"
+ },
+ "mesh_dir": "res://assets/village_v2/suzu_kit/mesh",
+ "modules": 18,
+ "tris_total": 2284
+}

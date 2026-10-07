@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-03T14:44:02",
+  "items": 47,
+  "facade": {
+    "blocked": 0,
+    "tall": 0
+  },
+  "composition": {
+    "props": 19,
+    "front": 3,
+    "south": 0,
+    "concentration": 0.894736842105263,
+    "north_occupancy": 0.2015625
+  },
+  "elements": {
+    "kr_bin": 1,
+    "kr_kago": 1,
+    "kr_hako_ishi": 1,
+    "kr_fuda_ma": 1,
+    "kr_ishidana": 1,
+    "kr_houki": 1,
+    "kr_sagyo": 1,
+    "sz_stool": 1,
+    "kr_nawa": 1,
+    "kr_hoshidana": 1,
+    "kr_furudana": 1,
+    "kr_akibin": 2,
+    "kr_fukuro": 1,
+    "kr_hakozumi": 2,
+    "kr_kuruma": 1,
+    "kr_zaimoku": 1,
+    "kr_okeyama": 1,
+    "kr_yakuso": 9,
+    "kr_kinoko": 4,
+    "fern_a": 2,
+    "shrub_a": 1,
+    "wk_sedge": 12,
+    "低木": 3
+  },
+  "overlay": {
+    "path": "res://maps/village_v2/gen/kirisame_p9.scn",
+    "mb": 0.0270814895629883,
+    "items": 47,
+    "shapes": 17
+  }
+}

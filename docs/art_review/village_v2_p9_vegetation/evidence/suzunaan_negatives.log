@@ -1,0 +1,8 @@
+[SUZU] INFO 規劃 35 件（266 ms）
+[SUZU] PASS 反向 float → 「接地」必須 FAIL（失敗項 1）
+[SUZU] PASS 反向 path → 「動線淨空」必須 FAIL（失敗項 3）
+[SUZU] PASS 反向 facade → 「門面」必須 FAIL（失敗項 3）
+[SUZU] PASS 反向 parcel → 「地塊」必須 FAIL（失敗項 3）
+[SUZU] PASS 反向 clutter → 「構圖」必須 FAIL（失敗項 3）
+[SUZU] PASS 反向 hero → 「不穿」必須 FAIL（失敗項 2）
+[SUZU] 結果：0 項失敗（negatives）

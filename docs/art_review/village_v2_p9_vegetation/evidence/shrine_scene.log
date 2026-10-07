@@ -1,0 +1,6 @@
+[SHRINE] PASS 場景已掛 Vegetation/ShrineGroveP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9"]
+[SHRINE] PASS 場景接地（122／122 件 origin 向下射線只認地形）：浮 > 0.06 m 0（最大 0.000）
+[SHRINE] PASS 碰撞：新樹幹／燈籠 vs 地標／建物／R2–R4 植被／其他接觸 0
+[SHRINE] PASS 實走：參道＋前庭膠囊 179 點被擋 0 
+[SHRINE] INFO ShrineGroveP9：122 件、MeshInstance 392、構件碰撞 7
+[SHRINE] 結果：0 項失敗（scene）

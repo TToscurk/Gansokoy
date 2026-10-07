@@ -1,0 +1,34 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MKT] PASS 場景已掛 Props/MarketP10（res://maps/village_v2/gen/market_p10.scn）、P9 Vegetation 掛載順序不變（ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9）
+[MKT] PASS 接地射線：42 件の原點と地形（衝突體）の差 ≤ 0.20 m 違反 0 
+[MKT] PASS LOD：42 件に LOD0／LOD1 mesh（欠 0）
+[MKT] PASS 碰撞 44 shapes、NPC anchors 50（group npc_activity_anchor＋activity meta）
+[MKT] PASS MultiMesh を使わない（節點ごとに選べる；MMBAKE 対象外）：0
+[MKT] 結果：0 項失敗（scene）
+p10 market scene 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[STR] PASS 場景已掛 Props/MarketP10 → Props/StreetP10（res://maps/village_v2/gen/street_p10.scn、各 1 個）、P9 Vegetation 掛載順序不變
+[STR] PASS MarketP10 封存：gen/market_p10.scn 雜湊＝封存時（2eda2277…）
+[STR] PASS 接地射線：124 件の原點と地形・路面（衝突體）の差 ≤ 0.20 m 違反 0 
+[STR] PASS LOD：124 件に LOD0／LOD1 mesh（欠 0）
+[STR] PASS 碰撞 127 shapes、NPC anchors 65（group npc_activity_anchor＋activity meta）
+[STR] PASS MultiMesh を使わない（節點ごとに選べる；MMBAKE 対象外）：0
+[STR] 結果：0 項失敗（scene）
+p10 street scene 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MW] PASS 場景已掛 Props/MarketP10 → StreetP10 → MarketWestP10（各 1 個）
+[MW] PASS MarketP10 封存：gen/market_p10.scn 雜湊＝封存時
+[MW] PASS 接地射線：70 件（陳列・看板・入口・後場・敷石）の原點と地形（衝突體）の差 ≤ 0.22 m 違反 0 
+[MW] PASS LOD：構件の LOD0／LOD1 mesh（欠 0 ）
+[MW] PASS 建物：10 棟に町家 Kit（LOD0／1／2）・店先帯、原點が地形の上 0–0.3 m（違反 0 ）
+[MW] PASS 床：区域ごとの床 6（面・材質の欠 0 ）
+[MW] PASS 碰撞 59 shapes、NPC anchors 32（group＋activity meta）
+[MW] PASS MultiMesh を使わない：0
+[MW] 結果：0 項失敗（scene）
+p10 market_west scene 0

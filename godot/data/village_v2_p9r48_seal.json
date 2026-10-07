@@ -1,0 +1,89 @@
+{
+ "phase": "P9 R4-8 Hero Surroundings：霧雨店周邊（Kirisame Shop Surroundings）—— 奇物雜貨店＋魔法材料工作坊",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_at": "2026-10-03",
+ "scope": "kiri_kit（門前：楕円札の立て札／奇石の開け箱／茸の籠／瓶の小台；側院：藥草・茸の干し棚／奇石・鉱物の棚／作業台（薬研）＋箒／縄；後院：材料箱／麻袋／空き瓶／板材／古い棚／大八車／桶；植生：藥草・茸）＋Vegetation/KirisameP9 overlay（gen/kirisame_p9.scn）；霧雨店 Hero 本體（P5 R2）未改",
+ "note": "使用者裁定：封存目前版本（r8），不再追加微調（不做 r9／r10）。門前克制、側院最有內容、後院更亂、北側陰影區留空。R4 Hero Surroundings 到此收束。只有真正 regression 才重開 R4-8。",
+ "renderer": "Forward+",
+ "counts": {
+  "placements": 47,
+  "kit_modules": 38,
+  "kit_tris": 17555,
+  "gate_plan": "8/8",
+  "negatives": "6/6",
+  "scene": "4/4"
+ },
+ "deferred_to_p13": [
+  "紙張（帳面・札）日照偏亮——lighting／material",
+  "後巷（Hero 背面と町家の間）暗部"
+ ],
+ "deferred_polish": [
+  "干し棚の草束偏黃——後續色彩 polish（non-blocking）",
+  "稍高整體帶到屋頂——審圖相機問題（non-blocking）"
+ ],
+ "deferred_to_p9_r5": [
+  "地面變化偏斑點——近地層統一",
+  "北側／空地偏空——groundcover"
+ ],
+ "frozen": {
+  "godot/tools/village_v2_kirisame_yard_lib.gd": "697557388415469c210429d451977a445fe056940736aec9fa2102317744685a",
+  "godot/tools/verify_village_v2_kirisame_yard.gd": "dcc660239a6843629afbba88199ece575ea8f6d2d2fa91d93d7a571c36b316df",
+  "godot/assets/blender/village_v2/build_kiri_kit.py": "33c397966d1305a7dc62f965d1ac8902ade895195fbae65a30a0989673cd000c",
+  "godot/maps/village_v2/gen/kirisame_p9.scn": "a8be4b3646c34409943253af91f2cf90669e5eb37e7d6fa6ed5ed1ee57126eb2",
+  "godot/data/village_v2_p9r48_kirisame.json": "100e621f19552490378d0f0195984aac0863d4b7c9f41728edd00ca36f983e9c",
+  "godot/assets/village_v2/kiri_kit/kiri_kit_manifest.json": "8256ae71f5218e3cbf9efa88e96afea8481ced52318e48776c1867e0ae9adce6",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_akibin.res": "0238b7870a61efb7dfed19dcd898ae6f185f3b2dba865558c51f462af0dc7d2e",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_akibin_l1.res": "860d05e09d67191e06e0d8b01f5bb60177849fbcfeacd6fd35dadccb46a2563e",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_bin.res": "19a0ab0dafc72b45e56af729d59cfebc501895717ff87918a0f56e72e614ea0b",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_bin_l1.res": "ae53f9fed3dd5796d23dff0dd96536986e389b28fc02b14557f90cb18fd726ca",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_fuda_ma.res": "6d39c1472fed6fdc400c9fd743e7c4d0a1156c8933be82a1869a4fbe5b5ae2b9",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_fuda_ma_l1.res": "35c7843031b7580a37c0aeeaed884b66570a60561adea18d8cbe238da797e3a9",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_fukuro.res": "0247c71b653ef1fdc4d9773186483e26b04b8d06ab95466eb2467a7cef16e2b5",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_fukuro_l1.res": "b4c3a0b03db0a71c635dbb0887150f5d0ed4236c36992eec7fd21a357f62f7e9",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_furudana.res": "94b5f79f81242d07d984e89de97772f90b2b54f8338b6cbf5f11b0b5fccbbd98",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_furudana_l1.res": "c8b04626905dfea008499744e506a8582093571100bccdf8aeb2ef7b0b2274a9",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hako_ishi.res": "594ae2e6835038481cf67d6f58bcb9d9647b2a0614b5cd09b17e25656568d1cf",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hako_ishi_l1.res": "7618e69140556453f152ab0bbaf57e9f81f151078eb83f16c85c4141e5b12c94",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hakozumi.res": "ab869674deaea5776e1a2253b60ce9a0abf18e0c6342c7a60c85703c8cf04db8",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hakozumi_l1.res": "356c1c610743c2d55639b7038687fa1a83b69be95457809b1809192047ff7441",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hoshidana.res": "846b82ad97afa40398026f2af6267f7a9d4544f439e32bd4001123846508464c",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_hoshidana_l1.res": "90222a14e01d20eb41166b9e84bb141e0575f639fc24879e839f7433dde444b2",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_houki.res": "7a3bd8be217875de23ee5e36d8042399ec9778c2f95f15d5f7049d9975f002eb",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_houki_l1.res": "86f0172b0a9ad7644fa06b9d234286977f608c6844c0e7f2c92fd05233e5171f",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_ishidana.res": "d19da0d6c400bb36aaceb0c68a69217207cc4bf10e2b6f45ebc5fee4ede11a65",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_ishidana_l1.res": "d323b029141fb3cf15330c2783519285eaeb784af3ecd9c1693b90fb285775bb",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kago.res": "2e2133d8b36c8603035267c9359e861441e46b2e016b1230094774c3e4321835",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kago_l1.res": "211e6598c02addb329924e46de2f360c1ca4dd130c5d15d049b1454023224132",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kinoko.res": "f4629728cf3e194fd553fc30373a14e1d93a94214751d66ef803b1b8b11c4878",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kinoko_l1.res": "64ad8c7aa7a89df900ba7a143a952c62a5bbbb405587b9acee4cc5cc67534587",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kuruma.res": "2e8a03c419c3e9b57e3ec8905d39912aa886e67c8ca64617c0890f47dfe0b8cf",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_kuruma_l1.res": "9734de1605968d5cf3e6b1b915e644c17333abd5388cd561726733339d364991",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_nawa.res": "51492a9aef10131d2949128a4942a1ff298bb34402a6a2a3f7d0ba2c40101027",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_nawa_l1.res": "5c1f1e91f985221d626514d0d29f45c35d89ae17f0314a681c81653498abec12",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_ni.res": "223d54a5c7a286e702ff9ba7cdaf5b16277f7a2abb3115b8c0a9513813466f2d",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_ni_l1.res": "faa69ccec4d9767e2dd7da49d6f0f8c2bb73abcd1e17ec762150bf188e75b471",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_okeyama.res": "2c203b23b3f3b08ecb30b696948f9e5c8f7c7a4718bf83ca359c5ccf06a74667",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_okeyama_l1.res": "8e15d09322c616b7625371fee06136103d30ee99d4e6e94bc51b470c4e3f531f",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_sagyo.res": "cc50ef2d4a6b9f9db7bfc4c982351c8d435af392a1d58ae684281cab861ea89f",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_sagyo_l1.res": "53a0e25cd150e59e85b970ccf92150b04367c47ff348b147b6e18f61d02885fe",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_yakuso.res": "7286e2d72160c76af7cb6cef8daf4087ede0078935b1312ab9f98f42f75554b5",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_yakuso_l1.res": "8f822268f836e2a0ea6d1d50b54fa4394c208312c70c02db1448f2dcb99cd9b0",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_zaimoku.res": "b2ed07d3ca63190d1c9864ccc85a8d0b97b370db8580a467babe807e6877658a",
+  "godot/assets/village_v2/kiri_kit/mesh/kr_zaimoku_l1.res": "96abfbe949008da6055b7c917ff5357c9256dee03d7d896d1ee8615ddfba6fb6",
+  "godot/assets/village_v2/kiri_kit/src/kiri_kit.glb": "0efc009c50d86c0773a4e4a0eaf4dd14ffbf9a0768667db38517495b9d8ae7c8",
+  "godot/assets/village_v2/kiri_kit/src/kiri_kit.glb.import": "e3060c7d21b3eb46280e462193b9ab15b3dbb7dfd8656f75812b51f29d5e8a7d",
+  "godot/assets/village_v2/kiri_kit/src/modules_blender.json": "eb4dfc9147d44e0e0549c9eb1c166ca56fff2f04184de1fa85d131d7269c4225"
+ },
+ "art_review_images": {
+  "r48/r48_sheet_front.png": "7978e74bd0fd70f86150b2cc6c9435d653dda28ba42889c17592049d7d85ad1d",
+  "r48/r48_sheet_side.png": "67637966ec7cc09cfdf7c9ecd090c1cf6e15d5b90c49605103c9e07db2ef7cdd",
+  "r48/r48_sheet_detail.png": "12ff91b1eacf6f375aa98b7f24ef31451f4c76860827bcd3ba412ecbb3389cd3",
+  "r48/r48_ground_ab.png": "601069d6b5c019d9a535e3e510a617006224f1eb7137147bbdec5aa8bc18e20f"
+ },
+ "evidence": {
+  "evidence/kirisame_gate.log": "14a7b93ade3014a5dd0706cbfe9b19383b3374016bdba3c01ba664eb68fbdd11",
+  "evidence/kirisame_negatives.log": "11731dc94841500fb0d20422139f0c615aa730e9d0f78a56bddf3a6f7a4a70c8",
+  "evidence/kirisame_scene.log": "41207f27631afb8fe95e8afa6e264a54a08c586091aba7424b9cbef0b665a8b3"
+ }
+}

@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_bark.gdshader" id="1_7ulfm"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VB_sugi_albedo.jpg" id="2_eybir"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/veg_kit/tex/VB_sugi_normal.jpg" id="3_inrkr"]
+
+[resource]
+resource_name = "VK_Bark_sugi"
+render_priority = 0
+shader = ExtResource("1_7ulfm")
+shader_parameter/albedo_tex = ExtResource("2_eybir")
+shader_parameter/normal_tex = ExtResource("3_inrkr")
+shader_parameter/albedo_mul = 1.0
+shader_parameter/normal_depth = 1.0
+shader_parameter/roughness = 0.92
+shader_parameter/specular = 0.18
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = null
+shader_parameter/flutter = null
