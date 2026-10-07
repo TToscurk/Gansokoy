@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] PASS status ART_APPROVED by user（2026-10-07）; agent does not approve art 
+[ACT] PASS seal 92 hashes incl. child seals（R3b／NPCLIB）: mismatch 0 [] 
+[ACT] PASS assignments 8 + clip/slot/options + cup grip/axis == live overlay 
+[ACT] PASS mount Population/ActivityP10 exactly 1, after PopulationP10 
+[ACT] PASS baseline 16 residents unchanged（R3b child seal） 
+[ACT] PASS permanent negative: in-memory frozen hash tamper detected exactly once 
+[ACT] PASS permanent negative: in-memory assignment tamper rejected 
+[ACT] 結果：0 項失敗（seal）

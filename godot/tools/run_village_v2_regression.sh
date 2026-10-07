@@ -105,7 +105,7 @@ run "P10 R1 市集廣場 plan gate 9 項（Kit／接地／建物／路面／封�
 run "P10 R1 市集廣場永久反向 8 案（各自瞄準項 FAIL）" MKT --headless --path . --script res://tools/verify_village_v2_market.gd -- --negatives
 run "P10 R1 市集廣場場景級驗證（掛載・接地射線・LOD・碰撞・anchors・MultiMesh 0）" MKT --path . --script res://tools/verify_village_v2_market.gd -- --scene
 run "P10 R2 主街 Street Life plan gate 16 項（Kit／接地／建物／店先帯／封存／戸口／水際／互不重疊／通行〔主街中央 ≥ 4.5 m〕／構圖／巷口／市の入口〔主街 4 視點・口の前 3 視點〕／作業場／農田交界／暮らし／NPC anchors）" STR --headless --path . --script res://tools/verify_village_v2_street.gd
-run "P10 R2 主街 Street Life 永久反向 14 案（各自瞄準項 FAIL）" STR --headless --path . --script res://tools/verify_village_v2_street.gd -- --negatives
+run "P10 R2 主街 Street Life 永久反向 13 案（各自瞄準項 FAIL）" STR --headless --path . --script res://tools/verify_village_v2_street.gd -- --negatives
 run "P10 R2 主街 Street Life 場景級驗證（掛載 MarketP10→StreetP10・MarketP10 封存雜湊・接地射線・LOD・碰撞・anchors・MultiMesh 0）" STR --path . --script res://tools/verify_village_v2_street.gd -- --scene
 run "P10 R2 主街 r5 封存（ART_APPROVED 2026-10-07：street_kit＋StreetP10 生成器／gate／網格／overlay／ART_REVIEW 圖 4／證據 sha256＋掛載＋字の向き 0＋竄改反向；封存中 --build 拒否）" STR --headless --path . --script res://tools/verify_village_v2_street.gd -- --seal
 run "字の向き監査（street_kit／market_kit／mise_kit／寺子屋：幟・暖簾・提灯・看板の字の面が表裏とも鏡像・逆さま 0；例外は測定理由つき）" TXT --headless --path . --script res://tools/audit_village_v2_text_facing.gd -- --strict --only=street_kit,market_kit,mise_kit,terakoya
@@ -134,6 +134,9 @@ run "P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五
 run "P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd
 run "P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --negatives
 run "P10 R3d 核心區人口 scene（掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）" CORE --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_core.gd -- --scene
+run "P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd
+run "P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --negatives
+run "P10 R3e 外圍人口 scene（掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
 run "P10 R3c Activity plan（16 人・8 指派・5 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
 run "P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --negatives
 echo "回歸失敗項目：$fail"

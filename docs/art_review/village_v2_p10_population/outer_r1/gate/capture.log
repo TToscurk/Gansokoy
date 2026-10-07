@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[OUTERSHOT] 1_market_core_after size (1920, 1080) player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[OUTERSHOT] 1_market_core_before size (1920, 1080) player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[OUTERSHOT] 2_mouth_from_south_after size (1920, 1080) player (258.0, 0.967199, -6.0) cam (260.711, 3.307343, -2.979633)
+[OUTERSHOT] 2_mouth_from_south_before size (1920, 1080) player (258.0, 0.967199, -6.0) cam (260.711, 3.307343, -2.979633)
+[OUTERSHOT] 3_alley_well_after size (1920, 1080) player (262.0, 1.433999, -84.0) cam (257.2303, 4.04028, -80.45827)
+[OUTERSHOT] 3_alley_well_before size (1920, 1080) player (262.0, 1.433999, -84.0) cam (257.2303, 4.04028, -80.45827)
+[OUTERSHOT] 4_farm_mid_after size (1920, 1080) player (310.0, 1.103845, -26.0) cam (303.192, 3.849669, -27.2897)
+[OUTERSHOT] 4_farm_mid_before size (1920, 1080) player (310.0, 1.103845, -26.0) cam (303.192, 3.849669, -27.2897)
+[OUTERSHOT] 5_waterwheel_after size (1920, 1080) player (322.5, 1.241983, -52.0) cam (316.0587, 3.789393, -51.6)
+[OUTERSHOT] 5_waterwheel_before size (1920, 1080) player (322.5, 1.241983, -52.0) cam (316.0587, 3.789393, -51.6)
+[OUTERSHOT] 6_canal_south_after size (1920, 1080) player (306.0, 0.575063, 38.0) cam (299.4842, 3.320887, 35.6427)
+[OUTERSHOT] 6_canal_south_before size (1920, 1080) player (306.0, 0.575063, 38.0) cam (299.4842, 3.320887, 35.6427)
+[OUTERSHOT] 7_farm_east_after size (1920, 1080) player (312.0, 1.433999, -84.0) cam (305.5639, 4.179823, -81.433)
+[OUTERSHOT] 7_farm_east_before size (1920, 1080) player (312.0, 1.433999, -84.0) cam (305.5639, 4.179823, -81.433)
+[OUTERSHOT] 8_shrine_torii_after size (1920, 1080) player (296.5, 1.782129, -142.0) cam (298.8014, 4.389395, -135.4429)
+[OUTERSHOT] 8_shrine_torii_before size (1920, 1080) player (296.5, 1.782129, -142.0) cam (298.8014, 4.389395, -135.4429)
+[OUTERSHOT] R1_market_core size (1920, 1080) player (244.0, 1.194001, -44.0) cam (242.9117, 3.801268, -50.86346)
+[OUTERSHOT] R2_market_mouth size (1920, 1080) player (247.0, 1.052335, -24.5) cam (240.24, 3.659601, -26.1104)
+[OUTERSHOT] R3_cross_street size (1920, 1080) player (268.0, 1.057061, -21.5) cam (261.1856, 3.664328, -20.13779)
+[OUTERSHOT] R4_farm_edge size (1920, 1080) player (300.0, 1.092782, -25.5) cam (293.1518, 3.700048, -24.31923)
+[OUTERSHOT] R5_canal_bridge size (1920, 1080) player (322.0, 1.042253, -30.0) cam (315.5448, 3.649519, -27.42664)
+[OUTERSHOT] route counts { "R1_market_core": 7, "R2_market_mouth": 4, "R3_cross_street": 1, "R4_farm_edge": 1, "R5_canal_bridge": 1 }

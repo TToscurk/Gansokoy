@@ -1097,6 +1097,8 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/population_core_p10.tscn" id="p10r3d_core"]
 [ext_resource type="Script" path="res://scripts/npc_activity_core.gd" id="p10r3d_act"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/entrance_cue_p10.tscn" id="p10r3d_cue"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/population_outer_p10.tscn" id="p10r3e_outer"]
+[ext_resource type="Script" path="res://scripts/npc_activity_outer.gd" id="p10r3e_act"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -143179,3 +143181,7 @@ script = ExtResource("p10r3d_act")
 
 [node name="EntranceCueP10" parent="Population" instance=ExtResource("p10r3d_cue")]
 
+[node name="OuterP10" parent="Population" instance=ExtResource("p10r3e_outer")]
+
+[node name="ActivityOuterP10" type="Node3D" parent="Population"]
+script = ExtResource("p10r3e_act")
