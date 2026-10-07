@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 7 assignments; population 16
+[POPSHOT] 1_market_tps_after size (1920, 1080) FOV 75.0 player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[POPSHOT] 1_market_tps_before size (1920, 1080) FOV 75.0 player (243.0, 1.157998, -38.0) cam (243.0026, 4.448134, -29.64565)
+[POPSHOT] 2_market_west_tps_after size (1920, 1080) FOV 75.0 player (216.0, 1.198198, -44.7) cam (211.5734, 3.683852, -44.3)
+[POPSHOT] 2_market_west_tps_before size (1920, 1080) FOV 75.0 player (216.0, 1.198198, -44.7) cam (211.5734, 3.683852, -44.3)
+[POPSHOT] 3_main_street_tps_after size (1920, 1080) FOV 75.0 player (265.0, 1.115506, -31.0) cam (263.8494, 4.405643, -22.72526)
+[POPSHOT] 3_main_street_tps_before size (1920, 1080) FOV 75.0 player (265.0, 1.115506, -31.0) cam (263.8494, 4.405643, -22.72526)
+[POPSHOT] 4_market_high_after size (1920, 1080) FOV 75.0 player (244.0, 1.145997, -36.0) cam (244.4, 8.907826, -24.51524)
+[POPSHOT] 4_market_high_before size (1920, 1080) FOV 75.0 player (244.0, 1.145997, -36.0) cam (244.4, 8.907826, -24.51524)
+[POPSHOT] 5_walk_through_00 size (1920, 1080) FOV 75.0 player (242.788, 1.048977, -26.9944) cam (243.1877, 4.3571, -18.04988)
+[POPSHOT] 5_walk_through_01 size (1920, 1080) FOV 75.0 player (242.788, 1.078614, -29.86053) cam (243.188, 4.396102, -20.98247)
+[POPSHOT] 5_walk_through_02 size (1920, 1080) FOV 75.0 player (242.477, 1.092865, -32.36796) cam (242.877, 4.411143, -23.4899)
+[POPSHOT] 5_walk_through_03 size (1920, 1080) FOV 75.0 player (242.477, 1.427948, -35.09265) cam (242.877, 4.428287, -26.34707)
+[POPSHOT] 5_walk_through_04 size (1920, 1080) FOV 75.0 player (242.477, 1.128011, -37.95882) cam (242.877, 4.444686, -29.08078)
+[POPSHOT] 5_walk_through_05 size (1920, 1080) FOV 75.0 player (242.477, 1.145206, -40.82521) cam (242.877, 4.461883, -31.94719)
+[POPWALK] travelled 16.3259372711182 start (242.6, 1.052335, -24.5) end (242.477, 1.145206, -40.82521)

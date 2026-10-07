@@ -1,0 +1,203 @@
+{
+  "axis": [
+    -1.0,
+    0.0,
+    0.0
+  ],
+  "candidates": {
+    "A_drinking_a030": {
+      "clip": "drinking_a030",
+      "cup_inside_frames": {
+        "arm_sleeve_L": 0,
+        "face_head": 55,
+        "hand_L": 131,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_inside_max_depth_m": {
+        "arm_sleeve_L": 0.0,
+        "face_head": 0.0311022906340659,
+        "hand_L": 0.0190545504689217,
+        "other": 0.0,
+        "torso": 0.0
+      },
+      "cup_inside_vertex_hits": {
+        "arm_sleeve_L": 0,
+        "face_head": 3091,
+        "hand_L": 17554,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_tilt_hold_max_deg": 0.0,
+      "cup_tilt_max_deg": 145.933411995142,
+      "cup_tilt_max_t": 4.1,
+      "frames30": 266,
+      "hand_through_face_frames": 0,
+      "hand_through_face_max_m": 0.0,
+      "length_s": 8.89999961853027,
+      "max_abduction_pose": {
+        "abd": 104.190040582037,
+        "cup_tilt_deg": 143.9279591718,
+        "elbow_below_shoulder_m": -0.05230762809515,
+        "elbow_lateral_flare_m": 0.162472799420357,
+        "head_pitch_back_deg": 33.7437368019368,
+        "rim_face_h": 0.429571471372248,
+        "rim_mouth_m": 0.0564203001558781,
+        "shoulder_above_neck_m": -0.0409516617655754,
+        "t": 4.3,
+        "upperarm_from_down_deg": 104.190040582037
+      },
+      "peak_sip": {
+        "cup_tilt_deg": 52.8945114798582,
+        "d": 0.0291580595076084,
+        "elbow_below_shoulder_m": 0.133455246686935,
+        "elbow_lateral_flare_m": 0.137567192316055,
+        "head_pitch_back_deg": 47.8119867184387,
+        "rim_face_h": 0.360327887286627,
+        "rim_mouth_m": 0.0291580595076084,
+        "shoulder_above_neck_m": -0.0496066361665726,
+        "t": 2.86666666666667,
+        "upperarm_from_down_deg": 51.2858079376857
+      },
+      "rim_lip_min_m": 0.000328124791849405,
+      "rim_lip_min_t": 3.06666666666667,
+      "sip_times_s": [
+        2.86666666666667,
+        3.9
+      ]
+    },
+    "B1_drinking_im1_a030": {
+      "clip": "drinking_im1_a030",
+      "cup_inside_frames": {
+        "arm_sleeve_L": 0,
+        "face_head": 59,
+        "hand_L": 128,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_inside_max_depth_m": {
+        "arm_sleeve_L": 0.0,
+        "face_head": 0.0304620925113559,
+        "hand_L": 0.0190547139160335,
+        "other": 0.0,
+        "torso": 0.0
+      },
+      "cup_inside_vertex_hits": {
+        "arm_sleeve_L": 0,
+        "face_head": 2410,
+        "hand_L": 17152,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_tilt_hold_max_deg": 0.0,
+      "cup_tilt_max_deg": 136.975591577914,
+      "cup_tilt_max_t": 4.06666666666667,
+      "frames30": 266,
+      "hand_through_face_frames": 0,
+      "hand_through_face_max_m": 0.0,
+      "length_s": 8.89999961853027,
+      "max_abduction_pose": {
+        "abd": 91.4237840949546,
+        "cup_tilt_deg": 135.277647531384,
+        "elbow_below_shoulder_m": -0.005301876924932,
+        "elbow_lateral_flare_m": 0.15432146191597,
+        "head_pitch_back_deg": 20.9359931741188,
+        "rim_face_h": 0.357152374548762,
+        "rim_mouth_m": 0.0522143915295601,
+        "shoulder_above_neck_m": -0.0456732511520386,
+        "t": 4.23333333333333,
+        "upperarm_from_down_deg": 91.4237840949546
+      },
+      "peak_sip": {
+        "cup_tilt_deg": 79.8486201901684,
+        "d": 0.0226058568805456,
+        "elbow_below_shoulder_m": 0.127892941236496,
+        "elbow_lateral_flare_m": 0.123224943876266,
+        "head_pitch_back_deg": 24.4686028713425,
+        "rim_face_h": 0.198737958968648,
+        "rim_mouth_m": 0.0226058568805456,
+        "shoulder_above_neck_m": -0.0510388612747192,
+        "t": 2.86666666666667,
+        "upperarm_from_down_deg": 53.175332995889
+      },
+      "rim_lip_min_m": 0.00253903632983565,
+      "rim_lip_min_t": 4.86666666666667,
+      "sip_times_s": [
+        2.86666666666667,
+        4.96666666666667
+      ]
+    },
+    "B2_watercooler_a030": {
+      "clip": "watercooler_a030",
+      "cup_inside_frames": {
+        "arm_sleeve_L": 0,
+        "face_head": 75,
+        "hand_L": 423,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_inside_max_depth_m": {
+        "arm_sleeve_L": 0.0,
+        "face_head": 0.0304747846918181,
+        "hand_L": 0.0279839164819568,
+        "other": 0.0,
+        "torso": 0.0
+      },
+      "cup_inside_vertex_hits": {
+        "arm_sleeve_L": 0,
+        "face_head": 5978,
+        "hand_L": 88407,
+        "other": 0,
+        "torso": 0
+      },
+      "cup_tilt_hold_max_deg": 23.0235978052508,
+      "cup_tilt_max_deg": 79.1804296138552,
+      "cup_tilt_max_t": 0.233333333333333,
+      "frames30": 1337,
+      "hand_through_face_frames": 0,
+      "hand_through_face_max_m": 0.0,
+      "length_s": 44.5999984741211,
+      "max_abduction_pose": {
+        "abd": 79.0699137475233,
+        "cup_tilt_deg": 79.1804296138552,
+        "elbow_below_shoulder_m": 0.0404591262340546,
+        "elbow_lateral_flare_m": 0.183968260884285,
+        "head_pitch_back_deg": 0.393265697184085,
+        "rim_face_h": 0.49435639835394,
+        "rim_mouth_m": 0.0940871834754944,
+        "shoulder_above_neck_m": -0.0313256829977036,
+        "t": 0.233333333333333,
+        "upperarm_from_down_deg": 79.0699137475233
+      },
+      "peak_sip": {
+        "cup_tilt_deg": 52.8265818334679,
+        "d": 0.0756945312023163,
+        "elbow_below_shoulder_m": 0.113249957561493,
+        "elbow_lateral_flare_m": 0.152081519365311,
+        "head_pitch_back_deg": 40.4849627580101,
+        "rim_face_h": 0.377696547910346,
+        "rim_mouth_m": 0.0756945312023163,
+        "shoulder_above_neck_m": -0.0413700975477695,
+        "t": 43.4666666666667,
+        "upperarm_from_down_deg": 57.9442491156504
+      },
+      "rim_lip_min_m": 0.0457916148006916,
+      "rim_lip_min_t": 43.4,
+      "sip_times_s": []
+    }
+  },
+  "grip": [
+    0.0199999995529652,
+    0.0,
+    0.0219999998807907
+  ],
+  "mouth_head_local": "(-0.002664, 0.014101, 0.109251)",
+  "regions": [
+    "face_head",
+    "hand_L",
+    "arm_sleeve_L",
+    "torso",
+    "other"
+  ],
+  "rest_skin_error_m": 0.0000671867746859789
+}

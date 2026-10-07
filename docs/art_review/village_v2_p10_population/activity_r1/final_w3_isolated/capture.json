@@ -1,0 +1,322 @@
+[
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p0.png",
+    "phase": 0,
+    "time": 0.0,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p1.png",
+    "phase": 1,
+    "time": 1.11249995231628,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p2.png",
+    "phase": 2,
+    "time": 2.22499990463257,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p3.png",
+    "phase": 3,
+    "time": 3.33749985694885,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p4.png",
+    "phase": 4,
+    "time": 4.44999980926514,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p5.png",
+    "phase": 5,
+    "time": 5.56249976158142,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p6.png",
+    "phase": 6,
+    "time": 6.67499971389771,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.975133, -0.221621), Z: (0.0, 0.221621, 0.975133), O: (228.6, 2.88428, -43.65)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v0_p7.png",
+    "phase": 7,
+    "time": 7.78749966621399,
+    "view": 0
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p0.png",
+    "phase": 0,
+    "time": 0.0,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p1.png",
+    "phase": 1,
+    "time": 1.11249995231628,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p2.png",
+    "phase": 2,
+    "time": 2.22499990463257,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p3.png",
+    "phase": 3,
+    "time": 3.33749985694885,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p4.png",
+    "phase": 4,
+    "time": 4.44999980926514,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p5.png",
+    "phase": 5,
+    "time": 5.56249976158142,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p6.png",
+    "phase": 6,
+    "time": 6.67499971389771,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, -1.0), Y: (-0.221621, 0.975133, 0.0), Z: (0.975133, 0.221621, -0.0), O: (231.9, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v1_p7.png",
+    "phase": 7,
+    "time": 7.78749966621399,
+    "view": 1
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p0.png",
+    "phase": 0,
+    "time": 0.0,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p1.png",
+    "phase": 1,
+    "time": 1.11249995231628,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p2.png",
+    "phase": 2,
+    "time": 2.22499990463257,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p3.png",
+    "phase": 3,
+    "time": 3.33749985694885,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p4.png",
+    "phase": 4,
+    "time": 4.44999980926514,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p5.png",
+    "phase": 5,
+    "time": 5.56249976158142,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p6.png",
+    "phase": 6,
+    "time": 6.67499971389771,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.975133, 0.221621), Z: (-0.0, 0.221621, -0.975133), O: (228.6, 2.88428, -50.25)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v2_p7.png",
+    "phase": 7,
+    "time": 7.78749966621399,
+    "view": 2
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p0.png",
+    "phase": 0,
+    "time": 0.0,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p1.png",
+    "phase": 1,
+    "time": 1.11249995231628,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p2.png",
+    "phase": 2,
+    "time": 2.22499990463257,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p3.png",
+    "phase": 3,
+    "time": 3.33749985694885,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p4.png",
+    "phase": 4,
+    "time": 4.44999980926514,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p5.png",
+    "phase": 5,
+    "time": 5.56249976158142,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p6.png",
+    "phase": 6,
+    "time": 6.67499971389771,
+    "view": 3
+  },
+  {
+    "actor": "/root/W3_chaya_f01",
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.221621, 0.975133, 0.0), Z: (-0.975133, 0.221621, -0.0), O: (225.3, 2.88428, -46.95)]",
+    "candidate": "W3_chaya_f01__drinking_im1_a030",
+    "clip_length": 8.89999961853027,
+    "file": "W3_chaya_f01__drinking_im1_a030_v3_p7.png",
+    "phase": 7,
+    "time": 7.78749966621399,
+    "view": 3
+  }
+]

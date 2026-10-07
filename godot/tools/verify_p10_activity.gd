@@ -17,7 +17,9 @@ func valid(e: Dictionary) -> bool:
  if not e.ap.is_playing() or e.ap.root_node!=NodePath("../Armature"): return false
  if e.prop!=null:
   if not e.prop.visible or absf(e.prop.global_basis.determinant())<1e-8: return false
-  if e.prop_kind=="cup" and e.prop.global_position.distance_to((e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone("LeftMiddleProximal"))).origin)>0.09: return false
+  # Cup body centre (foot + half height along the cup axis) within 0.10 m of the knuckle bone: the fitted grip
+  # (R3c Drink A/B 2026-10-07) puts the axis ~4.5 cm outside the palm skin, centre 0.088 m from LeftMiddleProximal.
+  if e.prop_kind=="cup" and (e.prop.global_position+e.prop.global_basis.y*0.036).distance_to((e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone("LeftMiddleProximal"))).origin)>0.10: return false
   if e.prop_kind=="crate":
    var palm=(e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone("LeftMiddleProximal"))).origin
    var bounds: AABB=e.prop.mesh.get_aabb()

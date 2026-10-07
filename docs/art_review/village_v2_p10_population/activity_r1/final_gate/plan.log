@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] PASS plan Market/M2_shufu_f01 
+[ACT] PASS plan Market/M4_sakanaya_m01 
+[ACT] PASS plan Market/M5_setomono_f01 
+[ACT] PASS plan Market/M7_kozo_m01 
+[ACT] PASS plan MarketWest/W1_nunoya_f01 
+[ACT] PASS plan MarketWest/W2_shufu_f01 
+[ACT] PASS plan MarketWest/W3_chaya_f01 
+[ACT] PASS scope16/7 assignments/5 types ["Talk", "Carry", "Sit", "YouthShortStep", "Drink"]

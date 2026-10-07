@@ -8,8 +8,16 @@ const ASSIGN={
  "Market/M7_kozo_m01": ["YouthShortStep","kozo_m01","light_walk_s100_a030","walk"],
  "MarketWest/W1_nunoya_f01": ["Talk","nunoya_f01","talk_general_a040","idle"],
  "MarketWest/W2_shufu_f01": ["Talk","shufu_f01","talk_general_a030","idle"],
- "MarketWest/W3_chaya_f01": ["Drink","chaya_f01","drinking_a030","idle"]
+ "MarketWest/W3_chaya_f01": ["Drink","chaya_f01","drinking_im1_a030","idle"]
 }
+## W3 tea-cup grip, in LeftHand axes: cup foot centre = LeftMiddleProximal + cup_grip, cup up-axis = cup_axis.
+## R3c Drink A/B (2026-10-07): fitted by tools/fit_p10_drink_cup.py on CPU-skinned vertices of chaya_f01 ×
+## drinking_im1_a030 — upright within ~15° while held low, leaning ~75° toward the face at the sip with the
+## near rim ~1 cm from the lips, fingers pressing the wall ≤ 4 mm, never floating, no face / sleeve / torso
+## vertex inside the cup. The old fixed grip (offset 0.020,0,0.022, axis −hand.x) sank the cup ~2 cm into
+## the fingers and up to 3 cm into the face, and turned it past horizontal at the sip.
+var cup_grip:=Vector3(0.04,-0.02,0.09)
+var cup_axis:=Vector3(-0.9624,0.2634,-0.0662)
 var entries: Array=[]
 var population: Node3D
 var enabled=true
@@ -74,6 +82,14 @@ func tea_cup() -> MeshInstance3D:
    var bb=TAU*(i+1)/32.0
    var p=[Vector3(sin(aa)*rings[j].x,rings[j].y,cos(aa)*rings[j].x),Vector3(sin(bb)*rings[j].x,rings[j].y,cos(bb)*rings[j].x),Vector3(sin(bb)*rings[j+1].x,rings[j+1].y,cos(bb)*rings[j+1].x),Vector3(sin(aa)*rings[j+1].x,rings[j+1].y,cos(aa)*rings[j+1].x)]
    for k in [0,1,2,0,2,3]: st.add_vertex(p[k])
+ # closed bottom: outer foot disc (y 0) and inner floor (y 0.012) — the cup must not read as an open tube
+ for disc in [[0.027,0.0],[0.021,0.012]]:
+  for i in 32:
+   var aa=TAU*i/32.0
+   var bb=TAU*(i+1)/32.0
+   st.add_vertex(Vector3(0,disc[1],0))
+   st.add_vertex(Vector3(sin(aa)*disc[0],disc[1],cos(aa)*disc[0]))
+   st.add_vertex(Vector3(sin(bb)*disc[0],disc[1],cos(bb)*disc[0]))
  st.generate_normals()
  var mi=MeshInstance3D.new()
  mi.mesh=st.commit()
@@ -84,6 +100,13 @@ func tea_cup() -> MeshInstance3D:
  mi.material_override=mat
  mi.set_meta("new_small_prop_reason","No standalone cup mesh in frozen market/street kits")
  return mi
+## Cup frame in hand space from its up-axis (the cup is rotationally symmetric; roll is arbitrary).
+## Same construction as tools/fit_p10_drink_cup.py basis().
+static func cup_basis(u: Vector3) -> Basis:
+ u=u.normalized()
+ var ref=Vector3(0,0,1) if absf(u.z)<0.9 else Vector3(1,0,0)
+ var x=u.cross(ref).normalized()
+ return Basis(x,u,x.cross(u))
 func bone(e: Dictionary,nm: String) -> Transform3D:
  return e.sk.global_transform*e.sk.get_bone_global_pose(e.sk.find_bone(nm))
 func update_props():
@@ -123,8 +146,7 @@ func update_props():
   elif e.prop_kind=="cup":
    var hand=bone(e,"LeftHand")
    var palm=bone(e,"LeftMiddleProximal").origin
-   var b=Basis(hand.basis.y,-hand.basis.x,hand.basis.z)
-   e.prop.global_transform=Transform3D(b,palm+hand.basis.z*0.022+hand.basis.x*0.020)
+   e.prop.global_transform=Transform3D(hand.basis*cup_basis(cup_axis),palm+hand.basis*cup_grip)
 func _process(_dt):
  update_props()
 func set_enabled(value: bool):
