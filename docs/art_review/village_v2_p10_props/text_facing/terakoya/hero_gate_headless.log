@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[HERO] terakoya：res://assets/village_v2/terakoya/terakoya.scn 放在 Landmarks/LANDMARK_TERAKOYA（anchor），原點 (188.0, 0.756, 24.0)、LOD0 64079 三角面
+[HERO] PASS terakoya size：LOD0 外框 x ±9.92（≤ 10.05）、z -6.42～8.14（容許 -6.55～8.40）、頂 10.15（10.13～10.45）、底 -0.40（-0.40）；P0 地標量體 [22.0, 11.0, 16.0]（寬×高×深）：主屋牆寬 16.94、含玄關總深 11.90（射線 x -2.30）、最高點 10.15 m，都不超過；射線實測：牆面寬 16.94（規格 17.00）、牆縱深 9.90（10.00）、屋脊頂 9.77（棟 9.78）、背面簷口 5.59（5.61）m；人物比例：入口淨高 2.50 m（門檻 0.12→鴨居 2.62；≥ 1.90，1.7 m 人）、淨寬 4.36 m（≥ 1.20）
+[HERO] PASS terakoya parcel_fit：8 個地面接觸件：在 P_LM_TERAKOYA 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS terakoya grounding：8 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、踏石 埋 0.20、幟台 埋 0.15、告示左 埋 0.30、告示右 埋 0.30、石燈籠 埋 0.12、花壇0 埋 0.15、花壇1 埋 0.15；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wire：已移除（可見網格 0、有效碰撞 0）；入口段差：路面 0.76 → 踏石 0.88（0.12 m）→ 台基 1.16（0.28 m），每階 ≤ 0.30
+[HERO] PASS terakoya materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Plaster": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Terakoya": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS terakoya geometry：LOD0 64079 面：退化 0、NaN 0、繞向反 0、LOD1 4811 面：退化 0、NaN 0、繞向反 0、LOD2 933 面：退化 0、NaN 0、繞向反 0；LOD0 64079 ≤ §14.8「寺子屋」上限 100000；與 Blender 建置紀錄 64079 一致
+[HERO] PASS terakoya pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_TERAKOYA 原點 (188.00, 0.76, 24.00)、yaw 90.0°（P0 90.0°）；原點在底面（LOD0 y -0.40～10.15）
+[HERO] PASS terakoya collision：8 個簡化形狀（≤ 8；asset.json 列 8）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 16 點被擋 0；步行帶頭頂淨空：16 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 764 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS terakoya lod：面數 64079 → 4811（7.5 %，≤ 35 %）→ 933（1.5 %，≤ 10 %）；距離 [0.0, 45.0, 120.0, 600.0] m、最後一級 600 m（地圖框最遠 520 m）
+[HERO] PASS terakoya performance：§14.8「寺子屋」LOD0 上限 100000（asset.json 自報 100000）：實測 64079（64 %）；每級 surface ≤ 5（實測 5）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] 寫入 res://assets/village_v2/terakoya/gate.json（headless）
+[HERO] 結果：0 項失敗

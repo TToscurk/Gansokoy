@@ -371,7 +371,7 @@ def banner(m, lod):
     # 橫竿＋幟（兩面）
     m.cyl((x, 5.05, z), (x + 0.86, 5.05, z), 0.025, 0.025, 6, AMAT, 1.0, caps=(False, True), uv_atlas=bam)
     Q.fz(m, x + 0.07, x + 0.82, 2.05, 5.03, z + 0.006, AMAT, 1.0, RG['banner'])
-    Q.fz(m, x + 0.07, x + 0.82, 2.05, 5.03, z - 0.006, AMAT, 0.85, Q.rsub(RG['banner'], 1, 0, 0, 1), back=True)
+    Q.fz(m, x + 0.07, x + 0.82, 2.05, 5.03, z - 0.006, AMAT, 0.85, RG['banner'], back=True)   # 裏：fz(back=True) が既に左右を合わせる；rsub の二重反轉で鏡像だった（2026-10-07 修正）
     # 布邊（外緣與下緣封口，免得側看露出背面）
     nv = Q.sw('#2F3F66')
     Q.fx(m, z - 0.006, z + 0.006, 2.05, 5.03, x + 0.82, AMAT, 1.0, nv)

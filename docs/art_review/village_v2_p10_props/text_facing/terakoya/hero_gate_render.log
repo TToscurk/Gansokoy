@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[HERO] PASS terakoya player_screenshot：main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 4 張：terakoya_front.png（亮度標準差 0.201、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_l.png（亮度標準差 0.275、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_r.png（亮度標準差 0.193、資產在畫面內、鏡頭到資產無遮擋）；terakoya_street_far.png（亮度標準差 0.249、資產在畫面內、鏡頭到資產無遮擋）
+[HERO] PASS terakoya f5_f6：F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.91（牆面 5.00，被擋在外）、最大離地 0.12 m
+[HERO] 寫入 res://assets/village_v2/terakoya/gate.json（render）
+[HERO] F6 截圖 C:/Users/B365/AppData/Local/hermes/cache/scratch/txt/tk_render_final/terakoya_f6.png；效能（畫面內總量，非本資產）：front：4512142 三角面／3306 draw call；front_l：4454968 三角面／3170 draw call；front_r：4369985 三角面／3525 draw call；street_far：3864223 三角面／2794 draw call
+[HERO] 結果：0 項失敗
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

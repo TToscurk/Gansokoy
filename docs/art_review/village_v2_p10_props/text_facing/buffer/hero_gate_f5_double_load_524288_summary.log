@@ -1,0 +1,9 @@
+# Hero gate --render（terakoya, buffer 524288, 2026-10-07）の F5 経路ログの要約。元ログ 4.5 MB は同一エラーの繰り返しのため要約のみ保存。
+# 'Too many instances using shader instance variables' 件数: 20608
+# [map]/[review] 行（村が 2 回載る証拠）:
+5:[map] village_v2 → res://maps/village_v2/village_v2.tscn
+9:[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+10:[map] village_v2 → res://maps/village_v2/village_v2.tscn
+# 結果行:
+[HERO] FAIL terakoya f5_f6：✗ F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 20607、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.91（牆面 5.00，被擋在外）、最大離地 0.12 m；錯誤例：Too many instances using shader instance variables. Increase buffer size in Project Settings.（material_stor
+[HERO] 結果：1 項失敗

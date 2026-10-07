@@ -1,7 +1,7 @@
 {
  "asset": "terakoya",
  "entry": "res://assets/village_v2/terakoya/terakoya.scn",
- "entry_sha256": "11a7987d453f1e9a7e2157d6abb065d67d908a6b4b25d328f591e008cd8d9490",
+ "entry_sha256": "3664a0a6445648f892b3ed0d161f32590d920869529f5f641fffdbe22df889a0",
  "godot": "4.7.2-stable (official)",
  "checks": {
   "size": {
@@ -13,7 +13,7 @@
     "人物比例：入口淨高 2.50 m（門檻 0.12→鴨居 2.62；≥ 1.90，1.7 m 人）、淨寬 4.36 m（≥ 1.20）"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "parcel_fit": {
    "result": "PASS",
@@ -22,18 +22,18 @@
     "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "grounding": {
    "result": "PASS",
    "detail": [
     "8 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、踏石 埋 0.20、幟台 埋 0.15、告示左 埋 0.30、告示右 埋 0.30、石燈籠 埋 0.12、花壇0 埋 0.15、花壇1 埋 0.15",
     "接地件正下方第一個碰撞體是地形：0 點不是",
-    "被取代的 Wire：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）",
+    "被取代的 Wire：已移除（可見網格 0、有效碰撞 0）",
     "入口段差：路面 0.76 → 踏石 0.88（0.12 m）→ 台基 1.16（0.28 m），每階 ≤ 0.30"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "materials": {
    "result": "PASS",
@@ -41,7 +41,7 @@
     "5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_Wood\": 0.42, \"V2_Plaster\": 0.42, \"V2_Kawara\": 0.42, \"V2_Stone\": 0.42, \"V2_Terakoya\": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "geometry": {
    "result": "PASS",
@@ -49,7 +49,7 @@
     "LOD0 64079 面：退化 0、NaN 0、繞向反 0、LOD1 4811 面：退化 0、NaN 0、繞向反 0、LOD2 933 面：退化 0、NaN 0、繞向反 0；LOD0 64079 ≤ §14.8「寺子屋」上限 100000；與 Blender 建置紀錄 64079 一致"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "pivot_scale": {
    "result": "PASS",
@@ -58,7 +58,7 @@
     "原點＝P0 地標 LANDMARK_TERAKOYA 原點 (188.00, 0.76, 24.00)、yaw 90.0°（P0 90.0°）；原點在底面（LOD0 y -0.40～10.15）"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "collision": {
    "result": "PASS",
@@ -69,7 +69,7 @@
     "周邊 764 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "lod": {
    "result": "PASS",
@@ -77,7 +77,7 @@
     "面數 64079 → 4811（7.5 %，≤ 35 %）→ 933（1.5 %，≤ 10 %）；距離 [0.0, 45.0, 120.0, 600.0] m、最後一級 600 m（地圖框最遠 520 m）"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "performance": {
    "result": "PASS",
@@ -85,15 +85,15 @@
     "§14.8「寺子屋」LOD0 上限 100000（asset.json 自報 100000）：實測 64079（64 %）；每級 surface ≤ 5（實測 5）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）"
    ],
    "part": "headless",
-   "date": "2026-09-25T11:45:22"
+   "date": "2026-10-07T18:00:09"
   },
   "player_screenshot": {
    "result": "PASS",
    "detail": [
-    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 4 張：terakoya_front.png（亮度標準差 0.259、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_l.png（亮度標準差 0.256、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_r.png（亮度標準差 0.254、資產在畫面內、鏡頭到資產無遮擋）；terakoya_street_far.png（亮度標準差 0.202、資產在畫面內、鏡頭到資產無遮擋）"
+    "main.tscn 載 village_v2（Hero 已烘焙在場景）、玩家鏡頭 4 張：terakoya_front.png（亮度標準差 0.201、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_l.png（亮度標準差 0.275、資產在畫面內、鏡頭到資產無遮擋）；terakoya_front_r.png（亮度標準差 0.193、資產在畫面內、鏡頭到資產無遮擋）；terakoya_street_far.png（亮度標準差 0.249、資產在畫面內、鏡頭到資產無遮擋）"
    ],
    "part": "render",
-   "date": "2026-09-25T11:43:46"
+   "date": "2026-10-07T18:00:46"
   },
   "f5_f6": {
    "result": "PASS",
@@ -101,16 +101,16 @@
     "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.91（牆面 5.00，被擋在外）、最大離地 0.12 m"
    ],
    "part": "render",
-   "date": "2026-09-25T11:43:46"
+   "date": "2026-10-07T18:00:46"
   }
  },
  "render_info": {
   "f6_png": "terakoya_f6.png",
   "perf": [
-   "front：1164742 三角面／333 draw call",
-   "front_l：1164044 三角面／280 draw call",
-   "front_r：1176180 三角面／403 draw call",
-   "street_far：1164066 三角面／287 draw call"
+   "front：4512142 三角面／3306 draw call",
+   "front_l：4454968 三角面／3170 draw call",
+   "front_r：4369985 三角面／3525 draw call",
+   "street_far：3864223 三角面／2794 draw call"
   ],
   "warnings": [],
   "renderer": "forward_plus"

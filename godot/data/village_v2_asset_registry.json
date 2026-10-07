@@ -648,7 +648,7 @@
    "kind": "hero",
    "path": "res://assets/village_v2/terakoya",
    "entry": "res://assets/village_v2/terakoya/terakoya.scn",
-   "entry_sha256": "11a7987d453f1e9a7e2157d6abb065d67d908a6b4b25d328f591e008cd8d9490",
+   "entry_sha256": "3664a0a6445648f892b3ed0d161f32590d920869529f5f641fffdbe22df889a0",
    "gate_json": "res://assets/village_v2/terakoya/gate.json",
    "gate": {
     "size": "PASS",
@@ -663,7 +663,7 @@
     "player_screenshot": "PASS",
     "f5_f6": "PASS"
    },
-   "gate_date": "2026-09-25T11:45:22",
+   "gate_date": "2026-10-07T18:00:46",
    "status": "ART_APPROVED（使用者 2026-09-25，R3）",
    "label": "寺子屋",
    "landmark": "LANDMARK_TERAKOYA",

@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [banner] readable 4 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [board_keine] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [board_recruit] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [board_today] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [noren] readable 6 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD0#4 [plaque] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [banner] readable 4 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [board_keine] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [board_recruit] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [board_today] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [noren] readable 6 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD1#4 [plaque] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [banner] readable 4 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [board_keine] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [board_recruit] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [board_today] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [noren] readable 6 mirrored 0 upside 0 dbl_no_back 0
+[TXT] · res://assets/village_v2/terakoya/terakoya.scn:LOD2#4 [plaque] readable 2 mirrored 0 upside 0 dbl_no_back 0
+[TXT] 結果：字の面を持つ surface 3、問題のある (surface, region) 0
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
