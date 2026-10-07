@@ -1,0 +1,14 @@
+COMMAND="D:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --seal
+GATE_SHA256=f38972b656081a7b4af4b16bdc301ac9976b353d346850ccdc3156e5105a2c6e
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[POP] PASS status ART_APPROVED: user ruling 2026-10-06; not agent art approval
+[POP] PASS seal 61 hashes incl child seals: mismatch 0 []
+[POP] PASS baseline mount Population/PopulationP10 exact 1; 16 actors 7/5/4, 13 Idle + 3 patrol; world file NOT globally hash-locked
+[POP] PASS permanent negative: in-memory mounted actor position override rejected
+[POP] PASS instance snapshot 16 identities/anchors/transforms/phases/params/endpoints bound to baked baseline
+[POP] PASS permanent negative: in-memory frozen hash tamper detected exactly once; no disk writes
+[POP] PASS permanent negative: in-memory child seal hash tamper detected exactly once
+[POP] 結果：0 項失敗（seal）
+EXIT=0

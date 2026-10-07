@@ -1,0 +1,12 @@
+COMMAND="D:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path godot --script res://tools/verify_village_v2_market_west.gd -- --seal
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[MW] PASS P10 R1b Market West r3 封存 124 檔雜湊一致（凍結 107、ART_REVIEW 圖 9、證據 8；不符 0：）
+[MW] PASS 依存：P10 R1 MarketP10 封存・P9 R5 地被（路地 1 限定解封後の再封存）の雜湊が R1b 封存時と一致（不符 0：）
+[MW] PASS village_v2.tscn 掛載 Props/MarketP10 → StreetP10 → MarketWestP10（res://maps/village_v2/gen/market_west_p10.scn 恰 1 個）
+[MW] PASS 裁定の記録：verdicts 10 項（= 10）、店の灯 18 盞（= 18、保留・P13 は強度／色温／範囲／全域バランスのみ調整可）
+[MW] PASS 反向：竄改 godot/tools/village_v2_market_west_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[MW] PASS 反向：依存 godot/maps/village_v2/gen/market_p10.scn の期望雜湊を竄改 → 偵測（実際 1）
+[MW] 結果：0 項失敗（seal）
+EXIT=0

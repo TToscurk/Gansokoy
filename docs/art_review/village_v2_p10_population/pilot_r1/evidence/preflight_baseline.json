@@ -1,0 +1,39 @@
+{
+  "samples_percent": [
+    16,
+    8,
+    9,
+    8,
+    7,
+    6,
+    9,
+    11,
+    9,
+    11
+  ],
+  "mean": 9.4,
+  "min": 6,
+  "max": 16,
+  "range": 10,
+  "pass": false,
+  "gpu_consumers": [
+    {
+      "pid": 1320,
+      "name": "dwm.exe",
+      "engine": "pid_1320_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 3
+    },
+    {
+      "pid": 4196,
+      "name": "Hermes.exe",
+      "engine": "pid_4196_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 1
+    },
+    {
+      "pid": 13800,
+      "name": "ChatGPT.exe",
+      "engine": "pid_13800_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 1
+    }
+  ]
+}

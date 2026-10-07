@@ -1,0 +1,31 @@
+{
+  "source_matches_archived_revision": {
+    "godot/tools/village_v2_population_lib.gd": true,
+    "godot/scripts/npc_population_actor.gd": true,
+    "godot/tools/verify_village_v2_population.gd": false,
+    "godot/tools/shot_village_v2_population.gd": true,
+    "godot/tools/shot_village_v2_population_views.json": true,
+    "godot/maps/village_v2/gen/population_p10.tscn": true,
+    "godot/maps/village_v2/village_v2.tscn": true
+  },
+  "runtime_png_matches_archived_revision": {
+    "1_market_tps_after.png": true,
+    "1_market_tps_before.png": true,
+    "2_market_west_tps_after.png": true,
+    "2_market_west_tps_before.png": true,
+    "3_main_street_tps_after.png": true,
+    "3_main_street_tps_before.png": true,
+    "4_market_high_after.png": true,
+    "4_market_high_before.png": true,
+    "5_walk_through_00.png": true,
+    "5_walk_through_01.png": true,
+    "5_walk_through_02.png": true,
+    "5_walk_through_03.png": true,
+    "5_walk_through_04.png": true,
+    "5_walk_through_05.png": true
+  },
+  "seal_sha256": "55a928d069568cc218e68b4e3f31afe912cc07bc16bfd972efb2cec8e729a5a5",
+  "seal_count": 75,
+  "post_final_log_not_hashed": "avoids circular self-reference",
+  "r3c_started": false
+}

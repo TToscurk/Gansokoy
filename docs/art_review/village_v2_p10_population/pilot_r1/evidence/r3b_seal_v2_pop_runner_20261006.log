@@ -1,0 +1,14 @@
+COMMAND="C:/Users/B365/AppData/Local/Programs/Python/Python310/python.exe" "D:/神社/shrine/docs/art_review/village_v2_p10_population/pilot_r1/evidence/r3b_seal_pop_only_runner.py"
+runner_sha256=432bff8847d03dff888fe0d3ed02b19cc98f2f0c1b8efc565571316d754164f3
+gate_sha256=f38972b656081a7b4af4b16bdc301ac9976b353d346850ccdc3156e5105a2c6e
+Actual runner POP entries selected=4; no other groups executed
+[POP] 結果：0 項失敗（seal）
+✓ P10 R3b ART_APPROVED baseline seal（來源／snapshot／原圖／證據／子封存雜湊＋mount scope＋永久竄改反向）
+[POP] 結果：0 項失敗（plan、1272 ms）
+✓ P10 R3b Population Pilot plan（16 人、三區、職業／重複／婆婆／小群／接地／render geometry／patrol／步速／sealed overlays）
+[POP] 結果：0 項失敗（negatives 9 案）
+✓ P10 R3b Population Pilot 永久反向 9 案（各自瞄準項 FAIL）
+[POP] 結果：0 項失敗（scene）
+✓ P10 R3b Population Pilot scene（掛載／NPC instance／TPS 同模型 ≤ 2／runtime／SpringArm）
+POP subset failures: 0
+EXIT=0

@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[CAPTURE_NEGATIVE] Inject after-save at 1_market_tps_after
+ERROR: Can't save PNG at path: 'C:\Users\B365\AppData\Local\hermes\cache\scratch\pop\capture_guard_r2\after-save/capture_write_blocker/1_market_tps_after.png'.
+   at: save_image (drivers/png/resource_saver_png.cpp:56)
+   GDScript backtrace (most recent call first):
+       [0] snap (res://tools/shot_village_v2_population.gd:27)
+ERROR: [POPSHOT] PNG save failed: 1_market_tps_after (7)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] snap (res://tools/shot_village_v2_population.gd:29)

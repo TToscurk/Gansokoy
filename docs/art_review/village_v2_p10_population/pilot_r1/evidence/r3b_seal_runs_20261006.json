@@ -1,0 +1,37 @@
+{
+  "seal_final": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --seal",
+    "exit": 0,
+    "log": "r3b_seal_seal_final_20261006.log"
+  },
+  "seal_negative": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --seal --seal-negative",
+    "exit": 2,
+    "log": "r3b_seal_seal_negative_20261006.log"
+  },
+  "build_denied": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --build",
+    "exit": 1,
+    "log": "r3b_seal_build_denied_20261006.log"
+  },
+  "attach_denied": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --attach",
+    "exit": 1,
+    "log": "r3b_seal_attach_denied_20261006.log"
+  },
+  "plan": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd",
+    "exit": 0,
+    "log": "r3b_seal_plan_20261006.log"
+  },
+  "negatives": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --negatives",
+    "exit": 0,
+    "log": "r3b_seal_negatives_20261006.log"
+  },
+  "scene": {
+    "command": "\"D:/Godot/Godot_v4.7.2-stable_win64_console.exe\" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --scene",
+    "exit": 0,
+    "log": "r3b_seal_scene_20261006.log"
+  }
+}

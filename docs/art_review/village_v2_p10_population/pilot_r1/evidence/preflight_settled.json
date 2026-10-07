@@ -1,0 +1,45 @@
+{
+  "samples_percent": [
+    7,
+    9,
+    6,
+    11,
+    7,
+    5,
+    5,
+    5,
+    24,
+    22
+  ],
+  "mean": 10.1,
+  "min": 5,
+  "max": 24,
+  "range": 19,
+  "pass": false,
+  "gpu_consumers": [
+    {
+      "pid": 1320,
+      "name": "dwm.exe",
+      "engine": "pid_1320_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 6
+    },
+    {
+      "pid": 12020,
+      "name": "chrome.exe",
+      "engine": "pid_12020_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 6
+    },
+    {
+      "pid": 4,
+      "name": "System",
+      "engine": "pid_4_luid_0x00000000_0x00012D3A_phys_0_eng_4_engtype_Copy",
+      "utilization": 1
+    },
+    {
+      "pid": 4196,
+      "name": "Hermes.exe",
+      "engine": "pid_4196_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+      "utilization": 1
+    }
+  ]
+}

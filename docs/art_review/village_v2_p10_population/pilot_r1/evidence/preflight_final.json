@@ -1,0 +1,25 @@
+{
+  "samples_percent": [
+    40,
+    26,
+    25,
+    6,
+    7,
+    6,
+    7,
+    7,
+    8,
+    9
+  ],
+  "mean": 14.1,
+  "min": 6,
+  "max": 40,
+  "range": 34,
+  "pass": false,
+  "gpu_consumers": {
+    "pid": 12020,
+    "name": "chrome.exe",
+    "engine": "pid_12020_luid_0x00000000_0x00012D3A_phys_0_eng_0_engtype_3D",
+    "utilization": 2
+  }
+}

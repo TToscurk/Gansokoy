@@ -189,6 +189,8 @@ for e in external_reference_only:
 GATE_KEYS = ['size', 'parcel_fit', 'grounding', 'materials', 'geometry', 'pivot_scale',
              'collision', 'lod', 'performance', 'player_screenshot', 'f5_f6']
 MATLIB_KEYS = ['license', 'texture_size', 'vram_compressed', 'tres_valid']
+# gate.json 的檢查鍵別名（P9 veg_kit 的 gate 寫 perf；gate.json 已封存不改，由這裡對應）
+GATE_ALIAS = {'performance': 'perf'}
 V2A = G + '/assets/village_v2'
 # 使用者親自給的 ART_APPROVED（agent 不得自行加入；每筆附日期與出處）。status 只是紀錄，產生器放不放仍只看 gate＋雜湊。
 ART_APPROVED = {
@@ -202,6 +204,10 @@ ART_APPROVED = {
     'hilltop_shrine': 'ART_APPROVED（使用者 2026-09-25，R5）',
     'hieda_house': 'ART_APPROVED（使用者 2026-09-26，R6）',
     'hieda_gate': 'ART_APPROVED（使用者 2026-09-26，R6）',
+    'veg_kit': 'ART_APPROVED（使用者 2026-10-01，P9 R1 植被庫；檜＝secondary vegetation）',
+    'bamboo_kit': 'ART_APPROVED（使用者 2026-10-02，P9 R3 竹 Kit 資產本體；西林／村緣擺放另審）',
+    'garden_kit': 'ART_APPROVED（使用者 2026-10-02，P9 R4 稗田邸庭園 garden_kit＋HiedaGardenP9；r2 targeted polish 後核准）',
+    'school_kit': 'ART_APPROVED（使用者 2026-10-02，P9 R4-3 寺子屋周邊 school_kit＋SchoolYardP9）',
 }
 v2_assets, v2_rejected = [], []
 for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
@@ -214,7 +220,10 @@ for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
     ep = G + '/' + entry[len('res://'):]
     lib = name == '_matlib'
     keys = MATLIB_KEYS if lib else GATE_KEYS
-    checks = gj.get('checks', {})
+    checks = dict(gj.get('checks', {}))
+    for k, a in GATE_ALIAS.items():
+        if k not in checks and a in checks:
+            checks[k] = checks[a]
     why = []
     if not os.path.exists(ep) or sha(ep) != gj.get('entry_sha256'):
         why.append('entry 雜湊與 gate.json 不一致（gate 之後改過，需重跑 gate）')
@@ -253,7 +262,8 @@ registry = {
     'v2_generator_sources': ['res://tools/gen_village_v2.gd', 'res://tools/village_v2_freeze.gd',
                              'res://tools/village_v2_greybox_lib.gd', 'res://tools/village_v2_parcel_lib.gd',
                              'res://tools/village_v2_terrain_lib.gd', 'res://tools/village_v2_water_lib.gd',
-                             'res://tools/village_v2_hero_lib.gd', 'res://maps/village_v2/layout_v2.json'],
+                             'res://tools/village_v2_hero_lib.gd', 'res://tools/village_v2_riverbank_lib.gd',
+                             'res://maps/village_v2/layout_v2.json'],
     'v2_allowed': {
         'prefixes': ['res://maps/village_v2/', 'res://tools/village_v2_',
                      'res://tools/gen_village_v2.gd', 'res://tools/shots/village_v2_'],

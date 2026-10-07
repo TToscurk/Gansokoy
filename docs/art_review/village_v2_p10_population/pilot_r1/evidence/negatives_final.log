@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[POP] 反向 twin       → 狙った項目 FAIL（全 FAIL 2）
+[POP] 反向 walk_rule  → 狙った項目 FAIL（全 FAIL 1）
+[POP] 反向 role       → 狙った項目 FAIL（全 FAIL 1）
+[POP] 反向 body       → 狙った項目 FAIL（全 FAIL 1）
+[POP] 反向 path       → 狙った項目 FAIL（全 FAIL 1）
+[POP] 反向 count      → 狙った項目 FAIL（全 FAIL 3）
+[POP] 反向 compose    → 狙った項目 FAIL（全 FAIL 2）
+[POP] 反向 ground     → 狙った項目 FAIL（全 FAIL 1）
+[POP] 反向 speed      → 狙った項目 FAIL（全 FAIL 1）
+[POP] 結果：0 項失敗（negatives 9 案）

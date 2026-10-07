@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[POP] PASS 場景已掛 Population/PopulationP10（1 個、scene_file_path＝res://maps/village_v2/gen/population_p10.tscn、visible）；Props の下ではない
+[POP] PASS art_revision＝P10 R3b Population Pilot r1 ART_REVIEW
+[POP] PASS Props の子は不變（MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9）
+[POP] PASS NPC 16 人：封存 NPC 場景の instance（clip は Asset Library の Idle／Walk のまま、上書きなし）・行動スクリプト（違反 []）
+[POP] PASS Population instance 的 mesh／材質 override＝封存 wrapper 原值（不新增材質／貼圖覆寫；[]）
+[POP] PASS 審圖 viewport 1920×1080・FOV 75・projection 有效（與 runtime capture 相同）
+[POP] PASS 審圖鏡位：同一モデルが同じ鏡頭に 3 人以上いない、各鏡位に人が見える（1_market_tps 2 人、2_market_west_tps 4 人、3_main_street_tps 3 人、4_market_high 4 人、5_walk_through 3 人；違反 []）
+[POP] PASS runtime 30 秒：walker 3/3 移動、3/3 折返、XZ ≤ 5 cm／Y 最大 0.0173 m ≤ 3 cm、末段端點正確、Idle 不動（[]）
+[POP] PASS SpringArm：NPC（M1_yaoya_m01）を貫く臂の長さ 4.57 m＝NPC を除いた長さ 4.58 m（對照：除外なしの射線は NPC に當たる＝true）
+[POP] 結果：0 項失敗（scene）

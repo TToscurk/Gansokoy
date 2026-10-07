@@ -1,0 +1,216 @@
+{
+  "status": "FINAL_ART_REVIEW_WAITING_FOR_USER_ART_APPROVED",
+  "not_a_seal": true,
+  "instances": 16,
+  "zones": {
+    "MarketP10": 7,
+    "MarketWest": 5,
+    "MainStreet": 4
+  },
+  "idle": 13,
+  "patrol": 3,
+  "renderer": "Forward+",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "hour": 10,
+  "source_sha256": {
+    "godot/tools/village_v2_population_lib.gd": "bf01ec9c82c5e289deb8b15c712422f7a6fd5d740c865172277fcdaf0989a035",
+    "godot/scripts/npc_population_actor.gd": "45e1c98b3e51d33981e7becda55a5c4fcb79c24917d0b430998c3d5aaf296710",
+    "godot/tools/verify_village_v2_population.gd": "7cd2c15ecec8e22cbc1321911aa2da4b5962529c597420fe005d3d6d6756cfe5",
+    "godot/tools/shot_village_v2_population.gd": "d06913d7b901c22a624761b459312fcdb3237f12c4fa08a5fca895c329520dac",
+    "godot/tools/shot_village_v2_population_views.json": "d77d854fab24ee7009ede4b5a93741bbbd9bf2d9bc52a03eb0b965285f8b7128",
+    "godot/maps/village_v2/gen/population_p10.tscn": "d3791eb83575ef45f4df2a18dfb116027d0b204f01360e16be011e726f7bd04a",
+    "godot/maps/village_v2/village_v2.tscn": "e2fd57150a5723c5b065045c906886f177af00d655cf6ad2528415a51df1c60b"
+  },
+  "runtime_png_sha256": {
+    "1_market_tps_after.png": "6f61cea325809f3aee40bb37c5e48cff714073c57c3af7f9bf58afd51d37601e",
+    "1_market_tps_before.png": "a53299533102aa7048c5444e01f7d8733471c764055d0089c979425fa8a4566b",
+    "2_market_west_tps_after.png": "28541789ed1f55d7afbfc8f2088f78951293e9d312b155b709ef876676a76b7c",
+    "2_market_west_tps_before.png": "2f4fc40d5131b43435895e38b307ea1e2ab83adc4fb09bffb80cf06ea8f50673",
+    "3_main_street_tps_after.png": "181efb6b5974958c1a71cf38169a53df65a5d2c1bcc05a83568712ab4c859566",
+    "3_main_street_tps_before.png": "540e35b9890f1d2d755598249c1621d011c44437f8798660beb472f7bdc4b1f3",
+    "4_market_high_after.png": "fa983060c283c2118d30afc4fb34ec1bf1bfb099397850f52c20fdbbe533a6dd",
+    "4_market_high_before.png": "447732bd8b0454f1eb52acee337d80ac2378c88ec7d0d0a73aabe8cd311a99b2",
+    "5_walk_through_00.png": "b672a4307cf527ffab66d965b265c27bb0cc26fee85dd2fa7e5892e8b0d1d491",
+    "5_walk_through_01.png": "0e1cfc0a38cc83394c524869d80e6d25dce9f55b866caef682cbc67e6fe5d725",
+    "5_walk_through_02.png": "291fb8a7fa055196a464220ae77a0f72c36308350d062599d41ddf83e4ac0f86",
+    "5_walk_through_03.png": "07bcbccdff8a82496a6ae8757aa4ffad80e93192537d54466b7128c98fa7c2ce",
+    "5_walk_through_04.png": "cdb8dc4ac1af62f3f351acc244b36025ec41602833f4646a577f2c7dfa908fe7",
+    "5_walk_through_05.png": "de8d206448371e0ff5ec5c95581368da46478eed6b46bb3c786e7b6ad3f58f29"
+  },
+  "plan_pass": 11,
+  "negatives_pass": 9,
+  "scene_pass": 9,
+  "npc_library_sealed": true,
+  "runtime_png_validation": {
+    "1_market_tps_after.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 279,
+      "sha256": "6f61cea325809f3aee40bb37c5e48cff714073c57c3af7f9bf58afd51d37601e"
+    },
+    "1_market_tps_before.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 273,
+      "sha256": "a53299533102aa7048c5444e01f7d8733471c764055d0089c979425fa8a4566b"
+    },
+    "2_market_west_tps_after.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 283,
+      "sha256": "28541789ed1f55d7afbfc8f2088f78951293e9d312b155b709ef876676a76b7c"
+    },
+    "2_market_west_tps_before.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 282,
+      "sha256": "2f4fc40d5131b43435895e38b307ea1e2ab83adc4fb09bffb80cf06ea8f50673"
+    },
+    "3_main_street_tps_after.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 291,
+      "sha256": "181efb6b5974958c1a71cf38169a53df65a5d2c1bcc05a83568712ab4c859566"
+    },
+    "3_main_street_tps_before.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 291,
+      "sha256": "540e35b9890f1d2d755598249c1621d011c44437f8798660beb472f7bdc4b1f3"
+    },
+    "4_market_high_after.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 342,
+      "sha256": "fa983060c283c2118d30afc4fb34ec1bf1bfb099397850f52c20fdbbe533a6dd"
+    },
+    "4_market_high_before.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 339,
+      "sha256": "447732bd8b0454f1eb52acee337d80ac2378c88ec7d0d0a73aabe8cd311a99b2"
+    },
+    "5_walk_through_00.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 279,
+      "sha256": "b672a4307cf527ffab66d965b265c27bb0cc26fee85dd2fa7e5892e8b0d1d491"
+    },
+    "5_walk_through_01.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 274,
+      "sha256": "0e1cfc0a38cc83394c524869d80e6d25dce9f55b866caef682cbc67e6fe5d725"
+    },
+    "5_walk_through_02.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 261,
+      "sha256": "291fb8a7fa055196a464220ae77a0f72c36308350d062599d41ddf83e4ac0f86"
+    },
+    "5_walk_through_03.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 265,
+      "sha256": "07bcbccdff8a82496a6ae8757aa4ffad80e93192537d54466b7128c98fa7c2ce"
+    },
+    "5_walk_through_04.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 260,
+      "sha256": "cdb8dc4ac1af62f3f351acc244b36025ec41602833f4646a577f2c7dfa908fe7"
+    },
+    "5_walk_through_05.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "crc_all_chunks": "PASS",
+      "chunks": 286,
+      "sha256": "de8d206448371e0ff5ec5c95581368da46478eed6b46bb3c786e7b6ad3f58f29"
+    }
+  },
+  "actual_player_walk": {
+    "distance_m": 16.3926963806152,
+    "start": "(242.6, 1.052335, -24.5)",
+    "end": "(242.4771, 1.144809, -40.89198)"
+  },
+  "capture_fix": "Borderless review-only root window, explicit 1920x1080; window/image dimensions and projection checked before every save; no cropping or upscaling",
+  "full_regression": {
+    "groups": 96,
+    "passed": 94,
+    "failed": 2,
+    "status": "COMPLETE_OUTPUT_NOT_ALL_GREEN",
+    "failed_groups": [
+      "P5 whitelist scope debt",
+      "P8 GPU budget; clean-baseline diagnosis PRELIMINARY"
+    ],
+    "after_full_run_changed_sources": [
+      "godot/tools/shot_village_v2_population.gd"
+    ],
+    "runtime_generator_actor_gate_scenes_unchanged": true
+  },
+  "independent_check": {
+    "initial_batch": "deleg_90f28252",
+    "initial_status": "ONE_CAPTURE_ASPECT_INCONSISTENCY; no NPC/library regression",
+    "closure_status": "CAPTURE_EVIDENCE_CLOSURE_PASS",
+    "closure_batch": "deleg_36c32f4d",
+    "report": "independent_check_final.md",
+    "viewport_closure_batch": "deleg_1d70f008",
+    "viewport_closure_status": "PNG_SIZE_CRC_SHA_PASS; FAIL-CLOSED_CONTROL_FLOW_BUG_FOUND"
+  },
+  "capture_failure_tests_sha256": "8dc4293dcdf6b4e9f73d01ab23d1ddd0efa773ca8108be9008516ce04fcb2473",
+  "capture_failure_tests": {
+    "passed": 4,
+    "total": 4,
+    "expected_exit_codes": [
+      2,
+      3,
+      3,
+      3
+    ],
+    "positive_exit": 0
+  }
+}

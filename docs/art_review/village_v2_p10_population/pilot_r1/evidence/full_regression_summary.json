@@ -1,0 +1,50 @@
+{
+  "status": "FULL_SUITE_OUTPUT_COMPLETE_WITH_2_FAILED_GROUPS",
+  "groups": 96,
+  "passed_groups": 94,
+  "failed_groups": 2,
+  "failures": [
+    "✗ P5 asset reset gate（白名單／Protected／封存）（exit 1）",
+    "✗ P8 runtime budget（五鏡位 A/B）（exit 1）"
+  ],
+  "wrapper_exit_code": -15,
+  "wrapper_termination": "agent_close; all 96 group results and final footer are present; do not claim normal exit 0",
+  "gpu_baseline_status": "PRELIMINARY; preflight range failed; T1 6.09ms, High_overlook 4.09ms; not strict PASS and not a formal regression verdict",
+  "population_instances": 16,
+  "p10_r3c": "WAITING_FOR_USER_ART_APPROVED_ON_R3B",
+  "files_sha256": {
+    "build_final.log": "415da95117e1771e5b4c2a9d6bcf3ac0228daab32aaf392d66257fc83e84e1f8",
+    "capture_negative_after-save.log": "d94f2e3968d9d20f209b42fa3990c0ee172d9a75410b36eb59cc8a37cfa5b6dd",
+    "capture_negative_before-save.log": "8217599fd57614ec16fe205b647ef33bd69c8b5c8eb82c352e3ea14323d0abbd",
+    "capture_negative_last-save.log": "1fb225081124c11c6a45f155241e11c7f8af00de57ca5d160122f923a6462318",
+    "capture_negative_last-size.log": "a8ffe20164faef7454ba19a4e0bf80bd0b13d89ee4acb88422641e72544be1e9",
+    "full_regression_final.log": "2984d137716a013b70f9b7a8578ff6c5c98a92c8cd89269a9c6ceb558aac88b6",
+    "negatives_final.log": "13f2749da72d72ee6df7e686acfc80adc73411422053f6cbe0830dc256a27c0d",
+    "p8_cost_baseline_preliminary.log": "eb6000ca12d2ef7f4a0f8c6ee40686362a25f3d11264571491dd455de33ed021",
+    "p8_seal_final.log": "a81df9641472a2d6d4a31dcad580f59c57dc42b1c158165f3a93dc7ca088fe02",
+    "plan_final.log": "dbad6cfee4cae33c6a19581ef5ac572730568233853b0a7ef68fc94991f1faa3",
+    "scene_final.log": "0f81c48f93e8720467c883249bddb64de7d1cb1a321742f56b9c92be85baa10a",
+    "shots_final.log": "6a2efd14fba3210c53fcfa55eb59b05ed26ff9e043c4cce29ac11fa0b5e71ff7",
+    "verify_npc_library_seal.log": "463f991289d39657e740718844d99d099a0d9e8d799c5e1b50b1a34fe6a4ef14",
+    "verify_village_v2_market_seal.log": "2cd32a28607189874278867543a7edbfecdeaf0029dd2638bac56b352bbef48f",
+    "verify_village_v2_market_west_seal.log": "9264cf25ee79b7a78c21d2dcdc94a804711b03e7cf92ce8c2c1cb54343e15c4b",
+    "verify_village_v2_p9_final_seal.log": "ad17c747fc5cc49cc14ce4b46b5f3ef28fadde8001202e4861828e6b5dd4f319"
+  },
+  "suite_source_sha256": {
+    "godot/tools/village_v2_population_lib.gd": "bf01ec9c82c5e289deb8b15c712422f7a6fd5d740c865172277fcdaf0989a035",
+    "godot/scripts/npc_population_actor.gd": "45e1c98b3e51d33981e7becda55a5c4fcb79c24917d0b430998c3d5aaf296710",
+    "godot/tools/verify_village_v2_population.gd": "7cd2c15ecec8e22cbc1321911aa2da4b5962529c597420fe005d3d6d6756cfe5",
+    "godot/tools/shot_village_v2_population.gd": "27fb20df89b39005b288a40b264aae75b1f12eb419989e900e8db3d8b2342a72",
+    "godot/tools/shot_village_v2_population_views.json": "d77d854fab24ee7009ede4b5a93741bbbd9bf2d9bc52a03eb0b965285f8b7128",
+    "godot/maps/village_v2/gen/population_p10.tscn": "d3791eb83575ef45f4df2a18dfb116027d0b204f01360e16be011e726f7bd04a",
+    "godot/maps/village_v2/village_v2.tscn": "e2fd57150a5723c5b065045c906886f177af00d655cf6ad2528415a51df1c60b"
+  },
+  "after_suite_capture_only_fix": [
+    "godot/tools/shot_village_v2_population.gd"
+  ],
+  "capture_failure_tests": {
+    "passed": 4,
+    "total": 4,
+    "manifest_sha256": "8dc4293dcdf6b4e9f73d01ab23d1ddd0efa773ca8108be9008516ce04fcb2473"
+  }
+}

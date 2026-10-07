@@ -1,0 +1,435 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/npc_population_actor.gd" id="1_rlrsk"]
+[ext_resource type="PackedScene" path="res://characters/npc/yaoya_m01/yaoya_m01.tscn" id="2_5udw0"]
+[ext_resource type="PackedScene" path="res://characters/npc/shufu_f01/shufu_f01.tscn" id="3_mfoa1"]
+[ext_resource type="PackedScene" path="res://characters/npc/chonin_m01/chonin_m01.tscn" id="4_1dxwk"]
+[ext_resource type="PackedScene" path="res://characters/npc/sakanaya_m01/sakanaya_m01.tscn" id="5_2yp8p"]
+[ext_resource type="PackedScene" path="res://characters/npc/setomono_f01/setomono_f01.tscn" id="6_jg64y"]
+[ext_resource type="PackedScene" path="res://characters/npc/takigi_m01/takigi_m01.tscn" id="7_tr0ri"]
+[ext_resource type="PackedScene" path="res://characters/npc/kozo_m01/kozo_m01.tscn" id="8_2n6ju"]
+[ext_resource type="PackedScene" path="res://characters/npc/nunoya_f01/nunoya_f01.tscn" id="9_x8xoj"]
+[ext_resource type="PackedScene" path="res://characters/npc/chaya_f01/chaya_f01.tscn" id="10_arq4n"]
+[ext_resource type="PackedScene" path="res://characters/npc/yakusou_f01/yakusou_f01.tscn" id="11_0twuh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rlrsk"]
+radius = 0.22
+height = 1.58
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5udw0"]
+radius = 0.22
+height = 1.52
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mfoa1"]
+radius = 0.22
+height = 1.62
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1dxwk"]
+radius = 0.22
+height = 1.61
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2yp8p"]
+radius = 0.22
+height = 1.43
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jg64y"]
+radius = 0.22
+height = 1.66
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tr0ri"]
+radius = 0.22
+height = 1.46
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2n6ju"]
+radius = 0.22
+height = 1.55
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x8xoj"]
+radius = 0.22
+height = 1.52
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_arq4n"]
+radius = 0.22
+height = 1.49
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0twuh"]
+radius = 0.22
+height = 1.41
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xyycf"]
+radius = 0.22
+height = 1.62
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_82ivb"]
+radius = 0.22
+height = 1.62
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27f0w"]
+radius = 0.22
+height = 1.58
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfvvb"]
+radius = 0.22
+height = 1.41
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crug3"]
+radius = 0.22
+height = 1.61
+
+[node name="PopulationP10" type="Node3D" unique_id=1172102732]
+metadata/art_revision = "P10 R3b Population Pilot r1 ART_REVIEW"
+metadata/actors = 16
+
+[node name="Market" type="Node3D" parent="." unique_id=107873722]
+
+[node name="M1_yaoya_m01" type="AnimatableBody3D" parent="Market" unique_id=853530161]
+transform = Transform3D(-0.28698108, 0, -0.9579362, 0, 1, 0, 0.9579362, 0, -0.28698108, 249.69089, 1.1529133, -33.81616)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 23757
+metadata/model = "yaoya_m01"
+metadata/trade = "yasai"
+metadata/zone = "market"
+metadata/group = "g_yasai"
+metadata/anchor = "MarketP10/vendor_yatai_yasai"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M1_yaoya_m01" unique_id=705455815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83000004, 0)
+shape = SubResource("CapsuleShape3D_rlrsk")
+
+[node name="NPC" parent="Market/M1_yaoya_m01" unique_id=433196253 instance=ExtResource("2_5udw0")]
+speed_scale = 0.9500000000000001
+start_time = 0.8200000000000001
+
+[node name="M2_shufu_f01" type="AnimatableBody3D" parent="Market" unique_id=406009558]
+transform = Transform3D(0.2869811, 0, 0.9579362, 0, 1, 0, -0.9579362, 0, 0.2869811, 247.31744, 1.1017438, -33.62397)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 31676
+metadata/model = "shufu_f01"
+metadata/trade = "customer"
+metadata/zone = "market"
+metadata/group = "g_yasai"
+metadata/anchor = "MarketP10/customer_yatai_yasai_b"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M2_shufu_f01" unique_id=2061804691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_5udw0")
+
+[node name="NPC" parent="Market/M2_shufu_f01" unique_id=812175074 instance=ExtResource("3_mfoa1")]
+speed_scale = 1.03
+start_time = 1.5
+
+[node name="M3_chonin_m01" type="AnimatableBody3D" parent="Market" unique_id=681185010]
+transform = Transform3D(-0.28698108, 0, -0.9579362, 0, 1, 0, 0.9579362, 0, -0.28698108, 251.07089, 1.1805034, -38.416157)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 39595
+metadata/model = "chonin_m01"
+metadata/trade = "clerk"
+metadata/zone = "market"
+metadata/group = ""
+metadata/anchor = "MarketP10/vendor_yatai_cha"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M3_chonin_m01" unique_id=2088613092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_mfoa1")
+
+[node name="NPC" parent="Market/M3_chonin_m01" unique_id=991869363 instance=ExtResource("4_1dxwk")]
+speed_scale = 0.96
+start_time = 0.6
+
+[node name="M4_sakanaya_m01" type="AnimatableBody3D" parent="Market" unique_id=1537958457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 248.4, 1.2501, -58.35)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 47514
+metadata/model = "sakanaya_m01"
+metadata/trade = "sakana"
+metadata/zone = "market"
+metadata/group = ""
+metadata/anchor = "MarketP10/vendor_yatai_sakana"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M4_sakanaya_m01" unique_id=783164609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
+shape = SubResource("CapsuleShape3D_1dxwk")
+
+[node name="NPC" parent="Market/M4_sakanaya_m01" unique_id=1034903751 instance=ExtResource("5_2yp8p")]
+speed_scale = 0.9500000000000001
+start_time = 2.75
+
+[node name="M5_setomono_f01" type="AnimatableBody3D" parent="Market" unique_id=320501849]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 234.45, 1.1769, -46.15)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 55433
+metadata/model = "setomono_f01"
+metadata/trade = "seto"
+metadata/zone = "market"
+metadata/group = ""
+metadata/anchor = "MarketP10/vendor_tana_seto"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M5_setomono_f01" unique_id=2044772377]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.755, 0)
+shape = SubResource("CapsuleShape3D_2yp8p")
+
+[node name="NPC" parent="Market/M5_setomono_f01" unique_id=1297725570 instance=ExtResource("6_jg64y")]
+speed_scale = 0.98
+start_time = 1.3900000000000001
+
+[node name="M6_takigi_m01" type="AnimatableBody3D" parent="Market" unique_id=1226701545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 242.59999, 1.2534, -58.9)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 63352
+metadata/model = "takigi_m01"
+metadata/trade = "zakka"
+metadata/zone = "market"
+metadata/group = ""
+metadata/anchor = "MarketP10/vendor_tana_zakka"
+
+[node name="Body" type="CollisionShape3D" parent="Market/M6_takigi_m01" unique_id=700760489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87, 0)
+shape = SubResource("CapsuleShape3D_jg64y")
+
+[node name="NPC" parent="Market/M6_takigi_m01" unique_id=1145116712 instance=ExtResource("7_tr0ri")]
+speed_scale = 1.04
+start_time = 5.22
+
+[node name="M7_kozo_m01" type="AnimatableBody3D" parent="Market" unique_id=134034782]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 243, 1.0583333, -27.5)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+mode = "patrol"
+path_xz = PackedVector2Array(243, -27.5, 243, -36, 243, -45.5)
+path_y = PackedFloat32Array(1.0583333, 1.0631666, 1.068, 1.0695, 1.071, 1.0725, 1.1239637, 1.1254728, 1.1269819, 1.1284909, 1.13, 1.1315091, 1.1330181, 1.1345272, 1.1360363, 1.1375272, 1.1390135, 1.1404998, 1.1419861, 1.1434815, 1.1449906, 1.1464996, 1.1480087, 1.1495174, 1.1510037, 1.15249, 1.1539803, 1.1554716, 1.107, 1.1085, 1.11, 1.1115, 1.113, 1.1145, 1.116, 1.1175001, 1.1190001, 1.1205001, 1.122, 1.1235, 1.125, 1.1265, 1.128, 1.1295, 1.131, 1.1325, 1.1340001, 1.1355, 1.137, 1.1385, 1.14, 1.1415, 1.143, 1.1445, 1.1459999, 1.1474999, 1.1489999, 1.1504999, 1.152, 1.1535, 1.155, 1.1565, 1.158, 1.1595, 1.161, 1.1625, 1.164, 1.1655, 1.167, 1.1685001, 1.1700001, 1.1715, 1.173)
+walk_speed = 1.197
+wait_min = 1.5
+wait_max = 3.5
+seed_i = 71271
+start_u = 0.33
+metadata/model = "kozo_m01"
+metadata/trade = "errand"
+metadata/zone = "market"
+metadata/group = ""
+metadata/anchor = ""
+
+[node name="Body" type="CollisionShape3D" parent="Market/M7_kozo_m01" unique_id=1346991133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77000004, 0)
+shape = SubResource("CapsuleShape3D_tr0ri")
+
+[node name="NPC" parent="Market/M7_kozo_m01" unique_id=656588147 instance=ExtResource("8_2n6ju")]
+animation = &"walk"
+start_time = 3.66
+
+[node name="MarketWest" type="Node3D" parent="." unique_id=1428392909]
+
+[node name="W1_nunoya_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=631683032]
+transform = Transform3D(0.7193994, 0, 0.69459665, 0, 1, 0, -0.69459665, 0, 0.7193994, 208.5, 1.3343005, -46.95)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 79190
+metadata/model = "nunoya_f01"
+metadata/trade = "gofuku"
+metadata/zone = "market_west"
+metadata/group = "g_gofuku"
+metadata/anchor = "MarketWestP10/mw_n2_vendor"
+
+[node name="Body" type="CollisionShape3D" parent="MarketWest/W1_nunoya_f01" unique_id=1132769794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.815, 0)
+shape = SubResource("CapsuleShape3D_2n6ju")
+
+[node name="NPC" parent="MarketWest/W1_nunoya_f01" unique_id=1887794976 instance=ExtResource("9_x8xoj")]
+speed_scale = 0.96
+start_time = 1.87
+
+[node name="W2_shufu_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=250562086]
+transform = Transform3D(-0.71939933, 0, -0.6945967, 0, 1, 0, 0.6945967, 0, -0.71939933, 209.90001, 1.2129999, -45.5)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 87109
+metadata/model = "shufu_f01"
+metadata/trade = "customer"
+metadata/zone = "market_west"
+metadata/group = "g_gofuku"
+metadata/anchor = "MarketWestP10/mw_n2_customer"
+
+[node name="Body" type="CollisionShape3D" parent="MarketWest/W2_shufu_f01" unique_id=988576036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_x8xoj")
+
+[node name="NPC" parent="MarketWest/W2_shufu_f01" unique_id=2118221827 instance=ExtResource("3_mfoa1")]
+speed_scale = 1.05
+start_time = 5.66
+
+[node name="W3_chaya_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=1212978593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 228.6, 1.28428, -46.95)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 95028
+metadata/model = "chaya_f01"
+metadata/trade = "chaya"
+metadata/zone = "market_west"
+metadata/group = ""
+metadata/anchor = "MarketWestP10/mw_n6_vendor"
+
+[node name="Body" type="CollisionShape3D" parent="MarketWest/W3_chaya_f01" unique_id=1554839435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
+shape = SubResource("CapsuleShape3D_arq4n")
+
+[node name="NPC" parent="MarketWest/W3_chaya_f01" unique_id=864124939 instance=ExtResource("10_arq4n")]
+speed_scale = 0.99
+start_time = 1.06
+
+[node name="W4_yakusou_f01" type="AnimatableBody3D" parent="MarketWest" unique_id=553318844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 220.7, 1.3343006, -46.95)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 102947
+metadata/model = "yakusou_f01"
+metadata/trade = "kanbutsu"
+metadata/zone = "market_west"
+metadata/group = ""
+metadata/anchor = "MarketWestP10/mw_n4_vendor"
+
+[node name="Body" type="CollisionShape3D" parent="MarketWest/W4_yakusou_f01" unique_id=259359727]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745, 0)
+shape = SubResource("CapsuleShape3D_0twuh")
+
+[node name="NPC" parent="MarketWest/W4_yakusou_f01" unique_id=541878890 instance=ExtResource("11_0twuh")]
+speed_scale = 0.93
+start_time = 1.36
+
+[node name="W5_chonin_m01" type="AnimatableBody3D" parent="MarketWest" unique_id=1192896161]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 208.6, 1.2076, -44.6)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+mode = "patrol"
+path_xz = PackedVector2Array(208.6, -44.6, 216, -44.6, 224.2, -44.6)
+path_y = PackedFloat32Array(1.2076, 1.2075999, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2076018, 1.2388512, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.2576, 1.245099, 1.2138485, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2075999, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2075999, 1.2076, 1.2075999, 1.2075999, 1.2076, 1.2075999, 1.2075999)
+walk_speed = 1.4060000000000001
+seed_i = 110866
+start_u = 0.65
+metadata/model = "chonin_m01"
+metadata/trade = "passer"
+metadata/zone = "market_west"
+metadata/group = ""
+metadata/anchor = ""
+
+[node name="Body" type="CollisionShape3D" parent="MarketWest/W5_chonin_m01" unique_id=749815974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_xyycf")
+
+[node name="NPC" parent="MarketWest/W5_chonin_m01" unique_id=1878447666 instance=ExtResource("4_1dxwk")]
+animation = &"walk"
+start_time = 0.06
+
+[node name="MainStreet" type="Node3D" parent="." unique_id=1560260706]
+
+[node name="S1_chonin_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=1625195507]
+transform = Transform3D(0.9998001, 0, 0.019995999, 0, 1, 0, -0.019995999, 0, 0.9998001, 253.18109, 1.0271951, -25.541813)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 118785
+metadata/model = "chonin_m01"
+metadata/trade = "porter"
+metadata/zone = "main_street"
+metadata/group = ""
+metadata/anchor = "StreetP10/st_porter_ichi"
+
+[node name="Body" type="CollisionShape3D" parent="MainStreet/S1_chonin_m01" unique_id=1932414408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_82ivb")
+
+[node name="NPC" parent="MainStreet/S1_chonin_m01" unique_id=1215310752 instance=ExtResource("4_1dxwk")]
+speed_scale = 0.9400000000000001
+start_time = 3.77
+
+[node name="S2_yaoya_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=777253534]
+transform = Transform3D(-0.16533172, 0, 0.986238, 0, 1, 0, -0.986238, 0, -0.16533172, 264.57236, 1.2448096, -41.899464)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 126704
+metadata/model = "yaoya_m01"
+metadata/trade = "tenbin"
+metadata/zone = "main_street"
+metadata/group = "g_tenbin"
+metadata/anchor = "StreetP10/st_vendor_MKT_025"
+
+[node name="Body" type="CollisionShape3D" parent="MainStreet/S2_yaoya_m01" unique_id=2091556799]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83000004, 0)
+shape = SubResource("CapsuleShape3D_27f0w")
+
+[node name="NPC" parent="MainStreet/S2_yaoya_m01" unique_id=1785545910 instance=ExtResource("2_5udw0")]
+speed_scale = 0.98
+start_time = 3.72
+
+[node name="S3_yakusou_f01" type="AnimatableBody3D" parent="MainStreet" unique_id=1541139268]
+transform = Transform3D(0.16533163, 0, -0.986238, 0, 1, 0, 0.986238, 0, 0.16533163, 265.9995, 1.248498, -42.13871)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+path_xz = PackedVector2Array()
+path_y = PackedFloat32Array()
+seed_i = 134623
+metadata/model = "yakusou_f01"
+metadata/trade = "customer"
+metadata/zone = "main_street"
+metadata/group = "g_tenbin"
+metadata/anchor = "StreetP10/st_customer_MKT_025"
+
+[node name="Body" type="CollisionShape3D" parent="MainStreet/S3_yakusou_f01" unique_id=1141082158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745, 0)
+shape = SubResource("CapsuleShape3D_sfvvb")
+
+[node name="NPC" parent="MainStreet/S3_yakusou_f01" unique_id=969604082 instance=ExtResource("11_0twuh")]
+speed_scale = 0.96
+start_time = 5.45
+
+[node name="S4_sakanaya_m01" type="AnimatableBody3D" parent="MainStreet" unique_id=1502747658]
+transform = Transform3D(-0.96849334, 0, 0.24903952, 0, 1, 0, -0.24903952, 0, -0.96849334, 264.2, 1.170446, -28.5)
+sync_to_physics = false
+script = ExtResource("1_rlrsk")
+mode = "patrol"
+path_xz = PackedVector2Array(264.2, -28.5, 266, -35.5, 267.6, -42.8)
+path_y = PackedFloat32Array(1.170446, 1.1718881, 1.1733301, 1.174772, 1.176214, 1.177644, 1.1790732, 1.1805024, 1.1819317, 1.1833609, 1.1847901, 1.1862193, 1.18765, 1.1890919, 1.1905338, 1.1919757, 1.1934177, 1.1948596, 1.1963016, 1.1977437, 1.1991823, 1.2006114, 1.2020406, 1.2034698, 1.2048991, 1.2063283, 1.2077575, 1.2091867, 1.2106159, 1.2120448, 1.2134712, 1.2148974, 1.2163236, 1.21775, 1.2191763, 1.2206025, 1.2220361, 1.2234751, 1.2249141, 1.2263532, 1.2277921, 1.2292311, 1.2306701, 1.2321091, 1.2335479, 1.234987, 1.236426, 1.237865, 1.239304, 1.240743, 1.242182, 1.243621, 1.2450489, 1.2464751, 1.2479013, 1.2493277, 1.2507539, 1.2521801, 1.2536064, 1.2547532)
+walk_speed = 1.323
+wait_min = 2.5
+seed_i = 142542
+start_u = 0.8200000000000001
+metadata/model = "sakanaya_m01"
+metadata/trade = "passer"
+metadata/zone = "main_street"
+metadata/group = ""
+metadata/anchor = ""
+
+[node name="Body" type="CollisionShape3D" parent="MainStreet/S4_sakanaya_m01" unique_id=2119090008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.845, 0)
+shape = SubResource("CapsuleShape3D_crug3")
+
+[node name="NPC" parent="MainStreet/S4_sakanaya_m01" unique_id=996510287 instance=ExtResource("5_2yp8p")]
+animation = &"walk"
+start_time = 1.41

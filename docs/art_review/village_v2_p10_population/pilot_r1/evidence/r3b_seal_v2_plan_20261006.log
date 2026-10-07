@@ -1,0 +1,18 @@
+COMMAND="D:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path godot --script res://tools/verify_village_v2_population.gd
+GATE_SHA256=f38972b656081a7b4af4b16bdc301ac9976b353d346850ccdc3156e5105a2c6e
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[POP] PASS 人數 16（12–18）、區域 { "market": 7, "market_west": 5, "main_street": 4 }（主市集・Market West・主街の 3 區のみ、各 ≥ 3）
+[POP] PASS 全員：封存 NPC 場景が存在し、anchor（封存 P10 overlay の Marker）を読めた（欠落 []）
+[POP] PASS 職業對位：外見→商い（菜販→八百屋・魚販→魚・布料→呉服・茶屋→茶屋・木柴→雜貨／運び・藥草→乾物／薬・陶器→瀬戸物…；違反 []）
+[POP] PASS 同一モデルは隣接しない：同モデル間の最短 13.0 m（≥ 12 m；違反 []）
+[POP] PASS 歩く人 3（2–4）：婆婆 2 人は Walk 0（[]）、跑腿少年 ≤ 1（[]）
+[POP] PASS 構圖：小群（2–3 人・3 m 以内）3 組（≥ 3：["g_yasai", "g_gofuku", "g_tenbin"]）、単独 7（≥ 4）、最近傍距離の変動係數 0.56（≥ 0.5＝等間隔に撒いていない）
+[POP] PASS 接地：Idle 13 人の足元と見えている最上面の差 最大 0.000 m（≤ 0.03；違反 []）
+[POP] PASS 體の衝突：Idle の capsule が屋台・棚・建物の衝突體に入らない（違反 []）、NPC 間 ≥ 0.55 m（[]）
+[POP] PASS 往復路 3 本：衝突體に入らない・Idle の人から ≥ 0.6 m・段差 ≤ 0.10 m・長さ 6–20 m（違反 []）
+[POP] PASS 歩速＝Walk clip の足の接地速度（kozo_m01 1.20 m/s, chonin_m01 1.41 m/s, sakanaya_m01 1.32 m/s；滑り ≤ 3 %、違反 []）
+[POP] PASS 封存 P10 overlay（MarketP10・MarketWestP10）は読むだけ：雜湊＝封存時（違い []）
+[POP] 結果：0 項失敗（plan、1507 ms）
+EXIT=0

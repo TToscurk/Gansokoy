@@ -1,0 +1,11 @@
+COMMAND="D:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path godot --script res://tools/verify_npc_library.gd -- --seal
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[NPCLIB] PASS 封存 status＝ART_APPROVED（user、2026-10-06）
+[NPCLIB] PASS P10 NPC Asset Library 封存 548 檔雜湊一致（凍結 410、原素材 24、ART_REVIEW 36、證據 78；不符 0：）
+[NPCLIB] PASS 正式パラメータ：roster＝封存（身長・idle／walk clip・arm-space 9 体、布料老闆娘 UV 復元＋runtime 2048、主婦 apron +4.0 cm；違い []）
+[NPCLIB] PASS 貼圖 import＝VRAM 圧縮＋mipmap、上限＝roster（13 件；布料老闆娘 2048；違い []）
+[NPCLIB] PASS 反向：凍結ファイル 1 件の雜湊を偽ると封存不一致になる（godot/characters/npc/_shared/anim/mixamo/idle_breathing_s0_a030.res）
+[NPCLIB] 結果：0 項失敗（seal）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+EXIT=0

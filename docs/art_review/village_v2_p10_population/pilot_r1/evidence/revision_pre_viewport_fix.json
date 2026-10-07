@@ -1,0 +1,47 @@
+{
+  "status": "ART_REVIEW_PENDING_FULL_REGRESSION",
+  "not_a_seal": true,
+  "instances": 16,
+  "zones": {
+    "MarketP10": 7,
+    "MarketWest": 5,
+    "MainStreet": 4
+  },
+  "idle": 13,
+  "patrol": 3,
+  "renderer": "Forward+",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "hour": 10,
+  "source_sha256": {
+    "godot/tools/village_v2_population_lib.gd": "bf01ec9c82c5e289deb8b15c712422f7a6fd5d740c865172277fcdaf0989a035",
+    "godot/scripts/npc_population_actor.gd": "45e1c98b3e51d33981e7becda55a5c4fcb79c24917d0b430998c3d5aaf296710",
+    "godot/tools/verify_village_v2_population.gd": "7cd2c15ecec8e22cbc1321911aa2da4b5962529c597420fe005d3d6d6756cfe5",
+    "godot/tools/shot_village_v2_population.gd": "27fb20df89b39005b288a40b264aae75b1f12eb419989e900e8db3d8b2342a72",
+    "godot/tools/shot_village_v2_population_views.json": "d77d854fab24ee7009ede4b5a93741bbbd9bf2d9bc52a03eb0b965285f8b7128",
+    "godot/maps/village_v2/gen/population_p10.tscn": "d3791eb83575ef45f4df2a18dfb116027d0b204f01360e16be011e726f7bd04a",
+    "godot/maps/village_v2/village_v2.tscn": "e2fd57150a5723c5b065045c906886f177af00d655cf6ad2528415a51df1c60b"
+  },
+  "runtime_png_sha256": {
+    "1_market_tps_after.png": "76f754b8153b487980ea80ac013ddfe862b384723839f67eec03682bf4386491",
+    "1_market_tps_before.png": "b3cc765107c4c82bef1cecb4fef59c2504cddf73f512fb105e6606860983c884",
+    "2_market_west_tps_after.png": "3229971dd789f06b5aee3757e829b64bcf3c4134ce0d92690af792e016492e58",
+    "2_market_west_tps_before.png": "008f5741c218b07bfc17865ddc660fcb0781d379fd4a5ec3d6b92e6b50eabc14",
+    "3_main_street_tps_after.png": "147596ce78209746889e1ee968b213145823c2e92a9a6d93890a003813ab5337",
+    "3_main_street_tps_before.png": "fa0aca726a101ad4993297ba14a293e43989d40c84c388ed2fe4261fbd90a43b",
+    "4_market_high_after.png": "a2a6c9e3eb79ca7600a3f64f19da4d1a4fcf018a8e48850fe1d29b543b4bfd73",
+    "4_market_high_before.png": "bdee550e6559a971c24277e8b9302e5e0741a681e5acb6444f36c9f9b1b89b01",
+    "5_walk_through_00.png": "e50e74593866369f1b5f72734097545293cd43bd2682bfb6ef56a513958a5256",
+    "5_walk_through_01.png": "276d51b948913e1bf9d09e77db338406e78aa7f862ff889e08096c33aacd6548",
+    "5_walk_through_02.png": "bc06a32f704bbc80100d62fae8825f6f06b72356b218da0044cf55d60b3b9461",
+    "5_walk_through_03.png": "0df9d8a2926c5d08c391a0d4f0371fe6204d908a02e67de08d567cb63ac09dee",
+    "5_walk_through_04.png": "eed5a349b2b19e9cd575a240edc7aa05e40e8453c8e6e14576dd288c2e37ee3f",
+    "5_walk_through_05.png": "9531476a84b467eb3650e5cb2a9d54a3452666630573ea7c617ef7f30ed66140"
+  },
+  "plan_pass": 11,
+  "negatives_pass": 9,
+  "scene_pass": 9,
+  "npc_library_sealed": true
+}

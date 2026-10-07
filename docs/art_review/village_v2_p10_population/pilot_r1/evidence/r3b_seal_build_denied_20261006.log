@@ -1,0 +1,9 @@
+COMMAND="D:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path godot --script res://tools/verify_village_v2_population.gd -- --build
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+ERROR: [POP] SEALED baseline: --build/--attach denied; user-approved reopen + reseal required
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_population.gd:46)
+EXIT=1
