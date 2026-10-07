@@ -1,0 +1,1227 @@
+{
+  "1_market_tps": {
+    "actors": [
+      {
+        "actor": "Market/M1_yaoya_m01",
+        "dist_m": 8.2,
+        "feet_px": [
+          1872,
+          883
+        ],
+        "head_px": [
+          1928,
+          666
+        ],
+        "height_px": 216,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M2_shufu_f01",
+        "dist_m": 6.3,
+        "feet_px": [
+          1575,
+          920
+        ],
+        "head_px": [
+          1615,
+          691
+        ],
+        "height_px": 228,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "Market/M3_chonin_m01",
+        "dist_m": 12.1,
+        "feet_px": [
+          1521,
+          655
+        ],
+        "head_px": [
+          1538,
+          538
+        ],
+        "height_px": 117,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M4_sakanaya_m01",
+        "dist_m": 29.3,
+        "feet_px": [
+          1057,
+          490
+        ],
+        "head_px": [
+          1058,
+          451
+        ],
+        "height_px": 39,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M5_setomono_f01",
+        "dist_m": 18.7,
+        "feet_px": [
+          559,
+          554
+        ],
+        "head_px": [
+          552,
+          485
+        ],
+        "height_px": 69,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M6_takigi_m01",
+        "dist_m": 29.3,
+        "feet_px": [
+          916,
+          489
+        ],
+        "head_px": [
+          916,
+          450
+        ],
+        "height_px": 39,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M7_kozo_m01",
+        "dist_m": 4.1,
+        "feet_px": [
+          930,
+          1022
+        ],
+        "head_px": [
+          928,
+          747
+        ],
+        "height_px": 274,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MarketWest/W1_nunoya_f01",
+        "dist_m": 38.7,
+        "feet_px": [
+          -597,
+          551
+        ],
+        "head_px": [
+          -625,
+          480
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W2_shufu_f01",
+        "dist_m": 36.8,
+        "feet_px": [
+          -668,
+          570
+        ],
+        "head_px": [
+          -701,
+          492
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W3_chaya_f01",
+        "dist_m": 22.6,
+        "feet_px": [
+          326,
+          545
+        ],
+        "head_px": [
+          315,
+          478
+        ],
+        "height_px": 67,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W4_yakusou_f01",
+        "dist_m": 28.3,
+        "feet_px": [
+          -24,
+          546
+        ],
+        "head_px": [
+          -41,
+          477
+        ],
+        "height_px": 68,
+        "on_screen": true,
+        "ray_visible_of5": 1
+      },
+      {
+        "actor": "MarketWest/W5_chonin_m01",
+        "dist_m": 28.1,
+        "feet_px": [
+          -252,
+          575
+        ],
+        "head_px": [
+          -277,
+          495
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S1_chonin_m01",
+        "dist_m": 11.2,
+        "feet_px": [
+          -1516,
+          -419
+        ],
+        "head_px": [
+          -1294,
+          13
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S2_yaoya_m01",
+        "dist_m": 24.9,
+        "feet_px": [
+          2042,
+          580
+        ],
+        "head_px": [
+          2066,
+          496
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S3_yakusou_f01",
+        "dist_m": 26.3,
+        "feet_px": [
+          2090,
+          576
+        ],
+        "head_px": [
+          2114,
+          494
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S4_sakanaya_m01",
+        "dist_m": 26.6,
+        "feet_px": [
+          2279,
+          594
+        ],
+        "head_px": [
+          2310,
+          504
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      }
+    ],
+    "camera": "[X: (0.998868, 0.0, 0.047565), Y: (0.008516, 0.983844, -0.178827), Z: (-0.046797, 0.17903, 0.98273), O: (243.0026, 4.448134, -29.64565)]"
+  },
+  "2_market_west_tps": {
+    "actors": [
+      {
+        "actor": "Market/M1_yaoya_m01",
+        "dist_m": 39.6,
+        "feet_px": [
+          1153,
+          473
+        ],
+        "head_px": [
+          1155,
+          443
+        ],
+        "height_px": 30,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M2_shufu_f01",
+        "dist_m": 37.3,
+        "feet_px": [
+          1170,
+          477
+        ],
+        "head_px": [
+          1171,
+          445
+        ],
+        "height_px": 32,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M3_chonin_m01",
+        "dist_m": 40.0,
+        "feet_px": [
+          1065,
+          471
+        ],
+        "head_px": [
+          1065,
+          442
+        ],
+        "height_px": 29,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M4_sakanaya_m01",
+        "dist_m": 39.4,
+        "feet_px": [
+          690,
+          473
+        ],
+        "head_px": [
+          689,
+          442
+        ],
+        "height_px": 31,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M5_setomono_f01",
+        "dist_m": 23.0,
+        "feet_px": [
+          903,
+          504
+        ],
+        "head_px": [
+          902,
+          454
+        ],
+        "height_px": 49,
+        "on_screen": true,
+        "ray_visible_of5": 4
+      },
+      {
+        "actor": "Market/M6_takigi_m01",
+        "dist_m": 34.3,
+        "feet_px": [
+          628,
+          482
+        ],
+        "head_px": [
+          625,
+          445
+        ],
+        "height_px": 37,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M7_kozo_m01",
+        "dist_m": 33.4,
+        "feet_px": [
+          1213,
+          483
+        ],
+        "head_px": [
+          1215,
+          447
+        ],
+        "height_px": 36,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W1_nunoya_f01",
+        "dist_m": 4.3,
+        "feet_px": [
+          1661,
+          -203
+        ],
+        "head_px": [
+          1599,
+          248
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W2_shufu_f01",
+        "dist_m": 2.5,
+        "feet_px": [
+          1631,
+          -973
+        ],
+        "head_px": [
+          1516,
+          26
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MarketWest/W3_chaya_f01",
+        "dist_m": 17.3,
+        "feet_px": [
+          851,
+          525
+        ],
+        "head_px": [
+          849,
+          459
+        ],
+        "height_px": 66,
+        "on_screen": true,
+        "ray_visible_of5": 3
+      },
+      {
+        "actor": "MarketWest/W4_yakusou_f01",
+        "dist_m": 9.6,
+        "feet_px": [
+          761,
+          604
+        ],
+        "head_px": [
+          755,
+          483
+        ],
+        "height_px": 121,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MarketWest/W5_chonin_m01",
+        "dist_m": 7.9,
+        "feet_px": [
+          933,
+          647
+        ],
+        "head_px": [
+          932,
+          505
+        ],
+        "height_px": 141,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MainStreet/S1_chonin_m01",
+        "dist_m": 45.7,
+        "feet_px": [
+          1278,
+          472
+        ],
+        "head_px": [
+          1280,
+          444
+        ],
+        "height_px": 27,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S2_yaoya_m01",
+        "dist_m": 53.1,
+        "feet_px": [
+          992,
+          459
+        ],
+        "head_px": [
+          992,
+          437
+        ],
+        "height_px": 21,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S3_yakusou_f01",
+        "dist_m": 54.5,
+        "feet_px": [
+          988,
+          458
+        ],
+        "head_px": [
+          988,
+          437
+        ],
+        "height_px": 21,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S4_sakanaya_m01",
+        "dist_m": 55.7,
+        "feet_px": [
+          1005,
+          457
+        ],
+        "head_px": [
+          1005,
+          437
+        ],
+        "height_px": 20,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      }
+    ],
+    "camera": "[X: (-0.0, 0.0, 1.0), Y: (0.159318, 0.987227, 0.0), Z: (-0.987227, 0.159318, -0.0), O: (211.5734, 3.683852, -44.3)]"
+  },
+  "3_main_street_tps": {
+    "actors": [
+      {
+        "actor": "Market/M1_yaoya_m01",
+        "dist_m": 18.1,
+        "feet_px": [
+          -327,
+          678
+        ],
+        "head_px": [
+          -371,
+          550
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M2_shufu_f01",
+        "dist_m": 19.9,
+        "feet_px": [
+          -622,
+          702
+        ],
+        "head_px": [
+          -681,
+          565
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M3_chonin_m01",
+        "dist_m": 20.4,
+        "feet_px": [
+          149,
+          583
+        ],
+        "head_px": [
+          131,
+          499
+        ],
+        "height_px": 84,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M4_sakanaya_m01",
+        "dist_m": 38.9,
+        "feet_px": [
+          484,
+          482
+        ],
+        "head_px": [
+          479,
+          446
+        ],
+        "height_px": 35,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M5_setomono_f01",
+        "dist_m": 37.7,
+        "feet_px": [
+          -348,
+          541
+        ],
+        "head_px": [
+          -369,
+          477
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M6_takigi_m01",
+        "dist_m": 42.0,
+        "feet_px": [
+          347,
+          483
+        ],
+        "head_px": [
+          341,
+          446
+        ],
+        "height_px": 36,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M7_kozo_m01",
+        "dist_m": 23.3,
+        "feet_px": [
+          -1389,
+          759
+        ],
+        "head_px": [
+          -1496,
+          594
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W1_nunoya_f01",
+        "dist_m": 60.5,
+        "feet_px": [
+          -2021,
+          570
+        ],
+        "head_px": [
+          -2084,
+          488
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W2_shufu_f01",
+        "dist_m": 58.6,
+        "feet_px": [
+          -2193,
+          590
+        ],
+        "head_px": [
+          -2266,
+          502
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W3_chaya_f01",
+        "dist_m": 42.8,
+        "feet_px": [
+          -607,
+          539
+        ],
+        "head_px": [
+          -633,
+          474
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W4_yakusou_f01",
+        "dist_m": 49.5,
+        "feet_px": [
+          -1087,
+          548
+        ],
+        "head_px": [
+          -1124,
+          477
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W5_chonin_m01",
+        "dist_m": 49.7,
+        "feet_px": [
+          -1513,
+          580
+        ],
+        "head_px": [
+          -1567,
+          496
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S1_chonin_m01",
+        "dist_m": 11.3,
+        "feet_px": [
+          -4626,
+          2154
+        ],
+        "head_px": [
+          -6103,
+          1559
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MainStreet/S2_yaoya_m01",
+        "dist_m": 19.3,
+        "feet_px": [
+          856,
+          529
+        ],
+        "head_px": [
+          854,
+          470
+        ],
+        "height_px": 59,
+        "on_screen": true,
+        "ray_visible_of5": 4
+      },
+      {
+        "actor": "MainStreet/S3_yakusou_f01",
+        "dist_m": 19.7,
+        "feet_px": [
+          907,
+          526
+        ],
+        "head_px": [
+          906,
+          468
+        ],
+        "height_px": 57,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MainStreet/S4_sakanaya_m01",
+        "dist_m": 18.4,
+        "feet_px": [
+          956,
+          533
+        ],
+        "head_px": [
+          956,
+          472
+        ],
+        "height_px": 61,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      }
+    ],
+    "camera": "[X: (0.982741, 0.0, 0.184987), Y: (0.033118, 0.983844, -0.17594), Z: (-0.181999, 0.17903, 0.966863), O: (263.8494, 4.405643, -22.72526)]"
+  },
+  "4_market_high": {
+    "actors": [
+      {
+        "actor": "Market/M1_yaoya_m01",
+        "dist_m": 12.7,
+        "feet_px": [
+          1274,
+          693
+        ],
+        "head_px": [
+          1295,
+          612
+        ],
+        "height_px": 80,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M2_shufu_f01",
+        "dist_m": 11.7,
+        "feet_px": [
+          1135,
+          703
+        ],
+        "head_px": [
+          1147,
+          622
+        ],
+        "height_px": 81,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "Market/M3_chonin_m01",
+        "dist_m": 16.8,
+        "feet_px": [
+          1255,
+          559
+        ],
+        "head_px": [
+          1269,
+          493
+        ],
+        "height_px": 65,
+        "on_screen": true,
+        "ray_visible_of5": 4
+      },
+      {
+        "actor": "Market/M4_sakanaya_m01",
+        "dist_m": 34.7,
+        "feet_px": [
+          1043,
+          354
+        ],
+        "head_px": [
+          1045,
+          319
+        ],
+        "height_px": 35,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M5_setomono_f01",
+        "dist_m": 24.7,
+        "feet_px": [
+          652,
+          443
+        ],
+        "head_px": [
+          641,
+          393
+        ],
+        "height_px": 49,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M6_takigi_m01",
+        "dist_m": 35.1,
+        "feet_px": [
+          922,
+          352
+        ],
+        "head_px": [
+          921,
+          317
+        ],
+        "height_px": 34,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M7_kozo_m01",
+        "dist_m": 10.9,
+        "feet_px": [
+          871,
+          728
+        ],
+        "head_px": [
+          864,
+          644
+        ],
+        "height_px": 84,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MarketWest/W1_nunoya_f01",
+        "dist_m": 42.8,
+        "feet_px": [
+          -119,
+          430
+        ],
+        "head_px": [
+          -155,
+          382
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W2_shufu_f01",
+        "dist_m": 40.9,
+        "feet_px": [
+          -135,
+          449
+        ],
+        "head_px": [
+          -173,
+          398
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W3_chaya_f01",
+        "dist_m": 28.2,
+        "feet_px": [
+          485,
+          431
+        ],
+        "head_px": [
+          469,
+          383
+        ],
+        "height_px": 48,
+        "on_screen": true,
+        "ray_visible_of5": 4
+      },
+      {
+        "actor": "MarketWest/W4_yakusou_f01",
+        "dist_m": 33.3,
+        "feet_px": [
+          247,
+          430
+        ],
+        "head_px": [
+          223,
+          382
+        ],
+        "height_px": 48,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W5_chonin_m01",
+        "dist_m": 32.9,
+        "feet_px": [
+          132,
+          459
+        ],
+        "head_px": [
+          102,
+          407
+        ],
+        "height_px": 51,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S1_chonin_m01",
+        "dist_m": 11.2,
+        "feet_px": [
+          2318,
+          1547
+        ],
+        "head_px": [
+          2585,
+          1480
+        ],
+        "height_px": 0,
+        "on_screen": false,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MainStreet/S2_yaoya_m01",
+        "dist_m": 27.5,
+        "feet_px": [
+          1708,
+          494
+        ],
+        "head_px": [
+          1739,
+          436
+        ],
+        "height_px": 57,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S3_yakusou_f01",
+        "dist_m": 28.7,
+        "feet_px": [
+          1752,
+          490
+        ],
+        "head_px": [
+          1785,
+          433
+        ],
+        "height_px": 56,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S4_sakanaya_m01",
+        "dist_m": 28.7,
+        "feet_px": [
+          1853,
+          513
+        ],
+        "head_px": [
+          1892,
+          453
+        ],
+        "height_px": 60,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      }
+    ],
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.886995, -0.461779), Z: (0.0, 0.461779, 0.886995), O: (244.4, 8.907826, -24.51524)]"
+  },
+  "5_walk_through": {
+    "actors": [
+      {
+        "actor": "Market/M1_yaoya_m01",
+        "dist_m": 19.0,
+        "feet_px": [
+          1222,
+          539
+        ],
+        "head_px": [
+          1226,
+          475
+        ],
+        "height_px": 63,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M2_shufu_f01",
+        "dist_m": 18.1,
+        "feet_px": [
+          1131,
+          542
+        ],
+        "head_px": [
+          1133,
+          478
+        ],
+        "height_px": 64,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "Market/M3_chonin_m01",
+        "dist_m": 23.8,
+        "feet_px": [
+          1212,
+          512
+        ],
+        "head_px": [
+          1216,
+          461
+        ],
+        "height_px": 50,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M4_sakanaya_m01",
+        "dist_m": 42.6,
+        "feet_px": [
+          1050,
+          464
+        ],
+        "head_px": [
+          1050,
+          437
+        ],
+        "height_px": 27,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M5_setomono_f01",
+        "dist_m": 31.3,
+        "feet_px": [
+          759,
+          487
+        ],
+        "head_px": [
+          757,
+          449
+        ],
+        "height_px": 38,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M6_takigi_m01",
+        "dist_m": 42.8,
+        "feet_px": [
+          953,
+          463
+        ],
+        "head_px": [
+          953,
+          436
+        ],
+        "height_px": 27,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "Market/M7_kozo_m01",
+        "dist_m": 17.0,
+        "feet_px": [
+          960,
+          545
+        ],
+        "head_px": [
+          960,
+          478
+        ],
+        "height_px": 66,
+        "on_screen": true,
+        "ray_visible_of5": 5
+      },
+      {
+        "actor": "MarketWest/W1_nunoya_f01",
+        "dist_m": 46.3,
+        "feet_px": [
+          172,
+          481
+        ],
+        "head_px": [
+          165,
+          444
+        ],
+        "height_px": 37,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W2_shufu_f01",
+        "dist_m": 44.3,
+        "feet_px": [
+          168,
+          488
+        ],
+        "head_px": [
+          160,
+          448
+        ],
+        "height_px": 39,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W3_chaya_f01",
+        "dist_m": 34.1,
+        "feet_px": [
+          631,
+          482
+        ],
+        "head_px": [
+          628,
+          445
+        ],
+        "height_px": 37,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W4_yakusou_f01",
+        "dist_m": 38.1,
+        "feet_px": [
+          451,
+          481
+        ],
+        "head_px": [
+          446,
+          444
+        ],
+        "height_px": 37,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MarketWest/W5_chonin_m01",
+        "dist_m": 37.1,
+        "feet_px": [
+          375,
+          490
+        ],
+        "head_px": [
+          369,
+          450
+        ],
+        "height_px": 40,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S1_chonin_m01",
+        "dist_m": 14.0,
+        "feet_px": [
+          1688,
+          653
+        ],
+        "head_px": [
+          1711,
+          539
+        ],
+        "height_px": 114,
+        "on_screen": true,
+        "ray_visible_of5": 2
+      },
+      {
+        "actor": "MainStreet/S2_yaoya_m01",
+        "dist_m": 33.7,
+        "feet_px": [
+          1546,
+          497
+        ],
+        "head_px": [
+          1553,
+          453
+        ],
+        "height_px": 44,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S3_yakusou_f01",
+        "dist_m": 34.8,
+        "feet_px": [
+          1579,
+          496
+        ],
+        "head_px": [
+          1586,
+          452
+        ],
+        "height_px": 43,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      },
+      {
+        "actor": "MainStreet/S4_sakanaya_m01",
+        "dist_m": 34.5,
+        "feet_px": [
+          1647,
+          501
+        ],
+        "head_px": [
+          1655,
+          455
+        ],
+        "height_px": 46,
+        "on_screen": true,
+        "ray_visible_of5": 0
+      }
+    ],
+    "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.983844, -0.17903), Z: (0.0, 0.17903, 0.983844), O: (243.0, 4.342471, -16.15523)]"
+  }
+}
