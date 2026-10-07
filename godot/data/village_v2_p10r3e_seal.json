@@ -1,0 +1,463 @@
+{
+ "schema": 1,
+ "phase": "P10 R3e Outer Village Population Pilot r1",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_date": "2026-10-07",
+ "approval_source": "使用者 2026-10-07：「P10 R3e Outer Village Population = ART_APPROVED。12 人外圍人口配置正式通過。不再增加外圍 NPC 數量。」「可以封存 R3e」",
+ "final_baseline": "外圍 12 人＝外圍最終人口基準；核心 39＋外圍 12＝51 個有明確用途的 NPC instance。人口梯度：核心區最密 → 主街／市場外圍明顯下降 → 農田／水車／後巷零星 → 森林／山腳無人＝正式方向。",
+ "do_not": [
+  "不再增加外圍人口",
+  "不把人口塞進森林",
+  "不增加山腳居民",
+  "不為農田另開 animation production",
+  "不填滿所有 anchors"
+ ],
+ "rule": "封存後不修改外圍人口，除非真正 collision／animation bug（OUTER_ALLOW_REBAKE=1＋使用者同意＋reseal）。",
+ "roster": {
+  "outer_total": 12,
+  "core_total": 39,
+  "total": 51,
+  "zone_counts": {
+   "farm": 4,
+   "waterwheel": 2,
+   "canal": 2,
+   "alley": 3,
+   "shrine": 1
+  },
+  "snapshot": "godot/data/village_v2_p10r3e_snapshot.json",
+  "core_snapshot": "godot/data/village_v2_p10r3d_snapshot.json"
+ },
+ "outer": [
+  {
+   "id": "O1",
+   "model": "takigi_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_mid",
+   "mode": "idle",
+   "position": [
+    319.16,
+    1.042,
+    -23.0
+   ],
+   "yaw_deg": 90.0,
+   "distance_from_core_m": 76.1
+  },
+  {
+   "id": "O2",
+   "model": "yaoya_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_east",
+   "mode": "idle",
+   "position": [
+    322.16,
+    1.428,
+    -88.0
+   ],
+   "yaw_deg": 90.0,
+   "distance_from_core_m": 90.9,
+   "activity": {
+    "type": "Carry",
+    "clip": "box_idle_a030",
+    "slot": "idle",
+    "options": {
+     "crate": [
+      "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+      0.3,
+      0.2
+     ],
+     "crate_forward": 0.14,
+     "crate_up": 0.09,
+     "crate_inset": 0.09
+    }
+   }
+  },
+  {
+   "id": "O3",
+   "model": "chonin_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    306.5,
+    0.822,
+    13.0
+   ],
+   "yaw_deg": 0.0,
+   "distance_from_core_m": 84.9,
+   "patrol_endpoints": [
+    [
+     306.5,
+     13.0
+    ],
+    [
+     307.0,
+     24.0
+    ]
+   ],
+   "patrol_path": [
+    [
+     306.5,
+     13.0
+    ],
+    [
+     306.5,
+     18.5
+    ],
+    [
+     307.0,
+     24.0
+    ]
+   ]
+  },
+  {
+   "id": "O4",
+   "model": "setomono_f01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_hill",
+   "mode": "idle",
+   "position": [
+    329.66,
+    1.524,
+    -104.0
+   ],
+   "yaw_deg": 90.0,
+   "distance_from_core_m": 106.1
+  },
+  {
+   "id": "O5",
+   "model": "sakanaya_m01",
+   "zone": "waterwheel",
+   "trade": "fisher",
+   "group": "g_wheel",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    328.6,
+    0.985,
+    -50.8
+   ],
+   "yaw_deg": -27.76,
+   "distance_from_core_m": 84.3
+  },
+  {
+   "id": "O6",
+   "model": "shufu_f01",
+   "zone": "waterwheel",
+   "trade": "neighbor",
+   "group": "g_wheel",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    327.6,
+    1.059,
+    -48.9
+   ],
+   "yaw_deg": 152.24,
+   "distance_from_core_m": 83.1,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "O7",
+   "model": "yakusou_f01",
+   "zone": "canal",
+   "trade": "resting",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    311.0,
+    0.453,
+    37.8
+   ],
+   "yaw_deg": 90.0,
+   "distance_from_core_m": 102.0,
+   "activity": {
+    "type": "Sit",
+    "clip": "sit_talk_a_a030",
+    "slot": "idle",
+    "options": {
+     "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+     "seat_drop": 0.22,
+     "seat_back": -0.09,
+     "seat_depth": 0.34,
+     "seat_len": 1.2,
+     "seat_shift": -0.1
+    }
+   }
+  },
+  {
+   "id": "O8",
+   "model": "chaya_f01",
+   "zone": "canal",
+   "trade": "passer",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    330.5,
+    0.799,
+    -31.5
+   ],
+   "yaw_deg": 120.0,
+   "distance_from_core_m": 85.9,
+   "activity": {
+    "type": "Drink",
+    "clip": "drinking_im1_a030",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "O9",
+   "model": "shufu_f01",
+   "zone": "alley",
+   "trade": "neighbor",
+   "group": "g_well",
+   "anchor": "StreetP10/st_well_ido_midlane",
+   "mode": "idle",
+   "position": [
+    268.297,
+    1.43,
+    -88.384
+   ],
+   "yaw_deg": 31.73,
+   "distance_from_core_m": 53.7
+  },
+  {
+   "id": "O10",
+   "model": "nunoya_f01",
+   "zone": "alley",
+   "trade": "neighbor",
+   "group": "g_well",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    269.4,
+    1.42,
+    -86.6
+   ],
+   "yaw_deg": -148.27,
+   "distance_from_core_m": 52.6,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   }
+  },
+  {
+   "id": "O11",
+   "model": "takigi_m01",
+   "zone": "alley",
+   "trade": "carpenter",
+   "group": "",
+   "anchor": "StreetP10/st_worker_105",
+   "mode": "idle",
+   "position": [
+    283.609,
+    1.366,
+    -76.399
+   ],
+   "yaw_deg": 73.19,
+   "distance_from_core_m": 53.1
+  },
+  {
+   "id": "O12",
+   "model": "yakusou_f01",
+   "zone": "shrine",
+   "trade": "pilgrim",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    292.0,
+    1.526,
+    -152.0
+   ],
+   "yaw_deg": -160.0,
+   "distance_from_core_m": 121.5
+  }
+ ],
+ "density_bands": {
+  "center_xz": [
+   245.0,
+   -40.0
+  ],
+  "rings_m": [
+   0.0,
+   40.0,
+   90.0,
+   150.0,
+   260.0
+  ],
+  "measured_people_per_1000m2": [
+   [
+    36,
+    7.162
+   ],
+   [
+    11,
+    0.539
+   ],
+   [
+    4,
+    0.088
+   ],
+   [
+    0,
+    0.0
+   ]
+  ],
+  "rule": "核心 (245,−40) からの環ごとの人／1000 m² が外へ単調に下がる；150–260 m（森林・山腳）は 0 人"
+ },
+ "forbidden_zones": {
+  "rule": "森林・山腳・偏僻路段には区域框が無い＝置けない（範圍 gate／seal）；150–260 m の環は 0 人",
+  "allowed_boxes_xzwh": {
+   "farm": [
+    300.0,
+    -115.0,
+    40.0,
+    150.0
+   ],
+   "waterwheel": [
+    320.0,
+    -60.0,
+    20.0,
+    20.0
+   ],
+   "canal": [
+    305.0,
+    -40.0,
+    35.0,
+    90.0
+   ],
+   "alley": [
+    255.0,
+    -95.0,
+    35.0,
+    25.0
+   ],
+   "shrine": [
+    280.0,
+    -175.0,
+    20.0,
+    35.0
+   ]
+  },
+  "zone_ranges": {
+   "farm": [
+    3,
+    5
+   ],
+   "waterwheel": [
+    1,
+    2
+   ],
+   "canal": [
+    1,
+    3
+   ],
+   "alley": [
+    2,
+    3
+   ],
+   "shrine": [
+    1,
+    2
+   ]
+  }
+ },
+ "mount": "village_v2.tscn Population：PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10 → OuterP10 → ActivityOuterP10（各 1 つ）",
+ "non_blocking": [
+  "水車旁兩人與水輪／樹樁在畫面上視覺重疊（無穿模）",
+  "井邊角色靠近井柱（無穿模）",
+  "農田目前沒有專用農作動畫（站立・短距離走動・搬收成；不硬套城市動作）"
+ ],
+ "verification": {
+  "plan": 14,
+  "negatives": 13,
+  "scene": 6,
+  "seal": 9,
+  "tag": "OUTER"
+ },
+ "frozen": {
+  "godot/tools/village_v2_population_outer_lib.gd": "16a727b3f1de100e655f74620aa34485bcd3aec7e3dc8f5a61f1f8f8a63a2602",
+  "godot/scripts/npc_activity_outer.gd": "c600c2b3ce9e1cd149fd335a6dcda0c1bdda2f2f30a901e1c8d9bf0d73c00153",
+  "godot/tools/verify_village_v2_population_outer.gd": "8900a3ad5ee45a22175b87d218a967308bd3747c87cc998d00d6fc6c9f6df136",
+  "godot/tools/shot_p10_population_outer.gd": "7b250d6f8c0fc170efebf2482a1fd3938426f05ef3f15120a387225c121d1d5d",
+  "godot/tools/shot_village_v2_population_outer_views.json": "a0c3192f2fea8e0ff4643d28f1e2116ea31b0a2625b7a7aa1dc55d6fe8673ba6",
+  "godot/maps/village_v2/gen/population_outer_p10.tscn": "8123adbd271ecd613a1d6cee13d096a81eba440457e6168f9f8508fe46a3c818",
+  "godot/data/village_v2_p10r3e_snapshot.json": "2ea45f40e51f1492f8bd7e318625de478b1c91b5523ad5a9667bef65042fd9c9",
+  "tools/seal_p10r3e.py": "833757d1a5de7f2d687c1a2c3cd77137766b6787e16e6a6b6e48d8c367332df9"
+ },
+ "evidence": {
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/capture.log": "d7f317b69bb73e7db6f52ea77440b61b2c7ccb13e75eb16071afc0159df350f4",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_act_seal.log": "55547fa4592df8b54b299c198fc7eaa1bbf844d54633cb7d040a8228fb31a1fc",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_core_seal.log": "6cdbf2de23d911328d2c16a3c00e81bc97aec1d681a3a5aead1c5eaf94eaf08f",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_mkt_seal.log": "20786a883028267c1997cc7bf10a2a5c19b35ae0095186f8114a14a281edb208",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_mmbake.log": "f0e5044c0d0942e6d3824a2ede231857d1c31eb4da3ce461e675935808aba322",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_mw_seal.log": "7cd550b41be6d6e1a48cd551936ab08f9687dd408353b6143300e0726d358330",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_npclib_seal.log": "7d168b174a83bcef05384d163508c0e138105fa0eee84f05e39fd422dccbc368",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_p9f.log": "ad17c747fc5cc49cc14ce4b46b5f3ef28fadde8001202e4861828e6b5dd4f319",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_pop_seal.log": "2415c37b18b3b9d4373e747fe870d855933ca44b059cdc448092093841c735ab",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/cross_str_seal.log": "785bd3597e5183189fc8d0efb5c5469f3c0c3f72c37a6c235e8a215fc880c060",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/negatives.log": "1a0b0fa4b097f11be53a80d6622b9681586b6d288761f95ad9d1b69b78b917c8",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/plan.log": "8f07b8900ec6a2db3426493af601f8427d5231a3aa2d95370c8c5db8e17f59cb",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/scene.log": "dbcfe57f15768c6e22584b9f861265059c39b34c0a131aa5f5baac592fc0060b",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/route_counts.json": "c5571a87879d7486adb355fbf7e2943d5706a9b6c2d5a3d5346288d2c17ccba4",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/README.md": "3af50df2335147d4b00f67ac8a95223a76fb211b9961d7693b60827077af6055"
+ },
+ "art_review_images": {
+  "docs/art_review/village_v2_p10_population/outer_r1/render/1_market_core_after.png": "fa17623e397de6de924a0262816e31c8c817a1ed4bbf6c7723afd0603a164cb3",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/1_market_core_before.png": "207fcd6b7a5f223a1bb45fbac6791c8fcf2741b9869675a91cc8568806cc7994",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/2_mouth_from_south_after.png": "a791b39f081904ce87a627073c63614d22a849334d14c50ed7f585e4b18cda14",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/2_mouth_from_south_before.png": "ceb1abb063f2274db914cffd27a663679828d7a4dfbd688c4dbc93e1a311cc4f",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/3_alley_well_after.png": "de0d25b69d74a29b5ce955f0ea0c662f6360f9312f9596ab828a5704c12ac0e5",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/3_alley_well_before.png": "cb5c21e3d343857c7a2d42a3aa58751e9cf1aebb774e219421fa5ba587e07f75",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/4_farm_mid_after.png": "2d256757d666102d767985ca774e91c5550a4ea831b3d5990b22bc4592a50d3e",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/4_farm_mid_before.png": "ba741153f4aac3e4bcdf09d30d4fd594c263a2b8dd1aec2061be606b3dac0004",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/5_waterwheel_after.png": "f8cbe8e9c68f9aecfd8bd8476bb2d7fa968683fdd4bfd54735f4c44f3ad56339",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/5_waterwheel_before.png": "ab7b9f544d0854a07afb79444f23a2473c990a78ec18e90251b49cba52a68412",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/6_canal_south_after.png": "abfa8ab9dbd9d09c5e31670ed0c39f462bca548a6de83a85356b83e5093b3bbc",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/6_canal_south_before.png": "1602211a4a519e59eebe8274affcc589167a738cf274dbe4b0c78404e2ead159",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/7_farm_east_after.png": "8c1df73ba8aaf7c8a10cf7ecd136b6736b672d047828561b3a77a9561c2cc6d5",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/7_farm_east_before.png": "71036eefe5fd7d4cbedeeeebe6164d1114a5ba630197eaaf31011c34174380da",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/8_shrine_torii_after.png": "792ca180c8603ef602344b2bcf5d877d4384ebe26f66ffb872486bff1def051b",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/8_shrine_torii_before.png": "84939b7b49912fc071f5178fb425404fbde6c2fe8d730438b6e0a2ff08c74ba2",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/R1_market_core.png": "052d70e999ce78fbfd79b71002f0b21c2acd9940b4e00201c68e4f02113cbb74",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/R2_market_mouth.png": "59bb4b6b57132a09fa908c89be02200699694b660f07bc953532453b0c5637cb",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/R3_cross_street.png": "1593ff3b83f0ba8db816ff08984e2d7443fbe06797a8d0b9890728ad8ab23dda",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/R4_farm_edge.png": "357b4fb2f864dd4237fd387c420e33b9a32633d193253cf74ae3acb5bc58d454",
+  "docs/art_review/village_v2_p10_population/outer_r1/render/R5_canal_bridge.png": "76848229fb316f9a3ac25cc1232ffba7f4362930d8371328b1cddc713c59364d",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/1_market_core.jpg": "4204db9f667848dfd21b5cb202aa96a29c9fc04fa345ccc52a66a166b6bd2532",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/2_mouth_from_south.jpg": "89ad5953ce23b912e0b1b763c4954100d70414a813c37cd6d3d69a3812505edf",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/3_alley_well.jpg": "fd35ed5cad55dfa0b89e3af1078cdebb3420a1b7cc52d65b4804b81ae9bac433",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/4_farm_mid.jpg": "967e4db73d42daa2ddc581b1a7455d4fd36febb576de2b4caa202f6542f4e9d3",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/5_waterwheel.jpg": "d57b1bcf73bcbb5551023e0990844087feff8c68ff426f749b6c96eff331b4d5",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/6_canal_south.jpg": "5cf5d6090e2d8cdc3419c50bea61c0523e0cc66b4c6763d36cd0ec6f3c928122",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/7_farm_east.jpg": "13bcaea24fe0424b71b3fc96bf69366ac5a04e23ba6187a3561b0dd6d87338ca",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/8_shrine_torii.jpg": "fbc9a52b691dfbffca355947e08368dc35117736bb0ad9505d33b040cf8bda01",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/R_walk_out_route.jpg": "08e18494ac21287894b4eba20877975113f6492fb1779ee539ea39e828896a51",
+  "docs/art_review/village_v2_p10_population/outer_r1/review/population_map.png": "74dfdb251f2f175bfa352377d0c982e37ee03ff459ce7b455334cf5c427736b7"
+ },
+ "child_seals": {
+  "godot/data/village_v2_p10r3d_seal.json": "6261de507438865bd89aac586a60b3262a6989e90663472e39ab1feb4a69c88a",
+  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+  "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
+ }
+}

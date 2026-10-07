@@ -1,0 +1,410 @@
+{
+ "schema": 1,
+ "scope": "P10 R3e 外圍人口 12（核心 39＝R3d 封存 snapshot を密度計算に参照）",
+ "outer_total": 12,
+ "core_total": 39,
+ "total": 51,
+ "zone_counts": {
+  "farm": 4,
+  "waterwheel": 2,
+  "canal": 2,
+  "alley": 3,
+  "shrine": 1
+ },
+ "outer": [
+  {
+   "id": "O1",
+   "model": "takigi_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_mid",
+   "mode": "idle",
+   "position": [
+    319.16,
+    1.042,
+    -23.0
+   ],
+   "yaw_deg": 90.0,
+   "anim_start_time": 5.54,
+   "speed_scale": 1.0,
+   "seed_i": 523652,
+   "distance_from_core_m": 76.1
+  },
+  {
+   "id": "O2",
+   "model": "yaoya_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_east",
+   "mode": "idle",
+   "position": [
+    322.16,
+    1.428,
+    -88.0
+   ],
+   "yaw_deg": 90.0,
+   "anim_start_time": 3.84,
+   "speed_scale": 0.97,
+   "seed_i": 628381,
+   "activity": {
+    "type": "Carry",
+    "clip": "box_idle_a030",
+    "slot": "idle",
+    "options": {
+     "crate": [
+      "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+      0.3,
+      0.2
+     ],
+     "crate_forward": 0.14,
+     "crate_up": 0.09,
+     "crate_inset": 0.09
+    }
+   },
+   "distance_from_core_m": 90.9
+  },
+  {
+   "id": "O3",
+   "model": "chonin_m01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "",
+   "mode": "patrol",
+   "position": [
+    306.5,
+    0.822,
+    13.0
+   ],
+   "yaw_deg": 0.0,
+   "anim_start_time": 0.93,
+   "speed_scale": 1.0,
+   "seed_i": 733110,
+   "patrol": {
+    "endpoints": [
+     [
+      306.5,
+      13.0
+     ],
+     [
+      307.0,
+      24.0
+     ]
+    ],
+    "path": [
+     [
+      306.5,
+      13.0
+     ],
+     [
+      306.5,
+      18.5
+     ],
+     [
+      307.0,
+      24.0
+     ]
+    ],
+    "length_m": 11.02,
+    "walk_speed": 1.406,
+    "wait": [
+     3.0,
+     6.0
+    ],
+    "start_u": 0.21
+   },
+   "distance_from_core_m": 84.9
+  },
+  {
+   "id": "O4",
+   "model": "setomono_f01",
+   "zone": "farm",
+   "trade": "farmer",
+   "group": "",
+   "anchor": "StreetP10/st_farmer_farm_hill",
+   "mode": "idle",
+   "position": [
+    329.66,
+    1.524,
+    -104.0
+   ],
+   "yaw_deg": 90.0,
+   "anim_start_time": 1.23,
+   "speed_scale": 1.02,
+   "seed_i": 837839,
+   "distance_from_core_m": 106.1
+  },
+  {
+   "id": "O5",
+   "model": "sakanaya_m01",
+   "zone": "waterwheel",
+   "trade": "fisher",
+   "group": "g_wheel",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    328.6,
+    0.985,
+    -50.8
+   ],
+   "yaw_deg": -27.76,
+   "anim_start_time": 3.14,
+   "speed_scale": 1.02,
+   "seed_i": 942568,
+   "distance_from_core_m": 84.3
+  },
+  {
+   "id": "O6",
+   "model": "shufu_f01",
+   "zone": "waterwheel",
+   "trade": "neighbor",
+   "group": "g_wheel",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    327.6,
+    1.059,
+    -48.9
+   ],
+   "yaw_deg": 152.24,
+   "anim_start_time": 1.96,
+   "speed_scale": 1.01,
+   "seed_i": 1047297,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a030",
+    "slot": "idle",
+    "options": {}
+   },
+   "distance_from_core_m": 83.1
+  },
+  {
+   "id": "O7",
+   "model": "yakusou_f01",
+   "zone": "canal",
+   "trade": "resting",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    311.0,
+    0.453,
+    37.8
+   ],
+   "yaw_deg": 90.0,
+   "anim_start_time": 0.14,
+   "speed_scale": 0.94,
+   "seed_i": 1152026,
+   "activity": {
+    "type": "Sit",
+    "clip": "sit_talk_a_a030",
+    "slot": "idle",
+    "options": {
+     "seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+     "seat_drop": 0.22,
+     "seat_back": -0.09,
+     "seat_depth": 0.34,
+     "seat_len": 1.2,
+     "seat_shift": -0.1
+    }
+   },
+   "distance_from_core_m": 102.0
+  },
+  {
+   "id": "O8",
+   "model": "chaya_f01",
+   "zone": "canal",
+   "trade": "passer",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    330.5,
+    0.799,
+    -31.5
+   ],
+   "yaw_deg": 120.0,
+   "anim_start_time": 3.12,
+   "speed_scale": 1.05,
+   "seed_i": 1256755,
+   "activity": {
+    "type": "Drink",
+    "clip": "drinking_im1_a030",
+    "slot": "idle",
+    "options": {}
+   },
+   "distance_from_core_m": 85.9
+  },
+  {
+   "id": "O9",
+   "model": "shufu_f01",
+   "zone": "alley",
+   "trade": "neighbor",
+   "group": "g_well",
+   "anchor": "StreetP10/st_well_ido_midlane",
+   "mode": "idle",
+   "position": [
+    268.297,
+    1.43,
+    -88.384
+   ],
+   "yaw_deg": 31.73,
+   "anim_start_time": 5.98,
+   "speed_scale": 1.06,
+   "seed_i": 1361484,
+   "distance_from_core_m": 53.7
+  },
+  {
+   "id": "O10",
+   "model": "nunoya_f01",
+   "zone": "alley",
+   "trade": "neighbor",
+   "group": "g_well",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    269.4,
+    1.42,
+    -86.6
+   ],
+   "yaw_deg": -148.27,
+   "anim_start_time": 3.55,
+   "speed_scale": 0.97,
+   "seed_i": 1466213,
+   "activity": {
+    "type": "Talk",
+    "clip": "talk_general_a040",
+    "slot": "idle",
+    "options": {}
+   },
+   "distance_from_core_m": 52.6
+  },
+  {
+   "id": "O11",
+   "model": "takigi_m01",
+   "zone": "alley",
+   "trade": "carpenter",
+   "group": "",
+   "anchor": "StreetP10/st_worker_105",
+   "mode": "idle",
+   "position": [
+    283.609,
+    1.366,
+    -76.399
+   ],
+   "yaw_deg": 73.19,
+   "anim_start_time": 3.16,
+   "speed_scale": 0.94,
+   "seed_i": 1570942,
+   "distance_from_core_m": 53.1
+  },
+  {
+   "id": "O12",
+   "model": "yakusou_f01",
+   "zone": "shrine",
+   "trade": "pilgrim",
+   "group": "",
+   "anchor": "",
+   "mode": "idle",
+   "position": [
+    292.0,
+    1.526,
+    -152.0
+   ],
+   "yaw_deg": -160.0,
+   "anim_start_time": 0.34,
+   "speed_scale": 0.95,
+   "seed_i": 1675671,
+   "distance_from_core_m": 121.5
+  }
+ ],
+ "density_bands": {
+  "center_xz": [
+   245.0,
+   -40.0
+  ],
+  "rings_m": [
+   0.0,
+   40.0,
+   90.0,
+   150.0,
+   260.0
+  ],
+  "measured_people_per_1000m2": [
+   [
+    36,
+    7.162
+   ],
+   [
+    11,
+    0.539
+   ],
+   [
+    4,
+    0.088
+   ],
+   [
+    0,
+    0.0
+   ]
+  ],
+  "rule": "核心 (245,−40) からの環ごとの人／1000 m² が外へ単調に下がる；150–260 m（森林・山腳）は 0 人"
+ },
+ "zone_boxes": {
+  "farm": [
+   300.0,
+   -115.0,
+   40.0,
+   150.0
+  ],
+  "waterwheel": [
+   320.0,
+   -60.0,
+   20.0,
+   20.0
+  ],
+  "canal": [
+   305.0,
+   -40.0,
+   35.0,
+   90.0
+  ],
+  "alley": [
+   255.0,
+   -95.0,
+   35.0,
+   25.0
+  ],
+  "shrine": [
+   280.0,
+   -175.0,
+   20.0,
+   35.0
+  ]
+ },
+ "zone_ranges": {
+  "farm": [
+   3,
+   5
+  ],
+  "waterwheel": [
+   1,
+   2
+  ],
+  "canal": [
+   1,
+   3
+  ],
+  "alley": [
+   2,
+   3
+  ],
+  "shrine": [
+   1,
+   2
+  ]
+ },
+ "forbidden": "森林・山腳・偏僻路段には区域框が無い＝置けない（範圍 gate／seal）；150–260 m の環は 0 人"
+}

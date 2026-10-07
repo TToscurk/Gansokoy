@@ -6,6 +6,9 @@ extends SceneTree
 ##   godot --headless --path godot --script res://tools/verify_village_v2_population_outer.gd -- --attach     Population へ OuterP10＋ActivityOuterP10（EntranceCueP10 の後）
 ##   godot --path godot --script res://tools/verify_village_v2_population_outer.gd -- --scene                 場景級（掛載・人数・Activity 逐フレーム・審圖鏡位・歩く人・密度勾配）
 ##   -- --map／--probe=ID,...／--scan=x0,z0,x1,z1,step  調査用
+##   -- --snapshot=<json>  封存用 snapshot（外圍 12 の id／model／zone／trade／位置／朝向／mode／patrol／activity、密度環、区域框）
+##   -- --seal  封存（data/village_v2_p10r3e_seal.json：雜湊＋掛載順＋場景の住人＝snapshot＋区域框・密度環・森林／山腳 0 人＋竄改反向；R3e ART_APPROVED 2026-10-07）
+##   封存中 --build／--attach は拒否（OUTER_ALLOW_REBAKE=1＝使用者が承認した collision／animation bug 修正のときだけ、その後 seal を更新）
 const PL := preload("res://tools/village_v2_population_lib.gd")
 const CL := preload("res://tools/village_v2_population_core_lib.gd")
 const OL := preload("res://tools/village_v2_population_outer_lib.gd")
@@ -29,6 +32,9 @@ const ZONE_BOX := {
 }
 const ZONE_RANGE := {"farm": [3, 5], "waterwheel": [1, 2], "canal": [1, 3], "alley": [2, 3], "shrine": [1, 2]}
 const TWIN_MIN := 8.0
+const SEAL := "res://data/village_v2_p10r3e_seal.json"
+const SNAPSHOT := "res://data/village_v2_p10r3e_snapshot.json"
+const CORE_SNAPSHOT := "res://data/village_v2_p10r3d_snapshot.json"
 
 var fails := 0
 var failed := []
@@ -367,6 +373,191 @@ func _negatives(v: Node3D, B: Array) -> int:
 	return mism
 
 
+## 往復路は全長の中点、Idle は立ち位置（密度環の代表点；snapshot と seal で同じ規則）
+static func _poly_mid(pts: PackedVector2Array) -> Vector2:
+	var L := 0.0
+	for i in range(1, pts.size()):
+		L += pts[i].distance_to(pts[i - 1])
+	return PL._along(pts, L * 0.5)
+
+
+static func _rec_point(r: Dictionary) -> Vector2:
+	if r.has("patrol"):
+		var pts := PackedVector2Array()
+		for q: Array in r["patrol"]["path"]:
+			pts.append(Vector2(float(q[0]), float(q[1])))
+		return _poly_mid(pts)
+	var pos: Array = r["position"]
+	return Vector2(float(pos[0]), float(pos[2]))
+
+
+func _actor_rec(a: Dictionary) -> Dictionary:
+	var p: Vector3 = a["p"]
+	var r := {"id": a["id"], "model": a["model"], "zone": a["zone"], "trade": a["trade"], "group": a["group"], "anchor": a["anchor"], "mode": a["mode"],
+		"position": [snappedf(p.x, 0.001), snappedf(p.y, 0.001), snappedf(p.z, 0.001)], "yaw_deg": snappedf(rad_to_deg(float(a["yaw"])), 0.01),
+		"anim_start_time": snappedf(fmod(float(a["idle_t"]) + 2.7, 6.0), 0.001), "speed_scale": a["speed_scale"], "seed_i": int(a["seed"]) + 7}
+	if a["mode"] == "patrol":
+		var pts: PackedVector2Array = a["path_xz"]
+		r["patrol"] = {"endpoints": [[pts[0].x, pts[0].y], [pts[pts.size() - 1].x, pts[pts.size() - 1].y]], "path": Array(pts).map(func(q: Vector2) -> Array: return [q.x, q.y]),
+			"length_m": snappedf(float(a["path_len"]), 0.01), "walk_speed": a["walk_speed"], "wait": a["wait"], "start_u": a["start_u"]}
+	var key := "%s/%s_%s" % [OL.ZONE_NODE.get(a["zone"], ""), a["id"], a["model"]]
+	if OL.ASSIGN.has(key):
+		var e: Array = OL.ASSIGN[key]
+		r["activity"] = {"type": e[0], "clip": e[2], "slot": e[3], "options": e[4] if e.size() > 4 else {}}
+	r["distance_from_core_m"] = snappedf(_rec_point(r).distance_to(CENTER), 0.1)
+	return r
+
+
+func _snapshot(P: Dictionary, path: String) -> void:
+	var zc := {}
+	for a: Dictionary in P["actors"]:
+		zc[a["zone"]] = int(zc.get(a["zone"], 0)) + 1
+	var recs: Array = (P["actors"] as Array).map(func(a: Dictionary) -> Dictionary: return _actor_rec(a))
+	var core: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CORE_SNAPSHOT))
+	var pts := []
+	for r: Dictionary in (core["r3b_baseline"] as Array) + (core["r3d_added"] as Array) + recs:
+		pts.append(_rec_point(r))
+	var boxes := {}
+	for z: String in ZONE_BOX:
+		var rb: Rect2 = ZONE_BOX[z]
+		boxes[z] = [rb.position.x, rb.position.y, rb.size.x, rb.size.y]
+	var out := {"schema": 1, "scope": "P10 R3e 外圍人口 12（核心 39＝R3d 封存 snapshot を密度計算に参照）",
+		"outer_total": recs.size(), "core_total": int(core["total"]), "total": int(core["total"]) + recs.size(), "zone_counts": zc, "outer": recs,
+		"density_bands": {"center_xz": [CENTER.x, CENTER.y], "rings_m": RINGS, "measured_people_per_1000m2": ring_density(pts),
+			"rule": "核心 (245,−40) からの環ごとの人／1000 m² が外へ単調に下がる；150–260 m（森林・山腳）は 0 人"},
+		"zone_boxes": boxes, "zone_ranges": ZONE_RANGE,
+		"forbidden": "森林・山腳・偏僻路段には区域框が無い＝置けない（範圍 gate／seal）；150–260 m の環は 0 人"}
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(out, " ", false) + "\n")
+	f.close()
+	print("[OUTER] snapshot → %s（外圍 %d、合計 %d、密度 %s）" % [path, recs.size(), out["total"], str(out["density_bands"]["measured_people_per_1000m2"])])
+
+
+func _sealed() -> bool:
+	if not FileAccess.file_exists(SEAL):
+		return false
+	var j = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	return j is Dictionary and String(j.get("status", "")) == "ART_APPROVED"
+
+
+func _seal_mismatch(seal: Dictionary) -> Array:
+	var repo := (ProjectSettings.globalize_path("res://") + "..").simplify_path() + "/"
+	var bad := []
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		var d: Dictionary = seal.get(grp, {})
+		for k: String in d:
+			if not FileAccess.file_exists(repo + k) or FileAccess.get_sha256(repo + k) != String(d[k]):
+				bad.append(k)
+	return bad
+
+
+## 場景の外圍住人が snapshot と一致（Idle：位置 1 cm・朝向 0.5°；全員：mode・model；patrol：端点 1 cm）
+func _live_mismatch(v: Node3D, snap: Dictionary) -> Array:
+	var bad := []
+	var outer := v.get_node_or_null("Population/" + OL.NODE_NAME)
+	if outer == null:
+		return ["OuterP10 が無い"]
+	var bodies := {}
+	for b in outer.find_children("*", "AnimatableBody3D", true, false):
+		bodies[String(b.name).split("_")[0]] = b
+	if bodies.size() != (snap["outer"] as Array).size():
+		bad.append("人数 %d≠%d" % [bodies.size(), (snap["outer"] as Array).size()])
+	for r: Dictionary in snap["outer"]:
+		var b: Node3D = bodies.get(String(r["id"]))
+		if b == null:
+			bad.append(String(r["id"]) + " 無い")
+			continue
+		var pos: Array = r["position"]
+		var idle_off: bool = String(r["mode"]) == "idle" and (b.global_position.distance_to(Vector3(pos[0], pos[1], pos[2])) > 0.01 \
+			or absf(angle_difference(b.global_rotation.y, deg_to_rad(float(r["yaw_deg"])))) > deg_to_rad(0.5))
+		if idle_off or String(b.get("mode")) != String(r["mode"]) or String(b.get_meta("model")) != String(r["model"]):
+			bad.append(String(r["id"]))
+		if r.has("patrol"):
+			var pts: PackedVector2Array = b.get("path_xz")
+			var ep: Array = r["patrol"]["endpoints"]
+			if pts.size() < 2 or pts[0].distance_to(Vector2(ep[0][0], ep[0][1])) > 0.01 or pts[pts.size() - 1].distance_to(Vector2(ep[1][0], ep[1][1])) > 0.01:
+				bad.append(String(r["id"]) + " patrol")
+	return bad
+
+
+## 規則：外圍の全員が区域框の中（森林・山腳・偏僻路段に框は無い）、密度環が外へ単調に下がる、150–260 m は 0 人、環の人数＝snapshot
+func _rule_mismatch(snap: Dictionary) -> Array:
+	var bad := []
+	var core: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CORE_SNAPSHOT))
+	var pts := []
+	for r: Dictionary in (core["r3b_baseline"] as Array) + (core["r3d_added"] as Array):
+		pts.append(_rec_point(r))
+	for r: Dictionary in snap["outer"]:
+		var q := _rec_point(r)
+		pts.append(q)
+		var box: Array = (snap["zone_boxes"] as Dictionary).get(String(r["zone"]), [])
+		if box.size() != 4 or not Rect2(float(box[0]), float(box[1]), float(box[2]), float(box[3])).has_point(q):
+			bad.append("%s 区域框の外 (%.1f,%.1f)" % [r["id"], q.x, q.y])
+	var rd := ring_density(pts)
+	for i in range(1, rd.size()):
+		if float(rd[i][1]) >= float(rd[i - 1][1]):
+			bad.append("密度が下がらない 環 %d" % i)
+	if int(rd[rd.size() - 1][0]) != 0:
+		bad.append("150–260 m（森林・山腳）に %d 人" % int(rd[rd.size() - 1][0]))
+	var meas: Array = snap["density_bands"]["measured_people_per_1000m2"]
+	for i in rd.size():
+		if int(rd[i][0]) != int(meas[i][0]):
+			bad.append("環 %d の人数 %d≠snapshot %d" % [i, int(rd[i][0]), int(meas[i][0])])
+	return bad
+
+
+func _seal(v: Node3D) -> int:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	if not parsed is Dictionary:
+		check("seal manifest が読める", false)
+		return 2
+	var seal: Dictionary = parsed
+	check("status ART_APPROVED（使用者 2026-10-07；agent は美術を承認しない）", String(seal.get("status", "")) == "ART_APPROVED" and String(seal.get("approved_by", "")) == "user")
+	var bad := _seal_mismatch(seal)
+	var n := 0
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		n += (seal.get(grp, {}) as Dictionary).size()
+	check("封存 %d 檔雜湊一致（凍結・證據・審圖・子封存 R3d／R3c／R3b／NPCLIB；不符 %d：%s）" % [n, bad.size(), str(bad.slice(0, 4))], bad.is_empty())
+	var txt := FileAccess.get_file_as_string(SCENE)
+	var order := ["PopulationP10", "ActivityP10", CL.NODE_NAME, CL.ACT_NODE, "EntranceCueP10", OL.NODE_NAME, OL.ACT_NODE]
+	var last := -1
+	var ok_m := true
+	for nm: String in order:
+		var lines := Array(txt.split("\n")).filter(func(l: String) -> bool: return l.begins_with("[node name=\"%s\"" % nm) and l.contains("parent=\"Population\""))
+		ok_m = ok_m and lines.size() == 1
+		var at := txt.find(String(lines[0])) if lines.size() == 1 else -1
+		ok_m = ok_m and at > last
+		last = at
+	check("掛載：Population の %s（各 1 つ、この順）" % " → ".join(order), ok_m)
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SNAPSHOT))
+	var zc: Dictionary = snap["zone_counts"]
+	var zr_ok := true
+	for z: String in ZONE_RANGE:
+		zr_ok = zr_ok and int(zc.get(z, 0)) >= int(ZONE_RANGE[z][0]) and int(zc.get(z, 0)) <= int(ZONE_RANGE[z][1])
+	check("snapshot：外圍 %d（12）・核心 %d（39）・合計 %d（51）、區域 %s が範圍内" % [int(snap["outer_total"]), int(snap["core_total"]), int(snap["total"]), str(zc)],
+		int(snap["outer_total"]) == 12 and int(snap["core_total"]) == 39 and int(snap["total"]) == 51 and zr_ok)
+	var lb := _live_mismatch(v, snap)
+	check("場景の外圍住人 12 が snapshot と一致（Idle 位置 ≤ 1 cm・朝向 ≤ 0.5°・mode・model・patrol 端点；不符 %s）" % str(lb), lb.is_empty())
+	var rb := _rule_mismatch(snap)
+	check("規則：区域框の中（森林・山腳・偏僻路段に框なし）・密度環が外へ単調に下がる・150–260 m は 0 人・環の人数＝snapshot（違反 %s）" % str(rb), rb.is_empty())
+	var tam := seal.duplicate(true)
+	var k0: String = (tam["frozen"] as Dictionary).keys()[0]
+	tam["frozen"][k0] = "0".repeat(64)
+	check("反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（%d）" % (_seal_mismatch(tam).size() - bad.size()), _seal_mismatch(tam).size() == bad.size() + 1)
+	var s2: Dictionary = snap.duplicate(true)
+	for r: Dictionary in s2["outer"]:
+		if String(r["id"]) == "O1":
+			r["position"][0] = float(r["position"][0]) + 0.25
+	check("反向：snapshot の Idle 住人を 0.25 m ずらす → 不一致を検出", not _live_mismatch(v, s2).is_empty())
+	var s3: Dictionary = snap.duplicate(true)
+	for r: Dictionary in s3["outer"]:
+		if String(r["id"]) == "O12":
+			r["position"] = [258.0, 30.0, -200.0]
+	check("反向：神社の婆を山腳の森 (258,−200) へ → 区域框・150–260 m 0 人の規則が FAIL", not _rule_mismatch(s3).is_empty())
+	print("[OUTER] 結果：%d 項失敗（seal）" % fails)
+	return 0 if fails == 0 else 2
+
+
 func _attach() -> int:
 	var txt := FileAccess.get_file_as_string(SCENE)
 	if not FileAccess.file_exists(OL.OUTPUT):
@@ -559,6 +750,19 @@ func _scene(v: Node3D) -> void:
 func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	helper = VG.new()
+	if "--seal" in args:
+		var v0: Node3D = (load(SCENE) as PackedScene).instantiate()
+		root.add_child(v0)
+		await physics_frame
+		var rs := _seal(v0)
+		helper.free()
+		quit(rs)
+		return
+	if (("--build" in args) or ("--attach" in args)) and _sealed() and OS.get_environment("OUTER_ALLOW_REBAKE") != "1":
+		push_error("P10 R3e は ART_APPROVED・封存中：--build／--attach は拒否（collision／animation bug を使用者が承認したら OUTER_ALLOW_REBAKE=1、その後 seal を更新）")
+		helper.free()
+		quit(1)
+		return
 	if "--attach" in args:
 		var r := _attach()
 		helper.free()
@@ -589,6 +793,9 @@ func _run() -> void:
 	print("[OUTER] INFO 外圍 %d 人（%d ms）" % [(P["actors"] as Array).size(), P["ms"]])
 	if "--map" in args:
 		_map(P, B)
+	for a1: String in args:
+		if a1.begins_with("--snapshot="):
+			_snapshot(P, a1.trim_prefix("--snapshot="))
 	for a0: String in args:
 		if a0.begins_with("--probe="):
 			_probe(v, P, a0.trim_prefix("--probe=").split(","))

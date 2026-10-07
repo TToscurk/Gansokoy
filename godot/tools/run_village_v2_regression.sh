@@ -134,6 +134,7 @@ run "P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五
 run "P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd
 run "P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --negatives
 run "P10 R3d 核心區人口 scene（掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）" CORE --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_core.gd -- --scene
+run "P10 R3e 外圍人口 封存（ART_APPROVED 2026-10-07：外圍 12 人＝最終基準・各區・位置／朝向・activity・patrol 端點・密度環単調下降・森林／山腳 0 人・依存 R3d／R3c／R3b／NPCLIB 雜湊＋掛載順＋場景＝snapshot＋竄改反向 3；封存中 --build／--attach 拒否）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --seal
 run "P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd
 run "P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --negatives
 run "P10 R3e 外圍人口 scene（掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
