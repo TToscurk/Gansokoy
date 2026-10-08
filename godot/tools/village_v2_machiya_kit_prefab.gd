@@ -22,6 +22,7 @@ extends SceneTree
 ## P9 R4-8 起也處理霧雨店周邊 奇物雜貨店＋魔法材料工作坊 Kit：-- --kit=kiri_kit（build_kiri_kit.py；擺放＝village_v2_kirisame_yard_lib.gd；
 ##   V2_Kirisame＝霧雨店 Hero atlas 的非發光色票只讀重用）。
 ## P10 R1 起也處理市集廣場 Kit：-- --kit=market_kit（build_market_kit.py；擺放＝village_v2_market_lib.gd；MK_Market＝market_kit atlas）。
+## P10 R4 Human-Use Pilot 起也處理生活痕跡 Kit：-- --kit=humanuse_kit（build_humanuse_kit.py；擺放＝village_v2_human_use_lib.gd；材質只用 V2_Wood／ST_Street，新 atlas なし；既存に無い生活語彙 6 だけ）。
 ## P10 R1b Market West Rework 起也處理見世 Kit：-- --kit=mise_kit（build_mise_kit.py；擺放＝village_v2_market_west_lib.gd；材質只用町で使用中の V2_Wood／V2_Kawara／MK_Market／ST_Street，新 atlas なし）。
 ## P10 R2 起也處理主街 Street Life Kit：-- --kit=street_kit（build_street_kit.py；擺放＝village_v2_street_lib.gd；ST_Street＝street_kit atlas）。
 ## P9 R3 起也處理竹 Kit：-- --kit=bamboo_kit（build_bamboo_kit.py；材質＋竹 prefab＝village_v2_bamboo_lib.gd，shader／LOD 重用 veg_kit）。
@@ -136,6 +137,14 @@ const KITS := {
 		"assembler": "res://tools/village_v2_street_lib.gd",
 		"extra": ["/street_kit_atlas.png", "/atlas.json"],
 	},
+	"humanuse_kit": {
+		"mats": {
+			"V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
+			"ST_Street": "res://assets/village_v2/street_kit/ST_Street.tres",
+		},
+		"assembler": "res://tools/village_v2_human_use_lib.gd",
+		"extra": [],
+	},
 	"mise_kit": {
 		"mats": {
 			"V2_Wood": "res://assets/village_v2/_matlib/V2_Wood.tres",
@@ -240,7 +249,7 @@ func _init() -> void:
 			tris += (idx.size() if not idx.is_empty() else (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()) / 3
 			am.surface_set_name(am.get_surface_count() - 1, mname)
 			am.surface_set_material(am.get_surface_count() - 1, mats[mname])
-		am.resource_name = {"machiya_kit": "kit_", "riverbank_kit": "rb_kit_", "veg_kit": "veg_", "bamboo_kit": "bk_", "garden_kit": "gk_kit_", "school_kit": "sk_kit_", "waterside_kit": "wk_kit_", "tower_kit": "tk_kit_", "suzu_kit": "sz_kit_", "geidon_kit": "gd_kit_", "kiri_kit": "kr_kit_", "market_kit": "mk_kit_", "street_kit": "st_kit_", "mise_kit": "ms_kit_"}[KIT] + name
+		am.resource_name = {"machiya_kit": "kit_", "riverbank_kit": "rb_kit_", "veg_kit": "veg_", "bamboo_kit": "bk_", "garden_kit": "gk_kit_", "school_kit": "sk_kit_", "waterside_kit": "wk_kit_", "tower_kit": "tk_kit_", "suzu_kit": "sz_kit_", "geidon_kit": "gd_kit_", "kiri_kit": "kr_kit_", "market_kit": "mk_kit_", "street_kit": "st_kit_", "mise_kit": "ms_kit_", "humanuse_kit": "hu_kit_"}[KIT] + name
 		var bt := int(mods[name]["tris"])
 		if tris != bt:
 			_fail("%s 三角面 Godot %d ≠ Blender %d" % [name, tris, bt])

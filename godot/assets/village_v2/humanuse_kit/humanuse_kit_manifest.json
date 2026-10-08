@@ -1,0 +1,25 @@
+{
+ "assembler": "res://tools/village_v2_human_use_lib.gd",
+ "asset": "humanuse_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari.res": "18d8e74c38f44ec86801c714099f407c4a515104a2cf301af8c562e3a6ea40ef",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari_l1.res": "7edcb82b0d8a30fc8ac05bda77200b1e390fad7454057f7f85f6fc370ebbc5db",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi.res": "3da8ba1084ec240553ce865f659cb4d05fc402f7bb30097c880c12f2b1d0b589",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi_l1.res": "ee7f13e44c2f37e7a79c8676075330dac4c53d968790cf72846158468b90a79f",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_senba.res": "7cc76f87fda6a8a4193ef7ec363248e33b8fefe1a6a279f0224c14481f7b59fc",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_senba_l1.res": "4b4f51bb41fa41c2f92a09736b5f677359cd4ea4941a2a1c06c891c819d1d28f",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago.res": "69d54b6f090408e02ce9212fc136a9ef2a0fe85a0a0339cce07e9e4fd146c2ab",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago_l1.res": "d457231d3584a2c674da55b6bb115ef00cbad70b1544e75edf5bb2a5482fc231",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_tarai.res": "c8537f26ca1073c9c18f315c1628bcb6c596fa7c47dff2d8e7943bb278298c0b",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_tarai_l1.res": "fe59045c5ade5935d496440e367ab9611878d427d2010eadf8b8b944c6bb8c43",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_tomi.res": "2720bdb9c4bdbcb247be6771165c136ac3ab30c8d64dd8546f4203c174d29cfe",
+  "res://assets/village_v2/humanuse_kit/mesh/hu_tomi_l1.res": "773e818f649c27ff66ac40c338ef1c4aa26190376319a2f30003458a1cfe01ba",
+  "res://assets/village_v2/humanuse_kit/src/modules_blender.json": "f0122bf013c742dd3dba0a737ce9954af67d4f3dd9fb9f00f1677d7d277f1c6d",
+  "res://assets/village_v2/street_kit/ST_Street.tres": "455c7f88e582e27c520fb4b66121fd0703a83d0ddf012641a11dec159161c064",
+  "res://tools/village_v2_human_use_lib.gd": "21165f8c8a3f812b7840036ed439939709250a4c287bb52856d660fb91e2a0c3"
+ },
+ "mesh_dir": "res://assets/village_v2/humanuse_kit/mesh",
+ "modules": 12,
+ "tris_total": 3548
+}
