@@ -1,0 +1,47 @@
+[HUX] INFO MeadowP9 規劃株を同 seed で再計算 118410 ms：114105 株
+[HUX] INFO 文脈 R4 2401 ms＋拡張 3885 ms・計画 40 件／10 cluster、落とした 0、地面 decal 416 面群、R4 件 50
+[HUX] PASS 資產：27 種 40 件、既存 Kit・R4 humanuse_kit の重用 37 件（93 %）、新規 humanuse_exp_kit の配置は缺件 2 種だけ（kit：hx_hatake 714△、hx_daikon_kake 732△、hx_doroage 110△；rejected candidate ["hx_doroage"] は配置しない；LOD0 ≤ 800△・材質 V2_Wood／ST_Street）；Hero 固有・kit 外・mesh 欠け・rejected []
+[HUX] PASS 設計どおり：10 cluster、設計 40 件すべて合法な位置に置けた（落とし 0・欠け cluster []）
+[HUX] PASS 正式の Batch 1（使用者裁定 2026-10-08）：群 10（＝10）＝A 農田 5（＝5）・B 住宅 5（＝5）・C 水岸擴張 0（＝0、ART_REJECTED）、各群 ≥ 3 件（最小 3）、件數 40 ≤ 90；rejected 群 ["XC1_araimono", "XC2_hashi", "XC3_suiro"]・rejected 資產 ["hx_doroage"] は出力しない——違反 []
+[HUX] PASS 計画＝封存 snapshot（res://data/village_v2_p10r4b_snapshot.json）：全件の id・zone・cluster・who・why・anchor・位置 ≤ 1 cm・朝向 ≤ 0.5°——不符 []
+[HUX] PASS 中型の輪郭：全群に高さ ≥ 0.9 m か長辺 ≥ 1.6 m の核（無い []）、微小物 群ごと ≤ 34 %（超過 []）・全體 0/40（≤ 15 %）
+[HUX] PASS 「誰が使う？なぜここ？」：全 40 件に who・why・anchor 型——欠け 0
+[HUX] PASS 依附：依附先の点が宣言どおりの型（田・農道・建物の裏の壁・水面・橋・作業面）、最寄りの件まで上限内——XA1_shukka route 3.2 m、XA2_teire route 2.9 m、XA3_hasa field 3.1 m、XA4_oroshi route 4.1 m、XA5_yasumi route 4.0 m、XB1_some building 1.3 m、XB2_okeya building 1.8 m、XB3_hatake building 1.8 m、XB4_nizukuri building 1.0 m、XB5_tsukemono building 0.7 m；違反 []
+[HUX] PASS 禁區：R4 の全禁區（路面・店先帯・建物・戸口・背戸の通り道・水・P7・橋・Hero・P8 の田／畦／水路・封存 overlay・樹幹・EnvironmentP9・NPC・MeadowP9）＋核心商業區（市場中心 r 45 m・P10 市集／主街／市集西の構件 +4 m）＋R4 の 50 件 +0.5 m・R4 Pilot 区 +3 m → 違反 0 []
+[HUX] PASS 接地＝見えている最上面：地形・路面・P4 院子・P8・封存 overlay の地面 decal の max を足元 5 点で取り、その最低点に置く（地形より高い面に乗る件 18／40）、足元の起伏 最大 0.119 m（≤ 0.12）
+[HUX] PASS MeadowP9 不重烘：規劃株 114105 のうち拡張の AABB +0.4 m 内 0 株（= 0）
+[HUX] PASS EnvironmentP9：構件から ≥ 1.6 m・錨から ≥ 3.2 m（最近 16.3 m）；NPC 51 人（増やさない・動かさない）の立ち位置まで最近 26.60 m（≥ 0.9）・往復路 +0.7、Marker3D なし
+[HUX] PASS 成組：各件は同じ群の別の件から ≤ 2.5 m（孤立 []）、群の広がり ≤ 20 m（超過 []）
+[HUX] PASS 非均一：R4 の 10 群との組成類似度 最大 0.33（≤ 0.50、XA3_hasa↔R4 A1_hasa）・R4 の脫穀一式（千歯＋唐箕＋籾干し）の再利用 []・本批の群どうし最大 0.33（≤ 0.50）・住宅 5 戸どうし最大 0.17（≤ 0.34）・同じ物が一つの區で 3 群以上 []・桶／手桶／箒／籠のある戸 0／5（≤ 2）
+[HUX] PASS 自然の岸を残す：水面の縁 460 格（4 m）のうち生活痕跡（R4＋R4b）から 6 m 以内 4 格（1 %、≤ 15 %）、本批の水岸群 0（＝0：C 水岸擴張は ART_REJECTED、R4 Pilot C は封存のまま）
+[HUX] INFO XA1_shukka（農田と農道・route、FarmPath_2×FarmPath_4 の辻の南西：俵を荷車に積み込む途中の出荷場（台の俵・積みかけの車・車の脇の 3 俵））：mk_kuruma_ni・wk_tawara3・st_kome_tsumi・kr_nawa
+[HUX] INFO XA2_teire（農田と農道・route、FarmPath_1×FarmPath_5 の辻の北東：組の農具置き場と手入れの台——鍬・鋤を掛けた農具掛け 2 架を並べ、その前で柄を削って付け替える作業台）：st_kuwa・st_kuwa・st_daiku・kr_zaimoku・sz_stool
+[HUX] INFO XA3_hasa（農田と農道・field、FarmPath_4 の東、田の北縁：農道に沿った長い稲架の列（3 架）と、風よけの柴垣・藁塚）：st_hasa・st_hasa・st_hasa・st_shibagaki・st_warazuka
+[HUX] INFO XA4_oroshi（農田と農道・route、Bridge_04 の田側の橋詰め：村から引いてきた荷を降ろしたところ——空になった大八車と、その後ろに降ろした箱・俵・菰包みの山、田へ背負っていく籠）：kr_kuruma・mk_tsumini・hu_seoikago・kr_ni
+[HUX] INFO XA5_yasumi（農田と農道・route、FarmPath_2×FarmPath_5 の辻の北西：田の合間の一服——藁塚の陰の縁台、下ろした背負い籠と水の手桶）：st_warazuka・sk_bench・hu_seoikago・sk_teoke
+[HUX] INFO XB1_some（普通住宅・building、B_P_RSW_048（WestBankLane の厨子二階）の裏：染め物の内職——藍の盥・染料の甕・染めた反物を掛けて干す）：ms_nuno_kake・hu_tarai・mk_kame・sz_stool
+[HUX] INFO XB2_okeya（普通住宅・building、B_P_RSW_051（WestBankLane の平屋）の裏：近所の桶・盥を直す家——軒の陰から日向に出した作業場を挟んで、左に直しを待つ盥、右に直し終えた手桶の山）：st_okeya・kr_okeyama・tk_okeyama・sk_box
+[HUX] INFO XB3_hatake（普通住宅・building、B_P_RNE_005（NELane の平屋）の裏：小さな家庭菜園——背戸の道の両側に畝、外側に柴垣）：hx_hatake・hx_hatake・st_shibagaki
+[HUX] INFO XB4_nizukuri（普通住宅・building、B_P_RNE_003（NELane の厨子二階）の裏：荷造りの家——箱と俵を積み、半分積んだ荷車（出荷か引っ越し））：mk_tsumini・mk_kuruma_ni・kr_ni・kr_nawa
+[HUX] INFO XB5_tsukemono（普通住宅・building、B_P_RSW_033（NWLane の平屋）の裏：冬の漬物づくり——竿に干して萎びさせた大根と、それを漬ける樽を並べた筵）：hx_daikon_kake・mk_mushiro_tsuke・sz_stool
+[HUX] INFO 計画 → D:/神社/shrine/docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_final.json
+[HUX] PASS 反向 核心商業區（市場中心）に置く＝core → 偵測
+[HUX] PASS 反向 R4 封存の件の上（hu_momiboshi）に置く＝r4／r4zone（r4） → 偵測
+[HUX] PASS 反向 R4 Pilot A の区（381, 10：件の無い所）に置く＝r4zone → 偵測
+[HUX] PASS 反向 P8 の田の中（470, 30）に置く＝p8 → 偵測
+[HUX] PASS 反向 水渠の水面（314, 60）に置く＝water → 偵測
+[HUX] PASS 反向 FarmPath_2 の路面（440, 30）に置く＝road → 偵測
+[HUX] PASS 反向 NPC の立ち位置 0.3 m（npc）＝npc 等 → 偵測
+[HUX] PASS 反向 背戸の通り道（RSW_048 の裏戸の前 0.9 m）＝backdoor（backdoor） → 偵測
+[HUX] PASS 反向 群の範圍（中心 ± 9 m）の外＝scope → 偵測
+[HUX] PASS 反向 足元の AABB +0.4 に MeadowP9 株 1 つ＝計數 1 → 偵測
+[HUX] PASS 反向 XA1 を R4 の脫穀一式（千歯＋唐箕＋籾干し）に差し替える → 偵測
+[HUX] PASS 反向 XB2 を XB1 と同じ組成にする（Jaccard 1.00 > 0.34） → 偵測
+[HUX] PASS 反向 R4 の B1（堆柴戶）をそのまま写す（Jaccard 1.00 > 0.50） → 偵測
+[HUX] PASS 反向 1 件を群から 28 m 離す＝孤立 → 偵測
+[HUX] PASS 反向 霧雨店の茸（kr_kinoko）・鈴奈庵の本箱（sz_hako）を使う＝Hero 固有 → 偵測
+[HUX] PASS 反向 依附先の型を偽る（橋の ref を田の中へ） → 偵測
+[HUX] PASS 反向 rejected_c()（ART_REJECTED の水岸 3 群）を正式計画に戻す（19 件の違反） → 偵測
+[HUX] PASS 反向 rejected candidate hx_doroage を配置する → 偵測
+[HUX] PASS 反向 B を 1 群減らす（10 群でなくなる） → 偵測
+[HUX] 結果：0 項失敗

@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[HUX] PASS 場景已掛 root/HumanUseExpansionP10（1 個、HumanUseP10 の次＝Props → HumanUseP10 → HumanUseExpansionP10 → Collision）、Props の子は封存どおり（MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9）
+[HUX] PASS art_revision＝P10 R4b Human-Use Expansion Batch 1 A/B FINAL（A 農田・B 住宅 ART_APPROVED、C 水岸 ART_REJECTED＝除去）、visible、scene_file_path＝res://maps/village_v2/gen/human_use_exp_p10.scn
+[HUX] PASS 個別ノード：MeshInstance 80（＝2×40 件）・MultiMesh 0・Marker3D 0
+[HUX] PASS R4 封存 HumanUseP10 不変：50 件が R4 snapshot と位置 ≤ 1 cm・id 一致（不符 []）
+[HUX] PASS 場景の正式構成：群 10（＝10）・C の件／rejected 群／hx_doroage 0（＝0）、ZoneC なし
+[HUX] PASS Population 不変：子 PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10 → OuterP10 → ActivityOuterP10・NPC body 51（＝51）
+[HUX] PASS 碰撞：腰より高い件だけ箱 36（＝meta 36）
+[HUX] PASS 擺放（接地）：40 件 × 3×3 ray（360 本）——FLOATING 0 []、最大の埋まり 0.110 m（≤ 0.15、002_st_kome_tsumi←/root/VillageV2/Collision/TerrainCollision）；腰より低い 4 件は visual_only
+[HUX] PASS 擺放（貫通）：碰撞箱 36 を collide_shape（自分・地形を除く）——OBJECT_PENETRATION 0 []
+[HUX] PASS 擺放 反向 float：000_mk_kuruma_ni を 0.3 m 持ち上げる → FLOATING（["000_mk_kuruma_ni 9/9"]）
+[HUX] PASS 擺放 反向 clash：碰撞箱 000_mk_kuruma_ni_c を最寄りの建物 B_P_MKT_043 へ押し込む → OBJECT_PENETRATION（1）
+[HUX] 結果：0 項失敗（scene）

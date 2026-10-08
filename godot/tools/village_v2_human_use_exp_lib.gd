@@ -4,6 +4,8 @@
 ##   封存 R4（village_v2_human_use_lib.gd）の context／why／frame を只讀で使い、追加の禁區を足す：
 ##     R4 の 50 件（+0.5 m）と R4 Pilot の矩形（+3 m：もう配置した場所）・核心商業區（市場中心 r 45 m＋P10 構件から 4 m）・水面・P7・P8・NPC…（R4 と同じ）。
 ##   高さ＝見えている最上面（地形・路面・P4 院子・P8 の田・封存 overlay の地面 decal〔Groundcover／Waterside …〕の max）を足元で取り、その最低点に置く。
+##   使用者裁定（2026-10-08）：A 農田 5 群・B 住宅 5 群＝ART_APPROVED（A/B FINAL）、C 水岸 3 群＝ART_REJECTED → rejected_c() に記録だけ残し正式出力から除去。
+##   R4 Pilot C（封存の水岸）は不変。C の代わりの高い輪郭の道具は足さない（自然の岸を余白として残す）。
 const HU := preload("res://tools/village_v2_human_use_lib.gd")
 const SL := preload("res://tools/village_v2_street_lib.gd")
 const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
@@ -11,10 +13,17 @@ const OUTPUT := "res://maps/village_v2/gen/human_use_exp_p10.scn"
 const NODE_NAME := "HumanUseExpansionP10"
 const AFTER := "HumanUseP10"
 const LOD_SWITCH := 34.0
-const ART_REVISION := "P10 R4b Human-Use Expansion Batch 1 r3（ART_REVIEW 前）"
+const ART_REVISION := "P10 R4b Human-Use Expansion Batch 1 A/B FINAL（A 農田・B 住宅 ART_APPROVED、C 水岸 ART_REJECTED＝除去）"
 const NEW_KIT := "humanuse_exp_kit"
 const NEW_PREFIX := "hx_"
-const NEW_IDS := ["hx_hatake", "hx_daikon_kake", "hx_doroage"]
+const NEW_IDS := ["hx_hatake", "hx_daikon_kake"]
+## 缺件として作ったが ART_REJECTED の C 群（XC3 泥上げ）専用だった物：kit に rejected candidate として残し、正式配置では使わない
+const REJECTED_NEW_IDS := ["hx_doroage"]
+const REJECTED_CLUSTERS := ["XC1_araimono", "XC2_hashi", "XC3_suiro"]
+const REJECTED_REASON := "Three iterations failed to establish readable waterside activities. Existing R4 Pilot C already provides sufficient waterside human-use evidence. Additional expansion was removed to preserve natural negative space."
+## 正式の Batch 1＝A 農田 5・B 住宅 5・C 水岸擴張 0、計 10 群（使用者 2026-10-08 裁定）
+const OFFICIAL_ZONES := {"A": 5, "B": 5, "C": 0}
+const OFFICIAL_CLUSTERS := 10
 ## R4b で使ってよい Hero kit の汎用品（kiri／suzu／mise は中身が店・Hero 固有の物が多いので許可制）
 const ALLOW := {"kr_": ["kr_houki", "kr_nawa", "kr_zaimoku", "kr_kuruma", "kr_okeyama", "kr_hakozumi", "kr_ni", "kr_fukuro"],
 	"sz_": ["sz_stool", "sz_hachi"], "ms_": ["ms_nuno_kake"]}
@@ -26,7 +35,8 @@ const P10_COMMERCE_PAD := 4.0
 const R4_PAD := 0.5
 const R4_ZONE_PAD := 3.0
 const GROUP_R := 9.0
-const ZONE_NAME := {"A": "農田と農道", "B": "普通住宅", "C": "水岸と水渠"}
+const ZONE_NAME := {"A": "農田と農道", "B": "普通住宅"}
+const REJECTED_ZONE_NAME := {"C": "水岸と水渠（ART_REJECTED）"}
 
 
 static func dims_table() -> Dictionary:
@@ -178,6 +188,7 @@ static func place(C: Dictionary, items: Array, id: String, c: Vector2, face: Vec
 
 
 ## 設計（cluster）：R4 と同じ形式。frame＝{"p","face"} か {"bld"}。zone＝A／B／C。
+## 正式の配置（A 農田 5・B 住宅 5）。C 水岸は rejected_c()。
 static func design() -> Array:
 	var D: Array = []
 	# ── A 農田と農道（R4 の Pilot A＝Bridge_03 田側は除く）：生產と運搬の動線の節点にだけ置く
@@ -272,7 +283,14 @@ static func design() -> Array:
 			["mk_mushiro_tsuke", Vector2(-1.55, 1.6), 0.0, "RSW_033 の母", "沢庵・菜・梅の樽を筵に並べて漬ける"],
 			["sz_stool", Vector2(-0.2, 2.65), -40.0, "RSW_033 の母", "樽の前で座る腰掛け"],
 		]})
-	# ── C 水岸と水渠（R4 の北の水車以外）：水源の用途ごとに 3 か所だけ、他の岸は自然のまま
+	return D
+
+
+## ART_REJECTED（使用者 2026-10-08）の水岸 3 群——rejected candidates として記録だけ残す。正式の design()／plan()／bake() は出力しない
+## （gate HUX が「正式の計画に C 群・REJECTED の id・hx_doroage が無い」ことを確認、反向でこの関数を足すと FAIL）。
+static func rejected_c() -> Array:
+	var D: Array = []
+	# ── C 水岸と水渠（r1→r3 の 3 回の反復でも 10–15 m で用途が読めず ART_REJECTED）
 	D.append({"id": "XC1_araimono", "zone": "C", "anchor": "water", "ref": Vector2(372.0, -156.0),
 		"desc": "北の雁木石段（stair3）の上：採った野菜を洗う所——泥付きの箱と籠 → 石段から汲んだ水の盥 → 洗って水を切る筵",
 		"frame": {"p": Vector2(366.0, -156.5), "face": Vector2(1, 0)},

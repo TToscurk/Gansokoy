@@ -4,6 +4,10 @@ extends SceneTree
 ##   godot --headless --path godot --script res://tools/verify_village_v2_human_use_exp.gd -- --attach   （root 直下・HumanUseP10 の次に掛ける）
 ##   godot --headless --path godot --script res://tools/verify_village_v2_human_use_exp.gd -- --scene    （掛載後：擴張層自身＋R4 の 50 件 snapshot が独立に一致）
 ##   --meadow-cache は設計の反復用。gate の本番は付けない（MeadowP9 規劃株を毎回同 seed で再計算）。MultiMesh なし → headless build 可。
+##   --snapshot=<json>  掛載済み場景の HumanUseExpansionP10 全件（id・zone・cluster・who・why・anchor・世界位置・朝向）を書き出す（封存用）
+##   --seal  封存（data/village_v2_p10r4b_seal.json：雜湊＋掛載＋場景＝snapshot＋snapshot の A/B＝承認時 r3 の A/B＋C 群・rejected id なし＋R4 の 50 件不変）。
+##           使用者裁定 2026-10-08：A 農田・B 住宅＝ART_APPROVED（A/B FINAL）、C 水岸＝ART_REJECTED（rejected_c() に記録だけ）。
+##           封存中は --build／--attach を拒否（HUX_ALLOW_REBAKE=1＝使用者が reopen した時だけ、その後 seal を更新）。
 const HX := preload("res://tools/village_v2_human_use_exp_lib.gd")
 const HU := preload("res://tools/village_v2_human_use_lib.gd")
 const MD := preload("res://tools/village_v2_meadow_lib.gd")
@@ -17,7 +21,10 @@ const MAX_ITEMS := 90
 const COHESION := 2.5
 const SPAN_MAX := 20.0
 const REF_DIST := {"field": 6.0, "route": 6.0, "building": 4.5, "water": 6.0, "work_surface": 7.0, "storage": 4.0, "bridge": 7.0}
-const ZONE_RANGE := {"A": [4, 5], "B": [5, 7], "C": [3, 4]}
+const ZONE_RANGE := {"A": [5, 5], "B": [5, 5], "C": [0, 0]}   # 使用者裁定 2026-10-08：A 5・B 5・C 水岸擴張 0
+const SEAL := "res://data/village_v2_p10r4b_seal.json"
+const SNAPSHOT := "res://data/village_v2_p10r4b_snapshot.json"
+const APPROVED_R3 := "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_r3.json"   # 使用者が審圖した r3 の計画（repo 相対）
 const R4_THRESH := ["hu_senba", "hu_tomi", "hu_momiboshi"]
 const COMMON_HH := ["sk_teoke", "kr_houki", "hu_seoikago", "sk_tensui"]
 var fails := 0
@@ -39,10 +46,26 @@ func _initialize() -> void:
 
 func _go() -> void:
 	var args := OS.get_cmdline_user_args()
+	if ("--attach" in args or "--build" in args) and _sealed() and OS.get_environment("HUX_ALLOW_REBAKE") != "1":
+		check("P10 R4b Batch 1 A/B FINAL 封存中（%s）：--build／--attach は拒否（使用者が reopen した時だけ HUX_ALLOW_REBAKE=1、封存を更新すること）" % SEAL, false)
+		quit(1)
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
+	if "--seal" in args:
+		root.add_child(v)
+		await physics_frame
+		quit(_seal(v))
+		return
+	for s0: String in args:
+		if s0.begins_with("--snapshot="):
+			root.add_child(v)
+			await physics_frame
+			_snapshot(v, s0.trim_prefix("--snapshot="))
+			quit(0)
+			return
 	if "--scene" in args:
 		root.add_child(v)
 		await physics_frame
@@ -222,7 +245,7 @@ func _asset_bad(C: Dictionary, items: Array) -> Array:
 		if HX.ALLOW.has(pre) and not (id in HX.ALLOW[pre]):
 			bad.append(id + "（Hero 固有・店の中身）")
 		if pre == HX.NEW_PREFIX and not (id in HX.NEW_IDS):
-			bad.append(id + "（新規の登録外）")
+			bad.append(id + ("（ART_REJECTED の rejected candidate）" if id in HX.REJECTED_NEW_IDS else "（新規の登録外）"))
 		for lod in ["", "_l1"]:
 			if not ResourceLoader.exists(HX.mesh_dir(id) + id + lod + ".res"):
 				bad.append(id + lod + "（mesh なし）")
@@ -275,7 +298,7 @@ func _plan_checks(P: Dictionary) -> void:
 		var m: Dictionary = kit_j["modules"][n]
 		if not n.ends_with("_l1"):
 			new_txt.append("%s %d△" % [n, int(m["tris"])])
-			new_ok = new_ok and int(m["tris"]) <= 800 and (n in HX.NEW_IDS)
+			new_ok = new_ok and int(m["tris"]) <= 800 and (n in HX.NEW_IDS or n in HX.REJECTED_NEW_IDS)
 		for mt in m["mats"]:
 			new_ok = new_ok and String(mt) in ["V2_Wood", "ST_Street"]
 	var ids := {}
@@ -285,8 +308,8 @@ func _plan_checks(P: Dictionary) -> void:
 		if not String(it["id"]).begins_with(HX.NEW_PREFIX):
 			reuse += 1
 	var ab := _asset_bad(C, items)
-	check("資產：%d 種 %d 件、既存 Kit・R4 humanuse_kit の重用 %d 件（%.0f %%）、新規 %s は缺件 %d 種だけ（%s；LOD0 ≤ 800△・材質 V2_Wood／ST_Street）；Hero 固有・kit 外・mesh 欠け %s" % [
-		ids.size(), items.size(), reuse, 100.0 * reuse / maxf(1, items.size()), HX.NEW_KIT, HX.NEW_IDS.size(), "、".join(new_txt), str(ab)],
+	check("資產：%d 種 %d 件、既存 Kit・R4 humanuse_kit の重用 %d 件（%.0f %%）、新規 %s の配置は缺件 %d 種だけ（kit：%s；rejected candidate %s は配置しない；LOD0 ≤ 800△・材質 V2_Wood／ST_Street）；Hero 固有・kit 外・mesh 欠け・rejected %s" % [
+		ids.size(), items.size(), reuse, 100.0 * reuse / maxf(1, items.size()), HX.NEW_KIT, HX.NEW_IDS.size(), "、".join(new_txt), str(HX.REJECTED_NEW_IDS), str(ab)],
 		ab.is_empty() and new_ok and reuse * 100 >= 80 * items.size())
 	# 2 設計どおり・構成
 	var zc := {}
@@ -301,11 +324,15 @@ func _plan_checks(P: Dictionary) -> void:
 			short.append(cl["id"])
 	check("設計どおり：%d cluster、設計 %d 件すべて合法な位置に置けた（落とし %d・欠け cluster %s）" % [clusters.size(), n_design, (C["dropped"] as Array).size(), str(short)],
 		(C["dropped"] as Array).is_empty() and short.is_empty())
-	var zok := clusters.size() >= 12 and clusters.size() <= 16 and n_min >= 3
-	for z: String in ZONE_RANGE:
-		zok = zok and int(zc.get(z, 0)) >= int(ZONE_RANGE[z][0]) and int(zc.get(z, 0)) <= int(ZONE_RANGE[z][1])
-	check("第一批の構成：群 %d（12–16）＝A 農田 %d（4–5）・B 住宅 %d（5–7）・C 水岸 %d（3–4）、各群 ≥ 3 件（最小 %d）、件數 %d ≤ %d（全村 batch しない）" % [
-		clusters.size(), zc.get("A", 0), zc.get("B", 0), zc.get("C", 0), n_min, items.size(), MAX_ITEMS], zok and items.size() <= MAX_ITEMS)
+	var ob := _official_bad(clusters, items)
+	check("正式の Batch 1（使用者裁定 2026-10-08）：群 %d（＝%d）＝A 農田 %d（＝5）・B 住宅 %d（＝5）・C 水岸擴張 %d（＝0、ART_REJECTED）、各群 ≥ 3 件（最小 %d）、件數 %d ≤ %d；rejected 群 %s・rejected 資產 %s は出力しない——違反 %s" % [
+		clusters.size(), HX.OFFICIAL_CLUSTERS, zc.get("A", 0), zc.get("B", 0), zc.get("C", 0), n_min, items.size(), MAX_ITEMS, str(HX.REJECTED_CLUSTERS), str(HX.REJECTED_NEW_IDS), str(ob)],
+		ob.is_empty() and n_min >= 3 and items.size() <= MAX_ITEMS)
+	var sv := _plan_vs_snapshot(items)
+	if sv.size() == 1 and String(sv[0]) == "no-snapshot":
+		info("snapshot なし（封存前）：計画＝snapshot の照合は省略")
+	else:
+		check("計画＝封存 snapshot（%s）：全件の id・zone・cluster・who・why・anchor・位置 ≤ 1 cm・朝向 ≤ 0.5°——不符 %s" % [SNAPSHOT, str(sv.slice(0, 4))], sv.is_empty())
 	# 3 中型の輪郭
 	var no_mid: Array = []
 	var micro_heavy: Array = []
@@ -433,8 +460,8 @@ func _plan_checks(P: Dictionary) -> void:
 		jr4, jr4_txt, str(thresh), jall, bkeys.size(), jb, str(rep_bad), common, bkeys.size()],
 		jr4 <= 0.5 and thresh.is_empty() and jall <= 0.5 and jb <= 0.34 and rep_bad.is_empty() and common <= 2)
 	var bs := _bank_share(C, items)
-	check("自然の岸を残す：水面の縁 %d 格（4 m）のうち生活痕跡（R4＋R4b）から 6 m 以内 %d 格（%.0f %%、≤ 15 %%）、本批の水岸群 %d（≤ 4）" % [
-		int(bs[0]), int(bs[1]), 100.0 * int(bs[1]) / maxf(1, int(bs[0])), zc.get("C", 0)], int(bs[0]) > 100 and int(bs[1]) * 100 <= 15 * int(bs[0]) and int(zc.get("C", 0)) <= 4)
+	check("自然の岸を残す：水面の縁 %d 格（4 m）のうち生活痕跡（R4＋R4b）から 6 m 以内 %d 格（%.0f %%、≤ 15 %%）、本批の水岸群 %d（＝0：C 水岸擴張は ART_REJECTED、R4 Pilot C は封存のまま）" % [
+		int(bs[0]), int(bs[1]), 100.0 * int(bs[1]) / maxf(1, int(bs[0])), zc.get("C", 0)], int(bs[0]) > 100 and int(bs[1]) * 100 <= 15 * int(bs[0]) and int(zc.get("C", 0)) == 0)
 	for cl: Dictionary in clusters:
 		info("%s（%s・%s、%s）：%s" % [cl["id"], HX.ZONE_NAME[String(cl["zone"])], cl["anchor"], cl["anchor_desc"], "・".join(_of(items, String(cl["id"])).map(func(it: Dictionary) -> String: return String(it["id"])))])
 
@@ -515,6 +542,273 @@ func _negatives(P: Dictionary) -> void:
 	_neg("1 件を群から 28 m 離す＝孤立", not _cohesion(C, iso).is_empty())
 	_neg("霧雨店の茸（kr_kinoko）・鈴奈庵の本箱（sz_hako）を使う＝Hero 固有", not _asset_bad(C, [{"id": "kr_kinoko"}]).is_empty() and not _asset_bad(C, [{"id": "sz_hako"}]).is_empty())
 	_neg("依附先の型を偽る（橋の ref を田の中へ）", not _ref_ok(C, {"anchor": "bridge", "ref": Vector2(470.0, 30.0)}))
+	# 使用者裁定の正式構成（rejected の C 群を戻す・rejected 資產を使う・A/B を 1 群減らす）
+	var rc: Array = (P["clusters"] as Array).duplicate(true)
+	var ri: Array = items.duplicate(true)
+	for cl: Dictionary in HX.rejected_c():
+		rc.append({"id": cl["id"], "zone": cl["zone"]})
+		for e: Array in cl["items"]:
+			ri.append({"id": e[0], "cluster": cl["id"], "zone": "C"})
+	var rb := _official_bad(rc, ri)
+	_neg("rejected_c()（ART_REJECTED の水岸 3 群）を正式計画に戻す（%d 件の違反）" % rb.size(), not rb.is_empty())
+	var di: Array = items.duplicate(true)
+	(di[0] as Dictionary)["id"] = "hx_doroage"
+	_neg("rejected candidate hx_doroage を配置する", not _official_bad(P["clusters"], di).is_empty() and not _asset_bad(C, [{"id": "hx_doroage"}]).is_empty())
+	var lc: Array = (P["clusters"] as Array).duplicate(true)
+	lc.pop_back()
+	_neg("B を 1 群減らす（10 群でなくなる）", not _official_bad(lc, items).is_empty())
+
+
+# ─────────────────────────── 正式構成・snapshot・封存 ───────────────────────────
+
+## 使用者裁定 2026-10-08 の正式構成からの逸脱（空＝OK）
+func _official_bad(clusters: Array, items: Array) -> Array:
+	var bad: Array = []
+	var zc := {}
+	for cl: Dictionary in clusters:
+		zc[String(cl["zone"])] = int(zc.get(String(cl["zone"]), 0)) + 1
+		if String(cl["id"]) in HX.REJECTED_CLUSTERS:
+			bad.append("rejected 群 " + String(cl["id"]))
+	if clusters.size() != HX.OFFICIAL_CLUSTERS:
+		bad.append("群 %d≠%d" % [clusters.size(), HX.OFFICIAL_CLUSTERS])
+	for z: String in HX.OFFICIAL_ZONES:
+		if int(zc.get(z, 0)) != int(HX.OFFICIAL_ZONES[z]):
+			bad.append("%s %d≠%d" % [z, int(zc.get(z, 0)), int(HX.OFFICIAL_ZONES[z])])
+	for z in zc:
+		if not HX.OFFICIAL_ZONES.has(z):
+			bad.append("未知の區 " + str(z))
+	for it: Dictionary in items:
+		if String(it["id"]) in HX.REJECTED_NEW_IDS:
+			bad.append("rejected 資產 " + String(it["id"]))
+		if String(it.get("zone", "")) == "C" or String(it.get("cluster", "")) in HX.REJECTED_CLUSTERS:
+			bad.append("C の件 %s@%s" % [it["id"], it.get("cluster", "?")])
+	return bad
+
+
+func _snap_yaw_ok(a_deg: float, b_deg: float) -> bool:
+	return absf(angle_difference(deg_to_rad(a_deg), deg_to_rad(b_deg))) <= deg_to_rad(0.5)
+
+
+## 計画の全件＝封存 snapshot（node 名 %03d_<id> で対応）
+func _plan_vs_snapshot(items: Array) -> Array:
+	if not FileAccess.file_exists(SNAPSHOT):
+		return ["no-snapshot"]
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SNAPSHOT))
+	var by := {}
+	for w: Dictionary in snap["items"]:
+		by[String(w["name"])] = w
+	var bad: Array = []
+	if by.size() != items.size():
+		bad.append("件数 %d≠%d" % [items.size(), by.size()])
+	for i in items.size():
+		var it: Dictionary = items[i]
+		var nm := "%03d_%s" % [i, it["id"]]
+		var w: Dictionary = by.get(nm, {})
+		if w.is_empty():
+			bad.append(nm + " 無い")
+			continue
+		var q: Array = w["position"]
+		var p2: Vector2 = it["p"]
+		if Vector3(p2.x, float(it["y"]), p2.y).distance_to(Vector3(q[0], q[1], q[2])) > 0.01 or not _snap_yaw_ok(rad_to_deg(float(it["yaw"])), float(w["yaw_deg"])):
+			bad.append(nm + " 位置／朝向")
+		for k in ["id", "zone", "cluster", "who", "why", "anchor"]:
+			if String(it[k]) != String(w[k]):
+				bad.append("%s %s" % [nm, k])
+	return bad
+
+
+func _live(v: Node3D) -> Array:
+	var go := v.get_node_or_null(HX.NODE_NAME) as Node3D
+	var out: Array = []
+	if go == null:
+		return out
+	for n in go.find_children("*", "Node3D", true, false):
+		if n.has_meta("hu_id"):
+			var xf := (n as Node3D).global_transform
+			out.append({"node": String(go.get_path_to(n)), "name": String(n.name), "id": String(n.get_meta("hu_id")), "zone": String(n.get_meta("hu_zone")),
+				"cluster": String(n.get_meta("hu_cluster")), "anchor": String(n.get_meta("hu_anchor")), "who": String(n.get_meta("hu_who")),
+				"why": String(n.get_meta("hu_why")), "position": [snappedf(xf.origin.x, 0.001), snappedf(xf.origin.y, 0.001), snappedf(xf.origin.z, 0.001)],
+				"yaw_deg": snappedf(rad_to_deg(xf.basis.get_euler().y), 0.01)})
+	return out
+
+
+func _snapshot(v: Node3D, path: String) -> void:
+	var items := _live(v)
+	var cl := {}
+	var zn := {}
+	for it: Dictionary in items:
+		cl[it["cluster"]] = int(cl.get(it["cluster"], 0)) + 1
+		zn[it["zone"]] = int(zn.get(it["zone"], 0)) + 1
+	var out := {"schema": 1, "scope": "P10 R4b Human-Use Expansion Batch 1 A/B FINAL：HumanUseExpansionP10（root 直下・HumanUseP10 の次）の全件；C 水岸 3 群は ART_REJECTED で含まない",
+		"art_revision": String((v.get_node(HX.NODE_NAME) as Node).get_meta("art_revision")), "total": items.size(), "clusters": cl, "zones": zn, "items": items}
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(out, "\t") + "\n")
+	f.close()
+	print("[HUX] snapshot → %s（%d 件、%d cluster）" % [path, items.size(), cl.size()])
+
+
+func _sealed() -> bool:
+	if not FileAccess.file_exists(SEAL):
+		return false
+	var j = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	return j is Dictionary and String(j.get("status", "")) == "ART_APPROVED"
+
+
+func _repo() -> String:
+	return (ProjectSettings.globalize_path("res://") + "..").simplify_path() + "/"
+
+
+func _seal_mismatch(seal: Dictionary) -> Array:
+	var bad: Array = []
+	for grp: String in ["frozen", "evidence", "art_review_images", "rejected_candidates", "child_seals"]:
+		var d: Dictionary = seal.get(grp, {})
+		for k: String in d:
+			if not FileAccess.file_exists(_repo() + k) or FileAccess.get_sha256(_repo() + k) != String(d[k]):
+				bad.append(k)
+	return bad
+
+
+## 場景の全件＝snapshot（node path で対応、位置 ≤ 1 cm・朝向 ≤ 0.5°・id／zone／cluster／anchor／who／why）
+func _live_mismatch(v: Node3D, snap: Dictionary) -> Array:
+	var bad: Array = []
+	var live := {}
+	for it: Dictionary in _live(v):
+		live[it["node"]] = it
+	var want: Array = snap["items"]
+	if live.size() != want.size():
+		bad.append("件数 %d≠%d" % [live.size(), want.size()])
+	for w: Dictionary in want:
+		var it: Dictionary = live.get(String(w["node"]), {})
+		if it.is_empty():
+			bad.append(String(w["node"]) + " 無い")
+			continue
+		var p: Array = it["position"]
+		var q: Array = w["position"]
+		if Vector3(p[0], p[1], p[2]).distance_to(Vector3(q[0], q[1], q[2])) > 0.01 or not _snap_yaw_ok(float(it["yaw_deg"]), float(w["yaw_deg"])):
+			bad.append(String(w["node"]) + " 位置／朝向")
+		for k in ["id", "zone", "cluster", "anchor", "who", "why"]:
+			if String(it[k]) != String(w[k]):
+				bad.append("%s %s" % [w["node"], k])
+	return bad
+
+
+## snapshot の件＝承認時（r3 審圖）の A/B 件（C を除く）：cluster・id が同じ物の最寄りが 2 cm 以内・朝向 ≤ 0.5°・who／why 同じ、件数一致
+func _approved_mismatch(snap_items: Array, r3: Dictionary) -> Array:
+	var ab: Array = (r3["items"] as Array).filter(func(it: Dictionary) -> bool: return String(it["zone"]) != "C")
+	var bad: Array = []
+	if ab.size() != snap_items.size():
+		bad.append("件数 r3 A/B %d≠snapshot %d" % [ab.size(), snap_items.size()])
+	var used := {}
+	for w: Dictionary in snap_items:
+		var q: Array = w.get("position", [0.0, 0.0, 0.0])
+		var best := -1
+		var bd := 1e9
+		for i in ab.size():
+			var a: Dictionary = ab[i]
+			if used.has(i) or String(a["cluster"]) != String(w["cluster"]) or String(a["id"]) != String(w["id"]):
+				continue
+			var d := Vector3(a["p"][0], a["p"][1], a["p"][2]).distance_to(Vector3(q[0], q[1], q[2]))
+			if d < bd:
+				bd = d
+				best = i
+		if best < 0 or bd > 0.02:
+			bad.append("%s %s（%.3f m）" % [w["cluster"], w["id"], bd])
+			continue
+		used[best] = true
+		var a2: Dictionary = ab[best]
+		if not _snap_yaw_ok(float(a2["yaw_deg"]), float(w["yaw_deg"])) or String(a2["who"]) != String(w["who"]) or String(a2["why"]) != String(w["why"]):
+			bad.append("%s %s 朝向／who／why" % [w["cluster"], w["id"]])
+	return bad
+
+
+## R4 封存 HumanUseP10 の 50 件が R4 snapshot と一致
+func _r4_bad(v: Node3D) -> Array:
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(R4_SNAPSHOT))
+	var hu := v.get_node_or_null(HU.NODE_NAME) as Node3D
+	var bad: Array = []
+	var n_live := 0
+	if hu:
+		for n in hu.find_children("*", "Node3D", true, false):
+			if n.has_meta("hu_id"):
+				n_live += 1
+	if n_live != (snap["items"] as Array).size():
+		bad.append("件数 %d≠%d" % [n_live, (snap["items"] as Array).size()])
+	for w: Dictionary in snap["items"]:
+		var n := hu.get_node_or_null(String(w["node"])) as Node3D if hu else null
+		var q: Array = w["position"]
+		if n == null or n.global_position.distance_to(Vector3(q[0], q[1], q[2])) > 0.01 or String(n.get_meta("hu_id", "")) != String(w["id"]):
+			bad.append(String(w["node"]))
+	return bad
+
+
+func _seal(v: Node3D) -> int:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	if not parsed is Dictionary:
+		check("seal manifest が読める", false)
+		return 2
+	var seal: Dictionary = parsed
+	var rj: Dictionary = seal.get("rejected", {})
+	check("status ART_APPROVED（A 農田・B 住宅、使用者 2026-10-08；agent は美術を承認しない）＋C 水岸 ART_REJECTED の記録（群 %s・理由が裁定文どおり）" % str(rj.get("clusters", [])),
+		String(seal.get("status", "")) == "ART_APPROVED" and String(seal.get("approved_by", "")) == "user" and String(rj.get("status", "")) == "ART_REJECTED"
+		and String(rj.get("reason", "")) == HX.REJECTED_REASON and Array(rj.get("clusters", [])) == HX.REJECTED_CLUSTERS)
+	var bad := _seal_mismatch(seal)
+	var n := 0
+	for grp: String in ["frozen", "evidence", "art_review_images", "rejected_candidates", "child_seals"]:
+		n += (seal.get(grp, {}) as Dictionary).size()
+	check("封存 %d 檔雜湊一致（凍結・證據・審圖・rejected candidates・子封存；不符 %d：%s）" % [n, bad.size(), str(bad.slice(0, 4))], bad.is_empty())
+	var roots: Array = []
+	for c in v.get_children():
+		roots.append(String(c.name))
+	var names: Array = []
+	for c in v.get_node("Props").get_children():
+		names.append(String(c.name))
+	var ip := roots.find("Props")
+	var txt := FileAccess.get_file_as_string(SCENE)
+	var go := v.get_node_or_null(HX.NODE_NAME) as Node3D
+	check("掛載：root 直下 Props → %s → %s（各 1 個）、Props の子は封存どおり（%s）、%s" % [HU.NODE_NAME, HX.NODE_NAME, " → ".join(names), HX.OUTPUT],
+		ip >= 0 and roots.find(HU.NODE_NAME) == ip + 1 and roots.find(HX.NODE_NAME) == ip + 2 and roots.count(HX.NODE_NAME) == 1 and names == PROPS_SEALED
+		and txt.count("p10r4b_human_use_exp") == 2 and go != null and go.scene_file_path == HX.OUTPUT and String(go.get_meta("art_revision", "")) == HX.ART_REVISION)
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SNAPSHOT))
+	var zn: Dictionary = snap["zones"]
+	check("snapshot：%d 件・%d cluster（A %d・B %d・C %d 件）、art_revision＝%s" % [int(snap["total"]), (snap["clusters"] as Dictionary).size(), int(zn.get("A", 0)), int(zn.get("B", 0)), int(zn.get("C", 0)), snap["art_revision"]],
+		int(snap["total"]) == int(seal["roster"]["total"]) and (snap["clusters"] as Dictionary).size() == HX.OFFICIAL_CLUSTERS and int(zn.get("C", 0)) == 0
+		and String(snap["art_revision"]) == HX.ART_REVISION)
+	var lb := _live_mismatch(v, snap)
+	check("場景の %d 件が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・id／zone／cluster／anchor／who／why；不符 %s）" % [int(snap["total"]), str(lb.slice(0, 4))], lb.is_empty())
+	var r3: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(_repo() + APPROVED_R3))
+	var am := _approved_mismatch(snap["items"], r3)
+	check("A/B は承認時（r3 審圖、%s）から美術の変更なし：snapshot の %d 件＝r3 の A/B 件（2 cm・0.5°・who／why）——不符 %s" % [APPROVED_R3, int(snap["total"]), str(am.slice(0, 4))], am.is_empty())
+	var cl_names: Array = []
+	if go:
+		for z in go.get_children():
+			for c in z.get_children():
+				cl_names.append(String(c.name))
+	var rej_nodes := cl_names.filter(func(nm: String) -> bool: return nm in HX.REJECTED_CLUSTERS)
+	var live_c := _live(v).filter(func(it: Dictionary) -> bool: return String(it["zone"]) == "C" or String(it["id"]) in HX.REJECTED_NEW_IDS)
+	check("C 水岸の除去：場景に rejected 群のノード %s・C の件／hx_doroage %d、ZoneC なし" % [str(rej_nodes), live_c.size()],
+		rej_nodes.is_empty() and live_c.is_empty() and go != null and go.get_node_or_null("ZoneC") == null)
+	var r4b := _r4_bad(v)
+	check("R4 封存 HumanUseP10 不変：50 件が R4 snapshot と位置 ≤ 1 cm・id 一致（不符 %s）" % str(r4b.slice(0, 3)), r4b.is_empty())
+	var nb := v.get_node("Population").find_children("*", "AnimatableBody3D", true, false).size()
+	check("Population 51 不変（NPC body %d）" % nb, nb == 51)
+	var tam := seal.duplicate(true)
+	var k0: String = (tam["frozen"] as Dictionary).keys()[0]
+	tam["frozen"][k0] = "0".repeat(64)
+	check("反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（%d）" % (_seal_mismatch(tam).size() - bad.size()), _seal_mismatch(tam).size() == bad.size() + 1)
+	var snap2: Dictionary = snap.duplicate(true)
+	snap2["items"][0]["position"][0] = float(snap2["items"][0]["position"][0]) + 0.25
+	check("反向：snapshot の 1 件を 0.25 m ずらす → 場景と不一致・承認時 r3 とも不一致", not _live_mismatch(v, snap2).is_empty() and not _approved_mismatch(snap2["items"], r3).is_empty())
+	var snap3: Dictionary = snap.duplicate(true)
+	snap3["items"][1]["who"] = "誰か"
+	check("反向：snapshot の 1 件の who を変える → 不一致を検出", not _live_mismatch(v, snap3).is_empty())
+	var r3c: Array = (r3["items"] as Array).filter(func(it: Dictionary) -> bool: return String(it["zone"]) == "C")
+	var snap4: Dictionary = snap.duplicate(true)
+	for it: Dictionary in r3c:
+		(snap4["items"] as Array).append({"node": "ZoneC/%s/x_%s" % [it["cluster"], it["id"]], "zone": "C", "cluster": it["cluster"], "id": it["id"],
+			"position": it["p"], "yaw_deg": it["yaw_deg"], "who": it["who"], "why": it["why"], "anchor": it["anchor"]})
+	check("反向：rejected の C %d 件を snapshot に戻す → 場景と不一致・承認時 A/B とも不一致" % r3c.size(), not _live_mismatch(v, snap4).is_empty() and not _approved_mismatch(snap4["items"], r3).is_empty())
+	print("[HUX] 結果：%d 項失敗（seal）" % fails)
+	return 0 if fails == 0 else 2
 
 
 # ─────────────────────────── build／attach／scene ───────────────────────────
@@ -596,20 +890,14 @@ func _scene(v: Node3D) -> void:
 	var mk := go.find_children("*", "Marker3D", true, false).size()
 	check("個別ノード：MeshInstance %d（＝2×%d 件）・MultiMesh %d・Marker3D %d" % [mi.size(), int(go.get_meta("items")), mm, mk], mm == 0 and mk == 0 and mi.size() == 2 * int(go.get_meta("items")))
 	# R4 の 50 件は封存 snapshot と独立に一致（拡張は R4 を動かさない）
-	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(R4_SNAPSHOT))
-	var hu := v.get_node_or_null(HU.NODE_NAME) as Node3D
-	var r4bad: Array = []
-	for w: Dictionary in snap["items"]:
-		var n := hu.get_node_or_null(String(w["node"])) as Node3D if hu else null
-		var q: Array = w["position"]
-		if n == null or n.global_position.distance_to(Vector3(q[0], q[1], q[2])) > 0.01 or String(n.get_meta("hu_id", "")) != String(w["id"]):
-			r4bad.append(String(w["node"]))
-	var r4n := 0
-	if hu:
-		for n in hu.find_children("*", "Node3D", true, false):
-			if n.has_meta("hu_id"):
-				r4n += 1
-	check("R4 封存 HumanUseP10 不変：%d 件（snapshot %d）が位置 ≤ 1 cm・id 一致（不符 %s）" % [r4n, (snap["items"] as Array).size(), str(r4bad.slice(0, 3))], r4bad.is_empty() and r4n == (snap["items"] as Array).size())
+	var r4bad := _r4_bad(v)
+	check("R4 封存 HumanUseP10 不変：50 件が R4 snapshot と位置 ≤ 1 cm・id 一致（不符 %s）" % str(r4bad.slice(0, 3)), r4bad.is_empty())
+	var oc := _live(v).filter(func(it: Dictionary) -> bool: return String(it["zone"]) == "C" or String(it["id"]) in HX.REJECTED_NEW_IDS or String(it["cluster"]) in HX.REJECTED_CLUSTERS)
+	var zc2 := {}
+	for it: Dictionary in _live(v):
+		zc2[it["cluster"]] = String(it["zone"])
+	check("場景の正式構成：群 %d（＝%d）・C の件／rejected 群／hx_doroage %d（＝0）、ZoneC なし" % [zc2.size(), HX.OFFICIAL_CLUSTERS, oc.size()],
+		zc2.size() == HX.OFFICIAL_CLUSTERS and oc.is_empty() and go.get_node_or_null("ZoneC") == null)
 	var pop: Array = []
 	for c in v.get_node("Population").get_children():
 		pop.append(String(c.name))

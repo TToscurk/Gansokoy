@@ -1,6 +1,26 @@
-# P10 R4b Human-Use Expansion Batch 1 — ART_REVIEW（r3、2026-10-08）
+# P10 R4b Human-Use Expansion Batch 1 — A/B FINAL（2026-10-08）
 
-**狀態：ART_REVIEW（未 ART_APPROVED、未封存、不進第二批）。** 技術 gate 全綠 ≠ 美術核准。
+**狀態：A 農田・B 住宅＝ART_APPROVED・SEALED（A/B FINAL）／C 水岸＝ART_REJECTED（正式配置から除去）。** 封存 `godot/data/village_v2_p10r4b_seal.json`。
+
+## 最終裁定（使用者 2026-10-08「P10 R4b Batch 1 — Final Art Decision」）
+- A Farmland：ART_APPROVED／B Residential：ART_APPROVED／C Waterside：ART_REJECTED。
+- 中距離 2/5 の 4 群（XA2 農具置き場・XA5 一服・XB2 桶直し・XB5 漬物）：ACCEPTED / NON-BLOCKING（secondary ambient detail）。
+- 第四次の美術反復なし。A/B 10 群の位置・用途・物件配置は変更しない；評分のために物件を足さない。
+- C 3 群（XC1 洗菜・XC2 換橋板・XC3 清淤）は正式生成から除去。理由（封存に記録）：
+  > Three iterations failed to establish readable waterside activities. Existing R4 Pilot C already provides sufficient waterside human-use evidence. Additional expansion was removed to preserve natural negative space.
+- C の設計は `village_v2_human_use_exp_lib.gd::rejected_c()` に rejected candidate として記録だけ残す（正式の design／plan／bake は出力しない）。XC3 専用の新規 `hx_doroage` も kit に残すが配置しない。曬漁網・曬布架などの代替は足さない。R4 Pilot C（封存）は不変。
+
+## 正式構成（C 除去後の実測）
+- **10 群 40 件**（A 農田 5 群 22 件・B 住宅 5 群 18 件、C 0）；重用 37／40（93 %）、新規の配置は `hx_hatake`×2・`hx_daikon_kake`×1。
+- 計画 40 件＝承認時 r3 の A/B 40 件と完全一致（id・zone・cluster・anchor・who・why・位置・朝向；`gate/plan_final.json` vs `gate/plan_r3.json`）。
+- 再撮影（A/B 31 視點×3 状態、`gate/ab_final_vs_r3.json`）：BEFORE（擴張なし）の差＝run 間の揺れ（風・NPC idle）を基準にすると、超過は XA4_oroshi high 0.20 %・near 0.11 %（背景の XC3 が消えた所、XA4 の荷車と荷の山は不変）と XB3_hatake near 0.05 %（植え込みの揺れ）だけ。
+- scene（`gate/scene_final.log`）11 項 PASS：Props → HumanUseP10 → HumanUseExpansionP10・正式構成 10 群／C 0／ZoneC なし・R4 の 50 件 snapshot ≤ 1 cm・Population 51・接地 360 ray（FLOATING 0、最大埋まり 0.110 m）・貫通 0・float／clash 反向。
+- plan（`gate/plan_final.log`）：正式構成・計画＝封存 snapshot・MeadowP9 株 0・禁區・非均一・自然の岸ほか＋反向 19（rejected_c() を戻す／hx_doroage を置く／B を 1 群減らす を含む）。
+- 以下の「範圍」以降は **r3 審圖時の記録**（13 群 53 件、C を含む）。`render/XC*`・`review/XC*`・`review/zoneC_*` は rejected candidates として封存に記録。`review/npc_on_off.jpg`・`review/distribution.jpg` は r3 の記録（C を含む）。
+
+---
+
+# （記録）r3 ART_REVIEW（2026-10-08）
 
 ## 範圍
 - 新 overlay：場景 root 直下 `HumanUseExpansionP10`（`HumanUseP10` の次）＝`godot/maps/village_v2/gen/human_use_exp_p10.scn`
@@ -74,6 +94,6 @@
 - 自然の岸：水面の縁 460 格のうち R4＋R4b の生活痕跡から 6 m 以内 11 格（2 %）
 - R4 HUSE `--scene`／`--seal` 0 失敗（擴張を掛けた状態）・回歸 subset：`gate/regression_subset.log`
 
-## 未決（使用者判斷）
-1. C 水岸 3 群：このまま次要として通すか、r4 で別の水の用途（R4 C のような高い輪郭：干した網・布、桶の干し台など）に差し替えるか、Batch 1 から外すか。
-2. XA2・XA5・XB2・XB5 の mid 2：次要として可か。
+## 未決（r3 時点）→ 使用者裁定で解決
+1. C 水岸 3 群 → ART_REJECTED・除去（上の最終裁定）。
+2. XA2・XA5・XB2・XB5 の mid 2 → ACCEPTED / NON-BLOCKING。

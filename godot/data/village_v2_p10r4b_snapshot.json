@@ -1,0 +1,664 @@
+{
+	"art_revision": "P10 R4b Human-Use Expansion Batch 1 A/B FINAL（A 農田・B 住宅 ART_APPROVED、C 水岸 ART_REJECTED＝除去）",
+	"clusters": {
+		"XA1_shukka": 4,
+		"XA2_teire": 5,
+		"XA3_hasa": 5,
+		"XA4_oroshi": 4,
+		"XA5_yasumi": 4,
+		"XB1_some": 4,
+		"XB2_okeya": 4,
+		"XB3_hatake": 3,
+		"XB4_nizukuri": 4,
+		"XB5_tsukemono": 3
+	},
+	"items": [
+		{
+			"anchor": "route",
+			"cluster": "XA1_shukka",
+			"id": "mk_kuruma_ni",
+			"name": "000_mk_kuruma_ni",
+			"node": "ZoneA/XA1_shukka/000_mk_kuruma_ni",
+			"position": [
+				436.084,
+				-0.112,
+				5.684
+			],
+			"who": "この辻の田を持つ農家（大八車）",
+			"why": "俵を積みかけた大八車：辻から村の米屋・蔵へ出す",
+			"yaw_deg": 90.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA1_shukka",
+			"id": "wk_tawara3",
+			"name": "001_wk_tawara3",
+			"node": "ZoneA/XA1_shukka/001_wk_tawara3",
+			"position": [
+				433.65,
+				0.011,
+				5.35
+			],
+			"who": "この辻の田を持つ農家",
+			"why": "車の後ろに下ろした次の 3 俵：これから積む",
+			"yaw_deg": -170.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA1_shukka",
+			"id": "st_kome_tsumi",
+			"name": "002_st_kome_tsumi",
+			"node": "ZoneA/XA1_shukka/002_st_kome_tsumi",
+			"position": [
+				431.696,
+				0.17,
+				3.896
+			],
+			"who": "この辻の田を持つ農家",
+			"why": "選った俵を台に積んで出荷を待つ（雨の日は菰を掛ける）",
+			"yaw_deg": -180.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA1_shukka",
+			"id": "kr_nawa",
+			"name": "003_kr_nawa",
+			"node": "ZoneA/XA1_shukka/003_kr_nawa",
+			"position": [
+				433.75,
+				0.148,
+				3.6
+			],
+			"who": "この辻の田を持つ農家",
+			"why": "俵を車に縛る縄（積み終わったら掛ける）",
+			"yaw_deg": -180.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA2_teire",
+			"id": "st_kuwa",
+			"name": "004_st_kuwa",
+			"node": "ZoneA/XA2_teire/004_st_kuwa",
+			"position": [
+				380.65,
+				0.004,
+				64.45
+			],
+			"who": "南の田の組",
+			"why": "組で使う鍬・鋤を掛けておく農具掛け（田へ出る前にここで取る）",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA2_teire",
+			"id": "st_kuwa",
+			"name": "005_st_kuwa",
+			"node": "ZoneA/XA2_teire/005_st_kuwa",
+			"position": [
+				378.75,
+				0.004,
+				64.4
+			],
+			"who": "南の田の組",
+			"why": "二架目の農具掛け：手入れの済んだ物を掛け戻す",
+			"yaw_deg": -4.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA2_teire",
+			"id": "st_daiku",
+			"name": "006_st_daiku",
+			"node": "ZoneA/XA2_teire/006_st_daiku",
+			"position": [
+				379.6,
+				0.031,
+				65.95
+			],
+			"who": "南の田の組（雨の合間の手入れ）",
+			"why": "馬 2 に板を渡した作業台：折れた鍬の柄を削って付け替える（鋸・墨壺・鉋屑）",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA2_teire",
+			"id": "kr_zaimoku",
+			"name": "007_kr_zaimoku",
+			"node": "ZoneA/XA2_teire/007_kr_zaimoku",
+			"position": [
+				377.15,
+				0.038,
+				65.75
+			],
+			"who": "南の田の組",
+			"why": "替えの柄にする樫の材",
+			"yaw_deg": -80.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA2_teire",
+			"id": "sz_stool",
+			"name": "008_sz_stool",
+			"node": "ZoneA/XA2_teire/008_sz_stool",
+			"position": [
+				378.75,
+				0.062,
+				66.95
+			],
+			"who": "南の田の組",
+			"why": "作業台の前の腰掛け",
+			"yaw_deg": 180.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "field",
+			"cluster": "XA3_hasa",
+			"id": "st_hasa",
+			"name": "009_st_hasa",
+			"node": "ZoneA/XA3_hasa/009_st_hasa",
+			"position": [
+				485.75,
+				-0.27,
+				-4.2
+			],
+			"who": "東の田の農家",
+			"why": "刈った稲を農道沿いの稲架に掛けて干す（列の東）",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "field",
+			"cluster": "XA3_hasa",
+			"id": "st_hasa",
+			"name": "010_st_hasa",
+			"node": "ZoneA/XA3_hasa/010_st_hasa",
+			"position": [
+				482.0,
+				-0.27,
+				-4.2
+			],
+			"who": "東の田の農家",
+			"why": "稲架の列の中ほど",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "field",
+			"cluster": "XA3_hasa",
+			"id": "st_hasa",
+			"name": "011_st_hasa",
+			"node": "ZoneA/XA3_hasa/011_st_hasa",
+			"position": [
+				478.25,
+				-0.27,
+				-4.2
+			],
+			"who": "東の田の農家",
+			"why": "稲架の列の西：一面の田の刈り稲で 3 架",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "field",
+			"cluster": "XA3_hasa",
+			"id": "st_shibagaki",
+			"name": "012_st_shibagaki",
+			"node": "ZoneA/XA3_hasa/012_st_shibagaki",
+			"position": [
+				482.0,
+				-0.294,
+				-5.65
+			],
+			"who": "東の田の農家",
+			"why": "稲架の田側に立てた柴垣：田から吹く風よけ",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "field",
+			"cluster": "XA3_hasa",
+			"id": "st_warazuka",
+			"name": "013_st_warazuka",
+			"node": "ZoneA/XA3_hasa/013_st_warazuka",
+			"position": [
+				475.7,
+				-0.287,
+				-4.7
+			],
+			"who": "東の田の農家",
+			"why": "去年の藁を積んだ藁塚（縄・草鞋・敷き藁に使う）",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA4_oroshi",
+			"id": "kr_kuruma",
+			"name": "014_kr_kuruma",
+			"node": "ZoneA/XA4_oroshi/014_kr_kuruma",
+			"position": [
+				339.4,
+				0.204,
+				46.65
+			],
+			"who": "南の田の農家（村から戻る）",
+			"why": "橋を渡ってきて荷を降ろし終えた大八車（空）",
+			"yaw_deg": 90.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA4_oroshi",
+			"id": "mk_tsumini",
+			"name": "015_mk_tsumini",
+			"node": "ZoneA/XA4_oroshi/015_mk_tsumini",
+			"position": [
+				337.15,
+				0.219,
+				47.15
+			],
+			"who": "南の田の農家",
+			"why": "車から降ろした荷：種籾の俵・肥料の菰包み・道具の箱・縄",
+			"yaw_deg": -180.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA4_oroshi",
+			"id": "hu_seoikago",
+			"name": "016_hu_seoikago",
+			"node": "ZoneA/XA4_oroshi/016_hu_seoikago",
+			"position": [
+				338.7,
+				0.211,
+				47.95
+			],
+			"who": "南の田の農家の嫁",
+			"why": "荷の山から田へ背負っていく籠（下ろしたまま）",
+			"yaw_deg": -165.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA4_oroshi",
+			"id": "kr_ni",
+			"name": "017_kr_ni",
+			"node": "ZoneA/XA4_oroshi/017_kr_ni",
+			"position": [
+				341.531,
+				0.202,
+				47.596
+			],
+			"who": "南の田の農家",
+			"why": "先に降ろした菰包み：あとで車ごと納屋へ",
+			"yaw_deg": 160.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA5_yasumi",
+			"id": "st_warazuka",
+			"name": "018_st_warazuka",
+			"node": "ZoneA/XA5_yasumi/018_st_warazuka",
+			"position": [
+				433.0,
+				-0.001,
+				64.5
+			],
+			"who": "北の田の年寄り",
+			"why": "去年の藁を積んだ藁塚：昼の日陰になる",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA5_yasumi",
+			"id": "sk_bench",
+			"name": "019_sk_bench",
+			"node": "ZoneA/XA5_yasumi/019_sk_bench",
+			"position": [
+				432.85,
+				0.016,
+				65.85
+			],
+			"who": "北の田の年寄り",
+			"why": "藁塚の陰に置いた縁台：昼飯と一服",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA5_yasumi",
+			"id": "hu_seoikago",
+			"name": "020_hu_seoikago",
+			"node": "ZoneA/XA5_yasumi/020_hu_seoikago",
+			"position": [
+				434.45,
+				0.002,
+				65.9
+			],
+			"who": "北の田の年寄り",
+			"why": "縁台の脇に下ろした背負い籠",
+			"yaw_deg": -15.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "route",
+			"cluster": "XA5_yasumi",
+			"id": "sk_teoke",
+			"name": "021_sk_teoke",
+			"node": "ZoneA/XA5_yasumi/021_sk_teoke",
+			"position": [
+				431.45,
+				0.035,
+				66.05
+			],
+			"who": "北の田の年寄り",
+			"why": "水を汲んできた手桶と柄杓",
+			"yaw_deg": 0.0,
+			"zone": "A"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB1_some",
+			"id": "ms_nuno_kake",
+			"name": "022_ms_nuno_kake",
+			"node": "ZoneB/XB1_some/022_ms_nuno_kake",
+			"position": [
+				152.096,
+				1.23,
+				-47.645
+			],
+			"who": "RSW_048 の女房（染め物の内職）",
+			"why": "藍で染めた反物を竿に掛けて干す",
+			"yaw_deg": 94.75,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB1_some",
+			"id": "hu_tarai",
+			"name": "023_hu_tarai",
+			"node": "ZoneB/XB1_some/023_hu_tarai",
+			"position": [
+				150.489,
+				1.25,
+				-47.662
+			],
+			"who": "RSW_048 の女房",
+			"why": "藍の液に布を浸ける盥（布が入ったまま）",
+			"yaw_deg": 94.75,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB1_some",
+			"id": "mk_kame",
+			"name": "024_mk_kame",
+			"node": "ZoneB/XB1_some/024_mk_kame",
+			"position": [
+				150.456,
+				1.225,
+				-46.234
+			],
+			"who": "RSW_048",
+			"why": "藍の染め液を寝かせる甕",
+			"yaw_deg": 94.75,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB1_some",
+			"id": "sz_stool",
+			"name": "025_sz_stool",
+			"node": "ZoneB/XB1_some/025_sz_stool",
+			"position": [
+				151.033,
+				1.255,
+				-48.359
+			],
+			"who": "RSW_048 の女房",
+			"why": "盥の前の腰掛け",
+			"yaw_deg": 34.75,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB2_okeya",
+			"id": "st_okeya",
+			"name": "026_st_okeya",
+			"node": "ZoneB/XB2_okeya/026_st_okeya",
+			"position": [
+				150.75,
+				1.398,
+				-76.03
+			],
+			"who": "RSW_051 の主（桶の直し）",
+			"why": "緩んだ桶に新しい竹の箍を締める作業場（丸太台・締めかけの桶）：明るい日向で",
+			"yaw_deg": 83.27,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB2_okeya",
+			"id": "kr_okeyama",
+			"name": "027_kr_okeyama",
+			"node": "ZoneB/XB2_okeya/027_kr_okeyama",
+			"position": [
+				150.721,
+				1.392,
+				-74.235
+			],
+			"who": "近所の家々",
+			"why": "直しを頼まれて積んである盥と桶（作業場の右手）",
+			"yaw_deg": 83.27,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB2_okeya",
+			"id": "tk_okeyama",
+			"name": "028_tk_okeyama",
+			"node": "ZoneB/XB2_okeya/028_tk_okeyama",
+			"position": [
+				150.57,
+				1.371,
+				-77.914
+			],
+			"who": "RSW_051 の主",
+			"why": "直し終えて台に積んだ手桶：取りに来るのを待つ",
+			"yaw_deg": 83.27,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB2_okeya",
+			"id": "sk_box",
+			"name": "029_sk_box",
+			"node": "ZoneB/XB2_okeya/029_sk_box",
+			"position": [
+				151.936,
+				1.419,
+				-75.84
+			],
+			"who": "RSW_051 の主",
+			"why": "鉋・鑿・竹割りの道具箱（座る後ろ）",
+			"yaw_deg": 103.27,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB3_hatake",
+			"id": "hx_hatake",
+			"name": "030_hx_hatake",
+			"node": "ZoneB/XB3_hatake/030_hx_hatake",
+			"position": [
+				477.998,
+				2.302,
+				-226.594
+			],
+			"who": "RNE_005 の婆",
+			"why": "背戸の脇の畝：大根・葱・青菜（毎朝ここで摘む）",
+			"yaw_deg": 18.41,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB3_hatake",
+			"id": "hx_hatake",
+			"name": "031_hx_hatake",
+			"node": "ZoneB/XB3_hatake/031_hx_hatake",
+			"position": [
+				482.22,
+				2.316,
+				-227.684
+			],
+			"who": "RNE_005 の婆",
+			"why": "道の反対側の畝：冬の漬物用の大根",
+			"yaw_deg": -161.59,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB3_hatake",
+			"id": "st_shibagaki",
+			"name": "032_st_shibagaki",
+			"node": "ZoneB/XB3_hatake/032_st_shibagaki",
+			"position": [
+				480.701,
+				2.314,
+				-225.281
+			],
+			"who": "RNE_005",
+			"why": "畑を路地から守る柴垣",
+			"yaw_deg": 18.41,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB4_nizukuri",
+			"id": "mk_tsumini",
+			"name": "033_mk_tsumini",
+			"node": "ZoneB/XB4_nizukuri/033_mk_tsumini",
+			"position": [
+				464.232,
+				2.287,
+				-223.055
+			],
+			"who": "RNE_003 の主",
+			"why": "木箱・俵・菰包みを積んだ荷：明日の朝に出す",
+			"yaw_deg": 47.98,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB4_nizukuri",
+			"id": "mk_kuruma_ni",
+			"name": "034_mk_kuruma_ni",
+			"node": "ZoneB/XB4_nizukuri/034_mk_kuruma_ni",
+			"position": [
+				465.666,
+				2.283,
+				-221.36
+			],
+			"who": "RNE_003 の主",
+			"why": "裏に回した大八車：半分積んだところ",
+			"yaw_deg": -42.02,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB4_nizukuri",
+			"id": "kr_ni",
+			"name": "035_kr_ni",
+			"node": "ZoneB/XB4_nizukuri/035_kr_ni",
+			"position": [
+				461.537,
+				2.277,
+				-221.109
+			],
+			"who": "RNE_003",
+			"why": "背戸の脇に出した菰包み",
+			"yaw_deg": 47.98,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB4_nizukuri",
+			"id": "kr_nawa",
+			"name": "036_kr_nawa",
+			"node": "ZoneB/XB4_nizukuri/036_kr_nawa",
+			"position": [
+				462.336,
+				2.289,
+				-220.726
+			],
+			"who": "RNE_003",
+			"why": "荷を縛る縄",
+			"yaw_deg": 47.98,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB5_tsukemono",
+			"id": "hx_daikon_kake",
+			"name": "037_hx_daikon_kake",
+			"node": "ZoneB/XB5_tsukemono/037_hx_daikon_kake",
+			"position": [
+				181.016,
+				1.9,
+				-159.666
+			],
+			"who": "RSW_033 の母",
+			"why": "沢庵にする大根を竿に掛けて干す（一週間ほど萎びさせる）",
+			"yaw_deg": -75.94,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB5_tsukemono",
+			"id": "mk_mushiro_tsuke",
+			"name": "038_mk_mushiro_tsuke",
+			"node": "ZoneB/XB5_tsukemono/038_mk_mushiro_tsuke",
+			"position": [
+				182.244,
+				1.898,
+				-156.439
+			],
+			"who": "RSW_033 の母",
+			"why": "沢庵・菜・梅の樽を筵に並べて漬ける",
+			"yaw_deg": -75.94,
+			"zone": "B"
+		},
+		{
+			"anchor": "building",
+			"cluster": "XB5_tsukemono",
+			"id": "sz_stool",
+			"name": "039_sz_stool",
+			"node": "ZoneB/XB5_tsukemono/039_sz_stool",
+			"position": [
+				180.897,
+				1.91,
+				-157.494
+			],
+			"who": "RSW_033 の母",
+			"why": "樽の前で座る腰掛け",
+			"yaw_deg": -35.94,
+			"zone": "B"
+		}
+	],
+	"schema": 1,
+	"scope": "P10 R4b Human-Use Expansion Batch 1 A/B FINAL：HumanUseExpansionP10（root 直下・HumanUseP10 の次）の全件；C 水岸 3 群は ART_REJECTED で含まない",
+	"total": 40,
+	"zones": {
+		"A": 22,
+		"B": 18
+	}
+}

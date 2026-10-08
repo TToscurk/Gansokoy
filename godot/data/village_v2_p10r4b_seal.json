@@ -1,0 +1,540 @@
+{
+ "schema": 1,
+ "phase": "P10 R4b Human-Use Expansion Batch 1 — A/B FINAL（A 農田 5 群・B 住宅 5 群；C 水岸 3 群は ART_REJECTED・除去）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_date": "2026-10-08",
+ "approval_source": "使用者 2026-10-08「P10 R4b Batch 1 — Final Art Decision」：A Farmland＝ART_APPROVED、B Residential＝ART_APPROVED、C Waterside＝ART_REJECTED、四個中距離 2/5 的 A/B 次要群組＝ACCEPTED / NON-BLOCKING；「移除 C 後，如果 A/B 完全沒有美術修改，且相關驗證全部通過，可以直接封存」",
+ "verdicts": {
+  "A": "ART_APPROVED：農田 5 群（出荷の積み込み・農具置き場と柄の付け替え・稲架の列・橋詰めで降ろした荷・藁塚の陰の一服）",
+  "B": "ART_APPROVED：住宅 5 群（染め物の内職・桶の直し・家庭菜園・荷造り・冬の漬物）",
+  "C": "ART_REJECTED：水岸 3 群（野菜洗い・橋板張り替え・泥上げ）を正式配置から除去",
+  "secondary": "ACCEPTED / NON-BLOCKING：XA2 農具置き場・XA5 一服・XB2 桶直し・XB5 漬物（中距離 2/5）＝secondary ambient detail、15 m で輪郭を要求しない"
+ },
+ "value": "10 個已核准生活群組，位置、用途與物件配置都不再修改；不要再為了提高評分而增加物件。",
+ "rejected": {
+  "status": "ART_REJECTED",
+  "clusters": [
+   "XC1_araimono",
+   "XC2_hashi",
+   "XC3_suiro"
+  ],
+  "reason": "Three iterations failed to establish readable waterside activities. Existing R4 Pilot C already provides sufficient waterside human-use evidence. Additional expansion was removed to preserve natural negative space.",
+  "detail": [
+   {
+    "id": "XC1_araimono",
+    "anchor": "water",
+    "desc": "北の雁木石段（stair3）の上：採った野菜を洗う所——泥付きの箱と籠 → 石段から汲んだ水の盥 → 洗って水を切る筵",
+    "n": 3
+   },
+   {
+    "id": "XC2_hashi",
+    "anchor": "bridge",
+    "desc": "Bridge_05（西の小川の木橋）の東の橋詰め：橋板の張り替え——馬に板を渡した作業台、新しい橋板の山、外した古い板、桁を見に降りる梯子",
+    "n": 5
+   },
+   {
+    "id": "XC3_suiro",
+    "anchor": "water",
+    "desc": "南の水車（WATERWHEEL_3）の下手の東岸：水路の泥上げ——岸に掻き上げた泥と藻の山（鋤を挿したまま）、崩れかけた岸の縁に並べた土嚢、熊手・鋤の掛け、泥を運ぶ手桶",
+    "n": 5
+   }
+  ],
+  "items": [
+   {
+    "cluster": "XC1_araimono",
+    "id": "mk_mushiro_yasai",
+    "position": [
+     365.5,
+     1.78,
+     -156.5
+    ],
+    "yaw_deg": 90.0,
+    "who": "北の田の農家",
+    "why": "洗った大根・南瓜・茄子を筵に並べて水を切る"
+   },
+   {
+    "cluster": "XC1_araimono",
+    "id": "hu_tarai",
+    "position": [
+     366.85,
+     1.86,
+     -158.25
+    ],
+    "yaw_deg": 90.0,
+    "who": "北の田の農家の嫁",
+    "why": "石段から汲んだ水で泥を落とす盥"
+   },
+   {
+    "cluster": "XC1_araimono",
+    "id": "st_kago_tsumi",
+    "position": [
+     364.75,
+     1.87,
+     -158.85
+    ],
+    "yaw_deg": 0.0,
+    "who": "北の田の農家",
+    "why": "畑から運んできた泥付きの大根・南瓜の箱と籠：これから洗う"
+   },
+   {
+    "cluster": "XC2_hashi",
+    "id": "st_daiku",
+    "position": [
+     168.8,
+     0.92,
+     -4.5
+    ],
+    "yaw_deg": -90.0,
+    "who": "WestBankLane の大工",
+    "why": "橋板を寸法に切る作業台（馬 2・鋸・墨壺）"
+   },
+   {
+    "cluster": "XC2_hashi",
+    "id": "kr_zaimoku",
+    "position": [
+     167.6,
+     0.92,
+     -4.3
+    ],
+    "yaw_deg": -90.0,
+    "who": "WestBankLane の大工",
+    "why": "張り替える新しい橋板（作業台と橋の間）"
+   },
+   {
+    "cluster": "XC2_hashi",
+    "id": "kr_zaimoku",
+    "position": [
+     170.1,
+     0.94,
+     -4.7
+    ],
+    "yaw_deg": -98.0,
+    "who": "WestBankLane の大工",
+    "why": "外した古い橋板：薪にする（作業台の裏）"
+   },
+   {
+    "cluster": "XC2_hashi",
+    "id": "tk_ladder",
+    "position": [
+     168.13,
+     0.91,
+     -1.35
+    ],
+    "yaw_deg": -90.0,
+    "who": "WestBankLane の大工",
+    "why": "橋の下へ降りて桁を見る梯子（岸に寝かせる）"
+   },
+   {
+    "cluster": "XC2_hashi",
+    "id": "kr_nawa",
+    "position": [
+     167.8,
+     0.93,
+     -6.15
+    ],
+    "yaw_deg": -90.0,
+    "who": "WestBankLane の大工",
+    "why": "板を吊り下ろす縄"
+   },
+   {
+    "cluster": "XC3_suiro",
+    "id": "hx_doroage",
+    "position": [
+     322.85,
+     0.24,
+     51.4
+    ],
+    "yaw_deg": -90.0,
+    "who": "水車を使う家の組",
+    "why": "水車の水路から掻き上げた泥と藻：乾いたら田へ入れる"
+   },
+   {
+    "cluster": "XC3_suiro",
+    "id": "kr_fukuro",
+    "position": [
+     322.45,
+     0.27,
+     53.6
+    ],
+    "yaw_deg": 180.0,
+    "who": "水車を使う家の組",
+    "why": "崩れかけた岸の縁に並べた土嚢（麻袋）"
+   },
+   {
+    "cluster": "XC3_suiro",
+    "id": "kr_ni",
+    "position": [
+     323.6,
+     0.29,
+     55.1
+    ],
+    "yaw_deg": -105.0,
+    "who": "水車を使う家の組",
+    "why": "土嚢の続き（菰包み）"
+   },
+   {
+    "cluster": "XC3_suiro",
+    "id": "st_kuwa",
+    "position": [
+     324.7,
+     0.21,
+     52.8
+    ],
+    "yaw_deg": -90.0,
+    "who": "水車を使う家の組",
+    "why": "藻・泥を掻く熊手と鋤を掛けた道具掛け"
+   },
+   {
+    "cluster": "XC3_suiro",
+    "id": "tk_okeyama",
+    "position": [
+     324.5,
+     0.27,
+     54.6
+    ],
+    "yaw_deg": -90.0,
+    "who": "水車を使う家の組",
+    "why": "掻き出した泥を運ぶ手桶を台に積む"
+   }
+  ],
+  "n_items": 13,
+  "generator": "godot/tools/village_v2_human_use_exp_lib.gd::rejected_c()（記録だけ；design()／plan()／bake() は出力しない、gate HUX が検証）",
+  "asset": "humanuse_exp_kit の hx_doroage（XC3 専用に作った缺件）は rejected candidate として kit に残し、配置しない（REJECTED_NEW_IDS）",
+  "review_files": "rejected_candidates（render XC*・review XC*／zoneC）＝r3 審圖の記録",
+  "not_replaced": "曬漁網・曬布架など高い輪郭の道具で代替しない（使用者指示）",
+  "r4_pilot_c": "R4 Pilot C（封存 village_v2_p10r4_seal.json の水車の修理・米俵・洗濯）は不変"
+ },
+ "mount": "village_v2 root 直下 Props → HumanUseP10 → HumanUseExpansionP10（HumanUseP10 の次）。Props の子は封存どおり MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9。",
+ "unchanged_proof": {
+  "plan": "C 除去後の計画 40 件＝承認時 r3 の A/B 40 件（id・zone・cluster・anchor・who・why・位置・朝向が完全一致、gate/plan_final.json vs gate/plan_r3.json）",
+  "render": "A/B 31 視點×3 状態を再撮影して r3 と比較（gate/ab_final_vs_r3.json）：BEFORE（擴張なし）の差＝run 間の揺れを基準に、超過は XA4 の 2 視點（背景の XC3 が消えた所）と XB3 near の植え込みの揺れだけ",
+  "scene": "R4 の 50 件 snapshot 位置 ≤ 1 cm・Population 51・Props の子は封存どおり（scene_final.log）"
+ },
+ "rule": "封存後は HumanUseExpansionP10 の配置・資產・生成器を変更しない（真正の placement／collision bug のみ HUX_ALLOW_REBAKE=1＋使用者同意＋reseal）。Batch 2・水岸の追加擴張は使用者の指示があるまで開始しない。共用 prefab tools/village_v2_machiya_kit_prefab.gd は他 Kit と共用のため凍結しない。",
+ "roster": {
+  "total": 40,
+  "zones": {
+   "A": 22,
+   "B": 18
+  },
+  "clusters": {
+   "XA1_shukka": {
+    "zone": "A",
+    "anchor": "route",
+    "items": [
+     "mk_kuruma_ni",
+     "wk_tawara3",
+     "st_kome_tsumi",
+     "kr_nawa"
+    ]
+   },
+   "XA2_teire": {
+    "zone": "A",
+    "anchor": "route",
+    "items": [
+     "st_kuwa",
+     "st_kuwa",
+     "st_daiku",
+     "kr_zaimoku",
+     "sz_stool"
+    ]
+   },
+   "XA3_hasa": {
+    "zone": "A",
+    "anchor": "field",
+    "items": [
+     "st_hasa",
+     "st_hasa",
+     "st_hasa",
+     "st_shibagaki",
+     "st_warazuka"
+    ]
+   },
+   "XA4_oroshi": {
+    "zone": "A",
+    "anchor": "route",
+    "items": [
+     "kr_kuruma",
+     "mk_tsumini",
+     "hu_seoikago",
+     "kr_ni"
+    ]
+   },
+   "XA5_yasumi": {
+    "zone": "A",
+    "anchor": "route",
+    "items": [
+     "st_warazuka",
+     "sk_bench",
+     "hu_seoikago",
+     "sk_teoke"
+    ]
+   },
+   "XB1_some": {
+    "zone": "B",
+    "anchor": "building",
+    "items": [
+     "ms_nuno_kake",
+     "hu_tarai",
+     "mk_kame",
+     "sz_stool"
+    ]
+   },
+   "XB2_okeya": {
+    "zone": "B",
+    "anchor": "building",
+    "items": [
+     "st_okeya",
+     "kr_okeyama",
+     "tk_okeyama",
+     "sk_box"
+    ]
+   },
+   "XB3_hatake": {
+    "zone": "B",
+    "anchor": "building",
+    "items": [
+     "hx_hatake",
+     "hx_hatake",
+     "st_shibagaki"
+    ]
+   },
+   "XB4_nizukuri": {
+    "zone": "B",
+    "anchor": "building",
+    "items": [
+     "mk_tsumini",
+     "mk_kuruma_ni",
+     "kr_ni",
+     "kr_nawa"
+    ]
+   },
+   "XB5_tsukemono": {
+    "zone": "B",
+    "anchor": "building",
+    "items": [
+     "hx_daikon_kake",
+     "mk_mushiro_tsuke",
+     "sz_stool"
+    ]
+   }
+  },
+  "snapshot": "godot/data/village_v2_p10r4b_snapshot.json",
+  "assets": {
+   "reused_items": 37,
+   "new_placed": [
+    "hx_daikon_kake",
+    "hx_hatake"
+   ],
+   "new_kit": "humanuse_exp_kit（hx_hatake・hx_daikon_kake 配置／hx_doroage は rejected candidate）"
+  }
+ },
+ "verification": {
+  "plan": 14,
+  "negatives": 19,
+  "build_readback": 1,
+  "scene": 11,
+  "seal": 13,
+  "tag": "HUX"
+ },
+ "frozen": {
+  "godot/tools/village_v2_human_use_exp_lib.gd": "2ff46865c0be0841a4d97fb77c2e5fac413154dec0dabe210311b674eb12a91a",
+  "godot/tools/verify_village_v2_human_use_exp.gd": "9c7a3c2bb84caecfb15ed9f8767e6b743355f19ff6c1c7d47bd7cd1b175ce602",
+  "godot/tools/shot_p10_human_use_exp.gd": "46a50d821d2f90934846a826edda8da6ba80655224ec8674a7b5e74d961fe1a7",
+  "godot/tools/shot_p10_human_use_exp_views.json": "720207cd2cbe3eceedb1aec020f28222eea41fa791641d4f4bfa39f5c7019265",
+  "godot/tools/survey_village_v2_human_use_exp.gd": "2ae54c5d0a57562850302ce040b71270bc56bc00f502d950fe5dcc2853836967",
+  "godot/tools/shot_village_v2_topdown.gd": "e86c011e6bee775426540f00891b9bf3e97e182bb28c5ccbb4472033ea3e8791",
+  "godot/assets/blender/village_v2/build_humanuse_exp_kit.py": "5a60af4c7606a4ff96ad6304d236d7ac5487e3735c4d5e24d5da98dec313866e",
+  "godot/maps/village_v2/gen/human_use_exp_p10.scn": "015cf366bb1d10cd60a4191090078f4bc9991455098f8a1e83d1dcbc80d0a878",
+  "godot/data/village_v2_p10r4b_snapshot.json": "38cf3e67b456c312dd8b113d3ece635c30cbe96e38c24b0aeb28954dc77cfe12",
+  "godot/assets/village_v2/humanuse_exp_kit/src/humanuse_exp_kit.glb": "74df7ff66aa47ef79d43433070b5c81f96a0e5744828a80f697cc6d684b64ce5",
+  "godot/assets/village_v2/humanuse_exp_kit/src/modules_blender.json": "9ce6e5aca09df9ee8d22f9ab4afc17015e3431a7b427703fe6734e6b720bfbea",
+  "godot/assets/village_v2/humanuse_exp_kit/humanuse_exp_kit_manifest.json": "3377c0461996a27e702a3b898b3befdbdcd98e67f211a303a4ae48c23434ac6b",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake.res": "858857ba6e312fd373edd9f303917c8f113d29d4ca68fca8972e92f232ba8f6e",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake_l1.res": "de4bcea56017b0196d39cef4c69b180570eb6fdf3009ec6995b9d9a9e5910cea",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_doroage.res": "00aa257d4affdcfc88de1bfa6dcaea113b3c8b77f08561814aac32452327b82d",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_doroage_l1.res": "289021e8f2e939fa7481256f366915acb9391b4c8ff268b6b0e1e177c976bdad",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_hatake.res": "98429838cd9fdaf2b8696874a9715a1815dca03519d6bb2f42755c87eb9584da",
+  "godot/assets/village_v2/humanuse_exp_kit/mesh/hx_hatake_l1.res": "77df5b808d604c85af5eb9ea0973663fce59c823a23e51573c562344e3c0fcdd",
+  "tools/seal_p10r4b.py": "405b99bffce38bacb409cbaeba49ebcc36027a4c380a553db84dde7c5b496179",
+  "tools/sheet_p10_r4b.py": "f655d2f112e6f229f24c21f8c44125a241ccf9133efe2e55e4f659766a14d083",
+  "tools/diff_p10_r4b_final.py": "7aa5aacdc96f2a52f6bed69b4ba20783fccd95ff8edcf8aba70f9093abc6f7ce"
+ },
+ "evidence": {
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_r3.json": "8dcecc255248b583d24cb86fbc1f0c1ef3d5d8616504342867b8ea0377f10c19",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_negatives.log": "78214ff470eef0b809ce17a0e435a40d1f3b4d6356bfbd423dc51a0786f5c093",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/scene.log": "d26a400e4588b6e2eff29be9564e2563a4d7f9a34bc51002739ade5287193a70",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/regression_subset.log": "7f7f70a05c818affaa14615114bc5355aa2a2d487150c4c85b02b93ea326c26d",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_final.json": "2f80f63a98170e3714fcde0ddb7346f1f79e12556cdf07624489ce4d80bfbeb6",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_final.log": "5b057e7c2e9a4bef7be02a307472cb39fcdf196e3a76f54673c2efe06c0f5b0b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/scene_final.log": "ced3cc0c525871e9bf905b161d3d152bc78a59cbb667a9032f832b5bc1e6b84b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/ab_final_vs_r3.json": "33125155125fc9c3599ef4354401c2fba2867ca938a640e27e25efd637cd4187",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/README.md": "06f78b647533d2ec78a5270474d8d9bcdea8df8f49f8b748f217174c412a6320"
+ },
+ "art_review_images": {
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_high_after.png": "e802e94afb9662f263778948448943d5ea3e1c0988c1afdeb4db288416e63e96",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_high_before.png": "1cb1e16fc20e8735fb26626931ab3ada12398da82826fd3ece785f538ede5943",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_high_npcoff.png": "f60ccf22df726bcb3372346e33700ce18ceef53060cc5822bfd3a0352befe422",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_mid_after.png": "51d1b0123cba8fca072b064dd07abe2efddd576705053104c21afae0ed99a66f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_mid_before.png": "051fe8948a6215de9a7359b3daf0cd7e2198c825cc1a65c93f207429e8688ff2",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_mid_npcoff.png": "b7d761e272209a5cd273575fae944db79e769443085161696eab43615fddf2bd",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_near_after.png": "2105fd09e6b007c7b5c9346a33b83dadc15b0ba8b51fbfa345eaeeb02e9f7757",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_near_before.png": "217e9090bf8b54dfaf6092c01857881a199de172a1091e50f296b81995af6a26",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA1_shukka_near_npcoff.png": "55205eac3c77ed3bb2b43a0426a95908a15ac0a9b2451841306f8eff9de79685",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_high_after.png": "dac293be7d762c88fbfd4a6e23a51aa68beaa496deadfd25f114d2eba3adae9f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_high_before.png": "eb1bd3480a84fcafb5dd2a92f4142792f3b0ee93bd98d8cf779e071b5846a29e",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_high_npcoff.png": "033d9ea4eb4d9afdadbd2ffbb651aac9018335bb92c8180ead49003bbdf2c82c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_mid_after.png": "893a03d5c2d57a66c0dbc1b1ccdf2b4bbd26823d2ca5593a04f5f51b6d4ba974",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_mid_before.png": "9374c1182c0b18bb2034905d39dbb4d8e1246022ac3e87e0fd0ba4627db13501",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_mid_npcoff.png": "7cfc3e65952b49b44d1ee6423e2bb5e75b67c0902f34077359158754296dbaa5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_near_after.png": "16f0fab2e9983568703f069c9106177628b79af5fecae77c5ab3849126a75ba5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_near_before.png": "cd8b62ee5284af7c144e8bba4147e187a321641ca3a3e0d409bf0f77ee4905f9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA2_teire_near_npcoff.png": "7b106405ba0bd8155ec5b6d4df4e2a7cbc03ec5f6003e3e8f764fee4c9b56f66",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_high_after.png": "171e16cc7dbdfef9fc20cb0c0fec346b74f3877abc477571b8d282ff80673fe0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_high_before.png": "da7746319f5c7ce6c3d40a495b9c988fffab55186e005c849a8e4c9b186844ab",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_high_npcoff.png": "689aea7b62ba56fba021b6cf54d1509171b27bed71bd69fd59277859a1080678",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_mid_after.png": "168c5177bdcf93918491a5e73ff6c47a20667c86dfa23d281d619aa4fd4008ac",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_mid_before.png": "2e8d3449711f7c1591b2f9b75ec6ff9dc34b8a9ebd9c728ff29839860e06f1d2",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_mid_npcoff.png": "e0b771f334c7f553fe96f151aba2627ed44b807166d22e1da25f309d79e24f3a",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_near_after.png": "93eefead5788b9c321f5b2a6e1641142dec0aef817d44791e3e3de01b85c8521",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_near_before.png": "75a4a650854c590adb37986fffa39ca1f8462e903c2e8b9ca3c84f958a9f6fbc",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA3_hasa_near_npcoff.png": "2e592fd307a883ee7ce714589065711db9fca59f1d0f01b13db831ea3ec59153",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_high_after.png": "865c4926ce683caee4bcc3e639017c3de51fd8163a68c7ecd6c6e619026f981f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_high_before.png": "485bafbc8bf4d2cb4f70fcb68015ea616d32071e28354493020c2d034e4cace8",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_high_npcoff.png": "128d02896d675ff55fc6d458df0605c38eeecae72c768aab3df72e1429fa4f10",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_mid_after.png": "62b884bbd094c08928b7f325c5584402908218db3c9edc0c8d2ed3fdfffad311",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_mid_before.png": "48743ae16f4b12913a602c6eb0230b67f356555af79b97a5d8ed68af39a56359",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_mid_npcoff.png": "1c81512ebeb63345cdfc23cc7b57138616993ed8ee709f9d310341872e44253b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_near_after.png": "f8847229c711d871927bc70ef8a929c5b81e093b6a95a3bb58bfefc13bf5222e",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_near_before.png": "5d72ff4131bccb5a359282e30bbd1a4b179eb9e574f9611116d3d9f607bc2dee",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_near_npcoff.png": "34ff48186b7ecf16e5ddd88aca633c1058bd21d9ae7b0a4c3eb2f33b7a97e0b4",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_npc_after.png": "fc82639be0290b874234dea2992b3d9cd6d835b2dbfde3f124ab8b70314bdcbf",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_npc_before.png": "11bd945155cec70393cf1a188bdd19ef75019302c8e584a3ac400d5e0ce84bd8",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA4_oroshi_npc_npcoff.png": "cfbf774d8f0573e0cef866c2b8a70e70bf54decd40230e41f6909b34ff275a97",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_high_after.png": "d3db75df5ed18cd3ab4efc4e9118e1bc1d478f7025278b4d3acb6c7923e8b0d2",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_high_before.png": "de180e681c497e3e62441cb10d32f1ff19068551c4db30611c410cd8343467a1",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_high_npcoff.png": "596d0e2c2ddff2936c7e03681ff4a0c4e3b2b8090f2ff1fcadb2a1da8f9cc8e1",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_mid_after.png": "18d82540bc3daa7067a8694a615b670ac4b1b83868a725fd6a48ddeadfb28150",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_mid_before.png": "e84f354a322e8a5d06a578b86825ae985626c4dde26a93810f9fec933468c63a",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_mid_npcoff.png": "4b6da861ebef28e7a8d6b7e2c1f9bc221f3bb4cf56de94f42b786631bbf46ddb",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_near_after.png": "390527b2e708f1c77c8a81aef08cdf7dd2f67f51d9858bc00467cde022581c03",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_near_before.png": "2bc1214d3aabce77cf0b33a69c01275e6c0329aae5ef17faeff8724c6ad00cb0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XA5_yasumi_near_npcoff.png": "02053ddc670b46d1ee415eef47c08bd1b48799e5c4193d7b24569fc10ffafed5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_high_after.png": "3f7d399d1b085a0354f10f07c600bc43f153a075c9c0295de705977e23e4eb1b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_high_before.png": "e6760b3d01fc1619fe9744c072080d7205962b8abc330146b94707b4dece1343",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_high_npcoff.png": "7a5f47b1a8938e417abbbab47d1e26db0976cdf4cc9bc436fca5eea8f034c40b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_mid_after.png": "10682d1f03badd6706d4afc98dd9b291310e8683704432be265589409a726de4",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_mid_before.png": "1995e7940fc2a1fac2ff99e0b777f12e579bb4d7151d6c1867d56141ea386a2f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_mid_npcoff.png": "e270148fcad709dfa757850262849abe4b9072636332f3cfc9396c0230e8bdf9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_near_after.png": "96536709a34e089d40d446e85731c4bde3cf5becb3d737c79569ea52e7b447eb",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_near_before.png": "de469989f91e1f5417be57febcfe5313c5486aec3730edfe39da4781c6f338cb",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB1_some_near_npcoff.png": "3be31c121a79bbd399db1b87ac9491e03ccddf5dc93b38d0faf7e16a1e0c7df5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_high_after.png": "b767dd9482da783c46b15ea4ed4238bdb2d40521627ba6cd4491d6d1d49faaa5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_high_before.png": "5ac1b008b9eaad83d07541159f2ed0f81c7249237cdcedfe437e16002caa5a8d",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_high_npcoff.png": "da7bfacc649b92bb5f39724269741a14b494251ece8402834b07c78b8ce25b24",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_mid_after.png": "da8883d70464c2903a8a57848e14c958471731e01b2b1759c068bb2fb1f8a013",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_mid_before.png": "9e3ac6e9d34ce0603abe33c359a3c721cf5e0dfe33192142e3b014d9387e48c0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_mid_npcoff.png": "4c19ad3ac593afbd46d2a246f1dbcc965a6b1247b10b77f7982c818143aa61fd",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_near_after.png": "22fc75639d06479a51308934ad630d8e04ecdd8374236ad03c8e1cb6fee7697c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_near_before.png": "a44b5855aa4d5a98038939569047f9a181ab91224b60a4e149efb98946ef75e3",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB2_okeya_near_npcoff.png": "9b020ca6bf3e97353c760ce982fb870a75d6abdebd48a185c0dcdc60eceee68b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_high_after.png": "4c7cffe20b84d73af318f2b783a166cc4c56f2303e3370da06d24b549881b4f1",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_high_before.png": "118ae9045f9b34990a6f641b1df4324796e4c0f66e51c31dcaa8123c8788602c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_high_npcoff.png": "5d79393cd06485eeac3b92915c44d01596f4cdf0ff4d4b281e669747c774c759",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_mid_after.png": "3226b3b43d13d4d010340864f7b38ede590ed660fbd042721e8b1144d3569f2c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_mid_before.png": "4771e4dfbbde8f0d23a46f74b2907d9e97b72f1362e5e5690ace29ac8af8d42b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_mid_npcoff.png": "8be6c42da30dca62c9df6cc4a0a4b4ea80f81e90215cdaa90863e12b2e2e692e",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_near_after.png": "544bb48cbd64619e737a7643c8e969460856c2318a1ee832de8c83de08dd0d68",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_near_before.png": "7e17ade478ea4f9a306f831d83ea07831b1d8498e49aee5a862320eb98748490",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB3_hatake_near_npcoff.png": "31b07b44ef1896c11cf2d4f032364ebd6b1b90b83608be2cb8709bd53485cb86",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_high_after.png": "14d9a99746fc3005b8a85e0d287450f443545382d802eeb42fb24ae0cb07f606",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_high_before.png": "a8b75234b62d7df8e8687662a08caf841ef60634ce75f3f23dd96cdc1a710175",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_high_npcoff.png": "d526d2f0b01bedbdaf341ddbddfc86a5d268d92b58eac701ef497c6ae5cd3be5",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_mid_after.png": "258f51f16e20a651aa876ea98cdf534e4269718742aac6577df70a0837aa5d94",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_mid_before.png": "9c82f267d5883bd20cf786ac2483759a80e5547b4cc4d81a443568cbbc56b74c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_mid_npcoff.png": "df09b8c66df719ff094f6dd9a20bd40c276e2f0caa6ef07f06ee4c52b3355a84",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_near_after.png": "d986540a934f7d0fdeec8fab48d3fa93c7492fe6dbb45e4627ba99784311577a",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_near_before.png": "45aa70685d1abaf7fd3c671dffdd30b528569383f3d3f426946f12bfd109aa7f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB4_nizukuri_near_npcoff.png": "81bfa37251b54e6d6616a89b90a287a84308ca2dd2b940cefe3f0ff1591cdf30",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_high_after.png": "d6f8a59c4009722d1a25244c12322abff92cd9e20ff3ca4185d5c6decaff2955",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_high_before.png": "ef97ca6307d640d88d5882e989d211063ff795f6a04c33d4519cd50bc0b7c495",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_high_npcoff.png": "ed3ccc9db69697ce7937c7d9a9ea8ad8c45b3c89a858e7ba8fc207b91df55ac8",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_mid_after.png": "896299cf1ea480981a2b3d830ad0d9ba8946ae19c3f5b1dfec1e7387084455e0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_mid_before.png": "55689589d5aa39fdbc0423cfab647ddac5eef04cff4592775c3e081c584c3fd9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_mid_npcoff.png": "c82242c25e4d6760d96e4c270cc52ad7541f8853f0718e224025495a8041c154",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_near_after.png": "853132d284f87fd1533d2332b5a7247a91e959de194ad3a9ce587615e54c8dd2",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_near_before.png": "0812e7053c043e435fab7ff18893bdb6848202923583878cc0844c0bd4750ed1",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XB5_tsukemono_near_npcoff.png": "7dd71ba3860e63fe4433df18b258b9dd112c5af907a8c02d9abbb05745fdd001",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/top_village_after.png": "880e0e234feba9ed6d36ce8babdc7655c37a781358adad434379980078a4ab4d",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/top_village_before.png": "fe5879c38730076b9e4d13e4a487d6c9edb99fae7e3931cac7c956d1c8705152",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XA1_shukka.jpg": "4bec262bb2ed55cae24c4e200df19d3a56875186631de35a135048425a6c78e0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XA2_teire.jpg": "3a678f744ab0d23c1c5a8b520c24ddfb2e0732e18475de913e30065f7fbc25bd",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XA3_hasa.jpg": "66b41f78464a2536a1483624a14891b76e8d5ff0e1d4794292122609417b0ae1",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XA4_oroshi.jpg": "80defac7082d57ce693fb115e34e3dde2985876f1c1399da36d3a106a53243dd",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XA5_yasumi.jpg": "da4905bed5a691088ab28b623a542eceb00028b0d3212db22af1ef1e377d09d3",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XB1_some.jpg": "af1b92538f0816d4a8dbaf58aefb6040b1624aba035d5ad101603a5725aae4f4",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XB2_okeya.jpg": "34dd8a8e5a92c12e281284b7503588828b1e40c4f656995efa1fc1e7f7d3e2bc",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XB3_hatake.jpg": "c861ed628ee760ca935261682ed43ecb99da818fd2bd37e968016a0aad0863bb",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XB4_nizukuri.jpg": "5e1f6e90492e75f8f854c6542f72f9bf28765da16bbc36a04c089228005ba137",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XB5_tsukemono.jpg": "501dacc5767a07f420f1627054cce852b199ad44d83d1ec45495d637d20992ed",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/distribution.jpg": "d8922939ec48894decbb5c8fdab82dd40c817d94eb62fb225ff478349ad29717",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/npc_on_off.jpg": "c0bcd0e952fb02540949835f8da2412e62e0146d83a1af1240d3843fa7d132c9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneA_overview_mid_npcoff.jpg": "49a9ad46472199b91479583c064c9045ad43ab2e74f5a0add64ffa3b14b69b01",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneA_overview_npcoff.jpg": "5529ffb45eb49885cc2aa87f7b57b5ba8bd97884b66cff190fc4df19c7391ef9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneB_overview_mid_npcoff.jpg": "19ade3303d7e4d63d98324699ee0507dc0297cd473b6c9792930c8cbb6135f92",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneB_overview_npcoff.jpg": "a87b01d37fd33a61bee272a526f619114e95be8082640ddf5641434df26827cf"
+ },
+ "rejected_candidates": {
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_high_after.png": "1aa5c54fc127df301fe4d317057aad41b7a4b0533e60fc78071ce352d5d564a0",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_high_before.png": "88f499e00320931120b9ee8d75e393c184dc174346c71cea5a127f79f7e38ca8",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_high_npcoff.png": "776c3ab4bc548870279b6f3d3f4ea7ae481d0806fd7d14282f55877c41b3090c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_mid_after.png": "77455b63ec05415d06422090e337bc75ca1bebc058d43c9984e183688b1b2050",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_mid_before.png": "b95fdcc982ab1585535f70ba114898e976b77be8fd436550b2efc416433a441b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_mid_npcoff.png": "7245e9b1aad1659193cd355e499560f335befa2cff9b59ba34732ffe87998928",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_near_after.png": "b871319da4b86538e2db3edc64d59f3e30467219e83daa184ff16605bb3cfdfc",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_near_before.png": "eda93295f2427fa5509c86aa4d2630e90ebf4b78c02aa96b5935701425843d21",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC1_araimono_near_npcoff.png": "cfc26ea0116097ad8d66c24abd7ae6fcc5c7352e686260f76d0bacdfae7fd2d3",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_high_after.png": "aaea238a44657a9a85f4dc2aa92fdb785c578931ed8daaddd6a2c2870ddd356b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_high_before.png": "35b57f908a970593260c454a35e7d465543013ff1ae2d22682886541bcf70a15",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_high_npcoff.png": "f3e555f011ba3e792efd9504ed67e496a7abbcae2186868a4469cf2061e6e63f",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_mid_after.png": "431ed5b252c119a054622e4365afd5e1fa23df14f937eecabeac86be885a5bb9",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_mid_before.png": "d77c434f3b194cc3e49ceb5e00be0da6e701ad8da396ead211391c8a6894556c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_mid_npcoff.png": "5df4a361f3383585a5e8598fc96caf8167775c0b6d14428f01375bb4acc3542b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_near_after.png": "2ae40765fd5eb91ffd653183e9258104713638d3188d9932f1da97b8a8839adc",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_near_before.png": "a93c2b4ba02c39fda0c3c47d99f2246c45703bc0ca7641bfedc91a9bdf305156",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC2_hashi_near_npcoff.png": "b8067dc80108509e056a3cd97c25535b93fc99a2d9787a1c2e7a6eb289d5df27",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_high_after.png": "2dc41a2e3c63a3359cee4bbea797400481fa8f821e511a344192eadcdb221b9c",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_high_before.png": "ce85e6739c0c06a64c202d84b3497a196046915df8d5f2667a3be915156d3e48",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_high_npcoff.png": "d7bd011b8c14c7781180395e5644d0ddf3fa3bd401ae8aa8549c18cf13333dd4",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_mid_after.png": "8d199b6d0ff73661fad413c4738973430494a77ff0180bb3e1a3692b152c527d",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_mid_before.png": "d15caba25baee929035551231d32671f205a60255d79cf65b9f2dae9912b2d9b",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_mid_npcoff.png": "f84128ad3f806247d0b98628faedbe47b5543b5f8855a508d718654d37bdd9fc",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_near_after.png": "a1ec682d37f33d2dc0052f8838c9dc7f24416ebbb7b392bf8fe65471f4626b7a",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_near_before.png": "e8bffbc227e8a47665a5b2aece7ab44117a583cb224e27478e99c7f710218097",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_near_npcoff.png": "fe414908493a5b5d53c3df2c1156acd561f8b383739cdab57d749740d76a3edf",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_npc_after.png": "096476b1e874059447b29d3a25563e73079709ba2f220b150a6f13b1a84aa342",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_npc_before.png": "8a81c96326c5ccdcb133ee24b42d97bebd58c3d5055145c7a668d354a7f2655e",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/render/XC3_suiro_npc_npcoff.png": "ad8fce1c47456176f5a608af8440c81315d7abefaeee7d37182b142681878881",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XC1_araimono.jpg": "97e861e98e7ff72dd3491ff5772cd55a85d4d7e40771de183a51993062eddaea",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XC2_hashi.jpg": "632c24783c68f71a067182ad599cf62ce238bfcb92eb2bc1714de4a32882ca82",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/XC3_suiro.jpg": "a9a32c769589c3308fcc42eae3fe9b682abf53c21323a97b5c1b4a2c9d38a138",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_mid_npcoff.jpg": "20b8a4b6479731082a4ca7e890c46f15b90d3ad6825bcd1c96efef9f04d8dec3",
+  "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
+ },
+ "child_seals": {
+  "godot/data/village_v2_p10r4_seal.json": "0c428cfdb2e52e013f7eed65ccc209333949719c195b836f4721f6828367b6a6",
+  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+  "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
+  "godot/data/village_v2_p10r3e_seal.json": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03",
+  "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
+  "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
+  "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
+  "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+  "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+  "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
+  "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+  "godot/data/village_v2_p8_seal.json": "520b6f642643c2142536c6fd817f5684317f9a84db97e617b359c43f9935a85c"
+ }
+}
