@@ -1,0 +1,135 @@
+{
+	"pairs": 2,
+	"renderer": "forward_plus",
+	"toggle": "",
+	"views": {
+		"perf_arrival": {
+			"on": {
+				"cpu_ms": 6.827,
+				"draw_calls": 2804,
+				"gpu_ms": 13.45,
+				"primitives": 2884049,
+				"runs": [
+					{
+						"cpu_ms": 6.8270001411438,
+						"draw_calls": 2804.0,
+						"gpu_ms": 13.4499998092651,
+						"primitives": 2884049.0
+					}
+				]
+			}
+		},
+		"perf_east_edge_high": {
+			"on": {
+				"cpu_ms": 1.211,
+				"draw_calls": 105,
+				"gpu_ms": 5.106,
+				"primitives": 339346,
+				"runs": [
+					{
+						"cpu_ms": 1.21099996566772,
+						"draw_calls": 105.0,
+						"gpu_ms": 5.10599994659424,
+						"primitives": 339346.0
+					}
+				]
+			}
+		},
+		"perf_east_edge_tps": {
+			"on": {
+				"cpu_ms": 1.121,
+				"draw_calls": 53,
+				"gpu_ms": 6.522,
+				"primitives": 368289,
+				"runs": [
+					{
+						"cpu_ms": 1.12100005149841,
+						"draw_calls": 53.0,
+						"gpu_ms": 6.52199983596802,
+						"primitives": 368289.0
+					}
+				]
+			}
+		},
+		"perf_main_street": {
+			"on": {
+				"cpu_ms": 6.204,
+				"draw_calls": 2214,
+				"gpu_ms": 8.116,
+				"primitives": 1905950,
+				"runs": [
+					{
+						"cpu_ms": 6.2039999961853,
+						"draw_calls": 2214.0,
+						"gpu_ms": 8.11600017547607,
+						"primitives": 1905950.0
+					}
+				]
+			}
+		},
+		"perf_north_ridge_out": {
+			"on": {
+				"cpu_ms": 1.133,
+				"draw_calls": 41,
+				"gpu_ms": 5.367,
+				"primitives": 197741,
+				"runs": [
+					{
+						"cpu_ms": 1.13300001621246,
+						"draw_calls": 41.0,
+						"gpu_ms": 5.36700010299683,
+						"primitives": 197741.0
+					}
+				]
+			}
+		},
+		"perf_sando_foot": {
+			"on": {
+				"cpu_ms": 3.447,
+				"draw_calls": 1016,
+				"gpu_ms": 10.489,
+				"primitives": 1540916,
+				"runs": [
+					{
+						"cpu_ms": 3.44700002670288,
+						"draw_calls": 1016.0,
+						"gpu_ms": 10.4890003204346,
+						"primitives": 1540916.0
+					}
+				]
+			}
+		},
+		"perf_village_high": {
+			"on": {
+				"cpu_ms": 5.249,
+				"draw_calls": 1983,
+				"gpu_ms": 11.331,
+				"primitives": 1958466,
+				"runs": [
+					{
+						"cpu_ms": 5.24900007247925,
+						"draw_calls": 1983.0,
+						"gpu_ms": 11.331000328064,
+						"primitives": 1958466.0
+					}
+				]
+			}
+		},
+		"perf_west_ridge_out": {
+			"on": {
+				"cpu_ms": 1.043,
+				"draw_calls": 59,
+				"gpu_ms": 5.335,
+				"primitives": 218422,
+				"runs": [
+					{
+						"cpu_ms": 1.04299998283386,
+						"draw_calls": 59.0,
+						"gpu_ms": 5.33500003814697,
+						"primitives": 218422.0
+					}
+				]
+			}
+		}
+	}
+}

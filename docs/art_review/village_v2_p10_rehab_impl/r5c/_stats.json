@@ -1,0 +1,152 @@
+{
+	"r5c_arrival_n_a.png": {
+		"frac_luma_lt_0.2": 0.102,
+		"mean_luma_srgb": 0.47,
+		"mean_sat": 0.292
+	},
+	"r5c_arrival_n_b.png": {
+		"frac_luma_lt_0.2": 0.102,
+		"mean_luma_srgb": 0.472,
+		"mean_sat": 0.294
+	},
+	"r5c_e_crosssouth_axis_a.png": {
+		"frac_luma_lt_0.2": 0.084,
+		"mean_luma_srgb": 0.484,
+		"mean_sat": 0.268
+	},
+	"r5c_e_crosssouth_axis_b.png": {
+		"frac_luma_lt_0.2": 0.082,
+		"mean_luma_srgb": 0.497,
+		"mean_sat": 0.268
+	},
+	"r5c_e_edge_farm_tps_a.png": {
+		"frac_luma_lt_0.2": 0.017,
+		"mean_luma_srgb": 0.512,
+		"mean_sat": 0.23
+	},
+	"r5c_e_edge_farm_tps_b.png": {
+		"frac_luma_lt_0.2": 0.005,
+		"mean_luma_srgb": 0.595,
+		"mean_sat": 0.214
+	},
+	"r5c_e_edge_high_a.png": {
+		"frac_luma_lt_0.2": 0.005,
+		"mean_luma_srgb": 0.408,
+		"mean_sat": 0.201
+	},
+	"r5c_e_edge_high_b.png": {
+		"frac_luma_lt_0.2": 0.0,
+		"mean_luma_srgb": 0.607,
+		"mean_sat": 0.203
+	},
+	"r5c_e_farmpath4_tps_a.png": {
+		"frac_luma_lt_0.2": 0.006,
+		"mean_luma_srgb": 0.506,
+		"mean_sat": 0.231
+	},
+	"r5c_e_farmpath4_tps_b.png": {
+		"frac_luma_lt_0.2": 0.001,
+		"mean_luma_srgb": 0.566,
+		"mean_sat": 0.224
+	},
+	"r5c_e_river_exit_tps_a.png": {
+		"frac_luma_lt_0.2": 0.179,
+		"mean_luma_srgb": 0.345,
+		"mean_sat": 0.333
+	},
+	"r5c_e_river_exit_tps_b.png": {
+		"frac_luma_lt_0.2": 0.18,
+		"mean_luma_srgb": 0.36,
+		"mean_sat": 0.325
+	},
+	"r5c_hill_shrine_out_a.png": {
+		"frac_luma_lt_0.2": 0.604,
+		"mean_luma_srgb": 0.252,
+		"mean_sat": 0.37
+	},
+	"r5c_hill_shrine_out_b.png": {
+		"frac_luma_lt_0.2": 0.604,
+		"mean_luma_srgb": 0.252,
+		"mean_sat": 0.369
+	},
+	"r5c_n_ridge_out_tps_a.png": {
+		"frac_luma_lt_0.2": 0.429,
+		"mean_luma_srgb": 0.251,
+		"mean_sat": 0.372
+	},
+	"r5c_n_ridge_out_tps_b.png": {
+		"frac_luma_lt_0.2": 0.385,
+		"mean_luma_srgb": 0.312,
+		"mean_sat": 0.352
+	},
+	"r5c_n_river_exit_tps_a.png": {
+		"frac_luma_lt_0.2": 0.057,
+		"mean_luma_srgb": 0.397,
+		"mean_sat": 0.35
+	},
+	"r5c_n_river_exit_tps_b.png": {
+		"frac_luma_lt_0.2": 0.015,
+		"mean_luma_srgb": 0.532,
+		"mean_sat": 0.329
+	},
+	"r5c_s_canal_exit_high_a.png": {
+		"frac_luma_lt_0.2": 0.308,
+		"mean_luma_srgb": 0.301,
+		"mean_sat": 0.286
+	},
+	"r5c_s_canal_exit_high_b.png": {
+		"frac_luma_lt_0.2": 0.299,
+		"mean_luma_srgb": 0.404,
+		"mean_sat": 0.283
+	},
+	"r5c_s_canal_exit_tps_a.png": {
+		"frac_luma_lt_0.2": 0.109,
+		"mean_luma_srgb": 0.412,
+		"mean_sat": 0.259
+	},
+	"r5c_s_canal_exit_tps_b.png": {
+		"frac_luma_lt_0.2": 0.082,
+		"mean_luma_srgb": 0.468,
+		"mean_sat": 0.245
+	},
+	"r5c_s_entry_road_south_a.png": {
+		"frac_luma_lt_0.2": 0.079,
+		"mean_luma_srgb": 0.452,
+		"mean_sat": 0.248
+	},
+	"r5c_s_entry_road_south_b.png": {
+		"frac_luma_lt_0.2": 0.062,
+		"mean_luma_srgb": 0.504,
+		"mean_sat": 0.234
+	},
+	"r5c_village_high_e_a.png": {
+		"frac_luma_lt_0.2": 0.001,
+		"mean_luma_srgb": 0.506,
+		"mean_sat": 0.151
+	},
+	"r5c_village_high_e_b.png": {
+		"frac_luma_lt_0.2": 0.0,
+		"mean_luma_srgb": 0.572,
+		"mean_sat": 0.161
+	},
+	"r5c_village_high_s_a.png": {
+		"frac_luma_lt_0.2": 0.0,
+		"mean_luma_srgb": 0.558,
+		"mean_sat": 0.126
+	},
+	"r5c_village_high_s_b.png": {
+		"frac_luma_lt_0.2": 0.0,
+		"mean_luma_srgb": 0.604,
+		"mean_sat": 0.132
+	},
+	"r5c_w_ridge_out_tps_a.png": {
+		"frac_luma_lt_0.2": 0.526,
+		"mean_luma_srgb": 0.226,
+		"mean_sat": 0.39
+	},
+	"r5c_w_ridge_out_tps_b.png": {
+		"frac_luma_lt_0.2": 0.421,
+		"mean_luma_srgb": 0.331,
+		"mean_sat": 0.347
+	}
+}
