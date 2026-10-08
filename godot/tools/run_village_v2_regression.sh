@@ -152,5 +152,7 @@ run "P10 R6a 材質亮度基準＋街區調色盤 Pilot plan gate＋反向 9（�
 run "P10 R6a 材質亮度基準 Pilot 場景級（root EdgeClosureP10 の次に AlbedoPilotP10・Pilot 建物の來源材質表面全覆寫・Pilot 外 0・enabled 開關還原・_matlib／kit 來源雜湊＝build 時；非 headless）" ALB --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --scene
 run "P10 R5a Ground Pilot plan gate＋反向 7（封存 ground.gdshader 雜湊＝matlib.json・補丁 6 段逐字・pilot shader 可重現・田格移除・discard 只在外緣侵蝕／參道挖洞・新參數預設＝舊行為・道路參數在核准範圍・外緣實測 sd 0.08–0.45 m）" GRD --headless --path . --script res://tools/verify_village_v2_ground_pilot.gd
 run "P10 R5a Ground Pilot 場景級（AlbedoPilotP10 の次に GroundPilotP10・地形 4＋道路 4 換 pilot shader・原參數逐一保留・非 Pilot 道路不變・enabled 開關・雜湊；非 headless）" GRD --path . --script res://tools/verify_village_v2_ground_pilot.gd -- --scene
+run "P10 R5b Water Pilot plan gate＋反向 6（水車 2 柄杓 16 在輪面與東軸承柱間・受け樋在迴轉圈內接 P8 樋頭・樋頭架台在軸承柱外落水渠底／小舟浮於水位・不撞石段・水深・離石段 ≤ 1.6・迎流／繫船杭落地・綱長／届いた荷落地）" WLF --headless --path . --script res://tools/verify_village_v2_water_life.gd
+run "P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・柄杓掛在水車 2 轉子下且隨輪轉・水車 1／3 不動・enabled 開關・碰撞 4；非 headless）" WLF --path . --script res://tools/verify_village_v2_water_life.gd -- --scene
 echo "回歸失敗項目：$fail"
 exit $fail

@@ -1,0 +1,82 @@
+{
+	"r5b_ww2_chute_a.png": {
+		"frac_luma_lt_0.2": 0.107,
+		"mean_luma_srgb": 0.452,
+		"mean_sat": 0.271
+	},
+	"r5b_ww2_chute_b.png": {
+		"frac_luma_lt_0.2": 0.107,
+		"mean_luma_srgb": 0.452,
+		"mean_sat": 0.271
+	},
+	"wlf_boat_12m_a.png": {
+		"frac_luma_lt_0.2": 0.015,
+		"mean_luma_srgb": 0.489,
+		"mean_sat": 0.263
+	},
+	"wlf_boat_12m_b.png": {
+		"frac_luma_lt_0.2": 0.013,
+		"mean_luma_srgb": 0.49,
+		"mean_sat": 0.263
+	},
+	"wlf_boat_high_a.png": {
+		"frac_luma_lt_0.2": 0.033,
+		"mean_luma_srgb": 0.32,
+		"mean_sat": 0.36
+	},
+	"wlf_boat_high_b.png": {
+		"frac_luma_lt_0.2": 0.041,
+		"mean_luma_srgb": 0.317,
+		"mean_sat": 0.366
+	},
+	"wlf_boat_river_a.png": {
+		"frac_luma_lt_0.2": 0.006,
+		"mean_luma_srgb": 0.431,
+		"mean_sat": 0.328
+	},
+	"wlf_boat_river_b.png": {
+		"frac_luma_lt_0.2": 0.005,
+		"mean_luma_srgb": 0.433,
+		"mean_sat": 0.326
+	},
+	"wlf_boat_tps_a.png": {
+		"frac_luma_lt_0.2": 0.015,
+		"mean_luma_srgb": 0.472,
+		"mean_sat": 0.275
+	},
+	"wlf_boat_tps_b.png": {
+		"frac_luma_lt_0.2": 0.01,
+		"mean_luma_srgb": 0.477,
+		"mean_sat": 0.27
+	},
+	"wlf_ww2_8m_a.png": {
+		"frac_luma_lt_0.2": 0.167,
+		"mean_luma_srgb": 0.483,
+		"mean_sat": 0.255
+	},
+	"wlf_ww2_8m_b.png": {
+		"frac_luma_lt_0.2": 0.167,
+		"mean_luma_srgb": 0.484,
+		"mean_sat": 0.255
+	},
+	"wlf_ww2_east_a.png": {
+		"frac_luma_lt_0.2": 0.214,
+		"mean_luma_srgb": 0.409,
+		"mean_sat": 0.309
+	},
+	"wlf_ww2_east_b.png": {
+		"frac_luma_lt_0.2": 0.216,
+		"mean_luma_srgb": 0.409,
+		"mean_sat": 0.31
+	},
+	"wlf_ww2_high_a.png": {
+		"frac_luma_lt_0.2": 0.105,
+		"mean_luma_srgb": 0.326,
+		"mean_sat": 0.307
+	},
+	"wlf_ww2_high_b.png": {
+		"frac_luma_lt_0.2": 0.107,
+		"mean_luma_srgb": 0.324,
+		"mean_sat": 0.31
+	}
+}

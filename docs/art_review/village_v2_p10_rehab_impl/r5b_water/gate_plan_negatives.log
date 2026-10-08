@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WLF] heights {"bent_bed":[-1.24327409267426,-1.11990821361542],"kago_ground":0.576546173095703,"kago_p":"(523.0731, -97.48479)","kago_spread":0.0715599060058594,"post_ground":-0.211967468261719}
+[WLF] PASS 柄杓 16：輪面與東軸承柱之間（越界角點 0）、半徑 2.52–3.00 m（輪 3.0、受け樋最大 2.44）
+[WLF] PASS 受け樋：x 2.245–3.245（輪面 2.22）、底 4.885→4.835（往樋頭降 50 mm）、樋頭接口 Δy 0.014 m
+[WLF] PASS 樋頭架台 2 柱：在東軸承柱（x 2.70）外 ≥ 0.05、腳埋水渠底 0.30 m（底 [-1.24, -1.12]）、頭＝P8 枕木下
+[WLF] PASS 小舟 7.2×1.5 m：吃水 0.12、船體碰撞 0、船底下水深 0.43 m、離石段 1.53 m、船首與迎流夾角 0.0°
+[WLF] PASS 繫船杭：地面差 0.000 m、地上部碰撞 0、綱長 3.70 m
+[WLF] PASS 届いた荷（st_kago_tsumi 重用）：放在四角最高點 −0.02（中心地面差 -0.020、四角起伏 0.072 ≤ 0.15）、地上部碰撞 0
+[WLF] 永久反向（每案必須讓 gate 失敗）
+[WLF]   N1 柄杓加厚撞東軸承柱：PASS（gate 正確失敗）
+[WLF]   N2 受け樋抬高進入柄杓迴轉圈：PASS（gate 正確失敗）
+[WLF]   N3 架台柱立在東軸承柱位置：PASS（gate 正確失敗）
+[WLF]   N4 小舟壓上石段：PASS（gate 正確失敗）
+[WLF]   N5 船過大（14 × 3 m，港口船）：PASS（gate 正確失敗）
+[WLF]   N6 繫船杭浮空 0.5 m：PASS（gate 正確失敗）
+[WLF] PASS 反向 6/6
+[WLF] 結果：0 項失敗
