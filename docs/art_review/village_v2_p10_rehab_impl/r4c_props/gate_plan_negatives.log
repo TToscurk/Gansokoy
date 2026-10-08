@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[R4C] PASS 竿×半束 最小淨距 0.016 m（≥ 0.010，0 穿插）
+[R4C] PASS 束頭（結び）坐在竿上：竿×束頭 0.001 m（−0.001～0.010＝接觸、不穿）
+[R4C] PASS 稲束×稲束（不同束）最小淨距 0.011 m（≥ 0.005）
+[R4C] PASS 脚×稲束 最小淨距 0.063 m（≥ 0.010）
+[R4C] PASS 網格＝規格（AABB＝manifest、材質＝V2_Wood／ST_Street、外形與 st_hasa 同尺度）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[R4C] PASS A2 籠／千歯扱き節點存在
+[R4C] PASS A2 背負い籠 東へ 1.0 m：視線（農道→千歯）距籠 0.86 m（原 0.07）≥ 0.45、落地、碰撞 0
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[R4C]   N4 籠不動（仍擋千歯扱き）：PASS（gate 正確失敗）
+[R4C] 永久反向（每案必須讓 gate 失敗）
+[R4C]   N1 舊 st_hasa 稲束（竿穿稲束）：PASS（gate 正確失敗）
+[R4C]   N2 上段束長 0.60（穗端壓下段束頭）：PASS（gate 正確失敗）
+[R4C]   N3 稲束掛在 X 脚上：PASS（gate 正確失敗）
+[R4C] PASS 反向 3/3
+[R4C] 結果：0 項失敗

@@ -1,0 +1,42 @@
+{
+ "_note": "build_hasa_v2.py 產生（P10 R4c Pilot）；Godot 端 tools/verify_village_v2_prop_fix.gd -- --convert 轉成 mesh/<名>.res（材質＝_matlib V2_Wood／street_kit ST_Street）。",
+ "materials": [
+  "V2_Wood",
+  "ST_Street"
+ ],
+ "modules": {
+  "st_hasa_v2": {
+   "tris": 1424,
+   "dims": [
+    -1.8342,
+    -0.0072,
+    -0.3344,
+    1.8342,
+    1.9072,
+    0.3344
+   ],
+   "mats": [
+    "ST_Street",
+    "V2_Wood"
+   ],
+   "note": "稲架 v2 3.0 × 0.8（高 1.90）：X 脚 3 組＋横竿 2 段（1.10／1.60）、稲束を竿に跨がせて掛ける（上段 12・下段 10、穂が下、竿と束は非貫通）"
+  },
+  "st_hasa_v2_l1": {
+   "tris": 584,
+   "dims": [
+    -1.8342,
+    -0.0072,
+    -0.3344,
+    1.8342,
+    1.9072,
+    0.3344
+   ],
+   "mats": [
+    "ST_Street",
+    "V2_Wood"
+   ],
+   "note": "稲架 v2 3.0 × 0.8（高 1.90）：X 脚 3 組＋横竿 2 段（1.10／1.60）、稲束を竿に跨がせて掛ける（上段 12・下段 10、穂が下、竿と束は非貫通）"
+  }
+ },
+ "total_tris": 2008
+}

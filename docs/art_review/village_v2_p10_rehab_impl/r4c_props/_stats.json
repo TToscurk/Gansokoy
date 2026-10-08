@@ -1,0 +1,62 @@
+{
+	"r4c_dakkoku_A2_a.png": {
+		"frac_luma_lt_0.2": 0.02,
+		"mean_luma_srgb": 0.469,
+		"mean_sat": 0.273
+	},
+	"r4c_dakkoku_A2_b.png": {
+		"frac_luma_lt_0.2": 0.019,
+		"mean_luma_srgb": 0.469,
+		"mean_sat": 0.273
+	},
+	"r4c_farmedge_hasa_zuka_a.png": {
+		"frac_luma_lt_0.2": 0.076,
+		"mean_luma_srgb": 0.42,
+		"mean_sat": 0.265
+	},
+	"r4c_farmedge_hasa_zuka_b.png": {
+		"frac_luma_lt_0.2": 0.075,
+		"mean_luma_srgb": 0.421,
+		"mean_sat": 0.266
+	},
+	"r4c_hasa_A1_10m_a.png": {
+		"frac_luma_lt_0.2": 0.108,
+		"mean_luma_srgb": 0.44,
+		"mean_sat": 0.253
+	},
+	"r4c_hasa_A1_10m_b.png": {
+		"frac_luma_lt_0.2": 0.108,
+		"mean_luma_srgb": 0.44,
+		"mean_sat": 0.253
+	},
+	"r4c_hasa_A1_a.png": {
+		"frac_luma_lt_0.2": 0.052,
+		"mean_luma_srgb": 0.433,
+		"mean_sat": 0.265
+	},
+	"r4c_hasa_A1_b.png": {
+		"frac_luma_lt_0.2": 0.051,
+		"mean_luma_srgb": 0.433,
+		"mean_sat": 0.265
+	},
+	"r4c_hasa_A1_close_a.png": {
+		"frac_luma_lt_0.2": 0.088,
+		"mean_luma_srgb": 0.448,
+		"mean_sat": 0.275
+	},
+	"r4c_hasa_A1_close_b.png": {
+		"frac_luma_lt_0.2": 0.083,
+		"mean_luma_srgb": 0.449,
+		"mean_sat": 0.277
+	},
+	"r4c_hasa_XA3_a.png": {
+		"frac_luma_lt_0.2": 0.012,
+		"mean_luma_srgb": 0.48,
+		"mean_sat": 0.271
+	},
+	"r4c_hasa_XA3_b.png": {
+		"frac_luma_lt_0.2": 0.01,
+		"mean_luma_srgb": 0.48,
+		"mean_sat": 0.273
+	}
+}

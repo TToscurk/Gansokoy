@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[R4C] PASS 載入 res://assets/village_v2/r4c_kit/src/r4c_kit.glb（需先 godot --headless --import）
+[R4C] PASS glb 內找到 st_hasa_v2
+[R4C] PASS st_hasa_v2 面 0 材質名 V2_Wood → res://assets/village_v2/_matlib/V2_Wood.tres
+[R4C] PASS st_hasa_v2 面 1 材質名 ST_Street → res://assets/village_v2/street_kit/ST_Street.tres
+[R4C] PASS 存 res://assets/village_v2/r4c_kit/mesh/st_hasa_v2.res（AABB [P: (-1.83425, -0.007185, -0.334435), S: (3.6685, 1.914369, 0.66887)]）
+[R4C] PASS glb 內找到 st_hasa_v2_l1
+[R4C] PASS st_hasa_v2_l1 面 0 材質名 V2_Wood → res://assets/village_v2/_matlib/V2_Wood.tres
+[R4C] PASS st_hasa_v2_l1 面 1 材質名 ST_Street → res://assets/village_v2/street_kit/ST_Street.tres
+[R4C] PASS 存 res://assets/village_v2/r4c_kit/mesh/st_hasa_v2_l1.res（AABB [P: (-1.83425, -0.007185, -0.334435), S: (3.6685, 1.914369, 0.66887)]）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
