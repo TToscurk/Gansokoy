@@ -15,6 +15,7 @@ const CUE := preload("res://tools/village_v2_entrance_cue_lib.gd")
 const VG := preload("res://tools/verify_village_v2_population.gd")
 const VA := preload("res://tools/verify_p10_activity.gd")
 const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
+const PS := preload("res://tools/village_v2_population_scope.gd")   # 2026-10-08 scope-aware count fix（使用者承認）
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const VIEWS := "res://tools/shot_village_v2_population_core_views.json"
 const R3C_SEAL := "res://data/village_v2_p10r3c_seal.json"
@@ -633,8 +634,16 @@ func _scene(v: Node3D) -> void:
 	var base := v.get_node_or_null("Population/PopulationP10")
 	var bodies := core.find_children("*", "AnimatableBody3D", true, false) if core else []
 	var all_b := v.get_node("Population").find_children("*", "AnimatableBody3D", true, false)
-	check("人數：CoreP10 %d（＝配役 %d）、Population 全体 %d（R3b 16＋R3d）" % [bodies.size(), CL.CAST.size(), all_b.size()],
-		core != null and base != null and bodies.size() == CL.CAST.size() and all_b.size() == 16 + CL.CAST.size(), "count")
+	# scope-aware（2026-10-08 使用者承認）：R3d が数えるのは自分の 39 の身元だけ（R3b PopulationP10 16＋R3d CoreP10 23、snapshot）。
+	#   場景全体の NPC 総数（R3e 外圍などを含む）では判定しない。
+	var core_b := PS.bodies(v, PS.CORE_LAYERS)
+	var w_core := PS.want("core")
+	var cbad := PS.mismatch(core_b, w_core)
+	check("人數（R3d scope：R3b PopulationP10＋R3d CoreP10 の身元 %d〔snapshot〕だけ・他の層は数えない）：CoreP10 %d（＝配役 %d）、scope %d 人；不符 %s（INFO：Population 全体 %d）" % [
+		w_core.size(), bodies.size(), CL.CAST.size(), core_b.size(), str(cbad.slice(0, 4)), all_b.size()],
+		core != null and base != null and bodies.size() == CL.CAST.size() and w_core.size() == 39 and cbad.is_empty(), "count")
+	var ng := PS.negatives(core_b, w_core)
+	check("人數 反向（記憶體内）：%s → 全部検出" % PS.neg_txt(ng), PS.neg_ok(ng), "count_neg")
 	var act := v.get_node_or_null("Population/" + CL.ACT_NODE)
 	var ebad := []
 	var entries: Array = act.get("entries") if act else []
@@ -813,6 +822,21 @@ func _scene(v: Node3D) -> void:
 		if float(s.trav) < 3.0 or not bool(s.rev) or float(s.xz) > 0.05 or float(s.y) > 0.03:
 			wbad.append("%s 移動 %.1f 折返 %s XZ %.3f Y %.3f" % [b.name, s.trav, s.rev, s.xz, s.y])
 	check("歩く人 %d：30 秒で移動・折返し・路線 XZ ≤ 0.05・高さ ≤ 0.03 m（違反 %s）" % [walk.size(), str(wbad)], wbad.is_empty() and walk.size() >= 1, "walk")
+	# R3d 単獨（R3e の層を外した場景）でも 39 人を同じ規則で検証できる：外圍の層を一時的に外して scope 判定を再実行 → 戻す
+	var pop := v.get_node("Population")
+	var held := []
+	for nm in PS.OUTER_LAYERS + ["ActivityOuterP10"]:
+		var o := pop.get_node_or_null(String(nm))
+		if o:
+			held.append([o, o.get_index()])
+			pop.remove_child(o)
+	var alone := PS.mismatch(PS.bodies(v, PS.CORE_LAYERS), w_core)
+	var alone_all := pop.find_children("*", "AnimatableBody3D", true, false).size()
+	for h: Array in held:
+		pop.add_child(h[0])
+		pop.move_child(h[0], int(h[1]))
+	check("R3d 単獨（R3e の層 %d 個を外した場景）：scope 判定 不符 %s・その時の Population 全体 %d（＝39）——外圍の有無で R3d の判定が変わらない" % [held.size(), str(alone), alone_all],
+		alone.is_empty() and alone_all == 39, "count_alone")
 
 
 func _run() -> void:

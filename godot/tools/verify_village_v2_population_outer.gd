@@ -15,6 +15,7 @@ const OL := preload("res://tools/village_v2_population_outer_lib.gd")
 const VG := preload("res://tools/verify_village_v2_population.gd")
 const VA := preload("res://tools/verify_p10_activity.gd")
 const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
+const PS := preload("res://tools/village_v2_population_scope.gd")   # 2026-10-08 scope-aware count fix（使用者承認）
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const VIEWS := "res://tools/shot_village_v2_population_outer_views.json"
 const R3C_SEAL := "res://data/village_v2_p10r3c_seal.json"
@@ -612,8 +613,18 @@ func _scene(v: Node3D) -> void:
 	var outer := v.get_node_or_null("Population/" + OL.NODE_NAME)
 	var bodies := outer.find_children("*", "AnimatableBody3D", true, false) if outer else []
 	var all_b := v.get_node("Population").find_children("*", "AnimatableBody3D", true, false)
-	check("人數：OuterP10 %d（＝配役 %d）、Population 全体 %d（核心 39＋外圍）" % [bodies.size(), OL.CAST.size(), all_b.size()],
-		bodies.size() == OL.CAST.size() and all_b.size() == 39 + OL.CAST.size(), "count")
+	# scope-aware（2026-10-08 使用者承認）：R3e＝外圍 12 の身元（snapshot）、最終の村人口＝Population 全体の身元が核心 39＋外圍 12＝51 と一致（scope 外の NPC・重複なし）
+	var o_b := PS.bodies(v, PS.OUTER_LAYERS)
+	var w_out := PS.want("outer")
+	var w_vil := PS.want("village")
+	var obad := PS.mismatch(o_b, w_out)
+	var vbad := PS.mismatch(all_b, w_vil)
+	check("人數（R3e scope：OuterP10 の身元 %d〔snapshot〕）：%d 人（＝配役 %d）・不符 %s；最終の村人口（Population 全体＝R3d 39＋R3e 12＝%d の身元）：%d 人・不符 %s" % [
+		w_out.size(), o_b.size(), OL.CAST.size(), str(obad.slice(0, 4)), w_vil.size(), all_b.size(), str(vbad.slice(0, 4))],
+		bodies.size() == OL.CAST.size() and w_out.size() == 12 and w_vil.size() == 51 and obad.is_empty() and vbad.is_empty(), "count")
+	var ng_o := PS.negatives(o_b, w_out)
+	var ng_v := PS.negatives(all_b, w_vil)
+	check("人數 反向（記憶體内）：外圍 %s・村人口 %s → 全部検出" % [PS.neg_txt(ng_o), PS.neg_txt(ng_v)], PS.neg_ok(ng_o) and PS.neg_ok(ng_v), "count_neg")
 	var act := v.get_node_or_null("Population/" + OL.ACT_NODE)
 	var entries: Array = act.get("entries") if act else []
 	var ebad := []

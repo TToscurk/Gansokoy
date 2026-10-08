@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[CORE] PASS 掛載：Population の PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10（各 1 つ、この順；位置 [7201139, 7201230, 7201317, 7201396, 7201496]）、入口 cue 2 件
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[CORE] PASS 人數（R3d scope：R3b PopulationP10＋R3d CoreP10 の身元 39〔snapshot〕だけ・他の層は数えない）：CoreP10 23（＝配役 23）、scope 39 人；不符 []（INFO：Population 全体 51）
+[CORE] PASS 人數 反向（記憶體内）：多一人 ["余分 X99_extra", "人数 40≠39"]／少一人 ["欠け M1", "人数 38≠39"]／身元重複 ["重複 M1×2", "欠け M2"] → 全部検出
+[CORE] PASS Activity：10 件（＝割り当て 10）が承認 clip を再生、道具が見える（違反 []）
+[CORE] PASS 道具が体に付いている（木箱中心↔両手 ≤ 0.32・杯↔左手 ≤ 0.12・縁台↔腰 水平 ≤ 0.45 m；違反 []）
+[CORE] PASS 縁台・木箱が屋台・建物の衝突體と重ならない（違反 []）
+[CORE] PASS 逐フレーム（30 fps・clip 全長、R3c と同じ基準）：clip／道具が妥当・足の rest 誤差 < 0.012・道具が描画三角形に入らない・木箱／縁台の食い込み < 0.02・縁台の脚が床に乗る < 0.055 m（C2_shufu_f01 310 f, C5_shufu_f01 310 f, C23_yakusou_f01 180 f, C12_yaoya_m01 191 f, C11_nunoya_f01 310 f, C13_shufu_f01 310 f, C17_chaya_f01 267 f, C20_kozo_m01 34 f, C21_nunoya_f01 310 f, C22_yakusou_f01 1350 f；違反 []）
+[CORE] PASS 審圖鏡位 11：同一モデルが同じ鏡頭に 3 人以上いない、各鏡位に人が見える（1_market_tps 4 人、2_market_west_tps 5 人、3_main_street_tps 10 人、4_market_high 9 人、5_walk_through 8 人、6_mouth_from_south 11 人、7_mouth_from_north 7 人、8_izakaya 5 人、9_terakoya 3 人、10_mouth_close 8 人、11_mouth_motion 12 人；違反 []）
+[CORE] PASS 歩く人 2：30 秒で移動・折返し・路線 XZ ≤ 0.05・高さ ≤ 0.03 m（違反 []）
+[CORE] PASS R3d 単獨（R3e の層 2 個を外した場景）：scope 判定 不符 []・その時の Population 全体 39（＝39）——外圍の有無で R3d の判定が変わらない
+[CORE] 結果：0 項失敗（scene）

@@ -397,12 +397,13 @@
  "frozen": {
   "godot/tools/village_v2_population_outer_lib.gd": "16a727b3f1de100e655f74620aa34485bcd3aec7e3dc8f5a61f1f8f8a63a2602",
   "godot/scripts/npc_activity_outer.gd": "c600c2b3ce9e1cd149fd335a6dcda0c1bdda2f2f30a901e1c8d9bf0d73c00153",
-  "godot/tools/verify_village_v2_population_outer.gd": "8900a3ad5ee45a22175b87d218a967308bd3747c87cc998d00d6fc6c9f6df136",
+  "godot/tools/verify_village_v2_population_outer.gd": "c2c11934eb9cf8eacd943ea6f89710cb1298bdd591322fc789a0471bdffe29e4",
   "godot/tools/shot_p10_population_outer.gd": "7b250d6f8c0fc170efebf2482a1fd3938426f05ef3f15120a387225c121d1d5d",
   "godot/tools/shot_village_v2_population_outer_views.json": "a0c3192f2fea8e0ff4643d28f1e2116ea31b0a2625b7a7aa1dc55d6fe8673ba6",
   "godot/maps/village_v2/gen/population_outer_p10.tscn": "8123adbd271ecd613a1d6cee13d096a81eba440457e6168f9f8508fe46a3c818",
   "godot/data/village_v2_p10r3e_snapshot.json": "2ea45f40e51f1492f8bd7e318625de478b1c91b5523ad5a9667bef65042fd9c9",
-  "tools/seal_p10r3e.py": "833757d1a5de7f2d687c1a2c3cd77137766b6787e16e6a6b6e48d8c367332df9"
+  "tools/seal_p10r3e.py": "833757d1a5de7f2d687c1a2c3cd77137766b6787e16e6a6b6e48d8c367332df9",
+  "godot/tools/village_v2_population_scope.gd": "a68250d3ccffba626d5d164cdfc2192661bc4e1c9c64a07c726ee3091f60ac4f"
  },
  "evidence": {
   "docs/art_review/village_v2_p10_population/outer_r1/gate/capture.log": "d7f317b69bb73e7db6f52ea77440b61b2c7ccb13e75eb16071afc0159df350f4",
@@ -419,7 +420,8 @@
   "docs/art_review/village_v2_p10_population/outer_r1/gate/plan.log": "8f07b8900ec6a2db3426493af601f8427d5231a3aa2d95370c8c5db8e17f59cb",
   "docs/art_review/village_v2_p10_population/outer_r1/gate/scene.log": "dbcfe57f15768c6e22584b9f861265059c39b34c0a131aa5f5baac592fc0060b",
   "docs/art_review/village_v2_p10_population/outer_r1/render/route_counts.json": "c5571a87879d7486adb355fbf7e2943d5706a9b6c2d5a3d5346288d2c17ccba4",
-  "docs/art_review/village_v2_p10_population/outer_r1/review/README.md": "3af50df2335147d4b00f67ac8a95223a76fb211b9961d7693b60827077af6055"
+  "docs/art_review/village_v2_p10_population/outer_r1/review/README.md": "3af50df2335147d4b00f67ac8a95223a76fb211b9961d7693b60827077af6055",
+  "docs/art_review/village_v2_p10_population/outer_r1/gate/scene_scope_fix_20261008.log": "8b511e3c943b8cc903f6ac39db9293147b2969bf27e78321fa055895442cb6c4"
  },
  "art_review_images": {
   "docs/art_review/village_v2_p10_population/outer_r1/render/1_market_core_after.png": "fa17623e397de6de924a0262816e31c8c817a1ed4bbf6c7723afd0603a164cb3",
@@ -455,9 +457,43 @@
   "docs/art_review/village_v2_p10_population/outer_r1/review/population_map.png": "74dfdb251f2f175bfa352377d0c982e37ee03ff459ce7b455334cf5c427736b7"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3d_seal.json": "6261de507438865bd89aac586a60b3262a6989e90663472e39ab1feb4a69c88a",
+  "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
   "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
   "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
- }
+ },
+ "reseal_history": [
+  {
+   "at": "2026-10-08",
+   "kind": "SCOPE_AWARE_COUNT_FIX",
+   "approved_by": "user",
+   "approval_source": "使用者 2026-10-08：「R3d 的人數檢查確實是驗證器設計錯誤，應該現在修正，不必留到 P12。」「R3d Core 39・R3e Outer 12・最終村莊人口 51」「R3d 單獨載入時仍必須能驗證 39 人」「核心驗證應檢查自己的 39 個 identity、位置與配置，不能拿整張場景的 NPC 總數來判斷」",
+   "reason": "scene gate の「人數」が Population 全体の NPC 總數（R3d＝16＋23、R3e＝39＋12）で判定していた：R3e 外圍の掛載で R3d が FAIL（R3e 封存時は --seal のみ実行で未検出）。scope 別の身元検査へ：R3d＝R3b PopulationP10＋R3d CoreP10 の snapshot 身元 39、R3e＝OuterP10 の snapshot 身元 12＋最終村人口 51（Population 全体の身元＝両 snapshot の和、scope 外・重複なし）。",
+   "checks_added": [
+    "count（scope 別の身元：人数・欠け・余分・重複・model）",
+    "count_neg（記憶體内：多一人／少一人／身元重複〔人数そのまま〕）"
+   ],
+   "unchanged": "NPC 配置・snapshot・生成器・overlay 場景・Activity・審圖・他の gate 項目",
+   "files": {
+    "godot/tools/verify_village_v2_population_outer.gd": [
+     "8900a3ad5ee45a22175b87d218a967308bd3747c87cc998d00d6fc6c9f6df136",
+     "c2c11934eb9cf8eacd943ea6f89710cb1298bdd591322fc789a0471bdffe29e4"
+    ],
+    "godot/tools/village_v2_population_scope.gd": [
+     null,
+     "a68250d3ccffba626d5d164cdfc2192661bc4e1c9c64a07c726ee3091f60ac4f"
+    ]
+   },
+   "child_seals": {
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "6261de507438865bd89aac586a60b3262a6989e90663472e39ab1feb4a69c88a",
+     "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba"
+    ]
+   },
+   "evidence_added": {
+    "docs/art_review/village_v2_p10_population/outer_r1/gate/scene_scope_fix_20261008.log": "8b511e3c943b8cc903f6ac39db9293147b2969bf27e78321fa055895442cb6c4"
+   },
+   "seal_file_before": "2d9613bb201dd31d0ba43db3132b106ad01797cb55f297e008bc0992ecfb1334"
+  }
+ ]
 }
