@@ -1102,6 +1102,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/human_use_p10.scn" id="p10r4_human_use"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/human_use_exp_p10.scn" id="p10r4b_human_use_exp"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/edge_closure_p10.scn" id="p10r5c_edge_closure"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/albedo_pilot_p10.scn" id="p10r6a_albedo_pilot"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -141173,6 +141174,8 @@ mesh = SubResource("CylinderMesh_shuvv")
 [node name="HumanUseExpansionP10" parent="." instance=ExtResource("p10r4b_human_use_exp")]
 
 [node name="EdgeClosureP10" parent="." instance=ExtResource("p10r5c_edge_closure")]
+
+[node name="AlbedoPilotP10" parent="." instance=ExtResource("p10r6a_albedo_pilot")]
 
 [node name="Collision" type="Node3D" parent="." unique_id=988851703]
 

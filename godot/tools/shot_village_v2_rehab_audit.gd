@@ -6,6 +6,7 @@ extends SceneTree
 ##   ["name", px, pz, tx, tz, pitch, dist, lateral]                → TPS：樞軸＝地表＋1.6 m，臂長 dist，橫移 lateral
 ##   ["name", "free", cx, cy, cz, tx, ty, tz, fov]                   → 自由機位（高視角）
 ## toggle＝同機位 _a（顯示）／_b（隱藏）；預設 Population（NPC ON／OFF）。toggle=none → 只拍一張。
+## toggle 節點若有 `enabled` 屬性（P10 R5a／R6a 材質覆寫 pilot）→ _a＝enabled、_b＝disabled（＝BEFORE）。
 ## 每張另寫 stats：全畫面 sRGB 平均亮度、平均飽和度（HSV S）、亮度 < 0.2 的像素比例。
 func _init() -> void:
 	var a := OS.get_cmdline_user_args()
@@ -72,7 +73,11 @@ func _init() -> void:
 		var states := [true] if g == null else [true, false]
 		for vis in states:
 			if g:
-				g.visible = vis
+				# 有 enabled 屬性的 pilot overlay（材質覆寫類）→ 切 enabled；其他 → 切 visible
+				if "enabled" in g:
+					g.set("enabled", vis)
+				else:
+					g.visible = vis
 			for i in 14:
 				await process_frame
 			await RenderingServer.frame_post_draw
@@ -82,7 +87,10 @@ func _init() -> void:
 			stats[fn] = _stats(img)
 		print("SHOT ", nm, " cam ", cam.global_position)
 	if g:
-		g.visible = true
+		if "enabled" in g:
+			g.set("enabled", true)
+		else:
+			g.visible = true
 	var f2 := FileAccess.open(outdir + "_stats.json", FileAccess.WRITE)
 	f2.store_string(JSON.stringify(stats, "\t"))
 	f2.close()

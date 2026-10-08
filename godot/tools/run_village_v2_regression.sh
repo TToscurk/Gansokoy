@@ -148,5 +148,7 @@ run "P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下
 run "P10 R4b Human-Use Expansion Batch 1 A/B FINAL 封存（使用者 2026-10-08：A・B ART_APPROVED／C 水岸 ART_REJECTED＝除去・理由を記録・40 件 snapshot＝場景＝承認時 r3 の A/B・C 群／hx_doroage なし・R4 の 50 件不変・NPC 51・凍結／證據／審圖／rejected candidates／子封存雜湊＋竄改・移動・who・C 戻し反向；封存中 --build／--attach 拒否）" HUX --headless --path . --script res://tools/verify_village_v2_human_use_exp.gd -- --seal
 run "P10 R5c World Edge Closure plan gate＋反向 4（frame 外 Vista：P1 邊緣頂點接縫 ≤ 0.01 m・vista 頂點全在 frame 外・TPS 視點 294／射線 25852 看見世界盡頭 0・水系延續〔水位單調・接口＝P2・匯入／會合〕・樹〔水中／陡坡／frame 內 0〕・地形 ≤ 140k 三角；反向 rim／seam／tree／water）" EDGE --headless --path . --script res://tools/verify_village_v2_edge_closure.gd
 run "P10 R5c World Edge Closure 場景級（root 直下 HumanUseExpansionP10 の次に EdgeClosureP10 1 個・CollisionObject3D 0・Collision/Boundary 4 牆不變・VistaTerrain frame 內頂點 0・MultiMesh 零矩陣 0；非 headless）" EDGE --path . --script res://tools/verify_village_v2_edge_closure.gd -- --scene
+run "P10 R6a 材質亮度基準＋街區調色盤 Pilot plan gate＋反向 9（來源材質＝0.42 灰／校正只改 albedo（Kit atlas＝等價 shader：木 0.75／屋根灰 0.42 不變／漆喰 0.70）／色卡 luma 在目標帶／Pilot 24 棟兩區・≤ 25 %／調色盤飽和 ≤ 0.22・鄰棟不同組；反向：帶色・等幅提亮・區外・全村・改粗糙度・Hero・Kit 屋根提亮・過飽和・全同組）" ALB --headless --path . --script res://tools/verify_village_v2_albedo_pilot.gd
+run "P10 R6a 材質亮度基準 Pilot 場景級（root EdgeClosureP10 の次に AlbedoPilotP10・Pilot 建物の來源材質表面全覆寫・Pilot 外 0・enabled 開關還原・_matlib／kit 來源雜湊＝build 時；非 headless）" ALB --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --scene
 echo "回歸失敗項目：$fail"
 exit $fail
