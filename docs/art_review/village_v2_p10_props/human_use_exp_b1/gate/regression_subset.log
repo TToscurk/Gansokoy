@@ -1,0 +1,96 @@
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，6904 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 40670 ms）
+✓ 場景擺放／碰撞稽核＋永久反向案例（clean 全 PASS；float／sink／clash→FAIL、aabbfp→PASS、noproxy→REVIEW）
+[GC] 結果：0 項失敗（scene）
+✓ P9 R5 Groundcover 場景級驗證（掛載順序 …→KirisameP9→GroundcoverP9、地面 overlay・shader・MultiMesh 矩陣；需 rendering display）
+[MKT] 結果：0 項失敗（scene）
+✓ P10 R1 市集廣場場景級驗證（掛載・接地射線・LOD・碰撞・anchors・MultiMesh 0）
+[STR] 結果：0 項失敗（scene）
+✓ P10 R2 主街 Street Life 場景級驗證（掛載 MarketP10→StreetP10・MarketP10 封存雜湊・接地射線・LOD・碰撞・anchors・MultiMesh 0）
+[TXT] 結果：字の面を持つ surface 93、問題のある (surface, region) 0
+✓ 字の向き監査（street_kit／market_kit／mise_kit／寺子屋：幟・暖簾・提灯・看板の字の面が表裏とも鏡像・逆さま 0；例外は測定理由つき）
+[MW] 結果：0 項失敗（scene）
+✓ P10 R1b Market West r3 場景級驗證（掛載順・MarketP10 封存雜湊・接地射線・LOD・建物 Kit・床・掀げた暖簾と店の灯・碰撞・anchors・MultiMesh 0）
+[MDW] 結果：0 項失敗（scene）
+✓ P9 R5-3 MeadowP9 場景級驗證（掛載順序 …→GroundcoverP9→MeadowP9、近中級・shader・碰撞 0・MultiMesh 矩陣；需 rendering display）
+[ENV] 結果：0 項失敗（scene）
+✓ P9 R5-4 EnvironmentP9 場景級驗證（Props 掛載 MarketP10→StreetP10→MarketWestP10→EnvironmentP9・個別ノード・MultiMesh 0）
+[NPCLIB] 結果：0 項失敗（9 NPC）
+✓ P10 NPC Asset Library（9 体・npc_roster.json）技術 gate 11 項/体：部位 skin・skeleton mapping〔family BoneMap 全割当・profile 親子〕・選定 clip（idle／walk ループ）・三角・外部材質・指定身長 ±5 mm・全フレーム接地・首胴不伸・root motion なし・wrapper（美術判定ではない）
+[POP] 結果：0 項失敗（scene）
+✓ P10 R3b Population Pilot scene（掛載／NPC instance／TPS 同模型 ≤ 2／runtime／SpringArm）
+[CORE] 結果：0 項失敗（scene）
+✓ P10 R3d 核心區人口 scene（人數＝scope 別の身元 39〔R3b＋R3d〕・多一人／少一人／重複の反向・R3d 単獨〔R3e を外す〕でも 39；掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）
+[OUTER] 結果：0 項失敗（scene）
+✓ P10 R3e 外圍人口 scene（人數＝外圍の身元 12＋村人口 51〔scope 外・重複なし〕・反向；掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）
+[FARM] 結果：0 項失敗（seal）
+✓ P8 封存（凍結來源／overlay／ART_REVIEW 圖／證據 sha256＋反向）
+[VEG] 結果：0 項失敗（seal）
+✓ P9 R1 植被庫封存（樹庫／生成器／LOD 指標／7 張核准總表／證據 sha256＋反向）
+[FOREST] 結果：0 項失敗（seal）
+✓ P9 R2 林帶封存（規劃器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋反向）
+[BPLACE] 結果：0 項失敗（seal）
+✓ P9 R3 封存（竹 Kit＋竹林擺放 生成器／gate／overlay／8 張 ART_REVIEW 總表／證據 sha256＋掛載＋反向）
+[GARDEN] 結果：0 項失敗（seal）
+✓ P9 R4 封存（稗田邸庭園 garden_kit＋HiedaGardenP9 生成器／gate／shader／overlay／9 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SHRINE] 結果：0 項失敗（seal）
+✓ P9 R4-2 封存（神社周邊 生成器／gate／地面 shader／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SCHOOL] 結果：0 項失敗（seal）
+✓ P9 R4-3 封存（寺子屋周邊 school_kit＋SchoolYardP9 生成器／gate／地面 shader／overlay／7 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[WATER] 結果：0 項失敗（seal）
+✓ P9 R4-4 封存（水車／龍神像周邊 waterside_kit＋WatersideP9 生成器／gate／overlay／3 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[TOWER] 結果：0 項失敗（seal）
+✓ P9 R4-5 封存（火見櫓周邊 tower_kit＋TowerYardP9 生成器／gate／overlay／3 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SUZU] 結果：0 項失敗（seal）
+✓ P9 R4-6 封存（鈴奈庵周邊 suzu_kit＋SuzunaanP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[GEID] 結果：0 項失敗（seal）
+✓ P9 R4-7 封存（鯢吞亭周邊 geidon_kit＋GeidonteiP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[KIRI] 結果：0 項失敗（seal）
+✓ P9 R4-8 封存（霧雨店周邊 kiri_kit＋KirisameP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[GC] 結果：0 項失敗（seal）
+✓ P9 R5 封存（Groundcover：Pilot r10f＋Macro Pilot m9＋全村 Macro 生成器／shader／overlay／35 張 ART_REVIEW 圖／證據 sha256＋掛載順序＋反向）
+[MKT] 結果：0 項失敗（seal）
+✓ P10 R1 市集廣場封存（market_kit＋MarketP10 生成器／gate／Kit 網格／overlay／5 張 ART_REVIEW 圖／證據 sha256＋掛載＋反向）
+[STR] 結果：0 項失敗（seal）
+✓ P10 R2 主街 r5 封存（ART_APPROVED 2026-10-07：street_kit＋StreetP10 生成器／gate／網格／overlay／ART_REVIEW 圖 4／證據 sha256＋掛載＋字の向き 0＋竄改反向；封存中 --build 拒否）
+[MW] 結果：0 項失敗（seal）
+✓ P10 R1b Market West r3 封存（ART_APPROVED：雜湊 124 檔＋依存〔P10 R1・P9 R5 限定解封〕＋掛載＋裁定 10 項・店の灯 18＋竄改反向 2）
+[MDW] 結果：0 項失敗（seal）
+✓ P9 R5-3 封存（MeadowP9 立ち草：生成器／gate／shader〔wind 0.7〕／overlay／ART_REVIEW 圖・wind GIF／證據 sha256＋掛載順序＋反向）
+[ENV] 結果：0 項失敗（seal）
+✓ P9 R5-4 封存（EnvironmentP9 生成器／gate／機位／overlay／audit／ART_REVIEW 圖／證據 sha256＋Props 掛載順＋反向；封存中 --build 拒否）
+[P9F] 結果：0 項失敗
+✓ P9 FINAL SEAL（P9_CLOSED：R1–R5 子封存檔 14 件の sha256＋Vegetation／Props 掛載順＋R5 final 狀態＋反向）
+[MMBAKE] 結果：0 項失敗
+✓ 永久 build rule：全場景 MultiMesh instance transform 非零（各 overlay 分組＋零矩陣反向＋非空；需 rendering display）
+[NPCLIB] 結果：0 項失敗（seal）
+✓ P10 NPC Asset Library 封存（ART_APPROVED 2026-10-06）：凍結 410・原素材 24・ART_REVIEW 35・證據 77 の雜湊＋封存外ファイルなし＋正式パラメータ（arm-space・布料老闆娘 UV 復元／2048・主婦 apron +4.0 cm）＋竄改反向
+[POP] 結果：0 項失敗（seal）
+✓ P10 R3b ART_APPROVED baseline seal（來源／snapshot／原圖／證據／子封存雜湊＋mount scope＋永久竄改反向）
+[ACT] 結果：0 項失敗（seal）
+✓ P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍結・證據・審圖圖・子封存（R3b／NPCLIB）雜湊＋8 指派／道具參數＝overlay＋掛載 1 つ＋永久竄改反向
+[CORE] 結果：0 項失敗（seal）
+✓ P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五區・R3b 不變・新增 23 の位置／朝向／activity／patrol・南側入口 3 人・EntranceCueP10 小幟 2・證據・審圖・子封存 R3b／R3c／NPCLIB の雜湊＋掛載順＋場景＝snapshot＋竄改反向；封存中 --build／--attach 拒否）
+[OUTER] 結果：0 項失敗（seal）
+✓ P10 R3e 外圍人口 封存（ART_APPROVED 2026-10-07：外圍 12 人＝最終基準・各區・位置／朝向・activity・patrol 端點・密度環単調下降・森林／山腳 0 人・依存 R3d／R3c／R3b／NPCLIB 雜湊＋掛載順＋場景＝snapshot＋竄改反向 3；封存中 --build／--attach 拒否）
+[HUSE] 結果：0 項失敗
+✓ P10 R4 Human-Use Pilot plan gate（3 Pilot・既存資產優先＋缺件 6・中型の輪郭・who/why/anchor・依附・禁區〔P8・水・NPC・Env +1.6・MeadowP9 株 0〕・接地・成組・非均一）＋反向 16
+[HUSE] 結果：0 項失敗（scene）
+✓ P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[ENV] 結果：0 項失敗
+✓ P9 R5-4 EnvironmentP9 全村 plan gate 13 項（既存資產のみ／分工語彙／MeadowP9 株位〔同 seed〕／接地／禁區〔P10 +1.5 m・anchors +1.2 m〕／戸口／階層／非展示／間隔／邊界邏輯／大留白／P10 優先／村邊／中尺度／R5 Macro Ground）
+[CORE] 結果：0 項失敗
+✓ P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）
+[CORE] 結果：0 項失敗（negatives）
+✓ P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）
+[OUTER] 結果：0 項失敗
+✓ P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）
+[OUTER] 結果：0 項失敗（negatives）
+✓ P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）
+[HUSE] 結果：0 項失敗（seal）
+✓ P10 R4 Human-Use Pilot 封存（ART_APPROVED 2026-10-08：A／B／C・10 cluster 50 件 snapshot＝場景〔位置・朝向・who／why／anchor〕・root 掛載 Props の次・Props の子は封存どおり・凍結／證據／審圖／子封存 R3d・R3e・P9F 等の雜湊＋竄改反向 3；封存中 --build／--attach 拒否）
+[HUX] 結果：0 項失敗
+✓ P10 R4b Human-Use Expansion Batch 1 plan gate（13 群＝A 農田 5・B 住宅 5・C 水岸 3、重用 ≥ 80 %・新規 humanuse_exp_kit 缺件 3・中型の輪郭・who/why/anchor・依附・禁區〔R4 全禁區＋核心商業區＋R4 の 50 件／Pilot 区〕・見えている最上面に接地・成組・非均一〔R4・本批・住宅どうし〕・自然の岸を残す）＋反向 16
+[HUX] 結果：0 項失敗（scene）
+✓ P10 R4b Human-Use Expansion Batch 1 場景級驗證（root 直下 HumanUseP10 の次に HumanUseExpansionP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・R4 の 50 件 snapshot 不変・Population 51 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+回歸失敗項目：0

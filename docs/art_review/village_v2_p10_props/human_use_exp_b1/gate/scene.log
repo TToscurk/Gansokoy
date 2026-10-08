@@ -1,0 +1,11 @@
+[HUX] PASS 場景已掛 root/HumanUseExpansionP10（1 個、HumanUseP10 の次＝Props → HumanUseP10 → HumanUseExpansionP10 → Collision）、Props の子は封存どおり（MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9）
+[HUX] PASS art_revision＝P10 R4b Human-Use Expansion Batch 1 r3（ART_REVIEW 前）、visible、scene_file_path＝res://maps/village_v2/gen/human_use_exp_p10.scn
+[HUX] PASS 個別ノード：MeshInstance 106（＝2×53 件）・MultiMesh 0・Marker3D 0
+[HUX] PASS R4 封存 HumanUseP10 不変：50 件（snapshot 50）が位置 ≤ 1 cm・id 一致（不符 []）
+[HUX] PASS Population 不変：子 PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10 → OuterP10 → ActivityOuterP10・NPC body 51（＝51）
+[HUX] PASS 碰撞：腰より高い件だけ箱 44（＝meta 44）
+[HUX] PASS 擺放（接地）：53 件 × 3×3 ray（477 本）——FLOATING 0 []、最大の埋まり 0.110 m（≤ 0.15、002_st_kome_tsumi←/root/VillageV2/Collision/TerrainCollision）；腰より低い 9 件は visual_only
+[HUX] PASS 擺放（貫通）：碰撞箱 44 を collide_shape（自分・地形を除く）——OBJECT_PENETRATION 0 []
+[HUX] PASS 擺放 反向 float：000_mk_kuruma_ni を 0.3 m 持ち上げる → FLOATING（["000_mk_kuruma_ni 9/9"]）
+[HUX] PASS 擺放 反向 clash：碰撞箱 000_mk_kuruma_ni_c を最寄りの建物 B_P_MKT_043 へ押し込む → OBJECT_PENETRATION（1）
+[HUX] 結果：0 項失敗（scene）
