@@ -156,7 +156,7 @@ run "P10 R5b Water Pilot plan gate＋反向 6（水車 2 柄杓 16 在輪面與�
 run "P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・柄杓掛在水車 2 轉子下且隨輪轉・水車 1／3 不動・enabled 開關・碰撞 4；非 headless）" WLF --path . --script res://tools/verify_village_v2_water_life.gd -- --scene
 run "P10 R6b Shrine Approach plan gate＋反向 6（石段 ≥ 80・蹴上 0.12–0.20・踏面 0.25–0.45・地形不蓋踏面・斜坡碰撞與踏面差 ≤ 半蹴上＋0.03・斜坡起終點接地形・≤ 38°・寬度／二の鳥居淨空・一の鳥居離丘腳街／主街・不撞・主街軸心端景 ≤ 6 m・燈籠落地 18–22 m・NPC 不在石段）" SAN --headless --path . --script res://tools/verify_village_v2_shrine_approach.gd
 run "P10 R6b Shrine Approach 場景級（WaterLifeP10 の次に ShrineApproachP10・參道 ribbon 挖洞・中心線射線＝斜坡碰撞／地形・enabled 開關；非 headless）" SAN --path . --script res://tools/verify_village_v2_shrine_approach.gd -- --scene
-run "P10 R4c Prop Fix plan gate＋反向 3（st_hasa_v2 規格：竿×半束 ≥ 0.010・束頭坐竿上・束×束 ≥ 0.005・脚×束 ≥ 0.010・網格＝manifest・與 st_hasa 同尺度）" R4C --headless --path . --script res://tools/verify_village_v2_prop_fix.gd
+run "P10 R4c Prop Fix plan gate＋反向 5（st_hasa_v2 規格：竿×半束 ≥ 0.010・束頭坐竿上・束×束 ≥ 0.005・脚×束 ≥ 0.010・網格＝manifest・與 st_hasa 同尺度；A2 籠 移位後も接地〔地面＝TerrainCollision〕・視線・碰撞；N4 籠不動・N5 籠沈む）" R4C --headless --path . --script res://tools/verify_village_v2_prop_fix.gd
 run "P10 R4c Prop Fix 場景級（ShrineApproachP10 の次に PropFixP10・st_hasa 全換 v2・enabled 還原；非 headless）" R4C --path . --script res://tools/verify_village_v2_prop_fix.gd -- --scene
 echo "回歸失敗項目：$fail"
 exit $fail

@@ -22,7 +22,7 @@ const OUTPUT := "res://maps/village_v2/gen/prop_fix_p10.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p10/prop_fix.gd"
 const EXT_ID := "p10r4c_prop_fix"
 const AFTER_NODE := "[node name=\"ShrineApproachP10\" parent=\".\" instance=ExtResource(\"p10r6b_shrine_approach\")]"
-const ART_REVISION := "P10 R4c prop fix pilot r1：st_hasa → st_hasa_v2（稲束跨竿、非貫通、束列避脚）＋A2 背負い籠を千歯扱きの視線外へ 1.0 m（ART_REVIEW）"
+const ART_REVISION := "P10 R4c prop fix pilot r1b（A2 籠の接地修正：地面＝TerrainCollision；r1 は籠自身の碰撞に當たり 1.0 m 沈んでいた）：st_hasa → st_hasa_v2（稲束跨竿、非貫通、束列避脚）＋A2 背負い籠を千歯扱きの視線外へ 1.0 m（ART_REVIEW）"
 ## A2（R4 Pilot A 脫穀作業床）：背負い籠が TPS 視線（農道側）で千歯扱きの前を塞ぐ → 籠だけ東へ 1.0 m（件數・他の件は不動）
 const A2_BASKET := "HumanUseP10/PilotA/A2_dakkoku/006_hu_seoikago"
 const A2_SENBA := "HumanUseP10/PilotA/A2_dakkoku/005_hu_senba"
@@ -71,6 +71,15 @@ func _init() -> void:
 		quiet = false
 		print("[R4C]   N4 籠不動（仍擋千歯扱き）：%s" % ("PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"))
 		if not tripped:
+			fails += 1
+		quiet = true
+		var f1 := fails
+		await _a2_gate(A2_SHIFT, -1.0)
+		var tripped5 := fails > f1
+		fails = f1
+		quiet = false
+		print("[R4C]   N5 籠が地面に 1.0 m 沈む（r1 の不具合）：%s" % ("PASS（gate 正確失敗）" if tripped5 else "FAIL（gate 沒抓到）"))
+		if not tripped5:
 			fails += 1
 	if "--build" in args:
 		_build()
@@ -279,7 +288,7 @@ var a2_moves := {}
 
 
 ## A2：籠の新位置（地面＝射線）＋視線（農道機位→千歯）が籠に遮られないこと＋籠が他の碰撞体に入らないこと
-func _a2_gate(shift: Vector2) -> void:
+func _a2_gate(shift: Vector2, sink := 0.0) -> void:
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
 	root.add_child(v)
 	await process_frame
@@ -295,16 +304,16 @@ func _a2_gate(shift: Vector2) -> void:
 		return
 	var np := Vector2(b.global_position.x, b.global_position.z) + shift
 	var sp := v.get_world_3d().direct_space_state
-	var q := PhysicsRayQueryParameters3D.create(Vector3(np.x, 20.0, np.y), Vector3(np.x, -10.0, np.y))
 	var ex: Array[RID] = []
 	for co in b.find_children("*", "CollisionObject3D", true, false):
 		ex.append((co as CollisionObject3D).get_rid())
 	if b is CollisionObject3D:
 		ex.append((b as CollisionObject3D).get_rid())
-	q.exclude = ex
-	var h := sp.intersect_ray(q)
-	var gy := float(h["position"].y) if not h.is_empty() else NAN
-	var y := b.global_position.y + (gy - _ground_at(sp, Vector2(b.global_position.x, b.global_position.z), ex)) if not is_nan(gy) else NAN
+	# 地面＝P1 TerrainCollision だけ（籠自身や周りの道具の碰撞に当たると、その高さぶん沈む／浮く——r1 で 1.0 m 沈んだ原因）
+	var g_old := _ground_at(sp, Vector2(b.global_position.x, b.global_position.z), ex)
+	var gy := _ground_at(sp, np, ex)
+	var off0 := b.global_position.y - g_old          # 封存の原位置：地面からの高さ（≈ 0 のはず）
+	var y := gy + off0 + sink if not is_nan(gy) else NAN
 	# 視線：農道機位（眼高 1.6）→ 千歯扱き中心（0.6）；籠（半徑 0.35）中心到線段距離
 	var s2 := Vector2(sn.global_position.x, sn.global_position.z)
 	var ab := s2 - A2_VIEW
@@ -324,7 +333,8 @@ func _a2_gate(shift: Vector2) -> void:
 		var nm := String(v.get_path_to(r["collider"])) if V_is(v, r["collider"]) else str(r["collider"])
 		if not nm.contains("TerrainCollision"):
 			hits.append(nm)
-	_ok(not is_nan(y) and dlos >= 0.45 and hits.is_empty(), "A2 背負い籠 東へ %.1f m：視線（農道→千歯）距籠 %.2f m（原 %.2f）≥ 0.45、落地、碰撞 %s" % [shift.length(), dlos, dlos0, str(hits) if not hits.is_empty() else "0"])
+	var grounded := not is_nan(y) and absf(off0) <= 0.15 and absf(y - gy) <= 0.15
+	_ok(grounded and dlos >= 0.45 and hits.is_empty(), "A2 背負い籠 東へ %.1f m：視線（農道→千歯）距籠 %.2f m（原 %.2f）≥ 0.45、接地 新 %+.3f m（原 %+.3f；|·| ≤ 0.15、地面＝TerrainCollision）、碰撞 %s" % [shift.length(), dlos, dlos0, y - gy, off0, str(hits) if not hits.is_empty() else "0"])
 	if not quiet:
 		a2_moves = {A2_BASKET: Vector3(np.x, y, np.y)}
 	v.free()
@@ -336,9 +346,16 @@ static func V_is(v: Node, o) -> bool:
 
 func _ground_at(sp: PhysicsDirectSpaceState3D, p: Vector2, ex: Array[RID]) -> float:
 	var q := PhysicsRayQueryParameters3D.create(Vector3(p.x, 20.0, p.y), Vector3(p.x, -10.0, p.y))
-	q.exclude = ex
-	var h := sp.intersect_ray(q)
-	return float(h["position"].y) if not h.is_empty() else NAN
+	var ex2: Array[RID] = ex.duplicate()
+	for t in 24:
+		q.exclude = ex2
+		var h := sp.intersect_ray(q)
+		if h.is_empty():
+			return NAN
+		if String((h["collider"] as Node).name).begins_with("TerrainCollision"):
+			return float(h["position"].y)
+		ex2.append(h["rid"])
+	return NAN
 
 
 func _build() -> void:
@@ -387,6 +404,13 @@ func _scene(v: Node3D) -> void:
 			owners[p.split("/")[0] + "/" + (p.split("/")[1] if p.split("/").size() > 1 else "")] = true
 	_ok(left == 0 and newc == int(n.get("swapped")) and newc > 0, "st_hasa → v2：換 %d 個 MeshInstance（殘留舊 mesh %d）、所在 %s" % [newc, left, str(owners.keys())])
 	_ok(int(n.get("moved")) == 1, "A2 背負い籠 移位 %d 件（只動這一件）" % int(n.get("moved")))
+	var bk := v.get_node_or_null(A2_BASKET) as Node3D
+	var exb: Array[RID] = []
+	if bk:
+		for co in bk.find_children("*", "CollisionObject3D", true, false):
+			exb.append((co as CollisionObject3D).get_rid())
+	var gyb := _ground_at(v.get_world_3d().direct_space_state, Vector2(bk.global_position.x, bk.global_position.z), exb) if bk else NAN
+	_ok(bk != null and not is_nan(gyb) and absf(bk.global_position.y - gyb) <= 0.15, "A2 背負い籠（移位後）接地：底 %+.3f m（地面＝TerrainCollision、|·| ≤ 0.15）" % ((bk.global_position.y - gyb) if bk and not is_nan(gyb) else NAN))
 	n.set("enabled", false)
 	var back := 0
 	for mi in v.find_children("*", "MeshInstance3D", true, false):

@@ -203,16 +203,16 @@ func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array,
 			var d := _seg_d(p2, LIB.OTHER_ROADS[rn])
 			if d < float(LIB.OTHER_HW[rn]) + 0.36 + 0.3:
 				bad6.append("柱 %+d 離 %s %.2f m" % [int(sd), rn, d])
-		var hh := _hits(Transform3D(txf.basis, pc + Vector3(0, 0.6, 0)), Vector3(0.72, 1.0, 0.72))
+		var hh := _hits(Transform3D(txf.basis, pc + Vector3(0, 0.6, 0)), Vector3(2.0 * LIB.GUARD_R, 1.0, 2.0 * LIB.GUARD_R))
 		if not hh.is_empty():
-			bad6.append("柱 %+d 撞 %s" % [int(sd), str(hh)])
+			bad6.append("柱（含乗り上げ防止ガード r %.2f）%+d 撞 %s" % [LIB.GUARD_R, int(sd), str(hh)])
 	var ms := LIB.OTHER_ROADS["MainStreet"]
 	var a5 := Vector2(ms[1][0], ms[1][1])
 	var b5 := Vector2(ms[2][0], ms[2][1])
 	var dir5 := (b5 - a5).normalized()
 	var to_t := Vector2(txf.origin.x, txf.origin.z) - b5
 	var axis_lat := absf(to_t.dot(Vector2(-dir5.y, dir5.x)))
-	_ok(bad6.is_empty() and axis_lat <= 6.0, "一の鳥居（s %.1f m）：柱台離丘腳街／主街 ≥ 半寬 + 0.66、不撞既有碰撞、離主街軸心延長線 %.2f m（≤ 6）%s" % [float(cfg["torii_s"]), axis_lat, "" if bad6.is_empty() else " ✗ " + str(bad6)])
+	_ok(bad6.is_empty() and axis_lat <= 6.0, "一の鳥居（s %.1f m）：柱台離丘腳街／主街 ≥ 半寬 + 0.66、柱台＋ガード不撞既有碰撞、離主街軸心延長線 %.2f m（≤ 6）%s" % [float(cfg["torii_s"]), axis_lat, "" if bad6.is_empty() else " ✗ " + str(bad6)])
 	# 7 石燈籠
 	var ls := LIB.lantern_specs(cl, H, st, V.get_world_3d().direct_space_state)
 	var bad7 := []

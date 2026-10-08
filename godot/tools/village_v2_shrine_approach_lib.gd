@@ -16,7 +16,7 @@ extends RefCounted
 const NODE_NAME := "ShrineApproachP10"
 const OUTPUT := "res://maps/village_v2/gen/shrine_approach_p10.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p10/shrine_approach.gd"
-const ART_REVISION := "P10 R6b shrine approach pilot r3（最終輪）：踏面明／立面暗（RISER_TONE 0.70）で段のリズム、石材 0.72；r2：石段色調（每段明暗差＋袖石苔味）、石材提亮（R6a 校正相當）、燈籠坐在坂に据えた水平基壇（ART_REVIEW）"
+const ART_REVISION := "P10 R6b shrine approach pilot r3b（技術修正：一の鳥居の柱台に乗り上げ防止ガード）／r3（最終輪）：踏面明／立面暗（RISER_TONE 0.70）で段のリズム、石材 0.72；r2：石段色調（每段明暗差＋袖石苔味）、石材提亮（R6a 校正相當）、燈籠坐在坂に据えた水平基壇（ART_REVIEW）"
 const TORII_SCN := "res://assets/village_v2/sando_torii/sando_torii.scn"
 const LANTERN := "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res"
 const LANTERN_L1 := "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res"
@@ -26,6 +26,8 @@ const SANDO := [Vector2(300, -130), Vector2(292, -160), Vector2(280, -190), Vect
 const SANDO_HW := 2.5
 const TORII1_S := 7.0
 const TORII1_SCALE := 1.0
+const GUARD_R := 0.52       # 柱台 0.72 角の外接円（半対角 0.509）
+const GUARD_H := 2.0
 const HILL_TORII := Vector2(289.6, -166.0)
 const STEP_W := 3.0
 const CURB_W := 0.24
@@ -402,6 +404,21 @@ static func build(v: Node3D, cl: PackedVector2Array, H: PackedFloat32Array) -> N
 	tor.transform = torii1_xf(cl, H)
 	tor.set_meta("asset", "sando_torii（P5 Hero 重用）")
 	root.add_child(tor)
+	# 柱台ガード：P5 鳥居の柱台碰撞（0.72 角・高 0.58）は膠囊が乗り上げられる → 斜めに歩くと柱台の縁に 0.5 m 浮いて引っかかる
+	# （19-point walk で實測 dy 0.50–0.58）。資產は觸らず、柱台を包む円柱（r 0.52・地面〜1.55 m）を overlay 側に足して乗れなくする。
+	var gd := StaticBody3D.new()
+	gd.name = "IchiNoToriiGuard"
+	gd.transform = tor.transform
+	for sd: float in [-1.0, 1.0]:
+		var gcs := CollisionShape3D.new()
+		gcs.name = "Guard_%s" % ("L" if sd < 0.0 else "R")
+		var cyl := CylinderShape3D.new()
+		cyl.radius = GUARD_R
+		cyl.height = GUARD_H
+		gcs.shape = cyl
+		gcs.position = Vector3(2.25 * sd, -0.45 + GUARD_H * 0.5, 0.0)
+		gd.add_child(gcs)
+	root.add_child(gd)
 	# 石燈籠
 	var lg := Node3D.new()
 	lg.name = "Lanterns"

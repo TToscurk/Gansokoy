@@ -15,6 +15,7 @@ WARNING: All audio drivers failed, falling back to the dummy driver.
 [R4C] PASS 順序：ShrineApproachP10 之後（index 16）
 [R4C] PASS st_hasa → v2：換 18 個 MeshInstance（殘留舊 mesh 0）、所在 ["Props/StreetP10", "HumanUseP10/PilotA", "HumanUseExpansionP10/ZoneA"]
 [R4C] PASS A2 背負い籠 移位 1 件（只動這一件）
+[R4C] PASS A2 背負い籠（移位後）接地：底 -0.002 m（地面＝TerrainCollision、|·| ≤ 0.15）
 [R4C] PASS enabled=false → 還原 18 個
 [R4C] PASS enabled=false → A2 籠回原位
 [R4C] 結果：0 項失敗

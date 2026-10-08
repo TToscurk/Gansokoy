@@ -5,7 +5,7 @@
 		"mean_sat": 0.273
 	},
 	"r4c_dakkoku_A2_b.png": {
-		"frac_luma_lt_0.2": 0.019,
+		"frac_luma_lt_0.2": 0.02,
 		"mean_luma_srgb": 0.469,
 		"mean_sat": 0.273
 	},
@@ -20,7 +20,7 @@
 		"mean_sat": 0.266
 	},
 	"r4c_hasa_A1_10m_a.png": {
-		"frac_luma_lt_0.2": 0.108,
+		"frac_luma_lt_0.2": 0.109,
 		"mean_luma_srgb": 0.44,
 		"mean_sat": 0.253
 	},
