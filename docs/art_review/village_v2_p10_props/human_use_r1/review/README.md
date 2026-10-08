@@ -1,6 +1,6 @@
 # P10 R4 Human-Use / Ambient Life Pilot — ART_REVIEW
 
-狀態：**ART_REVIEW**（未 ART_APPROVED、未封存）。3 個 Pilot 做完即 STOP，不擴到全村。
+狀態：**ART_APPROVED・SEALED**（使用者 2026-10-08：Pilot A／B／C 全部通過；封存 `godot/data/village_v2_p10r4_seal.json`＋snapshot `village_v2_p10r4_snapshot.json`，`verify_village_v2_human_use.gd -- --seal`）。以下為送審時的紀錄（ART_REVIEW r4），內容未改。
 `art_revision`＝P10 R4 Human-Use Pilot r4（ART_REVIEW）。overlay＝`HumanUseP10`（`gen/human_use_p10.scn`，掛在 village_v2 root 直下、緊接 `Props` 之後）。
 不放進 `Props` 的原因：已封存的 R3b scene gate 以「完全一致」檢查 `Props` 子節點（Market→Street→MarketWest→Environment），放進去會讓該封存 gate FAIL；依「不重開任何 Population seal」改掛 root。若要回到 `Props` 底下，需使用者同意把該 gate 改成順序檢查並 reseal R3b。
 
@@ -72,3 +72,12 @@ BEFORE→AFTER 在 5–10 m 屬明顯變化（尤其 A2、B_near、C3、C_npc）
 ## 下一步
 
 STOP，等使用者裁定。若三個 Pilot 都通過，再訂全村 Human-Use Expansion 規則；若判 FAIL，不進入 batch。
+
+## 使用者裁定（2026-10-08）
+
+- **ART_APPROVED**：A 農田（脫穀、曬穀、搬運形成完整工作流程）／B 住宅後巷（四戶不同生活習慣，沒有平均堆雜物）／C 水岸（水車維修、米俵搬運、洗衣形成具體用水關係）。
+- Non-blocking：B 側面可讀性較弱、C 在 15 m 約 3/5。未來擴張以玩家常走的方向優先安排主要生活物件，不必每個角度都磨到 5/5。
+- 值得保留的是 10 個有用途的工作群組，不是 50 件的數量。
+- 掛載：維持 root 直下、Props 之次（獨立 overlay，不為節點分類 reseal R3b）。
+- R3d 人數檢查＝驗證器設計錯誤 → 已修成 scope-aware（R3d 39／R3e 12／村 51，R3d 單獨仍驗 39；多一人／少一人／身份重複反向），R3d／R3e limited reseal（`reseal_history` 記前後雜湊）。
+- 全村擴張規則：不平均加道具；農田依生產與運輸動線、住宅依每戶差異、水岸依水源用途；核心商業區已有大量 P10 Props，不再重複堆放。

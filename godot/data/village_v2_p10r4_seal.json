@@ -1,0 +1,280 @@
+{
+ "schema": 1,
+ "phase": "P10 R4 Human-Use / Ambient Life Pilot r4（A 農田／B 住宅後巷／C 水岸）",
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_date": "2026-10-08",
+ "approval_source": "使用者 2026-10-08：「P10 R4 Human-Use Pilot A / B / C = ART_APPROVED」「P10 R4 三個 Pilot 的生活痕跡已經達到本輪目標，不需要再為 3/5 的次要鏡位反覆微調」",
+ "verdicts": {
+  "A": "通過：脫穀、曬穀、搬運形成完整工作流程，不再只是散落農具",
+  "B": "通過：四戶有不同生活習慣，沒有變成平均堆雜物",
+  "C": "通過：水車維修、米俵搬運、洗衣形成具體的用水關係"
+ },
+ "value": "這次真正值得保留的是：10 個有用途的工作群組，而不是 50 件物件的數量。",
+ "non_blocking": [
+  "B 的側面可讀性較弱（B_near2／B4_near 約 3/5）",
+  "C 在 15 m 只約 3/5（C_mid）",
+  "未來擴張時，以玩家常走的方向優先安排主要生活物件，不需要把每個角度都磨到 5/5"
+ ],
+ "mount": "village_v2 root 直下 HumanUseP10＝Props の次（使用者 2026-10-08 承認：獨立 overlay、與 Props 平行；不為節點分類重新封存 R3b）。Props の子は封存どおり MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9。",
+ "expansion_rules": [
+  "不要全村平均增加生活道具",
+  "農田依照生產與運輸動線安排",
+  "住宅依每戶生活差異安排",
+  "水岸依水源用途安排",
+  "核心商業區已經有大量 P10 Props，不應再次重複堆放",
+  "以玩家常走的方向優先安排主要生活物件"
+ ],
+ "rule": "封存後不修改 HumanUseP10 的配置・資產・生成器，除非真正的 placement／collision bug（HUSE_ALLOW_REBAKE=1＋使用者同意＋reseal）。共用 prefab tools/village_v2_machiya_kit_prefab.gd は他 Kit と共用なので凍結しない（humanuse_kit の mesh .res／manifest を凍結）。",
+ "roster": {
+  "total": 50,
+  "pilots": {
+   "A": 16,
+   "B": 21,
+   "C": 13
+  },
+  "clusters": {
+   "A1_hasa": {
+    "pilot": "A",
+    "anchor": "field",
+    "items": [
+     "st_hasa",
+     "st_hasa",
+     "hu_seoikago"
+    ]
+   },
+   "A2_dakkoku": {
+    "pilot": "A",
+    "anchor": "route",
+    "items": [
+     "hu_momiboshi",
+     "hu_momiboshi",
+     "hu_senba",
+     "hu_seoikago",
+     "st_warazuka",
+     "hu_tomi",
+     "wk_tawara3",
+     "kr_kuruma"
+    ]
+   },
+   "A3_taguchi": {
+    "pilot": "A",
+    "anchor": "field",
+    "items": [
+     "st_kuwa",
+     "sk_teoke",
+     "wk_tawara",
+     "kr_nawa",
+     "mk_kuruma_ni"
+    ]
+   },
+   "B1_maki": {
+    "pilot": "B",
+    "anchor": "building",
+    "items": [
+     "sk_woodpile",
+     "sk_woodpile",
+     "hu_makiwari",
+     "kr_nawa"
+    ]
+   },
+   "B2_shigoto": {
+    "pilot": "B",
+    "anchor": "building",
+    "items": [
+     "st_wara",
+     "sz_stool",
+     "st_warazuka",
+     "kr_hakozumi"
+    ]
+   },
+   "B3_kodomo": {
+    "pilot": "B",
+    "anchor": "building",
+    "items": [
+     "mk_hoshimono",
+     "hu_tarai",
+     "sz_stool",
+     "sk_tensui",
+     "sk_hoop",
+     "sk_temari",
+     "sk_zori"
+    ]
+   },
+   "B4_kirei": {
+    "pilot": "B",
+    "anchor": "building",
+    "items": [
+     "kr_houki",
+     "mk_kame",
+     "sk_teoke",
+     "sk_bench",
+     "sz_hachi",
+     "sz_hachi"
+    ]
+   },
+   "C1_shuri": {
+    "pilot": "C",
+    "anchor": "work_surface",
+    "items": [
+     "st_daiku",
+     "tk_ladder",
+     "kr_zaimoku",
+     "sk_box",
+     "tk_rope"
+    ]
+   },
+   "C2_nioki": {
+    "pilot": "C",
+    "anchor": "work_surface",
+    "items": [
+     "kr_kuruma",
+     "wk_tawara3",
+     "kr_ni",
+     "kr_okeyama"
+    ]
+   },
+   "C3_araiba": {
+    "pilot": "C",
+    "anchor": "water",
+    "items": [
+     "mk_hoshimono",
+     "hu_tarai",
+     "sz_stool",
+     "sk_teoke"
+    ]
+   }
+  },
+  "snapshot": "godot/data/village_v2_p10r4_snapshot.json",
+  "assets": {
+   "reused_items": 41,
+   "new_kit": "humanuse_kit（hu_senba・hu_tomi・hu_momiboshi・hu_tarai・hu_makiwari・hu_seoikago）"
+  }
+ },
+ "verification": {
+  "plan": 14,
+  "negatives": 16,
+  "build_readback": 3,
+  "scene": 11,
+  "seal": 8,
+  "tag": "HUSE"
+ },
+ "frozen": {
+  "godot/tools/village_v2_human_use_lib.gd": "21165f8c8a3f812b7840036ed439939709250a4c287bb52856d660fb91e2a0c3",
+  "godot/tools/verify_village_v2_human_use.gd": "f22f3aa35da17b0236dd6dcead17a339b7e1881ab7196c90efe2867cf9f22906",
+  "godot/tools/shot_p10_human_use.gd": "c854cfb996af24c7f7e7995786f20021b753b908b190b328f6849a061a9e8dbc",
+  "godot/tools/shot_p10_human_use_views.json": "a0e454e051a7d0ae4d77f185b4aa7135c7cecdb4b0132f9f168754d3ebb0ad59",
+  "godot/tools/shot_village_v2_topdown.gd": "e86c011e6bee775426540f00891b9bf3e97e182bb28c5ccbb4472033ea3e8791",
+  "godot/assets/blender/village_v2/build_humanuse_kit.py": "d0e03ab44af793618db489e8d421b0133e9888d4193ac29dfd41bc54cf064014",
+  "godot/maps/village_v2/gen/human_use_p10.scn": "c4c70a2672460e4bdb7910a8a91448f45a7a611e4088c30c79f003ce63b25d51",
+  "godot/data/village_v2_p10r4_snapshot.json": "971e2dd8d8a4c066a28b8690d87d6e2678ba99c26462a5ce9c731fb57814a45e",
+  "godot/assets/village_v2/humanuse_kit/src/humanuse_kit.glb": "5c279a1ad4793136cc336c947b54a0f6356c13a786a0b5c0b90801628508aa5b",
+  "godot/assets/village_v2/humanuse_kit/src/modules_blender.json": "f0122bf013c742dd3dba0a737ce9954af67d4f3dd9fb9f00f1677d7d277f1c6d",
+  "godot/assets/village_v2/humanuse_kit/humanuse_kit_manifest.json": "da417034adc1b7a41d6dbbaef77e72562296c0e458edb3a847e934f5ba211bfd",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_makiwari.res": "18d8e74c38f44ec86801c714099f407c4a515104a2cf301af8c562e3a6ea40ef",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_makiwari_l1.res": "7edcb82b0d8a30fc8ac05bda77200b1e390fad7454057f7f85f6fc370ebbc5db",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_momiboshi.res": "3da8ba1084ec240553ce865f659cb4d05fc402f7bb30097c880c12f2b1d0b589",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_momiboshi_l1.res": "ee7f13e44c2f37e7a79c8676075330dac4c53d968790cf72846158468b90a79f",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_senba.res": "7cc76f87fda6a8a4193ef7ec363248e33b8fefe1a6a279f0224c14481f7b59fc",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_senba_l1.res": "4b4f51bb41fa41c2f92a09736b5f677359cd4ea4941a2a1c06c891c819d1d28f",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_seoikago.res": "69d54b6f090408e02ce9212fc136a9ef2a0fe85a0a0339cce07e9e4fd146c2ab",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_seoikago_l1.res": "d457231d3584a2c674da55b6bb115ef00cbad70b1544e75edf5bb2a5482fc231",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_tarai.res": "c8537f26ca1073c9c18f315c1628bcb6c596fa7c47dff2d8e7943bb278298c0b",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_tarai_l1.res": "fe59045c5ade5935d496440e367ab9611878d427d2010eadf8b8b944c6bb8c43",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_tomi.res": "2720bdb9c4bdbcb247be6771165c136ac3ab30c8d64dd8546f4203c174d29cfe",
+  "godot/assets/village_v2/humanuse_kit/mesh/hu_tomi_l1.res": "773e818f649c27ff66ac40c338ef1c4aa26190376319a2f30003458a1cfe01ba",
+  "tools/seal_p10r4.py": "3d822f99582721c4d43abde93a81d33db1c55f4557fbb3574b1e6fb27001ef29"
+ },
+ "evidence": {
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/plan.json": "e43e1f26458ff68c6ab89e373b2ead588e714c5cf3c49a203af996053484b1d3",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/plan_negatives_build.log": "38dad66d0ec89ff888dfdb934338c8e9b001b79251fa4179fc9445a6918e2656",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/regression_final.log": "8e27eda9f9110797db3075b26b287d2ce35d7302f0719f9cfa0560012e73a733",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/regression_subset.log": "bc22b87e6c67bce856226d63834376f36c55aff93f4dec551ac2b3da46c75522",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/regression_subset_mount_under_props.log": "5d392b48aea9435c3f79356d6da55867c1602348ecc0c237630d0db7e36287ab",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/scene.log": "7601a8ecf0ab182c241e2c6ee24f63a4ddcae110323313d5558f27f732a9ca04",
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/shots.log": "61945aa206b83202d50ba69aa3d3d470c93b81f28adf94a56fc09452e4afa72f"
+ },
+ "art_review_images": {
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A1_near_after.png": "4e2746a8b7a6f81a16759d91dca2025e6bcb096ef3a7e31832d31a847b10db3b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A1_near_before.png": "17423b61c9da060c446e8fdcb7f6e3dda7fac98e8bd17397150bf7fe4c6782eb",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A1_near_npcoff.png": "e947e72d350c610c8370f247012bd65a64e77f2e8104ca695837fe012d984e19",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A2_near_after.png": "91c2d34d6e7ae379226c2b22872940629624cde4e6a92a0793936325a5041722",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A2_near_before.png": "f1d0ef8a5c9cbd05377e1099e1848f36c3b229b9bae658c3fa288a507bd66ae2",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A2_near_npcoff.png": "3b89eeb5186aa50f27bedc5b9a61b4ad685dc142393ef9670a910a2884c52f7b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A3_near_after.png": "5483b2a6a1f829eee0a124a58154007fb1e9b8a8717fca9cae2ba5ece010b9b1",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A3_near_before.png": "9d1587e8125a634a0a2d1e7f43ab81010e03aace459cc7d7f15795f8b1fcbbfa",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A3_near_npcoff.png": "fa7431d3f51e81586555c748debaf4c92e1690d5838bc866c441c9db4ce71943",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_high_after.png": "a166e6f2a62f78b07b8403c62f3971416633478e69e5ad228d0cef439a8095d3",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_high_before.png": "d01c214bf90a1a2f0a2664866cec6288c0bbce28e3ba1f7c12dec00de6fe5c6b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_high_npcoff.png": "180518c466353222350c446d64607a5a0f120ccaf913bce7b3b7907726e3d0ea",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid2_after.png": "7c146bfad73511153a72bd6aa53e9d821729cb816b1924625cf3b96cf14537a0",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid2_before.png": "3fd5a5de687c1873f7e9ee4939723cdef37e6115977c08c9698effb5d20837b6",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid2_npcoff.png": "d841cce0d70119d5eac388d81971cd81bc9eab551625340a96e72559bf671544",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid_after.png": "35ffe96b2f268a980c4ceb3edf4d66e0e10415f276dbfa485842ff2db8c91542",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid_before.png": "e1596403a15d76ef5700eb725110b9621793a3f3a47c7fb2f56cdd2fa091d880",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_mid_npcoff.png": "da3b7ba9256069a6fd24a50d57d50c9bcf21e7be7f538bfbac90ccc6c196187d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_npc_after.png": "e1bcccbd28c630abcb82e0098d6bd9182b045e73fa6df09d2c611818e13cad7e",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_npc_before.png": "bf3bfa57544c064081f9fefc848afd324a59dd45cddde23a83c650b90809a103",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/A_npc_npcoff.png": "cb01c2c89e397d8531a3a63a62547cb30c85ab315d79f8c126216da0d7945140",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B4_near_after.png": "b7fd6945381110b7838281fbd1f885ac616c9e36c16759c18fe469bfebe4f7e1",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B4_near_before.png": "93e491bd30ee6e8bcba0237d9a16b516d74068aa2803c0ca43f63971ccb6a4db",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B4_near_npcoff.png": "564a99b555073b6627ef3893dd997fb44f466403208fc3346ce682e6a3fdf82d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_high_after.png": "60794b92366aebac1cb46d6ea3cd30f27c1e2ad74ec896a233d7173309f411f6",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_high_before.png": "92ae9e561f1a722052cc39e912c73deba8f356417e027e8f18945f420dc40ab6",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_high_npcoff.png": "cc0f780d423fa783d1a1a0bf49ae7417f0e25e5ff913747d64f3290538ff0fe9",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_mid_after.png": "3d3cb5a5288aaba11f8536c8c656511fe38f9a2fb59e63012b589378f8c09003",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_mid_before.png": "7f5967e252473ffdde415ea5b056f3e1a74ea476998ac4ac8c9cb87a520cf4e0",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_mid_npcoff.png": "f9205385b1dfee6555e329c4d1d14d9330f9445f8af939a177d1fd9b1b798b7b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near2_after.png": "7c542494ec50d4888f229a22016c013033a66650e55f2d0af93d1400160c6a07",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near2_before.png": "9bea627dc77de8705a44bb8d67af7a8133c602773f2c047d1eb83d2314503bdf",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near2_npcoff.png": "5c0173e6c6e35c110afdafe32dc0dd1264f6dc510064332acd78ea3c3590f678",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near_after.png": "04d911fcff45f1b08e2fde7f5e1b213cc93e9fb6226200b84c46ccd3a5d2de9d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near_before.png": "59185833fd5a6d16d6bce7e7af3b618ed850e8bd1daea21da61f0f2ec259cdde",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_near_npcoff.png": "d98af65819603d1d56be5f03e729307000a52e7fc168fe3b2cdd30ec2009231f",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_npc_after.png": "7fd6faea2752b292dc3316a4790256aaeb07a791e2beac0565ec1e860afec477",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_npc_before.png": "2ee87ed93b63360cfaa94f83dfc53931ddf8b709afad4f7a95ce615bc3816ef5",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/B_npc_npcoff.png": "390d690df253d21e6bce96e13834527ce81af7c672333081d740ef81b8ed950a",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_near_after.png": "6daadfd3e82b69cfc18d786e5f3e01ed527ce455fdcc1897229b6eadc0bd51a5",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_near_before.png": "64d42ab33f0a950b886f8f05c2c15625c9bcc4eeb259d373043772ecd32da801",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_near_npcoff.png": "334b89c049ba8c8fbc722234f6ac6c2e70f303c5e85d0c725b08793f3867c5b0",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_side_after.png": "21be9e7d45e3e0d1e1f9812e11ae9503a1e1b32f972d0a433c4f2a0718d33494",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_side_before.png": "0fd9ee583e139bc9fd308c3dbee309bcafe5c1826c8d2636dca7d19ad8ad659f",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C1_side_npcoff.png": "a48fc74164a8a2b7a487dbf03b68ace14bdb549da903c356e461065d0a550a5d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C3_near_after.png": "8204fcce5b2db581675327cec8bedf000a00bb8e73fd14e2c0eed9c923555f75",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C3_near_before.png": "c2afe5c50b0c46ddbb22cc6f347b785e00b4781c77ad4571ac70bd797407385b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C3_near_npcoff.png": "2cf8363de1309b05a19f1108622bcf7e0caa6eaa236efb75ce46322e9325dcf0",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_high_after.png": "72ba7c473d52324d95dd6f9c57c0c4033a99ee3a65a1e878f69539e78845b663",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_high_before.png": "56cbaadd28c6eb614f0ef393d761265e322a3de5f45e0432ad962fccc0177808",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_high_npcoff.png": "c43c2fd69fce9b79f1f9f22b7edb37aefdd6ef43360e6910e2b04ceb2e48691f",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_mid_after.png": "f7751456ee3dee3e9d5288a1b55004b4d6513e44f2d769d08c93430f70426d12",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_mid_before.png": "947c2ba96213b4cccc6d1fc08b1e1747f76e2dd237ae955492845d2e6ae84202",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_mid_npcoff.png": "665977b0cf2cb69558e9cafab0e49d5d79f1254b47b1835719a4e953a46d12fc",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_npc_after.png": "23ed5d83afe8f37568163e57a588f29aab4a9899ffe1afd6e6877c6d5568683f",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_npc_before.png": "d261f07d96ada5b759f1fd76f86811d083de933c758e73aacba5dac17363ca89",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/C_npc_npcoff.png": "9bf647ab5c653eb1ba600e99f6324f319ebc4181b8bb1ec9177d86d5edb74399",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_A_after.png": "f0628b1d5df0b27f2944c36b28726300f5b3854017c04fde02fcd3d2b7fbef4d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_A_before.png": "ea28ab71fcde05619009f444aa39d6b7718bf74e6c9ddc90e4c186bfb0d18b94",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_B_after.png": "ad2dbd74423b631ef4e78c121b4af78568d9be4ddc69c27a2e3cbb3cdca5a5e8",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_B_before.png": "24083dee00f543d2304d4fa843e4c10b1204a1e65638858e39ca0871673814da",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_C_after.png": "63b041054fe2d53b7cd84358f7665d43bff740c048d27f72e9f7d7c7b0c722df",
+  "docs/art_review/village_v2_p10_props/human_use_r1/render/top_C_before.png": "60063273dc67d34bab640c761be12cffa44276ca19f1b665d45b3e29b2a1cb1b",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/A_top_before_after.jpg": "49cdf2d6205d288d40fb6a88edd68352f39d15dac1018b8224e1496d1dbb1555",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/A_tps_mid_10-15m_high_npc.jpg": "68066b59fbcdeab1f82741db29abdb68c5311de9887eb42fdedad308fd479929",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/A_tps_near_5-10m.jpg": "83dd2c58340cae8c96d1e2cf7391229d5aecd315fdae88693e8616a923fd22a9",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/B_top_before_after.jpg": "529d701260307437a54072cfbef7360433dad83ad75713340d2b18483fe01c5d",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/B_tps_mid_10-15m_high_npc.jpg": "15e53933033179c0bd5ab90464426cb1c26ade5ebe56f230fa39fca638d95323",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/B_tps_near_5-10m.jpg": "13f8eb654022abfa89bc0bc806cefd9603e64d1b480fb8aa93eb4cfcb0dc200a",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/C_top_before_after.jpg": "122e941e2edc75e39b8b1fe0f995576ffab8de05120e372b88f2c2a5f03a33fa",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/C_tps_mid_10-15m_high_npc.jpg": "d24c304290c6731517a953378066d3a5f17d5aa7cd849a5ee43520218ccef1ae",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/C_tps_near_5-10m.jpg": "d6dd95411de48683ed32a745d256f4d26dec1bf8a3aefabcafe74b9b22e95d88",
+  "docs/art_review/village_v2_p10_props/human_use_r1/review/README.md": "022f5b445fe71d458d21d021b47d703414cc661714eed7dad871514e8e90915f"
+ },
+ "child_seals": {
+  "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+  "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
+  "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
+  "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+  "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
+  "godot/data/village_v2_p10r3e_seal.json": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03"
+ }
+}

@@ -133,14 +133,15 @@ run "P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍�
 run "P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五區・R3b 不變・新增 23 の位置／朝向／activity／patrol・南側入口 3 人・EntranceCueP10 小幟 2・證據・審圖・子封存 R3b／R3c／NPCLIB の雜湊＋掛載順＋場景＝snapshot＋竄改反向；封存中 --build／--attach 拒否）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --seal
 run "P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd
 run "P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --negatives
-run "P10 R3d 核心區人口 scene（掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）" CORE --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_core.gd -- --scene
+run "P10 R3d 核心區人口 scene（人數＝scope 別の身元 39〔R3b＋R3d〕・多一人／少一人／重複の反向・R3d 単獨〔R3e を外す〕でも 39；掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）" CORE --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_core.gd -- --scene
 run "P10 R3e 外圍人口 封存（ART_APPROVED 2026-10-07：外圍 12 人＝最終基準・各區・位置／朝向・activity・patrol 端點・密度環単調下降・森林／山腳 0 人・依存 R3d／R3c／R3b／NPCLIB 雜湊＋掛載順＋場景＝snapshot＋竄改反向 3；封存中 --build／--attach 拒否）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --seal
 run "P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd
 run "P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --negatives
-run "P10 R3e 外圍人口 scene（掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
+run "P10 R3e 外圍人口 scene（人數＝外圍の身元 12＋村人口 51〔scope 外・重複なし〕・反向；掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
 run "P10 R3c Activity plan（16 人・8 指派・5 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
 run "P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --negatives
 run "P10 R4 Human-Use Pilot plan gate（3 Pilot・既存資產優先＋缺件 6・中型の輪郭・who/why/anchor・依附・禁區〔P8・水・NPC・Env +1.6・MeadowP9 株 0〕・接地・成組・非均一）＋反向 16" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --negatives
 run "P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --scene
+run "P10 R4 Human-Use Pilot 封存（ART_APPROVED 2026-10-08：A／B／C・10 cluster 50 件 snapshot＝場景〔位置・朝向・who／why／anchor〕・root 掛載 Props の次・Props の子は封存どおり・凍結／證據／審圖／子封存 R3d・R3e・P9F 等の雜湊＋竄改反向 3；封存中 --build／--attach 拒否）" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --seal
 echo "回歸失敗項目：$fail"
 exit $fail

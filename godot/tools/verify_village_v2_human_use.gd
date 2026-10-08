@@ -6,6 +6,9 @@ extends SceneTree
 ##     --survey=x,z,w,h[;…]   診断：0.5 m ごとの置ける／置けない理由の地図（設計用）
 ##     --meadow-cache=<json>  MeadowP9 規劃株のキャッシュ（設計の反復用；gate の本番は付けない＝毎回同 seed で再計算）
 ##   --build は MultiMesh を含まない（個別ノード）ので headless で可。
+##   --snapshot=<json>  掛載済み場景の HumanUseP10 全件（id・pilot・cluster・who・why・anchor・世界位置・朝向）を書き出す（封存用）
+##   --seal  封存（data/village_v2_p10r4_seal.json：雜湊＋root 掛載（Props の次）＋Props の子は封存どおり＋場景の 50 件が snapshot と一致＋竄改反向；
+##           R4 Human-Use Pilot ART_APPROVED 2026-10-08）。封存中は --build／--attach を拒否（HUSE_ALLOW_REBAKE=1＝使用者承認の再烘焙だけ）。
 const HU := preload("res://tools/village_v2_human_use_lib.gd")
 const MD := preload("res://tools/village_v2_meadow_lib.gd")
 const SL := preload("res://tools/village_v2_street_lib.gd")
@@ -14,6 +17,8 @@ const SCENE := "res://maps/village_v2/village_v2.tscn"
 const PROPS_SEALED := ["MarketP10", "StreetP10", "MarketWestP10", "EnvironmentP9"]   # R3b scene gate の完全一致
 const POP_ORDER := ["PopulationP10", "ActivityP10", "CoreP10", "ActivityCoreP10", "EntranceCueP10", "OuterP10", "ActivityOuterP10"]
 const VEG_KEEP := ["GroundcoverP9", "MeadowP9"]
+const SEAL := "res://data/village_v2_p10r4_seal.json"
+const SNAPSHOT := "res://data/village_v2_p10r4_snapshot.json"
 const MAX_ITEMS := 60
 const COHESION := 2.5
 const SPAN_MAX := 20.0
@@ -37,10 +42,26 @@ func _initialize() -> void:
 
 func _go() -> void:
 	var args := OS.get_cmdline_user_args()
+	if ("--attach" in args or "--build" in args) and _sealed() and OS.get_environment("HUSE_ALLOW_REBAKE") != "1":
+		check("P10 R4 封存中（%s）：--build／--attach は拒否（使用者が reopen した時だけ HUSE_ALLOW_REBAKE=1、封存を更新すること）" % SEAL, false)
+		quit(1)
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
+	if "--seal" in args:
+		root.add_child(v)
+		await physics_frame
+		quit(_seal(v))
+		return
+	for s0: String in args:
+		if s0.begins_with("--snapshot="):
+			root.add_child(v)
+			await physics_frame
+			_snapshot(v, s0.trim_prefix("--snapshot="))
+			quit(0)
+			return
 	if "--scene" in args:
 		root.add_child(v)
 		await physics_frame
@@ -710,3 +731,121 @@ func _audit(sp: PhysicsDirectSpaceState3D, D: Dictionary, body: StaticBody3D, te
 				names.append(String((w["collider"] as Node).name) if w["collider"] is Node else "?")
 			pen.append("%s %.2f m %s" % [c.name, dmax, str(names)])
 	return {"float": fl, "embed": embed, "rays": rays, "pen": pen, "shapes": nsh}
+
+
+# ─────────────────────────── snapshot／seal ───────────────────────────
+
+func _live(v: Node3D) -> Array:
+	var go := v.get_node_or_null(HU.NODE_NAME) as Node3D
+	var out: Array = []
+	if go == null:
+		return out
+	for n in go.find_children("*", "Node3D", true, false):
+		if n.has_meta("hu_id"):
+			var xf := (n as Node3D).global_transform
+			out.append({"node": String(go.get_path_to(n)), "id": String(n.get_meta("hu_id")), "pilot": String(n.get_meta("hu_pilot")),
+				"cluster": String(n.get_meta("hu_cluster")), "anchor": String(n.get_meta("hu_anchor")), "who": String(n.get_meta("hu_who")),
+				"why": String(n.get_meta("hu_why")), "position": [snappedf(xf.origin.x, 0.001), snappedf(xf.origin.y, 0.001), snappedf(xf.origin.z, 0.001)],
+				"yaw_deg": snappedf(rad_to_deg(xf.basis.get_euler().y), 0.01)})
+	return out
+
+
+func _snapshot(v: Node3D, path: String) -> void:
+	var items := _live(v)
+	var cl := {}
+	var pil := {}
+	for it: Dictionary in items:
+		cl[it["cluster"]] = int(cl.get(it["cluster"], 0)) + 1
+		pil[it["pilot"]] = int(pil.get(it["pilot"], 0)) + 1
+	var out := {"schema": 1, "scope": "P10 R4 Human-Use Pilot：HumanUseP10（root 直下・Props の次）の全件", "art_revision": String((v.get_node(HU.NODE_NAME) as Node).get_meta("art_revision")),
+		"total": items.size(), "clusters": cl, "pilots": pil, "items": items}
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(out, "	") + "
+")
+	f.close()
+	print("[HUSE] snapshot → %s（%d 件、%d cluster）" % [path, items.size(), cl.size()])
+
+
+func _sealed() -> bool:
+	if not FileAccess.file_exists(SEAL):
+		return false
+	var j = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	return j is Dictionary and String(j.get("status", "")) == "ART_APPROVED"
+
+
+func _seal_mismatch(seal: Dictionary) -> Array:
+	var repo := (ProjectSettings.globalize_path("res://") + "..").simplify_path() + "/"
+	var bad: Array = []
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		var d: Dictionary = seal.get(grp, {})
+		for k: String in d:
+			if not FileAccess.file_exists(repo + k) or FileAccess.get_sha256(repo + k) != String(d[k]):
+				bad.append(k)
+	return bad
+
+
+## 場景の全件が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・id／pilot／cluster／anchor／who／why）
+func _live_mismatch(v: Node3D, snap: Dictionary) -> Array:
+	var bad: Array = []
+	var live := {}
+	for it: Dictionary in _live(v):
+		live[it["node"]] = it
+	var want: Array = snap["items"]
+	if live.size() != want.size():
+		bad.append("件数 %d≠%d" % [live.size(), want.size()])
+	for w: Dictionary in want:
+		var it: Dictionary = live.get(String(w["node"]), {})
+		if it.is_empty():
+			bad.append(String(w["node"]) + " 無い")
+			continue
+		var p: Array = it["position"]
+		var q: Array = w["position"]
+		if Vector3(p[0], p[1], p[2]).distance_to(Vector3(q[0], q[1], q[2])) > 0.01 or absf(angle_difference(deg_to_rad(float(it["yaw_deg"])), deg_to_rad(float(w["yaw_deg"])))) > deg_to_rad(0.5):
+			bad.append(String(w["node"]) + " 位置／朝向")
+		for k in ["id", "pilot", "cluster", "anchor", "who", "why"]:
+			if String(it[k]) != String(w[k]):
+				bad.append("%s %s" % [w["node"], k])
+	return bad
+
+
+func _seal(v: Node3D) -> int:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	if not parsed is Dictionary:
+		check("seal manifest が読める", false)
+		return 2
+	var seal: Dictionary = parsed
+	check("status ART_APPROVED（使用者 2026-10-08；agent は美術を承認しない）", String(seal.get("status", "")) == "ART_APPROVED" and String(seal.get("approved_by", "")) == "user")
+	var bad := _seal_mismatch(seal)
+	var n := 0
+	for grp: String in ["frozen", "evidence", "art_review_images", "child_seals"]:
+		n += (seal.get(grp, {}) as Dictionary).size()
+	check("封存 %d 檔雜湊一致（凍結・證據・審圖・子封存；不符 %d：%s）" % [n, bad.size(), str(bad.slice(0, 4))], bad.is_empty())
+	var roots: Array = []
+	for c in v.get_children():
+		roots.append(String(c.name))
+	var names: Array = []
+	for c in v.get_node("Props").get_children():
+		names.append(String(c.name))
+	var ip := roots.find("Props")
+	var txt := FileAccess.get_file_as_string(SCENE)
+	check("掛載：root 直下 %s（1 個）＝Props の次（使用者 2026-10-08 承認）、Props の子は封存どおり（%s）、%s" % [HU.NODE_NAME, " → ".join(names), HU.OUTPUT],
+		roots.count(HU.NODE_NAME) == 1 and ip >= 0 and roots.find(HU.NODE_NAME) == ip + 1 and names == PROPS_SEALED and txt.count("p10r4_human_use") == 2
+		and (v.get_node(HU.NODE_NAME) as Node).scene_file_path == HU.OUTPUT)
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SNAPSHOT))
+	var pil: Dictionary = snap["pilots"]
+	check("snapshot：%d 件・%d cluster（A %d・B %d・C %d 件）、art_revision＝%s" % [int(snap["total"]), (snap["clusters"] as Dictionary).size(), int(pil.get("A", 0)), int(pil.get("B", 0)), int(pil.get("C", 0)), snap["art_revision"]],
+		int(snap["total"]) == 50 and (snap["clusters"] as Dictionary).size() == 10 and String(snap["art_revision"]) == HU.ART_REVISION)
+	var lb := _live_mismatch(v, snap)
+	check("場景の 50 件が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・id／pilot／cluster／anchor／who／why；不符 %s）" % str(lb.slice(0, 4)), lb.is_empty())
+	var tam := seal.duplicate(true)
+	var k0: String = (tam["frozen"] as Dictionary).keys()[0]
+	tam["frozen"][k0] = "0".repeat(64)
+	check("反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（%d）" % (_seal_mismatch(tam).size() - bad.size()), _seal_mismatch(tam).size() == bad.size() + 1)
+	var snap2: Dictionary = snap.duplicate(true)
+	snap2["items"][0]["position"][0] = float(snap2["items"][0]["position"][0]) + 0.25
+	check("反向：snapshot の 1 件を 0.25 m ずらす → 不一致を検出", not _live_mismatch(v, snap2).is_empty())
+	var snap3: Dictionary = snap.duplicate(true)
+	snap3["items"][1]["who"] = "誰か"
+	check("反向：snapshot の 1 件の who を変える → 不一致を検出", not _live_mismatch(v, snap3).is_empty())
+	print("[HUSE] 結果：%d 項失敗（seal）" % fails)
+	return 0 if fails == 0 else 2
