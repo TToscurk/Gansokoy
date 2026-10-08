@@ -115,16 +115,16 @@
 - 含 R5c 全 6 個：村內 +0.2～+1.8 ms；朝外看邊界的機位 +2.5～+5.6 ms（原本外面是空的所以便宜）；**ON 後最高絕對值 14.27 ms（石段機位）**，仍在既有村中心機位的範圍內。未見 catastrophic 項目。
 
 ## 6. 回歸
-全量 `run_village_v2_regression.sh` 128 項（`regression/full_regression.log`，修正前）：**118 PASS／10 FAIL**。
+全量 `run_village_v2_regression.sh` 128 項（`regression/full_regression.log`，修正前）：**118 PASS／10 FAIL**＝既知 4＋本輪造成 1（19-point walk，已修正）＋Pilot 相關 5（其中 R4 HUSE scene 另含 1 個本輪造成的接地檢查失敗，已修正）。
 - **既知、與 P10 FINAL 相同（未惡化）4 項**：TERRAIN 場景載入 3.84 s（> 3.0 s，P12；P10 FINAL 4.27 s）、P5 ASSET 白名單違規 421（件數不變；本輪新增依存 15 件全在白名單內）、P8 COST High_overlook +4.01 ms（P10 FINAL +4.08）、P9 R4-3 寺子屋 scene（R3d C20 巡回擋 2 點，同一訊息）。
-- **本輪造成、已修正 2 項**：
+- **本輪造成、已修正的問題 2 個**（佔 FAIL 的只有 19-point walk 1 項；A2 籠接地是 R4 HUSE scene 裡的 1 個檢查，該 run 另因 Pilot 偏差仍 FAIL，計入下方 5 項）：
   - 19-point walk（最大 |玩家y−地面| 0.50 m）：斜めの歩行線が一の鳥居の柱台（P5 碰撞 0.72 角・高 0.58 m）に乗り上げ → overlay 側に柱台ガード追加（資產不變）→ **0.05 m PASS**。
   - HUSE 接地「最大の埋まり 1.002 m」：A2 背負い籠が 1.0 m 沈んでいた（r1 gate の射線が籠自身の碰撞に當たった）→ 地面＝TerrainCollision に修正、反向 N5 追加 → 接地 −0.002 m。
 - **Pilot の設計上の偏差（D8／D9 授權；ART_APPROVED 後の全面套用／reseal で解消）5 項**——修正後の影響範圍再跑 `regression/rerun_affected_after_fix.log`（12 項：7 PASS／5 FAIL＝下記のみ）：
   - P6 KIT：AlbedoPilotP10 が Pilot 24 棟の表面に執行期 override（P6「無 override」規則）
-  - R4 HUSE scene：PropFixP10 が R4 の st_hasa を v2 mesh（`gen/r4c/`、kit 外パス）に差替
+  - R4 HUSE scene：PropFixP10 が R4 の st_hasa を v2 mesh（`gen/r4c/`、kit 外パス）に差替（修正後はこの 1 檢查だけ FAIL；A2 接地は PASS）
   - R4 HUSE seal／R4b HUX scene・seal：A2 背負い籠 1 件の移位（D9「A2 只調必要位置」）＝R4 snapshot 不一致 1 件だけ
-  - **封じ込め確認** `regression/proof_pilots_off.log`：AlbedoPilotP10／PropFixP10 を `enabled=false` にすると上記 6 run 全部 PASS（0 失敗、他の不一致なし）。確認後 `village_v2.tscn` を HEAD に復元（sha256 `7decaaad…` 一致、git diff 0）。
+  - **封じ込め確認** `regression/proof_pilots_off.log`：AlbedoPilotP10／PropFixP10 を `enabled=false` にすると上記 5 項＋R4b HUX plan の計 6 run 全部 PASS（0 失敗、他の不一致なし）。確認後 `village_v2.tscn` を HEAD に復元（sha256 `7decaaad…` 一致、git diff 0）。
 - 封存 `--seal`：P8／P9 R1–R5・FINAL／P10 R1・R1b・R2・R3b・R3c・R3d・R3e・NPCLIB 全 PASS；R4／R4b は上記 A2 移位のみ（不重封、D9）。
 - MMBAKE（全 MultiMesh 零矩陣 0）、PLACE（場景擺放稽核＋永久反向）、RBG、STR 等その他 PASS。
 
