@@ -1,0 +1,17 @@
+pilots off ['AlbedoPilotP10', 'PropFixP10'] 66ad76d39d490772
+[KIT] 結果：0 項失敗
+✓ P6 町家 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊）
+[HUSE] 結果：0 項失敗（scene）
+✓ P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUSE] 結果：0 項失敗（seal）
+✓ P10 R4 Human-Use Pilot 封存（ART_APPROVED 2026-10-08：A／B／C・10 cluster 50 件 snapshot＝場景〔位置・朝向・who／why／anchor〕・root 掛載 Props の次・Props の子は封存どおり・凍結／證據／審圖／子封存 R3d・R3e・P9F 等の雜湊＋竄改反向 3；封存中 --build／--attach 拒否）
+[HUX] 結果：0 項失敗
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL plan gate（正式 10 群＝A 農田 5・B 住宅 5・C 水岸擴張 0〔ART_REJECTED〕・計画＝封存 snapshot・重用＋缺件・中型の輪郭・who/why/anchor・依附・禁區〔R4 全禁區＋核心商業區＋R4 の 50 件／Pilot 区〕・見えている最上面に接地・成組・非均一・自然の岸）＋反向 19〔rejected_c() を戻す・hx_doroage を置く を含む〕
+[HUX] 結果：0 項失敗（scene）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下 HumanUseP10 の次に HumanUseExpansionP10・Props の子は封存どおり・正式 10 群／C 0／ZoneC なし・個別ノード・MultiMesh／Marker3D 0・R4 の 50 件 snapshot 不変・Population 51 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUX] 結果：0 項失敗（seal）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 封存（使用者 2026-10-08：A・B ART_APPROVED／C 水岸 ART_REJECTED＝除去・理由を記録・40 件 snapshot＝場景＝承認時 r3 の A/B・C 群／hx_doroage なし・R4 の 50 件不変・NPC 51・凍結／證據／審圖／rejected candidates／子封存雜湊＋竄改・移動・who・C 戻し反向；封存中 --build／--attach 拒否）
+回歸失敗項目：0
+proof=0
+restored 7decaaad1fc5748d HEAD 7decaaad1fc5748d
+warning: in the working copy of 'godot/maps/village_v2/village_v2.tscn', LF will be replaced by CRLF the next time Git touches it

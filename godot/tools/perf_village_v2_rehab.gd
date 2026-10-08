@@ -1,6 +1,6 @@
 extends SceneTree
 ## P10 R5–R6 施工：效能量測（非 headless、Forward+、10:00、VSync 關）。只讀，不存場景。
-##   Godot --path . --script res://tools/perf_village_v2_rehab.gd -- <views.json> <out.json> [toggle=<NodePath>] [pairs=2]
+##   Godot --path . --script res://tools/perf_village_v2_rehab.gd -- <views.json> <out.json> [toggle=<NodePath>[,<NodePath>…]] [pairs=2]
 ## views 與 shot_village_v2_rehab_audit.gd 同格式。每個機位：暖機 90 幀 → 量 120 幀（root viewport GPU 時間、CPU 渲染時間、
 ## draw calls、primitives 的中位數）。toggle 指定時同機位 ON／OFF 交替量 pairs 對（ABAB），取各自中位數 → 差＝該節點成本。
 func _init() -> void:
@@ -27,7 +27,13 @@ func _init() -> void:
 			toggle = s.trim_prefix("toggle=")
 		elif s.begins_with("pairs="):
 			pairs = s.trim_prefix("pairs=").to_int()
-	var g: Node3D = v.get_node_or_null(toggle) as Node3D if toggle != "" else null
+	# toggle 可用逗號列多個節點（P10 R5–R6 全部 pilot 一起 ON／OFF）；有 enabled 屬性的材質覆寫類 → 切 enabled
+	var gs: Array = []
+	for t in toggle.split(",", false):
+		var nd := v.get_node_or_null(t)
+		if nd:
+			gs.append(nd)
+	var g: Node3D = gs[0] if not gs.is_empty() else null
 	var vp := root.get_viewport_rid()
 	RenderingServer.viewport_set_measure_render_time(vp, true)
 	var cam := Camera3D.new()
@@ -48,7 +54,11 @@ func _init() -> void:
 		for p in (pairs if g else 1):
 			for stt in states:
 				if g:
-					g.visible = (stt == "on")
+					for gg in gs:
+						if "enabled" in gg:
+							gg.set("enabled", stt == "on")
+						else:
+							(gg as Node3D).visible = (stt == "on")
 				for i in 90:
 					await process_frame
 				var gpu := []
@@ -73,7 +83,11 @@ func _init() -> void:
 		res["views"][str(vw[0])] = rec
 		print("[PERF] %s %s" % [vw[0], JSON.stringify(rec).left(300)])
 	if g:
-		g.visible = true
+		for gg in gs:
+			if "enabled" in gg:
+				gg.set("enabled", true)
+			else:
+				(gg as Node3D).visible = true
 	var f := FileAccess.open(out, FileAccess.WRITE)
 	f.store_string(JSON.stringify(res, "\t"))
 	f.close()

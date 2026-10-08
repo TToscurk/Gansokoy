@@ -1,0 +1,682 @@
+{
+	"pairs": 2,
+	"renderer": "forward_plus",
+	"toggle": "AlbedoPilotP10,GroundPilotP10,WaterLifeP10,ShrineApproachP10,PropFixP10",
+	"views": {
+		"perf_alb_gate_n": {
+			"delta_draw_calls": 49,
+			"delta_gpu_ms": 0.132,
+			"delta_primitives": 740,
+			"off": {
+				"cpu_ms": 7.065,
+				"draw_calls": 2696,
+				"gpu_ms": 9.181,
+				"primitives": 2700401,
+				"runs": [
+					{
+						"cpu_ms": 7.06500005722046,
+						"draw_calls": 2696.0,
+						"gpu_ms": 9.06400012969971,
+						"primitives": 2700127.0
+					},
+					{
+						"cpu_ms": 6.87900018692017,
+						"draw_calls": 2696.0,
+						"gpu_ms": 9.18099975585938,
+						"primitives": 2700401.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 6.934,
+				"draw_calls": 2745,
+				"gpu_ms": 9.313,
+				"primitives": 2701141,
+				"runs": [
+					{
+						"cpu_ms": 6.93400001525879,
+						"draw_calls": 2745.0,
+						"gpu_ms": 9.22299957275391,
+						"primitives": 2700867.0
+					},
+					{
+						"cpu_ms": 6.68900012969971,
+						"draw_calls": 2745.0,
+						"gpu_ms": 9.3129997253418,
+						"primitives": 2701141.0
+					}
+				]
+			}
+		},
+		"perf_alb_west_alley": {
+			"delta_draw_calls": 13,
+			"delta_gpu_ms": 0.02,
+			"delta_primitives": 8392,
+			"off": {
+				"cpu_ms": 4.537,
+				"draw_calls": 1719,
+				"gpu_ms": 9.372,
+				"primitives": 2224742,
+				"runs": [
+					{
+						"cpu_ms": 4.51200008392334,
+						"draw_calls": 1719.0,
+						"gpu_ms": 9.32999992370605,
+						"primitives": 2224742.0
+					},
+					{
+						"cpu_ms": 4.53700017929077,
+						"draw_calls": 1719.0,
+						"gpu_ms": 9.37199974060059,
+						"primitives": 2224742.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 4.578,
+				"draw_calls": 1732,
+				"gpu_ms": 9.392,
+				"primitives": 2233134,
+				"runs": [
+					{
+						"cpu_ms": 4.57800006866455,
+						"draw_calls": 1732.0,
+						"gpu_ms": 9.25300025939941,
+						"primitives": 2233134.0
+					},
+					{
+						"cpu_ms": 4.57600021362305,
+						"draw_calls": 1732.0,
+						"gpu_ms": 9.39200019836426,
+						"primitives": 2233134.0
+					}
+				]
+			}
+		},
+		"perf_arrival": {
+			"delta_draw_calls": 55,
+			"delta_gpu_ms": 0.093,
+			"delta_primitives": 248,
+			"off": {
+				"cpu_ms": 6.328,
+				"draw_calls": 2836,
+				"gpu_ms": 13.463,
+				"primitives": 3184887,
+				"runs": [
+					{
+						"cpu_ms": 6.32800006866455,
+						"draw_calls": 2836.0,
+						"gpu_ms": 13.4630002975464,
+						"primitives": 3184887.0
+					},
+					{
+						"cpu_ms": 6.19099998474121,
+						"draw_calls": 2836.0,
+						"gpu_ms": 13.3959999084473,
+						"primitives": 3184887.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 6.593,
+				"draw_calls": 2891,
+				"gpu_ms": 13.556,
+				"primitives": 3185135,
+				"runs": [
+					{
+						"cpu_ms": 6.59299993515015,
+						"draw_calls": 2883.0,
+						"gpu_ms": 13.5559997558594,
+						"primitives": 3185135.0
+					},
+					{
+						"cpu_ms": 6.57100009918213,
+						"draw_calls": 2891.0,
+						"gpu_ms": 13.5030002593994,
+						"primitives": 3185135.0
+					}
+				]
+			}
+		},
+		"perf_east_edge_high": {
+			"delta_draw_calls": 0,
+			"delta_gpu_ms": 0.079,
+			"delta_primitives": 0,
+			"off": {
+				"cpu_ms": 1.423,
+				"draw_calls": 252,
+				"gpu_ms": 8.358,
+				"primitives": 1019375,
+				"runs": [
+					{
+						"cpu_ms": 1.41499996185303,
+						"draw_calls": 252.0,
+						"gpu_ms": 8.26700019836426,
+						"primitives": 1019375.0
+					},
+					{
+						"cpu_ms": 1.42299997806549,
+						"draw_calls": 252.0,
+						"gpu_ms": 8.35799980163574,
+						"primitives": 1019375.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 1.433,
+				"draw_calls": 252,
+				"gpu_ms": 8.437,
+				"primitives": 1019375,
+				"runs": [
+					{
+						"cpu_ms": 1.43299996852875,
+						"draw_calls": 252.0,
+						"gpu_ms": 8.35999965667725,
+						"primitives": 1019375.0
+					},
+					{
+						"cpu_ms": 1.40600001811981,
+						"draw_calls": 252.0,
+						"gpu_ms": 8.4370002746582,
+						"primitives": 1019375.0
+					}
+				]
+			}
+		},
+		"perf_east_edge_tps": {
+			"delta_draw_calls": 0,
+			"delta_gpu_ms": 0.075,
+			"delta_primitives": 0,
+			"off": {
+				"cpu_ms": 1.347,
+				"draw_calls": 206,
+				"gpu_ms": 9.036,
+				"primitives": 1139284,
+				"runs": [
+					{
+						"cpu_ms": 1.34700000286102,
+						"draw_calls": 206.0,
+						"gpu_ms": 9.0290002822876,
+						"primitives": 1139284.0
+					},
+					{
+						"cpu_ms": 1.10199999809265,
+						"draw_calls": 206.0,
+						"gpu_ms": 9.03600025177002,
+						"primitives": 1139284.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 1.314,
+				"draw_calls": 206,
+				"gpu_ms": 9.111,
+				"primitives": 1139284,
+				"runs": [
+					{
+						"cpu_ms": 1.31400001049042,
+						"draw_calls": 206.0,
+						"gpu_ms": 9.09700012207031,
+						"primitives": 1139284.0
+					},
+					{
+						"cpu_ms": 1.13699996471405,
+						"draw_calls": 206.0,
+						"gpu_ms": 9.11100006103516,
+						"primitives": 1139284.0
+					}
+				]
+			}
+		},
+		"perf_grd_farm_road_high": {
+			"delta_draw_calls": 34,
+			"delta_gpu_ms": 0.123,
+			"delta_primitives": 1761,
+			"off": {
+				"cpu_ms": 4.369,
+				"draw_calls": 1523,
+				"gpu_ms": 11.376,
+				"primitives": 1783738,
+				"runs": [
+					{
+						"cpu_ms": 4.36899995803833,
+						"draw_calls": 1523.0,
+						"gpu_ms": 11.3610000610352,
+						"primitives": 1783738.0
+					},
+					{
+						"cpu_ms": 4.36499977111816,
+						"draw_calls": 1523.0,
+						"gpu_ms": 11.3760004043579,
+						"primitives": 1782544.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 4.424,
+				"draw_calls": 1557,
+				"gpu_ms": 11.499,
+				"primitives": 1785499,
+				"runs": [
+					{
+						"cpu_ms": 4.4210000038147,
+						"draw_calls": 1557.0,
+						"gpu_ms": 11.4989995956421,
+						"primitives": 1785499.0
+					},
+					{
+						"cpu_ms": 4.42399978637695,
+						"draw_calls": 1557.0,
+						"gpu_ms": 11.496000289917,
+						"primitives": 1783862.0
+					}
+				]
+			}
+		},
+		"perf_main_street": {
+			"delta_draw_calls": 32,
+			"delta_gpu_ms": 0.148,
+			"delta_primitives": 8838,
+			"off": {
+				"cpu_ms": 7.158,
+				"draw_calls": 2278,
+				"gpu_ms": 8.631,
+				"primitives": 2288040,
+				"runs": [
+					{
+						"cpu_ms": 7.15799999237061,
+						"draw_calls": 2269.0,
+						"gpu_ms": 8.49400043487549,
+						"primitives": 2278692.0
+					},
+					{
+						"cpu_ms": 5.9689998626709,
+						"draw_calls": 2278.0,
+						"gpu_ms": 8.63099956512451,
+						"primitives": 2288040.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 6.219,
+				"draw_calls": 2310,
+				"gpu_ms": 8.779,
+				"primitives": 2296878,
+				"runs": [
+					{
+						"cpu_ms": 6.2189998626709,
+						"draw_calls": 2301.0,
+						"gpu_ms": 8.7790002822876,
+						"primitives": 2287530.0
+					},
+					{
+						"cpu_ms": 6.00799989700317,
+						"draw_calls": 2310.0,
+						"gpu_ms": 8.64500045776367,
+						"primitives": 2296878.0
+					}
+				]
+			}
+		},
+		"perf_north_ridge_out": {
+			"delta_draw_calls": 0,
+			"delta_gpu_ms": 0.034,
+			"delta_primitives": 0,
+			"off": {
+				"cpu_ms": 1.216,
+				"draw_calls": 222,
+				"gpu_ms": 9.708,
+				"primitives": 1653473,
+				"runs": [
+					{
+						"cpu_ms": 1.17799997329712,
+						"draw_calls": 222.0,
+						"gpu_ms": 9.70499992370605,
+						"primitives": 1653473.0
+					},
+					{
+						"cpu_ms": 1.21599996089935,
+						"draw_calls": 222.0,
+						"gpu_ms": 9.70800018310547,
+						"primitives": 1653473.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 1.204,
+				"draw_calls": 222,
+				"gpu_ms": 9.742,
+				"primitives": 1653473,
+				"runs": [
+					{
+						"cpu_ms": 1.2039999961853,
+						"draw_calls": 222.0,
+						"gpu_ms": 9.74199962615967,
+						"primitives": 1653473.0
+					},
+					{
+						"cpu_ms": 1.15199995040894,
+						"draw_calls": 222.0,
+						"gpu_ms": 9.73099994659424,
+						"primitives": 1653473.0
+					}
+				]
+			}
+		},
+		"perf_r4c_hasa": {
+			"delta_draw_calls": 2,
+			"delta_gpu_ms": 0.431,
+			"delta_primitives": 9500,
+			"off": {
+				"cpu_ms": 2.862,
+				"draw_calls": 1045,
+				"gpu_ms": 8.288,
+				"primitives": 1658048,
+				"runs": [
+					{
+						"cpu_ms": 2.86199998855591,
+						"draw_calls": 1045.0,
+						"gpu_ms": 8.28800010681152,
+						"primitives": 1658048.0
+					},
+					{
+						"cpu_ms": 2.80699992179871,
+						"draw_calls": 1045.0,
+						"gpu_ms": 8.28800010681152,
+						"primitives": 1658048.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 3.039,
+				"draw_calls": 1047,
+				"gpu_ms": 8.719,
+				"primitives": 1667548,
+				"runs": [
+					{
+						"cpu_ms": 3.03900003433228,
+						"draw_calls": 1047.0,
+						"gpu_ms": 8.6870002746582,
+						"primitives": 1667548.0
+					},
+					{
+						"cpu_ms": 2.79800009727478,
+						"draw_calls": 1047.0,
+						"gpu_ms": 8.7189998626709,
+						"primitives": 1667548.0
+					}
+				]
+			}
+		},
+		"perf_san_steps": {
+			"delta_draw_calls": 2,
+			"delta_gpu_ms": 0.294,
+			"delta_primitives": 9216,
+			"off": {
+				"cpu_ms": 3.139,
+				"draw_calls": 1043,
+				"gpu_ms": 13.919,
+				"primitives": 2624926,
+				"runs": [
+					{
+						"cpu_ms": 3.01900005340576,
+						"draw_calls": 1043.0,
+						"gpu_ms": 13.8000001907349,
+						"primitives": 2624926.0
+					},
+					{
+						"cpu_ms": 3.13899993896484,
+						"draw_calls": 1043.0,
+						"gpu_ms": 13.918999671936,
+						"primitives": 2624926.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 3.255,
+				"draw_calls": 1045,
+				"gpu_ms": 14.213,
+				"primitives": 2634142,
+				"runs": [
+					{
+						"cpu_ms": 3.25500011444092,
+						"draw_calls": 1045.0,
+						"gpu_ms": 14.1859998703003,
+						"primitives": 2634142.0
+					},
+					{
+						"cpu_ms": 3.15899991989136,
+						"draw_calls": 1045.0,
+						"gpu_ms": 14.2130002975464,
+						"primitives": 2634142.0
+					}
+				]
+			}
+		},
+		"perf_sando_foot": {
+			"delta_draw_calls": 7,
+			"delta_gpu_ms": 0.019,
+			"delta_primitives": 10646,
+			"off": {
+				"cpu_ms": 3.895,
+				"draw_calls": 1142,
+				"gpu_ms": 11.169,
+				"primitives": 2190666,
+				"runs": [
+					{
+						"cpu_ms": 3.89499998092651,
+						"draw_calls": 1142.0,
+						"gpu_ms": 11.1070003509521,
+						"primitives": 2190666.0
+					},
+					{
+						"cpu_ms": 3.84800004959106,
+						"draw_calls": 1142.0,
+						"gpu_ms": 11.168999671936,
+						"primitives": 2190666.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 4.406,
+				"draw_calls": 1149,
+				"gpu_ms": 11.188,
+				"primitives": 2201312,
+				"runs": [
+					{
+						"cpu_ms": 3.72300004959106,
+						"draw_calls": 1149.0,
+						"gpu_ms": 11.1879997253418,
+						"primitives": 2201312.0
+					},
+					{
+						"cpu_ms": 4.4060001373291,
+						"draw_calls": 1149.0,
+						"gpu_ms": 11.121000289917,
+						"primitives": 2201312.0
+					}
+				]
+			}
+		},
+		"perf_village_high": {
+			"delta_draw_calls": 68,
+			"delta_gpu_ms": 0.127,
+			"delta_primitives": 1062,
+			"off": {
+				"cpu_ms": 5.075,
+				"draw_calls": 2019,
+				"gpu_ms": 12.002,
+				"primitives": 2315366,
+				"runs": [
+					{
+						"cpu_ms": 5.07499980926514,
+						"draw_calls": 2019.0,
+						"gpu_ms": 12.0019998550415,
+						"primitives": 2315366.0
+					},
+					{
+						"cpu_ms": 4.99399995803833,
+						"draw_calls": 2019.0,
+						"gpu_ms": 11.9969997406006,
+						"primitives": 2315366.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 5.107,
+				"draw_calls": 2087,
+				"gpu_ms": 12.129,
+				"primitives": 2316428,
+				"runs": [
+					{
+						"cpu_ms": 5.10699987411499,
+						"draw_calls": 2087.0,
+						"gpu_ms": 12.128999710083,
+						"primitives": 2316428.0
+					},
+					{
+						"cpu_ms": 4.98000001907349,
+						"draw_calls": 2087.0,
+						"gpu_ms": 12.1040000915527,
+						"primitives": 2316428.0
+					}
+				]
+			}
+		},
+		"perf_west_ridge_out": {
+			"delta_draw_calls": 0,
+			"delta_gpu_ms": 0.039,
+			"delta_primitives": 0,
+			"off": {
+				"cpu_ms": 1.41,
+				"draw_calls": 286,
+				"gpu_ms": 10.896,
+				"primitives": 2180925,
+				"runs": [
+					{
+						"cpu_ms": 1.40699994564056,
+						"draw_calls": 286.0,
+						"gpu_ms": 10.8669996261597,
+						"primitives": 2180925.0
+					},
+					{
+						"cpu_ms": 1.4099999666214,
+						"draw_calls": 286.0,
+						"gpu_ms": 10.8959999084473,
+						"primitives": 2180925.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 1.357,
+				"draw_calls": 286,
+				"gpu_ms": 10.935,
+				"primitives": 2180925,
+				"runs": [
+					{
+						"cpu_ms": 1.27199995517731,
+						"draw_calls": 286.0,
+						"gpu_ms": 10.9350004196167,
+						"primitives": 2180925.0
+					},
+					{
+						"cpu_ms": 1.35699999332428,
+						"draw_calls": 286.0,
+						"gpu_ms": 10.8520002365112,
+						"primitives": 2180925.0
+					}
+				]
+			}
+		},
+		"perf_wlf_boat": {
+			"delta_draw_calls": 7,
+			"delta_gpu_ms": 0.126,
+			"delta_primitives": 3202,
+			"off": {
+				"cpu_ms": 1.582,
+				"draw_calls": 352,
+				"gpu_ms": 8.537,
+				"primitives": 1103856,
+				"runs": [
+					{
+						"cpu_ms": 1.58200001716614,
+						"draw_calls": 352.0,
+						"gpu_ms": 8.52799987792969,
+						"primitives": 1103856.0
+					},
+					{
+						"cpu_ms": 1.43900001049042,
+						"draw_calls": 352.0,
+						"gpu_ms": 8.53699970245361,
+						"primitives": 1103856.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 1.642,
+				"draw_calls": 359,
+				"gpu_ms": 8.663,
+				"primitives": 1107058,
+				"runs": [
+					{
+						"cpu_ms": 1.64199995994568,
+						"draw_calls": 359.0,
+						"gpu_ms": 8.64099979400635,
+						"primitives": 1107058.0
+					},
+					{
+						"cpu_ms": 1.39900004863739,
+						"draw_calls": 359.0,
+						"gpu_ms": 8.66300010681152,
+						"primitives": 1107058.0
+					}
+				]
+			}
+		},
+		"perf_wlf_ww2": {
+			"delta_draw_calls": 10,
+			"delta_gpu_ms": 0.143,
+			"delta_primitives": 9390,
+			"off": {
+				"cpu_ms": 3.523,
+				"draw_calls": 1270,
+				"gpu_ms": 8.744,
+				"primitives": 1776086,
+				"runs": [
+					{
+						"cpu_ms": 3.22300004959106,
+						"draw_calls": 1270.0,
+						"gpu_ms": 8.58399963378906,
+						"primitives": 1776086.0
+					},
+					{
+						"cpu_ms": 3.52300000190735,
+						"draw_calls": 1270.0,
+						"gpu_ms": 8.74400043487549,
+						"primitives": 1776086.0
+					}
+				]
+			},
+			"on": {
+				"cpu_ms": 3.817,
+				"draw_calls": 1280,
+				"gpu_ms": 8.887,
+				"primitives": 1785476,
+				"runs": [
+					{
+						"cpu_ms": 3.25099992752075,
+						"draw_calls": 1280.0,
+						"gpu_ms": 8.88700008392334,
+						"primitives": 1785476.0
+					},
+					{
+						"cpu_ms": 3.81699991226196,
+						"draw_calls": 1280.0,
+						"gpu_ms": 8.83699989318848,
+						"primitives": 1785476.0
+					}
+				]
+			}
+		}
+	}
+}

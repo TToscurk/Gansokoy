@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[PERF] perf_arrival {"delta_draw_calls":78,"delta_gpu_ms":0.482,"delta_primitives":301086,"off":{"cpu_ms":6.788,"draw_calls":2808,"gpu_ms":13.167,"primitives":2884049,"runs":[{"cpu_ms":6.7020001411438,"draw_calls":2808.0,"gpu_ms":13.1669998168945,"primitives":2884049.0},{"cpu_ms":6.78800010681152,"draw_calls":2808.0,"g
+[PERF] perf_main_street {"delta_draw_calls":97,"delta_gpu_ms":0.626,"delta_primitives":392354,"off":{"cpu_ms":7.196,"draw_calls":2211,"gpu_ms":8.158,"primitives":1904524,"runs":[{"cpu_ms":7.19600009918213,"draw_calls":2204.0,"gpu_ms":8.14400005340576,"primitives":1895176.0},{"cpu_ms":5.85599994659424,"draw_calls":2211.0,"g
+[PERF] perf_east_edge_tps {"delta_draw_calls":153,"delta_gpu_ms":2.519,"delta_primitives":770995,"off":{"cpu_ms":1.087,"draw_calls":53,"gpu_ms":6.584,"primitives":368289,"runs":[{"cpu_ms":0.882000029087067,"draw_calls":53.0,"gpu_ms":6.58400011062622,"primitives":368289.0},{"cpu_ms":1.08700001239777,"draw_calls":53.0,"gpu_ms"
+[PERF] perf_east_edge_high {"delta_draw_calls":147,"delta_gpu_ms":3.314,"delta_primitives":680029,"off":{"cpu_ms":1.244,"draw_calls":105,"gpu_ms":5.173,"primitives":339346,"runs":[{"cpu_ms":1.24399995803833,"draw_calls":105.0,"gpu_ms":5.1729998588562,"primitives":339346.0},{"cpu_ms":1.00699996948242,"draw_calls":105.0,"gpu_ms
+[PERF] perf_sando_foot {"delta_draw_calls":130,"delta_gpu_ms":0.944,"delta_primitives":660396,"off":{"cpu_ms":3.318,"draw_calls":1021,"gpu_ms":10.282,"primitives":1540916,"runs":[{"cpu_ms":3.31800007820129,"draw_calls":1021.0,"gpu_ms":10.2819995880127,"primitives":1540916.0},{"cpu_ms":3.22900009155273,"draw_calls":1021.0,
+[PERF] perf_village_high {"delta_draw_calls":102,"delta_gpu_ms":1.207,"delta_primitives":357962,"off":{"cpu_ms":4.881,"draw_calls":1983,"gpu_ms":10.956,"primitives":1958466,"runs":[{"cpu_ms":4.6729998588562,"draw_calls":1983.0,"gpu_ms":10.956000328064,"primitives":1958466.0},{"cpu_ms":4.88100004196167,"draw_calls":1983.0,"g
+[PERF] perf_west_ridge_out {"delta_draw_calls":227,"delta_gpu_ms":5.632,"delta_primitives":1962503,"off":{"cpu_ms":1.116,"draw_calls":59,"gpu_ms":5.317,"primitives":218422,"runs":[{"cpu_ms":1.11600005626678,"draw_calls":59.0,"gpu_ms":5.31699991226196,"primitives":218422.0},{"cpu_ms":0.892000019550323,"draw_calls":59.0,"gpu_ms
+[PERF] perf_north_ridge_out {"delta_draw_calls":181,"delta_gpu_ms":4.459,"delta_primitives":1455732,"off":{"cpu_ms":0.873,"draw_calls":41,"gpu_ms":5.3,"primitives":197741,"runs":[{"cpu_ms":0.857999980449677,"draw_calls":41.0,"gpu_ms":5.30000019073486,"primitives":197741.0},{"cpu_ms":0.873000025749207,"draw_calls":41.0,"gpu_ms"
+[PERF] perf_alb_gate_n {"delta_draw_calls":100,"delta_gpu_ms":0.592,"delta_primitives":337166,"off":{"cpu_ms":5.731,"draw_calls":2649,"gpu_ms":8.771,"primitives":2363701,"runs":[{"cpu_ms":5.6710000038147,"draw_calls":2649.0,"gpu_ms":8.68099975585938,"primitives":2363701.0},{"cpu_ms":5.73099994659424,"draw_calls":2649.0,"g
+[PERF] perf_alb_west_alley {"delta_draw_calls":132,"delta_gpu_ms":0.857,"delta_primitives":690320,"off":{"cpu_ms":5.168,"draw_calls":1602,"gpu_ms":8.571,"primitives":1542814,"runs":[{"cpu_ms":5.16800022125244,"draw_calls":1602.0,"gpu_ms":8.57100009918213,"primitives":1542814.0},{"cpu_ms":4.40500020980835,"draw_calls":1602.0,"
+[PERF] perf_grd_farm_road_high {"delta_draw_calls":50,"delta_gpu_ms":0.243,"delta_primitives":264956,"off":{"cpu_ms":5.599,"draw_calls":1506,"gpu_ms":11.322,"primitives":1520543,"runs":[{"cpu_ms":5.59899997711182,"draw_calls":1506.0,"gpu_ms":11.2200002670288,"primitives":1520543.0},{"cpu_ms":5.53499984741211,"draw_calls":1506.0,"
+[PERF] perf_wlf_ww2 {"delta_draw_calls":106,"delta_gpu_ms":1.04,"delta_primitives":448902,"off":{"cpu_ms":3.658,"draw_calls":1175,"gpu_ms":7.835,"primitives":1336574,"runs":[{"cpu_ms":3.58100008964539,"draw_calls":1175.0,"gpu_ms":7.83199977874756,"primitives":1336574.0},{"cpu_ms":3.65799999237061,"draw_calls":1175.0,"g
+[PERF] perf_wlf_boat {"delta_draw_calls":148,"delta_gpu_ms":1.831,"delta_primitives":586468,"off":{"cpu_ms":1.456,"draw_calls":211,"gpu_ms":6.819,"primitives":520590,"runs":[{"cpu_ms":1.43599998950958,"draw_calls":211.0,"gpu_ms":6.81099987030029,"primitives":520590.0},{"cpu_ms":1.4559999704361,"draw_calls":211.0,"gpu_ms
+[PERF] perf_san_steps {"delta_draw_calls":155,"delta_gpu_ms":1.486,"delta_primitives":899858,"off":{"cpu_ms":3.201,"draw_calls":889,"gpu_ms":12.781,"primitives":1734284,"runs":[{"cpu_ms":3.20099997520447,"draw_calls":889.0,"gpu_ms":12.7790002822876,"primitives":1734284.0},{"cpu_ms":3.16899991035461,"draw_calls":889.0,"gp
+[PERF] perf_r4c_hasa {"delta_draw_calls":94,"delta_gpu_ms":1.101,"delta_primitives":430296,"off":{"cpu_ms":3.257,"draw_calls":953,"gpu_ms":7.626,"primitives":1237252,"runs":[{"cpu_ms":3.20099997520447,"draw_calls":953.0,"gpu_ms":7.62599992752075,"primitives":1237252.0},{"cpu_ms":3.25699996948242,"draw_calls":953.0,"gpu_
