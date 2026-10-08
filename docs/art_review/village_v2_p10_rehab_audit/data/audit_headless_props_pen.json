@@ -1,0 +1,506 @@
+{
+	"load_ms": 5881,
+	"props_pen": [
+		{
+			"below_max_m": 0.0,
+			"item": "Props/MarketP10/Stalls/025_mk_mushiro_yasai",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/MarketP10/Collision::025_mk_mushiro_yasai_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/MarketP10/Stalls/026_mk_mushiro_tsuke",
+			"sampled_verts": 152,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/MarketP10/Collision::026_mk_mushiro_tsuke_c",
+					152
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/MarketP10/Stalls/027_mk_mushiro_kago",
+			"sampled_verts": 42,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/MarketP10/Collision::027_mk_mushiro_kago_c",
+					21
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/MarketP10/Back/006_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/MarketP10/Collision::006_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/Shopfront/025_st_wara",
+			"sampled_verts": 72,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::025_st_wara_c",
+					12
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/Shopfront/044_st_wara",
+			"sampled_verts": 72,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::044_st_wara_c",
+					12
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/Crossings/088_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::088_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.03,
+			"item": "Props/StreetP10/MarketLead/100_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 12,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::100_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/Work/103_st_wara",
+			"sampled_verts": 72,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::103_st_wara_c",
+					30
+				]
+			]
+		},
+		{
+			"below_max_m": 0.04,
+			"item": "Props/StreetP10/FarmEdge/109_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 6,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::109_st_hasa_c",
+					72
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/110_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::110_st_warazuka_c",
+					12
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/113_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::113_st_hasa_c",
+					72
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/114_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::114_st_warazuka_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/117_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::117_st_hasa_c",
+					72
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/118_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::118_st_warazuka_c",
+					12
+				]
+			]
+		},
+		{
+			"below_max_m": 0.04,
+			"item": "Props/StreetP10/FarmEdge/119_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 24,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::119_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.04,
+			"item": "Props/StreetP10/FarmEdge/120_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 6,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::120_st_hasa_c",
+					72
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/StreetP10/FarmEdge/121_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::121_st_warazuka_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.03,
+			"item": "Props/StreetP10/FarmEdge/122_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 8,
+			"verts_inside_other_colliders": [
+				[
+					"Props/StreetP10/Collision::122_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "Props/MarketWestP10/Stalls/057_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"Props/MarketWestP10/Collision::057_wk_tawara3_c36",
+					168
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseP10/PilotA/A1_hasa/000_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::000_st_hasa_c",
+					84
+				]
+			]
+		},
+		{
+			"below_max_m": 0.08,
+			"item": "HumanUseP10/PilotA/A1_hasa/001_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 54,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::001_st_hasa_c",
+					84
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseP10/PilotA/A1_hasa/002_hu_seoikago",
+			"sampled_verts": 492,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::002_hu_seoikago_c",
+					481
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseP10/PilotA/A2_dakkoku/007_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::007_st_warazuka_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.03,
+			"item": "HumanUseP10/PilotA/A2_dakkoku/009_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 16,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::009_wk_tawara3_c",
+					168
+				]
+			]
+		},
+		{
+			"below_max_m": 0.04,
+			"item": "HumanUseP10/PilotA/A3_taguchi/013_wk_tawara",
+			"sampled_verts": 66,
+			"verts_below_terrain": 12,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::013_wk_tawara_c",
+					48
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseP10/PilotB/B2_shigoto/020_st_wara",
+			"sampled_verts": 72,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::020_st_wara_c",
+					42
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseP10/PilotB/B2_shigoto/022_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::022_st_warazuka_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.03,
+			"item": "HumanUseP10/PilotC/C2_nioki/043_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 16,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseP10/Collision::043_wk_tawara3_c",
+					168
+				]
+			]
+		},
+		{
+			"below_max_m": 0.08,
+			"item": "HumanUseExpansionP10/ZoneA/XA1_shukka/001_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 30,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::001_wk_tawara3_c",
+					168
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneA/XA3_hasa/009_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::009_st_hasa_c",
+					84
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneA/XA3_hasa/010_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::010_st_hasa_c",
+					84
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneA/XA3_hasa/011_st_hasa",
+			"sampled_verts": 144,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::011_st_hasa_c",
+					84
+				]
+			]
+		},
+		{
+			"below_max_m": 0.3,
+			"item": "HumanUseExpansionP10/ZoneA/XA3_hasa/012_st_shibagaki",
+			"sampled_verts": 168,
+			"verts_below_terrain": 36,
+			"verts_inside_other_colliders": []
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneA/XA3_hasa/013_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::013_st_warazuka_c",
+					12
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneA/XA5_yasumi/018_st_warazuka",
+			"sampled_verts": 24,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::018_st_warazuka_c",
+					24
+				]
+			]
+		},
+		{
+			"below_max_m": 0.0,
+			"item": "HumanUseExpansionP10/ZoneB/XB5_tsukemono/038_mk_mushiro_tsuke",
+			"sampled_verts": 152,
+			"verts_below_terrain": 0,
+			"verts_inside_other_colliders": [
+				[
+					"HumanUseExpansionP10/Collision::038_mk_mushiro_tsuke_c",
+					152
+				]
+			]
+		},
+		{
+			"below_max_m": 0.04,
+			"item": "Vegetation/WatersideP9/Props/016_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 18,
+			"verts_inside_other_colliders": [
+				[
+					"Vegetation/WatersideP9/Collision::016_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.09,
+			"item": "Vegetation/WatersideP9/Props/018_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 30,
+			"verts_inside_other_colliders": [
+				[
+					"Vegetation/WatersideP9/Collision::018_wk_tawara3_c",
+					144
+				]
+			]
+		},
+		{
+			"below_max_m": 0.07,
+			"item": "Vegetation/WatersideP9/Props/019_wk_tawara",
+			"sampled_verts": 66,
+			"verts_below_terrain": 14,
+			"verts_inside_other_colliders": [
+				[
+					"Vegetation/WatersideP9/Collision::019_wk_tawara_c",
+					30
+				]
+			]
+		},
+		{
+			"below_max_m": 0.07,
+			"item": "Vegetation/WatersideP9/Props/021_wk_tawara",
+			"sampled_verts": 66,
+			"verts_below_terrain": 12,
+			"verts_inside_other_colliders": [
+				[
+					"Vegetation/WatersideP9/Collision::021_wk_tawara_c",
+					30
+				]
+			]
+		},
+		{
+			"below_max_m": 0.03,
+			"item": "Vegetation/GeidonteiP9/Props/019_wk_tawara3",
+			"sampled_verts": 198,
+			"verts_below_terrain": 8,
+			"verts_inside_other_colliders": [
+				[
+					"Vegetation/GeidonteiP9/Collision::019_wk_tawara3_c",
+					144
+				]
+			]
+		}
+	],
+	"scene": "res://maps/village_v2/village_v2.tscn",
+	"scene_sha256": "8830bab4deb90857f7642b20a606833ac516c38c272c30840f89aeefd09751c9"
+}

@@ -1,0 +1,313 @@
+{
+	"boot": {
+		"collision_layer": 1,
+		"collision_mask": 1,
+		"floor_max_deg": 52.0,
+		"map": "village_v2",
+		"ms": 540,
+		"pos": [
+			237.1,
+			0.47,
+			71.7
+		]
+	},
+	"fail_count": 0,
+	"portals": [
+		{
+			"arrival": [
+				0.3,
+				39.98,
+				0.0
+			],
+			"final": [
+				0.3,
+				4.04,
+				0.0
+			],
+			"ground_under_final": 4.01,
+			"map_now": "trail",
+			"min_y_4s": 4.04,
+			"on_floor_after_s": 1.85,
+			"target": "trail",
+			"void_fall": false
+		},
+		{
+			"arrival": [
+				0.3,
+				39.98,
+				0.0
+			],
+			"final": [
+				0.3,
+				4.2,
+				0.0
+			],
+			"ground_under_final": 4.2,
+			"map_now": "hieda1f",
+			"min_y_4s": 4.2,
+			"on_floor_after_s": 1.85,
+			"target": "hieda1f",
+			"void_fall": false
+		},
+		{
+			"arrival": [
+				0.3,
+				39.98,
+				0.0
+			],
+			"final": [
+				0.3,
+				3.13,
+				0.0
+			],
+			"ground_under_final": 3.13,
+			"map_now": "kourindou",
+			"min_y_4s": 3.13,
+			"on_floor_after_s": 1.87,
+			"target": "kourindou",
+			"void_fall": false
+		}
+	],
+	"walls": [
+		{
+			"final": [
+				390.0,
+				-2.36,
+				-339.82
+			],
+			"left_frame": false,
+			"min_y": -2.36,
+			"name": "N_river_exit",
+			"pass": true,
+			"start": [
+				390.0,
+				-2.07,
+				-334.0
+			]
+		},
+		{
+			"final": [
+				200.0,
+				28.07,
+				-339.7
+			],
+			"left_frame": false,
+			"min_y": 27.39,
+			"name": "N_hill",
+			"pass": true,
+			"start": [
+				200.0,
+				27.36,
+				-334.0
+			]
+		},
+		{
+			"final": [
+				470.0,
+				28.26,
+				-339.68
+			],
+			"left_frame": false,
+			"min_y": 27.52,
+			"name": "N_east",
+			"pass": true,
+			"start": [
+				470.0,
+				27.49,
+				-334.0
+			]
+		},
+		{
+			"final": [
+				289.0,
+				-2.41,
+				219.7
+			],
+			"left_frame": false,
+			"min_y": -2.41,
+			"name": "S_canal_exit",
+			"pass": true,
+			"start": [
+				289.0,
+				-2.41,
+				214.0
+			]
+		},
+		{
+			"final": [
+				122.0,
+				-1.43,
+				219.7
+			],
+			"left_frame": false,
+			"min_y": -1.77,
+			"name": "S_stream_exit",
+			"pass": true,
+			"start": [
+				122.0,
+				-1.79,
+				214.0
+			]
+		},
+		{
+			"final": [
+				224.0,
+				4.92,
+				219.69
+			],
+			"left_frame": false,
+			"min_y": 4.53,
+			"name": "S_portal_forest",
+			"pass": true,
+			"start": [
+				224.0,
+				4.52,
+				214.0
+			]
+		},
+		{
+			"final": [
+				559.7,
+				-2.7,
+				-112.0
+			],
+			"left_frame": false,
+			"min_y": -2.7,
+			"name": "E_river_exit",
+			"pass": true,
+			"start": [
+				554.0,
+				-2.69,
+				-112.0
+			]
+		},
+		{
+			"final": [
+				559.7,
+				0.06,
+				-50.0
+			],
+			"left_frame": false,
+			"min_y": -0.07,
+			"name": "E_farm_flat",
+			"pass": true,
+			"start": [
+				554.0,
+				-0.28,
+				-50.0
+			]
+		},
+		{
+			"final": [
+				559.7,
+				0.27,
+				100.0
+			],
+			"left_frame": false,
+			"min_y": -0.01,
+			"name": "E_south",
+			"pass": true,
+			"start": [
+				554.0,
+				-0.03,
+				100.0
+			]
+		},
+		{
+			"final": [
+				5.75,
+				21.55,
+				-100.0
+			],
+			"left_frame": false,
+			"min_y": 21.54,
+			"name": "W_ridge",
+			"pass": true,
+			"start": [
+				6.0,
+				21.53,
+				-100.0
+			]
+		},
+		{
+			"final": [
+				0.29,
+				21.72,
+				150.0
+			],
+			"left_frame": false,
+			"min_y": 21.72,
+			"name": "W_south",
+			"pass": true,
+			"start": [
+				6.0,
+				21.76,
+				150.0
+			]
+		},
+		{
+			"final": [
+				0.3,
+				49.02,
+				-339.71
+			],
+			"left_frame": false,
+			"min_y": 48.39,
+			"name": "C_NW",
+			"pass": true,
+			"start": [
+				6.0,
+				48.37,
+				-334.0
+			]
+		},
+		{
+			"final": [
+				559.7,
+				5.04,
+				219.7
+			],
+			"left_frame": false,
+			"min_y": 4.89,
+			"name": "C_SE",
+			"pass": true,
+			"start": [
+				554.0,
+				4.89,
+				214.0
+			]
+		},
+		{
+			"final": [
+				559.7,
+				37.28,
+				-339.7
+			],
+			"left_frame": false,
+			"min_y": 36.09,
+			"name": "C_NE",
+			"pass": true,
+			"start": [
+				554.0,
+				36.06,
+				-334.0
+			]
+		},
+		{
+			"final": [
+				0.3,
+				26.83,
+				219.7
+			],
+			"left_frame": false,
+			"min_y": 26.63,
+			"name": "C_SW",
+			"pass": true,
+			"start": [
+				6.0,
+				26.62,
+				214.0
+			]
+		}
+	]
+}

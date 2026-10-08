@@ -1,0 +1,512 @@
+{
+	"load_ms": 5921,
+	"scene": "res://maps/village_v2/village_v2.tscn",
+	"scene_sha256": "8830bab4deb90857f7642b20a606833ac516c38c272c30840f89aeefd09751c9",
+	"shrine": {
+		"m_over_15deg": 60.0,
+		"m_over_25deg": 49.0,
+		"m_over_8deg": 65.0,
+		"max_slope_deg_2m": 30.0,
+		"meshes_within_2_5m_of_axis": {
+			"Landmarks/LANDMARK_HILL_TORII/Hero": 3,
+			"Population/OuterP10/ShrineOutskirts": 1,
+			"Vegetation/ForestP9/Near": 4,
+			"Vegetation/GroundcoverP9/Ground": 1
+		},
+		"profile_every4m": [
+			[
+				0.0,
+				1.7,
+				0.2
+			],
+			[
+				4.0,
+				1.71,
+				0.2
+			],
+			[
+				8.0,
+				1.73,
+				0.3
+			],
+			[
+				12.0,
+				1.75,
+				0.2
+			],
+			[
+				16.0,
+				1.74,
+				1.2
+			],
+			[
+				20.0,
+				1.63,
+				3.2
+			],
+			[
+				24.0,
+				1.37,
+				4.5
+			],
+			[
+				28.0,
+				1.06,
+				4.2
+			],
+			[
+				31.0,
+				0.83,
+				2.2
+			],
+			[
+				35.0,
+				0.78,
+				7.1
+			],
+			[
+				39.0,
+				2.01,
+				30.0
+			],
+			[
+				43.0,
+				4.32,
+				30.0
+			],
+			[
+				47.0,
+				6.63,
+				30.0
+			],
+			[
+				51.0,
+				8.94,
+				30.0
+			],
+			[
+				55.0,
+				11.25,
+				30.0
+			],
+			[
+				59.0,
+				13.56,
+				30.0
+			],
+			[
+				63.0,
+				15.87,
+				20.7
+			],
+			[
+				66.4,
+				17.78,
+				30.0
+			],
+			[
+				70.4,
+				20.09,
+				30.0
+			],
+			[
+				74.4,
+				22.4,
+				30.0
+			],
+			[
+				78.4,
+				24.71,
+				30.0
+			],
+			[
+				82.4,
+				27.01,
+				28.7
+			],
+			[
+				86.2,
+				29.01,
+				25.3
+			],
+			[
+				90.2,
+				30.84,
+				19.9
+			],
+			[
+				94.2,
+				32.01,
+				11.1
+			],
+			[
+				98.2,
+				33.13,
+				27.4
+			]
+		],
+		"sando_len_m": 102.3,
+		"sando_material": {
+			"edge_gravel": 0.25,
+			"mode": 1,
+			"road_layer": 1,
+			"rut_offset": 0.85,
+			"rut_strength": 0.4,
+			"shoulder_layer": 2,
+			"wear_center": 0.0
+		},
+		"sando_node": "Roads/SecondaryRoads/HillApproach",
+		"z_end": 34.17,
+		"z_start": 1.7
+	},
+	"vista": [
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/SouthGate/Buildings/B_P_SGT_002",
+					47.0
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_019",
+					146.7
+				],
+				[
+					6.0,
+					"Districts/SouthGate/Buildings/B_P_SGT_001",
+					50.5
+				]
+			],
+			"from": [
+				224.0,
+				172.0
+			],
+			"len_m": 40.3,
+			"seg": "入口道路",
+			"toward": [
+				229.0,
+				132.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Landmarks/LANDMARK_KIRISAME/Hero/Collision",
+					72.9
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_023",
+					159.2
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_001",
+					41.2
+				]
+			],
+			"from": [
+				229.0,
+				132.0
+			],
+			"len_m": 28.4,
+			"seg": "入口道路2",
+			"toward": [
+				234.0,
+				104.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Props/StreetP10/Collision",
+					28.0
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_018",
+					70.9
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_023",
+					130.6
+				]
+			],
+			"from": [
+				234.0,
+				104.0
+			],
+			"len_m": 24.1,
+			"seg": "主街1",
+			"toward": [
+				236.0,
+				80.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/Market/Buildings/B_P_MKT_018",
+					41.5
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_021",
+					64.3
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_031",
+					179.1
+				]
+			],
+			"from": [
+				236.0,
+				80.0
+			],
+			"len_m": 40.4,
+			"seg": "主街2",
+			"toward": [
+				242.0,
+				40.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Props/StreetP10/Collision",
+					32.9
+				],
+				[
+					0.0,
+					"TERRAIN",
+					261.5
+				],
+				[
+					6.0,
+					"Props/StreetP10/Collision",
+					27.2
+				]
+			],
+			"from": [
+				242.0,
+				40.0
+			],
+			"len_m": 63.2,
+			"seg": "主街3",
+			"toward": [
+				262.0,
+				-20.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/Market/Buildings/B_P_MKT_028",
+					40.0
+				],
+				[
+					0.0,
+					"Props/StreetP10/Collision",
+					99.7
+				],
+				[
+					6.0,
+					"Props/StreetP10/Collision",
+					27.9
+				]
+			],
+			"from": [
+				262.0,
+				-20.0
+			],
+			"len_m": 62.6,
+			"seg": "主街4",
+			"toward": [
+				280.0,
+				-80.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+					39.2
+				],
+				[
+					0.0,
+					"Districts/MixedCommercial/Buildings/B_P_MXC_018",
+					63.3
+				],
+				[
+					6.0,
+					"Districts/MixedCommercial/Buildings/B_P_MXC_003",
+					39.2
+				]
+			],
+			"from": [
+				280.0,
+				-80.0
+			],
+			"len_m": 53.9,
+			"seg": "主街5",
+			"toward": [
+				300.0,
+				-130.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"TERRAIN",
+					41.2
+				],
+				[
+					0.0,
+					"TERRAIN",
+					41.5
+				],
+				[
+					6.0,
+					"TERRAIN",
+					48.9
+				]
+			],
+			"from": [
+				300.0,
+				-130.0
+			],
+			"len_m": 31.0,
+			"seg": "參道1",
+			"toward": [
+				292.0,
+				-160.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/Market/Buildings/B_P_MKT_039",
+					35.1
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_035",
+					84.8
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_033",
+					33.5
+				]
+			],
+			"from": [
+				196.0,
+				-20.0
+			],
+			"len_m": 66.0,
+			"seg": "中橫街E",
+			"toward": [
+				262.0,
+				-20.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Props/StreetP10/Collision",
+					60.9
+				],
+				[
+					0.0,
+					"Districts/Market/Buildings/B_P_MKT_034",
+					145.1
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_043",
+					62.2
+				]
+			],
+			"from": [
+				380.0,
+				-36.0
+			],
+			"len_m": 119.1,
+			"seg": "中橫街W",
+			"toward": [
+				262.0,
+				-20.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/Market/Buildings/B_P_MKT_050",
+					41.3
+				],
+				[
+					0.0,
+					"Collision/Boundary",
+					390.2
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_044",
+					39.0
+				]
+			],
+			"from": [
+				170.0,
+				50.0
+			],
+			"len_m": 71.0,
+			"seg": "南橫街E",
+			"toward": [
+				241.0,
+				48.0
+			]
+		},
+		{
+			"first_hit_at_eye_1.7": [
+				[
+					-6.0,
+					"Districts/Market/Buildings/B_P_MKT_049",
+					88.8
+				],
+				[
+					0.0,
+					"Districts/ResidentialWest/Buildings/B_P_RSW_077",
+					209.2
+				],
+				[
+					6.0,
+					"Districts/Market/Buildings/B_P_MKT_055",
+					73.4
+				]
+			],
+			"from": [
+				372.0,
+				40.0
+			],
+			"len_m": 131.2,
+			"seg": "南橫街W",
+			"toward": [
+				241.0,
+				48.0
+			]
+		}
+	]
+}

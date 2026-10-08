@@ -1,0 +1,67 @@
+{
+	"boundary_walls": [
+		[
+			"邊界牆_西/@CollisionShape3D@2",
+			[
+				188.0,
+				-5.0,
+				-212.0
+			],
+			[
+				2.0,
+				60.0,
+				439.0
+			]
+		],
+		[
+			"邊界牆_東/@CollisionShape3D@3",
+			[
+				475.0,
+				-5.0,
+				-212.0
+			],
+			[
+				2.0,
+				60.0,
+				439.0
+			]
+		],
+		[
+			"邊界牆_北/@CollisionShape3D@4",
+			[
+				188.0,
+				-5.0,
+				-212.0
+			],
+			[
+				289.0,
+				60.0,
+				2.0
+			]
+		],
+		[
+			"邊界牆_南/@CollisionShape3D@5",
+			[
+				188.0,
+				-5.0,
+				225.0
+			],
+			[
+				289.0,
+				60.0,
+				2.0
+			]
+		]
+	],
+	"own_colliders": true,
+	"reachable_cells": 29824,
+	"scene": "res://maps/slice/slice.tscn",
+	"start": [
+		236.0,
+		108.0
+	],
+	"step": 2.0,
+	"trimesh_added": 0,
+	"void_exit_count": 0,
+	"void_exits": []
+}

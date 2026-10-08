@@ -1,0 +1,6112 @@
+{
+	"arch": {
+		"kits": 187,
+		"materials_top": [
+			[
+				"res://assets/village_v2/_matlib/V2_Wood.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Wood_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.477,
+						0.39,
+						0.269,
+						0.4
+					],
+					"uses": 7578,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 6436,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Kawara.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Kawara_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.396,
+						0.388,
+						0.352,
+						0.387
+					],
+					"uses": 3973,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Plaster.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Plaster_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.813,
+						0.733,
+						0.639,
+						0.743
+					],
+					"uses": 3821,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/machiya_kit/machiya_kit_atlas.png",
+					"class": "StandardMaterial3D",
+					"roughness": 0.899999976158142,
+					"tex_mean_srgb": [
+						0.46,
+						0.395,
+						0.328,
+						0.404
+					],
+					"uses": 3531,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_pgdt3",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 424,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mgpt3",
+				{
+					"class": "ShaderMaterial",
+					"uses": 220
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_0ieyv",
+				{
+					"albedo_color": "ffffff",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.550000011920929,
+					"uses": 217,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_0vyqx",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Wood_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.477,
+						0.39,
+						0.269,
+						0.4
+					],
+					"uses": 213,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_f528u",
+				{
+					"class": "ShaderMaterial",
+					"uses": 74
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3kvpb",
+				{
+					"class": "ShaderMaterial",
+					"uses": 55
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Stone.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 27,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_h631w",
+				{
+					"class": "ShaderMaterial",
+					"uses": 18
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eoxij",
+				{
+					"class": "ShaderMaterial",
+					"uses": 13
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_svkxg",
+				{
+					"class": "ShaderMaterial",
+					"uses": 12
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5lh1r",
+				{
+					"class": "ShaderMaterial",
+					"uses": 8
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6hkj4",
+				{
+					"class": "ShaderMaterial",
+					"uses": 6
+				}
+			],
+			[
+				"res://assets/village_v2/aux_kura/V2_KuraShikkui.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/aux_kura/V2_KuraShikkui_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.915,
+						0.879,
+						0.821,
+						0.883
+					],
+					"uses": 6,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+				{
+					"class": "ShaderMaterial",
+					"uses": 5
+				}
+			],
+			[
+				"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+				{
+					"class": "ShaderMaterial",
+					"uses": 5
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_d0sb7",
+				{
+					"albedo_color": "9e874d",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.899999976158142,
+					"uses": 4,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_6riav",
+				{
+					"albedo_color": "524f4d",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.5,
+					"uses": 2,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_ty1vf",
+				{
+					"albedo_color": "5c8033",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.800000011920929,
+					"uses": 2,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kgndx",
+				{
+					"class": "ShaderMaterial",
+					"uses": 2
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jr387",
+				{
+					"class": "ShaderMaterial",
+					"uses": 2
+				}
+			]
+		],
+		"same_sig_pairs_within_25m": 0,
+		"themes": {
+			"amado": 28,
+			"bengara": 15,
+			"koshi": 21,
+			"koshib": 25,
+			"koshir": 23,
+			"lattice": 15,
+			"mado": 27,
+			"mixed": 15,
+			"open": 18
+		},
+		"top_style_roof_bays": [
+			[
+				"koshib/c3/t2/|flat|4",
+				2
+			],
+			[
+				"koshir/c3/t2/|low|5",
+				2
+			],
+			[
+				"mado/c1/t0/|lowoff|4",
+				2
+			],
+			[
+				"mado/c3/t0/mushi|lowoff|4",
+				1
+			],
+			[
+				"amado/c4/t1/|std|4",
+				1
+			],
+			[
+				"mado/c2/t1/|low|4",
+				1
+			],
+			[
+				"koshi/c0/t2/|std|5",
+				1
+			],
+			[
+				"koshir/c1/t0/plain|offb|3",
+				1
+			],
+			[
+				"koshi/c2/t1/|lowoff|4",
+				1
+			],
+			[
+				"koshib/c3/t0/|flat|4",
+				1
+			],
+			[
+				"amado/c2/t2/mushis|offb|4",
+				1
+			],
+			[
+				"koshir/c1/t0/|offb2|4",
+				1
+			]
+		],
+		"unique_full_sig": 187,
+		"unique_style": 134,
+		"unique_style_roof_bays": 184
+	},
+	"boundary": {
+		"coverage_2m": {
+			"cells": 78400,
+			"no_front_face_terrain": 0
+		},
+		"edges": {
+			"E": {
+				"edge_band_walkable_le52deg": 70,
+				"edge_h_max": 37.19,
+				"edge_h_min": -2.64,
+				"edge_not_higher_than_40m_inside": 36,
+				"profile": [
+					[
+						2.0,
+						37.19,
+						35.46,
+						29.69,
+						7.5
+					],
+					[
+						10.0,
+						35.04,
+						33.28,
+						27.64,
+						8.9
+					],
+					[
+						18.0,
+						31.26,
+						28.94,
+						23.08,
+						10.2
+					],
+					[
+						26.0,
+						26.39,
+						23.76,
+						17.47,
+						11.2
+					],
+					[
+						34.0,
+						20.73,
+						17.97,
+						11.76,
+						11.8
+					],
+					[
+						42.0,
+						15.44,
+						12.95,
+						6.6,
+						11.4
+					],
+					[
+						50.0,
+						11.85,
+						9.43,
+						2.82,
+						12.0
+					],
+					[
+						58.0,
+						10.5,
+						8.16,
+						1.18,
+						12.2
+					],
+					[
+						66.0,
+						10.13,
+						8.42,
+						1.02,
+						8.9
+					],
+					[
+						74.0,
+						9.67,
+						8.35,
+						1.24,
+						6.4
+					],
+					[
+						82.0,
+						9.59,
+						7.92,
+						1.34,
+						7.9
+					],
+					[
+						90.0,
+						9.63,
+						7.51,
+						1.48,
+						9.9
+					],
+					[
+						98.0,
+						9.65,
+						7.21,
+						1.9,
+						12.1
+					],
+					[
+						106.0,
+						9.47,
+						7.29,
+						2.05,
+						9.6
+					],
+					[
+						114.0,
+						9.6,
+						7.6,
+						1.83,
+						10.6
+					],
+					[
+						122.0,
+						9.61,
+						7.98,
+						2.06,
+						5.6
+					],
+					[
+						130.0,
+						9.65,
+						8.14,
+						2.12,
+						8.9
+					],
+					[
+						138.0,
+						9.79,
+						7.8,
+						2.14,
+						10.6
+					],
+					[
+						146.0,
+						9.84,
+						7.92,
+						2.07,
+						8.1
+					],
+					[
+						154.0,
+						10.09,
+						8.11,
+						2.02,
+						8.8
+					],
+					[
+						162.0,
+						10.36,
+						8.42,
+						1.97,
+						7.4
+					],
+					[
+						170.0,
+						7.85,
+						6.24,
+						1.91,
+						8.0
+					],
+					[
+						178.0,
+						3.62,
+						2.77,
+						1.12,
+						3.7
+					],
+					[
+						186.0,
+						0.3,
+						0.13,
+						0.62,
+						3.1
+					],
+					[
+						194.0,
+						-0.23,
+						-0.31,
+						0.17,
+						3.2
+					],
+					[
+						202.0,
+						-0.21,
+						-0.13,
+						-0.05,
+						3.1
+					],
+					[
+						210.0,
+						-0.43,
+						-0.95,
+						-1.22,
+						2.2
+					],
+					[
+						218.0,
+						-1.77,
+						-1.99,
+						-2.37,
+						1.0
+					],
+					[
+						226.0,
+						-2.64,
+						-2.7,
+						-3.07,
+						0.4
+					],
+					[
+						234.0,
+						-2.22,
+						-2.0,
+						-1.53,
+						0.9
+					],
+					[
+						242.0,
+						-1.18,
+						-1.04,
+						0.55,
+						0.6
+					],
+					[
+						250.0,
+						-0.23,
+						-0.24,
+						0.16,
+						4.5
+					],
+					[
+						258.0,
+						-0.45,
+						-0.46,
+						-0.5,
+						1.3
+					],
+					[
+						266.0,
+						-0.14,
+						-0.5,
+						-0.5,
+						3.6
+					],
+					[
+						274.0,
+						0.1,
+						-0.5,
+						-0.5,
+						6.1
+					],
+					[
+						282.0,
+						0.09,
+						-0.5,
+						-0.5,
+						7.0
+					],
+					[
+						290.0,
+						0.04,
+						-0.5,
+						-0.5,
+						5.4
+					],
+					[
+						298.0,
+						0.11,
+						-0.5,
+						-0.5,
+						5.9
+					],
+					[
+						306.0,
+						-0.13,
+						-0.5,
+						-0.5,
+						3.7
+					],
+					[
+						314.0,
+						0.01,
+						-0.5,
+						-0.5,
+						4.9
+					],
+					[
+						322.0,
+						-0.02,
+						-0.5,
+						-0.5,
+						4.0
+					],
+					[
+						330.0,
+						-0.44,
+						-0.5,
+						-0.5,
+						1.8
+					],
+					[
+						338.0,
+						-0.53,
+						-0.45,
+						-0.45,
+						1.6
+					],
+					[
+						346.0,
+						-0.91,
+						-0.4,
+						-0.4,
+						5.2
+					],
+					[
+						354.0,
+						-0.98,
+						-0.4,
+						-0.4,
+						5.5
+					],
+					[
+						362.0,
+						-0.74,
+						-0.4,
+						-0.4,
+						4.4
+					],
+					[
+						370.0,
+						-0.55,
+						-0.4,
+						-0.4,
+						2.0
+					],
+					[
+						378.0,
+						-0.29,
+						-0.4,
+						-0.4,
+						2.5
+					],
+					[
+						386.0,
+						-0.26,
+						-0.4,
+						-0.4,
+						1.9
+					],
+					[
+						394.0,
+						0.06,
+						-0.4,
+						-0.4,
+						4.4
+					],
+					[
+						402.0,
+						0.04,
+						-0.4,
+						-0.4,
+						5.2
+					],
+					[
+						410.0,
+						-0.24,
+						-0.35,
+						-0.35,
+						0.7
+					],
+					[
+						418.0,
+						0.12,
+						-0.3,
+						-0.3,
+						4.0
+					],
+					[
+						426.0,
+						0.43,
+						-0.3,
+						-0.3,
+						6.4
+					],
+					[
+						434.0,
+						0.36,
+						-0.3,
+						-0.3,
+						6.4
+					],
+					[
+						442.0,
+						0.19,
+						-0.3,
+						-0.3,
+						5.1
+					],
+					[
+						450.0,
+						0.19,
+						-0.3,
+						-0.3,
+						4.6
+					],
+					[
+						458.0,
+						0.03,
+						-0.3,
+						-0.3,
+						3.3
+					],
+					[
+						466.0,
+						-0.25,
+						-0.3,
+						-0.3,
+						1.8
+					],
+					[
+						474.0,
+						-0.55,
+						-0.3,
+						-0.3,
+						2.5
+					],
+					[
+						482.0,
+						-0.72,
+						-0.34,
+						-0.38,
+						3.8
+					],
+					[
+						490.0,
+						-0.64,
+						-0.89,
+						-0.94,
+						2.1
+					],
+					[
+						498.0,
+						-0.26,
+						-0.44,
+						-0.52,
+						1.8
+					],
+					[
+						506.0,
+						0.29,
+						0.1,
+						-0.3,
+						2.1
+					],
+					[
+						514.0,
+						0.93,
+						0.68,
+						0.15,
+						2.5
+					],
+					[
+						522.0,
+						1.68,
+						1.37,
+						1.29,
+						2.5
+					],
+					[
+						530.0,
+						2.6,
+						2.41,
+						2.56,
+						2.4
+					],
+					[
+						538.0,
+						3.56,
+						3.41,
+						3.38,
+						2.5
+					],
+					[
+						546.0,
+						4.35,
+						4.11,
+						4.31,
+						3.6
+					],
+					[
+						554.0,
+						4.88,
+						4.93,
+						4.81,
+						1.3
+					]
+				],
+				"samples": 70
+			},
+			"N": {
+				"edge_band_walkable_le52deg": 70,
+				"edge_h_max": 49.01,
+				"edge_h_min": -2.46,
+				"edge_not_higher_than_40m_inside": 5,
+				"profile": [
+					[
+						2.0,
+						49.01,
+						44.25,
+						27.07,
+						21.9
+					],
+					[
+						10.0,
+						48.81,
+						44.0,
+						26.66,
+						23.3
+					],
+					[
+						18.0,
+						48.33,
+						43.35,
+						26.15,
+						23.4
+					],
+					[
+						26.0,
+						47.27,
+						42.54,
+						25.22,
+						22.9
+					],
+					[
+						34.0,
+						45.81,
+						40.93,
+						23.74,
+						24.8
+					],
+					[
+						42.0,
+						43.75,
+						38.96,
+						22.0,
+						23.4
+					],
+					[
+						50.0,
+						41.49,
+						36.95,
+						20.29,
+						23.2
+					],
+					[
+						58.0,
+						39.48,
+						35.15,
+						18.26,
+						20.2
+					],
+					[
+						66.0,
+						37.49,
+						32.89,
+						15.93,
+						21.5
+					],
+					[
+						74.0,
+						35.35,
+						30.65,
+						13.73,
+						21.7
+					],
+					[
+						82.0,
+						33.16,
+						28.21,
+						11.98,
+						24.8
+					],
+					[
+						90.0,
+						31.15,
+						26.17,
+						10.11,
+						24.8
+					],
+					[
+						98.0,
+						29.19,
+						24.35,
+						8.38,
+						23.4
+					],
+					[
+						106.0,
+						28.13,
+						23.22,
+						7.14,
+						24.0
+					],
+					[
+						114.0,
+						27.49,
+						22.49,
+						6.0,
+						23.6
+					],
+					[
+						122.0,
+						27.36,
+						22.28,
+						5.69,
+						24.6
+					],
+					[
+						130.0,
+						27.51,
+						22.45,
+						5.66,
+						25.8
+					],
+					[
+						138.0,
+						27.45,
+						22.37,
+						6.07,
+						23.7
+					],
+					[
+						146.0,
+						27.7,
+						22.41,
+						6.43,
+						25.6
+					],
+					[
+						154.0,
+						28.27,
+						22.78,
+						6.59,
+						25.5
+					],
+					[
+						162.0,
+						28.52,
+						22.9,
+						6.36,
+						28.0
+					],
+					[
+						170.0,
+						28.64,
+						22.89,
+						6.03,
+						25.5
+					],
+					[
+						178.0,
+						28.76,
+						22.83,
+						5.93,
+						26.0
+					],
+					[
+						186.0,
+						28.57,
+						23.05,
+						10.05,
+						26.3
+					],
+					[
+						194.0,
+						28.28,
+						23.09,
+						15.99,
+						25.6
+					],
+					[
+						202.0,
+						27.96,
+						23.02,
+						21.09,
+						23.5
+					],
+					[
+						210.0,
+						27.55,
+						23.1,
+						24.07,
+						19.5
+					],
+					[
+						218.0,
+						27.36,
+						22.87,
+						23.93,
+						23.0
+					],
+					[
+						226.0,
+						27.19,
+						22.77,
+						20.77,
+						22.6
+					],
+					[
+						234.0,
+						27.33,
+						22.56,
+						15.07,
+						23.4
+					],
+					[
+						242.0,
+						27.75,
+						22.6,
+						9.04,
+						25.0
+					],
+					[
+						250.0,
+						28.25,
+						22.77,
+						5.3,
+						27.3
+					],
+					[
+						258.0,
+						28.64,
+						22.76,
+						5.28,
+						23.0
+					],
+					[
+						266.0,
+						28.76,
+						22.87,
+						5.43,
+						26.0
+					],
+					[
+						274.0,
+						28.9,
+						23.1,
+						5.59,
+						26.5
+					],
+					[
+						282.0,
+						28.97,
+						23.23,
+						5.38,
+						25.5
+					],
+					[
+						290.0,
+						28.54,
+						23.22,
+						5.63,
+						23.8
+					],
+					[
+						298.0,
+						28.17,
+						23.19,
+						6.0,
+						24.8
+					],
+					[
+						306.0,
+						28.12,
+						23.07,
+						5.79,
+						21.8
+					],
+					[
+						314.0,
+						28.05,
+						23.32,
+						5.88,
+						23.7
+					],
+					[
+						322.0,
+						27.93,
+						23.18,
+						6.0,
+						21.2
+					],
+					[
+						330.0,
+						27.65,
+						23.09,
+						5.56,
+						22.1
+					],
+					[
+						338.0,
+						26.54,
+						22.97,
+						5.71,
+						18.8
+					],
+					[
+						346.0,
+						22.79,
+						22.33,
+						6.03,
+						2.7
+					],
+					[
+						354.0,
+						17.2,
+						19.36,
+						6.41,
+						11.7
+					],
+					[
+						362.0,
+						10.89,
+						14.21,
+						6.3,
+						15.6
+					],
+					[
+						370.0,
+						4.82,
+						8.14,
+						6.18,
+						14.4
+					],
+					[
+						378.0,
+						-0.13,
+						2.36,
+						3.87,
+						11.0
+					],
+					[
+						386.0,
+						-1.73,
+						-1.27,
+						-1.19,
+						2.0
+					],
+					[
+						394.0,
+						-2.46,
+						-2.54,
+						-2.76,
+						3.4
+					],
+					[
+						402.0,
+						-1.37,
+						-2.87,
+						-2.25,
+						3.1
+					],
+					[
+						410.0,
+						1.51,
+						-0.13,
+						2.55,
+						7.9
+					],
+					[
+						418.0,
+						6.86,
+						4.95,
+						6.01,
+						10.0
+					],
+					[
+						426.0,
+						12.92,
+						10.99,
+						6.47,
+						10.6
+					],
+					[
+						434.0,
+						18.9,
+						16.78,
+						6.28,
+						9.5
+					],
+					[
+						442.0,
+						24.01,
+						21.14,
+						6.09,
+						11.1
+					],
+					[
+						450.0,
+						27.42,
+						22.69,
+						5.7,
+						20.9
+					],
+					[
+						458.0,
+						28.08,
+						22.77,
+						5.62,
+						25.6
+					],
+					[
+						466.0,
+						28.08,
+						22.87,
+						5.36,
+						22.8
+					],
+					[
+						474.0,
+						28.37,
+						22.98,
+						5.17,
+						25.1
+					],
+					[
+						482.0,
+						28.53,
+						23.4,
+						5.57,
+						24.5
+					],
+					[
+						490.0,
+						28.48,
+						23.26,
+						5.72,
+						25.0
+					],
+					[
+						498.0,
+						28.48,
+						23.23,
+						5.72,
+						24.6
+					],
+					[
+						506.0,
+						28.26,
+						23.23,
+						5.64,
+						23.5
+					],
+					[
+						514.0,
+						29.08,
+						23.69,
+						6.15,
+						26.4
+					],
+					[
+						522.0,
+						30.28,
+						24.9,
+						7.96,
+						23.7
+					],
+					[
+						530.0,
+						32.27,
+						26.8,
+						10.26,
+						26.6
+					],
+					[
+						538.0,
+						34.17,
+						28.62,
+						12.28,
+						25.9
+					],
+					[
+						546.0,
+						35.8,
+						30.45,
+						14.06,
+						26.7
+					],
+					[
+						554.0,
+						36.82,
+						31.7,
+						15.65,
+						22.7
+					]
+				],
+				"samples": 70
+			},
+			"S": {
+				"edge_band_walkable_le52deg": 70,
+				"edge_h_max": 26.85,
+				"edge_h_min": -2.39,
+				"edge_not_higher_than_40m_inside": 3,
+				"profile": [
+					[
+						2.0,
+						26.85,
+						25.94,
+						22.97,
+						4.8
+					],
+					[
+						10.0,
+						26.41,
+						25.53,
+						22.45,
+						4.6
+					],
+					[
+						18.0,
+						25.8,
+						25.02,
+						21.41,
+						4.8
+					],
+					[
+						26.0,
+						24.55,
+						23.63,
+						20.08,
+						3.7
+					],
+					[
+						34.0,
+						22.72,
+						21.91,
+						18.85,
+						5.7
+					],
+					[
+						42.0,
+						20.61,
+						20.12,
+						16.87,
+						2.4
+					],
+					[
+						50.0,
+						18.63,
+						17.92,
+						14.66,
+						3.7
+					],
+					[
+						58.0,
+						16.66,
+						15.78,
+						12.46,
+						3.5
+					],
+					[
+						66.0,
+						14.34,
+						13.87,
+						10.24,
+						2.1
+					],
+					[
+						74.0,
+						12.61,
+						11.65,
+						8.02,
+						4.5
+					],
+					[
+						82.0,
+						10.83,
+						9.51,
+						5.92,
+						7.0
+					],
+					[
+						90.0,
+						8.71,
+						7.47,
+						3.94,
+						6.7
+					],
+					[
+						98.0,
+						6.52,
+						5.92,
+						2.28,
+						4.1
+					],
+					[
+						106.0,
+						5.09,
+						4.45,
+						0.97,
+						3.2
+					],
+					[
+						114.0,
+						4.03,
+						3.67,
+						0.41,
+						2.2
+					],
+					[
+						122.0,
+						-1.47,
+						-1.55,
+						0.11,
+						4.0
+					],
+					[
+						130.0,
+						3.84,
+						3.27,
+						0.53,
+						3.3
+					],
+					[
+						138.0,
+						5.46,
+						4.79,
+						0.94,
+						5.2
+					],
+					[
+						146.0,
+						5.56,
+						4.79,
+						1.15,
+						4.6
+					],
+					[
+						154.0,
+						5.5,
+						4.71,
+						1.0,
+						6.8
+					],
+					[
+						162.0,
+						5.49,
+						4.51,
+						0.92,
+						4.4
+					],
+					[
+						170.0,
+						5.18,
+						4.04,
+						1.0,
+						6.6
+					],
+					[
+						178.0,
+						4.99,
+						4.01,
+						0.98,
+						6.6
+					],
+					[
+						186.0,
+						4.52,
+						3.85,
+						1.14,
+						4.9
+					],
+					[
+						194.0,
+						4.43,
+						4.09,
+						0.96,
+						3.7
+					],
+					[
+						202.0,
+						4.69,
+						3.8,
+						0.98,
+						6.0
+					],
+					[
+						210.0,
+						4.87,
+						3.37,
+						0.83,
+						8.0
+					],
+					[
+						218.0,
+						4.89,
+						3.29,
+						0.52,
+						7.8
+					],
+					[
+						226.0,
+						4.87,
+						3.25,
+						0.5,
+						7.9
+					],
+					[
+						234.0,
+						5.11,
+						3.61,
+						0.46,
+						7.4
+					],
+					[
+						242.0,
+						5.07,
+						3.83,
+						0.62,
+						5.0
+					],
+					[
+						250.0,
+						5.08,
+						4.24,
+						0.72,
+						4.2
+					],
+					[
+						258.0,
+						5.18,
+						4.25,
+						0.78,
+						3.9
+					],
+					[
+						266.0,
+						5.64,
+						4.28,
+						0.84,
+						7.0
+					],
+					[
+						274.0,
+						5.25,
+						4.27,
+						0.89,
+						6.1
+					],
+					[
+						282.0,
+						-0.21,
+						0.7,
+						1.36,
+						4.5
+					],
+					[
+						290.0,
+						-2.39,
+						-2.41,
+						-2.43,
+						0.1
+					],
+					[
+						298.0,
+						3.74,
+						3.41,
+						1.39,
+						2.3
+					],
+					[
+						306.0,
+						5.13,
+						4.31,
+						1.04,
+						5.4
+					],
+					[
+						314.0,
+						5.14,
+						4.49,
+						0.67,
+						3.3
+					],
+					[
+						322.0,
+						5.08,
+						4.3,
+						0.63,
+						5.3
+					],
+					[
+						330.0,
+						4.93,
+						4.19,
+						0.26,
+						3.5
+					],
+					[
+						338.0,
+						5.03,
+						3.88,
+						0.38,
+						7.3
+					],
+					[
+						346.0,
+						4.72,
+						4.0,
+						0.7,
+						6.1
+					],
+					[
+						354.0,
+						4.73,
+						4.07,
+						1.25,
+						3.1
+					],
+					[
+						362.0,
+						5.1,
+						4.31,
+						1.46,
+						6.2
+					],
+					[
+						370.0,
+						4.83,
+						4.02,
+						1.3,
+						4.4
+					],
+					[
+						378.0,
+						4.84,
+						3.95,
+						0.97,
+						5.1
+					],
+					[
+						386.0,
+						4.83,
+						3.74,
+						1.13,
+						5.3
+					],
+					[
+						394.0,
+						4.95,
+						3.88,
+						1.42,
+						5.5
+					],
+					[
+						402.0,
+						5.21,
+						4.05,
+						1.49,
+						7.1
+					],
+					[
+						410.0,
+						5.26,
+						4.17,
+						1.3,
+						5.3
+					],
+					[
+						418.0,
+						5.15,
+						4.18,
+						1.16,
+						6.4
+					],
+					[
+						426.0,
+						5.31,
+						4.19,
+						1.01,
+						5.2
+					],
+					[
+						434.0,
+						5.15,
+						4.21,
+						0.68,
+						3.7
+					],
+					[
+						442.0,
+						4.88,
+						3.83,
+						0.43,
+						4.8
+					],
+					[
+						450.0,
+						4.28,
+						3.7,
+						0.27,
+						3.4
+					],
+					[
+						458.0,
+						4.25,
+						3.5,
+						0.26,
+						5.6
+					],
+					[
+						466.0,
+						4.48,
+						3.57,
+						0.4,
+						6.0
+					],
+					[
+						474.0,
+						4.55,
+						3.87,
+						0.81,
+						4.6
+					],
+					[
+						482.0,
+						4.53,
+						3.7,
+						0.94,
+						4.7
+					],
+					[
+						490.0,
+						4.59,
+						3.99,
+						1.2,
+						3.8
+					],
+					[
+						498.0,
+						4.68,
+						4.23,
+						1.02,
+						2.8
+					],
+					[
+						506.0,
+						4.9,
+						4.46,
+						0.98,
+						3.2
+					],
+					[
+						514.0,
+						4.98,
+						4.37,
+						0.8,
+						4.8
+					],
+					[
+						522.0,
+						4.77,
+						3.97,
+						0.97,
+						2.8
+					],
+					[
+						530.0,
+						4.86,
+						3.63,
+						1.02,
+						5.9
+					],
+					[
+						538.0,
+						4.74,
+						3.68,
+						0.97,
+						5.6
+					],
+					[
+						546.0,
+						5.08,
+						3.99,
+						1.13,
+						5.7
+					],
+					[
+						554.0,
+						4.9,
+						3.93,
+						1.4,
+						7.1
+					]
+				],
+				"samples": 70
+			},
+			"W": {
+				"edge_band_walkable_le52deg": 70,
+				"edge_h_max": 49.02,
+				"edge_h_min": 21.46,
+				"edge_not_higher_than_40m_inside": 0,
+				"profile": [
+					[
+						2.0,
+						49.02,
+						48.46,
+						44.04,
+						3.5
+					],
+					[
+						10.0,
+						47.28,
+						46.52,
+						42.27,
+						5.3
+					],
+					[
+						18.0,
+						42.98,
+						42.42,
+						37.98,
+						4.0
+					],
+					[
+						26.0,
+						37.41,
+						36.94,
+						32.8,
+						4.7
+					],
+					[
+						34.0,
+						31.5,
+						30.94,
+						27.06,
+						3.2
+					],
+					[
+						42.0,
+						26.56,
+						25.71,
+						21.57,
+						6.3
+					],
+					[
+						50.0,
+						22.99,
+						22.29,
+						17.72,
+						5.0
+					],
+					[
+						58.0,
+						21.54,
+						21.0,
+						16.32,
+						4.2
+					],
+					[
+						66.0,
+						21.65,
+						20.77,
+						16.07,
+						5.6
+					],
+					[
+						74.0,
+						21.65,
+						20.84,
+						15.9,
+						5.1
+					],
+					[
+						82.0,
+						21.8,
+						20.37,
+						15.73,
+						8.3
+					],
+					[
+						90.0,
+						22.17,
+						20.23,
+						15.2,
+						8.8
+					],
+					[
+						98.0,
+						22.2,
+						20.54,
+						15.19,
+						8.8
+					],
+					[
+						106.0,
+						22.4,
+						20.48,
+						15.47,
+						8.7
+					],
+					[
+						114.0,
+						21.89,
+						20.28,
+						15.79,
+						8.3
+					],
+					[
+						122.0,
+						21.66,
+						20.36,
+						16.26,
+						6.4
+					],
+					[
+						130.0,
+						21.82,
+						20.55,
+						16.09,
+						5.2
+					],
+					[
+						138.0,
+						21.66,
+						20.59,
+						15.84,
+						4.5
+					],
+					[
+						146.0,
+						21.73,
+						20.66,
+						15.9,
+						8.1
+					],
+					[
+						154.0,
+						21.88,
+						20.82,
+						15.61,
+						8.4
+					],
+					[
+						162.0,
+						21.86,
+						21.03,
+						15.67,
+						4.2
+					],
+					[
+						170.0,
+						22.2,
+						21.14,
+						15.7,
+						5.3
+					],
+					[
+						178.0,
+						22.31,
+						21.19,
+						16.24,
+						3.9
+					],
+					[
+						186.0,
+						22.45,
+						21.39,
+						16.53,
+						5.9
+					],
+					[
+						194.0,
+						22.36,
+						21.24,
+						16.52,
+						5.5
+					],
+					[
+						202.0,
+						22.32,
+						20.78,
+						16.46,
+						7.7
+					],
+					[
+						210.0,
+						21.87,
+						20.3,
+						16.45,
+						6.8
+					],
+					[
+						218.0,
+						21.73,
+						20.07,
+						16.29,
+						8.7
+					],
+					[
+						226.0,
+						21.64,
+						20.06,
+						16.07,
+						8.6
+					],
+					[
+						234.0,
+						21.62,
+						20.35,
+						16.18,
+						7.0
+					],
+					[
+						242.0,
+						21.91,
+						20.84,
+						16.31,
+						5.1
+					],
+					[
+						250.0,
+						22.06,
+						21.3,
+						16.21,
+						4.6
+					],
+					[
+						258.0,
+						22.02,
+						21.4,
+						16.14,
+						2.7
+					],
+					[
+						266.0,
+						22.07,
+						21.25,
+						15.86,
+						4.8
+					],
+					[
+						274.0,
+						21.78,
+						20.91,
+						16.05,
+						4.4
+					],
+					[
+						282.0,
+						21.87,
+						20.59,
+						15.84,
+						5.8
+					],
+					[
+						290.0,
+						21.99,
+						20.35,
+						15.66,
+						8.5
+					],
+					[
+						298.0,
+						21.7,
+						20.84,
+						15.99,
+						6.8
+					],
+					[
+						306.0,
+						21.77,
+						21.2,
+						16.47,
+						2.8
+					],
+					[
+						314.0,
+						22.14,
+						21.19,
+						16.33,
+						2.7
+					],
+					[
+						322.0,
+						22.09,
+						21.34,
+						16.23,
+						2.9
+					],
+					[
+						330.0,
+						22.0,
+						21.32,
+						16.25,
+						5.4
+					],
+					[
+						338.0,
+						22.05,
+						20.99,
+						16.16,
+						5.3
+					],
+					[
+						346.0,
+						21.88,
+						20.66,
+						16.44,
+						5.3
+					],
+					[
+						354.0,
+						21.74,
+						20.39,
+						16.82,
+						8.0
+					],
+					[
+						362.0,
+						21.7,
+						20.26,
+						16.6,
+						7.5
+					],
+					[
+						370.0,
+						21.73,
+						20.5,
+						16.41,
+						6.8
+					],
+					[
+						378.0,
+						21.87,
+						20.72,
+						16.33,
+						7.6
+					],
+					[
+						386.0,
+						21.7,
+						20.7,
+						16.04,
+						4.5
+					],
+					[
+						394.0,
+						21.54,
+						20.51,
+						15.98,
+						5.4
+					],
+					[
+						402.0,
+						21.46,
+						20.24,
+						15.87,
+						5.0
+					],
+					[
+						410.0,
+						21.65,
+						20.15,
+						15.67,
+						7.6
+					],
+					[
+						418.0,
+						22.08,
+						20.43,
+						15.47,
+						6.7
+					],
+					[
+						426.0,
+						22.06,
+						20.51,
+						15.49,
+						6.4
+					],
+					[
+						434.0,
+						21.95,
+						20.61,
+						15.16,
+						7.9
+					],
+					[
+						442.0,
+						22.01,
+						20.88,
+						15.35,
+						6.5
+					],
+					[
+						450.0,
+						22.22,
+						21.47,
+						15.48,
+						4.0
+					],
+					[
+						458.0,
+						22.34,
+						21.73,
+						15.64,
+						4.9
+					],
+					[
+						466.0,
+						22.49,
+						21.45,
+						16.17,
+						6.3
+					],
+					[
+						474.0,
+						22.37,
+						21.16,
+						16.21,
+						6.9
+					],
+					[
+						482.0,
+						21.92,
+						20.97,
+						16.19,
+						5.9
+					],
+					[
+						490.0,
+						21.73,
+						20.93,
+						16.34,
+						5.3
+					],
+					[
+						498.0,
+						21.75,
+						20.84,
+						16.37,
+						6.9
+					],
+					[
+						506.0,
+						21.84,
+						20.59,
+						16.31,
+						8.4
+					],
+					[
+						514.0,
+						22.41,
+						21.19,
+						16.8,
+						6.3
+					],
+					[
+						522.0,
+						23.41,
+						22.08,
+						17.41,
+						6.1
+					],
+					[
+						530.0,
+						24.18,
+						23.36,
+						18.44,
+						5.0
+					],
+					[
+						538.0,
+						25.12,
+						24.61,
+						19.5,
+						2.8
+					],
+					[
+						546.0,
+						26.2,
+						25.33,
+						20.62,
+						4.1
+					],
+					[
+						554.0,
+						26.75,
+						25.69,
+						20.96,
+						5.7
+					]
+				],
+				"samples": 70
+			}
+		},
+		"terrain_mesh_xz_bounds": {
+			"FarmlandTerrain": [
+				322.0,
+				-144.0,
+				554.0,
+				144.0,
+				-0.7,
+				1.7
+			],
+			"MainTerrain": [
+				0.0,
+				-340.0,
+				560.0,
+				220.0,
+				-1.1,
+				49.0
+			],
+			"NorthHill": [
+				172.0,
+				-322.0,
+				376.0,
+				-158.0,
+				-0.6,
+				34.2
+			],
+			"RiverTerrain": [
+				66.0,
+				-340.0,
+				560.0,
+				220.0,
+				-4.2,
+				28.2
+			]
+		},
+		"visual_beyond_frame_gt3m": {
+			"by_group": {
+				"Vegetation/ForestP9": 24,
+				"Vegetation/MeadowP9": 65
+			},
+			"geometry_instances_checked": 55499
+		},
+		"walls": [
+			{
+				"center": [
+					280.0,
+					35.0,
+					-340.5
+				],
+				"disabled": false,
+				"name": "Wall_N",
+				"size": [
+					562.0,
+					90.0,
+					1.0
+				],
+				"y_max": 80.0,
+				"y_min": -10.0
+			},
+			{
+				"center": [
+					280.0,
+					35.0,
+					220.5
+				],
+				"disabled": false,
+				"name": "Wall_S",
+				"size": [
+					562.0,
+					90.0,
+					1.0
+				],
+				"y_max": 80.0,
+				"y_min": -10.0
+			},
+			{
+				"center": [
+					-0.5,
+					35.0,
+					-60.0
+				],
+				"disabled": false,
+				"name": "Wall_W",
+				"size": [
+					1.0,
+					90.0,
+					562.0
+				],
+				"y_max": 80.0,
+				"y_min": -10.0
+			},
+			{
+				"center": [
+					560.5,
+					35.0,
+					-60.0
+				],
+				"disabled": false,
+				"name": "Wall_E",
+				"size": [
+					1.0,
+					90.0,
+					562.0
+				],
+				"y_max": 80.0,
+				"y_min": -10.0
+			}
+		]
+	},
+	"env": {
+		"adj_brightness_contrast_saturation": [
+			1.0,
+			1.0,
+			1.04999995231628
+		],
+		"adjustment": true,
+		"ambient_color": "000000",
+		"ambient_energy": 1.0,
+		"ambient_sky_contribution": 1.0,
+		"ambient_source": 3,
+		"background_mode": 2,
+		"directional_lights": [
+			{
+				"color": "fff7eb",
+				"elev_deg": 60.0,
+				"energy": 1.54999995231628,
+				"indirect": 1.0,
+				"path": "Lighting/天象系統/太陽",
+				"shadow": true,
+				"visible": true
+			},
+			{
+				"color": "9eb8f2",
+				"elev_deg": -60.0,
+				"energy": 0.0,
+				"indirect": 1.0,
+				"path": "Lighting/天象系統/月亮",
+				"shadow": false,
+				"visible": false
+			}
+		],
+		"fog": true,
+		"fog_density": 0.000546000024769455,
+		"glow": true,
+		"reflected_source": 2,
+		"sdfgi": false,
+		"sky_material": "ShaderMaterial res://maps/village_v2/village_v2.tscn::ShaderMaterial_owkv7",
+		"ssao": true,
+		"ssil": false,
+		"tonemap_exposure": 0.980000019073486,
+		"tonemap_mode": 3,
+		"tonemap_white": 1.0,
+		"volumetric_fog": true,
+		"world_env_path": "Lighting/天象系統/天空環境"
+	},
+	"load_ms": 5901,
+	"props": {
+		"groups": {
+			"HumanUseExpansionP10": {
+				"alpha_scissor": 0,
+				"cull_disabled": 1,
+				"mats": {
+					"BK_Culm_dead.tres": 1,
+					"MK_Market.tres": 14,
+					"SK_School.tres": 12,
+					"ST_Street.tres": 36,
+					"V2_Kirisame.tres": 5,
+					"V2_Metal.tres": 1,
+					"V2_Wood.tres": 64,
+					"WK_Plant.tres": 1
+				},
+				"mesh_instances": 80,
+				"shader_mats": 1,
+				"transparent_surfaces": 0
+			},
+			"HumanUseP10": {
+				"alpha_scissor": 0,
+				"cull_disabled": 3,
+				"mats": {
+					"BK_Culm_dead.tres": 5,
+					"MK_Market.tres": 8,
+					"SK_School.tres": 26,
+					"ST_Street.tres": 32,
+					"V2_Kirisame.tres": 4,
+					"V2_Stone.tres": 2,
+					"V2_Suzunaan.tres": 4,
+					"V2_Wood.tres": 69,
+					"WK_Plant.tres": 3
+				},
+				"mesh_instances": 100,
+				"shader_mats": 5,
+				"transparent_surfaces": 0
+			},
+			"Props/EnvironmentP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 606,
+				"mats": {
+					"BK_Culm_dead.tres": 16,
+					"ST_Street.tres": 10,
+					"V2_KitStoneTri.tres": 312,
+					"V2_Wood.tres": 128,
+					"VK_Bark_dead.tres": 56,
+					"VK_Bark_hackberry.tres": 40,
+					"VK_Bark_sugi.tres": 22,
+					"VK_Leaf_A.tres": 450,
+					"VK_Leaf_B.tres": 40,
+					"WK_Plant.tres": 116
+				},
+				"mesh_instances": 1110,
+				"shader_mats": 624,
+				"transparent_surfaces": 490
+			},
+			"Props/MarketP10": {
+				"alpha_scissor": 0,
+				"cull_disabled": 1,
+				"mats": {
+					"BK_Culm_dead.tres": 1,
+					"MK_Market.tres": 64,
+					"SK_School.tres": 2,
+					"V2_Kirisame.tres": 1,
+					"V2_Wood.tres": 78,
+					"WK_Plant.tres": 1
+				},
+				"mesh_instances": 84,
+				"shader_mats": 1,
+				"transparent_surfaces": 0
+			},
+			"Props/MarketWestP10": {
+				"alpha_scissor": 0,
+				"cull_disabled": 7,
+				"mats": {
+					"BK_Culm_dead.tres": 1,
+					"MK_Market.tres": 154,
+					"SK_School.tres": 20,
+					"ST_Street.tres": 78,
+					"V2_Geidontei.tres": 1,
+					"V2_Kawara.tres": 179,
+					"V2_Kirisame.tres": 12,
+					"V2_KitStoneTri.tres": 193,
+					"V2_MachiyaKit.tres": 178,
+					"V2_Metal.tres": 1,
+					"V2_Plaster.tres": 117,
+					"V2_Stone.tres": 2,
+					"V2_Suzunaan.tres": 2,
+					"V2_Wood.tres": 470,
+					"WK_Plant.tres": 1,
+					"market_west_p10.scn::ShaderMaterial_h8jcf": 6
+				},
+				"mesh_instances": 862,
+				"shader_mats": 7,
+				"transparent_surfaces": 0
+			},
+			"Props/StreetP10": {
+				"alpha_scissor": 0,
+				"cull_disabled": 4,
+				"mats": {
+					"BK_Culm_dead.tres": 9,
+					"MK_Market.tres": 38,
+					"SK_School.tres": 16,
+					"ST_Street.tres": 124,
+					"V2_Geidontei.tres": 2,
+					"V2_Kirisame.tres": 5,
+					"V2_Metal.tres": 8,
+					"V2_Stone.tres": 4,
+					"V2_Suzunaan.tres": 12,
+					"V2_Wood.tres": 220,
+					"WK_Plant.tres": 4
+				},
+				"mesh_instances": 248,
+				"shader_mats": 9,
+				"transparent_surfaces": 0
+			},
+			"Vegetation/GeidonteiP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 27,
+				"mats": {
+					"BK_Culm_dead.tres": 1,
+					"SK_School.tres": 10,
+					"V2_Geidontei.tres": 11,
+					"V2_KitStoneTri.tres": 12,
+					"V2_Wood.tres": 24,
+					"VK_Leaf_A.tres": 6,
+					"WK_Plant.tres": 21,
+					"geidontei_p9.scn::ShaderMaterial_r0qws": 1
+				},
+				"mesh_instances": 69,
+				"shader_mats": 8,
+				"transparent_surfaces": 6
+			},
+			"Vegetation/KirisameP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 33,
+				"mats": {
+					"SK_School.tres": 24,
+					"V2_Kirisame.tres": 48,
+					"V2_Stone.tres": 10,
+					"V2_Wood.tres": 32,
+					"VK_Leaf_A.tres": 9,
+					"WK_Plant.tres": 24,
+					"kirisame_p9.scn::ShaderMaterial_2iix3": 1
+				},
+				"mesh_instances": 98,
+				"shader_mats": 10,
+				"transparent_surfaces": 9
+			},
+			"Vegetation/SchoolYardP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 80,
+				"mats": {
+					"BK_Culm_dead.tres": 6,
+					"SK_School.tres": 18,
+					"V2_KitStoneTri.tres": 78,
+					"V2_Wood.tres": 22,
+					"VK_Bark_hackberry.tres": 16,
+					"VK_Bark_maple.tres": 8,
+					"VK_Bark_sakura.tres": 4,
+					"VK_Bark_zelkova.tres": 4,
+					"VK_Leaf_A.tres": 48,
+					"VK_Leaf_B.tres": 32,
+					"school_yard_p9.scn::ShaderMaterial_fjtv8": 1
+				},
+				"mesh_instances": 191,
+				"shader_mats": 119,
+				"transparent_surfaces": 80
+			},
+			"Vegetation/SuzunaanP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 36,
+				"mats": {
+					"SK_School.tres": 8,
+					"V2_KitStoneTri.tres": 20,
+					"V2_Suzunaan.tres": 16,
+					"V2_Wood.tres": 14,
+					"VK_Leaf_A.tres": 12,
+					"WK_Plant.tres": 24,
+					"suzunaan_p9.scn::ShaderMaterial_gsibs": 1
+				},
+				"mesh_instances": 75,
+				"shader_mats": 13,
+				"transparent_surfaces": 12
+			},
+			"Vegetation/TowerYardP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 32,
+				"mats": {
+					"BK_Culm_dead.tres": 1,
+					"SK_School.tres": 2,
+					"V2_KitStoneTri.tres": 16,
+					"V2_Metal.tres": 3,
+					"V2_Wood.tres": 14,
+					"VK_Leaf_A.tres": 6,
+					"WK_Plant.tres": 26,
+					"tower_yard_p9.scn::ShaderMaterial_4c0qo": 1
+				},
+				"mesh_instances": 65,
+				"shader_mats": 8,
+				"transparent_surfaces": 6
+			},
+			"Vegetation/WatersideP9": {
+				"alpha_scissor": 0,
+				"cull_disabled": 423,
+				"mats": {
+					"SK_School.tres": 8,
+					"V2_KitStoneTri.tres": 20,
+					"V2_Wood.tres": 5,
+					"VK_Bark_camphor.tres": 4,
+					"VK_Bark_willow.tres": 20,
+					"VK_Leaf_A.tres": 41,
+					"VK_Leaf_B.tres": 4,
+					"WK_Plant.tres": 378,
+					"waterside_p9.scn::ShaderMaterial_0cvh2": 1,
+					"waterside_p9.scn::ShaderMaterial_6c0dc": 1,
+					"waterside_p9.scn::ShaderMaterial_j8bw2": 1,
+					"waterside_p9.scn::ShaderMaterial_tu15u": 1,
+					"waterside_p9.scn::StandardMaterial3D_jnwkj": 1
+				},
+				"mesh_instances": 450,
+				"shader_mats": 73,
+				"transparent_surfaces": 45
+			}
+		},
+		"straw_like_nodes": [
+			{
+				"aabb_min": [
+					240.3,
+					1.11,
+					-36.3
+				],
+				"aabb_size": [
+					1.86,
+					0.6,
+					2.06
+				],
+				"path": "Props/MarketP10/Stalls/025_mk_mushiro_yasai/LOD0"
+			},
+			{
+				"aabb_min": [
+					240.3,
+					1.11,
+					-36.3
+				],
+				"aabb_size": [
+					1.86,
+					0.6,
+					2.06
+				],
+				"path": "Props/MarketP10/Stalls/025_mk_mushiro_yasai/LOD1"
+			},
+			{
+				"aabb_min": [
+					240.35,
+					1.19,
+					-50.45
+				],
+				"aabb_size": [
+					1.81,
+					0.71,
+					1.91
+				],
+				"path": "Props/MarketP10/Stalls/026_mk_mushiro_tsuke/LOD0"
+			},
+			{
+				"aabb_min": [
+					240.35,
+					1.19,
+					-50.45
+				],
+				"aabb_size": [
+					1.81,
+					0.71,
+					1.91
+				],
+				"path": "Props/MarketP10/Stalls/026_mk_mushiro_tsuke/LOD1"
+			},
+			{
+				"aabb_min": [
+					244.55,
+					1.11,
+					-36.5
+				],
+				"aabb_size": [
+					1.3,
+					0.72,
+					1.8
+				],
+				"path": "Props/MarketP10/Stalls/027_mk_mushiro_kago/LOD0"
+			},
+			{
+				"aabb_min": [
+					244.55,
+					1.11,
+					-36.5
+				],
+				"aabb_size": [
+					1.3,
+					0.72,
+					1.8
+				],
+				"path": "Props/MarketP10/Stalls/027_mk_mushiro_kago/LOD1"
+			},
+			{
+				"aabb_min": [
+					249.31,
+					1.14,
+					-36.54
+				],
+				"aabb_size": [
+					1.11,
+					0.87,
+					1.02
+				],
+				"path": "Props/MarketP10/Back/006_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					249.31,
+					1.15,
+					-36.54
+				],
+				"aabb_size": [
+					1.09,
+					0.83,
+					1.01
+				],
+				"path": "Props/MarketP10/Back/006_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					265.7,
+					1.26,
+					-45.89
+				],
+				"aabb_size": [
+					1.26,
+					1.4,
+					1.6
+				],
+				"path": "Props/StreetP10/Shopfront/025_st_wara/LOD0"
+			},
+			{
+				"aabb_min": [
+					265.7,
+					1.26,
+					-45.89
+				],
+				"aabb_size": [
+					1.26,
+					1.4,
+					1.6
+				],
+				"path": "Props/StreetP10/Shopfront/025_st_wara/LOD1"
+			},
+			{
+				"aabb_min": [
+					239.1,
+					0.54,
+					75.3
+				],
+				"aabb_size": [
+					1.1,
+					1.4,
+					1.52
+				],
+				"path": "Props/StreetP10/Shopfront/044_st_wara/LOD0"
+			},
+			{
+				"aabb_min": [
+					239.1,
+					0.54,
+					75.3
+				],
+				"aabb_size": [
+					1.1,
+					1.4,
+					1.52
+				],
+				"path": "Props/StreetP10/Shopfront/044_st_wara/LOD1"
+			},
+			{
+				"aabb_min": [
+					270.08,
+					1.0,
+					-17.45
+				],
+				"aabb_size": [
+					1.02,
+					0.87,
+					1.11
+				],
+				"path": "Props/StreetP10/Crossings/088_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					270.08,
+					1.02,
+					-17.45
+				],
+				"aabb_size": [
+					1.01,
+					0.83,
+					1.09
+				],
+				"path": "Props/StreetP10/Crossings/088_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					248.54,
+					1.0,
+					-26.23
+				],
+				"aabb_size": [
+					0.96,
+					0.87,
+					1.06
+				],
+				"path": "Props/StreetP10/MarketLead/100_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					248.54,
+					1.02,
+					-26.21
+				],
+				"aabb_size": [
+					0.95,
+					0.83,
+					1.03
+				],
+				"path": "Props/StreetP10/MarketLead/100_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					229.75,
+					0.61,
+					43.04
+				],
+				"aabb_size": [
+					1.1,
+					1.4,
+					1.52
+				],
+				"path": "Props/StreetP10/Work/103_st_wara/LOD0"
+			},
+			{
+				"aabb_min": [
+					229.75,
+					0.61,
+					43.04
+				],
+				"aabb_size": [
+					1.1,
+					1.4,
+					1.52
+				],
+				"path": "Props/StreetP10/Work/103_st_wara/LOD1"
+			},
+			{
+				"aabb_min": [
+					320.17,
+					1.02,
+					-24.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/109_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					320.17,
+					1.02,
+					-24.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/109_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					318.0,
+					1.07,
+					-27.08
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.36
+				],
+				"path": "Props/StreetP10/FarmEdge/110_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					318.0,
+					1.07,
+					-27.07
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.33
+				],
+				"path": "Props/StreetP10/FarmEdge/110_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					330.67,
+					1.51,
+					-105.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/113_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					330.67,
+					1.51,
+					-105.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/113_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					328.7,
+					1.54,
+					-108.08
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.36
+				],
+				"path": "Props/StreetP10/FarmEdge/114_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					328.7,
+					1.54,
+					-108.07
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.33
+				],
+				"path": "Props/StreetP10/FarmEdge/114_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					323.17,
+					1.41,
+					-89.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/117_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					323.17,
+					1.41,
+					-89.83
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/117_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					321.7,
+					1.4,
+					-85.28
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.36
+				],
+				"path": "Props/StreetP10/FarmEdge/118_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					321.7,
+					1.4,
+					-85.27
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.33
+				],
+				"path": "Props/StreetP10/FarmEdge/118_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					323.64,
+					1.41,
+					-90.98
+				],
+				"aabb_size": [
+					0.92,
+					0.87,
+					0.79
+				],
+				"path": "Props/StreetP10/FarmEdge/119_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					323.64,
+					1.42,
+					-90.98
+				],
+				"aabb_size": [
+					0.9,
+					0.83,
+					0.79
+				],
+				"path": "Props/StreetP10/FarmEdge/119_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					310.67,
+					0.74,
+					21.17
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/120_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					310.67,
+					0.74,
+					21.17
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "Props/StreetP10/FarmEdge/120_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					309.5,
+					0.78,
+					18.92
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.36
+				],
+				"path": "Props/StreetP10/FarmEdge/121_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					309.5,
+					0.78,
+					18.93
+				],
+				"aabb_size": [
+					1.4,
+					1.78,
+					1.33
+				],
+				"path": "Props/StreetP10/FarmEdge/121_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					309.04,
+					0.72,
+					25.22
+				],
+				"aabb_size": [
+					0.92,
+					0.87,
+					0.79
+				],
+				"path": "Props/StreetP10/FarmEdge/122_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					309.04,
+					0.73,
+					25.22
+				],
+				"aabb_size": [
+					0.9,
+					0.83,
+					0.79
+				],
+				"path": "Props/StreetP10/FarmEdge/122_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					217.35,
+					1.24,
+					-47.36
+				],
+				"aabb_size": [
+					0.79,
+					0.87,
+					0.92
+				],
+				"path": "Props/MarketWestP10/Stalls/057_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					217.35,
+					1.26,
+					-47.34
+				],
+				"aabb_size": [
+					0.79,
+					0.83,
+					0.9
+				],
+				"path": "Props/MarketWestP10/Stalls/057_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					345.17,
+					0.07,
+					-23.43
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/000_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					345.17,
+					0.07,
+					-23.43
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/000_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					345.17,
+					0.0,
+					-27.38
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/001_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					345.17,
+					0.0,
+					-27.38
+				],
+				"aabb_size": [
+					0.67,
+					1.91,
+					3.67
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/001_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					346.08,
+					0.09,
+					-23.77
+				],
+				"aabb_size": [
+					0.68,
+					1.0,
+					0.62
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/002_hu_seoikago/LOD0"
+			},
+			{
+				"aabb_min": [
+					346.08,
+					0.09,
+					-23.77
+				],
+				"aabb_size": [
+					0.68,
+					0.97,
+					0.64
+				],
+				"path": "HumanUseP10/PilotA/A1_hasa/002_hu_seoikago/LOD1"
+			},
+			{
+				"aabb_min": [
+					346.22,
+					0.1,
+					-6.42
+				],
+				"aabb_size": [
+					1.36,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseP10/PilotA/A2_dakkoku/007_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					346.24,
+					0.1,
+					-6.42
+				],
+				"aabb_size": [
+					1.33,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseP10/PilotA/A2_dakkoku/007_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					353.86,
+					0.11,
+					-4.09
+				],
+				"aabb_size": [
+					1.0,
+					0.87,
+					1.09
+				],
+				"path": "HumanUseP10/PilotA/A2_dakkoku/009_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					353.86,
+					0.13,
+					-4.07
+				],
+				"aabb_size": [
+					1.0,
+					0.83,
+					1.07
+				],
+				"path": "HumanUseP10/PilotA/A2_dakkoku/009_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					375.96,
+					0.34,
+					2.98
+				],
+				"aabb_size": [
+					0.88,
+					0.48,
+					0.74
+				],
+				"path": "HumanUseP10/PilotA/A3_taguchi/013_wk_tawara/LOD0"
+			},
+			{
+				"aabb_min": [
+					375.97,
+					0.35,
+					2.98
+				],
+				"aabb_size": [
+					0.87,
+					0.45,
+					0.72
+				],
+				"path": "HumanUseP10/PilotA/A3_taguchi/013_wk_tawara/LOD1"
+			},
+			{
+				"aabb_min": [
+					259.34,
+					1.37,
+					-71.37
+				],
+				"aabb_size": [
+					1.26,
+					1.4,
+					1.6
+				],
+				"path": "HumanUseP10/PilotB/B2_shigoto/020_st_wara/LOD0"
+			},
+			{
+				"aabb_min": [
+					259.34,
+					1.37,
+					-71.37
+				],
+				"aabb_size": [
+					1.26,
+					1.4,
+					1.6
+				],
+				"path": "HumanUseP10/PilotB/B2_shigoto/020_st_wara/LOD1"
+			},
+			{
+				"aabb_min": [
+					258.39,
+					1.36,
+					-69.91
+				],
+				"aabb_size": [
+					1.73,
+					1.78,
+					1.71
+				],
+				"path": "HumanUseP10/PilotB/B2_shigoto/022_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					258.4,
+					1.36,
+					-69.9
+				],
+				"aabb_size": [
+					1.72,
+					1.78,
+					1.68
+				],
+				"path": "HumanUseP10/PilotB/B2_shigoto/022_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					323.14,
+					1.17,
+					-50.81
+				],
+				"aabb_size": [
+					0.92,
+					0.87,
+					0.79
+				],
+				"path": "HumanUseP10/PilotC/C2_nioki/043_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					323.16,
+					1.19,
+					-50.81
+				],
+				"aabb_size": [
+					0.9,
+					0.83,
+					0.79
+				],
+				"path": "HumanUseP10/PilotC/C2_nioki/043_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					433.17,
+					-0.02,
+					4.83
+				],
+				"aabb_size": [
+					0.94,
+					0.87,
+					1.04
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA1_shukka/001_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					433.17,
+					0.0,
+					4.83
+				],
+				"aabb_size": [
+					0.93,
+					0.83,
+					1.02
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA1_shukka/001_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					483.92,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/009_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					483.92,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/009_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					480.17,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/010_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					480.17,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/010_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					476.42,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/011_st_hasa/LOD0"
+			},
+			{
+				"aabb_min": [
+					476.42,
+					-0.28,
+					-4.53
+				],
+				"aabb_size": [
+					3.67,
+					1.91,
+					0.67
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/011_st_hasa/LOD1"
+			},
+			{
+				"aabb_min": [
+					480.5,
+					-0.59,
+					-5.74
+				],
+				"aabb_size": [
+					3.0,
+					1.45,
+					0.18
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/012_st_shibagaki/LOD0"
+			},
+			{
+				"aabb_min": [
+					480.5,
+					-0.59,
+					-5.74
+				],
+				"aabb_size": [
+					3.0,
+					1.45,
+					0.18
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/012_st_shibagaki/LOD1"
+			},
+			{
+				"aabb_min": [
+					475.02,
+					-0.29,
+					-5.4
+				],
+				"aabb_size": [
+					1.36,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/013_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					475.03,
+					-0.29,
+					-5.4
+				],
+				"aabb_size": [
+					1.33,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA3_hasa/013_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					432.32,
+					0.0,
+					63.8
+				],
+				"aabb_size": [
+					1.36,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA5_yasumi/018_st_warazuka/LOD0"
+			},
+			{
+				"aabb_min": [
+					432.33,
+					0.0,
+					63.8
+				],
+				"aabb_size": [
+					1.33,
+					1.78,
+					1.4
+				],
+				"path": "HumanUseExpansionP10/ZoneA/XA5_yasumi/018_st_warazuka/LOD1"
+			},
+			{
+				"aabb_min": [
+					181.38,
+					1.9,
+					-157.64
+				],
+				"aabb_size": [
+					2.22,
+					0.71,
+					2.29
+				],
+				"path": "HumanUseExpansionP10/ZoneB/XB5_tsukemono/038_mk_mushiro_tsuke/LOD0"
+			},
+			{
+				"aabb_min": [
+					181.38,
+					1.9,
+					-157.64
+				],
+				"aabb_size": [
+					2.22,
+					0.71,
+					2.29
+				],
+				"path": "HumanUseExpansionP10/ZoneB/XB5_tsukemono/038_mk_mushiro_tsuke/LOD1"
+			},
+			{
+				"aabb_min": [
+					325.06,
+					1.13,
+					-49.88
+				],
+				"aabb_size": [
+					1.02,
+					0.87,
+					1.11
+				],
+				"path": "Vegetation/WatersideP9/Props/016_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					325.06,
+					1.14,
+					-49.86
+				],
+				"aabb_size": [
+					1.02,
+					0.83,
+					1.09
+				],
+				"path": "Vegetation/WatersideP9/Props/016_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					318.85,
+					0.69,
+					-0.06
+				],
+				"aabb_size": [
+					1.14,
+					0.87,
+					1.19
+				],
+				"path": "Vegetation/WatersideP9/Props/018_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					318.85,
+					0.71,
+					-0.04
+				],
+				"aabb_size": [
+					1.13,
+					0.83,
+					1.17
+				],
+				"path": "Vegetation/WatersideP9/Props/018_wk_tawara3/LOD1"
+			},
+			{
+				"aabb_min": [
+					319.79,
+					0.6,
+					1.4
+				],
+				"aabb_size": [
+					0.67,
+					0.48,
+					0.86
+				],
+				"path": "Vegetation/WatersideP9/Props/019_wk_tawara/LOD0"
+			},
+			{
+				"aabb_min": [
+					319.79,
+					0.61,
+					1.41
+				],
+				"aabb_size": [
+					0.65,
+					0.45,
+					0.86
+				],
+				"path": "Vegetation/WatersideP9/Props/019_wk_tawara/LOD1"
+			},
+			{
+				"aabb_min": [
+					301.03,
+					0.34,
+					56.53
+				],
+				"aabb_size": [
+					0.53,
+					0.48,
+					0.8
+				],
+				"path": "Vegetation/WatersideP9/Props/021_wk_tawara/LOD0"
+			},
+			{
+				"aabb_min": [
+					301.03,
+					0.36,
+					56.53
+				],
+				"aabb_size": [
+					0.51,
+					0.45,
+					0.8
+				],
+				"path": "Vegetation/WatersideP9/Props/021_wk_tawara/LOD1"
+			},
+			{
+				"aabb_min": [
+					288.53,
+					1.21,
+					-57.24
+				],
+				"aabb_size": [
+					1.05,
+					0.87,
+					0.95
+				],
+				"path": "Vegetation/GeidonteiP9/Props/019_wk_tawara3/LOD0"
+			},
+			{
+				"aabb_min": [
+					288.55,
+					1.23,
+					-57.24
+				],
+				"aabb_size": [
+					1.03,
+					0.83,
+					0.95
+				],
+				"path": "Vegetation/GeidonteiP9/Props/019_wk_tawara3/LOD1"
+			}
+		],
+		"straw_regex": "(?i)(wara|straw|hasa|inaki|komo|mushiro|tawara|zuka|warazuka|藁|稲|筵|俵|菰|hay)"
+	},
+	"roads": {
+		"mesh_arrays_readable_headless": true,
+		"ribbons": [
+			{
+				"class": "main",
+				"label": "入口道路",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/MainStreet/EntranceRoad",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.109,
+					"mean": 0.097,
+					"min": 0.042,
+					"n": 365
+				},
+				"shader": "ground.gdshader",
+				"verts": 366,
+				"width_m": 7.0
+			},
+			{
+				"class": "main",
+				"label": "主街",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/MainStreet/MainStreet",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.131,
+					"mean": 0.098,
+					"min": 0.049,
+					"n": 750
+				},
+				"shader": "ground.gdshader",
+				"verts": 750,
+				"width_m": 7.2
+			},
+			{
+				"class": "secondary",
+				"label": "丘腳街",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/HillFootStreet",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.008,
+					"max": 1.463,
+					"mean": 0.103,
+					"min": 0.065,
+					"n": 498
+				},
+				"shader": "ground.gdshader",
+				"verts": 498,
+				"width_m": 6.0
+			},
+			{
+				"class": "secondary",
+				"label": "參道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/HillApproach",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.003,
+					"max": 0.171,
+					"mean": 0.099,
+					"min": 0.014,
+					"n": 312
+				},
+				"shader": "ground.gdshader",
+				"verts": 312,
+				"width_m": 5.0
+			},
+			{
+				"class": "secondary",
+				"label": "龍神道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/RiverNorthPath",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.08,
+					"max": 0.354,
+					"mean": 0.116,
+					"min": 0.096,
+					"n": 264
+				},
+				"shader": "ground.gdshader",
+				"verts": 264,
+				"width_m": 4.0
+			},
+			{
+				"class": "secondary",
+				"label": "龍神橋",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/DragonBridgeRoad",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.033,
+					"max": 0.169,
+					"mean": 0.106,
+					"min": 0.1,
+					"n": 30
+				},
+				"shader": "ground.gdshader",
+				"verts": 30,
+				"width_m": 5.0
+			},
+			{
+				"class": "secondary",
+				"label": "中橫街",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/CrossStreetMid",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.006,
+					"frac_gt_0.15m": 0.015,
+					"max": 0.354,
+					"mean": 0.101,
+					"min": -0.032,
+					"n": 528
+				},
+				"shader": "ground.gdshader",
+				"verts": 528,
+				"width_m": 6.0
+			},
+			{
+				"class": "secondary",
+				"label": "南橫街",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/CrossStreetSouth",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.03,
+					"max": 0.185,
+					"mean": 0.102,
+					"min": 0.08,
+					"n": 576
+				},
+				"shader": "ground.gdshader",
+				"verts": 576,
+				"width_m": 6.0
+			},
+			{
+				"class": "secondary",
+				"label": "河岸小徑",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/SecondaryRoads/RiversidePath",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.127,
+					"max": 0.591,
+					"mean": 0.139,
+					"min": 0.09,
+					"n": 306
+				},
+				"shader": "ground.gdshader",
+				"verts": 306,
+				"width_m": 3.0
+			},
+			{
+				"class": "alley",
+				"label": "西巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/WestAlley",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.124,
+					"mean": 0.1,
+					"min": 0.096,
+					"n": 732
+				},
+				"shader": "ground.gdshader",
+				"verts": 732,
+				"width_m": 3.0
+			},
+			{
+				"class": "alley",
+				"label": "西渠巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/WestLane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.015,
+					"max": 0.156,
+					"mean": 0.101,
+					"min": 0.1,
+					"n": 132
+				},
+				"shader": "ground.gdshader",
+				"verts": 132,
+				"width_m": 3.0
+			},
+			{
+				"class": "lane",
+				"label": "西北巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/NWLane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.062,
+					"mean": 0.06,
+					"min": 0.057,
+					"n": 330
+				},
+				"shader": "ground.gdshader",
+				"verts": 330,
+				"width_m": 2.5
+			},
+			{
+				"class": "lane",
+				"label": "西北支巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/NWBranch",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.06,
+					"mean": 0.06,
+					"min": 0.06,
+					"n": 168
+				},
+				"shader": "ground.gdshader",
+				"verts": 168,
+				"width_m": 2.0
+			},
+			{
+				"class": "lane",
+				"label": "西溪巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/WestBankLane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.061,
+					"mean": 0.06,
+					"min": 0.058,
+					"n": 414
+				},
+				"shader": "ground.gdshader",
+				"verts": 414,
+				"width_m": 2.5
+			},
+			{
+				"class": "lane",
+				"label": "中巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/MidLane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.061,
+					"mean": 0.06,
+					"min": 0.058,
+					"n": 258
+				},
+				"shader": "ground.gdshader",
+				"verts": 258,
+				"width_m": 2.5
+			},
+			{
+				"class": "lane",
+				"label": "南巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/SWLane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.063,
+					"mean": 0.06,
+					"min": 0.057,
+					"n": 270
+				},
+				"shader": "ground.gdshader",
+				"verts": 270,
+				"width_m": 2.5
+			},
+			{
+				"class": "lane",
+				"label": "東北巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/NELane",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.06,
+					"mean": 0.06,
+					"min": 0.057,
+					"n": 234
+				},
+				"shader": "ground.gdshader",
+				"verts": 234,
+				"width_m": 2.5
+			},
+			{
+				"class": "lane",
+				"label": "東北北巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/NENorth",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.06,
+					"mean": 0.06,
+					"min": 0.06,
+					"n": 126
+				},
+				"shader": "ground.gdshader",
+				"verts": 126,
+				"width_m": 2.0
+			},
+			{
+				"class": "lane",
+				"label": "東北南巷",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/Alleys/Lanes/NESouth",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.06,
+					"mean": 0.06,
+					"min": 0.06,
+					"n": 210
+				},
+				"shader": "ground.gdshader",
+				"verts": 210,
+				"width_m": 2.0
+			},
+			{
+				"class": "farm",
+				"label": "田埂道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/FarmPaths/FarmPath_1",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.006,
+					"frac_gt_0.15m": 0.019,
+					"max": 0.216,
+					"mean": 0.1,
+					"min": -0.016,
+					"n": 480
+				},
+				"shader": "ground.gdshader",
+				"verts": 480,
+				"width_m": 2.4
+			},
+			{
+				"class": "farm",
+				"label": "田埂道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/FarmPaths/FarmPath_2",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.012,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.131,
+					"mean": 0.097,
+					"min": -0.017,
+					"n": 738
+				},
+				"shader": "ground.gdshader",
+				"verts": 738,
+				"width_m": 2.4
+			},
+			{
+				"class": "farm",
+				"label": "田埂道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/FarmPaths/FarmPath_3",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.131,
+					"mean": 0.1,
+					"min": 0.069,
+					"n": 684
+				},
+				"shader": "ground.gdshader",
+				"verts": 684,
+				"width_m": 2.4
+			},
+			{
+				"class": "farm",
+				"label": "田埂道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/FarmPaths/FarmPath_4",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.1,
+					"mean": 0.1,
+					"min": 0.1,
+					"n": 648
+				},
+				"shader": "ground.gdshader",
+				"verts": 648,
+				"width_m": 2.4
+			},
+			{
+				"class": "farm",
+				"label": "田埂道",
+				"material": "ShaderMaterial",
+				"mode": 1,
+				"path": "Roads/FarmPaths/FarmPath_5",
+				"ribbon_minus_terrain": {
+					"frac_below_terrain": 0.0,
+					"frac_gt_0.15m": 0.0,
+					"max": 0.1,
+					"mean": 0.1,
+					"min": 0.1,
+					"n": 678
+				},
+				"shader": "ground.gdshader",
+				"verts": 678,
+				"width_m": 2.4
+			}
+		],
+		"terrain_farm_weight": {
+			"FarmlandTerrain": {
+				"has_uv": true,
+				"roads_farm_weight": {
+					"丘腳街:secondary": {
+						"shoulder2m": 16,
+						"shoulder_farm_gt0.1": 15,
+						"under": 17,
+						"under_farm_gt0.1": 16
+					},
+					"中橫街:secondary": {
+						"shoulder2m": 43,
+						"shoulder_farm_gt0.1": 42,
+						"under": 61,
+						"under_farm_gt0.1": 61
+					},
+					"南橫街:secondary": {
+						"shoulder2m": 48,
+						"shoulder_farm_gt0.1": 48,
+						"under": 69,
+						"under_farm_gt0.1": 67
+					},
+					"河岸小徑:secondary": {
+						"shoulder2m": 29,
+						"shoulder_farm_gt0.1": 24,
+						"under": 20,
+						"under_farm_gt0.1": 16
+					},
+					"田埂道:farm": {
+						"shoulder2m": 229,
+						"shoulder_farm_gt0.1": 229,
+						"under": 113,
+						"under_farm_gt0.1": 113
+					}
+				},
+				"verts": 13703
+			},
+			"MainTerrain": {
+				"has_uv": true,
+				"roads_farm_weight": {
+					"丘腳街:secondary": {
+						"shoulder2m": 161,
+						"shoulder_farm_gt0.1": 2,
+						"under": 249,
+						"under_farm_gt0.1": 6
+					},
+					"中橫街:secondary": {
+						"shoulder2m": 152,
+						"shoulder_farm_gt0.1": 4,
+						"under": 219,
+						"under_farm_gt0.1": 3
+					},
+					"主街:main": {
+						"shoulder2m": 262,
+						"shoulder_farm_gt0.1": 0,
+						"under": 441,
+						"under_farm_gt0.1": 0
+					},
+					"入口道路:main": {
+						"shoulder2m": 124,
+						"shoulder_farm_gt0.1": 0,
+						"under": 213,
+						"under_farm_gt0.1": 0
+					},
+					"南橫街:secondary": {
+						"shoulder2m": 161,
+						"shoulder_farm_gt0.1": 2,
+						"under": 233,
+						"under_farm_gt0.1": 2
+					},
+					"參道:secondary": {
+						"shoulder2m": 47,
+						"shoulder_farm_gt0.1": 0,
+						"under": 52,
+						"under_farm_gt0.1": 0
+					},
+					"河岸小徑:secondary": {
+						"shoulder2m": 90,
+						"shoulder_farm_gt0.1": 8,
+						"under": 71,
+						"under_farm_gt0.1": 10
+					},
+					"田埂道:farm": {
+						"shoulder2m": 7,
+						"shoulder_farm_gt0.1": 2,
+						"under": 2,
+						"under_farm_gt0.1": 1
+					},
+					"西巷:alley": {
+						"shoulder2m": 250,
+						"shoulder_farm_gt0.1": 0,
+						"under": 177,
+						"under_farm_gt0.1": 0
+					},
+					"西渠巷:alley": {
+						"shoulder2m": 54,
+						"shoulder_farm_gt0.1": 0,
+						"under": 39,
+						"under_farm_gt0.1": 0
+					},
+					"龍神橋:secondary": {
+						"shoulder2m": 25,
+						"shoulder_farm_gt0.1": 0,
+						"under": 22,
+						"under_farm_gt0.1": 0
+					},
+					"龍神道:secondary": {
+						"shoulder2m": 94,
+						"shoulder_farm_gt0.1": 0,
+						"under": 90,
+						"under_farm_gt0.1": 0
+					}
+				},
+				"verts": 55539
+			}
+		}
+	},
+	"scene": "res://maps/village_v2/village_v2.tscn",
+	"scene_sha256": "8830bab4deb90857f7642b20a606833ac516c38c272c30840f89aeefd09751c9",
+	"sight": {
+		"eye_h": 1.7,
+		"landmarks": {
+			"DRAGON": {
+				"blockers": [
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_001",
+						10
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_001",
+						9
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_003",
+						8
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_011",
+						7
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_018",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_014",
+						4
+					],
+					[
+						"Landmarks/LANDMARK_GEIDONTEI/Hero/Collision",
+						4
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_004",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 325.0,
+				"samples": 107,
+				"visible_samples": 20
+			},
+			"GEIDONTEI": {
+				"blockers": [
+					[
+						"Districts/Market/Buildings/B_P_MKT_011",
+						14
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_001",
+						12
+					],
+					[
+						"Landmarks/LANDMARK_GEIDONTEI/Hero/Collision",
+						12
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_003",
+						10
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						8
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_015",
+						6
+					],
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_001",
+						6
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_014",
+						5
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 372.1,
+				"samples": 107,
+				"visible_samples": 9
+			},
+			"HIEDA": {
+				"blockers": [
+					[
+						"Landmarks/LANDMARK_HIEDA/Hero/Collision",
+						29
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_018",
+						7
+					],
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_001",
+						6
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_004",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_002",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_003",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_011",
+						3
+					],
+					[
+						"Landmarks/LANDMARK_GEIDONTEI/Hero/Collision",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": -1.0,
+				"samples": 107,
+				"visible_samples": 0
+			},
+			"HILLFOOT_TEMPLE": {
+				"blockers": [
+					[
+						"Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block",
+						13
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_018",
+						9
+					],
+					[
+						"Props/StreetP10/Collision",
+						9
+					],
+					[
+						"TERRAIN",
+						7
+					],
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_002",
+						6
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_017",
+						6
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_031",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_023",
+						5
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": -1.0,
+				"samples": 107,
+				"visible_samples": 0
+			},
+			"HILL_TORII": {
+				"blockers": [
+					[
+						"Districts/Market/Buildings/B_P_MKT_023",
+						18
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_003",
+						12
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_031",
+						10
+					],
+					[
+						"Props/StreetP10/Collision",
+						7
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_001",
+						6
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_028",
+						3
+					],
+					[
+						"Vegetation/SuzunaanP9/Collision",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 299.2,
+				"samples": 107,
+				"visible_samples": 28
+			},
+			"KIRISAME": {
+				"blockers": [
+					[
+						"Landmarks/LANDMARK_KIRISAME/Hero/Collision",
+						56
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_017",
+						12
+					],
+					[
+						"Props/StreetP10/Collision",
+						7
+					],
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_003",
+						6
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_019",
+						6
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						6
+					],
+					[
+						"Landmarks/LANDMARK_SOUTH_GATE/Hero/Collision",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_022",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": -1.0,
+				"samples": 107,
+				"visible_samples": 0
+			},
+			"NORTH_HILL_shrine": {
+				"blockers": [
+					[
+						"TERRAIN",
+						15
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_031",
+						5
+					],
+					[
+						"Landmarks/LANDMARK_NORTH_HILL/Hero/Collision",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_024",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_029",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_020",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_021",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_019",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 0.0,
+				"samples": 107,
+				"visible_samples": 53
+			},
+			"SOUTH_GATE_torii": {
+				"blockers": [
+					[
+						"Districts/Market/Buildings/B_P_MKT_007",
+						8
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_005",
+						6
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						6
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_006",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_004",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_010",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_013",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_015",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 0.0,
+				"samples": 107,
+				"visible_samples": 63
+			},
+			"SUZUNAAN": {
+				"blockers": [
+					[
+						"Districts/Market/Buildings/B_P_MKT_021",
+						31
+					],
+					[
+						"Landmarks/LANDMARK_SUZUNAAN/Hero/Collision",
+						18
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_026",
+						16
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_020",
+						10
+					],
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						7
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_024",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_025",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_022",
+						3
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": -1.0,
+				"samples": 107,
+				"visible_samples": 0
+			},
+			"TERAKOYA": {
+				"blockers": [
+					[
+						"Districts/SouthGate/Buildings/B_P_SGT_002",
+						7
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_017",
+						6
+					],
+					[
+						"Landmarks/LANDMARK_TERAKOYA/Hero/Collision",
+						5
+					],
+					[
+						"Props/EnvironmentP9/Collision",
+						5
+					],
+					[
+						"Landmarks/LANDMARK_SUZUNAAN/Hero/Collision",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_030",
+						5
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_022",
+						4
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_050",
+						4
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 360.1,
+				"samples": 107,
+				"visible_samples": 12
+			},
+			"TOWER_hinomi": {
+				"blockers": [
+					[
+						"Districts/MixedCommercial/Buildings/B_P_MXC_008",
+						7
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_005",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_015",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_016",
+						3
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_004",
+						2
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_014",
+						2
+					],
+					[
+						"Landmarks/LANDMARK_SOUTH_GATE/Hero/Collision",
+						1
+					],
+					[
+						"Districts/Market/Buildings/B_P_MKT_007",
+						1
+					]
+				],
+				"dist_first_visible": -1.0,
+				"first_visible_m": 0.0,
+				"samples": 107,
+				"visible_samples": 84
+			}
+		},
+		"note": "physics rays vs collision (buildings = P4 box / Hero compound / props collision); canopy foliage without collision does not block → vegetation occlusion under-estimated",
+		"per_sample": [
+			{
+				"at": [
+					224.0,
+					172.0
+				],
+				"s_m": 0.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					224.5,
+					168.0
+				],
+				"s_m": 4.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					225.0,
+					164.1
+				],
+				"s_m": 8.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					225.5,
+					160.1
+				],
+				"s_m": 12.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					226.0,
+					156.1
+				],
+				"s_m": 16.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					226.5,
+					152.2
+				],
+				"s_m": 20.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					227.0,
+					148.2
+				],
+				"s_m": 24.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					227.5,
+					144.2
+				],
+				"s_m": 28.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					228.0,
+					140.2
+				],
+				"s_m": 32.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					228.5,
+					136.3
+				],
+				"s_m": 36.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					229.0,
+					132.3
+				],
+				"s_m": 40.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					229.0,
+					132.0
+				],
+				"s_m": 40.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					229.7,
+					128.1
+				],
+				"s_m": 44.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					230.4,
+					124.1
+				],
+				"s_m": 48.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					231.1,
+					120.2
+				],
+				"s_m": 52.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					231.8,
+					116.2
+				],
+				"s_m": 56.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					232.5,
+					112.3
+				],
+				"s_m": 60.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					233.2,
+					108.4
+				],
+				"s_m": 64.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					233.9,
+					104.4
+				],
+				"s_m": 68.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					234.0,
+					104.0
+				],
+				"s_m": 68.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					234.3,
+					100.0
+				],
+				"s_m": 72.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					234.7,
+					96.0
+				],
+				"s_m": 76.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					235.0,
+					92.0
+				],
+				"s_m": 80.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					235.3,
+					88.1
+				],
+				"s_m": 84.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					235.7,
+					84.1
+				],
+				"s_m": 88.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					236.0,
+					80.1
+				],
+				"s_m": 92.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					236.0,
+					80.0
+				],
+				"s_m": 92.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					236.6,
+					76.0
+				],
+				"s_m": 96.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					237.2,
+					72.1
+				],
+				"s_m": 100.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					237.8,
+					68.1
+				],
+				"s_m": 104.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					238.4,
+					64.2
+				],
+				"s_m": 108.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					239.0,
+					60.2
+				],
+				"s_m": 112.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					239.6,
+					56.3
+				],
+				"s_m": 116.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					240.2,
+					52.3
+				],
+				"s_m": 120.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					240.7,
+					48.4
+				],
+				"s_m": 124.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					241.3,
+					44.4
+				],
+				"s_m": 128.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					241.9,
+					40.4
+				],
+				"s_m": 132.8,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					242.0,
+					40.0
+				],
+				"s_m": 133.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					243.3,
+					36.2
+				],
+				"s_m": 137.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					244.5,
+					32.4
+				],
+				"s_m": 141.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					245.8,
+					28.6
+				],
+				"s_m": 145.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					247.1,
+					24.8
+				],
+				"s_m": 149.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					248.3,
+					21.0
+				],
+				"s_m": 153.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					249.6,
+					17.2
+				],
+				"s_m": 157.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					250.9,
+					13.4
+				],
+				"s_m": 161.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					252.1,
+					9.6
+				],
+				"s_m": 165.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					253.4,
+					5.8
+				],
+				"s_m": 169.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					254.6,
+					2.1
+				],
+				"s_m": 173.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					255.9,
+					-1.7
+				],
+				"s_m": 177.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					257.2,
+					-5.5
+				],
+				"s_m": 181.3,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					258.4,
+					-9.3
+				],
+				"s_m": 185.3,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					259.7,
+					-13.1
+				],
+				"s_m": 189.3,
+				"vis": []
+			},
+			{
+				"at": [
+					261.0,
+					-16.9
+				],
+				"s_m": 193.3,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					262.0,
+					-20.0
+				],
+				"s_m": 196.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					263.1,
+					-23.8
+				],
+				"s_m": 200.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					264.3,
+					-27.7
+				],
+				"s_m": 204.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					265.4,
+					-31.5
+				],
+				"s_m": 208.5,
+				"vis": [
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					266.6,
+					-35.3
+				],
+				"s_m": 212.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					267.7,
+					-39.2
+				],
+				"s_m": 216.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					268.9,
+					-43.0
+				],
+				"s_m": 220.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					270.0,
+					-46.8
+				],
+				"s_m": 224.5,
+				"vis": [
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					271.2,
+					-50.7
+				],
+				"s_m": 228.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					272.3,
+					-54.5
+				],
+				"s_m": 232.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					273.5,
+					-58.3
+				],
+				"s_m": 236.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					274.6,
+					-62.1
+				],
+				"s_m": 240.5,
+				"vis": [
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					275.8,
+					-66.0
+				],
+				"s_m": 244.5,
+				"vis": [
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					276.9,
+					-69.8
+				],
+				"s_m": 248.5,
+				"vis": [
+					"TOWER_hinomi",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					278.1,
+					-73.6
+				],
+				"s_m": 252.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					279.2,
+					-77.5
+				],
+				"s_m": 256.5,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					280.0,
+					-80.0
+				],
+				"s_m": 259.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					281.5,
+					-83.7
+				],
+				"s_m": 263.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					283.0,
+					-87.4
+				],
+				"s_m": 267.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					284.5,
+					-91.1
+				],
+				"s_m": 271.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					285.9,
+					-94.9
+				],
+				"s_m": 275.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					287.4,
+					-98.6
+				],
+				"s_m": 279.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					288.9,
+					-102.3
+				],
+				"s_m": 283.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					290.4,
+					-106.0
+				],
+				"s_m": 287.2,
+				"vis": [
+					"TOWER_hinomi"
+				]
+			},
+			{
+				"at": [
+					291.9,
+					-109.7
+				],
+				"s_m": 291.2,
+				"vis": []
+			},
+			{
+				"at": [
+					293.4,
+					-113.4
+				],
+				"s_m": 295.2,
+				"vis": []
+			},
+			{
+				"at": [
+					294.9,
+					-117.1
+				],
+				"s_m": 299.2,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					296.3,
+					-120.9
+				],
+				"s_m": 303.2,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					297.8,
+					-124.6
+				],
+				"s_m": 307.2,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					299.3,
+					-128.3
+				],
+				"s_m": 311.2,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					300.0,
+					-130.0
+				],
+				"s_m": 313.0,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					299.0,
+					-133.9
+				],
+				"s_m": 317.0,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					297.9,
+					-137.7
+				],
+				"s_m": 321.0,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"HILL_TORII",
+					"NORTH_HILL_shrine"
+				]
+			},
+			{
+				"at": [
+					296.9,
+					-141.6
+				],
+				"s_m": 325.0,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					295.9,
+					-145.5
+				],
+				"s_m": 329.0,
+				"vis": [
+					"HILL_TORII",
+					"NORTH_HILL_shrine",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					294.8,
+					-149.3
+				],
+				"s_m": 333.0,
+				"vis": [
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					293.8,
+					-153.2
+				],
+				"s_m": 337.0,
+				"vis": [
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					292.8,
+					-157.1
+				],
+				"s_m": 341.0,
+				"vis": [
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					292.0,
+					-160.0
+				],
+				"s_m": 344.1,
+				"vis": [
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					290.5,
+					-163.7
+				],
+				"s_m": 348.1,
+				"vis": [
+					"HILL_TORII"
+				]
+			},
+			{
+				"at": [
+					289.0,
+					-167.4
+				],
+				"s_m": 352.1,
+				"vis": [
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					287.5,
+					-171.1
+				],
+				"s_m": 356.1,
+				"vis": [
+					"TOWER_hinomi",
+					"HILL_TORII",
+					"DRAGON"
+				]
+			},
+			{
+				"at": [
+					286.1,
+					-174.9
+				],
+				"s_m": 360.1,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					284.6,
+					-178.6
+				],
+				"s_m": 364.1,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					283.1,
+					-182.3
+				],
+				"s_m": 368.1,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					281.6,
+					-186.0
+				],
+				"s_m": 372.1,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					280.1,
+					-189.7
+				],
+				"s_m": 376.1,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					280.0,
+					-190.0
+				],
+				"s_m": 376.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					277.5,
+					-193.2
+				],
+				"s_m": 380.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					275.1,
+					-196.3
+				],
+				"s_m": 384.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					272.6,
+					-199.5
+				],
+				"s_m": 388.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					270.2,
+					-202.6
+				],
+				"s_m": 392.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					267.7,
+					-205.8
+				],
+				"s_m": 396.4,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			},
+			{
+				"at": [
+					266.0,
+					-208.0
+				],
+				"s_m": 399.2,
+				"vis": [
+					"SOUTH_GATE_torii",
+					"TOWER_hinomi",
+					"GEIDONTEI",
+					"HILL_TORII",
+					"DRAGON",
+					"TERAKOYA"
+				]
+			}
+		],
+		"route": [
+			[
+				224,
+				172
+			],
+			[
+				229,
+				132
+			],
+			[
+				234,
+				104
+			],
+			[
+				236,
+				80
+			],
+			[
+				242,
+				40
+			],
+			[
+				262,
+				-20
+			],
+			[
+				280,
+				-80
+			],
+			[
+				300,
+				-130
+			],
+			[
+				292,
+				-160
+			],
+			[
+				280,
+				-190
+			],
+			[
+				266,
+				-208
+			]
+		],
+		"route_len_m": 399.2,
+		"sample_step_m": 4.0
+	}
+}

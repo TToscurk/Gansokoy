@@ -1,0 +1,3210 @@
+{
+	"arch": {
+		"kits": 187,
+		"materials_top": [
+			[
+				"res://assets/village_v2/_matlib/V2_Wood.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Wood_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.477,
+						0.39,
+						0.269,
+						0.4
+					],
+					"uses": 7578,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 6436,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Kawara.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Kawara_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.396,
+						0.388,
+						0.352,
+						0.387
+					],
+					"uses": 3973,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Plaster.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Plaster_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.813,
+						0.733,
+						0.639,
+						0.743
+					],
+					"uses": 3821,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/machiya_kit/machiya_kit_atlas.png",
+					"class": "StandardMaterial3D",
+					"roughness": 0.899999976158142,
+					"tex_mean_srgb": [
+						0.46,
+						0.395,
+						0.328,
+						0.404
+					],
+					"uses": 3531,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_pgdt3",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 424,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mgpt3",
+				{
+					"class": "ShaderMaterial",
+					"uses": 220
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_0ieyv",
+				{
+					"albedo_color": "ffffff",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.550000011920929,
+					"uses": 217,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_0vyqx",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Wood_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.477,
+						0.39,
+						0.269,
+						0.4
+					],
+					"uses": 213,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_f528u",
+				{
+					"class": "ShaderMaterial",
+					"uses": 74
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3kvpb",
+				{
+					"class": "ShaderMaterial",
+					"uses": 55
+				}
+			],
+			[
+				"res://assets/village_v2/_matlib/V2_Stone.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/_matlib/V2_Stone_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.599,
+						0.568,
+						0.485,
+						0.569
+					],
+					"uses": 27,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_h631w",
+				{
+					"class": "ShaderMaterial",
+					"uses": 18
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eoxij",
+				{
+					"class": "ShaderMaterial",
+					"uses": 13
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_svkxg",
+				{
+					"class": "ShaderMaterial",
+					"uses": 12
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5lh1r",
+				{
+					"class": "ShaderMaterial",
+					"uses": 8
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6hkj4",
+				{
+					"class": "ShaderMaterial",
+					"uses": 6
+				}
+			],
+			[
+				"res://assets/village_v2/aux_kura/V2_KuraShikkui.tres",
+				{
+					"albedo_color": "6b6b6b",
+					"albedo_tex": "res://assets/village_v2/aux_kura/V2_KuraShikkui_albedo.jpg",
+					"class": "StandardMaterial3D",
+					"roughness": 1.0,
+					"tex_mean_srgb": [
+						0.915,
+						0.879,
+						0.821,
+						0.883
+					],
+					"uses": 6,
+					"vertex_color_use_as_albedo": true
+				}
+			],
+			[
+				"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+				{
+					"class": "ShaderMaterial",
+					"uses": 5
+				}
+			],
+			[
+				"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+				{
+					"class": "ShaderMaterial",
+					"uses": 5
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_d0sb7",
+				{
+					"albedo_color": "9e874d",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.899999976158142,
+					"uses": 4,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_6riav",
+				{
+					"albedo_color": "524f4d",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.5,
+					"uses": 2,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_ty1vf",
+				{
+					"albedo_color": "5c8033",
+					"albedo_tex": "",
+					"class": "StandardMaterial3D",
+					"roughness": 0.800000011920929,
+					"uses": 2,
+					"vertex_color_use_as_albedo": false
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kgndx",
+				{
+					"class": "ShaderMaterial",
+					"uses": 2
+				}
+			],
+			[
+				"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jr387",
+				{
+					"class": "ShaderMaterial",
+					"uses": 2
+				}
+			]
+		],
+		"same_sig_pairs_within_25m": 0,
+		"themes": {
+			"amado": 28,
+			"bengara": 15,
+			"koshi": 21,
+			"koshib": 25,
+			"koshir": 23,
+			"lattice": 15,
+			"mado": 27,
+			"mixed": 15,
+			"open": 18
+		},
+		"top_style_roof_bays": [
+			[
+				"koshib/c3/t2/|flat|4",
+				2
+			],
+			[
+				"koshir/c3/t2/|low|5",
+				2
+			],
+			[
+				"mado/c1/t0/|lowoff|4",
+				2
+			],
+			[
+				"mado/c3/t0/mushi|lowoff|4",
+				1
+			],
+			[
+				"amado/c4/t1/|std|4",
+				1
+			],
+			[
+				"mado/c2/t1/|low|4",
+				1
+			],
+			[
+				"koshi/c0/t2/|std|5",
+				1
+			],
+			[
+				"koshir/c1/t0/plain|offb|3",
+				1
+			],
+			[
+				"koshi/c2/t1/|lowoff|4",
+				1
+			],
+			[
+				"koshib/c3/t0/|flat|4",
+				1
+			],
+			[
+				"amado/c2/t2/mushis|offb|4",
+				1
+			],
+			[
+				"koshir/c1/t0/|offb2|4",
+				1
+			]
+		],
+		"unique_full_sig": 187,
+		"unique_style": 134,
+		"unique_style_roof_bays": 184
+	},
+	"arch_kits": [
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_001/Kit",
+			"pos": [
+				244.8,
+				89.3
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=true/udh=2/cut=true/corner=0/hero=true",
+			"roof": "offb",
+			"style": "bengara/c4/t1/win"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_002/Kit",
+			"pos": [
+				245.0,
+				78.6
+			],
+			"r3": "offf/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=true",
+			"roof": "offf",
+			"style": "lattice/c0/t2/winb"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_003/Kit",
+			"pos": [
+				252.9,
+				36.2
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=true/udh=0/cut=true/corner=1/hero=false",
+			"roof": "std",
+			"style": "mixed/c3/t1/mushib"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_004/Kit",
+			"pos": [
+				255.6,
+				29.5
+			],
+			"r3": "offf/rec=shop:0.45/sb=true/dm=false/udh=2/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "lattice/c1/t2/winb"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_005/Kit",
+			"pos": [
+				258.3,
+				21.3
+			],
+			"r3": "low/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "bengara/c2/t1/wins"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_006/Kit",
+			"pos": [
+				260.2,
+				14.3
+			],
+			"r3": "std/rec=shop:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c3/t0/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_007/Kit",
+			"pos": [
+				262.6,
+				8.4
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "mixed/c2/t1/wins"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_008/Kit",
+			"pos": [
+				264.7,
+				2.0
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshi/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_009/Kit",
+			"pos": [
+				266.1,
+				-5.0
+			],
+			"r3": "std/rec=shop:0.45/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "bengara/c4/t0/wins"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_010/Kit",
+			"pos": [
+				269.1,
+				-10.9
+			],
+			"r3": "offf/rec=none:0.00/sb=true/dm=false/udh=2/cut=true/corner=1/hero=false",
+			"roof": "offf",
+			"style": "lattice/c3/t1/mushis"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_011/Kit",
+			"pos": [
+				275.5,
+				-33.3
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=true/udh=2/cut=true/corner=1/hero=false",
+			"roof": "offf",
+			"style": "lattice/c3/t1/wins"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_012/Kit",
+			"pos": [
+				277.7,
+				-39.2
+			],
+			"r3": "std/rec=shop:0.90/sb=true/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c2/t0/winb"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_013/Kit",
+			"pos": [
+				280.0,
+				-46.6
+			],
+			"r3": "offb/rec=shop:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "bengara/c4/t2/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_014/Kit",
+			"pos": [
+				290.4,
+				-80.3
+			],
+			"r3": "offf/rec=shop:0.90/sb=false/dm=false/udh=2/cut=true/corner=0/hero=false",
+			"roof": "offf",
+			"style": "bengara/c3/t2/amado"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_015/Kit",
+			"pos": [
+				293.4,
+				-87.9
+			],
+			"r3": "offb/rec=shop:0.45/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "lattice/c2/t0/win"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_016/Kit",
+			"pos": [
+				295.7,
+				-94.7
+			],
+			"r3": "std/rec=door:0.60/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c3/t2/mushi"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_017/Kit",
+			"pos": [
+				227.4,
+				76.0
+			],
+			"r3": "offb2/rec=shop:0.90/sb=false/dm=true/udh=2/cut=false/corner=1/hero=true",
+			"roof": "offb2",
+			"style": "open/c3/t1/amado"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_018/Kit",
+			"pos": [
+				233.9,
+				34.0
+			],
+			"r3": "offb/rec=koshi:0.35/sb=false/dm=false/udh=2/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "mado/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_019/Kit",
+			"pos": [
+				236.1,
+				27.6
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "lattice/c0/t1/winb"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_020/Kit",
+			"pos": [
+				239.2,
+				21.1
+			],
+			"r3": "offb2/rec=none:0.00/sb=true/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "open/c4/t0/mushis"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_021/Kit",
+			"pos": [
+				240.4,
+				14.6
+			],
+			"r3": "offf/rec=shop:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "bengara/c0/t1/winb"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_022/Kit",
+			"pos": [
+				243.0,
+				6.9
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=true/udh=2/cut=false/corner=0/hero=true",
+			"roof": "offb",
+			"style": "open/c2/t2/amado"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_023/Kit",
+			"pos": [
+				254.5,
+				-28.2
+			],
+			"r3": "offb/rec=none:0.00/sb=true/dm=true/udh=0/cut=false/corner=1/hero=false",
+			"roof": "offb",
+			"style": "mixed/c0/t0/mushi"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_024/Kit",
+			"pos": [
+				256.7,
+				-35.6
+			],
+			"r3": "low/rec=shop:0.45/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "open/c1/t1/wins"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_025/Kit",
+			"pos": [
+				258.8,
+				-42.5
+			],
+			"r3": "offb2/rec=shop:0.45/sb=false/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mixed/c0/t2/winb"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_026/Kit",
+			"pos": [
+				261.1,
+				-50.3
+			],
+			"r3": "offf/rec=none:0.00/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "bengara/c1/t0/mushi"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_027/Kit",
+			"pos": [
+				263.6,
+				-57.1
+			],
+			"r3": "low/rec=none:0.00/sb=true/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "mixed/c0/t2/win"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_028/Kit",
+			"pos": [
+				265.2,
+				-63.8
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c1/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_029/Kit",
+			"pos": [
+				267.1,
+				-70.3
+			],
+			"r3": "std/rec=shop:0.90/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "lattice/c2/t2/win"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_030/Kit",
+			"pos": [
+				269.0,
+				-76.6
+			],
+			"r3": "low/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "low",
+			"style": "open/c4/t0/plain"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_031/Kit",
+			"pos": [
+				275.2,
+				-93.8
+			],
+			"r3": "offb2/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "offb2",
+			"style": "mixed/c4/t0/amado"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_032/Kit",
+			"pos": [
+				219.9,
+				-11.0
+			],
+			"r3": "low/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "open/c3/t2/mushib"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_033/Kit",
+			"pos": [
+				227.0,
+				-11.9
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshir/c1/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_034/Kit",
+			"pos": [
+				233.6,
+				-11.0
+			],
+			"r3": "std/rec=shop:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=true",
+			"roof": "std",
+			"style": "open/c4/t0/mushis"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_035/Kit",
+			"pos": [
+				283.9,
+				-15.0
+			],
+			"r3": "offb/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "open/c0/t0/win"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_036/Kit",
+			"pos": [
+				289.9,
+				-17.1
+			],
+			"r3": "offf/rec=door:0.90/sb=false/dm=false/udh=2/cut=true/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshi/c3/t2/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_037/Kit",
+			"pos": [
+				297.7,
+				-17.6
+			],
+			"r3": "offb2/rec=door:0.90/sb=true/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "bengara/c0/t0/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_038/Kit",
+			"pos": [
+				304.8,
+				-19.0
+			],
+			"r3": "low/rec=shop:0.45/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "lattice/c2/t1/mushi"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_039/Kit",
+			"pos": [
+				235.3,
+				-29.0
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=2/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c0/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_040/Kit",
+			"pos": [
+				296.5,
+				-35.2
+			],
+			"r3": "std/rec=shop:0.90/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "mixed/c4/t2/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_041/Kit",
+			"pos": [
+				303.1,
+				-36.9
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "open/c1/t0/wins"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_042/Kit",
+			"pos": [
+				309.8,
+				-38.2
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=false/udh=2/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "mado/c3/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_043/Kit",
+			"pos": [
+				316.4,
+				-38.5
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c4/t0/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_044/Kit",
+			"pos": [
+				213.0,
+				57.8
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=true/udh=0/cut=false/corner=1/hero=false",
+			"roof": "std",
+			"style": "lattice/c1/t0/mushis"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_045/Kit",
+			"pos": [
+				220.2,
+				57.5
+			],
+			"r3": "offb/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=true",
+			"roof": "offb",
+			"style": "amado/c2/t1/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_046/Kit",
+			"pos": [
+				260.1,
+				55.5
+			],
+			"r3": "std/rec=shop:0.45/sb=false/dm=false/udh=0/cut=false/corner=0/hero=true",
+			"roof": "std",
+			"style": "bengara/c2/t0/mushi"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_047/Kit",
+			"pos": [
+				267.3,
+				54.5
+			],
+			"r3": "offf/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "lattice/c3/t1/amado"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_048/Kit",
+			"pos": [
+				274.1,
+				54.4
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "amado/c1/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_049/Kit",
+			"pos": [
+				280.9,
+				53.9
+			],
+			"r3": "offb/rec=shop:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "bengara/c2/t1/plain"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_050/Kit",
+			"pos": [
+				215.3,
+				40.7
+			],
+			"r3": "low/rec=shop:0.45/sb=true/dm=true/udh=0/cut=false/corner=1/hero=false",
+			"roof": "low",
+			"style": "mixed/c3/t2/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_051/Kit",
+			"pos": [
+				268.0,
+				37.4
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c4/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_052/Kit",
+			"pos": [
+				274.7,
+				36.4
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "mixed/c0/t0/plain"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_053/Kit",
+			"pos": [
+				281.5,
+				35.9
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c4/t1/win"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_054/Kit",
+			"pos": [
+				288.1,
+				36.3
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=2/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c0/t0/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/Market/Buildings/B_P_MKT_055/Kit",
+			"pos": [
+				294.6,
+				34.8
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "mixed/c3/t1/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_056/Kit",
+			"pos": [
+				214.4,
+				85.9
+			],
+			"r3": "offb/rec=shop:0.45/sb=true/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "offb",
+			"style": "mixed/c0/t1/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_057/Kit",
+			"pos": [
+				220.7,
+				89.5
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshir/c2/t2/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/Market/Buildings/B_P_MKT_058/Kit",
+			"pos": [
+				214.5,
+				6.8
+			],
+			"r3": "low/rec=door:0.90/sb=false/dm=false/udh=2/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "open/c3/t1/mushi"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/Market/Buildings/B_P_MKT_059/Kit",
+			"pos": [
+				215.1,
+				13.4
+			],
+			"r3": "std/rec=shop:0.45/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "mixed/c1/t2/win"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/Market/Buildings/B_P_MKT_060/Kit",
+			"pos": [
+				256.1,
+				-90.7
+			],
+			"r3": "offf/rec=door:0.90/sb=false/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshir/c3/t2/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_001/Kit",
+			"pos": [
+				298.7,
+				-100.9
+			],
+			"r3": "low/rec=shop:0.90/sb=true/dm=true/udh=2/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "lattice/c2/t0/wins"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_002/Kit",
+			"pos": [
+				301.2,
+				-107.2
+			],
+			"r3": "offf/rec=none:0.00/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "bengara/c3/t1/mushi"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_003/Kit",
+			"pos": [
+				302.8,
+				-113.6
+			],
+			"r3": "lowoff/rec=none:0.00/sb=true/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "open/c2/t2/winb"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_004/Kit",
+			"pos": [
+				306.4,
+				-120.3
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=true/udh=0/cut=true/corner=1/hero=false",
+			"roof": "std",
+			"style": "koshib/c0/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_005/Kit",
+			"pos": [
+				278.4,
+				-101.8
+			],
+			"r3": "offf2/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offf2",
+			"style": "lattice/c0/t1/win"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_006/Kit",
+			"pos": [
+				281.6,
+				-107.4
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=true/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "mixed/c1/t0/winb"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_007/Kit",
+			"pos": [
+				283.5,
+				-114.4
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "lattice/c4/t2/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_008/Kit",
+			"pos": [
+				286.5,
+				-122.0
+			],
+			"r3": "offf2/rec=none:0.00/sb=true/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf2",
+			"style": "mixed/c1/t0/winb"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_009/Kit",
+			"pos": [
+				236.6,
+				-140.5
+			],
+			"r3": "low/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshib/c2/t1/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_010/Kit",
+			"pos": [
+				244.7,
+				-140.8
+			],
+			"r3": "offf2/rec=shop:0.45/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf2",
+			"style": "bengara/c4/t2/mushi"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_011/Kit",
+			"pos": [
+				255.8,
+				-138.5
+			],
+			"r3": "lowoff/rec=none:0.00/sb=false/dm=true/udh=1/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c0/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_012/Kit",
+			"pos": [
+				261.1,
+				-135.9
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "bengara/c3/t2/mushi"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_013/Kit",
+			"pos": [
+				267.4,
+				-133.4
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshir/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_014/Kit",
+			"pos": [
+				273.8,
+				-131.8
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "amado/c3/t1/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_015/Kit",
+			"pos": [
+				322.6,
+				-120.0
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "bengara/c4/t1/mushib"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_016/Kit",
+			"pos": [
+				330.2,
+				-119.6
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c2/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_017/Kit",
+			"pos": [
+				336.6,
+				-120.2
+			],
+			"r3": "offf2/rec=shop:0.90/sb=false/dm=false/udh=1/cut=false/corner=0/hero=false",
+			"roof": "offf2",
+			"style": "mixed/c3/t1/mushib"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_018/Kit",
+			"pos": [
+				307.0,
+				-138.2
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "lowoff",
+			"style": "koshi/c1/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_019/Kit",
+			"pos": [
+				313.6,
+				-137.4
+			],
+			"r3": "offf/rec=koshi:0.35/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshib/c3/t1/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_020/Kit",
+			"pos": [
+				321.2,
+				-138.0
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "lattice/c0/t2/mushib"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_021/Kit",
+			"pos": [
+				328.8,
+				-137.6
+			],
+			"r3": "lowoff/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c1/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_022/Kit",
+			"pos": [
+				335.0,
+				-136.4
+			],
+			"r3": "offf/rec=shop:0.90/sb=false/dm=true/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offf",
+			"style": "open/c0/t2/mushis"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_023/Kit",
+			"pos": [
+				343.0,
+				-145.5
+			],
+			"r3": "lowoff/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshib/c4/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_024/Kit",
+			"pos": [
+				346.9,
+				-150.5
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c0/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_001/Kit",
+			"pos": [
+				210.1,
+				-10.1
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=true/udh=0/cut=false/corner=1/hero=false",
+			"roof": "offb2",
+			"style": "amado/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_002/Kit",
+			"pos": [
+				204.7,
+				-29.9
+			],
+			"r3": "flat/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=1/hero=false",
+			"roof": "flat",
+			"style": "mado/c4/t0/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_003/Kit",
+			"pos": [
+				214.4,
+				-29.9
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c2/t2/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_004/Kit",
+			"pos": [
+				223.6,
+				-29.9
+			],
+			"r3": "lowoff/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_005/Kit",
+			"pos": [
+				175.3,
+				59.7
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "std",
+			"style": "amado/c3/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_006/Kit",
+			"pos": [
+				185.5,
+				59.4
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c4/t2/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_007/Kit",
+			"pos": [
+				193.3,
+				59.2
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshir/c3/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_008/Kit",
+			"pos": [
+				204.4,
+				-138.3
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshi/c4/t1/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_009/Kit",
+			"pos": [
+				187.0,
+				-90.5
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshib/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_010/Kit",
+			"pos": [
+				192.2,
+				-82.3
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "amado/c0/t1/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_011/Kit",
+			"pos": [
+				194.9,
+				-70.9
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "mado/c2/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_012/Kit",
+			"pos": [
+				193.3,
+				-61.2
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshi/c1/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_013/Kit",
+			"pos": [
+				192.4,
+				-53.2
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c2/t1/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_014/Kit",
+			"pos": [
+				191.1,
+				-42.7
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshir/c3/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_015/Kit",
+			"pos": [
+				190.0,
+				-33.6
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c2/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_016/Kit",
+			"pos": [
+				190.5,
+				-25.4
+			],
+			"r3": "flat/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=1/hero=false",
+			"roof": "flat",
+			"style": "koshir/c3/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_017/Kit",
+			"pos": [
+				193.9,
+				-11.1
+			],
+			"r3": "lowoff/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "lowoff",
+			"style": "koshir/c4/t1/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_018/Kit",
+			"pos": [
+				196.1,
+				-2.1
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c2/t0/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_019/Kit",
+			"pos": [
+				185.2,
+				-121.5
+			],
+			"r3": "flat/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "amado/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_020/Kit",
+			"pos": [
+				191.0,
+				-113.2
+			],
+			"r3": "offb/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshi/c2/t2/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_021/Kit",
+			"pos": [
+				195.1,
+				-106.5
+			],
+			"r3": "low/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshir/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_022/Kit",
+			"pos": [
+				201.1,
+				-98.8
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshi/c2/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_023/Kit",
+			"pos": [
+				206.3,
+				-91.3
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "flat",
+			"style": "koshir/c4/t0/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_024/Kit",
+			"pos": [
+				211.7,
+				-73.5
+			],
+			"r3": "lowoff/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "lowoff",
+			"style": "koshir/c3/t1/plain"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_025/Kit",
+			"pos": [
+				210.5,
+				-63.9
+			],
+			"r3": "offb/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshib/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_026/Kit",
+			"pos": [
+				209.6,
+				-56.6
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "amado/c0/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_027/Kit",
+			"pos": [
+				187.7,
+				-211.2
+			],
+			"r3": "flat/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshib/c1/t1/mushib"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_028/Kit",
+			"pos": [
+				183.4,
+				-217.8
+			],
+			"r3": "offb2/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "amado/c4/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_029/Kit",
+			"pos": [
+				172.9,
+				-231.0
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshib/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_030/Kit",
+			"pos": [
+				165.2,
+				-236.0
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c4/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_031/Kit",
+			"pos": [
+				156.5,
+				-240.9
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshib/c3/t1/mushib"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_032/Kit",
+			"pos": [
+				190.5,
+				-152.5
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshi/c0/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_033/Kit",
+			"pos": [
+				188.7,
+				-159.7
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshir/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_034/Kit",
+			"pos": [
+				185.2,
+				-173.1
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c3/t0/mushi"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_035/Kit",
+			"pos": [
+				182.8,
+				-180.8
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c4/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_036/Kit",
+			"pos": [
+				172.4,
+				-205.2
+			],
+			"r3": "low/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "low",
+			"style": "mado/c2/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_037/Kit",
+			"pos": [
+				167.3,
+				-213.9
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshi/c0/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_038/Kit",
+			"pos": [
+				159.7,
+				-220.7
+			],
+			"r3": "offb/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshir/c1/t0/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_039/Kit",
+			"pos": [
+				151.2,
+				-225.6
+			],
+			"r3": "lowoff/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshi/c2/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_040/Kit",
+			"pos": [
+				149.6,
+				-206.4
+			],
+			"r3": "flat/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshib/c3/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_041/Kit",
+			"pos": [
+				169.9,
+				-187.6
+			],
+			"r3": "offb/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "amado/c2/t2/mushis"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_042/Kit",
+			"pos": [
+				153.4,
+				-188.1
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshir/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_043/Kit",
+			"pos": [
+				143.9,
+				-191.8
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "amado/c2/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_044/Kit",
+			"pos": [
+				136.8,
+				-195.0
+			],
+			"r3": "offb/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshir/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_045/Kit",
+			"pos": [
+				149.3,
+				-20.9
+			],
+			"r3": "flat/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshir/c2/t0/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_046/Kit",
+			"pos": [
+				146.7,
+				-30.3
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c1/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_047/Kit",
+			"pos": [
+				144.8,
+				-38.2
+			],
+			"r3": "low/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshib/c3/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048/Kit",
+			"pos": [
+				143.9,
+				-48.7
+			],
+			"r3": "offb/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "amado/c0/t1/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_049/Kit",
+			"pos": [
+				143.1,
+				-58.8
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshir/c2/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_050/Kit",
+			"pos": [
+				142.0,
+				-66.5
+			],
+			"r3": "offb2/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshi/c0/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_051/Kit",
+			"pos": [
+				142.8,
+				-75.1
+			],
+			"r3": "flat/rec=koshi:0.35/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshir/c1/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_052/Kit",
+			"pos": [
+				143.8,
+				-84.2
+			],
+			"r3": "offb/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshi/c2/t1/mushi"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_053/Kit",
+			"pos": [
+				145.2,
+				-95.8
+			],
+			"r3": "low/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshir/c3/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_054/Kit",
+			"pos": [
+				145.6,
+				-107.9
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshi/c0/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_055/Kit",
+			"pos": [
+				144.5,
+				-115.2
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=true/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "mado/c2/t2/plain"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_056/Kit",
+			"pos": [
+				143.0,
+				-124.8
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c3/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_057/Kit",
+			"pos": [
+				141.7,
+				-132.8
+			],
+			"r3": "offb2/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c4/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_058/Kit",
+			"pos": [
+				137.6,
+				-7.2
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshib/c0/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_059/Kit",
+			"pos": [
+				134.2,
+				-16.3
+			],
+			"r3": "offb2/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshi/c4/t1/mushi"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_060/Kit",
+			"pos": [
+				131.3,
+				-25.1
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c1/t0/"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_061/Kit",
+			"pos": [
+				128.5,
+				-37.8
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c4/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_062/Kit",
+			"pos": [
+				127.7,
+				-47.5
+			],
+			"r3": "flat/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshib/c4/t0/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_063/Kit",
+			"pos": [
+				127.1,
+				-54.8
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "mado/c0/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_064/Kit",
+			"pos": [
+				126.3,
+				-64.5
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshib/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_065/Kit",
+			"pos": [
+				126.2,
+				-73.4
+			],
+			"r3": "offb/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "amado/c4/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_066/Kit",
+			"pos": [
+				127.5,
+				-83.9
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=true/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshib/c2/t2/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_067/Kit",
+			"pos": [
+				128.6,
+				-94.0
+			],
+			"r3": "lowoff/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "amado/c4/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_068/Kit",
+			"pos": [
+				130.0,
+				-101.7
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c1/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_069/Kit",
+			"pos": [
+				128.7,
+				-110.7
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "mado/c3/t2/mushi"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_070/Kit",
+			"pos": [
+				127.3,
+				-119.8
+			],
+			"r3": "offb/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb",
+			"style": "koshir/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_071/Kit",
+			"pos": [
+				231.8,
+				-80.2
+			],
+			"r3": "lowoff/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "koshib/c0/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_072/Kit",
+			"pos": [
+				241.7,
+				-77.7
+			],
+			"r3": "offb/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb",
+			"style": "amado/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_073/Kit",
+			"pos": [
+				220.0,
+				-95.7
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c4/t0/mushib"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_074/Kit",
+			"pos": [
+				230.6,
+				-97.2
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c2/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_075/Kit",
+			"pos": [
+				237.7,
+				-95.4
+			],
+			"r3": "flat/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshi/c3/t2/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_076/Kit",
+			"pos": [
+				247.2,
+				-93.1
+			],
+			"r3": "std/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "mado/c4/t0/plain"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_077/Kit",
+			"pos": [
+				160.0,
+				55.6
+			],
+			"r3": "flat/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshib/c3/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_078/Kit",
+			"pos": [
+				157.6,
+				64.5
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "amado/c4/t0/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_079/Kit",
+			"pos": [
+				159.4,
+				80.0
+			],
+			"r3": "low/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshi/c4/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_080/Kit",
+			"pos": [
+				164.3,
+				88.3
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "amado/c1/t0/mushi"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_081/Kit",
+			"pos": [
+				178.0,
+				79.5
+			],
+			"r3": "lowoff/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "lowoff",
+			"style": "mado/c2/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_001/Kit",
+			"pos": [
+				438.2,
+				-205.8
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshi/c0/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_002/Kit",
+			"pos": [
+				451.2,
+				-219.2
+			],
+			"r3": "std/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=1/hero=false",
+			"roof": "std",
+			"style": "mado/c2/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_003/Kit",
+			"pos": [
+				458.0,
+				-226.1
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "amado/c3/t1/mushis"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_004/Kit",
+			"pos": [
+				467.6,
+				-231.3
+			],
+			"r3": "offb2/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "mado/c2/t2/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_005/Kit",
+			"pos": [
+				477.6,
+				-234.6
+			],
+			"r3": "low/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "koshib/c1/t1/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_006/Kit",
+			"pos": [
+				486.2,
+				-237.5
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c3/t0/mushib"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_007/Kit",
+			"pos": [
+				456.8,
+				-244.8
+			],
+			"r3": "offf/rec=door:0.90/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshir/c4/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_008/Kit",
+			"pos": [
+				464.4,
+				-246.9
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshi/c0/t0/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_009/Kit",
+			"pos": [
+				473.5,
+				-250.4
+			],
+			"r3": "std/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshir/c4/t1/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_010/Kit",
+			"pos": [
+				432.1,
+				-244.1
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "koshi/c3/t1/mushis"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_011/Kit",
+			"pos": [
+				450.8,
+				-202.9
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "flat",
+			"style": "amado/c4/t2/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_012/Kit",
+			"pos": [
+				458.8,
+				-196.0
+			],
+			"r3": "offb2/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c0/t0/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_013/Kit",
+			"pos": [
+				465.3,
+				-189.5
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "koshi/c3/t1/mushis"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_014/Kit",
+			"pos": [
+				476.3,
+				-183.2
+			],
+			"r3": "offb2/rec=koshi:0.35/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offb2",
+			"style": "koshib/c1/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_015/Kit",
+			"pos": [
+				485.6,
+				-180.7
+			],
+			"r3": "std/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "std",
+			"style": "amado/c4/t2/"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_016/Kit",
+			"pos": [
+				467.9,
+				-209.2
+			],
+			"r3": "low/rec=door:0.60/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "low",
+			"style": "mado/c2/t1/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_017/Kit",
+			"pos": [
+				474.8,
+				-202.3
+			],
+			"r3": "offf/rec=none:0.00/sb=false/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshir/c2/t2/mushib"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_018/Kit",
+			"pos": [
+				484.3,
+				-197.4
+			],
+			"r3": "flat/rec=none:0.00/sb=false/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "flat",
+			"style": "mado/c3/t0/"
+		},
+		{
+			"bays": 4,
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_019/Kit",
+			"pos": [
+				494.3,
+				-194.6
+			],
+			"r3": "offf/rec=door:0.90/sb=false/dm=false/udh=0/cut=false/corner=0/hero=false",
+			"roof": "offf",
+			"style": "koshi/c0/t2/"
+		},
+		{
+			"bays": 5,
+			"path": "Districts/SouthGate/Buildings/B_P_SGT_001/Kit",
+			"pos": [
+				239.7,
+				120.6
+			],
+			"r3": "low/rec=shop:0.45/sb=true/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "low",
+			"style": "bengara/c4/t1/mushib"
+		},
+		{
+			"bays": 3,
+			"path": "Districts/SouthGate/Buildings/B_P_SGT_002/Kit",
+			"pos": [
+				222.1,
+				122.1
+			],
+			"r3": "offf/rec=shop:0.45/sb=true/dm=false/udh=0/cut=true/corner=0/hero=false",
+			"roof": "offf",
+			"style": "lattice/c2/t0/winb"
+		},
+		{
+			"bays": 6,
+			"path": "Districts/SouthGate/Buildings/B_P_SGT_003/Kit",
+			"pos": [
+				222.9,
+				115.1
+			],
+			"r3": "std/rec=none:0.00/sb=true/dm=true/udh=0/cut=false/corner=0/hero=false",
+			"roof": "std",
+			"style": "open/c3/t1/mushi"
+		}
+	],
+	"arch_roof_cls": {
+		"flat": 21,
+		"low": 31,
+		"lowoff": 17,
+		"offb": 25,
+		"offb2": 29,
+		"offf": 21,
+		"offf2": 4,
+		"std": 39
+	},
+	"load_ms": 5887,
+	"scene": "res://maps/village_v2/village_v2.tscn",
+	"scene_sha256": "8830bab4deb90857f7642b20a606833ac516c38c272c30840f89aeefd09751c9",
+	"water": {
+		"Canal": {
+			"end": [
+				288.0,
+				220.0
+			],
+			"len_m": 413.5,
+			"mesh": "Water/Canal",
+			"start": [
+				388.0,
+				-172.0
+			],
+			"stations": [
+				[
+					0.0,
+					[
+						388.0,
+						-172.0
+					],
+					-1.13
+				],
+				[
+					20.0,
+					[
+						375.4,
+						-156.5
+					],
+					-1.13
+				],
+				[
+					40.0,
+					[
+						362.8,
+						-141.0
+					],
+					-1.13
+				],
+				[
+					41.2,
+					[
+						362.0,
+						-140.0
+					],
+					-1.13
+				],
+				[
+					61.2,
+					[
+						352.6,
+						-122.4
+					],
+					-1.13
+				],
+				[
+					75.2,
+					[
+						346.0,
+						-110.0
+					],
+					-1.13
+				],
+				[
+					95.2,
+					[
+						342.8,
+						-90.3
+					],
+					-1.13
+				],
+				[
+					115.2,
+					[
+						339.7,
+						-70.5
+					],
+					-1.4
+				],
+				[
+					125.9,
+					[
+						338.0,
+						-60.0
+					],
+					-1.4
+				],
+				[
+					145.9,
+					[
+						336.4,
+						-40.1
+					],
+					-1.4
+				],
+				[
+					165.9,
+					[
+						334.8,
+						-20.1
+					],
+					-1.4
+				],
+				[
+					176.0,
+					[
+						334.0,
+						-10.0
+					],
+					-1.5
+				],
+				[
+					196.0,
+					[
+						329.3,
+						9.4
+					],
+					-1.52
+				],
+				[
+					216.0,
+					[
+						324.7,
+						28.9
+					],
+					-1.52
+				],
+				[
+					227.4,
+					[
+						322.0,
+						40.0
+					],
+					-1.52
+				],
+				[
+					247.4,
+					[
+						313.1,
+						57.9
+					],
+					-1.52
+				],
+				[
+					267.4,
+					[
+						304.1,
+						75.8
+					],
+					-1.52
+				],
+				[
+					272.2,
+					[
+						302.0,
+						80.0
+					],
+					-1.52
+				],
+				[
+					292.2,
+					[
+						297.1,
+						99.4
+					],
+					-1.52
+				],
+				[
+					312.2,
+					[
+						292.3,
+						118.8
+					],
+					-1.63
+				],
+				[
+					313.4,
+					[
+						292.0,
+						120.0
+					],
+					-1.63
+				],
+				[
+					333.4,
+					[
+						291.2,
+						140.0
+					],
+					-1.63
+				],
+				[
+					353.4,
+					[
+						290.4,
+						160.0
+					],
+					-1.63
+				],
+				[
+					373.4,
+					[
+						289.6,
+						180.0
+					],
+					-1.63
+				],
+				[
+					393.4,
+					[
+						288.8,
+						199.9
+					],
+					-1.63
+				],
+				[
+					413.4,
+					[
+						288.0,
+						219.9
+					],
+					-1.63
+				]
+			],
+			"upstream_rises_gt2cm": 0
+		},
+		"MainRiver": {
+			"end": [
+				560.0,
+				-112.0
+			],
+			"len_m": 340.1,
+			"mesh": "Water/MainRiver",
+			"start": [
+				392.0,
+				-340.0
+			],
+			"stations": [
+				[
+					0.0,
+					[
+						392.0,
+						-340.0
+					],
+					-0.8
+				],
+				[
+					20.0,
+					[
+						396.9,
+						-320.6
+					],
+					-0.8
+				],
+				[
+					28.9,
+					[
+						399.0,
+						-312.0
+					],
+					-0.8
+				],
+				[
+					48.9,
+					[
+						393.3,
+						-292.8
+					],
+					-0.8
+				],
+				[
+					60.2,
+					[
+						390.0,
+						-282.0
+					],
+					-0.8
+				],
+				[
+					80.2,
+					[
+						386.2,
+						-262.4
+					],
+					-0.8
+				],
+				[
+					86.7,
+					[
+						385.0,
+						-256.0
+					],
+					-0.8
+				],
+				[
+					106.7,
+					[
+						389.2,
+						-236.4
+					],
+					-0.8
+				],
+				[
+					115.3,
+					[
+						391.0,
+						-228.0
+					],
+					-0.8
+				],
+				[
+					135.3,
+					[
+						397.3,
+						-209.0
+					],
+					-0.8
+				],
+				[
+					139.5,
+					[
+						398.6,
+						-205.0
+					],
+					-0.8
+				],
+				[
+					159.5,
+					[
+						405.0,
+						-186.0
+					],
+					-0.8
+				],
+				[
+					159.6,
+					[
+						405.0,
+						-186.0
+					],
+					-0.8
+				],
+				[
+					179.6,
+					[
+						413.9,
+						-168.1
+					],
+					-0.8
+				],
+				[
+					179.7,
+					[
+						414.0,
+						-168.0
+					],
+					-0.8
+				],
+				[
+					199.7,
+					[
+						427.7,
+						-153.4
+					],
+					-0.8
+				],
+				[
+					203.0,
+					[
+						430.0,
+						-151.0
+					],
+					-0.8
+				],
+				[
+					223.0,
+					[
+						447.6,
+						-141.5
+					],
+					-0.8
+				],
+				[
+					232.6,
+					[
+						456.0,
+						-137.0
+					],
+					-0.8
+				],
+				[
+					252.6,
+					[
+						474.6,
+						-129.7
+					],
+					-0.8
+				],
+				[
+					262.6,
+					[
+						484.0,
+						-126.0
+					],
+					-0.8
+				],
+				[
+					282.6,
+					[
+						503.4,
+						-121.1
+					],
+					-0.8
+				],
+				[
+					299.8,
+					[
+						520.0,
+						-117.0
+					],
+					-0.8
+				],
+				[
+					319.8,
+					[
+						539.8,
+						-114.5
+					],
+					-0.8
+				],
+				[
+					339.8,
+					[
+						559.7,
+						-112.0
+					],
+					-0.8
+				]
+			],
+			"upstream_rises_gt2cm": 0
+		},
+		"WestStream": {
+			"end": [
+				122.0,
+				220.0
+			],
+			"len_m": 466.5,
+			"mesh": "Water/Streams/WestStream",
+			"start": [
+				70.0,
+				-178.0
+			],
+			"stations": [
+				[
+					0.0,
+					[
+						70.0,
+						-178.0
+					],
+					7.87
+				],
+				[
+					20.0,
+					[
+						89.1,
+						-172.1
+					],
+					3.71
+				],
+				[
+					40.0,
+					[
+						108.2,
+						-166.2
+					],
+					1.13
+				],
+				[
+					44.0,
+					[
+						112.0,
+						-165.0
+					],
+					1.1
+				],
+				[
+					64.0,
+					[
+						130.6,
+						-157.7
+					],
+					1.1
+				],
+				[
+					84.0,
+					[
+						149.2,
+						-150.3
+					],
+					1.1
+				],
+				[
+					84.8,
+					[
+						150.0,
+						-150.0
+					],
+					1.1
+				],
+				[
+					104.8,
+					[
+						157.4,
+						-131.4
+					],
+					1.1
+				],
+				[
+					124.8,
+					[
+						164.9,
+						-112.9
+					],
+					1.1
+				],
+				[
+					144.1,
+					[
+						172.0,
+						-95.0
+					],
+					1.1
+				],
+				[
+					164.1,
+					[
+						174.0,
+						-75.1
+					],
+					1.0
+				],
+				[
+					184.1,
+					[
+						176.0,
+						-55.2
+					],
+					0.88
+				],
+				[
+					184.3,
+					[
+						176.0,
+						-55.0
+					],
+					0.88
+				],
+				[
+					204.3,
+					[
+						169.3,
+						-36.2
+					],
+					0.77
+				],
+				[
+					224.3,
+					[
+						162.6,
+						-17.3
+					],
+					0.65
+				],
+				[
+					232.0,
+					[
+						160.0,
+						-10.0
+					],
+					0.61
+				],
+				[
+					252.0,
+					[
+						153.4,
+						8.9
+					],
+					0.5
+				],
+				[
+					272.0,
+					[
+						146.8,
+						27.8
+					],
+					0.38
+				],
+				[
+					274.4,
+					[
+						146.0,
+						30.0
+					],
+					0.37
+				],
+				[
+					294.4,
+					[
+						140.8,
+						49.3
+					],
+					0.25
+				],
+				[
+					305.4,
+					[
+						138.0,
+						60.0
+					],
+					0.19
+				],
+				[
+					325.4,
+					[
+						134.7,
+						79.7
+					],
+					0.07
+				],
+				[
+					345.4,
+					[
+						131.4,
+						99.5
+					],
+					-0.08
+				],
+				[
+					365.4,
+					[
+						128.1,
+						119.2
+					],
+					-0.09
+				],
+				[
+					366.3,
+					[
+						128.0,
+						120.0
+					],
+					-0.09
+				],
+				[
+					386.3,
+					[
+						126.8,
+						140.0
+					],
+					-0.67
+				],
+				[
+					406.3,
+					[
+						125.6,
+						159.9
+					],
+					-0.92
+				],
+				[
+					426.3,
+					[
+						124.4,
+						179.9
+					],
+					-1.19
+				],
+				[
+					446.3,
+					[
+						123.2,
+						199.9
+					],
+					-1.19
+				],
+				[
+					466.3,
+					[
+						122.0,
+						219.8
+					],
+					-1.19
+				]
+			],
+			"upstream_rises_gt2cm": 0
+		},
+		"farmland_hydraulic_nodes": {
+			"Chute": 5,
+			"Drain": 89,
+			"Drop": 10,
+			"Feeder": 3,
+			"Outlet": 74,
+			"Siphon": 22,
+			"Trough": 22,
+			"Weir": 33
+		},
+		"riverbank_name_hits": {
+			"step": 21
+		},
+		"waterwheels": [
+			{
+				"hero_children_sample": [
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"Wheel",
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"RotorAnim",
+					"Collision",
+					"Pier",
+					"Bearing",
+					"Axle",
+					"Post",
+					"WheelHull"
+				],
+				"hero_pos_y": -1.4,
+				"id": "LANDMARK_WATERWHEEL_1",
+				"pos": [
+					334.8,
+					-1.49,
+					-52.0
+				]
+			},
+			{
+				"hero_children_sample": [
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"Wheel",
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"RotorAnim",
+					"Collision",
+					"Pier",
+					"Bearing",
+					"Axle",
+					"Post",
+					"WheelHull"
+				],
+				"hero_pos_y": -1.52,
+				"id": "LANDMARK_WATERWHEEL_2",
+				"pos": [
+					329.2,
+					-2.08,
+					0.0
+				]
+			},
+			{
+				"hero_children_sample": [
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"Wheel",
+					"LOD0",
+					"LOD1",
+					"LOD2",
+					"RotorAnim",
+					"Collision",
+					"Pier",
+					"Bearing",
+					"Axle",
+					"Post",
+					"WheelHull"
+				],
+				"hero_pos_y": -1.52,
+				"id": "LANDMARK_WATERWHEEL_3",
+				"pos": [
+					310.6,
+					-2.37,
+					58.0
+				]
+			}
+		]
+	}
+}

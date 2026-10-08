@@ -1,0 +1,67 @@
+{
+	"boundary_walls": [
+		[
+			"Boundary/@CollisionShape3D@2",
+			[
+				-118.0,
+				-12.0,
+				-119.0
+			],
+			[
+				236.0,
+				52.0,
+				1.0
+			]
+		],
+		[
+			"Boundary/@CollisionShape3D@3",
+			[
+				-118.0,
+				-12.0,
+				118.0
+			],
+			[
+				236.0,
+				52.0,
+				1.0
+			]
+		],
+		[
+			"Boundary/@CollisionShape3D@4",
+			[
+				-119.0,
+				-12.0,
+				-118.0
+			],
+			[
+				1.0,
+				52.0,
+				236.0
+			]
+		],
+		[
+			"Boundary/@CollisionShape3D@5",
+			[
+				118.0,
+				-12.0,
+				-118.0
+			],
+			[
+				1.0,
+				52.0,
+				236.0
+			]
+		]
+	],
+	"own_colliders": true,
+	"reachable_cells": 12828,
+	"scene": "res://maps/trail/trail.tscn",
+	"start": [
+		-13.7799997329712,
+		-26.8199996948242
+	],
+	"step": 2.0,
+	"trimesh_added": 1,
+	"void_exit_count": 0,
+	"void_exits": []
+}

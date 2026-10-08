@@ -1,0 +1,67 @@
+{
+	"boundary_walls": [
+		[
+			"Boundary/Wall_N",
+			[
+				-1.0,
+				-10.0,
+				-341.0
+			],
+			[
+				562.0,
+				90.0,
+				1.0
+			]
+		],
+		[
+			"Boundary/Wall_S",
+			[
+				-1.0,
+				-10.0,
+				220.0
+			],
+			[
+				562.0,
+				90.0,
+				1.0
+			]
+		],
+		[
+			"Boundary/Wall_W",
+			[
+				-1.0,
+				-10.0,
+				-341.0
+			],
+			[
+				1.0,
+				90.0,
+				562.0
+			]
+		],
+		[
+			"Boundary/Wall_E",
+			[
+				560.0,
+				-10.0,
+				-341.0
+			],
+			[
+				1.0,
+				90.0,
+				562.0
+			]
+		]
+	],
+	"own_colliders": true,
+	"reachable_cells": 74691,
+	"scene": "res://maps/village_v2/village_v2.tscn",
+	"start": [
+		224.0,
+		160.0
+	],
+	"step": 2.0,
+	"trimesh_added": 0,
+	"void_exit_count": 0,
+	"void_exits": []
+}
