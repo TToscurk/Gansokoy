@@ -150,5 +150,7 @@ run "P10 R5c World Edge Closure plan gate＋反向 4（frame 外 Vista：P1 邊�
 run "P10 R5c World Edge Closure 場景級（root 直下 HumanUseExpansionP10 の次に EdgeClosureP10 1 個・CollisionObject3D 0・Collision/Boundary 4 牆不變・VistaTerrain frame 內頂點 0・MultiMesh 零矩陣 0；非 headless）" EDGE --path . --script res://tools/verify_village_v2_edge_closure.gd -- --scene
 run "P10 R6a 材質亮度基準＋街區調色盤 Pilot plan gate＋反向 9（來源材質＝0.42 灰／校正只改 albedo（Kit atlas＝等價 shader：木 0.75／屋根灰 0.42 不變／漆喰 0.70）／色卡 luma 在目標帶／Pilot 24 棟兩區・≤ 25 %／調色盤飽和 ≤ 0.22・鄰棟不同組；反向：帶色・等幅提亮・區外・全村・改粗糙度・Hero・Kit 屋根提亮・過飽和・全同組）" ALB --headless --path . --script res://tools/verify_village_v2_albedo_pilot.gd
 run "P10 R6a 材質亮度基準 Pilot 場景級（root EdgeClosureP10 の次に AlbedoPilotP10・Pilot 建物の來源材質表面全覆寫・Pilot 外 0・enabled 開關還原・_matlib／kit 來源雜湊＝build 時；非 headless）" ALB --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --scene
+run "P10 R5a Ground Pilot plan gate＋反向 7（封存 ground.gdshader 雜湊＝matlib.json・補丁 6 段逐字・pilot shader 可重現・田格移除・discard 只在外緣侵蝕／參道挖洞・新參數預設＝舊行為・道路參數在核准範圍・外緣實測 sd 0.08–0.45 m）" GRD --headless --path . --script res://tools/verify_village_v2_ground_pilot.gd
+run "P10 R5a Ground Pilot 場景級（AlbedoPilotP10 の次に GroundPilotP10・地形 4＋道路 4 換 pilot shader・原參數逐一保留・非 Pilot 道路不變・enabled 開關・雜湊；非 headless）" GRD --path . --script res://tools/verify_village_v2_ground_pilot.gd -- --scene
 echo "回歸失敗項目：$fail"
 exit $fail

@@ -1,0 +1,92 @@
+{
+	"grd_cross_south_edge_8m_a.png": {
+		"frac_luma_lt_0.2": 0.004,
+		"mean_luma_srgb": 0.497,
+		"mean_sat": 0.259
+	},
+	"grd_cross_south_edge_8m_b.png": {
+		"frac_luma_lt_0.2": 0.006,
+		"mean_luma_srgb": 0.493,
+		"mean_sat": 0.245
+	},
+	"grd_farm_grid_high_a.png": {
+		"frac_luma_lt_0.2": 0.004,
+		"mean_luma_srgb": 0.375,
+		"mean_sat": 0.184
+	},
+	"grd_farm_grid_high_b.png": {
+		"frac_luma_lt_0.2": 0.004,
+		"mean_luma_srgb": 0.373,
+		"mean_sat": 0.178
+	},
+	"grd_farmpath4_6m_a.png": {
+		"frac_luma_lt_0.2": 0.009,
+		"mean_luma_srgb": 0.493,
+		"mean_sat": 0.262
+	},
+	"grd_farmpath4_6m_b.png": {
+		"frac_luma_lt_0.2": 0.01,
+		"mean_luma_srgb": 0.489,
+		"mean_sat": 0.239
+	},
+	"r5a_cross_mid_east_end_a.png": {
+		"frac_luma_lt_0.2": 0.012,
+		"mean_luma_srgb": 0.513,
+		"mean_sat": 0.244
+	},
+	"r5a_cross_mid_east_end_b.png": {
+		"frac_luma_lt_0.2": 0.013,
+		"mean_luma_srgb": 0.511,
+		"mean_sat": 0.234
+	},
+	"r5a_cross_south_to_farm_a.png": {
+		"frac_luma_lt_0.2": 0.004,
+		"mean_luma_srgb": 0.526,
+		"mean_sat": 0.236
+	},
+	"r5a_cross_south_to_farm_b.png": {
+		"frac_luma_lt_0.2": 0.004,
+		"mean_luma_srgb": 0.525,
+		"mean_sat": 0.228
+	},
+	"r5a_farm_road_high_a.png": {
+		"frac_luma_lt_0.2": 0.006,
+		"mean_luma_srgb": 0.356,
+		"mean_sat": 0.184
+	},
+	"r5a_farm_road_high_b.png": {
+		"frac_luma_lt_0.2": 0.007,
+		"mean_luma_srgb": 0.354,
+		"mean_sat": 0.179
+	},
+	"r5a_farmpath1_n_a.png": {
+		"frac_luma_lt_0.2": 0.009,
+		"mean_luma_srgb": 0.488,
+		"mean_sat": 0.268
+	},
+	"r5a_farmpath1_n_b.png": {
+		"frac_luma_lt_0.2": 0.009,
+		"mean_luma_srgb": 0.484,
+		"mean_sat": 0.255
+	},
+	"r5a_farmpath4_e_a.png": {
+		"frac_luma_lt_0.2": 0.019,
+		"mean_luma_srgb": 0.503,
+		"mean_sat": 0.247
+	},
+	"r5a_farmpath4_e_b.png": {
+		"frac_luma_lt_0.2": 0.02,
+		"mean_luma_srgb": 0.502,
+		"mean_sat": 0.231
+	},
+	"r5a_riverside_path_a.png": {
+		"frac_luma_lt_0.2": 0.04,
+		"mean_luma_srgb": 0.508,
+		"mean_sat": 0.219
+	},
+	"r5a_riverside_path_b.png": {
+		"frac_luma_lt_0.2": 0.039,
+		"mean_luma_srgb": 0.513,
+		"mean_sat": 0.218
+	}
+}
