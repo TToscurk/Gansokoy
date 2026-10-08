@@ -1,0 +1,30 @@
+[WALK] boot 7747 ms spawn [237.1, 0.47, 71.7] hour 10.0 npc 51 renderer forward_plus
+[WALK] seg seg0_to_start
+[WALK] seg seg1_gate_main
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[228.67,3.39,135.25],"floor":true,"fps":20.0,"look":[238.0,60.0],"name":"S01_south_gate","npc_nearest_m":100.9,"npc_within_25m":0,"pitch":-0.18,"player":[229.7,0.17,126.95],"seg":"seg1_gate_main"}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[236.55,3.75,69.09],"floor":true,"fps":27.0,"look":[262.0,-20.0],"name":"S02_main_street","npc_nearest_m":45.6,"npc_within_25m":0,"pitch":-0.18,"player":[238.85,0.53,61.05],"seg":"seg1_gate_main"}
+[WALK] seg seg2_main_market
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[257.84,4.24,-11.1],"floor":true,"fps":29.0,"look":[246.5,-40.0],"name":"S03_market_mouth","npc_nearest_m":4.0,"npc_within_25m":13,"pitch":-0.18,"player":[254.79,1.02,-18.88],"seg":"seg2_main_market"}
+[WALK] EVENT {"cam":[247.61,3.29,-32.97],"hit_length":2.66,"kind":"ARM_PULL","pos":[246.62,1.11,-35.58],"seg":"seg2_main_market","spring":8.5,"t":59.4}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[246.82,4.37,-32.71],"floor":true,"fps":28.0,"look":[238.5,-56.0],"name":"S04_market_plaza","npc_nearest_m":1.5,"npc_within_25m":28,"pitch":-0.18,"player":[244.01,1.14,-40.59],"seg":"seg2_main_market"}
+[WALK] seg seg3_market_west
+[WALK] EVENT {"cam":[234.01,3.17,-46.99],"hit_length":1.63,"kind":"ARM_PULL","pos":[232.48,1.18,-46.5],"seg":"seg3_market_west","spring":8.5,"t":67.1}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[233.41,4.39,-44.44],"floor":true,"fps":19.0,"look":[204.0,-44.5999984741211],"name":"S05_market_west","npc_nearest_m":4.3,"npc_within_25m":17,"pitch":-0.18,"player":[225.05,1.17,-44.48],"seg":"seg3_market_west"}
+[WALK] seg seg4_homes
+[WALK] EVENT {"cam":[203.36,3.66,-40.85],"hit_length":4.42,"kind":"ARM_PULL","pos":[200.84,1.17,-44.46],"seg":"seg4_homes","spring":8.5,"t":76.3}
+[WALK] EVENT {"cam":[246.8,3.77,-87.67],"hit_length":3.69,"kind":"ARM_PULL","pos":[248.94,1.41,-84.71],"seg":"seg4_homes","spring":8.5,"t":96.1}
+[WALK] STILL {"arm_hit":3.05,"arm_set":8.5,"cam":[247.48,3.66,-87.33],"floor":true,"fps":30.0,"look":[256.0,-72.0],"name":"S06_back_alley","npc_nearest_m":19.7,"npc_within_25m":2,"pitch":-0.18,"player":[248.94,1.41,-84.71],"seg":"seg4_homes"}
+[WALK] seg seg5_bridge_farm
+[WALK] EVENT {"cam":[278.46,3.93,-89.72],"hit_length":4.55,"kind":"ARM_PULL","pos":[280.91,1.41,-85.93],"seg":"seg5_bridge_farm","spring":8.5,"t":105.4}
+[WALK] EVENT {"cam":[259.96,3.43,-23.71],"hit_length":3.95,"kind":"ARM_PULL","pos":[263.83,1.02,-23.03],"seg":"seg5_bridge_farm","spring":8.5,"t":121.5}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[330.03,3.92,-38.77],"floor":true,"fps":40.0,"look":[372.0,-10.0],"name":"S07_bridge03_farm","npc_nearest_m":6.9,"npc_within_25m":4,"pitch":-0.18,"player":[336.93,0.7,-34.04],"seg":"seg5_bridge_farm"}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[378.82,3.72,-11.9],"floor":true,"fps":30.0,"look":[345.0,12.0],"name":"S08_farm_road","npc_nearest_m":48.1,"npc_within_25m":0,"pitch":-0.18,"player":[371.99,0.5,-7.07],"seg":"seg5_bridge_farm"}
+[WALK] seg seg6_waterwheel
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[356.41,3.37,-0.01],"floor":true,"fps":31.0,"look":[329.0,0.0],"name":"S09_waterwheel_farm","npc_nearest_m":36.1,"npc_within_25m":0,"pitch":-0.18,"player":[348.05,0.15,-0.01],"seg":"seg6_waterwheel"}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[322.91,4.18,-36.9],"floor":true,"fps":25.0,"look":[335.0,-52.0],"name":"S10_waterwheel_bank","npc_nearest_m":5.5,"npc_within_25m":4,"pitch":-0.18,"player":[328.13,0.96,-43.42],"seg":"seg6_waterwheel"}
+[WALK] seg seg7_shrine
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[298.92,4.97,-132.88],"floor":true,"fps":27.0,"look":[289.600006103516,-166.0],"name":"S11_shrine_approach","npc_nearest_m":12.0,"npc_within_25m":1,"pitch":-0.18,"player":[296.65,1.75,-140.93],"seg":"seg7_shrine"}
+[WALK] seg seg8_forest_edge
+[WALK] EVENT {"cam":[287.12,4.82,-171.86],"hit_length":4.48,"kind":"ARM_PULL","pos":[289.4,2.25,-167.94],"seg":"seg8_forest_edge","spring":8.5,"t":248.9}
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[195.38,5.21,-173.7],"floor":true,"fps":56.0,"look":[165.0,-228.0],"name":"S12_forest_edge","npc_nearest_m":104.8,"npc_within_25m":0,"pitch":-0.18,"player":[191.3,1.99,-181.0],"seg":"seg8_forest_edge"}
+[WALK] done events 7 stills 12

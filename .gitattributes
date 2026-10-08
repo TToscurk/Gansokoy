@@ -718,3 +718,4 @@ docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/scene_final.log -text
 docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/ab_final_vs_r3.json -text -eol
 docs/art_review/village_v2_p10_props/human_use_exp_b1/review/README.md -text -eol
 godot/data/village_v2_p10r4b_seal.json -text -eol
+docs/art_review/village_v2_p10_final/walk/*.mp4 filter=lfs diff=lfs merge=lfs -text

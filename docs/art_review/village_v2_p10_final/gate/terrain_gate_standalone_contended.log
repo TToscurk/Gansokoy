@@ -1,0 +1,76 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[TERRAIN] PASS 凍結：layout 有 approval.freeze
+[TERRAIN] PASS 凍結：Macro Layout 與核可值一致 
+[TERRAIN] INFO 場景載入：含 Vegetation overlay 的實際 load＋instantiate ≈ 4633 ms（base 4128 ＋ overlay load 229 ＋ instantiate 276；overlay 成本記 P12 technical debt）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[TERRAIN] PASS 場景有 Collision/TerrainCollision
+[TERRAIN]   北丘 主丘 (258, -226) 地面 34.166 m
+[TERRAIN] PASS 北丘 主丘 地面 34.17 m（凍結基準 34.17 ±0.05）
+[TERRAIN]   北丘 西肩 (213, -280) 地面 29.027 m
+[TERRAIN] PASS 北丘 西肩 地面 29.03 m（凍結基準 29.03 ±0.05）
+[TERRAIN]   北丘 東次峰 (307, -241) 地面 27.990 m
+[TERRAIN] PASS 北丘 東次峰 地面 27.99 m（凍結基準 27.99 ±0.05）
+[TERRAIN]   北丘 東長肩 (342, -256) 地面 9.184 m
+[TERRAIN] PASS 北丘 東長肩 地面 9.18 m（凍結基準 9.18 ±0.05）
+[TERRAIN] PASS 建成區平台：12133 點中 0 點偏離基準面 > 0.05 m（最大 0.00 m @ (193, -144)）
+[TERRAIN] PASS 平台外框往外 0–12 m：3601 段中最大坡度 44.7°（≤ 50° @ (210, -215)）
+[TERRAIN] PASS 道路 EntranceRoad     縱坡 10 m 視窗最大 13.8%（上限 15% @ (223, 207)）
+[TERRAIN] PASS 道路 MainStreet       縱坡 10 m 視窗最大 1.0%（上限 8% @ (297, -121)）
+[TERRAIN] PASS 道路 HillFootStreet   縱坡 10 m 視窗最大 5.5%（上限 12% @ (360, -128)）
+[TERRAIN] PASS 道路 RiverNorthPath   縱坡 10 m 視窗最大 5.7%（上限 15% @ (370, -174)）
+[TERRAIN] PASS 道路 DragonBridgeRoad 縱坡 10 m 視窗最大 7.9%（上限 15% @ (383, -205)）
+[TERRAIN] PASS 道路 CrossStreetMid   縱坡 10 m 視窗最大 8.5%（上限 15% @ (339, -34)）
+[TERRAIN] PASS 道路 CrossStreetSouth 縱坡 10 m 視窗最大 4.5%（上限 15% @ (328, 42)）
+[TERRAIN] PASS 道路 RiversidePath    縱坡 10 m 視窗最大 4.8%（上限 15% @ (505, -96)）
+[TERRAIN] PASS 道路 WestAlley        縱坡 10 m 視窗最大 0.7%（上限 12% @ (199, -27)）
+[TERRAIN] PASS 道路 WestLane         縱坡 10 m 視窗最大 3.6%（上限 12% @ (156, -9)）
+[TERRAIN] PASS 道路 FarmPath_1       縱坡 10 m 視窗最大 3.0%（上限 5% @ (372, -7)）
+[TERRAIN] PASS 道路 FarmPath_2       縱坡 10 m 視窗最大 1.0%（上限 5% @ (440, -5)）
+[TERRAIN] PASS 道路 FarmPath_3       縱坡 10 m 視窗最大 2.3%（上限 5% @ (500, -93)）
+[TERRAIN] PASS 道路 FarmPath_4       縱坡 10 m 視窗最大 4.3%（上限 5% @ (435, 0)）
+[TERRAIN] PASS 道路 FarmPath_5       縱坡 10 m 視窗最大 1.2%（上限 5% @ (371, 70)）
+[TERRAIN] PASS 參道 HillApproach 與山頂社殿 pad 都存在
+[TERRAIN] PASS 參道＋接坡到社殿 pad：2 m 視窗最大坡度 30.0°（≤ 35° @ (271, -202)）
+[TERRAIN] PASS 地形碰撞面 159506 面，最陡 64.9°、> 65° 的面 0（@ (288, -185)）
+[TERRAIN] PASS 場景有 Collision/Boundary
+[TERRAIN] PASS 邊界牆 北 緣：139 點中 0 點腰高擋不住（例 (0, 0)）
+[TERRAIN] PASS 邊界牆 南 緣：139 點中 0 點腰高擋不住（例 (0, 0)）
+[TERRAIN] PASS 邊界牆 西 緣：139 點中 0 點腰高擋不住（例 (0, 0)）
+[TERRAIN] PASS 邊界牆 東 緣：139 點中 0 點腰高擋不住（例 (0, 0)）
+[TERRAIN] PASS 可見三角面（P1 terrain-owned：Terrain 子樹）159506（≤ 6000000）
+[TERRAIN] INFO 可見三角面（不計入本項）：其他非植被 6048943、Vegetation overlay 33023944（P9／P12 自行驗證）
+[TERRAIN] FAIL village_v2.tscn load()+instantiate()（P1／base，不含 Vegetation overlay）4128 ms（≤ 3000 ms，headless 參考值）
+[TERRAIN] PASS 鋸齒：平台外框坡腳線擺動 p95 最差邊 0.16 m（≤ 0.25，該邊最大 0.48 m @ (119, 2)）
+[TERRAIN] PASS 鋸齒：主河左岸等高線（水位+0.6 m）擺動 p95 0.11 m（≤ 0.25，最大 1.05 m @ (399, -311)，345 站）
+[TERRAIN] PASS 鋸齒：龍神橋東岸段（左側）擺動 p95 0.20 m、最大 0.59 m（≤ 0.25，81 站）
+[TERRAIN] PASS 鋸齒：主河右岸等高線（水位+0.6 m）擺動 p95 0.19 m（≤ 0.25，最大 1.54 m @ (391, -285)，591 站）
+[TERRAIN] PASS 鋸齒：龍神橋東岸段（右側）擺動 p95 0.18 m、最大 0.64 m（≤ 0.25，172 站）
+[TERRAIN] PASS 平台邊分類檔 res://maps/village_v2/gen/terrain_edges.json 存在
+[TERRAIN] PASS Natural edge 1696 m／Retaining edge 60 m；Natural 站接坡帶：11079 段最大坡度 33.6°（≤ 40° @ (254, -175)）
+[TERRAIN] PASS layout 有 terrain.farm_terraces
+[TERRAIN] PASS 梯田田面：6433 點中 0 點偏離田面高 > 0.05 m（最大 0.00 m @ (332, 90)）；田面 9 階 [-0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3]
+[TERRAIN] PASS 灌溉：最高田面 0.30 − 水渠最低水位 -1.63 ＝ 揚程 1.93 m（≤ 2.0，水車）
+[TERRAIN] PASS 排水：最低田面 -0.50 − 主河水位 -0.80 ＝ 0.30 m（≥ 0.3）
+[TERRAIN] PASS 橋 5 座（P0 凍結 5 座）
+[TERRAIN] PASS Bridge_01_HillFootStreet_Canal 長 17.0 m（preferred 15.5，容許 14.0–17.1）
+[TERRAIN] PASS Bridge_02_DragonBridgeRoad_River 長 42.5 m（preferred 41.0，容許 36.9–45.1）
+[TERRAIN] PASS Bridge_03_CrossStreetMid_Canal 長 15.0 m（preferred 15.0，容許 13.5–16.5）
+[TERRAIN] PASS Bridge_04_CrossStreetSouth_Canal 長 14.0 m（preferred 14.0，容許 12.6–15.4）
+[TERRAIN] PASS Bridge_05_WestLane_WestStream 長 11.5 m（preferred 11.5，容許 10.4–12.7）
+[TERRAIN] PASS layout 有 terrain.river_bank_polish
+[TERRAIN] PASS 東岸坡頂線（岸頂 −0.25 m）離水邊距離扣線性趨勢後沿河擺動 5.8 m（≥ 3.0，審圖段 70 站）
+[TERRAIN] PASS 東岸坡面高（水邊外 5 m）扣線性趨勢後沿河起伏 0.38 m（≥ 0.30）
+[TERRAIN] PASS 東岸坡頂圓度：±3 m 內坡度變化 p95 0.147 /m（≤ 0.16）
+[TERRAIN] PASS 東岸水面帶外 1926 點中 0 點低於水位 -0.80 m（最深 0.00 m @ (0, 0)）
+[TERRAIN] PASS 東岸坡面 4123 點：局部尖峰／凹坑 0 個（> 0.05 m @ (0, 0)）
+[TERRAIN] PASS 東岸坡面最陡 28.2°（≤ 45° @ (430, -172)）
+[TERRAIN] PASS Bridge_01_HillFootStreet_Canal 橋端與地面高差最大 0.07 m（≤ 0.15）
+[TERRAIN] PASS Bridge_02_DragonBridgeRoad_River 橋端與地面高差最大 0.04 m（≤ 0.15）
+[TERRAIN] PASS Bridge_03_CrossStreetMid_Canal 橋端與地面高差最大 0.05 m（≤ 0.15）
+[TERRAIN] PASS Bridge_04_CrossStreetSouth_Canal 橋端與地面高差最大 0.05 m（≤ 0.15）
+[TERRAIN] PASS Bridge_05_WestLane_WestStream 橋端與地面高差最大 0.05 m（≤ 0.15）
+[TERRAIN] 結果：1 項失敗

@@ -1,0 +1,9 @@
+# P10 FINAL D4 載入時間の内訳（2026-10-08、headless、tools/probe_p10_final_load_breakdown.gd ／ verify_village_v2_terrain.gd）
+full regression 中の terrain gate：base 4270 ms（FAIL、≤ 3000）
+standalone（直前に診断 probe の CACHE_MODE_IGNORE_DEEP が 24 GB を使いページング → OS キャッシュ冷え）：base 22303 ms（無効な測定）
+village_v2.tscn load＋instantiate：冷 17294 ms／温 3932 ms
+terrain gate（温、2 回）：base 3560 ms／3526 ms（FAIL、≤ 3000）
+10-07（R3b 全回歸 PASS）以後に掛けた overlay だけを順に load＋instantiate（依存共有、2 回）：
+  population_core_p10.tscn 84／85 ms、entrance_cue_p10.tscn 12／12、population_outer_p10.tscn 66／66、human_use_p10.scn 50／51、human_use_exp_p10.scn 13／26
+  合計 226／241 ms
+参考：P9 R2 時点の base 2697 ms（docs/art_review/village_v2_p9_vegetation/evidence/p1_terrain_gate_after_r2.log）
