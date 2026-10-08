@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SAN] plan 中心線 102.1 m、石段 188（step 186／slab 2）、斜坡點 191
+[SAN] PASS 石段 186 段：蹴上 0.131–0.191 m（0.12–0.20）、踏面 0.25–0.45 m（0.25–0.45）、緩坡石疊超坡 0
+[SAN] PASS 踏面全在 P1 地形之上（被地形蓋住的段 0）
+[SAN] PASS 斜坡碰撞與踏面最大差 0.114 m（≤ 半蹴上 0.100 + 0.03）
+[SAN] PASS 斜坡碰撞：起點／終點與地形差 0.020／0.020 m、最大坡度 37.3°
+[SAN] PASS 石段＋袖石半寬 1.74 m（參道 2.5；二の鳥居柱內淨半寬 1.89，石段穿過鳥居）
+[SAN] PASS 一の鳥居（s 7.0 m）：柱台離丘腳街／主街 ≥ 半寬 + 0.66、不撞既有碰撞、離主街軸心延長線 4.19 m（≤ 6）
+[SAN] PASS 石燈籠 6 基（3 對）：坐在水平基壇（高 ≤ 1.0 m）、不撞、間隔 16–24 m（約 20 m 節奏，±1.5 m 找平地）
+[SAN] PASS NPC：初期位置不在石段、離鳥居柱 ≥ 1.2 m；巡回 6 條的路徑不貼鳥居柱、不橫切石段（NPC 不搬）
+[SAN] 永久反向（每案必須讓 gate 失敗）
+[SAN]   N1 蹴上 ×1.5（0.25 m 級，不是參道石段）：PASS（gate 正確失敗）
+[SAN]   N2 踏面壓低 0.12 m（被地形蓋住）：PASS（gate 正確失敗）
+[SAN]   N3 斜坡碰撞抬高 0.30 m（腳浮在踏面上）：PASS（gate 正確失敗）
+[SAN]   N4 一の鳥居立在路口（柱台壓丘腳街）：PASS（gate 正確失敗）
+[SAN]   N5 石段寬 4.6 m（超出參道、擠二の鳥居）：PASS（gate 正確失敗）
+[SAN]   N6 石燈籠浮空 0.4 m：PASS（gate 正確失敗）
+[SAN] PASS 反向 6/6
+[SAN] 結果：0 項失敗

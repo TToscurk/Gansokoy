@@ -1105,6 +1105,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/albedo_pilot_p10.scn" id="p10r6a_albedo_pilot"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/ground_pilot_p10.scn" id="p10r5a_ground_pilot"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/water_life_p10.scn" id="p10r5b_water_life"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/shrine_approach_p10.scn" id="p10r6b_shrine_approach"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -141182,6 +141183,8 @@ mesh = SubResource("CylinderMesh_shuvv")
 [node name="GroundPilotP10" parent="." instance=ExtResource("p10r5a_ground_pilot")]
 
 [node name="WaterLifeP10" parent="." instance=ExtResource("p10r5b_water_life")]
+
+[node name="ShrineApproachP10" parent="." instance=ExtResource("p10r6b_shrine_approach")]
 
 [node name="Collision" type="Node3D" parent="." unique_id=988851703]
 

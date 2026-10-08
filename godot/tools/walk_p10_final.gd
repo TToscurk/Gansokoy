@@ -3,6 +3,7 @@ extends SceneTree
 ## 既存の TPS 相機（Player/CameraAdapter）・10:00（review start の凍結）のまま、実際の入力で道を歩く。場景・封存には一切書き込まない。
 ##   godot --path godot --script res://tools/walk_p10_final.gd -- --review=kirisame --out=<dir/>           走訪（非 headless、録画・still・log）
 ##   godot --headless --path godot --script res://tools/walk_p10_final.gd -- --precheck                    ルートの事前点検（headless、village_v2 だけ）
+##   -- --route=res://tools/walk_p10_rehab_sando_route.json …   別ルート（P10 R6b 參道石段の上下通行テスト）
 ## 歩き方：毎 physics frame に Input.action_press("move_forward")（＝プレイヤーの W）、視線は CameraAdapter._target_yaw を進む方向へ
 ##   （＝マウスで向きを変える；相機の rotation_smoothing・SpringArm はそのまま）。向きの差 > 50° の間は前進を離して振り向く。
 ##   瞬間移動しない（開始は review spawn から歩く）。詰まったら左右へ 0.6 s 横歩き（moved < 0.4 m / 1.5 s）を最大 6 回、それでも駄目なら BLOCKED を記録して次へ。
@@ -92,7 +93,12 @@ func _go() -> void:
 		"npc_bodies": npcs.size(), "arm_length": arm.spring_length, "pitch": adapter.get("_target_pitch"), "window": [WIN.x, WIN.y],
 		"renderer": RenderingServer.get_current_rendering_method(), "scene": String(main.scene_file_path)}
 	print("[WALK] boot %d ms spawn %s hour %s npc %d renderer %s" % [log["boot"]["ms"], log["boot"]["spawn"], str(log["boot"]["hour"]), npcs.size(), log["boot"]["renderer"]])
-	var R: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ROUTE))
+	var route_path := ROUTE
+	for a2: String in args:
+		if a2.begins_with("--route="):
+			route_path = a2.trim_prefix("--route=")   # P10 R6b：參道石段通行測試等，用別的路線檔（預設＝P10 FINAL 路線）
+	var R: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(route_path))
+	log["route"] = route_path
 	last_pos = player.global_position
 	for step: Array in R["route"]:
 		match String(step[0]):

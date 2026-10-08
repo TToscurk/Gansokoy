@@ -1,0 +1,82 @@
+{
+	"r6b_main_bend_ne_a.png": {
+		"frac_luma_lt_0.2": 0.258,
+		"mean_luma_srgb": 0.4,
+		"mean_sat": 0.28
+	},
+	"r6b_main_bend_ne_b.png": {
+		"frac_luma_lt_0.2": 0.258,
+		"mean_luma_srgb": 0.4,
+		"mean_sat": 0.28
+	},
+	"r6b_main_north_end_a.png": {
+		"frac_luma_lt_0.2": 0.534,
+		"mean_luma_srgb": 0.286,
+		"mean_sat": 0.331
+	},
+	"r6b_main_north_end_b.png": {
+		"frac_luma_lt_0.2": 0.534,
+		"mean_luma_srgb": 0.287,
+		"mean_sat": 0.33
+	},
+	"r6b_sando_foot_a.png": {
+		"frac_luma_lt_0.2": 0.188,
+		"mean_luma_srgb": 0.406,
+		"mean_sat": 0.285
+	},
+	"r6b_sando_foot_b.png": {
+		"frac_luma_lt_0.2": 0.164,
+		"mean_luma_srgb": 0.433,
+		"mean_sat": 0.266
+	},
+	"r6b_sando_mid_a.png": {
+		"frac_luma_lt_0.2": 0.516,
+		"mean_luma_srgb": 0.225,
+		"mean_sat": 0.43
+	},
+	"r6b_sando_mid_b.png": {
+		"frac_luma_lt_0.2": 0.352,
+		"mean_luma_srgb": 0.296,
+		"mean_sat": 0.378
+	},
+	"r6b_sando_side_high_a.png": {
+		"frac_luma_lt_0.2": 0.472,
+		"mean_luma_srgb": 0.245,
+		"mean_sat": 0.293
+	},
+	"r6b_sando_side_high_b.png": {
+		"frac_luma_lt_0.2": 0.472,
+		"mean_luma_srgb": 0.245,
+		"mean_sat": 0.294
+	},
+	"san_steps_5m_a.png": {
+		"frac_luma_lt_0.2": 0.563,
+		"mean_luma_srgb": 0.222,
+		"mean_sat": 0.439
+	},
+	"san_steps_5m_b.png": {
+		"frac_luma_lt_0.2": 0.358,
+		"mean_luma_srgb": 0.303,
+		"mean_sat": 0.38
+	},
+	"san_steps_down_a.png": {
+		"frac_luma_lt_0.2": 0.568,
+		"mean_luma_srgb": 0.296,
+		"mean_sat": 0.506
+	},
+	"san_steps_down_b.png": {
+		"frac_luma_lt_0.2": 0.319,
+		"mean_luma_srgb": 0.38,
+		"mean_sat": 0.339
+	},
+	"san_torii1_10m_a.png": {
+		"frac_luma_lt_0.2": 0.555,
+		"mean_luma_srgb": 0.291,
+		"mean_sat": 0.295
+	},
+	"san_torii1_10m_b.png": {
+		"frac_luma_lt_0.2": 0.552,
+		"mean_luma_srgb": 0.294,
+		"mean_sat": 0.294
+	}
+}
