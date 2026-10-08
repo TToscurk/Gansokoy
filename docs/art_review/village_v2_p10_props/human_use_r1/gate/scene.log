@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[HUSE] PASS 場景已掛 root/HumanUseP10（1 個、root の子で Props の次＝Vegetation → Props → HumanUseP10 → Collision）、Props の子は封存どおり（MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9；R3b scene gate の完全一致を崩さない）
+[HUSE] PASS art_revision＝P10 R4 Human-Use Pilot r4（ART_REVIEW）、visible、scene_file_path＝res://maps/village_v2/gen/human_use_p10.scn
+[HUSE] PASS 個別ノード（選べる）：MeshInstance 100（＝2×50 件）・MultiMesh 0・NPC anchors（Marker3D）0、mesh は全部 kit の .res
+[HUSE] PASS Pilot→cluster→件の木構造：PilotA 3 cluster、PilotB 4 cluster、PilotC 3 cluster
+[HUSE] PASS Population 不変：子 PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10 → OuterP10 → ActivityOuterP10（R3b／R3d／R3e 封存の順）
+[HUSE] PASS 並行の封存 overlay 仍掛載・visible：GroundcoverP9・MeadowP9・EnvironmentP9・MarketP10・StreetP10・MarketWestP10
+[HUSE] PASS 碰撞：腰より高い件だけ箱 39（＝meta 39）
+[HUSE] PASS 擺放（接地）：50 件 × 3×3 ray（450 本）——FLOATING 0 []、最大の埋まり 0.118 m（起伏ぶん・意図的、≤ 0.15）；腰より低い 11 件は visual_only（碰撞なし・接地だけ測る）
+[HUSE] PASS 擺放（貫通）：碰撞箱 39 を collide_shape（自分・地形を除く）——OBJECT_PENETRATION 0 []（建物・P10・P8・河岸・NPC 席などに > 0.05 m 入らない）
+[HUSE] PASS 擺放 反向 float：000_st_hasa を 0.3 m 持ち上げる → FLOATING を検出（["000_st_hasa 9/9"]）
+[HUSE] PASS 擺放 反向 clash：碰撞箱 000_st_hasa_c を最寄りの建物 B_P_MKT_043 の中へ押し込む → OBJECT_PENETRATION を検出（1）
+[HUSE] 結果：0 項失敗（scene）

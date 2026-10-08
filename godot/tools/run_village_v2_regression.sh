@@ -140,5 +140,7 @@ run "P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）" OUTER --headl
 run "P10 R3e 外圍人口 scene（掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
 run "P10 R3c Activity plan（16 人・8 指派・5 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
 run "P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --negatives
+run "P10 R4 Human-Use Pilot plan gate（3 Pilot・既存資產優先＋缺件 6・中型の輪郭・who/why/anchor・依附・禁區〔P8・水・NPC・Env +1.6・MeadowP9 株 0〕・接地・成組・非均一）＋反向 16" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --negatives
+run "P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --scene
 echo "回歸失敗項目：$fail"
 exit $fail

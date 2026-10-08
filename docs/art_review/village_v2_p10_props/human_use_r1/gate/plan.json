@@ -1,0 +1,872 @@
+{
+	"art_revision": "P10 R4 Human-Use Pilot r4（ART_REVIEW）",
+	"clusters": [
+		{
+			"anchor": "field",
+			"anchor_desc": "Bridge_03 田側の畑（P8 block 4）の西の縁：刈り稲を掛ける稲架の列",
+			"center": [
+				345.5,
+				-23.6
+			],
+			"id": "A1_hasa",
+			"n": 3,
+			"n_design": 3,
+			"pilot": "A",
+			"ref": [
+				350.5,
+				-21.0
+			]
+		},
+		{
+			"anchor": "route",
+			"anchor_desc": "FarmPath_4（田の東西の農道）の北の平地：筵を囲んで扱き・選り・干し、俵に詰めて荷車へ（作業の流れ：稲束→千歯→筵→唐箕→俵→車）",
+			"center": [
+				352.0,
+				-4.6
+			],
+			"id": "A2_dakkoku",
+			"n": 8,
+			"n_design": 8,
+			"pilot": "A",
+			"ref": [
+				352.0,
+				0.0
+			]
+		},
+		{
+			"anchor": "field",
+			"anchor_desc": "FarmPath_1×FarmPath_4 の辻の南東＝P8 の田の北西の口：田に入る前に道具を取り、刈った物を車に積んで一服する所",
+			"center": [
+				378.6,
+				3.1
+			],
+			"id": "A3_taguchi",
+			"n": 5,
+			"n_design": 5,
+			"pilot": "A",
+			"ref": [
+				380.0,
+				7.5
+			]
+		},
+		{
+			"anchor": "building",
+			"anchor_desc": "B_P_MKT_030（厨子二階の店）の裏：薪をたくさん積む家（堆柴戶）——裏の角の薪棚 2 と、その前の薪割り場",
+			"center": [
+				263.76,
+				-78.15
+			],
+			"id": "B1_maki",
+			"n": 4,
+			"n_design": 4,
+			"pilot": "B",
+			"ref": [
+				263.76,
+				-78.15
+			]
+		},
+		{
+			"anchor": "building",
+			"anchor_desc": "B_P_MKT_029（二階の店）の裏：内職をする家（做工戶）——背戸の脇で藁細工、腰掛け・材料の藁塚・品物の箱",
+			"center": [
+				261.87,
+				-71.83
+			],
+			"id": "B2_shigoto",
+			"n": 4,
+			"n_design": 4,
+			"pilot": "B",
+			"ref": [
+				261.87,
+				-71.83
+			]
+		},
+		{
+			"anchor": "building",
+			"anchor_desc": "B_P_MKT_028（平屋の住まい）の裏：子供のいる家——背戸の前で洗濯（盥・天水桶・腰掛け）と干し竿、壁際に子供の遊び道具",
+			"center": [
+				259.92,
+				-65.35
+			],
+			"id": "B3_kodomo",
+			"n": 7,
+			"n_design": 7,
+			"pilot": "B",
+			"ref": [
+				259.92,
+				-65.35
+			]
+		},
+		{
+			"anchor": "building",
+			"anchor_desc": "B_P_RSW_072（MidLane の平屋）の裏：きれい好きの隠居の家（乾淨戶）——掃いた庭に箒、水甕、縁台と鉢植え",
+			"center": [
+				240.35,
+				-72.41
+			],
+			"id": "B4_kirei",
+			"n": 6,
+			"n_design": 6,
+			"pilot": "B",
+			"ref": [
+				240.35,
+				-72.41
+			]
+		},
+		{
+			"anchor": "work_surface",
+			"anchor_desc": "北の水車（村側の軸受け）の上手の岸：羽根板の修理と注油——作業台を囲んで替え板・道具箱・縄、岸に梯子",
+			"center": [
+				327.0,
+				-55.4
+			],
+			"id": "C1_shuri",
+			"n": 5,
+			"n_design": 5,
+			"pilot": "C",
+			"ref": [
+				332.6,
+				-52.0
+			]
+		},
+		{
+			"anchor": "work_surface",
+			"anchor_desc": "水車の臼（R4-4 の石臼・俵）の西：米を搗きに来た荷の一時置き（車・俵・菰包み・桶が臼の俵に寄り添う）",
+			"center": [
+				322.0,
+				-48.4
+			],
+			"id": "C2_nioki",
+			"n": 4,
+			"n_design": 4,
+			"pilot": "C",
+			"ref": [
+				326.0,
+				-46.3
+			]
+		},
+		{
+			"anchor": "water",
+			"anchor_desc": "Bridge_03 の北詰め・水渠の岸：洗い物をして干す所（水車番の家の裏）——竿・盥・腰掛け・手桶を岸の上に詰める",
+			"center": [
+				326.0,
+				-42.2
+			],
+			"id": "C3_araiba",
+			"n": 4,
+			"n_design": 4,
+			"pilot": "C",
+			"ref": [
+				334.0,
+				-42.0
+			]
+		}
+	],
+	"items": [
+		{
+			"anchor": "field",
+			"cluster": "A1_hasa",
+			"id": "st_hasa",
+			"p": [
+				345.5,
+				0.08,
+				-21.6
+			],
+			"pilot": "A",
+			"who": "O1 の家（田を持つ農家）",
+			"why": "刈った稲を田の脇の稲架に掛けて干す（列の北半分）",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A1_hasa",
+			"id": "st_hasa",
+			"p": [
+				345.5,
+				0.01,
+				-25.55
+			],
+			"pilot": "A",
+			"who": "O1 の家",
+			"why": "同じ稲架の列の南半分：一枚の田の刈り稲で 2 架が埋まる",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A1_hasa",
+			"id": "hu_seoikago",
+			"p": [
+				346.45,
+				0.09,
+				-23.45
+			],
+			"pilot": "A",
+			"who": "O1 の家の嫁",
+			"why": "田から背負ってきた稲束：これから稲架へ掛ける分を下ろした",
+			"yaw_deg": 78.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "hu_momiboshi",
+			"p": [
+				350.0,
+				0.11,
+				-4.65
+			],
+			"pilot": "A",
+			"who": "O1 の家の婆",
+			"why": "扱いた籾を筵に広げ、えぶりで返して干す（筵を 2 組並べた作業の床の西半分）",
+			"yaw_deg": -2.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "hu_momiboshi",
+			"p": [
+				352.0,
+				0.11,
+				-4.55
+			],
+			"pilot": "A",
+			"who": "O1 の家の婆",
+			"why": "筵の床の東半分：唐箕にかける前の籾を干す",
+			"yaw_deg": 3.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "hu_senba",
+			"p": [
+				348.25,
+				0.12,
+				-4.6
+			],
+			"pilot": "A",
+			"who": "O1 の家の主",
+			"why": "筵の床の西の縁で千歯扱き：扱いた籾は筵へ落ちる",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "hu_seoikago",
+			"p": [
+				347.65,
+				0.15,
+				-3.3
+			],
+			"pilot": "A",
+			"who": "O1 の家の嫁",
+			"why": "稲架から外して運んできた、これから扱く稲束",
+			"yaw_deg": 20.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "st_warazuka",
+			"p": [
+				346.9,
+				0.1,
+				-5.72
+			],
+			"pilot": "A",
+			"who": "O1 の家",
+			"why": "扱いた後の藁を千歯の後ろに積んだ藁塚",
+			"yaw_deg": 0.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "hu_tomi",
+			"p": [
+				353.95,
+				0.1,
+				-5.35
+			],
+			"pilot": "A",
+			"who": "O1 の家の主",
+			"why": "筵の床の東の縁で唐箕：干した籾の殻と塵を飛ばし、口を筵へ向ける",
+			"yaw_deg": -73.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "wk_tawara3",
+			"p": [
+				354.35,
+				0.14,
+				-3.55
+			],
+			"pilot": "A",
+			"who": "O1 の家",
+			"why": "選った籾を詰めた俵：唐箕の口の脇に積む",
+			"yaw_deg": -15.0
+		},
+		{
+			"anchor": "route",
+			"cluster": "A2_dakkoku",
+			"id": "kr_kuruma",
+			"p": [
+				355.55,
+				0.11,
+				-4.65
+			],
+			"pilot": "A",
+			"who": "O1 の家（大八車）",
+			"why": "俵を村の蔵へ運ぶ大八車：俵の隣に梶棒を農道へ向けて停め、積み込みを待つ",
+			"yaw_deg": 0.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A3_taguchi",
+			"id": "st_kuwa",
+			"p": [
+				378.6,
+				0.39,
+				3.1
+			],
+			"pilot": "A",
+			"who": "この田の組（数軒の共同）",
+			"why": "鍬・鋤・熊手を掛け、蓑を吊るす農具掛け：田の口に置いて毎朝取る",
+			"yaw_deg": 180.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A3_taguchi",
+			"id": "sk_teoke",
+			"p": [
+				377.35,
+				0.39,
+				2.75
+			],
+			"pilot": "A",
+			"who": "田で働く人",
+			"why": "水を汲んできた手桶と柄杓：一服の水",
+			"yaw_deg": 180.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A3_taguchi",
+			"id": "wk_tawara",
+			"p": [
+				376.4,
+				0.36,
+				3.35
+			],
+			"pilot": "A",
+			"who": "田で働く人",
+			"why": "腰を下ろす空き俵（休み場）",
+			"yaw_deg": 155.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A3_taguchi",
+			"id": "kr_nawa",
+			"p": [
+				377.6,
+				0.35,
+				3.9
+			],
+			"pilot": "A",
+			"who": "この田の組",
+			"why": "稲束を縛る藁縄の束",
+			"yaw_deg": 180.0
+		},
+		{
+			"anchor": "field",
+			"cluster": "A3_taguchi",
+			"id": "mk_kuruma_ni",
+			"p": [
+				381.55,
+				0.44,
+				3.0
+			],
+			"pilot": "A",
+			"who": "O3 の家",
+			"why": "田から上げた俵と南瓜・籠を積んだ大八車：辻から村へ出す前",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "building",
+			"cluster": "B1_maki",
+			"id": "sk_woodpile",
+			"p": [
+				263.63,
+				1.42,
+				-79.86
+			],
+			"pilot": "B",
+			"who": "MKT_030 の主（冬の煮炊き・湯）",
+			"why": "割った薪を裏の壁に沿って積む薪棚",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B1_maki",
+			"id": "sk_woodpile",
+			"p": [
+				262.74,
+				1.39,
+				-81.54
+			],
+			"pilot": "B",
+			"who": "MKT_030 の主",
+			"why": "二つ目の薪棚を直角に：裏の角が薪置き場",
+			"yaw_deg": 163.3
+		},
+		{
+			"anchor": "building",
+			"cluster": "B1_maki",
+			"id": "hu_makiwari",
+			"p": [
+				261.74,
+				1.43,
+				-80.27
+			],
+			"pilot": "B",
+			"who": "MKT_030 の息子",
+			"why": "薪棚の前で玉切りを割る薪割り台（割った薪は棚へ）",
+			"yaw_deg": -86.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B1_maki",
+			"id": "kr_nawa",
+			"p": [
+				261.15,
+				1.39,
+				-81.8
+			],
+			"pilot": "B",
+			"who": "MKT_030 の主",
+			"why": "割った薪を束ねる縄",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B2_shigoto",
+			"id": "st_wara",
+			"p": [
+				259.97,
+				1.37,
+				-70.57
+			],
+			"pilot": "B",
+			"who": "MKT_029 の女房（内職）",
+			"why": "店で売る草鞋を裏庭で編む藁細工の場（草鞋掛けは壁側）",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B2_shigoto",
+			"id": "sz_stool",
+			"p": [
+				259.06,
+				1.37,
+				-70.84
+			],
+			"pilot": "B",
+			"who": "MKT_029 の女房",
+			"why": "編む人が腰掛ける低い腰掛け（筵を向く）",
+			"yaw_deg": 73.3
+		},
+		{
+			"anchor": "building",
+			"cluster": "B2_shigoto",
+			"id": "st_warazuka",
+			"p": [
+				259.26,
+				1.36,
+				-69.06
+			],
+			"pilot": "B",
+			"who": "MKT_029 の女房",
+			"why": "農家から買って積んだ藁（草鞋の材料）：作業場の隣の藁塚",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B2_shigoto",
+			"id": "kr_hakozumi",
+			"p": [
+				260.42,
+				1.36,
+				-69.02
+			],
+			"pilot": "B",
+			"who": "MKT_029 の主",
+			"why": "出来た草鞋と仕入れの品を詰めた箱を裏の壁に積む",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "mk_hoshimono",
+			"p": [
+				256.66,
+				1.27,
+				-64.04
+			],
+			"pilot": "B",
+			"who": "MKT_028 の母",
+			"why": "洗った着物・手拭いと干し大根を盥の後ろの竿に干す（背戸の前は通り道に空ける）",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "hu_tarai",
+			"p": [
+				258.22,
+				1.33,
+				-64.2
+			],
+			"pilot": "B",
+			"who": "MKT_028 の母",
+			"why": "背戸の脇で洗濯の途中の盥（水と洗い物が入ったまま）",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "sz_stool",
+			"p": [
+				258.24,
+				1.34,
+				-64.97
+			],
+			"pilot": "B",
+			"who": "MKT_028 の母",
+			"why": "盥の前で洗う人の腰掛け",
+			"yaw_deg": -46.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "sk_tensui",
+			"p": [
+				258.48,
+				1.27,
+				-62.69
+			],
+			"pilot": "B",
+			"who": "MKT_028",
+			"why": "雨水を溜める天水桶：洗濯の水",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "sk_hoop",
+			"p": [
+				257.49,
+				1.27,
+				-62.27
+			],
+			"pilot": "B",
+			"who": "MKT_028 の子",
+			"why": "母の洗濯の脇に置きっぱなしの竹の輪回し",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "sk_temari",
+			"p": [
+				257.51,
+				1.34,
+				-65.3
+			],
+			"pilot": "B",
+			"who": "MKT_028 の子",
+			"why": "庭に転がっている手毬",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B3_kodomo",
+			"id": "sk_zori",
+			"p": [
+				259.79,
+				1.35,
+				-66.28
+			],
+			"pilot": "B",
+			"who": "MKT_028 の子",
+			"why": "背戸の踏み石の脇に脱いだ子供の草履",
+			"yaw_deg": -106.7
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "kr_houki",
+			"p": [
+				241.18,
+				1.38,
+				-71.54
+			],
+			"pilot": "B",
+			"who": "RSW_072 の隠居",
+			"why": "毎朝裏庭を掃く箒を背戸の脇に立て掛ける",
+			"yaw_deg": -14.1
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "mk_kame",
+			"p": [
+				242.51,
+				1.37,
+				-70.94
+			],
+			"pilot": "B",
+			"who": "RSW_072",
+			"why": "水甕（大は蓋と柄杓）：井戸から汲んだ水を溜める",
+			"yaw_deg": -14.1
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "sk_teoke",
+			"p": [
+				241.52,
+				1.37,
+				-70.88
+			],
+			"pilot": "B",
+			"who": "RSW_072",
+			"why": "水甕に水を運ぶ手桶",
+			"yaw_deg": -14.1
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "sk_bench",
+			"p": [
+				238.57,
+				1.38,
+				-72.3
+			],
+			"pilot": "B",
+			"who": "RSW_072 の隠居",
+			"why": "夕方に腰掛ける縁台",
+			"yaw_deg": -14.1
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "sz_hachi",
+			"p": [
+				237.21,
+				1.38,
+				-72.13
+			],
+			"pilot": "B",
+			"who": "RSW_072 の隠居",
+			"why": "縁台の脇に並べた鉢植え（隠居の楽しみ）",
+			"yaw_deg": -14.1
+		},
+		{
+			"anchor": "building",
+			"cluster": "B4_kirei",
+			"id": "sz_hachi",
+			"p": [
+				238.91,
+				1.38,
+				-71.54
+			],
+			"pilot": "B",
+			"who": "RSW_072 の隠居",
+			"why": "縁台の反対の端にも鉢植え：揃えて並べる",
+			"yaw_deg": -44.1
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C1_shuri",
+			"id": "st_daiku",
+			"p": [
+				326.7,
+				1.1,
+				-55.4
+			],
+			"pilot": "C",
+			"who": "水車番（村の大工を兼ねる）",
+			"why": "馬に板を渡して欠けた羽根板を削る作業台",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C1_shuri",
+			"id": "tk_ladder",
+			"p": [
+				329.6,
+				0.88,
+				-54.8
+			],
+			"pilot": "C",
+			"who": "水車番",
+			"why": "軸受けに油をさし、水輪の上の羽根に届く梯子（岸に寝かせる）",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C1_shuri",
+			"id": "kr_zaimoku",
+			"p": [
+				325.15,
+				1.2,
+				-55.5
+			],
+			"pilot": "C",
+			"who": "水車番",
+			"why": "替えの羽根板（板材）を作業台の後ろに積む",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C1_shuri",
+			"id": "sk_box",
+			"p": [
+				326.1,
+				1.18,
+				-57.15
+			],
+			"pilot": "C",
+			"who": "水車番",
+			"why": "鑿・鉋・油壺を入れた道具箱",
+			"yaw_deg": 70.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C1_shuri",
+			"id": "tk_rope",
+			"p": [
+				326.1,
+				1.15,
+				-53.57
+			],
+			"pilot": "C",
+			"who": "水車番",
+			"why": "水輪を止める・板を吊る縄の束",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C2_nioki",
+			"id": "kr_kuruma",
+			"p": [
+				321.0,
+				1.19,
+				-48.6
+			],
+			"pilot": "C",
+			"who": "米を搗きに来た農家（O5 の連れ）",
+			"why": "俵を運んできた大八車（梶棒を臼の方へ下ろして停める）",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C2_nioki",
+			"id": "wk_tawara3",
+			"p": [
+				323.6,
+				1.2,
+				-50.4
+			],
+			"pilot": "C",
+			"who": "米を搗きに来た農家",
+			"why": "臼の脇の俵（R4-4）に足して積んだ、搗く順番を待つ俵",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C2_nioki",
+			"id": "kr_ni",
+			"p": [
+				323.3,
+				1.18,
+				-47.5
+			],
+			"pilot": "C",
+			"who": "米を搗きに来た農家",
+			"why": "糠と籾殻を入れて持ち帰る菰包み",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "work_surface",
+			"cluster": "C2_nioki",
+			"id": "kr_okeyama",
+			"p": [
+				321.8,
+				1.18,
+				-46.8
+			],
+			"pilot": "C",
+			"who": "水車番",
+			"why": "搗いた米を受け・水を運ぶ桶と盥（車の脇に置く）",
+			"yaw_deg": 90.0
+		},
+		{
+			"anchor": "water",
+			"cluster": "C3_araiba",
+			"id": "mk_hoshimono",
+			"p": [
+				325.08,
+				1.03,
+				-41.52
+			],
+			"pilot": "C",
+			"who": "水車番の家",
+			"why": "水渠で洗った布と手拭いを岸の竿に干す",
+			"yaw_deg": 0.0
+		},
+		{
+			"anchor": "water",
+			"cluster": "C3_araiba",
+			"id": "hu_tarai",
+			"p": [
+				328.6,
+				0.86,
+				-42.5
+			],
+			"pilot": "C",
+			"who": "水車番の家の娘",
+			"why": "水渠から汲んだ水で洗い物をしている盥",
+			"yaw_deg": 0.0
+		},
+		{
+			"anchor": "water",
+			"cluster": "C3_araiba",
+			"id": "sz_stool",
+			"p": [
+				328.4,
+				0.88,
+				-41.55
+			],
+			"pilot": "C",
+			"who": "水車番の家の娘",
+			"why": "盥の前で洗う人の腰掛け",
+			"yaw_deg": 180.0
+		},
+		{
+			"anchor": "water",
+			"cluster": "C3_araiba",
+			"id": "sk_teoke",
+			"p": [
+				329.6,
+				0.74,
+				-41.8
+			],
+			"pilot": "C",
+			"who": "水車番の家の娘",
+			"why": "水渠から水を汲む手桶",
+			"yaw_deg": 0.0
+		}
+	],
+	"pilots": {
+		"A": "Farmland Human-Use（Bridge_03 田側：稲干し場・脱穀・田の入口）",
+		"B": "Residential Back Alley Life（MidLane 南：町家 4 戸の後院）",
+		"C": "Waterside / Working Edge（北の水車：維持・修理・米搗き）"
+	}
+}

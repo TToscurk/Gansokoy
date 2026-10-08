@@ -1,0 +1,53 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[HUSE] INFO MeadowP9 規劃株を同 seed で再計算 113230 ms：114105 株
+[HUSE] INFO 文脈 2415 ms・計画 50 件／10 cluster、落とした 0
+[HUSE] PASS 資產：35 種 50 件のうち既存 Kit の重用 41 件（82 %）、新規 humanuse_kit は缺件 6 種だけ（hu_senba 450△、hu_tomi 390△、hu_momiboshi 322△、hu_seoikago 398△、hu_tarai 440△、hu_makiwari 278△；LOD0 ≤ 600△・材質 V2_Wood／ST_Street のみ）；Hero 固有の中身・kit 外・mesh 欠け 0 []
+[HUSE] PASS 設計どおり：10 cluster（A 3・B 4・C 3）、設計 50 件すべて合法な位置に置けた（落とし 0・欠け cluster []）
+[HUSE] PASS Pilot 構成：A 農田 2–4 cluster（3）・B 住宅の裏 ≥ 3 戸（4）・C 水の縁 ≥ 2 cluster（3）、各 cluster ≥ 3 件（最小 3）
+[HUSE] PASS 範圍：全 50 件が 3 Pilot の矩形内（外 0）、上限 60 件（全村 batch しない）
+[HUSE] PASS 中型の輪郭：全 cluster に高さ ≥ 0.9 m か長辺 ≥ 1.6 m の核（無い []）、微小物（< 0.35 m）は cluster ごと ≤ 34 %（超過 []）・全體 2/50（≤ 15 %）
+[HUSE] PASS 「誰が使う？なぜここ？」：全 50 件に who・why・anchor 型（building／work_surface／water／field／route／storage）——欠け 0
+[HUSE] PASS 依附：各 cluster の依附先の点が宣言どおりの型（田＝P8・農道＝路面・建物＝その建物の裏の壁・水＝水面・作業面＝水車／既存の作業物）で、最寄りの件の足元まで型ごとの上限内——A1_hasa field 4.4 m、A2_dakkoku route 3.7 m、A3_taguchi field 4.0 m、B1_maki building 0.8 m、B2_shigoto building 1.4 m、B3_kodomo building 0.8 m、B4_kirei building 0.9 m、C1_shuri work_surface 2.8 m、C2_nioki work_surface 2.7 m、C3_araiba water 4.0 m；違反 []
+[HUSE] PASS 禁區：路面・店先帯・建物 +0.25・戸口・背戸の通り道・水 +0.8・P7 構件・橋・Hero／Landmark +0.4・P8 の田／畦／水路 +0.4・封存 overlay 構件・樹幹・EnvironmentP9 +1.6（錨 +3.2）・他の P10・NPC（+0.9／往復路 +0.7）・MeadowP9 株（AABB +0.4）・互いの重なり → 違反 0 []
+[HUSE] PASS 接地：足元の起伏 最大 0.118 m（≤ 0.12）、高さ＝足元の見えている最上面の最低点（地形・路面・P4 院子・P8 の地面）
+[HUSE] PASS MeadowP9 不重烘：規劃株 114105（同 seed 再計算）のうち HU の AABB +0.4 m 内 0 株（= 0 → meadow の文脈に HU が入っても再計算が封存と一致）
+[HUSE] PASS EnvironmentP9 不改：HU の足元は Env の構件から ≥ 1.6 m（R5-4 の P10 +1.5 m 規則が掛載後も成り立つ）・Env の錨 74 点から ≥ 3.2 m（最近 33.0 m）
+[HUSE] PASS NPC：snapshot の 51 人（R3b 16＋R3d 23＋R3e 12）を変えない、HU の足元の角から立ち位置まで最近 2.29 m（≥ 0.9）・往復路 6 本 +0.7、NPC anchors（Marker3D）を足さない
+[HUSE] PASS 成組：各件は同じ cluster の別の件から足元の縁で ≤ 2.5 m（孤立 []）、cluster の広がり ≤ 20 m（超過 []）——空地の真ん中に一つだけ、をしない
+[HUSE] PASS 非均一：B の 4 戸の組成の類似度（Jaccard）最大 0.10（≤ 0.34：同じ桶を各戸に配らない）・一つの Pilot で同じ物が 3 cluster 以上に出ない（[]）
+[HUSE] INFO A1_hasa（field、Bridge_03 田側の畑（P8 block 4）の西の縁：刈り稲を掛ける稲架の列）：st_hasa・st_hasa・hu_seoikago
+[HUSE] INFO A2_dakkoku（route、FarmPath_4（田の東西の農道）の北の平地：筵を囲んで扱き・選り・干し、俵に詰めて荷車へ（作業の流れ：稲束→千歯→筵→唐箕→俵→車））：hu_momiboshi・hu_momiboshi・hu_senba・hu_seoikago・st_warazuka・hu_tomi・wk_tawara3・kr_kuruma
+[HUSE] INFO A3_taguchi（field、FarmPath_1×FarmPath_4 の辻の南東＝P8 の田の北西の口：田に入る前に道具を取り、刈った物を車に積んで一服する所）：st_kuwa・sk_teoke・wk_tawara・kr_nawa・mk_kuruma_ni
+[HUSE] INFO B1_maki（building、B_P_MKT_030（厨子二階の店）の裏：薪をたくさん積む家（堆柴戶）——裏の角の薪棚 2 と、その前の薪割り場）：sk_woodpile・sk_woodpile・hu_makiwari・kr_nawa
+[HUSE] INFO B2_shigoto（building、B_P_MKT_029（二階の店）の裏：内職をする家（做工戶）——背戸の脇で藁細工、腰掛け・材料の藁塚・品物の箱）：st_wara・sz_stool・st_warazuka・kr_hakozumi
+[HUSE] INFO B3_kodomo（building、B_P_MKT_028（平屋の住まい）の裏：子供のいる家——背戸の前で洗濯（盥・天水桶・腰掛け）と干し竿、壁際に子供の遊び道具）：mk_hoshimono・hu_tarai・sz_stool・sk_tensui・sk_hoop・sk_temari・sk_zori
+[HUSE] INFO B4_kirei（building、B_P_RSW_072（MidLane の平屋）の裏：きれい好きの隠居の家（乾淨戶）——掃いた庭に箒、水甕、縁台と鉢植え）：kr_houki・mk_kame・sk_teoke・sk_bench・sz_hachi・sz_hachi
+[HUSE] INFO C1_shuri（work_surface、北の水車（村側の軸受け）の上手の岸：羽根板の修理と注油——作業台を囲んで替え板・道具箱・縄、岸に梯子）：st_daiku・tk_ladder・kr_zaimoku・sk_box・tk_rope
+[HUSE] INFO C2_nioki（work_surface、水車の臼（R4-4 の石臼・俵）の西：米を搗きに来た荷の一時置き（車・俵・菰包み・桶が臼の俵に寄り添う））：kr_kuruma・wk_tawara3・kr_ni・kr_okeyama
+[HUSE] INFO C3_araiba（water、Bridge_03 の北詰め・水渠の岸：洗い物をして干す所（水車番の家の裏）——竿・盥・腰掛け・手桶を岸の上に詰める）：mk_hoshimono・hu_tarai・sz_stool・sk_teoke
+[HUSE] INFO 計画 → D:/神社/shrine/docs/art_review/village_v2_p10_props/human_use_r1/gate/plan.json
+[HUSE] PASS 反向 P8 の田の中（392, 30）に置く＝p8 → 偵測
+[HUSE] PASS 反向 水渠の水面（338.5, -50）に置く＝water → 偵測
+[HUSE] PASS 反向 FarmPath_1 の路面（372, -15）に置く＝road → 偵測
+[HUSE] PASS 反向 NPC（R3e）の立ち位置 0.3 m に置く＝npc（npc） → 偵測
+[HUSE] PASS 反向 MeadowP9 の株の上（207.8, -97.3）に置く＝置けない（meadow） → 偵測
+[HUSE] PASS 反向 足元の AABB +0.4 に株 1 つ＝meadow 計數 1 → 偵測
+[HUSE] PASS 反向 EnvironmentP9 の錨 1 m に置く＝置けない（env） → 偵測
+[HUSE] PASS 反向 背戸の通り道（MKT_030 の裏戸の前 0.9 m）に置く＝backdoor／building（backdoor） → 偵測
+[HUSE] PASS 反向 Pilot の外（300, 60）に置く＝scope → 偵測
+[HUSE] PASS 反向 1 件を cluster から 28 m 離す＝孤立 → 偵測
+[HUSE] PASS 反向 who を消す＝誰が使う？が無い → 偵測
+[HUSE] PASS 反向 B2 を B1 と同じ組成にする＝複製（Jaccard 1.00） → 偵測
+[HUSE] PASS 反向 手毬 5 個だけの cluster＝中型の核なし → 偵測
+[HUSE] PASS 反向 霧雨店の茸（kr_kinoko）を使う＝Hero 固有の中身 → 偵測
+[HUSE] PASS 反向 存在しない kit の物（xx_foo）＝kit 外 → 偵測
+[HUSE] PASS 反向 依附先の型を偽る（田の ref を路面へ） → 偵測
+[HUSE] PASS pack overlay
+[HUSE] PASS save res://maps/village_v2/gen/human_use_p10.scn
+[HUSE] PASS 存檔回讀：構件 50（計画 50、meta 付き 50）・MeshInstance 100（LOD0/LOD1）・碰撞 39・MultiMesh 0・Marker3D 0・各件の who/why/anchor meta、art_revision
+[HUSE] 結果：0 項失敗

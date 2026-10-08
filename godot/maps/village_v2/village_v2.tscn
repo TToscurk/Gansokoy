@@ -1099,6 +1099,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/entrance_cue_p10.tscn" id="p10r3d_cue"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/population_outer_p10.tscn" id="p10r3e_outer"]
 [ext_resource type="Script" path="res://scripts/npc_activity_outer.gd" id="p10r3e_act"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/human_use_p10.scn" id="p10r4_human_use"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -141164,6 +141165,8 @@ mesh = SubResource("CylinderMesh_shuvv")
 [node name="MarketWestP10" parent="Props" instance=ExtResource("p10r1b_market_west")]
 
 [node name="EnvironmentP9" parent="Props" instance=ExtResource("p9r54_environment")]
+
+[node name="HumanUseP10" parent="." instance=ExtResource("p10r4_human_use")]
 
 [node name="Collision" type="Node3D" parent="." unique_id=988851703]
 
