@@ -1,0 +1,19 @@
+{
+ "assembler": "res://tools/village_v2_human_use_exp_lib.gd",
+ "asset": "humanuse_exp_kit",
+ "deps": {
+  "res://assets/village_v2/_matlib/V2_Wood.tres": "dd22284e6c2ba00919916ddfb53af7c07a7e1bc99e390d79b4ab84aba2650168",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake.res": "858857ba6e312fd373edd9f303917c8f113d29d4ca68fca8972e92f232ba8f6e",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake_l1.res": "de4bcea56017b0196d39cef4c69b180570eb6fdf3009ec6995b9d9a9e5910cea",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_doroage.res": "00aa257d4affdcfc88de1bfa6dcaea113b3c8b77f08561814aac32452327b82d",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_doroage_l1.res": "289021e8f2e939fa7481256f366915acb9391b4c8ff268b6b0e1e177c976bdad",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake.res": "98429838cd9fdaf2b8696874a9715a1815dca03519d6bb2f42755c87eb9584da",
+  "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake_l1.res": "77df5b808d604c85af5eb9ea0973663fce59c823a23e51573c562344e3c0fcdd",
+  "res://assets/village_v2/humanuse_exp_kit/src/modules_blender.json": "9ce6e5aca09df9ee8d22f9ab4afc17015e3431a7b427703fe6734e6b720bfbea",
+  "res://assets/village_v2/street_kit/ST_Street.tres": "455c7f88e582e27c520fb4b66121fd0703a83d0ddf012641a11dec159161c064",
+  "res://tools/village_v2_human_use_exp_lib.gd": "a1d078e36f073622552d017f33da2f1aa6bff54e459d412225cc795d26c14505"
+ },
+ "mesh_dir": "res://assets/village_v2/humanuse_exp_kit/mesh",
+ "modules": 6,
+ "tris_total": 2194
+}
