@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[KITM] PASS K1 登記表 ↔ 檔案：変体 18（cal 3・Kit atlas 1・調色盤 14）、id 一意、sha256 一致、shader 一致
+[KITM] PASS K2 基底との差＝albedo_color だけ（Kit atlas＝k 係数だけ；貼圖・粗さ・発光・band は基底／承認値と同じ）
+[KITM] PASS K3 飽和度 ≤ 0.22・albedo 明度が類別の帯（漆喰 [0.66, 0.76]・木 [0.66, 0.82]・基石 [0.6, 0.7]）
+[KITM] PASS K4 承認済み 24 棟 Pilot と同値（village_v2_albedo_pilot_lib.gd CAL／KIT_CLASS／PALETTE）：18／18
+[KITM] PASS K5 場景：町家 Kit 建物 187 棟、override のある建物＝Pilot 24／24 棟（すべて登記変体）・Pilot 外 0 棟
+[KITM] PASS K6 保護：_matlib・P6 Kit 原檔 6 檔の sha256＝登記時、git HEAD から未変更
+[KITM] PASS K7 置き場所：登記表・shader・変体材質 20 檔すべて maps/village_v2/kit_cal_p10/（village_v2 許可前綴）、旧 Pilot 目錄なし
+[KITM] 永久反向（每案必須讓 gate 失敗）
+[KITM]   N1 登記外の override（albedo 0.9）：PASS（gate 正確失敗）
+[KITM]   N2 登記変体を Pilot 外の建物に：PASS（gate 正確失敗）
+[KITM]   N3 変体の粗さを変える：PASS（gate 正確失敗）
+[KITM]   N4 飽和 0.30：PASS（gate 正確失敗）
+[KITM]   N5 登記 sha 改竄：PASS（gate 正確失敗）
+[KITM]   N6 明度が帯外（0.95）：PASS（gate 正確失敗）
+[KITM] PASS 反向 6/6
+[KITM] 結果：0 項失敗

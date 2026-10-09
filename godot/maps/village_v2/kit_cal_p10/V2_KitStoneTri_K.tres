@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Stone_albedo.jpg" id="1_fmprw"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Stone_normal.jpg" id="2_l16ml"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Stone_rough.jpg" id="3_byyt3"]
+
+[resource]
+resource_name = "V2_KitStoneTri_K"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.65, 0.65, 0.65, 1)
+albedo_texture = ExtResource("1_fmprw")
+roughness_texture = ExtResource("3_byyt3")
+normal_enabled = true
+normal_texture = ExtResource("2_l16ml")
+uv1_scale = Vector3(0.6667, 0.6667, 0.6667)
+uv1_triplanar = true
+uv1_world_triplanar = true

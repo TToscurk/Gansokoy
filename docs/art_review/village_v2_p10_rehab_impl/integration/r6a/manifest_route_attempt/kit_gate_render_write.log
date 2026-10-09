@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[KIT] PASS machiya_kit player_screenshot：main.tscn 載 village_v2（Kit 已烘焙在場景 197 棟）、代表棟 8 棟 × 3 張＝24 張：machiya_kit_B_P_MKT_001_front.png（nikai hira／店先，第 2 個候選，亮度標準差 0.213、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_l.png（nikai hira／店先，第 1 個候選，亮度標準差 0.219、在畫面內、無遮擋）；machiya_kit_B_P_MKT_001_front_r.png（nikai hira／店先，第 1 個候選，亮度標準差 0.209、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front.png（zushi hira／店先，第 1 個候選，亮度標準差 0.229、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_l.png（zushi hira／店先，第 1 個候選，亮度標準差 0.224、在畫面內、無遮擋）；machiya_kit_B_P_MKT_003_front_r.png（zushi hira／店先，第 3 個候選，亮度標準差 0.228、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.178、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_l.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.200、在畫面內、無遮擋）；machiya_kit_B_P_MKT_008_front_r.png（hiraya hira／住宅，第 1 個候選，亮度標準差 0.276、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.245、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_l.png（zushi tsuma／店先，第 2 個候選，亮度標準差 0.229、在畫面內、無遮擋）；machiya_kit_B_P_MKT_034_front_r.png（zushi tsuma／店先，第 1 個候選，亮度標準差 0.253、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.235、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_l.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.202、在畫面內、無遮擋）；machiya_kit_B_P_RSW_002_front_r.png（hiraya tsuma／住宅，第 1 個候選，亮度標準差 0.233、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.181、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_l.png（zushi hira／住宅，第 4 個候選，亮度標準差 0.196、在畫面內、無遮擋）；machiya_kit_B_P_RSW_003_front_r.png（zushi hira／住宅，第 1 個候選，亮度標準差 0.212、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.201、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_l.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.230、在畫面內、無遮擋）；machiya_kit_B_P_MKT_041_front_r.png（nikai tsuma／店先，第 1 個候選，亮度標準差 0.183、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.204、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_l.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.214、在畫面內、無遮擋）；machiya_kit_B_P_RSW_020_front_r.png（zushi tsuma／住宅，第 1 個候選，亮度標準差 0.217、在畫面內、無遮擋）
+[KIT] FAIL machiya_kit f5_f6：✗ F6（代表 8 棟單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、24 張鏡位＋8 棟實走）錯誤 0、警告 0；B_P_MKT_001 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_MKT_003 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.31（牆面 5.00，被擋在外）、最大離地 0.43 m；B_P_MKT_008 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.08 m；B_P_MKT_034 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_002 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_003 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_MKT_041 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m；B_P_RSW_020 實走：正面 3 m 外朝台基走 4 秒，停在局部 z 5.76（牆面 5.46，被擋在外）、最大離地 0.00 m
+SCRIPT ERROR: Cannot call method 'store_string' on a null value.
+   at: _write_gate (res://tools/verify_village_v2_machiya_kit_gate.gd:991)
+   GDScript backtrace (most recent call first):
+       [0] _write_gate (res://tools/verify_village_v2_machiya_kit_gate.gd:991)
+       [1] _render (res://tools/verify_village_v2_machiya_kit_gate.gd:1156)
+       [2] _walk (res://tools/verify_village_v2_machiya_kit_gate.gd:1261)
+[KIT] F6 截圖 D:/神社/shrine/docs/art_review/village_v2_p10_rehab_impl/integration/r6a/kit_render/machiya_kit_f6.png；效能（畫面內總量）：B_P_MKT_001_front：4489142 三角面／3680 draw call；B_P_MKT_001_front_l：4724937 三角面／3947 draw call；B_P_MKT_001_front_r：4284547 三角面／3579 draw call；B_P_MKT_003_front：4713577 三角面／3797 draw call；B_P_MKT_003_front_l：4612106 三角面／4370 draw call；B_P_MKT_003_front_r：4556088 三角面／3686 draw call；B_P_MKT_008_front：4366070 三角面／3897 draw call；B_P_MKT_008_front_l：4435878 三角面／4428 draw call；B_P_MKT_008_front_r：4290984 三角面／3828 draw call；B_P_MKT_034_front：4726964 三角面／3625 draw call；B_P_MKT_034_front_l：4528172 三角面／4025 draw call；B_P_MKT_034_front_r：4566200 三角面／3596 draw call；B_P_RSW_002_front：6988394 三角面／6994 draw call；B_P_RSW_002_front_l：6684683 三角面／6479 draw call；B_P_RSW_002_front_r：6899103 三角面／7058 draw call；B_P_RSW_003_front：7076714 三角面／7095 draw call；B_P_RSW_003_front_l：7033969 三角面／6924 draw call；B_P_RSW_003_front_r：7035149 三角面／7100 draw call；B_P_MKT_041_front：7099662 三角面／4607 draw call；B_P_MKT_041_front_l：6117023 三角面／5409 draw call；B_P_MKT_041_front_r：6014106 三角面／4486 draw call；B_P_RSW_020_front：5392817 三角面／4428 draw call；B_P_RSW_020_front_l：4973773 三角面／4087 draw call；B_P_RSW_020_front_r：5767826 三角面／4974 draw call
+[KIT] 結果：1 項失敗

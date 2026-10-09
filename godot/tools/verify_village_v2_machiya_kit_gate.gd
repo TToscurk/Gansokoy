@@ -11,6 +11,9 @@ extends SceneTree
 ##   2 地塊     台基在自己地塊內；整棟 LOD0 外框（含屋簷、庇）不進道路、不壓鄰地
 ##   3 接地     台基底＝ground_lo−embed、頂＝地板 0.32；台基四角＋中心地形都在台基高度區間內（不浮、不整棟埋）
 ##   4 材質     只用共享材質庫＋Kit atlas（≤ 5）、無 override、albedo_k 一致、貼圖 ≤ 2K VRAM 壓縮
+##              P10 R6a（使用者 2026-10-09 ART_APPROVED：Kit Material 24 Buildings Pilot）：surface override は「cal/kit_material_variants.json に
+##              登記された変体（sha＝登記表＝封存 data/village_v2_p10r6a_seal.json の凍結値）・登記の Pilot 建物・基底＝その surface の元材質」だけ合法；それ以外の override
+##              （未登記・Pilot 外・基底違い・material_override）は従来どおり FAIL。
 ##   5 幾何     構件無退化三角形／NaN、有法線與 UV；構件縮放只在設計方向（開間 x ±12 %、屋面 y＝z 同比）
 ##   6 Pivot    Kit 節點 identity、灰盒節點位置＝P4（中心、base、朝向），正面構件在 +z 牆面
 ##   7 碰撞     沿用 P4 灰盒 BoxShape（尺寸＝P4、啟用、layer≠0）；牆體構件不突出碰撞面 > 0.15 m
@@ -20,7 +23,8 @@ extends SceneTree
 ##  11 F5/F6    F6＝代表棟單獨場景 120 幀 0 錯誤；F5＝main.tscn 0 錯誤、實走被碰撞擋在外、不浮空
 ## 回歸（唯讀）：-- --regress  重驗 1–9 項（場景已烘焙的 Kit），不寫 gate.json；另驗 gate.json 11 項 PASS 且 manifest 雜湊一致。
 ## 反向案例（--neg，不寫 gate.json，預期對應項 FAIL）：size（牆外推）、parcel（整棟推出地塊）、ground（抬高 0.5）、
-##   material（override）、collision（關碰撞）、lod（刪 LOD2）、perf（LOD0 複製 3 份）。
+##   material（override）、collision（關碰撞）、lod（刪 LOD2）、perf（LOD0 複製 3 份）、
+##   material_offpilot（登記変体を Pilot 外の建物へ）、material_wrongbase（Pilot 建物の木の面に漆喰の変体）、material_badsha（登記表の sha と不一致の変体）。
 
 const KLib := preload("res://tools/village_v2_machiya_kit_lib.gd")
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
@@ -34,6 +38,8 @@ const MATLIB := "res://assets/village_v2/_matlib/matlib.json"
 const DIR := "res://assets/village_v2/machiya_kit"
 const ENTRY := DIR + "/machiya_kit_manifest.json"
 const GATE := DIR + "/gate.json"
+const CAL_REG := "res://maps/village_v2/kit_cal_p10/kit_material_variants.json"   # P10 R6a 登記変体
+const CAL_SEAL := "res://data/village_v2_p10r6a_seal.json"   # 登記表と全変体の sha を凍結（使用者 ART_APPROVED 2026-10-09）
 const HEADLESS_KEYS: Array[String] = ["size", "parcel_fit", "grounding", "materials", "geometry", "pivot_scale",
 	"collision", "lod", "performance"]
 const RENDER_KEYS: Array[String] = ["player_screenshot", "f5_f6"]
@@ -212,6 +218,35 @@ func _apply_neg() -> void:
 			k0.position.y += 0.5
 		"material":
 			(l0.get_child(0) as MeshInstance3D).material_override = StandardMaterial3D.new()
+		"material_offpilot", "material_wrongbase", "material_badsha":
+			_cal_load()
+			var want := "res://assets/village_v2/_matlib/V2_Plaster.tres"
+			var var_path := ""
+			for vp: String in cal:
+				if String(cal[vp]["base"]) == want:
+					var_path = vp
+					break
+			var vm := load(var_path) as Material
+			if neg == "material_badsha":
+				# 記憶體内で「この変体ファイルの sha が登記値と一致しない」状態にする（ファイルは触らない）
+				cal[var_path]["sha_ok"] = false
+			var tid := ""
+			for id: String in kits:
+				var is_p := cal_pilots.has(id)
+				if (neg == "material_offpilot" and not is_p) or (neg != "material_offpilot" and is_p):
+					tid = id
+					break
+			var done := false
+			for mi: MeshInstance3D in _mis(kits[tid], 0):
+				for si in mi.mesh.get_surface_count():
+					var sm := mi.mesh.surface_get_material(si)
+					if sm == null:
+						continue
+					var hit := (sm.resource_path == want) if neg != "material_wrongbase" else sm.resource_path.ends_with("V2_Wood.tres")
+					if hit and not done:
+						mi.set_surface_override_material(si, vm)
+						done = true
+			print("[KIT] neg %s：%s に %s（適用 %s）" % [neg, tid, var_path.get_file(), done])
 		"collision":
 			(bodies[b0["id"]].get_node("Shape") as CollisionShape3D).disabled = true
 		"lod":
@@ -542,7 +577,50 @@ func _c_ground() -> void:
 
 # ─────────────────────────── 4 材質 ───────────────────────────
 
+var cal := {}          # 変体 res path → {base, sha_ok}
+var cal_pilots := {}   # 登記 Pilot 建物 id
+
+
+## P10 R6a 登記変体（maps/village_v2/kit_cal_p10/kit_material_variants.json）：各変体ファイルの sha が登記表の値、かつ登記表と変体の sha が
+## ART_APPROVED 封存（data/village_v2_p10r6a_seal.json frozen）の値と一致するものだけ合法（封存が無い／違う＝全部不合法）
+func _cal_load() -> void:
+	if not cal.is_empty() or not FileAccess.file_exists(CAL_REG):
+		return
+	var frozen := {}
+	if FileAccess.file_exists(CAL_SEAL):
+		var sj: Variant = JSON.parse_string(FileAccess.get_file_as_string(CAL_SEAL))
+		if sj is Dictionary and String(sj.get("status", "")) == "ART_APPROVED":
+			frozen = sj.get("frozen", {})
+	var rel := func(p: String) -> String: return "godot/" + p.trim_prefix("res://")
+	var reg_ok: bool = String(frozen.get(rel.call(CAL_REG), "")) == FileAccess.get_sha256(CAL_REG)
+	var reg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CAL_REG))
+	for e: Dictionary in reg.get("variants", []):
+		var f := String(e["file"])
+		var sh := FileAccess.get_sha256(f)
+		cal[f] = {"base": String(e["base"]), "sha_ok": reg_ok and sh == String(e["sha256"]) and String(frozen.get(rel.call(f), "")) == sh}
+	for bp in reg.get("pilot_buildings", []):
+		cal_pilots[String(bp).get_file()] = true
+
+
+## surface override の合法性："" ＝合法（登記変体）、それ以外＝理由
+func _override_reason(id: String, mi: MeshInstance3D, si: int, ov: Material) -> String:
+	var e: Dictionary = cal.get(ov.resource_path, {})
+	if e.is_empty():
+		return "%s %s surface %d override（未登記 %s）" % [id, mi.name, si, ov.resource_path.get_file() if ov.resource_path != "" else ov.get_class()]
+	if not bool(e["sha_ok"]):
+		return "%s %s surface %d 登記変体 %s の sha が登記表／封存と不一致" % [id, mi.name, si, ov.resource_path.get_file()]
+	if not cal_pilots.has(id):
+		return "%s %s surface %d 登記変体 %s を Pilot 外の建物に" % [id, mi.name, si, ov.resource_path.get_file()]
+	var sm := mi.mesh.surface_get_material(si)
+	if sm == null or sm.resource_path != String(e["base"]):
+		return "%s %s surface %d 変体 %s の基底 %s ≠ 元材質 %s" % [id, mi.name, si, ov.resource_path.get_file(), String(e["base"]).get_file(), sm.resource_path.get_file() if sm else "null"]
+	return ""
+
+
 func _c_materials() -> void:
+	_cal_load()
+	var n_reg := 0
+	var reg_b := {}
 	var ML: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MATLIB))
 	var k := float(ML["albedo_k"])
 	var bad: Array = []
@@ -554,8 +632,14 @@ func _c_materials() -> void:
 				if mi.material_override != null:
 					bad.append("%s %s 有 material_override" % [id, mi.name])
 				for si in mi.mesh.get_surface_count():
-					if mi.get_surface_override_material(si) != null:
-						bad.append("%s %s surface %d override" % [id, mi.name, si])
+					var ov := mi.get_surface_override_material(si)
+					if ov != null:
+						var why := _override_reason(id, mi, si, ov)
+						if why != "":
+							bad.append(why)
+						else:
+							n_reg += 1
+							reg_b[id] = true
 				if seen_mesh.has(mi.mesh):
 					continue
 				seen_mesh[mi.mesh] = true
@@ -580,8 +664,8 @@ func _c_materials() -> void:
 				bad.append(e)
 			if not tex.has(t.resource_path.get_file()):
 				tex.append(t.resource_path.get_file())
-	_res("materials", bad.is_empty() and used.size() <= MAX_MATS, "%d 個材質（≤ %d）：%s；全是共享材質庫／Kit atlas、無 override、albedo_k 一致；%d 張貼圖 ≤ %d²、VRAM 壓縮%s" % [
-		used.size(), MAX_MATS, ", ".join(used.keys().map(func(p): return String(p).get_file())), tex.size(), TEX_MAX,
+	_res("materials", bad.is_empty() and used.size() <= MAX_MATS, "%d 個材質（≤ %d）：%s；全是共享材質庫／Kit atlas、albedo_k 一致；override＝P10 R6a 登記変体だけ（%d 面・%d／%d 棟＝登記 Pilot、未登記・Pilot 外・基底違い 0）；%d 張貼圖 ≤ %d²、VRAM 壓縮%s" % [
+		used.size(), MAX_MATS, ", ".join(used.keys().map(func(p): return String(p).get_file())), n_reg, reg_b.size(), cal_pilots.size(), tex.size(), TEX_MAX,
 		("；" + _worst(bad, 4)) if bad else ""])
 
 

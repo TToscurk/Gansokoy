@@ -1,0 +1,217 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_KitStoneTri_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_KitStoneTri_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_MachiyaKit_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_MachiyaKit_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A3.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A3.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B3.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B3.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Can't load dependency: 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres'.
+   at: parse_variant (core/io/resource_format_binary.cpp:444)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:475)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: Failed loading resource: res://maps/village_v2/gen/albedo_pilot_p10.scn.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+ERROR: res://maps/village_v2/village_v2.tscn:141183 - Parse Error: [ext_resource] referenced non-existent resource at: res://maps/village_v2/gen/albedo_pilot_p10.scn.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Node './AlbedoPilotP10' was modified from inside an instance, but it has vanished.
+   at: instantiate (scene/resources/packed_scene.cpp:312)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Parent path './Collision' for node 'Boundary' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_N' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_S' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_W' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_E' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tools/verify_village_v2_albedo_pilot.gd:45)
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[ALB] plan targets=24／187 棟、校正材質 4
+[ALB] PASS 來源材質 albedo 現值＝0.42 灰（Pilot 前提）
+[ALB] PASS 校正材質只改 albedo_color 且純灰（色相／飽和度／其他屬性不動）
+[ALB] PASS 色卡實測 luma 在目標帶：V2_Plaster k=0.70→0.718, V2_Wood k=0.75→0.413, V2_KitStoneTri k=0.65→0.522, Kit.k_dark k=0.75→0.413, Kit.k_light k=0.70→0.718
+[ALB] PASS Pilot 建物 24 棟（各區 { "A_gate_main_south": 12, "B_west_alley": 12 }）全為 machiya_kit 町家
+[ALB] PASS Pilot 建物全在兩區矩形內
+[ALB] PASS 範圍 12.8 %（≤ 25 %，Pilot 不是全村）
+[ALB] PASS 街區調色盤：飽和 ≤ 0.22、亮度在色卡帶、14 m 內鄰棟同組 0、使用組合 A 9 組, B 10 組
+[ALB] PASS pack
+[ALB] PASS save res://maps/village_v2/gen/albedo_pilot_p10.scn
+[ALB] PASS 回讀：targets 24、校正材質 4
+[ALB] build {"targets":24,"output_sha256":"d77c13b2cd447e6b55093d5f5794b1d5cc2cdfc728add3ecb56967c37390b483"}
+[ALB] 結果：0 項失敗
+ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: 11 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+WARNING: 44 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 31 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

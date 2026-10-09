@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[KIT] 187 棟町家（P4 machiya）套 Kit：187
+[KIT] PASS machiya_kit size：P4 machiya 187 棟、套 Kit 187 棟；射線實測 187 棟 vs P4：側牆差最大 0.000 m、背牆差最大 0.030（≤ 0.06）；瓦面離 Kit 屋根面（前後坡各一）最大 0.02（0～0.20）；棟瓦高出棟線最大 0.27（0.15～0.40）；R3 棟高全部 ≤ P4 屋脊（最多降 0.71 m）、勾配 ≤ P4 0.45、兩側簷高＝P4；最高點離 P4 屋脊最大 +0.48（≤ 0.55）；外框超出 P4 灰盒網格外框（含屋根、庇）最大 +0.032（≤ 0.06）；人物比例：入口開間最小淨高 1.93 m（≥ 1.90，1.7 m 人）、最小淨寬 1.60 m（≥ 1.20）
+[KIT] PASS machiya_kit parcel_fit：187 棟：台基出自己地塊最大 0.002 m²（≤ 0.005）；整棟 LOD0 外框（含屋簷、庇）比 P4 灰盒外框多壓道路最大 0.000 m²（≤ 0.05）、多壓鄰地最大 0.000 m²（≤ 0.05；P4 屋簷本來就可出牆線）；P6 R4 門前帶 187／187 棟：LOD0 構件外框（內縮 1 cm）壓道路最大 0.000 m²、壓鄰地最大 0.000 m²（各 ≤ 0.02）
+[KIT] PASS machiya_kit grounding：187 棟台基：底＝P4 ground_lo−embed、頂＝地板 0.32（差最大 0.000 m ≤ 0.01）；四角＋中心地形都在台基高度區間內，台基底最淺埋 -0.29 m（< 0 ＝在地形下）；P6 R4 門前帶：構件底都在地形下（敷石／渡り石／踏石＝在承托的地面帶／側溝頂面下；最淺 -0.065 m）；地面帶／側溝頂高出地形 0.088–0.122 m（0–0.20）；門前踏段頂到地板 0.107–0.170 m
+[KIT] PASS machiya_kit materials：5 個材質（≤ 5）：V2_KitStoneTri.tres, V2_Wood.tres, V2_Plaster.tres, V2_MachiyaKit.tres, V2_Kawara.tres；全是共享材質庫／Kit atlas、albedo_k 一致；override＝P10 R6a 登記変体だけ（2050 面・24／24 棟＝登記 Pilot、未登記・Pilot 外・基底違い 0）；14 張貼圖 ≤ 2048²、VRAM 壓縮；P6 R4 門前帶 5875 個 MeshInstance 全用白名單材質、無 override
+[KIT] PASS machiya_kit geometry：836 個共用構件 mesh：退化三角形 0、NaN／缺法線 UV 0；開間 x 縮放 0.901～1.057（±12 % 內）、屋面／螻羽 y＝z 同比、妻壁 x＝y 同比（違規 0）
+[KIT] PASS machiya_kit pivot_scale：187 棟：Kit 節點 identity（原點＝P4 灰盒原點：footprint 中心、base 高、+z 正面）；灰盒節點與 P4 紀錄位置差最大 0.005 m、朝向一致；正面構件都在 +z 牆面（R3 退縮開間＝牆面−退縮深）
+[KIT] PASS machiya_kit collision：187 棟：沿用 P4 灰盒 BoxShape（1 個、啟用、layer≠0、尺寸＝P4 寬×(簷−台基底)×深）；牆體構件（含出格子）突出碰撞面最大 0.140 m（≤ 0.15）
+[KIT] PASS machiya_kit lod：187 棟 LOD0／1／2 齊全、可見距離 [0.0, 40.0, 110.0, 600.0] m 接續（margin 4）；LOD1／LOD0 最大 4.4 %（≤ 35）、LOD2／LOD0 最大 4.2 %（≤ 10）；LOD1／2 外框與 LOD0 差最大 0.22 m（≤ 0.6）；P6 R4 門前帶 LOD0／LOD1 可見距離 [0.0, 40.0, 110.0, 600.0] m 接續（LOD2 不鋪）
+[KIT] PASS machiya_kit performance：§14.8「町家」LOD0 上限 25000：每棟實測最大 20550（B_P_MKT_056，82 %）、平均 13294；每棟材質 ≤ 5（實測 5）、碰撞 1；Kit 專屬貼圖 VRAM 估算 5.7 MB（≤ 8）；全村 187 棟 LOD0 合計 2486112 三角面（同時可見受 LOD 距離 40 m 限制）、Kit MeshInstance 11406 個、共用構件 mesh 836 個（磁碟 3203 KB，只存一次）
+[KIT] 寫入 res://assets/village_v2/machiya_kit/gate.json（headless）
+[KIT] 結果：0 項失敗

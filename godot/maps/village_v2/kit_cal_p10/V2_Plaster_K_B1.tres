@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Plaster_albedo.jpg" id="1_67cas"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Plaster_normal.jpg" id="2_dxysv"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/V2_Plaster_rough.jpg" id="3_pmlkp"]
+
+[resource]
+resource_name = "V2_Plaster_K_B1"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.73, 0.7, 0.64, 1)
+albedo_texture = ExtResource("1_67cas")
+roughness_texture = ExtResource("3_pmlkp")
+normal_enabled = true
+normal_texture = ExtResource("2_dxysv")

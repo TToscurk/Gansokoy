@@ -17,6 +17,8 @@ const EXT_ID := "p10r6a_albedo_pilot"
 const AFTER_NODE := "[node name=\"EdgeClosureP10\" parent=\".\" instance=ExtResource(\"p10r5c_edge_closure\")]"
 const SRC_K := 0.42
 const MAX_SHARE := 0.25
+const RS := preload("res://tools/village_v2_rehab_seal.gd")
+const SEAL := "res://data/village_v2_p10r6a_seal.json"   # 使用者 2026-10-09 ROUND 3 FINAL：R6a Kit Material 24 Buildings Pilot＝ART_APPROVED
 var fails := 0
 var quiet := false
 
@@ -31,6 +33,12 @@ func _ok(c: bool, msg: String) -> bool:
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
+	if RS.refuse_write(args, SEAL, "ALB_ALLOW_REBAKE", "ALB"):
+		quit(1)
+		return
+	if "--seal" in args:
+		quit(await RS.new().run(self, SEAL, "ALB", LIB.NODE_NAME, _seal_extra))
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
@@ -411,3 +419,19 @@ func _attach() -> int:
 	f.close()
 	print("[ALB] attach：加 root/%s（EdgeClosureP10 之後）→ %s（+%d 行）" % [LIB.NODE_NAME, SCENE, out.size() - lines.size()])
 	return 0
+
+
+## --seal 固有：AlbedoPilotP10 の材質はすべて登記変体（machiya_kit/cal/kit_material_variants.json）、Pilot 24 棟、適用面 > 0
+func _seal_extra(v: Node3D) -> Array:
+	var n := v.get_node(LIB.NODE_NAME)
+	var reg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://maps/village_v2/kit_cal_p10/kit_material_variants.json"))
+	var files := {}
+	for e in reg["variants"]:
+		files[String(e["file"])] = true
+	var bad := []
+	for m: Material in (n.get("cal_mats") as Array) + (n.get("variant_mats") as Array):
+		if not files.has(m.resource_path):
+			bad.append(m.resource_name)
+	var tg: PackedStringArray = n.get("targets")
+	return [[bad.is_empty(), "AlbedoPilotP10 の材質 %d 個すべて登記変体（未登記 %s）" % [(n.get("cal_mats") as Array).size() + (n.get("variant_mats") as Array).size(), str(bad.slice(0, 3))]],
+		[tg.size() == 24 and int(n.get("applied_surfaces")) > 0, "Pilot %d 棟・適用面 %d" % [tg.size(), int(n.get("applied_surfaces"))]]]

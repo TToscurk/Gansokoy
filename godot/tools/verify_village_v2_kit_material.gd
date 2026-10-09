@@ -9,7 +9,8 @@ extends SceneTree
 ##   K3 色の範囲：飽和度 ≤ 0.22、albedo 明度が類別の帯（登記）内、色卡 luma 帯を登記
 ##   K4 承認済み Pilot と同値：各変体の値＝village_v2_albedo_pilot_lib.gd の CAL／KIT_CLASS／PALETTE（第一輪核准 24 棟）
 ##   K5 場景：町家 Kit 建物（Districts の B_*／Kit の子木）の override は「登記表の変体」だけ・「登記の Pilot 建物」だけ；Pilot 24 棟以外の 163 棟は override 0
-##   K6 保護：_matlib・P6 Kit 原檔・Kit gate.json／manifest の sha256＝登記時と同じ、かつ git HEAD から未変更
+##   K6 保護：_matlib・P6 Kit 原檔（V2_MachiyaKit／V2_KitStoneTri）の sha256＝登記時と同じ、かつ git HEAD から未変更
+##   K7 置き場所：登記表・shader・変体材質 20 檔すべて maps/village_v2/kit_cal_p10/（許可前綴）、旧 assets/village_v2/machiya_kit_cal・machiya_kit/cal は無い
 ## 永久反向：N1 登記外の override（albedo 0.9）／N2 登記変体を Pilot 外の建物に／N3 変体の粗さを変える／N4 飽和 0.30／N5 登記 sha 改竄／N6 明度が帯外
 const KM := preload("res://tools/village_v2_kit_material_lib.gd")
 const AP := preload("res://tools/village_v2_albedo_pilot_lib.gd")
@@ -252,4 +253,16 @@ func _checks(reg: Dictionary, mats: Dictionary, ov: Dictionary) -> void:
 	var rc := OS.execute("git", ["-C", ProjectSettings.globalize_path("res://"), "diff", "--quiet", "HEAD", "--"] + gp, out)
 	if rc != 0:
 		bad6.append("git HEAD から変更あり（rc %d）" % rc)
-	_ok(bad6.is_empty(), "K6 保護：_matlib・P6 Kit 原檔・Kit gate.json／manifest %d 檔の sha256＝登記時、git HEAD から未変更%s" % [(reg["protected"] as Dictionary).size(), "" if bad6.is_empty() else " ✗ " + str(bad6)])
+	_ok(bad6.is_empty(), "K6 保護：_matlib・P6 Kit 原檔 %d 檔の sha256＝登記時、git HEAD から未変更%s" % [(reg["protected"] as Dictionary).size(), "" if bad6.is_empty() else " ✗ " + str(bad6)])
+	# K7
+	var bad7 := []
+	var need := [String(reg["shader"]["file"]), KM.REGISTRY]
+	for e in vs:
+		need.append(String(e["file"]))
+	for p in need:
+		if not String(p).begins_with("res://maps/village_v2/kit_cal_p10/") or not FileAccess.file_exists(p):
+			bad7.append(String(p).get_file())
+	for old_dir in ["res://assets/village_v2/machiya_kit_cal", "res://assets/village_v2/machiya_kit/cal"]:
+		if DirAccess.dir_exists_absolute(old_dir):
+			bad7.append(old_dir + " が残っている")
+	_ok(bad7.is_empty() and need.size() == 20, "K7 置き場所：登記表・shader・変体材質 %d 檔すべて maps/village_v2/kit_cal_p10/（village_v2 許可前綴）、旧 Pilot 目錄なし%s" % [need.size(), "" if bad7.is_empty() else " ✗ " + str(bad7.slice(0, 3))])

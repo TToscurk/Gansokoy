@@ -1,0 +1,199 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_KitStoneTri_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_KitStoneTri_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_MachiyaKit_K.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_MachiyaKit_K.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A3.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_A3.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_A2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B3.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Plaster_K_B3.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B0.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B0.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B1.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B1.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Cannot open file 'res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B2.tres'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://assets/village_v2/machiya_kit/cal/V2_Wood_K_B2.tres.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Can't load dependency: 'res://assets/village_v2/machiya_kit/cal/V2_Plaster_K.tres'.
+   at: parse_variant (core/io/resource_format_binary.cpp:444)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Error when trying to parse Variant.
+   at: parse_variant (core/io/resource_format_binary.cpp:475)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: Failed loading resource: res://maps/village_v2/gen/albedo_pilot_p10.scn.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+ERROR: res://maps/village_v2/village_v2.tscn:141183 - Parse Error: [ext_resource] referenced non-existent resource at: res://maps/village_v2/gen/albedo_pilot_p10.scn.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Node './AlbedoPilotP10' was modified from inside an instance, but it has vanished.
+   at: instantiate (scene/resources/packed_scene.cpp:312)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Parent path './Collision' for node 'Boundary' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_N' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_S' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_W' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+WARNING: Parent path './Collision/Boundary' for node 'Wall_E' has vanished when instantiating: 'res://maps/village_v2/village_v2.tscn'.
+   at: instantiate (scene/resources/packed_scene.cpp:213)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/verify_village_v2_kit_material.gd:38)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[KITM] write：変体 18、Pilot 建物 24 → res://maps/village_v2/kit_cal_p10/kit_material_variants.json
