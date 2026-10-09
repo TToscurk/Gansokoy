@@ -14,6 +14,9 @@ extends SceneTree
 ##   7 交差点の上下：FarmPath_1 − FarmPath_4 ≥ 0.012、CrossStreetSouth − FarmPath_1 ≥ 0.012（同じ高さの重なり＝ちらつき防止）
 ##   8 NPC：再生道の近く（元の半幅＋1 m）の NPC は地形の上（|足−地形| ≤ 0.05）、新しい路面との差 ≤ 0.08（元の帯は 0.10 埋まる）
 ##   9 元の road_*.res は不変（sha256 を build 前後で照合）
+##   T（ROUND 3：P7 地形の踩み固め重みの局部修正）：変える頂点＝対象 3 本の旧い帯が支配する頂点だけ（ほかの道・水辺・建物の塗りは不変）、
+##     COLOR.r 以外（位置・法線・UV・UV2・索引・COLOR.gba）は完全一致、旧い帯（trodden ≥ 0.3 相当の頂点）が 0.6 倍以下に細る、
+##     terrain_farmlandterrain.res は不変
 const LIB := preload("res://tools/village_v2_road_base_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const EXT_ID := "p10r5a_road_base"
@@ -55,6 +58,7 @@ func _init() -> void:
 	for k in LIB.ROADS:
 		plans[k] = LIB.plan_road(V, k, LIB.ROADS[k])
 	_gates(plans)
+	_terrain_gates(LIB.terrain_fix(V, plans), {})
 	if "--build" in args:
 		_build(src_sha)
 	else:
@@ -65,7 +69,7 @@ func _init() -> void:
 
 func _src_sha() -> Dictionary:
 	var out := {}
-	for k in LIB.ROADS:
+	for k in LIB.ROADS.keys() + [LIB.TERRAIN_NODE]:
 		var mi := V.get_node(k) as MeshInstance3D
 		out[k] = [mi.mesh.resource_path, FileAccess.get_sha256(mi.mesh.resource_path)]
 	return out
@@ -248,6 +252,46 @@ func _gates(plans: Dictionary, quiet_detail := false) -> void:
 	_ok(bad8.is_empty(), "NPC：再生道の近く %d 人は地形の上・新しい路面との差 ≤ 0.08（NPC 不搬）%s" % [n8, "" if bad8.is_empty() else " ✗ " + str(bad8.slice(0, 4))])
 
 
+func _terrain_gates(tf: Dictionary, inj: Dictionary) -> void:
+	var mi := V.get_node(LIB.TERRAIN_NODE) as MeshInstance3D
+	var a0 := (mi.mesh as ArrayMesh).surface_get_arrays(0)
+	var a1 := (tf["mesh"] as ArrayMesh).surface_get_arrays(0)
+	var v1: PackedVector3Array = a1[Mesh.ARRAY_VERTEX]
+	if bool(inj.get("move", false)):
+		v1 = v1.duplicate()
+		v1[100] = v1[100] + Vector3(0, 0.05, 0)
+	var diffs := []
+	for e in [["VERTEX", v1, a0[Mesh.ARRAY_VERTEX]], ["NORMAL", a1[Mesh.ARRAY_NORMAL], a0[Mesh.ARRAY_NORMAL]], ["UV", a1[Mesh.ARRAY_TEX_UV], a0[Mesh.ARRAY_TEX_UV]],
+			["UV2", a1[Mesh.ARRAY_TEX_UV2], a0[Mesh.ARRAY_TEX_UV2]], ["INDEX", a1[Mesh.ARRAY_INDEX], a0[Mesh.ARRAY_INDEX]], ["TANGENT", a1[Mesh.ARRAY_TANGENT], a0[Mesh.ARRAY_TANGENT]]]:
+		if e[1] != e[2]:
+			var md := -1.0
+			if e[1] != null and e[2] != null and e[1].size() == e[2].size() and (e[1] is PackedVector3Array or e[1] is PackedVector2Array or e[1] is PackedFloat32Array):
+				md = 0.0
+				for i in e[1].size():
+					var dd = e[1][i] - e[2][i]
+					md = maxf(md, absf(dd) if dd is float else (dd as Variant).length())
+			# 法線・接線は元と同じ圧縮フラグで再量子化される分（≤ 1e-3）だけ許す；位置・UV・索引は完全一致
+			if e[0] in ["NORMAL", "TANGENT"] and md >= 0.0 and md <= 1e-3:
+				continue
+			diffs.append("%s %s" % [e[0], ("max %.6f" % md) if md >= 0.0 else "size/型"])
+	var same: bool = diffs.is_empty()
+	var c0: PackedColorArray = a0[Mesh.ARRAY_COLOR]
+	var c1: PackedColorArray = a1[Mesh.ARRAY_COLOR]
+	var gba_bad := 0
+	var nchg := 0
+	for i in c0.size():
+		if not is_equal_approx(c0[i].g, c1[i].g) or not is_equal_approx(c0[i].b, c1[i].b) or not is_equal_approx(c0[i].a, c1[i].a):
+			gba_bad += 1
+		if absf(c0[i].r - c1[i].r) > 1e-4:
+			nchg += 1
+	var ch: PackedInt32Array = tf["changed"]
+	_ok(same and gba_bad == 0 and nchg == ch.size() and ch.size() > 0, "T1 地形 %s：頂点 %d のうち COLOR.r だけ %d 個を変更（予定 %d）（位置・UV・UV2・索引 完全一致／法線・接線 ≤ 1e-3（圧縮の再量子化）%s%s、COLOR.gba の差 %d）" % [LIB.TERRAIN_NODE, int(tf["verts"]), nchg, ch.size(), same, "" if same else " ✗ " + str(diffs), gba_bad])
+	_ok(int(tf["mismatch"]) == 0, "T2 変えた頂点はすべて「対象 3 本の旧い帯が支配」（tr0＝0.85·max(対象, ほか) ±%.2f、対象 ＞ ほか）：外れ %d" % [LIB.MATCH_TOL, int(tf["mismatch"])])
+	var bo := int(tf["band_old"])
+	var bn := int(tf["band_new"])
+	_ok(bo > 0 and float(bn) <= 0.6 * bo, "T3 旧い路寬の帯（踩み固め ≥ 0.3 相当の頂点）%d → 再生道の帯 %d（≤ 0.6 倍）、最大変化 %.2f" % [bo, bn, float(tf["max_delta"])])
+
+
 func _negatives(plans: Dictionary) -> void:
 	print("[RDB] 永久反向（每案必須讓 gate 失敗）")
 	var cases := []
@@ -272,6 +316,18 @@ func _negatives(plans: Dictionary) -> void:
 	c5["Roads/FarmPaths/FarmPath_1"] = LIB.plan_road(V, "Roads/FarmPaths/FarmPath_1", LIB.ROADS["Roads/FarmPaths/FarmPath_1"], {"lift": 0.03})
 	cases.append(["N5 交差点で FarmPath_1 と FarmPath_4 が同じ高さ（ちらつき）", c5])
 	var neg_fail := 0
+	# ROUND 3：地形の重みの反向
+	var tcases := [["N6 判定を緩める（ほかの道・水辺の塗りまで書き換える）", {"tol": 1.0}], ["N7 頂点を 1 つ動かす（位置は不変のはず）", {"move": true}]]
+	for c in tcases:
+		var f1 := fails
+		quiet = true
+		_terrain_gates(LIB.terrain_fix(V, plans, float(c[1].get("tol", LIB.MATCH_TOL))), c[1])
+		quiet = false
+		var tr := fails > f1
+		fails = f1
+		print("[RDB]   %s：%s" % [c[0], "PASS（gate 正確失敗）" if tr else "FAIL（gate 沒抓到）"])
+		if not tr:
+			neg_fail += 1
 	for c in cases:
 		var f0 := fails
 		quiet = true
@@ -282,7 +338,7 @@ func _negatives(plans: Dictionary) -> void:
 		print("[RDB]   %s：%s" % [c[0], "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
 		if not tripped:
 			neg_fail += 1
-	_ok(neg_fail == 0, "反向 %d/%d" % [cases.size() - neg_fail, cases.size()])
+	_ok(neg_fail == 0, "反向 %d/%d" % [cases.size() + 2 - neg_fail, cases.size() + 2])
 
 
 func _build(src_sha: Dictionary) -> void:
@@ -298,13 +354,13 @@ func _build(src_sha: Dictionary) -> void:
 	var nt := 0
 	for m in ms:
 		nt += (m as ArrayMesh).surface_get_arrays(0)[Mesh.ARRAY_INDEX].size() / 3
-	_ok(ms.size() == 3 and nt > 1000, "回讀：再生 mesh %d 本、三角形 %d" % [ms.size(), nt])
+	_ok(ms.size() == 4 and nt > 1000, "回讀：再生 mesh %d（道 3＋地形 1）、三角形 %d" % [ms.size(), nt])
 	var after := _src_sha()
 	var same := true
 	for k in src_sha:
 		if src_sha[k][1] != after[k][1]:
 			same = false
-	_ok(same, "元の road_*.res は不変（sha256 build 前後一致）：%s" % str(after.values().map(func(x): return "%s %s" % [String(x[0]).get_file(), String(x[1]).substr(0, 12)])))
+	_ok(same, "元の road_*.res・terrain_farmlandterrain.res は不変（sha256 build 前後一致）：%s" % str(after.values().map(func(x): return "%s %s" % [String(x[0]).get_file(), String(x[1]).substr(0, 12)])))
 	rb.free()
 	n.free()
 	print("[RDB] build {\"output_sha256\":\"%s\"}" % FileAccess.get_sha256(LIB.OUTPUT))
@@ -329,7 +385,10 @@ func _scene() -> void:
 		var m := mi.material_override as ShaderMaterial
 		if m == null or not m.shader.resource_path.ends_with("ground_p10_pilot.gdshader"):
 			bad.append("%s 材質が pilot shader でない" % LIB.ROADS[k]["name"])
-	_ok(bad.is_empty() and int(n.get("applied")) == 3 and gp != null, "再生 mesh 3 本が差し替わり、材質は GroundPilotP10 の pilot shader のまま%s" % ("" if bad.is_empty() else " ✗ " + str(bad)))
+	var tmi := V.get_node(LIB.TERRAIN_NODE) as MeshInstance3D
+	if tmi.mesh == null or String(tmi.mesh.resource_name) != "RoadBase_FarmlandTerrain":
+		bad.append("地形 mesh %s" % (tmi.mesh.resource_name if tmi.mesh else "null"))
+	_ok(bad.is_empty() and int(n.get("applied")) == 4 and gp != null, "再生 mesh 3 本＋地形 1 が差し替わり、道の材質は GroundPilotP10 の pilot shader のまま%s" % ("" if bad.is_empty() else " ✗ " + str(bad)))
 	# 道に碰撞なし（差し替えは見た目だけ）
 	var nc := 0
 	for k in LIB.ROADS:
@@ -370,9 +429,12 @@ func _scene() -> void:
 		if mi.mesh == null or String(mi.mesh.resource_name).begins_with("RoadBase_") or not mi.mesh.resource_path.begins_with("res://maps/village_v2/gen/road_"):
 			back = false
 		orig_paths.append(mi.mesh.resource_path.get_file() if mi.mesh else "null")
-	_ok(back and int(n.get("applied")) == 0, "enabled=false → 元の mesh に戻る（%s）" % str(orig_paths))
+	var tm2 := V.get_node(LIB.TERRAIN_NODE) as MeshInstance3D
+	if not tm2.mesh.resource_path.ends_with("terrain_farmlandterrain.res"):
+		back = false
+	_ok(back and int(n.get("applied")) == 0, "enabled=false → 元の mesh（道 3＋地形）に戻る（%s、地形 %s）" % [str(orig_paths), tm2.mesh.resource_path.get_file()])
 	n.set("enabled", true)
-	_ok(int(n.get("applied")) == 3, "enabled=true → 重新套用")
+	_ok(int(n.get("applied")) == 4, "enabled=true → 重新套用")
 
 
 func _attach() -> int:

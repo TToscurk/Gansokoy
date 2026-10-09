@@ -12,11 +12,17 @@ extends RefCounted
 ##   · 区間ごとの使われ方 traffic（0 田の奥 … 1 村の出入口）を UV2.y＝1＋traffic に入れる → pilot shader が轍・中央草・路肩草・砂利を変える
 ##   · 元の網格が切れている所（水の上＝橋が受け持つ）は切ったまま；南橫街は橋より東だけ再生（西＝町の区間は元の三角形を逐字コピー、境目 8 m で滑らかに）
 ## 変えない：P1 地形・碰撞（道に碰撞なし）・P3 道路の折線／幅の記録・P8 田・P9 地被・NPC（地形の上を歩く）。
+## ROUND 3（使用者 §3：舊路寬の直線の土色帯の根因を切り分けてから直す）：
+##   切り分け（tools/diag_village_v2_road_band.gd、同機位 A–E）で帯＝P7 地形（FarmlandTerrain）の頂点重み trodden（COLOR.r）と確定：
+##   gen_village_v2.gd `_road_halo`＝道の芯から hw−0.3〜hw＋1.6 m（ROAD_HALO）を 2 m 格子で踩み固め土に塗る（農道なら芯 ±2.8 m）。
+##   → 同じ式で「対象 3 本の旧い帯」と「ほかの道・巷道の帯」を再計算し、対象の帯が支配している頂点だけ、再生した道の芯・幅・使われ方で
+##     塗り直す（地形の格子 2 m の補間で帯が広がらないよう、塗りは路面の内側〔半幅 −0.6、halo 0–0.3〕だけ；道の土色は再生道 mesh が担う）。ほかの道・水辺・建物の塗りは不変、頂点位置・法線・UV は不変（COLOR.r だけ）。
+##   runtime で FarmlandTerrain の mesh を差し替え（terrain_farmlandterrain.res は不変・enabled=false で元へ）＝P7 limited correction の Pilot。
 
 const NODE_NAME := "RoadBaseP10"
 const OUTPUT := "res://maps/village_v2/gen/road_base_p10.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p10/road_base.gd"
-const ART_REVISION := "P10 R5a ROUND 2 road base pilot r2：農道の幅 0.66–0.82×・蛇行 0.34（元の路幅の中）、南橫街は橋のすぐ東（x 330）から 0.52–0.70× へ絞る・蛇行 0.6；r1：農道 2 本＋南橫街の田の区間を地形なり・不揃いの幅・蛇行・区間別の使われ方で再生（ART_REVIEW）"
+const ART_REVISION := "P10 R5a ROUND 3 road base pilot r3：P7 地形の踩み固め重み（舊路寬の直線の帯の根因）を再生道に合わせて局部修正（FarmlandTerrain、COLOR.r だけ）；r2：農道の幅 0.66–0.82×・蛇行 0.34（元の路幅の中）、南橫街は橋のすぐ東（x 330）から 0.52–0.70× へ絞る・蛇行 0.6；r1：農道 2 本＋南橫街の田の区間を地形なり・不揃いの幅・蛇行・区間別の使われ方で再生（ART_REVIEW）"
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const STEP := 1.0
 const US := [-1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0]
@@ -24,6 +30,20 @@ const EDGE_LIFT := -0.015
 const MID_LIFT_U := 0.85          # |u| ≤ 0.66 は芯の持ち上げ、0.85 で 0、1.0 で EDGE_LIFT
 const TAPER := 6.0                # 端・交差点からこの距離で蛇行／幅ゆらぎを 0 へ
 const SEAM_BLEND := 8.0
+## P7 地形の踩み固め重み（gen_village_v2.gd `_ground_weights`／`_road_halo` と同じ式）
+const TERRAIN_NODE := "Terrain/FarmlandTerrain"
+const PARCEL_LIB := "res://tools/village_v2_parcel_lib.gd"
+const OLD_HALO := 1.6            # gen ROAD_HALO
+const NEW_HALO := [0.0, 0.3]     # 再生道：田の奥 → 村側
+## P7 地形の格子は 2 m：格子点の重みが線形補間で ±2 m に広がる → 再生道の塗りは路面の内側（半幅 −0.6 m）だけに置き、
+##   道の土色は再生道 mesh 自身（pilot shader の轍・路肩草）に任せる。塗りの幅×使われ方（traffic、田の奥＝0）。
+##   r3a：半幅 −0.6 だけでは格子線上に乗る直線区間（FarmPath_1 は x＝372 の格子列そのもの）で芯の列 0.85 が ±2 m に補間されて残った。
+const NEW_PAINT_INSET := 0.6
+const TR_K := 0.85               # tr = max(wb·0.72, halo·0.85)
+const GRID := 2.0                # layout frame grid_step
+const GRID_X0 := 0.0
+const GRID_Z0 := -340.0
+const MATCH_TOL := 0.04          # 「対象の帯が支配」判定：tr0 ≈ 0.85·max(対象, ほか) の許容
 ## 対象（小範囲）：traffic＝[[s m, 0..1], …]（間は線形）；junctions＝他の道と交わる点（蛇行を 0 へ）
 const ROADS := {
 	"Roads/FarmPaths/FarmPath_1": {"name": "FarmPath_1", "lift": 0.045, "hw_k": [0.66, 0.82], "meander": 0.34, "seed": 7011,
@@ -302,6 +322,201 @@ static func _tri(st: SurfaceTool, v: Array, uv: Array, uv2: Array) -> void:
 		st.add_vertex(v[i])
 
 
+## ─────────────────────────── P7 地形の踩み固め重みの局部修正 ───────────────────────────
+static func _dense(pts: Array, maxstep: float) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	for k in pts.size() - 1:
+		var a: Vector2 = pts[k]
+		var b: Vector2 = pts[k + 1]
+		var n := maxi(1, int(ceil(a.distance_to(b) / maxstep)))
+		for s in n:
+			out.append(a.lerp(b, float(s) / n))
+	out.append(pts[pts.size() - 1])
+	return out
+
+
+## 線群 [{pts: PackedVector2Array（dense）, hw: PackedFloat32Array（各点）, halo: PackedFloat32Array（各点）}] の格子点 (i, j) での halo
+static func _halo_grid(lines: Array, i: int, j: int) -> float:
+	var q := Vector2(GRID_X0 + i * GRID, GRID_Z0 + j * GRID)
+	var best := 0.0
+	for ln: Dictionary in lines:
+		var bb: Rect2 = ln["bb"]
+		if not bb.has_point(q):
+			continue
+		var pts: PackedVector2Array = ln["pts"]
+		var hws: PackedFloat32Array = ln["hw"]
+		var hls: PackedFloat32Array = ln["halo"]
+		for k in pts.size():
+			var d := q.distance_to(pts[k])
+			var hw := hws[k]
+			var w := 1.0 - smoothstep(hw - 0.3, hw + hls[k], d)
+			if w > best:
+				best = w
+	return best
+
+
+## 頂点 (x, z) の halo：格子点ならその値、格子でない（格心点）なら 4 隅の双線形（gen の _sample と同じ）
+static func _halo_at(lines: Array, cache: Dictionary, x: float, z: float) -> float:
+	var fi := (x - GRID_X0) / GRID
+	var fj := (z - GRID_Z0) / GRID
+	var i0 := int(floor(fi))
+	var j0 := int(floor(fj))
+	var tx := fi - i0
+	var tz := fj - j0
+	var h := func(i: int, j: int) -> float:
+		var key := Vector2i(i, j)
+		if not cache.has(key):
+			cache[key] = _halo_grid(lines, i, j)
+		return float(cache[key])
+	var H: Callable = h
+	if tx < 1e-4 and tz < 1e-4:
+		return float(H.call(i0, j0))
+	return lerpf(lerpf(float(H.call(i0, j0)), float(H.call(i0 + 1, j0)), tx), lerpf(float(H.call(i0, j0 + 1)), float(H.call(i0 + 1, j0 + 1)), tx), tz)
+
+
+static func _line(pts: PackedVector2Array, hw: PackedFloat32Array, halo: PackedFloat32Array) -> Dictionary:
+	var bb := Rect2(pts[0], Vector2.ZERO)
+	var m := 0.0
+	for k in pts.size():
+		bb = bb.expand(pts[k])
+		m = maxf(m, hw[k] + halo[k])
+	return {"pts": pts, "hw": hw, "halo": halo, "bb": bb.grow(m + 0.6)}
+
+
+static func _const_line(pts: Array, hw: float, halo: float) -> Dictionary:
+	var dp := _dense(pts, 1.0)
+	var a := PackedFloat32Array()
+	var b := PackedFloat32Array()
+	a.resize(dp.size())
+	b.resize(dp.size())
+	a.fill(hw)
+	b.fill(halo)
+	return _line(dp, a, b)
+
+
+## 3 群の線：対象の旧い帯（old）、ほかの道・巷道（other）、再生道（new）
+static func halo_lines(v: Node3D, plans: Dictionary) -> Dictionary:
+	var Lj: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
+	var targets := {}
+	for k in ROADS:
+		targets[String(ROADS[k]["name"])] = k
+	var old := []
+	var other := []
+	var new := []
+	for r in Lj["roads"]:
+		var nm := String(r["name"])
+		var pts := []
+		for q in r["pts"]:
+			pts.append(Vector2(float(q[0]), float(q[1])))
+		var hw := float(r["half_w"])
+		if not targets.has(nm):
+			other.append(_const_line(pts, hw, OLD_HALO))
+			continue
+		var pl: Dictionary = plans[targets[nm]]
+		var seam := float(pl["seam_s"])
+		if seam < 0.0:
+			old.append(_const_line(pts, hw, OLD_HALO))
+		else:
+			# 町の区間（s < seam）は「ほか」、田の区間（s ≥ seam）が対象
+			var dp := _dense(pts, 1.0)
+			var s := 0.0
+			var town := []
+			var farm := []
+			for k in dp.size():
+				if k > 0:
+					s += dp[k].distance_to(dp[k - 1])
+				if s <= seam + 0.5:
+					town.append(dp[k])
+				if s >= seam - 0.5:
+					farm.append(dp[k])
+			other.append(_const_line(town, hw, OLD_HALO))
+			old.append(_const_line(farm, hw, OLD_HALO))
+		# 再生道：行の芯（蛇行込み）・半幅・使われ方
+		var cpts := PackedVector2Array()
+		var chw := PackedFloat32Array()
+		var chl := PackedFloat32Array()
+		for row: Dictionary in pl["rows"]:
+			var ps: Array = row["pts"]
+			var c3: Vector3 = ps[3]
+			cpts.append(Vector2(c3.x, c3.z))
+			# 塗りの幅は使われ方に比例（田の奥＝0：道の土色は mesh だけ、村側ほど路面の内側に踩み固めが残る）
+			chw.append(maxf(float(row["hw"]) - NEW_PAINT_INSET, 0.3) * float(row["traffic"]))
+			chl.append(lerpf(float(NEW_HALO[0]), float(NEW_HALO[1]), float(row["traffic"])))
+		new.append(_line(cpts, chw, chl))
+	var PL = load(PARCEL_LIB)
+	for r in PL.lanes(Lj):
+		var pts2 := []
+		for q in r["pts"]:
+			pts2.append(q as Vector2)
+		other.append(_const_line(pts2, float(r["hw"]), OLD_HALO))
+	return {"old": old, "other": other, "new": new}
+
+
+## FarmlandTerrain の COLOR.r を局部修正した新しい mesh と統計
+static func terrain_fix(v: Node3D, plans: Dictionary, tol := MATCH_TOL) -> Dictionary:
+	var mi := v.get_node(TERRAIN_NODE) as MeshInstance3D
+	var src := mi.mesh as ArrayMesh
+	var arr := src.surface_get_arrays(0)
+	var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var cs: PackedColorArray = arr[Mesh.ARRAY_COLOR]
+	var lines := halo_lines(v, plans)
+	var c_old := {}
+	var c_oth := {}
+	var c_new := {}
+	var out := cs.duplicate()
+	var changed := PackedInt32Array()
+	var band_old := 0
+	var band_new := 0
+	var mismatch := 0
+	var maxd := 0.0
+	var xf := mi.global_transform
+	for i in vs.size():
+		var w: Vector3 = xf * vs[i]
+		# 対象の線の近く（bb）だけ調べる
+		var near := false
+		for ln: Dictionary in lines["old"] + lines["new"]:
+			if (ln["bb"] as Rect2).has_point(Vector2(w.x, w.z)):
+				near = true
+				break
+		if not near:
+			continue
+		var ho := _halo_at(lines["old"], c_old, w.x, w.z)
+		if ho <= 0.0:
+			continue
+		var hh := _halo_at(lines["other"], c_oth, w.x, w.z)
+		var tr0 := cs[i].r
+		var in_band := ho >= 0.3 and tr0 >= 0.3 * TR_K
+		if in_band:
+			band_old += 1
+		if absf(tr0 - TR_K * maxf(ho, hh)) > tol or ho <= hh + 0.02 - (1.0 if tol > 0.5 else 0.0):
+			if in_band:
+				band_new += 1
+			continue
+		var strict_ok := absf(tr0 - TR_K * maxf(ho, hh)) <= MATCH_TOL and ho > hh + 0.02
+		var hn := _halo_at(lines["new"], c_new, w.x, w.z)
+		var tr1 := TR_K * maxf(hh, hn)
+		# 頂点色は 8 bit（元の圧縮フラグ）→ 1/255 未満の差は保存で消えるので変えない
+		if absf(tr1 - tr0) < 0.006:
+			if in_band:
+				band_new += 1
+			continue
+		out[i] = Color(tr1, cs[i].g, cs[i].b, cs[i].a)
+		changed.append(i)
+		if not strict_ok:
+			mismatch += 1
+		maxd = maxf(maxd, absf(tr1 - tr0))
+		if in_band and tr1 >= 0.3 * TR_K:
+			band_new += 1
+	var arr2 := arr.duplicate()
+	arr2[Mesh.ARRAY_COLOR] = out
+	var m := ArrayMesh.new()
+	# 元と同じ圧縮フラグ（法線・接線の量子化を元と同一に）
+	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr2, [], {}, src.surface_get_format(0))
+	m.resource_name = "RoadBase_FarmlandTerrain"
+	m.custom_aabb = src.custom_aabb
+	return {"mesh": m, "changed": changed, "max_delta": maxd, "band_old": band_old, "band_new": band_new, "verts": vs.size(), "mismatch": mismatch}
+
+
 static func build(v: Node3D) -> Node3D:
 	var root := Node3D.new()
 	root.name = NODE_NAME
@@ -318,6 +533,13 @@ static func build(v: Node3D) -> Node3D:
 		m.resource_name = "RoadBase_" + String(ROADS[k]["name"])
 		paths.append(k)
 		meshes.append(m)
+	var plans := {}
+	for k in keys:
+		plans[k] = plan_road(v, k, ROADS[k])
+	var tf := terrain_fix(v, plans)
+	paths.append(TERRAIN_NODE)
+	meshes.append(tf["mesh"])
+	root.set_meta("terrain_changed", (tf["changed"] as PackedInt32Array).size())
 	root.set("road_paths", paths)
 	root.set("road_meshes", meshes)
 	return root

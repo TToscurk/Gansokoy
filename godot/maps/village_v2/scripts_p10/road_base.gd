@@ -1,7 +1,8 @@
 extends Node3D
-## P10 R5a ROUND 2 Road Base Pilot（overlay `RoadBaseP10`，由 tools/village_v2_road_base_lib.gd 產生）。
-## _ready：road_paths の MeshInstance3D の mesh を road_meshes に差し替え（材質＝GroundPilotP10 の pilot shader のまま）。
-## enabled=false → 元の mesh に戻す。元の road_*.res は不変（runtime の差し替えだけ）。
+## P10 R5a Road Base Pilot（overlay `RoadBaseP10`，由 tools/village_v2_road_base_lib.gd 產生）。
+## _ready：road_paths の MeshInstance3D の mesh を road_meshes に差し替え（道 3 本＝材質は GroundPilotP10 の pilot shader のまま；
+## ROUND 3：＋Terrain/FarmlandTerrain＝踩み固め重み COLOR.r だけ局部修正した同形の mesh）。
+## enabled=false → 元の mesh に戻す。元の road_*.res／terrain_farmlandterrain.res は不変（runtime の差し替えだけ）。
 @export var road_paths: PackedStringArray = PackedStringArray()
 @export var road_meshes: Array[Mesh] = []
 @export var enabled := true:

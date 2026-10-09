@@ -1,0 +1,74 @@
+{
+  "grd_cross_south_edge_8m": {
+    "A_vs_B": {
+      "frac_gt12": 0.175,
+      "mean_abs": 4.02
+    },
+    "B_vs_C": {
+      "frac_gt12": 0.333,
+      "mean_abs": 7.98
+    },
+    "B_vs_E": {
+      "frac_gt12": 0.001,
+      "mean_abs": 0.9
+    },
+    "V0_vs_A": {
+      "frac_gt12": 0.091,
+      "mean_abs": 2.86
+    }
+  },
+  "grd_farmpath4_6m": {
+    "A_vs_B": {
+      "frac_gt12": 0.1,
+      "mean_abs": 2.62
+    },
+    "B_vs_C": {
+      "frac_gt12": 0.264,
+      "mean_abs": 6.75
+    },
+    "B_vs_E": {
+      "frac_gt12": 0.001,
+      "mean_abs": 0.9
+    },
+    "V0_vs_A": {
+      "frac_gt12": 0.073,
+      "mean_abs": 2.38
+    }
+  },
+  "r5a_farm_road_high": {
+    "A_vs_B": {
+      "frac_gt12": 0.049,
+      "mean_abs": 1.45
+    },
+    "B_vs_C": {
+      "frac_gt12": 0.118,
+      "mean_abs": 2.61
+    },
+    "B_vs_E": {
+      "frac_gt12": 0.005,
+      "mean_abs": 0.66
+    },
+    "V0_vs_A": {
+      "frac_gt12": 0.011,
+      "mean_abs": 1.09
+    }
+  },
+  "r5a_farmpath1_n": {
+    "A_vs_B": {
+      "frac_gt12": 0.09,
+      "mean_abs": 2.6
+    },
+    "B_vs_C": {
+      "frac_gt12": 0.229,
+      "mean_abs": 5.92
+    },
+    "B_vs_E": {
+      "frac_gt12": 0.011,
+      "mean_abs": 1.2
+    },
+    "V0_vs_A": {
+      "frac_gt12": 0.049,
+      "mean_abs": 1.96
+    }
+  }
+}
