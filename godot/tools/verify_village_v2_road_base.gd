@@ -21,6 +21,8 @@ const LIB := preload("res://tools/village_v2_road_base_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const EXT_ID := "p10r5a_road_base"
 const AFTER_NODE := "[node name=\"PropFixP10\" parent=\".\" instance=ExtResource(\"p10r4c_prop_fix\")]"
+const RS := preload("res://tools/village_v2_rehab_seal.gd")
+const SEAL := "res://data/village_v2_p10r5a_seal.json"   # 使用者 2026-10-09 ROUND 3 FINAL：R5a Road Base 416 m Pilot＝ART_APPROVED
 var fails := 0
 var quiet := false
 var V: Node3D
@@ -36,6 +38,12 @@ func _ok(c: bool, msg: String) -> bool:
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
+	if RS.refuse_write(args, SEAL, "RDB_ALLOW_REBAKE", "RDB"):
+		quit(1)
+		return
+	if "--seal" in args:
+		quit(await RS.new().run(self, SEAL, "RDB", LIB.NODE_NAME, _seal_extra))
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
@@ -468,3 +476,40 @@ func _attach() -> int:
 	f.close()
 	print("[RDB] attach：加 root/%s（PropFixP10 之後）→ %s（+%d 行）" % [LIB.NODE_NAME, SCENE, out.size() - lines.size()])
 	return 0
+
+
+## --seal 固有：再現性＝現在の生成器（lib）で記憶體内に再生成した道 3 本＋地形（COLOR.r 局部修正）が、封存した overlay の mesh と配列一致
+## （頂点・法線・UV・UV2・索引・COLOR；地形は COLOR.r の変更頂点数も）。元の road_*.res／terrain_farmlandterrain.res は不変（frozen の sha）。
+func _seal_extra(v: Node3D) -> Array:
+	V = v
+	var n := v.get_node(LIB.NODE_NAME)
+	var baked_paths: PackedStringArray = n.get("road_paths")
+	var baked: Array = n.get("road_meshes")
+	n.call("apply", false)
+	await physics_frame
+	await physics_frame
+	var plans := {}
+	for k in LIB.ROADS:
+		plans[k] = LIB.plan_road(v, k, LIB.ROADS[k])
+	var fresh := {}
+	for k in LIB.ROADS:
+		fresh[k] = LIB.make_mesh(plans[k])
+	var tf := LIB.terrain_fix(v, plans)
+	fresh[LIB.TERRAIN_NODE] = tf["mesh"]
+	var bad := []
+	for i in baked_paths.size():
+		var key := String(baked_paths[i])
+		if not fresh.has(key):
+			bad.append("%s 生成器に無い" % key)
+			continue
+		var a := (baked[i] as ArrayMesh).surface_get_arrays(0)
+		var b := (fresh[key] as ArrayMesh).surface_get_arrays(0)
+		for ai in [Mesh.ARRAY_VERTEX, Mesh.ARRAY_NORMAL, Mesh.ARRAY_TEX_UV, Mesh.ARRAY_TEX_UV2, Mesh.ARRAY_INDEX, Mesh.ARRAY_COLOR]:
+			if a[ai] != b[ai]:
+				bad.append("%s array %d" % [key.get_file(), ai])
+	n.call("apply", true)
+	await physics_frame
+	var nchg := (tf["changed"] as PackedInt32Array).size()
+	return [[bad.is_empty() and baked_paths.size() == 4, "再現性：生成器で記憶體内に再生成した道 3 本＋地形 FarmlandTerrain が封存 overlay の mesh と配列一致（%d 本、不一致 %s）" % [baked_paths.size(), str(bad.slice(0, 4))]],
+		[nchg == 577, "地形 COLOR.r の局部修正 %d 頂点（＝ART_APPROVED 時の 577）" % nchg],
+		[int(n.get("applied")) == 4, "RoadBaseP10 再適用 %d（道 3＋地形 1）" % int(n.get("applied"))]]

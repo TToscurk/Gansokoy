@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[EDGE] PASS status ART_APPROVED（2026-10-09；approved_by＝user、agent は美術を承認しない）
+[EDGE] PASS 封存 56 檔雜湊一致（凍結・證據・審圖・子封存；不符 0：[]）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[EDGE] PASS 掛載：root 直下 EdgeClosureP10 1 個・HumanUseExpansionP10 の直後（index 11）・res://maps/village_v2/gen/edge_closure_p10.scn
+[EDGE] PASS EdgeClosureP10 visible・描画ノード MeshInstance 3／MultiMesh 1646
+[EDGE] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1）
+[EDGE] 結果：0 項失敗（seal）

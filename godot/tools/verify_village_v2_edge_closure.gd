@@ -20,6 +20,8 @@ const MMG := preload("res://tools/village_v2_mm_bake_guard.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const AFTER_NODE := "[node name=\"HumanUseExpansionP10\" parent=\".\" instance=ExtResource(\"p10r4b_human_use_exp\")]"
 const EXT_ID := "p10r5c_edge_closure"
+const RS := preload("res://tools/village_v2_rehab_seal.gd")
+const SEAL := "res://data/village_v2_p10r5c_seal.json"   # 使用者 2026-10-09 ROUND 3 FINAL：R5c Boundary Closure＝ART_APPROVED
 
 var fails := 0
 var quiet := false
@@ -36,6 +38,12 @@ func check(name: String, ok: bool) -> bool:
 
 func _run() -> void:
 	var args := OS.get_cmdline_user_args()
+	if RS.refuse_write(args, SEAL, "EDGE_ALLOW_REBAKE", "EDGE"):
+		quit(1)
+		return
+	if "--seal" in args:
+		quit(await RS.new().run(self, SEAL, "EDGE", "EdgeClosureP10", _seal_extra))
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
@@ -409,3 +417,11 @@ func _attach() -> int:
 	f.close()
 	print("[EDGE] attach：加 root/%s（HumanUseExpansionP10 之後）→ %s（+%d 行）" % [EL.NODE_NAME, SCENE, out.size() - lines.size()])
 	return 0
+
+
+## --seal 固有：EdgeClosureP10 の内容（林帯・遠景）が見えて掛かっている（使用者：林帯の数は増やさない＝seal の frozen に overlay 雜湊）
+func _seal_extra(v: Node3D) -> Array:
+	var n := v.get_node("EdgeClosureP10") as Node3D
+	var mi := n.find_children("*", "MeshInstance3D", true, false).size()
+	var mm := n.find_children("*", "MultiMeshInstance3D", true, false).size()
+	return [[n.visible and mi + mm > 0, "EdgeClosureP10 visible・描画ノード MeshInstance %d／MultiMesh %d" % [mi, mm]]]

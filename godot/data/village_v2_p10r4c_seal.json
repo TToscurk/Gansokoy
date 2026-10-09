@@ -1,0 +1,62 @@
+{
+ "schema": 1,
+ "status": "ART_APPROVED",
+ "approved_by": "user",
+ "approved_date": "2026-10-09",
+ "approval_source": "使用者 2026-10-09 P10 R5–R6 ROUND 3 FINAL ART DIRECTION：「以下項目正式 ART_APPROVED：R5c Boundary Closure、R5a Road Base 416 m Pilot、R6a Kit Material 24 Buildings Pilot、R4c Straw Geometry Pilot」「允許開始這四項的正式整合及必要 limited reseal」「目前只核准 Pilot 範圍，不代表已批准全村套用」",
+ "scope": "Pilot 範囲のみ（全村套用は未承認）",
+ "reseal_history": [],
+ "phase": "P10 R4c Straw Geometry Pilot（st_hasa → st_hasa_v2：竿×稲束の穿插 0；A2 背負い籠 東へ 1.0 m の最小移位）",
+ "overlay": "res://maps/village_v2/gen/prop_fix_p10.scn",
+ "node": "PropFixP10",
+ "mount_after": "ShrineApproachP10",
+ "rule": "PropFixP10 が runtime で st_hasa（＋_l1）18 個を st_hasa_v2 に差し替え、A2 籠 1 件だけ移位。street_kit・R2／R4／R4b の baked overlay は不変。影響を受ける封存＝R4（snapshot の A2 位置・HUSE scene gate の mesh 判定）、R4b（R4 封存を子に持つ）→ limited reseal。R2 StreetP10 の封存 gate は不影響（--seal PASS）。--build／--attach は拒否（R4C_ALLOW_REBAKE=1＝使用者 reopen 時だけ）。",
+ "verification": {
+  "tag": "R4C",
+  "seal": "verify R4C --seal（雜湊・掛載・固有 live 検査・竄改反向）"
+ },
+ "frozen": {
+  "godot/tools/verify_village_v2_prop_fix.gd": "2bce41c825cd971ab205a05839779fe6aa402f9407c850d63af0fa988dfc603d",
+  "godot/maps/village_v2/scripts_p10/prop_fix.gd": "b4f8f039d0765e6e2f7e71eab2d91f44874e01eeab484160f896263c5d8c1000",
+  "godot/maps/village_v2/gen/prop_fix_p10.scn": "4a68f416b9a42ad00a9695501f21a680167e51aa8fc0d3151e83c63b77c94b7a",
+  "godot/tools/shot_village_v2_rehab_r4c_views.json": "42673cb17ea84877fd41b808e160898cee115d1aaddefaf3cf9016bece3f85ca",
+  "godot/tools/village_v2_rehab_seal.gd": "ea3541291b0a1bddc0525d3053fb61beddb2b8bc70c91b16b0d5e3ce8af8e106",
+  "tools/seal_p10_rehab.py": "11bb5392dd4c26a2863f1f2a238c7edd40b92101b86a112725550af05fd34054",
+  "godot/assets/blender/village_v2/build_hasa_v2.py": "df35b369a3c12adefc0ef2892e4d5410fe3e14605e842eaa3e85c019f4021893",
+  "godot/assets/village_v2/r4c_kit/src/hasa_v2_spec.json": "14330721c4fb147699c358c7ca9130560c2c45a38ac271db603b1b1c02a67eea",
+  "godot/assets/village_v2/r4c_kit/src/modules_blender.json": "8abbf43b18b4a547b185e4d3086ebb63df81c1344b7319b972b31643596b35cd",
+  "godot/assets/village_v2/r4c_kit/src/r4c_kit.glb": "a7ccafd64217daf4970bd6338dce03401ccfa1f87eda4403b808ee0806269cd0",
+  "godot/maps/village_v2/gen/r4c/st_hasa_v2.res": "b092d572b6ec708c88612e6544349087cdc622aef3afb104e1f3b8fe2ab3c611",
+  "godot/maps/village_v2/gen/r4c/st_hasa_v2_l1.res": "a7dd7d307de62961f03f149cb1f943e6cc02c9b85c877c9867321539bd966a8a"
+ },
+ "evidence": {
+  "docs/art_review/village_v2_p10_rehab_impl/integration/r4c/r4c_build_refused.log": "7b2b5dc34329a7153962711c34a457b9284ec7334283b41d064eb28433859608",
+  "docs/art_review/village_v2_p10_rehab_impl/integration/r4c/r4c_scene.log": "da63b9a385228de6168f7f1292b9092da4f0058e3acdc7d55cc907e0d3878b04",
+  "docs/art_review/village_v2_p10_rehab_impl/integration/r4c/r4c_seal.log": "51d8f05f93f3dbc102386dc8b39dbab98ce2fd6eaa571fbe7d5cf869df4b4682",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/_stats.json": "89e517dbf0bc29cc4c40b478e6ea4fb950bed33fb7787aaa5b2a802022a30940",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/convert.log": "56ca40ad95097ec3c25f25dec6681656a5b6d378634020047c7257b1271f24c6",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/gate_plan_negatives.log": "f64ee8cecd45ba6a73be6529df6ff2d0468e07ecd2249c112070522dfba2772c",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/gate_scene.log": "986ab5d4d834a0849e0ec3cff87c3964ed8585430b3972fd96e4fbd48a1e4201"
+ },
+ "art_review_images": {
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_dakkoku_A2_pair.jpg": "7c674dc995f303eb3daae3b6849369dbc76666ff84c38e5e9618ccc7a1271ac0",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_farmedge_hasa_zuka_pair.jpg": "99f568efce15062d7aa8e5317dfa290634da2633a7e76b4114743b4a6546d3bc",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_hasa_A1_10m_pair.jpg": "6613726b25fd5cdbd671712911caec410f768f0e7131a997831d4c7a628e457a",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_hasa_A1_close_pair.jpg": "6d24b1c0f8a45f77ce3560242cb9854be81972f401afa131de562870a93b06f8",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_hasa_A1_pair.jpg": "f094fa9abc2a9e6c732754185646c442dc595fd3501020edf19962a55c45b0c4",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/pairs/r4c_hasa_XA3_pair.jpg": "94f61d49bebbbf87b43544f78565d33a641ba160dc7afba578515ec7e52c9d77",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_dakkoku_A2_a.png": "6771d4c444ec9ec503bb61b3d7117bc08c5ec0cfc8cf3d075de9fc06e3fca91c",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_dakkoku_A2_b.png": "54dd4a7936c592bb61daf59e7f5018b8852e709db91161570e7023ab336cb0e4",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_farmedge_hasa_zuka_a.png": "2f329a669c51112ced227f27d6021176da68cedad996f16c8ab557c34d30c276",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_farmedge_hasa_zuka_b.png": "beeae5fd360b04f5278173c1110912dbff4c51499276c7cb08a8c4e46c5e42e5",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_10m_a.png": "29f67717cbba3f130a6dbcd9576d9922b8b728623be7e4d375c57612ae897b22",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_10m_b.png": "f96360cab99e59894428cb607e4c0b8d38b2b0b2408ac5cfd5b8eb6a06006e46",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_a.png": "1da33202e2e1e061f918cef9b0deefd1dcfc632f5ecc483146631af4bc74e33e",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_b.png": "a39007a264def40952a1865720b9a9e050830cb62b30372fd4073b9cc5a14165",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_close_a.png": "2b1cd15dea741e0ba04e089ab4686d7ef74fadb5bf06273c906931e53e15ffc5",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_A1_close_b.png": "5a856047798d992476bc36e2bb6332cd558f50d891b0134370580e3507800d77",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_XA3_a.png": "a46cf4a45868c0df8691f97330ecf92b39320233386de57c92f6b8aa1a263eea",
+  "docs/art_review/village_v2_p10_rehab_impl/r4c_props/r4c_hasa_XA3_b.png": "1c221c4ee9a9bd11d614850ecdf965274f4eb46bb99db711849be89dc61065bd"
+ },
+ "child_seals": {}
+}

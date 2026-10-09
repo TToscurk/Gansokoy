@@ -25,6 +25,11 @@ run() {  # $1 標籤, $2 grep 前綴, 其餘為 Godot 參數
 	printf '%s\n' "$out" | grep -E "^\[$tag\] (FAIL|結果)|SCRIPT ERROR|Parse Error"
 	if [ $rc -ne 0 ]; then echo "✗ $label（exit $rc）"; fail=$((fail + 1)); else echo "✓ $label"; fi
 }
+runneg() {  # 反向：$1 標籤, $2 期待する FAIL 行（grep -F）, 其餘為 Godot 參數；exit≠0 かつ期待行あり → PASS（P10 R6a：P6 Kit Gate 合法変体の反向）
+	local label="$1" want="$2"; shift 2
+	local out; out="$("$G" "$@" 2>&1)"; local rc=$?
+	if [ $rc -ne 0 ] && printf '%s\n' "$out" | grep -qF "$want"; then echo "✓ $label"; else echo "✗ $label（反向が FAIL しない：exit $rc）"; fail=$((fail + 1)); fi
+}
 if [ "${1:-}" = "--gen" ]; then
 	"$G" --headless --path . --script res://tools/gen_village_v2.gd > /dev/null 2>&1 || { echo "✗ 產生器失敗"; exit 98; }
 	echo "✓ 產生器"
@@ -40,6 +45,10 @@ run "P4 greybox gate"                       GB      --headless --path . --script
 run "P5 asset reset gate（白名單／Protected／封存）" ASSET --headless --path . --script res://tools/verify_village_v2_asset_reset.gd
 run "P5 Hero Asset Gate 回歸（已登記資產 1–9 項重驗＋gate.json 雜湊）" HERO --headless --path . --script res://tools/verify_village_v2_hero_gate.gd -- --all
 run "P6 町家 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊）" KIT --headless --path . --script res://tools/verify_village_v2_machiya_kit_gate.gd -- --regress
+runneg "P6 町家 Kit Gate 反向：任意の override → 4 材質 FAIL" "FAIL machiya_kit materials" --headless --path . --script res://tools/verify_village_v2_machiya_kit_gate.gd -- --regress --neg=material
+runneg "P6 町家 Kit Gate 反向（P10 R6a）：登記変体を Pilot 外の建物へ → FAIL" "FAIL machiya_kit materials" --headless --path . --script res://tools/verify_village_v2_machiya_kit_gate.gd -- --regress --neg=material_offpilot
+runneg "P6 町家 Kit Gate 反向（P10 R6a）：登記変体を基底違いの面へ → FAIL" "FAIL machiya_kit materials" --headless --path . --script res://tools/verify_village_v2_machiya_kit_gate.gd -- --regress --neg=material_wrongbase
+runneg "P6 町家 Kit Gate 反向（P10 R6a）：変体の sha が登記／封存と不一致 → FAIL" "FAIL machiya_kit materials" --headless --path . --script res://tools/verify_village_v2_machiya_kit_gate.gd -- --regress --neg=material_badsha
 run "P7 R2 河岸 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊＋烘焙＝重排）" RBG --headless --path . --script res://tools/verify_village_v2_riverbank_gate.gd -- --regress
 run "P7 R3 河岸石砌 Cleanup Gate（4 條規則：覆蓋空窗／可見 40–70%／浮空與過度外露／2–4 層）" RBSW --headless --path . --script res://tools/verify_village_v2_riverbank_stonework.gd
 run "場景擺放／碰撞稽核＋永久反向案例（clean 全 PASS；float／sink／clash→FAIL、aabbfp→PASS、noproxy→REVIEW）" PLACE --headless --path . --script res://tools/audit_village_v2_placement.gd -- --selftest
@@ -148,9 +157,11 @@ run "P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下
 run "P10 R4b Human-Use Expansion Batch 1 A/B FINAL 封存（使用者 2026-10-08：A・B ART_APPROVED／C 水岸 ART_REJECTED＝除去・理由を記録・40 件 snapshot＝場景＝承認時 r3 の A/B・C 群／hx_doroage なし・R4 の 50 件不変・NPC 51・凍結／證據／審圖／rejected candidates／子封存雜湊＋竄改・移動・who・C 戻し反向；封存中 --build／--attach 拒否）" HUX --headless --path . --script res://tools/verify_village_v2_human_use_exp.gd -- --seal
 run "P10 R5c World Edge Closure plan gate＋反向 4（frame 外 Vista：P1 邊緣頂點接縫 ≤ 0.01 m・vista 頂點全在 frame 外・TPS 視點 294／射線 25852 看見世界盡頭 0・水系延續〔水位單調・接口＝P2・匯入／會合〕・樹〔水中／陡坡／frame 內 0〕・地形 ≤ 140k 三角；反向 rim／seam／tree／water）" EDGE --headless --path . --script res://tools/verify_village_v2_edge_closure.gd
 run "P10 R5c World Edge Closure 場景級（root 直下 HumanUseExpansionP10 の次に EdgeClosureP10 1 個・CollisionObject3D 0・Collision/Boundary 4 牆不變・VistaTerrain frame 內頂點 0・MultiMesh 零矩陣 0；非 headless）" EDGE --path . --script res://tools/verify_village_v2_edge_closure.gd -- --scene
+run "P10 R5c World Edge Closure 封存（使用者 2026-10-09 ART_APPROVED：雜湊・掛載・林帯／遠景の描画・竄改反向；封存中 --build 拒否）" EDGE --headless --path . --script res://tools/verify_village_v2_edge_closure.gd -- --seal
 run "P10 R6a 材質亮度基準＋街區調色盤 Pilot plan gate＋反向 9（來源材質＝0.42 灰／校正只改 albedo（Kit atlas＝等價 shader：木 0.75／屋根灰 0.42 不變／漆喰 0.70）／色卡 luma 在目標帶／Pilot 24 棟兩區・≤ 25 %／調色盤飽和 ≤ 0.22・鄰棟不同組；反向：帶色・等幅提亮・區外・全村・改粗糙度・Hero・Kit 屋根提亮・過飽和・全同組）" ALB --headless --path . --script res://tools/verify_village_v2_albedo_pilot.gd
 run "P10 R6a 材質亮度基準 Pilot 場景級（root EdgeClosureP10 の次に AlbedoPilotP10・Pilot 建物の來源材質表面全覆寫・Pilot 外 0・enabled 開關還原・_matlib／kit 來源雜湊＝build 時；非 headless）" ALB --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --scene
 run "P10 R6a ROUND 3 Kit 專用校正材質 合法変体 gate＋反向 6（登記表 18 変体 ↔ 檔案 sha256・基底との差＝albedo_color／Kit atlas＝k だけ・飽和 ≤ 0.22・明度帯・承認済み 24 棟と同値・場景の Kit override＝登記変体だけ／Pilot 24 棟だけ／他 163 棟 0・_matlib／P6 Kit 原檔 git 未変更；Kit Gate は不変）" KITM --headless --path . --script res://tools/verify_village_v2_kit_material.gd
+run "P10 R6a Kit Material 24 Buildings Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔登記表・変体 18・shader・overlay〕・掛載・材質＝登記変体だけ・Pilot 24 棟・竄改反向）" ALB --headless --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --seal
 run "P10 R5a Ground Pilot plan gate＋反向 7（封存 ground.gdshader 雜湊＝matlib.json・補丁 7 段逐字（ROUND 2：再生道 UV2.y の区間別の使われ方）・pilot shader 可重現・田格移除・discard 只在外緣侵蝕／參道挖洞・新參數預設＝舊行為・道路參數在核准範圍・外緣實測 sd 0.08–0.45 m）" GRD --headless --path . --script res://tools/verify_village_v2_ground_pilot.gd
 run "P10 R5a Ground Pilot 場景級（AlbedoPilotP10 の次に GroundPilotP10・地形 4＋道路 4 換 pilot shader・原參數逐一保留・非 Pilot 道路不變・enabled 開關・雜湊；非 headless）" GRD --path . --script res://tools/verify_village_v2_ground_pilot.gd -- --scene
 run "P10 R5b Water Pilot plan gate＋反向 9（ROUND 3 純動力水車：揚水部材 0・下端の動き·水渠下流 ≥ 0.9・葉板浸水 0.15–0.80・主泡は出水側・P8 高架落とし樋〔Chute_0／Chute_1／ChuteJoint／HeadBearer／Support〕は runtime 非表示〔DropBox 以下は不変〕・表裏・小舟・繫船杭・荷）" WLF --headless --path . --script res://tools/verify_village_v2_water_life.gd
@@ -160,7 +171,9 @@ run "P10 R6b Shrine Approach 場景級（WaterLifeP10 の次に ShrineApproachP1
 run "P10 R6b ROUND 3 參道 walkable-surface gate＋反向 5（足場＝最上面の歩ける面〔P1 地形／斜坡碰撞〕：斜坡と見える踏面 ≤ 半蹴上＋0.03・玩家膠囊淨空〔中心＋左右〕・0.25 m ごとの高さ連続 ≤ tan(floor_max_angle)・踊り場の縁／両脇・NPC 巡回不横切り・正式 TPS 相機が石／地形に入らない〔腕の縮み回数は INFO〕・P9 R4-2 同經路を最上面基準で被擋 0；P9 R4-2 封存 gate は不変）" SWALK --headless --path . --script res://tools/verify_village_v2_sando_walkable.gd
 run "P10 R4c Prop Fix plan gate＋反向 5（st_hasa_v2 規格：竿×半束 ≥ 0.010・束頭坐竿上・束×束 ≥ 0.005・脚×束 ≥ 0.010・網格＝manifest・與 st_hasa 同尺度；A2 籠 移位後も接地〔地面＝TerrainCollision〕・視線・碰撞；N4 籠不動・N5 籠沈む）" R4C --headless --path . --script res://tools/verify_village_v2_prop_fix.gd
 run "P10 R4c Prop Fix 場景級（ShrineApproachP10 の次に PropFixP10・st_hasa 全換 v2・enabled 還原；非 headless）" R4C --path . --script res://tools/verify_village_v2_prop_fix.gd -- --scene
+run "P10 R4c Straw Geometry Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊・掛載・st_hasa_v2 差し替え 18・A2 移位 1 件＝R4 snapshot・竄改反向）" R4C --headless --path . --script res://tools/verify_village_v2_prop_fix.gd -- --seal
 run "P10 R5a ROUND 3 Road Base Pilot plan gate＋反向 7（ROUND 3：P7 地形 FarmlandTerrain の踩み固め重みを再生道に合わせて局部修正〔COLOR.r だけ・対象 3 本の旧い帯が支配する頂点だけ・旧い帯 ≤ 0.6 倍〕；小範囲 3 本 ≤ 450 m・元の路幅の中・地形なり〔芯＋0.02–0.07／縁 −0.03–0〕・定規の直線でない・水の上の切れ目を保つ・南橫街の町の区間は元の三角形・交差点の上下 ≥ 0.012・NPC 地形の上）" RDB --headless --path . --script res://tools/verify_village_v2_road_base.gd
 run "P10 R5a ROUND 3 Road Base Pilot 場景級（PropFixP10 の次に RoadBaseP10・3 本の mesh＋FarmlandTerrain 差し替え・材質＝pilot shader のまま・道に碰撞なし・P9 地被／立ち草の浮き 0・enabled 開關で元の mesh；非 headless）" RDB --path . --script res://tools/verify_village_v2_road_base.gd -- --scene
+run "P10 R5a Road Base 416 m Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔元の road_*.res／terrain_farmlandterrain.res 含む〕・掛載・再現性＝生成器で記憶體内再生成→封存 overlay と配列一致・地形 COLOR.r 577 頂点・竄改反向）" RDB --headless --path . --script res://tools/verify_village_v2_road_base.gd -- --seal
 echo "回歸失敗項目：$fail"
 exit $fail
