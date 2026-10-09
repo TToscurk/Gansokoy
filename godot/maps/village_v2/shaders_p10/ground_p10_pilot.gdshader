@@ -1,5 +1,5 @@
 // 人間之里 V2 P10 R5a GROUND PILOT（由 tools/village_v2_ground_pilot_lib.gd 從封存 ground.gdshader 文字補丁產生，勿手改）。
-// 補丁：田格段→田邊耕土斑、道路帶外緣侵蝕、田埂道中央草帶斷續化。其餘逐字＝ground.gdshader。
+// 補丁：田格段→田邊耕土斑、道路帶外緣侵蝕、田埂道中央草帶斷續化、ROUND 2 再生道（UV2.y ≥ 1）の区間別の使われ方。其餘逐字＝ground.gdshader。
 // 人間之里 V2 P7 地面材質（Ground Material / Transition）。
 // 由 tools/build_village_v2_textures.py --ground 產生，勿手改；層序＝matlib.json ground.layers：
 // 0 grass 1 street 2 trodden 3 gravel 4 mud 5 rock 6 forest
@@ -106,6 +106,18 @@ void fragment() {
 			rut = rut_strength * exp(-(xm - rut_offset) * (xm - rut_offset) / 0.035);
 		}
 		rut += wear_center * (1.0 - smoothstep(0.25, 0.55, ax + (nm.b - 0.5) * 0.2)) * 0.5;
+		// P10 R5a ROUND 2：再生した道（RoadBaseP10、UV2.y ≥ 1）＝区間ごとの使われ方 traffic＝UV2.y − 1（0 田の奥 … 1 村の出入口）。
+		// 旧網格は UV2.y＝0 → 何も変わらない。
+		if (UV2.y > 0.5) {
+			float traffic = clamp(UV2.y - 1.0, 0.0, 1.0);
+			float rx = xm - hw * 0.45;
+			float rk = exp(-rx * rx / 0.03);
+			rut += traffic * 0.6 * rk;
+			w[0] *= 1.0 - clamp(traffic * 1.5 * rk, 0.0, 0.9);
+			w[0] += (1.0 - traffic) * 0.6 * (1.0 - smoothstep(0.10, 0.30 + 0.15 * (1.0 - traffic), xm + (nf - 0.5) * 0.25));
+			w[0] += (1.0 - traffic) * 0.55 * smoothstep(0.55, 0.95, ax + (nm.g - 0.5) * 0.45);
+			w[3] += traffic * 0.35 * smoothstep(0.6, 0.95, ax) * smoothstep(0.4, 0.7, nf);
+		}
 	} else {
 		vec4 a = use_vertex_weights ? COLOR : fix_a;
 		vec4 b = use_vertex_weights ? vec4(UV.x, UV.y, UV2.x, UV2.y) : fix_b;

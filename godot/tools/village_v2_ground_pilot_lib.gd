@@ -20,7 +20,7 @@ const SCRIPT := "res://maps/village_v2/scripts_p10/ground_pilot.gd"
 const SRC_SHADER := "res://assets/village_v2/_matlib/ground/ground.gdshader"
 const SRC_SHA256 := "SET_BY_GATE"
 const OUT_SHADER := "res://maps/village_v2/shaders_p10/ground_p10_pilot.gdshader"
-const ART_REVISION := "P10 R5a ground pilot r3：草舌沿路拉長＋切口內 0.4 m 混草（r2 近距缺口像印章、土草一刀切）；R6b 參道石段挖洞參數 cut_s／cut_hw（預設關）（ART_REVIEW）"
+const ART_REVISION := "P10 R5a ground pilot ROUND 2 r4：再生道（UV2.y）の区間別の使われ方の段を追加（轍＝草なしの土の帯）、田埂道 1／4 の center_patch 1.0→0.35（梯子状の中央草）；r3：草舌沿路拉長＋切口內 0.4 m 混草（r2 近距缺口像印章、土草一刀切）；R6b 參道石段挖洞參數 cut_s／cut_hw（預設關）（ART_REVIEW）"
 
 const TERRAIN := ["Terrain/MainTerrain", "Terrain/NorthHill", "Terrain/FarmlandTerrain", "Terrain/RiverTerrain"]
 ## 田邊耕土強度（farm 權重 × farm_soil → 踏み土＋少量泥，斑塊化；0＝farm 權重完全不影響地面）
@@ -29,8 +29,8 @@ const FARM_SOIL := 0.32
 ## edge_w＝外緣侵蝕帶寬（m，0.25–1.20）、edge_irreg＝沿路寬度起伏（m，0.08–0.45）、center_patch＝中央草帶斷續化（0–1）
 const ROADS := {
 	"Roads/SecondaryRoads/CrossStreetSouth": {"edge_w": 0.55, "edge_irreg": 0.30, "center_patch": 0.0, "use": "town→farm"},
-	"Roads/FarmPaths/FarmPath_1": {"edge_w": 0.40, "edge_irreg": 0.26, "center_patch": 1.0, "use": "farm"},
-	"Roads/FarmPaths/FarmPath_4": {"edge_w": 0.40, "edge_irreg": 0.26, "center_patch": 1.0, "use": "farm"},
+	"Roads/FarmPaths/FarmPath_1": {"edge_w": 0.40, "edge_irreg": 0.26, "center_patch": 0.35, "use": "farm"},   # ROUND 2：1.0 → 0.35（沿路 7 m 周期の中央草の途切れが梯子状に見えた）
+	"Roads/FarmPaths/FarmPath_4": {"edge_w": 0.40, "edge_irreg": 0.26, "center_patch": 0.35, "use": "farm"},
 	"Roads/SecondaryRoads/RiversidePath": {"edge_w": 0.60, "edge_irreg": 0.32, "center_patch": 0.0, "use": "waterfront"},
 }
 const EDGE_W_RANGE := [0.25, 1.20]
@@ -89,6 +89,22 @@ const NEW_GRAVEL := """		w[3] += edge_gravel * smoothstep(0.5, 0.95, ax) * smoot
 const OLD_CENTER := """		w[0] += center_grass * (1.0 - smoothstep(0.22, 0.42, xm + (nf - 0.5) * 0.2));"""
 const NEW_CENTER := """		float cpat = mix(1.0, smoothstep(0.42, 0.66, texture(noise_tex, vec2(UV.y / 7.0, 0.37 + UV.x * 0.02)).b), center_patch);
 		w[0] += center_grass * cpat * (1.0 - smoothstep(0.16 + 0.12 * cpat, 0.30 + 0.16 * cpat, xm + (nf - 0.5) * 0.2));"""
+## P10 R5a ROUND 2：RoadBaseP10 が再生した道（UV2.y ≥ 1）だけ、区間ごとの使われ方 traffic＝UV2.y − 1 で轍・中央草・路肩の草・砂利を変える。
+## 旧網格（全村の道）は UV2.y＝0 → この段は何もしない（見た目不変）。
+const OLD_WEAR := """		rut += wear_center * (1.0 - smoothstep(0.25, 0.55, ax + (nm.b - 0.5) * 0.2)) * 0.5;"""
+const NEW_WEAR := """		rut += wear_center * (1.0 - smoothstep(0.25, 0.55, ax + (nm.b - 0.5) * 0.2)) * 0.5;
+		// P10 R5a ROUND 2：再生した道（RoadBaseP10、UV2.y ≥ 1）＝区間ごとの使われ方 traffic＝UV2.y − 1（0 田の奥 … 1 村の出入口）。
+		// 旧網格は UV2.y＝0 → 何も変わらない。
+		if (UV2.y > 0.5) {
+			float traffic = clamp(UV2.y - 1.0, 0.0, 1.0);
+			float rx = xm - hw * 0.45;
+			float rk = exp(-rx * rx / 0.03);
+			rut += traffic * 0.6 * rk;
+			w[0] *= 1.0 - clamp(traffic * 1.5 * rk, 0.0, 0.9);
+			w[0] += (1.0 - traffic) * 0.6 * (1.0 - smoothstep(0.10, 0.30 + 0.15 * (1.0 - traffic), xm + (nf - 0.5) * 0.25));
+			w[0] += (1.0 - traffic) * 0.55 * smoothstep(0.55, 0.95, ax + (nm.g - 0.5) * 0.45);
+			w[3] += traffic * 0.35 * smoothstep(0.6, 0.95, ax) * smoothstep(0.4, 0.7, nf);
+		}"""
 const OLD_UNIFORM := """uniform float bund_w = 1.2;"""
 const NEW_UNIFORM := """uniform float bund_w = 1.2;
 // P10 R5a pilot 參數（預設值＝不改變舊行為，除 farm_soil 外）
@@ -102,10 +118,10 @@ uniform vec2 cut_s = vec2(0.0);
 uniform float cut_hw = 0.0;"""
 const OLD_HEADER := """// 人間之里 V2 P7 地面材質（Ground Material / Transition）。"""
 const NEW_HEADER := """// 人間之里 V2 P10 R5a GROUND PILOT（由 tools/village_v2_ground_pilot_lib.gd 從封存 ground.gdshader 文字補丁產生，勿手改）。
-// 補丁：田格段→田邊耕土斑、道路帶外緣侵蝕、田埂道中央草帶斷續化。其餘逐字＝ground.gdshader。
+// 補丁：田格段→田邊耕土斑、道路帶外緣侵蝕、田埂道中央草帶斷續化、ROUND 2 再生道（UV2.y ≥ 1）の区間別の使われ方。其餘逐字＝ground.gdshader。
 // 人間之里 V2 P7 地面材質（Ground Material / Transition）。"""
 
-const PATCHES := [[OLD_HEADER, NEW_HEADER], [OLD_UNIFORM, NEW_UNIFORM], [OLD_GRID, NEW_GRID], [OLD_ROAD_HEAD, NEW_ROAD_HEAD], [OLD_GRAVEL, NEW_GRAVEL], [OLD_CENTER, NEW_CENTER]]
+const PATCHES := [[OLD_HEADER, NEW_HEADER], [OLD_UNIFORM, NEW_UNIFORM], [OLD_GRID, NEW_GRID], [OLD_ROAD_HEAD, NEW_ROAD_HEAD], [OLD_GRAVEL, NEW_GRAVEL], [OLD_CENTER, NEW_CENTER], [OLD_WEAR, NEW_WEAR]]
 
 
 ## 回傳 [code, missing]：missing＝找不到的補丁段（非空＝來源已變）

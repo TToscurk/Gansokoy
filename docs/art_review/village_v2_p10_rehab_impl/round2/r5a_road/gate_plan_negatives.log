@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[RDB] PASS 小範囲：再生 3 本（FarmPath_1／FarmPath_4／南橫街の田の区間）、長さ合計 416 m（≤ 450）
+[RDB]   境目 CrossStreetSouth：町の区間の三角形 150＝元のまま（頂点差 0.0000 m）、境目の行＝元の左右頂点（0.000／0.000 m）
+[RDB]   FarmPath_1：元の帯 地形＋0.100（最大 0.171）→ 新 芯 +0.045〜+0.045・縁 -0.015〜-0.015、半幅 1.20→0.80–1.20、蛇行 ≤ 0.27
+[RDB]   FarmPath_4：元の帯 地形＋0.100（最大 0.100）→ 新 芯 +0.030〜+0.030・縁 -0.015〜-0.015、半幅 1.20→0.78–1.20、蛇行 ≤ 0.31
+[RDB]   CrossStreetSouth：元の帯 地形＋0.106（最大 0.172）→ 新 芯 +0.060〜+0.060・縁 -0.015〜-0.015、半幅 3.00→1.93–3.00、蛇行 ≤ 0.57
+[RDB] PASS 元の路幅の中（横距離 ≤ 元の半幅）
+[RDB] PASS 地形なり：芯＝地形＋0.02–0.07、縁＝地形 −0.03–0.00（元の帯は＋0.10 の平板）
+[RDB] PASS 定規の直線でない：半幅比 ≥ 1.12、蛇行 ≥ 0.12（南橫街 0.2）、縁ぶれ σ ≥ 0.04
+[RDB] PASS 南橫街の境目：町の区間は元の三角形のまま、境目の行＝元の左右頂点
+[RDB]   FarmPath_1：元の区間 ["0–160"] → 新 ["0–160"]
+[RDB]   FarmPath_4：元の区間 ["0–216"] → 新 ["0–216"]
+[RDB]   CrossStreetSouth：元の区間 ["0–144", "158–202"] → 新 ["0–144", "158–202"]
+[RDB] PASS 元の網格の切れ目（水の上＝橋）は切れたまま
+[RDB] PASS 交差点の上下：FarmPath_1 0.045 − FarmPath_4 0.030 ≥ 0.012、南橫街 0.060 − FarmPath_1 ≥ 0.012
+[RDB] PASS NPC：再生道の近く 0 人は地形の上・新しい路面との差 ≤ 0.08（NPC 不搬）
+[RDB] 永久反向（每案必須讓 gate 失敗）
+[RDB]   N1 元の浮き（地形＋0.10 の平板）：PASS（gate 正確失敗）
+[RDB]   N2 元の路幅を越える（P8 田・P9 地被に食い込む）：PASS（gate 正確失敗）
+[RDB]   N3 定規の直線・幅一定（ROUND 1 の帯）：PASS（gate 正確失敗）
+[RDB]   N4 元に無い切れ目を跨ぐ（水の上に道を敷く相当）：PASS（gate 正確失敗）
+[RDB]   N5 交差点で FarmPath_1 と FarmPath_4 が同じ高さ（ちらつき）：PASS（gate 正確失敗）
+[RDB] PASS 反向 5/5
+[RDB] 結果：0 項失敗

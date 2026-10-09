@@ -1107,6 +1107,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/water_life_p10.scn" id="p10r5b_water_life"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/shrine_approach_p10.scn" id="p10r6b_shrine_approach"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/prop_fix_p10.scn" id="p10r4c_prop_fix"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/road_base_p10.scn" id="p10r5a_road_base"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -141188,6 +141189,8 @@ mesh = SubResource("CylinderMesh_shuvv")
 [node name="ShrineApproachP10" parent="." instance=ExtResource("p10r6b_shrine_approach")]
 
 [node name="PropFixP10" parent="." instance=ExtResource("p10r4c_prop_fix")]
+
+[node name="RoadBaseP10" parent="." instance=ExtResource("p10r5a_road_base")]
 
 [node name="Collision" type="Node3D" parent="." unique_id=988851703]
 
