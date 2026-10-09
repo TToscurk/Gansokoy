@@ -59,3 +59,8 @@
 1. 是否採 B（竜骨車 1 台／踏車 2 段二選一）。
 2. 授權 P8 limited correction（上列檔案）＋P8 reseal。
 3. 在那之前：R5b 維持 ART_REVIEW（純動力水車方向已接受），FEEDER 與 WLF 的 Expected Pilot Seal Conflict 照實保留。
+
+## 6. 裁定與實作（2026-10-10）
+- 使用者 P10 FINAL CLOSEOUT：「R5b.1 灌溉：方案 B LIMITED APPROVAL」——竜骨車 1 台優先，不做兩段踏車、不加第二座提水水車。
+- 已實作（P8 limited correction＋P8 limited reseal）：見 `impl/README.md`。單台竜骨車可合理供水：必要揚程 1.81 m、吐き口 2.18 m、傾斜 28.4°、樋長 5.17 m，下游水位鏈單調下降；FEEDER 0 失敗、FEEDER 永久反向 3/3。
+- 竜骨車外觀＝ART_REVIEW（未核准）。

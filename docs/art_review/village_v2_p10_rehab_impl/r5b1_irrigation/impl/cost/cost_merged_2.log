@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[COST] 解析度 (1920.0, 1061.0)、vsync off、max_fps 0、10:00；ON／OFF 交替 3 輪，每態暖機 60 幀、量 150 幀；GPU／frame 取中位數，Δ 取 3 輪中位數
+[COST] T1_eye        ON  frame 16.29 ms (p95 18.35)  renderCPU 3.60  GPU 15.90  prims 4241788  draws 2088
+[COST] T1_eye        OFF frame 10.42 ms (p95 11.21)  renderCPU 2.40  GPU 10.21  prims 3152135  draws 1560
+[COST] T1_eye        Δ(P8) frame +5.74  renderCPU +0.60  GPU +5.71（3 輪 +5.70／+5.71／+5.71）  prims +1089653  draws +528
+[COST] PASS budget T1_eye        GPU Δ +5.71（上限 6 ms）  renderCPU Δ +0.60（上限 4 ms）
+[COST] N2_eye        ON  frame 12.16 ms (p95 12.64)  renderCPU 3.33  GPU 11.74  prims 3809046  draws 2065
+[COST] N2_eye        OFF frame 9.79 ms (p95 10.57)  renderCPU 2.61  GPU 9.60  prims 2824590  draws 1443
+[COST] N2_eye        Δ(P8) frame +2.14  renderCPU +0.75  GPU +2.20（3 輪 +2.14／+2.20／+2.23）  prims +984456  draws +622
+[COST] PASS budget N2_eye        GPU Δ +2.20（上限 4 ms）  renderCPU Δ +0.75（上限 4 ms）
+[COST] S2_road       ON  frame 11.66 ms (p95 12.25)  renderCPU 3.24  GPU 11.26  prims 3919955  draws 1966
+[COST] S2_road       OFF frame 9.48 ms (p95 10.02)  renderCPU 2.33  GPU 9.02  prims 2588787  draws 1040
+[COST] S2_road       Δ(P8) frame +2.18  renderCPU +0.91  GPU +2.24（3 輪 +2.23／+2.24／+2.27）  prims +1331168  draws +926
+[COST] PASS budget S2_road       GPU Δ +2.24（上限 4 ms）  renderCPU Δ +0.91（上限 4 ms）
+[COST] Hieda_front   ON  frame 10.71 ms (p95 11.31)  renderCPU 3.44  GPU 10.30  prims 4225154  draws 2540
+[COST] Hieda_front   OFF frame 9.04 ms (p95 9.85)  renderCPU 2.33  GPU 8.77  prims 2829864  draws 1227
+[COST] Hieda_front   Δ(P8) frame +1.66  renderCPU +1.11  GPU +1.51（3 輪 +1.50／+1.51／+1.52）  prims +1395290  draws +1313
+[COST] PASS budget Hieda_front   GPU Δ +1.51（上限 4 ms）  renderCPU Δ +1.11（上限 4 ms）
+[COST] High_overlook ON  frame 19.85 ms (p95 20.28)  renderCPU 5.92  GPU 19.44  prims 8860348  draws 5082
+[COST] High_overlook OFF frame 16.09 ms (p95 16.53)  renderCPU 4.49  GPU 15.67  prims 6995833  draws 3560
+[COST] High_overlook Δ(P8) frame +3.97  renderCPU +1.42  GPU +3.97（3 輪 +3.77／+3.97／+4.26）  prims +1864514  draws +1521
+[COST] PASS budget High_overlook GPU Δ +3.97（上限 4 ms）  renderCPU Δ +1.42（上限 4 ms）
+[COST] 結果：0 項失敗（P8 runtime budget）

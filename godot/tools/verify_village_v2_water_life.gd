@@ -8,8 +8,8 @@ extends SceneTree
 ##   1 揚水部材なし：build する overlay に LiftBuckets／UkeToi／HeadBent／Pour／Spill／Splash／Spray／ChuteFlow／BucketWater が 0
 ##   2 水流と回転の向き：P5 RotorAnim を 0.5 s 進めたときの輪の下端の移動方向 · 水渠の下流方向（layout Canal 折線の順）≥ 0.9
 ##   3 葉板の浸かり：最下端の葉板先端が水面下 0.15–0.8 m、水渠底より ≥ 0.1 m 上
-##   4 P8 limited correction（runtime 非表示）：隠すノード／碰撞形が実在し、P8 WaterSupply の「高架（地面＋0.9 m 以上）」の可視部材を全部含み、
-##     DropBox 以下（上段土渠・伏越し・木槽・跨ぎ板）を 1 つも含まない
+##   4 P8 との関係（R5b.1 2026-10-10 で更新）：高架落とし樋は P8 生成器で撤去・竜骨車へ置換。overlay は P8 のノードを隠さない／止めない（触る 0）、
+##     P8 WaterSupply の高架部材（地面＋0.9 m 以上）は竜骨車だけ、DropBox 以下（上段土渠・伏越し・木槽・跨ぎ板）は存在
 ##   5 泡：主の泡＝輪心より下流（+z）・水面＋0.015
 ##   6 小舟：浮在水位（船底＝水位 − 吃水）、船體與世界碰撞體不相交、船底下水深 ≥ 0.15 m、離最下段石段 ≤ 1.6 m、
 ##     尺寸＝川舟（長 ≤ 8 m、寬 ≤ 1.8 m）、船首迎流（與流向夾角 ≤ 10°）
@@ -111,7 +111,7 @@ func _wheel_facts() -> void:
 
 
 func _cfg() -> Dictionary:
-	return {"lift_parts": 0, "rot_sign": 1.0, "hub_dy": 0.0, "hide_vis": LIB.P8_HIDE_VIS.duplicate(), "hide_col": LIB.P8_HIDE_COL.duplicate(), "foam_dz": 0.0,
+	return {"lift_parts": 0, "rot_sign": 1.0, "hub_dy": 0.0, "p8_touch": 0, "p8_extra_elevated": [], "foam_dz": 0.0,
 		"boat_off": LIB.BOAT_OFF, "boat_l": LIB.BOAT_L, "boat_b": LIB.BOAT_B, "post_dy": 0.0}
 
 
@@ -243,6 +243,11 @@ func _heights() -> Dictionary:
 	out["p8_shapes"] = colb.get_children().map(func(n): return String(n.name)) if colb else []
 	# build した overlay の揚水部材数（メモリ上）
 	var tmp := LIB.build(V, out)
+	var touch := 0
+	for pn in ["p8_hide_vis", "p8_hide_col", "p8_supply_path", "p8_col_path"]:
+		if tmp.get(pn) != null:
+			touch += 1
+	out["p8_touch"] = touch
 	var n_lift := 0
 	for nm in LIB.LIFT_PARTS:
 		n_lift += tmp.find_children(nm, "", true, false).size()
@@ -266,17 +271,15 @@ func _gates(cfg: Dictionary, H: Dictionary) -> void:
 	var imm := wy - tip
 	_ok(not is_nan(wy) and not is_nan(bedw) and imm >= float(LIB.IMMERSE[0]) and imm <= float(LIB.IMMERSE[1]) and tip - bedw >= 0.1,
 		"葉板の浸かり：先端 %.2f（Hero 局部）、水面 %.2f → %.2f m（%.2f–%.2f）、水渠底 %.2f より %.2f m 上" % [tip, wy, imm, float(LIB.IMMERSE[0]), float(LIB.IMMERSE[1]), bedw, tip - bedw])
-	# 4 P8 limited correction
-	var hv: Array = cfg["hide_vis"]
-	var hc: Array = cfg["hide_col"]
+	# 4 P8 との関係（R5b.1 2026-10-10）：高架落とし樋は P8 生成器で撤去済み。本 overlay は P8 を隠さない／止めない；
+	#   P8 WaterSupply の高架部材（地面＋0.9 m 以上）は竜骨車（Ryukotsu）だけ、DropBox 以下は存在。
 	var kids: Array = H["p8_children"]
-	var shapes: Array = H["p8_shapes"]
-	var missing := hv.filter(func(n): return not kids.has(n)) + hc.filter(func(n): return not shapes.has(n))
-	var not_hidden := (H["p8_elevated"] as Array).filter(func(n): return not hv.has(n))
-	var keep_hit := LIB.P8_KEEP.filter(func(n): return hv.has(n) or hc.has(n))
-	_ok(missing.is_empty() and not_hidden.is_empty() and keep_hit.is_empty() and kids.size() > 0,
-		"P8 水車 2 落とし樋（runtime 非表示）：可視 %d／碰撞 %d、P8 WaterSupply の高架部材 %s が全部対象（漏れ %s）、実在しない名 %s、DropBox 以下を含む %s"
-		% [hv.size(), hc.size(), str(H["p8_elevated"]), str(not_hidden), str(missing), str(keep_hit)])
+	var extra: Array = (H["p8_elevated"] as Array).filter(func(n): return n != LIB.P8_PUMP) + (cfg["p8_extra_elevated"] as Array)
+	var keep_missing := LIB.P8_KEEP.filter(func(n): return not kids.has(n))
+	var touch := int(H.get("p8_touch", 0)) + int(cfg["p8_touch"])
+	_ok(touch == 0 and extra.is_empty() and keep_missing.is_empty() and kids.has(LIB.P8_PUMP),
+		"P8 取水：overlay が触る P8 ノード %d；P8 WaterSupply の高架部材 %s（竜骨車以外 %s）；DropBox 以下の欠落 %s；竜骨車 %s"
+		% [touch, str(H["p8_elevated"]), str(extra), str(keep_missing), kids.has(LIB.P8_PUMP)])
 	# 5 泡
 	var fs: Array = LIB.foam_specs(wy if not is_nan(wy) else 0.0)
 	var f0: Vector3 = (fs[0]["c"] as Vector3) + Vector3(0, 0, float(cfg["foam_dz"]))
@@ -335,11 +338,11 @@ func _negatives(H: Dictionary) -> void:
 	c6["post_dy"] = 0.5
 	cases.append(["N6 繫船杭浮空 0.5 m", c6, H])
 	var c7 := _cfg()
-	c7["hide_vis"] = LIB.P8_HIDE_VIS.filter(func(n): return n != "Chute_0")
-	cases.append(["N7 高架落とし樋の一部（Chute_0）が残る", c7, H])
+	c7["p8_extra_elevated"] = ["Chute_0"]
+	cases.append(["N7 高架落とし樋（Chute_0）が P8 に残る", c7, H])
 	var c8 := _cfg()
-	c8["hide_vis"] = LIB.P8_HIDE_VIS + ["DropBox"]
-	cases.append(["N8 DropBox まで隠す（P8 の範囲を越える）", c8, H])
+	c8["p8_touch"] = 1
+	cases.append(["N8 overlay が P8 のノードを隠す／碰撞を止める", c8, H])
 	var c9 := _cfg()
 	c9["foam_dz"] = -4.0
 	cases.append(["N9 主の泡が上流側", c9, H])
@@ -416,43 +419,34 @@ func _scene() -> void:
 			for nm in LIB.LIFT_PARTS:
 				nl2 += r.find_children(nm, "", true, false).size()
 		_ok(r != null and nl2 == 0, "%s 不動（揚水部材 %d）" % [w.split("/")[1], nl2])
-	# P8 limited correction：隠す対象だけ隠れ、DropBox 以下は表示・碰撞のまま
+	# P8 取水（R5b.1）：overlay の有無で P8 WaterSupply の表示・碰撞は変わらない（全部表示・全部有効）
 	var sup := V.get_node(LIB.P8_SUPPLY)
 	var colb := V.get_node(LIB.P8_COL)
-	var vis_bad := []
-	for nm in LIB.P8_HIDE_VIS:
-		if (sup.get_node(nm) as Node3D).visible:
-			vis_bad.append(nm)
-	for nm in LIB.P8_HIDE_COL:
-		if not (colb.get_node(nm) as CollisionShape3D).disabled:
-			vis_bad.append("col " + nm)
-	for nm in LIB.P8_KEEP:
-		var k := sup.get_node_or_null(nm) as Node3D
-		if k and not k.visible:
-			vis_bad.append("keep " + nm)
-		var ks := colb.get_node_or_null(nm) as CollisionShape3D
-		if ks and ks.disabled:
-			vis_bad.append("keep col " + nm)
-	_ok(vis_bad.is_empty() and int(n.get("p8_hidden")) == LIB.P8_HIDE_VIS.size() + LIB.P8_HIDE_COL.size(), "P8 水車 2 落とし樋：可視 %d・碰撞 %d を runtime 停止、DropBox 以下は不変%s" % [LIB.P8_HIDE_VIS.size(), LIB.P8_HIDE_COL.size(), "" if vis_bad.is_empty() else " ✗ " + str(vis_bad)])
+	var st_on := _p8_state(sup, colb)
+	_ok(st_on == "all-on", "P8 取水構件（overlay 有効時）：%s" % st_on)
 	# 開關
 	n.set("enabled", false)
 	var hidden := true
 	for c in n.get_children():
 		if c is Node3D and (c as Node3D).visible:
 			hidden = false
-	var back := int(n.get("p8_hidden")) == 0
-	for nm in LIB.P8_HIDE_VIS:
-		if not (sup.get_node(nm) as Node3D).visible:
-			back = false
-	for nm in LIB.P8_HIDE_COL:
-		if (colb.get_node(nm) as CollisionShape3D).disabled:
-			back = false
-	_ok(hidden and back, "enabled=false → overlay 全隱藏、P8 落とし樋は元どおり表示・碰撞（%s）" % back)
+	var st_off := _p8_state(sup, colb)
+	_ok(hidden and st_off == "all-on", "enabled=false → overlay 全隱藏、P8 取水構件は不変（%s）" % st_off)
 	n.set("enabled", true)
-	_ok(not (sup.get_node("Chute_0") as Node3D).visible, "enabled=true → 再び非表示")
 	# 碰撞體：舟 1＋杭 1
 	var cols := n.find_children("*", "CollisionShape3D", true, false).size()
 	_ok(cols == 2, "碰撞形 %d（舟 1、杭 1）" % cols)
+
+
+func _p8_state(sup: Node, colb: Node) -> String:
+	var bad: Array = []
+	for c in sup.find_children("*", "VisualInstance3D", true, false):
+		if not (c as VisualInstance3D).is_visible_in_tree():
+			bad.append(String(sup.get_path_to(c)))
+	for s in colb.get_children():
+		if s is CollisionShape3D and (s as CollisionShape3D).disabled:
+			bad.append("col " + String(s.name))
+	return "all-on" if bad.is_empty() else "非表示／無効 %d：%s" % [bad.size(), ", ".join(bad.slice(0, 5))]
 
 
 func _attach() -> int:

@@ -49,17 +49,34 @@ const E_EDGE := [Vector2(426.2, 11.2), Vector2(426.6, 16.0), Vector2(426.9, 19.6
 	Vector2(430.2, 32.6), Vector2(430.8, 38.5), Vector2(430.3, 44.6),
 	Vector2(428.0, 46.0), Vector2(427.1, 50.8)]
 # r5 取水（2026-09-30 使用者裁示：高架只用於必要跨越段，其餘降為沿等高線的地面水路；跨路用暗渠／涵洞，水位高於路面時為伏越し）：
-# 穿村水渠（P2 Canal，水位 −1.52）→ 水車 2（LANDMARK_WATERWHEEL_2 (329.2, 0)，揚程上限 2.0 m）受け樋（東軸承柱頂 3.30）
-# → 短落とし樋：只跨水渠東岸坡，沿岸坡下降到 0.20 階面（兩段、水平 7.4 m，岸坡外 3.0 m）→ 落とし桝
-# → 上段土渠：沿 0.20 階面等高線東流（全區擴充時兼作 S 區主渠幹線）→ 伏越し入口桝
+# R5b.1（2026-10-10 使用者 P10 FINAL CLOSEOUT「方案 B LIMITED APPROVAL」）：水車 2 は純動力（WaterLifeP10）。水車 2 から 3.30 m の受け樋へ揚げる
+#   前提が無くなったので、高架落とし樋・接頭箱・受け樋枕木・支柱と其碰撞を撤去し、竜骨車 1 台（人力・踏み軸）で汲み上げる：
+# 穿村水渠（P2 Canal，水位 −1.52）→ 竜骨車（取水口＝樋底下端 −1.80、水面下 0.28／吐き口＝樋底上端 0.66；傾斜 28°、樋長 5.2 m、
+#   必要揚程＝水渠水面 −1.52 → 落とし桝水面 0.28 の 1.80 m、吐き口まで 2.18 m）→ 送り樋（0.53 → 0.50、桝の壁頂 0.44 の上へ張り出す）
+# → 落とし桝 → 上段土渠：沿 0.20 階面等高線東流（全區擴充時兼作 S 區主渠幹線）→ 伏越し入口桝
 # → 伏越し：FarmPath_1 路面 0.148 m 低於入口／出口桝水位 0.27／0.19 → 路下管段滿管、出口上湧＝封閉壓力段（非暗渠／涵洞；路面、地形不動，地上無構件）→ 出口桝
 # → 下段木槽：出口桝旁起半埋於坡地、往東漸出地面架在枕木上（頂 ≤ 0.29 m，與田埂同級、可跨），沿 W1 南埂外側東流 → 樋口落進內渠南端。
-# 水位一路下降（自流）：受け樋 3.30 → 上段 0.27 → 出口桝 0.19 → 木槽 0.17→0.15 → 內渠 0.078。水車、水渠、P1 地形都不動。
-const CHUTE := [Vector3(332.45, 3.30, 0.4), Vector3(336.3, 1.62, 2.75), Vector3(338.55, 0.47, 4.72)]   # 末端伸到落とし桝開口正上方；水平全長 7.4 m，岸坡外只 3.0 m   # (x, 樋底 y, z)
+# 水位：竜骨車吐き口 0.66 → 送り樋 0.53→0.50 → 落とし桝 0.28 → 上段 0.27 → 出口桝 0.19 → 木槽 0.17→0.15 → 內渠 0.078（竜骨車から先は自流）。
+#   水車、水渠、P1 地形、P7 河岸は不動。
+# CHUTE（r5 の高架落とし樋）は R5b.1 で撤去：生成には使わない（survey／probe の記録用に値だけ残す）。
+const CHUTE := [Vector3(332.45, 3.30, 0.4), Vector3(336.3, 1.62, 2.75), Vector3(338.55, 0.47, 4.72)]   # 撤去済み（記録）   # (x, 樋底 y, z)
 const CHUTE_W := 0.40            # 落とし樋外寬
 const CHUTE_POST_T := [0.0, 0.55]  # 第 2 段上的支柱位置（段內比例）；第 1 段整段在岸坡上、不立柱
 const BANK_X := 335.8            # 水渠岸坡（P7 河岸 kit 範圍）：不立柱、不給碰撞；受け樋頭架在水車東軸承柱上
 const DROP_BOX := Vector2(338.75, 4.85)
+## R5b.1 竜骨車（翻車）：位置は実測で選定（docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/）。
+##   水車 2 の回転円盤（AABB z ≤ 3.81）から 1 m 以上下流、取水口の渠底 −2.33（樋底下端の 0.53 m 下）、樋底は岸坡の地面より全長で ≥ 0.15 m 上。
+const RYU_LOW := Vector3(331.00, -1.80, 4.85)    # 樋底下端（取水口、下車）
+const RYU_HIGH := Vector3(335.55, 0.66, 4.85)    # 樋底上端（吐き口、上車）
+const RYU_W := 0.34              # 樋外寬
+const RYU_WALL := 0.22           # 側板高出底板頂
+const RYU_DRUM_UP := 0.20        # 車（上下）の中心＝樋底から樋面直交方向へ 0.20
+const RYU_FRAME_Z := [3.85, 5.85]  # 門形架（軸受柱＋手摺）の z
+const RYU_RAIL_LIFT := 1.25      # 手摺＝踏み軸の上 1.25 m（踏み板に立って肘を掛ける高さ）
+const FEED := [Vector3(335.40, 0.53, 4.85), Vector3(338.62, 0.50, 4.85)]   # 送り樋底：吐き口の下（樋の上端が 0.15 m 入り込む）→ 落とし桝の上へ張り出す
+const FEED_W := 0.48
+const FEED_WALL := 0.18
+const FEED_LEG_X := [336.55, 337.75]
 const UPPER := [Vector2(339.15, 4.95), Vector2(342.5, 5.55), Vector2(347.5, 6.2), Vector2(354.0, 6.4), Vector2(360.5, 6.3), Vector2(369.25, 6.25)]
 const UPPER_LIFT := 0.07         # 上段土渠水位（相對 0.20 階面）
 const UPPER_LIP := 0.62          # 上段土渠兩唇中心離渠中心
@@ -232,23 +249,37 @@ static func build(layout: Dictionary) -> Node3D:
 	Visual.apply(root, layout, P)
 	return root
 
-## 落とし樋支柱（可見網格與碰撞共用）：[{"p": Vector2, "y_top": 樋底, "y_bot": 柱腳}]；岸坡（x < BANK_X）不立柱。
+## 竜骨車の基準フレーム：樋底中心線 low→high の basis（+z＝上り方向、+y＝樋面直交の上）
+static func ryu_basis() -> Basis:
+	var a: Vector3 = RYU_LOW
+	var b: Vector3 = RYU_HIGH
+	var d := Vector2(b.x - a.x, b.z - a.z)
+	return Basis(Vector3.UP, atan2(d.x, d.y)) * Basis(Vector3.RIGHT, atan2(a.y - b.y, d.length()))
+
+## 上車（踏み軸）中心
+static func ryu_axle() -> Vector3:
+	return RYU_HIGH + ryu_basis() * Vector3(0, RYU_DRUM_UP, 0)
+
+## 竜骨車の柱（可見網格と碰撞の共用）：[{"name", "p": Vector2, "y_bot", "y_top", "s": 断面, "tall": bool}]
 static func supply_posts() -> Array:
 	var out: Array = []
-	var a: Vector3 = CHUTE[1]
-	var b: Vector3 = CHUTE[2]
-	for t: float in CHUTE_POST_T:
-		var q := a.lerp(b, t)
-		if q.x < BANK_X:
-			continue
-		out.append({"p": Vector2(q.x, q.z), "y_top": q.y, "y_bot": -0.35})     # 柱腳埋入
+	var ax := ryu_axle()
+	for i in 2:
+		out.append({"name": "Frame_%d" % i, "p": Vector2(ax.x, float(RYU_FRAME_Z[i])), "y_bot": -0.30, "y_top": ax.y + RYU_RAIL_LIFT + 0.06, "s": 0.12, "tall": true})
+	for sd in [-1, 1]:
+		out.append({"name": "Stake_%d" % ((sd + 1) / 2), "p": Vector2(RYU_LOW.x - 0.10, RYU_LOW.z + sd * 0.24), "y_bot": -2.60, "y_top": -1.18, "s": 0.10, "tall": false})
+	for i in FEED_LEG_X.size():
+		var x: float = FEED_LEG_X[i]
+		var y := lerpf(FEED[0].y, FEED[1].y, (x - FEED[0].x) / (FEED[1].x - FEED[0].x))
+		for sd in [-1, 1]:
+			out.append({"name": "FeedLeg_%d_%d" % [i, (sd + 1) / 2], "p": Vector2(x, FEED[0].z + sd * 0.20), "y_bot": 0.0, "y_top": y - 0.06, "s": 0.08, "tall": false})
 	return out
 
 ## 木槽底板頂 y（沿木槽弧長線性下降）
 static func trough_bottom(s: float, L: float) -> float:
 	return lerpf(TROUGH_BOT[0], TROUGH_BOT[1], clampf(s / maxf(L, 1e-3), 0.0, 1.0))
 
-## 取水碰撞（Irrigation/WaterSupply）：落とし樋（岸坡外段）＋支柱、各桝、地面木槽、跨渠板。
+## 取水碰撞（Irrigation/WaterSupply）：竜骨車（R5b.1）、各桝、地面木槽、跨渠板。
 ## 樋段兩側／上方外擴 CHUTE_CAM_PAD（TPS SpringArm 以碰撞面擋相機，外擴量＝相機與可見樋體淨距）；
 ## 下方不外擴（不做看不見的天花板）。木槽、桝、跨渠板頂 ≤ 0.4 m（與田埂同級、step_height 0.6 可跨），
 ## 四周與頂面外擴 LOW_CAM_PAD：低角度相機貼地時 SpringArm 才會在近裁面碰到可見石／板之前停下（walk --feeder 實測）。
@@ -258,24 +289,34 @@ static func _supply_body(parent: Node, posts: Array, layout: Dictionary) -> void
 	var body := StaticBody3D.new()
 	body.name = "WaterSupply"
 	parent.add_child(body)
+	# R5b.1 竜骨車：柱（門形架は相機外擴 CHUTE_CAM_PAD、低い柱は LOW_CAM_PAD）、頭部（踏み軸＋拐木の回転域）、手摺、傾斜樋、送り樋
 	var k := 0
 	for po: Dictionary in posts:
 		var h: float = float(po["y_top"]) - float(po["y_bot"])
 		var p: Vector2 = po["p"]
-		_coll_box(body, "Post_%02d" % k, Vector3(p.x, float(po["y_bot"]) + h * 0.5, p.y), Vector3(0.09 + 2.0 * CHUTE_CAM_PAD, h, CHUTE_W + 0.04 + 2.0 * CHUTE_CAM_PAD), 0.0, 0.0)
+		var pad := CHUTE_CAM_PAD if po["tall"] else LOW_CAM_PAD
+		_coll_box(body, "Post_%02d" % k, Vector3(p.x, float(po["y_bot"]) + h * 0.5, p.y), Vector3(float(po["s"]) + 2.0 * pad, h, float(po["s"]) + 2.0 * pad), 0.0, 0.0)
 		k += 1
-	# 落とし樋第 2 段（第 1 段在岸坡上方，不給碰撞；P7 河岸擺放不受影響）
-	var a: Vector3 = CHUTE[1]
-	var b: Vector3 = CHUTE[2]
-	var d := Vector2(b.x - a.x, b.z - a.z)
-	var bs := Basis(Vector3.UP, atan2(d.x, d.y)) * Basis(Vector3.RIGHT, atan2(a.y - b.y, d.length()))
+	var ax := ryu_axle()
+	var z0: float = RYU_FRAME_Z[0]
+	var z1: float = RYU_FRAME_Z[1]
+	var hp := 0.2      # 拐木の回転域（半径 0.38）＋相機近裁面
+	_coll_box(body, "RyuHead", Vector3(ax.x, (ax.y + 0.40 + hp + 0.05) * 0.5, (z0 + z1) * 0.5), Vector3(0.80 + 2.0 * hp, ax.y + 0.40 + hp - 0.05, z1 - z0), 0.0, 0.0)
+	_coll_box(body, "RyuRail", Vector3(ax.x, ax.y + RYU_RAIL_LIFT, (z0 + z1) * 0.5), Vector3(0.08 + 2.0 * CHUTE_CAM_PAD, 0.08 + 2.0 * CHUTE_CAM_PAD, z1 - z0 + 0.12), 0.0, 0.0)
+	var bs := ryu_basis()
+	var rl := (RYU_HIGH - RYU_LOW).length()
+	var th := RYU_WALL + 0.25 + CHUTE_CAM_PAD     # 側板＋戻り側の羽根板
 	var sh := CollisionShape3D.new()
-	sh.name = "Chute_1"
+	sh.name = "RyuTrough"
 	var bx := BoxShape3D.new()
-	bx.size = Vector3(CHUTE_W + 2.0 * CHUTE_CAM_PAD, 0.24 + CHUTE_CAM_PAD, d.length())
+	bx.size = Vector3(RYU_W + 2.0 * CHUTE_CAM_PAD, th + 0.04, rl)
 	sh.shape = bx
-	sh.transform = Transform3D(bs, (a + b) * 0.5 + bs * Vector3(0, (0.24 + CHUTE_CAM_PAD) * 0.5, 0))
+	sh.transform = Transform3D(bs, (RYU_LOW + RYU_HIGH) * 0.5 + bs * Vector3(0, th * 0.5 - 0.04, 0))
 	body.add_child(sh)
+	var fa: Vector3 = FEED[0]
+	var fb: Vector3 = FEED[1]
+	var ftop := maxf(fa.y, fb.y) + FEED_WALL - 0.02
+	_coll_box(body, "Feed", Vector3((fa.x + fb.x) * 0.5, (ftop + LOW_CAM_PAD + 0.0) * 0.5, fa.z), Vector3(fb.x - fa.x + 2.0 * LOW_CAM_PAD, ftop + LOW_CAM_PAD, FEED_W + 2.0 * LOW_CAM_PAD), 0.0, 0.0)
 	# 桝：落とし桝／伏越し入口桝／出口桝
 	var y0 := TLib.farm_level(layout, DROP_BOX)
 	_coll_box(body, "DropBox", Vector3(DROP_BOX.x, y0 + 0.08 + LOW_CAM_PAD * 0.5, DROP_BOX.y), Vector3(0.86 + 2.0 * LOW_CAM_PAD, 0.36 + LOW_CAM_PAD, 0.86 + 2.0 * LOW_CAM_PAD), 0.0, 0.0)

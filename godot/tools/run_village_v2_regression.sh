@@ -58,7 +58,8 @@ run "P8 封存（凍結來源／overlay／ART_REVIEW 圖／證據 sha256＋反�
 run "P8 local gate（田數、田埂碰撞、水位、灌排、農路淨距）" FARM --headless --path . --script res://tools/verify_village_v2_farmland.gd
 run "P8 永久反向（田面水抬 0.5 m → 恰 1 項 FAIL）"  FARM    --headless --path . --script res://tools/verify_village_v2_farmland.gd -- --negative
 run "P8 田埂／水面擺放稽核"                    FARM_PLACE --headless --path . --script res://tools/audit_village_v2_farmland_placement.gd
-run "P8 取水水路淨空（FarmPath_1／稗田邸前）"     FEEDER  --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder --no-shots --hour=10
+run "P8 取水水路淨空（FarmPath_1／稗田邸前）＋R5b.1 竜骨車：系統狀態〔非表示・無効碰撞・高架樋残骸 0〕・水源連通〔水位鎖単調〕・他層干渉 0" FEEDER  --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder --no-shots --hour=10
+run "P8 R5b.1 FEEDER 永久反向（取水構件の runtime 非表示・碰撞停止・高架樋残骸 → supply_system_state 各案 FAIL）" FEEDER-NEG --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder-negative --hour=10
 run "P8 全區 1.7 m 實走 25 段＋TPS 相機淨空"      ZONE    --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --zone --no-shots --hour=10
 run "P8 runtime budget（五鏡位 A/B）"           COST    --path . --resolution 1920x1080 --script res://tools/walk_village_v2_farmland.gd -- --cost --hour=10
 run "P9 R1 植被庫封存（樹庫／生成器／LOD 指標／7 張核准總表／證據 sha256＋反向）" VEG --headless --path . --script res://tools/verify_village_v2_veg_gate.gd -- --seal
@@ -164,8 +165,8 @@ run "P10 R6a ROUND 3 Kit 專用校正材質 合法変体 gate＋反向 6（登�
 run "P10 R6a Kit Material 24 Buildings Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔登記表・変体 18・shader・overlay〕・掛載・材質＝登記変体だけ・Pilot 24 棟・竄改反向）" ALB --headless --path . --script res://tools/verify_village_v2_albedo_pilot.gd -- --seal
 run "P10 R5a Ground Pilot plan gate＋反向 7（封存 ground.gdshader 雜湊＝matlib.json・補丁 7 段逐字（ROUND 2：再生道 UV2.y の区間別の使われ方）・pilot shader 可重現・田格移除・discard 只在外緣侵蝕／參道挖洞・新參數預設＝舊行為・道路參數在核准範圍・外緣實測 sd 0.08–0.45 m）" GRD --headless --path . --script res://tools/verify_village_v2_ground_pilot.gd
 run "P10 R5a Ground Pilot 場景級（AlbedoPilotP10 の次に GroundPilotP10・地形 4＋道路 4 換 pilot shader・原參數逐一保留・非 Pilot 道路不變・enabled 開關・雜湊；非 headless）" GRD --path . --script res://tools/verify_village_v2_ground_pilot.gd -- --scene
-run "P10 R5b Water Pilot plan gate＋反向 9（ROUND 3 純動力水車：揚水部材 0・下端の動き·水渠下流 ≥ 0.9・葉板浸水 0.15–0.80・主泡は出水側・P8 高架落とし樋〔Chute_0／Chute_1／ChuteJoint／HeadBearer／Support〕は runtime 非表示〔DropBox 以下は不変〕・表裏・小舟・繫船杭・荷）" WLF --headless --path . --script res://tools/verify_village_v2_water_life.gd
-run "P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・ROUND 3：揚水部材 0・輪が回り下端は下流へ・水車 1／3 不動・P8 落とし樋 可視 6／碰撞 3 を runtime 停止〔enabled=false で元どおり〕・碰撞 2；非 headless）" WLF --path . --script res://tools/verify_village_v2_water_life.gd -- --scene
+run "P10 R5b Water Pilot plan gate＋反向 9（ROUND 3 純動力水車：揚水部材 0・下端の動き·水渠下流 ≥ 0.9・葉板浸水 0.15–0.80・主泡は出水側・P8 取水に触れない〔R5b.1：高架落とし樋は P8 で撤去・竜骨車へ置換、overlay が隠す／止める P8 ノード 0、P8 高架部材は竜骨車だけ〕・表裏・小舟・繫船杭・荷）" WLF --headless --path . --script res://tools/verify_village_v2_water_life.gd
+run "P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・ROUND 3：揚水部材 0・輪が回り下端は下流へ・水車 1／3 不動・P8 取水構件は overlay の有無で不変〔全部表示・碰撞有効〕・碰撞 2；非 headless）" WLF --path . --script res://tools/verify_village_v2_water_life.gd -- --scene
 run "P10 R6b Shrine Approach plan gate＋反向 8（ROUND 2：石段 ≥ 80・蹴上 0.12–0.20・踏面 0.25–0.45／長い段 0.45–1.2／踊り場 1.2–2.0・地形不蓋踏面・斜坡碰撞與踏面差 ≤ 半蹴上＋0.03・≤ 38°・寬度／二の鳥居淨空・一の鳥居・燈籠・NPC 不在石段・リズム〔踊り場 3・盛土 ≤ 1.2 m・休みなし ≤ 60 段・丘の肩の長い段 ≥ 3〕）" SAN --headless --path . --script res://tools/verify_village_v2_shrine_approach.gd
 run "P10 R6b Shrine Approach 場景級（WaterLifeP10 の次に ShrineApproachP10・參道 ribbon 挖洞・中心線射線＝斜坡碰撞／地形・enabled 開關；非 headless）" SAN --path . --script res://tools/verify_village_v2_shrine_approach.gd -- --scene
 run "P10 R6b ROUND 3 參道 walkable-surface gate＋反向 5（足場＝最上面の歩ける面〔P1 地形／斜坡碰撞〕：斜坡と見える踏面 ≤ 半蹴上＋0.03・玩家膠囊淨空〔中心＋左右〕・0.25 m ごとの高さ連続 ≤ tan(floor_max_angle)・踊り場の縁／両脇・NPC 巡回不横切り・正式 TPS 相機が石／地形に入らない〔腕の縮み回数は INFO〕・P9 R4-2 同經路を最上面基準で被擋 0；P9 R4-2 封存 gate は不変）" SWALK --headless --path . --script res://tools/verify_village_v2_sando_walkable.gd

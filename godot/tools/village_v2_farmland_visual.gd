@@ -748,36 +748,12 @@ static func _stone_box(g: Node3D, c: Vector2, ground: float, top_y: float, water
 	if cover:
 		_box(g, "CoverStone", Vector3(c.x + 0.12, top_y + 0.03, c.y - 0.05), Vector3(0.5, 0.06, 0.62), stone, rng.randf_range(-0.12, 0.12))
 
-## 取水水路可見網格：落とし樋（岸坡 → 0.20 階面）、落とし桝、上段土渠、伏越し兩桝、地面木槽、跨渠板
+## 取水水路可見網格：竜骨車（R5b.1）、落とし桝、上段土渠、伏越し兩桝、地面木槽、跨渠板
 static func _supply_art(g: Node3D, irr: Node3D, P: Dictionary, layout: Dictionary, wood: Material, stone: Material, rng: RandomNumberGenerator) -> void:
 	var fmat := _flow_mat(0.8, Color(0.36, 0.36, 0.3), 0.7)
-	# 1) 落とし樋（2 段；第 1 段懸在水渠岸坡上方，受け樋頭架在水車 2 東軸承柱頂的枕木上）
-	for i in FL.CHUTE.size() - 1:
-		_trough_seg(_group(g, "Chute_%d" % i), FL.CHUTE[i], FL.CHUTE[i + 1], FL.CHUTE_W, 0.2, 0.08, wood, fmat)
-	# 兩段折點：接頭箱（兩段樋在此以短箱承接，遮住坡度改變處）
-	var jp: Vector3 = FL.CHUTE[1]
-	var jd := Vector2(FL.CHUTE[2].x - FL.CHUTE[0].x, FL.CHUTE[2].z - FL.CHUTE[0].z).normalized()
-	_box(g, "ChuteJoint", Vector3(jp.x, jp.y + 0.06, jp.z), Vector3(FL.CHUTE_W + 0.08, 0.24, 0.5), wood, atan2(jd.x, jd.y))
-	var h0: Vector3 = FL.CHUTE[0]
-	_box(g, "HeadBearer", Vector3(h0.x - 0.45, h0.y - 0.07, h0.z), Vector3(1.2, 0.14, 0.3), wood, 0.0)
-	var a1: Vector3 = FL.CHUTE[1]
-	var b1: Vector3 = FL.CHUTE[2]
-	var dir := Vector2(b1.x - a1.x, b1.z - a1.z).normalized()
-	var perp := Vector2(-dir.y, dir.x)
-	var yaw := atan2(dir.x, dir.y)
-	var k := 0
-	for po: Dictionary in P["supply_posts"]:
-		var p: Vector2 = po["p"]
-		var yt: float = po["y_top"]
-		var yb: float = po["y_bot"]
-		var h := yt - yb
-		var pg := _group(g, "Support_%02d" % k)
-		k += 1
-		for sd in [-1.0, 1.0]:
-			var q: Vector2 = p + perp * sd * (FL.CHUTE_W * 0.5 + 0.02)
-			_box(pg, "Post_%d" % int(sd), Vector3(q.x, yb + h * 0.5, q.y), Vector3(0.09, h, 0.09), wood, yaw)
-		_box(pg, "Cap", Vector3(p.x, yt - 0.075, p.y), Vector3(FL.CHUTE_W + 0.2, 0.07, 0.1), wood, yaw)
-	# 2) 落とし桝（落とし樋落水 → 上段土渠）
+	# 1) R5b.1 竜骨車（水車 2 下流の東岸。r5 の高架落とし樋・接頭箱・受け樋枕木・支柱は撤去）
+	_ryukotsu_art(_group(g, "Ryukotsu"), P, wood, fmat)
+	# 2) 落とし桝（竜骨車の送り樋が落水 → 上段土渠）
 	var y0 := TLib.farm_level(layout, FL.DROP_BOX)
 	_stone_box(_group(g, "DropBox"), FL.DROP_BOX, y0, y0 + 0.24, y0 + FL.UPPER_LIFT + 0.01, stone, fmat, rng, false, [0])
 	# 3) 上段土渠（兩唇為田埂管線的 LipSupA／LipSupB；此處只鋪渠底與水面）
@@ -823,6 +799,147 @@ static func _supply_art(g: Node3D, irr: Node3D, P: Dictionary, layout: Dictionar
 		var at: Vector2 = cr["at"]
 		for j in 3:
 			_box(cg, "Plank_%d" % j, Vector3(at.x + (j - 1) * 0.25 + rng.randf_range(-0.02, 0.02), float(cr["top"]) - 0.022, at.y), Vector3(0.23, 0.045, float(cr["span"]) + rng.randf_range(-0.08, 0.08)), wood, rng.randf_range(-0.05, 0.05))
+
+## R5b.1 竜骨車（翻車、人力の踏み軸）：傾斜樋＋羽根板の鎖（樋内の汲み上げ側／上の戻り側）＋上下の車＋踏み軸と拐木＋門形架と手摺
+##   ＋渠中の杭（下車）＋送り樋（落とし桝の上へ張り出し、落水）。寸法は lib 定数（碰撞と同源）。
+##   描画数を抑えるため、向きの同じ部材は 1 網格にまとめる（Trough/Body・Drive・Feed/Body、水は Trough/Water・Feed/Water）。
+##   柱（Post_*）・手摺・方杖は個別（FEEDER の柱碰撞・相機淨空の OBB を緊く保つ）。
+static func _ryukotsu_art(r: Node3D, P: Dictionary, wood: Material, fmat: Material) -> void:
+	var bs := FL.ryu_basis()
+	var lo: Vector3 = FL.RYU_LOW
+	var hi: Vector3 = FL.RYU_HIGH
+	var L := (hi - lo).length()
+	var mid := (lo + hi) * 0.5
+	var W: float = FL.RYU_W
+	var wall: float = FL.RYU_WALL
+	var to_local := Transform3D(bs, mid).affine_inverse()
+	var xrot := Basis(Vector3.BACK, PI * 0.5)       # 円柱の軸 y → 樋局部 x（＝世界 z 方向）
+	# 傾斜樋（樋の局部座標）：底板・側板・貫＋羽根板の鎖（汲み上げ側 0.02–0.14／戻り側 0.27–0.39）＋下車＋下の軸＋杭の貫
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_box_into(st, Transform3D(Basis(), Vector3(0, -0.02, 0)), Vector3(W, 0.04, L + 0.04))
+	_box_into(st, Transform3D(Basis(), Vector3(-W * 0.5 + 0.018, wall * 0.5 - 0.04, 0)), Vector3(0.036, wall + 0.04, L + 0.04))
+	_box_into(st, Transform3D(Basis(), Vector3(W * 0.5 - 0.018, wall * 0.5 - 0.04, 0)), Vector3(0.036, wall + 0.04, L + 0.04))
+	for k in floori(L / 1.6):
+		var t := (k + 0.5) * 1.6 / L - 0.5
+		_box_into(st, Transform3D(Basis(), Vector3(0, wall - 0.02, t * L)), Vector3(W + 0.05, 0.035, 0.045))
+	var n := floori((L - 0.30) / 0.22)
+	for i in n + 1:
+		var z := -L * 0.5 + 0.15 + i * (L - 0.30) / n
+		_box_into(st, Transform3D(Basis(), Vector3(0, 0.08, z)), Vector3(W - 0.09, 0.12, 0.022))
+		_box_into(st, Transform3D(Basis(), Vector3(0, 0.33, z)), Vector3(W - 0.09, 0.12, 0.022))
+	_box_into(st, Transform3D(Basis(), Vector3(0, 0.08, 0)), Vector3(0.04, 0.035, L - 0.2))
+	_box_into(st, Transform3D(Basis(), Vector3(0, 0.33, 0)), Vector3(0.04, 0.035, L - 0.2))
+	var lax_l := Vector3(0, FL.RYU_DRUM_UP, -L * 0.5)
+	_cyl_into(st, Transform3D(xrot, lax_l), 0.13, W - 0.06)
+	_cyl_into(st, Transform3D(xrot, lax_l), 0.04, 0.62)
+	_box_into(st, Transform3D(bs.inverse(), to_local * Vector3(lo.x - 0.10, -1.30, lo.z)), Vector3(0.07, 0.07, 0.62))
+	var tg := _group(r, "Trough")
+	_mesh_node(tg, "Body", st, wood, Transform3D(bs, mid))
+	var ws := SurfaceTool.new()
+	ws.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_box_into(ws, Transform3D(Basis(), Vector3(0, 0.09, 0)), Vector3(W - 0.08, 0.01, L))
+	_mesh_node(tg, "Water", ws, fmat, Transform3D(bs, mid))
+	# 踏み軸（世界 z 方向）＋上車＋拐木（片側 2 輪 × 2 人、各輪 4 本、隣の輪は 45° ずらす）
+	var ax := FL.ryu_axle()
+	var z0: float = FL.RYU_FRAME_Z[0]
+	var z1: float = FL.RYU_FRAME_Z[1]
+	var zrot := Basis(Vector3.RIGHT, PI * 0.5)
+	var ds := SurfaceTool.new()
+	ds.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_cyl_into(ds, Transform3D(zrot, Vector3(0, 0, (z0 + z1) * 0.5 - lo.z)), 0.055, z1 - z0 + 0.16)
+	_cyl_into(ds, Transform3D(zrot, Vector3.ZERO), 0.15, W - 0.06)
+	var ring := 0
+	for sd in [-1.0, 1.0]:
+		for dz: float in [0.42, 0.66]:
+			for k in 4:
+				var a := (ring * 0.25 + k * 0.5) * PI
+				var rb := Basis(Vector3.BACK, a)
+				_box_into(ds, Transform3D(rb, rb * Vector3(0.17, 0, 0) + Vector3(0, 0, sd * dz)), Vector3(0.30, 0.05, 0.05))
+				_box_into(ds, Transform3D(rb, rb * Vector3(0.33, 0, 0) + Vector3(0, 0, sd * dz)), Vector3(0.05, 0.11, 0.15))
+			ring += 1
+	_mesh_node(r, "Drive", ds, wood, Transform3D(Basis(), Vector3(ax.x, ax.y, lo.z)))
+	# 柱（門形架・杭・送り樋の脚）＋手摺＋方杖（岸坡は P7 の石積みなので中間架台は立てない：樋は下車の杭と門形架で両端支持）
+	for po: Dictionary in P["supply_posts"]:
+		var p: Vector2 = po["p"]
+		var h: float = float(po["y_top"]) - float(po["y_bot"])
+		var s: float = po["s"]
+		_box(r, "Post_" + String(po["name"]), Vector3(p.x, float(po["y_bot"]) + h * 0.5, p.y), Vector3(s, h, s), wood, 0.0)
+	_box(r, "Rail", Vector3(ax.x, ax.y + FL.RYU_RAIL_LIFT, (z0 + z1) * 0.5), Vector3(0.08, 0.08, z1 - z0 + 0.22), wood, 0.0)
+	for i in 2:
+		var zf: float = FL.RYU_FRAME_Z[i]
+		var top := Vector3(ax.x, ax.y + 0.55, zf)
+		var foot := Vector3(ax.x + 0.62, 0.05, zf)
+		var dv := top - foot
+		_box(r, "Brace_%d" % i, (top + foot) * 0.5, Vector3(0.07, dv.length(), 0.07), wood, 0.0)
+		(r.get_node("Brace_%d" % i) as Node3D).basis = Basis(Vector3.BACK, atan2(-dv.x, dv.y))
+	# 送り樋（送り樋の局部座標）：底板・側板・貫・西端の妻板・脚の貫／水面＋落水
+	var fa: Vector3 = FL.FEED[0]
+	var fb: Vector3 = FL.FEED[1]
+	var fd := Vector2(fb.x - fa.x, fb.z - fa.z)
+	var FL_ := fd.length()
+	var fbs := Basis(Vector3.UP, atan2(fd.x, fd.y)) * Basis(Vector3.RIGHT, atan2(fa.y - fb.y, FL_))
+	var fmid := (fa + fb) * 0.5
+	var f_local := Transform3D(fbs, fmid).affine_inverse()
+	var FW: float = FL.FEED_W
+	var fwall: float = FL.FEED_WALL
+	var fs := SurfaceTool.new()
+	fs.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_box_into(fs, Transform3D(Basis(), Vector3(0, -0.02, 0)), Vector3(FW, 0.04, FL_ + 0.04))
+	_box_into(fs, Transform3D(Basis(), Vector3(-FW * 0.5 + 0.018, fwall * 0.5 - 0.04, 0)), Vector3(0.036, fwall + 0.04, FL_ + 0.04))
+	_box_into(fs, Transform3D(Basis(), Vector3(FW * 0.5 - 0.018, fwall * 0.5 - 0.04, 0)), Vector3(0.036, fwall + 0.04, FL_ + 0.04))
+	for k in floori(FL_ / 1.6):
+		var t := (k + 0.5) * 1.6 / FL_ - 0.5
+		_box_into(fs, Transform3D(Basis(), Vector3(0, fwall - 0.02, t * FL_)), Vector3(FW + 0.05, 0.035, 0.045))
+	_box_into(fs, Transform3D(Basis(), Vector3(0, fwall * 0.5 - 0.05, -FL_ * 0.5 - 0.02)), Vector3(FW, fwall + 0.06, 0.035))
+	for i in FL.FEED_LEG_X.size():
+		var x: float = FL.FEED_LEG_X[i]
+		var y := lerpf(fa.y, fb.y, (x - fa.x) / (fb.x - fa.x))
+		_box_into(fs, Transform3D(fbs.inverse(), f_local * Vector3(x, y - 0.075, fa.z)), Vector3(0.07, 0.05, FW + 0.12))
+	var fg := _group(r, "Feed")
+	_mesh_node(fg, "Body", fs, wood, Transform3D(fbs, fmid))
+	var y_box := FL.UPPER_LIFT + 0.21     # 落とし桝水面（0.20 階面＋上段水位＋0.01）
+	var fws := SurfaceTool.new()
+	fws.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_box_into(fws, Transform3D(Basis(), Vector3(0, 0.06, 0)), Vector3(FW - 0.08, 0.01, FL_))
+	_box_into(fws, Transform3D(fbs.inverse(), f_local * Vector3(fb.x + 0.02, (fb.y + 0.05 + y_box) * 0.5, fb.z)), Vector3(0.02, fb.y + 0.05 - y_box, 0.22))
+	_mesh_node(fg, "Water", fws, fmat, Transform3D(fbs, fmid))
+
+static func _mesh_node(parent: Node3D, name: String, st: SurfaceTool, mat: Material, xf: Transform3D) -> void:
+	var node := MeshInstance3D.new()
+	node.name = name
+	node.mesh = st.commit()
+	node.material_override = mat
+	node.transform = xf
+	parent.add_child(node)
+
+static func _cyl_into(st: SurfaceTool, xf: Transform3D, r: float, h: float) -> void:
+	var m := CylinderMesh.new()
+	m.top_radius = r
+	m.bottom_radius = r
+	m.height = h
+	m.radial_segments = 10
+	m.rings = 1
+	st.append_from(m, 0, xf)
+
+static func _cyl(parent: Node3D, name: String, at: Vector3, r: float, h: float, b: Basis, mat: Material) -> void:
+	var m := CylinderMesh.new()
+	m.top_radius = r
+	m.bottom_radius = r
+	m.height = h
+	m.radial_segments = 10
+	m.rings = 1
+	var node := MeshInstance3D.new()
+	node.name = name
+	node.mesh = m
+	node.material_override = mat
+	node.transform = Transform3D(b, at)
+	parent.add_child(node)
+
+static func _box_into(st: SurfaceTool, xf: Transform3D, size: Vector3) -> void:
+	var m := BoxMesh.new()
+	m.size = size
+	st.append_from(m, 0, xf)
 
 static func _footprints(details: Node3D, P: Dictionary, layout: Dictionary) -> void:
 	var t := SurfaceTool.new()

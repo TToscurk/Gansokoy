@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[EQ]   名前の再利用：Irrigation/WaterSupply/Post_00（旧＝高架樋の柱碰撞 → 新＝竜骨車 門形架の柱碰撞、形状 (0.69, 1.97, 1.04) → (0.72, 2.445932, 0.72)）
+[EQ]   名前の再利用：Irrigation/WaterSupply/Post_01（旧＝高架樋の柱碰撞 → 新＝竜骨車 門形架の柱碰撞、形状 (0.69, 1.3375, 1.04) → (0.72, 2.445932, 0.72)）
+[EQ] old nodes 8703 new nodes 8708；一致 8677（MultiMesh 1844）；撤去 26（期待どおり消えた 26、残存 0）；新規 29（範囲外 0）；差分 0；root 一致
+[EQ] 撤去：Irrigation/WaterSupply/Post_00, Irrigation/WaterSupply/Post_01, Irrigation/WaterSupply/Chute_1, FieldDetails/WaterSupply/Chute_0, FieldDetails/WaterSupply/Chute_1, FieldDetails/WaterSupply/ChuteJoint, FieldDetails/WaterSupply/HeadBearer, FieldDetails/WaterSupply/Support_00, FieldDetails/WaterSupply/Support_01
+[EQ] 新規 Irrigation/WaterSupply：Irrigation/WaterSupply/Post_02, Irrigation/WaterSupply/Post_03, Irrigation/WaterSupply/Post_04, Irrigation/WaterSupply/Post_05, Irrigation/WaterSupply/Post_06, Irrigation/WaterSupply/Post_07, Irrigation/WaterSupply/RyuHead, Irrigation/WaterSupply/RyuRail, Irrigation/WaterSupply/RyuTrough, Irrigation/WaterSupply/Feed
+[EQ] 新規 Ryukotsu 直下：Trough, Drive, Post_Frame_0, Post_Frame_1, Post_Stake_0, Post_Stake_1, Post_FeedLeg_0_0, Post_FeedLeg_0_1, Post_FeedLeg_1_0, Post_FeedLeg_1_1, Rail, Brace_0, Brace_1, Feed
+[EQ] RESULT PASS

@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[FARM] PASS P8 封存 38 檔雜湊一致（凍結 8、ART_REVIEW 圖 24、證據 6；不符 0：）
+[FARM] PASS 反向：竄改 tools/village_v2_farmland_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1）
+[FARM] 結果：0 項失敗（seal）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)

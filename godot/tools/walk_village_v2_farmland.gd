@@ -69,6 +69,9 @@ func _run() -> void:
 		print("[COST] 結果：%d 項失敗（P8 runtime budget）" % fails)
 		quit(1 if fails > 0 else 0)
 		return
+	if "--feeder-negative" in OS.get_cmdline_user_args():
+		quit(await _feeder_negative())
+		return
 	if "--feeder" in OS.get_cmdline_user_args():
 		await _feeder()
 		print("[FEEDER] result: %d failed" % fails)
@@ -230,6 +233,14 @@ func _feeder() -> void:
 		if not hit:
 			uncovered.append("%s@(%.2f,%.2f)" % [b[3], c.x, c.z])
 	_chk("post_collision", uncovered.is_empty(), "可見支柱 %d 根，無碰撞 %d：%s" % [posts, uncovered.size(), "；".join(uncovered.slice(0, 6))])
+	# 1b) R5b.1 系統狀態（使用者 2026-10-10「P8 FEEDER 驗證不能僅因節點不可見就放行」）：
+	#   取水構件全部可見、碰撞形全部有效、碰撞體有層；撤去済みの r5 高架落とし樋（Chute／ChuteJoint／HeadBearer／Support）の残骸 0。
+	#   runtime overlay が P8 の部材を隠す／碰撞を止めると、ここで FAIL。
+	await _supply_state(body)
+	# 1c) 水源連通（竜骨車）：取水口が水渠水面下かつ渠底より上、樋底は岸坡の地面より上、吐き口 → 送り樋 → 落とし桝 → 上段土渠 → 伏越し → 木槽 → 內渠 の水位が単調に下がる
+	_source_chain()
+	# 1d) 竜骨車と他層の干渉：可見網格の頂点（P7 河岸・P9 植生・水車・P10 overlay・NPC）と MultiMesh 実例（草）が竜骨車の部材 OBB に入らない
+	_ryukotsu_clear(boxes)
 	# 2) 走廊內：支柱不落在路權內、樋下淨高（10 cm 格）
 	for cn: String in CORRIDORS:
 		var R: Rect2 = CORRIDORS[cn]
@@ -288,6 +299,181 @@ func _feeder() -> void:
 		await _jump_test(jp, boxes)
 	# 5) TPS 相機：12 方位 × 5 俯仰 × 3 臂長
 	await _camera_sweep(boxes)
+
+## R5b.1 永久反向：取水構件を runtime で隠す／碰撞を止める／撤去済みの高架樋が残る → supply_system_state は各案で必ず FAIL
+func _feeder_negative() -> int:
+	var body := main.map_root.get_node(FARM + "/Irrigation/WaterSupply") as StaticBody3D
+	var ws: Node = main.map_root.get_node(FARM + "/FieldDetails/WaterSupply")
+	var names := ["N1 竜骨車の樋を runtime 非表示（ROUND 3 の WaterLifeP10 と同じ手口）", "N2 竜骨車の柱の碰撞形を停止", "N3 撤去済みの高架落とし樋 Chute_0 が残る"]
+	var miss := 0
+	for i in names.size():
+		_neg_case(i, true, ws, body)
+		var f0 := fails
+		await _supply_state(body)
+		var tripped := fails > f0
+		fails = f0
+		_neg_case(i, false, ws, body)
+		print("[FEEDER-NEG] %s：%s" % [names[i], "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
+		if not tripped:
+			miss += 1
+	var f1 := fails
+	await _supply_state(body)
+	var clean := fails == f1
+	print("[FEEDER-NEG] 復元後の正常状態：%s" % ("PASS" if clean else "FAIL"))
+	print("[FEEDER-NEG] result: 反向 %d/%d" % [names.size() - miss, names.size()])
+	return 0 if miss == 0 and clean else 1
+
+func _neg_case(i: int, on: bool, ws: Node, body: StaticBody3D) -> void:
+	match i:
+		0:
+			(ws.get_node("Ryukotsu/Trough") as Node3D).visible = not on
+		1:
+			(body.get_node("Post_00") as CollisionShape3D).disabled = on
+		2:
+			if on:
+				var n := Node3D.new()
+				n.name = "Chute_0"
+				ws.add_child(n)
+			else:
+				ws.get_node("Chute_0").free()
+
+## R5b.1：取水構件の可視／碰撞の実状態
+func _supply_state(body: StaticBody3D) -> void:
+	var ws: Node = main.map_root.get_node(FARM + "/FieldDetails/WaterSupply")
+	var hidden: Array = []
+	var dead: Array = []
+	for n in ws.find_children("*", "", true, false):
+		var nm := String(n.name)
+		if nm.begins_with("Chute") or nm.begins_with("Support_") or nm == "HeadBearer":
+			dead.append(String(ws.get_path_to(n)))
+		if n is VisualInstance3D and not (n as VisualInstance3D).is_visible_in_tree():
+			hidden.append(String(ws.get_path_to(n)))
+	var disabled: Array = []
+	for s in body.get_children():
+		var nm := String(s.name)
+		if nm.begins_with("Chute"):
+			dead.append("Irrigation/WaterSupply/" + nm)
+		if s is CollisionShape3D and ((s as CollisionShape3D).disabled or (s as CollisionShape3D).shape == null):
+			disabled.append(nm)
+	var ok := hidden.is_empty() and disabled.is_empty() and dead.is_empty() and body.collision_layer != 0 and body.is_visible_in_tree() and body.process_mode != Node.PROCESS_MODE_DISABLED
+	_chk("supply_system_state", ok, "非表示の取水構件 %d%s；無効な碰撞形 %d%s；撤去済み高架樋の残骸 %d%s；碰撞層 %d" % [hidden.size(), "" if hidden.is_empty() else "（" + "、".join(hidden.slice(0, 4)) + "）",
+		disabled.size(), "" if disabled.is_empty() else "（" + "、".join(disabled.slice(0, 4)) + "）", dead.size(), "" if dead.is_empty() else "（" + "、".join(dead.slice(0, 4)) + "）", body.collision_layer])
+
+## P2 水渠水面（Water/*Canal* 網格）の (x, z) 最寄り頂点の y
+func _canal_water(x: float, z: float) -> float:
+	var best := INF
+	var wy := NAN
+	for mi in main.map_root.get_node("Water").find_children("*", "MeshInstance3D", true, false):
+		if not String(mi.name).to_lower().contains("canal"):
+			continue
+		var m := mi as MeshInstance3D
+		for s in m.mesh.get_surface_count():
+			for v: Vector3 in m.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX]:
+				var p := m.global_transform * v
+				var d := Vector2(p.x - x, p.z - z).length()
+				if d < best:
+					best = d
+					wy = p.y
+	return wy
+
+func _source_chain() -> void:
+	var lo: Vector3 = FL.RYU_LOW
+	var hi: Vector3 = FL.RYU_HIGH
+	var cw := _canal_water(lo.x, lo.z)
+	var bed := _ground(lo.x, lo.z)
+	var lax := lo + FL.ryu_basis() * Vector3(0, FL.RYU_DRUM_UP, 0)
+	var g_box := _ground(FL.DROP_BOX.x + 0.6, FL.DROP_BOX.y)       # 桝の東（土渠側）の 0.20 階面
+	var box_w := g_box + FL.UPPER_LIFT + 0.01
+	var box_top := g_box + 0.24
+	# 樋底と地面（岸坡）：水面より上に出ている区間で樋底板の下面 ≥ 地面＋0.10
+	var min_c := INF
+	var at := 0.0
+	for k in range(0, 41):
+		var t := k / 40.0
+		var q := lo.lerp(hi, t)
+		var g := _ground(q.x, q.z)
+		if q.y - 0.04 > cw and not is_nan(g):
+			var c := q.y - 0.04 - g
+			if c < min_c:
+				min_c = c
+				at = q.x
+	# 送り樋：樋底板の下面 ≥ 地面＋0.15、上端の樋は送り樋の底に入り込まない、張り出しは桝の壁頂より上・桝の内側
+	var fa: Vector3 = FL.FEED[0]
+	var fb: Vector3 = FL.FEED[1]
+	var min_f := INF
+	for k in range(0, 21):
+		var q := fa.lerp(fb, k / 20.0)
+		min_f = minf(min_f, q.y - 0.04 - _ground(q.x, q.z))
+	var t_nest := (fa.x - lo.x) / (hi.x - lo.x)
+	var nest_gap := lerpf(lo.y, hi.y, t_nest) - 0.04 - fa.y
+	var chain := [["竜骨車 吐き口（樋底上端）", hi.y], ["送り樋 水面 始", fa.y + 0.06], ["送り樋 水面 末", fb.y + 0.06], ["落とし桝 水面", box_w],
+		["上段土渠 水面", g_box + FL.UPPER_LIFT], ["伏越し入口桝", FL.SIPHON_WATER[0]], ["伏越し出口桝", FL.SIPHON_WATER[1]],
+		["木槽 水面 始", FL.TROUGH_BOT[0] + FL.TROUGH_DEPTH], ["木槽 水面 末", FL.TROUGH_BOT[1] + FL.TROUGH_DEPTH], ["內渠 水面", FL.CH_WATER_S]]
+	var mono := true
+	var txt: Array = ["水渠水面 %.2f" % cw]
+	for i in chain.size():
+		txt.append("%s %.3f" % [chain[i][0], float(chain[i][1])])
+		if i > 0 and float(chain[i][1]) > float(chain[i - 1][1]) + 1e-4:
+			mono = false
+	var intake_ok := lo.y <= cw - 0.15 and lax.y - 0.13 >= bed + 0.10 and lo.y - 0.04 >= bed + 0.20
+	var lift_ok := hi.y >= box_w + 0.15
+	var spout_ok := fb.y - 0.04 > box_top + 0.005 and absf(fb.x - FL.DROP_BOX.x) < 0.25 and absf(fb.z - FL.DROP_BOX.y) < 0.25
+	_chk("source_ryukotsu", intake_ok and lift_ok and spout_ok and min_c >= 0.10 and min_f >= 0.15 and nest_gap >= 0.0 and mono and not is_nan(cw),
+		"取水口 樋底 %.2f（水渠水面 %.2f の %.2f m 下、渠底 %.2f の %.2f m 上、下車の下端 %.2f）；必要揚程 %.2f m（水面→落とし桝水面）、吐き口まで %.2f m；"
+		% [lo.y, cw, cw - lo.y, bed, lo.y - 0.04 - bed, lax.y - 0.13, box_w - cw, hi.y - cw]
+		+ "傾斜 %.1f°・樋長 %.2f m；岸坡上の樋底板下面－地面 最小 %.2f m（x %.1f）；送り樋下面－地面 最小 %.2f m；上端の入り込み隙間 %.3f m；張り出し下面 %.2f > 桝壁頂 %.2f；水位鎖 %s：%s"
+		% [rad_to_deg(atan2(hi.y - lo.y, Vector2(hi.x - lo.x, hi.z - lo.z).length())), (hi - lo).length(), min_c, at, min_f, nest_gap, fb.y - 0.04, box_top, "単調減少" if mono else "逆流あり", " → ".join(txt)])
+
+func _ryukotsu_clear(boxes: Array) -> void:
+	var ryu: Array = boxes.filter(func(b: Array) -> bool: return String(b[3]).begins_with("Ryukotsu") or String(b[3]).begins_with("Trough/") or String(b[3]).begins_with("Feed/"))
+	var region := AABB(Vector3(329.5, -3.0, 2.5), Vector3(10.5, 6.0, 5.0))
+	var skip := ["Terrain", "Water", "Debug", "Collision"]
+	var hits := {}
+	var nverts := 0
+	for mi in main.map_root.find_children("*", "MeshInstance3D", true, false):
+		var m := mi as MeshInstance3D
+		if m.mesh == null or not m.is_visible_in_tree():
+			continue
+		var path := String(main.map_root.get_path_to(m))
+		if path.get_slice("/", 0) in skip or path.contains("/WaterSupply/") or path.contains("/Ground/") or path.contains("LOD1") or path.contains("LOD2") or path.contains("LOD3"):
+			continue
+		var ab: AABB = m.global_transform * m.get_aabb()
+		if not ab.intersects(region):
+			continue
+		for s in m.mesh.get_surface_count():
+			for v: Vector3 in m.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX]:
+				var p := m.global_transform * v
+				if not region.has_point(p):
+					continue
+				nverts += 1
+				for bx: Array in ryu:
+					if _obb_dist(bx, p) < 0.03:
+						hits[path] = int(hits.get(path, 0)) + 1
+						break
+	var mm_hits := {}
+	var nmm := 0
+	for mi in main.map_root.find_children("*", "MultiMeshInstance3D", true, false):
+		var mmi := mi as MultiMeshInstance3D
+		if mmi.multimesh == null or not mmi.is_visible_in_tree():
+			continue
+		var ab: AABB = mmi.global_transform * mmi.get_aabb()
+		if not ab.intersects(region):
+			continue
+		var mm := mmi.multimesh
+		var top := mm.mesh.get_aabb().end.y if mm.mesh else 0.3
+		for i in mm.instance_count:
+			var xf := mmi.global_transform * mm.get_instance_transform(i)
+			if not region.has_point(xf.origin):
+				continue
+			nmm += 1
+			var tip := xf * Vector3(0, top, 0)
+			for bx: Array in ryu:
+				if _seg_hits(bx, xf.origin, tip):
+					var key := String(main.map_root.get_path_to(mmi))
+					mm_hits[key] = int(mm_hits.get(key, 0)) + 1
+					break
+	_chk("ryukotsu_overlay_clear", hits.is_empty() and mm_hits.is_empty() and ryu.size() > 0,
+		"竜骨車の部材 OBB %d 個；周辺の可見網格頂点 %d のうち部材内 %s；MultiMesh 実例 %d のうち部材を貫く %s" % [ryu.size(), nverts, str(hits) if not hits.is_empty() else "0", nmm, str(mm_hits) if not mm_hits.is_empty() else "0"])
 
 func _place(p: Vector2, yaw: float) -> void:
 	player.global_position = Vector3(p.x, _ground(p.x, p.y) + 0.05, p.y)
@@ -348,7 +534,7 @@ func _camera_sweep(boxes: Array) -> void:
 	var pivot := player.get_node("Pivot") as Node3D
 	var pts := {"FP1_siphon": Vector2(372.0, 6.25), "FP1_south": Vector2(372.0, 1.5), "FP1_north": Vector2(372.0, 9.0),
 		"portal": Vector2(398.0, 2.0), "gate_front": Vector2(398.0, -6.0), "trough_cross": Vector2(397.8, 5.2),
-		"trough_mid": Vector2(386.6, 5.3), "chute_side": Vector2(339.0, 3.2)}
+		"trough_mid": Vector2(386.6, 5.3), "chute_side": Vector2(339.0, 3.2), "ryu_head_n": Vector2(337.0, 6.9)}
 	var cam0 := root.get_viewport().get_camera_3d()
 	var vs := Vector2(root.get_viewport().get_visible_rect().size)
 	var hh := cam0.near * tan(deg_to_rad(cam0.fov) * 0.5)
@@ -403,7 +589,7 @@ func _camera_sweep(boxes: Array) -> void:
 						if _seg_hits(bx, cp, eye):
 							occl += 1
 							break
-	_chk("tps_camera", bad == 0, "近裁面四角半徑＋1 cm＝%.3f m；%d 個相機姿勢（8 點 × 12 方位 × 5 俯仰 × 臂長 3／8.5／16 m）；距取水構件 < %.3f m 的姿勢 %d；最近 %.2f m（%s）；掛樋擋在相機與玩家胸口之間 %d 姿勢（%.1f %%，資訊）" % [CAM_CLEAR, n, CAM_CLEAR, bad, worst, worst_at, occl, 100.0 * occl / maxf(1, n)])
+	_chk("tps_camera", bad == 0, "近裁面四角半徑＋1 cm＝%.3f m；%d 個相機姿勢（%d 點 × 12 方位 × 5 俯仰 × 臂長 3／8.5／16 m）；距取水構件 < %.3f m 的姿勢 %d；最近 %.2f m（%s）；掛樋擋在相機與玩家胸口之間 %d 姿勢（%.1f %%，資訊）" % [CAM_CLEAR, n, pts.size(), CAM_CLEAR, bad, worst, worst_at, occl, 100.0 * occl / maxf(1, n)])
 	print("[FEEDER] camera near-miss breakdown: %s" % str(bad_by))
 	# 代表畫面（遊戲實際 TPS 相機）
 	for sn: String in shots:

@@ -37,11 +37,11 @@ const PADDLE_STEP_DEG := 22.5
 const POST_COL_X := 2.30          # 東軸承柱 碰撞箱の西面
 const POST_VIS_EAST := 2.74       # 東軸承柱 可視の東面
 const FOOT_Z := 0.23              # 礎石 z 半幅
-## P8 落とし樋（封存 farmland_p8.scn・ファイル不変）：水車 2 から田へ渡す高架部分だけ runtime で隠す（DropBox 以下は不変）
+## P8 取水（farmland_p8.scn）：R5b.1（2026-10-10）で高架落とし樋を P8 生成器側で撤去し竜骨車へ置き換えた。
+##   本 overlay は P8 のノードを一切隠さない／止めない（ROUND 3 の runtime 非表示は撤去）。gate はその状態を確認するだけ。
 const P8_SUPPLY := "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply"
 const P8_COL := "Districts/FarmlandEast/FarmlandP8/Irrigation/WaterSupply"
-const P8_HIDE_VIS := ["Chute_0", "Chute_1", "ChuteJoint", "HeadBearer", "Support_00", "Support_01"]
-const P8_HIDE_COL := ["Post_00", "Post_01", "Chute_1"]
+const P8_PUMP := "Ryukotsu"
 const P8_KEEP := ["DropBox", "SiphonBox_0", "SiphonBox_1", "GroundTrough", "Crossing_trough_385", "Crossing_trough_397", "Crossing_upper_354"]
 const IMMERSE := [0.15, 0.80]     # 葉板先端の浸かり（下掛け：浅すぎると流れを受けない、深すぎると輪が水を掻き上げる）
 const LIFT_PARTS := ["LiftBuckets", "UkeToi", "HeadBent", "Pour", "Spill", "Splash", "Spray", "ChuteFlow", "BucketWater"]
@@ -370,10 +370,6 @@ static func build(v: Node3D, heights: Dictionary) -> Node3D:
 	ww.transform = hero.global_transform
 	root.add_child(ww)
 	ww.add_child(_power_fx(float(heights.get("water_y", 0.0))))
-	root.set("p8_supply_path", NodePath(P8_SUPPLY))
-	root.set("p8_col_path", NodePath(P8_COL))
-	root.set("p8_hide_vis", PackedStringArray(P8_HIDE_VIS))
-	root.set("p8_hide_col", PackedStringArray(P8_HIDE_COL))
 	# 主河小舟
 	var bp := Node3D.new()
 	bp.name = "BoatLanding"
