@@ -1,0 +1,10 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[IRR] Water meshes：["WestStream", "Placeholder", "MainRiver", "Canal"]
+[IRR] MainRiver 水面：上流 -0.80（s 0）→ 下流 -0.80（s 335）、標本 63
+[IRR] Canal 水面：上流 -1.13（s 0）→ 下流 -1.63（s 409）、標本 80
+[IRR] 田面：[{"farm_level":0.0,"ground":0.0,"x":390.0,"z":15.0},{"farm_level":0.0,"ground":0.0,"x":390.0,"z":35.0},{"farm_level":0.0,"ground":0.0,"x":390.0,"z":52.0},{"farm_level":0.0,"ground":0.0,"x":415.0,"z":15.0},{"farm_level":0.0,"ground":0.0,"x":415.0,"z":30.0},{"farm_level":0.0,"ground":0.0,"x":415.0,"z":48.0}]
