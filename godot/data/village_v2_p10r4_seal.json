@@ -161,13 +161,13 @@
  },
  "frozen": {
   "godot/tools/village_v2_human_use_lib.gd": "21165f8c8a3f812b7840036ed439939709250a4c287bb52856d660fb91e2a0c3",
-  "godot/tools/verify_village_v2_human_use.gd": "f22f3aa35da17b0236dd6dcead17a339b7e1881ab7196c90efe2867cf9f22906",
+  "godot/tools/verify_village_v2_human_use.gd": "944418229d726de0b9929140e410d721e5273ac26df07ecc19b906a5cbe9516c",
   "godot/tools/shot_p10_human_use.gd": "c854cfb996af24c7f7e7995786f20021b753b908b190b328f6849a061a9e8dbc",
   "godot/tools/shot_p10_human_use_views.json": "a0e454e051a7d0ae4d77f185b4aa7135c7cecdb4b0132f9f168754d3ebb0ad59",
   "godot/tools/shot_village_v2_topdown.gd": "e86c011e6bee775426540f00891b9bf3e97e182bb28c5ccbb4472033ea3e8791",
   "godot/assets/blender/village_v2/build_humanuse_kit.py": "d0e03ab44af793618db489e8d421b0133e9888d4193ac29dfd41bc54cf064014",
   "godot/maps/village_v2/gen/human_use_p10.scn": "c4c70a2672460e4bdb7910a8a91448f45a7a611e4088c30c79f003ce63b25d51",
-  "godot/data/village_v2_p10r4_snapshot.json": "971e2dd8d8a4c066a28b8690d87d6e2678ba99c26462a5ce9c731fb57814a45e",
+  "godot/data/village_v2_p10r4_snapshot.json": "3e788d0d8a4d464922b4c38c9cc32e888c95b75defc1cd39d55c1c8d48332849",
   "godot/assets/village_v2/humanuse_kit/src/humanuse_kit.glb": "5c279a1ad4793136cc336c947b54a0f6356c13a786a0b5c0b90801628508aa5b",
   "godot/assets/village_v2/humanuse_kit/src/modules_blender.json": "f0122bf013c742dd3dba0a737ce9954af67d4f3dd9fb9f00f1677d7d277f1c6d",
   "godot/assets/village_v2/humanuse_kit/humanuse_kit_manifest.json": "da417034adc1b7a41d6dbbaef77e72562296c0e458edb3a847e934f5ba211bfd",
@@ -192,7 +192,9 @@
   "docs/art_review/village_v2_p10_props/human_use_r1/gate/regression_subset.log": "bc22b87e6c67bce856226d63834376f36c55aff93f4dec551ac2b3da46c75522",
   "docs/art_review/village_v2_p10_props/human_use_r1/gate/regression_subset_mount_under_props.log": "5d392b48aea9435c3f79356d6da55867c1602348ecc0c237630d0db7e36287ab",
   "docs/art_review/village_v2_p10_props/human_use_r1/gate/scene.log": "7601a8ecf0ab182c241e2c6ee24f63a4ddcae110323313d5558f27f732a9ca04",
-  "docs/art_review/village_v2_p10_props/human_use_r1/gate/shots.log": "61945aa206b83202d50ba69aa3d3d470c93b81f28adf94a56fc09452e4afa72f"
+  "docs/art_review/village_v2_p10_props/human_use_r1/gate/shots.log": "61945aa206b83202d50ba69aa3d3d470c93b81f28adf94a56fc09452e4afa72f",
+  "docs/art_review/village_v2_p10_rehab_impl/integration/r4_reseal/huse_scene.log": "c3d8d61f19ec0f8e8f38b929129d14871d8347f1cedf97b75202d1305924cf1f",
+  "docs/art_review/village_v2_p10_rehab_impl/integration/r4_reseal/huse_seal.log": "41f9d4f87c29703c42e8391a2ba17a6b6bf1e2100a36ef751413ba1cd44d743c"
  },
  "art_review_images": {
   "docs/art_review/village_v2_p10_props/human_use_r1/render/A1_near_after.png": "4e2746a8b7a6f81a16759d91dca2025e6bcb096ef3a7e31832d31a847b10db3b",
@@ -275,6 +277,35 @@
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
   "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
-  "godot/data/village_v2_p10r3e_seal.json": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03"
- }
+  "godot/data/village_v2_p10r3e_seal.json": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03",
+  "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
+ },
+ "reseal_history": [
+  {
+   "at": "2026-10-09",
+   "kind": "R4C_STRAW_GEOMETRY_A2",
+   "approved_by": "user",
+   "approval_source": "使用者 2026-10-09 P10 R5–R6 ROUND 3 FINAL ART DIRECTION：「以下項目正式 ART_APPROVED：R5c Boundary Closure、R5a Road Base 416 m Pilot、R6a Kit Material 24 Buildings Pilot、R4c Straw Geometry Pilot」「允許開始這四項的正式整合及必要 limited reseal」「目前只核准 Pilot 範圍，不代表已批准全村套用」「R4c 更新稻架模型和必要的 A2 位置，僅重新封存實際受影響的依賴」",
+   "reason": "P10 R4c（PropFixP10、封存 data/village_v2_p10r4c_seal.json）が A2 背負い籠 PilotA/A2_dakkoku/006_hu_seoikago を東へ 1.0 m 移す（TPS 視線で千歯扱きを塞いでいた；接地＝TerrainCollision）。st_hasa → st_hasa_v2 の mesh 差し替え（位置・朝向・件数は不変）。",
+   "changed": {
+    "snapshot": "PilotA/A2_dakkoku/006_hu_seoikago position [347.65, 0.145, -3.3] → [348.65, 0.144, -3.3]（他 49 件・who／why・yaw は不変）",
+    "verifier": "HUSE scene「個別ノード」：mesh は kit の .res、または PropFixP10 swaps に登記された差し替え先（st_hasa_v2／_l1）だけ合法＋反向（kit 外 BoxMesh → 検出）"
+   },
+   "unchanged": "human_use_p10.scn（baked）・生成器・humanuse_kit・審圖・他の gate 項目",
+   "files": {
+    "godot/data/village_v2_p10r4_snapshot.json": [
+     "971e2dd8d8a4c066a28b8690d87d6e2678ba99c26462a5ce9c731fb57814a45e",
+     "3e788d0d8a4d464922b4c38c9cc32e888c95b75defc1cd39d55c1c8d48332849"
+    ],
+    "godot/tools/verify_village_v2_human_use.gd": [
+     "f22f3aa35da17b0236dd6dcead17a339b7e1881ab7196c90efe2867cf9f22906",
+     "944418229d726de0b9929140e410d721e5273ac26df07ecc19b906a5cbe9516c"
+    ]
+   },
+   "seal_file_before": "0c428cfdb2e52e013f7eed65ccc209333949719c195b836f4721f6828367b6a6",
+   "child_seals_added": {
+    "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
+   }
+  }
+ ]
 }

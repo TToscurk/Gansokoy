@@ -597,11 +597,32 @@ func _scene(v: Node3D) -> void:
 	var mm := go.find_children("*", "MultiMeshInstance3D", true, false).size()
 	var mk := go.find_children("*", "Marker3D", true, false).size()
 	var lod_ok := true
+	# P10 R4c（使用者 2026-10-09 ART_APPROVED：Straw Geometry Pilot、封存 data/village_v2_p10r4c_seal.json）：PropFixP10 が st_hasa（＋_l1）を
+	# st_hasa_v2 に差し替える。差し替え先は PropFixP10 の swaps に登記された 2 つだけ合法（それ以外の kit 外 mesh は従来どおり FAIL）。
+	var r4c := {}
+	var pf := v.get_node_or_null("PropFixP10")
+	if pf != null:
+		var sw: Dictionary = pf.get("swaps")
+		for k in sw:
+			r4c[String((sw[k] as Mesh).resource_path)] = true
+	var n_r4c := 0
 	for m in mi:
 		var path := String((m as MeshInstance3D).mesh.resource_path)
-		lod_ok = lod_ok and path.begins_with("res://assets/village_v2/") and path.contains("/mesh/")
-	check("個別ノード（選べる）：MeshInstance %d（＝2×%d 件）・MultiMesh %d・NPC anchors（Marker3D）%d、mesh は全部 kit の .res" % [mi.size(), int(go.get_meta("items")), mm, mk],
+		var kit_ok := path.begins_with("res://assets/village_v2/") and path.contains("/mesh/")
+		if not kit_ok and r4c.has(path):
+			n_r4c += 1
+			kit_ok = true
+		lod_ok = lod_ok and kit_ok
+	check("個別ノード（選べる）：MeshInstance %d（＝2×%d 件）・MultiMesh %d・NPC anchors（Marker3D）%d、mesh は全部 kit の .res（R4c 登記の st_hasa_v2 差し替え %d）" % [mi.size(), int(go.get_meta("items")), mm, mk, n_r4c],
 		mm == 0 and mk == 0 and lod_ok and mi.size() == 2 * int(go.get_meta("items")))
+	# 反向（R4c 合法化の後も任意の差し替えは FAIL）：1 件を kit 外の BoxMesh に → 検出
+	var m0 := mi[0] as MeshInstance3D
+	var keep := m0.mesh
+	m0.mesh = BoxMesh.new()
+	var p0 := String(m0.mesh.resource_path)
+	var neg_ok := not ((p0.begins_with("res://assets/village_v2/") and p0.contains("/mesh/")) or r4c.has(p0))
+	m0.mesh = keep
+	check("反向：1 件を kit 外の mesh（BoxMesh）に差し替え → 検出（R4c 登記以外は不可）", neg_ok)
 	var pil: Array = []
 	for p in ["PilotA", "PilotB", "PilotC"]:
 		var n := go.get_node_or_null(p)

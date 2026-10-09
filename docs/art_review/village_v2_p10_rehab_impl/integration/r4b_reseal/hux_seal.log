@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[HUX] PASS status ART_APPROVED（A 農田・B 住宅、使用者 2026-10-08；agent は美術を承認しない）＋C 水岸 ART_REJECTED の記録（群 ["XC1_araimono", "XC2_hashi", "XC3_suiro"]・理由が裁定文どおり）
+[HUX] PASS 封存 189 檔雜湊一致（凍結・證據・審圖・rejected candidates・子封存；不符 0：[]）
+[HUX] PASS 掛載：root 直下 Props → HumanUseP10 → HumanUseExpansionP10（各 1 個）、Props の子は封存どおり（MarketP10 → StreetP10 → MarketWestP10 → EnvironmentP9）、res://maps/village_v2/gen/human_use_exp_p10.scn
+[HUX] PASS snapshot：40 件・10 cluster（A 22・B 18・C 0 件）、art_revision＝P10 R4b Human-Use Expansion Batch 1 A/B FINAL（A 農田・B 住宅 ART_APPROVED、C 水岸 ART_REJECTED＝除去）
+[HUX] PASS 場景の 40 件が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・id／zone／cluster／anchor／who／why；不符 []）
+[HUX] PASS A/B は承認時（r3 審圖、docs/art_review/village_v2_p10_props/human_use_exp_b1/gate/plan_r3.json）から美術の変更なし：snapshot の 40 件＝r3 の A/B 件（2 cm・0.5°・who／why）——不符 []
+[HUX] PASS C 水岸の除去：場景に rejected 群のノード []・C の件／hx_doroage 0、ZoneC なし
+[HUX] PASS R4 封存 HumanUseP10 不変：50 件が R4 snapshot と位置 ≤ 1 cm・id 一致（不符 []）
+[HUX] PASS Population 51 不変（NPC body 51）
+[HUX] PASS 反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（1）
+[HUX] PASS 反向：snapshot の 1 件を 0.25 m ずらす → 場景と不一致・承認時 r3 とも不一致
+[HUX] PASS 反向：snapshot の 1 件の who を変える → 不一致を検出
+[HUX] PASS 反向：rejected の C 13 件を snapshot に戻す → 場景と不一致・承認時 A/B とも不一致
+[HUX] 結果：0 項失敗（seal）

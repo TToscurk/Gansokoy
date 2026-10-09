@@ -28,6 +28,8 @@ const A2_BASKET := "HumanUseP10/PilotA/A2_dakkoku/006_hu_seoikago"
 const A2_SENBA := "HumanUseP10/PilotA/A2_dakkoku/005_hu_senba"
 const A2_SHIFT := Vector2(1.0, 0.0)
 const A2_VIEW := Vector2(346.0, 1.0)   # MASTER AUDIT r4c_dakkoku_A2 機位（農道側）
+const RS := preload("res://tools/village_v2_rehab_seal.gd")
+const SEAL := "res://data/village_v2_p10r4c_seal.json"   # 使用者 2026-10-09 ROUND 3 FINAL：R4c Straw Geometry Pilot＝ART_APPROVED
 var fails := 0
 var quiet := false
 
@@ -42,6 +44,12 @@ func _ok(c: bool, msg: String) -> bool:
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
+	if RS.refuse_write(args, SEAL, "R4C_ALLOW_REBAKE", "R4C"):
+		quit(1)
+		return
+	if "--seal" in args:
+		quit(await RS.new().run(self, SEAL, "R4C", NODE_NAME, _seal_extra))
+		return
 	if "--attach" in args:
 		quit(_attach())
 		return
@@ -453,3 +461,23 @@ func _attach() -> int:
 	f.close()
 	print("[R4C] attach：加 root/%s（ShrineApproachP10 之後）→ %s（+%d 行）" % [NODE_NAME, SCENE, out.size() - lines.size()])
 	return 0
+
+
+## --seal 固有：st_hasa → st_hasa_v2 の差し替え 18（StreetP10・HumanUseP10/PilotA・HumanUseExpansionP10/ZoneA）、A2 背負い籠の移位 1 件だけ、
+## 籠の接地（地面＝TerrainCollision）。R4 snapshot（limited reseal 後）の A2＝この移位後の位置。
+func _seal_extra(v: Node3D) -> Array:
+	var n := v.get_node(NODE_NAME)
+	var left := 0
+	for mi in v.find_children("*", "MeshInstance3D", true, false):
+		var m := (mi as MeshInstance3D).mesh
+		if m and OLD.has(m.resource_path):
+			left += 1
+	var b := v.get_node(A2_BASKET) as Node3D
+	var snap: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/village_v2_p10r4_snapshot.json"))
+	var want := Vector3.ZERO
+	for it: Dictionary in snap["items"]:
+		if "HumanUseP10/" + String(it["node"]) == A2_BASKET:
+			want = Vector3(it["position"][0], it["position"][1], it["position"][2])
+	return [[int(n.get("swapped")) == 18 and left == 0, "st_hasa → st_hasa_v2：%d 個（舊 mesh 殘り %d）" % [int(n.get("swapped")), left]],
+		[int(n.get("moved")) == 1, "A2 背負い籠の移位 %d 件だけ" % int(n.get("moved"))],
+		[b.global_position.distance_to(want) <= 0.01, "A2 籠の位置＝R4 snapshot（limited reseal 後）%s（差 %.3f m）" % [str(want), b.global_position.distance_to(want)]]]
