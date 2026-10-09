@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[R6B1] pilot counts {"L":42,"N":15,"P":39,"berm":120,"boulder":18,"landing":2}、r8 三角形 6926 → 区間外 3416、pilot 三角形 4445
+SHOT san_steps_5m
+SHOT san2_up_landing
+SHOT r6b1_up_landing1_close
+SHOT san2_down_landing
+SHOT san_steps_down
+SHOT r6b1_down_on_landing2
+SHOT r6b1_side_high
