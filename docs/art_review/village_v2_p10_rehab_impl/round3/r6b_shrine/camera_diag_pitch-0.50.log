@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[CAM] A_terrain_only       標本 257（0.25 m）  縮み 5（2 %）  回数 1  最短 3.37 m @s 100.0（Collision）  当たり { "Collision": 18 }  相機が石の中 0
+[CAM]   区間平均（s m:腕 m）30:8.5 40:8.5 50:8.5 60:8.5 70:8.5 80:8.5 90:7.4 100:3.4
+[CAM] B_no_landings        標本 266（0.25 m）  縮み 12（5 %）  回数 1  最短 1.49 m @s 101.7（Collision）  当たり { "Collision": 24 }  相機が石の中 0
+[CAM]   区間平均（s m:腕 m）30:8.5 40:8.5 50:8.5 60:8.5 70:8.5 80:8.5 90:7.3 100:2.3
+[CAM] C_round2_landings    標本 266（0.25 m）  縮み 11（4 %）  回数 1  最短 1.67 m @s 101.5（Collision）  当たり { "Collision": 24 }  相機が石の中 0
+[CAM]   区間平均（s m:腕 m）30:8.5 40:8.5 50:8.5 60:8.5 70:8.5 80:8.5 90:7.4 100:2.5
+[CAM] D_landings_d1.2      標本 266（0.25 m）  縮み 11（4 %）  回数 1  最短 1.61 m @s 101.6（Collision）  当たり { "Collision": 24 }  相機が石の中 0
+[CAM]   区間平均（s m:腕 m）30:8.5 40:8.5 50:8.5 60:8.5 70:8.5 80:8.5 90:7.4 100:2.5
+[CAM] E_landings_2_d1.2    標本 266（0.25 m）  縮み 11（4 %）  回数 1  最短 1.55 m @s 101.6（Collision）  当たり { "Collision": 24 }  相機が石の中 0
+[CAM]   区間平均（s m:腕 m）30:8.5 40:8.5 50:8.5 60:8.5 70:8.5 80:8.5 90:7.4 100:2.4

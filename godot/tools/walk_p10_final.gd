@@ -82,6 +82,11 @@ func _go() -> void:
 	dm = root.get_node_or_null("/root/DialogueManager")
 	adapter.set_process_unhandled_input(false)
 	player.set_process_unhandled_input(false)
+	# --pitch=：相機の初期 pitch を固定（起動中のマウス移動で pitch がずれた回を比較に使わないため；P10 R6b ROUND 3）
+	for a3: String in args:
+		if a3.begins_with("--pitch="):
+			adapter.set("_target_pitch", float(a3.trim_prefix("--pitch=")))
+			adapter.set("_current_pitch", float(a3.trim_prefix("--pitch=")))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	for cl in root.find_children("*", "CanvasLayer", true, false):
 		(cl as CanvasLayer).visible = false

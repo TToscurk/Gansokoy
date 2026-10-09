@@ -16,7 +16,7 @@ extends RefCounted
 const NODE_NAME := "ShrineApproachP10"
 const OUTPUT := "res://maps/village_v2/gen/shrine_approach_p10.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p10/shrine_approach.gd"
-const ART_REVISION := "P10 R6b ROUND 2 r8（ROUND 2 最終）：袖石を低く細く（踏面＋2–7 cm・幅 0.16–0.24・20 % 欠け）＝背の高い縁石に見えない、上面は苔、鼻先の面取りを石ごとに 2.5–6 cm（摩耗）、15 % の石にひび（細い暗線）；r7：法線修正後は明るすぎ（黄緑・白っぽい）→ 石材 0.64＝風化した灰（参考写真の暗い灰の石段）、袖石の苔は灰緑寄り、鼻先は石ごとに 0–3.7 cm 張り出し・左右で傾き（不揃いの鼻先線）、袖石は前の石の高さに続ける・欠け 8 %；r6：踏石の色を灰中心（暖灰は控えめ＝踏面の茶色い帯を消す）、1 段＝1 枚石が多く 2 枚は継ぎ目の位置を不揃いに（ジグザグの目地をやめる）、袖石＝1–3 段の短い石・高さ／幅不揃い・15 % 欠け・黄緑の苔（参考写真）、踊り場＝大きめの敷石＋前縁の框石、石段の両脇の參道 ribbon を全幅で隠す（茶色い土の帯）；r5：根因修正——石段の法線が裏向き（Godot の表＝時計回りと逆）で踏面に日光が当たらず暗い青に見えていた（r1–r4 共通、下り視点 2/5 の主因）→ 法線を表向きに；r4：下り視点 2/5 の整改——30° 一定坂の 170 段を踊り場 3（盛土・前縁 ≤ 1.2 m）＋丘の肩の長い踏面で 5 つの流れに分け、幅 3.0→2.4 m、踏石 2–3 枚の不揃い・面取りした鼻先（摩耗）・目地・色差（暖灰／青灰／緑灰）・袖石の苔と欠け、踊り場は石畳、踏面 UV を水平投影に（石の質感が出る）、石材 0.80／立面 0.82（暗い一様面を減らす）／r3b（技術修正：一の鳥居の柱台に乗り上げ防止ガード）／r3：踏面明／立面暗（RISER_TONE 0.70）で段のリズム、石材 0.72；r2：石段色調（每段明暗差＋袖石苔味）、石材提亮（R6a 校正相當）、燈籠坐在坂に据えた水平基壇（ART_REVIEW）"
+const ART_REVISION := "P10 R6b ROUND 3 r9：踊り場 3 は設計基礎として保持；模組の繰り返しを減らす局部の老化——踏面の奥（次の蹴上との入隅）に土と落ち葉の溜まり、鼻先の角の欠け 12 %、継ぎ目の苔、6 % の差し替え石（色違い）；r8（ROUND 2 最終）：袖石を低く細く（踏面＋2–7 cm・幅 0.16–0.24・20 % 欠け）＝背の高い縁石に見えない、上面は苔、鼻先の面取りを石ごとに 2.5–6 cm（摩耗）、15 % の石にひび（細い暗線）；r7：法線修正後は明るすぎ（黄緑・白っぽい）→ 石材 0.64＝風化した灰（参考写真の暗い灰の石段）、袖石の苔は灰緑寄り、鼻先は石ごとに 0–3.7 cm 張り出し・左右で傾き（不揃いの鼻先線）、袖石は前の石の高さに続ける・欠け 8 %；r6：踏石の色を灰中心（暖灰は控えめ＝踏面の茶色い帯を消す）、1 段＝1 枚石が多く 2 枚は継ぎ目の位置を不揃いに（ジグザグの目地をやめる）、袖石＝1–3 段の短い石・高さ／幅不揃い・15 % 欠け・黄緑の苔（参考写真）、踊り場＝大きめの敷石＋前縁の框石、石段の両脇の參道 ribbon を全幅で隠す（茶色い土の帯）；r5：根因修正——石段の法線が裏向き（Godot の表＝時計回りと逆）で踏面に日光が当たらず暗い青に見えていた（r1–r4 共通、下り視点 2/5 の主因）→ 法線を表向きに；r4：下り視点 2/5 の整改——30° 一定坂の 170 段を踊り場 3（盛土・前縁 ≤ 1.2 m）＋丘の肩の長い踏面で 5 つの流れに分け、幅 3.0→2.4 m、踏石 2–3 枚の不揃い・面取りした鼻先（摩耗）・目地・色差（暖灰／青灰／緑灰）・袖石の苔と欠け、踊り場は石畳、踏面 UV を水平投影に（石の質感が出る）、石材 0.80／立面 0.82（暗い一様面を減らす）／r3b（技術修正：一の鳥居の柱台に乗り上げ防止ガード）／r3：踏面明／立面暗（RISER_TONE 0.70）で段のリズム、石材 0.72；r2：石段色調（每段明暗差＋袖石苔味）、石材提亮（R6a 校正相當）、燈籠坐在坂に据えた水平基壇（ART_REVIEW）"
 const TORII_SCN := "res://assets/village_v2/sando_torii/sando_torii.scn"
 const LANTERN := "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res"
 const LANTERN_L1 := "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res"
@@ -407,6 +407,18 @@ static func _quad(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector
 		st.add_vertex(v)
 
 
+## 上向きの三角形 1 枚（Godot の表＝(v2−v0)×(v1−v0) が +y になる順に並べ直し、法線は真上）
+static func _tri_up(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3) -> void:
+	var vs := [a, b, c]
+	if (c - a).cross(b - a).y < 0.0:
+		vs = [a, c, b]
+	for v: Vector3 in vs:
+		st.set_color(_vc)
+		st.set_normal(Vector3.UP)
+		st.set_uv(_uv(v, Vector3.UP))
+		st.add_vertex(v)
+
+
 ## 頂点ごとの色（立面の明暗グラデーション）
 static func _quad_c(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector3, ca: Color, cb: Color, cc: Color, cd: Color) -> void:
 	var n := (c - a).cross(b - a).normalized()
@@ -565,6 +577,26 @@ static func build(v: Node3D, cl: PackedVector2Array, H: PackedFloat32Array) -> N
 				var base := _stone_tone(rng, edge)
 				if absf((u0 + u1) * 0.5) < 0.5:
 					base = _mul(base, 1.05)                          # 真ん中＝人が踏む道筋（摩耗で明るい）
+				var patch := rng.randf()
+				if patch < 0.03:
+					base = Color(0.70, 0.72, 0.66)                   # ROUND 3：後から差し替えた石（白っぽい新しめの石）
+				elif patch < 0.06:
+					base = Color(0.50, 0.56, 0.44)                   # ROUND 3：苔むした古い石
+				# ROUND 3：継ぎ目の苔（継ぎ目の 50 %、幅 2–3.5 cm、踏面＋1.5 mm）
+				if j > 0 and rng.randf() < 0.5:
+					var tm := tangent(cl, ka)
+					var nm := Vector2(-tm.y, tm.x)
+					var tm2 := tangent(cl, kb)
+					var nm2 := Vector2(-tm2.y, tm2.x)
+					var jw := rng.randf_range(0.01, 0.0175)
+					var cj := float(cuts[j])
+					var ma := cl[ka] + tm * 0.03 + nm * (cj - jw)
+					var mb := cl[kb] + nm2 * (cj - jw)
+					var mc := cl[kb] + nm2 * (cj + jw)
+					var md := cl[ka] + tm * 0.03 + nm * (cj + jw)
+					var mtn := rng.randf_range(0.8, 1.1)
+					_vc = Color(0.34 * mtn, 0.44 * mtn, 0.22 * mtn)
+					_quad(sm, Vector3(ma.x, ya + 0.0015, ma.y), Vector3(mb.x, yb + 0.0015, mb.y), Vector3(mc.x, yb + 0.0015, mc.y), Vector3(md.x, ya + 0.0015, md.y))
 				var dy := rng.randf_range(-0.006, 0.006)
 				var tilt := rng.randf_range(0.0, 0.009)              # 鼻先側が下がる（摩耗）
 				_uvo = Vector2(rng.randf_range(0.0, 7.0), rng.randf_range(0.0, 7.0))
@@ -573,6 +605,37 @@ static func build(v: Node3D, cl: PackedVector2Array, H: PackedFloat32Array) -> N
 					var nb0 := rng.randf_range(0.0, 0.025)   # 前へだけ（張り出し）：後ろへ引くと前の段との間に溝ができる
 					nose = Vector2(maxf(0.0, nb0 + rng.randf_range(-0.012, 0.012)), maxf(0.0, nb0 + rng.randf_range(-0.012, 0.012)))
 				_stone(sm, cl, ka, kb, u0, u1, ya + dy - tilt, yb + dy, ybot, r == 0, rise if r == 0 else 0.0, base, 0.0 if r == 0 else 0.012, nose, rng.randf_range(0.025, 0.06))
+				# ROUND 3：踏面の奥（次の段の蹴上との入隅）に土・落ち葉の溜まり（幅 3–9 cm、不揃い、踏面＋1 mm）
+				if kind == "step" and r == rows - 1:
+					var tq := tangent(cl, kb)
+					var nq := Vector2(-tq.y, tq.x)
+					var dw0 := rng.randf_range(0.03, 0.09)
+					var dw1 := rng.randf_range(0.03, 0.09)
+					var pq := cl[kb]
+					var qa := pq + nq * u0 - tq * dw0
+					var qb := pq + nq * u0
+					var qc := pq + nq * u1
+					var qd := pq + nq * u1 - tq * dw1
+					var lt := rng.randf_range(0.85, 1.1)
+					_vc = Color(0.46 * lt, 0.41 * lt, 0.33 * lt)
+					_uvo = Vector2(rng.randf_range(0.0, 7.0), 0.0)
+					_quad(sm, Vector3(qa.x, yb + dy + 0.001, qa.y), Vector3(qb.x, yb + dy + 0.001, qb.y), Vector3(qc.x, yb + dy + 0.001, qc.y), Vector3(qd.x, yb + dy + 0.001, qd.y))
+				# ROUND 3：鼻先の角の欠け（12 %：角に 6–12 cm の三角の欠け跡＝暗い面）
+				if r == 0 and rng.randf() < 0.12:
+					var tk := tangent(cl, ka)
+					var nk := Vector2(-tk.y, tk.x)
+					var cu := u0 if rng.randf() < 0.5 else u1
+					var sg := 1.0 if cu == u0 else -1.0
+					var cs := rng.randf_range(0.06, 0.12)
+					var pk := cl[ka] + nk * cu
+					var yk := ya + dy + 0.0015
+					var cA := pk
+					var cB := pk + tk * cs * 0.8
+					var cC := pk + tk * cs * 0.4 + nk * sg * cs * 0.5
+					var cD := pk + nk * sg * cs
+					_vc = _mul(base, 0.45)
+					_tri_up(sm, Vector3(cA.x, yk, cA.y), Vector3(cB.x, yk, cB.y), Vector3(cC.x, yk, cC.y))
+					_tri_up(sm, Vector3(cA.x, yk, cA.y), Vector3(cC.x, yk, cC.y), Vector3(cD.x, yk, cD.y))
 				# ひび：15 % の石に斜めの細い暗線（踏面＋1 mm）
 				if rng.randf() < 0.15 and u1 - u0 > 0.4:
 					var tc := tangent(cl, ka)

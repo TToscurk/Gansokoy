@@ -1,0 +1,102 @@
+{
+	"r6b_main_north_end_a.png": {
+		"frac_luma_lt_0.2": 0.534,
+		"mean_luma_srgb": 0.288,
+		"mean_sat": 0.33
+	},
+	"r6b_main_north_end_b.png": {
+		"frac_luma_lt_0.2": 0.535,
+		"mean_luma_srgb": 0.287,
+		"mean_sat": 0.33
+	},
+	"r6b_sando_foot_a.png": {
+		"frac_luma_lt_0.2": 0.189,
+		"mean_luma_srgb": 0.407,
+		"mean_sat": 0.284
+	},
+	"r6b_sando_foot_b.png": {
+		"frac_luma_lt_0.2": 0.163,
+		"mean_luma_srgb": 0.433,
+		"mean_sat": 0.266
+	},
+	"r6b_sando_mid_a.png": {
+		"frac_luma_lt_0.2": 0.374,
+		"mean_luma_srgb": 0.273,
+		"mean_sat": 0.356
+	},
+	"r6b_sando_mid_b.png": {
+		"frac_luma_lt_0.2": 0.352,
+		"mean_luma_srgb": 0.296,
+		"mean_sat": 0.378
+	},
+	"r6b_sando_side_high_a.png": {
+		"frac_luma_lt_0.2": 0.467,
+		"mean_luma_srgb": 0.246,
+		"mean_sat": 0.29
+	},
+	"r6b_sando_side_high_b.png": {
+		"frac_luma_lt_0.2": 0.471,
+		"mean_luma_srgb": 0.245,
+		"mean_sat": 0.293
+	},
+	"san2_down_landing_a.png": {
+		"frac_luma_lt_0.2": 0.271,
+		"mean_luma_srgb": 0.398,
+		"mean_sat": 0.297
+	},
+	"san2_down_landing_b.png": {
+		"frac_luma_lt_0.2": 0.358,
+		"mean_luma_srgb": 0.349,
+		"mean_sat": 0.357
+	},
+	"san2_down_top_a.png": {
+		"frac_luma_lt_0.2": 0.241,
+		"mean_luma_srgb": 0.392,
+		"mean_sat": 0.276
+	},
+	"san2_down_top_b.png": {
+		"frac_luma_lt_0.2": 0.237,
+		"mean_luma_srgb": 0.382,
+		"mean_sat": 0.295
+	},
+	"san2_up_landing_a.png": {
+		"frac_luma_lt_0.2": 0.368,
+		"mean_luma_srgb": 0.279,
+		"mean_sat": 0.352
+	},
+	"san2_up_landing_b.png": {
+		"frac_luma_lt_0.2": 0.36,
+		"mean_luma_srgb": 0.304,
+		"mean_sat": 0.373
+	},
+	"san_steps_5m_a.png": {
+		"frac_luma_lt_0.2": 0.388,
+		"mean_luma_srgb": 0.277,
+		"mean_sat": 0.362
+	},
+	"san_steps_5m_b.png": {
+		"frac_luma_lt_0.2": 0.358,
+		"mean_luma_srgb": 0.303,
+		"mean_sat": 0.381
+	},
+	"san_steps_down_a.png": {
+		"frac_luma_lt_0.2": 0.327,
+		"mean_luma_srgb": 0.406,
+		"mean_sat": 0.307
+	},
+	"san_steps_down_b.png": {
+		"frac_luma_lt_0.2": 0.318,
+		"mean_luma_srgb": 0.382,
+		"mean_sat": 0.339
+	},
+	"san_torii1_10m_a.png": {
+		"frac_luma_lt_0.2": 0.555,
+		"mean_luma_srgb": 0.291,
+		"mean_sat": 0.296
+	},
+	"san_torii1_10m_b.png": {
+		"frac_luma_lt_0.2": 0.552,
+		"mean_luma_srgb": 0.294,
+		"mean_sat": 0.294
+	}
+}
