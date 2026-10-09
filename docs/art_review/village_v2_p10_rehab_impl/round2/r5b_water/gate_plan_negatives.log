@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WLF] wheel facts: paddles 16 [-180.0, -157.5, -135.0, -112.5, -90.0, -67.5, -45.0, -22.5, 0.0, 22.5, 45.0, 67.5, 90.0, 112.5, 135.0, 157.5]、材質 V2_Wood.tres、頂点色平均 0.607
+[WLF] heights {"bed_wheel":-1.27456223964691,"bent_bed":[-1.23004138469696,-1.11489951610565],"kago_ground":0.576546173095703,"kago_p":"(523.0731, -97.48479)","kago_spread":0.0715599060058594,"post_ground":-0.211967468261719,"water_n":74,"water_y":-0.000467061996459961}
+[WLF] PASS 柄杓 16：葉板 16 枚の間（柄杓の角度範囲 ±2.5° に入る葉板 0）、內端 r 2.598（輪縁の帯 2.50–2.72 に差し込み）、外緣 r 3.387（葉板 3.0＋≥0.25＝輪郭の外）、東端 x 2.280（軸承柱碰撞 2.30）、最下點 -0.74（水面 -0.00−0.2 以下・底 -1.27＋0.15 以上）
+[WLF] PASS 受け樋：x 2.235–3.245（輪面 2.22）、最大 r 2.47（柄杓の回転 內緣 2.60 −0.1 以下）、底 4.885→4.835（往樋頭降 50 mm）、樋頭接口 Δy 0.014 m、西端の底と P8 枕木 +0.019 m（載る）
+[WLF] PASS 樋頭架台 2 柱：東軸承柱（可視東面 2.74）外 ≥ 0.05、礎石（z ±0.23）外、柄杓回轉範圍外、腳埋水渠底 0.30 m（底 [-1.23, -1.11]）、頭＝P8 枕木下
+[WLF] PASS 落水：注ぎ 輪頂 r 2.90・z -0.56・x 2.27（輪面の外）→ 受け樋の中（x 2.45、z -0.42、底 4.874＋0.056）；こぼれ水 2 本 輪郭（r 3.0＋0.15）の内に入る點 0；泡＝水面＋0.015
+[WLF] PASS 材質一致：輪 V2_Wood.tres／新部材 V2_Wood.tres、頂点色 輪 0.607／柄杓・受け樋 0.600（差 ≤ 0.05＝白く浮かない）、架台 0.32（≤ 輪＝日向で淡灰の縦材にならない）・濡れ脚 0.24
+[WLF] PASS 小舟 7.2×1.5 m：吃水 0.12、船體碰撞 0、船底下水深 0.43 m、離石段 1.53 m、船首與迎流夾角 0.0°
+[WLF] PASS 繫船杭：地面差 0.000 m、地上部碰撞 0、綱長 3.70 m
+[WLF] PASS 届いた荷（st_kago_tsumi 重用）：放在四角最高點 −0.02（中心地面差 -0.020、四角起伏 0.072 ≤ 0.15）、地上部碰撞 0
+[WLF] 永久反向（每案必須讓 gate 失敗）
+[WLF]   N1 柄杓を東へ広げて東軸承柱に当てる：PASS（gate 正確失敗）
+[WLF]   N2 受け樋抬高進入柄杓迴轉圈：PASS（gate 正確失敗）
+[WLF]   N3 架台柱立在東軸承柱位置：PASS（gate 正確失敗）
+[WLF]   N4 小舟壓上石段：PASS（gate 正確失敗）
+[WLF]   N5 船過大（14 × 3 m，港口船）：PASS（gate 正確失敗）
+[WLF]   N6 繫船杭浮空 0.5 m：PASS（gate 正確失敗）
+[WLF]   N7 柄杓を葉板の角度に置く（葉板と干渉）：PASS（gate 正確失敗）
+[WLF]   N8 注ぎが受け樋を外れる：PASS（gate 正確失敗）
+[WLF]   N9 柄杓が輪の輪郭の内（r3 以前＝西から見えない）：PASS（gate 正確失敗）
+[WLF]   N10 新部材が白い（r3 の檜色＝浮く）：PASS（gate 正確失敗）
+[WLF] PASS 反向 10/10
+[WLF] 結果：0 項失敗
