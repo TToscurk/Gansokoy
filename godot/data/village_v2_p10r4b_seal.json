@@ -537,7 +537,7 @@
   "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
   "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
-  "godot/data/village_v2_p8_seal.json": "520b6f642643c2142536c6fd817f5684317f9a84db97e617b359c43f9935a85c"
+  "godot/data/village_v2_p8_seal.json": "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf"
  },
  "reseal_history": [
   {
@@ -553,6 +553,20 @@
     ]
    },
    "seal_file_before": "00a8311778555f302e1300a9454f95c01ab99cbf52e677e335e9ba954f99d8cd"
+  },
+  {
+   "at": "2026-10-10",
+   "kind": "R5B1_CHILD_P8_UPDATE",
+   "child_seals": {
+    "godot/data/village_v2_p8_seal.json": [
+     "520b6f642643c2142536c6fd817f5684317f9a84db97e617b359c43f9935a85c",
+     "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf"
+    ]
+   },
+   "seal_file_before": "f0cd1d549e16139c378f268586f26db35faee92f9e5ecfaac4da0932f180ae80",
+   "approved_by": "user",
+   "approval_source": "使用者 2026-10-10 P10 FINAL CLOSEOUT：「R5b.1 灌溉：方案 B LIMITED APPROVAL」「允許 P8 limited correction」「進行必要的 affected-seal reseal，不修改無關封存」",
+   "reason": "R4b は P8 封存を子に持つ（A 農田群が P8 の田・畦に依存）。P8 limited reseal（R5B1_IRRIGATION_SOURCE_RYUKOTSU：水車 2 東岸の取水構件だけ）に追従。R4b の 40 件・生成器・overlay は不変；R4b scene gate 0 失敗（docs/art_review/village_v2_p10_final_closeout/regression/full_regression.log）。"
   }
  ]
 }

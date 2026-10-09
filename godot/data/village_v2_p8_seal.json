@@ -69,14 +69,14 @@
   }
  },
  "frozen": {
-  "tools/village_v2_farmland_lib.gd": "382f57c430389f8373ecfa88927d90c75c4beb14537dece44e5776e9229b7ec7",
-  "tools/village_v2_farmland_visual.gd": "46527a6c6beee8801373d65e0941905998957a4a9bce65e5960046116527736f",
+  "tools/village_v2_farmland_lib.gd": "68c2ad712528443d7b9459235e0e0e37262ae22f80497ba96492bf307410fa37",
+  "tools/village_v2_farmland_visual.gd": "a873162ab51d454102944d8eead40666fd2e924804bebcb6448ff9d4e8f3867c",
   "tools/village_v2_farmland_zone.gd": "1491f159d966df5b8484ced0ec4ffcdcc7c7ec0769fdc65b57c03da4c0dad0e8",
   "maps/village_v2/shaders/p8_paddy_water.gdshader": "fc81fcda517a6172c20592146dfd9b47f2ba12f347ea9a9f2afa23fb6ff25200",
   "maps/village_v2/shaders/p8_paddy_plant.gdshader": "1ebe4557fee7f88edd6584444f6942b7649ef038a6dda98b817f53377b2494c9",
   "data/village_v2_p8_blocks.json": "e40c487c58c41a2e97486e4e1f91589af6bb4687769424e5e7b2fc0a4d79a5aa",
   "data/village_v2_p8_ground.json": "39366a7f1937d873a527e17f01f4b8a1d2e1c091b290a51c51e263b0d1ca009b",
-  "maps/village_v2/gen/farmland_p8.scn": "0b995c38feee7b94fd6db1097bd50ca776cd19482b7157a8346878887fcf7f0c"
+  "maps/village_v2/gen/farmland_p8.scn": "8132313ba46ac1e054ce5064b6706a93837f715fdb9c11b14201ad8270af58ab"
  },
  "art_review_images": {
   "pilot_supply_tps_FP1_siphon.png": "d575480603048376195ea15126a7f5695b895a0f35744f4ad44063f840fdb82e",
@@ -122,5 +122,101 @@
    "pilot_supply_tps_trough_mid.png"
   ],
   "reason": "封存後第一次全回歸的 --feeder 步驟未帶 --no-shots，以同一凍結場景＋同一鏡位重拍覆寫；原圖未進 git、無備份。已改 run_village_v2_regression.sh 第 47 行加 --no-shots，雜湊更新為重拍版（內容＝目前核准場景）。"
- }
+ },
+ "reseal_history": [
+  {
+   "kind": "R5B1_IRRIGATION_SOURCE_RYUKOTSU",
+   "date": "2026-10-10",
+   "changed": {
+    "tools/village_v2_farmland_lib.gd": {
+     "old": "382f57c430389f8373ecfa88927d90c75c4beb14537dece44e5776e9229b7ec7",
+     "new": "68c2ad712528443d7b9459235e0e0e37262ae22f80497ba96492bf307410fa37"
+    },
+    "tools/village_v2_farmland_visual.gd": {
+     "old": "46527a6c6beee8801373d65e0941905998957a4a9bce65e5960046116527736f",
+     "new": "a873162ab51d454102944d8eead40666fd2e924804bebcb6448ff9d4e8f3867c"
+    },
+    "maps/village_v2/gen/farmland_p8.scn": {
+     "old": "0b995c38feee7b94fd6db1097bd50ca776cd19482b7157a8346878887fcf7f0c",
+     "new": "8132313ba46ac1e054ce5064b6706a93837f715fdb9c11b14201ad8270af58ab"
+    }
+   },
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-10 P10 FINAL CLOSEOUT「2. R5b.1 灌溉：方案 B LIMITED APPROVAL」：允許 P8 limited correction；以一台竜骨車作為優先方案；正式移除失去功能的架高落とし樋、無效支柱及相關碰撞；僅修改必要的 P8 內容與下游依賴，記錄 limited reseal history。",
+   "reason": "水車 2 が純動力（P10 R5b ROUND 3）になり、r5 の取水鎖「水渠 → 水車 2 受け樋 3.30 → 高架落とし樋 → 落とし桝」は水源を失った。ROUND 3 では WaterLifeP10 が runtime で高架樋を隠し碰撞を止めていた（P8 FEEDER post_collision FAIL：可見支柱 4 本に碰撞なし）。P8 生成器で高架落とし樋・接頭箱・受け樋枕木・支柱と其碰撞（可見 6 群・碰撞 3）を撤去し、竜骨車 1 台（人力・踏み軸）＋送り樋で 水渠水面 −1.52 から落とし桝（水面 0.28）へ汲み上げる。落とし桝以下（上段土渠・伏越し・木槽・內渠）は不変。",
+   "scope": "P8 farmland_p8.scn の FieldDetails/WaterSupply（Chute_0／Chute_1／ChuteJoint／HeadBearer／Support_00／Support_01 → Ryukotsu）と Irrigation/WaterSupply の碰撞形（Post_00／Post_01／Chute_1 → 竜骨車の Post_00–07・RyuHead・RyuRail・RyuTrough・Feed）だけ。その他 8677 ノード（MultiMesh 1844 を含む）は逐ノード等価（変換・網格配列・材質・MultiMesh バッファ・碰撞形・meta）。",
+   "measurements": {
+    "canal_water": -1.52,
+    "canal_bed_at_intake": -2.33,
+    "intake_trough_bottom": -1.8,
+    "discharge_trough_bottom": 0.66,
+    "drop_box_water": 0.288,
+    "required_lift_m": 1.81,
+    "design_lift_to_discharge_m": 2.18,
+    "incline_deg": 28.4,
+    "trough_length_m": 5.17,
+    "bank_clearance_min_m": 0.18,
+    "feed_trough_clearance_min_m": 0.24,
+    "water_chain": [
+     -1.52,
+     0.66,
+     0.59,
+     0.56,
+     0.288,
+     0.278,
+     0.27,
+     0.19,
+     0.18,
+     0.15,
+     0.078
+    ]
+   },
+   "art_status_of_change": "ART_REVIEW（竜骨車の見た目は使用者未核准；P8 本体の ART_APPROVED 2026-10-01 は変更なし）",
+   "dependencies": {
+    "updated": [
+     "tools/village_v2_farmland_lib.gd",
+     "tools/village_v2_farmland_visual.gd",
+     "maps/village_v2/gen/farmland_p8.scn"
+    ],
+    "unchanged_frozen": [
+     "tools/village_v2_farmland_lib.gd",
+     "tools/village_v2_farmland_zone.gd",
+     "maps/village_v2/shaders/p8_paddy_water.gdshader",
+     "maps/village_v2/shaders/p8_paddy_plant.gdshader",
+     "data/village_v2_p8_blocks.json",
+     "data/village_v2_p8_ground.json"
+    ],
+    "downstream_updated": [
+     "tools/walk_village_v2_farmland.gd（FEEDER：系統狀態・水源連通・他層干渉を追加、既存項目は不変）",
+     "tools/village_v2_water_life_lib.gd・maps/village_v2/scripts_p10/water_life.gd・maps/village_v2/gen/water_life_p10.scn（WaterLifeP10 の P8 runtime 非表示／碰撞停止を撤去；R5b は未封存）",
+     "tools/verify_village_v2_water_life.gd（WLF 項目 4・反向 N7／N8 を「P8 に触れない・高架部材は竜骨車だけ」へ）"
+    ],
+    "downstream_resealed": [
+     "data/village_v2_p10r4b_seal.json（child_seals の P8 封存雜湊のみ；R4b の 40 件・生成器・overlay・scene gate は不変、kind R5B1_CHILD_P8_UPDATE）"
+    ],
+    "not_affected": [
+     "水車 1／3（WW1／WW3 の zone 取水は不変）",
+     "P2 水渠・P1 地形・P7 河岸（RB_10_0 と干渉 0）",
+     "P9 WatersideP9（Irrigation の網格は不変）",
+     "P10 R4 HUSE（Irrigation の網格は不変）",
+     "NPC 51"
+    ]
+   },
+   "negatives": [
+    "FEEDER supply_system_state：ROUND 3 の状態（runtime で隠した部材・止めた碰撞）→ FAIL（feeder_round3_state.log）",
+    "WLF N7（高架落とし樋が P8 に残る）・N8（overlay が P8 を隠す）→ FAIL",
+    "--seal：記憶體で期待雜湊を 1 件竄改 → 1 件不符を検出"
+   ],
+   "evidence": [
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/p8_build.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/p8_equivalence.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/feeder.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/feeder_round3_state.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/wlf_plan_negatives.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/wlf_build.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/wlf_scene.log",
+    "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/p8_seal_after.log"
+   ]
+  }
+ ]
 }
