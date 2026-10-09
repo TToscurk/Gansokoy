@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[FEEDER] 可見方塊 104、碰撞形狀 14
+[FEEDER] PASS post_collision：可見支柱 4 根，無碰撞 0：
+[FEEDER] PASS route_clear_FarmPath_1：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS route_clear_FarmPath_4：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS route_clear_HiedaGateApron：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS portal_clear：PORTAL_HIEDA1F 最近支柱 60.30 m（門檻 2.2）；圓盤＋0.6 m 內樋下淨高 無樋覆蓋
+[FEEDER] PASS low_profile_east_of_345：x > 345（上段土渠起點以東、含 FarmPath_1／稗田邸前）取水構件離地最高 0.29 m（門檻 0.45：與田埂同級、無架空）
+[FEEDER] PASS walk_FarmPath_1：抵達=true、橫偏 0.00 m、頭部穿入樋體 0 幀、終點 (372.0, 0.100415, 13.0043)
+[FEEDER] PASS walk_HiedaFront：抵達=true、橫偏 0.00 m、頭部穿入樋體 0 幀、終點 (397.8102, 0.00079, 11.05137)
+[FEEDER] PASS walk_TroughSide：抵達=true、橫偏 0.01 m、頭部穿入樋體 0 幀、終點 (401.0048, 0.23151, 5.100551)
+[FEEDER] PASS jump_(372.0,6.3)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS jump_(386.6,4.8)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS jump_(397.8,6.2)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS tps_camera：近裁面四角半徑＋1 cm＝0.103 m；1440 個相機姿勢（8 點 × 12 方位 × 5 俯仰 × 臂長 3／8.5／16 m）；距取水構件 < 0.103 m 的姿勢 0；最近 0.13 m（FP1_siphon yaw 270° pitch 0.55 arm 3.0 → SiphonBox_0/CoverStone）；掛樋擋在相機與玩家胸口之間 0 姿勢（0.0 %，資訊）
+[FEEDER] camera near-miss breakdown: {  }
+[FEEDER] result: 0 failed

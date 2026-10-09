@@ -1,0 +1,4 @@
+P5 asset reset gate 違規：ROUND 2 421 → ROUND 3 440（+19）
+[DEP] albedo_pilot_p10.scn → machiya_kit_cal 直接依存 18：["V2_Plaster_K.tres", "V2_Wood_K.tres", "V2_KitStoneTri_K.tres", "V2_MachiyaKit_K.tres", "V2_Plaster_K_A0.tres", "V2_Plaster_K_A1.tres", "V2_Plaster_K_A2.tres", "V2_Plaster_K_A3.tres", "V2_Wood_K_A0.tres", "V2_Wood_K_A1.tres", "V2_Wood_K_A2.tres", "V2_Plaster_K_B0.tres", "V2_Plaster_K_B1.tres", "V2_Plaster_K_B2.tres", "V2_Plaster_K_B3.tres", "V2_Wood_K_B0.tres", "V2_Wood_K_B1.tres", "V2_Wood_K_B2.tres"]
+[DEP] machiya_kit_cal 内の 2 次依存：["kit_cal.gdshader"]
+18 tres＋kit_cal.gdshader＝19＝増分（machiya_kit_cal 未登錄於 P5 白名單；白名單不擴充，登錄屬 ART_APPROVED 後的合法更新）
