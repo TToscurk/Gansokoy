@@ -20,8 +20,9 @@ var swapped := false
 
 
 func _ready() -> void:
-	if enabled:
-		apply.call_deferred(true)
+	# ROUND 2：enabled=false で読み込まれた時も apply(false)（石段・燈籠を隠し斜坡碰撞を止める）。
+	# r1–r8 は enabled の時だけ apply → 掛載ノードに enabled=false を書いても斜坡碰撞が残っていた。
+	apply.call_deferred(enabled)
 
 
 func apply(on: bool) -> void:

@@ -13,6 +13,7 @@ extends SceneTree
 ##   6 一の鳥居：柱台離丘腳街／主街中心線 ≥ 半寬 + 0.3；柱台不撞既有碰撞體；在主街第 5 段軸心延長線左右 ≤ 6 m（端景）
 ##   7 石燈籠：坐在坂に据えた水平基壇（頂＝四角最高＋0.06、底＝最低 −0.15、高 ≤ 1.0）、不撞既有碰撞體、沿路間隔 16–24 m（20 m ±1.5 找平地）
 ##   8 NPC：Population 的 NPC 不在石段範圍內、離鳥居柱台 ≥ 1.2 m；巡回 NPC 的 path_xz 不貼鳥居柱、不橫切石段（D7 NPC 通行；不搬 NPC）
+##   9 ROUND 2 リズム：踊り場＝LANDINGS 數・奥行 1.2–2.0・前縁の盛土（踏面 − 地形）≤ 1.2 m；休みなしで続く段 ≤ 60；丘の肩の長い段 ≥ 3（0.45–1.2）
 const LIB := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const EXT_ID := "p10r6b_shrine_approach"
@@ -56,8 +57,8 @@ func _init() -> void:
 	var H := LIB.ramp_profile(V, cl)
 	var st := LIB.steps(cl, H)
 	var rp := LIB.ramp_points(st, H)
-	print("[SAN] plan 中心線 %.1f m、石段 %d（step %d／slab %d）、斜坡點 %d" % [cl.size() * 0.05, st.size(), st.filter(func(a): return a["kind"] == "step").size(), st.filter(func(a): return a["kind"] == "slab").size(), rp.size()])
-	var cfg := {"tread_dy": 0.0, "ramp_dy": 0.0, "riser_mul": 1.0, "torii_s": LIB.TORII1_S, "step_w": LIB.STEP_W, "lantern_dy": 0.0}
+	print("[SAN] plan 中心線 %.1f m、石段 %d（step %d／long %d／landing %d／slab %d）、斜坡點 %d" % [cl.size() * 0.05, st.size(), st.filter(func(a): return a["kind"] == "step").size(), st.filter(func(a): return a["kind"] == "long").size(), st.filter(func(a): return a["kind"] == "landing").size(), st.filter(func(a): return a["kind"] == "slab").size(), rp.size()])
+	var cfg := {"tread_dy": 0.0, "ramp_dy": 0.0, "riser_mul": 1.0, "torii_s": LIB.TORII1_S, "step_w": LIB.STEP_W, "lantern_dy": 0.0, "landing_dy": 0.0}
 	_gates(cl, H, st, rp, cfg)
 	if "--build" in args:
 		_build(cl, H)
@@ -112,43 +113,52 @@ func _ramp_at(rp: Array, k: int, dy: float) -> float:
 
 
 func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array, cfg: Dictionary) -> void:
-	# 1 石段尺寸
+	# 1 石段尺寸（step 0.25–0.45／long 0.45–1.2／landing 1.2–2.0；蹴上 0.12–0.20＝step・long・landing の前の蹴上）
 	var nstep := 0
 	var rmin := INF
 	var rmax := 0.0
 	var tmin := INF
 	var tmax := 0.0
+	var lt_bad := 0
 	var slab_bad := 0
 	var prev_y := NAN
 	var y0_ref := float(st[0]["y0"]) if not st.is_empty() else 0.0
 	for a: Dictionary in st:
 		var y := y0_ref + (float(a["y0"]) - y0_ref) * float(cfg["riser_mul"])
-		if String(a["kind"]) == "step":
-			nstep += 1
-			var tr := (int(a["k1"]) - int(a["k0"])) * 0.05
-			tmin = minf(tmin, tr)
-			tmax = maxf(tmax, tr)
-			if not is_nan(prev_y):
-				var r := y - prev_y
-				rmin = minf(rmin, r)
-				rmax = maxf(rmax, r)
-			prev_y = y
-		else:
-			var sl := rad_to_deg(atan2(float(a["y1"]) - float(a["y0"]), (int(a["k1"]) - int(a["k0"])) * 0.05))
+		var kd := String(a["kind"])
+		var tr := (int(a["k1"]) - int(a["k0"])) * 0.05
+		if kd == "slab":
+			var sl := rad_to_deg(atan2(float(a["y1"]) - float(a["y0"]), tr))
 			if sl >= LIB.SLOPE_MIN_DEG + 2.0:
 				slab_bad += 1
 			prev_y = NAN
-	_ok(nstep >= 80 and rmin >= LIB.RISER[0] - 0.005 and rmax <= LIB.RISER[1] + 0.005 and tmin >= LIB.TREAD[0] - 0.001 and tmax <= LIB.TREAD[1] + 0.001 and slab_bad == 0,
-		"石段 %d 段：蹴上 %.3f–%.3f m（%.2f–%.2f）、踏面 %.2f–%.2f m（%.2f–%.2f）、緩坡石疊超坡 %d" % [nstep, rmin, rmax, LIB.RISER[0], LIB.RISER[1], tmin, tmax, LIB.TREAD[0], LIB.TREAD[1], slab_bad])
+			continue
+		if kd == "step":
+			nstep += 1
+			tmin = minf(tmin, tr)
+			tmax = maxf(tmax, tr)
+		elif kd == "long":
+			if tr < LIB.LONG_TREAD[0] - 0.001 or tr > LIB.LONG_TREAD[1] + 0.001:
+				lt_bad += 1
+		elif kd == "landing":
+			if tr < LIB.LANDING_D[0] - 0.001 or tr > LIB.LANDING_D[1] + 0.001:
+				lt_bad += 1
+		if not is_nan(prev_y):
+			var r := y - prev_y
+			rmin = minf(rmin, r)
+			rmax = maxf(rmax, r)
+		prev_y = y
+	_ok(nstep >= 80 and rmin >= LIB.RISER[0] - 0.005 and rmax <= LIB.RISER[1] + 0.005 and tmin >= LIB.TREAD[0] - 0.001 and tmax <= LIB.TREAD[1] + 0.001 and slab_bad == 0 and lt_bad == 0,
+		"石段 %d 段：蹴上 %.3f–%.3f m（%.2f–%.2f）、踏面 %.2f–%.2f m（%.2f–%.2f）、長い段／踊り場の奥行 範囲外 %d、緩坡石疊超坡 %d" % [nstep, rmin, rmax, LIB.RISER[0], LIB.RISER[1], tmin, tmax, LIB.TREAD[0], LIB.TREAD[1], lt_bad, slab_bad])
 	# 2 地形不蓋踏面
 	var buried := 0
 	for a: Dictionary in st:
-		if String(a["kind"]) != "step":
+		if String(a["kind"]) == "slab":
 			continue
 		var hm := -INF
 		for k in range(int(a["k0"]), int(a["k1"]) + 1):
 			hm = maxf(hm, H[k])
-		if float(a["y0"]) + float(cfg["tread_dy"]) < hm - 0.01:
+		if float(a["y0"]) + float(cfg["tread_dy"]) + (float(cfg["landing_dy"]) if String(a["kind"]) == "landing" else 0.0) < hm - 0.01:
 			buried += 1
 	_ok(buried == 0, "踏面全在 P1 地形之上（被地形蓋住的段 %d）" % buried)
 	# 3 斜坡碰撞 vs 踏面
@@ -156,7 +166,7 @@ func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array,
 	var dev_bad := 0
 	var rr := float(LIB.RISER[1])
 	for a: Dictionary in st:
-		if String(a["kind"]) != "step":
+		if String(a["kind"]) == "slab":
 			continue
 		for k in range(int(a["k0"]), int(a["k1"]) + 1):
 			var rc := _ramp_at(rp, k, float(cfg["ramp_dy"]))
@@ -280,9 +290,32 @@ func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array,
 	_ok(bad8.is_empty() and n_patrol > 0, "NPC：初期位置不在石段、離鳥居柱 ≥ 1.2 m；巡回 %d 條的路徑不貼鳥居柱、不橫切石段（NPC 不搬）%s" % [n_patrol, "" if bad8.is_empty() else " ✗ " + str(bad8)])
 
 
+	# 9 ROUND 2 リズム：踊り場・盛土・休みなしの段数・丘の肩の長い段
+	var lands := st.filter(func(a): return String(a["kind"]) == "landing")
+	var fill_max := 0.0
+	var dbad := 0
+	for a: Dictionary in lands:
+		var fill := float(a["y0"]) + float(cfg["landing_dy"]) - H[int(a["k0"])]
+		fill_max = maxf(fill_max, fill)
+		var d := (int(a["k1"]) - int(a["k0"])) * 0.05
+		if d < LIB.LANDING_D[0] - 0.001 or d > LIB.LANDING_D[1] + 0.001:
+			dbad += 1
+	var run_n := 0
+	var run_max := 0
+	for a: Dictionary in st:
+		if String(a["kind"]) == "step":
+			run_n += 1
+			run_max = maxi(run_max, run_n)
+		else:
+			run_n = 0
+	var n_long := st.filter(func(a): return String(a["kind"]) == "long").size()
+	_ok(lands.size() == LIB.LANDINGS.size() and dbad == 0 and fill_max <= LIB.LANDING_FILL_MAX and run_max <= LIB.FLIGHT_MAX and n_long >= 3,
+		"リズム：踊り場 %d／%d（奥行範囲外 %d）、前縁の盛土 最大 %.2f m（≤ %.1f）、休みなしの段 最大 %d（≤ %d）、丘の肩の長い段 %d（≥ 3）" % [lands.size(), LIB.LANDINGS.size(), dbad, fill_max, LIB.LANDING_FILL_MAX, run_max, LIB.FLIGHT_MAX, n_long])
+
+
 func _negatives(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array) -> void:
 	print("[SAN] 永久反向（每案必須讓 gate 失敗）")
-	var base := {"tread_dy": 0.0, "ramp_dy": 0.0, "riser_mul": 1.0, "torii_s": LIB.TORII1_S, "step_w": LIB.STEP_W, "lantern_dy": 0.0}
+	var base := {"tread_dy": 0.0, "ramp_dy": 0.0, "riser_mul": 1.0, "torii_s": LIB.TORII1_S, "step_w": LIB.STEP_W, "lantern_dy": 0.0, "landing_dy": 0.0}
 	var cases := []
 	var c1 := base.duplicate()
 	c1["riser_mul"] = 1.5
@@ -302,7 +335,22 @@ func _negatives(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Ar
 	var c6 := base.duplicate()
 	c6["lantern_dy"] = 0.4
 	cases.append(["N6 石燈籠浮空 0.4 m", c6])
+	var c8 := base.duplicate()
+	c8["landing_dy"] = 1.0
+	cases.append(["N8 踊り場を 1.0 m 持ち上げる（盛土 2 m 級＝擁壁の上の台）", c8])
 	var neg_fail := 0
+	# N7：踊り場なし（r3 と同じ一本の長い段＝下り視点の単調な帯）
+	var st7 := LIB.steps(cl, H, [])
+	var rp7 := LIB.ramp_points(st7, H)
+	var f7 := fails
+	quiet = true
+	_gates(cl, H, st7, rp7, base)
+	quiet = false
+	var trip7 := fails > f7
+	fails = f7
+	print("[SAN]   %s：%s" % ["N7 踊り場なし（170 段が一本の帯）", "PASS（gate 正確失敗）" if trip7 else "FAIL（gate 沒抓到）"])
+	if not trip7:
+		neg_fail += 1
 	for c in cases:
 		var f0 := fails
 		quiet = true
@@ -313,7 +361,7 @@ func _negatives(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Ar
 		print("[SAN]   %s：%s" % [c[0], "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
 		if not tripped:
 			neg_fail += 1
-	_ok(neg_fail == 0, "反向 %d/%d" % [cases.size() - neg_fail, cases.size()])
+	_ok(neg_fail == 0, "反向 %d/%d" % [cases.size() + 1 - neg_fail, cases.size() + 1])
 
 
 func _build(cl: PackedVector2Array, H: PackedFloat32Array) -> void:
@@ -329,6 +377,13 @@ func _build(cl: PackedVector2Array, H: PackedFloat32Array) -> void:
 	_ok(ResourceSaver.save(ps, LIB.OUTPUT) == OK, "save %s" % LIB.OUTPUT)
 	var rb := (ResourceLoader.load(LIB.OUTPUT, "", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene).instantiate()
 	_ok(rb.get_node_or_null("StoneSteps") != null and rb.get_node_or_null("IchiNoTorii") != null and rb.get_node_or_null("RampCollision/Ramp") != null, "回讀：石段／一の鳥居／斜坡碰撞")
+	# ROUND 2：表裏（石段・燈籠基壇＝この overlay の網格；明示法線＝Godot の表）＋反向（r1–r4 の法線の四角は必ず検出）
+	var wb := LIB.winding_bad(rb.get_node("StoneSteps"))
+	var wl := LIB.winding_bad(rb.get_node("Lanterns"))
+	var neg := LIB.old_winding_quad()
+	var wn := LIB.winding_bad(neg)
+	neg.free()
+	_ok(int(wb[0]) + int(wl[0]) == 0 and int(wb[1]) > 1000 and int(wn[0]) == 2, "表裏：明示法線と表（時計回り）が逆の三角形 石段 %d／%d・基壇 %d／%d（反向：r1–r4 の法線の四角 → 検出 %d／2）" % [int(wb[0]), int(wb[1]), int(wl[0]), int(wl[1]), int(wn[0])])
 	print("[SAN] build {\"steps\":%d,\"lanterns\":%d,\"cut_s\":%s,\"output_sha256\":\"%s\"}" % [int(rb.get_node("StoneSteps").get_meta("steps", 0)), rb.get_node("Lanterns").get_child_count(), str(rb.get("cut_s")), FileAccess.get_sha256(LIB.OUTPUT)])
 	rb.free()
 	n.free()
