@@ -1,0 +1,38 @@
+{
+ "alb_A_entry_n_a.png": {
+  "mean_abs": 0.224,
+  "frac_gt12": 0.0031
+ },
+ "alb_A_facade_e_12m_a.png": {
+  "mean_abs": 0.186,
+  "frac_gt12": 0.0017
+ },
+ "alb_A_facade_e_6m_a.png": {
+  "mean_abs": 0.332,
+  "frac_gt12": 0.0061
+ },
+ "alb_A_facade_w_14m_a.png": {
+  "mean_abs": 0.048,
+  "frac_gt12": 0.0001
+ },
+ "alb_A_gate_n_a.png": {
+  "mean_abs": 0.094,
+  "frac_gt12": 0.001
+ },
+ "alb_A_high_a.png": {
+  "mean_abs": 0.406,
+  "frac_gt12": 0.0033
+ },
+ "alb_B_alley_s_a.png": {
+  "mean_abs": 1.385,
+  "frac_gt12": 0.0189
+ },
+ "alb_B_alley_w_a.png": {
+  "mean_abs": 0.235,
+  "frac_gt12": 0.0059
+ },
+ "alb_B_high_a.png": {
+  "mean_abs": 0.464,
+  "frac_gt12": 0.0053
+ }
+}

@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[ALB] plan targets=24／187 棟、校正材質 4
+[ALB] PASS 來源材質 albedo 現值＝0.42 灰（Pilot 前提）
+[ALB] PASS 校正材質只改 albedo_color 且純灰（色相／飽和度／其他屬性不動）
+[ALB] PASS 色卡實測 luma 在目標帶：V2_Plaster k=0.70→0.718, V2_Wood k=0.75→0.413, V2_KitStoneTri k=0.65→0.522, Kit.k_dark k=0.75→0.413, Kit.k_light k=0.70→0.718
+[ALB] PASS Pilot 建物 24 棟（各區 { "A_gate_main_south": 12, "B_west_alley": 12 }）全為 machiya_kit 町家
+[ALB] PASS Pilot 建物全在兩區矩形內
+[ALB] PASS 範圍 12.8 %（≤ 25 %，Pilot 不是全村）
+[ALB] PASS 街區調色盤：飽和 ≤ 0.22、亮度在色卡帶、14 m 內鄰棟同組 0、使用組合 A 9 組, B 10 組
+[ALB] 永久反向（每案必須讓 gate 失敗）
+[ALB]   N1 校正材質帶色（等於加飽和度）：PASS（gate 正確失敗）
+[ALB]   N2 全部材質 k=1.0（等幅提亮）：PASS（gate 正確失敗）
+[ALB]   N3 區外建物混入：PASS（gate 正確失敗）
+[ALB]   N4 全村 187 棟（非 Pilot）：PASS（gate 正確失敗）
+[ALB]   N5 校正材質改了粗糙度：PASS（gate 正確失敗）
+[ALB]   N6 Hero／非町家混入：PASS（gate 正確失敗）
+[ALB]   N7 Kit atlas 屋根灰也提亮（遠景 LOD 屋根變淺）：PASS（gate 正確失敗）
+[ALB] PASS 反向 7/7
+[ALB]   N8 調色盤過飽和（朱紅木）：PASS（gate 正確失敗）
+[ALB]   N9 全部同一組（複製感）：PASS（gate 正確失敗）
+[ALB] PASS 調色盤反向 2/2
+[ALB] 結果：0 項失敗

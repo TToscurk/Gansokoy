@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[ALB] plan targets=24／187 棟、校正材質 4
+[ALB] PASS 來源材質 albedo 現值＝0.42 灰（Pilot 前提）
+[ALB] PASS 校正材質只改 albedo_color 且純灰（色相／飽和度／其他屬性不動）
+[ALB] PASS 色卡實測 luma 在目標帶：V2_Plaster k=0.70→0.718, V2_Wood k=0.75→0.413, V2_KitStoneTri k=0.65→0.522, Kit.k_dark k=0.75→0.413, Kit.k_light k=0.70→0.718
+[ALB] PASS Pilot 建物 24 棟（各區 { "A_gate_main_south": 12, "B_west_alley": 12 }）全為 machiya_kit 町家
+[ALB] PASS Pilot 建物全在兩區矩形內
+[ALB] PASS 範圍 12.8 %（≤ 25 %，Pilot 不是全村）
+[ALB] PASS 街區調色盤：飽和 ≤ 0.22、亮度在色卡帶、14 m 內鄰棟同組 0、使用組合 A 9 組, B 10 組
+[ALB] PASS pack
+[ALB] PASS save res://maps/village_v2/gen/albedo_pilot_p10.scn
+[ALB] PASS 回讀：targets 24、校正材質 4
+[ALB] build {"targets":24,"output_sha256":"58765d63fb22dca226aec86b129dc7bf5b4a9d2ae2edfa62d90d6a54606049cf"}
+[ALB] 結果：0 項失敗
+ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: 11 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+WARNING: 44 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 31 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

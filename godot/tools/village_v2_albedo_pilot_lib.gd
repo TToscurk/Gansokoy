@@ -14,7 +14,7 @@ extends RefCounted
 const NODE_NAME := "AlbedoPilotP10"
 const OUTPUT := "res://maps/village_v2/gen/albedo_pilot_p10.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p10/albedo_pilot.gd"
-const ART_REVISION := "P10 R6a albedo pilot r5：＋街區調色盤（A 商業＝暖白漆喰＋紅殻／飴色木、B 住宅＝灰味漆喰＋風化灰木；每棟決定性挑選、鄰棟不同）（ART_REVIEW）"
+const ART_REVISION := "P10 R6a albedo pilot r6（ROUND 3 方案 A：材質＝登記済み Kit 專用校正材質の外部參照、値は r5 と同一）；r5：＋街區調色盤（A 商業＝暖白漆喰＋紅殻／飴色木、B 住宅＝灰味漆喰＋風化灰木；每棟決定性挑選、鄰棟不同）（ART_REVIEW）"
 ## 校正值（albedo_color sRGB 灰階）：依色卡實測（日照下垂直面 luma）選定——
 ##   白漆喰 0.70→0.718（目標 0.70–0.85；r1 0.75 高視角偏新、偏均一）、木 0.75→0.413（0.35–0.50）、
 ##   瓦＝不校正（維持 0.42：r1 0.58／r2 0.50 高視角屋面都讀成淺灰）、基石 0.65→0.522（0.50–0.60）。現況全部 0.42。
@@ -197,11 +197,17 @@ static func build(v: Node3D) -> Node3D:
 	var paths := PackedStringArray()
 	for it in t:
 		paths.append(String(it["path"]))
-	var cm := cal_materials()
+	# ROUND 3（方案 A）：登記済みの Kit 專用校正材質（assets/village_v2/machiya_kit_cal/）を外部參照で使う（値は同じ＝本檔の定数）
+	var KM = load("res://tools/village_v2_kit_material_lib.gd")
+	var cm: Array = KM.pilot_cal()
+	if cm.is_empty():
+		cm = cal_materials()
 	n.set("targets", paths)
 	n.set("src_paths", cm[0])
 	n.set("cal_mats", cm[1])
-	var pm := palette_materials()
+	var pm: Array = KM.pilot_palette()
+	if pm.is_empty():
+		pm = palette_materials()
 	n.set("variant_mats", pm[0])
 	var tv := []
 	for asg in assign(v, t):
