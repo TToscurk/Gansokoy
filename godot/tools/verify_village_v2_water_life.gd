@@ -4,14 +4,17 @@ extends SceneTree
 ##   build（headless 可，無 MultiMesh）：… -- --build
 ##   attach：… -- --attach        （village_v2.tscn 加 root/WaterLifeP10，GroundPilotP10 之後）
 ##   scene（非 headless）：… -- --scene
-## plan：
-##   1 柄杓 16：全在輪面（x 2.22）與東軸承柱（x 2.40）之間、不出輪半徑 3.0；內徑 > 受け樋最大半徑 + 0.05（迴轉不撞樋）
-##   2 受け樋：在輪面外、在柄杓迴轉圈內、往 P8 樋頭方向下降、東端＝P8 樋頭（Δx ≤ 0.02、樋底高 0–0.03 m）
-##   3 樋頭架台：柱在東軸承柱外 ≥ 0.05 m、柱腳埋入水渠底 ≥ 0.25 m、柱頭＝P8 枕木下（≤ 0.03 m）
-##   4 小舟：浮在水位（船底＝水位 − 吃水）、船體與世界碰撞體不相交、船底下水深 ≥ 0.15 m、離最下段石段 ≤ 1.6 m、
+## plan（ROUND 3＝水車 2 純動力）：
+##   1 揚水部材なし：build する overlay に LiftBuckets／UkeToi／HeadBent／Pour／Spill／Splash／Spray／ChuteFlow／BucketWater が 0
+##   2 水流と回転の向き：P5 RotorAnim を 0.5 s 進めたときの輪の下端の移動方向 · 水渠の下流方向（layout Canal 折線の順）≥ 0.9
+##   3 葉板の浸かり：最下端の葉板先端が水面下 0.15–0.8 m、水渠底より ≥ 0.1 m 上
+##   4 P8 limited correction（runtime 非表示）：隠すノード／碰撞形が実在し、P8 WaterSupply の「高架（地面＋0.9 m 以上）」の可視部材を全部含み、
+##     DropBox 以下（上段土渠・伏越し・木槽・跨ぎ板）を 1 つも含まない
+##   5 泡：主の泡＝輪心より下流（+z）・水面＋0.015
+##   6 小舟：浮在水位（船底＝水位 − 吃水）、船體與世界碰撞體不相交、船底下水深 ≥ 0.15 m、離最下段石段 ≤ 1.6 m、
 ##     尺寸＝川舟（長 ≤ 8 m、寬 ≤ 1.8 m）、船首迎流（與流向夾角 ≤ 10°）
-##   5 繫船杭：落地（地面差 ≤ 0.05 m、埋 0.35 m）、地上部分不撞其他碰撞體；綱長 ≤ 7 m
-##   6 「届いた荷」：落地（≤ 0.05 m）、不撞其他碰撞體
+##   7 繫船杭：落地（地面差 ≤ 0.05 m、埋 0.35 m）、地上部分不撞其他碰撞體；綱長 ≤ 7 m
+##   8 「届いた荷」：落地（≤ 0.05 m）、不撞其他碰撞體
 const LIB := preload("res://tools/village_v2_water_life_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const EXT_ID := "p10r5b_water_life"
@@ -108,7 +111,7 @@ func _wheel_facts() -> void:
 
 
 func _cfg() -> Dictionary:
-	return {"bucket_x1": -1.0, "bucket_th_off": 0.0, "bucket_r": [], "trough_raise": 0.0, "bent_x": LIB.BENT_X.duplicate(), "pour_dz": 0.0, "wood_vc": LIB.WOOD_VC,
+	return {"lift_parts": 0, "rot_sign": 1.0, "hub_dy": 0.0, "hide_vis": LIB.P8_HIDE_VIS.duplicate(), "hide_col": LIB.P8_HIDE_COL.duplicate(), "foam_dz": 0.0,
 		"boat_off": LIB.BOAT_OFF, "boat_l": LIB.BOAT_L, "boat_b": LIB.BOAT_B, "post_dy": 0.0}
 
 
@@ -136,10 +139,6 @@ func _hits(xf: Transform3D, size: Vector3) -> Array:
 
 func _heights() -> Dictionary:
 	var hx := hero.global_transform
-	var bed := []
-	for x in LIB.BENT_X:
-		var w := hx * Vector3(x, 0, LIB.BENT_Z)
-		bed.append(_ray_y(Vector2(w.x, w.z), hx.origin.y + 3.0) - hx.origin.y)
 	var ms := LIB.mooring_specs(0.0)
 	var pp: Vector2 = ms["post"]
 	var best := {}
@@ -185,98 +184,103 @@ func _heights() -> Dictionary:
 	var q := PhysicsRayQueryParameters3D.create(hub_w + Vector3(0, 6, 0), hub_w + Vector3(0, -20, 0))
 	q.exclude = hex
 	var hb := sp.intersect_ray(q)
-	var out := {"bent_bed": bed, "post_ground": _ray_y(pp), "water_y": wy, "water_n": wys.size(),
+	var out := {"post_ground": _ray_y(pp), "water_y": wy, "water_n": wys.size(),
 		"bed_wheel": (float(hb["position"].y) - hx.origin.y) if not hb.is_empty() else NAN}
 	out.merge(best)
+	# 水渠の下流方向（layout Canal 折線の順＝取水口→南）：輪心に最も近い区間
+	var L: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://maps/village_v2/layout_v2.json"))
+	var cp: Array = L["water"]["Canal"]["pts"]
+	var hub2 := Vector2(hub_w.x, hub_w.z)
+	var bd := INF
+	var flow := Vector2.ZERO
+	for i in cp.size() - 1:
+		var a := Vector2(float(cp[i][0]), float(cp[i][1]))
+		var b := Vector2(float(cp[i + 1][0]), float(cp[i + 1][1]))
+		var d := hub2.distance_to(Geometry2D.get_closest_point_to_segment(hub2, a, b))
+		if d < bd:
+			bd = d
+			flow = (b - a).normalized()
+	out["flow"] = flow
+	# 輪の回転：P5 RotorAnim を seek して、輪の下端（葉板先端）の点が 0.5 s でどちらへ動くか
+	var rotor := V.get_node(LIB.ROTOR) as Node3D
+	var ap: AnimationPlayer = null
+	for c in hero.get_children():
+		if c is AnimationPlayer:
+			ap = c
+	var dvec := Vector3.ZERO
+	if ap:
+		var an: String = String(ap.current_animation) if String(ap.current_animation) != "" else String(ap.get_animation_list()[0])
+		ap.play(an)
+		ap.seek(0.0, true)
+		var r0 := rotor.global_transform
+		var bot := hx * (LIB.HUB + Vector3(0, -LIB.PADDLE_R, 0))
+		var loc := r0.affine_inverse() * bot
+		ap.seek(0.5, true)
+		dvec = rotor.global_transform * loc - bot
+		out["anim"] = an
+	out["bottom_move"] = dvec
+	out["bottom_dot"] = Vector2(dvec.x, dvec.z).normalized().dot(flow) if Vector2(dvec.x, dvec.z).length() > 1e-4 else 0.0
+	# P8 WaterSupply の可視部材：地面より 0.9 m 以上高い（高架）もの
+	var sup := V.get_node_or_null(LIB.P8_SUPPLY)
+	var elevated := []
+	if sup:
+		for c in sup.get_children():
+			var top_off := -INF
+			for mi in ([c] if c is MeshInstance3D else []) + c.find_children("*", "MeshInstance3D", true, false):
+				var m := mi as MeshInstance3D
+				if m.mesh == null:
+					continue
+				var ab := m.global_transform * m.mesh.get_aabb()
+				var cc := ab.get_center()
+				var gy := _ray_y(Vector2(cc.x, cc.z))
+				if not is_nan(gy):
+					top_off = maxf(top_off, ab.position.y - gy)
+			if top_off >= 0.9:
+				elevated.append(String(c.name))
+	out["p8_elevated"] = elevated
+	out["p8_children"] = sup.get_children().map(func(n): return String(n.name)) if sup else []
+	var colb := V.get_node_or_null(LIB.P8_COL)
+	out["p8_shapes"] = colb.get_children().map(func(n): return String(n.name)) if colb else []
+	# build した overlay の揚水部材数（メモリ上）
+	var tmp := LIB.build(V, out)
+	var n_lift := 0
+	for nm in LIB.LIFT_PARTS:
+		n_lift += tmp.find_children(nm, "", true, false).size()
+	out["lift_parts"] = n_lift
+	tmp.free()
 	return out
 
 
 func _gates(cfg: Dictionary, H: Dictionary) -> void:
-	# 1 柄杓（Wheel 局部）：葉板の間・輪縁に載る・輪郭の外へ張り出す・東軸承柱の内・水に浸かる・水渠底に当たらない
-	var bs := LIB.bucket_specs(float(cfg["bucket_x1"]), float(cfg["bucket_th_off"]), cfg["bucket_r"])
-	var rmin := INF
-	var rmax := 0.0
-	var xmax := -INF
-	var pad_bad := 0
-	for b in bs:
-		# 柄杓の角度範囲（中心角からの相対、8 隅）に葉板の角度が ±2.5° 以内で入れば干渉（葉板は輪縁 2.7〜先端 3.0 の板）
-		var thb := rad_to_deg(float(b["th"]))
-		var lo := INF
-		var hi := -INF
-		var r_lo := INF
-		for c: Vector3 in LIB.bucket_corners(b):
-			var r := Vector2(c.y, c.z).length()
-			rmin = minf(rmin, r)
-			rmax = maxf(rmax, r)
-			r_lo = minf(r_lo, r)
-			xmax = maxf(xmax, c.x + LIB.HUB.x)
-			var rel := wrapf(rad_to_deg(atan2(c.z, c.y)) - thb, -180.0, 180.0)
-			lo = minf(lo, rel)
-			hi = maxf(hi, rel)
-		if r_lo <= LIB.PADDLE_R + 0.02:
-			for pa: float in paddles:
-				var rp := wrapf(pa - thb, -180.0, 180.0)
-				if rp >= lo - 2.5 and rp <= hi + 2.5:
-					pad_bad += 1
-	var low := LIB.HUB.y - rmax
+	# 1 揚水部材なし
+	var nl := int(H["lift_parts"]) + int(cfg["lift_parts"])
+	_ok(nl == 0, "動力水車：overlay に揚水部材（柄杓・受け樋・架台・注ぎ・樋の流れ）%d 件" % nl)
+	# 2 水流と回転の向き
+	var dot := float(H["bottom_dot"]) * float(cfg["rot_sign"])
+	var flow: Vector2 = H["flow"]
+	_ok(dot >= 0.9, "回転の向き：輪の下端（葉板先端）の動き · 水渠の下流方向 (%.3f, %.3f) ＝ %.3f（≥ 0.9＝流れが葉板を押す下掛け；RotorAnim %s）" % [flow.x, flow.y, dot, str(H.get("anim", "?"))])
+	# 3 葉板の浸かり
+	var tip := LIB.HUB.y + float(cfg["hub_dy"]) - LIB.PADDLE_R
 	var wy := float(H["water_y"])
 	var bedw := float(H["bed_wheel"])
-	_ok(bs.size() == LIB.BUCKETS and pad_bad == 0 and rmin >= 2.50 and rmin <= LIB.RIM_R - 0.03 and rmax >= LIB.PADDLE_R + 0.25 and xmax <= LIB.POST_COL_X - 0.01
-		and not is_nan(wy) and low <= wy - 0.2 and not is_nan(bedw) and low >= bedw + 0.15,
-		"柄杓 %d：葉板 %d 枚の間（柄杓の角度範囲 ±2.5° に入る葉板 %d）、內端 r %.3f（輪縁の帯 2.50–%.2f に差し込み）、外緣 r %.3f（葉板 %.1f＋≥0.25＝輪郭の外）、東端 x %.3f（軸承柱碰撞 %.2f）、最下點 %.2f（水面 %.2f−0.2 以下・底 %.2f＋0.15 以上）"
-		% [bs.size(), paddles.size(), pad_bad, rmin, LIB.RIM_R - 0.03, rmax, LIB.PADDLE_R, xmax, LIB.POST_COL_X, low, wy, bedw])
-	# 受け樋最大半徑（相對輪心，y-z）
-	var tz: float = LIB.P8_HEAD_LOCAL.z
-	var hw := LIB.TROUGH_W * 0.5 + 0.04
-	var tr := 0.0
-	for i in 2:
-		var ytop: float = float(LIB.TROUGH_BOT[i]) + float(cfg["trough_raise"]) + LIB.TROUGH_WALL
-		for sz in [-1.0, 1.0]:
-			tr = maxf(tr, Vector2(ytop - LIB.HUB.y, tz + sz * hw - LIB.HUB.z).length())
-	# 2 受け樋
-	var x0: float = LIB.TROUGH_X[0]
-	var x1: float = LIB.TROUGH_X[1]
-	var b0: float = float(LIB.TROUGH_BOT[0]) + float(cfg["trough_raise"])
-	var b1: float = float(LIB.TROUGH_BOT[1]) + float(cfg["trough_raise"])
-	var dy := b1 - LIB.P8_HEAD_LOCAL.y
-	var rest := (b0 - LIB.TROUGH_FLOOR) - LIB.P8_BEARER_TOP
-	_ok(x0 >= LIB.WHEEL_FACE_X + 0.01 and tr <= rmin - 0.1 and b0 > b1 and absf(x1 - LIB.P8_HEAD_LOCAL.x) <= 0.02 and dy >= 0.0 and dy <= 0.03 and rest >= -0.01 and rest <= 0.03,
-		"受け樋：x %.3f–%.3f（輪面 %.2f）、最大 r %.2f（柄杓の回転 內緣 %.2f −0.1 以下）、底 %.3f→%.3f（往樋頭降 %.0f mm）、樋頭接口 Δy %.3f m、西端の底と P8 枕木 %+.3f m（載る）"
-		% [x0, x1, LIB.WHEEL_FACE_X, tr, rmin, b0, b1, (b0 - b1) * 1000.0, dy, rest])
-	# 3 架台
-	var bad3 := []
-	var bed: Array = H["bent_bed"]
-	for i in 2:
-		var bx := float(cfg["bent_x"][i])
-		if bx - LIB.POST * 0.5 < LIB.POST_VIS_EAST + 0.05:
-			bad3.append("柱 %d x %.2f 貼東軸承柱" % [i, bx])
-		if absf(LIB.BENT_Z) - LIB.POST * 0.5 < LIB.FOOT_Z + 0.02:
-			bad3.append("柱 %d 壓礎石" % i)
-		if bx - LIB.POST * 0.5 < xmax + 0.05:
-			bad3.append("柱 %d 進柄杓回轉範圍" % i)
-		if is_nan(float(bed[i])):
-			bad3.append("柱 %d 下方無水渠底" % i)
-	_ok(bad3.is_empty(), "樋頭架台 2 柱：東軸承柱（可視東面 %.2f）外 ≥ 0.05、礎石（z ±%.2f）外、柄杓回轉範圍外、腳埋水渠底 0.30 m（底 %s）、頭＝P8 枕木下%s"
-		% [LIB.POST_VIS_EAST, LIB.FOOT_Z, str(bed.map(func(y): return snappedf(float(y), 0.01))), "" if bad3.is_empty() else " ✗ " + str(bad3)])
-	# 3b 落水：注ぎ＝輪頂を越えた柄杓の口 → 受け樋の中；こぼれ水＝輪郭の外を水面まで；泡＝水面
-	var pt: Vector3 = LIB.POUR_TOP
-	var pb: Vector3 = LIB.POUR_BOT + Vector3(0, 0, float(cfg["pour_dz"]))
-	var floor_y := lerpf(b0, b1, (pb.x - x0) / (x1 - x0))
-	var pr := Vector2(pt.y - LIB.HUB.y, pt.z - LIB.HUB.z).length()
-	var pm: Vector3 = LIB.POUR_MID
-	var pour_ok := pm.x >= LIB.WHEEL_FACE_X + 0.03 and pm.y < pt.y and pm.y > pb.y and pb.x >= x0 + 0.06 and pb.x <= x1 and absf(pb.z - tz) <= LIB.TROUGH_W * 0.5 - 0.03 and pb.y >= floor_y and pb.y <= floor_y + 0.12 \
-		and pt.x >= LIB.WHEEL_FACE_X + 0.03 and pr >= LIB.RIM_R and pr <= rmax + 0.05 and pt.z < 0.0
-	var spill_bad := 0
-	for sd: Dictionary in LIB.spill_specs(wy if not is_nan(wy) else 0.0):
-		for k in 6:
-			var p: Vector3 = (sd["top"] as Vector3).lerp(sd["bot"], k / 5.0)
-			if Vector2(p.y - LIB.HUB.y, p.z - LIB.HUB.z).length() < LIB.PADDLE_R + 0.15:
-				spill_bad += 1
-	_ok(pour_ok and spill_bad == 0, "落水：注ぎ 輪頂 r %.2f・z %.2f・x %.2f（輪面の外）→ 受け樋の中（x %.2f、z %.2f、底 %.3f＋%.3f）；こぼれ水 %d 本 輪郭（r %.1f＋0.15）の内に入る點 %d；泡＝水面＋0.015"
-		% [pr, pt.z, pt.x, pb.x, pb.z, floor_y, pb.y - floor_y, LIB.SPILL_TH_DEG.size(), LIB.PADDLE_R, spill_bad])
-	# 3c 材質一致：輪と同じ V2_Wood、頂点色の明度 ±0.05
-	_ok(wheel_mat == LIB.WOOD and absf(float(cfg["wood_vc"]) - wheel_vc) <= 0.05 and LIB.BENT_VC <= wheel_vc and LIB.BENT_WET_VC < LIB.BENT_VC,
-		"材質一致：輪 %s／新部材 %s、頂点色 輪 %.3f／柄杓・受け樋 %.3f（差 ≤ 0.05＝白く浮かない）、架台 %.2f（≤ 輪＝日向で淡灰の縦材にならない）・濡れ脚 %.2f" % [wheel_mat.get_file(), LIB.WOOD.get_file(), wheel_vc, float(cfg["wood_vc"]), LIB.BENT_VC, LIB.BENT_WET_VC])
+	var imm := wy - tip
+	_ok(not is_nan(wy) and not is_nan(bedw) and imm >= float(LIB.IMMERSE[0]) and imm <= float(LIB.IMMERSE[1]) and tip - bedw >= 0.1,
+		"葉板の浸かり：先端 %.2f（Hero 局部）、水面 %.2f → %.2f m（%.2f–%.2f）、水渠底 %.2f より %.2f m 上" % [tip, wy, imm, float(LIB.IMMERSE[0]), float(LIB.IMMERSE[1]), bedw, tip - bedw])
+	# 4 P8 limited correction
+	var hv: Array = cfg["hide_vis"]
+	var hc: Array = cfg["hide_col"]
+	var kids: Array = H["p8_children"]
+	var shapes: Array = H["p8_shapes"]
+	var missing := hv.filter(func(n): return not kids.has(n)) + hc.filter(func(n): return not shapes.has(n))
+	var not_hidden := (H["p8_elevated"] as Array).filter(func(n): return not hv.has(n))
+	var keep_hit := LIB.P8_KEEP.filter(func(n): return hv.has(n) or hc.has(n))
+	_ok(missing.is_empty() and not_hidden.is_empty() and keep_hit.is_empty() and kids.size() > 0,
+		"P8 水車 2 落とし樋（runtime 非表示）：可視 %d／碰撞 %d、P8 WaterSupply の高架部材 %s が全部対象（漏れ %s）、実在しない名 %s、DropBox 以下を含む %s"
+		% [hv.size(), hc.size(), str(H["p8_elevated"]), str(not_hidden), str(missing), str(keep_hit)])
+	# 5 泡
+	var fs: Array = LIB.foam_specs(wy if not is_nan(wy) else 0.0)
+	var f0: Vector3 = (fs[0]["c"] as Vector3) + Vector3(0, 0, float(cfg["foam_dz"]))
+	_ok(f0.z > 0.8 and absf(f0.y - (wy + 0.015)) < 0.01, "泡：主の泡は輪心より下流 z %+.2f（葉板が水から出る側）、水面＋0.015" % f0.z)
 	# 4 小舟
 	var bxf := LIB.boat_xf(float(cfg["boat_off"]))
 	var hull_c := bxf * Vector3(0, LIB.BOAT_H * 0.5 + 0.03, -0.2)
@@ -312,14 +316,14 @@ func _negatives(H: Dictionary) -> void:
 	print("[WLF] 永久反向（每案必須讓 gate 失敗）")
 	var cases := []
 	var c1 := _cfg()
-	c1["bucket_x1"] = 2.42
-	cases.append(["N1 柄杓を東へ広げて東軸承柱に当てる", c1, H])
+	c1["lift_parts"] = 1
+	cases.append(["N1 揚水部材が残る（柄杓 1）", c1, H])
 	var c2 := _cfg()
-	c2["trough_raise"] = 0.25
-	cases.append(["N2 受け樋抬高進入柄杓迴轉圈", c2, H])
+	c2["rot_sign"] = -1.0
+	cases.append(["N2 輪が流れに逆らって回る", c2, H])
 	var c3 := _cfg()
-	c3["bent_x"] = [2.55, 3.30]
-	cases.append(["N3 架台柱立在東軸承柱位置", c3, H])
+	c3["hub_dy"] = 0.6
+	cases.append(["N3 葉板が水に届かない（輪を 0.6 m 上げる）", c3, H])
 	var c4 := _cfg()
 	c4["boat_off"] = -0.6
 	cases.append(["N4 小舟壓上石段", c4, H])
@@ -331,17 +335,14 @@ func _negatives(H: Dictionary) -> void:
 	c6["post_dy"] = 0.5
 	cases.append(["N6 繫船杭浮空 0.5 m", c6, H])
 	var c7 := _cfg()
-	c7["bucket_th_off"] = -11.25
-	cases.append(["N7 柄杓を葉板の角度に置く（葉板と干渉）", c7, H])
+	c7["hide_vis"] = LIB.P8_HIDE_VIS.filter(func(n): return n != "Chute_0")
+	cases.append(["N7 高架落とし樋の一部（Chute_0）が残る", c7, H])
 	var c8 := _cfg()
-	c8["pour_dz"] = 0.5
-	cases.append(["N8 注ぎが受け樋を外れる", c8, H])
+	c8["hide_vis"] = LIB.P8_HIDE_VIS + ["DropBox"]
+	cases.append(["N8 DropBox まで隠す（P8 の範囲を越える）", c8, H])
 	var c9 := _cfg()
-	c9["bucket_r"] = [2.45, 2.95]
-	cases.append(["N9 柄杓が輪の輪郭の内（r3 以前＝西から見えない）", c9, H])
-	var c10 := _cfg()
-	c10["wood_vc"] = 0.95
-	cases.append(["N10 新部材が白い（r3 の檜色＝浮く）", c10, H])
+	c9["foam_dz"] = -4.0
+	cases.append(["N9 主の泡が上流側", c9, H])
 	var neg_fail := 0
 	for c in cases:
 		var f0 := fails
@@ -367,14 +368,16 @@ func _build(H: Dictionary) -> void:
 	_ok(ps.pack(n) == OK, "pack")
 	_ok(ResourceSaver.save(ps, LIB.OUTPUT) == OK, "save %s" % LIB.OUTPUT)
 	var rb := (ResourceLoader.load(LIB.OUTPUT, "", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene).instantiate()
-	var nb := rb.get_node_or_null("WW2_Lift/LiftBuckets") as MeshInstance3D
-	_ok(nb != null and nb.mesh != null and rb.get_node_or_null("BoatLanding/Boat/Hull") != null, "回讀：柄杓網格 %s、小舟 %s" % [nb != null, rb.get_node_or_null("BoatLanding/Boat/Hull") != null])
+	var nlift := 0
+	for nm in LIB.LIFT_PARTS:
+		nlift += rb.find_children(nm, "", true, false).size()
+	_ok(nlift == 0 and rb.get_node_or_null("WW2_Power/WaterFX/Foam") != null and rb.get_node_or_null("BoatLanding/Boat/Hull") != null, "回讀：揚水部材 %d、泡 %s、小舟 %s" % [nlift, rb.get_node_or_null("WW2_Power/WaterFX/Foam") != null, rb.get_node_or_null("BoatLanding/Boat/Hull") != null])
 	# ROUND 2：表裏（明示法線＝Godot の表）＋反向（r1–r12 の巻き順の四角は必ず検出）
 	var wb := LIB.winding_bad(rb)
 	var neg := LIB.old_winding_quad()
 	var wn := LIB.winding_bad(neg)
 	neg.free()
-	_ok(int(wb[0]) == 0 and int(wb[1]) > 100 and int(wn[0]) == 2, "表裏：明示法線と表（時計回り）が逆の三角形 %d／%d（反向：r1–r12 の巻き順の四角 → 検出 %d／2）" % [int(wb[0]), int(wb[1]), int(wn[0])])
+	_ok(int(wb[0]) == 0 and int(wb[1]) > 50 and int(wn[0]) == 2, "表裏：明示法線と表（時計回り）が逆の三角形 %d／%d（反向：r1–r12 の巻き順の四角 → 検出 %d／2）" % [int(wb[0]), int(wb[1]), int(wn[0])])
 	rb.free()
 	n.free()
 	print("[WLF] build {\"output_sha256\":\"%s\"}" % FileAccess.get_sha256(LIB.OUTPUT))
@@ -391,59 +394,65 @@ func _scene() -> void:
 	for i in 4:
 		await process_frame
 	var rotor := V.get_node(LIB.ROTOR) as Node3D
-	var bk := rotor.get_node_or_null("LiftBuckets") as Node3D
-	_ok(bk != null and bool(n.get("attached")), "柄杓掛在水車 2 轉子下（Hero/Wheel/LiftBuckets）")
-	# 隨輪轉：2 秒後柄杓世界位置改變、相對轉子不變
-	if bk:
-		var g0 := bk.global_transform
-		var l0 := bk.transform
-		var a0 := rotor.rotation.x
-		for i in 60:
-			await process_frame
-		await create_timer(1.5).timeout
-		_ok(not bk.global_transform.is_equal_approx(g0) and bk.transform.is_equal_approx(l0) and not is_equal_approx(rotor.rotation.x, a0), "柄杓隨輪轉（轉子角 %.2f→%.2f rad）" % [a0, rotor.rotation.x])
-	# 水車 1／3 不動
+	var nlift := 0
+	for nm in LIB.LIFT_PARTS:
+		nlift += n.find_children(nm, "", true, false).size() + rotor.find_children(nm, "", true, false).size()
+	_ok(nlift == 0, "動力水車：overlay・轉子に揚水部材 %d 件" % nlift)
+	# 輪は回り、下端は下流へ（runtime）
+	var hx := (V.get_node(LIB.WHEEL) as Node3D).global_transform
+	var bot := hx * (LIB.HUB + Vector3(0, -LIB.PADDLE_R, 0))
+	var loc := rotor.global_transform.affine_inverse() * bot
+	for i in 30:
+		await process_frame
+	await create_timer(0.5).timeout
+	var dv := rotor.global_transform * loc - bot
+	var flow3 := hx.basis.z.normalized()
+	_ok(dv.length() > 0.05 and Vector2(dv.x, dv.z).normalized().dot(Vector2(flow3.x, flow3.z)) >= 0.9, "輪が回り、下端は下流へ（移動 %.2f m、· 下流 %.3f）" % [dv.length(), Vector2(dv.x, dv.z).normalized().dot(Vector2(flow3.x, flow3.z))])
+	# 水車 1／3 不動（揚水部材なし）
 	for w in ["Landmarks/LANDMARK_WATERWHEEL_1/Hero/Wheel", "Landmarks/LANDMARK_WATERWHEEL_3/Hero/Wheel"]:
 		var r := V.get_node_or_null(w)
-		_ok(r != null and r.get_node_or_null("LiftBuckets") == null, "%s 未加柄杓（Pilot 只做水車 2）" % w.split("/")[1])
+		var nl2 := 0
+		if r:
+			for nm in LIB.LIFT_PARTS:
+				nl2 += r.find_children(nm, "", true, false).size()
+		_ok(r != null and nl2 == 0, "%s 不動（揚水部材 %d）" % [w.split("/")[1], nl2])
+	# P8 limited correction：隠す対象だけ隠れ、DropBox 以下は表示・碰撞のまま
+	var sup := V.get_node(LIB.P8_SUPPLY)
+	var colb := V.get_node(LIB.P8_COL)
+	var vis_bad := []
+	for nm in LIB.P8_HIDE_VIS:
+		if (sup.get_node(nm) as Node3D).visible:
+			vis_bad.append(nm)
+	for nm in LIB.P8_HIDE_COL:
+		if not (colb.get_node(nm) as CollisionShape3D).disabled:
+			vis_bad.append("col " + nm)
+	for nm in LIB.P8_KEEP:
+		var k := sup.get_node_or_null(nm) as Node3D
+		if k and not k.visible:
+			vis_bad.append("keep " + nm)
+		var ks := colb.get_node_or_null(nm) as CollisionShape3D
+		if ks and ks.disabled:
+			vis_bad.append("keep col " + nm)
+	_ok(vis_bad.is_empty() and int(n.get("p8_hidden")) == LIB.P8_HIDE_VIS.size() + LIB.P8_HIDE_COL.size(), "P8 水車 2 落とし樋：可視 %d・碰撞 %d を runtime 停止、DropBox 以下は不変%s" % [LIB.P8_HIDE_VIS.size(), LIB.P8_HIDE_COL.size(), "" if vis_bad.is_empty() else " ✗ " + str(vis_bad)])
 	# 開關
 	n.set("enabled", false)
 	var hidden := true
 	for c in n.get_children():
 		if c is Node3D and (c as Node3D).visible:
 			hidden = false
-	var p8_back := int(n.get("p8_toned")) == 0
-	for m: MeshInstance3D in n.call("p8_wood_nodes"):
-		if m.material_override != null and m.material_override.resource_name == "P10_WLF_P8WoodTone":
-			p8_back = false
-	_ok(rotor.get_node_or_null("LiftBuckets") == null and hidden and p8_back, "enabled=false → 柄杓取下、overlay 全隱藏、P8 落とし樋の木部は元の材質へ（%s）" % p8_back)
+	var back := int(n.get("p8_hidden")) == 0
+	for nm in LIB.P8_HIDE_VIS:
+		if not (sup.get_node(nm) as Node3D).visible:
+			back = false
+	for nm in LIB.P8_HIDE_COL:
+		if (colb.get_node(nm) as CollisionShape3D).disabled:
+			back = false
+	_ok(hidden and back, "enabled=false → overlay 全隱藏、P8 落とし樋は元どおり表示・碰撞（%s）" % back)
 	n.set("enabled", true)
-	_ok(rotor.get_node_or_null("LiftBuckets") != null, "enabled=true → 柄杓重新掛上")
-	# ROUND 2：落水と材質
-	var fx := n.get_node_or_null("WW2_Lift/WaterFX")
-	var fx_ok := fx != null and fx.get_node_or_null("Pour") != null and fx.get_node_or_null("Spill") != null and fx.get_node_or_null("Foam") != null \
-		and n.get_node_or_null("ChuteFlow/Flow") != null and bk != null and bk.get_node_or_null("BucketWater") != null
-	var bkm := (bk as MeshInstance3D).material_override if bk is MeshInstance3D else null
-	var tro := n.get_node_or_null("WW2_Lift/UkeToi/Trough") as MeshInstance3D
-	var pst := n.get_node_or_null("WW2_Lift/HeadBent/Posts") as MeshInstance3D
-	var wm := (V.get_node(LIB.ROTOR + "/LOD0") as MeshInstance3D).get_active_material(0)
-	var same := bkm != null and tro != null and pst != null and wm != null and bkm.resource_path == wm.resource_path and tro.material_override.resource_path == wm.resource_path and pst.material_override.resource_path == wm.resource_path
-	_ok(fx_ok and same, "落水 Pour／Spill／Foam／ChuteFlow／柄杓の中の水 存在 %s；柄杓・受け樋・架台の材質＝輪と同一 %s（%s）" % [fx_ok, same, wm.resource_path.get_file() if wm else "?"])
-	# ROUND 2：P8 落とし樋の木部の明度＝輪と同じ（runtime override、P8 ファイル不変）；enabled=false で元へ
-	var wl := n
-	var p8n: Array = wl.call("p8_wood_nodes")
-	var lum_bad := []
-	for m: MeshInstance3D in p8n:
-		var mo := m.material_override as StandardMaterial3D
-		var eff := mo.albedo_color.get_luminance() if mo else -1.0
-		var want := (wm as StandardMaterial3D).albedo_color.get_luminance() * LIB.WOOD_VC
-		if mo == null or absf(eff - want) > 0.03:
-			lum_bad.append("%s %.3f" % [m.name, eff])
-	_ok(p8n.size() >= 10 and p8n.size() <= 24 and lum_bad.is_empty() and int(wl.get("p8_toned")) == p8n.size(),
-		"P8 落とし樋（水車 2 の分だけ、10–24 件）木部 %d 件：明度 ＝ 輪（%.3f × 頂点色 %.2f）±0.03%s（P8 ファイル不変・runtime override）" % [p8n.size(), (wm as StandardMaterial3D).albedo_color.get_luminance(), LIB.WOOD_VC, "" if lum_bad.is_empty() else " ✗ " + str(lum_bad.slice(0, 4))])
-	# 碰撞體：架台 2＋舟 1＋杭 1
+	_ok(not (sup.get_node("Chute_0") as Node3D).visible, "enabled=true → 再び非表示")
+	# 碰撞體：舟 1＋杭 1
 	var cols := n.find_children("*", "CollisionShape3D", true, false).size()
-	_ok(cols == 4, "碰撞形 %d（架台柱 2、舟 1、杭 1）" % cols)
+	_ok(cols == 2, "碰撞形 %d（舟 1、杭 1）" % cols)
 
 
 func _attach() -> int:

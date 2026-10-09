@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WLF] wheel facts: paddles 16 [-180.0, -157.5, -135.0, -112.5, -90.0, -67.5, -45.0, -22.5, 0.0, 22.5, 45.0, 67.5, 90.0, 112.5, 135.0, 157.5]、材質 V2_Wood.tres、頂点色平均 0.607
+[WLF] heights {"anim":"spin","bed_wheel":-1.27456223964691,"bottom_dot":0.99999988079071,"bottom_move":"(-0.155792, 0.075216, 0.649129)","flow":"(-0.233373, 0.972387)","kago_ground":0.576546173095703,"kago_p":"(523.0731, -97.48479)","kago_spread":0.0715599060058594,"lift_parts":0,"p8_children":["Chute_0","Chute_1","ChuteJoint","HeadBearer","Support_00","Support_01","DropBox","SiphonBox_0","SiphonBox_1","GroundTrough","Crossing_trough_385","Crossing_trough_397","Crossing_upper_354","SplashStone_0","SplashStone_1","SplashStone_2","SplashStone_3","SplashStone_4","SplashStone_5"],"p8_elevated":["Chute_0","HeadBearer"],"p8_shapes":["Post_00","Post_01","Chute_1","DropBox","SiphonBox_0","SiphonBox_1","Trough_0","Trough_1","Trough_2","Trough_3","Trough_4","Crossing_trough_385","Crossing_trough_397","Crossing_upper_354"],"post_ground":-0.211967468261719,"water_n":74,"water_y":-0.000467061996459961}
+[WLF] PASS 動力水車：overlay に揚水部材（柄杓・受け樋・架台・注ぎ・樋の流れ）0 件
+[WLF] PASS 回転の向き：輪の下端（葉板先端）の動き · 水渠の下流方向 (-0.233, 0.972) ＝ 1.000（≥ 0.9＝流れが葉板を押す下掛け；RotorAnim spin）
+[WLF] PASS 葉板の浸かり：先端 -0.35（Hero 局部）、水面 -0.00 → 0.35 m（0.15–0.80）、水渠底 -1.27 より 0.92 m 上
+[WLF] PASS P8 水車 2 落とし樋（runtime 非表示）：可視 6／碰撞 3、P8 WaterSupply の高架部材 ["Chute_0", "HeadBearer"] が全部対象（漏れ []）、実在しない名 []、DropBox 以下を含む []
+[WLF] PASS 泡：主の泡は輪心より下流 z +2.05（葉板が水から出る側）、水面＋0.015
+[WLF] PASS 小舟 7.2×1.5 m：吃水 0.12、船體碰撞 0、船底下水深 0.43 m、離石段 1.53 m、船首與迎流夾角 0.0°
+[WLF] PASS 繫船杭：地面差 0.000 m、地上部碰撞 0、綱長 3.70 m
+[WLF] PASS 届いた荷（st_kago_tsumi 重用）：放在四角最高點 −0.02（中心地面差 -0.020、四角起伏 0.072 ≤ 0.15）、地上部碰撞 0
+[WLF] 永久反向（每案必須讓 gate 失敗）
+[WLF]   N1 揚水部材が残る（柄杓 1）：PASS（gate 正確失敗）
+[WLF]   N2 輪が流れに逆らって回る：PASS（gate 正確失敗）
+[WLF]   N3 葉板が水に届かない（輪を 0.6 m 上げる）：PASS（gate 正確失敗）
+[WLF]   N4 小舟壓上石段：PASS（gate 正確失敗）
+[WLF]   N5 船過大（14 × 3 m，港口船）：PASS（gate 正確失敗）
+[WLF]   N6 繫船杭浮空 0.5 m：PASS（gate 正確失敗）
+[WLF]   N7 高架落とし樋の一部（Chute_0）が残る：PASS（gate 正確失敗）
+[WLF]   N8 DropBox まで隠す（P8 の範囲を越える）：PASS（gate 正確失敗）
+[WLF]   N9 主の泡が上流側：PASS（gate 正確失敗）
+[WLF] PASS 反向 9/9
+[WLF] 結果：0 項失敗
