@@ -1,0 +1,141 @@
+{
+	"default_step_height": 0.6,
+	"runs": [
+		{
+			"arrived": true,
+			"case": "walk_x2_MKT_003",
+			"end": [
+				247.44,
+				35.3
+			],
+			"end_dist": 0.6,
+			"goal": [
+				248.0,
+				35.5
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"046_sk_bench_c"
+			],
+			"max_above_terrain": 0.51,
+			"start": [
+				244.0,
+				34.0999984741211
+			],
+			"step_height": 0.6,
+			"under_at_max": "Props/StreetP10/Collision/046_sk_bench_c y 1.21"
+		},
+		{
+			"arrived": true,
+			"case": "walk_s3_endai",
+			"end": [
+				228.79,
+				-45.56
+			],
+			"end_dist": 0.42,
+			"goal": [
+				228.399993896484,
+				-45.4000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"062_ms_endai_mousen_c39"
+			],
+			"max_above_terrain": 0.49,
+			"start": [
+				232.899993896484,
+				-47.2000007629395
+			],
+			"step_height": 0.6,
+			"under_at_max": "Props/MarketWestP10/Collision/062_ms_endai_mousen_c39 y 1.67"
+		},
+		{
+			"arrived": false,
+			"case": "walk_x2_MKT_003",
+			"end": [
+				246.5,
+				34.98
+			],
+			"end_dist": 1.59,
+			"goal": [
+				248.0,
+				35.5
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.0,
+				34.0999984741211
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.70"
+		},
+		{
+			"arrived": false,
+			"case": "walk_s3_endai",
+			"end": [
+				231.76,
+				-46.74
+			],
+			"end_dist": 3.62,
+			"goal": [
+				228.399993896484,
+				-45.4000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				232.899993896484,
+				-47.2000007629395
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": false,
+			"case": "walk_x2_MKT_003",
+			"end": [
+				246.5,
+				34.98
+			],
+			"end_dist": 1.59,
+			"goal": [
+				248.0,
+				35.5
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.0,
+				34.0999984741211
+			],
+			"step_height": 0.0,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.70"
+		},
+		{
+			"arrived": false,
+			"case": "walk_s3_endai",
+			"end": [
+				231.76,
+				-46.74
+			],
+			"end_dist": 3.62,
+			"goal": [
+				228.399993896484,
+				-45.4000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				232.899993896484,
+				-47.2000007629395
+			],
+			"step_height": 0.0,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		}
+	]
+}

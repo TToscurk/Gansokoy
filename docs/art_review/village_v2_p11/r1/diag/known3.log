@@ -1,0 +1,64 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[DIAG] A 神社：地形基準で被擋 40、歩行面基準で被擋 0、被擋点の歩行面−地形 最大 0.937 m、隣接標本の歩行面段差 > 0.6 m 0
+[DIAG]   (287.2,-172.1) 地形 4.90 歩行面 5.43（RampCollision）差 +0.53 当たり RampCollision／歩行面基準 なし
+[DIAG]   (287.0,-172.5) 地形 5.19 歩行面 5.74（RampCollision）差 +0.55 当たり RampCollision／歩行面基準 なし
+[DIAG]   (286.8,-173.0) 地形 5.47 歩行面 6.03（RampCollision）差 +0.56 当たり RampCollision／歩行面基準 なし
+[DIAG]   (286.6,-173.5) 地形 5.76 歩行面 6.34（RampCollision）差 +0.58 当たり RampCollision／歩行面基準 なし
+[DIAG]   (286.4,-173.9) 地形 6.05 歩行面 6.65（RampCollision）差 +0.60 当たり RampCollision／歩行面基準 なし
+[DIAG]   (286.2,-174.4) 地形 6.34 歩行面 7.00（RampCollision）差 +0.66 当たり RampCollision／歩行面基準 なし
+[DIAG]   (286.1,-174.9) 地形 6.63 歩行面 7.31（RampCollision）差 +0.69 当たり RampCollision／歩行面基準 なし
+[DIAG]   (285.9,-175.3) 地形 6.92 歩行面 7.62（RampCollision）差 +0.70 当たり RampCollision／歩行面基準 なし
+[DIAG]   (285.7,-175.8) 地形 7.21 歩行面 7.92（RampCollision）差 +0.72 当たり RampCollision／歩行面基準 なし
+[DIAG]   (285.5,-176.3) 地形 7.50 歩行面 8.23（RampCollision）差 +0.74 当たり RampCollision／歩行面基準 なし
+[DIAG]   (285.3,-176.7) 地形 7.78 歩行面 8.56（RampCollision）差 +0.78 当たり RampCollision／歩行面基準 なし
+[DIAG]   (285.1,-177.2) 地形 8.07 歩行面 8.86（RampCollision）差 +0.79 当たり RampCollision／歩行面基準 なし
+[DIAG]   (284.9,-177.6) 地形 8.36 歩行面 9.15（RampCollision）差 +0.79 当たり RampCollision／歩行面基準 なし
+[DIAG]   (284.8,-178.1) 地形 8.65 歩行面 9.24（RampCollision）差 +0.59 当たり RampCollision／歩行面基準 なし
+[DIAG]   (282.0,-185.1) 地形 12.98 歩行面 13.53（RampCollision）差 +0.55 当たり RampCollision／歩行面基準 なし
+[DIAG]   (281.8,-185.5) 地形 13.27 歩行面 13.86（RampCollision）差 +0.59 当たり RampCollision／歩行面基準 なし
+[DIAG]   (281.6,-186.0) 地形 13.56 歩行面 14.18（RampCollision）差 +0.63 当たり RampCollision／歩行面基準 なし
+[DIAG]   (281.4,-186.5) 地形 13.85 歩行面 14.55（RampCollision）差 +0.70 当たり RampCollision／歩行面基準 なし
+[DIAG]   (281.2,-186.9) 地形 14.13 歩行面 14.87（RampCollision）差 +0.73 当たり RampCollision／歩行面基準 なし
+[DIAG]   (281.0,-187.4) 地形 14.42 歩行面 15.20（RampCollision）差 +0.77 当たり RampCollision／歩行面基準 なし
+[DIAG]   (280.9,-187.8) 地形 14.71 歩行面 15.50（RampCollision）差 +0.79 当たり RampCollision／歩行面基準 なし
+[DIAG]   (280.7,-188.3) 地形 15.00 歩行面 15.83（RampCollision）差 +0.83 当たり RampCollision／歩行面基準 なし
+[DIAG]   (280.5,-188.8) 地形 15.29 歩行面 16.19（RampCollision）差 +0.90 当たり RampCollision／歩行面基準 なし
+[DIAG]   (280.3,-189.3) 地形 15.58 歩行面 16.52（RampCollision）差 +0.94 当たり RampCollision／歩行面基準 なし
+[DIAG]   (280.1,-189.7) 地形 15.87 歩行面 16.70（RampCollision）差 +0.83 当たり RampCollision／歩行面基準 なし
+[DIAG]   (276.5,-194.5) 地形 19.33 歩行面 19.84（RampCollision）差 +0.51 当たり RampCollision／歩行面基準 なし
+[DIAG]   (276.2,-194.9) 地形 19.62 歩行面 20.14（RampCollision）差 +0.52 当たり RampCollision／歩行面基準 なし
+[DIAG]   (275.9,-195.3) 地形 19.91 歩行面 20.46（RampCollision）差 +0.55 当たり RampCollision／歩行面基準 なし
+[DIAG]   (275.6,-195.7) 地形 20.20 歩行面 20.75（RampCollision）差 +0.56 当たり RampCollision／歩行面基準 なし
+[DIAG]   (275.3,-196.1) 地形 20.48 歩行面 21.05（RampCollision）差 +0.56 当たり RampCollision／歩行面基準 なし
+[DIAG]   (275.0,-196.5) 地形 20.77 歩行面 21.35（RampCollision）差 +0.57 当たり RampCollision／歩行面基準 なし
+[DIAG]   (274.7,-196.9) 地形 21.06 歩行面 21.66（RampCollision）差 +0.59 当たり RampCollision／歩行面基準 なし
+[DIAG]   (274.4,-197.3) 地形 21.35 歩行面 21.98（RampCollision）差 +0.63 当たり RampCollision／歩行面基準 なし
+[DIAG]   (274.1,-197.7) 地形 21.64 歩行面 22.30（RampCollision）差 +0.66 当たり RampCollision／歩行面基準 なし
+[DIAG]   (273.7,-198.0) 地形 21.93 歩行面 22.61（RampCollision）差 +0.68 当たり RampCollision／歩行面基準 なし
+[DIAG]   (273.4,-198.4) 地形 22.22 歩行面 22.91（RampCollision）差 +0.69 当たり RampCollision／歩行面基準 なし
+[DIAG]   (273.1,-198.8) 地形 22.51 歩行面 23.24（RampCollision）差 +0.73 当たり RampCollision／歩行面基準 なし
+[DIAG]   (272.8,-199.2) 地形 22.79 歩行面 23.56（RampCollision）差 +0.77 当たり RampCollision／歩行面基準 なし
+[DIAG]   (272.5,-199.6) 地形 23.08 歩行面 23.87（RampCollision）差 +0.79 当たり RampCollision／歩行面基準 なし
+[DIAG]   (272.2,-200.0) 地形 23.37 歩行面 24.12（RampCollision）差 +0.75 当たり RampCollision／歩行面基準 なし
+[DIAG] B 寺子屋：全体で被擋 2 ["(205.4,24.2) Population/CoreP10/Terakoya/C20_kozo_m01", "(204.9,24.2) Population/CoreP10/Terakoya/C20_kozo_m01"]；NPC を除くと 0 []；C20 停止点（巡回両端）→ ルート最短 1.35 m；巡回とルートの交差 [[205.19, 24.22]]
+[DIAG] C B_P_MKT_003 origin [252.87, 0.72, 36.19] meta depth 10.01 width 7.90
+[DIAG]   局部 z 6.10 [246.79, 35.12] 地形 0.695 最上 [[1.207, "Props/StreetP10/Collision"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 6.00 [246.89, 35.15] 地形 0.695 最上 [[1.207, "Props/StreetP10/Collision"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 5.90 [246.98, 35.18] 地形 0.695 最上 [[1.207, "Props/StreetP10/Collision"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 5.80 [247.08, 35.21] 地形 0.695 最上 [[1.207, "Props/StreetP10/Collision"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 5.70 [247.17, 35.24] 地形 0.695 最上 [[1.207, "Props/StreetP10/Collision"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.90 [247.93, 35.5] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.80 [248.03, 35.53] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.70 [248.12, 35.56] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.60 [248.21, 35.59] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.50 [248.31, 35.62] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.40 [248.4, 35.65] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.30 [248.5, 35.69] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.20 [248.59, 35.72] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.10 [248.69, 35.75] 地形 0.695 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.695, "Collision/TerrainCollision"]]
+[DIAG]   局部 z 4.00 [248.78, 35.78] 地形 0.694 最上 [[4.623, "Districts/Market/Buildings/B_P_MKT_003"], [0.694, "Collision/TerrainCollision"]]

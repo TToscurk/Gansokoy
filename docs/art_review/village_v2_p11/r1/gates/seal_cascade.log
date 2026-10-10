@@ -1,0 +1,44 @@
+不一致：godot/data/village_v2_p10r3b_seal.json child godot/data/village_v2_p9_final_seal.json c327c4c22553 → caa23b4bace3
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p9_final_seal.json c327c4c22553 → caa23b4bace3
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p9_final_seal.json c327c4c22553 → caa23b4bace3
+  更新 godot/data/village_v2_p10r3b_seal.json：child 1 件、seal 04f4ee125b05 → f831c6090690
+  更新 godot/data/village_v2_p10r4_seal.json：child 1 件、seal d2dd267868de → 867c7767f893
+  更新 godot/data/village_v2_p10r4b_seal.json：child 1 件、seal f5e8e8170659 → bdd338782f37
+不一致：godot/data/village_v2_p10r3c_seal.json child godot/data/village_v2_p10r3b_seal.json 04f4ee125b05 → f831c6090690
+不一致：godot/data/village_v2_p10r3d_seal.json child godot/data/village_v2_p10r3b_seal.json 04f4ee125b05 → f831c6090690
+不一致：godot/data/village_v2_p10r3e_seal.json child godot/data/village_v2_p10r3b_seal.json 04f4ee125b05 → f831c6090690
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r4_seal.json d2dd267868de → 867c7767f893
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3b_seal.json 04f4ee125b05 → f831c6090690
+  更新 godot/data/village_v2_p10r3c_seal.json：child 1 件、seal 2722b79694fb → 390dcd09610e
+  更新 godot/data/village_v2_p10r3d_seal.json：child 1 件、seal b54f7253eca9 → 530a97cddb28
+  更新 godot/data/village_v2_p10r3e_seal.json：child 1 件、seal 856d6a44eb07 → 3d0765d718ae
+  更新 godot/data/village_v2_p10r4b_seal.json：child 2 件、seal bdd338782f37 → 5c9e09878745
+不一致：godot/data/village_v2_p10r3d_seal.json child godot/data/village_v2_p10r3c_seal.json 2722b79694fb → 390dcd09610e
+不一致：godot/data/village_v2_p10r3e_seal.json child godot/data/village_v2_p10r3d_seal.json b54f7253eca9 → 530a97cddb28
+不一致：godot/data/village_v2_p10r3e_seal.json child godot/data/village_v2_p10r3c_seal.json 2722b79694fb → 390dcd09610e
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p10r3d_seal.json b54f7253eca9 → 530a97cddb28
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p10r3e_seal.json 856d6a44eb07 → 3d0765d718ae
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3c_seal.json 2722b79694fb → 390dcd09610e
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3d_seal.json b54f7253eca9 → 530a97cddb28
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3e_seal.json 856d6a44eb07 → 3d0765d718ae
+  更新 godot/data/village_v2_p10r3d_seal.json：child 1 件、seal 530a97cddb28 → 607e09ed5631
+  更新 godot/data/village_v2_p10r3e_seal.json：child 2 件、seal 3d0765d718ae → 0dee95e348ba
+  更新 godot/data/village_v2_p10r4_seal.json：child 2 件、seal 867c7767f893 → c182ee3d1c4c
+  更新 godot/data/village_v2_p10r4b_seal.json：child 3 件、seal 5c9e09878745 → e6be0edd67cb
+不一致：godot/data/village_v2_p10r3e_seal.json child godot/data/village_v2_p10r3d_seal.json 530a97cddb28 → 607e09ed5631
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p10r3d_seal.json 530a97cddb28 → 607e09ed5631
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p10r3e_seal.json 3d0765d718ae → 0dee95e348ba
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r4_seal.json 867c7767f893 → c182ee3d1c4c
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3d_seal.json 530a97cddb28 → 607e09ed5631
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3e_seal.json 3d0765d718ae → 0dee95e348ba
+  更新 godot/data/village_v2_p10r3e_seal.json：child 1 件、seal 0dee95e348ba → 155722b2ea59
+  更新 godot/data/village_v2_p10r4_seal.json：child 2 件、seal c182ee3d1c4c → 721fb423a77f
+  更新 godot/data/village_v2_p10r4b_seal.json：child 3 件、seal e6be0edd67cb → 94cda6e14c2f
+不一致：godot/data/village_v2_p10r4_seal.json child godot/data/village_v2_p10r3e_seal.json 0dee95e348ba → 155722b2ea59
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r4_seal.json c182ee3d1c4c → 721fb423a77f
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r3e_seal.json 0dee95e348ba → 155722b2ea59
+  更新 godot/data/village_v2_p10r4_seal.json：child 1 件、seal 721fb423a77f → 8f03cac2ecac
+  更新 godot/data/village_v2_p10r4b_seal.json：child 2 件、seal 94cda6e14c2f → bd4feabba18e
+不一致：godot/data/village_v2_p10r4b_seal.json child godot/data/village_v2_p10r4_seal.json 721fb423a77f → 8f03cac2ecac
+  更新 godot/data/village_v2_p10r4b_seal.json：child 1 件、seal bd4feabba18e → 87e791fbb5d3
+不一致 0（round 6）

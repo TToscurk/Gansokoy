@@ -1,0 +1,679 @@
+{
+	"actors": [
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M1_yaoya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				249.69,
+				-33.82
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M2_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				247.32,
+				-33.62
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M3_chonin_m01",
+			"penetration_samples": 0,
+			"pos": [
+				251.07,
+				-38.42
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M4_sakanaya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				248.4,
+				-58.35
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M5_setomono_f01",
+			"penetration_samples": 0,
+			"pos": [
+				234.45,
+				-46.15
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M6_takigi_m01",
+			"penetration_samples": 0,
+			"pos": [
+				242.6,
+				-58.9
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/PopulationP10/Market/M7_kozo_m01",
+			"path_len": 18.0,
+			"penetration_samples": 0,
+			"pos": [
+				243.0,
+				-33.08
+			],
+			"samples": 181,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MarketWest/W1_nunoya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				208.5,
+				-46.95
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MarketWest/W2_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				209.9,
+				-45.5
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MarketWest/W3_chaya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				228.6,
+				-46.95
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.246,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MarketWest/W4_yakusou_f01",
+			"penetration_samples": 1,
+			"pos": [
+				220.7,
+				-46.95
+			],
+			"samples": 1,
+			"with": "Population/ActivityP10/@StaticBody3D@55"
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/PopulationP10/MarketWest/W5_chonin_m01",
+			"path_len": 15.6,
+			"penetration_samples": 0,
+			"pos": [
+				219.16,
+				-44.6
+			],
+			"samples": 156,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MainStreet/S1_chonin_m01",
+			"penetration_samples": 0,
+			"pos": [
+				253.18,
+				-25.54
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MainStreet/S2_yaoya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				264.57,
+				-41.9
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/MainStreet/S3_yakusou_f01",
+			"penetration_samples": 0,
+			"pos": [
+				266.0,
+				-42.14
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/PopulationP10/MainStreet/S4_sakanaya_m01",
+			"path_len": 14.7,
+			"penetration_samples": 0,
+			"pos": [
+				267.12,
+				-40.6
+			],
+			"samples": 148,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C1_chaya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				255.21,
+				-52.22
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C2_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				252.84,
+				-52.02
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C3_takigi_m01",
+			"penetration_samples": 0,
+			"pos": [
+				231.38,
+				-43.8
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C4_nunoya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				234.45,
+				-38.2
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C5_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				236.65,
+				-35.9
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C7_sakanaya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				250.39,
+				-44.04
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C12_yaoya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				244.6,
+				-26.8
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C23_yakusou_f01",
+			"penetration_samples": 0,
+			"pos": [
+				247.4,
+				-42.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Market/C24_chaya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				246.1,
+				-43.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MarketWest/C8_setomono_f01",
+			"penetration_samples": 0,
+			"pos": [
+				230.6,
+				-29.6
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MarketWest/C9_sakanaya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				215.7,
+				-45.4
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MarketWest/C10_chonin_m01",
+			"penetration_samples": 0,
+			"pos": [
+				232.0,
+				-49.9
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/CoreP10/MainStreet/C6_sakanaya_m01",
+			"path_len": 19.5,
+			"penetration_samples": 0,
+			"pos": [
+				256.09,
+				-19.79
+			],
+			"samples": 196,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MainStreet/C11_nunoya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				249.9,
+				-24.5
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MainStreet/C13_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				263.51,
+				-31.71
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MainStreet/C14_setomono_f01",
+			"penetration_samples": 0,
+			"pos": [
+				261.54,
+				-31.64
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MainStreet/C16_takigi_m01",
+			"penetration_samples": 0,
+			"pos": [
+				270.67,
+				-35.74
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MainStreet/C19_chonin_m01",
+			"penetration_samples": 0,
+			"pos": [
+				272.08,
+				-45.35
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Izakaya/C17_chaya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				276.4,
+				-59.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Izakaya/C18_sakanaya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				277.6,
+				-60.8
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/CoreP10/Terakoya/C20_kozo_m01",
+			"path_len": 6.81,
+			"penetration_samples": 0,
+			"pos": [
+				205.25,
+				24.28
+			],
+			"samples": 69,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Terakoya/C21_nunoya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				207.8,
+				27.6
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.246,
+			"mode": "idle",
+			"npc": "Population/CoreP10/Terakoya/C22_yakusou_f01",
+			"penetration_samples": 1,
+			"pos": [
+				206.0,
+				28.9
+			],
+			"samples": 1,
+			"with": "Population/ActivityCoreP10/@StaticBody3D@65"
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Farm/O1_takigi_m01",
+			"penetration_samples": 0,
+			"pos": [
+				319.16,
+				-23.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Farm/O2_yaoya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				322.16,
+				-88.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "patrol",
+			"npc": "Population/OuterP10/Farm/O3_chonin_m01",
+			"path_len": 11.02,
+			"penetration_samples": 0,
+			"pos": [
+				306.5,
+				14.89
+			],
+			"samples": 111,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Farm/O4_setomono_f01",
+			"penetration_samples": 0,
+			"pos": [
+				329.66,
+				-104.0
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Waterwheel/O5_sakanaya_m01",
+			"penetration_samples": 0,
+			"pos": [
+				328.6,
+				-50.8
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Waterwheel/O6_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				327.6,
+				-48.9
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.245,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Canal/O7_yakusou_f01",
+			"penetration_samples": 1,
+			"pos": [
+				311.0,
+				37.8
+			],
+			"samples": 1,
+			"with": "Population/ActivityOuterP10/@StaticBody3D@73"
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/Canal/O8_chaya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				330.5,
+				-31.5
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/BackAlley/O9_shufu_f01",
+			"penetration_samples": 0,
+			"pos": [
+				268.3,
+				-88.38
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/BackAlley/O10_nunoya_f01",
+			"penetration_samples": 0,
+			"pos": [
+				269.4,
+				-86.6
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/BackAlley/O11_takigi_m01",
+			"penetration_samples": 0,
+			"pos": [
+				283.61,
+				-76.4
+			],
+			"samples": 1,
+			"with": ""
+		},
+		{
+			"max_depth_m": 0.0,
+			"mode": "idle",
+			"npc": "Population/OuterP10/ShrineOutskirts/O12_yakusou_f01",
+			"penetration_samples": 0,
+			"pos": [
+				292.0,
+				-152.0
+			],
+			"samples": 1,
+			"with": ""
+		}
+	],
+	"near_route": [
+		{
+			"dist_route_m": 0.67,
+			"mode": "idle",
+			"npc": "Population/PopulationP10/Market/M2_shufu_f01",
+			"pos": [
+				247.32,
+				-33.62
+			],
+			"static_width_m": 4.85,
+			"widest_side_after_npc_m": 4.13
+		},
+		{
+			"dist_route_m": 0.62,
+			"mode": "patrol",
+			"npc": "Population/PopulationP10/MarketWest/W5_chonin_m01",
+			"pos": [
+				219.16,
+				-44.6
+			],
+			"static_width_m": 6.0,
+			"widest_side_after_npc_m": 4.13
+		},
+		{
+			"dist_route_m": 1.02,
+			"mode": "patrol",
+			"npc": "Population/PopulationP10/MainStreet/S4_sakanaya_m01",
+			"pos": [
+				267.12,
+				-40.6
+			],
+			"static_width_m": 5.85,
+			"widest_side_after_npc_m": 3.73
+		},
+		{
+			"dist_route_m": 1.06,
+			"mode": "idle",
+			"npc": "Population/CoreP10/MarketWest/C10_chonin_m01",
+			"pos": [
+				232.0,
+				-49.9
+			],
+			"static_width_m": 3.6,
+			"widest_side_after_npc_m": 1.83
+		},
+		{
+			"dist_route_m": 0.06,
+			"mode": "patrol",
+			"npc": "Population/CoreP10/Terakoya/C20_kozo_m01",
+			"pos": [
+				205.25,
+				24.28
+			],
+			"static_width_m": 7.45,
+			"widest_side_after_npc_m": 4.13
+		}
+	]
+}

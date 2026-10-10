@@ -1,0 +1,43 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[FARM_WALK] step_height override 0.35
+[FEEDER] 可見方塊 101、碰撞形狀 23
+[FEEDER] PASS post_collision：可見支柱 8 根，無碰撞 0：
+[FEEDER] PASS supply_system_state：非表示の取水構件 0；無効な碰撞形 0；撤去済み高架樋の残骸 0；碰撞層 1
+[FEEDER] PASS source_ryukotsu：取水口 樋底 -1.80（水渠水面 -1.52 の 0.28 m 下、渠底 -2.33 の 0.49 m 上、下車の下端 -1.75）；必要揚程 1.81 m（水面→落とし桝水面）、吐き口まで 2.18 m；傾斜 28.4°・樋長 5.17 m；岸坡上の樋底板下面－地面 最小 0.18 m（x 335.1）；送り樋下面－地面 最小 0.24 m；上端の入り込み隙間 0.009 m；張り出し下面 0.46 > 桝壁頂 0.45；水位鎖 単調減少：水渠水面 -1.52 → 竜骨車 吐き口（樋底上端） 0.660 → 送り樋 水面 始 0.590 → 送り樋 水面 末 0.560 → 落とし桝 水面 0.288 → 上段土渠 水面 0.278 → 伏越し入口桝 0.270 → 伏越し出口桝 0.190 → 木槽 水面 始 0.180 → 木槽 水面 末 0.150 → 內渠 水面 0.078
+[FEEDER] PASS ryukotsu_overlay_clear：竜骨車の部材 OBB 16 個；周辺の可見網格頂点 3438 のうち部材内 0；MultiMesh 実例 63 のうち部材を貫く 0
+[FEEDER] PASS route_clear_FarmPath_1：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS route_clear_FarmPath_4：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS route_clear_HiedaGateApron：路權內取水構件覆蓋 0 格（地上＋架空，門檻 0）
+[FEEDER] PASS portal_clear：PORTAL_HIEDA1F 最近支柱 60.26 m（門檻 2.2）；圓盤＋0.6 m 內樋下淨高 無樋覆蓋
+[FEEDER] PASS low_profile_east_of_345：x > 345（上段土渠起點以東、含 FarmPath_1／稗田邸前）取水構件離地最高 0.29 m（門檻 0.45：與田埂同級、無架空）
+[FEEDER] PASS walk_FarmPath_1：抵達=true、橫偏 0.00 m、頭部穿入樋體 0 幀、終點 (372.0, 0.100415, 13.0043)
+[FEEDER] PASS walk_HiedaFront：抵達=true、橫偏 0.00 m、頭部穿入樋體 0 幀、終點 (397.8102, 0.000811, 11.04922)
+[FEEDER] PASS walk_TroughSide：抵達=true、橫偏 0.01 m、頭部穿入樋體 0 幀、終點 (401.0048, 0.23151, 5.100551)
+[FEEDER] PASS jump_(372.0,6.3)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS jump_(386.6,4.8)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS jump_(397.8,6.2)：樋下淨高 inf m、起跳頂高 1.75 m（頭頂 3.45 m）、撞頂=false、頭部穿入樋體 0 幀
+[FEEDER] PASS tps_camera：近裁面四角半徑＋1 cm＝0.103 m；1620 個相機姿勢（9 點 × 12 方位 × 5 俯仰 × 臂長 3／8.5／16 m）；距取水構件 < 0.103 m 的姿勢 0；最近 0.13 m（ryu_head_n yaw 180° pitch 0.55 arm 3.0 → Feed/Body）；掛樋擋在相機與玩家胸口之間 0 姿勢（0.0 %，資訊）
+[FEEDER] camera near-miss breakdown: {  }
+[FEEDER] result: 0 failed

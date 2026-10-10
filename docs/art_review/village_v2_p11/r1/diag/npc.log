@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[NPC] NPC 51（patrol 6）；靜的碰撞へのめり込み > 0.05 m：待機 3・巡回 0；ルート 1.2 m 以内 5 体、NPC の横を抜ける幅 < 0.9 m 0 体
+[NPC]   めり込み Population/PopulationP10/MarketWest/W4_yakusou_f01 idle 0.246 m（1/1 標本）← Population/ActivityP10/@StaticBody3D@55
+[NPC]   めり込み Population/CoreP10/Terakoya/C22_yakusou_f01 idle 0.246 m（1/1 標本）← Population/ActivityCoreP10/@StaticBody3D@65
+[NPC]   めり込み Population/OuterP10/Canal/O7_yakusou_f01 idle 0.245 m（1/1 標本）← Population/ActivityOuterP10/@StaticBody3D@73
+[NPC]   ルート近傍 Population/PopulationP10/Market/M2_shufu_f01 idle 距離 0.67 靜的幅 4.85 横を抜ける幅 4.13
+[NPC]   ルート近傍 Population/PopulationP10/MarketWest/W5_chonin_m01 patrol 距離 0.62 靜的幅 6.00 横を抜ける幅 4.13
+[NPC]   ルート近傍 Population/PopulationP10/MainStreet/S4_sakanaya_m01 patrol 距離 1.02 靜的幅 5.85 横を抜ける幅 3.73
+[NPC]   ルート近傍 Population/CoreP10/MarketWest/C10_chonin_m01 idle 距離 1.06 靜的幅 3.60 横を抜ける幅 1.83
+[NPC]   ルート近傍 Population/CoreP10/Terakoya/C20_kozo_m01 patrol 距離 0.06 靜的幅 7.45 横を抜ける幅 4.13

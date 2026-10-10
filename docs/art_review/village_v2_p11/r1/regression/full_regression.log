@@ -1,0 +1,301 @@
+[FREEZE] 結果：0 項失敗
+✓ freeze check
+[PROTECT] 結果：0 項失敗
+✓ P1 Approved Terrain Protection
+[WATER] 結果：0 項失敗
+✓ P2 water gate
+[TERRAIN] FAIL village_v2.tscn load()+instantiate()（P1／base，不含 Vegetation overlay）3556 ms（≤ 3000 ms，headless 參考值）
+[TERRAIN] 結果：1 項失敗
+✗ terrain gate（含鋸齒坡、東岸、橋端、農田）（exit 1）
+[BRIDGE] 結果：0 項失敗
+✓ 5 bridge checks
+[SL] 結果：0 項失敗
+✓ sightline checks
+[PARCEL] 結果：0 項失敗
+✓ P3 roads / parcels gate
+[GB] 結果：0 項失敗
+✓ P4 greybox gate
+[ASSET] FAIL V2 場景依賴 1860 個全在白名單內（違規 421：res://shaders/sky_daynight.gdshader, res://assets/village_v2/street_kit/ST_Street.tres, res://assets/village_v2/street_kit/street_kit_atlas.png, res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res, res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res, res://assets/village_v2/street_kit/mesh/st_kago_tsumi.res）
+[ASSET] 結果：1 項失敗
+✗ P5 asset reset gate（白名單／Protected／封存）（exit 1）
+[HERO] 結果：0 項失敗
+✓ P5 Hero Asset Gate 回歸（已登記資產 1–9 項重驗＋gate.json 雜湊）
+[KIT] 結果：0 項失敗
+✓ P6 町家 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊）
+✓ P6 町家 Kit Gate 反向：任意の override → 4 材質 FAIL
+✓ P6 町家 Kit Gate 反向（P10 R6a）：登記変体を Pilot 外の建物へ → FAIL
+✓ P6 町家 Kit Gate 反向（P10 R6a）：登記変体を基底違いの面へ → FAIL
+✓ P6 町家 Kit Gate 反向（P10 R6a）：変体の sha が登記／封存と不一致 → FAIL
+[RBG] 結果：0 項失敗
+✓ P7 R2 河岸 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊＋烘焙＝重排）
+[RBSW] 結果：0 項失敗（共 5 項）
+✓ P7 R3 河岸石砌 Cleanup Gate（4 條規則：覆蓋空窗／可見 40–70%／浮空與過度外露／2–4 層）
+[PLACE] 結果：PASS 207／REVIEW 0／FAIL 0（涵蓋 207 單位，6787 ms）——結論只適用於目前涵蓋範圍
+[PLACE] 結果：selftest 0 項不符預期（clean＋5 案例，共 38099 ms）
+✓ 場景擺放／碰撞稽核＋永久反向案例（clean 全 PASS；float／sink／clash→FAIL、aabbfp→PASS、noproxy→REVIEW）
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.07 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+[FARM] 結果：0 項失敗（seal）
+✓ P8 封存（凍結來源／overlay／ART_REVIEW 圖／證據 sha256＋反向）
+✓ P8 local gate（田數、田埂碰撞、水位、灌排、農路淨距）
+[FARM] FAIL water +0.045m on frozen terrace (max err 0.5000 < 0.002)
+✓ P8 永久反向（田面水抬 0.5 m → 恰 1 項 FAIL）
+✓ P8 田埂／水面擺放稽核
+✓ P8 取水水路淨空（FarmPath_1／稗田邸前）＋R5b.1 竜骨車：系統狀態〔非表示・無効碰撞・高架樋残骸 0〕・水源連通〔水位鎖単調〕・他層干渉 0
+✓ P8 R5b.1 FEEDER 永久反向（取水構件の runtime 非表示・碰撞停止・高架樋残骸 → supply_system_state 各案 FAIL）
+✓ P8 全區 1.7 m 實走 25 段＋TPS 相機淨空
+[COST] FAIL budget High_overlook GPU Δ +4.07（上限 4 ms）  renderCPU Δ +1.56（上限 4 ms）
+[COST] 結果：1 項失敗（P8 runtime budget）
+✗ P8 runtime budget（五鏡位 A/B）（exit 1）
+[VEG] 結果：0 項失敗（seal）
+✓ P9 R1 植被庫封存（樹庫／生成器／LOD 指標／7 張核准總表／證據 sha256＋反向）
+[VEG] 結果：0 項失敗
+✓ P9 R1 veg_kit Asset Gate 回歸（1–9 項重驗＋gate.json 11 項＋雜湊）
+[VEG] FAIL veg_kit grounding：✗ pivot＝根部：樹幹基部（碰撞圓柱底）離原點 ≤ 0.15 m、接地交線中心最大偏 0.32 m（≤ 0.15＋0.6×dbh，板根不對稱）；無自帶土台：貼地 ≤ 0.15 m 朝上水平面最大 9.00 m²（konara_a；上限 0.6＋樹幹斷面積）；最低頂點 −0.8～+0.05；違規 konara_a（土台面 9.00 m²、最低 -0.40、接地中心偏 0.14、樹幹基部偏 0.00）
+[VEG] FAIL veg_kit lod：✗ 34 棵：級數（樹 4／地被 3）、LOD1 36–49 %、LOD2 13–23 %（規格 ≈ 40 %／10–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 konara_a 級數 3（應 4）
+[VEG] FAIL veg_kit collision：✗ 普通樹 1 根樹幹圓柱、Hero ≤ 7、地被 0、無 trimesh；樹幹圓柱共 29；膠囊探針 145 次（中心撞、半徑＋0.4 m 外不撞）；違規 konara_a 碰撞數 2（應 1–1）
+[VEG] FAIL veg_kit materials：✗ 只用 veg_kit/mat 的 ShaderMaterial（11 種實際使用）、無 override：違規 konara_a/LOD0 override；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[VEG] FAIL veg_kit materials：✗ 只用 veg_kit/mat 的 ShaderMaterial（11 種實際使用）、無 override：違規 konara_a/LOD0 surf2 （無）；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[VEG] FAIL veg_kit lod：✗ 34 棵：級數（樹 4／地被 3）、LOD1 28–49 %、LOD2 10–23 %（規格 ≈ 40 %／10–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 konara_a 面數 [6512, 1810, 677, 280]（LOD1 28 %、LOD2 10 %）
+[VEG] FAIL veg_kit perf：✗ LOD0 類別上限：forest 最大 6512／6000、garden 最大 7162／12000、hero 最大 12125／15000、young 最大 2014／3500、dead 最大 1216／2500、under 最大 600／1000；每級 surface ≤ 2；全庫 LOD0 合計 154618（每種一棵）；Kit 貼圖 VRAM 估 45.2 MB（≤ 64）；違規 konara_a LOD0 6512 > 6000、konara_a/LOD0 surface 3
+[VEG] FAIL veg_kit size：✗ 34 棵：LOD0 高 vs 設計最大差 10.0 %（konara_a）、冠幅最大差 10.0 %；違規 konara_a（高 15.98／設計 14.53、冠幅差 10 %、類別 forest 8.0–32.0）
+[VEG] FAIL veg_kit pivot_scale：✗ 34 棵 prefab 根 basis／LOD 節點 transform＝identity（縮放 1；擺放時才給旋轉縮放）：違規 konara_a 根 basis≠identity
+[VEG] 結果：0 項失敗
+✓ P9 R1 veg_kit 永久反向 6 案（slab／lod／collision／material／perf／scale 各自 FAIL）
+[FOREST] 結果：0 項失敗（seal）
+✓ P9 R2 林帶封存（規劃器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋反向）
+[FOREST] 結果：0 項失敗
+✓ P9 R2 林帶 local gate（禁區、接地、檜 secondary、非均勻、杉牆、視線、天際線層級、instance uniform）
+[FOREST] 結果：反向 0 案不符預期
+✓ P9 R2 林帶永久反向 5 案（hinoki／uniform／float／road／sightline 各自瞄準項 FAIL）
+[BAMBOO] 結果：0 項失敗
+✓ P9 R3 bamboo_kit Asset Gate 回歸（1–9 項重驗＋gate.json 11 項＋雜湊；ART_REVIEW 中）
+[BAMBOO] FAIL bamboo_kit size：✗ 9 種：LOD0 高 vs 設計最大差 0.0 %、寬最大差 7.7 %；稈徑實測 mature 9 cm、thick 17 cm、thin 5 cm、young 8 cm、lean 10 cm、dead 8 cm、broken 9 cm；違規 take_mature（高 13.07／設計 13.07、寬差 8 %）
+[BAMBOO] FAIL bamboo_kit grounding：✗ pivot＝稈基：碰撞圓柱底離原點 ≤ 0.05 m；最低頂點 −0.5～+0.03（稈淺埋 0.25 m、不浮）；無自帶土台：貼地 ≤ 0.15 m 朝上水平面最大 9.000 m²（take_mature；上限 0.2）；落葉地被只有貼地卡片 ≤ 5 cm；違規 take_mature（土台面 9.00 m²、最低 -0.25、稈基偏 0.00）
+[BAMBOO] FAIL bamboo_kit lod：✗ 9 種：級數（竹稈 4／筍與落葉 3）、LOD1 34–50 %、LOD2 8–23 %（竹稈 25–50 %／6–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 take_mature 級數 3（應 4）
+[BAMBOO] FAIL bamboo_kit collision：✗ 竹稈 1 根圓柱（半徑 0.4–0.75×稈徑）、筍／落葉 0、無 trimesh；圓柱 6；膠囊探針 54 次（中心撞、半徑＋0.4 m 外不撞＝稈間可走）；違規 take_mature 碰撞數 2（應 1）
+[BAMBOO] FAIL bamboo_kit materials：✗ 只用 bamboo_kit/mat 的 ShaderMaterial（3 種實際使用：BK_Culm_green、BK_Leaf_A、BK_Culm_dead）、無 override：違規 take_mature/LOD0 override；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[BAMBOO] FAIL bamboo_kit materials：✗ 只用 bamboo_kit/mat 的 ShaderMaterial（3 種實際使用：BK_Culm_green、BK_Leaf_A、BK_Culm_dead）、無 override：違規 take_mature/LOD0 surf2 （無）、take_mature/LOD0 surf3 （無）；貼圖 ≤ 2048、VRAM 壓縮：違規 0
+[BAMBOO] FAIL bamboo_kit lod：✗ 9 種：級數（竹稈 4／筍與落葉 3）、LOD1 16–50 %、LOD2 5–23 %（竹稈 25–50 %／6–20 %）、高度差 ≤ 8 %、抖動換檔帶首尾相接：違規 take_mature 面數 [5450, 877, 262, 145]（LOD1 16 %、LOD2 5 %）
+[BAMBOO] FAIL bamboo_kit perf：✗ LOD0 類別上限：bamboo 最大 5450／4000、under 最大 82／500、litter 最大 52／200；每級 surface ≤ 2；全庫 LOD0 合計 17931（每種一稈）；Kit 貼圖 VRAM 估 8.0 MB（≤ 32）；違規 take_mature LOD0 5450 > 4000、take_mature/LOD0 surface 4（群植成本＝P12 technical debt，ART-FIRST）
+[BAMBOO] FAIL bamboo_kit size：✗ 9 種：LOD0 高 vs 設計最大差 10.0 %、寬最大差 10.0 %；稈徑實測 mature 9 cm、thick 17 cm、thin 5 cm、young 8 cm、lean 10 cm、dead 8 cm、broken 9 cm；違規 take_mature（高 14.38／設計 13.07、寬差 10 %；稈徑 0.094（種別 0.07–0.12、manifest 0.084、碰撞徑 0.086））
+[BAMBOO] FAIL bamboo_kit pivot_scale：✗ 9 種 prefab 根 basis／LOD 節點 transform＝identity（縮放 1；擺放時才給旋轉縮放）：違規 take_mature 根 basis≠identity
+[BAMBOO] FAIL bamboo_kit size：✗ 9 種：LOD0 高 vs 設計最大差 0.0 %、寬最大差 0.0 %；稈徑實測 mature 9 cm、thick 17 cm、thin 5 cm、young 8 cm、lean 10 cm、dead 8 cm、broken 9 cm；違規 take_mature（稈徑 0.085（種別 0.07–0.12、manifest 0.084、碰撞徑 0.216））
+[BAMBOO] FAIL bamboo_kit collision：✗ 竹稈 1 根圓柱（半徑 0.4–0.75×稈徑）、筍／落葉 0、無 trimesh；圓柱 7；膠囊探針 63 次（中心撞、半徑＋0.4 m 外不撞＝稈間可走）；違規 take_mature 碰撞半徑 0.108 vs 稈徑 0.084
+[BAMBOO] 結果：0 項失敗
+✓ P9 R3 bamboo_kit 反向 7 案（slab／lod／collision／material／perf／scale／culm_d 各自 FAIL）
+[BPLACE] 結果：0 項失敗（seal）
+✓ P9 R3 封存（竹 Kit＋竹林擺放 生成器／gate／overlay／8 張 ART_REVIEW 總表／證據 sha256＋掛載＋反向）
+[BPLACE] 結果：0 項失敗
+✓ P9 R3 竹林擺放 gate（禁區、接地、R2 共存、踏跡小徑、空間結構、頂線起伏、稈距、instance uniform）
+[BPLACE] 結果：0 項失敗（negatives）
+✓ P9 R3 竹林擺放永久反向 5 案（road／float／r2／path／dome 各自瞄準項 FAIL）
+[BPLACE] 結果：0 項失敗（scene）
+✓ P9 R3 竹林場景級驗證（稈基射線接地、稈碰撞 shape 查詢、小徑實走、節點總數）
+[GARDEN] 結果：0 項失敗（seal）
+✓ P9 R4 封存（稗田邸庭園 garden_kit＋HiedaGardenP9 生成器／gate／shader／overlay／9 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[GARDEN] 結果：0 項失敗
+✓ P9 R4 稗田邸庭園 plan gate（邊界／主軸淨空／前庭留白／池泉／飛石間距／接地／元素齊備）
+[GARDEN] 結果：0 項失敗（negatives）
+✓ P9 R4 稗田邸庭園永久反向 5 案（float／clutter／axis／pond／wall 各自瞄準項 FAIL）
+[GARDEN] 結果：0 項失敗（scene）
+✓ P9 R4 稗田邸庭園場景級驗證（ForestP9／BambooP9／HiedaGardenP9 掛載、射線接地、碰撞 vs 本屋／門／牆、主軸＋飛石實走、池擋人）
+[SHRINE] 結果：0 項失敗（seal）
+✓ P9 R4-2 封存（神社周邊 生成器／gate／地面 shader／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SHRINE] 結果：0 項失敗
+✓ P9 R4-2 神社周邊 plan gate（參道淨空／接地／村側視線＋R2 社殿天窗／前庭留白／鎮守林連續／非均勻／R2 共存／注連繩貼幹／元素）
+[SHRINE] 結果：0 項失敗（negatives）
+✓ P9 R4-2 神社周邊永久反向 6 案（road／sight／void／uniform／float／rope 各自瞄準項 FAIL）
+[SHRINE] 結果：0 項失敗（scene）
+✓ P9 R4-2 神社周邊場景級驗證（掛載順序 ForestP9→BambooP9→HiedaGardenP9→ShrineGroveP9、射線接地、碰撞、參道＋前庭實走〔P11 R1：歩行面基準＋段差 ≤ 0.45〕）
+[SHRINE] 結果：0 項失敗（scene negatives）
+✓ P9 R4-2 神社周邊 場景級反向 3 案（P11 R1：參道の箱／斜坡の継ぎ目段差／未登記の台 → 實走 FAIL）
+[SCHOOL] 結果：0 項失敗（seal）
+✓ P9 R4-3 封存（寺子屋周邊 school_kit＋SchoolYardP9 生成器／gate／地面 shader／overlay／7 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SCHOOL] 結果：0 項失敗
+✓ P9 R4-3 寺子屋周邊 plan gate（接地／不穿建築／主入口淨空／正面視線／前庭留白≤8 %＋生活小物≤20／植被語彙無杉檜／元素齊備）
+[SCHOOL] 結果：0 項失敗（negatives）
+✓ P9 R4-3 寺子屋周邊永久反向 6 案（float／door／facade／conifer／clip／clutter 各自瞄準項 FAIL）
+[SCHOOL] 結果：0 項失敗（scene）
+✓ P9 R4-3 寺子屋周邊場景級驗證（掛載順序 …→ShrineGroveP9→SchoolYardP9、射線接地、碰撞 vs Hero 本體、入口／前庭／側院膠囊實走〔P11 R1：靜的障害＋NPC 動的規則〕）
+[SCHOOL] 結果：0 項失敗（scene negatives）
+✓ P9 R4-3 寺子屋周邊 場景級反向 4 案（P11 R1：靜的箱／NPC 待機点／巡回端／ルートに沿う巡回 → FAIL）
+[WATER] 結果：0 項失敗（seal）
+✓ P9 R4-4 封存（水車／龍神像周邊 waterside_kit＋WatersideP9 生成器／gate／overlay／3 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[WATER] 結果：0 項失敗
+✓ P9 R4-4 水車／龍神像周邊 plan gate（接地／不穿／動線淨空／Hero 淨空／視線／河岸植生／植被語彙／元素／注連繩 Ø≥0.30 貼幹／作業場原寸留白）
+[WATER] 結果：0 項失敗（negatives）
+✓ P9 R4-4 水車／龍神像周邊永久反向 8 案（float／road／hero／sight／uniform／conifer／rope／mill 各自瞄準項 FAIL）
+[WATER] 結果：0 項失敗（scene）
+✓ P9 R4-4 水車／龍神像周邊場景級驗證（掛載順序 …→SchoolYardP9→WatersideP9、射線接地、碰撞、參拜道＋水車入口實走）
+[TOWER] 結果：0 項失敗（seal）
+✓ P9 R4-5 封存（火見櫓周邊 tower_kit＋TowerYardP9 生成器／gate／overlay／3 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[TOWER] 結果：0 項失敗
+✓ P9 R4-5 火見櫓周邊 plan gate（接地／不穿／動線淨空／開闊＋塔頂視線／地塊／構圖／元素）
+[TOWER] 結果：0 項失敗（negatives）
+✓ P9 R4-5 火見櫓周邊永久反向 6 案（float／path／tree／parcel／clutter／hero 各自瞄準項 FAIL）
+[TOWER] 結果：0 項失敗（scene）
+✓ P9 R4-5 火見櫓周邊場景級驗證（掛載順序 …→WatersideP9→TowerYardP9、射線接地、碰撞、進出路＋巡回路＋置き場踏み跡實走）
+[SUZU] 結果：0 項失敗（seal）
+✓ P9 R4-6 封存（鈴奈庵周邊 suzu_kit＋SuzunaanP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[SUZU] 結果：0 項失敗
+✓ P9 R4-6 鈴奈庵周邊 plan gate（Hero 座標系／接地／不穿／動線淨空／門面視線／地塊・道路／構圖留白／元素）
+[SUZU] 結果：0 項失敗（negatives）
+✓ P9 R4-6 鈴奈庵周邊永久反向 6 案（float／path／facade／parcel／clutter／hero 各自瞄準項 FAIL）
+[SUZU] 結果：0 項失敗（scene）
+✓ P9 R4-6 鈴奈庵周邊場景級驗證（掛載順序 …→TowerYardP9→SuzunaanP9、射線接地、碰撞、入口軸＋庇下＋北・横丁踏み跡實走）
+[GEID] 結果：0 項失敗（seal）
+✓ P9 R4-7 封存（鯢吞亭周邊 geidon_kit＋GeidonteiP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[GEID] 結果：0 項失敗
+✓ P9 R4-7 鯢吞亭周邊 plan gate（Hero 座標系／接地／不穿／動線淨空／門面視線／地塊・道路／構圖留白／元素）
+[GEID] 結果：0 項失敗（negatives）
+✓ P9 R4-7 鯢吞亭周邊永久反向 6 案（float／path／facade／parcel／clutter／hero 各自瞄準項 FAIL）
+[GEID] 結果：0 項失敗（scene）
+✓ P9 R4-7 鯢吞亭周邊場景級驗證（掛載順序 …→SuzunaanP9→GeidonteiP9、射線接地、碰撞、入口軸＋庇下＋南の踏み跡實走）
+[KIRI] 結果：0 項失敗（seal）
+✓ P9 R4-8 封存（霧雨店周邊 kiri_kit＋KirisameP9 生成器／gate／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）
+[KIRI] 結果：0 項失敗
+✓ P9 R4-8 霧雨店周邊 plan gate（Hero 座標系／接地／不穿／動線淨空・搬運路／門面視線／地塊・道路／構圖〔大件靠牆・側院外側留白〕／元素）
+[KIRI] 結果：0 項失敗（negatives）
+✓ P9 R4-8 霧雨店周邊永久反向 6 案（float／path／facade／parcel／clutter／hero 各自瞄準項 FAIL）
+[KIRI] 結果：0 項失敗（scene）
+✓ P9 R4-8 霧雨店周邊場景級驗證（掛載順序 …→GeidonteiP9→KirisameP9、射線接地、碰撞、入口軸＋庇下＋北の踏み跡＋搬運路實走）
+[GC] 結果：0 項失敗（seal）
+✓ P9 R5 封存（Groundcover：Pilot r10f＋Macro Pilot m9＋全村 Macro 生成器／shader／overlay／35 張 ART_REVIEW 圖／證據 sha256＋掛載順序＋反向）
+[GC] 結果：0 項失敗
+✓ P9 R5 Groundcover plan gate 37 項（Pilot r10f digest／全村 r5 林緣・溪岸／Macro Pilot＋m9 digest／全村 Macro 禁區・尺度・語意・留白・農田交界・後院・路肩／可見最上面）
+[GC] 結果：0 項失敗（negatives）
+✓ P9 R5 Groundcover 永久反向 42 案（Pilot 14／全村 8／Macro 8／MV・Surface・m9 12 各自瞄準項 FAIL）
+[GC] 結果：0 項失敗（scene）
+✓ P9 R5 Groundcover 場景級驗證（掛載順序 …→KirisameP9→GroundcoverP9、地面 overlay・shader・MultiMesh 矩陣；需 rendering display）
+[MKT] 結果：0 項失敗（seal）
+✓ P10 R1 市集廣場封存（market_kit＋MarketP10 生成器／gate／Kit 網格／overlay／5 張 ART_REVIEW 圖／證據 sha256＋掛載＋反向）
+[MKT] 結果：0 項失敗
+✓ P10 R1 市集廣場 plan gate 9 項（Kit／接地／建物／路面／封存／互不重疊／歩く通り／構圖／NPC anchors）
+[MKT] 結果：0 項失敗（negatives）
+✓ P10 R1 市集廣場永久反向 8 案（各自瞄準項 FAIL）
+[MKT] 結果：0 項失敗（scene）
+✓ P10 R1 市集廣場場景級驗證（掛載・接地射線・LOD・碰撞・anchors・MultiMesh 0）
+[STR] 結果：0 項失敗
+✓ P10 R2 主街 Street Life plan gate 16 項（Kit／接地／建物／店先帯／封存／戸口／水際／互不重疊／通行〔主街中央 ≥ 4.5 m〕／構圖／巷口／市の入口〔主街 4 視點・口の前 3 視點〕／作業場／農田交界／暮らし／NPC anchors）
+[STR] 結果：0 項失敗（negatives）
+✓ P10 R2 主街 Street Life 永久反向 13 案（各自瞄準項 FAIL）
+[STR] 結果：0 項失敗（scene）
+✓ P10 R2 主街 Street Life 場景級驗證（掛載 MarketP10→StreetP10・MarketP10 封存雜湊・接地射線・LOD・碰撞・anchors・MultiMesh 0）
+[STR] 結果：0 項失敗（seal）
+✓ P10 R2 主街 r5 封存（ART_APPROVED 2026-10-07：street_kit＋StreetP10 生成器／gate／網格／overlay／ART_REVIEW 圖 4／證據 sha256＋掛載＋字の向き 0＋竄改反向；封存中 --build 拒否）
+[TXT] 結果：字の面を持つ surface 93、問題のある (surface, region) 0
+✓ 字の向き監査（street_kit／market_kit／mise_kit／寺子屋：幟・暖簾・提灯・看板の字の面が表裏とも鏡像・逆さま 0；例外は測定理由つき）
+[MW] 結果：0 項失敗（seal）
+✓ P10 R1b Market West r3 封存（ART_APPROVED：雜湊 124 檔＋依存〔P10 R1・P9 R5 限定解封〕＋掛載＋裁定 10 項・店の灯 18＋竄改反向 2）
+[MW] 結果：0 項失敗
+✓ P10 R1b Market West（裏通り）r3 営業中 plan gate 21 項（Kit／建物／地塊／接地／掛け物／路面・店先帯／封存／水際／互不重疊／歩く通り／戸口／到達／視線〔主の口→茶屋・路地 1→呉服〕／構圖／NPC anchors／床／市集の北西角の視野／店内〔店台・奥の棚・店の灯〕／営業中〔北 ≥ 4・南 ≥ 2、店先の連続 ≥ 0.6〕／主次〔focal 2–3〕／入口の誘い）
+[MW] 結果：0 項失敗（negatives）
+✓ P10 R1b Market West r3 永久反向 19 案（各自瞄準項 FAIL）
+[MW] 結果：0 項失敗（scene）
+✓ P10 R1b Market West r3 場景級驗證（掛載順・MarketP10 封存雜湊・接地射線・LOD・建物 Kit・床・掀げた暖簾と店の灯・碰撞・anchors・MultiMesh 0）
+[MDW] 結果：0 項失敗（seal）
+✓ P9 R5-3 封存（MeadowP9 立ち草：生成器／gate／shader〔wind 0.7〕／overlay／ART_REVIEW 圖・wind GIF／證據 sha256＋掛載順序＋反向）
+[MDW] 結果：0 項失敗（scene）
+✓ P9 R5-3 MeadowP9 場景級驗證（掛載順序 …→GroundcoverP9→MeadowP9、近中級・shader・碰撞 0・MultiMesh 矩陣；需 rendering display）
+[ENV] 結果：0 項失敗
+✓ P9 R5-4 EnvironmentP9 全村 plan gate 13 項（既存資產のみ／分工語彙／MeadowP9 株位〔同 seed〕／接地／禁區〔P10 +1.5 m・anchors +1.2 m〕／戸口／階層／非展示／間隔／邊界邏輯／大留白／P10 優先／村邊／中尺度／R5 Macro Ground）
+[ENV] 結果：0 項失敗（scene）
+✓ P9 R5-4 EnvironmentP9 場景級驗證（Props 掛載 MarketP10→StreetP10→MarketWestP10→EnvironmentP9・個別ノード・MultiMesh 0）
+[ENV] 結果：0 項失敗（seal）
+✓ P9 R5-4 封存（EnvironmentP9 生成器／gate／機位／overlay／audit／ART_REVIEW 圖／證據 sha256＋Props 掛載順＋反向；封存中 --build 拒否）
+[P9F] 結果：0 項失敗
+✓ P9 FINAL SEAL（P9_CLOSED：R1–R5 子封存檔 14 件の sha256＋Vegetation／Props 掛載順＋R5 final 狀態＋反向）
+[MMBAKE] 結果：0 項失敗
+✓ 永久 build rule：全場景 MultiMesh instance transform 非零（各 overlay 分組＋零矩陣反向＋非空；需 rendering display）
+[NPC] 結果：0 項失敗
+✓ P10 R3a NPC Prototype（普通町人・男 chonin_m01、使用者 Tripo）技術 gate：部位 5・humanoid 骨格・共通 idle／walk ループ・三角・外部材質 3・身長 1.65–1.70・全フレーム接地・首胴不伸＋wrapper（美術判定ではない）
+[NPC] 結果：0 項失敗（negatives）
+✓ P10 R3a NPC Prototype 反向 4 案（部位欠落・1.1 倍・首伸び・10 cm 浮き）
+[NPCLIB] 結果：0 項失敗（9 NPC）
+✓ P10 NPC Asset Library（9 体・npc_roster.json）技術 gate 11 項/体：部位 skin・skeleton mapping〔family BoneMap 全割当・profile 親子〕・選定 clip（idle／walk ループ）・三角・外部材質・指定身長 ±5 mm・全フレーム接地・首胴不伸・root motion なし・wrapper（美術判定ではない）
+[NPCLIB] 結果：0 項失敗（negatives）
+✓ P10 NPC Asset Library 反向 7 案（部位欠落・1.05 倍・首伸び・10 cm 浮き・root drift・別 clip・骨の割当外れ）
+[NPCLIB] 結果：0 項失敗（seal）
+✓ P10 NPC Asset Library 封存（ART_APPROVED 2026-10-06）：凍結 410・原素材 24・ART_REVIEW 35・證據 77 の雜湊＋封存外ファイルなし＋正式パラメータ（arm-space・布料老闆娘 UV 復元／2048・主婦 apron +4.0 cm）＋竄改反向
+[POP] 結果：0 項失敗（seal）
+✓ P10 R3b ART_APPROVED baseline seal（來源／snapshot／原圖／證據／子封存雜湊＋mount scope＋永久竄改反向）
+[POP] 結果：0 項失敗（plan、1327 ms）
+✓ P10 R3b Population Pilot plan（16 人、三區、職業／重複／婆婆／小群／接地／render geometry／patrol／步速／sealed overlays）
+[POP] 結果：0 項失敗（negatives 9 案）
+✓ P10 R3b Population Pilot 永久反向 9 案（各自瞄準項 FAIL）
+[POP] 結果：0 項失敗（scene）
+✓ P10 R3b Population Pilot scene（掛載／NPC instance／TPS 同模型 ≤ 2／runtime／SpringArm）
+[ACT] 結果：0 項失敗（seal）
+✓ P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍結・證據・審圖圖・子封存（R3b／NPCLIB）雜湊＋8 指派／道具參數＝overlay＋掛載 1 つ＋永久竄改反向
+[CORE] 結果：0 項失敗（seal）
+✓ P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五區・R3b 不變・新增 23 の位置／朝向／activity／patrol・南側入口 3 人・EntranceCueP10 小幟 2・證據・審圖・子封存 R3b／R3c／NPCLIB の雜湊＋掛載順＋場景＝snapshot＋竄改反向；封存中 --build／--attach 拒否）
+[CORE] 結果：0 項失敗
+✓ P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）
+[CORE] 結果：0 項失敗（negatives）
+✓ P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）
+[CORE] 結果：0 項失敗（scene）
+✓ P10 R3d 核心區人口 scene（人數＝scope 別の身元 39〔R3b＋R3d〕・多一人／少一人／重複の反向・R3d 単獨〔R3e を外す〕でも 39；掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）
+[OUTER] 結果：0 項失敗（seal）
+✓ P10 R3e 外圍人口 封存（ART_APPROVED 2026-10-07：外圍 12 人＝最終基準・各區・位置／朝向・activity・patrol 端點・密度環単調下降・森林／山腳 0 人・依存 R3d／R3c／R3b／NPCLIB 雜湊＋掛載順＋場景＝snapshot＋竄改反向 3；封存中 --build／--attach 拒否）
+[OUTER] 結果：0 項失敗
+✓ P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）
+[OUTER] 結果：0 項失敗（negatives）
+✓ P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）
+[OUTER] 結果：0 項失敗（scene）
+✓ P10 R3e 外圍人口 scene（人數＝外圍の身元 12＋村人口 51〔scope 外・重複なし〕・反向；掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）
+✓ P10 R3c Activity plan（16 人・8 指派・5 類）
+✓ P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）
+[HUSE] 結果：0 項失敗
+✓ P10 R4 Human-Use Pilot plan gate（3 Pilot・既存資產優先＋缺件 6・中型の輪郭・who/why/anchor・依附・禁區〔P8・水・NPC・Env +1.6・MeadowP9 株 0〕・接地・成組・非均一）＋反向 16
+[HUSE] 結果：0 項失敗（scene）
+✓ P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUSE] 結果：0 項失敗（seal）
+✓ P10 R4 Human-Use Pilot 封存（ART_APPROVED 2026-10-08：A／B／C・10 cluster 50 件 snapshot＝場景〔位置・朝向・who／why／anchor〕・root 掛載 Props の次・Props の子は封存どおり・凍結／證據／審圖／子封存 R3d・R3e・P9F 等の雜湊＋竄改反向 3；封存中 --build／--attach 拒否）
+[HUX] 結果：0 項失敗
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL plan gate（正式 10 群＝A 農田 5・B 住宅 5・C 水岸擴張 0〔ART_REJECTED〕・計画＝封存 snapshot・重用＋缺件・中型の輪郭・who/why/anchor・依附・禁區〔R4 全禁區＋核心商業區＋R4 の 50 件／Pilot 区〕・見えている最上面に接地・成組・非均一・自然の岸）＋反向 19〔rejected_c() を戻す・hx_doroage を置く を含む〕
+[HUX] 結果：0 項失敗（scene）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下 HumanUseP10 の次に HumanUseExpansionP10・Props の子は封存どおり・正式 10 群／C 0／ZoneC なし・個別ノード・MultiMesh／Marker3D 0・R4 の 50 件 snapshot 不変・Population 51 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUX] 結果：0 項失敗（seal）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 封存（使用者 2026-10-08：A・B ART_APPROVED／C 水岸 ART_REJECTED＝除去・理由を記録・40 件 snapshot＝場景＝承認時 r3 の A/B・C 群／hx_doroage なし・R4 の 50 件不変・NPC 51・凍結／證據／審圖／rejected candidates／子封存雜湊＋竄改・移動・who・C 戻し反向；封存中 --build／--attach 拒否）
+[EDGE] 結果：0 項失敗
+✓ P10 R5c World Edge Closure plan gate＋反向 4（frame 外 Vista：P1 邊緣頂點接縫 ≤ 0.01 m・vista 頂點全在 frame 外・TPS 視點 294／射線 25852 看見世界盡頭 0・水系延續〔水位單調・接口＝P2・匯入／會合〕・樹〔水中／陡坡／frame 內 0〕・地形 ≤ 140k 三角；反向 rim／seam／tree／water）
+✓ P10 R5c World Edge Closure 場景級（root 直下 HumanUseExpansionP10 の次に EdgeClosureP10 1 個・CollisionObject3D 0・Collision/Boundary 4 牆不變・VistaTerrain frame 內頂點 0・MultiMesh 零矩陣 0；非 headless）
+[EDGE] 結果：0 項失敗（seal）
+✓ P10 R5c World Edge Closure 封存（使用者 2026-10-09 ART_APPROVED：雜湊・掛載・林帯／遠景の描画・竄改反向；封存中 --build 拒否）
+[ALB] 結果：0 項失敗
+✓ P10 R6a 材質亮度基準＋街區調色盤 Pilot plan gate＋反向 9（來源材質＝0.42 灰／校正只改 albedo（Kit atlas＝等價 shader：木 0.75／屋根灰 0.42 不變／漆喰 0.70）／色卡 luma 在目標帶／Pilot 24 棟兩區・≤ 25 %／調色盤飽和 ≤ 0.22・鄰棟不同組；反向：帶色・等幅提亮・區外・全村・改粗糙度・Hero・Kit 屋根提亮・過飽和・全同組）
+[ALB] 結果：0 項失敗
+✓ P10 R6a 材質亮度基準 Pilot 場景級（root EdgeClosureP10 の次に AlbedoPilotP10・Pilot 建物の來源材質表面全覆寫・Pilot 外 0・enabled 開關還原・_matlib／kit 來源雜湊＝build 時；非 headless）
+[KITM] 結果：0 項失敗
+✓ P10 R6a ROUND 3 Kit 專用校正材質 合法変体 gate＋反向 6（登記表 18 変体 ↔ 檔案 sha256・基底との差＝albedo_color／Kit atlas＝k だけ・飽和 ≤ 0.22・明度帯・承認済み 24 棟と同値・場景の Kit override＝登記変体だけ／Pilot 24 棟だけ／他 163 棟 0・_matlib／P6 Kit 原檔 git 未変更；Kit Gate は不変）
+[ALB] 結果：0 項失敗（seal）
+✓ P10 R6a Kit Material 24 Buildings Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔登記表・変体 18・shader・overlay〕・掛載・材質＝登記変体だけ・Pilot 24 棟・竄改反向）
+[GRD] 結果：0 項失敗
+✓ P10 R5a Ground Pilot plan gate＋反向 7（封存 ground.gdshader 雜湊＝matlib.json・補丁 7 段逐字（ROUND 2：再生道 UV2.y の区間別の使われ方）・pilot shader 可重現・田格移除・discard 只在外緣侵蝕／參道挖洞・新參數預設＝舊行為・道路參數在核准範圍・外緣實測 sd 0.08–0.45 m）
+[GRD] 結果：0 項失敗
+✓ P10 R5a Ground Pilot 場景級（AlbedoPilotP10 の次に GroundPilotP10・地形 4＋道路 4 換 pilot shader・原參數逐一保留・非 Pilot 道路不變・enabled 開關・雜湊；非 headless）
+[WLF] 結果：0 項失敗
+✓ P10 R5b Water Pilot plan gate＋反向 9（ROUND 3 純動力水車：揚水部材 0・下端の動き·水渠下流 ≥ 0.9・葉板浸水 0.15–0.80・主泡は出水側・P8 取水に触れない〔R5b.1：高架落とし樋は P8 で撤去・竜骨車へ置換、overlay が隠す／止める P8 ノード 0、P8 高架部材は竜骨車だけ〕・表裏・小舟・繫船杭・荷）
+[WLF] 結果：0 項失敗
+✓ P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・ROUND 3：揚水部材 0・輪が回り下端は下流へ・水車 1／3 不動・P8 取水構件は overlay の有無で不変〔全部表示・碰撞有効〕・碰撞 2；非 headless）
+[SAN] 結果：0 項失敗
+✓ P10 R6b Shrine Approach plan gate＋反向 8（ROUND 2：石段 ≥ 80・蹴上 0.12–0.20・踏面 0.25–0.45／長い段 0.45–1.2／踊り場 1.2–2.0・地形不蓋踏面・斜坡碰撞與踏面差 ≤ 半蹴上＋0.03・≤ 38°・寬度／二の鳥居淨空・一の鳥居・燈籠・NPC 不在石段・リズム〔踊り場 3・盛土 ≤ 1.2 m・休みなし ≤ 60 段・丘の肩の長い段 ≥ 3〕）
+[SAN] 結果：0 項失敗
+✓ P10 R6b Shrine Approach 場景級（WaterLifeP10 の次に ShrineApproachP10・參道 ribbon 挖洞・中心線射線＝斜坡碰撞／地形・enabled 開關；非 headless）
+[SWALK] 結果：0 項失敗
+✓ P10 R6b ROUND 3 參道 walkable-surface gate＋反向 5（足場＝最上面の歩ける面〔P1 地形／斜坡碰撞〕：斜坡と見える踏面 ≤ 半蹴上＋0.03・玩家膠囊淨空〔中心＋左右〕・0.25 m ごとの高さ連続 ≤ tan(floor_max_angle)・踊り場の縁／両脇・NPC 巡回不横切り・正式 TPS 相機が石／地形に入らない〔腕の縮み回数は INFO〕・P9 R4-2 同經路を最上面基準で被擋 0；P9 R4-2 封存 gate は不変）
+[R4C] 結果：0 項失敗
+✓ P10 R4c Prop Fix plan gate＋反向 5（st_hasa_v2 規格：竿×半束 ≥ 0.010・束頭坐竿上・束×束 ≥ 0.005・脚×束 ≥ 0.010・網格＝manifest・與 st_hasa 同尺度；A2 籠 移位後も接地〔地面＝TerrainCollision〕・視線・碰撞；N4 籠不動・N5 籠沈む）
+[R4C] 結果：0 項失敗
+✓ P10 R4c Prop Fix 場景級（ShrineApproachP10 の次に PropFixP10・st_hasa 全換 v2・enabled 還原；非 headless）
+[R4C] 結果：0 項失敗（seal）
+✓ P10 R4c Straw Geometry Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊・掛載・st_hasa_v2 差し替え 18・A2 移位 1 件＝R4 snapshot・竄改反向）
+[RDB] 結果：0 項失敗
+✓ P10 R5a ROUND 3 Road Base Pilot plan gate＋反向 7（ROUND 3：P7 地形 FarmlandTerrain の踩み固め重みを再生道に合わせて局部修正〔COLOR.r だけ・対象 3 本の旧い帯が支配する頂点だけ・旧い帯 ≤ 0.6 倍〕；小範囲 3 本 ≤ 450 m・元の路幅の中・地形なり〔芯＋0.02–0.07／縁 −0.03–0〕・定規の直線でない・水の上の切れ目を保つ・南橫街の町の区間は元の三角形・交差点の上下 ≥ 0.012・NPC 地形の上）
+[RDB] 結果：0 項失敗
+✓ P10 R5a ROUND 3 Road Base Pilot 場景級（PropFixP10 の次に RoadBaseP10・3 本の mesh＋FarmlandTerrain 差し替え・材質＝pilot shader のまま・道に碰撞なし・P9 地被／立ち草の浮き 0・enabled 開關で元の mesh；非 headless）
+[RDB] 結果：0 項失敗（seal）
+✓ P10 R5a Road Base 416 m Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔元の road_*.res／terrain_farmlandterrain.res 含む〕・掛載・再現性＝生成器で記憶體内再生成→封存 overlay と配列一致・地形 COLOR.r 577 頂点・竄改反向）
+回歸失敗項目：3
+exit=3

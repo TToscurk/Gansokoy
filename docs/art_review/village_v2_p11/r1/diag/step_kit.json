@@ -1,0 +1,143 @@
+{
+	"default_step_height": 0.6,
+	"runs": [
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				247.55,
+				35.37
+			],
+			"end_dist": 5.31,
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"046_sk_bench_c"
+			],
+			"max_above_terrain": 0.51,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.6,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				258.98,
+				1.07
+			],
+			"end_dist": 5.76,
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"058_kr_zaimoku_c"
+			],
+			"max_above_terrain": 0.27,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.6,
+			"under_at_max": "Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				246.49,
+				35.01
+			],
+			"end_dist": 6.43,
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.3,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				258.98,
+				1.07
+			],
+			"end_dist": 5.76,
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"058_kr_zaimoku_c"
+			],
+			"max_above_terrain": 0.27,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.3,
+			"under_at_max": "Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				246.49,
+				35.01
+			],
+			"end_dist": 6.43,
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.0,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				257.81,
+				0.68
+			],
+			"end_dist": 6.99,
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.0,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.90"
+		}
+	]
+}

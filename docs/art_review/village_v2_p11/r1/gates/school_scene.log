@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[SCHOOL] PASS 場景已掛 Vegetation/SchoolYardP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9：["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9", "TowerYardP9", "SuzunaanP9", "GeidonteiP9", "KirisameP9", "GroundcoverP9", "MeadowP9"]
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SCHOOL] PASS 場景接地（79／79 件 origin 向下射線只認地形；踏石上草履認踏石）：浮 > 0.06 m 0（最大 0.010）
+[SCHOOL] PASS 碰撞：構件箱／樹幹 vs 寺子屋本體・Hero 小物／鄰棟／其他植被 接觸 0
+[SCHOOL] INFO NPC 横切り C20_kozo_m01 (204.8,23.7)：静的通行幅 6.70 m（≥ 1.34）
+[SCHOOL] PASS 實走：入口＋前庭＋南側院＋北側通路 膠囊 145 點被擋 0 （靜的障害；NPC は下の動的規則）
+[SCHOOL] PASS 實走（NPC 動的規則）：NPC 51 体の待機点（idle 位置・巡回の両端）がルートから < 0.82 m 0 ；巡回がルートに沿って歩く区間 > 1.5 m 0 ；横切り 1 箇所の静的通行幅 < 1.34 m 0 
+[SCHOOL] INFO SchoolYardP9：79 件、MeshInstance 191、構件碰撞 11
+[SCHOOL] 結果：0 項失敗（scene）

@@ -1,0 +1,68 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[STEP] 乗り上がり帯（上面−地形 0.25–0.60 m）の構件碰撞：187 件；overlay 別 { "Vegetation/ForestP9": 3, "Vegetation/HiedaGardenP9": 34, "Vegetation/SchoolYardP9": 4, "Vegetation/WatersideP9": 5, "Vegetation/TowerYardP9": 2, "Vegetation/SuzunaanP9": 3, "Vegetation/GeidonteiP9": 3, "Vegetation/KirisameP9": 7, "Props/MarketP10": 10, "Props/StreetP10": 14, "Props/MarketWestP10": 9, "Props/EnvironmentP9": 77, "HumanUseP10/Collision": 10, "HumanUseExpansionP10/Collision": 6 }
+[STEP]   そのうち建物の碰撞から 1.2 m 以内（店先・戸口前）：25 件
+[STEP]   Props/MarketP10/Collision 007_sk_bench_c 上面 0.46 下面 0.04 平面 [0.98, 1.86] → B_P_MKT_024 0.00 m
+[STEP]   Props/StreetP10/Collision 011_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.46, 0.61] → B_P_MKT_019 0.00 m
+[STEP]   HumanUseP10/Collision 034_sk_bench_c 上面 0.47 下面 0.05 平面 [1.86, 0.91] → B_P_RSW_072 0.00 m
+[STEP]   Props/StreetP10/Collision 026_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.44, 0.6] → B_P_MKT_026 0.00 m
+[STEP]   Props/StreetP10/Collision 041_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.48, 0.61] → B_P_MXC_008 0.00 m
+[STEP]   Props/StreetP10/Collision 046_sk_bench_c 上面 0.51 下面 0.09 平面 [1.03, 1.86] → B_P_MKT_003 0.00 m
+[STEP]   Props/StreetP10/Collision 055_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.46, 0.61] → B_P_MKT_006 0.00 m
+[STEP]   Props/StreetP10/Collision 058_kr_zaimoku_c 上面 0.27 下面 0.09 平面 [1.28, 2.21] → B_P_MKT_008 0.00 m
+[STEP]   Props/StreetP10/Collision 080_sz_stool_c 上面 0.50 下面 0.10 平面 [0.4, 0.49] → B_P_MXC_002 0.00 m
+[STEP]   Props/StreetP10/Collision 101_st_okeya_c 上面 0.60 下面 -0.02 平面 [2.09, 2.54] → B_P_MKT_003 0.00 m
+[STEP]   Props/StreetP10/Collision 094_sk_teoke_c 上面 0.46 下面 0.00 平面 [0.4, 0.59] → B_P_MKT_031 0.00 m
+[STEP]   Props/StreetP10/Collision 083_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.48, 0.61] → B_P_MXC_003 0.00 m
+[STEP]   Props/StreetP10/Collision 016_gd_shogi_c 上面 0.52 下面 0.10 平面 [1.05, 1.7] → B_P_MKT_022 0.07 m
+[STEP]   Props/StreetP10/Collision 061_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.44, 0.6] → B_P_MKT_011 0.10 m
+[STEP]   Props/StreetP10/Collision 045_sk_teoke_c 上面 0.56 下面 0.10 平面 [0.38, 0.58] → B_P_MKT_002 0.37 m
+[STEP]   Props/StreetP10/Collision 087_sk_teoke_c 上面 0.46 下面 0.00 平面 [0.44, 0.6] → B_P_MKT_010 0.39 m
+[STEP]   Props/MarketWestP10/Collision 086_kr_kago_c51 上面 0.47 下面 0.00 平面 [0.42, 0.42] → B_P_RSW_003 0.39 m
+[STEP]   HumanUseP10/Collision 026_sz_stool_c 上面 0.45 下面 0.05 平面 [0.48, 0.48] → B_P_MKT_028 0.57 m
+[STEP]   Props/MarketP10/Collision 025_mk_mushiro_yasai_c 上面 0.54 下面 -0.01 平面 [1.9, 2.04] → B_P_MKT_039 0.57 m
+[STEP]   HumanUseP10/Collision 033_sk_teoke_c 上面 0.51 下面 0.05 平面 [0.6, 0.42] → B_P_RSW_072 0.58 m
+[STEP]   Props/EnvironmentP9/Collision 416_rb_bld_d_c 上面 0.39 下面 -0.10 平面 [1.12, 1.17] → B_P_RSW_059 0.60 m
+[STEP]   Props/MarketWestP10/Collision 125_ms_endai_mousen_c63 上面 0.48 下面 0.03 平面 [0.56, 1.8] → B_P_MKT_039 0.63 m
+[STEP]   HumanUseP10/Collision 028_sk_hoop_c 上面 0.59 下面 0.00 平面 [0.41, 0.68] → B_P_MKT_027 0.92 m
+[STEP]   HumanUseExpansionP10/Collision 025_sz_stool_c 上面 0.46 下面 0.06 平面 [0.49, 0.45] → B_P_RSW_048 1.12 m
+[STEP]   Props/EnvironmentP9/Collision 417_rb_bld_e_c 上面 0.35 下面 -0.15 平面 [1.29, 1.21] → B_P_RSW_059 1.20 m
+[STEP]   Props/MarketP10/Collision 014_gd_shogi_c 上面 0.42 下面 0.00 平面 [1.7, 1.02] → B_P_MKT_026 1.39 m
+[STEP]   Props/EnvironmentP9/Collision 549_gk_kei_mid_c 上面 0.42 下面 -0.15 平面 [0.67, 0.68] → B_P_MKT_055 1.49 m
+[STEP]   HumanUseP10/Collision 021_sz_stool_c 上面 0.45 下面 0.05 平面 [0.37, 0.48] → B_P_MKT_029 1.61 m
+[STEP]   HumanUseExpansionP10/Collision 039_sz_stool_c 上面 0.46 下面 0.06 平面 [0.49, 0.46] → B_P_RSW_033 1.62 m
+[STEP]   Props/EnvironmentP9/Collision 547_rb_bld_a_c 上面 0.44 下面 -0.11 平面 [1.57, 1.51] → B_P_MKT_055 1.94 m
+[STEP]   Vegetation/KirisameP9/Collision 012_kr_fukuro_c 上面 0.58 下面 0.00 平面 [0.77, 1.68] → B_P_MKT_045 1.95 m
+[STEP]   Vegetation/GeidonteiP9/Collision 015_sz_stool_c 上面 0.40 下面 0.00 平面 [0.47, 0.49] → B_P_MKT_013 2.06 m
+[STEP]   Props/EnvironmentP9/Collision 357_rb_bld_d_c 上面 0.32 下面 -0.17 平面 [1.34, 1.31] → B_P_RSW_045 2.21 m
+[STEP]   Props/MarketP10/Collision 013_gd_shogi_c 上面 0.46 下面 0.04 平面 [1.02, 1.7] → B_P_MKT_026 2.22 m
+[STEP]   Props/EnvironmentP9/Collision 132_rb_bld_e_c 上面 0.35 下面 -0.15 平面 [1.35, 1.32] → B_P_MKT_056 2.56 m
+[STEP]   Props/EnvironmentP9/Collision 552_gk_kei_low_c 上面 0.25 下面 -0.16 平面 [0.95, 1.15] → B_P_MKT_055 2.64 m
+[STEP]   Props/MarketP10/Collision 029_sz_stool_c 上面 0.40 下面 0.00 平面 [0.26, 0.42] → B_P_MKT_039 2.67 m
+[STEP]   Vegetation/KirisameP9/Collision 011_kr_akibin_c 上面 0.32 下面 0.00 平面 [0.68, 1.32] → B_P_MKT_045 2.79 m
+[STEP]   Props/EnvironmentP9/Collision 356_gk_kei_mid_c 上面 0.54 下面 -0.29 平面 [1.01, 1.0] → B_P_RSW_045 2.92 m
+[STEP]   Vegetation/KirisameP9/Collision 018_kr_akibin_c 上面 0.32 下面 0.00 平面 [1.37, 0.85] → B_P_MKT_045 3.04 m
+[STEP]   HumanUseExpansionP10/Collision 029_sk_box_c 上面 0.44 下面 0.06 平面 [0.54, 0.69] → B_P_RSW_051 3.05 m
+[STEP]   Props/MarketP10/Collision 027_mk_mushiro_kago_c 上面 0.49 下面 -0.01 平面 [1.32, 1.84] → B_P_MKT_023 3.57 m
+[STEP]   Props/EnvironmentP9/Collision 483_gk_kei_low_c 上面 0.37 下面 -0.05 平面 [1.09, 0.86] → B_P_RNE_019 3.62 m
+[STEP]   Props/EnvironmentP9/Collision 168_rb_bld_d_c 上面 0.31 下面 -0.18 平面 [1.06, 1.0] → B_P_RSW_034 3.70 m
+[STEP]   Vegetation/GeidonteiP9/Collision 011_gd_shogi_c 上面 0.42 下面 0.00 平面 [1.7, 1.02] → B_P_MKT_013 3.73 m
+[STEP]   Props/EnvironmentP9/Collision 535_rb_bld_d_c 上面 0.30 下面 -0.19 平面 [1.42, 1.41] → B_P_MXC_023 3.82 m
+[STEP]   Vegetation/SchoolYardP9/Collision 032_sk_box_c 上面 0.38 下面 0.00 平面 [0.73, 0.63] → B_P_MKT_058 3.91 m
+[STEP]   Props/EnvironmentP9/Collision 286_rb_bld_d_c 上面 0.38 下面 -0.11 平面 [1.07, 1.01] → B_P_MKT_018 4.36 m
+[STEP]   Props/MarketP10/Collision 030_sz_stool_c 上面 0.40 下面 0.00 平面 [0.26, 0.42] → B_P_MKT_039 4.39 m
+[STEP]   Props/EnvironmentP9/Collision 481_gk_kei_low_c 上面 0.37 下面 -0.04 平面 [0.82, 1.06] → B_P_RNE_017 4.55 m
+[STEP]   Props/EnvironmentP9/Collision 554_rb_bld_e_c 上面 0.39 下面 -0.11 平面 [1.28, 1.2] → B_P_MKT_053 4.96 m
+[STEP]   Vegetation/SchoolYardP9/Collision 031_sk_bench_c 上面 0.42 下面 0.00 平面 [1.87, 0.93] → B_P_MKT_058 5.04 m
+[STEP]   Props/EnvironmentP9/Collision 534_rb_bld_e_c 上面 0.33 下面 -0.17 平面 [1.08, 0.95] → B_P_MXC_023 5.14 m
+[STEP]   Props/EnvironmentP9/Collision 551_gk_kei_low_c 上面 0.35 下面 -0.07 平面 [1.24, 1.1] → B_P_MKT_053 5.16 m
+[STEP]   Vegetation/KirisameP9/Collision 002_kr_hako_ishi_c 上面 0.54 下面 0.00 平面 [0.58, 0.67] → B_P_MKT_017 5.17 m
+[STEP]   Vegetation/KirisameP9/Collision 007_sz_stool_c 上面 0.40 下面 0.00 平面 [0.49, 0.41] → B_P_MKT_017 5.32 m
+[STEP]   Props/EnvironmentP9/Collision 406_rb_bld_e_c 上面 0.35 下面 -0.14 平面 [1.07, 1.18] → B_P_RSW_070 5.59 m
+[STEP]   Props/MarketWestP10/Collision 052_kr_kago_c35 上面 0.57 下面 0.10 平面 [0.42, 0.42] → B_P_RSW_026 5.97 m
+[STEP]   Props/EnvironmentP9/Collision 343_rb_bld_e_c 上面 0.33 下面 -0.17 平面 [1.31, 1.35] → B_P_MKT_057 6.12 m
+[STEP]   Props/EnvironmentP9/Collision 533_gk_kei_mid_c 上面 0.51 下面 -0.43 平面 [1.12, 1.11] → B_P_MXC_023 6.12 m

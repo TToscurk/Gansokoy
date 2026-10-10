@@ -1,0 +1,1248 @@
+{
+	"mkt003": {
+		"depth_width_meta": [
+			10.01,
+			7.9
+		],
+		"walk_line": [
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 8.0,
+				"terrain": 0.695,
+				"world": [
+					244.99,
+					34.52
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.9,
+				"terrain": 0.695,
+				"world": [
+					245.08,
+					34.55
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.8,
+				"terrain": 0.695,
+				"world": [
+					245.18,
+					34.58
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.7,
+				"terrain": 0.695,
+				"world": [
+					245.27,
+					34.61
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.6,
+				"terrain": 0.695,
+				"world": [
+					245.37,
+					34.64
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.5,
+				"terrain": 0.695,
+				"world": [
+					245.46,
+					34.67
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.4,
+				"terrain": 0.695,
+				"world": [
+					245.56,
+					34.7
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.3,
+				"terrain": 0.695,
+				"world": [
+					245.65,
+					34.74
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.2,
+				"terrain": 0.695,
+				"world": [
+					245.75,
+					34.77
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.1,
+				"terrain": 0.695,
+				"world": [
+					245.84,
+					34.8
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 7.0,
+				"terrain": 0.695,
+				"world": [
+					245.94,
+					34.83
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.9,
+				"terrain": 0.695,
+				"world": [
+					246.03,
+					34.86
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.8,
+				"terrain": 0.695,
+				"world": [
+					246.13,
+					34.89
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.7,
+				"terrain": 0.695,
+				"world": [
+					246.22,
+					34.93
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.6,
+				"terrain": 0.695,
+				"world": [
+					246.32,
+					34.96
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.5,
+				"terrain": 0.695,
+				"world": [
+					246.41,
+					34.99
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.4,
+				"terrain": 0.695,
+				"world": [
+					246.51,
+					35.02
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.3,
+				"terrain": 0.695,
+				"world": [
+					246.6,
+					35.05
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.2,
+				"terrain": 0.695,
+				"world": [
+					246.7,
+					35.08
+				]
+			},
+			{
+				"hits": [
+					[
+						1.207,
+						"Props/StreetP10/Collision"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.1,
+				"terrain": 0.695,
+				"world": [
+					246.79,
+					35.12
+				]
+			},
+			{
+				"hits": [
+					[
+						1.207,
+						"Props/StreetP10/Collision"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 6.0,
+				"terrain": 0.695,
+				"world": [
+					246.89,
+					35.15
+				]
+			},
+			{
+				"hits": [
+					[
+						1.207,
+						"Props/StreetP10/Collision"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.9,
+				"terrain": 0.695,
+				"world": [
+					246.98,
+					35.18
+				]
+			},
+			{
+				"hits": [
+					[
+						1.207,
+						"Props/StreetP10/Collision"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.8,
+				"terrain": 0.695,
+				"world": [
+					247.08,
+					35.21
+				]
+			},
+			{
+				"hits": [
+					[
+						1.207,
+						"Props/StreetP10/Collision"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.7,
+				"terrain": 0.695,
+				"world": [
+					247.17,
+					35.24
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.6,
+				"terrain": 0.695,
+				"world": [
+					247.27,
+					35.27
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.5,
+				"terrain": 0.695,
+				"world": [
+					247.36,
+					35.31
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.4,
+				"terrain": 0.695,
+				"world": [
+					247.46,
+					35.34
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.3,
+				"terrain": 0.695,
+				"world": [
+					247.55,
+					35.37
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.2,
+				"terrain": 0.695,
+				"world": [
+					247.65,
+					35.4
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.1,
+				"terrain": 0.695,
+				"world": [
+					247.74,
+					35.43
+				]
+			},
+			{
+				"hits": [
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 5.0,
+				"terrain": 0.695,
+				"world": [
+					247.84,
+					35.46
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.9,
+				"terrain": 0.695,
+				"world": [
+					247.93,
+					35.5
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.8,
+				"terrain": 0.695,
+				"world": [
+					248.03,
+					35.53
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.7,
+				"terrain": 0.695,
+				"world": [
+					248.12,
+					35.56
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.6,
+				"terrain": 0.695,
+				"world": [
+					248.21,
+					35.59
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.5,
+				"terrain": 0.695,
+				"world": [
+					248.31,
+					35.62
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.4,
+				"terrain": 0.695,
+				"world": [
+					248.4,
+					35.65
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.3,
+				"terrain": 0.695,
+				"world": [
+					248.5,
+					35.69
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.2,
+				"terrain": 0.695,
+				"world": [
+					248.59,
+					35.72
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.695,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.1,
+				"terrain": 0.695,
+				"world": [
+					248.69,
+					35.75
+				]
+			},
+			{
+				"hits": [
+					[
+						4.623,
+						"Districts/Market/Buildings/B_P_MKT_003"
+					],
+					[
+						0.694,
+						"Collision/TerrainCollision"
+					]
+				],
+				"local_z": 4.0,
+				"terrain": 0.694,
+				"world": [
+					248.78,
+					35.78
+				]
+			}
+		],
+		"xf_origin": [
+			252.87,
+			0.72,
+			36.19
+		]
+	},
+	"school": {
+		"blocked_all": [
+			"(205.4,24.2) Population/CoreP10/Terakoya/C20_kozo_m01",
+			"(204.9,24.2) Population/CoreP10/Terakoya/C20_kozo_m01"
+		],
+		"blocked_excluding_npc": [],
+		"c20": {
+			"activity": {
+				"clip": "light_walk_s100_a030",
+				"options": {},
+				"slot": "walk",
+				"type": "YouthShortStep"
+			},
+			"anchor": "",
+			"group": "g_terakoya",
+			"id": "C20",
+			"idle_t": 2.77,
+			"mode": "patrol",
+			"model": "kozo_m01",
+			"patrol": {
+				"endpoints": [
+					[
+						202.0,
+						20.3999996185303
+					],
+					[
+						206.399993896484,
+						25.6000003814697
+					]
+				],
+				"length_m": 6.81,
+				"path": [
+					[
+						202.0,
+						20.3999996185303
+					],
+					[
+						205.0,
+						24.0
+					],
+					[
+						206.399993896484,
+						25.6000003814697
+					]
+				],
+				"start_u": 0.69,
+				"wait": [
+					1.5,
+					3.5
+				],
+				"walk_speed": 1.197
+			},
+			"position": [
+				202.0,
+				0.764,
+				20.4
+			],
+			"seed": 2618225.0,
+			"speed_scale": 1.0,
+			"trade": "pupil",
+			"yaw_deg": 39.81,
+			"zone": "terakoya"
+		},
+		"c20_crossings": [
+			[
+				205.19,
+				24.22
+			]
+		],
+		"c20_endpoint_min_dist_to_route_m": 1.35
+	},
+	"shrine": {
+		"blocked_surface_based": 0,
+		"blocked_terrain_based": 40,
+		"max_surface_rise_m": 0.937,
+		"points": [
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					287.17,
+					-172.07
+				],
+				"rise": 0.529,
+				"surface": 5.426,
+				"surface_by": "RampCollision",
+				"terrain": 4.897
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.99,
+					-172.53
+				],
+				"rise": 0.552,
+				"surface": 5.737,
+				"surface_by": "RampCollision",
+				"terrain": 5.185
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.8,
+					-173.0
+				],
+				"rise": 0.56,
+				"surface": 6.034,
+				"surface_by": "RampCollision",
+				"terrain": 5.474
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.61,
+					-173.46
+				],
+				"rise": 0.575,
+				"surface": 6.338,
+				"surface_by": "RampCollision",
+				"terrain": 5.763
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.43,
+					-173.93
+				],
+				"rise": 0.597,
+				"surface": 6.648,
+				"surface_by": "RampCollision",
+				"terrain": 6.051
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.24,
+					-174.39
+				],
+				"rise": 0.659,
+				"surface": 6.999,
+				"surface_by": "RampCollision",
+				"terrain": 6.34
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					286.06,
+					-174.86
+				],
+				"rise": 0.685,
+				"surface": 7.314,
+				"surface_by": "RampCollision",
+				"terrain": 6.629
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					285.87,
+					-175.32
+				],
+				"rise": 0.702,
+				"surface": 7.619,
+				"surface_by": "RampCollision",
+				"terrain": 6.917
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					285.69,
+					-175.78
+				],
+				"rise": 0.718,
+				"surface": 7.924,
+				"surface_by": "RampCollision",
+				"terrain": 7.206
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					285.5,
+					-176.25
+				],
+				"rise": 0.736,
+				"surface": 8.231,
+				"surface_by": "RampCollision",
+				"terrain": 7.495
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					285.31,
+					-176.71
+				],
+				"rise": 0.775,
+				"surface": 8.558,
+				"surface_by": "RampCollision",
+				"terrain": 7.783
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					285.13,
+					-177.18
+				],
+				"rise": 0.785,
+				"surface": 8.857,
+				"surface_by": "RampCollision",
+				"terrain": 8.072
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					284.94,
+					-177.64
+				],
+				"rise": 0.793,
+				"surface": 9.154,
+				"surface_by": "RampCollision",
+				"terrain": 8.361
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					284.76,
+					-178.11
+				],
+				"rise": 0.591,
+				"surface": 9.24,
+				"surface_by": "RampCollision",
+				"terrain": 8.649
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.97,
+					-185.07
+				],
+				"rise": 0.552,
+				"surface": 13.531,
+				"surface_by": "RampCollision",
+				"terrain": 12.979
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.79,
+					-185.53
+				],
+				"rise": 0.588,
+				"surface": 13.856,
+				"surface_by": "RampCollision",
+				"terrain": 13.268
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.6,
+					-186.0
+				],
+				"rise": 0.626,
+				"surface": 14.183,
+				"surface_by": "RampCollision",
+				"terrain": 13.557
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.42,
+					-186.46
+				],
+				"rise": 0.703,
+				"surface": 14.548,
+				"surface_by": "RampCollision",
+				"terrain": 13.845
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.23,
+					-186.93
+				],
+				"rise": 0.733,
+				"surface": 14.867,
+				"surface_by": "RampCollision",
+				"terrain": 14.134
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					281.04,
+					-187.39
+				],
+				"rise": 0.773,
+				"surface": 15.196,
+				"surface_by": "RampCollision",
+				"terrain": 14.423
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					280.86,
+					-187.85
+				],
+				"rise": 0.79,
+				"surface": 15.502,
+				"surface_by": "RampCollision",
+				"terrain": 14.712
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					280.67,
+					-188.32
+				],
+				"rise": 0.831,
+				"surface": 15.831,
+				"surface_by": "RampCollision",
+				"terrain": 15.0
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					280.49,
+					-188.78
+				],
+				"rise": 0.901,
+				"surface": 16.19,
+				"surface_by": "RampCollision",
+				"terrain": 15.289
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					280.3,
+					-189.25
+				],
+				"rise": 0.937,
+				"surface": 16.515,
+				"surface_by": "RampCollision",
+				"terrain": 15.578
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					280.12,
+					-189.71
+				],
+				"rise": 0.831,
+				"surface": 16.697,
+				"surface_by": "RampCollision",
+				"terrain": 15.866
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					276.51,
+					-194.49
+				],
+				"rise": 0.51,
+				"surface": 19.84,
+				"surface_by": "RampCollision",
+				"terrain": 19.33
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					276.2,
+					-194.89
+				],
+				"rise": 0.517,
+				"surface": 20.136,
+				"surface_by": "RampCollision",
+				"terrain": 19.619
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					275.89,
+					-195.28
+				],
+				"rise": 0.554,
+				"surface": 20.462,
+				"surface_by": "RampCollision",
+				"terrain": 19.908
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					275.59,
+					-195.67
+				],
+				"rise": 0.559,
+				"surface": 20.755,
+				"surface_by": "RampCollision",
+				"terrain": 20.196
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					275.28,
+					-196.07
+				],
+				"rise": 0.562,
+				"surface": 21.047,
+				"surface_by": "RampCollision",
+				"terrain": 20.485
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					274.97,
+					-196.46
+				],
+				"rise": 0.573,
+				"surface": 21.347,
+				"surface_by": "RampCollision",
+				"terrain": 20.774
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					274.67,
+					-196.86
+				],
+				"rise": 0.593,
+				"surface": 21.655,
+				"surface_by": "RampCollision",
+				"terrain": 21.062
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					274.36,
+					-197.25
+				],
+				"rise": 0.634,
+				"surface": 21.985,
+				"surface_by": "RampCollision",
+				"terrain": 21.351
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					274.05,
+					-197.65
+				],
+				"rise": 0.655,
+				"surface": 22.295,
+				"surface_by": "RampCollision",
+				"terrain": 21.64
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					273.74,
+					-198.04
+				],
+				"rise": 0.679,
+				"surface": 22.607,
+				"surface_by": "RampCollision",
+				"terrain": 21.928
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					273.44,
+					-198.44
+				],
+				"rise": 0.688,
+				"surface": 22.905,
+				"surface_by": "RampCollision",
+				"terrain": 22.217
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					273.13,
+					-198.83
+				],
+				"rise": 0.73,
+				"surface": 23.236,
+				"surface_by": "RampCollision",
+				"terrain": 22.506
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					272.82,
+					-199.23
+				],
+				"rise": 0.77,
+				"surface": 23.564,
+				"surface_by": "RampCollision",
+				"terrain": 22.794
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					272.52,
+					-199.62
+				],
+				"rise": 0.787,
+				"surface": 23.87,
+				"surface_by": "RampCollision",
+				"terrain": 23.083
+			},
+			{
+				"blocked_on_surface": false,
+				"hit": "RampCollision",
+				"hit_on_surface": "",
+				"p": [
+					272.21,
+					-200.02
+				],
+				"rise": 0.75,
+				"surface": 24.122,
+				"surface_by": "RampCollision",
+				"terrain": 23.372
+			}
+		],
+		"surface_steps_over_0_6": 0
+	}
+}

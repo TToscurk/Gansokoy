@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[OUTER] PASS status ART_APPROVED（使用者 2026-10-07；agent は美術を承認しない）
+[OUTER] PASS 封存 60 檔雜湊一致（凍結・證據・審圖・子封存 R3d／R3c／R3b／NPCLIB；不符 0：[]）
+[OUTER] PASS 掛載：Population の PopulationP10 → ActivityP10 → CoreP10 → ActivityCoreP10 → EntranceCueP10 → OuterP10 → ActivityOuterP10（各 1 つ、この順）
+[OUTER] PASS snapshot：外圍 12（12）・核心 39（39）・合計 51（51）、區域 { "farm": 4.0, "waterwheel": 2.0, "canal": 2.0, "alley": 3.0, "shrine": 1.0 } が範圍内
+[OUTER] PASS 場景の外圍住人 12 が snapshot と一致（Idle 位置 ≤ 1 cm・朝向 ≤ 0.5°・mode・model・patrol 端点；不符 []）
+[OUTER] PASS 規則：区域框の中（森林・山腳・偏僻路段に框なし）・密度環が外へ単調に下がる・150–260 m は 0 人・環の人数＝snapshot（違反 []）
+[OUTER] PASS 反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（1）
+[OUTER] PASS 反向：snapshot の Idle 住人を 0.25 m ずらす → 不一致を検出
+[OUTER] PASS 反向：神社の婆を山腳の森 (258,−200) へ → 区域框・150–260 m 0 人の規則が FAIL
+[OUTER] 結果：0 項失敗（seal）

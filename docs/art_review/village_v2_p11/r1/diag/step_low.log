@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[STEP] step 0.35 kit_B_P_MKT_003          prop 到達=false 終点→目標 6.43 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.35 kit_B_P_MKT_008          prop 到達=false 終点→目標 5.76 m 地形上最大 0.27 m 構件へ乗った ["058_kr_zaimoku_c"] 最高時の足元 Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17
+[STEP] step 0.35 mw_endai_062             prop 到達=false 終点→目標 3.81 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 hu_stool_048             prop 到達=true 終点→目標 0.55 m 地形上最大 0.37 m 構件へ乗った ["048_sz_stool_c"] 最高時の足元 HumanUseP10/Collision/048_sz_stool_c y 1.28
+[STEP] step 0.35 sando_steps_up           pass 到達=true 終点→目標 0.58 m 地形上最大 0.86 m 構件へ乗った [] 最高時の足元 ShrineApproachP10/RampCollision/Ramp y 15.67
+[STEP] step 0.35 sando_steps_down         pass 到達=true 終点→目標 0.56 m 地形上最大 0.94 m 構件へ乗った [] 最高時の足元 ShrineApproachP10/RampCollision/Ramp y 16.04
+[STEP] step 0.35 terakoya_stepstone       pass 到達=true 終点→目標 0.53 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.76
+[STEP] step 0.35 hieda_gate               pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.65
+[STEP] step 0.35 bridge02_end             pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.54
+[STEP] step 0.35 bridge05                 pass 到達=true 終点→目標 0.54 m 地形上最大 0.82 m 構件へ乗った [] 最高時の足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27
+[STEP] step 0.35 farm_bund_N2             pass 到達=true 終点→目標 0.54 m 地形上最大 0.28 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.00
+[STEP] step 0.35 riverbank_stair_dragon   pass 到達=true 終点→目標 0.59 m 地形上最大 0.01 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y -1.99
+[STEP] step 0.30 kit_B_P_MKT_003          prop 到達=false 終点→目標 6.43 m 地形上最大 0.30 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.30 kit_B_P_MKT_008          prop 到達=false 終点→目標 5.76 m 地形上最大 0.27 m 構件へ乗った ["058_kr_zaimoku_c"] 最高時の足元 Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17
+[STEP] step 0.30 mw_endai_062             prop 到達=false 終点→目標 3.81 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.30 hu_stool_048             prop 到達=true 終点→目標 0.55 m 地形上最大 0.37 m 構件へ乗った ["048_sz_stool_c"] 最高時の足元 HumanUseP10/Collision/048_sz_stool_c y 1.28
+[STEP] step 0.30 sando_steps_up           pass 到達=true 終点→目標 0.57 m 地形上最大 0.86 m 構件へ乗った [] 最高時の足元 ShrineApproachP10/RampCollision/Ramp y 15.68
+[STEP] step 0.30 sando_steps_down         pass 到達=true 終点→目標 0.56 m 地形上最大 0.94 m 構件へ乗った [] 最高時の足元 ShrineApproachP10/RampCollision/Ramp y 16.04
+[STEP] step 0.30 terakoya_stepstone       pass 到達=true 終点→目標 0.53 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.76
+[STEP] step 0.30 hieda_gate               pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.65
+[STEP] step 0.30 bridge02_end             pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.54
+[STEP] step 0.30 bridge05                 pass 到達=true 終点→目標 0.54 m 地形上最大 0.82 m 構件へ乗った [] 最高時の足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27
+[STEP] step 0.30 farm_bund_N2             pass 到達=true 終点→目標 0.54 m 地形上最大 0.28 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y 0.00
+[STEP] step 0.30 riverbank_stair_dragon   pass 到達=true 終点→目標 0.59 m 地形上最大 0.01 m 構件へ乗った [] 最高時の足元 Collision/TerrainCollision/Shape y -1.99

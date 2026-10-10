@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SHRINE] NEG 対照（無改変）：被擋 0 段差 0 → PASS
+[SHRINE] NEG N1 參道の歩行面に箱（障害）：被擋 3 段差 0 → PASS（gate 正確失敗）
+[SHRINE] NEG N2 斜坡碰撞を 0.8 m 持ち上げ（継ぎ目の段差）：被擋 5 段差 4 → PASS（gate 正確失敗）
+[SHRINE] NEG N3 未登記の台を参道に置く：被擋 5 段差 0 → PASS（gate 正確失敗）
+[SHRINE] 結果：0 項失敗（scene negatives）

@@ -1,0 +1,236 @@
+[
+	{
+		"arm_hit": "Props/MarketP10/Collision @ 2.79 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			246.57,
+			1.11,
+			-35.66
+		],
+		"seg": "s2_market"
+	},
+	{
+		"arm_hit": "Props/MarketP10/Collision @ 2.07 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			232.46,
+			1.18,
+			-46.55
+		],
+		"seg": "s3_market_west"
+	},
+	{
+		"kind": "LIFT",
+		"pos": [
+			231.16,
+			1.67,
+			-46.14
+		],
+		"seg": "s3_market_west"
+	},
+	{
+		"arm_hit": "Props/MarketWestP10/Collision @ 3.31 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			200.84,
+			1.17,
+			-44.46
+		],
+		"seg": "s4_homes"
+	},
+	{
+		"arm_hit": "Districts/Market/Buildings/B_P_MKT_031 @ 4.53 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			281.0,
+			1.41,
+			-85.88
+		],
+		"seg": "s5_bridge_farm"
+	},
+	{
+		"arm_hit": "Districts/Market/Buildings/B_P_MKT_023 @ 5.13 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			263.87,
+			1.02,
+			-22.98
+		],
+		"seg": "s5_bridge_farm"
+	},
+	{
+		"arm_hit": "Props/StreetP10/Collision @ 4.26 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			264.0,
+			1.02,
+			-22.95
+		],
+		"seg": "s5_bridge_farm"
+	},
+	{
+		"kind": "LIFT",
+		"pos": [
+			328.3,
+			1.29,
+			-41.68
+		],
+		"seg": "s7_to_shrine"
+	},
+	{
+		"arm_hit": "ShrineApproachP10/RampCollision @ 4.95 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			269.9,
+			25.95,
+			-203.52
+		],
+		"seg": "s9_sando_down"
+	},
+	{
+		"arm_hit": "ShrineApproachP10/RampCollision @ 4.18 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			275.01,
+			21.6,
+			-196.89
+		],
+		"seg": "s9_sando_down"
+	},
+	{
+		"arm_hit": "ShrineApproachP10/RampCollision @ 3.93 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			281.7,
+			14.2,
+			-185.96
+		],
+		"seg": "s9_sando_down"
+	},
+	{
+		"arm_hit": "ShrineApproachP10/RampCollision @ 4.23 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			286.79,
+			6.66,
+			-174.0
+		],
+		"seg": "s9_sando_down"
+	},
+	{
+		"arm_hit": "Districts/Market/Buildings/B_P_MKT_018 @ 4.46 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			244.19,
+			0.7,
+			34.06
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"arm_hit": "Districts/Market/Buildings/B_P_MKT_019 @ 4.71 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			244.51,
+			0.7,
+			34.14
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"ahead_0.4": "Landmarks/LANDMARK_SUZUNAAN/Hero/Collision @ 0.31 m",
+		"ahead_1.2": "Landmarks/LANDMARK_SUZUNAAN/Hero/Collision @ 0.31 m",
+		"goal_inside_building": "Landmarks/LANDMARK_SUZUNAAN/Hero/Collision",
+		"kind": "BLOCKED",
+		"pos": [
+			251.5,
+			1.11,
+			-5.26
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"arm_hit": "Landmarks/LANDMARK_TERAKOYA/Hero/Collision @ 4.32 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			197.72,
+			0.76,
+			24.14
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"arm_hit": "Landmarks/LANDMARK_TERAKOYA/Hero/Collision @ 4.32 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			197.72,
+			0.76,
+			24.14
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"ahead_0.4": "Landmarks/LANDMARK_GEIDONTEI/Hero/Collision @ 0.31 m",
+		"ahead_1.2": "Landmarks/LANDMARK_GEIDONTEI/Hero/Collision @ 0.31 m",
+		"goal_inside_building": "Landmarks/LANDMARK_GEIDONTEI/Hero/Collision",
+		"kind": "BLOCKED",
+		"pos": [
+			280.15,
+			1.45,
+			-62.75
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"ahead_0.4": "Landmarks/LANDMARK_KIRISAME/Hero/Collision @ 0.31 m",
+		"ahead_1.2": "Landmarks/LANDMARK_KIRISAME/Hero/Collision @ 0.31 m",
+		"goal_inside_building": "Landmarks/LANDMARK_KIRISAME/Hero/Collision",
+		"kind": "BLOCKED",
+		"pos": [
+			234.08,
+			0.67,
+			62.4
+		],
+		"seg": "x2_entrances"
+	},
+	{
+		"arm_hit": "Props/MarketWestP10/Collision @ 1.78 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			208.9,
+			1.14,
+			-40.96
+		],
+		"seg": "x3_lanes"
+	},
+	{
+		"arm_hit": "Districts/ResidentialWest/Buildings/B_P_RSW_004 @ 2.93 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			220.37,
+			1.13,
+			-38.09
+		],
+		"seg": "x3_lanes"
+	},
+	{
+		"arm_hit": "Districts/ResidentialWest/Buildings/B_P_RSW_073 @ 4.81 m",
+		"kind": "ARM_PULL",
+		"pos": [
+			225.49,
+			1.44,
+			-89.57
+		],
+		"seg": "x3_lanes"
+	},
+	{
+		"arm_hit": "なし",
+		"kind": "ARM_PULL",
+		"pos": [
+			281.06,
+			1.78,
+			-146.79
+		],
+		"seg": "x4_forest_edge"
+	}
+]

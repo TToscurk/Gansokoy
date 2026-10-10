@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SCHOOL] NEG 対照（無改変）：PASS
+[SCHOOL] NEG N1 ルート上に静的な箱：被擋 3 待機点 0 沿い 0 幅 0 → PASS（gate 正確失敗）
+[SCHOOL] NEG N2 C20 を idle にして横切り点に立たせる：被擋 0 待機点 1 沿い 0 幅 0 → PASS（gate 正確失敗）
+[SCHOOL] NEG N3 C20 の巡回の片端を入口ルート上へ：被擋 0 待機点 1 沿い 0 幅 0 → PASS（gate 正確失敗）
+[SCHOOL] NEG N4 C20 の巡回を入口ルートに沿わせる 4 m：被擋 0 待機点 1 沿い 1 幅 0 → PASS（gate 正確失敗）
+[SCHOOL] 結果：0 項失敗（scene negatives）

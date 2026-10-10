@@ -1,0 +1,541 @@
+{
+	"default_step_height": 0.6,
+	"runs": [
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				246.49,
+				35.01
+			],
+			"end_dist": 6.43,
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				258.98,
+				1.07
+			],
+			"end_dist": 5.76,
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"058_kr_zaimoku_c"
+			],
+			"max_above_terrain": 0.27,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.35,
+			"under_at_max": "Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "mw_endai_062",
+			"end": [
+				231.8,
+				-46.17
+			],
+			"end_dist": 3.81,
+			"goal": [
+				228.0,
+				-45.9000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				233.600006103516,
+				-46.2999992370605
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": true,
+			"case": "hu_stool_048",
+			"end": [
+				328.3,
+				-44.05
+			],
+			"end_dist": 0.55,
+			"goal": [
+				328.299987792969,
+				-44.5999984741211
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"048_sz_stool_c"
+			],
+			"max_above_terrain": 0.37,
+			"start": [
+				328.299987792969,
+				-39.4000015258789
+			],
+			"step_height": 0.35,
+			"under_at_max": "HumanUseP10/Collision/048_sz_stool_c y 1.28"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_up",
+			"end": [
+				280.72,
+				-188.47
+			],
+			"end_dist": 0.58,
+			"goal": [
+				280.5,
+				-189.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.86,
+			"start": [
+				290.0,
+				-166.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 15.67"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_down",
+			"end": [
+				289.79,
+				-166.52
+			],
+			"end_dist": 0.56,
+			"goal": [
+				290.0,
+				-166.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.94,
+			"start": [
+				280.5,
+				-189.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 16.04"
+		},
+		{
+			"arrived": true,
+			"case": "terakoya_stepstone",
+			"end": [
+				196.93,
+				24.01
+			],
+			"end_dist": 0.53,
+			"goal": [
+				196.399993896484,
+				24.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				201.0,
+				24.1000003814697
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.76"
+		},
+		{
+			"arrived": true,
+			"case": "hieda_gate",
+			"end": [
+				398.0,
+				-14.45
+			],
+			"end_dist": 0.55,
+			"goal": [
+				398.0,
+				-15.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				398.0,
+				-3.5
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.65"
+		},
+		{
+			"arrived": true,
+			"case": "bridge02_end",
+			"end": [
+				377.89,
+				-211.46
+			],
+			"end_dist": 0.55,
+			"goal": [
+				378.0,
+				-212.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				372.0,
+				-183.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.54"
+		},
+		{
+			"arrived": true,
+			"case": "bridge05",
+			"end": [
+				161.53,
+				-12.09
+			],
+			"end_dist": 0.54,
+			"goal": [
+				161.0,
+				-12.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.82,
+			"start": [
+				176.5,
+				-14.5
+			],
+			"step_height": 0.35,
+			"under_at_max": "Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27"
+		},
+		{
+			"arrived": true,
+			"case": "farm_bund_N2",
+			"end": [
+				391.46,
+				22.0
+			],
+			"end_dist": 0.54,
+			"goal": [
+				392.0,
+				22.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.28,
+			"start": [
+				372.0,
+				22.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.00"
+		},
+		{
+			"arrived": true,
+			"case": "riverbank_stair_dragon",
+			"end": [
+				388.26,
+				-213.47
+			],
+			"end_dist": 0.59,
+			"goal": [
+				388.0,
+				-214.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.01,
+			"start": [
+				392.0,
+				-200.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y -1.99"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				246.49,
+				35.01
+			],
+			"end_dist": 6.43,
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.3,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				258.98,
+				1.07
+			],
+			"end_dist": 5.76,
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"058_kr_zaimoku_c"
+			],
+			"max_above_terrain": 0.27,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.3,
+			"under_at_max": "Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "mw_endai_062",
+			"end": [
+				231.8,
+				-46.17
+			],
+			"end_dist": 3.81,
+			"goal": [
+				228.0,
+				-45.9000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				233.600006103516,
+				-46.2999992370605
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": true,
+			"case": "hu_stool_048",
+			"end": [
+				328.3,
+				-44.05
+			],
+			"end_dist": 0.55,
+			"goal": [
+				328.299987792969,
+				-44.5999984741211
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"048_sz_stool_c"
+			],
+			"max_above_terrain": 0.37,
+			"start": [
+				328.299987792969,
+				-39.4000015258789
+			],
+			"step_height": 0.3,
+			"under_at_max": "HumanUseP10/Collision/048_sz_stool_c y 1.28"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_up",
+			"end": [
+				280.72,
+				-188.47
+			],
+			"end_dist": 0.57,
+			"goal": [
+				280.5,
+				-189.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.86,
+			"start": [
+				290.0,
+				-166.0
+			],
+			"step_height": 0.3,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 15.68"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_down",
+			"end": [
+				289.79,
+				-166.52
+			],
+			"end_dist": 0.56,
+			"goal": [
+				290.0,
+				-166.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.94,
+			"start": [
+				280.5,
+				-189.0
+			],
+			"step_height": 0.3,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 16.04"
+		},
+		{
+			"arrived": true,
+			"case": "terakoya_stepstone",
+			"end": [
+				196.93,
+				24.01
+			],
+			"end_dist": 0.53,
+			"goal": [
+				196.399993896484,
+				24.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				201.0,
+				24.1000003814697
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.76"
+		},
+		{
+			"arrived": true,
+			"case": "hieda_gate",
+			"end": [
+				398.0,
+				-14.45
+			],
+			"end_dist": 0.55,
+			"goal": [
+				398.0,
+				-15.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				398.0,
+				-3.5
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.65"
+		},
+		{
+			"arrived": true,
+			"case": "bridge02_end",
+			"end": [
+				377.89,
+				-211.46
+			],
+			"end_dist": 0.55,
+			"goal": [
+				378.0,
+				-212.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				372.0,
+				-183.0
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.54"
+		},
+		{
+			"arrived": true,
+			"case": "bridge05",
+			"end": [
+				161.53,
+				-12.09
+			],
+			"end_dist": 0.54,
+			"goal": [
+				161.0,
+				-12.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.82,
+			"start": [
+				176.5,
+				-14.5
+			],
+			"step_height": 0.3,
+			"under_at_max": "Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27"
+		},
+		{
+			"arrived": true,
+			"case": "farm_bund_N2",
+			"end": [
+				391.46,
+				22.0
+			],
+			"end_dist": 0.54,
+			"goal": [
+				392.0,
+				22.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.28,
+			"start": [
+				372.0,
+				22.0
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.00"
+		},
+		{
+			"arrived": true,
+			"case": "riverbank_stair_dragon",
+			"end": [
+				388.26,
+				-213.47
+			],
+			"end_dist": 0.59,
+			"goal": [
+				388.0,
+				-214.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.01,
+			"start": [
+				392.0,
+				-200.0
+			],
+			"step_height": 0.3,
+			"under_at_max": "Collision/TerrainCollision/Shape y -1.99"
+		}
+	]
+}

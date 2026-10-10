@@ -1,0 +1,62 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[RT] boot {"collision_layer":1,"collision_mask":1,"floor_max_deg":52.0,"map":"village_v2","ms":773,"pos":[237.1,0.47,71.7]}
+[RT] wall N_river_exit PASS final [390.0, -2.36, -339.82] min_y -2.36
+[RT] wall N_hill PASS final [200.0, 28.07, -339.7] min_y 27.39
+[RT] wall N_east PASS final [470.0, 28.26, -339.68] min_y 27.52
+[RT] wall S_canal_exit PASS final [289.0, -2.41, 219.7] min_y -2.41
+[RT] wall S_stream_exit PASS final [122.0, -1.43, 219.7] min_y -1.77
+[RT] wall S_portal_forest PASS final [224.0, 4.92, 219.69] min_y 4.53
+[RT] wall E_river_exit PASS final [559.7, -2.7, -112.0] min_y -2.70
+[RT] wall E_farm_flat PASS final [559.7, 0.06, -50.0] min_y -0.07
+[RT] wall E_south PASS final [559.7, 0.27, 100.0] min_y -0.01
+[RT] wall W_ridge PASS final [5.75, 21.55, -100.0] min_y 21.54
+[RT] wall W_south PASS final [0.3, 21.72, 150.0] min_y 21.72
+[RT] wall C_NW PASS final [0.29, 49.02, -339.69] min_y 48.39
+[RT] wall C_SE PASS final [559.7, 5.04, 219.7] min_y 4.89
+[RT] wall C_NE PASS final [559.7, 37.28, -339.7] min_y 36.09
+[RT] wall C_SW PASS final [0.3, 26.83, 219.7] min_y 26.63
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223369491750990731>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[RT] portal trail arrival [0.3, 39.98, 0.0] final [0.3, 4.04, 0.0] min_y 4.04 floor_t 1.85 void=false
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[RT] return trail → village_v2 {"arrival":[220.83,1.36,169.56],"dist_to_portal_m":4.0,"fall_m":1.18,"final":[220.83,0.18,169.56],"ground_under_final":0.18,"map_now":"village_v2","on_floor_after_s":0.3}
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[RT] portal hieda1f arrival [0.3, 39.98, 0.0] final [0.3, 4.2, 0.0] min_y 4.20 floor_t 1.85 void=false
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[RT] return hieda1f → village_v2 {"arrival":[394.0,1.72,1.98],"dist_to_portal_m":4.0,"fall_m":1.18,"final":[394.0,0.54,1.98],"ground_under_final":0.54,"map_now":"village_v2","on_floor_after_s":0.3}
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223364499371602624>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[RT] portal kourindou arrival [0.3, 39.98, 0.0] final [0.3, 3.13, 0.0] min_y 3.13 floor_t 1.87 void=false
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[RT] return kourindou → village_v2 {"arrival":[424.39,3.19,-203.27],"dist_to_portal_m":4.0,"fall_m":1.18,"final":[424.39,2.01,-203.27],"ground_under_final":2.01,"map_now":"village_v2","on_floor_after_s":0.3}
+[RT] done fails=0
