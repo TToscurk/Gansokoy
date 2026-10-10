@@ -1,4 +1,5 @@
 extends SceneTree
+const P11R2Swap := preload("res://tools/p11r2/p11r2_swap.gd")
 ## P8 pilot player's actual movement along a bund in the loaded village.
 ## --zone：全區新構件（r6 生成器）玩家 1.7 m 實走＋TPS 相機淨空＋10:00 玩家視角代表畫面（可見網格當探針，不加碰撞）。
 ## --cost：同一鏡位 P8 開／關 A/B 幀成本（frame time、render CPU／GPU、primitives、draw calls、objects）。
@@ -39,6 +40,10 @@ func _run() -> void:
 	flags.set_flag("woke_in_trail", true)
 	flags.set_flag("met_reimu", true)
 	main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	# P11 R2：--candidate=A|B|C（候補スクリプトをメモリ上で差し替え、ファイル不変；tools/p11r2/p11r2_swap.gd）
+	var _cand := P11R2Swap.parse(OS.get_cmdline_user_args())
+	if _cand != "":
+		print("[P11R2] candidate ", P11R2Swap.apply(main, _cand))
 	root.add_child(main)
 	current_scene = main
 	for i in 60:
@@ -504,6 +509,14 @@ func _walk_leg(label: String, a: Vector2, b: Vector2, boxes: Array) -> void:
 		if f % 6 == 0:
 			player.snap_yaw(atan2(-d.x, -d.y))
 		await physics_frame
+		if "--trace" in OS.get_cmdline_user_args() and f % 6 == 0:
+			var tp := player.global_position
+			var tq := PhysicsRayQueryParameters3D.create(tp + Vector3(0, 0.2, 0), tp + Vector3(0, -0.8, 0), player.collision_mask)
+			tq.exclude = [player.get_rid()]
+			var th := player.get_world_3d().direct_space_state.intersect_ray(tq)
+			print("[ZTRACE] f%d pos %s floor %s fn %.1f v %.2f dbg %s under %s gap %s ang %s" % [f, str(tp), player.is_on_floor(), rad_to_deg(player.get_floor_normal().angle_to(Vector3.UP)), Vector2(player.velocity.x, player.velocity.z).length(), str(player.get("step_dbg")),
+				String((th["collider"] as Node).name) if not th.is_empty() else "-", str(snappedf(tp.y - (th["position"] as Vector3).y, 0.001)) if not th.is_empty() else "-",
+				str(snappedf(rad_to_deg((th["normal"] as Vector3).angle_to(Vector3.UP)), 0.1)) if not th.is_empty() else "-"])
 		var rel := p - a
 		dev = maxf(dev, absf(rel.x * dir.y - rel.y * dir.x))
 		for bx: Array in boxes:
@@ -672,6 +685,10 @@ var _skip_walk := false
 func _zone_walk(label: String, a: Vector2, b: Vector2) -> void:
 	if _skip_walk:
 		return
+	# P11 R2 診斷：--walk-filter=<部分一致> で 1 本だけ歩く、--trace で 6 幀ごとに位置と跨ぎ判定（候補 A の step_dbg）を出す
+	for u: String in OS.get_cmdline_user_args():
+		if u.begins_with("--walk-filter=") and not label.contains(u.trim_prefix("--walk-filter=")):
+			return
 	var d0 := b - a
 	await _place(a, atan2(-d0.x, -d0.y))
 	var body := CapsuleShape3D.new()
@@ -694,6 +711,14 @@ func _zone_walk(label: String, a: Vector2, b: Vector2) -> void:
 		if f % 6 == 0:
 			player.snap_yaw(atan2(-d.x, -d.y))
 		await physics_frame
+		if "--trace" in OS.get_cmdline_user_args() and f % 6 == 0:
+			var tp := player.global_position
+			var tq := PhysicsRayQueryParameters3D.create(tp + Vector3(0, 0.2, 0), tp + Vector3(0, -0.8, 0), player.collision_mask)
+			tq.exclude = [player.get_rid()]
+			var th := player.get_world_3d().direct_space_state.intersect_ray(tq)
+			print("[ZTRACE] f%d pos %s floor %s fn %.1f v %.2f dbg %s under %s gap %s ang %s" % [f, str(tp), player.is_on_floor(), rad_to_deg(player.get_floor_normal().angle_to(Vector3.UP)), Vector2(player.velocity.x, player.velocity.z).length(), str(player.get("step_dbg")),
+				String((th["collider"] as Node).name) if not th.is_empty() else "-", str(snappedf(tp.y - (th["position"] as Vector3).y, 0.001)) if not th.is_empty() else "-",
+				str(snappedf(rad_to_deg((th["normal"] as Vector3).angle_to(Vector3.UP)), 0.1)) if not th.is_empty() else "-"])
 		var rel := p - a
 		dev = maxf(dev, absf(rel.x * dir.y - rel.y * dir.x))
 		ymax = maxf(ymax, player.global_position.y)

@@ -1,4 +1,5 @@
 extends SceneTree
+const P11R2Swap := preload("res://tools/p11r2/p11r2_swap.gd")
 ## P11 R1 診斷（非 headless、場景・封存・玩家ファイルは不変）：玩家 step_height の比較。
 ## step_height はメモリ上だけ上書き（yoriichi_character.gd の @export、ファイル不変）。各 step 値で同じ短い実走を行い、
 ## 「構件への乗り上がり（足元の最初の当たりが構件で地形より 0.2 m 以上）」と「本来通れるべき段差（石段・踏石・橋端・門）で止まらないか」を量る。
@@ -20,6 +21,22 @@ const CASES := [
 	["bridge05", "pass", Vector2(176.5, -14.5), Vector2(161.0, -12.0)],
 	["farm_bund_N2", "pass", Vector2(372.0, 22.0), Vector2(392.0, 22.0)],
 	["riverbank_stair_dragon", "pass", Vector2(392.0, -200.0), Vector2(388.0, -214.0)],
+	# P11 R2：P8 ZONE の支渠跨渠板 S2（候補 A の初版で止まった所）
+	["plank_S2", "pass", Vector2(474.4, 19.3), Vector2(468.0, 19.2)],
+	# P11 R2：縁沿いの横移動（R1 の walk_step035 で 0.35 でも乗り上がった経路の再現）＝膠囊が箱の長辺に 0.12 m 食い込む線を端から端まで
+	["graze_046_bench_L", "prop", "graze", "046_sk_bench_c", -1.0],
+	["graze_046_bench_R", "prop", "graze", "046_sk_bench_c", 1.0],
+	["graze_046_bench_L_deep", "prop", "graze", "046_sk_bench_c", -1.0, 0.25],
+	["graze_046_bench_R_deep", "prop", "graze", "046_sk_bench_c", 1.0, 0.25],
+	["graze_062_endai_L", "prop", "graze", "062_ms_endai_mousen_c39", -1.0],
+	["graze_062_endai_R", "prop", "graze", "062_ms_endai_mousen_c39", 1.0],
+	["graze_062_endai_L_deep", "prop", "graze", "062_ms_endai_mousen_c39", -1.0, 0.25],
+	["graze_007_bench_L", "prop", "graze", "007_sk_bench_c", -1.0],
+	["graze_007_bench_R", "prop", "graze", "007_sk_bench_c", 1.0],
+	["graze_048_stool_L", "prop", "graze", "048_sz_stool_c", -1.0],
+	# P11 R2：跳躍は従来どおり使える（長凳・縁台に跳び乗れる＝jump は lifted_on が出るのが正しい）
+	["jump_046_bench", "jump", Vector2(244.0, 34.1), Vector2(246.87, 35.58), 1.3],
+	["jump_062_endai", "jump", Vector2(232.9, -47.2), Vector2(230.6, -46.31), 1.7],
 ]
 const PROP_PREFIX := ["Props/", "HumanUseP10", "HumanUseExpansionP10", "Vegetation/", "WaterLifeP10", "PropFixP10"]
 
@@ -47,6 +64,10 @@ func _go() -> void:
 		if a.begins_with("--out="):
 			out = a.trim_prefix("--out=")
 	main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	# P11 R2：--candidate=A|B|C（候補スクリプトをメモリ上で差し替え、ファイル不変；tools/p11r2/p11r2_swap.gd）
+	var _cand := P11R2Swap.parse(OS.get_cmdline_user_args())
+	if _cand != "":
+		print("[P11R2] candidate ", P11R2Swap.apply(main, _cand))
 	root.add_child(main)
 	current_scene = main
 	var t0 := Time.get_ticks_msec()
@@ -106,12 +127,30 @@ func _go() -> void:
 			var r := await _case(c)
 			r["step_height"] = st
 			R["runs"].append(r)
-			print("[STEP] step %.2f %-24s %s 到達=%s 終点→目標 %.2f m 地形上最大 %.2f m 構件へ乗った %s 最高時の足元 %s" % [st, c[0], c[1], r["arrived"], r["end_dist"], r["max_above_terrain"], str(r["lifted_on"]), r["under_at_max"]])
+			print("[STEP] step %.2f %-24s %s 到達=%s 終点→目標 %.2f m 地形上最大 %.2f m 構件へ乗った %s 終了時 地形上 %s 足元 %s ｜最高時の足元 %s" % [st, c[0], c[1], r.get("arrived"), r.get("end_dist", -1.0), r.get("max_above_terrain", -1.0), str(r.get("lifted_on")), str(r.get("final_above_terrain")), r.get("final_on", ""), r.get("under_at_max", "")])
 	if out != "":
 		var f := FileAccess.open(out, FileAccess.WRITE)
 		f.store_string(JSON.stringify(R, "\t") + "\n")
 		f.close()
 	quit(0)
+
+
+func _top_above_terrain(p: Vector3) -> float:
+	var ty := _terrain_y(p.x, p.z)
+	if is_nan(ty):
+		return 0.0
+	var rq := PhysicsRayQueryParameters3D.create(Vector3(p.x, ty + 6.0, p.z), Vector3(p.x, ty - 1.0, p.z), player.collision_mask)
+	rq.exclude = [player.get_rid()]
+	var r := player.get_world_3d().direct_space_state.intersect_ray(rq)
+	return float((r["position"] as Vector3).y) - ty if not r.is_empty() else 0.0
+
+
+func _find_shape(nm: String) -> CollisionShape3D:
+	for cs in vil.find_children("*", "CollisionShape3D", true, false):
+		var n := String(cs.name)
+		if (n == nm or (nm.length() <= 4 and n.begins_with(nm + "_"))) and (cs as CollisionShape3D).shape is BoxShape3D:
+			return cs as CollisionShape3D
+	return null
 
 
 func _terrain_y(x: float, z: float) -> float:
@@ -146,7 +185,37 @@ func _place(q: Vector2, yaw: float) -> void:
 func _case(c: Array) -> Dictionary:
 	var a: Vector2
 	var b: Vector2
-	if c[2] is String and String(c[2]) == "kit":
+	var jump_at := -1.0
+	if c[1] == "jump":
+		jump_at = float(c[4])
+	if c[2] is String and String(c[2]) == "graze":
+		var cs := _find_shape(String(c[3]))
+		if cs == null:
+			return {"case": c[0], "kind": c[1], "error": "shape not found"}
+		var bx := cs.shape as BoxShape3D
+		var gx := cs.global_transform
+		var ax := gx.basis.x.normalized()
+		var az := gx.basis.z.normalized()
+		var sx := bx.size.x * absf(gx.basis.x.length())
+		var sz := bx.size.z * absf(gx.basis.z.length())
+		var lng := ax if sx >= sz else az
+		var sht := az if sx >= sz else ax
+		var hl := maxf(sx, sz) * 0.5
+		var hs := minf(sx, sz) * 0.5
+		var ovl := float(c[5]) if c.size() > 5 else 0.12
+		var o := gx.origin + sht * float(c[4]) * (hs + 0.3 - ovl)
+		# 始点・終点が他の構件の上（屋台の屋根など）にならないよう、延長を 2.0 → 0.4 m まで縮める
+		var ext_a := 2.0
+		while ext_a > 0.4 and _top_above_terrain(o - lng * (hl + ext_a)) > 0.6:
+			ext_a -= 0.2
+		var ext_b := 2.0
+		while ext_b > 0.4 and _top_above_terrain(o + lng * (hl + ext_b)) > 0.6:
+			ext_b -= 0.2
+		var a3 := o - lng * (hl + ext_a)
+		var b3 := o + lng * (hl + ext_b)
+		a = Vector2(a3.x, a3.z)
+		b = Vector2(b3.x, b3.z)
+	elif c[2] is String and String(c[2]) == "kit":
 		var bp := vil.find_child(String(c[3]), true, false) as Node3D
 		var xf := bp.global_transform
 		var d := float(bp.get_meta("depth_m", 10.0))
@@ -174,6 +243,17 @@ func _case(c: Array) -> Dictionary:
 		var dd := b - p
 		adapter.set("_target_yaw", atan2(-dd.x, -dd.y))
 		Input.action_press("move_forward")
+		if "--trace" in OS.get_cmdline_user_args() and f % 3 == 0:
+			var tp := player.global_position
+			var tq := PhysicsRayQueryParameters3D.create(tp + Vector3(0, 0.2, 0), tp + Vector3(0, -0.8, 0), player.collision_mask)
+			tq.exclude = [player.get_rid()]
+			var th := player.get_world_3d().direct_space_state.intersect_ray(tq)
+			print("[TRACE] f%d pos %s floor %s v %.2f dbg %s under %s gap %s ang %s" % [f, str(tp), player.is_on_floor(), Vector2(player.velocity.x, player.velocity.z).length(), str(player.get("step_dbg")),
+				String((th["collider"] as Node).name) if not th.is_empty() else "-", str(snappedf(tp.y - (th["position"] as Vector3).y, 0.001)) if not th.is_empty() else "-",
+				str(snappedf(rad_to_deg((th["normal"] as Vector3).angle_to(Vector3.UP)), 0.1)) if not th.is_empty() else "-"])
+		if jump_at > 0.0 and p.distance_to(b) < jump_at and player.is_on_floor():
+			player.call("request_jump")
+			jump_at = -1.0
 		await physics_frame
 		f += 1
 		if f % 6 == 0:
@@ -207,8 +287,24 @@ func _case(c: Array) -> Dictionary:
 			if (hist[-1] as Vector2).distance_to(hist[0]) < 0.15:
 				break
 	Input.action_release("move_forward")
+	# 静止まで（空中なら着地するまで、最大 3 s）
+	for i in 180:
+		await physics_frame
+		if i > 20 and player.is_on_floor():
+			break
 	for i in 10:
 		await physics_frame
 	var e := Vector2(player.global_position.x, player.global_position.z)
+	# 終了時（静止後）の足元：構件の上に立っているか
+	var fp := player.global_position
+	var fty := _terrain_y(fp.x, fp.z)
+	var final_on := ""
+	var spf := player.get_world_3d().direct_space_state
+	var qf := PhysicsRayQueryParameters3D.create(fp + Vector3(0, 0.25, 0), fp + Vector3(0, -0.8, 0), player.collision_mask)
+	qf.exclude = [player.get_rid()]
+	var hf := spf.intersect_ray(qf)
+	if not hf.is_empty() and (hf["collider"] as Node) != null:
+		final_on = String(vil.get_path_to(hf["collider"] as Node))
 	return {"case": c[0], "kind": c[1], "start": [a.x, a.y], "goal": [b.x, b.y], "arrived": arrived, "end": [snappedf(e.x, 0.01), snappedf(e.y, 0.01)],
-		"end_dist": snappedf(e.distance_to(b), 0.01), "max_above_terrain": snappedf(maxab, 0.01), "lifted_on": lifted, "under_at_max": under_at_max}
+		"end_dist": snappedf(e.distance_to(b), 0.01), "max_above_terrain": snappedf(maxab, 0.01), "lifted_on": lifted, "under_at_max": under_at_max,
+		"final_above_terrain": snappedf(fp.y - fty, 0.01) if not is_nan(fty) else null, "final_on": final_on}

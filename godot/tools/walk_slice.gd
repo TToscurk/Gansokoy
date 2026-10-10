@@ -20,6 +20,10 @@ func _init() -> void:
 func _run() -> void:
 	var packed := ResourceLoader.load("res://scenes/main.tscn", "PackedScene") as PackedScene
 	_main = packed.instantiate()
+	# P11 R2：--candidate=A|B|C（候補スクリプトをメモリ上で差し替え、ファイル不変；tools/p11r2/p11r2_swap.gd）
+	var _cand: String = preload("res://tools/p11r2/p11r2_swap.gd").parse(OS.get_cmdline_user_args())
+	if _cand != "":
+		print("[P11R2] candidate ", preload("res://tools/p11r2/p11r2_swap.gd").apply(_main, _cand))
 	root.add_child(_main)
 	await process_frame
 	_main.load_map("slice", "")

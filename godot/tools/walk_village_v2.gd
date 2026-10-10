@@ -77,6 +77,10 @@ func _run() -> void:
 	sf.set_flag("woke_in_trail", true)
 	sf.set_flag("met_reimu", true)
 	main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	# P11 R2：--candidate=A|B|C（候補スクリプトをメモリ上で差し替え、ファイル不変；tools/p11r2/p11r2_swap.gd）
+	var _cand: String = preload("res://tools/p11r2/p11r2_swap.gd").parse(OS.get_cmdline_user_args())
+	if _cand != "":
+		print("[P11R2] candidate ", preload("res://tools/p11r2/p11r2_swap.gd").apply(main, _cand))
 	root.add_child(main)
 	current_scene = main
 	await _frames(60)

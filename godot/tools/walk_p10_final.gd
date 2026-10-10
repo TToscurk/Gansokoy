@@ -1,4 +1,5 @@
 extends SceneTree
+const P11R2Swap := preload("res://tools/p11r2/p11r2_swap.gd")
 ## P10 FINAL 統合走訪（Read-Only Review）：正式 main.tscn の通常 F5 経路（scripts/main.gd → ReviewStart の review spawn → village_v2）で、
 ## 既存の TPS 相機（Player/CameraAdapter）・10:00（review start の凍結）のまま、実際の入力で道を歩く。場景・封存には一切書き込まない。
 ##   godot --path godot --script res://tools/walk_p10_final.gd -- --review=kirisame --out=<dir/>           走訪（非 headless、録画・still・log）
@@ -67,6 +68,10 @@ func _go() -> void:
 	DirAccess.make_dir_recursive_absolute(outdir + "frames")
 	DisplayServer.window_set_size(WIN)
 	main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	# P11 R2：--candidate=A|B|C（候補スクリプトをメモリ上で差し替え、ファイル不変；tools/p11r2/p11r2_swap.gd）
+	var _cand := P11R2Swap.parse(OS.get_cmdline_user_args())
+	if _cand != "":
+		print("[P11R2] candidate ", P11R2Swap.apply(main, _cand))
 	root.add_child(main)
 	current_scene = main
 	# review start（main.gd → ReviewStart.apply）が終わるまで：プレイヤーが village_v2 の spawn に立つ
@@ -204,6 +209,76 @@ func _event(kind: String, extra: Dictionary) -> void:
 	print("[WALK] EVENT %s" % JSON.stringify(e))
 
 
+## P11 R2：相機の指標（区間ごと）＝玩家の遮蔽（相機→頭 pivot・相機→体 0.9 m の射線が何かに当たる幀；頭が 6 幀以上続けば OCCLUDED 事件）、
+##   腕の長さの幀間変化（|Δ| > 0.5 m/幀＝鏡頭の跳び；伸び方向は CAM_SNAP_OUT 事件）、実効 pitch（pivot.rotation.x）。
+##   録画区間（rec）は幀ごとの trace も残す（log.camtrace[seg] = [t, 腕, 望む長さ, 実効 pitch, 坂バイアス, 頭遮蔽, 体遮蔽]）。
+var occl_run := 0
+var last_hl := -1.0
+func _ray_blocked(from: Vector3, to: Vector3) -> Dictionary:
+	var rq := PhysicsRayQueryParameters3D.create(from, to)
+	rq.exclude = [player.get_rid()]
+	return player.get_world_3d().direct_space_state.intersect_ray(rq)
+
+
+func _occl_name(h: Dictionary) -> String:
+	var cn := h["collider"] as Node
+	if cn == null:
+		return "?"
+	if vil and vil.is_ancestor_of(cn):
+		var pth := String(vil.get_path_to(cn))
+		var parts := pth.split("/")
+		return "/".join(parts.slice(0, mini(3, parts.size())))
+	return String(cn.name)
+
+
+func _cam_metrics(hl: float) -> void:
+	var s: Dictionary = log["segments"][-1] if log["segments"].size() > 0 else {}
+	if s.is_empty():
+		return
+	s["cam_frames"] = int(s.get("cam_frames", 0)) + 1
+	var piv := adapter.get("pivot") as Node3D
+	var hit := _ray_blocked(cam.global_position, piv.global_position)
+	var hit_b := _ray_blocked(cam.global_position, player.global_position + Vector3(0, 0.9, 0))
+	if not hit_b.is_empty():
+		s["occl_body_frames"] = int(s.get("occl_body_frames", 0)) + 1
+		var bn := _occl_name(hit_b)
+		var ob: Dictionary = s.get("occl_body_by", {})
+		ob[bn] = int(ob.get(bn, 0)) + 1
+		s["occl_body_by"] = ob
+	if not hit.is_empty():
+		s["occl_frames"] = int(s.get("occl_frames", 0)) + 1
+		var hn := _occl_name(hit)
+		var oh: Dictionary = s.get("occl_head_by", {})
+		oh[hn] = int(oh.get(hn, 0)) + 1
+		s["occl_head_by"] = oh
+		occl_run += 1
+		if occl_run == 6:
+			var cn := hit["collider"] as Node
+			_event("OCCLUDED", {"by": String(vil.get_path_to(cn)) if vil and cn and vil.is_ancestor_of(cn) else (String(cn.name) if cn else "?"), "cam": _v3(cam.global_position)})
+	else:
+		occl_run = 0
+	if last_hl >= 0.0:
+		var d := hl - last_hl
+		s["arm_dmax"] = maxf(float(s.get("arm_dmax", 0.0)), absf(d))
+		if absf(d) > 0.5:
+			s["arm_jump_frames"] = int(s.get("arm_jump_frames", 0)) + 1
+			if d > 0.0:
+				_event("CAM_SNAP_OUT", {"from": snappedf(last_hl, 0.01), "to": snappedf(hl, 0.01)})
+	last_hl = hl
+	var pe := piv.rotation.x
+	var bias := float(adapter.call("slope_bias")) if adapter.has_method("slope_bias") else 0.0
+	s["pitch_min"] = minf(float(s.get("pitch_min", 0.0)), pe)
+	s["slope_bias_min"] = minf(float(s.get("slope_bias_min", 0.0)), bias)
+	if seg_rec or "--camtrace" in OS.get_cmdline_user_args():
+		if not log.has("camtrace"):
+			log["camtrace"] = {}
+		var ct: Dictionary = log["camtrace"]
+		if not ct.has(seg_name):
+			ct[seg_name] = []
+		(ct[seg_name] as Array).append([snappedf(tick / 60.0, 0.01), snappedf(hl, 0.01), snappedf(float(adapter.get("_current_distance")), 0.01),
+			snappedf(pe, 0.001), snappedf(bias, 0.001), 0 if hit.is_empty() else 1, 0 if hit_b.is_empty() else 1])
+
+
 ## 1 physics tick：録画・サンプル・対話の監視・距離
 var arm_pull_on := false
 func _tick() -> void:
@@ -217,10 +292,14 @@ func _tick() -> void:
 		dm.call("_end")
 	# SpringArm が縮む＝相機が建物・屋根・崖に押し込まれた（既知：Market West の屋根）
 	var hl := arm.get_hit_length()
-	var pulled := hl < arm.spring_length * 0.55
+	# P11 R2：基準は使用者の望む腕の長さ（_current_distance＝ズーム）。候補 B は伸び戻りをなめらかにするため spring_length を一時的に短くするので、
+	#   spring_length ではなく望む長さと比べる（現行の相機では両者は同じ＝R1 と同じ判定）。
+	var want_len := float(adapter.get("_current_distance"))
+	var pulled := hl < want_len * 0.55
 	if pulled and not arm_pull_on:
-		_event("ARM_PULL", {"hit_length": snappedf(hl, 0.01), "spring": snappedf(arm.spring_length, 0.01), "cam": _v3(cam.global_position)})
+		_event("ARM_PULL", {"hit_length": snappedf(hl, 0.01), "spring": snappedf(want_len, 0.01), "cam": _v3(cam.global_position)})
 	arm_pull_on = pulled
+	_cam_metrics(hl)
 	_lift_npc_check(p)
 	if tick % SAMPLE_TICKS == 0:
 		var nd := 1e9

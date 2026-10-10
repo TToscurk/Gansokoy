@@ -73,6 +73,10 @@ func _run() -> void:
 			cap_h = ((c as CollisionShape3D).shape as CapsuleShape3D).height
 	if "step_height" in pl:
 		step_h = float(pl.get("step_height"))
+	# P11 R2 診斷：--step-override=<m> で玩家の step_height の想定値だけ差し替える（既定は玩家の値のまま；P11 R2 候補 A＝0.35 の事前確認）
+	for u: String in OS.get_cmdline_user_args():
+		if u.begins_with("--step-override="):
+			step_h = float(u.trim_prefix("--step-override="))
 	pl.free()
 	V = (load(SCENE) as PackedScene).instantiate() as Node3D
 	root.add_child(V)
@@ -212,6 +216,7 @@ func _checks(cfg: Dictionary) -> void:
 					edge_bad.append("踊り場 s %.1f 縁の内側の足場 %.2f（踊り場 %.2f）" % [k * 0.05, inside, float(a["y0"])])
 				# 脇に降りた玩家：下り方向へ同じ横位置を辿り、斜坡との差 ≤ step_height の所まで ≤ 8 m
 				var ok_back := false
+				var min_d := INF
 				for m in range(0, 161, 4):
 					var kk := k - m
 					if kk < 0:
@@ -222,11 +227,16 @@ func _checks(cfg: Dictionary) -> void:
 					var in_p := cl[kk] + nn * sd * (half - 0.1)
 					var fo := _floor(out_p)
 					var fi := _floor(in_p)
+					if not is_nan(fo) and not is_nan(fi):
+						min_d = minf(min_d, fi - fo)
 					if not is_nan(fo) and not is_nan(fi) and fi - fo <= step_h:
 						ok_back = true
 						break
 				if not ok_back:
-					trap.append("踊り場 s %.1f %s 側" % [k * 0.05, "右" if sd > 0 else "左"])
+					# P11 R2：診斷として 8 m 以内で最も低かった「斜坡と脇の地面の段差」も出す（判定は不変）
+					trap.append("踊り場 s %.1f %s 側（8 m 以内の最小段差 %.2f m）" % [k * 0.05, "右" if sd > 0 else "左", min_d])
+	if not trap.is_empty():
+		_info("W4 脇へ降りて 8 m 以内に戻れない所 %d：%s" % [trap.size(), str(trap)])
 	_ok(edge_bad.is_empty() and trap.is_empty(), "W4 踊り場の縁と両脇：見える袖石の外縁 ≤ 斜坡の半幅＋0.05、縁の内側＝踊り場の高さ、脇へ降りても 8 m 以内に戻れる%s" % ("" if edge_bad.is_empty() and trap.is_empty() else " ✗ " + str((edge_bad + trap).slice(0, 4))))
 	# W5 NPC
 	var bad5 := []
