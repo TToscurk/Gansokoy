@@ -1,0 +1,1719 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223369650312459564>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1894 ms、佈置 2380 ms、合計 4274 ms
+[TRANS] c1 village_v2 → trail      portal first [0.0, 40.0, 0.0] fall 35.93 t_floor 1.9 portal_d 108.82 overlap 0 inside  face 43.3 FAIL ["(0,40,0)", "far from return portal", "fall 35.93", "t_floor 1.90"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3675 ms、佈置 7499 ms、合計 11174 ms
+[TRANS] c1 trail      → village_v2 travel first [220.83, 1.38, 169.56] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] village_v2 → hieda1f：背景載入 482 ms、佈置 991 ms、合計 1473 ms
+[TRANS] c1 village_v2 → hieda1f    portal first [0.0, 40.0, 0.0] fall 35.8 t_floor 1.9 portal_d 6.2 overlap 0 inside  face 0.0 FAIL ["(0,40,0)", "far from return portal", "fall 35.80", "t_floor 1.90"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] hieda1f → village_v2：背景載入 3468 ms、佈置 6325 ms、合計 9793 ms
+[TRANS] c1 hieda1f    → village_v2 travel first [394.0, 1.74, 1.98] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223364459357942483>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] village_v2 → kourindou：背景載入 685 ms、佈置 1453 ms、合計 2138 ms
+[TRANS] c1 village_v2 → kourindou  portal first [0.0, 40.0, 0.0] fall 36.87 t_floor 1.92 portal_d 62.8 overlap 0 inside  face 99.2 FAIL ["(0,40,0)", "far from return portal", "fall 36.87", "t_floor 1.92", "facing"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] kourindou → village_v2：背景載入 3652 ms、佈置 6586 ms、合計 10238 ms
+[TRANS] c1 kourindou  → village_v2 travel first [424.39, 3.21, -203.27] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223362072077545566>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1869 ms、佈置 2459 ms、合計 4328 ms
+[TRANS] c1 village_v2 → trail      portal first [0.0, 40.0, 0.0] fall 35.93 t_floor 1.9 portal_d 108.82 overlap 0 inside  face 89.1 FAIL ["(0,40,0)", "far from return portal", "fall 35.93", "t_floor 1.90", "facing"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 19899 個，關閉投影 17890 個，保護 5 個，減面建築 852 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] trail → slice：背景載入 2699 ms、佈置 6719 ms、合計 9418 ms
+[TRANS] c1 trail      → slice      travel(portal locked) first [232.39, 1.2, 110.29] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] slice → hieda1f：背景載入 201 ms、佈置 534 ms、合計 735 ms
+[TRANS] c1 slice      → hieda1f    portal first [0.0, 1.7, 2.2] fall 1.7 t_floor 0.42 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.70", "t_floor 0.42"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4037 個，關閉投影 3604 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] hieda1f → slice：背景載入 2650 ms、佈置 5485 ms、合計 8135 ms
+[TRANS] c1 hieda1f    → slice      portal first [230.44, 1.2, -118.17] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223360580700483894>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] slice → kourindou：背景載入 283 ms、佈置 569 ms、合計 852 ms
+[TRANS] c1 slice      → kourindou  portal first [58.05, 2.3, 9.36] fall 2.35 t_floor 0.48 portal_d 4.0 overlap 0 inside  face -80.8 FAIL ["fall 2.35", "t_floor 0.48", "facing"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4397 個，關閉投影 3967 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] kourindou → slice：背景載入 2866 ms、佈置 6157 ms、合計 9023 ms
+[TRANS] c1 kourindou  → slice      portal first [452.19, 1.12, -142.8] fall 1.56 t_floor 0.38 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.56", "t_floor 0.38"]
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223360053006810890>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] slice → trail：背景載入 938 ms、佈置 974 ms、合計 1912 ms
+[TRANS] c1 slice      → trail      portal first [1.59, 1.32, 104.81] fall 0.93 t_floor 0.3 portal_d 4.0 overlap 0 inside  face 89.1 FAIL ["fall 0.93", "t_floor 0.30", "facing"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 2844 ms、佈置 7341 ms、合計 10185 ms
+[TRANS] c1 trail      → village_v2 travel first [220.83, 1.38, 169.56] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223357173650562705>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1436 ms、佈置 2231 ms、合計 3667 ms
+[TRANS] c2 village_v2 → trail      portal first [0.0, 40.0, 0.0] fall 35.93 t_floor 1.9 portal_d 108.82 overlap 0 inside  face -0.9 FAIL ["(0,40,0)", "far from return portal", "fall 35.93", "t_floor 1.90"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3468 ms、佈置 7134 ms、合計 10602 ms
+[TRANS] c2 trail      → village_v2 travel first [220.83, 1.38, 169.56] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] village_v2 → hieda1f：背景載入 452 ms、佈置 1019 ms、合計 1471 ms
+[TRANS] c2 village_v2 → hieda1f    portal first [0.0, 40.0, 0.0] fall 35.8 t_floor 1.9 portal_d 6.2 overlap 0 inside  face 0.0 FAIL ["(0,40,0)", "far from return portal", "fall 35.80", "t_floor 1.90"]
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_xtcqj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_6l2px' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_vrlae' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_6i0kl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_ksxcn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_rxvbi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_eixs6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_hhnis' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_65df7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w03b0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dd6ps' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_visjl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lqi8w' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_4it67' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hki1o' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1jwe8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ich8e' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_04grt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h2mkq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p3ai1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u276y' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::StandardMaterial3D_c0l0x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_8e0b7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_05f3i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pdaqw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yodpk' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mg7yf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_n3qis' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_871yu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dgmv1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qkk53' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_iehyd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xtgi8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5qe5i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lcwsy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_odbom' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1sga4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tjaev' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5ryd7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jt1bs' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mvgtx' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_l2d5k' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ka8wy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v8w3e' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j37tl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_aeaqb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dom42' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fl1xt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_g3f33' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qweu0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_o1rf8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_o8suh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wnr4x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3baxm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_iey5i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0khil' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hhoy7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_37inl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_e53a0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3jbu3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nddt8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gajvo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qrf3y' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tpkh6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kgthd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s4xhp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ni652' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nkykw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xigld' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7b6jd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_674wt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yw6vy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yip0j' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_24tpf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_35d0t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yh2wd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3w281' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_b4rik' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ol15r' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vxjj5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jhvn7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bwm12' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yfogq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nc0nw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0wle3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wnnor' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nbc0h' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_q7a5a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_prekf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8wsbw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1ky8q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cntii' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vlbwl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lbfqo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3q0bs' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fvgqo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_x6s3a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ctihb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_73emy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_n7v7q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2ft62' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w1q56' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cbyoe' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ygmon' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qjfhn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xufy1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h317h' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_a2fmg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gnmou' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_t2hpm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yqqfa' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jqa8k' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fc1ty' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_38wos' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2o56f' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0q82s' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h5csu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_76myv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_l5v6i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xw4ah' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rqt24' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_d8t7x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qqxnd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ssvmc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k3u4p' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_js76a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_o71fo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0mr6q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tjksp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jq7rd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ea7e0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7pdcf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mqp3w' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2xcei' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tdmga' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kdcf0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_frsdu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ls5b8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0dfil' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i1jit' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_th8lm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8q8sa' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uf2ix' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yrjfi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uvnm3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i0h12' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ymbut' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kf368' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_34o4g' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6crax' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_efyxc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_58sob' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nv5xh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bebrc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_elu6x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fp4no' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vpjwd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8kp64' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k5bf1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5t7lj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bkcdh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bm86d' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w3ckg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fykb2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qfky0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_eugcm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k0rp2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_iebit' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i073u' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mdl3m' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_re0hk' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s1ah8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3d5hg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nbqan' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6pehf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5m8pv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_svptr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_au78t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6c8df' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_b3etr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vd6ys' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1lpnd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k2uem' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lqb31' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bgxtu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8d2rw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fj83q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dpr8w' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_om08l' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::StandardMaterial3D_aoxkl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_2h4pq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j11hg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ouykb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5blwv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_osr60' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tvtko' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bmh75' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ouudu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hlcpt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k80mi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u1rur' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4kmu6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mikvi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ni1nl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::ArrayMesh_k0rdj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1p5o1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::StandardMaterial3D_jl8ln' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w3bby' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qti32' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pgsli' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8f2sp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j4vud' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_plp7o' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ijboq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mweki' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cr4mg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5mk0q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_sh3ni' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fnxr5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_752pw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5fpih' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1bfgc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u1m4t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_px5xt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lck7p' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_snuyv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_37aid' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3x5wm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_c4ypv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_um8dd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_31w0e' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h6mdc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qtqpj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wd2mp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_flfj2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_puvkt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1fkct' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h5g4k' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_78ixo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_b8stf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6cxng' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_l3mj3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_g037x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j7y8q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_er6ip' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qx81q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_84jt4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_olb4e' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_whvsx' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wcvbf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3noqi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wjr30' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_33i5j' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4bp11' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uukr2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_t78lp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xt3ur' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xg4a2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u76kb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qgahe' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k8542' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_aqsbl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8uwsn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lpcry' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mmrn0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lvyx0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ok6yf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_byfwi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mdy57' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h36wi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gcaoo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ceso7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7iaca' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pu787' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tkqdg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_62tc6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dn6m2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2hvbe' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p8bp0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ojg0i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v4dx5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s1o17' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nv2kp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7jhfy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_701n6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j41ba' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_myijx' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1g8wq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_r60gc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_x0pgu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gvsl7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pjgac' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k5obw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2r8hh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lo2so' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s3x1h' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bewxm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wahov' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_iyrct' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xjgha' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nkxqi' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0utqo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nmkb3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qv0tr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rl855' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i4q55' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_oj1i7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ibj7i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_n1rmu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0lwib' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4xocv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mbdk2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_77xxk' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rimbb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5ekul' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hc80g' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_03qd7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ok1f3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hhkct' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_y4lk0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6pckf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_b3ad2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_sdqfn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h8bev' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vqc1q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hywq4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kyvcg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_002g3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u5qp8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gl35m' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fxtm2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7kk5d' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w3yxn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1mbw8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mnbm6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_eulfc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dpmgr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ftcfj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_miwwn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7fcbl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4tu1d' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xy7xc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kx37a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fusxo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_a0cq3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_84gcc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mntrr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bbnjg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p4o7g' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_62upa' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0ue7i' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_x5ubv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_idh2w' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dflp1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pc45b' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lkf2g' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_y6x1s' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_o357v' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w5bf5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jwbdw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xijr8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_744x8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8nmo5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_erkbo' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0cab0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5ce7c' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qfhdu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mqmy0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ph4c0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3tuw7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_245g3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6pc74' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kebl8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_72xqr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bi0r6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gskvj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_23dn1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_emjtc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mdb1n' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gb2xf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wjiwj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3pcy3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1pe03' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_f32fl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_q604r' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_n03r6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bv6je' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0rg26' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_leryf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mbe21' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_oirm8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_71b8m' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6l1ng' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fttjv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0bw5u' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bhs2u' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_m2riq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lrqtt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jbicr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p28de' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3xwhj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_urw6b' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rasg7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ny0k5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_sbuyg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4qacy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bxfuh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h65w0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0ip5s' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1861u' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8hgvn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0508q' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_l3d1k' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8330r' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tj6a0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_atvj8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wgfag' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6gato' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ennmw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ap2d4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wu1t6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_y1o7c' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bocwn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vj6t3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_e8ll1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5t53e' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_ye3a4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kvsou' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_f2obt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_f8eya' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xqeo6' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_grpif' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_e3p7a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_u8q0u' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cd3ly' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xcgsb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_y4bn7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_f6b2a' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p17oy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_70ick' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bejt2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w8njd' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_niqlj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tmpnf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dxynv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4lsma' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s6e4h' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_jlcmg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gmwj2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w16d8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_anhrg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_43ba2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vvdej' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2ljcg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gcsok' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_utrtt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nvbdp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1ueky' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rpuyy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_se61t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1sbh1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7yn2w' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0wgut' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_o6uvr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pg47c' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hy8ok' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_q3j7s' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_2tpwp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_a3owb' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h76un' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mmwod' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5wgpj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_yeruy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7as63' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4hwuq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_d7bj7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i87kw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_p5rdg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0gu0t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dodl2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1dsny' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4mhhh' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_lqubn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_atk0c' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_gkhr5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5gapn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hap8k' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_c0xc3' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_26uqa' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6c1bs' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cfqb5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_a0jtk' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_r2kx2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_snhv0' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_niidr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_plcyy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uuypv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_n5o2j' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vnlpj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_dhmlq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_pwbiv' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_qsnhj' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_heaxg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_3la27' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wvavs' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cnhn7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_t773j' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kq81v' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5np5x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_65x3x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_b0w11' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_08252' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xgynf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_a84u2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cnuy2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_j3vqa' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_h3vhy' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_nx86x' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_r8x8p' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_1gqtp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s43bn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_4o4b1' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_sr5bt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_20afw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_bhvxq' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uk4it' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v3yer' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_hnj8y' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wcbhe' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_kdmra' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v86hr' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5yjvt' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_rm8b7' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_s5ns5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tycwu' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_iquio' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cas6c' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_obht4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_uqxyp' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_x0le2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_at2p5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_oy7oc' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_armpm' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_i7qdg' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8xct4' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_cnri5' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_xpeph' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wk57b' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_6efry' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_8paww' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w24el' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_0lm4g' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_k0tgw' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_7gvoe' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_shsus' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v3lct' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_vdoyk' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tbnkn' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_mebup' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_5w35n' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_tkcj2' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_fw47t' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_w4cuf' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_v7ks8' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+ERROR: Another resource is loaded from path 'res://maps/village_v2/gen/groundcover_p9.scn::MultiMesh_wcofl' (possible cyclic resource inclusion).
+   at: set_path (core/io/resource.cpp:104)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] hieda1f → village_v2：背景載入 32275 ms、佈置 6065 ms、合計 38340 ms
+[TRANS] c2 hieda1f    → village_v2 travel first [394.0, 1.74, 1.98] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223351620123631781>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] village_v2 → kourindou：背景載入 636 ms、佈置 1429 ms、合計 2065 ms
+[TRANS] c2 village_v2 → kourindou  portal first [0.0, 40.0, 0.0] fall 36.87 t_floor 1.92 portal_d 62.8 overlap 0 inside  face 99.2 FAIL ["(0,40,0)", "far from return portal", "fall 36.87", "t_floor 1.92", "facing"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] kourindou → village_v2：背景載入 3464 ms、佈置 6062 ms、合計 9526 ms
+[TRANS] c2 kourindou  → village_v2 travel first [424.39, 3.21, -203.27] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223349243580653455>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1371 ms、佈置 2218 ms、合計 3589 ms
+[TRANS] c2 village_v2 → trail      portal first [0.0, 40.0, 0.0] fall 35.93 t_floor 1.9 portal_d 108.82 overlap 0 inside  face 89.1 FAIL ["(0,40,0)", "far from return portal", "fall 35.93", "t_floor 1.90", "facing"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 19899 個，關閉投影 17890 個，保護 5 個，減面建築 852 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] trail → slice：背景載入 2501 ms、佈置 6552 ms、合計 9053 ms
+[TRANS] c2 trail      → slice      travel(portal locked) first [232.39, 1.2, 110.29] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] slice → hieda1f：背景載入 195 ms、佈置 567 ms、合計 762 ms
+[TRANS] c2 slice      → hieda1f    portal first [0.0, 1.7, 2.2] fall 1.7 t_floor 0.42 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.70", "t_floor 0.42"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4037 個，關閉投影 3604 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] hieda1f → slice：背景載入 2935 ms、佈置 5875 ms、合計 8810 ms
+[TRANS] c2 hieda1f    → slice      portal first [230.44, 1.2, -118.17] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223347670599213150>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] slice → kourindou：背景載入 300 ms、佈置 612 ms、合計 912 ms
+[TRANS] c2 slice      → kourindou  portal first [58.05, 2.3, 9.36] fall 2.35 t_floor 0.48 portal_d 4.0 overlap 0 inside  face -80.8 FAIL ["fall 2.35", "t_floor 0.48", "facing"]
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4397 個，關閉投影 3967 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] kourindou → slice：背景載入 2938 ms、佈置 5983 ms、合計 8921 ms
+[TRANS] c2 kourindou  → slice      portal first [452.19, 1.12, -142.8] fall 1.56 t_floor 0.38 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.56", "t_floor 0.38"]
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223347179630804731>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] slice → trail：背景載入 971 ms、佈置 980 ms、合計 1951 ms
+[TRANS] c2 slice      → trail      portal first [1.59, 1.32, 104.81] fall 0.93 t_floor 0.3 portal_d 4.0 overlap 0 inside  face 89.1 FAIL ["fall 0.93", "t_floor 0.30", "facing"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3500 ms、佈置 7168 ms、合計 10668 ms
+[TRANS] c2 trail      → village_v2 travel first [220.83, 1.38, 169.56] fall 1.2 t_floor 0.35 portal_d 4.0 overlap 0 inside  face 0.0 FAIL ["fall 1.20", "t_floor 0.35"]
+[TRANS] 結果：28 ホップ、28 失敗
+ERROR: 8 RID allocations of type 'N10RendererRD11MeshStorage4MeshE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N10RendererRD15MaterialStorage8MaterialE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N10RendererRD15MaterialStorage6ShaderE' were leaked at exit.
+ERROR: 3 RID allocations of type 'N10RendererRD14TextureStorage7TextureE' were leaked at exit.
+ERROR: 18 RID allocations of type 'N17RendererSceneCull8InstanceE' were leaked at exit.
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceSurfaceDataCacheE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceForwardClusteredE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: 1 shaders of type SceneForwardClusteredShaderRD were never freed
+   at: ~ShaderRD (servers/rendering/renderer_rd/shader_rd.cpp:1236)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: 1 RID of type "UniformBuffer" was leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8684)
+WARNING: 4 RIDs of type "IndexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 4 RIDs of type "IndexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 5 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 5137 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

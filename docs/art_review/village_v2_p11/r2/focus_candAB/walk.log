@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P11R2] candidate ["A:Player→yoriichi_character_p11r2.gd", "B:Player/CameraAdapter→player_camera_adapter_p11r2.gd"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[WALK] boot 8611 ms spawn [237.1, 0.47, 71.7] hour 10.0 npc 51 renderer forward_plus
+[WALK] seg f1_mw_detour
+[WALK] EVENT {"from":5.63,"kind":"CAM_SNAP_OUT","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.1,"to":6.43}
+[WALK] EVENT {"from":6.43,"kind":"CAM_SNAP_OUT","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.2,"to":6.96}
+[WALK] EVENT {"ground":1.17,"kind":"TP","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.3,"to":[238.399993896484,-45.0]}
+[WALK] EVENT {"cam":[234.05,3.16,-47.05],"hit_length":1.58,"kind":"ARM_PULL","pos":[232.57,1.18,-46.32],"seg":"f1_mw_detour","spring":8.5,"t":3.9}
+[WALK] EVENT {"goal":[228.399993896484,-45.4000015258789],"kind":"STUCK","nudge":1,"pos":[231.81,1.18,-46.1],"seg":"f1_mw_detour","t":5.5}
+[WALK] EVENT {"from":7.84,"kind":"CAM_SNAP_OUT","pos":[230.95,1.19,-47.99],"seg":"f1_mw_detour","t":7.1,"to":8.38}
+[WALK] EVENT {"goal":[228.399993896484,-45.4000015258789],"kind":"STUCK","nudge":2,"pos":[230.95,1.19,-47.99],"seg":"f1_mw_detour","t":7.7}
+[WALK] EVENT {"cam":[234.05,3.41,-49.18],"hit_length":2.92,"kind":"ARM_PULL","pos":[232.35,1.18,-46.86],"seg":"f1_mw_detour","spring":8.5,"t":8.1}
+[WALK] EVENT {"from":1.73,"kind":"CAM_SNAP_OUT","pos":[232.53,1.18,-45.88],"seg":"f1_mw_detour","t":8.5,"to":2.27}
+[WALK] EVENT {"from":2.38,"kind":"CAM_SNAP_OUT","pos":[231.99,1.18,-45.86],"seg":"f1_mw_detour","t":8.6,"to":2.93}
+[WALK] seg f2_sando_down
+[WALK] EVENT {"ground":33.71,"kind":"TP","pos":[259.5,33.74,-219.0],"seg":"f2_sando_down","t":13.1,"to":[259.5,-219.0]}
+[WALK] EVENT {"cam":[257.5,36.23,-222.83],"hit_length":4.39,"kind":"ARM_PULL","pos":[259.5,33.74,-219.0],"seg":"f2_sando_down","spring":8.5,"t":13.2}
+[WALK] EVENT {"from":4.44,"kind":"CAM_SNAP_OUT","pos":[259.72,33.47,-218.59],"seg":"f2_sando_down","t":13.3,"to":5.07}
+[WALK] EVENT {"from":5.07,"kind":"CAM_SNAP_OUT","pos":[259.92,33.23,-218.23],"seg":"f2_sando_down","t":13.4,"to":5.64}
+[WALK] EVENT {"from":5.69,"kind":"CAM_SNAP_OUT","pos":[260.38,32.77,-217.42],"seg":"f2_sando_down","t":13.6,"to":6.34}
+[WALK] EVENT {"from":6.34,"kind":"CAM_SNAP_OUT","pos":[260.58,32.65,-217.07],"seg":"f2_sando_down","t":13.7,"to":6.86}
+[WALK] EVENT {"from":7.18,"kind":"CAM_SNAP_OUT","pos":[261.14,32.4,-216.08],"seg":"f2_sando_down","t":14.0,"to":7.68}
+[WALK] EVENT {"from":7.74,"kind":"CAM_SNAP_OUT","pos":[261.37,32.31,-215.68],"seg":"f2_sando_down","t":14.1,"to":8.37}
+[WALK] EVENT {"from":5.78,"kind":"CAM_SNAP_OUT","pos":[272.77,23.94,-199.85],"seg":"f2_sando_down","t":18.6,"to":6.32}
+[WALK] EVENT {"from":6.46,"kind":"CAM_SNAP_OUT","pos":[273.1,23.61,-199.43],"seg":"f2_sando_down","t":18.7,"to":7.02}
+[WALK] EVENT {"from":7.3,"kind":"CAM_SNAP_OUT","pos":[273.47,23.22,-198.95],"seg":"f2_sando_down","t":18.8,"to":7.82}
+[WALK] EVENT {"cam":[277.11,19.31,-193.88],"hit_length":4.65,"kind":"ARM_PULL","pos":[279.82,16.7,-189.98],"seg":"f2_sando_down","spring":8.5,"t":21.3}
+[WALK] EVENT {"cam":[288.87,3.42,-169.18],"hit_length":4.64,"kind":"ARM_PULL","pos":[290.38,0.86,-164.72],"seg":"f2_sando_down","spring":8.5,"t":27.5}
+[WALK] seg f3_lanes
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[208.9,1.02,-22.5],"seg":"f3_lanes","t":34.5,"to":[208.899993896484,-22.5]}
+[WALK] EVENT {"cam":[210.15,3.15,-42.07],"hit_length":1.73,"kind":"ARM_PULL","pos":[208.9,1.14,-40.96],"seg":"f3_lanes","spring":8.5,"t":38.8}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[219.65,1.02,-23.0],"seg":"f3_lanes","t":43.3,"to":[219.649993896484,-23.0]}
+[WALK] EVENT {"goal":[219.649993896484,-42.0],"kind":"STUCK","nudge":1,"pos":[219.65,1.13,-37.89],"seg":"f3_lanes","t":48.3}
+[WALK] EVENT {"cam":[220.64,3.06,-36.78],"hit_length":1.28,"kind":"ARM_PULL","pos":[220.37,1.13,-38.16],"seg":"f3_lanes","spring":8.5,"t":49.0}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[228.6,1.02,-24.0],"seg":"f3_lanes","t":50.0,"to":[228.600006103516,-24.0]}
+[WALK] done events 29 stills 0

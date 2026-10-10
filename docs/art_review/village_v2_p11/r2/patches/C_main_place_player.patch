@@ -1,0 +1,141 @@
+--- a/godot/scripts/main.gd
++++ b/godot/scripts/main.gd
+@@ -18,6 +18,9 @@
+ const BOOT_FALLBACK := "slice"
+ ## 傳送落地後的冷卻，免得一落地就被同一個傳送區抓回去
+ const PORTAL_COOLDOWN := 2.0
++## P11 R2：人間之里の別名（_find_arrival_portal）・着地の足元クリアランス（_settle_on_floor）
++const V_ALIASES := ["village_v2", "slice", "village"]
++const FOOT_CLEAR := 0.05
+ ## 只有 XZ 跨度超過這個值的 mesh 才做 trimesh 碰撞（地形、大結構）。
+ ## 小物件的碰撞交給 meta 裡的遊戲碰撞箱 —— 那份是 web 版調過手感的。
+ const TRIMESH_MIN_SPAN := 15.0
+@@ -1280,9 +1283,10 @@
+ ## 從 from_id 進來 → 落在通往 from_id 的傳送點旁；首次啟動（沒有來源圖）
+ ## 也落在第一個傳送點旁 —— 圖中心常常是建築物的正上方
+ func _place_player(meta: Dictionary, from_id: String) -> void:
+-	var spawn := Vector3(0.0, 40.0, 0.0)
++	# P11 R2：(0, 40, 0) から落とさない。来た地図の portal を探す（完全一致 → 人間之里の別名 village_v2／slice／village）→
++	# meta.spawn → 最初の portal。着地点は真下の床に置き（空中から落とさない）、膠囊が重なれば足元を上げる／内向きにずらす。
++	# arrival_yaw の無い portal は地図の内側を向く。
+ 	var portals: Array = meta.get("portals", [])
+-	var arrival_portal: Dictionary = {}
+ 	# meta.spawn：首次進圖（沒有來源圖）的指定出生點，序章醒來點用。
+ 	# y 不手填：從 40 m 高落下，地形碰撞接住。
+ 	if from_id == "" and meta.has("spawn"):
+@@ -1300,26 +1304,100 @@
+ 			player.rotation.y = spawn_yaw
+ 		portal_cooldown = PORTAL_COOLDOWN
+ 		return
+-	if from_id == "" and portals.size() > 0:
+-		var p0: Dictionary = portals[0]
+-		arrival_portal = p0
+-		spawn = _arrival_for_portal(p0)
+-	for p in portals:
+-		if p.get("target") == from_id:
+-			arrival_portal = p
+-			spawn = _arrival_for_portal(p)
+-			break
++	var arrival_portal: Dictionary = {}
++	if from_id != "":
++		arrival_portal = _find_arrival_portal(portals, from_id)
++	if arrival_portal.is_empty() and meta.has("spawn"):
++		_place_player(meta, "")
++		return
++	if arrival_portal.is_empty() and portals.size() > 0:
++		arrival_portal = portals[0]
++	if arrival_portal.is_empty():
++		# 着地情報の無い地図（portal も spawn も無い）だけ従来どおり
++		player.velocity = Vector3.ZERO
++		player.global_position = Vector3(0.0, 40.0, 0.0)
++		portal_cooldown = PORTAL_COOLDOWN
++		return
++	var arrival := _arrival_for_portal(arrival_portal)
++	var inward := Vector3(-arrival.x, 0.0, -arrival.z)
++	inward = inward.normalized() if inward.length() > 0.01 else Vector3.ZERO
+ 	player.velocity = Vector3.ZERO
+-	player.global_position = spawn
++	player.global_position = _settle_on_floor(arrival, inward)
++	var yaw := 0.0
+ 	if arrival_portal.has("arrival_yaw"):
+-		var arr_yaw := float(arrival_portal.arrival_yaw)
+-		if player.has_method("snap_yaw"):
+-			player.snap_yaw(arr_yaw)
+-		else:
+-			player.rotation.y = arr_yaw
++		yaw = float(arrival_portal.arrival_yaw)
++	elif inward != Vector3.ZERO:
++		yaw = atan2(-inward.x, -inward.z)
++	if player.has_method("snap_yaw"):
++		player.snap_yaw(yaw)
++	else:
++		player.rotation.y = yaw
+ 	portal_cooldown = PORTAL_COOLDOWN
+ 
+ 
++## P11 R2：来た地図への portal（完全一致 → 人間之里の別名）
++func _find_arrival_portal(portals: Array, from_id: String) -> Dictionary:
++	for p in portals:
++		if p.get("target") == from_id:
++			return p
++	if from_id in V_ALIASES:
++		for p in portals:
++			if String(p.get("target", "")) in V_ALIASES:
++				return p
++	return {}
++
++
++## P11 R2：着地点の真下の床に立たせる（膠囊が重なれば足元を最大 0.3 m 上げる／内向きに 0.5 m ずつ最大 4 m）
++func _settle_on_floor(at: Vector3, inward: Vector3) -> Vector3:
++	# 前の地図（map_root の外）はこの幀ではまだ queue_free 待ちで物理空間に残っている → 新しい地図の碰撞だけを見る
++	var space := get_viewport().get_world_3d().direct_space_state
++	var cap: Shape3D = null
++	var cap_local := Transform3D.IDENTITY
++	if player != null and player.has_method("_capsule_shape"):
++		cap = player.call("_capsule_shape")
++		cap_local = player.call("_capsule_local")
++	for i in 9:
++		var p := at + inward * (0.5 * i)
++		var rq := PhysicsRayQueryParameters3D.create(p, p + Vector3(0, -6.0, 0), player.collision_mask)
++		var ex: Array[RID] = [player.get_rid()]
++		var hit := {}
++		for k in 8:
++			rq.exclude = ex
++			var h := space.intersect_ray(rq)
++			if h.is_empty():
++				break
++			var col := h.get("collider") as Node
++			var nm := String(col.name) if col else ""
++			if col == null or map_root == null or not map_root.is_ancestor_of(col) \
++					or nm.contains("Boundary") or nm.contains("邊界") or nm.contains("boundary"):
++				ex.append(h["rid"])
++				continue
++			hit = h
++			break
++		if hit.is_empty():
++			continue
++		var floor_y := float((hit["position"] as Vector3).y)
++		if cap == null:
++			return Vector3(p.x, floor_y + FOOT_CLEAR, p.z)
++		# 斜面では膠囊の丸い底が上り側に触れるので、足元を 0.1 m ずつ（最大 0.3 m）上げて空きを探す
++		for lift: float in [0.0, 0.1, 0.2, 0.3]:
++			var stand := Vector3(p.x, floor_y + FOOT_CLEAR + lift, p.z)
++			var q := PhysicsShapeQueryParameters3D.new()
++			q.shape = cap
++			q.transform = Transform3D(Basis.IDENTITY, stand) * cap_local
++			q.collision_mask = player.collision_mask
++			q.exclude = [player.get_rid()]
++			var blocked := false
++			for r: Dictionary in space.intersect_shape(q, 16):
++				var rc := r.get("collider") as Node
++				if rc != null and map_root != null and map_root.is_ancestor_of(rc):
++					blocked = true
++					break
++			if not blocked:
++				return stand
++	return at
++
++
+ func _arrival_for_portal(portal: Dictionary) -> Vector3:
+ 	# Low-ceiling interiors may override the default 2 m drop height.  A portal
+ 	# can also record the ground under the inward landing point when that differs

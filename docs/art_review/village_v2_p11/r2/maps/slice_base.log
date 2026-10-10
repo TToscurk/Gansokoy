@@ -1,0 +1,127 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 3568 個，關閉投影 3150 個，保護 4 個，減面建築 52 個（省 1859 萬面）
+[實走] 膠囊 r=0.30 h=1.70  floor_max_angle=52°  max_slides=6  控制器=真實 _physics_process
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+主街往北走（應暢通）             走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.97  ✓ 暢通
+穿過大鳥居中央                走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✓ 暢通
+撞大鳥居左柱                 走了   9.5 / 28.0 m  終點Y   0.00 最高Y  0.98  ✓ 被擋
+撞大鳥居右柱                 走了  23.9 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞町家 machiya_西_00       走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞商家 shouka_東_02        走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞倉庫_Mesh               走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞霧雨店                   走了   5.5 / 28.0 m  終點Y   0.00 最高Y  1.09  ✓ 被擋
+撞鯢吞亭                   走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞鈴奈庵                   走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✗ 暢通
+撞寺子屋                   走了  25.9 / 28.0 m  終點Y  -0.18 最高Y  0.98  ✗ 暢通
+水路底撞石砌護岸               走了   5.0 / 28.0 m  終點Y  -3.03 最高Y -1.52  ✓ 被擋
+走進東河（應有河床）             走了  26.0 / 28.0 m  終點Y   0.03 最高Y  0.98  ✓ 暢通
+龍石像橋 西→東 上橋            走了  74.8 / 81.7 m  終點Y  -2.81 最高Y  0.48  ✓ 暢通
+龍石像橋 東→西 上橋            走了  56.8 / 81.7 m  終點Y  -0.14 最高Y  0.48  ✓ 暢通
+撞路燈_03（東側）             走了   4.9 / 28.0 m  終點Y   0.00 最高Y  0.98  ✓ 被擋
+兩排路燈之間走主街              走了  26.1 / 28.0 m  終點Y   0.00 最高Y  0.98  ✓ 暢通
+[實走] 失敗 7 / 17
+done
+ERROR: 2 RID allocations of type 'N10RendererRD11MeshStorage4MeshE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N10RendererRD15MaterialStorage8MaterialE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N10RendererRD15MaterialStorage6ShaderE' were leaked at exit.
+ERROR: 3 RID allocations of type 'N10RendererRD14TextureStorage7TextureE' were leaked at exit.
+ERROR: 3 RID allocations of type 'N17RendererSceneCull8InstanceE' were leaked at exit.
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceSurfaceDataCacheE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceForwardClusteredE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: 1 shaders of type SceneForwardClusteredShaderRD were never freed
+   at: ~ShaderRD (servers/rendering/renderer_rd/shader_rd.cpp:1236)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: 1 RID of type "UniformBuffer" was leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8684)
+WARNING: 4 RIDs of type "IndexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 4 RIDs of type "IndexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 5 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

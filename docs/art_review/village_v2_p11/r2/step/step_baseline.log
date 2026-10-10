@@ -1,0 +1,65 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[STEP] step 0.60 kit_B_P_MKT_003          prop 到達=false 終点→目標 5.31 m 地形上最大 0.51 m 構件へ乗った ["046_sk_bench_c"] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.60 kit_B_P_MKT_008          prop 到達=false 終点→目標 5.76 m 地形上最大 0.27 m 構件へ乗った ["058_kr_zaimoku_c"] 終了時 地形上 0.08 足元 Collision/TerrainCollision ｜最高時の足元 Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17
+[STEP] step 0.60 walk_x2_MKT_003          prop 到達=true 終点→目標 0.60 m 地形上最大 0.51 m 構件へ乗った ["046_sk_bench_c"] 終了時 地形上 0.43 足元 Collision/TerrainCollision ｜最高時の足元 Props/StreetP10/Collision/046_sk_bench_c y 1.21
+[STEP] step 0.60 walk_s3_endai            prop 到達=true 終点→目標 0.42 m 地形上最大 0.49 m 構件へ乗った ["062_ms_endai_mousen_c39"] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Props/MarketWestP10/Collision/062_ms_endai_mousen_c39 y 1.67
+[STEP] step 0.60 mw_endai_062             prop 到達=false 終点→目標 3.81 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.60 hu_stool_048             prop 到達=true 終点→目標 0.55 m 地形上最大 0.37 m 構件へ乗った ["048_sz_stool_c"] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 HumanUseP10/Collision/048_sz_stool_c y 1.28
+[STEP] step 0.60 sando_steps_up           pass 到達=true 終点→目標 0.56 m 地形上最大 0.87 m 構件へ乗った [] 終了時 地形上 0.91 足元 ShrineApproachP10/RampCollision ｜最高時の足元 ShrineApproachP10/RampCollision/Ramp y 15.68
+[STEP] step 0.60 sando_steps_down         pass 到達=true 終点→目標 0.56 m 地形上最大 0.94 m 構件へ乗った [] 終了時 地形上 0.26 足元 ShrineApproachP10/RampCollision ｜最高時の足元 ShrineApproachP10/RampCollision/Ramp y 16.04
+[STEP] step 0.60 terakoya_stepstone       pass 到達=true 終点→目標 0.53 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.76
+[STEP] step 0.60 hieda_gate               pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.65
+[STEP] step 0.60 bridge02_end             pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.54
+[STEP] step 0.60 bridge05                 pass 到達=true 終点→目標 0.55 m 地形上最大 0.82 m 構件へ乗った [] 終了時 地形上 0.82 足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision ｜最高時の足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27
+[STEP] step 0.60 farm_bund_N2             pass 到達=true 終点→目標 0.53 m 地形上最大 0.28 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.00
+[STEP] step 0.60 riverbank_stair_dragon   pass 到達=true 終点→目標 0.59 m 地形上最大 0.01 m 構件へ乗った [] 終了時 地形上 0.01 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y -2.04
+[STEP] step 0.60 plank_S2                 pass 到達=true 終点→目標 0.05 m 地形上最大 0.29 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Districts/FarmlandEast/FarmlandP8/Irrigation/ZoneWater/Plank_S2_Lateral y 0.09
+[STEP] step 0.60 graze_046_bench_L        prop 到達=true 終点→目標 0.55 m 地形上最大 0.30 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.70
+[STEP] step 0.60 graze_046_bench_R        prop 到達=true 終点→目標 0.57 m 地形上最大 0.28 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.70
+[STEP] step 0.60 graze_046_bench_L_deep   prop 到達=true 終点→目標 0.60 m 地形上最大 0.24 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.60 graze_046_bench_R_deep   prop 到達=true 終点→目標 0.60 m 地形上最大 0.24 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.60 graze_062_endai_L        prop 到達=true 終点→目標 0.58 m 地形上最大 0.23 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.17
+[STEP] step 0.60 graze_062_endai_R        prop 到達=false 終点→目標 3.69 m 地形上最大 0.29 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.60 graze_062_endai_L_deep   prop 到達=true 終点→目標 0.57 m 地形上最大 0.49 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.60 graze_007_bench_L        prop 到達=true 終点→目標 0.28 m 地形上最大 0.16 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.15
+[STEP] step 0.60 graze_007_bench_R        prop 到達=true 終点→目標 0.28 m 地形上最大 0.23 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.14
+[STEP] step 0.60 graze_048_stool_L        prop 到達=true 終点→目標 0.55 m 地形上最大 0.18 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.86
+[STEP] step 0.60 jump_046_bench           jump 到達=true 終点→目標 0.68 m 地形上最大 0.27 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.60 jump_062_endai           jump 到達=true 終点→目標 0.58 m 地形上最大 1.75 m 構件へ乗った [] 終了時 地形上 0.49 足元 Props/MarketWestP10/Collision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 kit_B_P_MKT_003          prop 到達=false 終点→目標 6.43 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.35 kit_B_P_MKT_008          prop 到達=false 終点→目標 5.76 m 地形上最大 0.27 m 構件へ乗った ["058_kr_zaimoku_c"] 終了時 地形上 0.08 足元 Collision/TerrainCollision ｜最高時の足元 Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17
+[STEP] step 0.35 walk_x2_MKT_003          prop 到達=false 終点→目標 1.59 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.70
+[STEP] step 0.35 walk_s3_endai            prop 到達=false 終点→目標 3.62 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 mw_endai_062             prop 到達=false 終点→目標 3.81 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 hu_stool_048             prop 到達=true 終点→目標 0.55 m 地形上最大 0.37 m 構件へ乗った ["048_sz_stool_c"] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 HumanUseP10/Collision/048_sz_stool_c y 1.28
+[STEP] step 0.35 sando_steps_up           pass 到達=true 終点→目標 0.58 m 地形上最大 0.86 m 構件へ乗った [] 終了時 地形上 0.91 足元 ShrineApproachP10/RampCollision ｜最高時の足元 ShrineApproachP10/RampCollision/Ramp y 15.67
+[STEP] step 0.35 sando_steps_down         pass 到達=true 終点→目標 0.56 m 地形上最大 0.94 m 構件へ乗った [] 終了時 地形上 0.26 足元 ShrineApproachP10/RampCollision ｜最高時の足元 ShrineApproachP10/RampCollision/Ramp y 16.04
+[STEP] step 0.35 terakoya_stepstone       pass 到達=true 終点→目標 0.53 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.76
+[STEP] step 0.35 hieda_gate               pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.65
+[STEP] step 0.35 bridge02_end             pass 到達=true 終点→目標 0.55 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.54
+[STEP] step 0.35 bridge05                 pass 到達=true 終点→目標 0.55 m 地形上最大 0.82 m 構件へ乗った [] 終了時 地形上 0.82 足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision ｜最高時の足元 Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27
+[STEP] step 0.35 farm_bund_N2             pass 到達=true 終点→目標 0.54 m 地形上最大 0.28 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.00
+[STEP] step 0.35 riverbank_stair_dragon   pass 到達=true 終点→目標 0.59 m 地形上最大 0.01 m 構件へ乗った [] 終了時 地形上 0.01 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y -2.04
+[STEP] step 0.35 plank_S2                 pass 到達=true 終点→目標 0.05 m 地形上最大 0.29 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Districts/FarmlandEast/FarmlandP8/Irrigation/ZoneWater/Plank_S2_Lateral y 0.09
+[STEP] step 0.35 graze_046_bench_L        prop 到達=true 終点→目標 0.55 m 地形上最大 0.30 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.70
+[STEP] step 0.35 graze_046_bench_R        prop 到達=true 終点→目標 0.57 m 地形上最大 0.28 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.70
+[STEP] step 0.35 graze_046_bench_L_deep   prop 到達=true 終点→目標 0.60 m 地形上最大 0.28 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.35 graze_046_bench_R_deep   prop 到達=true 終点→目標 0.56 m 地形上最大 0.24 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.35 graze_062_endai_L        prop 到達=true 終点→目標 0.58 m 地形上最大 0.24 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.17
+[STEP] step 0.35 graze_062_endai_R        prop 到達=false 終点→目標 3.69 m 地形上最大 0.29 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 graze_062_endai_L_deep   prop 到達=false 終点→目標 3.90 m 地形上最大 0.00 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18
+[STEP] step 0.35 graze_007_bench_L        prop 到達=true 終点→目標 0.28 m 地形上最大 0.22 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.14
+[STEP] step 0.35 graze_007_bench_R        prop 到達=true 終点→目標 0.57 m 地形上最大 0.17 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.15
+[STEP] step 0.35 graze_048_stool_L        prop 到達=true 終点→目標 0.55 m 地形上最大 0.18 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.86
+[STEP] step 0.35 jump_046_bench           jump 到達=true 終点→目標 0.68 m 地形上最大 0.27 m 構件へ乗った [] 終了時 地形上 0.0 足元 Collision/TerrainCollision ｜最高時の足元 Collision/TerrainCollision/Shape y 0.69
+[STEP] step 0.35 jump_062_endai           jump 到達=true 終点→目標 0.58 m 地形上最大 1.75 m 構件へ乗った [] 終了時 地形上 0.49 足元 Props/MarketWestP10/Collision ｜最高時の足元 Collision/TerrainCollision/Shape y 1.18

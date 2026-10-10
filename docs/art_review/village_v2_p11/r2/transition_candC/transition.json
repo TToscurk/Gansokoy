@@ -1,0 +1,849 @@
+{
+	"candidate": "C",
+	"fails": 0,
+	"hops": [
+		{
+			"cam_yaw": 0.015,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				220.83,
+				0.18,
+				169.56
+			],
+			"first": [
+				220.83,
+				0.23,
+				169.56
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				224.0,
+				172.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				0.0,
+				0.0,
+				2.2
+			],
+			"first": [
+				0.0,
+				0.05,
+				2.2
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				0.0,
+				6.19999980926514
+			],
+			"t_floor_s": 0.0,
+			"to": "hieda1f",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 3.142,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				394.0,
+				0.54,
+				1.98
+			],
+			"first": [
+				394.0,
+				0.59,
+				1.98
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "hieda1f",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				398.0,
+				2.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.411,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				58.05,
+				-0.05,
+				9.36
+			],
+			"first": [
+				58.05,
+				0.0,
+				9.36
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				62.0,
+				10.0
+			],
+			"t_floor_s": 0.0,
+			"to": "kourindou",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.571,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				424.39,
+				2.01,
+				-203.27
+			],
+			"first": [
+				424.39,
+				2.06,
+				-203.27
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "kourindou",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				428.0,
+				-205.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.015,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				232.39,
+				0.0,
+				110.29
+			],
+			"first": [
+				232.39,
+				0.05,
+				110.29
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				236.0,
+				112.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "travel(portal locked)",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				0.0,
+				0.0,
+				2.2
+			],
+			"first": [
+				0.0,
+				0.05,
+				2.2
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				0.0,
+				6.19999980926514
+			],
+			"t_floor_s": 0.0,
+			"to": "hieda1f",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				230.44,
+				0.0,
+				-118.17
+			],
+			"first": [
+				230.44,
+				0.05,
+				-118.17
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "hieda1f",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				234.0,
+				-120.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.411,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				58.05,
+				-0.05,
+				9.36
+			],
+			"first": [
+				58.05,
+				0.0,
+				9.36
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				62.0,
+				10.0
+			],
+			"t_floor_s": 0.0,
+			"to": "kourindou",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.571,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.0,
+			"final": [
+				452.19,
+				-0.44,
+				-142.8
+			],
+			"first": [
+				452.19,
+				-0.44,
+				-142.8
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "kourindou",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				456.0,
+				-144.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.015,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 1,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				220.83,
+				0.18,
+				169.56
+			],
+			"first": [
+				220.83,
+				0.23,
+				169.56
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				224.0,
+				172.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.015,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				220.83,
+				0.18,
+				169.56
+			],
+			"first": [
+				220.83,
+				0.23,
+				169.56
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				224.0,
+				172.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				0.0,
+				0.0,
+				2.2
+			],
+			"first": [
+				0.0,
+				0.05,
+				2.2
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				0.0,
+				6.19999980926514
+			],
+			"t_floor_s": 0.0,
+			"to": "hieda1f",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 3.142,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				394.0,
+				0.54,
+				1.98
+			],
+			"first": [
+				394.0,
+				0.59,
+				1.98
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "hieda1f",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				398.0,
+				2.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.411,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				58.05,
+				-0.05,
+				9.36
+			],
+			"first": [
+				58.05,
+				0.0,
+				9.36
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				62.0,
+				10.0
+			],
+			"t_floor_s": 0.0,
+			"to": "kourindou",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.571,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				424.39,
+				2.01,
+				-203.27
+			],
+			"first": [
+				424.39,
+				2.06,
+				-203.27
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "kourindou",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				428.0,
+				-205.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.015,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "village_v2",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				232.39,
+				0.0,
+				110.29
+			],
+			"first": [
+				232.39,
+				0.05,
+				110.29
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				236.0,
+				112.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "travel(portal locked)",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				0.0,
+				0.0,
+				2.2
+			],
+			"first": [
+				0.0,
+				0.05,
+				2.2
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				0.0,
+				6.19999980926514
+			],
+			"t_floor_s": 0.0,
+			"to": "hieda1f",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				230.44,
+				0.0,
+				-118.17
+			],
+			"first": [
+				230.44,
+				0.05,
+				-118.17
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "hieda1f",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				234.0,
+				-120.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.411,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				58.05,
+				-0.05,
+				9.36
+			],
+			"first": [
+				58.05,
+				0.0,
+				9.36
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				62.0,
+				10.0
+			],
+			"t_floor_s": 0.0,
+			"to": "kourindou",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 1.571,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.0,
+			"final": [
+				452.19,
+				-0.44,
+				-142.8
+			],
+			"first": [
+				452.19,
+				-0.44,
+				-142.8
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "kourindou",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				456.0,
+				-144.0
+			],
+			"t_floor_s": 0.0,
+			"to": "slice",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.015,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "away_from_portal",
+			"fall_m": 0.05,
+			"final": [
+				1.59,
+				0.39,
+				104.81
+			],
+			"first": [
+				1.59,
+				0.44,
+				104.81
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "slice",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				1.64999997615814,
+				108.809997558594
+			],
+			"t_floor_s": 0.0,
+			"to": "trail",
+			"via": "portal",
+			"why": []
+		},
+		{
+			"cam_yaw": 0.0,
+			"cycle": 2,
+			"facing_err_deg": 0.0,
+			"facing_ref": "arrival_yaw",
+			"fall_m": 0.05,
+			"final": [
+				220.83,
+				0.18,
+				169.56
+			],
+			"first": [
+				220.83,
+				0.23,
+				169.56
+			],
+			"first_dist_to_return_portal_m": 4.0,
+			"from": "trail",
+			"inside_portal": "",
+			"ok": true,
+			"overlap": [],
+			"return_portal": [
+				224.0,
+				172.0
+			],
+			"t_floor_s": 0.0,
+			"to": "village_v2",
+			"via": "travel",
+			"why": []
+		}
+	],
+	"swapped": [
+		"C:.→main_p11r2.gd"
+	]
+}

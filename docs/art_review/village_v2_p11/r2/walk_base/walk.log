@@ -1,0 +1,130 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WALK] start=trail {"arrival":[220.83,1.36,169.56],"map":"village_v2","on_floor_after_s":0.32,"portal_at":[224,172],"settled":[220.83,0.18,169.56]}
+[WALK] boot 23438 ms spawn [220.83, 0.18, 169.56] hour 10.0 npc 51 renderer forward_plus
+[WALK] seg s0_trail_gate
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[229.58,3.39,129.34],"floor":true,"fps":46.0,"look":[234.0,100.0],"name":"P01_south_gate","npc_nearest_m":95.5,"npc_within_25m":0,"pitch":-0.18,"player":[230.82,0.17,121.07],"seg":"s0_trail_gate"}
+[WALK] seg s1_main_street
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[236.76,3.76,69.15],"floor":true,"fps":60.0,"look":[252.0,10.0],"name":"P02_main_street","npc_nearest_m":45.6,"npc_within_25m":0,"pitch":-0.18,"player":[238.84,0.53,61.06],"seg":"s1_main_street"}
+[WALK] seg s2_market
+[WALK] EVENT {"cam":[247.7,3.28,-33.18],"hit_length":2.62,"kind":"ARM_PULL","pos":[246.57,1.11,-35.68],"seg":"s2_market","spring":8.5,"t":57.3}
+[WALK] EVENT {"from":4.48,"kind":"CAM_SNAP_OUT","pos":[245.46,1.13,-38.04],"seg":"s2_market","t":58.0,"to":7.92}
+[WALK] EVENT {"from":6.92,"kind":"CAM_SNAP_OUT","pos":[243.73,1.14,-40.87],"seg":"s2_market","t":58.8,"to":8.5}
+[WALK] seg s3_market_west
+[WALK] EVENT {"from":6.34,"kind":"CAM_SNAP_OUT","pos":[239.09,1.17,-44.61],"seg":"s3_market_west","t":60.3,"to":8.5}
+[WALK] EVENT {"cam":[234.29,3.28,-48.01],"hit_length":2.22,"kind":"ARM_PULL","pos":[232.46,1.18,-46.55],"seg":"s3_market_west","spring":8.5,"t":64.1}
+[WALK] EVENT {"from":2.52,"kind":"CAM_SNAP_OUT","pos":[231.35,1.67,-46.19],"seg":"s3_market_west","t":64.4,"to":8.5}
+[WALK] EVENT {"above_terrain":0.49,"kind":"LIFT","on":"Props/MarketWestP10/Collision/062_ms_endai_mousen_c39","pos":[231.29,1.67,-46.18],"seg":"s3_market_west","t":64.4}
+[WALK] seg s4_homes
+[WALK] EVENT {"cam":[203.4,3.65,-40.88],"hit_length":4.38,"kind":"ARM_PULL","pos":[200.89,1.17,-44.45],"seg":"s4_homes","spring":8.5,"t":72.1}
+[WALK] EVENT {"from":3.22,"kind":"CAM_SNAP_OUT","pos":[200.82,1.17,-44.57],"seg":"s4_homes","t":72.1,"to":4.62}
+[WALK] EVENT {"from":4.62,"kind":"CAM_SNAP_OUT","pos":[200.81,1.17,-44.63],"seg":"s4_homes","t":72.2,"to":7.37}
+[WALK] EVENT {"from":7.37,"kind":"CAM_SNAP_OUT","pos":[200.8,1.17,-44.7],"seg":"s4_homes","t":72.2,"to":8.5}
+[WALK] seg s5_bridge_farm
+[WALK] EVENT {"cam":[279.86,3.71,-89.01],"hit_length":3.32,"kind":"ARM_PULL","pos":[281.0,1.41,-85.88],"seg":"s5_bridge_farm","spring":8.5,"t":100.8}
+[WALK] EVENT {"from":3.32,"kind":"CAM_SNAP_OUT","pos":[281.02,1.41,-85.82],"seg":"s5_bridge_farm","t":100.8,"to":4.25}
+[WALK] EVENT {"from":4.25,"kind":"CAM_SNAP_OUT","pos":[281.03,1.41,-85.75],"seg":"s5_bridge_farm","t":100.8,"to":5.51}
+[WALK] EVENT {"from":5.51,"kind":"CAM_SNAP_OUT","pos":[281.03,1.41,-85.69],"seg":"s5_bridge_farm","t":100.8,"to":7.22}
+[WALK] EVENT {"from":7.22,"kind":"CAM_SNAP_OUT","pos":[281.03,1.41,-85.49],"seg":"s5_bridge_farm","t":100.9,"to":8.5}
+[WALK] EVENT {"cam":[260.03,3.44,-24.21],"hit_length":4.02,"kind":"ARM_PULL","pos":[263.88,1.02,-22.98],"seg":"s5_bridge_farm","spring":8.5,"t":117.1}
+[WALK] EVENT {"from":4.02,"kind":"CAM_SNAP_OUT","pos":[263.94,1.02,-22.96],"seg":"s5_bridge_farm","t":117.2,"to":5.01}
+[WALK] EVENT {"cam":[259.99,3.44,-23.35],"hit_length":3.98,"kind":"ARM_PULL","pos":[264.01,1.02,-22.95],"seg":"s5_bridge_farm","spring":8.5,"t":117.2}
+[WALK] EVENT {"from":4.08,"kind":"CAM_SNAP_OUT","pos":[264.14,1.02,-22.94],"seg":"s5_bridge_farm","t":117.2,"to":8.5}
+[WALK] seg s6_waterwheel
+[WALK] seg s7_to_shrine
+[WALK] EVENT {"from":4.95,"kind":"CAM_SNAP_OUT","pos":[298.61,1.7,-127.01],"seg":"s7_to_shrine","t":230.8,"to":8.5}
+[WALK] EVENT {"from":4.78,"kind":"CAM_SNAP_OUT","pos":[297.42,1.69,-125.01],"seg":"s7_to_shrine","t":231.5,"to":6.01}
+[WALK] EVENT {"from":6.01,"kind":"CAM_SNAP_OUT","pos":[297.41,1.69,-125.08],"seg":"s7_to_shrine","t":231.5,"to":8.29}
+[WALK] seg s8_sando_up
+[WALK] STILL {"arm_hit":8.5,"arm_set":8.5,"cam":[261.74,36.31,-209.86],"floor":true,"fps":60.0,"look":[258.0,-228.0],"name":"P03_shrine_top","npc_nearest_m":79.9,"npc_within_25m":0,"pitch":-0.18,"player":[260.05,33.09,-218.05],"seg":"s8_sando_up"}
+[WALK] seg s9_sando_down
+[WALK] EVENT {"cam":[267.0,28.55,-207.21],"hit_length":4.65,"kind":"ARM_PULL","pos":[269.9,25.94,-203.52],"seg":"s9_sando_down","spring":8.5,"t":263.2}
+[WALK] EVENT {"cam":[267.36,28.24,-206.75],"hit_length":4.58,"kind":"ARM_PULL","pos":[270.23,25.63,-203.09],"seg":"s9_sando_down","spring":8.5,"t":263.3}
+[WALK] EVENT {"cam":[272.76,24.07,-200.17],"hit_length":3.95,"kind":"ARM_PULL","pos":[275.05,21.56,-196.84],"seg":"s9_sando_down","spring":8.5,"t":265.3}
+[WALK] EVENT {"cam":[280.09,16.74,-189.51],"hit_length":3.72,"kind":"ARM_PULL","pos":[281.7,14.2,-185.96],"seg":"s9_sando_down","spring":8.5,"t":268.4}
+[WALK] EVENT {"cam":[285.31,9.12,-177.67],"hit_length":3.95,"kind":"ARM_PULL","pos":[286.84,6.58,-173.87],"seg":"s9_sando_down","spring":8.5,"t":271.7}
+[WALK] seg x1_bridges
+[WALK] EVENT {"ground":1.69,"kind":"TP","pos":[343.35,1.69,-128.0],"seg":"x1_bridges","t":281.5,"to":[343.350006103516,-128.0]}
+[WALK] EVENT {"kind":"BRIDGE","name":"Bridge_01","pos":[343.35,1.69,-128.0],"road_dist":0.0,"seg":"x1_bridges","span":15.5,"t":281.5}
+[WALK] EVENT {"ground":0.33,"kind":"TP","pos":[375.35,0.33,-205.0],"seg":"x1_bridges","t":292.9,"to":[375.350006103516,-205.0]}
+[WALK] EVENT {"kind":"BRIDGE","name":"Bridge_02","pos":[375.35,0.33,-205.0],"road_dist":0.0,"seg":"x1_bridges","span":41.0,"t":292.9}
+[WALK] EVENT {"ground":0.9,"kind":"TP","pos":[324.62,0.9,-31.85],"seg":"x1_bridges","t":317.0,"to":[324.619201660156,-31.8468761444092]}
+[WALK] EVENT {"kind":"BRIDGE","name":"Bridge_03","pos":[324.62,0.9,-31.85],"road_dist":0.0,"seg":"x1_bridges","span":15.0,"t":317.0}
+[WALK] EVENT {"ground":0.46,"kind":"TP","pos":[310.06,0.46,42.29],"seg":"x1_bridges","t":328.1,"to":[310.064147949219,42.2939186096191]}
+[WALK] EVENT {"kind":"BRIDGE","name":"Bridge_04","pos":[310.06,0.46,42.29],"road_dist":0.0,"seg":"x1_bridges","span":14.0,"t":328.1}
+[WALK] EVENT {"ground":0.98,"kind":"TP","pos":[169.2,0.98,-13.14],"seg":"x1_bridges","t":338.7,"to":[169.202728271484,-13.1393051147461]}
+[WALK] EVENT {"kind":"BRIDGE","name":"Bridge_05","pos":[169.2,0.98,-13.14],"road_dist":0.0,"seg":"x1_bridges","span":11.5,"t":338.7}
+[WALK] seg x2_entrances
+[WALK] EVENT {"ground":0.7,"kind":"TP","pos":[244.0,0.7,34.1],"seg":"x2_entrances","t":348.1,"to":[244.0,34.0999984741211]}
+[WALK] EVENT {"cam":[239.75,3.19,33.49],"hit_length":4.45,"kind":"ARM_PULL","pos":[244.19,0.7,34.06],"seg":"x2_entrances","spring":8.5,"t":348.2}
+[WALK] EVENT {"from":4.35,"kind":"CAM_SNAP_OUT","pos":[244.45,0.7,34.12],"seg":"x2_entrances","t":348.3,"to":8.5}
+[WALK] EVENT {"cam":[240.23,3.2,32.56],"hit_length":4.48,"kind":"ARM_PULL","pos":[244.51,0.7,34.14],"seg":"x2_entrances","spring":8.5,"t":348.3}
+[WALK] EVENT {"goal":[248.0,35.5],"kind":"STUCK","nudge":1,"pos":[246.5,0.7,34.92],"seg":"x2_entrances","t":350.2}
+[WALK] EVENT {"from":6.87,"kind":"CAM_SNAP_OUT","pos":[246.33,0.69,35.36],"seg":"x2_entrances","t":350.3,"to":7.52}
+[WALK] EVENT {"from":7.07,"kind":"CAM_SNAP_OUT","pos":[245.77,0.68,37.15],"seg":"x2_entrances","t":350.9,"to":8.5}
+[WALK] EVENT {"goal":[248.0,35.5],"kind":"STUCK","nudge":2,"pos":[245.89,0.68,37.1],"seg":"x2_entrances","t":352.3}
+[WALK] EVENT {"from":6.72,"kind":"CAM_SNAP_OUT","pos":[246.47,1.1,35.27],"seg":"x2_entrances","t":353.4,"to":8.5}
+[WALK] EVENT {"above_terrain":0.51,"kind":"LIFT","on":"Props/StreetP10/Collision/046_sk_bench_c","pos":[246.73,1.21,35.31],"seg":"x2_entrances","t":353.5}
+[WALK] EVENT {"ground":0.96,"kind":"TP","pos":[256.0,0.96,-10.0],"seg":"x2_entrances","t":353.9,"to":[256.0,-10.0]}
+[WALK] EVENT {"from":6.97,"kind":"CAM_SNAP_OUT","pos":[255.81,0.96,-10.02],"seg":"x2_entrances","t":354.0,"to":7.57}
+[WALK] EVENT {"from":7.57,"kind":"CAM_SNAP_OUT","pos":[255.74,0.96,-10.0],"seg":"x2_entrances","t":354.0,"to":8.24}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":1,"pos":[251.86,0.93,-6.31],"seg":"x2_entrances","t":357.2}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":2,"pos":[251.86,0.93,-6.31],"seg":"x2_entrances","t":359.3}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":3,"pos":[251.5,1.11,-5.26],"seg":"x2_entrances","t":361.9}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":4,"pos":[251.85,0.93,-6.31],"seg":"x2_entrances","t":364.6}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":5,"pos":[251.5,1.11,-5.26],"seg":"x2_entrances","t":367.1}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"STUCK","nudge":6,"pos":[251.85,0.93,-6.31],"seg":"x2_entrances","t":369.8}
+[WALK] EVENT {"goal":[249.5,-6.5],"kind":"BLOCKED","nudges":6,"pos":[251.5,1.11,-5.26],"seg":"x2_entrances","t":372.4}
+[WALK] EVENT {"ground":0.57,"kind":"TP","pos":[390.0,0.57,-3.0],"seg":"x2_entrances","t":372.7,"to":[390.0,-3.0]}
+[WALK] EVENT {"ground":0.75,"kind":"TP","pos":[209.0,0.75,24.3],"seg":"x2_entrances","t":375.2,"to":[209.0,24.2999992370605]}
+[WALK] EVENT {"cam":[193.47,3.24,23.05],"hit_length":4.38,"kind":"ARM_PULL","pos":[197.72,0.76,24.14],"seg":"x2_entrances","spring":8.5,"t":378.2}
+[WALK] EVENT {"cam":[193.47,3.24,23.05],"hit_length":4.38,"kind":"ARM_PULL","pos":[197.72,0.76,24.14],"seg":"x2_entrances","spring":8.5,"t":383.3}
+[WALK] EVENT {"ground":1.27,"kind":"TP","pos":[275.0,1.27,-62.0],"seg":"x2_entrances","t":388.6,"to":[275.0,-62.0]}
+[WALK] EVENT {"from":7.07,"kind":"CAM_SNAP_OUT","pos":[277.64,1.28,-62.04],"seg":"x2_entrances","t":389.3,"to":8.5}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":1,"pos":[279.95,1.45,-62.09],"seg":"x2_entrances","t":391.2}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":2,"pos":[279.83,1.28,-61.69],"seg":"x2_entrances","t":393.8}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":3,"pos":[280.15,1.45,-62.77],"seg":"x2_entrances","t":396.3}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":4,"pos":[279.83,1.28,-61.7],"seg":"x2_entrances","t":398.8}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":5,"pos":[280.15,1.45,-62.76],"seg":"x2_entrances","t":401.3}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"STUCK","nudge":6,"pos":[279.83,1.28,-61.7],"seg":"x2_entrances","t":403.7}
+[WALK] EVENT {"goal":[281.5,-62.0],"kind":"BLOCKED","nudges":6,"pos":[280.15,1.45,-62.75],"seg":"x2_entrances","t":406.2}
+[WALK] EVENT {"ground":0.53,"kind":"TP","pos":[238.5,0.53,62.0],"seg":"x2_entrances","t":406.6,"to":[238.5,62.0]}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":1,"pos":[234.14,0.67,61.98],"seg":"x2_entrances","t":409.1}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":2,"pos":[234.15,0.67,61.92],"seg":"x2_entrances","t":411.2}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":3,"pos":[234.08,0.67,62.4],"seg":"x2_entrances","t":413.9}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":4,"pos":[234.15,0.67,61.94],"seg":"x2_entrances","t":416.6}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":5,"pos":[234.08,0.67,62.4],"seg":"x2_entrances","t":419.2}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"STUCK","nudge":6,"pos":[234.15,0.67,61.94],"seg":"x2_entrances","t":422.0}
+[WALK] EVENT {"goal":[233.0,62.0],"kind":"BLOCKED","nudges":6,"pos":[234.08,0.67,62.4],"seg":"x2_entrances","t":424.6}
+[WALK] seg x3_lanes
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[208.9,1.02,-22.5],"seg":"x3_lanes","t":425.0,"to":[208.899993896484,-22.5]}
+[WALK] EVENT {"cam":[210.74,3.19,-41.35],"hit_length":1.93,"kind":"ARM_PULL","pos":[208.9,1.14,-40.96],"seg":"x3_lanes","spring":8.5,"t":429.6}
+[WALK] EVENT {"from":1.78,"kind":"CAM_SNAP_OUT","pos":[208.85,1.14,-40.92],"seg":"x3_lanes","t":429.6,"to":8.5}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[219.65,1.02,-23.0],"seg":"x3_lanes","t":434.2,"to":[219.649993896484,-23.0]}
+[WALK] EVENT {"goal":[219.649993896484,-42.0],"kind":"STUCK","nudge":1,"pos":[219.65,1.13,-37.89],"seg":"x3_lanes","t":439.3}
+[WALK] EVENT {"cam":[221.01,3.39,-34.98],"hit_length":3.12,"kind":"ARM_PULL","pos":[220.37,1.13,-38.09],"seg":"x3_lanes","spring":8.5,"t":440.0}
+[WALK] EVENT {"from":3.52,"kind":"CAM_SNAP_OUT","pos":[228.6,1.02,-24.0],"seg":"x3_lanes","t":440.7,"to":8.5}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[228.6,1.02,-24.0],"seg":"x3_lanes","t":441.0,"to":[228.600006103516,-24.0]}
+[WALK] EVENT {"ground":1.38,"kind":"TP","pos":[204.0,1.38,-80.0],"seg":"x3_lanes","t":444.1,"to":[204.0,-80.0]}
+[WALK] EVENT {"cam":[220.86,3.97,-90.59],"hit_length":4.65,"kind":"ARM_PULL","pos":[225.49,1.44,-89.57],"seg":"x3_lanes","spring":8.5,"t":450.0}
+[WALK] seg x4_forest_edge
+[WALK] EVENT {"ground":1.71,"kind":"TP","pos":[299.0,1.71,-131.0],"seg":"x4_forest_edge","t":464.4,"to":[299.0,-131.0]}
+[WALK] EVENT {"goal":[275.0,-141.0],"kind":"STUCK","nudge":1,"pos":[285.86,1.79,-150.79],"seg":"x4_forest_edge","t":474.9}
+[WALK] EVENT {"cam":[282.85,3.94,-148.78],"hit_length":2.56,"kind":"ARM_PULL","pos":[281.06,1.78,-146.79],"seg":"x4_forest_edge","spring":8.5,"t":477.1}
+[WALK] EVENT {"from":6.87,"kind":"CAM_SNAP_OUT","pos":[201.43,1.79,-150.44],"seg":"x4_forest_edge","t":498.2,"to":8.5}
+[WALK] done events 93 stills 3

@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P11R2] candidate ["B:Player/CameraAdapter→player_camera_adapter_p11r2.gd"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[WALK] boot 7534 ms spawn [237.1, 0.47, 71.7] hour 10.0 npc 51 renderer forward_plus
+[WALK] seg f1_mw_detour
+[WALK] EVENT {"from":5.53,"kind":"CAM_SNAP_OUT","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.1,"to":6.27}
+[WALK] EVENT {"ground":1.17,"kind":"TP","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.3,"to":[238.399993896484,-45.0]}
+[WALK] EVENT {"cam":[234.34,3.27,-47.68],"hit_length":2.19,"kind":"ARM_PULL","pos":[232.57,1.18,-46.25],"seg":"f1_mw_detour","spring":8.5,"t":4.0}
+[WALK] EVENT {"goal":[228.399993896484,-45.4000015258789],"kind":"STUCK","nudge":1,"pos":[231.82,1.18,-46.01],"seg":"f1_mw_detour","t":5.6}
+[WALK] EVENT {"goal":[228.399993896484,-45.4000015258789],"kind":"STUCK","nudge":2,"pos":[231.01,1.19,-47.91],"seg":"f1_mw_detour","t":7.8}
+[WALK] EVENT {"cam":[234.07,3.49,-49.67],"hit_length":3.39,"kind":"ARM_PULL","pos":[232.03,1.18,-47.04],"seg":"f1_mw_detour","spring":8.5,"t":8.2}
+[WALK] seg f2_sando_down
+[WALK] EVENT {"ground":33.71,"kind":"TP","pos":[259.5,33.74,-219.0],"seg":"f2_sando_down","t":13.3,"to":[259.5,-219.0]}
+[WALK] EVENT {"cam":[259.38,36.17,-223.04],"hit_length":4.13,"kind":"ARM_PULL","pos":[259.48,33.72,-218.93],"seg":"f2_sando_down","spring":8.5,"t":13.3}
+[WALK] seg f3_lanes
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[208.9,1.02,-22.5],"seg":"f3_lanes","t":36.4,"to":[208.899993896484,-22.5]}
+[WALK] EVENT {"cam":[210.74,3.19,-41.35],"hit_length":1.93,"kind":"ARM_PULL","pos":[208.9,1.14,-40.96],"seg":"f3_lanes","spring":8.5,"t":41.0}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[219.65,1.02,-23.0],"seg":"f3_lanes","t":45.6,"to":[219.649993896484,-23.0]}
+[WALK] EVENT {"goal":[219.649993896484,-42.0],"kind":"STUCK","nudge":1,"pos":[219.65,1.13,-37.89],"seg":"f3_lanes","t":50.7}
+[WALK] EVENT {"cam":[221.01,3.39,-34.97],"hit_length":3.13,"kind":"ARM_PULL","pos":[220.37,1.13,-38.09],"seg":"f3_lanes","spring":8.5,"t":51.4}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[228.6,1.02,-24.0],"seg":"f3_lanes","t":52.4,"to":[228.600006103516,-24.0]}
+[WALK] done events 14 stills 0

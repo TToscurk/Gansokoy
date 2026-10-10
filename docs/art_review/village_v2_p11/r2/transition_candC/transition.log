@@ -1,0 +1,590 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P11R2] candidate ["C:.→main_p11r2.gd"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223369646151710013>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 2365 ms、佈置 2286 ms、合計 4651 ms
+[TRANS] c1 village_v2 → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3649 ms、佈置 7480 ms、合計 11129 ms
+[TRANS] c1 trail      → village_v2 travel first [220.83, 0.23, 169.56] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] village_v2 → hieda1f：背景載入 474 ms、佈置 1010 ms、合計 1484 ms
+[TRANS] c1 village_v2 → hieda1f    portal first [0.0, 0.05, 2.2] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] hieda1f → village_v2：背景載入 3552 ms、佈置 6260 ms、合計 9812 ms
+[TRANS] c1 hieda1f    → village_v2 travel first [394.0, 0.59, 1.98] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223364483114480348>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] village_v2 → kourindou：背景載入 649 ms、佈置 1324 ms、合計 1973 ms
+[TRANS] c1 village_v2 → kourindou  portal first [58.05, 0.0, 9.36] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] kourindou → village_v2：背景載入 3240 ms、佈置 6163 ms、合計 9403 ms
+[TRANS] c1 kourindou  → village_v2 travel first [424.39, 2.06, -203.27] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223362115396313424>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1800 ms、佈置 2283 ms、合計 4083 ms
+[TRANS] c1 village_v2 → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 19899 個，關閉投影 17890 個，保護 5 個，減面建築 852 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] trail → slice：背景載入 2567 ms、佈置 6284 ms、合計 8851 ms
+[TRANS] c1 trail      → slice      travel(portal locked) first [232.39, 0.05, 110.29] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] slice → hieda1f：背景載入 210 ms、佈置 497 ms、合計 707 ms
+[TRANS] c1 slice      → hieda1f    portal first [0.0, 0.05, 2.2] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4037 個，關閉投影 3604 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] hieda1f → slice：背景載入 2933 ms、佈置 5743 ms、合計 8676 ms
+[TRANS] c1 hieda1f    → slice      portal first [230.44, 0.05, -118.17] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223360637256475606>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] slice → kourindou：背景載入 283 ms、佈置 575 ms、合計 858 ms
+[TRANS] c1 slice      → kourindou  portal first [58.05, 0.0, 9.36] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4397 個，關閉投影 3967 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] kourindou → slice：背景載入 2934 ms、佈置 5710 ms、合計 8644 ms
+[TRANS] c1 kourindou  → slice      portal first [452.19, -0.44, -142.8] fall 0.0 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223360119478070601>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] slice → trail：背景載入 917 ms、佈置 905 ms、合計 1822 ms
+[TRANS] c1 slice      → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 2585 ms、佈置 7164 ms、合計 9749 ms
+[TRANS] c1 trail      → village_v2 travel first [220.83, 0.23, 169.56] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223357293037233123>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1493 ms、佈置 2153 ms、合計 3646 ms
+[TRANS] c2 village_v2 → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3317 ms、佈置 7375 ms、合計 10692 ms
+[TRANS] c2 trail      → village_v2 travel first [220.83, 0.23, 169.56] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] village_v2 → hieda1f：背景載入 441 ms、佈置 973 ms、合計 1414 ms
+[TRANS] c2 village_v2 → hieda1f    portal first [0.0, 0.05, 2.2] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] hieda1f → village_v2：背景載入 3285 ms、佈置 5971 ms、合計 9256 ms
+[TRANS] c2 hieda1f    → village_v2 travel first [394.0, 0.59, 1.98] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223352111243079628>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] village_v2 → kourindou：背景載入 639 ms、佈置 1276 ms、合計 1915 ms
+[TRANS] c2 village_v2 → kourindou  portal first [58.05, 0.0, 9.36] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] kourindou → village_v2：背景載入 3302 ms、佈置 5997 ms、合計 9299 ms
+[TRANS] c2 kourindou  → village_v2 travel first [424.39, 2.06, -203.27] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223349734884646870>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] village_v2 → trail：背景載入 1369 ms、佈置 2252 ms、合計 3621 ms
+[TRANS] c2 village_v2 → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 19899 個，關閉投影 17890 個，保護 5 個，減面建築 852 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] trail → slice：背景載入 2467 ms、佈置 6552 ms、合計 9019 ms
+[TRANS] c2 trail      → slice      travel(portal locked) first [232.39, 0.05, 110.29] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] hieda1f → res://maps/hieda1f/hieda1f.tscn
+[map] Terrain override=<Object#null>
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[light] hieda1f 室內補光：ambient=2.10 + 24 盞散射補燈
+[travel] slice → hieda1f：背景載入 216 ms、佈置 570 ms、合計 786 ms
+[TRANS] c2 slice      → hieda1f    portal first [0.0, 0.05, 2.2] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4037 個，關閉投影 3604 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] hieda1f → slice：背景載入 2900 ms、佈置 5994 ms、合計 8894 ms
+[TRANS] c2 hieda1f    → slice      portal first [230.44, 0.05, -118.17] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] kourindou → res://maps/kourindou/kourindou.tscn
+[map] Terrain override=(res://assets/materials/terrain_kourindou.tres):<ShaderMaterial#-9223348278353861519>
+[map] trimesh 碰撞 753 個（own_colliders=false）
+[travel] slice → kourindou：背景載入 300 ms、佈置 571 ms、合計 871 ms
+[TRANS] c2 slice      → kourindou  portal first [58.05, 0.0, 9.36] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] slice → res://maps/slice/slice.tscn
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.927 → 14.0m，密度 0.022/m²
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×1.898 → 14.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：93 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：68 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：55 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×0.871 → 14.0m，密度 0.016/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：90 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.483 → 14.0m，密度 0.022/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：36 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：36 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.45m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.48m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：48 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.35m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[canal] 水面 176.0m（下游 -82.0→23.4、上游 23.4→94.0），格距 1.50m
+[waterline] 125 段吃水帶，深 0.50m、淡出 0.22m
+[bedstone] Pebble_Round_1.gltf：260 顆沉床石
+[bedstone] Pebble_Round_3.gltf：200 顆沉床石
+[bedstone] Pebble_Square_2.gltf：150 顆沉床石
+[bedstone] Rock_Medium_1.gltf：55 顆沉床石
+[grove] CommonTree_1.gltf：82 棵，本地高 7.26m ×1.789 → 13.0m，密度 0.022/m²
+[grove] Pine_2.gltf：82 棵，本地高 7.38m ×2.101 → 15.5m，密度 0.022/m²
+[grove] TwistedTree_3.gltf：52 棵，本地高 16.07m ×1.120 → 18.0m，密度 0.016/m²
+[grove] CommonTree_4.gltf：76 棵，本地高 9.44m ×1.536 → 14.5m，密度 0.022/m²
+[talus] Pebble_Round_1.gltf：171 顆，帶寬 1.60m
+[talus] Pebble_Round_3.gltf：139 顆，帶寬 1.60m
+[talus] Pebble_Square_2.gltf：109 顆，帶寬 1.60m
+[talus] Rock_Medium_1.gltf：31 顆，帶寬 1.60m
+[coping] Grass_Common_Short.gltf：48 叢，實高 0.56m
+[coping] Grass_Wispy_Short.gltf：48 叢，實高 0.54m
+[coping] Clover_1.gltf：48 叢，實高 0.40m
+[coping] Fern_1.gltf：14 叢，實高 0.63m
+[masonry] 壓頂石 71 顆、扶壁 14 座、洩水孔 15 處
+[map] slice 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[效能裁剪] 可見距離 4397 個，關閉投影 3967 個，保護 5 個，減面建築 52 個（省 1859 萬面）
+[效能裁剪] scatter West_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_03：可見距離 26 個，關閉投影 0 個
+[效能裁剪] scatter West_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter East_bush_04：可見距離 17 個，關閉投影 0 個
+[效能裁剪] scatter West_rock_05：可見距離 15 個，關閉投影 0 個
+[效能裁剪] scatter East_rock_05：可見距離 15 個，關閉投影 0 個
+[travel] kourindou → slice：背景載入 3084 ms、佈置 5771 ms、合計 8855 ms
+[TRANS] c2 kourindou  → slice      portal first [452.19, -0.44, -142.8] fall 0.0 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223347757572335529>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[travel] slice → trail：背景載入 917 ms、佈置 945 ms、合計 1862 ms
+[TRANS] c2 slice      → trail      portal first [1.59, 0.44, 104.81] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[travel] trail → village_v2：背景載入 3218 ms、佈置 7071 ms、合計 10289 ms
+[TRANS] c2 trail      → village_v2 travel first [220.83, 0.23, 169.56] fall 0.05 t_floor 0.0 portal_d 4.0 overlap 0 inside  face 0.0 OK
+[TRANS] 結果：28 ホップ、0 失敗
+ERROR: 2 RID allocations of type 'N10RendererRD11MeshStorage4MeshE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N10RendererRD15MaterialStorage8MaterialE' were leaked at exit.
+ERROR: 2 RID allocations of type 'N10RendererRD15MaterialStorage6ShaderE' were leaked at exit.
+ERROR: 3 RID allocations of type 'N10RendererRD14TextureStorage7TextureE' were leaked at exit.
+ERROR: 18 RID allocations of type 'N17RendererSceneCull8InstanceE' were leaked at exit.
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceSurfaceDataCacheE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: Pages in use exist at exit in PagedAllocator: N33RendererSceneRenderImplementation22RenderForwardClustered32GeometryInstanceForwardClusteredE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)
+ERROR: 2 shaders of type SceneForwardClusteredShaderRD were never freed
+   at: ~ShaderRD (servers/rendering/renderer_rd/shader_rd.cpp:1236)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: 1 RID of type "UniformBuffer" was leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8684)
+WARNING: 4 RIDs of type "IndexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 4 RIDs of type "IndexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexArray" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 3 RIDs of type "VertexBuffer" were leaked.
+   at: _free_rids (servers/rendering/rendering_device.cpp:8686)
+WARNING: 5 RIDs of type "Texture" were leaked.
+   at: finalize (servers/rendering/rendering_device.cpp:8900)
+WARNING: 5332 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

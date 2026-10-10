@@ -1,0 +1,54 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P11R2] candidate ["A:Player→yoriichi_character.gd"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[ZONE] 探針網格 429；跨階連接 9、取水 2、排水口 2
+[ZONE] PASS walk_DropWeir_T0_T1（堰旁橫越落差溝）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.11–0.21 m、終點 (373.0, 134.1)
+[ZONE] PASS walk_Siphon_T1_T2（沿 FarmPath_2 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.05–0.00 m、終點 (440.0, 86.3)
+[ZONE] PASS walk_DropWeir_T2_T3（堰旁橫越落差溝）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.29–-0.23 m、終點 (501.6, 133.7)
+[ZONE] PASS walk_Siphon_T3_S3（沿 FarmPath_5 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.35–-0.26 m、終點 (556.7, 70.0)
+[ZONE] PASS walk_Siphon_S3_N3（沿 FarmPath_4 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.52–-0.45 m、終點 (558.7, 0.0)
+[ZONE] PASS walk_Siphon_PILOT_S2（沿 FarmPath_2 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.10–-0.05 m、終點 (440.0, 67.5)
+[ZONE] PASS walk_Siphon_S2_N2（沿 FarmPath_4 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.25–-0.03 m、終點 (455.8, -0.0)
+[ZONE] PASS walk_DropWeir_N0_N1（堰旁橫越落差溝）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.10–0.01 m、終點 (371.8, -104.9)
+[ZONE] PASS walk_Siphon_N1_N2（沿 FarmPath_2 走過路下管段）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.21–-0.20 m、終點 (440.0, -88.3)
+[ZONE] PASS walk_Feeder_T0_槽側0：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.03–0.16 m、終點 (324.3, 67.8)
+[ZONE] PASS walk_Feeder_T0_槽側1：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.17–0.30 m、終點 (330.4, 76.1)
+[ZONE] PASS walk_Feeder_N0_槽側0：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.08–0.12 m、終點 (347.4, -50.3)
+[ZONE] PASS walk_Feeder_N0_槽側1：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.09–0.36 m、終點 (352.0, -47.0)
+[ZONE] PASS walk_Outfall_N2（沿 RiversidePath 走過暗渠）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.29–-0.13 m、終點 (458.1, -112.7)
+[ZONE] PASS walk_Outfall_N3（沿 RiversidePath 走過暗渠）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.07–0.41 m、終點 (517.6, -93.8)
+[ZONE] PASS walk_Plank_T0（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.30–0.60 m、終點 (350.9, 112.7)
+[ZONE] PASS walk_Plank_T1（跨支渠板）：抵達=true、橫偏 0.10 m、身體穿入可見構件 0 幀、高程 0.10–0.40 m、終點 (403.3, 109.2)
+[ZONE] PASS walk_Plank_T2（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.10–0.20 m、終點 (472.8, 110.7)
+[ZONE] PASS walk_Plank_T3（跨支渠板）：抵達=true、橫偏 0.03 m、身體穿入可見構件 0 幀、高程 -0.30–-0.00 m、終點 (525.3, 102.2)
+[ZONE] PASS walk_Plank_S2（跨支渠板）：抵達=true、橫偏 0.06 m、身體穿入可見構件 0 幀、高程 -0.20–0.10 m、終點 (468.0, 19.2)
+[ZONE] PASS walk_Plank_S3（跨支渠板）：抵達=true、橫偏 0.04 m、身體穿入可見構件 0 幀、高程 -0.40–-0.10 m、終點 (525.4, 28.4)
+[ZONE] PASS walk_Plank_N0（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 0.10–0.40 m、終點 (353.6, -77.7)
+[ZONE] PASS walk_Plank_N1（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.10–0.20 m、終點 (409.0, -103.9)
+[ZONE] PASS walk_Plank_N2（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.30–-0.00 m、終點 (467.6, -26.0)
+[ZONE] PASS walk_Plank_N3（跨支渠板）：抵達=true、橫偏 0.00 m、身體穿入可見構件 0 幀、高程 -0.50–-0.20 m、終點 (525.4, -24.2)
+[ZONE] PASS tps_camera_zone：近裁面四角半徑＋1 cm＝0.103 m；28 點 × 180 姿勢＝5040（12 方位 × 5 俯仰 × 臂長 3／8.5／16 m）；近裁面碰到可見構件 0；相機已壓地形（離地 < 0.103 m）時同時碰到貼地構件 75（資訊，非 P8）；只碰到貼地水面／渠床面片 10（資訊）；0.25 m 內 179（資訊）；構件擋在相機與胸口間 0（0.0 %，資訊）
+[ZONE] camera points: ["Siphon_T1_T2_road", "Siphon_T1_T2_inlet", "Siphon_T1_T2_outlet", "Siphon_T3_S3_road", "Siphon_T3_S3_inlet", "Siphon_T3_S3_outlet", "Siphon_S3_N3_road", "Siphon_S3_N3_inlet", "Siphon_S3_N3_outlet", "Siphon_PILOT_S2_road", "Siphon_PILOT_S2_inlet", "Siphon_PILOT_S2_outlet", "Siphon_S2_N2_road", "Siphon_S2_N2_inlet", "Siphon_S2_N2_outlet", "Siphon_N1_N2_road", "Siphon_N1_N2_inlet", "Siphon_N1_N2_outlet", "WW_T0_dropbox", "WW_T0_trough", "WW_T0_bank", "WW_N0_dropbox", "WW_N0_trough", "WW_N0_bank", "Outfall_N2_in", "Outfall_N2_out", "Outfall_N3_in", "Outfall_N3_out"]
+[ZONE] camera skim（貼地水面）: ["Siphon_S3_N3_inlet 0.12m", "Siphon_S3_N3_outlet 0.15m", "Siphon_PILOT_S2_inlet 0.13m", "Siphon_S2_N2_inlet 0.10m", "Siphon_N1_N2_inlet 0.13m", "WW_N0_trough 0.11m", "WW_N0_trough 0.11m", "WW_N0_trough 0.11m", "WW_N0_trough 0.11m", "Outfall_N3_in 0.13m"]
+[ZONE] result: 0 failed

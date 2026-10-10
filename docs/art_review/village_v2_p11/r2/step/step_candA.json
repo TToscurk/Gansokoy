@@ -1,0 +1,655 @@
+{
+	"default_step_height": 0.35,
+	"runs": [
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_003",
+			"end": [
+				246.49,
+				35.01
+			],
+			"end_dist": 6.43,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				252.583541870117,
+				37.0465316772461
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.989334106445,
+				34.5151329040527
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": false,
+			"case": "kit_B_P_MKT_008",
+			"end": [
+				258.98,
+				1.07
+			],
+			"end_dist": 5.76,
+			"final_above_terrain": 0.08,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				264.444061279297,
+				2.89756751060486
+			],
+			"kind": "prop",
+			"lifted_on": [
+				"058_kr_zaimoku_c"
+			],
+			"max_above_terrain": 0.27,
+			"start": [
+				256.419372558594,
+				0.218757152557373
+			],
+			"step_height": 0.35,
+			"under_at_max": "Props/StreetP10/Collision/058_kr_zaimoku_c y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "walk_x2_MKT_003",
+			"end": [
+				246.5,
+				34.98
+			],
+			"end_dist": 1.59,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				248.0,
+				35.5
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				244.0,
+				34.0999984741211
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.70"
+		},
+		{
+			"arrived": false,
+			"case": "walk_s3_endai",
+			"end": [
+				231.76,
+				-46.74
+			],
+			"end_dist": 3.62,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				228.399993896484,
+				-45.4000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				232.899993896484,
+				-47.2000007629395
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": false,
+			"case": "mw_endai_062",
+			"end": [
+				231.8,
+				-46.17
+			],
+			"end_dist": 3.81,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				228.0,
+				-45.9000015258789
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				233.600006103516,
+				-46.2999992370605
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": false,
+			"case": "hu_stool_048",
+			"end": [
+				328.32,
+				-41.12
+			],
+			"end_dist": 3.48,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				328.299987792969,
+				-44.5999984741211
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.13,
+			"start": [
+				328.299987792969,
+				-39.4000015258789
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.90"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_up",
+			"end": [
+				280.72,
+				-188.47
+			],
+			"end_dist": 0.58,
+			"final_above_terrain": 0.91,
+			"final_on": "ShrineApproachP10/RampCollision",
+			"goal": [
+				280.5,
+				-189.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.86,
+			"start": [
+				290.0,
+				-166.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 15.67"
+		},
+		{
+			"arrived": true,
+			"case": "sando_steps_down",
+			"end": [
+				289.79,
+				-166.52
+			],
+			"end_dist": 0.56,
+			"final_above_terrain": 0.26,
+			"final_on": "ShrineApproachP10/RampCollision",
+			"goal": [
+				290.0,
+				-166.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.94,
+			"start": [
+				280.5,
+				-189.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "ShrineApproachP10/RampCollision/Ramp y 16.04"
+		},
+		{
+			"arrived": true,
+			"case": "terakoya_stepstone",
+			"end": [
+				196.93,
+				24.01
+			],
+			"end_dist": 0.53,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				196.399993896484,
+				24.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				201.0,
+				24.1000003814697
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.76"
+		},
+		{
+			"arrived": true,
+			"case": "hieda_gate",
+			"end": [
+				398.0,
+				-14.45
+			],
+			"end_dist": 0.55,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				398.0,
+				-15.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				398.0,
+				-3.5
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.65"
+		},
+		{
+			"arrived": true,
+			"case": "bridge02_end",
+			"end": [
+				377.89,
+				-211.46
+			],
+			"end_dist": 0.55,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				378.0,
+				-212.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				372.0,
+				-183.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.54"
+		},
+		{
+			"arrived": true,
+			"case": "bridge05",
+			"end": [
+				161.54,
+				-12.09
+			],
+			"end_dist": 0.55,
+			"final_above_terrain": 0.82,
+			"final_on": "Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision",
+			"goal": [
+				161.0,
+				-12.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.82,
+			"start": [
+				176.5,
+				-14.5
+			],
+			"step_height": 0.35,
+			"under_at_max": "Roads/Bridges/Bridge_05_WestLane_WestStream/Hero/Collision/Deck y 1.27"
+		},
+		{
+			"arrived": true,
+			"case": "farm_bund_N2",
+			"end": [
+				391.46,
+				22.0
+			],
+			"end_dist": 0.54,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				392.0,
+				22.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.28,
+			"start": [
+				372.0,
+				22.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.00"
+		},
+		{
+			"arrived": true,
+			"case": "riverbank_stair_dragon",
+			"end": [
+				388.26,
+				-213.47
+			],
+			"end_dist": 0.59,
+			"final_above_terrain": 0.01,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				388.0,
+				-214.0
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.01,
+			"start": [
+				392.0,
+				-200.0
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y -1.99"
+		},
+		{
+			"arrived": true,
+			"case": "plank_S2",
+			"end": [
+				467.95,
+				19.2
+			],
+			"end_dist": 0.05,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				468.0,
+				19.2000007629395
+			],
+			"kind": "pass",
+			"lifted_on": [],
+			"max_above_terrain": 0.29,
+			"start": [
+				474.399993896484,
+				19.2999992370605
+			],
+			"step_height": 0.35,
+			"under_at_max": "Districts/FarmlandEast/FarmlandP8/Irrigation/ZoneWater/Plank_S2_Lateral y 0.09"
+		},
+		{
+			"arrived": true,
+			"case": "graze_046_bench_L",
+			"end": [
+				246.63,
+				37.98
+			],
+			"end_dist": 0.56,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				246.359649658203,
+				38.4679794311523
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.24,
+			"start": [
+				248.193756103516,
+				32.9656143188477
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": true,
+			"case": "graze_046_bench_R",
+			"end": [
+				245.67,
+				37.65
+			],
+			"end_dist": 0.56,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				245.553283691406,
+				38.1991882324219
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.22,
+			"start": [
+				247.387390136719,
+				32.6968231201172
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": true,
+			"case": "graze_046_bench_L_deep",
+			"end": [
+				246.63,
+				37.98
+			],
+			"end_dist": 0.6,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				246.236328125,
+				38.426872253418
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.26,
+			"start": [
+				248.070434570313,
+				32.9245071411133
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": true,
+			"case": "graze_046_bench_R_deep",
+			"end": [
+				245.75,
+				37.65
+			],
+			"end_dist": 0.6,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				245.676605224609,
+				38.2402954101563
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				247.510711669922,
+				32.7379302978516
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": true,
+			"case": "graze_062_endai_L",
+			"end": [
+				228.28,
+				-45.81
+			],
+			"end_dist": 0.58,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				227.700012207031,
+				-45.8450012207031
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.22,
+			"start": [
+				233.5,
+				-45.8450012207031
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.17"
+		},
+		{
+			"arrived": false,
+			"case": "graze_062_endai_R",
+			"end": [
+				231.38,
+				-46.89
+			],
+			"end_dist": 3.68,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				227.700012207031,
+				-46.7669982910156
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				233.5,
+				-46.7669982910156
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": false,
+			"case": "graze_062_endai_L_deep",
+			"end": [
+				231.8,
+				-45.97
+			],
+			"end_dist": 3.9,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				227.900009155273,
+				-45.9749984741211
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				233.5,
+				-45.9749984741211
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		},
+		{
+			"arrived": true,
+			"case": "graze_007_bench_L",
+			"end": [
+				251.09,
+				-40.13
+			],
+			"end_dist": 0.57,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				250.810150146484,
+				-39.627986907959
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				251.441497802734,
+				-41.7354469299316
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.14"
+		},
+		{
+			"arrived": true,
+			"case": "graze_007_bench_R",
+			"end": [
+				250.05,
+				-40.44
+			],
+			"end_dist": 0.57,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				250.005493164063,
+				-39.8690528869629
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.0,
+			"start": [
+				250.636840820313,
+				-41.9765129089355
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.14"
+		},
+		{
+			"arrived": true,
+			"case": "graze_048_stool_L",
+			"end": [
+				326.73,
+				-41.15
+			],
+			"end_dist": 0.55,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				326.190002441406,
+				-41.2399978637695
+			],
+			"kind": "prop",
+			"lifted_on": [],
+			"max_above_terrain": 0.18,
+			"start": [
+				330.609985351563,
+				-41.2399978637695
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.86"
+		},
+		{
+			"arrived": true,
+			"case": "jump_046_bench",
+			"end": [
+				247.31,
+				36.1
+			],
+			"end_dist": 0.68,
+			"final_above_terrain": 0.0,
+			"final_on": "Collision/TerrainCollision",
+			"goal": [
+				246.869995117188,
+				35.5800018310547
+			],
+			"kind": "jump",
+			"lifted_on": [],
+			"max_above_terrain": 0.27,
+			"start": [
+				244.0,
+				34.0999984741211
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 0.69"
+		},
+		{
+			"arrived": true,
+			"case": "jump_062_endai",
+			"end": [
+				231.15,
+				-46.51
+			],
+			"end_dist": 0.58,
+			"final_above_terrain": 0.49,
+			"final_on": "Props/MarketWestP10/Collision",
+			"goal": [
+				230.600006103516,
+				-46.310001373291
+			],
+			"kind": "jump",
+			"lifted_on": [],
+			"max_above_terrain": 1.75,
+			"start": [
+				232.899993896484,
+				-47.2000007629395
+			],
+			"step_height": 0.35,
+			"under_at_max": "Collision/TerrainCollision/Shape y 1.18"
+		}
+	]
+}

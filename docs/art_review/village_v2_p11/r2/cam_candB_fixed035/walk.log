@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[P11R2] candidate ["B:Player/CameraAdapter→player_camera_adapter_p11r2.gd"]
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[WALK] boot 8313 ms spawn [237.1, 0.47, 71.7] hour 10.0 npc 51 renderer forward_plus
+[WALK] seg f1_mw_detour
+[WALK] EVENT {"from":5.55,"kind":"CAM_SNAP_OUT","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.2,"to":6.34}
+[WALK] EVENT {"ground":1.17,"kind":"TP","pos":[238.4,1.17,-45.0],"seg":"f1_mw_detour","t":0.3,"to":[238.399993896484,-45.0]}
+[WALK] EVENT {"cam":[234.34,3.27,-47.73],"hit_length":2.19,"kind":"ARM_PULL","pos":[232.58,1.18,-46.29],"seg":"f1_mw_detour","spring":8.5,"t":4.0}
+[WALK] seg f2_sando_down
+[WALK] EVENT {"ground":33.71,"kind":"TP","pos":[259.5,33.74,-219.0],"seg":"f2_sando_down","t":8.9,"to":[259.5,-219.0]}
+[WALK] EVENT {"cam":[259.87,36.16,-222.93],"hit_length":4.01,"kind":"ARM_PULL","pos":[259.49,33.71,-218.93],"seg":"f2_sando_down","spring":8.5,"t":8.9}
+[WALK] EVENT {"by":"ShrineApproachP10/RampCollision","cam":[268.32,27.32,-205.53],"kind":"OCCLUDED","pos":[272.09,24.12,-200.72],"seg":"f2_sando_down","t":14.5}
+[WALK] EVENT {"by":"ShrineApproachP10/RampCollision","cam":[276.69,19.75,-194.47],"kind":"OCCLUDED","pos":[279.65,16.7,-190.23],"seg":"f2_sando_down","t":17.7}
+[WALK] EVENT {"cam":[277.12,19.26,-193.86],"hit_length":4.67,"kind":"ARM_PULL","pos":[279.84,16.7,-189.95],"seg":"f2_sando_down","spring":8.5,"t":17.8}
+[WALK] EVENT {"by":"ShrineApproachP10/RampCollision","cam":[282.85,12.32,-183.46],"kind":"OCCLUDED","pos":[284.89,9.24,-178.57],"seg":"f2_sando_down","t":20.9}
+[WALK] EVENT {"by":"ShrineApproachP10/RampCollision","cam":[288.47,4.1,-170.36],"kind":"OCCLUDED","pos":[290.27,0.92,-165.06],"seg":"f2_sando_down","t":24.5}
+[WALK] seg f3_lanes
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[208.9,1.02,-22.5],"seg":"f3_lanes","t":32.0,"to":[208.899993896484,-22.5]}
+[WALK] EVENT {"cam":[210.74,3.19,-41.35],"hit_length":1.93,"kind":"ARM_PULL","pos":[208.9,1.14,-40.96],"seg":"f3_lanes","spring":8.5,"t":36.6}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[219.65,1.02,-23.0],"seg":"f3_lanes","t":41.2,"to":[219.649993896484,-23.0]}
+[WALK] EVENT {"goal":[219.649993896484,-42.0],"kind":"STUCK","nudge":1,"pos":[219.65,1.13,-37.89],"seg":"f3_lanes","t":46.4}
+[WALK] EVENT {"cam":[221.01,3.39,-34.97],"hit_length":3.13,"kind":"ARM_PULL","pos":[220.37,1.13,-38.09],"seg":"f3_lanes","spring":8.5,"t":47.0}
+[WALK] EVENT {"ground":1.02,"kind":"TP","pos":[228.6,1.02,-24.0],"seg":"f3_lanes","t":48.1,"to":[228.600006103516,-24.0]}
+[WALK] done events 16 stills 0

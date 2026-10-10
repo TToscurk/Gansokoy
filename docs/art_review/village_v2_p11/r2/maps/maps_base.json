@@ -1,0 +1,74 @@
+{
+	"candidate": "",
+	"fails": 1,
+	"legs": [
+		{
+			"arrived_all": true,
+			"end": [
+				0.0,
+				3.92,
+				-22.41
+			],
+			"map": "shrine",
+			"max_rise": 5.27,
+			"reached": [
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"arrived_all": true,
+			"end": [
+				0.0,
+				-0.44,
+				19.43
+			],
+			"map": "shrine",
+			"max_rise": 0.0,
+			"reached": [
+				true,
+				true,
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"arrived_all": true,
+			"end": [
+				-7.63,
+				0.0,
+				-4.75
+			],
+			"map": "hieda1f",
+			"max_rise": 0.0,
+			"reached": [
+				true,
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"arrived_all": false,
+			"end": [
+				32.32,
+				0.33,
+				5.3
+			],
+			"map": "kourindou",
+			"max_rise": 0.54,
+			"reached": [
+				true,
+				true,
+				false
+			]
+		}
+	],
+	"step_height": 0.6
+}

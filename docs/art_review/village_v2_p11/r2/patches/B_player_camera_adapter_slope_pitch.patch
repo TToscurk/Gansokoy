@@ -1,0 +1,87 @@
+--- a/godot/characters/yoriichi/player_camera_adapter.gd
++++ b/godot/characters/yoriichi/player_camera_adapter.gd
+@@ -37,6 +37,25 @@
+ var _current_yaw := 0.0
+ var _current_pitch := -0.18
+ 
++## P11 R2：下り坂の俯仰バイアスと腕の伸び戻り（_process 2・3 参照）。
++## 足元中心の真下の面の傾き α ≥ SLOPE_MIN_DEG の下り坂を SLOPE_MIN_TIME 秒以上移動中は、実効 pitch を −atan(tan α − SLOPE_LINE_K)
++## （30° の參道で ≈ −0.43、下限 SLOPE_PITCH_MAX）まで「加算の偏り」で下げる＝頭→相機の線が背後の斜面より上を通る俯角。
++## 坂を降りきっても移動中は SLOPE_HOLD 秒保持し、その後・停止・上り坂では SLOPE_EASE で 0 へ戻る。使用者の _target_pitch（マウス）は変えない。
++## 腕：縮む（壁・屋根・坂に当たる）時は SpringArm3D のまま即時（相機碰撞は止めない）、伸び戻る時だけ ARM_EXTEND m/s。
++const SLOPE_MIN_DEG := 18.0
++const SLOPE_LINE_K := 0.12       # tan β = tan α − K（K ≈ 頭の高さ／腕の長さ − 余裕）
++const SLOPE_PITCH_MAX := -0.6    # rad
++const SLOPE_HOLD := 1.0          # s
++const SLOPE_MIN_TIME := 0.3      # s（この時間続いた下り坂だけ）
++const SLOPE_EASE := 0.9          # rad/s
++const ARM_EXTEND := 6.0          # m/s
++
++var _slope_bias := 0.0
++var _slope_pitch := 0.0          # 直近の下り坂で要った実効 pitch（0＝なし）
++var _slope_hold := 0.0
++var _slope_time := 0.0
++var _arm_eff := -1.0
++
+ 
+ func _ready() -> void:
+ 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+@@ -99,12 +118,56 @@
+ 		var rot_factor := 1.0 - exp(-rotation_smoothing * delta)
+ 		_current_yaw = lerp_angle(_current_yaw, _target_yaw, rot_factor)
+ 		_current_pitch = lerpf(_current_pitch, _target_pitch, rot_factor)
+-		pivot.rotation = Vector3(_current_pitch, _current_yaw, 0.0)
++		_slope_bias = move_toward(_slope_bias, _slope_bias_target(delta), SLOPE_EASE * delta)
++		pivot.rotation = Vector3(clampf(_current_pitch + _slope_bias, pitch_min, pitch_max), _current_yaw, 0.0)
+ 
+ 	# 3. Smooth zoom
+ 	if arm != null:
+ 		_current_distance = lerpf(_current_distance, _target_distance, 1.0 - exp(-zoom_smoothing * delta))
+-		arm.spring_length = _current_distance
++		# 縮むのは即時、伸びるのはなめらかに（窄巷で建物を抜けた瞬間に 4–6 m 跳ね返らない）
++		var hit := arm.get_hit_length()
++		if _arm_eff < 0.0:
++			_arm_eff = _current_distance
++		if hit < _arm_eff - 0.01:
++			_arm_eff = hit
++		else:
++			_arm_eff = move_toward(_arm_eff, _current_distance, ARM_EXTEND * delta)
++		arm.spring_length = minf(_current_distance, _arm_eff + 0.05)
++
++
++## P11 R2：下り坂バイアスの目標（0 か負）。
++func _slope_bias_target(delta: float) -> float:
++	var b := _body as CharacterBody3D
++	if b == null:
++		return 0.0
++	var hv := Vector2(b.velocity.x, b.velocity.z)
++	var moving := hv.length() > 0.5
++	var want := 0.0
++	if b.is_on_floor() and moving:
++		# 坂の判定は足元中心の真下の面の法線（縁・壁際の接触法線では反応しない）
++		var o := b.global_position
++		var rq := PhysicsRayQueryParameters3D.create(o + Vector3(0, 0.3, 0), o - Vector3(0, 0.6, 0), b.collision_mask)
++		rq.exclude = [b.get_rid()]
++		var h := b.get_world_3d().direct_space_state.intersect_ray(rq)
++		if not h.is_empty():
++			var n: Vector3 = h["normal"]
++			var a := n.angle_to(Vector3.UP)
++			var down := Vector2(n.x, n.z)
++			if rad_to_deg(a) >= SLOPE_MIN_DEG and down.length() > 0.01 and hv.normalized().dot(down.normalized()) > 0.5:
++				want = maxf(-atan(maxf(0.0, tan(a) - SLOPE_LINE_K)), SLOPE_PITCH_MAX)
++	# 一瞬の傾き（段の縁・踏石）では反応しない：SLOPE_MIN_TIME 秒続いた下り坂だけ
++	_slope_time = _slope_time + delta if want < 0.0 else 0.0
++	if want < 0.0 and _slope_time >= SLOPE_MIN_TIME:
++		_slope_pitch = want
++		_slope_hold = SLOPE_HOLD
++	elif moving and _slope_hold > 0.0:
++		_slope_hold -= delta
++	else:
++		_slope_hold = 0.0
++		_slope_pitch = 0.0
++	if _slope_pitch >= 0.0:
++		return 0.0
++	return minf(0.0, _slope_pitch - _current_pitch)
+ 
+ 
+ func _unhandled_input(event: InputEvent) -> void:
