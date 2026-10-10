@@ -215,4 +215,4 @@ v3 曾用「接觸法線＋即時反應」，結果在門前卡牆、踩到凳�
 - `review/`：連拍對照
 - `patches/`：A／B／C 的 patch
 
-原始影格（`frames/`）不提交。
+原始影格（`frames/`）、`stills/`，以及中間版 `walk_candAB_Bv3/`、`walk_candAB_Bfixed035/` 的 `walk_log.json`（含 camtrace，2.6／0.4 MB；v3 誤觸發的逐幀資料在此）只留在本機，不提交；這兩個中間版的 `walk.log`（事件）已提交。
