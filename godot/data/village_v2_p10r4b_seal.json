@@ -525,11 +525,11 @@
   "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r4_seal.json": "8f03cac2ecacfbca093a23fab101985db4effdf25ea0ca1d491114f2f789421a",
-  "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
-  "godot/data/village_v2_p10r3c_seal.json": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
-  "godot/data/village_v2_p10r3d_seal.json": "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba",
-  "godot/data/village_v2_p10r3e_seal.json": "155722b2ea592808b3f6ae792e34f145c3d030f19f314fb220893b6d2cbc28d8",
+  "godot/data/village_v2_p10r4_seal.json": "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec",
+  "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+  "godot/data/village_v2_p10r3c_seal.json": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+  "godot/data/village_v2_p10r3d_seal.json": "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
+  "godot/data/village_v2_p10r3e_seal.json": "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
@@ -600,6 +600,56 @@
    "seal_file_before": "f5e8e8170659c8537d7eeb15e24af7a89a8dbcefb98a20e4e95acd76a7f7a5ee",
    "approved_by": "user",
    "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
+  },
+  {
+   "kind": "P11_R2B_CHILD_NPC_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r4_seal.json": [
+     "8f03cac2ecacfbca093a23fab101985db4effdf25ea0ca1d491114f2f789421a",
+     "ad4cd54c1f4b61eb4a8603d7da3567f26a9f0450ffe7dfe0fc628f3e25e36012"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+     "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+     "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba",
+     "ab2133233bf709720b422a39e8b78e407dcdd1144b55d430a378564d1ce4acd2"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "155722b2ea592808b3f6ae792e34f145c3d030f19f314fb220893b6d2cbc28d8",
+     "2340a216fdf62f747215fc627bbd88617d01f9f2748b10432dcf15c260282dea"
+    ]
+   },
+   "seal_file_before": "87e791fbb5d3499f61656c34d84a6ecab854216c770e6661942dcb8ffdd70454",
+   "approved_by": "user（P11 R2B 指示 §6）",
+   "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P11_R2B_CHILD_NPC_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r4_seal.json": [
+     "ad4cd54c1f4b61eb4a8603d7da3567f26a9f0450ffe7dfe0fc628f3e25e36012",
+     "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "ab2133233bf709720b422a39e8b78e407dcdd1144b55d430a378564d1ce4acd2",
+     "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "2340a216fdf62f747215fc627bbd88617d01f9f2748b10432dcf15c260282dea",
+     "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba"
+    ]
+   },
+   "seal_file_before": "b30477177252f69beadd74bd70bd60499c43d01d9061abef22b4bdb355fd2971",
+   "approved_by": "user（P11 R2B 指示 §6）",
+   "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

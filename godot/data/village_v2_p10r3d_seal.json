@@ -569,7 +569,7 @@
   "godot/tools/village_v2_population_core_lib.gd": "a5351eb323f5a11ac7dd40bc748b103147ff7bd7d616d5e8c6ab813be5968a2d",
   "godot/tools/village_v2_entrance_cue_lib.gd": "f5ad8ba7444aa156c41a87bfddaa6931254745c70ad9a2211595a532e2350636",
   "godot/scripts/npc_activity_core.gd": "c3aea5a03e8858b5f86f9f3eed2f7b1fa29eee6f011a1d1e3e57514e6ea08a06",
-  "godot/tools/verify_village_v2_population_core.gd": "3599207bbb037ed07b78f70fe04b504f4170e071fdf74b50e0f604dbe691634d",
+  "godot/tools/verify_village_v2_population_core.gd": "d6d83ac7363d6e9c50de02ebf1acfa5e95cc4d6af579fca93ae1a32aef572b57",
   "godot/tools/shot_p10_population_core.gd": "3fb4d56193716dd68de62583dd6462a87c71392a84a3f84c20815c0a075d98b5",
   "godot/tools/survey_village_v2_population_core.gd": "ff068ed874e3996daace068e53ebcf527851eba501ea28682a60fe66edee91ed",
   "godot/tools/shot_village_v2_population_core_views.json": "9d85097d2cdbf8d319b80e2ede972c842b327aaf5b9f116b0a0092b780900e22",
@@ -723,8 +723,8 @@
   "docs/art_review/village_v2_p10_population/core_r1_1/review/6_mouth_from_south_r1_vs_r1_1.jpg": "8e1e803be546300ad0343b3a44e9965af15b4c8a915e4ca3444eb93d525b46f0"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
-  "godot/data/village_v2_p10r3c_seal.json": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+  "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+  "godot/data/village_v2_p10r3c_seal.json": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -772,6 +772,36 @@
    "seal_file_before": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
    "approved_by": "user",
    "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
+  },
+  {
+   "kind": "P11_R2B_CHILD_NPC_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+     "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+     "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb"
+    ]
+   },
+   "seal_file_before": "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba",
+   "approved_by": "user（P11 R2B 指示 §6）",
+   "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P11_R2B_LIMITED_NPC_BEHAVIOR_FIX",
+   "at": "2026-10-11",
+   "frozen": {
+    "godot/tools/verify_village_v2_population_core.gd": [
+     "3599207bbb037ed07b78f70fe04b504f4170e071fdf74b50e0f604dbe691634d",
+     "d6d83ac7363d6e9c50de02ebf1acfa5e95cc4d6af579fca93ae1a32aef572b57"
+    ]
+   },
+   "seal_file_before": "ab2133233bf709720b422a39e8b78e407dcdd1144b55d430a378564d1ce4acd2",
+   "approved_by": "user（P11 R2B 指示 §6 limited reseal）",
+   "reason": "P11 R2B TASK03：Drink を時々の動作にしたため、Idle 中の杯の非表示を許可（飲む間の非表示は従来どおり違反）。limited verifier correction、判定の緩和は Idle 相のみ。"
   }
  ]
 }

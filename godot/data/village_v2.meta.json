@@ -5,7 +5,12 @@
 		560.0,
 		560.0
 	],
-	"portals": [
+	"spawn": {
+		"x": 224.0,
+		"yaw": 0.0,
+		"z": 160.0
+	},
+	"portals_disabled_p11r2b": [
 		{
 			"arrival_ground_y": 0.18,
 			"arrival_y_offset": 1.2,
@@ -37,9 +42,6 @@
 			"z": -205.0
 		}
 	],
-	"spawn": {
-		"x": 224.0,
-		"yaw": 0.0,
-		"z": 160.0
-	}
+	"portals": [],
+	"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。"
 }

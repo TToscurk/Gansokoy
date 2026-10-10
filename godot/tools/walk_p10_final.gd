@@ -11,7 +11,7 @@ const P11R2Swap := preload("res://tools/p11r2/p11r2_swap.gd")
 ## 記録：0.1 s（6 physics tick）ごとに 960×540 JPG（区間ごと）、still＝1600×900 PNG（止まって look へ向きを変え 1.4 s 落ち着かせる）、
 ##   0.5 s ごとのサンプル（位置・接地・速度・SpringArm 実長／設定長・fps・最寄り NPC）と事件（STUCK／BLOCKED／ARM_PULL／DIALOGUE）を JSON に。
 ## P11 R1 追加（2026-10-10）：
-##   --start=trail   起動後に main.load_map("village_v2", "trail")＝獸道から村へ入る正式の落点から歩き始める（落点・着地時間を記録）
+##   --start=trail   起動後に main.load_map("village_v2", "")  # P11 R2B：V2 傳送停用 → meta.spawn（224,160）から＝獸道から村へ入る正式の落点から歩き始める（落点・着地時間を記録）
 ##   --step=<m>      診断用：プレイヤーの step_height をメモリ上だけ上書き（ファイル不変；乗り上がり帯の比較）
 ##   route の追加ステップ ["tp", x, z, yaw] ＝区間テスト用の配置（地面＋0.1、20 tick 落ち着かせる；事件 TP として記録）、
 ##   ["xbridge", "Bridge_0N"] ＝橋の中心へ最寄りの道路線の方向で橋長＋8 m を往復

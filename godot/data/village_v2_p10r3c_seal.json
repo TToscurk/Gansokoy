@@ -240,7 +240,7 @@
     }
   ],
   "frozen": {
-    "godot/scripts/npc_activity_overlay.gd": "a72689bcf2ce90507afee48808290f0d946a7bd3fa5f589d079d327d23e63e30",
+    "godot/scripts/npc_activity_overlay.gd": "dc6258ab90c2d1a64d107e96d0f934a302a20399ddc99fbb3f6b753c39e86ceb",
     "godot/maps/village_v2/activity_p10.tscn": "3e53a1038199422785157ff083bb2a7f9dbdfd3f16bb3e04296a5ac4d13ae496",
     "godot/tools/verify_p10_activity.gd": "83a20a678b83085069604eb9a17a08f57f8deae94dceacdaa213b10932913149",
     "godot/tools/probe_p10_drink_ab2.gd": "fda5eea06f30986b2e9af0c96c2e9189a8755fa346731b4b09c175d975cb2596",
@@ -336,7 +336,7 @@
     "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
   },
   "child_seals": {
-    "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+    "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
   },
   "reseal_history": [
@@ -365,6 +365,32 @@
       "seal_file_before": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
       "approved_by": "user",
       "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
+    },
+    {
+      "kind": "P11_R2B_LIMITED_NPC_BEHAVIOR_FIX",
+      "at": "2026-10-11",
+      "frozen": {
+        "godot/scripts/npc_activity_overlay.gd": [
+          "a72689bcf2ce90507afee48808290f0d946a7bd3fa5f589d079d327d23e63e30",
+          "dc6258ab90c2d1a64d107e96d0f934a302a20399ddc99fbb3f6b753c39e86ceb"
+        ]
+      },
+      "seal_file_before": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+      "approved_by": "user（P11 R2B 指示 §6 limited reseal）",
+      "reason": "P11 R2B TASK03（使用者 2026-10-11 指示）：Drink が idle slot に入り永久に飲み続けていた → 基線 Idle を既定、25–45 秒に 1 回だけ承認済み drink clip を再生、杯は飲む間だけ表示。clip・握持・割り当ては不変。"
+    },
+    {
+      "kind": "P11_R2B_CHILD_NPC_CASCADE",
+      "at": "2026-10-11",
+      "child_seals": {
+        "godot/data/village_v2_p10r3b_seal.json": [
+          "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+          "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248"
+        ]
+      },
+      "seal_file_before": "0477a9edf579b04b269d013035a4b6dee5ad00add433b7994bc17250e3c620a9",
+      "approved_by": "user（P11 R2B 指示 §6）",
+      "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
     }
   ]
 }

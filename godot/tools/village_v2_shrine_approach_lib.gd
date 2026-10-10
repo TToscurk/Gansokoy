@@ -48,7 +48,10 @@ const STONE_ALBEDO := Color(0.64, 0.635, 0.62)  # 風化した灰の石（r5 の
 const LANTERN_EVERY := 20.0
 const LANTERN_OFF := STEP_W * 0.5 + CURB_W + 0.55
 const PLINTH := 0.9          # 燈籠基壇（坂に据える水平の石台）邊長
-const PLINTH_UP := 0.06
+const PLINTH_UP := 0.06     # P11 R2B で基壇撤去（記録用）
+const LANTERN_FLOAT_MAX := 0.09
+const LANTERN_EMBED := 0.03
+const LANTERN_FOOT_HALF := 0.38   # gk_toro_kasuga の基礎の半幅（garden FOOT と同じ）
 const RISER_TONE := 0.82     # 立面の明度（踏面＝1）：r3 0.70 → 暗い一様面を減らす（下端だけ目地の汚れで暗く）
 const OTHER_ROADS := {"HillFootStreet": [[200, -148], [250, -150], [300, -130], [342, -128], [372, -128]], "MainStreet": [[262, -20], [280, -80], [300, -130]]}
 const OTHER_HW := {"HillFootStreet": 3.0, "MainStreet": 3.6}
@@ -364,11 +367,17 @@ static func ribbon_cut_s(cl: PackedVector2Array, st: Array) -> Vector2:
 static var _vc := Color(1, 1, 1)
 
 
-## 燈籠基壇的四角地面：[最低, 最高]
-static func lantern_ground(sp: PhysicsDirectSpaceState3D, p: Vector2) -> Array:
+## P11 R2B：燈籠底面高＝四角最低＋0.09（谷側の浮き ≤ 0.09、山側は土に埋まる）、ただし中心より上にしない、−0.03 の埋入
+static func lantern_seat(g2: Array) -> float:
+	return minf(float(g2[0]) + LANTERN_FLOAT_MAX, float(g2[2])) - LANTERN_EMBED
+
+
+## 燈籠足元の四角＋中心の地面：[最低, 最高, 中心]
+static func lantern_ground(sp: PhysicsDirectSpaceState3D, p: Vector2, half := PLINTH * 0.5) -> Array:
 	var lo := INF
 	var hi := -INF
-	var hp := PLINTH * 0.5
+	var mid := NAN
+	var hp := half
 	for c2 in [Vector2(0, 0), Vector2(hp, hp), Vector2(-hp, hp), Vector2(hp, -hp), Vector2(-hp, -hp)]:
 		# 只認 P1 地形（TerrainCollision）：不要打到樹幹、已掛的本 overlay（舊燈籠／斜坡碰撞）
 		var q := PhysicsRayQueryParameters3D.create(Vector3(p.x + c2.x, 80.0, p.y + c2.y), Vector3(p.x + c2.x, -20.0, p.y + c2.y))
@@ -381,9 +390,11 @@ static func lantern_ground(sp: PhysicsDirectSpaceState3D, p: Vector2) -> Array:
 			if String((h["collider"] as Node).name).begins_with("TerrainCollision"):
 				lo = minf(lo, float(h["position"].y))
 				hi = maxf(hi, float(h["position"].y))
+				if c2 == Vector2(0, 0):
+					mid = float(h["position"].y)
 				break
 			ex.append(h["rid"])
-	return [lo, hi]
+	return [lo, hi, mid if not is_nan(mid) else lo]
 
 
 static var _uvo := Vector2.ZERO    # 石ごとの UV ずらし（同じ模様の繰り返しを避ける）
@@ -790,25 +801,13 @@ static func build(v: Node3D, cl: PackedVector2Array, H: PackedFloat32Array) -> N
 	var li := 0
 	for ls in lantern_specs(cl, H, st, sp):
 		var p: Vector2 = ls["p"]
-		var g2 := lantern_ground(sp, p)
-		var gy := float(g2[1]) + PLINTH_UP   # 基壇頂（水平）＝四角最高＋0.06
-		# 基壇：0.9 × 0.9 石、底＝四角最低 −0.15（斜面に据える：坂側は埋まり、谷側は見える）
-		var pst := SurfaceTool.new()
-		pst.begin(Mesh.PRIMITIVE_TRIANGLES)
-		_vc = Color(0.86, 0.86, 0.82)
-		var hp := PLINTH * 0.5
-		_prism(pst, [p + Vector2(-hp, -hp), p + Vector2(-hp, hp), p + Vector2(hp, hp), p + Vector2(hp, -hp)], float(g2[0]) - 0.15, gy)
-		pst.generate_tangents()
-		var pmi := MeshInstance3D.new()
-		pmi.name = "Plinth_%02d" % li
-		pmi.mesh = pst.commit()
-		pmi.material_override = stm
-		pmi.visibility_range_end = 160.0
-		lg.add_child(pmi)
+		var g2 := lantern_ground(sp, p, LANTERN_FOOT_HALF)
+		# P11 R2B TASK06（使用者 2026-10-11）：多餘的水平基壇撤去，燈籠直接落在土面（春日燈籠本身已有基礎）。
+		var gy := lantern_seat(g2)
 		var ln := Node3D.new()
 		ln.name = "Toro_%02d" % li
 		li += 1
-		ln.transform = Transform3D(Basis(Vector3.UP, float(ls["yaw"])), Vector3(p.x, gy, p.y))   # 坐在基壇頂
+		ln.transform = Transform3D(Basis(Vector3.UP, float(ls["yaw"])), Vector3(p.x, gy, p.y))   # 直接落在土面
 		for lod in 2:
 			var m := MeshInstance3D.new()
 			m.name = "LOD%d" % lod

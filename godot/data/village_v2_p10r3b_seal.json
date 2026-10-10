@@ -26,7 +26,7 @@
   },
   "frozen": {
     "godot/tools/village_v2_population_lib.gd": "bf01ec9c82c5e289deb8b15c712422f7a6fd5d740c865172277fcdaf0989a035",
-    "godot/scripts/npc_population_actor.gd": "45e1c98b3e51d33981e7becda55a5c4fcb79c24917d0b430998c3d5aaf296710",
+    "godot/scripts/npc_population_actor.gd": "f09f5b66a285b5f40db198cf3c63e7d1b039a9d66c39414c4d5358d9a7c0f5c4",
     "godot/tools/verify_village_v2_population.gd": "f38972b656081a7b4af4b16bdc301ac9976b353d346850ccdc3156e5105a2c6e",
     "godot/tools/shot_village_v2_population.gd": "d06913d7b901c22a624761b459312fcdb3237f12c4fa08a5fca895c329520dac",
     "godot/tools/shot_village_v2_population_views.json": "d77d854fab24ee7009ede4b5a93741bbbd9bf2d9bc52a03eb0b965285f8b7128",
@@ -148,6 +148,19 @@
       "seal_file_before": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
       "approved_by": "user",
       "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
+    },
+    {
+      "kind": "P11_R2B_LIMITED_NPC_BEHAVIOR_FIX",
+      "at": "2026-10-11",
+      "frozen": {
+        "godot/scripts/npc_population_actor.gd": [
+          "45e1c98b3e51d33981e7becda55a5c4fcb79c24917d0b430998c3d5aaf296710",
+          "f09f5b66a285b5f40db198cf3c63e7d1b039a9d66c39414c4d5358d9a7c0f5c4"
+        ]
+      },
+      "seal_file_before": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+      "approved_by": "user（P11 R2B 指示 §6 limited reseal）",
+      "reason": "P11 R2B TASK04（使用者 2026-10-11 指示）：巡回の折返を最短弧に（rotate_toward が ±π を跨ぐと最大ほぼ 1 周回る）、振り向き中は walk clip で足踏み。人數・位置・朝向・path・mode・速度は不変。"
     }
   ]
 }

@@ -652,7 +652,9 @@ func _scene(v: Node3D) -> void:
 		var anim := ap.get_animation(StringName(e.slot))
 		if anim != e.clip or not ap.is_playing():
 			ebad.append(String(e.path) + " clip")
-		if e.prop != null and not (e.prop as Node3D).visible:
+		# P11 R2B（使用者 2026-10-11 TASK03）：Drink は時々飲む動作（既定 Idle）→ 杯は飲む間だけ表示。Idle 中の非表示は正常、飲む間の非表示は違反。
+		var occasional_idle: bool = e.has("drink_rng") and ap.current_animation != StringName(e.slot)
+		if e.prop != null and not (e.prop as Node3D).visible and not occasional_idle:
 			ebad.append(String(e.path) + " prop hidden")
 	check("Activity：%d 件（＝割り当て %d）が承認 clip を再生、道具が見える（違反 %s）" % [entries.size(), CL.ASSIGN.size(), str(ebad)],
 		act != null and entries.size() == CL.ASSIGN.size() and ebad.is_empty(), "activity")

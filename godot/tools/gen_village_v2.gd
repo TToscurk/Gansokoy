@@ -2508,6 +2508,7 @@ func _anchors() -> void:
 
 func _portals() -> void:
 	var g := vroot.get_node("Portals")
+	g.visible = false  # P11 R2B TASK01：傳送停用，規劃標記不顯示（節點保留給 sightline 等工具）
 	for pt in L["portals"]:
 		var at := Vector2(float(pt["at"][0]), float(pt["at"][1]))
 		var m := Marker3D.new()
@@ -2564,7 +2565,10 @@ func _write_meta() -> void:
 		"id": "village_v2",
 		"playSize": [float(F["x1"]) - float(F["x0"]), float(F["z1"]) - float(F["z0"])],
 		"spawn": {"x": float(sp["at"][0]), "z": float(sp["at"][1]), "yaw": float(sp["yaw"])},
-		"portals": portals}
+		# P11 R2B TASK01：V2 對外傳送停用（他圖重製中）。規劃座標只留作參考，main.gd 只讀 "portals"。
+		"portals": [],
+		"portals_disabled_p11r2b": portals,
+		"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。"}
 	var f := FileAccess.open(META, FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t") + "\n")
 	f.close()

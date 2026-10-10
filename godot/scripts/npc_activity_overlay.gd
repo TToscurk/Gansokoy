@@ -138,7 +138,8 @@ func bone(e: Dictionary,nm: String) -> Transform3D:
 func update_props():
  for e in entries:
   if e.prop==null: continue
-  e.prop.visible=enabled and (review_only.is_empty() or e.path==review_only)
+  # P11 R2B TASK03: the cup only shows while the occasional drink is playing (idle hands are empty).
+  e.prop.visible=enabled and (review_only.is_empty() or e.path==review_only) and (e.prop_kind!="cup" or not e.has("drink_rng") or e.ap.current_animation==e.slot)
   if e.prop_kind=="crate":
    var left=bone(e,"LeftMiddleProximal").origin
    var right=bone(e,"RightMiddleProximal").origin
@@ -175,8 +176,39 @@ func update_props():
    var hand=bone(e,"LeftHand")
    var palm=bone(e,"LeftMiddleProximal").origin
    e.prop.global_transform=Transform3D(hand.basis*cup_basis(cup_axis),palm+hand.basis*cup_grip)
-func _process(_dt):
+func _process(dt):
+ occasional_drink(dt)
  update_props()
+## P11 R2B TASK03 (user 2026-10-11): Drink was swapped into the "idle" slot, so tea-house residents sipped in an
+## endless loop. Keep the sealed clip and grip, but play it as an occasional action: baseline Idle by default,
+## one sip every 25-45 s (first one 6-20 s in, deterministic per actor), then back to Idle. Also covers the
+## R3d/R3e overlays that inherit this script (no change to their files or assignments).
+func occasional_drink(dt: float):
+ for e in entries:
+  if e.type!="Drink" or not enabled: continue
+  if e.ap.speed_scale==0.0 and e.has("drink_rng"): continue   # frozen review / gate poses are not switched
+  if not e.has("drink_rng"):
+   e.drink_rng=RandomNumberGenerator.new()
+   e.drink_rng.seed=hash(e.path)
+   e.lib.remove_animation(StringName(e.slot))
+   e.lib.add_animation(StringName(e.slot),e.baseline)
+   e.lib.add_animation(&"drink",e.clip)
+   e.slot="drink"
+   e.drink_next=e.drink_rng.randf_range(6.0,20.0)
+   e.npc.play_clip(&"idle",-1.0)
+  if e.ap.current_animation==&"drink":
+   # end by playback position (not wall time): frozen / seeked review captures stay on the drink pose
+   var pos: float=e.ap.current_animation_position
+   var wrapped: bool=pos<float(e.get("drink_pos",0.0))
+   e.drink_pos=pos
+   if wrapped or pos>=e.clip.length-0.05:
+    e.npc.play_clip(&"idle",-1.0)
+    e.drink_next=e.drink_rng.randf_range(25.0,45.0)
+  else:
+   e.drink_next-=dt
+   if e.drink_next<=0.0:
+    e.npc.play_clip(&"drink",0.0)
+    e.drink_pos=0.0
 func set_enabled(value: bool):
  enabled=value
  for e in entries:

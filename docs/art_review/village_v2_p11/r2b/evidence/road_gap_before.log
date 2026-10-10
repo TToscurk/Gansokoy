@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+Roads/MainStreet/EntranceRoad                n=  365 min=+0.042 p50=+0.100 p95=+0.102 max=+0.109 >0.15:0 >0.25:0 cull_disabled worst=[218.5, 5.04, 219.9]
+Roads/MainStreet/MainStreet                  n=  750 min=+0.049 p50=+0.100 p95=+0.112 max=+0.131 >0.15:0 >0.25:0 cull_disabled worst=[245.3, 0.75, 42.4]
+Roads/SecondaryRoads/HillFootStreet          n=  498 min=+0.065 p50=+0.100 p95=+0.101 max=+1.463 >0.15:4 >0.25:4 cull_disabled worst=[362.0, 1.72, -131.0]
+Roads/SecondaryRoads/HillApproach            n=  312 min=+0.014 p50=+0.100 p95=+0.109 max=+0.171 >0.15:1 >0.25:0 cull_disabled worst=[258.8, 33.81, -219.2]
+Roads/SecondaryRoads/RiverNorthPath          n=  264 min=+0.096 p50=+0.100 p95=+0.317 max=+0.354 >0.15:21 >0.25:15 cull_disabled worst=[379.1, 0.69, -200.7]
+Roads/SecondaryRoads/DragonBridgeRoad        n=   30 min=+0.100 p50=+0.100 p95=+0.129 max=+0.169 >0.15:1 >0.25:0 cull_disabled worst=[420.0, 1.81, -202.5]
+Roads/SecondaryRoads/CrossStreetMid          n=  528 min=-0.032 p50=+0.100 p95=+0.106 max=+0.354 >0.15:8 >0.25:2 cull_disabled worst=[330.7, 0.67, -29.9]
+Roads/SecondaryRoads/CrossStreetSouth        n=  448 min=-0.015 p50=+0.060 p95=+0.115 max=+0.155 >0.15:1 >0.25:0 cull_disabled worst=[314.3, 0.52, 45.3]
+Roads/SecondaryRoads/RiversidePath           n=  306 min=+0.090 p50=+0.100 p95=+0.487 max=+0.591 >0.15:39 >0.25:30 cull_disabled worst=[502.0, 0.45, -95.5]
+Roads/Alleys/WestAlley                       n=  732 min=+0.096 p50=+0.100 p95=+0.100 max=+0.124 >0.15:0 >0.25:0 cull_disabled worst=[197.9, 1.15, -23.9]
+Roads/Alleys/WestLane                        n=  132 min=+0.100 p50=+0.100 p95=+0.100 max=+0.156 >0.15:2 >0.25:0 cull_disabled worst=[164.1, 1.07, -13.1]
+Roads/Alleys/Lanes/NWLane                    n=  330 min=+0.057 p50=+0.060 p95=+0.060 max=+0.062 >0.15:0 >0.25:0 cull_disabled worst=[197.4, 1.86, -153.2]
+Roads/Alleys/Lanes/NWBranch                  n=  168 min=+0.060 p50=+0.060 p95=+0.060 max=+0.060 >0.15:0 >0.25:0 cull_disabled worst=[178.4, 2.15, -197.8]
+Roads/Alleys/Lanes/WestBankLane              n=  414 min=+0.058 p50=+0.060 p95=+0.060 max=+0.061 >0.15:0 >0.25:0 cull_disabled worst=[143.6, 1.01, -9.4]
+Roads/Alleys/Lanes/MidLane                   n=  258 min=+0.058 p50=+0.060 p95=+0.060 max=+0.061 >0.15:0 >0.25:0 cull_disabled worst=[276.6, 1.47, -86.9]
+Roads/Alleys/Lanes/SWLane                    n=  270 min=+0.057 p50=+0.060 p95=+0.060 max=+0.063 >0.15:0 >0.25:0 cull_disabled worst=[210.8, 0.5, 79.2]
+Roads/Alleys/Lanes/NELane                    n=  234 min=+0.057 p50=+0.060 p95=+0.060 max=+0.060 >0.15:0 >0.25:0 cull_disabled worst=[432.6, 2.21, -210.1]
+Roads/Alleys/Lanes/NENorth                   n=  126 min=+0.060 p50=+0.060 p95=+0.060 max=+0.060 >0.15:0 >0.25:0 cull_disabled worst=[440.5, 2.41, -241.2]
+Roads/Alleys/Lanes/NESouth                   n=  210 min=+0.060 p50=+0.060 p95=+0.060 max=+0.060 >0.15:0 >0.25:0 cull_disabled worst=[440.2, 2.26, -216.2]
+Roads/FarmPaths/FarmPath_1                   n= 1127 min=-0.015 p50=+0.045 p95=+0.045 max=+0.045 >0.15:0 >0.25:0 cull_disabled worst=[372.7, 0.16, 64.0]
+Roads/FarmPaths/FarmPath_2                   n=  738 min=-0.017 p50=+0.100 p95=+0.100 max=+0.131 >0.15:0 >0.25:0 cull_disabled worst=[441.2, 0.07, 74.0]
+Roads/FarmPaths/FarmPath_3                   n=  684 min=+0.069 p50=+0.100 p95=+0.101 max=+0.131 >0.15:0 >0.25:0 cull_disabled worst=[501.2, -0.13, 74.0]
+Roads/FarmPaths/FarmPath_4                   n= 1519 min=-0.015 p50=+0.030 p95=+0.030 max=+0.030 >0.15:0 >0.25:0 cull_disabled worst=[443.0, -0.14, -0.6]
+Roads/FarmPaths/FarmPath_5                   n=  678 min=+0.100 p50=+0.100 p95=+0.100 max=+0.100 >0.15:0 >0.25:0 cull_disabled worst=[448.0, -0.04, 71.2]

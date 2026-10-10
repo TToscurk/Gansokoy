@@ -11,7 +11,7 @@ extends SceneTree
 ##   4 斜坡碰撞連續：起終點與 P1 地形差 ≤ 0.03、最大坡度 ≤ 38°（玩家 floor_max 52°）
 ##   5 寬度：石段＋袖石半寬 ≤ 參道半寬 2.5；穿過二の鳥居處 ≤ 柱內淨半寬 1.89 − 0.05
 ##   6 一の鳥居：柱台離丘腳街／主街中心線 ≥ 半寬 + 0.3；柱台不撞既有碰撞體；在主街第 5 段軸心延長線左右 ≤ 6 m（端景）
-##   7 石燈籠：坐在坂に据えた水平基壇（頂＝四角最高＋0.06、底＝最低 −0.15、高 ≤ 1.0）、不撞既有碰撞體、沿路間隔 16–24 m（20 m ±1.5 找平地）
+##   7 石燈籠：P11 R2B で基壇撤去、土面に直接（谷側浮き ≤ 0.09・中心より上でない・山側埋入 ≤ 0.6）、不撞既有碰撞體、沿路間隔 16–24 m（20 m ±1.5 找平地）
 ##   8 NPC：Population 的 NPC 不在石段範圍內、離鳥居柱台 ≥ 1.2 m；巡回 NPC 的 path_xz 不貼鳥居柱、不橫切石段（D7 NPC 通行；不搬 NPC）
 ##   9 ROUND 2 リズム：踊り場＝LANDINGS 數・奥行 1.2–2.0・前縁の盛土（踏面 − 地形）≤ 1.2 m；休みなしで続く段 ≤ 60；丘の肩の長い段 ≥ 3（0.45–1.2）
 const LIB := preload("res://tools/village_v2_shrine_approach_lib.gd")
@@ -229,14 +229,14 @@ func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array,
 	var ss := []
 	for l: Dictionary in ls:
 		var p: Vector2 = l["p"]
-		var g2 := LIB.lantern_ground(V.get_world_3d().direct_space_state, p)
+		var g2 := LIB.lantern_ground(V.get_world_3d().direct_space_state, p, LIB.LANTERN_FOOT_HALF)
 		var gmin := float(g2[0])
 		var gmax := float(g2[1])
-		var top := gmax + LIB.PLINTH_UP + float(cfg["lantern_dy"])
+		var top := LIB.lantern_seat(g2) + float(cfg["lantern_dy"])
 		var g := gmax
-		# 基壇：頂＝四角最高＋0.06（不浮空）、底＝四角最低 −0.15（埋入）、高 ≤ 0.9 m；燈籠坐在基壇頂
-		if gmin == INF or top - (gmax + LIB.PLINTH_UP) > 0.001 or (gmax + LIB.PLINTH_UP) - (gmin - 0.15) > 1.0:
-			bad7.append("基壇 頂 %.2f／四角 %.2f–%.2f" % [top, gmin, gmax])
+		# P11 R2B：基壇なし、燈籠の底＝土面（四角最低から浮き ≤ 0.09、中心より上でない、山側の埋入 ≤ 0.6）
+		if gmin == INF or top - gmin > LIB.LANTERN_FLOAT_MAX + 0.001 or top > float(g2[2]) + 0.001 or gmax - top > 0.6:
+			bad7.append("燈籠底 %.2f／四角 %.2f–%.2f" % [top, gmin, gmax])
 		var hh := _hits(Transform3D(Basis(), Vector3(p.x, g + 1.0, p.y)), Vector3(0.6, 1.6, 0.6))
 		if not hh.is_empty():
 			bad7.append("撞 %s" % str(hh))
@@ -246,7 +246,7 @@ func _gates(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp: Array,
 		var gp := float(ss[i]) - float(ss[i - 2])
 		if gp < 16.0 or gp > 24.0:
 			gaps_ok = false
-	_ok(ls.size() >= 4 and bad7.is_empty() and gaps_ok, "石燈籠 %d 基（%d 對）：坐在水平基壇（高 ≤ 1.0 m）、不撞、間隔 16–24 m（約 20 m 節奏，±1.5 m 找平地）%s" % [ls.size(), ls.size() / 2, "" if bad7.is_empty() else " ✗ " + str(bad7.slice(0, 4))])
+	_ok(ls.size() >= 4 and bad7.is_empty() and gaps_ok, "石燈籠 %d 基（%d 對）：直接落在土面（谷側浮き ≤ 0.09・山側埋入 ≤ 0.6）、不撞、間隔 16–24 m（約 20 m 節奏，±1.5 m 找平地）%s" % [ls.size(), ls.size() / 2, "" if bad7.is_empty() else " ✗ " + str(bad7.slice(0, 4))])
 	# 8 NPC
 	var bad8 := []
 	var n_patrol := 0

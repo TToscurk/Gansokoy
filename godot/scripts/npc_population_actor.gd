@@ -91,6 +91,16 @@ func _place(snap_yaw: bool) -> void:
 		rotation.y = _yaw_goal
 
 
+## P11 R2B TASK04：rotate_toward は角度の値を線形に寄せるので、±π を跨ぐ目標だと
+## 遠回り（最大ほぼ 1 周）する。最短弧（angle_difference）で寄せる。
+const TURN_RATE := 2.6
+
+
+static func _turn(from: float, to: float, step: float) -> float:
+	var d := angle_difference(from, to)
+	return wrapf(from + clampf(d, -step, step), -PI, PI)
+
+
 func _blocked() -> bool:
 	var pl := get_tree().get_first_node_in_group("player") as Node3D
 	if pl == null:
@@ -105,8 +115,13 @@ func _blocked() -> bool:
 
 func _physics_process(dt: float) -> void:
 	if not _walking:
+		# P11 R2B TASK04：折返は最短弧で、足踏み（walk clip）しながら振り向く。Idle のまま独楽のように回らない。
+		if absf(angle_difference(rotation.y, _yaw_goal)) > 0.12:
+			_anim(&"walk")
+			rotation.y = _turn(rotation.y, _yaw_goal, TURN_RATE * dt)
+			return
+		_anim(&"idle")
 		_wait -= dt
-		rotation.y = rotate_toward(rotation.y, _yaw_goal, 3.5 * dt)
 		if _wait <= 0.0:
 			_walking = true
 			_anim(&"walk")
@@ -120,7 +135,7 @@ func _physics_process(dt: float) -> void:
 	var dy := absf(angle_difference(rotation.y, _yaw_goal))
 	_u = clampf(_u + sp * dt * _dir * (0.0 if dy > 1.2 else 1.0), 0.0, _len)
 	_place(false)
-	rotation.y = rotate_toward(rotation.y, _yaw_goal, 4.0 * dt)
+	rotation.y = _turn(rotation.y, _yaw_goal, 4.0 * dt)
 	if (_dir > 0 and _u >= _len) or (_dir < 0 and _u <= 0.0):
 		_dir = -_dir
 		_walking = false

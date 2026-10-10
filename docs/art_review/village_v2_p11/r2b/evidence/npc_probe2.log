@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[NPCB] 観察 90 秒（ゲーム内）
+[NPCB] Drink MarketWest/W3_chaya_f01      drink 20%  回数 2  杯の表示不一致 0 フレーム  OK
+[NPCB] Drink Izakaya/C17_chaya_f01        drink 19%  回数 2  杯の表示不一致 0 フレーム  OK
+[NPCB] Drink Canal/O8_chaya_f01           drink 19%  回数 2  杯の表示不一致 0 フレーム  OK
+[NPCB] Patrol M7_kozo_m01              折返 5 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] Patrol W5_chonin_m01            折返 6 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] Patrol S4_sakanaya_m01          折返 6 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] Patrol C6_sakanaya_m01          折返 5 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] Patrol C20_kozo_m01             折返 9 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] Patrol O3_chonin_m01            折返 7 回  最大回転 179°  Idle のまま回転 0.00 秒  OK
+[NPCB] NG 0

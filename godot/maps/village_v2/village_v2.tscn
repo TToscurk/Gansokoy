@@ -141220,6 +141220,7 @@ shape = SubResource("BoxShape3D_jiuh4")
 [node name="Navigation" type="Node3D" parent="." unique_id=1817103292]
 
 [node name="Portals" type="Node3D" parent="." unique_id=1642224931]
+visible = false
 
 [node name="PORTAL_TRAIL" type="Marker3D" parent="Portals" unique_id=1655480273]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224, 0.21684733, 172)

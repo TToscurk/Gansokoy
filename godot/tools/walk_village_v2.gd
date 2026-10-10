@@ -84,7 +84,7 @@ func _run() -> void:
 	root.add_child(main)
 	current_scene = main
 	await _frames(60)
-	main.load_map("village_v2", "trail")
+	main.load_map("village_v2", "")  # P11 R2B：V2 傳送停用 → meta.spawn（224,160）から
 	await _frames(90)
 	player = main.player
 	print("[WALK] map=%s 落地 (%.1f, %.2f, %.1f) 地面 %.2f" % [main.current_id,

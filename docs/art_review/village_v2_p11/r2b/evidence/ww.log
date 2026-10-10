@@ -1,0 +1,53 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WW] ===== 水車 1 at (334.8, -1.490979, -52.0)
+[WW]  10.6 m  y 0.02–3.42  size (15.06, 3.41, 7.74)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_N0/Merged_0  vis=true
+[WW]   6.0 m  y 0.21–3.33  size (4.97, 3.12, 0.79)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_N0/Merged_1  vis=true
+[WW]   8.3 m  y 0.07–0.29  size (0.89, 0.22, 0.88)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_N0/Merged_2  vis=true
+[WW]  13.6 m  y 0.18–0.20  size (9.05, 0.02, 6.75)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_N0/Merged_3  vis=true
+[WW]   0.1 m  y -3.00–1.70  size (5.78, 4.7, 1.95)  Landmarks/LANDMARK_WATERWHEEL_1/Hero/LOD0  vis=true
+[WW]   0.1 m  y -3.00–1.70  size (5.7, 4.7, 1.94)  Landmarks/LANDMARK_WATERWHEEL_1/Hero/LOD1  vis=true
+[WW]   0.1 m  y -3.00–1.70  size (5.7, 4.7, 1.94)  Landmarks/LANDMARK_WATERWHEEL_1/Hero/LOD2  vis=true
+[WW]   0.0 m  y -1.40–-1.40  size (0.0, 0.0, 0.0)  Landmarks/LANDMARK_WATERWHEEL_1/Hero/Collision  vis=true
+[WW]   8.8 m  y 1.09–2.65  size (1.19, 1.56, 2.31)  HumanUseP10/PilotC/C1_shuri/037_st_daiku/LOD0  vis=true
+[WW]   8.8 m  y 1.09–2.65  size (1.18, 1.56, 2.31)  HumanUseP10/PilotC/C1_shuri/037_st_daiku/LOD1  vis=true
+[WW]  13.6 m  y 1.19–2.11  size (2.74, 0.92, 1.12)  HumanUseP10/PilotC/C2_nioki/042_kr_kuruma/LOD0  vis=true
+[WW]  13.6 m  y 1.19–2.11  size (2.74, 0.92, 1.12)  HumanUseP10/PilotC/C2_nioki/042_kr_kuruma/LOD1  vis=true
+[WW]  11.3 m  y 0.86–1.11  size (0.77, 0.25, 0.74)  HumanUseP10/PilotC/C3_araiba/047_hu_tarai/LOD0  vis=true
+[WW]  11.3 m  y 0.86–1.11  size (0.77, 0.25, 0.74)  HumanUseP10/PilotC/C3_araiba/047_hu_tarai/LOD1  vis=true
+[WW] ===== 水車 2 at (329.2, -2.080629, 0.0)
+[WW]   6.2 m  y -1.91–1.14  size (4.96, 3.05, 0.62)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Trough/Body  vis=true
+[WW]   6.3 m  y -1.73–0.74  size (4.55, 2.47, 0.26)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Trough/Water  vis=true
+[WW]   7.9 m  y 0.48–1.19  size (0.71, 0.71, 2.16)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Drive  vis=true
+[WW]   7.3 m  y -0.30–2.15  size (0.12, 2.45, 0.12)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_Frame_0  vis=true
+[WW]   8.6 m  y -0.30–2.15  size (0.12, 2.45, 0.12)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_Frame_1  vis=true
+[WW]   4.9 m  y -2.60–-1.18  size (0.1, 1.42, 0.1)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_Stake_0  vis=true
+[WW]   5.4 m  y -2.60–-1.18  size (0.1, 1.42, 0.1)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_Stake_1  vis=true
+[WW]   8.7 m  y 0.00–0.46  size (0.08, 0.46, 0.08)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_FeedLeg_0_0  vis=true
+[WW]   8.9 m  y 0.00–0.46  size (0.08, 0.46, 0.08)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_FeedLeg_0_1  vis=true
+[WW]   9.7 m  y 0.00–0.45  size (0.08, 0.45, 0.08)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_FeedLeg_1_0  vis=true
+[WW]   9.9 m  y 0.00–0.45  size (0.08, 0.45, 0.08)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_FeedLeg_1_1  vis=true
+[WW]   7.9 m  y 2.05–2.13  size (0.08, 0.08, 2.22)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Rail  vis=true
+[WW]   7.6 m  y 0.04–1.40  size (0.68, 1.37, 0.07)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Brace_0  vis=true
+[WW]   8.8 m  y 0.04–1.40  size (0.68, 1.37, 0.07)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Brace_1  vis=true
+[WW]  11.0 m  y 0.12–0.25  size (0.2, 0.13, 0.86)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox/Stone_0  vis=true
+[WW]  10.9 m  y 0.12–0.44  size (0.86, 0.32, 0.19)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox/Stone_1  vis=true
+[WW]  10.4 m  y 0.12–0.44  size (0.19, 0.32, 0.86)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox/Stone_2  vis=true
+[WW]  10.6 m  y 0.12–0.44  size (0.86, 0.32, 0.18)  Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox/Stone_3  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.87, 4.7, 2.78)  Landmarks/LANDMARK_WATERWHEEL_2/Hero/LOD0  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.8, 4.7, 2.77)  Landmarks/LANDMARK_WATERWHEEL_2/Hero/LOD1  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.8, 4.7, 2.77)  Landmarks/LANDMARK_WATERWHEEL_2/Hero/LOD2  vis=true
+[WW]   0.0 m  y -1.52–-1.52  size (0.0, 0.0, 0.0)  Landmarks/LANDMARK_WATERWHEEL_2/Hero/Collision  vis=true
+[WW]   1.9 m  y -1.51–-1.51  size (2.78, 0.0, 7.37)  WaterLifeP10/WW2_Power/WaterFX/Foam  vis=true
+[WW] ===== 水車 3 at (310.6, -2.371663, 58.0)
+[WW]  12.5 m  y -2.31–0.69  size (1.2, 3.0, 1.2)  Water/Waterfalls/WATERFALL_F7/Placeholder  vis=true
+[WW]   5.9 m  y 0.41–3.24  size (4.35, 2.83, 2.41)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_T0/Merged_1  vis=true
+[WW]   8.0 m  y 0.07–0.49  size (0.87, 0.42, 0.87)  Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Feeders/Feeder_T0/Merged_2  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.75, 4.7, 3.88)  Landmarks/LANDMARK_WATERWHEEL_3/Hero/LOD0  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.68, 4.7, 3.85)  Landmarks/LANDMARK_WATERWHEEL_3/Hero/LOD1  vis=true
+[WW]   0.1 m  y -3.12–1.58  size (5.68, 4.7, 3.85)  Landmarks/LANDMARK_WATERWHEEL_3/Hero/LOD2  vis=true
+[WW]   0.0 m  y -1.52–-1.52  size (0.0, 0.0, 0.0)  Landmarks/LANDMARK_WATERWHEEL_3/Hero/Collision  vis=true

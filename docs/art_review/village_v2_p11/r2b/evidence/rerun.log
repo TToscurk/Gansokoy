@@ -1,0 +1,9 @@
+[RBG] 結果：0 項失敗
+✓ P7 R2 河岸 Kit Asset Gate 回歸（1–9 項重驗＋gate.json 雜湊＋烘焙＝重排）
+[WALK] 結果：19/19 段抵達、最大 |玩家y−地面| 0.07 m（上限 0.30 m）；失敗 0
+✓ 19-point walk
+[GC] 結果：0 項失敗
+✓ P9 R5 Groundcover plan gate 37 項（Pilot r10f digest／全村 r5 林緣・溪岸／Macro Pilot＋m9 digest／全村 Macro 禁區・尺度・語意・留白・農田交界・後院・路肩／可見最上面）
+[CORE] 結果：0 項失敗（scene）
+✓ P10 R3d 核心區人口 scene（人數＝scope 別の身元 39〔R3b＋R3d〕・多一人／少一人／重複の反向・R3d 単獨〔R3e を外す〕でも 39；掛載順・人數・Activity 再生・道具・審圖鏡位同モデル ≤ 2・歩く人 30 秒；非 headless）
+fail=0
