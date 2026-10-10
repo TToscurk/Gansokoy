@@ -4,7 +4,8 @@ extends SceneTree
 ## 正式 main.tscn（ReviewStart → village_v2）、真實 CharacterBody3D 玩家與輸入動作（move_forward＋sprint＋jump）。
 ##  walls  ：對每個邊界測點，把玩家放在邊緣內 6 m（測試用放置，非審圖走訪）、視線朝外，跑＋連跳 3.5 s，
 ##           記錄朝外最遠座標、最低 y、是否越出 frame。PASS＝不越出 frame 且 y > −10。
-##  portals：照 main.gd 的 headless 換圖路徑（load_map(target, "village_v2")），記錄落點與 4 s 內最低 y／是否著地。
+##  portals：照 main.gd 的 headless 換圖路徑（load_map(target, "village_v2")），記錄落點與 4 s 內最低 y／是否著地；
+##           P11 R1：再 load_map("village_v2", target) 返回，記錄 V2 側落点と portal の距離・落下・著地時間。
 const FX0 := 0.0
 const FX1 := 560.0
 const FZ0 := -340.0
@@ -152,8 +153,30 @@ func _portal(tgt: String) -> Dictionary:
 		"on_floor_after_s": snappedf(floor_t, 0.01), "ground_under_final": snappedf(g_under, 0.01) if not is_nan(g_under) else null,
 		"void_fall": min_y < -30.0 or (floor_t < 0.0 and is_nan(g_under))}
 	_p("portal %s arrival %s final %s min_y %.2f floor_t %.2f void=%s" % [tgt, str(rec["arrival"]), str(rec["final"]), min_y, floor_t, rec["void_fall"]])
-	# 回 village_v2
-	main.call("load_map", "village_v2", "")
+	# P11 R1：返回＝その圖から V2 へ（load_map("village_v2", tgt)＝V2 側の tgt 行き portal の落点）。落点と portal の距離・落下・着地時間を記録。
+	#   旧版は load_map("village_v2", "")（spawn）で戻っていた。
+	main.call("load_map", "village_v2", tgt)
+	for i in 3:
+		await physics_frame
+	var back := player.global_position
+	var bmin := INF
+	var bfloor := -1.0
+	for i in 240:
+		await physics_frame
+		bmin = minf(bmin, player.global_position.y)
+		if bfloor < 0.0 and player.is_on_floor():
+			bfloor = i / 60.0
+	var bfin := player.global_position
+	var L: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://maps/village_v2/layout_v2.json"))
+	var pat := Vector2.INF
+	for pp: Dictionary in L["portals"]:
+		if String(pp["target"]) == tgt:
+			pat = Vector2(float(pp["at"][0]), float(pp["at"][1]))
+	var bg := _ground(bfin.x, bfin.z)
+	rec["return_to_v2"] = {"map_now": String(main.get("current_id")), "arrival": _v(back), "final": _v(bfin), "on_floor_after_s": snappedf(bfloor, 0.01),
+		"fall_m": snappedf(back.y - bmin, 0.01), "dist_to_portal_m": snappedf(Vector2(bfin.x, bfin.z).distance_to(pat), 0.01) if pat != Vector2.INF else null,
+		"ground_under_final": snappedf(bg, 0.01) if not is_nan(bg) else null}
+	_p("return %s → village_v2 %s" % [tgt, JSON.stringify(rec["return_to_v2"])])
 	for i in 30:
 		await physics_frame
 	return rec

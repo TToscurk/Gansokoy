@@ -51,6 +51,11 @@ func _run() -> void:
 		push_error("[FARM_WALK] map/player/overlay missing")
 		quit(2)
 		return
+	# P11 R1 診斷：--step=<m> でプレイヤーの step_height をメモリ上だけ上書き（玩家ファイル不変；田埂の通行が段差設定に依存するかの比較）
+	for a: String in OS.get_cmdline_user_args():
+		if a.begins_with("--step="):
+			player.set("step_height", float(a.trim_prefix("--step=")))
+			print("[FARM_WALK] step_height override %.2f" % float(a.trim_prefix("--step=")))
 	var debug: Node = main.map_root.get_node_or_null("Debug")
 	if debug:
 		debug.visible = false

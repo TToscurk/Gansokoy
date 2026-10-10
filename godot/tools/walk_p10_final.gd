@@ -9,6 +9,13 @@ extends SceneTree
 ##   瞬間移動しない（開始は review spawn から歩く）。詰まったら左右へ 0.6 s 横歩き（moved < 0.4 m / 1.5 s）を最大 6 回、それでも駄目なら BLOCKED を記録して次へ。
 ## 記録：0.1 s（6 physics tick）ごとに 960×540 JPG（区間ごと）、still＝1600×900 PNG（止まって look へ向きを変え 1.4 s 落ち着かせる）、
 ##   0.5 s ごとのサンプル（位置・接地・速度・SpringArm 実長／設定長・fps・最寄り NPC）と事件（STUCK／BLOCKED／ARM_PULL／DIALOGUE）を JSON に。
+## P11 R1 追加（2026-10-10）：
+##   --start=trail   起動後に main.load_map("village_v2", "trail")＝獸道から村へ入る正式の落点から歩き始める（落点・着地時間を記録）
+##   --step=<m>      診断用：プレイヤーの step_height をメモリ上だけ上書き（ファイル不変；乗り上がり帯の比較）
+##   route の追加ステップ ["tp", x, z, yaw] ＝区間テスト用の配置（地面＋0.1、20 tick 落ち着かせる；事件 TP として記録）、
+##   ["xbridge", "Bridge_0N"] ＝橋の中心へ最寄りの道路線の方向で橋長＋8 m を往復
+##   事件 LIFT＝接地中、足元の最初の当たりが構件（Props／HumanUse*／Vegetation／EnvironmentP9 の Collision）で地形より 0.2 m 以上高い
+##         NPC_CONTACT＝プレイヤーの滑り衝突の相手が Population の NPC（連続 0.5 s 以上で 1 件）
 ## HUD（CanvasLayer）は撮影のため非表示（main.gd の "hud": false と同じ扱い）。マウスは捕捉しない（ユーザーの操作を奪わない・入力を混ぜない）。
 const ROUTE := "res://tools/walk_p10_final_route.json"
 const WIN := Vector2i(1600, 900)
@@ -87,6 +94,36 @@ func _go() -> void:
 		if a3.begins_with("--pitch="):
 			adapter.set("_target_pitch", float(a3.trim_prefix("--pitch=")))
 			adapter.set("_current_pitch", float(a3.trim_prefix("--pitch=")))
+	for a4: String in args:
+		if a4.begins_with("--step="):
+			player.set("step_height", float(a4.trim_prefix("--step=")))
+			log["step_height_override"] = float(a4.trim_prefix("--step="))
+	if "--start=trail" in args:
+		main.call("load_map", "village_v2", "trail")
+		var tl := Time.get_ticks_msec()
+		var arrive := Vector3.ZERO
+		var floor_t := -1.0
+		var fr := 0
+		while true:
+			await physics_frame
+			fr += 1
+			if fr == 3:
+				arrive = player.global_position
+			if fr > 3 and player.is_on_floor():
+				floor_t = (fr - 3) / 60.0
+				break
+			if Time.get_ticks_msec() - tl > 30000:
+				break
+		for i in 30:
+			await physics_frame
+		vil = main.get("map_root") as Node3D
+		log["start_trail"] = {"arrival": _v3(arrive), "on_floor_after_s": snappedf(floor_t, 0.01), "settled": _v3(player.global_position),
+			"map": String(main.get("current_id")), "portal_at": [224, 172]}
+		print("[WALK] start=trail %s" % JSON.stringify(log["start_trail"]))
+	if vil:
+		var tc := vil.get_node_or_null("Collision/TerrainCollision") as CollisionObject3D
+		if tc:
+			terrain_rid = tc.get_rid()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	for cl in root.find_children("*", "CanvasLayer", true, false):
 		(cl as CanvasLayer).visible = false
@@ -122,6 +159,10 @@ func _go() -> void:
 				await _walk_to(Vector2(float(step[1]), float(step[2])))
 			"still":
 				await _still(String(step[1]), Vector2(float(step[2]), float(step[3])))
+			"tp":
+				await _tp(Vector2(float(step[1]), float(step[2])), float(step[3]) if step.size() > 3 else 0.0)
+			"xbridge":
+				await _xbridge(String(step[1]))
 	_end_seg()
 	Input.action_release("move_forward")
 	var f := FileAccess.open(outdir + "walk_log.json", FileAccess.WRITE)
@@ -180,6 +221,7 @@ func _tick() -> void:
 	if pulled and not arm_pull_on:
 		_event("ARM_PULL", {"hit_length": snappedf(hl, 0.01), "spring": snappedf(arm.spring_length, 0.01), "cam": _v3(cam.global_position)})
 	arm_pull_on = pulled
+	_lift_npc_check(p)
 	if tick % SAMPLE_TICKS == 0:
 		var nd := 1e9
 		for n: Node3D in npcs:
@@ -378,3 +420,116 @@ func RLib_ground(sp: PhysicsDirectSpaceState3D, x: float, z: float) -> float:
 			break
 		ex.append(r.rid)
 	return best
+
+
+# ─────────────────────────── P11 R1 追加 ───────────────────────────
+
+var terrain_rid := RID()
+var lift_on := ""
+var npc_contact_ticks := 0
+var npc_contact_name := ""
+const PROP_PREFIX := ["Props/", "HumanUseP10", "HumanUseExpansionP10", "Vegetation/", "WaterLifeP10", "PropFixP10"]
+
+func _terrain_y(x: float, z: float) -> float:
+	var sp := player.get_world_3d().direct_space_state
+	var ex: Array[RID] = [player.get_rid()]
+	for i in 16:
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 80.0, z), Vector3(x, -40.0, z))
+		q.exclude = ex
+		var h := sp.intersect_ray(q)
+		if h.is_empty():
+			return NAN
+		if h["rid"] == terrain_rid:
+			return float((h["position"] as Vector3).y)
+		ex.append(h["rid"])
+	return NAN
+
+
+func _lift_npc_check(p: Vector3) -> void:
+	# LIFT：接地中の足元の最初の当たりが構件で、地形より 0.2 m 以上高い
+	if tick % 6 == 0 and vil:
+		var cur := ""
+		if player.is_on_floor():
+			var sp := player.get_world_3d().direct_space_state
+			var q := PhysicsRayQueryParameters3D.create(p + Vector3(0, 0.25, 0), p + Vector3(0, -0.6, 0), player.collision_mask)
+			q.exclude = [player.get_rid()]
+			var h := sp.intersect_ray(q)
+			if not h.is_empty() and h["collider"] is Node:
+				var path := String(vil.get_path_to(h["collider"] as Node))
+				for pre: String in PROP_PREFIX:
+					if path.begins_with(pre):
+						var ty := _terrain_y(p.x, p.z)
+						if not is_nan(ty) and p.y - ty > 0.2:
+							var shp := ""
+							var co := h["collider"] as CollisionObject3D
+							var so := co.shape_find_owner(int(h["shape"]))
+							var sn := co.shape_owner_get_owner(so)
+							if sn:
+								shp = String(sn.name)
+							cur = path + "/" + shp
+							if cur != lift_on:
+								_event("LIFT", {"on": cur, "above_terrain": snappedf(p.y - ty, 0.01)})
+						break
+		lift_on = cur
+	# NPC_CONTACT：滑り衝突の相手が Population の NPC
+	var hit := ""
+	for i in player.get_slide_collision_count():
+		var c := player.get_slide_collision(i).get_collider()
+		if c is Node and vil and String(vil.get_path_to(c as Node)).begins_with("Population/"):
+			hit = String((c as Node).name)
+	if hit != "":
+		npc_contact_ticks += 1
+		npc_contact_name = hit
+		if npc_contact_ticks == 30:
+			_event("NPC_CONTACT", {"npc": hit})
+	else:
+		npc_contact_ticks = 0
+
+
+func _tp(q: Vector2, yaw: float) -> void:
+	Input.action_release("move_forward")
+	var ty := _terrain_y(q.x, q.y)
+	var sp := player.get_world_3d().direct_space_state
+	var rq := PhysicsRayQueryParameters3D.create(Vector3(q.x, (ty if not is_nan(ty) else 0.0) + 6.0, q.y), Vector3(q.x, -40.0, q.y), player.collision_mask)
+	rq.exclude = [player.get_rid()]
+	var r := sp.intersect_ray(rq)
+	var gy := float((r["position"] as Vector3).y) if not r.is_empty() else ty
+	player.velocity = Vector3.ZERO
+	player.global_position = Vector3(q.x, gy + 0.1, q.y)
+	adapter.set("_target_yaw", yaw)
+	adapter.set("_current_yaw", yaw)
+	for i in 20:
+		await _tick()
+	last_pos = player.global_position
+	_event("TP", {"to": [q.x, q.y], "ground": snappedf(gy, 0.01)})
+
+
+func _xbridge(nm: String) -> void:
+	var br := vil.get_node_or_null("Roads/Bridges")
+	var b := (br.find_child(nm + "*", false, false) if br else vil.find_child(nm + "*", true, false)) as Node3D
+	if b == null:
+		_event("NO_BRIDGE", {"name": nm})
+		return
+	var c := Vector2(b.global_position.x, b.global_position.z)
+	var L: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://maps/village_v2/layout_v2.json"))
+	var best := INF
+	var dir := Vector2.RIGHT
+	for r: Dictionary in L["roads"]:
+		var pts: Array = r.get("pts", r.get("points", []))
+		for i in pts.size() - 1:
+			var a := Vector2(float(pts[i][0]), float(pts[i][1]))
+			var e := Vector2(float(pts[i + 1][0]), float(pts[i + 1][1]))
+			var cp := Geometry2D.get_closest_point_to_segment(c, a, e)
+			if cp.distance_to(c) < best:
+				best = cp.distance_to(c)
+				dir = (e - a).normalized()
+	var span := 0.0
+	var spans: Dictionary = L["terrain"]["bridge_spans"]["preferred"]
+	for k: String in spans:
+		if k.begins_with(nm):
+			span = float(spans[k])
+	var half := span * 0.5 + 4.0
+	await _tp(c - dir * half, _yaw_for(dir))
+	_event("BRIDGE", {"name": nm, "span": span, "road_dist": snappedf(best, 0.01)})
+	await _walk_to(c + dir * half)
+	await _walk_to(c - dir * half)
