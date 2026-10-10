@@ -723,8 +723,8 @@
   "docs/art_review/village_v2_p10_population/core_r1_1/review/6_mouth_from_south_r1_vs_r1_1.jpg": "8e1e803be546300ad0343b3a44e9965af15b4c8a915e4ca3444eb93d525b46f0"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
-  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+  "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+  "godot/data/village_v2_p10r3c_seal.json": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -755,6 +755,23 @@
     "docs/art_review/village_v2_p10_population/core_r1/gate/scene_scope_fix_20261008.log": "913725377753d1f03f941c9b936a1a75e0c2ede057b59d00fa52ef09c7bef583"
    },
    "seal_file_before": "6261de507438865bd89aac586a60b3262a6989e90663472e39ab1feb4a69c88a"
+  },
+  {
+   "kind": "P11_R1_CHILD_P9F_CASCADE",
+   "at": "2026-10-10",
+   "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+     "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+     "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6"
+    ]
+   },
+   "seal_file_before": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
+   "approved_by": "user",
+   "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
   }
  ]
 }

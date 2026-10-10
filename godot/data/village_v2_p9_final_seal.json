@@ -37,13 +37,13 @@
   },
   "R4_2_shrine_grove": {
    "file": "godot/data/village_v2_p9r42_seal.json",
-   "sha256": "61d9d73d5fc7eeb83f526416c3bfd6ed213ebef5f362b62d5079d9035feb1a44",
+   "sha256": "316756494b993b98d7330643b9eb0a6347044405ae1d83dc84157e10accee915",
    "regression_tag": "SHRINE",
    "verify": "verify_village_v2_shrine_grove.gd --seal"
   },
   "R4_3_school_yard": {
    "file": "godot/data/village_v2_p9r43_seal.json",
-   "sha256": "f2a226d3164a9f18855b0f388ea2d2b02e574ce5c393a29056530e200277fce7",
+   "sha256": "a35c45b95191b3096aa0f075e02a45634051bf3a67e8d377c4b6a5acbb671d7b",
    "regression_tag": "SCHOOL",
    "verify": "verify_village_v2_school_yard.gd --seal"
   },
@@ -120,7 +120,8 @@
  },
  "events": [
   "R5-3 RESEALED_AFTER_EQUIVALENT_REBAKE（village_v2_p9r53_seal.json reseal_history[0]）",
-  "R5 Macro Ground LIMITED_REOPEN_P10R1B_ROJI1_CLEAR（使用者授權、14:01:47 重烘、14:23:39 R5 seal 更新；village_v2_p9r5_seal.json reseal_history／final.events）"
+  "R5 Macro Ground LIMITED_REOPEN_P10R1B_ROJI1_CLEAR（使用者授權、14:01:47 重烘、14:23:39 R5 seal 更新；village_v2_p9r5_seal.json reseal_history／final.events）",
+  "P11 R1 LIMITED_VERIFIER_CORRECTION（R4-2 參道歩行面／R4-3 NPC 動的規則；使用者 2026-10-10 P11 指示；village_v2_p9r42_seal.json・p9r43_seal.json reseal_history）"
  ],
  "handoffs": {
   "P10": [
@@ -140,5 +141,25 @@
   "部分灌木 cluster 尺度相近，可看出一些排列節奏",
   "物件底下缺少局部踩實土／濕痕過渡；R5 Macro Ground 已封存，不在本輪重開",
   "Farm edge 的 human-use readability 移交 P10（Farm/Village Human-use Layer）"
+ ],
+ "reseal_history": [
+  {
+   "kind": "P11_R1_CHILD_R4_2_R4_3_UPDATE",
+   "date": "2026-10-10",
+   "sub_seals": {
+    "R4_2_shrine_grove": [
+     "61d9d73d5fc7eeb83f526416c3bfd6ed213ebef5f362b62d5079d9035feb1a44",
+     "316756494b993b98d7330643b9eb0a6347044405ae1d83dc84157e10accee915"
+    ],
+    "R4_3_school_yard": [
+     "f2a226d3164a9f18855b0f388ea2d2b02e574ce5c393a29056530e200277fce7",
+     "a35c45b95191b3096aa0f075e02a45634051bf3a67e8d377c4b6a5acbb671d7b"
+    ]
+   },
+   "seal_file_before": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-10「P11 — Collision & Navigation」：Step 1「P9 R4-2：神社參道 40 個碰撞阻擋點」「P9 R4-3：寺子屋巡邏 NPC 阻擋玩家」「先判定真正原因，再採用最小修正」「不得單純降低 Gate 標準、停用碰撞或刪除 NPC 來取得 PASS」「已封存內容只允許有明確原因的 limited correction，必須保留前後 hash、依賴與反向測試」",
+   "reason": "P9 R4-2／R4-3 の scene gate（實走）limited verifier correction（P11 R1）に伴い、子封存の雜湊だけ追従。R1–R5 の封存内容（生成器・overlay・地被）は不変。"
+  }
  ]
 }

@@ -6,7 +6,8 @@ extends SceneTree
 ##   掛進場景：         ... --headless ... -- --attach（village_v2.tscn 文字層級在 Vegetation/HiedaGardenP9 後加 ShrineGroveP9；
 ##                       先確認沒有 Godot 編輯器開著；**不重生** village_v2.tscn——若有流程重生它，重生後須依序重新 attach
 ##                       ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9）
-##   場景驗證：         ... --headless ... -- --scene（射線接地、碰撞 vs 地標／建物／R2 樹幹、參道＋前庭膠囊實走、視線射線、掛載順序）
+##   場景驗證：         ... --headless ... -- --scene（射線接地、碰撞 vs 地標／建物／R2 樹幹、參道＋前庭膠囊實走〔P11 R1：歩行面基準＋段差〕、視線射線、掛載順序）
+##   場景級反向：       ... --headless ... -- --scene-negatives（P11 R1：障害／継ぎ目段差／未登記の台 → 各案 FAIL）
 ##   審圖鏡位：         ... --headless ... -- --shots（寫 tools/shots/village_v2_p9r42_shrine_{before,after}.json）
 ##   封存：             ... --headless ... -- --seal（data/village_v2_p9r42_seal.json 雜湊＋掛載順序＋竄改反向；P9 R4-2 ART_APPROVED 2026-10-02）
 ## 每項一行 [SHRINE] PASS/FAIL；INFO 不計失敗；結尾 quit(失敗項數)。
@@ -57,6 +58,10 @@ func _run() -> void:
 		return
 	var L: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
+	if "--scene-negatives" in args:
+		root.add_child(v)
+		quit(await _scene_negatives(v, L))
+		return
 	if "--scene" in args:
 		root.add_child(v)
 		await _scene(v, L)
@@ -415,6 +420,124 @@ func _attach() -> int:
 	return 0
 
 
+# ─────────────────────── 實走（P11 R1 limited verifier correction 2026-10-10） ───────────────────────
+## 旧版：膠囊の基準高さ＝地形 S.h 固定。P10 R6b の參道（root/ShrineApproachP10、石段＋踊り場の斜坡碰撞 RampCollision）は地形より
+##   0.51–0.94 m 高い歩行面で、旧版はその上を歩く膠囊を「斜坡に埋まる」として 40／179 点を被擋と判定していた
+##   （docs/art_review/village_v2_p11/r1/diag/known3.json：歩行面基準では被擋 0）。
+## 修正：基準高さ＝その点の「歩行面」＝下向き射線で最初に当たる地形、または登記歩行面（WALKABLE：ShrineApproachP10 の RampCollision だけ）。
+##   それ以外の物体（構件・樹幹・建物・未登記の台）は従来どおり障害（射線はそれを越えて下の歩行面を探し、膠囊はその物体に当たる）。
+##   追加（旧版になかった検査）：隣接標本 0.5 m の歩行面段差 ≤ STEP_MAX（斜坡の継ぎ目・踊り場の縁で段差が跳ねないこと）。
+##   膠囊 r 0.3 h 1.7・底 ＝歩行面＋0.55（旧版と同じ余裕）・ルート・標本間隔・鳥居の除外は旧版と同じ。
+const WALKABLE := [["ShrineApproachP10", "RampCollision"]]
+const STEP_MAX := 0.45
+
+func _walk_base(v: Node3D, space: PhysicsDirectSpaceState3D, terrain: StaticBody3D, p: Vector2, h: float) -> Array:
+	var ex: Array[RID] = []
+	for k in 16:
+		var q := PhysicsRayQueryParameters3D.create(Vector3(p.x, h + 3.0, p.y), Vector3(p.x, h - 3.0, p.y))
+		q.exclude = ex
+		var r := space.intersect_ray(q)
+		if r.is_empty():
+			break
+		var col := r["collider"] as Node
+		if col == terrain:
+			return [float((r["position"] as Vector3).y), "terrain"]
+		var path := String(v.get_path_to(col))
+		for w: Array in WALKABLE:
+			if path.begins_with(String(w[0]) + "/") and String(col.name) == String(w[1]):
+				return [float((r["position"] as Vector3).y), "walkable"]
+		ex.append(r["rid"])
+	return [h, "terrain"]
+
+func _walk_check(v: Node3D, L: Dictionary, S: Object, space: PhysicsDirectSpaceState3D, terrain: StaticBody3D) -> Dictionary:
+	var road: Array = SG.road_pts(L)
+	var cap := CapsuleShape3D.new()
+	cap.radius = 0.3
+	cap.height = 1.7
+	var blocked: Array = []
+	var steps: Array = []
+	var probes := 0
+	var n_t := 0
+	var n_w := 0
+	var routes: Array = [road.slice(1), [Vector2(266.0, -208.0), Vector2(258.0, -214.0), Vector2(258.0, -221.5)],
+		[Vector2(250.5, -216.0), Vector2(266.0, -216.0)]]
+	for route: Array in routes:
+		var prev := NAN
+		for e: Array in GL.resample(route, 0.5):
+			var p: Vector2 = e[0]
+			if SG.TORII_BOX.grow(0.2).has_point(p) and absf((p - SG.TORII).dot(Vector2(0.927, 0.375))) > 1.6:
+				prev = NAN
+				continue
+			var wb := _walk_base(v, space, terrain, p, S.h(p.x, p.y))
+			var base: float = wb[0]
+			if String(wb[1]) == "walkable":
+				n_w += 1
+			else:
+				n_t += 1
+			if not is_nan(prev) and absf(base - prev) > STEP_MAX:
+				steps.append("(%.1f,%.1f) %+.2f m" % [p.x, p.y, base - prev])
+			prev = base
+			var qp := PhysicsShapeQueryParameters3D.new()
+			qp.shape = cap
+			qp.transform = Transform3D(Basis.IDENTITY, Vector3(p.x, base + 0.3 + 0.85 + 0.25, p.y))
+			qp.exclude = [terrain.get_rid()]
+			probes += 1
+			var r := space.intersect_shape(qp, 1)
+			if not r.is_empty():
+				blocked.append("(%.1f,%.1f) %s" % [p.x, p.y, (r[0]["collider"] as Node).name])
+	return {"probes": probes, "blocked": blocked, "steps": steps, "on_terrain": n_t, "on_walkable": n_w}
+
+## 永久反向（場景級・記憶體のみ）：各案で _walk_check が FAIL になること。
+##   N1 參道の歩行面に 0.6×1.2×0.6 m の箱（障害）→ 被擋
+##   N2 參道の斜坡碰撞を 0.8 m 持ち上げる（歩行面の継ぎ目に段差）→ 段差
+##   N3 未登記の「台」（歩行面の 0.7–0.9 m 上の板、別の親）を参道に置く → 被擋（登記外の面は歩行面として扱わない）
+func _scene_negatives(v: Node3D, L: Dictionary) -> int:
+	for i in 4:
+		await physics_frame
+	var space := v.get_world_3d().direct_space_state
+	var terrain := v.get_node("Collision/TerrainCollision") as StaticBody3D
+	var S := RLib.terrain_sampler(v)
+	var W0 := _walk_check(v, L, S, space, terrain)
+	var clean := (W0["blocked"] as Array).is_empty() and (W0["steps"] as Array).is_empty()
+	print("[SHRINE] NEG 対照（無改変）：被擋 %d 段差 %d → %s" % [(W0["blocked"] as Array).size(), (W0["steps"] as Array).size(), "PASS" if clean else "FAIL"])
+	var miss := 0 if clean else 1
+	var p0 := Vector2(285.7, -175.8)
+	var y0: float = _walk_base(v, space, terrain, p0, S.h(p0.x, p0.y))[0]
+	for n in 3:
+		var tamper: Node3D = null
+		var ramp := v.find_child("RampCollision", true, false) as Node3D
+		var ramp_xf := ramp.global_transform if ramp else Transform3D()
+		if n == 0 or n == 2:
+			var sb := StaticBody3D.new()
+			sb.name = "NegObstacle" if n == 0 else "NegUnregisteredDeck"
+			var cs := CollisionShape3D.new()
+			var bx := BoxShape3D.new()
+			bx.size = Vector3(0.6, 1.2, 0.6) if n == 0 else Vector3(2.0, 0.2, 3.0)
+			cs.shape = bx
+			sb.add_child(cs)
+			v.add_child(sb)
+			sb.global_position = Vector3(p0.x, y0 + (0.6 if n == 0 else 0.8), p0.y)
+			tamper = sb
+		else:
+			ramp.global_transform = ramp_xf.translated(Vector3(0, 0.8, 0))
+		for i in 3:
+			await physics_frame
+		var W := _walk_check(v, L, S, space, terrain)
+		var tripped := not (W["blocked"] as Array).is_empty() or not (W["steps"] as Array).is_empty()
+		var nm: String = ["N1 參道の歩行面に箱（障害）", "N2 斜坡碰撞を 0.8 m 持ち上げ（継ぎ目の段差）", "N3 未登記の台を参道に置く"][n]
+		print("[SHRINE] NEG %s：被擋 %d 段差 %d → %s" % [nm, (W["blocked"] as Array).size(), (W["steps"] as Array).size(), "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
+		if not tripped:
+			miss += 1
+		if tamper:
+			tamper.get_parent().remove_child(tamper)
+			tamper.free()
+		else:
+			ramp.global_transform = ramp_xf
+		for i in 3:
+			await physics_frame
+	print("[SHRINE] 結果：%d 項失敗（scene negatives）" % miss)
+	return miss
+
 # ─────────────────────────── 場景級驗證（已掛載） ───────────────────────────
 
 func _scene(v: Node3D, L: Dictionary) -> void:
@@ -482,28 +605,10 @@ func _scene(v: Node3D, L: Dictionary) -> void:
 				hits[key.get_slice("/", 0) + "/" + key.get_slice("/", 1) + "/" + key.get_slice("/", 2) + " ← " + String(sb.get_parent().name)] = 1
 	check("碰撞：新樹幹／燈籠 vs 地標／建物／R2–R4 植被／其他接觸 %s" % (str(hits.keys().slice(0, 5)) if hits else "0"), hits.is_empty())
 	# 3 實走：參道（鳥居南 → 終點）＋前庭橫走，膠囊 r 0.3 h 1.7（只排除地形）
-	var road: Array = SG.road_pts(L)
-	var cap := CapsuleShape3D.new()
-	cap.radius = 0.3
-	cap.height = 1.7
-	var blocked: Array = []
-	var probes := 0
-	var routes: Array = [road.slice(1), [Vector2(266.0, -208.0), Vector2(258.0, -214.0), Vector2(258.0, -221.5)],
-		[Vector2(250.5, -216.0), Vector2(266.0, -216.0)]]
-	for route: Array in routes:
-		for e: Array in GL.resample(route, 0.5):
-			var p: Vector2 = e[0]
-			if SG.TORII_BOX.grow(0.2).has_point(p) and absf((p - SG.TORII).dot(Vector2(0.927, 0.375))) > 1.6:
-				continue
-			var qp := PhysicsShapeQueryParameters3D.new()
-			qp.shape = cap
-			qp.transform = Transform3D(Basis.IDENTITY, Vector3(p.x, S.h(p.x, p.y) + 0.3 + 0.85 + 0.25, p.y))
-			qp.exclude = [terrain.get_rid()]
-			probes += 1
-			var r := space.intersect_shape(qp, 1)
-			if not r.is_empty():
-				blocked.append("(%.1f,%.1f) %s" % [p.x, p.y, (r[0]["collider"] as Node).name])
-	check("實走：參道＋前庭膠囊 %d 點被擋 %d %s" % [probes, blocked.size(), ", ".join(blocked.slice(0, 3))], blocked.is_empty())
+	var W := _walk_check(v, L, S, space, terrain)
+	check("實走：參道＋前庭膠囊 %d 點被擋 %d %s；歩行面の隣接段差 > %.2f m %d %s（歩行面＝地形 %d 点・登記歩行面 %d 点）" % [W["probes"], (W["blocked"] as Array).size(),
+		", ".join((W["blocked"] as Array).slice(0, 3)), STEP_MAX, (W["steps"] as Array).size(), ", ".join((W["steps"] as Array).slice(0, 3)), W["on_terrain"], W["on_walkable"]],
+		(W["blocked"] as Array).is_empty() and (W["steps"] as Array).is_empty())
 	var nmesh := go.find_children("*", "MeshInstance3D", true, false).size()
 	info("ShrineGroveP9：%s 件、MeshInstance %d、構件碰撞 %s" % [go.get_meta("items", "?"), nmesh, go.get_meta("shapes", "?")])
 

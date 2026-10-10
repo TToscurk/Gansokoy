@@ -525,16 +525,16 @@
   "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r4_seal.json": "d2dd267868de9c45cb75bd9193771b0fcccfc0a45af1f5c18431e05634167c35",
-  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
-  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
-  "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
-  "godot/data/village_v2_p10r3e_seal.json": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03",
+  "godot/data/village_v2_p10r4_seal.json": "8f03cac2ecacfbca093a23fab101985db4effdf25ea0ca1d491114f2f789421a",
+  "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
+  "godot/data/village_v2_p10r3c_seal.json": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+  "godot/data/village_v2_p10r3d_seal.json": "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba",
+  "godot/data/village_v2_p10r3e_seal.json": "155722b2ea592808b3f6ae792e34f145c3d030f19f314fb220893b6d2cbc28d8",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
-  "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+  "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
   "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
   "godot/data/village_v2_p8_seal.json": "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf"
@@ -567,6 +567,39 @@
    "approved_by": "user",
    "approval_source": "使用者 2026-10-10 P10 FINAL CLOSEOUT：「R5b.1 灌溉：方案 B LIMITED APPROVAL」「允許 P8 limited correction」「進行必要的 affected-seal reseal，不修改無關封存」",
    "reason": "R4b は P8 封存を子に持つ（A 農田群が P8 の田・畦に依存）。P8 limited reseal（R5B1_IRRIGATION_SOURCE_RYUKOTSU：水車 2 東岸の取水構件だけ）に追従。R4b の 40 件・生成器・overlay は不変；R4b scene gate 0 失敗（docs/art_review/village_v2_p10_final_closeout/regression/full_regression.log）。"
+  },
+  {
+   "kind": "P11_R1_CHILD_P9F_CASCADE",
+   "at": "2026-10-10",
+   "child_seals": {
+    "godot/data/village_v2_p9_final_seal.json": [
+     "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+     "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b"
+    ],
+    "godot/data/village_v2_p10r4_seal.json": [
+     "d2dd267868de9c45cb75bd9193771b0fcccfc0a45af1f5c18431e05634167c35",
+     "8f03cac2ecacfbca093a23fab101985db4effdf25ea0ca1d491114f2f789421a"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+     "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+     "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
+     "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03",
+     "155722b2ea592808b3f6ae792e34f145c3d030f19f314fb220893b6d2cbc28d8"
+    ]
+   },
+   "seal_file_before": "f5e8e8170659c8537d7eeb15e24af7a89a8dbcefb98a20e4e95acd76a7f7a5ee",
+   "approved_by": "user",
+   "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
   }
  ]
 }

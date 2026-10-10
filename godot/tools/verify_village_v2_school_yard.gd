@@ -6,7 +6,8 @@ extends SceneTree
 ##   掛進場景：         ... --headless ... -- --attach（village_v2.tscn 文字層級在 Vegetation/ShrineGroveP9 後加 SchoolYardP9；
 ##                       先確認沒有 Godot 編輯器開著；**不重生** village_v2.tscn——若有流程重生它，重生後須依序重新 attach
 ##                       ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9）
-##   場景驗證：         ... --headless ... -- --scene（掛載順序、射線接地、碰撞 vs 寺子屋／建物／其他、入口＋前庭＋側院膠囊實走、視線射線）
+##   場景驗證：         ... --headless ... -- --scene（掛載順序、射線接地、碰撞 vs 寺子屋／建物／其他、入口＋前庭＋側院膠囊實走〔P11 R1：靜的障害＋NPC 動的規則〕、視線射線）
+##   場景級反向：       ... --headless ... -- --scene-negatives（P11 R1：靜的箱／NPC 待機点／巡回端／沿って歩く → 各案 FAIL）
 ##   審圖鏡位：         ... --headless ... -- --shots（寫 tools/shots/village_v2_p9r43_school_{before,after}.json）
 ##   封存：             ... --headless ... -- --seal（data/village_v2_p9r43_seal.json 雜湊＋掛載順序＋竄改反向；P9 R4-3 ART_APPROVED 2026-10-02）
 ## 每項一行 [SCHOOL] PASS/FAIL；INFO 不計失敗；結尾 quit(失敗項數)。
@@ -57,6 +58,10 @@ func _run() -> void:
 		return
 	var L: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
 	var v: Node3D = (load(SCENE) as PackedScene).instantiate()
+	if "--scene-negatives" in args:
+		root.add_child(v)
+		quit(await _scene_negatives(v))
+		return
 	if "--scene" in args:
 		root.add_child(v)
 		await _scene(v)
@@ -337,6 +342,223 @@ func _attach() -> int:
 	return 0
 
 
+# ─────────────────────── 實走（P11 R1 limited verifier correction 2026-10-10） ───────────────────────
+## 旧版：ルート上の膠囊が地形以外の何かに当たれば被擋。P10 R3d で寺子屋に巡回 NPC（C20、AnimatableBody3D）が入り、
+##   読み込み直後の巡回位置（start_u 0.69）が入口ルート（西巷 → 踏石前）の横切り点 (205.2, 24.2) にあったため 2 点が被擋になった
+##   （docs/art_review/village_v2_p11/r1/diag/known3.json：NPC を除くと被擋 0、C20 の巡回両端はルートから 1.35 m、横切り 1 箇所）。
+## 修正：Population の NPC（動く体）は静的被擋の対象から外し、代わりに NPC の動的規則を追加（旧版になかった検査）：
+##   ① 待機点（idle の位置、巡回の両端＝wait する所）とルートの距離 ≥ 膠囊 0.3＋NPC 半径＋0.3
+##   ② 巡回がルートの帯（0.3＋NPC 半径）の中を歩く長さ ≤ ALONG_MAX（横切りは可、ルートに沿って歩き続けるのは不可）
+##   ③ 横切り点の静的な通行幅（ルートの法線方向、NPC を除く）≥ 2×(0.3＋NPC 半径)＋0.3（NPC が立ち止まっても横を抜けられる）
+##   静的障害（構件・建物・樹幹など）は旧版どおり 1 点でも当たれば FAIL。
+const ALONG_MAX := 1.5
+const ROUTES := [[Vector2(208.4, 24.3), Vector2(196.0, 24.0)], [Vector2(197.0, 18.0), Vector2(202.0, 24.0), Vector2(197.6, 31.0)],
+	[Vector2(197.2, 33.2), Vector2(195.6, 35.0), Vector2(192.6, 37.6), Vector2(186.0, 38.0), Vector2(180.0, 36.4), Vector2(179.0, 30.0)],
+	[Vector2(197.0, 12.5), Vector2(188.0, 11.2), Vector2(180.0, 12.0)]]
+
+func _npc_actors(v: Node3D) -> Array:
+	var out: Array = []
+	var pop := v.get_node_or_null("Population")
+	if pop == null:
+		return out
+	for n in pop.find_children("*", "AnimatableBody3D", true, false):
+		if n.get("mode") == null:
+			continue
+		var r := 0.3
+		for c in n.get_children():
+			if c is CollisionShape3D and (c as CollisionShape3D).shape is CapsuleShape3D:
+				r = ((c as CollisionShape3D).shape as CapsuleShape3D).radius
+		out.append({"node": n, "r": r})
+	return out
+
+func _route_dist(q: Vector2) -> Array:
+	var best := INF
+	var dir := Vector2.RIGHT
+	for route: Array in ROUTES:
+		for i in route.size() - 1:
+			var a: Vector2 = route[i]
+			var b: Vector2 = route[i + 1]
+			var cp := Geometry2D.get_closest_point_to_segment(q, a, b)
+			if cp.distance_to(q) < best:
+				best = cp.distance_to(q)
+				dir = (b - a).normalized()
+	return [best, dir]
+
+func _walk_check(v: Node3D, S: Object, space: PhysicsDirectSpaceState3D, terrain: StaticBody3D) -> Dictionary:
+	var cap := CapsuleShape3D.new()
+	cap.radius = 0.3
+	cap.height = 1.7
+	var actors := _npc_actors(v)
+	var ex: Array[RID] = [terrain.get_rid()]
+	for a: Dictionary in actors:
+		ex.append((a["node"] as CollisionObject3D).get_rid())
+	var blocked: Array = []
+	var probes := 0
+	for route: Array in ROUTES:
+		for e: Array in GL.resample(route, 0.5):
+			var p: Vector2 = e[0]
+			var qp := PhysicsShapeQueryParameters3D.new()
+			qp.shape = cap
+			qp.transform = Transform3D(Basis.IDENTITY, Vector3(p.x, S.h(p.x, p.y) + 0.3 + 0.85 + 0.12, p.y))
+			qp.exclude = ex
+			probes += 1
+			var r := space.intersect_shape(qp, 1)
+			if not r.is_empty():
+				blocked.append("(%.1f,%.1f) %s" % [p.x, p.y, String(v.get_path_to(r[0]["collider"] as Node))])
+	var dwell_bad: Array = []
+	var along_bad: Array = []
+	var width_bad: Array = []
+	var crossings: Array = []
+	var dwell_min := 0.0
+	var width_min := 0.0
+	for a: Dictionary in actors:
+		var n := a["node"] as Node3D
+		var rr: float = a["r"]
+		var band := 0.3 + rr
+		dwell_min = 0.3 + rr + 0.3
+		width_min = 2.0 * (0.3 + rr) + 0.3
+		var path: PackedVector2Array = n.get("path_xz")
+		var dwell: Array = []
+		if String(n.get("mode")) == "patrol" and path.size() >= 2:
+			dwell = [path[0], path[path.size() - 1]]
+		else:
+			dwell = [Vector2(n.global_position.x, n.global_position.z)]
+		for q: Vector2 in dwell:
+			var d: float = _route_dist(q)[0]
+			if d < dwell_min:
+				dwell_bad.append("%s (%.1f,%.1f) %.2f m" % [n.name, q.x, q.y, d])
+		if String(n.get("mode")) != "patrol" or path.size() < 2:
+			continue
+		var along := 0.0
+		var inside := false
+		var cross_at := Vector2.INF
+		var L := 0.0
+		for i in path.size() - 1:
+			L += path[i].distance_to(path[i + 1])
+		var steps := maxi(2, int(L / 0.05))
+		for k in steps + 1:
+			var u := L * k / steps
+			var q := _path_at(path, u)
+			var rd: Array = _route_dist(q)
+			var now := float(rd[0]) < band
+			if now:
+				along += L / steps
+				if not inside:
+					cross_at = q
+			elif inside:
+				if along > ALONG_MAX:
+					along_bad.append("%s %.2f m" % [n.name, along])
+				crossings.append([n.name, cross_at, rd[1]])
+				along = 0.0
+			inside = now
+		if inside:
+			if along > ALONG_MAX:
+				along_bad.append("%s %.2f m" % [n.name, along])
+			crossings.append([n.name, cross_at, _route_dist(cross_at)[1]])
+	# ③ 横切り点の静的通行幅（ルート法線方向、NPC 除外）
+	for c: Array in crossings:
+		var q: Vector2 = c[1]
+		var dir: Vector2 = c[2]
+		var nrm := Vector2(-dir.y, dir.x)
+		var free_lo := 0.0
+		var free_hi := 0.0
+		for sgn in [-1.0, 1.0]:
+			var t := 0.0
+			while t < 3.0:
+				var pp: Vector2 = q + nrm * (t + 0.05) * sgn
+				var qp := PhysicsShapeQueryParameters3D.new()
+				qp.shape = cap
+				qp.transform = Transform3D(Basis.IDENTITY, Vector3(pp.x, S.h(pp.x, pp.y) + 0.3 + 0.85 + 0.12, pp.y))
+				qp.exclude = ex
+				if not space.intersect_shape(qp, 1).is_empty():
+					break
+				t += 0.05
+			if sgn < 0:
+				free_lo = t
+			else:
+				free_hi = t
+		var width := free_lo + free_hi + 0.6
+		if width < width_min:
+			width_bad.append("%s (%.1f,%.1f) %.2f m" % [c[0], q.x, q.y, width])
+		else:
+			info("NPC 横切り %s (%.1f,%.1f)：静的通行幅 %.2f m（≥ %.2f）" % [c[0], q.x, q.y, width, width_min])
+	return {"probes": probes, "blocked": blocked, "npc_n": actors.size(), "dwell_bad": dwell_bad, "dwell_min": dwell_min, "along_bad": along_bad,
+		"crossings": crossings, "width_bad": width_bad, "width_min": width_min}
+
+func _path_at(path: PackedVector2Array, u: float) -> Vector2:
+	var acc := 0.0
+	for i in path.size() - 1:
+		var l := path[i].distance_to(path[i + 1])
+		if acc + l >= u:
+			return path[i].lerp(path[i + 1], clampf((u - acc) / maxf(l, 1e-6), 0.0, 1.0))
+		acc += l
+	return path[path.size() - 1]
+
+## 永久反向（場景級・記憶體のみ）：各案で _walk_check が FAIL になること。
+##   N1 ルート上に静的な箱 → 被擋（旧版どおり）
+##   N2 C20 を idle にして入口ルートの横切り点に立たせる → 待機点
+##   N3 C20 の巡回の片端を入口ルート上へ → 待機点
+##   N4 C20 の巡回を入口ルートに沿わせる（4 m）→ 沿って歩く
+func _scene_negatives(v: Node3D) -> int:
+	for i in 4:
+		await physics_frame
+	var space := v.get_world_3d().direct_space_state
+	var terrain := v.get_node("Collision/TerrainCollision") as StaticBody3D
+	var S := RLib.terrain_sampler(v)
+	quiet = true
+	var W0 := _walk_check(v, S, space, terrain)
+	var clean := (W0["blocked"] as Array).is_empty() and (W0["dwell_bad"] as Array).is_empty() and (W0["along_bad"] as Array).is_empty() and (W0["width_bad"] as Array).is_empty()
+	print("[SCHOOL] NEG 対照（無改変）：%s" % ("PASS" if clean else "FAIL"))
+	var miss := 0 if clean else 1
+	var c20: Node3D = null
+	for a: Dictionary in _npc_actors(v):
+		if String((a["node"] as Node).name).begins_with("C20"):
+			c20 = a["node"]
+	var X := Vector2(205.2, 24.2)
+	var names := ["N1 ルート上に静的な箱", "N2 C20 を idle にして横切り点に立たせる", "N3 C20 の巡回の片端を入口ルート上へ", "N4 C20 の巡回を入口ルートに沿わせる 4 m"]
+	for n in 4:
+		var box: StaticBody3D = null
+		var keep_mode: String = c20.get("mode")
+		var keep_path: PackedVector2Array = c20.get("path_xz")
+		var keep_xf := c20.global_transform
+		match n:
+			0:
+				box = StaticBody3D.new()
+				var cs := CollisionShape3D.new()
+				var bx := BoxShape3D.new()
+				bx.size = Vector3(0.6, 1.0, 0.6)
+				cs.shape = bx
+				box.add_child(cs)
+				v.add_child(box)
+				box.global_position = Vector3(200.0, S.h(200.0, 24.1) + 0.5, 24.1)
+			1:
+				c20.set("mode", "idle")
+				c20.global_position = Vector3(X.x, S.h(X.x, X.y), X.y)
+			2:
+				var pp := PackedVector2Array(keep_path)
+				pp[pp.size() - 1] = Vector2(204.0, 24.2)
+				c20.set("path_xz", pp)
+			3:
+				c20.set("path_xz", PackedVector2Array([Vector2(206.0, 22.0), Vector2(206.0, 24.25), Vector2(201.0, 24.15), Vector2(201.0, 22.0)]))
+		for i in 3:
+			await physics_frame
+		var W := _walk_check(v, S, space, terrain)
+		var tripped := not ((W["blocked"] as Array).is_empty() and (W["dwell_bad"] as Array).is_empty() and (W["along_bad"] as Array).is_empty() and (W["width_bad"] as Array).is_empty())
+		print("[SCHOOL] NEG %s：被擋 %d 待機点 %d 沿い %d 幅 %d → %s" % [names[n], (W["blocked"] as Array).size(), (W["dwell_bad"] as Array).size(), (W["along_bad"] as Array).size(), (W["width_bad"] as Array).size(), "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
+		if not tripped:
+			miss += 1
+		if box:
+			v.remove_child(box)
+			box.free()
+		c20.set("mode", keep_mode)
+		c20.set("path_xz", keep_path)
+		c20.global_transform = keep_xf
+		for i in 3:
+			await physics_frame
+	quiet = false
+	print("[SCHOOL] 結果：%d 項失敗（scene negatives）" % miss)
+	return miss
+
 # ─────────────────────────── 場景級驗證（已掛載） ───────────────────────────
 
 func _scene(v: Node3D) -> void:
@@ -407,26 +629,13 @@ func _scene(v: Node3D) -> void:
 				hits[key.get_slice("/", 0) + "/" + key.get_slice("/", 1) + "/" + key.get_slice("/", 2) + " ← " + String(cs.name)] = 1
 	check("碰撞：構件箱／樹幹 vs 寺子屋本體・Hero 小物／鄰棟／其他植被 接觸 %s" % (str(hits.keys().slice(0, 5)) if hits else "0"), hits.is_empty())
 	# 3 實走：西巷 → 踏石前、前庭橫走、南側院 → 裏、北側通路（膠囊 r 0.3 h 1.7；只排除地形）
-	var cap := CapsuleShape3D.new()
-	cap.radius = 0.3
-	cap.height = 1.7
-	var blocked: Array = []
-	var probes := 0
-	var routes: Array = [[Vector2(208.4, 24.3), Vector2(196.0, 24.0)], [Vector2(197.0, 18.0), Vector2(202.0, 24.0), Vector2(197.6, 31.0)],
-		[Vector2(197.2, 33.2), Vector2(195.6, 35.0), Vector2(192.6, 37.6), Vector2(186.0, 38.0), Vector2(180.0, 36.4), Vector2(179.0, 30.0)],
-		[Vector2(197.0, 12.5), Vector2(188.0, 11.2), Vector2(180.0, 12.0)]]
-	for route: Array in routes:
-		for e: Array in GL.resample(route, 0.5):
-			var p: Vector2 = e[0]
-			var qp := PhysicsShapeQueryParameters3D.new()
-			qp.shape = cap
-			qp.transform = Transform3D(Basis.IDENTITY, Vector3(p.x, S.h(p.x, p.y) + 0.3 + 0.85 + 0.12, p.y))
-			qp.exclude = [terrain.get_rid()]
-			probes += 1
-			var r := space.intersect_shape(qp, 1)
-			if not r.is_empty():
-				blocked.append("(%.1f,%.1f) %s" % [p.x, p.y, String(v.get_path_to(r[0]["collider"] as Node))])
-	check("實走：入口＋前庭＋南側院＋北側通路 膠囊 %d 點被擋 %d %s" % [probes, blocked.size(), ", ".join(blocked.slice(0, 3))], blocked.is_empty())
+	var W := _walk_check(v, S, space, terrain)
+	check("實走：入口＋前庭＋南側院＋北側通路 膠囊 %d 點被擋 %d %s（靜的障害；NPC は下の動的規則）" % [W["probes"], (W["blocked"] as Array).size(), ", ".join((W["blocked"] as Array).slice(0, 3))],
+		(W["blocked"] as Array).is_empty())
+	check("實走（NPC 動的規則）：NPC %d 体の待機点（idle 位置・巡回の両端）がルートから < %.2f m %d %s；巡回がルートに沿って歩く区間 > %.1f m %d %s；横切り %d 箇所の静的通行幅 < %.2f m %d %s" % [
+		W["npc_n"], W["dwell_min"], (W["dwell_bad"] as Array).size(), ", ".join((W["dwell_bad"] as Array).slice(0, 3)), ALONG_MAX, (W["along_bad"] as Array).size(), ", ".join((W["along_bad"] as Array).slice(0, 3)),
+		(W["crossings"] as Array).size(), W["width_min"], (W["width_bad"] as Array).size(), ", ".join((W["width_bad"] as Array).slice(0, 3))],
+		(W["dwell_bad"] as Array).is_empty() and (W["along_bad"] as Array).is_empty() and (W["width_bad"] as Array).is_empty())
 	info("SchoolYardP9：%s 件、MeshInstance %d、構件碰撞 %s" % [go.get_meta("items", "?"),
 		go.find_children("*", "MeshInstance3D", true, false).size(), go.get_meta("shapes", "?")])
 

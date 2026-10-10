@@ -25,7 +25,7 @@
   "p12_technical_debt": "寺子屋周邊未量 GPU；樹 prefab 展開成自有節點；地面 overlay 0.4 m 格；dither 外緣 discard",
   "frozen": {
     "godot/tools/village_v2_school_yard_lib.gd": "b4d27276ce7391ba3ce7ae09be48d635f058c6e0dede8d9cda4e28190f8a89d3",
-    "godot/tools/verify_village_v2_school_yard.gd": "e39a286f59e2fc3fae73bd6fa0720cd41bfce7945bcc4e132195d05d95ee69ef",
+    "godot/tools/verify_village_v2_school_yard.gd": "9b4297902fbd4df1b7e22247b3f1b58555e863c9b1508a3e3f3b060debd7c927",
     "godot/assets/blender/village_v2/build_school_kit.py": "cf9bbb356a53812cdbb2da61946548575ee894da1a3ad59b05474660c6a61171",
     "tools/build_village_v2_school_atlas.py": "8394d6f79d935a026d98f66c8c5318150ada74aff7e7700d3958259aa12f7054",
     "godot/maps/village_v2/gen/school_yard_p9.scn": "4d05007be30ff6c503741c3c5777103df128fb6207f21e0fed7f602d9e00a90b",
@@ -80,5 +80,36 @@
     "evidence/school_negatives.log": "9f2e942378737f242fa867afbfc496c5f02ee006b70a0bd8d2038f72b7908f6e",
     "evidence/school_scene.log": "bb3d8a39dba1d87a4152cdb94ef41337e1fe7c5fe8e98b38025d0f3bd620e79c",
     "evidence/p9r43_trunk_tint_investigation.json": "6a8146ad98a31a5b4486e20195f33f7ea3c9450334a4a08338622c46db8a3ded"
-  }
+  },
+  "reseal_history": [
+    {
+      "kind": "P11_R1_NPC_DYNAMIC_VERIFIER_CORRECTION",
+      "date": "2026-10-10",
+      "changed": {
+        "godot/tools/verify_village_v2_school_yard.gd": {
+          "old": "e39a286f59e2fc3fae73bd6fa0720cd41bfce7945bcc4e132195d05d95ee69ef",
+          "new": "9b4297902fbd4df1b7e22247b3f1b58555e863c9b1508a3e3f3b060debd7c927"
+        }
+      },
+      "seal_file_before": "f2a226d3164a9f18855b0f388ea2d2b02e574ce5c393a29056530e200277fce7",
+      "authorized_by": "user",
+      "authorization": "使用者 2026-10-10「P11 — Collision & Navigation」：Step 1「P9 R4-2：神社參道 40 個碰撞阻擋點」「P9 R4-3：寺子屋巡邏 NPC 阻擋玩家」「先判定真正原因，再採用最小修正」「不得單純降低 Gate 標準、停用碰撞或刪除 NPC 來取得 PASS」「已封存內容只允許有明確原因的 limited correction，必須保留前後 hash、依賴與反向測試」",
+      "reason": "scene gate「實走：入口＋前庭＋南側院＋北側通路」で、P10 R3d が後から加えた巡回 NPC（AnimatableBody3D）を静的被擋の対象から外し、NPC の動的規則を追加：①待機点（idle 位置・巡回両端）とルートの距離 ≥ 0.3＋NPC 半径＋0.3、②巡回がルート帯の中を歩く長さ ≤ 1.5 m、③横切り点の静的通行幅 ≥ 2×(0.3＋NPC 半径)＋0.3。真因：C20 の巡回（202.0,20.4）↔（206.4,25.6）が入口ルートを 1 箇所で横切り、読み込み直後の巡回位置（start_u 0.69）がちょうど横切り点にあった。NPC を除くと静的被擋 0、巡回両端はルートから 1.35 m、横切り点の静的通行幅 6.70 m。静的障害の判定は旧版どおり。NPC・巡回は変更なし。玩家実走：入口ルート 3 往復で NPC_CONTACT 0・BLOCKED 0。",
+      "negatives": [
+        "--scene-negatives N1 静的な箱 → 被擋 3",
+        "N2 C20 を idle にして横切り点 → 待機点",
+        "N3 巡回の片端をルート上 → 待機点",
+        "N4 巡回をルートに沿わせる 4 m → 沿い＋待機点",
+        "--seal 竄改反向（従来どおり）"
+      ],
+      "evidence": [
+        "docs/art_review/village_v2_p11/r1/diag/known3.json",
+        "docs/art_review/village_v2_p11/r1/diag/npc.json",
+        "docs/art_review/village_v2_p11/r1/gates/school_scene.log",
+        "docs/art_review/village_v2_p11/r1/gates/school_scene_negatives.log",
+        "docs/art_review/village_v2_p11/r1/walk_r1/walk_log.json"
+      ],
+      "unchanged": "生成器・overlay（gen/*.scn）・地面 shader・ART_REVIEW 總表・證據・status（ART_APPROVED）・掛載順序は不変。"
+    }
+  ]
 }

@@ -24,7 +24,7 @@
  "p12_technical_debt": "神社周邊未量 GPU；樹 prefab 展開成自有節點（MeshInstance 392，未 MultiMesh）；地面 overlay 0.5 m 格；dither 外緣 discard",
  "frozen": {
   "godot/tools/village_v2_shrine_grove_lib.gd": "7fe417e5bb31d45b7ebc6298facc9e360defc10b762e79a26bf852aec56a812a",
-  "godot/tools/verify_village_v2_shrine_grove.gd": "87beec5f01c83a473e8c252e34c2d830ef7b1a79ea5f6b7d1f4e42cde348d395",
+  "godot/tools/verify_village_v2_shrine_grove.gd": "e43e4a8e1c580a34850affa6d914412f1c42eec6fdecf553b913aa2644366eaf",
   "godot/assets/village_v2/shrine_grove/sg_ground.gdshader": "14a9ab5906b0d80ac0227a8dbb32906b89b5d75ff7f9e7091fc7b58f0fb53e6e",
   "godot/maps/village_v2/gen/shrine_grove_p9.scn": "a506996af9966965a15d71c498c100eca79c39d38cf056b0066b7862f618ff1c",
   "godot/data/village_v2_p9r42_shrine.json": "77e1393a9a55595ad5c62d5cce04286a6f4afe594d93ccd7244fb7a06bca846a",
@@ -41,5 +41,34 @@
   "evidence/shrine_gate.log": "8b11e739a6a2fe62657af4fe1fb27e419ca8c53fae5a8c4ce5a6683ba6a72717",
   "evidence/shrine_negatives.log": "20a5340a0bbc347c010dcdf10a7ed02854b0335ef18a80d9e17c2ca07235a6a3",
   "evidence/shrine_scene.log": "f4b967f569bc3bf4fc959945f0ec21529e06ce7510b750df6a5536da32aa8c18"
- }
+ },
+ "reseal_history": [
+  {
+   "kind": "P11_R1_WALKABLE_SURFACE_VERIFIER_CORRECTION",
+   "date": "2026-10-10",
+   "changed": {
+    "godot/tools/verify_village_v2_shrine_grove.gd": {
+     "old": "87beec5f01c83a473e8c252e34c2d830ef7b1a79ea5f6b7d1f4e42cde348d395",
+     "new": "e43e4a8e1c580a34850affa6d914412f1c42eec6fdecf553b913aa2644366eaf"
+    }
+   },
+   "seal_file_before": "61d9d73d5fc7eeb83f526416c3bfd6ed213ebef5f362b62d5079d9035feb1a44",
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-10「P11 — Collision & Navigation」：Step 1「P9 R4-2：神社參道 40 個碰撞阻擋點」「P9 R4-3：寺子屋巡邏 NPC 阻擋玩家」「先判定真正原因，再採用最小修正」「不得單純降低 Gate 標準、停用碰撞或刪除 NPC 來取得 PASS」「已封存內容只允許有明確原因的 limited correction，必須保留前後 hash、依賴與反向測試」",
+   "reason": "scene gate「實走：參道＋前庭」の膠囊基準高さを地形 S.h 固定から「歩行面」（下向き射線で最初の地形、または登記歩行面＝root/ShrineApproachP10 の RampCollision だけ）へ。真因：P10 R6b の參道斜坡碰撞は地形より 0.51–0.94 m 高い歩行面で、旧版はその上を歩く膠囊を「斜坡に埋まる」と 40／179 点で誤判定（歩行面基準では 0）。未登記の物体は従来どおり障害。追加（厳しくなる方向）：隣接標本 0.5 m の歩行面段差 ≤ 0.45 m。膠囊寸法・ルート・標本間隔は不変。玩家実走（tools/walk_p10_final.gd --start=trail、參道上り 69 m／下り 90 m）で BLOCKED／STUCK 0。",
+   "negatives": [
+    "--scene-negatives N1 參道の歩行面に箱 → 被擋 3",
+    "N2 斜坡碰撞を 0.8 m 持ち上げ → 被擋 5・段差 4",
+    "N3 未登記の台 → 被擋 5",
+    "--seal 竄改反向（従来どおり）"
+   ],
+   "evidence": [
+    "docs/art_review/village_v2_p11/r1/diag/known3.json",
+    "docs/art_review/village_v2_p11/r1/gates/shrine_scene.log",
+    "docs/art_review/village_v2_p11/r1/gates/shrine_scene_negatives.log",
+    "docs/art_review/village_v2_p11/r1/walk_r1/walk_log.json"
+   ],
+   "unchanged": "生成器・overlay（gen/*.scn）・地面 shader・ART_REVIEW 總表・證據・status（ART_APPROVED）・掛載順序は不変。"
+  }
+ ]
 }

@@ -105,7 +105,7 @@
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
     "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
     "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
-    "godot/data/village_v2_p9_final_seal.json": "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8"
+    "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b"
   },
   "verification": "Final gate source hash computed after all code writes. Post-final verification logs and manifest itself intentionally excluded to avoid self-reference. Existing review/evidence manifests remain historical and untouched.",
   "reseal_history": [
@@ -135,6 +135,19 @@
         }
       },
       "previous_seal_sha256": "d181d6385bb79132bf90f191c61dbd69513f91d226a1da01a43b3c0ba79ec7fc"
+    },
+    {
+      "kind": "P11_R1_CHILD_P9F_CASCADE",
+      "at": "2026-10-10",
+      "child_seals": {
+        "godot/data/village_v2_p9_final_seal.json": [
+          "c327c4c22553745e146927ac9ed0da3f6d04564f899c63558cda0d265cf341c8",
+          "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b"
+        ]
+      },
+      "seal_file_before": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+      "approved_by": "user",
+      "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
     }
   ]
 }

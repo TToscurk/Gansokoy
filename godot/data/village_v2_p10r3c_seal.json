@@ -336,7 +336,7 @@
     "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
   },
   "child_seals": {
-    "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+    "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
   },
   "reseal_history": [
@@ -352,6 +352,19 @@
         }
       },
       "previous_seal_sha256": "33222bb8a165c55f7236986b979d345610b7048230caf0aca22f4fd26bd9d8bb"
+    },
+    {
+      "kind": "P11_R1_CHILD_P9F_CASCADE",
+      "at": "2026-10-10",
+      "child_seals": {
+        "godot/data/village_v2_p10r3b_seal.json": [
+          "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+          "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79"
+        ]
+      },
+      "seal_file_before": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+      "approved_by": "user",
+      "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
     }
   ]
 }

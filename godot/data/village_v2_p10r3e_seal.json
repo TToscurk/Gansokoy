@@ -457,9 +457,9 @@
   "docs/art_review/village_v2_p10_population/outer_r1/review/population_map.png": "74dfdb251f2f175bfa352377d0c982e37ee03ff459ce7b455334cf5c427736b7"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3d_seal.json": "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
-  "godot/data/village_v2_p10r3c_seal.json": "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
-  "godot/data/village_v2_p10r3b_seal.json": "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+  "godot/data/village_v2_p10r3d_seal.json": "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba",
+  "godot/data/village_v2_p10r3c_seal.json": "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6",
+  "godot/data/village_v2_p10r3b_seal.json": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -494,6 +494,27 @@
     "docs/art_review/village_v2_p10_population/outer_r1/gate/scene_scope_fix_20261008.log": "8b511e3c943b8cc903f6ac39db9293147b2969bf27e78321fa055895442cb6c4"
    },
    "seal_file_before": "2d9613bb201dd31d0ba43db3132b106ad01797cb55f297e008bc0992ecfb1334"
+  },
+  {
+   "kind": "P11_R1_CHILD_P9F_CASCADE",
+   "at": "2026-10-10",
+   "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "04f4ee125b05c07c09edb68d4b78eaf634445f5f80c868d3461cc2673e556eef",
+     "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "b54f7253eca928ce5306c3d5945b8a57735ea68ad55ebda42b4d7f246dd54dba",
+     "607e09ed56318b9d48a334b1cf714f818ef07e76afe7026c1c07bfc5579c8dba"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "2722b79694fb246c1a5e021cf433a3e52af777108ea9b6c74ea82f14065ac019",
+     "390dcd09610e1f20bc0e0d10d717592e6bfb03788bd76becc64d0941a4b223a6"
+    ]
+   },
+   "seal_file_before": "856d6a44eb076b682472c9accd903241f2c160ac0f1cef1fc796ffdb5c672d03",
+   "approved_by": "user",
+   "reason": "P11 R1：P9 R4-2／R4-3 の scene gate limited verifier correction（使用者 2026-10-10 P11 指示）で P9 FINAL SEAL の雜湊が変わった（village_v2_p9_final_seal.json reseal_history P11_R1_CHILD_R4_2_R4_3_UPDATE）。本封存は child_seals の雜湊だけ追従、封存内容は不変。"
   }
  ]
 }

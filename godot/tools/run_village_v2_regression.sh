@@ -81,11 +81,13 @@ run "P9 R4 稗田邸庭園場景級驗證（ForestP9／BambooP9／HiedaGardenP9 
 run "P9 R4-2 封存（神社周邊 生成器／gate／地面 shader／overlay／4 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --seal
 run "P9 R4-2 神社周邊 plan gate（參道淨空／接地／村側視線＋R2 社殿天窗／前庭留白／鎮守林連續／非均勻／R2 共存／注連繩貼幹／元素）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd
 run "P9 R4-2 神社周邊永久反向 6 案（road／sight／void／uniform／float／rope 各自瞄準項 FAIL）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --negatives
-run "P9 R4-2 神社周邊場景級驗證（掛載順序 ForestP9→BambooP9→HiedaGardenP9→ShrineGroveP9、射線接地、碰撞、參道＋前庭實走）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --scene
+run "P9 R4-2 神社周邊場景級驗證（掛載順序 ForestP9→BambooP9→HiedaGardenP9→ShrineGroveP9、射線接地、碰撞、參道＋前庭實走〔P11 R1：歩行面基準＋段差 ≤ 0.45〕）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --scene
+run "P9 R4-2 神社周邊 場景級反向 3 案（P11 R1：參道の箱／斜坡の継ぎ目段差／未登記の台 → 實走 FAIL）" SHRINE --headless --path . --script res://tools/verify_village_v2_shrine_grove.gd -- --scene-negatives
 run "P9 R4-3 封存（寺子屋周邊 school_kit＋SchoolYardP9 生成器／gate／地面 shader／overlay／7 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --seal
 run "P9 R4-3 寺子屋周邊 plan gate（接地／不穿建築／主入口淨空／正面視線／前庭留白≤8 %＋生活小物≤20／植被語彙無杉檜／元素齊備）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd
 run "P9 R4-3 寺子屋周邊永久反向 6 案（float／door／facade／conifer／clip／clutter 各自瞄準項 FAIL）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --negatives
-run "P9 R4-3 寺子屋周邊場景級驗證（掛載順序 …→ShrineGroveP9→SchoolYardP9、射線接地、碰撞 vs Hero 本體、入口／前庭／側院膠囊實走）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --scene
+run "P9 R4-3 寺子屋周邊場景級驗證（掛載順序 …→ShrineGroveP9→SchoolYardP9、射線接地、碰撞 vs Hero 本體、入口／前庭／側院膠囊實走〔P11 R1：靜的障害＋NPC 動的規則〕）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --scene
+run "P9 R4-3 寺子屋周邊 場景級反向 4 案（P11 R1：靜的箱／NPC 待機点／巡回端／ルートに沿う巡回 → FAIL）" SCHOOL --headless --path . --script res://tools/verify_village_v2_school_yard.gd -- --scene-negatives
 run "P9 R4-4 封存（水車／龍神像周邊 waterside_kit＋WatersideP9 生成器／gate／overlay／3 張 ART_REVIEW 總表／證據 sha256＋掛載順序＋反向）" WATER --headless --path . --script res://tools/verify_village_v2_waterside.gd -- --seal
 run "P9 R4-4 水車／龍神像周邊 plan gate（接地／不穿／動線淨空／Hero 淨空／視線／河岸植生／植被語彙／元素／注連繩 Ø≥0.30 貼幹／作業場原寸留白）" WATER --headless --path . --script res://tools/verify_village_v2_waterside.gd
 run "P9 R4-4 水車／龍神像周邊永久反向 8 案（float／road／hero／sight／uniform／conifer／rope／mill 各自瞄準項 FAIL）" WATER --headless --path . --script res://tools/verify_village_v2_waterside.gd -- --negatives
