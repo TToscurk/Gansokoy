@@ -28,6 +28,7 @@ const CORRIDORS := {"FarmPath_1": Rect2(370.8, -12.0, 2.4, 24.0), "FarmPath_4": 
 	"HiedaGateApron": Rect2(394.5, -9.0, 7.0, 7.8)}
 const PORTAL := Vector3(398.0, 2.0, 2.2)      # x, z, 淨空半徑
 const POST_GAP_MIN := 1.2                     # 支柱列可穿越：相鄰柱對淨距 ≥ 膠囊直徑 0.6 × 2
+const T0_TAP := Vector2(338.1, 5.09)   # P11 R2D-Fix：village_v2_farmland_zone.gd BRANCHES["T0"]["tap"] と同値
 var main: Node
 var player: CharacterBody3D
 var fails := 0
@@ -454,6 +455,10 @@ func _ryukotsu_clear(boxes: Array) -> void:
 			for v: Vector3 in m.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX]:
 				var p := m.global_transform * v
 				if not region.has_point(p):
+					continue
+				# P11 R2D-Fix limited verifier correction：T0 支線の頭は送り樋の南壁開口に「接続するため」送り樋の外形に入る（同じ P8 取水系統、他層ではない）。
+				#   分水点から 0.45 m 以内の Branch_T0 の頂点だけ除外。それ以外の支線頂点・他層は従来どおり判定。
+				if path.contains("/Branches/Branch_T0/") and Vector2(p.x, p.z).distance_to(T0_TAP) < 0.45:
 					continue
 				nverts += 1
 				for bx: Array in ryu:

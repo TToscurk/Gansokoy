@@ -886,7 +886,16 @@ static func _ryukotsu_art(r: Node3D, P: Dictionary, wood: Material, fmat: Materi
 	var fs := SurfaceTool.new()
 	fs.begin(Mesh.PRIMITIVE_TRIANGLES)
 	_box_into(fs, Transform3D(Basis(), Vector3(0, -0.02, 0)), Vector3(FW, 0.04, FL_ + 0.04))
-	_box_into(fs, Transform3D(Basis(), Vector3(-FW * 0.5 + 0.018, fwall * 0.5 - 0.04, 0)), Vector3(0.036, fwall + 0.04, FL_ + 0.04))
+	# P11 R2D-Fix：T0 分水口＝南側（局部 −x）側板を木槽の外法幅で実際に切り欠く（底板の高さまで、底板は残す）。
+	#   局部 z は f_local で分水点から求める（送り樋は yaw／pitch 付き、世界の南＝局部 −x を前提にしない）。
+	var tap_w: Vector2 = load(FL.ZONE_SCRIPT).BRANCHES["T0"]["tap"]
+	var tap_z := (f_local * Vector3(tap_w.x, fa.y, tap_w.y)).z
+	var tap_half := FL.TROUGH_W * 0.5
+	var side_z0 := -FL_ * 0.5 - 0.02
+	var side_z1 := FL_ * 0.5 + 0.02
+	for seg: Vector2 in [Vector2(side_z0, tap_z - tap_half), Vector2(tap_z + tap_half, side_z1)]:
+		_box_into(fs, Transform3D(Basis(), Vector3(-FW * 0.5 + 0.018, fwall * 0.5 - 0.04, (seg.x + seg.y) * 0.5)), Vector3(0.036, fwall + 0.04, seg.y - seg.x))
+	_box_into(fs, Transform3D(Basis(), Vector3(-FW * 0.5 + 0.018, -0.03, tap_z)), Vector3(0.036, 0.06, FL.TROUGH_W))   # 切り欠きの下＝底板と同高の敷居
 	_box_into(fs, Transform3D(Basis(), Vector3(FW * 0.5 - 0.018, fwall * 0.5 - 0.04, 0)), Vector3(0.036, fwall + 0.04, FL_ + 0.04))
 	for k in floori(FL_ / 1.6):
 		var t := (k + 0.5) * 1.6 / FL_ - 0.5
@@ -902,6 +911,7 @@ static func _ryukotsu_art(r: Node3D, P: Dictionary, wood: Material, fmat: Materi
 	var fws := SurfaceTool.new()
 	fws.begin(Mesh.PRIMITIVE_TRIANGLES)
 	_box_into(fws, Transform3D(Basis(), Vector3(0, 0.06, 0)), Vector3(FW - 0.08, 0.01, FL_))
+	_box_into(fws, Transform3D(Basis(), Vector3(-FW * 0.5 + 0.01, 0.057, tap_z)), Vector3(0.1, 0.01, FL.TROUGH_W - 0.08))   # 開口を越えて木槽へ流れ出る水
 	_box_into(fws, Transform3D(fbs.inverse(), f_local * Vector3(fb.x + 0.02, (fb.y + 0.05 + y_box) * 0.5, fb.z)), Vector3(0.02, fb.y + 0.05 - y_box, 0.22))
 	_mesh_node(fg, "Water", fws, fmat, Transform3D(fbs, fmid))
 

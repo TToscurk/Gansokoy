@@ -107,6 +107,35 @@ func _init() -> void:
 	var br_nodes := 0 if zi == null or zi.get_node_or_null("Branches") == null else zi.get_node("Branches").find_children("*", "MeshInstance3D", true, false).size()
 	check("P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children %d, old collision %d); branch meshes %d, branch collision %d" % [feeders_left, old_coll, br_nodes, br_coll],
 		feeders_left == 0 and old_coll == 0 and br_nodes > 0 and br_coll > 0)
+	# P11 R2D-Fix：送り樋の T0 分水口が実際に開いている（木槽の中心線・水面高で送り樋内→木槽へ引いた線分が送り樋本体の三角形に当たらない）、
+	#   かつ開口の両脇は側板が残っている（±木槽半幅＋0.05 の線分は当たる）
+	var feed := pilot.get_node_or_null("FieldDetails/WaterSupply/Ryukotsu/Feed/Body") as MeshInstance3D
+	var tap: Vector2 = ZLib.BRANCHES["T0"]["tap"]
+	var cut_ok := false
+	var cut_txt := "Feed/Body なし"
+	if feed:
+		var fxf := feed.transform
+		var par := feed.get_parent() as Node3D
+		while par != null and par != pilot:
+			fxf = par.transform * fxf
+			par = par.get_parent() as Node3D
+		var faces := feed.mesh.get_faces()
+		var wy := float(ZLib.BRANCHES["T0"]["pts"][0][2]) - 0.02
+		var hit := func(dx: float) -> bool:
+			var a := Vector3(tap.x + dx, wy, FLib.FEED[0].z)
+			var b := Vector3(tap.x + dx, wy, tap.y + 0.3)
+			for t in range(0, faces.size(), 3):
+				if Geometry3D.segment_intersects_triangle(a, b, fxf * faces[t], fxf * faces[t + 1], fxf * faces[t + 2]) != null:
+					return true
+			return false
+		var c_open: bool = not hit.call(0.0) and not hit.call(-0.12) and not hit.call(0.12)
+		var sides: bool = hit.call(-(FLib.TROUGH_W * 0.5 + 0.05)) and hit.call(FLib.TROUGH_W * 0.5 + 0.05)
+		cut_ok = c_open and sides
+		cut_txt = "中心±0.12 開口=%s、両脇の側板残存=%s" % [c_open, sides]
+	if "--negative-feedcut" in OS.get_cmdline_user_args():
+		cut_ok = not cut_ok
+		cut_txt += "（反向：開口判定を反転）"
+	check("P11 R2D-Fix T0 tap: real opening in feed side board (%s)" % cut_txt, cut_ok)
 	if "--negative-branch" in OS.get_cmdline_user_args():
 		var neg: Dictionary = Z.duplicate(true)
 		var nw: PackedFloat32Array = neg["branches"][0]["runs"][0]["w"]

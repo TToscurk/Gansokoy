@@ -537,7 +537,7 @@
   "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
   "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
-  "godot/data/village_v2_p8_seal.json": "7daeef73c4397116b4b89658a5bb15442cad381557361629d337faca2edf8296"
+  "godot/data/village_v2_p8_seal.json": "3b066bc9647d2865d5c59f65ad24404c825ceb46c0c31f778b2516af756c0c69"
  },
  "reseal_history": [
   {
@@ -663,6 +663,19 @@
    "seal_file_before": "bce4b905f5b5aa91a400cb0468ca7c634ae7651356eeaa6fa56518694f3d78a1",
    "approved_by": "user（P11 R2D）",
    "reason": "P11 R2D：子封存 P8（竜骨車支線の limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P11_R2D_FIX_CHILD_P8_UPDATE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p8_seal.json": [
+     "7daeef73c4397116b4b89658a5bb15442cad381557361629d337faca2edf8296",
+     "3b066bc9647d2865d5c59f65ad24404c825ceb46c0c31f778b2516af756c0c69"
+    ]
+   },
+   "seal_file_before": "c94c7997c826ae574460d471ecd3d6d5aa7af9bb3a05fde631f65c888e7815d1",
+   "approved_by": "user（P11 R2D-Fix）",
+   "reason": "子封存 P8 の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

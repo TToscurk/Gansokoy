@@ -48,7 +48,7 @@ const BRANCHES := {
 	"N0": {"src": "上段土渠 南唇", "tap": Vector2(359.5, 5.68), "pts": [[359.5, 5.55, 0.265, "c"], [360.0, 4.0, 0.26, "c"], [360.0, 2.0, 0.26, "s"], [361.0, -2.0, 0.25, "c"],
 		[361.0, -5.0, 0.25, "c"], [364.0, -8.0, 0.25, "c"], [364.0, -27.0, 0.25, "c"], [360.0, -31.0, 0.25, "s"], [357.0, -39.0, 0.20, "c"],
 		[357.0, -40.0, 0.20, "c"], [352.35, -45.2, 0.20, "c"]]},
-	"T0": {"src": "送り樋 南壁", "tap": Vector2(338.1, 5.09), "pts": [[338.1, 5.35, 0.555, "c"], [338.15, 6.6, 0.555, "c"], [339.3, 7.8, 0.555, "c"], [340.0, 9.0, 0.55, "c"],
+	"T0": {"src": "送り樋 南壁", "tap": Vector2(338.1, 5.09), "pts": [[338.1, 5.08, 0.555, "c"], [338.15, 6.6, 0.555, "c"], [339.3, 7.8, 0.555, "c"], [340.0, 9.0, 0.55, "c"],
 		[340.0, 10.0, 0.55, "c"], [339.0, 11.0, 0.55, "c"], [338.0, 12.0, 0.46, "c"], [338.0, 13.0, 0.46, "c"], [337.0, 14.0, 0.46, "c"], [337.0, 17.0, 0.46, "c"],
 		[337.0, 18.0, 0.44, "c"], [336.0, 19.0, 0.44, "c"], [336.0, 24.0, 0.44, "c"], [335.0, 25.0, 0.44, "c"], [335.0, 30.0, 0.44, "c"], [334.0, 31.0, 0.44, "c"],
 		[334.0, 37.0, 0.44, "s"], [335.0, 46.0, 0.39, "c"], [326.0, 56.0, 0.39, "c"], [326.0, 59.0, 0.39, "c"], [327.0, 60.0, 0.39, "c"], [327.0, 65.0, 0.39, "c"],
@@ -59,6 +59,8 @@ const BR_TROUGH_MAX := 0.35    # 水面−地面 ≤ これ＝枕木上の木槽
 const BR_MIN := 0.03           # 水面は地面より最低これだけ上（水が見える）
 const BR_BANK := 0.67          # 土渠の堤の中心（水路中心から）
 const BR_HALF := 1.0           # 土渠の外法半幅
+const BR_ROUND := 1.2          # P11 R2D-Fix：T0 開水路の折れの丸め半径
+const BR_COLLAR := 1.2         # P11 R2D-Fix：土渠→木槽の接合で土手が木槽を抱いてから地面へ下りる長さ
 const OUTFALLS := ["N2", "N3"]
 ## r5 水車 2 受け樋頭相對水車 Hero 原點（水車局部座標：x 軸＝朝水渠中心；由 lib.CHUTE[0] 與水車 2 transform 反算）
 const HEAD_LOCAL := Vector3(3.252, 4.821, -0.368)
@@ -901,6 +903,10 @@ static func branch_specs() -> Array:
 				cw = PackedFloat32Array()
 		if cur.size() >= 2:
 			runs.append({"kind": "open", "line": cur, "w": cw})
+		if bid == "T0":
+			for r: Dictionary in runs:
+				if r["kind"] == "open":
+					_round_run(r, BR_ROUND)
 		for r: Dictionary in runs:
 			if r["kind"] != "open":
 				continue
@@ -918,6 +924,19 @@ static func branch_specs() -> Array:
 			r["length"] = L
 		out.append({"id": bid, "src": B["src"], "tap": B["tap"], "runs": runs, "block": bid, "head_w": float(pts[0][2]), "tail_w": float(pts[pts.size() - 1][2])})
 	return out
+
+## P11 R2D-Fix（T0 のみ）：開水路の折線を半径 r で丸め、新しい頂点の水面は元の折線へ投影した位置で補間（水位は不変）
+static func _round_run(r: Dictionary, rad: float) -> void:
+	var src := r.duplicate()
+	var rl := FL._round(r["line"], rad)
+	var w := PackedFloat32Array()
+	var last := INF
+	for p in rl:
+		var x := minf(branch_water(src, FL.project_s(src["line"], p)), last)   # 非増加を保つ
+		w.append(x)
+		last = x
+	r["line"] = rl
+	r["w"] = w
 
 ## 開水路区間の水面（頂点の水面を弧長で線形補間）
 static func branch_water(r: Dictionary, s: float) -> float:
@@ -962,7 +981,10 @@ static func branch_profile(u: float, w: float, g: float) -> float:
 	return branch_bed(w, g)
 
 ## 支線の可見網格：開水路の土渠（両堤＋渠底＋水面）、木槽区間（枕木上）、伏越し両端の石桝、分水板・落差板
-static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Material, gm: Material, fmat: Material, deep: Material, rng: RandomNumberGenerator) -> void:
+static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Material, gm: Material, fmat: Material, deep: Material, _shared_rng: RandomNumberGenerator) -> void:
+	# P11 R2D-Fix：支線専用の固定 seed（取樣数が変わっても後続の排水口石・農具の乱数を動かさない）
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 61101
 	for br: Dictionary in Z.get("branches", []):
 		var g := Visual._group(root, "Branch_%s" % br["id"])
 		g.set_meta("source", br["src"])
@@ -988,15 +1010,36 @@ static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Mater
 			var og := Visual._group(g, "Open_%d" % ri)
 			ri += 1
 			var rr := r
-			for sp: Array in branch_spans(r):
+			var spans := branch_spans(r)
+			var Lr: float = r["length"]
+			for si in spans.size():
+				var sp: Array = spans[si]
 				var s0: float = sp[1]
 				var s1: float = sp[2]
 				var sub := _cut(line, s0, s1)
 				if sub.size() < 2:
 					continue
 				if sp[0] == "earth":
-					Visual._ribbon(og, "Earth_%d" % int(s0), sub, BR_HALF, func(p: Vector2, u: float) -> float:
-						return branch_profile(u, branch_water(rr, FL.project_s(line, p)), ground_h(p)), gm, Color(0.12, 0.25, 1.0, 0.0), Vector2(1.0, 0.0), -1e9, 1e9)
+					# P11 R2D-Fix：木槽と接する端は土手を BR_COLLAR だけ木槽の下へ延ばし、木槽を抱いてから地面へ下ろす
+					#   （土渠 ribbon の切り口＝縦の土の面・暗い隙間をなくす）。T0 だけ（N0 は木槽なし）。
+					var c0 := BR_COLLAR if si > 0 and spans[si - 1][0] == "trough" else 0.0
+					var c1 := BR_COLLAR if si < spans.size() - 1 and spans[si + 1][0] == "trough" else 0.0
+					var e0 := maxf(s0 - c0, 0.0)
+					var e1 := minf(s1 + c1, Lr)
+					var esub := _cut(line, e0, e1) if (c0 > 0.0 or c1 > 0.0) else sub
+					Visual._ribbon(og, "Earth_%d" % int(s0), esub, BR_HALF, func(p: Vector2, u: float) -> float:
+						var sp_s := FL.project_s(line, p)
+						var w0 := branch_water(rr, sp_s)
+						var g0 := ground_h(p)
+						var h := branch_profile(u, w0, g0)
+						var out_d := maxf(s0 - sp_s, sp_s - s1)
+						if out_d <= 0.0:
+							return h
+						var f := clampf(1.0 - out_d / BR_COLLAR, 0.0, 1.0)
+						h = lerpf(g0 + 0.005, h, f)
+						if absf(u) < 0.45:
+							h = minf(h, maxf(w0 - FL.TROUGH_DEPTH - 0.05, g0 + 0.002))   # 木槽の底板の下
+						return h, gm, Color(0.12, 0.25, 1.0, 0.0), Vector2(1.0, 0.0), -1e9, 1e9)
 					Visual._ribbon(og, "Water_%d" % int(s0), sub, 0.3, func(p: Vector2, _u: float) -> float:
 						return branch_water(rr, FL.project_s(line, p)), fmat, Color(), Vector2(), -1e9, 1e9, true)
 				else:

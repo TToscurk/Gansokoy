@@ -58,6 +58,7 @@ run "P8 封存（凍結來源／overlay／ART_REVIEW 圖／證據 sha256＋反�
 run "P8 local gate（田數、田埂碰撞、水位、灌排、農路淨距）" FARM --headless --path . --script res://tools/verify_village_v2_farmland.gd
 run "P8 永久反向（田面水抬 0.5 m → 恰 1 項 FAIL）"  FARM    --headless --path . --script res://tools/verify_village_v2_farmland.gd -- --negative
 run "P8 P11 R2D 竜骨車支線 永久反向（支線の水面を逆勾配にする → branch gate が検出）" FARM --headless --path . --script res://tools/verify_village_v2_farmland.gd -- --negative-branch
+runneg "P8 P11 R2D-Fix 送り樋 T0 開口 永久反向（開口判定を反転 → FAIL）" "FAIL P11 R2D-Fix T0 tap" --headless --path . --script res://tools/verify_village_v2_farmland.gd -- --negative-feedcut
 run "P8 田埂／水面擺放稽核"                    FARM_PLACE --headless --path . --script res://tools/audit_village_v2_farmland_placement.gd
 run "P8 取水水路淨空（FarmPath_1／稗田邸前）＋R5b.1 竜骨車：系統狀態〔非表示・無効碰撞・高架樋残骸 0〕・水源連通〔水位鎖単調〕・他層干渉 0" FEEDER  --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder --no-shots --hour=10
 run "P8 R5b.1 FEEDER 永久反向（取水構件の runtime 非表示・碰撞停止・高架樋残骸 → supply_system_state 各案 FAIL）" FEEDER-NEG --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder-negative --hour=10

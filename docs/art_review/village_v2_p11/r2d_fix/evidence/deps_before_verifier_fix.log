@@ -1,0 +1,15 @@
+✓ P8 田埂／水面擺放稽核
+[FEEDER] FAIL ryukotsu_overlay_clear：竜骨車の部材 OBB 16 個；周辺の可見網格頂点 3804 のうち部材内 { "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches/Branch_T0/Merged_0": 72, "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches/Branch_T0/Merged_1": 12 }；MultiMesh 実例 65 のうち部材を貫く 0
+✗ P8 取水水路淨空（FarmPath_1／稗田邸前）＋R5b.1 竜骨車：系統狀態〔非表示・無効碰撞・高架樋残骸 0〕・水源連通〔水位鎖単調〕・他層干渉 0（exit 1）
+✓ P8 R5b.1 FEEDER 永久反向（取水構件の runtime 非表示・碰撞停止・高架樋残骸 → supply_system_state 各案 FAIL）
+[WATER] 結果：0 項失敗（scene）
+✓ P9 R4-4 水車／龍神像周邊場景級驗證（掛載順序 …→SchoolYardP9→WatersideP9、射線接地、碰撞、參拜道＋水車入口實走）
+[MMBAKE] 結果：0 項失敗
+✓ 永久 build rule：全場景 MultiMesh instance transform 非零（各 overlay 分組＋零矩陣反向＋非空；需 rendering display）
+[HUSE] 結果：0 項失敗（scene）
+✓ P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUX] 結果：0 項失敗（scene）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下 HumanUseP10 の次に HumanUseExpansionP10・Props の子は封存どおり・正式 10 群／C 0／ZoneC なし・個別ノード・MultiMesh／Marker3D 0・R4 の 50 件 snapshot 不変・Population 51 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[WLF] 結果：0 項失敗
+✓ P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・ROUND 3：揚水部材 0・輪が回り下端は下流へ・水車 1／3 不動・P8 取水構件は overlay の有無で不変〔全部表示・碰撞有効〕・碰撞 2；非 headless）
+fail=1
