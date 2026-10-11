@@ -272,12 +272,12 @@
   "docs/art_review/village_v2_p10_props/human_use_r1/review/README.md": "022f5b445fe71d458d21d021b47d703414cc661714eed7dad871514e8e90915f"
  },
  "child_seals": {
-  "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+  "godot/data/village_v2_p9_final_seal.json": "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
-  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
-  "godot/data/village_v2_p10r3e_seal.json": "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
+  "godot/data/village_v2_p10r3d_seal.json": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
+  "godot/data/village_v2_p10r3e_seal.json": "891fa76da0df6966ae1cadb212aa6f4bfc69da5a9c22a156d61b5e154d6c299c",
   "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
  },
  "reseal_history": [
@@ -378,6 +378,27 @@
    "seal_file_before": "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec",
    "approved_by": "user（P12 Wave 1）",
    "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_CLOSURE_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p9_final_seal.json": [
+     "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+     "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+     "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
+     "891fa76da0df6966ae1cadb212aa6f4bfc69da5a9c22a156d61b5e154d6c299c"
+    ]
+   },
+   "seal_file_before": "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9",
+   "approved_by": "user（P12 FINAL CLOSURE）",
+   "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

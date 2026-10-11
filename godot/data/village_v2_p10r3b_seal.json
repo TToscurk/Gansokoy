@@ -105,7 +105,7 @@
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
     "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
     "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
-    "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b"
+    "godot/data/village_v2_p9_final_seal.json": "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae"
   },
   "verification": "Final gate source hash computed after all code writes. Post-final verification logs and manifest itself intentionally excluded to avoid self-reference. Existing review/evidence manifests remain historical and untouched.",
   "reseal_history": [
@@ -174,6 +174,19 @@
       "seal_file_before": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
       "approved_by": "user（P12 Wave 1 決定：bounded profiling で明確な冗長処理が見つかれば低リスク修正）",
       "reason": "_ready の get_tree().root.find_children(SpringArm3D) 全樹走査（87k 節点・約 46 ms）を 51 体が同じ frame に繰り返していた（≈2.35 s）。1 process frame に 1 回だけ走査し結果を共有、同 frame 内で後から足された SpringArm3D は node_added でキャッシュへ追加。NPC の除外登録・挙動・人数・位置は不変（POP scene の SpringArm 檢查 PASS）。"
+    },
+    {
+      "kind": "P12_CLOSURE_CHILD_UPDATE",
+      "at": "2026-10-12",
+      "child_seals": {
+        "godot/data/village_v2_p9_final_seal.json": [
+          "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+          "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae"
+        ]
+      },
+      "seal_file_before": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+      "approved_by": "user（P12 FINAL CLOSURE）",
+      "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
     }
   ]
 }

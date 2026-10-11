@@ -457,9 +457,9 @@
   "docs/art_review/village_v2_p10_population/outer_r1/review/population_map.png": "74dfdb251f2f175bfa352377d0c982e37ee03ff459ce7b455334cf5c427736b7"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
-  "godot/data/village_v2_p10r3c_seal.json": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
-  "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+  "godot/data/village_v2_p10r3d_seal.json": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
+  "godot/data/village_v2_p10r3c_seal.json": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
+  "godot/data/village_v2_p10r3b_seal.json": "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -570,6 +570,27 @@
    "seal_file_before": "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
    "approved_by": "user（P12 Wave 1）",
    "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_CLOSURE_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+     "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
+     "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+     "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94"
+    ]
+   },
+   "seal_file_before": "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
+   "approved_by": "user（P12 FINAL CLOSURE）",
+   "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

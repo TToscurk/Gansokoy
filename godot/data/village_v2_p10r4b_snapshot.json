@@ -260,8 +260,8 @@
 			"name": "015_mk_tsumini",
 			"node": "ZoneA/XA4_oroshi/015_mk_tsumini",
 			"position": [
-				337.15,
-				0.219,
+				337.4,
+				0.218,
 				47.15
 			],
 			"who": "南の田の農家",
@@ -276,8 +276,8 @@
 			"name": "016_hu_seoikago",
 			"node": "ZoneA/XA4_oroshi/016_hu_seoikago",
 			"position": [
-				338.7,
-				0.211,
+				338.95,
+				0.21,
 				47.95
 			],
 			"who": "南の田の農家の嫁",

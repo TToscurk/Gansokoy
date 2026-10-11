@@ -37,7 +37,7 @@
  "p12_technical_debt": "規劃耗時 38–43 s（tooling debt）；未量 GPU；overlay MeshInstance 450；地面 overlay 0.5 m 格",
  "frozen": {
   "godot/tools/village_v2_waterside_lib.gd": "bcb960c40c58abf4bd331cc16351a9dcea0e9ea9d51b09f45378c6ec63324010",
-  "godot/tools/verify_village_v2_waterside.gd": "c0021078ad15d8c044c04afcb0cdafbd972a9e8c302eff5d90f90f7a1a6f34f5",
+  "godot/tools/verify_village_v2_waterside.gd": "7f2c86ffeaaec7258b835e235f70c70aaa63e5a298a3db1261205eedc498a8cc",
   "godot/assets/blender/village_v2/build_waterside_kit.py": "b4e04c0c12c12cf6de8d995b0912769869b75c9d55122f67fe708fc31a42169b",
   "godot/maps/village_v2/gen/waterside_p9.scn": "8fc80e8882383b6dfb8e3de18c641d6059b007fae9e770683d5ea991a118b21c",
   "godot/data/village_v2_p9r44_waterside.json": "93291e83579573403830b39e6f004440f2dc520e597510de3fd13f3eb8f3243b",
@@ -72,5 +72,21 @@
   "evidence/waterside_gate.log": "82cd9eb221c6b22800f3a20837561f750ec601d8ddfecfbe92af87f3874508df",
   "evidence/waterside_negatives.log": "16fd417e50e3889e970ed255185f2f91460c01bcabdc7e6725ff0b1005f4d62a",
   "evidence/waterside_scene.log": "d30654a6259d8f090f2cdc588ddbe6a3567de645f704db678c830291cc2f4f84"
- }
+ },
+ "reseal_history": [
+  {
+   "kind": "P12_CLOSURE_SEALED_DRIFT_REGISTRATION",
+   "at": "2026-10-12",
+   "frozen": {
+    "godot/tools/verify_village_v2_waterside.gd": [
+     "c0021078ad15d8c044c04afcb0cdafbd972a9e8c302eff5d90f90f7a1a6f34f5",
+     "7f2c86ffeaaec7258b835e235f70c70aaa63e5a298a3db1261205eedc498a8cc"
+    ]
+   },
+   "seal_file_before": "12d3eeb99d65db5c1db6bb3364baf7e30bfe11f04b87b64248e356d69dcee6ba",
+   "approved_by": "user",
+   "authorization": "使用者 2026-10-12「P12 FINAL CLOSURE — AUTHORIZED」TASK 2／3：植被封存差異を精確・可追溯に登記（再生成なし）",
+   "reason": "P11 R2C の河岸 RB_11_-7 局部重烘で WatersideP9 の同 seed 計画が漂移（計画上の wk_reed_s@(329.7,-47.2) が水車入口帯）。封存実物 Plants/120_wk_reed_s@(328.75,-45.25) は同じ _blocked 判定で通路外、scene 實走 56 點 0 阻擋。蘆葦は再生成しない。verifier に P12_DRIFT（障害集合・上游 RB_11_-7 lod0/lod1・封存 waterside_p9.scn の雜湊・計画摘要・実物位置）を固定、全一致時のみ容認＋反向 5 種。"
+  }
+ ]
 }

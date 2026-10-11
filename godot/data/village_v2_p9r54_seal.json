@@ -51,7 +51,7 @@
  },
  "frozen": {
   "godot/tools/village_v2_environment_lib.gd": "303460add7959ac77d9dd2b8fa995a4ddc01ac328793047f467e25d00d0b8464",
-  "godot/tools/verify_village_v2_environment.gd": "2176be31505ac41ca136fd13472eff02ee62736526320d9cb7eac0cc7e54ecbf",
+  "godot/tools/verify_village_v2_environment.gd": "df4b2b5f5b69d551592daef8a508b26a6e70d8c83fbfabced0aaca73f99daaeb",
   "godot/tools/shot_village_v2_environment_views.json": "9e13cf17a84eb61a1345feed844599d9c2fab9cc602d30a273de6c44e47f9a1f",
   "godot/maps/village_v2/gen/environment_p9.scn": "5fe520fea2693db656705a259ee3c023c33d3eb17174fcaa8e39d5ae7c4253e0",
   "godot/tools/audit_village_v2_env_assets.gd": "5636d47cbbf8bf3be7771cc841e5523fa48b88c5eae7ef42b7112e12dfaa58fd",
@@ -82,5 +82,21 @@
   "evidence/environment_x2_p10_coexist.log": "500b2c18036ee38fbb346c2df7b4634dae0645017c40050099c8a22b13b831de",
   "evidence/environment_x2_plan.log": "5cae37f07108445a0308d7b1f0c2af8c439df4dfd1b30c6d1efe8b8a84485277",
   "evidence/environment_x2_scene.log": "db9695622ffd4daef3a894fb372a308d707434e305a7ae1948e3c7eb5168c711"
- }
+ },
+ "reseal_history": [
+  {
+   "kind": "P12_CLOSURE_SEALED_DRIFT_REGISTRATION",
+   "at": "2026-10-12",
+   "frozen": {
+    "godot/tools/verify_village_v2_environment.gd": [
+     "2176be31505ac41ca136fd13472eff02ee62736526320d9cb7eac0cc7e54ecbf",
+     "df4b2b5f5b69d551592daef8a508b26a6e70d8c83fbfabced0aaca73f99daaeb"
+    ]
+   },
+   "seal_file_before": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+   "approved_by": "user",
+   "authorization": "使用者 2026-10-12「P12 FINAL CLOSURE — AUTHORIZED」TASK 2／3：植被封存差異を精確・可追溯に登記（再生成なし）",
+   "reason": "P11 R2D の農田水利（farmland_p8.scn）が MeadowP9 規劃の避障入力を変え、同 seed 再計算 114574 ≠ 封存近級 114105。封存 meadow_p9.scn（153,772 instance 全 LOD）保持、支線土渠外法内 0・道路面 0。草は再生成しない。verifier に P12_MEADOW_DRIFT（封存近級・現株数・株位摘要・上游 farmland_p8.scn・封存 meadow_p9.scn の雜湊）を固定、全一致時のみ容認＋反向 4 種。"
+  }
+ ]
 }

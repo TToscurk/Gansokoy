@@ -49,7 +49,7 @@
   },
   "R4_4_waterside": {
    "file": "godot/data/village_v2_p9r44_seal.json",
-   "sha256": "12d3eeb99d65db5c1db6bb3364baf7e30bfe11f04b87b64248e356d69dcee6ba",
+   "sha256": "2661d2220a9e0753ad4cad8373745b4552e949b822c62420696db751835a26b8",
    "regression_tag": "WATER",
    "verify": "verify_village_v2_waterside.gd --seal"
   },
@@ -91,7 +91,7 @@
   },
   "R5_4_environment": {
    "file": "godot/data/village_v2_p9r54_seal.json",
-   "sha256": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+   "sha256": "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a",
    "regression_tag": "ENV",
    "verify": "verify_village_v2_environment.gd --seal"
   }
@@ -160,6 +160,23 @@
    "authorized_by": "user",
    "authorization": "使用者 2026-10-10「P11 — Collision & Navigation」：Step 1「P9 R4-2：神社參道 40 個碰撞阻擋點」「P9 R4-3：寺子屋巡邏 NPC 阻擋玩家」「先判定真正原因，再採用最小修正」「不得單純降低 Gate 標準、停用碰撞或刪除 NPC 來取得 PASS」「已封存內容只允許有明確原因的 limited correction，必須保留前後 hash、依賴與反向測試」",
    "reason": "P9 R4-2／R4-3 の scene gate（實走）limited verifier correction（P11 R1）に伴い、子封存の雜湊だけ追従。R1–R5 の封存内容（生成器・overlay・地被）は不変。"
+  },
+  {
+   "kind": "P12_CLOSURE_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p9r44_seal.json": [
+     "12d3eeb99d65db5c1db6bb3364baf7e30bfe11f04b87b64248e356d69dcee6ba",
+     "2661d2220a9e0753ad4cad8373745b4552e949b822c62420696db751835a26b8"
+    ],
+    "godot/data/village_v2_p9r54_seal.json": [
+     "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+     "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a"
+    ]
+   },
+   "seal_file_before": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+   "approved_by": "user（P12 FINAL CLOSURE）",
+   "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

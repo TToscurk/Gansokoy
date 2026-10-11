@@ -693,7 +693,41 @@ func _live_mismatch(v: Node3D, snap: Dictionary) -> Array:
 
 
 ## snapshot の件＝承認時（r3 審圖）の A/B 件（C を除く）：cluster・id が同じ物の最寄りが 2 cm 以内・朝向 ≤ 0.5°・who／why 同じ、件数一致
-func _approved_mismatch(snap_items: Array, r3: Dictionary) -> Array:
+## P12 Final Closure（使用者 2026-10-12 核准）：r3 から位置だけを変えてよい件は、この 2 件だけ（cluster/id）。
+## 封存 manifest の approved_position_overrides に、この集合の外のキーがあれば FAIL（例外の黙った追加を防ぐ）。
+const OVERRIDE_KEYS := ["XA4_oroshi/mk_tsumini", "XA4_oroshi/hu_seoikago"]
+## 核准内容は checker 側に固定（checker 自体が seal frozen）：node・r3 原位置・核准位置。seal の記載はこれと一致しなければ拒否。
+const OVERRIDE_FIXED := {
+	"XA4_oroshi/mk_tsumini": {"node": "ZoneA/XA4_oroshi/015_mk_tsumini", "r3": [337.15, 0.22, 47.15], "approved": [337.4, 0.218, 47.15]},
+	"XA4_oroshi/hu_seoikago": {"node": "ZoneA/XA4_oroshi/016_hu_seoikago", "r3": [338.7, 0.21, 47.95], "approved": [338.95, 0.21, 47.95]},
+}
+
+
+static func _v3(a: Array) -> Vector3:
+	return Vector3(float(a[0]), float(a[1]), float(a[2]))
+
+
+## seal の approved_position_overrides → {cluster/id: 位置}。不正（集合外・承認者が user でない）なら null 相当の {"_bad": [...]} を返す
+func _overrides(seal: Dictionary) -> Dictionary:
+	var out := {}
+	var bad: Array = []
+	var ov: Dictionary = seal.get("approved_position_overrides", {})
+	for k: String in ov:
+		var e: Dictionary = ov[k]
+		var fx: Dictionary = OVERRIDE_FIXED.get(k, {})
+		if fx.is_empty() or String(e.get("approved_by", "")) != "user" or String(e.get("node", "")) != String(fx["node"]) 				or _v3(e.get("approved", [0, 0, 0])).distance_to(_v3(fx["approved"])) > 0.002 				or _v3(e.get("r3_original", [0, 0, 0])).distance_to(_v3(fx["r3"])) > 0.002:
+			bad.append(k)
+			continue
+		out[k] = fx["approved"]
+	for k: String in OVERRIDE_KEYS:
+		if not ov.has(k):
+			bad.append("缺 " + k)
+	if not bad.is_empty():
+		out["_bad"] = bad
+	return out
+
+
+func _approved_mismatch(snap_items: Array, r3: Dictionary, ov: Dictionary = {}) -> Array:
 	var ab: Array = (r3["items"] as Array).filter(func(it: Dictionary) -> bool: return String(it["zone"]) != "C")
 	var bad: Array = []
 	if ab.size() != snap_items.size():
@@ -707,7 +741,9 @@ func _approved_mismatch(snap_items: Array, r3: Dictionary) -> Array:
 			var a: Dictionary = ab[i]
 			if used.has(i) or String(a["cluster"]) != String(w["cluster"]) or String(a["id"]) != String(w["id"]):
 				continue
-			var d := Vector3(a["p"][0], a["p"][1], a["p"][2]).distance_to(Vector3(q[0], q[1], q[2]))
+			# 位置の期待値：r3（承認時）。核准済みの 2 件だけ seal の approved 位置（同じ 2 cm 判定）
+			var ep: Array = ov.get(String(a["cluster"]) + "/" + String(a["id"]), a["p"])
+			var d := Vector3(ep[0], ep[1], ep[2]).distance_to(Vector3(q[0], q[1], q[2]))
 			if d < bd:
 				bd = d
 				best = i
@@ -776,8 +812,12 @@ func _seal(v: Node3D) -> int:
 	var lb := _live_mismatch(v, snap)
 	check("場景の %d 件が snapshot と一致（位置 ≤ 1 cm・朝向 ≤ 0.5°・id／zone／cluster／anchor／who／why；不符 %s）" % [int(snap["total"]), str(lb.slice(0, 4))], lb.is_empty())
 	var r3: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(_repo() + APPROVED_R3))
-	var am := _approved_mismatch(snap["items"], r3)
-	check("A/B は承認時（r3 審圖、%s）から美術の変更なし：snapshot の %d 件＝r3 の A/B 件（2 cm・0.5°・who／why）——不符 %s" % [APPROVED_R3, int(snap["total"]), str(am.slice(0, 4))], am.is_empty())
+	var ov := _overrides(seal)
+	var ov_bad: Array = ov.get("_bad", [])
+	ov.erase("_bad")
+	var am := _approved_mismatch(snap["items"], r3, ov)
+	check("A/B は承認時（r3 審圖、%s）から美術の変更なし：snapshot の %d 件＝r3 の A/B 件（2 cm・0.5°・who／why；位置の核准例外 %d 件 %s、集合外／未承認 %s）——不符 %s" % [
+		APPROVED_R3, int(snap["total"]), ov.size(), str(ov.keys()), str(ov_bad), str(am.slice(0, 4))], am.is_empty() and ov_bad.is_empty())
 	var cl_names: Array = []
 	if go:
 		for z in go.get_children():
@@ -797,7 +837,23 @@ func _seal(v: Node3D) -> int:
 	check("反向：凍結雜湊を記憶體内で竄改 → 1 件だけ検出（%d）" % (_seal_mismatch(tam).size() - bad.size()), _seal_mismatch(tam).size() == bad.size() + 1)
 	var snap2: Dictionary = snap.duplicate(true)
 	snap2["items"][0]["position"][0] = float(snap2["items"][0]["position"][0]) + 0.25
-	check("反向：snapshot の 1 件を 0.25 m ずらす → 場景と不一致・承認時 r3 とも不一致", not _live_mismatch(v, snap2).is_empty() and not _approved_mismatch(snap2["items"], r3).is_empty())
+	check("反向：snapshot の 1 件を 0.25 m ずらす → 場景と不一致・承認時 r3 とも不一致", not _live_mismatch(v, snap2).is_empty() and not _approved_mismatch(snap2["items"], r3, ov).is_empty())
+	# P12 Final Closure 反向：核准例外の件をさらに 0.25 m ずらす → 不一致／例外キーを集合外へ追加 → FAIL／例外なしでは 2 件が r3 と不一致
+	var snap5: Dictionary = snap.duplicate(true)
+	for w5: Dictionary in snap5["items"]:
+		if String(w5["cluster"]) + "/" + String(w5["id"]) == OVERRIDE_KEYS[0]:
+			w5["position"][0] = float(w5["position"][0]) + 0.25
+	check("反向：核准例外 %s をさらに 0.25 m ずらす → 承認位置と不一致" % OVERRIDE_KEYS[0], not _approved_mismatch(snap5["items"], r3, ov).is_empty())
+	var seal6: Dictionary = seal.duplicate(true)
+	(seal6.get("approved_position_overrides", {}) as Dictionary)["XA1_shukka/mk_tsumini"] = {"approved": [0, 0, 0], "approved_by": "user"}
+	check("反向：例外キーを集合外（XA1_shukka/mk_tsumini）へ追加 → 拒否", (_overrides(seal6).get("_bad", []) as Array).size() == 1)
+	var seal7: Dictionary = seal.duplicate(true)
+	(seal7["approved_position_overrides"][OVERRIDE_KEYS[0]] as Dictionary)["approved"] = [337.9, 0.218, 47.15]
+	check("反向：合法キーの核准座標を書き換え（snapshot も同時に動かした想定）→ 拒否", (_overrides(seal7).get("_bad", []) as Array).size() == 1)
+	var seal8: Dictionary = seal.duplicate(true)
+	(seal8["approved_position_overrides"] as Dictionary).erase(OVERRIDE_KEYS[1])
+	check("反向：核准例外を 1 件削除 → 拒否（ちょうど 2 件必須）", (_overrides(seal8).get("_bad", []) as Array).size() == 1)
+	check("反向：例外なし（r3 のみ）では核准の 2 件が r3 と不一致＝例外が実際に効いている", _approved_mismatch(snap["items"], r3, {}).size() == ov.size() and ov.size() == OVERRIDE_KEYS.size())
 	var snap3: Dictionary = snap.duplicate(true)
 	snap3["items"][1]["who"] = "誰か"
 	check("反向：snapshot の 1 件の who を変える → 不一致を検出", not _live_mismatch(v, snap3).is_empty())
@@ -806,7 +862,7 @@ func _seal(v: Node3D) -> int:
 	for it: Dictionary in r3c:
 		(snap4["items"] as Array).append({"node": "ZoneC/%s/x_%s" % [it["cluster"], it["id"]], "zone": "C", "cluster": it["cluster"], "id": it["id"],
 			"position": it["p"], "yaw_deg": it["yaw_deg"], "who": it["who"], "why": it["why"], "anchor": it["anchor"]})
-	check("反向：rejected の C %d 件を snapshot に戻す → 場景と不一致・承認時 A/B とも不一致" % r3c.size(), not _live_mismatch(v, snap4).is_empty() and not _approved_mismatch(snap4["items"], r3).is_empty())
+	check("反向：rejected の C %d 件を snapshot に戻す → 場景と不一致・承認時 A/B とも不一致" % r3c.size(), not _live_mismatch(v, snap4).is_empty() and not _approved_mismatch(snap4["items"], r3, ov).is_empty())
 	print("[HUX] 結果：%d 項失敗（seal）" % fails)
 	return 0 if fails == 0 else 2
 

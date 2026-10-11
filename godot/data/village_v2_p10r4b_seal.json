@@ -340,14 +340,14 @@
  },
  "frozen": {
   "godot/tools/village_v2_human_use_exp_lib.gd": "2ff46865c0be0841a4d97fb77c2e5fac413154dec0dabe210311b674eb12a91a",
-  "godot/tools/verify_village_v2_human_use_exp.gd": "9c7a3c2bb84caecfb15ed9f8767e6b743355f19ff6c1c7d47bd7cd1b175ce602",
+  "godot/tools/verify_village_v2_human_use_exp.gd": "1dd307d50c77e574621d970a182e9b90dd9bfd3109a9e1c122ccb96bc506e1c8",
   "godot/tools/shot_p10_human_use_exp.gd": "46a50d821d2f90934846a826edda8da6ba80655224ec8674a7b5e74d961fe1a7",
   "godot/tools/shot_p10_human_use_exp_views.json": "720207cd2cbe3eceedb1aec020f28222eea41fa791641d4f4bfa39f5c7019265",
   "godot/tools/survey_village_v2_human_use_exp.gd": "2ae54c5d0a57562850302ce040b71270bc56bc00f502d950fe5dcc2853836967",
   "godot/tools/shot_village_v2_topdown.gd": "e86c011e6bee775426540f00891b9bf3e97e182bb28c5ccbb4472033ea3e8791",
   "godot/assets/blender/village_v2/build_humanuse_exp_kit.py": "5a60af4c7606a4ff96ad6304d236d7ac5487e3735c4d5e24d5da98dec313866e",
-  "godot/maps/village_v2/gen/human_use_exp_p10.scn": "015cf366bb1d10cd60a4191090078f4bc9991455098f8a1e83d1dcbc80d0a878",
-  "godot/data/village_v2_p10r4b_snapshot.json": "38cf3e67b456c312dd8b113d3ece635c30cbe96e38c24b0aeb28954dc77cfe12",
+  "godot/maps/village_v2/gen/human_use_exp_p10.scn": "53b46462be3c3b76981d318bbdf4dc35c429f1a4d36912fd84ffdda9c08296a8",
+  "godot/data/village_v2_p10r4b_snapshot.json": "8bb2085140a1dd04111a02ce3b63a2dc1cce220b1869bbffab88348875e9624a",
   "godot/assets/village_v2/humanuse_exp_kit/src/humanuse_exp_kit.glb": "74df7ff66aa47ef79d43433070b5c81f96a0e5744828a80f697cc6d684b64ce5",
   "godot/assets/village_v2/humanuse_exp_kit/src/modules_blender.json": "9ce6e5aca09df9ee8d22f9ab4afc17015e3431a7b427703fe6734e6b720bfbea",
   "godot/assets/village_v2/humanuse_exp_kit/humanuse_exp_kit_manifest.json": "3377c0461996a27e702a3b898b3befdbdcd98e67f211a303a4ae48c23434ac6b",
@@ -525,18 +525,18 @@
   "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r4_seal.json": "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9",
-  "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
-  "godot/data/village_v2_p10r3c_seal.json": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
-  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
-  "godot/data/village_v2_p10r3e_seal.json": "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
+  "godot/data/village_v2_p10r4_seal.json": "efd63348cad48280756409581c68142a18f039aecd878308e84c7ede0c114b14",
+  "godot/data/village_v2_p10r3b_seal.json": "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
+  "godot/data/village_v2_p10r3c_seal.json": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
+  "godot/data/village_v2_p10r3d_seal.json": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
+  "godot/data/village_v2_p10r3e_seal.json": "891fa76da0df6966ae1cadb212aa6f4bfc69da5a9c22a156d61b5e154d6c299c",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
-  "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+  "godot/data/village_v2_p9_final_seal.json": "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
-  "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+  "godot/data/village_v2_p9r54_seal.json": "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a",
   "godot/data/village_v2_p8_seal.json": "3b066bc9647d2865d5c59f65ad24404c825ceb46c0c31f778b2516af756c0c69"
  },
  "reseal_history": [
@@ -705,6 +705,111 @@
    "seal_file_before": "39a3e77933f46b3d6c605501fae3b86bd24816c25784bc1f2968a7c74a55e5bb",
    "approved_by": "user（P12 Wave 1）",
    "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_CLOSURE_HUX_XA4_APPROVED_OVERRIDE",
+   "at": "2026-10-12",
+   "frozen": {
+    "godot/tools/verify_village_v2_human_use_exp.gd": [
+     "9c7a3c2bb84caecfb15ed9f8767e6b743355f19ff6c1c7d47bd7cd1b175ce602",
+     "1dd307d50c77e574621d970a182e9b90dd9bfd3109a9e1c122ccb96bc506e1c8"
+    ],
+    "godot/maps/village_v2/gen/human_use_exp_p10.scn": [
+     "015cf366bb1d10cd60a4191090078f4bc9991455098f8a1e83d1dcbc80d0a878",
+     "53b46462be3c3b76981d318bbdf4dc35c429f1a4d36912fd84ffdda9c08296a8"
+    ],
+    "godot/data/village_v2_p10r4b_snapshot.json": [
+     "38cf3e67b456c312dd8b113d3ece635c30cbe96e38c24b0aeb28954dc77cfe12",
+     "8bb2085140a1dd04111a02ce3b63a2dc1cce220b1869bbffab88348875e9624a"
+    ]
+   },
+   "seal_file_before": "3199a1afbe7570d87e3820982fd0f6da40f372929fb4e72bc82916bfdee8c073",
+   "approved_by": "user（P12 FINAL CLOSURE TASK 1）",
+   "reason": "015／016 のみ位置変更（approved_position_overrides）。他 38 件・朝向・who／why・meta 不変；r3 承認 plan は不変、2 cm 判定は全件継続。checker は例外キーを 2 件に固定（集合外は FAIL）。"
+  },
+  {
+   "kind": "P12_CLOSURE_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p9r54_seal.json": [
+     "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
+     "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a"
+    ]
+   },
+   "seal_file_before": "7797f59b5724f514bb9280186d5eb37973225502be9dc181c22d55fd26561261",
+   "approved_by": "user（P12 FINAL CLOSURE）",
+   "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_CLOSURE_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p10r4_seal.json": [
+     "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9",
+     "efd63348cad48280756409581c68142a18f039aecd878308e84c7ede0c114b14"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+     "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
+     "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+     "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
+     "891fa76da0df6966ae1cadb212aa6f4bfc69da5a9c22a156d61b5e154d6c299c"
+    ],
+    "godot/data/village_v2_p9_final_seal.json": [
+     "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
+     "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae"
+    ]
+   },
+   "seal_file_before": "035047768b435eb8e8f37d68a3c6c2348ce5e5de72df430f6bf8b81b987f9738",
+   "approved_by": "user（P12 FINAL CLOSURE）",
+   "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
   }
- ]
+ ],
+ "approved_position_overrides": {
+  "XA4_oroshi/mk_tsumini": {
+   "node": "ZoneA/XA4_oroshi/015_mk_tsumini",
+   "r3_original": [
+    337.15,
+    0.22,
+    47.15
+   ],
+   "approved": [
+    337.4,
+    0.218,
+    47.15
+   ],
+   "yaw_deg": -180.0,
+   "approved_by": "user",
+   "approved_at": "2026-10-12",
+   "source": "P12 FINAL CLOSURE TASK 1",
+   "reason": "P11 R2D T0 支線の可見網格から 015 の LOD0 が 0.339 m（P8 水路禁區 0.4 m 違反）。同生成器・同 seed 再焼で x +0.25 m（y は接地で −0.001）。015→0.571 m／016→3.19 m。"
+  },
+  "XA4_oroshi/hu_seoikago": {
+   "node": "ZoneA/XA4_oroshi/016_hu_seoikago",
+   "r3_original": [
+    338.7,
+    0.21,
+    47.95
+   ],
+   "approved": [
+    338.95,
+    0.21,
+    47.95
+   ],
+   "yaw_deg": -165.0,
+   "approved_by": "user",
+   "approved_at": "2026-10-12",
+   "source": "P12 FINAL CLOSURE TASK 1",
+   "reason": "P11 R2D T0 支線の可見網格から 015 の LOD0 が 0.339 m（P8 水路禁區 0.4 m 違反）。同生成器・同 seed 再焼で x +0.25 m（y は接地で −0.001）。015→0.571 m／016→3.19 m。"
+  }
+ }
 }

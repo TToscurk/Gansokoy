@@ -20,6 +20,37 @@ const R5_SEAL := "res://data/village_v2_p9r5_seal.json"
 const MEADOW_SEAL := "res://data/village_v2_p9r53_seal.json"
 const SEAL := "res://data/village_v2_p9r54_seal.json"
 const PROPS_ORDER := ["MarketP10", "StreetP10", "MarketWestP10", "EnvironmentP9"]
+## P12 FINAL CLOSURE（使用者 2026-10-12 授權）：P11 R2D の農田水利（farmland_p8.scn）が MeadowP9 規劃の避障入力を変え、
+## 同 seed 再計算が封存近級 114105 から漂移。草は再生成しない（封存 meadow_p9.scn 保持）。以下が全部一致する時だけ容認：
+## 現計画の株数・株位摘要（同数で位置だけ違う漂移も不可）／上游 farmland_p8.scn・封存 meadow_p9.scn の雜湊。
+const P12_MEADOW_DRIFT := {
+	"sealed_near": 114105, "count": 114574, "digest": "5d9ef17a69aa96c6cf46628c40546912a771449e0c9400bd7879bd1d553cc53b",
+	"upstream": {"res://maps/village_v2/gen/farmland_p8.scn": "eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2"},
+	"baked": {"res://maps/village_v2/gen/meadow_p9.scn": "4fca207ec740ae0b36d8119a68394d6cf5c5afa627850c32c99672e73c428def"},
+}
+
+
+static func _pts_digest(pts: PackedVector2Array) -> String:
+	var hc := HashingContext.new()
+	hc.start(HashingContext.HASH_SHA256)
+	hc.update(pts.to_byte_array())
+	return hc.finish().hex_encode()
+
+
+## 空 Array＝登記どおり
+static func _meadow_drift(got: int, dig: String, sealed_near: int, D: Dictionary) -> Array:
+	var why: Array = []
+	if sealed_near != int(D["sealed_near"]):
+		why.append("封存近級")
+	if got != int(D["count"]):
+		why.append("株数 %d" % got)
+	if dig != String(D["digest"]):
+		why.append("株位摘要 " + dig)
+	for grp in ["upstream", "baked"]:
+		for k: String in D[grp]:
+			if FileAccess.get_sha256(k) != String(D[grp][k]):
+				why.append(grp + " " + k.get_file())
+	return why
 
 var fails := 0
 var failed_labels: Array = []
@@ -83,6 +114,7 @@ func _run() -> void:
 	var M := _meadow(v)
 	var P := EL.plan(v, M["p"], M["F"])
 	P["meadow_n"] = (M["p"] as PackedVector2Array).size()
+	P["meadow_digest"] = _pts_digest(M["p"])
 	print("[ENV] INFO 規劃 %d ms（距離場 %d ms）：錨 %d・event %d・件 %d；類の候補セル %s；落とした %d" % [P["ms"], P["G"]["ms"], (P["anchors"] as Array).size(),
 		(P["events"] as Array).size(), (P["items"] as Array).size(), str(P["counts"]), (P["dropped"] as Array).size()])
 	_summary(P)
@@ -212,7 +244,18 @@ func _checks(P: Dictionary) -> void:
 	var gin := 0
 	for it: Dictionary in items:
 		gin += EL.grass_in_core(C, it)
-	check("MeadowP9 不重烘：規劃株 %d＝R5-3 封存の近級 %d（同 seed 再計算が封存と一致）、固い物の足元の芯に入る草株 %d（= 0）" % [got, m_want, gin], got == m_want and gin == 0)
+	var mdr := _meadow_drift(got, String(P.get("meadow_digest", "")), m_want, P12_MEADOW_DRIFT)
+	check("MeadowP9 不重烘：規劃株 %d＝R5-3 封存の近級 %d（同 seed 再計算が封存と一致；不一致時は P12 封存差異登記 %s）、固い物の足元の芯に入る草株 %d（= 0）" % [got, m_want,
+		"—" if got == m_want else ("適用" if mdr.is_empty() else "不適用 " + str(mdr)), gin], (got == m_want or mdr.is_empty()) and gin == 0)
+	if not quiet and got != m_want and mdr.is_empty():
+		var e1 := P12_MEADOW_DRIFT.duplicate(true)
+		e1["upstream"][e1["upstream"].keys()[0]] = "0".repeat(64)
+		var e2 := P12_MEADOW_DRIFT.duplicate(true)
+		e2["baked"][e2["baked"].keys()[0]] = "0".repeat(64)
+		var dg := String(P["meadow_digest"])
+		check("反向（P12 差異登記）：株数 +1／同数で株位摘要違い／上游雜湊／封存 meadow 雜湊の竄改 → それぞれ不適用",
+			not _meadow_drift(got + 1, dg, m_want, P12_MEADOW_DRIFT).is_empty() and not _meadow_drift(got, "0".repeat(64), m_want, P12_MEADOW_DRIFT).is_empty()
+			and not _meadow_drift(got, dg, m_want, e1).is_empty() and not _meadow_drift(got, dg, m_want, e2).is_empty())
 	# 2 接地（石は意図的に高さの 15–40 % 埋める＝埋まり分は許す）
 	var fl := 0
 	var sk := 0

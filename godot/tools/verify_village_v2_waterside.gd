@@ -18,6 +18,18 @@ const REPORT := "res://data/village_v2_p9r44_waterside.json"
 const SEAL := "res://data/village_v2_p9r44_seal.json"
 const EYE := 1.7
 const ORDER := ["ForestP9", "BambooP9", "HiedaGardenP9", "ShrineGroveP9", "SchoolYardP9", "WatersideP9"]
+## P12 FINAL CLOSURE（使用者 2026-10-12 授權）：P11 R2C の河岸 RB_11_-7 局部重烘で、同 seed 再計算の計画が封存実物から漂移
+## （計画上の wk_reed_s が水車入口帯へ）。蘆葦は再生成しない。以下が「全部」一致する時だけ、この 1 件の計画障害を容認：
+## 障害集合が登記どおり／上游 2 檔・封存 overlay の雜湊／計画全体の摘要（他の漂移は不可）／封存実物の対応ノードが同じ判定で通路外。
+const P12_DRIFT := {
+	"blocked": ["wk_reed_s@(329.7,-47.2)"],
+	"plan_digest": "f53d2d2a1f6f2003cf6e5877a1a399fe313aba705548673a8b160a697533d3bf",
+	"upstream": {"res://maps/village_v2/gen/riverbank_rb_11_m7_lod0.res": "22f4f3abf480c331bb0fd2ebac871688f409f99a60999a5fbdfc26433f713002",
+		"res://maps/village_v2/gen/riverbank_rb_11_m7_lod1.res": "811d0d9d2a6463d3b057143f2a73faa4e458e2d35779b5123c80037dbb538930"},
+	"baked": {"res://maps/village_v2/gen/waterside_p9.scn": "8fc80e8882383b6dfb8e3de18c641d6059b007fae9e770683d5ea991a118b21c"},
+	"baked_node": "Plants/120_wk_reed_s", "baked_pos": [328.75, -45.25],
+}
+var _baked_cache: Node3D = null
 
 var fails := 0
 var neg := ""
@@ -239,7 +251,21 @@ func _checks(P: Dictionary) -> Dictionary:
 			if WS._blocked(q, rr, R, {"boxes": [], "walkways": H["walkways"], "entries": H["entries"], "dragon_walkway": H["dragon_walkway"]}, []):
 				block.append("%s@(%.1f,%.1f)" % [id, (it["p"] as Vector2).x, (it["p"] as Vector2).y])
 				break
-	check("動線淨空：道路／水車 walkway＋入口／龍神像參拜道＋walkway 內障礙 %d %s" % [block.size(), ", ".join(block.slice(0, 4))], block.is_empty())
+	var dr := _drift_ok(P, block, P12_DRIFT)
+	check("動線淨空：道路／水車 walkway＋入口／龍神像參拜道＋walkway 內障礙 %d %s（P12 封存差異登記：%s）" % [block.size(), ", ".join(block.slice(0, 4)),
+		"適用" if (not block.is_empty() and dr.is_empty()) else ("—" if block.is_empty() else "不適用 " + str(dr))], block.is_empty() or dr.is_empty())
+	if not quiet and not block.is_empty() and dr.is_empty():
+		var d1 := P12_DRIFT.duplicate(true)
+		d1["upstream"][d1["upstream"].keys()[0]] = "0".repeat(64)
+		var d2 := P12_DRIFT.duplicate(true)
+		d2["baked"][d2["baked"].keys()[0]] = "0".repeat(64)
+		var d3 := P12_DRIFT.duplicate(true)
+		d3["plan_digest"] = "0".repeat(64)
+		var d4 := P12_DRIFT.duplicate(true)
+		d4["baked_pos"] = [329.695, -47.189]
+		check("反向（P12 差異登記）：上游雜湊／封存 overlay 雜湊／計画摘要／実物位置の竄改、障害 1 件追加 → それぞれ不適用",
+			not _drift_ok(P, block, d1).is_empty() and not _drift_ok(P, block, d2).is_empty() and not _drift_ok(P, block, d3).is_empty()
+			and not _drift_ok(P, block, d4).is_empty() and not _drift_ok(P, block + ["wk_reed@(1.0,1.0)"], P12_DRIFT).is_empty())
 	# ── 4 Hero 淨空（layout keep_clear）：水車 r 6.0 內無樹／構件、植物 ≥ 4.5；龍神像 r 12 內無樹
 	var hc: Array = []
 	for it: Dictionary in items:
@@ -418,6 +444,43 @@ func _attach() -> int:
 
 
 # ─────────────────────────── 場景級驗證 ───────────────────────────
+
+static func _plan_digest(items: Array) -> String:
+	var rows := PackedStringArray()
+	for it: Dictionary in items:
+		var p: Vector2 = it["p"]
+		rows.append("%s %.3f %.3f %.3f" % [it["id"], p.x, float(it["y"]), float(it.get("yaw", 0.0))])
+	rows.sort()
+	return "\n".join(rows).sha256_text()
+
+
+## 空 Array＝登記どおり（容認可）。理由の列＝不適用
+func _drift_ok(P: Dictionary, block: Array, D: Dictionary) -> Array:
+	var why: Array = []
+	if block != D["blocked"]:
+		why.append("障害集合")
+	for grp in ["upstream", "baked"]:
+		for k: String in D[grp]:
+			if FileAccess.get_sha256(k) != String(D[grp][k]):
+				why.append(grp + " " + k.get_file())
+	var dg := _plan_digest(P["items"])
+	if dg != String(D["plan_digest"]):
+		why.append("計画摘要 " + dg)
+	if _baked_cache == null:
+		_baked_cache = (ResourceLoader.load(WS.OUTPUT, "", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene).instantiate()
+	var n := _baked_cache.get_node_or_null(String(D["baked_node"])) as Node3D
+	if n == null:
+		why.append("実物ノードなし")
+	else:
+		var o := (_baked_cache.transform * (n.get_parent() as Node3D).transform * n.transform).origin
+		var bp := Vector2(D["baked_pos"][0], D["baked_pos"][1])
+		var H: Dictionary = P["H"]
+		if Vector2(o.x, o.z).distance_to(bp) > 0.01:
+			why.append("実物位置 %s" % Vector2(o.x, o.z))
+		elif WS._blocked(Vector2(o.x, o.z), 0.4, P["R"], {"boxes": [], "walkways": H["walkways"], "entries": H["entries"], "dragon_walkway": H["dragon_walkway"]}, []):
+			why.append("実物が通路内")
+	return why
+
 
 func _scene(v: Node3D) -> void:
 	var go := v.get_node_or_null("Vegetation/" + WS.NODE_NAME) as Node3D
