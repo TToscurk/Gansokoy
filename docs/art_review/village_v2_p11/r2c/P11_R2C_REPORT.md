@@ -40,7 +40,9 @@
 - P10 R6b 參道 SAN 0 失敗（參道用 HillApproach ribbon 計算 cut_s）
 - P3 parcels gate 0 失敗
 - 沒有跑 143 項完整回歸，也沒有跑全村實走。
-- 畫面 `shots/`：同鏡位 before／after，各 3 處（riverside、rivernorth、crossmid）× TPS／低視角。
+- 畫面 `shots/`：
+  - **低視角 Before／After（同鏡位）**：`before_*.png`（R2B 開工前、未改任何道路時拍的 `shot_road_layers.gd` 原圖）對 `after_*_samecam.png`（R2C 最終版，同一個腳本、同一組鏡位），共 5 處：riverside、rivernorth、crossmid、hillfoot、main_side。
+  - **TPS 只有 After**：`after_*_tps.png`、`after_*_low.png`。原本打算拍的 TPS Before 作廢：拍攝時用 `git checkout` 切回舊檔，但因 `.git/index.lock` 失敗，拍到的其實是修改後的場景，所以刪除不提交。沒有用切換共享工作樹的方式補拍。
 
 ## Git
 
