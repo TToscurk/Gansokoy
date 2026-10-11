@@ -11,7 +11,7 @@ const P11R2Swap := preload("res://tools/p11r2/p11r2_swap.gd")
 ## 記録：0.1 s（6 physics tick）ごとに 960×540 JPG（区間ごと）、still＝1600×900 PNG（止まって look へ向きを変え 1.4 s 落ち着かせる）、
 ##   0.5 s ごとのサンプル（位置・接地・速度・SpringArm 実長／設定長・fps・最寄り NPC）と事件（STUCK／BLOCKED／ARM_PULL／DIALOGUE）を JSON に。
 ## P11 R1 追加（2026-10-10）：
-##   --start=trail   起動後に main.load_map("village_v2", "")  # P11 R2B：V2 傳送停用 → meta.spawn（224,160）から＝獸道から村へ入る正式の落点から歩き始める（落点・着地時間を記録）
+##   --start=trail   起動後に main.load_map("village_v2", "")（P11 R2E-fix：V2 傳送停用後は meta.spawn（224,160）＝開発入口）。--entry-only で入口だけ確認して終了。旧記述：獸道から村へ入る正式の落点から歩き始める（落点・着地時間を記録）
 ##   --step=<m>      診断用：プレイヤーの step_height をメモリ上だけ上書き（ファイル不変；乗り上がり帯の比較）
 ##   route の追加ステップ ["tp", x, z, yaw] ＝区間テスト用の配置（地面＋0.1、20 tick 落ち着かせる；事件 TP として記録）、
 ##   ["xbridge", "Bridge_0N"] ＝橋の中心へ最寄りの道路線の方向で橋長＋8 m を往復
@@ -104,7 +104,10 @@ func _go() -> void:
 			player.set("step_height", float(a4.trim_prefix("--step=")))
 			log["step_height_override"] = float(a4.trim_prefix("--step="))
 	if "--start=trail" in args:
-		main.call("load_map", "village_v2", "trail")
+		# P11 R2E-fix：舊版は from_id="trail" で V2 の trail 傳送點の到着位置を使っていた。R2B で V2 の portals を空にした後は
+		#   一致する傳送點が無く main._place_player の既定 (0,40,0) に落ちていた（地形に受け止められ (0.3,22,0)）。
+		#   村への正式な開発入口は meta.spawn (224,160)＝from_id "" なので、それを使う（傳送點は復活させない）。
+		main.call("load_map", "village_v2", "")
 		var tl := Time.get_ticks_msec()
 		var arrive := Vector3.ZERO
 		var floor_t := -1.0
@@ -125,6 +128,27 @@ func _go() -> void:
 		log["start_trail"] = {"arrival": _v3(arrive), "on_floor_after_s": snappedf(floor_t, 0.01), "settled": _v3(player.global_position),
 			"map": String(main.get("current_id")), "portal_at": [224, 172]}
 		print("[WALK] start=trail %s" % JSON.stringify(log["start_trail"]))
+		if "--entry-only" in args:
+			# 入口だけの smoke test：落点・着地・足元の碰撞・膠囊淨空を記録して終了（ルートは歩かない）
+			var sp0: Vector2 = Vector2(224.0, 160.0)
+			var pp := player.global_position
+			var rq := PhysicsRayQueryParameters3D.create(pp + Vector3(0, 0.3, 0), pp - Vector3(0, 1.0, 0))
+			rq.exclude = [player.get_rid()]
+			var hit := player.get_world_3d().direct_space_state.intersect_ray(rq)
+			var cq := PhysicsShapeQueryParameters3D.new()
+			var cap := CapsuleShape3D.new()
+			cap.radius = 0.28
+			cap.height = 1.5
+			cq.shape = cap
+			cq.transform = Transform3D(Basis(), pp + Vector3(0, 0.95, 0))
+			cq.exclude = [player.get_rid()]
+			var clash := player.get_world_3d().direct_space_state.intersect_shape(cq, 4).size()
+			var dxz := Vector2(pp.x, pp.z).distance_to(sp0)
+			var under := "なし" if hit.is_empty() else String((hit["collider"] as Node).name)
+			var ok := String(main.get("current_id")) == "village_v2" and dxz < 1.0 and floor_t >= 0.0 and not hit.is_empty() and clash == 0
+			print("[WALK] ENTRY %s：map %s 落点 %s（meta.spawn からの水平距離 %.2f m）著地 %.2f s 足元 %s 膠囊の重なり %d" % ["PASS" if ok else "FAIL", main.get("current_id"), _v3(pp), dxz, floor_t, under, clash])
+			quit(0 if ok else 1)
+			return
 	if vil:
 		var tc := vil.get_node_or_null("Collision/TerrainCollision") as CollisionObject3D
 		if tc:
