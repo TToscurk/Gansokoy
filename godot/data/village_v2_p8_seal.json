@@ -70,13 +70,13 @@
  },
  "frozen": {
   "tools/village_v2_farmland_lib.gd": "68c2ad712528443d7b9459235e0e0e37262ae22f80497ba96492bf307410fa37",
-  "tools/village_v2_farmland_visual.gd": "a873162ab51d454102944d8eead40666fd2e924804bebcb6448ff9d4e8f3867c",
-  "tools/village_v2_farmland_zone.gd": "1491f159d966df5b8484ced0ec4ffcdcc7c7ec0769fdc65b57c03da4c0dad0e8",
+  "tools/village_v2_farmland_visual.gd": "5359b6cc92ed0192e77450d52e48232ceeaa82b6b6da5922323af0aa371c5209",
+  "tools/village_v2_farmland_zone.gd": "3dfa28b159ca4bfe10b9c47da4af5bb68c3bc1c02c7b6561b5d8db112108474e",
   "maps/village_v2/shaders/p8_paddy_water.gdshader": "fc81fcda517a6172c20592146dfd9b47f2ba12f347ea9a9f2afa23fb6ff25200",
   "maps/village_v2/shaders/p8_paddy_plant.gdshader": "1ebe4557fee7f88edd6584444f6942b7649ef038a6dda98b817f53377b2494c9",
   "data/village_v2_p8_blocks.json": "e40c487c58c41a2e97486e4e1f91589af6bb4687769424e5e7b2fc0a4d79a5aa",
   "data/village_v2_p8_ground.json": "39366a7f1937d873a527e17f01f4b8a1d2e1c091b290a51c51e263b0d1ca009b",
-  "maps/village_v2/gen/farmland_p8.scn": "8132313ba46ac1e054ce5064b6706a93837f715fdb9c11b14201ad8270af58ab"
+  "maps/village_v2/gen/farmland_p8.scn": "e70aedfee73f275fa27df82339e982093cee695c218d8e2bf168601d4d6cb0a0"
  },
  "art_review_images": {
   "pilot_supply_tps_FP1_siphon.png": "d575480603048376195ea15126a7f5695b895a0f35744f4ad44063f840fdb82e",
@@ -217,6 +217,28 @@
     "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/wlf_scene.log",
     "docs/art_review/village_v2_p10_rehab_impl/r5b1_irrigation/impl/p8_seal_after.log"
    ]
+  },
+  {
+   "kind": "P11_R2D_BRANCHES_FROM_RYUKOTSU",
+   "date": "2026-10-11",
+   "changed": {
+    "tools/village_v2_farmland_visual.gd": {
+     "old": "a873162ab51d454102944d8eead40666fd2e924804bebcb6448ff9d4e8f3867c",
+     "new": "5359b6cc92ed0192e77450d52e48232ceeaa82b6b6da5922323af0aa371c5209"
+    },
+    "tools/village_v2_farmland_zone.gd": {
+     "old": "1491f159d966df5b8484ced0ec4ffcdcc7c7ec0769fdc65b57c03da4c0dad0e8",
+     "new": "3dfa28b159ca4bfe10b9c47da4af5bb68c3bc1c02c7b6561b5d8db112108474e"
+    },
+    "maps/village_v2/gen/farmland_p8.scn": {
+     "old": "8132313ba46ac1e054ce5064b6706a93837f715fdb9c11b14201ad8270af58ab",
+     "new": "e70aedfee73f275fa27df82339e982093cee695c218d8e2bf168601d4d6cb0a0"
+    }
+   },
+   "seal_file_before": "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf",
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-11 P11 R2D「B — WATERWHEEL IRRIGATION APPROVED WITH CONDITIONS」：水車 2 の竜骨車を N0／原田區／T0 の共同水源とする（竜骨車の追加なし）；必要な P8 limited correction と limited reseal を許可。",
+   "reason": "下掛け水車 1／3 は揚水できない（必要揚程 1.57／1.89 m）。高架落とし樋・支柱・接頭・桝・木槽とその碰撞（Feeder_N0／Feeder_T0）を撤去し、竜骨車系統から N0（上段土渠南唇の切欠き＋分水板）・T0（送り樋南壁の分水板）へ盛土の低い土渠＋短い木槽＋道路下の伏越しで送る。輪灌（分水板の開閉で交替）。田・田埂・竜骨車・水車・水渠・地形・道路は不変。"
   }
  ]
 }

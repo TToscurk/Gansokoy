@@ -1,0 +1,11 @@
+[WATER] 結果：0 項失敗（scene）
+✓ P9 R4-4 水車／龍神像周邊場景級驗證（掛載順序 …→SchoolYardP9→WatersideP9、射線接地、碰撞、參拜道＋水車入口實走）
+[MMBAKE] 結果：0 項失敗
+✓ 永久 build rule：全場景 MultiMesh instance transform 非零（各 overlay 分組＋零矩陣反向＋非空；需 rendering display）
+[HUSE] 結果：0 項失敗（scene）
+✓ P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[HUX] 結果：0 項失敗（scene）
+✓ P10 R4b Human-Use Expansion Batch 1 A/B FINAL 場景級驗證（root 直下 HumanUseP10 の次に HumanUseExpansionP10・Props の子は封存どおり・正式 10 群／C 0／ZoneC なし・個別ノード・MultiMesh／Marker3D 0・R4 の 50 件 snapshot 不変・Population 51 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）
+[WLF] 結果：0 項失敗
+✓ P10 R5b Water Pilot 場景級（GroundPilotP10 の次に WaterLifeP10・ROUND 3：揚水部材 0・輪が回り下端は下流へ・水車 1／3 不動・P8 取水構件は overlay の有無で不変〔全部表示・碰撞有効〕・碰撞 2；非 headless）
+fail=0

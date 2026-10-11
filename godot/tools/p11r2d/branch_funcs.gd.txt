@@ -1,0 +1,173 @@
+## 支線の堤の頂（水面＋0.07）と渠底（水面−0.07、ただし地面＋0.01 より下げない）
+static func branch_crest(w: float) -> float:
+	return w + 0.07
+
+static func branch_bed(w: float, g: float) -> float:
+	return maxf(w - 0.07, g + 0.01)
+
+## 土渠の横断（u＝−1…1、半幅 BR_HALF）：|u| ≤ 0.4 渠底、0.4–0.67 内法、0.67 堤頂、0.67–0.95 外法、以遠は地面
+static func branch_profile(u: float, w: float, g: float) -> float:
+	var au := absf(u)
+	if au >= 0.95:
+		return g + 0.005
+	if au > 0.67:
+		return lerpf(branch_crest(w), g + 0.005, (au - 0.67) / 0.28)
+	if au > 0.4:
+		return lerpf(branch_bed(w, g), branch_crest(w), (au - 0.4) / 0.27)
+	return branch_bed(w, g)
+
+## 支線の可見網格：開水路の土渠（両堤＋渠底＋水面）、木槽区間（枕木上）、伏越し両端の石桝、分水板・落差板
+static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Material, gm: Material, fmat: Material, deep: Material, rng: RandomNumberGenerator) -> void:
+	for br: Dictionary in Z.get("branches", []):
+		var g := Visual._group(root, "Branch_%s" % br["id"])
+		g.set_meta("source", br["src"])
+		g.set_meta("head_water", br["head_w"])
+		g.set_meta("tail_water", br["tail_w"])
+		g.set_meta("rotation", "輪灌：上段土渠（原田區）／N0／T0 は分水板の開閉で交替に受ける（竜骨車 1 台、同時に大量出水しない）")
+		var ri := 0
+		for r: Dictionary in br["runs"]:
+			var line: PackedVector2Array = r["line"]
+			if r["kind"] == "siphon":
+				var sg := Visual._group(g, "Siphon_%d" % ri)
+				sg.set_meta("hydraulics", "伏越し（道路下の満管、地上構件なし）")
+				var w: PackedFloat32Array = r["w"]
+				for k in 2:
+					var c: Vector2 = line[k]
+					var gy := ground_h(c)
+					var ww := maxf(float(w[k]), gy + 0.04)
+					var face := (c - line[1 - k]).normalized()
+					var open_k := [0] if absf(face.x) > absf(face.y) and face.x > 0 else ([2] if absf(face.x) > absf(face.y) else ([1] if face.y > 0 else [3]))
+					Visual._stone_box(Visual._group(sg, "Box_%d" % k), c, gy - 0.04, ww + 0.07, ww, stone, deep, rng, k == 0, open_k)
+				ri += 1
+				continue
+			var og := Visual._group(g, "Open_%d" % ri)
+			ri += 1
+			var rr := r
+			for sp: Array in branch_spans(r):
+				var s0: float = sp[1]
+				var s1: float = sp[2]
+				var sub := _cut(line, s0, s1)
+				if sub.size() < 2:
+					continue
+				if sp[0] == "earth":
+					Visual._ribbon(og, "Earth_%d" % int(s0), sub, BR_HALF, func(p: Vector2, u: float) -> float:
+						return branch_profile(u, branch_water(rr, FL.project_s(line, p)), ground_h(p)), gm, Color(0.12, 0.25, 1.0, 0.0), Vector2(1.0, 0.0), -1e9, 1e9)
+					Visual._ribbon(og, "Water_%d" % int(s0), sub, 0.3, func(p: Vector2, _u: float) -> float:
+						return branch_water(rr, FL.project_s(line, p)), fmat, Color(), Vector2(), -1e9, 1e9, true)
+				else:
+					var tg := Visual._group(og, "Trough_%d" % int(s0))
+					var n := maxi(1, ceili((s1 - s0) / 2.0))
+					for j in n:
+						var a := lerpf(s0, s1, float(j) / n)
+						var b := lerpf(s0, s1, float(j + 1) / n)
+						var pa: Vector2 = FL.at_s(line, a)[0]
+						var pb: Vector2 = FL.at_s(line, b)[0]
+						var ya := branch_water(r, a) - FL.TROUGH_DEPTH
+						var yb := branch_water(r, b) - FL.TROUGH_DEPTH
+						Visual._trough_seg(Visual._group(tg, "Seg_%d" % j), Vector3(pa.x, ya, pa.y), Vector3(pb.x, yb, pb.y), FL.TROUGH_W, FL.TROUGH_WALL, FL.TROUGH_DEPTH, wood, fmat)
+					var t := s0 + 0.6
+					var k := 0
+					while t < s1 - 0.3:
+						var at: Array = FL.at_s(line, t)
+						var c: Vector2 = at[0]
+						var d: Vector2 = at[1]
+						var gh := ground_h(c)
+						var top := branch_water(r, t) - FL.TROUGH_DEPTH - 0.04
+						if top - gh >= 0.03:
+							Visual._box(tg, "Sleeper_%d" % k, Vector3(c.x, (gh - 0.03 + top) * 0.5, c.y), Vector3(FL.TROUGH_W + 0.22, top - gh + 0.03, 0.12), wood, atan2(d.x, d.y) + rng.randf_range(-0.06, 0.06))
+							k += 1
+						t += 1.4
+			# 落差板：水面が 0.015 m 以上下がる頂点間の中点
+			var wv: PackedFloat32Array = r["w"]
+			for i in line.size() - 1:
+				if float(wv[i]) - float(wv[i + 1]) >= 0.015:
+					var mid := line[i].lerp(line[i + 1], 0.5)
+					_board_weir(Visual._group(og, "DropWeir_%d" % i), mid, (line[i + 1] - line[i]).normalized(), branch_bed(float(wv[i + 1]), ground_h(mid)) - 0.02, wood, rng)
+		# 分水板（頭部；輪灌の開閉板）
+		var first: Dictionary = br["runs"][0]
+		var fl: PackedVector2Array = first["line"]
+		var hd := (fl[1] - fl[0]).normalized()
+		var hc := fl[0] + hd * 0.35
+		_board_weir(Visual._group(g, "TapGate"), hc, hd, branch_bed(float(first["w"][0]), ground_h(hc)) - 0.02, wood, rng)
+
+## 支線の碰撞：土渠の両堤（2 m ごと）、木槽（地面〜側板頂）、伏越し桝、分水板・落差板（板堰と同寸）
+static func branch_collision(body: StaticBody3D, Z: Dictionary) -> void:
+	for br: Dictionary in Z.get("branches", []):
+		var id: String = br["id"]
+		var ri := 0
+		for r: Dictionary in br["runs"]:
+			var line: PackedVector2Array = r["line"]
+			if r["kind"] == "siphon":
+				var w: PackedFloat32Array = r["w"]
+				for k in 2:
+					var c: Vector2 = line[k]
+					var g := ground_h(c)
+					var top := maxf(float(w[k]), g + 0.04) + 0.07 + FL.LOW_CAM_PAD + (0.06 if k == 0 else 0.0)
+					FL._coll_box(body, "Br%s_%d_Siphon%d" % [id, ri, k], Vector3(c.x, (g - 0.1 + top) * 0.5, c.y), Vector3(0.86 + 2.0 * FL.LOW_CAM_PAD, top - g + 0.1, 0.86 + 2.0 * FL.LOW_CAM_PAD), 0.0, 0.0)
+				ri += 1
+				continue
+			for sp: Array in branch_spans(r):
+				var s0: float = sp[1]
+				var s1: float = sp[2]
+				var n := maxi(1, ceili((s1 - s0) / 2.0))
+				for j in n:
+					var a := lerpf(s0, s1, float(j) / n)
+					var b := lerpf(s0, s1, float(j + 1) / n)
+					var pa: Vector2 = FL.at_s(line, a)[0]
+					var pb: Vector2 = FL.at_s(line, b)[0]
+					var dd := pb - pa
+					if dd.length() < 0.05:
+						continue
+					var nrm := Vector2(-dd.y, dd.x).normalized()
+					var m := (pa + pb) * 0.5
+					var wm := branch_water(r, (a + b) * 0.5)
+					if sp[0] == "earth":
+						for sd: float in [-1.0, 1.0]:
+							var q := m + nrm * sd * BR_BANK
+							var g := minf(ground_h(q), minf(ground_h(pa + nrm * sd * BR_BANK), ground_h(pb + nrm * sd * BR_BANK)))
+							var top := branch_crest(wm)
+							if top - g < 0.05:
+								continue
+							FL._coll_box(body, "Br%s_%d_Bank%s_%d" % [id, ri, "L" if sd < 0 else "R", int(a * 10)], Vector3(q.x, (g + top) * 0.5, q.y), Vector3(0.34, top - g, dd.length() + 0.02), atan2(dd.x, dd.y), 0.0)
+					else:
+						var g := minf(ground_h(pa), ground_h(pb))
+						var top := wm - FL.TROUGH_DEPTH + FL.TROUGH_WALL + FL.LOW_CAM_PAD
+						FL._coll_box(body, "Br%s_%d_Trough_%d" % [id, ri, int(a * 10)], Vector3(m.x, (g + top) * 0.5, m.y), Vector3(FL.TROUGH_W + 0.05 + 2.0 * FL.LOW_CAM_PAD, maxf(top - g, 0.05), dd.length() + 0.02), atan2(dd.x, dd.y), 0.0)
+			var wv: PackedFloat32Array = r["w"]
+			for i in line.size() - 1:
+				if float(wv[i]) - float(wv[i + 1]) >= 0.015:
+					var mid := line[i].lerp(line[i + 1], 0.5)
+					var d := (line[i + 1] - line[i]).normalized()
+					FL._coll_box(body, "Br%s_%d_DropWeir_%d" % [id, ri, i], Vector3(mid.x, branch_bed(float(wv[i + 1]), ground_h(mid)) + 0.18, mid.y), Vector3(0.8, 0.42, 0.14), atan2(d.x, d.y), 0.0)
+			ri += 1
+		var first: Dictionary = br["runs"][0]
+		var fl: PackedVector2Array = first["line"]
+		var hd := (fl[1] - fl[0]).normalized()
+		var hc := fl[0] + hd * 0.35
+		FL._coll_box(body, "Br%s_TapGate" % id, Vector3(hc.x, branch_bed(float(first["w"][0]), ground_h(hc)) + 0.18, hc.y), Vector3(0.8, 0.42, 0.14), atan2(hd.x, hd.y), 0.0)
+
+## P11 R2D 支線の水理・形状チェック（gate 用、P は plan()）。戻り値 [不具合の説明...]
+static func branch_problems(Z: Dictionary, blocks: Dictionary) -> Array:
+	var bad: Array = []
+	var brs: Array = Z.get("branches", [])
+	if brs.size() != 2:
+		bad.append("支線数 %d ≠ 2" % brs.size())
+	for br: Dictionary in brs:
+		var id: String = br["id"]
+		var need := float(blocks[id]["lv"]) + MAIN_WATER
+		if float(br["tail_w"]) < need:
+			bad.append("%s 末端水面 %.3f < 田区主渠水面 %.3f" % [id, br["tail_w"], need])
+		var last_w := INF
+		for r: Dictionary in br["runs"]:
+			var w: PackedFloat32Array = r["w"]
+			for x in w:
+				if x > last_w + 1e-4:
+					bad.append("%s 逆勾配（水面 %.3f → %.3f）" % [id, last_w, x])
+				last_w = x
+			if r["kind"] != "open":
+				continue
+			for sm: Dictionary in r["samples"]:
+				var d := float(sm["w"]) - float(sm["g"])
+				if d < BR_MIN - 1e-4 or d > BR_TROUGH_MAX + 1e-4:
+					bad.append("%s 水面−地面 %.3f @%s（許容 %.2f–%.2f）" % [id, d, (sm["p"] as Vector2).snappedf(0.1), BR_MIN, BR_TROUGH_MAX])
+	return bad

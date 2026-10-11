@@ -655,7 +655,7 @@ static func _irrigation_art(irr: Node3D, details: Node3D, P: Dictionary, layout:
 		if d.has("zone"):
 			continue
 		for no: Dictionary in d["notches"]:
-			if no["kind"] == "tread":
+			if no["kind"] == "tread" or no["kind"] == "tap":     # tap＝P11 R2D 支線の分水切欠き（art は zone.branch_art）
 				continue
 			var at: Array = FL.at_s(d["pts"], float(no["s"]))
 			var c: Vector2 = at[0]

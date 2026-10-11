@@ -1,0 +1,178 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[FARM] build 7.6s
+[FARM] PASS plot count pilot 7 + zone 67
+[FARM] PASS staggered inner bunds, no cross: 6.00m >= 3
+[FARM] PASS unequal field areas 150–475 m2 (max/min >= 1.5)
+[FARM] PASS bund count 220
+[FARM] PASS every bund has collision (min 6 shapes)
+[FARM] PASS Plot_W1 mud/water/seedlings (5821 hills)
+[FARM] PASS Plot_W1 vertex-weighted mud
+[FARM] PASS Plot_W2 mud/water/seedlings (6055 hills)
+[FARM] PASS Plot_W2 vertex-weighted mud
+[FARM] PASS Plot_W3 mud/water/seedlings (6698 hills)
+[FARM] PASS Plot_W3 vertex-weighted mud
+[FARM] PASS Plot_E1 mud/water/seedlings (2842 hills)
+[FARM] PASS Plot_E1 vertex-weighted mud
+[FARM] PASS Plot_E2 mud/water/seedlings (4691 hills)
+[FARM] PASS Plot_E2 vertex-weighted mud
+[FARM] PASS Plot_E3 mud/water/seedlings (5369 hills)
+[FARM] PASS Plot_E3 vertex-weighted mud
+[FARM] PASS Plot_E4 mud/water/seedlings (1803 hills)
+[FARM] PASS Plot_E4 vertex-weighted mud
+[FARM] PASS Plot_T0A2 mud/water/seedlings (4604 hills)
+[FARM] PASS Plot_T0A2 vertex-weighted mud
+[FARM] PASS Plot_T0A3 mud/water/seedlings (3220 hills)
+[FARM] PASS Plot_T0A3 vertex-weighted mud
+[FARM] PASS Plot_T0A4 mud/water/seedlings (2648 hills)
+[FARM] PASS Plot_T0A4 vertex-weighted mud
+[FARM] PASS Plot_T0B1 mud/water/seedlings (3935 hills)
+[FARM] PASS Plot_T0B1 vertex-weighted mud
+[FARM] PASS Plot_T0B2 mud/water/seedlings (3166 hills)
+[FARM] PASS Plot_T0B2 vertex-weighted mud
+[FARM] PASS Plot_T0B3 mud/water/seedlings (3262 hills)
+[FARM] PASS Plot_T0B3 vertex-weighted mud
+[FARM] PASS Plot_T0B4 mud/water/seedlings (2111 hills)
+[FARM] PASS Plot_T0B4 vertex-weighted mud
+[FARM] PASS Plot_T1A1 mud/water/seedlings (3839 hills)
+[FARM] PASS Plot_T1A1 vertex-weighted mud
+[FARM] PASS Plot_T1A2 mud/water/seedlings (4044 hills)
+[FARM] PASS Plot_T1A2 vertex-weighted mud
+[FARM] PASS Plot_T1A3 mud/water/seedlings (5927 hills)
+[FARM] PASS Plot_T1A3 vertex-weighted mud
+[FARM] PASS Plot_T1A4 mud/water/seedlings (8218 hills)
+[FARM] PASS Plot_T1A4 vertex-weighted mud
+[FARM] PASS Plot_T1B1 mud/water/seedlings (7058 hills)
+[FARM] PASS Plot_T1B1 vertex-weighted mud
+[FARM] PASS Plot_T1B2 mud/water/seedlings (4966 hills)
+[FARM] PASS Plot_T1B2 vertex-weighted mud
+[FARM] PASS Plot_T1B3 mud/water/seedlings (7282 hills)
+[FARM] PASS Plot_T1B3 vertex-weighted mud
+[FARM] PASS Plot_T1B4 mud/water/seedlings (5315 hills)
+[FARM] PASS Plot_T1B4 vertex-weighted mud
+[FARM] PASS Plot_T2A2 mud/water/seedlings (4359 hills)
+[FARM] PASS Plot_T2A2 vertex-weighted mud
+[FARM] PASS Plot_T2A3 mud/water/seedlings (4020 hills)
+[FARM] PASS Plot_T2A3 vertex-weighted mud
+[FARM] PASS Plot_T2A4 mud/water/seedlings (6272 hills)
+[FARM] PASS Plot_T2A4 vertex-weighted mud
+[FARM] PASS Plot_T2B1 mud/water/seedlings (3919 hills)
+[FARM] PASS Plot_T2B1 vertex-weighted mud
+[FARM] PASS Plot_T2B2 mud/water/seedlings (6119 hills)
+[FARM] PASS Plot_T2B2 vertex-weighted mud
+[FARM] PASS Plot_T2B3 mud/water/seedlings (4596 hills)
+[FARM] PASS Plot_T2B3 vertex-weighted mud
+[FARM] PASS Plot_T2B4 mud/water/seedlings (5008 hills)
+[FARM] PASS Plot_T2B4 vertex-weighted mud
+[FARM] PASS Plot_T3A1 mud/water/seedlings (5346 hills)
+[FARM] PASS Plot_T3A1 vertex-weighted mud
+[FARM] PASS Plot_T3A2 mud/water/seedlings (4521 hills)
+[FARM] PASS Plot_T3A2 vertex-weighted mud
+[FARM] PASS Plot_T3A3 mud/water/seedlings (4569 hills)
+[FARM] PASS Plot_T3A3 vertex-weighted mud
+[FARM] PASS Plot_T3A4 mud/water/seedlings (3416 hills)
+[FARM] PASS Plot_T3A4 vertex-weighted mud
+[FARM] PASS Plot_T3B1 mud/water/seedlings (7265 hills)
+[FARM] PASS Plot_T3B1 vertex-weighted mud
+[FARM] PASS Plot_T3B2 mud/water/seedlings (4434 hills)
+[FARM] PASS Plot_T3B2 vertex-weighted mud
+[FARM] PASS Plot_T3B3 mud/water/seedlings (4128 hills)
+[FARM] PASS Plot_T3B3 vertex-weighted mud
+[FARM] PASS Plot_T3B4 mud/water/seedlings (2898 hills)
+[FARM] PASS Plot_T3B4 vertex-weighted mud
+[FARM] PASS Plot_S2A1 mud/water/seedlings (4220 hills)
+[FARM] PASS Plot_S2A1 vertex-weighted mud
+[FARM] PASS Plot_S2A2 mud/water/seedlings (4363 hills)
+[FARM] PASS Plot_S2A2 vertex-weighted mud
+[FARM] PASS Plot_S2A3 mud/water/seedlings (7705 hills)
+[FARM] PASS Plot_S2A3 vertex-weighted mud
+[FARM] PASS Plot_S2B1 mud/water/seedlings (6752 hills)
+[FARM] PASS Plot_S2B1 vertex-weighted mud
+[FARM] PASS Plot_S2B2 mud/water/seedlings (8932 hills)
+[FARM] PASS Plot_S2B2 vertex-weighted mud
+[FARM] PASS Plot_S2B3 mud/water/seedlings (3690 hills)
+[FARM] PASS Plot_S2B3 vertex-weighted mud
+[FARM] PASS Plot_S3A1 mud/water/seedlings (4306 hills)
+[FARM] PASS Plot_S3A1 vertex-weighted mud
+[FARM] PASS Plot_S3A2 mud/water/seedlings (5087 hills)
+[FARM] PASS Plot_S3A2 vertex-weighted mud
+[FARM] PASS Plot_S3A3 mud/water/seedlings (6087 hills)
+[FARM] PASS Plot_S3A3 vertex-weighted mud
+[FARM] PASS Plot_S3B2 mud/water/seedlings (4109 hills)
+[FARM] PASS Plot_S3B2 vertex-weighted mud
+[FARM] PASS Plot_S3B3 mud/water/seedlings (5520 hills)
+[FARM] PASS Plot_S3B3 vertex-weighted mud
+[FARM] PASS Plot_N0B1 mud/water/seedlings (2384 hills)
+[FARM] PASS Plot_N0B1 vertex-weighted mud
+[FARM] PASS Plot_N0B2 mud/water/seedlings (2999 hills)
+[FARM] PASS Plot_N0B2 vertex-weighted mud
+[FARM] PASS Plot_N0B3 mud/water/seedlings (4217 hills)
+[FARM] PASS Plot_N0B3 vertex-weighted mud
+[FARM] PASS Plot_N1A2 mud/water/seedlings (4911 hills)
+[FARM] PASS Plot_N1A2 vertex-weighted mud
+[FARM] PASS Plot_N1A3 mud/water/seedlings (4903 hills)
+[FARM] PASS Plot_N1A3 vertex-weighted mud
+[FARM] PASS Plot_N1A4 mud/water/seedlings (2244 hills)
+[FARM] PASS Plot_N1A4 vertex-weighted mud
+[FARM] PASS Plot_N1B1 mud/water/seedlings (5650 hills)
+[FARM] PASS Plot_N1B1 vertex-weighted mud
+[FARM] PASS Plot_N1B2 mud/water/seedlings (4869 hills)
+[FARM] PASS Plot_N1B2 vertex-weighted mud
+[FARM] PASS Plot_N1B3 mud/water/seedlings (6227 hills)
+[FARM] PASS Plot_N1B3 vertex-weighted mud
+[FARM] PASS Plot_N2A2 mud/water/seedlings (4872 hills)
+[FARM] PASS Plot_N2A2 vertex-weighted mud
+[FARM] PASS Plot_N2A3 mud/water/seedlings (5300 hills)
+[FARM] PASS Plot_N2A3 vertex-weighted mud
+[FARM] PASS Plot_N2A4 mud/water/seedlings (4225 hills)
+[FARM] PASS Plot_N2A4 vertex-weighted mud
+[FARM] PASS Plot_N2A5 mud/water/seedlings (7560 hills)
+[FARM] PASS Plot_N2A5 vertex-weighted mud
+[FARM] PASS Plot_N2B1 mud/water/seedlings (5238 hills)
+[FARM] PASS Plot_N2B1 vertex-weighted mud
+[FARM] PASS Plot_N2B2 mud/water/seedlings (5415 hills)
+[FARM] PASS Plot_N2B2 vertex-weighted mud
+[FARM] PASS Plot_N2B3 mud/water/seedlings (5215 hills)
+[FARM] PASS Plot_N2B3 vertex-weighted mud
+[FARM] PASS Plot_N2B4 mud/water/seedlings (6074 hills)
+[FARM] PASS Plot_N2B4 vertex-weighted mud
+[FARM] PASS Plot_N2B5 mud/water/seedlings (5586 hills)
+[FARM] PASS Plot_N2B5 vertex-weighted mud
+[FARM] PASS Plot_N3A2 mud/water/seedlings (3884 hills)
+[FARM] PASS Plot_N3A2 vertex-weighted mud
+[FARM] PASS Plot_N3A3 mud/water/seedlings (3812 hills)
+[FARM] PASS Plot_N3A3 vertex-weighted mud
+[FARM] PASS Plot_N3A4 mud/water/seedlings (2837 hills)
+[FARM] PASS Plot_N3A4 vertex-weighted mud
+[FARM] PASS Plot_N3A5 mud/water/seedlings (6332 hills)
+[FARM] PASS Plot_N3A5 vertex-weighted mud
+[FARM] PASS Plot_N3B1 mud/water/seedlings (5157 hills)
+[FARM] PASS Plot_N3B1 vertex-weighted mud
+[FARM] PASS Plot_N3B2 mud/water/seedlings (3627 hills)
+[FARM] PASS Plot_N3B2 vertex-weighted mud
+[FARM] PASS Plot_N3B3 mud/water/seedlings (5478 hills)
+[FARM] PASS Plot_N3B3 vertex-weighted mud
+[FARM] PASS Plot_N3B4 mud/water/seedlings (7166 hills)
+[FARM] PASS Plot_N3B4 vertex-weighted mud
+[FARM] PASS lateral crosses bunds: opening min 0.892m >= 0.85, water 0.48m < opening
+[FARM] PASS lateral water below lip crest by > 0.1m
+[FARM] PASS gravity feed: lateral > inlet crest > field water > outlet crest (pilot + 67 zone)
+[FARM] PASS zone links gravity + hydraulic naming (9 links, 2 outfalls)
+[FARM] PASS P11 R2D branches N0/T0 from ryukotsu: 2 branches, legacy feeders 0, problems 0 []
+[FARM] PASS P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children 0, old collision 0); branch meshes 10, branch collision 119
+[FARM] PASS NEGATIVE branch reverse slope must be detected
+[FARM] PASS water +0.045m on frozen terrace (max err 0.0000 < 0.002)
+[FARM] PASS frozen farm path clearance 1.11m
+[FARM] triangles (ArrayMesh, all ranges) = 790749
+[FARM] PASS pack
+[FARM] PASS save overlay
+[FARM] overlay res://maps/village_v2/gen/farmland_p8.scn 52.8 MB
+[FARM] result: 0 failed; pilot=7 + zone=67 fields; water err=0.0000m spread=0.045–0.045, path clearance=1.106m
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)

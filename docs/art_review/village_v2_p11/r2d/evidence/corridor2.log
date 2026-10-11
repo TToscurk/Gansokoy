@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[COR] ===== N0 支線（中心線 ±0.8 m）
+[COR]  Districts/FarmlandEast/FarmlandP8                頂点／実例   137  区間 s 0.0–56.2  ノード 8 ["Districts/FarmlandEast/FarmlandP8/Irrigation/UpperWater", "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_LipSupB", "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_ZN0_LipA"]
+[COR]  Districts/FarmlandEast/FarmlandP8（MM）            頂点／実例    39  区間 s 0.0–56.2  ノード 13 ["Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_14_-2_k0_near", "Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_14_-2_k1_near", "Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_14_-2_k1_far"]
+[COR] ===== T0 支線（中心線 ±0.8 m）
+[COR]  Districts/FarmlandEast/FarmlandP8                頂点／実例   166  区間 s 0.0–81.6  ノード 11 ["Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_ZT0_MainLip", "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_ZT0_EdgeA0", "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Post_FeedLeg_1_0"]
+[COR]  Vegetation/WatersideP9/Trees                     頂点／実例    17  区間 s 1.3–2.7  ノード 4 ["Vegetation/WatersideP9/Trees/004_yanagi_b/LOD0", "Vegetation/WatersideP9/Trees/004_yanagi_b/LOD1", "Vegetation/WatersideP9/Trees/004_yanagi_b/LOD2"]
+[COR]  Districts/FarmlandEast/FarmlandP8（MM）            頂点／実例    25  区間 s 80.4–81.1  ノード 4 ["Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_13_3_k0_near", "Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_13_3_k0_far", "Districts/FarmlandEast/FarmlandP8/FieldDetails/GrassChunks/Grass_13_3_k1_near"]

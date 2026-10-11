@@ -87,6 +87,32 @@ func _init() -> void:
 	for of: Dictionary in Z["outfalls"]:
 		link_ok = link_ok and float(of["w"]) > ZLib.RIVER_WATER
 	check("zone links gravity + hydraulic naming (%d links, %d outfalls)" % [Z["links"].size(), Z["outfalls"].size()], link_ok)
+	# P11 R2D：竜骨車 → N0／T0 支線（水面は下流へ非増加、末端 ≥ 田区主渠水面、水面−地面 0.03–0.35）；水車 1／3 の高架 feeder 0
+	var br_bad: Array = ZLib.branch_problems(Z, Z["blocks"])
+	check("P11 R2D branches N0/T0 from ryukotsu: %d branches, legacy feeders %d, problems %d %s" % [(Z.get("branches", []) as Array).size(), Z["feeders"].size(), br_bad.size(), str(br_bad.slice(0, 4))],
+		br_bad.is_empty() and Z["feeders"].is_empty())
+	# 撤去の確認：水車 1／3 の高架樋（Feeders 以下の構件）と碰撞（Chute_*／Post_*／DropBox_*／Trough_*〔旧 feeder 名〕）が 0、支線の構件と碰撞は有る
+	var zi := pilot.get_node_or_null("ZoneWorks/ZoneIrrigation")
+	var feeders_left := 0 if zi == null or zi.get_node_or_null("Feeders") == null else zi.get_node("Feeders").get_child_count()
+	var zw := pilot.get_node_or_null("Irrigation/ZoneWater")
+	var old_coll := 0
+	var br_coll := 0
+	if zw:
+		for c in zw.get_children():
+			var nm := String(c.name)
+			if nm.begins_with("Chute_") or nm.begins_with("Post_T0") or nm.begins_with("Post_N0") or nm.begins_with("DropBox_") or nm.begins_with("Trough_T0") or nm.begins_with("Trough_N0"):
+				old_coll += 1
+			if nm.begins_with("Br"):
+				br_coll += 1
+	var br_nodes := 0 if zi == null or zi.get_node_or_null("Branches") == null else zi.get_node("Branches").find_children("*", "MeshInstance3D", true, false).size()
+	check("P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children %d, old collision %d); branch meshes %d, branch collision %d" % [feeders_left, old_coll, br_nodes, br_coll],
+		feeders_left == 0 and old_coll == 0 and br_nodes > 0 and br_coll > 0)
+	if "--negative-branch" in OS.get_cmdline_user_args():
+		var neg: Dictionary = Z.duplicate(true)
+		var nw: PackedFloat32Array = neg["branches"][0]["runs"][0]["w"]
+		nw[1] += 0.2
+		neg["branches"][0]["runs"][0]["w"] = nw     # packed array は値渡し：書き戻す
+		check("NEGATIVE branch reverse slope must be detected", not ZLib.branch_problems(neg, Z["blocks"]).is_empty())
 	var max_water_error := 0.0
 	var spread_lo := INF
 	var spread_hi := -INF

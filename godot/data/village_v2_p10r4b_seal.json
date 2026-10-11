@@ -537,7 +537,7 @@
   "godot/data/village_v2_p9_final_seal.json": "caa23b4bace3d7c9249b04648abbfcf6dd72abf552037a6de21d13bd676d3c6b",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
   "godot/data/village_v2_p9r54_seal.json": "bfa5409d0da372d8efda48fb504bfce29bff9c855e0947d711ca3b2d2b3c7c5c",
-  "godot/data/village_v2_p8_seal.json": "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf"
+  "godot/data/village_v2_p8_seal.json": "7daeef73c4397116b4b89658a5bb15442cad381557361629d337faca2edf8296"
  },
  "reseal_history": [
   {
@@ -650,6 +650,19 @@
    "seal_file_before": "b30477177252f69beadd74bd70bd60499c43d01d9061abef22b4bdb355fd2971",
    "approved_by": "user（P11 R2B 指示 §6）",
    "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P11_R2D_CHILD_P8_UPDATE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p8_seal.json": [
+     "afe60297e059465a2b0fc30820e4f470eec4fad384441f3ee8457979690325bf",
+     "7daeef73c4397116b4b89658a5bb15442cad381557361629d337faca2edf8296"
+    ]
+   },
+   "seal_file_before": "bce4b905f5b5aa91a400cb0468ca7c634ae7651356eeaa6fa56518694f3d78a1",
+   "approved_by": "user（P11 R2D）",
+   "reason": "P11 R2D：子封存 P8（竜骨車支線の limited reseal）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }
