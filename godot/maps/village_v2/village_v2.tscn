@@ -141749,9 +141749,9 @@ cast_shadow = 0
 mesh = ExtResource("949_8uqvn")
 
 [node name="Riverbank" type="Node3D" parent="." unique_id=1173664661]
-metadata/lod0_tris = 628463
-metadata/lod1_tris = 102364
-metadata/items = 2766
+metadata/lod0_tris = 628654
+metadata/lod1_tris = 102396
+metadata/items = 2775
 
 [node name="RB_10_-1" type="Node3D" parent="Riverbank" unique_id=420793318]
 metadata/items = 138
@@ -142064,7 +142064,7 @@ visibility_range_end_margin = 4.0
 mesh = ExtResource("973_yx5p2")
 
 [node name="RB_11_-7" type="Node3D" parent="Riverbank" unique_id=1252112146]
-metadata/items = 43
+metadata/items = 52
 
 [node name="LOD0" type="MeshInstance3D" parent="Riverbank/RB_11_-7" unique_id=270456216]
 visibility_range_end = 75.0

@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[HYD] water verts 8758
+[HYD] ===== LANDMARK_WATERWHEEL_3 → T0  block lv 0.300
+[HYD]   受け樋頭 (313.6733, 3.3, 59.12518)  中間 (315.9116, 1.6788, 60.24433)  落とし桝側 (317.7429, 0.598, 61.16)
+[HYD]   落とし桝 (317.9218, 61.24944) 地面 0.151  桝水面 0.418
+[HYD]   木槽 [(318.3243, 61.45069), (324.0609, 69.62473), (330.2, 78.0)]  槽底 0.328→0.318  進水口 I (330.2, 78.0) 地面 0.300  要求水面 ≥ 0.368
+[HYD]   候補水源 Water/Waterfalls/WATERFALL_F7/Placeholder    距離 23.9 m  水面 0.69  （落差 0.32 m）
+[HYD]   水車脇の水面 Water/Canal 水位 -1.521（距離 0.9）→ 必要揚程 1.89 m（田区要求水面まで）
+[HYD] ===== LANDMARK_WATERWHEEL_1 → N0  block lv 0.100
+[HYD]   受け樋頭 (338.071, 3.424, -52.10749)  中間 (340.7026, 1.6084, -51.89697)  落とし桝側 (342.8557, 0.398, -51.72471)
+[HYD]   落とし桝 (343.0551, -51.70876) 地面 0.153  桝水面 0.218
+[HYD]   木槽 [(343.5037, -51.67288), (347.7025, -48.45438), (352.35, -45.2)]  槽底 0.128→0.118  進水口 I (352.35, -45.2) 地面 0.100  要求水面 ≥ 0.168
+[HYD]   候補水源 Water/Waterfalls/WATERFALL_F7/Placeholder    距離 123.2 m  水面 0.69  （落差 0.52 m）
+[HYD]   水車脇の水面 Water/Canal 水位 -1.397（距離 0.1）→ 必要揚程 1.57 m（田区要求水面まで）
