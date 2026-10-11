@@ -488,7 +488,9 @@ var _dead_left := -1.0
 ## river revetment top (coping lip 0.22 m proud, walk_slice 2026-09-03) and
 ## the west bridge abutment present ~46° faces that move_and_slide treats as
 ## walls; a real person steps over them. Set 0 to disable.
-@export var step_height := 0.6
+## P11 R2：0.6 → 0.35（0.51 m の店前の長凳・0.45–0.49 m の縁台を歩くだけで乗り越えない；
+## 參道・踏石・門・橋・田埂・跨渠板・河岸石段は 0.35 で通れる。docs/art_review/village_v2_p11/r2/）
+@export var step_height := 0.35
 
 ## Node whose world yaw defines "forward" for move_forward/back/left/right.
 ## main.tscn points this at the camera pivot so input is camera-relative; the
@@ -1514,15 +1516,38 @@ func _physics_process(delta):
 ## that we could stand on top of within step_height, lift the body onto it.
 ## Uses test_move (no side effects) so a false positive costs nothing.
 ## Pattern: godot-master physics-3d "kinematic_3d_stairs_logic".
+## P11 R2：②③④ を追加。g＝足元中心の真下の地面。② g が無ければ跨がない／③ 障害物の上面が g＋step_height を超えたら跨がない／
+## ④ 跨いだ後の足の高さ ≤ g＋step_height（膠囊の丸い底が縁に乗った状態からの連続抬升を禁止）。持ち上げ・前進・着地の掃引は原版のまま。
 func _try_step_up(delta: float) -> void:
 	if step_height <= 0.0:
 		return
 	var h := Vector3(velocity.x, 0.0, velocity.z)
 	if h.length_squared() < 0.01:
 		return
+	var space := get_world_3d().direct_space_state
+	# ② 足元中心の真下の地面 g（step_height＋0.5 m 以内に無ければ跨がない）
+	var o := global_transform.origin
+	var gq := PhysicsRayQueryParameters3D.create(o + Vector3(0, 0.05, 0), o - Vector3(0, step_height + 0.5, 0), collision_mask)
+	gq.exclude = [get_rid()]
+	var gh := space.intersect_ray(gq)
+	if gh.is_empty():
+		return
+	var g := float((gh["position"] as Vector3).y)
 	var motion := h * delta
+	var par := PhysicsTestMotionParameters3D.new()
+	var res := PhysicsTestMotionResult3D.new()
+	par.from = global_transform
+	par.motion = motion
 	# Not blocked → nothing to step over.
-	if not test_move(global_transform, motion):
+	if not PhysicsServer3D.body_test_motion(get_rid(), par, res):
+		return
+	# ③ 障害物の上面（当たった点の 5 cm 奥を真上から）が g＋step_height を超えるなら跨がない
+	var cp := res.get_collision_point()
+	var probe := Vector3(cp.x, 0.0, cp.z) + h.normalized() * 0.05
+	var tq := PhysicsRayQueryParameters3D.create(Vector3(probe.x, g + step_height + 0.3, probe.z), Vector3(probe.x, g - 0.1, probe.z), collision_mask)
+	tq.exclude = [get_rid()]
+	var th := space.intersect_ray(tq)
+	if not th.is_empty() and float((th["position"] as Vector3).y) > g + step_height + 0.01:
 		return
 	# Lift, try the motion up there, then settle back down.
 	#
@@ -1542,8 +1567,6 @@ func _try_step_up(delta: float) -> void:
 	q.exclude = [get_rid()]
 	if not get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty():
 		return  # ceiling / overhang: cannot stand step_height higher here
-	var par := PhysicsTestMotionParameters3D.new()
-	var res := PhysicsTestMotionResult3D.new()
 	par.from = raised
 	par.motion = motion
 	PhysicsServer3D.body_test_motion(get_rid(), par, res)
@@ -1570,6 +1593,9 @@ func _try_step_up(delta: float) -> void:
 		return
 	var rise: float = lifted_by - res.get_travel().length()
 	if rise <= 0.02:
+		return
+	# ④ 累積の上限：跨いだ後の足の高さ ≤ g＋step_height
+	if o.y + rise - g > step_height + 0.01:
 		return
 	global_position.y += rise
 

@@ -43,6 +43,7 @@ var cap_r := 0.3
 var cap_h := 1.7
 var floor_max := deg_to_rad(45.0)
 var step_h := 0.6
+var jump_up := 0.0      # P11 R2E：正常跳躍で上がれる段差（頂点高 v²/2g の半分＝前へ進みながら縁を越える保守値）
 
 
 func _ok(c: bool, msg: String) -> bool:
@@ -73,6 +74,8 @@ func _run() -> void:
 			cap_h = ((c as CollisionShape3D).shape as CapsuleShape3D).height
 	if "step_height" in pl:
 		step_h = float(pl.get("step_height"))
+	if "jump_velocity" in pl and "gravity" in pl and float(pl.get("gravity")) > 0.0:
+		jump_up = 0.5 * pow(float(pl.get("jump_velocity")), 2) / (2.0 * float(pl.get("gravity")))
 	# P11 R2 診斷：--step-override=<m> で玩家の step_height の想定値だけ差し替える（既定は玩家の値のまま；P11 R2 候補 A＝0.35 の事前確認）
 	for u: String in OS.get_cmdline_user_args():
 		if u.begins_with("--step-override="):
@@ -197,6 +200,7 @@ func _checks(cfg: Dictionary) -> void:
 	# W4 踊り場の縁と両脇
 	var edge_bad := []
 	var trap := []
+	var jump_back := []
 	var curb_out := LIB.STEP_W * 0.5 + 0.03 + 0.24   # 袖石の外縁の最大（lib：hw＋jit 0.03＋幅 0.24）
 	if curb_out > half + 0.05:
 		edge_bad.append("袖石の外縁 %.2f ＞ 斜坡の半幅 %.2f＋0.05" % [curb_out, half])
@@ -232,9 +236,16 @@ func _checks(cfg: Dictionary) -> void:
 					if not is_nan(fo) and not is_nan(fi) and fi - fo <= step_h:
 						ok_back = true
 						break
+				# P11 R2E（使用者 R2B 指示「參道平台側面高度差 0.36–0.52 m，允許玩家使用正常跳躍返回」）：
+				#   歩いて戻れなくても、8 m 以内の最小段差 ≤ 跳躍で上がれる段差なら閉じ込めではない（隱形の緩坡は追加しない）
+				if not ok_back and min_d <= jump_up:
+					jump_back.append("踊り場 s %.1f %s 側 %.2f m" % [k * 0.05, "右" if sd > 0 else "左", min_d])
+					ok_back = true
 				if not ok_back:
 					# P11 R2：診斷として 8 m 以内で最も低かった「斜坡と脇の地面の段差」も出す（判定は不変）
 					trap.append("踊り場 s %.1f %s 側（8 m 以内の最小段差 %.2f m）" % [k * 0.05, "右" if sd > 0 else "左", min_d])
+	if not jump_back.is_empty():
+		_info("W4 歩いては戻れず跳躍（上がれる段差 %.2f m）で戻る所 %d：%s" % [jump_up, jump_back.size(), str(jump_back)])
 	if not trap.is_empty():
 		_info("W4 脇へ降りて 8 m 以内に戻れない所 %d：%s" % [trap.size(), str(trap)])
 	_ok(edge_bad.is_empty() and trap.is_empty(), "W4 踊り場の縁と両脇：見える袖石の外縁 ≤ 斜坡の半幅＋0.05、縁の内側＝踊り場の高さ、脇へ降りても 8 m 以内に戻れる%s" % ("" if edge_bad.is_empty() and trap.is_empty() else " ✗ " + str((edge_bad + trap).slice(0, 4))))
