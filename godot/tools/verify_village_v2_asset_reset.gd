@@ -68,7 +68,40 @@ func _closure(root: String) -> PackedStringArray:
 	return out
 
 
+var _seal_cache := {}
+
+func _seal_frozen(path: String) -> Dictionary:
+	if not _seal_cache.has(path):
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+		_seal_cache[path] = (d as Dictionary).get("frozen", {}) if d is Dictionary else {}
+	return _seal_cache[path]
+
+## P12 Final Cleanup：精確ファイル登記。パス一致＋現行 SHA-256 一致＋来源証拠（封存の現行 frozen／封存 manifest／shared_runtime 腳本）が今も有効な時だけ許可。前綴は追加しない。
+func _exact_ok(p: String, reg: Dictionary) -> bool:
+	for e: Dictionary in reg.get("v2_exact_files", []):
+		if String(e.get("path", "")) != p:
+			continue
+		if not FileAccess.file_exists(p) or FileAccess.get_sha256(p) != String(e.get("sha256", "")):
+			return false
+		var ev := String(e.get("evidence", ""))
+		match String(e.get("source", "")):
+			"seal_frozen":
+				return String(_seal_frozen(ev).get("godot/" + p.trim_prefix("res://"), "")) == String(e["sha256"])
+			"kit_manifest":
+				var mf := String(e.get("manifest", ""))
+				# 封存された manifest の deps（path → sha256）にこのファイルが同じ雜湊で載っていること
+				if String(_seal_frozen(ev).get("godot/" + mf.trim_prefix("res://"), "")) != FileAccess.get_sha256(mf):
+					return false
+				var mj: Variant = JSON.parse_string(FileAccess.get_file_as_string(mf))
+				return mj is Dictionary and String(((mj as Dictionary).get("deps", {}) as Dictionary).get(p, "")) == String(e["sha256"])
+			"shared_runtime_dep":
+				return ev in (reg["v2_allowed"]["shared_runtime"] as Array) and FileAccess.get_file_as_string(ev).contains(p)
+		return false
+	return false
+
 func _allowed(p: String, reg: Dictionary) -> bool:
+	if _exact_ok(p, reg):
+		return true
 	var al: Dictionary = reg["v2_allowed"]
 	for pre: String in al["prefixes"]:
 		if p.begins_with(pre):

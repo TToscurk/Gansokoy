@@ -296,6 +296,14 @@ if MOVE:
                    'files': archived_moved}, f, ensure_ascii=False, indent=1)
 
 os.makedirs(G + '/data', exist_ok=True)
+# P12 Final Cleanup：精確ファイル登記（v2_exact_files）は検証済みの手入力 → 再生成でも引き継ぐ
+_prev_p = G + '/data/village_v2_asset_registry.json'
+if os.path.exists(_prev_p):
+    with open(_prev_p, encoding='utf-8') as f:
+        _prev = json.load(f)
+    for _k in ('v2_exact_files', 'v2_exact_files_note'):
+        if _k in _prev:
+            registry[_k] = _prev[_k]
 with open(G + '/data/village_v2_asset_registry.json', 'w', encoding='utf-8', newline='\n') as f:
     json.dump(registry, f, ensure_ascii=False, indent=1)
     f.write('\n')

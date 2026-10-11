@@ -1534,5 +1534,2572 @@
    "why_not_moved": "專案外的原始素材庫（可能被其他專案共用）；原地登記，V2 gate 禁止任何 D:/資產glb 路徑。"
   }
  ],
- "not_in_scope": "市集、河岸、橋、植被、自然素材等舊 kit 不在本次房屋封存範圍；V2 白名單預設不允許，分別到 P7／P9／P10 走 Asset Gate。maps/shrine/ 整張神社地圖不動。"
+ "not_in_scope": "市集、河岸、橋、植被、自然素材等舊 kit 不在本次房屋封存範圍；V2 白名單預設不允許，分別到 P7／P9／P10 走 Asset Gate。maps/shrine/ 整張神社地圖不動。",
+ "v2_exact_files": [
+  {
+   "path": "res://assets/village_v2/garden_kit/GK_FallSheet.tres",
+   "sha256": "549a43a37e48c1086b951e743a2d8e5f44a3cf89625da536d9af4b7f174f5a9d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/GK_Falls.tres",
+   "sha256": "413aeb94a2174652a75a3a2879c20e0f22e6bcdbd85c27bb727c897394c94f5c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/GK_PondWater.tres",
+   "sha256": "2c6f1b379d56d4bce45e4af21cc23fb1129d57bea20e01dc489bb87470ba5cf4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/GK_Water.tres",
+   "sha256": "8d59043f2b6b66d2c29ae2523020f0b67c2aa60abeb39efee1494a1d1eb77a55",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/hg_falls.gdshader",
+   "sha256": "2176afb4245eb6c5b2e107a1a47340938c4d8b82c099e494a99fc9564e74c4ab",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/hg_ground.gdshader",
+   "sha256": "943ba5d727e4ffed561ba26cb0764192074ff9fda01e6d9dc653aac5825db2f3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/hg_water.gdshader",
+   "sha256": "765a8e45a377bb9bc52ba008ca327ee44272058c777b993d15fa33ca2669cca8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_amaochi.res",
+   "sha256": "74c63c52b02fb906bd3dbc3ebfc2863f38f50b99923de0973ca691780be203e1",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_amaochi_l1.res",
+   "sha256": "5a4c8c9352e2f019605d2441b64d9ea6238bd80c35e2565828f7a50ac2bdedde",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_bridge.res",
+   "sha256": "b34c66e89c157059f121d91176ab467d1930b777d76aaeb45334c03712fedab4",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_bridge_l1.res",
+   "sha256": "ffbe5bf3f6fec1b77f89babf08a420a4b30d231e668afe60cc50748cbaa4ef90",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_flat.res",
+   "sha256": "fdce7584e467d86956970a32e5252cba433f0ca76217a17cae7396d73d11fa1e",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_flat_l1.res",
+   "sha256": "bc44e671a9ee48fba155d883e205e382dad5b61626cfc9ec0bf3d14099ada3c7",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_low.res",
+   "sha256": "ad58f81ced79667381ec6ada54a2a4a16dced6242a0e919fdb1c3a6d9472c22b",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_low_l1.res",
+   "sha256": "7454464e75c7271ec575fc7da6e4843d8ae200d8585a111a3700466b1f9d81ff",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_mid.res",
+   "sha256": "2fd1f24afe7177cde92eee22cdad0bc1c9d730f8aab4fb90ed6c2112b14de7ad",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_mid_l1.res",
+   "sha256": "d9b38dd1b692e08965a16c089fd97af676b8cc0ba7fb2420f09603a093f035a1",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_tall.res",
+   "sha256": "5f3312cb9839442d34cf29e2531a01878baf36215d161c0360872a86b0ac9054",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_tall_l1.res",
+   "sha256": "fef83322ac47a5c05545decc8d7de122a2a9bff078f18c8996ea3b3afae9648d",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_a.res",
+   "sha256": "42cfe56f010c0977eb2e3739ecb208ddbd0b8e132a803417ed95afa2c33769d1",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_a_l1.res",
+   "sha256": "3706cb98a32144a72fb1576f0fac56cbf0e17eaf3eb8bba8d712428fb3e0bd3d",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_b.res",
+   "sha256": "b1fb7d0ebd7422267b164997c117273e88d3b1dcc9b0156c929ac4dcf45cfb1b",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_b_l1.res",
+   "sha256": "cf5dbc00a45d6fca27d075c59ea60ca3d616a15928dfc1b72e7b4ededc330adb",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_c.res",
+   "sha256": "65baaf4a66bee539a10c571a24941ce477cd9546ca889026aa00fd08826d50ba",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_c_l1.res",
+   "sha256": "8f2bfdd0069860a235216575f2c720e11b57d4dc52dc87bdc6773a6998448d90",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_sodegaki.res",
+   "sha256": "46bd292912c314ced2943d4f4f6645bd59f573f122f371fbfc760835195b3b1b",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_sodegaki_l1.res",
+   "sha256": "e08e575bb47ae7bc031432823bfffac614648c3b381804bb97464310d7af3c9e",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_a.res",
+   "sha256": "7db9ad75f6465799a28896b3e14a3a0add3b27afb739731aa5de5d8630b0bb95",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_a_l1.res",
+   "sha256": "96f2fb86a986f4a9a83a93a1da94b486367ed9f1394ffda0093cf4c1823f610a",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_b.res",
+   "sha256": "b0f904339bdd7ee24cfaf3313f580e8f04e40943d2c235c9fd91b67456892388",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_b_l1.res",
+   "sha256": "914fed1bc1feefda382ca24db0a7fa37fd047eec8e68a60cc2f92320921591c4",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_c.res",
+   "sha256": "a500400b67dde0952e6fb9045c635436400b19c760f68b8bcffeb5ec9c0a9b1f",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_c_l1.res",
+   "sha256": "49c959e925c7b1eb8ddcefeb80a12bd39dbf1da5bd664b27e6b9b3da4b483d42",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_d.res",
+   "sha256": "807265d4deb508c72b8c5a70268f34aa7bab05ad94e6a6604e6c1c9b6ba2d4ef",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_d_l1.res",
+   "sha256": "a7b48c8291e1167bb804379829e87728399dbb8f8deb597163ef038136fc41c9",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res",
+   "sha256": "60a51e1d33b5c20477fb52a226a3add29fc7dd564b8ec59bd4670466fadae436",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res",
+   "sha256": "f0062949699f24c4969d5f31ab21eb29f71b5ec7d018a6b7389be431e4f5421c",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe.res",
+   "sha256": "372b2624a22f29c4adbb5a491ae1aabce3a36b5b8ff0e732ec56092b850494b2",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe_l1.res",
+   "sha256": "ad6ad42818a86b92b82d2fd7d3a0007a1d8c7ef6e4c750a866ee599927bb42cc",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi.res",
+   "sha256": "c9a3e9b576271093fdc75cfc5a8b494ff6946a9d15eba06a9d5505e10f2a68b1",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi_l1.res",
+   "sha256": "2afd5b9caffe1f87333a5f955ae544c9d2620a8b57685c0eafc0d27164c276e7",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tsukubai.res",
+   "sha256": "f587b76eb1a89c4af20f533cef27941d27c77c24dab141f0346398ad0beac89e",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tsukubai_l1.res",
+   "sha256": "57f2be7d90faae0db5ebbfb4dacd5c3bb578f9801e7e6d7c3a2ada60d7517a14",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_yotsume.res",
+   "sha256": "52f2eecd7869472d943c8d1c449e65bfe195895d3571d8d5d433f2876c4d2764",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_yotsume_l1.res",
+   "sha256": "3d95a218b8cffd0800a047be069bccf49f3fe925e7d85fcbbefffcf849b8a020",
+   "source": "kit_manifest",
+   "evidence": "res://data/village_v2_p9r4_seal.json",
+   "manifest": "res://assets/village_v2/garden_kit/garden_kit_manifest.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_chochin.res",
+   "sha256": "539a5c134d5d02f888ffa88877a46faca8a69357eab62118194da6c1da25fff0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_chochin_l1.res",
+   "sha256": "c8466955dc9a45cec3b9eec527aeca7ba16d0eeddcd8edd3be0b30010218ccbb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_fuda.res",
+   "sha256": "68f7489e77d8329263ca7f80291ade88d39cae3ebdcde55fdc8093ec62a91948",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_fuda_l1.res",
+   "sha256": "11ec7fc64a8a398e9bdbd41bf0ca4e0bc29f565caec35347ad335371e488d481",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_morijio.res",
+   "sha256": "6e5001ec8060744b6623b8ed5147ed494d77aaf9bf8c452ef1e9ca51974707e7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_morijio_l1.res",
+   "sha256": "814e0e720cfc941d47c8ce0fd6b718c24371a60533507782da07bcac73eea8a1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_shogi.res",
+   "sha256": "32f6005b00d7e742abe8932ed0bfc40b851a3626ae5250112b0084073527600f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_shogi_l1.res",
+   "sha256": "b408d74344209e0bd7b062a8130ffe92db61a74513e1d11c3c1088c7ba5156e3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taru.res",
+   "sha256": "28e9c8a6dba5feb57ba8846855264d041004285eaeb3e28a9351aa34d244e0ca",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taru_l1.res",
+   "sha256": "416a8f1baa96c0e74a260977adf88b541b2a7b11bd1a2e91dfea96bc64afd2ba",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi.res",
+   "sha256": "b1ed5d475073050572c7c2ecacdf87ef6b8ce9c964e4cdfecf200da9f960a4f9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi_l1.res",
+   "sha256": "20dbafad1083a0b23cb638d3e180c9f1b5473e79c379a91f3b853093f74752b4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_tray.res",
+   "sha256": "33886f4d791b693b279c9f7b54f8a39bd31354b82f62549157223c2202e00505",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_tray_l1.res",
+   "sha256": "b93ed0f69f7d8850d620afabe2fd43a86839bf5bf4a260555a3b7452264f231c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r47_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/groundcover/gc_ground.gdshader",
+   "sha256": "917ec836416e54b2e710e782d92d98dc3c5e83fb648ef4df19d6cf495f51fc3a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r5_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/groundcover/gc_macro.gdshader",
+   "sha256": "ed004c1a0757aad56187b2632a15967bbc6afa3055eb76091da6ac679625c267",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r5_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake.res",
+   "sha256": "858857ba6e312fd373edd9f303917c8f113d29d4ca68fca8972e92f232ba8f6e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake_l1.res",
+   "sha256": "de4bcea56017b0196d39cef4c69b180570eb6fdf3009ec6995b9d9a9e5910cea",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake.res",
+   "sha256": "98429838cd9fdaf2b8696874a9715a1815dca03519d6bb2f42755c87eb9584da",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake_l1.res",
+   "sha256": "77df5b808d604c85af5eb9ea0973663fce59c823a23e51573c562344e3c0fcdd",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari.res",
+   "sha256": "18d8e74c38f44ec86801c714099f407c4a515104a2cf301af8c562e3a6ea40ef",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari_l1.res",
+   "sha256": "7edcb82b0d8a30fc8ac05bda77200b1e390fad7454057f7f85f6fc370ebbc5db",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi.res",
+   "sha256": "3da8ba1084ec240553ce865f659cb4d05fc402f7bb30097c880c12f2b1d0b589",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi_l1.res",
+   "sha256": "ee7f13e44c2f37e7a79c8676075330dac4c53d968790cf72846158468b90a79f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_senba.res",
+   "sha256": "7cc76f87fda6a8a4193ef7ec363248e33b8fefe1a6a279f0224c14481f7b59fc",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_senba_l1.res",
+   "sha256": "4b4f51bb41fa41c2f92a09736b5f677359cd4ea4941a2a1c06c891c819d1d28f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago.res",
+   "sha256": "69d54b6f090408e02ce9212fc136a9ef2a0fe85a0a0339cce07e9e4fd146c2ab",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago_l1.res",
+   "sha256": "d457231d3584a2c674da55b6bb115ef00cbad70b1544e75edf5bb2a5482fc231",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tarai.res",
+   "sha256": "c8537f26ca1073c9c18f315c1628bcb6c596fa7c47dff2d8e7943bb278298c0b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tarai_l1.res",
+   "sha256": "fe59045c5ade5935d496440e367ab9611878d427d2010eadf8b8b944c6bb8c43",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tomi.res",
+   "sha256": "2720bdb9c4bdbcb247be6771165c136ac3ab30c8d64dd8546f4203c174d29cfe",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tomi_l1.res",
+   "sha256": "773e818f649c27ff66ac40c338ef1c4aa26190376319a2f30003458a1cfe01ba",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r4_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_akibin.res",
+   "sha256": "0238b7870a61efb7dfed19dcd898ae6f185f3b2dba865558c51f462af0dc7d2e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_akibin_l1.res",
+   "sha256": "860d05e09d67191e06e0d8b01f5bb60177849fbcfeacd6fd35dadccb46a2563e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_bin.res",
+   "sha256": "19a0ab0dafc72b45e56af729d59cfebc501895717ff87918a0f56e72e614ea0b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_bin_l1.res",
+   "sha256": "ae53f9fed3dd5796d23dff0dd96536986e389b28fc02b14557f90cb18fd726ca",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma.res",
+   "sha256": "6d39c1472fed6fdc400c9fd743e7c4d0a1156c8933be82a1869a4fbe5b5ae2b9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma_l1.res",
+   "sha256": "35c7843031b7580a37c0aeeaed884b66570a60561adea18d8cbe238da797e3a9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fukuro.res",
+   "sha256": "0247c71b653ef1fdc4d9773186483e26b04b8d06ab95466eb2467a7cef16e2b5",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fukuro_l1.res",
+   "sha256": "b4c3a0b03db0a71c635dbb0887150f5d0ed4236c36992eec7fd21a357f62f7e9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_furudana.res",
+   "sha256": "94b5f79f81242d07d984e89de97772f90b2b54f8338b6cbf5f11b0b5fccbbd98",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_furudana_l1.res",
+   "sha256": "c8b04626905dfea008499744e506a8582093571100bccdf8aeb2ef7b0b2274a9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi.res",
+   "sha256": "594ae2e6835038481cf67d6f58bcb9d9647b2a0614b5cd09b17e25656568d1cf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi_l1.res",
+   "sha256": "7618e69140556453f152ab0bbaf57e9f81f151078eb83f16c85c4141e5b12c94",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi.res",
+   "sha256": "ab869674deaea5776e1a2253b60ce9a0abf18e0c6342c7a60c85703c8cf04db8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi_l1.res",
+   "sha256": "356c1c610743c2d55639b7038687fa1a83b69be95457809b1809192047ff7441",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana.res",
+   "sha256": "846b82ad97afa40398026f2af6267f7a9d4544f439e32bd4001123846508464c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana_l1.res",
+   "sha256": "90222a14e01d20eb41166b9e84bb141e0575f639fc24879e839f7433dde444b2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_houki.res",
+   "sha256": "7a3bd8be217875de23ee5e36d8042399ec9778c2f95f15d5f7049d9975f002eb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_houki_l1.res",
+   "sha256": "86f0172b0a9ad7644fa06b9d234286977f608c6844c0e7f2c92fd05233e5171f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ishidana.res",
+   "sha256": "d19da0d6c400bb36aaceb0c68a69217207cc4bf10e2b6f45ebc5fee4ede11a65",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ishidana_l1.res",
+   "sha256": "d323b029141fb3cf15330c2783519285eaeb784af3ecd9c1693b90fb285775bb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kago.res",
+   "sha256": "2e2133d8b36c8603035267c9359e861441e46b2e016b1230094774c3e4321835",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kago_l1.res",
+   "sha256": "211e6598c02addb329924e46de2f360c1ca4dd130c5d15d049b1454023224132",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kinoko.res",
+   "sha256": "f4629728cf3e194fd553fc30373a14e1d93a94214751d66ef803b1b8b11c4878",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kinoko_l1.res",
+   "sha256": "64ad8c7aa7a89df900ba7a143a952c62a5bbbb405587b9acee4cc5cc67534587",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kuruma.res",
+   "sha256": "2e8a03c419c3e9b57e3ec8905d39912aa886e67c8ca64617c0890f47dfe0b8cf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kuruma_l1.res",
+   "sha256": "9734de1605968d5cf3e6b1b915e644c17333abd5388cd561726733339d364991",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_nawa.res",
+   "sha256": "51492a9aef10131d2949128a4942a1ff298bb34402a6a2a3f7d0ba2c40101027",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_nawa_l1.res",
+   "sha256": "5c1f1e91f985221d626514d0d29f45c35d89ae17f0314a681c81653498abec12",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ni.res",
+   "sha256": "223d54a5c7a286e702ff9ba7cdaf5b16277f7a2abb3115b8c0a9513813466f2d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ni_l1.res",
+   "sha256": "faa69ccec4d9767e2dd7da49d6f0f8c2bb73abcd1e17ec762150bf188e75b471",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_okeyama.res",
+   "sha256": "2c203b23b3f3b08ecb30b696948f9e5c8f7c7a4718bf83ca359c5ccf06a74667",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_okeyama_l1.res",
+   "sha256": "8e15d09322c616b7625371fee06136103d30ee99d4e6e94bc51b470c4e3f531f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_sagyo.res",
+   "sha256": "cc50ef2d4a6b9f9db7bfc4c982351c8d435af392a1d58ae684281cab861ea89f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_sagyo_l1.res",
+   "sha256": "53a0e25cd150e59e85b970ccf92150b04367c47ff348b147b6e18f61d02885fe",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_yakuso.res",
+   "sha256": "7286e2d72160c76af7cb6cef8daf4087ede0078935b1312ab9f98f42f75554b5",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_yakuso_l1.res",
+   "sha256": "8f822268f836e2a0ea6d1d50b54fa4394c208312c70c02db1448f2dcb99cd9b0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku.res",
+   "sha256": "b2ed07d3ca63190d1c9864ccc85a8d0b97b370db8580a467babe807e6877658a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku_l1.res",
+   "sha256": "96abfbe949008da6055b7c917ff5357c9256dee03d7d896d1ee8615ddfba6fb6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r48_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/MK_Market.tres",
+   "sha256": "e9486de39d2fff7906f143716836e2aca178e78d432ea5b57578f363cec822ed",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/market_kit_atlas.png",
+   "sha256": "7df4278231af6b197afd8abf7bbf395c187355321345957966c3a9d15126fa03",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_bangasa.res",
+   "sha256": "94950bbe9e452b637798ba5b3a8e3e91df48a034bb284eb2dda52624bf9f68d8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_bangasa_l1.res",
+   "sha256": "349addb284234f03ec65973a84e269735c16b67904eccbf49c26cd1a13f31f62",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_chochin_line.res",
+   "sha256": "1bf92ed16514d39065ded6b6b785f455704a4f067b4f7a3d11ad4be0b116a01e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res",
+   "sha256": "b96e70a6c87eb21d1b608e7f411421c6773862e406a75d3f75376300132ce1fd",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_endai_uri.res",
+   "sha256": "ed384a3c9eef4559cafa6d18373827166ccbd98c1a116b0c11ff509c81c95214",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_endai_uri_l1.res",
+   "sha256": "d583fe30c13fba5683b0b08c6a34d991e5ac7216a107003538cbf92d5208512a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_hoshimono.res",
+   "sha256": "3c0a1af66120928860589d499b6621af03c8190dfa4a2b707df4150e6b700379",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_hoshimono_l1.res",
+   "sha256": "99f67ea7237ee3e27e137631d8ed224b8848e15235a685495665ea5a0225c1d3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kame.res",
+   "sha256": "2915104c25dad10d776f142f48746a932171faa4c142b4c9d7de5610a7bd3479",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kame_l1.res",
+   "sha256": "10521f0512640b735c73285fd70cb821c3d499179fec66f3029d158c9e47c288",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_dango.res",
+   "sha256": "0c65d5c05a50137171560acdfe36a3b7955a7a3647cbe591de36dfb9bd23a3ac",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_dango_l1.res",
+   "sha256": "8fbf678ac2a6fc9818f33b90a03ef213ee4bc3fabd4f8b08176b0c526c68bfed",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi.res",
+   "sha256": "c9137aff0db7ebc987a9b07c8de2db19e5f4a77a15baf51c46237f98c9b1d5bb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi_l1.res",
+   "sha256": "935a9cbf03ebd0775317980a41981b52fa558ab787a735529febed73b51c9bb0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_seto.res",
+   "sha256": "4175494f2ec5d531b8b2a2c39fce87b1c6e31ab30cc9322f057b91b342ff26c4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_seto_l1.res",
+   "sha256": "56fb947065cea6df3989ed4ee83b34b4dfe3ce7b7d8deb031c5a2209cfc34d46",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai.res",
+   "sha256": "1e9038a5ea6f302109f2de23d812ece3cb748affdeaff08f0ab3d932314a55f2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai_l1.res",
+   "sha256": "997ffd4bc5d056158d1b97ba01bbbffd273a3e21457f2868874a2c1e7f03a8e6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni.res",
+   "sha256": "0d493e75ddb51058b217530da115f0f2eb62a7a2f8d849d0cccec58979aa0c0a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni_l1.res",
+   "sha256": "13d1db86ea49fb9a3cc38413a8eeeb3b843b5599f74f8f8593f8788213ca94d8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago.res",
+   "sha256": "b33584e1f377cd2387bf567a63c874988345a03bff98597525853d63167c8e97",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago_l1.res",
+   "sha256": "7f84136fe5b0afd69dd8523f9acea313de230f538f5fce399b548a4788e7e443",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke.res",
+   "sha256": "7b6d35ea1dab803481e0a627fc059420c16d98884acfb9e22597a477047c07fe",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res",
+   "sha256": "13e13c5d2108699947bd297646ef7e9bd4c655547760b4b7f2a5747288adc520",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai.res",
+   "sha256": "af22b22163d5167b37b4ba92fe7f6076eaa6ff1f941af484d059014e9c048295",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai_l1.res",
+   "sha256": "5eb77a5630c855e1b7865f54cc346d5dcc393a965e8e17d42dec45a1b56ba45d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_cha.res",
+   "sha256": "da118da2c3ad000352d0337e446715775d9333c3ef7ec58caed1d48893cef156",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res",
+   "sha256": "e30b686c25be6245da3d37d418841b09004ac032d52f63dd561052501d063ec7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+   "sha256": "37b945ffb125ece5440333375f6076a05b9a0fa922407a7d1b83b89d7855e6ef",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res",
+   "sha256": "aaee2276366b6cc374dd19808e8408b15c0255cef4f6da257ddebceee7010c4c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_seto.res",
+   "sha256": "c9bfaf1eb431ddb9a111af2f705f717547e23d4f623d75f5f703078d32fd279c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res",
+   "sha256": "92213ed3d9e4d278b5920f5d18c4680a00907b6941e9e5647b483c9257cf5524",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res",
+   "sha256": "12caed60fa9ecca7e2a7cdb2c007f61c43b9c3d706e5deb320f32f4137e753bf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res",
+   "sha256": "52c07f7d613a92281864ff4288d0e599420329cd3d440e5cd1f027b3b1660ce4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai.res",
+   "sha256": "38f88f527cfacdeef035b13a1653ed93def382f29995b058a20b809895ec1cea",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res",
+   "sha256": "aba82825d71597528a18fa9654b11f8a12316cc40088ab7dd7faad93c83c7c0f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_kasa.res",
+   "sha256": "fd215c31df5708c4c7ed75b84c5e40fe83b39501fc27de617d9bf493766f5a44",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_kasa_l1.res",
+   "sha256": "33eeb8dbc3417969e5f91050bc80ebf23cc971aea2b68d0b81eea2a04d9ac78d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_nuno.res",
+   "sha256": "514cbdcf6fece920795cdee0b991d7e39e281b8d3519d82aad1a54180615f410",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_nuno_l1.res",
+   "sha256": "b12b346956b5f72b33fab14c785c20bee197e1fc76849c760dd76bdab918ec25",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_omocha.res",
+   "sha256": "61cfafa538b2b9d142dea20a5f46cf29aafd82119d446c3157555d82f0957670",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_omocha_l1.res",
+   "sha256": "952866e65458925b413a69b4e6d254b522253b9f57218564fa5690919569aae1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_seto.res",
+   "sha256": "6d4b2f4b9deb87410092608a84678d54517b8da274d0b30c609794402f7745ad",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_seto_l1.res",
+   "sha256": "76ce36e28b7597b0164e7ebff6eff2972e6535c25aff286b9f4b87a10d903a14",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_zakka.res",
+   "sha256": "880c8691834e08e81d0041969e9b3be204bb4d8f17436b00977d83d0fb299c74",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_zakka_l1.res",
+   "sha256": "8e04a650872e467a104edd28d6c953f3d67cc1e5354e2774e9fff184e2acdb02",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tenbin.res",
+   "sha256": "e4774951f494da880aff3f53a71189a3b4df475be83120925105f653565b7499",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tenbin_l1.res",
+   "sha256": "66ea61bcf734d83bee0874b10b45bcffea954e7a09611e0381a8019b6df9d0f8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tsumini.res",
+   "sha256": "265a37ff88a8ab34255a68c7036044ac46fd85183bc5eb67064d2dab643caab5",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tsumini_l1.res",
+   "sha256": "b5e9a38cffabf4c935ea3423fd50f7c150154e45222892114ad6a296074e2abb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame.res",
+   "sha256": "49580ac046298adfe64c82dd51d28ec1e85eb738b99df94fe8866ba1f2868879",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res",
+   "sha256": "537837e408e44dcc942df9f92e6dea1177e921649bd691fb8c5bfbff0ce4c803",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha.res",
+   "sha256": "1011b98abb052bcc80818186ebe343675dd05a60019b17ecaecfe165c87e69b0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res",
+   "sha256": "d7366aa321107ec7368e6c4c9af98749fee66cdbf36f6fc0855d72911f3ae62f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_dango.res",
+   "sha256": "c685bf9d46574ad398824b284c934d23ec4319f3775326a585c8405dab631761",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_dango_l1.res",
+   "sha256": "79b8390310cb844a4de17e39ef860a9c8c9c7a2dc3e96b688d18d651e982d0a2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi.res",
+   "sha256": "074426b6ca5ebf3c98cb9b332bf8e0396868ed68b19d76e13f6376eb5a190435",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi_l1.res",
+   "sha256": "cc7ed2d1f1b1d5fd4cf083cd8db0910107b24a1c3995f1b676fa167b4aad56ca",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana.res",
+   "sha256": "7058c5f9c186c215f2e93f93871ec9a0538cd82161dd506e39afdf33de0de1f7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res",
+   "sha256": "d03f0d9ccce414a1656a3fccbbff601c416f5059061714aa8d1794dc7eef6515",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai.res",
+   "sha256": "be9048ff856c557e153927b6af2687de65ead68a80fb1e7f6b42173a0f51f942",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res",
+   "sha256": "e13dd8d71c903db326ee6589f426d902e53145a444be56160d897630d7287dbf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/meadow/meadow_grass.gdshader",
+   "sha256": "e3b9e0c18c90fb652de128b3404245d68bba2d3ee4d844002bec8da19a6d0e99",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r53_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_cha.res",
+   "sha256": "d2449bec6269a4c082c234967ea27dd552bc7a85af972cdbd6842e8e72445b1e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_cha_l1.res",
+   "sha256": "c0b1f2bc989d13033a4fffa05be7f165002af751b4ea30d6bd4b22894e2d3df9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu.res",
+   "sha256": "2ed81c7ae3a03a504dab45a302af25e2652b8fb02fd65c867bc7ed78586bfee8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu_l1.res",
+   "sha256": "66504cd4a5f8014ec0e37405a5dc8c8b1a0d140b55fd7518c2d261b0959e7306",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno.res",
+   "sha256": "fff14fbbef142ce533af934811c12a4803cd3d038b44b6db29c256516b8d8bf3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno_l1.res",
+   "sha256": "81e84b38c4dcd43c6a68af063cdf58b6c4f2b785583f4b141948b0c0c8efde10",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_sake.res",
+   "sha256": "cf05788fd1f7f84710fce84783538e73aae4ba3fb5b25362b882432ad8d5d275",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_sake_l1.res",
+   "sha256": "2af077109691d9718d343bc2cb6396fe1f9cf52feb7f50d6016d19804f56ab63",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_seto.res",
+   "sha256": "ca2440f7e48b4bac5dee7e08afd3179db06282e33f8890dd2cfa98c44ba06ff7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_seto_l1.res",
+   "sha256": "6278d31c5e3846bde6d8bd33b42fee5bfcc3fb4041972f7bbef137b123a2231f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai.res",
+   "sha256": "13c04cbd8c7de219a45bd021f5edc628b318ebec5edf940754bcf654c109844a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai_l1.res",
+   "sha256": "04fd49b0b7ddd88b00443958301a5d3f7564042644eeb5064a24cb14d2300def",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka.res",
+   "sha256": "92d76cc98f071e85d845d7506fc19c4df830ca1bcfd9aad172293b1a78dbd562",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka_l1.res",
+   "sha256": "6d9db3095b1944a20a7a6d10823e4a0d1625ea4a284249d9d0d73b3db5f7411f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+   "sha256": "93089bff4369a0b97aec4d5cc90f4b51428ec83cea746fd290df925f3d002a6e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen_l1.res",
+   "sha256": "f2aa05f19c017f35a0d0c153bb2af771e61272a6a818c699caeaacc943facdba",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_dango.res",
+   "sha256": "d937a123d8070a905b301d9c3599f88165e5d1f5e4e218439803c83203d4db5f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_dango_l1.res",
+   "sha256": "b3991b8b016f3845fe4d4c09f591cdea796839565c4cf1907221102549a1a8c9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi.res",
+   "sha256": "7736fdb75597f01173fc6ea23a08ca5604cbbd30c0891f2b4827ea193e6b5c37",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi_l1.res",
+   "sha256": "8147341fda1dbbc85a57ae4be815d19ebd1e7d31e2da1c1231a033fb36d776a3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_37.res",
+   "sha256": "91368dc3919e9389b7d82cb3ba883d33003ff401b2be428571b40b604df73e64",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_37_l1.res",
+   "sha256": "fcb8f3380c96ff71a5b49b382238d34420340505ae1be70eead37f0b9b3e1d16",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res",
+   "sha256": "fc677b255a24aabfe5beef6eb430f5d8f6f4c678c0327e5e42d1d1c6b365871e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res",
+   "sha256": "814f304fab27edf9a99d8a5300609995635638590b1c633a18ca79706721fd12",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_ai.res",
+   "sha256": "8cb147f4fd7d13c01fb66b05e3a4d1edba936fd0deb691545ceb2d3b1c6b7dde",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_ai_l1.res",
+   "sha256": "faa070043c63cd12aed7db502f77b8c6ac47f1c909dcd44bd058744ed265565e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_beni.res",
+   "sha256": "4f87a5b43333d367e760bd47646cb60c8c5ce4d57238ded7f09dd89312fe9282",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_beni_l1.res",
+   "sha256": "b79e69b3b37a36dca2bfbcefd24b82f9e5aef0741f45f79c1a35072faa4236a1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari.res",
+   "sha256": "fecbe9ed0e1978d3065cb9ce679080a87075c71c1b87880fe3c83d814092af92",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari_l1.res",
+   "sha256": "75e253ce395578c5da24c25e3493841d2a65f09ccb70510276a2244351d6d3e6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_cha.res",
+   "sha256": "e47605a4c1c0997476e81a045c4b498c847635f82d5e6bc2a975083149c468d9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_cha_l1.res",
+   "sha256": "4235f987cd3d4d1fbb86cd957b8f9ec73041d542bf18bea116349e25756c207b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu.res",
+   "sha256": "9410ce7cfa578978e5635ee25e01432fe64a8b687400260af1315cf25a8391b3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu_l1.res",
+   "sha256": "dd6c36be97562d43c3e3191ea46267c5eced58b723434f7335d40398b05a1eee",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kome.res",
+   "sha256": "6a268e7b75068ce42e6e57744de675a454716b48919a3136ff23c43c6f209aae",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kome_l1.res",
+   "sha256": "3c639a07fbb5929bc8e12c145939c128c6bef3de3662a29b572f246548340fca",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno.res",
+   "sha256": "6b9c93aa168a705b7e6667a48cb7b5fcbec42198d4e382b79d5b91a4e49ef7e8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno_l1.res",
+   "sha256": "e3dea5fcc1e88a85881ec6a51f9a563c6f7caa0cfc9e9b634bd0611c84c4ecf1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_sake.res",
+   "sha256": "4f0d94550db67ef30e58dc1587c6d8f6bc8e3a3d736e5d00f9ae4e662f1d98dd",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_sake_l1.res",
+   "sha256": "29a2a74800cc94fd53605480b06ef455818708322db3ce69db346608da94f399",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_seto.res",
+   "sha256": "c33c894e88c84b30c27cfa68c8ec5b50582dbac1cfe528591f0a0f8028b812e7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_seto_l1.res",
+   "sha256": "54cc22e2a8f2ff80031d00a580c9be7944e91cb1c3f97cf1c46a10db3a5bf9e4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai.res",
+   "sha256": "83d36578f7f7f093b44b143f4a5d023a102736eed132ab5d4a4dafedd5776193",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai_l1.res",
+   "sha256": "b033f710c22c9f92dea2e26e25b56187748a8300a4614cbc1ab0e274189864c0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka.res",
+   "sha256": "88e751f5f8c6f579c985b7a4df02c80a77b2fc31d5084aca10b3527876d33494",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka_l1.res",
+   "sha256": "d312d5d21d4840bec6d48add9673f75057ed380f6f29a4a3f72d756a0272e75a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka.res",
+   "sha256": "d065a8043b964b8aedcc005f4f020db7a4accee963d1eefffaf635656b0c69f8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka_l1.res",
+   "sha256": "ad51ee59acaacdd333fc6a9cf5e2c9c00d8b1ed1a71d58dc5979f9d34a462912",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro.res",
+   "sha256": "bd1efa2875c39be768241dfe668d502355f1abddc06fe07d7edc153262a3bd5e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro_l1.res",
+   "sha256": "9098c40c16bd563de6f949d220693977b7f736c01236787807dcd4abbbfcbcc0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai.res",
+   "sha256": "6ee7e1ca92b61782a7790ff5dacb945bdf50f63b20604b1faac2e05e93fa4325",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai_l1.res",
+   "sha256": "410499a2c310b92f5c4342f69faffb372d4a9571282b38c7d476272c01ef0eb7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni.res",
+   "sha256": "a62a3c0e4df5e32d2e4e528627195d45e5a04d90481803934d71cc321aeccd00",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni_l1.res",
+   "sha256": "31418cc0b5941ee5aa7370056435e80954a1b76b991efe9e186948fb94baa045",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari.res",
+   "sha256": "72c3321b3ff0b2ccb87078e6a4b19c9f692cf0ba0d7908f42426faaefa5c9865",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari_l1.res",
+   "sha256": "90ea26f256cfbc97a05e736e50141d0489fdf61b8c0004a2423638fdef1985a8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake.res",
+   "sha256": "132fd46ddc8db5064f3211520eefcf9a2925265f2728f08386b8eeea243b1f44",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake_l1.res",
+   "sha256": "88b59a40be7c7e232905381fd2df45bffbdfb6520e73335821f22e81a86f9fe9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_shitomi.res",
+   "sha256": "e71baecf66ed9d1501bb2f207be7b7f901fa79862f4037a79f7af4867d3cd2a9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_shitomi_l1.res",
+   "sha256": "a93f50964212f09202f6361efd3b9abf41dbca57c43918b35e534d63a5429036",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_cha.res",
+   "sha256": "a174edba724bf6b108a95436fe88fb17b61f2b26e9fff5aafa633ed4a8ab344c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_cha_l1.res",
+   "sha256": "6b2b6ed80023288073cc85dbe382572b417dd481e2d7eedb21ddf7f43ffe98c3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu.res",
+   "sha256": "3d965432118e1aa0af4003d0f6fe896f9e2a8ae6e77ec4294c0ba10d0661911e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu_l1.res",
+   "sha256": "dce55412991d8621d4ec5b0aa6d018d1e68abe3a0301380cba1dd6f275ae1659",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno.res",
+   "sha256": "56858943f211d453b62483ee578a8c240394edc14ca983ada3cb5e3d04ed2547",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno_l1.res",
+   "sha256": "06f2356261a2f1e79eb7ca12d72e6285bf84c582b6a4f257e531d72211e7470a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_sake.res",
+   "sha256": "6cd49b412a9439a723ee8111d1e2c78ff8c33b4e56e0c3231db3d989c51847b7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_sake_l1.res",
+   "sha256": "9a5caa0b84cea53c677b0420079e670583e23774f5c4f5e23fbc9019c538fc21",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_seto.res",
+   "sha256": "ba17fac3282318550dfe7e256dca2d971256e84337047b552b08948a889797d7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_seto_l1.res",
+   "sha256": "d5ba62c986f22225e1bd4f2986636d3536ada3371278e43a3f5bde5628e26c1e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai.res",
+   "sha256": "0ce868cffa170e3a4bfed80e9e29ff17990ca86d8f78ffa4320dc9aec539f700",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai_l1.res",
+   "sha256": "d7c5de707cfcca6faa7218aea30d3b31072b2137416aed5594caa8fe92a2a412",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka.res",
+   "sha256": "c1e9db64a64d806ee0a046f0a165543fb960476bd41291c919f27f1848ed7aff",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka_l1.res",
+   "sha256": "0b5dfdd6aedd2eb11c3cdb63bc8fe0643acc15c27f49e31f780c1a403cb77616",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin.res",
+   "sha256": "ce58fd4630f18a92eb1ea048b850768bdb404a386b2a13030184218bfa2825c8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin_l1.res",
+   "sha256": "ce76eabe132a2decf3f2968bc5dd3e0a71c8404e7ba934f72c842518073834f9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke.res",
+   "sha256": "3f76862419c6b99177581430a808ec255545a05adab122ee240dcdec1087fdcf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke_l1.res",
+   "sha256": "7fb68d2e3633ad96e10838d7ea3e99e71ce7087a63912a657c37b814433476be",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r1b_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/SK_School.tres",
+   "sha256": "0058f4073998760d9ac43e8952e94fe902197fe461b5310a9c05a84c0aaf6865",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_bench.res",
+   "sha256": "7b344e0057cd143f7da596138f52757bc7cc713335db1727ef33863734851b71",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_bench_l1.res",
+   "sha256": "42b3b3bf3ccd41b1ab2b33d5b38ee1ad35e8dff6302af00c1737988a871037ae",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_box.res",
+   "sha256": "fff15ee474fe2b7de2e51674146c708f2b554f82e27cc7de80a4ee43c1b54aad",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_box_l1.res",
+   "sha256": "d157e86cf7ec060cb1f1047f2601b9104139fded4a5f3508b6940daa874e9654",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_fuda.res",
+   "sha256": "106db982200c0b0b29a27e7b29a200bef6bd8a9587b4e676fb28c40d73414c12",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_fuda_l1.res",
+   "sha256": "005f1f81eb2ef0650be7425b434e489a180ec06316ef266982c22ffeed3ead12",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_getabako.res",
+   "sha256": "70067cafc84e17cc5aa7b274ccd87fb910798fa41b6fc944a94d689456730e7d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_getabako_l1.res",
+   "sha256": "f730fa485a685dde78278b15062e64f617648acca9a7e6813e0ed6cfc000eba3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hanshi.res",
+   "sha256": "15a4fe68a85c6ca946d7a7b74f822b4bb2aa52ecd8283eff510205b053854514",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hanshi_l1.res",
+   "sha256": "4e1f2c3083d1ec2adafd8e7bcaf3b8bd74520d6e2b6f4abc9595fc5847f8eedc",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hoop.res",
+   "sha256": "42a621323f2316367fafacb64d26bb7da674a820dadc6c428b025e6d395e9fad",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hoop_l1.res",
+   "sha256": "ef82ccddd8cc7e1c816725aa6fa134e471c7e3239c4e70258223851266186694",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_ishikeri.res",
+   "sha256": "6df7cf128abec528ae2d62410d7f1f36b3650d44c9e313ae5f87e97ddd94426b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_ishikeri_l1.res",
+   "sha256": "458fbc5dc4165b7e20e078980744a1bad500caaf31592cd029dceb27ef542d16",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_temari.res",
+   "sha256": "5ad5e17ce519f4b552ad4c852db029258e8e54c0db9810f0ef1184438ba68a8a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_temari_l1.res",
+   "sha256": "e1a025cafca9ae15082a4e6448127d7b102854a8a923d621038818ec8b696fc6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_tensui.res",
+   "sha256": "29fcddd6e75d6c6db38087aeeddf2e20ca7c3c613ff29047f757d01e4c2fbcf6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_tensui_l1.res",
+   "sha256": "7594ae32fefa29536c2381072c114360fbae08bf20b2c24da698a33dcc735aa2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_teoke.res",
+   "sha256": "d57289ce0a6717c3aa4c73eaa4a5196b1130b5a13730432456eb9f9f0cc8db70",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_teoke_l1.res",
+   "sha256": "e44cd9b443751171369fd81f6b9046bc05d0343a977000c06c951a88128f3791",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_toban.res",
+   "sha256": "d2f24105afd5663e96e0dbdf4922b78af04385c8669143dcac3f5430d5c46610",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_toban_l1.res",
+   "sha256": "8159627694ee1f93d8e64920b176ab076b48401dafa822e84af4b82bf4155943",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_woodpile.res",
+   "sha256": "6d45636bbbbfb309c220c8064b5b23a1f3763ad44785ec75509ecbbb00feb134",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_woodpile_l1.res",
+   "sha256": "7f2f00f161be26d96d78bd6b455bd8088cf0c439702893d47d7e7bece50cff20",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_zori.res",
+   "sha256": "d991f7c0e2faf05f23b7cd5cb700deae4e98a32410fcb17a93502a47ccfdb5eb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/mesh/sk_zori_l1.res",
+   "sha256": "c6c157823a2a9bc056cc2952845581b76fbfbe25debb5e5efd8d6830212d9fe1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/school_kit_atlas.png",
+   "sha256": "44cc78881937cb1c0c822fc8dc50370726f0098d19d758ff357960f66b297fc0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/school_kit/sy_ground.gdshader",
+   "sha256": "1071b863997782a4dff2ceb185694ce637e007ff5a863f9db6f292db2ef0ed14",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r43_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/shrine_grove/sg_ground.gdshader",
+   "sha256": "14a9ab5906b0d80ac0227a8dbb32906b89b5d75ff7f9e7091fc7b58f0fb53e6e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r42_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/ST_Street.tres",
+   "sha256": "455c7f88e582e27c520fb4b66121fd0703a83d0ddf012641a11dec159161c064",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_kusuri.res",
+   "sha256": "c1224e7049b042521f27f300cce52501aa89af1f625e8671a271d3c47be74281",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_kusuri_l1.res",
+   "sha256": "f2e4c607b2f973de126330a6db571aa4eacd3bfd0ca55f346a31165e4712157c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_meshi.res",
+   "sha256": "957698706d8b44a37c4a5a9e0d254a428c5898f59666fada72728f8f482895cf",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_meshi_l1.res",
+   "sha256": "6227731124c9a17c95160d4393ed92d93edc9092b5fe4e7474729af8828f1171",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_yasumi.res",
+   "sha256": "47bf4371dfacb0a4e6268c4e219b77650c968e9a7a9971e010a0fae4eae468df",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_yasumi_l1.res",
+   "sha256": "1e54606b6d3c0c61fde8d7a2f3431e07686a8417e4cdaea50208231709351cd3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_aka.res",
+   "sha256": "7870b20c5c899548ea19093c05d612d4cd93311e25254b5ad53a6dc3a5c30d92",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_aka_l1.res",
+   "sha256": "2b3d925722f59472e48fcd6ab0e2d03557b6ff61f2f644ecfa14bd98062ef714",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_shiro.res",
+   "sha256": "419134108fb661f351b0caf4274a430a7094d983dfa7948464847b92c8f60d6b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_shiro_l1.res",
+   "sha256": "b966ae6f670068df1477b62f11c5567c0030c696255e484594de2d2c5ccfc1a3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_daiku.res",
+   "sha256": "ecf06bb27dbb96af40a07060ea6104b82e8ace19fc8da63278d2cf48bf365321",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_daiku_l1.res",
+   "sha256": "606e54e76dfdb289f66a6d81f9e71c023aa782b00459092d71d164637c8271bb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ichi.res",
+   "sha256": "2d7ea6897e9d704f550671cfeb0ed6a227e41c1df1c1163eb4f86e62f414ff3e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ichi_l1.res",
+   "sha256": "0b981de4d1ce58fe23bd43e8124437c5423a0f68c984ead57dc7cf96c4c74f64",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_kawa.res",
+   "sha256": "5f86e04825a25560b618479235c1d4169e05347c68f3d602eb4687f7489a0f31",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_kawa_l1.res",
+   "sha256": "b710c9600baf56afe03494efeeaceda44c226c4d6f887c60f2ac7c9c3bacd267",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ta.res",
+   "sha256": "f98871ff087b21700b5b24b03255a705d9a0146f71153a107f0a97c6d787ceab",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ta_l1.res",
+   "sha256": "8c3366df86474be2c48f834147b56fa4b022a7851c802e2020bba8f554c48961",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro.res",
+   "sha256": "9b8a3cf7ea3e949e601a60ef760875c64d6c9068182e3f33b3990e5cdc21a1f0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro_l1.res",
+   "sha256": "c0cb0792b20d0ef5a21a4abbc89c5585a74a105fcf5f922172850c87440c1603",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hasa.res",
+   "sha256": "db47803e2e28c0b49eca3cf13ee3f1bb9949234b26016f0ebe552f6588524a61",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hasa_l1.res",
+   "sha256": "222b6eba5e88214e9a45013bffd33d478d72872b5f816f1ceb0ba7f7183223ee",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hinadan_seto.res",
+   "sha256": "1ce64945cbfe1d585f825832f9f56cb9e347405f46d8e6fa607d432a80a3f9d1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hinadan_seto_l1.res",
+   "sha256": "ed1c57a714f7eb273dba0c5d18465d333dd4a08627823c6226b04d383308126c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi.res",
+   "sha256": "5e212ef7944f084184beb504a4a473d9517889b8b59f3e14850b99a119e2b9bc",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi_l1.res",
+   "sha256": "21d83543d0bfa8e13a1ebd2cd8ec082991359adde00e538ef37917ed61326d4e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai.res",
+   "sha256": "d05f422bb50174049db2f3cee94aa19a72d7f5e2aba8e7f601d80687dfe58b73",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai_l1.res",
+   "sha256": "41bb26b3dde3c6b989b680fac500c59ea75826953d235de341c72c21bdf63e63",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka.res",
+   "sha256": "7ac9baf72a03e4f74a4f6e9ba7e4e14d550041786b1eedba489c3d5040b81635",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka_l1.res",
+   "sha256": "cba332e25de6869d8ae282a96548a696aaba41f1fea3727ac89334d4e2d1113c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_ichi_kanban.res",
+   "sha256": "d66035731aa494ba17f68a5ec12ebb0d00542f328680caac357de400903299a5",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_ichi_kanban_l1.res",
+   "sha256": "652fbcdb2bdcff446bfb2b405306d85efa6129102849bff6970790a5a865188c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_ido.res",
+   "sha256": "51d081607f97eaff596613d8801a2471f7823665549b74bb777fd2137ab2eff6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_ido_l1.res",
+   "sha256": "032ef9b20440aa8768aa60333b957acd587c69d8ad597c7901d88029a9d053fc",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kago_tsumi.res",
+   "sha256": "cf29de36fe4de7cdf87c180d223f97fe516e589ec09e0916322804f76c23a7a1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kago_tsumi_l1.res",
+   "sha256": "026418ce33769389085d512fb14366d690affbd08c4865f8324b1b8e3ed0d606",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_abura.res",
+   "sha256": "a2b9e7241d184d8a263b8a1b05df628146fd72abb5212adf5ab592a85d4657f4",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_abura_l1.res",
+   "sha256": "e32294b35643bad1e706ce1b98b52013054334c30a33b70438a92a7405f049a8",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kome.res",
+   "sha256": "9df8f56adb5f436aa3ea21ec3a103509b0b27bd9baea7e0f934778da045261af",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kome_l1.res",
+   "sha256": "ecde295a20f6bf6be171f2cb80f075b6926e6179960c345d9e99bac14bf76118",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri.res",
+   "sha256": "e2ba83f0c56686cc734ca0a3baa8ec7e98e6a4d136e924d10ee673e1e8b57442",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri_l1.res",
+   "sha256": "7bd2f5902f0e5c56debff0e1dd07a73c9b42d202f38f2d0f5204fd9757683988",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_sake.res",
+   "sha256": "fba4b7ec45b0ba859e8dd4bb451a079821e35674058ea89900e89a41bd3011c7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_sake_l1.res",
+   "sha256": "4bb7d14a45b57771fed82b3ebfaacd1294519485c04b9affb60234ba0fd18247",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kome_tsumi.res",
+   "sha256": "d2555b5ac1c3809c0f5746a725c3f22587e67dc76201524b2af99c9c51a8584e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kome_tsumi_l1.res",
+   "sha256": "fb1b09a207f54ca305d30bd13058884b836f4e6ad5d00e9946431961e55b079c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kuwa.res",
+   "sha256": "810922e09ed96b9d31f85f8430ac4730d51fb5bcfd56e133a67727bab2702f50",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_kuwa_l1.res",
+   "sha256": "7a3493a972fbca7697c0de2675fc642e769a620cdbad038ebd3bd5c9258168f0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_meshi.res",
+   "sha256": "719a3f6d987c5701ae0fc16946324bf88c884ed53d5d480f63fb173478839e8a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_meshi_l1.res",
+   "sha256": "90332d3086d062112ccf802defb0b24b4bf815571559f4b8577968d97a283bd2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_sake.res",
+   "sha256": "bbfbe2d2ea5612c32897443abfc84b30702f5473f6913958a56ecc76099637b7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_sake_l1.res",
+   "sha256": "43752f26048f7c2b915221f8bccaf231fd3a950c02d7f6604ddd188a011afbad",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_okeya.res",
+   "sha256": "2465157c116a3250d56b8aa35a3cda4b8506d2090ee2bd57557d204b056b5758",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_okeya_l1.res",
+   "sha256": "910e383de01224af5447ec26095cfe0ad9f6a7f357cd66562ad4dffc172ca459",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_onobori_ichi.res",
+   "sha256": "9a27272c6bfa624aa124dde6e0df944b2a9e5c569f4086ee1feace837c8b3d2a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_onobori_ichi_l1.res",
+   "sha256": "6296ac63a23142b2b65d8013136d87a8ef6da5c16aa98d317afd1696f56fe793",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_shibagaki.res",
+   "sha256": "f0b35c5052083ad637cc479fd32c3d3af44cc26576b66c8d7e2763e4eb244893",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_shibagaki_l1.res",
+   "sha256": "aee0b17918c58657468cef45cf7194f3d84c5fcfce87c1604d5a38f43fb32468",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_wara.res",
+   "sha256": "3931d1c5acd78b9c6f9bfdb714ae0bc01730a0e11a0152b4a4135a6f7b1c01e0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_wara_l1.res",
+   "sha256": "25af67cf083a48e2b19f3c2edec0d59b154807498c131e952ddaed48c4b30f7f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_warazuka.res",
+   "sha256": "d9e14dd560932af091e61f699d62059ccd4ed641e994a2168ac21c3d7d834bbc",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/mesh/st_warazuka_l1.res",
+   "sha256": "e5856b4c7fbca8d8e05a450bd96686b4849e36960f51a18ea00b9ef38582be8a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/street_kit/street_kit_atlas.png",
+   "sha256": "37cc151bbf897ef2f96884d0b446ef8aacfb0494ce1f6e055ebc526fe05b1989",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r2_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_bundle.res",
+   "sha256": "12eb86fd174a7e8b0d589671ae45d60625d8460916b6d1f007eda1818bdafe7a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_bundle_l1.res",
+   "sha256": "359632d80533beff1d6365d732de68bded4ac9b30ed103793b62abdf89a3709a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_dai.res",
+   "sha256": "c85b83f81d77149aa2fca41a1aadf9617c2ebd69de0e6e0d7926a774ab0d02d0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_dai_l1.res",
+   "sha256": "365e9df30dbb425b7ad3a42cb000261ab3cdf0756f6ebf634928728b2ba3b2c5",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hachi.res",
+   "sha256": "6f09d9f317e8b3d91cecae7c3bd45f918c1eb826fc9b7c59c29781a01e44f891",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hachi_l1.res",
+   "sha256": "40404081de92a09a472590cba6f13f482a3c3fcc5a89924580d8244a721aed98",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+   "sha256": "6843bbddc69221b393380640b01aeafa07967df6f13366cf7c3d3aee95bb0762",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako2.res",
+   "sha256": "e62725a11a7ed3c5f7907929ef30d3aa3266eb4ef8d11fad0c5dc6897c826f8e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako2_l1.res",
+   "sha256": "1a6583ee08f1205e56d15855ea5de913407686d741a3a61db56409a624a4c624",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako_l1.res",
+   "sha256": "6801d6a4f3dec3a3b752991d53cd6cdfe39314602171112572150d1b26810aa6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_kanban.res",
+   "sha256": "ceddcf8b966bfafd96a3473ac4f75ff8bf95e1c5fa9f2223a86c858a7b24a343",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_kanban_l1.res",
+   "sha256": "47eaa836b9d00dabb44b162adc158e643dd13cd9c4e7215a877f87a22b4e699f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_keiji.res",
+   "sha256": "39c37b98a0945bb1203904d20c18c7d3209d8434226679aa5356105441861387",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_keiji_l1.res",
+   "sha256": "2bf353b5a0ac06e45d03012520e9e9ba4eadd892d09742bb1c67c3bc0093e287",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_seoi.res",
+   "sha256": "c7450c5b56460e5ff59f892c22615fcad3dd9f57561205b7556cd94c8f488dda",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_seoi_l1.res",
+   "sha256": "f3b62658b7038203b44015dee1bdbb7d6bdea39024449a4ea15aeb8d8e2cc779",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_stool.res",
+   "sha256": "4e2b7d603fdd0aea0046d280bc14776595cb889991177465919ba7ff847f536a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_stool_l1.res",
+   "sha256": "039bec72137c071c38732973932f270cee747a3b4ce5c122a78950923f3824b6",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r46_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_ladder.res",
+   "sha256": "563f2b3f01986d50386c7b7f736e99a9a32db3db42740440c6547cb16860066c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_ladder_l1.res",
+   "sha256": "45b1503c085f8902411d1bdfbeb553a6406d78e3807afc32adc8b5da43543552",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_okeyama.res",
+   "sha256": "4fc62ac3e5567dfb931bbdfa69f62e1840a1008e33f1eca1f34e73292d70c0dd",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_okeyama_l1.res",
+   "sha256": "3033515c234786d7006c771845941e14fe1ab60318e6dfa14c31ef73e78be03c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rack.res",
+   "sha256": "364ea0d04fff0b6913e286857f9ff61a97b2197c92462551b45ffc5a67573121",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rack_l1.res",
+   "sha256": "f73ad93a47a62da88d1d3103cfbe94b4943205ffb8ee6e58e54fd71a224d2ba3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rope.res",
+   "sha256": "0e8a27986c77bacdb003e9dc5def5fddecb9040ca690070d4f4522f7e3c06281",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rope_l1.res",
+   "sha256": "adfebd736658feaf4d48f251e09823e778478a0e7f28c0273082ae7263f0c408",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r45_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/WK_Plant.tres",
+   "sha256": "d3256d6396b2c606a0608864d709787ea7aa34421a696a9203dd0743cb1f953b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_iris.res",
+   "sha256": "02ad9894f6bbe4673e141ee498dc11f1cacdee1cc9d5127fbfa8755a775a2ec3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_iris_l1.res",
+   "sha256": "2ad65966b4ca1cc70652fb41a0a44eb64ca3b5a256e09b592d2180eb7ab72d0e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed.res",
+   "sha256": "bcfe10e44fdecf49566ac1c7f9a47eda4b9491bd13df72e729bc98d99cd128f3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_l1.res",
+   "sha256": "e9746e96cdcfe870ba3e8a65504813970f37734fdf6589c39373b936a5abd95a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_s.res",
+   "sha256": "b9ff5f40dc8eccd7e297f7e0813dcd85198c1cc48cc8f1b76821f85b867d053d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_s_l1.res",
+   "sha256": "3bcfb822b02476465491f55fb4e8c7017e1d64c51c673977fbb53e37aded1561",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sedge.res",
+   "sha256": "3b6c47ee4d6c55ed8a67913445072d5da571294034a99bbc194b1c68d0c057f1",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sedge_l1.res",
+   "sha256": "da3ae80b46c47c9323c0f44275974fc304e0c031a34d1ddd8a727c9e1e85bd0c",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sonae.res",
+   "sha256": "b9e507cebe6397cabc58fc299adecd89be3d076e95517bc0492dfc8d617d4953",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sonae_l1.res",
+   "sha256": "b5356d379319f92f9c396eafb56775b53b0c0f2c2e0c6a58fa4d6d5b04eed36d",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara.res",
+   "sha256": "336fd4055c2f4582fdc8964ccde664a120d7e99e136679c83241a2ee48eda599",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara3.res",
+   "sha256": "d2399719a404319befa1aeddb29aef35f892ad48304f44363eae63afdabdbd3e",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara3_l1.res",
+   "sha256": "f92b728f856505c7feec474602ff234471830eddbcbb3d857656a9acce0d5d41",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara_l1.res",
+   "sha256": "fa4b187fb21ffb00ddd0c99c7b97e0d7f03963db6dfaceb919323e347f529a54",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_usu.res",
+   "sha256": "28229abf5e737729a4af87b54180af70bc224f09d301d7633e19ad2af34cf256",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_usu_l1.res",
+   "sha256": "f799b690e611514e9d80f963e3fbb107c03ab4ca1debf6ce07cbed2d18587694",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p9r44_seal.json"
+  },
+  {
+   "path": "res://characters/npc/chaya_f01/chaya_f01.glb",
+   "sha256": "fc7508a900dee4fa5236988d35c69557af3b12b9092115bfb387106deaf003a2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/chaya_f01/chaya_f01.tscn",
+   "sha256": "2d7c4916441b7e75472055b08192bdef384a6d67e0497812acb114b54d29c0eb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/chonin_m01/chonin_m01.glb",
+   "sha256": "3be313f98362751522ddf14a174cb26ea8b62f28eb6195fd2a42f225b70be31f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/chonin_m01/chonin_m01.tscn",
+   "sha256": "6961ed70dfb8ee304a3708ef0898ec6ca3774c741b63c3c8127819d9f8b789ea",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/kozo_m01/kozo_m01.glb",
+   "sha256": "2a0481adef9f08abda7321492262476e939ee8a08d58a258ba7c09b0f921e65f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/kozo_m01/kozo_m01.tscn",
+   "sha256": "4dd534ebe62817d90f91dbf5b977bd0c2b860c5b924bbba788792418dd388378",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/npc_visual.gd",
+   "sha256": "e82941b6552d11c3b0247f1e0e0081b457f3ae475c94ade65a592c7a72947d9f",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/nunoya_f01/nunoya_f01.glb",
+   "sha256": "b3c011471de2195e56eed3266cfef00a7b7cc0bf1253a17389199c340fcf17d7",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/nunoya_f01/nunoya_f01.tscn",
+   "sha256": "c625dc10887590b43976bb8e5d9e895773e4c6136f2ac2c5837b540a22a5d555",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/sakanaya_m01/sakanaya_m01.glb",
+   "sha256": "f60758b98d810e07a38941e2d90fffd5db11ccf2a2aedd601c998bef680f882b",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/sakanaya_m01/sakanaya_m01.tscn",
+   "sha256": "78cda4db2a35e51e78b69066cc15cb38e18947f69fb963e27272ed97e669c510",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/setomono_f01/setomono_f01.glb",
+   "sha256": "773b07d65040aff923b96e019f0db46a7f6beda7ec0ced26c4cdc6e08f8c55f3",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/setomono_f01/setomono_f01.tscn",
+   "sha256": "6fb15256a53ad828c1388fae3294e9be0243beae5a92a6d0ea433fb6e8658ae2",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/shufu_f01/shufu_f01.glb",
+   "sha256": "6d4d0430a2fbc2f62a949338363174148c1b2d4ead9882bf7ebb4d3480ee796a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/shufu_f01/shufu_f01.tscn",
+   "sha256": "c054a9150c9680d6ff33da4f6266d2202b4a72a73ad718b71fea36cc4189cd19",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/takigi_m01/takigi_m01.glb",
+   "sha256": "80a1d643e40f0f11cf89cbbcee06bc8b11f7e8667f8f06f3a12818f24b9349f0",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/takigi_m01/takigi_m01.tscn",
+   "sha256": "f9dd4d8fdf8dbdfd949f5806c0a926496cd3d548ef552184e1f6d654099352aa",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/yakusou_f01/yakusou_f01.glb",
+   "sha256": "0aa10573b31ed62f41a782feefee3cd188bf239ace403e13823dd67659d36607",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/yakusou_f01/yakusou_f01.tscn",
+   "sha256": "0405d59fe4cb20ea19a06bd21e3969ddce45030c615478e2fdf13567b2c03eb9",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/yaoya_m01/yaoya_m01.glb",
+   "sha256": "7f40f7d88dcf822ca7b6be498ad2d0c6de328446a02e587f99a88534d0f9ee34",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://characters/npc/yaoya_m01/yaoya_m01.tscn",
+   "sha256": "c84916e376983d8ecfdebf0bd7481c3e822cc28a1c985a629f25585a30455f1a",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10_npclib_seal.json"
+  },
+  {
+   "path": "res://scripts/npc_activity_core.gd",
+   "sha256": "c3aea5a03e8858b5f86f9f3eed2f7b1fa29eee6f011a1d1e3e57514e6ea08a06",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r3d_seal.json"
+  },
+  {
+   "path": "res://scripts/npc_activity_outer.gd",
+   "sha256": "c600c2b3ce9e1cd149fd335a6dcda0c1bdda2f2f30a901e1c8d9bf0d73c00153",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r3e_seal.json"
+  },
+  {
+   "path": "res://scripts/npc_activity_overlay.gd",
+   "sha256": "dc6258ab90c2d1a64d107e96d0f934a302a20399ddc99fbb3f6b753c39e86ceb",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r3c_seal.json"
+  },
+  {
+   "path": "res://scripts/npc_population_actor.gd",
+   "sha256": "2038ca2bdaf63515f6f2bc6dd7b45053af444a70ad702075080a60f8239601ef",
+   "source": "seal_frozen",
+   "evidence": "res://data/village_v2_p10r3b_seal.json"
+  },
+  {
+   "path": "res://shaders/sky_daynight.gdshader",
+   "sha256": "a142067819adbcd199a3e52dd9d56a8759d05c4179a621b8c91d3b19a351e5ab",
+   "source": "shared_runtime_dep",
+   "evidence": "res://scripts/sky_system.gd"
+  }
+ ],
+ "v2_exact_files_note": "P12 Final Cleanup（使用者 2026-10-12 授權）：既に各階段の封存で管理されているが本 registry に未登記だった V2 依存 421 件を、精確パス＋現行 SHA-256＋来源証拠で登記（目錄前綴は追加しない）。source＝seal_frozen（evidence の封存の現行 frozen に同一雜湊）／kit_manifest（evidence 封存の現行 frozen が雜湊固定する manifest の deps に同一パス・同一雜湊）／shared_runtime_dep（evidence＝v2_allowed.shared_runtime の腳本が参照）。"
 }
