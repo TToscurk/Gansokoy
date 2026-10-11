@@ -1,0 +1,3846 @@
+{
+ "by_dir": {
+  "assets/village_v2/garden_kit": 45,
+  "assets/village_v2/geidon_kit": 14,
+  "assets/village_v2/groundcover": 2,
+  "assets/village_v2/humanuse_exp_kit": 4,
+  "assets/village_v2/humanuse_kit": 12,
+  "assets/village_v2/kiri_kit": 38,
+  "assets/village_v2/market_kit": 64,
+  "assets/village_v2/meadow": 1,
+  "assets/village_v2/mise_kit": 78,
+  "assets/village_v2/school_kit": 29,
+  "assets/village_v2/shrine_grove": 1,
+  "assets/village_v2/street_kit": 64,
+  "assets/village_v2/suzu_kit": 18,
+  "assets/village_v2/tower_kit": 8,
+  "assets/village_v2/waterside_kit": 17,
+  "characters/npc": 1,
+  "characters/npc/chaya_f01": 2,
+  "characters/npc/chonin_m01": 2,
+  "characters/npc/kozo_m01": 2,
+  "characters/npc/nunoya_f01": 2,
+  "characters/npc/sakanaya_m01": 2,
+  "characters/npc/setomono_f01": 2,
+  "characters/npc/shufu_f01": 2,
+  "characters/npc/takigi_m01": 2,
+  "characters/npc/yakusou_f01": 2,
+  "characters/npc/yaoya_m01": 2,
+  "scripts": 4,
+  "shaders": 1
+ },
+ "count": 421,
+ "items": [
+  {
+   "chain": [
+    "res://shaders/sky_daynight.gdshader",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://shaders/sky_daynight.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/ST_Street.tres",
+    "res://maps/village_v2/gen/r4c/st_hasa_v2_l1.res",
+    "res://maps/village_v2/gen/prop_fix_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/ST_Street.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/street_kit_atlas.png",
+    "res://assets/village_v2/street_kit/ST_Street.tres",
+    "res://maps/village_v2/gen/r4c/st_hasa_v2_l1.res",
+    "res://maps/village_v2/gen/prop_fix_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/street_kit_atlas.png"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res",
+    "res://maps/village_v2/gen/shrine_approach_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res",
+    "res://maps/village_v2/gen/shrine_approach_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_kasuga.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kago_tsumi.res",
+    "res://maps/village_v2/gen/water_life_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kago_tsumi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/MK_Market.tres",
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/MK_Market.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/market_kit_atlas.png",
+    "res://assets/village_v2/market_kit/MK_Market.tres",
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/market_kit_atlas.png"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_tsuke.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_daikon_kake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_exp_kit/mesh/hx_hatake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_box_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_box_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_box.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_box.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_okeyama_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_okeyama_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_okeyama.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_okeyama.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_okeyama_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_okeyama_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_okeyama.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_okeyama.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_okeya_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_okeya_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_okeya.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_okeya.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kame_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kame_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kame.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kame.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_tarai_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tarai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_tarai.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tarai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_nuno_kake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_teoke_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_teoke_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_teoke.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_teoke.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_bench_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_bench_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_bench.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_bench.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_ni_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ni_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/SK_School.tres",
+    "res://assets/village_v2/kiri_kit/mesh/kr_ni_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/SK_School.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/school_kit_atlas.png",
+    "res://assets/village_v2/school_kit/SK_School.tres",
+    "res://assets/village_v2/kiri_kit/mesh/kr_ni_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/school_kit_atlas.png"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_ni.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ni.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_seoikago.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tsumini_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tsumini_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tsumini.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tsumini.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kuruma_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kuruma_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kuruma.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kuruma.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_warazuka_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_warazuka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_warazuka.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_warazuka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_shibagaki_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_shibagaki_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_shibagaki.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_shibagaki.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hasa_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hasa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hasa.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hasa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_stool_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_stool_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_stool.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_stool.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_zaimoku.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_daiku_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_daiku_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_daiku.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_daiku.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kuwa_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kuwa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kuwa.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kuwa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_nawa_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_nawa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_nawa.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_nawa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kome_tsumi_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kome_tsumi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kome_tsumi.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kome_tsumi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_tawara3_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara3_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_tawara3.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara3.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/WK_Plant.tres",
+    "res://assets/village_v2/waterside_kit/mesh/wk_tawara3.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/WK_Plant.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni_l1.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni.res",
+    "res://maps/village_v2/gen/human_use_exp_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kuruma_ni.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_rope_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rope_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_rope.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rope.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_ladder_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_ladder_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_ladder.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_ladder.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hachi_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hachi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hachi.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hachi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_houki_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_houki_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_houki.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_houki.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_zori_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_zori_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_zori.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_zori.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_temari_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_temari_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_temari.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_temari.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_hoop_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hoop_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_hoop.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hoop.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_tensui_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_tensui_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_tensui.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_tensui.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_hoshimono_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_hoshimono_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_hoshimono.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_hoshimono.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hakozumi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_wara_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_wara_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_wara.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_wara.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_makiwari.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_woodpile_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_woodpile_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_woodpile.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_woodpile.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_tawara_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_tawara.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_tawara.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_tomi_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tomi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_tomi.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_tomi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_senba_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_senba_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_senba.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_senba.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi_l1.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi.res",
+    "res://maps/village_v2/gen/human_use_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/humanuse_kit/mesh/hu_momiboshi.res"
+  },
+  {
+   "chain": [
+    "res://scripts/npc_activity_outer.gd",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://scripts/npc_activity_outer.gd"
+  },
+  {
+   "chain": [
+    "res://characters/npc/nunoya_f01/nunoya_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/nunoya_f01/nunoya_f01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/nunoya_f01/nunoya_f01.glb",
+    "res://characters/npc/nunoya_f01/nunoya_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/nunoya_f01/nunoya_f01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/npc_visual.gd",
+    "res://characters/npc/nunoya_f01/nunoya_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/npc_visual.gd"
+  },
+  {
+   "chain": [
+    "res://characters/npc/chaya_f01/chaya_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/chaya_f01/chaya_f01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/chaya_f01/chaya_f01.glb",
+    "res://characters/npc/chaya_f01/chaya_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/chaya_f01/chaya_f01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/yakusou_f01/yakusou_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/yakusou_f01/yakusou_f01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/yakusou_f01/yakusou_f01.glb",
+    "res://characters/npc/yakusou_f01/yakusou_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/yakusou_f01/yakusou_f01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/shufu_f01/shufu_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/shufu_f01/shufu_f01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/shufu_f01/shufu_f01.glb",
+    "res://characters/npc/shufu_f01/shufu_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/shufu_f01/shufu_f01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/sakanaya_m01/sakanaya_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/sakanaya_m01/sakanaya_m01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/sakanaya_m01/sakanaya_m01.glb",
+    "res://characters/npc/sakanaya_m01/sakanaya_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/sakanaya_m01/sakanaya_m01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/setomono_f01/setomono_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/setomono_f01/setomono_f01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/setomono_f01/setomono_f01.glb",
+    "res://characters/npc/setomono_f01/setomono_f01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/setomono_f01/setomono_f01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/chonin_m01/chonin_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/chonin_m01/chonin_m01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/chonin_m01/chonin_m01.glb",
+    "res://characters/npc/chonin_m01/chonin_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/chonin_m01/chonin_m01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/yaoya_m01/yaoya_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/yaoya_m01/yaoya_m01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/yaoya_m01/yaoya_m01.glb",
+    "res://characters/npc/yaoya_m01/yaoya_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/yaoya_m01/yaoya_m01.glb"
+  },
+  {
+   "chain": [
+    "res://characters/npc/takigi_m01/takigi_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/takigi_m01/takigi_m01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/takigi_m01/takigi_m01.glb",
+    "res://characters/npc/takigi_m01/takigi_m01.tscn",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/takigi_m01/takigi_m01.glb"
+  },
+  {
+   "chain": [
+    "res://scripts/npc_population_actor.gd",
+    "res://maps/village_v2/gen/population_outer_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://scripts/npc_population_actor.gd"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res",
+    "res://maps/village_v2/gen/entrance_cue_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res",
+    "res://maps/village_v2/gen/entrance_cue_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_ichi.res"
+  },
+  {
+   "chain": [
+    "res://scripts/npc_activity_core.gd",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://scripts/npc_activity_core.gd"
+  },
+  {
+   "chain": [
+    "res://characters/npc/kozo_m01/kozo_m01.tscn",
+    "res://maps/village_v2/gen/population_core_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/kozo_m01/kozo_m01.tscn"
+  },
+  {
+   "chain": [
+    "res://characters/npc/kozo_m01/kozo_m01.glb",
+    "res://characters/npc/kozo_m01/kozo_m01.tscn",
+    "res://maps/village_v2/gen/population_core_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://characters/npc/kozo_m01/kozo_m01.glb"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_tall_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_tall_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_tall.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_tall.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_iris_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_iris_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_iris.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_iris.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_reed_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_reed.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_mid_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_mid_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_mid.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_mid.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_reed_s_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_s_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_reed_s.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_reed_s.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_sedge_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sedge_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_sedge.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sedge.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_flat_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_flat_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_flat.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_flat.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_c_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_c_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_c.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_c.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_a_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_a_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_a.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_a.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_low_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_low_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_kei_low.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_kei_low.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_b_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_b_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_b.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_b.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_yotsume_l1.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_yotsume_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_yotsume.res",
+    "res://maps/village_v2/gen/environment_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_yotsume.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hoshidana.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_ido_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_ido_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_ido.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_ido.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_ichi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ichi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_ichi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ichi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_kido_37_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_37_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_kido_37.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_kido_37.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_meshi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_meshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_meshi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_meshi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_dango_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_dango_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_dango.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_dango.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuna_chochin.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_nobori_sake_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_sake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_nobori_sake.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_sake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_sake_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_sake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_sake.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_sake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tsuri_oke.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_kome_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kome_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_kome.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kome.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_cha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_cha.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_cha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_aka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noki_chochin_shiro.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_beni.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_kinari.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_noren_age_ai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_shitomi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_shitomi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_shitomi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_shitomi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_meshi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_geya_dango_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_dango_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_geya_dango.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_geya_dango.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_bangasa_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_bangasa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_bangasa.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_bangasa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_kashi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taruzumi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_sake_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_sake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_sake.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_sake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_beni_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_beni_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_beni.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_beni.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_cha_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_cha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_cha.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_cha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_taru_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taru_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_taru.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_taru.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_kanbutsu.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_dai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_dai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_dai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_dai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_ai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_ai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_ai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_ai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_seto_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_seto.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_shogi_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_shogi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_shogi.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_shogi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_maku_kinari.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_nuno.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kago_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kago_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kago.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kago.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_battari_zakka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_sake_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_sake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_sake.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_sake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_sake_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_sake_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_sake.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_sake.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_kome_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kome_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_kome.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kome.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_cha_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_cha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_cha.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_cha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_cha_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_cha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_cha.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_cha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_kanbutsu.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_kanbutsu.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_seto_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_seto.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_seto_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_seto.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_nuno.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_nuno.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_tana_zakka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/mise_kit/mesh/ms_naka_zakka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_d_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_d_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tobi_d.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tobi_d.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_c_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_c_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_c.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_c.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_b_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_b_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_b.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_b.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_a_l1.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_a_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_nobe_a.res",
+    "res://maps/village_v2/gen/market_west_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_nobe_a.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kago_tsumi_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kago_tsumi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_onobori_ichi_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_onobori_ichi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_onobori_ichi.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_onobori_ichi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_ichi_kanban_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_ichi_kanban_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_ichi_kanban.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_ichi_kanban.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_chochin_line_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_chochin_line.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_chochin_line.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_yashiro.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_ta_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ta_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_ta.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_ta.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_kawa_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_kawa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_fuda_kawa.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_fuda_kawa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_seto_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_seto.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_chochin_aka_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_aka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_chochin_aka.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_aka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_nobori_meshi_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_meshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_nobori_meshi.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_nobori_meshi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_abura_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_abura_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_abura.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_abura.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_yasumi_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_yasumi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_yasumi.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_yasumi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_kusuri_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_kusuri_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_andon_kusuri.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_andon_kusuri.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_kanban_kusuri.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_chochin_shiro_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_shiro_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_chochin_shiro.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_chochin_shiro.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hinadan_seto_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hinadan_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hinadan_seto.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hinadan_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tenbin_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tenbin_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tenbin.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tenbin.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka_l1.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka.res",
+    "res://maps/village_v2/gen/street_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/street_kit/mesh/st_hiradai_zakka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/meadow/meadow_grass.gdshader",
+    "res://maps/village_v2/gen/meadow_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/meadow/meadow_grass.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_seto.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_kanban_furugi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_nobori_tanmono.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_endai_uri_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_endai_uri_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_endai_uri.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_endai_uri.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_kago.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_mushiro_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_zakka_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_zakka_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_zakka.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_zakka.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_omocha_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_omocha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_omocha.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_omocha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_seto_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_seto_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_seto.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_seto.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_kasa_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_kasa_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_kasa.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_kasa.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_nuno_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_nuno_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_tana_nuno.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_tana_nuno.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_dango_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_dango_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_dango.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_dango.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_ame.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_meshi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_cha.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai.res",
+    "res://maps/village_v2/gen/market_p10.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/groundcover/gc_ground.gdshader",
+    "res://maps/village_v2/gen/groundcover_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/groundcover/gc_ground.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/groundcover/gc_macro.gdshader",
+    "res://maps/village_v2/gen/groundcover_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/groundcover/gc_macro.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/shrine_grove/sg_ground.gdshader",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/shrine_grove/sg_ground.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_fukuro_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fukuro_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_fukuro.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fukuro.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_akibin_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_akibin_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_akibin.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_akibin.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_furudana_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_furudana_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_furudana.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_furudana.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_sagyo_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_sagyo_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_sagyo.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_sagyo.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_ishidana_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ishidana_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_ishidana.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_ishidana.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_fuda_ma.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_hako_ishi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_bin_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_bin_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_bin.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_bin.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kinoko_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kinoko_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_kinoko.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_kinoko.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_yakuso_l1.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_yakuso_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/kiri_kit/mesh/kr_yakuso.res",
+    "res://maps/village_v2/gen/kirisame_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/kiri_kit/mesh/kr_yakuso.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_amaochi_l1.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_amaochi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_amaochi.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_amaochi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_chochin_l1.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_chochin_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_chochin.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_chochin.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_tray_l1.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_tray_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_tray.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_tray.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_fuda_l1.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_fuda_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_fuda.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_fuda.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_morijio_l1.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_morijio_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/geidon_kit/mesh/gd_morijio.res",
+    "res://maps/village_v2/gen/geidontei_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/geidon_kit/mesh/gd_morijio.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_seoi_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_seoi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_seoi.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_seoi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hako_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hako.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hako2_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako2_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_hako2.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_hako2.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_bundle_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_bundle_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_bundle.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_bundle.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_keiji_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_keiji_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_keiji.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_keiji.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_kanban_l1.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_kanban_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/suzu_kit/mesh/sz_kanban.res",
+    "res://maps/village_v2/gen/suzunaan_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/suzu_kit/mesh/sz_kanban.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_rack_l1.res",
+    "res://maps/village_v2/gen/tower_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rack_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/tower_kit/mesh/tk_rack.res",
+    "res://maps/village_v2/gen/tower_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/tower_kit/mesh/tk_rack.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_usu_l1.res",
+    "res://maps/village_v2/gen/waterside_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_usu_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_usu.res",
+    "res://maps/village_v2/gen/waterside_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_usu.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_sonae_l1.res",
+    "res://maps/village_v2/gen/waterside_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sonae_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/waterside_kit/mesh/wk_sonae.res",
+    "res://maps/village_v2/gen/waterside_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/waterside_kit/mesh/wk_sonae.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/sy_ground.gdshader",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/sy_ground.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_ishikeri_l1.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_ishikeri_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_ishikeri.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_ishikeri.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_hanshi_l1.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hanshi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_hanshi.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_hanshi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_toban_l1.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_toban_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_toban.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_toban.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_fuda_l1.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_fuda_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_fuda.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_fuda.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_getabako_l1.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_getabako_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/school_kit/mesh/sk_getabako.res",
+    "res://maps/village_v2/gen/school_yard_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/school_kit/mesh/sk_getabako.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/hg_ground.gdshader",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/hg_ground.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tsukubai_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tsukubai_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/GK_Water.tres",
+    "res://assets/village_v2/garden_kit/mesh/gk_tsukubai_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/GK_Water.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_tsukubai.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_tsukubai.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/GK_Falls.tres",
+    "res://assets/village_v2/garden_kit/mesh/gk_tsukubai.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/GK_Falls.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_bridge_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_bridge_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_bridge.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_bridge.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_oribe.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_toro_yukimi.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_sodegaki_l1.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_sodegaki_l1.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/mesh/gk_sodegaki.res",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/mesh/gk_sodegaki.res"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/GK_FallSheet.tres",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/GK_FallSheet.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/hg_falls.gdshader",
+    "res://assets/village_v2/garden_kit/GK_FallSheet.tres",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/hg_falls.gdshader"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/GK_PondWater.tres",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/GK_PondWater.tres"
+  },
+  {
+   "chain": [
+    "res://assets/village_v2/garden_kit/hg_water.gdshader",
+    "res://assets/village_v2/garden_kit/GK_PondWater.tres",
+    "res://maps/village_v2/gen/hieda_garden_p9.scn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://assets/village_v2/garden_kit/hg_water.gdshader"
+  },
+  {
+   "chain": [
+    "res://scripts/npc_activity_overlay.gd",
+    "res://maps/village_v2/activity_p10.tscn",
+    "res://maps/village_v2/village_v2.tscn"
+   ],
+   "exists": true,
+   "path": "res://scripts/npc_activity_overlay.gd"
+  }
+ ]
+}

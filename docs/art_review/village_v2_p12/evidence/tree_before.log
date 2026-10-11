@@ -1,0 +1,5 @@
+[P12TREE] 通常：load 4023／instantiate 785／add_child（同期）2524／→次 physics frame 234／+60 frame 399 ms；物理 active objects 6、collision pairs 100
+[P12TREE] サブツリー別 同期 add_child 合計 2784 ms（近似）
+[P12TREE]      2462 ms Population             節点    436 mesh    103 MM   0(0) body   53 shape    53 script  105 ["npc_population_actor.gd×51", "npc_visual.gd×51", "npc_activity_overlay.gd×1"]
+[P12TREE]        67 ms Vegetation             節点  51325 mesh  25707 MM 6351(197118) body  148 shape  6774 script    0 []
+[P12TREE]        47 ms Districts              節点  28989 mesh  19671 MM 1844(824066) body  427 shape  5052 script    0 []
