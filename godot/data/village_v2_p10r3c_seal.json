@@ -336,7 +336,7 @@
     "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
   },
   "child_seals": {
-    "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+    "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
   },
   "reseal_history": [
@@ -391,6 +391,19 @@
       "seal_file_before": "0477a9edf579b04b269d013035a4b6dee5ad00add433b7994bc17250e3c620a9",
       "approved_by": "user（P11 R2B 指示 §6）",
       "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+    },
+    {
+      "kind": "P12_W1_CHILD_CASCADE",
+      "at": "2026-10-11",
+      "child_seals": {
+        "godot/data/village_v2_p10r3b_seal.json": [
+          "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+          "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7"
+        ]
+      },
+      "seal_file_before": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+      "approved_by": "user（P12 Wave 1）",
+      "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
     }
   ]
 }

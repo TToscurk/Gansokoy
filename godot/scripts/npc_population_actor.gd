@@ -33,7 +33,7 @@ func _ready() -> void:
 	_npc = get_node_or_null("NPC")
 	_rng.seed = seed_i
 	sync_to_physics = false
-	for sa in get_tree().root.find_children("*", "SpringArm3D", true, false):
+	for sa in _scene_arms(get_tree()):
 		(sa as SpringArm3D).add_excluded_object(get_rid())
 	get_tree().node_added.connect(_on_node_added)
 	if mode != "patrol" or path_xz.size() < 2:
@@ -58,6 +58,28 @@ func _ready() -> void:
 func _on_node_added(n: Node) -> void:
 	if n is SpringArm3D:
 		(n as SpringArm3D).add_excluded_object(get_rid())
+		# 同じ frame の後続の actor が使う走査結果にも足す（frame 内キャッシュを陳腐化させない）
+		if _arms_frame == Engine.get_process_frames():
+			_arms_cache.append(n)
+
+
+## P12 Wave 1：SpringArm3D の全樹走査は 1 process frame に 1 回だけ。
+## 村の読込で 51 体が同じ frame に _ready → 以前は 87k 節点の root.find_children を 51 回（≈ 2.35 s）。
+## 同じ frame 内で後から足された SpringArm3D は、先に _ready した actor の _on_node_added が上でキャッシュへ追加する。
+static var _arms_cache: Array = []
+static var _arms_frame := -1
+
+
+static func _scene_arms(tree: SceneTree) -> Array:
+	var f := Engine.get_process_frames()
+	if f != _arms_frame:
+		_arms_cache = tree.root.find_children("*", "SpringArm3D", true, false)
+		_arms_frame = f
+	var out: Array = []
+	for a in _arms_cache:
+		if is_instance_valid(a) and (a as Node).is_inside_tree():
+			out.append(a)
+	return out
 
 
 func _anim(c: StringName) -> void:

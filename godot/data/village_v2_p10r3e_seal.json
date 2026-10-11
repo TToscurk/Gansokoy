@@ -457,9 +457,9 @@
   "docs/art_review/village_v2_p10_population/outer_r1/review/population_map.png": "74dfdb251f2f175bfa352377d0c982e37ee03ff459ce7b455334cf5c427736b7"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3d_seal.json": "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
-  "godot/data/village_v2_p10r3c_seal.json": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
-  "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+  "godot/data/village_v2_p10r3c_seal.json": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
+  "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -549,6 +549,27 @@
    "seal_file_before": "2340a216fdf62f747215fc627bbd88617d01f9f2748b10432dcf15c260282dea",
    "approved_by": "user（P11 R2B 指示 §6）",
    "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_W1_CHILD_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+     "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+     "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7"
+    ]
+   },
+   "seal_file_before": "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
+   "approved_by": "user（P12 Wave 1）",
+   "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

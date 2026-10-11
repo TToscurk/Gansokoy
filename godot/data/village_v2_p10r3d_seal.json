@@ -723,8 +723,8 @@
   "docs/art_review/village_v2_p10_population/core_r1_1/review/6_mouth_from_south_r1_vs_r1_1.jpg": "8e1e803be546300ad0343b3a44e9965af15b4c8a915e4ca3444eb93d525b46f0"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
-  "godot/data/village_v2_p10r3c_seal.json": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+  "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+  "godot/data/village_v2_p10r3c_seal.json": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -802,6 +802,23 @@
    "seal_file_before": "ab2133233bf709720b422a39e8b78e407dcdd1144b55d430a378564d1ce4acd2",
    "approved_by": "user（P11 R2B 指示 §6 limited reseal）",
    "reason": "P11 R2B TASK03：Drink を時々の動作にしたため、Idle 中の杯の非表示を許可（飲む間の非表示は従来どおり違反）。limited verifier correction、判定の緩和は Idle 相のみ。"
+  },
+  {
+   "kind": "P12_W1_CHILD_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+     "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+     "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86"
+    ]
+   },
+   "seal_file_before": "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
+   "approved_by": "user（P12 Wave 1）",
+   "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

@@ -276,8 +276,8 @@
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
-  "godot/data/village_v2_p10r3d_seal.json": "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
-  "godot/data/village_v2_p10r3e_seal.json": "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
+  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+  "godot/data/village_v2_p10r3e_seal.json": "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
   "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
  },
  "reseal_history": [
@@ -361,6 +361,23 @@
    "seal_file_before": "ad4cd54c1f4b61eb4a8603d7da3567f26a9f0450ffe7dfe0fc628f3e25e36012",
    "approved_by": "user（P11 R2B 指示 §6）",
    "reason": "P11 R2B：子封存（R3b／R3c の NPC 挙動 limited reseal）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_W1_CHILD_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
+     "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032"
+    ]
+   },
+   "seal_file_before": "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec",
+   "approved_by": "user（P12 Wave 1）",
+   "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

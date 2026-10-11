@@ -26,7 +26,7 @@
   },
   "frozen": {
     "godot/tools/village_v2_population_lib.gd": "bf01ec9c82c5e289deb8b15c712422f7a6fd5d740c865172277fcdaf0989a035",
-    "godot/scripts/npc_population_actor.gd": "f09f5b66a285b5f40db198cf3c63e7d1b039a9d66c39414c4d5358d9a7c0f5c4",
+    "godot/scripts/npc_population_actor.gd": "2038ca2bdaf63515f6f2bc6dd7b45053af444a70ad702075080a60f8239601ef",
     "godot/tools/verify_village_v2_population.gd": "f38972b656081a7b4af4b16bdc301ac9976b353d346850ccdc3156e5105a2c6e",
     "godot/tools/shot_village_v2_population.gd": "d06913d7b901c22a624761b459312fcdb3237f12c4fa08a5fca895c329520dac",
     "godot/tools/shot_village_v2_population_views.json": "d77d854fab24ee7009ede4b5a93741bbbd9bf2d9bc52a03eb0b965285f8b7128",
@@ -161,6 +161,19 @@
       "seal_file_before": "f831c6090690c72fc61281e967eb6e9fdda2100c402c1f25ca7d97774dc33b79",
       "approved_by": "user（P11 R2B 指示 §6 limited reseal）",
       "reason": "P11 R2B TASK04（使用者 2026-10-11 指示）：巡回の折返を最短弧に（rotate_toward が ±π を跨ぐと最大ほぼ 1 周回る）、振り向き中は walk clip で足踏み。人數・位置・朝向・path・mode・速度は不変。"
+    },
+    {
+      "kind": "P12_W1_SPRINGARM_SCAN_ONCE_PER_FRAME",
+      "at": "2026-10-11",
+      "frozen": {
+        "godot/scripts/npc_population_actor.gd": [
+          "f09f5b66a285b5f40db198cf3c63e7d1b039a9d66c39414c4d5358d9a7c0f5c4",
+          "2038ca2bdaf63515f6f2bc6dd7b45053af444a70ad702075080a60f8239601ef"
+        ]
+      },
+      "seal_file_before": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+      "approved_by": "user（P12 Wave 1 決定：bounded profiling で明確な冗長処理が見つかれば低リスク修正）",
+      "reason": "_ready の get_tree().root.find_children(SpringArm3D) 全樹走査（87k 節点・約 46 ms）を 51 体が同じ frame に繰り返していた（≈2.35 s）。1 process frame に 1 回だけ走査し結果を共有、同 frame 内で後から足された SpringArm3D は node_added でキャッシュへ追加。NPC の除外登録・挙動・人数・位置は不変（POP scene の SpringArm 檢查 PASS）。"
     }
   ]
 }

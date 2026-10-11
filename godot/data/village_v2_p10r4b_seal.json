@@ -525,11 +525,11 @@
   "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r4_seal.json": "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec",
-  "godot/data/village_v2_p10r3b_seal.json": "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
-  "godot/data/village_v2_p10r3c_seal.json": "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
-  "godot/data/village_v2_p10r3d_seal.json": "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
-  "godot/data/village_v2_p10r3e_seal.json": "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
+  "godot/data/village_v2_p10r4_seal.json": "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9",
+  "godot/data/village_v2_p10r3b_seal.json": "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7",
+  "godot/data/village_v2_p10r3c_seal.json": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
+  "godot/data/village_v2_p10r3d_seal.json": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
+  "godot/data/village_v2_p10r3e_seal.json": "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
@@ -676,6 +676,35 @@
    "seal_file_before": "c94c7997c826ae574460d471ecd3d6d5aa7af9bb3a05fde631f65c888e7815d1",
    "approved_by": "user（P11 R2D-Fix）",
    "reason": "子封存 P8 の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P12_W1_CHILD_CASCADE",
+   "at": "2026-10-11",
+   "child_seals": {
+    "godot/data/village_v2_p10r4_seal.json": [
+     "ec33798003e658401b3ed748125b936bdce5f0c361ba6d1b48d1e8718df20dec",
+     "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9"
+    ],
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "047bfe74e6b526b3fabee40df0542e03adbe1ed3cd670684719b14c92ba9b248",
+     "b52f92a7300e657020f81e3248b751c2690aedb2584271d793048943b619d3e7"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "e2a1759c63dbf05253641dcec95574d45de3b777b78128c018256ceec942bfcb",
+     "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86"
+    ],
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "fd4f83c31d1a665190be0b42b3dea1038fea88c513b7be4685fc5b35a62d9089",
+     "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "35b1050b41fc6e89473d4673dedc236f83c8fa97b1e7a39f23a852936d334cba",
+     "f58e6fc33dcf74bd874d0b0519022d5ab669d3237177b4dc16b37601c679a032"
+    ]
+   },
+   "seal_file_before": "39a3e77933f46b3d6c605501fae3b86bd24816c25784bc1f2968a7c74a55e5bb",
+   "approved_by": "user（P12 Wave 1）",
+   "reason": "子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }
