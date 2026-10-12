@@ -3,9 +3,9 @@ extends Node
 ##   エディタ：このシーン res://maps/village_v2/p13_preview.tscn を開いて F6（Run Current Scene）
 ##   命令列：Godot --path godot res://maps/village_v2/p13_preview.tscn
 ## 動作：main.tscn を current_scene として起動 → 人間之里 V2 を載せる → 主街の審圖站位へ → ArchPilotP13 overlay を村の根に追加。
-## 操作：F8＝プレビュー ON／OFF（OFF で元の建物・門前帶へ戻る）、F7＝主街 → MKT_010 前 → MKT_006 前 → 農家 A1／A2 → 主街 の順に瞬間移動。
+## P13 W2 で主街 39 棟・農家は正式場景へ統合済み（ArchPilotP13 overlay は退役、もう掛けない）。
+## 操作：F7＝主街 → MKT_010 前 → MKT_006 前 → 農家 A1／A2 → 主街 の順に瞬間移動。
 ## 碰撞・NPC・道路・農田は変更しない（overlay は見た目だけ、農家預覽は碰撞なし）。
-const OVERLAY := "res://maps/village_v2/gen/arch_pilot_p13.scn"
 const STOPS := [
 	["主街（北望）", Vector2(241.0, 44.0), Vector2(262.0, -20.0)],
 	["MKT_010 蔵造住居の前", Vector2(262.4, -13.2), Vector2(269.1, -10.9)],
@@ -14,7 +14,6 @@ const STOPS := [
 ]
 
 var main: Node
-var ov: Node3D
 var stop := 0
 
 
@@ -37,8 +36,6 @@ func _boot() -> void:
 		for i in 60:
 			await get_tree().process_frame
 	var mr: Node3D = main.get("map_root")
-	ov = (load(OVERLAY) as PackedScene).instantiate()
-	mr.add_child(ov)
 	for nm in ["Debug", "Portals", "QuestAnchors"]:
 		var n := mr.get_node_or_null(nm) as Node3D
 		if n:
@@ -48,29 +45,7 @@ func _boot() -> void:
 		dn.call("set_hour", 10.0)
 		dn.set("flowing", false)
 	await _go(0)
-	print("[P13 preview] 起動完了：F8＝預覽 ON／OFF、F7＝次の站位")
-	if "--p13-selftest" in OS.get_cmdline_user_args():
-		await _selftest()
-
-
-## 命令列 --p13-selftest：ON／OFF 切替で元 Kit と Pilot が同時表示されないこと、OFF で元の可視へ戻ることを確認して終了
-func _selftest() -> void:
-	var mr: Node3D = main.get("map_root")
-	var tg: PackedStringArray = ov.get("targets")
-	var bad := 0
-	for on in [true, false, true, false, true]:
-		ov.set("enabled", on)
-		await get_tree().process_frame
-		for p in tg:
-			var k := mr.get_node(NodePath(p)).get_node("Kit") as Node3D
-			var h := ov.get_node(String(p).get_file()) as Node3D
-			if k.visible == on or h.visible != on:
-				bad += 1
-		for p in ov.get("hide_nodes"):
-			if (mr.get_node(NodePath(p)) as Node3D).visible == on:
-				bad += 1
-	print("[P13 preview] selftest：切替 5 回、二重表示／戻り漏れ %d（棟 %d・隠す門前帶 %d）" % [bad, tg.size(), (ov.get("hide_nodes") as PackedStringArray).size()])
-	get_tree().quit(1 if bad > 0 else 0)
+	print("[P13 preview] 起動完了：F7＝次の站位（正式場景）")
 
 
 func _go(i: int) -> void:
@@ -92,11 +67,8 @@ func _go(i: int) -> void:
 
 
 func _unhandled_input(e: InputEvent) -> void:
-	if not (e is InputEventKey and e.pressed and not e.echo) or ov == null:
+	if not (e is InputEventKey and e.pressed and not e.echo):
 		return
 	match (e as InputEventKey).physical_keycode:
-		KEY_F8:
-			ov.set("enabled", not bool(ov.get("enabled")))
-			print("[P13 preview] 預覽 %s" % ("ON" if ov.get("enabled") else "OFF（原建物）"))
 		KEY_F7:
 			_go(stop + 1)

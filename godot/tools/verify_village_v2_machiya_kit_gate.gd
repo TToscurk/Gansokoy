@@ -27,6 +27,7 @@ extends SceneTree
 ##   material_offpilot（登記変体を Pilot 外の建物へ）、material_wrongbase（Pilot 建物の木の面に漆喰の変体）、material_badsha（登記表の sha と不一致の変体）。
 
 const KLib := preload("res://tools/village_v2_machiya_kit_lib.gd")
+const ML := preload("res://tools/village_v2_p13_mainstreet_lib.gd")   # P13 W2：主街 39 棟は設計表の実効紀錄で検証（P4 紀錄の上書き：妻入・型）
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
 const TLib := preload("res://tools/village_v2_terrain_lib.gd")
 const PLib := preload("res://tools/village_v2_parcel_lib.gd")
@@ -131,7 +132,7 @@ func _run() -> void:
 	GB = JSON.parse_string(FileAccess.get_file_as_string(GREYBOX))
 	for b: Dictionary in GB["buildings"]:
 		if String(b["kind"]) == "machiya":
-			recs.append(b)
+			recs.append(ML.effective_rec(b))
 	if not FileAccess.file_exists(ENTRY):
 		_p("FAIL 缺 %s（先跑 village_v2_machiya_kit_prefab.gd）" % ENTRY)
 		quit(1)
@@ -182,7 +183,7 @@ func _setup(parent: Node, vroot: Node3D = null) -> void:
 			if old != null:
 				body.remove_child(old)
 				old.free()
-		kits[b["id"]] = KLib.apply(body, b, lib, embed)
+		kits[b["id"]] = ML.apply(body, b, lib, embed)
 	await physics_frame
 	await physics_frame
 	space = v.get_world_3d().direct_space_state

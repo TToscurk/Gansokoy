@@ -525,7 +525,7 @@
   "docs/art_review/village_v2_p10_props/human_use_exp_b1/review/zoneC_overview_npcoff.jpg": "84b06d3c04e09f0e2cc0f89fe7d244fdfa98ff3a170cb9eee8e325a468acfd4c"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r4_seal.json": "efd63348cad48280756409581c68142a18f039aecd878308e84c7ede0c114b14",
+  "godot/data/village_v2_p10r4_seal.json": "c0e6237a6013a915719b92c671990f49a93ff33f3157a887a3deb4c1bf7f38f3",
   "godot/data/village_v2_p10r3b_seal.json": "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
   "godot/data/village_v2_p10r3c_seal.json": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
   "godot/data/village_v2_p10r3d_seal.json": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
@@ -533,7 +533,7 @@
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
-  "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+  "godot/data/village_v2_p10r2_seal.json": "1eaa5172743a443c2a7bdaed38e9b7fec21c27582abbeb3f69c19246b876b473",
   "godot/data/village_v2_p9_final_seal.json": "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae",
   "godot/data/village_v2_p9r53_seal.json": "dfbd58370533cd68e02038390748aa49979c5f19f24e29ebb78214f93cfe38e2",
   "godot/data/village_v2_p9r54_seal.json": "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a",
@@ -772,6 +772,23 @@
    "seal_file_before": "035047768b435eb8e8f37d68a3c6c2348ce5e5de72df430f6bf8b81b987f9738",
    "approved_by": "user（P12 FINAL CLOSURE）",
    "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P13_W2_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p10r4_seal.json": [
+     "efd63348cad48280756409581c68142a18f039aecd878308e84c7ede0c114b14",
+     "c0e6237a6013a915719b92c671990f49a93ff33f3157a887a3deb4c1bf7f38f3"
+    ],
+    "godot/data/village_v2_p10r2_seal.json": [
+     "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+     "1eaa5172743a443c2a7bdaed38e9b7fec21c27582abbeb3f69c19246b876b473"
+    ]
+   },
+   "seal_file_before": "1cafb31675de0b290ca88feef007283c761f431be48e27b8e47e7f3c8399ebbc",
+   "approved_by": "user（P13 WAVE 2）",
+   "reason": "P13 W2：子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ],
  "approved_position_overrides": {

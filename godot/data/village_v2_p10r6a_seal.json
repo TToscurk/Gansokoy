@@ -5,7 +5,21 @@
  "approved_date": "2026-10-09",
  "approval_source": "使用者 2026-10-09 P10 R5–R6 ROUND 3 FINAL ART DIRECTION：「以下項目正式 ART_APPROVED：R5c Boundary Closure、R5a Road Base 416 m Pilot、R6a Kit Material 24 Buildings Pilot、R4c Straw Geometry Pilot」「允許開始這四項的正式整合及必要 limited reseal」「目前只核准 Pilot 範圍，不代表已批准全村套用」",
  "scope": "Pilot 範囲のみ（全村套用は未承認）",
- "reseal_history": [],
+ "reseal_history": [
+  {
+   "kind": "P13_W2_LIMITED",
+   "at": "2026-10-12",
+   "frozen": {
+    "godot/tools/verify_village_v2_machiya_kit_gate.gd": [
+     "61f8be4d080672faf24a0a0687196dc3ad29afcd873e7d214ef53a1ceeac1d08",
+     "b2237fdf343d9271d6d2d991ead0c9cd429155512db531a15dcaf26a0339864f"
+    ]
+   },
+   "seal_file_before": "1beb4538cc2091e6a11ea9945ce33ee6fa938323669e1eda757b86bb7ff547ec",
+   "approved_by": "user（P13 WAVE 2）",
+   "reason": "P13 W2（使用者 2026-10-12 主街 39 棟 APPROVED）：主街 39 棟は data/village_v2_p13_mainstreet.json の実効紀錄（妻入・型）で検証（ML.effective_rec／ML.apply）。判定基準・容差・項目は不変。187 棟 --regress 0 失敗。"
+  }
+ ],
  "phase": "P10 R6a Kit Material 24 Buildings Pilot（方案 A：町家 Kit 專用校正材質＋區域調色盤 14 変体・登記表；漆喰 0.70・木 0.75・基石 0.65・Kit atlas 分類；瓦不校正）",
  "overlay": "res://maps/village_v2/gen/albedo_pilot_p10.scn",
  "node": "AlbedoPilotP10",
@@ -22,7 +36,7 @@
   "godot/maps/village_v2/gen/albedo_pilot_p10.scn": "d77c13b2cd447e6b55093d5f5794b1d5cc2cdfc728add3ecb56967c37390b483",
   "godot/tools/village_v2_kit_material_lib.gd": "f31f1b83a9782f895d63692e90c6d9f2f1522a4a4ce40fdb5ee3755b3d23426a",
   "godot/tools/verify_village_v2_kit_material.gd": "f00ff6ec501f984780bc0a38add84f9189ae1e8e627c6f1cb751c3c9b0d7c57a",
-  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "61f8be4d080672faf24a0a0687196dc3ad29afcd873e7d214ef53a1ceeac1d08",
+  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "b2237fdf343d9271d6d2d991ead0c9cd429155512db531a15dcaf26a0339864f",
   "godot/tools/shot_village_v2_rehab_alb_views.json": "6e5719922436e47ee4eafe12305bf3c5659920aa525900e980c27db6f3da8bcc",
   "godot/tools/village_v2_rehab_seal.gd": "ea3541291b0a1bddc0525d3053fb61beddb2b8bc70c91b16b0d5e3ce8af8e106",
   "tools/seal_p10_rehab.py": "11bb5392dd4c26a2863f1f2a238c7edd40b92101b86a112725550af05fd34054",

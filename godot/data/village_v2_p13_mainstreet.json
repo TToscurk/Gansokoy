@@ -1,0 +1,759 @@
+{
+ "_note": "P13 W2（使用者 2026-10-12 ART 方向承認）主街 39 棟の正式設計表。P4 灰盒紀錄（greybox.json）は変更しない——ここが P4 紀錄への上書き（妻入・型）と Kit 風格計畫への上書きの唯一の来源。tools/village_v2_p13_mainstreet_lib.gd が読み、gen_village_v2.gd と verify_village_v2_machiya_kit_gate.gd が同じ実効紀錄を使う。生成：tools/p13/design_mainstreet.py。",
+ "phase": "P13W2",
+ "buildings": [
+  {
+   "id": "B_P_MKT_001",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0,
+    1.0
+   ],
+   "street_items": [
+    "mk_tenbin",
+    "tk_okeyama"
+   ],
+   "role": "shop",
+   "cat": "魚屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_002",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0,
+    1.0
+   ],
+   "street_items": [
+    "st_wara",
+    "sk_teoke"
+   ],
+   "role": "shop",
+   "cat": "履物屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_003",
+   "district": "Market",
+   "tsuma": true,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "sk_bench",
+    "gd_taru",
+    "st_andon_meshi",
+    "st_nobori_meshi",
+    "st_chochin_aka"
+   ],
+   "role": "shop",
+   "cat": "妻入りの店（角地・厨子・飯屋）",
+   "pl": {
+    "up_period": 0,
+    "theme": "mixed",
+    "up": "mushi",
+    "sign": "side",
+    "kemuri": false
+   }
+  },
+  {
+   "id": "B_P_MKT_004",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "st_hinadan_seto",
+    "mk_kanban_seto"
+   ],
+   "role": "shop",
+   "cat": "瀬戸物屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_005",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "tk_okeyama"
+   ],
+   "role": "large",
+   "cat": "大店（両端本卯建・小山牆・屋根看板）",
+   "pl": {
+    "up_period": 0,
+    "roof": "low",
+    "udh": [
+     -1.0,
+     1.0
+    ],
+    "dormer": true,
+    "sign": "roof",
+    "theme": "bengara",
+    "up": "winb",
+    "sb": false
+   }
+  },
+  {
+   "id": "B_P_MKT_006",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_zakka",
+    "sk_teoke"
+   ],
+   "role": "workshop",
+   "cat": "竹籠製作兼販売の工房（開け放し・煙出し・板庇）",
+   "pl": {
+    "up_period": 0,
+    "theme": "open",
+    "kemuri": true,
+    "his_wood": true,
+    "roof": "offb2",
+    "sign": "side",
+    "up": "mushis",
+    "cut": true,
+    "rec": "none",
+    "rec_d": 0.0
+   },
+   "no_noren": true
+  },
+  {
+   "id": "B_P_MKT_007",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_kanban_kusuri",
+    "st_andon_kusuri"
+   ],
+   "role": "shop",
+   "cat": "二階の薬屋（棟偏後・板庇・袖看板）",
+   "pl": {
+    "up_period": 0,
+    "roof": "offb",
+    "sb": false,
+    "his_wood": true,
+    "theme": "lattice",
+    "up": "win",
+    "sign": "side",
+    "udh": [],
+    "dormer": false
+   }
+  },
+  {
+   "id": "B_P_MKT_008",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "kr_zaimoku"
+   ],
+   "role": "craft_home",
+   "cat": "大工の家（平屋・緩勾配・煙出し）",
+   "pl": {
+    "up_period": 0,
+    "roof": "flat",
+    "kemuri": true,
+    "kiri": true,
+    "theme": "koshib",
+    "cut": true,
+    "udh": [],
+    "dormer": false
+   }
+  },
+  {
+   "id": "B_P_MKT_009",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_andon_yasumi"
+   ],
+   "role": "shop",
+   "cat": "二階退縮の茶屋（片卯建）",
+   "pl": {
+    "up_period": 0,
+    "roof": "low",
+    "sb": true,
+    "udh": [
+     1.0
+    ],
+    "theme": "lattice",
+    "up": "amado"
+   }
+  },
+  {
+   "id": "B_P_MKT_010",
+   "district": "Market",
+   "tsuma": true,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [],
+   "role": "residence",
+   "cat": "蔵造りの住居（妻入・閉じた正面）",
+   "pl": {
+    "up_period": 0,
+    "fin": 0,
+    "tone": 2,
+    "theme": "amado",
+    "up": "mushi",
+    "kiri": true,
+    "inuyarai": true,
+    "kemuri": false,
+    "sign": ""
+   }
+  },
+  {
+   "id": "B_P_MKT_011",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "st_hiradai_zakka",
+    "sk_teoke",
+    "tk_okeyama"
+   ],
+   "role": "shop",
+   "cat": "荒物屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_012",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "gd_taruzumi",
+    "st_kanban_sake",
+    "st_nobori_sake",
+    "st_chochin_shiro"
+   ],
+   "role": "large",
+   "cat": "大店（酒屋・両端本卯建・小山牆・屋根看板）",
+   "pl": {
+    "up_period": 0,
+    "udh": [
+     -1.0,
+     1.0
+    ],
+    "dormer": true,
+    "sign": "roof",
+    "theme": "bengara",
+    "roof": "offf"
+   }
+  },
+  {
+   "id": "B_P_MKT_013",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0,
+    1.0
+   ],
+   "street_items": [
+    "st_kanban_kusuri",
+    "st_andon_kusuri"
+   ],
+   "role": "shop",
+   "cat": "薬屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_014",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "st_andon_yasumi"
+   ],
+   "role": "shop",
+   "cat": "茶屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_015",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_yasai",
+    "kr_hakozumi",
+    "mk_kanban_yasai",
+    "mk_nobori_yasai",
+    "tk_okeyama"
+   ],
+   "role": "large",
+   "cat": "大店（八百屋・両端本卯建・小山牆・屋根看板）",
+   "pl": {
+    "up_period": 0,
+    "udh": [
+     -1.0,
+     1.0
+    ],
+    "dormer": true,
+    "sign": "roof",
+    "theme": "lattice",
+    "roof": "low"
+   }
+  },
+  {
+   "id": "B_P_MKT_016",
+   "district": "Market",
+   "tsuma": true,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "mk_kame",
+    "st_kanban_abura"
+   ],
+   "role": "shop",
+   "cat": "妻入りの油屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_017",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0,
+    1.0
+   ],
+   "street_items": [
+    "gd_taruzumi",
+    "st_kanban_sake",
+    "st_nobori_sake",
+    "st_chochin_shiro"
+   ],
+   "role": "shop",
+   "cat": "酒屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_018",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "sz_hachi",
+    "sz_hachi",
+    "tk_okeyama"
+   ],
+   "role": "residence",
+   "cat": "厨子二階の住宅（平屋から上げる・虫籠窓）",
+   "pl": {
+    "up_period": 0,
+    "up": "mushi",
+    "theme": "koshi",
+    "kemuri": true,
+    "roof": "std"
+   },
+   "type": "zushi",
+   "roof_collision": true
+  },
+  {
+   "id": "B_P_MKT_019",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_zakka",
+    "sk_teoke"
+   ],
+   "role": "shop",
+   "cat": "質素な荒物屋（2F 退縮・板庇・棟偏後）",
+   "pl": {
+    "up_period": 0,
+    "roof": "offb2",
+    "sb": true,
+    "his_wood": true,
+    "theme": "open",
+    "up": "amado"
+   }
+  },
+  {
+   "id": "B_P_MKT_020",
+   "district": "Market",
+   "tsuma": true,
+   "visible_sides": [],
+   "street_items": [
+    "kr_okeyama"
+   ],
+   "role": "workshop",
+   "cat": "妻入りの豆腐屋（作業場・煙出し）",
+   "pl": {
+    "up_period": 0,
+    "theme": "open",
+    "kemuri": true,
+    "his_wood": true,
+    "up": "mushis"
+   }
+  },
+  {
+   "id": "B_P_MKT_021",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "sz_hachi",
+    "st_kanban_kusuri",
+    "st_andon_kusuri"
+   ],
+   "role": "large",
+   "cat": "大店の薬種問屋（2F 退縮・片卯建・袖看板）",
+   "pl": {
+    "up_period": 0,
+    "roof": "offf",
+    "udh": [
+     -1.0
+    ],
+    "sb": true,
+    "sign": "side",
+    "theme": "bengara",
+    "up": "wins"
+   }
+  },
+  {
+   "id": "B_P_MKT_022",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "gd_shogi",
+    "st_andon_yasumi",
+    "mk_nobori_cha"
+   ],
+   "role": "shop",
+   "cat": "茶屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_023",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "tk_okeyama",
+    "mk_chochin_line",
+    "st_ichi_kanban",
+    "st_onobori_ichi"
+   ],
+   "role": "shop",
+   "cat": "店",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_024",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "mk_kame",
+    "kr_okeyama",
+    "st_kanban_abura"
+   ],
+   "role": "shop",
+   "cat": "油屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_025",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "mk_tenbin",
+    "kr_okeyama"
+   ],
+   "role": "shop",
+   "cat": "魚屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_026",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_wara",
+    "sk_teoke"
+   ],
+   "role": "shop",
+   "cat": "履物屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_027",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_andon_meshi"
+   ],
+   "role": "shop",
+   "cat": "飯屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_028",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "sz_hachi",
+    "sz_hachi"
+   ],
+   "role": "residence",
+   "cat": "仕舞屋（住居・平入）",
+   "pl": {
+    "up_period": 0,
+    "theme": "koshib",
+    "kiri": true,
+    "inuyarai": true,
+    "sign": "",
+    "kemuri": false
+   }
+  },
+  {
+   "id": "B_P_MKT_029",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [],
+   "role": "shop",
+   "cat": "店",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_030",
+   "district": "Market",
+   "tsuma": true,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "st_hinadan_seto"
+   ],
+   "role": "shop",
+   "cat": "妻入りの瀬戸物屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MKT_031",
+   "district": "Market",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "st_hiradai_kashi",
+    "mk_kanban_dango",
+    "tk_okeyama"
+   ],
+   "role": "large",
+   "cat": "大店（菓子屋・両端本卯建・小山牆・屋根看板）",
+   "pl": {
+    "up_period": 0,
+    "udh": [
+     -1.0,
+     1.0
+    ],
+    "dormer": true,
+    "sign": "roof",
+    "theme": "lattice",
+    "roof": "low"
+   }
+  },
+  {
+   "id": "B_P_MXC_001",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [],
+   "role": "shop",
+   "cat": "店",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MXC_002",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_kashi",
+    "sz_stool",
+    "mk_kanban_dango",
+    "st_nobori_meshi",
+    "st_chochin_aka"
+   ],
+   "role": "shop",
+   "cat": "菓子屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MXC_003",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [
+    -1.0
+   ],
+   "street_items": [
+    "kr_okeyama",
+    "sk_teoke"
+   ],
+   "role": "shop",
+   "cat": "豆腐屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MXC_004",
+   "district": "MixedCommercial",
+   "tsuma": true,
+   "visible_sides": [
+    -1.0,
+    1.0
+   ],
+   "street_items": [
+    "sz_hachi",
+    "sk_tensui"
+   ],
+   "role": "residence",
+   "cat": "仕舞屋（住居・妻入）",
+   "pl": {
+    "up_period": 0,
+    "theme": "amado",
+    "kiri": true,
+    "inuyarai": true,
+    "sign": "",
+    "kemuri": false
+   }
+  },
+  {
+   "id": "B_P_MXC_005",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [],
+   "role": "large",
+   "cat": "大店（質屋・両端本卯建・小山牆・屋根看板）",
+   "pl": {
+    "up_period": 0,
+    "udh": [
+     -1.0,
+     1.0
+    ],
+    "dormer": true,
+    "sign": "roof",
+    "theme": "bengara",
+    "roof": "offf"
+   }
+  },
+  {
+   "id": "B_P_MXC_006",
+   "district": "MixedCommercial",
+   "tsuma": true,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_kashi",
+    "mk_kanban_dango"
+   ],
+   "role": "shop",
+   "cat": "妻入りの菓子屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MXC_007",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [],
+   "street_items": [
+    "st_hiradai_yasai",
+    "kr_hakozumi",
+    "mk_kanban_yasai",
+    "mk_nobori_yasai"
+   ],
+   "role": "shop",
+   "cat": "八百屋",
+   "pl": {
+    "up_period": 0
+   }
+  },
+  {
+   "id": "B_P_MXC_008",
+   "district": "MixedCommercial",
+   "tsuma": false,
+   "visible_sides": [
+    1.0
+   ],
+   "street_items": [
+    "kr_okeyama",
+    "sk_teoke"
+   ],
+   "role": "shop",
+   "cat": "豆腐屋",
+   "pl": {
+    "up_period": 0
+   }
+  }
+ ]
+}

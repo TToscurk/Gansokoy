@@ -275,7 +275,7 @@
   "godot/data/village_v2_p9_final_seal.json": "59e2561fc7df67a7794d583a9fa8820f67fb5a4382a06cfcceb661477df945ae",
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
-  "godot/data/village_v2_p10r2_seal.json": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+  "godot/data/village_v2_p10r2_seal.json": "1eaa5172743a443c2a7bdaed38e9b7fec21c27582abbeb3f69c19246b876b473",
   "godot/data/village_v2_p10r3d_seal.json": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
   "godot/data/village_v2_p10r3e_seal.json": "891fa76da0df6966ae1cadb212aa6f4bfc69da5a9c22a156d61b5e154d6c299c",
   "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
@@ -399,6 +399,19 @@
    "seal_file_before": "092de1c51ceb9d00d2f94dd71d5cff38dc445b1b2b4ea94f428be8a273b5aca9",
    "approved_by": "user（P12 FINAL CLOSURE）",
    "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P13_W2_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p10r2_seal.json": [
+     "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+     "1eaa5172743a443c2a7bdaed38e9b7fec21c27582abbeb3f69c19246b876b473"
+    ]
+   },
+   "seal_file_before": "efd63348cad48280756409581c68142a18f039aecd878308e84c7ede0c114b14",
+   "approved_by": "user（P13 WAVE 2）",
+   "reason": "P13 W2：子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

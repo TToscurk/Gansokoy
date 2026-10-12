@@ -21,7 +21,7 @@
   "godot/assets/village_v2/street_kit/street_kit_manifest.json": "4d266668e52e5934998d2f4d7807f4afd7b791d3ec7cfa6e43b7eeb3eb41a487",
   "godot/assets/village_v2/street_kit/ST_Street.tres": "455c7f88e582e27c520fb4b66121fd0703a83d0ddf012641a11dec159161c064",
   "godot/assets/village_v2/street_kit/src/modules_blender.json": "97c6bdaceb332c27780f3552f2d249d8f38284cf7812fbe044a32c4d82e485dc",
-  "godot/maps/village_v2/gen/street_p10.scn": "309284c0c8ebccf2afe5207c0a4fe480220fd9cdeb7f6af1cff7cf33e6f1bc0e",
+  "godot/maps/village_v2/gen/street_p10.scn": "bcf7e2757314bb014273e269c7ec26b87bcc37d4955c437232a2ca7c783eef58",
   "godot/tools/shot_village_v2_street_views.json": "5accb8eccab0bb2f01c162a4befab01d504fe263fb1927b73663224b9be9d51d",
   "godot/tools/village_v2_text_facing_lib.gd": "72a0585ed1701e36a8879327a50a9699288e91b043d84773ead52d110ef0a94e",
   "godot/tools/audit_village_v2_text_facing.gd": "6bc31dd869cf0087033bbb0ddff255175bdd716e62825006b9d46ca9cd9b4d5e",
@@ -116,5 +116,20 @@
   "text_facing/mw_seal.log": "7cd550b41be6d6e1a48cd551936ab08f9687dd408353b6143300e0726d358330",
   "text_facing/street_plan.log": "81a03c41f962ac1f371bec378e148a141c339e3f37c2d7521d36a36df852b2f6",
   "text_facing/street_scene.log": "4e5abcc355abd1257ff6007ce58905138d9031f373d2aa9775552dda37446653"
- }
+ },
+ "reseal_history": [
+  {
+   "kind": "P13_W2_LIMITED",
+   "at": "2026-10-12",
+   "frozen": {
+    "godot/maps/village_v2/gen/street_p10.scn": [
+     "309284c0c8ebccf2afe5207c0a4fe480220fd9cdeb7f6af1cff7cf33e6f1bc0e",
+     "bcf7e2757314bb014273e269c7ec26b87bcc37d4955c437232a2ca7c783eef58"
+    ]
+   },
+   "seal_file_before": "547d69fb14fa34c07a2958f9980d248099a629b2523175856862af2430a00a57",
+   "approved_by": "user（P13 WAVE 2）",
+   "reason": "P13 W2（使用者 2026-10-12 授權 TASK 2）：MKT_006＝竹籠製作兼販売の工房。055_sk_teoke → 055_st_wara（筵・材料束・編みかけ・腰掛け）＋碰撞 1.4×1.4×0.9 に差し替え。054 荒物平台（販売）は保持。他の節點・anchors 不変（fix_street_mkt006.gd の自己検査：MKT_006 以外 0）。"
+  }
+ ]
 }

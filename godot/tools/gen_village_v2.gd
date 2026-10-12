@@ -36,6 +36,7 @@ const PLib := preload("res://tools/village_v2_parcel_lib.gd")
 const GLib := preload("res://tools/village_v2_greybox_lib.gd")
 const HLib := preload("res://tools/village_v2_hero_lib.gd")
 const KLib := preload("res://tools/village_v2_machiya_kit_lib.gd")
+const ML := preload("res://tools/village_v2_p13_mainstreet_lib.gd")   # P13 W2：主街 39 棟の正式造型（data/village_v2_p13_mainstreet.json）
 const RLib := preload("res://tools/village_v2_riverbank_lib.gd")
 const LAYOUT := "res://maps/village_v2/layout_v2.json"
 const GEN := "res://maps/village_v2/gen/"
@@ -2239,10 +2240,19 @@ func _kits() -> void:
 		if body == null:
 			push_error("[v2] P6 Kit：找不到灰盒 %s" % b["id"])
 			continue
-		var kit := KLib.apply(body, b, lib, embed)
+		# P13 W2：主街 39 棟は ML（設計表の上書き）で組む。型を上げた棟（MKT_018 厨子）は碰撞箱も実効の簷へ。
+		var kit := ML.apply(body, b, lib, embed)
+		var rb := ML.effective_rec(b)
+		if float(rb["eave_m"]) != float(b["eave_m"]):
+			var cs := body.get_node("Shape") as CollisionShape3D
+			var sh := (cs.shape as BoxShape3D).duplicate() as BoxShape3D
+			var bot := float(b["ground_lo"]) - embed - float(b["base_h"])
+			sh.size.y = float(rb["eave_m"]) - bot
+			cs.shape = sh
+			cs.position.y = (float(rb["eave_m"]) + bot) * 0.5
 		tris += KLib.lod_tris(kit, 0)
 		# P6 R4 門前帶（排水溝／犬走り／踏石／入口前地面／牆腳／門前小台階／店前過渡）：牆線到路緣，高度取最終地形網格
-		var fr := KLib.frontage(body, b, lib, kit, func(p: Vector2) -> float: return _hgrid(p.x, p.y))
+		var fr := KLib.frontage(body, ML.effective_rec(b), lib, kit, func(p: Vector2) -> float: return _hgrid(p.x, p.y))
 		tris += KLib.lod_tris(fr, 0)
 		n += 1
 	print("[v2] P6 町家 Kit＋門前帶 套用 %d 棟（LOD0 合計 %d 三角面）" % [n, tris])
