@@ -1,0 +1,13 @@
+[W4S] boot 9327 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W4S] mode=r8 overlay=あり enabled=false
+SHOT mag_ab_on_s92_0
+[W4S] mag_ab s=92.0 玩家 (263.0025, 31.68052, -213.2922)：LandmarkParcelLines OFF → 56 px／ON → 47732 px
+SHOT mag_ab_on_s96_0
+[W4S] mag_ab s=96.0 玩家 (260.998, 32.53392, -216.7535)：LandmarkParcelLines OFF → 112 px／ON → 43260 px
+SHOT mag_ab_on_s97_6
+[W4S] mag_ab s=97.6 玩家 (260.2042, 33.09463, -218.1427)：LandmarkParcelLines OFF → 280 px／ON → 49708 px
+SHOT mag_ab_on_s99_0
+[W4S] mag_ab s=99.0 玩家 (259.5096, 33.91433, -219.3583)：LandmarkParcelLines OFF → 500 px／ON → 43564 px
+SHOT mag_ab_on_s100_0
+[W4S] mag_ab s=100.0 玩家 (259.0134, 34.16616, -220.2265)：LandmarkParcelLines OFF → 872 px／ON → 37064 px
+[DONE]

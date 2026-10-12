@@ -1,0 +1,20 @@
+[W4S] boot 9659 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W4S] mode=r8 overlay=なし
+SHOT top_dn_s96
+[W4S]   top_dn_s96 洋紅画素 112
+[W4S] trail 経路で村を読み直した（ReviewStart の hide_debug は効いていない）：map_root=@Node3D@119
+SHOT mag_trail_s98
+[W4S] trail 経路 s=97.6：洋紅画素 50180
+[W4S]   Lighting を隠す → 292（寄与 49888）
+[W4S]     Lighting/天象系統 を隠す → 260（寄与 49920）
+[W4S]       Lighting/天象系統/太陽 を隠す → 252（寄与 49928）
+[W4S]   Districts を隠す → 368（寄与 49812）
+[W4S]     Districts/LandmarkParcelLines を隠す → 320（寄与 49860）
+SHOT mag_trail_s99
+[W4S] trail 経路 s=99.0：洋紅画素 44200
+[W4S]   Lighting を隠す → 500（寄与 43700）
+[W4S]     Lighting/天象系統 を隠す → 472（寄与 43728）
+[W4S]       Lighting/天象系統/太陽 を隠す → 436（寄与 43764）
+[W4S]   Districts を隠す → 588（寄与 43612）
+[W4S]     Districts/LandmarkParcelLines を隠す → 532（寄与 43668）
+[DONE]

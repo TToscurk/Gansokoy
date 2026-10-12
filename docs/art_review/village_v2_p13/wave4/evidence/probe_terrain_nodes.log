@@ -1,0 +1,7 @@
+[W4N] Terrain/MainTerrain｜頂点 55539・三角形 107676・AABB (0,-340)–(560,220) y -1–49｜ground_p10_pilot.gdshader｜←参道を含む
+[W4N] Terrain/NorthHill｜頂点 5895・三角形 11396・AABB (172,-322)–(376,-158) y -1–34｜ground_p10_pilot.gdshader｜←参道を含む
+[W4N] Terrain/FarmlandTerrain｜頂点 13703・三角形 26800・AABB (322,-144)–(554,144) y -1–2｜ground_p10_pilot.gdshader｜
+[W4N] Terrain/RiverTerrain｜頂点 7633・三角形 13634・AABB (66,-340)–(560,220) y -4–28｜ground_p10_pilot.gdshader｜←参道を含む
+[W4N] Terrain 以下の MeshInstance3D 合計 4
+[W4N] TerrainCollision shape：ConcavePolygonShape3D
+[W4N]   faces 159506 個の三角形

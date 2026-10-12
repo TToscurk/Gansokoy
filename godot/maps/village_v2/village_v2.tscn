@@ -1123,6 +1123,7 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sdo_d910_e54_c2.res" id="p13w2_13"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/f1_mado_91_h29.res" id="p13w2_14"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/farmstead_p13.scn" id="p13w2_farmstead"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/sando_pilot_w4_p13.scn" id="p13w4_sando_pilot"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -144244,3 +144245,5 @@ script = ExtResource("p10r3d_act")
 script = ExtResource("p10r3e_act")
 
 [node name="FarmsteadP13" parent="." instance=ExtResource("p13w2_farmstead")]
+
+[node name="SandoPilotW4P13" parent="." instance=ExtResource("p13w4_sando_pilot")]

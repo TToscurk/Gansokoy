@@ -1,0 +1,73 @@
+[W4M] village_v2 の直下の子（掛載順）：
+[W4M]   00 Lighting (Node3D)
+[W4M]   01 Terrain (Node3D)
+[W4M]   02 Water (Node3D)
+[W4M]   03 Roads (Node3D)
+[W4M]   04 Districts (Node3D)
+[W4M]   05 Landmarks (Node3D)
+[W4M]   06 QuestAnchors (Node3D)
+[W4M]   07 Vegetation (Node3D)
+[W4M]   08 Props (Node3D)
+[W4M]   09 HumanUseP10 (Node3D)
+[W4M]   10 HumanUseExpansionP10 (Node3D)
+[W4M]   11 EdgeClosureP10 (Node3D)
+[W4M]   12 AlbedoPilotP10 (Node3D)
+[W4M]   13 GroundPilotP10 (Node3D)
+[W4M]   14 WaterLifeP10 (Node3D)
+[W4M]   15 ShrineApproachP10 (Node3D)
+[W4M]   16 PropFixP10 (Node3D)
+[W4M]   17 RoadBaseP10 (Node3D)
+[W4M]   18 Collision (Node3D)
+[W4M]   19 Navigation (Node3D)
+[W4M]   20 Portals (Node3D)
+[W4M]   21 Debug (Node3D)
+[W4M]   22 Riverbank (Node3D)
+[W4M]   23 Population (Node3D)
+[W4M]   24 FarmsteadP13 (Node3D)
+[W4M] Terrain/MainTerrain material_override: ShaderMaterial shader=res://maps/village_v2/shaders_p10/ground_p10_pilot.gdshader
+      albedo_arr = res://assets/village_v2/_matlib/ground/V2G_albedo.jpg
+      nrh_arr = res://assets/village_v2/_matlib/ground/V2G_nrh.jpg
+      noise_tex = res://assets/village_v2/_matlib/ground/V2G_noise.png
+      ground_k = 0.19
+      mode = 0
+      use_vertex_weights = true
+      fix_a = (0.0, 0.0, 0.0, 0.0)
+      fix_b = (0.0, 0.0, 0.0, 0.0)
+      road_layer = 1
+      shoulder_layer = 2
+      shoulder_start = 0.8
+      edge_gravel = 0.0
+      center_grass = 0.0
+      wear_center = 0.0
+      rut_offset = 0.0
+      rut_strength = 0.0
+      paddy = (350.0, -140.0, 24.0, 16.0)
+      bund_w = 1.2
+      farm_soil = 0.32
+[W4M]   surface 0 material: (null)
+[W4M] HillApproach material_override: ShaderMaterial shader=res://maps/village_v2/shaders_p10/ground_p10_pilot.gdshader
+      albedo_arr = res://assets/village_v2/_matlib/ground/V2G_albedo.jpg
+      nrh_arr = res://assets/village_v2/_matlib/ground/V2G_nrh.jpg
+      noise_tex = res://assets/village_v2/_matlib/ground/V2G_noise.png
+      ground_k = 0.19
+      mode = 1
+      use_vertex_weights = true
+      fix_a = (0.0, 0.0, 0.0, 0.0)
+      fix_b = (0.0, 0.0, 0.0, 0.0)
+      road_layer = 1
+      shoulder_layer = 2
+      shoulder_start = 0.78
+      edge_gravel = 0.25
+      center_grass = 0.0
+      wear_center = 0.0
+      rut_offset = 0.85
+      rut_strength = 0.4
+      paddy = (350.0, -140.0, 24.0, 16.0)
+      bund_w = 1.2
+      edge_w = 0.35
+      edge_irreg = 0.15
+      edge_core = 0.35
+      center_patch = 0.0
+      cut_s = (36.15028, 99.8035)
+      cut_hw = 2.6
+[W4M] StoneSteps material_override: StandardMaterial3D albedo_color=(0.64, 0.635, 0.62, 1.0) vertex_color_use_as_albedo=true albedo_tex=res://assets/village_v2/_matlib/V2_Stone_albedo.jpg rough=1.0 metallic=0.0 uv1_scale=(1.0, 1.0, 1.0) tri

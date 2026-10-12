@@ -1,0 +1,20 @@
+[W4S] boot 9800 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W4S] mode=r8 overlay=なし
+[W4S] mag_bisect 候補 10 個：Debug, QuestAnchors, Portals, Districts/LandmarkParcelLines, Districts/AuxParcelLines, Districts/Market/ParcelLines, Districts/MixedCommercial/ParcelLines, Districts/ResidentialWest/ParcelLines, Districts/ResidentialNE/ParcelLines, Districts/SouthGate/ParcelLines
+SHOT mag_on_s100
+[W4S]   s=100 疊層すべて表示：洋紅画素 0
+SHOT mag_on_s96
+[W4S]   s=96 疊層すべて表示：洋紅画素 4
+[W4S]     Debug を隠す → 4（寄与 0）
+[W4S]     QuestAnchors を隠す → 0（寄与 4）
+[W4S]     Portals を隠す → 0（寄与 4）
+[W4S]     Districts/LandmarkParcelLines を隠す → 0（寄与 4）
+[W4S]     Districts/AuxParcelLines を隠す → 4（寄与 0）
+[W4S]     Districts/Market/ParcelLines を隠す → 4（寄与 0）
+[W4S]     Districts/MixedCommercial/ParcelLines を隠す → 4（寄与 0）
+[W4S]     Districts/ResidentialWest/ParcelLines を隠す → 4（寄与 0）
+[W4S]     Districts/ResidentialNE/ParcelLines を隠す → 4（寄与 0）
+[W4S]     Districts/SouthGate/ParcelLines を隠す → 4（寄与 0）
+SHOT mag_on_s92
+[W4S]   s=92 疊層すべて表示：洋紅画素 0
+[DONE]

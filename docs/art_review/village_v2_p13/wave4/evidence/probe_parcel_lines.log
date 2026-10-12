@@ -1,0 +1,7 @@
+[W4P] Districts/LandmarkParcelLines：visible=true mesh=res://maps/village_v2/gen/parcels_landmark.res surfaces=1  StandardMaterial3D albedo=(0.3612, 0.1344, 0.3276, 1.0) unshaded=false vertex_color_use_as_albedo=false emission=false cast_shadow=0
+[W4P]   全体 AABB 中心(298, 17, -82) サイズ(244, 34, 308)
+[W4P]   surface 0：頂点 2460、参道の頂から 28 m 以内の頂点 300
+[W4P]     その範囲 x 248.0–268.0  y 31.61–34.24  z -236.0–-220.0
+[W4P] Districts/AuxParcelLines：visible=true mesh=res://maps/village_v2/gen/parcels_aux.res surfaces=1  StandardMaterial3D albedo=(0.2604, 0.252, 0.2184, 1.0) unshaded=false vertex_color_use_as_albedo=false emission=false cast_shadow=0
+[W4P]   全体 AABB 中心(309, 1, -70) サイズ(371, 2, 376)
+[W4P]   surface 0：頂点 5124、参道の頂から 28 m 以内の頂点 0

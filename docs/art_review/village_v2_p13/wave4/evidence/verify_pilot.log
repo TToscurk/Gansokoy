@@ -1,0 +1,32 @@
+[W4V] PASS overlay SandoPilotW4P13 が village_v2 に掛かっている
+[W4V] PASS root 直下の最後の子（既存 overlay の後ろ）
+[W4V] PASS 同名の重複なし
+[W4V] PASS overlay は碰撞体を持たない（0 個）
+[W4V] PASS rest_mesh（r8 から区間を除いた mesh）が入っている
+[W4V] PASS 斜坡碰撞 RampCollision/Ramp が r8 の生成式と一致（三角形 378・最大差 0.000000 m）
+[W4V] PASS 斜坡碰撞は有効のまま
+[W4V] PASS 試作計画 79 要素：蹴上・踏面長・地形・斜坡碰撞との差がすべて許容内
+[W4V] INFO 蹴上 変動係数 r8 0.028 → 試作 0.178／踏面長 r8 0.081 → 試作 0.186
+[W4V] PASS 不規則さ：蹴上・踏面長の変動係数がともに ≥ 0.12（r8 は 0.03／0.08）
+[W4V] PASS r8 の蹴上は節拍器（変動係数 0.028 < 0.10）＝試作の比較基準
+[W4V] PASS 反向：踏面を 0.5 m 下げる → 落ちる
+[W4V] PASS 反向：蹴上を +0.3 m → 落ちる
+[W4V] PASS 反向：斜坡碰撞を 0.3 m ずらす → 許容帯違反で落ちる
+[W4V] PASS 反向：踏面長を 0.6 m 延ばす → 落ちる
+[W4V] PASS 反向：r8 の計画は不規則さの gate（≥ 0.12）を満たさない＝gate が弁別する
+[W4V] PASS 表裏：巻き順と法線が逆の三角形 0／40096
+[W4V] PASS 反向：r1–r12 の巻き順の四角 → 表裏検査が落ちる（2）
+[W4V] PASS 頂点がすべて有限
+[W4V] PASS W4Steps は中心線から 4 m 以内（区間外へはみ出さない・標本のはみ出し 0）
+[W4V] PASS W4Steps 40096 三角形 ≤ 60,000（試作区間 27 m の予算）
+[W4V] INFO W4Steps 40096 三角形・W4Soil 1376 三角形
+[W4V] PASS scene の W4Steps ＝ 生成器の再出力（頂点 120288 個・最大差 0.000000 m・generator が source of truth）
+[W4V] PASS 浮空なし：地面に接する最下段 137 ブロックの底はすべて地形より ≥ 8 cm 下（最小 0.34 m）
+[W4V] INFO 笠石 133 個の外面露出（頂 − 地形）：最大 1.23 m・中央値 0.62 m｜≤ 0.30 m 12／0.30–0.60 m 52／> 0.60 m 69（石垣が必要な高さ）
+[W4V] PASS 反向：底を地形より 10 cm 上げた記録 → 浮空判定が落ちる
+[W4V] PASS enabled=false → StoneSteps は r8 の元の mesh に戻る（描画三角形 6926＝6926）
+[W4V] PASS enabled=false → W4Steps は隠れる
+[W4V] PASS enabled=true の StoneSteps は試作区間を除いた mesh（描画三角形 3902 < r8 6926＝区間分 3024 を除去）
+[W4V] PASS enabled=true に戻すと再び試作（往復で一致）
+[W4V] PASS 反向：overlay に碰撞体を足す → 検出される
+[W4V] 結果：0 項失敗
