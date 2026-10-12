@@ -23,9 +23,11 @@ const PROPS_ORDER := ["MarketP10", "StreetP10", "MarketWestP10", "EnvironmentP9"
 ## P12 FINAL CLOSURE（使用者 2026-10-12 授權）：P11 R2D の農田水利（farmland_p8.scn）が MeadowP9 規劃の避障入力を変え、
 ## 同 seed 再計算が封存近級 114105 から漂移。草は再生成しない（封存 meadow_p9.scn 保持）。以下が全部一致する時だけ容認：
 ## 現計画の株数・株位摘要（同数で位置だけ違う漂移も不可）／上游 farmland_p8.scn・封存 meadow_p9.scn の雜湊。
+## P13 W3B（使用者 2026-10-12 授權）：farmland_p8.scn を再烘焙（N0／T0 の土渠 頂点色＋UV2・木槽の台・水面材質のみ。頂点位置は old ⊂ new、碰撞・MultiMesh は逐ノード等価）。
+## 避障入力の幾何は不変＝同 seed 再計算の株数 114574・株位摘要 5d9ef17a… は不変であることを確認した上で、上游の雜湊だけ新しい P8 に更新した。
 const P12_MEADOW_DRIFT := {
 	"sealed_near": 114105, "count": 114574, "digest": "5d9ef17a69aa96c6cf46628c40546912a771449e0c9400bd7879bd1d553cc53b",
-	"upstream": {"res://maps/village_v2/gen/farmland_p8.scn": "eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2"},
+	"upstream": {"res://maps/village_v2/gen/farmland_p8.scn": "536f2599004d3013a7079431bd766e62f495f8c9543dd84c25f5cd873e8b848c"},
 	"baked": {"res://maps/village_v2/gen/meadow_p9.scn": "4fca207ec740ae0b36d8119a68394d6cf5c5afa627850c32c99672e73c428def"},
 }
 

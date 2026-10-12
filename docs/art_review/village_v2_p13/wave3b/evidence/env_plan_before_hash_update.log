@@ -1,0 +1,26 @@
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[ENV] INFO MeadowP9 規劃株を同 seed で再計算 112676 ms：114574 株
+[ENV] INFO satellite 試行：{ "edge_try": 61, "edge_empty": 26, "farm_try": 16, "forest_try": 108, "forest_empty": 34, "edge_unfit": 9, "water_try": 16, "water_empty": 4, "water_unfit": 3, "open_try": 32, "forest_unfit": 3, "farm_empty": 3, "open_empty": 11 }
+[ENV] INFO 規劃 34971 ms（距離場 2354 ms）：錨 111・event 70・件 513；類の候補セル { "forest": 4514, "water": 425, "open": 701, "edge": 754, "farm": 1032 }；落とした 745
+[ENV] INFO event 型：edge/fence_frag 5、edge/shrub_pair 2、edge/stake_shrub 5、edge/stepping_out 7、farm/boundary 3、farm/sedge_edge 3、farm/shrub_corner 1、farm/stone_pile 2、forest/deadwood 2、forest/sasa_patch 4、forest/snag 4、forest/stone_fern 7、forest/under 10、open/exposed_stone 3、open/grove_edge 1、open/low_shrub 1、open/rock_group 3、water/dry_transition 2、water/iris_patch 3、water/stone_shore 2
+[ENV] INFO 落とした理由：{ "bare": 151, "meadow": 48, "": 143, "trunk": 170, "far": 23, "sealed": 18, "overlap": 49, "p7": 117, "inland": 10, "water": 9, "road": 3, "offline": 3, "farm": 1 }
+[ENV] INFO 柴垣の落とした理由：{ "road": 1, "far": 1 }
+[ENV] INFO 中尺度外の件：{ "rb_cob_a": 2, "gk_tobi_a": 8, "gk_tobi_b": 10, "gk_tobi_c": 10, "rb_cob_b": 1, "rb_cob_c": 2 }
+[ENV] PASS 既存資產のみ：29 種 513 件、全部 res://assets/village_v2/<既存 kit>/mesh の LOD0＋LOD1 を唯讀參照（新規 mesh・舊 kit 0；不正 0）
+[ENV] PASS 分工：R5-4 語彙のみ（n1 と同じ自然・過渡 43 種；柴堆・桶・箱・曬衣・商業・作業台・店前・市集は P10）——語彙外 0 []
+[ENV] FAIL MeadowP9 不重烘：規劃株 114574＝R5-3 封存の近級 114105（同 seed 再計算が封存と一致；不一致時は P12 封存差異登記 不適用 ["upstream farmland_p8.scn"]）、固い物の足元の芯に入る草株 0（= 0）
+[ENV] PASS 接地：浮き（> 2 cm）0・沈み（埋まり分を除き > 0.25 m、埋まり > 45 %）0、最大 0.24 m；意図的に埋めた石・杭 145 件
+[ENV] PASS 禁區：路面・店先帯・建物・水（+0.6 m）・P7 構件／橋・田・封存 overlay 構件・P10 の實ノード（+1.5 m）／NPC anchors（+1.2 m）・樹幹・互いの重なり・MeadowP9 株（固い物の芯）→ 違反 0 {  }
+[ENV] PASS 戸口・表側：建物の表（路側）2.2 m 帯に置いた物 0（裏・側だけを使う）
+[ENV] PASS 階層（主 cluster → satellite → 單件 → 留白）：water event 7・主平均 2.3 件（≥ 1.8）・event 平均 4.4 件（≥ 2.5）・satellite あり 86 %・satellite 件數 4 通り・單件 4・主の散り > 8 m 0；farm event 9・主平均 4.0 件（≥ 2.8）・event 平均 8.1 件（≥ 4.5）・satellite あり 100 %・satellite 件數 4 通り・單件 4・主の散り > 8 m 0；forest event 27・主平均 3.5 件（≥ 2.8）・event 平均 8.3 件（≥ 4.5）・satellite あり 100 %・satellite 件數 5 通り・單件 47・主の散り > 8 m 0；edge event 19・主平均 3.8 件（≥ 2.8）・event 平均 6.6 件（≥ 4.5）・satellite あり 84 %・satellite 件數 7 通り・單件 9・主の散り > 8 m 0；open event 8・主平均 3.1 件（≥ 2.8）・event 平均 7.5 件（≥ 4.5）・satellite あり 100 %・satellite 件數 4 通り・單件 7・主の散り > 8 m 0
+[ENV] PASS 非展示：同じ組成の最大占有 0 %（≤ 25 %、3 件までは可）・型の最大占有 37 %（≤ 45 %、4 件までは可）・40 m 内の同組成 1 組（≤ 7）・倒木＋灌木 0 %（≤ 50 %）・杭＋柴垣 9 %（≤ 60 %）・4 系統以上の全部盛り 0；edge 組成 18 通り／19、farm 組成 8 通り／9、forest 組成 22 通り／27、water 組成 5 通り／7、open 組成 8 通り／8
+[ENV] PASS 間隔：錨の最近接・第二近接距離の變動係數 water 0.72, farm 0.41, forest 0.82, edge 0.49, open 0.46（各 ≥ 0.20、等距にしない）・杭／垣の線 24 本の間隔 變動係數 0.46（≥ 0.15）・等間隔の連続 0
+[ENV] PASS 邊界邏輯：田の縁の杭・柴垣 16 件のうち等高線（田から 0.5–2.6 m・向き ±30°）外れ 0・一本だけの杭（debug prop）0・蘆／菅／花菖蒲 15 件のうち水際 2.6 m より内陸 0・水邊の石 6 件のうち埋まり ≥ 10 % 6・村邊 人工物の建物距離 19.0 m < 幼樹 22.4 m
+[ENV] PASS 大留白：各類の場所のうち物から 4 m 以內の割合 water 25 %、farm 30 %、forest 18 %、edge 32 %、open 15 %（x2：空地 ≤ 38 %、水邊 ≤ 32 %、他 ≤ 40 %）
+[ENV] PASS P10 優先：build 時に讀んだ P10 occupancy 840 矩形（Props の EnvironmentP9 以外の全子＝市集・主街・市集西・今後の P10、NPC anchors 含む）・P10 の柴垣 3；錨が P10 から 5 m 未満 0・P10 の柴垣から 12 m 內の柴垣 0
+[ENV] PASS 村邊：四つ目垣のある event 5 / 19（≤ 35 %）・30 m 內で隣り合う垣 0・垣の枚數 9（村邊の件の ≤ 15 %）
+[ENV] PASS 中尺度：高さ 0.5–6 m か足元 ≥ 1 m の物 480 / 513（≥ 75 %）、微小（< 0.3 m かつ < 0.6 m）13（≤ 15 %）
+[ENV] PASS 封存不改：R5 Macro Ground（groundcover_p9.scn）雜湊＝封存時；本 overlay は別ファイル environment_p9.scn
+[ENV] 結果：1 項失敗

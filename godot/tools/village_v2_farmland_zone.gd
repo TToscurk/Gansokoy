@@ -980,11 +980,125 @@ static func branch_profile(u: float, w: float, g: float) -> float:
 		return lerpf(branch_bed(w, g), branch_crest(w), (au - 0.4) / 0.27)
 	return branch_bed(w, g)
 
+## P13 W3B：土渠の地面重み（ground shader mode 0：COLOR＝踏み土・碎石・泥・岩、UV2.x＝濡れ。残りは草）。
+## 渠底＝濡れ泥 → 内法＝泥→土 → 堤頂＝踏み固め土 → 外法＝草へ漸減。以前は渠の全幅（渠底〜外法）が同一の濡れ泥（COLOR 0.12,0.25,1.0／濡れ 1.0＝albedo×0.6）で、
+## 外縁 |u|＝0.95 で直線に草へ切り替わっていた（黒い帯の根因＝重み一様、幾何・光は無関係。W3 診断：重みだけ草にすると帯が消える）。
+## 沿い方向のゆらぎ（s の決定論ハッシュ）で草の侵入位置を変え、色が一様な帯にならないようにする。W3 樣本（使用者 ART 方向承認）と同じ式。
+## fade＝1 で通常、0 で草（木槽の下へ延びる collar の先端で渠の色が直線で切れないよう、草へ漸減させる）。
+static func _bh(x: float) -> float:
+	return fposmod(sin(x * 12.9898) * 43758.5453, 1.0)
+
+static func branch_bank_weights(u: float, s: float, fade := 1.0) -> Array:
+	var au := absf(u)
+	var j := _bh(s * 3.1 + (7.0 if u > 0.0 else 0.0))
+	var j2 := _bh(s * 1.7 + 3.3)
+	var col: Color
+	var uv2: Vector2
+	if au <= 0.45:
+		col = Color(0.05, 0.05, 0.9, 0.0)                                               # 渠底：濡れ泥
+		uv2 = Vector2(0.85, 0.0)
+	elif au <= 0.7:
+		# 内法：泥→土。堤頂の列（|u|→0.7）は沿い方向のゆらぎで土の質と量を変える（土が薄い所は草が堤頂まで寄る）。
+		# 外縁を草に固定したぶん、沿い方向の不規則さはここ（堤頂の列）と、列の間の補間・shader の重み擾乱で出す
+		var rise := smoothstep(0.5, 0.7, au)
+		var t := clampf((au - 0.45) / 0.25 + (j - 0.5) * 0.30 * rise, 0.0, 1.0)
+		var keep := lerpf(1.0, lerpf(1.0, 0.45, smoothstep(0.55, 1.0, j2)), rise)
+		col = Color(lerpf(0.1, 0.45, t) * keep, 0.08 * keep, lerpf(0.75, 0.25, t) * keep, 0.0)
+		uv2 = Vector2(lerpf(0.6, 0.2, t) * keep, 0.0)
+	else:
+		# 外法：堤頂の踏み固め土 → 草（ゆらぎ付き）。外縁（|u|→1）は必ず草＝メッシュの縁が地形の草と継ぎ目なくつながる
+		# （縁に踏み土が残ると、土色の帯と草の境が「定規のような直線の縁」として見える）
+		var edge := smoothstep(0.88, 1.0, au)
+		var t2 := maxf(clampf((au - 0.7) / 0.3 + (j - 0.5) * 0.7 * (1.0 - edge), 0.0, 1.0), edge)
+		var tro := lerpf(0.55 + 0.25 * j2, 0.0, t2)
+		col = Color(tro, 0.06 * (1.0 - t2), 0.12 * (1.0 - t2), 0.03 * j2 * (1.0 - t2))
+		uv2 = Vector2(0.05 * (1.0 - t2), 0.0)
+	if fade < 1.0:
+		col = Color(0.0, 0.0, 0.0, 0.0).lerp(col, fade)
+		uv2 = Vector2.ZERO.lerp(uv2, fade)
+	return [col, uv2]
+
+## P13 W3B：支線の水面材質（土渠・木槽で同一）。泥水色・粗さ↑・藻少量（W3 樣本で使用者が水色方向を承認）。
+## 反射は残し（Fresnel の空映りは水らしさ）、旧材質（tint 0.36 灰・clarity 0.7・rough 0.2）が明るい灰白に見えていた分を水色と粗さで抑える。
+static func branch_water_mat() -> ShaderMaterial:
+	var m := Visual._flow_mat(0.8, Color(0.22, 0.20, 0.13), 0.42)
+	m.set_shader_parameter("rough_base", 0.34)
+	m.set_shader_parameter("algae", 0.25)
+	m.set_shader_parameter("scum_color", Color(0.27, 0.24, 0.16))
+	return m
+
+## ── P13 W3B：木槽の台（低い盛り土）──────────────────────────────────────────────
+## 根因（tools/p13/probe_w3b_terrain.gd の実測）：木槽は槽底の下面＝水面−0.11 に枕木（1.4 m ごと、幅 0.12 m）で載るだけで、可見地面（FarmlandTerrain＋MainTerrain、
+## ground_h との差 ±5〜12 mm）との間が 3.3–21.6 cm 空いている（T0 木槽 3 本：6.1–21.6／3.3–6.8／3.3–15.3 cm）。枕木の間は影の中の黒い隙間になり、
+## 低い視点で槽が浮いて見える。碰撞は元から地面〜側板頂の実体なので、見た目だけが空いていた（材質・法線の問題ではない：影を切っても隙間そのものは残る）。
+## 修正：槽の下に地面なりの盛り土を通して隙間を実際に塞ぐ（水面高程・槽・枕木・碰撞・土渠は不変）。土渠自体が地面より 0.2 m 前後高い盛土（堤）なので、
+## 木槽の区間も同じ堤の延長として読める。盛り土は板の外面（0.21）に接して水面−0.06 で立ち上げ、TB_HALF 先で地面へ下ろす。
+## 槽底の下は collar の渠底（水面−0.12）より 4 mm 低く（見えない・z-fight なし）、板の厚み（0.174–0.21）の中で立ち上げる（槽内に土は出ない）。
+## 自由端（分水口側。竜骨車の送り樋・脚が隣接）は肩を TB_FADE で漸増させ、送り樋の脚・分水板に土を寄せない。
+const TB_HALF := 0.9
+const TB_D := [0.0, 0.17, 0.19, 0.34, 0.55, 0.9]
+const TB_FADE := 1.6
+
+static func trough_bed_ucols() -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	for k in range(TB_D.size() - 1, 0, -1):
+		out.append(-float(TB_D[k]) / TB_HALF)
+	for k in TB_D.size():
+		out.append(float(TB_D[k]) / TB_HALF)
+	return out
+
+## k＝肩の高さの係数（1＝通常、自由端で 0 へ）。板の下（d ≤ 0.19）は常に槽底の下
+static func trough_bed_h(d: float, w: float, g: float, k := 1.0) -> float:
+	var hu := w - FL.TROUGH_DEPTH - 0.05 - 0.004
+	var hb := maxf(w - 0.06, g + 0.02)
+	if d <= 0.17:
+		return hu
+	if d <= 0.19:
+		return lerpf(hu, hb, (d - 0.17) / 0.02)
+	var h := lerpf(hb, g + 0.008, smoothstep(0.0, 1.0, clampf((d - 0.19) / (TB_HALF - 0.19), 0.0, 1.0)))
+	return lerpf(g + 0.008, h, k)
+
+static func trough_bed_w(u: float, s: float) -> Array:
+	var d := absf(u) * TB_HALF
+	var uu := 0.76 if d <= 0.21 else lerpf(0.76, 1.0, clampf((d - 0.21) / (TB_HALF - 0.21), 0.0, 1.0))
+	return branch_bank_weights(uu if u >= 0.0 else -uu, s)
+
+static func trough_bed(og: Node3D, name: String, sub: PackedVector2Array, rr: Dictionary, line: PackedVector2Array, gm: Material, free_start: bool, free_end: bool) -> void:
+	var Ls := FL._length(sub)
+	var kf := func(p: Vector2) -> float:
+		var sl := FL.project_s(sub, p)
+		var k := 1.0
+		if free_start:
+			k = minf(k, smoothstep(0.2, TB_FADE, sl))
+		if free_end:
+			k = minf(k, smoothstep(0.2, TB_FADE, Ls - sl))
+		return k
+	var yfn := func(p: Vector2, u: float) -> float:
+		return trough_bed_h(absf(u) * TB_HALF, branch_water(rr, FL.project_s(line, p)), ground_h(p), kf.call(p))
+	var wfn := func(p: Vector2, u: float) -> Array:
+		return trough_bed_w(u, FL.project_s(line, p))
+	Visual._ribbon(og, name, sub, TB_HALF, yfn, gm, Color(), Vector2(), -1e9, 1e9, false, wfn, trough_bed_ucols())
+
+## 土渠の水面が木槽の口へ向けて絞られる（槽内の水幅＝0.34 に合わせて半幅 0.30 → 0.17、口の手前 WATER_FUNNEL m）。平面形だけで水面高程は不変
+const WATER_FUNNEL := 1.0
+const WATER_NECK := 0.58
+
+static func water_neck(taper_start: bool, taper_end: bool) -> Callable:
+	return func(s: float, L: float) -> float:
+		var k := 1.0
+		if taper_start:
+			k = minf(k, lerpf(WATER_NECK, 1.0, smoothstep(0.0, 1.0, s / WATER_FUNNEL)))
+		if taper_end:
+			k = minf(k, lerpf(WATER_NECK, 1.0, smoothstep(0.0, 1.0, (L - s) / WATER_FUNNEL)))
+		return k
+
 ## 支線の可見網格：開水路の土渠（両堤＋渠底＋水面）、木槽区間（枕木上）、伏越し両端の石桝、分水板・落差板
-static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Material, gm: Material, fmat: Material, deep: Material, _shared_rng: RandomNumberGenerator) -> void:
+static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Material, gm: Material, _fmat: Material, deep: Material, _shared_rng: RandomNumberGenerator) -> void:
 	# P11 R2D-Fix：支線専用の固定 seed（取樣数が変わっても後続の排水口石・農具の乱数を動かさない）
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 61101
+	# P13 W3B：支線（N0／T0）の水面は土渠・木槽とも専用の泥水材質。田・渠・桝・竜骨車・主河の水は触れない
+	var fmat: Material = branch_water_mat()
 	for br: Dictionary in Z.get("branches", []):
 		var g := Visual._group(root, "Branch_%s" % br["id"])
 		g.set_meta("source", br["src"])
@@ -1027,7 +1141,7 @@ static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Mater
 					var e0 := maxf(s0 - c0, 0.0)
 					var e1 := minf(s1 + c1, Lr)
 					var esub := _cut(line, e0, e1) if (c0 > 0.0 or c1 > 0.0) else sub
-					Visual._ribbon(og, "Earth_%d" % int(s0), esub, BR_HALF, func(p: Vector2, u: float) -> float:
+					var yfn := func(p: Vector2, u: float) -> float:
 						var sp_s := FL.project_s(line, p)
 						var w0 := branch_water(rr, sp_s)
 						var g0 := ground_h(p)
@@ -1039,9 +1153,19 @@ static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Mater
 						h = lerpf(g0 + 0.005, h, f)
 						if absf(u) < 0.45:
 							h = minf(h, maxf(w0 - FL.TROUGH_DEPTH - 0.05, g0 + 0.002))   # 木槽の底板の下
-						return h, gm, Color(0.12, 0.25, 1.0, 0.0), Vector2(1.0, 0.0), -1e9, 1e9)
-					Visual._ribbon(og, "Water_%d" % int(s0), sub, 0.3, func(p: Vector2, _u: float) -> float:
-						return branch_water(rr, FL.project_s(line, p)), fmat, Color(), Vector2(), -1e9, 1e9, true)
+						return h
+					# P13 W3B：頂点ごとの地面重み（渠底＝濡れ泥 → 内法 → 堤頂 → 外法＝草）。collar（木槽の下へ延びた部分）は先端へ向けて草へ漸減
+					var wfn := func(p: Vector2, u: float) -> Array:
+						var sp_s := FL.project_s(line, p)
+						var out_d := maxf(s0 - sp_s, sp_s - s1)
+						var fade := 1.0 if out_d <= 0.0 else smoothstep(0.0, 1.0, clampf(1.0 - out_d / BR_COLLAR, 0.0, 1.0))
+						return branch_bank_weights(u, sp_s, fade)
+					Visual._ribbon(og, "Earth_%d" % int(s0), esub, BR_HALF, yfn, gm, Color(0.12, 0.25, 1.0, 0.0), Vector2(1.0, 0.0), -1e9, 1e9, false, wfn)
+					# P13 W3B：木槽へつながる端は水幅を槽内（0.34）へ絞る（広い水面が槽の口で直線に切れ、槽の外に水の耳が残るのを避ける）
+					var wneck := water_neck(c0 > 0.0, c1 > 0.0)
+					var wyfn := func(p: Vector2, _u: float) -> float:
+						return branch_water(rr, FL.project_s(line, p))
+					Visual._ribbon(og, "Water_%d" % int(s0), sub, 0.3, wyfn, fmat, Color(), Vector2(), -1e9, 1e9, true, Callable(), PackedFloat32Array(), wneck)
 				else:
 					var tg := Visual._group(og, "Trough_%d" % int(s0))
 					var n := maxi(1, ceili((s1 - s0) / 2.0))
@@ -1065,6 +1189,8 @@ static func branch_art(root: Node3D, Z: Dictionary, wood: Material, stone: Mater
 							Visual._box(tg, "Sleeper_%d" % k, Vector3(c.x, (gh - 0.03 + top) * 0.5, c.y), Vector3(FL.TROUGH_W + 0.22, top - gh + 0.03, 0.12), wood, atan2(d.x, d.y) + rng.randf_range(-0.06, 0.06))
 							k += 1
 						t += 1.4
+					# P13 W3B：槽の下の隙間を塞ぐ低い盛り土（枕木の間の黒い隙間＝浮いて見える原因）
+					trough_bed(og, "Bed_%d" % int(s0), sub, rr, line, gm, si == 0, si == spans.size() - 1)
 			# 落差板：水面が 0.015 m 以上下がる頂点間の中点
 			var wv: PackedFloat32Array = r["w"]
 			for i in line.size() - 1:

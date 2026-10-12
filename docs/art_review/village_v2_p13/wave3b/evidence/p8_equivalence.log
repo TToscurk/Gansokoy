@@ -1,0 +1,11 @@
+
+[EQ] old nodes 8817 new nodes 8817；一致 8813（MultiMesh 1844）；差分 4；old のみ 0；new のみ 0（4.1s）
+[EQ]   期待 Branch_T0/Merged_2 keys=["mesh"]
+[EQ]   期待 Branch_T0/Merged_1 keys=["mesh", "mat"]
+[EQ]   期待 Branch_N0/Merged_1 keys=["mat"]
+[EQ]   期待 Branch_N0/Merged_0 keys=["mesh"]
+[EQ]   三角形 Branch_T0/Merged_2：old 2184 → new 3764；失われた位置 0；増えた位置 1580
+[EQ]   水面 Branch_T0/Merged_1：頂点 1488→1488・index 同一 true；y の最大差 0.00029289722443 m；x/z が動いた頂点 120（最大 0.126 m）
+[EQ]   水面 Branch_N0/Merged_1：頂点 1050→1050・index 同一 true；y の最大差 0.0 m；x/z が動いた頂点 0（最大 0.000 m）
+[EQ]   三角形 Branch_N0/Merged_0：old 1764 → new 1764；失われた位置 0；増えた位置 0
+[EQ] RESULT PASS（想定外の差分 0、old のみ 0、new のみ 0、三角形を失ったメッシュ 0）

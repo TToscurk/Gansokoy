@@ -1,0 +1,4 @@
+[W3B] mode=formal overlay=なし
+[W3B] T0_down_tps player(336.5,0.24,66.0) camera 距離 8.56 m・地面上 3.21 m・pitch -10.3°
+[W3B] T0_up_tps player(340.5,0.21,14.0) camera 距離 8.56 m・地面上 3.23 m・pitch -10.3°
+[W3B] N0_tps player(359.0,0.10,-26.0) camera 距離 8.56 m・地面上 3.23 m・pitch -10.3°

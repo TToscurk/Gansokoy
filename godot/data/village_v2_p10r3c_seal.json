@@ -336,7 +336,7 @@
     "docs/art_review/village_v2_p10_population/activity_r1/final_review/drink_ab_tps_8m.jpg": "b6c04ca6b65eb487afac9dbfc9ec9aab6c866d72d32927a711964b8ed72d08ad"
   },
   "child_seals": {
-    "godot/data/village_v2_p10r3b_seal.json": "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
+    "godot/data/village_v2_p10r3b_seal.json": "aded7212e885b0404f17289ed299855b6019e1ddf81f9718a52c95aa2f15cd80",
     "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
   },
   "reseal_history": [
@@ -417,6 +417,19 @@
       "seal_file_before": "69820300ff8b5cbe820e44287a34dd590b84d3414d3baadf2c437fc803cdaa86",
       "approved_by": "user（P12 FINAL CLOSURE）",
       "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
+    },
+    {
+      "kind": "P13_W3B_CHILD_UPDATE",
+      "at": "2026-10-12",
+      "child_seals": {
+        "godot/data/village_v2_p10r3b_seal.json": [
+          "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
+          "aded7212e885b0404f17289ed299855b6019e1ddf81f9718a52c95aa2f15cd80"
+        ]
+      },
+      "seal_file_before": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
+      "approved_by": "user（P13 WAVE 3B）",
+      "reason": "P13 W3B：子封存の雜湊だけ追従、本封存の内容は不変。"
     }
   ]
 }

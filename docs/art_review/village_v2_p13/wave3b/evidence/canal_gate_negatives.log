@@ -1,0 +1,7 @@
+[CANAL] PASS 基準場面は全項 PASS（反向の前提）
+[CANAL] PASS 反向 uniform：狙った項 ["C1 T0", "C1 N0"] が FAIL（実際の FAIL：["C1 N0", "C1 T0"]）、他の項は PASS のまま（巻き込み 0）
+[CANAL] PASS 反向 gap：狙った項 ["C4a", "C4c"] が FAIL（実際の FAIL：["C4a 木", "C4c 板"]）、他の項は PASS のまま（巻き込み 0）
+[CANAL] PASS 反向 poke：狙った項 ["C4a", "C4b"] が FAIL（実際の FAIL：["C4a 木", "C4b 槽"]）、他の項は PASS のまま（巻き込み 0）
+[CANAL] PASS 反向 wide：狙った項 ["C5"] が FAIL（実際の FAIL：["C5 木槽"]）、他の項は PASS のまま（巻き込み 0）
+[CANAL] PASS 反向 mat：狙った項 ["C3 T0", "C3 N0"] が FAIL（実際の FAIL：["C3 N0", "C3 T0"]）、他の項は PASS のまま（巻き込み 0）
+[CANAL] 結果：0 項失敗（negatives）

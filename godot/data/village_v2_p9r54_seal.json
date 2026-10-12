@@ -51,7 +51,7 @@
  },
  "frozen": {
   "godot/tools/village_v2_environment_lib.gd": "303460add7959ac77d9dd2b8fa995a4ddc01ac328793047f467e25d00d0b8464",
-  "godot/tools/verify_village_v2_environment.gd": "df4b2b5f5b69d551592daef8a508b26a6e70d8c83fbfabced0aaca73f99daaeb",
+  "godot/tools/verify_village_v2_environment.gd": "718e53953aa20b0ee2fcf618dbdfb32359dbd44d6c8cb503ac3e5bbb14b3faad",
   "godot/tools/shot_village_v2_environment_views.json": "9e13cf17a84eb61a1345feed844599d9c2fab9cc602d30a273de6c44e47f9a1f",
   "godot/maps/village_v2/gen/environment_p9.scn": "5fe520fea2693db656705a259ee3c023c33d3eb17174fcaa8e39d5ae7c4253e0",
   "godot/tools/audit_village_v2_env_assets.gd": "5636d47cbbf8bf3be7771cc841e5523fa48b88c5eae7ef42b7112e12dfaa58fd",
@@ -97,6 +97,30 @@
    "approved_by": "user",
    "authorization": "使用者 2026-10-12「P12 FINAL CLOSURE — AUTHORIZED」TASK 2／3：植被封存差異を精確・可追溯に登記（再生成なし）",
    "reason": "P11 R2D の農田水利（farmland_p8.scn）が MeadowP9 規劃の避障入力を変え、同 seed 再計算 114574 ≠ 封存近級 114105。封存 meadow_p9.scn（153,772 instance 全 LOD）保持、支線土渠外法内 0・道路面 0。草は再生成しない。verifier に P12_MEADOW_DRIFT（封存近級・現株数・株位摘要・上游 farmland_p8.scn・封存 meadow_p9.scn の雜湊）を固定、全一致時のみ容認＋反向 4 種。"
+  },
+  {
+   "kind": "P13_W3B_LIMITED",
+   "date": "2026-10-12",
+   "changed": {
+    "godot/tools/verify_village_v2_environment.gd": {
+     "old": "df4b2b5f5b69d551592daef8a508b26a6e70d8c83fbfabced0aaca73f99daaeb",
+     "new": "718e53953aa20b0ee2fcf618dbdfb32359dbd44d6c8cb503ac3e5bbb14b3faad"
+    }
+   },
+   "seal_file_before": "08dcf10f59792aaeb3f0ee335f777d3149ba28d18e9b8eb8d0af430243a3676a",
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-12「P13 WAVE 3B — FINAL CANAL ART INTEGRATION」：N0／T0 灌漑支線の土渠に W3 樣本の材質権重（渠底濡れ泥→内坡泥土→堤頂踏実土→外坡草）と泥水面を正式整合；farmland_p8.scn を 1 回正式重烘；P8 limited reseal；木槽と土渠の接合・槽下の暗縫の最小修正；CanalSampleP13 除去。水面高程・坡降・伏越し・道路・主要碰撞は不変。",
+   "reason": "verify_village_v2_environment.gd：P12_MEADOW_DRIFT.upstream の farmland_p8.scn 雜湊を新しい P8 に更新（同 seed の MeadowP9 規劃の株数 114574・株位摘要 5d9ef17a… は不変＝避障入力の幾何は変わっていない）",
+   "plan_unchanged": {
+    "meadow_count": 114574,
+    "meadow_digest": "5d9ef17a69aa96c6cf46628c40546912a771449e0c9400bd7879bd1d553cc53b",
+    "sealed_near": 114105,
+    "note": "P8 再烘焙後も同 seed 再計算の株数・株位摘要が登記どおり（env_plan_before_hash_update.log：失敗の理由は upstream farmland_p8.scn の雜湊だけ）"
+   },
+   "evidence": [
+    "docs/art_review/village_v2_p13/wave3b/evidence/env_plan_before_hash_update.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/env_plan_after_hash_update.log"
+   ]
   }
  ]
 }

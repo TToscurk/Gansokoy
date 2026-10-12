@@ -723,8 +723,8 @@
   "docs/art_review/village_v2_p10_population/core_r1_1/review/6_mouth_from_south_r1_vs_r1_1.jpg": "8e1e803be546300ad0343b3a44e9965af15b4c8a915e4ca3444eb93d525b46f0"
  },
  "child_seals": {
-  "godot/data/village_v2_p10r3b_seal.json": "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
-  "godot/data/village_v2_p10r3c_seal.json": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
+  "godot/data/village_v2_p10r3b_seal.json": "aded7212e885b0404f17289ed299855b6019e1ddf81f9718a52c95aa2f15cd80",
+  "godot/data/village_v2_p10r3c_seal.json": "10663d339be0eb28f7788307aadba8739c48729762a407874974b3a053bf2ebb",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -836,6 +836,23 @@
    "seal_file_before": "b52c8bbca1b3405d98c64af05f28e6100849b4e53f27be98ff024e266e322413",
    "approved_by": "user（P12 FINAL CLOSURE）",
    "reason": "P12 FINAL CLOSURE：子封存（P9 R4-4／R5-4 の差異登記、P10 R4b の HUX 核准位置）の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "P13_W3B_CHILD_UPDATE",
+   "at": "2026-10-12",
+   "child_seals": {
+    "godot/data/village_v2_p10r3b_seal.json": [
+     "dd093b7b086da17962ccb99e08dd88e340bbaf0ddab53d369b6e488a431b3d94",
+     "aded7212e885b0404f17289ed299855b6019e1ddf81f9718a52c95aa2f15cd80"
+    ],
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
+     "10663d339be0eb28f7788307aadba8739c48729762a407874974b3a053bf2ebb"
+    ]
+   },
+   "seal_file_before": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
+   "approved_by": "user（P13 WAVE 3B）",
+   "reason": "P13 W3B：子封存の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

@@ -62,6 +62,8 @@ runneg "P8 P11 R2D-Fix 送り樋 T0 開口 永久反向（開口判定を反転 
 run "P8 田埂／水面擺放稽核"                    FARM_PLACE --headless --path . --script res://tools/audit_village_v2_farmland_placement.gd
 run "P8 取水水路淨空（FarmPath_1／稗田邸前）＋R5b.1 竜骨車：系統狀態〔非表示・無効碰撞・高架樋残骸 0〕・水源連通〔水位鎖単調〕・他層干渉 0" FEEDER  --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder --no-shots --hour=10
 run "P8 R5b.1 FEEDER 永久反向（取水構件の runtime 非表示・碰撞停止・高架樋残骸 → supply_system_state 各案 FAIL）" FEEDER-NEG --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --feeder-negative --hour=10
+run "P13 W3B 土渠美術 gate（N0／T0 支線：地面重み非一様〔旧＝全幅同一の濡れ泥〕・外縁は草・泥水材質・木槽の台〔槽底の隙間 4–20 mm・槽内に土なし・側板の下に隙間なし〕・口の水幅）" CANAL --headless --path . --script res://tools/verify_village_v2_canal_art.gd
+run "P13 W3B 土渠美術 永久反向 5 案（uniform／gap／poke／wide／mat が各自の狙った項だけ FAIL）" CANAL --headless --path . --script res://tools/verify_village_v2_canal_art.gd -- --negatives
 run "P8 全區 1.7 m 實走 25 段＋TPS 相機淨空"      ZONE    --path . --resolution 1600x900 --script res://tools/walk_village_v2_farmland.gd -- --zone --no-shots --hour=10
 run "P8 runtime budget（五鏡位 A/B）"           COST    --path . --resolution 1920x1080 --script res://tools/walk_village_v2_farmland.gd -- --cost --hour=10
 run "P9 R1 植被庫封存（樹庫／生成器／LOD 指標／7 張核准總表／證據 sha256＋反向）" VEG --headless --path . --script res://tools/verify_village_v2_veg_gate.gd -- --seal

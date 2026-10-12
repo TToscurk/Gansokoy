@@ -1081,12 +1081,16 @@ static func _commit_up(arr: Array) -> ArrayMesh:
 	return t.commit()
 
 ## 沿中心線的帶狀網格（渠底／渠水／排水）。z_from／z_to：只取中心線 z 在此區間的部分。
-static func _ribbon(parent: Node3D, name: String, line: PackedVector2Array, half: float, yfn: Callable, mat: Material, col: Color, uv2v: Vector2, z_from: float, z_to: float, is_water := false) -> void:
+## P13 W3B：wfn（任意）＝頂點ごとの地面重み Callable(p: Vector2, u: float) -> [Color(COLOR), Vector2(UV2)]。
+##   指定時は col／uv2v の代わりに各頂点へこの重みを入れる（支線の土渠：渠底〜堤頂〜外法の漸変）。未指定の ribbon は従来どおり全頂点同一。
+## ucols（任意）＝横断の列位置 u（−1…1、昇順）。未指定は従来の 7 列等間隔。木槽の台（盛り土）のように板の厚み幅で折れる断面に使う。
+## hscale（任意）＝Callable(s: 沿い距離, L: 全長) -> 半幅の倍率。土渠の水面が木槽の口へ向けて絞られる（平面形だけ。高さは yfn のまま）。
+static func _ribbon(parent: Node3D, name: String, line: PackedVector2Array, half: float, yfn: Callable, mat: Material, col: Color, uv2v: Vector2, z_from: float, z_to: float, is_water := false, wfn := Callable(), ucols := PackedFloat32Array(), hscale := Callable()) -> void:
 	var L := 0.0
 	for i in line.size() - 1:
 		L += line[i].distance_to(line[i + 1])
 	var steps := maxi(2, ceili(L / 0.3))
-	var nu := 7
+	var nu := 7 if ucols.is_empty() else ucols.size()
 	var verts := PackedVector3Array()
 	var cols := PackedColorArray()
 	var uvs := PackedVector2Array()
@@ -1100,16 +1104,23 @@ static func _ribbon(parent: Node3D, name: String, line: PackedVector2Array, half
 			continue
 		var tan: Vector2 = at[1]
 		var nrm := Vector2(-tan.y, tan.x)
+		var hh := half * (float(hscale.call(s, L)) if hscale.is_valid() else 1.0)
 		for k in nu:
-			var u := lerpf(-1.0, 1.0, float(k) / (nu - 1))
-			var p := c + nrm * u * half
+			var u := lerpf(-1.0, 1.0, float(k) / (nu - 1)) if ucols.is_empty() else ucols[k]
+			var p := c + nrm * u * hh
 			verts.append(Vector3(p.x, yfn.call(p, u), p.y))
 			if is_water:
-				uvs.append(Vector2((1.0 - absf(u)) * half, s))
+				uvs.append(Vector2((1.0 - absf(u)) * hh, s))
 			else:
-				cols.append(col)
-				uvs.append(Vector2(0.0, 0.0))
-				uv2s.append(uv2v)
+				if wfn.is_valid():
+					var wt: Array = wfn.call(p, u)
+					cols.append(wt[0])
+					uvs.append(Vector2(0.0, 0.0))
+					uv2s.append(wt[1])
+				else:
+					cols.append(col)
+					uvs.append(Vector2(0.0, 0.0))
+					uv2s.append(uv2v)
 		rows += 1
 	if rows < 2:
 		return

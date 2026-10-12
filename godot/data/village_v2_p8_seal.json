@@ -70,13 +70,13 @@
  },
  "frozen": {
   "tools/village_v2_farmland_lib.gd": "68c2ad712528443d7b9459235e0e0e37262ae22f80497ba96492bf307410fa37",
-  "tools/village_v2_farmland_visual.gd": "df6df1afa443e5992f09bb03962f3f8aa467e29df535967b8f68430ce15ed1af",
-  "tools/village_v2_farmland_zone.gd": "b6764bb20541d1319c67f94ce2e2f28a2ee51497918a252684c631405a352c66",
+  "tools/village_v2_farmland_visual.gd": "f5ba0c1c1502b9d17577b29eabd3ac2dae3e548faa0fbde6c9a720cf6fed2f5f",
+  "tools/village_v2_farmland_zone.gd": "7d6bd7066aba3d8e0c9a54d6e77b05e65f644b693ee313d285f75c361a12be0f",
   "maps/village_v2/shaders/p8_paddy_water.gdshader": "fc81fcda517a6172c20592146dfd9b47f2ba12f347ea9a9f2afa23fb6ff25200",
   "maps/village_v2/shaders/p8_paddy_plant.gdshader": "1ebe4557fee7f88edd6584444f6942b7649ef038a6dda98b817f53377b2494c9",
   "data/village_v2_p8_blocks.json": "e40c487c58c41a2e97486e4e1f91589af6bb4687769424e5e7b2fc0a4d79a5aa",
   "data/village_v2_p8_ground.json": "39366a7f1937d873a527e17f01f4b8a1d2e1c091b290a51c51e263b0d1ca009b",
-  "maps/village_v2/gen/farmland_p8.scn": "eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2"
+  "maps/village_v2/gen/farmland_p8.scn": "536f2599004d3013a7079431bd766e62f495f8c9543dd84c25f5cd873e8b848c"
  },
  "art_review_images": {
   "pilot_supply_tps_FP1_siphon.png": "d575480603048376195ea15126a7f5695b895a0f35744f4ad44063f840fdb82e",
@@ -261,6 +261,87 @@
    "authorized_by": "user",
    "authorization": "使用者 2026-10-11 P11 R2D-Fix：T0 送り樋の実開口・T0 接縫の最小修正・必要な限定 reseal。",
    "reason": "送り樋南壁を木槽外法幅で切り欠き（底板の高さに敷居、開口を越える水面）、T0 支線始点を開口へ 0.27 m 延長；T0 開水路の 45° 折れを半径 1.2 m で丸め（水位は投影補間・非増加）、土渠→木槽の接合で土手を 1.2 m 延ばして木槽を抱かせる；支線 art は固定 seed の専用 RNG。水位・路線・N0・竜骨車・田は不変。"
+  },
+  {
+   "kind": "P13_W3B_LIMITED",
+   "date": "2026-10-12",
+   "changed": {
+    "tools/village_v2_farmland_visual.gd": {
+     "old": "df6df1afa443e5992f09bb03962f3f8aa467e29df535967b8f68430ce15ed1af",
+     "new": "f5ba0c1c1502b9d17577b29eabd3ac2dae3e548faa0fbde6c9a720cf6fed2f5f"
+    },
+    "tools/village_v2_farmland_zone.gd": {
+     "old": "b6764bb20541d1319c67f94ce2e2f28a2ee51497918a252684c631405a352c66",
+     "new": "7d6bd7066aba3d8e0c9a54d6e77b05e65f644b693ee313d285f75c361a12be0f"
+    },
+    "maps/village_v2/gen/farmland_p8.scn": {
+     "old": "eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2",
+     "new": "536f2599004d3013a7079431bd766e62f495f8c9543dd84c25f5cd873e8b848c"
+    }
+   },
+   "seal_file_before": "3b066bc9647d2865d5c59f65ad24404c825ceb46c0c31f778b2516af756c0c69",
+   "authorized_by": "user",
+   "authorization": "使用者 2026-10-12「P13 WAVE 3B — FINAL CANAL ART INTEGRATION」：N0／T0 灌漑支線の土渠に W3 樣本の材質権重（渠底濡れ泥→内坡泥土→堤頂踏実土→外坡草）と泥水面を正式整合；farmland_p8.scn を 1 回正式重烘；P8 limited reseal；木槽と土渠の接合・槽下の暗縫の最小修正；CanalSampleP13 除去。水面高程・坡降・伏越し・道路・主要碰撞は不変。",
+   "reason": "village_v2_farmland_visual.gd：_ribbon に任意引数 wfn（頂点ごとの地面重み）・ucols（横断の列位置）・hscale（半幅の倍率）を追加。未指定の ribbon は従来と bit 同一 ／ village_v2_farmland_zone.gd：branch_art：土渠の頂点ごとの地面重み（branch_bank_weights）・collar 先端の草への漸減・支線専用の泥水材質（branch_water_mat）・木槽の台（trough_bed）・木槽の口で水幅を槽内へ絞る（water_neck） ／ farmland_p8.scn：P8 を 1 回正式に重烘（非 headless）。変更は Branches 配下の 土渠メッシュ（頂点色／UV2＋木槽の台）と 水面メッシュ（材質・木槽の口の幅）だけ。他ノードは逐ノード等価",
+   "scope": "farmland_p8.scn の ZoneWorks/ZoneIrrigation/Branches 配下だけ（N0／T0 支線）：土渠メッシュ（頂点色 COLOR／UV2＝地面重み、T0 は木槽の台 Bed_* を追加）と水面メッシュ（材質＝泥水・T0 は木槽の口で水幅を絞る）。田・田埂・取水（竜骨車）・水渠・主河・他の渠／溝／桝・碰撞・MultiMesh は一切触れない。",
+   "measurements": {
+    "nodes": "8817 → 8817、逐ノード一致 8813（MultiMesh 1844 の buffer 含む）、差分 4＝Branch_N0/Merged_0・Merged_1 と Branch_T0/Merged_1・Merged_2 のみ（期待どおり）、old のみ 0・new のみ 0",
+    "earth_triangles": "N0 1764 → 1764（位置同一、頂点色／UV2 のみ変更）／T0 2184 → 3764（失われた三角形 0、増えた 1580＝木槽の台）",
+    "water_vertices": "N0 1050 同一／T0 1488 index 同一、x/z が動いた頂点 120（最大 0.126 m＝木槽の口の絞り）、y の最大差 0.29 mm（水面高程は不変）",
+    "file_bytes": "55,392,676 → 55,426,679",
+    "trough_gap_before": "槽底の下面〜可見地面 3.3–21.6 cm（T0 木槽 3 本：6.1–21.6／3.3–6.8／3.3–15.3 cm、terrain_gap_probe.log）、可見地形と碰撞用 ground_h の差は最大 12 mm",
+    "trough_gap_after": "槽底の下面〜台の頂 4–20 mm（実測最大 14 mm）、槽内（±0.12）の土は槽底の上面より 4.5 cm 以上下、板の外面で台は側板の下端以上",
+    "pixels_same_camera": "土渠の平均輝度／周囲地面：T0 下流 0.77→0.84、N0 0.82→0.87、農田高視角 0.72→0.86；最暗 5 % 点 T0 下流 0.115→0.232；水面 >0.80 の画素率（8 方位×2 高さ・最悪 view）T0 4.59 %→0.73 %、N0 1.75 %→0.26 %"
+   },
+   "dependencies": {
+    "updated": [
+     "tools/village_v2_farmland_zone.gd",
+     "tools/village_v2_farmland_visual.gd",
+     "maps/village_v2/gen/farmland_p8.scn"
+    ],
+    "unchanged_frozen": [
+     "tools/village_v2_farmland_lib.gd",
+     "maps/village_v2/shaders/p8_paddy_water.gdshader",
+     "maps/village_v2/shaders/p8_paddy_plant.gdshader",
+     "data/village_v2_p8_blocks.json",
+     "data/village_v2_p8_ground.json"
+    ],
+    "downstream_updated": [
+     "tools/verify_village_v2_environment.gd（P12_MEADOW_DRIFT.upstream の farmland_p8.scn 雜湊のみ。同 seed の MeadowP9 規劃 114574 株・株位摘要 5d9ef17a… は不変を確認）"
+    ],
+    "removed": [
+     "village_v2.tscn の CanalSampleP13（ext_resource＋node）・scripts_p13/canal_sample.gd・tools/village_v2_canal_sample_lib.gd（外観の出所を 1 つに）"
+    ],
+    "added": [
+     "tools/verify_village_v2_canal_art.gd（CANAL gate＋永久反向 5 案）・run_village_v2_regression.sh に 2 行"
+    ]
+   },
+   "negatives": [
+    "CANAL --negatives：uniform／gap／poke／wide／mat が各自の狙った項だけ FAIL（巻き込み 0）",
+    "CANAL を旧 farmland_p8.scn に実行 → C1／C3／C4a／C4c／C5 が FAIL",
+    "P8 --seal の永久反向：verify_village_v2_farmland.gd が記憶體で期待雜湊を 1 件竄改 → 1 件不符を検出（seals_after_reseal.log）"
+   ],
+   "art_status_of_change": "ART_REVIEW（W3 樣本の方向は使用者が 2026-10-12 に承認済み；N0／T0 正式整合の見た目は使用者の驗收待ち）。P8 本体の ART_APPROVED 2026-10-01 は変更なし",
+   "evidence": [
+    "docs/art_review/village_v2_p13/wave3b/evidence/p8_build.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/p8_equivalence.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/p8_gate_and_negatives.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/canal_gate.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/canal_gate_negatives.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/canal_gate_on_old_scene.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/pixel_stats_before_after.txt",
+    "docs/art_review/village_v2_p13/wave3b/evidence/glare_stats_before_after.txt",
+    "docs/art_review/village_v2_p13/wave3b/evidence/dark_gap_before_after.txt",
+    "docs/art_review/village_v2_p13/wave3b/evidence/farm_place.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/terrain_gap_probe.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/branch_composition.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/bed_neighbors_probe.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/feeder.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/feeder_negative.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/branch_walk.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/mmbake.log",
+    "docs/art_review/village_v2_p13/wave3b/evidence/seals_after_reseal.log"
+   ]
   }
  ]
 }

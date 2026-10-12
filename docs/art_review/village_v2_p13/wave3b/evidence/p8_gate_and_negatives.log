@@ -1,0 +1,27 @@
+=== verify_village_v2_farmland.gd -- 
+[FARM] PASS P11 R2D branches N0/T0 from ryukotsu: 2 branches, legacy feeders 0, problems 0 []
+[FARM] PASS P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children 0, old collision 0); branch meshes 10, branch collision 119
+[FARM] PASS P11 R2D-Fix T0 tap: real opening in feed side board (中心±0.12 開口=true、両脇の側板残存=true)
+[FARM] result: 0 failed; pilot=7 + zone=67 fields; water err=0.0000m spread=0.045–0.045, path clearance=1.106m
+exit=0
+=== verify_village_v2_farmland.gd -- --negative
+[FARM] PASS P11 R2D branches N0/T0 from ryukotsu: 2 branches, legacy feeders 0, problems 0 []
+[FARM] PASS P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children 0, old collision 0); branch meshes 10, branch collision 119
+[FARM] PASS P11 R2D-Fix T0 tap: real opening in feed side board (中心±0.12 開口=true、両脇の側板残存=true)
+[FARM] FAIL water +0.045m on frozen terrace (max err 0.5000 < 0.002)
+[FARM] PASS negative detects raised water
+[FARM] negative_expected_fail=1
+exit=0
+=== verify_village_v2_farmland.gd -- --negative-branch
+[FARM] PASS P11 R2D branches N0/T0 from ryukotsu: 2 branches, legacy feeders 0, problems 0 []
+[FARM] PASS P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children 0, old collision 0); branch meshes 10, branch collision 119
+[FARM] PASS P11 R2D-Fix T0 tap: real opening in feed side board (中心±0.12 開口=true、両脇の側板残存=true)
+[FARM] PASS NEGATIVE branch reverse slope must be detected
+[FARM] result: 0 failed; pilot=7 + zone=67 fields; water err=0.0000m spread=0.045–0.045, path clearance=1.106m
+exit=0
+=== verify_village_v2_farmland.gd -- --negative-feedcut
+[FARM] PASS P11 R2D branches N0/T0 from ryukotsu: 2 branches, legacy feeders 0, problems 0 []
+[FARM] PASS P11 R2D legacy WW1/WW3 elevated flumes removed (Feeders children 0, old collision 0); branch meshes 10, branch collision 119
+[FARM] FAIL P11 R2D-Fix T0 tap: real opening in feed side board (中心±0.12 開口=true、両脇の側板残存=true（反向：開口判定を反転）)
+[FARM] result: 1 failed; pilot=7 + zone=67 fields; water err=0.0000m spread=0.045–0.045, path clearance=1.106m
+exit=1

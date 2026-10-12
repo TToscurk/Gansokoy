@@ -1,0 +1,5 @@
+[MDW] INFO 封存 groundcover 規劃の再計算 72870 ms（讀み取り専用）
+[MDW] INFO meadow 文脈 4886 ms（Props・NPC 立ち位置 2451、村外の距離場 1 m）
+[MDW] INFO 1 m 場 18273 ms（505×507、縁のこぼれ 4059 セル）
+[MDW] INFO 規劃 11015 ms：107380 株（short 4264、medium 35298、tall 30175、seed 16699、dry 3147、lean 14069、sparse 0、fern 2654、sasa 1074）
+[MDW] 結果：0 項失敗

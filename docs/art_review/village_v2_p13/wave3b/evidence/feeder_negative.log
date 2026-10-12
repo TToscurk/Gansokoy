@@ -1,0 +1,9 @@
+[FEEDER] FAIL supply_system_state：非表示の取水構件 2（Ryukotsu/Trough/Body、Ryukotsu/Trough/Water）；無効な碰撞形 0；撤去済み高架樋の残骸 0；碰撞層 1
+[FEEDER-NEG] N1 竜骨車の樋を runtime 非表示（ROUND 3 の WaterLifeP10 と同じ手口）：PASS（gate 正確失敗）
+[FEEDER] FAIL supply_system_state：非表示の取水構件 0；無効な碰撞形 1（Post_00）；撤去済み高架樋の残骸 0；碰撞層 1
+[FEEDER-NEG] N2 竜骨車の柱の碰撞形を停止：PASS（gate 正確失敗）
+[FEEDER] FAIL supply_system_state：非表示の取水構件 0；無効な碰撞形 0；撤去済み高架樋の残骸 1（Chute_0）；碰撞層 1
+[FEEDER-NEG] N3 撤去済みの高架落とし樋 Chute_0 が残る：PASS（gate 正確失敗）
+[FEEDER] PASS supply_system_state：非表示の取水構件 0；無効な碰撞形 0；撤去済み高架樋の残骸 0；碰撞層 1
+[FEEDER-NEG] 復元後の正常状態：PASS
+[FEEDER-NEG] result: 反向 3/3

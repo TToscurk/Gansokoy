@@ -1,0 +1,4 @@
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[FARM_PLACE] bund=23160 water=666 samples, max |ground gap| 0.069m, max water intrusion -0.046m, 0 failures

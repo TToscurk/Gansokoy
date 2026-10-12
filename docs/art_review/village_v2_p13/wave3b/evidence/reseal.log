@@ -1,0 +1,11 @@
+frozen data/village_v2_p8_seal.json ['tools/village_v2_farmland_visual.gd', 'tools/village_v2_farmland_zone.gd', 'maps/village_v2/gen/farmland_p8.scn']
+frozen data/village_v2_p9r54_seal.json ['godot/tools/verify_village_v2_environment.gd']
+cascade 0 data/village_v2_p10r4b_seal.json ['village_v2_p9r54_seal.json', 'village_v2_p8_seal.json']
+cascade 0 data/village_v2_p9_final_seal.json ['village_v2_p9r54_seal.json']
+cascade 1 data/village_v2_p10r3b_seal.json ['village_v2_p9_final_seal.json']
+cascade 1 data/village_v2_p10r3c_seal.json ['village_v2_p10r3b_seal.json']
+cascade 1 data/village_v2_p10r3d_seal.json ['village_v2_p10r3b_seal.json', 'village_v2_p10r3c_seal.json']
+cascade 1 data/village_v2_p10r3e_seal.json ['village_v2_p10r3d_seal.json', 'village_v2_p10r3c_seal.json', 'village_v2_p10r3b_seal.json']
+cascade 1 data/village_v2_p10r4_seal.json ['village_v2_p9_final_seal.json', 'village_v2_p10r3d_seal.json', 'village_v2_p10r3e_seal.json']
+cascade 1 data/village_v2_p10r4b_seal.json ['village_v2_p10r4_seal.json', 'village_v2_p10r3b_seal.json', 'village_v2_p10r3c_seal.json', 'village_v2_p10r3d_seal.json', 'village_v2_p10r3e_seal.json', 'village_v2_p9_final_seal.json']
+seal mismatch 0 
