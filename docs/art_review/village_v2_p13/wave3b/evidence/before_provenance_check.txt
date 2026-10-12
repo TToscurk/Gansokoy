@@ -1,0 +1,59 @@
+== 1. 改前バックアップ scn の来歴（ハッシュ）
+[PROV] backup 実測           eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2
+[PROV] e50c84c の P8 封存値  eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2
+[PROV] e50c84c の LFS 指標   eea295d7cf0435144e2df0b2d8f751edd142b5538e0065410fa0317c393d95c2
+[PROV] → バックアップ＝元の封存版： True
+[PROV] 現行 scn 実測         536f2599004d3013a7079431bd766e62f495f8c9543dd84c25f5cd873e8b848c
+[PROV] HEAD の LFS 指標      536f2599004d3013a7079431bd766e62f495f8c9543dd84c25f5cd873e8b848c
+[PROV] → 現行＝HEAD の指標： True
+
+== 2. 撮影の時間線（重烘の時刻は最後の 1 回だけ残る）
+[PROV] 2026-10-12 15:27:09 → 15:33:40 | scratch/orig（58 枚）
+[PROV] 2026-10-12 15:39:38 → 15:40:14 | scratch/sample（52 枚）
+[PROV] 2026-10-12 15:44:06 | [改前バックアップ scn を作った時刻]
+[PROV] 2026-10-12 15:48:39 → 16:02:18 | scratch/exp1（78 枚）
+[PROV] 2026-10-12 15:49:25 → 15:51:56 | scratch/orig2（30 枚）
+[PROV] 2026-10-12 16:10:24 → 16:10:50 | scratch/exp2（32 枚）
+[PROV] 2026-10-12 16:15:28 → 16:15:56 | scratch/exp3（36 枚）
+[PROV] 2026-10-12 16:27:59 → 16:28:24 | scratch/exp4（32 枚）
+[PROV] 2026-10-12 16:31:46 → 16:34:34 | scratch/glare_exp（256 枚）
+[PROV] 2026-10-12 16:35:04 → 16:37:51 | scratch/glare_orig（256 枚）
+[PROV] 2026-10-12 16:47:34 → 16:47:50 | scratch/scan（12 枚）
+[PROV] 2026-10-12 16:50:19 → 16:50:29 | docs/…/shots/before（4 枚）
+[PROV] 2026-10-12 16:56:36 → 16:57:01 | scratch/exp5（34 枚）
+[PROV] 2026-10-12 17:00:47 | [最後の P8 重烘 scn の更新]
+[PROV] 2026-10-12 17:00:48 | [p8_build.log＝最後の build の終了]
+[PROV] 2026-10-12 17:02:34 → 17:02:57 | docs/…/shots/after（22 枚）
+[PROV] 2026-10-12 17:03:29 → 17:06:17 | scratch/glare_formal（256 枚）
+[PROV] 2026-10-12 17:19:55 → 17:21:57 | scratch/ends（15 枚）
+[PROV] 2026-10-12 17:42:56 → 17:43:59 | scratch/ends_old（9 枚）
+[PROV] 2026-10-12 18:03:33 → 18:03:45 | scratch/repro（16 枚）
+
+== 3. shots/before の画像内容（同じ 4 視点）
+[PROV] 比較          平均絶対差/765   差>30 の画素率
+[PROV] N0_tps       | before↔orig2(改前基線) 68.69 / 73.88% | before↔after 3.01 / 3.12%
+[PROV] T0_down_tps  | before↔orig2(改前基線) 0.63 / 0.54% | before↔after 2.38 / 2.16%
+[PROV] T0_up_tps    | before↔orig2(改前基線) 0.75 / 0.60% | before↔after 5.35 / 4.74%
+[PROV] high_farm    | before↔orig2(改前基線) 3.75 / 0.77% | before↔after 3.29 / 2.06%
+
+== 3b. 土メッシュのマスク面積（盛土が入ると面積が増える。旧幾何なら小さい）
+[PROV] N0_tps       before 43119 | orig2 14809 | after 46561 | after/before ×1.08
+[PROV] T0_down_tps  before 21370 | orig2 21372 | after 25822 | after/before ×1.21
+[PROV] T0_up_tps    before 19233 | orig2 19234 | after 82694 | after/before ×4.30
+[PROV] high_farm    before 24610 | orig2 24586 | after 27235 | after/before ×1.11
+
+== 4. glare 基線（glare_orig が旧水材質か）：水面マスク内の平均輝度
+[PROV] glare_orig    水面の平均輝度 0.409（16 view・水面画素 1520407）
+[PROV] glare_exp     水面の平均輝度 0.347（16 view・水面画素 1514205）
+[PROV] glare_formal  水面の平均輝度 0.347（16 view・水面画素 1515577）
+[PROV] → exp（新生成器をメモリ内で実行）≈ formal（重烘後）で、orig だけ明るければ glare_orig は旧水材質：orig−formal 0.062 / exp−formal 0.000
+
+== 5. 登録用：主要画像の sha256（先頭 16 桁）
+[PROV] before/N0_tps.png  907f3af6e13736dd
+[PROV] before/T0_down_tps.png  7fce776e566506fd
+[PROV] before/T0_up_tps.png  df823002c642e847
+[PROV] before/high_farm.png  60a8540cd6385828
+[PROV] after/N0_tps.png  789f17eb2d7fc39d
+[PROV] after/T0_down_tps.png  84ad9da65f07d817
+[PROV] after/T0_up_tps.png  3b0bfa00c9aa65d1
+[PROV] after/high_farm.png  a779cd762c0be634
