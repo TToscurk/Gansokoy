@@ -19,6 +19,12 @@ func _run() -> void:
 	var ps := PackedScene.new()
 	var ok := ps.pack(r) == OK and ResourceSaver.save(ps, AL.OUTPUT, ResourceSaver.FLAG_COMPRESS) == OK
 	print("[ARCH] save %s %s：%d 棟、LOD0 %d 三角面" % [AL.OUTPUT, "OK" if ok else "FAIL", int(r.get_meta("buildings")), int(r.get_meta("lod0_tris"))])
+	for e: Dictionary in r.get_meta("report"):
+		print("[ARCH] %s %s %s/%s top %.2f→%.2f（P4 碰撞頂 %.2f）x %s z %s（碰撞半幅 %s）差替 %d" % [e["id"], e["cat"], e["type"], e["roof"],
+			e["top0"], e["top1"], e["col_top"], str(e["x1"]), str(e["z1"]), str(e["col_half"]), e["swaps"]])
+	for f in r.get_node("FarmPreview").get_children():
+		print("[ARCH] farm %s @%s 地形 %s %s" % [f.name, f.position, str(f.get_meta("ground")), f.get_meta("dims")])
+	print("[ARCH] hide_nodes %s" % str(r.get("hide_nodes")))
 	r.free()
 	# 回讀
 	var back := (ResourceLoader.load(AL.OUTPUT, "", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene).instantiate()

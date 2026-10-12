@@ -1,0 +1,1510 @@
+[
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   427,
+   -123
+  ],
+  "block": 4.3,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 7.3,
+  "estate": 59.2
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   9
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 4.0,
+  "estate": 133.2
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   12
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 7.0,
+  "estate": 133.6
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   57
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 8.0,
+  "estate": 146.7
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   60
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.0,
+  "estate": 148.0
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   63
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.0,
+  "estate": 149.3
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   78
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.0,
+  "estate": 156.9
+ },
+ {
+  "kind": "noka",
+  "sx": 10.3,
+  "sz": 7.6,
+  "c": [
+   559,
+   81
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.0,
+  "estate": 158.5
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   319,
+   78
+  ],
+  "block": 5.3,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.5,
+  "estate": 103.3
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   9
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.6,
+  "estate": 134.4
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   12
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.6,
+  "estate": 134.8
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   57
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.7,
+  "estate": 147.3
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   60
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.6,
+  "estate": 148.6
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   78
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.6,
+  "estate": 157.3
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   81
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.6,
+  "estate": 158.9
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   559,
+   84
+  ],
+  "block": 6.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.6,
+  "estate": 160.5
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   -12
+  ],
+  "block": 5.3,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 6.0,
+  "estate": 136.7
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   -9
+  ],
+  "block": 5.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.2,
+  "estate": 136.7
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   9
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.2,
+  "estate": 137.4
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   12
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 6.0,
+  "estate": 137.7
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   57
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.0,
+  "estate": 150.0
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   60
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.1,
+  "estate": 151.3
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   63
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.7,
+  "estate": 152.6
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   78
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.4,
+  "estate": 159.8
+ },
+ {
+  "kind": "noka",
+  "sx": 7.6,
+  "sz": 10.3,
+  "c": [
+   562,
+   81
+  ],
+  "block": 9.2,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.1,
+  "estate": 161.4
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   319,
+   75
+  ],
+  "block": 7.3,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.3,
+  "estate": 103.8
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   322,
+   75
+  ],
+  "block": 4.6,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.5,
+  "estate": 102.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   322,
+   78
+  ],
+  "block": 3.4,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.5,
+  "estate": 104.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   430,
+   -123
+  ],
+  "block": 7.8,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 7.3,
+  "estate": 61.1
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   430,
+   -120
+  ],
+  "block": 5.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 6.0,
+  "estate": 58.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   430,
+   -117
+  ],
+  "block": 2.2,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 5.7,
+  "estate": 55.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   430,
+   -75
+  ],
+  "block": 3.9,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 5.7,
+  "estate": 14.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   433,
+   -123
+  ],
+  "block": 8.8,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 5.1,
+  "estate": 61.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   433,
+   -120
+  ],
+  "block": 6.1,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.2,
+  "estate": 58.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   433,
+   -117
+  ],
+  "block": 3.3,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 2.7,
+  "estate": 55.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   433,
+   -75
+  ],
+  "block": 3.9,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 2.7,
+  "estate": 15.4
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   433,
+   -72
+  ],
+  "block": 6.9,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 2.7,
+  "estate": 13.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   448,
+   -108
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.7,
+  "estate": 51.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   451,
+   -108
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 6.7,
+  "estate": 53.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   6
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 132.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   9
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.7,
+  "estate": 132.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   60
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.7,
+  "estate": 148.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   63
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.7,
+  "estate": 149.4
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   75
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.7,
+  "estate": 155.4
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   78
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.7,
+  "estate": 157.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   556,
+   81
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.7,
+  "estate": 158.7
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   -9
+  ],
+  "block": 3.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.7,
+  "estate": 134.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   -6
+  ],
+  "block": 3.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 134.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   6
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 135.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   9
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.7,
+  "estate": 135.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   60
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.7,
+  "estate": 150.6
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   63
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.7,
+  "estate": 152.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   75
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.7,
+  "estate": 158.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   78
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.7,
+  "estate": 159.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   559,
+   81
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.7,
+  "estate": 161.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   -9
+  ],
+  "block": 6.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 6.3,
+  "estate": 137.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   -6
+  ],
+  "block": 6.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.7,
+  "estate": 137.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   -3
+  ],
+  "block": 6.6,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.9,
+  "estate": 137.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   0
+  ],
+  "block": 8.4,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.8,
+  "estate": 137.7
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   3
+  ],
+  "block": 10.1,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.9,
+  "estate": 137.9
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   6
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.7,
+  "estate": 138.2
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   9
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 6.3,
+  "estate": 138.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   60
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.2,
+  "estate": 153.3
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   63
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.5,
+  "estate": 154.7
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   66
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.3,
+  "estate": 156.1
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   69
+  ],
+  "block": 10.7,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.8,
+  "estate": 157.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   72
+  ],
+  "block": 10.4,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 1.8,
+  "estate": 159.0
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   75
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.9,
+  "estate": 160.5
+ },
+ {
+  "kind": "naya",
+  "sx": 6.1,
+  "sz": 4.2,
+  "c": [
+   562,
+   78
+  ],
+  "block": 10.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.4,
+  "estate": 162.1
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   319,
+   75
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.9,
+  "estate": 103.6
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   322,
+   75
+  ],
+  "block": 5.1,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.0,
+  "estate": 101.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   322,
+   78
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.5,
+  "estate": 104.2
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   430,
+   -123
+  ],
+  "block": 7.2,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 7.6,
+  "estate": 60.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   430,
+   -120
+  ],
+  "block": 4.4,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 6.8,
+  "estate": 57.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   430,
+   -75
+  ],
+  "block": 3.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 6.7,
+  "estate": 13.6
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   433,
+   -123
+  ],
+  "block": 8.3,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 5.1,
+  "estate": 60.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   433,
+   -120
+  ],
+  "block": 5.5,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.8,
+  "estate": 57.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   433,
+   -117
+  ],
+  "block": 2.7,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.7,
+  "estate": 54.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   433,
+   -75
+  ],
+  "block": 3.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.7,
+  "estate": 15.2
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   433,
+   -72
+  ],
+  "block": 6.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 3.7,
+  "estate": 13.0
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   445,
+   -111
+  ],
+  "block": 7.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 1.7,
+  "estate": 52.5
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   445,
+   -108
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 1.7,
+  "estate": 49.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   448,
+   -108
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 4.7,
+  "estate": 51.1
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   451,
+   -108
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_2",
+  "farmpath_d": 7.7,
+  "estate": 52.6
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   6
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.8,
+  "estate": 133.0
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   9
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 4.8,
+  "estate": 133.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   12
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 7.7,
+  "estate": 133.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   60
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.8,
+  "estate": 148.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   63
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.8,
+  "estate": 149.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   78
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.8,
+  "estate": 157.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   556,
+   81
+  ],
+  "block": 4.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.8,
+  "estate": 158.9
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   -12
+  ],
+  "block": 4.0,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 7.8,
+  "estate": 135.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   -9
+  ],
+  "block": 3.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 4.8,
+  "estate": 135.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   -6
+  ],
+  "block": 3.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.9,
+  "estate": 135.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   6
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 1.9,
+  "estate": 136.0
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   9
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 4.8,
+  "estate": 136.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   12
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 7.8,
+  "estate": 136.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   60
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.8,
+  "estate": 151.0
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   63
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.9,
+  "estate": 152.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   78
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.8,
+  "estate": 159.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   559,
+   81
+  ],
+  "block": 7.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.8,
+  "estate": 161.5
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   -9
+  ],
+  "block": 6.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.9,
+  "estate": 138.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   -6
+  ],
+  "block": 6.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.7,
+  "estate": 138.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   -3
+  ],
+  "block": 7.2,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 138.5
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   0
+  ],
+  "block": 8.5,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 138.6
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   3
+  ],
+  "block": 10.5,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 2.7,
+  "estate": 138.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   6
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 3.7,
+  "estate": 139.0
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   9
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_4",
+  "farmpath_d": 5.9,
+  "estate": 139.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   60
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 6.8,
+  "estate": 153.7
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   63
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 4.4,
+  "estate": 155.1
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   66
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.8,
+  "estate": 156.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   69
+  ],
+  "block": 11.3,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.7,
+  "estate": 157.9
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   72
+  ],
+  "block": 11.1,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 2.7,
+  "estate": 159.3
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   75
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 3.2,
+  "estate": 160.8
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   78
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 5.1,
+  "estate": 162.4
+ },
+ {
+  "kind": "naya",
+  "sx": 4.2,
+  "sz": 6.1,
+  "c": [
+   562,
+   81
+  ],
+  "block": 10.9,
+  "farmpath": "FarmPath_5",
+  "farmpath_d": 7.7,
+  "estate": 164.0
+ }
+]
