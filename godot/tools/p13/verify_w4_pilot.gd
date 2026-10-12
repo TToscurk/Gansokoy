@@ -296,6 +296,8 @@ func _run() -> void:
 	var g_after := WS.TopGrid.new()
 	g_after.add_mesh(ss0.mesh)
 	g_after.add_mesh(steps_mi.mesh)
+	if soil_mi != null and soil_mi.mesh != null:
+		g_after.add_mesh(soil_mi.mesh)         # 縫の底〔砂利まじりの土、r11 から W4Soil〕も『見える面』。穿いて低い面を測ると縫の位置で偽の凹みになる
 	var g_before := WS.TopGrid.new()
 	var orig0 := (load("res://maps/village_v2/gen/shrine_approach_p10.scn") as PackedScene).instantiate()
 	g_before.add_mesh((orig0.get_node("StoneSteps") as MeshInstance3D).mesh)

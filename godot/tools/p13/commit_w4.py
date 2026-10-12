@@ -34,14 +34,17 @@ def targets():
         "godot/maps/village_v2/scripts_p13/sando_pilot_w4.gd",
         "godot/maps/village_v2/gen/sando_pilot_w4_p13.scn",
         "godot/maps/village_v2/village_v2.tscn",
+        "godot/tools/gen_village_v2.gd",                    # W4B：LandmarkParcelLines を visible=false で出力（1 行）
+        "docs/art_review/village_v2_p13/wave5_backlog.md",
     ]
     for f in sorted(os.listdir(os.path.join(REPO, "godot/tools/p13"))):
         if "w4" in f and not f.endswith(".uid"):
             out.append("godot/tools/p13/" + f)
-    root = os.path.join(REPO, "docs/art_review/village_v2_p13/wave4")
-    for d, _, fs in os.walk(root):
-        for f in sorted(fs):
-            out.append(os.path.relpath(os.path.join(d, f), REPO).replace("\\", "/"))
+    for sub in ("wave4", "wave4b"):
+        root = os.path.join(REPO, "docs/art_review/village_v2_p13/" + sub)
+        for d, _, fs in os.walk(root):
+            for f in sorted(fs):
+                out.append(os.path.relpath(os.path.join(d, f), REPO).replace("\\", "/"))
     return out
 
 

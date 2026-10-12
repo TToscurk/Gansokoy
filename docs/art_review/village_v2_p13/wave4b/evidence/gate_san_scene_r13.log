@@ -1,0 +1,7 @@
+[SAN] PASS root/ShrineApproachP10 掛載 1 個（實得 1）
+[SAN] PASS 順序：WaterLifeP10 之後（index 15）
+[SAN] PASS 參道 ribbon 換 pilot shader、石段範圍挖洞 cut_s (36.15028, 99.8035)、cut_hw 2.60
+[SAN] PASS 參道中心線往下射線：斜坡碰撞／地形 24、其他 0
+[SAN] PASS enabled=false → ribbon 還原、碰撞全停
+[SAN] PASS enabled=true → 重新套用
+[SAN] 結果：0 項失敗

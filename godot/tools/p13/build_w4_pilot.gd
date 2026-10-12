@@ -94,6 +94,27 @@ func _run() -> void:
 	for s in mi.mesh.get_surface_count():
 		tris += (mi.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
 	var wb := SA.winding_bad(ov)
+	var cnt := {}
+	var em: Array = []
+	for e: Dictionary in W4.side_log:
+		cnt[e["mode"]] = int(cnt.get(e["mode"], 0)) + 1
+		em.append(float(e["e_max"]))
+	em.sort()
+	var tl := 0
+	var tm := 0
+	var th := 0
+	var by_side := {-1.0: [0, 0, 0], 1.0: [0, 0, 0]}
+	for e: Dictionary in W4.side_log:
+		tl += int(e["n_lo"])
+		tm += int(e["n_mid"])
+		th += int(e["n_hi"])
+		var bs: Array = by_side[float(e["sd"])]
+		bs[0] += int(e["n_lo"])
+		bs[1] += int(e["n_mid"])
+		bs[2] += int(e["n_hi"])
+	var tt := float(maxi(tl + tm + th, 1))
+	print("[W4B] 局所露出量〔笠石頂線 − 外側地形、0.05 m ごと〕：< 0.12 m %.0f %%・0.12–0.30 m %.0f %%・> 0.30 m %.0f %%（左 %s・右 %s）" % [100.0 * tl / tt, 100.0 * tm / tt, 100.0 * th / tt, str(by_side[-1.0]), str(by_side[1.0])])
+	print("[W4B] 側面 run %d：%s｜e_max 分布 最小 %.2f・中央値 %.2f・最大 %.2f m" % [W4.side_log.size(), str(cnt), em[0] if em.size() > 0 else 0.0, em[em.size() / 2] if em.size() > 0 else 0.0, em[em.size() - 1] if em.size() > 0 else 0.0])
 	print("[W4B] W4Steps %d 三角形・W4Soil %d 三角形・%d ms・巻き順不正 %d／%d・石垣／笠石ブロック %d" % [tris, W4.soil_n, Time.get_ticks_msec() - t0, int(wb[0]), int(wb[1]), W4.diag.size()])
 	var ps := PackedScene.new()
 	var ok := ps.pack(ov) == OK and ResourceSaver.save(ps, W4.OUTPUT, ResourceSaver.FLAG_COMPRESS) == OK

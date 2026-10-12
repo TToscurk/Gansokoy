@@ -141693,6 +141693,7 @@ metadata/slope_pct = 14.7
 metadata/label = "河岸帶（主河兩岸 6 m 內；尚未分配用途）"
 
 [node name="LandmarkParcelLines" type="MeshInstance3D" parent="Districts" unique_id=1367616116]
+visible = false
 material_override = SubResource("StandardMaterial3D_mpgdm")
 cast_shadow = 0
 mesh = ExtResource("920_6x4tm")

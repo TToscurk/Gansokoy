@@ -7,10 +7,12 @@ extends SceneTree
 ##   up：玩家は静止、相機は既定（pitch −0.18）で背後（下側）。walk：玩家が実際の入力（move_forward）で下りながら、目標 s に達した瞬間に撮影＝動的相機〔下り坂バイアス〕が効いた状態。
 ## 再現性：Input.mouse_mode＝VISIBLE（実機のマウス捕捉で pitch がずれない）、pitch＝既定 −0.18、動的相機〔_slope_bias〕には触れない。場景ファイルは書かない。
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
+const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const OVR := "SandoPilotW4P13"
 const DEF_PITCH := -0.18
 const VIEWS := {
 	# 名前：[種別, s, 追加]   種別 up／walk（s＝撮影する位置、追加＝歩き出し s）／free（pos, target, fov は別表）
+	"up_s43": ["up", 43.0],
 	"up_s47": ["up", 47.0],
 	"up_s52": ["up", 52.0],
 	"up_s56": ["up", 56.0],
@@ -178,6 +180,132 @@ func _mag_drill(node: Node, base: int, depth: int) -> void:
 				await _mag_drill(n3, base, depth + 1)
 
 
+## ── 診断（exp）：同じ鏡位で「黒の出どころ」の候補を 1 つずつ外して撮る。lib の旗〔W4.flags〕と実行時の設定だけで変える（場景は書かない）──
+var _ov: Node3D
+var _exp_in := {}
+
+
+func _exp_prepare() -> void:
+	_ov = vil.get_node_or_null(OVR) as Node3D
+	var sp := vil.get_world_3d().direct_space_state
+	var H := SA.ramp_profile(vil, cl)
+	var st := SA.steps(cl, H)
+	var rp := SA.ramp_points(st, H)
+	var kr := W4.pilot_k_range(st)
+	var lanterns := []
+	for ls in SA.lantern_specs(cl, H, st, sp):
+		var s_l := float(ls["s"])
+		if s_l >= kr.x * 0.05 - 2.0 and s_l <= kr.y * 0.05 + 2.0 and not lanterns.has(s_l):
+			lanterns.append(s_l)
+	_exp_in = {"H": H, "plan": W4.replan(cl, H, st, rp),
+		"touts": [W4.outer_profile(sp, cl, kr, -1.0), W4.outer_profile(sp, cl, kr, 1.0)],
+		"tfars": [W4.outer_profile(sp, cl, kr, -1.0, W4.U_FAR), W4.outer_profile(sp, cl, kr, 1.0, W4.U_FAR)], "lanterns": lanterns}
+
+
+func _exp_apply(vname: String) -> void:
+	var f := {}
+	var vcol := true
+	var shadow := true
+	var self_shadow := true
+	var ssao := true
+	var soil_red := false
+	var diag := false
+	var soil_hide := false
+	var ssao_k := 1.0
+	var on := true
+	match vname:
+		"r8":
+			on = false
+		"no_decals":
+			f = {"no_decals": true}
+		"r0":
+			f = {"r_scale": 0.05}
+		"bed_up":
+			f = {"bed_off": 0.012}
+		"no_vcol":
+			vcol = false
+		"no_shadow":
+			shadow = false
+		"no_selfshadow":
+			self_shadow = false
+		"diag":
+			f = {"diag_color": true}
+			diag = true
+		"soil_red":
+			soil_red = true
+		"no_soil":
+			soil_hide = true
+		"no_ssao":
+			ssao = false
+		"ssao_half":
+			ssao_k = 0.5
+		"all_off_ssao":
+			f = {"no_decals": true, "r_scale": 0.05, "bed_off": 0.012}
+			vcol = false
+			ssao = false
+		"all_off":
+			f = {"no_decals": true, "r_scale": 0.05, "bed_off": 0.012}
+			vcol = false
+	W4.flags = f
+	_ov.set("enabled", on)
+	if on:
+		var ms := W4.build_meshes(cl, _exp_in["H"], _exp_in["plan"], _exp_in["touts"], _exp_in["tfars"], _exp_in["lanterns"])
+		var mi := _ov.get_node("W4Steps") as MeshInstance3D
+		if _steps_mat0 == null:
+			_steps_mat0 = mi.material_override
+		mi.mesh = ms["steps"]
+		(mi.material_override as StandardMaterial3D).vertex_color_use_as_albedo = vcol
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if self_shadow else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if diag:
+			var dm := StandardMaterial3D.new()
+			dm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			dm.vertex_color_use_as_albedo = true
+			dm.cull_mode = BaseMaterial3D.CULL_DISABLED
+			mi.material_override = dm
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		elif _steps_mat0 != null:
+			mi.material_override = _steps_mat0
+		var so := _ov.get_node_or_null("W4Soil") as MeshInstance3D
+		if so != null and _soil_mat0 == null:
+			_soil_mat0 = so.material_override
+		if so != null and ms["soil"] != null:
+			so.mesh = ms["soil"]
+			so.visible = not soil_hide
+			so.material_override = _soil_mat0
+			if soil_red or diag:
+				var rm := StandardMaterial3D.new()
+				rm.albedo_color = Color(1.0, 0.0, 0.0) if soil_red else Color(1.0, 1.0, 0.0)
+				rm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+				so.material_override = rm
+	for l in vil.find_children("*", "DirectionalLight3D", true, false):
+		(l as DirectionalLight3D).shadow_enabled = shadow
+	W4.flags = {}
+	# 環境光遮蔽：エンジンが生きている環境〔Camera3D の environment か WorldEnvironment〕へ。診断だけ（場景は書かない）
+	for env in _envs():
+		if not _ssao0.has(env):
+			_ssao0[env] = [env.ssao_enabled, env.ssao_intensity]
+		var o: Array = _ssao0[env]
+		env.ssao_enabled = ssao and bool(o[0])
+		env.ssao_intensity = float(o[1]) * ssao_k
+
+
+var _ssao0 := {}
+var _soil_mat0: Material = null
+var _steps_mat0: Material = null
+
+
+func _envs() -> Array:
+	var out := []
+	for we in vil.get_tree().root.find_children("*", "WorldEnvironment", true, false):
+		var e := (we as WorldEnvironment).environment
+		if e != null and not out.has(e):
+			out.append(e)
+	var cam := vil.get_viewport().get_camera_3d()
+	if cam != null and cam.environment != null and not out.has(cam.environment):
+		out.append(cam.environment)
+	return out
+
+
 func _rel(s: float, lat: float, h: float) -> Vector3:
 	var k := clampi(int(round(s / 0.05)), 0, cl.size() - 1)
 	var t := SA.tangent(cl, k)
@@ -295,6 +423,8 @@ func _run() -> void:
 		# 洋紅の帯の来歴（P11 R2 の経路〔--start=trail：load_map で村を読み直す＝ReviewStart の hide_debug が効かない〕を再現）：
 		# 当時の位置（s≈97.6、下り向き）で洋紅画素を数え、vil の直下の子を 1 つずつ隠して寄与を測り、寄与のあった節点は子へ掘り下げる
 		await _reload_trail()
+		var lm0 := vil.get_node_or_null("Districts/LandmarkParcelLines") as Node3D
+		print("[W4S] 正式ロード後の Districts/LandmarkParcelLines：%s・visible=%s・is_visible_in_tree=%s" % ["あり" if lm0 != null else "なし", str(lm0.visible) if lm0 != null else "-", str(lm0.is_visible_in_tree()) if lm0 != null else "-"])
 		for spot: float in [97.6, 99.0]:
 			await _tp(spot, false)
 			await _shot("mag_trail_s%d" % int(round(spot)))
@@ -302,6 +432,21 @@ func _run() -> void:
 			print("[W4S] trail 経路 s=%.1f：洋紅画素 %d" % [spot, base2])
 			if base2 > 0:
 				await _mag_drill(vil, base2, 0)
+	if "exp" in want:
+		await _exp_prepare()
+		var variants: PackedStringArray = (args[3] if args.size() > 3 else "base,r8,no_decals,r0,bed_up,no_vcol,no_shadow,all_off").split(",")
+		for vn: String in variants:
+			_exp_apply(vn)
+			await _frames(8)
+			for tv: String in ["up_s43", "up_s61"]:
+				await _tp(float(VIEWS[tv][1]), true)
+				await _shot("exp_%s__%s" % [vn, tv])
+			await _free_begin()
+			for cn: String in ["cl_treads_s40", "cl_land2"]:
+				var c: Array = CLOSE[cn]
+				await _free("exp_%s__%s" % [vn, cn], _rel(float(c[0]), float(c[1]), float(c[2])), _rel(float(c[3]), float(c[4]), float(c[5])), float(c[6]))
+			await _free_end()
+			print("[W4S] exp %s 撮影完了" % vn)
 	if "traj" in want:
 		# 実入力（move_forward）で試作区間を上り→下りに歩き、全物理フレームの位置を積算：r8（overlay OFF）と w4（ON）で同じなら
 		# 歩行・Auto-Step 0.35 m・碰撞・通行は何も変わっていない

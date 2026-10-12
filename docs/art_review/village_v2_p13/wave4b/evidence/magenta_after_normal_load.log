@@ -1,0 +1,5 @@
+[W4S] boot 9382 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W4S] trail 経路で村を読み直した（ReviewStart の hide_debug は効いていない）：map_root=@Node3D@119
+[W4S] 正式ロード後の Districts/LandmarkParcelLines：あり・visible=false・is_visible_in_tree=false
+[W4S] trail 経路 s=97.6：洋紅画素 312
+[W4S] trail 経路 s=99.0：洋紅画素 556

@@ -1826,6 +1826,8 @@ func _parcels() -> void:
 		var mi := _mi(parent, lname, _save(mesh, "parcels_" + String(key).to_lower()),
 			_mat(_k(PARCEL_COL.get(key, Color(0.8, 0.8, 0.8))), true), false)
 		mi.set_meta("phase", "P3")
+		if key == "landmark":
+			mi.visible = false   # P13 W4B：区画輪郭のデバッグ線〔洋紅色〕。正式ロードでは非表示（エディタではノードの目のアイコンで表示できる）
 	parcel_recs = recs
 	var pf := FileAccess.open(PARCELS, FileAccess.WRITE)
 	pf.store_string(JSON.stringify({"_note": "P3 地塊紀錄（§11）。由 tools/gen_village_v2.gd 產生，勿手改。",

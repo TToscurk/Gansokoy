@@ -103,6 +103,9 @@ func _run() -> void:
 	var ga := WS.TopGrid.new()
 	ga.add_mesh(ss.mesh)
 	ga.add_mesh((ov.get_node("W4Steps") as MeshInstance3D).mesh)
+	var soil_node := ov.get_node_or_null("W4Soil") as MeshInstance3D
+	if soil_node != null and soil_node.mesh != null:
+		ga.add_mesh(soil_node.mesh)            # 縫の底〔土〕も見える面（r11 から）
 	print("[W4X] 上向き三角形：Before %d・After %d" % [gb.tri.size() / 3, ga.tri.size() / 3])
 	_front_protrusion("Before", gb, cl, st.slice(rg.x, rg.y + 1))
 	_front_protrusion("After ", ga, cl, plan_a)
@@ -116,4 +119,30 @@ func _run() -> void:
 		print("[W4X] ", WS.fmt("横 %+.2f m  Before" % float(u), sb))
 		print("[W4X] ", WS.fmt("横 %+.2f m  After " % float(u), sa))
 		print("[W4X]   gate（After が Before の水準内）：%s" % ("OK" if WS.gate_ok(sa, sb) else "NG"))
+	# 最悪点の位置（中心線）：どの段・平台のどこで石面が碰撞面から外れるか
+	var worst := []
+	for k in range(kr.x + 8, kr.y - 8):
+		var p: Vector2 = cl[k]
+		var yr := WS.ramp_y(sp, p)
+		var ya := ga.top_at(p.x, p.y)
+		if is_nan(yr) or is_nan(ya):
+			continue
+		worst.append([ya - yr, k])
+	worst.sort_custom(func(x: Array, y: Array) -> bool: return float(x[0]) < float(y[0]))
+	for i in 6:
+		var w: Array = worst[i]
+		var kk := int(w[1])
+		var where := ""
+		for c: Dictionary in plan_a:
+			if kk >= int(c["k0"]) and kk <= int(c["k1"]):
+				where = "%s s=%.2f–%.2f" % [String(c["kind"]), int(c["k0"]) * 0.05, int(c["k1"]) * 0.05]
+		print("[W4X] 最も低い #%d：d=%+.1f cm・s=%.2f｜%s" % [i + 1, float(w[0]) * 100.0, kk * 0.05, where])
+	for i in 4:
+		var w: Array = worst[worst.size() - 1 - i]
+		var kk := int(w[1])
+		var where := ""
+		for c: Dictionary in plan_a:
+			if kk >= int(c["k0"]) and kk <= int(c["k1"]):
+				where = "%s s=%.2f–%.2f" % [String(c["kind"]), int(c["k0"]) * 0.05, int(c["k1"]) * 0.05]
+		print("[W4X] 最も高い #%d：d=%+.1f cm・s=%.2f｜%s" % [i + 1, float(w[0]) * 100.0, kk * 0.05, where])
 	quit(0)
