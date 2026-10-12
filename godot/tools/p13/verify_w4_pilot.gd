@@ -1,11 +1,12 @@
 extends SceneTree
 ## P13 Wave 4 参道試作 overlay の gate（headless、唯讀）。
 ##   godot --headless --path . --script res://tools/p13/verify_w4_pilot.gd
-## 守るもの：碰撞は r8 のまま（Auto-Step 0.35 m・相機・通行は碰撞と玩家コードに依存＝触れていない）／試作の踏面が斜坡碰撞の許容帯に収まる／
+## 守るもの：見える踏面と斜坡碰撞（足の高さ）のずれが r8 と同じ水準〔足が石に沈まない・浮かない〕／碰撞は r8 のまま（Auto-Step 0.35 m・相機・通行は碰撞と玩家コードに依存＝触れていない）／試作の踏面が斜坡碰撞の許容帯に収まる／
 ## 浮空なし（石垣の底が地形に埋まる）／不規則さが r8 より有意に大きい／巻き順・無碰撞・範囲／scene の生成物が生成器の出力と一致／enabled 切替で r8 に戻る。
 ## 反向（わざと壊したデータを渡すと gate が落ちる）も同じ関数で確かめる。
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
+const WS := preload("res://tools/p13/w4_walk_surface.gd")
 var fails := 0
 
 
@@ -40,8 +41,8 @@ func check_plan(plan: Array, H: PackedFloat32Array, rd: PackedFloat32Array) -> A
 			for kk in range(k0, k1 + 1):
 				if not is_nan(rd[kk]):
 					dev = maxf(dev, absf(rd[kk] - float(c["y0"])))
-			if dev > 0.5 * r + W4.DEV_PAD + 1e-3:
-				out.append("斜坡碰撞との差 %.3f m が許容帯を超える（s=%.2f）" % [dev, k0 * 0.05])
+			if dev > W4.dev_limit(r) + 1e-3:
+				out.append("斜坡碰撞との差 %.3f m が許容帯 %.3f m を超える（s=%.2f）" % [dev, W4.dev_limit(r), k0 * 0.05])
 			var tl := k1 - k0
 			if tl < int(W4.D_K[0]) or tl > int(W4.D_K[W4.D_K.size() - 1]):
 				out.append("踏面長 %d が範囲外" % tl)
@@ -61,6 +62,23 @@ func _tris(m: Mesh) -> int:
 	if idx != null and (idx as PackedInt32Array).size() > 0:
 		return (idx as PackedInt32Array).size() / 3
 	return (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+
+
+## 既存 SWALK W1 と同じ帯（|斜坡 − 踏面| ≤ 半蹴上 + 0.03）を超える踏面の数。SWALK は generator の計画〔LIB.steps〕を見る＝overlay の計画は対象外なので、ここで同じ式を適用する
+func swalk_viol(plan: Array, H: PackedFloat32Array, rd: PackedFloat32Array) -> int:
+	var n := 0
+	var yp := H[int(plan[0]["k0"])]
+	for c: Dictionary in plan:
+		if String(c["kind"]) == "step":
+			var r := float(c["y0"]) - yp
+			var dev := 0.0
+			for kk in range(int(c["k0"]), int(c["k1"]) + 1):
+				if not is_nan(rd[kk]):
+					dev = maxf(dev, absf(rd[kk] - float(c["y0"])))
+			if dev > 0.5 * r + 0.03 + 1e-6:
+				n += 1
+		yp = float(c["y1"])
+	return n
 
 
 func _cv(a: Array) -> float:
@@ -190,6 +208,14 @@ func _run() -> void:
 	bad4[2]["k1"] = int(bad4[2]["k1"]) + 12
 	_ok(not check_plan(bad4, H, rd).is_empty(), "反向：踏面長を 0.6 m 延ばす → 落ちる")
 	_ok(_cv(rt8[0]) < 0.12, "反向：r8 の計画は不規則さの gate（≥ 0.12）を満たさない＝gate が弁別する")
+	var sv_a := swalk_viol(plan, H, rd)
+	var sv_b := swalk_viol(st.slice(rg.x, rg.y + 1), H, rd)
+	_ok(sv_a == 0 and sv_b == 0, "既存 SWALK W1 の帯（半蹴上 + 3 cm）を超える踏面：試作 %d 段・r8 %d 段（どちらも 0）" % [sv_a, sv_b])
+	var bad5: Array = plan.duplicate(true)
+	for ci in range(6, 40):
+		if String(bad5[ci]["kind"]) == "step":
+			bad5[ci]["y0"] = float(bad5[ci]["y0"]) + 0.06
+	_ok(swalk_viol(bad5, H, rd) > 0, "反向：踏面を 6 cm 持ち上げる → SWALK 帯の違反が検出される（%d 段）" % swalk_viol(bad5, H, rd))
 	# ── 生成物 ──
 	var steps_mi := ov.get_node("W4Steps") as MeshInstance3D
 	var soil_mi := ov.get_node_or_null("W4Soil") as MeshInstance3D
@@ -265,6 +291,37 @@ func _run() -> void:
 	var fake := W4.diag.duplicate(true)
 	fake[0]["ybot"] = _terr(sp, fake[0]["p"]) + 0.1
 	_ok(float(_terr(sp, fake[0]["p"])) - float(fake[0]["ybot"]) < 0.08, "反向：底を地形より 10 cm 上げた記録 → 浮空判定が落ちる")
+	# ── 見える面と歩ける面（斜坡碰撞）のずれ：足が石に沈む／浮く（既存 SWALK W1 の穴を埋める：W1 は overlay の見える面を見ない）──
+	var ss0 := v.get_node("ShrineApproachP10/StoneSteps") as MeshInstance3D
+	var g_after := WS.TopGrid.new()
+	g_after.add_mesh(ss0.mesh)
+	g_after.add_mesh(steps_mi.mesh)
+	var g_before := WS.TopGrid.new()
+	var orig0 := (load("res://maps/village_v2/gen/shrine_approach_p10.scn") as PackedScene).instantiate()
+	g_before.add_mesh((orig0.get_node("StoneSteps") as MeshInstance3D).mesh)
+	orig0.free()
+	var lats := [0.0, 0.5, -0.5, 0.85, -0.85]
+	var meas := WS.measure(sp, cl, kr.x + 8, kr.y - 8, lats, [g_before, g_after])
+	var all_ok := true
+	var sum_a := {}
+	var sum_b := {}
+	for u in lats:
+		var sb0 := WS.summarize((meas[0] as Dictionary)[u])
+		var sa0 := WS.summarize((meas[1] as Dictionary)[u])
+		print("[W4V] INFO 横 %+.2f m｜%s｜%s" % [float(u), WS.fmt("After ", sa0), WS.fmt("Before", sb0)])
+		if int(sa0["n"]) < 400 or not WS.gate_ok(sa0, sb0):
+			all_ok = false
+		if float(u) == 0.0:
+			sum_a = sa0
+			sum_b = sb0
+	_ok(all_ok, "見える石の上面 − 斜坡碰撞（5 本の横位置、各約 520 点）が r8 と同じ水準：最大偏差 ≤ r8 + 2 cm・|d|>10 cm の割合 ≤ r8 + 4 pt・>15 cm 0・平均 ±3 cm 以内")
+	var d0: Array = (meas[1] as Dictionary)[0.0]
+	var d_sink: Array = d0.map(func(x: float) -> float: return x + 0.06)
+	_ok(not WS.gate_ok(WS.summarize(d_sink), sum_b), "反向：石面が一様に 6 cm 高い（足が沈む）→ 落ちる")
+	var d_scale: Array = d0.map(func(x: float) -> float: return x * 1.7)
+	_ok(not WS.gate_ok(WS.summarize(d_scale), sum_b), "反向：ずれを 1.7 倍にする（第 1 版相当の悪化）→ 落ちる")
+	var d_float: Array = d0.map(func(x: float) -> float: return x - 0.06)
+	_ok(not WS.gate_ok(WS.summarize(d_float), sum_b), "反向：石面が一様に 6 cm 低い（足が浮く）→ 落ちる")
 	# ── enabled 切替 ──
 	var ss := v.get_node("ShrineApproachP10/StoneSteps") as MeshInstance3D
 	var n_on := _tris(ss.mesh)

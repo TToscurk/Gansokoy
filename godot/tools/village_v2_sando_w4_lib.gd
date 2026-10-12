@@ -17,16 +17,18 @@ const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const NODE_NAME := "SandoPilotW4P13"
 const OUTPUT := "res://maps/village_v2/gen/sando_pilot_w4_p13.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p13/sando_pilot_w4.gd"
-const ART_REVISION := "P13 W4 r8"
+const ART_REVISION := "P13 W4 r10"
 const SEED := 130401
-# 踏面長（k＝0.05 m 単位）0.20–0.40 m とその重み。r8 は 0.25–0.45 で「蹴上 0.18 に最も近い長さ」だけを選んでいた
-const D_K := [4, 5, 6, 7, 8]
-const D_W := [0.10, 0.24, 0.32, 0.22, 0.12]
+# 踏面長（k＝0.05 m 単位）0.20–0.35 m とその重み。r8 は 0.25–0.45 で「蹴上 0.18 に最も近い長さ」だけを選んでいた。
+# 0.40 m の踏面は不可：斜坡碰撞（r8 の短い踏面から作られた折れ線）より 15 cm 以上高くなり、足が石に沈む（r8 実測 最大 11.7 cm → 試作 r8版 17.9 cm）
+const D_K := [4, 5, 6, 7]
+const D_W := [0.12, 0.28, 0.36, 0.24]
 const R_MIN := 0.11
 const R_MAX := 0.25
 const R_FIRST_MIN := 0.05
-const DEV_PAD := 0.05                         # 斜坡碰撞と踏面頂の差 ≤ 半蹴上 + これ（r8 の gate は 半蹴上 0.10 + 0.03）
-const E_SIGMA := 0.012
+const DEV_PAD := 0.02                         # 斜坡碰撞と踏面頂の差 ≤ 半蹴上 + これ（既存 SWALK W1 は +0.03。見える面の細部〔傾き・高さのゆらぎ〕の分を残すため 1 cm 厳しく）
+const DEV_CAP := 0.12                         # 差の絶対上限（r8 の実測 最大 11.3 cm〔計画〕／11.7 cm〔見える面〕と同じ水準）
+const E_SIGMA := 0.010
 const EDGE_LO := 1.02                          # 踏面端の |u|（r8 は 1.2 一定）。笠石を厚くした分だけ石段の幅を 2.0–2.3 m に（斜坡碰撞 ±1.44 m は不変）
 const EDGE_HI := 1.16
 const W_TOP := [0.24, 0.34]                    # 笠石の幅（r8 の袖石 0.16–0.24 は規格のレールに見えた）
@@ -96,6 +98,11 @@ static func _sample_len(rng: RandomNumberGenerator, allowed: Array, prev: int) -
 	return int(allowed[allowed.size() - 1])
 
 
+## 斜坡碰撞と踏面頂の差の許容（蹴上 riser に対して）。計画（plan_flight）と gate（verify_w4_pilot）の共通の定義
+static func dev_limit(riser: float) -> float:
+	return minf(0.5 * riser + DEV_PAD, DEV_CAP)
+
+
 ## 1 つの flight（ka〜kb、入口の高さ y_in、出口＝踊り場の高さ y_out）を、変化のある踏面列に計画し直す。失敗時は []
 static func plan_flight(H: PackedFloat32Array, rd: PackedFloat32Array, ka: int, kb: int, y_in: float, y_out: float, first: bool, rng: RandomNumberGenerator) -> Array:
 	for attempt in 300:
@@ -140,7 +147,7 @@ static func plan_flight(H: PackedFloat32Array, rd: PackedFloat32Array, ka: int, 
 					var rw := rd[kk]
 					if not is_nan(rw):
 						dev = maxf(dev, absf(rw - y))
-				score += maxf(dev - (0.5 * (y - y_prev) + DEV_PAD), 0.0)
+				score += maxf(dev - dev_limit(y - y_prev), 0.0)
 				if rem - l == 0:
 					var re := y_out - y
 					if re < R_MIN:
@@ -380,8 +387,8 @@ static func tread(sm: SurfaceTool, cl: PackedVector2Array, a: Dictionary, y_prev
 	a["eR"] = uR
 	var cuts := _cuts(rng, uL, uR, state["cuts"])
 	state["cuts"] = cuts.slice(1, cuts.size() - 1)
-	var nose := float(a.get("nose", 0.02))
-	var v_end := d - float(a.get("nose_next", 0.0))      # 次の段の蹴上が始まる位置（これより奥は見えない）
+	var nose := float(a.get("nose", 0.0))
+	var v_end := d - 0.01                                # 落葉・苔はこの手前まで（その先は次の段の石の下になりうる）
 	var hmin := INF
 	for k in range(k0, k1 + 1):
 		hmin = minf(hmin, H[k])
@@ -389,21 +396,21 @@ static func tread(sm: SurfaceTool, cl: PackedVector2Array, a: Dictionary, y_prev
 	var yaw := rng.randf_range(-0.02, 0.02)       # 段全体の傾き（rad）：石が据え直されて平行でない
 	var tgr := tg.rotated(yaw)
 	var nrr := Vector2(-tgr.y, tgr.x)
-	var back := d + 0.035 + rng.randf_range(0.0, 0.03)
+	var back := d + 0.10 + rng.randf_range(0.0, 0.02)     # 次の段の石の下へ 10 cm 潜る（前縁が奥へ下がっても隙間を作らない）
 	var W := func(uv: Vector2) -> Vector2:
 		return P0 + tgr * uv.y + nrr * uv.x
 	var min_top := INF       # この段の石の頂の最低〔土の床はその 1 cm 下に置く＝目地の底が浅く、石を覆わない〕
 	var infos: Array = []
-	var bow := rng.randf_range(0.02, 0.09) if rng.randf() < 0.45 else 0.0     # 段の前縁が弧を描く（中央が前へ出る＝遠目にも帯の輪郭が揺れる）
+	var bow := rng.randf_range(0.02, 0.05) if rng.randf() < 0.4 else 0.0      # 段の前縁が弧を描く（中央が前、端が後ろ。全幅の平均が 0 になるよう 0.667 bow を差し引く）
 	var half_w := maxf(absf(uL), absf(uR))
 	for j in cuts.size() - 1:
 		var u0 := float(cuts[j])
 		var u1 := float(cuts[j + 1])
 		var bow0 := bow * (1.0 - pow(u0 / half_w, 2.0))
 		var bow1 := bow * (1.0 - pow(u1 / half_w, 2.0))
-		var nj := nose + rng.randf_range(-0.02, 0.075)        # 石ごとに前縁が前後する（蹴上の線が波打つ）
+		var nj := nose + rng.randf_range(-0.025, 0.03)        # 石ごとに前縁が前後する（蹴上の線が波打つ。平均 +0.25 cm）
 		var gap := rng.randf_range(0.0015, 0.003)       # 目地＝面取りの浅い V 溝だけ（隙間を影が溜まる幅にしない）
-		var raw := [Vector2(u0, -nj - bow0 - rng.randf_range(0.0, 0.02)), Vector2(u1, -nj - bow1 - rng.randf_range(0.0, 0.02)), Vector2(u1, back + rng.randf_range(-0.01, 0.015)), Vector2(u0, back + rng.randf_range(-0.01, 0.015))]
+		var raw := [Vector2(u0, -nj - (bow0 - 0.667 * bow) - rng.randf_range(-0.01, 0.01)), Vector2(u1, -nj - (bow1 - 0.667 * bow) - rng.randf_range(-0.01, 0.01)), Vector2(u1, back + rng.randf_range(-0.01, 0.015)), Vector2(u0, back + rng.randf_range(-0.01, 0.015))]
 		var c2 := Vector2.ZERO
 		for q: Vector2 in raw:
 			c2 += q
@@ -447,9 +454,9 @@ static func tread(sm: SurfaceTool, cl: PackedVector2Array, a: Dictionary, y_prev
 			poly.append((pb0 + left_end) * 0.5 + Vector2(-rng.randf_range(0.0, 0.03), 0.0))
 		for q in tail:
 			poly.append(q)
-		var dy := clampf(rng.randfn(0.0, 0.010), -0.022, 0.022)
-		var tilt_f := rng.randf_range(0.02, 0.06)         # 前下がり（摩耗）
-		var tilt_u := rng.randf_range(-0.035, 0.035)
+		var dy := clampf(rng.randfn(0.0, 0.006), -0.012, 0.012)
+		var tilt_f := rng.randf_range(0.015, 0.04)        # 前下がり（摩耗）
+		var tilt_u := rng.randf_range(-0.02, 0.02)
 		var uc := (u0 + u1) * 0.5
 		var top_fn := func(q: Vector2) -> float:
 			return y + dy - tilt_f * (d - clampf(q.y, 0.0, d)) + tilt_u * (q.x - uc)
@@ -916,9 +923,7 @@ static func build_meshes(cl: PackedVector2Array, H: PackedFloat32Array, plan: Ar
 	var rp := RandomNumberGenerator.new()
 	rp.seed = SEED + 3
 	for a: Dictionary in plan:
-		a["nose"] = rp.randf_range(0.0, 0.035) if String(a["kind"]) == "step" else 0.035
-	for q in plan.size():
-		(plan[q] as Dictionary)["nose_next"] = float(plan[q + 1]["nose"]) if q + 1 < plan.size() else 0.0
+		a["nose"] = rp.randf_range(-0.01, 0.02)      # 段ごとの前縁の前後（平均 +0.5 cm＝ほぼ零均値。突出は斜坡碰撞に対して石が早く立ち上がる〔足が沈む〕原因になる）
 	var state := {"uL": -1.09, "uR": 1.09, "cuts": []}
 	var y_prev := NAN
 	for a: Dictionary in plan:

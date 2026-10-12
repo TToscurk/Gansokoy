@@ -1,6 +1,7 @@
 """P13 W4：一時 index で commit を作る（使用者の staged 53 項を動かさない）。
-  python tools/p13/commit_w4.py            # dry run（対象一覧のみ）
-  python tools/p13/commit_w4.py --commit   # 実行
+  python tools/p13/commit_w4.py                       # dry run（対象一覧と HEAD との差）
+  python tools/p13/commit_w4.py --commit              # 実行（既定のメッセージ）
+  python tools/p13/commit_w4.py --commit --msg FILE   # 実行（メッセージをファイルから）
 手順：HEAD を一時 index に読み込み → 対象を hash-object -w（.gitattributes のフィルタ適用）→ update-index → write-tree → commit-tree → update-ref。
 その後、実 index には対象パスの blob だけを同じ値で入れる（HEAD と一致させる＝status に「削除」が出ない）。他のパスの index は触らない。
 """
@@ -44,13 +45,35 @@ def targets():
     return out
 
 
+def head_blob(path):
+    r = subprocess.run(["git", "-C", REPO, "rev-parse", "--verify", "-q", "HEAD:" + path], capture_output=True)
+    return r.stdout.decode().strip() if r.returncode == 0 else None
+
+
 def main():
+    msg = MSG
+    if "--msg" in sys.argv:
+        msg = open(sys.argv[sys.argv.index("--msg") + 1], encoding="utf-8").read()
     ts = targets()
     for t in ts:
         assert os.path.exists(os.path.join(REPO, t)), t
-    print("対象 %d 件" % len(ts))
-    for t in ts[:12]:
-        print("  ", t)
+    env0 = dict(os.environ)
+    env0.pop("GIT_INDEX_FILE", None)
+    new, changed, same = [], [], 0
+    for t in ts:
+        hb = head_blob(t)
+        wb = git("hash-object", "--path=" + t, os.path.join(REPO, t), env=env0)
+        if hb is None:
+            new.append(t)
+        elif hb != wb:
+            changed.append(t)
+        else:
+            same += 1
+    print("対象 %d 件：HEAD と同一 %d／変更 %d／新規 %d" % (len(ts), same, len(changed), len(new)))
+    for t in changed:
+        print("  変更", t)
+    for t in new:
+        print("  新規", t)
     if "--commit" not in sys.argv:
         return
     env = dict(os.environ)
@@ -68,7 +91,7 @@ def main():
         blobs[t] = b
         git("update-index", "--add", "--cacheinfo", "100644,%s,%s" % (b, t), env=env2)
     tree = git("write-tree", env=env2)
-    commit = git("commit-tree", tree, "-p", head, "-m", MSG, env=env)
+    commit = git("commit-tree", tree, "-p", head, "-m", msg, env=env)
     git("update-ref", "-m", "P13 W4 pilot", "HEAD", commit, head, env=env)
     os.remove(tmp)
     # 実 index：対象パスだけ HEAD と同じ blob にする

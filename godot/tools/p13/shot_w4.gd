@@ -18,6 +18,7 @@ const VIEWS := {
 	"up_s66": ["up", 66.0],
 	"walk_down_s64": ["walk", 64.0, 72.0],
 	"walk_down_s56": ["walk", 56.0, 62.0],
+	"walk_down_s46": ["walk", 46.0, 52.0],
 	"top_s101": ["up", 100.0],
 	"top_dn_s100": ["down", 100.0],
 	"top_dn_s96": ["down", 96.0],
