@@ -17,7 +17,7 @@ const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const NODE_NAME := "SandoPilotW4P13"
 const OUTPUT := "res://maps/village_v2/gen/sando_pilot_w4_p13.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p13/sando_pilot_w4.gd"
-const ART_REVISION := "P13 W4B r13 + W5A r1"
+const ART_REVISION := "P13 W4B r13 + W5B integration r1"
 const SEED := 130401
 # 踏面長（k＝0.05 m 単位）0.20–0.35 m とその重み。r8 は 0.25–0.45 で「蹴上 0.18 に最も近い長さ」だけを選んでいた。
 # 0.40 m の踏面は不可：斜坡碰撞（r8 の短い踏面から作られた折れ線）より 15 cm 以上高くなり、足が石に沈む（r8 実測 最大 11.7 cm → 試作 r8版 17.9 cm）
@@ -1231,23 +1231,24 @@ static func build_meshes(cl: PackedVector2Array, H: PackedFloat32Array, plan: Ar
 	soil_n = 0
 	var W5 = w5()
 	W5.enabled = bool(flags.get("w5a", true))
+	W5.integrated = bool(flags.get("w5b", true))
 	W5.reset()
 	var sm := SurfaceTool.new()
 	sm.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var hm := SurfaceTool.new()
 	hm.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var rng := RandomNumberGenerator.new()
-	rng.seed = SEED + 7
+	rng.seed = int(flags.get("mesh_seed", SEED)) + 7
 	# 前処理：各段の鼻先（次の段の蹴上までの見える奥行きを決める）
 	var rp := RandomNumberGenerator.new()
-	rp.seed = SEED + 3
+	rp.seed = int(flags.get("mesh_seed", SEED)) + 3
 	for a: Dictionary in plan:
 		a["nose"] = rp.randf_range(-0.01, 0.02)      # 段ごとの前縁の前後（平均 +0.5 cm＝ほぼ零均値。突出は斜坡碰撞に対して石が早く立ち上がる〔足が沈む〕原因になる）
 	var state := {"uL": -1.09, "uR": 1.09, "cuts": []}
 	var y_prev := NAN
 	for a: Dictionary in plan:
 		if is_nan(y_prev):
-			y_prev = H[int(a["k0"])]
+			y_prev = float(flags.get("initial_y", H[int(a["k0"])]))
 		if String(a["kind"]) == "landing":
 			landing(sm, hm, cl, a, y_prev, H, state, rng)
 		else:
@@ -1275,7 +1276,7 @@ static func build(cl: PackedVector2Array, H: PackedFloat32Array, plan: Array, to
 	root.name = NODE_NAME
 	root.set_script(load(SCRIPT))
 	root.set_meta("art_revision", ART_REVISION)
-	root.set_meta("phase", "P13 W4 pilot")
+	root.set_meta("phase", "P13 W5B integrated")
 	root.set("rest_mesh", rest)
 	var ms := build_meshes(cl, H, plan, touts, tfars, lanterns)
 	var mi := MeshInstance3D.new()

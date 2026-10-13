@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[W4S] boot 9313 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W5B-WALK] up reached=true end_s=91.00 frames=436 lost_floor=0 max_dy=0.0526
+[W5B-WALK] down reached=true end_s=62.00 frames=434 lost_floor=0 max_dy=0.0535
+[W5B-WALK] failures 0

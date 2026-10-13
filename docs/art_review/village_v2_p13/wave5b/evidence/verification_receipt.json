@@ -1,0 +1,104 @@
+{
+  "status": "ART_REVIEW",
+  "range_m": [
+    37.2,
+    89.85
+  ],
+  "kept_original_range_m": [
+    89.85,
+    100.0
+  ],
+  "geometry_sha256": "561add1a8d79b2a6dfa8975f66bdbe0e2b28a8bd2ef12301fe515da9a66d52c1",
+  "checks": {
+    "build_integrated.log": {
+      "sha256": "ea09253c1c4e44f7b0091a897d9f1786abd56fecb6f0c9ad5d99ebd11d24510d",
+      "pass_assertions": 0,
+      "fail_assertions": 0
+    },
+    "upper_audit.log": {
+      "sha256": "c80c728b851d5e7c3417d61e25560c437697607a6f0af2b6a2c1b7ba6a75485c",
+      "pass_assertions": 0,
+      "fail_assertions": 0
+    },
+    "gate_w5b.log": {
+      "sha256": "690cb6dab97c258a89212644a1f72316fae64e491998ce7d2b7b8a878fb2edb9",
+      "pass_assertions": 31,
+      "fail_assertions": 0
+    },
+    "gate_w4.log": {
+      "sha256": "40d0e4c77a09c91821e0f1323a3576b60ada8ea7ac929ac8712a83f86aa371f7",
+      "pass_assertions": 34,
+      "fail_assertions": 0
+    },
+    "gate_san_plan.log": {
+      "sha256": "d62771054b5980671859bea94e6db57a61831c1815359969dc156d3163392a3a",
+      "pass_assertions": 10,
+      "fail_assertions": 0
+    },
+    "gate_san_scene.log": {
+      "sha256": "cea472a34efdfeaf54c434e68f6ae95075d0022c5c999ccebc2f6764b7261155",
+      "pass_assertions": 6,
+      "fail_assertions": 0
+    },
+    "gate_swalk.log": {
+      "sha256": "0e358d12bffe21b28113b347885a8050973b5c2ad25920fb19544bb4bfa6ae02",
+      "pass_assertions": 8,
+      "fail_assertions": 0
+    },
+    "gate_shrine_scene.log": {
+      "sha256": "86859847771b4da741b092c752d18ea3ba370d7019d5606010734f0019533021",
+      "pass_assertions": 4,
+      "fail_assertions": 0
+    },
+    "gate_shrine_seal.log": {
+      "sha256": "8cc6b79e63c0e0d8a9acdf372bec9d4223e762a9d0ac350ddf11dfad3ff6d6f9",
+      "pass_assertions": 3,
+      "fail_assertions": 0
+    },
+    "capture.log": {
+      "sha256": "51a31f471174adb49603e46aefcc2fe9291380ada48b5dfee2cdfa48a5c4177e",
+      "pass_assertions": 0,
+      "fail_assertions": 0
+    },
+    "walk_upper.log": {
+      "sha256": "fcbbea8fcb366ddf96cc9c7f8dddc3b6588e89a75158738eb28a7c18e83ced26",
+      "pass_assertions": 0,
+      "fail_assertions": 0
+    }
+  },
+  "images": {
+    "docs/art_review/village_v2_p13/wave5b/shots/01_right_wall_tps.png": {
+      "sha256": "81e1a0362b58c77302ea482bc24b05a7a5a29dce54be225093187dce46d1b6a4",
+      "renderer": "forward_plus",
+      "hour": 10.0,
+      "source": "main.tscn runtime, shot_w5b.gd"
+    },
+    "docs/art_review/village_v2_p13/wave5b/shots/02_left_wall.png": {
+      "sha256": "5a9c725c399de37900f078b1df00950bc48dbd04c802ea4e8bdbe9e0a5f9becc",
+      "renderer": "forward_plus",
+      "hour": 10.0,
+      "source": "main.tscn runtime, shot_w5b.gd"
+    },
+    "docs/art_review/village_v2_p13/wave5b/shots/03_uphill_tps.png": {
+      "sha256": "7dc34bf4e2ac98d8d69ccc6dd142f41261958bcbf09ce880cc22ee1d8b8d4c15",
+      "renderer": "forward_plus",
+      "hour": 10.0,
+      "source": "main.tscn runtime, shot_w5b.gd"
+    },
+    "docs/art_review/village_v2_p13/wave5b/shots/04_whole_approach_high.png": {
+      "sha256": "148ab518d9561a4683a995dd6f4c67fc3c9089f06ba805c387f4b65d557edcdf",
+      "renderer": "forward_plus",
+      "hour": 10.0,
+      "source": "main.tscn runtime, shot_w5b.gd"
+    },
+    "docs/art_review/village_v2_p13/wave5b/shots/05_new_old_join_s89_85.png": {
+      "sha256": "6147a517a5c703143e2d56eeddf6a1de67151f6ce83fc4897a6d5d792ce80a09",
+      "renderer": "forward_plus",
+      "hour": 10.0,
+      "source": "main.tscn runtime, shot_w5b.gd"
+    }
+  },
+  "protected_baseline_unchanged": true,
+  "original_staged_count": 53,
+  "reseal_performed": false
+}

@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W5G] PASS W5B replaces old sides, not an empty overlay
+[W5G] PASS changed stones inside approved lower range
+[W5G] PASS soil actually grounded on P1; no sunk/floating patch
+[W5G] PASS new stones avoid lantern feet
+[W5G] PASS base stones grounded 125; violations 0; minimum embed 0.192 m
+[W5G] PASS soil cover side -1.0 within approved limit
+[W5B] side -1.0 bands [{ "ka": 744, "kb": 847, "stats": { "stones": 38, "base_stones": 8, "size_mean": 0.24016220485078, "size_p10": 0.18809788693545, "size_p90": 0.29536623970736, "caps": 11, "amp_mean": 0.13134839615071, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 7, "foot_stones": 2, "plants": 0 } }, { "ka": 847, "kb": 955, "stats": { "stones": 65, "base_stones": 16, "size_mean": 0.2346549072649, "size_p10": 0.18266926355579, "size_p90": 0.28117923565408, "caps": 11, "amp_mean": 0.14706046718996, "cover_max": 0.36, "bare_rows": 0.21818181818182, "rocks": 7, "foot_stones": 3, "plants": 1 } }, { "ka": 955, "kb": 1052, "stats": { "stones": 58, "base_stones": 14, "size_mean": 0.22716859251857, "size_p10": 0.16198803799093, "size_p90": 0.29163120029733, "caps": 9, "amp_mean": 0.11093142699246, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 6, "foot_stones": 4, "plants": 1 } }, { "ka": 1052, "kb": 1160, "stats": { "stones": 55, "base_stones": 11, "size_mean": 0.22293673446036, "size_p10": 0.16507875676916, "size_p90": 0.2956182553711, "caps": 10, "amp_mean": 0.1798987656198, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 11, "foot_stones": 4, "plants": 3 } }, { "ka": 1160, "kb": 1252, "stats": { "stones": 69, "base_stones": 13, "size_mean": 0.24640256181597, "size_p10": 0.18044316463773, "size_p90": 0.30151991045794, "caps": 10, "amp_mean": 0.20948638596601, "cover_max": 0.36, "bare_rows": 0.23404255319149, "rocks": 4, "foot_stones": 1, "plants": 1 } }, { "ka": 1252, "kb": 1284, "stats": { "stones": 18, "base_stones": 5, "size_mean": 0.21254798638358, "size_p10": 0.12242810038481, "size_p90": 0.28071005490469, "caps": 3, "amp_mean": 0.16758016074134, "cover_max": 0.36, "bare_rows": 0.23529411764706, "rocks": 1, "foot_stones": 1, "plants": 1 } }]
+[W5G] PASS soil cover side 1.0 within approved limit
+[W5B] side 1.0 bands [{ "ka": 744, "kb": 847, "stats": { "stones": 47, "base_stones": 12, "size_mean": 0.22754110236073, "size_p10": 0.16398342436799, "size_p90": 0.27911790249131, "caps": 10, "amp_mean": 0.15013185802411, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 8, "foot_stones": 4, "plants": 0 } }, { "ka": 847, "kb": 949, "stats": { "stones": 56, "base_stones": 12, "size_mean": 0.25180786301622, "size_p10": 0.19263941948722, "size_p90": 0.30600379045251, "caps": 11, "amp_mean": 0.15402889502737, "cover_max": 0.36, "bare_rows": 0.23076923076923, "rocks": 6, "foot_stones": 1, "plants": 1 } }, { "ka": 949, "kb": 1052, "stats": { "stones": 61, "base_stones": 11, "size_mean": 0.22529306536094, "size_p10": 0.17184913860213, "size_p90": 0.27951549235198, "caps": 10, "amp_mean": 0.10160227295643, "cover_max": 0.36, "bare_rows": 0.0188679245283, "rocks": 4, "foot_stones": 2, "plants": 1 } }, { "ka": 1052, "kb": 1151, "stats": { "stones": 43, "base_stones": 10, "size_mean": 0.22528974560841, "size_p10": 0.16763662308841, "size_p90": 0.27728534888768, "caps": 10, "amp_mean": 0.14997573755709, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 8, "foot_stones": 3, "plants": 1 } }, { "ka": 1151, "kb": 1252, "stats": { "stones": 77, "base_stones": 10, "size_mean": 0.21607697231807, "size_p10": 0.16332455873326, "size_p90": 0.27031787426689, "caps": 9, "amp_mean": 0.18777330697811, "cover_max": 0.36, "bare_rows": 0.23076923076923, "rocks": 4, "foot_stones": 3, "plants": 1 } }, { "ka": 1252, "kb": 1284, "stats": { "stones": 18, "base_stones": 3, "size_mean": 0.22752496448689, "size_p10": 0.13663204266023, "size_p90": 0.29605139018506, "caps": 4, "amp_mean": 0.17599887632385, "cover_max": 0.36, "bare_rows": 0.0, "rocks": 3, "foot_stones": 1, "plants": 0 } }]
+[W5G] PASS approved lower tread/platform/joint geometry unchanged; changed walking triangles 0
+[W5G] PASS actual a6fe076 approved saved walking geometry unchanged; altered 0
+[W5G] PASS actual under-cap geometry rays 1557; visible holes 0
+[W5G] PASS negative: removed isolated backing has no ray hit
+[W5G] PASS no added collision bodies
+[W5G] PASS winding wrong 0 / 88335
+[W5G] PASS W4Steps saved=recomputed vertices 149361 max delta 0.000000
+[W5G] PASS W4Soil saved=recomputed vertices 34284 max delta 0.000000
+[W5G] PASS saved plant count = generator
+[W5G] PASS plants on actual soil, no floating
+[W5G] PASS negative: outside lower scope
+[W5G] PASS negative: floating soil
+[W5G] PASS negative: excessive soil cover
+[W5G] PASS upper production group exists
+[W5G] PASS actual under-cap geometry rays 1112; visible holes 0
+[W5G] PASS negative: removed isolated backing has no ray hit
+[W5G] PASS upper saved meshes = recomputed same-seed production generator
+[W5G] PASS upper soil grounded on frozen P1
+[W5G] PASS upper plants saved count = generator
+[W5G] PASS upper tread plan remains within original collision band; platform position/elevation unchanged
+[W5G] PASS upper base stones 116 grounded; minimum embed 0.203 m; violations 0
+[UPPER-SURFACE] u=0.0 before n=507｜平均 -1.9 cm・p5 -9.4・p95 +5.3・最小 -11.1・最大 +7.6｜|d|>10 cm 3.0 %・>15 cm 0.0 % | after n=513｜平均 +0.0 cm・p5 -7.8・p95 +7.5・最小 -11.2・最大 +11.1｜|d|>10 cm 1.9 %・>15 cm 0.0 %
+[UPPER-SURFACE] u=0.5 before n=513｜平均 -2.0 cm・p5 -9.6・p95 +5.2・最小 -11.1・最大 +7.5｜|d|>10 cm 3.3 %・>15 cm 0.0 % | after n=513｜平均 -0.1 cm・p5 -8.1・p95 +7.3・最小 -11.5・最大 +10.4｜|d|>10 cm 1.9 %・>15 cm 0.0 %
+[UPPER-SURFACE] u=-0.5 before n=513｜平均 -2.0 cm・p5 -9.5・p95 +5.4・最小 -11.3・最大 +7.7｜|d|>10 cm 3.7 %・>15 cm 0.0 % | after n=513｜平均 -0.1 cm・p5 -7.9・p95 +7.3・最小 -10.9・最大 +11.2｜|d|>10 cm 1.9 %・>15 cm 0.0 %
+[UPPER-SURFACE] u=0.85 before n=513｜平均 -2.0 cm・p5 -9.6・p95 +5.2・最小 -11.3・最大 +7.5｜|d|>10 cm 3.7 %・>15 cm 0.0 % | after n=513｜平均 -0.3 cm・p5 -8.2・p95 +7.2・最小 -11.0・最大 +11.1｜|d|>10 cm 1.6 %・>15 cm 0.0 %
+[UPPER-SURFACE] u=-0.85 before n=513｜平均 -2.0 cm・p5 -9.5・p95 +5.3・最小 -11.3・最大 +7.8｜|d|>10 cm 3.3 %・>15 cm 0.0 % | after n=513｜平均 -0.6 cm・p5 -8.8・p95 +7.1・最小 -10.9・最大 +11.3｜|d|>10 cm 1.9 %・>15 cm 0.0 %
+[W5G] PASS upper visible stone vs actual saved ramp: no missing walk surface and no deterioration
+[W5G] PASS joins s64.2 /77.1 /89.85 have no walk hole or >15 cm surface mismatch; bad 0
+[W5G] PASS no old/new double visible steps/walls in replaced range
+[W5B] result failures 0

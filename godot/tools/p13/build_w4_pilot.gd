@@ -3,7 +3,8 @@ extends SceneTree
 ##   godot --headless --path . --script res://tools/p13/build_w4_pilot.gd -- --build
 ##   godot --headless --path . --script res://tools/p13/build_w4_pilot.gd -- --attach
 ##   godot --headless --path . --script res://tools/p13/build_w4_pilot.gd -- --detach
-## --build は MultiMesh を使わない（通常 Mesh だけ）ので headless でよい。
+## W5B: --build routes to build_w5b.gd; use a rendering display (no --headless).
+## --historical-lower is diagnostic only; normal rebuild preserves upper integration.
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const W5 := preload("res://tools/village_v2_sando_w5a_lib.gd")
@@ -46,6 +47,14 @@ func _metrics(tag: String, cells: Array, y0: float) -> void:
 
 func _run() -> void:
 	var a := OS.get_cmdline_user_args()
+	if "--build" in a and not "--historical-lower" in a:
+		# W5B is now the source of truth; normal old entry cannot discard upper integration.
+		var output: Array = []
+		var rc := OS.execute(OS.get_executable_path(),PackedStringArray(["--path",ProjectSettings.globalize_path("res://"),"--script","res://tools/p13/build_w5b.gd","--","--build"]),output,true)
+		for line in output:
+			print(line)
+		quit(rc)
+		return
 	if "--attach" in a:
 		quit(_attach())
 		return

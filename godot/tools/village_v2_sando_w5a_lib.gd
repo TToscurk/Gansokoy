@@ -1,5 +1,6 @@
 extends RefCounted
-## P13 Wave 5A — 石垣と山坡の融合（局所サンプル s≈59–64.2 m）。P1 地形は触らない（非破壊の overlay だけ）。
+## P13 W5B production integration of ART_APPROVED W5A stonework. P1 remains read-only.
+## integrated=true: bounded bands in the existing W4 overlay; false: historical s≈59–64.2 sample.
 ## 呼び出し：village_v2_sando_w4_lib.gd の build_meshes が、試作区間の石垣 run〔s=58.95–64.20〕を旧経路〔scratch へ出力して乱数列だけ進める〕で処理しつつ記録し、
 ## build_sides の後で finish() を呼ぶ。W4B の他の幾何〔踏面・縫・平台・区間外〕は 1 ビットも変わらない。
 ## 構成（側 sd ごとに 1 つの連続した壁）：
@@ -9,7 +10,7 @@ extends RefCounted
 ##   ④ 根石・転がり石：少量。燈籠の足元は避ける
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
-const ART_REVISION := "P13 W5A r7d"      # 最終〔使用者の ART_REVIEW 待ち〕
+const ART_REVISION := "P13 W5B integration r1"  # W5A direction ART_APPROVED; integration ART_REVIEW
 const SEED := 130510
 const DS := 0.05
 const K_LO := 1179                 # s=58.95 m：両側とも run の境界
@@ -24,6 +25,9 @@ const LANTERN_U_MAX := 1.46        # 燈籠の足元〔内縁 1.61 m〕に食い
 const EARTH := Color(0.66, 0.57, 0.45)   # 牆腳の土染め〔石の頂点色を土色へ寄せる＝石と土の境界を連続させる〕
 
 static var enabled := true
+static var integrated := true       # false = historical W5A local sample
+static var scope_lo := 744          # s=37.20 m
+static var scope_hi := 1284         # s=64.20 m; upper extension sets this after compatibility audit
 static var sampler := Callable()   # func(Vector2 xz) -> float：P1 TerrainCollision の高さ。無効なら外側地形の線形外挿
 static var wsampler := Callable()  # func(Vector2 xz, float y) -> [COLOR, UV, UV2]：その場所の地形の頂点ウェイト〔土坡の外縁を地形と逐点で一致させる〕
 static var runs := {}              # sd(float) -> Array[{ka,kb,edge,ta,tb}]
@@ -64,7 +68,7 @@ static func add_plants(root: Node3D) -> void:
 
 
 static func in_sample(ka: int, kb: int) -> bool:
-	return enabled and ka >= K_LO and kb <= K_HI
+	return enabled and ka >= (scope_lo if integrated else K_LO) and kb <= (scope_hi if integrated else K_HI)
 
 
 static func record_run(sd: float, e: Dictionary) -> void:
@@ -93,7 +97,7 @@ static func setup(vil: Node3D, sp: PhysicsDirectSpaceState3D, cl: PackedVector2A
 	sampler = make_sampler(sp)
 	var lo := Vector2(INF, INF)
 	var hi := Vector2(-INF, -INF)
-	for k in range(K_LO - 40, K_HI + 40, 4):
+	for k in range(maxi((scope_lo if integrated else K_LO) - 40, 0), mini((scope_hi if integrated else K_HI) + 40, cl.size() - 1), 4):
 		lo = Vector2(minf(lo.x, cl[k].x), minf(lo.y, cl[k].y))
 		hi = Vector2(maxf(hi.x, cl[k].x), maxf(hi.y, cl[k].y))
 	var rc := Rect2(lo - Vector2(7.0, 7.0), (hi - lo) + Vector2(14.0, 14.0))
@@ -286,8 +290,8 @@ static func _make_ctx(cl: PackedVector2Array, sd: float, rl: Array, tout: Packed
 	for r: Dictionary in rl:
 		ka = mini(ka, int(r["ka"]))
 		kb = maxi(kb, int(r["kb"]))
-	var k0 := ka - EXT
-	var n := (kb - ka + 1) + 2 * EXT
+	var k0 := maxi(ka - EXT, 0)
+	var n := (kb - k0 + 1) + EXT
 	var C := {"cl": cl, "sd": sd, "ka": ka, "kb": kb, "k0": k0, "n": n, "lanterns": lanterns, "tout": tout, "tfar": tfar}
 	var pos := PackedVector2Array()
 	var nrm := PackedVector2Array()
@@ -523,7 +527,7 @@ static func _wall_tiles(sm: SurfaceTool, hm: SurfaceTool, C: Dictionary, rng: Ra
 	var wb := [Color(0.78, 0.04, 0.26, 0.04), Vector2(0.18, 0.0), Vector2(0.08, 0.0)]
 	var s0 := 0.0
 	while s0 < L - 0.001:
-		var s1 := minf(s0 + 0.25, L)
+		var s1 := minf(s0 + (DS if integrated else 0.25), L)  # conform backing to 5 cm cap-line samples; 25 cm chords left two real under-cap openings
 		var hb0: float = _at(C, "ex", float(ka) + s0 / DS) + BASE_DEEP
 		var hb1: float = _at(C, "ex", float(ka) + s1 / DS) + BASE_DEEP
 		var a := _pos(C, s0, H0 - 0.04, -BACK)
@@ -729,8 +733,14 @@ static func _mound(hm: SurfaceTool, C: Dictionary, rng: RandomNumberGenerator) -
 	var amp_sum := 0.0
 	var amp_cnt := 0
 	var bare := 0
-	for i in range(0, n, 2):
+	var indices: Array = range(0, n, 2)
+	if integrated:
+		indices = range(int(C["ka"]) - k0, int(C["kb"]) - k0, 2)
+		indices.append(int(C["kb"]) - k0)  # shared endpoint; no missing soil strip at odd k
+	for i: int in indices:
 		var kf: float = float(k0 + i)
+		if integrated and kf < float(C["ka"]):
+			continue
 		if kf > float(C["kb"]) + 0.5:
 			continue                         # 試作区間の上端〔s=64.2 m〕より先へは出さない
 		var amp := _amp(C, kf)
@@ -916,13 +926,39 @@ static func finish(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, tou
 		rl.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a["ka"]) < int(b["ka"]))
 		var C := _make_ctx(cl, sd, rl, touts[si], tfars[si], lanterns)
 		C["stats"] = {}
-		var rng := RandomNumberGenerator.new()
-		rng.seed = SEED + (101 if sd > 0.0 else 7)
-		_wall_tiles(sm, hm, C, rng)
-		_caps(sm, C, rng)
-		_mound(hm, C, rng)
-		_rocks(sm, C, rng)
-		tot[sd] = {"stats": C["stats"], "ka": C["ka"], "kb": C["kb"], "ex": C["ex"], "k0": C["k0"]}
+		var bands: Array = []
+		if integrated:
+			# Same W5A machinery in bounded bands; shared envelope prevents cap-line steps.
+			# No second stone system. Split at existing run boundaries, <=5.4 m.
+			var start := int(C["ka"])
+			var last := start
+			for r: Dictionary in rl:
+				if int(r["kb"]) - start > 108 and last > start:
+					bands.append(Vector2i(start, last))
+					start = last
+				last = int(r["kb"])
+			bands.append(Vector2i(start, last))
+		else:
+			bands.append(Vector2i(int(C["ka"]), int(C["kb"])))
+		var aggregate := {"stones": 0, "base_stones": 0, "caps": 0, "rocks": 0, "foot_stones": 0, "plants": 0, "cover_max": 0.0}
+		var records := []
+		for band: Vector2i in bands:
+			var B := C.duplicate()
+			B["ka"] = band.x
+			B["kb"] = band.y
+			B["stats"] = {}
+			var rng := RandomNumberGenerator.new()
+			rng.seed = SEED + (101 if sd > 0.0 else 7) + (band.x * 17 if integrated else 0)
+			_wall_tiles(sm, hm, B, rng)
+			_caps(sm, B, rng)
+			_mound(hm, B, rng)
+			_rocks(sm, B, rng)
+			for key: String in ["stones", "base_stones", "caps", "rocks", "foot_stones", "plants"]:
+				aggregate[key] = int(aggregate[key]) + int(B["stats"].get(key, 0))
+			aggregate["cover_max"] = maxf(float(aggregate["cover_max"]), float(B["stats"].get("cover_max", 0.0)))
+			records.append({"ka": band.x, "kb": band.y, "stats": B["stats"]})
+		C["stats"] = aggregate if integrated else records[0]["stats"]
+		tot[sd] = {"stats": C["stats"], "bands": records, "ka": C["ka"], "kb": C["kb"], "ex": C["ex"], "k0": C["k0"]}
 	stats = tot
 	W4.uv_k = uvk0
 	W4._uvo = Vector2.ZERO
