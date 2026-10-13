@@ -36,11 +36,12 @@ def targets():
         "godot/maps/village_v2/village_v2.tscn",
         "godot/tools/gen_village_v2.gd",                    # W4B：LandmarkParcelLines を visible=false で出力（1 行）
         "docs/art_review/village_v2_p13/wave5_backlog.md",
+        "godot/tools/village_v2_sando_w5a_lib.gd",          # W5A：石垣と山坡の融合
     ]
     for f in sorted(os.listdir(os.path.join(REPO, "godot/tools/p13"))):
-        if "w4" in f and not f.endswith(".uid"):
+        if ("w4" in f or "w5a" in f) and not f.endswith(".uid"):
             out.append("godot/tools/p13/" + f)
-    for sub in ("wave4", "wave4b"):
+    for sub in ("wave4", "wave4b", "wave5a"):
         root = os.path.join(REPO, "docs/art_review/village_v2_p13/" + sub)
         for d, _, fs in os.walk(root):
             for f in sorted(fs):

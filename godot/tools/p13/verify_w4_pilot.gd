@@ -6,6 +6,7 @@ extends SceneTree
 ## 反向（わざと壊したデータを渡すと gate が落ちる）も同じ関数で確かめる。
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
+const W5 := preload("res://tools/village_v2_sando_w5a_lib.gd")
 const WS := preload("res://tools/p13/w4_walk_surface.gd")
 var fails := 0
 
@@ -252,6 +253,7 @@ func _run() -> void:
 		var s_l := float(ls["s"])
 		if s_l >= kr.x * 0.05 - 2.0 and s_l <= kr.y * 0.05 + 2.0 and not lanterns.has(s_l):
 			lanterns.append(s_l)
+	W5.setup(v, sp, cl)                      # P13 W5A：生成器と同じ入力〔地形の高さ・ウェイト〕で再出力
 	var ms := W4.build_meshes(cl, H, plan, touts, tfars, lanterns)
 	var rebuilt: ArrayMesh = ms["steps"]
 	var rv: PackedVector3Array = rebuilt.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]

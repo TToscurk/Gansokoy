@@ -6,6 +6,7 @@ extends SceneTree
 ## --build は MultiMesh を使わない（通常 Mesh だけ）ので headless でよい。
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
+const W5 := preload("res://tools/village_v2_sando_w5a_lib.gd")
 const SCENE := "res://maps/village_v2/village_v2.tscn"
 const EXT_ID := "p13w4_sando_pilot"
 
@@ -83,6 +84,7 @@ func _run() -> void:
 		if s_l >= kr.x * 0.05 - 2.0 and s_l <= kr.y * 0.05 + 2.0 and not lanterns.has(s_l):
 			lanterns.append(s_l)
 	print("[W4B] 区間内の燈籠 s=%s" % str(lanterns))
+	W5.setup(v, sp, cl)                          # P13 W5A：土坡・根石の高さ＝P1 TerrainCollision の実測、外縁のウェイト＝地形の頂点ウェイト
 	var ss := v.get_node("ShrineApproachP10/StoneSteps") as MeshInstance3D
 	t0 = Time.get_ticks_msec()
 	var rest := W4.r8_without_range(ss.mesh as ArrayMesh, cl, kr)
@@ -115,6 +117,10 @@ func _run() -> void:
 	var tt := float(maxi(tl + tm + th, 1))
 	print("[W4B] 局所露出量〔笠石頂線 − 外側地形、0.05 m ごと〕：< 0.12 m %.0f %%・0.12–0.30 m %.0f %%・> 0.30 m %.0f %%（左 %s・右 %s）" % [100.0 * tl / tt, 100.0 * tm / tt, 100.0 * th / tt, str(by_side[-1.0]), str(by_side[1.0])])
 	print("[W4B] 側面 run %d：%s｜e_max 分布 最小 %.2f・中央値 %.2f・最大 %.2f m" % [W4.side_log.size(), str(cnt), em[0] if em.size() > 0 else 0.0, em[em.size() / 2] if em.size() > 0 else 0.0, em[em.size() - 1] if em.size() > 0 else 0.0])
+	if not W5.stats.is_empty():
+		for sdv in W5.stats:
+			var sst: Dictionary = (W5.stats[sdv] as Dictionary)["stats"]
+			print("[W5A] 側 %+.0f：石 %d（最下段 %d）・笠石 %d・転がり石 %d・根石 %d・草叢 %d｜石の大きさ p10 %.2f／平均 %.2f／p90 %.2f m｜土の盛り 平均 %.2f m・裸の石垣の割合 %.0f %%" % [float(sdv), int(sst.get("stones", 0)), int(sst.get("base_stones", 0)), int(sst.get("caps", 0)), int(sst.get("rocks", 0)), int(sst.get("foot_stones", 0)), int(sst.get("plants", 0)), float(sst.get("size_p10", 0.0)), float(sst.get("size_mean", 0.0)), float(sst.get("size_p90", 0.0)), float(sst.get("amp_mean", 0.0)), 100.0 * float(sst.get("bare_rows", 0.0))])
 	print("[W4B] W4Steps %d 三角形・W4Soil %d 三角形・%d ms・巻き順不正 %d／%d・石垣／笠石ブロック %d" % [tris, W4.soil_n, Time.get_ticks_msec() - t0, int(wb[0]), int(wb[1]), W4.diag.size()])
 	var ps := PackedScene.new()
 	var ok := ps.pack(ov) == OK and ResourceSaver.save(ps, W4.OUTPUT, ResourceSaver.FLAG_COMPRESS) == OK

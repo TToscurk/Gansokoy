@@ -8,11 +8,14 @@ extends SceneTree
 ## 再現性：Input.mouse_mode＝VISIBLE（実機のマウス捕捉で pitch がずれない）、pitch＝既定 −0.18、動的相機〔_slope_bias〕には触れない。場景ファイルは書かない。
 const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const W4 := preload("res://tools/village_v2_sando_w4_lib.gd")
+const W5 := preload("res://tools/village_v2_sando_w5a_lib.gd")
 const OVR := "SandoPilotW4P13"
 const DEF_PITCH := -0.18
 const VIEWS := {
 	# 名前：[種別, s, 追加]   種別 up／walk（s＝撮影する位置、追加＝歩き出し s）／free（pos, target, fov は別表）
 	"up_s43": ["up", 43.0],
+	"up_s53": ["up", 53.0],
+	"up_s58": ["up", 58.0],
 	"up_s47": ["up", 47.0],
 	"up_s52": ["up", 52.0],
 	"up_s56": ["up", 56.0],
@@ -28,7 +31,16 @@ const VIEWS := {
 }
 
 ## 近接のフリーカメラ視点：名前 → [カメラ s, 横 lat, 地面からの高さ h, 注視 s, 注視 lat, 注視 h, fov]（lat＝中心線の左法線方向 m、s＝中心線の弧長 m）
+## P13 W5A（s≈59–64.2 m の石垣と土坡）の鏡位
+const W5_TPS := ["up_s53", "up_s56", "up_s58"]
+const W5_CLOSE := ["w5_wallR", "w5_wallL", "w5_baseR", "w5_highR", "w5_highL", "w5_landR"]
 const CLOSE := {
+	"w5_wallR": [57.2, 4.4, 1.4, 61.0, 1.35, 0.5, 55.0],
+	"w5_wallL": [57.2, -4.4, 1.4, 61.0, -1.35, 0.5, 55.0],
+	"w5_baseR": [60.0, 3.1, 0.85, 61.2, 1.3, 0.35, 48.0],
+	"w5_highR": [54.5, 6.8, 5.8, 60.8, 0.9, 0.4, 55.0],
+	"w5_highL": [54.5, -6.8, 5.8, 60.8, -0.9, 0.4, 55.0],
+	"w5_landR": [67.5, 3.6, 2.4, 63.6, 1.2, 0.6, 55.0],
 	"cl_wallR_s60": [56.5, 4.5, 1.7, 60.0, 1.4, 0.4, 55.0],
 	"cl_wallL_s46": [43.5, -4.0, 1.6, 46.5, -1.4, 0.2, 55.0],
 	"cl_treads_s40": [36.0, 0.0, 2.4, 41.5, 0.0, 0.3, 50.0],
@@ -192,6 +204,7 @@ func _exp_prepare() -> void:
 	var st := SA.steps(cl, H)
 	var rp := SA.ramp_points(st, H)
 	var kr := W4.pilot_k_range(st)
+	W5.setup(vil, sp, cl)
 	var lanterns := []
 	for ls in SA.lantern_specs(cl, H, st, sp):
 		var s_l := float(ls["s"])
@@ -228,6 +241,10 @@ func _exp_apply(vname: String) -> void:
 			shadow = false
 		"no_selfshadow":
 			self_shadow = false
+		"w4b":
+			f = {"w5a": false}
+		"w5a":
+			f = {}
 		"diag":
 			f = {"diag_color": true}
 			diag = true
@@ -280,6 +297,9 @@ func _exp_apply(vname: String) -> void:
 	for l in vil.find_children("*", "DirectionalLight3D", true, false):
 		(l as DirectionalLight3D).shadow_enabled = shadow
 	W4.flags = {}
+	var pn := _ov.get_node_or_null("W5Plants") as Node3D
+	if pn != null:
+		pn.visible = on and vname != "w4b"                 # W5A の草叢は W4B 比較では隠す
 	# 環境光遮蔽：エンジンが生きている環境〔Camera3D の environment か WorldEnvironment〕へ。診断だけ（場景は書かない）
 	for env in _envs():
 		if not _ssao0.has(env):
@@ -432,6 +452,21 @@ func _run() -> void:
 			print("[W4S] trail 経路 s=%.1f：洋紅画素 %d" % [spot, base2])
 			if base2 > 0:
 				await _mag_drill(vil, base2, 0)
+	if "w5" in want:
+		await _exp_prepare()
+		var wvars: PackedStringArray = (args[3] if args.size() > 3 else "w4b,w5a").split(",")
+		for vn: String in wvars:
+			_exp_apply(vn)
+			await _frames(8)
+			for tv: String in W5_TPS:
+				await _tp(float(VIEWS[tv][1]), true)
+				await _shot("w5_%s__%s" % [vn, tv])
+			await _free_begin()
+			for cn: String in W5_CLOSE:
+				var c: Array = CLOSE[cn]
+				await _free("w5_%s__%s" % [vn, cn], _rel(float(c[0]), float(c[1]), float(c[2])), _rel(float(c[3]), float(c[4]), float(c[5])), float(c[6]))
+			await _free_end()
+			print("[W4S] w5 %s 撮影完了" % vn)
 	if "exp" in want:
 		await _exp_prepare()
 		var variants: PackedStringArray = (args[3] if args.size() > 3 else "base,r8,no_decals,r0,bed_up,no_vcol,no_shadow,all_off").split(",")

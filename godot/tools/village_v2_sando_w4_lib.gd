@@ -17,7 +17,7 @@ const SA := preload("res://tools/village_v2_shrine_approach_lib.gd")
 const NODE_NAME := "SandoPilotW4P13"
 const OUTPUT := "res://maps/village_v2/gen/sando_pilot_w4_p13.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p13/sando_pilot_w4.gd"
-const ART_REVISION := "P13 W4B r13"
+const ART_REVISION := "P13 W4B r13 + W5A r1"
 const SEED := 130401
 # 踏面長（k＝0.05 m 単位）0.20–0.35 m とその重み。r8 は 0.25–0.45 で「蹴上 0.18 に最も近い長さ」だけを選んでいた。
 # 0.40 m の踏面は不可：斜坡碰撞（r8 の短い踏面から作られた折れ線）より 15 cm 以上高くなり、足が石に沈む（r8 実測 最大 11.7 cm → 試作 r8版 17.9 cm）
@@ -50,6 +50,8 @@ static var soil_n := 0
 ##   no_decals＝苔・落葉・目地の貼り物を出さない／r_scale＝面取り幅の倍率／bed_off＝土の床の高さ加算／no_bed＝土の床を出さない
 static var flags := {}
 static var side_log: Array = []          # 側面の処理の記録：{sd, ka, kb, e_max, mode}
+static var _w5 = null              # P13 W5A モジュール〔preload の循環を避けて実行時に load〕
+static var side_lift := 0.0        # 0＝W4B のまま。1＝石の側壁の頂点色の漸暗をなくす〔P13 W5A：笠石の側壁が自己影と漸暗で黒い楔に見えた〕
 static var _cur_base := false      # 今置くブロックが地面に接する最下段か（diag の浮空判定は最下段だけ）
 
 
@@ -220,6 +222,12 @@ static func replan(cl: PackedVector2Array, H: PackedFloat32Array, st: Array, rp:
 
 # ───────────────────────────── メッシュ基本 ─────────────────────────────
 
+static func w5():
+	if _w5 == null:
+		_w5 = load("res://tools/village_v2_sando_w5a_lib.gd")
+	return _w5
+
+
 static func _uv(v: Vector3, n: Vector3) -> Vector2:
 	if absf(n.y) > 0.6:
 		return Vector2(v.x, v.z) * uv_k + _uvo
@@ -362,8 +370,8 @@ static func stone(st: SurfaceTool, P: Array, ht: Array, hc: float, ybot: float, 
 			cw = cb
 		_quad_out(st, Pin[i], Pin[j], Pe[j], Pe[i], low, cb, cb, cw, cw)
 		var cw0 := _mul(base, 0.90 if i >= fronts else 0.94)
-		var cm := _mul(base, 0.76)
-		var cd := _mul(base, 0.58)
+		var cm := _mul(base, 0.76).lerp(cw0, side_lift)
+		var cd := _mul(base, 0.58).lerp(cw0, side_lift)
 		if dg:
 			cw0 = Color(1, 0, 0)
 			cm = cw0
@@ -373,7 +381,7 @@ static func stone(st: SurfaceTool, P: Array, ht: Array, hc: float, ybot: float, 
 		_quad_out(st, Pm[i], Pm[j], Pb[j], Pb[i], low, cmm, cmm, cd, cd)
 	# 底（地中だが、側面から覗く隙間に備えて閉じる）
 	var cb3 := Vector3(c.x, ybot, c.y)
-	_vc = _mul(base, 0.35) if not dg else Color(1, 0, 1)
+	_vc = (_mul(base, 0.35).lerp(_mul(base, 0.80), side_lift) if not dg else Color(1, 0, 1))      # 底面〔笠石の下面は下から見える〕。side_lift で明るく
 	for i in n:
 		_tri_out(st, cb3, Pb[i], Pb[(i + 1) % n], Vector3(c.x, ybot + 5.0, c.y))
 
@@ -1057,7 +1065,7 @@ static func _heap(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, ka: 
 
 
 ## 側 sd の 1 run（plan[i..j]）：笠石の頂線 line(k) を引き、露出に応じて 1〜5 段の石垣を地形まで降ろし、根元に土の裾を盛る
-static func _wall_run(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, plan: Array, i: int, j: int, sd: float, tout: PackedFloat32Array, tfar: PackedFloat32Array, lanterns: Array, rng: RandomNumberGenerator) -> void:
+static func _wall_run_old(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, plan: Array, i: int, j: int, sd: float, tout: PackedFloat32Array, tfar: PackedFloat32Array, lanterns: Array, rng: RandomNumberGenerator) -> void:
 	var ka := int(plan[i]["k0"])
 	var kb := int(plan[j]["k1"])
 	var key := "eR" if sd > 0.0 else "eL"
@@ -1106,7 +1114,8 @@ static func _wall_run(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, 
 			n_mid += 1
 		else:
 			n_hi += 1
-	side_log.append({"sd": sd, "ka": ka, "kb": kb, "e_max": e_max, "mode": mode, "n_lo": n_lo, "n_mid": n_mid, "n_hi": n_hi})
+	side_log.append({"sd": sd, "ka": ka, "kb": kb, "e_max": e_max, "mode": mode, "n_lo": n_lo, "n_mid": n_mid, "n_hi": n_hi,
+		"i": i, "j": j, "edge": edge, "ta": ta, "tb": tb, "kind": String(plan[i]["kind"])})
 	if mode != "wall":
 		_bank(hm, cl, ka, kb, sd, edge, ta, tb, tout, tfar, lanterns)
 	if mode == "bank":
@@ -1171,6 +1180,27 @@ static func _wall_run(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, 
 		_heap(sm, hm, cl, ka, kb, sd, edge + w_top + BATTER * float(n_c - 1), ta, tb, tout, tfar, lanterns, rng)
 
 
+## P13 W5A の入口。Wave 5A の局所サンプル〔s=58.95–64.20〕に完全に入る run は、旧経路を scratch へ出力して乱数列だけ進め〔区間外の幾何を 1 ビットも変えない〕、
+## run のパラメータを記録して W5A が連続した 1 枚の壁として作り直す。flags["w5a"]=false で W4B そのまま。
+static func _wall_run(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, plan: Array, i: int, j: int, sd: float, tout: PackedFloat32Array, tfar: PackedFloat32Array, lanterns: Array, rng: RandomNumberGenerator) -> void:
+	var ka := int(plan[i]["k0"])
+	var kb := int(plan[j]["k1"])
+	var W5 = w5()
+	if W5.enabled and W5.in_sample(ka, kb):
+		var dn := diag.size()
+		var sn := soil_n
+		var sc := SurfaceTool.new()
+		sc.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var hc := SurfaceTool.new()
+		hc.begin(Mesh.PRIMITIVE_TRIANGLES)
+		_wall_run_old(sc, hc, cl, plan, i, j, sd, tout, tfar, lanterns, rng)
+		diag.resize(dn)
+		soil_n = sn
+		W5.record_run(sd, side_log[side_log.size() - 1])
+		return
+	_wall_run_old(sm, hm, cl, plan, i, j, sd, tout, tfar, lanterns, rng)
+
+
 ## 全 run の側面：run＝1–3 段（踊り場は単独）
 static func build_sides(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, plan: Array, touts: Array, tfars: Array, lanterns: Array, rng: RandomNumberGenerator) -> void:
 	var sides := [-1.0, 1.0]
@@ -1199,6 +1229,9 @@ static func build_meshes(cl: PackedVector2Array, H: PackedFloat32Array, plan: Ar
 	diag.clear()
 	side_log.clear()
 	soil_n = 0
+	var W5 = w5()
+	W5.enabled = bool(flags.get("w5a", true))
+	W5.reset()
 	var sm := SurfaceTool.new()
 	sm.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var hm := SurfaceTool.new()
@@ -1221,6 +1254,8 @@ static func build_meshes(cl: PackedVector2Array, H: PackedFloat32Array, plan: Ar
 			tread(sm, hm, cl, a, y_prev, H, state, rng)
 		y_prev = float(a["y1"])
 	build_sides(sm, hm, cl, plan, touts, tfars, lanterns, rng)
+	if W5.enabled:
+		W5.finish(sm, hm, cl, touts, tfars, lanterns)
 	sm.generate_tangents()
 	var out := {"steps": sm.commit()}
 	out["soil"] = hm.commit() if soil_n > 0 else null
@@ -1259,6 +1294,7 @@ static func build(cl: PackedVector2Array, H: PackedFloat32Array, plan: Array, to
 		so.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		root.add_child(so)
 		so.owner = root
+	w5().add_plants(root)          # P13 W5A：土坡の上の少量の草叢〔既存 veg_kit の instance〕
 	return root
 
 
