@@ -394,8 +394,14 @@ func _scene() -> void:
 		if m == null or not m.shader.resource_path.ends_with("ground_p10_pilot.gdshader"):
 			bad.append("%s 材質が pilot shader でない" % LIB.ROADS[k]["name"])
 	var tmi := V.get_node(LIB.TERRAIN_NODE) as MeshInstance3D
-	if tmi.mesh == null or String(tmi.mesh.resource_name) != "RoadBase_FarmlandTerrain":
-		bad.append("地形 mesh %s" % (tmi.mesh.resource_name if tmi.mesh else "null"))
+	# P13 W7 TASK 2（使用者 2026-10-14・R5a limited reseal）：root の FarmJunctionFixP13 が適用済みなら、RoadBase の地形 mesh から
+	# COLOR.r／UV2.y を数頂点だけ変えた派生 mesh（resource_name＝FarmJunctionFix_FarmlandTerrain）も合法。派生の厳密な検証（変更頂点＝記録の 5 点だけ・
+	# 位置／法線／UV 不変・他の RoadBase 変更頂点は不変）は tools/p13/w7/verify_w7_cleanup.gd が持つ。FarmJunctionFixP13 が無いのにその名前なら不合法。
+	var tname := String(tmi.mesh.resource_name) if tmi.mesh else "null"
+	var jf := V.get_node_or_null("FarmJunctionFixP13")
+	var tmesh_ok := tname == "RoadBase_FarmlandTerrain" or (tname == "FarmJunctionFix_FarmlandTerrain" and jf != null and int(jf.get("applied")) > 0)
+	if not tmesh_ok:
+		bad.append("地形 mesh %s" % tname)
 	_ok(bad.is_empty() and int(n.get("applied")) == 4 and gp != null, "再生 mesh 3 本＋地形 1 が差し替わり、道の材質は GroundPilotP10 の pilot shader のまま%s" % ("" if bad.is_empty() else " ✗ " + str(bad)))
 	# 道に碰撞なし（差し替えは見た目だけ）
 	var nc := 0

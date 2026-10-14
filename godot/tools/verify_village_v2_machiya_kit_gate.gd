@@ -601,6 +601,14 @@ func _cal_load() -> void:
 		cal[f] = {"base": String(e["base"]), "sha_ok": reg_ok and sh == String(e["sha256"]) and String(frozen.get(rel.call(f), "")) == sh}
 	for bp in reg.get("pilot_buildings", []):
 		cal_pilots[String(bp).get_file()] = true
+	# P13 W7 TASK 5（使用者 2026-10-14・R6a limited reseal）：第一批 50 棟（data/village_v2_p13w7_batch1.json）。名簿ファイルの sha256 が封存 frozen の値と
+	# 一致するときだけ、その建物にも登記変体の override を許可する（変体そのものは R6a の 18 変体だけ・sha は上の登記検証のまま）。
+	var w7_rel := "godot/data/village_v2_p13w7_batch1.json"
+	if FileAccess.file_exists("res://data/village_v2_p13w7_batch1.json") and String(frozen.get(w7_rel, "")) == FileAccess.get_sha256("res://data/village_v2_p13w7_batch1.json"):
+		var mj: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/village_v2_p13w7_batch1.json"))
+		if mj is Dictionary:
+			for wb: Dictionary in (mj as Dictionary).get("buildings", []):
+				cal_pilots[String(wb["id"])] = true
 
 
 ## surface override の合法性："" ＝合法（登記変体）、それ以外＝理由

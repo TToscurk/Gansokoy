@@ -1,0 +1,388 @@
+{
+	"LOD0/base_": {
+		"V2_KitStoneTri.tres": 187
+	},
+	"LOD0/bk_plain_": {
+		"V2_Plaster.tres": 520,
+		"V2_Wood.tres": 520
+	},
+	"LOD0/bk_win_": {
+		"V2_MachiyaKit.tres": 252,
+		"V2_Plaster.tres": 252,
+		"V2_Wood.tres": 252
+	},
+	"LOD0/dmg_": {
+		"V2_Plaster.tres": 6,
+		"V2_Wood.tres": 6
+	},
+	"LOD0/dmg_c": {
+		"V2_Plaster.tres": 23,
+		"V2_Wood.tres": 23
+	},
+	"LOD0/dmr_p": {
+		"V2_Kawara.tres": 29,
+		"V2_Wood.tres": 29
+	},
+	"LOD0/f": {
+		"V2_MachiyaKit.tres": 615,
+		"V2_Plaster.tres": 632,
+		"V2_Wood.tres": 772
+	},
+	"LOD0/fb_": {
+		"V2_Wood.tres": 186
+	},
+	"LOD0/fp_h": {
+		"V2_Wood.tres": 186
+	},
+	"LOD0/gbh_": {
+		"V2_Plaster.tres": 748,
+		"V2_Wood.tres": 748
+	},
+	"LOD0/gyo_": {
+		"V2_Wood.tres": 7
+	},
+	"LOD0/gyo_c": {
+		"V2_Wood.tres": 38
+	},
+	"LOD0/his_": {
+		"V2_Kawara.tres": 96,
+		"V2_Wood.tres": 96
+	},
+	"LOD0/hisw_": {
+		"V2_Wood.tres": 69
+	},
+	"LOD0/hisx_": {
+		"V2_Kawara.tres": 74,
+		"V2_Wood.tres": 74
+	},
+	"LOD0/iy_": {
+		"V2_MachiyaKit.tres": 99,
+		"V2_Wood.tres": 99
+	},
+	"LOD0/kbr_kanban_": {
+		"V2_MachiyaKit.tres": 8,
+		"V2_Wood.tres": 8
+	},
+	"LOD0/kbr_kanban_b_": {
+		"V2_MachiyaKit.tres": 6,
+		"V2_Wood.tres": 6
+	},
+	"LOD0/kbr_kanban_c_": {
+		"V2_MachiyaKit.tres": 8,
+		"V2_Wood.tres": 8
+	},
+	"LOD0/kbs_kanban_": {
+		"V2_Kawara.tres": 7,
+		"V2_MachiyaKit.tres": 7,
+		"V2_Wood.tres": 7
+	},
+	"LOD0/kbs_kanban_b_": {
+		"V2_Kawara.tres": 5,
+		"V2_MachiyaKit.tres": 5,
+		"V2_Wood.tres": 5
+	},
+	"LOD0/kbs_kanban_c_": {
+		"V2_Kawara.tres": 12,
+		"V2_MachiyaKit.tres": 12,
+		"V2_Wood.tres": 12
+	},
+	"LOD0/kemu_": {
+		"V2_Kawara.tres": 19,
+		"V2_MachiyaKit.tres": 19,
+		"V2_Plaster.tres": 19,
+		"V2_Wood.tres": 19
+	},
+	"LOD0/kemu_t": {
+		"V2_Kawara.tres": 26,
+		"V2_MachiyaKit.tres": 26,
+		"V2_Plaster.tres": 26,
+		"V2_Wood.tres": 26
+	},
+	"LOD0/kiri_": {
+		"V2_Wood.tres": 17
+	},
+	"LOD0/nr_noren_a_": {
+		"V2_MachiyaKit.tres": 9
+	},
+	"LOD0/nr_noren_b_": {
+		"V2_MachiyaKit.tres": 11
+	},
+	"LOD0/nr_noren_c_": {
+		"V2_MachiyaKit.tres": 8
+	},
+	"LOD0/nr_noren_d_": {
+		"V2_MachiyaKit.tres": 10
+	},
+	"LOD0/nr_noren_e_": {
+		"V2_MachiyaKit.tres": 10
+	},
+	"LOD0/nr_sudare_": {
+		"V2_MachiyaKit.tres": 24
+	},
+	"LOD0/nr_sudare_b_": {
+		"V2_MachiyaKit.tres": 8
+	},
+	"LOD0/oni_": {
+		"V2_Kawara.tres": 53
+	},
+	"LOD0/oni_b_": {
+		"V2_Kawara.tres": 58
+	},
+	"LOD0/oni_b_t": {
+		"V2_Kawara.tres": 110
+	},
+	"LOD0/oni_t": {
+		"V2_Kawara.tres": 108
+	},
+	"LOD0/post_e": {
+		"V2_Wood.tres": 393
+	},
+	"LOD0/rf_": {
+		"V2_Kawara.tres": 1630,
+		"V2_Wood.tres": 1630
+	},
+	"LOD0/rg_l_": {
+		"V2_Kawara.tres": 22
+	},
+	"LOD0/rg_l_t": {
+		"V2_Kawara.tres": 52
+	},
+	"LOD0/rg_u_": {
+		"V2_Kawara.tres": 40
+	},
+	"LOD0/rg_u_t": {
+		"V2_Kawara.tres": 73
+	},
+	"LOD0/rt_h": {
+		"V2_Plaster.tres": 270,
+		"V2_Wood.tres": 270
+	},
+	"LOD0/rtu_": {
+		"V2_Plaster.tres": 18
+	},
+	"LOD0/rtu_c": {
+		"V2_Plaster.tres": 39
+	},
+	"LOD0/sd_d": {
+		"V2_Plaster.tres": 336,
+		"V2_Wood.tres": 336
+	},
+	"LOD0/sdo_d": {
+		"V2_MachiyaKit.tres": 38,
+		"V2_Plaster.tres": 38,
+		"V2_Wood.tres": 38
+	},
+	"LOD0/sf_h": {
+		"V2_Wood.tres": 186
+	},
+	"LOD0/u_amado_": {
+		"V2_MachiyaKit.tres": 20,
+		"V2_Plaster.tres": 20,
+		"V2_Wood.tres": 20
+	},
+	"LOD0/u_mushi_": {
+		"V2_MachiyaKit.tres": 55,
+		"V2_Plaster.tres": 55,
+		"V2_Wood.tres": 55
+	},
+	"LOD0/u_mushib_": {
+		"V2_MachiyaKit.tres": 28,
+		"V2_Plaster.tres": 28,
+		"V2_Wood.tres": 28
+	},
+	"LOD0/u_mushis_": {
+		"V2_MachiyaKit.tres": 16,
+		"V2_Plaster.tres": 16,
+		"V2_Wood.tres": 16
+	},
+	"LOD0/u_plain_": {
+		"V2_Plaster.tres": 212,
+		"V2_Wood.tres": 212
+	},
+	"LOD0/u_win_": {
+		"V2_MachiyaKit.tres": 27,
+		"V2_Plaster.tres": 27,
+		"V2_Wood.tres": 27
+	},
+	"LOD0/u_winb_": {
+		"V2_MachiyaKit.tres": 23,
+		"V2_Plaster.tres": 23,
+		"V2_Wood.tres": 23
+	},
+	"LOD0/u_wins_": {
+		"V2_MachiyaKit.tres": 15,
+		"V2_Plaster.tres": 15,
+		"V2_Wood.tres": 15
+	},
+	"LOD0/ud_": {
+		"V2_Kawara.tres": 19,
+		"V2_Plaster.tres": 19,
+		"V2_Wood.tres": 19
+	},
+	"LOD0/udh_": {
+		"V2_Kawara.tres": 90,
+		"V2_Plaster.tres": 90,
+		"V2_Wood.tres": 90
+	},
+	"LOD0/udk_": {
+		"V2_Kawara.tres": 10,
+		"V2_Plaster.tres": 10
+	},
+	"LOD0/udk_c": {
+		"V2_Kawara.tres": 35,
+		"V2_Plaster.tres": 35
+	},
+	"LOD0/vg_": {
+		"V2_Kawara.tres": 658,
+		"V2_Wood.tres": 658
+	},
+	"LOD1/base_": {
+		"V2_KitStoneTri.tres": 187
+	},
+	"LOD1/dmg_": {
+		"V2_Plaster.tres": 6,
+		"V2_Wood.tres": 6
+	},
+	"LOD1/dmg_c": {
+		"V2_Plaster.tres": 23,
+		"V2_Wood.tres": 23
+	},
+	"LOD1/dmr_p": {
+		"V2_Kawara.tres": 29,
+		"V2_Wood.tres": 29
+	},
+	"LOD1/kemu_": {
+		"V2_Kawara.tres": 19,
+		"V2_MachiyaKit.tres": 19,
+		"V2_Plaster.tres": 19,
+		"V2_Wood.tres": 19
+	},
+	"LOD1/kemu_t": {
+		"V2_Kawara.tres": 26,
+		"V2_MachiyaKit.tres": 26,
+		"V2_Plaster.tres": 26,
+		"V2_Wood.tres": 26
+	},
+	"LOD1/l_box_": {
+		"V2_MachiyaKit.tres": 39
+	},
+	"LOD1/l_box_c": {
+		"V2_MachiyaKit.tres": 167
+	},
+	"LOD1/l_f": {
+		"V2_MachiyaKit.tres": 772
+	},
+	"LOD1/l_rh_": {
+		"V2_MachiyaKit.tres": 124
+	},
+	"LOD1/l_rh_t": {
+		"V2_MachiyaKit.tres": 250
+	},
+	"LOD1/l_slab_": {
+		"V2_MachiyaKit.tres": 62
+	},
+	"LOD1/l_u_amado_": {
+		"V2_MachiyaKit.tres": 20
+	},
+	"LOD1/l_u_mushi_": {
+		"V2_MachiyaKit.tres": 71
+	},
+	"LOD1/l_u_mushib_": {
+		"V2_MachiyaKit.tres": 28
+	},
+	"LOD1/l_u_win_": {
+		"V2_MachiyaKit.tres": 42
+	},
+	"LOD1/l_u_winb_": {
+		"V2_MachiyaKit.tres": 23
+	},
+	"LOD1/rg_l_": {
+		"V2_Kawara.tres": 22
+	},
+	"LOD1/rg_l_t": {
+		"V2_Kawara.tres": 52
+	},
+	"LOD1/rg_u_": {
+		"V2_Kawara.tres": 40
+	},
+	"LOD1/rg_u_t": {
+		"V2_Kawara.tres": 73
+	},
+	"LOD1/udh_": {
+		"V2_Kawara.tres": 90,
+		"V2_Plaster.tres": 90,
+		"V2_Wood.tres": 90
+	},
+	"LOD1/udk_": {
+		"V2_Kawara.tres": 10,
+		"V2_Plaster.tres": 10
+	},
+	"LOD1/udk_c": {
+		"V2_Kawara.tres": 35,
+		"V2_Plaster.tres": 35
+	},
+	"LOD2/base_": {
+		"V2_KitStoneTri.tres": 187
+	},
+	"LOD2/dmg_": {
+		"V2_Plaster.tres": 6,
+		"V2_Wood.tres": 6
+	},
+	"LOD2/dmg_c": {
+		"V2_Plaster.tres": 23,
+		"V2_Wood.tres": 23
+	},
+	"LOD2/dmr_p": {
+		"V2_Kawara.tres": 29,
+		"V2_Wood.tres": 29
+	},
+	"LOD2/kemu_": {
+		"V2_Kawara.tres": 19,
+		"V2_MachiyaKit.tres": 19,
+		"V2_Plaster.tres": 19,
+		"V2_Wood.tres": 19
+	},
+	"LOD2/kemu_t": {
+		"V2_Kawara.tres": 26,
+		"V2_MachiyaKit.tres": 26,
+		"V2_Plaster.tres": 26,
+		"V2_Wood.tres": 26
+	},
+	"LOD2/l_box_": {
+		"V2_MachiyaKit.tres": 39
+	},
+	"LOD2/l_box_c": {
+		"V2_MachiyaKit.tres": 167
+	},
+	"LOD2/l_rh_": {
+		"V2_MachiyaKit.tres": 124
+	},
+	"LOD2/l_rh_t": {
+		"V2_MachiyaKit.tres": 250
+	},
+	"LOD2/rg_l_": {
+		"V2_Kawara.tres": 22
+	},
+	"LOD2/rg_l_t": {
+		"V2_Kawara.tres": 52
+	},
+	"LOD2/rg_u_": {
+		"V2_Kawara.tres": 40
+	},
+	"LOD2/rg_u_t": {
+		"V2_Kawara.tres": 73
+	},
+	"LOD2/udh_": {
+		"V2_Kawara.tres": 90,
+		"V2_Plaster.tres": 90,
+		"V2_Wood.tres": 90
+	},
+	"LOD2/udk_": {
+		"V2_Kawara.tres": 10,
+		"V2_Plaster.tres": 10
+	},
+	"LOD2/udk_c": {
+		"V2_Kawara.tres": 35,
+		"V2_Plaster.tres": 35
+	}
+}

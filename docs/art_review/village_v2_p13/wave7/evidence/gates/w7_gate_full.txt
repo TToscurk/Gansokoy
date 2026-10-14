@@ -1,0 +1,76 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W7G] PASS root/RoadEdgeBlendP13 掛載 1 個（實得 1）
+[W7G] PASS root/EarthBankToneP13 掛載 1 個（實得 1）
+[W7G] PASS root/FarmJunctionFixP13 掛載 1 個（實得 1）
+[W7G] PASS root/AlbedoBatch1P13 掛載 1 個（實得 1）
+[W7G] PASS 順序：RoadEdgeBlendP13 → EarthBankToneP13 → FarmJunctionFixP13 → AlbedoBatch1P13（index [27, 28, 29, 30]）
+[W7G] PASS EarthBankToneP13 enabled
+[W7G] PASS EarthBankToneP13 は子ノード 0（雙份 geometry なし）
+[W7G] PASS FarmJunctionFixP13 enabled
+[W7G] PASS FarmJunctionFixP13 は子ノード 0（雙份 geometry なし）
+[W7G] PASS AlbedoBatch1P13 enabled
+[W7G] PASS AlbedoBatch1P13 は子ノード 0（雙份 geometry なし）
+[W7G] PASS EarthBankToneP13.applied＝220（期待 220）
+[W7G] PASS FarmJunctionFixP13.applied＝5（期待 5）
+[W7G] PASS AlbedoBatch1P13.applied_surfaces＝5496
+[W7G] PASS EarthBanks 子 220 件（期待 220）
+[W7G] PASS 220 件が複製材質 1 個を共有・ground_k＝0.210（MeshInstance 以外 0・材質種 1・k 違い 0）
+[W7G] PASS 複製材質の使用者＝220（期待 220）・EarthBanks 外 0
+[W7G] PASS enabled=false → 元の共用材質 1 個・ground_k＝0.304（元の材質は書き換わっていない）
+[W7G] PASS 元の共用材質の使用者＝220（EarthBanks 外 0）：共用による他区域への波及なし
+[W7G] PASS 複製材質＝元の材質と同じ shader・ground_k 以外の引数が同一（差 []）
+[W7G] PASS enabled=true → 再套用 220
+[W7G] PASS FarmlandTerrain.mesh＝FarmJunctionFix_FarmlandTerrain（実 FarmJunctionFix_FarmlandTerrain）
+[W7G] PASS RoadBaseP10.road_paths に Terrain/FarmlandTerrain がある（index 3）
+[W7G] PASS 頂点数 13703＝RoadBase の地形 13703、surface 1
+[W7G] PASS 記録の頂点 (366, -34) が RoadBase 地形で一意に引き当たる（idx 3787）
+[W7G] PASS 記録の頂点 (368, -34) が RoadBase 地形で一意に引き当たる（idx 3788）
+[W7G] PASS 記録の頂点 (370, -34) が RoadBase 地形で一意に引き当たる（idx 3789）
+[W7G] PASS 記録の頂点 (372, -34) が RoadBase 地形で一意に引き当たる（idx 3790）
+[W7G] PASS 記録の頂点 (374, -34) が RoadBase 地形で一意に引き当たる（idx 3791）
+[W7G] PASS 頂点位置が RoadBase 地形と全て同一（差 0）
+[W7G] PASS index（三角形の並び）が同一（26800 本）
+[W7G] PASS 法線が同一（量子化誤差 0.001 内・差 0）
+[W7G] PASS UV／UV2.x／COLOR.gba が全頂点で不変（差 0／0／0）
+[W7G] PASS COLOR.r／UV2.y は記録の 5 頂点だけ新値、他の全頂点は RoadBase のまま（r 違い 0、street 違い 0）
+[W7G] PASS overlay の頂点番号 [3787, 3788, 3789, 3790, 3791]＝位置から独立に引いた番号 [3787, 3788, 3789, 3790, 3791]
+[W7G] PASS custom_aabb 不変
+[W7G] PASS enabled=false → FarmlandTerrain.mesh は RoadBase の mesh そのもの
+[W7G] PASS enabled=true → 再套用
+WARNING: FarmJunctionFixP13: 頂点 3787 の位置が記録と違う
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://maps/village_v2/scripts_p13/farm_junction_fix.gd:57)
+       [1] _c_junction (res://tools/p13/w7/verify_w7_cleanup.gd:326)
+       [2] _run (res://tools/p13/w7/verify_w7_cleanup.gd:113)
+[W7G] PASS 記録と位置が違う頂点表は拒否（applied 0・mesh 不変）
+[W7G] PASS 名簿 50 棟（manifest 50）
+[W7G] PASS ID 重複なし
+[W7G] PASS W2 主街 39 棟と重ならない（重複 []）
+[W7G] PASS R6a Pilot 24 棟と重ならない（重複 []）
+[W7G] PASS 名簿の建物がすべて場景に存在（欠落 0）
+[W7G] PASS 50 棟すべて machiya_kit の町家 Kit（違い 0）
+[W7G] PASS 区と用途の対応：Market／MixedCommercial＝商業 A・Residential＝住宅 B（違い 0）
+[W7G] PASS 割り当てた変体はすべて R6a 登記の palette 変体で、区・基底材質が一致（違い 0）
+[W7G] PASS overlay.targets＝名簿（50・同順）
+[W7G] PASS overlay の校正材質 4 はすべて R6a 登記ファイルの外部參照
+[W7G] PASS overlay の覆寫 5496 面・屋根（l_rh_*）不覆寫 200 面＝名簿から独立に数えた値（5496／200）
+[W7G] PASS overlay.skip_prefixes＝[l_rh_]（実 ["l_rh_"]）
+[W7G] PASS 50 棟 × 建物ノード全体（Kit の LOD0／1／2 全面＋Frontage 等 Kit 外の子）：期待どおりの登記変体、Kawara 不校正、LOD1／2 の屋根 l_rh_* は未校正アトラスのまま、material_override なし（不一致 0 [] []）
+[W7G] PASS 範囲外（Pilot 24＋batch 50 以外）の町家に登記変体の覆寫 0（実 0 []、うち W2 主街 0）
+[W7G] PASS 14 m 内の同区・同組なし（Pilot 24 ＋ batch 50 棟の全対。衝突 []）
+[W7G] PASS 使用した変体 14 種の輝度帯（漆喰 0.66–0.76／木 0.66–0.82）と飽和 ≤ 0.22（違反 []）
+[W7G] PASS LOD0 → LOD1/2 の明度差：漆喰 ≤ 0.08（最大 0.017）・木 ≤ 0.10（最大 0.079）＝遠景で灰に戻らない（違反 []）
+[W7G] PASS enabled=false → 50 棟の覆寫 0（残 0）
+[W7G] PASS enabled=true → 再套用（5496 面）
+[W7G] PASS 3 overlay は碰撞／導航／MultiMesh を持たない（0）
+[W7G] PASS 3 overlay の開閉で MeshInstance3D／碰撞物／導航領域／MultiMesh の数が不変 [48590, 700, 0, 9841]
+[W7G]   反向 8/8 が正しく FAIL
+[W7G] PASS 反向 8/8
+[W7G] PASS 61  FAIL 0
+[W7G] 結果：0 項失敗

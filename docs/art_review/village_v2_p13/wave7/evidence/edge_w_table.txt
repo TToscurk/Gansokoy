@@ -1,0 +1,9 @@
+# RoadEdgeBlendP13 edge_w：旧（W6 final＝git ce37a40/db98a55 の gen/road_edge_blend_p13.scn）→ 現行（W7）。他のパラメータ差は全道で 0。
+roads old=7 new=7
+CrossStreetMid  edge_w 0.55 → 0.55  他のパラメータ差 []
+HillFootStreet  edge_w 0.55 → 0.4  他のパラメータ差 []
+RiverNorthPath  edge_w 0.55 → 0.4  他のパラメータ差 []
+EntranceRoad  edge_w 0.55 → 0.4  他のパラメータ差 []
+FarmPath_2  edge_w 0.4 → 0.3  他のパラメータ差 []
+FarmPath_3  edge_w 0.4 → 0.3  他のパラメータ差 []
+FarmPath_5  edge_w 0.4 → 0.3  他のパラメータ差 []

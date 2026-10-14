@@ -1,0 +1,912 @@
+{
+	"approved_by": "user（P13 WAVE 7 TASK 5 批准第一批 50 棟正式材質整合・2026-10-14）",
+	"buildings": [
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_032",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_032",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				219.9,
+				-11.0
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A1"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_034",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_034",
+			"plaster": "V2_Plaster_K_A3",
+			"pos": [
+				233.6,
+				-11.0
+			],
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_035",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_035",
+			"plaster": "V2_Plaster_K_A0",
+			"pos": [
+				283.9,
+				-15.0
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "nikai",
+			"type_label": "總二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_037",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_037",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				297.7,
+				-17.6
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_038",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_038",
+			"plaster": "V2_Plaster_K_A3",
+			"pos": [
+				304.8,
+				-19.0
+			],
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_039",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_039",
+			"plaster": "V2_Plaster_K_A0",
+			"pos": [
+				235.3,
+				-29.0
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_040",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_040",
+			"plaster": "V2_Plaster_K_A0",
+			"pos": [
+				296.5,
+				-35.2
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_041",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_041",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				303.1,
+				-36.9
+			],
+			"road": "CrossStreetMid",
+			"roof": "tsuma",
+			"type": "nikai",
+			"type_label": "總二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_042",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_042",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				309.8,
+				-38.2
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_043",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_043",
+			"plaster": "V2_Plaster_K_A3",
+			"pos": [
+				316.4,
+				-38.5
+			],
+			"road": "CrossStreetMid",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_049",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_049",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				280.9,
+				53.9
+			],
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A1"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_053",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_053",
+			"plaster": "V2_Plaster_K_A0",
+			"pos": [
+				281.5,
+				35.9
+			],
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"type": "nikai",
+			"type_label": "總二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_055",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_055",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				294.6,
+				34.8
+			],
+			"road": "CrossStreetSouth",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_058",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_058",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				214.5,
+				6.8
+			],
+			"road": "WestAlley",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_059",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_059",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				215.1,
+				13.4
+			],
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"type": "nikai",
+			"type_label": "總二階",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "Market",
+			"id": "B_P_MKT_060",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/Market/Buildings/B_P_MKT_060",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				256.1,
+				-90.7
+			],
+			"road": "MidLane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業（市集區の町家列）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_009",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_009",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				236.6,
+				-140.5
+			],
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_010",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_010",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				244.7,
+				-140.8
+			],
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_013",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_013",
+			"plaster": "V2_Plaster_K_A0",
+			"pos": [
+				267.4,
+				-133.4
+			],
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_014",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_014",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				273.8,
+				-131.8
+			],
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_015",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_015",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				322.6,
+				-120.0
+			],
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A0"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_018",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_018",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				307.0,
+				-138.2
+			],
+			"road": "HillFootStreet",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A1"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_019",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_019",
+			"plaster": "V2_Plaster_K_A2",
+			"pos": [
+				313.6,
+				-137.4
+			],
+			"road": "HillFootStreet",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A1"
+		},
+		{
+			"area": "A_gate_main_south",
+			"district": "MixedCommercial",
+			"id": "B_P_MXC_023",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/MixedCommercial/Buildings/B_P_MXC_023",
+			"plaster": "V2_Plaster_K_A1",
+			"pos": [
+				343.0,
+				-145.5
+			],
+			"road": "RiverNorthPath",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "商業・混在（丘脚通り）",
+			"wood": "V2_Wood_K_A2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialNE",
+			"id": "B_P_RNE_001",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_001",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				438.2,
+				-205.8
+			],
+			"road": "NELane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（北東区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialNE",
+			"id": "B_P_RNE_002",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_002",
+			"plaster": "V2_Plaster_K_B3",
+			"pos": [
+				451.2,
+				-219.2
+			],
+			"road": "NELane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（北東区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialNE",
+			"id": "B_P_RNE_007",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_007",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				456.8,
+				-244.8
+			],
+			"road": "NELane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（北東区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialNE",
+			"id": "B_P_RNE_010",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_010",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				432.1,
+				-244.1
+			],
+			"road": "NENorth",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（北東区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialNE",
+			"id": "B_P_RNE_012",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialNE/Buildings/B_P_RNE_012",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				458.8,
+				-196.0
+			],
+			"road": "NESouth",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（北東区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_007",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_007",
+			"plaster": "V2_Plaster_K_B3",
+			"pos": [
+				193.3,
+				59.2
+			],
+			"road": "CrossStreetSouth",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_010",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_010",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				192.2,
+				-82.3
+			],
+			"road": "WestAlley",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_017",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_017",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				193.9,
+				-11.1
+			],
+			"road": "WestAlley",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_022",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_022",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				201.1,
+				-98.8
+			],
+			"road": "WestAlley",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_023",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_023",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				206.3,
+				-91.3
+			],
+			"road": "WestAlley",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_027",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_027",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				187.7,
+				-211.2
+			],
+			"road": "NWLane",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_029",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_029",
+			"plaster": "V2_Plaster_K_B3",
+			"pos": [
+				172.9,
+				-231.0
+			],
+			"road": "NWLane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_033",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_033",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				188.7,
+				-159.7
+			],
+			"road": "NWLane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_034",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_034",
+			"plaster": "V2_Plaster_K_B3",
+			"pos": [
+				185.2,
+				-173.1
+			],
+			"road": "NWLane",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_036",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_036",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				172.4,
+				-205.2
+			],
+			"road": "NWLane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_045",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_045",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				149.3,
+				-20.9
+			],
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_046",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_046",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				146.7,
+				-30.3
+			],
+			"road": "WestBankLane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_048",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				143.9,
+				-48.7
+			],
+			"road": "WestBankLane",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B0"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_059",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_059",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				134.2,
+				-16.3
+			],
+			"road": "WestBankLane",
+			"roof": "tsuma",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_071",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_071",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				231.8,
+				-80.2
+			],
+			"road": "MidLane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_072",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_072",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				241.7,
+				-77.7
+			],
+			"road": "MidLane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_073",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_073",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				220.0,
+				-95.7
+			],
+			"road": "MidLane",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_074",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_074",
+			"plaster": "V2_Plaster_K_B3",
+			"pos": [
+				230.6,
+				-97.2
+			],
+			"road": "MidLane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B1"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_075",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_075",
+			"plaster": "V2_Plaster_K_B0",
+			"pos": [
+				237.7,
+				-95.4
+			],
+			"road": "MidLane",
+			"roof": "hira",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_076",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_076",
+			"plaster": "V2_Plaster_K_B1",
+			"pos": [
+				247.2,
+				-93.1
+			],
+			"road": "MidLane",
+			"roof": "hira",
+			"type": "zushi",
+			"type_label": "厨子二階",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		},
+		{
+			"area": "B_west_alley",
+			"district": "ResidentialWest",
+			"id": "B_P_RSW_077",
+			"kit_asset": "machiya_kit",
+			"path": "Districts/ResidentialWest/Buildings/B_P_RSW_077",
+			"plaster": "V2_Plaster_K_B2",
+			"pos": [
+				160.0,
+				55.6
+			],
+			"road": "SWLane",
+			"roof": "tsuma",
+			"type": "hiraya",
+			"type_label": "平屋",
+			"use": "住宅（西区）",
+			"wood": "V2_Wood_K_B2"
+		}
+	],
+	"count": 50,
+	"node": "AlbedoBatch1P13",
+	"overlay": "res://maps/village_v2/gen/albedo_batch1_p13.scn",
+	"phase": "P13 W7 TASK 5 — R6a First Batch 50 町家",
+	"rule": "R6a 登記済み 18 変体の再利用だけ（新材質なし）。AlbedoBatch1P13 は albedo_pilot.gd と同じ仕組みの scripts_p13/albedo_batch.gd（封存済みの albedo_pilot.gd は複製・無変更）。Pilot 24・W2 主街 39 と重ならない。Kawara は不校正。LOD1／LOD2 の屋根（部品名 l_rh_*）は覆寫しない（K 版アトラスが屋根瓦を明るくし、LOD0 の屋根・主街と食い違うため）。",
+	"schema": 1,
+	"source": "docs/art_review/village_v2_p13/wave6/evidence/inventory_priority_batches.json batch1"
+}

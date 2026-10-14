@@ -226,21 +226,25 @@ func _checks(reg: Dictionary, mats: Dictionary, ov: Dictionary) -> void:
 	for e in vs:
 		reg_paths[String(e["file"])] = true
 	var pilots: Array = reg.get("pilot_buildings", [])
+	var w7 := _w7_batch_paths()
 	var bad5 := []
 	var n_pilot_ov := 0
 	var n_other_ov := 0
+	var n_batch_ov := 0
 	for b in ov:
 		for m5: Material in ov[b]:
 			if not reg_paths.has(m5.resource_path):
 				bad5.append("%s 登記外 %s" % [String(b).get_file(), m5.resource_name])
-			elif not (b in pilots):
+			elif not (b in pilots) and not w7.has(String(b)):
 				bad5.append("%s は Pilot 外" % String(b).get_file())
 		if not (ov[b] as Array).is_empty():
 			if b in pilots:
 				n_pilot_ov += 1
+			elif w7.has(String(b)):
+				n_batch_ov += 1
 			else:
 				n_other_ov += 1
-	_ok(bad5.is_empty() and n_pilot_ov == pilots.size() and pilots.size() == 24 and n_other_ov == 0, "K5 場景：町家 Kit 建物 %d 棟、override のある建物＝Pilot %d／%d 棟（すべて登記変体）・Pilot 外 %d 棟%s" % [ov.size(), n_pilot_ov, pilots.size(), n_other_ov, "" if bad5.is_empty() else " ✗ " + str(bad5.slice(0, 3))])
+	_ok(bad5.is_empty() and n_pilot_ov == pilots.size() and pilots.size() == 24 and n_other_ov == 0, "K5 場景：町家 Kit 建物 %d 棟、override のある建物＝Pilot %d／%d 棟（すべて登記変体）・Pilot 外 %d 棟（うち P13 W7 第一批の合法範囲 %d 棟）%s" % [ov.size(), n_pilot_ov, pilots.size(), n_other_ov + n_batch_ov, n_batch_ov, "" if bad5.is_empty() else " ✗ " + str(bad5.slice(0, 3))])
 	# K6
 	var bad6 := []
 	for p in reg["protected"]:
@@ -266,3 +270,22 @@ func _checks(reg: Dictionary, mats: Dictionary, ov: Dictionary) -> void:
 		if DirAccess.dir_exists_absolute(old_dir):
 			bad7.append(old_dir + " が残っている")
 	_ok(bad7.is_empty() and need.size() == 20, "K7 置き場所：登記表・shader・変体材質 %d 檔すべて maps/village_v2/kit_cal_p10/（village_v2 許可前綴）、旧 Pilot 目錄なし%s" % [need.size(), "" if bad7.is_empty() else " ✗ " + str(bad7.slice(0, 3))])
+
+
+## P13 W7 TASK 5（使用者 2026-10-14・R6a limited reseal）：第一批 50 棟の名簿（data/village_v2_p13w7_batch1.json）。ファイルの sha256 が封存 frozen の値と
+## 一致するときだけ合法（一致しない／封存が無い＝空）。合法な変体は R6a の登記 18 変体だけで、この名簿は「どの建物が持ってよいか」を足すだけ。
+func _w7_batch_paths() -> Dictionary:
+	var out := {}
+	var man := "res://data/village_v2_p13w7_batch1.json"
+	if not FileAccess.file_exists(man) or not FileAccess.file_exists(KM.SEAL):
+		return out
+	var sj: Variant = JSON.parse_string(FileAccess.get_file_as_string(KM.SEAL))
+	if not (sj is Dictionary) or String((sj as Dictionary).get("status", "")) != "ART_APPROVED":
+		return out
+	if String(((sj as Dictionary).get("frozen", {}) as Dictionary).get("godot/data/village_v2_p13w7_batch1.json", "")) != FileAccess.get_sha256(man):
+		return out
+	var mj: Variant = JSON.parse_string(FileAccess.get_file_as_string(man))
+	if mj is Dictionary:
+		for wb: Dictionary in (mj as Dictionary).get("buildings", []):
+			out[String(wb["path"])] = true
+	return out

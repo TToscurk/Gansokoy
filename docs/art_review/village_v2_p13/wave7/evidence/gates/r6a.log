@@ -1,0 +1,10 @@
+PASS ALB plan (exit 0, 6s)
+PASS ALB --scene (exit 0, 10s)
+PASS ALB --seal (exit 0, 6s)
+PASS KITM (exit 0, 7s)
+PASS KIT --regress (187) (exit 0, 10s)
+PASS(neg) KIT neg material (11s)
+PASS(neg) KIT neg offpilot (10s)
+PASS(neg) KIT neg wrongbase (11s)
+PASS(neg) KIT neg badsha (10s)
+DONE r6a

@@ -1,0 +1,3 @@
+PASS W7 gate +反向 (exit 0, 7s)
+PASS W6 gate +反向 (TASK1 params) (exit 0, 31s)
+DONE w7

@@ -1,0 +1,85 @@
+{
+ "criteria": {
+  "strict": "同じ道・型・屋根・外形枠 ±0.5 m・LOD0 の部品数と三角形数が同じ（完全に同一形状）",
+  "envelope": "型・屋根が同じで 幅／奥行き ±0.5 m・軒高 ±0.3 m、25 m 以内（LOD0 の細部は違ってよい）"
+ },
+ "strict_pairs": [],
+ "envelope_pairs": [
+  {
+   "a": "B_P_MKT_032",
+   "b": "B_P_MKT_058",
+   "dist_m": 18.6,
+   "road_a": "CrossStreetMid",
+   "road_b": "WestAlley",
+   "type": "厨子二階",
+   "roof": "hira",
+   "width_m": 7.0,
+   "depth_m": 10.92,
+   "lod0_tris": [
+    13348,
+    14452
+   ],
+   "lod0_meshes": [
+    48,
+    53
+   ]
+  },
+  {
+   "a": "B_P_MKT_032",
+   "b": "B_P_RSW_003",
+   "dist_m": 19.6,
+   "road_a": "CrossStreetMid",
+   "road_b": "CrossStreetMid",
+   "type": "厨子二階",
+   "roof": "hira",
+   "width_m": 7.0,
+   "depth_m": 10.92,
+   "lod0_tris": [
+    13348,
+    14552
+   ],
+   "lod0_meshes": [
+    48,
+    46
+   ]
+  },
+  {
+   "a": "B_P_MXC_015",
+   "b": "B_P_MXC_020",
+   "dist_m": 18.1,
+   "road_a": "HillFootStreet",
+   "road_b": "HillFootStreet",
+   "type": "厨子二階",
+   "roof": "tsuma",
+   "width_m": 7.9,
+   "depth_m": 10.92,
+   "lod0_tris": [
+    16436,
+    18212
+   ],
+   "lod0_meshes": [
+    53,
+    53
+   ]
+  },
+  {
+   "a": "B_P_RSW_005",
+   "b": "B_P_RSW_077",
+   "dist_m": 15.8,
+   "road_a": "CrossStreetSouth",
+   "road_b": "SWLane",
+   "type": "平屋",
+   "roof": "tsuma",
+   "width_m": 7.19,
+   "depth_m": 10.92,
+   "lod0_tris": [
+    16406,
+    15714
+   ],
+   "lod0_meshes": [
+    40,
+    46
+   ]
+  }
+ ]
+}

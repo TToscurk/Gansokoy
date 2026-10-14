@@ -19,6 +19,26 @@
    "hash_before": "657453a02a9c56ccb28d2d97e8249d2c9073056443b1b06e274535210bc44eca",
    "hash_after": "8d0c02c8b3014247b1a08f0c3b558dce22358a7919159010ba16a20937ec37d1",
    "verification": "GRD plan 反向 7/7・--scene 0 失敗（非 Pilot 道路 12 条不變＋W6 引き受け 7 条＋反向 1）；RDB --seal 0 失敗"
+  },
+  {
+   "kind": "W7_RDB_SCENE_GATE_ACCEPT_JUNCTION_FIX_MESH",
+   "approved_by": "user（P13 WAVE 7 TASK 2：『若修改涉及封存，執行限定範圍 R5a limited reseal』）",
+   "reason": "P13 W7 TASK 2 の FarmJunctionFixP13 は、RoadBaseP10 が差し替えた FarmlandTerrain.mesh から COLOR.r／UV2.y を 5 頂点だけ変えた派生 mesh（resource_name＝FarmJunctionFix_FarmlandTerrain）に runtime で置き換える。RDB 場景 gate は地形 mesh の名前が RoadBase_FarmlandTerrain であることを要求していたため、後続 overlay の正当な変更で FAIL する（跨層）。",
+   "scope": {
+    "changed_file": "godot/tools/verify_village_v2_road_base.gd",
+    "change": "_scene() の地形 mesh 名検査だけ。RoadBase_FarmlandTerrain に加えて、root に FarmJunctionFixP13 があり applied > 0 のときの FarmJunctionFix_FarmlandTerrain も合法。FarmJunctionFixP13 が無いのにその名前なら従来どおり FAIL。派生の厳密検証（変更頂点＝記録の 5 点だけ・位置／法線／UV 不変・RoadBase の他頂点不変）はtools/p13/w7/verify_w7_cleanup.gd が持つ。",
+    "not_changed": "road_base lib／road_base.gd／gen/road_base_p10.scn／元の road_*.res／terrain_farmlandterrain.res／R5a の plan gate・反向・封存範囲・判定基準・容差。"
+   },
+   "verification": "RDB plan＋反向 5/5・--scene 0 失敗・--seal 0 失敗；W7 gate（junction 検査 18 項＋反向）",
+   "at": "2026-10-14",
+   "frozen": {
+    "godot/tools/verify_village_v2_road_base.gd": [
+     "d8d5c35ba14acbe034030b4152934671dbda38e525c3acfbc6829e28bb2acf6c",
+     "302cb0b300335bde1f2d82b3a8c126dfb8d600650a3e83d704449f5ed7eb61f2"
+    ]
+   },
+   "added_frozen": {},
+   "seal_file_before": "735218d38cc1f3e3c4eabc8c376b77fbfe8c45226fbe744b1e77590d677e0c79"
   }
  ],
  "phase": "P10 R5a Road Base 416 m Pilot（FarmPath_1・FarmPath_4・南橫街の田の区間：地形なり・不揃いの幅・蛇行・使われ方；P7 FarmlandTerrain 踩み固め重み 577 頂点の局部修正；pilot ground shader）",
@@ -32,7 +52,7 @@
  },
  "frozen": {
   "godot/tools/village_v2_road_base_lib.gd": "745855e70043afd97b6b4b49947c90a6627e579c8020f0f7ee87c143d6bdec21",
-  "godot/tools/verify_village_v2_road_base.gd": "d8d5c35ba14acbe034030b4152934671dbda38e525c3acfbc6829e28bb2acf6c",
+  "godot/tools/verify_village_v2_road_base.gd": "302cb0b300335bde1f2d82b3a8c126dfb8d600650a3e83d704449f5ed7eb61f2",
   "godot/maps/village_v2/scripts_p10/road_base.gd": "f78038662b4b997df07239712450aff890ce466ebbcc95f62c5ba7f9d6cd4dae",
   "godot/maps/village_v2/gen/road_base_p10.scn": "39b8cab0eb33b1d98d88eeb6a81165937380a8f65941bb3e30a97fa25b797848",
   "godot/tools/diag_village_v2_road_band.gd": "98ec41242c46241f97581319df9046c7899e2e3fa26e545a5d5249cba686a64c",

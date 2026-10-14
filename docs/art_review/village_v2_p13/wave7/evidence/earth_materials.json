@@ -1,0 +1,2546 @@
+{
+ "earthbank_kinds": {
+  "DrainN/": {
+   "n": 1,
+   "tris": 3740
+  },
+  "InnerA/": {
+   "n": 1,
+   "tris": 2288
+  },
+  "InnerB/": {
+   "n": 1,
+   "tris": 2552
+  },
+  "InnerC/": {
+   "n": 1,
+   "tris": 2442
+  },
+  "InnerD/": {
+   "n": 1,
+   "tris": 2464
+  },
+  "InnerE/": {
+   "n": 1,
+   "tris": 2354
+  },
+  "LipE/": {
+   "n": 1,
+   "tris": 5478
+  },
+  "LipSupA/": {
+   "n": 1,
+   "tris": 3036
+  },
+  "LipSupB/": {
+   "n": 1,
+   "tris": 3014
+  },
+  "LipW/": {
+   "n": 1,
+   "tris": 5390
+  },
+  "OuterE1/": {
+   "n": 1,
+   "tris": 3102
+  },
+  "OuterE2/": {
+   "n": 1,
+   "tris": 1232
+  },
+  "OuterE3/": {
+   "n": 1,
+   "tris": 1474
+  },
+  "OuterE4/": {
+   "n": 1,
+   "tris": 3014
+  },
+  "OuterW1/": {
+   "n": 1,
+   "tris": 4180
+  },
+  "OuterW2/": {
+   "n": 1,
+   "tris": 1870
+  },
+  "OuterW3/": {
+   "n": 1,
+   "tris": 4246
+  },
+  "ZN0/Cut": {
+   "n": 4,
+   "tris": 3344
+  },
+  "ZN0/DrainLip": {
+   "n": 1,
+   "tris": 858
+  },
+  "ZN0/Edge": {
+   "n": 3,
+   "tris": 3960
+  },
+  "ZN0/Lip": {
+   "n": 2,
+   "tris": 8272
+  },
+  "ZN1/Cut": {
+   "n": 9,
+   "tris": 12628
+  },
+  "ZN1/DrainLip": {
+   "n": 1,
+   "tris": 2046
+  },
+  "ZN1/Edge": {
+   "n": 7,
+   "tris": 9130
+  },
+  "ZN1/Lip": {
+   "n": 2,
+   "tris": 8360
+  },
+  "ZN2/Cut": {
+   "n": 12,
+   "tris": 18546
+  },
+  "ZN2/DrainLip": {
+   "n": 1,
+   "tris": 2112
+  },
+  "ZN2/Edge": {
+   "n": 10,
+   "tris": 12628
+  },
+  "ZN2/Lip": {
+   "n": 2,
+   "tris": 12276
+  },
+  "ZN2/MainLip": {
+   "n": 1,
+   "tris": 1738
+  },
+  "ZN3/Cut": {
+   "n": 11,
+   "tris": 15840
+  },
+  "ZN3/DrainLip": {
+   "n": 1,
+   "tris": 2090
+  },
+  "ZN3/Edge": {
+   "n": 9,
+   "tris": 10648
+  },
+  "ZN3/Lip": {
+   "n": 2,
+   "tris": 10384
+  },
+  "ZN3/MainLip": {
+   "n": 1,
+   "tris": 1826
+  },
+  "ZS2/Cut": {
+   "n": 8,
+   "tris": 12606
+  },
+  "ZS2/DrainLip": {
+   "n": 1,
+   "tris": 3344
+  },
+  "ZS2/Edge": {
+   "n": 6,
+   "tris": 7832
+  },
+  "ZS2/Lip": {
+   "n": 2,
+   "tris": 7876
+  },
+  "ZS2/MainLip": {
+   "n": 1,
+   "tris": 1760
+  },
+  "ZS3/Cut": {
+   "n": 8,
+   "tris": 11814
+  },
+  "ZS3/DrainLip": {
+   "n": 1,
+   "tris": 3058
+  },
+  "ZS3/Edge": {
+   "n": 6,
+   "tris": 7920
+  },
+  "ZS3/Lip": {
+   "n": 2,
+   "tris": 7876
+  },
+  "ZS3/MainLip": {
+   "n": 1,
+   "tris": 1562
+  },
+  "ZT0/Cut": {
+   "n": 10,
+   "tris": 11506
+  },
+  "ZT0/DrainLip": {
+   "n": 1,
+   "tris": 2002
+  },
+  "ZT0/Edge": {
+   "n": 8,
+   "tris": 9152
+  },
+  "ZT0/Lip": {
+   "n": 2,
+   "tris": 8888
+  },
+  "ZT0/MainLip": {
+   "n": 1,
+   "tris": 1408
+  },
+  "ZT1/Cut": {
+   "n": 10,
+   "tris": 19228
+  },
+  "ZT1/DrainLip": {
+   "n": 1,
+   "tris": 3938
+  },
+  "ZT1/Edge": {
+   "n": 8,
+   "tris": 8888
+  },
+  "ZT1/Lip": {
+   "n": 2,
+   "tris": 8756
+  },
+  "ZT1/MainLip": {
+   "n": 1,
+   "tris": 2288
+  },
+  "ZT2/Cut": {
+   "n": 10,
+   "tris": 16302
+  },
+  "ZT2/DrainLip": {
+   "n": 1,
+   "tris": 3938
+  },
+  "ZT2/Edge": {
+   "n": 8,
+   "tris": 8910
+  },
+  "ZT2/Lip": {
+   "n": 2,
+   "tris": 8756
+  },
+  "ZT2/MainLip": {
+   "n": 1,
+   "tris": 1738
+  },
+  "ZT3/Cut": {
+   "n": 10,
+   "tris": 14432
+  },
+  "ZT3/DrainLip": {
+   "n": 1,
+   "tris": 3058
+  },
+  "ZT3/Edge": {
+   "n": 8,
+   "tris": 8866
+  },
+  "ZT3/Lip": {
+   "n": 2,
+   "tris": 8756
+  },
+  "ZT3/MainLip": {
+   "n": 1,
+   "tris": 1870
+  }
+ },
+ "groups": {
+  "MO:ShaderMaterial#-9223371709967487083|farmland_p8.scn::ShaderMaterial_6fu4m|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710017818734|farmland_p8.scn::ShaderMaterial_kagru|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710068150385|farmland_p8.scn::ShaderMaterial_g5lf5|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710118482036|farmland_p8.scn::ShaderMaterial_0dl0d|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710168813687|farmland_p8.scn::ShaderMaterial_qup6e|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A5": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A5/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710219145338|farmland_p8.scn::ShaderMaterial_3nn3p|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710269476989|farmland_p8.scn::ShaderMaterial_qiql2|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710319808640|farmland_p8.scn::ShaderMaterial_kia31|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710672130197|farmland_p8.scn::ShaderMaterial_nwi0y|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B5": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B5/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710722461848|farmland_p8.scn::ShaderMaterial_jkqhc|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710772793499|farmland_p8.scn::ShaderMaterial_6riav|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710823125150|farmland_p8.scn::ShaderMaterial_7oiek|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710873456801|farmland_p8.scn::ShaderMaterial_yu6ek|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710923788452|farmland_p8.scn::ShaderMaterial_j0hv1|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A5": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A5/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371710974120103|farmland_p8.scn::ShaderMaterial_hl2sl|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711024451754|farmland_p8.scn::ShaderMaterial_jnks8|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711074783405|farmland_p8.scn::ShaderMaterial_mwlwm|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711326441660|farmland_p8.scn::ShaderMaterial_a2ga7|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711376773311|farmland_p8.scn::ShaderMaterial_ql060|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711427104962|farmland_p8.scn::ShaderMaterial_mpdk7|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711477436613|farmland_p8.scn::ShaderMaterial_4mjsj|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711527768264|farmland_p8.scn::ShaderMaterial_nppag|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711578099915|farmland_p8.scn::ShaderMaterial_advik|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711729094868|farmland_p8.scn::ShaderMaterial_54nw4|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711779426519|farmland_p8.scn::ShaderMaterial_gqei7|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371711829758170|farmland_p8.scn::ShaderMaterial_msvt8|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712047861991|farmland_p8.scn::ShaderMaterial_odipb|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712098193642|farmland_p8.scn::ShaderMaterial_v4wv5|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712148525293|farmland_p8.scn::ShaderMaterial_hte0f|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712198856944|farmland_p8.scn::ShaderMaterial_qnswn|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712249188595|farmland_p8.scn::ShaderMaterial_ffonx|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712500846850|farmland_p8.scn::ShaderMaterial_4xmex|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712551178501|farmland_p8.scn::ShaderMaterial_i6aqy|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712601510152|farmland_p8.scn::ShaderMaterial_vjugb|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712651841803|farmland_p8.scn::ShaderMaterial_x18qk|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712702173454|farmland_p8.scn::ShaderMaterial_aewot|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371712752505105|farmland_p8.scn::ShaderMaterial_c0reo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713071272228|farmland_p8.scn::ShaderMaterial_gxnma|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713121603879|farmland_p8.scn::ShaderMaterial_eqct0|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713171935530|farmland_p8.scn::ShaderMaterial_114py|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713222267181|farmland_p8.scn::ShaderMaterial_3kaqi|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713272598832|farmland_p8.scn::ShaderMaterial_gp0mo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713322930483|farmland_p8.scn::ShaderMaterial_qjc0b|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713373262134|farmland_p8.scn::ShaderMaterial_1vmqo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713423593785|farmland_p8.scn::ShaderMaterial_hvj3e|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713708806474|farmland_p8.scn::ShaderMaterial_yhcta|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713759138125|farmland_p8.scn::ShaderMaterial_yx8o6|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713809469776|farmland_p8.scn::ShaderMaterial_04b8u|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713859801427|farmland_p8.scn::ShaderMaterial_nisc3|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713910133078|farmland_p8.scn::ShaderMaterial_as5j8|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371713960464729|farmland_p8.scn::ShaderMaterial_c4can|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714010796380|farmland_p8.scn::ShaderMaterial_rx4ds|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714329563503|farmland_p8.scn::ShaderMaterial_aklgp|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714379895154|farmland_p8.scn::ShaderMaterial_y38xf|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714430226805|farmland_p8.scn::ShaderMaterial_ss0fl|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714480558456|farmland_p8.scn::ShaderMaterial_57e0j|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714530890107|farmland_p8.scn::ShaderMaterial_b470s|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714581221758|farmland_p8.scn::ShaderMaterial_8qh48|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714631553409|farmland_p8.scn::ShaderMaterial_8ea4x|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714681885060|farmland_p8.scn::ShaderMaterial_xcyfs|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371714967097749|farmland_p8.scn::ShaderMaterial_vk4ec|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715017429400|farmland_p8.scn::ShaderMaterial_mbk3y|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715067761051|farmland_p8.scn::ShaderMaterial_7pq2b|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715118092702|farmland_p8.scn::ShaderMaterial_yun6j|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B1/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715168424353|farmland_p8.scn::ShaderMaterial_o16mw|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A4/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715218756004|farmland_p8.scn::ShaderMaterial_1ww6k|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A3/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715269087655|farmland_p8.scn::ShaderMaterial_5t6kb|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A2/Merged_0"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371715571077561|farmland_p8.scn::ShaderMaterial_wsnjk|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 2
+   },
+   "n": 2,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches/Branch_N0/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches/Branch_T0/Merged_1"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371716091171288|farmland_p8.scn::ShaderMaterial_8b3vo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 6
+   },
+   "n": 8,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_T1_T2/Merged_3",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_T3_S3/Merged_3",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_S3_N3/Merged_3",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_PILOT_S2/Merged_3"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371716208611807|farmland_p8.scn::ShaderMaterial_wb2k3|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 9,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Outfalls": 2
+   },
+   "n": 11,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/DropWeir_T0_T1/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_T1_T2/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/DropWeir_T2_T3/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links/Siphon_T3_S3/Merged_1"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371717735338554|farmland_p8.scn::ShaderMaterial_j6nih|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N0": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Outfalls": 2
+   },
+   "n": 12,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0/DrainWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1/DrainWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2/DrainWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3/DrainWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371717852779073|farmland_p8.scn::ShaderMaterial_y17c0|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N0": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3": 2
+   },
+   "n": 18,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0/LateralWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0/MainWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1/LateralWater",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1/MainWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371727835223188|farmland_p8.scn::ShaderMaterial_afdwl|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E4": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E4/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371727935886490|farmland_p8.scn::ShaderMaterial_u3k2u|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E3/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371728019772575|farmland_p8.scn::ShaderMaterial_bo7nc|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E2/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371728103658660|farmland_p8.scn::ShaderMaterial_eptlt|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E1/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371728187544745|farmland_p8.scn::ShaderMaterial_mhqms|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W3": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W3/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371728288208047|farmland_p8.scn::ShaderMaterial_4tuik|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W2": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W2/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371728372094132|farmland_p8.scn::ShaderMaterial_66f05|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W1": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W1/Spill"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371729831712011|farmland_p8.scn::ShaderMaterial_fkcen|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_0": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_1": 1
+   },
+   "n": 2,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_0/Water",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_1/Water"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371730251142436|farmland_p8.scn::ShaderMaterial_42c7q|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/GroundTrough": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu": 2
+   },
+   "n": 8,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Trough/Water",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu/Feed/Water",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox/Water",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/GroundTrough/Seg_0/Water"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371741407991741|farmland_p8.scn::ShaderMaterial_ko36i|ground.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks": 220
+   },
+   "n": 220,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_OuterW1",
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_OuterW2",
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_OuterW3",
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks/Earth_OuterE1"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371741441546175|farmland_p8.scn::ShaderMaterial_fcwqq|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Irrigation": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/UpperWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371741491877826|farmland_p8.scn::ShaderMaterial_7gpfj|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Irrigation": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/DrainWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371741558986694|farmland_p8.scn::ShaderMaterial_hoow4|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Irrigation": 2
+   },
+   "n": 2,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/LateralWater_S",
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/LateralWater_N"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371741592541128|farmland_p8.scn::ShaderMaterial_mylq8|ground.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Irrigation": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_S3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_T0A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_T2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Meadow_N0a": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N0": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N2": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N3": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S2": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S3": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3": 3,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 9,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Outfalls": 2
+   },
+   "n": 57,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/LateralBed",
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/DrainBed",
+    "Districts/FarmlandEast/FarmlandP8/Irrigation/UpperBed",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0/LateralBed"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371823146592965|farmland_p8.scn::ShaderMaterial_ud03m|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371823415028437|farmland_p8.scn::ShaderMaterial_ut0um|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371823817681645|farmland_p8.scn::ShaderMaterial_d1moo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371824220334853|farmland_p8.scn::ShaderMaterial_jvd0v|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371824622988061|farmland_p8.scn::ShaderMaterial_rrxrj|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A5/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A5/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371825025641269|farmland_p8.scn::ShaderMaterial_mmgdt|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371825428294477|farmland_p8.scn::ShaderMaterial_0kx7t|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371825696729949|farmland_p8.scn::ShaderMaterial_e1g6h|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371826032274289|farmland_p8.scn::ShaderMaterial_klc7x|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B5/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B5/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371826434927497|farmland_p8.scn::ShaderMaterial_5oben|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371826837580705|farmland_p8.scn::ShaderMaterial_2g2mg|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371827240233913|farmland_p8.scn::ShaderMaterial_wdaqj|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371827642887121|farmland_p8.scn::ShaderMaterial_v6diw|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371828313975801|farmland_p8.scn::ShaderMaterial_fxl5i|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A5/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A5/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371828783737877|farmland_p8.scn::ShaderMaterial_qw0n2|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371829119282217|farmland_p8.scn::ShaderMaterial_13l51|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371829656153161|farmland_p8.scn::ShaderMaterial_pl4jh|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371830058806369|farmland_p8.scn::ShaderMaterial_rmwvc|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371830461459577|farmland_p8.scn::ShaderMaterial_crcoa|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371830864112785|farmland_p8.scn::ShaderMaterial_emk5d|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371831132548257|farmland_p8.scn::ShaderMaterial_0ypl4|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371831602310333|farmland_p8.scn::ShaderMaterial_6t8po|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371832139181277|farmland_p8.scn::ShaderMaterial_3migk|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371832541834485|farmland_p8.scn::ShaderMaterial_43v6c|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371832944487693|farmland_p8.scn::ShaderMaterial_kmalo|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371833347140901|farmland_p8.scn::ShaderMaterial_ojugw|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371833749794109|farmland_p8.scn::ShaderMaterial_53fk4|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371834152447317|farmland_p8.scn::ShaderMaterial_odqu4|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371834555100525|farmland_p8.scn::ShaderMaterial_uc3wa|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371834957753733|farmland_p8.scn::ShaderMaterial_kuecq|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371835360406941|farmland_p8.scn::ShaderMaterial_wkqto|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371835763060149|farmland_p8.scn::ShaderMaterial_6dwol|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371836165713357|farmland_p8.scn::ShaderMaterial_fa56n|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371836568366565|farmland_p8.scn::ShaderMaterial_ks8al|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371837105237509|farmland_p8.scn::ShaderMaterial_pkwu6|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371837642108453|farmland_p8.scn::ShaderMaterial_utoca|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371838178979397|farmland_p8.scn::ShaderMaterial_lcjym|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371838447414869|farmland_p8.scn::ShaderMaterial_p3twa|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371838850068077|farmland_p8.scn::ShaderMaterial_ir0ge|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371839252721285|farmland_p8.scn::ShaderMaterial_1dj2g|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371839655374493|farmland_p8.scn::ShaderMaterial_aso7o|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371840058027701|farmland_p8.scn::ShaderMaterial_8l0ym|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371840326463173|farmland_p8.scn::ShaderMaterial_tdhha|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371840729116381|farmland_p8.scn::ShaderMaterial_3lu0y|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371841131769589|farmland_p8.scn::ShaderMaterial_c7io7|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371841534422797|farmland_p8.scn::ShaderMaterial_5myu0|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371841802858269|farmland_p8.scn::ShaderMaterial_d50yp|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371842205511477|farmland_p8.scn::ShaderMaterial_si6jn|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371842473946949|farmland_p8.scn::ShaderMaterial_102q7|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371843010817893|farmland_p8.scn::ShaderMaterial_6y86f|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371843547688837|farmland_p8.scn::ShaderMaterial_ejth8|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371843883233177|farmland_p8.scn::ShaderMaterial_530ny|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371844285886385|farmland_p8.scn::ShaderMaterial_h0ixd|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371844688539593|farmland_p8.scn::ShaderMaterial_11yxa|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371844956975065|farmland_p8.scn::ShaderMaterial_rx0j3|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371845426737141|farmland_p8.scn::ShaderMaterial_0y6gx|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371845829390349|farmland_p8.scn::ShaderMaterial_d7r7j|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371846232043557|farmland_p8.scn::ShaderMaterial_iemk8|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371846500479029|farmland_p8.scn::ShaderMaterial_rptu6|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371846836023369|farmland_p8.scn::ShaderMaterial_tya8q|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371847104458841|farmland_p8.scn::ShaderMaterial_wshlu|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371847507112049|farmland_p8.scn::ShaderMaterial_0hqg0|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371847909765257|farmland_p8.scn::ShaderMaterial_yy1cu|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371848312418465|farmland_p8.scn::ShaderMaterial_koetq|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371848715071673|farmland_p8.scn::ShaderMaterial_80jev|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371848983507145|farmland_p8.scn::ShaderMaterial_pekus|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371849386160353|farmland_p8.scn::ShaderMaterial_nugud|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371849738481910|farmland_p8.scn::ShaderMaterial_xbnyk|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371850409570590|farmland_p8.scn::ShaderMaterial_qk43m|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371851080659270|farmland_p8.scn::ShaderMaterial_ircic|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371851751747950|farmland_p8.scn::ShaderMaterial_l4a3k|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371852489945498|farmland_p8.scn::ShaderMaterial_1dnj3|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371853228143046|farmland_p8.scn::ShaderMaterial_7ugus|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371853882454509|farmland_p8.scn::ShaderMaterial_wiuly|p8_paddy_plant.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt/SeedlingBundles"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371853916008943|farmland_p8.scn::ShaderMaterial_7rlfw|p8_paddy_water.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt": 1
+   },
+   "n": 1,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt/ShallowWater"
+   ]
+  },
+  "MO:ShaderMaterial#-9223371853949563377|farmland_p8.scn::ShaderMaterial_f528u|ground.gdshader": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A5/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B5/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A5/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B3/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B4/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/FieldArt": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3/FieldArt": 1
+   },
+   "n": 74,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt/WetMudBottom",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/FieldArt/WetMudBottom",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3/FieldArt/WetMudBottom",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1/FieldArt/WetMudBottom"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371708893745195|farmland_p8.scn::StandardMaterial3D_drbf2|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools": 2
+   },
+   "n": 2,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_S2/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_N0/Merged_1"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371708977631280|farmland_p8.scn::StandardMaterial3D_h7ylk|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools": 5
+   },
+   "n": 5,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_T0/Merged_2",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_T2/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_S2/Merged_3",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_N0/Merged_2"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371709011185714|farmland_p8.scn::StandardMaterial3D_i4ty8|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools": 2
+   },
+   "n": 2,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_T0/Merged_1",
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools/Tools_S2/Merged_2"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371730368582955|farmland_p8.scn::StandardMaterial3D_l8ndb|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E3": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W2": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E1": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E2": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E3": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E4": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W1": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W2": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W3": 1,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_28": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_47": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_Drain": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_trough_385": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_trough_397": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_upper_354": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/GroundTrough": 49,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu": 14,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools": 5,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N0": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N1": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N2": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N3": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S2": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S3": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 3
+   },
+   "n": 210,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir/Post_-1",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir/Post_1",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir/Board_0",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir/Board_1"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371737666672350|farmland_p8.scn::StandardMaterial3D_kkomu|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails": 217
+   },
+   "n": 217,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/MudClods_OuterW1",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/MudClods_OuterW2",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/MudClods_OuterW3",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/MudClods_OuterE1"
+   ]
+  },
+  "MO:StandardMaterial3D#-9223371737700226784|farmland_p8.scn::StandardMaterial3D_cetdi|": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails": 219,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/DrainOutletBox": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E1": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E2": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E3": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E4": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W1": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W2": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W3": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E1": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E2": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E3": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E4": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W1": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W2": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W3": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply": 6,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_0": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_1": 4,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 9,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Outfalls": 2
+   },
+   "n": 424,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Pebbles_OuterW1",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Pebbles_OuterW2",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Pebbles_OuterW3",
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Pebbles_OuterE1"
+   ]
+  },
+  "SM:null": {
+   "dirs": {
+    "Districts/FarmlandEast/FarmlandP8/EarthBanks": 220,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails": 436,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/CheckWeir": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/DrainOutletBox": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E1": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E2": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E3": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_E4": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W1": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W2": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Inlet_W3": 4,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E1": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E2": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E3": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_E4": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W1": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W2": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/Outlet_W3": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_28": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_47": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/PlankCrossing_Drain": 2,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply": 6,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_trough_385": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_trough_397": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Crossing_upper_354": 3,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/DropBox": 5,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/GroundTrough": 54,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/Ryukotsu": 16,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_0": 6,
+    "Districts/FarmlandEast/FarmlandP8/FieldDetails/WaterSupply/SiphonBox_1": 5,
+    "Districts/FarmlandEast/FarmlandP8/Irrigation": 7,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_E4/FieldArt": 3,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N0B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N1B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2A5/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B5": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N2B5/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A5": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3A5/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_N3B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S2B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_S3B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T0B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T1B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T2B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3A4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B4": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_T3B4/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3": 1,
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W3/FieldArt": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0a_3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_2": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/DryField_S0b_3": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N1A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_N3A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_S3B1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_T0A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Fallow_T2A1": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/FarmTools": 14,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N0B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N1B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2A5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N2B5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3A5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_N3B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_S3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T0B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T1B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T2B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Inlet_T3B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Meadow_N0a": 1,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N0B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N1B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2A5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N2B5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3A5": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_N3B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_S3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T0B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T1B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T2B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3A4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B1": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B2": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B3": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneDetails/Outlet_T3B4": 2,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N0": 8,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N1": 8,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N2": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_N3": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S2": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_S3": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T0": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T1": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T2": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Block_T3": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Branches": 10,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Links": 36,
+    "Districts/FarmlandEast/FarmlandP8/ZoneWorks/ZoneIrrigation/Outfalls": 8
+   },
+   "n": 1499,
+   "sample": [
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/PaddyWater",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt/WetMudBottom",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W1/FieldArt/ShallowWater",
+    "Districts/FarmlandEast/FarmlandP8/Plots/Plot_W2/PaddyWater"
+   ]
+  }
+ }
+}

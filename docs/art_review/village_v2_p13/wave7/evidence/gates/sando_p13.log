@@ -1,0 +1,4 @@
+verify_w4_pilot exit=0 10s :: [W4V] 結果：0 項失敗 
+verify_w5a_sample exit=1 16s :: [W5G] 結果：4 項失敗 
+verify_w5b_integration exit=0 26s :: 
+verify_w5c_transition exit=0 9s :: 

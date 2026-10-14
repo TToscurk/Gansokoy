@@ -342,6 +342,7 @@ func _scene(v: Node3D) -> void:
 	var in_ok := 0
 	var in_miss := 0
 	var out_bad := 0
+	var w7 := _w7_batch_paths()
 	for b in v.get_node("Districts").find_children("B_*", "", true, false):
 		var bp := String(v.get_path_to(b))
 		var is_t := tset.has(bp)
@@ -358,7 +359,7 @@ func _scene(v: Node3D) -> void:
 						in_ok += 1
 					else:
 						in_miss += 1
-				elif not is_t and has_cal:
+				elif not is_t and has_cal and not w7.has(bp):
 					out_bad += 1
 	_ok(in_ok > 0 and in_miss == 0, "Pilot 建物的來源材質表面全部覆寫（%d 面、漏 %d）" % [in_ok, in_miss])
 	_ok(out_bad == 0, "Pilot 外建物沒有覆寫（%d）" % out_bad)
@@ -367,6 +368,8 @@ func _scene(v: Node3D) -> void:
 	n.set("enabled", false)
 	var left := 0
 	for b in v.get_node("Districts").find_children("B_*", "", true, false):
+		if w7.has(String(v.get_path_to(b))):
+			continue   # P13 W7 第一批は別 overlay（AlbedoBatch1P13）の責任範囲：Pilot の開閉では還原されない（W7 gate が独立に開閉を検査）
 		for mi in b.find_children("*", "MeshInstance3D", true, false):
 			var m := mi as MeshInstance3D
 			if m.mesh == null:
@@ -375,7 +378,7 @@ func _scene(v: Node3D) -> void:
 				var ov := m.get_surface_override_material(si)
 				if ov != null and cal_set.has(ov):
 					left += 1
-	_ok(left == 0, "enabled=false → 覆寫全部還原（殘留 %d）" % left)
+	_ok(left == 0, "enabled=false → 覆寫全部還原（殘留 %d%s）" % [left, "" if w7.is_empty() else "・P13 W7 第一批 %d 棟は別 overlay のため除外" % w7.size()])
 	n.set("enabled", true)
 	_ok(int(n.get("applied_surfaces")) == in_ok, "enabled=true → 重新套用 %d 面" % int(n.get("applied_surfaces")))
 	# 來源檔不變
@@ -435,3 +438,22 @@ func _seal_extra(v: Node3D) -> Array:
 	var tg: PackedStringArray = n.get("targets")
 	return [[bad.is_empty(), "AlbedoPilotP10 の材質 %d 個すべて登記変体（未登記 %s）" % [(n.get("cal_mats") as Array).size() + (n.get("variant_mats") as Array).size(), str(bad.slice(0, 3))]],
 		[tg.size() == 24 and int(n.get("applied_surfaces")) > 0, "Pilot %d 棟・適用面 %d" % [tg.size(), int(n.get("applied_surfaces"))]]]
+
+
+## P13 W7 TASK 5（使用者 2026-10-14・R6a limited reseal）：第一批 50 棟の名簿（data/village_v2_p13w7_batch1.json）。ファイルの sha256 が封存 frozen の値と
+## 一致するときだけ合法（一致しない／封存が無い＝空）。合法な変体は R6a の登記 18 変体だけで、この名簿は「どの建物が持ってよいか」を足すだけ。
+func _w7_batch_paths() -> Dictionary:
+	var out := {}
+	var man := "res://data/village_v2_p13w7_batch1.json"
+	if not FileAccess.file_exists(man) or not FileAccess.file_exists(SEAL):
+		return out
+	var sj: Variant = JSON.parse_string(FileAccess.get_file_as_string(SEAL))
+	if not (sj is Dictionary) or String((sj as Dictionary).get("status", "")) != "ART_APPROVED":
+		return out
+	if String(((sj as Dictionary).get("frozen", {}) as Dictionary).get("godot/data/village_v2_p13w7_batch1.json", "")) != FileAccess.get_sha256(man):
+		return out
+	var mj: Variant = JSON.parse_string(FileAccess.get_file_as_string(man))
+	if mj is Dictionary:
+		for wb: Dictionary in (mj as Dictionary).get("buildings", []):
+			out[String(wb["path"])] = true
+	return out

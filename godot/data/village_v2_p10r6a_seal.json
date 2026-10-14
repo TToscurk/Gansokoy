@@ -18,6 +18,53 @@
    "seal_file_before": "1beb4538cc2091e6a11ea9945ce33ee6fa938323669e1eda757b86bb7ff547ec",
    "approved_by": "user（P13 WAVE 2）",
    "reason": "P13 W2（使用者 2026-10-12 主街 39 棟 APPROVED）：主街 39 棟は data/village_v2_p13_mainstreet.json の実効紀錄（妻入・型）で検証（ML.effective_rec／ML.apply）。判定基準・容差・項目は不変。187 棟 --regress 0 失敗。"
+  },
+  {
+   "kind": "W7_BATCH1_SCOPE_AWARE",
+   "approved_by": "user（P13 WAVE 7 TASK 5：批准第一批 50 棟正式材質整合）",
+   "reason": "R6a の合法範囲は『Pilot 24 棟だけ』だった。使用者が第一批 50 棟の正式材質整合を承認したため、Kit Gate『4 材質』・ALB 場景 gate『Pilot 外に覆寫なし』・KITM K5『Pilot 外 0 棟』が正当な後続 overlay（AlbedoBatch1P13）で FAIL する（跨層）。",
+   "scope": {
+    "changed_files": [
+     "godot/tools/verify_village_v2_machiya_kit_gate.gd",
+     "godot/tools/verify_village_v2_albedo_pilot.gd",
+     "godot/tools/verify_village_v2_kit_material.gd"
+    ],
+    "added_frozen": "godot/data/village_v2_p13w7_batch1.json（第一批 50 棟の名簿）",
+    "change": "3 verifier とも、名簿ファイルの sha256 が本封存の frozen 値と一致するときだけ、名簿の建物にも『登記変体の override』を許可する（Pilot 外検査から除外）。合法な変体は R6a の登記 18 変体だけ（sha・基底一致・飽和・明度帯の検査は不変）。名簿の sha が違う／封存が無い＝従来どおり全て FAIL。",
+    "not_changed": "登記表 kit_material_variants.json／18 変体の .tres／kit_cal.gdshader／albedo_pilot.gd／albedo_pilot_p10.scn／R6a lib 2 本／Pilot 24 棟の割り当て／判定基準・容差・永久反向。"
+   },
+   "verification": "Kit Gate --regress（187 棟）・反向 4／ALB plan＋場景＋反向／KITM 場景・反向；W7 gate（名簿 50・LOD0／1／2 全面・範囲外 0・反向 7/7）",
+   "at": "2026-10-14",
+   "frozen": {
+    "godot/tools/verify_village_v2_albedo_pilot.gd": [
+     "0b3d2abe1753923f289c8cbfd562683fa3833075ad7d08ecdad5a3edfa3423c5",
+     "91adca4677c81f1237bb5b38f6192d86ee9213e6f1884d3469902e6921fabf27"
+    ],
+    "godot/tools/verify_village_v2_kit_material.gd": [
+     "f00ff6ec501f984780bc0a38add84f9189ae1e8e627c6f1cb751c3c9b0d7c57a",
+     "137a5837c76ba15a310ed82052bcbee0a3de2a04316ee9149a8eb01198ed74f8"
+    ],
+    "godot/tools/verify_village_v2_machiya_kit_gate.gd": [
+     "b2237fdf343d9271d6d2d991ead0c9cd429155512db531a15dcaf26a0339864f",
+     "1a9ad402f5e2c5c20bdfa315a6b4744ca3dbc3f1b19d5b95bd07ed6b463d4629"
+    ],
+    "godot/data/village_v2_p13w7_batch1.json": [
+     "287a2b23456071c0ecbfddde88cb0d0da446cf5bac5a94a71f7c9dec7aec119e",
+     "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef"
+    ]
+   },
+   "added_frozen": {
+    "godot/data/village_v2_p13w7_batch1.json": "287a2b23456071c0ecbfddde88cb0d0da446cf5bac5a94a71f7c9dec7aec119e"
+   },
+   "seal_file_before": "0363fc2d37affd8c883c901af4569e562a2add8cda28f4c2cfe2ee31e7a25049",
+   "amended": [
+    {
+     "godot/tools/verify_village_v2_albedo_pilot.gd": "91adca4677c81f1237bb5b38f6192d86ee9213e6f1884d3469902e6921fabf27"
+    },
+    {
+     "godot/data/village_v2_p13w7_batch1.json": "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef"
+    }
+   ]
   }
  ],
  "phase": "P10 R6a Kit Material 24 Buildings Pilot（方案 A：町家 Kit 專用校正材質＋區域調色盤 14 変体・登記表；漆喰 0.70・木 0.75・基石 0.65・Kit atlas 分類；瓦不校正）",
@@ -31,12 +78,12 @@
  },
  "frozen": {
   "godot/tools/village_v2_albedo_pilot_lib.gd": "cd11271d3a7079df41d5aa095347c6b3129542a7e4bdad7eba1c658a10a6bdb0",
-  "godot/tools/verify_village_v2_albedo_pilot.gd": "0b3d2abe1753923f289c8cbfd562683fa3833075ad7d08ecdad5a3edfa3423c5",
+  "godot/tools/verify_village_v2_albedo_pilot.gd": "91adca4677c81f1237bb5b38f6192d86ee9213e6f1884d3469902e6921fabf27",
   "godot/maps/village_v2/scripts_p10/albedo_pilot.gd": "c550affd0cd356f12c4849fd8a78ce70e7fa4d973bd7030189f6bf2fd9530822",
   "godot/maps/village_v2/gen/albedo_pilot_p10.scn": "d77c13b2cd447e6b55093d5f5794b1d5cc2cdfc728add3ecb56967c37390b483",
   "godot/tools/village_v2_kit_material_lib.gd": "f31f1b83a9782f895d63692e90c6d9f2f1522a4a4ce40fdb5ee3755b3d23426a",
-  "godot/tools/verify_village_v2_kit_material.gd": "f00ff6ec501f984780bc0a38add84f9189ae1e8e627c6f1cb751c3c9b0d7c57a",
-  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "b2237fdf343d9271d6d2d991ead0c9cd429155512db531a15dcaf26a0339864f",
+  "godot/tools/verify_village_v2_kit_material.gd": "137a5837c76ba15a310ed82052bcbee0a3de2a04316ee9149a8eb01198ed74f8",
+  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "1a9ad402f5e2c5c20bdfa315a6b4744ca3dbc3f1b19d5b95bd07ed6b463d4629",
   "godot/tools/shot_village_v2_rehab_alb_views.json": "6e5719922436e47ee4eafe12305bf3c5659920aa525900e980c27db6f3da8bcc",
   "godot/tools/village_v2_rehab_seal.gd": "ea3541291b0a1bddc0525d3053fb61beddb2b8bc70c91b16b0d5e3ce8af8e106",
   "tools/seal_p10_rehab.py": "11bb5392dd4c26a2863f1f2a238c7edd40b92101b86a112725550af05fd34054",
@@ -59,7 +106,8 @@
   "godot/maps/village_v2/kit_cal_p10/V2_Wood_K_B1.tres": "fbe792e24c0f8a50d406cd784eda0a17d849d16989d74bd59b5a2cfde7adae60",
   "godot/maps/village_v2/kit_cal_p10/V2_Wood_K_B2.tres": "b9ddd74b891e41036a4c1d3afde4996a2d45d877bb25856dfe3f75a27527d028",
   "godot/maps/village_v2/kit_cal_p10/kit_cal.gdshader": "59b4197bea6b64533ad02da26349baee87a4db5b5803daebff4455604fa25b6f",
-  "godot/maps/village_v2/kit_cal_p10/kit_material_variants.json": "e2359a8fa50d146864b78eeeaa659efb15237fe5ff9d97e3df709b25dbca4e1c"
+  "godot/maps/village_v2/kit_cal_p10/kit_material_variants.json": "e2359a8fa50d146864b78eeeaa659efb15237fe5ff9d97e3df709b25dbca4e1c",
+  "godot/data/village_v2_p13w7_batch1.json": "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef"
  },
  "evidence": {
   "docs/art_review/village_v2_p10_rehab_impl/integration/r6a/alb_build.log": "a7dba6ea505b6032ab5c7eb2ce3ab7080b082e7c3c0f11f258a5e6cc4ffae0a4",
