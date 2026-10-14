@@ -1,0 +1,268 @@
+[
+ {
+  "id": "B_P_MKT_035",
+  "part": "wall",
+  "px": [
+   32144,
+   24424,
+   24392
+  ],
+  "luma": [
+   126.1,
+   166.5,
+   172.4
+  ],
+  "r10": 1.321,
+  "r20": 1.367,
+  "district": "Market",
+  "plaster": "V2_Plaster_K_A0",
+  "wood": "V2_Wood_K_A2"
+ },
+ {
+  "id": "B_P_MXC_013",
+  "part": "wall",
+  "px": [
+   11901,
+   10712,
+   10994
+  ],
+  "luma": [
+   40.9,
+   38.7,
+   98.8
+  ],
+  "r10": 0.946,
+  "r20": 2.416,
+  "district": "MixedCommercial",
+  "plaster": "V2_Plaster_K_A0",
+  "wood": "V2_Wood_K_A0"
+ },
+ {
+  "id": "B_P_MXC_014",
+  "part": "wall",
+  "px": [
+   2164,
+   2276,
+   2279
+  ],
+  "luma": [
+   39.0,
+   43.1,
+   75.4
+  ],
+  "r10": 1.105,
+  "r20": 1.934,
+  "district": "MixedCommercial",
+  "plaster": "V2_Plaster_K_A1",
+  "wood": "V2_Wood_K_A0"
+ },
+ {
+  "id": "B_P_RSW_071",
+  "part": "wall",
+  "px": [
+   128067,
+   85272,
+   85272
+  ],
+  "luma": [
+   78.2,
+   128.4,
+   128.5
+  ],
+  "r10": 1.642,
+  "r20": 1.643,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B0",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_073",
+  "part": "wall",
+  "px": [
+   290081,
+   265457,
+   265188
+  ],
+  "luma": [
+   120.6,
+   159.6,
+   178.7
+  ],
+  "r10": 1.324,
+  "r20": 1.482,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B2",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_074",
+  "part": "wall",
+  "px": [
+   23449,
+   21840,
+   21846
+  ],
+  "luma": [
+   91.6,
+   95.8,
+   165.8
+  ],
+  "r10": 1.045,
+  "r20": 1.809,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B3",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_075",
+  "part": "wall",
+  "px": [
+   9009,
+   9395,
+   9401
+  ],
+  "luma": [
+   66.7,
+   73.2,
+   115.8
+  ],
+  "r10": 1.098,
+  "r20": 1.737,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B0",
+  "wood": "V2_Wood_K_B2"
+ },
+ {
+  "id": "B_P_RSW_076",
+  "part": "wall",
+  "px": [
+   9482,
+   6714,
+   6724
+  ],
+  "luma": [
+   91.1,
+   118.5,
+   158.8
+  ],
+  "r10": 1.3,
+  "r20": 1.743,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B1",
+  "wood": "V2_Wood_K_B2"
+ },
+ {
+  "id": "B_P_MXC_013",
+  "part": "roof",
+  "px": [
+   5800,
+   8185,
+   8185
+  ],
+  "luma": [
+   50.9,
+   71.3,
+   71.7
+  ],
+  "r10": 1.4,
+  "r20": 1.408,
+  "district": "MixedCommercial",
+  "plaster": "V2_Plaster_K_A0",
+  "wood": "V2_Wood_K_A0"
+ },
+ {
+  "id": "B_P_RSW_071",
+  "part": "roof",
+  "px": [
+   16164,
+   54065,
+   54065
+  ],
+  "luma": [
+   39.2,
+   65.5,
+   65.6
+  ],
+  "r10": 1.672,
+  "r20": 1.673,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B0",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_073",
+  "part": "roof",
+  "px": [
+   52441,
+   73471,
+   73471
+  ],
+  "luma": [
+   58.6,
+   98.0,
+   98.0
+  ],
+  "r10": 1.673,
+  "r20": 1.673,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B2",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_074",
+  "part": "roof",
+  "px": [
+   8203,
+   8847,
+   8869
+  ],
+  "luma": [
+   60.2,
+   90.6,
+   91.0
+  ],
+  "r10": 1.504,
+  "r20": 1.51,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B3",
+  "wood": "V2_Wood_K_B1"
+ },
+ {
+  "id": "B_P_RSW_075",
+  "part": "roof",
+  "px": [
+   6119,
+   5554,
+   5554
+  ],
+  "luma": [
+   57.6,
+   84.1,
+   84.2
+  ],
+  "r10": 1.459,
+  "r20": 1.461,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B0",
+  "wood": "V2_Wood_K_B2"
+ },
+ {
+  "id": "B_P_RSW_076",
+  "part": "roof",
+  "px": [
+   4127,
+   7381,
+   7381
+  ],
+  "luma": [
+   62.6,
+   80.0,
+   80.0
+  ],
+  "r10": 1.278,
+  "r20": 1.278,
+  "district": "ResidentialWest",
+  "plaster": "V2_Plaster_K_B1",
+  "wood": "V2_Wood_K_B2"
+ }
+]

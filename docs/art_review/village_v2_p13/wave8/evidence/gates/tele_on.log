@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[W4S] boot 10179 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W8T] guard=enabled=true primes=1 tracked=18225
+[W8T] -- シナリオ boot → [226.4, 152.7]
+[W8T]    テレポート完了
+[W8T]    プローブ完了
+SHOT on_boot_f001
+[W8T] boot → z=152.7  cam→門 61.6 m  可視表面 [3, 0, 0] / [3, 3, 3]  ok L0
+[W8T] -- シナリオ mid → [226.4, 152.7]
+[W8T]    テレポート完了
+[W8T]    プローブ完了
+SHOT on_mid_f001
+[W8T] mid → z=152.7  cam→門 61.6 m  可視表面 [0, 3, 0] / [3, 3, 3]  ok L1
+[W8T] -- シナリオ far → [226.4, 152.7]
+[W8T]    テレポート完了
+[W8T]    プローブ完了
+[W8T] far → z=152.7  cam→門 61.6 m  可視表面 [3, 0, 0] / [3, 3, 3]  ok L0
+[W8T] -- シナリオ near → [226.4, 152.7]
+[W8T]    テレポート完了
+[W8T]    プローブ完了
+[W8T] near → z=152.7  cam→門 61.6 m  可視表面 [0, 3, 0] / [3, 3, 3]  ok L1
+[W8T] -- シナリオ cold → [226.4, 152.7]
+[W8T]    テレポート完了
+[W8T]    プローブ完了
+SHOT on_cold_f001
+[W8T] cold → z=152.7  cam→門 61.6 m  可視表面 [0, 3, 0] / [3, 3, 3]  ok L1
+[W8T] 総括 5 回のテレポート中 GAP 0 回

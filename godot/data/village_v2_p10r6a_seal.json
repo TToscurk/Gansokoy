@@ -65,6 +65,65 @@
      "godot/data/village_v2_p13w7_batch1.json": "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef"
     }
    ]
+  },
+  {
+   "kind": "W8_LOD_MATERIALS_SCOPE_AWARE",
+   "approved_by": "user（P13 WAVE 8 TASK B：少量按建築調色盤分類的 LOD 材質を許可）",
+   "reason": "R6a の合法な override は『登記 18 変体』だけだった。W8 TASK B は第一批 50 棟の LOD1／LOD2 の atlas 表面（V2_MachiyaKit）を、LOD0 の灰泥・木・瓦に色を合わせた調色盤別の LOD 材質（新 shader kit_cal_lod.gdshader の派生 21 材質）で覆寫する。Kit Gate『4 材質』・KITM K5 は未登記の override として正当な後続 overlay（LodCalBatch1P13）で FAIL する（跨層）。",
+   "scope": {
+    "changed_files": [
+     "godot/tools/verify_village_v2_machiya_kit_gate.gd",
+     "godot/tools/verify_village_v2_kit_material.gd"
+    ],
+    "added_frozen": "lod_cal_p13/ の登記表・shader・変体 .tres 全部と、割り当て名簿 data/village_v2_p13w8_lod.json",
+    "change": "2 verifier とも、LOD 材質の登記表・shader・各変体の sha256 が本封存の frozen 値と一致するものだけ、登記変体として許可する（base＝V2_MachiyaKit.tres の表面に限る）。適用先は W7 の第一批名簿の建物だけ（従来の Pilot 外検査がそのまま効く）。登記表の sha が違う／封存が無い＝従来どおり全て FAIL。",
+    "not_changed": "R6a 登記表 kit_material_variants.json／既存 18 変体の .tres／kit_cal.gdshader／albedo_pilot.gd／albedo_pilot_p10.scn／W7 の albedo_batch.gd／Pilot 24 棟の割り当て／判定基準・容差・永久反向。verify_village_v2_albedo_pilot.gd は変更なし（W7 の名簿範囲の例外がそのまま効く）。"
+   },
+   "verification": "Kit Gate --regress（187 棟）・反向 4／KITM 場景・反向／ALB 場景・封存；W8 gate（登記・名簿・LOD1／2 全面・範囲外 0・還原・反向）",
+   "at": "2026-10-14",
+   "frozen": {
+    "godot/tools/verify_village_v2_kit_material.gd": [
+     "137a5837c76ba15a310ed82052bcbee0a3de2a04316ee9149a8eb01198ed74f8",
+     "591cb74605daf7043be66f3dcd01cd16a3dc961758999d12ac4ad46bf7dbf3e0"
+    ],
+    "godot/tools/verify_village_v2_machiya_kit_gate.gd": [
+     "1a9ad402f5e2c5c20bdfa315a6b4744ca3dbc3f1b19d5b95bd07ed6b463d4629",
+     "e2ea1f72dcae7703ec9eb3e2a2c3d381b90938eaa2b2be6bddea9bfebf4e1b1b"
+    ]
+   },
+   "added_frozen": {
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P00.tres": "817750eefac9f4a6db39e9718550ddbc7f6cf8bf4ecf62ba19111ef83f008778",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P01.tres": "40d7409779bdd4b3aa6f63623aeb3b70b3c4312fee4c740b899e31efa8edacf0",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P02.tres": "3efaf3f10064df02c7af4e375c307e52874b964eb9c0a6e2589f31e6bb79577f",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P03.tres": "6935b6978cfaeba4a08f3525d95f8aa610b20bbb631fbc610cbfc576165a8d53",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P04.tres": "6c9fbf5f309a4e87845671b8cdff8618cfaf83a5d89fc66ccdd32d062acbba23",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P05.tres": "d605fcb9afd5e7d7b9366e91fbeba92d456f9b0967fb4d6b1fbf62238be63289",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P06.tres": "e5639fe0464491daf70607ac822f65cb318086ac1f29a466ace532f699d1f26d",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P07.tres": "a10215ab77c256613312421d38515824684ec0fd2cd038e27699b34571c1f495",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P08.tres": "924f3694c601cc3d842c0dbff222de784dec83d02d18388a662c9bec3ec1a12b",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P09.tres": "ea7ae6e1c3e9b2316338a14248c49b18ffb35e33b3699c01a48ec9c7008ec641",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P10.tres": "cd4647221740dedd412fc18cdfc392708416bef3c449205d2bc7b468e936a4d9",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P11.tres": "7f7a6f6edc3f54f0c09c57427cda7c9eba4b8aa5e65dd01eabfdc6720d184876",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P12.tres": "ef084442de0cdffcdd15c0b4cb87a7b3d5f4be42a11189698b679ffbfe6eed5a",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P00.tres": "bafdef7025eefa724744c6931e6df592d63f8fe3d396566b938c51e4329e87aa",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P01.tres": "62ba9fc444f670dc13c03ae03ff77840d009db99c37e7c5b1db0ebf219277cfd",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P02.tres": "cb10ad4fdd0baca85c4a1cc772c51898f8950655efa8fdbdc99fac34134ae135",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P03.tres": "1fe75187fe93b23d366dca6e213b43db849619aed63eb75b2ca8fed4326cb9c7",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P04.tres": "2b230148f21a7dbe13d5c74786c884edafb375860c2b026566ceca2b1224a521",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P05.tres": "3e02dafd2d5db6e0589d63d1941a6b9f7acc2726d60786da7670c04d62f1d871",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_00.tres": "6032e79e2e35dbc6a88e8f572712be3d472f5baf079d76181ee9c54eae4d5a59",
+    "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_01.tres": "11a9bedb45ddd45908148d59972dfa178a1965e1d0bb26f20c7f4b38feddb3a5",
+    "godot/maps/village_v2/lod_cal_p13/kit_cal_lod.gdshader": "ed4344f13c776995ebed7560cef911f8ad003fd1f0b33bdff15bf574b8ab89ba",
+    "godot/maps/village_v2/lod_cal_p13/lod_material_variants.json": "159b809cf9dbe460b26ae4da66297c8916c6438f403fecd109843be91be4bd42",
+    "godot/data/village_v2_p13w8_lod.json": "0d55a685fc3dcb9cfb59c8ca5a571a707b0ccb0799e49113fb161a20c10348a0"
+   },
+   "seal_file_before": "70df16caecc086c47d420e43ded4b2d875bccbb6b5246bf032bdea1546c51d96",
+   "amended": [
+    {
+     "godot/tools/verify_village_v2_kit_material.gd": "591cb74605daf7043be66f3dcd01cd16a3dc961758999d12ac4ad46bf7dbf3e0",
+     "godot/tools/verify_village_v2_machiya_kit_gate.gd": "e2ea1f72dcae7703ec9eb3e2a2c3d381b90938eaa2b2be6bddea9bfebf4e1b1b"
+    }
+   ]
   }
  ],
  "phase": "P10 R6a Kit Material 24 Buildings Pilot（方案 A：町家 Kit 專用校正材質＋區域調色盤 14 変体・登記表；漆喰 0.70・木 0.75・基石 0.65・Kit atlas 分類；瓦不校正）",
@@ -82,8 +141,8 @@
   "godot/maps/village_v2/scripts_p10/albedo_pilot.gd": "c550affd0cd356f12c4849fd8a78ce70e7fa4d973bd7030189f6bf2fd9530822",
   "godot/maps/village_v2/gen/albedo_pilot_p10.scn": "d77c13b2cd447e6b55093d5f5794b1d5cc2cdfc728add3ecb56967c37390b483",
   "godot/tools/village_v2_kit_material_lib.gd": "f31f1b83a9782f895d63692e90c6d9f2f1522a4a4ce40fdb5ee3755b3d23426a",
-  "godot/tools/verify_village_v2_kit_material.gd": "137a5837c76ba15a310ed82052bcbee0a3de2a04316ee9149a8eb01198ed74f8",
-  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "1a9ad402f5e2c5c20bdfa315a6b4744ca3dbc3f1b19d5b95bd07ed6b463d4629",
+  "godot/tools/verify_village_v2_kit_material.gd": "591cb74605daf7043be66f3dcd01cd16a3dc961758999d12ac4ad46bf7dbf3e0",
+  "godot/tools/verify_village_v2_machiya_kit_gate.gd": "e2ea1f72dcae7703ec9eb3e2a2c3d381b90938eaa2b2be6bddea9bfebf4e1b1b",
   "godot/tools/shot_village_v2_rehab_alb_views.json": "6e5719922436e47ee4eafe12305bf3c5659920aa525900e980c27db6f3da8bcc",
   "godot/tools/village_v2_rehab_seal.gd": "ea3541291b0a1bddc0525d3053fb61beddb2b8bc70c91b16b0d5e3ce8af8e106",
   "tools/seal_p10_rehab.py": "11bb5392dd4c26a2863f1f2a238c7edd40b92101b86a112725550af05fd34054",
@@ -107,7 +166,31 @@
   "godot/maps/village_v2/kit_cal_p10/V2_Wood_K_B2.tres": "b9ddd74b891e41036a4c1d3afde4996a2d45d877bb25856dfe3f75a27527d028",
   "godot/maps/village_v2/kit_cal_p10/kit_cal.gdshader": "59b4197bea6b64533ad02da26349baee87a4db5b5803daebff4455604fa25b6f",
   "godot/maps/village_v2/kit_cal_p10/kit_material_variants.json": "e2359a8fa50d146864b78eeeaa659efb15237fe5ff9d97e3df709b25dbca4e1c",
-  "godot/data/village_v2_p13w7_batch1.json": "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef"
+  "godot/data/village_v2_p13w7_batch1.json": "b0c08416908b43a55eb38d8d32ef7a9c4a179995595a308b6ce5fedfd8ca33ef",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P00.tres": "817750eefac9f4a6db39e9718550ddbc7f6cf8bf4ecf62ba19111ef83f008778",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P01.tres": "40d7409779bdd4b3aa6f63623aeb3b70b3c4312fee4c740b899e31efa8edacf0",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P02.tres": "3efaf3f10064df02c7af4e375c307e52874b964eb9c0a6e2589f31e6bb79577f",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P03.tres": "6935b6978cfaeba4a08f3525d95f8aa610b20bbb631fbc610cbfc576165a8d53",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P04.tres": "6c9fbf5f309a4e87845671b8cdff8618cfaf83a5d89fc66ccdd32d062acbba23",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P05.tres": "d605fcb9afd5e7d7b9366e91fbeba92d456f9b0967fb4d6b1fbf62238be63289",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P06.tres": "e5639fe0464491daf70607ac822f65cb318086ac1f29a466ace532f699d1f26d",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P07.tres": "a10215ab77c256613312421d38515824684ec0fd2cd038e27699b34571c1f495",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P08.tres": "924f3694c601cc3d842c0dbff222de784dec83d02d18388a662c9bec3ec1a12b",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P09.tres": "ea7ae6e1c3e9b2316338a14248c49b18ffb35e33b3699c01a48ec9c7008ec641",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P10.tres": "cd4647221740dedd412fc18cdfc392708416bef3c449205d2bc7b468e936a4d9",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P11.tres": "7f7a6f6edc3f54f0c09c57427cda7c9eba4b8aa5e65dd01eabfdc6720d184876",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P12.tres": "ef084442de0cdffcdd15c0b4cb87a7b3d5f4be42a11189698b679ffbfe6eed5a",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P00.tres": "bafdef7025eefa724744c6931e6df592d63f8fe3d396566b938c51e4329e87aa",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P01.tres": "62ba9fc444f670dc13c03ae03ff77840d009db99c37e7c5b1db0ebf219277cfd",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P02.tres": "cb10ad4fdd0baca85c4a1cc772c51898f8950655efa8fdbdc99fac34134ae135",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P03.tres": "1fe75187fe93b23d366dca6e213b43db849619aed63eb75b2ca8fed4326cb9c7",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P04.tres": "2b230148f21a7dbe13d5c74786c884edafb375860c2b026566ceca2b1224a521",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P05.tres": "3e02dafd2d5db6e0589d63d1941a6b9f7acc2726d60786da7670c04d62f1d871",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_00.tres": "6032e79e2e35dbc6a88e8f572712be3d472f5baf079d76181ee9c54eae4d5a59",
+  "godot/maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_01.tres": "11a9bedb45ddd45908148d59972dfa178a1965e1d0bb26f20c7f4b38feddb3a5",
+  "godot/maps/village_v2/lod_cal_p13/kit_cal_lod.gdshader": "ed4344f13c776995ebed7560cef911f8ad003fd1f0b33bdff15bf574b8ab89ba",
+  "godot/maps/village_v2/lod_cal_p13/lod_material_variants.json": "159b809cf9dbe460b26ae4da66297c8916c6438f403fecd109843be91be4bd42",
+  "godot/data/village_v2_p13w8_lod.json": "0d55a685fc3dcb9cfb59c8ca5a571a707b0ccb0799e49113fb161a20c10348a0"
  },
  "evidence": {
   "docs/art_review/village_v2_p10_rehab_impl/integration/r6a/alb_build.log": "a7dba6ea505b6032ab5c7eb2ce3ab7080b082e7c3c0f11f258a5e6cc4ffae0a4",

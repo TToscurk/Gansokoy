@@ -1,0 +1,106 @@
+{
+	"gap": 2,
+	"guard": false,
+	"rows": [
+		{
+			"cam_dist": 61.6,
+			"counts": [
+				0,
+				0,
+				0
+			],
+			"n": [
+				3,
+				3,
+				3
+			],
+			"origin": "boot",
+			"shot": "off_boot_f001",
+			"target": [
+				226.4,
+				152.7
+			],
+			"verdict": "GAP"
+		},
+		{
+			"cam_dist": 61.6,
+			"counts": [
+				0,
+				3,
+				0
+			],
+			"n": [
+				3,
+				3,
+				3
+			],
+			"origin": "mid",
+			"shot": "off_mid_f001",
+			"target": [
+				226.4,
+				152.7
+			],
+			"verdict": "ok L1"
+		},
+		{
+			"cam_dist": 61.6,
+			"counts": [
+				0,
+				3,
+				0
+			],
+			"n": [
+				3,
+				3,
+				3
+			],
+			"origin": "far",
+			"shot": "",
+			"target": [
+				226.4,
+				152.7
+			],
+			"verdict": "ok L1"
+		},
+		{
+			"cam_dist": 61.6,
+			"counts": [
+				3,
+				0,
+				0
+			],
+			"n": [
+				3,
+				3,
+				3
+			],
+			"origin": "near",
+			"shot": "",
+			"target": [
+				226.4,
+				152.7
+			],
+			"verdict": "ok L0"
+		},
+		{
+			"cam_dist": 61.6,
+			"counts": [
+				0,
+				0,
+				0
+			],
+			"n": [
+				3,
+				3,
+				3
+			],
+			"origin": "cold",
+			"shot": "off_cold_f001",
+			"target": [
+				226.4,
+				152.7
+			],
+			"verdict": "GAP"
+		}
+	]
+}

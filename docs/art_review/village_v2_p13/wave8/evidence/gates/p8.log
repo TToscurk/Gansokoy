@@ -1,0 +1,8 @@
+PASS P1 Approved Terrain Protection (exit 0, 7s)
+PASS P8 local gate (exit 0, 11s)
+PASS P8 --seal (exit 0, 2s)
+PASS P8 永久反向 (--negative) (exit 0, 11s)
+PASS P8 田埂／水面擺放稽核 (exit 0, 8s)
+PASS GRD plan+反向 7 (exit 0, 1s)
+PASS GRD --scene (exit 0, 25s)
+DONE p8

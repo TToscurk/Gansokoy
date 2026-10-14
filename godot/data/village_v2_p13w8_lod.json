@@ -1,0 +1,588 @@
+{
+ "schema": 1,
+ "phase": "P13 W8 TASK B — LOD1／LOD2 色の整合（第一批 50 棟）",
+ "approved_by": "user（P13 WAVE 8 TASK B・2026-10-14）",
+ "node": "LodCalBatch1P13",
+ "overlay": "res://maps/village_v2/gen/lod_cal_batch1_p13.scn",
+ "registry": "res://maps/village_v2/lod_cal_p13/lod_material_variants.json",
+ "count": 50,
+ "buildings": [
+  {
+   "id": "B_P_MKT_032",
+   "path": "Districts/Market/Buildings/B_P_MKT_032",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MKT_034",
+   "path": "Districts/Market/Buildings/B_P_MKT_034",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_035",
+   "path": "Districts/Market/Buildings/B_P_MKT_035",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_037",
+   "path": "Districts/Market/Buildings/B_P_MKT_037",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_038",
+   "path": "Districts/Market/Buildings/B_P_MKT_038",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_039",
+   "path": "Districts/Market/Buildings/B_P_MKT_039",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_040",
+   "path": "Districts/Market/Buildings/B_P_MKT_040",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_041",
+   "path": "Districts/Market/Buildings/B_P_MKT_041",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_042",
+   "path": "Districts/Market/Buildings/B_P_MKT_042",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_043",
+   "path": "Districts/Market/Buildings/B_P_MKT_043",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_049",
+   "path": "Districts/Market/Buildings/B_P_MKT_049",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MKT_053",
+   "path": "Districts/Market/Buildings/B_P_MKT_053",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_055",
+   "path": "Districts/Market/Buildings/B_P_MKT_055",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_058",
+   "path": "Districts/Market/Buildings/B_P_MKT_058",
+   "l1": "V2_MachiyaKit_L1_P06",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_059",
+   "path": "Districts/Market/Buildings/B_P_MKT_059",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_060",
+   "path": "Districts/Market/Buildings/B_P_MKT_060",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_009",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_009",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MXC_010",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_010",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_013",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_013",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_014",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_014",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_015",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_015",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_018",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_018",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MXC_019",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_019",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MXC_023",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_023",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_RNE_001",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_001",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RNE_002",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_002",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RNE_007",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_007",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RNE_010",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_010",
+   "l1": "V2_MachiyaKit_L1_P06",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RNE_012",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_012",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_007",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_007",
+   "l1": "V2_MachiyaKit_L1_P02",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_010",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_010",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_017",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_017",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_022",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_022",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_023",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_023",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_027",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_027",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_029",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_029",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_033",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_033",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_034",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_034",
+   "l1": "V2_MachiyaKit_L1_P02",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_036",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_036",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_045",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_045",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_046",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_046",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_048",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_048",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_059",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_059",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_071",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_071",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_072",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_072",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_073",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_073",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_074",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_074",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_075",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_075",
+   "l1": "V2_MachiyaKit_L1_P11",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_076",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_076",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_077",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_077",
+   "l1": "V2_MachiyaKit_L1_P11",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B2"
+   ]
+  }
+ ],
+ "fit": {
+  "gain": {
+   "box1": [
+    0.93,
+    0.9751,
+    1.0317
+   ],
+   "face1": [
+    0.93,
+    0.9751,
+    1.0317
+   ],
+   "box2": [
+    0.9659,
+    1.0303,
+    1.0887
+   ],
+   "roof": [
+    0.57,
+    0.57,
+    0.57
+   ]
+  },
+  "n_l1": 13,
+  "n_l2": 6,
+  "n_roof": 2
+ }
+}

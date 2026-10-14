@@ -1,0 +1,2433 @@
+{
+	"B_P_MKT_001": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_001",
+		"pos": [
+			244.8,
+			89.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_002": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_002",
+		"pos": [
+			245.0,
+			78.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_003": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_003",
+		"pos": [
+			252.9,
+			36.2
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_004": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_004",
+		"pos": [
+			255.6,
+			29.5
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_005": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_005",
+		"pos": [
+			258.3,
+			21.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_006": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_006",
+		"pos": [
+			260.2,
+			14.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_007": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_007",
+		"pos": [
+			262.6,
+			8.4
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_008": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_008",
+		"pos": [
+			264.7,
+			2.0
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_009": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_009",
+		"pos": [
+			266.1,
+			-5.0
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_010": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_010",
+		"pos": [
+			269.1,
+			-10.9
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_011": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_011",
+		"pos": [
+			275.5,
+			-33.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_012": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_012",
+		"pos": [
+			277.7,
+			-39.2
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_013": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_013",
+		"pos": [
+			280.0,
+			-46.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_014": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_014",
+		"pos": [
+			290.4,
+			-80.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_015": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_015",
+		"pos": [
+			293.4,
+			-87.9
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_016": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_016",
+		"pos": [
+			295.7,
+			-94.7
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_017": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_017",
+		"pos": [
+			227.4,
+			76.0
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_018": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_018",
+		"pos": [
+			233.9,
+			34.0
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_019": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_019",
+		"pos": [
+			236.1,
+			27.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_020": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_020",
+		"pos": [
+			239.2,
+			21.1
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_021": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_021",
+		"pos": [
+			240.4,
+			14.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_022": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_022",
+		"pos": [
+			243.0,
+			6.9
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_023": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_023",
+		"pos": [
+			254.5,
+			-28.2
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_024": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_024",
+		"pos": [
+			256.7,
+			-35.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_025": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_025",
+		"pos": [
+			258.8,
+			-42.5
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_026": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_026",
+		"pos": [
+			261.1,
+			-50.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_027": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_027",
+		"pos": [
+			263.6,
+			-57.1
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_028": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_028",
+		"pos": [
+			265.2,
+			-63.8
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_029": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_029",
+		"pos": [
+			267.1,
+			-70.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_030": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_030",
+		"pos": [
+			269.0,
+			-76.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_031": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_031",
+		"pos": [
+			275.2,
+			-93.8
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_032": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_032",
+		"pos": [
+			219.9,
+			-11.0
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_033": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_033",
+		"pos": [
+			227.0,
+			-11.9
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_034": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_034",
+		"pos": [
+			233.6,
+			-11.0
+		],
+		"road": "CrossStreetMid",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_035": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_035",
+		"pos": [
+			283.9,
+			-15.0
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_036": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_036",
+		"pos": [
+			289.9,
+			-17.1
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_037": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_037",
+		"pos": [
+			297.7,
+			-17.6
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_038": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_038",
+		"pos": [
+			304.8,
+			-19.0
+		],
+		"road": "CrossStreetMid",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_039": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_039",
+		"pos": [
+			235.3,
+			-29.0
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_040": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_040",
+		"pos": [
+			296.5,
+			-35.2
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_041": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_041",
+		"pos": [
+			303.1,
+			-36.9
+		],
+		"road": "CrossStreetMid",
+		"roof": "tsuma",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_042": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_042",
+		"pos": [
+			309.8,
+			-38.2
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_043": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_043",
+		"pos": [
+			316.4,
+			-38.5
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_044": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_044",
+		"pos": [
+			213.0,
+			57.8
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_045": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_045",
+		"pos": [
+			220.2,
+			57.5
+		],
+		"road": "CrossStreetSouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_046": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_046",
+		"pos": [
+			260.1,
+			55.5
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_047": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_047",
+		"pos": [
+			267.3,
+			54.5
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_048": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_048",
+		"pos": [
+			274.1,
+			54.4
+		],
+		"road": "CrossStreetSouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_049": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_049",
+		"pos": [
+			280.9,
+			53.9
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_050": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_050",
+		"pos": [
+			215.3,
+			40.7
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_051": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_051",
+		"pos": [
+			268.0,
+			37.4
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_052": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_052",
+		"pos": [
+			274.7,
+			36.4
+		],
+		"road": "CrossStreetSouth",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_053": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_053",
+		"pos": [
+			281.5,
+			35.9
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_054": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_054",
+		"pos": [
+			288.1,
+			36.3
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_055": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_055",
+		"pos": [
+			294.6,
+			34.8
+		],
+		"road": "CrossStreetSouth",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_056": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_056",
+		"pos": [
+			214.4,
+			85.9
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_057": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_057",
+		"pos": [
+			220.7,
+			89.5
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MKT_058": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_058",
+		"pos": [
+			214.5,
+			6.8
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MKT_059": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_059",
+		"pos": [
+			215.1,
+			13.4
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MKT_060": {
+		"district": "Market",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/Market/Buildings/B_P_MKT_060",
+		"pos": [
+			256.1,
+			-90.7
+		],
+		"road": "MidLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_001": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_001",
+		"pos": [
+			298.7,
+			-100.9
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MXC_002": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_002",
+		"pos": [
+			301.2,
+			-107.2
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_003": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_003",
+		"pos": [
+			302.8,
+			-113.6
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MXC_004": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_004",
+		"pos": [
+			306.4,
+			-120.3
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_005": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_005",
+		"pos": [
+			278.4,
+			-101.8
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MXC_006": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_006",
+		"pos": [
+			281.6,
+			-107.4
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MXC_007": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_007",
+		"pos": [
+			283.5,
+			-114.4
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_008": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_008",
+		"pos": [
+			286.5,
+			-122.0
+		],
+		"road": "MainStreet",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_MXC_009": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_009",
+		"pos": [
+			236.6,
+			-140.5
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_010": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_010",
+		"pos": [
+			244.7,
+			-140.8
+		],
+		"road": "HillFootStreet",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_011": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_011",
+		"pos": [
+			255.8,
+			-138.5
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_012": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_012",
+		"pos": [
+			261.1,
+			-135.9
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_013": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_013",
+		"pos": [
+			267.4,
+			-133.4
+		],
+		"road": "HillFootStreet",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_014": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_014",
+		"pos": [
+			273.8,
+			-131.8
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_015": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_015",
+		"pos": [
+			322.6,
+			-120.0
+		],
+		"road": "HillFootStreet",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_016": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_016",
+		"pos": [
+			330.2,
+			-119.6
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_017": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_017",
+		"pos": [
+			336.6,
+			-120.2
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_018": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_018",
+		"pos": [
+			307.0,
+			-138.2
+		],
+		"road": "HillFootStreet",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_019": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_019",
+		"pos": [
+			313.6,
+			-137.4
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_020": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_020",
+		"pos": [
+			321.2,
+			-138.0
+		],
+		"road": "HillFootStreet",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_021": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_021",
+		"pos": [
+			328.8,
+			-137.6
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_022": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_022",
+		"pos": [
+			335.0,
+			-136.4
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_MXC_023": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_023",
+		"pos": [
+			343.0,
+			-145.5
+		],
+		"road": "RiverNorthPath",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_MXC_024": {
+		"district": "MixedCommercial",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/MixedCommercial/Buildings/B_P_MXC_024",
+		"pos": [
+			346.9,
+			-150.5
+		],
+		"road": "RiverNorthPath",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_001": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_001",
+		"pos": [
+			438.2,
+			-205.8
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_002": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_002",
+		"pos": [
+			451.2,
+			-219.2
+		],
+		"road": "NELane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_003": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_003",
+		"pos": [
+			458.0,
+			-226.1
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RNE_004": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_004",
+		"pos": [
+			467.6,
+			-231.3
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_005": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_005",
+		"pos": [
+			477.6,
+			-234.6
+		],
+		"road": "NELane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_006": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_006",
+		"pos": [
+			486.2,
+			-237.5
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RNE_007": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_007",
+		"pos": [
+			456.8,
+			-244.8
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_008": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_008",
+		"pos": [
+			464.4,
+			-246.9
+		],
+		"road": "NELane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_009": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_009",
+		"pos": [
+			473.5,
+			-250.4
+		],
+		"road": "NELane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_010": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_010",
+		"pos": [
+			432.1,
+			-244.1
+		],
+		"road": "NENorth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RNE_011": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_011",
+		"pos": [
+			450.8,
+			-202.9
+		],
+		"road": "NESouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_012": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_012",
+		"pos": [
+			458.8,
+			-196.0
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_013": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_013",
+		"pos": [
+			465.3,
+			-189.5
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RNE_014": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_014",
+		"pos": [
+			476.3,
+			-183.2
+		],
+		"road": "NESouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_015": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_015",
+		"pos": [
+			485.6,
+			-180.7
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_016": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_016",
+		"pos": [
+			467.9,
+			-209.2
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_017": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_017",
+		"pos": [
+			474.8,
+			-202.3
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RNE_018": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_018",
+		"pos": [
+			484.3,
+			-197.4
+		],
+		"road": "NESouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RNE_019": {
+		"district": "ResidentialNE",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialNE/Buildings/B_P_RNE_019",
+		"pos": [
+			494.3,
+			-194.6
+		],
+		"road": "NESouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_001": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_001",
+		"pos": [
+			210.1,
+			-10.1
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_002": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_002",
+		"pos": [
+			204.7,
+			-29.9
+		],
+		"road": "CrossStreetMid",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_003": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_003",
+		"pos": [
+			214.4,
+			-29.9
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_004": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_004",
+		"pos": [
+			223.6,
+			-29.9
+		],
+		"road": "CrossStreetMid",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_005": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_005",
+		"pos": [
+			175.3,
+			59.7
+		],
+		"road": "CrossStreetSouth",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_006": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_006",
+		"pos": [
+			185.5,
+			59.4
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_007": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_007",
+		"pos": [
+			193.3,
+			59.2
+		],
+		"road": "CrossStreetSouth",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_008": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_008",
+		"pos": [
+			204.4,
+			-138.3
+		],
+		"road": "HillFootStreet",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_009": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_009",
+		"pos": [
+			187.0,
+			-90.5
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_010": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_010",
+		"pos": [
+			192.2,
+			-82.3
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_011": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_011",
+		"pos": [
+			194.9,
+			-70.9
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_012": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_012",
+		"pos": [
+			193.3,
+			-61.2
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_013": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_013",
+		"pos": [
+			192.4,
+			-53.2
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_014": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_014",
+		"pos": [
+			191.1,
+			-42.7
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_015": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_015",
+		"pos": [
+			190.0,
+			-33.6
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_016": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_016",
+		"pos": [
+			190.5,
+			-25.4
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_017": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_017",
+		"pos": [
+			193.9,
+			-11.1
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_018": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_018",
+		"pos": [
+			196.1,
+			-2.1
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_019": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_019",
+		"pos": [
+			185.2,
+			-121.5
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_020": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_020",
+		"pos": [
+			191.0,
+			-113.2
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_021": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_021",
+		"pos": [
+			195.1,
+			-106.5
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_022": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_022",
+		"pos": [
+			201.1,
+			-98.8
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_023": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_023",
+		"pos": [
+			206.3,
+			-91.3
+		],
+		"road": "WestAlley",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_024": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_024",
+		"pos": [
+			211.7,
+			-73.5
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_025": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_025",
+		"pos": [
+			210.5,
+			-63.9
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_026": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_026",
+		"pos": [
+			209.6,
+			-56.6
+		],
+		"road": "WestAlley",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_027": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_027",
+		"pos": [
+			187.7,
+			-211.2
+		],
+		"road": "NWLane",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_028": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_028",
+		"pos": [
+			183.4,
+			-217.8
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_029": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_029",
+		"pos": [
+			172.9,
+			-231.0
+		],
+		"road": "NWLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_030": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_030",
+		"pos": [
+			165.2,
+			-236.0
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_031": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_031",
+		"pos": [
+			156.5,
+			-240.9
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_032": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_032",
+		"pos": [
+			190.5,
+			-152.5
+		],
+		"road": "NWLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_033": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_033",
+		"pos": [
+			188.7,
+			-159.7
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_034": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_034",
+		"pos": [
+			185.2,
+			-173.1
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_035": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_035",
+		"pos": [
+			182.8,
+			-180.8
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_036": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_036",
+		"pos": [
+			172.4,
+			-205.2
+		],
+		"road": "NWLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_037": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_037",
+		"pos": [
+			167.3,
+			-213.9
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_038": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_038",
+		"pos": [
+			159.7,
+			-220.7
+		],
+		"road": "NWLane",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_039": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_039",
+		"pos": [
+			151.2,
+			-225.6
+		],
+		"road": "NWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_040": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_040",
+		"pos": [
+			149.6,
+			-206.4
+		],
+		"road": "NWBranch",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_041": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_041",
+		"pos": [
+			169.9,
+			-187.6
+		],
+		"road": "NWBranch",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_042": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_042",
+		"pos": [
+			153.4,
+			-188.1
+		],
+		"road": "NWBranch",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_043": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_043",
+		"pos": [
+			143.9,
+			-191.8
+		],
+		"road": "NWBranch",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_044": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_044",
+		"pos": [
+			136.8,
+			-195.0
+		],
+		"road": "NWBranch",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_045": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_045",
+		"pos": [
+			149.3,
+			-20.9
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_046": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_046",
+		"pos": [
+			146.7,
+			-30.3
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_047": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_047",
+		"pos": [
+			144.8,
+			-38.2
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_048": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048",
+		"pos": [
+			143.9,
+			-48.7
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_049": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_049",
+		"pos": [
+			143.1,
+			-58.8
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_050": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_050",
+		"pos": [
+			142.0,
+			-66.5
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_051": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_051",
+		"pos": [
+			142.8,
+			-75.1
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_052": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_052",
+		"pos": [
+			143.8,
+			-84.2
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_053": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_053",
+		"pos": [
+			145.2,
+			-95.8
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_054": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_054",
+		"pos": [
+			145.6,
+			-107.9
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_055": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_055",
+		"pos": [
+			144.5,
+			-115.2
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_056": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_056",
+		"pos": [
+			143.0,
+			-124.8
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_057": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_057",
+		"pos": [
+			141.7,
+			-132.8
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_058": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_058",
+		"pos": [
+			137.6,
+			-7.2
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_059": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_059",
+		"pos": [
+			134.2,
+			-16.3
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_060": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_060",
+		"pos": [
+			131.3,
+			-25.1
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_061": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_061",
+		"pos": [
+			128.5,
+			-37.8
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_062": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_062",
+		"pos": [
+			127.7,
+			-47.5
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_063": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_063",
+		"pos": [
+			127.1,
+			-54.8
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_064": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_064",
+		"pos": [
+			126.3,
+			-64.5
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_065": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_065",
+		"pos": [
+			126.2,
+			-73.4
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_066": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_066",
+		"pos": [
+			127.5,
+			-83.9
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_067": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_067",
+		"pos": [
+			128.6,
+			-94.0
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_068": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_068",
+		"pos": [
+			130.0,
+			-101.7
+		],
+		"road": "WestBankLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_069": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_069",
+		"pos": [
+			128.7,
+			-110.7
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_070": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_070",
+		"pos": [
+			127.3,
+			-119.8
+		],
+		"road": "WestBankLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_071": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_071",
+		"pos": [
+			231.8,
+			-80.2
+		],
+		"road": "MidLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_072": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_072",
+		"pos": [
+			241.7,
+			-77.7
+		],
+		"road": "MidLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_073": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_073",
+		"pos": [
+			220.0,
+			-95.7
+		],
+		"road": "MidLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_074": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_074",
+		"pos": [
+			230.6,
+			-97.2
+		],
+		"road": "MidLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_075": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_075",
+		"pos": [
+			237.7,
+			-95.4
+		],
+		"road": "MidLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_076": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_076",
+		"pos": [
+			247.2,
+			-93.1
+		],
+		"road": "MidLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_077": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_077",
+		"pos": [
+			160.0,
+			55.6
+		],
+		"road": "SWLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_078": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_078",
+		"pos": [
+			157.6,
+			64.5
+		],
+		"road": "SWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_079": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_079",
+		"pos": [
+			159.4,
+			80.0
+		],
+		"road": "SWLane",
+		"roof": "hira",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_RSW_080": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_080",
+		"pos": [
+			164.3,
+			88.3
+		],
+		"road": "SWLane",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_RSW_081": {
+		"district": "ResidentialWest",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/ResidentialWest/Buildings/B_P_RSW_081",
+		"pos": [
+			178.0,
+			79.5
+		],
+		"road": "SWLane",
+		"roof": "tsuma",
+		"type": "hiraya",
+		"type_label": "平屋"
+	},
+	"B_P_SGT_001": {
+		"district": "SouthGate",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/SouthGate/Buildings/B_P_SGT_001",
+		"pos": [
+			239.7,
+			120.6
+		],
+		"road": "EntranceRoad",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	},
+	"B_P_SGT_002": {
+		"district": "SouthGate",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/SouthGate/Buildings/B_P_SGT_002",
+		"pos": [
+			222.1,
+			122.1
+		],
+		"road": "EntranceRoad",
+		"roof": "hira",
+		"type": "nikai",
+		"type_label": "總二階"
+	},
+	"B_P_SGT_003": {
+		"district": "SouthGate",
+		"kit_asset": "machiya_kit",
+		"path": "Districts/SouthGate/Buildings/B_P_SGT_003",
+		"pos": [
+			222.9,
+			115.1
+		],
+		"road": "EntranceRoad",
+		"roof": "hira",
+		"type": "zushi",
+		"type_label": "厨子二階"
+	}
+}

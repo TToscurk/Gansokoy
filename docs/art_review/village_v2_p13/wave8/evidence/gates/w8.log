@@ -1,0 +1,4 @@
+PASS W8 gate +反向 (exit 0, 8s)
+PASS W7 gate +反向 (exit 0, 7s)
+PASS W6 gate +反向 (exit 0, 29s)
+DONE w8

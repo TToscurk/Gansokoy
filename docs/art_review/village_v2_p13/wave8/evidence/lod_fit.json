@@ -1,0 +1,1261 @@
+{
+ "gain": {
+  "box1": [
+   0.93,
+   0.9751,
+   1.0317
+  ],
+  "face1": [
+   0.93,
+   0.9751,
+   1.0317
+  ],
+  "box2": [
+   0.9659,
+   1.0303,
+   1.0887
+  ],
+  "roof": [
+   0.57,
+   0.57,
+   0.57
+  ]
+ },
+ "n_l1": 13,
+ "n_l2": 6,
+ "n_roof": 2,
+ "materials": [
+  {
+   "id": "V2_MachiyaKit_L1_P00",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.6246,
+     0.5201,
+     0.4132
+    ],
+    "face_mul": [
+     1.6143,
+     1.4081,
+     1.1515
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P01",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.4664,
+     0.3604,
+     0.2472
+    ],
+    "face_mul": [
+     2.61,
+     2.2354,
+     1.5943
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P02",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.6261,
+     0.4931,
+     0.3543
+    ],
+    "face_mul": [
+     0.7991,
+     0.6786,
+     0.528
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P03",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.5353,
+     0.3993,
+     0.2855
+    ],
+    "face_mul": [
+     2.2065,
+     1.2751,
+     0.7349
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P04",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.543,
+     0.4495,
+     0.3398
+    ],
+    "face_mul": [
+     2.5918,
+     2.4154,
+     1.6221
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P05",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.4984,
+     0.4026,
+     0.3015
+    ],
+    "face_mul": [
+     2.0892,
+     1.8251,
+     1.3373
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P06",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.6253,
+     0.5385,
+     0.4453
+    ],
+    "face_mul": [
+     0.8848,
+     0.7577,
+     0.6085
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P07",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.6608,
+     0.5146,
+     0.3694
+    ],
+    "face_mul": [
+     1.3312,
+     1.0826,
+     0.8027
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P08",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.5153,
+     0.4072,
+     0.2896
+    ],
+    "face_mul": [
+     2.6685,
+     2.3814,
+     1.5129
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P09",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.4974,
+     0.4119,
+     0.3191
+    ],
+    "face_mul": [
+     2.6176,
+     2.5886,
+     2.079
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P10",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.4717,
+     0.3522,
+     0.2675
+    ],
+    "face_mul": [
+     2.4874,
+     1.368,
+     0.7647
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P11",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.5548,
+     0.4759,
+     0.39
+    ],
+    "face_mul": [
+     1.2317,
+     1.1431,
+     0.9437
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P12",
+   "kind": "l1",
+   "params": {
+    "box_mul": [
+     0.4954,
+     0.4075,
+     0.3199
+    ],
+    "face_mul": [
+     1.8057,
+     1.3612,
+     0.9318
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P00",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.578,
+     0.4823,
+     0.3743
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P01",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.4245,
+     0.3292,
+     0.2443
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P02",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.4581,
+     0.3805,
+     0.2927
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P03",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.6461,
+     0.5254,
+     0.3918
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P04",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.4714,
+     0.3643,
+     0.2539
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P05",
+   "kind": "l2",
+   "params": {
+    "box_mul": [
+     0.5062,
+     0.4184,
+     0.3119
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_LR_00",
+   "kind": "roof",
+   "params": {
+    "roof_mode": true,
+    "roof_k": [
+     0.04706,
+     0.04852,
+     0.03954
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_LR_01",
+   "kind": "roof",
+   "params": {
+    "roof_mode": true,
+    "roof_k": [
+     0.04609,
+     0.05496,
+     0.0615
+    ]
+   }
+  }
+ ],
+ "assign": [
+  {
+   "id": "B_P_MKT_032",
+   "path": "Districts/Market/Buildings/B_P_MKT_032",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MKT_034",
+   "path": "Districts/Market/Buildings/B_P_MKT_034",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_035",
+   "path": "Districts/Market/Buildings/B_P_MKT_035",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_037",
+   "path": "Districts/Market/Buildings/B_P_MKT_037",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_038",
+   "path": "Districts/Market/Buildings/B_P_MKT_038",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_039",
+   "path": "Districts/Market/Buildings/B_P_MKT_039",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_040",
+   "path": "Districts/Market/Buildings/B_P_MKT_040",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_041",
+   "path": "Districts/Market/Buildings/B_P_MKT_041",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_042",
+   "path": "Districts/Market/Buildings/B_P_MKT_042",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_043",
+   "path": "Districts/Market/Buildings/B_P_MKT_043",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A3",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_049",
+   "path": "Districts/Market/Buildings/B_P_MKT_049",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MKT_053",
+   "path": "Districts/Market/Buildings/B_P_MKT_053",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_055",
+   "path": "Districts/Market/Buildings/B_P_MKT_055",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MKT_058",
+   "path": "Districts/Market/Buildings/B_P_MKT_058",
+   "l1": "V2_MachiyaKit_L1_P06",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_059",
+   "path": "Districts/Market/Buildings/B_P_MKT_059",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MKT_060",
+   "path": "Districts/Market/Buildings/B_P_MKT_060",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P03",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_009",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_009",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_MXC_010",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_010",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_013",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_013",
+   "l1": "V2_MachiyaKit_L1_P03",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A0",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_014",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_014",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_015",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_015",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A0"
+   ]
+  },
+  {
+   "id": "B_P_MXC_018",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_018",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MXC_019",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_019",
+   "l1": "V2_MachiyaKit_L1_P07",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A2",
+    "V2_Wood_K_A1"
+   ]
+  },
+  {
+   "id": "B_P_MXC_023",
+   "path": "Districts/MixedCommercial/Buildings/B_P_MXC_023",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_A1",
+    "V2_Wood_K_A2"
+   ]
+  },
+  {
+   "id": "B_P_RNE_001",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_001",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RNE_002",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_002",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RNE_007",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_007",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RNE_010",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_010",
+   "l1": "V2_MachiyaKit_L1_P06",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RNE_012",
+   "path": "Districts/ResidentialNE/Buildings/B_P_RNE_012",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_007",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_007",
+   "l1": "V2_MachiyaKit_L1_P02",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_010",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_010",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_017",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_017",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_022",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_022",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_023",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_023",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_027",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_027",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P01",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_029",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_029",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_033",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_033",
+   "l1": "V2_MachiyaKit_L1_P00",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_034",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_034",
+   "l1": "V2_MachiyaKit_L1_P02",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_036",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_036",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_045",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_045",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_046",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_046",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_048",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_048",
+   "l1": "V2_MachiyaKit_L1_P05",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B0"
+   ]
+  },
+  {
+   "id": "B_P_RSW_059",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_059",
+   "l1": "V2_MachiyaKit_L1_P12",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_071",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_071",
+   "l1": "V2_MachiyaKit_L1_P09",
+   "l2": "V2_MachiyaKit_L2_P02",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_072",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_072",
+   "l1": "V2_MachiyaKit_L1_P10",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_073",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_073",
+   "l1": "V2_MachiyaKit_L1_P04",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_074",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_074",
+   "l1": "V2_MachiyaKit_L1_P01",
+   "l2": "V2_MachiyaKit_L2_P04",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B3",
+    "V2_Wood_K_B1"
+   ]
+  },
+  {
+   "id": "B_P_RSW_075",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_075",
+   "l1": "V2_MachiyaKit_L1_P11",
+   "l2": "V2_MachiyaKit_L2_P00",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B0",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_076",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_076",
+   "l1": "V2_MachiyaKit_L1_P08",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_01",
+   "palette": [
+    "V2_Plaster_K_B1",
+    "V2_Wood_K_B2"
+   ]
+  },
+  {
+   "id": "B_P_RSW_077",
+   "path": "Districts/ResidentialWest/Buildings/B_P_RSW_077",
+   "l1": "V2_MachiyaKit_L1_P11",
+   "l2": "V2_MachiyaKit_L2_P05",
+   "roof": "V2_MachiyaKit_LR_00",
+   "palette": [
+    "V2_Plaster_K_B2",
+    "V2_Wood_K_B2"
+   ]
+  }
+ ],
+ "residual": [
+  {
+   "id": "B_P_MKT_032",
+   "box1_vs_W0": 0.9570049634338275,
+   "face1_vs_F0": 0.9901791637912881,
+   "box2_vs_B0": 1.0367414549046807,
+   "roof_vs_R0": 0.5693101879012776
+  },
+  {
+   "id": "B_P_MKT_034",
+   "box1_vs_W0": 0.9469332115356107,
+   "face1_vs_F0": 0.9678364689071565,
+   "box2_vs_B0": 1.0373529533499866,
+   "roof_vs_R0": 0.5758649730075927
+  },
+  {
+   "id": "B_P_MKT_035",
+   "box1_vs_W0": 0.974420143159532,
+   "face1_vs_F0": 1.0923822869509225,
+   "box2_vs_B0": 0.981436287069662,
+   "roof_vs_R0": 0.5814418305511077
+  },
+  {
+   "id": "B_P_MKT_037",
+   "box1_vs_W0": 0.9475589018515576,
+   "face1_vs_F0": 0.9912139082750913,
+   "box2_vs_B0": 1.0054173214561541,
+   "roof_vs_R0": 0.5794550084889181
+  },
+  {
+   "id": "B_P_MKT_038",
+   "box1_vs_W0": 0.9773938443482669,
+   "face1_vs_F0": 1.0624198324958116,
+   "box2_vs_B0": 1.0448920943355238,
+   "roof_vs_R0": 0.5562069018859737
+  },
+  {
+   "id": "B_P_MKT_039",
+   "box1_vs_W0": 0.975096461578773,
+   "face1_vs_F0": 1.031838410226551,
+   "box2_vs_B0": 0.9846793890423304,
+   "roof_vs_R0": 0.5751796385084803
+  },
+  {
+   "id": "B_P_MKT_040",
+   "box1_vs_W0": 0.9498635925092094,
+   "face1_vs_F0": 0.8698371704620971,
+   "box2_vs_B0": 1.0032000760275206,
+   "roof_vs_R0": 0.5798426344301463
+  },
+  {
+   "id": "B_P_MKT_041",
+   "box1_vs_W0": 0.9577400689531219,
+   "face1_vs_F0": 0.8605355240397019,
+   "box2_vs_B0": 1.0508970457113904,
+   "roof_vs_R0": 0.5753217825803993
+  },
+  {
+   "id": "B_P_MKT_042",
+   "box1_vs_W0": 0.876035542101784,
+   "face1_vs_F0": 0.8589158014505448,
+   "box2_vs_B0": 0.9661633772342194,
+   "roof_vs_R0": 0.571785952291252
+  },
+  {
+   "id": "B_P_MKT_043",
+   "box1_vs_W0": 0.9344836787565771,
+   "face1_vs_F0": 0.7595095233312777,
+   "box2_vs_B0": 1.040754473017154,
+   "roof_vs_R0": 0.5978871530347591
+  },
+  {
+   "id": "B_P_MKT_049",
+   "box1_vs_W0": 0.901872537126923,
+   "face1_vs_F0": 0.9181943938088167,
+   "box2_vs_B0": 0.9760147526911577,
+   "roof_vs_R0": 0.561781924602149
+  },
+  {
+   "id": "B_P_MKT_053",
+   "box1_vs_W0": 0.9162301391130464,
+   "face1_vs_F0": 0.8052297803353436,
+   "box2_vs_B0": 0.9629470197190299,
+   "roof_vs_R0": 0.5600474800493512
+  },
+  {
+   "id": "B_P_MKT_055",
+   "box1_vs_W0": 1.0082934496444858,
+   "face1_vs_F0": 1.1098055136345804,
+   "box2_vs_B0": 0.9623648599207588,
+   "roof_vs_R0": 0.5552079409866145
+  },
+  {
+   "id": "B_P_MKT_058",
+   "box1_vs_W0": 0.9196345170324642,
+   "face1_vs_F0": 1.045363907378657,
+   "box2_vs_B0": 1.030463852738695,
+   "roof_vs_R0": 0.5847101189486522
+  },
+  {
+   "id": "B_P_MKT_059",
+   "box1_vs_W0": 0.9434976501063622,
+   "face1_vs_F0": 0.9376457714484293,
+   "box2_vs_B0": 0.9874406328586481,
+   "roof_vs_R0": 0.5705545867499452
+  },
+  {
+   "id": "B_P_MKT_060",
+   "box1_vs_W0": 0.9201523613321649,
+   "face1_vs_F0": 0.9370675328225203,
+   "box2_vs_B0": 1.0453253837675387,
+   "roof_vs_R0": 0.579653316202151
+  },
+  {
+   "id": "B_P_MXC_009",
+   "box1_vs_W0": 0.9247793039206114,
+   "face1_vs_F0": 0.921226678007154,
+   "box2_vs_B0": 1.0206962530360384,
+   "roof_vs_R0": 0.5609522182669217
+  },
+  {
+   "id": "B_P_MXC_010",
+   "box1_vs_W0": 0.9201124538238349,
+   "face1_vs_F0": 0.9281449596313601,
+   "box2_vs_B0": 0.9585996537900893,
+   "roof_vs_R0": 0.5626841277062944
+  },
+  {
+   "id": "B_P_MXC_013",
+   "box1_vs_W0": 1.0195515449103691,
+   "face1_vs_F0": 0.9975058650804604,
+   "box2_vs_B0": 0.9759200959841928,
+   "roof_vs_R0": 0.5713852326172083
+  },
+  {
+   "id": "B_P_MXC_014",
+   "box1_vs_W0": 1.0107197998910704,
+   "face1_vs_F0": 0.9583585077192204,
+   "box2_vs_B0": 1.0079558207463206,
+   "roof_vs_R0": 0.5671613205267257
+  },
+  {
+   "id": "B_P_MXC_015",
+   "box1_vs_W0": 0.9332979795300211,
+   "face1_vs_F0": 0.8481982371192857,
+   "box2_vs_B0": 0.9612958774821766,
+   "roof_vs_R0": 0.5551207690485297
+  },
+  {
+   "id": "B_P_MXC_018",
+   "box1_vs_W0": 0.9888743538354452,
+   "face1_vs_F0": 1.0609506123337888,
+   "box2_vs_B0": 1.0877446513414017,
+   "roof_vs_R0": 0.5753540118708534
+  },
+  {
+   "id": "B_P_MXC_019",
+   "box1_vs_W0": 0.9643063984408738,
+   "face1_vs_F0": 0.8583958972589903,
+   "box2_vs_B0": 0.9765899500684126,
+   "roof_vs_R0": 0.5678877635248093
+  },
+  {
+   "id": "B_P_MXC_023",
+   "box1_vs_W0": 0.9818053982647,
+   "face1_vs_F0": 1.0391964469914639,
+   "box2_vs_B0": 1.0415159326949073,
+   "roof_vs_R0": 0.5712349539880641
+  },
+  {
+   "id": "B_P_RNE_001",
+   "box1_vs_W0": 1.0073106188486707,
+   "face1_vs_F0": 1.022292821791678,
+   "box2_vs_B0": 0.9973787232163139,
+   "roof_vs_R0": 0.5754865018094965
+  },
+  {
+   "id": "B_P_RNE_002",
+   "box1_vs_W0": 0.9654500605288608,
+   "face1_vs_F0": 1.0449193748396852,
+   "box2_vs_B0": 0.9886159583457381,
+   "roof_vs_R0": 0.5643153169234619
+  },
+  {
+   "id": "B_P_RNE_007",
+   "box1_vs_W0": 0.9379055724884666,
+   "face1_vs_F0": 0.7007827995227309,
+   "box2_vs_B0": 1.0227978057203138,
+   "roof_vs_R0": 0.5688272094923398
+  },
+  {
+   "id": "B_P_RNE_010",
+   "box1_vs_W0": 1.0125011941805668,
+   "face1_vs_F0": 0.8894262451876066,
+   "box2_vs_B0": 0.9769570603821804,
+   "roof_vs_R0": 0.5635307225067134
+  },
+  {
+   "id": "B_P_RNE_012",
+   "box1_vs_W0": 1.021158903116476,
+   "face1_vs_F0": 0.948282184511824,
+   "box2_vs_B0": 0.9999201283614476,
+   "roof_vs_R0": 0.5784454822708611
+  },
+  {
+   "id": "B_P_RSW_007",
+   "box1_vs_W0": 0.9739346841201366,
+   "face1_vs_F0": 0.883139332436697,
+   "box2_vs_B0": 1.0532154032379084,
+   "roof_vs_R0": 0.5893097110545764
+  },
+  {
+   "id": "B_P_RSW_010",
+   "box1_vs_W0": 0.9633224116163616,
+   "face1_vs_F0": 1.0365951411313434,
+   "box2_vs_B0": 0.9943917557085582,
+   "roof_vs_R0": 0.5674013365835054
+  },
+  {
+   "id": "B_P_RSW_017",
+   "box1_vs_W0": 0.9512975015582985,
+   "face1_vs_F0": 0.8697817495156137,
+   "box2_vs_B0": 0.9863104333042131,
+   "roof_vs_R0": 0.5586322905642161
+  },
+  {
+   "id": "B_P_RSW_022",
+   "box1_vs_W0": 0.9645536156179937,
+   "face1_vs_F0": 1.113048859123449,
+   "box2_vs_B0": 0.9991816215385946,
+   "roof_vs_R0": 0.5670529976345029
+  },
+  {
+   "id": "B_P_RSW_023",
+   "box1_vs_W0": 0.9986073397286959,
+   "face1_vs_F0": 0.928213135038041,
+   "box2_vs_B0": 0.9971812688645859,
+   "roof_vs_R0": 0.5747619500809766
+  },
+  {
+   "id": "B_P_RSW_027",
+   "box1_vs_W0": 0.9503486871945528,
+   "face1_vs_F0": 1.0010324979826875,
+   "box2_vs_B0": 1.0086762961268074,
+   "roof_vs_R0": 0.554713129082841
+  },
+  {
+   "id": "B_P_RSW_029",
+   "box1_vs_W0": 0.9050256684162261,
+   "face1_vs_F0": 1.0589224578678986,
+   "box2_vs_B0": 1.038336763398254,
+   "roof_vs_R0": 0.5618078519417836
+  },
+  {
+   "id": "B_P_RSW_033",
+   "box1_vs_W0": 1.0203975166355521,
+   "face1_vs_F0": 1.0595126878482948,
+   "box2_vs_B0": 1.0197186681736852,
+   "roof_vs_R0": 0.574410165887072
+  },
+  {
+   "id": "B_P_RSW_034",
+   "box1_vs_W0": 0.9537075368561233,
+   "face1_vs_F0": 1.0524678882035194,
+   "box2_vs_B0": 1.0136031836864852,
+   "roof_vs_R0": 0.5798743065865871
+  },
+  {
+   "id": "B_P_RSW_036",
+   "box1_vs_W0": 1.013728883147252,
+   "face1_vs_F0": 1.037588546773805,
+   "box2_vs_B0": 1.0452755005954422,
+   "roof_vs_R0": 0.5551207690485297
+  },
+  {
+   "id": "B_P_RSW_045",
+   "box1_vs_W0": 0.986391884295591,
+   "face1_vs_F0": 0.9325643314650216,
+   "box2_vs_B0": 1.01029679673345,
+   "roof_vs_R0": 0.5794679044849268
+  },
+  {
+   "id": "B_P_RSW_046",
+   "box1_vs_W0": 0.9853834025869391,
+   "face1_vs_F0": 0.8996038261663072,
+   "box2_vs_B0": 1.018449743528076,
+   "roof_vs_R0": 0.5699682656855197
+  },
+  {
+   "id": "B_P_RSW_048",
+   "box1_vs_W0": 0.9869834746201197,
+   "face1_vs_F0": 1.0489214426373392,
+   "box2_vs_B0": 1.0413798650762351,
+   "roof_vs_R0": 0.5588621414224106
+  },
+  {
+   "id": "B_P_RSW_059",
+   "box1_vs_W0": 1.0092240014779448,
+   "face1_vs_F0": 0.9055379478467863,
+   "box2_vs_B0": 1.0256113062598324,
+   "roof_vs_R0": 0.5552341603300376
+  },
+  {
+   "id": "B_P_RSW_071",
+   "box1_vs_W0": 1.0232553392432953,
+   "face1_vs_F0": 1.01445729469513,
+   "box2_vs_B0": 1.0572249497225374,
+   "roof_vs_R0": 0.5668077630029336
+  },
+  {
+   "id": "B_P_RSW_072",
+   "box1_vs_W0": 0.9391692646055007,
+   "face1_vs_F0": 0.8262993257880618,
+   "box2_vs_B0": 1.0580304295808058,
+   "roof_vs_R0": 0.5752534872170296
+  },
+  {
+   "id": "B_P_RSW_073",
+   "box1_vs_W0": 1.0070370542024092,
+   "face1_vs_F0": 0.9315340343267053,
+   "box2_vs_B0": 1.0166165681604629,
+   "roof_vs_R0": 0.5854206177780223
+  },
+  {
+   "id": "B_P_RSW_074",
+   "box1_vs_W0": 0.9308611547951022,
+   "face1_vs_F0": 0.9137076580394401,
+   "box2_vs_B0": 1.0385696125401847,
+   "roof_vs_R0": 0.5555632396624901
+  },
+  {
+   "id": "B_P_RSW_075",
+   "box1_vs_W0": 0.9303948134050849,
+   "face1_vs_F0": 0.9644319446050766,
+   "box2_vs_B0": 1.027507328018819,
+   "roof_vs_R0": 0.5738304507940001
+  },
+  {
+   "id": "B_P_RSW_076",
+   "box1_vs_W0": 0.9285100087898601,
+   "face1_vs_F0": 0.8351091689463779,
+   "box2_vs_B0": 1.0171450031142384,
+   "roof_vs_R0": 0.5796499377279246
+  },
+  {
+   "id": "B_P_RSW_077",
+   "box1_vs_W0": 1.0003961235315053,
+   "face1_vs_F0": 0.9649127891906762,
+   "box2_vs_B0": 1.0504648171871491,
+   "roof_vs_R0": 0.5631730009693614
+  }
+ ]
+}

@@ -106,6 +106,11 @@ func _run() -> void:
 	root.add_child(v)
 	for i in 10:
 		await process_frame
+	# P13 W8：LodCalBatch1P13 は W7 の K 版の上から LOD1／LOD2 を差し替える。W7 gate は W7 の状態（K 版・屋根は覆寫なし）だけを見るので W8 を閉じてから検査する
+	# （W8 の LOD 材質は tools/p13/w8/verify_w8_lod.gd が独立に検査し、開閉で W7 の状態へ完全還原されることもそちらで確かめる）
+	var w8cal := v.get_node_or_null("LodCalBatch1P13")
+	if w8cal != null:
+		w8cal.set("enabled", false)
 	_load_data()
 	_collect_buildings()
 	_a_mount()

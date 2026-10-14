@@ -1129,6 +1129,8 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/earth_bank_tone_p13.scn" id="p13w7_earthbank"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/farm_junction_fix_p13.scn" id="p13w7_farmjunction"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/albedo_batch1_p13.scn" id="p13w7_batch1"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/lod_guard_p13.scn" id="p13w8_lodguard"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/lod_cal_batch1_p13.scn" id="p13w8_lodcal"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -144263,3 +144265,7 @@ script = ExtResource("p10r3e_act")
 [node name="FarmJunctionFixP13" parent="." instance=ExtResource("p13w7_farmjunction")]
 
 [node name="AlbedoBatch1P13" parent="." instance=ExtResource("p13w7_batch1")]
+
+[node name="LodGuardP13" parent="." instance=ExtResource("p13w8_lodguard")]
+
+[node name="LodCalBatch1P13" parent="." instance=ExtResource("p13w8_lodcal")]

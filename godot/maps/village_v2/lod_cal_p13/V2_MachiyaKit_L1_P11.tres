@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://maps/village_v2/lod_cal_p13/kit_cal_lod.gdshader" id="1_lod"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/machiya_kit/machiya_kit_atlas.png" id="2_atl"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/machiya_kit/machiya_kit_emit.png" id="3_emi"]
+
+[resource]
+resource_name = "V2_MachiyaKit_L1_P11"
+render_priority = 0
+shader = ExtResource("1_lod")
+shader_parameter/albedo_tex = ExtResource("2_atl")
+shader_parameter/emit_tex = ExtResource("3_emi")
+shader_parameter/k_dark = 0.75
+shader_parameter/k_mid = 0.42
+shader_parameter/k_light = 0.7
+shader_parameter/band_dark = Vector2(0.26, 0.34)
+shader_parameter/band_light = Vector2(0.55, 0.7)
+shader_parameter/roughness_v = 0.9
+shader_parameter/emission_energy = 0.4
+shader_parameter/box_mul = Vector3(0.5548, 0.4759, 0.3900)
+shader_parameter/face_mul = Vector3(1.2317, 1.1431, 0.9437)

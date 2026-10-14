@@ -61,7 +61,7 @@ func _run() -> void:
 		if not (b in reg["pilot_buildings"]):
 			non_target = b
 			break
-	var cases := ["N1 登記外の override（albedo 0.9）", "N2 登記変体を Pilot 外の建物に", "N3 変体の粗さを変える", "N4 飽和 0.30", "N5 登記 sha 改竄", "N6 明度が帯外（0.95）"]
+	var cases := ["N1 登記外の override（albedo 0.9）", "N2 登記変体を Pilot 外の建物に", "N3 変体の粗さを変える", "N4 飽和 0.30", "N5 登記 sha 改竄", "N6 明度が帯外（0.95）", "N7 W8 LOD 材質が封存に凍結されていない"]
 	for ci in cases.size():
 		var r2: Dictionary = reg.duplicate(true)
 		var m2 := mats.duplicate()
@@ -87,6 +87,8 @@ func _run() -> void:
 				m2[vid2] = y
 			4:
 				r2["variants"][3]["sha256"] = "0".repeat(64)
+			6:
+				_w8_off = true   # P13 W8：LOD 材質の登記（封存 frozen）が無い状態 → W8 の override は未登記として K5 が失敗するはず
 			5:
 				var vid3 := "V2_Plaster_K_B2"
 				var z := (m2[vid3] as StandardMaterial3D).duplicate() as StandardMaterial3D
@@ -96,6 +98,7 @@ func _run() -> void:
 		quiet = true
 		_checks(r2, m2, o2)
 		quiet = false
+		_w8_off = false
 		var tripped := fails > f0
 		fails = f0
 		print("[KITM]   %s：%s" % [cases[ci], "PASS（gate 正確失敗）" if tripped else "FAIL（gate 沒抓到）"])
@@ -225,6 +228,8 @@ func _checks(reg: Dictionary, mats: Dictionary, ov: Dictionary) -> void:
 	var reg_paths := {}
 	for e in vs:
 		reg_paths[String(e["file"])] = true
+	for wf: String in _w8_lod_files():
+		reg_paths[wf] = true   # P13 W8 TASK B：封存で凍結された LOD 材質（適用先は下の w7 名簿の建物だけ）
 	var pilots: Array = reg.get("pilot_buildings", [])
 	var w7 := _w7_batch_paths()
 	var bad5 := []
@@ -270,6 +275,39 @@ func _checks(reg: Dictionary, mats: Dictionary, ov: Dictionary) -> void:
 		if DirAccess.dir_exists_absolute(old_dir):
 			bad7.append(old_dir + " が残っている")
 	_ok(bad7.is_empty() and need.size() == 20, "K7 置き場所：登記表・shader・変体材質 %d 檔すべて maps/village_v2/kit_cal_p10/（village_v2 許可前綴）、旧 Pilot 目錄なし%s" % [need.size(), "" if bad7.is_empty() else " ✗ " + str(bad7.slice(0, 3))])
+
+
+## P13 W8 TASK B（使用者 2026-10-14・R6a limited reseal）：LOD1／LOD2 の atlas 材質（按調色盤）。登記表・shader・各変体の sha256 が封存 frozen の値と一致するものだけ合法
+var _w8_off := false   # 永久反向 N7 用（W8 の登記が封存に無い状態を作る）
+
+
+func _w8_lod_files() -> Array:
+	var out := []
+	if _w8_off:
+		return out
+	var regp := "res://maps/village_v2/lod_cal_p13/lod_material_variants.json"
+	if not FileAccess.file_exists(regp) or not FileAccess.file_exists(KM.SEAL):
+		return out
+	var sj: Variant = JSON.parse_string(FileAccess.get_file_as_string(KM.SEAL))
+	if not (sj is Dictionary) or String((sj as Dictionary).get("status", "")) != "ART_APPROVED":
+		return out
+	var frozen: Dictionary = (sj as Dictionary).get("frozen", {})
+	var rel := func(p: String) -> String: return "godot/" + p.trim_prefix("res://")
+	if String(frozen.get(rel.call(regp), "")) != FileAccess.get_sha256(regp):
+		return out
+	var reg: Variant = JSON.parse_string(FileAccess.get_file_as_string(regp))
+	if not (reg is Dictionary):
+		return out
+	var shf := String(((reg as Dictionary).get("shader", {}) as Dictionary).get("file", ""))
+	if shf == "" or not FileAccess.file_exists(shf) or FileAccess.get_sha256(shf) != String(reg["shader"]["sha256"]) or String(frozen.get(rel.call(shf), "")) != FileAccess.get_sha256(shf):
+		return out
+	for e: Dictionary in (reg as Dictionary).get("variants", []):
+		var f := String(e["file"])
+		if FileAccess.file_exists(f):
+			var sh := FileAccess.get_sha256(f)
+			if sh == String(e["sha256"]) and String(frozen.get(rel.call(f), "")) == sh:
+				out.append(f)
+	return out
 
 
 ## P13 W7 TASK 5（使用者 2026-10-14・R6a limited reseal）：第一批 50 棟の名簿（data/village_v2_p13w7_batch1.json）。ファイルの sha256 が封存 frozen の値と

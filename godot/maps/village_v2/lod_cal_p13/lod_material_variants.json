@@ -1,0 +1,412 @@
+{
+ "phase": "P13 W8 TASK B — LOD1／LOD2 町家 atlas 材質（按建築調色盤）",
+ "approved_by": "user（P13 WAVE 8 TASK B 授權：少量按建築調色盤分類的 LOD 材質・2026-10-14）",
+ "shader": {
+  "file": "res://maps/village_v2/lod_cal_p13/kit_cal_lod.gdshader",
+  "sha256": "ed4344f13c776995ebed7560cef911f8ad003fd1f0b33bdff15bf574b8ab89ba"
+ },
+ "limits": {
+  "mul": [
+   0.15,
+   3.0
+  ],
+  "roof_k": [
+   0.021195000000000002,
+   0.42390000000000005
+  ]
+ },
+ "rule": "V2_MachiyaKit（LOD1／LOD2 の atlas 表面）の surface override だけ・第一批 50 棟（data/village_v2_p13w7_batch1.json）の LOD1／LOD2 だけ・LOD0 は不変・幾何不変",
+ "variants": [
+  {
+   "id": "V2_MachiyaKit_L1_P00",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P00.tres",
+   "sha256": "817750eefac9f4a6db39e9718550ddbc7f6cf8bf4ecf62ba19111ef83f008778",
+   "params": {
+    "box_mul": [
+     0.6246,
+     0.5201,
+     0.4132
+    ],
+    "face_mul": [
+     1.6143,
+     1.4081,
+     1.1515
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P01",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P01.tres",
+   "sha256": "40d7409779bdd4b3aa6f63623aeb3b70b3c4312fee4c740b899e31efa8edacf0",
+   "params": {
+    "box_mul": [
+     0.4664,
+     0.3604,
+     0.2472
+    ],
+    "face_mul": [
+     2.61,
+     2.2354,
+     1.5943
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P02",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P02.tres",
+   "sha256": "3efaf3f10064df02c7af4e375c307e52874b964eb9c0a6e2589f31e6bb79577f",
+   "params": {
+    "box_mul": [
+     0.6261,
+     0.4931,
+     0.3543
+    ],
+    "face_mul": [
+     0.7991,
+     0.6786,
+     0.528
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P03",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P03.tres",
+   "sha256": "6935b6978cfaeba4a08f3525d95f8aa610b20bbb631fbc610cbfc576165a8d53",
+   "params": {
+    "box_mul": [
+     0.5353,
+     0.3993,
+     0.2855
+    ],
+    "face_mul": [
+     2.2065,
+     1.2751,
+     0.7349
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P04",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P04.tres",
+   "sha256": "6c9fbf5f309a4e87845671b8cdff8618cfaf83a5d89fc66ccdd32d062acbba23",
+   "params": {
+    "box_mul": [
+     0.543,
+     0.4495,
+     0.3398
+    ],
+    "face_mul": [
+     2.5918,
+     2.4154,
+     1.6221
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P05",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P05.tres",
+   "sha256": "d605fcb9afd5e7d7b9366e91fbeba92d456f9b0967fb4d6b1fbf62238be63289",
+   "params": {
+    "box_mul": [
+     0.4984,
+     0.4026,
+     0.3015
+    ],
+    "face_mul": [
+     2.0892,
+     1.8251,
+     1.3373
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P06",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P06.tres",
+   "sha256": "e5639fe0464491daf70607ac822f65cb318086ac1f29a466ace532f699d1f26d",
+   "params": {
+    "box_mul": [
+     0.6253,
+     0.5385,
+     0.4453
+    ],
+    "face_mul": [
+     0.8848,
+     0.7577,
+     0.6085
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P07",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P07.tres",
+   "sha256": "a10215ab77c256613312421d38515824684ec0fd2cd038e27699b34571c1f495",
+   "params": {
+    "box_mul": [
+     0.6608,
+     0.5146,
+     0.3694
+    ],
+    "face_mul": [
+     1.3312,
+     1.0826,
+     0.8027
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P08",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P08.tres",
+   "sha256": "924f3694c601cc3d842c0dbff222de784dec83d02d18388a662c9bec3ec1a12b",
+   "params": {
+    "box_mul": [
+     0.5153,
+     0.4072,
+     0.2896
+    ],
+    "face_mul": [
+     2.6685,
+     2.3814,
+     1.5129
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P09",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P09.tres",
+   "sha256": "ea7ae6e1c3e9b2316338a14248c49b18ffb35e33b3699c01a48ec9c7008ec641",
+   "params": {
+    "box_mul": [
+     0.4974,
+     0.4119,
+     0.3191
+    ],
+    "face_mul": [
+     2.6176,
+     2.5886,
+     2.079
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P10",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P10.tres",
+   "sha256": "cd4647221740dedd412fc18cdfc392708416bef3c449205d2bc7b468e936a4d9",
+   "params": {
+    "box_mul": [
+     0.4717,
+     0.3522,
+     0.2675
+    ],
+    "face_mul": [
+     2.4874,
+     1.368,
+     0.7647
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P11",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P11.tres",
+   "sha256": "7f7a6f6edc3f54f0c09c57427cda7c9eba4b8aa5e65dd01eabfdc6720d184876",
+   "params": {
+    "box_mul": [
+     0.5548,
+     0.4759,
+     0.39
+    ],
+    "face_mul": [
+     1.2317,
+     1.1431,
+     0.9437
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L1_P12",
+   "kind": "l1",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L1_P12.tres",
+   "sha256": "ef084442de0cdffcdd15c0b4cb87a7b3d5f4be42a11189698b679ffbfe6eed5a",
+   "params": {
+    "box_mul": [
+     0.4954,
+     0.4075,
+     0.3199
+    ],
+    "face_mul": [
+     1.8057,
+     1.3612,
+     0.9318
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P00",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P00.tres",
+   "sha256": "bafdef7025eefa724744c6931e6df592d63f8fe3d396566b938c51e4329e87aa",
+   "params": {
+    "box_mul": [
+     0.578,
+     0.4823,
+     0.3743
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P01",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P01.tres",
+   "sha256": "62ba9fc444f670dc13c03ae03ff77840d009db99c37e7c5b1db0ebf219277cfd",
+   "params": {
+    "box_mul": [
+     0.4245,
+     0.3292,
+     0.2443
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P02",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P02.tres",
+   "sha256": "cb10ad4fdd0baca85c4a1cc772c51898f8950655efa8fdbdc99fac34134ae135",
+   "params": {
+    "box_mul": [
+     0.4581,
+     0.3805,
+     0.2927
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P03",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P03.tres",
+   "sha256": "1fe75187fe93b23d366dca6e213b43db849619aed63eb75b2ca8fed4326cb9c7",
+   "params": {
+    "box_mul": [
+     0.6461,
+     0.5254,
+     0.3918
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P04",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P04.tres",
+   "sha256": "2b230148f21a7dbe13d5c74786c884edafb375860c2b026566ceca2b1224a521",
+   "params": {
+    "box_mul": [
+     0.4714,
+     0.3643,
+     0.2539
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_L2_P05",
+   "kind": "l2",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_L2_P05.tres",
+   "sha256": "3e02dafd2d5db6e0589d63d1941a6b9f7acc2726d60786da7670c04d62f1d871",
+   "params": {
+    "box_mul": [
+     0.5062,
+     0.4184,
+     0.3119
+    ],
+    "face_mul": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_LR_00",
+   "kind": "roof",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_00.tres",
+   "sha256": "6032e79e2e35dbc6a88e8f572712be3d472f5baf079d76181ee9c54eae4d5a59",
+   "params": {
+    "roof_mode": true,
+    "roof_k": [
+     0.04706,
+     0.04852,
+     0.03954
+    ]
+   }
+  },
+  {
+   "id": "V2_MachiyaKit_LR_01",
+   "kind": "roof",
+   "base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+   "file": "res://maps/village_v2/lod_cal_p13/V2_MachiyaKit_LR_01.tres",
+   "sha256": "11a9bedb45ddd45908148d59972dfa178a1965e1d0bb26f20c7f4b38feddb3a5",
+   "params": {
+    "roof_mode": true,
+    "roof_k": [
+     0.04609,
+     0.05496,
+     0.0615
+    ]
+   }
+  }
+ ]
+}

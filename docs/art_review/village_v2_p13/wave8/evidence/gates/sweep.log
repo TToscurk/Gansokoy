@@ -1,0 +1,5 @@
+PASS LOD 掃引 OFF (exit 0, 38s)
+PASS LOD 掃引 ON (exit 0, 60s)
+PASS 同じ部位の 2 級同時表示 0（probe 47 距離・margin 0）
+PASS LOD 掃引 判定（ON gap 0・OFF で検出）
+DONE sweep

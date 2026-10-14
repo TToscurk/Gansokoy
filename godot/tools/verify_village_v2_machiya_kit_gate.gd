@@ -248,6 +248,18 @@ func _apply_neg() -> void:
 						mi.set_surface_override_material(si, vm)
 						done = true
 			print("[KIT] neg %s：%s に %s（適用 %s）" % [neg, tid, var_path.get_file(), done])
+		"material_w8_badsha", "material_w8_unfrozen":
+			# P13 W8：LOD 材質の登記変体が（a）sha 不一致 または（b）封存に凍結されていない状態を記憶体内で作る（ファイルは触らない）
+			_cal_load()
+			var hit_n := 0
+			for vp: String in cal.keys():
+				if vp.begins_with("res://maps/village_v2/lod_cal_p13/"):
+					hit_n += 1
+					if neg == "material_w8_badsha":
+						cal[vp]["sha_ok"] = false
+						break
+					cal.erase(vp)
+			print("[KIT] neg %s：W8 変体 %d 件を不合法にした" % [neg, hit_n])
 		"collision":
 			(bodies[b0["id"]].get_node("Shape") as CollisionShape3D).disabled = true
 		"lod":
@@ -601,6 +613,10 @@ func _cal_load() -> void:
 		cal[f] = {"base": String(e["base"]), "sha_ok": reg_ok and sh == String(e["sha256"]) and String(frozen.get(rel.call(f), "")) == sh}
 	for bp in reg.get("pilot_buildings", []):
 		cal_pilots[String(bp).get_file()] = true
+	# P13 W8 TASK B（使用者 2026-10-14・R6a limited reseal）：LOD1／LOD2 の atlas 材質（按調色盤）。登記表（lod_material_variants.json）・shader・各変体の sha256 が
+	# 封存 frozen の値と一致するものだけ合法（base＝V2_MachiyaKit.tres）。適用先は上の W7 名簿の建物だけ（下の cal_pilots 検査がそのまま効く）。
+	for wf: String in _w8_lod_files(frozen):
+		cal[wf] = {"base": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres", "sha_ok": true}
 	# P13 W7 TASK 5（使用者 2026-10-14・R6a limited reseal）：第一批 50 棟（data/village_v2_p13w7_batch1.json）。名簿ファイルの sha256 が封存 frozen の値と
 	# 一致するときだけ、その建物にも登記変体の override を許可する（変体そのものは R6a の 18 変体だけ・sha は上の登記検証のまま）。
 	var w7_rel := "godot/data/village_v2_p13w7_batch1.json"
@@ -609,6 +625,30 @@ func _cal_load() -> void:
 		if mj is Dictionary:
 			for wb: Dictionary in (mj as Dictionary).get("buildings", []):
 				cal_pilots[String(wb["id"])] = true
+
+
+## P13 W8 TASK B：封存で凍結された LOD 材質の登記変体ファイル一覧（検証に通ったものだけ）
+func _w8_lod_files(frozen: Dictionary) -> Array:
+	var out := []
+	var regp := "res://maps/village_v2/lod_cal_p13/lod_material_variants.json"
+	if not FileAccess.file_exists(regp):
+		return out
+	var rel := func(p: String) -> String: return "godot/" + p.trim_prefix("res://")
+	if String(frozen.get(rel.call(regp), "")) != FileAccess.get_sha256(regp):
+		return out
+	var reg: Variant = JSON.parse_string(FileAccess.get_file_as_string(regp))
+	if not (reg is Dictionary):
+		return out
+	var shf := String(((reg as Dictionary).get("shader", {}) as Dictionary).get("file", ""))
+	if shf == "" or not FileAccess.file_exists(shf) or FileAccess.get_sha256(shf) != String(reg["shader"]["sha256"]) or String(frozen.get(rel.call(shf), "")) != FileAccess.get_sha256(shf):
+		return out
+	for e: Dictionary in (reg as Dictionary).get("variants", []):
+		var f := String(e["file"])
+		if FileAccess.file_exists(f):
+			var sh := FileAccess.get_sha256(f)
+			if sh == String(e["sha256"]) and String(frozen.get(rel.call(f), "")) == sh:
+				out.append(f)
+	return out
 
 
 ## surface override の合法性："" ＝合法（登記変体）、それ以外＝理由
