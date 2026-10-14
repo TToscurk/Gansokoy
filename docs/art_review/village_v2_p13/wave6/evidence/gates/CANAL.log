@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[CANAL] PASS C1 N0 土渠の重み非一様（異なる重み 295・旧一様重み 0・草 29 % / 1050 頂点）
+[CANAL] PASS C3 N0 水面は泥水材質（支線水面メッシュ 1：tint (0.22, 0.2, 0.13, 1.0) clarity 0.42 rough 0.34）
+[CANAL] PASS C1 T0 土渠の重み非一様（異なる重み 1053・旧一様重み 0・草 25 % / 2204 頂点）
+[CANAL] PASS C3 T0 水面は泥水材質（支線水面メッシュ 1：tint (0.22, 0.2, 0.13, 1.0) clarity 0.42 rough 0.34）
+[CANAL] PASS C2 外縁（|u|=1）は全 s で草（重み 0）
+[CANAL] PASS C4a 木槽の台：槽底の下面と台の頂の隙間 4–20 mm（点 41、不良 0、最大隙間 0.014 m）
+[CANAL] PASS C4b 槽内（±0.12）に土が槽底の上面より出ない（不良 0、最大の出 -0.045 m）
+[CANAL] PASS C4c 板の外面で台が側板の下端以上（点 82、不良 0）
+[CANAL] PASS C5 木槽の口の水幅が槽内に絞られる（口から 0.2 m 以内の水面頂点 95、最大の横ずれ 0.174 m ≤ 0.22）
+[CANAL] 結果：0 項失敗

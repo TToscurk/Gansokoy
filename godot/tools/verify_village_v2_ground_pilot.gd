@@ -255,6 +255,30 @@ func _build() -> void:
 	print("[GRD] build {\"roads\":%d,\"output_sha256\":\"%s\"}" % [LIB.ROADS.size(), FileAccess.get_sha256(LIB.OUTPUT)])
 
 
+## 非 Pilot 道路の材質不変検査。戻り値＝[検査数, 不一致の配列]。w6_roads（RoadEdgeBlendP13 引き受け）は pilot shader であることだけ要求。
+func _non_pilot_bad(v: Node3D, fresh: Node3D, targets: PackedStringArray, w6_roads: PackedStringArray, sh: Shader) -> Array:
+	var others := 0
+	var other_bad := []
+	for mi in v.get_node("Roads").find_children("*", "MeshInstance3D", true, false):
+		var p := String(v.get_path_to(mi))
+		if p in targets or not (p.begins_with("Roads/MainStreet") or p.begins_with("Roads/SecondaryRoads") or p.begins_with("Roads/Alleys") or p.begins_with("Roads/FarmPaths")):
+			continue
+		# 參道 ribbon 由 R6b ShrineApproachP10 接管（石段挖洞），不屬本 Pilot 的「不變」檢查
+		var sap := v.get_node_or_null("ShrineApproachP10")
+		if sap and String(sap.get("ribbon_path")) == p:
+			continue
+		if p in w6_roads:
+			var mw := (mi as MeshInstance3D).material_override as ShaderMaterial
+			if mw == null or mw.shader != sh:
+				other_bad.append(p + "（W6 引き受けだが pilot shader でない）")
+			continue
+		var f := fresh.get_node_or_null(NodePath(p)) as MeshInstance3D
+		others += 1
+		if f == null or (mi as MeshInstance3D).material_override != f.material_override:
+			other_bad.append(p)
+	return [others, other_bad]
+
+
 func _scene(v: Node3D) -> void:
 	var nodes := v.find_children(LIB.NODE_NAME, "", false, false)
 	_ok(nodes.size() == 1, "root/%s 掛載 1 個（實得 %d）" % [LIB.NODE_NAME, nodes.size()])
@@ -295,21 +319,22 @@ func _scene(v: Node3D) -> void:
 		ok_cnt += 1
 	_ok(bad.is_empty() and ok_cnt == targets.size(), "Pilot 對象 %d 個（地形 %d＋道路 %d）全部換 pilot shader、原參數逐一保留%s" % [ok_cnt, (n.get("terrain_paths") as PackedStringArray).size(), (n.get("road_paths") as PackedStringArray).size(), "" if bad.is_empty() else " ✗ " + str(bad)])
 	# 非 Pilot 道路不變
-	var others := 0
-	var other_bad := []
-	for mi in v.get_node("Roads").find_children("*", "MeshInstance3D", true, false):
-		var p := String(v.get_path_to(mi))
-		if p in targets or not (p.begins_with("Roads/MainStreet") or p.begins_with("Roads/SecondaryRoads") or p.begins_with("Roads/Alleys") or p.begins_with("Roads/FarmPaths")):
-			continue
-		# 參道 ribbon 由 R6b ShrineApproachP10 接管（石段挖洞），不屬本 Pilot 的「不變」檢查
-		var sap := v.get_node_or_null("ShrineApproachP10")
-		if sap and String(sap.get("ribbon_path")) == p:
-			continue
-		var f := fresh.get_node_or_null(NodePath(p)) as MeshInstance3D
-		others += 1
-		if f == null or (mi as MeshInstance3D).material_override != f.material_override:
-			other_bad.append(p)
-	_ok(other_bad.is_empty(), "非 Pilot 道路 %d 條材質不變%s" % [others, "" if other_bad.is_empty() else " ✗ " + str(other_bad)])
+	# P13 W6 limited verifier correction（範圍＝RoadEdgeBlendP13.road_paths 列的道路、僅此）：這些道路由後續 overlay 套同一個
+	# pilot shader（外緣侵蝕），所以不再要求「材質不變」，改要求「已換成本 Pilot 的 shader」；其餘道路仍逐一要求材質不變（反向見下）。
+	var w6n := v.get_node_or_null("RoadEdgeBlendP13")
+	var w6_roads := PackedStringArray(w6n.get("road_paths")) if w6n != null else PackedStringArray()
+	var res := _non_pilot_bad(v, fresh, targets, w6_roads, sh)
+	var others: int = res[0]
+	var other_bad: Array = res[1]
+	_ok(other_bad.is_empty(), "非 Pilot 道路 %d 條材質不變（另 %d 條由 RoadEdgeBlendP13 套同一 pilot shader）%s" % [others, w6_roads.size(), "" if other_bad.is_empty() else " ✗ " + str(other_bad)])
+	# 反向（W6）：W6 引き受けでない道路〔MainStreet〕の材質を差し替えると、この検査が必ず 1 件検出する
+	var mst := v.get_node_or_null("Roads/MainStreet/MainStreet") as MeshInstance3D
+	if mst != null:
+		var keep := mst.material_override
+		mst.material_override = ShaderMaterial.new()
+		var neg: Array = _non_pilot_bad(v, fresh, targets, w6_roads, sh)[1]
+		mst.material_override = keep
+		_ok(neg.size() == 1, "反向：W6 引き受け外の道路（MainStreet）の材質を差し替えると非 Pilot 検査が 1 件検出（%d）" % neg.size())
 	# 開關還原
 	n.set("enabled", false)
 	var left := 0

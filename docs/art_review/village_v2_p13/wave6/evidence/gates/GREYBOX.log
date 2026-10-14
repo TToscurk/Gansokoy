@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[GB] PASS greybox.json 版本 v2-layout-0.3 ＝ layout v2-layout-0.3
+[GB] PASS greybox.json 與目前 layout＋parcels 重算一致（199 棟 vs 重算 199 棟，不一致 0）
+[GB] PASS 場景建築節點 199 個 ＝ 檔案 199 棟（缺 0、位置不符 0）
+[GB] PASS 正式町家 187 塊，每塊正好 1 棟主屋：違規 0
+[GB] PASS aux 38 塊不強制建築（use { "後院": 12, "倉／小屋": 9, "空地": 9, "庭院": 8 }）；只有「倉／小屋」可放 1 棟，實放 9 棟；庭院／後院／空地有建築 0 塊
+[GB] PASS 建築 footprint 完整在自己的地塊內（容差 0.02 m）：超出 0
+[GB] PASS 建築牆體離最近路緣最小 0.49 m（B_P_MXC_021×HillFootStreet；下限 0）
+[GB] PASS 屋簷／庇水平投影離最近路緣最小 0.04 m（B_P_MXC_021×HillFootStreet；下限 0，不伸進路幅）
+[GB] PASS 建築之間重疊 0 對
+[GB] PASS 町家量體：面寬 ≥ 4.0（實測 ≥ 4.10）、縱深 7.28–10.92（實測 9.10–10.92）、簷高 2.9–5.4（實測 2.90–5.40）、屋脊 ≤ 9.0（實測 ≤ 7.86）m；類型 { "nikai": 30, "zushi": 61, "hiraya": 96 }：違規 0
+[GB] PASS 接地：台基頂＝footprint 最高地面＋plinth、基礎底低於最低地面、埋深 ≤ 0.35＋地塊高低差（實測最大 0.30 m）：違規 0
+[GB] PASS 入口：正面朝自己的道路、入口前地面到台基頂段差 0–0.75 m（實測最大 0.41 m @ B_P_RSW_004）：違規 0
+[GB] PASS LANDMARK_SUZUNAAN（zushi）灰盒 9.10×8.19 m、簷 3.9／脊 5.74 m：壓主街路幅 0.00 m²（P0 box 0.27 m²）、正面離路緣 2.00 m、正面與主街夾角 0.0°、沿街平移 0.0 m、P0 線框 已取代
+[GB] PASS LANDMARK_GEIDONTEI（zushi）灰盒 10.92×9.10 m、簷 3.9／脊 5.95 m：壓主街路幅 0.00 m²（P0 box 0.52 m²）、正面離路緣 2.00 m、正面與主街夾角 0.0°、沿街平移 0.0 m、P0 線框 已取代
+[GB] PASS LANDMARK_KIRISAME（zushi）灰盒 8.19×7.28 m、簷 3.9／脊 5.54 m：壓主街路幅 0.00 m²（P0 box 0.00 m²）、正面離路緣 1.41 m、正面與主街夾角 0.0°、沿街平移 0.0 m、P0 線框 已取代
+[GB] INFO 主街 D/H（兩側建築正面間距 ÷ 平均簷高，兩側都有建築的測站 26 個）：中位 1.76、範圍 1.52–2.85（參考：概念圖 1.0–1.5、V1 slice 2–3）
+[GB] INFO 全建築視線 眼高 1.7 m MainStreet（62 站）望龍神像：看得到 0 站 []；主要擋物 B_P_MKT_010×14、B_P_MKT_041×13、B_P_MKT_013×12、B_P_MKT_035×12
+[GB] INFO 全建築視線 眼高 1.7 m MainStreet（62 站）望山頂社殿：看得到 19 站 [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 88, 92, 96, 100, 232, 236, 240, 244]；主要擋物 B_P_MKT_021×9、B_P_MKT_022×9、B_P_MKT_024×8、B_P_MKT_025×8
+[GB] INFO 全建築視線 眼高 1.7 m MainStreet（62 站）望南大鳥居：看得到 26 站 (0…100 m)；主要擋物 B_P_MKT_005×27、B_P_MKT_004×26、B_P_MKT_009×14、B_P_MKT_011×8
+[GB] INFO 全建築視線 眼高 1.7 m HillFootStreet（44 站）望龍神像：看得到 29 站 (0…172 m)；主要擋物 B_P_MXC_020×6、B_P_MXC_023×6、B_P_MXC_018×5、B_P_MXC_021×5
+[GB] INFO 全建築視線 眼高 1.7 m RiverNorthPath（22 站）望龍神像：看得到 22 站 (0…84 m)；主要擋物 
+[GB] INFO 全建築視線 眼高 1.7 m DragonBridgeRoad（13 站）望龍神像：看得到 13 站 [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48]；主要擋物 
+[GB] 結果：0 項失敗

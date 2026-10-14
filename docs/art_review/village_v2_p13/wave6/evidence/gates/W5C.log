@@ -1,0 +1,38 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W5G] PASS W5C group exists in overlay
+[W5G] PASS plan = the 20 original r8 elements, s=89.85..99.50
+[W5G] PASS every tread keeps the original k-range and height; contiguous; violations 0 (collision contract)
+[W5G] PASS W5C saved meshes = recomputed same-seed generator
+[W5G] PASS W5C plant count = generator (1)
+[W5G] PASS W5C base stones grounded 45; violations 0; minimum embed 0.203 m
+[W5G] PASS W5C soil outside the stair grounded on frozen P1 (no sunk / floating patch)
+[W5G] PASS W5C stones keep clear of lantern feet
+[W5G] PASS every W5C triangle lies within s=88.65..100.70 m (taper allowance) and 4.5 m of the axis; outside 0
+[W5G] PASS no added collision bodies
+[W5G] PASS winding wrong 0 / 96705
+[W5G] PASS old r8 treads/curbs removed exactly once through s=99.50 (no double visible stair); remaining r8 tris 2
+[W5C-SURFACE] u=0.0 before n=193｜平均 -1.5 cm・p5 -9.0・p95 +4.9・最小 -12.1・最大 +6.2｜|d|>10 cm 0.5 %・>15 cm 0.0 % | after n=193｜平均 -0.8 cm・p5 -7.0・p95 +5.0・最小 -9.8・最大 +8.8｜|d|>10 cm 0.0 %・>15 cm 0.0 %
+[W5C-SURFACE] u=0.5 before n=193｜平均 -0.8 cm・p5 -7.7・p95 +5.2・最小 -9.8・最大 +11.2｜|d|>10 cm 0.5 %・>15 cm 0.0 % | after n=193｜平均 -0.2 cm・p5 -6.6・p95 +5.6・最小 -9.8・最大 +11.2｜|d|>10 cm 0.5 %・>15 cm 0.0 %
+[W5C-SURFACE] u=-0.5 before n=193｜平均 -1.4 cm・p5 -8.6・p95 +5.2・最小 -12.2・最大 +7.3｜|d|>10 cm 0.5 %・>15 cm 0.0 % | after n=193｜平均 -1.1 cm・p5 -7.3・p95 +5.1・最小 -12.2・最大 +8.5｜|d|>10 cm 0.5 %・>15 cm 0.0 %
+[W5C-SURFACE] u=0.85 before n=193｜平均 -0.3 cm・p5 -6.9・p95 +8.2・最小 -9.0・最大 +11.4｜|d|>10 cm 2.1 %・>15 cm 0.0 % | after n=193｜平均 -0.0 cm・p5 -6.2・p95 +8.4・最小 -7.6・最大 +11.4｜|d|>10 cm 2.1 %・>15 cm 0.0 %
+[W5C-SURFACE] u=-0.85 before n=193｜平均 -1.4 cm・p5 -8.6・p95 +5.3・最小 -12.2・最大 +6.6｜|d|>10 cm 0.5 %・>15 cm 0.0 % | after n=193｜平均 -1.2 cm・p5 -7.5・p95 +5.0・最小 -11.9・最大 +9.1｜|d|>10 cm 0.5 %・>15 cm 0.0 %
+[W5G] PASS visible stone vs actual ramp collision: no missing walk surface, no deterioration vs r8
+[W5G] PASS joins s=89.85 / interior / 99.50: no walk hole or >15 cm surface mismatch beyond what r8 already had; new bad 0
+[W5G] PASS actual under-cap geometry rays 164; visible holes 0
+[W5G] PASS negative: removed isolated backing has no ray hit
+[W5C-POKE] inside |lat|<=0.85: before max 0.116 m (15 cells) | after max 0.039 m (5 cells)
+[W5G] PASS terrain above tread top inside |lat|<=0.85 (riser feet excluded) <= 5 cm (r8 before 11.6 cm)
+[W5G] PASS saved suppress list = generator's intruder list ["4905_sasa_a", "6695_tsutsuji_a"] (sealed forest_p9.scn untouched)
+[W5G] PASS no visible plant sits on the walking width of s=89.85..99.50 ([])
+[W5C] far-instance check skipped in headless (MultiMesh data unreadable); run without --headless for it
+[W5G] PASS negative: with the overlay disabled the plants are visible again and the check catches them ["4905_sasa_a", "6695_tsutsuji_a"]
+[W5G] PASS re-enabled overlay hides them again
+[W5G] PASS negative: a raised tread is caught by the plan-fidelity check
+[W5G] PASS negative: the r8 baseline (known terrain-through-tread) is flagged by the same poke metric (11.6 cm)
+[W5G] PASS negative: a plant placed on the stair is caught by the vegetation check
+[W5C] result failures 0

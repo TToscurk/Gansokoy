@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[WATER]   水面網格 3 個、三角面 8410
+[WATER] PASS MainRiver 水面邊外露：外緣 2216 取樣點中 0 點浮空（地形低於水面 > 0.01 m），最大 0.00 m @ (0, 0)
+[WATER] PASS MainRiver 露底：與河道連通、低於水位的 9030 點中 0 點沒有水面（最深 0.00 m @ (0, 0)）
+[WATER] PASS MainRiver 穿岸：水面在地面上、離濕區 > 2 m 的點 0（最大 0.00 m @ (0, 0)）
+[WATER] PASS MainRiver 負水深：170 站主槽最深點中 0 站 < 0.10 m（最淺 1.84 m @ (0, 0)）；主槽深 p10/p50/p90 1.89/2.34/3.35 m
+[WATER] PASS Canal 水面邊外露：外緣 2498 取樣點中 0 點浮空（地形低於水面 > 0.01 m），最大 0.00 m @ (0, 0)
+[WATER] PASS Canal 露底：與河道連通、低於水位的 2508 點中 0 點沒有水面（最深 0.00 m @ (0, 0)）
+[WATER] PASS Canal 穿岸：水面在地面上、離濕區 > 2 m 的點 0（最大 0.00 m @ (0, 0)）
+[WATER] PASS Canal 負水深：206 站主槽最深點中 0 站 < 0.10 m（最淺 0.79 m @ (0, 0)）；主槽深 p10/p50/p90 0.79/0.80/0.95 m
+[WATER] PASS WestStream 水面邊外露：外緣 2818 取樣點中 0 點浮空（地形低於水面 > 0.01 m），最大 0.00 m @ (0, 0)
+[WATER] PASS WestStream 露底：與河道連通、低於水位的 1830 點中 0 點沒有水面（最深 0.00 m @ (0, 0)）
+[WATER] PASS WestStream 穿岸：水面在地面上、離濕區 > 2 m 的點 0（最大 0.00 m @ (0, 0)）
+[WATER] PASS WestStream 負水深：233 站主槽最深點中 0 站 < 0.10 m（最淺 0.16 m @ (0, 0)）；主槽深 p10/p50/p90 0.20/0.52/0.74 m
+[WATER] PASS 主河主槽深度沿河變化 p90−p10 1.46 m（≥ 0.8；P1 為固定 2.40 m）
+[WATER] PASS 主河彎道（53 站）平均主槽深 − 直段（39 站）＝ 1.29 m（≥ 0.5）
+[WATER] PASS 主河彎道（54 站）外岸半寬處比內岸深 1.79 m（≥ 0.4）
+[WATER] PASS 西溪主槽深 p90−p10 0.53 m（≥ 0.4）
+[WATER] PASS 西溪淺灘（≤ 0.30 m）27%、潭（≥ 0.60 m）37%（各 ≥ 10%）
+[WATER] PASS 西溪濕寬 2.5–8.0 m（變化 ≥ 1.5）
+[WATER] PASS 水渠工程深度：主槽深 p10/p50/p90 0.79/0.80/0.95 m（最淺 ≥ 0.5）
+[WATER] PASS Bridge_01_HillFootStreet_Canal 橋面頂 1.68 − 水面 -1.13 ＝ 出水高 2.81 m（≥ 0.30）
+[WATER]   INFO Bridge_01_HillFootStreet_Canal 灰模箱底 1.08 − 水面 -1.13 ＝ 2.21 m
+[WATER] PASS Bridge_02_DragonBridgeRoad_River 橋面頂 1.11 − 水面 -0.80 ＝ 出水高 1.91 m（≥ 0.30）
+[WATER]   INFO Bridge_02_DragonBridgeRoad_River 灰模箱底 0.51 − 水面 -0.80 ＝ 1.31 m
+[WATER] PASS Bridge_03_CrossStreetMid_Canal 橋面頂 0.37 − 水面 -1.40 ＝ 出水高 1.77 m（≥ 0.30）
+[WATER]   INFO Bridge_03_CrossStreetMid_Canal 灰模箱底 -0.23 − 水面 -1.40 ＝ 1.17 m
+[WATER] PASS Bridge_04_CrossStreetSouth_Canal 橋面頂 0.47 − 水面 -1.52 ＝ 出水高 1.99 m（≥ 0.30）
+[WATER]   INFO Bridge_04_CrossStreetSouth_Canal 灰模箱底 -0.13 − 水面 -1.52 ＝ 1.39 m
+[WATER] PASS Bridge_05_WestLane_WestStream 橋面頂 1.01 − 水面 0.61 ＝ 出水高 0.40 m（≥ 0.30）
+[WATER]   INFO Bridge_05_WestLane_WestStream 灰模箱底 0.41 − 水面 0.61 ＝ -0.20 m（箱底入水：P4 灰模橋厚度問題）
+[WATER] 結果：0 項失敗

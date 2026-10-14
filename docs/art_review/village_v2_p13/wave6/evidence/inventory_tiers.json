@@ -1,0 +1,24 @@
+{
+ "tier_counts": {
+  "Market": {
+   "A_route_prominent(>=3000px in >=1 TPS shot)": 29
+  },
+  "MixedCommercial": {
+   "A_route_prominent(>=3000px in >=1 TPS shot)": 15,
+   "B_route_visible(>=500px)": 1
+  },
+  "ResidentialWest": {
+   "A_route_prominent(>=3000px in >=1 TPS shot)": 68,
+   "B_route_visible(>=500px)": 11,
+   "C_route_not_seen(<500px in 138 route shots)": 2
+  },
+  "ResidentialNE": {
+   "A_route_prominent(>=3000px in >=1 TPS shot)": 14,
+   "B_route_visible(>=500px)": 3,
+   "C_route_not_seen(<500px in 138 route shots)": 2
+  },
+  "SouthGate": {
+   "A_route_prominent(>=3000px in >=1 TPS shot)": 3
+  }
+ }
+}

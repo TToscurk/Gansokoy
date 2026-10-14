@@ -1,0 +1,13 @@
+{
+	"Vegetation/ShrineGroveP9/Ground": {
+		"d_min": 0.00594234466552734,
+		"d_p05": 0.00697827339172363,
+		"d_p50": 0.0159997940063477,
+		"samples": 284700,
+		"top_cells": [],
+		"tri": 28470,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	}
+}

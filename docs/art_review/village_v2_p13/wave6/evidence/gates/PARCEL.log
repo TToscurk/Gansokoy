@@ -1,0 +1,41 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[PARCEL] PASS 巷道 8 條，場景 Roads/Alleys/Lanes 有 8 個
+[PARCEL] PASS 巷道 NWLane（西北巷）寬 2.5 m、長 106 m、最大轉折 27°、縱坡 1.6%、離水 44.1 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 NWBranch（西北支巷）寬 2.0 m、長 54 m、最大轉折 30°、縱坡 0.2%、離水 42.8 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 WestBankLane（西溪巷）寬 2.5 m、長 132 m、最大轉折 16°、縱坡 1.2%、離水 10.3 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 MidLane（中巷）寬 2.5 m、長 81 m、最大轉折 38°、縱坡 0.7%、離水 28.7 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 SWLane（南巷）寬 2.5 m、長 87 m、最大轉折 81°、縱坡 1.7%、離水 26.0 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 NELane（東北巷）寬 2.5 m、長 76 m、最大轉折 30°、縱坡 3.6%、離水 11.1 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 NENorth（東北北巷）寬 2.0 m、長 42 m、最大轉折 24°、縱坡 0.6%、離水 28.6 m、路面貼地偏差 0.00 m
+[PARCEL] PASS 巷道 NESouth（東北南巷）寬 2.0 m、長 67 m、最大轉折 30°、縱坡 0.4%、離水 28.6 m、路面貼地偏差 0.00 m
+[PARCEL] PASS parcels.json 版本 v2-layout-0.3 ＝ layout v2-layout-0.3
+[PARCEL] PASS parcels.json 與目前 layout 重算一致（234 塊 vs 重算 234 塊，不一致 0）
+[PARCEL] PASS 場景地塊 Marker 234 個 ＝ 檔案 234 塊（缺 0）
+[PARCEL] PASS §11 欄位（Parcel ID／Ground Height／Footprint／Entrance Height／Road Height／Slope／Frontage／Clearance）缺 0 項
+[PARCEL] PASS 地塊互不重疊（各內縮 0.03 m 後，0 對）
+[PARCEL] PASS 地塊 225 塊（町家 187、附屬用地 38）不壓道路／巷道路幅（留 0.5 m）：0 違規
+[PARCEL] PASS 地塊在建成區平台內（外框內縮 0.5 m）：0 違規
+[PARCEL] PASS 地塊離水道（主河 6 m／渠、溪 3 m）：0 違規
+[PARCEL] PASS 地塊避開 keep_clear（水車、龍神像、大鳥居、參道鳥居、傳送點、任務錨點、橋頭，共 23 處）：0 違規
+[PARCEL] PASS 臨路面 5–9 m；正式町家縱深 12–25 m（實測 12.0–25.0 m）、附屬用地 8–12 m（實測 8.0–12.0 m）：0 違規
+[PARCEL] PASS 無淺町家（kind machiya 全部 ≥ 12 m）：0 塊違規
+[PARCEL] PASS 地塊內高低差 ≤ 0.6 m、坡度 ≤ 5%（最大 1.3%）：0／0 違規
+[PARCEL] PASS 入口與路面高差 ≤ 0.5 m（最大 0.11 m）：0 違規
+[PARCEL] PASS 記錄地面高與目前地形一致（中心點最大差 0.014 m）：0 違規
+[PARCEL]   INFO P_LM_SUZUNAAN（鈴奈庵（候補））地標本體壓到路幅 0.27 m²（P0 凍結位置；P4 灰盒退縮或縮 footprint）
+[PARCEL]   INFO P_LM_GEIDONTEI（鯢吞亭（候補））地標本體壓到路幅 0.52 m²（P0 凍結位置；P4 灰盒退縮或縮 footprint）
+[PARCEL] PASS 地標固定地塊 9 塊（應 9）、各含其地標中心
+[PARCEL] PASS Market 建成地 1.67 ha，離最近路緣 > 30 m 佔 1.8%（≤ 10%）
+[PARCEL] PASS MixedCommercial 建成地 0.73 ha，離最近路緣 > 30 m 佔 0.0%（≤ 10%）
+[PARCEL] PASS ResidentialWest 建成地 3.32 ha，離最近路緣 > 30 m 佔 4.2%（≤ 10%）
+[PARCEL] PASS ResidentialNE 建成地 0.85 ha，離最近路緣 > 30 m 佔 4.4%（≤ 10%）
+[PARCEL] PASS MansionEstate 建成地 0.26 ha，離最近路緣 > 30 m 佔 1.9%（≤ 10%）
+[PARCEL] PASS SouthGate 建成地 0.13 ha，離最近路緣 > 30 m 佔 0.0%（≤ 10%）
+[PARCEL] PASS EntranceRoad（入口道路）可建臨路面上建築地塊覆蓋 100%（≥ 70%；另有 14 點放不下最小町家 5×12 m＝刻意留白，4 點是附屬用地）
+[PARCEL] PASS MainStreet（主街）可建臨路面上建築地塊覆蓋 99%（≥ 70%；另有 111 點放不下最小町家 5×12 m＝刻意留白，18 點是附屬用地）
+[PARCEL] 結果：0 項失敗

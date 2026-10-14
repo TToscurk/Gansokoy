@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SL] 有體積的 placeholder：23 個；加上建築共 219 個
+[SL] PASS 主街測站 62 個（每 4 m，全長 244 m）
+[SL] PASS 眼高 1.7 m 走廊視線 2880 條，被擋 0 條（上限 0）：無
+[SL] PASS 眼高 1.7 m 望山頂社殿：62 站中 0 站被擋（上限 0）：無
+[SL] INFO 眼高 1.7 m 主街望山頂社殿 全建築擋 42 站（看得到 20 站）：B_P_MKT_021×9、B_P_MKT_022×9、B_P_MKT_025×8、B_P_MKT_024×7
+[SL] INFO 眼高 1.7 m 主街望龍神像（漸進式揭露，不判失敗）：62 站中 地標擋 13 站、全建築擋 62 站（看得到 0 站）
+[SL] PASS 眼高 1.7 m 望南大鳥居：62 站中 0 站被擋（上限 0）：無
+[SL] INFO 眼高 1.7 m 主街望南大鳥居 全建築擋 36 站（看得到 26 站）：B_P_MKT_005×27、B_P_MKT_004×26、B_P_MKT_009×14、B_P_MKT_011×8
+[SL] INFO 眼高 1.7 m 龍神像揭露段 HillFootStreet 104–146 m（全建築，不判失敗）：11 站中 看得到 1 站：B_P_MXC_020×6、B_P_MXC_021×5、B_P_MXC_022×4、B_P_MXC_023×4、B_P_MXC_019×3、B_P_MXC_018×2、B_P_MXC_024×2
+[SL] PASS 眼高 1.7 m 龍神像終點接近區（HillFootStreet 146–176 m 8 站、RiverNorthPath 0–86 m 22 站、DragonBridgeRoad 0–50 m 13 站，全建築）：43 站中 0 站被擋（上限 0）：無
+[SL] PASS 眼高 2.3 m 走廊視線 2880 條，被擋 0 條（上限 0）：無
+[SL] PASS 眼高 2.3 m 望山頂社殿：62 站中 0 站被擋（上限 0）：無
+[SL] INFO 眼高 2.3 m 主街望山頂社殿 全建築擋 39 站（看得到 23 站）：B_P_MKT_022×8、B_P_MKT_021×7、B_P_MKT_024×7、B_P_MKT_029×6
+[SL] INFO 眼高 2.3 m 主街望龍神像（漸進式揭露，不判失敗）：62 站中 地標擋 12 站、全建築擋 62 站（看得到 0 站）
+[SL] PASS 眼高 2.3 m 望南大鳥居：62 站中 0 站被擋（上限 0）：無
+[SL] INFO 眼高 2.3 m 主街望南大鳥居 全建築擋 34 站（看得到 28 站）：B_P_MKT_005×14、B_P_MKT_009×14、B_P_MKT_004×12、B_P_MKT_011×8
+[SL] INFO 眼高 2.3 m 龍神像揭露段 HillFootStreet 104–146 m（全建築，不判失敗）：11 站中 看得到 2 站：B_P_MXC_020×6、B_P_MXC_021×5、B_P_MXC_022×4、B_P_MXC_019×3、B_P_MXC_018×2、B_P_MXC_024×1
+[SL] PASS 眼高 2.3 m 龍神像終點接近區（HillFootStreet 146–176 m 8 站、RiverNorthPath 0–86 m 22 站、DragonBridgeRoad 0–50 m 13 站，全建築）：43 站中 0 站被擋（上限 0）：無
+[SL] 結果：0 項失敗

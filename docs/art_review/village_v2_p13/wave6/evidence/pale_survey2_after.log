@@ -1,0 +1,83 @@
+=== D:/神社/shrine/docs/art_review/village_v2_p13/wave6/survey2_after tag=f thresh=0.1 min=15 max=4000 ===
+--- ノード別（成分数・総画素・平均 gain）---
+  OVG:ShrineGroveP9                              comps=  661 px=   32773 gain=0.141
+  EB:Districts/FarmlandEast/FarmlandP8           comps=  504 px=   22221 gain=0.147
+  OVG:GroundcoverP9/MacroVillage                 comps=  467 px=   22149 gain=0.138
+  T:MainTerrain                                  comps=  278 px=   22113 gain=0.135
+  R:SecondaryRoads/HillApproach                  comps=  230 px=   17468 gain=0.139
+  OVG:SchoolYardP9                               comps=  122 px=    9533 gain=0.142
+  R:SecondaryRoads/CrossStreetMid                comps=   61 px=    8812 gain=0.132
+  R:MainStreet/MainStreet                        comps=   96 px=    7109 gain=0.135
+  OVG:WatersideP9                                comps=  100 px=    6760 gain=0.128
+  R:SecondaryRoads/HillFootStreet                comps=   50 px=    6018 gain=0.141
+  R:Alleys/Lanes                                 comps=   93 px=    5432 gain=0.125
+  OVG:GroundcoverP9/Village                      comps=  146 px=    5162 gain=0.147
+  OVG:GroundcoverP9/Macro                        comps=   79 px=    5123 gain=0.135
+  T:RiverTerrain                                 comps=  143 px=    4260 gain=0.164
+  R:SecondaryRoads/CrossStreetSouth              comps=   57 px=    4064 gain=0.125
+  R:FarmPaths/FarmPath_1                         comps=   61 px=    2810 gain=0.123
+  T:FarmlandTerrain                              comps=  119 px=    2541 gain=0.165
+  R:FarmPaths/FarmPath_5                         comps=   45 px=    2394 gain=0.126
+  R:Alleys/WestAlley                             comps=   27 px=    2242 gain=0.138
+  R:FarmPaths/FarmPath_3                         comps=   41 px=    2119 gain=0.135
+  R:FarmPaths/FarmPath_4                         comps=   27 px=    1862 gain=0.130
+  OVG:SuzunaanP9                                 comps=   43 px=    1740 gain=0.139
+  Y:Market                                       comps=    9 px=    1661 gain=0.126
+  R:FarmPaths/FarmPath_2                         comps=   33 px=    1650 gain=0.139
+  T:NorthHill                                    comps=   38 px=    1641 gain=0.151
+  R:MainStreet/EntranceRoad                      comps=   16 px=    1103 gain=0.144
+  Y:ResidentialWest                              comps=    9 px=     653 gain=0.131
+  R:SecondaryRoads/RiverNorthPath                comps=   10 px=     495 gain=0.123
+  OVG:GroundcoverP9/Ground_forest                comps=    9 px=     429 gain=0.161
+  R:Alleys/WestLane                              comps=    6 px=     389 gain=0.123
+  Y:ResidentialNE                                comps=    4 px=     353 gain=0.132
+  R:SecondaryRoads/RiversidePath                 comps=    3 px=     342 gain=0.132
+  Y:MixedCommercial                              comps=    1 px=     227 gain=0.122
+  OVG:TowerYardP9                                comps=    5 px=     217 gain=0.130
+  R:SecondaryRoads/DragonBridgeRoad              comps=    7 px=     167 gain=0.110
+  OVG:GeidonteiP9                                comps=    1 px=     134 gain=0.118
+  OVG:GroundcoverP9/Ground_stream                comps=    1 px=      34 gain=0.112
+  OVG:KirisameP9                                 comps=    2 px=      31 gain=0.149
+  Y:SouthGate                                    comps=    1 px=      16 gain=0.178
+  OVG:GroundcoverP9/Ground_street                comps=    1 px=      15 gain=0.147
+--- ショット別（淡色画素の多い順）---
+  #088 sando                  pale_px=  9747 comps= 99  largest=689px R:SecondaryRoads/HillApproach bbox=[790, 563, 868, 575] gain=0.16
+  #021 CrossStreetSouth       pale_px=  9188 comps=137  largest=928px OVG:SchoolYardP9 bbox=[0, 574, 161, 600] gain=0.15
+  #076 spot_hillapproach_n    pale_px=  8768 comps= 87  largest=2541px OVG:ShrineGroveP9 bbox=[1211, 813, 1327, 899] gain=0.17
+  #084 sando                  pale_px=  5599 comps=101  largest=400px R:SecondaryRoads/HillApproach bbox=[883, 454, 940, 464] gain=0.17
+  #083 sando                  pale_px=  5520 comps= 90  largest=349px T:MainTerrain bbox=[1412, 672, 1463, 693] gain=0.14
+  #013 HillApproach           pale_px=  5444 comps=124  largest=179px R:SecondaryRoads/HillApproach bbox=[676, 439, 694, 453] gain=0.13
+  #070 NESouth                pale_px=  5188 comps= 53  largest=1004px OVG:GroundcoverP9/Macro bbox=[122, 541, 384, 551] gain=0.12
+  #087 sando                  pale_px=  5128 comps=123  largest=329px R:SecondaryRoads/HillApproach bbox=[729, 593, 866, 598] gain=0.16
+  #073 spot_rivernorth_dragon pale_px=  5012 comps= 77  largest=321px OVG:WatersideP9 bbox=[373, 483, 435, 501] gain=0.15
+  #036 FarmPath_1             pale_px=  4619 comps= 69  largest=488px EB:Districts/FarmlandEast/FarmlandP8 bbox=[55, 603, 142, 625] gain=0.13
+  #082 sando                  pale_px=  4489 comps= 95  largest=227px Y:MixedCommercial bbox=[1359, 586, 1403, 620] gain=0.12
+  #074 spot_dragonroad_e      pale_px=  4456 comps=171  largest=83px T:RiverTerrain bbox=[1089, 624, 1102, 640] gain=0.18
+  #029 WestAlley              pale_px=  4436 comps= 26  largest=1269px R:SecondaryRoads/CrossStreetMid bbox=[190, 513, 444, 540] gain=0.12
+  #086 sando                  pale_px=  4418 comps=114  largest=281px OVG:ShrineGroveP9 bbox=[631, 451, 686, 462] gain=0.14
+  #059 NWBranch               pale_px=  4253 comps= 54  largest=532px OVG:GroundcoverP9/MacroVillage bbox=[1309, 453, 1386, 478] gain=0.15
+  #030 WestAlley              pale_px=  4089 comps= 37  largest=1196px Y:Market bbox=[442, 468, 696, 481] gain=0.13
+  #081 sando                  pale_px=  3838 comps= 39  largest=355px R:SecondaryRoads/HillApproach bbox=[820, 482, 891, 492] gain=0.13
+  #012 HillApproach           pale_px=  3656 comps= 68  largest=938px T:MainTerrain bbox=[398, 468, 536, 481] gain=0.13
+  #085 sando                  pale_px=  3395 comps= 97  largest=164px OVG:ShrineGroveP9 bbox=[547, 398, 588, 449] gain=0.14
+  #017 CrossStreetMid         pale_px=  3206 comps= 38  largest=609px R:SecondaryRoads/CrossStreetMid bbox=[851, 462, 937, 478] gain=0.20
+  #027 WestAlley              pale_px=  3095 comps= 16  largest=1747px T:MainTerrain bbox=[981, 515, 1329, 524] gain=0.12
+  #047 FarmPath_4             pale_px=  3004 comps= 81  largest=258px R:FarmPaths/FarmPath_4 bbox=[752, 540, 789, 550] gain=0.13
+  #015 RiverNorthPath         pale_px=  2927 comps= 50  largest=242px OVG:GroundcoverP9/MacroVillage bbox=[571, 376, 628, 386] gain=0.12
+  #045 FarmPath_3             pale_px=  2898 comps= 55  largest=321px EB:Districts/FarmlandEast/FarmlandP8 bbox=[244, 498, 353, 504] gain=0.14
+  #000 EntranceRoad           pale_px=  2869 comps= 38  largest=732px T:MainTerrain bbox=[0, 459, 151, 469] gain=0.17
+  #006 MainStreet             pale_px=  2817 comps= 28  largest=667px R:MainStreet/MainStreet bbox=[1217, 763, 1292, 834] gain=0.14
+  #075 spot_hillapproach_s    pale_px=  2670 comps= 42  largest=774px T:MainTerrain bbox=[417, 456, 540, 467] gain=0.14
+  #009 HillFootStreet         pale_px=  2568 comps= 27  largest=527px R:SecondaryRoads/HillFootStreet bbox=[858, 509, 953, 538] gain=0.16
+  #064 MidLane                pale_px=  2501 comps= 37  largest=506px OVG:GroundcoverP9/MacroVillage bbox=[178, 529, 295, 541] gain=0.12
+  #005 MainStreet             pale_px=  2457 comps= 56  largest=333px OVG:SuzunaanP9 bbox=[474, 520, 546, 566] gain=0.13
+  #022 CrossStreetSouth       pale_px=  2339 comps= 32  largest=669px T:MainTerrain bbox=[945, 414, 1118, 423] gain=0.20
+  #018 CrossStreetMid         pale_px=  2338 comps= 24  largest=332px R:SecondaryRoads/CrossStreetMid bbox=[809, 417, 868, 426] gain=0.13
+  #037 FarmPath_2             pale_px=  2259 comps= 54  largest=278px EB:Districts/FarmlandEast/FarmlandP8 bbox=[329, 500, 380, 514] gain=0.15
+  #077 spot_westlane_w        pale_px=  2258 comps= 28  largest=551px T:MainTerrain bbox=[1272, 416, 1397, 431] gain=0.12
+  #063 MidLane                pale_px=  2215 comps= 46  largest=298px R:Alleys/Lanes bbox=[956, 444, 1028, 477] gain=0.12
+  #048 FarmPath_4             pale_px=  2121 comps= 29  largest=506px EB:Districts/FarmlandEast/FarmlandP8 bbox=[1074, 434, 1239, 486] gain=0.15
+  #010 HillFootStreet         pale_px=  2068 comps= 19  largest=402px R:SecondaryRoads/HillFootStreet bbox=[810, 429, 882, 448] gain=0.13
+  #046 FarmPath_3             pale_px=  1977 comps= 39  largest=452px EB:Districts/FarmlandEast/FarmlandP8 bbox=[10, 527, 122, 531] gain=0.15
+  #004 MainStreet             pale_px=  1973 comps= 50  largest=329px OVG:GroundcoverP9/MacroVillage bbox=[8, 860, 61, 899] gain=0.13
+  #065 SWLane                 pale_px=  1973 comps= 31  largest=439px OVG:GroundcoverP9/MacroVillage bbox=[0, 543, 99, 560] gain=0.12

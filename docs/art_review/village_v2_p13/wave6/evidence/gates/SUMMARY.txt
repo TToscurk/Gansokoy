@@ -1,0 +1,40 @@
+[PASS] SHRINE_seal  rc=0  [SHRINE] PASS 反向：竄改 godot/tools/village_v2_shrine_grove_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1） [SHRINE] 結果：0 項失敗（seal） 
+[PASS] SHRINE_plan  rc=0  [SHRINE] PASS 元素：{ "sugi_c": 5, "shrub_a": 28, "young_sugi": 13, "sasa_a": 18, "sugi_a": 5, "sugi_b": 1, "hinoki": 3, "shii_a": 2, "sugi_hero": 1, "gk_toro_kasuga": 4, "fern_a": 33, "log_a": 2 }
+[PASS] WATER_seal  rc=0  [WATER] PASS 反向：竄改 godot/tools/village_v2_waterside_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1） [WATER] 結果：0 項失敗（seal） 
+[PASS] WATER_plan  rc=0  [WATER] PASS 作業場：米俵・石臼 7 件（原寸、水際 ≥ 2.5 m、柳樹冠外、1.2 m 內無植物、離水車 ≥ 7 m、俵↔臼 ≥ 2.0 m）：違規 0  [WATER] 結果：0 項失敗 
+[PASS] GC_seal  rc=0  [GC] PASS 反向：竄改 godot/tools/village_v2_groundcover_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1） [GC] 結果：0 項失敗（seal） 
+[PASS] P9F  rc=0  [P9F] PASS 反向：竄改 R1_tree_kit の封存檔雜湊 → 偵測到 1 筆不符（實際 1） [P9F] 結果：0 項失敗 
+[PASS] FOREST_seal  rc=0  [FOREST] PASS 反向：竄改 godot/tools/village_v2_forest_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1） [FOREST] 結果：0 項失敗（seal） 
+[PASS] SHRINE_scene  rc=0  [SHRINE] PASS 實走：參道＋前庭膠囊 179 點被擋 0 ；歩行面の隣接段差 > 0.45 m 0 （歩行面＝地形 66 点・登記歩行面 113 点） [SHRINE] 結果：0 項失敗（scene） 
+[PASS] SHRINE_sneg  rc=0  [SHRINE] NEG N3 未登記の台を参道に置く：被擋 5 段差 0 → PASS（gate 正確失敗） [SHRINE] 結果：0 項失敗（scene negatives） 
+[PASS] WATER_scene  rc=0  [WATER] PASS 實走：龍神像參拜道＋水車入口→walkway 膠囊 56 點被本 overlay 擋 0  [WATER] 結果：0 項失敗（scene） 
+[PASS] GC_scene  rc=0  [GC] PASS [P10 限定解封] 場景：路地 1 の歩く芯の地被 instance 0（= 0）；反向：芯に 1 つ足すと 1（= 1） [GC] 結果：0 項失敗（scene） 
+[PASS] GRD_plan  rc=0  [GRD] PASS 反向 7/7 [GRD] 結果：0 項失敗 
+[PASS] GRD_scene  rc=0  [GRD] PASS ground.gdshader／pilot shader 雜湊＝build 時 [GRD] 結果：0 項失敗 
+[PASS] RDB_plan  rc=0  [RDB] PASS 反向 7/7 [RDB] 結果：0 項失敗 
+[PASS] RDB_scene  rc=0  [RDB] PASS enabled=true → 重新套用 [RDB] 結果：0 項失敗 
+[PASS] RDB_seal  rc=0  [RDB] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1） [RDB] 結果：0 項失敗（seal） 
+[PASS] EDGE_plan  rc=0  [EDGE] PASS 反向 water：RiverEast 往外升高 → 水系 FAIL（52） [EDGE] 結果：0 項失敗 
+[PASS] EDGE_seal  rc=0  [EDGE] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1） [EDGE] 結果：0 項失敗（seal） 
+[PASS] ALB_seal  rc=0  [ALB] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1） [ALB] 結果：0 項失敗（seal） 
+[PASS] R4C_seal  rc=0  [R4C] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1） [R4C] 結果：0 項失敗（seal） 
+[PASS] SAN_plan  rc=0  [SAN] PASS 反向 8/8 [SAN] 結果：0 項失敗 
+[PASS] SAN_scene  rc=0  [SAN] PASS enabled=true → 重新套用 [SAN] 結果：0 項失敗 
+[PASS] SWALK  rc=0  [SWALK] PASS 反向 5/5 [SWALK] 結果：0 項失敗 
+[PASS] PARCEL  rc=0  [PARCEL] PASS MainStreet（主街）可建臨路面上建築地塊覆蓋 99%（≥ 70%；另有 111 點放不下最小町家 5×12 m＝刻意留白，18 點是附屬用地） [PARCEL] 結果：0 項�
+[PASS] PROTECT  rc=0  [PROTECT] PASS 岸線縫 1193 點：|Δh| > 0.30 m 的 0 點，最大 0.000 m @ (352, -112) [PROTECT] 結果：0 項失敗 
+[PASS] W6_CLEAN  rc=0  [W6G] ==== passes=29 fails=0 ==== [W6G] 結果：0 項失敗 
+[PASS] W4_PILOT  rc=0  [W4V] PASS 反向：overlay に碰撞体を足す → 検出される [W4V] 結果：0 項失敗 
+[PASS] W5B  rc=0  [W5G] PASS joins s64.2 /77.1 /89.85 have no walk hole or >15 cm surface mismatch; bad 0 [W5G] PASS no old/new double visible steps/walls in replaced range 
+[PASS] W5C  rc=0  [W5G] PASS negative: the r8 baseline (known terrain-through-tread) is flagged by the same poke metric (11.6 cm) [W5G] PASS negative: a plant placed on the stair is caught by the vegetation check 
+[PASS] P2_WATER  rc=0  [WATER] PASS Bridge_05_WestLane_WestStream 橋面頂 1.01 − 水面 0.61 ＝ 出水高 0.40 m（≥ 0.30） [WATER] 結果：0 項失敗 
+[PASS] BRIDGE  rc=0  [BRIDGE] PASS 路×水交叉 5 處（應為 5） [BRIDGE] 結果：0 項失敗 
+[PASS] FREEZE  rc=0  [FREEZE] PASS 凍結後 --variant=W80／空白 → 允許 [FREEZE] 結果：0 項失敗 
+[PASS] GREYBOX  rc=0  [GB] PASS LANDMARK_KIRISAME（zushi）灰盒 8.19×7.28 m、簷 3.9／脊 5.54 m：壓主街路幅 0.00 m²（P0 box 0.00 m²）、正面離路緣 1.41 m、正面與主街夾角 0.0°、沿街平移 0
+[PASS] SIGHTLINE  rc=0  [SL] PASS 眼高 2.3 m 龍神像終點接近區（HillFootStreet 146–176 m 8 站、RiverNorthPath 0–86 m 22 站、DragonBridgeRoad 0–50 m 13 站，全建築）：43 站中 0 站被擋（上限 0
+[FAIL] TERRAIN  rc=1  [TERRAIN] PASS Bridge_05_WestLane_WestStream 橋端與地面高差最大 0.05 m（≤ 0.15） [TERRAIN] 結果：1 項失敗 
+[PASS] ASSET_RESET  rc=0  [ASSET] PASS v2_assets 25 件（hero／landmark 11 項、材質庫 4 項）全 PASS、雜湊與 gate.json 一致（問題 0：） [ASSET] 結果：0 項失敗 
+[PASS] FARM_seal  rc=0  [FARM] PASS 反向：竄改 tools/village_v2_farmland_lib.gd 期望雜湊 → 偵測到 1 筆不符（實際 1） [FARM] 結果：0 項失敗（seal） 
+[PASS] CANAL  rc=0  [CANAL] PASS C5 木槽の口の水幅が槽内に絞られる（口から 0.2 m 以内の水面頂点 95、最大の横ずれ 0.174 m ≤ 0.22） [CANAL] 結果：0 項失敗 
+[PASS] P7_BRIDGE_RBG  rc=0  [RBG] PASS gate.json 11 項 PASS 且雜湊一致、場景烘焙與重排一致（2775 件） [RBG] 結果：0 項失敗 
+== local checks done: fails=1 ==

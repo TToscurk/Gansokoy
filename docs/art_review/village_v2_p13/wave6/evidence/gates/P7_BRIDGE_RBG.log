@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[RBG] 河岸件 2775：{ "step": 21, "land": 3, "pile": 255, "rail": 11, "cob": 589, "bld": 159, "rev": 858, "cap": 423, "shig": 74, "curb": 42, "flag": 340 }；區塊 65；親水點 3
+[RBG] PASS riverbank_kit size：構件 64 個 AABB vs Blender 設計尺寸最大差 0.000 m（rb_pile_r；≤ 0.02）；擺放縮放在設計範圍（護岸 x 0.8–1.36／沿坡 0.45–1.8、巨石 0.44–1.81、河原石 0.54–1.36、石段／平台／木樁 1:1）：違規 0；親水石段（雁木）3 處：MainRiver/stair_1 5 級：級高 0.23–0.23、級間水平距 0.65–0.99、末級→平台 0.00、平台頂＝水位＋0.13；Canal/stair_1 6 級：級高 0.24–0.24、級間水平距 0.43–0.47、末級→平台 0.00、平台頂＝水位＋0.13；Canal/stair_2 10 級：級高 0.26–0.26、級間水平距 0.47–0.52、末級→平台 0.00、平台頂＝水位＋0.13（級高 ≤ 0.27 且差 ≤ 0.02；雁木沿岸 0.44＋緩岸往水側外移 → 級間水平距 0.38–1.00、踏石 1.3 m 長保證相鄰級重疊 ≥ 0.3；平台頂＝水位＋0.13±0.05；可走性由 11 項實走驗）
+[RBG] PASS riverbank_kit parcel_fit：件（AABB 內縮 20 %）不壓建築／地標／橋／圍牆碰撞體：2775 件、違規 0；巨石／河原石／木樁／しがらみ／矮欄／笠石 中心不在路帶上：違規 0；5 座橋面矩形內（橋面以下 0.6 m 以上）沒有河岸件：0
+[RBG] PASS riverbank_kit grounding：2775 件：底 ≤ 地面＋0.05（不浮）違規 0；頂 ≥ 地面（不整顆埋）違規 0；橋頭鋪石／見切り石 頂−路面 −0.03～+0.08（平貼路面）違規 0、最大偏差 0.049；木樁埋入 ≥ 0.30 m：違規 0；親水平台基石底在水位下 ≥ 0.30（不懸在水面）：違規 0
+[RBG] PASS riverbank_kit materials：構件材質只用 V2_KitStoneTri／V2_Wood（町家 Kit 已過 gate 的 world triplanar 石材＋共享材質庫木材，未新增貼圖）：違規 0；區塊材質 ["V2_KitStoneTri", "V2_Wood"]；override 0；濕石／苔頂點色：水線 −0.05～+0.2 m 平均亮度 0.464（24436 點）vs 水面上 1.3 m 以上 0.884（27144 點）＝ 52 %（< 85 %）
+[RBG] PASS riverbank_kit geometry：構件 64 個：退化三角形 0、NaN 0、缺法線／UV 0；擺放 basis 行列式 ≤ 0：0
+[RBG] PASS riverbank_kit pivot_scale：Riverbank／65 區塊／LOD 節點全 identity（頂點已是世界座標）：違規 0；件所在 32 m 分格都有區塊：缺 0
+[RBG] PASS riverbank_kit collision：BoxShape 107（應 107：石段／平台／矮欄／大巨石）、停用 0、layer 0 的 body 0；護岸面板／鋪石／河原石不給碰撞（地形碰撞不變）；石段／平台 24 面：碰撞頂 vs 踏面最大差 0.000 m（≤ 0.03）、打不到 0
+[RBG] PASS riverbank_kit lod：65 區塊：LOD0（0–75 m）／LOD1（–420 m）齊全且接續；LOD1／LOD0 最大 25 %（≤ 35 %）
+[RBG] PASS riverbank_kit performance：區塊 LOD0 最大 34766（RB_10_0；≤ 40000）、全村 LOD0 628654（≤ 650000）、LOD1 102396；每區塊 surface ≤ 2（draw call）違規 0；構件庫 64 個（每件只存一次、合併進區塊網格）
+[RBG] PASS gate.json 11 項 PASS 且雜湊一致、場景烘焙與重排一致（2775 件）
+[RBG] 結果：0 項失敗

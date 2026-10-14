@@ -5,7 +5,22 @@
  "approved_date": "2026-10-09",
  "approval_source": "使用者 2026-10-09 P10 R5–R6 ROUND 3 FINAL ART DIRECTION：「以下項目正式 ART_APPROVED：R5c Boundary Closure、R5a Road Base 416 m Pilot、R6a Kit Material 24 Buildings Pilot、R4c Straw Geometry Pilot」「允許開始這四項的正式整合及必要 limited reseal」「目前只核准 Pilot 範圍，不代表已批准全村套用」",
  "scope": "Pilot 範囲のみ（全村套用は未承認）",
- "reseal_history": [],
+ "reseal_history": [
+  {
+   "at": "2026-10-14",
+   "kind": "W6_GRD_SCENE_GATE_SCOPE_AWARE",
+   "approved_by": "user（P13 Wave 6 指示 §6：必要な limited reseal は明確な修改範囲つきで可）",
+   "reason": "P13 Wave 6 の RoadEdgeBlendP13 が外圍 7 道路（CrossStreetMid／HillFootStreet／RiverNorthPath／EntranceRoad／FarmPath_2／3／5）へこの Pilot と同じ ground_p10_pilot.gdshader の外緣侵蝕を overlay で套用する。GRD 場景 gate『非 Pilot 道路材質不變』は封存時のscope（Pilot 4 道路だけが変わる）を前提にしていたため、後続 overlay の正当な変更で FAIL する（跨層）。",
+   "scope": {
+    "changed_file": "godot/tools/verify_village_v2_ground_pilot.gd",
+    "change": "非 Pilot 道路検査を関数化（_non_pilot_bad）。RoadEdgeBlendP13.road_paths に列挙された道路は『pilot shader に換わっている』ことだけを要求（材質不變の対象外）。それ以外の道路は従来どおり材質不變を要求。反向 1 案を追加：W6 引き受け外の MainStreet の材質を差し替えると必ず 1 件検出。",
+    "not_changed": "ground_p10_pilot.gdshader／ground_pilot.gd／ground_pilot_p10.scn／village_v2_ground_pilot_lib.gd／road_base 関連／R5a の plan gate（shader 雜湊・補丁・外緣統計）／Pilot 4 道路の参數"
+   },
+   "hash_before": "657453a02a9c56ccb28d2d97e8249d2c9073056443b1b06e274535210bc44eca",
+   "hash_after": "8d0c02c8b3014247b1a08f0c3b558dce22358a7919159010ba16a20937ec37d1",
+   "verification": "GRD plan 反向 7/7・--scene 0 失敗（非 Pilot 道路 12 条不變＋W6 引き受け 7 条＋反向 1）；RDB --seal 0 失敗"
+  }
+ ],
  "phase": "P10 R5a Road Base 416 m Pilot（FarmPath_1・FarmPath_4・南橫街の田の区間：地形なり・不揃いの幅・蛇行・使われ方；P7 FarmlandTerrain 踩み固め重み 577 頂点の局部修正；pilot ground shader）",
  "overlay": "res://maps/village_v2/gen/road_base_p10.scn",
  "node": "RoadBaseP10",
@@ -22,7 +37,7 @@
   "godot/maps/village_v2/gen/road_base_p10.scn": "39b8cab0eb33b1d98d88eeb6a81165937380a8f65941bb3e30a97fa25b797848",
   "godot/tools/diag_village_v2_road_band.gd": "98ec41242c46241f97581319df9046c7899e2e3fa26e545a5d5249cba686a64c",
   "godot/tools/village_v2_ground_pilot_lib.gd": "95a3412790112500870f7ce2b50406229439ad3eafd1bf23e7542824272dd57f",
-  "godot/tools/verify_village_v2_ground_pilot.gd": "657453a02a9c56ccb28d2d97e8249d2c9073056443b1b06e274535210bc44eca",
+  "godot/tools/verify_village_v2_ground_pilot.gd": "8d0c02c8b3014247b1a08f0c3b558dce22358a7919159010ba16a20937ec37d1",
   "godot/maps/village_v2/scripts_p10/ground_pilot.gd": "dc4b95ae772d4b8e16bc62d4ca7f0964eb619458410737d57750214a0cb29fc6",
   "godot/maps/village_v2/gen/ground_pilot_p10.scn": "0a71b1dd1c6b42f6de137d7796d3cf0cf2d58bb7afa614094f552e4a1a2dd97c",
   "godot/maps/village_v2/shaders_p10/ground_p10_pilot.gdshader": "30ceb183b70e72fa176eaaaf8625ee9fd6136ee34ac162445950957ea9af5971",

@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[GRD] shader 產生：{"ok":true,"out_sha256":"30ceb183b70e72fa176eaaaf8625ee9fd6136ee34ac162445950957ea9af5971","src_sha256":"0c030a3d9a9a8392c024967fcec234196f9e7a828b8b58200c5e3f12e672fa89"}
+[GRD] PASS 來源 ground.gdshader 雜湊＝matlib.json 封存值（0c030a3d9a9a…）
+[GRD] PASS 補丁 7 段各命中 1 次
+[GRD] PASS 磁碟 pilot shader＝補丁結果逐字（res://maps/village_v2/shaders_p10/ground_p10_pilot.gdshader）
+[GRD] PASS 田格段已移除、discard 只在外緣侵蝕段＋參道石段挖洞段（2）
+[GRD] PASS 新參數預設 edge_w／edge_irreg／center_patch／cut_s／cut_hw＝0（未指名道路不變）
+[GRD] PASS Pilot 道路 4 條參數在核准範圍
+[GRD] PASS 外緣實測（CPU 同雜訊重算）：CrossStreetSouth/l sd 0.21 max 0.85 侵蝕 85%, CrossStreetSouth/r sd 0.22 max 0.84 侵蝕 85%, FarmPath_1/l sd 0.12 max 0.42 侵蝕 98%, FarmPath_1/r sd 0.13 max 0.42 侵蝕 92%, FarmPath_4/l sd 0.14 max 0.42 侵蝕 82%, FarmPath_4/r sd 0.15 max 0.42 侵蝕 84%, RiversidePath/l sd 0.19 max 0.52 侵蝕 83%, RiversidePath/r sd 0.19 max 0.52 侵蝕 83%
+[GRD] 永久反向（每案必須讓 gate 失敗）
+[GRD]   N1 來源 shader 已變（補丁段找不到）：PASS（gate 正確失敗）
+[GRD]   N2 pilot shader 被手改：PASS（gate 正確失敗）
+[GRD]   N3 edge_w 超出 1.20 m：PASS（gate 正確失敗）
+[GRD]   N4 侵蝕吃進路面核心（edge_core 0.8）：PASS（gate 正確失敗）
+[GRD]   N5 田格沒移除：PASS（gate 正確失敗）
+[GRD]   N6 edge_w 預設非 0（全部道路都被侵蝕）：PASS（gate 正確失敗）
+[GRD]   N7 外緣等寬（雜訊無起伏 → 侵蝕成一條平行直線）：PASS（gate 正確失敗）
+[GRD] PASS 反向 7/7
+[GRD] 結果：0 項失敗
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)

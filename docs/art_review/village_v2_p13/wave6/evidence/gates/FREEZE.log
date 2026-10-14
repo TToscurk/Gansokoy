@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[FREEZE] 現值 frozen sha256 = 88eee8a183105cdd3ae7c57430fdaf4a523c7c628f6da9b632ec8f89d3a1c4ff
+[FREEZE] PASS layout 有 approval.freeze
+[FREEZE] PASS version = v2-layout-0.3（實際 v2-layout-0.3）
+[FREEZE] PASS status = LAYOUT_FREEZE（實際 LAYOUT_FREEZE）
+[FREEZE] PASS approval.freeze.sha256 = 現值
+[FREEZE] PASS 主街 selected = W80（實際 W80）
+[FREEZE] PASS 主街全寬 7.20 m（實際 7.20 m）
+[FREEZE] PASS 核可值＝現值 → 通過
+[FREEZE] PASS 主街半寬 3.6→4.5 → 擋下
+[FREEZE] PASS 北丘高 +0.3 m → 擋下
+[FREEZE] PASS 主河半寬改 → 擋下
+[FREEZE] PASS 主河水位改 → 擋下
+[FREEZE] PASS 地標位置移 1 m → 擋下
+[FREEZE] PASS 建成區基準面／林冠高／terrain／註記／版本改 → 仍通過
+[FREEZE] PASS key 順序顛倒 → 雜湊不變
+[FREEZE] PASS 沒有 approval.freeze → 通過（未核可的 layout 不擋）
+[FREEZE] PASS 凍結後 --variant=W100 → 拒絕
+[FREEZE] PASS 凍結後 --variant=W80／空白 → 允許
+[FREEZE] 結果：0 項失敗
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)

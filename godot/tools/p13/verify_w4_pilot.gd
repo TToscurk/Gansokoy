@@ -155,7 +155,16 @@ func _run() -> void:
 	if ov == null:
 		quit(1)
 		return
-	_ok(v.get_child(v.get_child_count() - 1) == ov, "root 直下の最後の子（既存 overlay の後ろ）")
+	# P13 W6 limited verifier correction：当時は「root の最後の子」だったが、後続の P13 overlay（DrapeFixP13／RoadEdgeBlendP13）が
+	# 末尾に追加されたため、意図〔既存の封存 overlay より後ろ＝上書きできる〕を直接検査する：
+	#   ① 自分より前に P13 以外の root 子を全部持つ（自分の後ろに P13 以外の子が 0）
+	#   ② 自分の後ろの子は名前が "P13" で終わる P13 overlay だけ
+	var after_non_p13 := []
+	for k in range(ov.get_index() + 1, v.get_child_count()):
+		var cn := String(v.get_child(k).name)
+		if not cn.ends_with("P13"):
+			after_non_p13.append(cn)
+	_ok(after_non_p13.is_empty(), "root 直下で自分より後ろの子は P13 overlay だけ（既存 overlay の後ろ・後続 %d 件・P13 以外 %s）" % [v.get_child_count() - ov.get_index() - 1, str(after_non_p13)])
 	_ok(v.get_children().filter(func(c: Node) -> bool: return c.name == W4.NODE_NAME).size() == 1, "同名の重複なし")
 	var cols := ov.find_children("*", "CollisionObject3D", true, false)
 	_ok(cols.is_empty(), "overlay は碰撞体を持たない（%d 個）" % cols.size())

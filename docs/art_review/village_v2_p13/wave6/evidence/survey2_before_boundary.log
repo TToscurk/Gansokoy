@@ -1,0 +1,462 @@
+#00 EntranceRoad s=  22.5 boundary_px=  2798 seam_ratio= 1.05 (prof_r k0..0.385 k8 0.400 | prof_g k0 0.368 k8 0.355)
+      R:MainStreet/EntranceRoad          | T:MainTerrain                  n= 2503 dRGB=  7.7
+      R:MainStreet/EntranceRoad          | GC:Ground/MacroVillage         n=  147 dRGB=  3.9
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=   44 dRGB=  3.3
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=   23 dRGB= 14.8
+#01 EntranceRoad s=  67.5 boundary_px=  3280 seam_ratio= 1.05 (prof_r k0..0.420 k8 0.423 | prof_g k0 0.406 k8 0.392)
+      R:MainStreet/EntranceRoad          | T:MainTerrain                  n= 1910 dRGB=  8.4
+      R:MainStreet/EntranceRoad          | GC:Ground/MacroVillage         n=  900 dRGB=  3.8
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=   98 dRGB= 10.2
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=   88 dRGB=  4.4
+#02 EntranceRoad s= 112.5 boundary_px=  4635 seam_ratio= 1.05 (prof_r k0..0.421 k8 0.413 | prof_g k0 0.405 k8 0.392)
+      R:MainStreet/EntranceRoad          | GC:Ground/MacroVillage         n= 1662 dRGB=  5.9
+      R:MainStreet/EntranceRoad          | T:MainTerrain                  n= 1162 dRGB=  9.9
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  387 dRGB=  7.7
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  387 dRGB=  5.2
+#03 MainStreet   s=  22.5 boundary_px=  5506 seam_ratio= 1.03 (prof_r k0..0.417 k8 0.414 | prof_g k0 0.412 k8 0.399)
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n= 2267 dRGB=  4.8
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 1283 dRGB=  4.0
+      R:MainStreet/MainStreet            | GC:Ground/Macro                n= 1138 dRGB=  3.6
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  327 dRGB=  9.2
+#04 MainStreet   s=  67.5 boundary_px=  3760 seam_ratio= 1.00 (prof_r k0..0.384 k8 0.387 | prof_g k0 0.385 k8 0.386)
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n= 3527 dRGB=  4.7
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  169 dRGB=  5.3
+      R:SecondaryRoads/CrossStreetMid    | T:MainTerrain                  n=   20 dRGB= 12.3
+      R:MainStreet/MainStreet            | OVG:SuzunaanP9                 n=   20 dRGB=  3.6
+#05 MainStreet   s= 112.5 boundary_px=  2247 seam_ratio= 1.07 (prof_r k0..0.394 k8 0.413 | prof_g k0 0.376 k8 0.357)
+      R:MainStreet/MainStreet            | OVG:SuzunaanP9                 n=  964 dRGB=  6.9
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  724 dRGB=  6.0
+      R:SecondaryRoads/CrossStreetMid    | T:MainTerrain                  n=  275 dRGB= 11.7
+      R:SecondaryRoads/CrossStreetMid    | OVG:SuzunaanP9                 n=  135 dRGB=  1.7
+#06 MainStreet   s= 157.5 boundary_px=   606 seam_ratio= 1.05 (prof_r k0..0.325 k8 0.359 | prof_g k0 0.320 k8 0.304)
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  258 dRGB=  5.2
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  138 dRGB=  1.3
+      R:MainStreet/MainStreet            | OVG:GeidonteiP9                n=  133 dRGB=  5.7
+      R:MainStreet/MainStreet            | GC:Ground/Ground_street        n=   32 dRGB=  7.0
+#07 MainStreet   s= 202.5 boundary_px=  1095 seam_ratio= 1.09 (prof_r k0..0.326 k8 0.327 | prof_g k0 0.320 k8 0.294)
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  837 dRGB=  5.0
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  162 dRGB=  6.5
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n=   71 dRGB= 12.3
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n=   14 dRGB= 10.1
+#08 HillFootStre s=  22.5 boundary_px=  4485 seam_ratio= 1.02 (prof_r k0..0.404 k8 0.400 | prof_g k0 0.399 k8 0.390)
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n= 3499 dRGB=  3.5
+      R:SecondaryRoads/HillFootStreet    | T:MainTerrain                  n=  645 dRGB=  5.7
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=  119 dRGB=  7.2
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n=   52 dRGB= 10.4
+#09 HillFootStre s=  67.5 boundary_px=  3276 seam_ratio= 1.10 (prof_r k0..0.381 k8 0.363 | prof_g k0 0.368 k8 0.340)
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n= 1252 dRGB=  2.9
+      R:SecondaryRoads/HillFootStreet    | T:MainTerrain                  n=  758 dRGB=  6.5
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n=  527 dRGB= 13.9
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/Village              n=  439 dRGB=  2.9
+#10 HillFootStre s= 112.5 boundary_px=  3868 seam_ratio= 1.03 (prof_r k0..0.346 k8 0.345 | prof_g k0 0.344 k8 0.330)
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n= 3053 dRGB=  3.4
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/Macro                n=  663 dRGB=  4.9
+      R:SecondaryRoads/HillFootStreet    | T:MainTerrain                  n=   47 dRGB=  8.8
+      R:SecondaryRoads/RiversidePath     | T:MainTerrain                  n=   45 dRGB= 14.3
+#11 HillFootStre s= 157.5 boundary_px=  1517 seam_ratio= 1.02 (prof_r k0..0.460 k8 0.445 | prof_g k0 0.440 k8 0.432)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  494 dRGB=  4.8
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/Macro                n=  226 dRGB=  3.6
+      R:SecondaryRoads/HillFootStreet    | T:FarmlandTerrain              n=  206 dRGB= 11.7
+      R:SecondaryRoads/RiversidePath     | GC:Ground/MacroVillage         n=  107 dRGB=  6.6
+#12 HillApproach s=  22.5 boundary_px=  4543 seam_ratio= 1.01 (prof_r k0..0.366 k8 0.369 | prof_g k0 0.367 k8 0.360)
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n= 3580 dRGB=  4.4
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=  531 dRGB=  3.6
+      R:SecondaryRoads/HillApproach      | T:MainTerrain                  n=  423 dRGB=  3.2
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=    8 dRGB= 11.2
+#13 HillApproach s=  67.5 boundary_px=  1356 seam_ratio= 1.03 (prof_r k0..0.340 k8 0.328 | prof_g k0 0.339 k8 0.328)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1356 dRGB=  3.8
+#14 RiverNorthPa s=  22.5 boundary_px=  3178 seam_ratio= 1.02 (prof_r k0..0.420 k8 0.420 | prof_g k0 0.415 k8 0.409)
+      R:SecondaryRoads/RiverNorthPath    | GC:Ground/MacroVillage         n= 1216 dRGB=  2.9
+      R:SecondaryRoads/RiverNorthPath    | GC:Ground/Macro                n=  888 dRGB=  3.2
+      R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n=  863 dRGB=  4.0
+      R:SecondaryRoads/RiverNorthPath    | OVG:WatersideP9                n=   82 dRGB= 18.7
+#15 RiverNorthPa s=  67.5 boundary_px=  1627 seam_ratio= 1.05 (prof_r k0..0.380 k8 0.393 | prof_g k0 0.362 k8 0.352)
+      R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n= 1506 dRGB=  7.7
+      R:SecondaryRoads/RiverNorthPath    | OVG:WatersideP9                n=   94 dRGB=  8.1
+      R:SecondaryRoads/RiverNorthPath    | GC:Plants/0860_fern_a          n=   12 dRGB= 14.4
+      R:SecondaryRoads/DragonBridgeRoad  | OVG:WatersideP9                n=    6 dRGB= 11.8
+#16 DragonBridge s=  22.5 boundary_px=  1475 seam_ratio= 1.14 (prof_r k0..0.495 k8 0.411 | prof_g k0 0.471 k8 0.406)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=  607 dRGB=  5.5
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  261 dRGB= 11.5
+      R:SecondaryRoads/DragonBridgeRoad  | GC:Ground/MacroVillage         n=  206 dRGB=  3.6
+      R:SecondaryRoads/RiversidePath     | T:MainTerrain                  n=  167 dRGB=  9.5
+#17 CrossStreetM s=  22.5 boundary_px=  2869 seam_ratio= 1.01 (prof_r k0..0.361 k8 0.399 | prof_g k0 0.359 k8 0.358)
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n= 2597 dRGB=  3.3
+      R:SecondaryRoads/CrossStreetMid    | T:MainTerrain                  n=  137 dRGB=  8.8
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/Ground_street        n=   33 dRGB=  5.9
+      R:SecondaryRoads/CrossStreetMid    | OVG:SuzunaanP9                 n=   33 dRGB=  0.7
+#18 CrossStreetM s=  67.5 boundary_px=  2144 seam_ratio= 1.02 (prof_r k0..0.332 k8 0.355 | prof_g k0 0.327 k8 0.320)
+      R:SecondaryRoads/CrossStreetMid    | T:MainTerrain                  n=  857 dRGB=  5.9
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  652 dRGB=  6.1
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  434 dRGB=  3.2
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n=   76 dRGB=  5.8
+#19 CrossStreetM s= 112.5 boundary_px=  3574 seam_ratio= 1.03 (prof_r k0..0.351 k8 0.339 | prof_g k0 0.346 k8 0.330)
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n= 2878 dRGB=  2.9
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=  424 dRGB=  6.9
+      R:SecondaryRoads/CrossStreetMid    | T:FarmlandTerrain              n=  128 dRGB=  6.5
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  126 dRGB=  9.6
+#20 CrossStreetM s= 157.5 boundary_px=  4696 seam_ratio= 1.07 (prof_r k0..0.429 k8 0.407 | prof_g k0 0.403 k8 0.387)
+      R:SecondaryRoads/CrossStreetMid    | T:FarmlandTerrain              n= 2100 dRGB=  6.7
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 1335 dRGB= 12.3
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  790 dRGB= 11.8
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  333 dRGB=  5.0
+#21 CrossStreetS s=  22.5 boundary_px=  3206 seam_ratio= 1.06 (prof_r k0..0.391 k8 0.392 | prof_g k0 0.383 k8 0.366)
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n=  938 dRGB=  3.5
+      R:SecondaryRoads/CrossStreetSouth  | OVG:SchoolYardP9               n=  781 dRGB=  4.2
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n=  539 dRGB=  7.4
+      R:Alleys/WestAlley                 | T:MainTerrain                  n=  481 dRGB= 13.2
+#22 CrossStreetS s=  67.5 boundary_px=  6488 seam_ratio= 1.02 (prof_r k0..0.405 k8 0.415 | prof_g k0 0.400 k8 0.391)
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n= 2893 dRGB=  4.1
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n= 1777 dRGB=  4.8
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  687 dRGB=  5.1
+      R:SecondaryRoads/CrossStreetSouth  | T:MainTerrain                  n=  590 dRGB=  5.2
+#23 CrossStreetS s= 112.5 boundary_px=  3217 seam_ratio= 1.00 (prof_r k0..0.296 k8 0.299 | prof_g k0 0.295 k8 0.296)
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n= 2779 dRGB=  3.4
+      R:SecondaryRoads/CrossStreetSouth  | T:FarmlandTerrain              n=  122 dRGB= 11.4
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=  115 dRGB=  4.0
+      R:SecondaryRoads/CrossStreetSouth  | T:MainTerrain                  n=  100 dRGB=  3.5
+#24 CrossStreetS s= 157.5 boundary_px=  6899 seam_ratio= 1.02 (prof_r k0..0.444 k8 0.437 | prof_g k0 0.417 k8 0.415)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 2861 dRGB=  8.9
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1460 dRGB= 10.0
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1120 dRGB= 12.7
+      R:SecondaryRoads/CrossStreetSouth  | T:FarmlandTerrain              n=  534 dRGB=  3.9
+#25 RiversidePat s=  22.5 boundary_px=  6241 seam_ratio= 1.00 (prof_r k0..0.411 k8 0.407 | prof_g k0 0.401 k8 0.408)
+      R:SecondaryRoads/RiversidePath     | GC:Ground/MacroVillage         n= 3440 dRGB=  3.6
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1589 dRGB= 11.0
+      R:SecondaryRoads/RiversidePath     | T:MainTerrain                  n=  712 dRGB=  3.0
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  282 dRGB=  2.1
+#26 RiversidePat s=  67.5 boundary_px=  7780 seam_ratio= 1.04 (prof_r k0..0.386 k8 0.373 | prof_g k0 0.373 k8 0.362)
+      R:SecondaryRoads/RiversidePath     | GC:Chunks/GC_21_-4_fine_near   n= 2793 dRGB=  9.6
+      R:SecondaryRoads/RiversidePath     | GC:Ground/MacroVillage         n= 2202 dRGB=  3.8
+      R:SecondaryRoads/RiversidePath     | GC:Chunks/GC_21_-5_fine_near   n= 1348 dRGB=  8.8
+      R:SecondaryRoads/RiversidePath     | GC:Chunks/GC_21_-4_stem_near   n=  563 dRGB=  8.9
+#27 WestAlley    s=  22.5 boundary_px=  4074 seam_ratio= 1.01 (prof_r k0..0.418 k8 0.413 | prof_g k0 0.417 k8 0.410)
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 3737 dRGB=  3.8
+      R:Alleys/WestAlley                 | T:MainTerrain                  n=  162 dRGB= 10.2
+      R:Alleys/WestAlley                 | GC:Ground/Ground_lawn          n=   75 dRGB=  0.6
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=   53 dRGB= 11.7
+#28 WestAlley    s=  67.5 boundary_px=  3881 seam_ratio= 0.98 (prof_r k0..0.439 k8 0.446 | prof_g k0 0.434 k8 0.445)
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 2998 dRGB=  3.2
+      R:Alleys/WestAlley                 | GC:Ground/Ground_lawn          n=  748 dRGB=  5.7
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n=   52 dRGB= 22.7
+      R:Alleys/WestAlley                 | T:MainTerrain                  n=   42 dRGB=  6.0
+#29 WestAlley    s= 112.5 boundary_px=  6171 seam_ratio= 1.02 (prof_r k0..0.376 k8 0.400 | prof_g k0 0.366 k8 0.361)
+      R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n= 2122 dRGB=  3.1
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 1579 dRGB=  2.6
+      R:Alleys/WestLane                  | GC:Ground/MacroVillage         n= 1301 dRGB=  6.6
+      R:SecondaryRoads/CrossStreetMid    | T:MainTerrain                  n=  555 dRGB= 12.8
+#30 WestAlley    s= 157.5 boundary_px=  3899 seam_ratio= 1.11 (prof_r k0..0.443 k8 0.451 | prof_g k0 0.429 k8 0.387)
+      R:Alleys/WestAlley                 | T:MainTerrain                  n=  984 dRGB=  5.6
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n=  590 dRGB=  6.5
+      R:SecondaryRoads/CrossStreetSouth  | T:MainTerrain                  n=  430 dRGB=  4.8
+      R:Alleys/WestAlley                 | OVG:SchoolYardP9               n=  414 dRGB=  9.0
+#31 WestAlley    s= 202.5 boundary_px= 11330 seam_ratio= 1.02 (prof_r k0..0.419 k8 0.424 | prof_g k0 0.414 k8 0.407)
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 7702 dRGB=  4.3
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 2898 dRGB=  3.8
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=  148 dRGB= 16.0
+      R:MainStreet/EntranceRoad          | T:MainTerrain                  n=  143 dRGB= 11.4
+#32 WestLane     s=  22.5 boundary_px=  4497 seam_ratio= 1.02 (prof_r k0..0.403 k8 0.391 | prof_g k0 0.401 k8 0.393)
+      R:Alleys/WestLane                  | GC:Ground/MacroVillage         n= 3409 dRGB=  3.6
+      R:Alleys/WestLane                  | GC:Ground/Village              n=  762 dRGB=  4.5
+      R:Alleys/WestLane                  | T:MainTerrain                  n=  145 dRGB=  2.0
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=  121 dRGB= 12.8
+#33 FarmPath_1   s=  22.5 boundary_px=  7837 seam_ratio= 1.03 (prof_r k0..0.440 k8 0.454 | prof_g k0 0.419 k8 0.412)
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 3022 dRGB=  9.8
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1436 dRGB=  5.3
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 1367 dRGB=  2.6
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  809 dRGB=  8.8
+#34 FarmPath_1   s=  67.5 boundary_px=  6093 seam_ratio= 1.08 (prof_r k0..0.434 k8 0.412 | prof_g k0 0.410 k8 0.397)
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 2664 dRGB= 11.6
+      R:SecondaryRoads/CrossStreetSouth  | T:FarmlandTerrain              n= 1541 dRGB=  6.5
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 1282 dRGB=  3.6
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  603 dRGB=  6.2
+#35 FarmPath_1   s= 112.5 boundary_px=  1495 seam_ratio= 1.01 (prof_r k0..0.368 k8 0.377 | prof_g k0 0.363 k8 0.360)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 1335 dRGB=  2.7
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  148 dRGB= 11.4
+      R:MainStreet/EntranceRoad          | T:MainTerrain                  n=    7 dRGB= 29.8
+      R:FarmPaths/FarmPath_1             | GC:Plants/0753_shrub_a         n=    3 dRGB=  8.6
+#36 FarmPath_1   s= 157.5 boundary_px=   994 seam_ratio= 1.00 (prof_r k0..0.344 k8 0.346 | prof_g k0 0.342 k8 0.342)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=  990 dRGB=  2.8
+      R:FarmPaths/FarmPath_1             | GC:Plants/0774_fern_a          n=    2 dRGB= 51.8
+      R:FarmPaths/FarmPath_1             | GC:Plants/0838_fern_a          n=    1 dRGB= 31.7
+      R:FarmPaths/FarmPath_1             | GC:Chunks/GC_4_-3_short_far    n=    1 dRGB= 76.7
+#37 FarmPath_2   s=  22.5 boundary_px=  2986 seam_ratio= 0.95 (prof_r k0..0.405 k8 0.432 | prof_g k0 0.408 k8 0.427)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1511 dRGB=  9.2
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  986 dRGB=  7.7
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  430 dRGB=  3.2
+      R:FarmPaths/FarmPath_5             | T:MainTerrain                  n=   29 dRGB=  1.7
+#38 FarmPath_2   s=  67.5 boundary_px=  3823 seam_ratio= 1.02 (prof_r k0..0.414 k8 0.430 | prof_g k0 0.412 k8 0.439)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1511 dRGB=  8.8
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1468 dRGB=  3.2
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  764 dRGB=  9.5
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=   41 dRGB=  2.6
+#39 FarmPath_2   s= 112.5 boundary_px=  7635 seam_ratio= 0.98 (prof_r k0..0.419 k8 0.445 | prof_g k0 0.408 k8 0.414)
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 3061 dRGB=  7.0
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1443 dRGB= 10.1
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1398 dRGB=  5.7
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  938 dRGB=  8.0
+#40 FarmPath_2   s= 157.5 boundary_px=  6115 seam_ratio= 1.06 (prof_r k0..0.448 k8 0.413 | prof_g k0 0.419 k8 0.403)
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 3047 dRGB= 15.4
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1487 dRGB=  8.1
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  844 dRGB=  8.3
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=  730 dRGB=  3.2
+#41 FarmPath_2   s= 202.5 boundary_px=  1776 seam_ratio= 1.01 (prof_r k0..0.364 k8 0.370 | prof_g k0 0.376 k8 0.377)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1462 dRGB= 10.0
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  241 dRGB= 12.3
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=   66 dRGB=  6.9
+      R:FarmPaths/FarmPath_2             | GC:Plants/0752_fern_a          n=    3 dRGB= 38.7
+#42 FarmPath_3   s=  22.5 boundary_px=  3499 seam_ratio= 1.01 (prof_r k0..0.423 k8 0.426 | prof_g k0 0.425 k8 0.435)
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1516 dRGB=  9.9
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1045 dRGB=  8.2
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  863 dRGB=  2.9
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=   48 dRGB=  2.2
+#43 FarmPath_3   s=  67.5 boundary_px=  5684 seam_ratio= 1.03 (prof_r k0..0.433 k8 0.411 | prof_g k0 0.419 k8 0.406)
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 2928 dRGB=  8.4
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1498 dRGB=  9.0
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1010 dRGB=  7.6
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  126 dRGB=  5.0
+#44 FarmPath_3   s= 112.5 boundary_px=  4813 seam_ratio= 1.02 (prof_r k0..0.441 k8 0.441 | prof_g k0 0.434 k8 0.451)
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 2377 dRGB=  5.9
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1496 dRGB=  9.8
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  810 dRGB=  7.0
+      R:FarmPaths/FarmPath_5             | T:MainTerrain                  n=   67 dRGB= 14.6
+#45 FarmPath_3   s= 157.5 boundary_px=  5239 seam_ratio= 1.01 (prof_r k0..0.410 k8 0.462 | prof_g k0 0.410 k8 0.408)
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 3062 dRGB=  7.6
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1454 dRGB=  9.1
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  715 dRGB=  9.3
+      R:FarmPaths/FarmPath_3             | GC:Plants/0752_fern_a          n=    2 dRGB= 34.3
+#46 FarmPath_3   s= 202.5 boundary_px=  1429 seam_ratio= 1.04 (prof_r k0..0.342 k8 0.345 | prof_g k0 0.367 k8 0.375)
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1424 dRGB= 10.5
+      R:FarmPaths/FarmPath_3             | GC:Plants/0753_shrub_a         n=    3 dRGB=  6.1
+      R:FarmPaths/FarmPath_3             | GC:Chunks/GC_4_-3_short_far    n=    2 dRGB= 43.0
+#47 FarmPath_4   s=  22.5 boundary_px=  5523 seam_ratio= 1.09 (prof_r k0..0.423 k8 0.429 | prof_g k0 0.401 k8 0.380)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 3073 dRGB= 10.7
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1384 dRGB=  4.4
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  810 dRGB=  7.4
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  124 dRGB=  6.4
+#48 FarmPath_4   s=  67.5 boundary_px=  4121 seam_ratio= 1.05 (prof_r k0..0.429 k8 0.400 | prof_g k0 0.402 k8 0.412)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 1690 dRGB= 13.9
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1343 dRGB=  3.8
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  909 dRGB=  8.6
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  155 dRGB=  6.4
+#49 FarmPath_4   s= 112.5 boundary_px=  5180 seam_ratio= 0.94 (prof_r k0..0.444 k8 0.464 | prof_g k0 0.414 k8 0.453)
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 3024 dRGB= 12.9
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1343 dRGB=  2.7
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  642 dRGB=  5.9
+      R:SecondaryRoads/RiversidePath     | T:MainTerrain                  n=   72 dRGB=  7.2
+#50 FarmPath_4   s= 157.5 boundary_px=  4584 seam_ratio= 1.00 (prof_r k0..0.362 k8 0.433 | prof_g k0 0.381 k8 0.369)
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 3000 dRGB= 12.4
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1220 dRGB=  2.9
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  263 dRGB= 10.0
+      R:FarmPaths/FarmPath_5             | T:MainTerrain                  n=   77 dRGB= 12.0
+#51 FarmPath_4   s= 202.5 boundary_px=  1218 seam_ratio= 1.02 (prof_r k0..0.331 k8 0.338 | prof_g k0 0.327 k8 0.323)
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1137 dRGB=  2.7
+      R:FarmPaths/FarmPath_4             | T:MainTerrain                  n=   77 dRGB=  7.3
+      R:FarmPaths/FarmPath_4             | GC:Plants/0773_fern_a          n=    2 dRGB= 43.0
+      R:FarmPaths/FarmPath_4             | GC:Chunks/GC_5_1_flower_v_near n=    1 dRGB= 53.7
+#52 FarmPath_5   s=  22.5 boundary_px=  5564 seam_ratio= 1.05 (prof_r k0..0.415 k8 0.389 | prof_g k0 0.393 k8 0.380)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 2984 dRGB= 13.7
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1488 dRGB=  8.1
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  612 dRGB=  2.9
+      R:SecondaryRoads/CrossStreetSouth  | T:FarmlandTerrain              n=  321 dRGB= 15.4
+#53 FarmPath_5   s=  67.5 boundary_px=  4951 seam_ratio= 1.01 (prof_r k0..0.429 k8 0.435 | prof_g k0 0.404 k8 0.438)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 2811 dRGB= 14.8
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1494 dRGB=  8.1
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  501 dRGB=  2.9
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  140 dRGB=  3.5
+#54 FarmPath_5   s= 112.5 boundary_px=  6584 seam_ratio= 0.94 (prof_r k0..0.377 k8 0.402 | prof_g k0 0.386 k8 0.401)
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n= 2752 dRGB= 10.3
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 2126 dRGB=  7.1
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1180 dRGB=  8.8
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  501 dRGB=  2.7
+#55 FarmPath_5   s= 157.5 boundary_px=  4965 seam_ratio= 1.03 (prof_r k0..0.389 k8 0.433 | prof_g k0 0.399 k8 0.392)
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 3071 dRGB=  7.8
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1431 dRGB= 10.0
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  412 dRGB=  3.1
+      R:FarmPaths/FarmPath_4             | T:MainTerrain                  n=   26 dRGB=  8.9
+#56 FarmPath_5   s= 202.5 boundary_px=  1409 seam_ratio= 1.02 (prof_r k0..0.320 k8 0.331 | prof_g k0 0.341 k8 0.343)
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1360 dRGB=  9.6
+      R:FarmPaths/FarmPath_5             | T:MainTerrain                  n=   48 dRGB= 17.7
+      R:FarmPaths/FarmPath_5             | GC:Chunks/GC_4_-11_stem_near   n=    1 dRGB= 58.7
+#57 NWLane       s=  22.5 boundary_px=  1450 seam_ratio= 1.04 (prof_r k0..0.370 k8 0.385 | prof_g k0 0.360 k8 0.350)
+      R:Alleys/Lanes                     | T:MainTerrain                  n= 1391 dRGB=  5.0
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=   45 dRGB= 10.7
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=   14 dRGB= 16.7
+#58 NWLane       s=  67.5 boundary_px=  1712 seam_ratio= 1.01 (prof_r k0..0.418 k8 0.416 | prof_g k0 0.418 k8 0.409)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 1670 dRGB=  3.2
+      R:Alleys/Lanes                     | T:MainTerrain                  n=   27 dRGB=  3.6
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=    5 dRGB= 20.1
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_1_flower_v_near n=    4 dRGB=  7.6
+#59 NWBranch     s=  22.5 boundary_px=  3359 seam_ratio= 1.00 (prof_r k0..0.371 k8 0.371 | prof_g k0 0.371 k8 0.373)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 3309 dRGB=  3.8
+      R:Alleys/Lanes                     | T:MainTerrain                  n=   46 dRGB=  2.9
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=    4 dRGB= 38.1
+#60 WestBankLane s=  22.5 boundary_px=  3447 seam_ratio= 1.02 (prof_r k0..0.394 k8 0.387 | prof_g k0 0.392 k8 0.381)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 3199 dRGB=  3.6
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_-2_stem_near    n=  148 dRGB=  5.4
+      R:Alleys/Lanes                     | T:MainTerrain                  n=   47 dRGB=  8.3
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_-2_fine_near    n=   37 dRGB=  3.9
+#61 WestBankLane s=  67.5 boundary_px=  3118 seam_ratio= 1.01 (prof_r k0..0.427 k8 0.419 | prof_g k0 0.424 k8 0.426)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 2846 dRGB=  3.0
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  248 dRGB= 13.9
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=    8 dRGB=  6.6
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=    7 dRGB=  9.2
+#62 WestBankLane s= 112.5 boundary_px=  2311 seam_ratio= 1.01 (prof_r k0..0.436 k8 0.431 | prof_g k0 0.437 k8 0.435)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 2254 dRGB=  2.6
+      R:Alleys/Lanes                     | T:MainTerrain                  n=   28 dRGB=  4.6
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_-6_fine_near    n=   16 dRGB= 16.8
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=    9 dRGB= 10.2
+#63 MidLane      s=  22.5 boundary_px=  3554 seam_ratio= 1.02 (prof_r k0..0.409 k8 0.409 | prof_g k0 0.407 k8 0.398)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 3033 dRGB=  4.0
+      R:Alleys/Lanes                     | GC:Ground/Ground_lawn          n=  362 dRGB=  2.9
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  153 dRGB=  5.3
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_1_flower_v_near n=    4 dRGB= 38.0
+#64 MidLane      s=  67.5 boundary_px=  4006 seam_ratio= 1.01 (prof_r k0..0.407 k8 0.416 | prof_g k0 0.404 k8 0.398)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 2997 dRGB=  3.6
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  805 dRGB=  4.2
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  142 dRGB=  4.7
+      R:MainStreet/MainStreet            | T:MainTerrain                  n=   58 dRGB=  9.7
+#65 SWLane       s=  22.5 boundary_px=  2905 seam_ratio= 1.02 (prof_r k0..0.423 k8 0.425 | prof_g k0 0.421 k8 0.413)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 2769 dRGB=  2.6
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  129 dRGB=  5.8
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_-6_fine_near    n=    3 dRGB= 11.0
+      R:Alleys/Lanes                     | GC:Plants/0795_fern_a          n=    2 dRGB= 24.8
+#66 SWLane       s=  67.5 boundary_px=  8102 seam_ratio= 1.04 (prof_r k0..0.437 k8 0.432 | prof_g k0 0.428 k8 0.415)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 4417 dRGB=  3.7
+      R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n= 2026 dRGB=  5.0
+      R:MainStreet/EntranceRoad          | GC:Ground/MacroVillage         n=  253 dRGB=  5.4
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n=  249 dRGB=  7.8
+#67 NELane       s=  22.5 boundary_px=  9853 seam_ratio= 1.00 (prof_r k0..0.403 k8 0.406 | prof_g k0 0.404 k8 0.404)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 8110 dRGB=  3.5
+      R:Alleys/Lanes                     | T:MainTerrain                  n= 1233 dRGB=  3.3
+      R:Alleys/Lanes                     | GC:Ground/Macro                n=  489 dRGB=  2.8
+      R:Alleys/Lanes                     | GC:Chunks/GC_5_1_flower_v_near n=   10 dRGB= 10.0
+#68 NELane       s=  67.5 boundary_px=  1058 seam_ratio= 0.99 (prof_r k0..0.401 k8 0.399 | prof_g k0 0.395 k8 0.406)
+      R:Alleys/Lanes                     | GC:Ground/Macro                n=  872 dRGB=  4.0
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  180 dRGB=  4.0
+      R:Alleys/Lanes                     | GC:Plants/0752_fern_a          n=    2 dRGB= 35.0
+      R:Alleys/Lanes                     | GC:Plants/0795_fern_a          n=    2 dRGB= 24.7
+#69 NENorth      s=  22.5 boundary_px=  5874 seam_ratio= 1.01 (prof_r k0..0.411 k8 0.409 | prof_g k0 0.411 k8 0.407)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 4882 dRGB=  3.0
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  599 dRGB=  7.2
+      R:Alleys/Lanes                     | GC:Ground/Macro                n=  376 dRGB=  5.0
+      R:Alleys/Lanes                     | GC:Plants/0860_fern_a          n=    9 dRGB= 10.7
+#70 NESouth      s=  22.5 boundary_px=  2718 seam_ratio= 1.02 (prof_r k0..0.368 k8 0.361 | prof_g k0 0.368 k8 0.374)
+      R:Alleys/Lanes                     | GC:Ground/Macro                n= 2299 dRGB=  3.2
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  400 dRGB=  3.4
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=    8 dRGB=  5.3
+      R:Alleys/Lanes                     | GC:Chunks/GC_19_-9_fine_near   n=    6 dRGB=  4.8
+#71 spot_hillfoo s=   0.0 boundary_px=  3123 seam_ratio= 1.01 (prof_r k0..0.441 k8 0.440 | prof_g k0 0.430 k8 0.433)
+      R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n=  880 dRGB=  4.4
+      R:SecondaryRoads/RiverNorthPath    | GC:Ground/MacroVillage         n=  626 dRGB=  2.1
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  476 dRGB=  4.7
+      R:SecondaryRoads/RiverNorthPath    | GC:Ground/Macro                n=  341 dRGB=  3.8
+#72 spot_hillfoo s=   0.0 boundary_px=  2549 seam_ratio= 1.18 (prof_r k0..0.469 k8 0.408 | prof_g k0 0.439 k8 0.372)
+      R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n=  747 dRGB=  9.1
+      R:SecondaryRoads/RiverNorthPath    | GC:Ground/MacroVillage         n=  519 dRGB= 10.3
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/Macro                n=  475 dRGB=  5.1
+      R:SecondaryRoads/HillFootStreet    | T:FarmlandTerrain              n=  396 dRGB=  9.6
+#73 spot_riverno s=   0.0 boundary_px=  2252 seam_ratio= 1.09 (prof_r k0..0.396 k8 0.422 | prof_g k0 0.371 k8 0.348)
+      R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n= 1387 dRGB=  9.1
+      R:SecondaryRoads/RiverNorthPath    | OVG:WatersideP9                n=  628 dRGB=  8.1
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=   80 dRGB= 10.1
+      R:Alleys/Lanes                     | T:MainTerrain                  n=   66 dRGB=  9.4
+#74 spot_dragonr s=   0.0 boundary_px=  2084 seam_ratio= 1.10 (prof_r k0..0.487 k8 0.440 | prof_g k0 0.474 k8 0.431)
+      R:Alleys/Lanes                     | GC:Ground/MacroVillage         n= 1276 dRGB=  4.2
+      R:SecondaryRoads/DragonBridgeRoad  | GC:Ground/MacroVillage         n=  461 dRGB=  3.1
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  255 dRGB=  9.5
+      R:Alleys/Lanes                     | GC:Ground/Macro                n=   54 dRGB=  6.4
+#75 spot_hillapp s=   0.0 boundary_px=  5008 seam_ratio= 1.01 (prof_r k0..0.378 k8 0.385 | prof_g k0 0.379 k8 0.375)
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n= 4219 dRGB=  4.1
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=  455 dRGB=  3.6
+      R:SecondaryRoads/HillApproach      | T:MainTerrain                  n=  320 dRGB=  3.0
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=   11 dRGB= 15.9
+#76 spot_hillapp s=   0.0 boundary_px=    66 seam_ratio= 1.11 (prof_r k0..0.288 k8 0.317 | prof_g k0 0.278 k8 0.251)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=   66 dRGB=  4.7
+#77 spot_westlan s=   0.0 boundary_px=  4903 seam_ratio= 1.03 (prof_r k0..0.400 k8 0.389 | prof_g k0 0.396 k8 0.383)
+      R:Alleys/WestLane                  | GC:Ground/MacroVillage         n= 3124 dRGB=  4.3
+      R:Alleys/WestLane                  | GC:Ground/Village              n= 1047 dRGB=  5.0
+      R:Alleys/WestLane                  | T:MainTerrain                  n=  433 dRGB=  3.1
+      R:Alleys/Lanes                     | T:MainTerrain                  n=  170 dRGB= 16.8
+#78 spot_riversi s=   0.0 boundary_px=  7347 seam_ratio= 1.01 (prof_r k0..0.394 k8 0.423 | prof_g k0 0.396 k8 0.389)
+      R:SecondaryRoads/RiversidePath     | GC:Ground/MacroVillage         n= 4656 dRGB=  4.4
+      R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n= 1460 dRGB= 10.0
+      R:SecondaryRoads/RiversidePath     | T:MainTerrain                  n=  455 dRGB=  3.4
+      R:FarmPaths/FarmPath_3             | GC:Ground/MacroVillage         n=  287 dRGB=  7.2
+#79 spot_crossso s=   0.0 boundary_px=  7332 seam_ratio= 1.03 (prof_r k0..0.441 k8 0.432 | prof_g k0 0.415 k8 0.415)
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 2865 dRGB= 11.0
+      R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n= 1450 dRGB= 10.2
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n= 1043 dRGB= 11.8
+      R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n=  727 dRGB=  3.2
+#80 spot_crossmi s=   0.0 boundary_px=  4583 seam_ratio= 1.07 (prof_r k0..0.427 k8 0.403 | prof_g k0 0.403 k8 0.388)
+      R:SecondaryRoads/CrossStreetMid    | T:FarmlandTerrain              n= 2041 dRGB=  5.5
+      R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n= 1339 dRGB= 12.5
+      R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  857 dRGB= 11.2
+      R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  149 dRGB=  2.9
+#81 sando        s=   4.0 boundary_px=  8555 seam_ratio= 1.02 (prof_r k0..0.413 k8 0.414 | prof_g k0 0.410 k8 0.401)
+      R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n= 5650 dRGB=  3.9
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n= 1514 dRGB=  3.5
+      R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  672 dRGB=  7.3
+      R:SecondaryRoads/HillFootStreet    | T:MainTerrain                  n=  362 dRGB= 12.6
+#82 sando        s=  14.0 boundary_px=  4596 seam_ratio= 1.00 (prof_r k0..0.348 k8 0.350 | prof_g k0 0.348 k8 0.350)
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n= 4035 dRGB=  3.4
+      R:SecondaryRoads/HillApproach      | T:MainTerrain                  n=  314 dRGB=  3.2
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=  227 dRGB=  3.1
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=   15 dRGB= 13.6
+#83 sando        s=  26.0 boundary_px=  2912 seam_ratio= 1.01 (prof_r k0..0.357 k8 0.365 | prof_g k0 0.356 k8 0.353)
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n= 1273 dRGB=  4.1
+      R:SecondaryRoads/HillApproach      | T:MainTerrain                  n= 1033 dRGB=  4.1
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=  600 dRGB=  3.5
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=    5 dRGB= 10.1
+#84 sando        s=  37.0 boundary_px=  1984 seam_ratio= 1.02 (prof_r k0..0.335 k8 0.336 | prof_g k0 0.333 k8 0.324)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1973 dRGB=  4.0
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=    9 dRGB=  7.1
+      R:SecondaryRoads/HillApproach      | GC:Chunks/GC_5_-6_short_far    n=    2 dRGB=  8.5
+#85 sando        s=  50.0 boundary_px=  1298 seam_ratio= 1.01 (prof_r k0..0.353 k8 0.359 | prof_g k0 0.351 k8 0.349)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1296 dRGB=  4.2
+      R:SecondaryRoads/HillApproach      | T:NorthHill                    n=    1 dRGB=  1.7
+      R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n=    1 dRGB= 36.3
+#86 sando        s=  62.0 boundary_px=  1418 seam_ratio= 1.03 (prof_r k0..0.339 k8 0.335 | prof_g k0 0.338 k8 0.324)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1414 dRGB=  3.9
+      R:SecondaryRoads/HillApproach      | T:NorthHill                    n=    4 dRGB=  3.2
+#87 sando        s=  78.0 boundary_px=  1616 seam_ratio= 1.02 (prof_r k0..0.321 k8 0.319 | prof_g k0 0.319 k8 0.314)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1606 dRGB=  3.5
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=    3 dRGB=  2.3
+      R:SecondaryRoads/HillApproach      | GC:Plants/0795_fern_a          n=    2 dRGB=  5.8
+      R:SecondaryRoads/HillApproach      | GC:Plants/0752_fern_a          n=    2 dRGB=  7.5
+#88 sando        s=  92.0 boundary_px=  1147 seam_ratio= 1.01 (prof_r k0..0.260 k8 0.266 | prof_g k0 0.258 k8 0.254)
+      R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n= 1138 dRGB=  2.5
+      R:SecondaryRoads/HillApproach      | GC:Plants/0860_fern_a          n=    4 dRGB=  3.9
+      R:SecondaryRoads/HillApproach      | GC:Plants/0773_fern_a          n=    2 dRGB= 63.5
+      R:SecondaryRoads/HillApproach      | GC:Chunks/GC_5_1_flower_v_near n=    2 dRGB= 48.8
+
+=== 全ショット合計の境界対（road × ground） ===
+  R:Alleys/Lanes                     | GC:Ground/MacroVillage         n=  44791 dRGB=  3.5
+  R:FarmPaths/FarmPath_5             | T:FarmlandTerrain              n=  26638 dRGB=  9.1
+  R:FarmPaths/FarmPath_3             | T:FarmlandTerrain              n=  25726 dRGB=  9.8
+  R:FarmPaths/FarmPath_4             | T:FarmlandTerrain              n=  24443 dRGB=  6.5
+  R:FarmPaths/FarmPath_2             | T:FarmlandTerrain              n=  21383 dRGB=  9.9
+  R:FarmPaths/FarmPath_1             | T:FarmlandTerrain              n=  20814 dRGB=  8.9
+  R:Alleys/WestAlley                 | GC:Ground/MacroVillage         n=  19864 dRGB=  4.0
+  R:SecondaryRoads/HillApproach      | GC:Ground/MacroVillage         n=  15272 dRGB=  4.3
+  R:SecondaryRoads/HillFootStreet    | GC:Ground/MacroVillage         n=  13468 dRGB=  3.6
+  R:MainStreet/MainStreet            | GC:Ground/MacroVillage         n=  11906 dRGB=  5.0
+  R:SecondaryRoads/HillApproach      | OVG:ShrineGroveP9              n=  10714 dRGB=  3.7
+  R:SecondaryRoads/RiversidePath     | GC:Ground/MacroVillage         n=  10405 dRGB=  4.0
+  R:SecondaryRoads/CrossStreetSouth  | GC:Ground/MacroVillage         n=   8176 dRGB=  4.0
+  R:Alleys/WestLane                  | GC:Ground/MacroVillage         n=   7834 dRGB=  4.4
+  R:SecondaryRoads/CrossStreetMid    | GC:Ground/MacroVillage         n=   7725 dRGB=  3.2
+  R:MainStreet/EntranceRoad          | T:MainTerrain                  n=   5725 dRGB=  8.5
+  R:SecondaryRoads/RiverNorthPath    | T:MainTerrain                  n=   5383 dRGB=  7.1
+  R:Alleys/Lanes                     | T:MainTerrain                  n=   5375 dRGB=  6.1
+  R:SecondaryRoads/CrossStreetMid    | T:FarmlandTerrain              n=   4269 dRGB=  6.1
+  R:Alleys/Lanes                     | GC:Ground/Macro                n=   4090 dRGB=  3.6
+  R:MainStreet/EntranceRoad          | GC:Ground/MacroVillage         n=   2962 dRGB=  5.1
+  R:SecondaryRoads/RiversidePath     | GC:Chunks/GC_21_-4_fine_near   n=   2793 dRGB=  9.6
+  R:MainStreet/MainStreet            | T:MainTerrain                  n=   2621 dRGB=  6.3
+  R:SecondaryRoads/CrossStreetSouth  | T:FarmlandTerrain              n=   2518 dRGB=  7.3
+  R:SecondaryRoads/RiverNorthPath    | GC:Ground/MacroVillage         n=   2361 dRGB=  4.3
+
+=== 平均輝度プロファイル（境界から k px、0..8） ===
+  road  : 0.405 0.406 0.404 0.403 0.404 0.405 0.406 0.407 0.407
+  ground: 0.397 0.393 0.391 0.391 0.392 0.393 0.393 0.392 0.391

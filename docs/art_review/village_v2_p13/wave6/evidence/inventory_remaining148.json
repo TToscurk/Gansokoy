@@ -1,0 +1,2074 @@
+[
+ {
+  "name": "B_P_MKT_032",
+  "district": "Market",
+  "pos": [
+   219.9,
+   -11.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 277589,
+  "shrine_px": 797,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_033",
+  "district": "Market",
+  "pos": [
+   227.0,
+   -11.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 5862,
+  "shrine_px": 439,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MKT_034",
+  "district": "Market",
+  "pos": [
+   233.6,
+   -11.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 29622,
+  "shrine_px": 551,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MKT_035",
+  "district": "Market",
+  "pos": [
+   283.9,
+   -15.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 275988,
+  "shrine_px": 57,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_MKT_036",
+  "district": "Market",
+  "pos": [
+   289.9,
+   -17.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 346159,
+  "shrine_px": 181,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_037",
+  "district": "Market",
+  "pos": [
+   297.7,
+   -17.6
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 319575,
+  "shrine_px": 396,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MKT_038",
+  "district": "Market",
+  "pos": [
+   304.8,
+   -19.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 393304,
+  "shrine_px": 121,
+  "shrine_vis": false,
+  "n3000": 7
+ },
+ {
+  "name": "B_P_MKT_039",
+  "district": "Market",
+  "pos": [
+   235.3,
+   -29.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 24629,
+  "shrine_px": 1560,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_040",
+  "district": "Market",
+  "pos": [
+   296.5,
+   -35.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 339360,
+  "shrine_px": 395,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_MKT_041",
+  "district": "Market",
+  "pos": [
+   303.1,
+   -36.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 454168,
+  "shrine_px": 492,
+  "shrine_vis": false,
+  "n3000": 6
+ },
+ {
+  "name": "B_P_MKT_042",
+  "district": "Market",
+  "pos": [
+   309.8,
+   -38.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 207025,
+  "shrine_px": 434,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_MKT_043",
+  "district": "Market",
+  "pos": [
+   316.4,
+   -38.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 139586,
+  "shrine_px": 479,
+  "shrine_vis": false,
+  "n3000": 8
+ },
+ {
+  "name": "B_P_MKT_044",
+  "district": "Market",
+  "pos": [
+   213.0,
+   57.8
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 79457,
+  "shrine_px": 313,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_MKT_045",
+  "district": "Market",
+  "pos": [
+   220.2,
+   57.5
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 7776,
+  "shrine_px": 415,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_046",
+  "district": "Market",
+  "pos": [
+   260.1,
+   55.5
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 40787,
+  "shrine_px": 195,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_047",
+  "district": "Market",
+  "pos": [
+   267.3,
+   54.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 6913,
+  "shrine_px": 204,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_048",
+  "district": "Market",
+  "pos": [
+   274.1,
+   54.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 27071,
+  "shrine_px": 51,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MKT_049",
+  "district": "Market",
+  "pos": [
+   280.9,
+   53.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 348624,
+  "shrine_px": 15,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MKT_050",
+  "district": "Market",
+  "pos": [
+   215.3,
+   40.7
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 60039,
+  "shrine_px": 740,
+  "shrine_vis": true,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_MKT_051",
+  "district": "Market",
+  "pos": [
+   268.0,
+   37.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 21274,
+  "shrine_px": 84,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_052",
+  "district": "Market",
+  "pos": [
+   274.7,
+   36.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 294762,
+  "shrine_px": 99,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_053",
+  "district": "Market",
+  "pos": [
+   281.5,
+   35.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 170512,
+  "shrine_px": 265,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_MKT_054",
+  "district": "Market",
+  "pos": [
+   288.1,
+   36.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 8585,
+  "shrine_px": 6,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MKT_055",
+  "district": "Market",
+  "pos": [
+   294.6,
+   34.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 10119,
+  "shrine_px": 97,
+  "shrine_vis": false,
+  "n3000": 6
+ },
+ {
+  "name": "B_P_MKT_056",
+  "district": "Market",
+  "pos": [
+   214.4,
+   85.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 54929,
+  "shrine_px": 495,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MKT_057",
+  "district": "Market",
+  "pos": [
+   220.7,
+   89.5
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 32857,
+  "shrine_px": 24,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MKT_058",
+  "district": "Market",
+  "pos": [
+   214.5,
+   6.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 6208,
+  "shrine_px": 640,
+  "shrine_vis": true,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MKT_059",
+  "district": "Market",
+  "pos": [
+   215.1,
+   13.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 9211,
+  "shrine_px": 369,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MKT_060",
+  "district": "Market",
+  "pos": [
+   256.1,
+   -90.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 315346,
+  "shrine_px": 914,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MXC_009",
+  "district": "MixedCommercial",
+  "pos": [
+   236.6,
+   -140.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 261087,
+  "shrine_px": 1665,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_010",
+  "district": "MixedCommercial",
+  "pos": [
+   244.7,
+   -140.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 68319,
+  "shrine_px": 3309,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_011",
+  "district": "MixedCommercial",
+  "pos": [
+   255.8,
+   -138.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 265210,
+  "shrine_px": 159,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_012",
+  "district": "MixedCommercial",
+  "pos": [
+   261.1,
+   -135.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 248379,
+  "shrine_px": 104,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_013",
+  "district": "MixedCommercial",
+  "pos": [
+   267.4,
+   -133.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 20520,
+  "shrine_px": 235,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MXC_014",
+  "district": "MixedCommercial",
+  "pos": [
+   273.8,
+   -131.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 192952,
+  "shrine_px": 74,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_MXC_015",
+  "district": "MixedCommercial",
+  "pos": [
+   322.6,
+   -120.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 47990,
+  "shrine_px": 1755,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_016",
+  "district": "MixedCommercial",
+  "pos": [
+   330.2,
+   -119.6
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1494,
+  "shrine_px": 278,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_MXC_017",
+  "district": "MixedCommercial",
+  "pos": [
+   336.6,
+   -120.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 9137,
+  "shrine_px": 278,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MXC_018",
+  "district": "MixedCommercial",
+  "pos": [
+   307.0,
+   -138.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 339857,
+  "shrine_px": 2937,
+  "shrine_vis": true,
+  "n3000": 8
+ },
+ {
+  "name": "B_P_MXC_019",
+  "district": "MixedCommercial",
+  "pos": [
+   313.6,
+   -137.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 14471,
+  "shrine_px": 1332,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_020",
+  "district": "MixedCommercial",
+  "pos": [
+   321.2,
+   -138.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 17131,
+  "shrine_px": 214,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_021",
+  "district": "MixedCommercial",
+  "pos": [
+   328.8,
+   -137.6
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 7031,
+  "shrine_px": 8,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_MXC_022",
+  "district": "MixedCommercial",
+  "pos": [
+   335.0,
+   -136.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 7379,
+  "shrine_px": 13,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_MXC_023",
+  "district": "MixedCommercial",
+  "pos": [
+   343.0,
+   -145.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 384550,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_MXC_024",
+  "district": "MixedCommercial",
+  "pos": [
+   346.9,
+   -150.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 56121,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_001",
+  "district": "ResidentialWest",
+  "pos": [
+   210.1,
+   -10.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 88165,
+  "shrine_px": 363,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_002",
+  "district": "ResidentialWest",
+  "pos": [
+   204.7,
+   -29.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 19804,
+  "shrine_px": 49,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_003",
+  "district": "ResidentialWest",
+  "pos": [
+   214.4,
+   -29.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 320885,
+  "shrine_px": 966,
+  "shrine_vis": true,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_004",
+  "district": "ResidentialWest",
+  "pos": [
+   223.6,
+   -29.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 65334,
+  "shrine_px": 378,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_005",
+  "district": "ResidentialWest",
+  "pos": [
+   175.3,
+   59.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 6598,
+  "shrine_px": 4,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_006",
+  "district": "ResidentialWest",
+  "pos": [
+   185.5,
+   59.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 176158,
+  "shrine_px": 56,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_007",
+  "district": "ResidentialWest",
+  "pos": [
+   193.3,
+   59.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 130114,
+  "shrine_px": 498,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_008",
+  "district": "ResidentialWest",
+  "pos": [
+   204.4,
+   -138.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 212182,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_009",
+  "district": "ResidentialWest",
+  "pos": [
+   187.0,
+   -90.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 106821,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_010",
+  "district": "ResidentialWest",
+  "pos": [
+   192.2,
+   -82.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 3817,
+  "shrine_px": 1283,
+  "shrine_vis": true,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_011",
+  "district": "ResidentialWest",
+  "pos": [
+   194.9,
+   -70.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 122456,
+  "shrine_px": 1878,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_012",
+  "district": "ResidentialWest",
+  "pos": [
+   193.3,
+   -61.2
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 196211,
+  "shrine_px": 1074,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_013",
+  "district": "ResidentialWest",
+  "pos": [
+   192.4,
+   -53.2
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 284309,
+  "shrine_px": 1088,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_014",
+  "district": "ResidentialWest",
+  "pos": [
+   191.1,
+   -42.7
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 3718,
+  "shrine_px": 588,
+  "shrine_vis": true,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_015",
+  "district": "ResidentialWest",
+  "pos": [
+   190.0,
+   -33.6
+  ],
+  "pilot": true,
+  "tier": "B",
+  "max_px": 621,
+  "shrine_px": 558,
+  "shrine_vis": true,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_016",
+  "district": "ResidentialWest",
+  "pos": [
+   190.5,
+   -25.4
+  ],
+  "pilot": true,
+  "tier": "B",
+  "max_px": 1553,
+  "shrine_px": 414,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_017",
+  "district": "ResidentialWest",
+  "pos": [
+   193.9,
+   -11.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 240051,
+  "shrine_px": 1092,
+  "shrine_vis": true,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_018",
+  "district": "ResidentialWest",
+  "pos": [
+   196.1,
+   -2.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 4706,
+  "shrine_px": 263,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_019",
+  "district": "ResidentialWest",
+  "pos": [
+   185.2,
+   -121.5
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 2672,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_020",
+  "district": "ResidentialWest",
+  "pos": [
+   191.0,
+   -113.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 280017,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_021",
+  "district": "ResidentialWest",
+  "pos": [
+   195.1,
+   -106.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 139627,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_022",
+  "district": "ResidentialWest",
+  "pos": [
+   201.1,
+   -98.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 23782,
+  "shrine_px": 4152,
+  "shrine_vis": true,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_023",
+  "district": "ResidentialWest",
+  "pos": [
+   206.3,
+   -91.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 187418,
+  "shrine_px": 2114,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_024",
+  "district": "ResidentialWest",
+  "pos": [
+   211.7,
+   -73.5
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 356598,
+  "shrine_px": 2301,
+  "shrine_vis": true,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RSW_025",
+  "district": "ResidentialWest",
+  "pos": [
+   210.5,
+   -63.9
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 379911,
+  "shrine_px": 304,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_026",
+  "district": "ResidentialWest",
+  "pos": [
+   209.6,
+   -56.6
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 336009,
+  "shrine_px": 431,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_027",
+  "district": "ResidentialWest",
+  "pos": [
+   187.7,
+   -211.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 508300,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_RSW_028",
+  "district": "ResidentialWest",
+  "pos": [
+   183.4,
+   -217.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 156832,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_029",
+  "district": "ResidentialWest",
+  "pos": [
+   172.9,
+   -231.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 24118,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_030",
+  "district": "ResidentialWest",
+  "pos": [
+   165.2,
+   -236.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 5732,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_031",
+  "district": "ResidentialWest",
+  "pos": [
+   156.5,
+   -240.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 3893,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_032",
+  "district": "ResidentialWest",
+  "pos": [
+   190.5,
+   -152.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 28432,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_033",
+  "district": "ResidentialWest",
+  "pos": [
+   188.7,
+   -159.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 259452,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RSW_034",
+  "district": "ResidentialWest",
+  "pos": [
+   185.2,
+   -173.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 155190,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RSW_035",
+  "district": "ResidentialWest",
+  "pos": [
+   182.8,
+   -180.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 10078,
+  "shrine_px": 2,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_036",
+  "district": "ResidentialWest",
+  "pos": [
+   172.4,
+   -205.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 448539,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_037",
+  "district": "ResidentialWest",
+  "pos": [
+   167.3,
+   -213.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 61290,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_038",
+  "district": "ResidentialWest",
+  "pos": [
+   159.7,
+   -220.7
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1183,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_039",
+  "district": "ResidentialWest",
+  "pos": [
+   151.2,
+   -225.6
+  ],
+  "pilot": false,
+  "tier": "C",
+  "max_px": 0,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_040",
+  "district": "ResidentialWest",
+  "pos": [
+   149.6,
+   -206.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 48653,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_041",
+  "district": "ResidentialWest",
+  "pos": [
+   169.9,
+   -187.6
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 508370,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_042",
+  "district": "ResidentialWest",
+  "pos": [
+   153.4,
+   -188.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 52717,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_043",
+  "district": "ResidentialWest",
+  "pos": [
+   143.9,
+   -191.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 11370,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_044",
+  "district": "ResidentialWest",
+  "pos": [
+   136.8,
+   -195.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 3718,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_045",
+  "district": "ResidentialWest",
+  "pos": [
+   149.3,
+   -20.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 25898,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_046",
+  "district": "ResidentialWest",
+  "pos": [
+   146.7,
+   -30.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 303409,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_047",
+  "district": "ResidentialWest",
+  "pos": [
+   144.8,
+   -38.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 13735,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_048",
+  "district": "ResidentialWest",
+  "pos": [
+   143.9,
+   -48.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 12687,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_049",
+  "district": "ResidentialWest",
+  "pos": [
+   143.1,
+   -58.8
+  ],
+  "pilot": false,
+  "tier": "C",
+  "max_px": 38,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_050",
+  "district": "ResidentialWest",
+  "pos": [
+   142.0,
+   -66.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 317579,
+  "shrine_px": 43,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_051",
+  "district": "ResidentialWest",
+  "pos": [
+   142.8,
+   -75.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 80449,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_052",
+  "district": "ResidentialWest",
+  "pos": [
+   143.8,
+   -84.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 13277,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_053",
+  "district": "ResidentialWest",
+  "pos": [
+   145.2,
+   -95.8
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1825,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_054",
+  "district": "ResidentialWest",
+  "pos": [
+   145.6,
+   -107.9
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1681,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_055",
+  "district": "ResidentialWest",
+  "pos": [
+   144.5,
+   -115.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 473637,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_056",
+  "district": "ResidentialWest",
+  "pos": [
+   143.0,
+   -124.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 23010,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_057",
+  "district": "ResidentialWest",
+  "pos": [
+   141.7,
+   -132.8
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1958,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_058",
+  "district": "ResidentialWest",
+  "pos": [
+   137.6,
+   -7.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 5280,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_059",
+  "district": "ResidentialWest",
+  "pos": [
+   134.2,
+   -16.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 269277,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_060",
+  "district": "ResidentialWest",
+  "pos": [
+   131.3,
+   -25.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 142732,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_061",
+  "district": "ResidentialWest",
+  "pos": [
+   128.5,
+   -37.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 23647,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_062",
+  "district": "ResidentialWest",
+  "pos": [
+   127.7,
+   -47.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 7033,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RSW_063",
+  "district": "ResidentialWest",
+  "pos": [
+   127.1,
+   -54.8
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1450,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_064",
+  "district": "ResidentialWest",
+  "pos": [
+   126.3,
+   -64.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 340952,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_065",
+  "district": "ResidentialWest",
+  "pos": [
+   126.2,
+   -73.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 69549,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_066",
+  "district": "ResidentialWest",
+  "pos": [
+   127.5,
+   -83.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 29588,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_067",
+  "district": "ResidentialWest",
+  "pos": [
+   128.6,
+   -94.0
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1864,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_068",
+  "district": "ResidentialWest",
+  "pos": [
+   130.0,
+   -101.7
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 946,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_069",
+  "district": "ResidentialWest",
+  "pos": [
+   128.7,
+   -110.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 454265,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_070",
+  "district": "ResidentialWest",
+  "pos": [
+   127.3,
+   -119.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 25715,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_071",
+  "district": "ResidentialWest",
+  "pos": [
+   231.8,
+   -80.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 274281,
+  "shrine_px": 1228,
+  "shrine_vis": true,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_RSW_072",
+  "district": "ResidentialWest",
+  "pos": [
+   241.7,
+   -77.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 8813,
+  "shrine_px": 691,
+  "shrine_vis": true,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RSW_073",
+  "district": "ResidentialWest",
+  "pos": [
+   220.0,
+   -95.7
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 402776,
+  "shrine_px": 3472,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_074",
+  "district": "ResidentialWest",
+  "pos": [
+   230.6,
+   -97.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 349866,
+  "shrine_px": 1291,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_075",
+  "district": "ResidentialWest",
+  "pos": [
+   237.7,
+   -95.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 37599,
+  "shrine_px": 1520,
+  "shrine_vis": true,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RSW_076",
+  "district": "ResidentialWest",
+  "pos": [
+   247.2,
+   -93.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 20265,
+  "shrine_px": 1996,
+  "shrine_vis": true,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_RSW_077",
+  "district": "ResidentialWest",
+  "pos": [
+   160.0,
+   55.6
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1455,
+  "shrine_px": 507,
+  "shrine_vis": true,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RSW_078",
+  "district": "ResidentialWest",
+  "pos": [
+   157.6,
+   64.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 369047,
+  "shrine_px": 125,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_079",
+  "district": "ResidentialWest",
+  "pos": [
+   159.4,
+   80.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 85621,
+  "shrine_px": 491,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_080",
+  "district": "ResidentialWest",
+  "pos": [
+   164.3,
+   88.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 22571,
+  "shrine_px": 231,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RSW_081",
+  "district": "ResidentialWest",
+  "pos": [
+   178.0,
+   79.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 86362,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_001",
+  "district": "ResidentialNE",
+  "pos": [
+   438.2,
+   -205.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 18474,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RNE_002",
+  "district": "ResidentialNE",
+  "pos": [
+   451.2,
+   -219.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 106559,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 3
+ },
+ {
+  "name": "B_P_RNE_003",
+  "district": "ResidentialNE",
+  "pos": [
+   458.0,
+   -226.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 7104,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RNE_004",
+  "district": "ResidentialNE",
+  "pos": [
+   467.6,
+   -231.3
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 519,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RNE_005",
+  "district": "ResidentialNE",
+  "pos": [
+   477.6,
+   -234.6
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 453628,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_006",
+  "district": "ResidentialNE",
+  "pos": [
+   486.2,
+   -237.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 19411,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_007",
+  "district": "ResidentialNE",
+  "pos": [
+   456.8,
+   -244.8
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 36094,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RNE_008",
+  "district": "ResidentialNE",
+  "pos": [
+   464.4,
+   -246.9
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 2954,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RNE_009",
+  "district": "ResidentialNE",
+  "pos": [
+   473.5,
+   -250.4
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 453024,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RNE_010",
+  "district": "ResidentialNE",
+  "pos": [
+   432.1,
+   -244.1
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 258106,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RNE_011",
+  "district": "ResidentialNE",
+  "pos": [
+   450.8,
+   -202.9
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 298867,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_012",
+  "district": "ResidentialNE",
+  "pos": [
+   458.8,
+   -196.0
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 56575,
+  "shrine_px": 216,
+  "shrine_vis": false,
+  "n3000": 4
+ },
+ {
+  "name": "B_P_RNE_013",
+  "district": "ResidentialNE",
+  "pos": [
+   465.3,
+   -189.5
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 9990,
+  "shrine_px": 1,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RNE_014",
+  "district": "ResidentialNE",
+  "pos": [
+   476.3,
+   -183.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 6487,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_015",
+  "district": "ResidentialNE",
+  "pos": [
+   485.6,
+   -180.7
+  ],
+  "pilot": false,
+  "tier": "B",
+  "max_px": 1840,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RNE_016",
+  "district": "ResidentialNE",
+  "pos": [
+   467.9,
+   -209.2
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 150782,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 2
+ },
+ {
+  "name": "B_P_RNE_017",
+  "district": "ResidentialNE",
+  "pos": [
+   474.8,
+   -202.3
+  ],
+  "pilot": false,
+  "tier": "A",
+  "max_px": 13184,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 1
+ },
+ {
+  "name": "B_P_RNE_018",
+  "district": "ResidentialNE",
+  "pos": [
+   484.3,
+   -197.4
+  ],
+  "pilot": false,
+  "tier": "C",
+  "max_px": 103,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_RNE_019",
+  "district": "ResidentialNE",
+  "pos": [
+   494.3,
+   -194.6
+  ],
+  "pilot": false,
+  "tier": "C",
+  "max_px": 94,
+  "shrine_px": 0,
+  "shrine_vis": false,
+  "n3000": 0
+ },
+ {
+  "name": "B_P_SGT_001",
+  "district": "SouthGate",
+  "pos": [
+   239.7,
+   120.6
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 274229,
+  "shrine_px": 78,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_SGT_002",
+  "district": "SouthGate",
+  "pos": [
+   222.1,
+   122.1
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 360249,
+  "shrine_px": 103,
+  "shrine_vis": false,
+  "n3000": 5
+ },
+ {
+  "name": "B_P_SGT_003",
+  "district": "SouthGate",
+  "pos": [
+   222.9,
+   115.1
+  ],
+  "pilot": true,
+  "tier": "A",
+  "max_px": 149552,
+  "shrine_px": 90,
+  "shrine_vis": false,
+  "n3000": 5
+ }
+]

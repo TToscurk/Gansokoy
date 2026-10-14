@@ -1,0 +1,4024 @@
+{
+	"districts": {
+		"AuxParcelLines": {
+			"children": []
+		},
+		"FarmlandEast": {
+			"children": [
+				{
+					"center": [
+						438.98,
+						-0.23,
+						3.93
+					],
+					"child_names": [
+						"Plots",
+						"Bunds",
+						"Irrigation",
+						"EarthBanks",
+						"FieldDetails",
+						"ZoneWorks"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"null|null": 888,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_04b8u|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0dl0d|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0hqg0|ShaderMaterial": 860,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0kx7t|ShaderMaterial": 894,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0y6gx|ShaderMaterial": 1488,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0ypl4|ShaderMaterial": 554,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_102q7|ShaderMaterial": 909,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_114py|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_11yxa|ShaderMaterial": 1662,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_13l51|ShaderMaterial": 1092,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dj2g|ShaderMaterial": 1013,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dnj3|ShaderMaterial": 3788,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1vmqo|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1ww6k|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_2g2mg|ShaderMaterial": 1277,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3kaqi|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3lu0y|ShaderMaterial": 1036,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3migk|ShaderMaterial": 1316,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3nn3p|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_42c7q|ShaderMaterial": 120,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_43v6c|ShaderMaterial": 1029,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4mjsj|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4tuik|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4xmex|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_530ny|ShaderMaterial": 907,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_53fk4|ShaderMaterial": 1523,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_54nw4|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_57e0j|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5myu0|ShaderMaterial": 1133,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5oben|ShaderMaterial": 1339,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5t6kb|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_66f05|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6dwol|ShaderMaterial": 883,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6fu4m|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6riav|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6t8po|ShaderMaterial": 1083,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6y86f|ShaderMaterial": 1506,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7gpfj|ShaderMaterial": 1452,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7oiek|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7pq2b|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7rlfw|ShaderMaterial": 3190,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7ugus|ShaderMaterial": 2760,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_80jev|ShaderMaterial": 599,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8b3vo|ShaderMaterial": 216,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8ea4x|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8l0ym|ShaderMaterial": 828,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8qh48|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_a2ga7|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_advik|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aewot|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_afdwl|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aklgp|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_as5j8|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aso7o|ShaderMaterial": 1528,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_b470s|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_bo7nc|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c0reo|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c4can|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c7io7|ShaderMaterial": 1101,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_crcoa|ShaderMaterial": 1291,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d1moo|ShaderMaterial": 828,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d50yp|ShaderMaterial": 947,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d7r7j|ShaderMaterial": 1745,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_e1g6h|ShaderMaterial": 847,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ejth8|ShaderMaterial": 834,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_emk5d|ShaderMaterial": 1110,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eptlt|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eqct0|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_f528u|ShaderMaterial": 94861,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fa56n|ShaderMaterial": 1871,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fcwqq|ShaderMaterial": 1212,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ffonx|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fkcen|ShaderMaterial": 24,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fxl5i|ShaderMaterial": 1536,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_g5lf5|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gp0mo|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gqei7|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gxnma|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_h0ixd|ShaderMaterial": 1339,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hl2sl|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hoow4|ShaderMaterial": 2160,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hte0f|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hvj3e|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_i6aqy|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_iemk8|ShaderMaterial": 1483,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ir0ge|ShaderMaterial": 1138,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ircic|ShaderMaterial": 2418,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j0hv1|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j6nih|ShaderMaterial": 16224,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jkqhc|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jnks8|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jvd0v|ShaderMaterial": 1069,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kagru|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kia31|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_klc7x|ShaderMaterial": 1348,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kmalo|ShaderMaterial": 626,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ko36i|ShaderMaterial": 406890,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_koetq|ShaderMaterial": 965,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ks8al|ShaderMaterial": 1388,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kuecq|ShaderMaterial": 1230,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_l4a3k|ShaderMaterial": 1303,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_lcjym|ShaderMaterial": 991,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mbk3y|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mhqms|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mmgdt|ShaderMaterial": 770,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mpdk7|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_msvt8|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mwlwm|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mylq8|ShaderMaterial": 87291,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nisc3|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nppag|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nugud|ShaderMaterial": 1043,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nwi0y|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_o16mw|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odipb|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odqu4|ShaderMaterial": 1090,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ojugw|ShaderMaterial": 768,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_p3twa|ShaderMaterial": 599,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pekus|ShaderMaterial": 869,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pkwu6|ShaderMaterial": 1809,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pl4jh|ShaderMaterial": 1166,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qiql2|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qjc0b|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qk43m|ShaderMaterial": 2683,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ql060|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qnswn|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qup6e|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qw0n2|ShaderMaterial": 1299,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rmwvc|ShaderMaterial": 1497,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rptu6|ShaderMaterial": 1002,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rrxrj|ShaderMaterial": 1494,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx0j3|ShaderMaterial": 1060,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx4ds|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_si6jn|ShaderMaterial": 1570,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ss0fl|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tdhha|ShaderMaterial": 935,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tya8q|ShaderMaterial": 1107,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_u3k2u|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_uc3wa|ShaderMaterial": 1579,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ud03m|ShaderMaterial": 1939,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ut0um|ShaderMaterial": 1031,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_utoca|ShaderMaterial": 1185,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v4wv5|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v6diw|ShaderMaterial": 1313,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vjugb|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vk4ec|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wb2k3|ShaderMaterial": 4152,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wdaqj|ShaderMaterial": 1080,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wiuly|ShaderMaterial": 336,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wkqto|ShaderMaterial": 1033,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wshlu|ShaderMaterial": 583,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wsnjk|ShaderMaterial": 3888,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_x18qk|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xbnyk|ShaderMaterial": 1889,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xcyfs|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y17c0|ShaderMaterial": 31968,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y38xf|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yhcta|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yu6ek|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yun6j|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yx8o6|ShaderMaterial": 48,
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yy1cu|ShaderMaterial": 863,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_cetdi|StandardMaterial3D": 24126,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_drbf2|StandardMaterial3D": 24,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_h7ylk|StandardMaterial3D": 480,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_i4ty8|StandardMaterial3D": 36,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_kkomu|StandardMaterial3D": 13356,
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_l8ndb|StandardMaterial3D": 6756
+					},
+					"mats": {
+						"null|null": {
+							"cls": "null"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_04b8u|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_04b8u",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0dl0d|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0dl0d",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0hqg0|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0hqg0",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0kx7t|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0kx7t",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0y6gx|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0y6gx",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0ypl4|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_0ypl4",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_102q7|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_102q7",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_114py|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_114py",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_11yxa|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_11yxa",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_13l51|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_13l51",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dj2g|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dj2g",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dnj3|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1dnj3",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1vmqo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1vmqo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1ww6k|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_1ww6k",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_2g2mg|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_2g2mg",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3kaqi|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3kaqi",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3lu0y|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3lu0y",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3migk|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3migk",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3nn3p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_3nn3p",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_42c7q|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_42c7q",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_43v6c|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_43v6c",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4mjsj|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4mjsj",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4tuik|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4tuik",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4xmex|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_4xmex",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_530ny|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_530ny",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_53fk4|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_53fk4",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_54nw4|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_54nw4",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_57e0j|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_57e0j",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5myu0|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5myu0",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5oben|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5oben",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5t6kb|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_5t6kb",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_66f05|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_66f05",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6dwol|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6dwol",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6fu4m|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6fu4m",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6riav|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6riav",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6t8po|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6t8po",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6y86f|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_6y86f",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7gpfj|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7gpfj",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7oiek|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7oiek",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7pq2b|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7pq2b",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7rlfw|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7rlfw",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7ugus|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_7ugus",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_80jev|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_80jev",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8b3vo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8b3vo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8ea4x|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8ea4x",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8l0ym|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8l0ym",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8qh48|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_8qh48",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_a2ga7|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_a2ga7",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_advik|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_advik",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aewot|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aewot",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_afdwl|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_afdwl",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aklgp|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aklgp",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_as5j8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_as5j8",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aso7o|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_aso7o",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_b470s|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_b470s",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_bo7nc|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_bo7nc",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c0reo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c0reo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c4can|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c4can",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c7io7|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_c7io7",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_crcoa|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_crcoa",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d1moo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d1moo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d50yp|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d50yp",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d7r7j|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_d7r7j",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_e1g6h|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_e1g6h",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ejth8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ejth8",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_emk5d|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_emk5d",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eptlt|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eptlt",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eqct0|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_eqct0",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_f528u|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_f528u",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fa56n|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fa56n",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fcwqq|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fcwqq",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ffonx|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ffonx",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fkcen|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fkcen",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fxl5i|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_fxl5i",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_g5lf5|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_g5lf5",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gp0mo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gp0mo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gqei7|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gqei7",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gxnma|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_gxnma",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_h0ixd|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_h0ixd",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hl2sl|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hl2sl",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hoow4|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hoow4",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hte0f|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hte0f",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hvj3e|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_hvj3e",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_i6aqy|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_i6aqy",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_iemk8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_iemk8",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ir0ge|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ir0ge",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ircic|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ircic",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j0hv1|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j0hv1",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j6nih|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_j6nih",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jkqhc|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jkqhc",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jnks8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jnks8",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jvd0v|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_jvd0v",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kagru|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kagru",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kia31|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kia31",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_klc7x|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_klc7x",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kmalo|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kmalo",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ko36i|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ko36i",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_koetq|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_koetq",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ks8al|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ks8al",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kuecq|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_kuecq",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_l4a3k|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_l4a3k",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_lcjym|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_lcjym",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mbk3y|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mbk3y",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mhqms|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mhqms",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mmgdt|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mmgdt",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mpdk7|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mpdk7",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_msvt8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_msvt8",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mwlwm|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mwlwm",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mylq8|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_mylq8",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nisc3|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nisc3",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nppag|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nppag",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nugud|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nugud",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nwi0y|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_nwi0y",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_o16mw|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_o16mw",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odipb|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odipb",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odqu4|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_odqu4",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ojugw|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ojugw",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_p3twa|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_p3twa",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pekus|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pekus",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pkwu6|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pkwu6",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pl4jh|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_pl4jh",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qiql2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qiql2",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qjc0b|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qjc0b",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qk43m|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qk43m",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ql060|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ql060",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qnswn|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qnswn",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qup6e|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qup6e",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qw0n2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_qw0n2",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rmwvc|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rmwvc",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rptu6|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rptu6",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rrxrj|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rrxrj",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx0j3|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx0j3",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx4ds|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_rx4ds",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_si6jn|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_si6jn",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ss0fl|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ss0fl",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tdhha|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tdhha",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tya8q|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_tya8q",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_u3k2u|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_u3k2u",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_uc3wa|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_uc3wa",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ud03m|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ud03m",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ut0um|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_ut0um",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_utoca|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_utoca",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v4wv5|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v4wv5",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v6diw|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_v6diw",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vjugb|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vjugb",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vk4ec|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_vk4ec",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wb2k3|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wb2k3",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wdaqj|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wdaqj",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wiuly|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wiuly",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_plant.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wkqto|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wkqto",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wshlu|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wshlu",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wsnjk|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_wsnjk",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_x18qk|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_x18qk",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xbnyk|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xbnyk",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xcyfs|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_xcyfs",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y17c0|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y17c0",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y38xf|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_y38xf",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yhcta|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yhcta",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yu6ek|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yu6ek",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yun6j|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yun6j",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yx8o6|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yx8o6",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yy1cu|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::ShaderMaterial_yy1cu",
+							"shader": "res://maps/village_v2/shaders/p8_paddy_water.gdshader"
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_cetdi|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Stone",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_cetdi",
+							"tex": true
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_drbf2|StandardMaterial3D": {
+							"albedo": [
+								0.32,
+								0.31,
+								0.3
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_drbf2",
+							"tex": false
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_h7ylk|StandardMaterial3D": {
+							"albedo": [
+								0.62,
+								0.53,
+								0.3
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_h7ylk",
+							"tex": false
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_i4ty8|StandardMaterial3D": {
+							"albedo": [
+								0.36,
+								0.5,
+								0.2
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_i4ty8",
+							"tex": false
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_kkomu|StandardMaterial3D": {
+							"albedo": [
+								1.0,
+								1.0,
+								1.0
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_kkomu",
+							"tex": false
+						},
+						"res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_l8ndb|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://maps/village_v2/gen/farmland_p8.scn::StandardMaterial3D_l8ndb",
+							"tex": true
+						}
+					},
+					"n_children": 6,
+					"n_mesh": 1499,
+					"name": "FarmlandP8",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						227.96,
+						4.75,
+						273.04
+					],
+					"tris": 794873
+				}
+			]
+		},
+		"LandmarkParcelLines": {
+			"children": []
+		},
+		"MansionEstate": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_LM_HIEDA",
+						"P_LM_HIEDA_GATE"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 2,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				}
+			]
+		},
+		"Market": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_LM_TOWER",
+						"P_LM_SUZUNAAN",
+						"P_LM_GEIDONTEI",
+						"P_LM_KIRISAME",
+						"P_MKT_001",
+						"P_MKT_002",
+						"P_MKT_003",
+						"P_MKT_004",
+						"P_MKT_005",
+						"P_MKT_006",
+						"P_MKT_007",
+						"P_MKT_008",
+						"P_MKT_009",
+						"P_MKT_010"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 71,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				},
+				{
+					"center": [
+						262.05,
+						0.98,
+						-1.86
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_wkpcq|StandardMaterial3D": 5266
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_wkpcq|StandardMaterial3D": {
+							"albedo": [
+								0.391,
+								0.26,
+								0.126
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_wkpcq",
+							"tex": false
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "ParcelLines",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						115.33,
+						1.2,
+						199.41
+					],
+					"tris": 5266
+				},
+				{
+					"center": [
+						263.62,
+						4.77,
+						-0.85
+					],
+					"child_names": [
+						"B_P_MKT_001",
+						"B_P_MKT_002",
+						"B_P_MKT_003",
+						"B_P_MKT_004",
+						"B_P_MKT_005",
+						"B_P_MKT_006",
+						"B_P_MKT_007",
+						"B_P_MKT_008",
+						"B_P_MKT_009",
+						"B_P_MKT_010",
+						"B_P_MKT_011",
+						"B_P_MKT_012",
+						"B_P_MKT_013",
+						"B_P_MKT_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 770796,
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 13723,
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 420,
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 91238,
+						"res://assets/village_v2/aux_kura/V2_KuraShikkui.tres|StandardMaterial3D": 6108,
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": 21070,
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": 6204,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 744,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 744,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ijq27|StandardMaterial3D": 24,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 1060,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": 720
+					},
+					"mats": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Kawara",
+							"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Plaster",
+							"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Stone",
+							"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/aux_kura/V2_KuraShikkui.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KuraShikkui",
+							"path": "res://assets/village_v2/aux_kura/V2_KuraShikkui.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KitStoneTri",
+							"path": "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_MachiyaKit",
+							"path": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+							"tex": true
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+							"albedo": [
+								0.235,
+								0.231,
+								0.218
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+							"albedo": [
+								0.067,
+								0.055,
+								0.046
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ijq27|StandardMaterial3D": {
+							"albedo": [
+								0.386,
+								0.382,
+								0.37
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ijq27",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+							"albedo": [
+								0.143,
+								0.147,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.328,
+								0.311
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm",
+							"tex": false
+						}
+					},
+					"n_children": 62,
+					"n_mesh": 5715,
+					"name": "Buildings",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						112.35,
+						9.62,
+						197.74
+					],
+					"tris": 912851
+				},
+				{
+					"center": [
+						261.21,
+						0.96,
+						-1.85
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": 2382
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "Yards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						113.62,
+						1.2,
+						199.41
+					],
+					"tris": 2382
+				},
+				{
+					"center": [
+						256.01,
+						0.65,
+						48.1
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": 202
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "AuxYards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						71.96,
+						0.18,
+						24.49
+					],
+					"tris": 202
+				}
+			]
+		},
+		"MixedCommercial": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_MXC_001",
+						"P_MXC_002",
+						"P_MXC_003",
+						"P_MXC_004",
+						"P_MXC_005",
+						"P_MXC_006",
+						"P_MXC_007",
+						"P_MXC_008",
+						"P_MXC_009",
+						"P_MXC_010",
+						"P_MXC_011",
+						"P_MXC_012",
+						"P_MXC_013",
+						"P_MXC_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 25,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				},
+				{
+					"center": [
+						292.72,
+						1.72,
+						-125.39
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_kj85o|StandardMaterial3D": 2032
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_kj85o|StandardMaterial3D": {
+							"albedo": [
+								0.231,
+								0.26,
+								0.361
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_kj85o",
+							"tex": false
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "ParcelLines",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						119.02,
+						0.37,
+						62.33
+					],
+					"tris": 2032
+				},
+				{
+					"center": [
+						292.93,
+						5.44,
+						-125.56
+					],
+					"child_names": [
+						"B_P_MXC_001",
+						"B_P_MXC_002",
+						"B_P_MXC_003",
+						"B_P_MXC_004",
+						"B_P_MXC_005",
+						"B_P_MXC_006",
+						"B_P_MXC_007",
+						"B_P_MXC_008",
+						"B_P_MXC_009",
+						"B_P_MXC_010",
+						"B_P_MXC_011",
+						"B_P_MXC_012",
+						"B_P_MXC_013",
+						"B_P_MXC_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 282792,
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 4022,
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 31746,
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": 8406,
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": 2426,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 288,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 288,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 348,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": 288
+					},
+					"mats": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Kawara",
+							"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Plaster",
+							"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KitStoneTri",
+							"path": "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_MachiyaKit",
+							"path": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+							"tex": true
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+							"albedo": [
+								0.235,
+								0.231,
+								0.218
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+							"albedo": [
+								0.067,
+								0.055,
+								0.046
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+							"albedo": [
+								0.143,
+								0.147,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.328,
+								0.311
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm",
+							"tex": false
+						}
+					},
+					"n_children": 24,
+					"n_mesh": 2173,
+					"name": "Buildings",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						119.47,
+						8.53,
+						59.44
+					],
+					"tris": 330604
+				},
+				{
+					"center": [
+						289.01,
+						1.7,
+						-125.4
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": 772
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "Yards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						110.74,
+						0.37,
+						62.34
+					],
+					"tris": 772
+				},
+				{
+					"center": [
+						288.27,
+						1.72,
+						-127.85
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": 72
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "AuxYards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						13.01,
+						0.09,
+						9.1
+					],
+					"tris": 72
+				}
+			]
+		},
+		"NorthHill": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_LM_HILLFOOT_TEMPLE",
+						"P_LM_NORTH_HILL"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 2,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				}
+			]
+		},
+		"ResidentialNE": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_RNE_001",
+						"P_RNE_002",
+						"P_RNE_003",
+						"P_RNE_004",
+						"P_RNE_005",
+						"P_RNE_006",
+						"P_RNE_007",
+						"P_RNE_008",
+						"P_RNE_009",
+						"P_RNE_010",
+						"P_RNE_011",
+						"P_RNE_012",
+						"P_RNE_013",
+						"P_RNE_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 27,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				},
+				{
+					"center": [
+						462.28,
+						2.26,
+						-214.66
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_vmfcu|StandardMaterial3D": 1732
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_vmfcu|StandardMaterial3D": {
+							"albedo": [
+								0.151,
+								0.294,
+								0.26
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_vmfcu",
+							"tex": false
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "ParcelLines",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						78.54,
+						0.55,
+						92.3
+					],
+					"tris": 1732
+				},
+				{
+					"center": [
+						462.47,
+						5.33,
+						-215.71
+					],
+					"child_names": [
+						"B_P_RNE_001",
+						"B_P_RNE_002",
+						"B_P_RNE_003",
+						"B_P_RNE_004",
+						"B_P_RNE_005",
+						"B_P_RNE_006",
+						"B_P_RNE_007",
+						"B_P_RNE_008",
+						"B_P_RNE_009",
+						"B_P_RNE_010",
+						"B_P_RNE_011",
+						"B_P_RNE_012",
+						"B_P_RNE_013",
+						"B_P_RNE_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 221622,
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 1957,
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 120,
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 21880,
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": 9672,
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": 1638,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3|StandardMaterial3D": 24,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 252,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 252,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 168,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": 228
+					},
+					"mats": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Kawara",
+							"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Plaster",
+							"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Stone",
+							"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KitStoneTri",
+							"path": "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_MachiyaKit",
+							"path": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+							"tex": true
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3|StandardMaterial3D": {
+							"albedo": [
+								0.244,
+								0.206,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+							"albedo": [
+								0.235,
+								0.231,
+								0.218
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+							"albedo": [
+								0.067,
+								0.055,
+								0.046
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+							"albedo": [
+								0.143,
+								0.147,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.328,
+								0.311
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm",
+							"tex": false
+						}
+					},
+					"n_children": 21,
+					"n_mesh": 1879,
+					"name": "Buildings",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						74.01,
+						7.37,
+						82.82
+					],
+					"tris": 257813
+				},
+				{
+					"center": [
+						462.28,
+						2.24,
+						-214.65
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": 844
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "Yards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						78.53,
+						0.55,
+						92.31
+					],
+					"tris": 844
+				},
+				{
+					"center": [
+						459.36,
+						2.21,
+						-210.18
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": 226
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "AuxYards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						70.93,
+						0.4,
+						67.04
+					],
+					"tris": 226
+				}
+			]
+		},
+		"ResidentialWest": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_LM_TERAKOYA",
+						"P_RSW_001",
+						"P_RSW_002",
+						"P_RSW_003",
+						"P_RSW_004",
+						"P_RSW_005",
+						"P_RSW_006",
+						"P_RSW_007",
+						"P_RSW_008",
+						"P_RSW_009",
+						"P_RSW_010",
+						"P_RSW_011",
+						"P_RSW_012",
+						"P_RSW_013"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 103,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				},
+				{
+					"center": [
+						185.74,
+						1.43,
+						-77.1
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_6jtoc|StandardMaterial3D": 7484
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_6jtoc|StandardMaterial3D": {
+							"albedo": [
+								0.218,
+								0.311,
+								0.168
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_6jtoc",
+							"tex": false
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "ParcelLines",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						137.06,
+						2.07,
+						345.04
+					],
+					"tris": 7484
+				},
+				{
+					"center": [
+						186.05,
+						4.24,
+						-75.32
+					],
+					"child_names": [
+						"B_P_RSW_001",
+						"B_P_RSW_002",
+						"B_P_RSW_003",
+						"B_P_RSW_004",
+						"B_P_RSW_005",
+						"B_P_RSW_006",
+						"B_P_RSW_007",
+						"B_P_RSW_008",
+						"B_P_RSW_009",
+						"B_P_RSW_010",
+						"B_P_RSW_011",
+						"B_P_RSW_012",
+						"B_P_RSW_013",
+						"B_P_RSW_014"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 949356,
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 8020,
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 300,
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 90036,
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": 41048,
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": 6708,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3|StandardMaterial3D": 60,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 1032,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 1032,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 688,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": 972
+					},
+					"mats": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Kawara",
+							"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Plaster",
+							"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Stone",
+							"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KitStoneTri",
+							"path": "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_MachiyaKit",
+							"path": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+							"tex": true
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3|StandardMaterial3D": {
+							"albedo": [
+								0.244,
+								0.206,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_70rv3",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+							"albedo": [
+								0.235,
+								0.231,
+								0.218
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+							"albedo": [
+								0.067,
+								0.055,
+								0.046
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+							"albedo": [
+								0.143,
+								0.147,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.328,
+								0.311
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm",
+							"tex": false
+						}
+					},
+					"n_children": 86,
+					"n_mesh": 8219,
+					"name": "Buildings",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						131.83,
+						8.58,
+						343.34
+					],
+					"tris": 1099252
+				},
+				{
+					"center": [
+						185.75,
+						1.41,
+						-77.11
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": 3740
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "Yards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						137.07,
+						2.07,
+						345.03
+					],
+					"tris": 3740
+				},
+				{
+					"center": [
+						164.05,
+						1.27,
+						-52.68
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": 682
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "AuxYards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						80.02,
+						1.78,
+						296.73
+					],
+					"tris": 682
+				}
+			]
+		},
+		"Riverside": {
+			"children": []
+		},
+		"SouthGate": {
+			"children": [
+				{
+					"center": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"child_names": [
+						"P_SGT_001",
+						"P_SGT_002",
+						"P_SGT_003",
+						"A_SGT_001"
+					],
+					"cls": "Node3D",
+					"mat_tris": {},
+					"mats": {},
+					"n_children": 4,
+					"n_mesh": 0,
+					"name": "Parcels",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"tris": 0
+				},
+				{
+					"center": [
+						231.05,
+						0.27,
+						117.52
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_26d4y|StandardMaterial3D": 240
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_26d4y|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.235,
+								0.185
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_26d4y",
+							"tex": false
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "ParcelLines",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						34.31,
+						0.09,
+						15.74
+					],
+					"tris": 240
+				},
+				{
+					"center": [
+						230.96,
+						3.8,
+						117.84
+					],
+					"child_names": [
+						"B_P_SGT_001",
+						"B_P_SGT_002",
+						"B_P_SGT_003"
+					],
+					"cls": "Node3D",
+					"mat_tris": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 34654,
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 487,
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 4092,
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": 1094,
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": 330,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 36,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 36,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 60,
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": 36
+					},
+					"mats": {
+						"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Kawara",
+							"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Plaster",
+							"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_Wood",
+							"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_KitStoneTri",
+							"path": "res://assets/village_v2/machiya_kit/V2_KitStoneTri.tres",
+							"tex": true
+						},
+						"res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres|StandardMaterial3D": {
+							"albedo": [
+								0.42,
+								0.42,
+								0.42
+							],
+							"cls": "StandardMaterial3D",
+							"name": "V2_MachiyaKit",
+							"path": "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres",
+							"tex": true
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+							"albedo": [
+								0.235,
+								0.231,
+								0.218
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+							"albedo": [
+								0.067,
+								0.055,
+								0.046
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+							"albedo": [
+								0.143,
+								0.147,
+								0.16
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+							"tex": false
+						},
+						"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm|StandardMaterial3D": {
+							"albedo": [
+								0.336,
+								0.328,
+								0.311
+							],
+							"cls": "StandardMaterial3D",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_un0cm",
+							"tex": false
+						}
+					},
+					"n_children": 3,
+					"n_mesh": 289,
+					"name": "Buildings",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						28.47,
+						7.91,
+						15.27
+					],
+					"tris": 40825
+				},
+				{
+					"center": [
+						231.05,
+						0.25,
+						117.35
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": 90
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_xfg1p",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "Yards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						34.32,
+						0.09,
+						15.42
+					],
+					"tris": 90
+				},
+				{
+					"center": [
+						241.2,
+						0.27,
+						114.88
+					],
+					"child_names": [],
+					"cls": "MeshInstance3D",
+					"mat_tris": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": 56
+					},
+					"mats": {
+						"res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2|ShaderMaterial": {
+							"cls": "ShaderMaterial",
+							"name": "",
+							"path": "res://maps/village_v2/village_v2.tscn::ShaderMaterial_8erx2",
+							"shader": "res://assets/village_v2/_matlib/ground/ground.gdshader"
+						}
+					},
+					"n_children": 0,
+					"n_mesh": 1,
+					"name": "AuxYards",
+					"pos": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"size": [
+						10.72,
+						0.05,
+						6.68
+					],
+					"tris": 56
+				}
+			]
+		}
+	},
+	"landmarks": {
+		"LANDMARK_DRAGON": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 122,
+				"res://assets/village_v2/dragon_statue/V2_DragonStatue.tres|StandardMaterial3D": 125737
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/dragon_statue/V2_DragonStatue.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_DragonStatue",
+					"path": "res://assets/village_v2/dragon_statue/V2_DragonStatue.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				388.0,
+				-0.17,
+				-188.0
+			],
+			"size": [
+				10.0,
+				16.42,
+				10.0
+			],
+			"tris": 125859
+		},
+		"LANDMARK_GEIDONTEI": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 36790,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 47,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 270,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 3958,
+				"res://assets/village_v2/geidontei/V2_Geidontei.tres|StandardMaterial3D": 3281,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 20
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/geidontei/V2_Geidontei.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Geidontei",
+					"path": "res://assets/village_v2/geidontei/V2_Geidontei.tres",
+					"tex": true
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+					"albedo": [
+						0.235,
+						0.231,
+						0.218
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": {
+					"albedo": [
+						0.329,
+						0.279,
+						0.305
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+					"albedo": [
+						0.067,
+						0.055,
+						0.046
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+					"albedo": [
+						0.143,
+						0.147,
+						0.16
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+					"tex": false
+				}
+			},
+			"n_children": 2,
+			"n_mesh": 8,
+			"pos": [
+				284.6,
+				1.27,
+				-62.0
+			],
+			"size": [
+				13.7,
+				6.52,
+				14.15
+			],
+			"tris": 44402
+		},
+		"LANDMARK_HIEDA": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 102636,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 464,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 1514,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 9948,
+				"res://assets/village_v2/hieda_house/V2_HiedaHouse.tres|StandardMaterial3D": 398
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/hieda_house/V2_HiedaHouse.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_HiedaHouse",
+					"path": "res://assets/village_v2/hieda_house/V2_HiedaHouse.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				403.0,
+				1.14,
+				-40.0
+			],
+			"size": [
+				26.23,
+				9.31,
+				15.69
+			],
+			"tris": 114960
+		},
+		"LANDMARK_HIEDA_GATE": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 63522,
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 144,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 2346,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 12720,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 11344
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				}
+			},
+			"n_children": 2,
+			"n_mesh": 6,
+			"pos": [
+				398.0,
+				0.96,
+				-10.0
+			],
+			"size": [
+				37.94,
+				4.82,
+				51.45
+			],
+			"tris": 90076
+		},
+		"LANDMARK_HILLFOOT_TEMPLE": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_56mkv|StandardMaterial3D": 12
+			},
+			"mats": {
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_56mkv|StandardMaterial3D": {
+					"albedo": [
+						0.231,
+						0.176,
+						0.134
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_56mkv",
+					"tex": false
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 1,
+			"pos": [
+				228.0,
+				1.2,
+				-170.0
+			],
+			"size": [
+				18.0,
+				9.0,
+				12.0
+			],
+			"tris": 12
+		},
+		"LANDMARK_HILL_TORII": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 458,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 100,
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": 456,
+				"res://assets/village_v2/sando_torii/V2_SandoTorii.tres|StandardMaterial3D": 852
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": {
+					"albedo": [
+						0.8,
+						0.8,
+						0.8
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_WoodRed",
+					"path": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/sando_torii/V2_SandoTorii.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_SandoTorii",
+					"path": "res://assets/village_v2/sando_torii/V2_SandoTorii.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				289.6,
+				1.16,
+				-166.0
+			],
+			"size": [
+				6.3,
+				6.71,
+				3.1
+			],
+			"tris": 1866
+		},
+		"LANDMARK_KIRISAME": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 25162,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 50,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 70,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 2726,
+				"res://assets/village_v2/kirisame/V2_Kirisame.tres|StandardMaterial3D": 1188,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 20
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/kirisame/V2_Kirisame.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kirisame",
+					"path": "res://assets/village_v2/kirisame/V2_Kirisame.tres",
+					"tex": true
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+					"albedo": [
+						0.235,
+						0.231,
+						0.218
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": {
+					"albedo": [
+						0.329,
+						0.279,
+						0.305
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+					"albedo": [
+						0.067,
+						0.055,
+						0.046
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+					"albedo": [
+						0.143,
+						0.147,
+						0.16
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+					"tex": false
+				}
+			},
+			"n_children": 2,
+			"n_mesh": 8,
+			"pos": [
+				229.7,
+				0.53,
+				62.0
+			],
+			"size": [
+				9.97,
+				6.11,
+				9.99
+			],
+			"tris": 29252
+		},
+		"LANDMARK_NORTH_HILL": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 26698,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 1010,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 3524,
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": 468,
+				"res://assets/village_v2/hilltop_shrine/V2_HilltopShrine.tres|StandardMaterial3D": 1436
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": {
+					"albedo": [
+						0.8,
+						0.8,
+						0.8
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_WoodRed",
+					"path": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/hilltop_shrine/V2_HilltopShrine.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_HilltopShrine",
+					"path": "res://assets/village_v2/hilltop_shrine/V2_HilltopShrine.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				258.0,
+				34.17,
+				-228.0
+			],
+			"size": [
+				13.66,
+				8.92,
+				9.5
+			],
+			"tris": 33136
+		},
+		"LANDMARK_SOUTH_GATE": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 1086,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 388,
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": 564
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_WoodRed.tres|StandardMaterial3D": {
+					"albedo": [
+						0.8,
+						0.8,
+						0.8
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_WoodRed",
+					"path": "res://assets/village_v2/_matlib/V2_WoodRed.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				234.0,
+				0.31,
+				100.0
+			],
+			"size": [
+				13.82,
+				10.97,
+				1.7
+			],
+			"tris": 2038
+		},
+		"LANDMARK_SUZUNAAN": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 29682,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 46,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 62,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 3880,
+				"res://assets/village_v2/suzunaan/V2_Suzunaan.tres|StandardMaterial3D": 644,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": 12,
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": 20
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/suzunaan/V2_Suzunaan.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Suzunaan",
+					"path": "res://assets/village_v2/suzunaan/V2_Suzunaan.tres",
+					"tex": true
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp|StandardMaterial3D": {
+					"albedo": [
+						0.235,
+						0.231,
+						0.218
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_7kwnp",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx|StandardMaterial3D": {
+					"albedo": [
+						0.329,
+						0.279,
+						0.305
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_cp5mx",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0|StandardMaterial3D": {
+					"albedo": [
+						0.067,
+						0.055,
+						0.046
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_hc7k0",
+					"tex": false
+				},
+				"res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg|StandardMaterial3D": {
+					"albedo": [
+						0.143,
+						0.147,
+						0.16
+					],
+					"cls": "StandardMaterial3D",
+					"name": "",
+					"path": "res://maps/village_v2/village_v2.tscn::StandardMaterial3D_ks3sg",
+					"tex": false
+				}
+			},
+			"n_children": 2,
+			"n_mesh": 8,
+			"pos": [
+				247.8,
+				0.94,
+				-6.0
+			],
+			"size": [
+				12.25,
+				6.31,
+				12.28
+			],
+			"tris": 34370
+		},
+		"LANDMARK_TERAKOYA": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": 61148,
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": 222,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 286,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 7338,
+				"res://assets/village_v2/terakoya/V2_Terakoya.tres|StandardMaterial3D": 829
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Kawara.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Kawara",
+					"path": "res://assets/village_v2/_matlib/V2_Kawara.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Plaster.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Plaster",
+					"path": "res://assets/village_v2/_matlib/V2_Plaster.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/terakoya/V2_Terakoya.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Terakoya",
+					"path": "res://assets/village_v2/terakoya/V2_Terakoya.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				188.0,
+				0.76,
+				24.0
+			],
+			"size": [
+				14.56,
+				10.55,
+				19.85
+			],
+			"tris": 69823
+		},
+		"LANDMARK_TOWER": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 692,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 392,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 3262
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 3,
+			"pos": [
+				250.0,
+				0.5,
+				66.0
+			],
+			"size": [
+				6.32,
+				18.19,
+				6.15
+			],
+			"tris": 4346
+		},
+		"LANDMARK_WATERWHEEL_1": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 232,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 60,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 2488
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 6,
+			"pos": [
+				334.8,
+				-1.49,
+				-52.0
+			],
+			"size": [
+				5.78,
+				7.62,
+				6.81
+			],
+			"tris": 2780
+		},
+		"LANDMARK_WATERWHEEL_2": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 232,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 60,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 2488
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 6,
+			"pos": [
+				329.2,
+				-2.08,
+				0.0
+			],
+			"size": [
+				5.94,
+				7.62,
+				6.83
+			],
+			"tris": 2780
+		},
+		"LANDMARK_WATERWHEEL_3": {
+			"cls": "Node3D",
+			"mat_tris": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": 232,
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": 60,
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": 2488
+			},
+			"mats": {
+				"res://assets/village_v2/_matlib/V2_Metal.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Metal",
+					"path": "res://assets/village_v2/_matlib/V2_Metal.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Stone.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Stone",
+					"path": "res://assets/village_v2/_matlib/V2_Stone.tres",
+					"tex": true
+				},
+				"res://assets/village_v2/_matlib/V2_Wood.tres|StandardMaterial3D": {
+					"albedo": [
+						0.42,
+						0.42,
+						0.42
+					],
+					"cls": "StandardMaterial3D",
+					"name": "V2_Wood",
+					"path": "res://assets/village_v2/_matlib/V2_Wood.tres",
+					"tex": true
+				}
+			},
+			"n_children": 1,
+			"n_mesh": 6,
+			"pos": [
+				310.6,
+				-2.37,
+				58.0
+			],
+			"size": [
+				6.42,
+				7.62,
+				6.57
+			],
+			"tris": 2780
+		}
+	},
+	"other_roots": {}
+}

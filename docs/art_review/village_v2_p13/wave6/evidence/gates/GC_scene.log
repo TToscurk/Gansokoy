@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[GC] PASS 場景已掛 Vegetation/GroundcoverP9，順序 ForestP9 → BambooP9 → HiedaGardenP9 → ShrineGroveP9 → SchoolYardP9 → WatersideP9 → TowerYardP9 → SuzunaanP9 → GeidonteiP9 → KirisameP9 → GroundcoverP9
+[GC] PASS MultiMesh 分塊 1920 節點（全部不投影＋visibility range）、碰撞 0（地被は碰撞なし）
+[GC] PASS [全村] 地面 overlay 區塊 178（一般／林緣／溪岸、全部不投影＋visibility range）、art_revision＝P9 R5 Macro Expansion v3（全村 Macro Ground Integration：一般類は全村 Macro、林緣・溪岸は r5、Pilot r10f・Macro Pilot m9 凍結、可見最上面ルール；ART_REVIEW 前）
+[GC] PASS [Macro] 地面 overlay 3 區（A／B／C、gc_macro shader、不投影＋visibility range）
+[GC] PASS [MV] 全村 Macro 地面 overlay 216 區塊（gc_macro shader、不投影＋visibility range）
+[GC] PASS 永久 build rule：場景中 GroundcoverP9 全部 instance transform 非零（MultiMesh 節點 1920、instance 23798、零矩陣 0 ）
+[GC] INFO GroundcoverP9：instance 15196、植物節點 1423
+ERROR: Condition "multimesh->mesh.is_null()" is true.
+   at: _multimesh_re_create_aabb (servers/rendering/renderer_rd/storage_rd/mesh_storage.cpp:1836)
+   GDScript backtrace (most recent call first):
+       [0] _scene (res://tools/verify_village_v2_groundcover.gd:997)
+       [1] _run (res://tools/verify_village_v2_groundcover.gd:55)
+[GC] PASS [P10 限定解封] 場景：路地 1 の歩く芯の地被 instance 0（= 0）；反向：芯に 1 つ足すと 1（= 1）
+[GC] 結果：0 項失敗（scene）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12

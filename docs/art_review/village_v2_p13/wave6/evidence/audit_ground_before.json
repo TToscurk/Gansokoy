@@ -1,0 +1,7232 @@
+{
+	"Vegetation/GeidonteiP9/Ground": {
+		"d_min": 0.0106840133666992,
+		"d_p05": 0.010999321937561,
+		"d_p50": 0.0110000371932983,
+		"samples": 30040,
+		"top_cells": [],
+		"tri": 3004,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Ground_forest": {
+		"d_min": -0.0552730560302734,
+		"d_p05": 0.0091094970703125,
+		"d_p50": 0.0109996795654297,
+		"samples": 25650,
+		"top_cells": [
+			{
+				"at": [
+					226.0,
+					10.58,
+					-193.9
+				],
+				"cell4m": [
+					224,
+					-196
+				],
+				"n": 27,
+				"worst": -0.036
+			},
+			{
+				"at": [
+					231.9,
+					21.88,
+					-210.0
+				],
+				"cell4m": [
+					228,
+					-212
+				],
+				"n": 16,
+				"worst": -0.054
+			},
+			{
+				"at": [
+					226.3,
+					12.04,
+					-196.3
+				],
+				"cell4m": [
+					224,
+					-200
+				],
+				"n": 15,
+				"worst": -0.055
+			},
+			{
+				"at": [
+					228.7,
+					16.5,
+					-202.7
+				],
+				"cell4m": [
+					228,
+					-204
+				],
+				"n": 14,
+				"worst": -0.033
+			}
+		],
+		"tri": 23080,
+		"under20mm_pct": 0.1364522417154,
+		"under50mm_pct": 0.0116959064327485,
+		"under5mm_pct": 0.553606237816764
+	},
+	"Vegetation/GroundcoverP9/Ground/Ground_lawn": {
+		"d_min": 0.0108146667480469,
+		"d_p05": 0.0109994411468506,
+		"d_p50": 0.0110002756118774,
+		"samples": 27390,
+		"top_cells": [],
+		"tri": 13694,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Ground_stream": {
+		"d_min": -0.00961720943450928,
+		"d_p05": 0.010999321937561,
+		"d_p50": 0.0110000371932983,
+		"samples": 31050,
+		"top_cells": [
+			{
+				"at": [
+					176.0,
+					1.39,
+					-82.9
+				],
+				"cell4m": [
+					176,
+					-84
+				],
+				"n": 4,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					172.0,
+					1.51,
+					-103.6
+				],
+				"cell4m": [
+					172,
+					-104
+				],
+				"n": 3,
+				"worst": -0.009
+			},
+			{
+				"at": [
+					178.0,
+					1.3,
+					-67.6
+				],
+				"cell4m": [
+					176,
+					-68
+				],
+				"n": 3,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					172.0,
+					1.25,
+					-59.5
+				],
+				"cell4m": [
+					172,
+					-60
+				],
+				"n": 3,
+				"worst": -0.006
+			}
+		],
+		"tri": 12420,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0515297906602254
+	},
+	"Vegetation/GroundcoverP9/Ground/Ground_street": {
+		"d_min": 0.00953269004821777,
+		"d_p05": 0.0108661651611328,
+		"d_p50": 0.0110001564025879,
+		"samples": 4020,
+		"top_cells": [],
+		"tri": 402,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Macro/M_A": {
+		"d_min": -0.0167734026908875,
+		"d_p05": 0.015778124332428,
+		"d_p50": 0.0160000026226044,
+		"samples": 26390,
+		"top_cells": [
+			{
+				"at": [
+					297.4,
+					-0.55,
+					116.6
+				],
+				"cell4m": [
+					296,
+					116
+				],
+				"n": 3,
+				"worst": -0.017
+			}
+		],
+		"tri": 26384,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0113679424024252
+	},
+	"Vegetation/GroundcoverP9/Ground/Macro/M_B": {
+		"d_min": -0.0848962068557739,
+		"d_p05": 0.0156002044677734,
+		"d_p50": 0.0160001516342163,
+		"samples": 28060,
+		"top_cells": [
+			{
+				"at": [
+					363.3,
+					0.95,
+					-149.3
+				],
+				"cell4m": [
+					360,
+					-152
+				],
+				"n": 14,
+				"worst": -0.022
+			},
+			{
+				"at": [
+					352.7,
+					1.63,
+					-134.7
+				],
+				"cell4m": [
+					352,
+					-136
+				],
+				"n": 9,
+				"worst": -0.027
+			},
+			{
+				"at": [
+					360.0,
+					1.43,
+					-146.0
+				],
+				"cell4m": [
+					360,
+					-148
+				],
+				"n": 8,
+				"worst": -0.042
+			},
+			{
+				"at": [
+					349.1,
+					0.83,
+					-101.1
+				],
+				"cell4m": [
+					348,
+					-104
+				],
+				"n": 7,
+				"worst": -0.085
+			}
+		],
+		"tri": 22448,
+		"under20mm_pct": 0.114041339985745,
+		"under50mm_pct": 0.0142551674982181,
+		"under5mm_pct": 0.26015680684248
+	},
+	"Vegetation/GroundcoverP9/Ground/Macro/M_C": {
+		"d_min": 0.0133132934570313,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 28300,
+		"top_cells": [],
+		"tri": 19806,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-1": {
+		"d_min": 0.0157822370529175,
+		"d_p05": 0.0159769058227539,
+		"d_p50": 0.0160001516342163,
+		"samples": 1580,
+		"top_cells": [],
+		"tri": 158,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-11": {
+		"d_min": 0.00549697875976563,
+		"d_p05": 0.014129638671875,
+		"d_p50": 0.0160007476806641,
+		"samples": 48760,
+		"top_cells": [],
+		"tri": 4876,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-12": {
+		"d_min": 0.0077972412109375,
+		"d_p05": 0.0148649215698242,
+		"d_p50": 0.0159997940063477,
+		"samples": 29980,
+		"top_cells": [],
+		"tri": 2998,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-2": {
+		"d_min": 0.0149350166320801,
+		"d_p05": 0.0159533023834229,
+		"d_p50": 0.0160002708435059,
+		"samples": 13360,
+		"top_cells": [],
+		"tri": 1336,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-3": {
+		"d_min": 0.0159389972686768,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 11280,
+		"top_cells": [],
+		"tri": 1128,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-4": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 31320,
+		"top_cells": [],
+		"tri": 3132,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-5": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 25110,
+		"top_cells": [],
+		"tri": 5022,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-6": {
+		"d_min": 0.0149432420730591,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160007476806641,
+		"samples": 42060,
+		"top_cells": [],
+		"tri": 4206,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-7": {
+		"d_min": 0.0153260231018066,
+		"d_p05": 0.0159053802490234,
+		"d_p50": 0.0160002708435059,
+		"samples": 2620,
+		"top_cells": [],
+		"tri": 262,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_-9": {
+		"d_min": 0.0152502059936523,
+		"d_p05": 0.0156669616699219,
+		"d_p50": 0.0159997940063477,
+		"samples": 8300,
+		"top_cells": [],
+		"tri": 830,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_0": {
+		"d_min": 0.0159304738044739,
+		"d_p05": 0.0159992575645447,
+		"d_p50": 0.0660065412521362,
+		"samples": 1020,
+		"top_cells": [],
+		"tri": 102,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_1": {
+		"d_min": 0.0148658752441406,
+		"d_p05": 0.0159990787506104,
+		"d_p50": 0.0160006880760193,
+		"samples": 27920,
+		"top_cells": [],
+		"tri": 2792,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_2": {
+		"d_min": 0.0156326293945313,
+		"d_p05": 0.0159991979598999,
+		"d_p50": 0.0635738372802734,
+		"samples": 11180,
+		"top_cells": [],
+		"tri": 1118,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_3": {
+		"d_min": 0.0157782137393951,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000622272491,
+		"samples": 1780,
+		"top_cells": [],
+		"tri": 178,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_5": {
+		"d_min": 0.0159994512796402,
+		"d_p05": 0.0159994661808014,
+		"d_p50": 0.0159997940063477,
+		"samples": 340,
+		"top_cells": [],
+		"tri": 34,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_10_6": {
+		"d_min": 0.0159984827041626,
+		"d_p05": 0.0159987509250641,
+		"d_p50": 0.0160000324249268,
+		"samples": 80,
+		"top_cells": [],
+		"tri": 8,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-1": {
+		"d_min": 0.0156807899475098,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.016000509262085,
+		"samples": 42580,
+		"top_cells": [],
+		"tri": 4258,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-11": {
+		"d_min": 0.00948715209960938,
+		"d_p05": 0.0143051147460938,
+		"d_p50": 0.0160007476806641,
+		"samples": 21340,
+		"top_cells": [],
+		"tri": 2134,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-12": {
+		"d_min": 0.00679397583007813,
+		"d_p05": 0.0147256851196289,
+		"d_p50": 0.0159997940063477,
+		"samples": 20660,
+		"top_cells": [],
+		"tri": 2066,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-2": {
+		"d_min": 0.0148165225982666,
+		"d_p05": 0.0159988403320313,
+		"d_p50": 0.0655266046524048,
+		"samples": 19060,
+		"top_cells": [],
+		"tri": 1906,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-3": {
+		"d_min": 0.0159074068069458,
+		"d_p05": 0.0159957408905029,
+		"d_p50": 0.0160002708435059,
+		"samples": 4400,
+		"top_cells": [],
+		"tri": 440,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-4": {
+		"d_min": 0.0155736207962036,
+		"d_p05": 0.0159988403320313,
+		"d_p50": 0.0160002708435059,
+		"samples": 29280,
+		"top_cells": [],
+		"tri": 2928,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-5": {
+		"d_min": 0.0156965255737305,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.016000509262085,
+		"samples": 44860,
+		"top_cells": [],
+		"tri": 4486,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_-6": {
+		"d_min": 0.0146194696426392,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160009860992432,
+		"samples": 35760,
+		"top_cells": [],
+		"tri": 3576,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_0": {
+		"d_min": 0.0159991383552551,
+		"d_p05": 0.0159994959831238,
+		"d_p50": 0.0160002708435059,
+		"samples": 36470,
+		"top_cells": [],
+		"tri": 7294,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_1": {
+		"d_min": 0.0150667428970337,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0659850239753723,
+		"samples": 32860,
+		"top_cells": [],
+		"tri": 3286,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_2": {
+		"d_min": 0.0157430171966553,
+		"d_p05": 0.0159997940063477,
+		"d_p50": 0.0659717917442322,
+		"samples": 32080,
+		"top_cells": [],
+		"tri": 3208,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_11_5": {
+		"d_min": 0.00816535949707031,
+		"d_p05": 0.0149027407169342,
+		"d_p50": 0.0159999206662178,
+		"samples": 11560,
+		"top_cells": [],
+		"tri": 1156,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-1": {
+		"d_min": 0.0155260562896729,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 25950,
+		"top_cells": [],
+		"tri": 5190,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-11": {
+		"d_min": 0.000827789306640625,
+		"d_p05": 0.0119380950927734,
+		"d_p50": 0.0159988403320313,
+		"samples": 31880,
+		"top_cells": [],
+		"tri": 3188,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-12": {
+		"d_min": 0.00913000106811523,
+		"d_p05": 0.0137844085693359,
+		"d_p50": 0.0160003900527954,
+		"samples": 4560,
+		"top_cells": [],
+		"tri": 456,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-2": {
+		"d_min": 0.0150647163391113,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0659772157669067,
+		"samples": 36400,
+		"top_cells": [],
+		"tri": 3640,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-3": {
+		"d_min": 0.0159991979598999,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160000324249268,
+		"samples": 30480,
+		"top_cells": [],
+		"tri": 6096,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-4": {
+		"d_min": 0.0159987211227417,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 25420,
+		"top_cells": [],
+		"tri": 5084,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-5": {
+		"d_min": 0.0158007144927979,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0659865140914917,
+		"samples": 21900,
+		"top_cells": [],
+		"tri": 2190,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-6": {
+		"d_min": 0.01475989818573,
+		"d_p05": 0.0159593820571899,
+		"d_p50": 0.0160106420516968,
+		"samples": 26160,
+		"top_cells": [],
+		"tri": 2616,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_-7": {
+		"d_min": 0.0133131742477417,
+		"d_p05": 0.0158292055130005,
+		"d_p50": 0.0160000324249268,
+		"samples": 21580,
+		"top_cells": [],
+		"tri": 2158,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_0": {
+		"d_min": 0.0144650340080261,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.015999972820282,
+		"samples": 36110,
+		"top_cells": [],
+		"tri": 7222,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_1": {
+		"d_min": 0.0125035643577576,
+		"d_p05": 0.015841007232666,
+		"d_p50": 0.0160003304481506,
+		"samples": 32460,
+		"top_cells": [],
+		"tri": 3246,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_2": {
+		"d_min": 0.060334324836731,
+		"d_p05": 0.0628021955490112,
+		"d_p50": 0.065673828125,
+		"samples": 640,
+		"top_cells": [],
+		"tri": 64,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_3": {
+		"d_min": 0.0120198428630829,
+		"d_p05": 0.0148600041866302,
+		"d_p50": 0.0159998387098312,
+		"samples": 14060,
+		"top_cells": [],
+		"tri": 1406,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_4": {
+		"d_min": 0.0105644911527634,
+		"d_p05": 0.0148618221282959,
+		"d_p50": 0.01599982380867,
+		"samples": 16300,
+		"top_cells": [],
+		"tri": 1630,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_12_5": {
+		"d_min": 0.00989368557929993,
+		"d_p05": 0.0149604231119156,
+		"d_p50": 0.0159999132156372,
+		"samples": 39480,
+		"top_cells": [],
+		"tri": 3948,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-1": {
+		"d_min": 0.0133501291275024,
+		"d_p05": 0.0154668092727661,
+		"d_p50": 0.0160000324249268,
+		"samples": 4900,
+		"top_cells": [],
+		"tri": 490,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-10": {
+		"d_min": 0.00484657287597656,
+		"d_p05": 0.0122585296630859,
+		"d_p50": 0.0159988403320313,
+		"samples": 11740,
+		"top_cells": [],
+		"tri": 1174,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-11": {
+		"d_min": 0.00244712829589844,
+		"d_p05": 0.0123844146728516,
+		"d_p50": 0.0160007476806641,
+		"samples": 10600,
+		"top_cells": [],
+		"tri": 1060,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-12": {
+		"d_min": 0.00795173645019531,
+		"d_p05": 0.0147805213928223,
+		"d_p50": 0.0160002708435059,
+		"samples": 25620,
+		"top_cells": [],
+		"tri": 2562,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-2": {
+		"d_min": 0.0127660632133484,
+		"d_p05": 0.0156877040863037,
+		"d_p50": 0.0160003900527954,
+		"samples": 20160,
+		"top_cells": [],
+		"tri": 2016,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-3": {
+		"d_min": 0.0140429735183716,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160000324249268,
+		"samples": 16520,
+		"top_cells": [],
+		"tri": 1652,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-4": {
+		"d_min": 0.0143189430236816,
+		"d_p05": 0.0158540606498718,
+		"d_p50": 0.0159999132156372,
+		"samples": 35780,
+		"top_cells": [],
+		"tri": 3578,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-5": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0659811496734619,
+		"samples": 6520,
+		"top_cells": [],
+		"tri": 652,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-6": {
+		"d_min": 0.0150046348571777,
+		"d_p05": 0.0159733295440674,
+		"d_p50": 0.0160162448883057,
+		"samples": 4560,
+		"top_cells": [],
+		"tri": 456,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-7": {
+		"d_min": 0.0107122659683228,
+		"d_p05": 0.0152753591537476,
+		"d_p50": 0.0159999132156372,
+		"samples": 49580,
+		"top_cells": [],
+		"tri": 4958,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-8": {
+		"d_min": 0.00962269306182861,
+		"d_p05": 0.0149589776992798,
+		"d_p50": 0.0160000324249268,
+		"samples": 17660,
+		"top_cells": [],
+		"tri": 1766,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_-9": {
+		"d_min": 0.0114402770996094,
+		"d_p05": 0.0132560729980469,
+		"d_p50": 0.0159997940063477,
+		"samples": 560,
+		"top_cells": [],
+		"tri": 56,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_0": {
+		"d_min": 0.0137910842895508,
+		"d_p05": 0.0152508616447449,
+		"d_p50": 0.0160000920295715,
+		"samples": 9440,
+		"top_cells": [],
+		"tri": 944,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_1": {
+		"d_min": 0.0131088495254517,
+		"d_p05": 0.0154436826705933,
+		"d_p50": 0.0160001516342163,
+		"samples": 16560,
+		"top_cells": [],
+		"tri": 1656,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_2": {
+		"d_min": 0.0133064389228821,
+		"d_p05": 0.0159552991390228,
+		"d_p50": 0.0160000920295715,
+		"samples": 3320,
+		"top_cells": [],
+		"tri": 332,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_3": {
+		"d_min": 0.0112071931362152,
+		"d_p05": 0.0152741819620132,
+		"d_p50": 0.015999972820282,
+		"samples": 33440,
+		"top_cells": [],
+		"tri": 3344,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_4": {
+		"d_min": 0.0103999972343445,
+		"d_p05": 0.0150466561317444,
+		"d_p50": 0.015999972820282,
+		"samples": 40040,
+		"top_cells": [],
+		"tri": 4004,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_5": {
+		"d_min": 0.010820746421814,
+		"d_p05": 0.0150845050811768,
+		"d_p50": 0.015999972820282,
+		"samples": 27390,
+		"top_cells": [],
+		"tri": 5478,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_13_6": {
+		"d_min": 0.0135365128517151,
+		"d_p05": 0.0155102014541626,
+		"d_p50": 0.0160000622272491,
+		"samples": 2620,
+		"top_cells": [],
+		"tri": 262,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-10": {
+		"d_min": 0.00589084625244141,
+		"d_p05": 0.0142302513122559,
+		"d_p50": 0.0159997940063477,
+		"samples": 4900,
+		"top_cells": [],
+		"tri": 490,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-11": {
+		"d_min": 0.0077967643737793,
+		"d_p05": 0.0141639709472656,
+		"d_p50": 0.0159997940063477,
+		"samples": 33260,
+		"top_cells": [],
+		"tri": 3326,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-12": {
+		"d_min": 0.00531864166259766,
+		"d_p05": 0.0140056610107422,
+		"d_p50": 0.0159997940063477,
+		"samples": 25080,
+		"top_cells": [],
+		"tri": 5016,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-7": {
+		"d_min": 0.0114583969116211,
+		"d_p05": 0.0159643888473511,
+		"d_p50": 0.0160001516342163,
+		"samples": 40480,
+		"top_cells": [],
+		"tri": 4048,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-8": {
+		"d_min": 0.00975459814071655,
+		"d_p05": 0.015097051858902,
+		"d_p50": 0.0160000324249268,
+		"samples": 46740,
+		"top_cells": [],
+		"tri": 4674,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_14_-9": {
+		"d_min": 0.0110807381570339,
+		"d_p05": 0.0151271224021912,
+		"d_p50": 0.0159999132156372,
+		"samples": 30980,
+		"top_cells": [],
+		"tri": 3098,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_15_-10": {
+		"d_min": -0.000446319580078125,
+		"d_p05": 0.0150952339172363,
+		"d_p50": 0.0160000324249268,
+		"samples": 30520,
+		"top_cells": [],
+		"tri": 3052,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_15_-11": {
+		"d_min": 0.0040895938873291,
+		"d_p05": 0.0139021873474121,
+		"d_p50": 0.0160000324249268,
+		"samples": 36760,
+		"top_cells": [],
+		"tri": 3676,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_15_-12": {
+		"d_min": 0.00556588172912598,
+		"d_p05": 0.0143365859985352,
+		"d_p50": 0.0159997940063477,
+		"samples": 5200,
+		"top_cells": [],
+		"tri": 520,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_15_-7": {
+		"d_min": -0.01318359375,
+		"d_p05": 0.0135966539382935,
+		"d_p50": 0.0159999132156372,
+		"samples": 10020,
+		"top_cells": [
+			{
+				"at": [
+					381.9,
+					1.68,
+					-153.9
+				],
+				"cell4m": [
+					380,
+					-156
+				],
+				"n": 6,
+				"worst": -0.013
+			}
+		],
+		"tri": 1002,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0598802395209581
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_16_-11": {
+		"d_min": 0.0147350430488586,
+		"d_p05": 0.0157708823680878,
+		"d_p50": 0.0159998834133148,
+		"samples": 3640,
+		"top_cells": [],
+		"tri": 364,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_16_-6": {
+		"d_min": 0.0130493640899658,
+		"d_p05": 0.0155868530273438,
+		"d_p50": 0.015999972820282,
+		"samples": 12080,
+		"top_cells": [],
+		"tri": 1208,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_16_-7": {
+		"d_min": 0.0103738605976105,
+		"d_p05": 0.0155928730964661,
+		"d_p50": 0.015999972820282,
+		"samples": 15020,
+		"top_cells": [],
+		"tri": 1502,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-10": {
+		"d_min": 0.00541114807128906,
+		"d_p05": 0.0156837701797485,
+		"d_p50": 0.0160001516342163,
+		"samples": 43180,
+		"top_cells": [],
+		"tri": 4318,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-11": {
+		"d_min": 0.0039515495300293,
+		"d_p05": 0.0155183672904968,
+		"d_p50": 0.0160000324249268,
+		"samples": 27130,
+		"top_cells": [],
+		"tri": 5426,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-12": {
+		"d_min": 0.0114884376525879,
+		"d_p05": 0.0151715874671936,
+		"d_p50": 0.015999972820282,
+		"samples": 5640,
+		"top_cells": [],
+		"tri": 564,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-6": {
+		"d_min": 0.0131930112838745,
+		"d_p05": 0.0150861144065857,
+		"d_p50": 0.0159997940063477,
+		"samples": 2020,
+		"top_cells": [],
+		"tri": 202,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-7": {
+		"d_min": 0.0148772001266479,
+		"d_p05": 0.0148772001266479,
+		"d_p50": 0.0155295729637146,
+		"samples": 20,
+		"top_cells": [],
+		"tri": 2,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-8": {
+		"d_min": -0.00398898124694824,
+		"d_p05": 0.0135812759399414,
+		"d_p50": 0.0159997940063477,
+		"samples": 15020,
+		"top_cells": [],
+		"tri": 1502,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_17_-9": {
+		"d_min": 0.00275611877441406,
+		"d_p05": 0.0146691799163818,
+		"d_p50": 0.0160000324249268,
+		"samples": 47140,
+		"top_cells": [],
+		"tri": 4714,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-10": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 25320,
+		"top_cells": [],
+		"tri": 2532,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-11": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160002708435059,
+		"samples": 41320,
+		"top_cells": [],
+		"tri": 4132,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-12": {
+		"d_min": 0.0112376809120178,
+		"d_p05": 0.0155415236949921,
+		"d_p50": 0.0160001218318939,
+		"samples": 17260,
+		"top_cells": [],
+		"tri": 1726,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-5": {
+		"d_min": 0.0142839848995209,
+		"d_p05": 0.0157955139875412,
+		"d_p50": 0.0159998834133148,
+		"samples": 18200,
+		"top_cells": [],
+		"tri": 1820,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-6": {
+		"d_min": 0.0142229795455933,
+		"d_p05": 0.015881359577179,
+		"d_p50": 0.0159999430179596,
+		"samples": 560,
+		"top_cells": [],
+		"tri": 56,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-7": {
+		"d_min": 0.0100399255752563,
+		"d_p05": 0.013990044593811,
+		"d_p50": 0.0159995555877686,
+		"samples": 2440,
+		"top_cells": [],
+		"tri": 244,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-8": {
+		"d_min": -0.00699293613433838,
+		"d_p05": 0.0154781341552734,
+		"d_p50": 0.0160000324249268,
+		"samples": 41340,
+		"top_cells": [
+			{
+				"at": [
+					432.4,
+					1.8,
+					-177.5
+				],
+				"cell4m": [
+					432,
+					-180
+				],
+				"n": 4,
+				"worst": -0.007
+			}
+		],
+		"tri": 4134,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.00967585873246251
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_18_-9": {
+		"d_min": 0.0153651237487793,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 22740,
+		"top_cells": [],
+		"tri": 2274,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-11": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159997940063477,
+		"d_p50": 0.016000509262085,
+		"samples": 22880,
+		"top_cells": [],
+		"tri": 2288,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-12": {
+		"d_min": 0.0107144564390183,
+		"d_p05": 0.0155128240585327,
+		"d_p50": 0.0160000026226044,
+		"samples": 17660,
+		"top_cells": [],
+		"tri": 1766,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-5": {
+		"d_min": 0.00385427474975586,
+		"d_p05": 0.0150842070579529,
+		"d_p50": 0.0159998834133148,
+		"samples": 29440,
+		"top_cells": [],
+		"tri": 2944,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-6": {
+		"d_min": 0.0154247283935547,
+		"d_p05": 0.0155038833618164,
+		"d_p50": 0.0159991979598999,
+		"samples": 40,
+		"top_cells": [],
+		"tri": 4,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-7": {
+		"d_min": 0.0094296932220459,
+		"d_p05": 0.0145821571350098,
+		"d_p50": 0.0159997940063477,
+		"samples": 25440,
+		"top_cells": [],
+		"tri": 2544,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_19_-8": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.016000509262085,
+		"samples": 31100,
+		"top_cells": [],
+		"tri": 3110,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-11": {
+		"d_min": 0.0159986019134521,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160002708435059,
+		"samples": 8180,
+		"top_cells": [],
+		"tri": 818,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-12": {
+		"d_min": 0.0110386610031128,
+		"d_p05": 0.0156497955322266,
+		"d_p50": 0.0159999430179596,
+		"samples": 19020,
+		"top_cells": [],
+		"tri": 1902,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-4": {
+		"d_min": 0.0159969702363014,
+		"d_p05": 0.0159990563988686,
+		"d_p50": 0.0160000324249268,
+		"samples": 1400,
+		"top_cells": [],
+		"tri": 140,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-5": {
+		"d_min": -0.00579327344894409,
+		"d_p05": 0.0138425230979919,
+		"d_p50": 0.0160001516342163,
+		"samples": 22560,
+		"top_cells": [
+			{
+				"at": [
+					503.7,
+					0.3,
+					-102.3
+				],
+				"cell4m": [
+					500,
+					-104
+				],
+				"n": 4,
+				"worst": -0.006
+			}
+		],
+		"tri": 2256,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0177304964539007
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-6": {
+		"d_min": -0.000622004270553589,
+		"d_p05": 0.00602242350578308,
+		"d_p50": 0.0159994959831238,
+		"samples": 280,
+		"top_cells": [],
+		"tri": 28,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-7": {
+		"d_min": -0.000770151615142822,
+		"d_p05": 0.014951229095459,
+		"d_p50": 0.0159999132156372,
+		"samples": 20880,
+		"top_cells": [],
+		"tri": 2088,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_20_-8": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 27160,
+		"top_cells": [],
+		"tri": 2716,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-10": {
+		"d_min": 0.0111377239227295,
+		"d_p05": 0.0145282745361328,
+		"d_p50": 0.0160000324249268,
+		"samples": 3660,
+		"top_cells": [],
+		"tri": 366,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-11": {
+		"d_min": 0.0141136646270752,
+		"d_p05": 0.0158360600471497,
+		"d_p50": 0.0160001516342163,
+		"samples": 19680,
+		"top_cells": [],
+		"tri": 1968,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-12": {
+		"d_min": 0.0109129548072815,
+		"d_p05": 0.0156701505184174,
+		"d_p50": 0.0159999579191208,
+		"samples": 29100,
+		"top_cells": [],
+		"tri": 2910,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-4": {
+		"d_min": 0.00237125158309937,
+		"d_p05": 0.0159831345081329,
+		"d_p50": 0.0163248330354691,
+		"samples": 3700,
+		"top_cells": [],
+		"tri": 370,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-5": {
+		"d_min": -0.0037306547164917,
+		"d_p05": 0.0104997754096985,
+		"d_p50": 0.0160000920295715,
+		"samples": 3100,
+		"top_cells": [],
+		"tri": 310,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-6": {
+		"d_min": 0.00015982985496521,
+		"d_p05": 0.0137362480163574,
+		"d_p50": 0.0160001218318939,
+		"samples": 6800,
+		"top_cells": [],
+		"tri": 680,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-7": {
+		"d_min": 0.00818872451782227,
+		"d_p05": 0.0154516994953156,
+		"d_p50": 0.0160000920295715,
+		"samples": 38200,
+		"top_cells": [],
+		"tri": 3820,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_21_-8": {
+		"d_min": 0.0158512592315674,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 3760,
+		"top_cells": [],
+		"tri": 376,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-1": {
+		"d_min": 0.0140225887298584,
+		"d_p05": 0.0158383846282959,
+		"d_p50": 0.0160002708435059,
+		"samples": 1340,
+		"top_cells": [],
+		"tri": 134,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-10": {
+		"d_min": 0.0129445791244507,
+		"d_p05": 0.0156876444816589,
+		"d_p50": 0.0160002708435059,
+		"samples": 15860,
+		"top_cells": [],
+		"tri": 1586,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-11": {
+		"d_min": 0.011821985244751,
+		"d_p05": 0.0156608819961548,
+		"d_p50": 0.015999972820282,
+		"samples": 6800,
+		"top_cells": [],
+		"tri": 680,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-12": {
+		"d_min": 0.00931072235107422,
+		"d_p05": 0.0156011581420898,
+		"d_p50": 0.0160000324249268,
+		"samples": 18600,
+		"top_cells": [],
+		"tri": 1860,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-3": {
+		"d_min": 0.0113189220428467,
+		"d_p05": 0.0157140493392944,
+		"d_p50": 0.0160001516342163,
+		"samples": 16140,
+		"top_cells": [],
+		"tri": 1614,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-4": {
+		"d_min": 0.0116901397705078,
+		"d_p05": 0.0155413150787354,
+		"d_p50": 0.0160001516342163,
+		"samples": 19320,
+		"top_cells": [],
+		"tri": 1932,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-5": {
+		"d_min": 0.00821971893310547,
+		"d_p05": 0.0156211853027344,
+		"d_p50": 0.0160001516342163,
+		"samples": 23400,
+		"top_cells": [],
+		"tri": 2340,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-6": {
+		"d_min": 0.0129847526550293,
+		"d_p05": 0.0153849124908447,
+		"d_p50": 0.0160001516342163,
+		"samples": 9180,
+		"top_cells": [],
+		"tri": 918,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-8": {
+		"d_min": 0.0133209228515625,
+		"d_p05": 0.0158984661102295,
+		"d_p50": 0.0160002708435059,
+		"samples": 6340,
+		"top_cells": [],
+		"tri": 634,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_-9": {
+		"d_min": 0.0104775428771973,
+		"d_p05": 0.0154111385345459,
+		"d_p50": 0.0160000324249268,
+		"samples": 14540,
+		"top_cells": [],
+		"tri": 1454,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_0": {
+		"d_min": 0.00889730453491211,
+		"d_p05": 0.0155559778213501,
+		"d_p50": 0.0160001516342163,
+		"samples": 21940,
+		"top_cells": [],
+		"tri": 2194,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_1": {
+		"d_min": 0.010272741317749,
+		"d_p05": 0.0154565572738647,
+		"d_p50": 0.0160001516342163,
+		"samples": 26100,
+		"top_cells": [],
+		"tri": 2610,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_2": {
+		"d_min": 0.011338472366333,
+		"d_p05": 0.0151083469390869,
+		"d_p50": 0.0160000324249268,
+		"samples": 7900,
+		"top_cells": [],
+		"tri": 790,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_3": {
+		"d_min": 0.0110502243041992,
+		"d_p05": 0.0149514675140381,
+		"d_p50": 0.0160001516342163,
+		"samples": 9920,
+		"top_cells": [],
+		"tri": 992,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_4": {
+		"d_min": 0.0114268064498901,
+		"d_p05": 0.0155022144317627,
+		"d_p50": 0.0160001516342163,
+		"samples": 12460,
+		"top_cells": [],
+		"tri": 1246,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_5": {
+		"d_min": 0.0102914571762085,
+		"d_p05": 0.0152639150619507,
+		"d_p50": 0.0160000324249268,
+		"samples": 24640,
+		"top_cells": [],
+		"tri": 2464,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_4_6": {
+		"d_min": 0.0146384239196777,
+		"d_p05": 0.0157473683357239,
+		"d_p50": 0.0160001516342163,
+		"samples": 3200,
+		"top_cells": [],
+		"tri": 320,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-1": {
+		"d_min": 0.0145566463470459,
+		"d_p05": 0.0159994959831238,
+		"d_p50": 0.0160003900527954,
+		"samples": 49040,
+		"top_cells": [],
+		"tri": 4904,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-10": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 21540,
+		"top_cells": [],
+		"tri": 2154,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-11": {
+		"d_min": 0.0144042372703552,
+		"d_p05": 0.0159990787506104,
+		"d_p50": 0.0159997940063477,
+		"samples": 19740,
+		"top_cells": [],
+		"tri": 1974,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-12": {
+		"d_min": 0.00830379128456116,
+		"d_p05": 0.0152902901172638,
+		"d_p50": 0.0159997716546059,
+		"samples": 5880,
+		"top_cells": [],
+		"tri": 588,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-2": {
+		"d_min": 0.0159987211227417,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160001516342163,
+		"samples": 32020,
+		"top_cells": [],
+		"tri": 3202,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-3": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160000324249268,
+		"samples": 29380,
+		"top_cells": [],
+		"tri": 2938,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-4": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 23600,
+		"top_cells": [],
+		"tri": 2360,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-5": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160001516342163,
+		"samples": 30900,
+		"top_cells": [],
+		"tri": 3090,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-6": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 30160,
+		"top_cells": [],
+		"tri": 3016,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-7": {
+		"d_min": 0.0159993171691895,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0159999132156372,
+		"samples": 4060,
+		"top_cells": [],
+		"tri": 406,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-8": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160002708435059,
+		"samples": 33960,
+		"top_cells": [],
+		"tri": 3396,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_-9": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0159997940063477,
+		"samples": 25400,
+		"top_cells": [],
+		"tri": 2540,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_0": {
+		"d_min": 0.0159670114517212,
+		"d_p05": 0.0159993767738342,
+		"d_p50": 0.0160000920295715,
+		"samples": 48880,
+		"top_cells": [],
+		"tri": 4888,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_1": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159993767738342,
+		"d_p50": 0.0160002112388611,
+		"samples": 16340,
+		"top_cells": [],
+		"tri": 1634,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_2": {
+		"d_min": 0.0159991979598999,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0159999132156372,
+		"samples": 17800,
+		"top_cells": [],
+		"tri": 1780,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_3": {
+		"d_min": 0.0148600935935974,
+		"d_p05": 0.0156701803207397,
+		"d_p50": 0.015999972820282,
+		"samples": 2020,
+		"top_cells": [],
+		"tri": 202,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_5": {
+		"d_min": 0.0133727788925171,
+		"d_p05": 0.014832615852356,
+		"d_p50": 0.0160000324249268,
+		"samples": 2780,
+		"top_cells": [],
+		"tri": 278,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_5_6": {
+		"d_min": 0.0157682541757822,
+		"d_p05": 0.0157682541757822,
+		"d_p50": 0.0164450379088521,
+		"samples": 20,
+		"top_cells": [],
+		"tri": 2,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-1": {
+		"d_min": 0.0143023133277893,
+		"d_p05": 0.0159195065498352,
+		"d_p50": 0.0159999132156372,
+		"samples": 11700,
+		"top_cells": [],
+		"tri": 1170,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-10": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 37520,
+		"top_cells": [],
+		"tri": 3752,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-11": {
+		"d_min": 0.00971603393554688,
+		"d_p05": 0.0157196521759033,
+		"d_p50": 0.0160000324249268,
+		"samples": 28750,
+		"top_cells": [],
+		"tri": 5750,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-12": {
+		"d_min": 0.0117321312427521,
+		"d_p05": 0.0153770223259926,
+		"d_p50": 0.016000047326088,
+		"samples": 24120,
+		"top_cells": [],
+		"tri": 2412,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-2": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160003900527954,
+		"samples": 38340,
+		"top_cells": [],
+		"tri": 3834,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-3": {
+		"d_min": 0.0159991979598999,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0659763813018799,
+		"samples": 32620,
+		"top_cells": [],
+		"tri": 3262,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-4": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0659583806991577,
+		"samples": 16640,
+		"top_cells": [],
+		"tri": 1664,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-5": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 20720,
+		"top_cells": [],
+		"tri": 2072,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-6": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160000324249268,
+		"samples": 8360,
+		"top_cells": [],
+		"tri": 836,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-7": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160001516342163,
+		"samples": 27220,
+		"top_cells": [],
+		"tri": 2722,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-8": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 33060,
+		"top_cells": [],
+		"tri": 6612,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_-9": {
+		"d_min": 0.0159986019134521,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160007476806641,
+		"samples": 26990,
+		"top_cells": [],
+		"tri": 5398,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_0": {
+		"d_min": 0.0157716274261475,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160001516342163,
+		"samples": 9400,
+		"top_cells": [],
+		"tri": 940,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_1": {
+		"d_min": 0.015903115272522,
+		"d_p05": 0.0159993767738342,
+		"d_p50": 0.0160000324249268,
+		"samples": 35380,
+		"top_cells": [],
+		"tri": 3538,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_2": {
+		"d_min": 0.0157139897346497,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.016000509262085,
+		"samples": 33880,
+		"top_cells": [],
+		"tri": 3388,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_3": {
+		"d_min": 0.0159162878990173,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160001516342163,
+		"samples": 38660,
+		"top_cells": [],
+		"tri": 3866,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_4": {
+		"d_min": 0.01021409034729,
+		"d_p05": 0.0157559514045715,
+		"d_p50": 0.015999972820282,
+		"samples": 31100,
+		"top_cells": [],
+		"tri": 6220,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_5": {
+		"d_min": 0.0100307464599609,
+		"d_p05": 0.0146316885948181,
+		"d_p50": 0.0159999132156372,
+		"samples": 31340,
+		"top_cells": [],
+		"tri": 3134,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_6_6": {
+		"d_min": 0.0133208334445953,
+		"d_p05": 0.0153602957725525,
+		"d_p50": 0.0159998536109924,
+		"samples": 4580,
+		"top_cells": [],
+		"tri": 458,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-1": {
+		"d_min": 0.0153583288192749,
+		"d_p05": 0.0159990787506104,
+		"d_p50": 0.0411555767059326,
+		"samples": 27500,
+		"top_cells": [],
+		"tri": 5500,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-10": {
+		"d_min": 0.0159988403320313,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 41200,
+		"top_cells": [],
+		"tri": 4120,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-11": {
+		"d_min": -0.0137500762939453,
+		"d_p05": 0.0149599313735962,
+		"d_p50": 0.0160000324249268,
+		"samples": 26560,
+		"top_cells": [
+			{
+				"at": [
+					189.1,
+					6.71,
+					-263.0
+				],
+				"cell4m": [
+					188,
+					-264
+				],
+				"n": 13,
+				"worst": -0.014
+			}
+		],
+		"tri": 7966,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0489457831325301
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-12": {
+		"d_min": -0.0215549468994141,
+		"d_p05": 0.0118527412414551,
+		"d_p50": 0.0159997940063477,
+		"samples": 30460,
+		"top_cells": [
+			{
+				"at": [
+					187.9,
+					9.14,
+					-268.0
+				],
+				"cell4m": [
+					184,
+					-268
+				],
+				"n": 64,
+				"worst": -0.022
+			},
+			{
+				"at": [
+					188.9,
+					9.9,
+					-269.0
+				],
+				"cell4m": [
+					188,
+					-272
+				],
+				"n": 31,
+				"worst": -0.015
+			},
+			{
+				"at": [
+					187.9,
+					10.0,
+					-269.9
+				],
+				"cell4m": [
+					184,
+					-272
+				],
+				"n": 20,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					188.0,
+					9.19,
+					-267.9
+				],
+				"cell4m": [
+					188,
+					-268
+				],
+				"n": 10,
+				"worst": -0.015
+			}
+		],
+		"tri": 3046,
+		"under20mm_pct": 0.0393959290873276,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.41365725541694
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-2": {
+		"d_min": 0.0159620046615601,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160003900527954,
+		"samples": 25420,
+		"top_cells": [],
+		"tri": 2542,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-3": {
+		"d_min": 0.0159972906112671,
+		"d_p05": 0.0159995555877686,
+		"d_p50": 0.0160001516342163,
+		"samples": 5440,
+		"top_cells": [],
+		"tri": 544,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-5": {
+		"d_min": 0.0154273509979248,
+		"d_p05": 0.0159516334533691,
+		"d_p50": 0.0160003900527954,
+		"samples": 18340,
+		"top_cells": [],
+		"tri": 1834,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-6": {
+		"d_min": 0.0148863792419434,
+		"d_p05": 0.0159991979598999,
+		"d_p50": 0.0160000324249268,
+		"samples": 31060,
+		"top_cells": [],
+		"tri": 6212,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-7": {
+		"d_min": 0.0159215927124023,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 29820,
+		"top_cells": [],
+		"tri": 5964,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-8": {
+		"d_min": 0.0159984827041626,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160001516342163,
+		"samples": 23280,
+		"top_cells": [],
+		"tri": 2328,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_-9": {
+		"d_min": 0.0159986019134521,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 23380,
+		"top_cells": [],
+		"tri": 2338,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_0": {
+		"d_min": 0.0159991979598999,
+		"d_p05": 0.015999436378479,
+		"d_p50": 0.0160002708435059,
+		"samples": 10280,
+		"top_cells": [],
+		"tri": 1028,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_2": {
+		"d_min": 0.0150983929634094,
+		"d_p05": 0.0159996747970581,
+		"d_p50": 0.0160007476806641,
+		"samples": 44620,
+		"top_cells": [],
+		"tri": 4462,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_3": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000920295715,
+		"samples": 31890,
+		"top_cells": [],
+		"tri": 6378,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_4": {
+		"d_min": 0.0109460949897766,
+		"d_p05": 0.0155780538916588,
+		"d_p50": 0.0159998834133148,
+		"samples": 28340,
+		"top_cells": [],
+		"tri": 8500,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_5": {
+		"d_min": 0.010081946849823,
+		"d_p05": 0.0150569677352905,
+		"d_p50": 0.015999972820282,
+		"samples": 21140,
+		"top_cells": [],
+		"tri": 2114,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_7_6": {
+		"d_min": 0.0144885778427124,
+		"d_p05": 0.0155338048934937,
+		"d_p50": 0.0160000920295715,
+		"samples": 4960,
+		"top_cells": [],
+		"tri": 496,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-1": {
+		"d_min": 0.0156290531158447,
+		"d_p05": 0.0159986019134521,
+		"d_p50": 0.0160003900527954,
+		"samples": 33820,
+		"top_cells": [],
+		"tri": 3382,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-11": {
+		"d_min": -0.00584268569946289,
+		"d_p05": 0.0158224105834961,
+		"d_p50": 0.0160000324249268,
+		"samples": 8240,
+		"top_cells": [
+			{
+				"at": [
+					193.5,
+					3.52,
+					-258.4
+				],
+				"cell4m": [
+					192,
+					-260
+				],
+				"n": 10,
+				"worst": -0.006
+			}
+		],
+		"tri": 824,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.121359223300971
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-12": {
+		"d_min": -0.00583648681640625,
+		"d_p05": 0.00957298278808594,
+		"d_p50": 0.0159988403320313,
+		"samples": 22500,
+		"top_cells": [
+			{
+				"at": [
+					197.8,
+					20.86,
+					-275.9
+				],
+				"cell4m": [
+					196,
+					-276
+				],
+				"n": 2,
+				"worst": -0.006
+			}
+		],
+		"tri": 2250,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.00888888888888889
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-2": {
+		"d_min": 0.0150223970413208,
+		"d_p05": 0.015994668006897,
+		"d_p50": 0.0160002708435059,
+		"samples": 29280,
+		"top_cells": [],
+		"tri": 2928,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-3": {
+		"d_min": 0.0158898830413818,
+		"d_p05": 0.015993595123291,
+		"d_p50": 0.0160000324249268,
+		"samples": 24920,
+		"top_cells": [],
+		"tri": 2492,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-4": {
+		"d_min": 0.015408992767334,
+		"d_p05": 0.0159870386123657,
+		"d_p50": 0.0160003900527954,
+		"samples": 36800,
+		"top_cells": [],
+		"tri": 3680,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-5": {
+		"d_min": 0.0153919458389282,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160009860992432,
+		"samples": 41240,
+		"top_cells": [],
+		"tri": 4124,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-6": {
+		"d_min": 0.0142544507980347,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160002708435059,
+		"samples": 28540,
+		"top_cells": [],
+		"tri": 5708,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_-7": {
+		"d_min": 0.010582447052002,
+		"d_p05": 0.0159553289413452,
+		"d_p50": 0.0160001516342163,
+		"samples": 34500,
+		"top_cells": [],
+		"tri": 3450,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_0": {
+		"d_min": 0.0157392621040344,
+		"d_p05": 0.0159554481506348,
+		"d_p50": 0.0160000324249268,
+		"samples": 15140,
+		"top_cells": [],
+		"tri": 1514,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_1": {
+		"d_min": 0.015891432762146,
+		"d_p05": 0.0159852504730225,
+		"d_p50": 0.0160005688667297,
+		"samples": 7720,
+		"top_cells": [],
+		"tri": 772,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_2": {
+		"d_min": 0.0149926543235779,
+		"d_p05": 0.0159987807273865,
+		"d_p50": 0.0648616552352905,
+		"samples": 26150,
+		"top_cells": [],
+		"tri": 5230,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_3": {
+		"d_min": 0.0150727033615112,
+		"d_p05": 0.0159993469715118,
+		"d_p50": 0.0160003900527954,
+		"samples": 27250,
+		"top_cells": [],
+		"tri": 5450,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_4": {
+		"d_min": 0.0105171203613281,
+		"d_p05": 0.0156338512897491,
+		"d_p50": 0.0159999132156372,
+		"samples": 30720,
+		"top_cells": [],
+		"tri": 6144,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_5": {
+		"d_min": 0.00995296239852905,
+		"d_p05": 0.0156502723693848,
+		"d_p50": 0.015999972820282,
+		"samples": 18180,
+		"top_cells": [],
+		"tri": 1818,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_8_6": {
+		"d_min": 0.0109691023826599,
+		"d_p05": 0.0156278312206268,
+		"d_p50": 0.0159999132156372,
+		"samples": 2540,
+		"top_cells": [],
+		"tri": 254,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-1": {
+		"d_min": 0.0156480073928833,
+		"d_p05": 0.0159994959831238,
+		"d_p50": 0.0659815073013306,
+		"samples": 29580,
+		"top_cells": [],
+		"tri": 2958,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-10": {
+		"d_min": 0.00702095031738281,
+		"d_p05": 0.0140933990478516,
+		"d_p50": 0.0159988403320313,
+		"samples": 30780,
+		"top_cells": [],
+		"tri": 3078,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-11": {
+		"d_min": 0.00916481018066406,
+		"d_p05": 0.0146026611328125,
+		"d_p50": 0.0159997940063477,
+		"samples": 39580,
+		"top_cells": [],
+		"tri": 3958,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-12": {
+		"d_min": 0.00609970092773438,
+		"d_p05": 0.0120201110839844,
+		"d_p50": 0.0159997940063477,
+		"samples": 6200,
+		"top_cells": [],
+		"tri": 620,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-2": {
+		"d_min": 0.0150223970413208,
+		"d_p05": 0.0159996747970581,
+		"d_p50": 0.0160001516342163,
+		"samples": 6480,
+		"top_cells": [],
+		"tri": 648,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-4": {
+		"d_min": 0.0159990787506104,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160000324249268,
+		"samples": 20200,
+		"top_cells": [],
+		"tri": 2020,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-5": {
+		"d_min": 0.015998363494873,
+		"d_p05": 0.0159993171691895,
+		"d_p50": 0.0160001516342163,
+		"samples": 32040,
+		"top_cells": [],
+		"tri": 3204,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-6": {
+		"d_min": 0.0142737627029419,
+		"d_p05": 0.0159991979598999,
+		"d_p50": 0.0160000324249268,
+		"samples": 24000,
+		"top_cells": [],
+		"tri": 2400,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-7": {
+		"d_min": -0.0553736686706543,
+		"d_p05": 0.0158987045288086,
+		"d_p50": 0.0160001516342163,
+		"samples": 15480,
+		"top_cells": [
+			{
+				"at": [
+					238.7,
+					1.65,
+					-166.7
+				],
+				"cell4m": [
+					236,
+					-168
+				],
+				"n": 30,
+				"worst": -0.055
+			}
+		],
+		"tri": 1548,
+		"under20mm_pct": 0.0775193798449612,
+		"under50mm_pct": 0.0258397932816537,
+		"under5mm_pct": 0.193798449612403
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-8": {
+		"d_min": 0.0078883171081543,
+		"d_p05": 0.0078883171081543,
+		"d_p50": 0.0119445323944092,
+		"samples": 20,
+		"top_cells": [],
+		"tri": 2,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-9": {
+		"d_min": -0.00581932067871094,
+		"d_p05": 0.0156707763671875,
+		"d_p50": 0.0159997940063477,
+		"samples": 12340,
+		"top_cells": [
+			{
+				"at": [
+					234.1,
+					24.45,
+					-214.2
+				],
+				"cell4m": [
+					232,
+					-216
+				],
+				"n": 12,
+				"worst": -0.006
+			}
+		],
+		"tri": 1234,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0972447325769854
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_0": {
+		"d_min": 0.0157650709152222,
+		"d_p05": 0.0159994959831238,
+		"d_p50": 0.0659705400466919,
+		"samples": 31640,
+		"top_cells": [],
+		"tri": 6328,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_1": {
+		"d_min": 0.0152170658111572,
+		"d_p05": 0.0159994959831238,
+		"d_p50": 0.0659880638122559,
+		"samples": 26340,
+		"top_cells": [],
+		"tri": 5268,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_2": {
+		"d_min": 0.0153467357158661,
+		"d_p05": 0.0159370601177216,
+		"d_p50": 0.0162113904953003,
+		"samples": 3340,
+		"top_cells": [],
+		"tri": 334,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_3": {
+		"d_min": 0.0147428512573242,
+		"d_p05": 0.0159299671649933,
+		"d_p50": 0.0160002112388611,
+		"samples": 31420,
+		"top_cells": [],
+		"tri": 3142,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_4": {
+		"d_min": 0.0152134001255035,
+		"d_p05": 0.0159904956817627,
+		"d_p50": 0.015999972820282,
+		"samples": 34380,
+		"top_cells": [],
+		"tri": 3438,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_5": {
+		"d_min": 0.0112594068050385,
+		"d_p05": 0.0156817138195038,
+		"d_p50": 0.0160000771284103,
+		"samples": 32320,
+		"top_cells": [],
+		"tri": 3232,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_6": {
+		"d_min": 0.0140777751803398,
+		"d_p05": 0.0156352519989014,
+		"d_p50": 0.0160001963376999,
+		"samples": 3000,
+		"top_cells": [],
+		"tri": 300,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-10": {
+		"d_min": -0.04510498046875,
+		"d_p05": 0.00745582580566406,
+		"d_p50": 0.0119991302490234,
+		"samples": 10800,
+		"top_cells": [
+			{
+				"at": [
+					241.6,
+					29.48,
+					-219.6
+				],
+				"cell4m": [
+					240,
+					-220
+				],
+				"n": 105,
+				"worst": -0.045
+			},
+			{
+				"at": [
+					242.1,
+					29.82,
+					-220.1
+				],
+				"cell4m": [
+					240,
+					-224
+				],
+				"n": 12,
+				"worst": -0.017
+			}
+		],
+		"tri": 1080,
+		"under20mm_pct": 0.240740740740741,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 1.08333333333333
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-11": {
+		"d_min": -0.0241775512695313,
+		"d_p05": 0.00699424743652344,
+		"d_p50": 0.0119991302490234,
+		"samples": 36220,
+		"top_cells": [
+			{
+				"at": [
+					256.0,
+					31.34,
+					-241.5
+				],
+				"cell4m": [
+					252,
+					-244
+				],
+				"n": 32,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					256.0,
+					31.39,
+					-241.4
+				],
+				"cell4m": [
+					256,
+					-244
+				],
+				"n": 27,
+				"worst": -0.024
+			},
+			{
+				"at": [
+					260.0,
+					32.13,
+					-240.4
+				],
+				"cell4m": [
+					260,
+					-244
+				],
+				"n": 26,
+				"worst": -0.019
+			},
+			{
+				"at": [
+					252.0,
+					26.31,
+					-250.0
+				],
+				"cell4m": [
+					252,
+					-252
+				],
+				"n": 2,
+				"worst": -0.006
+			}
+		],
+		"tri": 3622,
+		"under20mm_pct": 0.0358917725013805,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.251242407509663
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-12": {
+		"d_min": -0.00881195068359375,
+		"d_p05": 0.00858402252197266,
+		"d_p50": 0.0120000839233398,
+		"samples": 20720,
+		"top_cells": [
+			{
+				"at": [
+					242.4,
+					8.06,
+					-280.0
+				],
+				"cell4m": [
+					240,
+					-280
+				],
+				"n": 18,
+				"worst": -0.009
+			},
+			{
+				"at": [
+					244.4,
+					6.45,
+					-280.0
+				],
+				"cell4m": [
+					244,
+					-280
+				],
+				"n": 18,
+				"worst": -0.007
+			}
+		],
+		"tri": 2072,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.173745173745174
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-7": {
+		"d_min": -0.0070488452911377,
+		"d_p05": 0.0119884014129639,
+		"d_p50": 0.0119999647140503,
+		"samples": 3880,
+		"top_cells": [
+			{
+				"at": [
+					243.6,
+					2.73,
+					-167.6
+				],
+				"cell4m": [
+					240,
+					-168
+				],
+				"n": 2,
+				"worst": -0.007
+			}
+		],
+		"tri": 388,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0515463917525773
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-8": {
+		"d_min": -0.0884103775024414,
+		"d_p05": 0.0116620063781738,
+		"d_p50": 0.0120000839233398,
+		"samples": 7500,
+		"top_cells": [
+			{
+				"at": [
+					243.6,
+					4.62,
+					-171.6
+				],
+				"cell4m": [
+					240,
+					-172
+				],
+				"n": 10,
+				"worst": -0.088
+			}
+		],
+		"tri": 750,
+		"under20mm_pct": 0.133333333333333,
+		"under50mm_pct": 0.0533333333333333,
+		"under5mm_pct": 0.133333333333333
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_-9": {
+		"d_min": 0.0110130310058594,
+		"d_p05": 0.0114631652832031,
+		"d_p50": 0.0119991302490234,
+		"samples": 4760,
+		"top_cells": [],
+		"tri": 476,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_5": {
+		"d_min": 0.00385206937789917,
+		"d_p05": 0.0110931992530823,
+		"d_p50": 0.0120000094175339,
+		"samples": 46120,
+		"top_cells": [],
+		"tri": 4612,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_10_6": {
+		"d_min": 0.00737941265106201,
+		"d_p05": 0.0105113983154297,
+		"d_p50": 0.0119998753070831,
+		"samples": 3500,
+		"top_cells": [],
+		"tri": 350,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-10": {
+		"d_min": 0.0119895935058594,
+		"d_p05": 0.0119915008544922,
+		"d_p50": 0.0120010375976563,
+		"samples": 160,
+		"top_cells": [],
+		"tri": 16,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-11": {
+		"d_min": -0.0180549621582031,
+		"d_p05": 0.00824928283691406,
+		"d_p50": 0.0120010375976563,
+		"samples": 27920,
+		"top_cells": [
+			{
+				"at": [
+					286.2,
+					18.06,
+					-250.0
+				],
+				"cell4m": [
+					284,
+					-252
+				],
+				"n": 32,
+				"worst": -0.018
+			},
+			{
+				"at": [
+					286.8,
+					21.04,
+					-242.0
+				],
+				"cell4m": [
+					284,
+					-244
+				],
+				"n": 26,
+				"worst": -0.013
+			},
+			{
+				"at": [
+					286.2,
+					18.89,
+					-248.0
+				],
+				"cell4m": [
+					284,
+					-248
+				],
+				"n": 10,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					288.2,
+					20.08,
+					-244.0
+				],
+				"cell4m": [
+					288,
+					-244
+				],
+				"n": 2,
+				"worst": -0.011
+			}
+		],
+		"tri": 5584,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.250716332378223
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-12": {
+		"d_min": -0.000632762908935547,
+		"d_p05": 0.0100221633911133,
+		"d_p50": 0.0120000839233398,
+		"samples": 30780,
+		"top_cells": [],
+		"tri": 3078,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-7": {
+		"d_min": -0.000502824783325195,
+		"d_p05": 0.0105686187744141,
+		"d_p50": 0.0119998455047607,
+		"samples": 17020,
+		"top_cells": [],
+		"tri": 1702,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-8": {
+		"d_min": 0.0119876861572266,
+		"d_p05": 0.0119895935058594,
+		"d_p50": 0.0119996070861816,
+		"samples": 140,
+		"top_cells": [],
+		"tri": 14,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_-9": {
+		"d_min": 0.0119915008544922,
+		"d_p05": 0.011993408203125,
+		"d_p50": 0.0120010375976563,
+		"samples": 100,
+		"top_cells": [],
+		"tri": 10,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_5": {
+		"d_min": 0.00500383973121643,
+		"d_p05": 0.0107860565185547,
+		"d_p50": 0.0119999051094055,
+		"samples": 26080,
+		"top_cells": [],
+		"tri": 2608,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_11_6": {
+		"d_min": 0.00526392459869385,
+		"d_p05": 0.0108500123023987,
+		"d_p50": 0.0120002031326294,
+		"samples": 4000,
+		"top_cells": [],
+		"tri": 400,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-10": {
+		"d_min": 0.0119781494140625,
+		"d_p05": 0.0119838714599609,
+		"d_p50": 0.0119991302490234,
+		"samples": 40,
+		"top_cells": [],
+		"tri": 4,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-11": {
+		"d_min": -0.0176982879638672,
+		"d_p05": 0.0045318603515625,
+		"d_p50": 0.0119991302490234,
+		"samples": 44540,
+		"top_cells": [
+			{
+				"at": [
+					288.4,
+					20.13,
+					-244.0
+				],
+				"cell4m": [
+					288,
+					-244
+				],
+				"n": 56,
+				"worst": -0.011
+			},
+			{
+				"at": [
+					288.4,
+					19.56,
+					-246.0
+				],
+				"cell4m": [
+					288,
+					-248
+				],
+				"n": 21,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					296.0,
+					23.75,
+					-248.0
+				],
+				"cell4m": [
+					296,
+					-248
+				],
+				"n": 9,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					298.0,
+					25.7,
+					-244.0
+				],
+				"cell4m": [
+					296,
+					-244
+				],
+				"n": 6,
+				"worst": -0.007
+			}
+		],
+		"tri": 4454,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.307588684328693
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-12": {
+		"d_min": -0.00376319885253906,
+		"d_p05": 0.00877189636230469,
+		"d_p50": 0.0120000839233398,
+		"samples": 43640,
+		"top_cells": [],
+		"tri": 4364,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-7": {
+		"d_min": 0.00266444683074951,
+		"d_p05": 0.00909841060638428,
+		"d_p50": 0.0119999647140503,
+		"samples": 2140,
+		"top_cells": [],
+		"tri": 214,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-8": {
+		"d_min": 0.00456333160400391,
+		"d_p05": 0.00456333160400391,
+		"d_p50": 0.00903892517089844,
+		"samples": 20,
+		"top_cells": [],
+		"tri": 2,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_-9": {
+		"d_min": 0.0119941234588623,
+		"d_p05": 0.0119991302490234,
+		"d_p50": 0.012000560760498,
+		"samples": 40,
+		"top_cells": [],
+		"tri": 4,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_5": {
+		"d_min": 0.000354588031768799,
+		"d_p05": 0.0100879669189453,
+		"d_p50": 0.0120002031326294,
+		"samples": 2840,
+		"top_cells": [],
+		"tri": 284,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_12_6": {
+		"d_min": 0.00130230188369751,
+		"d_p05": 0.0106084942817688,
+		"d_p50": 0.0120000243186951,
+		"samples": 2000,
+		"top_cells": [],
+		"tri": 200,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-10": {
+		"d_min": -0.01318359375,
+		"d_p05": 0.00682640075683594,
+		"d_p50": 0.0120000839233398,
+		"samples": 45600,
+		"top_cells": [
+			{
+				"at": [
+					320.0,
+					23.15,
+					-238.0
+				],
+				"cell4m": [
+					320,
+					-240
+				],
+				"n": 4,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					322.0,
+					21.19,
+					-236.0
+				],
+				"cell4m": [
+					320,
+					-236
+				],
+				"n": 4,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					328.0,
+					16.46,
+					-236.0
+				],
+				"cell4m": [
+					328,
+					-236
+				],
+				"n": 4,
+				"worst": -0.013
+			},
+			{
+				"at": [
+					326.0,
+					18.11,
+					-236.0
+				],
+				"cell4m": [
+					324,
+					-236
+				],
+				"n": 2,
+				"worst": -0.005
+			}
+		],
+		"tri": 4560,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0307017543859649
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-11": {
+		"d_min": -0.0156955718994141,
+		"d_p05": 0.00449752807617188,
+		"d_p50": 0.0119991302490234,
+		"samples": 41560,
+		"top_cells": [
+			{
+				"at": [
+					316.0,
+					24.26,
+					-250.0
+				],
+				"cell4m": [
+					316,
+					-252
+				],
+				"n": 8,
+				"worst": -0.012
+			},
+			{
+				"at": [
+					314.0,
+					25.12,
+					-250.0
+				],
+				"cell4m": [
+					312,
+					-252
+				],
+				"n": 7,
+				"worst": -0.016
+			},
+			{
+				"at": [
+					320.0,
+					20.94,
+					-252.0
+				],
+				"cell4m": [
+					320,
+					-252
+				],
+				"n": 6,
+				"worst": -0.007
+			},
+			{
+				"at": [
+					318.0,
+					23.95,
+					-248.0
+				],
+				"cell4m": [
+					316,
+					-248
+				],
+				"n": 6,
+				"worst": -0.013
+			}
+		],
+		"tri": 4156,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.158806544754572
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-12": {
+		"d_min": -0.00197219848632813,
+		"d_p05": 0.00792980194091797,
+		"d_p50": 0.0120000839233398,
+		"samples": 3860,
+		"top_cells": [],
+		"tri": 386,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-7": {
+		"d_min": 0.00264197587966919,
+		"d_p05": 0.0091404914855957,
+		"d_p50": 0.0120001435279846,
+		"samples": 2320,
+		"top_cells": [],
+		"tri": 232,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-8": {
+		"d_min": 0.0018114447593689,
+		"d_p05": 0.0101218521595001,
+		"d_p50": 0.0119999945163727,
+		"samples": 37600,
+		"top_cells": [],
+		"tri": 3760,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_13_-9": {
+		"d_min": -0.00463688373565674,
+		"d_p05": 0.00919891893863678,
+		"d_p50": 0.0120000392198563,
+		"samples": 25980,
+		"top_cells": [],
+		"tri": 5196,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_14_-10": {
+		"d_min": 0.00317001342773438,
+		"d_p05": 0.010485053062439,
+		"d_p50": 0.0120000839233398,
+		"samples": 1380,
+		"top_cells": [],
+		"tri": 138,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_14_-9": {
+		"d_min": 0.00793084502220154,
+		"d_p05": 0.0108746588230133,
+		"d_p50": 0.0120000541210175,
+		"samples": 1760,
+		"top_cells": [],
+		"tri": 176,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_17_-11": {
+		"d_min": -0.0102944374084473,
+		"d_p05": 0.00838327407836914,
+		"d_p50": 0.0119996070861816,
+		"samples": 5660,
+		"top_cells": [
+			{
+				"at": [
+					416.0,
+					2.4,
+					-262.0
+				],
+				"cell4m": [
+					416,
+					-264
+				],
+				"n": 12,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					416.0,
+					2.38,
+					-260.0
+				],
+				"cell4m": [
+					416,
+					-260
+				],
+				"n": 11,
+				"worst": -0.006
+			}
+		],
+		"tri": 566,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.406360424028269
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_17_-12": {
+		"d_min": -0.0063788890838623,
+		"d_p05": 0.00846672058105469,
+		"d_p50": 0.0119999647140503,
+		"samples": 38080,
+		"top_cells": [
+			{
+				"at": [
+					420.8,
+					2.43,
+					-266.0
+				],
+				"cell4m": [
+					420,
+					-268
+				],
+				"n": 20,
+				"worst": -0.005
+			},
+			{
+				"at": [
+					416.0,
+					2.09,
+					-266.0
+				],
+				"cell4m": [
+					416,
+					-268
+				],
+				"n": 6,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					416.0,
+					2.35,
+					-264.0
+				],
+				"cell4m": [
+					416,
+					-264
+				],
+				"n": 2,
+				"worst": -0.006
+			}
+		],
+		"tri": 3808,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0735294117647059
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_18_-11": {
+		"d_min": 0.0119986534118652,
+		"d_p05": 0.0119993686676025,
+		"d_p50": 0.0119996070861816,
+		"samples": 5040,
+		"top_cells": [],
+		"tri": 504,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_18_-12": {
+		"d_min": -0.00289773941040039,
+		"d_p05": 0.00947904586791992,
+		"d_p50": 0.0120000839233398,
+		"samples": 36000,
+		"top_cells": [],
+		"tri": 3600,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_19_-11": {
+		"d_min": 0.0119986534118652,
+		"d_p05": 0.0119993686676025,
+		"d_p50": 0.0119996070861816,
+		"samples": 4360,
+		"top_cells": [],
+		"tri": 436,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_19_-12": {
+		"d_min": -0.0057227611541748,
+		"d_p05": 0.00823688507080078,
+		"d_p50": 0.0120000839233398,
+		"samples": 36000,
+		"top_cells": [
+			{
+				"at": [
+					478.6,
+					2.44,
+					-266.0
+				],
+				"cell4m": [
+					476,
+					-268
+				],
+				"n": 18,
+				"worst": -0.005
+			},
+			{
+				"at": [
+					480.2,
+					2.44,
+					-266.0
+				],
+				"cell4m": [
+					480,
+					-268
+				],
+				"n": 3,
+				"worst": -0.006
+			}
+		],
+		"tri": 3600,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0583333333333333
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_20_-11": {
+		"d_min": -0.000490188598632813,
+		"d_p05": 0.0108613967895508,
+		"d_p50": 0.0119998455047607,
+		"samples": 6540,
+		"top_cells": [],
+		"tri": 654,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_20_-12": {
+		"d_min": -0.00751543045043945,
+		"d_p05": 0.00736784934997559,
+		"d_p50": 0.0120000839233398,
+		"samples": 35880,
+		"top_cells": [
+			{
+				"at": [
+					484.0,
+					2.44,
+					-266.0
+				],
+				"cell4m": [
+					484,
+					-268
+				],
+				"n": 40,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					483.0,
+					2.44,
+					-266.0
+				],
+				"cell4m": [
+					480,
+					-268
+				],
+				"n": 37,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					498.6,
+					2.43,
+					-266.0
+				],
+				"cell4m": [
+					496,
+					-268
+				],
+				"n": 36,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					489.0,
+					2.44,
+					-266.0
+				],
+				"cell4m": [
+					488,
+					-268
+				],
+				"n": 20,
+				"worst": -0.005
+			}
+		],
+		"tri": 3588,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.44314381270903
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_21_-10": {
+		"d_min": 0.0048675537109375,
+		"d_p05": 0.0110100507736206,
+		"d_p50": 0.0120000839233398,
+		"samples": 35960,
+		"top_cells": [],
+		"tri": 3596,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_21_-11": {
+		"d_min": 0.000333309173583984,
+		"d_p05": 0.0105250775814056,
+		"d_p50": 0.0120003223419189,
+		"samples": 34000,
+		"top_cells": [],
+		"tri": 3400,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_21_-12": {
+		"d_min": -0.00282180309295654,
+		"d_p05": 0.0074765682220459,
+		"d_p50": 0.012000160291791,
+		"samples": 10560,
+		"top_cells": [],
+		"tri": 1056,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_21_-8": {
+		"d_min": 0.0101244449615479,
+		"d_p05": 0.0119991302490234,
+		"d_p50": 0.0120000839233398,
+		"samples": 9140,
+		"top_cells": [],
+		"tri": 914,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_21_-9": {
+		"d_min": 0.00912284851074219,
+		"d_p05": 0.0114974975585938,
+		"d_p50": 0.0120000839233398,
+		"samples": 26620,
+		"top_cells": [],
+		"tri": 2662,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-1": {
+		"d_min": 0.00916409492492676,
+		"d_p05": 0.0115242600440979,
+		"d_p50": 0.0119999647140503,
+		"samples": 9640,
+		"top_cells": [],
+		"tri": 964,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-10": {
+		"d_min": -0.00201177597045898,
+		"d_p05": 0.0106840133666992,
+		"d_p50": 0.0119999647140503,
+		"samples": 44460,
+		"top_cells": [],
+		"tri": 4446,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-11": {
+		"d_min": -0.00467300415039063,
+		"d_p05": 0.0100820064544678,
+		"d_p50": 0.0120000839233398,
+		"samples": 46140,
+		"top_cells": [],
+		"tri": 4614,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-12": {
+		"d_min": 0.00455522537231445,
+		"d_p05": 0.0112113952636719,
+		"d_p50": 0.0120000913739204,
+		"samples": 34200,
+		"top_cells": [],
+		"tri": 3420,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-2": {
+		"d_min": 0.00527596473693848,
+		"d_p05": 0.0100725889205933,
+		"d_p50": 0.0119999647140503,
+		"samples": 12900,
+		"top_cells": [],
+		"tri": 1290,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-3": {
+		"d_min": 0.00346255302429199,
+		"d_p05": 0.010832667350769,
+		"d_p50": 0.0119999647140503,
+		"samples": 37100,
+		"top_cells": [],
+		"tri": 3710,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-4": {
+		"d_min": 0.00361394882202148,
+		"d_p05": 0.0108845233917236,
+		"d_p50": 0.0119999647140503,
+		"samples": 39080,
+		"top_cells": [],
+		"tri": 3908,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-5": {
+		"d_min": 0.00454354286193848,
+		"d_p05": 0.0109145641326904,
+		"d_p50": 0.0119999647140503,
+		"samples": 41300,
+		"top_cells": [],
+		"tri": 4130,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-6": {
+		"d_min": 0.00193524360656738,
+		"d_p05": 0.00994741916656494,
+		"d_p50": 0.0119999647140503,
+		"samples": 22080,
+		"top_cells": [],
+		"tri": 2208,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-7": {
+		"d_min": 0.00436544418334961,
+		"d_p05": 0.00928950309753418,
+		"d_p50": 0.0119998455047607,
+		"samples": 7420,
+		"top_cells": [],
+		"tri": 742,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-8": {
+		"d_min": 0.00563168525695801,
+		"d_p05": 0.0110117197036743,
+		"d_p50": 0.0120000839233398,
+		"samples": 18580,
+		"top_cells": [],
+		"tri": 1858,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_-9": {
+		"d_min": 0.00226199626922607,
+		"d_p05": 0.0107170343399048,
+		"d_p50": 0.0120000839233398,
+		"samples": 41700,
+		"top_cells": [],
+		"tri": 4170,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_0": {
+		"d_min": 0.00613611936569214,
+		"d_p05": 0.0109609365463257,
+		"d_p50": 0.0119999647140503,
+		"samples": 32480,
+		"top_cells": [],
+		"tri": 3248,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_1": {
+		"d_min": 0.00480037927627563,
+		"d_p05": 0.0111234784126282,
+		"d_p50": 0.0120000839233398,
+		"samples": 39320,
+		"top_cells": [],
+		"tri": 3932,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_2": {
+		"d_min": 0.00488948822021484,
+		"d_p05": 0.0110586881637573,
+		"d_p50": 0.0120000839233398,
+		"samples": 22780,
+		"top_cells": [],
+		"tri": 2278,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_3": {
+		"d_min": 0.00384914875030518,
+		"d_p05": 0.011165976524353,
+		"d_p50": 0.0120000839233398,
+		"samples": 7940,
+		"top_cells": [],
+		"tri": 794,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_4": {
+		"d_min": 0.00360250473022461,
+		"d_p05": 0.0107347965240479,
+		"d_p50": 0.0120001435279846,
+		"samples": 19240,
+		"top_cells": [],
+		"tri": 1924,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_5": {
+		"d_min": 0.00260676443576813,
+		"d_p05": 0.0107442699372768,
+		"d_p50": 0.0120001137256622,
+		"samples": 35580,
+		"top_cells": [],
+		"tri": 3558,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_4_6": {
+		"d_min": 0.00933625549077988,
+		"d_p05": 0.0119994282722473,
+		"d_p50": 0.0120002031326294,
+		"samples": 1600,
+		"top_cells": [],
+		"tri": 160,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-11": {
+		"d_min": 0.00695276260375977,
+		"d_p05": 0.00855237245559692,
+		"d_p50": 0.0120001137256622,
+		"samples": 1420,
+		"top_cells": [],
+		"tri": 142,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-12": {
+		"d_min": -0.000118963420391083,
+		"d_p05": 0.0105308592319489,
+		"d_p50": 0.0120000243186951,
+		"samples": 39580,
+		"top_cells": [],
+		"tri": 3958,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-2": {
+		"d_min": 0.0619701147079468,
+		"d_p05": 0.0619714260101318,
+		"d_p50": 0.0619809627532959,
+		"samples": 60,
+		"top_cells": [],
+		"tri": 6,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-3": {
+		"d_min": 0.0119999647140503,
+		"d_p05": 0.0120000839233398,
+		"d_p50": 0.0619809627532959,
+		"samples": 360,
+		"top_cells": [],
+		"tri": 36,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-4": {
+		"d_min": 0.0119990110397339,
+		"d_p05": 0.0119994878768921,
+		"d_p50": 0.0120002031326294,
+		"samples": 920,
+		"top_cells": [],
+		"tri": 92,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-5": {
+		"d_min": 0.0119994878768921,
+		"d_p05": 0.0119994878768921,
+		"d_p50": 0.0120000839233398,
+		"samples": 80,
+		"top_cells": [],
+		"tri": 8,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_-6": {
+		"d_min": 0.0119991302490234,
+		"d_p05": 0.011999249458313,
+		"d_p50": 0.0119999647140503,
+		"samples": 300,
+		"top_cells": [],
+		"tri": 30,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_1": {
+		"d_min": 0.0119994878768921,
+		"d_p05": 0.0119996070861816,
+		"d_p50": 0.0120000839233398,
+		"samples": 1080,
+		"top_cells": [],
+		"tri": 108,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_2": {
+		"d_min": 0.0119993686676025,
+		"d_p05": 0.0119993686676025,
+		"d_p50": 0.011999785900116,
+		"samples": 160,
+		"top_cells": [],
+		"tri": 16,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_3": {
+		"d_min": 0.0111426115036011,
+		"d_p05": 0.0116571187973022,
+		"d_p50": 0.0120000243186951,
+		"samples": 360,
+		"top_cells": [],
+		"tri": 36,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_5": {
+		"d_min": 0.00178086757659912,
+		"d_p05": 0.00996625423431396,
+		"d_p50": 0.0120000839233398,
+		"samples": 15680,
+		"top_cells": [],
+		"tri": 1568,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_5_6": {
+		"d_min": 0.00968527793884277,
+		"d_p05": 0.0110741257667542,
+		"d_p50": 0.0120000839233398,
+		"samples": 1380,
+		"top_cells": [],
+		"tri": 138,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_6_-12": {
+		"d_min": 0.00256901979446411,
+		"d_p05": 0.00980158150196075,
+		"d_p50": 0.0120000243186951,
+		"samples": 16700,
+		"top_cells": [],
+		"tri": 1670,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_6_5": {
+		"d_min": 0.000356554985046387,
+		"d_p05": 0.0105021595954895,
+		"d_p50": 0.0119999647140503,
+		"samples": 44920,
+		"top_cells": [],
+		"tri": 4492,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_7_-12": {
+		"d_min": 0.00465798377990723,
+		"d_p05": 0.00793138146400452,
+		"d_p50": 0.0120000243186951,
+		"samples": 860,
+		"top_cells": [],
+		"tri": 86,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_7_-9": {
+		"d_min": 0.0119988918304443,
+		"d_p05": 0.0119996070861816,
+		"d_p50": 0.0120000839233398,
+		"samples": 620,
+		"top_cells": [],
+		"tri": 62,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_7_5": {
+		"d_min": 0.000965267419815063,
+		"d_p05": 0.00998616218566895,
+		"d_p50": 0.0119999796152115,
+		"samples": 46500,
+		"top_cells": [],
+		"tri": 4650,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_-10": {
+		"d_min": -0.0439968109130859,
+		"d_p05": 0.0103654861450195,
+		"d_p50": 0.0120000839233398,
+		"samples": 32390,
+		"top_cells": [
+			{
+				"at": [
+					208.0,
+					6.34,
+					-232.0
+				],
+				"cell4m": [
+					208,
+					-232
+				],
+				"n": 33,
+				"worst": -0.026
+			},
+			{
+				"at": [
+					208.8,
+					6.37,
+					-219.2
+				],
+				"cell4m": [
+					208,
+					-220
+				],
+				"n": 33,
+				"worst": -0.038
+			},
+			{
+				"at": [
+					215.6,
+					10.77,
+					-218.0
+				],
+				"cell4m": [
+					212,
+					-220
+				],
+				"n": 29,
+				"worst": -0.03
+			},
+			{
+				"at": [
+					208.8,
+					6.95,
+					-238.8
+				],
+				"cell4m": [
+					208,
+					-240
+				],
+				"n": 28,
+				"worst": -0.044
+			}
+		],
+		"tri": 6478,
+		"under20mm_pct": 0.237727693732634,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.747144180302562
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_-11": {
+		"d_min": -0.0663027763366699,
+		"d_p05": 0.00632524490356445,
+		"d_p50": 0.0120000839233398,
+		"samples": 28080,
+		"top_cells": [
+			{
+				"at": [
+					213.6,
+					10.01,
+					-253.6
+				],
+				"cell4m": [
+					212,
+					-256
+				],
+				"n": 83,
+				"worst": -0.054
+			},
+			{
+				"at": [
+					214.0,
+					12.27,
+					-256.4
+				],
+				"cell4m": [
+					212,
+					-260
+				],
+				"n": 66,
+				"worst": -0.015
+			},
+			{
+				"at": [
+					208.0,
+					7.25,
+					-255.6
+				],
+				"cell4m": [
+					208,
+					-256
+				],
+				"n": 61,
+				"worst": -0.046
+			},
+			{
+				"at": [
+					209.6,
+					7.9,
+					-251.6
+				],
+				"cell4m": [
+					208,
+					-252
+				],
+				"n": 59,
+				"worst": -0.053
+			}
+		],
+		"tri": 5616,
+		"under20mm_pct": 0.584045584045584,
+		"under50mm_pct": 0.0427350427350427,
+		"under5mm_pct": 1.89458689458689
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_-12": {
+		"d_min": -0.0286521911621094,
+		"d_p05": 0.00002288818359375,
+		"d_p50": 0.0119991302490234,
+		"samples": 7220,
+		"top_cells": [
+			{
+				"at": [
+					215.2,
+					21.49,
+					-265.2
+				],
+				"cell4m": [
+					212,
+					-268
+				],
+				"n": 58,
+				"worst": -0.018
+			},
+			{
+				"at": [
+					214.0,
+					23.97,
+					-269.2
+				],
+				"cell4m": [
+					212,
+					-272
+				],
+				"n": 34,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					216.0,
+					22.23,
+					-266.0
+				],
+				"cell4m": [
+					216,
+					-268
+				],
+				"n": 30,
+				"worst": -0.027
+			},
+			{
+				"at": [
+					216.0,
+					25.09,
+					-270.0
+				],
+				"cell4m": [
+					216,
+					-272
+				],
+				"n": 28,
+				"worst": -0.011
+			}
+		],
+		"tri": 722,
+		"under20mm_pct": 0.0554016620498615,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 2.46537396121884
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_-7": {
+		"d_min": 0.0119987726211548,
+		"d_p05": 0.0119987726211548,
+		"d_p50": 0.0120003223419189,
+		"samples": 60,
+		"top_cells": [],
+		"tri": 6,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_-9": {
+		"d_min": -0.0248165130615234,
+		"d_p05": 0.011077880859375,
+		"d_p50": 0.0120000839233398,
+		"samples": 16120,
+		"top_cells": [
+			{
+				"at": [
+					210.0,
+					7.07,
+					-215.6
+				],
+				"cell4m": [
+					208,
+					-216
+				],
+				"n": 36,
+				"worst": -0.025
+			},
+			{
+				"at": [
+					210.8,
+					7.11,
+					-210.8
+				],
+				"cell4m": [
+					208,
+					-212
+				],
+				"n": 8,
+				"worst": -0.019
+			},
+			{
+				"at": [
+					216.2,
+					10.33,
+					-212.0
+				],
+				"cell4m": [
+					216,
+					-212
+				],
+				"n": 1,
+				"worst": -0.015
+			}
+		],
+		"tri": 1612,
+		"under20mm_pct": 0.10545905707196,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.279156327543424
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_5": {
+		"d_min": 0.00181397795677185,
+		"d_p05": 0.0108295679092407,
+		"d_p50": 0.0119999945163727,
+		"samples": 49020,
+		"top_cells": [],
+		"tri": 4902,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_8_6": {
+		"d_min": 0.00927656888961792,
+		"d_p05": 0.0113582015037537,
+		"d_p50": 0.0120000243186951,
+		"samples": 2400,
+		"top_cells": [],
+		"tri": 240,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-10": {
+		"d_min": -0.0665645599365234,
+		"d_p05": 0.00674057006835938,
+		"d_p50": 0.0119991302490234,
+		"samples": 25260,
+		"top_cells": [
+			{
+				"at": [
+					239.6,
+					28.05,
+					-217.6
+				],
+				"cell4m": [
+					236,
+					-220
+				],
+				"n": 29,
+				"worst": -0.06
+			},
+			{
+				"at": [
+					220.0,
+					16.16,
+					-224.1
+				],
+				"cell4m": [
+					216,
+					-228
+				],
+				"n": 28,
+				"worst": -0.009
+			},
+			{
+				"at": [
+					218.0,
+					14.33,
+					-232.0
+				],
+				"cell4m": [
+					216,
+					-232
+				],
+				"n": 26,
+				"worst": -0.019
+			},
+			{
+				"at": [
+					218.0,
+					14.19,
+					-234.0
+				],
+				"cell4m": [
+					216,
+					-236
+				],
+				"n": 23,
+				"worst": -0.013
+			}
+		],
+		"tri": 5052,
+		"under20mm_pct": 0.0593824228028504,
+		"under50mm_pct": 0.0237529691211401,
+		"under5mm_pct": 0.902612826603325
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-11": {
+		"d_min": -0.0257139205932617,
+		"d_p05": 0.00658893585205078,
+		"d_p50": 0.0120000839233398,
+		"samples": 35900,
+		"top_cells": [
+			{
+				"at": [
+					218.0,
+					14.52,
+					-258.0
+				],
+				"cell4m": [
+					216,
+					-260
+				],
+				"n": 60,
+				"worst": -0.019
+			},
+			{
+				"at": [
+					218.0,
+					12.22,
+					-255.6
+				],
+				"cell4m": [
+					216,
+					-256
+				],
+				"n": 55,
+				"worst": -0.026
+			},
+			{
+				"at": [
+					220.0,
+					11.89,
+					-255.6
+				],
+				"cell4m": [
+					220,
+					-256
+				],
+				"n": 36,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					216.8,
+					17.94,
+					-261.2
+				],
+				"cell4m": [
+					216,
+					-264
+				],
+				"n": 33,
+				"worst": -0.016
+			}
+		],
+		"tri": 3590,
+		"under20mm_pct": 0.0501392757660167,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.646239554317549
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-12": {
+		"d_min": -0.021697998046875,
+		"d_p05": 0.00318145751953125,
+		"d_p50": 0.0119991302490234,
+		"samples": 41140,
+		"top_cells": [
+			{
+				"at": [
+					217.6,
+					25.33,
+					-270.4
+				],
+				"cell4m": [
+					216,
+					-272
+				],
+				"n": 49,
+				"worst": -0.02
+			},
+			{
+				"at": [
+					216.8,
+					27.06,
+					-273.2
+				],
+				"cell4m": [
+					216,
+					-276
+				],
+				"n": 21,
+				"worst": -0.022
+			},
+			{
+				"at": [
+					218.0,
+					28.32,
+					-278.0
+				],
+				"cell4m": [
+					216,
+					-280
+				],
+				"n": 16,
+				"worst": -0.02
+			},
+			{
+				"at": [
+					220.0,
+					26.48,
+					-274.0
+				],
+				"cell4m": [
+					220,
+					-276
+				],
+				"n": 13,
+				"worst": -0.018
+			}
+		],
+		"tri": 4114,
+		"under20mm_pct": 0.0291686922702965,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.430238210986874
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-7": {
+		"d_min": -0.00196921825408936,
+		"d_p05": 0.0105153322219849,
+		"d_p50": 0.0120002031326294,
+		"samples": 2060,
+		"top_cells": [],
+		"tri": 206,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-8": {
+		"d_min": 0.0100851058959961,
+		"d_p05": 0.0110807418823242,
+		"d_p50": 0.0120000839233398,
+		"samples": 9300,
+		"top_cells": [],
+		"tri": 930,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-9": {
+		"d_min": -0.0448741912841797,
+		"d_p05": 0.0100421905517578,
+		"d_p50": 0.0120000839233398,
+		"samples": 16480,
+		"top_cells": [
+			{
+				"at": [
+					237.6,
+					26.43,
+					-215.6
+				],
+				"cell4m": [
+					236,
+					-216
+				],
+				"n": 46,
+				"worst": -0.045
+			},
+			{
+				"at": [
+					220.0,
+					14.91,
+					-215.6
+				],
+				"cell4m": [
+					220,
+					-216
+				],
+				"n": 42,
+				"worst": -0.011
+			},
+			{
+				"at": [
+					217.6,
+					11.64,
+					-212.0
+				],
+				"cell4m": [
+					216,
+					-212
+				],
+				"n": 25,
+				"worst": -0.015
+			},
+			{
+				"at": [
+					216.7,
+					10.78,
+					-212.0
+				],
+				"cell4m": [
+					216,
+					-216
+				],
+				"n": 14,
+				"worst": -0.01
+			}
+		],
+		"tri": 1648,
+		"under20mm_pct": 0.121359223300971,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.855582524271845
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_5": {
+		"d_min": 0.00585034489631653,
+		"d_p05": 0.0118857473134995,
+		"d_p50": 0.0120002329349518,
+		"samples": 4680,
+		"top_cells": [],
+		"tri": 468,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_6": {
+		"d_min": 0.0119986832141876,
+		"d_p05": 0.0119989514350891,
+		"d_p50": 0.0119996070861816,
+		"samples": 240,
+		"top_cells": [],
+		"tri": 24,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_11_5": {
+		"d_min": -0.0691766701638699,
+		"d_p05": 0.011324018239975,
+		"d_p50": 0.0130004733800888,
+		"samples": 5180,
+		"top_cells": [
+			{
+				"at": [
+					287.0,
+					0.24,
+					135.0
+				],
+				"cell4m": [
+					284,
+					132
+				],
+				"n": 46,
+				"worst": -0.058
+			},
+			{
+				"at": [
+					287.2,
+					-0.01,
+					130.8
+				],
+				"cell4m": [
+					284,
+					128
+				],
+				"n": 18,
+				"worst": -0.069
+			},
+			{
+				"at": [
+					286.9,
+					0.3,
+					139.1
+				],
+				"cell4m": [
+					284,
+					136
+				],
+				"n": 14,
+				"worst": -0.034
+			},
+			{
+				"at": [
+					287.0,
+					0.08,
+					141.0
+				],
+				"cell4m": [
+					284,
+					140
+				],
+				"n": 12,
+				"worst": -0.066
+			}
+		],
+		"tri": 518,
+		"under20mm_pct": 0.791505791505791,
+		"under50mm_pct": 0.135135135135135,
+		"under5mm_pct": 1.81467181467181
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_11_6": {
+		"d_min": 0.0122336149215698,
+		"d_p05": 0.0124248266220093,
+		"d_p50": 0.0130005478858948,
+		"samples": 460,
+		"top_cells": [],
+		"tri": 46,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_12_2": {
+		"d_min": -0.0272253900766373,
+		"d_p05": 0.00717161595821381,
+		"d_p50": 0.0130003169178963,
+		"samples": 220,
+		"top_cells": [
+			{
+				"at": [
+					307.9,
+					-0.15,
+					58.1
+				],
+				"cell4m": [
+					304,
+					56
+				],
+				"n": 5,
+				"worst": -0.027
+			},
+			{
+				"at": [
+					308.0,
+					-0.15,
+					58.0
+				],
+				"cell4m": [
+					308,
+					56
+				],
+				"n": 1,
+				"worst": -0.008
+			}
+		],
+		"tri": 22,
+		"under20mm_pct": 0.909090909090909,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 2.72727272727273
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_12_3": {
+		"d_min": -0.0559836328029633,
+		"d_p05": 0.00742423534393311,
+		"d_p50": 0.0130004361271858,
+		"samples": 14000,
+		"top_cells": [
+			{
+				"at": [
+					304.7,
+					-0.33,
+					87.4
+				],
+				"cell4m": [
+					304,
+					84
+				],
+				"n": 39,
+				"worst": -0.043
+			},
+			{
+				"at": [
+					308.7,
+					0.06,
+					77.3
+				],
+				"cell4m": [
+					308,
+					76
+				],
+				"n": 37,
+				"worst": -0.014
+			},
+			{
+				"at": [
+					310.0,
+					0.06,
+					73.9
+				],
+				"cell4m": [
+					308,
+					72
+				],
+				"n": 36,
+				"worst": -0.05
+			},
+			{
+				"at": [
+					306.0,
+					-0.13,
+					82.0
+				],
+				"cell4m": [
+					304,
+					80
+				],
+				"n": 34,
+				"worst": -0.03
+			}
+		],
+		"tri": 1400,
+		"under20mm_pct": 0.492857142857143,
+		"under50mm_pct": 0.0285714285714286,
+		"under5mm_pct": 1.67142857142857
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_12_4": {
+		"d_min": 0.00480389595031738,
+		"d_p05": 0.0125282406806946,
+		"d_p50": 0.01300048828125,
+		"samples": 5160,
+		"top_cells": [],
+		"tri": 516,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_12_5": {
+		"d_min": -0.0766731798648834,
+		"d_p05": 0.00965994596481323,
+		"d_p50": 0.0130004361271858,
+		"samples": 6900,
+		"top_cells": [
+			{
+				"at": [
+					296.0,
+					-0.13,
+					129.9
+				],
+				"cell4m": [
+					292,
+					128
+				],
+				"n": 90,
+				"worst": -0.071
+			},
+			{
+				"at": [
+					296.0,
+					-0.14,
+					129.3
+				],
+				"cell4m": [
+					296,
+					128
+				],
+				"n": 46,
+				"worst": -0.077
+			},
+			{
+				"at": [
+					296.0,
+					-0.23,
+					128.0
+				],
+				"cell4m": [
+					292,
+					124
+				],
+				"n": 45,
+				"worst": -0.076
+			},
+			{
+				"at": [
+					296.0,
+					-0.07,
+					132.0
+				],
+				"cell4m": [
+					292,
+					132
+				],
+				"n": 42,
+				"worst": -0.07
+			}
+		],
+		"tri": 690,
+		"under20mm_pct": 3.39130434782609,
+		"under50mm_pct": 1.56521739130435,
+		"under5mm_pct": 3.84057971014493
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_12_6": {
+		"d_min": 0.005867600440979,
+		"d_p05": 0.00765180587768555,
+		"d_p50": 0.0130003690719604,
+		"samples": 400,
+		"top_cells": [],
+		"tri": 40,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_-1": {
+		"d_min": 0.00509065389633179,
+		"d_p05": 0.0128942430019379,
+		"d_p50": 0.0130006670951843,
+		"samples": 1560,
+		"top_cells": [],
+		"tri": 156,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_-2": {
+		"d_min": -0.0548809170722961,
+		"d_p05": -0.00543838739395142,
+		"d_p50": 0.0130006074905396,
+		"samples": 1340,
+		"top_cells": [
+			{
+				"at": [
+					331.0,
+					0.51,
+					-29.0
+				],
+				"cell4m": [
+					328,
+					-32
+				],
+				"n": 59,
+				"worst": -0.055
+			},
+			{
+				"at": [
+					330.3,
+					0.46,
+					-26.3
+				],
+				"cell4m": [
+					328,
+					-28
+				],
+				"n": 9,
+				"worst": -0.032
+			}
+		],
+		"tri": 134,
+		"under20mm_pct": 3.05970149253731,
+		"under50mm_pct": 0.149253731343284,
+		"under5mm_pct": 5.07462686567164
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_-3": {
+		"d_min": -0.0532658994197845,
+		"d_p05": -0.0094408392906189,
+		"d_p50": 0.0130003690719604,
+		"samples": 800,
+		"top_cells": [
+			{
+				"at": [
+					335.2,
+					0.27,
+					-71.2
+				],
+				"cell4m": [
+					332,
+					-72
+				],
+				"n": 22,
+				"worst": -0.053
+			},
+			{
+				"at": [
+					332.3,
+					0.6,
+					-52.3
+				],
+				"cell4m": [
+					332,
+					-56
+				],
+				"n": 21,
+				"worst": -0.024
+			},
+			{
+				"at": [
+					332.7,
+					0.56,
+					-51.3
+				],
+				"cell4m": [
+					332,
+					-52
+				],
+				"n": 4,
+				"worst": -0.008
+			}
+		],
+		"tri": 80,
+		"under20mm_pct": 1.5,
+		"under50mm_pct": 0.5,
+		"under5mm_pct": 5.875
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_-4": {
+		"d_min": -0.0361693501472473,
+		"d_p05": 0.0115275681018829,
+		"d_p50": 0.0130007117986679,
+		"samples": 6720,
+		"top_cells": [
+			{
+				"at": [
+					336.0,
+					0.14,
+					-73.9
+				],
+				"cell4m": [
+					332,
+					-76
+				],
+				"n": 62,
+				"worst": -0.036
+			},
+			{
+				"at": [
+					336.0,
+					0.04,
+					-76.0
+				],
+				"cell4m": [
+					332,
+					-80
+				],
+				"n": 13,
+				"worst": -0.019
+			}
+		],
+		"tri": 672,
+		"under20mm_pct": 0.267857142857143,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 1.11607142857143
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_0": {
+		"d_min": -0.0478032752871513,
+		"d_p05": 0.00882998108863831,
+		"d_p50": 0.0130005478858948,
+		"samples": 4580,
+		"top_cells": [
+			{
+				"at": [
+					335.9,
+					0.08,
+					2.1
+				],
+				"cell4m": [
+					332,
+					0
+				],
+				"n": 56,
+				"worst": -0.048
+			},
+			{
+				"at": [
+					320.2,
+					0.45,
+					23.8
+				],
+				"cell4m": [
+					320,
+					20
+				],
+				"n": 17,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					322.2,
+					0.48,
+					15.8
+				],
+				"cell4m": [
+					320,
+					12
+				],
+				"n": 9,
+				"worst": -0.02
+			},
+			{
+				"at": [
+					322.3,
+					0.47,
+					16.3
+				],
+				"cell4m": [
+					320,
+					16
+				],
+				"n": 6,
+				"worst": -0.016
+			}
+		],
+		"tri": 458,
+		"under20mm_pct": 0.283842794759825,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 1.98689956331878
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_1": {
+		"d_min": -0.083576112985611,
+		"d_p05": 0.0114500522613525,
+		"d_p50": 0.0130005180835724,
+		"samples": 7440,
+		"top_cells": [
+			{
+				"at": [
+					318.0,
+					0.32,
+					37.9
+				],
+				"cell4m": [
+					316,
+					36
+				],
+				"n": 47,
+				"worst": -0.057
+			},
+			{
+				"at": [
+					327.0,
+					0.26,
+					37.0
+				],
+				"cell4m": [
+					324,
+					36
+				],
+				"n": 23,
+				"worst": -0.084
+			},
+			{
+				"at": [
+					329.8,
+					0.55,
+					30.2
+				],
+				"cell4m": [
+					328,
+					28
+				],
+				"n": 13,
+				"worst": -0.023
+			},
+			{
+				"at": [
+					320.9,
+					0.43,
+					25.1
+				],
+				"cell4m": [
+					320,
+					24
+				],
+				"n": 6,
+				"worst": -0.044
+			}
+		],
+		"tri": 744,
+		"under20mm_pct": 0.806451612903226,
+		"under50mm_pct": 0.10752688172043,
+		"under5mm_pct": 1.19623655913979
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_2": {
+		"d_min": -0.0507058277726173,
+		"d_p05": 0.011835128068924,
+		"d_p50": 0.01300048828125,
+		"samples": 5260,
+		"top_cells": [
+			{
+				"at": [
+					313.7,
+					-0.08,
+					66.3
+				],
+				"cell4m": [
+					312,
+					64
+				],
+				"n": 55,
+				"worst": -0.051
+			},
+			{
+				"at": [
+					317.3,
+					0.14,
+					60.7
+				],
+				"cell4m": [
+					316,
+					60
+				],
+				"n": 8,
+				"worst": -0.012
+			}
+		],
+		"tri": 526,
+		"under20mm_pct": 0.171102661596958,
+		"under50mm_pct": 0.0380228136882129,
+		"under5mm_pct": 1.19771863117871
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_13_3": {
+		"d_min": 0.01182821393013,
+		"d_p05": 0.0121205300092697,
+		"d_p50": 0.0130003914237022,
+		"samples": 340,
+		"top_cells": [],
+		"tri": 34,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_-1": {
+		"d_min": -0.0218228697776794,
+		"d_p05": 0.0119818598031998,
+		"d_p50": 0.0130004733800888,
+		"samples": 1920,
+		"top_cells": [
+			{
+				"at": [
+					339.7,
+					-0.19,
+					-17.7
+				],
+				"cell4m": [
+					336,
+					-20
+				],
+				"n": 6,
+				"worst": -0.014
+			},
+			{
+				"at": [
+					339.7,
+					-0.15,
+					-20.2
+				],
+				"cell4m": [
+					336,
+					-24
+				],
+				"n": 2,
+				"worst": -0.022
+			}
+		],
+		"tri": 192,
+		"under20mm_pct": 0.0520833333333333,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.416666666666667
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_-2": {
+		"d_min": -0.0554972216486931,
+		"d_p05": 0.0123489201068878,
+		"d_p50": 0.0130005097016692,
+		"samples": 3960,
+		"top_cells": [
+			{
+				"at": [
+					340.0,
+					-0.07,
+					-31.0
+				],
+				"cell4m": [
+					340,
+					-32
+				],
+				"n": 30,
+				"worst": -0.055
+			},
+			{
+				"at": [
+					340.0,
+					-0.07,
+					-30.2
+				],
+				"cell4m": [
+					336,
+					-32
+				],
+				"n": 6,
+				"worst": -0.038
+			}
+		],
+		"tri": 396,
+		"under20mm_pct": 0.757575757575758,
+		"under50mm_pct": 0.0757575757575758,
+		"under5mm_pct": 0.909090909090909
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_-3": {
+		"d_min": 0.0103399157524109,
+		"d_p05": 0.0119363963603973,
+		"d_p50": 0.0130004743114114,
+		"samples": 2460,
+		"top_cells": [],
+		"tri": 246,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_-4": {
+		"d_min": -0.0438709184527397,
+		"d_p05": -0.000806733965873718,
+		"d_p50": 0.0130005031824112,
+		"samples": 2500,
+		"top_cells": [
+			{
+				"at": [
+					337.0,
+					-0.29,
+					-81.0
+				],
+				"cell4m": [
+					336,
+					-84
+				],
+				"n": 52,
+				"worst": -0.044
+			},
+			{
+				"at": [
+					336.3,
+					-0.18,
+					-76.3
+				],
+				"cell4m": [
+					336,
+					-80
+				],
+				"n": 15,
+				"worst": -0.024
+			},
+			{
+				"at": [
+					347.0,
+					-0.06,
+					-89.0
+				],
+				"cell4m": [
+					344,
+					-92
+				],
+				"n": 10,
+				"worst": -0.044
+			},
+			{
+				"at": [
+					347.0,
+					-0.01,
+					-87.0
+				],
+				"cell4m": [
+					344,
+					-88
+				],
+				"n": 9,
+				"worst": -0.03
+			}
+		],
+		"tri": 250,
+		"under20mm_pct": 0.84,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 3.44
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_-7": {
+		"d_min": -0.00969600677490234,
+		"d_p05": 0.00120139122009277,
+		"d_p50": 0.0130002498626709,
+		"samples": 540,
+		"top_cells": [
+			{
+				"at": [
+					360.2,
+					1.78,
+					-148.2
+				],
+				"cell4m": [
+					360,
+					-152
+				],
+				"n": 3,
+				"worst": -0.009
+			},
+			{
+				"at": [
+					360.0,
+					1.78,
+					-148.0
+				],
+				"cell4m": [
+					360,
+					-148
+				],
+				"n": 2,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					359.9,
+					1.79,
+					-147.9
+				],
+				"cell4m": [
+					356,
+					-148
+				],
+				"n": 1,
+				"worst": -0.005
+			}
+		],
+		"tri": 54,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 1.11111111111111
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_14_0": {
+		"d_min": 0.0117900371551514,
+		"d_p05": 0.0125164687633514,
+		"d_p50": 0.0130003988742828,
+		"samples": 380,
+		"top_cells": [],
+		"tri": 38,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_15_-10": {
+		"d_min": -0.00577539205551147,
+		"d_p05": 0.00756144523620605,
+		"d_p50": 0.0130004584789276,
+		"samples": 9800,
+		"top_cells": [
+			{
+				"at": [
+					374.0,
+					0.87,
+					-238.0
+				],
+				"cell4m": [
+					372,
+					-240
+				],
+				"n": 3,
+				"worst": -0.006
+			}
+		],
+		"tri": 980,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0306122448979592
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_15_-11": {
+		"d_min": -0.000844836235046387,
+		"d_p05": 0.0113332867622375,
+		"d_p50": 0.0130005478858948,
+		"samples": 10180,
+		"top_cells": [],
+		"tri": 1018,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_15_-12": {
+		"d_min": -0.00261855125427246,
+		"d_p05": 0.00846493244171143,
+		"d_p50": 0.01300048828125,
+		"samples": 7260,
+		"top_cells": [],
+		"tri": 726,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_15_-7": {
+		"d_min": -0.0422511100769043,
+		"d_p05": -0.00167179107666016,
+		"d_p50": 0.0130003690719604,
+		"samples": 6800,
+		"top_cells": [
+			{
+				"at": [
+					363.9,
+					1.77,
+					-151.9
+				],
+				"cell4m": [
+					360,
+					-152
+				],
+				"n": 97,
+				"worst": -0.027
+			},
+			{
+				"at": [
+					366.9,
+					1.59,
+					-154.9
+				],
+				"cell4m": [
+					364,
+					-156
+				],
+				"n": 41,
+				"worst": -0.042
+			},
+			{
+				"at": [
+					376.7,
+					0.69,
+					-150.7
+				],
+				"cell4m": [
+					376,
+					-152
+				],
+				"n": 34,
+				"worst": -0.021
+			},
+			{
+				"at": [
+					361.2,
+					1.27,
+					-147.2
+				],
+				"cell4m": [
+					360,
+					-148
+				],
+				"n": 22,
+				"worst": -0.014
+			}
+		],
+		"tri": 680,
+		"under20mm_pct": 0.838235294117647,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 3.54411764705882
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_15_-9": {
+		"d_min": 0.0120331645011902,
+		"d_p05": 0.0122737288475037,
+		"d_p50": 0.0130003094673157,
+		"samples": 60,
+		"top_cells": [],
+		"tri": 6,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-10": {
+		"d_min": 0.00802314281463623,
+		"d_p05": 0.0113498568534851,
+		"d_p50": 0.01300048828125,
+		"samples": 5740,
+		"top_cells": [],
+		"tri": 574,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-11": {
+		"d_min": 0.00160807371139526,
+		"d_p05": 0.0102491676807404,
+		"d_p50": 0.0130004584789276,
+		"samples": 19780,
+		"top_cells": [],
+		"tri": 1978,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-12": {
+		"d_min": 0.00213721394538879,
+		"d_p05": 0.0118787884712219,
+		"d_p50": 0.01300048828125,
+		"samples": 15360,
+		"top_cells": [],
+		"tri": 1536,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-6": {
+		"d_min": 0.00873386859893799,
+		"d_p05": 0.0115871131420136,
+		"d_p50": 0.0130005180835724,
+		"samples": 2520,
+		"top_cells": [],
+		"tri": 252,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-7": {
+		"d_min": 0.0006142258644104,
+		"d_p05": 0.010887086391449,
+		"d_p50": 0.01300048828125,
+		"samples": 7780,
+		"top_cells": [],
+		"tri": 778,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-8": {
+		"d_min": -0.00114095211029053,
+		"d_p05": 0.0086665153503418,
+		"d_p50": 0.0130005031824112,
+		"samples": 4660,
+		"top_cells": [],
+		"tri": 466,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_16_-9": {
+		"d_min": 0.00675243139266968,
+		"d_p05": 0.0100154280662537,
+		"d_p50": 0.013000663369894,
+		"samples": 540,
+		"top_cells": [],
+		"tri": 54,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-10": {
+		"d_min": 0.00839758664369583,
+		"d_p05": 0.0123681128025055,
+		"d_p50": 0.0130003988742828,
+		"samples": 10720,
+		"top_cells": [],
+		"tri": 1072,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-11": {
+		"d_min": 0.0104810744524002,
+		"d_p05": 0.0117015689611435,
+		"d_p50": 0.0130003392696381,
+		"samples": 280,
+		"top_cells": [],
+		"tri": 28,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-12": {
+		"d_min": 0.00916099548339844,
+		"d_p05": 0.0114640593528748,
+		"d_p50": 0.01300048828125,
+		"samples": 420,
+		"top_cells": [],
+		"tri": 42,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-5": {
+		"d_min": 0.00712212920188904,
+		"d_p05": 0.012182354927063,
+		"d_p50": 0.01300048828125,
+		"samples": 2120,
+		"top_cells": [],
+		"tri": 212,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-6": {
+		"d_min": -0.00252920389175415,
+		"d_p05": 0.0112743973731995,
+		"d_p50": 0.01300048828125,
+		"samples": 17380,
+		"top_cells": [],
+		"tri": 1738,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-7": {
+		"d_min": 0.00172907114028931,
+		"d_p05": 0.00922375917434692,
+		"d_p50": 0.0130004286766052,
+		"samples": 1820,
+		"top_cells": [],
+		"tri": 182,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-8": {
+		"d_min": -0.00277161598205566,
+		"d_p05": 0.0107572674751282,
+		"d_p50": 0.0130001604557037,
+		"samples": 9340,
+		"top_cells": [],
+		"tri": 934,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_17_-9": {
+		"d_min": 0.00146174430847168,
+		"d_p05": 0.0099128782749176,
+		"d_p50": 0.0130000710487366,
+		"samples": 6400,
+		"top_cells": [],
+		"tri": 640,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_18_-5": {
+		"d_min": 0.00820526480674744,
+		"d_p05": 0.0121496617794037,
+		"d_p50": 0.0130004733800888,
+		"samples": 7160,
+		"top_cells": [],
+		"tri": 716,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_18_-6": {
+		"d_min": 0.00342863798141479,
+		"d_p05": 0.0109530687332153,
+		"d_p50": 0.01300048828125,
+		"samples": 12700,
+		"top_cells": [],
+		"tri": 1270,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_18_-7": {
+		"d_min": 0.00293076038360596,
+		"d_p05": 0.0111243724822998,
+		"d_p50": 0.0130001902580261,
+		"samples": 11440,
+		"top_cells": [],
+		"tri": 1144,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_18_-8": {
+		"d_min": 0.0105632543563843,
+		"d_p05": 0.0122258067131042,
+		"d_p50": 0.0130000710487366,
+		"samples": 400,
+		"top_cells": [],
+		"tri": 40,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_19_-5": {
+		"d_min": 0.00325825810432434,
+		"d_p05": 0.00960144400596619,
+		"d_p50": 0.01300048828125,
+		"samples": 13160,
+		"top_cells": [],
+		"tri": 1316,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_19_-6": {
+		"d_min": 0.00699889659881592,
+		"d_p05": 0.0112724304199219,
+		"d_p50": 0.0130003392696381,
+		"samples": 2940,
+		"top_cells": [],
+		"tri": 294,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_19_-7": {
+		"d_min": 0.00358593463897705,
+		"d_p05": 0.010256290435791,
+		"d_p50": 0.0130001902580261,
+		"samples": 9620,
+		"top_cells": [],
+		"tri": 962,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_20_-5": {
+		"d_min": -0.00444111227989197,
+		"d_p05": 0.00780463218688965,
+		"d_p50": 0.0130004975944757,
+		"samples": 14760,
+		"top_cells": [],
+		"tri": 1476,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_20_-6": {
+		"d_min": 0.00357138365507126,
+		"d_p05": 0.0103708505630493,
+		"d_p50": 0.0130003690719604,
+		"samples": 16400,
+		"top_cells": [],
+		"tri": 1640,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_20_-7": {
+		"d_min": 0.0124453902244568,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.0142536163330078,
+		"samples": 100,
+		"top_cells": [],
+		"tri": 10,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_21_-5": {
+		"d_min": -0.0199605822563171,
+		"d_p05": 0.0077551007270813,
+		"d_p50": 0.01300048828125,
+		"samples": 12320,
+		"top_cells": [
+			{
+				"at": [
+					516.5,
+					0.51,
+					-99.5
+				],
+				"cell4m": [
+					516,
+					-100
+				],
+				"n": 12,
+				"worst": -0.02
+			},
+			{
+				"at": [
+					504.1,
+					0.33,
+					-101.9
+				],
+				"cell4m": [
+					504,
+					-104
+				],
+				"n": 1,
+				"worst": -0.005
+			}
+		],
+		"tri": 1232,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.105519480519481
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_21_-6": {
+		"d_min": -0.00520902872085571,
+		"d_p05": 0.0109288394451141,
+		"d_p50": 0.0130004286766052,
+		"samples": 15220,
+		"top_cells": [
+			{
+				"at": [
+					513.7,
+					0.25,
+					-138.4
+				],
+				"cell4m": [
+					512,
+					-140
+				],
+				"n": 2,
+				"worst": -0.005
+			}
+		],
+		"tri": 1522,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0131406044678055
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_4_-7": {
+		"d_min": -0.0326263904571533,
+		"d_p05": 0.00956392288208008,
+		"d_p50": 0.0130002498626709,
+		"samples": 7300,
+		"top_cells": [
+			{
+				"at": [
+					114.3,
+					1.85,
+					-167.7
+				],
+				"cell4m": [
+					112,
+					-168
+				],
+				"n": 13,
+				"worst": -0.021
+			},
+			{
+				"at": [
+					119.3,
+					1.78,
+					-158.7
+				],
+				"cell4m": [
+					116,
+					-160
+				],
+				"n": 11,
+				"worst": -0.013
+			},
+			{
+				"at": [
+					118.1,
+					1.85,
+					-165.9
+				],
+				"cell4m": [
+					116,
+					-168
+				],
+				"n": 6,
+				"worst": -0.033
+			},
+			{
+				"at": [
+					115.8,
+					1.82,
+					-160.2
+				],
+				"cell4m": [
+					112,
+					-164
+				],
+				"n": 4,
+				"worst": -0.031
+			}
+		],
+		"tri": 730,
+		"under20mm_pct": 0.10958904109589,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.479452054794521
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_4_-8": {
+		"d_min": -0.00220251083374023,
+		"d_p05": 0.0114167928695679,
+		"d_p50": 0.0130003690719604,
+		"samples": 6000,
+		"top_cells": [],
+		"tri": 600,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_4_4": {
+		"d_min": 0.0121966153383255,
+		"d_p05": 0.0123978331685066,
+		"d_p50": 0.0130005667451769,
+		"samples": 120,
+		"top_cells": [],
+		"tri": 12,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_4_5": {
+		"d_min": 0.00614547729492188,
+		"d_p05": 0.012537956237793,
+		"d_p50": 0.0130005478858948,
+		"samples": 8320,
+		"top_cells": [],
+		"tri": 832,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_4_6": {
+		"d_min": 0.00810050964355469,
+		"d_p05": 0.00973409414291382,
+		"d_p50": 0.0130004286766052,
+		"samples": 360,
+		"top_cells": [],
+		"tri": 36,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_-6": {
+		"d_min": 0.0130000114440918,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.0130007266998291,
+		"samples": 80,
+		"top_cells": [],
+		"tri": 8,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_-7": {
+		"d_min": -0.0265846252441406,
+		"d_p05": 0.0129989385604858,
+		"d_p50": 0.0130003690719604,
+		"samples": 41160,
+		"top_cells": [
+			{
+				"at": [
+					132.1,
+					1.83,
+					-160.0
+				],
+				"cell4m": [
+					132,
+					-164
+				],
+				"n": 36,
+				"worst": -0.02
+			},
+			{
+				"at": [
+					120.1,
+					1.83,
+					-158.0
+				],
+				"cell4m": [
+					120,
+					-160
+				],
+				"n": 35,
+				"worst": -0.014
+			},
+			{
+				"at": [
+					123.8,
+					1.86,
+					-164.0
+				],
+				"cell4m": [
+					120,
+					-164
+				],
+				"n": 29,
+				"worst": -0.019
+			},
+			{
+				"at": [
+					128.0,
+					1.71,
+					-155.9
+				],
+				"cell4m": [
+					128,
+					-156
+				],
+				"n": 29,
+				"worst": -0.017
+			}
+		],
+		"tri": 4116,
+		"under20mm_pct": 0.0145772594752187,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.549076773566569
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_-8": {
+		"d_min": 0.0130000114440918,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.01300048828125,
+		"samples": 2020,
+		"top_cells": [],
+		"tri": 202,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_0": {
+		"d_min": 0.000420808792114258,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.0130003094673157,
+		"samples": 5540,
+		"top_cells": [],
+		"tri": 554,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_1": {
+		"d_min": -0.00984209775924683,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130005478858948,
+		"samples": 19860,
+		"top_cells": [
+			{
+				"at": [
+					142.0,
+					0.69,
+					32.7
+				],
+				"cell4m": [
+					140,
+					32
+				],
+				"n": 25,
+				"worst": -0.01
+			},
+			{
+				"at": [
+					138.3,
+					0.61,
+					45.7
+				],
+				"cell4m": [
+					136,
+					44
+				],
+				"n": 4,
+				"worst": -0.009
+			}
+		],
+		"tri": 1986,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.146022155085599
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_2": {
+		"d_min": -0.00865769386291504,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130003690719604,
+		"samples": 31380,
+		"top_cells": [
+			{
+				"at": [
+					142.0,
+					0.55,
+					56.7
+				],
+				"cell4m": [
+					140,
+					56
+				],
+				"n": 31,
+				"worst": -0.009
+			},
+			{
+				"at": [
+					136.1,
+					0.57,
+					53.9
+				],
+				"cell4m": [
+					136,
+					52
+				],
+				"n": 21,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					136.0,
+					0.56,
+					55.6
+				],
+				"cell4m": [
+					132,
+					52
+				],
+				"n": 4,
+				"worst": -0.007
+			},
+			{
+				"at": [
+					139.8,
+					0.47,
+					70.2
+				],
+				"cell4m": [
+					136,
+					68
+				],
+				"n": 1,
+				"worst": -0.006
+			}
+		],
+		"tri": 3138,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.181644359464627
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_3": {
+		"d_min": -0.00521647930145264,
+		"d_p05": 0.0126915872097015,
+		"d_p50": 0.0130005478858948,
+		"samples": 36460,
+		"top_cells": [
+			{
+				"at": [
+					130.3,
+					0.33,
+					84.3
+				],
+				"cell4m": [
+					128,
+					84
+				],
+				"n": 1,
+				"worst": -0.005
+			}
+		],
+		"tri": 3646,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.00274273176083379
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_4": {
+		"d_min": -0.00782105326652527,
+		"d_p05": 0.0116844177246094,
+		"d_p50": 0.0130004286766052,
+		"samples": 8500,
+		"top_cells": [
+			{
+				"at": [
+					131.7,
+					0.49,
+					116.3
+				],
+				"cell4m": [
+					128,
+					116
+				],
+				"n": 2,
+				"worst": -0.008
+			}
+		],
+		"tri": 850,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0235294117647059
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_5": {
+		"d_min": -0.0212924480438232,
+		"d_p05": 0.0119362771511078,
+		"d_p50": 0.01300048828125,
+		"samples": 33200,
+		"top_cells": [
+			{
+				"at": [
+					131.0,
+					0.42,
+					121.0
+				],
+				"cell4m": [
+					128,
+					120
+				],
+				"n": 8,
+				"worst": -0.021
+			},
+			{
+				"at": [
+					130.8,
+					0.35,
+					125.2
+				],
+				"cell4m": [
+					128,
+					124
+				],
+				"n": 2,
+				"worst": -0.008
+			}
+		],
+		"tri": 3320,
+		"under20mm_pct": 0.00301204819277108,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0301204819277108
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_5_6": {
+		"d_min": 0.00303071737289429,
+		"d_p05": 0.0116826444864273,
+		"d_p50": 0.01300048828125,
+		"samples": 1960,
+		"top_cells": [],
+		"tri": 196,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-1": {
+		"d_min": -0.00417482852935791,
+		"d_p05": 0.0128293037414551,
+		"d_p50": 0.0130005478858948,
+		"samples": 27440,
+		"top_cells": [],
+		"tri": 2744,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-2": {
+		"d_min": -0.00533008575439453,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130007266998291,
+		"samples": 20960,
+		"top_cells": [
+			{
+				"at": [
+					166.1,
+					1.11,
+					-38.1
+				],
+				"cell4m": [
+					164,
+					-40
+				],
+				"n": 2,
+				"worst": -0.005
+			}
+		],
+		"tri": 2096,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.00954198473282443
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-3": {
+		"d_min": 0.0130000114440918,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.0130002498626709,
+		"samples": 3440,
+		"top_cells": [],
+		"tri": 344,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-5": {
+		"d_min": -0.0157812833786011,
+		"d_p05": 0.0129889249801636,
+		"d_p50": 0.0130007266998291,
+		"samples": 16060,
+		"top_cells": [
+			{
+				"at": [
+					164.0,
+					1.51,
+					-106.4
+				],
+				"cell4m": [
+					164,
+					-108
+				],
+				"n": 8,
+				"worst": -0.016
+			},
+			{
+				"at": [
+					167.8,
+					1.57,
+					-114.2
+				],
+				"cell4m": [
+					164,
+					-116
+				],
+				"n": 5,
+				"worst": -0.012
+			},
+			{
+				"at": [
+					158.1,
+					1.6,
+					-119.9
+				],
+				"cell4m": [
+					156,
+					-120
+				],
+				"n": 2,
+				"worst": -0.007
+			},
+			{
+				"at": [
+					164.0,
+					1.52,
+					-106.3
+				],
+				"cell4m": [
+					160,
+					-108
+				],
+				"n": 2,
+				"worst": -0.013
+			}
+		],
+		"tri": 1606,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.105853051058531
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-6": {
+		"d_min": -0.0230402946472168,
+		"d_p05": 0.0129990577697754,
+		"d_p50": 0.01300048828125,
+		"samples": 36600,
+		"top_cells": [
+			{
+				"at": [
+					154.5,
+					1.65,
+					-129.5
+				],
+				"cell4m": [
+					152,
+					-132
+				],
+				"n": 25,
+				"worst": -0.012
+			},
+			{
+				"at": [
+					156.0,
+					1.63,
+					-126.8
+				],
+				"cell4m": [
+					152,
+					-128
+				],
+				"n": 25,
+				"worst": -0.011
+			},
+			{
+				"at": [
+					156.0,
+					1.6,
+					-127.9
+				],
+				"cell4m": [
+					156,
+					-128
+				],
+				"n": 15,
+				"worst": -0.013
+			},
+			{
+				"at": [
+					150.1,
+					1.72,
+					-139.9
+				],
+				"cell4m": [
+					148,
+					-140
+				],
+				"n": 14,
+				"worst": -0.014
+			}
+		],
+		"tri": 3660,
+		"under20mm_pct": 0.0163934426229508,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.286885245901639
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_-7": {
+		"d_min": -0.0241879224777222,
+		"d_p05": 0.0129990577697754,
+		"d_p50": 0.01300048828125,
+		"samples": 18780,
+		"top_cells": [
+			{
+				"at": [
+					148.0,
+					1.74,
+					-146.8
+				],
+				"cell4m": [
+					144,
+					-148
+				],
+				"n": 29,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					150.5,
+					1.8,
+					-153.5
+				],
+				"cell4m": [
+					148,
+					-156
+				],
+				"n": 17,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					153.6,
+					1.79,
+					-150.4
+				],
+				"cell4m": [
+					152,
+					-152
+				],
+				"n": 17,
+				"worst": -0.017
+			},
+			{
+				"at": [
+					148.0,
+					1.74,
+					-146.5
+				],
+				"cell4m": [
+					148,
+					-148
+				],
+				"n": 8,
+				"worst": -0.01
+			}
+		],
+		"tri": 1878,
+		"under20mm_pct": 0.0053248136315229,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.388711395101171
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_0": {
+		"d_min": -0.00892066955566406,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.01300048828125,
+		"samples": 37860,
+		"top_cells": [
+			{
+				"at": [
+					150.0,
+					0.84,
+					8.7
+				],
+				"cell4m": [
+					148,
+					8
+				],
+				"n": 26,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					156.0,
+					0.83,
+					10.2
+				],
+				"cell4m": [
+					152,
+					8
+				],
+				"n": 19,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					156.0,
+					0.82,
+					11.5
+				],
+				"cell4m": [
+					156,
+					8
+				],
+				"n": 5,
+				"worst": -0.008
+			},
+			{
+				"at": [
+					158.0,
+					0.86,
+					5.5
+				],
+				"cell4m": [
+					156,
+					4
+				],
+				"n": 3,
+				"worst": -0.009
+			}
+		],
+		"tri": 3786,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.14527205493925
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_1": {
+		"d_min": -0.00721389055252075,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130006074905396,
+		"samples": 19820,
+		"top_cells": [
+			{
+				"at": [
+					150.0,
+					0.72,
+					28.8
+				],
+				"cell4m": [
+					148,
+					28
+				],
+				"n": 21,
+				"worst": -0.007
+			},
+			{
+				"at": [
+					147.8,
+					0.67,
+					36.2
+				],
+				"cell4m": [
+					144,
+					36
+				],
+				"n": 1,
+				"worst": -0.006
+			}
+		],
+		"tri": 1982,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.110998990918264
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_6_2": {
+		"d_min": 0.0122827291488647,
+		"d_p05": 0.0130001306533813,
+		"d_p50": 0.0130006670951843,
+		"samples": 10640,
+		"top_cells": [],
+		"tri": 1064,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_7_-1": {
+		"d_min": 0.0123848915100098,
+		"d_p05": 0.0129889249801636,
+		"d_p50": 0.01300048828125,
+		"samples": 7240,
+		"top_cells": [],
+		"tri": 724,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_7_-2": {
+		"d_min": -0.0048060417175293,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130007266998291,
+		"samples": 22580,
+		"top_cells": [],
+		"tri": 2258,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_7_-3": {
+		"d_min": -0.0106735229492188,
+		"d_p05": 0.0130000114440918,
+		"d_p50": 0.0130002498626709,
+		"samples": 13700,
+		"top_cells": [
+			{
+				"at": [
+					170.0,
+					1.18,
+					-47.9
+				],
+				"cell4m": [
+					168,
+					-48
+				],
+				"n": 1,
+				"worst": -0.011
+			}
+		],
+		"tri": 1370,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0072992700729927
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_7_-5": {
+		"d_min": -0.0115032196044922,
+		"d_p05": 0.0129241943359375,
+		"d_p50": 0.0130007266998291,
+		"samples": 18340,
+		"top_cells": [
+			{
+				"at": [
+					170.0,
+					1.54,
+					-109.2
+				],
+				"cell4m": [
+					168,
+					-112
+				],
+				"n": 29,
+				"worst": -0.012
+			},
+			{
+				"at": [
+					172.1,
+					1.52,
+					-103.9
+				],
+				"cell4m": [
+					172,
+					-104
+				],
+				"n": 1,
+				"worst": -0.005
+			}
+		],
+		"tri": 1834,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.163576881134133
+	},
+	"Vegetation/GroundcoverP9/Ground/Village/stream/G_stream_7_-6": {
+		"d_min": 0.0121161937713623,
+		"d_p05": 0.012697696685791,
+		"d_p50": 0.0130003690719604,
+		"samples": 1680,
+		"top_cells": [],
+		"tri": 168,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/HiedaGardenP9/Ground": {
+		"d_min": 0.00930559635162354,
+		"d_p05": 0.00999999046325684,
+		"d_p50": 0.0119997262954712,
+		"samples": 26870,
+		"top_cells": [],
+		"tri": 34926,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/KirisameP9/Ground": {
+		"d_min": 0.00983589887619019,
+		"d_p05": 0.0109941363334656,
+		"d_p50": 0.0110002160072327,
+		"samples": 18520,
+		"top_cells": [],
+		"tri": 1852,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/SchoolYardP9/Ground": {
+		"d_min": 0.00902402400970459,
+		"d_p05": 0.0109991431236267,
+		"d_p50": 0.0110000371932983,
+		"samples": 27780,
+		"top_cells": [],
+		"tri": 16664,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/ShrineGroveP9/Ground": {
+		"d_min": -0.193668365478516,
+		"d_p05": 0.00399971008300781,
+		"d_p50": 0.0159997940063477,
+		"samples": 25890,
+		"top_cells": [
+			{
+				"at": [
+					286.8,
+					10.93,
+					-183.2
+				],
+				"cell4m": [
+					284,
+					-184
+				],
+				"n": 15,
+				"worst": -0.053
+			},
+			{
+				"at": [
+					257.8,
+					18.51,
+					-189.7
+				],
+				"cell4m": [
+					256,
+					-192
+				],
+				"n": 12,
+				"worst": -0.08
+			},
+			{
+				"at": [
+					274.3,
+					17.79,
+					-189.7
+				],
+				"cell4m": [
+					272,
+					-192
+				],
+				"n": 10,
+				"worst": -0.141
+			},
+			{
+				"at": [
+					284.8,
+					15.3,
+					-191.2
+				],
+				"cell4m": [
+					284,
+					-192
+				],
+				"n": 10,
+				"worst": -0.179
+			}
+		],
+		"tri": 28470,
+		"under20mm_pct": 0.436461954422557,
+		"under50mm_pct": 0.158362302047122,
+		"under5mm_pct": 0.726149092313635
+	},
+	"Vegetation/SuzunaanP9/Ground": {
+		"d_min": 0.0109984874725342,
+		"d_p05": 0.010999321937561,
+		"d_p50": 0.0109999179840088,
+		"samples": 30540,
+		"top_cells": [],
+		"tri": 3054,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/TowerYardP9/Ground": {
+		"d_min": 0.0100653171539307,
+		"d_p05": 0.010850191116333,
+		"d_p50": 0.0110001564025879,
+		"samples": 35480,
+		"top_cells": [],
+		"tri": 3548,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/WatersideP9/Ground/dragon": {
+		"d_min": -0.0138981342315674,
+		"d_p05": 0.0109982490539551,
+		"d_p50": 0.0109999179840088,
+		"samples": 27250,
+		"top_cells": [
+			{
+				"at": [
+					386.3,
+					0.22,
+					-179.7
+				],
+				"cell4m": [
+					384,
+					-180
+				],
+				"n": 3,
+				"worst": -0.006
+			},
+			{
+				"at": [
+					395.3,
+					-1.34,
+					-175.2
+				],
+				"cell4m": [
+					392,
+					-176
+				],
+				"n": 2,
+				"worst": -0.014
+			},
+			{
+				"at": [
+					387.8,
+					0.01,
+					-180.2
+				],
+				"cell4m": [
+					384,
+					-184
+				],
+				"n": 1,
+				"worst": -0.007
+			}
+		],
+		"tri": 13624,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0220183486238532
+	},
+	"Vegetation/WatersideP9/Ground/ww1": {
+		"d_min": -0.17706985771656,
+		"d_p05": 0.0109989047050476,
+		"d_p50": 0.0109999179840088,
+		"samples": 29280,
+		"top_cells": [
+			{
+				"at": [
+					335.3,
+					-0.17,
+					-67.2
+				],
+				"cell4m": [
+					332,
+					-68
+				],
+				"n": 40,
+				"worst": -0.177
+			},
+			{
+				"at": [
+					342.8,
+					-0.27,
+					-64.7
+				],
+				"cell4m": [
+					340,
+					-68
+				],
+				"n": 40,
+				"worst": -0.172
+			},
+			{
+				"at": [
+					333.8,
+					0.19,
+					-57.7
+				],
+				"cell4m": [
+					332,
+					-60
+				],
+				"n": 40,
+				"worst": -0.071
+			},
+			{
+				"at": [
+					333.3,
+					-0.26,
+					-47.2
+				],
+				"cell4m": [
+					332,
+					-48
+				],
+				"n": 40,
+				"worst": -0.159
+			}
+		],
+		"tri": 5856,
+		"under20mm_pct": 1.04166666666667,
+		"under50mm_pct": 0.474726775956284,
+		"under5mm_pct": 1.22609289617486
+	},
+	"Vegetation/WatersideP9/Ground/ww2": {
+		"d_min": -0.191921100020409,
+		"d_p05": 0.0109981745481491,
+		"d_p50": 0.0109999179840088,
+		"samples": 30830,
+		"top_cells": [
+			{
+				"at": [
+					325.8,
+					-1.08,
+					10.3
+				],
+				"cell4m": [
+					324,
+					8
+				],
+				"n": 40,
+				"worst": -0.19
+			},
+			{
+				"at": [
+					338.8,
+					-0.4,
+					-14.7
+				],
+				"cell4m": [
+					336,
+					-16
+				],
+				"n": 34,
+				"worst": -0.069
+			},
+			{
+				"at": [
+					327.3,
+					-0.58,
+					0.8
+				],
+				"cell4m": [
+					324,
+					0
+				],
+				"n": 30,
+				"worst": -0.143
+			},
+			{
+				"at": [
+					329.8,
+					-1.1,
+					-7.7
+				],
+				"cell4m": [
+					328,
+					-8
+				],
+				"n": 25,
+				"worst": -0.131
+			}
+		],
+		"tri": 6166,
+		"under20mm_pct": 0.541680181641259,
+		"under50mm_pct": 0.262731106065521,
+		"under5mm_pct": 0.716834252351606
+	},
+	"Vegetation/WatersideP9/Ground/ww3": {
+		"d_min": -0.0448844432830811,
+		"d_p05": 0.0109988451004028,
+		"d_p50": 0.0109999179840088,
+		"samples": 43420,
+		"top_cells": [
+			{
+				"at": [
+					313.3,
+					-0.52,
+					49.3
+				],
+				"cell4m": [
+					312,
+					48
+				],
+				"n": 40,
+				"worst": -0.043
+			},
+			{
+				"at": [
+					322.3,
+					-1.42,
+					46.3
+				],
+				"cell4m": [
+					320,
+					44
+				],
+				"n": 20,
+				"worst": -0.045
+			},
+			{
+				"at": [
+					320.3,
+					-1.44,
+					50.3
+				],
+				"cell4m": [
+					320,
+					48
+				],
+				"n": 20,
+				"worst": -0.04
+			},
+			{
+				"at": [
+					311.8,
+					-1.57,
+					53.8
+				],
+				"cell4m": [
+					308,
+					52
+				],
+				"n": 20,
+				"worst": -0.032
+			}
+		],
+		"tri": 4342,
+		"under20mm_pct": 0.133578995854445,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.483648088438508
+	}
+}

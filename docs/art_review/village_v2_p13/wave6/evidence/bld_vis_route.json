@@ -1,0 +1,1468 @@
+{
+ "shots": 138,
+ "buildings": {
+  "B_P_MKT_001": {
+   "max_px": 281663,
+   "total_px": 675235,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 6,
+   "best_shot": "b_003:seg1_gate_main"
+  },
+  "B_P_MKT_002": {
+   "max_px": 347979,
+   "total_px": 483250,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 4,
+   "best_shot": "b_000:seg0_to_start"
+  },
+  "B_P_MKT_017": {
+   "max_px": 338828,
+   "total_px": 671048,
+   "shots_ge_500": 11,
+   "shots_ge_3000": 6,
+   "best_shot": "b_000:seg0_to_start"
+  },
+  "B_P_SGT_001": {
+   "max_px": 274229,
+   "total_px": 342886,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "b_002:seg1_gate_main"
+  },
+  "B_P_SGT_002": {
+   "max_px": 360249,
+   "total_px": 392460,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "b_002:seg1_gate_main"
+  },
+  "B_P_SGT_003": {
+   "max_px": 149552,
+   "total_px": 331273,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "c_002:EntranceRoad"
+  },
+  "LANDMARK_SOUTH_GATE": {
+   "max_px": 180900,
+   "total_px": 303093,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 7,
+   "best_shot": "b_001:seg0_to_start"
+  },
+  "S_A_MKT_006": {
+   "max_px": 84890,
+   "total_px": 130144,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 3,
+   "best_shot": "b_003:seg1_gate_main"
+  },
+  "B_P_MKT_003": {
+   "max_px": 221910,
+   "total_px": 417736,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 5,
+   "best_shot": "c_004:MainStreet"
+  },
+  "B_P_MKT_004": {
+   "max_px": 233091,
+   "total_px": 288918,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 4,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_018": {
+   "max_px": 290591,
+   "total_px": 500011,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "c_004:MainStreet"
+  },
+  "B_P_MKT_019": {
+   "max_px": 34652,
+   "total_px": 54846,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 2,
+   "best_shot": "c_004:MainStreet"
+  },
+  "B_P_MKT_020": {
+   "max_px": 329888,
+   "total_px": 339972,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_021": {
+   "max_px": 96951,
+   "total_px": 108734,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 3,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_022": {
+   "max_px": 12191,
+   "total_px": 23137,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 2,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_023": {
+   "max_px": 255376,
+   "total_px": 618279,
+   "shots_ge_500": 16,
+   "shots_ge_3000": 8,
+   "best_shot": "b_008:seg2_main_market"
+  },
+  "B_P_MKT_024": {
+   "max_px": 331248,
+   "total_px": 433608,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 4,
+   "best_shot": "b_019:seg5_bridge_farm"
+  },
+  "B_P_MKT_025": {
+   "max_px": 54097,
+   "total_px": 74616,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "b_019:seg5_bridge_farm"
+  },
+  "B_P_MKT_027": {
+   "max_px": 175105,
+   "total_px": 336614,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 6,
+   "best_shot": "b_018:seg5_bridge_farm"
+  },
+  "B_P_MKT_029": {
+   "max_px": 128678,
+   "total_px": 295707,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 6,
+   "best_shot": "b_015:seg4_homes"
+  },
+  "B_P_MKT_048": {
+   "max_px": 27071,
+   "total_px": 29552,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "B_P_MKT_049": {
+   "max_px": 348624,
+   "total_px": 363655,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 3,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "B_P_MKT_053": {
+   "max_px": 170512,
+   "total_px": 198261,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "LANDMARK_KIRISAME": {
+   "max_px": 166467,
+   "total_px": 212120,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 5,
+   "best_shot": "b_004:seg1_gate_main"
+  },
+  "LANDMARK_NORTH_HILL": {
+   "max_px": 74866,
+   "total_px": 151057,
+   "shots_ge_500": 19,
+   "shots_ge_3000": 6,
+   "best_shot": "c_088:sando"
+  },
+  "LANDMARK_SUZUNAAN": {
+   "max_px": 280276,
+   "total_px": 665002,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 3,
+   "best_shot": "b_007:seg1_gate_main"
+  },
+  "B_P_MKT_044": {
+   "max_px": 79457,
+   "total_px": 147487,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 5,
+   "best_shot": "c_031:WestAlley"
+  },
+  "B_P_MKT_057": {
+   "max_px": 32857,
+   "total_px": 47272,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_003:seg1_gate_main"
+  },
+  "LANDMARK_TERAKOYA": {
+   "max_px": 78927,
+   "total_px": 83393,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 1,
+   "best_shot": "c_030:WestAlley"
+  },
+  "LANDMARK_TOWER": {
+   "max_px": 112329,
+   "total_px": 271730,
+   "shots_ge_500": 20,
+   "shots_ge_3000": 9,
+   "best_shot": "b_004:seg1_gate_main"
+  },
+  "B_P_MKT_026": {
+   "max_px": 341972,
+   "total_px": 720172,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 5,
+   "best_shot": "c_006:MainStreet"
+  },
+  "B_P_MKT_028": {
+   "max_px": 225726,
+   "total_px": 247449,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 4,
+   "best_shot": "b_018:seg5_bridge_farm"
+  },
+  "B_P_MKT_030": {
+   "max_px": 216333,
+   "total_px": 595764,
+   "shots_ge_500": 13,
+   "shots_ge_3000": 5,
+   "best_shot": "b_036:seg7_shrine"
+  },
+  "B_P_MKT_031": {
+   "max_px": 465901,
+   "total_px": 1210891,
+   "shots_ge_500": 13,
+   "shots_ge_3000": 9,
+   "best_shot": "b_016:seg4_homes"
+  },
+  "B_P_MKT_035": {
+   "max_px": 275988,
+   "total_px": 441000,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 4,
+   "best_shot": "b_020:seg5_bridge_farm"
+  },
+  "B_P_MKT_036": {
+   "max_px": 346159,
+   "total_px": 353689,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_033:seg7_shrine"
+  },
+  "B_P_MKT_037": {
+   "max_px": 319575,
+   "total_px": 334611,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 3,
+   "best_shot": "b_021:seg5_bridge_farm"
+  },
+  "B_P_MKT_041": {
+   "max_px": 454168,
+   "total_px": 627449,
+   "shots_ge_500": 13,
+   "shots_ge_3000": 6,
+   "best_shot": "c_019:CrossStreetMid"
+  },
+  "B_P_MKT_045": {
+   "max_px": 7776,
+   "total_px": 15394,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_004:seg1_gate_main"
+  },
+  "B_P_MKT_046": {
+   "max_px": 40787,
+   "total_px": 76625,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_004:seg1_gate_main"
+  },
+  "B_P_MKT_047": {
+   "max_px": 6913,
+   "total_px": 12296,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_004:seg1_gate_main"
+  },
+  "B_P_MKT_051": {
+   "max_px": 21274,
+   "total_px": 29669,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "b_005:seg1_gate_main"
+  },
+  "B_P_MXC_005": {
+   "max_px": 339351,
+   "total_px": 402665,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 4,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "B_P_MXC_006": {
+   "max_px": 19136,
+   "total_px": 27969,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "B_P_MXC_008": {
+   "max_px": 384943,
+   "total_px": 562576,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 4,
+   "best_shot": "b_038:seg7_shrine"
+  },
+  "B_P_MKT_005": {
+   "max_px": 179934,
+   "total_px": 196709,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 3,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_006": {
+   "max_px": 5741,
+   "total_px": 9880,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 1,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_007": {
+   "max_px": 6100,
+   "total_px": 14962,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 1,
+   "best_shot": "b_006:seg1_gate_main"
+  },
+  "B_P_MKT_008": {
+   "max_px": 255994,
+   "total_px": 509700,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 2,
+   "best_shot": "b_007:seg1_gate_main"
+  },
+  "B_P_MKT_009": {
+   "max_px": 167068,
+   "total_px": 298005,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 2,
+   "best_shot": "c_005:MainStreet"
+  },
+  "B_P_MKT_010": {
+   "max_px": 223183,
+   "total_px": 292015,
+   "shots_ge_500": 11,
+   "shots_ge_3000": 5,
+   "best_shot": "c_018:CrossStreetMid"
+  },
+  "B_P_MKT_011": {
+   "max_px": 377822,
+   "total_px": 1062285,
+   "shots_ge_500": 12,
+   "shots_ge_3000": 7,
+   "best_shot": "b_019:seg5_bridge_farm"
+  },
+  "B_P_MKT_012": {
+   "max_px": 150933,
+   "total_px": 267559,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 4,
+   "best_shot": "c_006:MainStreet"
+  },
+  "B_P_MKT_013": {
+   "max_px": 305676,
+   "total_px": 596572,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 5,
+   "best_shot": "b_035:seg7_shrine"
+  },
+  "B_P_MKT_014": {
+   "max_px": 352311,
+   "total_px": 795242,
+   "shots_ge_500": 20,
+   "shots_ge_3000": 15,
+   "best_shot": "b_017:seg5_bridge_farm"
+  },
+  "B_P_MKT_052": {
+   "max_px": 294762,
+   "total_px": 302878,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "B_P_MKT_059": {
+   "max_px": 9211,
+   "total_px": 28357,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_066:SWLane"
+  },
+  "B_P_MXC_007": {
+   "max_px": 6103,
+   "total_px": 10387,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "B_P_MXC_018": {
+   "max_px": 339857,
+   "total_px": 813188,
+   "shots_ge_500": 12,
+   "shots_ge_3000": 8,
+   "best_shot": "c_010:HillFootStreet"
+  },
+  "B_P_RSW_017": {
+   "max_px": 240051,
+   "total_px": 245466,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_029:WestAlley"
+  },
+  "B_P_RSW_018": {
+   "max_px": 4706,
+   "total_px": 9768,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "b_005:seg1_gate_main"
+  },
+  "B_P_RSW_047": {
+   "max_px": 13735,
+   "total_px": 20345,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "c_032:WestLane"
+  },
+  "B_P_RSW_048": {
+   "max_px": 12687,
+   "total_px": 29850,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_077:spot_westlane_w"
+  },
+  "B_P_RSW_049": {
+   "max_px": 38,
+   "total_px": 48,
+   "shots_ge_500": 0,
+   "shots_ge_3000": 0,
+   "best_shot": "b_005:seg1_gate_main"
+  },
+  "B_P_RSW_064": {
+   "max_px": 340952,
+   "total_px": 341929,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_066": {
+   "max_px": 29588,
+   "total_px": 31792,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "LANDMARK_GEIDONTEI": {
+   "max_px": 89348,
+   "total_px": 173821,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 8,
+   "best_shot": "b_018:seg5_bridge_farm"
+  },
+  "S_A_RSW_006": {
+   "max_px": 2401,
+   "total_px": 2402,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "b_005:seg1_gate_main"
+  },
+  "B_P_MKT_015": {
+   "max_px": 269888,
+   "total_px": 663075,
+   "shots_ge_500": 13,
+   "shots_ge_3000": 11,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "S_A_MKT_002": {
+   "max_px": 176978,
+   "total_px": 304069,
+   "shots_ge_500": 12,
+   "shots_ge_3000": 6,
+   "best_shot": "b_036:seg7_shrine"
+  },
+  "B_P_MKT_039": {
+   "max_px": 24629,
+   "total_px": 37262,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "b_008:seg2_main_market"
+  },
+  "B_P_MKT_032": {
+   "max_px": 277589,
+   "total_px": 348685,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_017:CrossStreetMid"
+  },
+  "B_P_MKT_033": {
+   "max_px": 5862,
+   "total_px": 6582,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_017:CrossStreetMid"
+  },
+  "B_P_MKT_034": {
+   "max_px": 29622,
+   "total_px": 49618,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 3,
+   "best_shot": "b_008:seg2_main_market"
+  },
+  "B_P_RNE_003": {
+   "max_px": 7104,
+   "total_px": 15865,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "c_067:NELane"
+  },
+  "B_P_RSW_001": {
+   "max_px": 88165,
+   "total_px": 101161,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_029:WestAlley"
+  },
+  "B_P_RSW_002": {
+   "max_px": 19804,
+   "total_px": 20384,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_029:WestAlley"
+  },
+  "B_P_RSW_003": {
+   "max_px": 320885,
+   "total_px": 322939,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_017:CrossStreetMid"
+  },
+  "B_P_RSW_004": {
+   "max_px": 65334,
+   "total_px": 99921,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_011:seg3_market_west"
+  },
+  "B_P_RSW_016": {
+   "max_px": 1553,
+   "total_px": 2923,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_045": {
+   "max_px": 25898,
+   "total_px": 57941,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_077:spot_westlane_w"
+  },
+  "B_P_RSW_059": {
+   "max_px": 269277,
+   "total_px": 281692,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 3,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "B_P_RSW_060": {
+   "max_px": 142732,
+   "total_px": 142763,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "B_P_RSW_071": {
+   "max_px": 274281,
+   "total_px": 466565,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 5,
+   "best_shot": "b_014:seg4_homes"
+  },
+  "B_P_MKT_060": {
+   "max_px": 315346,
+   "total_px": 331069,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 3,
+   "best_shot": "b_015:seg4_homes"
+  },
+  "B_P_MXC_011": {
+   "max_px": 265210,
+   "total_px": 402228,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_043:seg8_forest_edge"
+  },
+  "B_P_MXC_012": {
+   "max_px": 248379,
+   "total_px": 257822,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "c_009:HillFootStreet"
+  },
+  "B_P_MXC_013": {
+   "max_px": 20520,
+   "total_px": 62864,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "b_042:seg8_forest_edge"
+  },
+  "B_P_MXC_014": {
+   "max_px": 192952,
+   "total_px": 214065,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 4,
+   "best_shot": "b_042:seg8_forest_edge"
+  },
+  "B_P_RSW_020": {
+   "max_px": 280017,
+   "total_px": 281686,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_027:WestAlley"
+  },
+  "B_P_RSW_022": {
+   "max_px": 23782,
+   "total_px": 24744,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_027:WestAlley"
+  },
+  "B_P_RSW_023": {
+   "max_px": 187418,
+   "total_px": 202276,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 3,
+   "best_shot": "b_013:seg4_homes"
+  },
+  "B_P_RSW_024": {
+   "max_px": 356598,
+   "total_px": 388124,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 4,
+   "best_shot": "b_013:seg4_homes"
+  },
+  "B_P_RSW_032": {
+   "max_px": 28432,
+   "total_px": 36495,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "b_045:seg8_forest_edge"
+  },
+  "B_P_RSW_040": {
+   "max_px": 48653,
+   "total_px": 61961,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_041": {
+   "max_px": 508370,
+   "total_px": 539835,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_042": {
+   "max_px": 52717,
+   "total_px": 53017,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_072": {
+   "max_px": 8813,
+   "total_px": 30611,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 4,
+   "best_shot": "b_014:seg4_homes"
+  },
+  "B_P_RSW_073": {
+   "max_px": 402776,
+   "total_px": 442541,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_063:MidLane"
+  },
+  "B_P_RSW_076": {
+   "max_px": 20265,
+   "total_px": 48099,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 5,
+   "best_shot": "b_014:seg4_homes"
+  },
+  "LANDMARK_HILLFOOT_TEMPLE": {
+   "max_px": 154090,
+   "total_px": 417170,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 8,
+   "best_shot": "c_008:HillFootStreet"
+  },
+  "LANDMARK_HILL_TORII": {
+   "max_px": 64451,
+   "total_px": 105121,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "c_084:sando"
+  },
+  "S_A_RSW_014": {
+   "max_px": 13533,
+   "total_px": 17110,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_008": {
+   "max_px": 212182,
+   "total_px": 231189,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_045:seg8_forest_edge"
+  },
+  "B_P_RSW_033": {
+   "max_px": 259452,
+   "total_px": 449022,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 4,
+   "best_shot": "b_046:seg8_forest_edge"
+  },
+  "B_P_RSW_034": {
+   "max_px": 155190,
+   "total_px": 312693,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 4,
+   "best_shot": "c_057:NWLane"
+  },
+  "B_P_RSW_038": {
+   "max_px": 1183,
+   "total_px": 1870,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "B_P_RSW_075": {
+   "max_px": 37599,
+   "total_px": 61696,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "b_014:seg4_homes"
+  },
+  "B_P_RSW_014": {
+   "max_px": 3718,
+   "total_px": 6388,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_046": {
+   "max_px": 303409,
+   "total_px": 344823,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 3,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "B_P_RSW_061": {
+   "max_px": 23647,
+   "total_px": 23856,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "B_P_RSW_010": {
+   "max_px": 3817,
+   "total_px": 6069,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_027:WestAlley"
+  },
+  "B_P_RSW_011": {
+   "max_px": 122456,
+   "total_px": 134881,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_012": {
+   "max_px": 196211,
+   "total_px": 334943,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_013": {
+   "max_px": 284309,
+   "total_px": 304412,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "b_012:seg4_homes"
+  },
+  "B_P_RSW_025": {
+   "max_px": 379911,
+   "total_px": 417268,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_026": {
+   "max_px": 336009,
+   "total_px": 373000,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_012:seg4_homes"
+  },
+  "B_P_MXC_010": {
+   "max_px": 68319,
+   "total_px": 76944,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_043:seg8_forest_edge"
+  },
+  "B_P_RSW_074": {
+   "max_px": 349866,
+   "total_px": 391903,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 3,
+   "best_shot": "b_014:seg4_homes"
+  },
+  "LANDMARK_HIEDA_GATE": {
+   "max_px": 72272,
+   "total_px": 459701,
+   "shots_ge_500": 24,
+   "shots_ge_3000": 19,
+   "best_shot": "c_048:FarmPath_4"
+  },
+  "B_P_MKT_016": {
+   "max_px": 112346,
+   "total_px": 129770,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 2,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "LANDMARK_WATERWHEEL_1": {
+   "max_px": 13548,
+   "total_px": 34795,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 4,
+   "best_shot": "b_022:seg5_bridge_farm"
+  },
+  "LANDMARK_WATERWHEEL_3": {
+   "max_px": 1056,
+   "total_px": 3774,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 0,
+   "best_shot": "c_002:EntranceRoad"
+  },
+  "B_P_MKT_040": {
+   "max_px": 339360,
+   "total_px": 401537,
+   "shots_ge_500": 9,
+   "shots_ge_3000": 5,
+   "best_shot": "b_021:seg5_bridge_farm"
+  },
+  "B_P_MKT_038": {
+   "max_px": 393304,
+   "total_px": 667319,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 7,
+   "best_shot": "c_019:CrossStreetMid"
+  },
+  "B_P_MKT_042": {
+   "max_px": 207025,
+   "total_px": 254815,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 5,
+   "best_shot": "b_032:seg7_shrine"
+  },
+  "B_P_MKT_043": {
+   "max_px": 139586,
+   "total_px": 300432,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 8,
+   "best_shot": "b_032:seg7_shrine"
+  },
+  "LANDMARK_HIEDA": {
+   "max_px": 59769,
+   "total_px": 204151,
+   "shots_ge_500": 18,
+   "shots_ge_3000": 13,
+   "best_shot": "b_028:seg6_waterwheel"
+  },
+  "B_P_RNE_001": {
+   "max_px": 18474,
+   "total_px": 41052,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 3,
+   "best_shot": "c_074:spot_dragonroad_e"
+  },
+  "B_P_RNE_002": {
+   "max_px": 106559,
+   "total_px": 122645,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_067:NELane"
+  },
+  "B_P_RNE_004": {
+   "max_px": 519,
+   "total_px": 863,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_069:NENorth"
+  },
+  "B_P_RNE_005": {
+   "max_px": 453628,
+   "total_px": 456327,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_068:NELane"
+  },
+  "B_P_RNE_006": {
+   "max_px": 19411,
+   "total_px": 22265,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_068:NELane"
+  },
+  "B_P_RNE_007": {
+   "max_px": 36094,
+   "total_px": 63394,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 4,
+   "best_shot": "c_069:NENorth"
+  },
+  "B_P_RNE_010": {
+   "max_px": 258106,
+   "total_px": 355746,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 4,
+   "best_shot": "c_069:NENorth"
+  },
+  "B_P_RNE_011": {
+   "max_px": 298867,
+   "total_px": 306006,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 1,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_012": {
+   "max_px": 56575,
+   "total_px": 77735,
+   "shots_ge_500": 10,
+   "shots_ge_3000": 4,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_013": {
+   "max_px": 9990,
+   "total_px": 27522,
+   "shots_ge_500": 12,
+   "shots_ge_3000": 2,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_014": {
+   "max_px": 6487,
+   "total_px": 18026,
+   "shots_ge_500": 11,
+   "shots_ge_3000": 1,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_015": {
+   "max_px": 1840,
+   "total_px": 7949,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 0,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_016": {
+   "max_px": 150782,
+   "total_px": 175722,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_017": {
+   "max_px": 13184,
+   "total_px": 16024,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_070:NESouth"
+  },
+  "B_P_RNE_018": {
+   "max_px": 103,
+   "total_px": 379,
+   "shots_ge_500": 0,
+   "shots_ge_3000": 0,
+   "best_shot": "b_022:seg5_bridge_farm"
+  },
+  "B_P_RNE_019": {
+   "max_px": 94,
+   "total_px": 649,
+   "shots_ge_500": 0,
+   "shots_ge_3000": 0,
+   "best_shot": "c_020:CrossStreetMid"
+  },
+  "LANDMARK_DRAGON": {
+   "max_px": 176453,
+   "total_px": 248595,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 4,
+   "best_shot": "c_015:RiverNorthPath"
+  },
+  "S_A_RNE_002": {
+   "max_px": 96668,
+   "total_px": 107996,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 2,
+   "best_shot": "c_069:NENorth"
+  },
+  "S_A_RNE_006": {
+   "max_px": 5433,
+   "total_px": 10080,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_074:spot_dragonroad_e"
+  },
+  "B_P_RSW_080": {
+   "max_px": 22571,
+   "total_px": 22789,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_065:SWLane"
+  },
+  "B_P_MKT_054": {
+   "max_px": 8585,
+   "total_px": 14136,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 1,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "B_P_MKT_055": {
+   "max_px": 10119,
+   "total_px": 37878,
+   "shots_ge_500": 7,
+   "shots_ge_3000": 6,
+   "best_shot": "c_023:CrossStreetSouth"
+  },
+  "LANDMARK_WATERWHEEL_2": {
+   "max_px": 8184,
+   "total_px": 22527,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "b_026:seg6_waterwheel"
+  },
+  "B_P_MXC_001": {
+   "max_px": 38928,
+   "total_px": 58590,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 3,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "B_P_MXC_002": {
+   "max_px": 4556,
+   "total_px": 14804,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 2,
+   "best_shot": "b_037:seg7_shrine"
+  },
+  "B_P_RSW_030": {
+   "max_px": 5732,
+   "total_px": 10859,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "B_P_RSW_077": {
+   "max_px": 1455,
+   "total_px": 1510,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_030:WestAlley"
+  },
+  "B_P_RSW_079": {
+   "max_px": 85621,
+   "total_px": 85998,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_065:SWLane"
+  },
+  "B_P_RSW_081": {
+   "max_px": 86362,
+   "total_px": 86555,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_065:SWLane"
+  },
+  "B_P_MXC_003": {
+   "max_px": 285528,
+   "total_px": 306294,
+   "shots_ge_500": 6,
+   "shots_ge_3000": 3,
+   "best_shot": "b_038:seg7_shrine"
+  },
+  "B_P_MXC_004": {
+   "max_px": 230565,
+   "total_px": 377802,
+   "shots_ge_500": 8,
+   "shots_ge_3000": 5,
+   "best_shot": "c_010:HillFootStreet"
+  },
+  "B_P_MXC_015": {
+   "max_px": 47990,
+   "total_px": 56010,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "c_010:HillFootStreet"
+  },
+  "B_P_MXC_016": {
+   "max_px": 1494,
+   "total_px": 3208,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "b_028:seg6_waterwheel"
+  },
+  "B_P_MXC_017": {
+   "max_px": 9137,
+   "total_px": 12302,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_072:spot_hillfoot_bridge_e"
+  },
+  "B_P_MXC_020": {
+   "max_px": 17131,
+   "total_px": 33412,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_040:seg8_forest_edge"
+  },
+  "B_P_MXC_022": {
+   "max_px": 7379,
+   "total_px": 12630,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "c_072:spot_hillfoot_bridge_e"
+  },
+  "B_P_MXC_023": {
+   "max_px": 384550,
+   "total_px": 397980,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 3,
+   "best_shot": "c_014:RiverNorthPath"
+  },
+  "B_P_MXC_024": {
+   "max_px": 56121,
+   "total_px": 58282,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_014:RiverNorthPath"
+  },
+  "B_P_RSW_058": {
+   "max_px": 5280,
+   "total_px": 5605,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_032:WestLane"
+  },
+  "B_P_MKT_056": {
+   "max_px": 54929,
+   "total_px": 125444,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 3,
+   "best_shot": "c_066:SWLane"
+  },
+  "B_P_RSW_021": {
+   "max_px": 139627,
+   "total_px": 139628,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_027:WestAlley"
+  },
+  "B_P_MXC_019": {
+   "max_px": 14471,
+   "total_px": 21808,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "c_010:HillFootStreet"
+  },
+  "B_P_MXC_021": {
+   "max_px": 7031,
+   "total_px": 8781,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "b_040:seg8_forest_edge"
+  },
+  "B_P_RSW_035": {
+   "max_px": 10078,
+   "total_px": 17432,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 1,
+   "best_shot": "b_045:seg8_forest_edge"
+  },
+  "B_P_MXC_009": {
+   "max_px": 261087,
+   "total_px": 309243,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "b_044:seg8_forest_edge"
+  },
+  "B_P_RSW_019": {
+   "max_px": 2672,
+   "total_px": 2688,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "b_044:seg8_forest_edge"
+  },
+  "B_P_RSW_052": {
+   "max_px": 13277,
+   "total_px": 14072,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_053": {
+   "max_px": 1825,
+   "total_px": 2557,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_057": {
+   "max_px": 1958,
+   "total_px": 4610,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "c_062:WestBankLane"
+  },
+  "B_P_RSW_070": {
+   "max_px": 25715,
+   "total_px": 26033,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_062:WestBankLane"
+  },
+  "B_P_RSW_036": {
+   "max_px": 448539,
+   "total_px": 897067,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_058:NWLane"
+  },
+  "B_P_RSW_055": {
+   "max_px": 473637,
+   "total_px": 476935,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_062:WestBankLane"
+  },
+  "B_P_RSW_056": {
+   "max_px": 23010,
+   "total_px": 26381,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_062:WestBankLane"
+  },
+  "B_P_RSW_069": {
+   "max_px": 454265,
+   "total_px": 454810,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_062:WestBankLane"
+  },
+  "B_P_RSW_027": {
+   "max_px": 508300,
+   "total_px": 823348,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 5,
+   "best_shot": "c_058:NWLane"
+  },
+  "B_P_RSW_028": {
+   "max_px": 156832,
+   "total_px": 190584,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "B_P_RSW_029": {
+   "max_px": 24118,
+   "total_px": 47569,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 3,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "S_A_RSW_010": {
+   "max_px": 12076,
+   "total_px": 15410,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "b_047:seg8_forest_edge"
+  },
+  "B_P_RSW_031": {
+   "max_px": 3893,
+   "total_px": 7081,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "B_P_RSW_037": {
+   "max_px": 61290,
+   "total_px": 77135,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "b_048:seg8_forest_edge"
+  },
+  "B_P_RSW_007": {
+   "max_px": 130114,
+   "total_px": 161724,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 3,
+   "best_shot": "c_021:CrossStreetSouth"
+  },
+  "B_P_RSW_078": {
+   "max_px": 369047,
+   "total_px": 371410,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 1,
+   "best_shot": "c_065:SWLane"
+  },
+  "B_P_RNE_008": {
+   "max_px": 2954,
+   "total_px": 5466,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 0,
+   "best_shot": "c_067:NELane"
+  },
+  "B_P_RNE_009": {
+   "max_px": 453024,
+   "total_px": 460898,
+   "shots_ge_500": 5,
+   "shots_ge_3000": 2,
+   "best_shot": "c_068:NELane"
+  },
+  "B_P_MKT_050": {
+   "max_px": 60039,
+   "total_px": 91485,
+   "shots_ge_500": 4,
+   "shots_ge_3000": 4,
+   "best_shot": "c_030:WestAlley"
+  },
+  "B_P_MKT_058": {
+   "max_px": 6208,
+   "total_px": 6301,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_029:WestAlley"
+  },
+  "B_P_RSW_006": {
+   "max_px": 176158,
+   "total_px": 181055,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 2,
+   "best_shot": "c_021:CrossStreetSouth"
+  },
+  "B_P_RSW_015": {
+   "max_px": 621,
+   "total_px": 622,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_028:WestAlley"
+  },
+  "B_P_RSW_009": {
+   "max_px": 106821,
+   "total_px": 106821,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_027:WestAlley"
+  },
+  "B_P_RSW_005": {
+   "max_px": 6598,
+   "total_px": 6598,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_030:WestAlley"
+  },
+  "B_P_RSW_062": {
+   "max_px": 7033,
+   "total_px": 15369,
+   "shots_ge_500": 3,
+   "shots_ge_3000": 2,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "S_A_RSW_018": {
+   "max_px": 2,
+   "total_px": 2,
+   "shots_ge_500": 0,
+   "shots_ge_3000": 0,
+   "best_shot": "c_053:FarmPath_5"
+  },
+  "B_P_RSW_065": {
+   "max_px": 69549,
+   "total_px": 70642,
+   "shots_ge_500": 2,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_043": {
+   "max_px": 11370,
+   "total_px": 11411,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_044": {
+   "max_px": 3718,
+   "total_px": 3973,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_059:NWBranch"
+  },
+  "B_P_RSW_063": {
+   "max_px": 1450,
+   "total_px": 1450,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_060:WestBankLane"
+  },
+  "B_P_RSW_050": {
+   "max_px": 317579,
+   "total_px": 317579,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_051": {
+   "max_px": 80449,
+   "total_px": 80449,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 1,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_054": {
+   "max_px": 1681,
+   "total_px": 1681,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_067": {
+   "max_px": 1864,
+   "total_px": 1864,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_061:WestBankLane"
+  },
+  "B_P_RSW_068": {
+   "max_px": 946,
+   "total_px": 946,
+   "shots_ge_500": 1,
+   "shots_ge_3000": 0,
+   "best_shot": "c_061:WestBankLane"
+  }
+ }
+}

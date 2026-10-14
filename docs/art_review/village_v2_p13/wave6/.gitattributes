@@ -1,0 +1,4 @@
+# Preserve actual engine logs and verification receipts byte-for-byte.
+evidence/* -text -eol
+evidence/*.log whitespace=-blank-at-eof,cr-at-eol
+evidence/gates/* -text -eol

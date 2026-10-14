@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[BRIDGE]   Bridge_01_HillFootStreet_Canal     中心 (355.1, -128.0) 尺寸 17.0×5.5×7.1 橋面頂 3.16 m
+[BRIDGE]   Bridge_02_DragonBridgeRoad_River   中心 (399.8, -205.0) 尺寸 42.5×6.3×6.1 橋面頂 3.25 m
+[BRIDGE]   Bridge_03_CrossStreetMid_Canal     中心 (335.9, -34.0) 尺寸 16.1×4.7×9.8 橋面頂 2.14 m
+[BRIDGE]   Bridge_04_CrossStreetSouth_Canal   中心 (321.1, 41.9) 尺寸 14.3×4.7×7.6 橋面頂 1.89 m
+[BRIDGE]   Bridge_05_WestLane_WestStream      中心 (159.9, -10.3) 尺寸 12.2×2.6×7.3 橋面頂 2.45 m
+[BRIDGE] PASS Roads/Bridges 共 5 座（應為 5）
+[BRIDGE] PASS 交叉 HillFootStreet × Canal @ (355.6, -128.0) → Bridge_01_HillFootStreet_Canal
+[BRIDGE] PASS 交叉 DragonBridgeRoad × MainRiver @ (398.6, -205.0) → Bridge_02_DragonBridgeRoad_River
+[BRIDGE] PASS 交叉 CrossStreetMid × Canal @ (335.9, -34.0) → Bridge_03_CrossStreetMid_Canal
+[BRIDGE] PASS 交叉 CrossStreetSouth × Canal @ (321.1, 41.9) → Bridge_04_CrossStreetSouth_Canal
+[BRIDGE] PASS 交叉 WestLane × WestStream @ (160.1, -10.3) → Bridge_05_WestLane_WestStream
+[BRIDGE] PASS 路×水交叉 5 處（應為 5）
+[BRIDGE] 結果：0 項失敗

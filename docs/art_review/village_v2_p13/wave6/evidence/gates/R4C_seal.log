@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[R4C] PASS status ART_APPROVED（2026-10-09；approved_by＝user、agent は美術を承認しない）
+[R4C] PASS 封存 37 檔雜湊一致（凍結・證據・審圖・子封存；不符 0：[]）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[R4C] PASS 掛載：root 直下 PropFixP10 1 個・ShrineApproachP10 の直後（index 16）・res://maps/village_v2/gen/prop_fix_p10.scn
+[R4C] PASS st_hasa → st_hasa_v2：18 個（舊 mesh 殘り 0）
+[R4C] PASS A2 背負い籠の移位 1 件だけ
+[R4C] PASS A2 籠の位置＝R4 snapshot（limited reseal 後）(348.65, 0.144, -3.3)（差 0.000 m）
+[R4C] PASS 反向：凍結雜湊 1 件を記憶體内で竄改 → 1 件だけ検出（1）
+[R4C] 結果：0 項失敗（seal）

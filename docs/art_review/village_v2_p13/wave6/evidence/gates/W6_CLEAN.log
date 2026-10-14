@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W6G] PASS A1 DrapeFixP13／RoadEdgeBlendP13 が root 直下に存在
+[W6G] PASS A2 掛載順 SandoPilotW4P13 → DrapeFixP13 → RoadEdgeBlendP13（重複なし）
+[W6G] PASS A3 両方 enabled=true
+[W6G] PASS A4 DrapeFix 套用 40／40 件
+[W6G] PASS A5 RoadEdgeBlend 套用 7／7 件
+[W6G] PASS B1 拓樸（surface／頂點数／index／法線／色／UV／UV2）原網格と一致（不一致 0）
+[W6G] PASS B2 x／z 不変（不一致 0）
+[W6G] PASS B3 只往上（下がった頂点 0）
+[W6G] PASS B4 抬高 ≤ 0.40 m（最大 0.262 m・超過 0）
+[W6G] PASS C1 溶接位置ごとの抬高が一致（ひび割れ候補 0）
+[W6G] PASS D1 独立格子（主要 5 網格 N=7／その他 N=3）で overlay が地形より 4 mm 以上沈む点 0（最悪 -5.9 mm）
+[W6G] PASS D2 対象 40 網格すべて元は 2 cm 以上沈んでいた（40）——不要な網格を含めていない
+[W6G] PASS E1 未列入の Ground 網格 372 個に 2 cm 以上沈む標本 0（0）
+[W6G] PASS F1 外緣侵蝕 7 道路の shader＝pilot・参数一致（不一致 0）
+[W6G] PASS F2 道路 mesh は差し替えていない（surface 数 1・RoadBaseP10 の対象外）
+[W6G] PASS F3 村内道路（MainStreet／Alleys／橋道）は元の ground.gdshader のまま（変更 0）
+[W6G] PASS F4 既存 pilot 道路（R5a 封存）はそのまま pilot shader
+[W6G] PASS G1 disable → 原 mesh／原 ground.gdshader に完全復帰（mesh 0・材質 0）
+[W6G] PASS G2 再 enable → 套用数が回復
+[W6G] PASS I1 DrapeFixP13／RoadEdgeBlendP13 の子孫に CollisionObject3D／CollisionShape3D／NavigationRegion3D／MultiMeshInstance3D が 0（実得 0）
+[W6G] PASS I2 overlay の開閉で CollisionObject3D 700＝700・NavigationRegion3D 0＝0（不変）
+[W6G] PASS H1 反向：全体を 12 cm 沈めた網格を沈み検査が検出
+[W6G] PASS H2 反向：x を 5 cm ずらした網格を xz 検査が検出
+[W6G] PASS H3 反向：1 頂点を 50 cm 抬高した網格を上限検査が検出
+[W6G] PASS H4 反向：同位置頂点の片方だけ抬高した合成網格を溶接検査が検出
+[W6G] PASS H4b 正例：同位置頂点を両方同量抬高した合成網格は溶接検査を通る
+[W6G] PASS H5 反向：頂点を下げた網格を「只往上」検査が検出
+[W6G] PASS H6 反向：修正前の ShrineGrove Ground は 2 cm 以上沈む（完全性検査が検出できる）
+[W6G] PASS H7 反向：edge_w を食い違わせた期待値を道路パラメータ検査が検出
+[W6G] ==== passes=29 fails=0 ====
+[W6G] 結果：0 項失敗

@@ -1,0 +1,13 @@
+road pair (label swapped between two runs)               px shots   mean|dRGB| of those px
+NELane <-> NESouth                                    23369     4                     1.09
+NELane <-> NENorth                                     9935     4                     1.36
+NENorth <-> NESouth                                     217     3                     0.43
+CrossStreetMid <-> WestAlley                            143     2                     0.45
+CrossStreetMid <-> MainStreet                           103     4                     0.85
+NWBranch <-> NWLane                                      31     1                     0.56
+CrossStreetSouth <-> MainStreet                          20     4                     0.48
+FarmPath_2 <-> FarmPath_5                                19     6                     8.81
+FarmPath_3 <-> FarmPath_5                                10     6                     6.33
+HillFootStreet <-> MainStreet                             8     2                     1.92
+FarmPath_3 <-> FarmPath_4                                 8     5                     4.54
+CrossStreetSouth <-> WestAlley                            7     2                     0.52

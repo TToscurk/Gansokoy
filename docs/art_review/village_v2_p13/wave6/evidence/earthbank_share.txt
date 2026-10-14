@@ -1,0 +1,8 @@
+shots=89  with EarthBanks>0.5%: 34   >2%: 25   >5%: 13   max=6.6%   mean(all)=1.45%
+luma ratio EarthBanks / adjacent-terrain-mean (shots with >0.5% banks): median=1.19  p10=1.10  p90=1.22
+     6.6%  ratio=1.21  c_043:FarmPath_3
+     6.6%  ratio=1.20  c_049:FarmPath_4
+     6.5%  ratio=1.24  c_053:FarmPath_5
+     6.1%  ratio=1.19  c_044:FarmPath_3
+     5.9%  ratio=1.14  c_045:FarmPath_3
+     5.8%  ratio=1.21  c_042:FarmPath_3

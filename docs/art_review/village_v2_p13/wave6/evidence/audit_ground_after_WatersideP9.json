@@ -1,0 +1,46 @@
+{
+	"Vegetation/WatersideP9/Ground/dragon": {
+		"d_min": 0.005949467420578,
+		"d_p05": 0.0109984576702118,
+		"d_p50": 0.0109999775886536,
+		"samples": 136240,
+		"top_cells": [],
+		"tri": 13624,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/WatersideP9/Ground/ww1": {
+		"d_min": 0.00597377400845289,
+		"d_p05": 0.0109991505742073,
+		"d_p50": 0.0109999775886536,
+		"samples": 58560,
+		"top_cells": [],
+		"tri": 5856,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/WatersideP9/Ground/ww2": {
+		"d_min": 0.00594329833984375,
+		"d_p05": 0.010998860001564,
+		"d_p50": 0.0109999775886536,
+		"samples": 61660,
+		"top_cells": [],
+		"tri": 6166,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	},
+	"Vegetation/WatersideP9/Ground/ww3": {
+		"d_min": 0.00594902038574219,
+		"d_p05": 0.0109990239143372,
+		"d_p50": 0.0109999775886536,
+		"samples": 43420,
+		"top_cells": [],
+		"tri": 4342,
+		"under20mm_pct": 0.0,
+		"under50mm_pct": 0.0,
+		"under5mm_pct": 0.0
+	}
+}
