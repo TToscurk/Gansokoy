@@ -1132,6 +1132,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/lod_guard_p13.scn" id="p13w8_lodguard"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/lod_cal_batch1_p13.scn" id="p13w8_lodcal"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9_p13.scn" id="p13w9_enrich"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/arch_w9r2_p13.scn" id="p13w9r2_arch"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -144272,3 +144273,5 @@ script = ExtResource("p10r3e_act")
 [node name="LodCalBatch1P13" parent="." instance=ExtResource("p13w8_lodcal")]
 
 [node name="EnrichW9P13" parent="." instance=ExtResource("p13w9_enrich")]
+
+[node name="ArchW9R2P13" parent="." instance=ExtResource("p13w9r2_arch")]

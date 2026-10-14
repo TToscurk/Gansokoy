@@ -1,0 +1,93 @@
+{
+ "_note": "build_w9r2_arch.py 產生；Godot prefab（tools/p13/w9/w9r2_prefab.gd）讀此表逐一轉成 mesh/<名>.res。",
+ "materials": [
+  "V2_Wood",
+  "V2_Plaster",
+  "V2_Kawara",
+  "V2_KitStoneTri",
+  "V2_MachiyaKit"
+ ],
+ "modules": {
+  "B_P_MKT_012_L0": {
+   "tris": 14942,
+   "note": "B_P_MKT_012 LOD0"
+  },
+  "B_P_MKT_012_L1": {
+   "tris": 122,
+   "note": "B_P_MKT_012 LOD1"
+  },
+  "B_P_MKT_013_L0": {
+   "tris": 1360,
+   "note": "B_P_MKT_013 LOD0"
+  },
+  "B_P_MKT_013_L1": {
+   "tris": 244,
+   "note": "B_P_MKT_013 LOD1"
+  },
+  "B_P_MKT_011_L0": {
+   "tris": 1628,
+   "note": "B_P_MKT_011 LOD0"
+  },
+  "B_P_MKT_011_L1": {
+   "tris": 220,
+   "note": "B_P_MKT_011 LOD1"
+  },
+  "B_P_MKT_010_L0": {
+   "tris": 18858,
+   "note": "B_P_MKT_010 LOD0"
+  },
+  "B_P_MKT_010_L1": {
+   "tris": 22,
+   "note": "B_P_MKT_010 LOD1"
+  },
+  "B_P_MKT_009_L0": {
+   "tris": 10382,
+   "note": "B_P_MKT_009 LOD0"
+  },
+  "B_P_MKT_009_L1": {
+   "tris": 22,
+   "note": "B_P_MKT_009 LOD1"
+  },
+  "B_P_MKT_008_L0": {
+   "tris": 17684,
+   "note": "B_P_MKT_008 LOD0"
+  },
+  "B_P_MKT_008_L1": {
+   "tris": 232,
+   "note": "B_P_MKT_008 LOD1"
+  },
+  "B_P_RSW_047_L0": {
+   "tris": 268,
+   "note": "B_P_RSW_047 LOD0"
+  },
+  "B_P_RSW_047_L1": {
+   "tris": 12,
+   "note": "B_P_RSW_047 LOD1"
+  },
+  "B_P_RSW_048_L0": {
+   "tris": 20874,
+   "note": "B_P_RSW_048 LOD0"
+  },
+  "B_P_RSW_048_L1": {
+   "tris": 122,
+   "note": "B_P_RSW_048 LOD1"
+  },
+  "B_P_RSW_061_L0": {
+   "tris": 22780,
+   "note": "B_P_RSW_061 LOD0"
+  },
+  "B_P_RSW_061_L1": {
+   "tris": 120,
+   "note": "B_P_RSW_061 LOD1"
+  },
+  "B_P_RSW_062_L0": {
+   "tris": 11642,
+   "note": "B_P_RSW_062 LOD0"
+  },
+  "B_P_RSW_062_L1": {
+   "tris": 22,
+   "note": "B_P_RSW_062 LOD1"
+  }
+ },
+ "total_tris": 121556
+}

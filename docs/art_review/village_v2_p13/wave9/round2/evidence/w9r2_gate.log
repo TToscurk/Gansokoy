@@ -1,0 +1,112 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[W9R2G] 反向案例 6/6（戸口・頭上・張り出し×2・正常軒・室内）
+[W9R2G] PASS root 直下に ArchW9R2P13 が 1 回だけ掛載（保存された village_v2.tscn）
+[W9R2G] PASS ArchW9R2P13 は EnrichW9P13 の直後（順序）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W9R2G] PASS 実行時に root/ArchW9R2P13 がある
+[W9R2G] PASS 建築 10 棟（SPECS と一致）
+[W9R2G] PASS overlay に碰撞体 0（実際 0）
+[W9R2G] PASS B_P_MKT_008：overlay 子がある
+[W9R2G] PASS B_P_MKT_008：body が実在（Districts/Market/Buildings/B_P_MKT_008）
+[W9R2G] PASS B_P_MKT_008：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_008：L0／L1 あり
+[W9R2G] PASS B_P_MKT_008：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_008：三角面 L0 17684／L1 232（上限 26000／500）
+[W9R2G] PASS B_P_MKT_008：張り出しが上限内（[P: (-3.763137, 0.28, -5.723137), S: (7.526275, 4.849, 13.16314)]）
+[W9R2G] PASS B_P_MKT_008：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_008：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_009：overlay 子がある
+[W9R2G] PASS B_P_MKT_009：body が実在（Districts/Market/Buildings/B_P_MKT_009）
+[W9R2G] PASS B_P_MKT_009：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_009：L0／L1 あり
+[W9R2G] PASS B_P_MKT_009：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_009：三角面 L0 10382／L1 22（上限 26000／500）
+[W9R2G] PASS B_P_MKT_009：張り出しが上限内（[P: (-2.505538, 0.32, -4.895), S: (5.011075, 6.86676, 10.9175)]）
+[W9R2G] PASS B_P_MKT_009：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_009：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_010：overlay 子がある
+[W9R2G] PASS B_P_MKT_010：body が実在（Districts/Market/Buildings/B_P_MKT_010）
+[W9R2G] PASS B_P_MKT_010：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_010：L0／L1 あり
+[W9R2G] PASS B_P_MKT_010：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_010：三角面 L0 18858／L1 22（上限 26000／500）
+[W9R2G] PASS B_P_MKT_010：張り出しが上限内（[P: (-4.057682, 0.296, -5.755), S: (8.115363, 6.19645, 11.97702)]）
+[W9R2G] PASS B_P_MKT_010：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_010：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_011：overlay 子がある
+[W9R2G] PASS B_P_MKT_011：body が実在（Districts/Market/Buildings/B_P_MKT_011）
+[W9R2G] PASS B_P_MKT_011：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_011：L0／L1 あり
+[W9R2G] PASS B_P_MKT_011：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_011：三角面 L0 1628／L1 220（上限 26000／500）
+[W9R2G] PASS B_P_MKT_011：張り出しが上限内（[P: (-3.502, 0.32, 4.305), S: (7.004, 5.08, 2.68)]）
+[W9R2G] PASS B_P_MKT_011：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_011：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_012：overlay 子がある
+[W9R2G] PASS B_P_MKT_012：body が実在（Districts/Market/Buildings/B_P_MKT_012）
+[W9R2G] PASS B_P_MKT_012：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_012：L0／L1 あり
+[W9R2G] PASS B_P_MKT_012：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_012：三角面 L0 14942／L1 122（上限 26000／500）
+[W9R2G] PASS B_P_MKT_012：張り出しが上限内（[P: (-2.813491, 0.32, -5.674991), S: (5.626982, 6.814175, 12.64443)]）
+[W9R2G] PASS B_P_MKT_012：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_012：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_013：overlay 子がある
+[W9R2G] PASS B_P_MKT_013：body が実在（Districts/Market/Buildings/B_P_MKT_013）
+[W9R2G] PASS B_P_MKT_013：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_013：L0／L1 あり
+[W9R2G] PASS B_P_MKT_013：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_013：三角面 L0 1360／L1 244（上限 26000／500）
+[W9R2G] PASS B_P_MKT_013：張り出しが上限内（[P: (-3.971, 0.32, 4.76), S: (7.942, 3.58, 1.73)]）
+[W9R2G] PASS B_P_MKT_013：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_013：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_047：overlay 子がある
+[W9R2G] PASS B_P_RSW_047：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_047）
+[W9R2G] PASS B_P_RSW_047：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_047：L0／L1 あり
+[W9R2G] PASS B_P_RSW_047：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_047：三角面 L0 268／L1 12（上限 26000／500）
+[W9R2G] PASS B_P_RSW_047：張り出しが上限内（[P: (-2.0485, 0.22, 5.34), S: (4.097, 2.68, 0.62)]）
+[W9R2G] PASS B_P_RSW_047：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_047：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_048：overlay 子がある
+[W9R2G] PASS B_P_RSW_048：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_048）
+[W9R2G] PASS B_P_RSW_048：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_048：L0／L1 あり
+[W9R2G] PASS B_P_RSW_048：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_048：三角面 L0 20874／L1 122（上限 26000／500）
+[W9R2G] PASS B_P_RSW_048：張り出しが上限内（[P: (-4.165072, 0.28, -6.026072), S: (8.330145, 6.01242, 12.49551)]）
+[W9R2G] PASS B_P_RSW_048：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_048：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_061：overlay 子がある
+[W9R2G] PASS B_P_RSW_061：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_061）
+[W9R2G] PASS B_P_RSW_061：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_061：L0／L1 あり
+[W9R2G] PASS B_P_RSW_061：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_061：三角面 L0 22780／L1 120（上限 26000／500）
+[W9R2G] PASS B_P_RSW_061：張り出しが上限内（[P: (-5.059744, 0.22, -6.469244), S: (10.11949, 4.6052, 12.93849)]）
+[W9R2G] PASS B_P_RSW_061：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_061：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_062：overlay 子がある
+[W9R2G] PASS B_P_RSW_062：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_062）
+[W9R2G] PASS B_P_RSW_062：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_062：L0／L1 あり
+[W9R2G] PASS B_P_RSW_062：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_062：三角面 L0 11642／L1 22（上限 26000／500）
+[W9R2G] PASS B_P_RSW_062：張り出しが上限内（[P: (-2.365306, 0.28, -5.755), S: (4.730612, 5.45306, 12.12444)]）
+[W9R2G] PASS B_P_RSW_062：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_062：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS 10 棟 LOD0 合計 120418 tri（上限 160000）
+[W9R2G] PASS enabled=true：R1 の吊り物（簾・吊柿・杉玉）7 件がこの 10 棟でだけ隠れる（実際 7）
+[W9R2G] PASS EnrichW9P13 全 265 件のうち非表示は 7 件だけ（他の R1 内容は触れていない・実際 7）
+[W9R2G] PASS enabled=false で R1 の物は全て元の表示（非表示 0）
+[W9R2G] PASS enabled=false で Kit は全て元の表示へ（非表示だったもの 379 → 残り 0）
+[W9R2G] PASS enabled=false で overlay は非表示
+[W9R2G] PASS enabled=true で同じ Kit 構件が再び隠れる（379 → 379）
+[W9R2G] PASS village_v2.tscn の git diff は『追加のみ・≤3 行』（掛載の ext_resource＋node＋空行。実際 +3 −0）
+[W9R2G] PASS 10 棟とも body の碰撞は Kit 由来の 1 Shape のまま（増減なし）
+[W9R2G] 結果：104 通過・0 失敗（反向案例 6/6）
