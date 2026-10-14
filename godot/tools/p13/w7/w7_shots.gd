@@ -49,7 +49,11 @@ func _run() -> void:
 	for dn: String in disables:
 		var dnode := vil.get_node_or_null(NodePath(dn))
 		if dnode != null:
-			dnode.set("enabled", false)
+			if "enabled" in dnode:
+				dnode.set("enabled", false)
+			else:
+				# enabled を持たない純粋な overlay（W9 以降）：見えなくする（撮影用。碰撞は止めない）
+				(dnode as Node3D).visible = false
 			print("[W7S] disabled ", dn)
 		else:
 			print("[W7S] disable: node not found ", dn)

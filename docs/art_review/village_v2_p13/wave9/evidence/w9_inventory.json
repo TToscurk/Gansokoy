@@ -1,0 +1,424 @@
+{
+ "total_items": 265,
+ "by_zone": {
+  "R": 154,
+  "M": 49,
+  "F": 62
+ },
+ "new_asset_placements": 176,
+ "reused_asset_placements": 89,
+ "distinct_ids": 40,
+ "kit_meshes_built": 25,
+ "kit_total_tris_all_lods": 16750,
+ "kit_meshes_placed": 20,
+ "kit_built_not_placed": [
+  "w9_kasa_dai",
+  "w9_shita_tool_m",
+  "w9_shita_wood_m",
+  "w9_zaru_kake",
+  "w9_zori_kake"
+ ],
+ "plan_dropped": 36,
+ "rows": [
+  {
+   "id": "w9_hana_pink",
+   "kind": "new",
+   "total": 43,
+   "R": 18,
+   "M": 10,
+   "F": 15,
+   "tri_lod0": 336,
+   "tri_lod1": 108
+  },
+  {
+   "id": "w9_hana_shiro",
+   "kind": "new",
+   "total": 28,
+   "R": 14,
+   "M": 8,
+   "F": 6,
+   "tri_lod0": 264,
+   "tri_lod1": 108
+  },
+  {
+   "id": "w9_hana_kiiro",
+   "kind": "new",
+   "total": 24,
+   "R": 10,
+   "M": 4,
+   "F": 10,
+   "tri_lod0": 264,
+   "tri_lod1": 108
+  },
+  {
+   "id": "w9_hana_higanbana",
+   "kind": "new",
+   "total": 14,
+   "R": 6,
+   "M": 2,
+   "F": 6,
+   "tri_lod0": 644,
+   "tri_lod1": 204
+  },
+  {
+   "id": "w9_sudare",
+   "kind": "new",
+   "total": 12,
+   "R": 8,
+   "M": 4,
+   "F": 0,
+   "tri_lod0": 164,
+   "tri_lod1": 96
+  },
+  {
+   "id": "w9_ueki_tana",
+   "kind": "new",
+   "total": 9,
+   "R": 8,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": 724,
+   "tri_lod1": 325
+  },
+  {
+   "id": "w9_takegaki",
+   "kind": "new",
+   "total": 6,
+   "R": 6,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 488,
+   "tri_lod1": 146
+  },
+  {
+   "id": "w9_asagao",
+   "kind": "new",
+   "total": 5,
+   "R": 5,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 848,
+   "tri_lod1": 266
+  },
+  {
+   "id": "w9_itabei_a",
+   "kind": "new",
+   "total": 5,
+   "R": 5,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 204,
+   "tri_lod1": 120
+  },
+  {
+   "id": "w9_kido",
+   "kind": "new",
+   "total": 5,
+   "R": 5,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 222,
+   "tri_lod1": 150
+  },
+  {
+   "id": "w9_itabei_b",
+   "kind": "new",
+   "total": 3,
+   "R": 3,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 216,
+   "tri_lod1": 132
+  },
+  {
+   "id": "w9_jizo",
+   "kind": "new",
+   "total": 3,
+   "R": 1,
+   "M": 1,
+   "F": 1,
+   "tri_lod0": 206,
+   "tri_lod1": 108
+  },
+  {
+   "id": "w9_kaki_dai",
+   "kind": "new",
+   "total": 3,
+   "R": 1,
+   "M": 0,
+   "F": 2,
+   "tri_lod0": 904,
+   "tri_lod1": 352
+  },
+  {
+   "id": "w9_sugidama",
+   "kind": "new",
+   "total": 3,
+   "R": 0,
+   "M": 3,
+   "F": 0,
+   "tri_lod0": 788,
+   "tri_lod1": 204
+  },
+  {
+   "id": "w9_tsurushi_kaki",
+   "kind": "new",
+   "total": 3,
+   "R": 2,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": 638,
+   "tri_lod1": 194
+  },
+  {
+   "id": "w9_tsurushi_togarashi",
+   "kind": "new",
+   "total": 3,
+   "R": 2,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": 726,
+   "tri_lod1": 152
+  },
+  {
+   "id": "w9_hokora",
+   "kind": "new",
+   "total": 2,
+   "R": 1,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": 178,
+   "tri_lod1": 128
+  },
+  {
+   "id": "w9_shita_tool",
+   "kind": "new",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 404,
+   "tri_lod1": 116
+  },
+  {
+   "id": "w9_shita_wood",
+   "kind": "new",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": 902,
+   "tri_lod1": 144
+  },
+  {
+   "id": "w9_kakashi",
+   "kind": "new",
+   "total": 1,
+   "R": 0,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": 172,
+   "tri_lod1": 91
+  },
+  {
+   "id": "fern_a",
+   "kind": "reuse",
+   "total": 21,
+   "R": 7,
+   "M": 8,
+   "F": 6,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "shrub_a",
+   "kind": "reuse",
+   "total": 17,
+   "R": 10,
+   "M": 0,
+   "F": 7,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "sz_hachi",
+   "kind": "reuse",
+   "total": 8,
+   "R": 6,
+   "M": 2,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "kr_kago",
+   "kind": "reuse",
+   "total": 6,
+   "R": 4,
+   "M": 0,
+   "F": 2,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "gk_yotsume",
+   "kind": "reuse",
+   "total": 5,
+   "R": 5,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "young_broad_b",
+   "kind": "reuse",
+   "total": 5,
+   "R": 4,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "sasa_a",
+   "kind": "reuse",
+   "total": 3,
+   "R": 3,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "sk_woodpile",
+   "kind": "reuse",
+   "total": 3,
+   "R": 3,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "young_broad_a",
+   "kind": "reuse",
+   "total": 3,
+   "R": 1,
+   "M": 1,
+   "F": 1,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "mk_hoshimono",
+   "kind": "reuse",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "mk_kame",
+   "kind": "reuse",
+   "total": 2,
+   "R": 1,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "ms_noren_age_ai",
+   "kind": "reuse",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "ms_noren_age_beni",
+   "kind": "reuse",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "ms_noren_age_kinari",
+   "kind": "reuse",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "sk_teoke",
+   "kind": "reuse",
+   "total": 2,
+   "R": 1,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "st_kuwa",
+   "kind": "reuse",
+   "total": 2,
+   "R": 2,
+   "M": 0,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "gk_toro_kasuga",
+   "kind": "reuse",
+   "total": 1,
+   "R": 0,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "hx_daikon_kake",
+   "kind": "reuse",
+   "total": 1,
+   "R": 0,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "sk_bench",
+   "kind": "reuse",
+   "total": 1,
+   "R": 0,
+   "M": 1,
+   "F": 0,
+   "tri_lod0": null,
+   "tri_lod1": null
+  },
+  {
+   "id": "st_wara",
+   "kind": "reuse",
+   "total": 1,
+   "R": 0,
+   "M": 0,
+   "F": 1,
+   "tri_lod0": null,
+   "tri_lod1": null
+  }
+ ]
+}
