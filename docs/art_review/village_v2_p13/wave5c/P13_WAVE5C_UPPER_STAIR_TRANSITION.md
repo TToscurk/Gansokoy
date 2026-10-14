@@ -1,6 +1,40 @@
-# P13 WAVE 5C — UPPER SHRINE STAIR TRANSITION（ART_REVIEW 提交）
+# P13 WAVE 5C — UPPER SHRINE STAIR TRANSITION
 
-狀態：**ART_REVIEW**（未 ART_APPROVED）。範圍＝參道 s=89.85–99.50 m（原 r8 最後 20 個元素）。s=37.20–89.85 m 與左右乾砌石垣不動。
+**最終狀態（使用者裁定）：TECH ACCEPTED / CONDITIONAL ART ACCEPTED。本階段技術工作結案，美術帶少量已記錄例外。STOP SHRINE STAIR ITERATION。**
+範圍＝參道 s=89.85–99.50 m（原 r8 最後 20 個元素）。s=37.20–89.85 m 與左右乾砌石垣不動。接受 commit `a29a636`。
+
+## 0. 最終裁定（優先於下方「ART_REVIEW 提交」各節）
+
+### 0.1 保留
+- 保留 s=89.85–99.50 m 的現有石階、邊石與地形適應方案（收窄 A 方案）。
+- 不重新排列已驗證的 20 個階梯元素；**不啟動 W5D、不再做石階參數搜索**。
+
+### 0.2 已記錄、尚未完成的視覺缺陷（移交 P13 最終環境美術清單，不宣稱已修正）
+1. 最後約 0.5 m 右側步行幅（s≈98.7–99.5 m）**不是完整石鋪面**：可見面是 P1 地形，山坡土比踏面高 8–19 cm（`evidence/cover_after.log`：該段 11–13／17 格被石覆蓋）。可走性由 SWALK 與上下行走確認。
+2. 部分邊石與笠石的收尾過於破碎（上段右側尤其明顯）。
+3. 石階與土坡仍有局部突兀交界；已核准的 s≈70、83 m 側面也有類似交界（`diag/mid_vs_top.png`），屬同一類問題，應在 P13 的坡面／地形融合統一處理，而不是回頭單修石階。
+
+### 0.3 植被處理——正式整合的必要條件
+- 現況：兩株 ForestP9 植物（Near `4905_sasa_a`、`6695_tsutsuji_a` 與各自的遠景 LOD2 instance）**只在 `SandoPilotW4P13` overlay 啟用時**隱藏。overlay 已實例於 `village_v2.tscn`、`enabled` 預設 true、`_ready` 時 deferred 套用，所以正常進入 village_v2 的遊戲路徑會排除它們（W5C gate：歩行幅內可見植物 0；關掉 overlay 的反向案例會抓到）。
+- 整合規則（之後任何人重生／重掛場景時都必須遵守）：
+  - 重生 `village_v2.tscn` 後必須確認 `SandoPilotW4P13` 仍掛載、`enabled=true`、`suppress_plants` 非空；不得因 overlay 被停用或遺失而讓植物重新穿進石階。
+  - 抑制清單以 `Vegetation/ForestP9/...` 的節點路徑與 MultiMesh instance index 記錄；**ForestP9 若被重烘，清單會失效**，必須由 `w5c_upper_plan.gd` 的 `intruders()` 重算並重建 W5C（W5C gate 會比對「儲存清單＝生成器清單」，不一致即 FAIL）。
+  - **不得為了這兩株植物直接修改整個 ForestP9，也不得重烘森林層**；封存的 `forest_p9.scn` 維持原樣。
+  - 若日後要把抑制改成「烘進場景」的永久方案，必須另案並經使用者同意（涉及 P9 R2 封存的限定解封）。
+
+### 0.4 測試與保護
+- 已有的局部 gate（W5C 26 項含 5 反向、W5B、W4 pilot、SAN plan／scene、SWALK、SHRINE、FOREST seal、P9 FINAL）與一次玩家上下行走已足夠；**不重跑七輪參數搜索、不跑全村回歸與長距離實走**。
+- P1 地形、相機、Auto-Step 及其他 session 檔案未動；原 staged 53 項前後一致；不 push。
+
+### 0.5 後續
+- 停止參道石階迭代，不再自行開啟石階修正任務。
+- 後續優先序：P13 剩餘道路、地形與村莊整體美術（上述 0.2 三項併入該清單）。
+
+---
+
+# 以下為原 ART_REVIEW 提交內容（歷史紀錄）
+
+狀態（提交時）：**ART_REVIEW**。
 
 ## 1. 先查到的事實（BEFORE，r8 長踏石）
 
