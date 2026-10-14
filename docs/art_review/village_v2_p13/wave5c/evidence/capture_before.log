@@ -1,0 +1,20 @@
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[W4S] boot 11123 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+SHOT before_t1_up_s85
+SHOT before_t2_up_s90
+SHOT before_t3_entrance_s95
+SHOT before_t4_entrance_s98
+SHOT before_t5_down_s100
+SHOT before_f1_join
+SHOT before_f2_upper_side
+SHOT before_f3_upper_high
+SHOT before_f4_top_looking_down
+SHOT before_f5_close_treads
+[W5C-SHOTS] DONE before

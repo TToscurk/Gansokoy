@@ -217,7 +217,11 @@ func _verify_upper(v: Node3D,H: PackedFloat32Array,st: Array,rp: Array,lamps0: A
 					join_bad+=1
 	_ok(join_bad==0,"joins s64.2 /77.1 /89.85 have no walk hole or >15 cm surface mismatch; bad %d"%join_bad)
 	# Original r8 triangles removed exactly once in replaced range.
-	var expected := W4.r8_without_range((baseline.get_node("StoneSteps") as MeshInstance3D).mesh as ArrayMesh,cl,Vector2i(744,UP.END))
+	# W5C extends the removal of the old r8 stair to s=99.50 m (the W5B gate must follow the committed overlay, not a stale constant)
+	var end_k := UP.END
+	if ov.get_node_or_null("W5C") != null:
+		end_k = int(load("res://tools/p13/w5c_upper_plan.gd").END)
+	var expected := W4.r8_without_range((baseline.get_node("StoneSteps") as MeshInstance3D).mesh as ArrayMesh,cl,Vector2i(744,end_k))
 	var actual := (v.get_node("ShrineApproachP10/StoneSteps") as MeshInstance3D).mesh
 	_ok(expected.surface_get_arrays(0)[Mesh.ARRAY_INDEX]==actual.surface_get_arrays(0)[Mesh.ARRAY_INDEX],"no old/new double visible steps/walls in replaced range")
 	baseline.free()

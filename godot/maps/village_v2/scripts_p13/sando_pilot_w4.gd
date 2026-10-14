@@ -12,16 +12,46 @@ extends Node3D
 @export var steps_path: NodePath = NodePath("../ShrineApproachP10/StoneSteps")
 @export var soil_material_from: NodePath = NodePath("../Terrain/MainTerrain")
 @export var rest_mesh: Mesh
+## P13 W5C：参道の歩く幅に載っている封存済み ForestP9 の植物〔Near の節点＋遠景 MultiMesh の 1 インスタンス〕を実行時だけ隠す。
+## 封存ファイル（forest_p9.scn）は書き換えない。enabled=false で元に戻る。[{near, name, origin, far, far_index}]（生成器が計算して書く）
+@export var suppress_plants: Array = []
 
 var _orig_mesh: Mesh
 var _steps: MeshInstance3D
+var _far_saved := {}
 
 
 func _ready() -> void:
 	apply.call_deferred(enabled)
 
 
+func _apply_plants(on: bool) -> void:
+	var host := get_parent()
+	if host == null:
+		return
+	for e in suppress_plants:
+		var near := host.get_node_or_null(NodePath(String(e["near"]))) as Node3D
+		if near != null:
+			near.visible = not on
+		var far_path := String(e.get("far", ""))
+		var idx := int(e.get("far_index", -1))
+		if far_path == "" or idx < 0:
+			continue
+		var mmi := host.get_node_or_null(NodePath(far_path)) as MultiMeshInstance3D
+		if mmi == null or mmi.multimesh == null or idx >= mmi.multimesh.instance_count:
+			continue
+		var key := far_path + "#" + str(idx)
+		if on:
+			if not _far_saved.has(key):
+				_far_saved[key] = mmi.multimesh.get_instance_transform(idx)
+			var orig: Transform3D = _far_saved[key]
+			mmi.multimesh.set_instance_transform(idx, Transform3D(Basis().scaled(Vector3.ZERO), orig.origin))
+		elif _far_saved.has(key):
+			mmi.multimesh.set_instance_transform(idx, _far_saved[key])
+
+
 func apply(on: bool) -> void:
+	_apply_plants(on)
 	for c in get_children():
 		if c is Node3D:
 			(c as Node3D).visible = on

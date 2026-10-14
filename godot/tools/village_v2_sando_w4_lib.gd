@@ -506,6 +506,10 @@ static func tread(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array, a: D
 	var uR := clampf(float(state["uR"]) + rng.randf_range(-0.05, 0.05), EDGE_LO, EDGE_HI)
 	state["uL"] = uL
 	state["uR"] = uR
+	if a.has("cap_l") or a.has("cap_r"):
+		# P13 W5C（要素に cap_l／cap_r がある時だけ＝承認済みの下段は 1 ビットも変わらない）：地形が踏面頂より高い側は、その手前で石を止める。state（乱数の歩み）は触らない
+		uL = -minf(-uL, float(a.get("cap_l", 9.0)))
+		uR = minf(uR, float(a.get("cap_r", 9.0)))
 	a["eL"] = -uL
 	a["eR"] = uR
 	var cuts := _cuts(rng, uL, uR, state["cuts"])
@@ -1216,6 +1220,12 @@ static func build_sides(sm: SurfaceTool, hm: SurfaceTool, cl: PackedVector2Array
 				j = mini(i + cnt, plan.size()) - 1
 				for q in range(i + 1, j + 1):
 					if String(plan[q]["kind"]) != "step":
+						j = q - 1
+						break
+				# P13 W5C：踏面の端に cap_l／cap_r がある run は、端が変わる所で run を切る（壁が最も広い踏面に合わせて外に立たない）。乱数の消費は変えない
+				var ckey := "cap_r" if sd > 0.0 else "cap_l"
+				for q in range(i + 1, j + 1):
+					if absf(float(plan[q].get(ckey, 9.0)) - float(plan[i].get(ckey, 9.0))) > 0.05:
 						j = q - 1
 						break
 			_wall_run(sm, hm, cl, plan, i, j, sd, touts[si], tfars[si], lanterns, rng)

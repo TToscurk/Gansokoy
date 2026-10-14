@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[SWALK] INFO 玩家 膠囊 r 0.30 h 1.70、floor_max_angle 52.0°、step_height 0.35；石段 185（踊り場 3）
+[SWALK] PASS W1 歩ける面＝斜坡碰撞と見える踏面の差 最大 0.114 m（≤ 半蹴上 0.10＋0.03）、外れ 0、足場なし 0
+[SWALK] PASS W2 玩家膠囊（r 0.30 h 1.70、足場＋0.30）を石段の中心線と左右 ±0.85 m に置く：接触 0
+[SWALK] PASS W3 高さの連続：0.25 m ごとの足場の差 最大 0.187 m（≤ 0.25·tan(52°)＋0.02＝0.340）
+[SWALK] INFO W4 歩いては戻れず跳躍（上がれる段差 0.84 m）で戻る所 9：["踊り場 s 50.3 左 側 0.43 m", "踊り場 s 50.3 右 側 0.46 m", "踊り場 s 50.8 左 側 0.44 m", "踊り場 s 50.8 右 側 0.43 m", "踊り場 s 62.9 左 側 0.36 m", "踊り場 s 63.4 左 側 0.41 m", "踊り場 s 75.9 右 側 0.52 m", "踊り場 s 76.4 左 側 0.36 m", "踊り場 s 76.4 右 側 0.46 m"]
+[SWALK] PASS W4 踊り場の縁と両脇：見える袖石の外縁 ≤ 斜坡の半幅＋0.05、縁の内側＝踊り場の高さ、脇へ降りても 8 m 以内に戻れる
+[SWALK] PASS W5 NPC：初期位置が石段の上 0・巡回 6 條が石段を横切らない（NPC 不搬）
+[SWALK] PASS W6 TPS 相機（上り＋下り 532 点）：相機が見える石・地形の中 0 点
+[SWALK] INFO W6 腕の縮み（正しい碰撞挙動）：下り 147／266 点（55 %）・5 回・最短 1.46 m、上り 0／266 点
+[SWALK] PASS W7 P9 R4-2 と同じ經路（參道＋前庭 179 点、膠囊は足場＋0.55＝封存 gate と同じ高さ、足場＝最上面の歩ける面）被擋 0
+[SWALK] 永久反向（每案必須讓 gate 失敗）
+[SWALK]   N1 參道（s 70 m）に 1 m の箱：PASS（gate 正確失敗）
+[SWALK]   N2 踊り場の斜坡を 0.5 m 持ち上げる（段差）：PASS（gate 正確失敗）
+[SWALK]   N3 踊り場の斜坡を抜く（穴）：PASS（gate 正確失敗）
+[SWALK]   N4 斜坡を幅 2.0 m に細くする（袖石の下に碰撞なし）：PASS（gate 正確失敗）
+[SWALK]   N5 相機の碰撞を切る（腕 8.5 m 固定）：PASS（gate 正確失敗）
+[SWALK] PASS 反向 5/5
+[SWALK] INFO 参考：P9 R4-2 封存 gate と同じ地形基準の膠囊でこの場景を測ると 179 点中 40 点が被擋（そこでの足場は地形より最大 0.94 m 上＝踊り場の盛土の上を歩く面）
+[SWALK] 結果：0 項失敗
