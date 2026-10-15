@@ -1,6 +1,7 @@
 # P13 W9 Phase 3 R1 — 村莊視覺差異化（A 主街／B 住宅巷／C 農舍邊緣）
 
-**狀態：ART_REVIEW（等待使用者裁定）。** 未 ART_APPROVED、未封存、未 push；W9 整體未封存。
+**狀態（R1 提交時）：ART_REVIEW。** 未 ART_APPROVED、未封存、未 push；W9 整體未封存。
+**第一批最終狀態：ART_APPROVED（使用者裁定 2026-10-16；經 R2 局部修正後核准，見 `../phase3_r2/P13_WAVE9_PHASE3_R2_REPORT.md` 開頭）。W9 整體仍未封存。** 下面各節是 R1 提交時的記錄，原樣保留。
 日期：2026-10-15。基底：`1fdb647`（Phase 2 局部結案）。
 **提交後更正**：初版（`0fdea17`）有 6 處數字／方位／判準的記載不準，已在本版更正，列表見 §8。
 **R2（2026-10-15 你下達「ART_REVIEW ACCEPTED」裁定後的三項局部修正）**：MXC_005 白蔵比例・RSW_071 柴棚柱與 SpringArm・C 區 cT4／cT7 植被 → `../phase3_r2/P13_WAVE9_PHASE3_R2_REPORT.md`。本報告 §2 的 MXC_005 數字（寬 3.0 m・棟 7.1 m）與 RSW_071 的庇柱是 R1 的紀錄，R2 已變更。

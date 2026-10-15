@@ -1,6 +1,28 @@
-# P13 W9 Phase 3 第一批 R2：局部修正報告（ART_REVIEW）
+# P13 W9 Phase 3 第一批 R2：局部修正報告【ART_APPROVED（使用者裁定 2026-10-16）】
 
-日期：2026-10-15　狀態：**ART_REVIEW 已提交，尚未 ART_APPROVED**　範圍：你對「W9 Phase 3 第一批 ART_REVIEW ACCEPTED」裁定中的三項局部修正。
+## 最終裁定（使用者・2026-10-16）— 以下自 §0 起為提交時（ART_REVIEW）的記錄，原樣保留
+
+**W9 Phase 3 第一批（MXC_005 白蔵／RSW_071 柴棚／C 區植被），全部 ART_APPROVED。這不是 W9 整體的封存（W9 沒有封存）。未 push。**
+
+| 項目 | 裁定 | 保留的內容 | 使用者的指示 |
+|---|---|---|---|
+| 1. MXC_005 白蔵 | 核准 | 低矮附屬倉的造型與目前尺寸（棟 4.61・軒 3.35・壁寬 3.45・奧行 10.49 m） | **不再修改 footprint，也不再進行比例搜索** |
+| 2. RSW_071 柴棚 | 核准 | 無落地庇柱、由牆面腕木支撐的懸挑設計；薪堆・劈柴墩的低矮碰撞 | SpringArm 已恢復正常；**不再為 bT3 的局部屋簷遮蔽修改全域相機** |
+| 3. C 區植被 | 核准 | cT4、cT7 目前的植被配置 | **不再微調灌木間距、葉冠與地被** |
+| 4. 驗證報告 | 接受更正（`dc3c764`） | gate 歷史與限制說明 | **不得將 gate PASS 宣稱為美術品質的客觀證明** |
+
+局部結案的處理：
+- 三項核准與報告更正皆記錄為已核准／已接受。**本批正式結案，不得自行開啟 W9 Phase 3 R2c。**
+- 已知限制照原樣保留在 §6 與 `../W9_FOLLOWUP_REGISTRY.md`（#6–#15），**本輪不要求修正**。
+- 未重拍對照圖，未重跑任何 gate／全量測試。引用的既有結果（出處＝本報告 §4 與 `evidence/`）：主 gate 374／0（反向 36／36）・柱 gate 19／0・到達性 NG 0・環境 gate 50／0・蔵 gate 6／0・view gate 9／0・sweep gate 9／0・真玩家短走 ON 8／0／NEG 4／0・步行 23 段 FAIL 0。這些只是回歸防護，**不證明美術品質**。
+- 原 Kit・可逆 overlay（`ArchW9R2P13`、`EnrichW9P3`）與既有資產保留。可逆性依 R1 報告 §「overlay 可逆」的驗證（`ArchW9R2P13` 以 `enabled=false` 還原；`EnrichW9P3` 是 `village_v2.tscn` 的純追加 3 行，刪節點與 ext_resource 即回原狀；證據 `gate_r2_main.log`／git diff）。**本輪未重測**。
+- 保護：staged 53 項的 path／status／mode／blob 不變；其他 session 的工作不動；不 push。
+- 河道內的 P2 `WATERFALL_F7/Placeholder` 藍色圓柱列為**待處理的玩家可見缺陷**（登記表 #9），先確認用途與依賴關係，未經確認不改封存場景；唯讀查得的依賴關係已寫入登記表。
+- 下一批方向見 `../W9_FOLLOWUP_REGISTRY.md` 末段「下一批方向」：**必須以大幅提升場景辨識度為目標**，不回頭打磨這三區。
+
+---
+
+日期：2026-10-15（提交時的記錄）　狀態（提交時）：**ART_REVIEW 已提交，尚未 ART_APPROVED**　範圍：你對「W9 Phase 3 第一批 ART_REVIEW ACCEPTED」裁定中的三項局部修正。
 其餘（A／B／C 的整體方向、R1 的 374／0・40／0・21 段實走）沿用，不重做、不擴張到全村。審圖圖片在 `review/`，證據在 `evidence/`（索引：`evidence/README.md`）；**各新增 gate 的完整執行歷史（含失敗）在 `evidence/GATE_HISTORY.md`**。
 
 > **提交後更正**：原版（commit `68e1433`）的 §5 自稱「變更全部列在這裡」，但漏記了 sweep gate 反向案例的初期失敗與 N2 判準的更動，R-G4 的先後順序也寫錯，且全文用日文書寫。本版補齊並改為繁體中文；結論與最終數字不變。細目見 §8。
