@@ -1,0 +1,74 @@
+# W9 Phase 4 R1 局部 gate 摘要（2026-10-16・全て実機／headless 実行ログからの抜粋）
+
+## 資産鎖の最終実行（04:17–04:19・全 exit 0）
+Blender exit=0 / prefab「結果：0 項失敗」exit=0 / bake exit=0 / EnrichW9P4 build exit=0（最終ソースで再生成。04:08 の prefab exit=1 の輪は破棄して作り直し）
+
+## verify_w9r2.gd（建築 overlay：38 棟＝既存 27＋Phase 4 の 11）
+[W9R2G] PASS 38 棟 LOD0 合計 556089 tri（上限 590900＝平均 15550 × 棟数）
+[W9R2G] PASS village_v2.tscn は 0ca148f から『追加のみ・≤9 行（R2 3＋Phase 3 の EnrichW9P3 3＋Phase 4 の EnrichW9P4 3）』（実際 +9 −0）
+[W9R2G] 結果：517 通過・0 失敗（反向案例 36/36）
+
+## verify_w9p4.gd（EnrichW9P4・新設／W9.why を保存済み場景の実座標で再評価）
+[W9P4G] PASS 保存された village_v2.tscn に ext_resource 1＋node 1 だけ掛かっている（1＋1）
+[W9P4G] PASS EnrichW9P4 は EnrichW9P3 の直後（順序）
+[W9P4G] PASS 既存 overlay EnrichW9P13 は残っている
+[W9P4G] PASS 既存 overlay EnrichW9P3 は残っている
+[W9P4G] PASS 既存 overlay ArchW9R2P13 は残っている
+[W9P4G] PASS 既存 overlay FarmsteadP13 は残っている
+[W9P4G] PASS 既存 overlay MeadowP9 は残っている
+[W9P4G] PASS 既存 overlay EnvironmentP9 は残っている
+[W9P4G] PASS 既存 overlay HumanUseP10 は残っている
+[W9P4G] PASS EnrichW9P4 は root に 1 つだけ（1）
+[W9P4G] PASS 烘焙した件数と meta items が一致（115）
+[W9P4G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
+[W9P4G] PASS 区域 B4 の構件数 84 ≥ 40
+[W9P4G] PASS 区域 C4 の構件数 31 ≥ 20
+[W9P4G] PASS 西巷の暮らしの痕跡：小物を置いた戸が 10 ≥ 8
+[W9P4G] PASS 各戸の小物の組：同じ組が 3 戸以上に使われていない（戸 10）
+[W9P4G] PASS B4 の構件の種類 35 ≥ 14（同じ一組の複製ではない）
+[W9P4G] PASS 宅間の垣・塀の部材 8 ≥ 3
+[W9P4G] PASS 棟の背後の樹冠：高さ ≥ 8 m の樹 5 ≥ 5（屋根並みの単調さを破る）
+[W9P4G] PASS C4_pocket_N：高木 2 ≥ 2・中層 8 ≥ 4・低層 10 ≥ 4（三層）
+[W9P4G] PASS C4_pocket_N：隣の株までの距離の変動係数 0.46 ≥ 0.25（等間隔でない・20 株）
+[W9P4G] PASS C4_pocket_S：高木 1 ≥ 1・中層 5 ≥ 4・低層 5 ≥ 4（三層）
+[W9P4G] PASS C4_pocket_S：隣の株までの距離の変動係数 0.30 ≥ 0.25（等間隔でない・11 株）
+[W9P4G] INFO LOD0 三角面 96584・MeshInstance 295・碰撞箱 38・MultiMesh 0
+[W9P4G] PASS 予算：LOD0 96584 ≤ 150000・Mesh 295 ≤ 450・碰撞箱 38 ≤ 60
+[W9P4G] PASS MultiMesh なし（headless 烘焙の零行列問題の対象外）
+[W9P4G] PASS 全 115 構件が道・建物・戸口・水・田・封存物・NPC 動線・Hero に触れず、接地している（不適合 0）
+[W9P4G] PASS 樹・竹・低木は路面の縁から 0.6 m 以内に乗らない（0）
+[W9P4G] PASS 高木は路面の縁から 3 m 以上離れる＝道の視線の通路を塞がない（0）
+[W9P4G] PASS 地面物が W9 R1／Phase 3 の構件と重ならない（0）
+[W9P4G] PASS 構件同士が重ならない（重なり 0）
+[W9P4G] PASS 碰撞箱 38 個が戸口の空け帯と NPC の巡回路に触れない（0）
+[W9P4G] PASS 反向：主街の路面（245.0, 20.0）に置いた樹は『road』で落ちる（road）
+[W9P4G] PASS 反向：建物の中に置いた小屋は落ちる（inside_building(MKT_001 -2.59)）
+[W9P4G] PASS 反向：地面から 0.6 m 浮いた構件は落ちる（float(1.69 vs ground 1.09)）
+[W9P4G] PASS 反向：戸口の空け帯にかかる碰撞箱は落ちる（door(B_P_MKT_001)）
+[W9P4G] PASS 反向：二重掛載は件数 2 として検出できる（2）
+[W9P4G] PASS 反向：同じ小物の組が 3 戸に使われると落ちる
+[W9P4G] PASS 正：同じ組が 2 戸までなら通る
+[W9P4G] PASS 反向：1.5 m 等間隔の並びは変動係数 0.00 で落ちる（< 0.25）
+[W9P4G] PASS 反向：主街の路面（245.0, 20.0）に置いた高木は『路面から離れる』判定で落ちる
+[W9P4G] PASS 40  FAIL 0
+[W9P4G] 結果：0 項失敗
+
+## 既存 W9 gate（本批で落ちないことの確認）
+- verify_w9r2_posts: 結果：19 通過・0 失敗
+- verify_w9p3（EnrichW9P3）: PASS 50  FAIL 0 / 結果：0 項失敗
+- verify_w9_enrichment（EnrichW9P13）: PASS 20  FAIL 0 / 結果：0 項失敗
+
+## 実機の玩家歩行（walk_w9r2_real.gd＝main.tscn の玩家制御器・Phase 4 の 11 棟×3 脚＝33 脚＋既存 14 脚）
+- overlay ON（新しい建物）: 47 脚・FAIL 3 ['p4_MKT_004_along_near', 'p4_MKT_005_along_near', 'p4_MKT_015_along_near']
+- overlay OFF（ArchW9R2P13 を無効＝元の Kit）: 47 脚・FAIL 3
+- ON と OFF で結果（ok／stop）が違う脚: []
+- FAIL 3 脚（MKT_004／005／015 の壁際 1.3 m の帯）は ON／OFF で停止位置（first_stall_lx −0.51／−6.43／−6.12）・停止フレーム数（119／46／51）・壁からの距離（1.54／1.3／1.3 m）が完全に同じ＝今回の屋根・庇の変更とは無関係（元の Kit 状態でも同じ位置で止まる。止めている物の正体は未特定で、店前の既存物と推定）。道の中の脚（along_road）と入口の脚（door 11／11）は ON で全て到達。
+- 接地喪失 0・1 フレーム最大の段差 0.0036 m
+
+## SpringArm（arm_sweep_w9p3.gd に --lane と EnrichW9P4 の認識を足して、西巷の直線区間 s 0..50 m を 16 方位×5 横位置で sweep）
+[ARMSW] overlay collision objects: 10  arm.collision_mask=1  spring_length(configured)=5.46
+[ARMSW] samples=8080  悪化(≥0.30 m)=150 (1.86 %)  平均悪化=0.0748 m
+[ARMSW]   原因 EnrichW9P4/Collision               n=150  最大 5.917 m
+- 屋根・庇・柱（ArchW9R2P13）による縮みは 0。縮みの全て（150 件）は EnrichW9P4/Collision（宅間の木戸・板塀・下屋の碰撞）。
+- 最悪は 7.5 m → 1.58 m（縮み 5.917 m・位置 (203.76, −67.94)・巷の軸から横へ −1.2 m・向き yaw 270°。ほかに (199.0, −48.37)・横 +1.2 m・yaw 90° で 5.909 m）。
+- 同じ種類の値は Phase 3（EnrichW9P3/Collision）で 62／10 960＝0.57 %（登記表 #13）。今回は巷が狭く垣が連続するので 1.86 %。**判断を求める項目**（レポート §8）。

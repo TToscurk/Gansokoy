@@ -1,0 +1,30 @@
+[WEIR] F7 at (307.0, 70.0) dir=(-0.447, 0.894)
+[WEIR]   s=-24.0  water=-1.52  ground=-2.43  depth=0.91
+[WEIR]   s=-16.0  water=-1.52  ground=-2.47  depth=0.94
+[WEIR]   s= -8.0  water=-1.52  ground=-2.40  depth=0.87
+[WEIR]   s= -4.0  water=-1.52  ground=-2.32  depth=0.79
+[WEIR]   s= +0.0  water=-1.52  ground=-2.31  depth=0.79
+[WEIR]   s= +4.0  water=-1.52  ground=-2.46  depth=0.94
+[WEIR]   s= +8.0  water=-1.52  ground=-2.46  depth=0.94
+[WEIR]   s=+16.0  water=-1.52  ground=-2.45  depth=0.93
+[WEIR]   s=+24.0  water=-1.52  ground=-1.81  depth=0.29
+[WEIR]   lat=-4.0 water=-1.52 ground=-0.32
+[WEIR]   lat=-2.0 water=-1.52 ground=-2.27
+[WEIR]   lat=+2.0 water=-1.52 ground=-2.27
+[WEIR]   lat=+4.0 water=-1.52 ground=-0.53
+[WEIR] B7 at (142.8, 42.0) dir=(-0.258, 0.966)
+[WEIR]   s=-24.0  water=0.44  ground=-0.10  depth=0.54
+[WEIR]   s=-16.0  water=0.39  ground=0.02  depth=0.37
+[WEIR]   s= -8.0  water=0.35  ground=0.12  depth=0.22
+[WEIR]   s= -4.0  water=0.32  ground=-0.23  depth=0.55
+[WEIR]   s= +0.0  water=0.30  ground=-0.24  depth=0.54
+[WEIR]   s= +4.0  water=0.28  ground=-0.40  depth=0.67
+[WEIR]   s= +8.0  water=0.25  ground=-0.10  depth=0.36
+[WEIR]   s=+16.0  water=0.21  ground=-0.07  depth=0.27
+[WEIR]   s=+24.0  water=0.16  ground=-0.55  depth=0.71
+[WEIR]   lat=-4.0 water=nan ground=0.64
+[WEIR]   lat=-2.0 water=0.30 ground=0.27
+[WEIR]   lat=+2.0 water=0.30 ground=0.29
+[WEIR]   lat=+4.0 water=nan ground=0.65
+[WEIR] node WATERFALL_B7 pos=(142.8, -0.237596, 42.0) label=跌水（西渠） conf=medium
+[WEIR] node WATERFALL_F7 pos=(307.0, -2.314183, 70.0) label=跌水（水車旁） conf=low
