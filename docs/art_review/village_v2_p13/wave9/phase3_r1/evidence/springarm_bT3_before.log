@@ -1,0 +1,5 @@
+[ARM] disabled=["EnrichW9P3", "ArchW9R2P13"] player=(235.80, 1.43, -87.60) arm_origin=(235.80, 3.13, -87.60) dir=(-0.230, 0.179, 0.957) spring_length=2.80 hit_length=2.746 margin=0.20 mask=1
+[ARM] ray hit 2.752 m  collider=/root/Main/VillageV2/Districts/ResidentialWest/Buildings/B_P_RSW_071  pos=(235.17, 3.62, -84.97)
+[ARM]    ↑ Buildings (Node3D)
+[ARM]    ↑ ResidentialWest (Node3D)
+[ARM]    ↑ Districts (Node3D)

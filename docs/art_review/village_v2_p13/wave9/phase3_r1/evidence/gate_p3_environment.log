@@ -1,0 +1,65 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W9P3G] PASS 保存された village_v2.tscn に ext_resource 1＋node 1 だけ掛かっている（1＋1）
+[W9P3G] PASS EnrichW9P3 は ArchW9R2P13 の直後（順序）
+[W9P3G] PASS 既存 overlay EnrichW9P13 は残っている
+[W9P3G] PASS 既存 overlay ArchW9R2P13 は残っている
+[W9P3G] PASS 既存 overlay FarmsteadP13 は残っている
+[W9P3G] PASS 既存 overlay MeadowP9 は残っている
+[W9P3G] PASS 既存 overlay EnvironmentP9 は残っている
+[W9P3G] PASS 既存 overlay HumanUseP10 は残っている
+[W9P3G] PASS EnrichW9P3 は root に 1 つだけ（1）
+[W9P3G] PASS 烘焙した件数と meta items が一致（87）
+[W9P3G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
+[W9P3G] PASS 区域 B3 の構件数 17 ≥ 12
+[W9P3G] PASS 区域 C3 の構件数 70 ≥ 55
+[W9P3G] PASS 屋敷林：主屋 A1 から 20 m 以内に高さ ≥ 8 m の樹が 5 本（≥ 5）
+[W9P3G] PASS C3 の樹種：11 種・同種の最多 ≤ 35 %（11）
+[W9P3G] PASS 屋敷竹：竹叢の本数 12 ≥ 8
+[W9P3G] PASS 生垣（東縁）：6 株・途中に ≥ 2.2 m の切れ目（茅葺きの正面を隠さない）
+[W9P3G] PASS 生垣の最大高 1.60 m ≤ 1.8 m
+[W9P3G] PASS 菜園：畝 3 ≥ 3・竹垣 3 ≥ 3
+[W9P3G] PASS 柴棚 B_P_FARM_SHED が 1 棟・納屋 A2 の近く（1）
+[W9P3G] PASS 農路の路肩：木 3 ≥ 3・低木と笹の群れ 34 ≥ 20
+[W9P3G] INFO LOD0 三角面 135834・MeshInstance 284・材質 11 種・碰撞箱 35・MultiMesh 0・高木 11
+[W9P3G] PASS 予算：LOD0 135834 ≤ 300000・Mesh 284 ≤ 900・碰撞箱 35 ≤ 80
+[W9P3G] PASS MultiMesh なし（headless 烘焙の零行列問題の対象外）
+[W9P3G] PASS 全 87 構件が道・建物・戸口・水・田・封存物・NPC 動線・Hero に触れず、接地している（不適合 0）
+[W9P3G] PASS 樹・竹・低木は路面の縁から 0.6 m 以内に乗らない（0）
+[W9P3G] PASS 地面物（畝・垣・小屋）が W9 R1 の構件と重ならない（0）
+[W9P3G] PASS 構件同士が重ならない（重なり 0）
+[W9P3G] PASS 碰撞箱 35 個が戸口の空け帯と NPC の巡回路に触れない（0）
+[W9P3G] PASS 柴棚の碰撞箱 11 ≥ 8（奥壁 4＋西壁 2＋前の柱 3）
+[W9P3G] PASS 高木の幹の碰撞（円柱 15）が樹の本数（15）と一致
+ERROR: W9 dims 無し: momiji_a
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] dims (res://tools/p13/w9/w9_lib.gd:99)
+       [1] foot (res://tools/p13/w9/w9_lib.gd:111)
+       [2] why (res://tools/p13/w9/w9_lib.gd:212)
+       [3] _check (res://tools/p13/w9/verify_w9p3.gd:70)
+       [4] _run (res://tools/p13/w9/verify_w9p3.gd:349)
+ERROR: W9 dims 無し: momiji_a
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] dims (res://tools/p13/w9/w9_lib.gd:99)
+       [1] foot (res://tools/p13/w9/w9_lib.gd:111)
+       [2] why (res://tools/p13/w9/w9_lib.gd:212)
+       [3] _check (res://tools/p13/w9/verify_w9p3.gd:70)
+       [4] _run (res://tools/p13/w9/verify_w9p3.gd:349)
+[W9P3G] PASS 反向：主街の路面に置いた樹は落ちる（building）
+[W9P3G] PASS 反向：P8 の田の中に置いた畝は落ちる（p8）
+[W9P3G] PASS 反向：建物の中に置いた小屋は落ちる（building）
+[W9P3G] PASS 反向：地面から 0.6 m 浮いた構件は落ちる（float(2.14 vs ground 1.54)）
+[W9P3G] PASS 反向：二重掛載は件数 2 として検出できる（2）
+[W9P3G] PASS 反向：同じ樹種ばかりは多様性 gate が落ちる
+[W9P3G] PASS 反向：種類は足りても一種が 35 % を超えれば落ちる
+[W9P3G] PASS 反向：切れ目のない生垣は落ちる
+[W9P3G] PASS 正：3.6 m の切れ目がある生垣は通る
+[W9P3G] PASS 反向：戸口の空け帯にかかる碰撞箱は落ちる（door(B_P_MKT_001)）
+[W9P3G] PASS 40  FAIL 0
+[W9P3G] 結果：0 項失敗

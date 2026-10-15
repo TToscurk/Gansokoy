@@ -1,0 +1,1400 @@
+{
+ "items": [
+  {
+   "id": "shii_a",
+   "zone": "B3",
+   "cluster": "B3_back_south",
+   "p": [
+    219.0,
+    -105.0
+   ],
+   "y": 1.544,
+   "yaw": 1.5671,
+   "sx": 0.7,
+   "sy": 0.705,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "konara_b",
+   "zone": "B3",
+   "cluster": "B3_back_south",
+   "p": [
+    231.0,
+    -106.5
+   ],
+   "y": 1.558,
+   "yaw": 0.8274,
+   "sx": 0.88,
+   "sy": 0.873,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "kuromatsu_a",
+   "zone": "B3",
+   "cluster": "B3_back_south",
+   "p": [
+    240.5,
+    -107.0
+   ],
+   "y": 1.606,
+   "yaw": -2.912,
+   "sx": 0.62,
+   "sy": 0.595,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "young_broad_b",
+   "zone": "B3",
+   "cluster": "B3_back_south",
+   "p": [
+    249.5,
+    -106.0
+   ],
+   "y": 1.599,
+   "yaw": -1.111,
+   "sx": 1.35,
+   "sy": 1.423,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "konara_b",
+   "zone": "B3",
+   "cluster": "B3_back_south",
+   "p": [
+    225.0,
+    -107.5
+   ],
+   "y": 1.559,
+   "yaw": 0.2055,
+   "sx": 0.7,
+   "sy": 0.678,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "konara_a",
+   "zone": "B3",
+   "cluster": "B3_back_north",
+   "p": [
+    224.5,
+    -70.5
+   ],
+   "y": 1.382,
+   "yaw": 1.4982,
+   "sx": 0.62,
+   "sy": 0.59,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "enoki_a",
+   "zone": "B3",
+   "cluster": "B3_back_north",
+   "p": [
+    233.0,
+    -70.0
+   ],
+   "y": 1.318,
+   "yaw": -0.3424,
+   "sx": 0.76,
+   "sy": 0.754,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "konara_b",
+   "zone": "B3",
+   "cluster": "B3_back_north",
+   "p": [
+    243.0,
+    -69.5
+   ],
+   "y": 1.315,
+   "yaw": 1.5325,
+   "sx": 0.8,
+   "sy": 0.783,
+   "kind": "reuse",
+   "who": "宅地を持つ家々"
+  },
+  {
+   "id": "w9_itabei_a",
+   "zone": "B3",
+   "cluster": "B3_gap_075_076",
+   "p": [
+    241.001,
+    -89.354
+   ],
+   "y": 1.434,
+   "yaw": -0.2426,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "隣り合う二戸"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "B3",
+   "cluster": "B3_gap_075_076",
+   "p": [
+    240.415,
+    -90.94
+   ],
+   "y": 1.457,
+   "yaw": -2.152,
+   "sx": 1.2,
+   "sy": 1.16,
+   "kind": "reuse",
+   "who": "隣り合う二戸"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "B3",
+   "cluster": "B3_gap_075_076",
+   "p": [
+    242.306,
+    -90.678
+   ],
+   "y": 1.457,
+   "yaw": -1.7077,
+   "sx": 1.0,
+   "sy": 1.016,
+   "kind": "reuse",
+   "who": "隣り合う二戸"
+  },
+  {
+   "id": "w9_kido",
+   "zone": "B3",
+   "cluster": "B3_gap_073_074",
+   "p": [
+    225.7,
+    -94.0
+   ],
+   "y": 1.477,
+   "yaw": -0.2426,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "裏の畑を持つ家"
+  },
+  {
+   "id": "young_broad_a",
+   "zone": "B3",
+   "cluster": "B3_gap_073_074",
+   "p": [
+    225.7,
+    -99.0
+   ],
+   "y": 1.491,
+   "yaw": -1.262,
+   "sx": 1.35,
+   "sy": 1.35,
+   "kind": "reuse",
+   "who": "裏の畑を持つ家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "B3",
+   "cluster": "B3_gap_073_074",
+   "p": [
+    224.7,
+    -96.2
+   ],
+   "y": 1.478,
+   "yaw": -0.6665,
+   "sx": 1.3,
+   "sy": 1.298,
+   "kind": "reuse",
+   "who": "裏の畑を持つ家"
+  },
+  {
+   "id": "w9_itabei_b",
+   "zone": "B3",
+   "cluster": "B3_gap_071_072",
+   "p": [
+    237.7,
+    -82.9
+   ],
+   "y": 1.407,
+   "yaw": -0.1107,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "北列の二戸"
+  },
+  {
+   "id": "young_broad_a",
+   "zone": "B3",
+   "cluster": "B3_gap_071_072",
+   "p": [
+    237.475,
+    -76.783
+   ],
+   "y": 1.359,
+   "yaw": -0.3897,
+   "sx": 1.3,
+   "sy": 1.335,
+   "kind": "reuse",
+   "who": "北列の二戸"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "B3",
+   "cluster": "B3_gap_071_072",
+   "p": [
+    237.0,
+    -80.5
+   ],
+   "y": 1.379,
+   "yaw": -2.3932,
+   "sx": 1.5,
+   "sy": 1.42,
+   "kind": "reuse",
+   "who": "北列の二戸"
+  },
+  {
+   "id": "keyaki_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    312.2,
+    70.0
+   ],
+   "y": -0.15,
+   "yaw": 2.9063,
+   "sx": 0.72,
+   "sy": 0.724,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "akamatsu_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    311.6,
+    76.0
+   ],
+   "y": 0.089,
+   "yaw": 2.1052,
+   "sx": 0.52,
+   "sy": 0.551,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shii_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    312.6,
+    81.5
+   ],
+   "y": 0.059,
+   "yaw": -0.3661,
+   "sx": 0.84,
+   "sy": 0.807,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "konara_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    312.8,
+    90.0
+   ],
+   "y": 0.0,
+   "yaw": 0.7382,
+   "sx": 0.7,
+   "sy": 0.677,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "enoki_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    317.417,
+    61.325
+   ],
+   "y": 0.153,
+   "yaw": 2.3579,
+   "sx": 0.8,
+   "sy": 0.753,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "kuromatsu_a",
+   "zone": "C3",
+   "cluster": "C3_belt",
+   "p": [
+    313.099,
+    67.35
+   ],
+   "y": -0.321,
+   "yaw": -2.4635,
+   "sx": 0.7,
+   "sy": 0.74,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_thin",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    312.985,
+    95.446
+   ],
+   "y": 0.171,
+   "yaw": 0.7836,
+   "sx": 1.016,
+   "sy": 1.074,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_mature",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    311.219,
+    94.48
+   ],
+   "y": 0.005,
+   "yaw": -3.1082,
+   "sx": 1.04,
+   "sy": 0.997,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_thin",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    311.055,
+    94.29
+   ],
+   "y": -0.005,
+   "yaw": 2.2415,
+   "sx": 1.046,
+   "sy": 1.069,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_young",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    311.275,
+    93.804
+   ],
+   "y": 0.01,
+   "yaw": -0.3362,
+   "sx": 1.039,
+   "sy": 1.087,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_thin",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    313.391,
+    94.242
+   ],
+   "y": 0.18,
+   "yaw": 1.0458,
+   "sx": 1.053,
+   "sy": 1.111,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_thin",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    311.476,
+    93.313
+   ],
+   "y": 0.012,
+   "yaw": 2.798,
+   "sx": 0.954,
+   "sy": 0.956,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_young",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    310.752,
+    93.629
+   ],
+   "y": -0.036,
+   "yaw": -1.0422,
+   "sx": 1.005,
+   "sy": 1.031,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_mature",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    312.975,
+    94.976
+   ],
+   "y": 0.165,
+   "yaw": 2.691,
+   "sx": 1.055,
+   "sy": 1.053,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_mature",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    310.857,
+    93.195
+   ],
+   "y": -0.038,
+   "yaw": -1.9904,
+   "sx": 1.0,
+   "sy": 1.058,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_mature",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    310.639,
+    93.864
+   ],
+   "y": -0.041,
+   "yaw": 0.1451,
+   "sx": 1.091,
+   "sy": 1.081,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_young",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    312.022,
+    95.519
+   ],
+   "y": 0.093,
+   "yaw": -0.8888,
+   "sx": 1.022,
+   "sy": 0.977,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "take_mature",
+   "zone": "C3",
+   "cluster": "C3_bamboo",
+   "p": [
+    312.497,
+    93.204
+   ],
+   "y": 0.073,
+   "yaw": -2.6795,
+   "sx": 1.006,
+   "sy": 1.04,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "young_broad_b",
+   "zone": "C3",
+   "cluster": "C3_orchard",
+   "p": [
+    314.0,
+    97.4
+   ],
+   "y": 0.256,
+   "yaw": 0.9522,
+   "sx": 1.15,
+   "sy": 1.082,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "konara_b",
+   "zone": "C3",
+   "cluster": "C3_orchard",
+   "p": [
+    318.8,
+    99.8
+   ],
+   "y": 0.463,
+   "yaw": -3.0964,
+   "sx": 0.5,
+   "sy": 0.517,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "hx_hatake",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    314.8,
+    89.8
+   ],
+   "y": 0.05,
+   "yaw": 0.0,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "hx_hatake",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    318.0,
+    89.8
+   ],
+   "y": 0.146,
+   "yaw": 0.0,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "hx_hatake",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    314.8,
+    91.8
+   ],
+   "y": 0.065,
+   "yaw": 0.0,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "w9_takegaki",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    314.45,
+    93.4
+   ],
+   "y": 0.152,
+   "yaw": 0.0,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "w9_takegaki",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    316.55,
+    93.4
+   ],
+   "y": 0.279,
+   "yaw": 0.0,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "w9_takegaki",
+   "zone": "C3",
+   "cluster": "C3_garden",
+   "p": [
+    313.2,
+    91.85
+   ],
+   "y": 0.047,
+   "yaw": -1.5708,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "reuse",
+   "who": "畑仕事をする家族"
+  },
+  {
+   "id": "farm_shed",
+   "zone": "C3",
+   "cluster": "C3_shed",
+   "p": [
+    321.6,
+    64.3
+   ],
+   "y": -0.024,
+   "yaw": 1.5708,
+   "sx": 1.0,
+   "sy": 1.0,
+   "kind": "new",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.463,
+    79.111
+   ],
+   "y": 0.287,
+   "yaw": 3.0158,
+   "sx": 1.341,
+   "sy": 1.349,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.525,
+    80.274
+   ],
+   "y": 0.288,
+   "yaw": -1.5632,
+   "sx": 1.268,
+   "sy": 1.273,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.295,
+    81.64
+   ],
+   "y": 0.287,
+   "yaw": -2.0089,
+   "sx": 1.275,
+   "sy": 1.34,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.31,
+    82.713
+   ],
+   "y": 0.281,
+   "yaw": 2.9662,
+   "sx": 1.146,
+   "sy": 1.133,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.251,
+    85.098
+   ],
+   "y": 0.277,
+   "yaw": 2.9359,
+   "sx": 1.108,
+   "sy": 1.106,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_hedge",
+   "p": [
+    327.461,
+    86.552
+   ],
+   "y": 0.285,
+   "yaw": 1.657,
+   "sx": 1.123,
+   "sy": 1.141,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "young_broad_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    338.6,
+    64.0
+   ],
+   "y": 0.201,
+   "yaw": -1.5288,
+   "sx": 1.15,
+   "sy": 1.149,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "young_broad_b",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    348.5,
+    76.0
+   ],
+   "y": 0.291,
+   "yaw": -1.1954,
+   "sx": 1.1,
+   "sy": 1.156,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "konara_b",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    356.5,
+    64.0
+   ],
+   "y": 0.201,
+   "yaw": 2.3517,
+   "sx": 0.6,
+   "sy": 0.588,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    335.615,
+    65.446
+   ],
+   "y": 0.215,
+   "yaw": -1.9468,
+   "sx": 1.239,
+   "sy": 1.226,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    334.26,
+    65.512
+   ],
+   "y": 0.217,
+   "yaw": 0.7233,
+   "sx": 1.339,
+   "sy": 1.348,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    336.034,
+    66.625
+   ],
+   "y": 0.241,
+   "yaw": -0.1235,
+   "sx": 1.207,
+   "sy": 1.165,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "fern_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    333.78,
+    67.042
+   ],
+   "y": 0.242,
+   "yaw": -2.0202,
+   "sx": 1.394,
+   "sy": 1.457,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    335.091,
+    67.088
+   ],
+   "y": 0.243,
+   "yaw": 0.632,
+   "sx": 1.176,
+   "sy": 1.22,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "fern_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    334.95,
+    64.468
+   ],
+   "y": 0.201,
+   "yaw": 0.863,
+   "sx": 1.091,
+   "sy": 1.127,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    333.445,
+    64.627
+   ],
+   "y": 0.204,
+   "yaw": -3.0616,
+   "sx": 1.215,
+   "sy": 1.151,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    341.603,
+    66.344
+   ],
+   "y": 0.234,
+   "yaw": -2.2386,
+   "sx": 1.391,
+   "sy": 1.46,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "fern_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    342.543,
+    65.735
+   ],
+   "y": 0.224,
+   "yaw": 2.5388,
+   "sx": 1.173,
+   "sy": 1.188,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    343.356,
+    65.115
+   ],
+   "y": 0.213,
+   "yaw": -2.5811,
+   "sx": 1.06,
+   "sy": 1.081,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    344.025,
+    67.009
+   ],
+   "y": 0.242,
+   "yaw": -2.4703,
+   "sx": 1.301,
+   "sy": 1.319,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "fern_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    350.53,
+    66.15
+   ],
+   "y": 0.231,
+   "yaw": -1.2,
+   "sx": 1.436,
+   "sy": 1.503,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    351.5,
+    64.938
+   ],
+   "y": 0.211,
+   "yaw": -1.5514,
+   "sx": 1.165,
+   "sy": 1.175,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    351.737,
+    66.056
+   ],
+   "y": 0.232,
+   "yaw": -0.6043,
+   "sx": 1.016,
+   "sy": 1.045,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    350.235,
+    64.95
+   ],
+   "y": 0.205,
+   "yaw": 0.8414,
+   "sx": 1.127,
+   "sy": 1.117,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    350.63,
+    63.839
+   ],
+   "y": 0.2,
+   "yaw": -0.4957,
+   "sx": 1.203,
+   "sy": 1.244,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    336.7,
+    74.285
+   ],
+   "y": 0.256,
+   "yaw": -2.4902,
+   "sx": 1.305,
+   "sy": 1.356,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    335.174,
+    73.023
+   ],
+   "y": 0.251,
+   "yaw": 1.7656,
+   "sx": 1.211,
+   "sy": 1.211,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    334.696,
+    75.256
+   ],
+   "y": 0.271,
+   "yaw": 2.7686,
+   "sx": 1.401,
+   "sy": 1.433,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    335.209,
+    74.317
+   ],
+   "y": 0.256,
+   "yaw": -0.4396,
+   "sx": 1.498,
+   "sy": 1.46,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    340.857,
+    74.243
+   ],
+   "y": 0.258,
+   "yaw": 0.2698,
+   "sx": 1.043,
+   "sy": 1.019,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    342.569,
+    73.799
+   ],
+   "y": 0.255,
+   "yaw": -0.798,
+   "sx": 1.223,
+   "sy": 1.29,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    342.541,
+    74.916
+   ],
+   "y": 0.265,
+   "yaw": 1.1826,
+   "sx": 1.005,
+   "sy": 0.962,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    340.25,
+    75.561
+   ],
+   "y": 0.28,
+   "yaw": -1.4558,
+   "sx": 1.301,
+   "sy": 1.314,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    351.482,
+    73.286
+   ],
+   "y": 0.253,
+   "yaw": 1.3443,
+   "sx": 1.433,
+   "sy": 1.375,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "fern_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    350.832,
+    75.86
+   ],
+   "y": 0.284,
+   "yaw": -0.3003,
+   "sx": 1.422,
+   "sy": 1.346,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    348.727,
+    73.882
+   ],
+   "y": 0.255,
+   "yaw": -1.6892,
+   "sx": 1.45,
+   "sy": 1.511,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    350.096,
+    73.268
+   ],
+   "y": 0.253,
+   "yaw": 0.0924,
+   "sx": 1.007,
+   "sy": 1.063,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    349.64,
+    75.273
+   ],
+   "y": 0.271,
+   "yaw": -0.0526,
+   "sx": 1.381,
+   "sy": 1.372,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "sasa_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    355.107,
+    73.059
+   ],
+   "y": 0.253,
+   "yaw": 1.8581,
+   "sx": 1.043,
+   "sy": 1.094,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    355.154,
+    74.582
+   ],
+   "y": 0.261,
+   "yaw": -1.9156,
+   "sx": 1.096,
+   "sy": 1.161,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    355.968,
+    74.914
+   ],
+   "y": 0.267,
+   "yaw": 1.1082,
+   "sx": 1.13,
+   "sy": 1.103,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "tsutsuji_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    357.139,
+    74.03
+   ],
+   "y": 0.256,
+   "yaw": -2.9185,
+   "sx": 1.317,
+   "sy": 1.385,
+   "kind": "reuse",
+   "who": "農家"
+  },
+  {
+   "id": "shrub_a",
+   "zone": "C3",
+   "cluster": "C3_road",
+   "p": [
+    354.413,
+    73.696
+   ],
+   "y": 0.255,
+   "yaw": 1.9217,
+   "sx": 1.195,
+   "sy": 1.168,
+   "kind": "reuse",
+   "who": "農家"
+  }
+ ],
+ "dropped": [
+  "w9_takegaki near (313.2,89.6) 置けない（overlap:hx_hatake）[C3_garden]",
+  "tsutsuji_a near (327.4,87.7) 置けない（p8）[C3_hedge]",
+  "sasa_a near (327.6,89.1) 置けない（p8）[C3_hedge]",
+  "sasa_a near (342.4,65.8) 置けない（overlap:fern_a）[C3_road]",
+  "shrub_a near (342.8,65.4) 置けない（overlap:shrub_a）[C3_road]",
+  "sasa_a near (350.8,64.9) 置けない（overlap:sasa_a）[C3_road]",
+  "fern_a near (351.3,66.3) 置けない（overlap:sasa_a）[C3_road]",
+  "fern_a near (335.9,74.7) 置けない（overlap:shrub_a）[C3_road]",
+  "shrub_a near (334.8,74.4) 置けない（overlap:sasa_a）[C3_road]",
+  "tsutsuji_a near (336.0,73.7) 置けない（overlap:shrub_a）[C3_road]",
+  "fern_a near (340.6,74.5) 置けない（overlap:shrub_a）[C3_road]",
+  "fern_a near (342.2,73.7) 置けない（overlap:shrub_a）[C3_road]",
+  "sasa_a near (349.2,74.9) 置けない（overlap:tsutsuji_a）[C3_road]",
+  "shrub_a near (348.9,73.3) 置けない（overlap:tsutsuji_a）[C3_road]",
+  "tsutsuji_a near (355.3,73.4) 置けない（overlap:sasa_a）[C3_road]"
+ ],
+ "clusters": [
+  {
+   "id": "B3_back_south",
+   "zone": "B3",
+   "n": 5,
+   "desc": "南列（073–076）の背後の樹冠：巷から見上げた屋根の上に緑と高さの変化（紅葉・楢・欅ふう）"
+  },
+  {
+   "id": "B3_back_north",
+   "zone": "B3",
+   "n": 3,
+   "desc": "北列（071・072）の背後の樹冠：巷を西から見ると屋根の上に枝が重なる"
+  },
+  {
+   "id": "B3_gap_075_076",
+   "zone": "B3",
+   "n": 3,
+   "desc": "075｜076 の宅間：板塀＋躑躅の植え込み（隣家との私領域の境。樹冠は両側の屋根に掛かるので置かない）"
+  },
+  {
+   "id": "B3_gap_073_074",
+   "zone": "B3",
+   "n": 3,
+   "desc": "073｜074 の宅間：木戸＋板塀＋庭木（裏の畑・井戸への入口）"
+  },
+  {
+   "id": "B3_gap_071_072",
+   "zone": "B3",
+   "n": 3,
+   "desc": "071｜072 の宅間：板塀＋庭木"
+  },
+  {
+   "id": "C3_belt",
+   "zone": "C3",
+   "n": 6,
+   "desc": "屋敷林：主屋の背後（西・北西の運河の土手沿い）に欅・赤松・椎・楢・榎・黒松を不揃いに（茅葺き屋根の背景になる緑の高さ。北から来る道と庭先の見通しの帯は空ける）"
+  },
+  {
+   "id": "C3_bamboo",
+   "zone": "C3",
+   "n": 12,
+   "desc": "屋敷竹：主屋の南西の竹叢（太い竹＋細い竹＋若竹の混生。林と違い、家の脇の小さな叢）"
+  },
+  {
+   "id": "C3_orchard",
+   "zone": "C3",
+   "n": 2,
+   "desc": "庭木・果樹ふう：菜園の南西に小ぶりの庭木 2（樹形も大きさも違う。庭の南端 x≥322 と主屋への見通しの帯は空ける）"
+  },
+  {
+   "id": "C3_garden",
+   "zone": "C3",
+   "n": 6,
+   "desc": "家庭菜園：主屋の南西の畝 3＋竹垣（庭の南端への通り道は東に空ける）"
+  },
+  {
+   "id": "C3_shed",
+   "zone": "C3",
+   "n": 1,
+   "desc": "柴棚・農具小屋：納屋 A2 の北に独立した片流れの板葺き小屋（薪・柴束・農具・割り台）"
+  },
+  {
+   "id": "C3_hedge",
+   "zone": "C3",
+   "n": 6,
+   "desc": "庭先の生垣：庭の東縁（田との境）に躑躅・低木・笹の混植（途中を空けて、茅葺きの正面は隠さない）"
+  },
+  {
+   "id": "C3_road",
+   "zone": "C3",
+   "n": 37,
+   "desc": "農路の路肩：田の角の木 3 と低木・笹の群れ（北・南の路肩に不均一に。路面と NPC の動線は空ける）"
+  }
+ ]
+}

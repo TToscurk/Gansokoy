@@ -159,9 +159,81 @@
   "B_P_RSW_014_L1": {
    "tris": 66,
    "note": "B_P_RSW_014 LOD1"
+  },
+  "B_P_MKT_030_L0": {
+   "tris": 9734,
+   "note": "B_P_MKT_030 LOD0"
+  },
+  "B_P_MKT_030_L1": {
+   "tris": 30,
+   "note": "B_P_MKT_030 LOD1"
+  },
+  "B_P_MKT_031_L0": {
+   "tris": 22604,
+   "note": "B_P_MKT_031 LOD0"
+  },
+  "B_P_MKT_031_L1": {
+   "tris": 46,
+   "note": "B_P_MKT_031 LOD1"
+  },
+  "B_P_MXC_005_L0": {
+   "tris": 15740,
+   "note": "B_P_MXC_005 LOD0"
+  },
+  "B_P_MXC_005_L1": {
+   "tris": 80,
+   "note": "B_P_MXC_005 LOD1"
+  },
+  "B_P_MXC_006_L0": {
+   "tris": 12754,
+   "note": "B_P_MXC_006 LOD0"
+  },
+  "B_P_MXC_006_L1": {
+   "tris": 132,
+   "note": "B_P_MXC_006 LOD1"
+  },
+  "B_P_MXC_007_L0": {
+   "tris": 16594,
+   "note": "B_P_MXC_007 LOD0"
+  },
+  "B_P_MXC_007_L1": {
+   "tris": 34,
+   "note": "B_P_MXC_007 LOD1"
+  },
+  "B_P_RSW_075_L0": {
+   "tris": 13656,
+   "note": "B_P_RSW_075 LOD0"
+  },
+  "B_P_RSW_075_L1": {
+   "tris": 32,
+   "note": "B_P_RSW_075 LOD1"
+  },
+  "B_P_RSW_076_L0": {
+   "tris": 13811,
+   "note": "B_P_RSW_076 LOD0"
+  },
+  "B_P_RSW_076_L1": {
+   "tris": 64,
+   "note": "B_P_RSW_076 LOD1"
+  },
+  "B_P_RSW_071_L0": {
+   "tris": 5950,
+   "note": "B_P_RSW_071 LOD0"
+  },
+  "B_P_RSW_071_L1": {
+   "tris": 32,
+   "note": "B_P_RSW_071 LOD1"
+  },
+  "B_P_FARM_SHED_L0": {
+   "tris": 6610,
+   "note": "B_P_FARM_SHED LOD0"
+  },
+  "B_P_FARM_SHED_L1": {
+   "tris": 18,
+   "note": "B_P_FARM_SHED LOD1"
   }
  },
- "total_tris": 267434,
+ "total_tris": 385355,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -390,6 +462,87 @@
     "bracket_gap": 0.9934571428571429,
     "strut": false,
     "posts": []
+   }
+  ],
+  "B_P_MKT_031": [
+   {
+    "x0": -3.93,
+    "x1": 3.93,
+    "y": 2.85,
+    "zf": 5.46,
+    "depth": 0.75,
+    "p": 0.32,
+    "style": "tile",
+    "brackets": 8,
+    "bracket_gap": 1.122857142857143,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MXC_005": [
+   {
+    "x0": -3.4834,
+    "x1": 0.48,
+    "y": 2.85,
+    "zf": 5.46,
+    "depth": 0.85,
+    "p": 0.32,
+    "style": "tile",
+    "brackets": 5,
+    "bracket_gap": 0.99085,
+    "strut": false,
+    "posts": []
+   },
+   {
+    "x0": 0.52,
+    "x1": 3.4834,
+    "y": 3.05,
+    "zf": 5.66,
+    "depth": 0.55,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 4,
+    "bracket_gap": 0.9878,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MXC_007": [
+   {
+    "x0": -3.93,
+    "x1": 3.93,
+    "y": 3.55,
+    "zf": 1.86,
+    "depth": 3.6,
+    "p": 0.24,
+    "style": "tile",
+    "brackets": 8,
+    "bracket_gap": 1.122857142857143,
+    "strut": false,
+    "posts": [
+     -3.45,
+     0.55,
+     3.45
+    ]
+   }
+  ],
+  "B_P_RSW_071": [
+   {
+    "x0": -3.5455,
+    "x1": -0.35,
+    "y": 3.0,
+    "zf": 5.46,
+    "depth": 1.15,
+    "p": 0.2,
+    "style": "board",
+    "brackets": 4,
+    "bracket_gap": 1.0651666666666666,
+    "strut": false,
+    "posts": [
+     -3.3655,
+     -1.94775,
+     -0.53
+    ]
    }
   ]
  },
@@ -636,6 +789,125 @@
     "kind": "turret",
     "scale": 1.5
    }
+  ],
+  "B_P_MKT_030": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 12,
+    "stones": 41,
+    "ove": 0.5
+   }
+  ],
+  "B_P_MKT_031": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.8
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.28
+   }
+  ],
+  "B_P_MXC_005": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.55
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.15
+   }
+  ],
+  "B_P_MXC_006": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.15
+   },
+   {
+    "kind": "turret",
+    "scale": 1.2
+   }
+  ],
+  "B_P_MXC_007": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.45
+   }
+  ],
+  "B_P_RSW_075": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.55
+   }
+  ],
+  "B_P_RSW_076": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.5
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.2
+   }
+  ],
+  "B_P_RSW_071": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 18,
+    "stones": 61,
+    "ove": 0.45
+   }
   ]
  },
  "posts": {
@@ -793,6 +1065,76 @@
     "z": 5.63,
     "top": 0.9,
     "w": 0.34
+   }
+  ],
+  "B_P_MXC_007": [
+   {
+    "x": -3.45,
+    "z": 5.38,
+    "top": 2.3956,
+    "w": 0.14
+   },
+   {
+    "x": 0.55,
+    "z": 5.38,
+    "top": 2.3956,
+    "w": 0.14
+   },
+   {
+    "x": 3.45,
+    "z": 5.38,
+    "top": 2.3956,
+    "w": 0.14
+   }
+  ],
+  "B_P_RSW_071": [
+   {
+    "x": -3.3655,
+    "z": 6.53,
+    "top": 2.478,
+    "w": 0.14
+   },
+   {
+    "x": -1.94775,
+    "z": 6.53,
+    "top": 2.478,
+    "w": 0.14
+   },
+   {
+    "x": -0.53,
+    "z": 6.53,
+    "top": 2.478,
+    "w": 0.14
+   },
+   {
+    "x": -3.0455,
+    "z": 5.63,
+    "top": 1.05,
+    "w": 0.36
+   },
+   {
+    "x": -2.5455,
+    "z": 5.63,
+    "top": 1.05,
+    "w": 0.36
+   },
+   {
+    "x": -2.0455,
+    "z": 5.63,
+    "top": 1.05,
+    "w": 0.36
+   },
+   {
+    "x": -1.5455,
+    "z": 5.63,
+    "top": 1.05,
+    "w": 0.36
+   },
+   {
+    "x": -1.0499999999999998,
+    "z": 6.28,
+    "top": 0.95,
+    "w": 0.5
    }
   ]
  }

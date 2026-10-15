@@ -8,7 +8,7 @@ extends SceneTree
 const L := preload("res://tools/p13/w9/w9r2_lib.gd")
 
 const MAX_TRI0 := 30000        # 1 棟 LOD0
-const MAX_TRI0_ALL := 330000
+const MAX_TRI0_ALL := 420000     # Phase 3 で 8 棟（A 5＋B 3）が増えた：27 棟 × 平均 14k。LOD0 は 40 m 以内だけ描画（それ以遠は L1 の 30–130 tri）
 const MAX_TRI1 := 500          # 1 棟 LOD1
 const SIDE_OVER := 1.35        # 左右（妻・桁行）への張り出し上限 [m]（P4 massing の外側）
 const BACK_OVER := 1.35
@@ -26,7 +26,7 @@ const EAVE_MAX_GAP := 1.3      # 腕木の最大間隔
 const EAVE_MIN_FRONT := 2.0    # 庇の前縁の下端高さ（頭が当たらない）
 # R1 の吊り物（overlay が同じ toggle で隠す種類）
 const R1_HANG := ["sudare", "kaki", "sugi", "zaru", "zori"]
-const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020", "B_P_RSW_014"]   # 妻入（懸魚が要る）
+const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020", "B_P_RSW_014", "B_P_RSW_075"]   # 妻入（懸魚が要る）
 const R2_BASE := "0ca148f"      # R2 の直前（R1 最終）。village_v2.tscn はここから追加のみ・≤3 行
 const NEIGHBOR_SHRINK := 0.12  # 隣棟の massing 箱をこれだけ縮めて、屋根・庇の貫入を拾う（Kit 自身の軒も少し重なるため）
 const NEIGHBOR_Y := 2.0        # 隣棟への貫入は屋根・庇の高さ（局部 y > 2.0）だけ
@@ -470,7 +470,10 @@ func _run() -> void:
 	var gout := []
 	OS.execute("git", ["diff", "--numstat", R2_BASE, "--", ProjectSettings.globalize_path(L.SCENE)], gout)
 	var ns: PackedStringArray = String(gout[0]).strip_edges().split("\t") if gout.size() > 0 else PackedStringArray()
-	_ok(ns.size() >= 2 and int(ns[1]) == 0 and int(ns[0]) <= 3, "village_v2.tscn は %s から『追加のみ・≤3 行』（実際 +%s −%s）" % [R2_BASE, ns[0] if ns.size() > 0 else "?", ns[1] if ns.size() > 1 else "?"])
+	# R2 の 3 行（ext_resource＋node＋空行）。Phase 3（EnrichW9P3）が掛かっていればその 3 行だけ上乗せして許す（余計な行は許さない）
+	var scene_txt := FileAccess.get_file_as_string(L.SCENE)
+	var p3_lines := 3 if scene_txt.contains("p13w9p3_enrich") else 0
+	_ok(ns.size() >= 2 and int(ns[1]) == 0 and int(ns[0]) <= 3 + p3_lines, "village_v2.tscn は %s から『追加のみ・≤%d 行（R2 3＋Phase 3 の EnrichW9P3 %d）』（実際 +%s −%s）" % [R2_BASE, 3 + p3_lines, p3_lines, ns[0] if ns.size() > 0 else "?", ns[1] if ns.size() > 1 else "?"])
 	var shape_ok := true
 	for id: String in L.SPECS:
 		var body3 := v.get_node_or_null(NodePath(L.SPECS[id]["path"])) as Node3D

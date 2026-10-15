@@ -1,0 +1,4 @@
+[ARM] disabled=[] player=(235.80, 1.43, -87.60) arm_origin=(235.80, 3.13, -87.60) dir=(-0.230, 0.179, 0.957) spring_length=1.68 hit_length=1.536 margin=0.20 mask=1
+[ARM] ray hit 1.538 m  collider=/root/Main/VillageV2/ArchW9R2P13/B_P_RSW_071/Posts  pos=(235.45, 3.40, -86.13)
+[ARM]    ↑ B_P_RSW_071 (Node3D)
+[ARM]    ↑ ArchW9R2P13 (Node3D)

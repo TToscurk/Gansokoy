@@ -49,6 +49,16 @@ const SPECS := {
 	"B_P_RSW_074": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_074", "hide": ["all"]},      # 板葺き簡陋民宅
 	"B_P_MKT_029": {"path": "Districts/Market/Buildings/B_P_MKT_029", "hide": ["all"]},                # 土蔵の商家
 	"B_P_RSW_014": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_014", "hide": ["all"]},      # 作業場付きの工匠宅
+	# ── Phase 3 A：主街 北ブロック（西側）の屋形の差異化 5 棟（全隠して自前で組む。入口位置・footprint・body 碰撞は不変）──
+	"B_P_MKT_030": {"path": "Districts/Market/Buildings/B_P_MKT_030", "hide": ["all"]},                # 瀬戸物屋＝棟の低い板葺き平屋
+	"B_P_MKT_031": {"path": "Districts/Market/Buildings/B_P_MKT_031", "hide": ["all"]},                # 菓子屋大店＝高い棟＋二階の出桁造り＋千鳥破風
+	"B_P_MXC_005": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_005", "hide": ["all"]},      # 質屋＝店＋脇蔵（妻入の白い二階建て）
+	"B_P_MXC_006": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_006", "hide": ["all"]},      # 菓子屋＝寄棟の二階＋全幅の縁
+	"B_P_MXC_007": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_007", "hide": ["all"]},      # 八百屋＝深い下屋の吹き放ちの土間店
+	# ── Phase 3 B：住宅巷（MidLane）の家 3 棟 ──
+	"B_P_RSW_075": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_075", "hide": ["all"]},      # 瓦葺き妻入の小綺麗な家＋縁側
+	"B_P_RSW_076": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_076", "hide": ["all"]},      # 母屋＋板蔵（倉房）
+	"B_P_RSW_071": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_071", "hide": ["all"]},      # 板葺き平入＋前の下屋の柴棚
 }
 
 

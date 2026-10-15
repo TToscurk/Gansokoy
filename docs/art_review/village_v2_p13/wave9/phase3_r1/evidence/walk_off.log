@@ -1,0 +1,41 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[W4S] boot 10244 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[W9P3WALK] 玩家 capsule 半径 0.30・高さ 1.70（player_yoriichi.tscn）
+[W9P3WALK] disabled EnrichW9P3
+[W9P3WALK] disabled ArchW9R2P13
+[W9P3WALK] tag=off EnrichW9P3=なし ArchW9R2P13=false
+[W9P3WALK] PASS A_street_a               reach stop=reached frames=716 blocked=0 max_run=0 lost=0 max_dy=0.0025 end(297.6, -122.7) → 到達
+[W9P3WALK] PASS A_street_b               reach stop=reached frames=715 blocked=0 max_run=0 lost=0 max_dy=0.0021 end(280.1, -78.8) → 到達
+[W9P3WALK] PASS A_door_MKT_030           door stop=stalled frames=93 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(274.4, -74.5) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS A_door_MKT_031           door stop=stalled frames=93 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(281.1, -92.9) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS A_door_MXC_005           door stop=stalled frames=93 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(283.5, -98.9) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS A_door_MXC_006           door stop=stalled frames=93 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(286.1, -105.6) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS A_door_MXC_007           door stop=stalled frames=93 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(288.3, -111.1) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] FAIL B_lane_east              reach stop=reached frames=445 blocked=0 max_run=0 lost=37 max_dy=0.2000 end(250.0, -84.1) → 到達
+[W9P3WALK] PASS B_lane_west              reach stop=reached frames=449 blocked=0 max_run=0 lost=0 max_dy=0.0021 end(221.4, -90.5) → 到達
+[W9P3WALK] PASS B_door_RSW_071           door stop=stalled frames=85 blocked=30 max_run=30 lost=0 max_dy=0.0014 end(232.4, -86.0) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS B_door_RSW_075           door stop=stalled frames=85 blocked=30 max_run=30 lost=0 max_dy=0.0025 end(236.3, -89.9) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] PASS B_door_RSW_076           door stop=stalled frames=85 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(246.2, -87.4) → 壁の手前 0.30 m まで着いた
+[W9P3WALK] SKIP B_gap_fence_075_076      block（OFF では新しい実体が無い）
+[W9P3WALK] FAIL C_road_west              reach stop=reached frames=407 blocked=0 max_run=0 lost=1 max_dy=0.1349 end(329.9, 70.4) → 到達
+[W9P3WALK] FAIL C_plank_to_door          reach stop=reached frames=254 blocked=0 max_run=0 lost=9 max_dy=0.0617 end(323.3, 83.9) → 到達
+[W9P3WALK] FAIL C_yard_to_garden         reach stop=reached frames=137 blocked=0 max_run=0 lost=24 max_dy=0.1278 end(317.0, 88.0) → 到達
+[W9P3WALK] PASS C_south_corridor         reach stop=reached frames=99 blocked=0 max_run=0 lost=0 max_dy=0.0029 end(319.6, 93.0) → 到達
+[W9P3WALK] PASS C_north_approach         reach stop=reached frames=78 blocked=0 max_run=0 lost=0 max_dy=0.0020 end(320.0, 61.6) → 到達
+[W9P3WALK] 結果：18 脚・FAIL 4

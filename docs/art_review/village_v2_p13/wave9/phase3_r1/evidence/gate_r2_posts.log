@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[W9R2P] 玩家 capsule（res://characters/yoriichi/player_yoriichi.tscn）：r 0.30・h 1.70
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W9R2P] PASS B_P_MKT_011：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_008：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_026：Posts 碰撞がある
+[W9R2P] PASS B_P_RSW_074：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_029：Posts 碰撞がある
+[W9R2P] PASS B_P_RSW_014：Posts 碰撞がある
+[W9R2P] PASS B_P_MXC_007：Posts 碰撞がある
+[W9R2P] PASS B_P_RSW_071：Posts 碰撞がある
+[W9R2P] PASS 柱 35 本（8 棟）
+[W9R2P] PASS 全 35 本：プレイヤー capsule（r 0.30・h 1.7）は柱の見た目に食い込む位置に立てない（4 方向）
+[W9R2P] PASS 全 35 本：柱の中心を通る直線（街側・横）は必ず止まる（通り抜けない）
+[W9R2P] PASS 全 35 本：碰撞の外 6 cm では止まらない（過大な碰撞でない）
+[W9R2P] PASS 全 35 本：柱のない位置（街側 4 m）では止まらない（検査が空振りでない）
+[W9R2P]   B_P_MKT_011 戸口 x=0.88 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_008 戸口 x=-0.88 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_026 戸口 x=1.76 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_RSW_074 戸口 x=-0.45 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_029 戸口 x=2.62 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_RSW_014 戸口 x=0.90 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MXC_007 戸口 x=-1.32 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_RSW_071 戸口 x=0.90 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P] PASS 戸口へ真っすぐ入る線（街側 3 m → 0.4 m）に柱が当たらない
+[W9R2P] PASS 封存済み NPC の待機位置 69 点：碰撞箱の縁との最短 2.39 m ≥ 0.50 m
+[W9R2P] PASS 封存済み NPC の巡回経路 6 本：碰撞箱の縁との最短 3.17 m ≥ 0.50 m
+[W9R2P] PASS enabled=true：柱の位置に立てない（基準）
+[W9R2P] PASS enabled=false（Before）：柱の碰撞は全て消える（残り 0／35）
+[W9R2P] PASS enabled=true に戻すと柱の碰撞が全て復活（35／35）
+[W9R2P] 結果：19 通過・0 失敗
