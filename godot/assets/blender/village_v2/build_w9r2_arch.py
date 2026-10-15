@@ -2258,6 +2258,10 @@ BUILDERS = [build_mkt012, build_mkt013, build_mkt011, build_mkt010, build_mkt009
             build_rsw075, build_rsw076, build_rsw071,      # Phase 3 B：住宅巷（MidLane）の家 3 棟
             build_farm_shed]      # Phase 3 C：農家の柴棚・農具小屋（独立した小屋）
 
+# Phase 4 R1：主街の輪郭差異化 5 棟（別ファイル build_w9p4_arch.py。この名前空間で exec する＝同じ helper・材質・Kit を使う）
+exec(compile(open(HERE + '/build_w9p4_arch.py', encoding='utf-8').read(), HERE + '/build_w9p4_arch.py', 'exec'))
+BUILDERS += P4_BUILDERS
+
 
 def write_json_retry(p, d, tries=8):
     """K.write_json と同じ書式。Windows で他のプロセス（ウイルス対策・同期・別 session の走査）が一瞬握っていると open(…, 'w') が Errno 22 で落ちることがあるため、

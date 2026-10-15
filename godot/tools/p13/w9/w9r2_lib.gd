@@ -59,6 +59,20 @@ const SPECS := {
 	"B_P_RSW_075": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_075", "hide": ["all"]},      # 瓦葺き妻入の小綺麗な家＋縁側
 	"B_P_RSW_076": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_076", "hide": ["all"]},      # 母屋＋板蔵（倉房）
 	"B_P_RSW_071": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_071", "hide": ["all"]},      # 板葺き平入＋前の下屋の柴棚
+
+	# ── Phase 4 R1：主街の輪郭差異化 5 棟（用途は各棟の門前の P10 商いに合わせた。全隠して自前で組む。入口位置・footprint・body 碰撞は不変）──
+	"B_P_MKT_005": {"path": "Districts/Market/Buildings/B_P_MKT_005", "hide": ["all"]},                # 雑貨の大店＝入母屋＋二階の出格子の通し
+	"B_P_MKT_015": {"path": "Districts/Market/Buildings/B_P_MKT_015", "hide": ["all"]},                # 八百屋・青物問屋＝二重屋根（四方下屋＋退縮した二階の寄棟）
+	"B_P_MXC_001": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_001", "hide": ["all"]},      # 旅籠＝高い棟＋玄関の唐破風
+	"B_P_MXC_002": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_002", "hide": ["all"]},      # 団子・菓子屋＝低い石置き板葺き（谷）＋深い板庇
+	"B_P_MXC_004": {"path": "Districts/MixedCommercial/Buildings/B_P_MXC_004", "hide": ["all"]},      # 仕舞屋・門構え＝寄棟の翼＋隆起した妻入の門棟
+	"B_P_MKT_001": {"path": "Districts/Market/Buildings/B_P_MKT_001", "hide": ["all"]},                # 秤屋＝南入口の右手・低い瓦の寄棟の中二階
+	"B_P_MKT_004": {"path": "Districts/Market/Buildings/B_P_MKT_004", "hide": ["all"]},                # 瀬戸物屋＝低い石置き板葺き（北隣 MKT_005 の入母屋の南端を見せる）
+	# ── Phase 4 B：西巷（WestAlley）の 4 棟 ──
+	"B_P_RSW_024": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_024", "hide": ["all"]},      # 名主の家＝横に広い入母屋の平屋＋唐破風の玄関
+	"B_P_RSW_025": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_025", "hide": ["all"]},      # 板葺きの低い家（東列で一番低い）
+	"B_P_RSW_026": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_026", "hide": ["all"]},      # 仕立て屋＝細長く高い妻入のせり出し二階
+	"B_P_RSW_012": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_012", "hide": ["all"]},      # 越屋根の寄棟の農家
 }
 
 

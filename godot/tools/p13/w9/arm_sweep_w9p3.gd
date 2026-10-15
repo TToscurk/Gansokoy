@@ -13,9 +13,9 @@ const ARM_UP := 1.70
 const ARM_SIN := 0.179
 const ARM_MAX := 7.5
 const WORSE := 0.30
-const LANE_O := Vector2(234.8, -87.8)
-const LANE_S := Vector2(0.97, 0.24)
-const LANE_N := Vector2(-0.24, 0.97)
+var LANE_O := Vector2(234.8, -87.8)
+var LANE_S := Vector2(0.97, 0.24)
+var LANE_N := Vector2(-0.24, 0.97)
 const BT3 := [Vector2(235.8, -87.6), Vector2(236.4, -90.1)]
 const BT4 := [Vector2(245.2, -85.3), Vector2(245.9, -87.8)]
 const BODY_071 := "Districts/ResidentialWest/Buildings/B_P_RSW_071"
@@ -48,7 +48,7 @@ func _owner_of(col: Node) -> String:
 		return NEG_OWNER
 	var p := String(vil.get_path_to(col))
 	var seg := p.split("/")
-	if seg.size() >= 2 and (seg[0] == "ArchW9R2P13" or seg[0] == "EnrichW9P3"):
+	if seg.size() >= 2 and (seg[0] == "ArchW9R2P13" or seg[0] == "EnrichW9P3" or seg[0] == "EnrichW9P4"):
 		return "%s/%s" % [seg[0], seg[1]]
 	return "(base)"
 
@@ -140,13 +140,18 @@ func _run() -> void:
 			gate = true
 		elif a.begins_with("--probe="):
 			probes = a.trim_prefix("--probe=")
+		elif a.begins_with("--lane="):          # Phase 4：別の巷（直線区間）を測る。LANE_N は LANE_S を 90° 回した向き（既定の 071 の巷と同じ規約）
+			var lq := a.trim_prefix("--lane=").split(",")
+			LANE_O = Vector2(float(lq[0]), float(lq[1]))
+			LANE_S = Vector2(float(lq[2]), float(lq[3])).normalized()
+			LANE_N = Vector2(-LANE_S.y, LANE_S.x)
 	out = ""
 	await _boot()
 	await _frames(8)
 	_arm = player.get_node("Pivot/SpringArm3D") as SpringArm3D
 	_space = player.get_world_3d().direct_space_state
 	_pl_rid = player.get_rid()
-	for nm: String in ["ArchW9R2P13", "EnrichW9P3"]:
+	for nm: String in ["ArchW9R2P13", "EnrichW9P3", "EnrichW9P4"]:
 		var n := vil.get_node_or_null(nm)
 		if n == null:
 			continue

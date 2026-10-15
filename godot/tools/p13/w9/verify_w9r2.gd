@@ -8,7 +8,7 @@ extends SceneTree
 const L := preload("res://tools/p13/w9/w9r2_lib.gd")
 
 const MAX_TRI0 := 30000        # 1 棟 LOD0
-const MAX_TRI0_ALL := 420000     # Phase 3 で 8 棟（A 5＋B 3）が増えた：27 棟 × 平均 14k。LOD0 は 40 m 以内だけ描画（それ以遠は L1 の 30–130 tri）
+const MAX_TRI0_AVG := 15550      # 1 棟あたりの平均上限（Phase 3 の 420000／27 棟）。棟が増えても平均の基準は同じ：Phase 4 で 11 棟増（主街 7＋西巷 4）→ 合計 = 平均 × 棟数。LOD0 は 40 m 以内だけ描画（それ以遠は L1 の 30–130 tri）
 const MAX_TRI1 := 500          # 1 棟 LOD1
 const SIDE_OVER := 1.35        # 左右（妻・桁行）への張り出し上限 [m]（P4 massing の外側）
 const BACK_OVER := 1.35
@@ -404,7 +404,8 @@ func _run() -> void:
 					if mi is MeshInstance3D:
 						states.append([mi, (mi as MeshInstance3D).visible])
 		before[id] = states
-	_ok(tri_all <= MAX_TRI0_ALL, "%d 棟 LOD0 合計 %d tri（上限 %d）" % [L.SPECS.size(), tri_all, MAX_TRI0_ALL])
+	var max_all: int = MAX_TRI0_AVG * L.SPECS.size()
+	_ok(tri_all <= max_all, "%d 棟 LOD0 合計 %d tri（上限 %d＝平均 %d × 棟数）" % [L.SPECS.size(), tri_all, max_all, MAX_TRI0_AVG])
 	# [2.1] 他 overlay（P10・R1・Population など）の実体への貫入 0、隣の建物との間隔（Kit 側面の広がり＋0.25 m 以内）
 	var all_others := _collect(v)
 	for id: String in L.SPECS:
@@ -473,7 +474,8 @@ func _run() -> void:
 	# R2 の 3 行（ext_resource＋node＋空行）。Phase 3（EnrichW9P3）が掛かっていればその 3 行だけ上乗せして許す（余計な行は許さない）
 	var scene_txt := FileAccess.get_file_as_string(L.SCENE)
 	var p3_lines := 3 if scene_txt.contains("p13w9p3_enrich") else 0
-	_ok(ns.size() >= 2 and int(ns[1]) == 0 and int(ns[0]) <= 3 + p3_lines, "village_v2.tscn は %s から『追加のみ・≤%d 行（R2 3＋Phase 3 の EnrichW9P3 %d）』（実際 +%s −%s）" % [R2_BASE, 3 + p3_lines, p3_lines, ns[0] if ns.size() > 0 else "?", ns[1] if ns.size() > 1 else "?"])
+	var p4_lines := 3 if scene_txt.contains("p13w9p4_enrich") else 0     # Phase 4（EnrichW9P4）が掛かっていればその 3 行だけ上乗せ（余計な行は許さない）
+	_ok(ns.size() >= 2 and int(ns[1]) == 0 and int(ns[0]) <= 3 + p3_lines + p4_lines, "village_v2.tscn は %s から『追加のみ・≤%d 行（R2 3＋Phase 3 の EnrichW9P3 %d＋Phase 4 の EnrichW9P4 %d）』（実際 +%s −%s）" % [R2_BASE, 3 + p3_lines + p4_lines, p3_lines, p4_lines, ns[0] if ns.size() > 0 else "?", ns[1] if ns.size() > 1 else "?"])
 	var shape_ok := true
 	for id: String in L.SPECS:
 		var body3 := v.get_node_or_null(NodePath(L.SPECS[id]["path"])) as Node3D

@@ -231,9 +231,97 @@
   "B_P_FARM_SHED_L1": {
    "tris": 18,
    "note": "B_P_FARM_SHED LOD1"
+  },
+  "B_P_MKT_005_L0": {
+   "tris": 23648,
+   "note": "B_P_MKT_005 LOD0"
+  },
+  "B_P_MKT_005_L1": {
+   "tris": 88,
+   "note": "B_P_MKT_005 LOD1"
+  },
+  "B_P_MKT_015_L0": {
+   "tris": 28646,
+   "note": "B_P_MKT_015 LOD0"
+  },
+  "B_P_MKT_015_L1": {
+   "tris": 200,
+   "note": "B_P_MKT_015 LOD1"
+  },
+  "B_P_MKT_001_L0": {
+   "tris": 20430,
+   "note": "B_P_MKT_001 LOD0"
+  },
+  "B_P_MKT_001_L1": {
+   "tris": 132,
+   "note": "B_P_MKT_001 LOD1"
+  },
+  "B_P_MKT_004_L0": {
+   "tris": 2680,
+   "note": "B_P_MKT_004 LOD0"
+  },
+  "B_P_MKT_004_L1": {
+   "tris": 30,
+   "note": "B_P_MKT_004 LOD1"
+  },
+  "B_P_MXC_001_L0": {
+   "tris": 13872,
+   "note": "B_P_MXC_001 LOD0"
+  },
+  "B_P_MXC_001_L1": {
+   "tris": 32,
+   "note": "B_P_MXC_001 LOD1"
+  },
+  "B_P_MXC_002_L0": {
+   "tris": 2710,
+   "note": "B_P_MXC_002 LOD0"
+  },
+  "B_P_MXC_002_L1": {
+   "tris": 30,
+   "note": "B_P_MXC_002 LOD1"
+  },
+  "B_P_MXC_004_L0": {
+   "tris": 24116,
+   "note": "B_P_MXC_004 LOD0"
+  },
+  "B_P_MXC_004_L1": {
+   "tris": 164,
+   "note": "B_P_MXC_004 LOD1"
+  },
+  "B_P_RSW_024_L0": {
+   "tris": 23412,
+   "note": "B_P_RSW_024 LOD0"
+  },
+  "B_P_RSW_024_L1": {
+   "tris": 86,
+   "note": "B_P_RSW_024 LOD1"
+  },
+  "B_P_RSW_025_L0": {
+   "tris": 1562,
+   "note": "B_P_RSW_025 LOD0"
+  },
+  "B_P_RSW_025_L1": {
+   "tris": 30,
+   "note": "B_P_RSW_025 LOD1"
+  },
+  "B_P_RSW_026_L0": {
+   "tris": 16932,
+   "note": "B_P_RSW_026 LOD0"
+  },
+  "B_P_RSW_026_L1": {
+   "tris": 46,
+   "note": "B_P_RSW_026 LOD1"
+  },
+  "B_P_RSW_012_L0": {
+   "tris": 18846,
+   "note": "B_P_RSW_012 LOD0"
+  },
+  "B_P_RSW_012_L1": {
+   "tris": 132,
+   "note": "B_P_RSW_012 LOD1"
   }
  },
- "total_tris": 387289,
+ "total_tris": 565113,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -537,6 +625,124 @@
     "style": "board",
     "brackets": 4,
     "bracket_gap": 1.0651666666666666,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_005": [
+   {
+    "x0": -4.3799,
+    "x1": 4.3799,
+    "y": 2.85,
+    "zf": 5.46,
+    "depth": 0.85,
+    "p": 0.32,
+    "style": "tile",
+    "brackets": 9,
+    "bracket_gap": 1.094975,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_015": [
+   {
+    "x0": -4.383100000000001,
+    "x1": 3.85,
+    "y": 2.62,
+    "zf": 5.46,
+    "depth": 1.0,
+    "p": 0.25,
+    "style": "board",
+    "brackets": 9,
+    "bracket_gap": 1.0291375,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_001": [
+   {
+    "x0": -3.48,
+    "x1": 3.48,
+    "y": 2.8,
+    "zf": 5.46,
+    "depth": 0.95,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 8,
+    "bracket_gap": 0.9942857142857143,
+    "strut": true,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_004": [
+   {
+    "x0": -3.03,
+    "x1": 3.03,
+    "y": 2.62,
+    "zf": 5.46,
+    "depth": 1.0,
+    "p": 0.28,
+    "style": "board",
+    "brackets": 7,
+    "bracket_gap": 1.01,
+    "strut": true,
+    "posts": []
+   }
+  ],
+  "B_P_MXC_001": [
+   {
+    "x0": -2.85,
+    "x1": -0.95,
+    "y": 3.05,
+    "zf": 5.46,
+    "depth": 0.55,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 3,
+    "bracket_gap": 0.9500000000000001,
+    "strut": false,
+    "posts": []
+   },
+   {
+    "x0": 1.85,
+    "x1": 3.0303,
+    "y": 3.05,
+    "zf": 5.46,
+    "depth": 0.55,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 3,
+    "bracket_gap": 0.59015,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MXC_002": [
+   {
+    "x0": -1.9,
+    "x1": 3.0,
+    "y": 2.85,
+    "zf": 5.46,
+    "depth": 1.35,
+    "p": 0.28,
+    "style": "board",
+    "brackets": 6,
+    "bracket_gap": 0.9800000000000001,
+    "strut": true,
+    "posts": []
+   }
+  ],
+  "B_P_RSW_026": [
+   {
+    "x0": -2.68,
+    "x1": 2.68,
+    "y": 2.9,
+    "zf": 5.46,
+    "depth": 0.6,
+    "p": 0.32,
+    "style": "tile",
+    "brackets": 6,
+    "bracket_gap": 1.072,
     "strut": false,
     "posts": []
    }
@@ -903,6 +1109,140 @@
     "battens": 18,
     "stones": 61,
     "ove": 0.45
+   }
+  ],
+  "B_P_MKT_005": [
+   {
+    "kind": "irimoya",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.15
+   }
+  ],
+  "B_P_MKT_015": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.45
+   }
+  ],
+  "B_P_MKT_001": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.4
+   }
+  ],
+  "B_P_MKT_004": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 14,
+    "stones": 48,
+    "ove": 0.45
+   }
+  ],
+  "B_P_MXC_001": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.15
+   }
+  ],
+  "B_P_MXC_002": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 18,
+    "stones": 61,
+    "ove": 0.3
+   }
+  ],
+  "B_P_MXC_004": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.3
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.15
+   }
+  ],
+  "B_P_RSW_024": [
+   {
+    "kind": "irimoya",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.5
+   }
+  ],
+  "B_P_RSW_025": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 12,
+    "stones": 40,
+    "ove": 0.4
+   }
+  ],
+  "B_P_RSW_026": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.5
+   }
+  ],
+  "B_P_RSW_012": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.52
+   },
+   {
+    "kind": "turret",
+    "scale": 1.55
    }
   ]
  },
