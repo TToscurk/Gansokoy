@@ -30,13 +30,19 @@ const SPECS := {
 	"B_P_MKT_008": {"path": "Districts/Market/Buildings/B_P_MKT_008", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_009": {"path": "Districts/Market/Buildings/B_P_MKT_009", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_010": {"path": "Districts/Market/Buildings/B_P_MKT_010", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_011": {"path": "Districts/Market/Buildings/B_P_MKT_011", "hide": ["front", "eave"]},
+	"B_P_MKT_011": {"path": "Districts/Market/Buildings/B_P_MKT_011", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_012": {"path": "Districts/Market/Buildings/B_P_MKT_012", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_013": {"path": "Districts/Market/Buildings/B_P_MKT_013", "hide": ["front", "eave"]},
 	"B_P_RSW_047": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_047", "hide": ["front", "eave"]},
 	"B_P_RSW_048": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_061": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_061", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_062": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_062", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_025": {"path": "Districts/Market/Buildings/B_P_MKT_025", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_027": {"path": "Districts/Market/Buildings/B_P_MKT_027", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_026": {"path": "Districts/Market/Buildings/B_P_MKT_026", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_024": {"path": "Districts/Market/Buildings/B_P_MKT_024", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_006": {"path": "Districts/Market/Buildings/B_P_MKT_006", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_020": {"path": "Districts/Market/Buildings/B_P_MKT_020", "hide": ["front", "eave", "roof"]},
 }
 
 

@@ -16,8 +16,8 @@ var _mats: Array = []        # [MeshInstance3D, surface, 元の override]
 var hidden_count := 0
 var copied_surfaces := 0
 var r1_hidden := 0
-## W9 R1（EnrichW9P13）が壁・軒に『吊った』物のうち、R2 で作り直した正面・庇と重なるもの（簾・吊柿・杉玉）。この 10 棟でだけ隠す（暖簾・地面の物は残す）。
-const R1_HANG := ["sudare", "kaki", "sugi"]
+## W9 R1（EnrichW9P13）が壁・軒に『吊った』物のうち、R2 で作り直した正面・庇と重なるもの（簾・吊柿・杉玉・笊・草履）。R2／R2.1 の 16 棟でだけ隠す（暖簾・地面の物は残す）。
+const R1_HANG := ["sudare", "kaki", "sugi", "zaru", "zori"]
 
 
 func _ready() -> void:
