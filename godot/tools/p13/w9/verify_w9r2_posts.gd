@@ -2,14 +2,16 @@ extends SceneTree
 ## P13 W9 Round 2.1 収尾：庇柱・玄関柱の碰撞を『実際の物理空間』で検査する。
 ##   godot --headless --path godot --script res://tools/p13/w9/verify_w9r2_posts.gd
 ## 見るもの：
-##   ① 各柱で、実プレイヤーと同じ capsule（scenes/player.tscn：r 0.45・h 1.7）が柱の見た目に 2 cm 食い込む位置に立てない（柱の 4 面）／柱の中心を通る直線は必ず止まる（通り抜けない）。
+##   ① 各柱で、実プレイヤーと同じ capsule（main.tscn が使う characters/yoriichi/player_yoriichi.tscn：r 0.30・h 1.7。実行時に読む）が柱の見た目に 2 cm 食い込む位置に立てない（柱の 4 面）／柱の中心を通る直線は必ず止まる（通り抜けない）。
 ##   ② 柱から見た目の面 + 余白だけ離れれば止まらない（碰撞が過大でない）／柱のない位置では止まらない（検査が空振りでない）。
 ##   ③ enabled=false で柱の碰撞は消え（Before＝柱なし）、true で戻る。
 ##   ④ 柱が通行を塞がない：戸口へ真っすぐ入る線（街側 3 m → 戸口 0.4 m）に柱が当たらない／封存済み NPC（R3b・R3d・R3e の待機位置と巡回経路）から
 ##      NPC 半径 + 柱 + 余白 以上離れている。
 const L := preload("res://tools/p13/w9/w9r2_lib.gd")
-const PLAYER_R := 0.45
-const PLAYER_H := 1.7
+## 玩家 capsule は main.tscn が実際に使う player_yoriichi.tscn から読む（Phase 2 で、従来ここに書いていた scenes/player.tscn の r 0.45 は main.tscn の玩家ではないと判明＝実際は r 0.30）
+const PLAYER_SCENE := "res://characters/yoriichi/player_yoriichi.tscn"
+var PLAYER_R := 0.30
+var PLAYER_H := 1.7
 const NPC_R := 0.35
 const VIS_HALF := 0.07           # 見た目の柱の半幅（w 0.14）
 const SNAPS := ["res://data/village_v2_p10r3b_snapshot.json", "res://data/village_v2_p10r3d_snapshot.json", "res://data/village_v2_p10r3e_snapshot.json"]
@@ -77,6 +79,12 @@ static func _npc_points(snaps: Array) -> Array:
 func _run() -> void:
 	var meta := JSON.parse_string(FileAccess.get_file_as_string(L.META)) as Dictionary
 	var posts_meta: Dictionary = meta.get("posts", {})
+	var pinst := (load(PLAYER_SCENE) as PackedScene).instantiate()
+	var pcs := pinst.get_node("CollisionShape3D") as CollisionShape3D
+	PLAYER_R = (pcs.shape as CapsuleShape3D).radius
+	PLAYER_H = (pcs.shape as CapsuleShape3D).height
+	pinst.free()
+	print("[W9R2P] 玩家 capsule（%s）：r %.2f・h %.2f" % [PLAYER_SCENE, PLAYER_R, PLAYER_H])
 	var snaps: Array = []
 	for f: String in SNAPS:
 		snaps.append(JSON.parse_string(FileAccess.get_file_as_string(f)))
@@ -111,7 +119,8 @@ func _run() -> void:
 	var through_ok := true
 	var clear_ok := true
 	var empty_ok := true
-	for gp: Array in gposts:
+	for gi in gposts.size():
+		var gp: Array = gposts[gi]
 		var g: Vector3 = gp[1]
 		var o2: Vector2 = gp[2]
 		var t2 := Vector2(-o2.y, o2.x)
@@ -133,8 +142,25 @@ func _run() -> void:
 			if not hit:
 				through_ok = false
 				bad.append("通り抜け %s" % str(dv))
-		# 碰撞の外 +6 cm（街側）は止まらない
-		if _hits_posts(space, caps, g + Vector3(o2.x * (PLAYER_R + float(gp[3]) + 0.06), 0.0, o2.y * (PLAYER_R + float(gp[3]) + 0.06))):
+		# 碰撞の外 +6 cm（街側）は止まらない。ただし同じ建物の別の碰撞箱（薪・桶・荷受け台など近接して並ぶ小物）が probe の円に触れる位置なら、
+		# その probe は『別の箱』の領分なので判定から外す（箱ごとの局部座標で、円と他の箱の距離が capsule 半径 + 4 cm 未満のとき）。
+		var pr := Vector2(0.0, PLAYER_R + float(gp[3]) + 0.06)         # この箱の局部（t2, o2）での probe 位置
+		var near_other := false
+		for gj in gposts.size():
+			if gj == gi:
+				continue
+			var gq: Array = gposts[gj]
+			if String(gq[0]) != String(gp[0]):
+				continue
+			var dq := Vector2((gq[1] as Vector3).x - g.x, (gq[1] as Vector3).z - g.z)
+			var cq := Vector2(dq.dot(t2), dq.dot(o2))                  # 他の箱の中心（この箱の局部座標）
+			var hq := float(gq[3])
+			var ex := maxf(absf(pr.x - cq.x) - hq, 0.0)
+			var ez := maxf(absf(pr.y - cq.y) - hq, 0.0)
+			if Vector2(ex, ez).length() < PLAYER_R + 0.04:
+				near_other = true
+				break
+		if not near_other and _hits_posts(space, caps, g + Vector3(o2.x * pr.y, 0.0, o2.y * pr.y)):
 			clear_ok = false
 			bad.append("碰撞が過大")
 		# 柱のない位置（街側へ 4 m）では止まらない
@@ -171,14 +197,15 @@ func _run() -> void:
 	var min_route := 1.0e9
 	for gp: Array in gposts:
 		var p2 := Vector2((gp[1] as Vector3).x, (gp[1] as Vector3).z)
+		var hh: float = float(gp[3])      # 碰撞箱の半幅（柱 0.125〜／荷受け台・薪・桶などの小物 0.18〜0.28）を引いた『縁までの距離』で見る
 		for q: Vector2 in idle:
-			min_idle = minf(min_idle, p2.distance_to(q))
+			min_idle = minf(min_idle, p2.distance_to(q) - hh)
 		for path: Array in routes:
 			for i in range(path.size() - 1):
-				min_route = minf(min_route, _seg_dist(p2, path[i], path[i + 1]))
-	var need := NPC_R + 0.125 + 0.15
-	_ok(min_idle >= need, "封存済み NPC の待機位置 %d 点：柱との最短 %.2f m ≥ %.2f m" % [idle.size(), min_idle, need])
-	_ok(min_route >= need, "封存済み NPC の巡回経路 %d 本：柱との最短 %.2f m ≥ %.2f m" % [routes.size(), min_route, need])
+				min_route = minf(min_route, _seg_dist(p2, path[i], path[i + 1]) - hh)
+	var need := NPC_R + 0.15
+	_ok(min_idle >= need, "封存済み NPC の待機位置 %d 点：碰撞箱の縁との最短 %.2f m ≥ %.2f m" % [idle.size(), min_idle, need])
+	_ok(min_route >= need, "封存済み NPC の巡回経路 %d 本：碰撞箱の縁との最短 %.2f m ≥ %.2f m" % [routes.size(), min_route, need])
 	# ③ enabled の往復
 	var g0: Array = gposts[0]
 	var probe: Vector3 = g0[1]

@@ -1,0 +1,116 @@
+# P13 W9 Phase 2 R2（板葺き簡陋民宅／土蔵の商家／工匠宅）技術検査の記録（2026-10-15）
+# 形式：生成物の最終ビルド（Blender → import → prefab → bake）の後に取った実行ログの抜粋。時刻はログの更新時刻。
+
+## 1. 最終ビルド（15:47:47）
+[W9R2] 38 メッシュ、合計 267434 三角面 → D:/神社/shrine/godot/assets/village_v2/w9r2_arch/src/w9r2_arch.glb
+[w9r2-prefab] 38 構件、267434 三角面（Blender 267434）→ res://assets/village_v2/w9r2_arch/mesh/
+[w9r2-prefab] 結果：0 項失敗
+[W9R2B] 保存 res://maps/village_v2/gen/arch_w9r2_p13.scn：OK・建築 19・LOD0 三角面 266458・庇柱碰撞 24・失敗 0
+
+## 2. 三棟の mesh（SHA-256 先頭16桁／三角面）
+B_P_RSW_074_L0.res  sha256[:16]=ec94ef68257b1745  tris=4826
+B_P_RSW_074_L1.res  sha256[:16]=ef7e2bef528b4b97  tris=46
+B_P_MKT_029_L0.res  sha256[:16]=f56d6b33d72af2c1  tris=19126
+B_P_MKT_029_L1.res  sha256[:16]=e25e182cead06bd7  tris=66
+B_P_RSW_014_L0.res  sha256[:16]=7fb68aee4d721ea9  tris=21300
+B_P_RSW_014_L1.res  sha256[:16]=0cb992608eda00a9  tris=66
+overlay L0 合計 = 266458（草稿 4865917：260942）／ 三棟 L0 = 45252（草稿 39736）／ 三棟が隠す Kit 構件の L0 合計（草稿報告の実測）= 41899
+碰撞（Posts）：B_P_MKT_011=2, B_P_MKT_008=2, B_P_MKT_026=2, B_P_RSW_074=5, B_P_MKT_029=6, B_P_RSW_014=7
+manifest 依存 45 件のハッシュ不一致 = 0
+
+## 3. Asset/配置 gate  verify_w9r2.gd（headless・15:49:39）
+[W9R2G] 反向案例 36/36（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）
+[W9R2G] 結果：268 通過・0 失敗（反向案例 36/36）
+PASS 行数 = 268
+[W9R2G] PASS B_P_RSW_074：庇柱・玄関柱 5 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_RSW_074：三角面 L0 4826／L1 46（上限 30000／500）
+[W9R2G] PASS B_P_MKT_029：庇柱・玄関柱 6 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MKT_029：三角面 L0 19126／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_RSW_014：庇柱・玄関柱 7 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_RSW_014：三角面 L0 21300／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_RSW_074：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_074：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_029：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_029：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_014：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_014：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+
+## 4. Posts（碰撞）verify_w9r2_posts.gd（headless・15:49:46）
+# 玩家 capsule は main.tscn が使う characters/yoriichi/player_yoriichi.tscn から読む（r 0.30）。従来この gate は scenes/player.tscn の r 0.45 を使っていた（修正）。
+[W9R2P] 玩家 capsule（res://characters/yoriichi/player_yoriichi.tscn）：r 0.30・h 1.70
+[W9R2P] PASS B_P_MKT_011：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_008：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_026：Posts 碰撞がある
+[W9R2P] PASS B_P_RSW_074：Posts 碰撞がある
+[W9R2P] PASS B_P_MKT_029：Posts 碰撞がある
+[W9R2P] PASS B_P_RSW_014：Posts 碰撞がある
+[W9R2P] PASS 柱 24 本（6 棟）
+[W9R2P] PASS 全 24 本：プレイヤー capsule（r 0.30・h 1.7）は柱の見た目に食い込む位置に立てない（4 方向）
+[W9R2P] PASS 全 24 本：柱の中心を通る直線（街側・横）は必ず止まる（通り抜けない）
+[W9R2P] PASS 全 24 本：碰撞の外 6 cm では止まらない（過大な碰撞でない）
+[W9R2P] PASS 全 24 本：柱のない位置（街側 4 m）では止まらない（検査が空振りでない）
+[W9R2P]   B_P_MKT_011 戸口 x=0.88 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_008 戸口 x=-0.88 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_026 戸口 x=1.76 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_RSW_074 戸口 x=-0.45 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_MKT_029 戸口 x=2.62 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P]   B_P_RSW_014 戸口 x=0.90 へ（街側 3 m → 0.4 m）：柱に当たる刻み 0／27
+[W9R2P] PASS 戸口へ真っすぐ入る線（街側 3 m → 0.4 m）に柱が当たらない
+[W9R2P] PASS 封存済み NPC の待機位置 69 点：碰撞箱の縁との最短 2.39 m ≥ 0.50 m
+[W9R2P] PASS 封存済み NPC の巡回経路 6 本：碰撞箱の縁との最短 3.17 m ≥ 0.50 m
+[W9R2P] PASS enabled=true：柱の位置に立てない（基準）
+[W9R2P] PASS enabled=false（Before）：柱の碰撞は全て消える（残り 0／24）
+[W9R2P] PASS enabled=true に戻すと柱の碰撞が全て復活（24／24）
+[W9R2P] 結果：17 通過・0 失敗
+
+## 5. 旧来の BFS 到達性（w9_walk_check.gd・参考・15:49:58）
+[W9W] 到達性：5 区間中 NG 0
+[W9W] 結果：0 項失敗
+
+## 6. 実際の玩家による短距離歩行  walk_w9r2_real.gd（main.tscn → ReviewStart → village_v2・実制御器・Forward+）
+# ON（overlay 有効＝最終版）15:55:56
+[W9WALK] 玩家 capsule 半径 0.30・高さ 1.70（player_yoriichi.tscn）
+[W9WALK] tag=on overlay=あり enabled=true
+[W9WALK] PASS 074_along_near   along stop=reached frames=150 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.89, 立面 1.31) start地面差 -0.07  → 到達
+[W9WALK] PASS 074_along_road   along stop=reached frames=152 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.87, 立面 3.00) start地面差 -0.08  → 到達
+[W9WALK] PASS 074_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx -0.45, 立面 0.29) start地面差 -0.09  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS 074_woodpile     prop stop=stalled frames=66 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx 1.60, 立面 0.68) start地面差 -0.09  → 停止 立面 0.68 m・上昇 +0.01 m（期待 0.68 ±0.08：小物の前面 0.38 + 半径 0.30）
+[W9WALK] PASS 074_tub          prop stop=stalled frames=65 blocked=30 max_run=30 lost=0 max_dy=0.0024 end(lx -1.80, 立面 0.76) start地面差 -0.08  → 停止 立面 0.76 m・上昇 +0.01 m（期待 0.77 ±0.08：小物の前面 0.47 + 半径 0.30）
+[W9WALK] PASS 029_along_near   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0026 end(lx 6.17, 立面 1.50) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_along_road   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0024 end(lx 6.17, 立面 3.20) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_door         door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 2.60, 立面 0.30) start地面差 -0.03  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS 029_platform     prop stop=stalled frames=67 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -2.00, 立面 0.83) start地面差 -0.06  → 停止 立面 0.83 m・上昇 +0.00 m（期待 0.83 ±0.08：小物の前面 0.53 + 半径 0.30）
+[W9WALK] PASS 014_along_near   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 6.27, 立面 1.30) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_along_road   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0025 end(lx 6.27, 立面 3.00) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx 0.90, 立面 0.31) start地面差 -0.02  → 壁の手前 0.31 m まで着いた
+[W9WALK] PASS 014_anvil        prop stop=stalled frames=65 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.80, 立面 0.78) start地面差 -0.04  → 停止 立面 0.78 m・上昇 +0.00 m（期待 0.77 ±0.08：小物の前面 0.47 + 半径 0.30）
+[W9WALK] PASS 014_woodpile     prop stop=stalled frames=67 blocked=30 max_run=30 lost=0 max_dy=0.0009 end(lx 2.60, 立面 0.64) start地面差 -0.01  → 停止 立面 0.64 m・上昇 +0.00 m（期待 0.63 ±0.08：小物の前面 0.33 + 半径 0.30）
+[W9WALK] 結果：14 脚・FAIL 0
+# OFF（--disable=ArchW9R2P13＝元の Kit）15:56:59
+[W9WALK] 玩家 capsule 半径 0.30・高さ 1.70（player_yoriichi.tscn）
+[W9WALK] disabled ArchW9R2P13
+[W9WALK] tag=off overlay=あり enabled=false
+[W9WALK] PASS 074_along_near   along stop=reached frames=150 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.89, 立面 1.31) start地面差 -0.07  → 到達
+[W9WALK] PASS 074_along_road   along stop=reached frames=152 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.87, 立面 3.00) start地面差 -0.08  → 到達
+[W9WALK] PASS 074_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx -0.45, 立面 0.29) start地面差 -0.09  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS 074_woodpile     prop stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx 1.60, 立面 0.30) start地面差 -0.09  → 停止 立面 0.30 m・上昇 +0.02 m（期待 0.30 ±0.08：OFF＝壁）
+[W9WALK] PASS 074_tub          prop stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0024 end(lx -1.80, 立面 0.29) start地面差 -0.08  → 停止 立面 0.29 m・上昇 +0.02 m（期待 0.30 ±0.08：OFF＝壁）
+[W9WALK] PASS 029_along_near   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0026 end(lx 6.17, 立面 1.50) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_along_road   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0024 end(lx 6.17, 立面 3.20) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_door         door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 2.60, 立面 0.30) start地面差 -0.03  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS 029_platform     prop stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -2.00, 立面 0.30) start地面差 -0.06  → 停止 立面 0.30 m・上昇 +0.00 m（期待 0.30 ±0.08：OFF＝壁）
+[W9WALK] PASS 014_along_near   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 6.27, 立面 1.30) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_along_road   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0025 end(lx 6.27, 立面 3.00) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx 0.90, 立面 0.31) start地面差 -0.02  → 壁の手前 0.31 m まで着いた
+[W9WALK] PASS 014_anvil        prop stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.80, 立面 0.31) start地面差 -0.04  → 停止 立面 0.31 m・上昇 +0.00 m（期待 0.30 ±0.08：OFF＝壁）
+[W9WALK] PASS 014_woodpile     prop stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0009 end(lx 2.60, 立面 0.31) start地面差 -0.01  → 停止 立面 0.31 m・上昇 +0.00 m（期待 0.30 ±0.08：OFF＝壁）
+[W9WALK] 結果：14 脚・FAIL 0
+
+## 7. 一次の有界コスト比較  w9r2_p2_perf.gd（ON/OFF×2・暖機40＋測定100幀・1600×900・Forward+・vsync off・15:54:54）
+[W9P2P] 解像度 (1600.0, 900.0)・forward_plus・vsync off・max_fps 0・10:00；各鏡位 ON,OFF,ON,OFF（暖機 40＋測定 100 幀）
+[W9P2P] rsw074_v4    Δframe +0.053 ms・Δgpu -0.009 ms・Δcpu -0.203 ms・Δdraws -171.9・Δprims   -21612・Δobjs -285.9  （ON frame 12.29／gpu 11.63／draws 4132／prims 6809471）
+[W9P2P] mkt029_v3    Δframe -0.924 ms・Δgpu -0.008 ms・Δcpu -0.810 ms・Δdraws -386.4・Δprims   +94037・Δobjs -898.4  （ON frame 13.81／gpu 9.49／draws 5188／prims 6007988）
+[W9P2P] rsw014_v3    Δframe -0.118 ms・Δgpu +0.033 ms・Δcpu -0.380 ms・Δdraws -146.9・Δprims   +30181・Δobjs -325.6  （ON frame 10.87／gpu 10.07／draws 3831／prims 5814800）
+[W9P2P] rsw074_a     Δframe +0.269 ms・Δgpu +0.138 ms・Δcpu +0.192 ms・Δdraws -161.0・Δprims   -21550・Δobjs -281.0  （ON frame 12.09／gpu 11.11／draws 4345／prims 6335390）
+[W9P2P] far          Δframe -0.046 ms・Δgpu -0.076 ms・Δcpu -0.072 ms・Δdraws  +1.0・Δprims       +0・Δobjs  +0.0  （ON frame 11.76／gpu 10.65／draws 4286／prims 5200709）
+[W9P2P] DONE -> C:/Users/B365/AppData/Local/hermes/cache/scratch/p2_perf_final.json

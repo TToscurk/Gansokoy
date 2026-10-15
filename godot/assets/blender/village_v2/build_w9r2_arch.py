@@ -647,6 +647,7 @@ class Bld:
         self.m1 = new(bid + '_L1', bid + ' LOD1')
         self.W = [tmp('w0'), tmp('w1')]      # 壁・前面（FIN 色変体）
         self.R = [tmp('r0'), tmp('r1')]      # 屋根・庇（TONE 瓦色変体）
+        self.P = [tmp('p0'), tmp('p1')]      # 小物（無着色：藁・炭・鉄の色が FIN／TONE に左右されない。Phase 2 r2）
 
     def finish(self):
         FIN, TONE = NS['FIN'], NS['TONE']
@@ -657,6 +658,8 @@ class Bld:
                 tint(self.R[lod], {'V2_Kawara': TONE[self.tone]})
             put(dst, self.W[lod])
             put(dst, self.R[lod])
+            if self.P[lod].f:
+                put(dst, self.P[lod])
 
 
 def row1(B, m, bays, dz=0.0):
@@ -1162,7 +1165,7 @@ def board_plane(dst, lod, ra, rb, ea, eb, col=0.78):
     return npl, stones
 
 
-def board_roof(dst, lod, wall_len, half, eave, p, ove, ovg):
+def board_roof(dst, lod, wall_len, half, eave, p, ove, ovg, patch=None):
     """板葺き（石置き）の切妻：棟は x 方向（gable_roof と同じ局部枠）。棟覆い・棟の石・破風板・鼻隠し付き。返り値＝棟高。"""
     H = eave + p * half
     L = wall_len + 2.0 * ovg
@@ -1178,6 +1181,18 @@ def board_roof(dst, lod, wall_len, half, eave, p, ove, ovg):
             for e in (-1.0, 1.0):                                       # 破風板
                 dst.beam((e * L / 2, H, 0.0), (e * L / 2, ye, sg * Zs), 0.05, 0.16, 'V2_Wood', DARK * 0.85, up=n)
             dst.beam((-L / 2, ye - 0.04, sg * Zs), (L / 2, ye - 0.04, sg * Zs), 0.05, 0.13, 'V2_Wood', DARK * 0.85)    # 鼻隠し
+    if patch and lod == 0:                                              # 屋根の補修：新しい（明るい）板を一部だけ張り替えた跡
+        sg_, xa_, xb_, ta_, tb_ = patch
+        pt = lambda x_, t_: (x_, H + (ye - H) * t_, sg_ * Zs * t_)
+        qa, qb, qc, qd = pt(xa_, ta_), pt(xb_, ta_), pt(xb_, tb_), pt(xa_, tb_)
+        nn = _newell([qa, qb, qc, qd])
+        nn = mul(nn, -1.0) if nn[1] < 0 else nn
+        up_ = lambda q_: add(q_, mul(nn, 0.016))
+        polyo(dst, [up_(qa), up_(qb), up_(qc), up_(qd)], 'V2_Wood', 1.0, out=nn, grain=X)
+        nj = max(2, int((tb_ - ta_) * Zs / 0.30))
+        for i in range(1, nj):                                          # 新しい板の段
+            f_ = ta_ + (tb_ - ta_) * i / nj
+            dst.beam(add(pt(xa_, f_), mul(nn, 0.02)), add(pt(xb_, f_), mul(nn, 0.02)), 0.03, 0.02, 'V2_Wood', 0.62, up=nn)
     if lod == 0:
         dst.box((-L / 2 - 0.04, H - 0.03, -0.16), (L / 2 + 0.04, H + 0.07, 0.16), 'V2_Wood', DARK * 0.9, grain=X)      # 棟覆い
         k = max(2, int(round(L / 1.1)))
@@ -1242,6 +1257,214 @@ def kura_window_side(dst, x, sgn, zc, y0, y1, ww=0.62):
     dst.box((min(xs0, xs1), y0 - 0.03, z1 + t - 0.01), (max(xs0, xs1), y1 + 0.03, z1 + t + 0.05), 'V2_Plaster', PL * 0.9, grain=Y)
 
 
+# ═══════════ Phase 2 r2：生活痕跡・倉儲／交易／搬運・作業区の小物（無着色の P メッシュへ）═══════════
+# 規則：地面に置く物は壁から 0.45 m 以内（プレイヤーの碰撞カプセル r 0.45 が入れない帯＝碰撞を足さずに済む）。壁際の高さ 1.1–1.8 m の吊り物は壁から 0.7 m 以内（gate の HUG 帯）。
+# 戸口の幅の前（z 0.25–1.6）は空ける。足元は y −0.04..−0.06 まで埋めて、地面が少し低くても浮かない。
+STRAW = (0.80, 0.66, 0.36)
+
+
+def solid(x, z, w, top):
+    """見た目のある小物（薪・桶・荷受け台・切り株）の碰撞：庇柱（POSTS）と同じ記録＝Godot の bake が Posts の BoxShape3D を作る。
+    プレイヤーの自動跨ぎ（step_height）で踏み上がれない高さ（top ≥ 0.9）にする。w は箱の一辺（碰撞は w＋0.06）。"""
+    _rec('post', x=float(x), z=float(z), top=float(top), w=float(w))
+
+
+def woodpile(dst, x0, x1, z, rows=6, r=0.075, ln=0.33, y0=-0.04):
+    """壁際の薪積み：丸太の小口（円）を手前（+z）へ向け、段ごとに半個ずらして積む。長さ ln が壁から出る（出入りは決定的にばらつかせる）。"""
+    n0 = max(3, int((x1 - x0) / (2 * r * 1.02)))
+    for ri in range(rows):
+        n = n0 - (ri % 2)
+        xs = x0 + r + (ri % 2) * r
+        for i in range(n):
+            xc = xs + i * 2 * r * 1.02
+            yc = y0 + r + ri * r * 1.82
+            jit = 0.02 * (((i * 5 + ri * 3) % 4) - 1.5) / 1.5
+            dst.cyl((xc, yc, z + 0.01), (xc, yc, z + ln + jit), r, r * 0.96, 8, 'V2_Wood', 0.82 + 0.16 * (((i * 3 + ri * 7) % 5) / 4.0), caps=(True, True))
+
+
+def rice_bale(dst, xc, yc, zc, ln=0.62, r=0.17):
+    """米俵：藁色の樽形（中央が膨らむ・軸 x）＋縄の帯 3 本。"""
+    dst.cyl((xc - ln / 2, yc, zc), (xc, yc, zc), r * 0.80, r, 10, 'V2_Plaster', STRAW, caps=(True, False))
+    dst.cyl((xc, yc, zc), (xc + ln / 2, yc, zc), r, r * 0.80, 10, 'V2_Plaster', STRAW, caps=(False, True))
+    for dx in (-0.2, 0.0, 0.2):
+        rr = r * (1.0 - 0.2 * abs(dx) / 0.31) + 0.006
+        dst.cyl((xc + dx - 0.018, yc, zc), (xc + dx + 0.018, yc, zc), rr, rr, 10, 'V2_Wood', DARK * 0.8, caps=(False, False))
+
+
+def crate(dst, x0, x1, z0, z1, y0, y1, col=0.80):
+    """木箱：板の目地（暗い帯 3）と角の縦桟。"""
+    dst.box((x0, y0, z0), (x1, y1, z1), 'V2_Wood', col, grain=X)
+    for yy in (y0 + 0.05, (y0 + y1) / 2 - 0.012, y1 - 0.08):
+        dst.box((x0 - 0.008, yy, z0 - 0.008), (x1 + 0.008, yy + 0.025, z1 + 0.008), 'V2_Wood', DARK * 0.8, grain=X)
+    for xx in (x0, x1 - 0.04):
+        dst.box((xx - 0.006, y0, z0 - 0.012), (xx + 0.046, y1, z1 + 0.012), 'V2_Wood', DARK * 0.9, grain=Y)
+
+
+def barrels(dst, x0, zc, y0, rows=(1,), r=0.19, h=0.50, col=0.6):
+    """樽（箍 2）の三角積み。x0＝左端、y0＝置く面の高さ。"""
+    y = y0
+    for ri, n in enumerate(rows):
+        for i in range(n):
+            xc = x0 + r + i * 2 * r * 1.02 + ri * r
+            dst.cyl((xc, y, zc), (xc, y + h, zc), r * 0.94, r, 12, 'V2_Wood', col, caps=(True, True))
+            for yy in (y + 0.1, y + h - 0.13):
+                dst.cyl((xc, yy, zc), (xc, yy + 0.03, zc), r + 0.012, r + 0.012, 12, 'V2_Wood', DARK * 0.6, caps=(False, False))
+        y += h * 0.92
+
+
+def tub(dst, x, z, r, h, y0=-0.04, col=0.62, water=True):
+    """桶・天水桶（口が広い・箍 2・水面）。"""
+    dst.cyl((x, y0, z), (x, y0 + h, z), r * 0.86, r, 12, 'V2_Wood', col, caps=(True, True))
+    for yy in (y0 + 0.08, y0 + h - 0.11):
+        dst.cyl((x, yy, z), (x, yy + 0.028, z), r * 0.93 + 0.012, r * 0.93 + 0.012, 12, 'V2_Wood', DARK * 0.55, caps=(False, False))
+    if water:
+        dst.cyl((x, y0 + h - 0.07, z), (x, y0 + h - 0.065, z), r * 0.92, r * 0.92, 12, 'V2_Wood', 0.07, caps=(True, False))
+
+
+def jar(dst, x, z, r, h, y0=-0.04):
+    """甕（腹が膨らみ口が窄まる）。"""
+    dst.cyl((x, y0, z), (x, y0 + h * 0.5, z), r * 0.62, r, 12, 'V2_KitStoneTri', 0.42, caps=(True, False))
+    dst.cyl((x, y0 + h * 0.5, z), (x, y0 + h * 0.92, z), r, r * 0.56, 12, 'V2_KitStoneTri', 0.42, caps=(False, False))
+    dst.cyl((x, y0 + h * 0.92, z), (x, y0 + h, z), r * 0.66, r * 0.66, 12, 'V2_KitStoneTri', 0.3, caps=(True, True))
+
+
+def mino(dst, x, ytop, z, w=0.50, h=0.68):
+    """蓑（藁の雨具）：上が細く裾が広がる台形に、藁の段を 6 枚重ねて壁に掛ける。z＝壁面。"""
+    n = 6
+    for i in range(n):
+        f0, f1 = i / n, (i + 1) / n
+        y1, y0 = ytop - h * f0, ytop - h * f1
+        hw = 0.12 + (w / 2 - 0.12) * f1
+        c = 0.9 + 0.1 * (i % 2)
+        dst.box((x - hw, y0, z + 0.005), (x + hw, y1 + 0.02, z + 0.035 + 0.01 * (i % 2)), 'V2_Plaster', tuple(q * c for q in (0.74, 0.60, 0.33)), grain=Y)
+    dst.box((x - 0.05, ytop, z), (x + 0.05, ytop + 0.05, z + 0.03), 'V2_Wood', DARK, grain=Y)       # 掛け釘の板
+
+
+def kasa(dst, x, y, z, r=0.2):
+    """笠（円錐）：壁に頂を手前へ向けて掛ける。"""
+    dst.cyl((x, y, z + 0.015), (x, y, z + 0.11), r, 0.03, 10, 'V2_Plaster', (0.78, 0.64, 0.38), caps=(True, False))
+
+
+def hung_dried(dst, x0, x1, y, z, n=6, seed=0):
+    """干し物の竿：竹竿から干し大根（細長い白）・干し柿の連（橙）・藁束が垂れる。下端は y−0.52。壁から 0.15 m 以内に収める。"""
+    dst.beam((x0, y, z), (x1, y, z), 0.03, 0.03, 'V2_Wood', DARK)
+    for i in range(n):
+        xx = x0 + 0.12 + (x1 - x0 - 0.24) * i / max(1, n - 1)
+        k = (i + seed) % 3
+        if k == 0:
+            for dx in (-0.045, 0.0, 0.045):
+                dst.cyl((xx + dx, y - 0.03, z), (xx + dx, y - 0.50, z), 0.026, 0.012, 6, 'V2_Plaster', (0.88, 0.82, 0.64), caps=(False, True))
+        elif k == 1:
+            dst.beam((xx, y, z), (xx, y - 0.46, z), 0.01, 0.01, 'V2_Wood', DARK)
+            for q in range(4):
+                yy = y - 0.10 - q * 0.10
+                dst.cyl((xx, yy, z), (xx, yy - 0.085, z), 0.048, 0.04, 8, 'V2_Plaster', (0.80, 0.40, 0.14), caps=(True, True))
+        else:
+            dst.cyl((xx, y - 0.02, z), (xx, y - 0.48, z), 0.012, 0.075, 8, 'V2_Plaster', (0.70, 0.58, 0.32), caps=(False, True))
+
+
+def ladder(dst, xw, sx, zc, ytop, lean=0.55, wd=0.42, rungs=7):
+    """竹の梯子：外壁面 xw に sx 向きへ立て掛ける（足元は壁から lean、上端は壁）。"""
+    for dz in (-wd / 2, wd / 2):
+        dst.beam((xw + sx * lean, -0.03, zc + dz), (xw + sx * 0.02, ytop, zc + dz), 0.045, 0.045, 'V2_Wood', 0.9)
+    for i in range(rungs):
+        f = (i + 0.7) / (rungs + 0.4)
+        xx = xw + sx * (lean * (1 - f) + 0.02 * f)
+        yy = -0.03 + (ytop + 0.03) * f
+        dst.beam((xx, yy, zc - wd / 2), (xx, yy, zc + wd / 2), 0.03, 0.03, 'V2_Wood', 0.8)
+
+
+def board_vent(R, zc, H, ln=0.9, hw=0.30):
+    """板葺き棟の煙出し（囲炉裏の煙の抜け）：細長い板囲い（前後は横板の隙間）＋小さな板葺き切妻。棟は z 方向。lod0 のみ。"""
+    y0 = H - 0.14
+    h = 0.50
+    za, zb = zc - ln / 2, zc + ln / 2
+    for sx in (-1.0, 1.0):
+        xa, xb = (sx * (hw - 0.04), sx * hw) if sx > 0 else (sx * hw, sx * (hw - 0.04))
+        R.box((xa, y0, za), (xb, y0 + h, zb), 'V2_Wood', DARK * 0.9, grain=Y)
+    for sz in (-1.0, 1.0):
+        z0_, z1_ = (zb - 0.04, zb) if sz > 0 else (za, za + 0.04)
+        R.box((-hw, y0, z0_), (hw, y0 + h, z1_), 'V2_Wood', 0.08, grain=X)
+        zs0, zs1 = (zb - 0.01, zb + 0.035) if sz > 0 else (za - 0.035, za + 0.01)
+        for k in range(4):
+            yy = y0 + 0.16 + k * 0.085
+            R.box((-hw + 0.02, yy, zs0), (hw - 0.02, yy + 0.05, zs1), 'V2_Wood', 0.92, grain=X)
+    yc = y0 + h
+    hwo, zr0, zr1, top = hw + 0.12, za - 0.12, zb + 0.12, yc + 0.24
+    for sx in (-1.0, 1.0):
+        polyo(R, [(sx * hwo, yc - 0.03, zr0), (sx * hwo, yc - 0.03, zr1), (0.0, top, zr1), (0.0, top, zr0)], 'V2_Wood', 0.74, out=(sx * 0.6, 0.8, 0.0), grain=Z)
+    for sz, zz in ((1.0, zr1), (-1.0, zr0)):
+        polyo(R, [(-hwo, yc - 0.03, zz), (hwo, yc - 0.03, zz), (0.0, top, zz)], 'V2_Wood', DARK, out=(0.0, 0.0, sz))
+    R.box((-0.05, top - 0.02, zr0), (0.05, top + 0.04, zr1), 'V2_Wood', DARK * 0.9, grain=Z)
+
+
+def kamachi(dst, x0, x1, zf, h=0.46, depth=0.46):
+    """店先の荷受け台（上がり框）：床板＋縁框＋前脚（背面は壁）。"""
+    dst.box((x0, h - 0.06, zf + 0.01), (x1, h, zf + depth), 'V2_Wood', 0.82, grain=X)
+    dst.box((x0, h - 0.17, zf + depth - 0.05), (x1, h - 0.06, zf + depth), 'V2_Wood', DARK, grain=X)
+    n = max(2, int((x1 - x0) / 0.9))
+    for i in range(n + 1):
+        xx = x0 + 0.04 + (x1 - x0 - 0.12) * i / n
+        dst.box((xx, -0.06, zf + depth - 0.12), (xx + 0.08, h - 0.17, zf + depth - 0.04), 'V2_Wood', DARK, grain=Y)
+
+
+def stump_anvil(dst, x, z):
+    """鍛冶の簷下作業区：鉄床の切り株＋鉄床（胴・面・角）＋載せた槌。"""
+    dst.cyl((x, -0.05, z), (x, 0.44, z), 0.21, 0.18, 10, 'V2_Wood', 0.5, caps=(True, True))
+    dst.box((x - 0.19, 0.44, z - 0.075), (x + 0.15, 0.60, z + 0.075), 'V2_KitStoneTri', 0.26)
+    dst.box((x - 0.22, 0.60, z - 0.09), (x + 0.14, 0.67, z + 0.09), 'V2_KitStoneTri', 0.22)
+    dst.cyl((x + 0.14, 0.635, z), (x + 0.36, 0.635, z), 0.045, 0.012, 8, 'V2_KitStoneTri', 0.22, caps=(False, True))
+    dst.beam((x - 0.16, 0.69, z + 0.02), (x - 0.02, 0.69, z + 0.13), 0.03, 0.03, 'V2_Wood', DARK)
+    dst.box((x - 0.05, 0.67, z + 0.11), (x + 0.03, 0.75, z + 0.19), 'V2_KitStoneTri', 0.24)
+
+
+def charcoal(dst, x, y0, z, r=0.16, h=0.52):
+    """炭俵（立てた藁の筒・煤けた色・縄 3）。"""
+    dst.cyl((x, y0, z), (x, y0 + h, z), r, r, 10, 'V2_Plaster', (0.34, 0.30, 0.25), caps=(True, True))
+    for yy in (y0 + 0.08, y0 + h / 2 - 0.012, y0 + h - 0.10):
+        dst.cyl((x, yy, z), (x, yy + 0.025, z), r + 0.007, r + 0.007, 10, 'V2_Wood', DARK * 0.7, caps=(False, False))
+
+
+def tool_wall(dst, x0, x1, z, y):
+    """奥壁の道具掛け：掛け板に槌 3・鋏（やっとこ）3 を吊る（鍛冶の道具）。y＝掛け板の上端。"""
+    dst.box((x0, y - 0.06, z), (x1, y, z + 0.05), 'V2_Wood', DARK, grain=X)
+    n = 6
+    for i in range(n):
+        xx = x0 + 0.12 + (x1 - x0 - 0.24) * i / (n - 1)
+        if i % 2 == 0:       # 槌
+            dst.beam((xx, y - 0.06, z + 0.05), (xx, y - 0.46, z + 0.05), 0.03, 0.03, 'V2_Wood', DARK)
+            dst.box((xx - 0.075, y - 0.20, z + 0.02), (xx + 0.075, y - 0.08, z + 0.10), 'V2_KitStoneTri', 0.24)
+        else:                # やっとこ
+            dst.beam((xx - 0.012, y - 0.06, z + 0.05), (xx - 0.045, y - 0.50, z + 0.05), 0.022, 0.022, 'V2_KitStoneTri', 0.24)
+            dst.beam((xx + 0.012, y - 0.06, z + 0.05), (xx + 0.045, y - 0.50, z + 0.05), 0.022, 0.022, 'V2_KitStoneTri', 0.24)
+
+
+def kura_loft(W, P, zg):
+    """蔵の妻の上階：荷揚げ戸（厚い漆喰の観音扉を開けた口）＋棟下から突き出す荷揚げ梁・滑車・縄・吊り荷（米俵）。zg＝妻の面。
+    店の棟（4.6 m）の上に出る高さ（口 6.05–6.95 m・梁 7.2 m）＝通りから『倉に荷を揚げる家』と読める。"""
+    W.box((-0.46, 6.05, zg - 0.01), (0.46, 6.95, zg + 0.02), 'V2_Wood', 0.08, grain=Y)                       # 暗い奥
+    for xa, xb in ((-0.58, -0.46), (0.46, 0.58)):
+        W.box((xa, 5.95, zg), (xb, 7.05, zg + 0.13), 'V2_Plaster', PL * 0.96, grain=Y)                       # 抱き
+    W.box((-0.58, 6.95, zg), (0.58, 7.05, zg + 0.13), 'V2_Plaster', PL * 0.96, grain=X)                      # 楣
+    W.box((-0.58, 5.95, zg), (0.58, 6.05, zg + 0.17), 'V2_Plaster', PL * 0.90, grain=X)                      # 沓摺
+    for sx in (-1.0, 1.0):                                                                                   # 開いた観音扉（壁に直角）
+        xa, xb = (0.58, 0.66) if sx > 0 else (-0.66, -0.58)
+        W.box((xa, 6.02, zg + 0.13), (xb, 6.98, zg + 0.62), 'V2_Plaster', PL * 0.9, grain=Z)
+        W.box((xa - (0.012 if sx > 0 else -0.012), 6.30, zg + 0.20), (xb + (0.012 if sx > 0 else -0.012), 6.36, zg + 0.60), 'V2_Wood', DARK * 0.45, grain=Z)
+        W.box((xa - (0.012 if sx > 0 else -0.012), 6.66, zg + 0.20), (xb + (0.012 if sx > 0 else -0.012), 6.72, zg + 0.60), 'V2_Wood', DARK * 0.45, grain=Z)
+    zb_ = zg + 1.10
+    P.beam((0.0, 7.17, zg - 0.12), (0.0, 7.17, zg + 1.30), 0.11, 0.13, 'V2_Wood', DARK)                      # 荷揚げ梁
+    P.cyl((-0.04, 6.99, zb_), (0.04, 6.99, zb_), 0.09, 0.09, 12, 'V2_Wood', DARK * 0.45, caps=(True, True))  # 滑車
+    P.beam((0.0, 7.10, zb_), (0.0, 7.00, zb_), 0.02, 0.02, 'V2_Wood', DARK * 0.45)
+    # 吊り荷は『荷揚げ戸の高さまで上がってきた』位置（俵の中心 6.12 m＝戸の沓摺 6.05 m の少し上）に置く：
+    # 店の棟（4.63 m）より 1.3 m 以上高く、街から見て店の屋根に隠れず、暗い戸口を背に俵が読める（5.18 m に垂らすと店の屋根に隠れた＝実測）。
+    P.cyl((0.0, 6.92, zb_), (0.0, 6.52, zb_), 0.012, 0.012, 6, 'V2_Wood', 0.85, caps=(False, False))        # 縄
+    for sx in (-1.0, 1.0):                                                                                   # 吊り荷の掛け縄
+        P.beam((0.0, 6.52, zb_), (sx * 0.22, 6.31, zb_), 0.012, 0.012, 'V2_Wood', 0.85)
+    rice_bale(P, 0.0, 6.12, zb_, ln=0.60, r=0.17)                                                            # 吊り上げ中の米俵
+
+
+
 def build_rsw074():
     """B_P_RSW_074 板葺き簡陋民宅：低い平屋（壁 2.3 m）＋石置きの板葺き屋根（押さえ竹・石・棟覆い・破風板）、荒い土壁と腰板に露出した柱、
     小さな戸口（板戸）・連子窓・妻の小窓、背に板葺きの下屋。瓦・漆喰の町家とは屋根材・量体・壁の構造・開口が違う。入口＝x −1.35..0.45。"""
@@ -1253,9 +1476,10 @@ def build_rsw074():
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
         tm = tmp()
-        H = board_roof(tm, lod, zf - zm, w / 2, YE, 0.36, 0.45, 0.40)
+        H = board_roof(tm, lod, zf - zm, w / 2, YE, 0.36, 0.45, 0.40, patch=(1.0, 0.55, 1.95, 0.32, 0.80))     # 左の屋面の一部を新しい板に張り替えた補修跡
         put(R, tm, off=(0.0, 0.0, (zf + zm) / 2), rot=-math.pi * 0.5)
         board_shed(R, lod, -w / 2 - 0.35, w / 2 + 0.35, zm, 2.15, zr - 0.30, 1.45)
+        eave_roof(R, lod, -1.25, 0.35, 2.56, zf, 0.85, p=0.28, style='board', tone=0.72)                              # 戸口の上の小さな板庇（雨宿り・土間の延長）
         if lod == 1:
             W.box((-w / 2, FL, zm), (w / 2, YE, zf), 'V2_Plaster', MUD, grain=Y)
             W.box((-w / 2, FL, zr), (w / 2, 1.75, zm), 'V2_Plaster', MUD2, grain=Y)
@@ -1310,6 +1534,20 @@ def build_rsw074():
         W.box((-w / 2, 1.12, zr), (w / 2, 1.45, zr + 0.12), 'V2_Plaster', MUD2, grain=X)
         W.box((-w / 2, 2.10, zm), (w / 2, YE, zm + 0.12), 'V2_Plaster', MUD, grain=X)
         polyo(W, [(-w / 2, YE, zm + 0.06), (w / 2, YE, zm + 0.06), (0.0, H - 0.02, zm + 0.06)], 'V2_Wood', BOARD * 0.68, out=(0.0, 0.0, -1.0), grain=Y)
+        # --- 生活痕跡：薪（窓の下）・天水桶と桶・蓑と笠・干し物・梯子・棟の煙出し ---
+        PR = B.P[0]
+        woodpile(PR, 1.00, 2.18, zf, rows=6, r=0.075, ln=0.33)                    # 窓の下の薪積み（高さ 0.85 m・窓の下端 1.30 m より低い）
+        for xs_ in (1.20, 1.60, 2.00):
+            solid(xs_, zf + 0.17, 0.36, 0.95)                                     # 薪の碰撞
+        solid(-1.80, zf + 0.22, 0.44, 0.90)                                       # 天水桶の碰撞
+        solid(-2.17, zf + 0.15, 0.30, 0.90)                                       # 小桶の碰撞
+        tub(PR, -1.80, zf + 0.24, 0.22, 0.46)                                      # 天水桶（左の壁・軒の雨だれ受け）
+        tub(PR, -2.17, zf + 0.15, 0.13, 0.26, col=0.7, water=False)                # 小さな桶
+        mino(PR, -1.80, 1.68, zf)                                                  # 蓑
+        kasa(PR, -2.03, 1.86, zf)                                                  # 笠
+        hung_dried(PR, 0.55, 2.12, 2.12, zf + 0.13, n=6, seed=1)                   # 干し大根・干し柿（壁から 0.13 m）
+        ladder(PR, -w / 2, -1.0, 2.20, YE - 0.05)                                  # 左の壁に立て掛けた竹梯子（屋根の石を直す）
+        board_vent(R, 2.8, H)                                                     # 棟の煙出し（囲炉裏）
     B.finish()
     return B
 
@@ -1363,9 +1601,19 @@ def build_mkt029():
         polyo(W, [(-kw_ + 0.06, YK - 0.02, zk1 + 0.035), (kw_ - 0.06, YK - 0.02, zk1 + 0.035), (0.0, Hk - 0.10, zk1 + 0.035)], 'V2_Plaster', PL, out=(0.0, 0.0, 1.0), grain=Y)
         polyo(W, [(-kw_ + 0.06, YK - 0.02, zk0 - 0.035), (kw_ - 0.06, YK - 0.02, zk0 - 0.035), (0.0, Hk - 0.10, zk0 - 0.035)], 'V2_Plaster', PL, out=(0.0, 0.0, -1.0), grain=Y)
         zg = zk1 + 0.035
-        W.box((-0.40, 6.45, zg), (0.40, 7.05, zg + 0.10), 'V2_Plaster', PL * 0.96, grain=Y)
-        W.box((-0.30, 6.55, zg + 0.09), (0.30, 6.95, zg + 0.11), 'V2_Wood', 0.12, grain=Y)
-        W.box((-0.46, 6.40, zg), (0.46, 6.48, zg + 0.16), 'V2_Plaster', PL * 0.9, grain=X)
+        PR = B.P[0]
+        kura_loft(W, PR, zg)                                                           # 荷揚げ戸＋荷揚げ梁・滑車・吊り荷（棟の上に出る）
+        # 店先の荷受け台（上がり框）：米俵の積み・木箱・樽（壁から 0.46 m 以内・戸口は x 1.75..3.5 なので反対側）
+        kamachi(PR, -3.40, -0.40, zf)
+        for xb in (-3.05, -2.40, -1.75):
+            rice_bale(PR, xb, 0.46 + 0.16, zf + 0.25)
+        for xb in (-2.72, -2.07):
+            rice_bale(PR, xb, 0.46 + 0.16 + 0.29, zf + 0.25)
+        crate(PR, -1.40, -0.92, zf + 0.06, zf + 0.44, 0.46, 0.84)
+        crate(PR, -1.32, -1.00, zf + 0.10, zf + 0.40, 0.84, 1.12, 0.72)
+        barrels(PR, -0.88, zf + 0.25, 0.46, rows=(1,), r=0.19, h=0.50)
+        for xs_ in (-3.20, -2.70, -2.20, -1.70, -1.20, -0.70):
+            solid(xs_, zf + 0.25, 0.50, 1.20)                                     # 荷受け台＋荷（踏み上がれない高さ）
     B.finish()
     return B
 
@@ -1418,9 +1666,28 @@ def build_rsw014():
                 W.box((xx - 0.035, FL, zz - 0.035), (xx + 0.035, FL + 0.74, zz + 0.035), 'V2_Wood', DARK, grain=Y)
         shitomi(W, -w / 2 + 0.1, -0.1, 2.45, zf, rise=0.75, out=0.85, struts=False)                                    # 突き上げ戸（庇になる）
         chimney(R, -2.75, zi + 0.75, 3.2, Hw + 1.15, s=0.70)                                                          # 竈の煙突（棟より 1.15 m 上）
+        # --- 簷下の作業区（突き上げ戸の庇の下・壁から 0.45 m 以内）：鉄床の切り株、焼き入れ桶、炭俵 ---
+        PR = B.P[0]
+        stump_anvil(PR, -1.80, zf + 0.23)
+        tub(PR, -2.85, zf + 0.22, 0.19, 0.42, col=0.5)
+        charcoal(PR, -3.20, -0.04, zf + 0.20, h=0.54)
+        charcoal(PR, -3.20, 0.50, zf + 0.20, h=0.54)
+        solid(-1.80, zf + 0.22, 0.44, 0.90)                                       # 切り株（鉄床）の碰撞
+        solid(-2.85, zf + 0.22, 0.40, 0.90)                                       # 焼き入れ桶の碰撞
+        solid(-3.20, zf + 0.20, 0.34, 1.20)                                       # 炭俵（2 段）の碰撞
+        # --- 室内：炭俵（左壁際）・奥壁の道具掛け（槌 3・やっとこ 3）---
+        for cz in (zf - 0.75, zf - 1.20, zf - 1.65):
+            charcoal(PR, -3.30, FL, cz)
+        charcoal(PR, -3.30, FL + 0.52, zf - 0.97)
+        tool_wall(PR, -1.95, -0.42, zi + 0.02, 1.62)
         # --- 住まい（右）---
         put(W, FR('door', 1.80, B.hk), off=(0.0, 0.0, zf))
         put(W, FR('koshi', w / 2 - 1.80, B.hk), off=(1.80, 0.0, zf))
+        woodpile(PR, 2.00, 3.15, zf, rows=5, r=0.075, ln=0.30)                                                          # 住まいの薪（鍛冶の炭とは別＝暮らしの側）
+        jar(PR, 3.38, zf + 0.17, 0.17, 0.44)                                                                           # 水甕
+        for xs_ in (2.20, 2.60, 3.00):
+            solid(xs_, zf + 0.15, 0.30, 0.95)                                                                         # 薪の碰撞
+        solid(3.38, zf + 0.17, 0.34, 0.90)                                                                            # 水甕の碰撞
         W.box((w / 2 - 0.10, FL, -zf), (w / 2, YH, zf), 'V2_Plaster', PL, grain=Z)
         W.box((0.0, FL, -zf), (w / 2, YH, -zf + 0.10), 'V2_Plaster', PL, grain=X)
     B.finish()
@@ -1431,6 +1698,21 @@ BUILDERS = [build_mkt012, build_mkt013, build_mkt011, build_mkt010, build_mkt009
             build_rsw047, build_rsw048, build_rsw061, build_rsw062,
             build_mkt025, build_mkt027, build_mkt026, build_mkt024, build_mkt006, build_mkt020,
             build_rsw074, build_mkt029, build_rsw014]      # 最後の 3 つ＝Phase 2 の新建築タイプ見本
+
+
+def write_json_retry(p, d, tries=8):
+    """K.write_json と同じ書式。Windows で他のプロセス（ウイルス対策・同期・別 session の走査）が一瞬握っていると open(…, 'w') が Errno 22 で落ちることがあるため、
+    待って再試行する（書式・内容は K.write_json と同一。失敗が続けば最後の例外をそのまま上げる）。"""
+    import time
+    for i in range(tries):
+        try:
+            K.write_json(p, d)
+            return
+        except OSError as e:
+            if i == tries - 1:
+                raise
+            print('[W9R2] write_json 再試行 %d/%d：%r' % (i + 1, tries, e))
+            time.sleep(2.0)
 
 
 def main():
@@ -1450,7 +1732,7 @@ def main():
     os.makedirs(OUT + '/src', exist_ok=True)
     K.export_glb(bpy, OUT + '/src/w9r2_arch.glb', objs)
     total = sum(v['tris'] for v in manifest.values())
-    K.write_json(OUT + '/src/modules_blender.json', {
+    write_json_retry(OUT + '/src/modules_blender.json', {
         '_note': 'build_w9r2_arch.py 產生；Godot prefab（tools/p13/w9/w9r2_prefab.gd）讀此表逐一轉成 mesh/<名>.res。',
         'materials': MATS, 'modules': manifest, 'total_tris': total, 'eaves': EAVES, 'roofs': ROOFS, 'posts': POSTS})
     print('[W9R2] %d メッシュ、合計 %d 三角面 → %s' % (len(manifest), total, OUT + '/src/w9r2_arch.glb'))
