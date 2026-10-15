@@ -1759,26 +1759,16 @@ def kura_win_front(dst, xc, y0, y1, z, ww=0.62):
     dst.box((x1 + t, y0 - 0.03, z + t - 0.01), (x1 + t + 0.05, y1 + 0.03, z + t + 0.34), 'V2_Plaster', PL * 0.9, grain=Z)    # 開いた観音扉（壁に直角）
 
 
-def kura_win_side(dst, x, sg, zc, y0, y1, ww=0.60):
-    """蔵の側壁の小窓（x＝壁面・sg＝壁の外向き ±1）：暗い奥＋厚い漆喰の抱き。扉は開かない（隣家との隙間が 0.2 m）。出は 0.07 m。"""
-    z0, z1 = zc - ww / 2, zc + ww / 2
-    t = 0.07
-    xa, xb = (x, x + sg * 0.004) if sg > 0 else (x + sg * 0.004, x)
-    dst.box((min(xa, x - sg * 0.01), y0, z0), (max(xb, x - sg * 0.01), y1, z1), 'V2_Wood', 0.12, grain=Y)
-    for (za, zb, ya, yb_) in ((z0 - t, z0, y0 - t, y1 + t), (z1, z1 + t, y0 - t, y1 + t), (z0, z1, y1, y1 + t), (z0, z1, y0 - t, y0)):
-        dst.box((min(x, x + sg * t), ya, za), (max(x, x + sg * t), yb_, zb), 'V2_Plaster', PL * 0.96, grain=Y)
-
 
 def kura_front(W, x0, x1, z, yk, door_w=1.1):
-    """蔵の正面（z＝前面）：白漆喰＋海鼠壁の腰＋土戸（鉄の帯金）＋二階の窓（観音扉）＋上の小窓。"""
+    """蔵の正面（z＝前面）：白漆喰＋海鼠壁の腰＋土戸（鉄の帯金）。R2b：軒 3.35 m の低い附属倉に合わせ、戸の上の窓を無くした
+    （戸 2.2 m・庇 2.65 m・軒下の帯）。開口は『戸』と『妻の小窓』の二つだけ＝窓を縦に積まない（塔に読めた R1／R2 の原因）。"""
     xc = (x0 + x1) / 2
-    namako(W, x0 + 0.05, x1 - 0.05, FL, 1.55, z + 0.004)
-    W.box((x0 - 0.02, 1.55, z - 0.02), (x1 + 0.02, 1.67, z + 0.07), 'V2_Plaster', PL * 0.92, grain=X)
-    tsuchido(W, xc - door_w / 2, xc + door_w / 2, z, 2.30)
-    W.box((x0 - 0.02, 2.30, z - 0.02), (x1 + 0.02, 2.40, z + 0.06), 'V2_Plaster', PL * 0.92, grain=X)
-    kura_win_front(W, xc, 3.55, 4.45, z, 0.66)
-    W.box((x0 - 0.02, 4.75, z - 0.02), (x1 + 0.02, 4.85, z + 0.06), 'V2_Plaster', PL * 0.92, grain=X)
-    kura_win_front(W, xc, 5.35, 5.80, z, 0.46)
+    namako(W, x0 + 0.05, x1 - 0.05, FL, 1.20, z + 0.004)
+    W.box((x0 - 0.02, 1.20, z - 0.02), (x1 + 0.02, 1.30, z + 0.07), 'V2_Plaster', PL * 0.92, grain=X)
+    tsuchido(W, xc - door_w / 2, xc + door_w / 2, z, 2.20)
+    W.box((x0 - 0.02, 2.20, z - 0.02), (x1 + 0.02, 2.30, z + 0.06), 'V2_Plaster', PL * 0.92, grain=X)
+    W.box((x0 - 0.02, yk - 0.16, z - 0.02), (x1 + 0.02, yk - 0.06, z + 0.06), 'V2_Plaster', PL * 0.92, grain=X)
 
 
 def pottery(P, x0, x1, z, y0, tiers=3, dy=0.40, seed=0):
@@ -1912,45 +1902,44 @@ def build_mkt031():
 
 
 def build_mxc005():
-    """B_P_MXC_005 質屋（Phase 3 A）：店（左 4.0 m・低めの二階＝棟 6.7 m）＋脇の蔵（右 3.0 m・妻を通りへ向けた白い二階建て＝棟 7.1 m）。
-    蔵は店より 0.2 m 前へ出て、海鼠壁の腰＋鉄の土戸＋二階の観音窓。二つの屋根（横棟と縦棟）が並ぶ＝『店＋脇蔵』の双子の輪郭。入口（店）＝x −1.75..0。"""
+    """B_P_MXC_005 質屋（Phase 3 A・R2b）：店（左 3.5 m・低めの二階＝棟 7.0 m）＋脇の蔵（右 3.5 m・店より 2.4 m 低い白い附属倉＝軒 3.35 m・棟 約 4.6 m）。
+    R2b（使用者 2026-10-15 の再確認）：R2 の蔵（軒 3.9・棟 5.2）も、通りから見る妻面で『戸・窓・妻の小窓』が縦に三段で、なお細長い塔に読めた。
+    → 『較低矮的附屬倉房』へ：軒を 3.35 m に下げ（棟 4.6 m・棟高÷幅 1.3）、戸の上の窓を無くし、開口を戸と妻の小窓の二つにした（細部は足さない）。以下は R2 の説明：
+    R2（使用者 2026-10-15）：R1 の蔵（幅 3.0 m・軒 6.2 m・棟 7.1 m・長さ 6.8 m）は細長い塔に読めた。→ 低く（棟を店より 1.8 m 下げる）・広く（3.5 m＝店と同じ幅）・
+    長く（奥行をほぼ全長 10.3 m）し、街の面から 0.35 m 引いて『店に付く倉』にする。二つの屋根（横棟の店・縦棟の蔵）が並ぶ輪郭は残す。入口（店）＝x −1.75..0。"""
     B = Bld('B_P_MXC_005', 7.0068, 10.92, 4.5, fin=0, tone=0)
     w, zf = B.w, B.zf
-    xs0, xk, xk1 = -w / 2, 0.50, w / 2
-    YE, YK = 4.5, 6.2
-    zk1, zk0 = zf + 0.20, zf - 6.6
+    xs0, xk, xk1 = -w / 2, 0.0, w / 2
+    YE, YK = 4.5, 3.35
+    zk1, zk0 = zf - 0.35, -zf + 0.25
     ws = xk - xs0
-    bays1 = [('koshir', 1.7525), ('shop_o', 1.7525), ('plain', ws - 3.505)]
-    bays2 = [('mushib', 1.7525), ('mushi', 1.7525), ('plain', ws - 3.505)]
+    bays1 = [('koshir', 1.7525), ('shop_o', 1.7525)]
+    bays2 = [('mushib', 1.7525), ('mushi', 1.7525)]
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
         tm = tmp()
         gable_roof(tm, lod, ws, zf, YE, 0.40, 0.55, 0.05, tsuma=False)
         put(R, tm, off=((xs0 + xk) / 2, 0.0, 0.0))
         tk = tmp()
-        Hk = gable_roof(tk, lod, zk1 - zk0, (xk1 - xk) / 2, YK, 0.60, 0.15, 0.12, tsuma=True, oni=True, gyo=True)
+        Hk = gable_roof(tk, lod, zk1 - zk0, (xk1 - xk) / 2, YK, 0.55, 0.15, 0.12, tsuma=True, oni=True, gyo=True)
         put(R, tk, off=((xk + xk1) / 2, 0.0, (zk1 + zk0) / 2), rot=-math.pi * 0.5)
         eave_roof(R, lod, xs0 + 0.02, xk - 0.02, 2.85, zf, 0.85, p=0.32, style='tile')
-        eave_roof(R, lod, xk + 0.02, xk1 - 0.02, 3.05, zk1, 0.55, p=0.30, style='tile')                    # 蔵の腰屋根：二階建てを『一階＋二階』に割り、細長い塔に見えないようにする
-        W.box((xk, FL, zk0), (xk1, YK, zk1), 'V2_Plaster', PL, grain=Y)                                  # 蔵（中身は箱＝正面だけ作り込む）
+        eave_roof(R, lod, xk + 0.02, xk1 - 0.02, 2.65, zk1, 0.50, p=0.30, style='tile')                    # 蔵の戸の庇：一階（戸）と上の窓を割る横の影
+        W.box((xk, FL, zk0), (xk1, YK, zk1), 'V2_Plaster', PL, grain=Y)                                     # 蔵（中身は箱＝正面だけ作り込む）
         W.box((xk - 0.02, 0.0, zk0 - 0.02), (xk1 + 0.02, 0.42, zk1 + 0.05), 'V2_KitStoneTri', 0.8)         # 蔵の石の土台（どっしり据える）
         if lod == 1:
             W.box((xs0, FL, -zf), (xk, YE, zf), 'V2_Plaster', PL, grain=Y)
             continue
         assert abs(row1p(B, W, xs0, bays1) - xk) < 0.02
         assert abs(row2p(B, W, xs0, bays2, 2.85, YE) - xk) < 0.02
-        W.box((xs0, FL, -zf), (xs0 + 0.10, YE, zf), 'V2_Plaster', PL, grain=Z)                           # 店の左壁・背壁・右壁（蔵の後ろ側）
+        W.box((xs0, FL, -zf), (xs0 + 0.10, YE, zf), 'V2_Plaster', PL, grain=Z)                           # 店の左壁・背壁・右壁（右壁は蔵が引いた前の 0.35 m の袖壁も兼ねる）
         W.box((xs0, FL, -zf), (xk, YE, -zf + 0.10), 'V2_Plaster', PL, grain=X)
-        W.box((xk - 0.10, FL, -zf), (xk, YE, zk0), 'V2_Plaster', PL, grain=Z)
+        W.box((xk - 0.10, FL, -zf), (xk, YE, zf), 'V2_Plaster', PL, grain=Z)
         kura_front(W, xk, xk1, zk1, YK)
-        # 蔵の右の側壁（隣家 MXC_006 の屋根の上に見える面）：腰の板金帯＋二階の小窓で、のっぺりした白い大壁を割る（左の壁は店の屋根に隠れる）
-        zc = (zk0 + zk1) / 2
-        for yb in (3.05, 4.75):
-            W.box((xk1, yb, zk0), (xk1 + 0.03, yb + 0.10, zk1), 'V2_Wood', DARK, grain=Z)
-        kura_win_side(W, xk1, 1.0, zc, 5.25, 5.85)
-        # 蔵の妻（前後）：木組みを塗り込めた平らな白漆喰
+        # 蔵の妻（前後）：木組みを塗り込めた平らな白漆喰。前の妻には小窓
         for zz, sgn in ((zk1 + 0.035, 1.0), (zk0 - 0.035, -1.0)):
             polyo(W, [(xk + 0.06, YK - 0.02, zz), (xk1 - 0.06, YK - 0.02, zz), ((xk + xk1) / 2, Hk - 0.10, zz)], 'V2_Plaster', PL, out=(0.0, 0.0, sgn), grain=Y)
+        kura_win_front(W, (xk + xk1) / 2, YK + 0.17, YK + 0.50, zk1 + 0.035, 0.36)
     B.finish()
     return B
 
@@ -2121,7 +2110,7 @@ def build_rsw071():
         tm = tmp()
         H = board_roof(tm, lod, w, zf, YE, 0.30, 0.45, 0.12)
         put(R, tm)
-        eave_roof(R, lod, xl0, xl1, 3.00, zf, 1.15, p=0.20, style='board', tone=0.72, posts=(xl0 + 0.18, (xl0 + xl1) / 2, xl1 - 0.18))
+        eave_roof(R, lod, xl0, xl1, 3.00, zf, 1.15, p=0.20, style='board', tone=0.72)   # R2（使用者 2026-10-15）：庇柱を無くし、壁付けの腕木だけで受ける（深さ 1.15 m < 1.55 m の庇は柱が要らない。柱の碰撞が SpringArm を 1.21 m 縮めていた）。斜材も付けない：相機が元の場景と同じ位置＝庇の下に入るので、斜材が画面の左右を塞いだ（近景遮蔽 31.5 %）
         for sx in (-1.0, 1.0):
             polyo(W, [(sx * w / 2, YE, -zf), (sx * w / 2, YE, zf), (sx * w / 2, H - 0.03, 0.0)], 'V2_Wood', BOARD * 0.68, out=(sx, 0.0, 0.0), grain=Y)
         if lod == 1:
@@ -2161,7 +2150,7 @@ def build_rsw071():
         woodpile(PR, xl0 + 0.10, xl1 - 0.60, zf, rows=7, r=0.075, ln=0.34)
         woodpile(PR, xl1 - 0.50, xl1 - 0.05, zf, rows=5, r=0.075, ln=0.34)
         for xs_ in (xl0 + 0.5, xl0 + 1.0, xl0 + 1.5, xl0 + 2.0):
-            solid(xs_, zf + 0.17, 0.36, 1.05)      # 壁際の薪（庇柱 3 本は eave_roof の Posts）
+            solid(xs_, zf + 0.17, 0.36, 1.05)      # 壁際の薪（R2：庇柱は無い。碰撞は薪の低い箱だけ＝top 1.05 m で SpringArm の線の下）
         kasa(PR, xl1 - 0.22, 1.55, zf + 0.02)
         mino(PR, xl1 - 0.62, 1.70, zf)
         W.box((xl1 - 0.95, -0.04, zf + 0.62), (xl1 - 0.45, 0.45, zf + 1.02), 'V2_Wood', 0.55, grain=Y)                 # 割り台（切り株）

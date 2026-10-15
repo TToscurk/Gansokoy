@@ -20,6 +20,29 @@ const HEDGE_MAX_H := 1.8
 const HEDGE_GAP_MIN := 2.2
 const TREE_MIN_H := 8.0
 
+## R1（0fdea17・bce7cf4）の農路の南の路肩：同じ配合の群れ 4 つ（反向案例の固定データ＝p3_environment_plan の C3_road・z ≥ 72・x 333–359）
+const R1_VERGE := [
+	{"id": "shrub_a", "p": Vector2(334.7, 75.3), "sx": 1.40, "sy": 1.43},
+	{"id": "sasa_a", "p": Vector2(335.2, 73.0), "sx": 1.21, "sy": 1.21},
+	{"id": "sasa_a", "p": Vector2(335.2, 74.3), "sx": 1.50, "sy": 1.46},
+	{"id": "shrub_a", "p": Vector2(336.7, 74.3), "sx": 1.30, "sy": 1.36},
+	{"id": "shrub_a", "p": Vector2(340.2, 75.6), "sx": 1.30, "sy": 1.31},
+	{"id": "shrub_a", "p": Vector2(340.9, 74.2), "sx": 1.04, "sy": 1.02},
+	{"id": "tsutsuji_a", "p": Vector2(342.5, 74.9), "sx": 1.00, "sy": 0.96},
+	{"id": "shrub_a", "p": Vector2(342.6, 73.8), "sx": 1.22, "sy": 1.29},
+	{"id": "young_broad_b", "p": Vector2(348.5, 76.0), "sx": 1.10, "sy": 1.16},
+	{"id": "tsutsuji_a", "p": Vector2(348.7, 73.9), "sx": 1.45, "sy": 1.51},
+	{"id": "tsutsuji_a", "p": Vector2(349.6, 75.3), "sx": 1.38, "sy": 1.37},
+	{"id": "tsutsuji_a", "p": Vector2(350.1, 73.3), "sx": 1.01, "sy": 1.06},
+	{"id": "fern_a", "p": Vector2(350.8, 75.9), "sx": 1.42, "sy": 1.35},
+	{"id": "sasa_a", "p": Vector2(351.5, 73.3), "sx": 1.43, "sy": 1.38},
+	{"id": "shrub_a", "p": Vector2(354.4, 73.7), "sx": 1.20, "sy": 1.17},
+	{"id": "sasa_a", "p": Vector2(355.1, 73.1), "sx": 1.04, "sy": 1.09},
+	{"id": "shrub_a", "p": Vector2(355.2, 74.6), "sx": 1.10, "sy": 1.16},
+	{"id": "shrub_a", "p": Vector2(356.0, 74.9), "sx": 1.13, "sy": 1.10},
+	{"id": "tsutsuji_a", "p": Vector2(357.1, 74.0), "sx": 1.32, "sy": 1.39},
+]
+
 var passed := 0
 var failed := 0
 
@@ -221,6 +244,15 @@ func _run() -> void:
 	_ok(hatake >= 3 and fences >= 3, "菜園：畝 %d ≥ 3・竹垣 %d ≥ 3" % [hatake, fences])
 	_ok(sheds.size() == 1 and (sheds[0]["p"] as Vector2).distance_to(A2) <= 12.0, "柴棚 B_P_FARM_SHED が 1 棟・納屋 A2 の近く（%d）" % sheds.size())
 	_ok(verge_trees >= 3 and verge_plants >= 20, "農路の路肩：木 %d ≥ 3・低木と笹の群れ %d ≥ 20" % [verge_trees, verge_plants])
+	# ── R2（使用者 2026-10-15 ART_REVIEW ACCEPTED の局所調整）：cT4 の前景樹・cT7 の南の路肩
+	var c3_recs: Array = recs.filter(func(it: Dictionary) -> bool: return String(it["cluster"]).begins_with("C3"))
+	var cam_trees: Array = P3.cam_in_crown(c3_recs, P3.CT4_CAM)
+	_ok(cam_trees.is_empty(), "cT4：相機 (%.1f, %.1f, %.1f) が C3 の樹冠の中・すぐ脇にない（%s）" % [P3.CT4_CAM.x, P3.CT4_CAM.y, P3.CT4_CAM.z, str(cam_trees)])
+	var view: Dictionary = P3.ct4_view(c3_recs)
+	_ok(float(view["farm"]) <= P3.CT4_BLOCK_MAX and float(view["canal"]) <= P3.CT4_BLOCK_MAX, "cT4：相機から農舎 A1（北の壁面 %d 点）への視線の遮られ率 %.0f %%・運河（%d 点）%.0f %% ≤ %.0f %%（%s）" % [int(view["farm_n"]), 100.0 * float(view["farm"]), int(view["canal_n"]), 100.0 * float(view["canal"]), 100.0 * P3.CT4_BLOCK_MAX, str(view["who"])])
+	var vc: Dictionary = P3.verge_check(c3_recs.filter(func(it: Dictionary) -> bool: return String(it["cluster"]) == "C3_road"))
+	print("[W9P3G]   路肩（南）の群れ：", JSON.stringify((vc["G"] as Array).map(func(g: Dictionary) -> Dictionary: return {"x": "%.1f–%.1f" % [g["x0"], g["x1"]], "w": snappedf(float(g["w"]), 0.1), "tall": snappedf(float(g["tall"]), 0.1), "ids": g["ids"]})), " 隙間 ", str((vc["gaps"] as Array).map(func(x: float) -> float: return snappedf(x, 0.1))))
+	_ok(bool(vc["ok"]), "cT7 の左（南の路肩）：群れ %d・最大の帯 %.1f m ≤ %.1f・切れ目（≥ %.1f m）%d ≥ 3・隣と同配合 %d・種類 %d ≥ 5・高い群 %d・低い群 %d（%s）" % [int(vc["groups"]), float(vc["widest"]), P3.VERGE_WIDE_MAX, P3.VERGE_GAP_MIN, int(vc["open_gaps"]), int(vc["same_adj"]), int(vc["species"]), int(vc["tall"]), int(vc["low"]), str(vc["why"])])
 	# ── 予算
 	var tri := 0
 	var mesh := 0
@@ -392,6 +424,36 @@ func _run() -> void:
 	var dc := (dp[0] + dp[1] + dp[2] + dp[3]) * 0.25
 	var fake := PackedVector2Array([dc + Vector2(-0.3, -0.3), dc + Vector2(0.3, -0.3), dc + Vector2(0.3, 0.3), dc + Vector2(-0.3, 0.3)])
 	_ok(_coll_bad(C, fake) != "", "反向：戸口の空け帯にかかる碰撞箱は落ちる（%s）" % _coll_bad(C, fake))
+	# N9 R1 の榎（相機の 3.6 m 前）を戻すと cT4 の相機が樹冠の中になる
+	var neg_enoki: Array = c3_recs.duplicate()
+	neg_enoki.append({"id": "enoki_a", "p": Vector2(317.4, 61.3), "y": 0.15, "sx": 0.80, "sy": 0.75, "cluster": "C3_belt"})
+	_ok(not P3.cam_in_crown(neg_enoki, P3.CT4_CAM).is_empty(), "反向：R1 の榎（相機の 3.6 m 前）を戻すと『相機が樹冠の中』として落ちる（%s）" % str(P3.cam_in_crown(neg_enoki, P3.CT4_CAM)))
+	# N10 農舎の真正面（相機の視線の上）に大木を置くと、農舎への視線が遮られる
+	var neg_block: Array = c3_recs.duplicate()
+	neg_block.append({"id": "keyaki_a", "p": Vector2(317.2, 66.0), "y": 0.1, "sx": 0.60, "sy": 0.60, "cluster": "C3_belt"})
+	var vb: Dictionary = P3.ct4_view(neg_block)
+	_ok(float(vb["farm"]) > P3.CT4_BLOCK_MAX, "反向：相機と農舎の間に大木を置くと農舎への視線の遮られ率が %.0f %% に跳ね上がり落ちる（> %.0f %%）" % [100.0 * float(vb["farm"]), 100.0 * P3.CT4_BLOCK_MAX])
+	# N11 運河への視線の上に幹を置くと、運河への視線が遮られる
+	var neg_canal: Array = c3_recs.duplicate()
+	neg_canal.append({"id": "shii_a", "p": Vector2(311.36, 66.41), "y": 0.0, "sx": 0.80, "sy": 0.80, "cluster": "C3_belt"})
+	var vcn: Dictionary = P3.ct4_view(neg_canal)
+	_ok(float(vcn["canal"]) > P3.CT4_BLOCK_MAX, "反向：相機と運河の間に幹を置くと運河への視線の遮られ率が %.0f %% になり落ちる（> %.0f %%）" % [100.0 * float(vcn["canal"]), 100.0 * P3.CT4_BLOCK_MAX])
+	# N11b R1 の榎を戻すと、農舎の遮られ率も落ちる
+	var ve: Dictionary = P3.ct4_view(neg_enoki)
+	_ok(float(ve["farm"]) > P3.CT4_BLOCK_MAX, "反向：R1 の榎を戻すと農舎への視線の遮られ率が %.0f %% になり落ちる" % (100.0 * float(ve["farm"])))
+	# N12 R1 の路肩（同じ配合の群れ・11 m 続く帯）は落ちる
+	var vr1: Dictionary = P3.verge_check(R1_VERGE)
+	_ok(not bool(vr1["ok"]), "反向：R1 の南の路肩（群れ %d・最大の帯 %.1f m）は落ちる（%s）" % [int(vr1["groups"]), float(vr1["widest"]), str(vr1["why"])])
+	# N13 同じ低木を 1.8 m おきに並べた帯は落ちる
+	var comb: Array = []
+	for k in 13:
+		comb.append({"id": "shrub_a", "p": Vector2(334.0 + 1.8 * k, 74.6), "sx": 1.2, "sy": 1.2})
+	_ok(not bool(P3.verge_check(comb)["ok"]), "反向：同じ低木を 1.8 m おきに並べた帯は落ちる（%s）" % str(P3.verge_check(comb)["why"]))
+	# N14 群れの間を詰める（B を A と C の間いっぱいに広げる）と切れ目が足りず落ちる
+	var packed: Array = (c3_recs.filter(func(it: Dictionary) -> bool: return String(it["cluster"]) == "C3_road")).duplicate()
+	for dx in [-2.0, 2.2, 4.0, 5.6]:
+		packed.append({"id": "tsutsuji_a", "p": Vector2(341.5 + dx, 74.4), "sx": 1.2, "sy": 1.2})
+	_ok(not bool(P3.verge_check(packed)["ok"]), "反向：群れの間を詰めると『切れ目』が足りず落ちる（%s）" % str(P3.verge_check(packed)["why"]))
 	print("[W9P3G] PASS %d  FAIL %d" % [passed, failed])
 	print("[W9P3G] 結果：%d 項失敗" % failed)
 	quit(1 if failed > 0 else 0)

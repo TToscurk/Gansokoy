@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[review] dev review start：kirisame 霧雨店（主街の南から店先・南側の出し）（237.10, 0.52, 71.70）時刻 10.00（凍結）
+[W4S] boot 10175 ms・玩家 (237.1, 0.469756, 71.7)・hour 10.0・renderer forward_plus
+[ARMSW] overlay collision objects: 9  arm.collision_mask=1  spring_length(configured)=5.54
+[ARMSW] samples=10960  悪化(≥0.30 m)=62 (0.57 %)  平均悪化=0.0235 m
+[ARMSW]   原因 EnrichW9P3/Collision               n=62  最大 5.080 m
+[ARMSW]   worst {"base":7.5,"loss":5.08,"now":2.42,"o":-1.2,"p":[224.42,-91.6],"s":-11.0,"who":"EnrichW9P3/Collision","yaw_deg":202.5}
+[ARMSW]   worst {"base":7.5,"loss":5.08,"now":2.42,"o":-1.2,"p":[224.66,-91.54],"s":-10.75,"who":"EnrichW9P3/Collision","yaw_deg":202.5}
+[ARMSW]   worst {"base":7.5,"loss":5.08,"now":2.42,"o":-1.2,"p":[224.9,-91.48],"s":-10.5,"who":"EnrichW9P3/Collision","yaw_deg":202.5}
+[ARMSW]   worst {"base":7.5,"loss":5.08,"now":2.42,"o":-1.2,"p":[225.15,-91.42],"s":-10.25,"who":"EnrichW9P3/Collision","yaw_deg":202.5}
+[ARMSW]   worst {"base":7.5,"loss":5.08,"now":2.42,"o":-1.2,"p":[225.39,-91.36],"s":-10.0,"who":"EnrichW9P3/Collision","yaw_deg":202.5}
+[ARMSW] PASS G1 071 の overlay（ArchW9R2P13/B_P_RSW_071）がある
+[ARMSW] PASS G1 071 の碰撞箱は薪・切り株の低い箱 5 個だけ（1.35 m を超える柱 0）
+[ARMSW] PASS G2 巷全体 685 地点×16 方位の sweep：071 起因の SpringArm 悪化（≥ 0.30 m）が 0 件（R1：188 件）
+[ARMSW] PASS G3 悪化の割合 0.57 % ≤ 1.00 %（R1：2.28 %。残りは宅間の板塀・庭木の幹＝設計上の障害物）
+[ARMSW] PASS G4 bT3：腕長 2.752 m（元の場景 2.752 m・差 0.000 m ≤ 0.05）
+[ARMSW] PASS G4 bT4：腕長 2.808 m（元の場景 2.808 m・差 0.000 m ≤ 0.05）
+[ARMSW] PASS N1 反向：R1 の庇柱を戻すと bT3 の腕が 1.21 m 縮む（≥ 1.00 m＝この gate は R1 の問題を検出できる）
+[ARMSW] PASS N2 反向：柱を戻した sweep（s −4..6）の『目立つ悪化』が 186 件に増える（≥ 20・柱が無い今：071 起因 0）
+[ARMSW] PASS N3 戻した後：柱を外すと bT3 の腕長が元に戻る（差 0.000 m）
+[ARMSW] PASS 9  FAIL 0
+[ARMSW] 結果：0 項失敗

@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W9P3B] MeadowP9 規劃株：キャッシュ C:/Users/B365/AppData/Local/hermes/cache/scratch/w9_meadow.json（114574 株）
+[W9P3B] plan 6577 ms：構件 79・cluster 12・置けなかった 7（R1 占有 107 件）
+[W9P3B] 区域別：{"B3":17,"C3":62}
+[W9P3B] 種別： akamatsu_a×1 enoki_a×2 farm_shed×1 fern_a×6 hx_hatake×3 keyaki_a×1 konara_a×2 konara_b×5 kuromatsu_a×2 sasa_a×13 shii_a×2 shrub_a×6 take_mature×5 take_thin×4 take_young×3 tsutsuji_a×10 w9_itabei_a×1 w9_itabei_b×1 w9_kido×1 w9_takegaki×3 young_broad_a×4 young_broad_b×3
+[W9P3B]   B3_back_south       5  北側の列（073–076）の背後の樹冠：巷から見上げた屋根の上に緑と高さの変化（紅葉・楢・欅ふう）
+[W9P3B]   B3_back_north       3  南側の列（071・072）の背後の樹冠：巷を西から見ると屋根の上に枝が重なる
+[W9P3B]   B3_gap_075_076      3  075｜076 の宅間：板塀＋躑躅の植え込み（隣家との私領域の境。樹冠は両側の屋根に掛かるので置かない）
+[W9P3B]   B3_gap_073_074      3  073｜074 の宅間：木戸＋板塀＋庭木（裏の畑・井戸への入口）
+[W9P3B]   B3_gap_071_072      3  071｜072 の宅間：板塀＋庭木
+[W9P3B]   C3_belt             6  屋敷林：主屋の背後（西・北西の運河の土手沿い）に欅・赤松・椎・楢・榎・黒松を不揃いに（茅葺き屋根の背景になる緑の高さ。北から来る道と庭先の見通しの帯は空ける）
+[W9P3B]   C3_bamboo          12  屋敷竹：主屋の南西の竹叢（太い竹＋細い竹＋若竹の混生。林と違い、家の脇の小さな叢）
+[W9P3B]   C3_orchard          2  庭木・果樹ふう：菜園の南西に小ぶりの庭木 2（樹形も大きさも違う。庭の南端 x≥322 と主屋への見通しの帯は空ける）
+[W9P3B]   C3_garden           6  家庭菜園：主屋の南西の畝 3＋竹垣（庭の南端への通り道は東に空ける）
+[W9P3B]   C3_shed             1  柴棚・農具小屋：納屋 A2 の北に独立した片流れの板葺き小屋（薪・柴束・農具・割り台）
+[W9P3B]   C3_hedge            6  庭先の生垣：庭の東縁（田との境）に躑躅・低木・笹の混植（途中を空けて、茅葺きの正面は隠さない）
+[W9P3B]   C3_road            29  農路の路肩：田の角の木 3 と低木・笹の群れ（北・南の路肩に不均一に。路面と NPC の動線は空ける）
+[W9P3B] 落ち：w9_takegaki near (313.2,89.6) 置けない（overlap:hx_hatake）[C3_garden]
+[W9P3B] 落ち：tsutsuji_a near (327.4,87.7) 置けない（p8）[C3_hedge]
+[W9P3B] 落ち：sasa_a near (327.6,89.1) 置けない（p8）[C3_hedge]
+[W9P3B] 落ち：sasa_a near (342.4,65.8) 置けない（overlap:fern_a）[C3_road]
+[W9P3B] 落ち：shrub_a near (342.8,65.4) 置けない（overlap:shrub_a）[C3_road]
+[W9P3B] 落ち：sasa_a near (350.8,64.9) 置けない（overlap:sasa_a）[C3_road]
+[W9P3B] 落ち：fern_a near (351.3,66.3) 置けない（overlap:sasa_a）[C3_road]
+[W9P3B] dump → C:/Users/B365/AppData/Local/hermes/cache/scratch/final/p3_plan_final.json
+[W9P3B] 存檔回讀：構件 79（計画 79）・MeshInstance 261・碰撞 35・MultiMesh 0 → res://maps/village_v2/gen/enrich_w9p3.scn

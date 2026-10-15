@@ -1,0 +1,70 @@
+{
+ "frame": [
+  1600,
+  900
+ ],
+ "baseline_tag": "Cid2off",
+ "baseline_px": {
+  "farmhouse_A1": 33833,
+  "canal_water": 171196,
+  "riverbank_stone": 110149
+ },
+ "rows": [
+  {
+   "tag": "Cid",
+   "label": "R1 (0fdea17/bce7cf4)",
+   "visible_ratio_pct": {
+    "farmhouse_A1": 62.2,
+    "canal_water": 99.7,
+    "riverbank_stone": 98.7
+   },
+   "c3_trees_screen_pct": {
+    "enoki_a": 18.75,
+    "kuromatsu_a": 3.95,
+    "keyaki_a": 1.26,
+    "shii_a": 0.54,
+    "young_broad_b": 0.17,
+    "akamatsu_a": 0.03,
+    "konara_a": 0.01
+   }
+  },
+  {
+   "tag": "Cid2on",
+   "label": "R2 初版 (榎のみ移動)",
+   "visible_ratio_pct": {
+    "farmhouse_A1": 81.5,
+    "canal_water": 99.7,
+    "riverbank_stone": 98.7
+   },
+   "c3_trees_screen_pct": {
+    "keyaki_a": 5.69,
+    "kuromatsu_a": 4.69,
+    "young_broad_a": 1.15,
+    "shii_a": 0.89,
+    "young_broad_b": 0.17,
+    "akamatsu_a": 0.06,
+    "enoki_a": 0.04,
+    "konara_a": 0.0
+   }
+  },
+  {
+   "tag": "Cid4on",
+   "label": "R2b 最終 (榎＋黒松を移動)",
+   "visible_ratio_pct": {
+    "farmhouse_A1": 99.9,
+    "canal_water": 99.9,
+    "riverbank_stone": 99.5
+   },
+   "c3_trees_screen_pct": {
+    "keyaki_a": 6.7,
+    "shii_a": 1.95,
+    "young_broad_a": 1.15,
+    "akamatsu_a": 0.55,
+    "kuromatsu_a": 0.38,
+    "young_broad_b": 0.17,
+    "enoki_a": 0.07,
+    "konara_a": 0.01
+   }
+  }
+ ]
+}

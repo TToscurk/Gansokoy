@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[W9VIEW] PASS arch_w9r2_p13.scn と B_P_RSW_071 の L0 メッシュを読めた
+[W9VIEW] PASS overlay に B_P_RSW_071 がある
+[W9VIEW]   B_P_RSW_071 の transform origin=(231.8419, 1.418029, -80.16972) basis.z=(0.242245, 0.0, -0.970215)（village 直下の overlay なので建物 body と同じ）
+[W9VIEW] PASS TriangleMesh を作れた（5842 面）
+[W9VIEW]   bT3：相機から 1.8 m 以内の 071 overlay が画面の 20.5 %（全距離では 20.6 %・最近 0.91 m）
+[W9VIEW]   bT4：相機から 1.8 m 以内の 071 overlay が画面の 0.0 %（全距離では 0.0 %・最近 1000000000.00 m）
+[W9VIEW] PASS bT3：近景（≤ 1.8 m）の 071 overlay の遮蔽率 20.5 % ≤ 22 %（正式 TPS・相機は元の場景と同じ位置）
+[W9VIEW] PASS bT4：近景の 071 overlay の遮蔽率 0.0 % ≤ 2 %
+[W9VIEW] PASS 反向：相機を庇の奥へ 0.5 m 下げると近景遮蔽率が 20.5 % → 100.0 % に上がる（計測が相機位置に反応する）
+[W9VIEW] PASS 反向：相機を庇の外（2 m 前）へ出すと近景遮蔽率が 20.5 % → 0.0 % に下がる
+[W9VIEW] PASS meta：071 の庇は斜材なし（strut=false）・庇柱 0 本
+[W9VIEW] PASS 反向：R2 の初版の斜材 4 本を足すと bT3 の近景遮蔽率が 20.5 % → 31.8 % に上がり上限 22 % を超えて落ちる
+[W9VIEW] PASS 9  FAIL 0
+[W9VIEW] 結果：0 項失敗

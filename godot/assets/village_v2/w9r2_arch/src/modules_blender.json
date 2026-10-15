@@ -177,7 +177,7 @@
    "note": "B_P_MKT_031 LOD1"
   },
   "B_P_MXC_005_L0": {
-   "tris": 15740,
+   "tris": 17782,
    "note": "B_P_MXC_005 LOD0"
   },
   "B_P_MXC_005_L1": {
@@ -217,7 +217,7 @@
    "note": "B_P_RSW_076 LOD1"
   },
   "B_P_RSW_071_L0": {
-   "tris": 5950,
+   "tris": 5842,
    "note": "B_P_RSW_071 LOD0"
   },
   "B_P_RSW_071_L1": {
@@ -233,7 +233,7 @@
    "note": "B_P_FARM_SHED LOD1"
   }
  },
- "total_tris": 385355,
+ "total_tris": 387289,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -482,27 +482,27 @@
   "B_P_MXC_005": [
    {
     "x0": -3.4834,
-    "x1": 0.48,
+    "x1": -0.02,
     "y": 2.85,
     "zf": 5.46,
     "depth": 0.85,
     "p": 0.32,
     "style": "tile",
     "brackets": 5,
-    "bracket_gap": 0.99085,
+    "bracket_gap": 0.86585,
     "strut": false,
     "posts": []
    },
    {
-    "x0": 0.52,
+    "x0": 0.02,
     "x1": 3.4834,
-    "y": 3.05,
-    "zf": 5.66,
-    "depth": 0.55,
+    "y": 2.65,
+    "zf": 5.11,
+    "depth": 0.5,
     "p": 0.3,
     "style": "tile",
-    "brackets": 4,
-    "bracket_gap": 0.9878,
+    "brackets": 5,
+    "bracket_gap": 0.86585,
     "strut": false,
     "posts": []
    }
@@ -538,11 +538,7 @@
     "brackets": 4,
     "bracket_gap": 1.0651666666666666,
     "strut": false,
-    "posts": [
-     -3.3655,
-     -1.94775,
-     -0.53
-    ]
+    "posts": []
    }
   ]
  },
@@ -1088,24 +1084,6 @@
    }
   ],
   "B_P_RSW_071": [
-   {
-    "x": -3.3655,
-    "z": 6.53,
-    "top": 2.478,
-    "w": 0.14
-   },
-   {
-    "x": -1.94775,
-    "z": 6.53,
-    "top": 2.478,
-    "w": 0.14
-   },
-   {
-    "x": -0.53,
-    "z": 6.53,
-    "top": 2.478,
-    "w": 0.14
-   },
    {
     "x": -3.0455,
     "z": 5.63,

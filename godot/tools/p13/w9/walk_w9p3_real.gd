@@ -203,6 +203,24 @@ func _run() -> void:
 		var dc := (dp[0] + dp[1] + dp[2] + dp[3]) * 0.25
 		await _leg("B_door_" + id.trim_prefix("B_P_"), "door", [dc + (b["az"] as Vector2) * 3.0, dc - (b["az"] as Vector2) * 0.6], {"b": b})
 	await _leg("B_gap_fence_075_076", "block", [P3.lane(5.65, -1.0), P3.lane(5.65, -6.5)], {"min_short": 1.0})
+	# R2（使用者 2026-10-15・SpringArm の修正）：071 の柴棚は庇柱を無くした（深さ 1.15 m の庇は腕木＋斜材で受ける）。
+	#   局部 x＝−3.5455..−0.35・z＝5.46..6.61 が庇。局部 +x＝(front.z, −front.x)、+z＝front（W9 の b["az"]）。
+	if not _off:
+		var b71 := W9.bld(C, "B_P_RSW_071")
+		var f71: Vector2 = b71["az"]
+		var x71 := Vector2(f71.y, -f71.x)
+		var o71: Vector2 = b71["o"]
+		var lw := func(lx: float, lz: float) -> Vector2: return o71 + x71 * lx + f71 * lz
+		# 1) 元の庇柱の列（局部 z＝6.53）を横切る線（z＝6.93＝切り株の箱 6.56＋半径 0.3＋余白）を東西に歩ける＝柱が無い（R1 では最初の柱で止まった）
+		await _leg("B_shed_front_row", "reach", [lw.call(-4.6, 6.93), lw.call(0.4, 6.93)])
+		# 2) 元の中柱の線（局部 x＝−1.94775）で壁へ向かう：壁際の薪の積み（modules の posts＝Posts の箱）の前で止まる。期待位置は同じ posts データから導く
+		var mj: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/village_v2/w9r2_arch/src/modules_blender.json"))
+		var best_front := -1.0e9
+		for pb: Dictionary in ((mj as Dictionary)["posts"] as Dictionary).get("B_P_RSW_071", []):
+			if absf(float(pb["x"]) - (-1.94775)) <= (float(pb["w"]) + 0.06) * 0.5 + _r - 0.01 and float(pb["z"]) < 6.3:
+				best_front = maxf(best_front, float(pb["z"]) + (float(pb["w"]) + 0.06) * 0.5)
+		var stop_z: float = best_front + _r
+		await _leg("B_shed_under_roof_to_wood", "block", [lw.call(-1.94775, 9.0), lw.call(-1.94775, 5.0)], {"short": absf(stop_z - 5.0), "tol": 0.14})
 	# ── C：農家 A1／A2
 	await _leg("C_road_west", "reach", [Vector2(357.0, 70.4), Vector2(329.6, 70.4)])
 	await _leg("C_plank_to_door", "reach", [Vector2(329.6, 70.4), Vector2(326.4, 70.9), Vector2(324.9, 76.0), Vector2(322.9, 81.6), Vector2(323.4, 84.3)])

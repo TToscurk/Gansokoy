@@ -1,0 +1,8 @@
+BLENDER=0 (try 1)
+IMPORT=0
+PREFAB=0
+[w9r2-prefab] 56 構件、387289 三角面（Blender 387289）→ res://assets/village_v2/w9r2_arch/mesh/
+[w9r2-prefab] 結果：0 項失敗
+BUILD=0
+[W9R2B] 保存 res://maps/village_v2/gen/arch_w9r2_p13.scn：OK・建築 27・LOD0 三角面 379235・庇柱碰撞 32・失敗 0
+DONE

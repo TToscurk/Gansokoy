@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[W9KURA] PASS MXC_005 の L0 メッシュを読めた（res://assets/village_v2/w9r2_arch/mesh/B_P_MXC_005_L0.res）
+[W9KURA]   実測：蔵の棟 4.61 m・店の棟 6.98 m・蔵の壁の幅 3.45 m・奥行 10.49 m・棟高÷幅 1.34
+[W9KURA] PASS 蔵は付属の低い倉庫の量体（a 店より 1.0 m 低い・b 棟 ≤ 5.2 m・c 幅 ≥ 3.3 m・d 棟高÷幅 ≤ 1.6・e 奥行 ≥ 幅×2.5）[]
+[W9KURA] PASS 反向：R1 の蔵（幅 3.0・棟 7.1・奥行 6.8）は 5 項で落ちる（["蔵の棟 7.10 が店の棟 6.70 より 1.0 m 以上低くない", "蔵の棟 7.10 > 5.2 m", "蔵の壁の幅 3.00 < 3.3 m", "棟高÷幅 2.37 > 1.6（塔の比）", "奥行 6.80 < 幅×2.5＝7.50（横に長くない）"]）
+[W9KURA] PASS 反向：低くても細い蔵（幅 2.2）は落ちる（["蔵の壁の幅 2.20 < 3.3 m", "棟高÷幅 2.23 > 1.6（塔の比）"]）
+[W9KURA] PASS 反向：店とほぼ同じ高さの蔵（棟 6.0）は落ちる（["蔵の棟 6.00 が店の棟 6.70 より 1.0 m 以上低くない", "蔵の棟 6.00 > 5.2 m", "棟高÷幅 1.71 > 1.6（塔の比）"]）
+[W9KURA] PASS 反向：奥行 6.0 m の立方体に近い蔵は落ちる（["奥行 6.00 < 幅×2.5＝8.75（横に長くない）"]）
+[W9KURA] PASS 6  FAIL 0
+[W9KURA] 結果：0 項失敗

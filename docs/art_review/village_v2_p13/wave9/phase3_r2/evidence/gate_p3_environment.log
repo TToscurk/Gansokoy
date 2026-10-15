@@ -1,0 +1,76 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 8 assignments; population 16
+[ACT-CORE] core overlay 10 assignments; core population 23
+[ACT-OUTER] outer overlay 5 assignments; outer population 12
+[W9P3G] PASS 保存された village_v2.tscn に ext_resource 1＋node 1 だけ掛かっている（1＋1）
+[W9P3G] PASS EnrichW9P3 は ArchW9R2P13 の直後（順序）
+[W9P3G] PASS 既存 overlay EnrichW9P13 は残っている
+[W9P3G] PASS 既存 overlay ArchW9R2P13 は残っている
+[W9P3G] PASS 既存 overlay FarmsteadP13 は残っている
+[W9P3G] PASS 既存 overlay MeadowP9 は残っている
+[W9P3G] PASS 既存 overlay EnvironmentP9 は残っている
+[W9P3G] PASS 既存 overlay HumanUseP10 は残っている
+[W9P3G] PASS EnrichW9P3 は root に 1 つだけ（1）
+[W9P3G] PASS 烘焙した件数と meta items が一致（79）
+[W9P3G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
+[W9P3G] PASS 区域 B3 の構件数 17 ≥ 12
+[W9P3G] PASS 区域 C3 の構件数 62 ≥ 55
+[W9P3G] PASS 屋敷林：主屋 A1 から 16 m 以内に高さ ≥ 8 m の樹が 6 本（≥ 5）
+[W9P3G] PASS C3 の樹種：12 種・同種の最多 ≤ 35 %（12）
+[W9P3G] PASS 屋敷竹：竹叢の本数 12 ≥ 8
+[W9P3G] PASS 生垣（東縁）：6 株・途中に ≥ 2.2 m の切れ目（茅葺きの正面を隠さない）
+[W9P3G] PASS 生垣の最大高 1.60 m ≤ 1.8 m
+[W9P3G] PASS 菜園：畝 3 ≥ 3・竹垣 3 ≥ 3
+[W9P3G] PASS 柴棚 B_P_FARM_SHED が 1 棟・納屋 A2 の近く（1）
+[W9P3G] PASS 農路の路肩：木 4 ≥ 3・低木と笹の群れ 25 ≥ 20
+[W9P3G] PASS cT4：相機 (316.4, 3.3, 57.7) が C3 の樹冠の中・すぐ脇にない（[]）
+[W9P3G] PASS cT4：相機から農舎 A1（北の壁面 35 点）への視線の遮られ率 9 %・運河（9 点）0 % ≤ 10 %（{ "akamatsu_a@(311.6,76.0)": 2, "shii_a@(312.6,81.5)": 3, "kuromatsu_a@(310.6,79.4)": 2, "keyaki_a@(312.2,70.0)": 1 }）
+[W9P3G]   路肩（南）の群れ：[{"ids":["fern_a","sasa_a","young_broad_a"],"tall":6.5,"w":3.9,"x":"333.3–337.2"},{"ids":["tsutsuji_a"],"tall":1.1,"w":1.7,"x":"341.9–343.6"},{"ids":["fern_a","sasa_a","young_broad_b"],"tall":5.6,"w":5.4,"x":"347.0–352.4"},{"ids":["shrub_a","tsutsuji_a"],"tall":1.6,"w":2.4,"x":"355.4–357.8"}] 隙間 [4.6, 3.4, 3.0]
+[W9P3G] PASS cT7 の左（南の路肩）：群れ 4・最大の帯 5.4 m ≤ 6.5・切れ目（≥ 2.5 m）3 ≥ 3・隣と同配合 0・種類 6 ≥ 5・高い群 2・低い群 1（[]）
+[W9P3G] INFO LOD0 三角面 132788・MeshInstance 261・材質 11 種・碰撞箱 35・MultiMesh 0・高木 11
+[W9P3G] PASS 予算：LOD0 132788 ≤ 300000・Mesh 261 ≤ 900・碰撞箱 35 ≤ 80
+[W9P3G] PASS MultiMesh なし（headless 烘焙の零行列問題の対象外）
+[W9P3G] PASS 全 79 構件が道・建物・戸口・水・田・封存物・NPC 動線・Hero に触れず、接地している（不適合 0）
+[W9P3G] PASS 樹・竹・低木は路面の縁から 0.6 m 以内に乗らない（0）
+[W9P3G] PASS 地面物（畝・垣・小屋）が W9 R1 の構件と重ならない（0）
+[W9P3G] PASS 構件同士が重ならない（重なり 0）
+[W9P3G] PASS 碰撞箱 35 個が戸口の空け帯と NPC の巡回路に触れない（0）
+[W9P3G] PASS 柴棚の碰撞箱 11 ≥ 8（奥壁 4＋西壁 2＋前の柱 3）
+[W9P3G] PASS 高木の幹の碰撞（円柱 15）が樹の本数（15）と一致
+ERROR: W9 dims 無し: momiji_a
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] dims (res://tools/p13/w9/w9_lib.gd:99)
+       [1] foot (res://tools/p13/w9/w9_lib.gd:111)
+       [2] why (res://tools/p13/w9/w9_lib.gd:212)
+       [3] _check (res://tools/p13/w9/verify_w9p3.gd:93)
+       [4] _run (res://tools/p13/w9/verify_w9p3.gd:381)
+ERROR: W9 dims 無し: momiji_a
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] dims (res://tools/p13/w9/w9_lib.gd:99)
+       [1] foot (res://tools/p13/w9/w9_lib.gd:111)
+       [2] why (res://tools/p13/w9/w9_lib.gd:212)
+       [3] _check (res://tools/p13/w9/verify_w9p3.gd:93)
+       [4] _run (res://tools/p13/w9/verify_w9p3.gd:381)
+[W9P3G] PASS 反向：主街の路面に置いた樹は落ちる（building）
+[W9P3G] PASS 反向：P8 の田の中に置いた畝は落ちる（p8）
+[W9P3G] PASS 反向：建物の中に置いた小屋は落ちる（building）
+[W9P3G] PASS 反向：地面から 0.6 m 浮いた構件は落ちる（float(2.14 vs ground 1.54)）
+[W9P3G] PASS 反向：二重掛載は件数 2 として検出できる（2）
+[W9P3G] PASS 反向：同じ樹種ばかりは多様性 gate が落ちる
+[W9P3G] PASS 反向：種類は足りても一種が 35 % を超えれば落ちる
+[W9P3G] PASS 反向：切れ目のない生垣は落ちる
+[W9P3G] PASS 正：3.6 m の切れ目がある生垣は通る
+[W9P3G] PASS 反向：戸口の空け帯にかかる碰撞箱は落ちる（door(B_P_MKT_001)）
+[W9P3G] PASS 反向：R1 の榎（相機の 3.6 m 前）を戻すと『相機が樹冠の中』として落ちる（["enoki_a@(317.4,61.3) 幹まで 3.8 m < 樹冠 5.7 m＋1.0"]）
+[W9P3G] PASS 反向：相機と農舎の間に大木を置くと農舎への視線の遮られ率が 40 % に跳ね上がり落ちる（> 10 %）
+[W9P3G] PASS 反向：相機と運河の間に幹を置くと運河への視線の遮られ率が 33 % になり落ちる（> 10 %）
+[W9P3G] PASS 反向：R1 の榎を戻すと農舎への視線の遮られ率が 77 % になり落ちる
+[W9P3G] PASS 反向：R1 の南の路肩（群れ 3・最大の帯 9.7 m）は落ちる（["群れ 3 < 4", "一続きの帯 9.7 m > 6.5 m", "切れ目（≥ 2.5 m）1 < 3", "低い群（≤ 1.5 m）が無い"]）
+[W9P3G] PASS 反向：同じ低木を 1.8 m おきに並べた帯は落ちる（["群れ 1 < 4", "一続きの帯 23.7 m > 6.5 m", "切れ目（≥ 2.5 m）0 < 3", "種類 1 < 5", "高い群（≥ 4 m）が無い"]）
+[W9P3G] PASS 反向：群れの間を詰めると『切れ目』が足りず落ちる（["一続きの帯 7.5 m > 6.5 m", "切れ目（≥ 2.5 m）1 < 3", "隣り合う群れの配合が同じ 1"]）
+[W9P3G] PASS 50  FAIL 0
+[W9P3G] 結果：0 項失敗
