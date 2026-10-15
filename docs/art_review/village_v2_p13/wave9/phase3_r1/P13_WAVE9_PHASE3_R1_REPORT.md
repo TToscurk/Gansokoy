@@ -2,6 +2,7 @@
 
 **狀態：ART_REVIEW（等待使用者裁定）。** 未 ART_APPROVED、未封存、未 push；W9 整體未封存。
 日期：2026-10-15。基底：`1fdb647`（Phase 2 局部結案）。
+**提交後更正**：初版（`0fdea17`）有 6 處數字／方位／判準的記載不準，已在本版更正，列表見 §8。
 
 > 本報告裡所有「x/5」都是我用視覺模型對審圖截圖做的**懷疑式自評**，只用來決定下一步修什麼，**不是美術核准**，也不取代你的判斷。
 
@@ -38,7 +39,7 @@ BEFORE＝`1fdb647` 的 W9 R2 建築（已核准的 19 棟照舊）＋無 `Enrich
 | RSW_075 | (237.7, −95.4)　寬 5.4 | **瓦葺妻入**（懸魚・鬼瓦）＋縁側 |
 | RSW_076 | (247.2, −93.1)　寬 6.3 | **瓦母屋（棟 5.8）＋黑色縱板倉房**（妻入，高 3.2 m，退 0.35 m） |
 | RSW_071 | (231.8, −80.2)　寬 7.2 | **石置板葺（棟 4.2）＋巷側深板葺下屋（柴棚，薪・農具）**（石 61、押え 18；柱 8 個碰撞） |
-| 宅間 075｜076／073｜074／071｜072 | (243, −92)／(225.6, −94)／(237.6, −80) | 板塀＋躑躅／木戶＋板塀＋庭木／板塀＋庭木；南列背後 5 株、北列背後 3 株不同樹形的樹冠 |
+| 宅間 075｜076／073｜074／071｜072 | (243, −92)／(225.6, −94)／(237.6, −80) | 板塀＋躑躅／木戶＋板塀＋庭木／板塀＋庭木；巷北側（073–076）屋後 5 株、巷南側（071・072）屋後 3 株不同樹形的樹冠 |
 
 ### C 農舍（`EnrichW9P3`，plan→bake→save 的獨立 overlay，非 MultiMesh）
 中心約 (322, 80)；共 70 件：屋敷林 6 高木（欅・赤松・椎・楢・榎・黑松）、竹叢 12、庭木 2、庭先生垣 6（缺口 ≥ 3.6 m）、家庭菜園 畝 3＋竹垣 3、**獨立柴棚 1（`B_P_FARM_SHED`，6,610 tri，碰撞 11 箱）**、農路路肩 37（灌木・笹・蕨・路角 3 樹）。樹種 9 類，單一樹種 ≤ 35 %，全部取既有 veg／bamboo／garden／humanuse kit，未新增樹模型。
@@ -49,14 +50,14 @@ BEFORE＝`1fdb647` 的 W9 R2 建築（已核准的 19 棟照舊）＋無 `Enrich
 
 ## 2. 審圖包（`review/`）
 
-BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實際玩家與 SpringArm。43 對鏡位的相機／玩家／朝向已逐筆比對（`evidence/camera_before_after_compare.json`）：**42 對完全一致（≤2 cm），1 對不一致 = B-TPS1（見 §4 風險 R1，SpringArm 被新碰撞縮短 1.0 m，我沒有改相機去掩蓋）**。
+BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實際玩家與 SpringArm。43 對鏡位的相機／玩家／朝向已逐筆比對（`evidence/camera_before_after_compare.json`）：**42 對完全一致（≤2 cm），1 對不一致 = B-TPS1（見 §4 風險 R1：SpringArm 被新碰撞縮短 1.21 m〔2.75→1.54 m〕，我沒有改相機去掩蓋）**。
 
 | 檔 | 內容 | 性質 |
 |---|---|---|
-| `A_tps_before_after.jpg` | 三個主街 TPS（南端往北、北端往南、街中） | **正常 TPS** |
+| `A_tps_before_after.jpg` | 三個主街 TPS（北端寄り朝南南西、南端寄り朝北北東、街中朝西北西；本村北＝−z。初版圖的題字把南北寫反，已重出） | **正常 TPS** |
 | `A_mid_before_after.jpg` | 眼高 2.1 m 自由相機（沿街） | 診斷，非 TPS |
 | `A_aerial_before_after.jpg` | 15／22 m 俯瞰 | 診斷，非 TPS |
-| `B_tps_before_after.jpg` | 075／076／071 正面三個 TPS | **正常 TPS** |
+| `B_tps_before_after.jpg` | 075／076／071 正面三個 TPS（第一格題字的 SpringArm 數字已更正為腕長 2.75→1.54 m） | **正常 TPS** |
 | `B_lane_before_after.jpg` | 沿巷向東／向西 | **正常 TPS**（巷道方向） |
 | `B_aerial_before_after.jpg` | 14／16 m 俯瞰 | 診斷 |
 | `C_tps_before_after.jpg` | 農道、渡し板、庭南端三個 TPS | **正常 TPS** |
@@ -75,13 +76,21 @@ BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實
 | 庇柱碰撞 gate | **19 PASS／0 FAIL**（柱 35，Phase 3 新增 11） | `gate_r2_posts.log` |
 | W9 到達性（既有 W9 碰撞） | 5 區間 NG 0 | `gate_w9_reach.log` |
 | **Phase 3 環境 gate `verify_w9p3.gd`** | **40 PASS／0 FAIL**（含反向 9：街面樹／田中畝／屋內小屋／浮空 0.6 m／二重掛載／單一樹種／35 % 超過／無缺口生垣／戶口帶碰撞） | `gate_p3_environment.log` |
-| overlay 可逆 | `enabled=false`：Kit 隱藏 1413 → 殘 0、overlay 隱藏；再 `true`：同樣 1413 再隱藏；`EnrichW9P3` 移除後行走結果與 OFF 基準相同 | `gate_r2_main.log`／`walk_off.json` |
+| overlay 可逆 | `enabled=false`：Kit 隱藏 1413 → 殘 0、overlay 隱藏；再 `true`：同樣 1413 再隱藏；`EnrichW9P3` 是 tscn 的純追加 3 行（對 HEAD +3／−0），刪掉節點與 ext_resource 即回原狀 | `gate_r2_main.log`／git diff |
 | `village_v2.tscn` | 對 HEAD **+3 行、−0**（`EnrichW9P3` 的 ext_resource＋node）；對 R2 基底 +6/−0，gate 放行 ≤6 | git diff |
 | **正式玩家 capsule（r0.30 h1.70）真 Input 行走** | ON **21 脚 FAIL 0**；A 街 2 段＋5 戶口、B 巷 2 段＋3 戶口、C 農路／渡し板／庭／南北通路 | `walk_on.json`／`walk_on.log` |
 | ON vs OFF（同一條路線） | 17 條可比較的脚（reach／door）**全部不比 OFF 差**；16 條 frames／blocked 逐幀相同，1 條（075 戶口）差 1 幀（前面牆位置略不同）；lost／max_dy 相同、終點差 ≤ 0.006 m → **新內容沒有擋住任何既有走法** | `walk_on.json` 的 `baseline_compare`、`walk_on.log` 的「OFF 比」欄 |
 | 新碰撞確實擋人 | 柴棚奥壁停在期望位置（0.71 m ±0.12）、柴棚外薪堆（1.82 m）、欅幹（0.69 m）、075｜076 板塀；皆不登上、不穿過 | `walk_on.json` |
 
-誠實註記：B 巷東向 `lost=37／max_dy 0.20`、C `lost=1／9／24` 在 **OFF（原場景）也完全相同**，是既有地形段差與水路，不是 Phase 3 造成；我把走路 gate 改成「ON 不比 OFF 差」而不是「lost=0」，因為舊判準會把原地形也判成 FAIL。
+誠實註記：B 巷東向 `lost=37／max_dy 0.20`、C `lost=1／9／24` 在 **OFF（原場景）也完全相同**，是既有地形段差與水路，不是 Phase 3 造成；我把走路 gate 改成「ON 不比 OFF 差」而不是「lost=0」，因為舊判準會把原地形也判成 FAIL。OFF 基準檔 `walk_off.json`／`walk_off.log` 是用舊判準錄的，所以它自己仍顯示「FAIL 4」（就是這四條原地形脚）；它的原始量測值（frames／blocked／lost／max_dy／終點）不依判準，ON 的比較用的就是這些值，未用新判準重錄。
+
+### 判準與 gate 的變更履歷（提交後補記；初版沒寫）
+| # | gate | 第一次結果 | 處理 | 現況 |
+|---|---|---|---|---|
+| G1 | W9 R2 主 gate（`verify_w9r2.gd`，既有） | 新內容上 371 通過／3 失敗：075、076 被宅間的樹冠（`EnrichW9P3` 的 young_broad_b）貫入，另 `village_v2.tscn` 追加行數超過上限（+6 > 3） | 樹撤去（改內容）；行數上限改成「R2 的 3 行＋`EnrichW9P3` 已掛載時的 3 行」，其他判準不動 | 374／0，反向 36/36 |
+| G2 | 走路 gate（`walk_w9p3_real.gd`，新） | 第一版 ON：21 脚 FAIL 5；OFF：18 脚 FAIL 4 | 4 條是原地形（OFF 也一樣）→ reach 脚改成「ON 不比 OFF 基準差」。第 5 條與另一條出在柴棚的 block 脚：`C_shed_woodpile_out` 起點太遠、落到水渠一側（掉 0.58 m）判 FAIL；`C_shed_enter_to_back` 在第 36 幀就停住、離目標還有 7.26 m，卻判成 PASS（**空洞的 PASS**）。兩條改成起點在開口前 3.6–5 m，期待停止距離由碰撞箱前面＋capsule 半徑 0.30 導出（±0.12 m） | ON 21／0；OFF 基準檔自身仍顯示舊判準的 FAIL 4（見上段） |
+| G3 | 環境 gate（`verify_w9p3.gd`，新） | 第一次 36 通過／4 失敗：①屋敷林 16 m 內高木 4 棵（需 ≥5）②生垣沒有 ≥2.2 m 的缺口③路肩灌木群 17（需 ≥20）④柴棚壓到 R1 的花 | ②③④ 靠改內容。**①當時我同時加樹並把半徑 16→20 m**；事後算過，最終配置 16 m 內本來就有 5 棵（距主屋 5.4／8.8／9.5／13.3／15.4 m），放寬沒有必要，已**還原 16 m**（本更正 commit） | 16 m 判準下 40／0 |
+
 
 ### 效能（代表鏡位，Forward+，1600×900，vsync off，ALL−OFF 中位數，`evidence/perf.json`）
 | 鏡位 | ΔGPU ms | Δdraw | Δprim |
@@ -98,7 +107,7 @@ BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實
 
 | # | 風險 | 說明 |
 |---|---|---|
-| **R1** | **B 巷：071 柴棚柱讓 SpringArm 縮短 1.0 m** | 站在 075 前往北看時，相機臂 BEFORE 3.48 m（撞 071 原 body）→ AFTER **2.48 m**（`ArchW9R2P13/B_P_RSW_071/Posts`，top 3.40 m）。與 MKT_029 同類（Posts 碰撞 vs SpringArm）。相機與 Posts 皆未改；已登記（`W9_FOLLOWUP_REGISTRY.md` #6）。證據 `springarm_bT3_*.log`。 |
+| **R1** | **B 巷：071 柴棚的前柱（Posts 碰撞）讓 SpringArm 變短 1.21 m** | 巷中 (235.8, −87.6) 面向 075 正面（朝北）時，相機在玩家背後（南側，071 那一側）。BEFORE：SpringArm（自樞軸起算）撞 071 原本的 body，長 **2.75 m**（玩家腳下到相機 3.48 m）；AFTER：撞 071 柴棚的前柱（`ArchW9R2P13/B_P_RSW_071/Posts`，柱寬 0.14 m、局部高 2.478 m；射線命中高度 y = 3.40 m），長 **1.54 m**（腳下到相機 2.48 m）。相機被拉近 1.21 m。與 MKT_029 同類（Posts 碰撞 vs SpringArm）。相機與 Posts 皆未改；已登記（`W9_FOLLOWUP_REGISTRY.md` #6）。證據 `springarm_bT3_*.log`。 |
 | R2 | MXC_005 蔵偏細長（寬 3.0 m） | 已加腰屋根／石土台／側壁木帶，視覺模型仍判「像塔」。footprint 不動的前提下只能再調體量，未再追。 |
 | R3 | C 前景樹偏大、部分角度擋主屋 | 已把 4 棵近路／近主屋的樹移開／縮小一輪；庭南端往北看仍 3/5。 |
 | R4 | B／A 多處屋簷底與倉房面近黑 | 看起來是 10:00 全域光＋陰影，未見破面；屬 P13 全域 lighting，不做局部補光。 |
@@ -109,7 +118,7 @@ BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實
 
 ## 5. 仍顯得單調的區域與後續建議
 
-- **A**：成排的**東側**（對面）完全沒動，是最大的單調來源——走在街心看，一半還是舊輪廓。下一批建議做東側 4–5 棟，**並把西側 MKT_031／MXC_005 的高度差再拉開一點**（目前 031 比鄰棟只高約 0.9 m）。
+- **A**：對面（東側）8 棟——MXC_001–003、MKT_014–016、S_A_MKT_002、鯢吞亭（Hero，不動）——這一輪**沒有輪廓改造**（以 `modules_blender.json` 的 W9 Hero overlay 清單核對），是最大的單調來源：走在街心看，一半還是舊輪廓。下一批建議做東側 4–5 棟，**並把西側 MKT_031／MXC_005 的高度差再拉開一點**（目前 031 比鄰棟只高約 0.9 m）。
 - **B**：巷道縱深方向沒有變化；建議在**巷口與巷尾各放一個能在縱深看見的大輪廓**（井戶屋形、小祠、一棵大樹），而不是再做更多戶。
 - **C**：只做了一戶農舍；沿農道往東的田間**只有路肩灌木**，沒有第二處人為痕跡（水渠旁小屋、稲架、牛棚）。
 - 全村其他 150 多棟仍是同一套 Kit（未擴張，依指令等本批裁定）。
@@ -119,7 +128,7 @@ BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實
 ## 6. Git／保護
 
 - 本階段**未使用** reset／stash／push；工作樹中他 session 的修改（`data/dialogue/*`、`mapRegistry.json`、`slice.meta.json`、`mq09.tres` 等）與 `.uid`、`beast_path` 皆未碰、未納入。
-- 已暫存的 **53 項**：與基準 `p3_staged_raw_before.txt`（路徑／狀態／index blob）提交**前**逐行一致；提交**後**一致性見回覆。與本次路徑**無交集**。
+- 已暫存的 **53 項**：與基準 `p3_staged_raw_before.txt`（路徑／狀態／index blob）提交**前**逐行一致；提交後（`0fdea17`）再核一次也一致（路徑／狀態／mode／blob 全同）。與本次路徑**無交集**。
 - 提交用 `git commit --only --pathspec-from-file`，只含本報告 §1 列出的檔案。
 - 暫存 BEFORE 專用的 `_p3tmp_arch_head.scn` 已刪（要重現 BEFORE：`git show 1fdb647:godot/maps/village_v2/gen/arch_w9r2_p13.scn` 以 `--swap` 掛回）。
 
@@ -127,3 +136,18 @@ BEFORE／AFTER 同一鏡位檔（`p3_at_{A,B,C}.txt`）、10:00、Forward+、實
 
 未改玩家控制器／相機／main；未動 P1／P8／道路；未重烘森林；未改 NPC 路線；未動丘腳社寺灰盒；未全村擴張；未封存 W9；未 push。
 `village_v2.tscn` 只新增 `EnrichW9P3` 掛載 3 行（與 W9 R2 的 `ArchW9R2P13` 同一做法、可刪除還原），不是 limited reseal。
+
+---
+
+## 8. 提交後的更正（初版 `0fdea17` → 本版）
+
+交付後我對照背景作業的紀錄與原始檔再核了一遍，發現下列記載不準，已更正：
+
+| # | 初版寫法 | 實際 | 處理 |
+|---|---|---|---|
+| 1 | B-TPS1「SpringArm 縮短 1.0 m（腕 3.48→2.48 m）」 | 3.48／2.48 m 是**玩家腳下到相機**的距離。SpringArm 自樞軸起算的長度是 **2.75→1.54 m（−1.21 m）**，相機實際位移 1.215 m（`camera_before_after_compare.json`、`springarm_bT3_*.log`） | §2、§4 R1、登記 #6、B_tps 圖題字已改。`0fdea17` 的 commit message 寫「1.0 m」，不改歷史，以本版為準 |
+| 2 | 柱「top 3.40 m」 | 3.40 m 是射線命中的**高度**；前柱本身寬 0.14 m、局部高 2.478 m（`modules_blender.json` 的 `posts`） | 已改；登記 #6 刪掉「把柱 top 降到 3.0 m」的建議（那會讓碰撞和看得見的柱子不一致） |
+| 3 | A_tps 圖題字「南端から北向き／北端から南向き」；B 區「南列（073–076）／北列（071・072）」 | 本村北＝−z（`review_start` 的「主街（北望）」朝 −z）。aT3 站**北端**朝南南西、aT2 站**南端**朝北北東；073–076（z≈−95）在巷的**北側**，071・072（z≈−80）在**南側** | A_tps／B_tps 圖用自動計算的方位重出；報告與 lib 註解／desc／`who` 已改。節點 id `B3_back_south／north` 不改（會動到場景），已在 lib 註記。環境 overlay 因 3 個節點的 `who` meta 字串改變而重烘：87 件的位置／縮放／種類全同（逐件比對），場景 sha256 不同只因 meta |
+| 4 | 環境 gate「40/0」，未提判準曾放寬 | 見 §3 G3：反復中我把屋敷林半徑 16→20 m，其實不需要 | 判準還原 16 m，重跑 40／0 |
+| 5 | 「`EnrichW9P3` 移除後行走結果與 OFF 基準相同」當作可逆證據 | 這是循環論證（OFF 基準就是移除後量的）。可逆性的證據是 tscn 純追加 3 行（+3／−0） | 已改 |
+| 6 | 「主街東側（對面）完全沒動」 | 以 W9 Hero overlay 清單核對：對面 8 棟都沒有輪廓改造，但「完全沒動」說過頭（前期 W9／P10 的小物仍在） | 改為「沒有輪廓改造」 |

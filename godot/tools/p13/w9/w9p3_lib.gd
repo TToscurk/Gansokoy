@@ -169,27 +169,28 @@ static func _fence(C: Dictionary, items: Array, id: String, a: Vector2, b: Vecto
 
 
 # ─────────────────────────── 設計 B3：住宅巷 MidLane ───────────────────────────
-## 巷のフレーム：原点 O＝(234.8, −87.8)、s＝東へ（0.97, 0.24）、o＝北へ（−0.24, 0.97）。南列の正面は o≈−2.3、北列の正面は o≈+2.4
+## 巷のフレーム：原点 O＝(234.8, −87.8)、s＝東へ（0.97, 0.24）、o＝南へ（−0.24, 0.97）＝+z 側（村の北は −z）。北側の列（073–076）の正面は o≈−2.3、南側の列（071・072）の正面は o≈+2.4
 static func lane(s: float, o: float) -> Vector2:
 	return Vector2(234.8 + 0.97 * s - 0.24 * o, -87.8 + 0.24 * s + 0.97 * o)
 
 
-## 巷の軸 d＝(0.97, 0.24)（東向き）、南列（074/075/076）の正面は北向き nS＝(−0.24, 0.97)
-## 実測（W9 survey）：南列の背後 z −104 以北・北列の背後 z −73 以南は空き。宅間は 073|074＝x 224–227、075|076＝x 242–244、071|072＝x 237–238
+## 巷の軸 d＝(0.97, 0.24)（東向き）、北側の列（074/075/076）の正面は南向き nS＝(−0.24, 0.97)
+## 実測（W9 survey）：北側の列の背後 z −104 以北・南側の列の背後 z −73 以南は空き。宅間は 073|074＝x 224–227、075|076＝x 242–244、071|072＝x 237–238
 
 static func design_B3(_C: Dictionary) -> Array:
 	var D: Array = []
-	D.append({"id": "B3_back_south", "zone": "B3", "desc": "南列（073–076）の背後の樹冠：巷から見上げた屋根の上に緑と高さの変化（紅葉・楢・欅ふう）", "center": Vector2(235.0, -106.0), "run": func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
+	# 注：id の south／north は当初の取り違えの名残り（B3_back_south＝実際は北側の列 073–076、B3_back_north＝南側の列 071・072）。ノード名を変えるとシーンが変わるので据え置き
+	D.append({"id": "B3_back_south", "zone": "B3", "desc": "北側の列（073–076）の背後の樹冠：巷から見上げた屋根の上に緑と高さの変化（紅葉・楢・欅ふう）", "center": Vector2(235.0, -106.0), "run": func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
 		var m := meta.duplicate()
-		m.merge({"who": "宅地を持つ家々", "why": "南列の家々の裏手に残された庭木（屋根の背後に樹冠が重なり、一続きの屋根並みにならない）"}, true)
+		m.merge({"who": "宅地を持つ家々", "why": "北側の列の家々の裏手に残された庭木（屋根の背後に樹冠が重なり、一続きの屋根並みにならない）"}, true)
 		_plant(C2, items, "shii_a", 219.0, -105.0, 0.70, m, 2.5)
 		_plant(C2, items, "konara_b", 231.0, -106.5, 0.88, m, 2.5)
 		_plant(C2, items, "kuromatsu_a", 240.5, -107.0, 0.62, m, 2.5)
 		_plant(C2, items, "young_broad_b", 249.5, -106.0, 1.35, m, 2.5)
 		_plant(C2, items, "konara_b", 225.0, -107.5, 0.70, m, 2.5)})
-	D.append({"id": "B3_back_north", "zone": "B3", "desc": "北列（071・072）の背後の樹冠：巷を西から見ると屋根の上に枝が重なる", "center": Vector2(233.0, -70.0), "run": func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
+	D.append({"id": "B3_back_north", "zone": "B3", "desc": "南側の列（071・072）の背後の樹冠：巷を西から見ると屋根の上に枝が重なる", "center": Vector2(233.0, -70.0), "run": func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
 		var m := meta.duplicate()
-		m.merge({"who": "宅地を持つ家々", "why": "北列の家々の裏手の庭木（巷の奥行を作り、屋根並みの背景を緑にする）"}, true)
+		m.merge({"who": "宅地を持つ家々", "why": "南側の列の家々の裏手の庭木（巷の奥行を作り、屋根並みの背景を緑にする）"}, true)
 		_plant(C2, items, "konara_a", 224.5, -70.5, 0.62, m, 2.5)
 		_plant(C2, items, "enoki_a", 233.0, -70.0, 0.76, m, 2.5)
 		_plant(C2, items, "konara_b", 243.0, -70.5, 0.80, m, 2.5)})
@@ -209,7 +210,7 @@ static func design_B3(_C: Dictionary) -> Array:
 		_plant(C2, items, "shrub_a", 224.7, -96.2, 1.3, m, 0.6)})
 	D.append({"id": "B3_gap_071_072", "zone": "B3", "desc": "071｜072 の宅間：板塀＋庭木", "center": Vector2(237.6, -80.0), "run": func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
 		var m := meta.duplicate()
-		m.merge({"who": "北列の二戸", "why": "板葺きの家と隣家の間の板塀と庭木"}, true)
+		m.merge({"who": "南側の列の二戸", "why": "板葺きの家と隣家の間の板塀と庭木"}, true)
 		_fence(C2, items, "w9_itabei_b", Vector2(236.8, -83.0), Vector2(238.6, -82.8), m)
 		_plant(C2, items, "young_broad_a", 237.6, -77.0, 1.3, m, 1.2)
 		_plant(C2, items, "sasa_a", 237.0, -80.5, 1.5, m, 0.6)})

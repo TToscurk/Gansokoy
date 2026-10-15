@@ -17,7 +17,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [W9P3G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
 [W9P3G] PASS 区域 B3 の構件数 17 ≥ 12
 [W9P3G] PASS 区域 C3 の構件数 70 ≥ 55
-[W9P3G] PASS 屋敷林：主屋 A1 から 20 m 以内に高さ ≥ 8 m の樹が 5 本（≥ 5）
+[W9P3G] PASS 屋敷林：主屋 A1 から 16 m 以内に高さ ≥ 8 m の樹が 5 本（≥ 5）
 [W9P3G] PASS C3 の樹種：11 種・同種の最多 ≤ 35 %（11）
 [W9P3G] PASS 屋敷竹：竹叢の本数 12 ≥ 8
 [W9P3G] PASS 生垣（東縁）：6 株・途中に ≥ 2.2 m の切れ目（茅葺きの正面を隠さない）

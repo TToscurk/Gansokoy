@@ -191,7 +191,7 @@ func _run() -> void:
 		var isC := String(it["cluster"]).begins_with("C3")
 		if isC and (P3.TREES.has(id) or id.begins_with("young_broad")):
 			c3_trees.append(id)
-		if isC and P3.TREES.has(id) and P3.tree_h(id) * float(it["sy"]) >= TREE_MIN_H and p.distance_to(A1) <= 20.0:
+		if isC and P3.TREES.has(id) and P3.tree_h(id) * float(it["sy"]) >= TREE_MIN_H and p.distance_to(A1) <= 16.0:
 			belt += 1
 		if P3.BAMBOO.has(id) and p.distance_to(Vector2(311.8, 94.5)) <= 3.5:
 			bamboo += 1
@@ -212,7 +212,7 @@ func _run() -> void:
 				verge_plants += 1
 		if P3.TREES.has(id) and P3.tree_h(id) * float(it["sy"]) >= TREE_MIN_H:
 			tall += 1
-	_ok(belt >= 5, "屋敷林：主屋 A1 から 20 m 以内に高さ ≥ %.0f m の樹が %d 本（≥ 5）" % [TREE_MIN_H, belt])
+	_ok(belt >= 5, "屋敷林：主屋 A1 から 16 m 以内に高さ ≥ %.0f m の樹が %d 本（≥ 5）" % [TREE_MIN_H, belt])
 	_ok(variety_ok(c3_trees), "C3 の樹種：%d 種・同種の最多 ≤ 35 %%（%s）" % [(c3_trees as Array).size(), str(c3_trees.size())])
 	_ok(bamboo >= 8, "屋敷竹：竹叢の本数 %d ≥ 8" % bamboo)
 	var east_zs: Array = hedge_zs.filter(func(z: float) -> bool: return z < 1000.0)
