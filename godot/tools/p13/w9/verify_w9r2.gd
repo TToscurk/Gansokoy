@@ -2,7 +2,7 @@ extends SceneTree
 ## P13 W9 Round 2／2.1 gate：ArchW9R2P13（建築外形サンプル）を「保存された場景」から独立に検査する ＋ 反向案例。
 ##   godot --headless --path godot --script res://tools/p13/w9/verify_w9r2.gd
 ## 見るもの：掛載（1 回・順序）／各棟の id・body 追従／LOD 範囲・三角面予算／張り出し上限／戸口前の淨空／通行の頭上淨空／
-##   enabled の往復（Kit の visible が完全に元へ戻る）／新規碰撞 0／R1 の吊り物を隠す件数（R1 の中身は他に触れない）／
+##   enabled の往復（Kit の visible が完全に元へ戻る）／碰撞は庇柱・玄関柱（Posts）だけ（柱ごとに位置・太さ・高さ・layer／mask を meta と突き合わせ）／R1 の吊り物を隠す件数（R1 の中身は他に触れない）／
 ##   [2.1] 庇の構造規則（幅・深さ・勾配＝排水・腕木の間隔・深い庇は庇柱・前縁の高さ）／屋根の収め（棟の段積み・鬼瓦・垂木尻・懸魚）／
 ##   [2.1] 他 overlay（P10 の看板・幟・提灯・商品・NPC、R1、隣の建物）の実体との非干渉。
 const L := preload("res://tools/p13/w9/w9r2_lib.gd")
@@ -106,6 +106,29 @@ static func over_ok(ab: AABB, w: float, d: float) -> bool:
 	var zf := d / 2.0
 	return ab.position.x >= -w / 2.0 - SIDE_OVER and ab.end.x <= w / 2.0 + SIDE_OVER \
 		and ab.position.z >= -zf - BACK_OVER and ab.end.z <= zf + FRONT_OVER
+
+
+## 庇柱・玄関柱の碰撞（Posts）を meta の posts と突き合わせる。違反の理由を返す（空＝適合）。
+## exp＝meta の posts（{x,z,top,w}）／got＝[[局部位置, BoxShape3D.size, layer, mask], …]／body_layer・body_mask＝建物 body の値。
+static func post_issues(exp: Array, got: Array, body_layer: int, body_mask: int) -> PackedStringArray:
+	var out: PackedStringArray = []
+	if exp.size() != got.size():
+		out.append("柱 %d 本に対し碰撞 %d 個" % [exp.size(), got.size()])
+		return out
+	for i in exp.size():
+		var e: Dictionary = exp[i]
+		var g: Array = got[i]
+		var pos: Vector3 = g[0]
+		var sz: Vector3 = g[1]
+		if Vector2(pos.x - float(e["x"]), pos.z - float(e["z"])).length() > 0.005:
+			out.append("柱 %d の碰撞位置が柱とずれる" % i)
+		if sz.x < float(e["w"]) + 0.02 or sz.z < float(e["w"]) + 0.02:
+			out.append("柱 %d の碰撞が柱より細い（%.2f）" % [i, sz.x])
+		if sz.y < float(e["top"]) - 0.05:
+			out.append("柱 %d の碰撞が柱の高さに届かない（%.2f < %.2f）" % [i, sz.y, float(e["top"])])
+		if int(g[2]) != body_layer or int(g[3]) != body_mask:
+			out.append("柱 %d の layer／mask が body と違う" % i)
+	return out
 
 
 ## 庇 1 本の構造規則。違反の理由を返す（空＝適合）。e は generator の eaves メタ。
@@ -287,10 +310,17 @@ func _run() -> void:
 		return
 	_ok(ov.get_child_count() == L.SPECS.size(), "建築 %d 棟（SPECS と一致）" % L.SPECS.size())
 	var tri_all := 0
-	var coll := 0
-	for n in ov.find_children("*", "CollisionObject3D", true, false):
-		coll += 1
-	_ok(coll == 0, "overlay に碰撞体 0（実際 %d）" % coll)
+	# 碰撞体は庇柱・玄関柱（<建築>/Posts）だけ。それ以外（壁・屋根・小物）の碰撞体は 0（footprint・入口・body の碰撞は Kit のまま）
+	var posts_meta: Dictionary = meta.get("posts", {})
+	var coll_other := 0
+	var post_bodies := 0
+	for cb in ov.find_children("*", "CollisionObject3D", true, false):
+		if String(cb.name) == "Posts" and posts_meta.has(String(cb.get_parent().name)):
+			post_bodies += 1
+		else:
+			coll_other += 1
+	_ok(coll_other == 0, "overlay の碰撞体は庇柱・玄関柱（Posts）だけ（それ以外 %d）" % coll_other)
+	_ok(post_bodies == posts_meta.size() and posts_meta.size() > 0, "柱のある %d 棟すべてに Posts 碰撞がある（実際 %d）" % [posts_meta.size(), post_bodies])
 	var before: Dictionary = {}
 	var dims: Dictionary = {}
 	for id: String in L.SPECS:
@@ -314,6 +344,16 @@ func _run() -> void:
 		var w := box.size.x if box else 5.0
 		var d := box.size.z if box else 10.0
 		dims[id] = [w, d, dcx, dw]
+		var pm: Array = posts_meta.get(id, [])
+		var sbn := n.get_node_or_null("Posts") as StaticBody3D
+		var got: Array = []
+		if sbn != null:
+			for cs in sbn.get_children():
+				if cs is CollisionShape3D and (cs as CollisionShape3D).shape is BoxShape3D:
+					got.append([(cs as CollisionShape3D).position, ((cs as CollisionShape3D).shape as BoxShape3D).size, sbn.collision_layer, sbn.collision_mask])
+		if pm.size() > 0 or sbn != null:
+			var piss := post_issues(pm, got, int((body as CollisionObject3D).collision_layer), int((body as CollisionObject3D).collision_mask))
+			_ok(piss.is_empty(), "%s：庇柱・玄関柱 %d 本の碰撞（位置・太さ・高さ・layer／mask）%s" % [id, pm.size(), "" if piss.is_empty() else str(piss)])
 		var l0 := n.get_node_or_null("L0") as MeshInstance3D
 		var l1 := n.get_node_or_null("L1") as MeshInstance3D
 		_ok(l0 != null and l1 != null, "%s：L0／L1 あり" % id)
@@ -321,11 +361,9 @@ func _run() -> void:
 			continue
 		_ok(l0.visibility_range_begin == 0.0 and l0.visibility_range_end == l1.visibility_range_begin \
 			and l1.visibility_range_end >= 400.0, "%s：LOD 範囲が連続（L0→L1・遠距離まで）" % id)
-		var es0: Array = (meta.get("eaves", {}) as Dictionary).get(id, [])
-		var plist: Array = []
-		for e0: Dictionary in es0:
-			for xp in e0.get("posts", []):
-				plist.append([float(xp), d / 2.0 + float(e0["depth"]) - 0.08])
+		var plist: Array = []      # 柱（庇柱・玄関柱）は構造材 → 頭上帯の対象から外す（碰撞は上の Posts で検査）
+		for pd: Dictionary in pm:
+			plist.append([float(pd["x"]), float(pd["z"])])
 		var a0 := analyze(l0.mesh, w, d, dcx, dw, plist)
 		var a1 := analyze(l1.mesh, w, d, dcx, dw)
 		tri_all += int(a0["tri"])
@@ -346,7 +384,7 @@ func _run() -> void:
 			if String(r.get("kind", "")) != "turret":
 				has_roof = true
 			riss.append_array(roof_issues(r, TSUMA.has(id)))
-		var rebuilt: bool = (sp["hide"] as Array).has("roof")     # 屋根を作り直さない棟は収めの検査を免除
+		var rebuilt: bool = (sp["hide"] as Array).has("roof") or (sp["hide"] as Array).has("all")     # 屋根を作り直さない棟は収めの検査を免除
 		_ok(not rebuilt or (has_roof and riss.is_empty()), "%s：屋根の収め（大棟の段積み・鬼瓦・垂木尻%s）%s" % [id, "・懸魚" if TSUMA.has(id) else "", "" if riss.is_empty() else str(riss)])
 		var states: Array = []
 		for lod in 3:
@@ -509,7 +547,19 @@ func _negatives() -> Array:
 	var apart := _tri_mesh(Vector3(2.8, 3.0, 0.0), Vector3(3.2, 3.0, 0.5), Vector3(3.0, 2.8, 0.0))
 	tot += 1
 	okc += 1 if int(penetrations_obb(apart, Transform3D.IDENTITY, nbx, 2.0)[0]) == 0 else 0
-	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2）" % [okc, tot])
+	# --- 庇柱の碰撞（closeout）---
+	var pe := [{"x": 1.0, "z": 6.0, "top": 2.3, "w": 0.14}]
+	tot += 1
+	okc += 1 if post_issues(pe, [[Vector3(1.0, 1.15, 6.0), Vector3(0.2, 2.3, 0.2), 1, 1]], 1, 1).is_empty() else 0
+	for badp in [
+			[],                                                                   # 柱があるのに碰撞なし
+			[[Vector3(1.4, 1.15, 6.0), Vector3(0.2, 2.3, 0.2), 1, 1]],            # 位置がずれる
+			[[Vector3(1.0, 1.15, 6.0), Vector3(0.1, 2.3, 0.1), 1, 1]],            # 柱より細い
+			[[Vector3(1.0, 0.5, 6.0), Vector3(0.2, 1.0, 0.2), 1, 1]],             # 高さが届かない
+			[[Vector3(1.0, 1.15, 6.0), Vector3(0.2, 2.3, 0.2), 2, 1]]]:           # layer が body と違う
+		tot += 1
+		okc += 0 if post_issues(pe, badp, 1, 1).is_empty() else 1
+	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5）" % [okc, tot])
 	return [okc, tot]
 
 

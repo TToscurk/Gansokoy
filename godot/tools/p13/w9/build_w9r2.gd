@@ -25,6 +25,8 @@ func _run() -> void:
 	ov.name = L.NODE_NAME
 	ov.set_script(load(L.SCRIPT))
 	var vinv := v.global_transform.affine_inverse()
+	var meta := JSON.parse_string(FileAccess.get_file_as_string(L.META)) as Dictionary
+	var nposts := 0
 	var fails := 0
 	var tris := 0
 	for id: String in L.SPECS:
@@ -41,6 +43,25 @@ func _run() -> void:
 		n.set_meta("hide0", L.hide_prefixes(id, 0))
 		n.set_meta("hide12", L.hide_prefixes(id, 1))
 		ov.add_child(n)
+		var posts: Array = (meta.get("posts", {}) as Dictionary).get(id, [])
+		if not posts.is_empty():
+			# 庇柱・玄関柱の碰撞：building body と同じ layer／mask の StaticBody3D（Posts）＋柱ごとの BoxShape3D
+			var sb := StaticBody3D.new()
+			sb.name = "Posts"
+			sb.collision_layer = int((body as CollisionObject3D).collision_layer)
+			sb.collision_mask = int((body as CollisionObject3D).collision_mask)
+			for i in posts.size():
+				var pd: Dictionary = posts[i]
+				var half := maxf(float(pd["w"]) / 2.0 + L.POST_PAD, 0.125)       # 礎石（±0.12）まで覆う
+				var bs := BoxShape3D.new()
+				bs.size = Vector3(2.0 * half, float(pd["top"]), 2.0 * half)
+				var cs := CollisionShape3D.new()
+				cs.name = "Post%d" % i
+				cs.shape = bs
+				cs.position = Vector3(float(pd["x"]), float(pd["top"]) / 2.0, float(pd["z"]))
+				sb.add_child(cs)
+				nposts += 1
+			n.add_child(sb)
 		for lod in 2:
 			var mp: String = L.MESH_DIR + "%s_L%d.res" % [id, lod]
 			var mesh := load(mp) as Mesh
@@ -70,7 +91,7 @@ func _run() -> void:
 	var ps := PackedScene.new()
 	ps.pack(ov)
 	var err := ResourceSaver.save(ps, L.OUTPUT)
-	print("[W9R2B] 保存 %s：%s・建築 %d・LOD0 三角面 %d・失敗 %d" % [L.OUTPUT, error_string(err), ov.get_child_count(), tris, fails])
+	print("[W9R2B] 保存 %s：%s・建築 %d・LOD0 三角面 %d・庇柱碰撞 %d・失敗 %d" % [L.OUTPUT, error_string(err), ov.get_child_count(), tris, nposts, fails])
 	quit(0 if (err == OK and fails == 0) else 1)
 
 

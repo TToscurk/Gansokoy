@@ -40,6 +40,7 @@ SEC = math.sqrt(1 + P * P)
 
 MODS = {}
 INFO = {}
+POSTS = {}      # 建築 id → 庇柱・玄関柱 [{x, z, top, w}]（Godot 側が碰撞を作る・gate が読む）
 EAVES = {}      # 建築 id → 庇の構造メタ（gate が読む）
 ROOFS = {}      # 建築 id → 屋根の収め（棟・鬼瓦・軒先・懸魚）メタ
 _CUR = [None]
@@ -47,7 +48,7 @@ _CUR = [None]
 
 def _rec(group, **kw):
     if _CUR[0]:
-        (EAVES if group == 'eave' else ROOFS).setdefault(_CUR[0], []).append(kw)
+        {'eave': EAVES, 'post': POSTS}.get(group, ROOFS).setdefault(_CUR[0], []).append(kw)
 
 
 def new(name, note=''):
@@ -270,9 +271,10 @@ def hip_roof(dst, lod, HA, HB, y_wall, p, ove, ridge_box=True):
 
 # ───────────────────────── 庇・下屋・布・小構件 ─────────────────────────
 
-def eave_roof(dst, lod, x0, x1, y, zf, depth, p=0.36, style='tile', brackets=True, strut=False, fascia_col=DARK, posts=(), tone=0.8):
+def eave_roof(dst, lod, x0, x1, y, zf, depth, p=0.36, style='tile', brackets=True, strut=False, fascia_col=DARK, posts=(), tone=0.8, flash=False):
     """壁（z＝zf）に付く片流れの庇：壁際の屋面線 y から depth だけ前へ、勾配 p で下る。style='tile'（瓦）／'board'（杉皮板葺）。
     R2.1：板庇に『厚み』を持たせる（野地裏・垂木・鼻隠し・袖板）。壁際に胴差と雨押さえ、腕木は 1.15 m 以内の間隔、
+    flash=True（収尾で 011／020／026 だけ）：雨押さえを鉛色（V2_Kawara）にして壁から屋面へ 12 cm 立ち上げ、接合線を見える形にする。他の棟は R2.1 のまま。
     深い庇（≥1.6 m）は庇柱（礎石付き）＋繋ぎ梁で受ける。排水＝壁側が高く通り側へ下がる（p>0）。"""
     L = x1 - x0
     s = depth - 0.04
@@ -309,7 +311,10 @@ def eave_roof(dst, lod, x0, x1, y, zf, depth, p=0.36, style='tile', brackets=Tru
     # 出桁（先端の桁）
     dst.box((x0, ye - 0.30, zf + s - 0.1), (x1, ye - 0.14, zf + s + 0.02), 'V2_Wood', fascia_col, grain=X)
     # 壁際：雨押さえ（上）と胴差（下・壁の骨組みに庇を結ぶ）
-    dst.box((x0, y - 0.05, zf - 0.04), (x1, y + 0.06, zf + 0.02), 'V2_Kawara' if style == 'tile' else 'V2_Wood', 0.75, grain=X)
+    if flash:
+        dst.box((x0, y - 0.05, zf - 0.04), (x1, y + 0.12, zf + 0.03), 'V2_Kawara', 0.66, grain=X)     # 雨押さえ（鉛色の水切り：壁から屋面へ 12 cm 立ち上げ・庇の全長）
+    else:
+        dst.box((x0, y - 0.05, zf - 0.04), (x1, y + 0.06, zf + 0.02), 'V2_Kawara' if style == 'tile' else 'V2_Wood', 0.75, grain=X)
     dst.box((x0, y - 0.36, zf - 0.02), (x1, y - 0.18, zf + 0.07), 'V2_Wood', DARK * 0.9, grain=X)
     if brackets:
         for i in range(nb + 1):
@@ -322,6 +327,7 @@ def eave_roof(dst, lod, x0, x1, y, zf, depth, p=0.36, style='tile', brackets=Tru
         dst.box((xp - 0.07, 0.12, zp - 0.07), (xp + 0.07, ye - 0.30, zp + 0.07), 'V2_Wood', DARK, grain=Y)
         dst.box((xp - 0.12, 0.0, zp - 0.12), (xp + 0.12, 0.14, zp + 0.12), 'V2_KitStoneTri', 0.8)
         dst.beam((xp, ye - 0.33, zp), (xp, y - 0.30, zf + 0.02), 0.08, 0.12, 'V2_Wood', DARK)
+        _rec('post', x=float(xp), z=float(zp), top=float(ye - 0.30), w=0.14)
 
 
 def cloth(dst, x0, x1, ytop, ybot, z, key, seg_w=0.9, billow=0.05, tilt=0.0, col=1.0, rod=True):
@@ -502,13 +508,16 @@ def hung_goods(dst, x0, x1, y, z, n=6, seed=1):
 # ───────────────────────── 建物ごとの組立 ─────────────────────────
 
 def hung_fish(dst, x0, x1, y, z, n=8):
-    """干物の竿：竹棹に紐で吊る細長い魚（下端は y−0.55）。"""
+    """干物の竿：竹棹に紐で吊る魚（尾を上に・頭が下・胴が膨らむ輪郭。二段、下端は y−0.51）。"""
     dst.beam((x0, y, z), (x1, y, z), 0.035, 0.035, 'V2_Wood', DARK)
     for i in range(n):
         xx = x0 + 0.15 + (x1 - x0 - 0.3) * i / max(1, n - 1)
         for k in range(2):
-            yy = y - 0.04 - k * 0.27
-            dst.box((xx - 0.035, yy - 0.24, z - 0.015), (xx + 0.035, yy, z + 0.015), 'V2_Plaster', 0.6, grain=Y)
+            yy = y - 0.04 - k * 0.25
+            pts = [(xx - 0.03, yy, z), (xx + 0.03, yy, z), (xx + 0.05, yy - 0.08, z), (xx + 0.03, yy - 0.17, z), (xx, yy - 0.22, z),
+                   (xx - 0.03, yy - 0.17, z), (xx - 0.05, yy - 0.08, z)]                       # 尾を上に吊った魚の輪郭（頭が下・胴が膨らむ。下端は y−0.51＝竿 2.36 で 1.85 m）
+            polyo(dst, pts, 'V2_Plaster', 0.92 if (i + k) % 2 else 0.78, out=(0.0, 0.0, 1.0))
+            polyo(dst, pts[::-1], 'V2_Plaster', 0.62, out=(0.0, 0.0, -1.0))
         dst.beam((xx, y, z), (xx, y - 0.04, z), 0.012, 0.012, 'V2_Wood', DARK)
 
 
@@ -546,14 +555,85 @@ def tsuchido(dst, x0, x1, zf, y1=2.25):
     dst.box((x1 - 0.04, FL, zf - 0.04), (x1 + 0.05, y1 + 0.05, zf + 0.15), 'V2_Plaster', PL * 0.9, grain=Y)
 
 
-def koshi_turret(B, lod, H, scale=1.5, rot=math.pi * 0.5):
+def koshi_turret(B, lod, H, scale=1.5, rot=math.pi * 0.5, x=0.0, z=0.0):
     """越屋根（煙出し・湯気抜き）：Kit の kemuri を拡大して棟上に載せる。"""
     if lod:
         return
     tm = tmp()
     put(tm, cached(('kemu',), lambda: NS['kemuri']()), sx=scale, sy=scale, sz=scale)
-    put(B.R[lod], tm, off=(0.0, H - 0.1, 0.0), rot=rot)
+    put(B.R[lod], tm, off=(x, H - 0.1, z), rot=rot)
     _rec('roof', kind='turret', scale=scale)
+
+
+def post(dst, x, z, top, w=0.15, col=None):
+    """独立柱（礎石付き）：碰撞用の寸法を POSTS へ記録（Godot の bake が StaticBody3D を作る）。"""
+    dst.box((x - w / 2, 0.12, z - w / 2), (x + w / 2, top, z + w / 2), 'V2_Wood', DARK if col is None else col, grain=Y)
+    dst.box((x - 0.12, 0.0, z - 0.12), (x + 0.12, 0.14, z + 0.12), 'V2_KitStoneTri', 0.8)
+    _rec('post', x=float(x), z=float(z), top=float(top), w=float(w))
+
+
+def louver_window(dst, x0, x1, y0, y1, z, n=5):
+    """無双窓（横板の換気窓）：枠＋暗い奥＋水平の板。壁（z）より 0.06 まで出る。"""
+    dst.box((x0 - 0.05, y0 - 0.05, z - 0.04), (x1 + 0.05, y1 + 0.05, z + 0.03), 'V2_Wood', DARK, grain=X)
+    dst.box((x0, y0, z - 0.06), (x1, y1, z - 0.01), 'V2_Wood', DARK * 0.3, grain=X)
+    for i in range(n):
+        yy = y0 + (y1 - y0) * (i + 0.5) / n
+        dst.box((x0 + 0.02, yy - 0.022, z - 0.005), (x1 - 0.02, yy + 0.018, z + 0.06), 'V2_Wood', 0.95, grain=X)
+
+
+def ridge_vent(B, lod, H, x0, x1, hh=0.55, hw_=0.36):
+    """棟換気（越屋根の細長い版）：棟に載る横板の籠＋小さな切妻屋根。棟は x 方向。lod0 のみ。"""
+    if lod:
+        return
+    R = B.R[0]
+    y0 = H + 0.02
+    R.box((x0, y0, -hw_), (x1, y0 + 0.10, hw_), 'V2_Wood', DARK, grain=X)
+    n = max(2, int(round((x1 - x0) / 0.9)))
+    for i in range(n + 1):
+        xx = x0 + 0.06 + (x1 - x0 - 0.12) * i / n
+        for sg in (-1.0, 1.0):
+            R.box((xx - 0.04, y0 + 0.10, sg * (hw_ - 0.05) - 0.04), (xx + 0.04, y0 + hh, sg * (hw_ - 0.05) + 0.04), 'V2_Wood', DARK, grain=Y)
+    for sg in (-1.0, 1.0):
+        for k in range(4):
+            yy = y0 + 0.17 + k * ((hh - 0.24) / 4.0)
+            za, zb = (hw_ - 0.03, hw_ + 0.012) if sg > 0 else (-hw_ - 0.012, -hw_ + 0.03)
+            R.box((x0 + 0.04, yy, za), (x1 - 0.04, yy + 0.05, zb), 'V2_Wood', 0.95, grain=X)
+    yc = y0 + hh
+    hwo = hw_ + 0.2
+    xa, xb = x0 - 0.16, x1 + 0.16
+    for sg in (-1.0, 1.0):
+        polyo(R, [(xa, yc, sg * hwo), (xb, yc, sg * hwo), (xb, yc + 0.34, 0.0), (xa, yc + 0.34, 0.0)], 'V2_Kawara', 0.58, out=(0.0, 0.7, sg), grain=X)
+        polyo(R, [(xa, yc - 0.05, sg * hwo), (xb, yc - 0.05, sg * hwo), (xb, yc, sg * hwo), (xa, yc, sg * hwo)], 'V2_Wood', DARK, out=(0.0, 0.0, sg), grain=X)
+    for xe, o in ((xa, -1.0), (xb, 1.0)):
+        polyo(R, [(xe, yc, -hwo), (xe, yc, hwo), (xe, yc + 0.34, 0.0)], 'V2_Plaster', PL, out=(o, 0.0, 0.0))
+    R.box((xa - 0.02, yc + 0.31, -0.06), (xb + 0.02, yc + 0.39, 0.06), 'V2_Kawara', 0.5, grain=X)
+
+
+def hung_sandals(dst, x0, x1, y, z, n=10):
+    """草履・下駄の吊り列（竿に二つ一組）。下端は y−0.40 以上。"""
+    dst.beam((x0, y, z), (x1, y, z), 0.04, 0.04, 'V2_Wood', DARK)
+    for i in range(n):
+        xx = x0 + 0.14 + (x1 - x0 - 0.28) * i / max(1, n - 1)
+        for k, dx in enumerate((-0.06, 0.06)):
+            h = 0.26 + 0.02 * ((i + k) % 3)
+            dst.box((xx + dx - 0.04, y - 0.06 - h, z - 0.012), (xx + dx + 0.04, y - 0.06, z + 0.012), 'V2_Wood', 1.12 if i % 2 else 0.95, grain=Y)
+            dst.beam((xx + dx, y, z), (xx + dx, y - 0.06, z), 0.012, 0.012, 'V2_Wood', DARK)
+
+
+def chimney(R, x, z, y0, y1, s=0.5):
+    """土の煙突（豆腐屋・鍛冶など火を使う作業場の目印）：漆喰の角筒＋煤けた口＋小さな瓦の笠。"""
+    h = s / 2
+    R.box((x - h, y0, z - h), (x + h, y1, z + h), 'V2_Plaster', PL * 0.82, grain=Y)
+    R.box((x - h - 0.04, y1 - 0.34, z - h - 0.04), (x + h + 0.04, y1 - 0.20, z + h + 0.04), 'V2_Plaster', PL * 0.7, grain=X)
+    R.box((x - h - 0.02, y1 - 0.20, z - h - 0.02), (x + h + 0.02, y1, z + h + 0.02), 'V2_Wood', DARK * 0.5, grain=Y)
+    top = y1 + 0.24
+    cx0, cx1, cz0, cz1 = x - h - 0.12, x + h + 0.12, z - h - 0.12, z + h + 0.12
+    for pts, out in (([(cx0, y1, cz1), (cx1, y1, cz1), (x + 0.05, top, z + 0.05), (x - 0.05, top, z + 0.05)], (0.0, 0.6, 1.0)),
+                     ([(cx1, y1, cz0), (cx0, y1, cz0), (x - 0.05, top, z - 0.05), (x + 0.05, top, z - 0.05)], (0.0, 0.6, -1.0)),
+                     ([(cx1, y1, cz1), (cx1, y1, cz0), (x + 0.05, top, z - 0.05), (x + 0.05, top, z + 0.05)], (1.0, 0.6, 0.0)),
+                     ([(cx0, y1, cz0), (cx0, y1, cz1), (x - 0.05, top, z + 0.05), (x - 0.05, top, z - 0.05)], (-1.0, 0.6, 0.0))):
+        polyo(R, pts, 'V2_Kawara', 0.55, out=out, grain=X)
+
 
 
 class Bld:
@@ -684,7 +764,7 @@ def build_mkt011():
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
         gable_on_body(B, lod, 5.4, 0.42, 0.30, 0.12, False)
-        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.95, zf, 1.45, p=0.26, style='board', strut=True, posts=(-w / 2 + 0.25, 2.05))   # 庇柱：戸口（x 0..1.75）の前は空け、左端と戸口の右で受ける（P10 の平台・桶山・桶を避ける位置）
+        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.95, zf, 1.45, p=0.26, style='board', strut=True, posts=(-w / 2 + 0.25, 2.05), flash=True)   # 庇柱：戸口（x 0..1.75）の前は空け、左端と戸口の右で受ける（P10 の平台・桶山・桶を避ける位置）
         if lod == 0:
             row1(B, W, bays1)
             row2(B, W, bays2, 2.9, 5.4)
@@ -858,24 +938,48 @@ def build_rsw062():
 
 
 def build_mkt025():
-    """B_P_MKT_025 魚屋：三間とも戸を上げた『全面開放の土間店』（戸の閉じる店が並ぶ通りで、生ものを扱う店だけが開けっぱなし）＋
-    緩い切妻＋浅い板庇に干物の竿（高所）。入口＝x −3.05..−1.31（右端が壁）。Kit style mixed/c0/t2。"""
-    B = Bld('B_P_MKT_025', 6.096, 10.92, 5.4, fin=0, tone=2)
+    """B_P_MKT_025 魚屋（R2.1 改）：隣（2 階建て・軒 5.4 m）より一段低い『平屋＋中二階』の吹き放ち店。
+    店先は柱 4 本と太い差鴨居だけの全面開放（入口＝x −3.05..−1.31 は左端の間）、奥は石敷きの土間・石の生け簀・板台、
+    差鴨居の前に干物の竿。中二階の壁帯に無双窓（換気）、棟には細長い棟換気。Kit の壁・屋根は全て隠し、側壁・背壁・屋根を自前で閉じる。
+    店の輪郭が通りの屋並みの『谷』になる（棟 Kit −2.3 m）ことが主眼。"""
+    B = Bld('B_P_MKT_025', 6.096, 10.92, 3.45, fin=0, tone=2)
     w, zf = B.w, B.zf
-    bays1 = [('shop_o', 1.743), ('shop_o', 2.1765), ('shop_o', 2.1765)]
-    bays2 = [('winb', 1.743), ('winb', 2.1765), ('winb', 2.1765)]
+    YE = 3.45
+    xs = [-w / 2 + 0.10, -1.305, 0.8715, w / 2 - 0.10]
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
-        gable_on_body(B, lod, 5.4, 0.26, 0.40, 0.10, False)           # 深さ 10.9 m の屋根は勾配 0.26 でも棟が 1.4 m 上がる＝『緩い切妻』
-        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.95, zf, 1.2, p=0.28, style='board', strut=False)
-        if lod == 0:
-            row1(B, W, bays1)
-            row2(B, W, bays2, 2.9, 5.4)
-            hung_fish(W, -w / 2 + 0.25, w / 2 - 0.25, 2.46, zf + 0.85, n=9)
-            put(W, cached(('ud90',), lambda: NS['udatsu'](0.9)), off=(w / 2 - 0.13, 2.95, zf))
+        H = gable_on_body(B, lod, YE, 0.40, 0.85, 0.10, False)
+        W.box((-w / 2, FL, -zf), (-w / 2 + 0.10, YE, zf), 'V2_Plaster', PL * 0.9, grain=Z)
+        W.box((w / 2 - 0.10, FL, -zf), (w / 2, YE, zf), 'V2_Plaster', PL * 0.9, grain=Z)
+        W.box((-w / 2, FL, -zf), (w / 2, YE, -zf + 0.10), 'V2_Plaster', PL * 0.9, grain=X)
+        if lod == 1:
+            W.box((-w / 2, FL, zf - 0.05), (w / 2, 2.55, zf), 'V2_Wood', DARK * 0.45, grain=X)
+            W.box((-w / 2, 2.55, zf - 0.05), (w / 2, YE, zf), 'V2_Plaster', PL, grain=X)
+            continue
+        zi = zf - 3.0
+        W.box((-w / 2 + 0.10, FL, zi), (w / 2 - 0.10, FL + 0.04, zf), 'V2_KitStoneTri', 0.85)                  # 石敷きの土間
+        W.box((-w / 2 + 0.10, FL, zi - 0.10), (w / 2 - 0.10, YE, zi), 'V2_Plaster', PL * 0.78, grain=X)        # 奥の壁（漆喰：暗い口にならず『開いた店』と読める）
+        W.box((-w / 2 + 0.10, 2.50, zi), (w / 2 - 0.10, 2.56, zf), 'V2_Wood', BOARD * 0.8, grain=X)            # 天井
+        W.box((-2.55, FL + 0.04, zi + 0.02), (1.55, FL + 0.66, zi + 0.78), 'V2_KitStoneTri', 0.8)               # 石の生け簀
+        W.box((-2.43, FL + 0.60, zi + 0.12), (1.43, FL + 0.67, zi + 0.68), 'V2_Wood', DARK * 0.3, grain=X)     # 水面（暗）
+        W.box((-0.4, FL + 0.74, zi + 1.3), (2.5, FL + 0.80, zi + 2.1), 'V2_Wood', BOARD, grain=X)              # 板台
+        for xl in (-0.3, 2.4):
+            for zl in (zi + 1.35, zi + 2.05):
+                W.box((xl - 0.04, FL + 0.04, zl - 0.04), (xl + 0.04, FL + 0.74, zl + 0.04), 'V2_Wood', DARK, grain=Y)
+        for xp in xs:                                                                                           # 吹き放ちの柱
+            W.box((xp - 0.09, FL, zf - 0.09), (xp + 0.09, 2.52, zf + 0.09), 'V2_Wood', DARK, grain=Y)
+        W.box((-w / 2, 2.50, zf - 0.12), (w / 2, 3.02, zf + 0.10), 'V2_Wood', DARK * 0.95, grain=X)            # 差鴨居
+        W.box((-w / 2, 3.02, zf - 0.04), (w / 2, YE, zf + 0.03), 'V2_Plaster', PL, grain=X)                     # 中二階の壁帯
+        for xc in (-2.1, -0.7, 0.7, 2.1):
+            louver_window(W, xc - 0.38, xc + 0.38, 3.12, 3.36, zf + 0.03)
+        for xa, xb in zip(xs[1:-1], xs[2:]):                                                                    # 貫（入口の間には渡さない）
+            W.box((xa + 0.09, 0.95, zf - 0.04), (xb - 0.09, 1.02, zf + 0.03), 'V2_Wood', DARK * 0.9, grain=X)
+        for xh in (-2.75, 2.75):
+            W.beam((xh, 2.42, zf + 0.10), (xh, 2.42, zf + 0.52), 0.06, 0.08, 'V2_Wood', DARK)
+        hung_fish(W, -2.85, 2.85, 2.36, zf + 0.52, n=11)
+        ridge_vent(B, lod, H, -1.9, 1.9)
     B.finish()
     return B
-
 
 def build_mkt027():
     """B_P_MKT_027 飯屋：2F の張り出し縁（客席＝手摺付き）＋棟上の大きな越屋根（竈の煙出し）＋戸口の両脇に据え付けの長床几＋半暖簾。
@@ -901,26 +1005,33 @@ def build_mkt027():
 
 
 def build_mkt026():
-    """B_P_MKT_026 履物屋（弁柄壁・厨子二階）：戸口の左右に取り付く 3 段の陳列棚（草履の列）＋長い瓦庇＋虫籠窓 5。入口＝x 0.88..2.64。
-    Kit style bengara/c1/t0。"""
+    """B_P_MKT_026 履物屋（R2.1 改）：長い一様な瓦庇をやめ、玄関（x 0.88..2.64）の上に『出し破風の小屋根』（妻面を通りへ向ける切妻・
+    懸魚付き・前の 2 本の庇柱と繋ぎ梁）を出して店の顔にする。その左右は短くした瓦庇、左 2 間は壁から 0.32 m 張り出す出格子の陳列窓。
+    玄関の庇の下に草履・下駄の吊り列。2F の玄関上は塗り壁（庇の屋根が窓を隠すため）。Kit style bengara/c1/t0。"""
     B = Bld('B_P_MKT_026', 8.797, 10.92, 3.9, hk='h27', fin=1, tone=0)
     w, zf = B.w, B.zf
-    bays1 = [('koshir', 1.76), ('shop_k', 1.76), ('shop_k', 1.76), ('shop_o', 1.76), ('koshir', w - 7.04)]
-    bays2 = [('mushi', 1.76), ('mushib', 1.76), ('mushi', 1.76), ('mushib', 1.76), ('mushi', w - 7.04)]
+    cx, hw_ = 1.7615, 1.45
+    bays1 = [('koshir', 1.76), ('koshir', 1.76), ('koshir', 1.76), ('shop_o', 1.76), ('koshir', w - 7.04)]
+    bays2 = [('mushi', 1.76), ('mushib', 1.76), ('mushi', 1.76), ('plain', 1.76), ('mushi', w - 7.04)]
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
         gable_on_body(B, lod, 3.9, 0.46, 0.45, 0.10, False)
-        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.75, zf, 1.1, p=0.30, style='tile', strut=False)
+        eave_roof(R, lod, -w / 2 + 0.02, cx - hw_ - 0.14, 2.75, zf, 1.1, p=0.30, style='tile', strut=False, flash=True)
+        eave_roof(R, lod, cx + hw_ + 0.14, w / 2 - 0.02, 2.75, zf, 1.1, p=0.30, style='tile', strut=False, flash=True)
+        tm = tmp()
+        gable_roof(tm, lod, 1.30, hw_, 2.70, 0.50, 0.12, 0.10, tsuma=True)
+        put(R, tm, off=(cx, 0.0, zf + 0.50), rot=-math.pi * 0.5)
         if lod == 0:
             row1(B, W, bays1)
             row2(B, W, bays2, 2.7, 3.9)
-            shelf_wall(W, -1.78, 0.76, zf)
-            shelf_wall(W, 2.72, w / 2 - 0.12, zf)
-            for e in (-1.0, 1.0):
-                put(W, cached(('ud80',), lambda: NS['udatsu'](0.8)), off=(e * (w / 2 - 0.13), 2.75, zf))
+            deguchi(W, -2.45, -1.07, 0.62, 2.15, zf, out=0.32)
+            deguchi(W, -0.69, 0.69, 0.62, 2.15, zf, out=0.32)
+            for xq in (cx - 1.30, cx + 1.30):
+                post(W, xq, zf + 1.05, 2.40, w=0.16)
+            W.box((cx - 1.46, 2.40, zf + 0.98), (cx + 1.46, 2.60, zf + 1.12), 'V2_Wood', DARK, grain=X)       # 繋ぎ梁（庇柱の頭）
+            hung_sandals(W, cx - 1.10, cx + 1.10, 2.30, zf + 0.72, n=9)
     B.finish()
     return B
-
 
 def nurigome(dst, w, zf, y0, y1, openings, t=0.17, col=None):
     """塗籠（2F 全面を厚い漆喰で塗り込めた壁）：木の骨組みを覆う連続した壁面。窓は厚み t の深い抱き（開口の側面・上下が見える）。
@@ -982,27 +1093,34 @@ def build_mkt006():
 
 
 def build_mkt020():
-    """B_P_MKT_020 豆腐屋（妻入）：棟上の大きな越屋根（湯気抜き）＋懸魚の急な妻＋右の作業場側は湯気窓の格子を広くとった開口＋浅い板庇。
-    入口＝x −1.44..0.48。Kit style open/c4/t0。"""
+    """B_P_MKT_020 豆腐屋（R2.1 改）：妻入の急勾配＋懸魚。板庇は 1.0→0.55 m に縮め、製作空間をはっきりさせる：
+    右の作業側に『湯気窓』＋持ち出しの作業台＋窓下の石の水舟、屋根には土の煙突（竈）と大きな湯気抜きの越屋根。入口＝x −1.44..0.48。Kit style open/c4/t0。"""
     B = Bld('B_P_MKT_020', 4.806, 9.1, 3.9, hk='h27', fin=4, tone=0)
     w, zf = B.w, B.zf
     bays1 = [('koshib', 0.96), ('shop_o', 1.924), ('shop_k', w - 2.884)]
     bays2 = [('mushis', 0.96), ('mushis', 1.924), ('mushis', w - 2.884)]
     for lod in (0, 1):
         W, R = B.W[lod], B.R[lod]
-        H = gable_on_body(B, lod, 3.9, 0.62, 0.20, 0.30, True)           # 側軒 0.20：隣（MKT_021）の massing が 0.2 m 先
-        koshi_turret(B, lod, H, 1.7, -math.pi * 0.5)
-        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.75, zf, 1.0, p=0.28, style='board', strut=False)
+        H = gable_on_body(B, lod, 3.9, 0.62, 0.20, 0.30, True)
+        koshi_turret(B, lod, H, 1.9, -math.pi * 0.5, z=0.3)
+        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.75, zf, 0.55, p=0.30, style='board', flash=True)
         if lod == 0:
             row1(B, W, bays1)
             row2(B, W, bays2, 2.7, 3.9)
-            # 作業場側：湯気窓（広い格子の欄間）
             xk0, xk1 = 0.55, w / 2 - 0.12
             W.rect_uv((xk0, 1.65, zf + 0.015), (xk1, 1.65, zf + 0.015), (xk1, 2.45, zf + 0.015), (xk0, 2.45, zf + 0.015), AM, RG['koshi_b'], 0.9)
             W.box((xk0 - 0.04, 2.45, zf - 0.02), (xk1 + 0.04, 2.55, zf + 0.06), 'V2_Wood', DARK, grain=X)
+            W.box((xk0 - 0.06, 1.04, zf - 0.02), (xk1 + 0.06, 1.12, zf + 0.24), 'V2_Wood', BOARD, grain=X)    # 作業台の持ち出し板
+            for xb in (xk0 + 0.1, (xk0 + xk1) / 2, xk1 - 0.1):
+                W.beam((xb, 1.04, zf + 0.22), (xb, 0.80, zf + 0.0), 0.05, 0.07, 'V2_Wood', DARK)
+            W.box((xk0, FL, zf), (xk1 - 0.1, FL + 0.50, zf + 0.26), 'V2_KitStoneTri', 0.8)                 # 石の水舟（P10 の桶山が z+0.29 から立つので 0.26 まで）
+            W.box((xk0 + 0.08, FL + 0.44, zf + 0.06), (xk1 - 0.18, FL + 0.51, zf + 0.21), 'V2_Wood', DARK * 0.3, grain=X)
+            xc_, zc_ = 1.15, zf - 1.6
+            yr = H - 0.62 * abs(xc_)
+            R.box((xc_ - 0.38, yr - 0.12, zc_ - 0.38), (xc_ + 0.38, yr + 0.20, zc_ + 0.38), 'V2_Kawara', 0.6)  # 屋根との取り合い（鉛色の水切り）
+            chimney(R, xc_, zc_, yr - 0.3, H + 1.40, s=0.62)                                                # 竈の煙突（棟より 1.4 m 上・遠くからも見える太さ）
     B.finish()
     return B
-
 
 BUILDERS = [build_mkt012, build_mkt013, build_mkt011, build_mkt010, build_mkt009, build_mkt008,
             build_rsw047, build_rsw048, build_rsw061, build_rsw062,
@@ -1028,7 +1146,7 @@ def main():
     total = sum(v['tris'] for v in manifest.values())
     K.write_json(OUT + '/src/modules_blender.json', {
         '_note': 'build_w9r2_arch.py 產生；Godot prefab（tools/p13/w9/w9r2_prefab.gd）讀此表逐一轉成 mesh/<名>.res。',
-        'materials': MATS, 'modules': manifest, 'total_tris': total, 'eaves': EAVES, 'roofs': ROOFS})
+        'materials': MATS, 'modules': manifest, 'total_tris': total, 'eaves': EAVES, 'roofs': ROOFS, 'posts': POSTS})
     print('[W9R2] %d メッシュ、合計 %d 三角面 → %s' % (len(manifest), total, OUT + '/src/w9r2_arch.glb'))
     for k, v in manifest.items():
         print('[W9R2]  %s %d tri' % (k, v['tris']))

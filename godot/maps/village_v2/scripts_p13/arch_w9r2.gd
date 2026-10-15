@@ -57,9 +57,21 @@ func _kit_meshes(kit: Node, lods: Array) -> Array:
 	return out
 
 
+func _posts(on: bool) -> void:
+	## 庇柱・玄関柱の碰撞（Posts/PostN）：overlay が有効の間だけ有効。Before（enabled=false）では柱が無いので碰撞も無し。
+	for c in get_children():
+		var sb := c.get_node_or_null("Posts")
+		if sb == null:
+			continue
+		for cs in sb.get_children():
+			if cs is CollisionShape3D:
+				(cs as CollisionShape3D).set_deferred("disabled", not on)
+
+
 func _apply(on: bool) -> void:
 	_restore()
 	visible = on
+	_posts(on)
 	if not on:
 		return
 	var vil := get_parent()
@@ -89,8 +101,15 @@ func _apply(on: bool) -> void:
 			var g := kit.get_node_or_null("LOD%d" % lod)
 			if g == null or pre.is_empty():
 				continue
+			var all_but_base := pre.has("*")       # 全面置換：base（基礎）以外の Kit 構件を全部隠す
 			for mi in g.get_children():
 				if not mi is MeshInstance3D:
+					continue
+				if all_but_base:
+					if not String(mi.name).begins_with("base"):
+						_hidden.append([mi, (mi as MeshInstance3D).visible])
+						(mi as MeshInstance3D).visible = false
+						hidden_count += 1
 					continue
 				for p in pre:
 					if String(mi.name).begins_with(p):

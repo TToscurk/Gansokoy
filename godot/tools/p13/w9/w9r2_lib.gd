@@ -9,6 +9,8 @@ const SCENE := "res://maps/village_v2/village_v2.tscn"
 const AFTER := "EnrichW9P13"
 const MESH_DIR := "res://assets/village_v2/w9r2_arch/mesh/"
 const SCRIPT := "res://maps/village_v2/scripts_p13/arch_w9r2.gd"
+const META := "res://assets/village_v2/w9r2_arch/src/modules_blender.json"
+const POST_PAD := 0.03        # 庇柱の碰撞は柱（w）より半径 +0.03 m 太い箱（見た目の柱に触れたら当たる）。礎石（±0.12）より細くはしない
 const LOD_RANGES := [0.0, 40.0, 600.0]
 const LOD_MARGIN := 4.0
 
@@ -37,7 +39,7 @@ const SPECS := {
 	"B_P_RSW_048": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_061": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_061", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_062": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_062", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_025": {"path": "Districts/Market/Buildings/B_P_MKT_025", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_025": {"path": "Districts/Market/Buildings/B_P_MKT_025", "hide": ["all"]},      # 平屋へ低くするので Kit の壁・柱・屋根を（base 以外）全て隠し自前で閉じる
 	"B_P_MKT_027": {"path": "Districts/Market/Buildings/B_P_MKT_027", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_026": {"path": "Districts/Market/Buildings/B_P_MKT_026", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_024": {"path": "Districts/Market/Buildings/B_P_MKT_024", "hide": ["front", "eave", "roof"]},
@@ -49,6 +51,8 @@ const SPECS := {
 static func hide_prefixes(id: String, lod: int) -> PackedStringArray:
 	var out := PackedStringArray()
 	var cats: Array = SPECS[id]["hide"]
+	if cats.has("all"):
+		return PackedStringArray(["*"])      # base 以外の Kit 構件を全部（overlay 側で解釈）
 	var tab: Dictionary = CAT0 if lod == 0 else CAT12
 	for c: String in cats:
 		var cc := c

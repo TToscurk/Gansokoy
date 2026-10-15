@@ -89,11 +89,11 @@
    "note": "B_P_RSW_062 LOD1"
   },
   "B_P_MKT_025_L0": {
-   "tris": 12426,
+   "tris": 13978,
    "note": "B_P_MKT_025 LOD0"
   },
   "B_P_MKT_025_L1": {
-   "tris": 22,
+   "tris": 80,
    "note": "B_P_MKT_025 LOD1"
   },
   "B_P_MKT_027_L0": {
@@ -105,11 +105,11 @@
    "note": "B_P_MKT_027 LOD1"
   },
   "B_P_MKT_026_L0": {
-   "tris": 20594,
+   "tris": 21106,
    "note": "B_P_MKT_026 LOD0"
   },
   "B_P_MKT_026_L1": {
-   "tris": 22,
+   "tris": 44,
    "note": "B_P_MKT_026 LOD1"
   },
   "B_P_MKT_024_L0": {
@@ -129,7 +129,7 @@
    "note": "B_P_MKT_006 LOD1"
   },
   "B_P_MKT_020_L0": {
-   "tris": 10792,
+   "tris": 10920,
    "note": "B_P_MKT_020 LOD0"
   },
   "B_P_MKT_020_L1": {
@@ -137,7 +137,7 @@
    "note": "B_P_MKT_020 LOD1"
   }
  },
- "total_tris": 219732,
+ "total_tris": 222004,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -265,32 +265,30 @@
     "posts": []
    }
   ],
-  "B_P_MKT_025": [
-   {
-    "x0": -3.028,
-    "x1": 3.028,
-    "y": 2.95,
-    "zf": 5.46,
-    "depth": 1.2,
-    "p": 0.28,
-    "style": "board",
-    "brackets": 7,
-    "bracket_gap": 1.0093333333333334,
-    "strut": false,
-    "posts": []
-   }
-  ],
   "B_P_MKT_026": [
    {
     "x0": -4.378500000000001,
+    "x1": 0.1715000000000001,
+    "y": 2.75,
+    "zf": 5.46,
+    "depth": 1.1,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 5,
+    "bracket_gap": 1.1375000000000002,
+    "strut": false,
+    "posts": []
+   },
+   {
+    "x0": 3.3515,
     "x1": 4.378500000000001,
     "y": 2.75,
     "zf": 5.46,
     "depth": 1.1,
     "p": 0.3,
     "style": "tile",
-    "brackets": 9,
-    "bracket_gap": 1.0946250000000002,
+    "brackets": 3,
+    "bracket_gap": 0.5135000000000003,
     "strut": false,
     "posts": []
    }
@@ -331,8 +329,8 @@
     "x1": 2.383,
     "y": 2.75,
     "zf": 4.55,
-    "depth": 1.0,
-    "p": 0.28,
+    "depth": 0.55,
+    "p": 0.3,
     "style": "board",
     "brackets": 6,
     "bracket_gap": 0.9532,
@@ -442,7 +440,7 @@
     "hip_caps": 0,
     "eave_tails": true,
     "gegyo": false,
-    "ove": 0.4
+    "ove": 0.85
    }
   ],
   "B_P_MKT_027": [
@@ -469,6 +467,15 @@
     "eave_tails": true,
     "gegyo": false,
     "ove": 0.45
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.12
    }
   ],
   "B_P_MKT_024": [
@@ -509,7 +516,51 @@
    },
    {
     "kind": "turret",
-    "scale": 1.7
+    "scale": 1.9
+   }
+  ]
+ },
+ "posts": {
+  "B_P_MKT_011": [
+   {
+    "x": -3.252,
+    "z": 6.375,
+    "top": 2.2834000000000003,
+    "w": 0.14
+   },
+   {
+    "x": 2.05,
+    "z": 6.375,
+    "top": 2.2834000000000003,
+    "w": 0.14
+   }
+  ],
+  "B_P_MKT_008": [
+   {
+    "x": 2.62,
+    "z": 7.08,
+    "top": 2.188,
+    "w": 0.14
+   },
+   {
+    "x": 3.36,
+    "z": 7.08,
+    "top": 2.188,
+    "w": 0.14
+   }
+  ],
+  "B_P_MKT_026": [
+   {
+    "x": 0.4615,
+    "z": 6.51,
+    "top": 2.4,
+    "w": 0.16
+   },
+   {
+    "x": 3.0615,
+    "z": 6.51,
+    "top": 2.4,
+    "w": 0.16
    }
   ]
  }
