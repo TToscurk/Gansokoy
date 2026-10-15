@@ -135,9 +135,33 @@
   "B_P_MKT_020_L1": {
    "tris": 22,
    "note": "B_P_MKT_020 LOD1"
+  },
+  "B_P_RSW_074_L0": {
+   "tris": 2504,
+   "note": "B_P_RSW_074 LOD0"
+  },
+  "B_P_RSW_074_L1": {
+   "tris": 44,
+   "note": "B_P_RSW_074 LOD1"
+  },
+  "B_P_MKT_029_L0": {
+   "tris": 17922,
+   "note": "B_P_MKT_029 LOD0"
+  },
+  "B_P_MKT_029_L1": {
+   "tris": 66,
+   "note": "B_P_MKT_029 LOD1"
+  },
+  "B_P_RSW_014_L0": {
+   "tris": 19310,
+   "note": "B_P_RSW_014 LOD0"
+  },
+  "B_P_RSW_014_L1": {
+   "tris": 66,
+   "note": "B_P_RSW_014 LOD1"
   }
  },
- "total_tris": 222004,
+ "total_tris": 261916,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -337,6 +361,21 @@
     "strut": false,
     "posts": []
    }
+  ],
+  "B_P_MKT_029": [
+   {
+    "x0": -3.4771,
+    "x1": 3.4771,
+    "y": 2.75,
+    "zf": 5.46,
+    "depth": 1.0,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 8,
+    "bracket_gap": 0.9934571428571429,
+    "strut": false,
+    "posts": []
+   }
   ]
  },
  "roofs": {
@@ -517,6 +556,70 @@
    {
     "kind": "turret",
     "scale": 1.9
+   }
+  ],
+  "B_P_RSW_074": [
+   {
+    "kind": "board",
+    "gable": true,
+    "ridge_cover": true,
+    "barge": true,
+    "battens": 20,
+    "stones": 68,
+    "ove": 0.45
+   },
+   {
+    "kind": "board",
+    "gable": false,
+    "ridge_cover": false,
+    "barge": true,
+    "battens": 6,
+    "stones": 18,
+    "ove": 0.3
+   }
+  ],
+  "B_P_MKT_029": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.35
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.4
+   }
+  ],
+  "B_P_RSW_014": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.18
+   },
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.18
+   },
+   {
+    "kind": "turret",
+    "scale": 1.5
    }
   ]
  },

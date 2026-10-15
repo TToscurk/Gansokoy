@@ -1,0 +1,61 @@
+# W9 Phase 2（新建築タイプ 3 棟）— 直接相関の検査（2026-10-15）。godot/ で Godot 4.7.2 headless。
+
+## verify_w9r2.gd（19 棟）
+[W9R2G] 反向案例 36/36（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）
+[W9R2G] 結果：265 通過・0 失敗（反向案例 36/36）
+
+### 新 3 棟の項目
+[W9R2G] PASS B_P_RSW_074：overlay 子がある
+[W9R2G] PASS B_P_RSW_074：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_074）
+[W9R2G] PASS B_P_RSW_074：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_074：L0／L1 あり
+[W9R2G] PASS B_P_RSW_074：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_074：三角面 L0 2504／L1 44（上限 30000／500）
+[W9R2G] PASS B_P_RSW_074：張り出しが上限内（[P: (-2.727747, 0.32, -5.785), S: (5.455495, 2.980234, 11.685)]）
+[W9R2G] PASS B_P_RSW_074：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_074：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_074：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_074：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_029：overlay 子がある
+[W9R2G] PASS B_P_MKT_029：body が実在（Districts/Market/Buildings/B_P_MKT_029）
+[W9R2G] PASS B_P_MKT_029：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_029：L0／L1 あり
+[W9R2G] PASS B_P_MKT_029：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_029：三角面 L0 17922／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_MKT_029：張り出しが上限内（[P: (-3.5921, 0.296, -5.575), S: (7.1842, 7.399, 12.04444)]）
+[W9R2G] PASS B_P_MKT_029：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_029：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_029：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_029：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_014：overlay 子がある
+[W9R2G] PASS B_P_RSW_014：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_014）
+[W9R2G] PASS B_P_RSW_014：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_014：L0／L1 あり
+[W9R2G] PASS B_P_RSW_014：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_014：三角面 L0 19310／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_RSW_014：張り出しが上限内（[P: (-3.80355, 0.28, -5.755), S: (7.6071, 5.253579, 12.1)]）
+[W9R2G] PASS B_P_RSW_014：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_014：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_014：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_014：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_RSW_074：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_074：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_029：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_029：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_014：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_014：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+
+## verify_w9r2_posts.gd（庇柱 6 本・新規碰撞なし）
+[W9R2P] 結果：14 通過・0 失敗
+
+## w9_walk_check.gd（R1 の歩行 14 線＋5 区間）
+[W9W] 到達性：5 区間中 NG 0
+[W9W] 結果：0 項失敗
+
+## 面数（LOD0）
+  B_P_RSW_074 Kit LOD0（base 以外・隠れる分）11148 → 新 2504（-8644）
+  B_P_MKT_029 Kit LOD0（base 以外・隠れる分）14983 → 新 17922（+2939）
+  B_P_RSW_014 Kit LOD0（base 以外・隠れる分）15768 → 新 19310（+3542）
+  3 棟の差し引き -2163 tri。overlay LOD0 合計 260942（3 棟 39736＋既存 16 棟 221206、build log の相減）
+  既存 16 棟の L0/L1 .res は git 上で変更なし（新規は 3 対のみ）
+  碰撞：新規・変更なし。body Shape の頂＝原 Kit 軒高（074 2.90／029 5.40／014 2.90 m）、可見最高（074 3.30／029 7.70／014 5.53 m）

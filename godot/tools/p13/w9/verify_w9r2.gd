@@ -26,7 +26,7 @@ const EAVE_MAX_GAP := 1.3      # 腕木の最大間隔
 const EAVE_MIN_FRONT := 2.0    # 庇の前縁の下端高さ（頭が当たらない）
 # R1 の吊り物（overlay が同じ toggle で隠す種類）
 const R1_HANG := ["sudare", "kaki", "sugi", "zaru", "zori"]
-const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020"]   # 妻入（懸魚が要る）
+const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020", "B_P_RSW_014"]   # 妻入（懸魚が要る）
 const R2_BASE := "0ca148f"      # R2 の直前（R1 最終）。village_v2.tscn はここから追加のみ・≤3 行
 const NEIGHBOR_SHRINK := 0.12  # 隣棟の massing 箱をこれだけ縮めて、屋根・庇の貫入を拾う（Kit 自身の軒も少し重なるため）
 const NEIGHBOR_Y := 2.0        # 隣棟への貫入は屋根・庇の高さ（局部 y > 2.0）だけ
@@ -164,6 +164,16 @@ static func eave_issues(e: Dictionary, w: float, door_cx: float, door_w: float) 
 static func roof_issues(r: Dictionary, tsuma: bool) -> PackedStringArray:
 	var out: PackedStringArray = []
 	if String(r.get("kind", "")) == "turret":
+		return out
+	if String(r.get("kind", "")) == "board":          # 板葺き（石置き）屋根：瓦屋根の規則（段積みの棟・鬼瓦）ではなく、押さえ竹・石・破風板（・切妻なら棟覆い）
+		if int(r.get("battens", 0)) < 2:
+			out.append("押さえ竹なし")
+		if int(r.get("stones", 0)) < 4:
+			out.append("石置きなし")
+		if not bool(r.get("barge", false)):
+			out.append("破風板なし")
+		if bool(r.get("gable", false)) and not bool(r.get("ridge_cover", false)):
+			out.append("棟覆いなし")
 		return out
 	if not bool(r.get("eave_tails", false)):
 		out.append("軒先の垂木尻なし")
@@ -531,6 +541,15 @@ func _negatives() -> Array:
 		okc += 0 if roof_issues(r, false).is_empty() else 1
 	tot += 1
 	okc += 0 if roof_issues(rgood, true).is_empty() else 1          # 妻入なのに懸魚なし
+	# --- 板葺き屋根（Phase 2）---
+	var bgood := {"kind": "board", "gable": true, "ridge_cover": true, "barge": true, "battens": 10, "stones": 40}
+	tot += 1
+	okc += 1 if roof_issues(bgood, false).is_empty() else 0
+	for badb in [{"battens": 0}, {"stones": 0}, {"barge": false}, {"ridge_cover": false}]:
+		var rb: Dictionary = bgood.duplicate()
+		rb.merge(badb, true)
+		tot += 1
+		okc += 0 if roof_issues(rb, false).is_empty() else 1
 	# --- 貫入（他 overlay の実体）---
 	var pole := [["Props/StreetP10/Signs/065_st_nobori_sake/LOD0", AABB(Vector3(-2.4, -0.2, 5.9), Vector3(0.6, 4.0, 0.5))]]
 	var slab := _tri_mesh(Vector3(-2.3, 2.7, 5.95), Vector3(-1.9, 2.7, 6.3), Vector3(-2.1, 2.5, 6.3))       # 幟の竿を貫く庇
@@ -559,7 +578,7 @@ func _negatives() -> Array:
 			[[Vector3(1.0, 1.15, 6.0), Vector3(0.2, 2.3, 0.2), 2, 1]]]:           # layer が body と違う
 		tot += 1
 		okc += 0 if post_issues(pe, badp, 1, 1).is_empty() else 1
-	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5）" % [okc, tot])
+	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）" % [okc, tot])
 	return [okc, tot]
 
 

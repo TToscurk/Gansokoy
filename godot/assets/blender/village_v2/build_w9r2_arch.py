@@ -1122,9 +1122,315 @@ def build_mkt020():
     B.finish()
     return B
 
+# ═══════════════════════ Phase 2：新しい建築タイプ 3 棟（板葺き簡陋民宅／土蔵の商家／作業場付きの工匠宅）═══════════════════════
+# 町家 Kit は『瓦屋根・木構架・土壁』の一語彙。ここでは屋根材・量体・壁の構造・開口・附属空間そのものを変えた 3 型を 1 棟ずつ見本にする。
+# 材質は町で使用中の V2_Wood／V2_Plaster／V2_Kawara／V2_KitStoneTri／Kit の atlas だけ（新しい資源なし）。
+
+def _lerp3(a, b, t):
+    return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t)
+
+
+def board_plane(dst, lod, ra, rb, ea, eb, col=0.78):
+    """板葺（石置き）屋面の 1 枚：高い辺 ra→rb（x 方向）から低い辺 ea→eb へ下る。板の重なり（段）・押さえ竹（棟→軒）・石を載せる。
+    戻り値＝(押さえ竹の本数, 石の数)。"""
+    n = _newell([ra, rb, eb, ea])
+    if n[1] < 0:
+        n = mul(n, -1.0)
+    polyo(dst, [ra, rb, eb, ea], 'V2_Wood', col, out=n, grain=X)
+    if lod:
+        return 0, 0
+    dn = lambda q: add(q, mul(n, -0.05))
+    polyo(dst, [dn(ra), dn(rb), dn(eb), dn(ea)], 'V2_Wood', DARK * 0.7, out=mul(n, -1.0), grain=X)
+    S = math.sqrt(sum((ea[k] - ra[k]) ** 2 for k in range(3)))
+    nc = max(2, int(S / 0.30))
+    for i in range(1, nc):                                              # 板の重なり（段）
+        f = i / nc
+        dst.beam(add(_lerp3(ra, ea, f), mul(n, 0.012)), add(_lerp3(rb, eb, f), mul(n, 0.012)), 0.035, 0.022, 'V2_Wood', DARK * 0.78, up=n)
+    Lx = math.sqrt(sum((rb[k] - ra[k]) ** 2 for k in range(3)))
+    xd = norm(sub(rb, ra))
+    npl = max(2, int(round(Lx / 0.85)))
+    stones = 0
+    for i in range(npl):                                                # 押さえ竹（棟→軒）＋石
+        t = (i + 0.5) / npl
+        top, bot = _lerp3(ra, rb, t), _lerp3(ea, eb, t)
+        dst.beam(add(top, mul(n, 0.03)), add(bot, mul(n, 0.03)), 0.05, 0.05, 'V2_Wood', DARK * 0.82, up=n)
+        for j, fr in enumerate((0.30, 0.58, 0.85)):
+            c = add(_lerp3(top, bot, fr), mul(n, 0.085))
+            cl = 0.76 + 0.18 * (((i * 7 + j * 3) % 5) / 4.0)
+            dst.beam(add(c, mul(xd, -0.13)), add(c, mul(xd, 0.13)), 0.19 + 0.02 * ((i + j) % 3), 0.11, 'V2_KitStoneTri', cl, up=n)
+            stones += 1
+    return npl, stones
+
+
+def board_roof(dst, lod, wall_len, half, eave, p, ove, ovg):
+    """板葺き（石置き）の切妻：棟は x 方向（gable_roof と同じ局部枠）。棟覆い・棟の石・破風板・鼻隠し付き。返り値＝棟高。"""
+    H = eave + p * half
+    L = wall_len + 2.0 * ovg
+    ye = eave - p * ove
+    Zs = half + ove
+    nbat = nst = 0
+    for sg in (1.0, -1.0):
+        a, b = board_plane(dst, lod, (-L / 2, H, 0.0), (L / 2, H, 0.0), (-L / 2, ye, sg * Zs), (L / 2, ye, sg * Zs))
+        nbat += a
+        nst += b
+        if lod == 0:
+            n = norm((0.0, 1.0, sg * p))
+            for e in (-1.0, 1.0):                                       # 破風板
+                dst.beam((e * L / 2, H, 0.0), (e * L / 2, ye, sg * Zs), 0.05, 0.16, 'V2_Wood', DARK * 0.85, up=n)
+            dst.beam((-L / 2, ye - 0.04, sg * Zs), (L / 2, ye - 0.04, sg * Zs), 0.05, 0.13, 'V2_Wood', DARK * 0.85)    # 鼻隠し
+    if lod == 0:
+        dst.box((-L / 2 - 0.04, H - 0.03, -0.16), (L / 2 + 0.04, H + 0.07, 0.16), 'V2_Wood', DARK * 0.9, grain=X)      # 棟覆い
+        k = max(2, int(round(L / 1.1)))
+        for i in range(k):
+            xc = -L / 2 + L * (i + 0.5) / k
+            dst.box((xc - 0.14, H + 0.07, -0.10), (xc + 0.14, H + 0.19, 0.10), 'V2_KitStoneTri', 0.8 + 0.1 * (i % 3) / 2.0)   # 棟の石
+            nst += 1
+        _rec('roof', kind='board', gable=True, ridge_cover=True, barge=True, battens=nbat, stones=nst, ove=ove)
+    else:
+        dst.box((-L / 2, H - 0.02, -0.14), (L / 2, H + 0.10, 0.14), 'V2_Wood', DARK * 0.9, grain=X)
+    return H
+
+
+def board_shed(dst, lod, x0, x1, z_hi, y_hi, z_lo, y_lo):
+    """板葺きの片流れ（下屋）：z_hi の壁際（y_hi）から z_lo の軒（y_lo）へ下る。"""
+    a, b = board_plane(dst, lod, (x0, y_hi, z_hi), (x1, y_hi, z_hi), (x0, y_lo, z_lo), (x1, y_lo, z_lo), col=0.72)
+    if lod == 0:
+        n = _newell([(x0, y_hi, z_hi), (x1, y_hi, z_hi), (x1, y_lo, z_lo), (x0, y_lo, z_lo)])
+        n = mul(n, -1.0) if n[1] < 0 else n
+        dst.beam((x0, y_lo - 0.04, z_lo), (x1, y_lo - 0.04, z_lo), 0.05, 0.13, 'V2_Wood', DARK * 0.85)               # 鼻隠し
+        for xe in (x0, x1):                                                                                           # 破風板
+            dst.beam((xe, y_hi, z_hi), (xe, y_lo, z_lo), 0.05, 0.15, 'V2_Wood', DARK * 0.85, up=n)
+        _rec('roof', kind='board', gable=False, ridge_cover=False, barge=True, battens=a, stones=b, ove=0.3)
+
+
+def namako_side(dst, z0, z1, y0, y1, x, sgn, cell=0.24, tcol=0.42):
+    """海鼠壁（側面版）：x＝壁面、sgn＝外向き（+1／−1）。白漆喰の盛り上がった目地に暗い平瓦。"""
+    j = 0.03
+    out = (float(sgn), 0.0, 0.0)
+    polyo(dst, [(x, y0, z0), (x, y0, z1), (x, y1, z1), (x, y1, z0)], 'V2_Plaster', PL, out=out, grain=Y)
+    nz = max(2, int(round((z1 - z0) / cell)))
+    ny = max(2, int(round((y1 - y0) / cell)))
+    cw, ch = (z1 - z0) / nz, (y1 - y0) / ny
+    xo = x + sgn * 0.012
+    for iy in range(ny):
+        for iz in range(nz):
+            a, b = z0 + iz * cw + j, z0 + (iz + 1) * cw - j
+            c, d = y0 + iy * ch + j, y0 + (iy + 1) * ch - j
+            polyo(dst, [(xo, c, a), (xo, c, b), (xo, d, b), (xo, d, a)], 'V2_Kawara', tcol, out=out, grain=Y)
+    xa, xb = (x, x + sgn * 0.02) if sgn > 0 else (x + sgn * 0.02, x)
+    for iy in range(ny + 1):
+        yy = y0 + iy * ch
+        dst.box((xa, yy - j * 0.8, z0), (xb, yy + j * 0.8, z1), 'V2_Plaster', PL, grain=Z)
+    for iz in range(nz + 1):
+        zz = z0 + iz * cw
+        dst.box((xa, y0, zz - j * 0.8), (xb, y1, zz + j * 0.8), 'V2_Plaster', PL, grain=Y)
+
+
+def kura_window_side(dst, x, sgn, zc, y0, y1, ww=0.62):
+    """土蔵の窓（側面）：壁より出る厚い漆喰の抱き（枠）＋暗い奥＋漆喰の観音扉（片方を開いた形）。"""
+    xa, xb = (x, x + sgn * 0.11) if sgn > 0 else (x + sgn * 0.11, x)
+    z0, z1 = zc - ww / 2, zc + ww / 2
+    out = (float(sgn), 0.0, 0.0)
+    xo = x + sgn * 0.004
+    polyo(dst, [(xo, y0, z0), (xo, y0, z1), (xo, y1, z1), (xo, y1, z0)], 'V2_Wood', 0.12, out=out, grain=Y)           # 暗い奥
+    t = 0.11
+    dst.box((xa, y0 - t, z0 - t), (xb, y1 + t, z0), 'V2_Plaster', PL * 0.96, grain=Y)                                  # 抱き（左右・上下）
+    dst.box((xa, y0 - t, z1), (xb, y1 + t, z1 + t), 'V2_Plaster', PL * 0.96, grain=Y)
+    dst.box((xa, y1, z0), (xb, y1 + t, z1), 'V2_Plaster', PL * 0.96, grain=X)
+    dst.box((xa, y0 - t, z0), (xb, y0, z1), 'V2_Plaster', PL * 0.96, grain=X)
+    xs0, xs1 = (x + sgn * 0.11, x + sgn * 0.45)                                                                        # 開いた観音扉（壁に直角）
+    dst.box((min(xs0, xs1), y0 - 0.03, z1 + t - 0.01), (max(xs0, xs1), y1 + 0.03, z1 + t + 0.05), 'V2_Plaster', PL * 0.9, grain=Y)
+
+
+def build_rsw074():
+    """B_P_RSW_074 板葺き簡陋民宅：低い平屋（壁 2.3 m）＋石置きの板葺き屋根（押さえ竹・石・棟覆い・破風板）、荒い土壁と腰板に露出した柱、
+    小さな戸口（板戸）・連子窓・妻の小窓、背に板葺きの下屋。瓦・漆喰の町家とは屋根材・量体・壁の構造・開口が違う。入口＝x −1.35..0.45。"""
+    B = Bld('B_P_RSW_074', 4.5013, 10.92, 2.3, fin=0, tone=0)
+    w, zf = B.w, B.zf
+    MUD, MUD2 = (0.74, 0.62, 0.47), (0.66, 0.55, 0.42)
+    zm, zr, YE = -2.20, -B.zf, 2.30
+    xdl, xdr = -1.35, 0.45
+    for lod in (0, 1):
+        W, R = B.W[lod], B.R[lod]
+        tm = tmp()
+        H = board_roof(tm, lod, zf - zm, w / 2, YE, 0.36, 0.45, 0.40)
+        put(R, tm, off=(0.0, 0.0, (zf + zm) / 2), rot=-math.pi * 0.5)
+        board_shed(R, lod, -w / 2 - 0.35, w / 2 + 0.35, zm, 2.15, zr - 0.30, 1.45)
+        if lod == 1:
+            W.box((-w / 2, FL, zm), (w / 2, YE, zf), 'V2_Plaster', MUD, grain=Y)
+            W.box((-w / 2, FL, zr), (w / 2, 1.75, zm), 'V2_Plaster', MUD2, grain=Y)
+            polyo(W, [(-w / 2, YE, zf - 0.02), (w / 2, YE, zf - 0.02), (0.0, H, zf - 0.02)], 'V2_Wood', BOARD * 0.7, out=(0.0, 0.0, 1.0))
+            polyo(W, [(-w / 2, YE, zm + 0.02), (w / 2, YE, zm + 0.02), (0.0, H, zm + 0.02)], 'V2_Wood', BOARD * 0.7, out=(0.0, 0.0, -1.0))
+            continue
+        # --- 前面：腰板（横板）＋荒壁、戸口（板戸を半分引いた形）、連子窓 ---
+        for (xa, xb) in ((-w / 2, xdl), (xdr, w / 2)):
+            W.box((xa, FL, zf - 0.12), (xb, 1.12, zf), 'V2_Wood', BOARD * 0.72, grain=X)
+        W.box((-w / 2, 1.12, zf - 0.12), (xdl, YE, zf), 'V2_Plaster', MUD, grain=Y)
+        wx0, wx1, wy0, wy1 = 0.95, 1.80, 1.30, 1.86
+        W.box((xdr, 1.12, zf - 0.12), (wx0, YE, zf), 'V2_Plaster', MUD, grain=Y)
+        W.box((wx1, 1.12, zf - 0.12), (w / 2, YE, zf), 'V2_Plaster', MUD, grain=Y)
+        W.box((wx0, 1.12, zf - 0.12), (wx1, wy0, zf), 'V2_Plaster', MUD, grain=Y)
+        W.box((wx0, wy1, zf - 0.12), (wx1, YE, zf), 'V2_Plaster', MUD, grain=Y)
+        W.box((wx0, wy0, zf - 0.10), (wx1, wy1, zf - 0.07), 'V2_Wood', 0.14, grain=Y)                                 # 窓の奥（暗）
+        nb_ = int((wx1 - wx0) / 0.075)
+        for i in range(nb_ + 1):                                                                                       # 連子（竹の縦格子）
+            xx = wx0 + 0.04 + (wx1 - wx0 - 0.08) * i / nb_
+            W.box((xx - 0.012, wy0, zf - 0.065), (xx + 0.012, wy1, zf - 0.015), 'V2_Wood', 0.78, grain=Y)
+        for yy in (wy0 - 0.03, wy1):
+            W.box((wx0 - 0.03, yy, zf - 0.10), (wx1 + 0.03, yy + 0.04, zf + 0.0), 'V2_Wood', DARK, grain=X)
+        W.box((xdl, 1.98, zf - 0.12), (xdr, YE, zf), 'V2_Plaster', MUD, grain=Y)                                      # 戸口の上の荒壁
+        W.box((xdl - 0.06, 1.90, zf - 0.14), (xdr + 0.06, 1.98, zf + 0.03), 'V2_Wood', DARK, grain=X)                  # 鴨居
+        W.box((-0.45, FL, zf - 0.10), (xdr, 1.90, zf - 0.05), 'V2_Wood', BOARD * 0.72, grain=Y)                        # 板戸（右半分を閉じ、左は開いて暗い）
+        W.box((xdl, FL, zf - 0.62), (-0.45, 1.90, zf - 0.58), 'V2_Wood', 0.12, grain=Y)                                # 戸口の奥（暗い土間）
+        for xp in (-w / 2 + 0.06, xdl, xdr, w / 2 - 0.06):                                                             # 柱（露出した骨組み）
+            W.box((xp - 0.06, FL, zf - 0.14), (xp + 0.06, YE + 0.04, zf + 0.02), 'V2_Wood', DARK, grain=Y)
+        W.box((-w / 2, YE - 0.06, zf - 0.14), (w / 2, YE + 0.06, zf + 0.04), 'V2_Wood', DARK, grain=X)                 # 頭貫
+        for (xa, xb) in ((-w / 2, xdl), (xdr, w / 2)):
+            W.box((xa, 1.08, zf - 0.13), (xb, 1.16, zf + 0.01), 'V2_Wood', DARK, grain=X)                              # 貫
+        # 妻面（縦板）＋小窓
+        polyo(W, [(-w / 2, YE, zf - 0.06), (w / 2, YE, zf - 0.06), (0.0, H - 0.02, zf - 0.06)], 'V2_Wood', BOARD * 0.68, out=(0.0, 0.0, 1.0), grain=Y)
+        W.quad((-0.17, 2.50, zf - 0.055), (0.17, 2.50, zf - 0.055), (0.17, 2.80, zf - 0.055), (-0.17, 2.80, zf - 0.055), 'V2_Wood', 0.15, grain=Y)
+        # --- 側面：腰板＋荒壁、柱、貫（主屋）---
+        for sx in (-1.0, 1.0):
+            xo, xi = sx * w / 2, sx * (w / 2 - 0.12)
+            xlo, xhi = min(xo, xi), max(xo, xi)
+            W.box((xlo, FL, zm), (xhi, 1.12, zf), 'V2_Wood', BOARD * 0.72, grain=Z)
+            W.box((xlo, 1.12, zm), (xhi, YE, zf), 'V2_Plaster', MUD, grain=Z)
+            for zz in (zm + 0.08, zm + (zf - zm) * 0.34, zm + (zf - zm) * 0.66, zf - 0.08):
+                W.box((xlo - 0.02, FL, zz - 0.06), (xhi + 0.02, YE + 0.04, zz + 0.06), 'V2_Wood', DARK, grain=Y)
+            W.box((xlo - 0.02, 1.08, zm), (xhi + 0.02, 1.16, zf), 'V2_Wood', DARK, grain=Z)
+            W.box((xlo - 0.02, YE - 0.06, zm), (xhi + 0.02, YE + 0.06, zf), 'V2_Wood', DARK, grain=Z)
+            # 下屋の側面（屋根の勾配に合わせた台形の荒壁）
+            W.box((xlo, FL, zr), (xhi, 1.12, zm), 'V2_Wood', BOARD * 0.72, grain=Z)
+            polyo(W, [(xo, 1.12, zm), (xo, 1.12, zr), (xo, 1.45, zr), (xo, 2.15, zm)], 'V2_Plaster', MUD2, out=(sx, 0.0, 0.0), grain=Z)
+            for zz, ht in ((zm - 0.08, 2.15), (zr + 0.08, 1.45)):
+                W.box((xlo - 0.02, FL, zz - 0.06), (xhi + 0.02, ht, zz + 0.06), 'V2_Wood', DARK, grain=Y)
+        # --- 下屋の背面、主屋の背面（下屋の屋根より上）と背面の妻 ---
+        W.box((-w / 2, FL, zr), (w / 2, 1.12, zr + 0.12), 'V2_Wood', BOARD * 0.72, grain=X)
+        W.box((-w / 2, 1.12, zr), (w / 2, 1.45, zr + 0.12), 'V2_Plaster', MUD2, grain=X)
+        W.box((-w / 2, 2.10, zm), (w / 2, YE, zm + 0.12), 'V2_Plaster', MUD, grain=X)
+        polyo(W, [(-w / 2, YE, zm + 0.06), (w / 2, YE, zm + 0.06), (0.0, H - 0.02, zm + 0.06)], 'V2_Wood', BOARD * 0.68, out=(0.0, 0.0, -1.0), grain=Y)
+    B.finish()
+    return B
+
+
+def build_mkt029():
+    """B_P_MKT_029 土蔵の商家：通り側は低めの店（厨子二階・緩い瓦屋根・浅い庇）、その奥に一段高い土蔵（白漆喰の厚い壁・海鼠壁の腰・深い窓の観音扉・
+    重い入母屋風の妻入瓦屋根）が背後から立ち上がり、店の棟の上に白い妻壁と鬼瓦が見える。量体＝店（手前 5.4 m）＋蔵（奥 5.2 m）。入口＝x 1.75..3.5。"""
+    B = Bld('B_P_MKT_029', 6.9942, 10.92, 3.6, hk='h27', fin=2, tone=1)
+    w, zf = B.w, B.zf
+    zb, zk1, zk0 = 0.05, -0.30, -B.zf               # 店の背面／蔵の前面／蔵の背面
+    kw_ = 3.10                                      # 蔵の半幅（側軒の先端が footprint 内に収まる）
+    YK = 6.0                                        # 蔵の壁高（店の棟 4.6 m より 1.4 m 高い白壁が背後に立つ）
+    YS = 3.6                                        # 店の壁高（厨子二階）
+    half_s = (zf - zb) / 2.0
+    bays1 = [('koshib', 1.75), ('shop_k', 1.75), ('koshir', 1.745), ('shop_o', w - 5.245)]
+    bays2 = [('mushib', 1.75), ('mushi', 1.75), ('mushib', 1.745), ('mushi', w - 5.245)]
+    for lod in (0, 1):
+        W, R = B.W[lod], B.R[lod]
+        # 屋根：店（平入・緩い瓦）＋蔵（妻入・重い瓦・鬼瓦）
+        tms = tmp()
+        gable_roof(tms, lod, w, half_s, YS, 0.38, 0.35, 0.10, tsuma=False)
+        put(R, tms, off=(0.0, 0.0, (zf + zb) / 2))
+        tmk = tmp()
+        gable_roof(tmk, lod, zk1 - zk0, kw_, YK, 0.45, 0.40, 0.12, tsuma=True, oni=True, gyo=True)
+        put(R, tmk, off=(0.0, 0.0, (zk1 + zk0) / 2), rot=-math.pi * 0.5)
+        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.75, zf, 1.0, p=0.30, style='tile', strut=False)
+        if lod == 1:
+            W.box((-w / 2, FL, zb), (w / 2, YS, zf), 'V2_Plaster', PL, grain=Y)
+            W.box((-kw_, FL, zk0), (kw_, YK, zk1), 'V2_Plaster', PL, grain=Y)
+            continue
+        # 店：前面は Kit の開間、側面・背面は漆喰の壁
+        row1(B, W, bays1)
+        row2(B, W, bays2, 2.7, YS)
+        for sx in (-1.0, 1.0):
+            W.box((min(sx * w / 2, sx * (w / 2 - 0.1)), FL, zb), (max(sx * w / 2, sx * (w / 2 - 0.1)), YS, zf), 'V2_Plaster', PL, grain=Z)
+        W.box((-w / 2, FL, zb), (w / 2, YS, zb + 0.10), 'V2_Plaster', PL, grain=X)
+        cloth(W, 1.80, 3.40, 2.30, 1.50, zf + 0.03, 'noren_a', seg_w=0.8, billow=0.04)
+        # 蔵：厚い白漆喰の壁（前面は店の屋根の上に白く見える）、側面は海鼠壁の腰＋深い窓
+        W.box((-kw_, FL, zk1 - 0.30), (kw_, YK, zk1), 'V2_Plaster', PL, grain=Y)
+        W.box((-kw_, FL, zk0), (kw_, YK, zk0 + 0.30), 'V2_Plaster', PL, grain=Y)
+        for sx in (-1.0, 1.0):
+            x = sx * kw_
+            xa, xb = (x - 0.30, x) if sx > 0 else (x, x + 0.30)
+            W.box((xa, FL, zk0), (xb, YK, zk1), 'V2_Plaster', PL, grain=Z)
+            namako_side(W, zk0 + 0.05, zk1 - 0.05, FL, 1.50, x + sx * 0.0, sx)
+            W.box((min(x, x + sx * 0.05), 1.50, zk0), (max(x, x + sx * 0.05), 1.60, zk1), 'V2_Plaster', PL * 0.92, grain=Z)    # 海鼠壁の上端の見切り
+            for zc in (-1.55, -3.60):
+                kura_window_side(W, x, sx, zc, 4.30, 5.10)
+        # 蔵の妻（前後）は木組みを塗り込めた平らな白漆喰（Kit の妻は軸組みが見える）＋前の妻に小窓（店の棟の上に見える）
+        Hk = YK + 0.45 * kw_
+        polyo(W, [(-kw_ + 0.06, YK - 0.02, zk1 + 0.035), (kw_ - 0.06, YK - 0.02, zk1 + 0.035), (0.0, Hk - 0.10, zk1 + 0.035)], 'V2_Plaster', PL, out=(0.0, 0.0, 1.0), grain=Y)
+        polyo(W, [(-kw_ + 0.06, YK - 0.02, zk0 - 0.035), (kw_ - 0.06, YK - 0.02, zk0 - 0.035), (0.0, Hk - 0.10, zk0 - 0.035)], 'V2_Plaster', PL, out=(0.0, 0.0, -1.0), grain=Y)
+        zg = zk1 + 0.035
+        W.box((-0.40, 6.45, zg), (0.40, 7.05, zg + 0.10), 'V2_Plaster', PL * 0.96, grain=Y)
+        W.box((-0.30, 6.55, zg + 0.09), (0.30, 6.95, zg + 0.11), 'V2_Wood', 0.12, grain=Y)
+        W.box((-0.46, 6.40, zg), (0.46, 6.48, zg + 0.16), 'V2_Plaster', PL * 0.9, grain=X)
+    B.finish()
+    return B
+
+
+def build_rsw014():
+    """B_P_RSW_014 作業場付きの工匠宅（鍛冶）：左半分が大戸を開け放した作業場（棟の高い妻入・煙出し・土の煙突・突き上げ戸・竈／鉄床／水桶／作業台）、
+    右半分が住まい（低い妻入）。2 つの妻入屋根が高さ違いで並び、谷が通りから見える。入口（住まい側）＝x 0..1.8。"""
+    B = Bld('B_P_RSW_014', 7.1971, 10.92, 2.7, hk='h27', fin=2, tone=2)
+    w, zf = B.w, B.zf
+    hw = w / 4.0                    # 各棟の半幅 1.799
+    YW, YH = 3.10, 2.70             # 作業棟／住まいの壁高
+    for lod in (0, 1):
+        W, R = B.W[lod], B.R[lod]
+        tmw = tmp()
+        Hw = gable_roof(tmw, lod, B.d, hw, YW, 0.58, 0.18, 0.30, tsuma=True, oni=True, gyo=True)
+        put(R, tmw, off=(-hw, 0.0, 0.0), rot=-math.pi * 0.5)
+        tmh = tmp()
+        gable_roof(tmh, lod, B.d, hw, YH, 0.50, 0.18, 0.30, tsuma=True, oni=True, gyo=True)
+        put(R, tmh, off=(hw, 0.0, 0.0), rot=-math.pi * 0.5)
+        koshi_turret(B, lod, Hw, 1.5, -math.pi * 0.5, x=-hw, z=0.8)
+        if lod == 1:
+            W.box((-w / 2, FL, -zf), (0.0, YW, zf), 'V2_Plaster', PL * 0.8, grain=Y)
+            W.box((0.0, FL, -zf), (w / 2, YH, zf), 'V2_Plaster', PL, grain=Y)
+            W.quad((-w / 2 + 0.15, FL, zf + 0.02), (-0.15, FL, zf + 0.02), (-0.15, 2.45, zf + 0.02), (-w / 2 + 0.15, 2.45, zf + 0.02), 'V2_Wood', 0.15, grain=Y)
+            continue
+        # --- 作業棟（左）---
+        W.box((-w / 2, FL, -zf), (-w / 2 + 0.10, YW, zf), 'V2_Wood', BOARD * 0.55, grain=Z)                          # 外壁（煤けた板）
+        W.box((-w / 2, FL, -zf), (0.0, YW, -zf + 0.10), 'V2_Wood', BOARD * 0.55, grain=X)
+        W.box((-0.06, FL, -zf), (0.06, YH, zf), 'V2_Plaster', PL * 0.9, grain=Z)                                      # 住まいとの界壁
+        W.box((-0.07, YH, -zf), (0.07, YW, zf), 'V2_Wood', DARK * 0.6, grain=Z)                                       # 界壁の上（住まいの屋根より上の部分）は軒天の暗い板
+        for xp in (-w / 2 + 0.09, -0.07):                                                                               # 大戸の脇の太い柱
+            W.box((xp - 0.10, FL, zf - 0.14), (xp + 0.10, YW, zf + 0.05), 'V2_Wood', DARK, grain=Y)
+        W.box((-w / 2, 2.45, zf - 0.14), (0.0, 2.80, zf + 0.06), 'V2_Wood', DARK * 0.95, grain=X)                       # 大戸の差鴨居
+        W.box((-w / 2, 2.80, zf - 0.10), (0.0, YW, zf), 'V2_Wood', DARK * 0.8, grain=X)
+        # 内部：土間・奥壁（漆喰）・天井、竈（石）・煙の覆い、鉄床、水桶、作業台
+        xi0, xi1, zi = -w / 2 + 0.10, -0.06, zf - 4.4
+        W.box((xi0, FL, zi), (xi1, FL + 0.02, zf), 'V2_Plaster', (0.62, 0.52, 0.40), grain=X)
+        W.box((xi0, FL, zi - 0.10), (xi1, 2.45, zi), 'V2_Plaster', PL * 0.72, grain=X)
+        W.box((xi0, 2.38, zi), (xi1, 2.45, zf), 'V2_Wood', DARK * 0.55, grain=X)
+        W.box((-3.30, FL, zi + 0.2), (-2.10, FL + 0.62, zi + 1.3), 'V2_KitStoneTri', 0.72)                            # 竈
+        W.box((-3.25, FL + 0.62, zi + 0.25), (-2.15, FL + 0.68, zi + 1.25), 'V2_Wood', 0.16, grain=X)                  # 火床（煤）
+        W.box((-3.35, 1.70, zi + 0.12), (-2.05, 2.40, zi + 1.38), 'V2_Plaster', PL * 0.5, grain=Y)                    # 煙の覆い
+        W.cyl((-1.20, FL, zf - 2.3), (-1.20, FL + 0.55, zf - 2.3), 0.22, 0.20, 10, 'V2_Wood', DARK, caps=(True, True))   # 鉄床の台（切り株）
+        W.box((-1.47, FL + 0.55, zf - 2.43), (-0.93, FL + 0.80, zf - 2.17), 'V2_KitStoneTri', 0.28)                    # 鉄床
+        W.box((-0.93, FL + 0.66, zf - 2.36), (-0.74, FL + 0.78, zf - 2.24), 'V2_KitStoneTri', 0.28)
+        W.cyl((-2.45, FL, zf - 1.3), (-2.45, FL + 0.50, zf - 1.3), 0.36, 0.34, 12, 'V2_Wood', 0.55, caps=(True, True))  # 焼き入れの水桶
+        W.box((-0.95, FL + 0.74, zi + 0.4), (-0.32, FL + 0.80, zi + 3.0), 'V2_Wood', BOARD * 0.8, grain=Z)              # 作業台
+        for zz in (zi + 0.5, zi + 2.9):
+            for xx in (-0.88, -0.38):
+                W.box((xx - 0.035, FL, zz - 0.035), (xx + 0.035, FL + 0.74, zz + 0.035), 'V2_Wood', DARK, grain=Y)
+        shitomi(W, -w / 2 + 0.1, -0.1, 2.45, zf, rise=0.75, out=0.85, struts=False)                                    # 突き上げ戸（庇になる）
+        chimney(R, -2.75, zi + 0.75, 3.2, Hw + 1.15, s=0.70)                                                          # 竈の煙突（棟より 1.15 m 上）
+        # --- 住まい（右）---
+        put(W, FR('door', 1.80, B.hk), off=(0.0, 0.0, zf))
+        put(W, FR('koshi', w / 2 - 1.80, B.hk), off=(1.80, 0.0, zf))
+        W.box((w / 2 - 0.10, FL, -zf), (w / 2, YH, zf), 'V2_Plaster', PL, grain=Z)
+        W.box((0.0, FL, -zf), (w / 2, YH, -zf + 0.10), 'V2_Plaster', PL, grain=X)
+    B.finish()
+    return B
+
+
 BUILDERS = [build_mkt012, build_mkt013, build_mkt011, build_mkt010, build_mkt009, build_mkt008,
             build_rsw047, build_rsw048, build_rsw061, build_rsw062,
-            build_mkt025, build_mkt027, build_mkt026, build_mkt024, build_mkt006, build_mkt020]
+            build_mkt025, build_mkt027, build_mkt026, build_mkt024, build_mkt006, build_mkt020,
+            build_rsw074, build_mkt029, build_rsw014]      # 最後の 3 つ＝Phase 2 の新建築タイプ見本
 
 
 def main():

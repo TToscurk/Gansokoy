@@ -1,5 +1,5 @@
 extends RefCounted
-## P13 W9 Round 2：建築外形サンプル（主街 6＋住宅巷 4）の仕様表。
+## P13 W9 Round 2：建築外形サンプル（主街 6＋住宅巷 4）＋2.1 追加 6＋Phase 2 の新建築タイプ 3 の仕様表。
 ##   生成器 source of truth＝assets/blender/village_v2/build_w9r2_arch.py（メッシュ）＋ このファイル（どの Kit 構件を隠すか）。
 ##   overlay（ArchW9R2P13）は該当建築の Kit の構件を『カテゴリ単位』で非表示にし、同じ局部座標に新メッシュを重ねる。
 ##   footprint・入口位置・碰撞（Shape）・Frontage（地面の過渡）には触れない。enabled=false で Kit を完全に還す。
@@ -45,6 +45,10 @@ const SPECS := {
 	"B_P_MKT_024": {"path": "Districts/Market/Buildings/B_P_MKT_024", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_006": {"path": "Districts/Market/Buildings/B_P_MKT_006", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_020": {"path": "Districts/Market/Buildings/B_P_MKT_020", "hide": ["front", "eave", "roof"]},
+	# ── Phase 2：新しい建築タイプ 3 棟（Kit の壁・屋根・庇を base 以外全て隠して自前で組む）──
+	"B_P_RSW_074": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_074", "hide": ["all"]},      # 板葺き簡陋民宅
+	"B_P_MKT_029": {"path": "Districts/Market/Buildings/B_P_MKT_029", "hide": ["all"]},                # 土蔵の商家
+	"B_P_RSW_014": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_014", "hide": ["all"]},      # 作業場付きの工匠宅
 }
 
 
