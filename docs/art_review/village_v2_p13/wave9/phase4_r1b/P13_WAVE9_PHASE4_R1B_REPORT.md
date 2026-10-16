@@ -1,5 +1,16 @@
 # P13 W9 Phase 4 R1b — Area B 定點修正（B1 SpringArm／B2 RSW_026）ART_REVIEW
 
+## 最終裁定（使用者 2026-10-16，追記）
+
+**B1、B2 ART_APPROVED。不需要 R1c。**
+- B1：SpringArm 嚴重壓縮已解決到可接受程度；剩下 11 件非重度縮短接受。
+- B2：RSW_026 修改後的二樓出挑與屋根輪廓接受；遠距可讀性有限不構成再迭代的理由。
+- RSW_012：保留既有的屋簷相機限制。
+- RSW_026 二樓的相機穿入：記為獨立的碰撞／相機問題（登記表 #22），不得把美術任務擴大成全域相機系統修改。
+- Phase 4 局部結案，見 `../W9_FOLLOWUP_REGISTRY.md`「Phase 4 結案」。結案時未重跑任何檢查、未重拍圖。以下為提交時的記錄，原樣保留。
+
+---
+
 日期：2026-10-16　狀態：**ART_REVIEW（未 ART_APPROVED、未封存）**　依據：使用者裁定「P13 W9 Phase 4 R1 — Art Direction Verdict」§2 Area B。
 Area A（主街 7 棟）、Area C（中橫街植栽）、水車／P8 水面、幾何預算上限：本輪**未改動**。
 

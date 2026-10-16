@@ -1,5 +1,7 @@
 # P13 W9 Phase 4 R1：主街 7 棟・西巷 4 棟・中橫街植栽・藍柱調查
 
+> **最終狀態（2026-10-16 追記）**：A 主街 7 棟＝設計方向核准；C 中橫街植栽＝核准；B 西巷 4 棟經 Phase 4 R1b 修正（B1 SpringArm／B2 RSW_026）後 **ART_APPROVED**。Phase 4 局部結案，不開 R1c（`W9_FOLLOWUP_REGISTRY.md`「Phase 4 結案」）。以下為提交時的記錄，原樣保留。
+>
 > **狀態：ART_REVIEW。** 未 ART_APPROVED，也不自行標記。Phase 3 第一批（`79daa60`）已結案，本批不重開。
 > 提交：內容 `bd576d7`（40 檔：生成器・資產・場景・工具）、文件＝其後的 docs 提交（本報告所在）；未 push；原 staged 53 項前後逐行相同。
 
