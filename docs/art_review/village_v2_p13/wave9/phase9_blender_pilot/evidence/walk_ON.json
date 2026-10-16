@@ -1,0 +1,282 @@
+{
+	"fails": 0,
+	"legs": [
+		{
+			"dy_total": 0.099,
+			"end": [
+				455.28,
+				2.31,
+				-235.15
+			],
+			"end_dist": 0.33,
+			"frames": 335,
+			"kind": "along",
+			"leg": "lane_a",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0023,
+			"max_stall_run": 0,
+			"min_dist": 0.33,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.025,
+			"end": [
+				467.7,
+				2.34,
+				-239.7
+			],
+			"end_dist": 0.32,
+			"frames": 195,
+			"kind": "along",
+			"leg": "lane_b",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0023,
+			"max_stall_run": 0,
+			"min_dist": 0.32,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.025,
+			"end": [
+				455.8,
+				2.31,
+				-235.5
+			],
+			"end_dist": 0.32,
+			"frames": 195,
+			"kind": "along",
+			"leg": "lane_b_rev",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0013,
+			"max_stall_run": 0,
+			"min_dist": 0.32,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.099,
+			"end": [
+				440.72,
+				2.21,
+				-218.75
+			],
+			"end_dist": 0.33,
+			"frames": 335,
+			"kind": "along",
+			"leg": "lane_a_rev",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0016,
+			"max_stall_run": 0,
+			"min_dist": 0.33,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.039,
+			"end": [
+				456.22,
+				2.15,
+				-208.81
+			],
+			"end_dist": 0.31,
+			"frames": 263,
+			"kind": "along",
+			"leg": "nesouth",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0016,
+			"max_stall_run": 0,
+			"min_dist": 0.31,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.039,
+			"end": [
+				440.28,
+				2.19,
+				-215.19
+			],
+			"end_dist": 0.31,
+			"frames": 263,
+			"kind": "along",
+			"leg": "nesouth_rev",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0022,
+			"max_stall_run": 0,
+			"min_dist": 0.31,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.025,
+			"end": [
+				473.7,
+				2.2,
+				-217.14
+			],
+			"end_dist": 0.31,
+			"frames": 309,
+			"kind": "along",
+			"leg": "back_strip",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0022,
+			"max_stall_run": 0,
+			"min_dist": 0.31,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.026,
+			"end": [
+				453.9,
+				2.18,
+				-212.96
+			],
+			"end_dist": 0.31,
+			"frames": 309,
+			"kind": "along",
+			"leg": "back_strip_rev",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0016,
+			"max_stall_run": 0,
+			"min_dist": 0.31,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.039,
+			"end": [
+				470.32,
+				2.24,
+				-222.87
+			],
+			"end_dist": 0.31,
+			"frames": 142,
+			"kind": "along",
+			"leg": "yard004_in",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0023,
+			"max_stall_run": 0,
+			"min_dist": 0.31,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.035,
+			"end": [
+				447.47,
+				2.31,
+				-234.71
+			],
+			"end_dist": 0.32,
+			"frames": 101,
+			"kind": "along",
+			"leg": "hoshiba_in",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0025,
+			"max_stall_run": 0,
+			"min_dist": 0.32,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.022,
+			"end": [
+				455.42,
+				2.23,
+				-221.46
+			],
+			"end_dist": 0.32,
+			"frames": 80,
+			"kind": "to",
+			"leg": "gate_kido",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0021,
+			"max_stall_run": 0,
+			"min_dist": 0.32,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.013,
+			"end": [
+				448.05,
+				2.25,
+				-224.34
+			],
+			"end_dist": 0.35,
+			"frames": 51,
+			"kind": "to",
+			"leg": "door_002",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0016,
+			"max_stall_run": 0,
+			"min_dist": 0.35,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.014,
+			"end": [
+				453.05,
+				2.28,
+				-230.04
+			],
+			"end_dist": 0.35,
+			"frames": 51,
+			"kind": "to",
+			"leg": "door_003",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0014,
+			"max_stall_run": 0,
+			"min_dist": 0.35,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": -0.019,
+			"end": [
+				466.1,
+				2.32,
+				-237.31
+			],
+			"end_dist": 0.33,
+			"frames": 53,
+			"kind": "to",
+			"leg": "door_004",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0016,
+			"max_stall_run": 0,
+			"min_dist": 0.33,
+			"ok": true,
+			"stop": "reached"
+		},
+		{
+			"dy_total": 0.009,
+			"end": [
+				456.6,
+				2.19,
+				-215.05
+			],
+			"end_dist": 0.33,
+			"frames": 51,
+			"kind": "to",
+			"leg": "backdoor_002",
+			"lost_floor": 0,
+			"max_dy_frame": 0.0023,
+			"max_stall_run": 0,
+			"min_dist": 0.33,
+			"ok": true,
+			"stop": "reached"
+		}
+	],
+	"mounts": [
+		[
+			"DistrictB8P",
+			"res://maps/village_v2/gen/district_b8p.scn"
+		]
+	],
+	"tag": "ON"
+}

@@ -1,0 +1,11 @@
+{
+ "pilot_screen_share_pct": {
+  "V1_lane_in": 2.01,
+  "V2_gap_kido": 2.86,
+  "V3_back_yard": 8.15,
+  "V4_row_back": 2.6,
+  "V5_row_lane": 2.84,
+  "E1_high": 2.99
+ },
+ "method": "ID パス（w6_base.id_begin）：各画素の節点 id → DistrictB8P 配下の割合"
+}

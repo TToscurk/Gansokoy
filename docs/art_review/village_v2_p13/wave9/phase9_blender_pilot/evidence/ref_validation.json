@@ -1,0 +1,59 @@
+{
+ "tolerance_m": 0.003,
+ "yaw_tol_rad": 0.0001,
+ "scale_tol": 0.001,
+ "path": "Godot MeshInstance global_transform -> GLTFDocument -> Blender glTF importer (Y-up->Z-up) -> b2g()",
+ "rows": [
+  {
+   "name": "B_P_RNE_002",
+   "meshes": 63,
+   "expect": 63,
+   "d_aabb": 0.00019111328126086846,
+   "d_pos": 4.919433592931455e-05,
+   "d_yaw": 7.008514404382993e-07,
+   "d_scale": 3.089904785369413e-06,
+   "yaw_deg": -132.04121785999192,
+   "scale": [
+    5.4,
+    0.69,
+    10.01
+   ],
+   "ok": true,
+   "tilt": 0.0
+  },
+  {
+   "name": "B_P_RNE_003",
+   "meshes": 65,
+   "expect": 65,
+   "d_aabb": 0.00020983886719250222,
+   "d_pos": 4.206542968177018e-05,
+   "d_yaw": 1.2368774404691862e-07,
+   "d_scale": 8.773803710226957e-07,
+   "yaw_deg": -132.01686715369885,
+   "scale": [
+    6.3,
+    0.69,
+    10.92
+   ],
+   "ok": true,
+   "tilt": 0.0
+  },
+  {
+   "name": "B_P_RNE_004",
+   "meshes": 54,
+   "expect": 54,
+   "d_aabb": 4.698734283437034e-05,
+   "d_pos": 4.698734283437034e-05,
+   "d_yaw": 4.325408937688735e-07,
+   "d_scale": 1.0299682617898043e-06,
+   "yaw_deg": -161.60119913060183,
+   "scale": [
+    4.11,
+    0.69,
+    10.92
+   ],
+   "ok": true,
+   "tilt": 0.0
+  }
+ ]
+}

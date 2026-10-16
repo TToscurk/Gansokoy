@@ -1,0 +1,447 @@
+{
+ "district": "B8P",
+ "status": "ART_REVIEW（未批准・village_v2.tscn 未掛載）",
+ "manifest": "godot/data/district/B8P.json",
+ "manifest_sha256": "1236c2226bf9d97376ea589e7cc3b273b97955df6ae2270a304d350d97a1431b",
+ "objects": {
+  "exported_from_blender": 62,
+  "imported_overlay_nodes": 62,
+  "reused_from_B8_P8": 33,
+  "new_blender_placements": 29,
+  "collision_shapes": 33,
+  "mesh_instances": 136,
+  "lod0_triangles": 30521,
+  "multimesh": 0
+ },
+ "coordinate_conversion": {
+  "contract": "Godot (x,y,z) -> Blender (x,-z,y); yaw -> rotation_euler.z; scale (sx,sy,sz) -> (sx,sz,sy); metres; BASE origin",
+  "reference_buildings": [
+   {
+    "name": "B_P_RNE_002",
+    "yaw_deg": -132.04,
+    "mesh0_scale": [
+     5.4,
+     0.69,
+     10.01
+    ],
+    "d_vertex_aabb_m": 0.000191,
+    "d_pos_m": 4.9e-05,
+    "d_yaw_rad": 7e-07,
+    "ok": true
+   },
+   {
+    "name": "B_P_RNE_003",
+    "yaw_deg": -132.02,
+    "mesh0_scale": [
+     6.3,
+     0.69,
+     10.92
+    ],
+    "d_vertex_aabb_m": 0.00021,
+    "d_pos_m": 4.2e-05,
+    "d_yaw_rad": 1.2e-07,
+    "ok": true
+   },
+   {
+    "name": "B_P_RNE_004",
+    "yaw_deg": -161.6,
+    "mesh0_scale": [
+     4.11,
+     0.69,
+     10.92
+    ],
+    "d_vertex_aabb_m": 4.7e-05,
+    "d_pos_m": 4.7e-05,
+    "d_yaw_rad": 4.3e-07,
+    "ok": true
+   }
+  ],
+  "ref_tol_m": 0.003,
+  "calibration": {
+   "tol": 0.002,
+   "tol_rule": "max(1 mm, worst × 10) 切り上げ",
+   "worst": 0.000152587890625
+  },
+  "rt_aabb_tol_m": 0.002
+ },
+ "aabb": {
+  "max_dim": 0.000152587890625,
+  "max_max": 9.98973846435547e-05,
+  "max_min": 0.0001068115234375,
+  "max_snap_dy": 0.0144597496032715,
+  "missing_aabb_v": 0,
+  "n": 62,
+  "tol": 0.002,
+  "worst": "B8P_0008(w9_asagao)"
+ },
+ "terrain": {
+  "embed_max": 0.0181150436401367,
+  "embed_max_vid": "B8P_0058(st_hasa)",
+  "fail": 0,
+  "items": 59,
+  "on_visible_ground": [
+   "B8P_0004 sz_hachi（碰撞の無い可視の地面の上：店先帯 9 点）",
+   "B8P_0005 sz_hachi（碰撞の無い可視の地面の上：店先帯 9 点）",
+   "B8P_0006 kr_kago（碰撞の無い可視の地面の上：店先帯 9 点）",
+   "B8P_0008 w9_asagao（碰撞の無い可視の地面の上：店先帯 9 点）",
+   "B8P_0040 kr_zaimoku（碰撞の無い可視の地面の上：院子 5 点）",
+   "B8P_0053 young_sugi（碰撞の無い可視の地面の上：院子 7 点）"
+  ],
+  "rays": 513,
+  "review": [],
+  "support_min": 1.0
+ },
+ "checks": [
+  {
+   "check": "M1",
+   "ok": true,
+   "msg": "M1 schema：res://data/district/B8P.json・62 件（問題 0）"
+  },
+  {
+   "check": "M2",
+   "ok": true,
+   "msg": "M2 overlay は現在の manifest から bake された（sha256 1236c2226bf9… / overlay 1236c2226bf9…）"
+  },
+  {
+   "check": "M3",
+   "ok": true,
+   "msg": "M3 往復：manifest 62 件 ↔ overlay 節点 62・x/z/yaw/scale 不一致 0"
+  },
+  {
+   "check": "M3",
+   "ok": true,
+   "msg": "M3 Blender の y と Godot の接地の差 最大 0.014 m ≤ 0.30 m（B8P_0060；超えたら context が古い）"
+  },
+  {
+   "check": "M4",
+   "ok": true,
+   "msg": "M4 全 item が街區 rect [P: (442.0, -241.0), S: (33.0, 31.0)] の中（外 0）"
+  },
+  {
+   "check": "M5",
+   "ok": true,
+   "msg": "M5 Blender の world AABB と Godot 再計算（x/z）の差 最大 0.000 m ≤ 0.05 m（超過 0）"
+  },
+  {
+   "check": "M5b",
+   "ok": true,
+   "msg": "M5b Runtime World AABB（頂点・3 軸）62 件：min 差 0.0001・max 差 0.0001・寸法差 0.0002 m ≤ 0.002 m（超過 0・aabb_v 欠 0・最悪 B8P_0008(w9_asagao)）"
+  },
+  {
+   "check": "M6",
+   "ok": true,
+   "msg": "M6 配置（W9.why＋接地）62 件：道・建物・戸口・水・田・封存物・NPC・Hero に触れず接地（不適合 0）"
+  },
+  {
+   "check": "M7",
+   "ok": true,
+   "msg": "M7 重なり：footprint 候補 0 組 → 三角形で実貫通 0 組"
+  },
+  {
+   "check": "M8",
+   "ok": true,
+   "msg": "M8 碰撞箱 33 個が戸口の空け帯・NPC 巡回路に触れない（0）"
+  },
+  {
+   "check": "M9",
+   "ok": true,
+   "msg": "M9 任務の出入口から最も近い item 21.8 m ≥ 6.0 m（B8P_0064↔PORTAL_KOURINDOU）"
+  },
+  {
+   "check": "M10",
+   "ok": true,
+   "msg": "M10 通行帯 3 本 14480 樣本：overlay の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）0 件・≥ 0.30 m 6 件・最悪 7.50 → 3.30 m B8P_nelane(462.1,-236.7)"
+  },
+  {
+   "check": "M12",
+   "ok": true,
+   "msg": "M12 地形接地（TerrainCollision・多点 ray 513 本）59 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0058(st_hasa)）"
+  },
+  {
+   "check": "M11",
+   "ok": true,
+   "msg": "M11 予算：LOD0 三角形 30521 ≤ 200000・MeshInstance 136 ≤ 600・碰撞 33 ≤ 120・MultiMesh 0"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "道路の上へ移動：road"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "vid 重複：[\"vid 重複 B8P_0001\"]"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "y +0.5 m（浮き）：float(2.69 vs ground 2.19)"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "AABB を z へ 0.3 m（軸換算の誤り）：0.300 m"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "同じ物を 0.15 m ずらして重ねる（三角形）：sz_hachi 交差 4"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "space が Blender 座標：space=blender_z_up"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "runtime 節点を 0.3 m 動かす（M5b）：min 差 0.300 m"
+  },
+  {
+   "check": "NEG",
+   "ok": true,
+   "msg": "0.3 m 持ち上げる（M12 浮き）：B8P_0004 支持 0%"
+  }
+ ],
+ "gate": {
+  "pass": 14,
+  "fail": 0,
+  "neg_ok": 8,
+  "neg_bad": 0
+ },
+ "incremental": {
+  "changed": 1,
+  "scoped_checks": 1,
+  "pass": 14,
+  "fail": 0,
+  "build_s": 11.0,
+  "verify_s": 11.6,
+  "blender_edit_export_s": 0.07,
+  "rebuilt": "godot/maps/village_v2/gen/district_b8p.scn only"
+ },
+ "walk": {
+  "OFF": {
+   "legs": 15,
+   "fail": 0
+  },
+  "ON": {
+   "legs": 15,
+   "fail": 0,
+   "legs_detail": [
+    {
+     "leg": "lane_a",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.33,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "lane_b",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.32,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "lane_b_rev",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.32,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "lane_a_rev",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.33,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "nesouth",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.31,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "nesouth_rev",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.31,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "back_strip",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.31,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "back_strip_rev",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.31,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "yard004_in",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.31,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "hoshiba_in",
+     "kind": "along",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.32,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "gate_kido",
+     "kind": "to",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.32,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "door_002",
+     "kind": "to",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.35,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "door_003",
+     "kind": "to",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.35,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "door_004",
+     "kind": "to",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.33,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    },
+    {
+     "leg": "backdoor_002",
+     "kind": "to",
+     "stop": "reached",
+     "ok": true,
+     "end_dist": 0.33,
+     "lost_floor": 0,
+     "max_stall_run": 0
+    }
+   ]
+  }
+ },
+ "perf": {
+  "label": "PRELIMINARY（使用者の Blender 2 個・ブラウザが開いている：preflight の DCC 除外条件を満たさない）",
+  "gpu_util_preflight_pct": [
+   5,
+   2,
+   3,
+   3,
+   4,
+   4,
+   5,
+   5,
+   5,
+   5
+  ],
+  "renderer": "forward_plus",
+  "resolution": "(1600.0, 900.0)",
+  "rounds": 3,
+  "views": {
+   "V1_lane_in": {
+    "d_frame_ms": 0.048,
+    "d_gpu_ms": 0.323,
+    "d_cpu_ms": 0.2,
+    "d_draws": 233.0,
+    "d_prims": 84765.0,
+    "d_objs": 282.0,
+    "on_frame_ms": 11.312,
+    "on_gpu_ms": 10.981
+   },
+   "V3_back_yard": {
+    "d_frame_ms": -0.116,
+    "d_gpu_ms": -0.003,
+    "d_cpu_ms": 0.278,
+    "d_draws": 189.0,
+    "d_prims": 78627.0,
+    "d_objs": 234.0,
+    "on_frame_ms": 9.761,
+    "on_gpu_ms": 9.28
+   },
+   "V5_row_lane": {
+    "d_frame_ms": 0.263,
+    "d_gpu_ms": 0.069,
+    "d_cpu_ms": 0.313,
+    "d_draws": 215.98,
+    "d_prims": 77039.6,
+    "d_objs": 263.96,
+    "on_frame_ms": 14.616,
+    "on_gpu_ms": 11.033
+   }
+  }
+ },
+ "visual": {
+  "tps_views": [
+   "V1_lane_in",
+   "V2_gap_kido",
+   "V3_back_yard",
+   "V4_row_back",
+   "V5_row_lane"
+  ],
+  "diagnostic": [
+   "E1_high"
+  ],
+  "pilot_screen_share_pct": {
+   "V1_lane_in": 2.01,
+   "V2_gap_kido": 2.86,
+   "V3_back_yard": 8.15,
+   "V4_row_back": 2.6,
+   "V5_row_lane": 2.84,
+   "E1_high": 2.99
+  },
+  "camera_pose_max_delta_m": 0.012,
+  "correction_passes": 2
+ },
+ "exceptions": [
+  "placement/collision 的 audit_village_v2_placement.gd 只涵蓋建物單位；本 overlay 的道具以 M6/M7/M8/M12 與實走驗證",
+  "NPC 巡回路：試点範圍內 0 條（context.npc_paths＝0），M8 對 NPC 路徑的檢查為空集合",
+  "LOD／visibility range 沿用 P3.bundle，未另行測切換行為",
+  "效能為 PRELIMINARY"
+ ]
+}

@@ -107,3 +107,9 @@ P13 要擴張到尚未改善的街區，**不回頭反覆打磨已批准的三�
 - 方向轉為全村的環境完整度與探索體驗；017／018 為使用者接受的現行視覺基準（不再打磨，碰撞限制 #26 保留），**不是 ART_APPROVED 記錄**。
 - **已送 ART_REVIEW**（2026-10-16）：`phase8_village_survey/P13_WAVE9_PHASE8_VILLAGE_SURVEY_REPORT.md`。全村評估、灰盒盤點（G1–G7）、注記地圖、五項排序；第一批 A8／B8 overlay `EnrichW9P8` 生成但未掛載（#29）。新增 #28–#31。未核准、未封存、未 push。
 - 需要使用者裁定：A8／B8 是否值得掛載；除錯層處理（#28）；丘腳社寺造型方向（TASK E）；主街南段路口・火見櫓前是否開放 P10／P9 封存範圍。
+
+## Phase 9：Blender-first 街區管線試點 B8P（使用者 2026-10-16「Blender-First Village Production Pipeline」）
+
+- **已送 ART_REVIEW**（2026-10-16）：`phase9_blender_pilot/P13_WAVE9_PHASE9_BLENDER_PILOT_REPORT.md`。B8 內 RNE_002／003／004 三戶＋後院共享地，62 件（沿用 B8 33＋Blender 新放 29），overlay `DistrictB8P` 只在隔離場景／記憶體掛載，**未掛進 `village_v2.tscn`**，未 push。
+- gate 14／0、反向 8／8、真玩家實走 15 腳 ON／OFF 0 FAIL；效能為 PRELIMINARY（量測時使用者的 Blender 與瀏覽器開著）。vision 判定比 P8「略好」，V1 巷口與 V4 住宅列仍空。
+- **使用者裁定（2026-10-16「Phase 9 Closure and Village Content Freeze」）**：管線技術上可行；B8P 保留為隔離實驗（不取代 B8、不與 B8 同時掛載、不再打磨或加資產）；未驗證內容等價前不得宣稱與正式內容等價；manifest、Blender 原檔、generator 與驗證證據保留。往後的複雜環境資產與空間編排優先用 Blender MCP，Godot 負責 runtime 整合與驗證；已完成的街區不為統一工具而遷移。draw call 開銷與 LOD 行為的調查延後到下一個開發週期，不阻擋本次收尾。

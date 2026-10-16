@@ -1,0 +1,8 @@
+[DBLD] manifest D:/神社/shrine/work/district/B8P/incr_test.json（sha256 4bbf5298aab8…）62 件・接地し直し：Blender の y との差 最大 0.014 m（B8P_0060）
+[DBLD] 存檔回読：item 62（manifest 62）・MeshInstance 136・碰撞 33・MultiMesh 0 → res://maps/village_v2/gen/district_b8p.scn
+[DBLD] テスト場景 res://tests/district/district_b8p_test.tscn（変更なし）
+[DBLD] manifest res://data/district/B8P.json（sha256 1236c2226bf9…）62 件・接地し直し：Blender の y との差 最大 0.014 m（B8P_0060）
+[DBLD] 存檔回読：item 62（manifest 62）・MeshInstance 136・碰撞 33・MultiMesh 0 → res://maps/village_v2/gen/district_b8p.scn
+[DBLD] テスト場景 res://tests/district/district_b8p_test.tscn（変更なし）
+[DBLD] 変更なし：res://maps/village_v2/gen/district_b8p.scn は manifest（sha256 1236c2226bf9…）と bake 規則 district_bake.v1 から作られている → 書き直さない（--force で強制）
+[DBLD] テスト場景 res://tests/district/district_b8p_test.tscn（変更なし）

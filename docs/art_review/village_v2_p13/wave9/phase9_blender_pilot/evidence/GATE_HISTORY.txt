@@ -1,0 +1,35 @@
+# B8P gate 歷史（district_verify.gd；每輪皆含 8 個反向案例）
+## cal_verify
+[DVER] CAL  M5b 実測：36 件・min 差 0.000107・max 差 0.000076・寸法差 0.000153 m（最悪 B8P_0008(w9_asagao)）・接地し直し最大 0.0037 m → 規則による許容値 0.002 m
+[DVER] FAIL M6 配置（W9.why＋接地）36 件：道・建物・戸口・水・田・封存物・NPC・Hero に触れず接地（不適合 2）
+[DVER]   接地 FAIL B8P_0004 sz_hachi 支持 0% gap_min +0.101
+[DVER]   接地 FAIL B8P_0005 sz_hachi 支持 0% gap_min +0.101
+[DVER]   接地 FAIL B8P_0006 kr_kago 支持 0% gap_min +0.092
+[DVER]   接地 FAIL B8P_0008 w9_asagao 支持 0% gap_min +0.103
+[DVER] FAIL M12 地形接地（TerrainCollision・多点 ray 285 本）33 件：浮き FAIL 4・REVIEW 1・最低支持率 0%・最大埋まり 0.02 m（B8P_0020(w9_shita_wood_m)）
+[DVER] NEG  BAD  道路の上へ移動：FAIL するはずが通った（）
+[DVER] 合計 PASS 10・FAIL 2・反向 OK 7／BAD 1
+## verify_r1
+[DVER] FAIL M10 通行帯 2 本 10960 樣本：overlay の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）5 件・≥ 0.30 m 18 件・最悪 7.50 → 0.16 m B8P_back(454.6,-214.1)
+[DVER]   接地 FAIL B8P_0053 young_sugi 支持 0% gap_min +0.062
+[DVER] FAIL M12 地形接地（TerrainCollision・多点 ray 502 本）58 件：浮き FAIL 1・REVIEW 1・店先帯（可視・碰撞なし）の上 4 件・最低支持率 0%・最大埋まり 0.02 m（B8P_0020(w9_shita_wood_m)）
+[DVER] 合計 PASS 12・FAIL 2・反向 OK 8／BAD 0
+## verify_r2
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 493 本）57 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0020(w9_shita_wood_m)）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 8／BAD 0
+## verify_r3
+[DVER] FAIL M10 通行帯 3 本 14480 樣本：overlay の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）18 件・≥ 0.30 m 109 件・最悪 7.50 → 1.85 m B8P_back(451.6,-213.6)
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 520 本）60 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0058(st_hasa)）
+[DVER] 合計 PASS 13・FAIL 1・反向 OK 8／BAD 0
+## verify_r4
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 520 本）60 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0058(st_hasa)）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 8／BAD 0
+## verify_r5
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 513 本）59 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0058(st_hasa)）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 8／BAD 0
+## incr_verify
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 9 本）1 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 0 件・最低支持率 100%・最大埋まり 0.01 m（B8P_0064(st_warazuka)）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 8／BAD 0
+## verify_final
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 513 本）59 件：浮き FAIL 0・REVIEW 0・碰撞の無い可視の地面（店先帯・院子）の上 6 件・最低支持率 100%・最大埋まり 0.02 m（B8P_0058(st_hasa)）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 8／BAD 0

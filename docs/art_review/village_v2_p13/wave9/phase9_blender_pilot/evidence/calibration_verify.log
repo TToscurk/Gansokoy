@@ -1,0 +1,38 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[DVER] PASS M1 schema：D:/神社/shrine/work/district/B8P/calibration.json・36 件（問題 0）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[DVER] INFO village_v2.tscn の DistrictB8P 掛載：なし（本検査は書かない）
+[DVER] PASS M2 overlay は現在の manifest から bake された（sha256 e69b96e2328b… / overlay e69b96e2328b…）
+[DVER] PASS M3 往復：manifest 36 件 ↔ overlay 節点 36・x/z/yaw/scale 不一致 0
+[DVER] PASS M3 Blender の y と Godot の接地の差 最大 0.004 m ≤ 0.30 m（B8P_C01；超えたら context が古い）
+[DVER] PASS M4 全 item が街區 rect [P: (442.0, -241.0), S: (33.0, 31.0)] の中（外 0）
+[DVER] PASS M5 Blender の world AABB と Godot 再計算（x/z）の差 最大 0.000 m ≤ 0.05 m（超過 0）
+[DVER] CAL  M5b 実測：36 件・min 差 0.000107・max 差 0.000076・寸法差 0.000153 m（最悪 B8P_0008(w9_asagao)）・接地し直し最大 0.0037 m → 規則による許容値 0.002 m
+[DVER]   不適合 B8P_C01 st_ido@(470.5,-216.0) building [_calibration]
+[DVER]   不適合 B8P_C03 kr_kuruma@(474.0,-214.0) backdoor [_calibration]
+[DVER] FAIL M6 配置（W9.why＋接地）36 件：道・建物・戸口・水・田・封存物・NPC・Hero に触れず接地（不適合 2）
+[DVER] PASS M7 重なり：footprint 候補 0 組 → 三角形で実貫通 0 組
+[DVER] PASS M8 碰撞箱 17 個が戸口の空け帯・NPC 巡回路に触れない（0）
+[DVER] PASS M9 任務の出入口から最も近い item 26.2 m ≥ 6.0 m（B8P_0001↔PORTAL_KOURINDOU）
+[DVER] INFO M10 SpringArm 未実施（--no-arm または通行帯なし）
+[DVER]   接地 FAIL B8P_0004 sz_hachi 支持 0% gap_min +0.101
+[DVER]   接地 FAIL B8P_0005 sz_hachi 支持 0% gap_min +0.101
+[DVER]   接地 FAIL B8P_0006 kr_kago 支持 0% gap_min +0.092
+[DVER]   接地 FAIL B8P_0008 w9_asagao 支持 0% gap_min +0.103
+[DVER]   接地 REVIEW B8P_C03 kr_kuruma 支持 67% 埋まり 0.00 m
+[DVER] FAIL M12 地形接地（TerrainCollision・多点 ray 285 本）33 件：浮き FAIL 4・REVIEW 1・最低支持率 0%・最大埋まり 0.02 m（B8P_0020(w9_shita_wood_m)）
+[DVER] PASS M11 予算：LOD0 三角形 17694 ≤ 200000・MeshInstance 80 ≤ 600・碰撞 17 ≤ 120・MultiMesh 0
+[DVER] NEG  BAD  道路の上へ移動：FAIL するはずが通った（）
+[DVER] NEG  OK   vid 重複：期待どおり FAIL（["vid 重複 B8P_0001"]）
+[DVER] NEG  OK   y +0.5 m（浮き）：期待どおり FAIL（float(2.82 vs ground 2.32)）
+[DVER] NEG  OK   AABB を z へ 0.3 m（軸換算の誤り）：期待どおり FAIL（0.300 m）
+[DVER] NEG  OK   同じ物を 0.15 m ずらして重ねる（三角形）：期待どおり FAIL（sz_hachi 交差 4）
+[DVER] NEG  OK   space が Blender 座標：期待どおり FAIL（space=blender_z_up）
+[DVER] NEG  OK   runtime 節点を 0.3 m 動かす（M5b）：期待どおり FAIL（min 差 0.300 m）
+[DVER] NEG  OK   0.3 m 持ち上げる（M12 浮き）：期待どおり FAIL（B8P_0004 支持 0%）
+[DVER] 合計 PASS 10・FAIL 2・反向 OK 7／BAD 1
+[DVER] → D:/神社/shrine/work/district/B8P/cal_verify.json

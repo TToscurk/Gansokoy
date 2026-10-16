@@ -1,0 +1,142 @@
+{
+	"baseline": "",
+	"district": "B8P",
+	"fail": 2,
+	"items": 36,
+	"manifest": "D:/神社/shrine/work/district/B8P/calibration.json",
+	"manifest_sha256": "e69b96e2328b7abb0076d82ba1b4778bd22f95b2a4d859ea3930b8d3fff72f8e",
+	"neg_bad": 1,
+	"neg_ok": 7,
+	"pass": 10,
+	"results": [
+		{
+			"check": "M1",
+			"msg": "M1 schema：D:/神社/shrine/work/district/B8P/calibration.json・36 件（問題 0）",
+			"ok": true
+		},
+		{
+			"check": "M2",
+			"msg": "M2 overlay は現在の manifest から bake された（sha256 e69b96e2328b… / overlay e69b96e2328b…）",
+			"ok": true
+		},
+		{
+			"check": "M3",
+			"msg": "M3 往復：manifest 36 件 ↔ overlay 節点 36・x/z/yaw/scale 不一致 0",
+			"ok": true
+		},
+		{
+			"check": "M3",
+			"msg": "M3 Blender の y と Godot の接地の差 最大 0.004 m ≤ 0.30 m（B8P_C01；超えたら context が古い）",
+			"ok": true
+		},
+		{
+			"check": "M4",
+			"msg": "M4 全 item が街區 rect [P: (442.0, -241.0), S: (33.0, 31.0)] の中（外 0）",
+			"ok": true
+		},
+		{
+			"check": "M5",
+			"msg": "M5 Blender の world AABB と Godot 再計算（x/z）の差 最大 0.000 m ≤ 0.05 m（超過 0）",
+			"ok": true
+		},
+		{
+			"check": "M6",
+			"msg": "M6 配置（W9.why＋接地）36 件：道・建物・戸口・水・田・封存物・NPC・Hero に触れず接地（不適合 2）",
+			"ok": false
+		},
+		{
+			"check": "M7",
+			"msg": "M7 重なり：footprint 候補 0 組 → 三角形で実貫通 0 組",
+			"ok": true
+		},
+		{
+			"check": "M8",
+			"msg": "M8 碰撞箱 17 個が戸口の空け帯・NPC 巡回路に触れない（0）",
+			"ok": true
+		},
+		{
+			"check": "M9",
+			"msg": "M9 任務の出入口から最も近い item 26.2 m ≥ 6.0 m（B8P_0001↔PORTAL_KOURINDOU）",
+			"ok": true
+		},
+		{
+			"check": "M12",
+			"msg": "M12 地形接地（TerrainCollision・多点 ray 285 本）33 件：浮き FAIL 4・REVIEW 1・最低支持率 0%・最大埋まり 0.02 m（B8P_0020(w9_shita_wood_m)）",
+			"ok": false
+		},
+		{
+			"check": "M11",
+			"msg": "M11 予算：LOD0 三角形 17694 ≤ 200000・MeshInstance 80 ≤ 600・碰撞 17 ≤ 120・MultiMesh 0",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "道路の上へ移動：",
+			"ok": false
+		},
+		{
+			"check": "NEG",
+			"msg": "vid 重複：[\"vid 重複 B8P_0001\"]",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "y +0.5 m（浮き）：float(2.82 vs ground 2.32)",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "AABB を z へ 0.3 m（軸換算の誤り）：0.300 m",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "同じ物を 0.15 m ずらして重ねる（三角形）：sz_hachi 交差 4",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "space が Blender 座標：space=blender_z_up",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "runtime 節点を 0.3 m 動かす（M5b）：min 差 0.300 m",
+			"ok": true
+		},
+		{
+			"check": "NEG",
+			"msg": "0.3 m 持ち上げる（M12 浮き）：B8P_0004 支持 0%",
+			"ok": true
+		}
+	],
+	"scope": 36,
+	"stats": {
+		"calibration": {
+			"tol": 0.002,
+			"tol_rule": "max(1 mm, worst × 10) 切り上げ",
+			"worst": 0.000152587890625
+		},
+		"rt_aabb": {
+			"max_dim": 0.000152587890625,
+			"max_max": 0.0000762939453125,
+			"max_min": 0.0001068115234375,
+			"max_snap_dy": 0.00368124046325669,
+			"missing_aabb_v": 0,
+			"n": 36,
+			"tol": 0.0,
+			"worst": "B8P_0008(w9_asagao)"
+		},
+		"terrain": {
+			"embed_max": 0.015453577041626,
+			"embed_max_vid": "B8P_0020(w9_shita_wood_m)",
+			"fail": 4,
+			"items": 33,
+			"rays": 285,
+			"review": [
+				"B8P_C03 kr_kuruma 支持 67% 埋まり 0.00 m"
+			],
+			"support_min": 0.0
+		}
+	}
+}

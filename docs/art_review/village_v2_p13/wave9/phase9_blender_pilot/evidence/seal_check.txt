@@ -1,0 +1,4 @@
+# B8P 試点：封存檔 hash 對照（godot/data/village_v2_*seal*.json の frozen 表；唯讀）
+現行 seal（*_history.json を除く）30 ファイル：entries 1155 match 1155 mismatch 0
+履歴 seal（*_history.json：差し替え前の記録）を含めると entries 1188 match 1182、不一致 6 件はすべて p9r5 の履歴 2 ファイル（現行 p9r5 seal とは一致・該当ファイルの mtime 10-05）
+試点の新規・変更ファイルが frozen 表に出現：0

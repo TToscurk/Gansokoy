@@ -1,0 +1,24 @@
+[B8PWALK] FAIL lane_through   along stop=stalled frames=254 max_run=30 lost=0 max_dy=0.002 end_dist=21.02 → 未到達（目標まで 21.02 m で停止）
+[B8PWALK] FAIL lane_back      along stop=stalled frames=242 max_run=30 lost=0 max_dy=0.002 end_dist=21.81 → 未到達（目標まで 21.81 m で停止）
+[B8PWALK] PASS back_strip     along stop=reached frames=309 max_run=0 lost=0 max_dy=0.002 end_dist=0.31 → 到達
+[B8PWALK] PASS back_strip_rev along stop=reached frames=309 max_run=0 lost=0 max_dy=0.002 end_dist=0.31 → 到達
+[B8PWALK] PASS yard004_in     along stop=reached frames=118 max_run=0 lost=0 max_dy=0.002 end_dist=0.33 → 到達
+[B8PWALK] PASS hoshiba_in     along stop=reached frames=101 max_run=0 lost=0 max_dy=0.002 end_dist=0.32 → 到達
+[B8PWALK] PASS gate_kido      to stop=reached frames=80 max_run=0 lost=0 max_dy=0.002 end_dist=0.32 → 目標の手前 0.00 m（許容 1.30）
+[B8PWALK] PASS door_002       to stop=reached frames=51 max_run=0 lost=0 max_dy=0.002 end_dist=0.35 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS door_003       to stop=reached frames=51 max_run=0 lost=0 max_dy=0.001 end_dist=0.35 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS door_004       to stop=reached frames=53 max_run=0 lost=0 max_dy=0.002 end_dist=0.33 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS backdoor_002   to stop=reached frames=51 max_run=0 lost=0 max_dy=0.002 end_dist=0.33 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] 結果：11 脚・FAIL 2
+[B8PWALK] FAIL lane_through   along stop=stalled frames=254 max_run=30 lost=0 max_dy=0.002 end_dist=21.02 → 未到達（目標まで 21.02 m で停止）
+[B8PWALK] FAIL lane_back      along stop=stalled frames=242 max_run=30 lost=0 max_dy=0.002 end_dist=21.81 → 未到達（目標まで 21.81 m で停止）
+[B8PWALK] PASS back_strip     along stop=reached frames=309 max_run=0 lost=0 max_dy=0.002 end_dist=0.31 → 到達
+[B8PWALK] PASS back_strip_rev along stop=reached frames=309 max_run=0 lost=0 max_dy=0.002 end_dist=0.31 → 到達
+[B8PWALK] PASS yard004_in     along stop=reached frames=142 max_run=0 lost=0 max_dy=0.002 end_dist=0.31 → 到達
+[B8PWALK] PASS hoshiba_in     along stop=reached frames=101 max_run=0 lost=0 max_dy=0.002 end_dist=0.32 → 到達
+[B8PWALK] PASS gate_kido      to stop=reached frames=80 max_run=0 lost=0 max_dy=0.002 end_dist=0.32 → 目標の手前 0.00 m（許容 1.30）
+[B8PWALK] PASS door_002       to stop=reached frames=51 max_run=0 lost=0 max_dy=0.002 end_dist=0.35 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS door_003       to stop=reached frames=51 max_run=0 lost=0 max_dy=0.001 end_dist=0.35 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS door_004       to stop=reached frames=53 max_run=0 lost=0 max_dy=0.002 end_dist=0.33 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] PASS backdoor_002   to stop=reached frames=51 max_run=0 lost=0 max_dy=0.002 end_dist=0.33 → 目標の手前 0.00 m（許容 1.10）
+[B8PWALK] 結果：11 脚・FAIL 2
