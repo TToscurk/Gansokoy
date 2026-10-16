@@ -1,0 +1,114 @@
+# 設計前の AABB 制約（scratch probe、各棟の局部座標・唯讀）
+## 候補 8 棟の現況（probe_p6.gd）
+[P6] ===== B_P_MKT_002 pos=(244.954, 0.451, 78.622) yaw=-98.63 w=5.20 d=9.10 type=nikai roof=hira eave=5.40 ridge=7.45 in_overlay=false
+[P6]   shape size=(5.201086, 5.74268, 9.1) top=5.40   kit render x[-4.00,4.00] y[-0.34,7.61] z[-5.32,5.33]
+[P6]   nb same  B_P_MKT_001  lp=(10.53,-0.06,-1.46) dyaw=4 w=7.00 type=nikai roof=hira  render x[5.77,15.29] ytop 0.26 z[-7.72,4.80] in_ov=true
+[P6]   nb across B_P_MKT_017  lp=(0.02,0.01,17.75) dyaw=-180 w=5.20 type=nikai roof=hira  render x[-4.11,4.14] ytop 7.79 z[11.98,23.52] in_ov=false
+[P6]   low props in front zone: 2
+[P6] ===== B_P_MKT_017 pos=(227.400, 0.464, 75.978) yaw=81.48 w=5.20 d=10.01 type=nikai roof=hira eave=5.40 ridge=7.65 in_overlay=false
+[P6]   shape size=(5.199583, 5.749322, 10.01) top=5.40   kit render x[-4.12,4.12] y[-0.35,7.78] z[-5.77,5.77]
+[P6]   nb across B_P_MKT_002  lp=(-0.01,-0.01,17.75) dyaw=180 w=5.20 type=nikai roof=hira  render x[-4.01,3.98] ytop 7.60 z[12.42,23.07] in_ov=false
+[P6]   hi Props/StreetP10/Signs/005_st_nobori_sake/LOD0                          x[2.25,2.88] y[-0.21,3.79] z[5.53,5.88]
+[P6]   hi Props/StreetP10/Signs/006_st_chochin_shiro/LOD0                        x[1.45,2.05] y[-0.22,2.48] z[5.02,5.95]
+[P6]   hi EnrichW9P13/ZoneM/M_MKT_017/160_w9_sugidama/LOD0                       x[1.13,2.34] y[2.20,3.30] z[4.94,6.46]
+[P6]   low props in front zone: 3
+[P6] ===== B_P_MKT_018 pos=(233.925, 0.724, 33.988) yaw=71.57 w=6.09 d=10.92 type=hiraya roof=hira eave=2.90 ridge=5.36 in_overlay=false
+[P6]   shape size=(6.092941, 4.26, 10.92) top=3.90   kit render x[-6.37,6.37] y[-0.36,6.87] z[-7.29,7.29]
+[P6]   nb across B_P_MKT_003  lp=(3.90,-0.00,18.67) dyaw=-180 w=7.90 type=zushi roof=hira  render x[-3.10,10.90] ytop 6.02 z[11.29,26.04] in_ov=false
+[P6]   nb same  B_P_MKT_019  lp=(6.75,0.04,0.00) dyaw=-0 w=7.00 type=nikai roof=hira  render x[-0.08,13.58] ytop 7.82 z[-7.56,7.56] in_ov=false
+[P6]   nb same  B_P_MKT_020  lp=(13.85,0.07,0.91) dyaw=0 w=4.81 type=zushi roof=hira  render x[8.67,19.03] ytop 3.97 z[-5.08,6.91] in_ov=true
+[P6]   nb same  B_P_MKT_021  lp=(20.40,0.12,0.00) dyaw=0 w=7.90 type=nikai roof=hira  render x[13.13,27.68] ytop 8.28 z[-7.83,7.83] in_ov=false
+[P6]   low props in front zone: 5
+[P6] ===== B_P_MKT_003 pos=(252.868, 0.723, 36.193) yaw=-108.43 w=7.90 d=10.01 type=zushi roof=hira eave=3.90 ridge=6.15 in_overlay=false
+[P6]   shape size=(7.895436, 4.296999, 10.01) top=3.90   kit render x[-7.00,7.00] y[-0.39,6.02] z[-7.38,7.37]
+[P6]   nb same  B_P_MKT_004  lp=(-7.20,0.04,-0.45) dyaw=0 w=6.10 type=nikai roof=hira  render x[-13.53,-0.88] ytop 0.36 z[-7.74,6.84] in_ov=true
+[P6]   nb same  B_P_MKT_005  lp=(-15.86,0.09,-0.45) dyaw=0 w=8.80 type=nikai roof=hira  render x[-23.53,-8.18] ytop 0.41 z[-8.55,7.65] in_ov=true
+[P6]   nb same  B_P_MKT_006  lp=(-23.05,0.12,0.00) dyaw=-0 w=5.20 type=zushi roof=hira  render x[-28.70,-17.39] ytop 4.02 z[-6.56,6.57] in_ov=true
+[P6]   nb across B_P_MKT_018  lp=(3.90,0.00,18.67) dyaw=-180 w=6.09 type=hiraya roof=hira  render x[-2.47,10.27] ytop 6.87 z[11.38,25.95] in_ov=false
+[P6]   nb across B_P_MKT_019  lp=(-2.85,0.04,18.67) dyaw=180 w=7.00 type=nikai roof=hira  render x[-9.68,3.98] ytop 7.82 z[11.11,26.23] in_ov=false
+[P6]   nb other B_P_MKT_051  lp=(-3.65,-0.02,-14.69) dyaw=113 w=5.21 type=hiraya roof=hira  render x[-9.63,2.47] ytop 5.06 z[-19.36,-10.20] in_ov=false
+[P6]   nb other B_P_MKT_052  lp=(-6.74,-0.01,-20.81) dyaw=113 w=6.10 type=zushi roof=tsuma  render x[-13.25,-0.03] ytop 5.39 z[-26.08,-15.65] in_ov=false
+[P6]   hi Props/StreetP10/Signs/048_st_nobori_meshi/LOD0                         x[3.57,4.25] y[-0.24,3.76] z[5.49,6.02]
+[P6]   hi Props/StreetP10/Signs/050_st_chochin_aka/LOD0                          x[-2.61,-1.76] y[-0.21,2.49] z[5.02,6.05]
+[P6]   low props in front zone: 4
+[P6] ===== B_P_MKT_019 pos=(236.061, 0.765, 27.586) yaw=71.54 w=7.00 d=10.92 type=nikai roof=hira eave=5.40 ridge=7.86 in_overlay=false
+[P6]   shape size=(7.000506, 5.768409, 10.92) top=5.40   kit render x[-6.83,6.83] y[-0.36,7.78] z[-7.56,7.56]
+[P6]   nb across B_P_MKT_003  lp=(-2.84,-0.04,18.67) dyaw=-180 w=7.90 type=zushi roof=hira  render x[-9.85,4.16] ytop 5.98 z[11.29,26.04] in_ov=false
+[P6]   nb across B_P_MKT_004  lp=(4.36,-0.01,19.12) dyaw=-180 w=6.10 type=nikai roof=hira  render x[-1.97,10.69] ytop 0.31 z[11.83,26.41] in_ov=true
+[P6]   nb same  B_P_MKT_018  lp=(-6.75,-0.04,0.00) dyaw=0 w=6.09 type=hiraya roof=hira  render x[-13.12,-0.38] ytop 6.83 z[-7.29,7.29] in_ov=false
+[P6]   nb same  B_P_MKT_020  lp=(7.10,0.03,0.91) dyaw=0 w=4.81 type=zushi roof=hira  render x[1.92,12.29] ytop 3.93 z[-5.08,6.90] in_ov=true
+[P6]   nb same  B_P_MKT_021  lp=(13.65,0.08,-0.00) dyaw=0 w=7.90 type=nikai roof=hira  render x[6.38,20.93] ytop 8.24 z[-7.84,7.83] in_ov=false
+[P6]   nb same  B_P_MKT_022  lp=(21.79,0.12,-0.01) dyaw=0 w=7.01 type=nikai roof=hira  render x[14.97,28.62] ytop 8.28 z[-7.57,7.55] in_ov=false
+[P6]   nb other B_P_MKT_059  lp=(6.84,0.08,-24.33) dyaw=-148 w=4.80 type=nikai roof=tsuma  render x[1.90,11.66] ytop 6.86 z[-30.16,-18.50] in_ov=false
+[P6]   low props in front zone: 4
+[P6] ===== B_P_MKT_021 pos=(240.380, 0.845, 14.633) yaw=71.57 w=7.90 d=10.92 type=nikai roof=hira eave=5.40 ridge=7.86 in_overlay=false
+[P6]   shape size=(7.895435, 5.773437, 10.92) top=5.40   kit render x[-7.28,7.28] y[-0.38,8.16] z[-7.83,7.83]
+[P6]   nb across B_P_MKT_005  lp=(-0.65,-0.03,19.12) dyaw=-180 w=8.80 type=nikai roof=hira  render x[-8.32,7.03] ytop 0.29 z[11.02,27.21] in_ov=true
+[P6]   nb across B_P_MKT_006  lp=(6.54,0.00,18.66) dyaw=180 w=5.20 type=zushi roof=hira  render x[0.89,12.20] ytop 3.90 z[12.09,25.23] in_ov=true
+[P6]   nb same  B_P_MKT_018  lp=(-20.40,-0.12,-0.00) dyaw=-0 w=6.09 type=hiraya roof=hira  render x[-26.77,-14.03] ytop 6.75 z[-7.29,7.28] in_ov=false
+[P6]   nb same  B_P_MKT_019  lp=(-13.65,-0.08,-0.00) dyaw=-0 w=7.00 type=nikai roof=hira  render x[-20.48,-6.83] ytop 7.70 z[-7.56,7.56] in_ov=false
+[P6]   nb same  B_P_MKT_020  lp=(-6.55,-0.05,0.91) dyaw=0 w=4.81 type=zushi roof=hira  render x[-11.74,-1.37] ytop 3.85 z[-5.08,6.90] in_ov=true
+[P6]   nb same  B_P_MKT_022  lp=(8.14,0.04,-0.00) dyaw=0 w=7.01 type=nikai roof=hira  render x[1.32,14.97] ytop 8.20 z[-7.56,7.56] in_ov=false
+[P6]   nb other B_P_MKT_059  lp=(-6.80,-0.01,-24.33) dyaw=-148 w=4.80 type=nikai roof=tsuma  render x[-11.74,-1.98] ytop 6.77 z[-30.16,-18.50] in_ov=false
+[P6]   low props in front zone: 4
+[P6] ===== B_P_MKT_022 pos=(242.953, 0.889, 6.910) yaw=71.64 w=7.01 d=10.92 type=nikai roof=hira eave=5.40 ridge=7.86 in_overlay=false
+[P6]   shape size=(7.006841, 5.768311, 10.92) top=5.40   kit render x[-6.82,6.82] y[-0.37,8.16] z[-7.56,7.56]
+[P6]   nb across B_P_MKT_005  lp=(-8.81,-0.07,19.11) dyaw=180 w=8.80 type=nikai roof=hira  render x[-16.48,-1.15] ytop 0.25 z[11.01,27.20] in_ov=true
+[P6]   nb across B_P_MKT_006  lp=(-1.62,-0.04,18.66) dyaw=180 w=5.20 type=zushi roof=hira  render x[-7.27,4.03] ytop 3.86 z[12.10,25.22] in_ov=true
+[P6]   nb across B_P_MKT_007  lp=(4.73,-0.00,19.13) dyaw=180 w=6.10 type=nikai roof=hira  render x[-1.64,11.10] ytop 7.99 z[11.84,26.41] in_ov=false
+[P6]   nb same  B_P_MKT_019  lp=(-21.79,-0.12,-0.03) dyaw=-0 w=7.00 type=nikai roof=hira  render x[-28.62,-14.97] ytop 7.66 z[-7.59,7.53] in_ov=false
+[P6]   nb same  B_P_MKT_020  lp=(-14.70,-0.09,0.89) dyaw=-0 w=4.81 type=zushi roof=hira  render x[-19.87,-9.52] ytop 3.81 z[-5.10,6.88] in_ov=true
+[P6]   nb same  B_P_MKT_021  lp=(-8.14,-0.04,-0.01) dyaw=-0 w=7.90 type=nikai roof=hira  render x[-15.41,-0.87] ytop 8.12 z[-7.83,7.82] in_ov=false
+[P6]   hi Props/StreetP10/Signs/018_mk_nobori_cha/LOD0                           x[1.02,1.71] y[-0.24,3.76] z[5.95,6.47]
+[P6]   hi EnrichW9P13/ZoneM/M_MKT_022/164_w9_sudare/LOD0                         x[-0.01,1.76] y[0.88,2.44] z[5.12,6.30]
+[P6]   low props in front zone: 2
+[P6] ===== B_P_MKT_007 pos=(262.596, 0.885, 8.444) yaw=-108.41 w=6.10 d=10.92 type=nikai roof=hira eave=5.40 ridge=7.86 in_overlay=false
+[P6]   shape size=(6.10241, 5.7632, 10.92) top=5.40   kit render x[-6.37,6.37] y[-0.36,7.99] z[-7.29,7.29]
+[P6]   nb same  B_P_MKT_004  lp=(22.20,-0.13,0.01) dyaw=-0 w=6.10 type=nikai roof=hira  render x[15.88,28.52] ytop 0.19 z[-7.28,7.30] in_ov=true
+[P6]   nb same  B_P_MKT_005  lp=(13.54,-0.07,0.01) dyaw=0 w=8.80 type=nikai roof=hira  render x[5.87,21.22] ytop 0.25 z[-8.09,8.10] in_ov=true
+[P6]   nb same  B_P_MKT_006  lp=(6.35,-0.04,0.46) dyaw=-0 w=5.20 type=zushi roof=hira  render x[0.70,12.01] ytop 3.86 z[-6.10,7.03] in_ov=true
+[P6]   nb same  B_P_MKT_008  lp=(-6.75,0.04,-0.00) dyaw=-0 w=7.00 type=hiraya roof=hira  render x[-13.57,0.08] ytop 2.94 z[-7.56,7.56] in_ov=true
+[P6]   nb same  B_P_MKT_009  lp=(-13.85,0.08,0.90) dyaw=-0 w=4.80 type=nikai roof=hira  render x[-19.03,-8.67] ytop 5.48 z[-5.09,6.89] in_ov=true
+[P6]   nb same  B_P_MKT_010  lp=(-20.40,0.14,-0.01) dyaw=-0 w=7.90 type=zushi roof=hira  render x[-27.67,-13.13] ytop 4.04 z[-7.84,7.81] in_ov=true
+[P6]   nb across B_P_MKT_022  lp=(4.75,0.00,19.12) dyaw=-180 w=7.01 type=nikai roof=hira  render x[-2.08,11.57] ytop 8.16 z[11.56,26.68] in_ov=false
+[P6]   low props in front zone: 3
+
+## 選定 4 棟：gate と同じ others_for の箱（P10 等）・側面帯（probe_q.gd）
+[Q] ===== B_P_MKT_019 w=7.000 d=10.920 zf=5.460 door_cx=0.875 door_w=1.750 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Shopfront/010_st_hiradai_zakka/LOD0            x[1.72,4.20] y[0.09,1.47] z[5.48,7.53]
+[Q]   gatebox Props/StreetP10/Shopfront/011_sk_teoke/LOD0                    x[-0.71,-0.06] y[0.09,0.47] z[5.96,6.50]
+[Q]   gatebox Props/StreetP10/Residence/009_tk_okeyama/LOD0                  x[-4.95,-3.65] y[0.03,1.19] z[5.81,6.91]
+[Q]   gatebox EnrichW9P13/ZoneM/S_MKT_019_MKT_020/166_fern_a/LOD0            x[3.20,5.09] y[-0.16,0.59] z[3.09,4.83]
+[Q]   side -1: 1 objs  Props/…/009_tk_okeyama x[-4.99,-3.61] y≤1.23 z[5.77,6.95]
+[Q]   side +1: 3 objs  Props/…/010_st_hiradai_zakka x[1.68,4.24] y≤1.51 z[5.44,7.57] | EnrichW9P13/…/165_w9_hana_kiiro x[3.56,4.14] y≤0.28 z[4.27,4.85] | EnrichW9P13/…/166_fern_a x[3.16,5.13] y≤0.63 z[3.05,4.87]
+[Q] ===== B_P_MKT_021 w=7.900 d=10.920 zf=5.460 door_cx=1.317 door_w=1.756 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Shopfront/012_kr_okeyama/LOD0                  x[-5.73,-4.49] y[0.06,0.86] z[5.79,6.91]
+[Q]   gatebox Props/StreetP10/Shopfront/015_sz_hachi/LOD0                    x[-3.24,-2.54] y[0.07,0.61] z[5.97,6.68]
+[Q]   gatebox Props/StreetP10/Signs/013_st_kanban_kusuri/LOD0                x[-2.66,-1.72] y[0.07,1.77] z[5.88,6.80]
+[Q]   gatebox Props/StreetP10/Signs/014_st_andon_kusuri/LOD0                 x[-1.82,-1.26] y[0.08,1.04] z[6.00,6.56]
+[Q]   side -1: 1 objs  Props/…/012_kr_okeyama x[-5.77,-4.45] y≤0.90 z[5.75,6.95]
+[Q]   side +1: 0 objs  
+[Q] ===== B_P_MKT_022 w=7.010 d=10.920 zf=5.460 door_cx=-0.876 door_w=1.753 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Shopfront/016_gd_shogi/LOD0                    x[1.70,3.56] y[0.10,0.44] z[5.67,7.11]
+[Q]   gatebox Props/StreetP10/Signs/017_st_andon_yasumi/LOD0                 x[1.23,1.79] y[0.10,1.06] z[6.05,6.61]
+[Q]   gatebox Props/StreetP10/Signs/018_mk_nobori_cha/LOD0                   x[1.06,1.67] y[-0.20,3.72] z[5.99,6.43]
+[Q]   gatebox EnrichW9P13/ZoneM/M_MKT_022/164_w9_sudare/LOD0                 x[0.03,1.72] y[0.92,2.40] z[5.16,6.26]
+[Q]   side -1: 0 objs  
+[Q]   side +1: 1 objs  Props/…/016_gd_shogi x[1.66,3.60] y≤0.48 z[5.63,7.15]
+[Q] ===== B_P_MKT_003 w=7.900 d=10.010 zf=5.005 door_cx=-0.439 door_w=1.756 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Shopfront/046_sk_bench/LOD0                    x[0.31,2.32] y[0.07,0.44] z[5.14,6.62]
+[Q]   gatebox Props/StreetP10/Shopfront/049_gd_taru/LOD0                     x[2.22,2.93] y[0.10,0.66] z[5.56,6.27]
+[Q]   gatebox Props/StreetP10/Signs/047_st_andon_meshi/LOD0                  x[-1.93,-1.37] y[0.13,1.09] z[5.59,6.16]
+[Q]   gatebox Props/StreetP10/Signs/048_st_nobori_meshi/LOD0                 x[3.61,4.21] y[-0.20,3.72] z[5.53,5.98]
+[Q]   gatebox Props/StreetP10/Signs/050_st_chochin_aka/LOD0                  x[-2.57,-1.80] y[-0.17,2.45] z[5.06,6.01]
+[Q]   gatebox Props/StreetP10/Work/101_st_okeya/LOD0                         x[4.95,7.93] y[-0.07,0.48] z[2.24,4.94]
+[Q]   side -1: 1 objs  Props/…/051_st_hinadan_seto x[-7.75,-5.78] y≤1.13 z[5.20,7.09]
+[Q]   side +1: 2 objs  Props/…/048_st_nobori_meshi x[3.57,4.25] y≤3.76 z[5.49,6.02] | Props/…/101_st_okeya x[4.91,7.97] y≤0.52 z[2.20,4.98]
+
+## 隣棟の実頂点が自棟の壁へどこまで来るか（probe_nb.gd）
+[NB] B_P_MKT_021 ← B_P_MKT_020 (overlay, side -1): verts 3150  y[1.60,4.30]  nearest to my wall -0.03 m  by-band(closest, neg=outside wall) y1:-0.32 y2:-0.20 y3:0.03 y4:-0.20
+[NB] B_P_MKT_019 ← B_P_MKT_020 (overlay, side +1): verts 413  y[3.48,3.93]  nearest to my wall 0.97 m  by-band(closest, neg=outside wall) y3:-0.97
+[NB] B_P_MKT_019 ← B_P_MKT_018 (kit, side -1): verts 2280  y[2.46,6.83]  nearest to my wall 0.12 m  by-band(closest, neg=outside wall) y2:-0.17 y3:-0.15 y4:-0.13 y5:-0.17 y6:-0.12
+[NB] B_P_MKT_003 ← B_P_MKT_004 (overlay, side -1): verts 1170  y[1.57,5.78]  nearest to my wall 0.04 m  by-band(closest, neg=outside wall) y1:-0.33 y2:-0.20 y3:-0.05 y4:-0.08 y5:-0.04
+[NB] B_P_MKT_021 ← B_P_MKT_022 (overlay, side +1): verts 4139  y[1.66,5.58]  nearest to my wall 0.09 m  by-band(closest, neg=outside wall) y1:-0.79 y2:-0.69 y3:-0.69 y4:-0.13 y5:-0.09
+[NB] B_P_MKT_022 ← B_P_MKT_021 (overlay, side -1): verts 1609  y[2.21,9.29]  nearest to my wall 0.56 m  by-band(closest, neg=outside wall) y2:-0.69 y3:-0.69 y5:-0.56 y6:-0.59 y7:-0.59 y8:-0.57 y9:-0.75
