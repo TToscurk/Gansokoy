@@ -1,0 +1,52 @@
+# 正常 TPS（同位置・同朝向・相機座標 Before/After 一致）の ID パス：画面に占める割合と bbox（1600x900）。agg_id.py、filter MKT_02[38]
+== S23a Before
+ 1.40%  B_P_MKT_023                                      bbox x607-817 y267-411
+ 0.01%  B_P_MKT_028                                      bbox x838-844 y346-369
+== S23a After
+ 1.91%  B_P_MKT_023                                      bbox x575-820 y230-411
+ 0.01%  B_P_MKT_028                                      bbox x838-844 y325-369
+== S23b Before
+ 3.42%  B_P_MKT_023                                      bbox x496-850 y236-450
+ 0.01%  B_P_MKT_028                                      bbox x928-939 y343-376
+== S23b After
+ 4.48%  B_P_MKT_023                                      bbox x477-861 y182-450
+ 0.03%  B_P_MKT_028                                      bbox x924-938 y322-376
+== E23 Before
+ 2.52%  B_P_MKT_023                                      bbox x695-904 y245-464
+== E23 After
+ 3.38%  B_P_MKT_023                                      bbox x673-929 y189-464
+== X23 Before
+ 5.60%  B_P_MKT_023                                      bbox x373-807 y214-496
+== X23 After
+ 7.33%  B_P_MKT_023                                      bbox x347-819 y153-496
+== X23b Before
+10.25%  B_P_MKT_023                                      bbox x198-824 y159-566
+ 0.02%  B_P_MKT_028                                      bbox x185-204 y344-394
+== X23b After
+14.53%  B_P_MKT_023                                      bbox x171-839 y78-566
+ 0.04%  B_P_MKT_028                                      bbox x174-204 y310-394
+== F28 Before
+ 6.36%  B_P_MKT_028                                      bbox x567-974 y239-509
+== F28 After
+ 6.69%  B_P_MKT_028                                      bbox x562-981 y181-509
+== F28n Before
+ 1.56%  B_P_MKT_028                                      bbox x713-944 y283-477
+== F28n After
+ 1.86%  B_P_MKT_028                                      bbox x711-930 y275-477
+ 0.00%  B_P_MKT_023                                      bbox x535-553 y289-298
+== N28a Before
+ 0.06%  B_P_MKT_028                                      bbox x785-808 y346-423
+ 0.00%  B_P_MKT_023                                      bbox x756-766 y328-376
+== N28a After
+ 0.18%  B_P_MKT_028                                      bbox x782-873 y304-423
+ 0.01%  B_P_MKT_023                                      bbox x754-781 y314-376
+== W28 Before
+ 0.36%  B_P_MKT_028                                      bbox x746-810 y330-471
+== W28 After
+ 0.55%  B_P_MKT_028                                      bbox x745-814 y278-471
+== W28n Before
+ 0.27%  B_P_MKT_028                                      bbox x789-842 y338-470
+ 0.01%  B_P_MKT_023                                      bbox x733-746 y325-382
+== W28n After
+ 0.58%  B_P_MKT_028                                      bbox x786-934 y282-470
+ 0.03%  B_P_MKT_023                                      bbox x731-776 y303-382

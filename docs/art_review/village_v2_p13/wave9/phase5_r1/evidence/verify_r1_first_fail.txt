@@ -1,0 +1,1 @@
+[W9R2G] FAIL B_P_MKT_023：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 999）["Props/StreetP10/MarketLead/000_mk_chochin_line/LOD0", "Props/StreetP10/MarketLead/002_st_onobori_ichi/LOD0"]

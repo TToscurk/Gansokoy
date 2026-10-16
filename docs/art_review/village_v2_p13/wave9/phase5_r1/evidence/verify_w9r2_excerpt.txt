@@ -1,0 +1,37 @@
+[W9R2G] 反向案例 36/36（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）
+[W9R2G] PASS root 直下に ArchW9R2P13 が 1 回だけ掛載（保存された village_v2.tscn）
+[W9R2G] PASS B_P_MKT_023：overlay 子がある
+[W9R2G] PASS B_P_MKT_023：body が実在（Districts/Market/Buildings/B_P_MKT_023）
+[W9R2G] PASS B_P_MKT_023：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_023：L0／L1 あり
+[W9R2G] PASS B_P_MKT_023：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_023：三角面 L0 21763／L1 102（上限 30000／500）
+[W9R2G] PASS B_P_MKT_023：張り出しが上限内（[P: (-3.185835, 0.32, -6.045647), S: (6.37167, 7.907, 12.09129)]）
+[W9R2G] PASS B_P_MKT_023：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_023：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_023：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_023：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_028：overlay 子がある
+[W9R2G] PASS B_P_MKT_028：body が実在（Districts/Market/Buildings/B_P_MKT_028）
+[W9R2G] PASS B_P_MKT_028：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_028：L0／L1 あり
+[W9R2G] PASS B_P_MKT_028：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_028：三角面 L0 14985／L1 32（上限 30000／500）
+[W9R2G] PASS B_P_MKT_028：張り出しが上限内（[P: (-3.23, 0.044752, -5.855), S: (6.46, 4.935498, 12.12444)]）
+[W9R2G] PASS B_P_MKT_028：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_028：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_028：庇 3 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_028：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS 40 棟 LOD0 合計 593921 tri（上限 622000＝平均 15550 × 棟数）
+[W9R2G] PASS B_P_MKT_023：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_023：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_028：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_028：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS enabled=true：R1 の吊り物（sudare・kaki・sugi・zaru・zori）8 件がこの 40 棟でだけ隠れる（実際 8）
+[W9R2G] PASS enabled=false で R1 の物は全て元の表示（非表示 0）
+[W9R2G] PASS enabled=false で Kit は全て元の表示へ（非表示だったもの 2280 → 残り 0）
+[W9R2G] PASS enabled=false で overlay は非表示
+[W9R2G] PASS enabled=true で同じ Kit 構件が再び隠れる（2280 → 2280）
+[W9R2G] PASS village_v2.tscn は 0ca148f から『追加のみ・≤9 行（R2 3＋Phase 3 の EnrichW9P3 3＋Phase 4 の EnrichW9P4 3）』（実際 +9 −0）
+[W9R2G] PASS 全棟とも body の碰撞は Kit 由来の 1 Shape のまま（増減なし）
+[W9R2G] 結果：543 通過・0 失敗（反向案例 36/36）
