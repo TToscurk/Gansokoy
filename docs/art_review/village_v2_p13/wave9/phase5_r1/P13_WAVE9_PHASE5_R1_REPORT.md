@@ -1,6 +1,17 @@
 # P13 W9 Phase 5 R1 — 主街中段 MKT_023／MKT_028 ART_REVIEW
 
-日期：2026-10-16　狀態：**ART_REVIEW（未 ART_APPROVED、未封存）**　依據：使用者「P13 W9 — Phase 4 R1b Final Art Decision & Next Assignment」Phase 5 指派（Jev 指令範圍交叉檢查 24/24 後執行）。
+## 最終裁定（使用者 2026-10-16，追記）
+
+**MKT_023、MKT_028 ART_APPROVED**（依正常遊玩視角可見的改善）。不授權 R2。
+- 現行幾何保留，不再迭代。
+- MKT_023 二階的碰撞限制記為未解決的整合問題（登記表 #23）。
+- 面數 593,921 在既有上限 622,000 內接受；**不提高預算公式**（#24）。
+- P10 封存資產與原 53 項 staged 保留；結案不另跑完整驗證循環；未 push。
+- Phase 5 局部結案，見 `../W9_FOLLOWUP_REGISTRY.md`「Phase 5 結案」。以下為提交時的記錄，原樣保留。
+
+---
+
+日期：2026-10-16　狀態（提交時）：**ART_REVIEW（未 ART_APPROVED、未封存）**　依據：使用者「P13 W9 — Phase 4 R1b Final Art Decision & Next Assignment」Phase 5 指派（Jev 指令範圍交叉檢查 24/24 後執行）。
 範圍只有 MKT_023、MKT_028。MKT_014、主街南段 8 棟、已核准的 Phase 4 建築、相機／控制器、P10 封存內容：**未改動**。
 
 ## 1. 看得到的改善（正常 TPS，同位置同朝向；15 個鏡位的相機座標 Before／After 完全一致）
