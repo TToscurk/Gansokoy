@@ -18,6 +18,13 @@ const MAX_SHAPES := 60
 const TALL_H := 8.0
 const CV_MIN := 0.25           ## 隣の株までの距離の変動係数（等間隔の並びは ≈ 0）
 const TREE_ROAD_GAP := 3.0     ## 高木は路面の縁からこの距離以上離す（視線の通路）
+## B1（Phase 4 R1b）：SpringArm の ray は arm_sweep_w9p3.gd と同じ規約（起点 足元+1.70 m・背後・仰角 sin 0.179・最大 7.5 m・mask 1）。
+## 『重い縮み』＝EnrichW9P4 の碰撞による縮みが ARM_SEV_LOSS 以上で、腕が ARM_SEV_LEN 未満になる（R1：最悪 7.5 → 1.58 m）。
+const ARM_UP := 1.70
+const ARM_SIN := 0.179
+const ARM_MAX := 7.5
+const ARM_SEV_LOSS := 2.0
+const ARM_SEV_LEN := 3.0
 
 var passed := 0
 var failed := 0
@@ -152,6 +159,45 @@ static func sets_ok(houses: Dictionary) -> bool:
 		if int(cnt[k]) >= 3:
 			return false
 	return true
+
+
+## B1：西巷の通行帯（巷の軸 ±1.2 m・s 0..LEN・16 方位）で SpringArm の ray を全碰撞あり／EnrichW9P4 の碰撞なしの 2 回飛ばし、縮みを数える
+func _arm_scan(v: Node3D, own: Node3D) -> Dictionary:
+	var sp := v.get_world_3d().direct_space_state
+	var ex: Array = []
+	for c in own.find_children("*", "CollisionObject3D", true, false):
+		ex.append((c as CollisionObject3D).get_rid())
+	var S := P4.LANE_B4_S.normalized()
+	var N := Vector2(-S.y, S.x)
+	var cc := sqrt(1.0 - ARM_SIN * ARM_SIN)
+	var res := {"n": 0, "severe": 0, "any": 0, "w_loss": 0.0, "w_pre": ARM_MAX, "w_now": ARM_MAX}
+	for yi in 16:
+		var yaw := TAU * float(yi) / 16.0
+		var fc := Vector2(sin(yaw), -cos(yaw))
+		var back := Vector3(-fc.x * cc, ARM_SIN, -fc.y * cc)
+		for o: float in [-1.2, -0.6, 0.0, 0.6, 1.2]:
+			for k in int(P4.LANE_B4_LEN / 0.5) + 1:
+				var pw := P4.LANE_B4_O + S * (0.5 * k) + N * o
+				var rg := sp.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(pw.x, 60.0, pw.y), Vector3(pw.x, -20.0, pw.y), 1, ex))
+				if rg.is_empty():
+					continue
+				var o3 := Vector3(pw.x, float((rg["position"] as Vector3).y) + ARM_UP, pw.y)
+				var to := o3 + back * ARM_MAX
+				var r1 := sp.intersect_ray(PhysicsRayQueryParameters3D.create(o3, to, 1))
+				var r0 := sp.intersect_ray(PhysicsRayQueryParameters3D.create(o3, to, 1, ex))
+				var now := ARM_MAX if r1.is_empty() else o3.distance_to(r1["position"] as Vector3)
+				var pre := ARM_MAX if r0.is_empty() else o3.distance_to(r0["position"] as Vector3)
+				var loss := pre - now
+				res["n"] = int(res["n"]) + 1
+				if loss >= 0.30:
+					res["any"] = int(res["any"]) + 1
+				if loss >= ARM_SEV_LOSS and now < ARM_SEV_LEN:
+					res["severe"] = int(res["severe"]) + 1
+				if loss > float(res["w_loss"]):
+					res["w_loss"] = loss
+					res["w_pre"] = pre
+					res["w_now"] = now
+	return res
 
 
 func _layers(recs: Array, cl: String) -> Dictionary:
@@ -347,6 +393,31 @@ func _run() -> void:
 			if cbad <= 5:
 				print("[W9P4G]   碰撞不適合 %s %s" % [cs.name, r])
 	_ok(cbad == 0, "碰撞箱 %d 個が戸口の空け帯と NPC の巡回路に触れない（%d）" % [shapes.size(), cbad])
+	# ── B1（Phase 4 R1b・使用者裁定）：西巷の通行帯から、EnrichW9P4 の碰撞が SpringArm を大きく縮めない（同じ地点・同じ向きで EnrichW9P4 の碰撞を除いた ray と比べる）
+	for i in 3:
+		await physics_frame
+	var sv := _arm_scan(v, own)
+	_ok(int(sv["severe"]) == 0, "B1 西巷の通行帯 %d 地点×16 方位：EnrichW9P4 による SpringArm の重い縮み（≥ %.1f m かつ腕 < %.1f m）%d 件（R1：81 件）・≥ 0.30 m の縮み %d 件（R1：150 件）・最悪 %.2f → %.2f m" \
+		% [int(sv["n"]) / 16, ARM_SEV_LOSS, ARM_SEV_LEN, int(sv["severe"]), int(sv["any"]), float(sv["w_pre"]), float(sv["w_now"])])
+	# 反向：木戸 2 基の碰撞だけを（記憶の中だけで）R1 の位置＝巷の口（向きの前方へ setback m）へ戻すと、重い縮みを検出できる
+	var kido: Array = []
+	for cs in shapes:
+		if String(cs.name).contains("_w9_kido_"):
+			kido.append(cs)
+	for cs in kido:
+		var c3 := cs as CollisionShape3D
+		c3.global_position += c3.global_transform.basis.z.normalized() * float((P4.A_GAPS["B_P_RSW_024|B_P_RSW_025"][1] as Dictionary)["setback"])
+	for i in 4:
+		await physics_frame
+	var sv2 := _arm_scan(v, own)
+	_ok(kido.size() == 2 and int(sv2["severe"]) >= 20, "B1 反向：木戸 %d 基の碰撞を R1 の位置へ戻すと重い縮みが %d 件（≥ 20・この検査は R1 の問題を検出できる）" % [kido.size(), int(sv2["severe"])])
+	for cs in kido:
+		var c4 := cs as CollisionShape3D
+		c4.global_position -= c4.global_transform.basis.z.normalized() * float((P4.A_GAPS["B_P_RSW_024|B_P_RSW_025"][1] as Dictionary)["setback"])
+	for i in 4:
+		await physics_frame
+	var sv3 := _arm_scan(v, own)
+	_ok(int(sv3["severe"]) == 0 and int(sv3["any"]) == int(sv["any"]), "B1 戻した後：重い縮み %d 件・≥ 0.30 m %d 件（元の値に戻る）" % [int(sv3["severe"]), int(sv3["any"])])
 	# ── 反向案例（gate が本当に落ちる）
 	var sample: Dictionary = recs[0].duplicate()
 	sample["hang"] = false

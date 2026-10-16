@@ -504,37 +504,53 @@ def build_rsw025():
 
 
 def build_rsw026():
-    """B_P_RSW_026 仕立て屋の細長い家（Phase 4 B）：瓦の妻入（壁 4.7 m・棟 6.0 m）＋二階が一階より 0.38 m せり出す出桁造り（腕木が並ぶ）。東列で一番高く、
-    巷に三角の妻面を向ける。一階の庇は短く（0.6 m）、せり出した二階が巷に被さる。入口＝x 0.90..2.70（Kit の戸口と同じ）。"""
-    B = Bld('B_P_RSW_026', 5.4, 10.92, 4.7, hk='h27', fin=2, tone=1)
+    """B_P_RSW_026 仕立て屋の細長い家（Phase 4 B）：瓦の妻入＋二階が一階より大きくせり出す出桁造り。入口＝x 0.90..2.70（Kit の戸口と同じ）。
+    Phase 4 R1b（使用者裁定 B2「正常 TPS 距離で隣と見分けにくい」→ 巷に見える上部の輪郭を一つだけ作り替える）：
+      R1 は二階のせり出し 0.38 m・壁 4.7 m・勾配 0.62（棟 約 6.4 m）で、妻の三角は一階の前面（zf）にあり二階の前壁より 0.38 m 引っ込み、
+      せり出しの下に瓦の一階庇が潜り込んで、遠目には隣と同じ『瓦の切妻＋庇』に読めた。
+      → 二階を 0.90 m せり出し（大きな腕木 7 本＋せり出しの先に通しの出桁）、妻の三角と屋根をせり出しの前面まで持ち出し（屋根は d＋0.90 の長さで前へ 0.45 m ずらす）、
+        勾配 0.80・壁 5.1 m で棟 約 7.3 m の細く尖った妻にする。一階の瓦庇はやめ、せり出しそのものが戸口の軒になる＝巷側に深い影の帯。
+      せり出しの下端は 3.02 m（一階の格子 2.72 m の上に漆喰の欄間帯）：TPS の腕の先（巷で 足元＋約 3.0 m）がせり出しの体積に入らない高さ
+      （R1 の 2.72 m では巷の通行帯 8080 標本のうち 90 件〔腕 7.5 m〕で相機がせり出し・二階の体積に入った → 本案 75 件、腕 8.5 m では 101 → 95 件
+       〔tools/p13/p4/diag_cam_026.gd〕。残りは Kit の body 碰撞〔上端 2.90 m〕より上の二階の角に腕の先が届く R1 以前からの類型）。
+      巷の東列の棟：名主の入母屋 約 5.9 m｜板葺き 4.8 m｜この家 約 7.3 m。前への張り出しは屋根の先で zf＋1.45 m。"""
+    B = Bld('B_P_RSW_026', 5.4, 10.92, 5.1, hk='h27', fin=2, tone=1)
     w, zf = B.w, B.zf
-    YE, Y2, out = 4.7, 3.0, 0.38
+    YE, Y2, out = 5.1, 3.40, 0.90
+    YU = 3.12                                         # せり出しの床裏の下端（欄間帯の上）
     zc = zf + out
+    p_roof = 0.80
     bays1 = [('koshib', 1.8), ('koshi', 1.8), ('door', 1.8)]
     bays2 = [('win', 1.8), ('win', 1.8), ('win', 1.8)]
     for lod in (0, 1):
         W, R, PR = B.W[lod], B.R[lod], B.P[lod]
-        H = gable_on_body(B, lod, YE, 0.62, 0.50, 0.50, True)
-        eave_roof(R, lod, -w / 2 + 0.02, w / 2 - 0.02, 2.90, zf, 0.60, p=0.32, style='tile')
+        tm = tmp()
+        gable_roof(tm, lod, B.d + out, w / 2, YE, p_roof, 0.50, 0.55, tsuma=True, oni=True)      # 妻はせり出しの前面（zc）と背面（−zf）
+        put(R, tm, off=(0.0, 0.0, out * 0.5), rot=-math.pi * 0.5)
         if lod == 1:
             W.box((-w / 2, FL, -zf), (w / 2, Y2, zf), 'V2_Plaster', PL, grain=Y)
             W.box((-w / 2, Y2, -zf), (w / 2, YE, zc), 'V2_Plaster', PL, grain=Y)
+            W.box((-w / 2, YU, zf), (w / 2, Y2, zc), 'V2_Wood', DARK * 0.9, grain=X)
             continue
         assert abs(row1p(B, W, -w / 2, bays1) - w / 2) < 0.02
-        W.box((-w / 2, 2.72, zf - 0.04), (w / 2, Y2, zc), 'V2_Wood', DARK * 0.9, grain=X)             # 二階の床裏・出桁
+        W.box((-w / 2, 2.70, zf - 0.10), (w / 2, YU, zf), 'V2_Plaster', PL, grain=X)                  # 一階の格子の上の漆喰の欄間帯
+        W.box((-w / 2 - 0.02, 2.70, zf - 0.04), (w / 2 + 0.02, 2.80, zf + 0.05), 'V2_Wood', DARK, grain=X)   # 長押
+        W.box((-w / 2, YU, zf - 0.04), (w / 2, Y2, zc), 'V2_Wood', DARK * 0.9, grain=X)                # 二階の床裏（せり出し 0.90 m）
         nbk = 7
-        for i in range(nbk):                                                                           # 腕木
+        for i in range(nbk):                                                                           # 腕木（太く・長く）
             xb = -w / 2 + 0.25 + (w - 0.5) * i / (nbk - 1)
-            W.beam((xb, 2.62, zf - 0.02), (xb, 2.82, zc - 0.06), 0.09, 0.15, 'V2_Wood', DARK)
-        assert abs(row2p(B, W, -w / 2, bays2, Y2 + 0.2, YE - 0.5, dz=out) - w / 2) < 0.02
+            W.beam((xb, 3.06, zf - 0.02), (xb, 3.24, zc - 0.10), 0.12, 0.20, 'V2_Wood', DARK)
+        W.box((-w / 2 - 0.04, 3.02, zc - 0.20), (w / 2 + 0.04, 3.26, zc + 0.02), 'V2_Wood', DARK * 0.85, grain=X)   # 出桁（腕木の先の通し桁）
+        assert abs(row2p(B, W, -w / 2, bays2, Y2 + 0.25, YE - 0.55, dz=out) - w / 2) < 0.02
         W.box((-w / 2, Y2, zc - 0.10), (w / 2, YE, zc), 'V2_Plaster', PL, grain=X)                     # 二階の前壁（窓の周り）
         W.box((-w / 2 - 0.02, YE - 0.16, zc - 0.04), (w / 2 + 0.02, YE - 0.02, zc + 0.08), 'V2_Wood', DARK, grain=X)
         for sx in (-1.0, 1.0):
             xo, xi = sx * w / 2, sx * (w / 2 - 0.10)
             W.box((min(xo, xi), FL, -zf), (max(xo, xi), YE, zf), 'V2_Plaster', PL, grain=Z)
-            W.box((min(xo, xi), Y2 - 0.1, zf), (max(xo, xi), YE, zc), 'V2_Plaster', PL, grain=Z)
-            side_window(W, sx * w / 2, sx, 0.0, 3.4, 4.3, ww=0.9)
-            side_window(W, sx * w / 2, sx, -3.0, 3.4, 4.3, ww=0.9)
+            W.box((min(xo, xi), Y2 - 0.1, zf), (max(xo, xi), YE, zc), 'V2_Plaster', PL, grain=Z)     # せり出しの側壁
+            W.box((min(xo, xi) - 0.02, Y2 - 0.12, zf - 0.04), (max(xo, xi) + 0.02, YE + 0.02, zf + 0.06), 'V2_Wood', DARK, grain=Y)   # せり出しの付け根の柱
+            side_window(W, sx * w / 2, sx, 0.0, 3.7, 4.6, ww=0.9)
+            side_window(W, sx * w / 2, sx, -3.0, 3.7, 4.6, ww=0.9)
             side_window(W, sx * w / 2, sx, 1.2, 1.2, 2.1, ww=0.8)
         W.box((-w / 2, FL, -zf), (w / 2, YE, -zf + 0.10), 'V2_Plaster', PL, grain=X)
     B.finish()

@@ -15,14 +15,29 @@ const SCENE := "res://maps/village_v2/village_v2.tscn"
 const AFTER := "EnrichW9P3"
 const ART_REVISION := "P13 W9 Phase 4 R1（ART_REVIEW）：B 西巷の生活痕跡・庭木、C 中橫街の裏の空き地"
 const ZONE_NAME := {"B3": "西巷 WestAlley（宅間・戸口・庭木）", "C3": "中橫街 CrossStreetMid（裏の空き地の植栽）"}
+## B1（Phase 4 R1b）の検査範囲：西巷の直線区間（O＋S·s、s 0..LEN m）・通常の通行帯（巷の軸 ±1.2 m）。arm_sweep_w9p3.gd --lane=204,-80,-0.119,0.993 と同じ枠。
+const LANE_B4_O := Vector2(204.0, -80.0)
+const LANE_B4_S := Vector2(-0.119, 0.993)
+const LANE_B4_LEN := 50.0
 
 ## 西巷の宅間（key＝"a|b"＝gaps() の a|b。逆順でも引く）。西列：018→009（北へ）、東列：019→026。量体を作り替えた 024｜025｜026｜012 の周りを中心に。
+## setback／setback_only（Phase 4 R1b・使用者裁定 B1）：その宅間の構件を前面から奥へ setback m 平行移動する（setback_only＝その接頭辞の id だけ。巷の口の野の花＝on_frontage は動かさない）。
+##   W9.gap_recipe は args の未知キーを無視するので、共用の配置規則は一字も変えない（_gap_runner_p4 が置いた後で動かし、W9.why で検査し直す）。
+##   R1 の実測：巷の通行帯（軸 ±1.2 m）から 1.5 m の巷の口に立つ屋根付きの木戸（高 2.37 m）に SpringArm の ray（起点 1.70 m・仰角 sin 0.179）が
+##   高さ 1.97 m で当たり、腕 7.5 m → 1.58 m（≥ 0.30 m の縮み 150 件のうち 139 件・重い縮み〔≥ 2 m かつ < 3 m〕84 件は全てこの 2 基）。
+##   r1（垣・木戸・庭ごと 3.6 m 奥へ）は縮みを 0 にしたが、腕が木戸の屋根を越えて巷の口の奥へ下がり、木戸が玩家の体を隠した（TPS 実写で確認・不採用）。
+##   → r2：木戸だけを宅間の奥（前面から 9.4 m・裏木戸）へ移す。巷の口は R1 の低い四つ目垣（0.98 m）のまま、木戸の跡は垣の切れ目＝庭の出入口。
+##   腕の先（既定 8.5 m）は巷の口から最大 6.8 m までしか届かないので、木戸は相機より奥＝縮みも遮りも作らない。巷の口の挙動は R1 で隣の四つ目垣の前に立った時と同じ。
+##   r2 の TPS 実写（巷を横切る向き＝背中が宅間）：腕は巷の口から 5.7–6.6 m 奥まで下がり、共用 recipe が深さ 5.5 m に置く若木（幅 約 5 m・高 約 4.8 m）の樹冠の中に
+##   相機が入って玩家を葉が覆った → setback_extra：若木だけを 4.9 m 奥（前面から 約 10.3 m・裏木戸の向こう）へ。樹冠の手前の縁 約 7.8 m＞相機の最奥 6.6 m。
+##   板塀の上から見える奥の庭木という recipe の意図どおり、相機の届く前 7 m には低いもの（垣 0.98・植木棚 1.39・朝顔 1.9・低木・花）だけが残る。
+##   下屋（025｜026・高 2.39 m）は R1 で最悪 7.5 → 3.30 m（重い縮みの基準外・TPS 実写で玩家の全身が見える）なので動かさない（r1 の 1.6 m 奥は肩越しの視界を下屋の屋根が塞いだ）。
 const A_GAPS := {
-	"B_P_RSW_024|B_P_RSW_025": ["yard", {"gate": 0.45}],                          # 名主の家の脇の庭：板塀・木戸・植木棚・朝顔・庭木
+	"B_P_RSW_024|B_P_RSW_025": ["yard", {"gate": 0.45, "setback": 9.2, "setback_only": "w9_kido", "setback_extra": {"young_broad": 4.9}}],   # 名主の家の脇の庭：低い四つ目垣の切れ目から入る庭、奥に屋根付きの裏木戸と庭木
 	"B_P_RSW_025|B_P_RSW_026": ["shed_wood", {"wall": "a"}],                      # 板葺きの家の薪の下屋（025 の側壁に掛ける）
 	"B_P_RSW_016|B_P_RSW_015": ["open", {}],                                      # 低い四つ目垣と野の花
 	"B_P_RSW_015|B_P_RSW_014": ["fence", {"id": "w9_takegaki"}],                  # 竹垣
-	"B_P_RSW_014|B_P_RSW_013": ["yard", {"gate": 0.55, "kaki": true}],            # 干し柿の庭
+	"B_P_RSW_014|B_P_RSW_013": ["yard", {"gate": 0.55, "kaki": true, "setback": 9.2, "setback_only": "w9_kido", "setback_extra": {"young_broad": 4.9}}],   # 干し柿の庭（奥に裏木戸と庭木）
 	"B_P_RSW_013|B_P_RSW_012": ["shed_tool", {"wall": "c"}],                      # 農家の農具の下屋（012 の側壁）
 	"B_P_RSW_012|B_P_RSW_011": ["shrine", {"id": "w9_jizo"}],                     # 辻の地蔵
 	"B_P_RSW_011|B_P_RSW_010": ["fence_gate", {"gate": 0.5, "id": "w9_takegaki"}],
@@ -46,6 +61,55 @@ static func _plant(C: Dictionary, items: Array, id: String, x: float, z: float, 
 	return P3._plant(C, items, id, x, z, s, meta, rmax)
 
 
+## 宅間の runner（W9._gap_runner と同じ配置）＋ setback：共用の W9.gap_recipe で置いた構件を、前面から奥（−az）へ setback m 平行移動し、
+## 移動後の位置で W9.why（道・建物・戸口・水・田・封存物・NPC・既存構件との重なり）と傾斜を検査し直す。通らない構件は置かない（dropped に記録）。
+## on_frontage（巷の口の野の花）は動かさない。setback_only があればその接頭辞の id だけ動かす。
+static func _gap_runner_p4(g: Dictionary, spec: Array, seed_i: int) -> Callable:
+	return func(C2: Dictionary, items: Array, meta: Dictionary) -> void:
+		var args: Dictionary = spec[1]
+		var n0 := items.size()
+		W9.gap_recipe(C2, items, g, String(spec[0]), args, meta, seed_i)
+		var dv0 := float(args.get("setback", 0.0))
+		var extra: Dictionary = args.get("setback_extra", {})     # 接頭辞 → その id だけ別の距離で奥へ
+		if dv0 <= 0.0 and extra.is_empty():
+			return
+		var only := String(args.get("setback_only", ""))
+		var az: Vector2 = W9.gap_frame(g)["az"]
+		var got: Array = items.slice(n0)
+		items.resize(n0)
+		var moved: Array = []
+		var kept: Array = []
+		for it: Dictionary in got:
+			var idv := String(it["id"])
+			var dvi := 0.0
+			for pre: String in extra:
+				if idv.begins_with(pre):
+					dvi = float(extra[pre])
+			if dvi <= 0.0 and not (only != "" and not idv.begins_with(only)):
+				dvi = dv0
+			if bool(it.get("on_frontage", false)) or dvi <= 0.0:
+				kept.append(it)
+			else:
+				moved.append([it, dvi])
+		items.append_array(kept)
+		for pr: Array in moved:
+			var it: Dictionary = pr[0]
+			var dv := float(pr[1])
+			var it2 := it.duplicate()
+			it2["p"] = (it["p"] as Vector2) - az * dv
+			if not bool(it2.get("hang", false)):
+				it2["y"] = W9.ground_y(C2, it2)
+			it2["setback_m"] = dv
+			var soft := bool(it2.get("soft", false))
+			var w := W9.why(C2, it2, items, "soft" if soft else "wall")
+			if w == "" and not soft and W9.relief(C2, it2) > 0.45:
+				w = "slope %.2f" % W9.relief(C2, it2)
+			if w != "":
+				(C2["dropped"] as Array).append("%s（宅間を %.1f m 奥へ）%s [%s]" % [it["id"], dv, w, meta.get("cluster", "?")])
+				continue
+			items.append(it2)
+
+
 static func design_B4(C: Dictionary) -> Array:
 	var D: Array = []
 	# 1) 宅間
@@ -62,8 +126,13 @@ static func design_B4(C: Dictionary) -> Array:
 		var spec: Array = (A_GAPS[key] as Array).duplicate(true)
 		if swap and (spec[1] as Dictionary).has("wall"):
 			(spec[1] as Dictionary)["wall"] = "c" if String((spec[1] as Dictionary)["wall"]) == "a" else "a"
+		var sb := spec[1] as Dictionary
+		var sb_txt := ""
+		if sb.has("setback"):
+			sb_txt = "（%s巷の口から %.1f m 奥へ）" % [(String(sb["setback_only"]) + " を") if sb.has("setback_only") else "", float(sb["setback"])]
 		D.append({"id": "AG_" + String(g["a"]).trim_prefix("B_P_") + "_" + String(g["b"]).trim_prefix("B_P_RSW_"), "zone": "B3",
-			"desc": "西巷の宅間 %s（幅 %.1f m）：%s" % [key, g["w"], spec[0]], "center": g["front"], "run": W9._gap_runner(g, spec, 40 + si)})
+			"desc": "西巷の宅間 %s（幅 %.1f m）：%s%s" % [key, g["w"], spec[0], sb_txt],
+			"center": g["front"], "run": _gap_runner_p4(g, spec, 40 + si)})
 	# 2) 各戸の暮らし
 	var names: Array = A_HOUSES.keys()
 	names.sort()

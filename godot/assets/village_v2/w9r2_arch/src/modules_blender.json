@@ -305,11 +305,11 @@
    "note": "B_P_RSW_025 LOD1"
   },
   "B_P_RSW_026_L0": {
-   "tris": 16932,
+   "tris": 18016,
    "note": "B_P_RSW_026 LOD0"
   },
   "B_P_RSW_026_L1": {
-   "tris": 46,
+   "tris": 56,
    "note": "B_P_RSW_026 LOD1"
   },
   "B_P_RSW_012_L0": {
@@ -321,7 +321,7 @@
    "note": "B_P_RSW_012 LOD1"
   }
  },
- "total_tris": 565113,
+ "total_tris": 566207,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -729,21 +729,6 @@
     "brackets": 6,
     "bracket_gap": 0.9800000000000001,
     "strut": true,
-    "posts": []
-   }
-  ],
-  "B_P_RSW_026": [
-   {
-    "x0": -2.68,
-    "x1": 2.68,
-    "y": 2.9,
-    "zf": 5.46,
-    "depth": 0.6,
-    "p": 0.32,
-    "style": "tile",
-    "brackets": 6,
-    "bracket_gap": 1.072,
-    "strut": false,
     "posts": []
    }
   ]

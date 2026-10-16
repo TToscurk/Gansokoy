@@ -6,6 +6,7 @@ extends "res://tools/p13/w6/w6_base.gd"
 ##   --at     ：玩家を (x,z) に置き (tx,tz) 方向を向かせた通常 TPS（w6_survey2 と同じ規約。W6 の ab_* と同じ座標なら同機位）
 ##   --free   ：自由相機（俯瞰・近接）。玩家は隠す。fov 省略＝55
 ##   --disable：root 直下の指定 overlay を enabled=false にして撮る（Before 用）
+##   --remove ：root 直下の指定 overlay を碰撞ごと取り除いて撮る（その overlay が無い元の場景の SpringArm を見るため）
 ##   --id     ：同じ鏡位の ID パス（各画素＝どの節点が描いたか）も撮る
 ##   --swap=Name=res://path.scn  ：root 直下の overlay Name を、別の（旧版の）シーンの instance に差し替えてから撮る（Before 用・同ハーネスで比較するため）
 ##   --lodcycle ：--free の各鏡位を、全町家の LOD0／LOD1／LOD2 を強制的に 1 つずつ見せて 3 枚撮る（<tag>_<name>_L0／_L1／_L2）。距離による LOD 切替・hysteresis に依存しない
@@ -19,6 +20,7 @@ func _run() -> void:
 	var tag := args[1]
 	var want_id := false
 	var disables: Array = []
+	var removes: Array = []  # root 直下の overlay を碰撞ごと取り除く（Phase 4 R1b：『その overlay が無い元の場景』の相機を撮るため）
 	var swaps: Array = []   # [name, res path]
 	var lodcycle := false
 	var ats: Array = []     # [name, Vector2 pos, Vector2 tgt]
@@ -33,6 +35,8 @@ func _run() -> void:
 			swaps.append([sw[0], sw[1]])
 		elif a.begins_with("--disable="):
 			disables.append_array(a.trim_prefix("--disable=").split(",", false))
+		elif a.begins_with("--remove="):
+			removes.append_array(a.trim_prefix("--remove=").split(",", false))
 		elif a.begins_with("--at="):
 			for it: String in a.trim_prefix("--at=").split(";", false):
 				var kv := it.split(":")
@@ -46,6 +50,17 @@ func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	cl = SA2.centerline()
 	await _boot()
+	for rn: String in removes:
+		var rnode := vil.get_node_or_null(NodePath(rn))
+		if rnode != null:
+			vil.remove_child(rnode)
+			rnode.free()
+			print("[W7S] removed ", rn)
+		else:
+			print("[W7S] remove: node not found ", rn)
+	if not removes.is_empty():
+		for i in 4:
+			await physics_frame
 	for dn: String in disables:
 		var dnode := vil.get_node_or_null(NodePath(dn))
 		if dnode != null:

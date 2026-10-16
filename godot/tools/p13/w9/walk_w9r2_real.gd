@@ -80,6 +80,9 @@ const LEGS := [
 	["p4_MXC_004_along_near", "p4_MXC_004", "along", Vector2(-6.95, 1.3), Vector2(6.95, 1.3), 0.0],
 	["p4_MXC_004_along_road", "p4_MXC_004", "along", Vector2(-6.95, 3.2), Vector2(6.95, 3.2), 0.0],
 	["p4_MXC_004_door", "p4_MXC_004", "door", Vector2(1.32, 3.2), Vector2(1.32, -0.6), 0.0],
+	# ── Phase 4 R1b（B1）：木戸を宅間の奥へ移した後、巷の口（四つ目垣の切れ目）から庭へ実際に歩いて入れる（lx＝R1 の木戸の中心）
+	["p4b_gap_024_025_in", "p4_RSW_025", "along", Vector2(-4.13, 3.0), Vector2(-4.13, -3.5), 0.0],
+	["p4b_gap_014_013_in", "014", "along", Vector2(6.30, 3.0), Vector2(6.30, -3.5), 0.0],
 ]
 const STALL_FRAMES := 30          # 速度 < 0.3 m/s が連続してこの数に達したら、その脚は止まったとみなす（0.5 s）
 const TIMEOUT_MS := 25000
@@ -209,9 +212,12 @@ func _run() -> void:
 	out = args[0]
 	_tag = args[1]
 	var disables: Array = []
+	var only: PackedStringArray = []
 	for a: String in args:
 		if a.begins_with("--disable="):
 			disables.append_array(a.trim_prefix("--disable=").split(",", false))
+		elif a.begins_with("--only="):          # 脚名の接頭辞（カンマ区切り）で絞る（Phase 4 R1b）
+			only = a.trim_prefix("--only=").split(",", false)
 	DirAccess.make_dir_recursive_absolute(out)
 	await _boot()
 	_off = not disables.is_empty()
@@ -233,6 +239,8 @@ func _run() -> void:
 	var ov := vil.get_node_or_null("ArchW9R2P13")
 	print("[W9WALK] tag=%s overlay=%s enabled=%s" % [_tag, "あり" if ov != null else "なし", str(ov.get("enabled")) if ov != null else "-"])
 	for lg: Array in LEGS:
+		if not only.is_empty() and not Array(only).any(func(pre: String) -> bool: return String(lg[0]).begins_with(pre)):
+			continue
 		await _leg(lg)
 	var f := FileAccess.open(out + _tag + "_walk.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify({"tag": _tag, "legs": _results, "fails": _fails}, "\t") + "\n")
