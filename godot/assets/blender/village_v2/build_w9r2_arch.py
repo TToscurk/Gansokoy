@@ -2267,6 +2267,9 @@ BUILDERS += P5_BUILDERS
 # Phase 6：主街南段の建築多様性 4 棟（MKT_019・021・022・003。別ファイル build_w9p6_arch.py・同じ名前空間）
 exec(compile(open(HERE + '/build_w9p6_arch.py', encoding='utf-8').read(), HERE + '/build_w9p6_arch.py', 'exec'))
 BUILDERS += P6_BUILDERS
+# P13 W9 Phase 7（MCP-first 試行）：主街南段 MKT_017・MKT_018（使用者 2026-10-16）
+exec(compile(open(HERE + '/build_w9p7_arch.py', encoding='utf-8').read(), HERE + '/build_w9p7_arch.py', 'exec'))
+BUILDERS += P7_BUILDERS
 
 
 def write_json_retry(p, d, tries=8):

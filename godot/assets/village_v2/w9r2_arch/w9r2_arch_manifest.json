@@ -32,6 +32,10 @@
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_013_L1.res": "fe3f4e8472ff9262701c0bd8bd158348cd41d20c4ddfbe38fd871a2c1c5ca7f2",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_015_L0.res": "ec4b9494a345a6eda9009eb6d11067e158c6ac8f6c1110a22404370de56838c4",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_015_L1.res": "7c87dc915dc6c203d55501647b5b0739c33f110f53847ccfbb187e3bd56b862d",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L0.res": "4d352b41a1a01b6a31792742f8cea8549cfe9d3a020748ecc52e7214cad4019c",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L1.res": "78e53ba8239dec5b09d60d677310ed301c6c140efed849e0cece32a0569c4841",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_018_L0.res": "ebae04a75a0ddb4580c80c81da360c50f0b4a078231c4cdbcb2b49d1c3f919d8",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_018_L1.res": "a4e20c03f37f0f49e5093abad5db41a557cef75cf20e31764aaa6ff5beaf676a",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_019_L0.res": "35f19a01c8b099d241d55960da638a08f4b2aada77c1f2ea6b548fb64fde4536",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_019_L1.res": "1e4143da4ea3f3280ee3dbf050abba2a5f5ce5686e337865e4760c5d1cae84e4",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_020_L0.res": "4d1eee7b55ba37589aaa8dc3ce8e72f535eca6a33458934ad64e2250deccb891",
@@ -96,10 +100,10 @@
   "res://assets/village_v2/w9r2_arch/mesh/B_P_RSW_075_L1.res": "b915914ccd5ab829b0edb62e0b181b34fcde6d458aa0d9f6501dba1b6240dd29",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_RSW_076_L0.res": "ec94b2448755412401ec65816c9d6237b8492bf1b12fb3bb226acf81ad97e49a",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_RSW_076_L1.res": "6b5bbee678ddf7ae509b532b719d8dfa7d2345e162363937ad9fe02cabc3edc6",
-  "res://assets/village_v2/w9r2_arch/src/modules_blender.json": "85de9efd3ad41a1d32c68df4f53683c5e48294606e887a17aa31cb77e2a93cd0",
-  "res://assets/village_v2/w9r2_arch/src/w9r2_arch.glb": "4d95ed29c395f04a307296e5a1f0514f3d63de2f5b96f611136defc896a13358"
+  "res://assets/village_v2/w9r2_arch/src/modules_blender.json": "92338dbac3c78f83e1144b385499191019e713e978829375391da388c5482c05",
+  "res://assets/village_v2/w9r2_arch/src/w9r2_arch.glb": "eb6a83eb020d44aa3e5382d0d7d0bd0f2f6d6a49da146a741273b663a79d0fe4"
  },
  "mesh_dir": "res://assets/village_v2/w9r2_arch/mesh",
- "modules": 90,
- "tris_total": 673756
+ "modules": 94,
+ "tris_total": 700370
 }

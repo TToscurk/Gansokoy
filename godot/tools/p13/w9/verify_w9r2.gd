@@ -426,7 +426,8 @@ func _run() -> void:
 	for z in r1n.get_children():
 		for cl in z.get_children():
 			for it in cl.get_children():
-				if it is Node3D and L.SPECS.has(String(it.get_meta("w9_b", ""))) and R1_HANG.has(String(it.get_meta("w9_feature", ""))):
+				if it is Node3D and L.SPECS.has(String(it.get_meta("w9_b", ""))) and R1_HANG.has(String(it.get_meta("w9_feature", ""))) \
+						and not L.keep_r1(String(it.get_meta("w9_b", ""))).has(String(it.get_meta("w9_feature", ""))):
 					expect += 1
 	_ok(int(ov.get("r1_hidden")) == expect and expect > 0, "enabled=true：R1 の吊り物（%s）%d 件がこの %d 棟でだけ隠れる（実際 %d）" % ["・".join(R1_HANG), expect, L.SPECS.size(), int(ov.get("r1_hidden"))])
 	var r1_off := 0

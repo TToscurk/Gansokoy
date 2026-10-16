@@ -367,9 +367,25 @@
   "B_P_MKT_003_L1": {
    "tris": 36,
    "note": "B_P_MKT_003 LOD1"
+  },
+  "B_P_MKT_017_L0": {
+   "tris": 12342,
+   "note": "B_P_MKT_017 LOD0"
+  },
+  "B_P_MKT_017_L1": {
+   "tris": 442,
+   "note": "B_P_MKT_017 LOD1"
+  },
+  "B_P_MKT_018_L0": {
+   "tris": 13778,
+   "note": "B_P_MKT_018 LOD0"
+  },
+  "B_P_MKT_018_L1": {
+   "tris": 52,
+   "note": "B_P_MKT_018 LOD1"
   }
  },
- "total_tris": 673756,
+ "total_tris": 700370,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -875,6 +891,36 @@
     "style": "board",
     "brackets": 8,
     "bracket_gap": 1.1142857142857143,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_017": [
+   {
+    "x0": -2.58,
+    "x1": 2.12,
+    "y": 4.05,
+    "zf": 5.005,
+    "depth": 0.8,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 6,
+    "bracket_gap": 0.9400000000000001,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_018": [
+   {
+    "x0": -0.535,
+    "x1": 1.405,
+    "y": 2.78,
+    "zf": 5.46,
+    "depth": 0.55,
+    "p": 0.28,
+    "style": "board",
+    "brackets": 3,
+    "bracket_gap": 0.97,
     "strut": false,
     "posts": []
    }
@@ -1445,6 +1491,28 @@
    {
     "kind": "turret",
     "scale": 2.0
+   }
+  ],
+  "B_P_MKT_017": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.55
+   }
+  ],
+  "B_P_MKT_018": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.6
    }
   ]
  },

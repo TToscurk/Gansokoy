@@ -81,7 +81,14 @@ const SPECS := {
 	"B_P_MKT_021": {"path": "Districts/Market/Buildings/B_P_MKT_021", "hide": ["all"]},                # 薬種問屋＝黒漆喰の店蔵（箱棟・観音扉・袖卯建）
 	"B_P_MKT_022": {"path": "Districts/Market/Buildings/B_P_MKT_022", "hide": ["all"]},                # 茶屋（辻の角）＝寄棟の二階
 	"B_P_MKT_003": {"path": "Districts/Market/Buildings/B_P_MKT_003", "hide": ["all"]},                # 飯屋（東列の南の角）＝本二階の妻入＋南の下屋＋煙出し
+	"B_P_MKT_017": {"path": "Districts/Market/Buildings/B_P_MKT_017", "hide": ["all"], "keep_r1": ["sugi"]},   # 酒屋（南入口の西・Phase 7）＝本卯建の造り酒屋（杉玉は R1 のまま残す＝酒屋の印）
+	"B_P_MKT_018": {"path": "Districts/Market/Buildings/B_P_MKT_018", "hide": ["all"]},                # 住宅（井戸の辻・Phase 7）＝表低奥高の非対称切妻
 }
+
+
+## R1（EnrichW9P13）の吊り物のうち、作り直した正面でも元の位置にそのまま吊れるので隠さない種類（棟ごと・既定は空）。
+static func keep_r1(id: String) -> PackedStringArray:
+	return PackedStringArray(SPECS.get(id, {}).get("keep_r1", []))
 
 
 static func hide_prefixes(id: String, lod: int) -> PackedStringArray:

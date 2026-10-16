@@ -79,11 +79,13 @@ func _apply(on: bool) -> void:
 	if r1 != null:
 		var ids := {}
 		for c in get_children():
-			ids[String(c.get_meta("body_path", "")).get_file()] = true
+			ids[String(c.get_meta("body_path", "")).get_file()] = c.get_meta("keep_r1", PackedStringArray())   # 隠さない種類（Phase 7：017 の杉玉）
 		for z in r1.get_children():
 			for cl in z.get_children():
 				for it in cl.get_children():
-					if it is Node3D and ids.has(String(it.get_meta("w9_b", ""))) and R1_HANG.has(String(it.get_meta("w9_feature", ""))):
+					var fb := String(it.get_meta("w9_b", ""))
+					var ft := String(it.get_meta("w9_feature", ""))
+					if it is Node3D and ids.has(fb) and R1_HANG.has(ft) and not (ids[fb] as PackedStringArray).has(ft):
 						_hidden.append([it, (it as Node3D).visible])
 						(it as Node3D).visible = false
 						r1_hidden += 1

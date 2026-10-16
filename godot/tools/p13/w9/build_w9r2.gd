@@ -42,6 +42,7 @@ func _run() -> void:
 		n.set_meta("body_path", sp["path"])
 		n.set_meta("hide0", L.hide_prefixes(id, 0))
 		n.set_meta("hide12", L.hide_prefixes(id, 1))
+		n.set_meta("keep_r1", L.keep_r1(id))
 		ov.add_child(n)
 		var posts: Array = (meta.get("posts", {}) as Dictionary).get(id, [])
 		if not posts.is_empty():
