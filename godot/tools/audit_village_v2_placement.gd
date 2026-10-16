@@ -488,12 +488,18 @@ func _broad_phase() -> Array:
 	return pairs
 
 
-## 候選對逐 shape：collide_shape 只對 B（exclude 其他所有單位與地形），接觸點對距離＝穿插深度。
+## 候選對逐 shape：collide_shape 只對 B（exclude 場景中 B 以外的所有碰撞體：其他單位、地形、邊界，以及 overlay 的道具碰撞），接觸點對距離＝穿插深度。
+## （2026-10-16 修正：原本只排除「單位＋地形＋邊界」，A 的 shape 碰到第三者——例如 EnrichW9P8 貼牆的棚、ArchW9R2P13 的柱——
+##   也被記成 A×B 穿插。判定門檻不變，只修正接觸的歸屬。）
 ## 任一方沒有碰撞代理 → 不做物理查詢（查了也必然「沒碰到」），記 NO_COLLISION_PROXY。
 func _narrow_phase(pairs: Array) -> Dictionary:
 	var all_rids: Array[RID] = static_rids.duplicate()
 	for u in units:
 		all_rids.append_array(u["rids"])
+	for co in v.find_children("*", "CollisionObject3D", true, false):
+		var rid := (co as CollisionObject3D).get_rid()
+		if not all_rids.has(rid):
+			all_rids.append(rid)
 	var res := {}
 	for pr: Dictionary in pairs:
 		var A: Dictionary = units[pr["a"]]

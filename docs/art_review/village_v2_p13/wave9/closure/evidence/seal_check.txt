@@ -1,0 +1,3 @@
+# 收尾後 封存檔 hash 對照（godot/data/village_v2_*seal*.json、*_history.json 除外；唯讀）
+現行 seal 30 檔：entries 1155 match 1155 mismatch 0
+收尾改動的檔案出現在 frozen 表：0

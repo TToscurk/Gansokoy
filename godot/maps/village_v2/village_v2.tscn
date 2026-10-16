@@ -1135,6 +1135,8 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/arch_w9r2_p13.scn" id="p13w9r2_arch"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p3.scn" id="p13w9p3_enrich"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p4.scn" id="p13w9p4_enrich"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p8.scn" id="p13w9p8_enrich"]
+[ext_resource type="Script" path="res://maps/village_v2/scripts_p13/dev_layer_gate.gd" id="p13w9_devgate"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -144281,3 +144283,8 @@ script = ExtResource("p10r3e_act")
 [node name="EnrichW9P3" parent="." instance=ExtResource("p13w9p3_enrich")]
 
 [node name="EnrichW9P4" parent="." instance=ExtResource("p13w9p4_enrich")]
+
+[node name="EnrichW9P8" parent="." instance=ExtResource("p13w9p8_enrich")]
+
+[node name="DevLayerGate" parent="." type="Node"]
+script = ExtResource("p13w9_devgate")

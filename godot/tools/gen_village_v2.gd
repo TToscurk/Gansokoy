@@ -2572,15 +2572,28 @@ func _write_meta() -> void:
 			"arrival_yaw": float(pt["arrival_yaw"]),
 			"note": "%s（%s，conf=%s）" % [pt["label"], pt["src"], pt["conf"]]})
 	var sp: Dictionary = L["spawn"]
+	# P13 W9 收尾（2026-10-16 使用者授權）：只恢復村南入口的「→獸道」一個傳送點。目標是新獸道 beast_path
+	# （它的南端 portal 已指向 village_v2；layout 的規劃目標 trail 是舊獸道，回程指向 slice）。
+	# 沒有這一筆時，main.gd::_place_player 找不到 target==from_id 的 portal，從獸道進村會落在 (0, 40, 0)＝地圖西北角。
+	# 稗田邸 1F・香霖堂的傳送仍停用（他圖的回程仍指向 slice）。
+	var active: Array = []
+	for p: Dictionary in portals:
+		if String(p["target"]) == "trail":
+			var p2: Dictionary = p.duplicate()
+			p2["target"] = "beast_path"
+			p2["note"] = "→ 獸道 beast_path（村南入口；P13 W9 收尾 2026-10-16 使用者授權恢復；layout 規劃目標為 trail）"
+			active.append(p2)
 	var meta := {
 		"_note": "V2 blockout 開發用（--map=village_v2）。由 tools/gen_village_v2.gd 產生，勿手改。正式遊戲的人間之里仍是 slice（計畫 §52）。",
 		"id": "village_v2",
 		"playSize": [float(F["x1"]) - float(F["x0"]), float(F["z1"]) - float(F["z0"])],
 		"spawn": {"x": float(sp["at"][0]), "z": float(sp["at"][1]), "yaw": float(sp["yaw"])},
 		# P11 R2B TASK01：V2 對外傳送停用（他圖重製中）。規劃座標只留作參考，main.gd 只讀 "portals"。
-		"portals": [],
+		# P13 W9 收尾：其中「→獸道」一筆以 target=beast_path 恢復（見上）。
+		"portals": active,
 		"portals_disabled_p11r2b": portals,
-		"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。"}
+		"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。",
+		"note_p13w9_closure": "P13 W9 收尾（2026-10-16 使用者授權）：恢復村南入口 →獸道 beast_path 一筆（獸道進村的落點與回程出口）；稗田邸 1F・香霖堂仍停用。"}
 	var f := FileAccess.open(META, FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t") + "\n")
 	f.close()

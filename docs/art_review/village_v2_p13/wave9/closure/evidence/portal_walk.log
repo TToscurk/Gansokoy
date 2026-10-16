@@ -1,0 +1,10 @@
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[map] beast_path → res://maps/beast_path/beast_path.tscn
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[V2SMOKE] PORTALWALK → beast_path：OK current=beast_path cooldown=0.00 pos=(0.0, 0.3, 2.0) on_floor=true
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[V2SMOKE] PORTALWALK → village_v2：OK current=village_v2 cooldown=0.00 pos=(220.8, 0.2, 169.6) on_floor=true

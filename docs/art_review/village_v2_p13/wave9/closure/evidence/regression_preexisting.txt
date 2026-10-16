@@ -1,0 +1,8 @@
+# P5 asset reset gate（verify_village_v2_asset_reset.gd）FAIL 的歸屬
+收尾後（現行 village_v2.tscn）：V2 場景依賴 2070 個、違規 137（res://assets/village_v2/w9_kit/mesh/*：w9_shita_tool、w9_takegaki、w9_itabei_b … 與其 _l1）
+收尾前（--registry=<副本，v2_scene 指向收尾前的場景副本>）：依賴 2068 個、違規 138＝同樣 137 個 w9_kit 網格＋副本自己的路徑 1
+→ 新增的 2 個依賴（gen/enrich_w9p8.scn、scripts_p13/dev_layer_gate.gd）都在白名單內；137 個違規是 W9 kit 尚未登記進 P5 asset registry（W9 各輪既有），不是收尾造成。
+未改 registry（登記 W9 kit 是另一件事，不為了讓 gate 通過而放寬白名單）。
+
+# terrain gate（verify_village_v2_terrain.gd）FAIL
+唯一 FAIL：village_v2.tscn load()+instantiate() 4022 ms（≤ 3000 ms，headless 參考值）。docs/art_review/village_v2_p13 既有證據已有 3856 ms 的同項 FAIL（收尾前）；本次量測時另有 headless 診斷行程並行。屬計時參考值，其餘地形項目全過。

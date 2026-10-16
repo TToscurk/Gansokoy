@@ -1,0 +1,17 @@
+# 回歸總表（bash godot/tools/run_village_v2_regression.sh）收尾掛載後一次全跑
+147 項：✓ 143／✗ 4，耗時 5266 s（rc=4）。逐項見 regression_full.log。
+
+## 4 個 ✗ 的歸屬（皆另做收尾前／後對照）
+1. terrain gate：唯一 FAIL＝場景 load()+instantiate() 時間（≤ 3000 ms 參考值）。收尾前場景 4212 ms、收尾後 4074 ms → 既有，非收尾造成。
+2. P5 asset reset：137 個 w9_kit 網格不在 P5 registry 白名單；收尾前同 137 個（見 regression_preexisting.txt）→ 既有。
+3. 場景擺放稽核：稽核工具把第三者碰撞（EnrichW9P8 貼牆構件、ArchW9R2P13 的柱）記成建物對建物穿插；已修正歸屬（門檻不變），修正後 clean 207／0／0、selftest 0 不符（place_audit_attribution.md、place_selftest_after_fix.log）。
+4. P10 R3d 核心區人口 scene：審圖鏡位 4_market_high 同模型 chonin_m01 3 人（10→11 人）。收尾前 PASS、只掛 EnrichW9P8 PASS、掛 DevLayerGate 後 FAIL（--dev-layers 讓 gate 不隱藏仍 FAIL）。
+   原因：此檢查以 process_frame 計數等待，行人 NPC 在 _physics_process 移動，每幀的物理步數隨實際幀時間變 → 場景任何載入差異都會改變行人此刻的位置。
+   以 --fixed-fps 60（每幀固定 1 個物理步）重跑：收尾前、收尾後皆 4_market_high 10 人、違反 0、整項 PASS。→ 計時造成，非內容回歸；未改此封存檢查。
+
+core_before: 4_market_high 10 人；[CORE] 結果：0 項失敗
+core_p8only: 4_market_high 10 人；[CORE] 結果：0 項失敗
+core_after_rerun: 4_market_high 11 人；[CORE] 結果：1 項失敗
+core_after_devlayers: 4_market_high 11 人；[CORE] 結果：1 項失敗
+core_before_fixed: 4_market_high 10 人；[CORE] 結果：0 項失敗
+core_after_fixed: 4_market_high 10 人；[CORE] 結果：0 項失敗

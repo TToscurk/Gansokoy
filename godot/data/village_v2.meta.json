@@ -42,6 +42,18 @@
 			"z": -205.0
 		}
 	],
-	"portals": [],
-	"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。"
+	"portals": [
+		{
+			"arrival_ground_y": 0.18,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 0.0,
+			"note": "→ 獸道 beast_path（村南入口；P13 W9 收尾 2026-10-16 使用者授權恢復；layout 規劃目標為 trail）",
+			"target": "beast_path",
+			"x": 224.0,
+			"y": 0.22,
+			"z": 172.0
+		}
+	],
+	"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。",
+	"note_p13w9_closure": "P13 W9 收尾（2026-10-16 使用者授權）：恢復村南入口 →獸道 beast_path 一筆（獸道進村的落點與回程出口）；稗田邸 1F・香霖堂仍停用。"
 }
