@@ -1,0 +1,32 @@
+[W9R2G] 反向案例 36/36（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）
+[W9R2G] PASS root 直下に ArchW9R2P13 が 1 回だけ掛載（保存された village_v2.tscn）
+[W9R2G] PASS B_P_MKT_017：overlay 子がある
+[W9R2G] PASS B_P_MKT_017：body が実在（Districts/Market/Buildings/B_P_MKT_017）
+[W9R2G] PASS B_P_MKT_017：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_017：L0／L1 あり
+[W9R2G] PASS B_P_MKT_017：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_017：三角面 L0 12342／L1 442（上限 30000／500）
+[W9R2G] PASS B_P_MKT_017：張り出しが上限内（[P: (-3.12, 0.32, -5.644), S: (6.24, 9.17275, 11.45844)]）
+[W9R2G] PASS B_P_MKT_017：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_017：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_017：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_017：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_018：overlay 子がある
+[W9R2G] PASS B_P_MKT_018：body が実在（Districts/Market/Buildings/B_P_MKT_018）
+[W9R2G] PASS B_P_MKT_018：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_018：L0／L1 あり
+[W9R2G] PASS B_P_MKT_018：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_018：三角面 L0 13778／L1 52（上限 30000／500）
+[W9R2G] PASS B_P_MKT_018：張り出しが上限内（[P: (-3.395, 0.28, -5.935), S: (6.495, 6.87, 12.02)]）
+[W9R2G] PASS B_P_MKT_018：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_018：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_018：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_018：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS 46 棟 LOD0 合計 690448 tri（上限 715300＝平均 15550 × 棟数）
+[W9R2G] PASS B_P_MKT_017：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_017：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_018：他 overlay の実体（5 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_018：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS enabled=true：R1 の吊り物（sudare・kaki・sugi・zaru・zori）9 件がこの 46 棟でだけ隠れる（実際 9）
+[W9R2G] PASS village_v2.tscn は 0ca148f から『追加のみ・≤9 行（R2 3＋Phase 3 の EnrichW9P3 3＋Phase 4 の EnrichW9P4 3）』（実際 +9 −0）
+[W9R2G] 結果：621 通過・0 失敗（反向案例 36/36）

@@ -1,0 +1,3 @@
+[TT] B_P_MKT_018 × B_P_MKT_019 (overlay)：帯の三角形 719 × 1718、交差 0 
+[TT] kit:B_P_MKT_018 × B_P_MKT_019 (overlay)：帯の三角形 843 × 1718、交差 0 
+[TT] B_P_MKT_019 × B_P_MKT_018 (overlay)：帯の三角形 921 × 1459、交差 0 

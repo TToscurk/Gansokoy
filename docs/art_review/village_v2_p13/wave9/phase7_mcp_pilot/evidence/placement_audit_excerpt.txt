@@ -1,0 +1,16 @@
+# audit_village_v2_placement.gd --selftest（2026-10-16、Phase 7 後）
+# 017・018 は REVIEW／FAIL に出ない（body 碰撞は不変）。下の REVIEW／FAIL と selftest aabbfp の不一致は本回が触っていない body（MXC_007/008・RSW_074/075・MKT_029/030）の既存事象＝未調査
+[PLACE] REVIEW B_P_MKT_029 [greybox] support 35/35 gap_max -0.303 slope_max 0.5° relief 0.06：OBJECT_PENETRATION 與 B_P_MKT_030 穿插 0.030 m
+[PLACE] REVIEW B_P_MKT_030 [greybox] support 28/28 gap_max -0.302 slope_max 0.5° relief 0.05：OBJECT_PENETRATION 與 B_P_MKT_029 穿插 0.030 m
+[PLACE] FAIL B_P_MXC_007 [greybox] support 35/35 gap_max -0.303 slope_max 0.6° relief 0.07：OBJECT_PENETRATION 與 B_P_MXC_008 穿插 0.205 m
+[PLACE] FAIL B_P_MXC_008 [greybox] support 35/35 gap_max -0.303 slope_max 0.6° relief 0.06：OBJECT_PENETRATION 與 B_P_MXC_007 穿插 0.205 m
+[PLACE] REVIEW B_P_RSW_074 [greybox] support 28/28 gap_max -0.306 slope_max 0.3° relief 0.06：OBJECT_PENETRATION 與 B_P_RSW_075 穿插 0.040 m
+[PLACE] REVIEW B_P_RSW_075 [greybox] support 28/28 gap_max -0.306 slope_max 0.3° relief 0.06：OBJECT_PENETRATION 與 B_P_RSW_074 穿插 0.040 m
+[PLACE] 結果：PASS 201／REVIEW 4／FAIL 2（涵蓋 207 單位，5647 ms）——結論只適用於目前涵蓋範圍
+[PLACE] FAIL（期望全部 PASS） clean：PASS 201／REVIEW 4／FAIL 2（涵蓋 207 單位）
+[PLACE] OK float：鈴奈庵抬高 0.3 m → 鈴奈庵 FAIL（FLOATING） → 鈴奈庵 FAIL FLOATING 最大懸空 0.260 m {"BackStep":0.186,"Chest":0.23,"Counter":0.26,"Planter":0.234,"Step":0.216}；INSUFFICIENT_SUPPORT 51%（4425 ms）
+[PLACE] OK sink：鈴奈庵下沉 0.8 m → 鈴奈庵 FAIL（TERRAIN_PENETRATION） → 鈴奈庵 FAIL TERRAIN_PENETRATION 地形高出基準面 0.795 m；SINK 最淺埋深 0.84 m（整棟下沉？）（4448 ms）
+[PLACE] OK clash：霧雨店推進鈴奈庵側面 6 m → 兩者 FAIL（OBJECT_PENETRATION） → 鈴奈庵 FAIL／霧雨店 FAIL OBJECT_PENETRATION 與 LANDMARK_SUZUNAAN/Hero 穿插 3.210 m（4487 ms）
+[PLACE] FAIL aabbfp：兩個 10×3×3 m 箱體 yaw 40°、短軸淨距 0.6 m 並排（AABB 明顯重疊、形狀不接觸）→ 兩者 PASS、計入 AABB_FALSE_POSITIVE → AABB 候選 true、形狀接觸 false、CTRL_A PASS／CTRL_B PASS （4580 ms）
+[PLACE] OK noproxy：霧雨店碰撞全停用並推進鈴奈庵 AABB → 霧雨店 REVIEW（NO_COLLISION_PROXY），不得 PASS → 霧雨店 REVIEW NO_COLLISION_PROXY 與 LANDMARK_SUZUNAAN/Hero AABB 重疊但沒有可用碰撞，物理查詢無法判定（445
+[PLACE] 結果：selftest 2 項不符預期（clean＋5 案例，共 31296 ms）

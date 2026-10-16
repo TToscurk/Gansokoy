@@ -1,0 +1,25 @@
+# 正常 TPS 24 視点（Before=H＝Phase 6 最終／After=Q＝Phase 7 最終、相機座標 24/24 一致）の ID パス：017・018 の画面占有（1600x900）
+F002 | Before: MKT_017 13.66%  MKT_018 0.09%   | After: MKT_017 16.42%  MKT_018 0.07%  
+F003 | Before: MKT_018 14.12%   | After: MKT_018 13.55%  
+F007 | Before:  | After: 
+F017 | Before: MKT_017 5.06%  MKT_018 0.37%   | After: MKT_017 6.40%  MKT_018 0.36%  
+F018 | Before: MKT_018 4.41%   | After: MKT_018 4.62%  
+F019 | Before: MKT_018 11.20%   | After: MKT_018 11.76%  
+F021 | Before:  | After: 
+F022 | Before:  | After: 
+N008 | Before: MKT_017 2.95%  MKT_018 0.15%   | After: MKT_017 3.66%  MKT_018 0.14%  
+N020 | Before: MKT_017 11.77%  MKT_018 0.24%   | After: MKT_017 15.11%  MKT_018 0.22%  
+N032 | Before: MKT_017 21.57%  MKT_018 0.52%   | After: MKT_017 22.62%  MKT_018 0.51%  
+N046 | Before: MKT_018 2.04%   | After: MKT_018 2.15%  
+N058 | Before: MKT_018 6.92%   | After: MKT_018 7.41%  
+N066 | Before: MKT_018 17.53%   | After: MKT_018 17.29%  
+N074 | Before: MKT_018 17.26%   | After: MKT_018 16.92%  
+N082 | Before:  | After: 
+N090 | Before:  | After: 
+N098 | Before:  | After: 
+S040 | Before: MKT_017 2.27%   | After: MKT_017 3.20%  
+S070 | Before: MKT_018 2.10%  MKT_017 0.21%   | After: MKT_018 2.06%  MKT_017 0.35%  
+S080 | Before: MKT_018 0.26%  MKT_017 0.16%   | After: MKT_017 0.27%  MKT_018 0.26%  
+S090 | Before: MKT_017 0.13%  MKT_018 0.08%   | After: MKT_017 0.20%  MKT_018 0.09%  
+S100 | Before: MKT_017 0.10%  MKT_018 0.03%   | After: MKT_017 0.16%  MKT_018 0.03%  
+S112 | Before: MKT_017 0.08%  MKT_018 0.01%   | After: MKT_017 0.12%  MKT_018 0.01%  

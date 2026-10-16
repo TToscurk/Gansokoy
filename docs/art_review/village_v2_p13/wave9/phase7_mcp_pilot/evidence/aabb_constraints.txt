@@ -1,0 +1,15 @@
+# 設計前の制約（scratch/p7/probe_q.gd＝verify_w9r2.gd::others_for と同じ箱、body 局部座標）
+[Q] ===== B_P_MKT_017 w=5.200 d=10.010 zf=5.005 door_cx=0.000 door_w=1.733 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Shopfront/003_gd_taruzumi/LOD0                 x[-2.50,-0.97] y[0.10,1.26] z[5.41,6.32]
+[Q]   gatebox Props/StreetP10/Signs/004_st_kanban_sake/LOD0                  x[0.81,1.57] y[0.12,1.82] z[5.57,6.28]
+--
+[Q]   gatebox EnrichW9P13/ZoneM/M_MKT_017/160_w9_sugidama/LOD0               x[1.17,2.30] y[2.24,3.26] z[4.98,6.42]
+[Q]   side -1: 1 objs  Props/…/107_mk_hoshimono x[-6.63,-3.18] y≤1.88 z[3.86,4.73]
+[Q]   side +1: 2 objs  Vegetation/…/034_shrub_a x[4.16,5.66] y≤0.75 z[-4.88,-3.47] | Props/…/005_st_nobori_sake x[2.25,2.88] y≤3.79 z[5.53,5.88]
+[Q] ===== B_P_MKT_018 w=6.090 d=10.920 zf=5.460 door_cx=0.435 door_w=1.740 kit_meta=["asset_id","phase","door_cx","door_w","style","roof_cls","roof_ps","roof_cr","roof_h","roof_ove","door_rec","r3","bays","bay_scale","bay_x","bay_kind","door_i","p13_role","p13_cat","p13_tsuma"]
+[Q]   gatebox Props/StreetP10/Residence/008_sz_hachi/LOD0                    x[-1.71,-1.02] y[0.08,0.62] z[5.98,6.69]
+--
+[Q]   gatebox EnrichW9P13/ZoneM/M_MKT_018/161_sz_hachi/LOD0                  x[-3.03,-2.33] y[-0.01,0.53] z[5.45,6.16]
+[Q]   gatebox EnrichW9P13/ZoneM/M_MKT_018/162_sz_hachi/LOD0                  x[-2.42,-1.71] y[-0.01,0.53] z[5.46,6.16]
+[Q]   side -1: 2 objs  Props/…/105_st_ido x[-7.88,-4.90] y≤2.25 z[3.48,6.19] | EnrichW9P13/…/161_sz_hachi x[-3.07,-2.29] y≤0.57 z[5.41,6.20]
+[Q]   side +1: 1 objs  Props/…/009_tk_okeyama x[1.76,3.14] y≤1.28 z[5.77,6.95]
