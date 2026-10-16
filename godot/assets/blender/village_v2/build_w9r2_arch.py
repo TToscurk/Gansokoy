@@ -2261,6 +2261,9 @@ BUILDERS = [build_mkt012, build_mkt013, build_mkt011, build_mkt010, build_mkt009
 # Phase 4 R1：主街の輪郭差異化 5 棟（別ファイル build_w9p4_arch.py。この名前空間で exec する＝同じ helper・材質・Kit を使う）
 exec(compile(open(HERE + '/build_w9p4_arch.py', encoding='utf-8').read(), HERE + '/build_w9p4_arch.py', 'exec'))
 BUILDERS += P4_BUILDERS
+# Phase 5：主街中段 2 棟（MKT_023 市の角の米屋・MKT_028 隠居の仕舞屋。別ファイル build_w9p5_arch.py・同じ名前空間）
+exec(compile(open(HERE + '/build_w9p5_arch.py', encoding='utf-8').read(), HERE + '/build_w9p5_arch.py', 'exec'))
+BUILDERS += P5_BUILDERS
 
 
 def write_json_retry(p, d, tries=8):

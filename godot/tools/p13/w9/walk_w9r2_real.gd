@@ -29,6 +29,9 @@ const B := {
 	"p4_MXC_001": {"pos": Vector2(298.659, -100.917), "yaw": -111.80, "w": 6.1000, "d": 10.92, "y": 1.544},
 	"p4_MXC_002": {"pos": Vector2(301.167, -107.177), "yaw": -111.86, "w": 7.0000, "d": 10.92, "y": 1.584},
 	"p4_MXC_004": {"pos": Vector2(306.424, -120.321), "yaw": -111.81, "w": 7.9000, "d": 10.92, "y": 1.700},
+	# ── Phase 5（主街中段 2 棟）：pos／yaw＝body の実測（atan2(basis.z.x, basis.z.z)）・y＝body の y ──
+	"p5_MKT_023": {"pos": Vector2(254.4828, -28.2123), "yaw": 73.21, "w": 5.2002, "d": 10.92, "y": 1.094},
+	"p5_MKT_028": {"pos": Vector2(265.1548, -63.7873), "yaw": 73.32, "w": 6.1054, "d": 10.92, "y": 1.310},
 }
 ## [名前, 建物, 種別, 出発 (lx, dz), 目標 (lx, dz), prop の碰撞箱の前面（立面から通り側へ m。Posts の z + 半幅 - 立面。generator の solid() と同じ値）]
 const LEGS := [
@@ -83,6 +86,13 @@ const LEGS := [
 	# ── Phase 4 R1b（B1）：木戸を宅間の奥へ移した後、巷の口（四つ目垣の切れ目）から庭へ実際に歩いて入れる（lx＝R1 の木戸の中心）
 	["p4b_gap_024_025_in", "p4_RSW_025", "along", Vector2(-4.13, 3.0), Vector2(-4.13, -3.5), 0.0],
 	["p4b_gap_014_013_in", "014", "along", Vector2(6.30, 3.0), Vector2(6.30, -3.5), 0.0],
+	# ── Phase 5：023 の前は P10 封存の大幟（立面から 0.7–1.8 m）・看板・提灯綱の竿が立つので、沿う脚は 2.0 m／3.4 m ──
+	["p5_MKT_023_along_near", "p5_MKT_023", "along", Vector2(-5.6, 2.0), Vector2(5.6, 2.0), 0.0],
+	["p5_MKT_023_along_road", "p5_MKT_023", "along", Vector2(-5.6, 3.4), Vector2(5.6, 3.4), 0.0],
+	["p5_MKT_023_door", "p5_MKT_023", "door", Vector2(0.0, 3.4), Vector2(0.0, -0.6), 0.0],
+	["p5_MKT_028_along_near", "p5_MKT_028", "along", Vector2(-6.05, 1.3), Vector2(6.05, 1.3), 0.0],
+	["p5_MKT_028_along_road", "p5_MKT_028", "along", Vector2(-6.05, 3.0), Vector2(6.05, 3.0), 0.0],
+	["p5_MKT_028_door", "p5_MKT_028", "door", Vector2(0.436, 3.0), Vector2(0.436, -0.6), 0.0],
 ]
 const STALL_FRAMES := 30          # 速度 < 0.3 m/s が連続してこの数に達したら、その脚は止まったとみなす（0.5 s）
 const TIMEOUT_MS := 25000

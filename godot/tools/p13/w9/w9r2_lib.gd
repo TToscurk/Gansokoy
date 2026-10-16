@@ -73,6 +73,9 @@ const SPECS := {
 	"B_P_RSW_025": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_025", "hide": ["all"]},      # 板葺きの低い家（東列で一番低い）
 	"B_P_RSW_026": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_026", "hide": ["all"]},      # 仕立て屋＝細長く高い妻入のせり出し二階
 	"B_P_RSW_012": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_012", "hide": ["all"]},      # 越屋根の寄棟の農家
+	# ── Phase 5：主街中段 2 棟（全隠して自前で組む。入口位置・footprint・body 碰撞は不変）──
+	"B_P_MKT_023": {"path": "Districts/Market/Buildings/B_P_MKT_023", "hide": ["all"]},                # 市の角の米屋＝総二階の入母屋（南の妻を中橫街へ）＋角を回る庇
+	"B_P_MKT_028": {"path": "Districts/Market/Buildings/B_P_MKT_028", "hide": ["all"]},                # 隠居の仕舞屋＝妻入の平屋（木連格子の妻）
 }
 
 
