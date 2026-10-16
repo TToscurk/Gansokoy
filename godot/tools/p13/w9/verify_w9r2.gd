@@ -26,7 +26,7 @@ const EAVE_MAX_GAP := 1.3      # 腕木の最大間隔
 const EAVE_MIN_FRONT := 2.0    # 庇の前縁の下端高さ（頭が当たらない）
 # R1 の吊り物（overlay が同じ toggle で隠す種類）
 const R1_HANG := ["sudare", "kaki", "sugi", "zaru", "zori"]
-const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020", "B_P_RSW_014", "B_P_RSW_075", "B_P_MKT_028"]   # 妻入（懸魚が要る）
+const TSUMA := ["B_P_MKT_009", "B_P_MKT_010", "B_P_RSW_062", "B_P_MKT_020", "B_P_RSW_014", "B_P_RSW_075", "B_P_MKT_028", "B_P_MKT_003"]   # 妻入（懸魚が要る）
 const R2_BASE := "0ca148f"      # R2 の直前（R1 最終）。village_v2.tscn はここから追加のみ・≤3 行
 const NEIGHBOR_SHRINK := 0.12  # 隣棟の massing 箱をこれだけ縮めて、屋根・庇の貫入を拾う（Kit 自身の軒も少し重なるため）
 const NEIGHBOR_Y := 2.0        # 隣棟への貫入は屋根・庇の高さ（局部 y > 2.0）だけ

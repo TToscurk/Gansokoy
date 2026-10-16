@@ -335,9 +335,41 @@
   "B_P_MKT_028_L1": {
    "tris": 32,
    "note": "B_P_MKT_028 LOD1"
+  },
+  "B_P_MKT_019_L0": {
+   "tris": 14364,
+   "note": "B_P_MKT_019 LOD0"
+  },
+  "B_P_MKT_019_L1": {
+   "tris": 44,
+   "note": "B_P_MKT_019 LOD1"
+  },
+  "B_P_MKT_021_L0": {
+   "tris": 18294,
+   "note": "B_P_MKT_021 LOD0"
+  },
+  "B_P_MKT_021_L1": {
+   "tris": 46,
+   "note": "B_P_MKT_021 LOD1"
+  },
+  "B_P_MKT_022_L0": {
+   "tris": 20852,
+   "note": "B_P_MKT_022 LOD0"
+  },
+  "B_P_MKT_022_L1": {
+   "tris": 134,
+   "note": "B_P_MKT_022 LOD1"
+  },
+  "B_P_MKT_003_L0": {
+   "tris": 16897,
+   "note": "B_P_MKT_003 LOD0"
+  },
+  "B_P_MKT_003_L1": {
+   "tris": 36,
+   "note": "B_P_MKT_003 LOD1"
   }
  },
- "total_tris": 603089,
+ "total_tris": 673756,
  "eaves": {
   "B_P_MKT_012": [
    {
@@ -785,6 +817,64 @@
     "style": "board",
     "brackets": 3,
     "bracket_gap": 0.8030000000000002,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_021": [
+   {
+    "x0": -3.68,
+    "x1": 3.93,
+    "y": 3.15,
+    "zf": 5.46,
+    "depth": 1.0,
+    "p": 0.3,
+    "style": "tile",
+    "brackets": 8,
+    "bracket_gap": 1.0871428571428572,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_022": [
+   {
+    "x0": -3.485,
+    "x1": 3.485,
+    "y": 2.95,
+    "zf": 5.46,
+    "depth": 0.45,
+    "p": 0.28,
+    "style": "board",
+    "brackets": 8,
+    "bracket_gap": 0.9957142857142857,
+    "strut": false,
+    "posts": []
+   }
+  ],
+  "B_P_MKT_003": [
+   {
+    "x0": -3.93,
+    "x1": 3.5,
+    "y": 3.1,
+    "zf": 5.005,
+    "depth": 0.35,
+    "p": 0.3,
+    "style": "board",
+    "brackets": 8,
+    "bracket_gap": 1.0614285714285714,
+    "strut": false,
+    "posts": []
+   },
+   {
+    "x0": -3.9,
+    "x1": 3.9,
+    "y": 3.1,
+    "zf": 3.95,
+    "depth": 1.25,
+    "p": 0.3,
+    "style": "board",
+    "brackets": 8,
+    "bracket_gap": 1.1142857142857143,
     "strut": false,
     "posts": []
    }
@@ -1307,6 +1397,54 @@
     "eave_tails": true,
     "gegyo": true,
     "ove": 0.15
+   }
+  ],
+  "B_P_MKT_019": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 1.0
+   }
+  ],
+  "B_P_MKT_021": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.45
+   }
+  ],
+  "B_P_MKT_022": [
+   {
+    "kind": "hip",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 4,
+    "eave_tails": true,
+    "gegyo": false,
+    "ove": 0.45
+   }
+  ],
+  "B_P_MKT_003": [
+   {
+    "kind": "gable",
+    "ridge_stack": true,
+    "oni": true,
+    "hip_caps": 0,
+    "eave_tails": true,
+    "gegyo": true,
+    "ove": 0.2
+   },
+   {
+    "kind": "turret",
+    "scale": 2.0
    }
   ]
  },
