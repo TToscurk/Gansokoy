@@ -1,0 +1,46 @@
+[W9P8G] PASS village_v2.tscn の EnrichW9P8 掛載行：ext_resource 0・node 0（0＋0＝未掛載、1＋1＝掛載。半端な状態ではない）
+[W9P8G] INFO village_v2.tscn には未掛載 → 記憶の中で EnrichW9P4 の直後に掛けて検査する（場景ファイルは書かない）
+[W9P8G] PASS 既存 overlay EnrichW9P13 は残っている
+[W9P8G] PASS 既存 overlay EnrichW9P3 は残っている
+[W9P8G] PASS 既存 overlay EnrichW9P4 は残っている
+[W9P8G] PASS 既存 overlay ArchW9R2P13 は残っている
+[W9P8G] PASS 既存 overlay FarmsteadP13 は残っている
+[W9P8G] PASS 既存 overlay HumanUseP10 は残っている
+[W9P8G] PASS 既存 overlay EdgeClosureP10 は残っている
+[W9P8G] PASS EnrichW9P8 は root に 1 つだけ（1）
+[W9P8G] PASS 烘焙した件数と meta items が一致（154）
+[W9P8G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
+[W9P8G] PASS 区域 A8 の構件数 46 ≥ 30
+[W9P8G] PASS 区域 B8 の構件数 108 ≥ 60
+[W9P8G] PASS 東北聚落の門前：小物を置いた戸 11 ≥ 8
+[W9P8G] PASS 各戸の小物の組：同じ組が 3 戸以上に使われていない（戸 11）
+[W9P8G] PASS B8 の構件の種類 36 ≥ 14（同じ一組の複製ではない）
+[W9P8G] PASS B8 宅間の垣・塀の部材 11 ≥ 3
+[W9P8G] PASS B8 屋根並みの背後：高さ ≥ 8 m の樹 6 ≥ 3
+[W9P8G] PASS A8 稲の置き場：9 件・最も高い物 1.78 m < 2.0 m（塀と屋敷を隠さない）
+[W9P8G] PASS A8_north_grove：高木 2 ≥ 2・中層 4 ≥ 3・低層 12 ≥ 4（三層）
+[W9P8G] PASS A8_north_grove：隣の株までの距離の変動係数 0.45 ≥ 0.25（等間隔でない・19 株）
+[W9P8G] PASS 任務の出入口（香霖堂・稗田邸の portal、阿求の anchor）から最も近い構件 6.1 m ≥ 6.0 m（PORTAL_KOURINDOU）
+[W9P8G] INFO LOD0 三角面 107269・MeshInstance 388・碰撞箱 57・MultiMesh 0
+[W9P8G] PASS 予算：LOD0 107269 ≤ 150000・Mesh 388 ≤ 450・碰撞箱 57 ≤ 80
+[W9P8G] PASS MultiMesh なし（headless 烘焙の零行列問題の対象外）
+[W9P8G] PASS 全 154 構件が道・建物・戸口・水・田・封存物・NPC 動線・Hero に触れず、接地している（不適合 0）
+[W9P8G] PASS 樹・低木は路面の縁から 0.6 m 以内に乗らない（0）
+[W9P8G] PASS 高木は路面の縁から 3 m 以上離れる＝道の視線の通路を塞がない（0）
+[W9P8G] PASS 地面物が W9 R1／Phase 3／Phase 4 の構件と重ならない（0）
+[W9P8G] PASS 構件同士が重ならない（重なり 0）
+[W9P8G] PASS 碰撞箱 57 個が戸口の空け帯と NPC の巡回路に触れない（0）
+[W9P8G] PASS 通行帯 4 本 29040 樣本：EnrichW9P8 の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）0 件・≥ 0.30 m の縮み 3 件・最悪 7.50 → 3.43 m B8_nelane(462.1,-236.9)
+[W9P8G] PASS 反向：田埂道の脇（373.6, −18.0）に高さ 2.4 m の箱を足すと重い縮み 112 件（≥ 1・この検査は縮みを検出できる）
+[W9P8G] PASS 可逆：visible=false で EnrichW9P8 のメッシュがすべて非表示（残り 0）
+[W9P8G] PASS 可逆：EnrichW9P8 を外すと root の節点構成が掛ける前と同じ（37 節点）
+[W9P8G] PASS 反向：主街の路面（245.0, 20.0）に置いた樹は『road』で落ちる（road）
+[W9P8G] PASS 反向：建物の中に置いた小屋は落ちる（building）
+[W9P8G] PASS 反向：地面から 0.6 m 浮いた構件は落ちる（float(1.28 vs ground 0.68)）
+[W9P8G] PASS 反向：戸口の空け帯にかかる碰撞箱は落ちる（door(B_P_MKT_001)）
+[W9P8G] PASS 反向：二重掛載は件数 2 として検出できる（2）
+[W9P8G] PASS 反向：同じ小物の組が 3 戸に使われると落ちる
+[W9P8G] PASS 反向：1.5 m 等間隔の並びは変動係数 0.00 で落ちる（< 0.25）
+[W9P8G] PASS 反向：香霖堂の portal から 1.8 m の点は『出入口から 6 m』で落ちる（PORTAL_KOURINDOU）
+[W9P8G] PASS 42  FAIL 0
+[W9P8G] 結果：0 項失敗

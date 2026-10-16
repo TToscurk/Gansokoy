@@ -1,0 +1,7 @@
+[P8P] 解像度 (1600.0, 900.0)・forward_plus・vsync off・max_fps 0・10:00；各鏡位 ON／OFF ×2（暖機 40＋測定 100 幀）
+[P8P] PA1   ON−OFF：Δframe +0.238・Δgpu +0.221・Δcpu +0.188・Δdraws  +86.0・Δprims    +88128・Δobjs +168.0  （ON frame 10.19／gpu 8.84／draws 2342）
+[P8P] PA4   ON−OFF：Δframe +0.221・Δgpu +0.189・Δcpu +0.163・Δdraws +105.0・Δprims    +53600・Δobjs +143.0  （ON frame 10.09／gpu 8.74／draws 2234）
+[P8P] PB1   ON−OFF：Δframe +0.140・Δgpu +0.151・Δcpu +0.015・Δdraws +222.0・Δprims   +145424・Δobjs +329.0  （ON frame 11.53／gpu 10.34／draws 2835）
+[P8P] PB4   ON−OFF：Δframe +0.332・Δgpu +0.179・Δcpu +0.089・Δdraws +143.0・Δprims   +108387・Δobjs +243.0  （ON frame 11.79／gpu 10.54／draws 2315）
+[P8P] D03   ON−OFF：Δframe +0.207・Δgpu +0.108・Δcpu +0.225・Δdraws +222.0・Δprims   +150215・Δobjs +324.0  （ON frame 11.72／gpu 10.37／draws 3515）
+[P8P] DONE -> C:/Users/B365/AppData/Local/hermes/cache/scratch/p8/perf_p8.json

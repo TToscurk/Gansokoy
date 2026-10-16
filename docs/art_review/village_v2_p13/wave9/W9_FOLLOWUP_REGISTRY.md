@@ -32,6 +32,10 @@
 | 25 | **相機整合**（Phase 6、同 #22／#23 類型） | MKT_003 的 Kit body 碰撞上緣 3.90 m、新壁 6.25 m；MKT_019 出桁前出 0.40 m 在碰撞箱外（出し桁下端 3.24 m＞立面邊預設 TPS 相機高 3.22 m，但玩家可調俯仰） | `phase6_r1/P13_WAVE9_PHASE6_R1_REPORT.md` §5；**未取樣** | 依 #22／#23 另案；Phase 6 不新增碰撞、不改相機 |
 | 26 | **相機整合**（Phase 7、同 #22／#23／#25 類型） | MKT_017 碰撞頂 5.40 m，新壁 5.6 m＋屋根＋本卯建（頂約 9.4 m、妻面外 0.28 m）；MKT_018 碰撞頂 3.90 m，後半本二階壁 5.35 m。牆邊預設 TPS 相機約 3.22 m 高，低於 017 下屋桁（約 3.45 m）、018 垂木尻（約 3.46 m）；調高俯仰時可能進入上層 | `phase7_mcp_pilot/P13_WAVE9_PHASE7_MCP_PILOT_REPORT.md` §6；**未取樣** | 依 #22／#23 另案；Phase 7 不加碰撞、不改相機 |
 | 27 | 驗證註記（既有、Phase 7 發現） | `audit_village_v2_placement.gd --selftest`：PASS 201／REVIEW 4／FAIL 2（MXC_007×008 穿插 0.205 m、RSW_074×075 0.040 m、MKT_029×030 0.030 m），selftest 2 項不符（clean、aabbfp）。都是本回沒碰的 body 碰撞；017／018 不在名單內 | `phase7_mcp_pilot/evidence/placement_audit_excerpt.txt` | **未調查**；需先查是哪一輪改了這些 body 碰撞或 audit，再決定修 audit 或修場景 |
+| 28 | **玩家可見缺陷**（Phase 8 發現、全村） | 除錯層外露：`Debug`（Label3D 39＝「LANDMARK_SOUTH_GATE」「鈴奈庵（候補）」「跌水（placeholder）」等巨大浮空字、`DistrictOutlines` 7 條）與 `QuestAnchors`（洋紅色 CylinderMesh 8 根） | 只有 `scripts/dev/review_start.gd`（ReviewStart）與 `p13_preview_boot.gd` 會隱藏；`main.gd::load_map` 不隱藏。`--map=village_v2` 實測全部可見（`phase8_village_survey/evidence/debug_visibility_normal_flow.txt`、`review/D_debug_layer_normal_flow.jpg`：4 鏡位中 3 個 vision 判 severe）。獸道 `beast_path.meta.json` 南端 portal 的 target 是 village_v2；目前正式開局 `trail → slice` 尚未接到 V2 | **未處理、需授權**：改 `main.gd`（共享）或 `gen_village_v2.gd`＋重生主場景，並與獸道 session 協調。Phase 8 排名第 1 |
+| 29 | 整合（Phase 8） | `EnrichW9P8`（A8 稗田邸西、B8 東北聚落；154 件）已生成，**未掛進 `village_v2.tscn`** | 共享編輯器的 current_scene 是 `village_v2.tscn`，未存檔狀態無法經 MCP 確認，依指令不寫共享場景；AFTER 圖與 gate 都是記憶體內掛載。`phase8_village_survey/P13_WAVE9_PHASE8_VILLAGE_SURVEY_REPORT.md` §8、§10 | 待使用者 ART_REVIEW 裁定與掛載授權；掛載＝`build_w9p8.gd -- --attach`（3 行），刪除即還原 |
+| 30 | 美術（資訊・Phase 8） | A8 遠距（X03、K01）只見一團綠、稻置場小道具零碎；B8「整體仍不是有人住的聚落」、PB2 沿路仍空、井戶周圍石材偏淺、吊柿排列規則、PB3 竹垣片孤立；D02／D04 幾乎無變化（畫面佔比 0.8 %／0.3 %） | vision 懷疑式評估（`phase8_village_survey/evidence/vision_notes.md`）、ID pass（`evidence/p8_coverage.txt`） | 已知限制；r1→r2 已用掉一次有理由的修正，不再反覆打磨，等使用者裁定 |
+| 31 | 驗證註記（Phase 8） | `verify_w9p8.gd` 的門檻（區域最少件數、雜木林三層、變動係數 0.25、稻置場 < 2 m、portal 6 m、SpringArm 重度＝≥ 2.0 m 且腕 < 3.0 m）是本輪建 gate 時訂的，沒有獨立依據；r1→r2 期間門檻未改。未做真玩家控制器實走、共享編輯器中的掛載 runtime。效能（ON−OFF）ΔGPU +0.11～+0.22 ms、Δdraw calls +86～+222（MeshInstance、非 MultiMesh，同 #11） | `phase8_village_survey/evidence/gate_final.txt`、`GATE_HISTORY.txt`、`perf_p8.txt` | gate 只是回歸防護，**不得當作美術品質的證明**；掛載後若要上線再做實走 |
 
 ## Phase 3 第一批 結案（使用者 ART_APPROVED・2026-10-16）
 
@@ -97,3 +101,9 @@ P13 要擴張到尚未改善的街區，**不回頭反覆打磨已批准的三�
 - 沿用可逆 overlay 流程；只做實際幾何變更需要的定點檢查。主要成功標準：**玩家走過時明顯感到村落更多樣**。送 ART_REVIEW，不自行核准或封存。
 - **Phase 6 R1（主街南段 MKT_019／021／022／003）已送 ART_REVIEW**（2026-10-16）：`phase6_r1/P13_WAVE9_PHASE6_R1_REPORT.md`。未核准、未封存；新增 #25、更新 #24。
 - **Phase 7 MCP-first 試行（主街南段 MKT_017／018）已送 ART_REVIEW**（2026-10-16）：`phase7_mcp_pilot/P13_WAVE9_PHASE7_MCP_PILOT_REPORT.md`。未核准、未封存；新增 #26／#27、更新 #24；overlay 新增 `keep_r1`（017 的 R1 杉玉保留顯示）。Phase 6 仍在 ART_REVIEW、幾何未動。
+
+## Phase 8：全村完成度調查（使用者 2026-10-16「Village-Wide Completion Survey」）
+
+- 方向轉為全村的環境完整度與探索體驗；017／018 為使用者接受的現行視覺基準（不再打磨，碰撞限制 #26 保留），**不是 ART_APPROVED 記錄**。
+- **已送 ART_REVIEW**（2026-10-16）：`phase8_village_survey/P13_WAVE9_PHASE8_VILLAGE_SURVEY_REPORT.md`。全村評估、灰盒盤點（G1–G7）、注記地圖、五項排序；第一批 A8／B8 overlay `EnrichW9P8` 生成但未掛載（#29）。新增 #28–#31。未核准、未封存、未 push。
+- 需要使用者裁定：A8／B8 是否值得掛載；除錯層處理（#28）；丘腳社寺造型方向（TASK E）；主街南段路口・火見櫓前是否開放 P10／P9 封存範圍。

@@ -1,0 +1,46 @@
+[W9P8B] MeadowP9 規劃株：キャッシュ C:/Users/B365/AppData/Local/hermes/cache/scratch/w9_meadow.json（114574 株）
+[W9P8B] plan 8473 ms：構件 154・cluster 25・置けなかった 15（占有 454 件）
+[W9P8B] 区域別：{"B3":46,"C3":108}
+[W9P8B] 種別： akamatsu_a×1 enoki_a×3 fern_a×13 gk_yotsume×5 hu_momiboshi×1 hu_seoikago×1 konara_a×2 konara_b×2 kr_houki×1 kr_kago×2 kuromatsu_a×1 mk_hoshimono×2 mk_kame×2 mk_kuruma_ni×1 ms_noren_age_ai×1 ms_noren_age_kinari×1 sasa_a×8 shrub_a×22 sk_teoke×3 sk_woodpile×4 st_ido×1 st_kuwa×2 st_warazuka×1 sz_hachi×4 tsutsuji_a×5 w9_asagao×4 w9_hana_higanbana×2 w9_hana_kiiro×8 w9_hana_pink×9 w9_hana_shiro×12 w9_itabei_b×4 w9_jizo×2 w9_kido×2 w9_shita_tool×1 w9_shita_wood_m×1 w9_sudare×1 w9_takegaki×2 w9_tsurushi_kaki×2 w9_tsurushi_togarashi×1 w9_ueki_tana×3 wk_tawara×1 wk_tawara3×2 wk_usu×1 young_broad_a×4 young_broad_b×3
+[W9P8B]   A8_jizo                     4  中橫街の東端と田埂道の辻（大宅の西の角）：辻の地蔵と供え花
+[W9P8B]   A8_rice_yard                9  西塀の外の稲の置き場：俵の山・稲叢・荷車・臼・背負い籠（田から運んだ稲を大宅へ納める前の置き場。高さ 2 m 未満で塀と屋敷を隠さない）
+[W9P8B]   A8_wall_foot               14  大宅の西塀の足元の植え込み：躑躅・低木・笹・羊歯の不揃いな群れと若木 2（白い塀だけの長い面に緑の過渡）
+[W9P8B]   A8_north_grove             19  中橫街の終点の北（田と大宅の間の空き地）：屋敷林の縁の雑木（高木 3・中木 1）と低木・笹・羊歯・野の花の不規則な林縁
+[W9P8B]   BH_RNE_001                  3  B_P_RNE_001（hiraya・幅 4.5 m）の門前：水を汲み置く家 ・ 薪を焚く家
+[W9P8B]   BH_RNE_002                  1  B_P_RNE_002（hiraya・幅 5.4 m）の門前：夏の日差しを避ける家 ・ 草花を育てる家
+[W9P8B]   BH_RNE_003                  4  B_P_RNE_003（zushi・幅 6.3 m）の門前：暖簾 ・ 干し柿をつくる家 ・ 鉢を並べる家
+[W9P8B]   BH_RNE_004                  2  B_P_RNE_004（hiraya・幅 4.1 m）の門前：畑を持つ家 ・ 畑仕事から戻った家
+[W9P8B]   BH_RNE_005                  2  B_P_RNE_005（hiraya・幅 7.2 m）の門前：朝顔を這わせる家 ・ 薪を焚く家
+[W9P8B]   BH_RNE_010                  1  B_P_RNE_010（zushi・幅 5.4 m）の門前：薪を焚く家 ・ 鉢を並べる家
+[W9P8B]   BH_RNE_011                  3  B_P_RNE_011（hiraya・幅 4.5 m）の門前：朝顔を這わせる家 ・ 鉢を並べる家
+[W9P8B]   BH_RNE_012                  2  B_P_RNE_012（hiraya・幅 7.2 m）の門前：唐辛子を干す家 ・ 薪を焚く家
+[W9P8B]   BH_RNE_013                  2  B_P_RNE_013（zushi・幅 5.4 m）の門前：暖簾 ・ 草花を育てる家
+[W9P8B]   BH_RNE_016                  2  B_P_RNE_016（hiraya・幅 5.4 m）の門前：畑仕事から戻った家 ・ 夏の日差しを避ける家
+[W9P8B]   BH_RNE_017                  2  B_P_RNE_017（zushi・幅 6.3 m）の門前：畑を持つ家 ・ 干し柿をつくる家
+[W9P8B]   BG_RNE_003_002             11  東北聚落の宅間 B_P_RNE_003|B_P_RNE_002（幅 3.9 m）：yard
+[W9P8B]   BG_RNE_004_003              6  東北聚落の宅間 B_P_RNE_004|B_P_RNE_003（幅 5.6 m）：shed_wood
+[W9P8B]   BG_RNE_005_004              7  東北聚落の宅間 B_P_RNE_005|B_P_RNE_004（幅 4.9 m）：fence_gate
+[W9P8B]   BG_RNE_008_009              7  東北聚落の宅間 B_P_RNE_008|B_P_RNE_009（幅 3.9 m）：shrine
+[W9P8B]   BG_RNE_012_011              6  東北聚落の宅間 B_P_RNE_012|B_P_RNE_011（幅 4.7 m）：shed_tool
+[W9P8B]   BG_RNE_014_013              8  東北聚落の宅間 B_P_RNE_014|B_P_RNE_013（幅 5.9 m）：open
+[W9P8B]   BG_RNE_017_018              5  東北聚落の宅間 B_P_RNE_017|B_P_RNE_018（幅 5.5 m）：fence
+[W9P8B]   BG_RNE_018_019             10  東北聚落の宅間 B_P_RNE_018|B_P_RNE_019（幅 4.9 m）：yard
+[W9P8B]   B8_well                     5  東北聚落の共同井戸（香霖堂口の北・東北巷の西の空き地）：井戸と手桶・水甕・井戸端の草
+[W9P8B]   B8_canopy                  19  屋根並みの背後の樹冠：龍神橋から見える集落の背景に高さの違う緑（同じ Kit の屋根の連続を破る）
+[W9P8B] 落ち：fern_a near (383.5,-30.9) 置けない（hero）[A8_wall_foot]
+[W9P8B] 落ち：sasa_a near (382.3,-24.9) 置けない（overlap:sasa_a）[A8_wall_foot]
+[W9P8B] 落ち：tsutsuji_a near (382.6,-16.5) 置けない（hero）[A8_wall_foot]
+[W9P8B] 落ち：fern_a near (382.2,-14.2) 置けない（overlap:shrub_a）[A8_wall_foot]
+[W9P8B] 落ち：fern_a near (380.5,-42.5) 置けない（overlap:fern_a）[A8_north_grove]
+[W9P8B] 落ち：shrub_a near (380.4,-41.8) 置けない（overlap:fern_a）[A8_north_grove]
+[W9P8B] 落ち：fern_a near (377.0,-48.7) 置けない（overlap:fern_a）[A8_north_grove]
+[W9P8B] 落ち：B_P_RNE_002 ueki：開間なし（side -1）[BH_RNE_002]
+[W9P8B] 落ち：st_kuwa on B_P_RNE_004：置けない（door）[BH_RNE_004]
+[W9P8B] 落ち：B_P_RNE_010 hachi：開間なし（side -1）[BH_RNE_010]
+[W9P8B] 落ち：B_P_RNE_016 sudare：開間なし（side 1）[BH_RNE_016]
+[W9P8B] 落ち：w9_hana_pink near (473.4,-191.8) 置けない（road）[BG_RNE_014_013]
+[W9P8B] 落ち：w9_itabei_b（宅間の垣）1.9 m：overlap:w9_itabei_b [BG_RNE_017_018]
+[W9P8B] 落ち：w9_kido（宅間）overlap:gk_yotsume [BG_RNE_018_019]
+[W9P8B] 落ち：tsutsuji_a near (440.4,-193.5) 置けない（overlap:shrub_a）[B8_canopy]
+[W9P8B] dump → C:/Users/B365/AppData/Local/hermes/cache/scratch/p8/plan_d.json
+[W9P8B] 存檔回読：構件 154（計画 154）・MeshInstance 388・碰撞 57・MultiMesh 0 → res://maps/village_v2/gen/enrich_w9p8.scn

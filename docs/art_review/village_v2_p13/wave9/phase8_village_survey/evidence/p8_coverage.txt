@@ -1,0 +1,14 @@
+# EnrichW9P8 在 After（A8b）正常 TPS 各視點的畫面佔比（ID pass）與前 4 個 cluster
+X03  EnrichW9P8  1.97%  A8_north_grove 1.33%  A8_wall_foot 0.45%  A8_rice_yard 0.09%  B8_canopy 0.08%
+K01  EnrichW9P8  0.78%  A8_wall_foot 0.62%  A8_north_grove 0.11%  A8_rice_yard 0.05%  A8_jizo 0.00%
+PA1  EnrichW9P8  4.68%  A8_north_grove 3.81%  A8_wall_foot 0.70%  A8_rice_yard 0.14%  A8_jizo 0.03%
+PA2  EnrichW9P8  7.05%  A8_north_grove 4.13%  A8_wall_foot 2.53%  A8_rice_yard 0.28%  A8_jizo 0.12%
+PA3  EnrichW9P8  3.15%  A8_wall_foot 2.17%  A8_north_grove 0.71%  A8_rice_yard 0.24%  A8_jizo 0.02%
+PA4  EnrichW9P8  5.48%  A8_north_grove 3.77%  A8_wall_foot 1.37%  A8_rice_yard 0.24%  A8_jizo 0.10%
+D02  EnrichW9P8  0.79%  B8_canopy 0.75%  B8_well 0.03%  BH_RNE_001 0.01%  BH_RNE_002 0.01%
+D03  EnrichW9P8 10.19%  B8_canopy 6.43%  B8_well 2.26%  BH_RNE_001 1.43%  BH_RNE_010 0.02%
+D04  EnrichW9P8  0.33%  BH_RNE_017 0.30%  BG_RNE_017_018 0.02%  B8_canopy 0.02%
+PB1  EnrichW9P8  6.30%  B8_canopy 3.01%  B8_well 2.88%  BH_RNE_001 0.35%  BH_RNE_002 0.03%
+PB2  EnrichW9P8  1.86%  B8_canopy 1.76%  BH_RNE_011 0.08%  BH_RNE_017 0.01%  BH_RNE_016 0.01%
+PB3  EnrichW9P8  5.97%  BG_RNE_004_003 4.07%  B8_canopy 1.49%  BH_RNE_003 0.29%  B8_well 0.06%
+PB4  EnrichW9P8  2.66%  B8_canopy 2.53%  B8_well 0.09%  BH_RNE_001 0.03%  BH_RNE_002 0.01%

@@ -1,0 +1,2 @@
+# P8 封存檔 hash 對照（各 seal JSON 的 frozen 表；唯讀）
+entries 1155 match 1155 mismatch 0 missing 0 P8 新檔出現在 frozen 表 0

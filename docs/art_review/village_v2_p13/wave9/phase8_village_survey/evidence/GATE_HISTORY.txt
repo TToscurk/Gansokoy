@@ -1,0 +1,24 @@
+# verify_w9p8.gd 執行歷史（每次的 FAIL 行；全文在 scratch）
+## verify_a.txt
+[W9P8G] FAIL B8 屋根並みの背後：高さ ≥ 8 m の樹 2 ≥ 3
+[W9P8G] FAIL 樹・低木は路面の縁から 0.6 m 以内に乗らない（2）
+[W9P8G] FAIL 通行帯 4 本 29040 樣本：EnrichW9P8 の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）141 件・≥ 0.30 m の縮み 183 件・最悪 7.50 → 0.44 m B8_nesouth(443.6,-212.5)
+[W9P8G] PASS 39  FAIL 3
+[W9P8G] 結果：3 項失敗
+## verify_a2.txt
+[W9P8G] FAIL B8 屋根並みの背後：高さ ≥ 8 m の樹 2 ≥ 3
+[W9P8G]   路面の縁 0.6 m 以内の植物 shrub_a@(443.2,-212.3) [BG_RNE_002_001]
+[W9P8G]   路面の縁 0.6 m 以内の植物 young_broad_b@(444.9,-211.8) [BG_RNE_002_001]
+[W9P8G] FAIL 樹・低木は路面の縁から 0.6 m 以内に乗らない（2）
+[W9P8G]   重い縮みの碰撞 082_w9_kido_c：25 件
+[W9P8G]   重い縮みの碰撞 124_st_ido_c：116 件
+[W9P8G] FAIL 通行帯 4 本 29040 樣本：EnrichW9P8 の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）141 件・≥ 0.30 m の縮み 183 件・最悪 7.50 → 0.44 m B8_nesouth(443.6,-212.5)
+[W9P8G] PASS 39  FAIL 3
+[W9P8G] 結果：3 項失敗
+## verify_b.txt
+[W9P8G] FAIL A8_north_grove：高木 2 ≥ 2・中層 2 ≥ 3・低層 12 ≥ 4（三層）
+[W9P8G] PASS 41  FAIL 1
+[W9P8G] 結果：1 項失敗
+## verify_final.txt
+[W9P8G] PASS 42  FAIL 0
+[W9P8G] 結果：0 項失敗

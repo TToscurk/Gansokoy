@@ -1,0 +1,23 @@
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[DBG] Debug                            visible_in_tree=true  visible Label3D=39  visible MeshInstance3D=7
+[DBG] QuestAnchors                     visible_in_tree=true  visible Label3D=0  visible MeshInstance3D=8
+[DBG] Portals                          visible_in_tree=false  visible Label3D=0  visible MeshInstance3D=0
+[DBG] Districts/LandmarkParcelLines    visible_in_tree=false  visible Label3D=0  visible MeshInstance3D=0
+[DBG] Districts/AuxParcelLines         visible_in_tree=true  visible Label3D=0  visible MeshInstance3D=0
+[DBG]   mesh Debug/DistrictOutlines/Market ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/MixedCommercial ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/ResidentialWest ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/ResidentialNE ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/MansionEstate ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/SouthGate ArrayMesh vis=true
+[DBG]   mesh Debug/DistrictOutlines/Farmland ArrayMesh vis=true
+[DBG]   label Debug/Labels/MainRiver_Label text=主河 pos=(385.0, 17.0, -256.0)
+[DBG]   label Debug/Labels/Canal_Label text=穿村水渠 pos=(334.0, 14.0, -10.0)
+[DBG]   label Debug/Labels/WATERFALL_B7_Label text=跌水（placeholder） pos=(143.0, 4.0, 42.0)
+[DBG]   label Debug/Labels/WATERFALL_F7_Label text=跌水（placeholder） pos=(307.0, 2.0, 70.0)
+[DBG]   label Debug/Labels/Market_Label text=市集 pos=(262.0, 31.0, -9.0)
+[DBG]   label Debug/Labels/MixedCommercial_Label text=住商混合 pos=(302.0, 32.0, -131.0)
+[DBG]   label Debug/Labels/ResidentialWest_Label text=西住宅區 pos=(194.0, 31.0, -66.0)
+[DBG]   label Debug/Labels/ResidentialNE_Label text=東北住宅區 pos=(464.0, 32.0, -204.0)
