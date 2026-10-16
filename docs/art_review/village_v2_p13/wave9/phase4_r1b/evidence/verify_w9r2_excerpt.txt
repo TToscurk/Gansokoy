@@ -1,0 +1,15 @@
+[W9R2G] PASS B_P_RSW_026：overlay 子がある
+[W9R2G] PASS B_P_RSW_026：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_026）
+[W9R2G] PASS B_P_RSW_026：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_026：L0／L1 あり
+[W9R2G] PASS B_P_RSW_026：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_026：三角面 L0 18016／L1 56（上限 30000／500）
+[W9R2G] PASS B_P_RSW_026：張り出しが上限内（[P: (-3.225, 0.28, -6.005), S: (6.45, 7.28, 12.91)]）
+[W9R2G] PASS B_P_RSW_026：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_026：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_026：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_026：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS 38 棟 LOD0 合計 557173 tri（上限 590900＝平均 15550 × 棟数）
+[W9R2G] PASS B_P_RSW_026：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_026：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] 結果：517 通過・0 失敗（反向案例 36/36）

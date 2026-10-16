@@ -1,0 +1,22 @@
+[W9WALK] 玩家 capsule 半径 0.30・高さ 1.70（player_yoriichi.tscn）
+[W9WALK] tag=R1bF overlay=あり enabled=true
+[W9WALK] PASS 014_along_near   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 6.27, 立面 1.30) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_along_road   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0025 end(lx 6.27, 立面 3.00) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx 0.90, 立面 0.31) start地面差 -0.02  → 壁の手前 0.31 m まで着いた
+[W9WALK] PASS 014_anvil        prop stop=stalled frames=65 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.80, 立面 0.78) start地面差 -0.04  → 停止 立面 0.78 m・上昇 +0.00 m（期待 0.77 ±0.08：小物の前面 0.47 + 半径 0.30）
+[W9WALK] PASS 014_woodpile     prop stop=stalled frames=67 blocked=30 max_run=30 lost=0 max_dy=0.0009 end(lx 2.60, 立面 0.64) start地面差 -0.01  → 停止 立面 0.64 m・上昇 +0.00 m（期待 0.63 ±0.08：小物の前面 0.33 + 半径 0.30）
+[W9WALK] PASS p4_RSW_024_along_near along stop=reached frames=208 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 6.75, 立面 1.30) start地面差 +0.01  → 到達
+[W9WALK] PASS p4_RSW_024_along_road along stop=reached frames=208 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 6.75, 立面 3.00) start地面差 +0.01  → 到達
+[W9WALK] PASS p4_RSW_024_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.35, 立面 0.30) start地面差 -0.03  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS p4_RSW_025_along_near along stop=reached frames=154 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.95, 立面 1.30) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_025_along_road along stop=reached frames=154 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.95, 立面 3.00) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_025_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx -0.45, 立面 0.30) start地面差 -0.01  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS p4_RSW_026_along_near along stop=reached frames=167 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 5.37, 立面 1.30) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_026_along_road along stop=reached frames=167 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 5.37, 立面 3.00) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_026_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.80, 立面 0.30) start地面差 -0.03  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS p4_RSW_012_along_near along stop=reached frames=180 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 5.79, 立面 1.30) start地面差 -0.07  → 到達
+[W9WALK] PASS p4_RSW_012_along_road along stop=reached frames=180 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 5.79, 立面 3.00) start地面差 -0.07  → 到達
+[W9WALK] PASS p4_RSW_012_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -0.45, 立面 0.30) start地面差 -0.03  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS p4b_gap_024_025_in along stop=reached frames=94 blocked=0 max_run=0 lost=0 max_dy=0.0011 end(lx -4.13, 立面 -3.20) start地面差 +0.01  → 到達
+[W9WALK] PASS p4b_gap_014_013_in along stop=reached frames=94 blocked=0 max_run=0 lost=0 max_dy=0.0020 end(lx 6.30, 立面 -3.20) start地面差 +0.01  → 到達
+[W9WALK] 結果：19 脚・FAIL 0

@@ -1,0 +1,46 @@
+[W9P4G] PASS 保存された village_v2.tscn に ext_resource 1＋node 1 だけ掛かっている（1＋1）
+[W9P4G] PASS EnrichW9P4 は EnrichW9P3 の直後（順序）
+[W9P4G] PASS 既存 overlay EnrichW9P13 は残っている
+[W9P4G] PASS 既存 overlay EnrichW9P3 は残っている
+[W9P4G] PASS 既存 overlay ArchW9R2P13 は残っている
+[W9P4G] PASS 既存 overlay FarmsteadP13 は残っている
+[W9P4G] PASS 既存 overlay MeadowP9 は残っている
+[W9P4G] PASS 既存 overlay EnvironmentP9 は残っている
+[W9P4G] PASS 既存 overlay HumanUseP10 は残っている
+[W9P4G] PASS EnrichW9P4 は root に 1 つだけ（1）
+[W9P4G] PASS 烘焙した件数と meta items が一致（115）
+[W9P4G] PASS 全構件に who／why と kind（new／reuse）がある（欠落 0）
+[W9P4G] PASS 区域 B4 の構件数 84 ≥ 40
+[W9P4G] PASS 区域 C4 の構件数 31 ≥ 20
+[W9P4G] PASS 西巷の暮らしの痕跡：小物を置いた戸が 10 ≥ 8
+[W9P4G] PASS 各戸の小物の組：同じ組が 3 戸以上に使われていない（戸 10）
+[W9P4G] PASS B4 の構件の種類 35 ≥ 14（同じ一組の複製ではない）
+[W9P4G] PASS 宅間の垣・塀の部材 8 ≥ 3
+[W9P4G] PASS 棟の背後の樹冠：高さ ≥ 8 m の樹 5 ≥ 5（屋根並みの単調さを破る）
+[W9P4G] PASS C4_pocket_N：高木 2 ≥ 2・中層 8 ≥ 4・低層 10 ≥ 4（三層）
+[W9P4G] PASS C4_pocket_N：隣の株までの距離の変動係数 0.46 ≥ 0.25（等間隔でない・20 株）
+[W9P4G] PASS C4_pocket_S：高木 1 ≥ 1・中層 5 ≥ 4・低層 5 ≥ 4（三層）
+[W9P4G] PASS C4_pocket_S：隣の株までの距離の変動係数 0.30 ≥ 0.25（等間隔でない・11 株）
+[W9P4G] INFO LOD0 三角面 96584・MeshInstance 295・碰撞箱 38・MultiMesh 0
+[W9P4G] PASS 予算：LOD0 96584 ≤ 150000・Mesh 295 ≤ 450・碰撞箱 38 ≤ 60
+[W9P4G] PASS MultiMesh なし（headless 烘焙の零行列問題の対象外）
+[W9P4G] PASS 全 115 構件が道・建物・戸口・水・田・封存物・NPC 動線・Hero に触れず、接地している（不適合 0）
+[W9P4G] PASS 樹・竹・低木は路面の縁から 0.6 m 以内に乗らない（0）
+[W9P4G] PASS 高木は路面の縁から 3 m 以上離れる＝道の視線の通路を塞がない（0）
+[W9P4G] PASS 地面物が W9 R1／Phase 3 の構件と重ならない（0）
+[W9P4G] PASS 構件同士が重ならない（重なり 0）
+[W9P4G] PASS 碰撞箱 38 個が戸口の空け帯と NPC の巡回路に触れない（0）
+[W9P4G] PASS B1 西巷の通行帯 505 地点×16 方位：EnrichW9P4 による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）0 件（R1：81 件）・≥ 0.30 m の縮み 11 件（R1：150 件）・最悪 7.50 → 3.30 m
+[W9P4G] PASS B1 反向：木戸 2 基の碰撞を R1 の位置へ戻すと重い縮みが 81 件（≥ 20・この検査は R1 の問題を検出できる）
+[W9P4G] PASS B1 戻した後：重い縮み 0 件・≥ 0.30 m 11 件（元の値に戻る）
+[W9P4G] PASS 反向：主街の路面（245.0, 20.0）に置いた樹は『road』で落ちる（road）
+[W9P4G] PASS 反向：建物の中に置いた小屋は落ちる（inside_building(MKT_001 -2.59)）
+[W9P4G] PASS 反向：地面から 0.6 m 浮いた構件は落ちる（float(1.69 vs ground 1.09)）
+[W9P4G] PASS 反向：戸口の空け帯にかかる碰撞箱は落ちる（door(B_P_MKT_001)）
+[W9P4G] PASS 反向：二重掛載は件数 2 として検出できる（2）
+[W9P4G] PASS 反向：同じ小物の組が 3 戸に使われると落ちる
+[W9P4G] PASS 正：同じ組が 2 戸までなら通る
+[W9P4G] PASS 反向：1.5 m 等間隔の並びは変動係数 0.00 で落ちる（< 0.25）
+[W9P4G] PASS 反向：主街の路面（245.0, 20.0）に置いた高木は『路面から離れる』判定で落ちる
+[W9P4G] PASS 43  FAIL 0
+[W9P4G] 結果：0 項失敗
