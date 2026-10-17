@@ -62,6 +62,7 @@ func _go() -> void:
 	var out := ""
 	var hour := 10.0
 	var only: PackedStringArray = []
+	var zone := ""
 	var win := Vector2i(1600, 900)
 	var hide_sets: Array = []
 	var budget_off := false
@@ -74,6 +75,8 @@ func _go() -> void:
 			hour = float(a.trim_prefix("--hour="))
 		elif a.begins_with("--only="):
 			only = a.trim_prefix("--only=").split(",")
+		elif a.begins_with("--zone="):   # 效率規則 2026-10-18：只拍站在該區 tile 內的鏡位（S01–S04）
+			zone = a.trim_prefix("--zone=")
 		elif a.begins_with("--hide="):
 			for g in a.trim_prefix("--hide=").split("|"):
 				hide_sets.append(g.split(","))
@@ -128,6 +131,8 @@ func _go() -> void:
 	for v: Dictionary in _views():
 		var nm := String(v["name"])
 		if not only.is_empty() and not only.has(nm):
+			continue
+		if zone != "" and not _in_zone(v, zone):
 			continue
 		_hide_hud()
 		if v.has("free"):
@@ -211,3 +216,21 @@ func _put(q: Vector2, yaw: float, pitch: float, dist: float) -> void:
 		player.snap_yaw(yaw)
 	for i in 30:
 		await physics_frame
+
+
+## --zone：鏡位所在 z（TPS 的 at、自由鏡位的 cam）落在 layout scenes[].tile 的 z 範圍（±5 m）內
+func _in_zone(v: Dictionary, zid: String) -> bool:
+	var z := 0.0
+	if v.has("free"):
+		z = float((v["free"]["cam"] as Array)[2])   # free.cam＝[x, y, z]；at＝[x, z]
+	elif v.has("at"):
+		z = float((v["at"] as Array)[1])
+	elif v.has("arena"):
+		return zid == "S04"   # arena＝[deg, r]，圓心是 S04 的 boss_arena
+	else:
+		return true
+	for sc: Dictionary in lib.L["scenes"]:
+		if String(sc["id"]) == zid:
+			var t: Array = sc["tile"]
+			return z >= float(t[1]) - 5.0 and z <= float(t[3]) + 5.0
+	return false

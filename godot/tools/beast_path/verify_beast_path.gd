@@ -19,14 +19,26 @@ var _plan_override: Array = []          # 反向測試的注入點（正式驗�
 var out_path := ""
 
 
+## 凍結退役（使用者 2026-10-18 效率規則 4）：以下比對「舊凍結檔（V0.1／V1.2／V1.3）」的 gate，
+## 不符時改報 INFO（基準改由 git 提交保證，核准過的重製不再被當成回歸）。--legacy-freeze 恢復舊行為（FAIL）。
+const LEGACY_FREEZE_GATES := ["forest.frozen_plan_equal", "forest.frozen_scene_equal", "isolation.protected_files",
+	"isolation.layout_other_zones", "forest.s04_v12_kept", "meadow.s04_v12_kept", "pool.shore_v12_kept"]
+var legacy_freeze := false
+
+
 func _initialize() -> void:
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--out="):
 			out_path = a.trim_prefix("--out=")
+		elif a == "--legacy-freeze":
+			legacy_freeze = true
 	_go.call_deferred()
 
 
 func _gate(name: String, ok: bool, detail: String) -> void:
+	if not ok and not legacy_freeze and name in LEGACY_FREEZE_GATES:
+		_info(name, "（凍結已退役，基準＝git 提交；--legacy-freeze 才算 FAIL）" + detail)
+		return
 	results.append({"gate": name, "ok": ok, "detail": detail})
 	print("[%s] %-34s %s" % ["PASS" if ok else "FAIL", name, detail])
 
