@@ -13,7 +13,7 @@
 # 永久 build rule（2026-10-03 起）：MultiMesh 烘焙必須非 headless，存檔後回讀 instance transform 非零（tools/village_v2_mm_bake_guard.gd）；
 #   本表 MMBAKE 以非 headless 掃描整個 village_v2 場景的全部 MultiMesh（headless 跑會直接 FAIL，不當 PASS）。
 # 用法（repo 根目錄，git-bash）：  bash godot/tools/run_village_v2_regression.sh [--full] [--seals] [--gen]
-#   （預設）FAST：只跑 FAST_TAGS（凍結／地形保護／Hero 回歸／場景擺放稽核／19 點實走）——日常改動用這個（2026-10-18 使用者裁定：驗證預算）
+#   （預設）FAST：只跑 FAST_TAGS（凍結／地形保護／Hero 回歸／場景擺放稽核；約 1.5 分鐘）——日常改動用這個（2026-10-18 使用者裁定：驗證預算）
 #   --full  全部非封存項目（里程碑、批次提交前、使用者要求時才跑）
 #   --seals 另外加跑封存（--seal）項目。封存制度 2026-10-18 起退役（凍結改由 git 提交保證）；
 #           場景本體可直接手改，封存雜湊不符是預期的，只在要對照歷史基準時才跑
@@ -34,7 +34,7 @@ for a in "$@"; do
 		--gen)   GEN=1 ;;
 	esac
 done
-FAST_TAGS=" FREEZE PROTECT HERO PLACE WALK "
+FAST_TAGS=" FREEZE PROTECT HERO PLACE "   # 19 點實走（WALK）單項約 9.5 分鐘 → 只在 --full
 skip() {  # $1 標籤, $2 tag, 其餘為 Godot 參數 → 0＝要跳過
 	local label="$1" tag="$2"; shift 2
 	local is_seal=0

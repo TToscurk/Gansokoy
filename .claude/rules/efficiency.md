@@ -10,7 +10,7 @@ Full text: repo root `.hermes.md` → 效率規則. Summary:
    (each building is its own selectable scene). `--remove` undoes. Do not write Blender
    collision scripts, asset.json gate_spec, registry entries or new gates for new buildings.
 2. **Verification budget**: local checks + at most 4 shots. `run_village_v2_regression.sh`
-   defaults to FAST (5 items); `--full` only at milestones, before a batch commit, or on request.
+   defaults to FAST (4 items, ~1.5 min; the 19-point walk is --full only); `--full` only at milestones, before a batch commit, or on request.
    Add a gate/negative case only when the same bug happens a second time.
 3. **Light evidence**: no per-round `evidence/` / `repro/` / `review/` folders or long reports.
    Report = measured numbers in chat + one contact sheet + the commit message.
