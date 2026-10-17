@@ -1,0 +1,12 @@
+legs 72 phys [{'after': 3.7151, 'before': 7.1191}]
+total {'REG_SIG': 1, 'SAME': 61, 'SNAP+': 8, 'REG_MIN': 1, 'BETTER': 1}
+B_P_MKT_030  {'REG_SIG': 1, 'SAME': 32, 'SNAP+': 2, 'REG_MIN': 1} | pen 7.2→7.6 s hid 1.1→1.4 s short 13.5→12.3 s snap 0→2 reach 12→12/36
+B_P_MXC_007  {'BETTER': 1, 'SAME': 29, 'SNAP+': 6} | pen 4.5→4.3 s hid 0.2→0.4 s short 13.7→12.0 s snap 7→16 reach 30→29/36
+
+REG_SIG legs:
+  B_P_MKT_030 front_near in p-0.18  pen run 0.00→0.45  hid run 0.22→0.22  who {'B_P_MKT_030': 27}  end_lx 0.49→0.49
+
+reach changed:
+  B_P_MXC_007 front_near in p-0.18 reach True→False end_lx 5.15→-2.62
+  B_P_MXC_007 front_near in p-0.60 reach False→True end_lx -2.62→5.15
+  B_P_MXC_007 front_near out p-0.60 reach True→False end_lx 5.15→-2.62

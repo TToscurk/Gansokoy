@@ -1,0 +1,50 @@
+var v = get_tree().current_scene
+var ov = v.get_node("ArchW9R2P13")
+var L = load("res://tools/p13/w9/w9r2_lib.gd")
+var cf = JSON.parse_string(FileAccess.get_file_as_string(L.COLFIT))["buildings"]
+for i in 3:
+	await get_tree().physics_frame
+var r = {"scene": v.scene_file_path, "enabled": ov.get("enabled"), "boxes": 0, "shell_on": 0, "body_on_bld": 0, "conflict": 0, "layer_bad": 0, "missing": 0}
+for id in cf:
+	var sh = ov.get_node_or_null(id + "/Shell")
+	var body = v.get_node_or_null(NodePath(String(L.SPECS[id]["path"])))
+	if sh == null or body == null:
+		r["missing"] += 1
+		continue
+	var son = 0
+	for c in sh.get_children():
+		r["boxes"] += 1
+		if not c.disabled:
+			son += 1
+	r["shell_on"] += son
+	var bon = 0
+	for c in body.get_children():
+		if c is CollisionShape3D and not c.disabled:
+			bon += 1
+	if bon > 0:
+		r["body_on_bld"] += 1
+	if bon > 0 and son > 0:
+		r["conflict"] += 1
+	if sh.collision_layer != body.collision_layer or sh.collision_mask != body.collision_mask:
+		r["layer_bad"] += 1
+var space = v.get_world_3d().direct_space_state
+var spots = [["B_P_MXC_007", 0.35, 3.0], ["B_P_MXC_007", -1.7, 3.0], ["B_P_MKT_025", -2.0, 4.2], ["B_P_RSW_076", -2.2, -3.0], ["B_P_RSW_014", -1.8, 2.75], ["B_P_MXC_004", 1.35, 4.6]]
+var ph = []
+for sp in spots:
+	var body = v.get_node(NodePath(String(L.SPECS[sp[0]]["path"])))
+	var pq = PhysicsPointQueryParameters3D.new()
+	pq.position = body.global_transform * Vector3(sp[1], 1.0, sp[2])
+	pq.collision_mask = 1
+	var hits = []
+	for h in space.intersect_point(pq, 8):
+		hits.append(String(v.get_path_to(h["collider"])))
+	var sh = ov.get_node(String(sp[0]) + "/Shell")
+	var pq2 = PhysicsPointQueryParameters3D.new()
+	pq2.position = sh.get_child(sh.get_child_count() - 1).global_position
+	pq2.collision_mask = 1
+	var hits2 = []
+	for h in space.intersect_point(pq2, 8):
+		hits2.append(String(v.get_path_to(h["collider"])))
+	ph.append({"spot": sp, "open_hits": hits, "shell_box_hits": hits2})
+r["phys"] = ph
+return r

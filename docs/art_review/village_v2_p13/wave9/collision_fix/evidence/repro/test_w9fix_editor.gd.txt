@@ -1,0 +1,99 @@
+@tool
+extends McpTestSuite
+## 一時（W9 FIX 最終驗收・真の編輯器）：編輯中の場景（拋棄式の副本）で外形碰撞箱 Shell と元の箱の状態を読む。
+## 使い方：res://tests/test_w9fix_editor.gd に置き、MCP test_run(suite="w9fix_editor")。段階名は DIR/stage.txt、結果は DIR/snap_<段階>.json。
+## 驗收後に削除済み（repo には残さない。ここは再現用の写し）。
+const L := preload("res://tools/p13/w9/w9r2_lib.gd")
+const DIR := "D:/神社/shrine/work/w9_collision_fix/editor/"
+
+
+func suite_name() -> String:
+	return "w9fix_editor"
+
+
+func test_shell_state() -> void:
+	var stage := FileAccess.get_file_as_string(DIR + "stage.txt").strip_edges()
+	var v := EditorInterface.get_edited_scene_root()
+	assert_true(v != null, "編輯中の場景がある")
+	if v == null:
+		return
+	var snap := {"stage": stage, "scene": v.scene_file_path, "root": String(v.name), "editor_hint": Engine.is_editor_hint(), "root_iid": v.get_instance_id()}
+	var ov := v.get_node_or_null("ArchW9R2P13")
+	assert_true(ov != null, "ArchW9R2P13 がある")
+	if ov == null:
+		return
+	var cf: Dictionary = (JSON.parse_string(FileAccess.get_file_as_string(L.COLFIT)) as Dictionary)["buildings"]
+	snap["overlay_enabled"] = ov.get("enabled")
+	snap["overlay_visible"] = (ov as Node3D).visible
+	snap["hidden_count"] = ov.get("hidden_count")
+	snap["booted"] = ov.get("_booted")
+	var n_box := 0
+	var shell_on := 0
+	var body_on_bld := 0
+	var conflict := 0
+	var layer_bad := 0
+	var xf_bad := 0
+	var missing := 0
+	var l0_vis := 0
+	var kit_hidden := 0
+	var per := {}
+	for id: String in cf:
+		var b := ov.get_node_or_null(id)
+		var sh := b.get_node_or_null("Shell") as StaticBody3D if b else null
+		var body := v.get_node_or_null(NodePath(String(L.SPECS[id]["path"]))) as StaticBody3D
+		if sh == null or body == null:
+			missing += 1
+			continue
+		var l0 := b.get_node_or_null("L0") as Node3D
+		if l0 and l0.is_visible_in_tree():
+			l0_vis += 1
+		for mi in body.get_node("Kit").find_children("*", "MeshInstance3D", true, false):
+			if not (mi as Node3D).visible:
+				kit_hidden += 1
+		var boxes: Array = (cf[id] as Dictionary)["boxes"]
+		var son := 0
+		var kids := sh.get_children()
+		for i in kids.size():
+			var cs := kids[i] as CollisionShape3D
+			n_box += 1
+			if not cs.disabled:
+				son += 1
+			if i < boxes.size():
+				var bx: Dictionary = boxes[i]
+				var c := Vector3((float(bx["x0"]) + float(bx["x1"])) / 2.0, (float(bx["y0"]) + float(bx["y1"])) / 2.0, (float(bx["z0"]) + float(bx["z1"])) / 2.0)
+				var s := Vector3(float(bx["x1"]) - float(bx["x0"]), float(bx["y1"]) - float(bx["y0"]), float(bx["z1"]) - float(bx["z0"]))
+				if cs.position.distance_to(c) > 0.005 or (cs.shape as BoxShape3D).size.distance_to(s) > 0.005:
+					xf_bad += 1
+		if kids.size() != boxes.size():
+			xf_bad += 1
+		shell_on += son
+		var bon := 0
+		for c in body.get_children():
+			if c is CollisionShape3D and not (c as CollisionShape3D).disabled:
+				bon += 1
+		if bon > 0:
+			body_on_bld += 1
+		if bon > 0 and son > 0:
+			conflict += 1
+		if sh.collision_layer != body.collision_layer or sh.collision_mask != body.collision_mask:
+			layer_bad += 1
+		per[id] = [son, kids.size(), bon, sh.collision_layer, sh.collision_mask, body.collision_layer, body.collision_mask]
+	snap["shell_boxes"] = n_box
+	snap["shell_on"] = shell_on
+	snap["body_on_buildings"] = body_on_bld
+	snap["conflict"] = conflict
+	snap["layer_bad"] = layer_bad
+	snap["xf_bad"] = xf_bad
+	snap["missing"] = missing
+	snap["l0_visible"] = l0_vis
+	snap["kit_hidden_in_shell_buildings"] = kit_hidden
+	snap["per"] = per
+	# 注意：編輯器の世界では direct_space_state の点照会が Shell 中心でも空を返した（物理の証拠にならない）→ 物理は game_eval で実行中に確認
+	var f := FileAccess.open(DIR + "snap_%s.json" % stage, FileAccess.WRITE)
+	f.store_string(JSON.stringify(snap, "\t"))
+	f.close()
+	var n_json := 0
+	for k in cf:
+		n_json += ((cf[k] as Dictionary)["boxes"] as Array).size()
+	assert_eq(missing, 0, "Shell 欠落 0")
+	assert_eq(n_box, n_json, "Shell 箱数＝collision_fit.json")

@@ -1,0 +1,81 @@
+[W9CAM] B_P_MXC_007 front_near in      p-0.18  B pen 0.47/0.47 hid 0.00/0.00 snap 0 short 2.84 reach true | A pen 0.23/0.23 hid 0.00/0.00 snap 0 short 0.61 reach false
+[W9CAM] B_P_MXC_007 front_near in      p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.24 reach false | A pen 0.00/0.00 hid 0.18/0.04 snap 0 short 1.66 reach true
+[W9CAM] B_P_MXC_007 front_near in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.49 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 1 short 0.52 reach true
+[W9CAM] B_P_MXC_007 front_near in_r    p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.29 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 2 short 0.33 reach true
+[W9CAM] B_P_MXC_007 front_near in_l    p-0.18  B pen 0.40/0.40 hid 0.00/0.00 snap 0 short 0.21 reach true | A pen 0.36/0.36 hid 0.03/0.03 snap 2 short 0.18 reach true
+[W9CAM] B_P_MXC_007 front_near in_l    p-0.60  B pen 0.59/0.59 hid 0.00/0.00 snap 0 short 0.22 reach true | A pen 0.57/0.57 hid 0.00/0.00 snap 1 short 0.20 reach true
+[W9CAM] B_P_MXC_007 front_near along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_near along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_near along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_near along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_near out     p-0.18  B pen 0.40/0.40 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.40/0.40 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_near out     p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MXC_007 front_road in      p-0.18  B pen 0.23/0.23 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.23/0.23 hid 0.00/0.00 snap 2 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road in      p-0.60  B pen 0.23/0.23 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.23/0.23 hid 0.00/0.00 snap 1 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road in_r    p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 2 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 2 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road in_l    p-0.18  B pen 0.00/0.00 hid 0.02/0.02 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.01/0.01 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road in_l    p-0.60  B pen 0.83/0.82 hid 0.02/0.02 snap 0 short 0.00 reach true | A pen 0.90/0.80 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road out     p-0.18  B pen 1.33/1.22 hid 0.02/0.02 snap 0 short 0.00 reach true | A pen 1.33/1.22 hid 0.02/0.02 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 front_road out     p-0.60  B pen 0.00/0.00 hid 0.08/0.04 snap 1 short 0.00 reach true | A pen 0.00/0.00 hid 0.09/0.04 snap 1 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  in      p-0.18  B pen 0.00/0.00 hid 0.04/0.04 snap 1 short 2.10 reach true | A pen 0.00/0.00 hid 0.02/0.02 snap 1 short 2.12 reach true
+[W9CAM] B_P_MXC_007 back_near  in      p-0.60  B pen 0.00/0.00 hid 0.03/0.03 snap 1 short 2.05 reach true | A pen 0.00/0.00 hid 0.03/0.03 snap 1 short 2.07 reach true
+[W9CAM] B_P_MXC_007 back_near  in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 2.39 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 2.37 reach true
+[W9CAM] B_P_MXC_007 back_near  in_r    p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  in_l    p-0.18  B pen 0.00/0.00 hid 0.02/0.02 snap 1 short 1.92 reach true | A pen 0.00/0.00 hid 0.02/0.02 snap 1 short 1.92 reach true
+[W9CAM] B_P_MXC_007 back_near  in_l    p-0.60  B pen 0.00/0.00 hid 0.02/0.02 snap 1 short 0.00 reach true | A pen 0.00/0.00 hid 0.02/0.02 snap 1 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  out     p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MXC_007 back_near  out     p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] SHOT MXC_007_typical_front_road_along_l_p18 before pen=false hid=false arm=8.50
+[W9CAM] SHOT MXC_007_typical_front_road_along_l_p18 after pen=false hid=false arm=8.50
+[W9CAM] B_P_MKT_030 front_near in      p-0.18  B pen 0.00/0.00 hid 0.25/0.22 snap 0 short 1.57 reach false | A pen 0.45/0.45 hid 0.28/0.22 snap 0 short 0.78 reach false
+[W9CAM] B_P_MKT_030 front_near in      p-0.60  B pen 0.05/0.03 hid 0.22/0.20 snap 0 short 1.52 reach false | A pen 0.05/0.03 hid 0.22/0.20 snap 0 short 1.52 reach false
+[W9CAM] B_P_MKT_030 front_near in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.55 reach false | A pen 0.00/0.00 hid 0.02/0.02 snap 0 short 1.55 reach false
+[W9CAM] B_P_MKT_030 front_near in_r    p-0.60  B pen 1.57/1.52 hid 0.02/0.02 snap 0 short 0.00 reach false | A pen 1.57/1.52 hid 0.03/0.03 snap 1 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near in_l    p-0.18  B pen 0.10/0.10 hid 0.31/0.20 snap 0 short 1.47 reach false | A pen 0.10/0.10 hid 0.42/0.22 snap 0 short 1.49 reach false
+[W9CAM] B_P_MKT_030 front_near in_l    p-0.60  B pen 1.50/0.98 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 1.48/0.97 hid 0.00/0.00 snap 1 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near out     p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_near out     p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 front_road in      p-0.18  B pen 0.00/0.00 hid 0.23/0.22 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.22/0.22 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road in      p-0.60  B pen 0.20/0.08 hid 0.05/0.03 snap 0 short 0.00 reach true | A pen 0.23/0.10 hid 0.04/0.02 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road in_r    p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road in_l    p-0.18  B pen 0.86/0.86 hid 0.03/0.03 snap 0 short 0.00 reach true | A pen 0.90/0.90 hid 0.04/0.02 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road in_l    p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road out     p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 front_road out     p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach true
+[W9CAM] B_P_MKT_030 back_near  in      p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.93 reach false | A pen 0.00/0.00 hid 0.03/0.03 snap 0 short 1.94 reach false
+[W9CAM] B_P_MKT_030 back_near  in      p-0.60  B pen 0.03/0.03 hid 0.00/0.00 snap 0 short 2.22 reach false | A pen 0.03/0.03 hid 0.00/0.00 snap 0 short 1.88 reach false
+[W9CAM] B_P_MKT_030 back_near  in_r    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.29 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.28 reach false
+[W9CAM] B_P_MKT_030 back_near  in_r    p-0.60  B pen 1.43/1.43 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 1.36/1.36 hid 0.07/0.07 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  in_l    p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.94 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 1.85 reach false
+[W9CAM] B_P_MKT_030 back_near  in_l    p-0.60  B pen 1.44/1.44 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 1.42/1.42 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  along_r p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  along_r p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  along_l p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  along_l p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  out     p-0.18  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] B_P_MKT_030 back_near  out     p-0.60  B pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false | A pen 0.00/0.00 hid 0.00/0.00 snap 0 short 0.00 reach false
+[W9CAM] SHOT MKT_030_pen_front_near_in_p18 before pen=false hid=false arm=1.32
+[W9CAM] SHOT MKT_030_pen_front_near_in_p18 after pen=true hid=false arm=3.01
+[W9CAM] SHOT MKT_030_hid_back_near_in_r_p60 before pen=true hid=false arm=2.16
+[W9CAM] SHOT MKT_030_hid_back_near_in_r_p60 after pen=true hid=false arm=5.76
+[W9CAM] SHOT MKT_030_typical_front_road_along_l_p18 before pen=false hid=false arm=8.26
+[W9CAM] SHOT MKT_030_typical_front_road_along_l_p18 after pen=false hid=false arm=8.50
+[W9CAM] physics process ms 平均：BEFORE 7.1191・AFTER 3.7151

@@ -1,0 +1,3 @@
+[W9PERF] village_v2 load+instantiate 4561 ms・add_child+8 frames 515 ms
+[W9PERF] before：capsule cast_motion+rest_info 1 組 6.21 µs（3 回の中央値・4004 点）・[5.83216783216783, 6.20579420579421, 6.27872127872128]
+[W9PERF] after：capsule cast_motion+rest_info 1 組 7.33 µs（3 回の中央値・4004 点）・[7.31468531468532, 7.33141858141858, 7.45579420579421]

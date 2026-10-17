@@ -1,0 +1,5 @@
+[W9SEM] res://_w9fix_disposable/orig.tscn ノード 91002
+[W9SEM] res://_w9fix_disposable/s1.tscn ノード 91002
+[W9SEM] res://_w9fix_disposable/s2.tscn ノード 91002
+[W9SEM] res://_w9fix_disposable/orig.tscn → res://_w9fix_disposable/s1.tscn：差 {  }
+[W9SEM] res://_w9fix_disposable/s1.tscn → res://_w9fix_disposable/s2.tscn：差 {  }

@@ -1,0 +1,4 @@
+[W9CAM] FOCUS focus_MXC_007_front_road_in_l_p18 before lx 1.82：[1.88, false, false, 4.28, ""]
+[W9CAM] FOCUS focus_MXC_007_front_road_in_l_p18 after lx 1.82：[1.88, true, false, 5.4, "B_P_MXC_007"]
+[W9CAM] FOCUS focus_RSW_074_back_near_in_r_p18 before lx 0.25：[0.38, false, false, 1.84, ""]
+[W9CAM] FOCUS focus_RSW_074_back_near_in_r_p18 after lx 0.25：[0.32, true, false, 6.54, "B_P_RSW_075"]

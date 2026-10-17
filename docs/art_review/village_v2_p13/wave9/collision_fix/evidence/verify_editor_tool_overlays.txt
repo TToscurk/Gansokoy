@@ -1,0 +1,17 @@
+[EDTOOL] PASS ArchW9R2P13 の腳本は @tool（編輯器でも走る）
+[EDTOOL] PASS DevLayerGate の腳本は @tool
+[EDTOOL] 非 @tool 腳本を外した節點 119
+[EDTOOL] PASS ArchW9R2P13 が Kit 構件を隠す（2723）
+[EDTOOL] PASS hide_extra0 の前角柱 5/5 本が隠れる
+[EDTOOL] PASS 外形碰撞箱：Shell 22 棟（collision_fit.json 22 棟）の body の元の箱が無効 22・Shell の箱 401 個（json 401）が有効 401
+[EDTOOL] PASS 遊戲路徑：ParcelLines 7 個＋Debug／QuestAnchors／Portals＝10 個すべて非表示（可見 0）
+[EDTOOL] PASS 編輯器路徑：地形碰撞 Shape と開發疊層 10 個が非表示
+[EDTOOL] PASS PRE_SAVE 後の visible／材質覆寫が保存ファイルと一致（差 0）
+[EDTOOL] PASS PRE_SAVE で ArchW9R2P13 の隠し件数 0
+[EDTOOL] PASS 反向：PRE_SAVE 後に 1 件隠すと差 1 を拾う（1）
+[EDTOOL] PASS PRE_SAVE で外形碰撞箱の入れ替えが戻る（body 無効 0・Shell 有効 0）
+[EDTOOL] PASS 反向：PRE_SAVE 後に Shell の箱を 1 つ有効にすると差 1 を拾う（1）
+[EDTOOL] PASS POST_SAVE で ArchW9R2P13 が同じ 2723 件を隠し直す（2723）
+[EDTOOL] PASS POST_SAVE で外形碰撞箱を入れ替え直す（[22, 22, 401, 401]）
+[EDTOOL] PASS 2 回目の PRE_SAVE／POST_SAVE も同じ結果（差 0）
+[EDTOOL] 結果：15 通過・0 失敗

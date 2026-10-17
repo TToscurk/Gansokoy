@@ -1,0 +1,6 @@
+[W9CAM] FOCUS focus_MKT_030_front_near_in_r_p18 before lx -2.43：[-2.37, false, false, 1.84, ""]
+[W9CAM] FOCUS focus_MKT_030_front_near_in_r_p18 after lx -2.43：[-2.37, false, false, 1.85, ""]
+[W9CAM] FOCUS focus_MKT_030_front_road_in_p18 before lx -3.43：[-3.37, false, true, 3.04, ""]
+[W9CAM] FOCUS focus_MKT_030_front_road_in_p18 after lx -3.43：[-3.37, false, true, 3.05, ""]
+[W9CAM] FOCUS focus_MXC_007_front_road_in_l_p18 before lx -4.92：[-4.92, false, true, 4.28, ""]
+[W9CAM] FOCUS focus_MXC_007_front_road_in_l_p18 after lx -4.92：[-4.92, false, true, 4.28, ""]

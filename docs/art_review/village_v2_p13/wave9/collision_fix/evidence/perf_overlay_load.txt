@@ -1,0 +1,2 @@
+[W9PERF] arch_w9r2_p13_HEAD.scn：load 中央値 1.08 ms・instantiate 中央値 0.78 ms・節点 178
+[W9PERF] arch_w9r2_p13.scn：load 中央値 6.69 ms・instantiate 中央値 4.11 ms・節点 591

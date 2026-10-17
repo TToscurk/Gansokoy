@@ -1,0 +1,316 @@
+{
+ "open": {
+  "body_on_buildings": 0,
+  "booted": true,
+  "conflict": 0,
+  "editor_hint": true,
+  "hidden_count": 2723,
+  "kit_hidden_in_shell_buildings": 1477,
+  "l0_visible": 22,
+  "layer_bad": 0,
+  "missing": 0,
+  "overlay_enabled": true,
+  "overlay_visible": true,
+  "phys": [
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     0.35,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     -1.7,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MKT_025",
+     -2.0,
+     4.2
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_076",
+     -2.2,
+     -3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_014",
+     -1.8,
+     2.75
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_004",
+     1.35,
+     4.6
+    ]
+   }
+  ],
+  "root": "VillageV2",
+  "scene": "res://_w9fix_disposable/village_v2_copy.tscn",
+  "shell_boxes": 391,
+  "shell_on": 391,
+  "stage": "open",
+  "xf_bad": 0
+ },
+ "save1": {
+  "body_on_buildings": 0,
+  "booted": true,
+  "conflict": 0,
+  "editor_hint": true,
+  "hidden_count": 2723,
+  "kit_hidden_in_shell_buildings": 1477,
+  "l0_visible": 22,
+  "layer_bad": 0,
+  "missing": 0,
+  "overlay_enabled": true,
+  "overlay_visible": true,
+  "phys": [
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     0.35,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     -1.7,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MKT_025",
+     -2.0,
+     4.2
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_076",
+     -2.2,
+     -3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_014",
+     -1.8,
+     2.75
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_004",
+     1.35,
+     4.6
+    ]
+   }
+  ],
+  "root": "VillageV2",
+  "scene": "res://_w9fix_disposable/village_v2_copy.tscn",
+  "shell_boxes": 391,
+  "shell_on": 391,
+  "stage": "save1",
+  "xf_bad": 0
+ },
+ "reload1": {
+  "body_on_buildings": 0,
+  "booted": true,
+  "conflict": 0,
+  "editor_hint": true,
+  "hidden_count": 2723,
+  "kit_hidden_in_shell_buildings": 1477,
+  "l0_visible": 22,
+  "layer_bad": 0,
+  "missing": 0,
+  "overlay_enabled": true,
+  "overlay_visible": true,
+  "phys": [
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     0.35,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     -1.7,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MKT_025",
+     -2.0,
+     4.2
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_076",
+     -2.2,
+     -3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_014",
+     -1.8,
+     2.75
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_004",
+     1.35,
+     4.6
+    ]
+   }
+  ],
+  "root": "VillageV2",
+  "root_iid": 21870392992061,
+  "scene": "res://_w9fix_disposable/village_v2_copy.tscn",
+  "shell_boxes": 391,
+  "shell_on": 391,
+  "stage": "reload1",
+  "xf_bad": 0
+ },
+ "reload2": {
+  "body_on_buildings": 0,
+  "booted": true,
+  "conflict": 0,
+  "editor_hint": true,
+  "hidden_count": 2723,
+  "kit_hidden_in_shell_buildings": 1477,
+  "l0_visible": 22,
+  "layer_bad": 0,
+  "missing": 0,
+  "overlay_enabled": true,
+  "overlay_visible": true,
+  "phys": [
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     0.35,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_007",
+     -1.7,
+     3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MKT_025",
+     -2.0,
+     4.2
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_076",
+     -2.2,
+     -3.0
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_RSW_014",
+     -1.8,
+     2.75
+    ]
+   },
+   {
+    "open_hits": [],
+    "shell_box_hits": [],
+    "spot": [
+     "B_P_MXC_004",
+     1.35,
+     4.6
+    ]
+   }
+  ],
+  "root": "VillageV2",
+  "root_iid": 30185265127741,
+  "scene": "res://_w9fix_disposable/village_v2_copy.tscn",
+  "shell_boxes": 391,
+  "shell_on": 391,
+  "stage": "reload2",
+  "xf_bad": 0
+ },
+ "game_eval_runtime_of_copy": {
+  "scene": "res://_w9fix_disposable/village_v2_copy.tscn",
+  "enabled": true,
+  "boxes": 391,
+  "shell_on": 391,
+  "body_on_bld": 0,
+  "conflict": 0,
+  "layer_bad": 0,
+  "missing": 0,
+  "phys": "6 spots: open_hits [] at all; shell_box_hits = own Shell at all (see report)"
+ },
+ "note": "real editor test ran on the 391-box data (v16); v17 adds 10 registered boxes, activation code unchanged"
+}

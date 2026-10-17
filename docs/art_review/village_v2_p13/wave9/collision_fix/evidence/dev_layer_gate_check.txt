@@ -1,0 +1,13 @@
+[DEVGATE] 場景文字：node 1・ext_resource 1（應為 1／1 或 0／0）
+[DEVGATE] root 最後一個子節點：DevLayerGate
+[DEVGATE]   Debug                          visible=false
+[DEVGATE]   QuestAnchors                   visible=false
+[DEVGATE]   Districts/LandmarkParcelLines  visible=false
+[DEVGATE]   Districts/AuxParcelLines       visible=false
+[DEVGATE]   Portals                        visible=false
+[DEVGATE]   Districts/Market/ParcelLines   visible=false
+[DEVGATE]   Districts/MixedCommercial/ParcelLines visible=false
+[DEVGATE]   Districts/ResidentialWest/ParcelLines visible=false
+[DEVGATE]   Districts/ResidentialNE/ParcelLines visible=false
+[DEVGATE]   Districts/SouthGate/ParcelLines visible=false
+[DEVGATE] 結果：OK

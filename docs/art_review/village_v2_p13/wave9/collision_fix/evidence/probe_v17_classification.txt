@@ -1,0 +1,39 @@
+walk ghost before 44 → after 17 ; pen before 206 → after 184
+
+[walk residual after] building shell? ghost(b→a) pen(b→a) contact-height range
+  B_P_MKT_001 S g 0→0 p 6→6  h 1.99..2.02
+  B_P_MKT_003 S g 0→0 p 2→2  h 0.67..0.72
+  B_P_MKT_004 S g 0→0 p 10→10  h 1.88..2.06
+  B_P_MKT_006 - g 2→2 p 4→4  h 1.76..2.03
+  B_P_MKT_008 - g 1→1 p 9→9  h 1.76..2.04
+  B_P_MKT_009 - g 0→0 p 14→14  h 1.86..1.89
+  B_P_MKT_011 - g 0→0 p 8→8  h 1.87..2.04
+  B_P_MKT_012 - g 0→0 p 5→5  h 1.93..1.94
+  B_P_MKT_013 S g 0→0 p 7→4  h 1.76..1.76
+  B_P_MKT_020 - g 2→2 p 0→0  h 1.76..1.76
+  B_P_MKT_024 - g 2→2 p 0→0  h 0.36..1.76
+  B_P_MKT_025 S g 0→0 p 7→7  h 1.90..1.91
+  B_P_MKT_026 S g 1→1 p 14→8  h 0.67..2.00
+  B_P_MKT_027 - g 0→0 p 8→8  h 0.48..0.50
+  B_P_MXC_001 - g 4→4 p 0→0  h 0.84..1.73
+  B_P_MXC_002 - g 0→0 p 3→3  h 1.98..2.04
+  B_P_MXC_007 S g 0→0 p 0→1  h 0.38..0.38
+  B_P_RSW_012 - g 0→0 p 13→13  h 0.46..1.20
+  B_P_RSW_014 S g 2→2 p 0→0  h 0.43..0.62
+  B_P_RSW_024 S g 0→0 p 21→21  h 0.50..1.20
+  B_P_RSW_047 - g 0→0 p 6→6  h 0.44..0.45
+  B_P_RSW_061 - g 0→0 p 10→10  h 0.52..0.53
+  B_P_RSW_071 - g 0→0 p 2→2  h 0.57..0.63
+  B_P_RSW_074 S g 2→2 p 31→27  h 1.25..1.97
+  B_P_RSW_075 - g 0→0 p 9→9  h 0.50..0.51
+  B_P_RSW_076 S g 27→1 p 7→7  h 0.51..1.76
+
+[camera] compared 223728 ; transitions {'clip>clip': 17469, 'clip>inv': 4, 'clip>ok': 1204, 'inv>clip': 164, 'inv>inv': 16787, 'inv>ok': 2568, 'ok>clip': 457, 'ok>inv': 14, 'ok>ok': 185061}
+  improved (inv>ok + clip>ok) 3772 ; worsened (ok>clip + ok>inv + clip>inv) 475 ; inv>clip 164
+  stored regression samples 475
+    14 C0 早く止まる（ok>inv：Shell が見た目より手前）
+    294 C1 素通り（見た目の面を抜けて 7.5 m まで何にも当たらない）
+    127 C2 浅い（見た目の面の奥 ≤ 1.0 m の Shell で止まる）
+    40 C3 深い（見た目の面の奥 > 1.0 m の Shell で止まる）
+  by visible building: [('B_P_RSW_074', 66), ('B_P_MKT_015', 61), ('B_P_MKT_030', 47), ('B_P_RSW_076', 47), ('B_P_MXC_005', 38), ('B_P_MKT_004', 36), ('B_P_RSW_014', 32), ('B_P_MKT_005', 28), ('B_P_MKT_021', 18), ('B_P_MKT_026', 17), ('B_P_MXC_007', 17), ('B_P_MXC_004', 15)]
+  by surface: {'under': 230, 'wall': 241, 'top/none': 4}

@@ -1,0 +1,650 @@
+[W9R2G] 反向案例 49/49（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4／外形碰撞箱 1+7／有効状態 1+4）
+[W9R2G] PASS root 直下に ArchW9R2P13 が 1 回だけ掛載（保存された village_v2.tscn）
+[W9R2G] PASS ArchW9R2P13 は EnrichW9P13 の直後（順序）
+[W9R2G] PASS 実行時に root/ArchW9R2P13 がある
+[W9R2G] PASS 建築 46 棟（SPECS と一致）
+[W9R2G] PASS overlay の碰撞体は庇柱・玄関柱（Posts）と登録済みの外形碰撞箱（Shell）だけ（それ以外・未登録 0）
+[W9R2G] PASS 柱のある 8 棟すべてに Posts 碰撞がある（実際 8）
+[W9R2G] PASS collision_fit.json の 22 棟（401 箱・全て SPECS の建物 id）すべてに Shell がある（実際 22）
+[W9R2G] PASS 保存された場景：22 棟で元の箱が有効・Shell は全て無効（同時有効なし）
+[W9R2G] PASS 実行時 enabled=true：22 棟で元の箱が無効・Shell 401 箱が有効（同時有効なし）
+[W9R2G] PASS B_P_MKT_008：overlay 子がある
+[W9R2G] PASS B_P_MKT_008：body が実在（Districts/Market/Buildings/B_P_MKT_008）
+[W9R2G] PASS B_P_MKT_008：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_008：庇柱・玄関柱 2 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MKT_008：L0／L1 あり
+[W9R2G] PASS B_P_MKT_008：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_008：三角面 L0 18096／L1 122（上限 30000／500）
+[W9R2G] PASS B_P_MKT_008：張り出しが上限内（[P: (-3.785467, 0.0, -5.746109), S: (7.570934, 5.129, 12.94611)]）
+[W9R2G] PASS B_P_MKT_008：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_008：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_008：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_008：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_009：overlay 子がある
+[W9R2G] PASS B_P_MKT_009：body が実在（Districts/Market/Buildings/B_P_MKT_009）
+[W9R2G] PASS B_P_MKT_009：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_009：L0／L1 あり
+[W9R2G] PASS B_P_MKT_009：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_009：三角面 L0 10970／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_009：張り出しが上限内（[P: (-2.523, 0.32, -4.895), S: (5.046, 6.86676, 10.9175)]）
+[W9R2G] PASS B_P_MKT_009：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_009：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_009：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_009：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_010：overlay 子がある
+[W9R2G] PASS B_P_MKT_010：body が実在（Districts/Market/Buildings/B_P_MKT_010）
+[W9R2G] PASS B_P_MKT_010：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_010：L0／L1 あり
+[W9R2G] PASS B_P_MKT_010：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_010：三角面 L0 19518／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_010：張り出しが上限内（[P: (-4.0775, 0.296, -5.755), S: (8.155, 6.19645, 11.97702)]）
+[W9R2G] PASS B_P_MKT_010：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_010：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_010：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_010：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_011：overlay 子がある
+[W9R2G] PASS B_P_MKT_011：body が実在（Districts/Market/Buildings/B_P_MKT_011）
+[W9R2G] PASS B_P_MKT_011：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_011：庇柱・玄関柱 2 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MKT_011：L0／L1 あり
+[W9R2G] PASS B_P_MKT_011：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_011：三角面 L0 14442／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_011：張り出しが上限内（[P: (-3.617, 0.0, -5.33), S: (7.234, 7.8021, 11.825)]）
+[W9R2G] PASS B_P_MKT_011：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_011：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_011：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_011：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_012：overlay 子がある
+[W9R2G] PASS B_P_MKT_012：body が実在（Districts/Market/Buildings/B_P_MKT_012）
+[W9R2G] PASS B_P_MKT_012：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_012：L0／L1 あり
+[W9R2G] PASS B_P_MKT_012：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_012：三角面 L0 15184／L1 122（上限 30000／500）
+[W9R2G] PASS B_P_MKT_012：張り出しが上限内（[P: (-2.833557, 0.296, -5.696386), S: (5.667113, 7.151675, 12.52639)]）
+[W9R2G] PASS B_P_MKT_012：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_012：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_012：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_012：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_013：overlay 子がある
+[W9R2G] PASS B_P_MKT_013：body が実在（Districts/Market/Buildings/B_P_MKT_013）
+[W9R2G] PASS B_P_MKT_013：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_013：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_013：L0／L1 あり
+[W9R2G] PASS B_P_MKT_013：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_013：三角面 L0 1560／L1 2（上限 30000／500）
+[W9R2G] PASS B_P_MKT_013：張り出しが上限内（[P: (-3.971, 0.32, 4.76), S: (7.942, 3.58, 1.74)]）
+[W9R2G] PASS B_P_MKT_013：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_013：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_013：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_013：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_047：overlay 子がある
+[W9R2G] PASS B_P_RSW_047：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_047）
+[W9R2G] PASS B_P_RSW_047：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_047：L0／L1 あり
+[W9R2G] PASS B_P_RSW_047：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_047：三角面 L0 268／L1 12（上限 30000／500）
+[W9R2G] PASS B_P_RSW_047：張り出しが上限内（[P: (-2.0485, 0.22, 5.34), S: (4.097, 2.68, 0.62)]）
+[W9R2G] PASS B_P_RSW_047：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_047：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_047：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_047：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_048：overlay 子がある
+[W9R2G] PASS B_P_RSW_048：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_048）
+[W9R2G] PASS B_P_RSW_048：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_048：L0／L1 あり
+[W9R2G] PASS B_P_RSW_048：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_048：三角面 L0 22130／L1 122（上限 30000／500）
+[W9R2G] PASS B_P_RSW_048：張り出しが上限内（[P: (-4.183712, 0.28, -6.046552), S: (8.367423, 5.97742, 12.516)]）
+[W9R2G] PASS B_P_RSW_048：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_048：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_048：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_048：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_061：overlay 子がある
+[W9R2G] PASS B_P_RSW_061：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_061）
+[W9R2G] PASS B_P_RSW_061：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_061：L0／L1 あり
+[W9R2G] PASS B_P_RSW_061：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_061：三角面 L0 24132／L1 120（上限 30000／500）
+[W9R2G] PASS B_P_RSW_061：張り出しが上限内（[P: (-5.086066, 0.22, -6.495568), S: (10.17213, 4.5702, 12.99114)]）
+[W9R2G] PASS B_P_RSW_061：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_061：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_061：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_061：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_062：overlay 子がある
+[W9R2G] PASS B_P_RSW_062：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_062）
+[W9R2G] PASS B_P_RSW_062：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_062：L0／L1 あり
+[W9R2G] PASS B_P_RSW_062：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_062：三角面 L0 12230／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_RSW_062：張り出しが上限内（[P: (-2.3795, 0.28, -5.755), S: (4.759, 5.45306, 12.12444)]）
+[W9R2G] PASS B_P_RSW_062：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_062：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_062：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_062：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_025：overlay 子がある
+[W9R2G] PASS B_P_MKT_025：body が実在（Districts/Market/Buildings/B_P_MKT_025）
+[W9R2G] PASS B_P_MKT_025：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_025：外形碰撞箱 Shell 63 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_025：L0／L1 あり
+[W9R2G] PASS B_P_MKT_025：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_025：三角面 L0 13978／L1 80（上限 30000／500）
+[W9R2G] PASS B_P_MKT_025：張り出しが上限内（[P: (-3.143, 0.32, -6.335), S: (6.286, 6.274, 12.67)]）
+[W9R2G] PASS B_P_MKT_025：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_025：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_025：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_025：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_027：overlay 子がある
+[W9R2G] PASS B_P_MKT_027：body が実在（Districts/Market/Buildings/B_P_MKT_027）
+[W9R2G] PASS B_P_MKT_027：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_027：L0／L1 あり
+[W9R2G] PASS B_P_MKT_027：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_027：三角面 L0 10142／L1 20（上限 30000／500）
+[W9R2G] PASS B_P_MKT_027：張り出しが上限内（[P: (-2.6985, 0.32, -5.38), S: (5.397, 7.6876, 11.215)]）
+[W9R2G] PASS B_P_MKT_027：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_027：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_027：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_027：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_026：overlay 子がある
+[W9R2G] PASS B_P_MKT_026：body が実在（Districts/Market/Buildings/B_P_MKT_026）
+[W9R2G] PASS B_P_MKT_026：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_026：庇柱・玄関柱 2 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MKT_026：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_026：L0／L1 あり
+[W9R2G] PASS B_P_MKT_026：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_026：三角面 L0 21106／L1 44（上限 30000／500）
+[W9R2G] PASS B_P_MKT_026：張り出しが上限内（[P: (-4.4935, 0.0, -5.935), S: (8.987, 6.7116, 12.64)]）
+[W9R2G] PASS B_P_MKT_026：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_026：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_026：庇 2 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_026：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_024：overlay 子がある
+[W9R2G] PASS B_P_MKT_024：body が実在（Districts/Market/Buildings/B_P_MKT_024）
+[W9R2G] PASS B_P_MKT_024：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_024：L0／L1 あり
+[W9R2G] PASS B_P_MKT_024：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_024：三角面 L0 16166／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_024：張り出しが上限内（[P: (-4.046, 0.32, -5.735), S: (8.092, 7.018, 12.15444)]）
+[W9R2G] PASS B_P_MKT_024：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_024：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_024：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_024：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_006：overlay 子がある
+[W9R2G] PASS B_P_MKT_006：body が実在（Districts/Market/Buildings/B_P_MKT_006）
+[W9R2G] PASS B_P_MKT_006：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_006：L0／L1 あり
+[W9R2G] PASS B_P_MKT_006：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_006：三角面 L0 10364／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_006：張り出しが上限内（[P: (-2.694, 0.32, -5.33), S: (5.388, 5.8609, 11.625)]）
+[W9R2G] PASS B_P_MKT_006：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_006：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_006：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_006：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_020：overlay 子がある
+[W9R2G] PASS B_P_MKT_020：body が実在（Districts/Market/Buildings/B_P_MKT_020）
+[W9R2G] PASS B_P_MKT_020：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_020：L0／L1 あり
+[W9R2G] PASS B_P_MKT_020：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_020：三角面 L0 10920／L1 22（上限 30000／500）
+[W9R2G] PASS B_P_MKT_020：張り出しが上限内（[P: (-2.628, 0.32, -4.845), S: (5.256, 6.709859, 9.934999)]）
+[W9R2G] PASS B_P_MKT_020：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_020：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_020：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_020：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_RSW_074：overlay 子がある
+[W9R2G] PASS B_P_RSW_074：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_074）
+[W9R2G] PASS B_P_RSW_074：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_074：庇柱・玄関柱 5 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_RSW_074：外形碰撞箱 Shell 65 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_RSW_074：L0／L1 あり
+[W9R2G] PASS B_P_RSW_074：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_074：三角面 L0 4826／L1 46（上限 30000／500）
+[W9R2G] PASS B_P_RSW_074：張り出しが上限内（[P: (-2.822566, -0.04, -5.785), S: (5.550313, 3.790234, 12.085)]）
+[W9R2G] PASS B_P_RSW_074：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_074：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_074：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_074：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_029：overlay 子がある
+[W9R2G] PASS B_P_MKT_029：body が実在（Districts/Market/Buildings/B_P_MKT_029）
+[W9R2G] PASS B_P_MKT_029：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_029：庇柱・玄関柱 6 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MKT_029：外形碰撞箱 Shell 20 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_029：L0／L1 あり
+[W9R2G] PASS B_P_MKT_029：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_029：三角面 L0 19126／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_MKT_029：張り出しが上限内（[P: (-3.5921, -0.06, -5.575), S: (7.1842, 7.755, 12.04444)]）
+[W9R2G] PASS B_P_MKT_029：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_029：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_029：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_029：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_014：overlay 子がある
+[W9R2G] PASS B_P_RSW_014：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_014）
+[W9R2G] PASS B_P_RSW_014：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_014：庇柱・玄関柱 7 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_RSW_014：外形碰撞箱 Shell 27 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_RSW_014：L0／L1 あり
+[W9R2G] PASS B_P_RSW_014：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_014：三角面 L0 21300／L1 66（上限 30000／500）
+[W9R2G] PASS B_P_RSW_014：張り出しが上限内（[P: (-3.80355, -0.05, -5.755), S: (7.6071, 5.58358, 12.1)]）
+[W9R2G] PASS B_P_RSW_014：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_014：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_014：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_014：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_030：overlay 子がある
+[W9R2G] PASS B_P_MKT_030：body が実在（Districts/Market/Buildings/B_P_MKT_030）
+[W9R2G] PASS B_P_MKT_030：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_030：外形碰撞箱 Shell 24 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_030：L0／L1 あり
+[W9R2G] PASS B_P_MKT_030：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_030：三角面 L0 9734／L1 30（上限 30000／500）
+[W9R2G] PASS B_P_MKT_030：張り出しが上限内（[P: (-2.5609, 0.32, -5.985), S: (5.1218, 4.258, 11.97)]）
+[W9R2G] PASS B_P_MKT_030：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_030：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_030：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_030：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_031：overlay 子がある
+[W9R2G] PASS B_P_MKT_031：body が実在（Districts/Market/Buildings/B_P_MKT_031）
+[W9R2G] PASS B_P_MKT_031：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_031：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_031：L0／L1 あり
+[W9R2G] PASS B_P_MKT_031：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_031：三角面 L0 22604／L1 46（上限 30000／500）
+[W9R2G] PASS B_P_MKT_031：張り出しが上限内（[P: (-4.045, 0.296, -6.285), S: (8.09, 8.7432, 12.57)]）
+[W9R2G] PASS B_P_MKT_031：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_031：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_031：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_031：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_005：overlay 子がある
+[W9R2G] PASS B_P_MXC_005：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_005）
+[W9R2G] PASS B_P_MXC_005：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_005：外形碰撞箱 Shell 27 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MXC_005：L0／L1 あり
+[W9R2G] PASS B_P_MXC_005：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_005：三角面 L0 17782／L1 80（上限 30000／500）
+[W9R2G] PASS B_P_MXC_005：張り出しが上限内（[P: (-3.5484, 0.0, -6.035), S: (7.226799, 6.984, 12.35617)]）
+[W9R2G] PASS B_P_MXC_005：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_005：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_005：庇 2 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_005：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_006：overlay 子がある
+[W9R2G] PASS B_P_MXC_006：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_006）
+[W9R2G] PASS B_P_MXC_006：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_006：L0／L1 あり
+[W9R2G] PASS B_P_MXC_006：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_006：三角面 L0 12754／L1 132（上限 30000／500）
+[W9R2G] PASS B_P_MXC_006：張り出しが上限内（[P: (-2.882667, 0.32, -4.836109), S: (5.765335, 6.6534, 10.21611)]）
+[W9R2G] PASS B_P_MXC_006：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_006：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_006：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_006：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_007：overlay 子がある
+[W9R2G] PASS B_P_MXC_007：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_007）
+[W9R2G] PASS B_P_MXC_007：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_007：庇柱・玄関柱 3 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_MXC_007：外形碰撞箱 Shell 39 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MXC_007：L0／L1 あり
+[W9R2G] PASS B_P_MXC_007：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_007：三角面 L0 16594／L1 34（上限 30000／500）
+[W9R2G] PASS B_P_MXC_007：張り出しが上限内（[P: (-4.045, 0.0, -5.935), S: (8.09, 6.4372, 11.435)]）
+[W9R2G] PASS B_P_MXC_007：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_007：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_007：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_007：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_075：overlay 子がある
+[W9R2G] PASS B_P_RSW_075：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_075）
+[W9R2G] PASS B_P_RSW_075：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_075：L0／L1 あり
+[W9R2G] PASS B_P_RSW_075：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_075：三角面 L0 13656／L1 32（上限 30000／500）
+[W9R2G] PASS B_P_RSW_075：張り出しが上限内（[P: (-3.2731, 0.22, -5.905), S: (6.5462, 4.483012, 11.915)]）
+[W9R2G] PASS B_P_RSW_075：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_075：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_075：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_075：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_RSW_076：overlay 子がある
+[W9R2G] PASS B_P_RSW_076：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_076）
+[W9R2G] PASS B_P_RSW_076：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_076：外形碰撞箱 Shell 22 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_RSW_076：L0／L1 あり
+[W9R2G] PASS B_P_RSW_076：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_076：三角面 L0 13811／L1 64（上限 30000／500）
+[W9R2G] PASS B_P_RSW_076：張り出しが上限内（[P: (-3.37785, -0.04, -5.985), S: (6.6057, 6.1332, 11.995)]）
+[W9R2G] PASS B_P_RSW_076：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_076：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_076：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_076：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_071：overlay 子がある
+[W9R2G] PASS B_P_RSW_071：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_071）
+[W9R2G] PASS B_P_RSW_071：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_071：庇柱・玄関柱 5 本の碰撞（位置・太さ・高さ・layer／mask）
+[W9R2G] PASS B_P_RSW_071：L0／L1 あり
+[W9R2G] PASS B_P_RSW_071：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_071：三角面 L0 5842／L1 32（上限 30000／500）
+[W9R2G] PASS B_P_RSW_071：張り出しが上限内（[P: (-3.7555, -0.04, -5.935), S: (7.511, 4.968, 12.535)]）
+[W9R2G] PASS B_P_RSW_071：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_071：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_071：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_071：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_005：overlay 子がある
+[W9R2G] PASS B_P_MKT_005：body が実在（Districts/Market/Buildings/B_P_MKT_005）
+[W9R2G] PASS B_P_MKT_005：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_005：外形碰撞箱 Shell 9 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_005：L0／L1 あり
+[W9R2G] PASS B_P_MKT_005：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_005：三角面 L0 23648／L1 88（上限 30000／500）
+[W9R2G] PASS B_P_MKT_005：張り出しが上限内（[P: (-4.685899, 0.32, -5.745568), S: (9.371798, 7.9208, 12.06674)]）
+[W9R2G] PASS B_P_MKT_005：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_005：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_005：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_005：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_015：overlay 子がある
+[W9R2G] PASS B_P_MKT_015：body が実在（Districts/Market/Buildings/B_P_MKT_015）
+[W9R2G] PASS B_P_MKT_015：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_015：外形碰撞箱 Shell 21 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_015：L0／L1 あり
+[W9R2G] PASS B_P_MKT_015：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_015：三角面 L0 28646／L1 200（上限 30000／500）
+[W9R2G] PASS B_P_MKT_015：張り出しが上限内（[P: (-4.688668, 0.32, -5.745565), S: (9.377337, 7.321612, 12.19557)]）
+[W9R2G] PASS B_P_MKT_015：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_015：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_015：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_015：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_001：overlay 子がある
+[W9R2G] PASS B_P_MXC_001：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_001）
+[W9R2G] PASS B_P_MXC_001：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_001：L0／L1 あり
+[W9R2G] PASS B_P_MXC_001：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_001：三角面 L0 13872／L1 32（上限 30000／500）
+[W9R2G] PASS B_P_MXC_001：張り出しが上限内（[P: (-3.1953, 0.32, -5.635), S: (6.3906, 8.31, 11.895)]）
+[W9R2G] PASS B_P_MXC_001：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_001：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_001：庇 2 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_001：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_002：overlay 子がある
+[W9R2G] PASS B_P_MXC_002：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_002）
+[W9R2G] PASS B_P_MXC_002：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_002：L0／L1 あり
+[W9R2G] PASS B_P_MXC_002：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_002：三角面 L0 2710／L1 30（上限 30000／500）
+[W9R2G] PASS B_P_MXC_002：張り出しが上限内（[P: (-3.6588, 0.32, -5.785), S: (7.3176, 5.208, 12.585)]）
+[W9R2G] PASS B_P_MXC_002：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_002：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_002：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_002：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MXC_004：overlay 子がある
+[W9R2G] PASS B_P_MXC_004：body が実在（Districts/MixedCommercial/Buildings/B_P_MXC_004）
+[W9R2G] PASS B_P_MXC_004：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MXC_004：外形碰撞箱 Shell 6 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MXC_004：L0／L1 あり
+[W9R2G] PASS B_P_MXC_004：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MXC_004：三角面 L0 24116／L1 164（上限 30000／500）
+[W9R2G] PASS B_P_MXC_004：張り出しが上限内（[P: (-4.385566, 0.0, -5.905), S: (8.510567, 6.3, 11.81)]）
+[W9R2G] PASS B_P_MXC_004：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MXC_004：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MXC_004：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MXC_004：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_001：overlay 子がある
+[W9R2G] PASS B_P_MKT_001：body が実在（Districts/Market/Buildings/B_P_MKT_001）
+[W9R2G] PASS B_P_MKT_001：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_001：外形碰撞箱 Shell 34 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_001：L0／L1 あり
+[W9R2G] PASS B_P_MKT_001：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_001：三角面 L0 20430／L1 132（上限 30000／500）
+[W9R2G] PASS B_P_MKT_001：張り出しが上限内（[P: (-4.035631, 0.32, -5.995674), S: (8.071263, 5.52, 12.41512)]）
+[W9R2G] PASS B_P_MKT_001：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_001：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_001：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_001：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_004：overlay 子がある
+[W9R2G] PASS B_P_MKT_004：body が実在（Districts/Market/Buildings/B_P_MKT_004）
+[W9R2G] PASS B_P_MKT_004：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_004：外形碰撞箱 Shell 18 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_004：L0／L1 あり
+[W9R2G] PASS B_P_MKT_004：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_004：三角面 L0 2680／L1 30（上限 30000／500）
+[W9R2G] PASS B_P_MKT_004：張り出しが上限内（[P: (-3.21, 0.32, -5.935752), S: (6.42, 5.4264, 12.38575)]）
+[W9R2G] PASS B_P_MKT_004：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_004：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_004：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_004：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_024：overlay 子がある
+[W9R2G] PASS B_P_RSW_024：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_024）
+[W9R2G] PASS B_P_RSW_024：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_024：外形碰撞箱 Shell 12 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_RSW_024：L0／L1 あり
+[W9R2G] PASS B_P_RSW_024：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_024：三角面 L0 23412／L1 86（上限 30000／500）
+[W9R2G] PASS B_P_RSW_024：張り出しが上限内（[P: (-4.685568, 0.22, -6.095566), S: (9.371137, 5.734, 12.19113)]）
+[W9R2G] PASS B_P_RSW_024：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_024：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_024：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_024：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_025：overlay 子がある
+[W9R2G] PASS B_P_RSW_025：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_025）
+[W9R2G] PASS B_P_RSW_025：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_025：L0／L1 あり
+[W9R2G] PASS B_P_RSW_025：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_025：三角面 L0 1562／L1 30（上限 30000／500）
+[W9R2G] PASS B_P_RSW_025：張り出しが上限内（[P: (-2.41, 0.28, -5.885752), S: (4.82, 4.6664, 11.7715)]）
+[W9R2G] PASS B_P_RSW_025：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_025：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_025：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_025：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_026：overlay 子がある
+[W9R2G] PASS B_P_RSW_026：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_026）
+[W9R2G] PASS B_P_RSW_026：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_026：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_RSW_026：L0／L1 あり
+[W9R2G] PASS B_P_RSW_026：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_026：三角面 L0 18016／L1 56（上限 30000／500）
+[W9R2G] PASS B_P_RSW_026：張り出しが上限内（[P: (-3.225, 0.28, -6.005), S: (6.45, 7.28, 12.91)]）
+[W9R2G] PASS B_P_RSW_026：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_026：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_026：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_026：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_RSW_012：overlay 子がある
+[W9R2G] PASS B_P_RSW_012：body が実在（Districts/ResidentialWest/Buildings/B_P_RSW_012）
+[W9R2G] PASS B_P_RSW_012：overlay の transform が body と同じ
+[W9R2G] PASS B_P_RSW_012：L0／L1 あり
+[W9R2G] PASS B_P_RSW_012：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_RSW_012：三角面 L0 18846／L1 132（上限 30000／500）
+[W9R2G] PASS B_P_RSW_012：張り出しが上限内（[P: (-3.800295, 0.22, -6.115365), S: (7.60059, 4.45465, 12.23073)]）
+[W9R2G] PASS B_P_RSW_012：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_RSW_012：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_RSW_012：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_RSW_012：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_023：overlay 子がある
+[W9R2G] PASS B_P_MKT_023：body が実在（Districts/Market/Buildings/B_P_MKT_023）
+[W9R2G] PASS B_P_MKT_023：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_023：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_023：L0／L1 あり
+[W9R2G] PASS B_P_MKT_023：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_023：三角面 L0 21763／L1 102（上限 30000／500）
+[W9R2G] PASS B_P_MKT_023：張り出しが上限内（[P: (-3.185835, 0.32, -6.045647), S: (6.37167, 7.907, 12.09129)]）
+[W9R2G] PASS B_P_MKT_023：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_023：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_023：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_023：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_028：overlay 子がある
+[W9R2G] PASS B_P_MKT_028：body が実在（Districts/Market/Buildings/B_P_MKT_028）
+[W9R2G] PASS B_P_MKT_028：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_028：L0／L1 あり
+[W9R2G] PASS B_P_MKT_028：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_028：三角面 L0 14985／L1 32（上限 30000／500）
+[W9R2G] PASS B_P_MKT_028：張り出しが上限内（[P: (-3.23, 0.044752, -5.855), S: (6.46, 4.935498, 12.12444)]）
+[W9R2G] PASS B_P_MKT_028：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_028：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_028：庇 3 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_028：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_019：overlay 子がある
+[W9R2G] PASS B_P_MKT_019：body が実在（Districts/Market/Buildings/B_P_MKT_019）
+[W9R2G] PASS B_P_MKT_019：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_019：外形碰撞箱 Shell 2 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_019：L0／L1 あり
+[W9R2G] PASS B_P_MKT_019：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_019：三角面 L0 14364／L1 44（上限 30000／500）
+[W9R2G] PASS B_P_MKT_019：張り出しが上限内（[P: (-3.575, 0.32, -6.485), S: (7.15, 7.018, 12.97)]）
+[W9R2G] PASS B_P_MKT_019：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_019：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_019：庇 0 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_019：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_021：overlay 子がある
+[W9R2G] PASS B_P_MKT_021：body が実在（Districts/Market/Buildings/B_P_MKT_021）
+[W9R2G] PASS B_P_MKT_021：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_021：外形碰撞箱 Shell 1 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_021：L0／L1 あり
+[W9R2G] PASS B_P_MKT_021：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_021：三角面 L0 18294／L1 46（上限 30000／500）
+[W9R2G] PASS B_P_MKT_021：張り出しが上限内（[P: (-4.4, 0.32, -5.935), S: (8.465, 9.0108, 12.40444)]）
+[W9R2G] PASS B_P_MKT_021：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_021：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_021：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_021：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_022：overlay 子がある
+[W9R2G] PASS B_P_MKT_022：body が実在（Districts/Market/Buildings/B_P_MKT_022）
+[W9R2G] PASS B_P_MKT_022：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_022：L0／L1 あり
+[W9R2G] PASS B_P_MKT_022：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_022：三角面 L0 20852／L1 134（上限 30000／500）
+[W9R2G] PASS B_P_MKT_022：張り出しが上限内（[P: (-4.090646, 0.32, -6.045835), S: (8.181293, 6.92725, 12.09167)]）
+[W9R2G] PASS B_P_MKT_022：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_022：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_022：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_022：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_003：overlay 子がある
+[W9R2G] PASS B_P_MKT_003：body が実在（Districts/Market/Buildings/B_P_MKT_003）
+[W9R2G] PASS B_P_MKT_003：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_003：外形碰撞箱 Shell 1 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）
+[W9R2G] PASS B_P_MKT_003：L0／L1 あり
+[W9R2G] PASS B_P_MKT_003：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_003：三角面 L0 16897／L1 36（上限 30000／500）
+[W9R2G] PASS B_P_MKT_003：張り出しが上限内（[P: (-4.175, 0.28, -5.35), S: (9.365, 8.6055, 10.725)]）
+[W9R2G] PASS B_P_MKT_003：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_003：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_003：庇 2 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_003：屋根の収め（大棟の段積み・鬼瓦・垂木尻・懸魚）
+[W9R2G] PASS B_P_MKT_017：overlay 子がある
+[W9R2G] PASS B_P_MKT_017：body が実在（Districts/Market/Buildings/B_P_MKT_017）
+[W9R2G] PASS B_P_MKT_017：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_017：L0／L1 あり
+[W9R2G] PASS B_P_MKT_017：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_017：三角面 L0 12342／L1 442（上限 30000／500）
+[W9R2G] PASS B_P_MKT_017：張り出しが上限内（[P: (-3.12, 0.32, -5.644), S: (6.24, 9.17275, 11.45844)]）
+[W9R2G] PASS B_P_MKT_017：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_017：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_017：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_017：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS B_P_MKT_018：overlay 子がある
+[W9R2G] PASS B_P_MKT_018：body が実在（Districts/Market/Buildings/B_P_MKT_018）
+[W9R2G] PASS B_P_MKT_018：overlay の transform が body と同じ
+[W9R2G] PASS B_P_MKT_018：L0／L1 あり
+[W9R2G] PASS B_P_MKT_018：LOD 範囲が連続（L0→L1・遠距離まで）
+[W9R2G] PASS B_P_MKT_018：三角面 L0 13778／L1 52（上限 30000／500）
+[W9R2G] PASS B_P_MKT_018：張り出しが上限内（[P: (-3.395, 0.28, -5.935), S: (6.495, 6.87, 12.02)]）
+[W9R2G] PASS B_P_MKT_018：戸口の前（幅＋余白・壁から 1.6 m）に y 0.35–1.8 の三角形 0（0）
+[W9R2G] PASS B_P_MKT_018：壁の外の頭の高さ帯（y 1.1–1.8）に三角形 0（0）
+[W9R2G] PASS B_P_MKT_018：庇 1 本の構造規則（幅・勾配・腕木間隔・深い庇の庇柱・前縁高）
+[W9R2G] PASS B_P_MKT_018：屋根の収め（大棟の段積み・鬼瓦・垂木尻）
+[W9R2G] PASS 46 棟 LOD0 合計 690448 tri（上限 715300＝平均 15550 × 棟数）
+[W9R2G] PASS B_P_MKT_008：他 overlay の実体（1 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_008：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_009：他 overlay の実体（1 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_009：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_010：他 overlay の実体（1 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_010：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_011：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_011：隣棟（8 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_012：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_012：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_013：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_013：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_047：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_047：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_048：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_048：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_061：他 overlay の実体（9 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_061：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_062：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_062：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_025：他 overlay の実体（7 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_025：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_027：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_027：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_026：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_026：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_024：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_024：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_006：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_006：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_020：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_020：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_074：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_074：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_029：他 overlay の実体（0 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_029：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_014：他 overlay の実体（5 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_014：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_030：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_030：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_031：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_031：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_005：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_005：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_006：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_006：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_007：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_007：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_075：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_075：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_076：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_076：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_071：他 overlay の実体（1 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_071：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_005：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_005：隣棟（9 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_015：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_015：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_001：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_001：隣棟（8 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_002：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_002：隣棟（8 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MXC_004：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MXC_004：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_001：他 overlay の実体（2 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_001：隣棟（2 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_004：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_004：隣棟（8 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_024：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_024：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_025：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_025：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_026：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_026：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_RSW_012：他 overlay の実体（1 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_RSW_012：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_023：他 overlay の実体（8 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_023：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_028：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_028：隣棟（4 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_019：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_019：隣棟（6 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_021：他 overlay の実体（4 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_021：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_022：他 overlay の実体（3 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_022：隣棟（7 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_003：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_003：隣棟（8 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_017：他 overlay の実体（6 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_017：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS B_P_MKT_018：他 overlay の実体（5 件）への貫入 0（壁から 0.2 m より外・実際 0）
+[W9R2G] PASS B_P_MKT_018：隣棟（5 棟）の massing 箱への屋根・庇の貫入 0（実際 0）
+[W9R2G] PASS enabled=true：R1 の吊り物（sudare・kaki・sugi・zaru・zori）9 件がこの 46 棟でだけ隠れる（実際 9）
+[W9R2G] PASS EnrichW9P13 全 265 件のうち非表示は 9 件だけ（他の R1 内容は触れていない・実際 9）
+[W9R2G] PASS enabled=false で R1 の物は全て元の表示（非表示 0）
+[W9R2G] PASS enabled=false で Kit は全て元の表示へ（非表示だったもの 2723 → 残り 0）
+[W9R2G] PASS enabled=false で overlay は非表示
+[W9R2G] PASS enabled=false：22 棟で元の箱が有効に戻り Shell は全て無効（同時有効なし）
+[W9R2G] PASS enabled=true で同じ Kit 構件が再び隠れる（2723 → 2723）
+[W9R2G] PASS enabled の繰り返し（false→true × 2 回）：毎回 off／on の状態が正しい
+[W9R2G] FAIL village_v2.tscn は 0ca148f から『追加のみ・≤9 行（R2 3＋Phase 3 の EnrichW9P3 3＋Phase 4 の EnrichW9P4 3）』（実際 +16 −0）
+[W9R2G] PASS 全棟とも body の碰撞は Kit 由来の 1 Shape のまま（増減なし）
+[W9R2G] 結果：647 通過・1 失敗（反向案例 49/49）

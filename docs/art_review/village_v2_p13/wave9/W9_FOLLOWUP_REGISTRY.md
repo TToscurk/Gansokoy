@@ -36,6 +36,9 @@
 | 29 | 整合（Phase 8） | `EnrichW9P8`（A8 稗田邸西、B8 東北聚落；154 件）已生成，**未掛進 `village_v2.tscn`** | 共享編輯器的 current_scene 是 `village_v2.tscn`，未存檔狀態無法經 MCP 確認，依指令不寫共享場景；AFTER 圖與 gate 都是記憶體內掛載。`phase8_village_survey/P13_WAVE9_PHASE8_VILLAGE_SURVEY_REPORT.md` §8、§10 | **已掛載（收尾 2026-10-16，使用者裁定「視為收尾內容，美術狀態仍標 ART_REVIEW」）**：`build_w9p8.gd -- --attach`（EnrichW9P4 之後）；`verify_w9p8.gd` 掛載模式 43 PASS／0 FAIL；26 段主路線實走 0 FAIL。美術仍 ART_REVIEW、未 ART_APPROVED |
 | 30 | 美術（資訊・Phase 8） | A8 遠距（X03、K01）只見一團綠、稻置場小道具零碎；B8「整體仍不是有人住的聚落」、PB2 沿路仍空、井戶周圍石材偏淺、吊柿排列規則、PB3 竹垣片孤立；D02／D04 幾乎無變化（畫面佔比 0.8 %／0.3 %） | vision 懷疑式評估（`phase8_village_survey/evidence/vision_notes.md`）、ID pass（`evidence/p8_coverage.txt`） | 已知限制；r1→r2 已用掉一次有理由的修正，不再反覆打磨，等使用者裁定 |
 | 31 | 驗證註記（Phase 8） | `verify_w9p8.gd` 的門檻（區域最少件數、雜木林三層、變動係數 0.25、稻置場 < 2 m、portal 6 m、SpringArm 重度＝≥ 2.0 m 且腕 < 3.0 m）是本輪建 gate 時訂的，沒有獨立依據；r1→r2 期間門檻未改。未做真玩家控制器實走、共享編輯器中的掛載 runtime。效能（ON−OFF）ΔGPU +0.11～+0.22 ms、Δdraw calls +86～+222（MeshInstance、非 MultiMesh，同 #11） | `phase8_village_survey/evidence/gate_final.txt`、`GATE_HISTORY.txt`、`perf_p8.txt` | gate 只是回歸防護，**不得當作美術品質的證明**；掛載後若要上線再做實走 |
+| 32 | 已知限制（W9 FIX・MXC_004） | 凹入門口地板離地 0.41 m（step 0.35）→ 要跳才能進入凹處；碰撞門寬 1.10 m／可見 1.40 m（側柱每邊 0.12–0.18 m）。真 controller：正門停 0.24 m、後牆 −1.11（期待 −1.16）、可走出；側柱 2 段 FAIL（`collision_fix/evidence/walk_real_controller.txt`） | 使用者 2026-10-17 裁定：裝飾性、非互動入口，接受。不改 step height／移動。日後任務需要走入時重新處理 |
+| 33 | 相機殘留（W9 FIX・MKT_030） | 站在店前 1.3 m（lx 0.49），相機正朝店內＋預設俯仰：臂從垂れ壁下的開放店面開口進入店內，1.32→3.01 m，畫面約 70% 被遮、連續 0.45 s（`collision_fix/shots/v17_MKT_030_pen_front_near_in_p18_*`） | 定點修正 1 次已用完（垂れ壁／袖壁 tier 5）；此項**待使用者裁定**：接受為已知限制，或另行授權處理 |
+| 34 | 相機限制（W9 FIX・RSW_074 背面） | 後巷臂朝內 +45°：相機進入鄰棟 RSW_075 屋頂（RSW_075 無 Shell，Kit 屋頂無碰撞慣例），0.34 s；原本被 RSW_074 舊箱擋住 | ACCEPTED LIMITATION（修正要動無關建物，未授權） |
 
 ## Phase 3 第一批 結案（使用者 ART_APPROVED・2026-10-16）
 
@@ -119,3 +122,9 @@ P13 要擴張到尚未改善的街區，**不回頭反覆打磨已批准的三�
 - 使用者裁定：可寫 `village_v2.tscn`（期間不開編輯器）；EnrichW9P8 掛載（美術仍 ART_REVIEW）；授權恢復村南「→獸道」傳送點（`village_v2.meta.json`＋`gen_village_v2.gd`）；劇情移植不在本次（序章重做）；district 管線混合檔合併提交。
 - 已做：EnrichW9P8＋DevLayerGate 掛進 `village_v2.tscn`（+7 行，可逆）；獸道進村落點 (0.3, 22, 0)→(220.8, 0.2, 169.6)；26 段主路線 2.27 km 真輸入實走 0 FAIL；回歸總表 147 項 143 ✓／4 ✗（皆已歸屬：2 既有、1 稽核歸屬修正、1 計時）。#27／#28／#29 結案。
 - **等待使用者批准 CONTENT_FREEZE**：`closure/P13_WAVE9_CLOSURE_READINESS_REPORT.md`。
+
+## W9 FIX：建築碰撞替換 最終驗收（使用者 2026-10-17「Final Acceptance」「Freeze-Oriented Closure」）
+
+- 報告：`collision_fix/P13_W9_COLLISION_FIX_CLOSURE_REPORT.md`。22 棟／401 箱登錄 Shell，`_ready` 同步交換，編輯器存／重載（真 MCP、拋棄式副本）語意差 0；verifier 647／1（行數為既有基準例外）、反向 49／49；生命週期 42／0；真 controller 46 段與前輪相同。
+- TPS 相機實玩確認：6 棟 216 段，重現 MKT_030／MXC_007 垂れ壁穿透 → 唯一一次定點修正（tier 5，10 箱）後，同位置已不穿透；殘留 #33 待裁定、#34 接受。MXC_004 #32 接受為已知限制。
+- 未宣告 CONTENT_FREEZE；未 push。

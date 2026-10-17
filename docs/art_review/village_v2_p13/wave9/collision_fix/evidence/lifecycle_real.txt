@@ -1,0 +1,44 @@
+[W9LIFE] boot：current_id=village_v2
+[W9LIFE] PASS 起動：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS 起動：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS 起動：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS 起動：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] PASS 読檔 B_P_MXC_007 (0.00, 5.10)：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22）
+[W9LIFE] PASS 読檔 B_P_MXC_007 (0.00, 5.10)：60 物理フレームで押し出されない（水平移動 最大 0.000 m・上限 0.10）・接地 true
+[W9LIFE] PASS 読檔 B_P_MXC_007 (-1.70, 3.00)：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22）
+[W9LIFE] PASS 読檔 B_P_MXC_007 (-1.70, 3.00)：60 物理フレームで押し出されない（水平移動 最大 0.000 m・上限 0.10）・接地 true
+[W9LIFE] PASS 読檔 B_P_MKT_025 (-2.00, 4.20)：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22）
+[W9LIFE] PASS 読檔 B_P_MKT_025 (-2.00, 4.20)：60 物理フレームで押し出されない（水平移動 最大 0.000 m・上限 0.10）・接地 true
+[W9LIFE] PASS 読檔 B_P_RSW_076 (-2.20, -3.00)：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22）
+[W9LIFE] PASS 読檔 B_P_RSW_076 (-2.20, -3.00)：60 物理フレームで押し出されない（水平移動 最大 0.000 m・上限 0.10）・接地 true
+[W9LIFE] PASS 読檔 B_P_RSW_014 (-1.80, 2.75)：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22）
+[W9LIFE] PASS 読檔 B_P_RSW_014 (-1.80, 2.75)：60 物理フレームで押し出されない（水平移動 最大 0.000 m・上限 0.10）・接地 true
+[W9LIFE] PASS 読檔の後：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS 読檔の後：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS 読檔の後：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS 読檔の後：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] PASS 退出：beast_path へ（村は解放・current_id=beast_path）
+[W9LIFE] PASS 再入場：load_map 直後（物理フレーム前）に入れ替え済み（Shell 有効 401/401・body 無効 22/22・同時有効 0）
+[W9LIFE] PASS 再入場の後：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS 再入場の後：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS 再入場の後：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS 再入場の後：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] PASS enabled=false #1：Shell 有効 0（0）・body の元の箱 有効 22/22・同時有効 0
+[W9LIFE] PASS enabled=false #1：物理照会で元の箱が実際に効いている（5/5 点で当たり：["B_P_MXC_007", "B_P_MXC_007", "B_P_MKT_025", "B_P_RSW_076", "B_P_RSW_014"]）
+[W9LIFE] PASS enabled=true #1：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS enabled=true #1：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS enabled=true #1：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS enabled=true #1：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] PASS enabled=false #2：Shell 有効 0（0）・body の元の箱 有効 22/22・同時有効 0
+[W9LIFE] PASS enabled=false #2：物理照会で元の箱が実際に効いている（5/5 点で当たり：["B_P_MXC_007", "B_P_MXC_007", "B_P_MKT_025", "B_P_RSW_076", "B_P_RSW_014"]）
+[W9LIFE] PASS enabled=true #2：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS enabled=true #2：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS enabled=true #2：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS enabled=true #2：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] PASS enabled=false #3：Shell 有効 0（0）・body の元の箱 有効 22/22・同時有効 0
+[W9LIFE] PASS enabled=false #3：物理照会で元の箱が実際に効いている（5/5 点で当たり：["B_P_MXC_007", "B_P_MXC_007", "B_P_MKT_025", "B_P_RSW_076", "B_P_RSW_014"]）
+[W9LIFE] PASS enabled=true #3：Shell 22 棟／401 箱（json 22 棟／401 箱）・未登録 0・欠落 0
+[W9LIFE] PASS enabled=true #3：Shell 有効 401/401・body の元の箱 無効 22/22・同時有効 0
+[W9LIFE] PASS enabled=true #3：layer／mask＝body（不一致 0）・形と位置＝json（不一致 0）
+[W9LIFE] PASS enabled=true #3：物理照会（修正で歩ける所 5 点の足元 +1.0 m）に建物の碰撞なし（当たり 0：["", "", "", "", ""]）
+[W9LIFE] 結果：42 項・FAIL 0

@@ -1,0 +1,49 @@
+[W9WALK] 玩家 capsule 半径 0.30・高さ 1.70（player_yoriichi.tscn）
+[W9WALK] tag=after overlay=あり enabled=true
+[W9WALK] PASS 074_along_near   along stop=reached frames=150 blocked=0 max_run=0 lost=0 max_dy=0.0015 end(lx 4.89, 立面 1.31) start地面差 -0.07  → 到達
+[W9WALK] PASS 074_along_road   along stop=reached frames=152 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 4.87, 立面 3.00) start地面差 -0.08  → 到達
+[W9WALK] PASS 074_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx -0.45, 立面 0.28) start地面差 -0.09  → 壁の手前 0.28 m まで着いた
+[W9WALK] PASS 074_woodpile     prop stop=stalled frames=66 blocked=30 max_run=30 lost=0 max_dy=0.0023 end(lx 1.60, 立面 0.68) start地面差 -0.09  → 停止 立面 0.68 m・上昇 +0.01 m（期待 0.68 ±0.08：小物の前面 0.38 + 半径 0.30）
+[W9WALK] PASS 074_tub          prop stop=stalled frames=65 blocked=30 max_run=30 lost=0 max_dy=0.0024 end(lx -1.80, 立面 0.76) start地面差 -0.08  → 停止 立面 0.76 m・上昇 +0.01 m（期待 0.77 ±0.08：小物の前面 0.47 + 半径 0.30）
+[W9WALK] PASS 029_along_near   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0026 end(lx 6.17, 立面 1.50) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_along_road   along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0024 end(lx 6.17, 立面 3.20) start地面差 -0.08  → 到達
+[W9WALK] PASS 029_door         door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 2.60, 立面 0.29) start地面差 -0.03  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS 029_platform     prop stop=stalled frames=67 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -2.00, 立面 0.83) start地面差 -0.06  → 停止 立面 0.83 m・上昇 +0.00 m（期待 0.83 ±0.08：小物の前面 0.53 + 半径 0.30）
+[W9WALK] PASS 014_along_near   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 6.27, 立面 1.30) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_along_road   along stop=reached frames=194 blocked=0 max_run=0 lost=0 max_dy=0.0025 end(lx 6.27, 立面 3.00) start地面差 -0.07  → 到達
+[W9WALK] PASS 014_door         door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx 0.90, 立面 0.30) start地面差 -0.02  → 壁の手前 0.30 m まで着いた
+[W9WALK] PASS 014_anvil        prop stop=stalled frames=65 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.80, 立面 0.78) start地面差 -0.04  → 停止 立面 0.78 m・上昇 +0.00 m（期待 0.77 ±0.08：小物の前面 0.47 + 半径 0.30）
+[W9WALK] PASS 014_woodpile     prop stop=stalled frames=67 blocked=30 max_run=30 lost=0 max_dy=0.0009 end(lx 2.60, 立面 0.64) start地面差 -0.01  → 停止 立面 0.64 m・上昇 +0.00 m（期待 0.63 ±0.08：小物の前面 0.33 + 半径 0.30）
+[W9WALK] PASS p4_RSW_024_along_near along stop=reached frames=208 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 6.75, 立面 1.30) start地面差 +0.01  → 到達
+[W9WALK] PASS p4_RSW_024_along_road along stop=reached frames=208 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 6.75, 立面 3.00) start地面差 +0.01  → 到達
+[W9WALK] PASS p4_RSW_024_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.35, 立面 0.29) start地面差 -0.03  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS p4_RSW_026_along_near along stop=reached frames=167 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 5.37, 立面 1.30) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_026_along_road along stop=reached frames=167 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 5.37, 立面 3.00) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_RSW_026_door  door stop=stalled frames=72 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.80, 立面 0.29) start地面差 -0.03  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS p4_MKT_001_along_near along stop=reached frames=193 blocked=0 max_run=0 lost=0 max_dy=0.0019 end(lx 6.19, 立面 1.31) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_MKT_001_along_road along stop=reached frames=191 blocked=0 max_run=0 lost=0 max_dy=0.0019 end(lx 6.17, 立面 3.20) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_MKT_001_door  door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0013 end(lx 0.88, 立面 0.29) start地面差 -0.02  → 壁の手前 0.29 m まで着いた
+[W9WALK] FAIL p4_MKT_004_along_near along stop=stalled frames=119 blocked=30 max_run=30 lost=0 max_dy=0.0016 end(lx -0.51, 立面 1.54) start地面差 +0.02  → 未到達（停止 lx -0.51 立面 1.54）
+[W9WALK] PASS p4_MKT_004_along_road along stop=reached frames=178 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 5.75, 立面 3.20) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_MKT_004_door  door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 2.18, 立面 0.29) start地面差 -0.03  → 壁の手前 0.29 m まで着いた
+[W9WALK] FAIL p4_MKT_005_along_near along stop=stalled frames=46 blocked=30 max_run=30 lost=0 max_dy=0.0016 end(lx -6.43, 立面 1.30) start地面差 +0.02  → 未到達（停止 lx -6.43 立面 1.30）
+[W9WALK] PASS p4_MKT_005_along_road along stop=reached frames=218 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 7.07, 立面 3.20) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_MKT_005_door  door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0008 end(lx -1.76, 立面 0.29) start地面差 -0.01  → 壁の手前 0.29 m まで着いた
+[W9WALK] FAIL p4_MKT_015_along_near along stop=stalled frames=51 blocked=30 max_run=30 lost=0 max_dy=0.0014 end(lx -6.12, 立面 1.30) start地面差 +0.02  → 未到達（停止 lx -6.12 立面 1.30）
+[W9WALK] PASS p4_MKT_015_along_road along stop=reached frames=219 blocked=0 max_run=0 lost=0 max_dy=0.0016 end(lx 7.12, 立面 3.20) start地面差 +0.02  → 到達
+[W9WALK] PASS p4_MKT_015_door  door stop=stalled frames=75 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.76, 立面 0.29) start地面差 -0.01  → 壁の手前 0.29 m まで着いた
+[W9WALK] PASS p4_MXC_004_along_near along stop=reached frames=209 blocked=0 max_run=0 lost=0 max_dy=0.0036 end(lx 6.63, 立面 1.31) start地面差 +0.00  → 到達
+[W9WALK] PASS p4_MXC_004_along_road along stop=reached frames=205 blocked=0 max_run=0 lost=0 max_dy=0.0019 end(lx 6.65, 立面 3.20) start地面差 +0.00  → 到達
+[W9WALK] PASS p4_MXC_004_door  stopz stop=stalled frames=76 blocked=30 max_run=30 lost=0 max_dy=0.0016 end(lx 1.32, 立面 0.24) start地面差 -0.06  → 最初の停止 立面 0.24（期待 見た目の面 0.00 + 半径 0.30 ＝ 0.30 ±0.08）
+[W9WALK] PASS p4_MXC_004_recess_back stopz stop=stalled frames=43 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.32, 立面 -1.11) start地面差 +0.35  → 最初の停止 立面 -1.11（期待 見た目の面 -1.46 + 半径 0.30 ＝ -1.16 ±0.08）
+[W9WALK] FAIL p4_MXC_004_recess_left stopx stop=stalled frames=36 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.10, 立面 -0.75) start地面差 +0.35  → 最初の停止 lx 1.10（期待 見た目の面 0.62 + 半径 0.30 ＝ 0.92 ±0.08）
+[W9WALK] FAIL p4_MXC_004_recess_right stopx stop=stalled frames=36 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 1.59, 立面 -0.75) start地面差 +0.35  → 最初の停止 lx 1.59（期待 見た目の面 2.02 − 半径 0.30 ＝ 1.72 ±0.08）
+[W9WALK] PASS p4_MXC_004_recess_exit exit stop=reached frames=55 blocked=0 max_run=0 lost=11 max_dy=0.0556 end(lx 1.32, 立面 2.85) start地面差 +0.35  → 出られた（床から降りる間の非接地 11 フレーム）
+[W9WALK] PASS p5_MKT_023_along_near along stop=reached frames=164 blocked=0 max_run=0 lost=0 max_dy=0.0023 end(lx 5.27, 立面 2.00) start地面差 -0.07  → 到達
+[W9WALK] PASS p5_MKT_023_along_road along stop=reached frames=164 blocked=0 max_run=0 lost=0 max_dy=0.0022 end(lx 5.27, 立面 3.40) start地面差 -0.07  → 到達
+[W9WALK] PASS p5_MKT_023_door  door stop=stalled frames=78 blocked=30 max_run=30 lost=0 max_dy=0.0022 end(lx -0.00, 立面 0.29) start地面差 -0.07  → 壁の手前 0.29 m まで着いた
+[W9WALK] FAIL w9f_MXC_007_porch_gap door stop=stalled frames=51 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx 0.35, 立面 1.67) start地面差 -0.05  → 壁の手前 1.67 m まで着いた
+[W9WALK] PASS w9f_MXC_007_porch_table door stop=stalled frames=73 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -1.70, 立面 0.24) start地面差 -0.07  → 壁の手前 0.24 m まで着いた
+[W9WALK] PASS w9f_MKT_025_front door stop=stalled frames=76 blocked=30 max_run=30 lost=0 max_dy=0.0000 end(lx -2.00, 立面 0.24) start地面差 -0.05  → 壁の手前 0.24 m まで着いた
+[W9WALK] PASS w9f_RSW_076_yard_in along stop=reached frames=53 blocked=0 max_run=0 lost=0 max_dy=0.0013 end(lx -2.03, 立面 -8.50) start地面差 -0.01  → 到達
+[W9WALK] 結果：46 脚・FAIL 6
