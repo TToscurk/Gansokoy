@@ -49,7 +49,7 @@ W9R2 重做了 46 棟的正面與屋頂外觀，但每棟 body 仍是 Kit 外形
 
 **唯一一次定點修正（tier 5，依可見面採寸）**：MKT_030 正面垂れ壁 1 箱；MXC_007 正面垂れ壁 1 箱，加上左右**袖壁** 8 箱（見世兩側為實牆，牆頂順屋頂坡度分 4 段；先前 hull 交集把它們漏掉，屬 MISSING_COLLIDER）。不改生成規則、不動其他棟或相機系統。採寸：`evidence/measure_hangwall.txt`。
 
-**第二輪（401 箱，2 棟 72 段）**：在第一輪重現的同一位置、同一移動中重新拍攝，AFTER 的臂長等於 BEFORE（1.85／3.05／4.28 m），不再進入建物（`shots/v17_*`）。
+**第二輪（401 箱，2 棟 72 段）**：在第一輪重現的同一位置、同一移動中重新拍攝，AFTER 的臂長等於 BEFORE（1.85／3.05／4.28 m），不再進入建物（`review/v17_*.jpg`，左 BEFORE／右 AFTER）。
 
 **殘留（需裁定）**：
 
@@ -79,4 +79,4 @@ W9R2 重做了 46 棟的正面與屋頂外觀，但每棟 body 仍是 Kit 外形
 - `godot/assets/village_v2/w9r2_arch/src/collision_fit.json`
 - `godot/tools/p13/w9/`：`attach_dev_layer_gate.gd`、`build_w9r2.gd`、`verify_w9r2.gd`、`w9r2_lib.gd`、`walk_w9r2_real.gd`、`verify_editor_tool_overlays.gd`、`w9fix_colfit.gd`、`w9fix_colfit_post.py`、`w9fix_probe.gd`、`w9fix_lifecycle_real.gd`、`w9fix_cam_review.gd`、`diag_w9fix_collision.gd`、`diag_w9fix_profile.gd`、`shot_w9fix.gd`，以及已存在的 `.uid`
 
-證據：本資料夾（`evidence/`、`evidence/repro/`、`shots/`）。完整原始記錄在 `work/w9_collision_fix/`（已 gitignore）。
+證據：本資料夾（`evidence/`、`evidence/repro/`、`review/`（BEFORE｜AFTER 並排 jpg））。完整原始記錄在 `work/w9_collision_fix/`（已 gitignore）。

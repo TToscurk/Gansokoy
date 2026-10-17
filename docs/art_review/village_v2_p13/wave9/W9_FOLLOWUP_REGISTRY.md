@@ -37,7 +37,7 @@
 | 30 | 美術（資訊・Phase 8） | A8 遠距（X03、K01）只見一團綠、稻置場小道具零碎；B8「整體仍不是有人住的聚落」、PB2 沿路仍空、井戶周圍石材偏淺、吊柿排列規則、PB3 竹垣片孤立；D02／D04 幾乎無變化（畫面佔比 0.8 %／0.3 %） | vision 懷疑式評估（`phase8_village_survey/evidence/vision_notes.md`）、ID pass（`evidence/p8_coverage.txt`） | 已知限制；r1→r2 已用掉一次有理由的修正，不再反覆打磨，等使用者裁定 |
 | 31 | 驗證註記（Phase 8） | `verify_w9p8.gd` 的門檻（區域最少件數、雜木林三層、變動係數 0.25、稻置場 < 2 m、portal 6 m、SpringArm 重度＝≥ 2.0 m 且腕 < 3.0 m）是本輪建 gate 時訂的，沒有獨立依據；r1→r2 期間門檻未改。未做真玩家控制器實走、共享編輯器中的掛載 runtime。效能（ON−OFF）ΔGPU +0.11～+0.22 ms、Δdraw calls +86～+222（MeshInstance、非 MultiMesh，同 #11） | `phase8_village_survey/evidence/gate_final.txt`、`GATE_HISTORY.txt`、`perf_p8.txt` | gate 只是回歸防護，**不得當作美術品質的證明**；掛載後若要上線再做實走 |
 | 32 | 已知限制（W9 FIX・MXC_004） | 凹入門口地板離地 0.41 m（step 0.35）→ 要跳才能進入凹處；碰撞門寬 1.10 m／可見 1.40 m（側柱每邊 0.12–0.18 m）。真 controller：正門停 0.24 m、後牆 −1.11（期待 −1.16）、可走出；側柱 2 段 FAIL（`collision_fix/evidence/walk_real_controller.txt`） | 使用者 2026-10-17 裁定：裝飾性、非互動入口，接受。不改 step height／移動。日後任務需要走入時重新處理 |
-| 33 | 相機殘留（W9 FIX・MKT_030） | 站在店前 1.3 m（lx 0.49），相機正朝店內＋預設俯仰：臂從垂れ壁下的開放店面開口進入店內，1.32→3.01 m，畫面約 70% 被遮、連續 0.45 s（`collision_fix/shots/v17_MKT_030_pen_front_near_in_p18_*`） | 定點修正 1 次已用完（垂れ壁／袖壁 tier 5）；此項**待使用者裁定**：接受為已知限制，或另行授權處理 |
+| 33 | 相機殘留（W9 FIX・MKT_030） | 站在店前 1.3 m（lx 0.49），相機正朝店內＋預設俯仰：臂從垂れ壁下的開放店面開口進入店內，1.32→3.01 m，畫面約 70% 被遮、連續 0.45 s（`collision_fix/review/v17_MKT_030_pen_front_near_in_p18.jpg`） | 定點修正 1 次已用完（垂れ壁／袖壁 tier 5）；此項**待使用者裁定**：接受為已知限制，或另行授權處理 |
 | 34 | 相機限制（W9 FIX・RSW_074 背面） | 後巷臂朝內 +45°：相機進入鄰棟 RSW_075 屋頂（RSW_075 無 Shell，Kit 屋頂無碰撞慣例），0.34 s；原本被 RSW_074 舊箱擋住 | ACCEPTED LIMITATION（修正要動無關建物，未授權） |
 
 ## Phase 3 第一批 結案（使用者 ART_APPROVED・2026-10-16）
