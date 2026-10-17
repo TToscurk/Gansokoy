@@ -37,6 +37,14 @@ if [ $gen -eq 1 ]; then
 	"$G" --headless --path . --script res://tools/beast_path/generate_beast_path.gd -- "--only=$zone" > "$S/gen_$z.log" 2>&1 \
 		|| { grep -E 'SCRIPT ERROR|Parse Error|FAIL' "$S/gen_$z.log" | head -5; echo "[BP] FAIL 生成"; exit 1; }
 	step "生成 $zone 完成"
+	# 生成每次重抽 .tscn 的 unique_id：內容只差 unique_id 的場景檔還原成 HEAD，避免假變動污染下一區的隔離檢查
+	for f in $(git diff --name-only -- maps/beast_path/*.tscn); do
+		f="${f#godot/}"
+		if diff -q <(git show "HEAD:godot/$f" | tr -d '\r' | sed -E 's/ unique_id=[0-9]+//') \
+				<(tr -d '\r' < "$f" | sed -E 's/ unique_id=[0-9]+//') > /dev/null; then
+			git checkout -q -- "$f" && echo "[BP] $f 只差 unique_id → 還原成 HEAD"
+		fi
+	done
 fi
 "$G" --headless --path . --script res://tools/beast_path/verify_beast_path.gd -- "--out=$S/verify.json" > "$S/verify_$z.log" 2>&1
 grep -E '^\[FAIL\]|═══' "$S/verify_$z.log"
