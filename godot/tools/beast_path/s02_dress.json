@@ -1,0 +1,409 @@
+{
+ "_note": "S02 森林深處：全區美術完成候選（使用者 2026-10-17 授權 S02 環境美術重製）。同一套擺放（tools/beast_path/s01_dress.gd＋s01_floor.gd，scene＝S02）＋S02 自己的參數：比 S01 更深、更濕、更多蕨／笹／苔／倒木，草退到林窗與路旁。地表情境＝zone_ground.gd（與地形同一份場）。烘焙＝bake_s01_dress.gd -- --zone=S02（非 headless）→ maps/beast_path/gen/s02_dress.scn；enabled＝false → generator 不掛。不改地形高度、不動凍結的樹。",
+ "scene": "S02",
+ "enabled": true,
+ "seed": 52021,
+ "zones": [],
+ "bbox": [
+  -110.0,
+  -222.0,
+  110.0,
+  -100.0
+ ],
+ "band": {
+  "_why": "沿主路與支線（妖獸巢穴側環）兩側 max_m 以內；外緣 fade_m 用噪聲打散。再遠的林內只有地表＋樹（玩家看不到，不付成本）。",
+  "max_m": 24.0,
+  "fade_m": 9.0
+ },
+ "clear": {
+  "_why": "同 S01：離主路路緣（m）",
+  "low": 0.35,
+  "grass": 0.9,
+  "tall": 1.6,
+  "fern": 1.8,
+  "shrub": 2.6,
+  "hard": 3.5,
+  "foot_pad": 0.45,
+  "trunk": 0.4,
+  "under": 0.55,
+  "wall_rock_pad": 0.3,
+  "branch_db": 0.9,
+  "stream_ds": 0.8,
+  "paving_low": 0.55
+ },
+ "rocks": [],
+ "wall_rocks": {
+  "_why": "S02 的坡（溪谷兩岸、巢穴側環的坡）：半埋的露頭與苔岩，打斷平滑坡面；不改地形",
+  "x": [
+   -80.0,
+   80.0
+  ],
+  "z": [
+   -218.0,
+   -104.0
+  ],
+  "slope": [
+   24.0,
+   62.0
+  ],
+  "y": [
+   -20.0,
+   60.0
+  ],
+  "min_d": 11.0,
+  "n": 12,
+  "seed": 7313,
+  "assets": [
+   "s01_rock_outcrop_c",
+   "s01_rock_cliff_b",
+   "s01_rock_cliff_a"
+  ],
+  "sat_assets": [
+   "s01_mossstone_a",
+   "s01_rock_cliff_b",
+   "s01_mossstone_b"
+  ],
+  "p_two": 0.55,
+  "s": [
+   0.8,
+   1.2
+  ],
+  "bury": [
+   0.5,
+   0.62
+  ],
+  "lean_k": 0.6,
+  "yaw_j": 14.0
+ },
+ "foot_talus": {
+  "_why": "坡腳與溪岸的苔石、碎石（不等距）",
+  "x": [
+   -80.0,
+   80.0
+  ],
+  "z": [
+   -218.0,
+   -104.0
+  ],
+  "slope": [
+   12.0,
+   30.0
+  ],
+  "n": 22,
+  "min_d": 4.5,
+  "seed": 4219,
+  "assets": [
+   "s01_mossstone_a",
+   "s01_mossstone_b",
+   "s01_debris_a",
+   "s01_mossstone_b"
+  ]
+ },
+ "wood": [],
+ "floor": {
+  "_why": "同 S01 R5 的棲地×群落×林窗；S02 參數：林下種（蕨、笹、闊葉草本、苔、落葉、枯枝）提高，開闊地的草降低。",
+  "chunk_m": 20.0,
+  "species": {
+   "grass_tall": {
+    "assets": [
+     "s01_grass_tall_a",
+     "s01_grass_tall_b",
+     "s01_grass_tall_c",
+     "s01_grass_tall_d"
+    ],
+    "spacing": 0.5,
+    "pmax": 0.6,
+    "s": [
+     0.75,
+     1.25
+    ],
+    "freq": 0.085,
+    "clear": 1.5,
+    "lod": [
+     26.0,
+     46.0,
+     58.0
+    ]
+   },
+   "grass_short": {
+    "assets": [
+     "s01_grass_short_a",
+     "s01_grass_short_b"
+    ],
+    "spacing": 0.6,
+    "pmax": 0.55,
+    "s": [
+     0.8,
+     1.4
+    ],
+    "freq": 0.16,
+    "clear": 0.8,
+    "lod": [
+     30.0,
+     40.0,
+     52.0
+    ]
+   },
+   "shadegrass": {
+    "assets": [
+     "s01_shadegrass_a"
+    ],
+    "spacing": 0.6,
+    "pmax": 0.85,
+    "s": [
+     0.8,
+     1.4
+    ],
+    "freq": 0.14,
+    "clear": 0.35,
+    "lod": [
+     28.0,
+     32.0,
+     42.0
+    ]
+   },
+   "sedge": {
+    "assets": [
+     "s01_sedge_a"
+    ],
+    "spacing": 1.0,
+    "pmax": 0.85,
+    "s": [
+     0.8,
+     1.3
+    ],
+    "freq": 0.12,
+    "clear": 1.0,
+    "lod": [
+     24.0,
+     40.0,
+     50.0
+    ]
+   },
+   "fern_big": {
+    "assets": [
+     "s01_fern_a",
+     "s01_fern_c"
+    ],
+    "spacing": 1.35,
+    "pmax": 0.82,
+    "s": [
+     0.8,
+     1.15
+    ],
+    "freq": 0.085,
+    "clear": 1.6,
+    "lod": [
+     18.0,
+     40.0,
+     50.0
+    ],
+    "shadow": false
+   },
+   "fern_small": {
+    "assets": [
+     "s01_fern_b",
+     "s01_fern_d"
+    ],
+    "spacing": 1.2,
+    "pmax": 0.9,
+    "s": [
+     0.75,
+     1.15
+    ],
+    "freq": 0.15,
+    "clear": 1.0,
+    "lod": [
+     16.0,
+     32.0,
+     42.0
+    ]
+   },
+   "herb": {
+    "assets": [
+     "s01_fuki_a",
+     "s01_fuki_b",
+     "s01_herb_broad_a"
+    ],
+    "spacing": 0.8,
+    "pmax": 0.9,
+    "s": [
+     0.8,
+     1.15
+    ],
+    "freq": 0.11,
+    "clear": 1.3,
+    "lod": [
+     22.0,
+     38.0,
+     48.0
+    ]
+   },
+   "forb": {
+    "assets": [
+     "s01_forb_a",
+     "s01_forb_b"
+    ],
+    "spacing": 0.85,
+    "pmax": 0.5,
+    "s": [
+     0.65,
+     1.05
+    ],
+    "freq": 0.22,
+    "clear": 1.4,
+    "lod": [
+     32.0,
+     50.0,
+     66.0
+    ]
+   },
+   "sasa": {
+    "assets": [
+     "s01_sasa_b",
+     "s01_sasa_a"
+    ],
+    "spacing": 1.0,
+    "pmax": 0.95,
+    "s": [
+     0.85,
+     1.25
+    ],
+    "freq": 0.07,
+    "clear": 1.8,
+    "lod": [
+     18.0,
+     40.0,
+     50.0
+    ],
+    "shadow": false
+   },
+   "shrub": {
+    "assets": [
+     "s01_shrub_a",
+     "s01_shrub_b"
+    ],
+    "spacing": 1.6,
+    "pmax": 0.62,
+    "s": [
+     0.8,
+     1.3
+    ],
+    "freq": 0.1,
+    "clear": 2.6,
+    "lod": [
+     0.0,
+     46.0,
+     56.0
+    ],
+    "shadow": false
+   },
+   "sapling": {
+    "assets": [
+     "s01_sapling_a",
+     "s01_sapling_b"
+    ],
+    "spacing": 2.0,
+    "pmax": 0.8,
+    "s": [
+     0.8,
+     1.3
+    ],
+    "freq": 0.12,
+    "clear": 3.0,
+    "lod": [
+     0.0,
+     52.0,
+     62.0
+    ],
+    "shadow": true
+   },
+   "litter": {
+    "assets": [
+     "s01_litter_a",
+     "s01_litter_b"
+    ],
+    "spacing": 1.7,
+    "pmax": 0.92,
+    "s": [
+     0.85,
+     1.35
+    ],
+    "freq": 0.12,
+    "clear": 0.35,
+    "lod": [
+     0.0,
+     26.0,
+     34.0
+    ]
+   },
+   "moss": {
+    "assets": [
+     "s01_moss_a"
+    ],
+    "spacing": 1.15,
+    "pmax": 0.9,
+    "s": [
+     0.7,
+     1.4
+    ],
+    "freq": 0.14,
+    "clear": 0.35,
+    "lod": [
+     0.0,
+     30.0,
+     38.0
+    ]
+   },
+   "twigs": {
+    "assets": [
+     "s01_twigs_a"
+    ],
+    "spacing": 2.1,
+    "pmax": 0.6,
+    "s": [
+     0.8,
+     1.2
+    ],
+    "freq": 0.2,
+    "clear": 0.35,
+    "lod": [
+     0.0,
+     22.0,
+     28.0
+    ]
+   }
+  }
+ },
+ "auto_wood": {
+  "_why": "S02 比 S01 更多倒木與露根（深林、少人整理）",
+  "seed": 1902,
+  "roots": {
+   "p": 0.55,
+   "max": 44,
+   "min_trees_7m": 3,
+   "min_road": 1.8
+  },
+  "dead": {
+   "min_trees_7m": 2,
+   "min_road": 3.5,
+   "min_d": 7.0,
+   "max": 30,
+   "assets": [
+    "s01_log_c",
+    "s01_log_a",
+    "s01_branch_pile_a",
+    "s01_stump_a",
+    "s01_log_b",
+    "s01_branch_a"
+   ]
+  }
+ },
+ "lod": {
+  "shadow": [
+   "sapling"
+  ],
+  "chunk_m": 20.0
+ },
+ "_perf": "全區總審效能（2026-10-17，GTX 1070、1600×900）：S02 林床初版 8 ms（47.9 FPS）→ 縮 LOD 換手／淡出距離（近景 20 m 內不變）、落葉間距 1.45→1.7、沿路帶 30→24 m（S03 26→22 m）。二輪：森林門 55 FPS → 蕨間距 1.2→1.35／1.05→1.2、大蕨 pmax 0.95→0.82、灌木 pmax 0.8→0.62 且不投影（幼樹仍投影）。最終整合（2026-10-17）：森林門 58.5 FPS → 蕨／笹 LOD1 換手 24→18（小蕨 22→16）m、淡出 56→50／46→42 m；幼樹 85→62 m、灌木 75→56 m 淡出（18 m 內的近景不變）。"
+}

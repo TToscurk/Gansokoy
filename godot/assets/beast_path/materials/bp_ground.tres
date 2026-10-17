@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_ground.gdshader" id="1_kbkip"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_albedo.jpg" id="2_2m5md"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="3_ib4uo"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_nrh.jpg" id="4_d7ylb"]
+
+[resource]
+resource_name = "BP_Ground_S04"
+render_priority = 0
+shader = ExtResource("1_kbkip")
+shader_parameter/albedo_arr = ExtResource("2_2m5md")
+shader_parameter/nrh_arr = ExtResource("4_d7ylb")
+shader_parameter/noise_tex = ExtResource("3_ib4uo")
+shader_parameter/ground_k = 0.26
+shader_parameter/seam_z0 = -340.0
+shader_parameter/seam_z1 = -366.0
+shader_parameter/autumn = Vector4(9.717571, -424.89905, 18, 1)
+shader_parameter/moss_col = null
+shader_parameter/wet_dark = null
+shader_parameter/bump_amp = null
+shader_parameter/cliff_tone = null

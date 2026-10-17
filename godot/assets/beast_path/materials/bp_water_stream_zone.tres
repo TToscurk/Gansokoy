@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_water.gdshader" id="1_gqk8s"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="2_xe5w0"]
+
+[resource]
+resource_name = "BP_Water_StreamZone"
+render_priority = 0
+shader = ExtResource("1_gqk8s")
+shader_parameter/noise_tex = ExtResource("2_xe5w0")
+shader_parameter/deep_col = null
+shader_parameter/mid_col = null
+shader_parameter/shallow_col = null
+shader_parameter/foam_col = null
+shader_parameter/shallow_depth = null
+shader_parameter/deep_depth = null
+shader_parameter/ripple = 0.045
+shader_parameter/uv_flow = 0.42
+shader_parameter/fall = Vector4(0, 0, 1, 0)
+shader_parameter/lip = Vector4(0, 0, 0, 0)

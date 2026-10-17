@@ -1,0 +1,1953 @@
+{
+  "cover_counts": {
+    "s01_fern_a": 457,
+    "s01_fern_b": 371,
+    "s01_fern_c": 402,
+    "s01_fern_d": 703,
+    "s01_forb_a": 301,
+    "s01_forb_b": 43,
+    "s01_fuki_a": 271,
+    "s01_fuki_b": 189,
+    "s01_grass_short_a": 1180,
+    "s01_grass_short_b": 848,
+    "s01_grass_tall_a": 439,
+    "s01_grass_tall_b": 632,
+    "s01_grass_tall_c": 433,
+    "s01_grass_tall_d": 1735,
+    "s01_herb_broad_a": 104,
+    "s01_litter_a": 219,
+    "s01_litter_b": 666,
+    "s01_moss_a": 302,
+    "s01_sapling_a": 46,
+    "s01_sapling_b": 39,
+    "s01_sasa_a": 38,
+    "s01_sasa_b": 386,
+    "s01_sedge_a": 172,
+    "s01_shadegrass_a": 3354,
+    "s01_shrub_a": 192,
+    "s01_shrub_b": 114,
+    "s01_twigs_a": 58
+  },
+  "cover_on_road": 0,
+  "cover_path_edge_min_m": {
+    "fern_big": 0.96,
+    "fern_small": 0.72,
+    "forb": 1.66,
+    "grass_short": 0.16,
+    "grass_tall": 1.29,
+    "herb": 0.89,
+    "litter": 0.21,
+    "moss": 0.56,
+    "sapling": 1.98,
+    "sasa": 1.31,
+    "sedge": 1.12,
+    "shadegrass": 0.14,
+    "shrub": 2.44,
+    "twigs": 1.75
+  },
+  "cover_tris_lod1_total": 1680584,
+  "cover_tris_total": 5406890,
+  "hard": [
+    {
+      "aabb_min": [
+        51.46,
+        2.65,
+        -16.35
+      ],
+      "asset": "s01_rock_cliff_a",
+      "below_pct": 46.7,
+      "collide": true,
+      "drop_m": 0.89,
+      "id": "F1",
+      "path_edge_min_m": 49.63,
+      "pos": [
+        53.5,
+        3.77,
+        -14.0
+      ],
+      "protrude_m": 3.32,
+      "reachable": true,
+      "size": [
+        3.37,
+        4.43,
+        4.49
+      ],
+      "trunk_clear_m": 2.18,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 4013
+    },
+    {
+      "aabb_min": [
+        58.96,
+        11.39,
+        -19.18
+      ],
+      "asset": "s01_rock_rib_d",
+      "below_pct": 49.1,
+      "collide": true,
+      "drop_m": 0.56,
+      "id": "F2",
+      "path_edge_min_m": 57.48,
+      "pos": [
+        60.0,
+        12.54,
+        -18.0
+      ],
+      "protrude_m": 2.02,
+      "reachable": true,
+      "size": [
+        3.26,
+        5.59,
+        2.25
+      ],
+      "trunk_clear_m": 4.42,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 45,
+      "verts": 2794
+    },
+    {
+      "aabb_min": [
+        50.5,
+        2.83,
+        8.37
+      ],
+      "asset": "s01_rock_outcrop_c",
+      "below_pct": 81.2,
+      "collide": true,
+      "drop_m": 3.34,
+      "id": "F3",
+      "path_edge_min_m": 48.05,
+      "pos": [
+        52.4,
+        4.06,
+        11.0
+      ],
+      "protrude_m": 1.44,
+      "reachable": true,
+      "size": [
+        3.6,
+        3.14,
+        5.22
+      ],
+      "trunk_clear_m": 1.66,
+      "underside_gap_max_m": 2.25,
+      "underside_verts_gap_gt30cm": 21,
+      "verts": 2677
+    },
+    {
+      "aabb_min": [
+        51.16,
+        3.68,
+        -28.57
+      ],
+      "asset": "s01_rock_cliff_b",
+      "below_pct": 50.1,
+      "collide": true,
+      "drop_m": 0.81,
+      "id": "F4",
+      "path_edge_min_m": 50.88,
+      "pos": [
+        52.6,
+        4.6,
+        -27.6
+      ],
+      "protrude_m": 2.26,
+      "reachable": true,
+      "size": [
+        2.75,
+        3.5,
+        2.66
+      ],
+      "trunk_clear_m": 3.07,
+      "underside_gap_max_m": 1.4,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 3281
+    },
+    {
+      "aabb_min": [
+        60.12,
+        16.24,
+        -33.43
+      ],
+      "asset": "s01_rock_rib_d",
+      "below_pct": 78.1,
+      "collide": false,
+      "drop_m": 0.25,
+      "id": "F5",
+      "path_edge_min_m": 60.35,
+      "pos": [
+        61.2,
+        16.88,
+        -31.5
+      ],
+      "protrude_m": 1.0,
+      "reachable": false,
+      "size": [
+        3.94,
+        3.29,
+        2.53
+      ],
+      "trunk_clear_m": 6.43,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 2794
+    },
+    {
+      "aabb_min": [
+        49.11,
+        2.28,
+        -10.12
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 43.9,
+      "collide": true,
+      "drop_m": 0.13,
+      "id": "M1",
+      "path_edge_min_m": 47.09,
+      "pos": [
+        49.6,
+        2.53,
+        -9.5
+      ],
+      "protrude_m": 0.48,
+      "reachable": true,
+      "size": [
+        1.04,
+        0.86,
+        1.23
+      ],
+      "trunk_clear_m": 5.69,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        50.41,
+        2.69,
+        -19.83
+      ],
+      "asset": "s01_mossstone_b",
+      "below_pct": 77.4,
+      "collide": false,
+      "drop_m": 0.34,
+      "id": "M2",
+      "path_edge_min_m": 49.15,
+      "pos": [
+        50.8,
+        2.9,
+        -19.4
+      ],
+      "protrude_m": 0.16,
+      "reachable": true,
+      "size": [
+        0.85,
+        0.6,
+        0.88
+      ],
+      "trunk_clear_m": 4.55,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 195
+    },
+    {
+      "aabb_min": [
+        48.14,
+        2.5,
+        3.02
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 48.7,
+      "collide": false,
+      "drop_m": 0.14,
+      "id": "M3",
+      "path_edge_min_m": 45.82,
+      "pos": [
+        48.6,
+        2.71,
+        3.4
+      ],
+      "protrude_m": 0.35,
+      "reachable": true,
+      "size": [
+        0.93,
+        0.69,
+        0.74
+      ],
+      "trunk_clear_m": 3.06,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        49.5,
+        2.98,
+        -24.54
+      ],
+      "asset": "s01_mossstone_b",
+      "below_pct": 57.9,
+      "collide": false,
+      "drop_m": 0.1,
+      "id": "M4",
+      "path_edge_min_m": 48.73,
+      "pos": [
+        49.9,
+        3.14,
+        -24.2
+      ],
+      "protrude_m": 0.23,
+      "reachable": true,
+      "size": [
+        0.78,
+        0.49,
+        0.73
+      ],
+      "trunk_clear_m": 4.01,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 195
+    },
+    {
+      "aabb_min": [
+        46.71,
+        2.43,
+        10.13
+      ],
+      "asset": "s01_mossstone_b",
+      "below_pct": 55.4,
+      "collide": false,
+      "drop_m": 0.16,
+      "id": "M5",
+      "path_edge_min_m": 44.32,
+      "pos": [
+        47.2,
+        2.66,
+        10.6
+      ],
+      "protrude_m": 0.3,
+      "reachable": true,
+      "size": [
+        0.91,
+        0.68,
+        0.94
+      ],
+      "trunk_clear_m": 3.59,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 195
+    },
+    {
+      "aabb_min": [
+        49.73,
+        2.53,
+        -16.53
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 70.7,
+      "collide": false,
+      "drop_m": 0.02,
+      "id": "D1",
+      "path_edge_min_m": 48.06,
+      "pos": [
+        50.6,
+        3.1,
+        -15.8
+      ],
+      "protrude_m": 0.13,
+      "reachable": true,
+      "size": [
+        1.48,
+        1.02,
+        1.82
+      ],
+      "trunk_clear_m": 6.76,
+      "underside_gap_max_m": 0.85,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        49.79,
+        3.39,
+        -30.31
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 57.5,
+      "collide": false,
+      "drop_m": 0.08,
+      "id": "D2",
+      "path_edge_min_m": 49.93,
+      "pos": [
+        50.4,
+        3.85,
+        -29.8
+      ],
+      "protrude_m": 0.36,
+      "reachable": true,
+      "size": [
+        1.51,
+        0.84,
+        1.17
+      ],
+      "trunk_clear_m": 6.72,
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 27,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        49.57,
+        2.85,
+        8.52
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 72.3,
+      "collide": false,
+      "drop_m": 0.02,
+      "id": "D3",
+      "path_edge_min_m": 47.08,
+      "pos": [
+        50.0,
+        3.05,
+        9.0
+      ],
+      "protrude_m": 0.09,
+      "reachable": true,
+      "size": [
+        0.98,
+        0.37,
+        1.31
+      ],
+      "trunk_clear_m": 0.94,
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        58.85,
+        11.01,
+        -0.92
+      ],
+      "asset": "s01_rock_cliff_b",
+      "below_pct": 59.3,
+      "collide": true,
+      "drop_m": 1.42,
+      "id": "W1a",
+      "path_edge_min_m": 56.65,
+      "pos": [
+        60.11,
+        11.58,
+        -0.39
+      ],
+      "protrude_m": 2.12,
+      "reachable": true,
+      "size": [
+        2.15,
+        2.05,
+        1.63
+      ],
+      "trunk_clear_m": 3.43,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 131,
+      "verts": 3281
+    },
+    {
+      "aabb_min": [
+        60.17,
+        12.43,
+        -7.91
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 62.9,
+      "collide": false,
+      "drop_m": 0.55,
+      "id": "W1b",
+      "path_edge_min_m": 58.11,
+      "pos": [
+        60.64,
+        12.71,
+        -7.42
+      ],
+      "protrude_m": 0.77,
+      "reachable": false,
+      "size": [
+        0.79,
+        0.77,
+        0.97
+      ],
+      "trunk_clear_m": 3.49,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 43,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        52.39,
+        3.32,
+        -7.06
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 59.2,
+      "collide": false,
+      "drop_m": 0.02,
+      "id": "W1t",
+      "path_edge_min_m": 50.32,
+      "pos": [
+        53.31,
+        3.55,
+        -6.35
+      ],
+      "protrude_m": 0.12,
+      "reachable": true,
+      "size": [
+        1.63,
+        0.43,
+        1.76
+      ],
+      "trunk_clear_m": 3.44,
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        56.63,
+        12.95,
+        -47.74
+      ],
+      "asset": "s01_rock_cliff_a",
+      "below_pct": 62.2,
+      "collide": false,
+      "drop_m": 3.17,
+      "id": "W2",
+      "path_edge_min_m": 59.77,
+      "pos": [
+        59.68,
+        14.3,
+        -44.81
+      ],
+      "protrude_m": 5.55,
+      "reachable": false,
+      "size": [
+        4.61,
+        5.18,
+        5.69
+      ],
+      "trunk_clear_m": 2.62,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 152,
+      "verts": 4013
+    },
+    {
+      "aabb_min": [
+        58.69,
+        16.75,
+        -43.43
+      ],
+      "asset": "s01_rock_outcrop_c",
+      "below_pct": 58.2,
+      "collide": false,
+      "drop_m": 0.79,
+      "id": "W2a",
+      "path_edge_min_m": 61.18,
+      "pos": [
+        60.35,
+        17.53,
+        -42.05
+      ],
+      "protrude_m": 1.73,
+      "reachable": false,
+      "size": [
+        3.29,
+        1.98,
+        2.91
+      ],
+      "trunk_clear_m": 6.04,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 92,
+      "verts": 2677
+    },
+    {
+      "aabb_min": [
+        49.28,
+        4.29,
+        -45.68
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 56.3,
+      "collide": false,
+      "drop_m": 0.03,
+      "id": "W2t",
+      "path_edge_min_m": 52.9,
+      "pos": [
+        50.0,
+        4.51,
+        -44.62
+      ],
+      "protrude_m": 0.17,
+      "reachable": true,
+      "size": [
+        1.54,
+        0.4,
+        1.77
+      ],
+      "trunk_clear_m": 6.33,
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        59.57,
+        15.98,
+        4.19
+      ],
+      "asset": "s01_rock_outcrop_c",
+      "below_pct": 56.7,
+      "collide": false,
+      "drop_m": 0.1,
+      "id": "W3",
+      "path_edge_min_m": 57.09,
+      "pos": [
+        62.68,
+        17.98,
+        8.11
+      ],
+      "protrude_m": 4.1,
+      "reachable": false,
+      "size": [
+        5.81,
+        4.79,
+        7.67
+      ],
+      "trunk_clear_m": 1.17,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 200,
+      "verts": 2677
+    },
+    {
+      "aabb_min": [
+        63.47,
+        17.83,
+        4.57
+      ],
+      "asset": "s01_rock_cliff_b",
+      "below_pct": 61.5,
+      "collide": false,
+      "drop_m": 1.42,
+      "id": "W3a",
+      "path_edge_min_m": 61.02,
+      "pos": [
+        64.77,
+        18.49,
+        5.65
+      ],
+      "protrude_m": 1.62,
+      "reachable": false,
+      "size": [
+        1.97,
+        2.41,
+        2.46
+      ],
+      "trunk_clear_m": 5.73,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 87,
+      "verts": 3281
+    },
+    {
+      "aabb_min": [
+        59.1,
+        17.39,
+        9.91
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 65.9,
+      "collide": false,
+      "drop_m": 0.28,
+      "id": "W3b",
+      "path_edge_min_m": 56.64,
+      "pos": [
+        59.51,
+        17.58,
+        10.27
+      ],
+      "protrude_m": 0.29,
+      "reachable": false,
+      "size": [
+        0.8,
+        0.59,
+        0.66
+      ],
+      "trunk_clear_m": 2.69,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 17,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        50.4,
+        3.34,
+        -41.32
+      ],
+      "asset": "s01_rock_cliff_a",
+      "below_pct": 62.2,
+      "collide": true,
+      "drop_m": 2.93,
+      "id": "W4",
+      "path_edge_min_m": 52.33,
+      "pos": [
+        52.91,
+        4.54,
+        -38.84
+      ],
+      "protrude_m": 3.23,
+      "reachable": true,
+      "size": [
+        4.55,
+        4.6,
+        4.55
+      ],
+      "trunk_clear_m": 10.43,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 124,
+      "verts": 4013
+    },
+    {
+      "aabb_min": [
+        51.98,
+        5.78,
+        -43.37
+      ],
+      "asset": "s01_rock_outcrop_c",
+      "below_pct": 57.6,
+      "collide": true,
+      "drop_m": 0.38,
+      "id": "W4a",
+      "path_edge_min_m": 54.71,
+      "pos": [
+        53.65,
+        6.72,
+        -41.76
+      ],
+      "protrude_m": 1.91,
+      "reachable": true,
+      "size": [
+        3.15,
+        2.24,
+        3.3
+      ],
+      "trunk_clear_m": 8.41,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 179,
+      "verts": 2677
+    },
+    {
+      "aabb_min": [
+        49.36,
+        4.04,
+        -41.28
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 59.4,
+      "collide": false,
+      "drop_m": 0.02,
+      "id": "W4t",
+      "path_edge_min_m": 51.73,
+      "pos": [
+        49.98,
+        4.22,
+        -40.62
+      ],
+      "protrude_m": 0.14,
+      "reachable": true,
+      "size": [
+        1.44,
+        0.36,
+        1.85
+      ],
+      "trunk_clear_m": 10.15,
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        53.59,
+        3.81,
+        -0.18
+      ],
+      "asset": "s01_mossstone_b",
+      "below_pct": 54.4,
+      "collide": false,
+      "drop_m": 0.15,
+      "id": "T1",
+      "path_edge_min_m": 51.39,
+      "pos": [
+        54.09,
+        4.11,
+        0.36
+      ],
+      "protrude_m": 0.42,
+      "reachable": true,
+      "size": [
+        0.88,
+        0.78,
+        1.1
+      ],
+      "trunk_clear_m": 1.45,
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 195
+    },
+    {
+      "aabb_min": [
+        49.73,
+        3.6,
+        -34.57
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 51.7,
+      "collide": true,
+      "drop_m": 0.16,
+      "id": "T2",
+      "path_edge_min_m": 50.54,
+      "pos": [
+        50.32,
+        4.0,
+        -33.75
+      ],
+      "protrude_m": 0.78,
+      "reachable": true,
+      "size": [
+        1.33,
+        1.16,
+        1.45
+      ],
+      "trunk_clear_m": 10.32,
+      "underside_gap_max_m": 0.95,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        55.2,
+        6.53,
+        -17.41
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 52.7,
+      "collide": false,
+      "drop_m": 0.22,
+      "id": "T3",
+      "path_edge_min_m": 53.62,
+      "pos": [
+        55.69,
+        6.8,
+        -16.95
+      ],
+      "protrude_m": 0.43,
+      "reachable": true,
+      "size": [
+        0.98,
+        0.76,
+        0.79
+      ],
+      "trunk_clear_m": 5.53,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 13,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        52.05,
+        2.86,
+        5.17
+      ],
+      "asset": "s01_mossstone_a",
+      "below_pct": 52.4,
+      "collide": true,
+      "drop_m": 0.18,
+      "id": "T4",
+      "path_edge_min_m": 49.59,
+      "pos": [
+        52.6,
+        3.21,
+        5.82
+      ],
+      "protrude_m": 0.62,
+      "reachable": true,
+      "size": [
+        1.29,
+        1.08,
+        1.31
+      ],
+      "trunk_clear_m": 1.56,
+      "underside_gap_max_m": 0.1,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 677
+    },
+    {
+      "aabb_min": [
+        55.4,
+        7.14,
+        -24.22
+      ],
+      "asset": "s01_mossstone_b",
+      "below_pct": 56.9,
+      "collide": true,
+      "drop_m": 0.05,
+      "id": "T5",
+      "path_edge_min_m": 54.54,
+      "pos": [
+        55.85,
+        7.39,
+        -23.81
+      ],
+      "protrude_m": 0.47,
+      "reachable": true,
+      "size": [
+        0.93,
+        0.65,
+        0.71
+      ],
+      "trunk_clear_m": 0.82,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 195
+    },
+    {
+      "aabb_min": [
+        50.01,
+        2.35,
+        -2.78
+      ],
+      "asset": "s01_debris_a",
+      "below_pct": 71.6,
+      "collide": false,
+      "drop_m": 0.03,
+      "id": "T6",
+      "path_edge_min_m": 47.85,
+      "pos": [
+        50.8,
+        2.76,
+        -2.09
+      ],
+      "protrude_m": 0.17,
+      "reachable": true,
+      "size": [
+        1.88,
+        0.73,
+        1.96
+      ],
+      "trunk_clear_m": 4.73,
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1514
+    },
+    {
+      "aabb_min": [
+        45.27,
+        2.64,
+        2.02
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 13.7,
+      "collide": true,
+      "drop_m": 0.11,
+      "id": "L1",
+      "path_edge_min_m": 42.8,
+      "pos": [
+        46.2,
+        2.6,
+        4.4
+      ],
+      "protrude_m": 0.47,
+      "size": [
+        1.85,
+        0.51,
+        4.44
+      ],
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 8,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        46.69,
+        2.39,
+        -21.98
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 35.6,
+      "collide": true,
+      "drop_m": 0.14,
+      "id": "L2",
+      "path_edge_min_m": 45.67,
+      "pos": [
+        48.6,
+        2.6,
+        -21.4
+      ],
+      "protrude_m": 0.58,
+      "size": [
+        3.61,
+        1.05,
+        1.13
+      ],
+      "underside_gap_max_m": 0.8,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        54.58,
+        5.21,
+        -11.23
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 68.2,
+      "collide": false,
+      "drop_m": 0.36,
+      "id": "R1",
+      "path_edge_min_m": 52.87,
+      "pos": [
+        56.3,
+        6.35,
+        -10.04
+      ],
+      "protrude_m": 0.4,
+      "size": [
+        2.74,
+        1.57,
+        2.45
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 1.7,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        53.52,
+        3.05,
+        2.01
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 34.2,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "R2",
+      "path_edge_min_m": 51.44,
+      "pos": [
+        54.92,
+        4.25,
+        2.49
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        2.3,
+        1.64,
+        1.59
+      ],
+      "tree": "young_broad_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 18,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        53.03,
+        5.33,
+        -23.98
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 28.8,
+      "collide": false,
+      "drop_m": 0.05,
+      "id": "R3",
+      "path_edge_min_m": 52.37,
+      "pos": [
+        54.39,
+        6.35,
+        -23.18
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.21,
+        1.4,
+        1.83
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 12,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        10.08,
+        1.34,
+        -16.37
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 5.6,
+      "collide": false,
+      "drop_m": 0.04,
+      "id": "B1",
+      "path_edge_min_m": 8.6,
+      "pos": [
+        11.2,
+        1.39,
+        -15.6
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.2,
+        0.47,
+        1.34
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        42.44,
+        2.5,
+        7.95
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 8.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "B2",
+      "path_edge_min_m": 39.94,
+      "pos": [
+        43.6,
+        2.52,
+        8.6
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        2.3,
+        0.37,
+        1.12
+      ],
+      "underside_gap_max_m": 0.6,
+      "underside_verts_gap_gt30cm": 10,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        51.01,
+        2.86,
+        -7.99
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 11.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "B3",
+      "path_edge_min_m": 48.96,
+      "pos": [
+        51.6,
+        3.04,
+        -6.8
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        0.83,
+        0.51,
+        2.39
+      ],
+      "underside_gap_max_m": 0.7,
+      "underside_verts_gap_gt30cm": 6,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -14.52,
+        2.69,
+        -89.33
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "E1",
+      "path_edge_min_m": 8.31,
+      "pos": [
+        -13.3,
+        3.1,
+        -88.2
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        2.63,
+        0.79,
+        3.39
+      ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -10.16,
+        2.96,
+        -88.29
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 23.9,
+      "collide": false,
+      "drop_m": 0.05,
+      "id": "E2",
+      "path_edge_min_m": 4.16,
+      "pos": [
+        -8.8,
+        2.97,
+        -87.6
+      ],
+      "protrude_m": 0.14,
+      "size": [
+        2.72,
+        0.22,
+        1.2
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        11.95,
+        2.78,
+        -61.26
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 31.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR1",
+      "path_edge_min_m": 22.63,
+      "pos": [
+        12.96,
+        3.15,
+        -60.51
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.71,
+        0.67,
+        2.52
+      ],
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        10.99,
+        3.19,
+        -93.88
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR2",
+      "path_edge_min_m": 3.16,
+      "pos": [
+        13.05,
+        3.56,
+        -93.18
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        3.12,
+        0.7,
+        2.0
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        7.86,
+        0.46,
+        -11.04
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR3",
+      "path_edge_min_m": 5.99,
+      "pos": [
+        9.76,
+        0.81,
+        -10.66
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.9,
+        0.67,
+        1.59
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -22.08,
+        2.65,
+        -84.74
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR4",
+      "path_edge_min_m": 11.9,
+      "pos": [
+        -21.13,
+        3.02,
+        -83.28
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        3.2,
+        0.7,
+        2.48
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -25.39,
+        2.0,
+        -64.73
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR5",
+      "path_edge_min_m": 8.15,
+      "pos": [
+        -24.84,
+        2.41,
+        -63.8
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        1.88,
+        0.72,
+        2.71
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -26.17,
+        2.24,
+        -68.75
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR6",
+      "path_edge_min_m": 9.41,
+      "pos": [
+        -25.46,
+        2.63,
+        -67.82
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        2.22,
+        0.72,
+        2.69
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        8.7,
+        3.03,
+        -88.51
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.4,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR7",
+      "path_edge_min_m": 4.65,
+      "pos": [
+        10.55,
+        3.42,
+        -87.14
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.81,
+        0.71,
+        2.24
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        14.84,
+        3.39,
+        -92.25
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "id": "AR8",
+      "path_edge_min_m": 7.23,
+      "pos": [
+        16.55,
+        3.69,
+        -91.91
+      ],
+      "protrude_m": 0.29,
+      "size": [
+        2.61,
+        0.59,
+        1.42
+      ],
+      "tree": "sugi_c",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -4.37,
+        1.35,
+        -43.96
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 25.9,
+      "collide": true,
+      "drop_m": 0.1,
+      "id": "AD1",
+      "path_edge_min_m": 4.36,
+      "pos": [
+        -2.54,
+        1.43,
+        -43.11
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        3.61,
+        0.6,
+        1.7
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        15.8,
+        3.14,
+        -63.26
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 39.5,
+      "collide": false,
+      "drop_m": 0.07,
+      "id": "AD2",
+      "path_edge_min_m": 24.04,
+      "pos": [
+        16.72,
+        3.21,
+        -62.15
+      ],
+      "protrude_m": 0.11,
+      "size": [
+        1.9,
+        0.3,
+        2.28
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        15.12,
+        3.4,
+        -91.68
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 45.7,
+      "collide": true,
+      "drop_m": 0.05,
+      "id": "AD3",
+      "path_edge_min_m": 8.21,
+      "pos": [
+        15.88,
+        3.61,
+        -90.33
+      ],
+      "protrude_m": 0.98,
+      "size": [
+        1.59,
+        1.23,
+        2.42
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        22.96,
+        3.72,
+        -92.34
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 14.6,
+      "collide": true,
+      "drop_m": 0.07,
+      "id": "AD4",
+      "path_edge_min_m": 14.05,
+      "pos": [
+        25.42,
+        3.72,
+        -91.86
+      ],
+      "protrude_m": 0.47,
+      "size": [
+        4.6,
+        0.57,
+        0.95
+      ],
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -24.94,
+        2.92,
+        -86.9
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 23.8,
+      "collide": false,
+      "drop_m": 0.08,
+      "id": "AD5",
+      "path_edge_min_m": 16.77,
+      "pos": [
+        -24.21,
+        3.03,
+        -85.83
+      ],
+      "protrude_m": 0.29,
+      "size": [
+        1.39,
+        0.52,
+        2.16
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -35.39,
+        3.41,
+        -73.52
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 31.3,
+      "collide": true,
+      "drop_m": 0.13,
+      "id": "AD6",
+      "path_edge_min_m": 18.17,
+      "pos": [
+        -33.5,
+        3.44,
+        -72.96
+      ],
+      "protrude_m": 0.58,
+      "size": [
+        3.62,
+        0.77,
+        1.1
+      ],
+      "underside_gap_max_m": 0.85,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        -10.42,
+        0.52,
+        0.54
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 25.9,
+      "collide": true,
+      "drop_m": 0.11,
+      "id": "AD7",
+      "path_edge_min_m": 4.01,
+      "pos": [
+        -8.61,
+        0.54,
+        0.93
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        3.63,
+        0.49,
+        0.7
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -25.35,
+        2.81,
+        -74.89
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 33.3,
+      "collide": false,
+      "drop_m": 0.06,
+      "id": "AD8",
+      "path_edge_min_m": 11.37,
+      "pos": [
+        -24.95,
+        2.95,
+        -73.51
+      ],
+      "protrude_m": 0.13,
+      "size": [
+        1.23,
+        0.36,
+        2.79
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        5.91,
+        2.88,
+        -79.35
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.0,
+      "collide": true,
+      "drop_m": 0.06,
+      "id": "AD9",
+      "path_edge_min_m": 7.51,
+      "pos": [
+        6.69,
+        3.13,
+        -78.47
+      ],
+      "protrude_m": 0.98,
+      "size": [
+        1.69,
+        1.29,
+        2.2
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        7.72,
+        0.67,
+        -7.81
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 16.9,
+      "collide": true,
+      "drop_m": 0.11,
+      "id": "AD10",
+      "path_edge_min_m": 5.66,
+      "pos": [
+        8.56,
+        0.64,
+        -5.47
+      ],
+      "protrude_m": 0.44,
+      "size": [
+        1.74,
+        0.51,
+        4.46
+      ],
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -15.17,
+        2.59,
+        -78.18
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 11.9,
+      "collide": false,
+      "drop_m": 0.04,
+      "id": "AD11",
+      "path_edge_min_m": 3.33,
+      "pos": [
+        -13.98,
+        2.59,
+        -77.49
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.34,
+        0.35,
+        1.07
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -2.3,
+        2.22,
+        -62.85
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 26.1,
+      "collide": true,
+      "drop_m": 0.1,
+      "id": "AD13",
+      "path_edge_min_m": 8.56,
+      "pos": [
+        -0.8,
+        2.23,
+        -61.38
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        3.01,
+        0.5,
+        2.92
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -20.59,
+        2.04,
+        -62.78
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 23.9,
+      "collide": false,
+      "drop_m": 0.05,
+      "id": "AD14",
+      "path_edge_min_m": 3.54,
+      "pos": [
+        -20.17,
+        2.08,
+        -61.41
+      ],
+      "protrude_m": 0.14,
+      "size": [
+        1.27,
+        0.23,
+        2.78
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        12.88,
+        3.4,
+        -74.51
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.3,
+      "collide": true,
+      "drop_m": 0.07,
+      "id": "AD15",
+      "path_edge_min_m": 16.15,
+      "pos": [
+        13.61,
+        3.61,
+        -73.41
+      ],
+      "protrude_m": 0.97,
+      "size": [
+        1.98,
+        1.23,
+        2.27
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        -17.07,
+        3.15,
+        -95.02
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 15.3,
+      "collide": true,
+      "drop_m": 0.1,
+      "id": "AD16",
+      "path_edge_min_m": 12.16,
+      "pos": [
+        -14.61,
+        3.13,
+        -94.47
+      ],
+      "protrude_m": 0.43,
+      "size": [
+        4.55,
+        0.53,
+        1.17
+      ],
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        8.42,
+        3.03,
+        -64.77
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 15.9,
+      "collide": false,
+      "drop_m": 0.05,
+      "id": "AD17",
+      "path_edge_min_m": 17.26,
+      "pos": [
+        8.75,
+        3.03,
+        -63.58
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        0.86,
+        0.37,
+        2.37
+      ],
+      "underside_gap_max_m": 0.6,
+      "underside_verts_gap_gt30cm": 6,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -34.02,
+        2.54,
+        -63.84
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 16.6,
+      "collide": true,
+      "drop_m": 0.08,
+      "id": "AD18",
+      "path_edge_min_m": 15.12,
+      "pos": [
+        -32.44,
+        2.61,
+        -62.68
+      ],
+      "protrude_m": 0.66,
+      "size": [
+        3.03,
+        0.79,
+        2.32
+      ],
+      "underside_gap_max_m": 1.35,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 469
+    }
+  ],
+  "mm_lod1_nodes": 373,
+  "mm_nodes": 913,
+  "skipped": [
+    {
+      "id": "W1",
+      "why": "樹幹在岩裡"
+    },
+    {
+      "id": "W3t",
+      "why": "與既有谷壁岩重疊"
+    },
+    {
+      "id": "AD12",
+      "why": "離主路路緣 3.01 m（要 ≥ 3.5）"
+    }
+  ],
+  "tris": {
+    "s01_fern_a": 1044,
+    "s01_fern_b": 728,
+    "s01_fern_c": 1100,
+    "s01_fern_d": 408,
+    "s01_forb_a": 452,
+    "s01_forb_b": 132,
+    "s01_fuki_a": 336,
+    "s01_fuki_b": 528,
+    "s01_grass_short_a": 168,
+    "s01_grass_short_b": 150,
+    "s01_grass_tall_a": 412,
+    "s01_grass_tall_b": 348,
+    "s01_grass_tall_c": 338,
+    "s01_grass_tall_d": 256,
+    "s01_herb_broad_a": 396,
+    "s01_litter_a": 1008,
+    "s01_litter_b": 624,
+    "s01_moss_a": 170,
+    "s01_sapling_a": 1656,
+    "s01_sapling_b": 544,
+    "s01_sasa_a": 582,
+    "s01_sasa_b": 1224,
+    "s01_sedge_a": 792,
+    "s01_shadegrass_a": 132,
+    "s01_shrub_a": 1220,
+    "s01_shrub_b": 1164,
+    "s01_twigs_a": 252
+  }
+}

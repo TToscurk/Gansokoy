@@ -1,0 +1,494 @@
+{
+	"forest": {
+		"bamboo_zones": "f4dfeaa5e92939d18d2cc594ac9915b7287534724bea20f6862aa75db2784bc1",
+		"branch_clear_extra": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
+		"clearings": "0b0cdec89f456227819d43aa392f298c73a13d580df1eeb6bc975a983f6db024",
+		"density_per_100m2": "2405a2c8d6f40c3e741afe3645bd3ccb5867c6cb7e0a02bc7d23346ede103461",
+		"freeze": "d6d42060634e3d5669eceb31108a443437d16ed12db78e80a7f4cdb240fa082c",
+		"freeze_s04": "44af8546682292664fc082a07c69680b8756fe86b217f9118ae4374a2a505711",
+		"freeze_s04_meadow": "417cc2a0a692244d25577222ce9570c11f1948c064608a5420697da3b1607837",
+		"near_path": "d376a207c832c6efaf64e6247437d38fe75099cc6f8d1c926755d7a6ca92fcc1",
+		"pins": "f3eef5b78bc4b40102894b5ce949772c42da5fd90e80f11dc381c86841f085e3",
+		"seed": "2604b8f6448cd2d82dc378ebc0735158b825b5715bb272966a8b372b9a478b22",
+		"species_mix": "296f9acb409ec3feb6c26a286c71fb0ccd508584e2cf1336309ea1dc5147aa9a",
+		"stands": "367f28b963b23215754f399861eb588a2a9699034f40ddd3b9108018cad7dc92"
+	},
+	"order": [
+		"portal_village",
+		"spawn_s01",
+		"fence_village_L",
+		"fence_village_R",
+		"fence_village_R2",
+		"farm_patch",
+		"farm_hut",
+		"firewood",
+		"basket_farm",
+		"fence_field_edge",
+		"signpost_entrance",
+		"fence_torii_L",
+		"fence_torii_R",
+		"rock_torii_L",
+		"rock_torii_R",
+		"rocks_torii",
+		"lantern_in_L",
+		"lantern_in_R",
+		"torii_gate",
+		"shrine_hut_entrance",
+		"stone_marker_a",
+		"rocks_meadow",
+		"rock_meadow_m1",
+		"rock_meadow_m2",
+		"fence_end",
+		"log_fallen_1",
+		"stump_1",
+		"roots_1",
+		"footprints_a",
+		"stump_2",
+		"lair_offerings_1",
+		"lair_offerings_2",
+		"lair_bones",
+		"lair_feathers",
+		"lair_mushrooms_1",
+		"lair_mushrooms_2",
+		"lair_branch",
+		"lair_rock_a",
+		"lair_rock_b",
+		"fence_descent",
+		"steps_descent",
+		"bridge_01",
+		"stones_ford",
+		"rocks_moss_bridge",
+		"rocks_moss_bridge2",
+		"rocks_moss_bridge3",
+		"cascade_main",
+		"basket_bridge",
+		"steps_bridge_n",
+		"roots_giant_a",
+		"roots_giant_b",
+		"boulder_gate_L",
+		"boulder_gate_R",
+		"steps_rootstep",
+		"branch_rootstep",
+		"branch_glade",
+		"footprints_b",
+		"lantern_glade_L",
+		"stone_marker_b",
+		"signpost_fork",
+		"shrine_wayside",
+		"rocks_fork",
+		"lane_gate",
+		"stones_bamboo",
+		"steps_bamboo",
+		"rocks_moss_bamboo",
+		"torii_bamboo",
+		"lantern_bamboo",
+		"lantern_bamboo2",
+		"fence_broken_north",
+		"shimenawa_north",
+		"fall_spring_L",
+		"fall_spring_R",
+		"fall_spring_B",
+		"fall_lip_a",
+		"fall_lip_b",
+		"fall_lip_c",
+		"fall_lip_w",
+		"fall_lip_e",
+		"fall_bed_a",
+		"fall_bed_b",
+		"fall_flank_L",
+		"fall_flank_R",
+		"footprints_c",
+		"offerings_north",
+		"lantern_fallen",
+		"branch_north",
+		"footprints_d",
+		"mushrooms_north",
+		"boulder_arena_L",
+		"boulder_arena_R"
+	],
+	"pois": {
+		"basket_bridge": {
+			"d": "a833565e83ee0cf681e335739ec3a385ab152cbc11761285acf8b90dd42d8c30",
+			"scene": "S02"
+		},
+		"basket_farm": {
+			"d": "16d2d4e9dbf79c0ac566f8ea3ce017e138df551eedc21cd46c376809ad942532",
+			"scene": "S01"
+		},
+		"boulder_arena_L": {
+			"d": "bd54d00e6999e5c76dd2627a813ab59d80aaf93f6a24e55d9f048c1c22147647",
+			"scene": "S04"
+		},
+		"boulder_arena_R": {
+			"d": "693b8b4650db8ea4605b783c2b150e1917fad33c6d1c2e9aad867d768de87d58",
+			"scene": "S04"
+		},
+		"boulder_gate_L": {
+			"d": "ed36f6b0bbf2bdc320f8a201c6e7b4d2d65e188b017f42e715ceaa3d5a9398dd",
+			"scene": "S03"
+		},
+		"boulder_gate_R": {
+			"d": "e11af17563afaf452f182f11bf21800b069e6d49a7df2fbab6850461d816b734",
+			"scene": "S03"
+		},
+		"branch_glade": {
+			"d": "e3442658fad22257a98fa57821dcbf532be699cc349dbe1cd70f7a7342f4cf4c",
+			"scene": "S03"
+		},
+		"branch_north": {
+			"d": "0f7edfaf752dd9b8ca3c2819685a605cfb6d537d50a6c117614087f8bdba62db",
+			"scene": "S03"
+		},
+		"branch_rootstep": {
+			"d": "e020f4d97531524cacf44f5106063f90a1825c24abd21f4b06cfa99d60985031",
+			"scene": "S03"
+		},
+		"bridge_01": {
+			"d": "64576f04dd5231386461e6be0fd70d05bb66676808e0360c25398a5034271545",
+			"scene": "S02"
+		},
+		"cascade_main": {
+			"d": "996ab38a2bb570e24f5008aeb703255d4bd666ab803f6d7dd272a74053b56669",
+			"scene": "S02"
+		},
+		"fall_bed_a": {
+			"d": "dc5a846c497e4d8c0e40eb0e7e932e89c532d2b2906fc2397d269f253c3a5313",
+			"scene": "S04"
+		},
+		"fall_bed_b": {
+			"d": "06c479793ff05ce77129473cb41fd4b4c751dea8c6c5df270801adda662990a9",
+			"scene": "S04"
+		},
+		"fall_flank_L": {
+			"d": "1322dabfe17b51d1dfd5c063db3e9dadcb869943173f2f5d09ca6a8fb3069af2",
+			"scene": "S04"
+		},
+		"fall_flank_R": {
+			"d": "2ebd6e81fe6b031f3a98a8b855f09e9608711ec8662f5020d68f644154795e53",
+			"scene": "S04"
+		},
+		"fall_lip_a": {
+			"d": "1be047fee206733090515df9760f63384f71fe6a71f83bc9096462a423e57686",
+			"scene": "S04"
+		},
+		"fall_lip_b": {
+			"d": "d984ca8f26f74aaeafc27d6b5d77236cab7b0d60aa886bf1e0b43de2f504e984",
+			"scene": "S04"
+		},
+		"fall_lip_c": {
+			"d": "d520aff45ded50bfd2fea1d9e7e1a2b48d04da47adbc671591637783ef35cabe",
+			"scene": "S04"
+		},
+		"fall_lip_e": {
+			"d": "33eae90302612d16d7f59763c1da28177f54f8a8341d8d48c2c10a28b9a61e13",
+			"scene": "S04"
+		},
+		"fall_lip_w": {
+			"d": "7d78c6b1a78ae0b15764816dc3980083394b7d0c4e1c5ea369d5201c9506d9af",
+			"scene": "S04"
+		},
+		"fall_spring_B": {
+			"d": "0787a3bf4ef32e5421c84b497da82ccbd4f339ee495f77fc63716254ea58c603",
+			"scene": "S04"
+		},
+		"fall_spring_L": {
+			"d": "4172bdd04cee6c7abda87920716499a21eab9accde1a189d3b2c9e8f52cef9f4",
+			"scene": "S04"
+		},
+		"fall_spring_R": {
+			"d": "6e5ba152e80fe14e47b8edafd69bdb1be281de2c96f590e17f53bd9c8e365484",
+			"scene": "S04"
+		},
+		"farm_hut": {
+			"d": "36565181c99dc1123c5e5dfbcd74c333ebd62a742fe24c28caaf9065d2c1ffc9",
+			"scene": "S01"
+		},
+		"farm_patch": {
+			"d": "f9c97c2f6187d40fd4738d1549c99d803bdbe6de3f45689fb6047a6f0b51f733",
+			"scene": "S01"
+		},
+		"fence_broken_north": {
+			"d": "8996019ffeb08a01a53f49b4b73c6f34b1180bdf2762f967ed7b1692f8678ea4",
+			"scene": "S03"
+		},
+		"fence_descent": {
+			"d": "ece4ca24ee42a703cb0e3afbf20a46869320a1fd8d5726beaa27aca24b42394f",
+			"scene": "S02"
+		},
+		"fence_end": {
+			"d": "c4552e55bca039bb4a48b8dc0637736545d15b8dcaafbe9013ee6e1bebf53494",
+			"scene": "S02"
+		},
+		"fence_field_edge": {
+			"d": "dba0776dcc6587d8900f93cec69c3b36016ae47be1d8ccc2aa7887b60542b4b6",
+			"scene": "S01"
+		},
+		"fence_torii_L": {
+			"d": "af329fce60cf4a18692d00620b1f28a4e6e47ef695ac8f5fc8b1d85c21ce90f8",
+			"scene": "S01"
+		},
+		"fence_torii_R": {
+			"d": "60376b04c4c2643d345040d5bcb6d52856fc5f92ccfac0b6b891a0ba8c1d99f9",
+			"scene": "S01"
+		},
+		"fence_village_L": {
+			"d": "275583d7df084633c0792a7f8f531898f9fb3344d584c994445c4de9841dcb02",
+			"scene": "S01"
+		},
+		"fence_village_R": {
+			"d": "f1d8693d6655fd4a322fa6d71a57bce73f76405774d8dc1cf5682e43b5f227ea",
+			"scene": "S01"
+		},
+		"fence_village_R2": {
+			"d": "4ea5d106f869fc4844d4c10ba5666614a38290c18507964c7a1785128f539f12",
+			"scene": "S01"
+		},
+		"firewood": {
+			"d": "852b7dbad306ad94c07e216fa2faa0915473bf5cd1d006ca0a219927a6160f7a",
+			"scene": "S01"
+		},
+		"footprints_a": {
+			"d": "0bb87f903c2806cacef7df6b0d95a6161d79719a6bd81d702d44e82cb9c622e3",
+			"scene": "S02"
+		},
+		"footprints_b": {
+			"d": "cb9f726f828766d73ad99078fc504fa676e9225c4a229ab896004e411b9593cd",
+			"scene": "S03"
+		},
+		"footprints_c": {
+			"d": "3f58b2b47c1ee2f829d1ff7a618f84c172eafada03452079a8ae0b4be1683b3c",
+			"scene": "S03"
+		},
+		"footprints_d": {
+			"d": "17b8dbd920ca028603176f0e8d0be912999cd0bdd330b1bf22ca13f5ef0a3264",
+			"scene": "S03"
+		},
+		"lair_bones": {
+			"d": "466b9a18a6e6223895631f9d96b0621aedc54b0abd84e6799f98a7ee593185d7",
+			"scene": "S02"
+		},
+		"lair_branch": {
+			"d": "bf7bf8f5b139f014a8614fb05f72214f639418d9c240f6ffcabd7cadeff9b968",
+			"scene": "S02"
+		},
+		"lair_feathers": {
+			"d": "9e4fe0c59d190d7ecb9b9b2ea29f2074ceb262f528327e2f4b21775a7c9c79c0",
+			"scene": "S02"
+		},
+		"lair_mushrooms_1": {
+			"d": "d65b033ff63db7bb2c171407f41552711153e7e711468f083fe7a02f72e42ba2",
+			"scene": "S02"
+		},
+		"lair_mushrooms_2": {
+			"d": "201d8d9084517d9f0709f07f7884b2c4c3756564afa90fdd7867696baf965fdc",
+			"scene": "S02"
+		},
+		"lair_offerings_1": {
+			"d": "4bcfc239da481f0a576942efdac82990ebe4b371a35870f4ba30286e2fbe5a84",
+			"scene": "S02"
+		},
+		"lair_offerings_2": {
+			"d": "daf9a94d4483486b70cd5a2d7ff31f68b419838d84076a3a97bd5c591ed592f8",
+			"scene": "S02"
+		},
+		"lair_rock_a": {
+			"d": "0ae5f4b79d34ebbae6fe499a527660f54abad9b1f880904dde60e09cdfb4cfad",
+			"scene": "S02"
+		},
+		"lair_rock_b": {
+			"d": "c7aca62d8a4595b52fde3b025d42d6fef8c199633a6d5695215b3c3dc7e4173c",
+			"scene": "S02"
+		},
+		"lane_gate": {
+			"d": "7e37a91a8e10666e0cebce49bc622a7481d09a98fbf302a98fb04ec7128057b8",
+			"scene": "S03"
+		},
+		"lantern_bamboo": {
+			"d": "a251fb3d9b6d7867bd43ad282a64073d37a59f4fe97de0194517554023af2874",
+			"scene": "S03"
+		},
+		"lantern_bamboo2": {
+			"d": "ec38075a3334ddfe5303c5addf92d25ba62935b76c7114a06b8ac728780d54c3",
+			"scene": "S03"
+		},
+		"lantern_fallen": {
+			"d": "db0ffed9c16d3dc049ea859ecccd09902cdd50874677122c7a5d8e23da8c2bb3",
+			"scene": "S03"
+		},
+		"lantern_glade_L": {
+			"d": "b5cc2763472f67e6936c8846440a49e7c3f45075b4ab831c175d2caa5afc93ad",
+			"scene": "S03"
+		},
+		"lantern_in_L": {
+			"d": "fbea64d557d91383ea30802ac23ea9d1315b506684c50be96fc3cda5ba2e8edf",
+			"scene": "S01"
+		},
+		"lantern_in_R": {
+			"d": "3a721a92b1250ffaa49ff0e5e3bc4ee07b869fa202ab8d7a5036a84b83e82c0d",
+			"scene": "S01"
+		},
+		"log_fallen_1": {
+			"d": "cefb4ef400319015d9c9f085c4b66897ac5c218fea3377e4465528dcdd43b99f",
+			"scene": "S02"
+		},
+		"mushrooms_north": {
+			"d": "9afaf9b70cf54bc87fd697fcee896b2a8d3bf7ed64edd249392e73cecd76c511",
+			"scene": "S03"
+		},
+		"offerings_north": {
+			"d": "4204b70fecd2999dfdce1fe278896a94787eaa58cf9bc1923ab67f97095c999c",
+			"scene": "S03"
+		},
+		"portal_village": {
+			"d": "84bd17e969a6ac567abf1a1488e21956d60b29b9d6e601dff8e57f9f31b85ccc",
+			"scene": "S01"
+		},
+		"rock_meadow_m1": {
+			"d": "d6771100775836ca36c2fe6d2c24ada9f8a520f49c9fa35751e5782a2cfbbfd0",
+			"scene": "S01"
+		},
+		"rock_meadow_m2": {
+			"d": "c780e5ab886d47cd6fa8e7048385155ca2a5309e5c607a5190dc1725c0dcd00b",
+			"scene": "S01"
+		},
+		"rock_torii_L": {
+			"d": "b62d13adf672d6d19270b36aeeb7776203aaead0a7322dc56da8d049c70aa42c",
+			"scene": "S01"
+		},
+		"rock_torii_R": {
+			"d": "2ae0446f73b86dc27534181ef64a6c487f6060713d12768b86900ffd11d19dda",
+			"scene": "S01"
+		},
+		"rocks_fork": {
+			"d": "bca6eaec7254cd328329f410f1eaa18432bfec5f41176a406e61191339464d5a",
+			"scene": "S03"
+		},
+		"rocks_meadow": {
+			"d": "0b9601858942e645bdf2d83dc21b289e35f568f6bbba8160eb4af51ae3b832c7",
+			"scene": "S01"
+		},
+		"rocks_moss_bamboo": {
+			"d": "95c5213df698524ae7e6fc80272414a1cecfc44f349bf048d8295cffaae52659",
+			"scene": "S03"
+		},
+		"rocks_moss_bridge": {
+			"d": "125f6a7771b80d4656c61d7311f326b6fddf5f5d6e9dc9c5df747efe328ccb30",
+			"scene": "S02"
+		},
+		"rocks_moss_bridge2": {
+			"d": "fa7c63106a628dbde1bcdf679052c028f45808a5fa2cea1e18a369cb3437d8aa",
+			"scene": "S02"
+		},
+		"rocks_moss_bridge3": {
+			"d": "f86db637739f736dd55a906062edefe93e2175dc8cf01580f30545a3ed20b40a",
+			"scene": "S02"
+		},
+		"rocks_torii": {
+			"d": "4066a8c4307ac6fa4ed26756a63c1ee4f299762d6378e7a1cd234e1cd9380e22",
+			"scene": "S01"
+		},
+		"roots_1": {
+			"d": "c0cbf502722c47f6ec1cd6754b5d1c47ea6c68d5c629c6675b3362d45f25733f",
+			"scene": "S02"
+		},
+		"roots_giant_a": {
+			"d": "20de8c7e3aca8de5f3657024b57b4c73e66f79852a7628e9ae4e25575fb6ad19",
+			"scene": "S02"
+		},
+		"roots_giant_b": {
+			"d": "753f04706922c9d4666afaa28dcd3fbcc8c3fd7066a87a20ce39e8a3c1456309",
+			"scene": "S02"
+		},
+		"shimenawa_north": {
+			"d": "540908b247d617d5016708075da6d1dfba323dc3e2809c4e577190e36558dd73",
+			"scene": "S04"
+		},
+		"shrine_hut_entrance": {
+			"d": "5b6ab7eba91fddcfa7603fda11b1daf4015fca2a562431aede4cde50a695368d",
+			"scene": "S01"
+		},
+		"shrine_wayside": {
+			"d": "00a75ee19c2304155f488346a9312968e949882b60d10d439b5eddc669882a5a",
+			"scene": "S03"
+		},
+		"signpost_entrance": {
+			"d": "2401340616767c3414199174825957d6f221dff182a098124722d022dd95d5f9",
+			"scene": "S01"
+		},
+		"signpost_fork": {
+			"d": "b070071d98ed4429aec1b369ca444c3ff4d9b26162fa403af9fc58056c20a7ea",
+			"scene": "S03"
+		},
+		"spawn_s01": {
+			"d": "c62f7118eece2c0025b77f2baf291a8865a9281554f44578ad3f01e0b40d5f06",
+			"scene": "S01"
+		},
+		"steps_bamboo": {
+			"d": "87cc242e327fc4f879abe82de14d9972ddcbab9b709823ea9e3b3db107fe09bf",
+			"scene": "S03"
+		},
+		"steps_bridge_n": {
+			"d": "b001f32973375448dcd672586bd52ca2bf3f00a28941b2e8c33d8e8dea5806bf",
+			"scene": "S02"
+		},
+		"steps_descent": {
+			"d": "ce9fab2ce2e90a4124c543585149cb41e89ac163065baf1ec55e2ff7a2c06db3",
+			"scene": "S02"
+		},
+		"steps_rootstep": {
+			"d": "d8a332ab42aeb4a59fd595c65771d98ff7d902544355a6861e24650344489ac2",
+			"scene": "S03"
+		},
+		"stone_marker_a": {
+			"d": "757e066e229b68a6156fcd042b61f43857ecb81bc0e73dbd3372cac01594a9ce",
+			"scene": "S01"
+		},
+		"stone_marker_b": {
+			"d": "ec92d316d35a9ecb2eb17819a16f854f0e80dd9c5e415598da36f2a54b08a7d3",
+			"scene": "S03"
+		},
+		"stones_bamboo": {
+			"d": "91d8b64aa3c14265ceab063582bca28abb5613a445607c6fae365ccc1fba4632",
+			"scene": "S03"
+		},
+		"stones_ford": {
+			"d": "88377dea05f0552cf1d7dee378e83a0f4544c2ee2fc7497d2e4ac249404e9366",
+			"scene": "S02"
+		},
+		"stump_1": {
+			"d": "013b7d69aed33879c0287d56cdddd3d7d039b40b35db9b296929b87ea803d616",
+			"scene": "S02"
+		},
+		"stump_2": {
+			"d": "ee7adbfb535b396cb72000cd27f9a6d5562f3761f11cb544c2ba961f469e89ba",
+			"scene": "S02"
+		},
+		"torii_bamboo": {
+			"d": "7a4ae39ffeb5e6923520525e21ed434eb379b683947266310cf6cf40817291f3",
+			"scene": "S03"
+		},
+		"torii_gate": {
+			"d": "93e4f91b050b0b13eb484656e98ff1360d3049c7978b41d5ef6650d9940bd588",
+			"scene": "S01"
+		}
+	},
+	"top": {
+		"_note": "3b503dce76b8fe36d937d0d9cfdc85ec62cc4a98fe3cc978ff2534ae19a5af57",
+		"_retired_pois": "ca5a7439d9b0161271c7da0389da85648796458e057124b33677e5c7d75f4b24",
+		"atmosphere": "291a538f39e0aaa96f0db2845a0bd213dc0fe3cc838f6479cd508e376752bb85",
+		"beats": "26bcf978ba1220e141d5ef328abb2c4dd9dd027b6850701b69c97f2bdefb372b",
+		"boss_arena": "b18a31cb83b3bc855987b0378b3aa2b48692d5610b0e2dd2da25a0b0662f832f",
+		"branches": "7e3bc590d8507d5ef5146921518edc822942a483064d6c9cd28a72c80de15930",
+		"frame": "232bb2c1b7b53e71402f756551017ad5b628392fb00205a729f3def3a6620947",
+		"freeze_s04_pool_shore": "edfa8c961b39832f1ebd4a08a627dcb4934cb585d85a8b3fe5dde0b379928088",
+		"limits": "96ae24cac74ea57d3957d94485173b5d2e73ef8025be6e2091b935a5311a4653",
+		"main_path": "2de57dffcf242effd604a4eade42a7d1af29a642bf2b937dd9decc7507c6e371",
+		"references": "0e21ce615d83d53f24b5e1755eb8cfeaef0bfb5edc40346b4b655eac3a104f52",
+		"scenes": "0e6cea5099c8042ec6994ceec741a83b3f2acea52631c38de574734c82bd59d4",
+		"spec": "09b380b0a85fc52843301c7f40b5cba984b1c5d837908b27d92775508e306876",
+		"status": "e92101f2a49cd8e57b1dbf62ca043aec270970b7a3687b90449d10c7c443c288",
+		"streams": "399618d36d3c0f2903780436a35f67af37244e52d12ecbc4138dd1c52981048b",
+		"terrain": "a23eeeb37ab020a1e8fcf315c29a73c96be7d82a8a8e11a6f169327f91b111aa",
+		"version": "5a4747fcdafec66d8d8812022e3b7d2666d886ec0e0ee7926ec8c50db40f29d5"
+	}
+}

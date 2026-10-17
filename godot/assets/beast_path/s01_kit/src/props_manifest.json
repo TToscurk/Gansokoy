@@ -1,0 +1,342 @@
+{
+ "generator": "assets/beast_path/s01_kit/src/build_bp_props.py",
+ "blender": "5.2.1 LTS",
+ "assets": {
+  "bp_step_stone_a": {
+   "category": "step",
+   "tris": 126,
+   "verts": 225,
+   "size_m": [
+    0.959,
+    0.376,
+    0.425
+   ],
+   "z_min": -0.427,
+   "z_max": -0.003
+  },
+  "bp_step_stone_b": {
+   "category": "step",
+   "tris": 126,
+   "verts": 225,
+   "size_m": [
+    0.66,
+    0.523,
+    0.33
+   ],
+   "z_min": -0.323,
+   "z_max": 0.007
+  },
+  "bp_step_stone_c": {
+   "category": "step",
+   "tris": 158,
+   "verts": 281,
+   "size_m": [
+    0.878,
+    0.503,
+    0.43
+   ],
+   "z_min": -0.436,
+   "z_max": -0.006
+  },
+  "bp_step_stone_d": {
+   "category": "step",
+   "tris": 110,
+   "verts": 197,
+   "size_m": [
+    0.675,
+    0.563,
+    0.388
+   ],
+   "z_min": -0.393,
+   "z_max": -0.004
+  },
+  "bp_step_stone_e": {
+   "category": "step",
+   "tris": 142,
+   "verts": 253,
+   "size_m": [
+    0.939,
+    0.533,
+    0.417
+   ],
+   "z_min": -0.416,
+   "z_max": 0.001
+  },
+  "bp_step_log_a": {
+   "category": "step",
+   "tris": 242,
+   "verts": 134,
+   "size_m": [
+    1.183,
+    0.28,
+    0.216
+   ],
+   "z_min": 0.009,
+   "z_max": 0.225
+  },
+  "bp_step_log_b": {
+   "category": "step",
+   "tris": 242,
+   "verts": 134,
+   "size_m": [
+    1.18,
+    0.293,
+    0.225
+   ],
+   "z_min": 0.002,
+   "z_max": 0.227
+  },
+  "bp_step_log_c": {
+   "category": "step",
+   "tris": 374,
+   "verts": 206,
+   "size_m": [
+    2.421,
+    0.308,
+    0.23
+   ],
+   "z_min": 0.002,
+   "z_max": 0.232
+  },
+  "bp_step_log_d": {
+   "category": "step",
+   "tris": 374,
+   "verts": 206,
+   "size_m": [
+    2.327,
+    0.315,
+    0.24
+   ],
+   "z_min": 0.007,
+   "z_max": 0.247
+  },
+  "bp_bridge_a": {
+   "category": "arch",
+   "tris": 1588,
+   "verts": 3132,
+   "size_m": [
+    10.9,
+    2.696,
+    1.429
+   ],
+   "z_min": -0.429,
+   "z_max": 1.0
+  },
+  "bp_bridge_a_abut": {
+   "category": "arch_stone",
+   "tris": 190,
+   "verts": 380,
+   "size_m": [
+    0.896,
+    3.344,
+    0.899
+   ],
+   "z_min": -1.006,
+   "z_max": -0.106
+  },
+  "bp_hokora_a": {
+   "category": "arch",
+   "tris": 696,
+   "verts": 1392,
+   "size_m": [
+    3.21,
+    3.1,
+    2.28
+   ],
+   "z_min": 0.0,
+   "z_max": 2.28
+  },
+  "bp_hokora_a_base": {
+   "category": "arch_stone",
+   "tris": 272,
+   "verts": 544,
+   "size_m": [
+    3.387,
+    2.987,
+    0.68
+   ],
+   "z_min": -0.252,
+   "z_max": 0.428
+  },
+  "bp_signpost_a": {
+   "category": "arch",
+   "tris": 48,
+   "verts": 96,
+   "size_m": [
+    0.26,
+    0.26,
+    2.555
+   ],
+   "z_min": -0.35,
+   "z_max": 2.205
+  },
+  "bp_signpost_board": {
+   "category": "arch",
+   "tris": 72,
+   "verts": 142,
+   "size_m": [
+    0.93,
+    0.047,
+    0.22
+   ],
+   "z_min": -0.11,
+   "z_max": 0.11
+  },
+  "bp_marker_a": {
+   "category": "arch_stone",
+   "tris": 90,
+   "verts": 184,
+   "size_m": [
+    0.321,
+    0.265,
+    1.311
+   ],
+   "z_min": -0.251,
+   "z_max": 1.06
+  },
+  "bp_fence_post_a": {
+   "category": "arch",
+   "tris": 108,
+   "verts": 208,
+   "size_m": [
+    0.125,
+    0.119,
+    1.5
+   ],
+   "z_min": -0.25,
+   "z_max": 1.25
+  },
+  "bp_fence_rail_a": {
+   "category": "arch",
+   "tris": 94,
+   "verts": 182,
+   "size_m": [
+    1.0,
+    0.08,
+    0.091
+   ],
+   "z_min": -0.045,
+   "z_max": 0.046
+  },
+  "bp_gate_a": {
+   "category": "arch",
+   "tris": 216,
+   "verts": 432,
+   "size_m": [
+    2.9,
+    0.72,
+    2.585
+   ],
+   "z_min": -0.3,
+   "z_max": 2.285
+  },
+  "bp_offering_stone": {
+   "category": "arch_stone",
+   "tris": 86,
+   "verts": 176,
+   "size_m": [
+    0.741,
+    0.768,
+    0.278
+   ],
+   "z_min": -0.102,
+   "z_max": 0.176
+  },
+  "bp_offering_a": {
+   "category": "arch",
+   "tris": 264,
+   "verts": 256,
+   "size_m": [
+    0.473,
+    0.32,
+    0.599
+   ],
+   "z_min": 0.0,
+   "z_max": 0.599
+  },
+  "bp_stepstone_a": {
+   "category": "rock",
+   "tris": 128,
+   "verts": 235,
+   "size_m": [
+    1.135,
+    0.888,
+    0.844
+   ],
+   "z_min": -0.628,
+   "z_max": 0.217
+  },
+  "bp_stepstone_b": {
+   "category": "rock",
+   "tris": 128,
+   "verts": 235,
+   "size_m": [
+    0.923,
+    0.859,
+    0.842
+   ],
+   "z_min": -0.627,
+   "z_max": 0.215
+  },
+  "bp_basket_a": {
+   "category": "arch",
+   "tris": 692,
+   "verts": 922,
+   "size_m": [
+    0.574,
+    0.631,
+    0.501
+   ],
+   "z_min": 0.0,
+   "z_max": 0.501
+  },
+  "bp_shed_a": {
+   "category": "arch",
+   "tris": 1790,
+   "verts": 3602,
+   "size_m": [
+    5.7,
+    4.7,
+    3.517
+   ],
+   "z_min": -0.157,
+   "z_max": 3.36
+  },
+  "bp_firewood_a": {
+   "category": "arch",
+   "tris": 224,
+   "verts": 408,
+   "size_m": [
+    0.87,
+    1.076,
+    0.462
+   ],
+   "z_min": 0.007,
+   "z_max": 0.469
+  },
+  "s01_lantern_a_low": {
+   "category": "arch_stone",
+   "tris": 538,
+   "verts": 432,
+   "size_m": [
+    0.751,
+    0.814,
+    1.352
+   ],
+   "z_min": -0.151,
+   "z_max": 1.201
+  },
+  "s01_lantern_a_top": {
+   "category": "arch_stone",
+   "tris": 1042,
+   "verts": 1486,
+   "size_m": [
+    0.943,
+    1.078,
+    0.975
+   ],
+   "z_min": 1.2,
+   "z_max": 2.175
+  }
+ }
+}

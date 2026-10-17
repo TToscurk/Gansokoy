@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_waterfall.gdshader" id="1_gka3n"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="2_phfbk"]
+
+[resource]
+resource_name = "BP_Waterfall_B"
+render_priority = 0
+shader = ExtResource("1_gka3n")
+shader_parameter/noise_tex = ExtResource("2_phfbk")
+shader_parameter/water_col = null
+shader_parameter/deep_col = null
+shader_parameter/speed = 1.17
+shader_parameter/height_m = 19.969998741149904
+shader_parameter/mirror = 1.0
+shader_parameter/y_shift = 7.3
+shader_parameter/alpha_k = 0.62
+shader_parameter/top_fade = 0.006
+shader_parameter/edge_top = 0.12

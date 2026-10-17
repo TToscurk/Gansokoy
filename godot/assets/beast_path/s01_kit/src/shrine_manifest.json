@@ -1,0 +1,97 @@
+{
+ "generator": "assets/beast_path/s01_kit/src/build_s01_shrine.py",
+ "blender": "5.2.1 LTS",
+ "assets": {
+  "s01_torii_a": {
+   "category": "arch",
+   "tris": 1998,
+   "verts": 2438,
+   "size_m": [
+    7.32,
+    0.508,
+    4.755
+   ],
+   "z_min": 0.28,
+   "z_max": 5.035
+  },
+  "s01_torii_a_base": {
+   "category": "arch_stone",
+   "tris": 68,
+   "verts": 136,
+   "size_m": [
+    5.935,
+    0.932,
+    0.624
+   ],
+   "z_min": -0.322,
+   "z_max": 0.302
+  },
+  "s01_lantern_a": {
+   "category": "arch_stone",
+   "tris": 1580,
+   "verts": 1918,
+   "size_m": [
+    0.943,
+    1.078,
+    2.326
+   ],
+   "z_min": -0.151,
+   "z_max": 2.175
+  },
+  "s01_crop_daikon": {
+   "category": "crop",
+   "tris": 518,
+   "verts": 537,
+   "size_m": [
+    0.913,
+    0.757,
+    0.604
+   ],
+   "z_min": -0.05,
+   "z_max": 0.554
+  },
+  "s01_crop_negi": {
+   "category": "crop",
+   "tris": 572,
+   "verts": 385,
+   "size_m": [
+    0.621,
+    0.426,
+    0.767
+   ],
+   "z_min": -0.031,
+   "z_max": 0.736
+  },
+  "s01_crop_greens": {
+   "category": "crop",
+   "tris": 140,
+   "verts": 200,
+   "size_m": [
+    0.477,
+    0.457,
+    0.185
+   ],
+   "z_min": -0.014,
+   "z_max": 0.171
+  }
+ },
+ "torii": {
+  "span_post_centres_m": 5.0,
+  "post_r_m": [
+   0.23,
+   0.2
+  ],
+  "nemaki_r_m": 0.258,
+  "lean_m": 0.1,
+  "foot_z_m": 0.3,
+  "nuki_z_m": [
+   3.22,
+   3.52
+  ],
+  "shimaki_z_m": 4.24,
+  "kasagi_half_m": 3.52,
+  "sori_m": 0.22,
+  "clear_width_ground_m": 4.484,
+  "clear_height_m": 3.22
+ }
+}

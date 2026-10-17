@@ -1,0 +1,45 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_ground_s01.gdshader" id="1_ynfg2"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_albedo.jpg" id="2_1nigx"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_forest_diff.jpg" id="3_4hpdr"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_forest_nor_gl.jpg" id="4_sytr6"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_diff.jpg" id="5_261bu"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass_nor_gl.jpg" id="6_f04ay"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="7_ypcur"]
+[ext_resource type="CompressedTexture2DArray" path="res://assets/village_v2/_matlib/ground/V2G_nrh.jpg" id="8_di6ep"]
+
+[resource]
+resource_name = "BP_Ground_S01"
+render_priority = 0
+shader = ExtResource("1_ynfg2")
+shader_parameter/albedo_arr = ExtResource("2_1nigx")
+shader_parameter/nrh_arr = ExtResource("8_di6ep")
+shader_parameter/noise_tex = ExtResource("7_ypcur")
+shader_parameter/ground_k = 0.27
+shader_parameter/seam_z0 = -2000.0
+shader_parameter/seam_z1 = -1999.0
+shader_parameter/moss_col = null
+shader_parameter/wet_dark = null
+shader_parameter/bump_amp = null
+shader_parameter/cliff_tone = null
+shader_parameter/rut_amp = null
+shader_parameter/rut_z = null
+shader_parameter/rut_gap = null
+shader_parameter/slope_rock_rng = null
+shader_parameter/bank_rng = null
+shader_parameter/gain_a = Vector4(1, 1.1, 0.74, 0.92)
+shader_parameter/gain_b = Vector2(1, 0.96)
+shader_parameter/far_steep_fix = 1.0
+shader_parameter/r3_on = 1.0
+shader_parameter/litter_alb = ExtResource("3_4hpdr")
+shader_parameter/litter_nrm = ExtResource("4_sytr6")
+shader_parameter/mossg_alb = ExtResource("5_261bu")
+shader_parameter/mossg_nrm = ExtResource("6_f04ay")
+shader_parameter/r3_tile = Vector2(2.3, 3.1)
+shader_parameter/gain_c = Vector2(0.7, 0.74)
+shader_parameter/grass_desat = 0.2
+shader_parameter/dry_tint = Vector3(1.15, 1.04, 0.72)
+shader_parameter/lush_tint = Vector3(0.86, 0.96, 0.84)
+shader_parameter/litter_desat = null
+shader_parameter/r3_far_rot = 0.62

@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_water.gdshader" id="1_valyr"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="2_pp20j"]
+
+[resource]
+resource_name = "BP_Water_Stream"
+render_priority = 0
+shader = ExtResource("1_valyr")
+shader_parameter/noise_tex = ExtResource("2_pp20j")
+shader_parameter/deep_col = null
+shader_parameter/mid_col = null
+shader_parameter/shallow_col = null
+shader_parameter/foam_col = null
+shader_parameter/shallow_depth = null
+shader_parameter/deep_depth = null
+shader_parameter/ripple = 0.035
+shader_parameter/uv_flow = 0.35
+shader_parameter/fall = Vector4(0, 0, 1, 0)
+shader_parameter/lip = Vector4(-8, -443.85, 4, 0.75)

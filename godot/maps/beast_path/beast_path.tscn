@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://maps/beast_path/s01_entrance.tscn" id="1_caxbn"]
+[ext_resource type="PackedScene" path="res://maps/beast_path/s02_deep_forest.tscn" id="2_u2mh3"]
+[ext_resource type="PackedScene" path="res://maps/beast_path/s03_crossroads.tscn" id="3_0rtgc"]
+[ext_resource type="PackedScene" path="res://maps/beast_path/s04_boss_clearing.tscn" id="4_t1cd2"]
+[ext_resource type="Script" path="res://maps/beast_path/bp_atmosphere.gd" id="5_mrs5f"]
+
+[node name="BeastPath" type="Node3D" unique_id=662498653]
+metadata/own_colliders = true
+metadata/bp_version = "0.1-whitebox"
+metadata/bp_status = "WHITEBOX / ART_REVIEW（未 ART_APPROVED）"
+
+[node name="S01_Entrance" type="Node3D" parent="." unique_id=1906810318 instance=ExtResource("1_caxbn")]
+metadata/bp_scene = "S01"
+metadata/bp_version = "0.1-whitebox"
+metadata/bp_status = "WHITEBOX / ART_REVIEW"
+
+[node name="S02_DeepForest" type="Node3D" parent="." unique_id=923595352 instance=ExtResource("2_u2mh3")]
+metadata/bp_scene = "S02"
+metadata/bp_version = "0.1-whitebox"
+metadata/bp_status = "WHITEBOX / ART_REVIEW"
+
+[node name="S03_Crossroads" type="Node3D" parent="." unique_id=461131731 instance=ExtResource("3_0rtgc")]
+metadata/bp_scene = "S03"
+metadata/bp_version = "0.1-whitebox"
+metadata/bp_status = "WHITEBOX / ART_REVIEW"
+
+[node name="S04_BossClearing" type="Node3D" parent="." unique_id=1397436188 instance=ExtResource("4_t1cd2")]
+metadata/bp_scene = "S04"
+metadata/bp_version = "0.1-whitebox"
+metadata/bp_status = "WHITEBOX / ART_REVIEW"
+
+[node name="BP_Atmosphere" type="WorldEnvironment" parent="." unique_id=196449050]
+script = ExtResource("5_mrs5f")

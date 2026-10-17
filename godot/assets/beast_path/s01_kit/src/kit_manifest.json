@@ -1,0 +1,726 @@
+{
+ "generator": "assets/beast_path/s01_kit/src/build_s01_kit.py",
+ "blender": "5.2.1 LTS",
+ "assets": {
+  "s01_grass_tall_a": {
+   "category": "veg_grass",
+   "tris": 412,
+   "verts": 628,
+   "size_m": [
+    0.822,
+    0.801,
+    1.066
+   ],
+   "z_min": -0.01,
+   "z_max": 1.056
+  },
+  "s01_grass_tall_b": {
+   "category": "veg_grass",
+   "tris": 348,
+   "verts": 508,
+   "size_m": [
+    0.529,
+    0.517,
+    0.613
+   ],
+   "z_min": -0.01,
+   "z_max": 0.603
+  },
+  "s01_grass_tall_c": {
+   "category": "veg_grass",
+   "tris": 338,
+   "verts": 534,
+   "size_m": [
+    0.749,
+    0.942,
+    1.143
+   ],
+   "z_min": -0.01,
+   "z_max": 1.133
+  },
+  "s01_grass_short_a": {
+   "category": "veg_grass",
+   "tris": 168,
+   "verts": 280,
+   "size_m": [
+    0.274,
+    0.287,
+    0.254
+   ],
+   "z_min": -0.01,
+   "z_max": 0.244
+  },
+  "s01_grass_short_b": {
+   "category": "veg_grass",
+   "tris": 150,
+   "verts": 250,
+   "size_m": [
+    0.25,
+    0.302,
+    0.299
+   ],
+   "z_min": -0.01,
+   "z_max": 0.289
+  },
+  "s01_grass_tall_d": {
+   "category": "veg_grass",
+   "tris": 256,
+   "verts": 432,
+   "size_m": [
+    0.72,
+    0.749,
+    1.049
+   ],
+   "z_min": -0.01,
+   "z_max": 1.039
+  },
+  "s01_sedge_a": {
+   "category": "veg_grass",
+   "tris": 792,
+   "verts": 968,
+   "size_m": [
+    0.625,
+    0.678,
+    0.488
+   ],
+   "z_min": -0.01,
+   "z_max": 0.478
+  },
+  "s01_shadegrass_a": {
+   "category": "veg_grass",
+   "tris": 132,
+   "verts": 220,
+   "size_m": [
+    0.41,
+    0.231,
+    0.17
+   ],
+   "z_min": -0.01,
+   "z_max": 0.16
+  },
+  "s01_fern_a": {
+   "category": "veg_fern",
+   "tris": 1044,
+   "verts": 1638,
+   "size_m": [
+    1.244,
+    1.316,
+    0.419
+   ],
+   "z_min": 0.02,
+   "z_max": 0.439
+  },
+  "s01_fern_b": {
+   "category": "veg_fern",
+   "tris": 728,
+   "verts": 1134,
+   "size_m": [
+    0.918,
+    0.926,
+    0.391
+   ],
+   "z_min": -0.032,
+   "z_max": 0.359
+  },
+  "s01_fern_c": {
+   "category": "veg_fern",
+   "tris": 1100,
+   "verts": 1720,
+   "size_m": [
+    1.542,
+    1.293,
+    0.527
+   ],
+   "z_min": 0.02,
+   "z_max": 0.547
+  },
+  "s01_fern_d": {
+   "category": "veg_fern",
+   "tris": 408,
+   "verts": 612,
+   "size_m": [
+    0.465,
+    0.501,
+    0.218
+   ],
+   "z_min": 0.02,
+   "z_max": 0.238
+  },
+  "s01_shrub_a": {
+   "category": "veg_shrub",
+   "tris": 1220,
+   "verts": 1823,
+   "size_m": [
+    0.991,
+    1.213,
+    1.052
+   ],
+   "z_min": -0.033,
+   "z_max": 1.019
+  },
+  "s01_sasa_a": {
+   "category": "veg_shrub",
+   "tris": 582,
+   "verts": 690,
+   "size_m": [
+    0.876,
+    0.876,
+    0.808
+   ],
+   "z_min": -0.021,
+   "z_max": 0.787
+  },
+  "s01_sasa_b": {
+   "category": "veg_shrub",
+   "tris": 1224,
+   "verts": 1200,
+   "size_m": [
+    1.185,
+    1.36,
+    0.697
+   ],
+   "z_min": -0.021,
+   "z_max": 0.677
+  },
+  "s01_shrub_b": {
+   "category": "veg_shrub",
+   "tris": 1164,
+   "verts": 1569,
+   "size_m": [
+    0.972,
+    1.091,
+    0.796
+   ],
+   "z_min": -0.03,
+   "z_max": 0.766
+  },
+  "s01_forb_a": {
+   "category": "veg_forb",
+   "tris": 452,
+   "verts": 607,
+   "size_m": [
+    0.396,
+    0.467,
+    0.584
+   ],
+   "z_min": -0.039,
+   "z_max": 0.545
+  },
+  "s01_forb_b": {
+   "category": "veg_forb",
+   "tris": 132,
+   "verts": 165,
+   "size_m": [
+    0.305,
+    0.289,
+    0.394
+   ],
+   "z_min": -0.049,
+   "z_max": 0.345
+  },
+  "s01_fuki_a": {
+   "category": "veg_herb",
+   "tris": 336,
+   "verts": 252,
+   "size_m": [
+    0.715,
+    0.742,
+    0.507
+   ],
+   "z_min": -0.022,
+   "z_max": 0.485
+  },
+  "s01_fuki_b": {
+   "category": "veg_herb",
+   "tris": 528,
+   "verts": 396,
+   "size_m": [
+    0.856,
+    0.948,
+    0.391
+   ],
+   "z_min": -0.022,
+   "z_max": 0.369
+  },
+  "s01_herb_broad_a": {
+   "category": "veg_herb",
+   "tris": 396,
+   "verts": 330,
+   "size_m": [
+    0.548,
+    0.674,
+    0.257
+   ],
+   "z_min": -0.024,
+   "z_max": 0.233
+  },
+  "s01_sapling_a": {
+   "category": "veg_sapling",
+   "tris": 1656,
+   "verts": 3107,
+   "size_m": [
+    1.19,
+    0.886,
+    1.671
+   ],
+   "z_min": -0.032,
+   "z_max": 1.639
+  },
+  "s01_sapling_b": {
+   "category": "veg_sapling",
+   "tris": 544,
+   "verts": 898,
+   "size_m": [
+    0.887,
+    0.795,
+    1.158
+   ],
+   "z_min": -0.036,
+   "z_max": 1.123
+  },
+  "s01_litter_a": {
+   "category": "litter",
+   "tris": 1008,
+   "verts": 1236,
+   "size_m": [
+    1.802,
+    1.717,
+    0.032
+   ],
+   "z_min": -0.002,
+   "z_max": 0.031
+  },
+  "s01_litter_b": {
+   "category": "litter",
+   "tris": 624,
+   "verts": 768,
+   "size_m": [
+    1.228,
+    1.086,
+    0.03
+   ],
+   "z_min": -0.001,
+   "z_max": 0.029
+  },
+  "s01_moss_a": {
+   "category": "moss",
+   "tris": 170,
+   "verts": 238,
+   "size_m": [
+    1.328,
+    1.024,
+    0.098
+   ],
+   "z_min": -0.025,
+   "z_max": 0.073
+  },
+  "s01_twigs_a": {
+   "category": "litter",
+   "tris": 252,
+   "verts": 171,
+   "size_m": [
+    1.091,
+    1.98,
+    0.024
+   ],
+   "z_min": 0.0,
+   "z_max": 0.024
+  },
+  "s01_rock_cliff_a": {
+   "category": "rock",
+   "tris": 7680,
+   "verts": 4013,
+   "size_m": [
+    4.484,
+    2.509,
+    4.779
+   ],
+   "z_min": -1.226,
+   "z_max": 3.553
+  },
+  "s01_rock_cliff_b": {
+   "category": "rock",
+   "tris": 6400,
+   "verts": 3281,
+   "size_m": [
+    2.882,
+    2.331,
+    3.531
+   ],
+   "z_min": -0.967,
+   "z_max": 2.564
+  },
+  "s01_rock_outcrop_c": {
+   "category": "rock",
+   "tris": 5120,
+   "verts": 2677,
+   "size_m": [
+    5.098,
+    3.949,
+    3.079
+   ],
+   "z_min": -1.213,
+   "z_max": 1.866
+  },
+  "s01_rock_rib_d": {
+   "category": "rock",
+   "tris": 5120,
+   "verts": 2794,
+   "size_m": [
+    2.225,
+    2.017,
+    6.035
+   ],
+   "z_min": -1.335,
+   "z_max": 4.7
+  },
+  "s01_mossstone_a": {
+   "category": "rock",
+   "tris": 1280,
+   "verts": 677,
+   "size_m": [
+    1.208,
+    0.926,
+    0.861
+   ],
+   "z_min": -0.255,
+   "z_max": 0.607
+  },
+  "s01_mossstone_b": {
+   "category": "rock",
+   "tris": 320,
+   "verts": 195,
+   "size_m": [
+    0.724,
+    0.754,
+    0.547
+   ],
+   "z_min": -0.184,
+   "z_max": 0.363
+  },
+  "s01_debris_a": {
+   "category": "rock",
+   "tris": 2240,
+   "verts": 1514,
+   "size_m": [
+    1.672,
+    1.536,
+    0.242
+   ],
+   "z_min": -0.095,
+   "z_max": 0.147
+  },
+  "s01_log_a": {
+   "category": "wood",
+   "tris": 812,
+   "verts": 437,
+   "size_m": [
+    4.612,
+    0.721,
+    0.523
+   ],
+   "z_min": 0.01,
+   "z_max": 0.533
+  },
+  "s01_log_b": {
+   "category": "wood",
+   "tris": 854,
+   "verts": 469,
+   "size_m": [
+    3.714,
+    0.666,
+    0.765
+   ],
+   "z_min": 0.001,
+   "z_max": 0.766
+  },
+  "s01_log_c": {
+   "category": "wood",
+   "tris": 812,
+   "verts": 437,
+   "size_m": [
+    3.63,
+    0.697,
+    0.482
+   ],
+   "z_min": 0.0,
+   "z_max": 0.482
+  },
+  "s01_stump_a": {
+   "category": "wood",
+   "tris": 598,
+   "verts": 381,
+   "size_m": [
+    2.118,
+    1.828,
+    1.223
+   ],
+   "z_min": -0.192,
+   "z_max": 1.031
+  },
+  "s01_roots_a": {
+   "category": "wood",
+   "tris": 856,
+   "verts": 570,
+   "size_m": [
+    3.133,
+    2.325,
+    0.649
+   ],
+   "z_min": -0.303,
+   "z_max": 0.346
+  },
+  "s01_roots_b": {
+   "category": "wood",
+   "tris": 1048,
+   "verts": 676,
+   "size_m": [
+    2.884,
+    1.722,
+    0.615
+   ],
+   "z_min": -0.3,
+   "z_max": 0.315
+  },
+  "s01_branch_a": {
+   "category": "wood",
+   "tris": 172,
+   "verts": 126,
+   "size_m": [
+    2.415,
+    0.854,
+    0.359
+   ],
+   "z_min": 0.004,
+   "z_max": 0.363
+  },
+  "s01_branch_pile_a": {
+   "category": "wood",
+   "tris": 320,
+   "verts": 243,
+   "size_m": [
+    2.271,
+    1.861,
+    0.194
+   ],
+   "z_min": -0.004,
+   "z_max": 0.19
+  },
+  "s01_grass_tall_a_lod1": {
+   "category": "lod",
+   "tris": 105,
+   "verts": 191,
+   "size_m": [
+    0.831,
+    0.45,
+    1.014
+   ],
+   "z_min": -0.01,
+   "z_max": 1.004
+  },
+  "s01_grass_tall_b_lod1": {
+   "category": "lod",
+   "tris": 78,
+   "verts": 130,
+   "size_m": [
+    0.484,
+    0.454,
+    0.54
+   ],
+   "z_min": -0.01,
+   "z_max": 0.53
+  },
+  "s01_grass_tall_c_lod1": {
+   "category": "lod",
+   "tris": 99,
+   "verts": 189,
+   "size_m": [
+    0.875,
+    0.894,
+    1.193
+   ],
+   "z_min": -0.01,
+   "z_max": 1.183
+  },
+  "s01_grass_short_a_lod1": {
+   "category": "lod",
+   "tris": 54,
+   "verts": 90,
+   "size_m": [
+    0.229,
+    0.245,
+    0.244
+   ],
+   "z_min": -0.01,
+   "z_max": 0.234
+  },
+  "s01_grass_short_b_lod1": {
+   "category": "lod",
+   "tris": 48,
+   "verts": 80,
+   "size_m": [
+    0.279,
+    0.212,
+    0.234
+   ],
+   "z_min": -0.01,
+   "z_max": 0.224
+  },
+  "s01_grass_tall_d_lod1": {
+   "category": "lod",
+   "tris": 86,
+   "verts": 174,
+   "size_m": [
+    0.504,
+    0.646,
+    1.011
+   ],
+   "z_min": -0.01,
+   "z_max": 1.001
+  },
+  "s01_sedge_a_lod1": {
+   "category": "lod",
+   "tris": 203,
+   "verts": 261,
+   "size_m": [
+    0.518,
+    0.508,
+    0.501
+   ],
+   "z_min": -0.01,
+   "z_max": 0.491
+  },
+  "s01_shadegrass_a_lod1": {
+   "category": "lod",
+   "tris": 42,
+   "verts": 70,
+   "size_m": [
+    0.354,
+    0.222,
+    0.145
+   ],
+   "z_min": -0.01,
+   "z_max": 0.135
+  },
+  "s01_fern_a_lod1": {
+   "category": "lod",
+   "tris": 540,
+   "verts": 846,
+   "size_m": [
+    1.232,
+    1.218,
+    0.614
+   ],
+   "z_min": 0.02,
+   "z_max": 0.634
+  },
+  "s01_fern_b_lod1": {
+   "category": "lod",
+   "tris": 378,
+   "verts": 588,
+   "size_m": [
+    0.857,
+    0.933,
+    0.325
+   ],
+   "z_min": -0.02,
+   "z_max": 0.305
+  },
+  "s01_fern_c_lod1": {
+   "category": "lod",
+   "tris": 540,
+   "verts": 840,
+   "size_m": [
+    1.373,
+    1.46,
+    0.514
+   ],
+   "z_min": 0.02,
+   "z_max": 0.534
+  },
+  "s01_fern_d_lod1": {
+   "category": "lod",
+   "tris": 252,
+   "verts": 384,
+   "size_m": [
+    0.523,
+    0.449,
+    0.217
+   ],
+   "z_min": 0.02,
+   "z_max": 0.237
+  },
+  "s01_fuki_a_lod1": {
+   "category": "lod",
+   "tris": 147,
+   "verts": 119,
+   "size_m": [
+    0.595,
+    0.741,
+    0.307
+   ],
+   "z_min": 0.176,
+   "z_max": 0.484
+  },
+  "s01_fuki_b_lod1": {
+   "category": "lod",
+   "tris": 231,
+   "verts": 187,
+   "size_m": [
+    0.682,
+    0.765,
+    0.308
+   ],
+   "z_min": 0.077,
+   "z_max": 0.385
+  },
+  "s01_herb_broad_a_lod1": {
+   "category": "lod",
+   "tris": 132,
+   "verts": 132,
+   "size_m": [
+    0.536,
+    0.665,
+    0.208
+   ],
+   "z_min": 0.042,
+   "z_max": 0.251
+  },
+  "s01_forb_a_lod1": {
+   "category": "lod",
+   "tris": 190,
+   "verts": 215,
+   "size_m": [
+    0.394,
+    0.372,
+    0.619
+   ],
+   "z_min": -0.04,
+   "z_max": 0.579
+  },
+  "s01_sasa_a_lod1": {
+   "category": "lod",
+   "tris": 276,
+   "verts": 324,
+   "size_m": [
+    0.627,
+    0.73,
+    0.788
+   ],
+   "z_min": -0.021,
+   "z_max": 0.767
+  },
+  "s01_sasa_b_lod1": {
+   "category": "lod",
+   "tris": 432,
+   "verts": 486,
+   "size_m": [
+    1.322,
+    0.971,
+    0.35
+   ],
+   "z_min": 0.261,
+   "z_max": 0.611
+  }
+ }
+}

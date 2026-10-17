@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/beast_path/materials/bp_water.gdshader" id="1_qrp2t"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/_matlib/ground/V2G_noise.png" id="2_ovkv6"]
+
+[resource]
+resource_name = "BP_Water_Pool"
+render_priority = 0
+shader = ExtResource("1_qrp2t")
+shader_parameter/noise_tex = ExtResource("2_ovkv6")
+shader_parameter/deep_col = null
+shader_parameter/mid_col = null
+shader_parameter/shallow_col = null
+shader_parameter/foam_col = null
+shader_parameter/shallow_depth = null
+shader_parameter/deep_depth = null
+shader_parameter/ripple = null
+shader_parameter/uv_flow = null
+shader_parameter/fall = Vector4(-8, -435, 2.9, 0.85)
+shader_parameter/lip = null

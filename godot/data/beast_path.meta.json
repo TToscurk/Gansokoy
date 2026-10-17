@@ -1,0 +1,46 @@
+{
+	"_note": "獸道 V0.1 白模（WHITEBOX / ART_REVIEW）。由 tools/beast_path/generate_beast_path.gd 產生，勿手改。",
+	"colliders": [],
+	"connections": [
+		"village_v2"
+	],
+	"id": "beast_path",
+	"mobTheme": "",
+	"playSize": [
+		220.0,
+		520.0
+	],
+	"portals": [
+		{
+			"_note": "南：人間之里 V2（村莊端銜接，T26）。y＝該點地面高；抵達點由 main.gd 往世界原點方向內縮 4 m（原點在本圖南端，所以入口傳送點放在 z=+6 → 抵達 z=+2、在路上）。V2→獸道 的傳送目前由 village_v2.meta.json 停用（使用者裁定），本檔不動它。",
+			"arrival_ground_y": 0.22,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 0.0,
+			"target": "village_v2",
+			"x": 0.0,
+			"y": 0.22,
+			"z": 6.0
+		},
+		{
+			"_note": "保留：往博麗神社方向（戰後出口，T26 先保留）",
+			"target": "",
+			"x": 46.0,
+			"y": 17.59,
+			"z": -441.0
+		},
+		{
+			"_note": "保留：往迷途竹林方向（支線出口）",
+			"target": "",
+			"x": -50.0,
+			"y": 13.76,
+			"z": -326.0
+		}
+	],
+	"safe": true,
+	"spawn": {
+		"note": "S01 入口；y 由射線量地面",
+		"x": 0.0,
+		"yaw": 0.0,
+		"z": -12.0
+	}
+}
