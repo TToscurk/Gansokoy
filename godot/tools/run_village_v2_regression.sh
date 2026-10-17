@@ -12,25 +12,54 @@
 #   6 個永久反向案例（--negatives：每個都必須讓它瞄準的那一項 FAIL）。
 # 永久 build rule（2026-10-03 起）：MultiMesh 烘焙必須非 headless，存檔後回讀 instance transform 非零（tools/village_v2_mm_bake_guard.gd）；
 #   本表 MMBAKE 以非 headless 掃描整個 village_v2 場景的全部 MultiMesh（headless 跑會直接 FAIL，不當 PASS）。
-# 用法（repo 根目錄，git-bash）：  bash godot/tools/run_village_v2_regression.sh [--gen]
-#   --gen   先重新產生場景再驗證
+# 用法（repo 根目錄，git-bash）：  bash godot/tools/run_village_v2_regression.sh [--full] [--seals] [--gen]
+#   （預設）FAST：只跑 FAST_TAGS（凍結／地形保護／Hero 回歸／場景擺放稽核／19 點實走）——日常改動用這個（2026-10-18 使用者裁定：驗證預算）
+#   --full  全部非封存項目（里程碑、批次提交前、使用者要求時才跑）
+#   --seals 另外加跑封存（--seal）項目。封存制度 2026-10-18 起退役（凍結改由 git 提交保證）；
+#           場景本體可直接手改，封存雜湊不符是預期的，只在要對照歷史基準時才跑
+#   --gen   先重新產生場景再驗證（生成器已退役，需另設 VILLAGE_V2_ALLOW_REGEN=1，會丟掉全部 overlay）
 # 任一項非 0 退出 → 整體退出碼 = 失敗項目數。固定鏡位擷取另見 docs/plans/2026-09-23-人間之里V2重製規劃.md §9.5。
 set -u
 cd "$(dirname "$0")/.." || exit 99
 G="${GODOT:-D:/Godot/Godot_v4.7.2-stable_win64_console.exe}"
 fail=0
+skipped=0
+MODE=fast
+SEALS=0
+GEN=0
+for a in "$@"; do
+	case "$a" in
+		--full)  MODE=full ;;
+		--seals) SEALS=1 ;;
+		--gen)   GEN=1 ;;
+	esac
+done
+FAST_TAGS=" FREEZE PROTECT HERO PLACE WALK "
+skip() {  # $1 標籤, $2 tag, 其餘為 Godot 參數 → 0＝要跳過
+	local label="$1" tag="$2"; shift 2
+	local is_seal=0
+	case " $* " in *" --seal "*) is_seal=1 ;; esac
+	case "$label" in *封存*) is_seal=1 ;; esac
+	if [ $is_seal -eq 1 ] && [ $SEALS -eq 0 ]; then return 0; fi
+	if [ $is_seal -eq 1 ] && [ $SEALS -eq 1 ]; then return 1; fi
+	if [ "$MODE" = fast ] && [[ "$FAST_TAGS" != *" $tag "* ]]; then return 0; fi
+	return 1
+}
 run() {  # $1 標籤, $2 grep 前綴, 其餘為 Godot 參數
 	local label="$1" tag="$2"; shift 2
+	if skip "$label" "$tag" "$@"; then skipped=$((skipped + 1)); return; fi
 	local out; out="$("$G" "$@" 2>&1)"; local rc=$?
 	printf '%s\n' "$out" | grep -E "^\[$tag\] (FAIL|結果)|SCRIPT ERROR|Parse Error"
 	if [ $rc -ne 0 ]; then echo "✗ $label（exit $rc）"; fail=$((fail + 1)); else echo "✓ $label"; fi
 }
 runneg() {  # 反向：$1 標籤, $2 期待する FAIL 行（grep -F）, 其餘為 Godot 參數；exit≠0 かつ期待行あり → PASS（P10 R6a：P6 Kit Gate 合法変体の反向）
 	local label="$1" want="$2"; shift 2
+	if [ "$MODE" = fast ]; then skipped=$((skipped + 1)); return; fi
 	local out; out="$("$G" "$@" 2>&1)"; local rc=$?
 	if [ $rc -ne 0 ] && printf '%s\n' "$out" | grep -qF "$want"; then echo "✓ $label"; else echo "✗ $label（反向が FAIL しない：exit $rc）"; fail=$((fail + 1)); fi
 }
-if [ "${1:-}" = "--gen" ]; then
+echo "模式：$MODE$([ $SEALS -eq 1 ] && echo '＋封存')"
+if [ $GEN -eq 1 ]; then
 	"$G" --headless --path . --script res://tools/gen_village_v2.gd > /dev/null 2>&1 || { echo "✗ 產生器失敗"; exit 98; }
 	echo "✓ 產生器"
 fi
@@ -145,7 +174,7 @@ run "P10 R3b ART_APPROVED baseline seal（來源／snapshot／原圖／證據／
 run "P10 R3b Population Pilot plan（16 人、三區、職業／重複／婆婆／小群／接地／render geometry／patrol／步速／sealed overlays）" POP --headless --path . --script res://tools/verify_village_v2_population.gd
 run "P10 R3b Population Pilot 永久反向 9 案（各自瞄準項 FAIL）" POP --headless --path . --script res://tools/verify_village_v2_population.gd -- --negatives
 run "P10 R3b Population Pilot scene（掛載／NPC instance／TPS 同模型 ≤ 2／runtime／SpringArm）" POP --headless --path . --script res://tools/verify_village_v2_population.gd -- --scene
-run "P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍結・證據・審圖圖・子封存（R3b／NPCLIB）雜湊＋8 指派／道具參數＝overlay＋掛載 1 つ＋永久竄改反向" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --seal
+run "P10 R3c／R3c.1 Activity baseline seal（ART_APPROVED 2026-10-07）：凍結・證據・審圖圖・子封存（R3b／NPCLIB）雜湊＋7 指派〔2026-10-16 茶屋少女 Drink 削除〕／道具參數＝overlay＋掛載 1 つ＋永久竄改反向" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --seal
 run "P10 R3d 核心人口 封存（ART_APPROVED 2026-10-07：39 人 roster・五區・R3b 不變・新增 23 の位置／朝向／activity／patrol・南側入口 3 人・EntranceCueP10 小幟 2・證據・審圖・子封存 R3b／R3c／NPCLIB の雜湊＋掛載順＋場景＝snapshot＋竄改反向；封存中 --build／--attach 拒否）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --seal
 run "P10 R3d 核心區人口 plan（R3b＋R3d 30–40 人・密度順・核心區・anchor・職業・歩く人・同モデル ≥ 8 m・構圖・接地・體・往復路・步速・承認 vocabulary・封存只讀）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd
 run "P10 R3d 核心區人口 反向 12 案（各自瞄準項 FAIL）" CORE --headless --path . --script res://tools/verify_village_v2_population_core.gd -- --negatives
@@ -154,7 +183,7 @@ run "P10 R3e 外圍人口 封存（ART_APPROVED 2026-10-07：外圍 12 人＝最
 run "P10 R3e 外圍人口 Pilot plan（人數・區域・密度勾配単調下降・外圍不成群・anchor・職業・歩く人・同モデル・接地・體・往復路・步速・封存 vocabulary・R3d 雜湊）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd
 run "P10 R3e 外圍人口 反向 13 案（各自瞄準項 FAIL）" OUTER --headless --path . --script res://tools/verify_village_v2_population_outer.gd -- --negatives
 run "P10 R3e 外圍人口 scene（人數＝外圍の身元 12＋村人口 51〔scope 外・重複なし〕・反向；掛載順・人數・Activity 逐フレーム・審圖鏡位・歩く人；非 headless）" OUTER --rendering-method forward_plus --path . --script res://tools/verify_village_v2_population_outer.gd -- --scene
-run "P10 R3c Activity plan（16 人・8 指派・5 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
+run "P10 R3c Activity plan（16 人・7 指派・4 類）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --plan
 run "P10 R3c Activity 反向（停止／root／空 clip／長さ 0／道具脫離／隱藏／17 人）" ACT --headless --path . --script res://tools/verify_p10_activity.gd -- --negatives
 run "P10 R4 Human-Use Pilot plan gate（3 Pilot・既存資產優先＋缺件 6・中型の輪郭・who/why/anchor・依附・禁區〔P8・水・NPC・Env +1.6・MeadowP9 株 0〕・接地・成組・非均一）＋反向 16" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --negatives
 run "P10 R4 Human-Use Pilot 場景級驗證（root 直下 Props の次に HumanUseP10・Props の子は封存どおり・個別ノード・MultiMesh／Marker3D 0・Population 不変・擺放〔3×3 ray 接地・collide_shape 貫通〕＋float／clash 反向）" HUSE --headless --path . --script res://tools/verify_village_v2_human_use.gd -- --scene
@@ -182,5 +211,5 @@ run "P10 R4c Straw Geometry Pilot 封存（使用者 2026-10-09 ART_APPROVED：�
 run "P10 R5a ROUND 3 Road Base Pilot plan gate＋反向 7（ROUND 3：P7 地形 FarmlandTerrain の踩み固め重みを再生道に合わせて局部修正〔COLOR.r だけ・対象 3 本の旧い帯が支配する頂点だけ・旧い帯 ≤ 0.6 倍〕；小範囲 3 本 ≤ 450 m・元の路幅の中・地形なり〔芯＋0.02–0.07／縁 −0.03–0〕・定規の直線でない・水の上の切れ目を保つ・南橫街の町の区間は元の三角形・交差点の上下 ≥ 0.012・NPC 地形の上）" RDB --headless --path . --script res://tools/verify_village_v2_road_base.gd
 run "P10 R5a ROUND 3 Road Base Pilot 場景級（PropFixP10 の次に RoadBaseP10・3 本の mesh＋FarmlandTerrain 差し替え・材質＝pilot shader のまま・道に碰撞なし・P9 地被／立ち草の浮き 0・enabled 開關で元の mesh；非 headless）" RDB --path . --script res://tools/verify_village_v2_road_base.gd -- --scene
 run "P10 R5a Road Base 416 m Pilot 封存（使用者 2026-10-09 ART_APPROVED：雜湊〔元の road_*.res／terrain_farmlandterrain.res 含む〕・掛載・再現性＝生成器で記憶體内再生成→封存 overlay と配列一致・地形 COLOR.r 577 頂点・竄改反向）" RDB --headless --path . --script res://tools/verify_village_v2_road_base.gd -- --seal
-echo "回歸失敗項目：$fail"
+echo "回歸失敗項目：$fail（跳過 $skipped 項；模式 $MODE）"
 exit $fail

@@ -25,7 +25,7 @@ extends SceneTree
 ##   4 Support %／5 Slope／6 Penetration（建築：地形高過基準面＝頂進屋內；單位間穿插深度）
 ## 輸出 [PLACE] 開頭。
 
-const SCENE := "res://maps/village_v2/village_v2.tscn"
+var SCENE := "res://maps/village_v2/village_v2.tscn"   # --scene=res://… 可改（快速通道示範場景用）
 const FLOAT_TOL := 0.05      # 底面高於地形超過這個＝該點懸空
 const FLOAT_FAIL := 0.15     # 可見懸空超過這個＝FLOATING FAIL
 const FOOT_BAND := 0.6       # shape 底面距單位最低 shape 底 ≤ 這個＝落地 shape
@@ -82,6 +82,8 @@ func _run() -> void:
 			neg = a.trim_prefix("--neg=")
 		elif a == "--selftest":
 			selftest = true
+		elif a.begins_with("--scene="):
+			SCENE = a.trim_prefix("--scene=")
 	if selftest:
 		quit(await _selftest(out))
 		return
@@ -376,6 +378,12 @@ func _collect() -> void:
 			var h := b.get_node_or_null("Hero") as Node3D
 			if h != null:
 				_add(h, "Roads/Bridges/%s/Hero" % b.name, "hero", false)
+	# 建築快速通道（tools/fastlane/place_building.gd，2026-10-18）：FastLane/<id> 每個都是建築單位
+	var fl := v.get_node_or_null("FastLane")
+	if fl != null:
+		for b: Node in fl.get_children():
+			if b is Node3D:
+				_add(b as Node3D, "FastLane/%s" % b.name, "hero", true)
 	for q: Node in v.get_node("QuestAnchors").find_children("Pole", "MeshInstance3D", true, false):
 		visual_only.append({"name": "QuestAnchors/%s/Pole" % q.get_parent().name, "reason": "任務錨點標桿"})
 	var ctrl := v.get_node_or_null("AuditControl")
@@ -612,7 +620,13 @@ func _ground(u: Dictionary) -> Dictionary:
 	# 先決定各落地 shape 的格點數，總數超過 RAYS_MAX 就等比縮
 	var feet_s: Array = []
 	var total := 0
+	# 快速通道建築：有標 meta foot 的 shape（牆腳範圍的薄箱）就只用它們當落地 shape，不拿含屋簷的整體網格去量
+	var marked := false
 	for s: Dictionary in u["shapes"]:
+		marked = marked or bool((s["cs"] as CollisionShape3D).get_meta("foot", false))
+	for s: Dictionary in u["shapes"]:
+		if marked and not bool((s["cs"] as CollisionShape3D).get_meta("foot", false)):
+			continue
 		if (s["waabb"] as AABB).position.y - lowest > FOOT_BAND:
 			continue
 		var la: AABB = s["laabb"]

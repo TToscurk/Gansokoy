@@ -130,6 +130,13 @@ var ground_stats := {}          # P7 地表分層統計（_report 用）
 
 
 func _init() -> void:
+	# 生成器退役（使用者 2026-10-18 裁定）：village_v2.tscn 從此是手工可編輯的場景本體。
+	# 重生會從零重建整個場景，丟掉根節點下全部 overlay（P10／P13／FastLane…）與所有手改；預設拒絕。
+	# 真的要整村重生（例如改了 layout_v2.json 的地形）才設 VILLAGE_V2_ALLOW_REGEN=1，且之後要逐一重掛 overlay。
+	if OS.get_environment("VILLAGE_V2_ALLOW_REGEN") != "1":
+		push_error("[v2] 生成器已退役：village_v2.tscn 是手改場景本體，重生會丟掉全部 overlay 與手改。真要重生請設 VILLAGE_V2_ALLOW_REGEN=1")
+		quit(4)
+		return
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
 	if typeof(parsed) != TYPE_DICTIONARY:
 		push_error("[v2] 讀不到或解析失敗：" + LAYOUT)
