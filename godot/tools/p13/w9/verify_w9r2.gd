@@ -2,7 +2,8 @@ extends SceneTree
 ## P13 W9 Round 2／2.1 gate：ArchW9R2P13（建築外形サンプル）を「保存された場景」から独立に検査する ＋ 反向案例。
 ##   godot --headless --path godot --script res://tools/p13/w9/verify_w9r2.gd
 ## 見るもの：掛載（1 回・順序）／各棟の id・body 追従／LOD 範囲・三角面予算／張り出し上限／戸口前の淨空／通行の頭上淨空／
-##   enabled の往復（Kit の visible が完全に元へ戻る）／碰撞は庇柱・玄関柱（Posts）だけ（柱ごとに位置・太さ・高さ・layer／mask を meta と突き合わせ）／R1 の吊り物を隠す件数（R1 の中身は他に触れない）／
+##   enabled の往復（Kit の visible が完全に元へ戻る）／碰撞は庇柱・玄関柱（Posts）＋登録済みの外形碰撞箱（Shell）だけ（Posts は柱ごとに位置・太さ・高さ・layer／mask を meta と、
+##   Shell は箱ごとに位置・寸法・回転・layer／mask と有効状態を collision_fit.json と突き合わせ）／R1 の吊り物を隠す件数（R1 の中身は他に触れない）／
 ##   [2.1] 庇の構造規則（幅・深さ・勾配＝排水・腕木の間隔・深い庇は庇柱・前縁の高さ）／屋根の収め（棟の段積み・鬼瓦・垂木尻・懸魚）／
 ##   [2.1] 他 overlay（P10 の看板・幟・提灯・商品・NPC、R1、隣の建物）の実体との非干渉。
 const L := preload("res://tools/p13/w9/w9r2_lib.gd")
@@ -128,6 +129,71 @@ static func post_issues(exp: Array, got: Array, body_layer: int, body_mask: int)
 			out.append("柱 %d の碰撞が柱の高さに届かない（%.2f < %.2f）" % [i, sz.y, float(e["top"])])
 		if int(g[2]) != body_layer or int(g[3]) != body_mask:
 			out.append("柱 %d の layer／mask が body と違う" % i)
+	return out
+
+
+## 外形碰撞箱（<建築>/Shell）1 棟分の照合。exp＝collision_fit.json の boxes（建物局部・x0..x1 など）、
+## got＝[[position, size, 回転が単位, layer, mask, BoxShape3D か], ...]（Shell の CollisionShape3D ごと）。違反の理由を返す（空＝適合）。
+## 拒否：Shell が無い（json に登録あり）／未登録の Shell（json に無い）／箱の数の違い／位置・寸法・回転の違い（±0.005 m）／重複（同じ箱に 2 つ）／
+##       json に無い箱／layer・mask が body と違う／BoxShape3D 以外。
+static func shell_issues(exp: Array, got: Array, body_layer: int, body_mask: int) -> PackedStringArray:
+	var out: PackedStringArray = []
+	if exp.size() > 0 and got.is_empty():
+		out.append("Shell が無い（collision_fit.json に %d 箱が登録）" % exp.size())
+		return out
+	if exp.is_empty() and got.size() > 0:
+		out.append("未登録の Shell（collision_fit.json に無い・%d 箱）" % got.size())
+		return out
+	if exp.size() != got.size():
+		out.append("箱の数 %d（json %d）" % [got.size(), exp.size()])
+	var used: Array = []
+	used.resize(got.size())
+	used.fill(0)
+	for i in exp.size():
+		var e: Dictionary = exp[i]
+		var c := Vector3((float(e["x0"]) + float(e["x1"])) / 2.0, (float(e["y0"]) + float(e["y1"])) / 2.0, (float(e["z0"]) + float(e["z1"])) / 2.0)
+		var s := Vector3(float(e["x1"]) - float(e["x0"]), float(e["y1"]) - float(e["y0"]), float(e["z1"]) - float(e["z0"]))
+		var m := 0
+		for j in got.size():
+			var g: Array = got[j]
+			if (g[0] as Vector3).distance_to(c) <= 0.005 and (g[1] as Vector3).distance_to(s) <= 0.005 and bool(g[2]):
+				m += 1
+				used[j] = int(used[j]) + 1
+		if m == 0:
+			out.append("箱 %d：位置・寸法・回転が json と違う（中心 %s 寸法 %s）" % [i, c, s])
+		elif m > 1:
+			out.append("箱 %d：重複（同じ箱が %d 個）" % [i, m])
+	for j in got.size():
+		var g: Array = got[j]
+		if int(used[j]) == 0:
+			out.append("json に無い箱（中心 %s）" % (g[0] as Vector3))
+		if not bool(g[5]):
+			out.append("箱 %d が BoxShape3D でない" % j)
+		if int(g[3]) != body_layer or int(g[4]) != body_mask:
+			out.append("箱 %d の layer／mask（%d／%d）が body（%d／%d）と違う" % [j, int(g[3]), int(g[4]), body_layer, body_mask])
+	return out
+
+
+## 元の箱（body の CollisionShape3D）と Shell の有効状態。body_dis／shell_dis＝disabled の配列。expect：
+##   "saved"＝保存された場景（腳本が走る前）／"off"＝overlay 無効：元の箱が有効・Shell は全て無効
+##   "on"＝overlay 有効：元の箱が全て無効・Shell は全て有効
+## どの状態でも『元の箱と Shell が同時に有効』は拒否。
+static func activation_issues(body_dis: Array, shell_dis: Array, expect: String) -> PackedStringArray:
+	var out: PackedStringArray = []
+	var body_on := body_dis.count(false)
+	var shell_on := shell_dis.count(false)
+	if body_on > 0 and shell_on > 0:
+		out.append("元の箱 %d と Shell %d が同時に有効" % [body_on, shell_on])
+	if expect == "on":
+		if body_on > 0:
+			out.append("overlay 有効なのに元の箱 %d が有効" % body_on)
+		if shell_on != shell_dis.size():
+			out.append("overlay 有効なのに Shell %d/%d だけ有効" % [shell_on, shell_dis.size()])
+	else:
+		if body_on != body_dis.size():
+			out.append("%s なのに元の箱 %d/%d だけ有効" % [expect, body_on, body_dis.size()])
+		if shell_on > 0:
+			out.append("%s なのに Shell %d が有効" % [expect, shell_on])
 	return out
 
 
@@ -320,17 +386,46 @@ func _run() -> void:
 		return
 	_ok(ov.get_child_count() == L.SPECS.size(), "建築 %d 棟（SPECS と一致）" % L.SPECS.size())
 	var tri_all := 0
-	# 碰撞体は庇柱・玄関柱（<建築>/Posts）だけ。それ以外（壁・屋根・小物）の碰撞体は 0（footprint・入口・body の碰撞は Kit のまま）
+	# 碰撞体は庇柱・玄関柱（<建築>/Posts）＋ 外形碰撞箱（<建築>/Shell・collision_fit.json に登録済みのものだけ）。それ以外は 0。
+	# ── 規則の変更（2026-10-17 W9 FIX・使用者裁定 Decision 1）：以前は『Posts だけ』。W9R2 は正面・屋根の見た目を作り直したが
+	#    body の碰撞箱（Kit の外形に合わせた 1 Shape）は据え置いた。そのため 22 棟で、新しい低い屋根の上 1.0–3.6 m に箱が出る（見えない天井）、
+	#    開いた見世・前庭・庭を箱が塞ぐ（見えない壁 3.1–3.6 m）、新しい二階の壁に碰撞が無い（0.6–3.0 m）不一致が出た
+	#    （work/w9_collision_fix の diag_runtime_before／probe）。body の箱は共有場景 village_v2.tscn の物なので触らず、
+	#    overlay 側に見た目から導いた箱（Shell）を置き、overlay 有効の間だけ body の箱と入れ替える。よって Shell を許すが、
+	#    collision_fit.json と箱ごとに完全一致すること・元の箱と同時に有効にならないことを条件にする（下の shell_issues／activation_issues）。
 	var posts_meta: Dictionary = meta.get("posts", {})
+	var colfit: Dictionary = (JSON.parse_string(FileAccess.get_file_as_string(L.COLFIT)) as Dictionary).get("buildings", {})
 	var coll_other := 0
 	var post_bodies := 0
+	var shell_bodies := 0
 	for cb in ov.find_children("*", "CollisionObject3D", true, false):
-		if String(cb.name) == "Posts" and posts_meta.has(String(cb.get_parent().name)):
+		var pid := String(cb.get_parent().name)
+		if String(cb.name) == "Posts" and posts_meta.has(pid) and cb.get_parent().get_parent() == ov:
 			post_bodies += 1
+		elif String(cb.name) == "Shell" and colfit.has(pid) and cb.get_parent().get_parent() == ov and cb is StaticBody3D:
+			shell_bodies += 1
 		else:
 			coll_other += 1
-	_ok(coll_other == 0, "overlay の碰撞体は庇柱・玄関柱（Posts）だけ（それ以外 %d）" % coll_other)
+	_ok(coll_other == 0, "overlay の碰撞体は庇柱・玄関柱（Posts）と登録済みの外形碰撞箱（Shell）だけ（それ以外・未登録 %d）" % coll_other)
 	_ok(post_bodies == posts_meta.size() and posts_meta.size() > 0, "柱のある %d 棟すべてに Posts 碰撞がある（実際 %d）" % [posts_meta.size(), post_bodies])
+	var n_json_boxes := 0
+	var ids_ok := true
+	for k in colfit:
+		n_json_boxes += ((colfit[k] as Dictionary)["boxes"] as Array).size()
+		ids_ok = ids_ok and L.SPECS.has(k)
+	_ok(shell_bodies == colfit.size() and colfit.size() > 0 and ids_ok, "collision_fit.json の %d 棟（%d 箱・全て SPECS の建物 id）すべてに Shell がある（実際 %d）" % [colfit.size(), n_json_boxes, shell_bodies])
+	# 保存された状態（腳本が走る前）：元の箱が有効・Shell は全て無効（＝腳本が無くても二重にならない）
+	var vs := (load(L.SCENE) as PackedScene).instantiate()
+	var saved_iss: PackedStringArray = []
+	for k in colfit:
+		saved_iss.append_array(_act_issues_of(vs, vs.get_node(L.NODE_NAME), String(k), "saved"))
+	vs.free()
+	_ok(saved_iss.is_empty(), "保存された場景：%d 棟で元の箱が有効・Shell は全て無効（同時有効なし）%s" % [colfit.size(), "" if saved_iss.is_empty() else str(saved_iss.slice(0, 5))])
+	# 実行時（overlay 有効）：元の箱が全て無効・Shell が全て有効
+	var on_iss: PackedStringArray = []
+	for k in colfit:
+		on_iss.append_array(_act_issues_of(v, ov, String(k), "on"))
+	_ok(on_iss.is_empty(), "実行時 enabled=true：%d 棟で元の箱が無効・Shell %d 箱が有効（同時有効なし）%s" % [colfit.size(), n_json_boxes, "" if on_iss.is_empty() else str(on_iss.slice(0, 5))])
 	var before: Dictionary = {}
 	var dims: Dictionary = {}
 	for id: String in L.SPECS:
@@ -364,6 +459,18 @@ func _run() -> void:
 		if pm.size() > 0 or sbn != null:
 			var piss := post_issues(pm, got, int((body as CollisionObject3D).collision_layer), int((body as CollisionObject3D).collision_mask))
 			_ok(piss.is_empty(), "%s：庇柱・玄関柱 %d 本の碰撞（位置・太さ・高さ・layer／mask）%s" % [id, pm.size(), "" if piss.is_empty() else str(piss)])
+		var shn := n.get_node_or_null("Shell") as CollisionObject3D
+		var sexp: Array = (colfit.get(id, {}) as Dictionary).get("boxes", [])
+		if shn != null or sexp.size() > 0:
+			var sgot: Array = []
+			if shn != null:
+				for cs in shn.get_children():
+					if cs is CollisionShape3D:
+						var csn := cs as CollisionShape3D
+						sgot.append([csn.position, (csn.shape as BoxShape3D).size if csn.shape is BoxShape3D else Vector3.ZERO, csn.basis.is_equal_approx(Basis.IDENTITY),
+							shn.collision_layer, shn.collision_mask, csn.shape is BoxShape3D])
+			var siss := shell_issues(sexp, sgot, int((body as CollisionObject3D).collision_layer), int((body as CollisionObject3D).collision_mask))
+			_ok(siss.is_empty(), "%s：外形碰撞箱 Shell %d 箱（位置・寸法・回転・layer／mask・重複なし＝collision_fit.json）%s" % [id, sexp.size(), "" if siss.is_empty() else str(siss.slice(0, 4))])
 		var l0 := n.get_node_or_null("L0") as MeshInstance3D
 		var l1 := n.get_node_or_null("L1") as MeshInstance3D
 		_ok(l0 != null and l1 != null, "%s：L0／L1 あり" % id)
@@ -461,6 +568,10 @@ func _run() -> void:
 				still_hidden += 1
 	_ok(still_hidden == 0, "enabled=false で Kit は全て元の表示へ（非表示だったもの %d → 残り %d）" % [hidden_on, still_hidden])
 	_ok(not (ov as Node3D).visible, "enabled=false で overlay は非表示")
+	var off_iss: PackedStringArray = []
+	for k in colfit:
+		off_iss.append_array(_act_issues_of(v, ov, String(k), "off"))
+	_ok(off_iss.is_empty(), "enabled=false：%d 棟で元の箱が有効に戻り Shell は全て無効（同時有効なし）%s" % [colfit.size(), "" if off_iss.is_empty() else str(off_iss.slice(0, 5))])
 	ov.set("enabled", true)
 	await process_frame
 	var hidden_again := 0
@@ -469,6 +580,18 @@ func _run() -> void:
 			if is_instance_valid(s[0]) and not (s[0] as MeshInstance3D).visible:
 				hidden_again += 1
 	_ok(hidden_again == hidden_on and hidden_on > 0, "enabled=true で同じ Kit 構件が再び隠れる（%d → %d）" % [hidden_on, hidden_again])
+	# 繰り返しの有効化（false→true をもう 2 回）：毎回同じ状態に戻る
+	var rep_iss: PackedStringArray = []
+	for r in 2:
+		ov.set("enabled", false)
+		await process_frame
+		for k in colfit:
+			rep_iss.append_array(_act_issues_of(v, ov, String(k), "off"))
+		ov.set("enabled", true)
+		await process_frame
+		for k in colfit:
+			rep_iss.append_array(_act_issues_of(v, ov, String(k), "on"))
+	_ok(rep_iss.is_empty(), "enabled の繰り返し（false→true × 2 回）：毎回 off／on の状態が正しい%s" % ("" if rep_iss.is_empty() else str(rep_iss.slice(0, 5))))
 	var gout := []
 	OS.execute("git", ["diff", "--numstat", R2_BASE, "--", ProjectSettings.globalize_path(L.SCENE)], gout)
 	var ns: PackedStringArray = String(gout[0]).strip_edges().split("\t") if gout.size() > 0 else PackedStringArray()
@@ -490,6 +613,27 @@ func _run() -> void:
 	_ok(shape_ok, "全棟とも body の碰撞は Kit 由来の 1 Shape のまま（増減なし）")
 	print("[W9R2G] 結果：%d 通過・%d 失敗（反向案例 %d/%d）" % [passed, failed, neg[0], neg[1]])
 	quit(0 if failed == 0 and int(neg[0]) == int(neg[1]) else 1)
+
+
+## 1 棟分の元の箱と Shell の disabled を集めて activation_issues に渡す（理由に建物 id を付ける）
+func _act_issues_of(vroot: Node, ovn: Node, id: String, expect: String) -> PackedStringArray:
+	var out: PackedStringArray = []
+	var body := vroot.get_node_or_null(NodePath(String(L.SPECS[id]["path"])))
+	var sh := ovn.get_node_or_null(id + "/Shell")
+	if body == null or sh == null:
+		out.append("%s：body または Shell が無い" % id)
+		return out
+	var bd: Array = []
+	for c in body.get_children():
+		if c is CollisionShape3D:
+			bd.append((c as CollisionShape3D).disabled)
+	var sd: Array = []
+	for c in sh.get_children():
+		if c is CollisionShape3D:
+			sd.append((c as CollisionShape3D).disabled)
+	for s in activation_issues(bd, sd, expect):
+		out.append("%s：%s" % [id, s])
+	return out
 
 
 ## 反向案例：検査関数に『違反するメッシュ・メタ』を与えて、確かに拾うこと
@@ -584,7 +728,38 @@ func _negatives() -> Array:
 			[[Vector3(1.0, 1.15, 6.0), Vector3(0.2, 2.3, 0.2), 2, 1]]]:           # layer が body と違う
 		tot += 1
 		okc += 0 if post_issues(pe, badp, 1, 1).is_empty() else 1
-	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4）" % [okc, tot])
+	# --- 外形碰撞箱 Shell（W9 FIX）---
+	var se := [{"x0": -2.0, "x1": 2.0, "y0": -0.4, "y1": 3.0, "z0": -5.0, "z1": 1.0}, {"x0": -2.0, "x1": -1.5, "y0": -0.4, "y1": 2.6, "z0": 1.0, "z1": 5.0}]
+	var sg := [[Vector3(0, 1.3, -2.0), Vector3(4, 3.4, 6), true, 1, 1, true], [Vector3(-1.75, 1.1, 3.0), Vector3(0.5, 3.0, 4.0), true, 1, 1, true]]
+	tot += 1
+	okc += 1 if shell_issues(se, sg, 1, 1).is_empty() else 0
+	var sg_move: Array = sg.duplicate(true)
+	sg_move[1][0] = Vector3(-1.45, 1.1, 3.0)
+	var sg_rot: Array = sg.duplicate(true)
+	sg_rot[0][2] = false
+	var sg_layer: Array = sg.duplicate(true)
+	sg_layer[0][3] = 2
+	for bads in [
+			[se, []],                                   # Shell が無い（json に登録あり）
+			[se, sg_move],                              # 位置が違う
+			[se, sg_rot],                               # 回転している
+			[se, sg + [sg[0]]],                         # 重複（同じ箱が 2 つ）
+			[se, sg + [[Vector3(5, 1, 5), Vector3(1, 1, 1), true, 1, 1, true]]],   # json に無い箱
+			[[], sg],                                   # 未登録の Shell
+			[se, sg_layer]]:                            # layer が body と違う
+		tot += 1
+		okc += 0 if shell_issues(bads[0], bads[1], 1, 1).is_empty() else 1
+	# --- 元の箱と Shell の有効状態 ---
+	tot += 1
+	okc += 1 if activation_issues([true], [false, false], "on").is_empty() and activation_issues([false], [true, true], "saved").is_empty() else 0
+	for bada in [
+			[[false], [false, false], "on"],            # 同時に有効（衝突）
+			[[false], [true, true], "on"],              # 有効なのに元の箱のまま
+			[[true], [true, true], "on"],               # 有効なのにどちらも無効（碰撞が消える）
+			[[false], [false, true], "saved"]]:         # 保存状態で Shell が有効
+		tot += 1
+		okc += 0 if activation_issues(bada[0], bada[1], bada[2]).is_empty() else 1
+	print("[W9R2G] 反向案例 %d/%d（戸口・頭上・張り出し×2・正常軒・室内／庇構造 1+7+1／屋根の収め 1+4+1／貫入 2／隣棟 massing 2／庇柱の碰撞 1+5／板葺き屋根 1+4／外形碰撞箱 1+7／有効状態 1+4）" % [okc, tot])
 	return [okc, tot]
 
 

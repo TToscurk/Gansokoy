@@ -107,6 +107,14 @@ func _check() -> void:
 		print("[DEVGATE]   %-30s %s" % [p, ("visible=%s" % n.visible) if n else "（無此節點）"])
 		if n_node == 1 and n != null and n.visible:
 			bad = true
+	# 2026-10-17：各町の ParcelLines（Districts/*/ParcelLines）も正式遊玩で隠す
+	for n in v.get_node("Districts").find_children("*ParcelLines*", "", true, false):
+		var pth := String(v.get_path_to(n))
+		if pth in DEV_PATHS:
+			continue
+		print("[DEVGATE]   %-30s visible=%s" % [pth, (n as Node3D).visible])
+		if n_node == 1 and (n as Node3D).visible:
+			bad = true
 	print("[DEVGATE] 結果：%s" % ("FAIL" if bad else "OK"))
 	v.queue_free()
 	await process_frame

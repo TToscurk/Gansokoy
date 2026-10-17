@@ -1,18 +1,26 @@
+@tool
 extends Node3D
 ## P13 W9 Round 2：建築外形サンプル overlay（`ArchW9R2P13`・tools/p13/w9/build_w9r2.gd が産生）。
 ## 子＝建築 id ごとの Node3D（body と同じ transform）＋ L0／L1 メッシュ。metadata：body_path（village 直下から）、hide（カテゴリごとの接頭辞）。
 ## enabled=true：該当建築の Kit 構件のうち hide0／hide12 の接頭辞に合うものを非表示にし、新メッシュを見せる。
 ##   材質は建築自身の Kit 構件に付いている覆寫（W7 Albedo／W8 LodCal）を同じ基底材質の面にコピーする（隣と明度がずれない）。
 ## enabled=false：非表示にした Kit 構件を元の visible に戻し、新メッシュを隠す（Before と同じ状態）。
+## @tool（2026-10-17）：編輯器裡也套用同樣的隱藏，否則編輯器同時畫舊 Kit 與新外形 → 屋頂兩層互穿、共面構件閃爍（z-fighting）。
+##   存檔前（NOTIFICATION_EDITOR_PRE_SAVE）先全部還原、存完（POST_SAVE）再套回 → village_v2.tscn 不會被寫進 visible=false／材質覆寫。
+##   編輯器裡不動庇柱碰撞（_posts 只在遊戲中切換）。驗證：tools/p13/w9/verify_editor_tool_overlays.gd。
+## W9 FIX（2026-10-17）：外形が変わった 22 棟は <id>/Shell（collision_fit.json の箱）を持つ。有効の間は body の元の箱を無効・Shell を有効にする
+##   （_shell）。編輯器でも同じに切り替える＝碰撞 gizmo が遊戲中の実際の碰撞を表す。存檔前は _restore で元の disabled に戻る。
 @export var enabled := true:
 	set(v):
 		enabled = v
-		if _booted:
+		if _booted or (Engine.is_editor_hint() and is_inside_tree()):
+			_booted = true
 			_apply(v)
 
 var _booted := false
 var _hidden: Array = []      # [MeshInstance3D, 元の visible]
 var _mats: Array = []        # [MeshInstance3D, surface, 元の override]
+var _cols: Array = []        # [CollisionShape3D, 元の disabled]（_shell が切り替えたもの）
 var hidden_count := 0
 var copied_surfaces := 0
 var r1_hidden := 0
@@ -21,6 +29,11 @@ const R1_HANG := ["sudare", "kaki", "sugi", "zaru", "zori"]
 
 
 func _ready() -> void:
+	# 碰撞の入れ替えだけは同期で行う（W9 FIX 生存期間）：_boot は W7／W8 の材質を待って 2 フレーム遅れる。その間に物理フレームが走ると
+	# 元の箱が効いたまま——読檔（main._on_load_requested：load_map の直後に玩家を置く）で、修正で歩けるようになった所に立っていた玩家が
+	# 押し出された（w9fix_lifecycle_real.gd：MXC_007 の見世で 0.44 m）。_apply は _restore→_shell を同期で行うので二重にならない。
+	if enabled:
+		_shell()
 	_boot.call_deferred()
 
 
@@ -30,6 +43,18 @@ func _boot() -> void:
 	await get_tree().process_frame
 	_booted = true
 	_apply(enabled)
+
+
+func _notification(what: int) -> void:
+	# 編輯器存檔：存的是『沒有被本腳本改過』的原狀態（只在編輯器發生；遊戲中不會收到）
+	# _ready で碰撞だけ先に入れ替えるので、_boot 前（2 フレーム）の存檔でも元へ戻す（_restore は空なら何もしない）
+	if what == NOTIFICATION_EDITOR_PRE_SAVE:
+		_restore()
+	elif what == NOTIFICATION_EDITOR_POST_SAVE:
+		if _booted:
+			_apply(enabled)
+		elif enabled:
+			_shell()
 
 
 func _restore() -> void:
@@ -42,6 +67,10 @@ func _restore() -> void:
 		if is_instance_valid(a[0]):
 			(a[0] as MeshInstance3D).set_surface_override_material(int(a[1]), a[2])
 	_mats.clear()
+	for c in _cols:
+		if is_instance_valid(c[0]):
+			(c[0] as CollisionShape3D).disabled = c[1]
+	_cols.clear()
 	hidden_count = 0
 	copied_surfaces = 0
 
@@ -68,12 +97,33 @@ func _posts(on: bool) -> void:
 				(cs as CollisionShape3D).set_deferred("disabled", not on)
 
 
+func _shell() -> void:
+	## 元の箱（Kit の外形に合わせた body/Shape）→ 作り直した外形の箱（<id>/Shell）。disabled は直接切り替える
+	## （set_deferred だと _restore→_shell の連続呼び出しで『元の値』を取り違える）。
+	var vil := get_parent()
+	for b in get_children():
+		var sh := b.get_node_or_null("Shell")
+		var body := vil.get_node_or_null(NodePath(String(b.get_meta("body_path", ""))))
+		if sh == null or body == null:
+			continue
+		for cs in body.get_children():
+			if cs is CollisionShape3D:
+				_cols.append([cs, (cs as CollisionShape3D).disabled])
+				(cs as CollisionShape3D).disabled = true
+		for cs in sh.get_children():
+			if cs is CollisionShape3D:
+				_cols.append([cs, (cs as CollisionShape3D).disabled])
+				(cs as CollisionShape3D).disabled = false
+
+
 func _apply(on: bool) -> void:
 	_restore()
 	visible = on
-	_posts(on)
+	if not Engine.is_editor_hint():
+		_posts(on)
 	if not on:
 		return
+	_shell()
 	var vil := get_parent()
 	var r1 := vil.get_node_or_null("EnrichW9P13")
 	if r1 != null:

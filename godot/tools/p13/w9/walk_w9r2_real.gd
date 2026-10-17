@@ -13,6 +13,7 @@ extends "res://tools/p13/w6/w6_base.gd"
 ##        prop＝ON：停止の立面距離が『小物の碰撞箱の前面 + capsule 半径』（±0.08 m）で、小物の上へ登っていない（Δy ≤ 0.25 m）／
 ##             OFF（--disable）：小物の碰撞が無いので壁（碰撞 body の前面 = 立面）まで届く（停止 ≤ 半径 + 0.08 m）。
 ## 出力：<tag>_walk.json＋標準出力 [W9WALK] 行。--disable を付ければ同じ脚を overlay OFF（元の Kit）で歩く（比較用）。
+## --shell-off：W9 FIX の外形碰撞箱（Shell）を無効にし body の元の箱を有効にする（修正前の碰撞・見た目は同じ）。
 const B := {
 	"074": {"pos": Vector2(230.58, -97.22), "yaw": -14.0, "w": 4.5013, "d": 10.92, "y": 1.52},
 	"029": {"pos": Vector2(267.10, -70.26), "yaw": 73.3, "w": 6.9942, "d": 10.92, "y": 1.35},
@@ -32,6 +33,10 @@ const B := {
 	# ── Phase 5（主街中段 2 棟）：pos／yaw＝body の実測（atan2(basis.z.x, basis.z.z)）・y＝body の y ──
 	"p5_MKT_023": {"pos": Vector2(254.4828, -28.2123), "yaw": 73.21, "w": 5.2002, "d": 10.92, "y": 1.094},
 	"p5_MKT_028": {"pos": Vector2(265.1548, -63.7873), "yaw": 73.32, "w": 6.1054, "d": 10.92, "y": 1.310},
+	# ── W9 FIX（外形碰撞箱 Shell）：開いた見世・庭へ実際に歩いて入る（pos／yaw＝village_v2.tscn の body の transform）──
+	"w9f_MXC_007": {"pos": Vector2(283.476, -114.419), "yaw": 68.19, "w": 7.9000, "d": 10.92, "y": 1.621},
+	"w9f_MKT_025": {"pos": Vector2(258.776, -42.525), "yaw": 73.29, "w": 6.0960, "d": 10.92, "y": 1.182},
+	"w9f_RSW_076": {"pos": Vector2(247.182, -93.074), "yaw": -14.06, "w": 6.3060, "d": 10.92, "y": 1.495},
 }
 ## [名前, 建物, 種別, 出発 (lx, dz), 目標 (lx, dz), prop の碰撞箱の前面（立面から通り側へ m。Posts の z + 半幅 - 立面。generator の solid() と同じ値）]
 const LEGS := [
@@ -82,7 +87,14 @@ const LEGS := [
 	["p4_MXC_002_door", "p4_MXC_002", "door", Vector2(-0.88, 3.2), Vector2(-0.88, -0.6), 0.0],
 	["p4_MXC_004_along_near", "p4_MXC_004", "along", Vector2(-6.95, 1.3), Vector2(6.95, 1.3), 0.0],
 	["p4_MXC_004_along_road", "p4_MXC_004", "along", Vector2(-6.95, 3.2), Vector2(6.95, 3.2), 0.0],
-	["p4_MXC_004_door", "p4_MXC_004", "door", Vector2(1.32, 3.2), Vector2(1.32, -0.6), 0.0],
+	# W9 FIX 最終驗收（Decision 2）：MXC_004 の戸口は立面から 1.46 m 凹み（見た目の側柱 lx 0.62／2.02・奥の壁 立面 −1.46）、
+	# 凹みの床は地面から 0.41 m（step_height 0.35 より高い）。旧 'door'（立面 1.1 m 以内で止まれば合格・目標 −0.6）は凹みの実形と合わず
+	# timeout していた。期待値は『見た目の面 ± 半径』±0.08（stopz／stopx）・凹みの中の脚は床の上に置く（7 番目 true）。
+	["p4_MXC_004_door", "p4_MXC_004", "stopz", Vector2(1.32, 3.2), Vector2(1.32, -3.0), 0.0],
+	["p4_MXC_004_recess_back", "p4_MXC_004", "stopz", Vector2(1.32, -0.35), Vector2(1.32, -3.0), -1.46, true],
+	["p4_MXC_004_recess_left", "p4_MXC_004", "stopx", Vector2(1.32, -0.75), Vector2(-1.5, -0.75), 0.62, true],
+	["p4_MXC_004_recess_right", "p4_MXC_004", "stopx", Vector2(1.32, -0.75), Vector2(4.0, -0.75), 2.02, true],
+	["p4_MXC_004_recess_exit", "p4_MXC_004", "exit", Vector2(1.32, -0.75), Vector2(1.32, 3.2), 0.0, true],
 	# ── Phase 4 R1b（B1）：木戸を宅間の奥へ移した後、巷の口（四つ目垣の切れ目）から庭へ実際に歩いて入れる（lx＝R1 の木戸の中心）
 	["p4b_gap_024_025_in", "p4_RSW_025", "along", Vector2(-4.13, 3.0), Vector2(-4.13, -3.5), 0.0],
 	["p4b_gap_014_013_in", "014", "along", Vector2(6.30, 3.0), Vector2(6.30, -3.5), 0.0],
@@ -93,6 +105,11 @@ const LEGS := [
 	["p5_MKT_028_along_near", "p5_MKT_028", "along", Vector2(-6.05, 1.3), Vector2(6.05, 1.3), 0.0],
 	["p5_MKT_028_along_road", "p5_MKT_028", "along", Vector2(-6.05, 3.0), Vector2(6.05, 3.0), 0.0],
 	["p5_MKT_028_door", "p5_MKT_028", "door", Vector2(0.436, 3.0), Vector2(0.436, -0.6), 0.0],
+	# ── W9 FIX：見世の奥へ（台の間＝奥の壁 z 1.9／台の前 z 4.8）・開いた正面の台の前・裏庭へ横から ──
+	["w9f_MXC_007_porch_gap", "w9f_MXC_007", "door", Vector2(0.35, 3.0), Vector2(0.35, -4.5), 0.0],
+	["w9f_MXC_007_porch_table", "w9f_MXC_007", "door", Vector2(-1.7, 3.0), Vector2(-1.7, -4.5), 0.0],
+	["w9f_MKT_025_front", "w9f_MKT_025", "door", Vector2(-2.0, 3.2), Vector2(-2.0, -4.0), 0.0],
+	["w9f_RSW_076_yard_in", "w9f_RSW_076", "along", Vector2(-5.5, -8.5), Vector2(-1.7, -8.5), 0.0],
 ]
 const STALL_FRAMES := 30          # 速度 < 0.3 m/s が連続してこの数に達したら、その脚は止まったとみなす（0.5 s）
 const TIMEOUT_MS := 25000
@@ -107,6 +124,25 @@ var _r := 0.3              # 玩家 capsule の半径（_run で実機の値を�
 
 func _yaw(k: String) -> float:
 	return deg_to_rad(float((B[k] as Dictionary)["yaw"]))
+
+
+## 庇の板・屋根の下（戸口の凹みの中）へ置く：_tpw は y 80 から当てるので屋根の上に乗る。局部 +1.6 m から下へ当てた最初の面に置く
+func _tpw_under(k: String, p: Vector2, face: Vector2) -> void:
+	Input.action_release("move_forward")
+	var sp := player.get_world_3d().direct_space_state
+	var y0 := float((B[k] as Dictionary)["y"]) + 1.6
+	var rq := PhysicsRayQueryParameters3D.create(Vector3(p.x, y0, p.y), Vector3(p.x, y0 - 4.0, p.y), player.collision_mask)
+	rq.exclude = [player.get_rid()]
+	var r := sp.intersect_ray(rq)
+	var gy := float((r["position"] as Vector3).y) if not r.is_empty() else y0 - 1.6
+	player.velocity = Vector3.ZERO
+	player.global_position = Vector3(p.x, gy + 0.1, p.y)
+	player.call("snap_yaw", atan2(-face.x, -face.y))
+	_fix_camera()
+	await _frames(4)
+	for i in 40:
+		await physics_frame
+	await _frames(20)
 
 
 ## 建物ローカル (lx, dz) → 世界 (x, z)。dz＝立面（lz＝奥行/2）から通り側へ。
@@ -136,7 +172,10 @@ func _leg(lg: Array) -> void:
 	var front: float = lg[5]
 	var p0 := _w(k, a.x, a.y)
 	var p1 := _w(k, z.x, z.y)
-	await _tpw(p0, (p1 - p0).normalized())
+	if lg.size() > 6 and bool(lg[6]):
+		await _tpw_under(k, p0, (p1 - p0).normalized())
+	else:
+		await _tpw(p0, (p1 - p0).normalized())
 	var start := player.global_position
 	var gy_off := start.y - float((B[k] as Dictionary)["y"])
 	var dt := 1.0 / float(Engine.physics_ticks_per_second)
@@ -176,7 +215,7 @@ func _leg(lg: Array) -> void:
 		prev = pp
 		if not player.is_on_floor():
 			lost += 1
-		if kind == "along" and d <= 0.35:
+		if (kind == "along" or kind == "exit") and d <= 0.35:
 			reached = true
 			stop = "reached"
 			break
@@ -198,6 +237,17 @@ func _leg(lg: Array) -> void:
 		"door":
 			ok = lost == 0 and not is_nan(first_stall.y) and first_stall.y <= 1.1 and max_dy <= 0.25
 			verdict = "壁の手前 %.2f m まで着いた" % el.y
+		"stopz", "stopx":
+			# 見た目の面（front）＋半径で止まる（進む向きの手前側）。±0.08
+			var along_z := kind == "stopz"
+			var dirs := signf((z.y - a.y) if along_z else (z.x - a.x))
+			var want2 := front - dirs * _r
+			var got: float = first_stall.y if along_z else first_stall.x
+			ok = lost == 0 and not is_nan(got) and absf(got - want2) <= 0.08 and max_dy <= 0.25
+			verdict = "最初の停止 %s %.2f（期待 見た目の面 %.2f %s 半径 %.2f ＝ %.2f ±0.08）" % ["立面" if along_z else "lx", got, front, "+" if dirs < 0 else "−", _r, want2]
+		"exit":
+			ok = reached and lost <= 30 and max_run <= 12
+			verdict = "出られた（床から降りる間の非接地 %d フレーム）" % lost if reached else "出られない（停止 lx %.2f 立面 %.2f）" % [el.x, el.y]
 		"prop":
 			var climbed := end.y - start.y
 			var want := _r if _off else front + _r         # OFF＝壁まで／ON＝小物の碰撞箱の前面で止まる
@@ -245,6 +295,18 @@ func _run() -> void:
 			print("[W9WALK] disabled ", dn)
 		else:
 			print("[W9WALK] disable: node not found ", dn)
+	if "--shell-off" in args:
+		# 修正前の碰撞構成（W9 FIX の Shell を無効・body の元の箱を有効。見た目は同じ W9R2）
+		for b in vil.get_node("ArchW9R2P13").get_children():
+			var sh := b.get_node_or_null("Shell")
+			if sh == null:
+				continue
+			for c in vil.get_node(NodePath(String(b.get_meta("body_path")))).get_children():
+				if c is CollisionShape3D:
+					(c as CollisionShape3D).disabled = false
+			for c in sh.get_children():
+				(c as CollisionShape3D).disabled = true
+		print("[W9WALK] shell-off（修正前の碰撞）")
 	await _frames(6)
 	var ov := vil.get_node_or_null("ArchW9R2P13")
 	print("[W9WALK] tag=%s overlay=%s enabled=%s" % [_tag, "あり" if ov != null else "なし", str(ov.get("enabled")) if ov != null else "-"])

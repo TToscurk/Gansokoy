@@ -26,6 +26,10 @@ func _run() -> void:
 	ov.set_script(load(L.SCRIPT))
 	var vinv := v.global_transform.affine_inverse()
 	var meta := JSON.parse_string(FileAccess.get_file_as_string(L.META)) as Dictionary
+	var colfit: Dictionary = {}
+	if FileAccess.file_exists(L.COLFIT):
+		colfit = (JSON.parse_string(FileAccess.get_file_as_string(L.COLFIT)) as Dictionary).get("buildings", {})
+	var nshell := 0
 	var nposts := 0
 	var fails := 0
 	var tris := 0
@@ -63,6 +67,26 @@ func _run() -> void:
 				sb.add_child(cs)
 				nposts += 1
 			n.add_child(sb)
+		if colfit.has(id):
+			# W9 FIX：作り直した外形に合わせた碰撞箱（Shell）。保存時は disabled＝true（腳本が動かなければ元の箱のまま＝二重にならない）。
+			# arch_w9r2.gd が overlay 有効の間だけ body の元の箱を無効・Shell を有効にする。
+			var sh := StaticBody3D.new()
+			sh.name = "Shell"
+			sh.collision_layer = int((body as CollisionObject3D).collision_layer)
+			sh.collision_mask = int((body as CollisionObject3D).collision_mask)
+			var bi := 0
+			for bx: Dictionary in (colfit[id] as Dictionary)["boxes"]:
+				var bs := BoxShape3D.new()
+				bs.size = Vector3(float(bx["x1"]) - float(bx["x0"]), float(bx["y1"]) - float(bx["y0"]), float(bx["z1"]) - float(bx["z0"]))
+				var cs := CollisionShape3D.new()
+				cs.name = "Box%d" % bi
+				cs.shape = bs
+				cs.position = Vector3((float(bx["x0"]) + float(bx["x1"])) / 2.0, (float(bx["y0"]) + float(bx["y1"])) / 2.0, (float(bx["z0"]) + float(bx["z1"])) / 2.0)
+				cs.disabled = true
+				sh.add_child(cs)
+				bi += 1
+				nshell += 1
+			n.add_child(sh)
 		for lod in 2:
 			var mp: String = L.MESH_DIR + "%s_L%d.res" % [id, lod]
 			var mesh := load(mp) as Mesh
@@ -92,7 +116,7 @@ func _run() -> void:
 	var ps := PackedScene.new()
 	ps.pack(ov)
 	var err := ResourceSaver.save(ps, L.OUTPUT)
-	print("[W9R2B] 保存 %s：%s・建築 %d・LOD0 三角面 %d・庇柱碰撞 %d・失敗 %d" % [L.OUTPUT, error_string(err), ov.get_child_count(), tris, nposts, fails])
+	print("[W9R2B] 保存 %s：%s・建築 %d・LOD0 三角面 %d・庇柱碰撞 %d・外形碰撞箱 %d・失敗 %d" % [L.OUTPUT, error_string(err), ov.get_child_count(), tris, nposts, nshell, fails])
 	quit(0 if (err == OK and fails == 0) else 1)
 
 

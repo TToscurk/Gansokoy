@@ -10,6 +10,8 @@ const AFTER := "EnrichW9P13"
 const MESH_DIR := "res://assets/village_v2/w9r2_arch/mesh/"
 const SCRIPT := "res://maps/village_v2/scripts_p13/arch_w9r2.gd"
 const META := "res://assets/village_v2/w9r2_arch/src/modules_blender.json"
+## W9 FIX：外形が変わった建物の碰撞箱（tools/p13/w9/w9fix_colfit.gd → w9fix_colfit_post.py が産生）。<id>/Shell として焼く
+const COLFIT := "res://assets/village_v2/w9r2_arch/src/collision_fit.json"
 const POST_PAD := 0.03        # 庇柱の碰撞は柱（w）より半径 +0.03 m 太い箱（見た目の柱に触れたら当たる）。礎石（±0.12）より細くはしない
 const LOD_RANGES := [0.0, 40.0, 600.0]
 const LOD_MARGIN := 4.0
@@ -30,19 +32,19 @@ const CAT12 := {
 ## id → {path: village 直下からの body パス, hide: [カテゴリ]}
 const SPECS := {
 	"B_P_MKT_008": {"path": "Districts/Market/Buildings/B_P_MKT_008", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_009": {"path": "Districts/Market/Buildings/B_P_MKT_009", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_009": {"path": "Districts/Market/Buildings/B_P_MKT_009", "hide": ["front", "eave", "roof"], "hide_extra0": ["post_e54_c4_21"]},
 	"B_P_MKT_010": {"path": "Districts/Market/Buildings/B_P_MKT_010", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_011": {"path": "Districts/Market/Buildings/B_P_MKT_011", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_012": {"path": "Districts/Market/Buildings/B_P_MKT_012", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_012": {"path": "Districts/Market/Buildings/B_P_MKT_012", "hide": ["front", "eave", "roof"], "hide_extra0": ["post_e54_c2_21"]},
 	"B_P_MKT_013": {"path": "Districts/Market/Buildings/B_P_MKT_013", "hide": ["front", "eave"]},
 	"B_P_RSW_047": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_047", "hide": ["front", "eave"]},
 	"B_P_RSW_048": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_048", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_061": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_061", "hide": ["front", "eave", "roof"]},
 	"B_P_RSW_062": {"path": "Districts/ResidentialWest/Buildings/B_P_RSW_062", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_025": {"path": "Districts/Market/Buildings/B_P_MKT_025", "hide": ["all"]},      # 平屋へ低くするので Kit の壁・柱・屋根を（base 以外）全て隠し自前で閉じる
-	"B_P_MKT_027": {"path": "Districts/Market/Buildings/B_P_MKT_027", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_026": {"path": "Districts/Market/Buildings/B_P_MKT_026", "hide": ["front", "eave", "roof"]},
-	"B_P_MKT_024": {"path": "Districts/Market/Buildings/B_P_MKT_024", "hide": ["front", "eave", "roof"]},
+	"B_P_MKT_027": {"path": "Districts/Market/Buildings/B_P_MKT_027", "hide": ["front", "eave", "roof"], "hide_extra0": ["post_e54_13"]},
+	"B_P_MKT_026": {"path": "Districts/Market/Buildings/B_P_MKT_026", "hide": ["front", "eave", "roof"], "hide_extra0": ["post_e39_c1_21"]},
+	"B_P_MKT_024": {"path": "Districts/Market/Buildings/B_P_MKT_024", "hide": ["front", "eave", "roof"], "hide_extra0": ["post_e54_c1_27"]},
 	"B_P_MKT_006": {"path": "Districts/Market/Buildings/B_P_MKT_006", "hide": ["front", "eave", "roof"]},
 	"B_P_MKT_020": {"path": "Districts/Market/Buildings/B_P_MKT_020", "hide": ["front", "eave", "roof"]},
 	# ── Phase 2：新しい建築タイプ 3 棟（Kit の壁・屋根・庇を base 以外全て隠して自前で組む）──
@@ -103,4 +105,9 @@ static func hide_prefixes(id: String, lod: int) -> PackedStringArray:
 			cc = "eave" if cats.has("eave") else "front"
 		for p: String in tab.get(cc, []):
 			out.append(p)
+	# 個別に隠す Kit LOD0 構件（完全名）：新外形の角柱と同じ位置・同じ面に重なる Kit の前角柱（共面＝z-fighting で閃爍）。
+	# 2026-10-17 実測（共面三角形の被覆率 50–100%、隠しても新外形の角柱が連続して立つことを確認）
+	if lod == 0:
+		for n: String in SPECS[id].get("hide_extra0", []):
+			out.append(n)
 	return out
