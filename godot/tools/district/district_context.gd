@@ -62,8 +62,14 @@ func _run() -> void:
 	root.add_child(v)
 	for i in 3:
 		await physics_frame
+	var n_supp := DL.prepare_scene(v, d)
+	if n_supp > 0:
+		print("[DCTX] 街區表 suppress：既存 %d 組を記憶内で取り除いて判定（場景ファイルは書かない）" % n_supp)
 	P3.register_dims()
 	var C := W9.context(v, PackedVector2Array())
+	var n_surf := DL.attach_surface(C, v, d)
+	if n_surf > 0:
+		print("[%s] 街區表 surface：%d 三角形を W9.top_h に併入（掛載済みの境內地面）" % ["DCTX", n_surf])
 	var CL := DL.local_context(C, R)
 	print("[DCTX] context %d ms（建物 %d → 街區近傍 %d・樹幹 %d → %d）" % [Time.get_ticks_msec() - t0, (C["bld"] as Array).size(), (CL["bld"] as Array).size(), (C["trunks"] as Array).size(), (CL["trunks"] as Array).size()])
 	# ── 建物
@@ -116,7 +122,7 @@ func _run() -> void:
 	for j in hnz:
 		for i in hnx:
 			var p := HR.position + Vector2(i * hstep, j * hstep)
-			var h := W9.top_h(C, p)
+			var h := DL.top_h(C, p)
 			hs.append(snappedf(h, 0.001) if not is_nan(h) else -9999.0)
 			var wh := WS.h(p.x, p.y)
 			if not is_nan(wh) and (is_nan(h) or wh > h - 0.02):

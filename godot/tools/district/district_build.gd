@@ -62,15 +62,21 @@ func _run() -> void:
 	root.add_child(v)
 	for i in 3:
 		await physics_frame
+	var n_supp := DL.prepare_scene(v, d)
+	if n_supp > 0:
+		print("[DBLD] 街區表 suppress：既存 %d 組を記憶内で取り除いて判定（場景ファイルは書かない）" % n_supp)
 	P3.register_dims()
 	var C := W9.context(v, PackedVector2Array())
+	var n_surf := DL.attach_surface(C, v, d)
+	if n_surf > 0:
+		print("[%s] 街區表 surface：%d 三角形を W9.top_h に併入（掛載済みの境內地面）" % ["DBLD", n_surf])
 	var items: Array = []
 	var dy_max := 0.0
 	var dy_vid := ""
 	for e: Dictionary in M["items"]:
 		var it := DL.item_from_entry(e, d)
 		if String(it["ground"]) == "snap" and not bool(it.get("hang", false)):
-			var gy := W9.ground_y(C, it)
+			var gy := DL.ground_y(C, it)
 			var dy := absf(gy - float(it["y"]))
 			if dy > dy_max:
 				dy_max = dy

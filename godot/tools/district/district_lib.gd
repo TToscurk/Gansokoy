@@ -45,6 +45,21 @@ const DISTRICTS := {
 		"seed_scene": "res://maps/village_v2/gen/enrich_w9p8.scn", "seed_zone": "ZoneA8", "supersedes": ["EnrichW9P8:ZoneA8"],
 		"arm_lanes": {"A8_cross_end": [Vector2(352.0, -35.2), Vector2(380.0, -36.0)], "A8_farmpath": [Vector2(372.0, -33.0), Vector2(372.0, -2.0)]},
 		"keep_clear": {"PORTAL_HIEDA1F": Vector2(398.0, 2.0), "akyuu_record": Vector2(398.0, -4.0)}},
+	## E2（2026-10-17 使用者）：丘腳社寺（LANDMARK_HILLFOOT_TEMPLE，社殿 12.0×11.4 m 在 (228, −170)）的境內環境。rect＝社寺整地面（y 1.20）＋西側水溝＋東／北丘腳＋丘腳街南緣。
+	## 社寺本體・碰撞不動；既有 EnvironmentP9／MeadowP9／GroundcoverP9 不改（掛載後由 HillfootPrecinctE2 可逆抑制）。無 seed（原環境不是這條管線產的）；
+	## 不設 keep_clear（石段前要鋪踏石；前庭留白由 verify_hf_precinct.gd 的前庭多邊形規則管）。
+	"HF": {"name": "丘腳社寺 境內環境（參道・前庭・境界植栽）", "rect": Rect2(206.0, -190.0, 44.0, 42.0),
+		"supersedes": [],
+		"arm_lanes": {"HF_approach": [Vector2(228.0, -148.5), Vector2(228.0, -158.0), Vector2(228.0, -165.0)],
+			"HF_front_cross": [Vector2(219.5, -161.5), Vector2(236.5, -161.5)],
+			"HF_west_flank": [Vector2(220.0, -163.0), Vector2(220.0, -176.0)],
+			"HF_east_flank": [Vector2(236.5, -163.0), Vector2(236.5, -176.0)]},
+		## 掛載後 HillfootPrecinctE2 會可逆抑制的既有 EnvironmentP9 組（hf_precinct_lib.gd SUPPRESS_GROUPS 與此相同，verify_hf_precinct.gd 檢查一致）。
+		## context／build／verify 用 prepare_scene 在『記憶體內』先拿掉這些節點與其碰撞，W9.why 才不會把它們當占用（env）。
+		"suppress": ["Props/EnvironmentP9/edge/E082_fence_frag"],
+		## 掛載済みの境內地面 overlay（地形 +3.2 cm 的可見面）併入 W9.top_h：踏石・植栽才會座在『看得見的地面』上，而不是埋在它下面（見 attach_surface）。
+		"surface": "HillfootPrecinctE2/Ground",
+		"keep_clear": {}},
 }
 const KEEP_R := 6.0
 const Y_SNAP_TOL := 0.10        # 接地（W9 verify と同じ）
@@ -100,6 +115,73 @@ static func overlay_path(d: String) -> String:
 
 static func node_name(d: String) -> String:
 	return "District" + d
+
+
+## 街區が「掛載後の世界」で判定されるよう、街區表の suppress（既存 overlay の抑制対象）を記憶内で取り除く（場景ファイルは書かない）。
+## 節点そのものと、EnvironmentP9/Collision にある同名の <名>_c 碰撞箱を free する。戻り値＝取り除いた節点数。
+static func prepare_scene(v: Node3D, d: String) -> int:
+	var n := 0
+	var col := v.get_node_or_null("Props/EnvironmentP9/Collision")
+	for path: String in (DISTRICTS[d] as Dictionary).get("suppress", []):
+		var node := v.get_node_or_null(path)
+		if node == null:
+			continue
+		if col != null:
+			for ch in node.get_children():
+				var sh := col.get_node_or_null(String(ch.name) + "_c")
+				if sh != null:
+					col.remove_child(sh)
+					sh.free()
+		node.get_parent().remove_child(node)
+		node.free()
+		n += 1
+	return n
+
+
+## district 表 "surface"（場景內的 overlay Ground 節點路徑）：其 MeshInstance3D 中被覆（UV2.y）平均 ≥ 0.5 的三角形放進 C["SURF"]，
+## 由本檔的 top_h／ground_y（W9 同名函式的包裝）一併當作『見えている最上面』——踏石・植栽才會座在看得見的地面上，不會埋在它下面。
+## 注意：不能併入 C["F"]（W9.why 把 F 當『店先帯』＝不可放置，整個境內會變成 frontage）。沒掛載（節點不存在）→ 不加（回傳 0）。回傳三角形數。
+static func attach_surface(C: Dictionary, v: Node3D, d: String) -> int:
+	var path: String = String((DISTRICTS[d] as Dictionary).get("surface", ""))
+	if path == "":
+		return 0
+	var mi := v.get_node_or_null(path) as MeshInstance3D
+	if mi == null or mi.mesh == null or mi.mesh.get_surface_count() == 0:
+		return 0
+	var arr := mi.mesh.surface_get_arrays(0)
+	var V: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var U2: PackedVector2Array = arr[Mesh.ARRAY_TEX_UV2]
+	var IDX: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
+	var faces := PackedVector3Array()
+	for t in range(0, IDX.size(), 3):
+		if (U2[IDX[t]].y + U2[IDX[t + 1]].y + U2[IDX[t + 2]].y) / 3.0 >= 0.5:
+			faces.append(V[IDX[t]])
+			faces.append(V[IDX[t + 1]])
+			faces.append(V[IDX[t + 2]])
+	var S := RLib.TriSampler.new()
+	S.add(faces, RLib.rel_xf(mi, v))
+	C["SURF"] = S
+	return faces.size() / 3
+
+
+## W9.top_h ＋ 區域專屬面（C["SURF"]，沒有就等於 W9.top_h）
+static func top_h(C: Dictionary, p: Vector2) -> float:
+	var h := W9.top_h(C, p)
+	if C.has("SURF"):
+		var f: float = (C["SURF"] as RLib.TriSampler).h(p.x, p.y)
+		if not is_nan(f):
+			h = maxf(h, f)
+	return h
+
+
+## W9.ground_y（中心＋足元各點的最小值）の top_h 差し替え版
+static func ground_y(C: Dictionary, it: Dictionary) -> float:
+	if not C.has("SURF"):
+		return W9.ground_y(C, it)
+	var hs: Array = [top_h(C, it["p"])]
+	for q in W9.foot(it):
+		hs.append(top_h(C, q))
+	return float(hs.min())
 
 
 static func test_scene_path(d: String) -> String:
@@ -222,7 +304,7 @@ static func check(C: Dictionary, it: Dictionary) -> String:
 	if w != "":
 		return w
 	var hang := bool(it.get("hang", false))
-	var gy := W9.ground_y(C, it)
+	var gy := ground_y(C, it)
 	if not hang:
 		if absf(float(it["y"]) - gy) > Y_SNAP_TOL:
 			return "float(%.2f vs ground %.2f)" % [float(it["y"]), gy]

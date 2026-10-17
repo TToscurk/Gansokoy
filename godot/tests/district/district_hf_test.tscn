@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://maps/village_v2/village_v2.tscn" id="1_village"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/district_hf.scn" id="2_district"]
+
+[node name="DistrictTestHF" type="Node3D"]
+
+[node name="Village" parent="." instance=ExtResource("1_village")]
+
+[node name="DistrictHF" parent="Village" instance=ExtResource("2_district")]

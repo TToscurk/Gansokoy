@@ -285,8 +285,14 @@ func _run() -> void:
 	root.add_child(v)
 	for i in 3:
 		await physics_frame
+	var n_supp := DL.prepare_scene(v, d)
+	if n_supp > 0:
+		print("[DVER] 街區表 suppress：既存 %d 組を記憶内で取り除いて判定（場景ファイルは書かない）" % n_supp)
 	P3.register_dims()
 	var C := W9.context(v, PackedVector2Array())
+	var n_surf := DL.attach_surface(C, v, d)
+	if n_surf > 0:
+		print("[%s] 街區表 surface：%d 三角形を W9.top_h に併入（掛載済みの境內地面）" % ["DVER", n_surf])
 	var txt := FileAccess.get_file_as_string(DL.SCENE)
 	print("[DVER] INFO village_v2.tscn の %s 掛載：%s（本検査は書かない）" % [DL.node_name(d), "あり" if txt.contains("[node name=\"%s\"" % DL.node_name(d)) else "なし"])
 	if not ResourceLoader.exists(DL.overlay_path(d)):
@@ -519,7 +525,7 @@ func _run() -> void:
 		if road_p != Vector2.INF:
 			var itr := it0.duplicate()
 			itr["p"] = road_p
-			itr["y"] = W9.ground_y(C, itr)
+			itr["y"] = DL.ground_y(C, itr)
 			var w := DL.check(C, itr)
 			_neg("道路の上へ移動", w != "", w)
 		else:
@@ -530,7 +536,7 @@ func _run() -> void:
 		_neg("vid 重複", de.any(func(s: String) -> bool: return s.begins_with("vid 重複")), str(de.slice(0, 1)))
 		var itf := it0.duplicate()
 		itf["hang"] = false
-		itf["y"] = W9.ground_y(C, itf) + 0.5
+		itf["y"] = DL.ground_y(C, itf) + 0.5
 		var wf := DL.check(C, itf)
 		_neg("y +0.5 m（浮き）", wf.begins_with("float") or wf != "", wf)
 		var e0: Dictionary = (entries[0] as Dictionary).duplicate(true)

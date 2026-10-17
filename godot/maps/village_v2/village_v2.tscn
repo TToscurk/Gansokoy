@@ -1138,6 +1138,8 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p8.scn" id="p13w9p8_enrich"]
 [ext_resource type="Script" path="res://maps/village_v2/scripts_p13/dev_layer_gate.gd" id="p13w9_devgate"]
 [ext_resource type="PackedScene" path="res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn" id="w9_hillfoot_temple"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/district_hf.scn" id="e2_district_hf"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/hillfoot_precinct_e2.scn" id="e2_precinct"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -144269,6 +144271,10 @@ script = ExtResource("p10r3e_act")
 [node name="EnrichW9P4" parent="." instance=ExtResource("p13w9p4_enrich")]
 
 [node name="EnrichW9P8" parent="." instance=ExtResource("p13w9p8_enrich")]
+
+[node name="DistrictHF" parent="." instance=ExtResource("e2_district_hf")]
+
+[node name="HillfootPrecinctE2" parent="." instance=ExtResource("e2_precinct")]
 
 [node name="DevLayerGate" parent="." type="Node"]
 script = ExtResource("p13w9_devgate")
