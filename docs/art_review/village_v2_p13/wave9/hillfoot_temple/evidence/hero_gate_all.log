@@ -1,0 +1,335 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialWest/Buildings/S_A_RSW_002（body），原點 (173.3013, 0.667108, 39.76296)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialWest/Buildings/S_A_RSW_006（body），原點 (193.9102, 0.887094, 3.689886)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialWest/Buildings/S_A_RSW_010（body），原點 (192.6765, 2.133795, -203.995)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialWest/Buildings/S_A_RSW_014（body），原點 (155.8143, 2.13723, -204.865)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialWest/Buildings/S_A_RSW_018（body），原點 (164.0874, 0.346484, 93.89125)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialNE/Buildings/S_A_RNE_002（body），原點 (442.9685, 2.317704, -234.661)、LOD0 4734 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_koya：res://assets/village_v2/aux_koya/aux_koya.scn 放在 Districts/ResidentialNE/Buildings/S_A_RNE_006（body），原點 (429.86, 2.3169, -234.785)、LOD0 4734 三角面
+[HERO] PASS aux_koya size：【S_A_RSW_002】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RSW_002：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RSW_006】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RSW_006：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RSW_010】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RSW_010：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RSW_014】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RSW_014：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RSW_018】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RSW_018：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RNE_002】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RNE_002：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m；【S_A_RNE_006】；LOD0 外框 x ±2.01（≤ 2.17）、z -1.42～1.42（容許 -1.48～1.48）、頂 2.90（2.71～3.01）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_RNE_006：面寬 2.73／縱深 1.82／簷 2.30／屋脊 2.71／台基 0.32 m；射線實測：牆面寬 2.73（P4 2.73）、牆縱深 1.82（P4 1.82）、屋脊頂 2.89（屋脊 2.71）、背面簷口 2.13（P4 簷口 2.10）m
+[HERO] PASS aux_koya parcel_fit：【S_A_RSW_002】；3 個地面接觸件：在 A_RSW_002 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RSW_006】；3 個地面接觸件：在 A_RSW_006 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RSW_010】；3 個地面接觸件：在 A_RSW_010 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RSW_014】；3 個地面接觸件：在 A_RSW_014 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RSW_018】；3 個地面接觸件：在 A_RSW_018 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RNE_002】；3 個地面接觸件：在 A_RNE_002 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_RNE_006】；3 個地面接觸件：在 A_RNE_006 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS aux_koya grounding：【S_A_RSW_002】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.39、踏石 埋 0.13、薪棚 埋 0.24；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RSW_002 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.65 → 踏石 0.83（0.18 m）→ 台基 0.99（0.16 m），每階 ≤ 0.30；【S_A_RSW_006】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.13、薪棚 埋 0.23；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RSW_006 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.88 → 踏石 1.05（0.17 m）→ 台基 1.21（0.16 m），每階 ≤ 0.30；【S_A_RSW_010】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.12、薪棚 埋 0.25；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RSW_010 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 2.12 → 踏石 2.29（0.18 m）→ 台基 2.45（0.16 m），每階 ≤ 0.30；【S_A_RSW_014】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.12、薪棚 埋 0.24；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RSW_014 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 2.12 → 踏石 2.30（0.18 m）→ 台基 2.46（0.16 m），每階 ≤ 0.30；【S_A_RSW_018】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.13、薪棚 埋 0.23；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RSW_018 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.34 → 踏石 0.51（0.16 m）→ 台基 0.67（0.16 m），每階 ≤ 0.30；【S_A_RNE_002】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.12、薪棚 埋 0.23；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RNE_002 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 2.30 → 踏石 2.48（0.18 m）→ 台基 2.64（0.16 m），每階 ≤ 0.30；【S_A_RNE_006】；3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.38、踏石 埋 0.13、薪棚 埋 0.23；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_RNE_006 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 2.31 → 踏石 2.48（0.17 m）→ 台基 2.64（0.16 m），每階 ≤ 0.30
+[HERO] PASS aux_koya materials：【S_A_RSW_002】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RSW_006】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RSW_010】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RSW_014】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RSW_018】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RNE_002】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_RNE_006】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS aux_koya geometry：【S_A_RSW_002】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RSW_006】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RSW_010】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RSW_014】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RSW_018】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RNE_002】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致；【S_A_RNE_006】；LOD0 4734 面：退化 0、NaN 0、繞向反 0、LOD1 528 面：退化 0、NaN 0、繞向反 0、LOD2 84 面：退化 0、NaN 0、繞向反 0；LOD0 4734 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 4734 一致
+[HERO] PASS aux_koya pivot_scale：【S_A_RSW_002】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (173.30, 0.67, 39.76)＝P4 footprint 中心 (173.30, 39.76)、base_h 0.67；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RSW_006】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (193.91, 0.89, 3.69)＝P4 footprint 中心 (193.91, 3.69)、base_h 0.89；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RSW_010】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (192.68, 2.13, -204.00)＝P4 footprint 中心 (192.67, -204.00)、base_h 2.13；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RSW_014】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (155.81, 2.14, -204.87)＝P4 footprint 中心 (155.82, -204.86)、base_h 2.14；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RSW_018】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (164.09, 0.35, 93.89)＝P4 footprint 中心 (164.09, 93.89)、base_h 0.35；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RNE_002】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (442.97, 2.32, -234.66)＝P4 footprint 中心 (442.97, -234.66)、base_h 2.32；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）；【S_A_RNE_006】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (429.86, 2.32, -234.79)＝P4 footprint 中心 (429.86, -234.79)、base_h 2.32；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～2.90）
+[HERO] PASS aux_koya collision：【S_A_RSW_002】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RSW_006】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RSW_010】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RSW_014】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RSW_018】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RNE_002】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_RNE_006】；3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 7 點被擋 0；步行帶頭頂淨空：7 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS aux_koya lod：【S_A_RSW_002】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 542 m）；【S_A_RSW_006】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 502 m）；【S_A_RSW_010】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 561 m）；【S_A_RSW_014】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 586 m）；【S_A_RSW_018】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 587 m）；【S_A_RNE_002】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 635 m）；【S_A_RNE_006】；面數 4734 → 528（11.2 %，≤ 35 %）→ 84（1.8 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 626 m）
+[HERO] PASS aux_koya performance：【S_A_RSW_002】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RSW_006】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RSW_010】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RSW_014】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RSW_018】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RNE_002】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【S_A_RNE_006】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 4734（19 %）；每級 surface ≤ 5（實測 3）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS aux_koya：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_kura：res://assets/village_v2/aux_kura/aux_kura.scn 放在 Districts/Market/Buildings/S_A_MKT_002（body），原點 (287.5225, 1.357754, -72.65106)、LOD0 12578 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] aux_kura：res://assets/village_v2/aux_kura/aux_kura.scn 放在 Districts/Market/Buildings/S_A_MKT_006（body），原點 (223.6578, 0.357551, 94.18774)、LOD0 12578 三角面
+[HERO] PASS aux_kura size：【S_A_MKT_002】；LOD0 外框 x ±2.28（≤ 2.34）、z -3.08～3.26（容許 -3.17～3.30）、頂 5.21（5.02～5.32）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_MKT_002：面寬 3.64／縱深 5.46／簷 4.20／屋脊 5.02／台基 0.32 m；射線實測：牆面寬 3.64（P4 3.64）、牆縱深 5.46（P4 5.46）、屋脊頂 5.10（屋脊 5.02）、側面簷口 4.05（P4 簷口 4.02）m；人物比例：入口淨高 1.98 m（門檻 0.32→鴨居 2.30；≥ 1.90，1.7 m 人）、淨寬 1.24 m（≥ 1.20）；【S_A_MKT_006】；LOD0 外框 x ±2.28（≤ 2.34）、z -3.08～3.26（容許 -3.17～3.30）、頂 5.21（5.02～5.32）、底 -0.40（-0.40）；規格＝P4 灰盒 S_A_MKT_006：面寬 3.64／縱深 5.46／簷 4.20／屋脊 5.02／台基 0.32 m；射線實測：牆面寬 3.64（P4 3.64）、牆縱深 5.46（P4 5.46）、屋脊頂 5.10（屋脊 5.02）、側面簷口 4.05（P4 簷口 4.02）m；人物比例：入口淨高 1.98 m（門檻 0.32→鴨居 2.30；≥ 1.90，1.7 m 人）、淨寬 1.24 m（≥ 1.20）
+[HERO] PASS aux_kura parcel_fit：【S_A_MKT_002】；2 個地面接觸件：在 A_MKT_002 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；【S_A_MKT_006】；2 個地面接觸件：在 A_MKT_006 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS aux_kura grounding：【S_A_MKT_002】；2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.36、踏石 埋 0.13；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_MKT_002 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 1.35 → 踏石 1.52（0.17 m）→ 台基 1.68（0.16 m），每階 ≤ 0.30；【S_A_MKT_006】；2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.36、踏石 埋 0.13；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 S_A_MKT_006 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.36 → 踏石 0.52（0.16 m）→ 台基 0.68（0.16 m），每階 ≤ 0.30
+[HERO] PASS aux_kura materials：【S_A_MKT_002】；4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_KuraShikkui": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮；【S_A_MKT_006】；4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_KuraShikkui": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS aux_kura geometry：【S_A_MKT_002】；LOD0 12578 面：退化 0、NaN 0、繞向反 0、LOD1 1090 面：退化 0、NaN 0、繞向反 0、LOD2 62 面：退化 0、NaN 0、繞向反 0；LOD0 12578 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 12578 一致；【S_A_MKT_006】；LOD0 12578 面：退化 0、NaN 0、繞向反 0、LOD1 1090 面：退化 0、NaN 0、繞向反 0、LOD2 62 面：退化 0、NaN 0、繞向反 0；LOD0 12578 ≤ §14.8「町家」上限 25000；與 Blender 建置紀錄 12578 一致
+[HERO] PASS aux_kura pivot_scale：【S_A_MKT_002】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (287.52, 1.36, -72.65)＝P4 footprint 中心 (287.52, -72.65)、base_h 1.36；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～5.21）；【S_A_MKT_006】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (223.66, 0.36, 94.19)＝P4 footprint 中心 (223.66, 94.19)、base_h 0.36；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.40～5.21）
+[HERO] PASS aux_kura collision：【S_A_MKT_002】；2 個簡化形狀（≤ 8；asset.json 列 2）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 9 點被擋 0；步行帶頭頂淨空：9 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 279 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【S_A_MKT_006】；2 個簡化形狀（≤ 8；asset.json 列 2）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 9 點被擋 0；步行帶頭頂淨空：9 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 279 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS aux_kura lod：【S_A_MKT_002】；面數 12578 → 1090（8.7 %，≤ 35 %）→ 62（0.5 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 410 m）；【S_A_MKT_006】；面數 12578 → 1090（8.7 %，≤ 35 %）→ 62（0.5 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 700.0] m、最後一級 700 m（地圖框最遠 549 m）
+[HERO] PASS aux_kura performance：【S_A_MKT_002】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 40.0 MB（全村共用一次）；【S_A_MKT_006】；§14.8「町家」LOD0 上限 25000（asset.json 自報 25000）：實測 12578（50 %）；每級 surface ≤ 5（實測 4）；碰撞 2 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 40.0 MB（全村共用一次）
+[HERO] PASS aux_kura：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] bridge_01：res://assets/village_v2/bridge_01/bridge_01.scn 放在 Roads/Bridges/Bridge_01_HillFootStreet_Canal（bridge），原點 (355.1, 1.683635, -128.0)、LOD0 3910 三角面
+[HERO] PASS bridge_01 size：LOD0 外框 x ±3.56（≤ 3.58）、z -8.52～8.52（容許 -8.55～8.55）、頂 1.48（1.43～1.53）、底 -4.00（-4.00）；規格＝P4 灰盒橋 Bridge_01_HillFootStreet_Canal：長 17.00／寬 6.80／兩端高差 -0.116 m（asset.json 17.00／6.80／-0.116）；P0 橋長 15.5（容許 13.95～17.05）；射線實測橋面長 17.00 m（z -8.50～8.50；灰盒 17.00、P0 容許 13.95～17.05）；橋端與地形高差：−z端 橋面 1.75／地形 1.69（0.05）、+z端 橋面 1.63／地形 1.56（0.07）；最大 0.07 m（≤ 0.15）；橋面縱坡：10 m 視窗最大 4.7%（≤ 12%）、1 m 局部最大 10.4%（≤ 20%）；拱度（扣兩端連線）0.41 m @ z -0.0（規格 0.42）；欄杆內淨寬 6.52 m（道路寬 6.0、橋寬 6.8）、架木頂離橋面 0.95 m（0.85～1.10）；結構底離 Canal 水面：6 站最小 3.05 m @ z 3.5（≥ 0.15；河中支撐 ±0.9 m 除外）
+[HERO] PASS bridge_01 parcel_fit：4 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 HillFootStreet 路肩 28.75 m²、石橋台＋z 壓 HillFootStreet 路肩 61.72 m²、橋脚1 壓 HillFootStreet 路肩 7.44 m²、橋脚2 壓 HillFootStreet 路肩 7.45 m²
+[HERO] PASS bridge_01 grounding：4 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.20、石橋台＋z 埋 0.30、橋脚1 埋 0.30、橋脚2 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Bridge_01_HillFootStreet_Canal 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）
+[HERO] PASS bridge_01 materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS bridge_01 geometry：LOD0 3910 面：退化 0、NaN 0、繞向反 0、LOD1 904 面：退化 0、NaN 0、繞向反 0、LOD2 168 面：退化 0、NaN 0、繞向反 0；LOD0 3910 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 3910 一致
+[HERO] PASS bridge_01 pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (355.10, 1.68, -128.00)＝灰盒橋 Bridge_01_HillFootStreet_Canal 箱頂中心 (355.10, 1.68, -128.00)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -4.00～1.48
+[HERO] PASS bridge_01 collision：7 個簡化形狀（≤ 8；asset.json 列 7）、1 個碰撞體、只有 box／cylinder／convex：是；橋面 102 點（道路寬內 x ±2.70、每 0.5 m）：有碰撞 102、膠囊站得住 102、碰撞頂與可見橋板差最大 0.008 m（≤ 0.10）；欄杆擋得住：橋面上 0.5／1.0 m 往兩側 64 條射線，在 x ±3.50 內打到碰撞的 64 條；周邊 227 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS bridge_01 lod：面數 3910 → 904（23.1 %，≤ 35 %）→ 168（4.3 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 497 m）
+[HERO] PASS bridge_01 performance：§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 3910（26 %）；每級 surface ≤ 5（實測 3）；碰撞 7 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS bridge_01：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] bridge_02：res://assets/village_v2/bridge_02/bridge_02.scn 放在 Roads/Bridges/Bridge_02_DragonBridgeRoad_River（bridge），原點 (399.85, 1.110527, -205.0)、LOD0 8540 三角面
+[HERO] PASS bridge_02 size：LOD0 外框 x ±3.06（≤ 3.08）、z -21.28～21.26（容許 -21.30～21.30）、頂 2.14（2.09～2.19）、底 -4.12（-4.12）；規格＝P4 灰盒橋 Bridge_02_DragonBridgeRoad_River：長 42.50／寬 5.80／兩端高差 +1.472 m（asset.json 42.50／5.80／+1.472）；P0 橋長 41.0（容許 36.90～45.10）；射線實測橋面長 42.50 m（z -21.25～21.25；灰盒 42.50、P0 容許 36.90～45.10）；橋端與地形高差：−z端 橋面 0.38／地形 0.33（0.06）、+z端 橋面 1.85／地形 1.84（0.01）；最大 0.06 m（≤ 0.15）；橋面縱坡：10 m 視窗最大 7.8%（≤ 12%）、1 m 局部最大 9.5%（≤ 20%）；拱度（扣兩端連線）0.60 m @ z 0.2（規格 0.60）；欄杆內淨寬 5.52 m（道路寬 5.0、橋寬 5.8）、架木頂離橋面 0.95 m（0.85～1.10）；結構底離 MainRiver 水面：22 站最小 1.62 m @ z -14.8（≥ 0.15；河中支撐 ±0.9 m 除外）
+[HERO] PASS bridge_02 parcel_fit：10 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 DragonBridgeRoad 路肩 9.00 m²、石橋台＋z 壓 DragonBridgeRoad 路肩 7.02 m²、橋脚1 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚2 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚3 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚4 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚5 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚6 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚7 壓 DragonBridgeRoad 路肩 6.20 m²、橋脚8 壓 DragonBridgeRoad 路肩 6.20 m²
+[HERO] PASS bridge_02 grounding：10 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.20、石橋台＋z 埋 0.26、橋脚1 埋 0.30、橋脚2 埋 0.30、橋脚3 埋 0.30、橋脚4 埋 0.30、橋脚5 埋 0.29、橋脚6 埋 0.30、橋脚7 埋 0.30、橋脚8 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Bridge_02_DragonBridgeRoad_River 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）
+[HERO] PASS bridge_02 materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS bridge_02 geometry：LOD0 8540 面：退化 0、NaN 0、繞向反 0、LOD1 2406 面：退化 0、NaN 0、繞向反 0、LOD2 228 面：退化 0、NaN 0、繞向反 0；LOD0 8540 ≤ §14.8「龍神橋」上限 30000；與 Blender 建置紀錄 8540 一致
+[HERO] PASS bridge_02 pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (399.85, 1.11, -205.00)＝灰盒橋 Bridge_02_DragonBridgeRoad_River 箱頂中心 (399.85, 1.11, -205.00)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -4.12～2.14
+[HERO] PASS bridge_02 collision：8 個簡化形狀（≤ 8；asset.json 列 8）、1 個碰撞體、只有 box／cylinder／convex：是；橋面 255 點（道路寬內 x ±2.20、每 0.5 m）：有碰撞 255、膠囊站得住 255、碰撞頂與可見橋板差最大 0.007 m（≤ 0.10）；欄杆擋得住：橋面上 0.5／1.0 m 往兩側 168 條射線，在 x ±3.00 內打到碰撞的 168 條；周邊 425 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS bridge_02 lod：面數 8540 → 2406（28.2 %，≤ 35 %）→ 228（2.7 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 584 m）
+[HERO] PASS bridge_02 performance：§14.8「龍神橋」LOD0 上限 30000（asset.json 自報 30000）：實測 8540（28 %）；每級 surface ≤ 5（實測 3）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS bridge_02：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] bridge_03：res://assets/village_v2/bridge_03/bridge_03.scn 放在 Roads/Bridges/Bridge_03_CrossStreetMid_Canal（bridge），原點 (335.9187, 0.37257, -33.98463)、LOD0 3200 三角面
+[HERO] PASS bridge_03 size：LOD0 外框 x ±3.56（≤ 3.58）、z -7.51～7.53（容許 -7.55～7.55）、頂 1.77（1.72～1.82）、底 -2.90（-2.90）；規格＝P4 灰盒橋 Bridge_03_CrossStreetMid_Canal：長 15.00／寬 6.80／兩端高差 -0.708 m（asset.json 15.00／6.80／-0.708）；P0 橋長 15.0（容許 13.50～16.50）；射線實測橋面長 15.00 m（z -7.50～7.50；灰盒 15.00、P0 容許 13.50～16.50）；橋端與地形高差：−z端 橋面 0.73／地形 0.71（0.02）、+z端 橋面 0.03／地形 -0.03（0.06）；最大 0.06 m（≤ 0.15）；橋面縱坡：10 m 視窗最大 8.0%（≤ 12%）、1 m 局部最大 14.8%（≤ 20%）；拱度（扣兩端連線）0.38 m @ z -0.0（規格 0.38）；欄杆內淨寬 6.52 m（道路寬 6.0、橋寬 6.8）、架木頂離橋面 0.94 m（0.85～1.10）；結構底離 Canal 水面：9 站最小 1.86 m @ z 3.0（≥ 0.15；河中支撐 ±0.9 m 除外）
+[HERO] PASS bridge_03 parcel_fit：3 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 CrossStreetMid 路肩 44.51 m²、石橋台＋z 壓 CrossStreetMid 路肩 41.79 m²、橋脚1 壓 CrossStreetMid 路肩 7.48 m²
+[HERO] PASS bridge_03 grounding：3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.33、石橋台＋z 埋 0.33、橋脚1 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Bridge_03_CrossStreetMid_Canal 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）
+[HERO] PASS bridge_03 materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS bridge_03 geometry：LOD0 3200 面：退化 0、NaN 0、繞向反 0、LOD1 736 面：退化 0、NaN 0、繞向反 0、LOD2 158 面：退化 0、NaN 0、繞向反 0；LOD0 3200 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 3200 一致
+[HERO] PASS bridge_03 pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (335.92, 0.37, -33.98)＝灰盒橋 Bridge_03_CrossStreetMid_Canal 箱頂中心 (335.92, 0.37, -33.98)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -2.90～1.77
+[HERO] PASS bridge_03 collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；橋面 90 點（道路寬內 x ±2.70、每 0.5 m）：有碰撞 90、膠囊站得住 90、碰撞頂與可見橋板差最大 0.012 m（≤ 0.10）；欄杆擋得住：橋面上 0.5／1.0 m 往兩側 56 條射線，在 x ±3.50 內打到碰撞的 56 條；周邊 206 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS bridge_03 lod：面數 3200 → 736（23.0 %，≤ 35 %）→ 158（4.9 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 454 m）
+[HERO] PASS bridge_03 performance：§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 3200（21 %）；每級 surface ≤ 5（實測 3）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS bridge_03：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] bridge_04：res://assets/village_v2/bridge_04/bridge_04.scn 放在 Roads/Bridges/Bridge_04_CrossStreetSouth_Canal（bridge），原點 (321.0566, 0.467215, 41.88679)、LOD0 3022 三角面
+[HERO] PASS bridge_04 size：LOD0 外框 x ±3.56（≤ 3.58）、z -7.02～7.02（容許 -7.05～7.05）、頂 1.43（1.38～1.48）、底 -3.26（-3.26）；規格＝P4 灰盒橋 Bridge_04_CrossStreetSouth_Canal：長 14.00／寬 6.80／兩端高差 +0.006 m（asset.json 14.00／6.80／+0.006）；P0 橋長 14.0（容許 12.60～15.40）；射線實測橋面長 14.00 m（z -7.00～7.00；灰盒 14.00、P0 容許 12.60～15.40）；橋端與地形高差：−z端 橋面 0.47／地形 0.42（0.05）、+z端 橋面 0.48／地形 0.41（0.06）；最大 0.06 m（≤ 0.15）；橋面縱坡：10 m 視窗最大 2.9%（≤ 12%）、1 m 局部最大 9.6%（≤ 20%）；拱度（扣兩端連線）0.34 m @ z -0.1（規格 0.35）；欄杆內淨寬 6.52 m（道路寬 6.0、橋寬 6.8）、架木頂離橋面 0.94 m（0.85～1.10）；結構底離 Canal 水面：10 站最小 2.18 m @ z -3.0（≥ 0.15；河中支撐 ±0.9 m 除外）
+[HERO] PASS bridge_04 parcel_fit：3 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 CrossStreetSouth 路肩 57.75 m²、石橋台＋z 壓 CrossStreetSouth 路肩 8.34 m²、橋脚1 壓 CrossStreetSouth 路肩 7.44 m²
+[HERO] PASS bridge_04 grounding：3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.32、石橋台＋z 埋 0.20、橋脚1 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Bridge_04_CrossStreetSouth_Canal 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）
+[HERO] PASS bridge_04 materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS bridge_04 geometry：LOD0 3022 面：退化 0、NaN 0、繞向反 0、LOD1 656 面：退化 0、NaN 0、繞向反 0、LOD2 158 面：退化 0、NaN 0、繞向反 0；LOD0 3022 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 3022 一致
+[HERO] PASS bridge_04 pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (321.06, 0.47, 41.89)＝灰盒橋 Bridge_04_CrossStreetSouth_Canal 箱頂中心 (321.06, 0.47, 41.89)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -3.26～1.43
+[HERO] PASS bridge_04 collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；橋面 84 點（道路寬內 x ±2.70、每 0.5 m）：有碰撞 84、膠囊站得住 84、碰撞頂與可見橋板差最大 0.008 m（≤ 0.10）；欄杆擋得住：橋面上 0.5／1.0 m 往兩側 52 條射線，在 x ±3.50 內打到碰撞的 52 條；周邊 175 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS bridge_04 lod：面數 3022 → 656（21.7 %，≤ 35 %）→ 158（5.2 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 499 m）
+[HERO] PASS bridge_04 performance：§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 3022（20 %）；每級 surface ≤ 5（實測 3）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS bridge_04：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] bridge_05：res://assets/village_v2/bridge_05/bridge_05.scn 放在 Roads/Bridges/Bridge_05_WestLane_WestStream（bridge），原點 (159.8839, 1.011618, -10.27196)、LOD0 2148 三角面
+[HERO] PASS bridge_05 size：LOD0 外框 x ±2.06（≤ 2.08）、z -5.76～5.76（容許 -5.80～5.80）、頂 1.44（1.39～1.49）、底 -1.15（-1.15）；規格＝P4 灰盒橋 Bridge_05_WestLane_WestStream：長 11.50／寬 3.80／兩端高差 -0.020 m（asset.json 11.50／3.80／-0.020）；P0 橋長 11.5（容許 10.35～12.65）；射線實測橋面長 11.50 m（z -5.75～5.75；灰盒 11.50、P0 容許 10.35～12.65）；橋端與地形高差：−z端 橋面 1.03／地形 0.97（0.06）、+z端 橋面 1.01／地形 0.95（0.06）；最大 0.06 m（≤ 0.15）；橋面縱坡：10 m 視窗最大 1.5%（≤ 12%）、1 m 局部最大 9.9%（≤ 20%）；拱度（扣兩端連線）0.29 m @ z 0.1（規格 0.30）；欄杆內淨寬 3.52 m（道路寬 3.0、橋寬 3.8）、架木頂離橋面 0.94 m（0.85～1.10）；結構底離 WestStream 水面：10 站最小 0.56 m @ z 2.3（≥ 0.15；河中支撐 ±0.9 m 除外）
+[HERO] PASS bridge_05 parcel_fit：2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）石橋台−z 壓 WestLane 路肩 7.96 m²、石橋台＋z 壓 WestLane 路肩 22.13 m²
+[HERO] PASS bridge_05 grounding：2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石橋台−z 埋 0.22、石橋台＋z 埋 0.34；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Bridge_05_WestLane_WestStream 灰盒：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）
+[HERO] PASS bridge_05 materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS bridge_05 geometry：LOD0 2148 面：退化 0、NaN 0、繞向反 0、LOD1 508 面：退化 0、NaN 0、繞向反 0、LOD2 148 面：退化 0、NaN 0、繞向反 0；LOD0 2148 ≤ §14.8「水渠橋」上限 15000；與 Blender 建置紀錄 2148 一致
+[HERO] PASS bridge_05 pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (159.88, 1.01, -10.27)＝灰盒橋 Bridge_05_WestLane_WestStream 箱頂中心 (159.88, 1.01, -10.27)（差 0.000 m）；傾斜 0.00°（應 0）、+z 與灰盒道路方向差 0.00°；LOD0 y -1.15～1.44
+[HERO] PASS bridge_05 collision：5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；橋面 69 點（道路寬內 x ±1.20、每 0.5 m）：有碰撞 69、膠囊站得住 69、碰撞頂與可見橋板差最大 0.009 m（≤ 0.10）；欄杆擋得住：橋面上 0.5／1.0 m 往兩側 44 條射線，在 x ±2.00 內打到碰撞的 44 條；周邊 176 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS bridge_05 lod：面數 2148 → 508（23.6 %，≤ 35 %）→ 148（6.9 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 0.0] m、最後一級 不裁切（地圖框最遠 518 m）
+[HERO] PASS bridge_05 performance：§14.8「水渠橋」LOD0 上限 15000（asset.json 自報 15000）：實測 2148（14 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS bridge_05：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] dragon_statue：res://assets/village_v2/dragon_statue/dragon_statue.scn 放在 Landmarks/LANDMARK_DRAGON（anchor），原點 (388.0, -0.169436, -188.0)、LOD0 87676 三角面
+[HERO] PASS dragon_statue size：LOD0 外框 x ±5.00（≤ 5.00）、z -5.00～5.00（容許 -5.00～5.00）、頂 12.62（12.32～14.67）、底 -3.80（-3.80）
+[HERO] PASS dragon_statue parcel_fit：1 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0
+[HERO] PASS dragon_statue grounding：1 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：河岸基壇 埋 1.42；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Statue：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS dragon_statue materials：2 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Stone": 0.42, "V2_DragonStatue": 0.42 }、4 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS dragon_statue geometry：LOD0 87676 面：退化 0、NaN 0、繞向反 0、LOD1 29971 面：退化 0、NaN 0、繞向反 0、LOD2 8212 面：退化 0、NaN 0、繞向反 0；LOD0 87676 ≤ §14.8「龍神像」上限 100000；與 Blender 建置紀錄 87676 一致
+[HERO] PASS dragon_statue pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_DRAGON 原點 (388.00, -0.17, -188.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -3.80～12.62）
+[HERO] PASS dragon_statue collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 30 點被擋 0；步行帶頭頂淨空：30 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 3.00）；周邊 534 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS dragon_statue lod：面數 87676 → 29971（34.2 %，≤ 35 %）→ 8212（9.4 %，≤ 10 %）；距離 [0.0, 70.0, 200.0, 800.0] m、最後一級 800 m（地圖框最遠 563 m）
+[HERO] PASS dragon_statue performance：§14.8「龍神像」LOD0 上限 100000（asset.json 自報 100000）：實測 87676（88 %）；每級 surface ≤ 5（實測 2）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 10.7 MB（全村共用一次）
+[HERO] PASS dragon_statue：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] fire_tower：res://assets/village_v2/fire_tower/fire_tower.scn 放在 Landmarks/LANDMARK_TOWER（anchor），原點 (250.0, 0.504, 66.0)、LOD0 3074 三角面
+[HERO] PASS fire_tower size：LOD0 外框 x ±3.25（≤ 3.50）、z -3.07～3.07（容許 -3.50～3.50）、頂 17.79（17.74～18.00）、底 -0.40（-0.40）
+[HERO] PASS fire_tower parcel_fit：5 個地面接觸件：在 P_LM_TOWER 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS fire_tower grounding：5 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：石基礎西北 埋 0.40、石基礎西南 埋 0.40、石基礎東北 埋 0.40、石基礎東南 埋 0.40、梯腳 埋 0.05；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Block：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS fire_tower materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS fire_tower geometry：LOD0 3074 面：退化 0、NaN 0、繞向反 0、LOD1 980 面：退化 0、NaN 0、繞向反 0、LOD2 292 面：退化 0、NaN 0、繞向反 0；LOD0 3074 ≤ §14.8「火見櫓」上限 20000；與 Blender 建置紀錄 3074 一致
+[HERO] PASS fire_tower pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_TOWER 原點 (250.00, 0.50, 66.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～17.79）
+[HERO] PASS fire_tower collision：5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 49 點被擋 0；步行帶頭頂淨空：49 點中 0 點 < 1.95 m；最低淨空 12.60 m（≥ 2.30）；周邊 76 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS fire_tower lod：面數 3074 → 980（31.9 %，≤ 35 %）→ 292（9.5 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 700.0] m、最後一級 700 m（地圖框最遠 511 m）
+[HERO] PASS fire_tower performance：§14.8「火見櫓」LOD0 上限 20000（asset.json 自報 20000）：實測 3074（15 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS fire_tower：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] geidontei：res://assets/village_v2/geidontei/geidontei.scn 放在 Landmarks/LANDMARK_GEIDONTEI（greybox），原點 (285.1476, 1.318695, -61.8357)、LOD0 41234 三角面
+[HERO] PASS geidontei size：LOD0 外框 x ±5.76（≤ 5.83）、z -5.06～5.78（容許 -5.12～5.83）、頂 6.14（5.95～6.25）、底 -0.38（-0.38）；規格＝P4 灰盒 B_P_LM_GEIDONTEI：面寬 10.92／縱深 9.10／簷 3.90／屋脊 5.95／台基 0.32 m；射線實測：牆面寬 10.88（P4 10.92）、牆縱深 9.08（P4 9.10）、屋脊頂 6.13（屋脊 5.95）、背面簷口 3.76（P4 簷口 3.70）m；人物比例：入口淨高 2.07 m（門檻 0.35→鴨居 2.42；≥ 1.90，1.7 m 人）、淨寬 2.75 m（≥ 1.20）
+[HERO] PASS geidontei parcel_fit：5 個地面接觸件：在 P_LM_GEIDONTEI 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS geidontei grounding：5 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.29、踏石 埋 0.10、石燈籠左 埋 0.12、石燈籠右 埋 0.06、勝手口踏石 埋 0.05；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Greybox：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 1.29 → 踏石 1.46（0.17 m）→ 台基 1.64（0.18 m），每階 ≤ 0.30
+[HERO] PASS geidontei materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Plaster": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Geidontei": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS geidontei geometry：LOD0 41234 面：退化 0、NaN 0、繞向反 0、LOD1 2949 面：退化 0、NaN 0、繞向反 0、LOD2 163 面：退化 0、NaN 0、繞向反 0；LOD0 41234 ≤ §14.8「鯢吞亭」上限 100000；與 Blender 建置紀錄 41234 一致
+[HERO] PASS geidontei pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (285.15, 1.32, -61.84)＝P4 footprint 中心 (285.15, -61.84)、base_h 1.32；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.38～6.14）
+[HERO] PASS geidontei collision：5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 30 點被擋 0；步行帶頭頂淨空：30 點中 0 點 < 1.95 m；最低淨空 2.35 m（≥ 2.00）；周邊 603 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS geidontei lod：面數 41234 → 2949（7.2 %，≤ 35 %）→ 163（0.4 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 600.0] m、最後一級 600 m（地圖框最遠 401 m）
+[HERO] PASS geidontei performance：§14.8「鯢吞亭」LOD0 上限 100000（asset.json 自報 100000）：實測 41234（41 %）；每級 surface ≤ 5（實測 5）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS geidontei：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] hieda_gate：res://assets/village_v2/hieda_gate/hieda_gate.scn 放在 Landmarks/LANDMARK_HIEDA_GATE（anchor），原點 (398.0, 0.96, -10.0)、LOD0 8470 三角面
+[HERO] PASS hieda_gate size：LOD0 外框 x ±3.46（≤ 3.50）、z -0.98～0.98（容許 -1.00～1.00）、頂 4.51（4.46～5.00）、底 -0.30（-0.30）
+[HERO] PASS hieda_gate parcel_fit：7 個地面接觸件：在 P_LM_HIEDA_GATE 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS hieda_gate grounding：7 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：礎石左 埋 0.25、礎石右 埋 0.25、敷石 埋 0.14、側間地覆左 埋 0.20、側間地覆右 埋 0.20、袖牆腰石左 埋 0.30、袖牆腰石右 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wire：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS hieda_gate materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Plaster": 0.42, "V2_Metal": 0.42 }、15 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS hieda_gate geometry：LOD0 8470 面：退化 0、NaN 0、繞向反 0、LOD1 1374 面：退化 0、NaN 0、繞向反 0、LOD2 174 面：退化 0、NaN 0、繞向反 0；LOD0 8470 ≤ §14.8「稗田邸」上限 150000；與 Blender 建置紀錄 8470 一致
+[HERO] PASS hieda_gate pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_HIEDA_GATE 原點 (398.00, 0.96, -10.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.30～4.51）
+[HERO] PASS hieda_gate collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 30 點被擋 0；步行帶頭頂淨空：30 點中 0 點 < 1.95 m；最低淨空 2.62 m（≥ 2.50）；周邊 180 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS hieda_gate lod：面數 8470 → 1374（16.2 %，≤ 35 %）→ 174（2.1 %，≤ 10 %）；距離 [0.0, 45.0, 120.0, 600.0] m、最後一級 600 m（地圖框最遠 517 m）
+[HERO] PASS hieda_gate performance：§14.8「稗田邸」LOD0 上限 150000（asset.json 自報 150000）：實測 8470（6 %）；每級 surface ≤ 5（實測 5）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 53.3 MB（全村共用一次）
+[HERO] PASS hieda_gate：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] hieda_house：res://assets/village_v2/hieda_house/hieda_house.scn 放在 Landmarks/LANDMARK_HIEDA（anchor），原點 (403.0, 1.14, -40.0)、LOD0 107132 三角面
+[HERO] PASS hieda_house size：LOD0 外框 x ±13.11（≤ 14.00）、z -7.32～8.37（容許 -9.00～9.00）、頂 8.91（8.86～9.00）、底 -0.40（-0.40）；P0 地標量體 [28.0, 9.0, 18.0]（寬×高×深）：主屋牆寬 23.90、含玄關總深 13.10（射線 x -2.40）、最高點 8.91 m，都不超過；射線實測：牆面寬 23.90（規格 23.90）、牆縱深 9.90（9.90）、屋脊頂 8.64（棟 8.64）、背面簷口 5.15（5.15）m；人物比例：入口淨高 1.95 m（門檻 0.60→鴨居 2.55；≥ 1.90，1.7 m 人）、淨寬 2.40 m（≥ 1.20）
+[HERO] PASS hieda_house parcel_fit：3 個地面接觸件：在 P_LM_HIEDA 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS hieda_house grounding：3 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、台基（玄關） 埋 0.40、踏石 埋 0.20；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wire：已移除（可見網格 0、有效碰撞 0）；入口段差：路面 1.14 → 踏石 1.39（0.25 m）→ 台基 1.64（0.25 m），每階 ≤ 0.30
+[HERO] PASS hieda_house materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Plaster": 0.42, "V2_HiedaHouse": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS hieda_house geometry：LOD0 107132 面：退化 0、NaN 0、繞向反 0、LOD1 7390 面：退化 0、NaN 0、繞向反 0、LOD2 438 面：退化 0、NaN 0、繞向反 0；LOD0 107132 ≤ §14.8「稗田邸」上限 150000；與 Blender 建置紀錄 107132 一致
+[HERO] PASS hieda_house pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_HIEDA 原點 (403.00, 1.14, -40.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～8.91）
+[HERO] PASS hieda_house collision：3 個簡化形狀（≤ 8；asset.json 列 3）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 12 點被擋 0；步行帶頭頂淨空：12 點中 0 點 < 1.95 m；最低淨空 2.99 m（≥ 2.50）；周邊 1142 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS hieda_house lod：面數 107132 → 7390（6.9 %，≤ 35 %）→ 438（0.4 %，≤ 10 %）；距離 [0.0, 55.0, 140.0, 700.0] m、最後一級 700 m（地圖框最遠 502 m）
+[HERO] PASS hieda_house performance：§14.8「稗田邸」LOD0 上限 150000（asset.json 自報 150000）：實測 107132（71 %）；每級 surface ≤ 5（實測 5）；碰撞 3 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS hieda_house：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] hieda_wall：res://assets/village_v2/hieda_wall/hieda_wall.scn 放在 Landmarks/LANDMARK_HIEDA_GATE（anchor），原點 (398.0, 0.96, -10.0)、LOD0 67462 三角面
+[HERO] PASS hieda_wall size：LOD0 外框 x ±23.97（≤ 23.98）、z -50.47～0.47（容許 -50.48～0.48）、頂 2.55（2.23～2.58）、底 -0.30（-0.30）；圍牆 170 站（每 1.0 m）射線實測：牆頂離地 2.20～2.29 m（2.17～2.34；最低在 W t 30.0）、離地 1.0 m 牆厚 0.34～0.39 m（0.33～0.40，含柱）；宅邸邊界封閉（除大宅門開口）：170 站中 可見網格缺口 0、碰撞缺口 0；門旁銜接（x ±3.42 接大宅門袖牆端）：西 側：瓦頂 大宅門袖牆 2.249／圍牆 2.248（差 0.002 ≤ 0.03）、牆面 z 0.170／0.170（差 0.000 ≤ 0.01）、接縫前後牆面缺 0；東 側：瓦頂 大宅門袖牆 2.249／圍牆 2.248（差 0.002 ≤ 0.03）、牆面 z 0.170／0.170（差 0.000 ≤ 0.01）、接縫前後牆面缺 0
+[HERO] PASS hieda_wall parcel_fit：90 個地面接觸件：在 district MansionEstate（同宅邸地塊 P_LM_HIEDA、P_LM_HIEDA_GATE 不算他人地塊） 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點；LOD0 全部頂點（含瓦頂出簷）在 district MansionEstate 內：界外 0 點
+[HERO] PASS hieda_wall grounding：90 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：腰石 S_W-01 埋 0.30、腰石 S_W-02 埋 0.30、腰石 S_W-03 埋 0.30、腰石 S_W-04 埋 0.30、腰石 S_W-05 埋 0.30、腰石 S_E-01 埋 0.30、腰石 S_E-02 埋 0.30、腰石 S_E-03 埋 0.30、腰石 S_E-04 埋 0.30、腰石 S_E-05 埋 0.30、腰石 S_E-06 埋 0.30、腰石 S_E-07 埋 0.30、腰石 S_E-08 埋 0.30、腰石 S_E-09 埋 0.30、腰石 S_E-10 埋 0.30、腰石 S_E-11 埋 0.30、腰石 E-01 埋 0.30、腰石 E-02 埋 0.30、腰石 E-03 埋 0.30、腰石 E-04 埋 0.30、腰石 E-05 埋 0.30、腰石 E-06 埋 0.30、腰石 E-07 埋 0.30、腰石 E-08 埋 0.30、腰石 E-09 埋 0.30、腰石 E-10 埋 0.30、腰石 E-11 埋 0.30、腰石 E-12 埋 0.30、腰石 E-13 埋 0.30、腰石 E-14 埋 0.30、腰石 E-15 埋 0.30、腰石 E-16 埋 0.30、腰石 E-17 埋 0.30、腰石 E-18 埋 0.30、腰石 E-19 埋 0.30、腰石 E-20 埋 0.30、腰石 E-21 埋 0.30、腰石 E-22 埋 0.30、腰石 E-23 埋 0.30、腰石 E-24 埋 0.30、腰石 E-25 埋 0.30、腰石 E-26 埋 0.30、腰石 E-27 埋 0.30、腰石 N-01 埋 0.30、腰石 N-02 埋 0.30、腰石 N-03 埋 0.30、腰石 N-04 埋 0.30、腰石 N-05 埋 0.30、腰石 N-06 埋 0.30、腰石 N-07 埋 0.30、腰石 N-08 埋 0.30、腰石 N-09 埋 0.30、腰石 N-10 埋 0.30、腰石 N-11 埋 0.30、腰石 N-12 埋 0.30、腰石 N-13 埋 0.30、腰石 N-14 埋 0.30、腰石 N-15 埋 0.30、腰石 N-16 埋 0.30、腰石 N-17 埋 0.30、腰石 N-18 埋 0.30、腰石 N-19 埋 0.30、腰石 N-20 埋 0.30、腰石 W-01 埋 0.30、腰石 W-02 埋 0.30、腰石 W-03 埋 0.30、腰石 W-04 埋 0.30、腰石 W-05 埋 0.30、腰石 W-06 埋 0.30、腰石 W-07 埋 0.30、腰石 W-08 埋 0.30、腰石 W-09 埋 0.30、腰石 W-10 埋 0.30、腰石 W-11 埋 0.30、腰石 W-12 埋 0.30、腰石 W-13 埋 0.30、腰石 W-14 埋 0.30、腰石 W-15 埋 0.30、腰石 W-16 埋 0.30、腰石 W-17 埋 0.30、腰石 W-18 埋 0.30、腰石 W-19 埋 0.30、腰石 W-20 埋 0.30、腰石 W-21 埋 0.30、腰石 W-22 埋 0.30、腰石 W-23 埋 0.30、腰石 W-24 埋 0.30、腰石 W-25 埋 0.30、腰石 W-26 埋 0.30、腰石 W-27 埋 0.30；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 ：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS hieda_wall materials：4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Plaster": 0.42 }、12 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS hieda_wall geometry：LOD0 67462 面：退化 0、NaN 0、繞向反 0、LOD1 11698 面：退化 0、NaN 0、繞向反 0、LOD2 898 面：退化 0、NaN 0、繞向反 0；LOD0 67462 ≤ §14.8「稗田邸」上限 150000；與 Blender 建置紀錄 67462 一致
+[HERO] PASS hieda_wall pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_HIEDA_GATE 原點 (398.00, 0.96, -10.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.30～2.55）
+[HERO] PASS hieda_wall collision：5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 93 點被擋 0；步行帶頭頂淨空：93 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.50）；周邊 2534 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS hieda_wall lod：面數 67462 → 11698（17.3 %，≤ 35 %）→ 898（1.3 %，≤ 10 %）；距離 [0.0, 60.0, 150.0, 700.0] m、最後一級 700 m（地圖框最遠 517 m）
+[HERO] PASS hieda_wall performance：§14.8「稗田邸」LOD0 上限 150000（asset.json 自報 150000）：實測 67462（45 %）；每級 surface ≤ 5（實測 4）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS hieda_wall：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] hillfoot_temple：res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn 放在 Landmarks/LANDMARK_HILLFOOT_TEMPLE（anchor），原點 (228.0, 1.198052, -170.0)、LOD0 57975 三角面
+[HERO] PASS hillfoot_temple size：LOD0 外框 x ±6.02（≤ 9.00）、z -5.68～5.69（容許 -6.00～6.00）、頂 8.92（8.62～9.00）、底 -0.08（-0.08）；P0 地標量體 [18.0, 9.0, 12.0]（寬×高×深）：主屋牆寬 6.74、含玄關總深 5.54（射線 x 0.00）、最高點 8.92 m，都不超過；射線實測：牆面寬 6.74（規格 6.74）、牆縱深 5.37（5.37）、屋脊頂 8.75（棟 8.75）、背面簷口 5.51（5.51）m
+[HERO] PASS hillfoot_temple parcel_fit：2 個地面接觸件：在 P_LM_HILLFOOT_TEMPLE 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS hillfoot_temple grounding：2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.08、石段 埋 0.08；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Block：已移除（可見網格 0、有效碰撞 0）；入口石段 5 段（LOD0 實測踏面，局部）：路面 -0.00 → 0.28 → 0.52 → 0.76 → 1.00 → 1.23 → 1.47（最後＝台基頂），每階 0～0.30（最大 0.28 m）
+[HERO] PASS hillfoot_temple materials：1 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_HillfootTemple": 0.42 }、1 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS hillfoot_temple geometry：LOD0 57975 面：退化 0、NaN 0、繞向反 0、LOD1 19492 面：退化 0、NaN 0、繞向反 0、LOD2 5596 面：退化 0、NaN 0、繞向反 0；LOD0 57975 ≤ §14.8「社殿」上限 60000；與 Blender 建置紀錄 57975 一致
+[HERO] PASS hillfoot_temple pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_HILLFOOT_TEMPLE 原點 (228.00, 1.20, -170.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.08～8.92）
+[HERO] PASS hillfoot_temple collision：8 個簡化形狀（≤ 8；asset.json 列 8）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 44 點被擋 0；步行帶頭頂淨空：44 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.50）；周邊 582 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS hillfoot_temple lod：面數 57975 → 19492（33.6 %，≤ 35 %）→ 5596（9.7 %，≤ 10 %）；距離 [0.0, 45.0, 130.0, 700.0] m、最後一級 700 m（地圖框最遠 512 m）
+[HERO] PASS hillfoot_temple performance：§14.8「社殿」LOD0 上限 60000（asset.json 自報 60000）：實測 57975（97 %）；每級 surface ≤ 5（實測 1）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 0.0 MB（全村共用一次）
+[HERO] PASS hillfoot_temple：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] hilltop_shrine：res://assets/village_v2/hilltop_shrine/hilltop_shrine.scn 放在 Landmarks/LANDMARK_NORTH_HILL（anchor），原點 (258.0, 34.16614, -228.0)、LOD0 29939 三角面
+[HERO] PASS hilltop_shrine size：LOD0 外框 x ±6.83（≤ 7.00）、z -4.53～4.97（容許 -5.00～5.00）、頂 8.52（8.50～9.00）、底 -0.40（-0.40）；P0 地標量體 [14.0, 9.0, 10.0]（寬×高×深）：主屋牆寬 10.74、含玄關總深 7.97（射線 x -1.85）、最高點 8.52 m，都不超過；射線實測：牆面寬 10.74（規格 10.80）、牆縱深 6.10（6.20）、屋脊頂 8.14（棟 8.15）、背面簷口 4.36（4.37）m
+[HERO] PASS hilltop_shrine parcel_fit：4 個地面接觸件：在 P_LM_NORTH_HILL 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS hilltop_shrine grounding：4 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、踏石 埋 0.20、向拝礎石左 埋 0.15、向拝礎石右 埋 0.15；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Block：已移除（可見網格 0、有效碰撞 0）；入口段差：路面 34.17 → 踏石 34.34（0.17 m）→ 台基 34.47（0.13 m），每階 ≤ 0.30
+[HERO] PASS hilltop_shrine materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_WoodRed": 0.8, "V2_HilltopShrine": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS hilltop_shrine geometry：LOD0 29939 面：退化 0、NaN 0、繞向反 0、LOD1 2664 面：退化 0、NaN 0、繞向反 0、LOD2 533 面：退化 0、NaN 0、繞向反 0；LOD0 29939 ≤ §14.8「社殿」上限 60000；與 Blender 建置紀錄 29939 一致
+[HERO] PASS hilltop_shrine pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_NORTH_HILL 原點 (258.00, 34.17, -228.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.40～8.52）
+[HERO] PASS hilltop_shrine collision：1 個簡化形狀（≤ 8；asset.json 列 1）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 28 點被擋 0；步行帶頭頂淨空：28 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.50）；周邊 476 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS hilltop_shrine lod：面數 29939 → 2664（8.9 %，≤ 35 %）→ 533（1.8 %，≤ 10 %）；距離 [0.0, 45.0, 130.0, 700.0] m、最後一級 700 m（地圖框最遠 540 m）
+[HERO] PASS hilltop_shrine performance：§14.8「社殿」LOD0 上限 60000（asset.json 自報 60000）：實測 29939（50 %）；每級 surface ≤ 5（實測 5）；碰撞 1 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS hilltop_shrine：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] kirisame：res://assets/village_v2/kirisame/kirisame.scn 放在 Landmarks/LANDMARK_KIRISAME（greybox），原點 (229.9476, 0.555925, 62.03715)、LOD0 27034 三角面
+[HERO] PASS kirisame size：LOD0 外框 x ±4.39（≤ 4.46）、z -4.15～4.61（容許 -4.21～4.67）、頂 5.73（5.54～5.84）、底 -0.38（-0.38）；規格＝P4 灰盒 B_P_LM_KIRISAME：面寬 8.19／縱深 7.28／簷 3.90／屋脊 5.54／台基 0.32 m；射線實測：牆面寬 8.15（P4 8.19）、牆縱深 7.26（P4 7.28）、屋脊頂 5.72（屋脊 5.54）、背面簷口 3.76（P4 簷口 3.70）m；人物比例：入口淨高 2.07 m（門檻 0.35→鴨居 2.42；≥ 1.90，1.7 m 人）、淨寬 1.75 m（≥ 1.20）
+[HERO] PASS kirisame parcel_fit：7 個地面接觸件：在 P_LM_KIRISAME 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS kirisame grounding：7 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.32、踏石 埋 0.10、展示台腳 埋 0.07、花桶 埋 0.10、黑板腳 埋 0.04、木箱 埋 0.05、勝手口踏石 埋 0.10；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Greybox：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.52 → 踏石 0.70（0.18 m）→ 台基 0.88（0.18 m），每階 ≤ 0.30
+[HERO] PASS kirisame materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Plaster": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Kirisame": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS kirisame geometry：LOD0 27034 面：退化 0、NaN 0、繞向反 0、LOD1 2026 面：退化 0、NaN 0、繞向反 0、LOD2 136 面：退化 0、NaN 0、繞向反 0；LOD0 27034 ≤ §14.8「霧雨店」上限 60000；與 Blender 建置紀錄 27034 一致
+[HERO] PASS kirisame pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (229.95, 0.56, 62.04)＝P4 footprint 中心 (229.95, 62.04)、base_h 0.56；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.38～5.73）
+[HERO] PASS kirisame collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 31 點被擋 0；步行帶頭頂淨空：31 點中 0 點 < 1.95 m；最低淨空 2.35 m（≥ 2.00）；周邊 470 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS kirisame lod：面數 27034 → 2026（7.5 %，≤ 35 %）→ 136（0.5 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 600.0] m、最後一級 600 m（地圖框最遠 520 m）
+[HERO] PASS kirisame performance：§14.8「霧雨店」LOD0 上限 60000（asset.json 自報 60000）：實測 27034（45 %）；每級 surface ≤ 5（實測 5）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS kirisame：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] sando_torii：res://assets/village_v2/sando_torii/sando_torii.scn 放在 Landmarks/LANDMARK_HILL_TORII（anchor），原點 (289.6, 1.160674, -166.0)、LOD0 1342 三角面
+[HERO] PASS sando_torii size：LOD0 外框 x ±3.25（≤ 3.30）、z -0.36～0.36（容許 -0.45～0.45）、頂 6.26（6.00～6.35）、底 -0.45（-0.45）；射線實測：柱心距 4.48 m（P0 span 4.5）、柱間淨寬 4.05（≥ 3.5）、通行淨高（貫下）3.40（≥ 2.6）、笠木中央頂 6.00（P0 h 6.0～6.35）
+[HERO] PASS sando_torii parcel_fit：2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；（使用者裁示允許）台座左 壓 HillApproach 路肩 0.44 m²、台座右 壓 HillApproach 路肩 0.44 m²；柱心線上的道路斷面 HillApproach：半寬 2.50 m；台座內緣 ±1.89 → 中間淨寬 3.78 m（≥ 3.5）；台座壓路肩每側 0.61 m（≤ 0.63，使用者裁示）
+[HERO] PASS sando_torii grounding：2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台座左 埋 0.37、台座右 埋 0.37；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Torii：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS sando_torii materials：4 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_WoodRed": 0.8, "V2_Metal": 0.42, "V2_Stone": 0.42, "V2_SandoTorii": 0.42 }、10 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS sando_torii geometry：LOD0 1342 面：退化 0、NaN 0、繞向反 0、LOD1 404 面：退化 0、NaN 0、繞向反 0、LOD2 120 面：退化 0、NaN 0、繞向反 0；LOD0 1342 ≤ §14.8「鳥居」上限 5000；與 Blender 建置紀錄 1342 一致
+[HERO] PASS sando_torii pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_HILL_TORII 原點 (289.60, 1.16, -166.00)、yaw 22.0°（P0 22.0°）；原點在底面（LOD0 y -0.45～6.26）
+[HERO] PASS sando_torii collision：4 個簡化形狀（≤ 8；asset.json 列 4）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 104 點被擋 0；步行帶頭頂淨空：104 點中 0 點 < 1.95 m；最低淨空 3.33 m（≥ 2.60）；周邊 33 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS sando_torii lod：面數 1342 → 404（30.1 %，≤ 35 %）→ 120（8.9 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 700.0] m、最後一級 700 m（地圖框最遠 483 m）
+[HERO] PASS sando_torii performance：§14.8「鳥居」LOD0 上限 5000（asset.json 自報 5000）：實測 1342（27 %）；每級 surface ≤ 5（實測 4）；碰撞 4 ≤ 8；貼圖 VRAM 估算：本資產專屬 1.3 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS sando_torii：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] south_torii：res://assets/village_v2/south_torii/south_torii.scn 放在 Landmarks/LANDMARK_SOUTH_GATE（anchor），原點 (234.0, 0.311834, 100.0)、LOD0 1542 三角面
+[HERO] PASS south_torii size：LOD0 外框 x ±6.91（≤ 7.05）、z -0.85～0.85（容許 -0.95～0.95）、頂 10.72（10.00～10.80）、底 -0.25（-0.25）；射線實測：柱心距 9.97 m（P0 span 10.0）、柱間淨寬 9.03（≥ 8.5）、通行淨高（貫下）7.75（≥ 6.0）、笠木中央頂 10.29（P0 h 10.0～10.80）
+[HERO] PASS south_torii parcel_fit：2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；柱心線上的道路斷面 MainStreet：離中心最遠 3.95 m ≤ 柱內緣 4.50 m（道路整寬從兩柱之間通過）
+[HERO] PASS south_torii grounding：2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台座左 埋 0.24、台座右 埋 0.25；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Torii：已移除（可見網格 0、有效碰撞 0）
+[HERO] PASS south_torii materials：3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_WoodRed": 0.8, "V2_Metal": 0.42, "V2_Stone": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS south_torii geometry：LOD0 1542 面：退化 0、NaN 0、繞向反 0、LOD1 346 面：退化 0、NaN 0、繞向反 0、LOD2 150 面：退化 0、NaN 0、繞向反 0；LOD0 1542 ≤ §14.8「鳥居」上限 5000；與 Blender 建置紀錄 1542 一致
+[HERO] PASS south_torii pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_SOUTH_GATE 原點 (234.00, 0.31, 100.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.25～10.72）
+[HERO] PASS south_torii collision：4 個簡化形狀（≤ 8；asset.json 列 4）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 60 點被擋 0；步行帶頭頂淨空：60 點中 0 點 < 1.95 m；最低淨空 7.75 m（≥ 6.00）；周邊 98 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS south_torii lod：面數 1542 → 346（22.4 %，≤ 35 %）→ 150（9.7 %，≤ 10 %）；距離 [0.0, 60.0, 160.0, 700.0] m、最後一級 700 m（地圖框最遠 548 m）
+[HERO] PASS south_torii performance：§14.8「鳥居」LOD0 上限 5000（asset.json 自報 5000）：實測 1542（31 %）；每級 surface ≤ 5（實測 3）；碰撞 4 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS south_torii：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] suzunaan：res://assets/village_v2/suzunaan/suzunaan.scn 放在 Landmarks/LANDMARK_SUZUNAAN（greybox），原點 (247.1825, 0.970904, -6.205828)、LOD0 31978 三角面
+[HERO] PASS suzunaan size：LOD0 外框 x ±4.86（≤ 4.92）、z -4.61～5.07（容許 -4.67～5.13）、頂 5.93（5.74～6.04）、底 -0.38（-0.38）；規格＝P4 灰盒 B_P_LM_SUZUNAAN：面寬 9.10／縱深 8.19／簷 3.90／屋脊 5.74／台基 0.32 m；射線實測：牆面寬 9.06（P4 9.10）、牆縱深 8.15（P4 8.19）、屋脊頂 5.92（屋脊 5.74）、背面簷口 3.76（P4 簷口 3.70）m；人物比例：入口淨高 2.07 m（門檻 0.35→鴨居 2.42；≥ 1.90，1.7 m 人）、淨寬 1.82 m（≥ 1.20）
+[HERO] PASS suzunaan parcel_fit：8 個地面接觸件：在 P_LM_SUZUNAAN 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS suzunaan grounding：8 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.30、踏石 埋 0.08、縁台前板 埋 0.04、花盆 埋 0.06、木箱 埋 0.07、勝手口踏石 埋 0.10、竪樋左 埋 0.10、竪樋右 埋 0.15；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Greybox：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）；入口段差：路面 0.92 → 踏石 1.11（0.19 m）→ 台基 1.29（0.18 m），每階 ≤ 0.30
+[HERO] PASS suzunaan materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Plaster": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Suzunaan": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS suzunaan geometry：LOD0 31978 面：退化 0、NaN 0、繞向反 0、LOD1 2286 面：退化 0、NaN 0、繞向反 0、LOD2 50 面：退化 0、NaN 0、繞向反 0；LOD0 31978 ≤ §14.8「鈴奈庵」上限 60000；與 Blender 建置紀錄 31978 一致
+[HERO] PASS suzunaan pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 (247.18, 0.97, -6.21)＝P4 footprint 中心 (247.18, -6.20)、base_h 0.97；+z 與 P4 正面方向差 0.00°；原點在底面（LOD0 y -0.38～5.93）
+[HERO] PASS suzunaan collision：6 個簡化形狀（≤ 8；asset.json 列 6）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 35 點被擋 0；步行帶頭頂淨空：35 點中 0 點 < 1.95 m；最低淨空 2.37 m（≥ 2.00）；周邊 521 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS suzunaan lod：面數 31978 → 2286（7.1 %，≤ 35 %）→ 50（0.2 %，≤ 10 %）；距離 [0.0, 40.0, 110.0, 600.0] m、最後一級 600 m（地圖框最遠 457 m）
+[HERO] PASS suzunaan performance：§14.8「鈴奈庵」LOD0 上限 60000（asset.json 自報 60000）：實測 31978（53 %）；每級 surface ≤ 5（實測 5）；碰撞 6 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS suzunaan：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] terakoya：res://assets/village_v2/terakoya/terakoya.scn 放在 Landmarks/LANDMARK_TERAKOYA（anchor），原點 (188.0, 0.756, 24.0)、LOD0 64079 三角面
+[HERO] PASS terakoya size：LOD0 外框 x ±9.92（≤ 10.05）、z -6.42～8.14（容許 -6.55～8.40）、頂 10.15（10.13～10.45）、底 -0.40（-0.40）；P0 地標量體 [22.0, 11.0, 16.0]（寬×高×深）：主屋牆寬 16.94、含玄關總深 11.90（射線 x -2.30）、最高點 10.15 m，都不超過；射線實測：牆面寬 16.94（規格 17.00）、牆縱深 9.90（10.00）、屋脊頂 9.77（棟 9.78）、背面簷口 5.59（5.61）m；人物比例：入口淨高 2.50 m（門檻 0.12→鴨居 2.62；≥ 1.90，1.7 m 人）、淨寬 4.36 m（≥ 1.20）
+[HERO] PASS terakoya parcel_fit：8 個地面接觸件：在 P_LM_TERAKOYA 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；LOD0 全部頂點（含屋簷、庇）不進道路：0 點
+[HERO] PASS terakoya grounding：8 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.40、踏石 埋 0.20、幟台 埋 0.15、告示左 埋 0.30、告示右 埋 0.30、石燈籠 埋 0.12、花壇0 埋 0.15、花壇1 埋 0.15；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wire：已移除（可見網格 0、有效碰撞 0）；入口段差：路面 0.76 → 踏石 0.88（0.12 m）→ 台基 1.16（0.28 m），每階 ≤ 0.30
+[HERO] PASS terakoya materials：5 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Plaster": 0.42, "V2_Kawara": 0.42, "V2_Stone": 0.42, "V2_Terakoya": 0.42 }、14 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS terakoya geometry：LOD0 64079 面：退化 0、NaN 0、繞向反 0、LOD1 4811 面：退化 0、NaN 0、繞向反 0、LOD2 933 面：退化 0、NaN 0、繞向反 0；LOD0 64079 ≤ §14.8「寺子屋」上限 100000；與 Blender 建置紀錄 64079 一致
+[HERO] PASS terakoya pivot_scale：縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點＝P0 地標 LANDMARK_TERAKOYA 原點 (188.00, 0.76, 24.00)、yaw 90.0°（P0 90.0°）；原點在底面（LOD0 y -0.40～10.15）
+[HERO] PASS terakoya collision：8 個簡化形狀（≤ 8；asset.json 列 8）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 16 點被擋 0；步行帶頭頂淨空：16 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.00）；周邊 764 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS terakoya lod：面數 64079 → 4811（7.5 %，≤ 35 %）→ 933（1.5 %，≤ 10 %）；距離 [0.0, 45.0, 120.0, 600.0] m、最後一級 600 m（地圖框最遠 520 m）
+[HERO] PASS terakoya performance：§14.8「寺子屋」LOD0 上限 100000（asset.json 自報 100000）：實測 64079（64 %）；每級 surface ≤ 5（實測 5）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 5.7 MB（≤ 8）、共用材質庫 42.7 MB（全村共用一次）
+[HERO] PASS terakoya：gate.json 與目前 .scn 雜湊一致
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] waterwheel：res://assets/village_v2/waterwheel/waterwheel.scn 放在 Landmarks/LANDMARK_WATERWHEEL_1（anchor），原點 (334.8, -1.396979, -52.0)、LOD0 2056 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] waterwheel：res://assets/village_v2/waterwheel/waterwheel.scn 放在 Landmarks/LANDMARK_WATERWHEEL_2（anchor），原點 (329.2, -1.521029, 0.0)、LOD0 2056 三角面
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[HERO] waterwheel：res://assets/village_v2/waterwheel/waterwheel.scn 放在 Landmarks/LANDMARK_WATERWHEEL_3（anchor），原點 (310.6, -1.520963, 58.0)、LOD0 2056 三角面
+[HERO] PASS waterwheel size：【LANDMARK_WATERWHEEL_1】；LOD0 外框 x ±2.90（≤ 2.95）、z -3.00～3.00（容許 -3.05～3.05）、頂 5.65（5.60～5.70）、底 -1.60（-1.60）；輪（Wheel）半徑 3.00 m（P0 LANDMARK_WATERWHEEL_1 r 3.2，不超過）、輪寬 1.24 m、輪心離原點（水面）2.65 m、軸向 x；【LANDMARK_WATERWHEEL_2】；LOD0 外框 x ±2.90（≤ 2.95）、z -3.00～3.00（容許 -3.05～3.05）、頂 5.65（5.60～5.70）、底 -1.60（-1.60）；輪（Wheel）半徑 3.00 m（P0 LANDMARK_WATERWHEEL_2 r 3.2，不超過）、輪寬 1.24 m、輪心離原點（水面）2.65 m、軸向 x；【LANDMARK_WATERWHEEL_3】；LOD0 外框 x ±2.90（≤ 2.95）、z -3.00～3.00（容許 -3.05～3.05）、頂 5.65（5.60～5.70）、底 -1.60（-1.60）；輪（Wheel）半徑 3.00 m（P0 LANDMARK_WATERWHEEL_3 r 3.2，不超過）、輪寬 1.24 m、輪心離原點（水面）2.65 m、軸向 x
+[HERO] PASS waterwheel parcel_fit：【LANDMARK_WATERWHEEL_1】；2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；輪子外框投影在 Canal 水面（半寬 3.0 m）內：水面外 0.000 m²、壓道路 0.000 m²；【LANDMARK_WATERWHEEL_2】；2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；輪子外框投影在 Canal 水面（半寬 3.0 m）內：水面外 0.000 m²、壓道路 0.000 m²；【LANDMARK_WATERWHEEL_3】；2 個地面接觸件：（地標，無地塊）地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0；輪子外框投影在 Canal 水面（半寬 3.0 m）內：水面外 0.001 m²、壓道路 0.000 m²
+[HERO] PASS waterwheel grounding：【LANDMARK_WATERWHEEL_1】；2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：西岸石積橋台 埋 1.08、東側軸承柱 埋 0.36；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wheel：已移除（可見網格 0、有效碰撞 0）；輪下緣 y -1.75：泡進 Canal 水面 0.35 m（0.15～0.60）、離渠底最近 0.78 m（≥ 0.10）；【LANDMARK_WATERWHEEL_2】；2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：西岸石積橋台 埋 0.45、東側軸承柱 埋 0.32；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wheel：已移除（可見網格 0、有效碰撞 0）；輪下緣 y -1.87：泡進 Canal 水面 0.35 m（0.15～0.60）、離渠底最近 0.92 m（≥ 0.10）；【LANDMARK_WATERWHEEL_3】；2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：西岸石積橋台 埋 0.42、東側軸承柱 埋 0.35；接地件正下方第一個碰撞體是地形：0 點不是；被取代的 Wheel：已移除（可見網格 0、有效碰撞 0）；輪下緣 y -1.87：泡進 Canal 水面 0.35 m（0.15～0.60）、離渠底最近 0.90 m（≥ 0.10）
+[HERO] PASS waterwheel materials：【LANDMARK_WATERWHEEL_1】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【LANDMARK_WATERWHEEL_2】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮；【LANDMARK_WATERWHEEL_3】；3 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { "V2_Wood": 0.42, "V2_Stone": 0.42, "V2_Metal": 0.42 }、9 張貼圖 ≤ 2048²、VRAM 壓縮
+[HERO] PASS waterwheel geometry：【LANDMARK_WATERWHEEL_1】；LOD0 2056 面：退化 0、NaN 0、繞向反 0、LOD1 618 面：退化 0、NaN 0、繞向反 0、LOD2 106 面：退化 0、NaN 0、繞向反 0；LOD0 2056 ≤ §14.8「水車」上限 15000；與 Blender 建置紀錄 2056 一致；【LANDMARK_WATERWHEEL_2】；LOD0 2056 面：退化 0、NaN 0、繞向反 0、LOD1 618 面：退化 0、NaN 0、繞向反 0、LOD2 106 面：退化 0、NaN 0、繞向反 0；LOD0 2056 ≤ §14.8「水車」上限 15000；與 Blender 建置紀錄 2056 一致；【LANDMARK_WATERWHEEL_3】；LOD0 2056 面：退化 0、NaN 0、繞向反 0、LOD1 618 面：退化 0、NaN 0、繞向反 0、LOD2 106 面：退化 0、NaN 0、繞向反 0；LOD0 2056 ≤ §14.8「水車」上限 15000；與 Blender 建置紀錄 2056 一致
+[HERO] PASS waterwheel pivot_scale：【LANDMARK_WATERWHEEL_1】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 xz＝P0 地標 LANDMARK_WATERWHEEL_1 (334.80, -52.00)；原點 y -1.397＝Canal 水面 -1.397（差 0.000）；+z 與水流方向差 0.00°（yaw -4.6°）；LOD0 y -1.60～5.65；【LANDMARK_WATERWHEEL_2】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 xz＝P0 地標 LANDMARK_WATERWHEEL_2 (329.20, 0.00)；原點 y -1.521＝Canal 水面 -1.521（差 0.000）；+z 與水流方向差 0.00°（yaw -13.5°）；LOD0 y -1.60～5.65；【LANDMARK_WATERWHEEL_3】；縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是；原點 xz＝P0 地標 LANDMARK_WATERWHEEL_3 (310.60, 58.00)；原點 y -1.521＝Canal 水面 -1.521（差 0.001）；+z 與水流方向差 0.00°（yaw -26.6°）；LOD0 y -1.60～5.65
+[HERO] PASS waterwheel collision：【LANDMARK_WATERWHEEL_1】；5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 9 點被擋 0；步行帶頭頂淨空：9 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 3.00）；周邊 48 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【LANDMARK_WATERWHEEL_2】；5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 9 點被擋 0；步行帶頭頂淨空：9 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 3.00）；周邊 59 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條；【LANDMARK_WATERWHEEL_3】；5 個簡化形狀（≤ 8；asset.json 列 5）、1 個碰撞體、只有 box／cylinder／convex：是；膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 9 點被擋 0；步行帶頭頂淨空：9 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 3.00）；周邊 65 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條
+[HERO] PASS waterwheel lod：【LANDMARK_WATERWHEEL_1】；面數 2056 → 618（30.1 %，≤ 35 %）→ 106（5.2 %，≤ 10 %）；距離 [0.0, 50.0, 140.0, 600.0] m、最後一級 600 m（地圖框最遠 442 m）；【LANDMARK_WATERWHEEL_2】；面數 2056 → 618（30.1 %，≤ 35 %）→ 106（5.2 %，≤ 10 %）；距離 [0.0, 50.0, 140.0, 600.0] m、最後一級 600 m（地圖框最遠 473 m）；【LANDMARK_WATERWHEEL_3】；面數 2056 → 618（30.1 %，≤ 35 %）→ 106（5.2 %，≤ 10 %）；距離 [0.0, 50.0, 140.0, 600.0] m、最後一級 600 m（地圖框最遠 505 m）
+[HERO] PASS waterwheel performance：【LANDMARK_WATERWHEEL_1】；§14.8「水車」LOD0 上限 15000（asset.json 自報 15000）：實測 2056（14 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【LANDMARK_WATERWHEEL_2】；§14.8「水車」LOD0 上限 15000（asset.json 自報 15000）：實測 2056（14 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）；【LANDMARK_WATERWHEEL_3】；§14.8「水車」LOD0 上限 15000（asset.json 自報 15000）：實測 2056（14 %）；每級 surface ≤ 5（實測 3）；碰撞 5 ≤ 8；貼圖 VRAM 估算：本資產專屬 0.0 MB（≤ 8）、共用材質庫 32.0 MB（全村共用一次）
+[HERO] PASS waterwheel：gate.json 與目前 .scn 雜湊一致
+[HERO] v2_assets hero／landmark 21 件重驗完成
+[HERO] 結果：0 項失敗

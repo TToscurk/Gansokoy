@@ -1,0 +1,451 @@
+{
+ "_note": "丘腳社寺 Hero 資產規格（build_hillfoot_temple.py 產生；Godot 端 tools/village_v2_hero_prefab.gd、verify_village_v2_hero_gate.gd 讀取）。幾何取自使用者 2026-10-17 提供的 Tripo 模型（src/hillfoot_temple_source.glb，原檔 D:/資產glb/丘腳社寺/japanese+shrine+3d+model.glb；唯讀讀入、減面、另存）。 放在 P0 地標原點（anchor），取代 P0 佔位 Block；尺寸以 P0 量體 18 × 9 × 12 為上限、地塊 P_LM_HILLFOOT_TEMPLE 為界。 building.ov_eave 是讓 gate 的背面簷口射線落在背簷下（z −4.60）反推的值，不是實際出簷。",
+ "id": "hillfoot_temple",
+ "landmark": "LANDMARK_HILLFOOT_TEMPLE",
+ "kind": "hero",
+ "budget_class": "社殿",
+ "glb": "res://assets/village_v2/hillfoot_temple/src/hillfoot_temple.glb",
+ "scene": "res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn",
+ "lod_objects": [
+  "HillfootTemple_LOD0",
+  "HillfootTemple_LOD1",
+  "HillfootTemple_LOD2"
+ ],
+ "lod_ranges_m": [
+  0,
+  45,
+  130,
+  700
+ ],
+ "budget": {
+  "lod0": 60000,
+  "lod1_ratio": 0.35,
+  "lod2_ratio": 0.1,
+  "materials": 5,
+  "collision": 8
+ },
+ "materials": {
+  "V2_HillfootTemple": "res://assets/village_v2/hillfoot_temple/V2_HillfootTemple.tres"
+ },
+ "spec": {
+  "source": "Tripo（使用者 2026-10-17 提供）",
+  "source_tris": 92902,
+  "scale": 12.2767,
+  "height_m": 9.0,
+  "sink_m": 0.08,
+  "kidan_top_m": 1.47,
+  "front": "+z（南，面向丘腳街）",
+  "footprint_m": [
+   12.03,
+   11.37
+  ],
+  "design": {
+   "kidan": "石積台基（頂 1.47 m）＋正面石段 6 段（斜面碰撞沿段鼻、35.3°）",
+   "hall": "入母屋系瓦屋根、向拝、緣＋高欄、格子戶、注連繩、賽錢箱",
+   "props": "石燈籠（石段兩側、台基左後／右後／右中）、右前高札（小屋根）"
+  }
+ },
+ "gate_spec": {
+  "placement": "anchor",
+  "anchor": "Landmarks/LANDMARK_HILLFOOT_TEMPLE",
+  "replaces": "Block",
+  "p4_id": "",
+  "parcel": "P_LM_HILLFOOT_TEMPLE",
+  "road": "HillFootStreet",
+  "size": {
+   "x_half_max": 9.0,
+   "z_min": -6.0,
+   "z_max": 6.0,
+   "top": [
+    8.62,
+    9.0
+   ],
+   "bottom": -0.08
+  },
+  "building": {
+   "zf": 1.606,
+   "plinth": 1.47,
+   "ridge": 8.746,
+   "eave_edge": 5.515,
+   "ov_eave": 1.967,
+   "probe": {
+    "x": -2.5,
+    "y": 2.8,
+    "z": -1.0,
+    "gx": 0.0
+   },
+   "w": 6.739,
+   "d": 5.366
+  },
+  "ground": [
+   {
+    "name": "台基",
+    "rect": [
+     -4.85,
+     -4.45,
+     4.85,
+     2.85
+    ],
+    "bottom": -0.08,
+    "top": 1.47,
+    "embed_max": 0.15
+   },
+   {
+    "name": "石段",
+    "rect": [
+     -1.7,
+     2.95,
+     1.7,
+     4.4
+    ],
+    "bottom": -0.08,
+    "top": 0.22,
+    "embed_max": 0.15
+   }
+  ],
+  "walkway": {
+   "rect": [
+    -3.0,
+    5.7,
+    3.0,
+    6.6
+   ],
+   "head": 1.95,
+   "min_clear": 2.5,
+   "step": 0.25
+  },
+  "entry": [
+   0.0,
+   6.2
+  ],
+  "inside": [
+   0.0,
+   -1.0
+  ],
+  "steps": [
+   [
+    0.0,
+    4.27
+   ],
+   [
+    0.0,
+    3.9
+   ],
+   [
+    0.0,
+    3.55
+   ],
+   [
+    0.0,
+    3.2
+   ],
+   [
+    0.0,
+    2.9
+   ]
+  ],
+  "walk": {
+   "from": [
+    -9.0,
+    -1.0
+   ],
+   "to": [
+    0.0,
+    -1.0
+   ],
+   "box": [
+    -5.05,
+    -5.3,
+    5.05,
+    3.1
+   ]
+  },
+  "shots": [
+   [
+    "front",
+    0.0,
+    10.0
+   ],
+   [
+    "front_l",
+    7.0,
+    9.5
+   ],
+   [
+    "front_r",
+    -7.0,
+    9.5
+   ],
+   [
+    "approach",
+    -8.0,
+    16.0
+   ]
+  ]
+ },
+ "collision": [
+  {
+   "type": "box",
+   "name": "Kidan",
+   "center": [
+    0.0,
+    0.685,
+    -1.27
+   ],
+   "size": [
+    10.1,
+    1.57,
+    8.06
+   ]
+  },
+  {
+   "type": "box",
+   "name": "Hall",
+   "center": [
+    0.0,
+    3.035,
+    -0.925
+   ],
+   "size": [
+    9.8,
+    3.13,
+    7.45
+   ]
+  },
+  {
+   "type": "convex",
+   "name": "Steps",
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "points": [
+    [
+     -1.75,
+     -0.1,
+     4.98
+    ],
+    [
+     -1.75,
+     -0.1,
+     2.76
+    ],
+    [
+     -1.75,
+     1.47,
+     2.76
+    ],
+    [
+     1.75,
+     -0.1,
+     4.98
+    ],
+    [
+     1.75,
+     -0.1,
+     2.76
+    ],
+    [
+     1.75,
+     1.47,
+     2.76
+    ]
+   ]
+  },
+  {
+   "type": "box",
+   "name": "FrontL",
+   "center": [
+    -3.6,
+    1.175,
+    3.69
+   ],
+   "size": [
+    3.7,
+    2.55,
+    2.58
+   ]
+  },
+  {
+   "type": "box",
+   "name": "FrontR",
+   "center": [
+    3.55,
+    1.375,
+    3.99
+   ],
+   "size": [
+    3.6,
+    2.95,
+    3.18
+   ]
+  },
+  {
+   "type": "cylinder",
+   "name": "LanternL",
+   "center": [
+    -5.48,
+    1.15,
+    -2.76
+   ],
+   "radius": 0.74,
+   "height": 2.5
+  },
+  {
+   "type": "cylinder",
+   "name": "LanternR",
+   "center": [
+    5.48,
+    1.15,
+    -2.76
+   ],
+   "radius": 0.74,
+   "height": 2.5
+  },
+  {
+   "type": "cylinder",
+   "name": "LanternR2",
+   "center": [
+    5.48,
+    1.15,
+    0.88
+   ],
+   "radius": 0.74,
+   "height": 2.5
+  }
+ ],
+ "measured_blender": {
+  "source_tris": 92902,
+  "scale": 12.2767,
+  "LOD0": 57975,
+  "aabb": [
+   [
+    -6.011,
+    -0.084,
+    -5.682
+   ],
+   [
+    6.017,
+    8.917,
+    5.689
+   ]
+  ],
+  "LOD1": 19492,
+  "aabb_lod1": [
+   [
+    -6.004,
+    -0.077,
+    -5.673
+   ],
+   [
+    6.011,
+    8.918,
+    5.678
+   ]
+  ],
+  "LOD2": 5596,
+  "aabb_lod2": [
+   [
+    -5.986,
+    -0.057,
+    -5.609
+   ],
+   [
+    5.986,
+    8.836,
+    5.661
+   ]
+  ],
+  "pre_export": {
+   "LOD0": 57976,
+   "LOD1": 19494,
+   "LOD2": 5598
+  },
+  "poke_selfcheck": {
+   "rays": 2494,
+   "over_0.15": 0,
+   "worst": []
+  },
+  "steps": {
+   "ramp_deg": 35.3,
+   "front_profile_x0": [
+    [
+     0.0,
+     0.02,
+     4.451
+    ],
+    [
+     0.0,
+     0.12,
+     4.451
+    ],
+    [
+     0.0,
+     0.22,
+     4.45
+    ],
+    [
+     0.0,
+     0.32,
+     4.088
+    ],
+    [
+     0.0,
+     0.42,
+     4.082
+    ],
+    [
+     0.0,
+     0.52,
+     3.865
+    ],
+    [
+     0.0,
+     0.62,
+     3.742
+    ],
+    [
+     0.0,
+     0.72,
+     3.735
+    ],
+    [
+     0.0,
+     0.82,
+     3.392
+    ],
+    [
+     0.0,
+     0.92,
+     3.394
+    ],
+    [
+     0.0,
+     1.02,
+     3.047
+    ],
+    [
+     0.0,
+     1.12,
+     3.047
+    ],
+    [
+     0.0,
+     1.22,
+     3.036
+    ],
+    [
+     0.0,
+     1.32,
+     2.771
+    ],
+    [
+     0.0,
+     1.42,
+     2.77
+    ]
+   ]
+  }
+ }
+}

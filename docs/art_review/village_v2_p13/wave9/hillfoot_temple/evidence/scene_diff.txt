@@ -1,0 +1,29 @@
+1139a1140
+> [ext_resource type="PackedScene" path="res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn" id="w9_hillfoot_temple"]
+2925,2934d2925
+< [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56mkv"]
+< albedo_color = Color(0.23099999, 0.17639999, 0.1344, 0.42)
+< roughness = 0.95
+< 
+< [sub_resource type="BoxMesh" id="BoxMesh_q7m4q"]
+< size = Vector3(18, 9, 12)
+< 
+< [sub_resource type="BoxShape3D" id="BoxShape3D_by7iv"]
+< size = Vector3(18, 9, 12)
+< 
+141762a141754
+> metadata/hero_asset = "hillfoot_temple"
+141764,141773c141756,141757
+< [node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" unique_id=403649819]
+< 
+< [node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=2035340635]
+< transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+< material_override = SubResource("StandardMaterial3D_56mkv")
+< mesh = SubResource("BoxMesh_q7m4q")
+< 
+< [node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=2121314821]
+< transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+< shape = SubResource("BoxShape3D_by7iv")
+---
+> [node name="Hero" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" instance=ExtResource("w9_hillfoot_temple")]
+> metadata/phase = "P5"

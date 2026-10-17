@@ -1184,8 +1184,10 @@ func _c_ground() -> void:
 			_res("grounding", dip >= float(wr[0]) and dip <= float(wr[1]) and bed >= 0.10,
 				"輪下緣 y %.2f：泡進 %s 水面 %.2f m（%.2f～%.2f）、離渠底最近 %.2f m（≥ 0.10）" % [
 					bot.y, gs["water_ref"], dip, float(wr[0]), float(wr[1]), bed])
-	# 入口段差（有台基的建築）
-	if not _bld().is_empty() and gs.has("entry"):
+	# 入口段差（有台基的建築）；多段石段（gate_spec.steps）另走 _entry_steps
+	if not _bld().is_empty() and gs.has("entry") and gs.has("steps"):
+		_entry_steps(xf)
+	elif not _bld().is_empty() and gs.has("entry"):
 		var step: Dictionary = {}
 		for g: Dictionary in gs["ground"]:
 			if String(g["name"]) == "踏石":
@@ -1198,6 +1200,34 @@ func _c_ground() -> void:
 		var r2 := pl - st
 		_res("grounding", r1 >= 0.0 and r1 <= 0.30 and r2 >= 0.0 and r2 <= 0.30,
 			"入口段差：路面 %.2f → 踏石 %.2f（%.2f m）→ 台基 %.2f（%.2f m），每階 ≤ 0.30" % [eg, st, r1, pl, r2])
+
+
+## 多段石段（W9 丘腳社寺起）：gate_spec.steps＝各段踏面中心（局部 x, z）。踏面高由 LOD0 實測：
+## 自台基頂上方 0.3 m 往下第一個可見面（避開向拝屋根、屋簷）。路面 → 各段 → 台基頂，每階 0～0.30 m（與單一踏石同門檻）。
+func _entry_steps(xf: Transform3D) -> void:
+	var e := xf * Vector3(float(gs["entry"][0]), 0, float(gs["entry"][1]))
+	var eg := _ground(e.x, e.z) - xf.origin.y
+	var pl := float(_bld()["plinth"])
+	var from_y := pl + 0.3
+	var seq: Array = [eg]
+	for s: Array in gs["steps"]:
+		var lx := float(s[0])
+		var lz := float(s[1])
+		var dv := _vis_dist(Vector3(lx, from_y, lz), Vector3(lx, -5.0, lz), _tris_at(lx, lz))
+		seq.append(NAN if dv == INF else from_y - dv)
+	seq.append(pl)
+	var ok := true
+	var worst := 0.0
+	var tops: Array = []
+	for i in range(1, seq.size()):
+		var r := float(seq[i]) - float(seq[i - 1])
+		if is_nan(r) or r < 0.0 or r > 0.30:
+			ok = false
+		if not is_nan(r):
+			worst = maxf(worst, r)
+		tops.append("%.2f" % float(seq[i]))
+	_res("grounding", ok, "入口石段 %d 段（LOD0 實測踏面，局部）：路面 %.2f → %s（最後＝台基頂），每階 0～0.30（最大 %.2f m）" % [
+		(gs["steps"] as Array).size(), eg, " → ".join(tops), worst])
 
 
 ## 4 材質

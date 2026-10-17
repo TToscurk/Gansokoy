@@ -1137,6 +1137,7 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p4.scn" id="p13w9p4_enrich"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p8.scn" id="p13w9p8_enrich"]
 [ext_resource type="Script" path="res://maps/village_v2/scripts_p13/dev_layer_gate.gd" id="p13w9_devgate"]
+[ext_resource type="PackedScene" path="res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn" id="w9_hillfoot_temple"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -2921,16 +2922,6 @@ roughness = 0.95
 cull_mode = 2
 albedo_color = Color(0.2604, 0.252, 0.21839999, 1)
 roughness = 0.95
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56mkv"]
-albedo_color = Color(0.23099999, 0.17639999, 0.1344, 0.42)
-roughness = 0.95
-
-[sub_resource type="BoxMesh" id="BoxMesh_q7m4q"]
-size = Vector3(18, 9, 12)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_by7iv"]
-size = Vector3(18, 9, 12)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0tf12"]
 size = Vector3(9.1, 0.69663185, 8.19)
@@ -141760,17 +141751,10 @@ metadata/label = "丘腳社寺"
 metadata/src = "D3-E3"
 metadata/conf = "medium"
 metadata/placeholder = true
+metadata/hero_asset = "hillfoot_temple"
 
-[node name="Block" type="StaticBody3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" unique_id=403649819]
-
-[node name="Mesh" type="MeshInstance3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=2035340635]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
-material_override = SubResource("StandardMaterial3D_56mkv")
-mesh = SubResource("BoxMesh_q7m4q")
-
-[node name="Shape" type="CollisionShape3D" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block" unique_id=2121314821]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
-shape = SubResource("BoxShape3D_by7iv")
+[node name="Hero" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" instance=ExtResource("w9_hillfoot_temple")]
+metadata/phase = "P5"
 
 [node name="LANDMARK_DRAGON" type="Node3D" parent="Landmarks" unique_id=649486162]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, -0.16943625, -188)

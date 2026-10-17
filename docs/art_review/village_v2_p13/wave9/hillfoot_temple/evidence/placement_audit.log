@@ -1,0 +1,58 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] 案例：clean
+[PLACE] 涵蓋 207 擺放單位 {"greybox":187,"hero":20}；接地射線 6324 條（adaptive，間距 2.0 m、每軸 ≤ 12、每單位 ≤ 400）
+[PLACE] visual_only（不驗、不計 PASS）8：{"任務錨點標桿":8}
+[PLACE] 稽核範圍外（只報數量）：{"Districts 地表貼片（Yards／AuxYards／ParcelLines）":15,"Props":2304,"Roads":44,"Terrain":4,"Vegetation":32058,"Water":5}
+[PLACE] Broad phase：AABB 相交候選 81 對 → 形狀實際接觸 0 對、AABB_FALSE_POSITIVE 59 對、缺碰撞代理 22 對
+[PLACE] REVIEW B_P_MKT_001 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 沒有可用碰撞、也未標 visual_only（無法驗接地／穿插）
+[PLACE] REVIEW B_P_MKT_003 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_004 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_004 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_003、B_P_MKT_005 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_005 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_004、B_P_MKT_006 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_013 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_012 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_015 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_014、B_P_MKT_016 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_019 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_018、B_P_MKT_020 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_021 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_020、B_P_MKT_022 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_023 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_024 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_025 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_024、B_P_MKT_026 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_026 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_025、B_P_MKT_027 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_029 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_028、B_P_MKT_030 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_030 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_029 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MKT_031 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MXC_005 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MXC_004 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MXC_003 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MXC_005 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MKT_031、B_P_MXC_006 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_MXC_007 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_MXC_006、B_P_MXC_008 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_RSW_014 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 沒有可用碰撞、也未標 visual_only（無法驗接地／穿插）
+[PLACE] REVIEW B_P_RSW_024 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 沒有可用碰撞、也未標 visual_only（無法驗接地／穿插）
+[PLACE] REVIEW B_P_RSW_026 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 沒有可用碰撞、也未標 visual_only（無法驗接地／穿插）
+[PLACE] REVIEW B_P_RSW_074 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 與 B_P_RSW_075 AABB 重疊但沒有可用碰撞，物理查詢無法判定
+[PLACE] REVIEW B_P_RSW_076 [greybox] support 0/0 gap_max 0.000 slope_max 0.0° relief 0.00：NO_COLLISION_PROXY 沒有可用碰撞、也未標 visual_only（無法驗接地／穿插）
+[PLACE] INFO 185 單位（刻意重疊／代理差異）：LANDMARK_SOUTH_GATE/Hero（基礎埋深 0.24–0.25 m）；LANDMARK_NORTH_HILL/Hero（基礎埋深 0.40–0.40 m）；LANDMARK_HILL_TORII/Hero（基礎埋深 0.39–0.68 m）；LANDMARK_HILLFOOT_TEMPLE/Hero（基礎埋深 0.10–0.10 m）；LANDMARK_DRAGON/Hero（基礎埋深 1.76–4.71 m）；LANDMARK_TERAKOYA/Hero（碰撞代理底離地但可見網格接地 {"PostL":0.1,"PostR":0.1}、基礎埋深 0.00–0.40 m） …
+[PLACE] 問題分類：{"NO_COLLISION_PROXY":22}
+[PLACE] 結果：PASS 185／REVIEW 22／FAIL 0（涵蓋 207 單位，5843 ms）——結論只適用於目前涵蓋範圍
+[PLACE] FAIL（期望全部 PASS） clean：PASS 185／REVIEW 22／FAIL 0（涵蓋 207 單位）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] OK float：鈴奈庵抬高 0.3 m → 鈴奈庵 FAIL（FLOATING） → 鈴奈庵 FAIL FLOATING 最大懸空 0.260 m {"BackStep":0.186,"Chest":0.23,"Counter":0.26,"Planter":0.234,"Step":0.216}；INSUFFICIENT_SUPPORT 51%（4443 ms）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] OK sink：鈴奈庵下沉 0.8 m → 鈴奈庵 FAIL（TERRAIN_PENETRATION） → 鈴奈庵 FAIL TERRAIN_PENETRATION 地形高出基準面 0.795 m；SINK 最淺埋深 0.84 m（整棟下沉？）（4374 ms）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] OK clash：霧雨店推進鈴奈庵側面 6 m → 兩者 FAIL（OBJECT_PENETRATION） → 鈴奈庵 FAIL／霧雨店 FAIL OBJECT_PENETRATION 與 LANDMARK_SUZUNAAN/Hero 穿插 3.210 m（4436 ms）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] OK aabbfp：兩個 10×3×3 m 箱體 yaw 40°、短軸淨距 0.6 m 並排（AABB 明顯重疊、形狀不接觸）→ 兩者 PASS、計入 AABB_FALSE_POSITIVE → AABB 候選 true、形狀接觸 false、CTRL_A PASS／CTRL_B PASS （4697 ms）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[PLACE] OK noproxy：霧雨店碰撞全停用並推進鈴奈庵 AABB → 霧雨店 REVIEW（NO_COLLISION_PROXY），不得 PASS → 霧雨店 REVIEW NO_COLLISION_PROXY 與 LANDMARK_SUZUNAAN/Hero AABB 重疊但沒有可用碰撞，物理查詢無法判定（4426 ms）
+[PLACE] 結果：selftest 1 項不符預期（clean＋5 案例，共 31710 ms）

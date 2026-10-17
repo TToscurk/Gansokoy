@@ -128,3 +128,8 @@ P13 要擴張到尚未改善的街區，**不回頭反覆打磨已批准的三�
 - 報告：`collision_fix/P13_W9_COLLISION_FIX_CLOSURE_REPORT.md`。22 棟／401 箱登錄 Shell，`_ready` 同步交換，編輯器存／重載（真 MCP、拋棄式副本）語意差 0；verifier 647／1（行數為既有基準例外）、反向 49／49；生命週期 42／0；真 controller 46 段與前輪相同。
 - TPS 相機實玩確認：6 棟 216 段，重現 MKT_030／MXC_007 垂れ壁穿透 → 唯一一次定點修正（tier 5，10 箱）後，同位置已不穿透；殘留 #33 待裁定、#34 接受。MXC_004 #32 接受為已知限制。
 - 未宣告 CONTENT_FREEZE；未 push。
+
+## 丘腳社寺：使用者模型（使用者 2026-10-17 指示）
+
+- 使用者提供 Tripo 模型（D:/資產glb/丘腳社寺）→ P5 Hero 管線 `hillfoot_temple`，取代 P0 灰盒（收尾報告 §4 G1）。Asset Gate 11／11 PASS、registry 登記（ART_REVIEW）、碰撞 8 個（台基、本體、石段斜面、袖石＋燈籠、高札）、真輸入實走 A–E 無卡住。
+- 待裁定：石段正前方的 EnvironmentP9 四目垣斷片（E082_fence_frag）是否移開；美術 ART_REVIEW。報告：`hillfoot_temple/HILLFOOT_TEMPLE_REPORT.md`。

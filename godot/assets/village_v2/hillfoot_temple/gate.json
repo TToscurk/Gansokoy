@@ -1,0 +1,117 @@
+{
+ "asset": "hillfoot_temple",
+ "entry": "res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn",
+ "entry_sha256": "3966c939c602be492bf67aa73f0df78dfe5e04716ba917ff252aeeb8d9d3bfad",
+ "godot": "4.7.2-stable (official)",
+ "checks": {
+  "size": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 外框 x ±6.02（≤ 9.00）、z -5.68～5.69（容許 -6.00～6.00）、頂 8.92（8.62～9.00）、底 -0.08（-0.08）",
+    "P0 地標量體 [18.0, 9.0, 12.0]（寬×高×深）：主屋牆寬 6.74、含玄關總深 5.54（射線 x 0.00）、最高點 8.92 m，都不超過",
+    "射線實測：牆面寬 6.74（規格 6.74）、牆縱深 5.37（5.37）、屋脊頂 8.75（棟 8.75）、背面簷口 5.51（5.51）m"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "parcel_fit": {
+   "result": "PASS",
+   "detail": [
+    "2 個地面接觸件：在 P_LM_HILLFOOT_TEMPLE 內、地塊外 0.000 m²、壓道路 0.000 m²、壓其他地塊 0",
+    "LOD0 全部頂點（含屋簷、庇）不進道路：0 點"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "grounding": {
+   "result": "PASS",
+   "detail": [
+    "2 個接地件都落在地形上（底低於地形最低點、埋深 ≤ 容許＋高低差、頂露出）：台基 埋 0.08、石段 埋 0.08",
+    "接地件正下方第一個碰撞體是地形：0 點不是",
+    "被取代的 Block：保留節點（P4 gate 紀錄用）但已退場（可見網格 0、有效碰撞 0）",
+    "入口石段 5 段（LOD0 實測踏面，局部）：路面 -0.00 → 0.28 → 0.52 → 0.76 → 1.00 → 1.23 → 1.47（最後＝台基頂），每階 0～0.30（最大 0.28 m）"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "materials": {
+   "result": "PASS",
+   "detail": [
+    "1 個材質（≤ 5）全是登記的共享庫／Hero atlas、albedo_k 與材質庫登記一致 { \"V2_HillfootTemple\": 0.42 }、1 張貼圖 ≤ 2048²、VRAM 壓縮"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "geometry": {
+   "result": "PASS",
+   "detail": [
+    "LOD0 57975 面：退化 0、NaN 0、繞向反 0、LOD1 19492 面：退化 0、NaN 0、繞向反 0、LOD2 5596 面：退化 0、NaN 0、繞向反 0；LOD0 57975 ≤ §14.8「社殿」上限 60000；與 Blender 建置紀錄 57975 一致"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "pivot_scale": {
+   "result": "PASS",
+   "detail": [
+    "縮放 (1.0, 1.0, 1.0)（應 1,1,1）、LOD／Collision 節點 identity：是",
+    "原點＝P0 地標 LANDMARK_HILLFOOT_TEMPLE 原點 (228.00, 1.20, -170.00)、yaw 0.0°（P0 0.0°）；原點在底面（LOD0 y -0.08～8.92）"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "collision": {
+   "result": "PASS",
+   "detail": [
+    "8 個簡化形狀（≤ 8；asset.json 列 8）、1 個碰撞體、只有 box／cylinder／convex：是",
+    "膠囊 r 0.3／h 1.7：入口站點無碰撞、台基內有擋住、步行帶 44 點被擋 0",
+    "步行帶頭頂淨空：44 點中 0 點 < 1.95 m；最低淨空 inf m（≥ 2.50）",
+    "周邊 582 條射線（離地 0.3／1.0／1.6 m；碰撞取同一列 0.3–1.6 m 最先擋到身體處）：可見網格比碰撞面突出 > 0.15 m 的 0 條"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "lod": {
+   "result": "PASS",
+   "detail": [
+    "面數 57975 → 19492（33.6 %，≤ 35 %）→ 5596（9.7 %，≤ 10 %）；距離 [0.0, 45.0, 130.0, 700.0] m、最後一級 700 m（地圖框最遠 512 m）"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "performance": {
+   "result": "PASS",
+   "detail": [
+    "§14.8「社殿」LOD0 上限 60000（asset.json 自報 60000）：實測 57975（97 %）；每級 surface ≤ 5（實測 1）；碰撞 8 ≤ 8；貼圖 VRAM 估算：本資產專屬 2.7 MB（≤ 8）、共用材質庫 0.0 MB（全村共用一次）"
+   ],
+   "part": "headless",
+   "date": "2026-10-17T22:07:28"
+  },
+  "player_screenshot": {
+   "result": "PASS",
+   "detail": [
+    "main.tscn 載 village_v2（Hero 執行期以產生器同一段放置）、玩家鏡頭 4 張：hillfoot_temple_front.png（亮度標準差 0.157、資產在畫面內、鏡頭到資產無遮擋）；hillfoot_temple_front_l.png（亮度標準差 0.181、資產在畫面內、鏡頭到資產無遮擋）；hillfoot_temple_front_r.png（亮度標準差 0.164、資產在畫面內、鏡頭到資產無遮擋）；hillfoot_temple_approach.png（亮度標準差 0.163、資產在畫面內、鏡頭到資產無遮擋）"
+   ],
+   "part": "render",
+   "date": "2026-10-17T22:11:32"
+  },
+  "f5_f6": {
+   "result": "PASS",
+   "detail": [
+    "F6（資產單獨場景 120 幀）錯誤 0；F5（main.tscn → village_v2、4 張鏡位＋實走）錯誤 0、警告 0；實走：局部 (-9.0, -1.0) → (0.0, -1.0) 走 4 秒，停在局部 (-5.35, -1.00)（被擋在外）、最大離地 0.00 m"
+   ],
+   "part": "render",
+   "date": "2026-10-17T22:11:32"
+  }
+ },
+ "render_info": {
+  "f6_png": "hillfoot_temple_f6.png",
+  "perf": [
+   "front：7248454 三角面／3772 draw call",
+   "front_l：6991534 三角面／3679 draw call",
+   "front_r：6859822 三角面／3894 draw call",
+   "approach：6903469 三角面／4062 draw call"
+  ],
+  "warnings": [],
+  "renderer": "forward_plus"
+ }
+}
