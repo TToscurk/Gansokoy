@@ -1,0 +1,24 @@
+MMBREAK total=302 nodes=23
+MMROW Vegetation/MeadowP9/Near/N_9_-8_short | 實例 1 / 37
+MMROW Vegetation/MeadowP9/Near/N_9_-8_medium | 實例 19 / 281
+MMROW Vegetation/MeadowP9/Near/N_9_-8_tall | 實例 19 / 77
+MMROW Vegetation/MeadowP9/Near/N_9_-8_seed | 實例 3 / 28
+MMROW Vegetation/MeadowP9/Near/N_9_-8_lean | 實例 3 / 69
+MMROW Vegetation/MeadowP9/Near/N_9_-7_short | 實例 29 / 62
+MMROW Vegetation/MeadowP9/Near/N_9_-7_medium | 實例 91 / 228
+MMROW Vegetation/MeadowP9/Near/N_9_-7_tall | 實例 29 / 132
+MMROW Vegetation/MeadowP9/Near/N_9_-7_seed | 實例 7 / 55
+MMROW Vegetation/MeadowP9/Mid/M_4_-4_medium | 實例 33 / 158
+MMROW Vegetation/MeadowP9/Mid/M_4_-4_tall | 實例 20 / 203
+MMROW Vegetation/MeadowP9/Mid/M_4_-4_seed | 實例 6 / 71
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_short_near | 實例 1 / 11
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_fine_near | 實例 2 / 18
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_fine_far | 實例 1 / 8
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_stem_near | 實例 3 / 21
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_stem_far | 實例 2 / 10
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_dry_near | 實例 1 / 8
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-8_dry_far | 實例 1 / 4
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-7_fine_near | 實例 12 / 24
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-7_fine_far | 實例 5 / 11
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-7_stem_near | 實例 10 / 11
+MMROW Vegetation/GroundcoverP9/Chunks/GC_9_-7_stem_far | 實例 4 / 5

@@ -1,0 +1,128 @@
+{
+ "checks": [
+  {
+   "id": "M1.mount",
+   "msg": "overlay=true district=true script=true enabled=true",
+   "ok": true
+  },
+  {
+   "id": "M1.suppress",
+   "msg": "E082 子節點 7・仍可見 0・對應碰撞 5（仍啟用 0）・overlay 記錄 suppressed_nodes=7 shapes=5",
+   "ok": true
+  },
+  {
+   "id": "M2.reversible",
+   "msg": "off：E082 可見 7/7・碰撞啟用 5/5・DistrictHF 隱藏 true（其碰撞停用 6/6）・Ground 隱藏 true｜MultiMesh 境內實例 on→可見 0 off→可見 302（原數 302）｜往返×3  [0: on=0 off=302] [1: on=0 off=302] [2: on=0 off=302]｜復原後可見 0",
+   "ok": true
+  },
+  {
+   "id": "M3.grass",
+   "msg": "抑制中境內可見草株 0（抑制前 302；境內實例總數 302）・全場景零矩陣實例 0 / 177570",
+   "ok": true
+  },
+  {
+   "id": "M4.editor_save",
+   "msg": "PRE_SAVE：E082 可見 7/7・碰撞啟用 5/5・境內草株可見 302（原 302）・DistrictHF 可見 true・保留差し替え false｜POST_SAVE：E082 可見 0・草株可見 0",
+   "ok": true
+  },
+  {
+   "id": "G1.ground_vs_collision",
+   "msg": "頂點 2547・Ground−地形碰撞 min 0.032 max 0.140｜可走區(fade>0.5) 1821 點 p95 0.032 max 0.069（lift 0.032）",
+   "ok": true
+  },
+  {
+   "id": "G2.no_dip",
+   "msg": "三角形內 4362 三角形×7 點（被覆 ≤ 3 % 的 2710 點不計）：Ground−可見地形 最小 0.0140（門檻 ≥ 0.012）・低於門檻 0",
+   "ok": true
+  },
+  {
+   "id": "G3.zfight",
+   "msg": "候選層 95・頂點 2547：與其他層垂直差 < 8 mm 的點 0；最小差 +0.009（Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-7 @(237.5,-164.5)）",
+   "ok": true
+  },
+  {
+   "id": "G4.no_gap",
+   "msg": "開放邊界頂點 580・其中 fade>0.03 且不在台基箱／街接縫帶 0 []・Ground 帶碰撞體 false",
+   "ok": true
+  },
+  {
+   "id": "P1.stairs_foundation",
+   "msg": "DistrictHF MeshInstance 170 個・與石段稜柱／社殿碰撞 AABB 最小間隙 0.76 m（DistrictHF/W_pine/HF_0018/LOD3；門檻 ≥ 0.4）・中心落入 shrine_box 0",
+   "ok": true
+  },
+  {
+   "id": "P2.entrance_clear",
+   "msg": "參道中心線 13.3 m・膠囊查詢 162 次（中心＋側向±0.8）・碰撞命中 0 []",
+   "ok": true
+  },
+  {
+   "id": "P3.no_invisible_walls",
+   "msg": "DistrictHF 碰撞形狀 6 個・找不到對應可見網格 0 []",
+   "ok": true
+  },
+  {
+   "id": "P4.stones_seated",
+   "msg": "踏石／平石 12 顆：石頂 − 地面 最小 0.054 最大 0.248（門檻 0.012–0.25）[]",
+   "ok": true
+  },
+  {
+   "id": "P5.shrine_unmoved",
+   "msg": "LANDMARK_HILLFOOT_TEMPLE origin (228.000, 1.198, -170.000)・basis yaw 0.00°・Hero 在 true・碰撞形狀 8｜layout：{\"at\":[228.0,-170.0],\"color\":[0.55,0.42,0.32],\"conf\":\"medium\",\"id\":\"LANDMARK_HILLFOOT_TEMPLE\",\"label\":\"丘腳社寺\",\"pad\":true,\"size\":[18.0,9.0,12.0],\"src\":\"D3-E3\",\"type\":\"box\",\"yaw\":0.0}",
+   "ok": true
+  }
+ ],
+ "data": {
+  "ground_minus_collision": {
+   "max": 0.140004873275757,
+   "min": 0.0319830179214478,
+   "walk_max": 0.0688577890396118,
+   "walk_n": 1821,
+   "walk_p95": 0.0320043563842773
+  },
+  "ground_minus_visible_terrain_min": 0.0139999687671661,
+  "mm": {
+   "off": {
+    "inside": 302,
+    "total": 177570,
+    "visible": 302,
+    "zero_all": 0
+   },
+   "on": {
+    "inside": 302,
+    "total": 177570,
+    "visible": 0,
+    "zero_all": 0
+   }
+  },
+  "shrine_transform": {
+   "basis": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "origin": [
+    228.0,
+    1.19805192947388,
+    -170.0
+   ]
+  },
+  "stones": {
+   "n": 12,
+   "top_max": 0.247901320457459,
+   "top_min": 0.0540348291397095
+  },
+  "suppressed": {
+   "E082_children": 7,
+   "collisions": 5,
+   "trimmed_instances": 302,
+   "trimmed_mmis": 23
+  }
+ },
+ "fail": 0
+}

@@ -1,0 +1,58 @@
+## E082_fence_frag children
+443_gk_yotsume | Node3D | pos=(229.70,1.20,-162.69) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+444_gk_yotsume | Node3D | pos=(227.66,1.20,-161.82) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+445_rb_pile_r | Node3D | pos=(226.95,1.12,-161.80) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+446_rb_pile_a | Node3D | pos=(224.66,1.03,-160.84) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+447_shrub_a | Node3D | pos=(218.97,0.78,-161.88) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+448_rb_bld_d | Node3D | pos=(217.35,0.65,-162.20) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+449_shrub_a | Node3D | pos=(222.86,0.94,-160.08) | meta=[&"env_id", &"env_cluster", &"env_role"] | children=LOD0:MeshInstance3D,LOD1:MeshInstance3D
+## EnvironmentP9 top-level children
+Collision | StaticBody3D | n=213
+edge | Node3D | n=20
+farm | Node3D | n=9
+forest | Node3D | n=27
+water | Node3D | n=10
+open | Node3D | n=8
+## EnvironmentP9/Collision shapes near E082 (within 14 m of (224,-162))
+443_gk_yotsume_c | pos=(229.70,1.67,-162.69) | BoxShape3D | disabled=false
+444_gk_yotsume_c | pos=(227.66,1.68,-161.82) | BoxShape3D | disabled=false
+445_rb_pile_r_c | pos=(226.95,1.54,-161.80) | BoxShape3D | disabled=false
+446_rb_pile_a_c | pos=(224.66,1.50,-160.84) | BoxShape3D | disabled=false
+448_rb_bld_d_c | pos=(217.37,0.89,-162.19) | BoxShape3D | disabled=false
+## MultiMesh instances inside COURT∪APPROACH (origin xz)
+Vegetation/ForestP9/Far/LOD2/C_4_-4/sasa_a_young | total=8 | in_polys=0 | in_box(216..240,-180..-150)=1 | stride_floats=12 | mesh=sasa_a_LOD2.res
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_short_near | total=11 | in_polys=1 | in_box(216..240,-180..-150)=2 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_d2ecq
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_short_far | total=5 | in_polys=0 | in_box(216..240,-180..-150)=1 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_wpfjx
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_fine_near | total=18 | in_polys=1 | in_box(216..240,-180..-150)=5 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_kxdq6
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_fine_far | total=8 | in_polys=1 | in_box(216..240,-180..-150)=2 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_visjl
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_stem_near | total=21 | in_polys=3 | in_box(216..240,-180..-150)=4 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_mbmw0
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_stem_far | total=10 | in_polys=2 | in_box(216..240,-180..-150)=3 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_6vb0t
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_dry_near | total=8 | in_polys=1 | in_box(216..240,-180..-150)=3 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_4it67
+Vegetation/GroundcoverP9/Chunks/GC_9_-8_dry_far | total=4 | in_polys=1 | in_box(216..240,-180..-150)=3 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_uclns
+Vegetation/GroundcoverP9/Chunks/GC_9_-7_fine_near | total=24 | in_polys=12 | in_box(216..240,-180..-150)=21 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_kxdq6
+Vegetation/GroundcoverP9/Chunks/GC_9_-7_fine_far | total=11 | in_polys=5 | in_box(216..240,-180..-150)=10 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_visjl
+Vegetation/GroundcoverP9/Chunks/GC_9_-7_stem_near | total=11 | in_polys=10 | in_box(216..240,-180..-150)=11 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_mbmw0
+Vegetation/GroundcoverP9/Chunks/GC_9_-7_stem_far | total=5 | in_polys=4 | in_box(216..240,-180..-150)=5 | stride_floats=16 | mesh=groundcover_p9.scn::ArrayMesh_6vb0t
+Vegetation/MeadowP9/Near/N_9_-8_short | total=37 | in_polys=1 | in_box(216..240,-180..-150)=14 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_4hxcm
+Vegetation/MeadowP9/Near/N_9_-8_medium | total=281 | in_polys=11 | in_box(216..240,-180..-150)=70 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_56by1
+Vegetation/MeadowP9/Near/N_9_-8_tall | total=77 | in_polys=12 | in_box(216..240,-180..-150)=61 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_41d0q
+Vegetation/MeadowP9/Near/N_9_-8_seed | total=28 | in_polys=0 | in_box(216..240,-180..-150)=11 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_dxoa7
+Vegetation/MeadowP9/Near/N_9_-8_lean | total=69 | in_polys=2 | in_box(216..240,-180..-150)=12 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_cfh7g
+Vegetation/MeadowP9/Near/N_9_-8_fern | total=36 | in_polys=0 | in_box(216..240,-180..-150)=1 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_7stp1
+Vegetation/MeadowP9/Near/N_9_-7_short | total=62 | in_polys=35 | in_box(216..240,-180..-150)=62 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_4hxcm
+Vegetation/MeadowP9/Near/N_9_-7_medium | total=228 | in_polys=97 | in_box(216..240,-180..-150)=228 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_56by1
+Vegetation/MeadowP9/Near/N_9_-7_tall | total=132 | in_polys=32 | in_box(216..240,-180..-150)=132 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_41d0q
+Vegetation/MeadowP9/Near/N_9_-7_seed | total=55 | in_polys=11 | in_box(216..240,-180..-150)=55 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_dxoa7
+Vegetation/MeadowP9/Near/N_9_-7_lean | total=10 | in_polys=0 | in_box(216..240,-180..-150)=10 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_cfh7g
+Vegetation/MeadowP9/Mid/M_4_-4_medium | total=158 | in_polys=32 | in_box(216..240,-180..-150)=81 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_gjedx
+Vegetation/MeadowP9/Mid/M_4_-4_tall | total=203 | in_polys=17 | in_box(216..240,-180..-150)=85 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_lojvq
+Vegetation/MeadowP9/Mid/M_4_-4_seed | total=71 | in_polys=5 | in_box(216..240,-180..-150)=38 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_6gkoh
+Vegetation/MeadowP9/Mid/M_4_-4_lean | total=31 | in_polys=0 | in_box(216..240,-180..-150)=4 | stride_floats=16 | mesh=meadow_p9.scn::ArrayMesh_0wxcs
+## total MultiMesh instances inside polys = 296
+## individual MeshInstance nodes (LOD0, origin inside polys) not under EnvironmentP9
+Landmarks/LANDMARK_HILLFOOT_TEMPLE/Hero | pos=(228.00,1.20,-170.00)
+Props/EnvironmentP9/edge/E082_fence_frag/443_gk_yotsume | pos=(229.70,1.20,-162.69)
+Props/EnvironmentP9/edge/E082_fence_frag/444_gk_yotsume | pos=(227.66,1.20,-161.82)
+Props/EnvironmentP9/edge/E082_fence_frag/445_rb_pile_r | pos=(226.95,1.12,-161.80)
+Props/EnvironmentP9/edge/E082_fence_frag/446_rb_pile_a | pos=(224.66,1.03,-160.84)
+Props/EnvironmentP9/edge/E082_fence_frag/449_shrub_a | pos=(222.86,0.94,-160.08)

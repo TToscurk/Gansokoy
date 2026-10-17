@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[W4S] boot 10533 ms・玩家 (224.0, 0.284283, 160.0)・hour 6.51459489252529・renderer forward_plus
+[HFV] PASS M1.mount — overlay=true district=true script=true enabled=true
+[HFV] PASS M1.suppress — E082 子節點 7・仍可見 0・對應碰撞 5（仍啟用 0）・overlay 記錄 suppressed_nodes=7 shapes=5
+[HFV] PASS M2.reversible — off：E082 可見 7/7・碰撞啟用 5/5・DistrictHF 隱藏 true（其碰撞停用 6/6）・Ground 隱藏 true｜MultiMesh 境內實例 on→可見 0 off→可見 302（原數 302）｜往返×3  [0: on=0 off=302] [1: on=0 off=302] [2: on=0 off=302]｜復原後可見 0
+[HFV] PASS M3.grass — 抑制中境內可見草株 0（抑制前 302；境內實例總數 302）・全場景零矩陣實例 0 / 177570
+[HFV] PASS M4.editor_save — PRE_SAVE：E082 可見 7/7・碰撞啟用 5/5・境內草株可見 302（原 302）・DistrictHF 可見 true・保留差し替え false｜POST_SAVE：E082 可見 0・草株可見 0
+[HFV] PASS G1.ground_vs_collision — 頂點 2547・Ground−地形碰撞 min 0.032 max 0.140｜可走區(fade>0.5) 1821 點 p95 0.032 max 0.069（lift 0.032）
+[HFV] PASS G2.no_dip — 三角形內 4362 三角形×7 點（被覆 ≤ 3 % 的 2710 點不計）：Ground−可見地形 最小 0.0140（門檻 ≥ 0.012）・低於門檻 0
+[HFV] PASS G3.zfight — 候選層 95・頂點 2547：與其他層垂直差 < 8 mm 的點 0；最小差 +0.009（Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-7 @(237.5,-164.5)）
+[HFV] PASS G4.no_gap — 開放邊界頂點 580・其中 fade>0.03 且不在台基箱／街接縫帶 0 []・Ground 帶碰撞體 false
+[HFV] PASS P1.stairs_foundation — DistrictHF MeshInstance 170 個・與石段稜柱／社殿碰撞 AABB 最小間隙 0.76 m（DistrictHF/W_pine/HF_0018/LOD3；門檻 ≥ 0.4）・中心落入 shrine_box 0
+[HFV] PASS P2.entrance_clear — 參道中心線 13.3 m・膠囊查詢 162 次（中心＋側向±0.8）・碰撞命中 0 []
+[HFV] PASS P3.no_invisible_walls — DistrictHF 碰撞形狀 6 個・找不到對應可見網格 0 []
+[HFV] PASS P4.stones_seated — 踏石／平石 12 顆：石頂 − 地面 最小 0.054 最大 0.248（門檻 0.012–0.25）[]
+[HFV] PASS P5.shrine_unmoved — LANDMARK_HILLFOOT_TEMPLE origin (228.000, 1.198, -170.000)・basis yaw 0.00°・Hero 在 true・碰撞形狀 8｜layout：{"at":[228.0,-170.0],"color":[0.55,0.42,0.32],"conf":"medium","id":"LANDMARK_HILLFOOT_TEMPLE","label":"丘腳社寺","pad":true,"size":[18.0,9.0,12.0],"src":"D3-E3","type":"box","yaw":0.0}
+[HFV] === PASS：14 項・FAIL 0 ===

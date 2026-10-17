@@ -1,0 +1,40 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[DVER] PASS M1 schema：res://data/district/HF.json・60 件（問題 0）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[DVER] 街區表 suppress：既存 1 組を記憶内で取り除いて判定（場景ファイルは書かない）
+[DVER] 街區表 surface：3156 三角形を W9.top_h に併入（掛載済みの境內地面）
+[DVER] INFO village_v2.tscn の DistrictHF 掛載：あり（本検査は書かない）
+[DVER] PASS M2 overlay は現在の manifest から bake された（sha256 db4e2f85188d… / overlay db4e2f85188d…）
+[DVER] PASS M3 往復：manifest 60 件 ↔ overlay 節点 60・x/z/yaw/scale 不一致 0
+[DVER] PASS M3 Blender の y と Godot の接地の差 最大 0.032 m ≤ 0.30 m（HF_0026；超えたら context が古い）
+[DVER] PASS M4 全 item が街區 rect [P: (206.0, -190.0), S: (44.0, 42.0)] の中（外 0）
+[DVER] PASS M5 Blender の world AABB と Godot 再計算（x/z）の差 最大 0.000 m ≤ 0.05 m（超過 0）
+[DVER] PASS M5b Runtime World AABB（頂点・3 軸）60 件：min 差 0.0002・max 差 0.0003・寸法差 0.0003 m ≤ 0.002 m（超過 0・aabb_v 欠 0・最悪 HF_0027(young_sugi)）
+[DVER] PASS M6 配置（W9.why＋接地）60 件：道・建物・戸口・水・田・封存物・NPC・Hero に触れず接地（不適合 0）
+[DVER] PASS M7 重なり：footprint 候補 0 組 → 三角形で実貫通 0 組
+[DVER] PASS M8 碰撞箱 6 個が戸口の空け帯・NPC 巡回路に触れない（0）
+[DVER] PASS M9 任務の出入口から最も近い item 1000000000.0 m ≥ 6.0 m（）
+[DVER] PASS M10 通行帯 4 本 9920 樣本：overlay の碰撞による SpringArm の重い縮み（≥ 2.0 m かつ腕 < 3.0 m）0 件・≥ 0.30 m 10 件・最悪 5.83 → 4.97 m HF_east_flank(236.5,-173.0)
+[DVER]   接地 REVIEW HF_0009 tsutsuji_a 支持 100% 埋まり 0.32 m
+[DVER]   接地 REVIEW HF_0010 fern_a 支持 100% 埋まり 0.33 m
+[DVER]   接地 REVIEW HF_0016 tsutsuji_a 支持 100% 埋まり 0.35 m
+[DVER]   接地 REVIEW HF_0019 sasa_a 支持 100% 埋まり 0.33 m
+[DVER]   接地 REVIEW HF_0021 young_sugi 支持 100% 埋まり 0.41 m
+[DVER]   接地 REVIEW HF_0022 young_sugi 支持 100% 埋まり 0.45 m
+[DVER]   接地 REVIEW HF_0023 shrub_a 支持 100% 埋まり 0.47 m
+[DVER]   接地 REVIEW HF_0024 shrub_a 支持 100% 埋まり 0.55 m
+[DVER] PASS M12 地形接地（TerrainCollision・多点 ray 454 本）60 件：浮き FAIL 0・REVIEW 26・碰撞の無い可視の地面（店先帯・院子）の上 0 件・最低支持率 89%・最大埋まり 1.04 m（HF_0059(gk_kei_low)）
+[DVER] PASS M11 予算：LOD0 三角形 28798 ≤ 200000・MeshInstance 170 ≤ 600・碰撞 6 ≤ 120・MultiMesh 0
+[DVER] NEG  BAD  道路の上へ移動：FAIL するはずが通った（街區に道路の点が無く試せない）
+[DVER] NEG  OK   vid 重複：期待どおり FAIL（["vid 重複 HF_0001"]）
+[DVER] NEG  OK   y +0.5 m（浮き）：期待どおり FAIL（float(1.32 vs ground 0.82)）
+[DVER] NEG  OK   AABB を z へ 0.3 m（軸換算の誤り）：期待どおり FAIL（0.300 m）
+[DVER] NEG  OK   同じ物を 0.15 m ずらして重ねる（三角形）：期待どおり FAIL（gk_kei_low 交差 4）
+[DVER] NEG  OK   space が Blender 座標：期待どおり FAIL（space=blender_z_up）
+[DVER] NEG  OK   runtime 節点を 0.3 m 動かす（M5b）：期待どおり FAIL（min 差 0.300 m）
+[DVER] NEG  OK   0.3 m 持ち上げる（M12 浮き）：期待どおり FAIL（HF_0001 支持 0%）
+[DVER] 合計 PASS 14・FAIL 0・反向 OK 7／BAD 1

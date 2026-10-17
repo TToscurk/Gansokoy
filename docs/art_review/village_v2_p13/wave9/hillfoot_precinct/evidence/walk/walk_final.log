@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.312 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1070
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] village_v2 → res://maps/village_v2/village_v2.tscn
+[map] village_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 0 個（own_colliders=true）
+[ACT] private overlay 7 assignments; population 16
+[ACT-CORE] core overlay 9 assignments; core population 23
+[ACT-OUTER] outer overlay 4 assignments; outer population 12
+[W4S] boot 10830 ms・玩家 (224.0, 0.284283, 160.0)・hour 6.51454912320987・renderer forward_plus
+[PREC] hero=true overlay=true enabled=true
+SHOT PREC_stepfoot
+SHOT PREC_midstair
+[PREC] A_street_straight_to_stairs stalled frames=294 lost=0 max_dy=0.047 arm_min=8.50 stall=[{ "x": 228.01, "y": 2.5, "z": -166.9, "local": [0.01, 1.3, 3.1], "collider": "VillageV2/Landmarks/LANDMARK_HILLFOOT_TEMPLE/Hero/Collision", "wp": 4, "dist": 1.1 }] feet={ "min": 0.087, "max": 0.307, "mean": 0.27 } end=[228.01, 2.49, -166.9]
+SHOT PREC_top
+[PREC] B_down_steps reached frames=105 lost=0 max_dy=0.048 arm_min=1.62 stall=[] feet={ "min": 0.078, "max": 0.3, "mean": 0.193 } end=[224.9, 1.18, -160.87]
+[PREC] A2_west_diagonal reached frames=209 lost=0 max_dy=0.048 arm_min=8.50 stall=[] feet={  } end=[227.85, 1.2, -163.79]
+[PREC] A3_east_diagonal reached frames=209 lost=0 max_dy=0.030 arm_min=6.16 stall=[] feet={  } end=[228.38, 1.2, -163.78]
+[PREC] S_stepping_stones reached frames=243 lost=0 max_dy=0.031 arm_min=8.50 stall=[] feet={  } end=[228.04, 1.2, -163.7]
+[PREC] C_front_cross reached frames=231 lost=0 max_dy=0.001 arm_min=8.50 stall=[] feet={  } end=[235.83, 1.2, -163.8]
+[PREC] C2_front_far reached frames=198 lost=0 max_dy=0.039 arm_min=8.50 stall=[] feet={  } end=[234.31, 1.16, -160.6]
+[PREC] D_west reached frames=186 lost=0 max_dy=0.000 arm_min=8.50 stall=[] feet={  } end=[221.0, 1.2, -176.13]
+[PREC] D_back reached frames=204 lost=0 max_dy=0.000 arm_min=8.50 stall=[] feet={  } end=[234.53, 1.2, -176.6]
+[PREC] D_east reached frames=186 lost=0 max_dy=0.000 arm_min=7.70 stall=[] feet={  } end=[235.0, 1.2, -164.27]
+[PREC] sweep AFTER n=144
+[PREC] sweep BEFORE n=144
+[PREC] SpringArm：樣本 144・AFTER 最短 0.78／BEFORE 最短 0.78・< 2.0 m（重壓縮）AFTER 9／BEFORE 9・比 BEFORE 短 > 0.25 m 的樣本 1・最大退步 -0.29（(228.0,-163.6) k=5 4.99→4.70）
+[PREC] done

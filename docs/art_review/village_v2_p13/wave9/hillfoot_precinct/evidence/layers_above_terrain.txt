@@ -1,0 +1,17 @@
+candidates=112
+(228.0,-153.5) terrain=1.718 | Vegetation/GroundcoverP9/Ground/MacroVillage/MV_9_-7 +0.016 ; Terrain/MainTerrain -0.000
+(228.0,-157.0) terrain=1.145 | Terrain/MainTerrain -0.000
+(228.0,-159.0) terrain=1.142 | Terrain/MainTerrain +0.000
+(225.0,-161.0) terrain=1.198 | Terrain/MainTerrain +0.000
+(231.0,-162.0) terrain=1.198 | Terrain/MainTerrain +0.000
+(228.0,-164.5) terrain=1.198 | Terrain/MainTerrain +0.000
+(221.0,-166.0) terrain=1.198 | Terrain/MainTerrain +0.000
+(235.0,-166.0) terrain=1.198 | Terrain/NorthHill +0.000
+(221.0,-172.0) terrain=1.198 | Terrain/NorthHill +0.000
+(235.0,-172.0) terrain=1.198 | Terrain/NorthHill +0.000
+(228.0,-178.0) terrain=1.198 | Terrain/NorthHill +0.000
+(238.0,-168.0) terrain=1.198 | Terrain/NorthHill +0.000
+(217.0,-160.0) terrain=0.682 | Terrain/MainTerrain -0.000
+(240.0,-158.0) terrain=1.232 | Vegetation/GroundcoverP9/Ground/Village/forest/G_forest_9_-7 +0.019 ; Terrain/MainTerrain +0.000
+(228.0,-151.5) terrain=1.716 | Roads/SecondaryRoads/HillFootStreet +0.099 ; Terrain/MainTerrain -0.000
+(228.0,-150.0) terrain=1.716 | Roads/SecondaryRoads/HillFootStreet +0.099 ; Terrain/MainTerrain -0.000
