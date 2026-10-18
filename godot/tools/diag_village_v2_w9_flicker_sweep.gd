@@ -4,6 +4,7 @@ extends SceneTree
 ## 把該組換成不受光洋紅哨兵 → 相機 2 mm 側移 12 幀 → 數「內部像素在哨兵↔非哨兵間翻轉」次數；
 ## 同條件把 overlay（ArchW9R2P13/<id>）隱藏再數一次（solo 對照）。翻轉 ≫ solo ⇒ overlay ⟷ Kit 共面 z-fighting（畫面上會閃）。
 ##   godot --path godot --resolution 640x360 --script res://tools/diag_village_v2_w9_flicker_sweep.gd -- [--dist=12] [--ids=..] [--shots=<prefix>] [--shotall] [--still]
+## --rays：對被標記（或 --shotall）的機位，從翻轉像素打射線，印出 overlay 與 Kit 各自命中的網格／surface／三角形與深度差（找出確切的衝突幾何）。
 ## --still：隱藏植被／NPC／水／粒子，排除會自己動的東西造成的翻轉（用來判定剩餘翻轉是不是建築 z-fighting）。
 
 var dist := 12.0
@@ -11,6 +12,7 @@ var ids := PackedStringArray()
 var shots := ""
 var shot_all := false
 var still := false
+var rays := false
 var main: Node
 var last_mask := PackedByteArray()
 
@@ -21,6 +23,8 @@ func _init() -> void:
 			dist = float(a.get_slice("=", 1))
 		elif a.begins_with("--ids="):
 			ids = a.get_slice("=", 1).split(",")
+		elif a == "--rays":
+			rays = true
 		elif a == "--still":
 			still = true
 		elif a == "--shotall":
@@ -106,6 +110,77 @@ static func _alpha_geo(g: GeometryInstance3D) -> bool:
 			if m and _alpha_mat(m):
 				return true
 	return false
+
+
+## 每個 (網格, surface) 一個 ConcavePolygonShape3D：shape 索引 → [標籤, surface]；face_index＝該 surface 的三角形序
+func _ray_body(parent: Node, meshes: Array, layer: int) -> Array:
+	var sb := StaticBody3D.new()
+	sb.collision_layer = layer
+	sb.collision_mask = 0
+	parent.add_child(sb)
+	var map := []
+	for mi: MeshInstance3D in meshes:
+		for si in mi.mesh.get_surface_count():
+			var arr := mi.mesh.surface_get_arrays(si)
+			var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var f := PackedVector3Array()
+			if arr[Mesh.ARRAY_INDEX] != null:
+				for i: int in arr[Mesh.ARRAY_INDEX]:
+					f.append(mi.global_transform * vs[i])
+			else:
+				for v in vs:
+					f.append(mi.global_transform * v)
+			var sh := ConcavePolygonShape3D.new()
+			sh.backface_collision = true
+			sh.set_faces(f)
+			var cs := CollisionShape3D.new()
+			cs.shape = sh
+			sb.add_child(cs)
+			map.append(["%s(%s)" % [String(main.map_root.get_path_to(mi)), mi.mesh.resource_path.get_file()], si])
+	return [sb, map]
+
+
+func _ray_report(cam: Camera3D, mask: PackedByteArray, w: int, ov_meshes: Array, kit_meshes: Array) -> void:
+	var a: Array = _ray_body(main.map_root, ov_meshes, 1 << 25)
+	var b: Array = _ray_body(main.map_root, kit_meshes, 1 << 26)
+	await physics_frame
+	await physics_frame
+	var sp: PhysicsDirectSpaceState3D = main.map_root.get_world_3d().direct_space_state
+	var px := []
+	for i in mask.size():
+		if mask[i] > 0:
+			px.append(i)
+	var step := maxi(1, px.size() / 10)
+	var tally := {}
+	for k in range(0, px.size(), step):
+		var i: int = px[k]
+		var sxy := Vector2(i % w + 0.5, i / w + 0.5)
+		var o := cam.project_ray_origin(sxy)
+		var dv := cam.project_ray_normal(sxy)
+		var res := []
+		for e in [[1 << 25, a], [1 << 26, b]]:
+			var q := PhysicsRayQueryParameters3D.create(o, o + dv * 200.0, e[0])
+			q.hit_back_faces = true
+			var h := sp.intersect_ray(q)
+			if h.is_empty():
+				res.append(null)
+			else:
+				var m: Array = (e[1] as Array)[1][int(h.shape)]
+				res.append([o.distance_to(h.position), m[0], m[1], int(h.face_index), h.position, h.normal])
+		var line := "[fsw-ray]   px(%d,%d) " % [int(sxy.x), int(sxy.y)]
+		for j in 2:
+			var r = res[j]
+			line += ("overlay " if j == 0 else " | kit ") + ("-" if r == null else "%.4f m %s s%d t%d @(%.3f,%.3f,%.3f) n(%.2f,%.2f,%.2f)" % [r[0], r[1], r[2], r[3], r[4].x, r[4].y, r[4].z, r[5].x, r[5].y, r[5].z])
+		if res[0] != null and res[1] != null:
+			line += "  深度差 %+.4f m" % [float(res[0][0]) - float(res[1][0])]
+			var key := "%s s%d t%d ⟷ %s s%d t%d" % [res[0][1], res[0][2], res[0][3], res[1][1], res[1][2], res[1][3]]
+			tally[key] = int(tally.get(key, 0)) + 1
+		print(line)
+	for key in tally:
+		print("[fsw-ray]   配對 ×%d：%s" % [tally[key], key])
+	(a[0] as Node).queue_free()
+	(b[0] as Node).queue_free()
+	await physics_frame
 
 
 func _run() -> void:
@@ -206,6 +281,14 @@ func _run() -> void:
 				if flag:
 					hits += 1
 				print("[fsw] %s %-12s dir(%+.2f,%+.2f) %-4s 哨兵 %6d px 翻轉 %5d  solo %5d %s" % ["!!" if flag else "  ", ov.name, d.x, d.z, sk, r[1], r[0], solo[0], "← overlay 造成" if flag else ""])
+				if rays and (flag or shot_all) and int(r[0]) > 0:
+					cam.global_position = pos
+					var ovm: Array = []
+					for n in ov.find_children("*", "MeshInstance3D", true, false):
+						var gi := n as MeshInstance3D
+						if gi.is_visible_in_tree() and gi.mesh and (gi.visibility_range_end == 0.0 or gi.visibility_range_end > 20.0) and gi.visibility_range_begin < 20.0:
+							ovm.append(gi)
+					await _ray_report(cam, rmask, w, ovm, meshes.filter(func(m): return String(m.get_parent().name) == "LOD0"))
 				if (flag or shot_all) and shots != "":
 					for i in meshes.size():
 						(meshes[i] as MeshInstance3D).material_override = sentinel
