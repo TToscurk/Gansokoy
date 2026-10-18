@@ -83,6 +83,9 @@ void fragment() {
 		if (cut_s.y > cut_s.x && UV.y > cut_s.x && UV.y < cut_s.y && xm < cut_hw) {
 			discard;
 		}
+		// 2026-10-18 道路接觸修正：草舌不再 discard（discard 讓可見地面掉到下方 6–10 cm 的地形、與道路碰撞不符），
+		// 改成在路面高度直接畫草（bite_in → 只剩草層）。外形、位置、雜訊與原本相同；cut_s 參道石段仍 discard（碰撞另行扣除）。
+		bool bite_in = false;
 		float edge_soft = 0.0;
 		if (edge_w > 0.0 || edge_irreg > 0.0) {
 			float from_edge = hw - xm;
@@ -90,10 +93,8 @@ void fragment() {
 			float n_mid = texture(noise_tex, vec2(UV.y / 4.3, from_edge / 1.3) + vec2(0.71, 0.29 + sign(UV.x) * 0.37)).g;
 			float bite = edge_irreg * smoothstep(0.30, 0.75, n_lo) + edge_w * (smoothstep(0.35, 0.80, n_mid) * 0.7 + (nf - 0.5) * 0.6);
 			float cut = min(max(bite, 0.0), hw * edge_core);
-			if (from_edge < cut) {
-				discard;
-			}
-			edge_soft = 1.0 - smoothstep(0.0, 0.40, from_edge - cut);
+			bite_in = from_edge < cut;
+			edge_soft = bite_in ? 1.0 : 1.0 - smoothstep(0.0, 0.40, from_edge - cut);
 		}
 		float edge = smoothstep(shoulder_start, 1.0, ax + (nm.g - 0.5) * 0.30 + (nf - 0.5) * 0.14);
 		w[road_layer] += 1.0 - edge;
@@ -117,6 +118,13 @@ void fragment() {
 			w[0] += (1.0 - traffic) * 0.6 * (1.0 - smoothstep(0.10, 0.30 + 0.15 * (1.0 - traffic), xm + (nf - 0.5) * 0.25));
 			w[0] += (1.0 - traffic) * 0.55 * smoothstep(0.55, 0.95, ax + (nm.g - 0.5) * 0.45);
 			w[3] += traffic * 0.35 * smoothstep(0.6, 0.95, ax) * smoothstep(0.4, 0.7, nf);
+		}
+		if (bite_in) {
+			for (int bi = 1; bi < 7; bi++) {
+				w[bi] = 0.0;
+			}
+			w[0] = 1.0;
+			rut = 0.0;
 		}
 	} else {
 		vec4 a = use_vertex_weights ? COLOR : fix_a;

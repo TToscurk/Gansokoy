@@ -86,7 +86,7 @@ func _run() -> void:
 					var ty: float = h1.position.y
 					var cy: float = h2.position.y
 					var cname := String((h2.collider as Node).get_path()).get_slice("VillageV2/", 1)
-					if cname.begins_with("Collision/TerrainCollision") or cname.begins_with("Collision/RoadCollision"):
+					if cname.begins_with("Collision/TerrainCollision") or cname.begins_with("Collision/DirtRoadCollision"):
 						rc.append(p.y - cy)
 						tc.append(ty - cy)
 						rt.append(p.y - ty)

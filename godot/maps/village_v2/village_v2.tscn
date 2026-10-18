@@ -940,6 +940,7 @@
 [ext_resource type="PackedScene" path="res://assets/village_v2/waterwheel/waterwheel.scn" id="934_s6f43"]
 [ext_resource type="Shape3D" path="res://maps/village_v2/gen/terrain_col.res" id="941_1rihs"]
 [ext_resource type="Shape3D" path="res://maps/village_v2/gen/road_col.res" id="rcf_road_col"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/gen/road_shoulder.scn" id="rsh_road_shoulder"]
 [ext_resource type="FontFile" uid="uid://bl5cm7wvg4lu8" path="res://assets/fonts/NotoSerifTC-VF.ttf" id="942_l35q4"]
 [ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_market.res" id="943_6d2kf"]
 [ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_mixedcommercial.res" id="944_4bsyq"]
@@ -142230,10 +142231,13 @@ mesh = SubResource("CylinderMesh_shuvv")
 [node name="Shape" type="CollisionShape3D" parent="Collision/TerrainCollision" unique_id=872127671]
 shape = ExtResource("941_1rihs")
 
-[node name="RoadCollision" type="StaticBody3D" parent="Collision"]
-metadata/note = "2026-10-18 道路接觸修正：Roads/** 實際顯示的路面三角形（surface 0）原樣烘成碰撞（tools/village_v2_road_contact_fix.gd）；可見路面＝碰撞面"
+[node name="RoadShoulder" parent="Roads" instance=ExtResource("rsh_road_shoulder")]
+metadata/note = "2026-10-18 道路路肩：路緣外側斜坡接回地形（tools/village_v2_road_shoulder.gd 產生 gen/road_shoulder.scn）；路面頂點不動"
 
-[node name="Shape" type="CollisionShape3D" parent="Collision/RoadCollision"]
+[node name="DirtRoadCollision" type="StaticBody3D" parent="Collision"]
+metadata/note = "2026-10-18 道路接觸修正：路面 ribbon（扣掉參道石段挖洞段）＋路肩（Roads/RoadShoulder）烘成碰撞（tools/village_v2_road_contact_fix.gd）；可見地面＝碰撞面。名稱含 Dirt → 腳步聲＝土路（FootstepAudio.classify）"
+
+[node name="Shape" type="CollisionShape3D" parent="Collision/DirtRoadCollision"]
 shape = ExtResource("rcf_road_col")
 
 [node name="Boundary" type="StaticBody3D" parent="Collision" unique_id=92281630]

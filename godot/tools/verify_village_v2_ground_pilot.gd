@@ -8,7 +8,7 @@ extends SceneTree
 ##   1 來源 ground.gdshader 雜湊＝_matlib matlib.json ground.files_sha256（封存值；來源變了就不打補丁）
 ##   2 6 段補丁各恰好命中 1 次
 ##   3 磁碟上的 pilot shader＝補丁結果逐字（可重現、沒被手改）
-##   4 田格已移除（無 `mod(p - paddy.xy`）；discard 只在外緣侵蝕段
+##   4 田格已移除（無 `mod(p - paddy.xy`）；discard 只在參道石段挖洞段；外緣侵蝕在路面高度畫草（2026-10-18 起，不再 discard）
 ##   5 新參數預設值＝舊行為（edge_w／edge_irreg／center_patch 預設 0）——沒被 Pilot 指名的道路不受影響
 ##   6 Pilot 道路參數在核准範圍：edge_w ∈ [0.25,1.20]、edge_irreg ∈ [0.08,0.45]、核心保留 edge_core ≤ 0.35
 ##   7 外緣實測（CPU 以同一張 V2G_noise.png 雙線性重算 shader 的侵蝕式）：每條 Pilot 道路兩側外緣位置沿路
@@ -137,9 +137,10 @@ func _gates(src: String, disk: String, roads_cfg: Dictionary, patches: Array, ed
 	for pt in patches:
 		code = code.replace(pt[0], pt[1])
 	_ok(disk == code, "磁碟 pilot shader＝補丁結果逐字（%s）" % LIB.OUT_SHADER)
-	# 4 田格移除、discard 位置
+	# 4 田格移除、discard 位置（2026-10-18 道路接觸修正：外緣侵蝕改在路面高度畫草、不再 discard——discard 讓可見地面掉到
+	#   下方 6–10 cm 的地形而與道路碰撞不符；只剩參道石段挖洞段 discard，該段由 village_v2_road_contact_fix.gd 從碰撞扣除）
 	var ndis := disk.count("discard;")
-	_ok(not disk.contains("mod(p - paddy.xy") and ndis == 2 and disk.contains("if (from_edge < cut) {") and disk.contains("if (cut_s.y > cut_s.x && UV.y > cut_s.x && UV.y < cut_s.y && xm < cut_hw) {"), "田格段已移除、discard 只在外緣侵蝕段＋參道石段挖洞段（%d）" % ndis)
+	_ok(not disk.contains("mod(p - paddy.xy") and ndis == 1 and disk.contains("bite_in = from_edge < cut;") and disk.contains("if (bite_in) {") and disk.contains("if (cut_s.y > cut_s.x && UV.y > cut_s.x && UV.y < cut_s.y && xm < cut_hw) {"), "田格段已移除、discard 只在參道石段挖洞段、外緣侵蝕在路面高度畫草（discard %d）" % ndis)
 	# 5 預設值＝舊行為
 	var defaults_ok := disk.contains("uniform float edge_w = 0.0;") and disk.contains("uniform float edge_irreg = 0.0;") and disk.contains("uniform float center_patch = 0.0;") and disk.contains("uniform vec2 cut_s = vec2(0.0);") and disk.contains("uniform float cut_hw = 0.0;")
 	_ok(defaults_ok, "新參數預設 edge_w／edge_irreg／center_patch／cut_s／cut_hw＝0（未指名道路不變）")

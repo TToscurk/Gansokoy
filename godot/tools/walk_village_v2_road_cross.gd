@@ -1,5 +1,5 @@
 extends SceneTree
-## 道路接地穩定度＋橫越實走（真控制器、真碰撞）：RoadCollision ⟷ TerrainCollision 的交界。需要視窗。
+## 道路接地穩定度＋橫越實走（真控制器、真碰撞）：DirtRoadCollision（路面＋路肩）⟷ TerrainCollision 的交界。需要視窗。
 ##   godot --path godot --resolution 960x540 --script res://tools/walk_village_v2_road_cross.gd
 ## A. 橫越：路外 → 路面 → 對側路外。端點自動沿路找「站得下、直線上沒有地形／路面以外碰撞」的位置（找不到報 SKIP，
 ##    不再把端點放進路旁建築）。
@@ -145,7 +145,7 @@ func _run() -> void:
 	for i in 90:
 		await process_frame
 	p = main.player
-	for n in ["Collision/TerrainCollision", "Collision/RoadCollision"]:
+	for n in ["Collision/TerrainCollision", "Collision/DirtRoadCollision"]:
 		var b := main.map_root.get_node_or_null(n) as CollisionObject3D
 		if b:
 			ground_rids[b.get_rid()] = true
