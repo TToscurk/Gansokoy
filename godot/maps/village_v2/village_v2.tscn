@@ -939,6 +939,7 @@
 [ext_resource type="PackedScene" path="res://assets/village_v2/kirisame/kirisame.scn" id="933_n6oom"]
 [ext_resource type="PackedScene" path="res://assets/village_v2/waterwheel/waterwheel.scn" id="934_s6f43"]
 [ext_resource type="Shape3D" path="res://maps/village_v2/gen/terrain_col.res" id="941_1rihs"]
+[ext_resource type="Shape3D" path="res://maps/village_v2/gen/road_col.res" id="rcf_road_col"]
 [ext_resource type="FontFile" uid="uid://bl5cm7wvg4lu8" path="res://assets/fonts/NotoSerifTC-VF.ttf" id="942_l35q4"]
 [ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_market.res" id="943_6d2kf"]
 [ext_resource type="ArrayMesh" path="res://maps/village_v2/gen/district_mixedcommercial.res" id="944_4bsyq"]
@@ -142228,6 +142229,12 @@ mesh = SubResource("CylinderMesh_shuvv")
 
 [node name="Shape" type="CollisionShape3D" parent="Collision/TerrainCollision" unique_id=872127671]
 shape = ExtResource("941_1rihs")
+
+[node name="RoadCollision" type="StaticBody3D" parent="Collision"]
+metadata/note = "2026-10-18 道路接觸修正：Roads/** 實際顯示的路面三角形（surface 0）原樣烘成碰撞（tools/village_v2_road_contact_fix.gd）；可見路面＝碰撞面"
+
+[node name="Shape" type="CollisionShape3D" parent="Collision/RoadCollision"]
+shape = ExtResource("rcf_road_col")
 
 [node name="Boundary" type="StaticBody3D" parent="Collision" unique_id=92281630]
 
