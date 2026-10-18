@@ -52,6 +52,7 @@ SaveManager="*res://systems/save/save_manager.gd"
 DialogueManager="*res://systems/dialogue/dialogue_manager.gd"
 WaypointResolver="*res://systems/nav/waypoint_resolver.gd"
 Weather="*res://scripts/weather.gd"
+Wind="*res://scripts/wind.gd"
 CyclopsAutoload="*uid://4siqre3jhe80"
 SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
@@ -236,4 +237,56 @@ sgt_wind_turbulence={
 sgt_wind_pattern={
 "type": "sampler2D",
 "value": "res://addons/simplegrasstextured/images/wind_pattern.png"
+}
+gw_dir={
+"type": "vec3",
+"value": Vector3(0.788, 0, 0.616)
+}
+gw_strength={
+"type": "float",
+"value": 0.55
+}
+gw_gust={
+"type": "float",
+"value": 0
+}
+gw_time={
+"type": "float",
+"value": 0
+}
+gw_flutter={
+"type": "float",
+"value": 1
+}
+gw_ctrl={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+gw_tune={
+"type": "vec4",
+"value": Vector4(1, 0, 0, 0)
+}
+gw_vprof={
+"type": "vec4",
+"value": Vector4(0.16, 0.6, 0, 0.02)
+}
+gw_events={
+"type": "sampler2D",
+"value": ""
+}
+gw_shelters={
+"type": "sampler2D",
+"value": ""
+}
+gw_species={
+"type": "sampler2D",
+"value": ""
+}
+gw_species_n={
+"type": "float",
+"value": 0.0
+}
+gw_resp={
+"type": "sampler2D",
+"value": ""
 }

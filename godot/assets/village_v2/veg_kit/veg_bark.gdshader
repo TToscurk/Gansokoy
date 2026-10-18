@@ -5,7 +5,11 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_sc
 #include "res://assets/village_v2/veg_kit/veg_common.gdshaderinc"
 
 void vertex() {
-	v_lod_d = veg_vertex_common(VERTEX, NORMAL, UV2, 0.0, MODEL_MATRIX, MAIN_CAM_INV_VIEW_MATRIX, TIME);
+	float wdisp;
+	v_lod_d = veg_vertex_common(VERTEX, NORMAL, UV2, 0.0, MODEL_MATRIX, MAIN_CAM_INV_VIEW_MATRIX, gw_time, 3.0, wdisp);
+	if (gw_ctrl.z > 0.5) {
+		COLOR = vec4(wdisp / 0.6, 0.0, 0.0, COLOR.a);
+	}
 }
 
 void fragment() {
@@ -22,4 +26,9 @@ void fragment() {
 	NORMAL_MAP_DEPTH = normal_depth;
 	ROUGHNESS = roughness;
 	SPECULAR = specular;
+	// Wind 除錯熱圖（gw_ctrl.z==1）：位移長度（vertex 寫在 COLOR.r）→灰階 emission
+	if (gw_ctrl.z > 0.5) {
+		ALBEDO = vec3(0.0);
+		EMISSION = wf_heat(COLOR.r * 0.6);
+	}
 }

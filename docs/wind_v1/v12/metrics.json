@@ -1,0 +1,140 @@
+{
+  "heat_scale_m": 0.6,
+  "step_s": 0.1,
+  "profile_tall_keyaki": {
+    "height_m": 18.37912940979,
+    "bins_0_to_1": [
+      0.0,
+      0.0011,
+      0.0042,
+      0.0074,
+      0.0121,
+      0.0181,
+      0.0256,
+      0.0365,
+      0.0467,
+      0.14,
+      0.1709,
+      0.1738,
+      0.1886,
+      0.2108,
+      0.2415,
+      0.2424,
+      0.2559,
+      0.2655,
+      0.2868,
+      0.3015
+    ],
+    "root_0_10pct_m": 0.0005,
+    "mid_45_55pct_m": 0.1554,
+    "tip_90_100pct_m": 0.2941,
+    "max_m": 0.3015
+  },
+  "profile_short_momiji": {
+    "height_m": 6.35454368591309,
+    "bins_0_to_1": [
+      0.0,
+      0.0,
+      0.0019,
+      0.0827,
+      0.0942,
+      0.0829,
+      0.0982,
+      0.088,
+      0.0863,
+      0.0958,
+      0.1013,
+      0.0986,
+      0.1128,
+      0.1155,
+      0.1326,
+      0.122,
+      0.1401,
+      0.1571,
+      0.1583,
+      0.1898
+    ],
+    "root_0_10pct_m": 0.0,
+    "mid_45_55pct_m": 0.0985,
+    "tip_90_100pct_m": 0.174,
+    "max_m": 0.1898
+  },
+  "states": {
+    "calm": {
+      "veg_mean_disp_m": 0.0082,
+      "veg_p95_disp_m": 0.0145,
+      "tall_tip_m": 0.0164,
+      "grass_ground_m": 0.0048,
+      "pixel_motion_0_255": 0.056
+    },
+    "breeze": {
+      "veg_mean_disp_m": 0.0795,
+      "veg_p95_disp_m": 0.1598,
+      "tall_tip_m": 0.1866,
+      "grass_ground_m": 0.0414,
+      "pixel_motion_0_255": 1.324
+    },
+    "gust": {
+      "veg_mean_disp_m": 0.1405,
+      "veg_p95_disp_m": 0.3126,
+      "tall_tip_m": 0.2937,
+      "grass_ground_m": 0.0475,
+      "pixel_motion_0_255": 3.386
+    }
+  },
+  "elevation": {
+    "grass_mound_top_5m_m": 0.0571,
+    "grass_ground_m": 0.0452
+  },
+  "shelter": {
+    "grass_behind_wall_m": 0.0236,
+    "grass_open_m": 0.0375
+  },
+  "propagation_arrival_s": {
+    "x=-11.0m": 1.3,
+    "x=-5.5m": 1.9000000000000001,
+    "x=+0.0m": 2.5,
+    "x=+5.5m": 3.1,
+    "x=+11.0m": 3.7
+  },
+  "crown_lag_tall": {
+    "trunk_peak_s": 4.4,
+    "crown_peak_s": 5.6,
+    "trunk_half_decay_s": 5.6000000000000005,
+    "crown_half_decay_s": 6.2,
+    "trunk_peak_m": 0.0336,
+    "crown_peak_m": 0.3121
+  },
+  "propagation_trees_peak_s": {
+    "short_momiji_x-6": 3.3,
+    "tall_keyaki_x+7.5": 5.6
+  },
+  "ab_same_pixels": {
+    "grass_mound": {
+      "on_m": 0.0368,
+      "off_m": 0.0347,
+      "ratio": 1.061
+    },
+    "grass_ground": {
+      "on_m": 0.0349,
+      "off_m": 0.0349,
+      "ratio": 1.0
+    },
+    "grass_shelter": {
+      "on_m": 0.0247,
+      "off_m": 0.0618,
+      "ratio": 0.4
+    },
+    "grass_open": {
+      "on_m": 0.0362,
+      "off_m": 0.0362,
+      "ratio": 1.0
+    }
+  },
+  "videos": {
+    "states": true,
+    "gustline_heat_trees": true,
+    "gustline_heat_grass": true,
+    "gustline": true
+  }
+}

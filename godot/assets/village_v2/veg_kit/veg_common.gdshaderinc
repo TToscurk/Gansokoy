@@ -19,10 +19,20 @@ uniform float albedo_mul = 1.0;
 uniform float normal_depth = 1.0;
 uniform float roughness = 0.9;
 uniform float specular = 0.3;
+// 風（Wind V1）：實際風場來自 global uniform（Wind autoload 每幀上傳），
+// 這裡的 wind_strength 是「這個材質的倍率」——舊 .tres 存的 null＝用預設 1.0。
+// wind_dir 只在 global 風場尚未建立時當退路（例如編輯器裡單獨預覽材質）。
 uniform vec3 wind_dir = vec3(1.0, 0.0, 0.3);
-uniform float wind_strength = 0.0;
+uniform float wind_strength = 1.0;
 uniform float wind_speed = 1.0;
 uniform float flutter = 0.06;
+uniform float wind_gain = 1.0;
+
+#include "res://assets/shaders/wind_field.gdshaderinc"
+
+// Wind V1.2：物種與正規化高度（Wind autoload 在節點進場時依 mesh 名稱與 AABB 設定）。
+//   x＝物種索引（-1＝未接線 → 闊葉高木、高度由 lod_ref 估）、y＝mesh 局部頂高、z＝mesh 局部樞軸高（根部）
+instance uniform vec4 wind_sp = vec4(-1.0, 0.0, 0.0, 0.0);
 
 instance uniform vec4 lod_band = vec4(0.0, 0.0, 0.0, 0.0);
 instance uniform vec3 lod_ref = vec3(0.0, 1.5, 0.0);
@@ -32,6 +42,7 @@ instance uniform vec3 leaf_tint = vec3(1.0, 1.0, 1.0);
 instance uniform float leaf_sat = 1.0;
 
 varying float v_lod_d;
+// 除錯熱圖（gw_ctrl.z==1）：vertex() 把位移長度寫進 COLOR.r（不另開 varying——葉卡／草的 overdraw 很重，多一個插值器有成本）
 
 vec3 veg_s2l(vec3 c) {
 	return mix(pow((c + vec3(0.055)) * (1.0 / 1.055), vec3(2.4)), c * (1.0 / 12.92), lessThan(c, vec3(0.04045)));
@@ -45,26 +56,113 @@ float veg_ign(vec2 p) {
 	return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715))));
 }
 
-// 回傳世界空間位移（呼叫端轉回局部）
-vec3 veg_wind(vec3 wp, vec2 uv2, float flut_w, vec3 nrm_w, float t) {
-	float w = uv2.x;
-	float ph = uv2.y * 6.2831853;
-	vec3 wd = normalize(vec3(wind_dir.x, 0.0, wind_dir.z) + vec3(1e-4, 0.0, 0.0));
-	float sway = sin(t * 0.9 + ph + dot(wp.xz, vec2(0.031, 0.027))) * 0.6 + sin(t * 2.1 + ph * 1.7) * 0.25 + 0.35;
-	vec3 off = wd * (w * w) * wind_strength * sway;
-	off.y -= length(off) * 0.25 * w;
-	off += nrm_w * flut_w * flutter * wind_strength * sin(t * 7.3 + ph * 3.1 + wp.y * 1.3);
-	return off;
+// 世界向量 → 模型局部向量。
+// 不用 inverse(MODEL_MATRIX)：植被／草叢的實例都是「旋轉＋等比縮放＋平移」，
+// 轉置 3x3 就是旋轉的逆（差一個 scale²，等於讓大棵的樹擺幅大一點，視覺上更合理）。
+// 逐頂點 mat4 反矩陣是風 V1 第一版 +2–3 ms GPU 的主因；這裡換成 9 次乘加。
+vec3 veg_to_local(vec3 v, mat4 m) {
+	return vec3(dot(v, m[0].xyz), dot(v, m[1].xyz), dot(v, m[2].xyz));
 }
 
-// 回傳 LOD 距離（主相機→樹參考點）；varying 只能在 vertex() 本體賦值，由呼叫端寫 v_lod_d
-float veg_vertex_common(inout vec3 vtx, vec3 nrm, vec2 uv2, float flut_w, mat4 model, mat4 cam_inv_view, float time) {
+// Wind V1.2：高度加權彎曲＋分層二次運動（回傳世界空間位移；呼叫端轉回局部）。
+//
+// 三層（同一個驅動力，wf_drive 一次算出主幹與樹冠；與 Wind.sample_field 同一個量）：
+//   1. 主幹彎曲：bw＝pow(hn, tip_response)，hn＝mesh 局部高度 /（頂高−樞軸）——不是世界 Y；
+//      根部 hn=0 → 0 位移（不脫根），樹梢最大。驅動力取樹冠高度的垂直剖面（整棵樹吃同一個風載）。
+//      主幹只有很短的延遲（0.25×lag）＝慢、重。
+//   2. 樹冠彈性：wf_drive 的 crown＝欠阻尼彈簧（物種 damping、sway_hz、lag）——陣風過後主幹開始回正時，
+//      樹冠仍在擺、再過衝一下才停。只作用在 hn 上段 × 作者遮罩 UV2.x（低枝不會被高度單獨帶動）。
+//   3. 葉片／細枝顫動：物種 flutter_hz，強度吃「該頂點高度」的剖面（樹頂亂流較強），權重 COLOR.a。
+// 自然擺動：物種 sway_hz ＋不可通約的第二頻率，相位吃根部雜湊 → 相鄰樹不同步、不是單一正弦迴圈。
+// 安全上限：總位移以 tanh 軟夾在物種 max_deform（× 實例縮放）內；長度保持：位移愈大樹梢略降（弧長近似）。
+vec3 veg_wind(vec3 vtx, vec3 wp, mat4 model, vec2 uv2, float flut_w, vec3 nrm_w, float t, float gain) {
+	vec3 root = model[3].xyz;
+	float sc = length(model[1].xyz);
+	// 物種與高度
+	int sp = int(wind_sp.x + 0.5);
+	float top = wind_sp.y;
+	float piv = wind_sp.z;
+	// 未接線（編輯器預覽、Wind 未啟動）：不做主幹彎曲，只留作者 UV2 階層的枝擺（＝V1 行為）。
+	//   不能猜成高木——同一個 veg_bark 也用在四つ目垣／袖垣／蹲踞等庭園構件上。
+	float wired = 1.0;
+	if (wind_sp.x < -0.5) {
+		sp = WF_SP_BROAD_TALL;
+		top = max(lod_ref.y * 2.1, 1.0);
+		piv = 0.0;
+		wired = 0.0;
+	}
+	vec4 r0;
+	vec4 r1;
+	vec4 r2;
+	wf_species(sp, r0, r1, r2);
+	float stiff = r0.x;
+	float bend_mult = r0.y;
+	float tip_exp = r0.z;
+	float lag = r0.w;
+	float flut_hz = r1.y;
+	float max_d = r1.z * sc;
+	float crown_gain = r1.w;
+	float sway_hz = r2.z;
+	float h_loc = max(top - piv, 0.05);
+	float hn = clamp((vtx.y - piv) / h_loc, 0.0, 1.0);
+	float h_w = h_loc * sc;
+	// 場
+	vec3 fld = wf_field(root.xz);
+	vec2 wd2 = fld.xy;
+	vec3 wd = vec3(wd2.x, 0.0, wd2.y);
+	vec3 side = vec3(-wd2.y, 0.0, wd2.x);
+	float env_c = wf_height_factor(0.7 * h_w) * wf_elev_factor(root.y)
+		* wf_shelter(root.xz, root.y + 0.7 * h_w);
+	float trunk;
+	float crown;
+	wf_drive(root.xz, wd2, fld.z, env_c, t, sp, lag, r2, trunk, crown);
+	float ph_i = wf_hash(root.xz) * WF_TAU;
+	float steady = env_c * gw_strength * fld.z;
+	// 自然擺動：物種固有頻率、每棵樹自己的相位（根部雜湊）；順風 sin、橫風 cos（同一個角度 → 橢圓擺，
+	// 不是平面來回）。疊在 front 波與行進陣風上 → 整體不是同步的單一正弦迴圈。
+	float arg_n = t * WF_TAU * sway_hz + ph_i;
+	float nat = sin(arg_n) * 0.12;
+	float cross_ = cos(arg_n) * 0.07;
+	// 主幹：每單位驅動力的樹梢位移（m）＝ K × bend_mult × (1 − 0.8 stiffness) × 樹高
+	float amp = 0.0156 * bend_mult * (1.0 - 0.8 * stiff) * h_w * wired;
+	float bw = pow(hn, tip_exp);
+	float cm = smoothstep(0.3, 0.85, hn) * mix(0.35, 1.0, clamp(uv2.x, 0.0, 1.0));
+	float d_main = amp * (bw * (trunk + steady * nat) + crown_gain * cm * (crown - trunk));
+	vec3 off = wd * d_main + side * (amp * bw * steady * cross_);
+	// 枝／葉叢層（作者階層權重 UV2.x）：沿用 V1 的枝擺，但驅動力換成樹冠彈簧響應（有延遲、有過衝）
+	float w = clamp(uv2.x, 0.0, 1.0);
+	float ph = uv2.y * WF_TAU;
+	float sway_b = sin(t * 0.9 + ph + dot(root.xz, vec2(0.041, 0.033))) * 0.75;
+	off += wd * (w * w) * gain * wind_strength * min(bend_mult, 1.0) * (0.05 * sway_b * steady + 0.06 * crown);
+	// 葉片顫動：亂流隨樹內高度增強（樹冠頂 ×1.5；線性近似剖面，不做逐頂點 pow）
+	if (flut_w > 0.0) {
+		float turb = 1.0 + 0.5 * hn;
+		off += nrm_w * flut_w * flutter * gain * crown * turb * gw_flutter * min(bend_mult, 1.0)
+			* sin(t * WF_TAU * flut_hz + ph * 3.1 + wp.y * 1.3) * 0.5;
+	}
+	// 長度保持（弧長近似）＋安全上限
+	float hv = max(wp.y - root.y, 0.3);
+	off.y -= 0.5 * dot(off.xz, off.xz) / hv;
+	return wf_soft_clamp(off, max_d);
+}
+
+// 回傳 LOD 距離（主相機→樹參考點）；varying 只能在 vertex() 本體賦值，由呼叫端寫 v_lod_d（位移長度經 out wdisp 回傳）
+float veg_vertex_common(inout vec3 vtx, vec3 nrm, vec2 uv2, float flut_w, mat4 model, mat4 cam_inv_view, float time, float gain, out float wdisp) {
 	float d = distance(cam_inv_view[3].xyz, (model * vec4(lod_ref, 1.0)).xyz);
-	if (wind_strength > 0.0) {
+	wdisp = 0.0;
+	// 距離閘門：>60 m 的樹冠位移在畫面上不到 1 px，卻要吃滿整個頂點著色器。
+	// 45→60 m 漸弱，60 m 外整段跳過（每實例一致，不會有逐頂點分歧）。
+	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && gain > 0.0 && d < 60.0) {
+		float fade = 1.0 - smoothstep(45.0, 60.0, d);
 		vec3 wp = (model * vec4(vtx, 1.0)).xyz;
-		vec3 nw = normalize((model * vec4(nrm, 0.0)).xyz);
-		vec3 off = veg_wind(wp, uv2, flut_w, nw, time * wind_speed);
-		vtx += (inverse(model) * vec4(off, 0.0)).xyz;
+		vec3 nw = vec3(0.0, 1.0, 0.0);
+		if (flut_w > 0.0) {
+			nw = normalize((model * vec4(nrm, 0.0)).xyz);
+		}
+		vec3 off = veg_wind(vtx, wp, model, uv2, flut_w, nw, time * wind_speed, gain) * fade;
+		wdisp = length(off);
+		// 世界→局部：轉置 3×3 再除以 scale²（等比縮放實例的精確逆）
+		vtx += veg_to_local(off, model) / max(dot(model[0].xyz, model[0].xyz), 1e-6);
 	}
 	return d;
 }

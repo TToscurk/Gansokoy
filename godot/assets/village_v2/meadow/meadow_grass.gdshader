@@ -13,10 +13,15 @@ shader_type spatial;
 render_mode cull_disabled, diffuse_burley, specular_schlick_ggx;
 
 uniform vec3 wind_dir = vec3(1.0, 0.0, 0.3);
-// P9 最終値 0.7（2026-10-05 使用者裁定、R5-3 r6c wind review）：樹・竹（veg_common）は wind 0 のため 1.0 では草だけ動きすぎる。
-//   将来の全域風系統で樹／竹／草を統一するときに再バランス（Global Wind Manager が同名 uniform を一括設定）
+// P9 最終值 0.7（2026-10-05 使用者裁定、R5-3 r6c wind review）。
+// Wind V1：這一項現在是「BREEZE 時的振幅」，實際振幅＝本值 × (gw_strength / 0.55)，
+//   所以預設 Light Breeze 下的外觀與 P9 審圖一致，換 preset 或陣風才變強。
 uniform float wind_strength = 0.7;
 uniform float wind_speed = 1.0;
+
+#include "res://assets/shaders/wind_field.gdshaderinc"
+// Wind V1.2：物種（預設 grass）；要讓某片草吃別的物種參數，設這個 instance uniform 即可。
+instance uniform int wind_species = 6;
 // 草浪の振幅（m、葉先・高さ 0.5 m の株あたり）と葉ごとの揺れ
 uniform float gust_amp = 0.07;
 uniform float flutter_amp = 0.024;
@@ -39,6 +44,11 @@ vec3 s2l(vec3 c) {
 
 vec3 l2s(vec3 c) {
 	return mix(vec3(1.055) * pow(c, vec3(1.0 / 2.4)) - vec3(0.055), c * 12.92, lessThan(c, vec3(0.0031308)));
+}
+
+// 世界向量→局部（等比縮放＋旋轉；省掉逐頂點 mat4 反矩陣）
+vec3 to_local(vec3 v, mat4 m) {
+	return vec3(dot(v, m[0].xyz), dot(v, m[1].xyz), dot(v, m[2].xyz));
 }
 
 // 2D 値 noise（0–1、世界座標の位相・強さの揺らぎ用）
@@ -67,29 +77,51 @@ void vertex() {
 	VERTEX.y *= f;
 	VERTEX.xz *= mix(0.35, 1.0, f) * step(0.001, f) * (1.0 + far_widen * smoothstep(8.0, 26.0, d));
 	vec3 wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	if (wind_strength > 0.0) {
-		float k = UV.y * UV.y * (1.0 - 0.65 * UV2.y);
-		vec3 wd = normalize(vec3(wind_dir.x, 0.0, wind_dir.z) + vec3(1e-4, 0.0, 0.0));
-		vec2 wd2 = wd.xz;
-		float t = TIME * wind_speed;
+	float wdisp = 0.0;
+	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && d < 34.0) {
+		vec4 r0;
+		vec4 r1;
+		vec4 r2;
+		wf_species(wind_species, r0, r1, r2);
+		float sc = length(MODEL_MATRIX[1].xyz);
+		// 高度權重：UV.y＝作者烘的「葉根 0 → 葉尖 1」（不是世界 Y）；tip_response＝指數（grass 2.0＝P9 原本的 UV.y²）
+		float k = pow(clamp(UV.y, 0.0, 1.0), r0.z) * (1.0 - 0.65 * UV2.y) * (1.0 - 0.8 * r0.x) / 0.72;
+		// 空間場（與 Wind.sample_field 同一組常數）
+		vec3 fld = wf_field(root.xz);
+		vec2 wd2 = fld.xy;
+		vec3 wd = vec3(wd2.x, 0.0, wd2.y);
+		// 環境係數：海拔、遮蔽（草叢高度＝剖面正規化高度 z0 → 剖面 ×1，BREEZE 外觀同 P9）
+		// 草＝垂直剖面的正規化高度 z0（×1.00）：只乘海拔與遮蔽（樹冠才吃剖面增益）
+		float env = wf_elev_factor(root.y) * wf_shelter(root.xz, root.y + 0.5 * sc);
+		// 驅動力＝樹冠同一個彈簧（草的 lag／damping 很小 → 幾乎即時、略帶回彈）；行進陣風取代 V1 的全域 gw_gust
+		float t = gw_time * wind_speed;
+		// 草沒有樹冠層：單點驅動力＋純延遲 lag（不查樹冠響應表，省頂點成本）
+		float drive = wf_force(root.xz, wd2, fld.z, env, t, r0.w);
+		// Wind V1：BREEZE（gw 0.55）＝ P9 審圖的 0.7，其餘依比例放大；陣風是 drive 裡的行進事件
+		float ws = wind_strength * r0.y * (drive / 0.55);
 		// 風向へ流れる草浪：低周波 2 本の和を 0–1 に（強い所＝明るく倒れる帯）。世界座標の値 noise（~6 m、風下へ流れる）で
 		//   波の強さを場所ごとに揺らす（隣の株とは相関するが、全面が同期して左右に揺れない）
 		float along = dot(root.xz, wd2);
 		float across = dot(root.xz, vec2(-wd2.y, wd2.x));
-		// wind review r6：波頭を低周波 noise で歪める（~30 m・~11 m）＝15 m ごとに同じ縞が規則正しく並ばない（風下 32 m の相関 0.49 → 0.11）
+		// wind review r6：波頭を低周波 noise で歪める（~30 m・~11 m）＝15 m ごとに同じ縞が規則正しく並ばない
 		along += 9.0 * vnoise(root.xz * 0.035 + vec2(3.1, 7.7)) + 4.0 * vnoise(root.xz * 0.09);
-		// 葉ごとに草浪の到達を最大 0.35 s 遅らせる（同じ叢の葉が完全に同期しない：相関 0.97 → 0.91）
+		// 葉ごとに草浪の到達を最大 0.35 s 遅らせる（同じ叢の葉が完全に同期しない）
 		float tg = t + 0.35 * UV2.x;
 		float gust = 0.5 + 0.32 * sin(along * 0.42 - tg * 1.6 + sin(across * 0.13) * 1.7) + 0.18 * sin(along * 0.95 + across * 0.31 - tg * 2.3);
 		gust *= 0.55 + 0.9 * vnoise(root.xz * 0.17 - wd2 * t * 0.35);
 		float ph = UV2.x * 6.2831853 + vnoise(root.xz * 0.8) * 4.0;
-		float flut = sin(t * 4.1 + ph + root.x * 1.3 + root.z * 0.7);
-		vec3 off = wd * (gust_amp * (0.35 + 0.65 * gust)) * k * wind_strength * 2.0;
+		// 葉の細顫：物種 flutter_hz（grass 0.65 Hz＝P9 の 4.1 rad/s）
+		float flut = sin(t * WF_TAU * r1.y + ph + root.x * 1.3 + root.z * 0.7);
+		vec3 off = wd * (gust_amp * (0.35 + 0.65 * gust)) * k * ws * 2.0;
 		vec3 side = vec3(-wd.z, 0.0, wd.x);
-		off += (side * 0.6 + wd * 0.4) * flutter_amp * flut * k * wind_strength;
+		off += (side * 0.6 + wd * 0.4) * flutter_amp * flut * k * ws;
 		off.y -= length(off.xz) * 0.35 * UV.y;
-		wp += off;
-		VERTEX = (inverse(MODEL_MATRIX) * vec4(wp, 1.0)).xyz;
+		off = wf_soft_clamp(off, r1.z * sc);
+		wdisp = length(off);
+		VERTEX += to_local(off, MODEL_MATRIX) / max(dot(MODEL_MATRIX[0].xyz, MODEL_MATRIX[0].xyz), 1e-6);
+	}
+	if (gw_ctrl.z > 0.5) {
+		COLOR = vec4(wdisp / 0.6, 0.0, 0.0, 1.0);
 	}
 	v_wn = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
@@ -102,4 +134,8 @@ void fragment() {
 	SPECULAR = specular;
 	BACKLIGHT = c * translucency;
 	NORMAL = normalize((VIEW_MATRIX * vec4(v_wn, 0.0)).xyz);
+	if (gw_ctrl.z > 0.5) {
+		ALBEDO = vec3(0.0);
+		EMISSION = wf_heat(COLOR.r * 0.6);
+	}
 }

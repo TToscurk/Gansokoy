@@ -1,0 +1,111 @@
+[gd_resource type="Resource" script_class="WindSpeciesTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/wind/wind_species.gd" id="1_abc00"]
+[ext_resource type="Script" path="res://scripts/wind/wind_species_table.gd" id="2_yjru0"]
+
+[sub_resource type="Resource" id="Resource_eg0un"]
+script = ExtResource("1_abc00")
+
+[sub_resource type="Resource" id="Resource_5c8fn"]
+script = ExtResource("1_abc00")
+id = "broad_small"
+stiffness = 0.45
+tip_response = 2.0
+response_lag = 0.3
+damping = 0.3
+flutter_hz = 1.3
+max_deform_m = 0.45
+crown_gain = 0.5
+sway_hz = 0.32
+
+[sub_resource type="Resource" id="Resource_1l84j"]
+script = ExtResource("1_abc00")
+id = "conifer"
+stiffness = 0.65
+bend_mult = 0.85
+tip_response = 2.4
+response_lag = 0.55
+damping = 0.4
+flutter_hz = 0.9
+max_deform_m = 0.65
+crown_gain = 0.35
+sway_hz = 0.18
+
+[sub_resource type="Resource" id="Resource_2qhlf"]
+script = ExtResource("1_abc00")
+id = "weeping"
+stiffness = 0.3
+bend_mult = 1.1
+tip_response = 1.6
+response_lag = 0.7
+damping = 0.22
+flutter_hz = 1.0
+max_deform_m = 0.7
+crown_gain = 0.9
+sway_hz = 0.2
+
+[sub_resource type="Resource" id="Resource_6c44e"]
+script = ExtResource("1_abc00")
+id = "bamboo"
+stiffness = 0.22
+bend_mult = 1.55
+tip_response = 1.8
+response_lag = 0.35
+damping = 0.18
+flutter_hz = 1.6
+max_deform_m = 1.2
+crown_gain = 0.45
+sway_hz = 0.28
+
+[sub_resource type="Resource" id="Resource_jrkhk"]
+script = ExtResource("1_abc00")
+id = "bush"
+stiffness = 0.55
+bend_mult = 0.9
+tip_response = 1.6
+response_lag = 0.15
+damping = 0.4
+flutter_hz = 1.6
+max_deform_m = 0.22
+crown_gain = 0.4
+sway_hz = 0.55
+
+[sub_resource type="Resource" id="Resource_sghex"]
+script = ExtResource("1_abc00")
+id = "grass"
+stiffness = 0.35
+tip_response = 2.0
+response_lag = 0.08
+damping = 0.35
+flutter_hz = 0.65
+max_deform_m = 0.25
+crown_gain = 0.5
+sway_hz = 0.9
+
+[sub_resource type="Resource" id="Resource_38wjo"]
+script = ExtResource("1_abc00")
+id = "paddy"
+stiffness = 0.4
+tip_response = 2.0
+response_lag = 0.1
+damping = 0.35
+flutter_hz = 0.62
+max_deform_m = 0.18
+crown_gain = 0.5
+sway_hz = 0.8
+
+[sub_resource type="Resource" id="Resource_tnlg8"]
+script = ExtResource("1_abc00")
+id = "rigid"
+stiffness = 1.0
+bend_mult = 0.0
+response_lag = 0.0
+damping = 0.95
+flutter_hz = 0.0
+max_deform_m = 0.0
+crown_gain = 0.0
+sway_hz = 0.0
+
+[resource]
+script = ExtResource("2_yjru0")
+profiles = Array[ExtResource("1_abc00")]([SubResource("Resource_eg0un"), SubResource("Resource_5c8fn"), SubResource("Resource_1l84j"), SubResource("Resource_2qhlf"), SubResource("Resource_6c44e"), SubResource("Resource_jrkhk"), SubResource("Resource_sghex"), SubResource("Resource_38wjo"), SubResource("Resource_tnlg8")])
