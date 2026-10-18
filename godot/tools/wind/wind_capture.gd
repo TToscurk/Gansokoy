@@ -16,6 +16,7 @@ extends SceneTree
 ##   --seq=...  取代 preset 迴圈，逐鏡位跑一串指令（; 分隔）：
 ##                reset｜preset:<名>｜wind:<deg>,<strength>｜settle:<秒>｜gust:<amp>,<dur>｜label:<名>｜frames:<N>
 ##                vprof:<α>,<z0>,<elev_ref>,<elev_gain>｜noshelter（同一風時鐘的 A/B：只差剖面／遮蔽）
+##                run:<秒>（真實時間、風時鐘解凍：浮物／燈籠等物理物件跟風同步前進）｜rframes:<N>（真實時間每 0.1 s 一張）
 ##              例：reset;preset:calm;wind:0,0.55;settle:4;label:gustline;gust:0.9,3.0;frames:80
 ##   場景有 probe_points() → 每個鏡位把探針世界座標投影成像素寫進 manifest（views[].probes）
 
@@ -369,8 +370,38 @@ func _run_seq(scene: Node, view_name: String, seq: String, step: float, out: Str
 				wind.set_vertical_profile(vp[0].to_float(), vp[1].to_float(), vp[2].to_float(), vp[3].to_float())
 			"noshelter":
 				wind.clear_shelters()
+			"run":
+				# 真實時間跑 N 秒（風時鐘解凍）：讓物理物件（浮物、燈籠）與風場同一個時鐘前進
+				wind.set_frozen(false)
+				var t_end := Time.get_ticks_msec() + int(arg.to_float() * 1000.0)
+				while Time.get_ticks_msec() < t_end:
+					await physics_frame
+				wind.set_frozen(true)
 			"label":
 				label = view_name + "_" + arg
+			"rframes":
+				# 真實時間連拍（風時鐘解凍）：每 0.1 s 存一張；浮物等物理物件與風同一時鐘
+				wind.set_frozen(false)
+				for i in int(arg):
+					var t_next := Time.get_ticks_msec() + 100
+					while Time.get_ticks_msec() < t_next:
+						await physics_frame
+					await RenderingServer.frame_post_draw
+					var st2: Dictionary = wind.get_wind()
+					var p2 := "%s/%s_%03d.png" % [out, label, i]
+					root.get_texture().get_image().save_png(p2)
+					var fl_states := {}
+					var demo := scene.find_child("WindRiverDemo", true, false)
+					if demo and demo.has_method("floatables"):
+						for f in demo.call("floatables"):
+							var fs: Dictionary = f.call("state")
+							var fp: Vector3 = fs["pos"]
+							fl_states[String(f.name)] = [snappedf(fp.x, 0.01), snappedf(fp.y, 0.001), snappedf(fp.z, 0.01), snappedf(float(fs["fade"]), 0.01)]
+					man["shots"].append({"key": label, "frame": i, "file": p2, "preset": st2["preset"],
+						"strength": st2["strength"], "gust": st2["gust"], "time": st2["time"], "events": st2["events"],
+						"floatables": fl_states})
+				wind.set_frozen(true)
+				print("SHOT %s %d frames (realtime)" % [label, int(arg)])
 			"frames":
 				for i in int(arg):
 					wind.debug_advance(step)

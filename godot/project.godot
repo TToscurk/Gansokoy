@@ -286,6 +286,18 @@ gw_species_n={
 "type": "float",
 "value": 0.0
 }
+gw_flow={
+"type": "sampler2D",
+"value": ""
+}
+gw_flow_rect={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+gw_water={
+"type": "vec4",
+"value": Vector4(0.02, 1, 0, 0)
+}
 gw_resp={
 "type": "sampler2D",
 "value": ""

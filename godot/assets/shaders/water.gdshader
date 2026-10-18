@@ -37,8 +37,24 @@ uniform float shred : hint_range(0.0, 1.0) = 0.0;
 uniform float shred_scale = 3.0;
 uniform float shred_speed = 1.0;
 
+// ── Wind V2 水面（預設全關＝既有材質外觀完全不變；目前只有人里主河開）──────────
+#include "res://assets/shaders/water_field.gdshaderinc"
+// 1＝長波用共用水面場（gw_time 模擬時鐘、振幅 gw_water.x、隨當地風平滑變大），取代舊的 TIME 雙正弦。
+uniform float wind_coupled = 0.0;
+// 1＝人里主河模式：反照率／透明度沿用 P2 頂點色（水深烘色，與原 StandardMaterial 相同），
+//   法線在世界空間合成（主河網格沒有 UV／切線，NORMAL_MAP 用不了）＝流向捲動細節＋風漣漪；
+//   流向取 gw_flow（Wind 從河道中心線烘的流場），不吃頂點色 GB。
+uniform float vc_albedo = 0.0;
+uniform float vc_roughness = 0.15;
+uniform float vc_specular = 0.6;
+// 流向捲動細節的斜率強度（世界空間）
+uniform float detail_slope = 0.05;
+
 varying float bank;      // 頂點色 R：1=岸邊、0=中央
 varying vec2 flow_dir;   // 頂點色 GB：局部下游方向
+varying vec2 v_flow;     // Wind V2：gw_flow 流速向量（m/s）
+varying vec2 v_wdir;     // Wind V2：當地風向
+varying float v_wind;    // Wind V2：當地風力
 
 // 自製 value noise。⚠ 不要拿 wave_nor 當噪聲源：實測那張法線貼圖
 // R/G 的 std 只有 0.07、B（法線 Z）mean=0.962，任何門檻都會讓 99% 的
@@ -60,11 +76,79 @@ void vertex() {
 	flow_dir = COLOR.gb * 2.0 - 1.0;
 	// 水面微微起伏（河不是鏡子）
 	vec3 wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	VERTEX.y += sin(TIME * 0.9 + wp.x * 0.6 + wp.z * 0.4) * 0.025
-		+ sin(TIME * 1.7 + wp.z * 1.1) * 0.015;
+	v_flow = vec2(0.0);
+	v_wdir = vec2(1.0, 0.0);
+	v_wind = 0.0;
+	if (wind_coupled > 0.5) {
+		vec3 fl = wf_flow(wp.xz);
+		v_flow = fl.xy;
+		vec2 fd = length(fl.xy) > 1e-4 ? normalize(fl.xy) : vec2(1.0, 0.0);
+		vec3 fld = wf_field(wp.xz);
+		v_wdir = fld.xy;
+		v_wind = wf_force(wp.xz, fld.xy, fld.z, 1.0, gw_time, 0.0);
+		VERTEX.y += wf_water_long(wp.xz, fd, gw_time, v_wind);
+	} else {
+		VERTEX.y += sin(TIME * 0.9 + wp.x * 0.6 + wp.z * 0.4) * 0.025
+			+ sin(TIME * 1.7 + wp.z * 1.1) * 0.015;
+	}
+	if (vc_albedo > 0.5) {
+		bank = 0.0;
+		flow_dir = v_flow;
+	}
+}
+
+// 兩八度 value noise 的斜率（中央差分）；尺度 ~1.1 m／0.45 m
+vec2 _noise_slope(vec2 q) {
+	float e = 0.12;
+	// 定義域旋轉（不沿世界軸）：value noise 的格線方向不再對齊 → 不讀成方塊
+	vec2 a = mat2(vec2(0.80, 0.60), vec2(-0.60, 0.80)) * q * 0.9;
+	vec2 b = mat2(vec2(0.39, -0.92), vec2(0.92, 0.39)) * q * 2.2 + vec2(17.3, 5.1);
+	float n0 = _vnoise(a) + 0.5 * _vnoise(b);
+	float nx = _vnoise(a + vec2(e * 0.9, 0.0)) + 0.5 * _vnoise(b + vec2(e * 2.2, 0.0));
+	float nz = _vnoise(a + vec2(0.0, e * 0.9)) + 0.5 * _vnoise(b + vec2(0.0, e * 2.2));
+	return vec2(nx - n0, nz - n0) / e;
+}
+
+vec3 _s2l(vec3 c) {
+	return mix(pow((c + vec3(0.055)) * (1.0 / 1.055), vec3(2.4)), c * (1.0 / 12.92), lessThan(c, vec3(0.04045)));
 }
 
 void fragment() {
+	if (vc_albedo > 0.5) {
+		// ── 人里主河（Wind V2）：顏色＝P2 頂點色，法線＝流向細節＋風漣漪（世界空間）
+		vec3 wpos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+		vec2 fl = v_flow;
+		float cycle = 6.0;
+		float t1 = fract(gw_time / cycle);
+		float t2 = fract(gw_time / cycle + 0.5);
+		float w1 = abs(t1 * 2.0 - 1.0);
+		// 流向細節：程序 value noise（兩個八度）沿流場捲動，雙相位交叉淡入（flow map）。
+		//   不用 wave_nor：專案現有的是草地法線圖（細長葉形），在大河上會讀成規則條紋。
+		vec2 q1 = wpos.xz - fl * t1 * cycle;
+		vec2 q2 = wpos.xz - fl * t2 * cycle;
+		vec2 slope = mix(_noise_slope(q1), _noise_slope(q2), w1) * detail_slope;
+		// 風向／風力逐像素取（不用頂點內插：主河網格 ~2 m 三角形，內插會讓漣漪強度呈三角形塊狀）
+		vec3 ffld = wf_field(wpos.xz);
+		float fwind = wf_force(wpos.xz, ffld.xy, ffld.z, 1.0, gw_time, 0.0);
+		vec3 rp = wf_water_ripple(wpos.xz, ffld.xy, fl, gw_time, fwind);
+		// 遠處的漣漪小於 1 px：不畫成條紋，改成粗糙度（風大＝反光變碎）——近 8 m 全量、30 m 外 25 %
+		float near = 1.0 - 0.75 * smoothstep(8.0, 30.0, length(VERTEX));
+		slope += rp.yz * near;
+		vec3 nw = normalize(vec3(-slope.x, 1.0, -slope.y));
+		NORMAL = normalize((VIEW_MATRIX * vec4(nw, 0.0)).xyz);
+		if (!FRONT_FACING) {
+			NORMAL = -NORMAL;
+		}
+		vec3 c = COLOR.rgb;
+		if (!OUTPUT_IS_SRGB) {
+			c = _s2l(c);
+		}
+		ALBEDO = c;
+		ALPHA = COLOR.a;
+		ROUGHNESS = vc_roughness + 0.14 * (1.0 - near) * clamp(fwind / 1.2, 0.0, 1.0);
+		SPECULAR = vc_specular;
+		METALLIC = 0.0;
+	} else {
 	vec2 uv = (NODE_POSITION_WORLD.xz + VERTEX.xz) * wave_scale;
 	vec3 n1;
 	vec3 n2;
@@ -138,5 +222,6 @@ void fragment() {
 		ALPHA *= mix(1.0, mask, bite);
 		// 撕開的邊緣同時提亮，讀成飛沫而不是破洞。
 		ALBEDO = mix(ALBEDO, vec3(0.94, 0.96, 0.97), (1.0 - mask) * bite * 0.6);
+	}
 	}
 }

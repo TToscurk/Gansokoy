@@ -170,6 +170,17 @@ var _veg_unknown := {}
 ## 村裡 13 萬個植被節點只用到幾百種 mesh；不快取時接線讓 village_v2 載入多 ~0.7 s。
 var _veg_cache := {}
 
+# ── 水面場（Wind V2 Phase E） ─────────────────────────────
+## 已接線的河（WaterField）；null＝目前地圖沒有接線的水體（取樣回傳 NAN／零流）。
+var water: WaterField = null
+var _river_node: MeshInstance3D = null
+## 河名 → 中心線來源（layout JSON 的 water.<名> pts／half_w）。只接這些；其他水體維持原材質。
+const RIVER_SOURCES := {"MainRiver": "res://maps/village_v2/layout_v2.json"}
+const RIVER_SHADER := "res://assets/shaders/water.gdshader"
+const RIVER_NORMAL_TEX := "res://assets/textures/terrain_grass_nor_gl.jpg"
+const RIVER_FLOW_SPEED := 0.55
+const FLOW_CACHE_DIR := "user://wind_flow_cache"
+
 ## 除錯 UI（F9）。只有 debug build 才會建立；release 不會出現。
 const DEBUG_KEY := KEY_F9
 var _debug_ui: CanvasLayer = null
@@ -813,6 +824,8 @@ func _push_globals() -> void:
 		Vector4(float(_events.size()), _gust_gain, float(_debug_view), float(_shelter_n)))
 	RenderingServer.global_shader_parameter_set("gw_vprof", _vprof)
 	RenderingServer.global_shader_parameter_set("gw_tune", Vector4(_local_var, 0.0, 0.0, 0.0))
+	if water != null:
+		RenderingServer.global_shader_parameter_set("gw_water", Vector4(water.long_amp, water.ripple_gain, 0.0, 0.0))
 
 
 # ───────────────────────── 事件／遮蔽／物種貼圖（V1.2） ─────────────────────────
@@ -942,6 +955,138 @@ func set_species_param(name: String, key: String, value: float) -> bool:
 	return true
 
 
+# ───────────────────────── 水面（Wind V2 Phase E） ─────────────────────────
+
+## 主河進場：建流場（中心線→1 m 世界貼圖，user:// 快取）、換上 water.gdshader 的「人里主河模式」
+## （顏色／透明＝原 P2 頂點色，加流向細節、長波、風漣漪）。原材質留在 meta wind_orig_material。
+## 不改 mesh、不改 .tscn；WIND_NO_RIVER=1 可跳過做 A/B。
+func _attach_river(mi: MeshInstance3D) -> void:
+	if not is_instance_valid(mi) or not mi.is_inside_tree():
+		return
+	var src: String = RIVER_SOURCES[String(mi.name)]
+	var L: Variant = JSON.parse_string(FileAccess.get_file_as_string(src))
+	if not (L is Dictionary) or not (L as Dictionary).get("water", {}).has(String(mi.name)):
+		push_warning("[Wind] 找不到河道中心線 %s：%s" % [mi.name, src])
+		return
+	var W: Dictionary = L["water"][String(mi.name)]
+	var pts := PackedVector2Array()
+	for q in W["pts"]:
+		pts.append(Vector2(float(q[0]), float(q[1])))
+	var hw := PackedFloat32Array()
+	for v in W["half_w"]:
+		hw.append(float(v))
+	var wf := WaterField.new()
+	var key := "%s_%d" % [String(mi.name), hash(str(W["pts"]) + str(W["half_w"]) + str(RIVER_FLOW_SPEED))]
+	var cache := "%s/%s.res" % [FLOW_CACHE_DIR, key]
+	if ResourceLoader.exists(cache):
+		wf.load_cached(load(cache) as Image, String(mi.name), pts, hw, float(mi.get_meta("water_y")))
+	else:
+		wf.build(String(mi.name), pts, hw, float(mi.get_meta("water_y")), RIVER_FLOW_SPEED)
+		DirAccess.make_dir_recursive_absolute(FLOW_CACHE_DIR)
+		ResourceSaver.save(wf.img, cache)
+	water = wf
+	RenderingServer.global_shader_parameter_set("gw_flow", wf.tex)
+	RenderingServer.global_shader_parameter_set("gw_flow_rect", Vector4(wf.rect.position.x, wf.rect.position.y,
+		1.0 / wf.rect.size.x, 1.0 / wf.rect.size.y))
+	var orig := mi.material_override
+	var m := ShaderMaterial.new()
+	m.shader = load(RIVER_SHADER)
+	m.set_shader_parameter("wave_nor", load(RIVER_NORMAL_TEX))
+	m.set_shader_parameter("wind_coupled", 1.0)
+	m.set_shader_parameter("vc_albedo", 1.0)
+	m.set_shader_parameter("wave_scale", 0.25)
+	m.set_shader_parameter("detail_slope", 0.025)
+	if orig is BaseMaterial3D:
+		m.set_shader_parameter("vc_roughness", (orig as BaseMaterial3D).roughness)
+		m.set_shader_parameter("vc_specular", (orig as BaseMaterial3D).metallic_specular)
+	mi.set_meta("wind_orig_material", orig)
+	mi.material_override = m
+	# 長波 2 cm＋浮物：剔除邊界放寬一點
+	mi.extra_cull_margin = maxf(mi.extra_cull_margin, 0.2)
+	_river_node = mi
+	if not mi.tree_exiting.is_connected(_on_river_exit):
+		mi.tree_exiting.connect(_on_river_exit)
+	print("[Wind] 河 %s 接線：流場 %dx%d（%.0f×%.0f m）" % [mi.name, wf.img.get_width(), wf.img.get_height(),
+		wf.rect.size.x, wf.rect.size.y])
+
+
+func _on_river_exit() -> void:
+	water = null
+	_river_node = null
+	RenderingServer.global_shader_parameter_set("gw_flow_rect", Vector4.ZERO)
+
+
+## 測試／A-B：把主河換回原材質（或再接回）
+func set_river_enabled(v: bool) -> void:
+	if _river_node == null or not is_instance_valid(_river_node):
+		return
+	if v:
+		_attach_river(_river_node)
+	else:
+		_river_node.material_override = _river_node.get_meta("wind_orig_material")
+
+
+func has_water() -> bool:
+	return water != null
+
+
+## 水面當地風力（與 wf_water_wind 同：env＝1，不吃海拔／遮蔽）
+func _water_wind(p: Vector2, t: float) -> Vector3:
+	var n1 := 0.5 + 0.5 * sin(p.dot(FIELD_K1) + t * 0.11)
+	var n2 := 0.5 + 0.5 * sin(p.dot(FIELD_K2) + t * 0.07)
+	var ang := _angle + _local_var * (FIELD_DIR_A1 * (n1 - 0.5) + FIELD_DIR_A2 * (n2 - 0.5))
+	var wd := Vector2(cos(ang), sin(ang))
+	var m := (1.0 + _local_var * FIELD_STR_A1 * (n1 - 0.5)) * (1.0 + _local_var * FIELD_STR_A2 * (n2 - 0.5))
+	var front := 0.5 + 0.5 * sin(t * 1.25 - p.dot(wd) * 0.10)
+	return Vector3(wd.x, wd.y, _strength * m * (0.85 + 0.30 * front) + gust_at(p, t))
+
+
+## 水面高度（世界 Y）＝靜水面＋長波＋風漣漪；不在水中回傳 NAN。
+func sample_water_height(world_position: Vector3) -> float:
+	if water == null:
+		return NAN
+	var p := Vector2(world_position.x, world_position.z)
+	var fl := water.flow3(p)
+	if fl.z < 0.05:
+		return NAN
+	var w := _water_wind(p, _time)
+	var f2 := Vector2(fl.x, fl.y)
+	var fd := f2.normalized() if f2.length() > 1e-4 else Vector2(1, 0)
+	return water.water_y + water.long_wave(p, fd, _time, w.z) \
+		+ water.ripple(p, Vector2(w.x, w.y), f2, _time, w.z).x
+
+
+## 水面法線（世界）：長波＋漣漪斜率（長波斜率用中央差分，漣漪用解析導數——與 shader 同源）。
+func sample_water_normal(world_position: Vector3) -> Vector3:
+	if water == null:
+		return Vector3.UP
+	var p := Vector2(world_position.x, world_position.z)
+	var fl := water.flow3(p)
+	var w := _water_wind(p, _time)
+	var f2 := Vector2(fl.x, fl.y)
+	var fd := f2.normalized() if f2.length() > 1e-4 else Vector2(1, 0)
+	var e := 0.25
+	var dx := (water.long_wave(p + Vector2(e, 0), fd, _time, w.z) - water.long_wave(p - Vector2(e, 0), fd, _time, w.z)) / (2.0 * e)
+	var dz := (water.long_wave(p + Vector2(0, e), fd, _time, w.z) - water.long_wave(p - Vector2(0, e), fd, _time, w.z)) / (2.0 * e)
+	var r := water.ripple(p, Vector2(w.x, w.y), f2, _time, w.z)
+	return Vector3(-(dx + r.y), 1.0, -(dz + r.z)).normalized()
+
+
+## 水流（m/s，世界 XZ；y＝0）。不在水中＝零。
+func sample_water_flow(world_position: Vector3) -> Vector3:
+	if water == null:
+		return Vector3.ZERO
+	var fl := water.flow3(Vector2(world_position.x, world_position.z))
+	return Vector3(fl.x, 0.0, fl.y)
+
+
+## 0–1：這裡有沒有水（流場貼圖 B）
+func sample_water_mask(world_position: Vector3) -> float:
+	if water == null:
+		return 0.0
+	return water.flow3(Vector2(world_position.x, world_position.z)).z
+
+
 # ───────────────────────── 植被接線（V1.2） ─────────────────────────
 
 ## 植被節點進場：依 shader 判斷是樹／竹（veg_leaf／veg_bark）或草，設定
@@ -951,6 +1096,8 @@ func set_species_param(name: String, key: String, value: float) -> bool:
 func _on_node_added_veg(n: Node) -> void:
 	if n is MeshInstance3D or n is MultiMeshInstance3D:
 		_wire_veg(n as GeometryInstance3D)
+		if RIVER_SOURCES.has(String(n.name)) and n.has_meta("water_y") and not OS.has_environment("WIND_NO_RIVER"):
+			_attach_river.call_deferred(n)
 
 
 func wire_vegetation(root: Node) -> Dictionary:
