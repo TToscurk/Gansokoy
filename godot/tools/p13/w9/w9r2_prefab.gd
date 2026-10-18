@@ -2,6 +2,7 @@ extends SceneTree
 ## P13 W9 R2：w9r2_arch の GLB → mesh/<名>.res（独立版；建築サンプル 10 棟の LOD0／LOD1 メッシュ）。
 ## 封存済み tools/village_v2_machiya_kit_prefab.gd（P10 R4／R4b seal に雜湊が入っている）は一字も触らず、同じ手順をこの場所で実行する。
 ##   godot --headless --path . --script res://tools/p13/w9/w9r2_prefab.gd
+## 2026-10-18：重產 mesh/*.res 後自動呼叫 tools/p13/w9/w9r2_dedup_coplanar.gd（去重到收斂＋--check；失敗＝prefab 失敗）。刪掉與保留 Kit 構件共面的重複三角形，否則閃爍回來。--no-dedup 跳過（僅診斷用）。
 ## 材質は町家 Kit で使用中の承認済み 5 種だけ（白名單外の surface は FAIL）：V2_Wood／V2_Plaster／V2_Kawara／V2_KitStoneTri／V2_MachiyaKit。
 const DIR := "res://assets/village_v2/w9r2_arch"
 const MATS := {
@@ -102,5 +103,17 @@ func _init() -> void:
 	mf.close()
 	print("[w9r2-prefab] %d 構件、%d 三角面（Blender %d）→ %s/mesh/" % [count, total, int(man["total_tris"]), DIR])
 	gl_root.free()
+	if fails == 0 and not OS.get_cmdline_user_args().has("--no-dedup"):
+		# 2026-10-18：重產的網格會帶回與保留 Kit 構件共面的重複三角形（W9 閃爍）→ 立刻去重，再 --check 確認。任一步失敗都算 prefab 失敗。
+		var exe := OS.get_executable_path()
+		var proj := ProjectSettings.globalize_path("res://")
+		for mode in [[], ["--", "--check"]]:
+			var out: Array = []
+			var code := OS.execute(exe, ["--headless", "--path", proj, "--script", "res://tools/p13/w9/w9r2_dedup_coplanar.gd"] + mode, out, true)
+			for ln: String in String("".join(out)).split("\n"):
+				if ln.begins_with("[dedup] SUMMARY") or ln.contains("PASS") or ln.contains("FAIL"):
+					print(ln)
+			if code != 0:
+				_fail("去重%s 失敗（exit %d）" % ["檢查" if not mode.is_empty() else "", code])
 	print("[w9r2-prefab] 結果：%d 項失敗" % fails)
 	quit(fails)
