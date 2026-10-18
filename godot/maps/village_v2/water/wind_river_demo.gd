@@ -1,5 +1,8 @@
 extends Node3D
-## Wind V2 主河浮物（Phase E／G 實地整合；WIND_V2_REVIEW）。
+## Wind V2 主河浮物（Phase E／G 實地整合）。
+## 正式（預設）：只接既有資產——WaterLifeP10 碼頭的小舟（Hull 視覺繫留）。
+## 漂流物（落葉 proxy、酒樽）是測試內容：只有 spawn_debris()（驗證工具）或命令列 --wind-river-debris 才生成，
+## 不在正式遊玩中把河道塞滿測試物。
 ## 全部漂流物共用 Wind 的水面場（流場＋長波＋風漣漪）與風場；元件＝scripts/water/floatable.gd。
 ##   LEAF_PROXY_*：落葉代理（明示 proxy：專案沒有單片落葉資產）——輕、受風大、偏航快；漂遠淡出回上游。
 ##   Taru_*：真實資產 geidon_kit/gd_taru（酒樽）——重、慣性大；同樣是臨時漂流物（淡出回收）。
@@ -30,6 +33,16 @@ func _build() -> void:
 	if w == null or not w.has_water() or _built:
 		return
 	_built = true
+	_attach_boat()
+	if "--wind-river-debris" in OS.get_cmdline_user_args():
+		spawn_debris()
+
+
+## 測試用漂流物（落葉 proxy ×8、酒樽 ×2）；正式遊玩不生成。
+func spawn_debris() -> void:
+	var w := get_node_or_null("/root/Wind")
+	if w == null or not w.has_water() or find_child("LEAF_PROXY_0", false, false) != null:
+		return
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7071
 	var leaf_mesh := _leaf_mesh()
@@ -69,8 +82,12 @@ func _build() -> void:
 		f.add_child(mi)
 		f.position = Vector3(p.x, float(w.sample_water_height(Vector3(p.x, 0, p.y))), p.y)
 		add_child(f)
+	print("[RiverDemo] 測試漂流物：落葉 proxy 8、酒樽 2")
+
+
+func _attach_boat() -> void:
 	var boat := get_node_or_null(BOAT_PATH) as Node3D
-	if boat != null and boat.get_node_or_null("Hull") != null:
+	if boat != null and boat.get_node_or_null("Hull") != null and boat.get_node_or_null("BoatTether") == null:
 		var f: Node3D = FLOAT.new()
 		f.name = "BoatTether"
 		f.set("preset", 1)
@@ -85,7 +102,7 @@ func _build() -> void:
 		boat.add_child(f)
 		f.set("visual_node", f.get_path_to(boat.get_node("Hull")))
 		f.call("_ready")
-	print("[RiverDemo] 漂流物：落葉 proxy 8、酒樽 2、小舟繫留 %s" % str(boat != null))
+		print("[RiverDemo] 小舟繫留浮動（正式）")
 
 
 func floatables() -> Array:

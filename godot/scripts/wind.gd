@@ -192,6 +192,7 @@ var _debug_on := false
 const CLOTH_SHADER := "res://assets/shaders/wind_cloth.gdshader"
 const KIT_MAT_PATH := "res://assets/village_v2/machiya_kit/V2_MachiyaKit.tres"
 var _cloth_mat: ShaderMaterial = null
+var _cloth_mats := {}
 var _cloth_n := 0
 var _cloth_nodes: Array = []
 var _cloth_t := 0.0
@@ -225,11 +226,12 @@ func _ready() -> void:
 	# 植被接線（V1.2）：release 也要（物種／高度／剔除邊界）；WIND_NO_VEG_WIRE=1 可跳過做 A/B。
 	if not OS.has_environment("WIND_NO_VEG_WIRE"):
 		get_tree().node_added.connect(_on_node_added_veg)
+	# V2 Phase G：暖簾／竹簾／吊燈籠／生物接線在 release 也開（正式整合，不再只是 debug）。
+	# 診斷用：WIND_NO_CLOTH=1 可完全跳過（量載入成本或 A/B 用）。
+	if not OS.has_environment("WIND_NO_CLOTH"):
+		get_tree().node_added.connect(_on_node_added)
+		_scan_existing_cloth()
 	if OS.is_debug_build():
-		# 診斷用：WIND_NO_CLOTH=1 可完全跳過暖簾接線（量載入成本或 A/B 用）。
-		if not OS.has_environment("WIND_NO_CLOTH"):
-			get_tree().node_added.connect(_on_node_added)
-			_scan_existing_cloth()
 		if "--wind-debug" in OS.get_cmdline_user_args():
 			_set_debug_visible(true)
 	_print_startup()
@@ -655,7 +657,9 @@ func _process(delta: float) -> void:
 		var cam := get_viewport().get_camera_3d() if get_viewport() else null
 		if cam != null:
 			_focus = cam.global_position
-	if not _frozen:
+	# 暫停（get_tree().paused）＝風時鐘停：植被、水面、布料一起停；恢復後從同一點接著走。
+	# Wind 本身 PROCESS_MODE_ALWAYS 只是為了暫停中 F9 面板還能操作。
+	if not _frozen and not get_tree().paused:
 		_advance(delta * _time_scale)
 	_sh_t += delta
 	if _sh_t >= 0.5:
@@ -1005,12 +1009,15 @@ func _attach_river(mi: MeshInstance3D) -> void:
 	mi.extra_cull_margin = maxf(mi.extra_cull_margin, 0.2)
 	_river_node = mi
 	if not mi.tree_exiting.is_connected(_on_river_exit):
-		mi.tree_exiting.connect(_on_river_exit)
+		mi.tree_exiting.connect(_on_river_exit.bind(mi))
 	print("[Wind] 河 %s 接線：流場 %dx%d（%.0f×%.0f m）" % [mi.name, wf.img.get_width(), wf.img.get_height(),
 		wf.rect.size.x, wf.rect.size.y])
 
 
-func _on_river_exit() -> void:
+func _on_river_exit(mi: MeshInstance3D) -> void:
+	# 換圖時新地圖的主河可能比舊地圖先進場：只有「目前這條」離場才清空
+	if mi != _river_node:
+		return
 	water = null
 	_river_node = null
 	RenderingServer.global_shader_parameter_set("gw_flow_rect", Vector4.ZERO)
@@ -1184,14 +1191,21 @@ func _wire_veg(gi: GeometryInstance3D) -> void:
 ## 只接「nr_noren*」＝屋簷下垂掛的暖簾。牆板、格子窗等 kit 件不動。
 ## 用共用 ShaderMaterial ＋ 逐節點 instance uniform（top／length），不動 mesh、不動 .scn。
 func _on_node_added(n: Node) -> void:
-	if n is MeshInstance3D and String(n.name).begins_with("nr_noren"):
-		_attach_cloth.call_deferred(n as MeshInstance3D)
+	if n is MeshInstance3D:
+		var nm := String(n.name)
+		if nm.begins_with("nr_noren") or nm.begins_with("nr_sudare"):
+			_attach_cloth.call_deferred(n as MeshInstance3D)
+		elif (n as MeshInstance3D).mesh and _is_lantern((n as MeshInstance3D).mesh.resource_path.get_file()):
+			_attach_lantern.call_deferred(n as MeshInstance3D)
+	elif n is Skeleton3D:
+		_attach_secondary.call_deferred(n as Skeleton3D)
 
 
 func _scan_existing_cloth() -> void:
 	var root := get_tree().root
 	for n in root.find_children("*", "MeshInstance3D", true, false):
-		if String(n.name).begins_with("nr_noren"):
+		var nm := String(n.name)
+		if nm.begins_with("nr_noren") or nm.begins_with("nr_sudare"):
 			_attach_cloth(n as MeshInstance3D)
 
 
@@ -1204,25 +1218,130 @@ func _attach_cloth(mi: MeshInstance3D) -> void:
 	var src := mesh.surface_get_material(0) as BaseMaterial3D
 	if src == null or src.albedo_texture == null:
 		return
-	if _cloth_mat == null:
-		_cloth_mat = ShaderMaterial.new()
-		_cloth_mat.shader = load(CLOTH_SHADER)
-		_cloth_mat.set_shader_parameter("albedo_tex", src.albedo_texture)
-		_cloth_mat.set_shader_parameter("albedo_color", src.albedo_color)
+	# 一個來源材質一個布料材質（暖簾與竹簾的貼圖／顏色不一定相同；共用會換錯外觀）
+	var cm: ShaderMaterial = _cloth_mats.get(src)
+	if cm == null:
+		cm = ShaderMaterial.new()
+		cm.shader = load(CLOTH_SHADER)
+		cm.set_shader_parameter("albedo_tex", src.albedo_texture)
+		cm.set_shader_parameter("albedo_color", src.albedo_color)
 		if src.emission_enabled and src.emission_texture:
-			_cloth_mat.set_shader_parameter("emit_tex", src.emission_texture)
-			_cloth_mat.set_shader_parameter("emit_energy", src.emission_energy_multiplier)
+			cm.set_shader_parameter("emit_tex", src.emission_texture)
+			cm.set_shader_parameter("emit_energy", src.emission_energy_multiplier)
+		_cloth_mats[src] = cm
+		if _cloth_mat == null:
+			_cloth_mat = cm
 	var aabb := mesh.get_aabb()
-	mi.material_override = _cloth_mat
+	mi.material_override = cm
 	# top＝AABB 上緣（吊竿處），len＝布長；兩者都是 mesh 局部座標，跟著節點走。
 	mi.set_instance_shader_parameter("cloth_top", aabb.position.y + aabb.size.y - 0.02)
 	mi.set_instance_shader_parameter("cloth_len", maxf(aabb.size.y - 0.02, 0.05))
+	# 竹簾：比布硬、重 → 擺幅 30 %（同一個材質、同一個風場，只差 instance 增益）
+	mi.set_instance_shader_parameter("cloth_gain", 0.3 if String(mi.name).begins_with("nr_sudare") else 1.0)
 	_cloth_nodes.append(mi)
 	_cloth_n += 1
 
 
 func cloth_count() -> int:
 	return _cloth_n
+
+# ───────────────────────── 吊燈籠（V2 Phase G） ─────────────────────────
+## 只接「單顆、掛在簷下／竿上」的燈籠 mesh（一個 mesh＝一顆燈籠）。繩串燈籠（ms_tsuna_chochin、mk_chochin_line）
+## 一個 mesh 裡有很多顆、各自吊點不同，整串一起擺會錯 → 不接（維持靜止）。
+const LANTERN_PREFIX := ["ms_noki_chochin", "st_chochin_shiro", "gd_chochin"]
+const SUSPENDED_SCRIPT := "res://scripts/wind/wind_suspended.gd"
+var _lantern_n := 0
+
+
+func _is_lantern(nm: String) -> bool:
+	for p in LANTERN_PREFIX:
+		if nm.begins_with(p):
+			return true
+	return false
+
+
+## 在吊點（mesh AABB 頂面中心）插一個世界軸對齊的鉸鏈節點，把燈籠 mesh 原樣（global transform 不變）
+## 掛到鉸鏈下，鉸鏈掛 wind_suspended（擺錘＋慣性＋阻尼）。LOD0／LOD1 各自一個鉸鏈、同參數同輸入 → 擺動一致。
+## 不改 .tscn、不動建築與碰撞；靜止時 transform＝原擺位。
+func _attach_lantern(mi: MeshInstance3D) -> void:
+	if not is_instance_valid(mi) or not mi.is_inside_tree() or mi.mesh == null:
+		return
+	var par := mi.get_parent()
+	if par == null or String(par.name).begins_with("WindPivot"):
+		return
+	var ab := mi.mesh.get_aabb()
+	var hook := mi.global_transform * Vector3(ab.get_center().x, ab.position.y + ab.size.y, ab.get_center().z)
+	var keep := mi.global_transform
+	mi.set_meta("wind_orig_xf", keep)
+	var pivot := Node3D.new()
+	pivot.name = "WindPivot_" + String(mi.name)
+	pivot.set_script(load(SUSPENDED_SCRIPT))
+	var hgt := ab.size.y * mi.global_transform.basis.get_scale().y
+	# 物理參數沿用 pilot 校準（0.55 kg／0.11 m²／0.5 m 時強陣風 ~28°）：迎風面積依燈籠寬×高×0.5 夾在 0.03–0.12 m²
+	var wid := ab.size.x * mi.global_transform.basis.get_scale().x
+	pivot.set("mass_kg", 0.6)
+	pivot.set("area_m2", clampf(wid * hgt * 0.5, 0.03, 0.12))
+	pivot.set("length_m", clampf(hgt * 0.6, 0.2, 0.7))
+	pivot.set("wind_gain", 0.7)
+	pivot.set("max_angle_deg", 28.0)
+	pivot.set("damping", 1.6)
+	par.add_child(pivot)
+	pivot.global_transform = Transform3D(Basis(), hook)
+	# _ready 已經用加入當下的 transform 記成靜止姿勢；這裡改了位置 → 重記
+	pivot.set("_rest", pivot.transform)
+	mi.reparent(pivot, false)
+	mi.global_transform = keep
+	_lantern_n += 1
+
+
+func lantern_count() -> int:
+	return _lantern_n
+
+
+# ───────────────────────── 生物二次運動自動接線（V2 Phase G） ─────────────────────────
+## 依骨架「簽名」（必備骨名＋驗證）接 WindSecondaryMotion；不改角色場景／戰鬥腳本。
+## 目前只登記狼 rig；其他角色（含緣一）不會被接到。骨架 meta wind_secondary_off＝true 可排除（對照組用）。
+const SECONDARY_RIGS := [
+	{"bones": ["Tail1", "Tail5", "ManeB.L1", "Ruff1"], "profile": "res://data/wind/secondary/wolf.tres"},
+]
+var _secondary_n := 0
+
+
+func _attach_secondary(sk: Skeleton3D) -> void:
+	if not is_instance_valid(sk) or not sk.is_inside_tree() or bool(sk.get_meta("wind_secondary_off", false)):
+		return
+	for c in sk.get_children():
+		if c is WindSecondaryMotion:
+			return
+	for rig in SECONDARY_RIGS:
+		var ok := true
+		for b in rig["bones"]:
+			if sk.find_bone(String(b)) < 0:
+				ok = false
+				break
+		if not ok:
+			continue
+		var m := WindSecondaryMotion.new()
+		m.name = "WindSecondaryMotion"
+		m.profile = load(String(rig["profile"]))
+		sk.add_child(m)
+		# 身體＝最近的 CharacterBody3D 祖先（沒有就骨架父節點）
+		var body: Node = sk.get_parent()
+		var a: Node = sk
+		while a != null:
+			if a is CharacterBody3D:
+				body = a
+				break
+			a = a.get_parent()
+		m.body_path = m.get_path_to(body)
+		m._rebuild()
+		_secondary_n += 1
+		return
+
+
+func secondary_count() -> int:
+	return _secondary_n
+
 
 
 # ───────────────────────── 除錯面板 ─────────────────────────
@@ -1239,7 +1358,8 @@ func _set_debug_visible(v: bool) -> void:
 		var panel: PanelContainer = load(DEBUG_PANEL).new()
 		_debug_ui.add_child(panel)
 		panel.call("setup", self)
-		get_tree().root.add_child(_debug_ui)
+		# _ready 期間 root 還在建子節點：直接 add_child 會失敗（--wind-debug 開機開面板時）→ deferred
+		get_tree().root.add_child.call_deferred(_debug_ui)
 	if v and not _debug_on:
 		_mouse_before = Input.mouse_mode
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

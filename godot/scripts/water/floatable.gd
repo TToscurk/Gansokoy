@@ -209,6 +209,12 @@ func _far_from_camera() -> bool:
 func _respawn() -> void:
 	var j := Vector3(_rng.randf_range(-1.5, 1.5), 0, _rng.randf_range(-1.5, 1.5))
 	_pos = _spawn.origin + j
+	# 重生在「水面 − 吃水」（平衡位置），不是水面高度——否則重物會從 12 cm 高處落下再晃
+	var w := get_node_or_null("/root/Wind")
+	if w != null:
+		var wh: float = w.sample_water_height(_pos)
+		if not is_nan(wh):
+			_pos.y = wh - draft_m
 	velocity = Vector3.ZERO
 	heave_v = 0.0
 	_fading = false

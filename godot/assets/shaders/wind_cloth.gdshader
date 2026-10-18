@@ -20,6 +20,8 @@ uniform float specular = 0.2;
 // 逐節點：吊竿高度、布長（mesh 局部座標；Wind._attach_cloth 從 mesh AABB 算）
 instance uniform float cloth_top = 1.9;
 instance uniform float cloth_len = 0.7;
+// 逐節點擺幅倍率（竹簾 0.3：比布硬、重）
+instance uniform float cloth_gain = 1.0;
 // 逐節點風場樣本（dir.x, dir.z, strength, 0）：由 Wind 每 0.2 s 依世界座標＋遮蔽取樣。
 // 沒有這個值時退回全域場，材質在其他場景也能單獨預覽。
 instance uniform vec4 obj_wind = vec4(0.0);
@@ -53,7 +55,7 @@ void vertex() {
 		float ph = wp.x * 1.7 + wp.z * 1.3;
 		float billow = sin(t * 2.1 + ph + hang * 3.0) * 0.55
 			+ sin(t * 4.7 + ph * 1.7 + hang * 5.0) * 0.2;
-		float amp = 0.055 * wind_gain * ls * (1.0 + 0.5 * gw_gust) * gw_flutter;
+		float amp = 0.055 * wind_gain * cloth_gain * ls * (1.0 + 0.5 * gw_gust) * gw_flutter;
 		vec3 o = vec3(wd2.x, 0.0, wd2.y) * amp * w * (0.65 + 0.5 * billow);
 		o += vec3(-wd2.y, 0.0, wd2.x) * amp * 0.45 * w * sin(t * 3.3 + ph + hang * 4.0);
 		o.y += amp * 0.22 * w * (0.5 + 0.5 * sin(t * 2.7 + ph));

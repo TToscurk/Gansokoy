@@ -63,8 +63,10 @@ func spawn_wolf(nm: String, pos: Vector3, anim: String, with_motion: bool) -> No
 	root.position = pos
 	add_child(root)
 	var inst: Node = (load(WOLF) as PackedScene).instantiate()
-	root.add_child(inst)
 	var sk := inst.find_children("*", "Skeleton3D", true, false)[0] as Skeleton3D
+	# Wind 會自動替狼 rig 接 WindSecondaryMotion；試驗場自己接（或明確不接＝對照組），所以先排除
+	sk.set_meta("wind_secondary_off", true)
+	root.add_child(inst)
 	if with_motion:
 		var m: SkeletonModifier3D = MOTION.new()
 		m.name = "WindSecondaryMotion"

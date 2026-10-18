@@ -87,6 +87,8 @@ func _run() -> void:
 	w.set_frozen(false)
 	w.set_preset(1)
 	var demo := v.get_node_or_null("WindRiverDemo")
+	if demo:
+		demo.call("spawn_debris")   # 正式遊玩不生成；驗證工具明確要求
 	for i in 30:
 		await process_frame
 	var fl: Array = demo.call("floatables") if demo else []
@@ -101,6 +103,7 @@ func _run() -> void:
 	var max_step := 0.0
 	var prev_fade := {}
 	var max_err := 0.0
+	var worst_n := ""
 	var below := 0
 	var leaf_resp := []
 	var taru_resp := []
@@ -134,7 +137,9 @@ func _run() -> void:
 			var wh := float(w.sample_water_height(p))
 			if not is_nan(wh) and i > 120:
 				var err := absf(p.y - (wh - float(n.get("draft_m"))))
-				max_err = maxf(max_err, err)
+				if err > max_err:
+					max_err = err
+					worst_n = "%s@%d" % [n.name, i]
 				if p.y < wh - float(n.get("draft_m")) - 0.15:
 					below += 1
 			fade_min = minf(fade_min, float(st["fade"]))
@@ -150,7 +155,7 @@ func _run() -> void:
 		if boat:
 			var bp: Vector3 = (boat.call("state") as Dictionary)["pos"]
 			boat_max = maxf(boat_max, Vector2(bp.x - boat_anchor.x, bp.z - boat_anchor.z).length())
-	_ok(max_err < 0.05, "貼水面：浮物高度與（水面−吃水）最大誤差 %.1f mm" % (max_err * 1000.0))
+	_ok(max_err < 0.05, "貼水面：浮物高度與（水面−吃水）最大誤差 %.1f mm（%s）" % [max_err * 1000.0, worst_n])
 	_ok(below == 0, "不落水：低於水面 15 cm 以上的樣本 %d" % below)
 	_ok(max_step < 0.2, "無瞬移：可見時最大單步位移 %.3f m（1/60 s）" % max_step)
 	var ly := _std(leaf_yaw)
