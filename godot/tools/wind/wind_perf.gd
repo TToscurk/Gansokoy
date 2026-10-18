@@ -69,6 +69,11 @@ func _run() -> void:
 	if weather and weather.has_method("set_weather"):
 		weather.set_weather("clear")
 
+	# --no-shadows：關掉所有 DirectionalLight 陰影（量陰影 pass 佔風成本多少；風開／關兩邊同樣關）
+	if _arg(a, "--no-shadows", "0") == "1":
+		for l in root.find_children("*", "DirectionalLight3D", true, false):
+			(l as DirectionalLight3D).shadow_enabled = false
+		print("[perf] DirectionalLight 陰影關閉")
 	var cam := Camera3D.new()
 	cam.fov = 70.0
 	cam.near = 0.1
@@ -96,7 +101,7 @@ func _run() -> void:
 			await process_frame
 		var off_ms := []
 		var on_ms := []
-		for cyc in CYCLES:
+		for cyc in int(_arg(a, "--cycles", str(CYCLES))):
 			wind.set_enabled(false)
 			await _settle()
 			off_ms.append(await _measure("off"))

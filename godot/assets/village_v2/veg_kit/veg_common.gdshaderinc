@@ -75,7 +75,10 @@ vec3 veg_to_local(vec3 v, mat4 m) {
 //   3. 葉片／細枝顫動：物種 flutter_hz，強度吃「該頂點高度」的剖面（樹頂亂流較強），權重 COLOR.a。
 // 自然擺動：物種 sway_hz ＋不可通約的第二頻率，相位吃根部雜湊 → 相鄰樹不同步、不是單一正弦迴圈。
 // 安全上限：總位移以 tanh 軟夾在物種 max_deform（× 實例縮放）內；長度保持：位移愈大樹梢略降（弧長近似）。
-vec3 veg_wind(vec3 vtx, vec3 wp, mat4 model, vec2 uv2, float flut_w, vec3 nrm_w, float t, float gain) {
+// 距離分級（Phase C 效能）：d＝實例到主相機距離（陰影 pass 同值 → 影子同級）。
+//   d < 24 m：完整（樹冠彈簧查表＋front 解析相位）；d > 30 m：樹冠＝主幹驅動（仍有行進陣風、
+//   高度加權、自然擺動、葉片顫動，只少了樹冠相對主幹的延遲——30 m 外 < 1–2 px）；24–30 m 兩者混合不跳級。
+vec3 veg_wind(vec3 vtx, vec3 wp, mat4 model, vec2 uv2, float flut_w, vec3 nrm_w, float t, float gain, float d_cam) {
 	vec3 root = model[3].xyz;
 	float sc = length(model[1].xyz);
 	// 物種與高度
@@ -115,7 +118,14 @@ vec3 veg_wind(vec3 vtx, vec3 wp, mat4 model, vec2 uv2, float flut_w, vec3 nrm_w,
 		* wf_shelter(root.xz, root.y + 0.7 * h_w);
 	float trunk;
 	float crown;
-	wf_drive(root.xz, wd2, fld.z, env_c, t, sp, lag, r2, trunk, crown);
+	float wfull = 1.0 - smoothstep(24.0, 30.0, d_cam);
+	if (wfull > 0.001) {
+		wf_drive(root.xz, wd2, fld.z, env_c, t, sp, lag, r2, trunk, crown);
+		crown = mix(trunk, crown, wfull);
+	} else {
+		trunk = wf_force(root.xz, wd2, fld.z, env_c, t, 0.25 * lag);
+		crown = trunk;
+	}
 	float ph_i = wf_hash(root.xz) * WF_TAU;
 	float steady = env_c * gw_strength * fld.z;
 	// 自然擺動：物種固有頻率、每棵樹自己的相位（根部雜湊）；順風 sin、橫風 cos（同一個角度 → 橢圓擺，
@@ -159,7 +169,7 @@ float veg_vertex_common(inout vec3 vtx, vec3 nrm, vec2 uv2, float flut_w, mat4 m
 		if (flut_w > 0.0) {
 			nw = normalize((model * vec4(nrm, 0.0)).xyz);
 		}
-		vec3 off = veg_wind(vtx, wp, model, uv2, flut_w, nw, time * wind_speed, gain) * fade;
+		vec3 off = veg_wind(vtx, wp, model, uv2, flut_w, nw, time * wind_speed, gain, d) * fade;
 		wdisp = length(off);
 		// 世界→局部：轉置 3×3 再除以 scale²（等比縮放實例的精確逆）
 		vtx += veg_to_local(off, model) / max(dot(model[0].xyz, model[0].xyz), 1e-6);
