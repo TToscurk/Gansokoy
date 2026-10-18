@@ -1,0 +1,103 @@
+[gd_resource type="Resource" script_class="SecondaryMotionProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/wind/secondary_chain.gd" id="1_1n18q"]
+[ext_resource type="Script" path="res://scripts/wind/secondary_motion_profile.gd" id="2_6n51m"]
+
+[sub_resource type="Resource" id="Resource_wv1ww"]
+script = ExtResource("1_1n18q")
+label = "tail"
+root_bone = "Tail1"
+tip_bone = "Tail5"
+stiffness = 28.0
+damping = 0.32
+inertia = 1.2
+max_angle_deg = 40.0
+
+[sub_resource type="Resource" id="Resource_mbvs5"]
+script = ExtResource("1_1n18q")
+label = "mane_B_L"
+root_bone = "ManeB.L1"
+tip_bone = "ManeB.L2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_vvqg0"]
+script = ExtResource("1_1n18q")
+label = "mane_F_L"
+root_bone = "ManeF.L1"
+tip_bone = "ManeF.L2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_jkjl7"]
+script = ExtResource("1_1n18q")
+label = "mane_M_L"
+root_bone = "ManeM.L1"
+tip_bone = "ManeM.L2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_6sudf"]
+script = ExtResource("1_1n18q")
+label = "mane_B_R"
+root_bone = "ManeB.R1"
+tip_bone = "ManeB.R2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_8m8kc"]
+script = ExtResource("1_1n18q")
+label = "mane_F_R"
+root_bone = "ManeF.R1"
+tip_bone = "ManeF.R2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_amfju"]
+script = ExtResource("1_1n18q")
+label = "mane_M_R"
+root_bone = "ManeM.R1"
+tip_bone = "ManeM.R2"
+kind = 0
+stiffness = 60.0
+damping = 0.5
+wind_influence = 0.8
+inertia = 0.6
+max_angle_deg = 22.0
+
+[sub_resource type="Resource" id="Resource_je2b0"]
+script = ExtResource("1_1n18q")
+label = "ruff"
+root_bone = "Ruff1"
+tip_bone = "Ruff2"
+kind = 0
+stiffness = 70.0
+damping = 0.55
+wind_influence = 0.6
+inertia = 0.5
+max_angle_deg = 15.0
+
+[resource]
+script = ExtResource("2_6n51m")
+rig_name = "wolf (assets/enemies/wolf/wolf_pounce.glb)"
+chains = Array[ExtResource("1_1n18q")]([SubResource("Resource_wv1ww"), SubResource("Resource_mbvs5"), SubResource("Resource_vvqg0"), SubResource("Resource_jkjl7"), SubResource("Resource_6sudf"), SubResource("Resource_8m8kc"), SubResource("Resource_amfju"), SubResource("Resource_je2b0")])
