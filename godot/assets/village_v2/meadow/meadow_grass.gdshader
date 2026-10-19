@@ -51,17 +51,8 @@ vec3 to_local(vec3 v, mat4 m) {
 	return vec3(dot(v, m[0].xyz), dot(v, m[1].xyz), dot(v, m[2].xyz));
 }
 
-// 2D 値 noise（0–1、世界座標の位相・強さの揺らぎ用）
-float hash2(vec2 p) {
-	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-}
-
-float vnoise(vec2 p) {
-	vec2 i = floor(p);
-	vec2 f = fract(p);
-	vec2 u = f * f * (3.0 - 2.0 * f);
-	return mix(mix(hash2(i), hash2(i + vec2(1.0, 0.0)), u.x), mix(hash2(i + vec2(0.0, 1.0)), hash2(i + vec2(1.0, 1.0)), u.x), u.y);
-}
+// Wind V2 效能版：草浪的兩個世界 noise（波頭扭曲 warp、強弱 gmod）改在共用風場貼圖裡算（wind_field_gen，
+//   同一個 hash2／vnoise 式子）；每叢相位 noise 改用無三角函數的 wf_vnoise_fast。
 
 void vertex() {
 	vec3 root = MODEL_MATRIX[3].xyz;
@@ -78,17 +69,22 @@ void vertex() {
 	VERTEX.xz *= mix(0.35, 1.0, f) * step(0.001, f) * (1.0 + far_widen * smoothstep(8.0, 26.0, d));
 	vec3 wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	float wdisp = 0.0;
-	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && d < 34.0) {
+	// Wind V2 效能版：f＝0 的叢已縮成一點（隱藏）——不能再加風位移，否則葉尖頂點被拉開成細長三角形
+	//   （不可見距離的叢變成數百萬片細條被光柵化；V1.2–V2 的草地風成本大部分是這個）。
+	//   風位移也乘 f：縮小中的叢擺幅跟著縮。
+	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && d < 34.0 && f > 0.001 && wf_tex_ok()) {
 		vec4 r0;
 		vec4 r1;
-		vec4 r2;
-		wf_species(wind_species, r0, r1, r2);
+		wf_species_grass(wind_species, r0, r1);
 		float sc = length(MODEL_MATRIX[1].xyz);
 		// 高度權重：UV.y＝作者烘的「葉根 0 → 葉尖 1」（不是世界 Y）；tip_response＝指數（grass 2.0＝P9 原本的 UV.y²）
 		float k = pow(clamp(UV.y, 0.0, 1.0), r0.z) * (1.0 - 0.65 * UV2.y) * (1.0 - 0.8 * r0.x) / 0.72;
-		// 空間場（與 Wind.sample_field 同一組常數）
-		vec3 fld = wf_field(root.xz);
-		vec2 wd2 = fld.xy;
+		// 空間場（共用風場貼圖：方塊 0＝風向＋warp、方塊 5＝草的驅動力＋gmod）
+		vec2 wd2;
+		float warp;
+		float gforce;
+		float gmod;
+		wf_tex_grass(wind_species, root.xz, wd2, warp, gforce, gmod);
 		vec3 wd = vec3(wd2.x, 0.0, wd2.y);
 		// 環境係數：海拔、遮蔽（草叢高度＝剖面正規化高度 z0 → 剖面 ×1，BREEZE 外觀同 P9）
 		// 草＝垂直剖面的正規化高度 z0（×1.00）：只乘海拔與遮蔽（樹冠才吃剖面增益）
@@ -96,7 +92,7 @@ void vertex() {
 		// 驅動力＝樹冠同一個彈簧（草的 lag／damping 很小 → 幾乎即時、略帶回彈）；行進陣風取代 V1 的全域 gw_gust
 		float t = gw_time * wind_speed;
 		// 草沒有樹冠層：單點驅動力＋純延遲 lag（不查樹冠響應表，省頂點成本）
-		float drive = wf_force(root.xz, wd2, fld.z, env, t, r0.w);
+		float drive = env * gforce;
 		// Wind V1：BREEZE（gw 0.55）＝ P9 審圖的 0.7，其餘依比例放大；陣風是 drive 裡的行進事件
 		float ws = wind_strength * r0.y * (drive / 0.55);
 		// 風向へ流れる草浪：低周波 2 本の和を 0–1 に（強い所＝明るく倒れる帯）。世界座標の値 noise（~6 m、風下へ流れる）で
@@ -104,19 +100,30 @@ void vertex() {
 		float along = dot(root.xz, wd2);
 		float across = dot(root.xz, vec2(-wd2.y, wd2.x));
 		// wind review r6：波頭を低周波 noise で歪める（~30 m・~11 m）＝15 m ごとに同じ縞が規則正しく並ばない
-		along += 9.0 * vnoise(root.xz * 0.035 + vec2(3.1, 7.7)) + 4.0 * vnoise(root.xz * 0.09);
+		along += warp;
 		// 葉ごとに草浪の到達を最大 0.35 s 遅らせる（同じ叢の葉が完全に同期しない）
 		float tg = t + 0.35 * UV2.x;
-		float gust = 0.5 + 0.32 * sin(along * 0.42 - tg * 1.6 + sin(across * 0.13) * 1.7) + 0.18 * sin(along * 0.95 + across * 0.31 - tg * 2.3);
-		gust *= 0.55 + 0.9 * vnoise(root.xz * 0.17 - wd2 * t * 0.35);
-		float ph = UV2.x * 6.2831853 + vnoise(root.xz * 0.8) * 4.0;
-		// 葉の細顫：物種 flutter_hz（grass 0.65 Hz＝P9 の 4.1 rad/s）
-		float flut = sin(t * WF_TAU * r1.y + ph + root.x * 1.3 + root.z * 0.7);
+		// Wind V2 効能版：距離品質分級（d＝株→主相機、陰影 pass も同じ距離）。
+		//   近（< 10 m）＝全部；中（14–34 m）＝主草浪（同じ波頭形・同じ時刻）＋陣風＋高さ重みのみ、
+		//   短波長の第 2 波（振幅 18 %）と葉の細顫（1–2 cm＝この距離で 1 px 未満）を省く。10–14 m は両方を混合。
+		//   陰影 pass（正射影）は中級の式：影は主草浪と同じ動き、細顫だけ省く。
+		float lite = PROJECTION_MATRIX[3][3] > 0.5 ? 1.0 : smoothstep(10.0, 14.0, d);
+		float g1 = sin(along * 0.42 - tg * 1.6 + sin(across * 0.13) * 1.7);
+		float gust = 0.5 + 0.32 * g1;
+		float flut = 0.0;
+		if (lite < 1.0) {
+			float g2 = 0.18 * sin(along * 0.95 + across * 0.31 - tg * 2.3);
+			gust += g2 * (1.0 - lite);
+			float ph = UV2.x * 6.2831853 + wf_vnoise_fast(root.xz * 0.8) * 4.0;
+			// 葉の細顫：物種 flutter_hz（grass 0.65 Hz＝P9 の 4.1 rad/s）
+			flut = sin(t * WF_TAU * r1.y + ph + root.x * 1.3 + root.z * 0.7) * (1.0 - lite);
+		}
+		gust *= gmod;
 		vec3 off = wd * (gust_amp * (0.35 + 0.65 * gust)) * k * ws * 2.0;
 		vec3 side = vec3(-wd.z, 0.0, wd.x);
 		off += (side * 0.6 + wd * 0.4) * flutter_amp * flut * k * ws;
 		off.y -= length(off.xz) * 0.35 * UV.y;
-		off = wf_soft_clamp(off, r1.z * sc);
+		off = wf_soft_clamp(off, r1.z * sc) * f;
 		wdisp = length(off);
 		VERTEX += to_local(off, MODEL_MATRIX) / max(dot(MODEL_MATRIX[0].xyz, MODEL_MATRIX[0].xyz), 1e-6);
 	}

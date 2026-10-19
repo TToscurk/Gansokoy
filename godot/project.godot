@@ -302,3 +302,23 @@ gw_resp={
 "type": "sampler2D",
 "value": ""
 }
+gw_field={
+"type": "sampler2D",
+"value": ""
+}
+gw_field_rect={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+gw_spg={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+gw_spp={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+gw_spm={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}

@@ -49,23 +49,33 @@ const int WF_SP_RIGID = 8;
 const float WF_TAU = 6.2831853;
 const float WF_GUST_SPEED = 9.0;
 
-// 空間場：回傳 (風向 xz 單位向量, 強度空間倍率)。與 Wind.sample_field 的 n1／n2 同。
-vec3 wf_field(vec2 p) {
+// 風向：全域主風向（gw_dir）轉 aoff 弧度。|aoff| ≤ 0.25 rad × gw_tune.x（≤ 0.5 rad 時誤差 < 3e-3）：
+// 小角度泰勒展開代替 cos／sin（誤差 < 2e-4 rad）。共用風場貼圖存的就是 aoff（小角度、內插不會繞圈）。
+vec2 wf_dir_rot(float aoff) {
 	vec2 base = gw_dir.xz;
 	if (dot(base, base) < 1e-8) {
 		base = vec2(1.0, 0.0);
 	}
 	base = normalize(base);
-	float n1 = 0.5 + 0.5 * sin(dot(p, vec2(0.045, 0.031)) + gw_time * 0.11);
-	float n2 = 0.5 + 0.5 * sin(dot(p, vec2(-0.021, 0.038)) + gw_time * 0.07);
-	float aoff = gw_tune.x * (0.38 * (n1 - 0.5) + 0.12 * (n2 - 0.5));
-	// |aoff| ≤ 0.25 rad × gw_tune.x（≤ 0.5 rad 時誤差 < 3e-3）：小角度泰勒展開代替 cos／sin（誤差 < 2e-4 rad，省 2 個逐頂點三角函數）
 	float a2 = aoff * aoff;
 	float ca = 1.0 - 0.5 * a2 + a2 * a2 * (1.0 / 24.0);
 	float sa = aoff * (1.0 - a2 * (1.0 / 6.0));
-	vec2 wd = vec2(base.x * ca - base.y * sa, base.x * sa + base.y * ca);
+	return vec2(base.x * ca - base.y * sa, base.x * sa + base.y * ca);
+}
+
+// 空間場的兩個量：(方向偏移 aoff 弧度, 強度空間倍率 m)。與 Wind.sample_field 的 n1／n2 同。
+vec2 wf_field_dm(vec2 p) {
+	float n1 = 0.5 + 0.5 * sin(dot(p, vec2(0.045, 0.031)) + gw_time * 0.11);
+	float n2 = 0.5 + 0.5 * sin(dot(p, vec2(-0.021, 0.038)) + gw_time * 0.07);
+	float aoff = gw_tune.x * (0.38 * (n1 - 0.5) + 0.12 * (n2 - 0.5));
 	float m = (1.0 + gw_tune.x * 0.28 * (n1 - 0.5)) * (1.0 + gw_tune.x * 0.14 * (n2 - 0.5));
-	return vec3(wd, m);
+	return vec2(aoff, m);
+}
+
+// 空間場：回傳 (風向 xz 單位向量, 強度空間倍率)。
+vec3 wf_field(vec2 p) {
+	vec2 dm = wf_field_dm(p);
+	return vec3(wf_dir_rot(dm.x), dm.y);
 }
 
 // 陣風封包：快升（前 30 %）慢落，0–1；tau 在 [0, dur] 外為 0（smoothstep 兩端自然歸零）。
@@ -235,5 +245,96 @@ float wf_hash(vec2 p) {
 vec3 wf_heat(float d) {
 	return vec3(clamp(d / 0.6, 0.0, 1.0));
 }
+
+// 無三角函數的值噪聲（0–1，格距 1/頻率）：給逐頂點用的「每叢隨機相位」（相鄰叢相關、不同步）。
+float wf_vnoise_fast(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	vec2 u = f * f * (3.0 - 2.0 * f);
+	return mix(mix(wf_hash(i), wf_hash(i + vec2(1.0, 0.0)), u.x),
+		mix(wf_hash(i + vec2(0.0, 1.0)), wf_hash(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+
+// ───────────────── V2 效能版：共用風場貼圖 gw_field（WIND_V2_PERF_REVIEW） ─────────────────
+// 問題：上面的場量（空間場、陣風事件迴圈、樹冠彈簧查表、草浪 noise）只跟「根部位置＋時間」有關，
+//   卻在每個頂點重算（一棵樹幾千個頂點算同一個值）——獸道實測佔風成本的 3/4。
+// 做法：Wind autoload 每幀用一個 SubViewport 跑 wind_field_gen.gdshader，把這些量在一張
+//   以主相機為中心、世界軸對齊、貼齊格點的 RGBA16F 貼圖上算一次；頂點著色器只取樣 2 次。
+//   生成器 include 的就是本檔（同一份 wf_field／wf_drive／wf_force）→ 貼圖＝同一個場的取樣；
+//   CPU（Wind.sample_field／sample_vegetation）仍走解析式，兩邊只差雙線性內插（格距見 gw_field_rect）。
+//   是動態場（每幀重算、陣風照樣行進），不是預烘動畫。
+// 10 個 N×N 方塊橫排（env＝1，呼叫端再乘自己的 env——驅動力對 env 是線性的）；每個 shader 每頂點只取樣 1 次：
+//   方塊 s（0–7，物種 broad_tall…paddy）＝ (方向偏移 aoff, 強度倍率 m, trunk_s, crown_s)   樹 shader
+//   方塊 8 ＝ 草（grass 物種）＝ (aoff, 草浪波頭扭曲 warp, 純延遲驅動力 force6, 草浪強弱 gmod)   meadow／grass_wind
+//   方塊 9 ＝ 秧苗（paddy 物種）＝ (aoff, m, force7, 0)                                    p8_paddy_plant
+// gw_field_rect ＝ (原點 x, 原點 z, 1/邊長 m, 每方塊格數 N)；N＝0 → 貼圖未建立（編輯器預覽）→ 不動。
+// 範圍外（相機 ±N·格距/2 以外）夾到邊緣格：遠樹仍跟著邊緣的場動，不會突然靜止。
+// 生成器自己 #define WF_FIELD_GENERATOR：不能宣告 gw_field（會把自己的渲染目標綁成輸入 → Vulkan 拒絕）。
+global uniform vec4 gw_field_rect;
+const float WF_FIELD_TILES = 10.0;
+// 草／秧苗的物種參數改走 global uniform（不讀物種貼圖；草的頂點數極多，每頂點少 2 次貼圖讀取）。
+//   gw_spg＝grass (stiffness, bend_mult, tip_response, flutter_hz)、gw_spp＝paddy 同欄、gw_spm＝(grass max_deform, paddy max_deform, 0, 0)
+global uniform vec4 gw_spg;
+global uniform vec4 gw_spp;
+global uniform vec4 gw_spm;
+#ifndef WF_FIELD_GENERATOR
+global uniform sampler2D gw_field : filter_linear, repeat_disable;
+
+bool wf_tex_ok() {
+	return gw_field_rect.w > 0.5;
+}
+
+vec4 wf_tex(float tile, vec2 p) {
+	vec2 uv = (p - gw_field_rect.xy) * gw_field_rect.z;
+	float h = 0.5 / max(gw_field_rect.w, 1.0);
+	uv = clamp(uv, vec2(h), vec2(1.0 - h));
+	return textureLod(gw_field, vec2((tile + uv.x) * (1.0 / WF_FIELD_TILES), uv.y), 0.0);
+}
+
+// 樹 shader：一次取樣 → 單位風向、m、trunk、crown（env＝1）。sp 0–7；rigid（8）與未知 → 驅動力 0。
+void wf_tex_tree(int sp, vec2 p, out vec2 wd, out float m, out float trunk, out float crown) {
+	if (sp < 0 || sp > 7) {
+		wd = wf_dir_rot(0.0);
+		m = 1.0;
+		trunk = 0.0;
+		crown = 0.0;
+		return;
+	}
+	vec4 v = wf_tex(float(sp), p);
+	wd = wf_dir_rot(v.x);
+	m = v.y;
+	trunk = v.z;
+	crown = v.w;
+}
+
+// 草 shader：一次取樣 → 單位風向、warp、force（純延遲 lag 的單點驅動力，env＝1）、gmod。
+//   grass（6）→ 方塊 8；paddy（7）→ 方塊 9（warp 0、gmod 1）；其他物種 → 該物種的 trunk（warp 0、gmod 1）。
+void wf_tex_grass(int sp, vec2 p, out vec2 wd, out float warp, out float force, out float gmod) {
+	float tile = sp == 6 ? 8.0 : (sp == 7 ? 9.0 : float(clamp(sp, 0, 7)));
+	vec4 v = wf_tex(tile, p);
+	wd = wf_dir_rot(v.x);
+	bool g = sp == 6;
+	warp = g ? v.y : 0.0;
+	force = (sp < 0 || sp > 7) ? 0.0 : v.z;
+	gmod = g ? v.w : 1.0;
+}
+
+// 草／秧苗的物種參數（r0＝stiffness, bend_mult, tip_response, lag；r1.y＝flutter_hz、r1.z＝max_deform）：
+//   grass／paddy 讀 global uniform，其他物種退回物種貼圖。
+void wf_species_grass(int id, out vec4 r0, out vec4 r1) {
+	if (id == 6 && gw_species_n > 0.5) {
+		r0 = vec4(gw_spg.xyz, 0.0);
+		r1 = vec4(0.0, gw_spg.w, gw_spm.x, 0.0);
+		return;
+	}
+	if (id == 7 && gw_species_n > 0.5) {
+		r0 = vec4(gw_spp.xyz, 0.0);
+		r1 = vec4(0.0, gw_spp.w, gw_spm.y, 0.0);
+		return;
+	}
+	vec4 r2;
+	wf_species(id, r0, r1, r2);
+}
+#endif
 
 #endif

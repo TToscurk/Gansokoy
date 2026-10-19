@@ -13,7 +13,7 @@ uniform float crown_normal = 1.0;
 
 void vertex() {
 	float wdisp;
-	v_lod_d = veg_vertex_common(VERTEX, NORMAL, UV2, COLOR.a, MODEL_MATRIX, MAIN_CAM_INV_VIEW_MATRIX, gw_time, 1.0, wdisp);
+	v_lod_d = veg_vertex_common(VERTEX, NORMAL, UV2, COLOR.a, MODEL_MATRIX, MAIN_CAM_INV_VIEW_MATRIX, gw_time, 1.0, PROJECTION_MATRIX[3][3], wdisp);
 	if (gw_ctrl.z > 0.5) {
 		COLOR = vec4(wdisp / 0.6, 0.0, 0.0, COLOR.a);
 	}

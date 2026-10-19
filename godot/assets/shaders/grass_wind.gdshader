@@ -26,8 +26,7 @@ void vertex() {
 	//   以叢內最高葉（0.4 m×1.6）為 1 —— 最高葉尖的振幅與 V1 相同，下段改成彎曲曲線（不是線性剪切）。
 	vec4 r0;
 	vec4 r1;
-	vec4 r2;
-	wf_species(wind_species, r0, r1, r2);
+	wf_species_grass(wind_species, r0, r1);
 	float hn = clamp(VERTEX.y / 0.64, 0.0, 1.0);
 	float h = 1.6 * pow(hn, r0.z) * (1.0 - 0.8 * r0.x) / 0.72;
 	vec3 root = MODEL_MATRIX[3].xyz;
@@ -35,14 +34,18 @@ void vertex() {
 	vec3 wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	vec3 o = vec3(0.0);
 	float dm = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, wp);
-	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && dm < 45.0) {
-		vec3 fld = wf_field(root.xz);
-		vec2 wd2 = fld.xy;
+	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && dm < 45.0 && wf_tex_ok()) {
+		// 場（Wind V2 效能版：共用風場貼圖）
+		vec2 wd2;
+		float g_warp;
+		float g_force;
+		float g_mod;
+		wf_tex_grass(wind_species, root.xz, wd2, g_warp, g_force, g_mod);
 		// 草＝垂直剖面的正規化高度 z0（×1.00）：只乘海拔與遮蔽（樹冠才吃剖面增益）
 		float env = wf_elev_factor(root.y) * wf_shelter(root.xz, root.y + 0.4 * sc);
 		float t = gw_time;
 		// 草沒有樹冠層：單點驅動力＋純延遲 lag（不查樹冠響應表，省頂點成本）
-		float drive = wf_force(root.xz, wd2, fld.z, env, t, r0.w);
+		float drive = env * g_force;
 		float ph = wp.x * 0.9 + wp.z * 1.1 + wp.y * 0.4;
 		// 高頻細顫 + 低頻草浪（沿風向掃過草原）
 		float flutter = sin(t * sway_speed + ph) * 0.6

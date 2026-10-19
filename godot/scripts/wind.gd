@@ -142,6 +142,18 @@ var _auto_in := 2.0
 var _gust_gain := 1.0
 ## 焦點：陣風在它上風處生成、遮蔽依離它的距離挑最近 8 個。預設跟主相機；set_focus() 可鎖定。
 var _focus := Vector3.ZERO
+
+## V2 效能版：共用風場貼圖（gw_field）。SubViewport 每幀在 GPU 上把「逐根部」場量算一次，
+## 植被頂點只取樣（見 wind_field.gdshaderinc）。以主相機為中心、貼齊格點（相機移動時格點不游移）。
+## 命令列 --wind-field=N,格距m 可改解析度（A/B 用）；預設 128 格 × 2 m＝±128 m。
+const FIELD_GEN_SHADER := "res://assets/shaders/wind_field_gen.gdshader"
+const FIELD_TILES := 10
+var field_n := 128
+var field_texel := 2.0
+var _fvp: SubViewport = null
+var _frect: ColorRect = null
+var _field_origin := Vector2.ZERO
+var _field_active := false
 var _focus_locked := false
 var _vprof := VPROF_DEFAULT
 ## 局部風力差異倍率（空間場方向／強度擾動的振幅；1＝V1.1 設計值）。shader 端＝gw_tune.x。
@@ -206,6 +218,7 @@ func _ready() -> void:
 	_auto_in = _gust_rng.randf_range(1.5, 4.0)
 	_init_textures()
 	_load_species()
+	_init_field()
 	_apply_preset(Preset.BREEZE, true)
 	# 命令列覆寫（A/B、錄影、審圖用）：--wind=off|calm|breeze|moderate|gust
 	for arg in OS.get_cmdline_user_args():
@@ -828,8 +841,68 @@ func _push_globals() -> void:
 		Vector4(float(_events.size()), _gust_gain, float(_debug_view), float(_shelter_n)))
 	RenderingServer.global_shader_parameter_set("gw_vprof", _vprof)
 	RenderingServer.global_shader_parameter_set("gw_tune", Vector4(_local_var, 0.0, 0.0, 0.0))
+	_update_field()
 	if water != null:
 		RenderingServer.global_shader_parameter_set("gw_water", Vector4(water.long_amp, water.ripple_gain, 0.0, 0.0))
+
+
+# ───────────────────────── 共用風場貼圖（V2 效能版） ─────────────────────────
+
+func _init_field() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--wind-field="):
+			var parts := arg.substr(13).split(",")
+			field_n = clampi(int(parts[0]), 16, 512)
+			if parts.size() > 1:
+				field_texel = clampf(float(parts[1]), 0.25, 16.0)
+	_fvp = SubViewport.new()
+	_fvp.name = "WindFieldGen"
+	_fvp.size = Vector2i(field_n * FIELD_TILES, field_n)
+	_fvp.disable_3d = true
+	_fvp.use_hdr_2d = true            # RGBA16F：存負值與 >1 的驅動力
+	_fvp.transparent_bg = true
+	_fvp.msaa_2d = Viewport.MSAA_DISABLED
+	_fvp.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	_fvp.render_target_clear_mode = SubViewport.CLEAR_MODE_NEVER
+	_fvp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	_frect = ColorRect.new()
+	_frect.size = Vector2(_fvp.size)
+	var mat := ShaderMaterial.new()
+	mat.shader = load(FIELD_GEN_SHADER)
+	_frect.material = mat
+	_fvp.add_child(_frect)
+	add_child(_fvp)
+	RenderingServer.global_shader_parameter_set("gw_field", _fvp.get_texture())
+	_field_active = true
+
+
+## 每幀：以主相機為中心貼齊格點、上傳 gw_field_rect。風完全停（基礎風 0、沒有陣風事件）時
+## 停止重算貼圖（植被 shader 的閘門也關著）——關風不付生成成本。
+func _update_field() -> void:
+	if _fvp == null:
+		return
+	var cam := get_viewport().get_camera_3d() if get_viewport() else null
+	var c := Vector2(_focus.x, _focus.z)
+	if cam != null:
+		c = Vector2(cam.global_position.x, cam.global_position.z)
+	var span := field_texel * float(field_n)
+	_field_origin = (c / field_texel).floor() * field_texel - Vector2(span, span) * 0.5
+	RenderingServer.global_shader_parameter_set("gw_field_rect",
+		Vector4(_field_origin.x, _field_origin.y, 1.0 / span, float(field_n)))
+	var live := _strength > 0.0 or float(_events.size()) * _gust_gain > 0.0009   # 與 shader 閘門同條件（略寬）
+	if live != _field_active:
+		_field_active = live
+		_fvp.render_target_update_mode = SubViewport.UPDATE_ALWAYS if live else SubViewport.UPDATE_DISABLED
+
+
+## 除錯／驗證：貼圖的世界範圍（原點、邊長 m）與解析度。
+func field_info() -> Dictionary:
+	return {"origin": _field_origin, "span": field_texel * float(field_n), "n": field_n,
+		"texel": field_texel, "tiles": FIELD_TILES, "active": _field_active}
+
+
+func field_texture() -> Texture2D:
+	return _fvp.get_texture() if _fvp else null
 
 
 # ───────────────────────── 事件／遮蔽／物種貼圖（V1.2） ─────────────────────────
@@ -937,6 +1010,12 @@ func _upload_species() -> void:
 	else:
 		_sp_tex.update(_sp_img)
 	RenderingServer.global_shader_parameter_set("gw_species_n", float(order.size()))
+	# 草／秧苗的物種參數另走 global uniform（草的頂點數極多，不讀物種貼圖）
+	var g := _profile("grass")
+	var pd := _profile("paddy")
+	RenderingServer.global_shader_parameter_set("gw_spg", Vector4(g.stiffness, g.bend_mult, g.tip_response, g.flutter_hz))
+	RenderingServer.global_shader_parameter_set("gw_spp", Vector4(pd.stiffness, pd.bend_mult, pd.tip_response, pd.flutter_hz))
+	RenderingServer.global_shader_parameter_set("gw_spm", Vector4(g.max_deform_m, pd.max_deform_m, 0.0, 0.0))
 	# 物種參數變了 → 陣風響應表也要重算
 	_events_dirty = true
 

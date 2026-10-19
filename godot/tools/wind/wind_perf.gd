@@ -104,6 +104,7 @@ func _run() -> void:
 		for cyc in int(_arg(a, "--cycles", str(CYCLES))):
 			wind.set_enabled(false)
 			await _settle()
+			await _wait_gate_closed(wind)
 			off_ms.append(await _measure("off"))
 			wind.set_enabled(true)
 			wind.set_preset(3)   # Strong Gust：最壞情況
@@ -167,6 +168,17 @@ func _run() -> void:
 func _settle() -> void:
 	# 風場 tau=1.35 s：至少等 2 秒，量到的才是穩態（不是還在升的過渡）。
 	for i in 120:
+		await process_frame
+
+
+## 「關風」量測前確認 shader 閘門真的關了：基礎風＝0 且陣風事件已清空（陣風增益 TAU_OFF 淡出約 3–4 s）。
+## 只等固定幀數時，跑得快的版本（fps 高）會在事件還沒清空時就開始量 → off 基準被汙染、Δ 被低估。
+func _wait_gate_closed(wind: Node) -> void:
+	for i in 1200:
+		if float(wind.get("_strength")) == 0.0 and (wind.get("_events") as Array).is_empty():
+			break
+		await process_frame
+	for i in 10:
 		await process_frame
 
 

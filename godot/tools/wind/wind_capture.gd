@@ -370,6 +370,9 @@ func _run_seq(scene: Node, view_name: String, seq: String, step: float, out: Str
 				wind.set_vertical_profile(vp[0].to_float(), vp[1].to_float(), vp[2].to_float(), vp[3].to_float())
 			"noshelter":
 				wind.clear_shelters()
+			"dview":
+				# 位移熱圖（0＝一般、1＝熱圖）：實際地圖也能用（植被 shader 改輸出位移灰階，0.6 m＝白）
+				wind.set_debug_view(int(arg))
 			"run":
 				# 真實時間跑 N 秒（風時鐘解凍）：讓物理物件（浮物、燈籠）與風場同一個時鐘前進
 				wind.set_frozen(false)

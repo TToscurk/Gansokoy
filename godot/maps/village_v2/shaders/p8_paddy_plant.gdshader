@@ -31,23 +31,26 @@ void vertex() {
 	vec3 w = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	vec4 r0;
 	vec4 r1;
-	vec4 r2;
-	wf_species(wind_species, r0, r1, r2);
+	wf_species_grass(wind_species, r0, r1);
 	// 高度權重：UV.y＝作者烘的葉片高度比例（不是世界 Y）；paddy tip_response 2.0＝V1 的 UV.y²
 	float k = pow(clamp(UV.y, 0.0, 1.0), r0.z) * (1.0 - 0.8 * r0.x) / 0.68;
 	vec3 root = MODEL_MATRIX[3].xyz;
 	float sc = length(MODEL_MATRIX[1].xyz);
 	vec3 o = vec3(0.0);
 	float dm = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, w);
-	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && dm < 45.0) {
-		vec3 fld = wf_field(root.xz);
-		vec2 wd2 = fld.xy;
+	if ((gw_strength > 0.0 || gw_ctrl.x * gw_ctrl.y > 0.001) && dm < 45.0 && wf_tex_ok()) {
+		// 場（Wind V2 效能版：共用風場貼圖）
+		vec2 wd2;
+		float g_warp;
+		float g_force;
+		float g_mod;
+		wf_tex_grass(wind_species, root.xz, wd2, g_warp, g_force, g_mod);
 		vec3 wd = vec3(wd2.x, 0.0, wd2.y);
 		vec3 side = vec3(-wd2.y, 0.0, wd2.x);
 		// 草＝垂直剖面的正規化高度 z0（×1.00）：只乘海拔與遮蔽（樹冠才吃剖面增益）
 		float env = wf_elev_factor(root.y) * wf_shelter(root.xz, root.y + 0.45 * sc);
 		// 草沒有樹冠層：單點驅動力＋純延遲 lag（不查樹冠響應表，省頂點成本）
-		float drive = wf_force(root.xz, wd2, fld.z, env, gw_time, r0.w);
+		float drive = env * g_force;
 		// 沿風向推進的草浪（相位吃世界座標）＋葉片自己的細顫
 		float along = dot(w.xz, wd2);
 		float across = dot(w.xz, vec2(-wd2.y, wd2.x));
