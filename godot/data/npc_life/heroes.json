@@ -1,5 +1,5 @@
 {
-	"_note": "NPC Living World HERO 定義（docs/NPC自主生活系統.md）。events.kind：object＝Smart Object 事件；place／route＝地點／巡路；social＝找另一名 HERO 雙人交談（主題在 social.json）；home＝回據點（leave＝離村）。條件：hours、need_world／not_world（世界事實）、need_know／not_know（該 HERO 知道的傳聞）、cooldown、priority（≥5 反應事件優先）、focus（進行中不接受社交）。plan_change：學到某傳聞時放棄手上事件的機率（性格：易改變計畫）。",
+	"_note": "NPC Living World HERO 定義（docs/NPC自主生活系統.md）。events.kind：object＝Smart Object 事件；place／route＝地點／巡路；social＝找另一名 HERO 雙人交談（主題在 social.json）；home＝回據點（leave＝離村）。條件：hours、need_world／not_world（世界事實）、need_know／not_know（該 HERO 知道的傳聞）、cooldown、priority（≥5 反應事件優先）、focus（進行中不接受社交）。plan_change：學到某傳聞時放棄手上事件的機率（性格：易改變計畫）。 speech＝口語與情緒反應：_style（口語習慣，給人看）＋reactions.<刺激>＝[{emo, zh, ja, en, w, aff:hi|lo（對說話者好感高／低時加權）, world（世界事實成立才可選、權重×）, mood（自己目前心情相同時加權）}]；交談主題裡 [\"<hero>\", \"@<刺激>\"] 的行由聽者依自己的表、關係、心情、世界狀態挑一句。",
 	"_shared": {
 		"fact_text": {
 			"anomaly_south_forest": "村口南邊林子出現了毛玉（小妖怪），孩子上學會經過",
@@ -78,6 +78,32 @@
 			"marisa_investigate": ["森林邊上不太對勁，我正在查呢。", "你也聽說毛玉的事了？跟著我別亂跑。"],
 			"busy_talk": ["啊，等等，我們正聊到一半。"],
 			"alarm": ["喂喂，有東西過來了！"]
+		},
+		"speech": {
+			"_style": "直來直往、得意、愛惡作劇；語尾「〜ぜ」「〜だろ」；驚訝多半轉成興奮，被說教就嘴硬",
+			"reactions": {
+				"strange_find": [
+					{"emo": "excited", "zh": "欸，什麼什麼？給我看！", "ja": "えっ、なになに？見せてくれよ！", "en": "Ooh, what is it? Lemme see!"}
+				],
+				"tease": [
+					{"emo": "smug", "zh": "嘿嘿，羨慕吧？", "ja": "へへっ、うらやましいだろ？", "en": "Heh. Jealous?", "w": 2},
+					{"emo": "annoyed", "zh": "嘖，囉唆啦。", "ja": "ちぇっ、うるさいなあ。", "en": "Tch. Gimme a break.", "mood": "annoyed"}
+				],
+				"danger_news": [
+					{"emo": "excited", "zh": "喔？有意思，交給我吧！", "ja": "おっ、面白そうじゃん。任せとけ！", "en": "Ooh, sounds fun. Leave it to me!", "w": 2},
+					{"emo": "serious", "zh": "……真的假的？", "ja": "……マジか？", "en": "...Seriously?", "world": "anomaly_south_forest", "w": 2}
+				],
+				"absurd": [
+					{"emo": "happy", "zh": "哈哈哈！你在說什麼啦！", "ja": "あっはは！何言ってんだよ！", "en": "Ahaha! What are you even saying?"}
+				],
+				"listen": [
+					{"emo": "neutral", "zh": "嗯嗯。", "ja": "うんうん。", "en": "Uh-huh."},
+					{"emo": "doubt", "zh": "嗯？", "ja": "ん？", "en": "Hm?"}
+				],
+				"praise": [
+					{"emo": "embarrassed", "zh": "欸、哪、哪有啦。", "ja": "え、そ、そうか？", "en": "Wh— really? Heh."}
+				]
+			}
 		}
 	},
 	"keine": {
@@ -117,6 +143,35 @@
 			"keine_report_anomaly": ["村口的林子有異狀，我得通知人。"],
 			"busy_talk": ["抱歉，我們還在談事情。"],
 			"alarm": ["退後！我來處理。"]
+		},
+		"speech": {
+			"_style": "穩重、說教口吻；擔心村民與孩子；被調侃會慌；語尾「〜だぞ」「〜だろう」；嘆氣代表頭痛",
+			"reactions": {
+				"strange_find": [
+					{"emo": "doubt", "zh": "嗯？", "ja": "ん？", "en": "Hm?", "w": 2, "aff": "lo"},
+					{"emo": "worried", "zh": "……等等，你該不會碰過了吧？", "ja": "……待て、まさか触ったりしてないだろうな？", "en": "...Hold on. You didn't touch it, did you?", "w": 2},
+					{"emo": "surprised", "zh": "什麼！？", "ja": "なにっ！？", "en": "What!?", "world": "anomaly_south_forest", "w": 3}
+				],
+				"tease": [
+					{"emo": "annoyed", "zh": "這、這有什麼好笑的！", "ja": "な、何がおかしい！", "en": "Wh— what's so funny!?"},
+					{"emo": "embarrassed", "zh": "咳，總、總之……", "ja": "こほん。と、とにかくだな……", "en": "Ahem. A-anyway..."}
+				],
+				"danger_news": [
+					{"emo": "serious", "zh": "孩子們會經過那裡。", "ja": "子どもたちが通る道だぞ。", "en": "The children walk that road.", "w": 2},
+					{"emo": "surprised", "zh": "什麼！？", "ja": "なんだと！？", "en": "What!?"}
+				],
+				"absurd": [
+					{"emo": "sigh", "zh": "唉……你啊。", "ja": "はぁ……お前というやつは。", "en": "Haah... you really are something.", "w": 2, "aff": "lo"},
+					{"emo": "annoyed", "zh": "給我認真一點！", "ja": "真面目に聞け！", "en": "Take this seriously!"}
+				],
+				"listen": [
+					{"emo": "neutral", "zh": "嗯。", "ja": "うむ。", "en": "Mm."},
+					{"emo": "doubt", "zh": "嗯？", "ja": "ん？", "en": "Hm?"}
+				],
+				"praise": [
+					{"emo": "embarrassed", "zh": "咳、不、不用說這些。", "ja": "こほん、そ、そういうのはいい。", "en": "Ahem. Th-that's not necessary."}
+				]
+			}
 		}
 	},
 	"kosuzu": {
@@ -166,6 +221,32 @@
 			"kosuzu_unpack": ["你看你看，新進的書！……好像不太對勁的那種。"],
 			"busy_talk": ["啊，等我一下，馬上就好！"],
 			"alarm": ["哇、妖怪！？"]
+		},
+		"speech": {
+			"_style": "好奇心旺盛、容易興奮也容易害怕；看到怪東西兩眼發亮；語尾「〜ですよ」「えへへ」",
+			"reactions": {
+				"strange_find": [
+					{"emo": "excited", "zh": "欸！？真的嗎！給我看給我看！", "ja": "えっ！？ほんとに！？見せて見せて！", "en": "Wait, really!? Show me, show me!", "w": 3},
+					{"emo": "worried", "zh": "那、那個不會被詛咒吧……？", "ja": "そ、それ、呪われてたりしませんよね……？", "en": "Th-that's not cursed, is it...?"}
+				],
+				"tease": [
+					{"emo": "embarrassed", "zh": "才、才沒有那回事啦！", "ja": "そ、そんなことないですよ！", "en": "Th-that's not true!"}
+				],
+				"danger_news": [
+					{"emo": "worried", "zh": "欸……好可怕。", "ja": "ええっ……こわい。", "en": "Eek... that's scary.", "w": 2},
+					{"emo": "excited", "zh": "說不定是妖魔本裡寫的那種！", "ja": "妖魔本に載ってるやつかも！", "en": "Maybe it's like the ones in my youkai books!"}
+				],
+				"absurd": [
+					{"emo": "happy", "zh": "噗、哈哈！", "ja": "ぷっ、あはは！", "en": "Pfft— ahaha!"}
+				],
+				"listen": [
+					{"emo": "neutral", "zh": "嗯嗯！", "ja": "うんうん！", "en": "Uh-huh!"},
+					{"emo": "doubt", "zh": "咦？", "ja": "え？", "en": "Huh?"}
+				],
+				"praise": [
+					{"emo": "happy", "zh": "欸嘿嘿……", "ja": "えへへ……", "en": "Ehehe..."}
+				]
+			}
 		}
 	},
 	"akyuu": {
@@ -199,6 +280,31 @@
 			"akyuu_record": ["正在寫緣起，請稍等……好了，有什麼事嗎？"],
 			"busy_talk": ["抱歉，我們正說到要緊處。"],
 			"alarm": ["……請小心。"]
+		},
+		"speech": {
+			"_style": "有教養、從容、帶點調侃；任何怪事先想到要記進緣起；語尾「〜ですね」「あら」「ふふ」",
+			"reactions": {
+				"strange_find": [
+					{"emo": "happy", "zh": "哎呀，這得記進緣起才行。", "ja": "あら、それは縁起に書き留めておかないと。", "en": "Oh my. I'll have to note that in the Gensokyo Chronicle.", "w": 2},
+					{"emo": "doubt", "zh": "……具體是什麼樣子呢？", "ja": "……具体的には、どのような？", "en": "...And what exactly did it look like?"}
+				],
+				"tease": [
+					{"emo": "smug", "zh": "呵呵，你說呢？", "ja": "ふふ、どうでしょうね？", "en": "Hehe. Who's to say?"}
+				],
+				"danger_news": [
+					{"emo": "serious", "zh": "……我會記下來，詳細告訴我。", "ja": "……記録しておきます。詳しく聞かせてください。", "en": "...I'll record it. Tell me everything.", "w": 2}
+				],
+				"absurd": [
+					{"emo": "happy", "zh": "呵呵，真有你的。", "ja": "ふふっ、相変わらずですね。", "en": "Hehe. You never change."}
+				],
+				"listen": [
+					{"emo": "neutral", "zh": "是。", "ja": "ええ。", "en": "Yes."},
+					{"emo": "doubt", "zh": "哎呀？", "ja": "あら？", "en": "Oh?"}
+				],
+				"praise": [
+					{"emo": "smug", "zh": "呵呵，謝謝誇獎。", "ja": "ふふ、お褒めにあずかり光栄です。", "en": "Hehe. I'm honored."}
+				]
+			}
 		}
 	},
 	"reimu": {
@@ -236,6 +342,35 @@
 			"reimu_sense_anomaly": ["別過來，這附近有妖氣。"],
 			"busy_talk": ["等一下，我們在說正事。"],
 			"alarm": ["妖怪？剛好，順便退治了。"]
+		},
+		"speech": {
+			"_style": "慵懶、愛吐槽、對魔理沙先懷疑；碰到異變立刻認真；語尾「〜わよ」「〜でしょ」；常嘆氣",
+			"reactions": {
+				"strange_find": [
+					{"emo": "doubt", "zh": "……又是從哪裡拿來的？", "ja": "……それ、また誰かから持ってきたんじゃないでしょうね？", "en": "...And who'd you swipe that from this time?", "w": 3, "aff": "hi"},
+					{"emo": "sigh", "zh": "唉……又來了。", "ja": "はぁ……また始まった。", "en": "Ugh... here we go again.", "w": 2, "mood": "sigh"},
+					{"emo": "serious", "zh": "等等，那東西有妖氣。", "ja": "待って。それ、妖気がするわ。", "en": "Wait. That thing reeks of youkai.", "world": "anomaly_south_forest", "w": 4}
+				],
+				"tease": [
+					{"emo": "annoyed", "zh": "哈啊？你說什麼？", "ja": "はぁ？何か言った？", "en": "Huh? Say that again?", "w": 2},
+					{"emo": "sigh", "zh": "隨你說吧。", "ja": "好きに言えば。", "en": "Say whatever you want."}
+				],
+				"danger_news": [
+					{"emo": "serious", "zh": "……在哪裡？", "ja": "……どこ？", "en": "...Where?", "w": 2},
+					{"emo": "sigh", "zh": "真是的，又要加班了。", "ja": "もう、また仕事が増えるじゃない。", "en": "Great. More work for me."}
+				],
+				"absurd": [
+					{"emo": "annoyed", "zh": "你是笨蛋嗎？", "ja": "あんた、バカじゃないの？", "en": "Are you an idiot?", "w": 2, "aff": "hi"},
+					{"emo": "sigh", "zh": "……我就當沒聽到。", "ja": "……聞かなかったことにするわ。", "en": "...I'm pretending I didn't hear that."}
+				],
+				"listen": [
+					{"emo": "neutral", "zh": "嗯——", "ja": "ふーん。", "en": "Mm-hm."},
+					{"emo": "doubt", "zh": "啊？", "ja": "はぁ？", "en": "Huh?"}
+				],
+				"praise": [
+					{"emo": "smug", "zh": "哼，現在才知道？", "ja": "ふふん、今さら気づいたの？", "en": "Hmph. Took you long enough."}
+				]
+			}
 		}
 	}
 }

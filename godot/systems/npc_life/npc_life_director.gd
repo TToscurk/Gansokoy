@@ -56,6 +56,7 @@ var gh := 0
 var _ready_done := false
 var path_stats := {"n": 0, "max_ms": 0.0, "total_ms": 0.0}
 var voice: Node               # npc_voice.gd（data/npc_life/voices.json）
+var mood := {}                # hero -> {emo, t}：最近一次說話的情緒（生活時鐘），影響反應挑選
 var jev: Node                 # npc_life_jev_provider.gd（jev_heroes 不空時才建立）
 var _pending := {}            # hero -> {"t": ticket, "map": {option_id: {ev, partner}}}
 var decision_stats := {}      # hero -> {"jev": n, "builtin": n, "priority": n, "fallback": {why: n}}
@@ -835,6 +836,7 @@ func open_session(a: String, b: String, topic: Dictionary) -> Dictionary:
 	if not heroes.has(b) or not bool(heroes[b].call("can_accept_social", a)):
 		return {}
 	var s := {"a": a, "b": b, "topic": topic, "state": "approach", "i": -1, "t": 0.0, "line_left": 0.0, "wait": 0.0, "paused": 0.0}
+	s["script"] = resolve_script(topic, a, b)
 	# 先讓對方收手（它結束手上事件時會 release，此時 session 還不在清單裡，不會被誤關），再登記
 	heroes[b].call("hold_for_session", s)
 	sessions.append(s)
@@ -874,58 +876,146 @@ func _tick_session(s: Dictionary, ld: float) -> void:
 	s.line_left -= ld
 	if s.line_left > 0.0:
 		return
-	var lines: Array = s.topic.get("lines", [])
+	var script: Array = s.script
 	var ni: int = s.i + 1
-	if ni >= lines.size():
+	if ni >= script.size():
 		s.state = "done"
 		_apply_topic(s)
 		end_session(s, "Completed", "done")
 		return
-	var ln: Array = lines[ni]
-	var who := String(ln[0])
-	var spk: String = s.a if who == "a" or who == s.a else s.b
-	var lis: String = s.b if spk == s.a else s.a
-	var text := String(ln[1])
+	var bt: Dictionary = script[ni]
+	var spk: String = bt.spk
+	var lis: String = bt.lis
+	var text := String(bt.zh)
+	var emo := String(bt.get("emo", "neutral"))
+	# 開口前停頓（思考、猶豫）：只做一次；≥ 0.3 s 時說話者做思考動作
+	if float(bt.get("pause", 0.0)) > 0.0 and int(s.get("paused_beat", -1)) != ni:
+		s["paused_beat"] = ni
+		s.line_left = float(bt.pause)
+		_cut_previous(s)
+		if float(bt.pause) >= 0.3:
+			heroes[spk].call("session_think", float(bt.pause))
+		return
 	# 語音：有快取就用；正在生成就最多等 3 秒（字幕不先跳）；沒有就只顯示字幕
-	var vtext := _voice_text(s.topic, ni)
+	var vtext := _beat_voice_text(bt)
 	var vclip: Dictionary = {}
 	if voice != null and vtext != "":
-		vclip = voice.call("lookup", spk, vtext)
-		if vclip.is_empty() and bool(voice.call("is_pending", spk, vtext)) and float(s.get("vwait", 0.0)) < 3.0:
+		vclip = voice.call("lookup", spk, vtext, emo)
+		if vclip.is_empty() and bool(voice.call("is_pending", spk, vtext, emo)) and float(s.get("vwait", 0.0)) < 3.0:
 			s["vwait"] = float(s.get("vwait", 0.0)) + ld
 			s.line_left = 0.05
 			return
 	s["vwait"] = 0.0
+	_cut_previous(s)
 	s.i = ni
 	var dur := clampf(0.13 * text.length() + 1.4, 2.4, 6.5)
 	if not vclip.is_empty():
 		dur = float(vclip.dur) + 0.45
+	# 被打斷：講到 cut 成就換下一個人（語音在下一句開始時停掉），不留 0.45 s 尾巴
+	var cut := float(bt.get("cut", 0.0))
+	if cut > 0.0:
+		dur = maxf((dur - 0.45) * cut, 0.6)
+		s["cut_spk"] = spk
 	s.line_left = dur
-	heroes[spk].call("session_speak", text, dur, heroes[lis], String(ln[2]) if ln.size() > 2 else "", vclip)
-	heroes[lis].call("session_listen", heroes[spk])
+	heroes[spk].call("session_speak", text, dur, heroes[lis], String(bt.get("clip", "")), vclip, emo)
+	heroes[lis].call("session_listen", heroes[spk], dur, emo)
+	mood[spk] = {"emo": emo, "t": clock}
 	hero_said.emit(spk, text, lis)
-	# sub＝目前語言的原文字幕（沒有該語言語音時照樣提供，例如英文字幕）；voice＝實際播出的語音台詞
-	_log(spk, String(s.topic.get("id", "")), "SAY", {"to": lis, "text": text, "sub": vtext, "voice": vtext if not vclip.is_empty() else "", "voice_s": snappedf(float(vclip.get("dur", 0.0)), 0.01)})
+	# sub＝目前語言的原文字幕（沒有該語言語音時照樣提供）；voice＝實際播出的語音台詞
+	_log(spk, String(s.topic.get("id", "")), "SAY", {"to": lis, "text": text, "sub": vtext, "voice": vtext if not vclip.is_empty() else "", "voice_s": snappedf(float(vclip.get("dur", 0.0)), 0.01), "emo": emo, "react": String(bt.get("react", "")), "cut": cut})
 
 
-func _voice_text(topic: Dictionary, i: int) -> String:
+## 上一句被打斷（cut）：在下一個人開口的瞬間停掉它的語音
+func _cut_previous(s: Dictionary) -> void:
+	var c := String(s.get("cut_spk", ""))
+	if c != "" and heroes.has(c):
+		heroes[c].call("session_cut")
+	s["cut_spk"] = ""
+
+
+## 交談主題 → 實際台本（每行：說話者、聽者、繁中、ja、en、情緒、停頓、打斷）。
+## 反應行（"@刺激"）由說話者依自己的 speech.reactions，參考對方關係、自己心情、世界狀態挑一句。
+func resolve_script(topic: Dictionary, a: String, b: String) -> Array:
+	var out: Array = []
+	var lines: Array = topic.get("lines", [])
+	var beats: Array = topic.get("beats", [])
+	var vj: Array = topic.get("voice", {}).get("ja", [])
+	var ve: Array = topic.get("voice", {}).get("en", [])
+	for i in lines.size():
+		var ln: Array = lines[i]
+		var who := String(ln[0])
+		var spk: String = a if who == "a" or who == a else b
+		var lis: String = b if spk == a else a
+		var bt: Dictionary = (beats[i] as Dictionary).duplicate() if i < beats.size() else {}
+		var row := {"spk": spk, "lis": lis, "zh": String(ln[1]), "clip": String(ln[2]) if ln.size() > 2 else "",
+			"ja": String(vj[i]) if i < vj.size() else "", "en": String(ve[i]) if i < ve.size() else ""}
+		if String(ln[1]).begins_with("@"):
+			var stim := String(ln[1]).substr(1)
+			var r := pick_reaction(spk, stim, lis)
+			row.zh = String(r.get("zh", "……"))
+			row.ja = String(r.get("ja", ""))
+			row.en = String(r.get("en", ""))
+			bt["emo"] = String(r.get("emo", "neutral"))
+			bt["react"] = stim
+		for k in bt:
+			row[k] = bt[k]
+		if not row.has("emo"):
+			row["emo"] = "neutral"
+		out.append(row)
+	return out
+
+
+## 某名 HERO 對某個刺激的反應：權重＝基本 w ×（對說話者好感：aff hi／lo ×2 或 ×0.4）×（世界事實成立 ×3，不成立不可選）×（自己目前心情相同 ×2.5）
+func pick_reaction(hero: String, stim: String, from: String, rnd := true) -> Dictionary:
+	var pool: Array = defs.get(hero, {}).get("speech", {}).get("reactions", {}).get(stim, [])
+	if pool.is_empty():
+		return {"emo": "neutral", "zh": "嗯。", "ja": "うん。", "en": "Mm."}
+	var aff := float(defs[hero].get("relationships", {}).get(from, {}).get("affinity", 0.5))
+	var md: Dictionary = mood.get(hero, {})
+	var cur_mood := String(md.get("emo", "")) if clock - float(md.get("t", -1e9)) < 120.0 else ""
+	var ws: Array = []
+	var tot := 0.0
+	for e in pool:
+		var w := float(e.get("w", 1.0))
+		match String(e.get("aff", "")):
+			"hi": w *= 2.0 if aff >= 0.8 else 0.4
+			"lo": w *= 2.0 if aff <= 0.55 else 0.4
+		if e.has("world"):
+			w *= 3.0 if world.has(String(e.world)) else 0.0     # 世界正在發生的事優先
+		if e.has("mood") and cur_mood == String(e.mood):
+			w *= 2.5
+		ws.append(w)
+		tot += w
+	if tot <= 0.0:
+		return pool[0]
+	if not rnd:      # 測試用：回權重最高的
+		var bi := 0
+		for k in ws.size():
+			if float(ws[k]) > float(ws[bi]):
+				bi = k
+		return pool[bi]
+	var r := randf() * tot
+	for k in pool.size():
+		r -= float(ws[k])
+		if r <= 0.0:
+			return pool[k]
+	return pool[pool.size() - 1]
+
+
+func _beat_voice_text(bt: Dictionary) -> String:
 	if voice == null:
 		return ""
-	var arr: Array = topic.get("voice", {}).get(String(voice.get("lang")), [])
-	return String(arr[i]) if i < arr.size() else ""
+	return String(bt.get(String(voice.get("lang")), ""))
 
 
 ## 交談一開就請語音系統先生成（快取沒有的才會真的送引擎）
 func _prefetch_voice(s: Dictionary) -> void:
 	if voice == null:
 		return
-	var lines: Array = s.topic.get("lines", [])
-	for i in lines.size():
-		var who := String(lines[i][0])
-		var spk: String = s.a if who == "a" or who == s.a else s.b
-		var vt := _voice_text(s.topic, i)
+	for bt in s.get("script", []):
+		var vt := _beat_voice_text(bt)
 		if vt != "":
-			voice.call("prefetch", spk, vt)
+			voice.call("prefetch", bt.spk, vt, String(bt.get("emo", "neutral")))
 
 
 func _apply_topic(s: Dictionary) -> void:

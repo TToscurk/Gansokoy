@@ -1,5 +1,5 @@
 extends SceneTree
-## NpcVoice 測試：烘焙快取、預熱、執行期生成＋自動快取、英文只有字幕、引擎離線退回（需開 AivisSpeech：D:\Tools\TTS\start_aivis.cmd）
+## NpcVoice 測試：烘焙快取、預熱、執行期生成＋自動快取（ja／en）、引擎離線退回（需開 VOICEVOX、AivisSpeech、Kokoro：D:\Tools\TTS\start_*.cmd）
 ## godot --headless --path godot -s res://tools/npc_voice/verify_npc_voice.gd
 const V := preload("res://systems/npc_life/npc_voice.gd")
 var fails := 0
@@ -22,9 +22,12 @@ func _run() -> void:
 	_ok("烘焙快取命中（res://assets/voice）", not c.is_empty() and c.stream != null, "dur %.2f env %d" % [float(c.get("dur", 0)), (c.get("env", PackedFloat32Array()) as PackedFloat32Array).size()])
 	# 2) 預熱：引擎有開時，_ready 會在背景對用到的聲線呼叫 /initialize_speaker；等它做完再量第一次生成
 	var tw := Time.get_ticks_msec()
-	while (v1.get("warm_ms") as Dictionary).size() < 3 and Time.get_ticks_msec() - tw < 60000:
+	var want := 0
+	for e in (v1.call("speakers_in_use") as Dictionary).values():
+		want += (e as Array).size()
+	while (v1.get("warm_ms") as Dictionary).size() < want and Time.get_ticks_msec() - tw < 90000:
 		await process_frame
-	_ok("預熱 3 個日文聲線", (v1.get("warm_ms") as Dictionary).size() == 3, "各聲線預熱耗時 ms %s" % v1.get("warm_ms"))
+	_ok("預熱日文聲線（含情緒 style）%d 個" % want, want >= 3 and (v1.get("warm_ms") as Dictionary).size() == want, "各聲線預熱耗時 ms %s" % v1.get("warm_ms"))
 	# 3) 執行期生成（日文 AivisSpeech）→ 自動存 user:// 快取；預熱後第一次生成應 < 3 s（交談最多只等 3 s）
 	v1.set("lang", "ja")
 	for h in ["marisa", "keine", "reimu"]:
@@ -44,16 +47,21 @@ func _run() -> void:
 			var hh: Dictionary = v2.call("lookup", h, text)
 			_ok("重開後從 user://voice_cache 命中", not hh.is_empty() and int(v2.get("stats").hit_user) == 1, str(v2.get("stats")))
 			v2.queue_free()
-	# 英文：沒有英文語音（已移除），lang=en 時不送引擎、只留英文字幕
+	# 英文：Kokoro（引擎有開才測得到生成；沒開時只顯示字幕）
 	v1.set("lang", "en")
-	v1.call("prefetch", "marisa", "Runtime test %s." % stamp)
-	_ok("lang=en：沒有英文聲線、不送引擎（只顯示字幕）", not bool(v1.call("has_voice", "marisa")) and not bool(v1.call("is_pending", "marisa", "Runtime test %s." % stamp)), "")
+	var etext := "Runtime test number %s." % stamp
+	var te := Time.get_ticks_msec()
+	v1.call("prefetch", "marisa", etext, "surprised")
+	while bool(v1.call("is_pending", "marisa", etext, "surprised")) and Time.get_ticks_msec() - te < 30000:
+		await process_frame
+	var ge: Dictionary = v1.call("lookup", "marisa", etext, "surprised")
+	_ok("lang=en：Kokoro 執行期生成（情緒 surprised）", not ge.is_empty(), "%d ms, dur %.2f" % [Time.get_ticks_msec() - te, float(ge.get("dur", 0))])
 	var social: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/npc_life/social.json"))
 	var en_subs := 0
 	for t in social.topics:
 		if t.has("voice") and (t.voice as Dictionary).has("en") and (t.voice.en as Array).size() == (t.lines as Array).size():
 			en_subs += 1
-	_ok("英文字幕台詞保留（social.json voice.en 與繁中逐句對應）", en_subs >= 4, "%d 個主題" % en_subs)
+	_ok("英文台詞（social.json voice.en）與繁中逐句對應", en_subs >= 4, "%d 個主題" % en_subs)
 	# 4) 引擎離線：生成失敗、lookup 回空（交談只顯示字幕，不卡）
 	v1.set("lang", "ja")
 	# 讓魔理沙實際用的引擎離線（聲線換過引擎也照樣測得到）

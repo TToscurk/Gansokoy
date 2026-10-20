@@ -1,11 +1,14 @@
 extends Node
 ## NPC 語音（NpcLife 的子節點）：依 data/npc_life/voices.json 替每名 HERO 指定聲線，交談台詞配本機 TTS 語音。
 ##   查快取順序：記憶體 → res://assets/voice/voice_index.json（離線烘焙、隨遊戲出貨）→ user://voice_cache（執行期生成過的）
-##   都沒有且本機引擎有開（開發機）→ HTTP 生成（AivisSpeech／VOICEVOX 相容 API：audio_query＋synthesis），
+##   都沒有且本機引擎有開（開發機）→ HTTP 生成（AivisSpeech／VOICEVOX 相容 API：audio_query＋synthesis；Kokoro：OpenAI 相容 /v1/audio/speech），
 ##   存進 user://voice_cache 並記錄，之後自動走快取。引擎沒開 → 回空，交談照常只顯示字幕。
 ##   引擎有開時，啟動後在背景預熱目前語言用到的聲線（/initialize_speaker），避免第一句等模型載入（AivisSpeech 每個模型約 7 s）。
 ##   不呼叫任何付費／雲端語音服務；遊戲本身不啟動也不重啟引擎。
 ## 嘴型：每段語音附 30 Hz 音量包絡（env），actor 用它驅動嘴部開合。
+## 情緒：voices.json heroes.<id>.<lang>.emotions.<emo> 覆寫基本聲線參數（換 style＝speaker、speed、pitch、intonation、
+##   tempo〔AivisSpeech 緩急〕、pause〔句讀停頓倍率〕、volume、rise〔VOICEVOX 句尾上揚，問句／驚訝〕）。
+##   快取鍵含「解析後的全部參數」：改了台詞或任何情緒參數，鍵就不同，絕不會播到舊音檔。
 
 signal clip_ready(key: String)
 
@@ -50,10 +53,17 @@ func speakers_in_use() -> Dictionary:
 		if v.is_empty():
 			continue
 		var e := String(v.engine)
+		if String(cfg.get("engines", {}).get(e, {}).get("api", "")) != "voicevox":
+			continue          # Kokoro 沒有逐聲線載入，不必預熱
+		var spks := [int(v.speaker)]
+		for em in v.get("emotions", {}).values():
+			if (em as Dictionary).has("speaker"):
+				spks.append(int(em.speaker))
 		if not out.has(e):
 			out[e] = []
-		if not (out[e] as Array).has(int(v.speaker)):
-			(out[e] as Array).append(int(v.speaker))
+		for sp in spks:
+			if not (out[e] as Array).has(sp):
+				(out[e] as Array).append(sp)
 	return out
 
 
@@ -81,25 +91,42 @@ func _warmup() -> void:
 			warm_ms[spk] = Time.get_ticks_msec() - t0
 
 
-func hero_voice(hero: String) -> Dictionary:
-	return cfg.get("heroes", {}).get(hero, {}).get(lang, {})
+## 解析後的聲線參數（基本＋情緒覆寫）；沒有該語言設定回 {}
+func hero_voice(hero: String, emo := "neutral") -> Dictionary:
+	var base: Dictionary = cfg.get("heroes", {}).get(hero, {}).get(lang, {})
+	if base.is_empty():
+		return {}
+	var v := base.duplicate()
+	v.erase("emotions")
+	v.erase("label")
+	var em: Dictionary = base.get("emotions", {}).get(emo, {})
+	for k in em:
+		if k != "label":
+			v[k] = em[k]
+	return v
 
 
 func has_voice(hero: String) -> bool:
 	return not hero_voice(hero).is_empty()
 
 
-## 快取鍵（與 tools/npc_voice/bake_voice_cache.py 的 clip_key 必須一致）
+const KEY_FIELDS := ["engine", "speaker", "voice", "lang_code", "speed", "pitch", "intonation", "tempo", "pause", "volume", "rise"]
+
+## 快取鍵（與 tools/npc_voice/bake_voice_cache.py 的 clip_key 必須一致）：所有影響聲音的參數都在裡面
 static func clip_key(hero: String, lng: String, v: Dictionary, text: String) -> String:
-	var spk: Variant = v.get("speaker", "")
-	var spk_s := str(int(spk)) if (spk is float or spk is int) else str(spk)
-	var sig := "%s|%s|%s|%s|%.2f|%s" % [hero, lng, v.get("engine", ""), spk_s, float(v.get("speed", 1.0)), text]
+	var parts := PackedStringArray()
+	for k in KEY_FIELDS:
+		if not v.has(k):
+			continue
+		var x: Variant = v[k]
+		parts.append("%s=%s" % [k, ("%.3f" % float(x)) if (x is float or x is int) else str(x)])
+	var sig := "%s|%s|%s|%s" % [hero, lng, ";".join(parts), text]
 	return sig.sha1_text().substr(0, 16)
 
 
 ## 已有就回 {stream, dur, env}；沒有回 {}
-func lookup(hero: String, text: String) -> Dictionary:
-	var v := hero_voice(hero)
+func lookup(hero: String, text: String, emo := "neutral") -> Dictionary:
+	var v := hero_voice(hero, emo)
 	if v.is_empty() or text == "":
 		return {}
 	var key := clip_key(hero, lang, v, text)
@@ -125,8 +152,8 @@ func lookup(hero: String, text: String) -> Dictionary:
 
 
 ## 預先生成（交談一開始就呼叫，等走到位時通常已經好了）
-func prefetch(hero: String, text: String) -> void:
-	var v := hero_voice(hero)
+func prefetch(hero: String, text: String, emo := "neutral") -> void:
+	var v := hero_voice(hero, emo)
 	if v.is_empty() or text == "":
 		return
 	var key := clip_key(hero, lang, v, text)
@@ -139,8 +166,8 @@ func prefetch(hero: String, text: String) -> void:
 	_generate(key, hero, v, eng, text)
 
 
-func is_pending(hero: String, text: String) -> bool:
-	var v := hero_voice(hero)
+func is_pending(hero: String, text: String, emo := "neutral") -> bool:
+	var v := hero_voice(hero, emo)
 	return not v.is_empty() and _pending.has(clip_key(hero, lang, v, text))
 
 
@@ -150,7 +177,7 @@ func _engine_alive(name: String, eng: Dictionary) -> bool:
 	var rec: Dictionary = _engine_ok.get(ck, {})
 	if not rec.is_empty() and Time.get_ticks_msec() - int(rec.t) < 30000:
 		return bool(rec.ok)
-	var probe := String(eng.url) + "/version"
+	var probe := String(eng.url) + ("/version" if String(eng.api) == "voicevox" else "/v1/audio/voices")
 	var r := await _http(probe, HTTPClient.METHOD_GET, "", PackedStringArray(), 1.5)
 	var ok := not r.is_empty()
 	_engine_ok[ck] = {"ok": ok, "t": Time.get_ticks_msec(), "engine": name}
@@ -163,18 +190,21 @@ func _generate(key: String, hero: String, v: Dictionary, eng: Dictionary, text: 
 		_gen_fail(key)
 		return
 	var url := String(eng.url)
-	var q := await _http(url + "/audio_query?speaker=%d&text=%s" % [int(v.speaker), text.uri_encode()], HTTPClient.METHOD_POST, "", PackedStringArray(), 15.0)
-	if q.is_empty():
-		_gen_fail(key)
-		return
-	var query: Variant = JSON.parse_string(q.get_string_from_utf8())
-	if not (query is Dictionary):
-		_gen_fail(key)
-		return
-	if v.has("speed"): query["speedScale"] = float(v.speed)
-	if v.has("pitch"): query["pitchScale"] = float(v.pitch)
-	if v.has("intonation"): query["intonationScale"] = float(v.intonation)
-	var wav := await _http(url + "/synthesis?speaker=%d" % int(v.speaker), HTTPClient.METHOD_POST, JSON.stringify(query), PackedStringArray(["Content-Type: application/json"]))
+	var wav := PackedByteArray()
+	if String(eng.api) == "voicevox":
+		var q := await _http(url + "/audio_query?speaker=%d&text=%s" % [int(v.speaker), text.uri_encode()], HTTPClient.METHOD_POST, "", PackedStringArray(), 15.0)
+		if q.is_empty():
+			_gen_fail(key)
+			return
+		var query: Variant = JSON.parse_string(q.get_string_from_utf8())
+		if not (query is Dictionary):
+			_gen_fail(key)
+			return
+		apply_query_params(query, v, bool(eng.get("pitch_edit", false)))
+		wav = await _http(url + "/synthesis?speaker=%d" % int(v.speaker), HTTPClient.METHOD_POST, JSON.stringify(query), PackedStringArray(["Content-Type: application/json"]))
+	else:
+		var body := {"model": "kokoro", "input": text, "voice": String(v.voice), "response_format": "wav", "stream": false, "speed": float(v.get("speed", 1.0)), "lang_code": String(v.get("lang_code", "a"))}
+		wav = await _http(url + "/v1/audio/speech", HTTPClient.METHOD_POST, JSON.stringify(body), PackedStringArray(["Content-Type: application/json"]))
 	if wav.size() < 64:
 		_gen_fail(key)
 		return
@@ -196,6 +226,27 @@ func _generate(key: String, hero: String, v: Dictionary, eng: Dictionary, text: 
 	stats.gen += 1
 	(stats.gen_ms as Array).append(Time.get_ticks_msec() - t0)
 	clip_ready.emit(key)
+
+
+## AudioQuery 套用聲線／情緒參數（與 bake_voice_cache.py 的 apply_query_params 同規則）
+static func apply_query_params(query: Dictionary, v: Dictionary, pitch_edit: bool) -> void:
+	if v.has("speed"): query["speedScale"] = float(v.speed)
+	if v.has("pitch"): query["pitchScale"] = float(v.pitch)
+	if v.has("intonation"): query["intonationScale"] = float(v.intonation)
+	if v.has("tempo"): query["tempoDynamicsScale"] = float(v.tempo)      # AivisSpeech 專用
+	if v.has("pause"): query["pauseLengthScale"] = float(v.pause)
+	if v.has("volume"): query["volumeScale"] = float(v.volume)
+	# 句尾上揚（問句／驚訝）：把最後一個有音高的 mora 往上推（VOICEVOX 的 accent_phrases 音高可編輯）
+	if pitch_edit and v.has("rise") and float(v.rise) != 0.0:
+		var aps: Array = query.get("accent_phrases", [])
+		if not aps.is_empty():
+			var moras: Array = aps[aps.size() - 1].get("moras", [])
+			for k in range(moras.size() - 1, -1, -1):
+				if float(moras[k].get("pitch", 0.0)) > 0.0:
+					moras[k]["pitch"] = float(moras[k].pitch) + float(v.rise)
+					if k > 0 and float(moras[k - 1].get("pitch", 0.0)) > 0.0:
+						moras[k - 1]["pitch"] = float(moras[k - 1].pitch) + float(v.rise) * 0.4
+					break
 
 
 func _gen_fail(key: String) -> void:

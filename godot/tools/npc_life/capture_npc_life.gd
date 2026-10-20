@@ -208,13 +208,15 @@ func _sc_voice() -> void:
 	_park_player(FAR)
 	dir.set("time_scale", 1.0)
 	var topic := ""
+	var partner := "keine"
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--topic="): topic = a.substr(8)
+		if a.begins_with("--partner="): partner = a.substr(10)
 	# 指定主題：暫時讓魔理沙的閒聊只用這個主題
 	for ev in dir.get("defs")["marisa"].events:
 		if ev.id == "marisa_chat" and topic != "":
 			ev["topics"] = [topic]
-	dir.call("force_event", "marisa", "marisa_chat", "keine")
+	dir.call("force_event", "marisa", "marisa_chat", partner)
 	var cl := CanvasLayer.new()
 	main.add_child(cl)
 	sub = Label.new()
@@ -233,11 +235,12 @@ func _sc_voice() -> void:
 	dir.connect("event_state", func(h, e, st, info):
 		if st == "SAY":
 			var nm := String(dir.get("defs")[h].get("name", h))
-			sub.text = "%s：%s\n%s" % [nm, info.get("text", ""), info.get("sub", "")])
-	var pair := _follow_pair("marisa", "keine", 3.2, 1.5)
+			var emo := String(info.get("emo", "neutral"))
+			sub.text = "%s：%s%s\n%s" % [nm, info.get("text", ""), ("　〔%s〕" % emo) if emo != "neutral" else "", info.get("sub", "")])
+	var pair := _follow_pair("marisa", partner, 3.2, 1.5)
 	follow = func(dt: float) -> void:
 		var speaker := ""
-		for h in ["marisa", "keine"]:
+		for h in ["marisa", partner]:
 			if bool(_hero(h).call("is_speaking")):
 				speaker = h
 		if speaker == "":
@@ -258,7 +261,7 @@ func _sc_voice() -> void:
 		cam.look_at(head)
 	shot_on = {"SAY": 1.6}
 	max_per = 6
-	shot_heroes = ["marisa", "keine"]
+	shot_heroes = ["marisa", partner]
 
 
 func _sc_mushroom() -> void:

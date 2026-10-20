@@ -214,20 +214,60 @@ func _maybe_change_plan(f: String) -> bool:
 	return false
 
 
-func session_speak(text: String, dur: float, listener: Node3D, clip: String, vclip := {}) -> void:
+## 情緒 → 說話時的動作（沒有該動作就退回一般說話）
+const EMO_CLIPS := {
+	"happy": ["talk_funny"], "excited": ["talk_twohands", "talk_funny"], "smug": ["talk_funny"],
+	"surprised": ["talk_twohands"], "annoyed": ["talk_twohands"], "serious": ["talk_general"],
+	"doubt": ["idle_think", "talk_general"], "worried": ["talk_general"], "sigh": ["idle_think", "talk_general"],
+	"embarrassed": ["talk_general"],
+}
+const EMO_BODY := {"excited": "happy"}     # 身體反應借用的 profile
+
+
+func session_speak(text: String, dur: float, listener: Node3D, clip: String, vclip := {}, emo := "neutral") -> void:
 	_look_at = listener
 	say(text, dur)
 	if not vclip.is_empty():
 		_speak_voice(vclip)
 	if _pose == "":
-		var c := clip if clip != "" else _pick_clip(_action("talk").get("loop", ["idle"]))
+		var pool: Array = EMO_CLIPS.get(emo, _action("talk").get("loop", ["idle"]))
+		var c := clip if clip != "" else _pick_clip(pool)
+		if c == "idle":
+			c = _pick_clip(_action("talk").get("loop", ["idle"]))
 		_play(c, 0.0)
+	_emote_play(String(EMO_BODY.get(emo, emo)), maxf(float(vclip.get("dur", dur - 0.45)), 0.4))
 
 
-func session_listen(speaker: Node3D) -> void:
+## 聆聽：看著對方；對方講得久、語氣平常時中途點個頭（不出聲，不會兩人同時說話）
+func session_listen(speaker: Node3D, dur := 0.0, emo := "neutral") -> void:
 	_look_at = speaker
 	if _pose == "" and _act.is_empty():
 		_anim(&"idle")
+	if dur > 3.0 and emo in ["neutral", "happy", "excited", "smug", "serious"]:
+		var me := self
+		get_tree().create_timer(dur * 0.45).timeout.connect(func():
+			if is_instance_valid(me) and not _session.is_empty() and not is_speaking():
+				_emote_play("nod", 0.6))
+
+
+## 開口前停頓：思考動作
+func session_think(t: float) -> void:
+	if _pose == "" and _act.is_empty() and _has_clip("idle_think"):
+		_play("idle_think", 0.0)
+	_emote_play("thinking", t)
+
+
+## 被對方打斷：語音當場停（字幕泡泡留著讓玩家看到被打斷的那句）
+func session_cut() -> void:
+	_stop_voice()
+
+
+var _emote: Node
+
+
+func _emote_play(emo: String, dur: float) -> void:
+	if _emote != null and emo != "neutral":
+		_emote.call("play", emo, dur, 1.0)
 
 
 func session_ended(s: Dictionary, state: String) -> void:
@@ -1119,6 +1159,10 @@ func _make_look() -> void:
 	_look.duration = 0.25
 	_look.influence = 0.0
 	_look.target_node = _look.get_path_to(_look_target)
+	# 情緒身體反應（排在 LookAt 之後，疊在看向之上）
+	_emote = (load("res://systems/npc_life/npc_emote.gd") as GDScript).new()
+	_emote.name = "LifeEmote"
+	sk.add_child(_emote)
 
 
 func _update_look(dt: float) -> void:

@@ -23,7 +23,7 @@
 
 ## 語音（r1，可切換）
 
-交談台詞可配本機 TTS 語音（`systems/npc_life/npc_voice.gd`＋`npc_mouth.gd`，設定 `data/npc_life/voices.json`、台詞 `social.json` 的 `voice`）。快取優先，引擎沒開只顯示字幕。評估、授權與指令見 `docs/npc_life/NPC語音評估.md`。
+交談台詞可配本機 TTS 語音（`systems/npc_life/npc_voice.gd`＋`npc_mouth.gd`，設定 `data/npc_life/voices.json`、台詞 `social.json` 的 `voice`）。快取優先，引擎沒開只顯示字幕。評估、授權與指令見 `docs/npc_life/NPC語音評估.md`。情緒化對話（beats：emo／pause／cut、反應行 "@刺激"、heroes.json 的 speech、程序化身體反應 npc_emote.gd）見同文件 r4 段。
 
 ## 事件鏈（目前資料）
 

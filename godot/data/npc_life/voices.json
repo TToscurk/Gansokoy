@@ -1,23 +1,48 @@
 {
-	"_note": "NPC 語音設定（systems/npc_life/npc_voice.gd）。lang＝語音語言；目前只有日文語音（ja）。字幕：繁中用 social.json 的 lines；原文字幕用 social.json 的 voice.<lang>（英文字幕 voice.en 保留，lang=en 時只有字幕、沒有語音）。每名 HERO 每種語言指定引擎與聲線；沒有設定的 HERO 只顯示字幕。engines 列可用的本機引擎，實際要開的只有 heroes 引用到的（目前：voicevox＝魔理沙 ぞん子・慧音 波音リツ；aivis＝靈夢 コハク）。快取：res://assets/voice（tools/npc_voice/bake_voice_cache.py 離線烘焙）＋ user://voice_cache（執行期生成）。mouth＝嘴在 Skeleton 空間（rest 姿勢）的位置（點位探針＋特寫判定）；mouth_uv＝嘴在「身體」網格貼圖上的位置（[u, v, UV→公尺 2×2 矩陣的兩欄]，跨貼圖接縫時兩塊）；mouth_uv_back＝嘴是開縫的模型才需要：縫裡露出的頭殼內側也畫暗；mouth_inner＝開縫嘴的唇內壁 UV 塊 [u, v, 半徑]，說話時塗暗（tools/npc_voice/bake_mouth_uv.gd 由 mouth 烘焙），npc_mouth.gd 用它在臉的表面畫開合的嘴；mouth_enabled＝false 時不掛嘴型（使用者 2026-10-21：目前不用嘴巴動，資料保留）。授權：見 docs/npc_life/NPC語音評估.md。",
+	"_note": "NPC 語音設定（systems/npc_life/npc_voice.gd）。lang＝語音語言；ja＝日文語音、en＝英文語音（Kokoro，2026-10-21 使用者要求重裝）。字幕：繁中用 social.json 的 lines；原文字幕用 social.json 的 voice.<lang>。每名 HERO 每種語言指定引擎與聲線；沒有設定的 HERO 只顯示字幕。engines 列可用的本機引擎，實際要開的只有 heroes 引用到的（目前：voicevox＝魔理沙 ぞん子・慧音 波音リツ；aivis＝靈夢 コハク）。快取：res://assets/voice（tools/npc_voice/bake_voice_cache.py 離線烘焙）＋ user://voice_cache（執行期生成）。mouth＝嘴在 Skeleton 空間（rest 姿勢）的位置（點位探針＋特寫判定）；mouth_uv＝嘴在「身體」網格貼圖上的位置（[u, v, UV→公尺 2×2 矩陣的兩欄]，跨貼圖接縫時兩塊）；mouth_uv_back＝嘴是開縫的模型才需要：縫裡露出的頭殼內側也畫暗；mouth_inner＝開縫嘴的唇內壁 UV 塊 [u, v, 半徑]，說話時塗暗（tools/npc_voice/bake_mouth_uv.gd 由 mouth 烘焙），npc_mouth.gd 用它在臉的表面畫開合的嘴；mouth_enabled＝false 時不掛嘴型（使用者 2026-10-21：目前不用嘴巴動，資料保留）。授權：見 docs/npc_life/NPC語音評估.md。 emotions.<情緒>＝覆寫基本參數（speaker 換 style、speed、pitch〔AivisSpeech 勿改〕、intonation〔VOICEVOX 抑揚／AivisSpeech 感情強度〕、tempo〔AivisSpeech 緩急〕、pause〔句讀停頓倍率〕、rise〔VOICEVOX 句尾上揚〕）；Kokoro 只有 speed。情緒：neutral／happy／excited／smug／surprised／doubt／annoyed／sigh／embarrassed／worried／serious。",
 	"lang": "ja",
 	"mouth_enabled": false,
 	"engines": {
-		"aivis": {"url": "http://127.0.0.1:10101", "api": "voicevox", "label": "AivisSpeech Engine 1.2.0"},
-		"voicevox": {"url": "http://127.0.0.1:50021", "api": "voicevox", "label": "VOICEVOX ENGINE 0.25.2"}
+		"aivis": {
+			"url": "http://127.0.0.1:10101",
+			"api": "voicevox",
+			"label": "AivisSpeech Engine 1.2.0"
+		},
+		"voicevox": {
+			"url": "http://127.0.0.1:50021",
+			"api": "voicevox",
+			"label": "VOICEVOX ENGINE 0.25.2",
+			"pitch_edit": true
+		},
+		"kokoro": {
+			"url": "http://127.0.0.1:8880",
+			"api": "openai",
+			"label": "Kokoro-FastAPI 0.9.0（Kokoro-82M v1.0，CUDA）"
+		}
 	},
 	"heroes": {
 		"marisa": {
-			"ja": {"engine": "voicevox", "speaker": 90, "label": "ぞん子／ノーマル（VOICEVOX:ぞん子）", "speed": 1.0},
-			"mouth": [-0.001, 1.347, 0.0949], "mouth_size": [0.018, 0.010], "mouth_uv": [[0.91401, 0.46121, -0.5724, -0.9576, -1.091, 0.6111], [0.90291, 0.97186, 1.1606, -0.1393, -0.2883, -1.1358]]
+			"ja": {"engine": "voicevox", "speaker": 90, "label": "ぞん子／ノーマル（VOICEVOX:ぞん子）", "speed": 1.05, "emotions": {"neutral": {"speaker": 90, "speed": 1.05}, "happy": {"speaker": 90, "speed": 1.12, "pitch": 0.04, "intonation": 1.35}, "smug": {"speaker": 90, "speed": 1.0, "pitch": -0.02, "intonation": 1.25}, "surprised": {"speaker": 92, "speed": 1.15, "pitch": 0.06, "intonation": 1.5, "rise": 0.35}, "doubt": {"speaker": 90, "speed": 1.0, "intonation": 1.2, "rise": 0.45}, "annoyed": {"speaker": 90, "speed": 1.1, "pitch": -0.03, "intonation": 1.3}, "sigh": {"speaker": 91, "speed": 0.88, "pitch": -0.04, "intonation": 0.8, "pause": 1.6}, "embarrassed": {"speaker": 91, "speed": 1.08, "pitch": 0.02, "intonation": 0.9}, "worried": {"speaker": 91, "speed": 0.95, "intonation": 0.9}, "serious": {"speaker": 90, "speed": 0.98, "pitch": -0.03, "intonation": 0.9}, "excited": {"speaker": 93, "speed": 1.1, "intonation": 1.3}}},
+			"mouth": [-0.001, 1.347, 0.0949],
+			"mouth_size": [0.018, 0.01],
+			"mouth_uv": [[0.91401, 0.46121, -0.5724, -0.9576, -1.091, 0.6111], [0.90291, 0.97186, 1.1606, -0.1393, -0.2883, -1.1358]],
+			"en": {"engine": "kokoro", "voice": "af_bella", "label": "af_bella", "lang_code": "a", "speed": 1.05, "emotions": {"neutral": {"speed": 1.05}, "happy": {"speed": 1.12}, "excited": {"speed": 1.15}, "surprised": {"speed": 1.15}, "sigh": {"speed": 0.88}, "doubt": {"speed": 0.97}, "annoyed": {"speed": 1.1}, "smug": {"speed": 1.0}, "embarrassed": {"speed": 1.08}, "worried": {"speed": 0.95}, "serious": {"speed": 0.98}}}
 		},
 		"keine": {
-			"ja": {"engine": "voicevox", "speaker": 9, "label": "波音リツ／ノーマル（VOICEVOX:波音リツ）", "speed": 1.0},
-			"mouth": [0.0003, 1.345, 0.19], "mouth_size": [0.016, 0.010], "mouth_uv": [[0.74944, 0.2393, -1.9783, 0.425, 0.3134, 2.0643], [0.55559, 0.23165, -1.1236, -2.0643, -2.878, -0.425]], "mouth_uv_back": [[0.27312, 0.91134, 1.99, -0.9808, 0.9371, 1.6673]], "mouth_inner": [0.12301, 0.12166, 0.0086]
+			"ja": {"engine": "voicevox", "speaker": 9, "label": "波音リツ／ノーマル（VOICEVOX:波音リツ）", "speed": 1.0, "emotions": {"neutral": {"speaker": 9, "speed": 1.0}, "serious": {"speaker": 65, "speed": 0.96}, "annoyed": {"speaker": 65, "speed": 1.05, "pitch": -0.02, "intonation": 1.35}, "surprised": {"speaker": 9, "speed": 1.15, "pitch": 0.07, "intonation": 1.6, "rise": 0.4}, "doubt": {"speaker": 9, "speed": 0.98, "intonation": 1.25, "rise": 0.45}, "sigh": {"speaker": 9, "speed": 0.85, "pitch": -0.05, "intonation": 0.75, "pause": 1.7}, "happy": {"speaker": 9, "speed": 1.05, "pitch": 0.03, "intonation": 1.3}, "worried": {"speaker": 9, "speed": 0.95, "pitch": -0.02, "intonation": 0.9}, "embarrassed": {"speaker": 9, "speed": 1.08, "pitch": 0.02, "intonation": 1.0}, "smug": {"speaker": 65, "speed": 1.0, "intonation": 1.2}}},
+			"mouth": [0.0003, 1.345, 0.19],
+			"mouth_size": [0.016, 0.01],
+			"mouth_uv": [[0.74944, 0.2393, -1.9783, 0.425, 0.3134, 2.0643], [0.55559, 0.23165, -1.1236, -2.0643, -2.878, -0.425]],
+			"mouth_uv_back": [[0.27312, 0.91134, 1.99, -0.9808, 0.9371, 1.6673]],
+			"mouth_inner": [0.12301, 0.12166, 0.0086],
+			"en": {"engine": "kokoro", "voice": "bf_emma", "label": "bf_emma", "lang_code": "b", "speed": 1.0, "emotions": {"neutral": {"speed": 1.0}, "happy": {"speed": 1.07}, "excited": {"speed": 1.1}, "surprised": {"speed": 1.1}, "sigh": {"speed": 0.83}, "doubt": {"speed": 0.92}, "annoyed": {"speed": 1.05}, "smug": {"speed": 0.95}, "embarrassed": {"speed": 1.03}, "worried": {"speed": 0.9}, "serious": {"speed": 0.93}}}
 		},
 		"reimu": {
-			"ja": {"engine": "aivis", "speaker": 1878365379, "label": "コハク／ねむたい", "speed": 1.0},
-			"mouth": [-0.006, 1.351, 0.1156], "mouth_size": [0.014, 0.009], "mouth_uv": [[0.79034, 0.42522, -0.0009, -1.7185, -1.7358, 0.3383]]
+			"ja": {"engine": "aivis", "speaker": 1878365379, "label": "コハク／ねむたい", "speed": 1.0, "emotions": {"neutral": {"speaker": 1878365379}, "sigh": {"speaker": 1878365379, "speed": 0.9, "intonation": 1.4, "pause": 1.5}, "annoyed": {"speaker": 1878365376, "speed": 1.08, "intonation": 1.3, "tempo": 1.4}, "surprised": {"speaker": 1878365376, "speed": 1.12, "intonation": 1.4, "tempo": 1.6}, "doubt": {"speaker": 1878365376, "speed": 0.98, "tempo": 1.2}, "happy": {"speaker": 1878365377, "intonation": 1.2, "tempo": 1.2}, "smug": {"speaker": 1878365377, "intonation": 0.9}, "serious": {"speaker": 1878365376, "speed": 0.95, "intonation": 0.8, "tempo": 0.8}, "worried": {"speaker": 1878365378, "intonation": 1.2}, "embarrassed": {"speaker": 1878365377, "speed": 1.05, "tempo": 1.3}}},
+			"mouth": [-0.006, 1.351, 0.1156],
+			"mouth_size": [0.014, 0.009],
+			"mouth_uv": [[0.79034, 0.42522, -0.0009, -1.7185, -1.7358, 0.3383]],
+			"en": {"engine": "kokoro", "voice": "af_heart", "label": "af_heart", "lang_code": "a", "speed": 0.97, "emotions": {"neutral": {"speed": 0.97}, "happy": {"speed": 1.04}, "excited": {"speed": 1.07}, "surprised": {"speed": 1.07}, "sigh": {"speed": 0.8}, "doubt": {"speed": 0.89}, "annoyed": {"speed": 1.02}, "smug": {"speed": 0.92}, "embarrassed": {"speed": 1.0}, "worried": {"speed": 0.87}, "serious": {"speed": 0.9}}}
 		}
 	}
 }
