@@ -56,7 +56,9 @@ func _run() -> void:
 	_ok("英文字幕台詞保留（social.json voice.en 與繁中逐句對應）", en_subs >= 4, "%d 個主題" % en_subs)
 	# 4) 引擎離線：生成失敗、lookup 回空（交談只顯示字幕，不卡）
 	v1.set("lang", "ja")
-	(v1.get("cfg").engines.aivis as Dictionary)["url"] = "http://127.0.0.1:1"
+	# 讓魔理沙實際用的引擎離線（聲線換過引擎也照樣測得到）
+	var eng_name := String((v1.call("hero_voice", "marisa") as Dictionary).engine)
+	(v1.get("cfg").engines[eng_name] as Dictionary)["url"] = "http://127.0.0.1:1"
 	var tx := "オフラインテスト%s" % stamp
 	var t1 := Time.get_ticks_msec()
 	v1.call("prefetch", "marisa", tx)

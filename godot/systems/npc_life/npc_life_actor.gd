@@ -1027,7 +1027,7 @@ func _make_voice() -> void:
 	var vc: Dictionary = {}
 	if _life.get("voice") != null:
 		vc = _life.voice.cfg.get("heroes", {}).get(hero_id, {})
-	if vc.has("mouth_uv") and _npc != null:
+	if vc.has("mouth_uv") and _npc != null and bool(_life.voice.cfg.get("mouth_enabled", true)):
 		_mouth = load("res://systems/npc_life/npc_mouth.gd").attach(_npc, vc)
 
 

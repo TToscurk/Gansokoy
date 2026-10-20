@@ -1,20 +1,34 @@
-# NPC AI 語音（r1 評估 2026-10-20 → r2 收尾 2026-10-21）
+# NPC AI 語音（r1 評估 2026-10-20 → r2 收尾 → r3 換聲線 2026-10-21）
 
 規格：使用者 2026-10-20 指示（三套本機免費 TTS：AivisSpeech／Kokoro-FastAPI／VOICEVOX）。只用本機引擎，不用付費／雲端語音。
 
-## 現況（r2，使用者裁定後）
+## 現況（r3，2026-10-21 使用者指定）
+
+- **聲線**：
+  - 魔理沙＝VOICEVOX **ぞん子／ノーマル**（id 90）。
+  - 慧音＝VOICEVOX **波音リツ／ノーマル**（id 9）。
+  - 靈夢＝AivisSpeech コハク／ねむたい（未變）。
+- **引擎**：VOICEVOX 與 AivisSpeech 兩個都要開，才能生成新台詞。玩遊戲時不用開，因為語音已預錄。
+- **嘴型關閉**（使用者：「目前不用嘴巴動」）：`voices.json` 設 `"mouth_enabled": false`，HERO 不掛嘴型。嘴的 UV 資料與 `npc_mouth.gd` 保留，改回 `true` 即可恢復。
+- **授權（必讀）**：
+  - 波音リツ：署名「VOICEVOX:波音リツ」即可商用、非商用。
+  - **ぞん子：署名「VOICEVOX:ぞん子」；但商用要先個別詢問**（https://zonko.zone-energy.jp/contact）。
+  - 原文存在 `D:\神社\proto\npc_voice\licenses\voicevox_ぞん子.md`、`voicevox_波音リツ.md`。
+
+## r2 時的狀態（歷史）
+
 
 - **正式只用日文語音：AivisSpeech**（魔理沙＝まお／からかい、慧音＝みちのくあいり／標準、靈夢＝コハク／ねむたい）。
 - **英文語音已移除**（使用者 2026-10-21：「CUDA 測試做完後，整個英文語音都不要」）：Kokoro 引擎（CPU／GPU 兩套環境、模型、uv 快取、啟動檔）已從 `D:\Tools\TTS` 刪除；英文語音快取 15 句與 `voices.json` 的英文設定已刪。
 - **英文字幕保留**（使用者更正：「可以留下英文字幕設定」）：`social.json` 每個主題的 `voice.en` 原文台詞保留；`lang=en` 時不送引擎、只提供英文字幕（交談紀錄 `SAY` 的 `sub` 欄位）。
-- VOICEVOX 引擎仍裝在 D 槽當備選，但沒有任何 HERO 用它，平常不必開。
+- （r3 起 VOICEVOX 改為使用中，見上方。）
 
 ## 安裝（全部在 D 槽）
 
 | 引擎 | 位置 | 啟動 | API | 狀態 |
 |---|---|---|---|---|
 | AivisSpeech Engine 1.2.0（DirectML GPU） | `D:\Tools\TTS\AivisSpeech-Engine` | `D:\Tools\TTS\start_aivis.cmd` | `http://127.0.0.1:10101` | **使用中** |
-| VOICEVOX ENGINE 0.25.2（DirectML） | `D:\Tools\TTS\VOICEVOX-Engine` | `D:\Tools\TTS\start_voicevox.cmd` | `http://127.0.0.1:50021` | 備選、未使用 |
+| VOICEVOX ENGINE 0.25.2（DirectML） | `D:\Tools\TTS\VOICEVOX-Engine` | `D:\Tools\TTS\start_voicevox.cmd` | `http://127.0.0.1:50021` | **使用中**（r3 起） |
 | Kokoro-FastAPI 0.9.0 | （已刪除） | — | — | 已移除 |
 
 - AivisSpeech 的模型資料夾 `%APPDATA%\AivisSpeech-Engine` 是 junction，實體 1.4 GB 在 `D:\Tools\TTS\data\AivisSpeech-Engine`。
@@ -23,7 +37,7 @@
 ## 什麼時候要開引擎
 
 - **玩遊戲：不用開任何引擎。** 已烘焙的 15 句日文語音隨專案出貨（`res://assets/voice`），沒有快取的台詞只顯示字幕。遊戲本身不會啟動或重啟引擎。
-- **開發時要新增台詞：只開 AivisSpeech。** `bake_voice_cache.py` 會先檢查需要的引擎有沒有開，沒開就直接說要開哪個。
+- **開發時要新增台詞：開 voices.json 用到的引擎（r3：VOICEVOX＋AivisSpeech）。** `bake_voice_cache.py` 會先檢查需要的引擎有沒有開，沒開就直接說要開哪個。
 - **冷啟動**：AivisSpeech 每個模型第一次載入約 6–8 s。現在有兩層處理：
   1. 烘焙工具在烘焙前先預熱用到的 3 個聲線。
   2. 遊戲在引擎有開時，啟動後在背景預熱（`/initialize_speaker`），引擎剛啟動還沒回應時每 5 s 重試、最多 6 次。

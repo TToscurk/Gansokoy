@@ -5,7 +5,8 @@
 key 的算法必須與 systems/npc_life/npc_voice.gd 的 clip_key 一致。只用本機免費引擎；只用 Python 標準函式庫。
 只需要開 voices.json 裡 heroes 用到的引擎（目前只有 AivisSpeech：D:\\Tools\\TTS\\start_aivis.cmd）；
 開工前會先檢查，沒開就直接說要開哪個，不會半途失敗。烘焙前先預熱每個聲線（AivisSpeech 冷模型約 7 s）。
-用法：python bake_voice_cache.py [--langs=ja] [--topics=mk_greet,...] [--force]
+用法：python bake_voice_cache.py [--langs=ja] [--topics=mk_greet,...] [--force] [--prune]
+  --prune：刪掉現在設定用不到的舊快取（換聲線後的舊檔，含 .import）
 之後：godot --headless --path godot --import
 """
 import array, hashlib, io, json, math, os, struct, sys, time, urllib.parse, urllib.request, wave
@@ -108,6 +109,7 @@ def main():
             http(f"{voices['engines'][e]['url']}/initialize_speaker?speaker={s}&skip_reinit=true", ctype="post", timeout=120)
             print(f"預熱 {e} {s}：{time.perf_counter() - t0:.2f}s")
     made = skipped = 0
+    live = set()
     for lang in langs:
         os.makedirs(os.path.join(OUTDIR, "cache", lang), exist_ok=True)
         for t in social["topics"]:
@@ -120,6 +122,7 @@ def main():
                     continue
                 text = t["voice"][lang][i]
                 key = clip_key(hero, lang, v, text)
+                live.add(key)
                 rel = f"cache/{lang}/{key}.wav"
                 path = os.path.join(OUTDIR, rel)
                 if key in index["clips"] and os.path.exists(path) and "force" not in args:
@@ -134,8 +137,17 @@ def main():
                                        "engine": v["engine"], "voice": v.get("label", ""), "topic": t["id"], "line": i, "text": text, "gen_s": round(gen, 3)}
                 made += 1
                 print(f"{lang} {t['id']}#{i} {hero:6s} {v['engine']:8s} gen {gen:5.2f}s dur {dur:5.2f}s  {text}")
+    pruned = 0
+    if "prune" in args and only is None:
+        for k in [k for k, c in index["clips"].items() if c["lang"] in langs and k not in live]:
+            f = os.path.join(OUTDIR, index["clips"][k]["file"].split("res://assets/voice/")[1])
+            for x in (f, f + ".import"):
+                if os.path.exists(x):
+                    os.remove(x)
+            del index["clips"][k]
+            pruned += 1
     json.dump(index, open(INDEX, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print(f"made {made} skipped {skipped} → {INDEX}")
+    print(f"made {made} skipped {skipped} pruned {pruned} → {INDEX}")
 
 
 if __name__ == "__main__":
