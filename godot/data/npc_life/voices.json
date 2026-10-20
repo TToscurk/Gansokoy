@@ -1,0 +1,22 @@
+{
+	"_note": "NPC 語音設定（systems/npc_life/npc_voice.gd）。lang＝語音語言；目前只有日文語音（ja）。字幕：繁中用 social.json 的 lines；原文字幕用 social.json 的 voice.<lang>（英文字幕 voice.en 保留，lang=en 時只有字幕、沒有語音）。每名 HERO 每種語言指定引擎與聲線；沒有設定的 HERO 只顯示字幕。engines 列可用的本機引擎，實際要開的只有 heroes 引用到的（目前只有 aivis；voicevox 為備選、未使用）。快取：res://assets/voice（tools/npc_voice/bake_voice_cache.py 離線烘焙）＋ user://voice_cache（執行期生成）。mouth＝嘴在 Skeleton 空間（rest 姿勢）的位置（點位探針＋特寫判定）；mouth_uv＝嘴在「身體」網格貼圖上的位置（[u, v, UV→公尺 2×2 矩陣的兩欄]，跨貼圖接縫時兩塊）；mouth_uv_back＝嘴是開縫的模型才需要：縫裡露出的頭殼內側也畫暗；mouth_inner＝開縫嘴的唇內壁 UV 塊 [u, v, 半徑]，說話時塗暗（tools/npc_voice/bake_mouth_uv.gd 由 mouth 烘焙），npc_mouth.gd 用它在臉的表面畫開合的嘴。授權：見 docs/npc_life/NPC語音評估.md。",
+	"lang": "ja",
+	"engines": {
+		"aivis": {"url": "http://127.0.0.1:10101", "api": "voicevox", "label": "AivisSpeech Engine 1.2.0"},
+		"voicevox": {"url": "http://127.0.0.1:50021", "api": "voicevox", "label": "VOICEVOX ENGINE 0.25.2"}
+	},
+	"heroes": {
+		"marisa": {
+			"ja": {"engine": "aivis", "speaker": 888753764, "label": "まお／からかい", "speed": 1.05},
+			"mouth": [-0.001, 1.347, 0.0949], "mouth_size": [0.018, 0.010], "mouth_uv": [[0.91401, 0.46121, -0.5724, -0.9576, -1.091, 0.6111], [0.90291, 0.97186, 1.1606, -0.1393, -0.2883, -1.1358]]
+		},
+		"keine": {
+			"ja": {"engine": "aivis", "speaker": 1717361472, "label": "みちのくあいり／標準", "speed": 1.0},
+			"mouth": [0.0003, 1.345, 0.19], "mouth_size": [0.016, 0.010], "mouth_uv": [[0.74944, 0.2393, -1.9783, 0.425, 0.3134, 2.0643], [0.55559, 0.23165, -1.1236, -2.0643, -2.878, -0.425]], "mouth_uv_back": [[0.27312, 0.91134, 1.99, -0.9808, 0.9371, 1.6673]], "mouth_inner": [0.12301, 0.12166, 0.0086]
+		},
+		"reimu": {
+			"ja": {"engine": "aivis", "speaker": 1878365379, "label": "コハク／ねむたい", "speed": 1.0},
+			"mouth": [-0.006, 1.351, 0.1156], "mouth_size": [0.014, 0.009], "mouth_uv": [[0.79034, 0.42522, -0.0009, -1.7185, -1.7358, 0.3383]]
+		}
+	}
+}
