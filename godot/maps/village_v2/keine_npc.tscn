@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_actor.gd" id="1_gdfwp"]
+[ext_resource type="PackedScene" path="res://characters/keine/keine.tscn" id="2_3wv3h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gdfwp"]
+radius = 0.22
+height = 1.6
+
+[node name="KeineNPC" type="Node3D" unique_id=322319153]
+metadata/life_revision = "NPC Living World r1（2026-10-20）：本體改用 systems/npc_life/npc_life_actor.gd，由 NpcLife director 排程自主生活事件"
+metadata/art_revision = "Keine NPC r1 ART_REVIEW（2026-10-18）"
+
+[node name="K1_keine" type="AnimatableBody3D" parent="." unique_id=741632981]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 235.5, 0.57824326, 70)
+sync_to_physics = false
+script = ExtResource("1_gdfwp")
+hero_id = "keine"
+mode = "patrol"
+path_xz = PackedVector2Array(235.5, 70, 235.5, 62)
+path_y = PackedFloat32Array(0.57824326, 0.5797119, 0.58117294, 0.5826416, 0.58411026, 0.5855751, 0.58703995, 0.5885086, 0.58996964, 0.5914383, 0.59290314, 0.5943718, 0.59584427, 0.5973015, 0.59877014, 0.6002388, 0.6017151, 0.6031761, 0.6046448, 0.6061096, 0.6075783, 0.60904694, 0.6105156, 0.61198425, 0.6134453, 0.61491394, 0.6163788, 0.61785126, 0.6193161, 0.62078476, 0.6222496, 0.62371445, 0.6251869)
+walk_speed = 1.296
+wait_min = 8.0
+wait_max = 16.0
+seed_i = 170018
+metadata/model = "keine"
+metadata/zone = "main_street"
+
+[node name="Body" type="CollisionShape3D" parent="K1_keine" unique_id=21716520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_gdfwp")
+
+[node name="NPC" parent="K1_keine" unique_id=1921393389 instance=ExtResource("2_3wv3h")]

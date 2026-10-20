@@ -1100,6 +1100,12 @@
 [ext_resource type="Script" path="res://scripts/npc_activity_core.gd" id="p10r3d_act"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/entrance_cue_p10.tscn" id="p10r3d_cue"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/population_outer_p10.tscn" id="p10r3e_outer"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/keine_npc.tscn" id="keine_npc_r1"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/kosuzu_npc.tscn" id="kosuzu_npc_r1"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/akyuu_npc.tscn" id="akyuu_npc_r1"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/marisa_npc.tscn" id="marisa_npc_r1"]
+[ext_resource type="PackedScene" path="res://maps/village_v2/reimu_npc.tscn" id="reimu_npc_life_r1"]
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_director.gd" id="npc_life_director_r1"]
 [ext_resource type="Script" path="res://scripts/npc_activity_outer.gd" id="p10r3e_act"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/human_use_p10.scn" id="p10r4_human_use"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/human_use_exp_p10.scn" id="p10r4b_human_use_exp"]
@@ -144253,6 +144259,16 @@ script = ExtResource("p10r3d_act")
 
 [node name="OuterP10" parent="Population" instance=ExtResource("p10r3e_outer")]
 
+[node name="KeineNPC" parent="Population" instance=ExtResource("keine_npc_r1")]
+
+[node name="KosuzuNPC" parent="Population" instance=ExtResource("kosuzu_npc_r1")]
+
+[node name="AkyuuNPC" parent="Population" instance=ExtResource("akyuu_npc_r1")]
+
+[node name="MarisaNPC" parent="Population" instance=ExtResource("marisa_npc_r1")]
+
+[node name="ReimuNPC" parent="Population" instance=ExtResource("reimu_npc_life_r1")]
+
 [node name="ActivityOuterP10" type="Node3D" parent="Population"]
 script = ExtResource("p10r3e_act")
 
@@ -144292,3 +144308,7 @@ script = ExtResource("p10r3e_act")
 script = ExtResource("p13w9_devgate")
 
 [node name="WindRiverDemo" parent="." instance=ExtResource("wv2_wind_river_demo")]
+
+[node name="NpcLife" type="Node" parent="."]
+script = ExtResource("npc_life_director_r1")
+metadata/note = "NPC Living World director（docs/NPC自主生活系統.md；data/npc_life/）"

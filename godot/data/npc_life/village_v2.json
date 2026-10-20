@@ -1,0 +1,63 @@
+{
+	"_note": "NPC Living World（docs/NPC自主生活系統.md）village_v2 地點資料。places＝具名地點（可走格上）；objects＝Smart Object（stand＝互動站位、face＝面向點、node＝場景節點路徑供有效性檢查與隱藏）；homes＝各 HERO 的據點（link＝可走格上的銜接點，at 與 link 之間直線走，用於緣側等有落差處）。可走格由 tools/npc_life/bake_npc_life_walkgrid.gd 烘焙並逐點驗證。",
+	"grid": {"file": "res://data/npc_life/village_v2_walk.bin", "origin": [176.0, -76.0], "cell": 0.5, "w": 512, "h": 568},
+	"hub": "gate",
+	"place_labels": {"gate": "人里大鳥居（村口）", "south_road": "村口南路", "south_exit": "出村的南路", "forest_edge": "村口南林邊", "hokora_front": "村口小祠", "tower_yard": "火見櫓前", "kirisame_front": "霧雨道具店前", "cs_school": "南橫街（寺子屋路口）", "terakoya_yard": "寺子屋", "main_40": "主街南段", "main_10": "主街中段", "suzunaan_front": "鈴奈庵前", "cross_mid": "中橫街口", "market_north": "市集北口", "market_mid": "市集中段", "cross_east": "東水渠橋", "hieda_gate_out": "稗田邸門外", "hieda_gate_in": "稗田邸門內", "hieda_west": "稗田邸西側", "hieda_garden": "稗田邸後庭"},
+	"places": {
+		"gate": [234.0, 104.0],
+		"south_road": [229.0, 132.0],
+		"south_exit": [222.6, 204.0],
+		"forest_edge": [218.0, 147.0],
+		"hokora_front": [246.3, 98.4],
+		"tower_yard": [243.5, 66.0],
+		"kirisame_front": [238.5, 60.0],
+		"cs_school": [205.0, 48.5],
+		"terakoya_yard": [201.0, 30.0],
+		"main_40": [242.0, 40.0],
+		"main_10": [251.5, 10.0],
+		"suzunaan_front": [256.5, -8.0],
+		"cross_mid": [262.0, -20.0],
+		"market_north": [244.0, -24.0],
+		"market_mid": [242.0, -44.0],
+		"cross_east": [336.0, -33.0],
+		"hieda_gate_out": [398.0, -5.0],
+		"hieda_gate_in": [398.0, -14.0],
+		"hieda_west": [388.0, -30.0],
+		"hieda_garden": [395.0, -50.0]
+	},
+	"objects": [
+		{"id": "mushroom_1", "label": "霧雨道具店後院的蘑菇", "tags": ["mushroom", "material"], "node": "Vegetation/KirisameP9/Weeds/028_kr_kinoko", "stand": [232.18, 57.3], "face": [232.18, 57.97], "hide_on_use": true, "regrow": 420},
+		{"id": "mushroom_2", "label": "霧雨道具店後院的蘑菇", "tags": ["mushroom", "material"], "node": "Vegetation/KirisameP9/Weeds/029_kr_kinoko", "stand": [228.72, 56.75], "face": [228.72, 57.4], "hide_on_use": true, "regrow": 420},
+		{"id": "mushroom_3", "label": "霧雨道具店後院的蘑菇", "tags": ["mushroom", "material"], "node": "Vegetation/KirisameP9/Weeds/030_kr_kinoko", "stand": [225.4, 60.3], "face": [226.27, 60.53], "hide_on_use": true, "regrow": 420},
+		{"id": "mushroom_4", "label": "霧雨道具店後院的蘑菇", "tags": ["mushroom", "material"], "node": "Vegetation/KirisameP9/Weeds/031_kr_kinoko", "stand": [221.85, 67.45], "face": [221.85, 66.79], "hide_on_use": true, "regrow": 420},
+		{"id": "herb_kirisame", "label": "霧雨道具店後院的藥草", "tags": ["herb", "material"], "node": "Vegetation/KirisameP9/Weeds/027_kr_yakuso", "stand": [230.49, 71.85], "face": [230.49, 71.22], "hide_on_use": true, "regrow": 420},
+		{"id": "stall_zakka", "label": "市集雜貨攤", "tags": ["market", "stall", "material_shop"], "node": "Props/MarketP10/Stalls/023_mk_tana_zakka", "stand": [241.4, -55.8], "face": [241.4, -57.4]},
+		{"id": "stall_omocha", "label": "市集玩具攤", "tags": ["market", "stall"], "node": "Props/MarketP10/Stalls/018_mk_tana_omocha", "stand": [237.1, -48.1], "face": [235.2, -48.1]},
+		{"id": "stall_ame", "label": "市集糖果攤", "tags": ["market", "stall", "food"], "node": "Props/MarketP10/Stalls/003_mk_yatai_ame", "stand": [250.8, -47.7], "face": [252.79, -47.7]},
+		{"id": "street_bench", "label": "主街路邊長椅", "tags": ["bench", "rest", "study"], "node": "Props/StreetP10/Shopfront/046_sk_bench", "stand": [245.6, 35.0], "face": [246.87, 35.58]},
+		{"id": "entrance_bench", "label": "村口長椅", "tags": ["bench", "rest"], "node": "EnrichW9P13/ZoneM/M_entrance/188_sk_bench", "stand": [243.1, 101.8], "face": [244.4, 101.8]},
+		{"id": "hokora", "label": "村口小祠", "tags": ["shrine", "pray"], "node": "EnrichW9P13/ZoneM/M_entrance/185_w9_hokora", "stand": [246.3, 97.95], "face": [246.2, 96.4]},
+		{"id": "terakoya_class", "label": "寺子屋前院（孩子們）", "tags": ["teach"], "node": "Population/CoreP10/Terakoya/C21_nunoya_f01", "stand": [201.2, 27.0], "face": [206.3, 26.9]},
+		{"id": "school_board", "label": "寺子屋告示牌", "tags": ["notice", "inspect"], "node": "Vegetation/SchoolYardP9/Props/029_sk_fuda", "stand": [205.6, 22.25], "face": [205.6, 21.2]},
+		{"id": "fire_barrel_tower", "label": "火見櫓下的防火水桶", "tags": ["fire_barrel", "inspect"], "node": "Vegetation/TowerYardP9/Props/001_sk_tensui", "stand": [244.25, 70.35], "face": [245.25, 70.35]},
+		{"id": "suzunaan_board", "label": "鈴奈庵告示", "tags": ["notice", "inspect"], "node": "Vegetation/SuzunaanP9/Props/011_sz_keiji", "stand": [250.46, -11.15], "face": [250.46, -10.04]},
+		{"id": "suzunaan_bookstand", "label": "鈴奈庵書台", "tags": ["books", "shop_work"], "node": "Vegetation/SuzunaanP9/Props/015_sz_dai", "stand": [249.17, -15.05], "face": [249.17, -14.08]},
+		{"id": "suzunaan_boxes", "label": "鈴奈庵門口書箱", "tags": ["books", "shop_work"], "node": "Vegetation/SuzunaanP9/Props/017_sz_hako", "stand": [245.5, -13.6], "face": [245.5, -12.5]},
+		{"id": "suzunaan_sign", "label": "鈴奈庵招牌前", "tags": ["shop_front", "greet"], "node": "Vegetation/SuzunaanP9/Props/000_sz_kanban", "stand": [255.0, -10.2], "face": [262.0, -10.2]},
+		{"id": "hieda_tsukubai", "label": "稗田邸後庭蹲踞", "tags": ["garden", "observe"], "node": "Vegetation/HiedaGardenP9/Props/tsukubai/253_gk_tsukubai", "stand": [395.0, -50.55], "face": [395.0, -51.4]},
+		{"id": "hieda_lantern", "label": "稗田邸前庭石燈籠", "tags": ["garden", "pray"], "node": "Vegetation/HiedaGardenP9/Props/lantern/042_gk_toro_kasuga", "stand": [400.9, -21.05], "face": [400.9, -19.9]},
+		{"id": "anomaly_spot", "label": "村口南林邊（毛玉出沒處）", "tags": ["anomaly"], "node": "", "dynamic": true, "stand": [216.9, 147.6], "face": [214.6, 147.6]}
+	],
+	"homes": {
+		"keine": {"at": [201.0, 30.5], "yaw_to": [206.0, 30.5]},
+		"kosuzu": {"at": [253.67, -5.42], "yaw_to": [262.0, -2.6]},
+		"akyuu": {"at": [395.0, -45.7], "y": 1.692, "edge": [395.0, -46.25], "link": [395.0, -48.3], "yaw_to": [395.0, -51.4], "pose": "seiza"},
+		"marisa": {"at": [222.6, 204.0], "leave": true},
+		"reimu": {"at": [222.6, 204.0], "leave": true}
+	},
+	"anomaly": {"kedama_at": [214.6, 147.6]},
+	"world_triggers": [
+		{"id": "forest_kedama", "kind": "spawn_kedama", "fact": "anomaly_south_forest", "ttl": 900, "first": [150, 240], "repeat": [900, 1400], "forbid_world": ["anomaly_south_forest", "anomaly_resolved"]},
+		{"id": "book_delivery", "kind": "set_world", "fact": "new_youkai_book", "ttl": 900, "first": [90, 180], "repeat": [900, 1500], "forbid_world": ["new_youkai_book"]}
+	]
+}

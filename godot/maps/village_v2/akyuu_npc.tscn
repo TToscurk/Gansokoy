@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_actor.gd" id="1_act"]
+[ext_resource type="PackedScene" path="res://characters/akyuu/akyuu.tscn" id="2_aky"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aky"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_contact"]
+colors = PackedColorArray(0, 0, 0, 0.8, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_contact"]
+gradient = SubResource("Gradient_contact")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="AkyuuNPC" type="Node3D"]
+metadata/life_revision = "NPC Living World r1（2026-10-20）：本體改用 systems/npc_life/npc_life_actor.gd，由 NpcLife director 排程自主生活事件"
+metadata/art_revision = "Akyuu NPC r1 ART_REVIEW（2026-10-19）：稗田邸本屋背面西翼緣側正座，面向後庭蹲踞（395, −51.4）；r1b 簷下光照：緣側局部環境光探針＋臉補光 0.06＋接觸陰影"
+
+[node name="A1_akyuu" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 395, 1.692, -45.7)
+sync_to_physics = false
+script = ExtResource("1_act")
+hero_id = "akyuu"
+mode = "idle"
+seed_i = 190201
+metadata/model = "akyuu"
+metadata/zone = "hieda_engawa_west"
+metadata/placement = "緣側地板（hieda_house LOD0 下射）1.690–1.695 m；拉門牆 z −44.95、緣側外緣 z −46.25；正座足跡 root 空間 z −0.53（鞋尖）～+0.23（袴前緣）→ 世界 z −45.17～−45.93"
+
+[node name="Body" type="CollisionShape3D" parent="A1_akyuu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.15)
+shape = SubResource("CapsuleShape3D_aky")
+
+[node name="NPC" parent="A1_akyuu" instance=ExtResource("2_aky")]
+animation = &"seiza"
+
+[node name="FaceFill" parent="A1_akyuu/NPC"]
+day_energy = 0.06
+
+[node name="ContactShadow" type="Decal" parent="A1_akyuu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
+size = Vector3(1.0, 0.14, 1.2)
+texture_albedo = SubResource("GradientTexture2D_contact")
+upper_fade = 0.2
+lower_fade = 0.2
+
+[node name="EngawaAmbient" type="ReflectionProbe" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 403, 2.9, -45.8)
+size = Vector3(26, 2.6, 2.2)
+interior = true
+ambient_mode = 2
+ambient_color = Color(0.55, 0.62, 0.78, 1)
+ambient_color_energy = 0.15
+blend_distance = 0.3
+reflection_mask = 1024
+metadata/note = "簷下沒有任何遮天光：天空環境光直接照到角色（實測關掉環境光後角色全黑）→ 臉比白色拉門亮 3–4 倍。本屋背面緣側（x 390–416、簷下）以 interior 探針換成低亮度環境光；reflection_mask＝render layer 11＝只照阿求（身體＋袖子），房子不受影響（拉門亮度實測不變）"

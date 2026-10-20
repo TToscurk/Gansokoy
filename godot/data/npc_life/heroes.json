@@ -1,0 +1,241 @@
+{
+	"_note": "NPC Living World HERO 定義（docs/NPC自主生活系統.md）。events.kind：object＝Smart Object 事件；place／route＝地點／巡路；social＝找另一名 HERO 雙人交談（主題在 social.json）；home＝回據點（leave＝離村）。條件：hours、need_world／not_world（世界事實）、need_know／not_know（該 HERO 知道的傳聞）、cooldown、priority（≥5 反應事件優先）、focus（進行中不接受社交）。plan_change：學到某傳聞時放棄手上事件的機率（性格：易改變計畫）。",
+	"_shared": {
+		"fact_text": {
+			"anomaly_south_forest": "村口南邊林子出現了毛玉（小妖怪），孩子上學會經過",
+			"anomaly_resolved": "林邊的毛玉騷動剛解決",
+			"new_youkai_book": "鈴奈庵剛進了一本可疑的妖魔本",
+			"marisa_has_mushroom": "身上帶著剛採的蘑菇／藥草，想研究",
+			"akyuu_recorded_anomaly": "已把毛玉的事記進緣起",
+			"reimu_took_book": "靈夢把妖魔本沒收了"
+		},
+		"general_clips": {
+			"talk_general": ["res://characters/marisa/anim/talk_general_a030_grounded.res", true],
+			"talk_funny": ["res://characters/marisa/anim/talk_funny_a030_grounded.res", true],
+			"talk_twohands": ["res://characters/marisa/anim/talk_twohands_a030_grounded.res", false],
+			"browse": ["res://characters/marisa/anim/browse_looking_down_a030_grounded.res", true],
+			"kneel_down": ["res://characters/akyuu/anim/sit_kneeldown_a030_final.res", false],
+			"kneel_idle": ["res://characters/akyuu/anim/kneel_idle_a030_final.res", true],
+			"kneel_up": ["res://characters/akyuu/anim/stand_from_kneel_a030_final.res", false],
+			"pray_down": ["res://characters/akyuu/anim/fall_to_knees_pray_a030_final.res", false],
+			"pray_idle": ["res://characters/akyuu/anim/kneel_pray_a030_final.res", true],
+			"pray_up": ["res://characters/akyuu/anim/pray_to_stand_a030_final.res", false]
+		},
+		"actions": {
+			"idle": {"loop": ["idle"]},
+			"look": {"loop": ["idle_think", "idle"]},
+			"think": {"loop": ["idle_think"]},
+			"inspect": {"loop": ["browse"]},
+			"browse": {"loop": ["browse"]},
+			"gather": {"intro": "kneel_down", "loop": ["kneel_idle"], "outro": "kneel_up"},
+			"observe": {"intro": "kneel_down", "loop": ["kneel_idle"], "outro": "kneel_up"},
+			"investigate": {"intro": "kneel_down", "loop": ["kneel_idle"], "outro": "kneel_up"},
+			"pray": {"intro": "pray_down", "loop": ["pray_idle"], "outro": "pray_up"},
+			"talk": {"loop": ["talk_general", "talk_funny"]},
+			"greet": {"loop": ["talk_twohands", "talk_general"]},
+			"teach": {"loop": ["talk_general", "talk_twohands", "talk_funny"], "switch": 6.5}
+		}
+	},
+	"marisa": {
+		"name": "魔理沙",
+		"identity": "霧雨魔理沙：住在魔法森林的普通魔法使。人里霧雨道具店老闆的女兒，離家後很少正面回家。好奇心旺盛、行動派，收集蘑菇與魔法材料。",
+		"skeleton": "general",
+		"walk_speed": 1.427,
+		"bubble_h": 2.1,
+		"personality": {"curiosity": 0.95, "sociability": 0.8, "diligence": 0.3, "impulsiveness": 0.85},
+		"relationships": {
+			"reimu": {"affinity": 0.95, "style": "摯友兼對手，鬥嘴不斷"},
+			"kosuzu": {"affinity": 0.7, "style": "鈴奈庵常客，愛翻魔導書"},
+			"keine": {"affinity": 0.5, "style": "常被說教，但會乖乖聽消息"},
+			"akyuu": {"affinity": 0.5, "style": "被寫進緣起裡，有點在意評價"}
+		},
+		"interests": ["蘑菇", "魔法材料", "異變", "魔導書"],
+		"notice": {"anomaly": {"radius": 18.0}},
+		"plan_change": {"anomaly_south_forest": 0.9},
+		"divert": {"tags": ["mushroom"], "radius": 9.0, "chance": 0.6, "event": "marisa_mushroom", "cooldown": 60, "say": "咦？那邊的蘑菇……先去看看！"},
+		"events": [
+			{"id": "marisa_mushroom", "kind": "object", "label": "採集蘑菇", "object_tags": ["mushroom"], "nearest": true, "action": "gather", "dur": [6, 9], "hours": [6, 18], "weight": 3.0, "cooldown": 80, "tags": ["curious"],
+				"say_go": ["霧雨店的後院……蘑菇又長出來了吧？"], "say_act": ["嘿嘿，趁老爸沒注意……", "這朵顏色很可疑，正合我意！", "拿回去配八卦爐剛剛好。"], "say_done": ["收集完畢，閃人！"],
+				"outcome": {"learn": ["marisa_has_mushroom"]}},
+			{"id": "marisa_herb", "kind": "object", "label": "摘藥草", "object_tags": ["herb"], "action": "gather", "dur": [5, 8], "hours": [6, 18], "weight": 1.2, "cooldown": 150, "tags": ["curious"],
+				"say_act": ["這草曬乾了可以拿來做觸媒。"], "outcome": {"learn": ["marisa_has_mushroom"]}},
+			{"id": "marisa_market", "kind": "object", "label": "市集找魔法材料", "object_tags": ["material_shop", "stall"], "action": "browse", "dur": [6, 10], "hours": [7, 17], "weight": 2.0, "cooldown": 150, "tags": ["curious"],
+				"say_go": ["去市集晃晃，說不定有便宜的材料。"], "say_act": ["有沒有能當魔法材料的東西……", "老闆，這個怎麼賣？……太貴了吧！", "這個瓶子不錯，裝藥正好。"]},
+			{"id": "marisa_study", "kind": "object", "label": "研究採集物", "object_tags": ["study"], "action": "think", "dur": [6, 9], "need_know": ["marisa_has_mushroom"], "weight": 2.5, "cooldown": 120,
+				"say_act": ["這朵和剛才那株混在一起的話……嘿嘿。", "火力不夠，還得再找點材料。"], "outcome": {"forget": ["marisa_has_mushroom"]}},
+			{"id": "marisa_chat", "kind": "social", "label": "找熟人聊天", "weight": 2.2, "cooldown": 90, "pair_cooldown": 200, "hours": [6, 19]},
+			{"id": "marisa_investigate", "kind": "object", "label": "調查森林異狀", "object_tags": ["anomaly"], "action": "investigate", "dur": [6, 9], "priority": 8, "focus": true, "need_know": ["anomaly_south_forest"], "need_world": ["anomaly_south_forest"], "weight": 5.0, "cooldown": 30,
+				"say_go": ["森林邊有怪事？不去看看怎麼行！"], "say_act": ["喂喂，毛玉？躲在這裡做什麼……", "嗯——這痕跡是妖精的惡作劇吧。"], "say_done": ["跑掉了。好啦，事情解決！"],
+				"outcome": {"kedama_flee": true, "set_world": {"anomaly_resolved": 300}, "clear_world": ["anomaly_south_forest"]}},
+			{"id": "marisa_wander", "kind": "place", "label": "閒晃", "places": ["kirisame_front", "tower_yard", "main_40", "hokora_front", "main_10"], "action": "look", "dur": [3, 6], "weight": 1.0, "cooldown": 40},
+			{"id": "marisa_leave", "kind": "home", "label": "回魔法森林", "hours": [18.5, 5.5], "weight": 4.0, "dur": [300, 600], "cooldown": 60, "say_go": ["天快黑了，回森林去吧。"]}
+		],
+		"player_chat": {
+			"greet": ["喲！你是外面來的吧？", "嗨，要不要一起去找蘑菇？"],
+			"default": ["人里的東西雖然普通，偶爾也會挖到寶哦。", "我可是普通的魔法使，記好啦。", "別跟慧音說我在這裡摘蘑菇啊。"],
+			"marisa_mushroom": ["噓——我在採蘑菇，別聲張。", "這後院的蘑菇長得特別好，你懂的。"],
+			"marisa_market": ["我在找魔法材料，你有看到什麼奇怪的東西嗎？"],
+			"marisa_investigate": ["森林邊上不太對勁，我正在查呢。", "你也聽說毛玉的事了？跟著我別亂跑。"],
+			"busy_talk": ["啊，等等，我們正聊到一半。"],
+			"alarm": ["喂喂，有東西過來了！"]
+		}
+	},
+	"keine": {
+		"name": "慧音",
+		"identity": "上白澤慧音：人里寺子屋的老師，也是守護人里的半獸。認真、愛說教，關心孩子與村子的安全，熟悉人里歷史。",
+		"skeleton": "general",
+		"walk_speed": 1.296,
+		"bubble_h": 2.1,
+		"personality": {"curiosity": 0.5, "sociability": 0.6, "diligence": 0.95, "impulsiveness": 0.3},
+		"relationships": {
+			"akyuu": {"affinity": 0.85, "style": "同為記錄歷史的人，互相敬重"},
+			"kosuzu": {"affinity": 0.65, "style": "擔心她碰妖魔本"},
+			"reimu": {"affinity": 0.6, "style": "異變時互相通報"},
+			"marisa": {"affinity": 0.5, "style": "頭痛但信任她的行動力"}
+		},
+		"interests": ["寺子屋", "人里安全", "歷史"],
+		"notice": {"anomaly": {"radius": 20.0}},
+		"plan_change": {"anomaly_south_forest": 0.95},
+		"events": [
+			{"id": "keine_teach", "kind": "object", "label": "寺子屋上課", "object_tags": ["teach"], "action": "teach", "dur": [16, 24], "hours": [8, 15], "weight": 3.0, "cooldown": 120, "tags": ["duty"], "focus": true,
+				"say_go": ["該上課了。"], "say_act": ["好，今天從人里的歷史講起。", "專心聽！不然我可要用頭槌了。", "這個字讀作「緣起」，記住了嗎？"]},
+			{"id": "keine_patrol", "kind": "route", "label": "巡視村口", "places": ["main_40", "gate", "south_road", "forest_edge", "tower_yard"], "action": "look", "dur": [2, 4], "hours": [6, 19], "weight": 2.5, "cooldown": 150, "tags": ["duty"],
+				"say_act": ["一切正常。", "嗯……沒有異狀。", "孩子們上學的路要顧好。"]},
+			{"id": "keine_fire_check", "kind": "object", "label": "檢查防火水桶", "object_tags": ["fire_barrel"], "action": "inspect", "dur": [4, 6], "weight": 1.5, "cooldown": 200, "tags": ["duty"],
+				"say_act": ["防火水桶的水量……足夠。"]},
+			{"id": "keine_notice", "kind": "object", "label": "看告示", "object_tags": ["notice"], "action": "inspect", "dur": [4, 6], "weight": 1.2, "cooldown": 180, "tags": ["duty"],
+				"say_act": ["告示又被風吹歪了。", "下個月的祭典……得提醒大家準備。"]},
+			{"id": "keine_report_anomaly", "kind": "social", "label": "通報異狀", "need_know": ["anomaly_south_forest"], "priority": 7, "weight": 5.0, "cooldown": 60, "pair_cooldown": 0, "partners": ["marisa", "reimu", "akyuu"], "topics": ["keine_anomaly_marisa", "keine_anomaly_reimu", "keine_anomaly_akyuu"]},
+			{"id": "keine_chat", "kind": "social", "label": "與人交談", "weight": 1.6, "cooldown": 120, "pair_cooldown": 240, "hours": [6, 20], "partners": ["akyuu", "kosuzu", "marisa", "reimu"], "max_dist": 120},
+			{"id": "keine_home", "kind": "home", "label": "回寺子屋", "action": "think", "hours": [19, 6], "weight": 4.0, "dur": [60, 120], "cooldown": 30}
+		],
+		"player_chat": {
+			"greet": ["你好。是從村外來的嗎？", "嗯？有什麼事嗎？"],
+			"default": ["人里有人里的規矩，記得遵守。", "孩子們很喜歡外面的故事，有空來寺子屋坐坐。", "最近妖怪的動靜有點多，夜裡別在外面亂走。"],
+			"keine_teach": ["現在是上課時間，有事晚點再說吧。"],
+			"keine_patrol": ["我在巡視村子，你也小心些。"],
+			"keine_report_anomaly": ["村口的林子有異狀，我得通知人。"],
+			"busy_talk": ["抱歉，我們還在談事情。"],
+			"alarm": ["退後！我來處理。"]
+		}
+	},
+	"kosuzu": {
+		"name": "小鈴",
+		"identity": "本居小鈴：人里租書屋「鈴奈庵」的看板娘。能讀懂妖魔本，對妖怪的書充滿好奇，常常闖禍；阿求的好友。",
+		"skeleton": "mixamo",
+		"head_look": false,
+		"walk_speed": 1.05,
+		"bubble_h": 1.85,
+		"personality": {"curiosity": 0.9, "sociability": 0.75, "diligence": 0.6, "impulsiveness": 0.6},
+		"relationships": {
+			"akyuu": {"affinity": 0.95, "style": "摯友"},
+			"reimu": {"affinity": 0.8, "style": "常被她看穿妖魔本的事"},
+			"marisa": {"affinity": 0.7, "style": "常客"},
+			"keine": {"affinity": 0.5, "style": "老師，有點怕被說教"}
+		},
+		"interests": ["書", "妖魔本", "妖怪故事"],
+		"plan_change": {},
+		"actions": {
+			"look": {"loop": ["look_around", "idle"]},
+			"think": {"loop": ["thinking"]},
+			"inspect": {"loop": ["look_around", "thinking"]},
+			"browse": {"intro": "pickup_onehand", "loop": ["thinking"]},
+			"gather": {"intro": "pickup_onehand", "loop": ["look_around"]},
+			"arrange": {"intro": "pickup_onehand", "loop": ["pickup_onehand", "thinking", "pickup_onehand"], "switch": 4.0},
+			"talk": {"loop": ["talk_funny", "greeting"]},
+			"greet": {"loop": ["waving", "greeting"]},
+			"bored": {"loop": ["yawn"]},
+			"excited": {"loop": ["bashful", "talk_funny"], "switch": 5.0},
+			"bow": {"intro": "bow_formal", "loop": ["idle"]}
+		},
+		"events": [
+			{"id": "kosuzu_arrange", "kind": "object", "label": "整理書架", "object_tags": ["books"], "action": "arrange", "dur": [8, 13], "weight": 3.0, "cooldown": 60, "tags": ["duty"],
+				"say_act": ["這本放這裡……那本是租出去的。", "外來本的書架又亂了。"]},
+			{"id": "kosuzu_shopfront", "kind": "object", "label": "招呼客人", "object_tags": ["shop_front"], "action": "greet", "dur": [5, 8], "hours": [7, 18], "weight": 2.0, "cooldown": 90,
+				"say_act": ["歡迎光臨鈴奈庵～！", "有新進的書哦！要不要看看？"]},
+			{"id": "kosuzu_board", "kind": "object", "label": "看告示", "object_tags": ["notice"], "object_ids": ["suzunaan_board"], "action": "inspect", "dur": [4, 6], "weight": 0.8, "cooldown": 240},
+			{"id": "kosuzu_idle_home", "kind": "home", "label": "店門口發呆", "action": "bored", "dur": [8, 14], "weight": 1.2, "cooldown": 90,
+				"say_act": ["今天客人好少……", "好想讀那本妖魔本……"]},
+			{"id": "kosuzu_unpack", "kind": "object", "label": "拆新進的書", "object_tags": ["books"], "object_ids": ["suzunaan_boxes"], "action": "excited", "dur": [7, 10], "need_world": ["new_youkai_book"], "not_know": ["new_youkai_book"], "priority": 6, "weight": 5.0, "cooldown": 30,
+				"say_act": ["這本……該不會是妖魔本吧？！", "封面寫著看不懂的字，好想讀！"], "outcome": {"learn": ["new_youkai_book"]}},
+			{"id": "kosuzu_chat", "kind": "social", "label": "跟熟人聊天", "weight": 1.6, "cooldown": 90, "pair_cooldown": 200, "max_dist": 25}
+		],
+		"player_chat": {
+			"greet": ["歡迎光臨！要借書嗎？", "啊，是新面孔呢！"],
+			"default": ["鈴奈庵什麼書都有，外來本也有哦。", "妖怪的書最有意思了……啊，這個別跟阿求說。", "還書記得準時哦！"],
+			"kosuzu_unpack": ["你看你看，新進的書！……好像不太對勁的那種。"],
+			"busy_talk": ["啊，等我一下，馬上就好！"],
+			"alarm": ["哇、妖怪！？"]
+		}
+	},
+	"akyuu": {
+		"name": "阿求",
+		"identity": "稗田阿求：稗田家第九代當主「御阿禮之子」，過目不忘，編寫《幻想鄉緣起》。體弱，多在稗田邸內工作；小鈴的好友。",
+		"skeleton": "general",
+		"walk_speed": 1.41,
+		"bubble_h": 2.0,
+		"start_pose": "seiza",
+		"personality": {"curiosity": 0.8, "sociability": 0.55, "diligence": 0.85, "impulsiveness": 0.2},
+		"relationships": {
+			"kosuzu": {"affinity": 0.95, "style": "摯友"},
+			"keine": {"affinity": 0.85, "style": "同為記錄歷史的人"},
+			"reimu": {"affinity": 0.6, "style": "採訪對象"},
+			"marisa": {"affinity": 0.5, "style": "緣起裡的人物"}
+		},
+		"interests": ["幻想鄉緣起", "妖怪記錄", "庭園"],
+		"plan_change": {"anomaly_south_forest": 0.3},
+		"events": [
+			{"id": "akyuu_record", "kind": "home", "label": "緣側寫緣起", "action": "seiza", "dur": [30, 60], "weight": 3.0, "cooldown": 30, "tags": ["duty"],
+				"say_act": ["……幻想鄉緣起，今日也要添上一筆。", "這一段，該怎麼寫才好呢。"]},
+			{"id": "akyuu_garden", "kind": "object", "label": "觀察庭院", "object_tags": ["garden"], "action": "observe", "dur": [8, 12], "weight": 2.0, "cooldown": 120,
+				"say_act": ["蹲踞的水，映著今天的天色。", "苔又長了一些呢。"]},
+			{"id": "akyuu_visit_kosuzu", "kind": "social", "label": "去鈴奈庵找小鈴", "partners": ["kosuzu"], "weight": 1.3, "cooldown": 300, "pair_cooldown": 600, "hours": [8, 17]},
+			{"id": "akyuu_record_anomaly", "kind": "home", "label": "記錄異狀", "action": "seiza", "dur": [20, 30], "need_know": ["anomaly_south_forest"], "not_know": ["akyuu_recorded_anomaly"], "priority": 6, "weight": 4.0, "cooldown": 30,
+				"say_act": ["村口出現毛玉……記下來吧。", "妖怪出沒的時間與地點，都是重要的史料。"], "outcome": {"learn": ["akyuu_recorded_anomaly"]}}
+		],
+		"player_chat": {
+			"greet": ["您好，我是稗田阿求。", "啊，是客人呢。"],
+			"default": ["見過的事我都不會忘記，請別介意。", "幻想鄉緣起裡也有關於外來者的記載哦。", "身體不太好，所以多半待在家裡。"],
+			"akyuu_record": ["正在寫緣起，請稍等……好了，有什麼事嗎？"],
+			"busy_talk": ["抱歉，我們正說到要緊處。"],
+			"alarm": ["……請小心。"]
+		}
+	},
+	"reimu": {
+		"name": "靈夢",
+		"identity": "博麗靈夢：博麗神社的巫女，解決異變的人。直覺極準，懶散、愛錢（賽錢），對妖怪毫不客氣；與魔理沙是老朋友，常去鈴奈庵盯小鈴。",
+		"skeleton": "general",
+		"walk_speed": 1.447,
+		"bubble_h": 2.05,
+		"personality": {"curiosity": 0.4, "sociability": 0.6, "diligence": 0.35, "impulsiveness": 0.5, "intuition": 0.95},
+		"relationships": {
+			"marisa": {"affinity": 0.9, "style": "老朋友"},
+			"kosuzu": {"affinity": 0.8, "style": "盯著她別碰妖魔本"},
+			"akyuu": {"affinity": 0.6, "style": "常被問東問西"},
+			"keine": {"affinity": 0.6, "style": "異變時的聯絡人"}
+		},
+		"interests": ["賽錢", "甜食", "異變"],
+		"plan_change": {"anomaly_south_forest": 0.7},
+		"events": [
+			{"id": "reimu_hokora", "kind": "object", "label": "參拜村口小祠", "object_tags": ["pray"], "object_ids": ["hokora"], "action": "pray", "dur": [6, 9], "weight": 2.0, "cooldown": 240,
+				"say_act": ["這座小祠也該打掃了……", "……賽錢箱呢？沒有賽錢箱嗎？"]},
+			{"id": "reimu_market", "kind": "object", "label": "市集買點心", "object_tags": ["food"], "action": "browse", "dur": [5, 8], "hours": [8, 17], "weight": 2.0, "cooldown": 200,
+				"say_act": ["糖果……錢包好冷啊。", "老闆，賒帳可以嗎？"]},
+			{"id": "reimu_rest", "kind": "object", "label": "在村口歇腳", "object_tags": ["rest"], "action": "look", "dur": [6, 10], "weight": 1.5, "cooldown": 180,
+				"say_act": ["好麻煩……先休息一下。", "今天天氣真好，不想工作。"]},
+			{"id": "reimu_check_kosuzu", "kind": "social", "label": "去鈴奈庵盯小鈴", "partners": ["kosuzu"], "need_world": ["new_youkai_book"], "priority": 6, "weight": 4.0, "cooldown": 120, "pair_cooldown": 0, "topics": ["reimu_scold_book"]},
+			{"id": "reimu_sense_anomaly", "kind": "place", "label": "直覺：村口林子有東西", "places": ["forest_edge"], "action": "look", "dur": [4, 6], "need_world": ["anomaly_south_forest"], "not_know": ["anomaly_south_forest"], "priority": 6, "weight": 3.0, "cooldown": 60,
+				"say_act": ["……這股妖氣，就在附近。"], "outcome": {"learn": ["anomaly_south_forest"]}},
+			{"id": "reimu_meet_marisa_anomaly", "kind": "social", "label": "在林邊碰見魔理沙", "partners": ["marisa"], "need_know": ["anomaly_south_forest"], "need_world": ["anomaly_south_forest"], "priority": 7, "weight": 4.0, "cooldown": 60, "pair_cooldown": 0, "topics": ["reimu_marisa_anomaly"], "max_dist": 40},
+			{"id": "reimu_chat", "kind": "social", "label": "閒聊", "weight": 1.5, "cooldown": 120, "pair_cooldown": 240, "hours": [7, 18]},
+			{"id": "reimu_leave", "kind": "home", "label": "回神社", "hours": [17.5, 6.0], "weight": 4.0, "dur": [300, 600], "cooldown": 60, "say_go": ["差不多該回神社了。"]}
+		],
+		"player_chat": {
+			"greet": ["……什麼事？要參拜的話請到博麗神社。", "你是外來的？那就順便捐點賽錢吧。"],
+			"default": ["異變的話交給我就行了。", "神社的賽錢箱一直是空的……你懂我的意思吧？", "人里還算太平，我才有空來逛逛。"],
+			"reimu_sense_anomaly": ["別過來，這附近有妖氣。"],
+			"busy_talk": ["等一下，我們在說正事。"],
+			"alarm": ["妖怪？剛好，順便退治了。"]
+		}
+	}
+}

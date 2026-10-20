@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_actor.gd" id="1_act"]
+[ext_resource type="PackedScene" path="res://characters/kosuzu/kosuzu.tscn" id="2_kos"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kos"]
+radius = 0.22
+height = 1.5
+
+[node name="KosuzuNPC" type="Node3D"]
+metadata/life_revision = "NPC Living World r1（2026-10-20）：本體改用 systems/npc_life/npc_life_actor.gd，由 NpcLife director 排程自主生活事件"
+metadata/art_revision = "Kosuzu NPC r1 ART_REVIEW（2026-10-19）：鈴奈庵門口右側、面向主街"
+
+[node name="K1_kosuzu" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.3162278, 0, 0.9486833, 0, 1, 0, -0.9486833, 0, 0.3162278, 253.67, 1.026, -5.42)
+sync_to_physics = false
+script = ExtResource("1_act")
+hero_id = "kosuzu"
+mode = "idle"
+seed_i = 190101
+metadata/model = "kosuzu"
+metadata/zone = "suzunaan_front"
+
+[node name="Body" type="CollisionShape3D" parent="K1_kosuzu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CapsuleShape3D_kos")
+
+[node name="NPC" parent="K1_kosuzu" instance=ExtResource("2_kos")]

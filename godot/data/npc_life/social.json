@@ -1,0 +1,641 @@
+{
+	"_note": "NPC Living World 雙人交談主題。pair＝兩名 HERO（不分先後，除非有 initiator）；lines＝[說話者 id, 台詞, 可選動作名]，由 NpcLifeDirector 依序同步播放（雙方到位、互相面對才開始，任何一方離開 3.2 m 以上即中止）。條件：need_know（發起者知道）、listener_know／listener_not_know（聽者）、need_world／not_world。outcome.teach＝雙方都學到（傳聞擴散，事件鏈的觸發點）。 voice＝語音台詞（{ja:[…], en:[…]}，與 lines 一一對應；字幕仍用 lines 的繁中）。",
+	"topics": [
+		{
+			"id": "mk_greet",
+			"pair": [
+				"marisa",
+				"keine"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"marisa",
+					"喲，慧音！今天也在巡邏？"
+				],
+				[
+					"keine",
+					"魔理沙。妳該不會又在打什麼歪主意吧。"
+				],
+				[
+					"marisa",
+					"怎麼可能，我可是很守規矩的～"
+				],
+				[
+					"keine",
+					"……上次把寺子屋的粉筆拿去當觸媒的是誰？"
+				]
+			],
+			"voice": {
+				"ja": [
+					"よう、慧音！今日も見回りか？",
+					"魔理沙。また何かろくでもないことを企んでいるんじゃないだろうな。",
+					"まさか。私はこう見えて真面目なんだぜ〜。",
+					"……この前、寺子屋のチョークを触媒にしたのは誰だったかな？"
+				],
+				"en": [
+					"Yo, Keine! Out on patrol again today?",
+					"Marisa. You're not plotting something again, are you?",
+					"No way. I'm a model citizen, you know.",
+					"...Then who used the schoolhouse chalk as a catalyst last time?"
+				]
+			}
+		},
+		{
+			"id": "mk_mushroom",
+			"pair": [
+				"marisa",
+				"keine"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"keine",
+					"妳身上怎麼一股蘑菇味。"
+				],
+				[
+					"marisa",
+					"研究材料啦。這次的火力絕對夠。"
+				],
+				[
+					"keine",
+					"要做實驗就回森林去做，別在村裡炸了什麼。"
+				]
+			],
+			"voice": {
+				"ja": [
+					"お前、なんだかキノコの匂いがするぞ。",
+					"研究材料だぜ。今回の火力は間違いなしだ。",
+					"実験なら森に帰ってやれ。村で何か爆発させるなよ。"
+				],
+				"en": [
+					"Why do you smell like mushrooms?",
+					"Research materials. This time the firepower is guaranteed.",
+					"If you're experimenting, do it back in your forest. Don't blow anything up in the village."
+				]
+			}
+		},
+		{
+			"id": "keine_anomaly_marisa",
+			"pair": [
+				"keine",
+				"marisa"
+			],
+			"initiator": "keine",
+			"need_know": [
+				"anomaly_south_forest"
+			],
+			"listener_not_know": [
+				"anomaly_south_forest"
+			],
+			"weight": 5.0,
+			"lines": [
+				[
+					"keine",
+					"魔理沙，來得正好。村口南邊的林子裡有毛玉在晃。"
+				],
+				[
+					"marisa",
+					"毛玉？那種小東西也值得慧音操心？"
+				],
+				[
+					"keine",
+					"就在孩子們上學會經過的地方。我走不開，妳去看看。"
+				],
+				[
+					"marisa",
+					"好啦好啦，我去瞧瞧——說不定還能撿到什麼好材料。",
+					"talk_twohands"
+				]
+			],
+			"outcome": {
+				"teach": [
+					"anomaly_south_forest"
+				]
+			},
+			"voice": {
+				"ja": [
+					"魔理沙、ちょうどいいところに。村の南の林で毛玉がうろついている。",
+					"毛玉？そんな小物、慧音が気にするほどのことか？",
+					"子どもたちの通学路なんだ。私は手が離せない、見てきてくれ。",
+					"はいはい、行ってくるぜ。ついでにいい材料でも拾えるかもな。"
+				],
+				"en": [
+					"Marisa, good timing. There's a kedama wandering in the woods south of the village.",
+					"A kedama? Is something that small really worth your worry?",
+					"It's right on the children's way to school. I can't leave, so go take a look.",
+					"Fine, fine, I'll check it out. Maybe I'll find some good materials while I'm at it."
+				]
+			}
+		},
+		{
+			"id": "keine_anomaly_reimu",
+			"pair": [
+				"keine",
+				"reimu"
+			],
+			"initiator": "keine",
+			"need_know": [
+				"anomaly_south_forest"
+			],
+			"listener_not_know": [
+				"anomaly_south_forest"
+			],
+			"weight": 4.0,
+			"lines": [
+				[
+					"keine",
+					"靈夢，村口的林子裡有妖怪的氣息。"
+				],
+				[
+					"reimu",
+					"唉……又是工作。報酬呢？"
+				],
+				[
+					"keine",
+					"……我會跟村長說，給神社添點香油錢。"
+				],
+				[
+					"reimu",
+					"早說嘛。我去看看。"
+				]
+			],
+			"outcome": {
+				"teach": [
+					"anomaly_south_forest"
+				]
+			}
+		},
+		{
+			"id": "keine_anomaly_akyuu",
+			"pair": [
+				"keine",
+				"akyuu"
+			],
+			"initiator": "keine",
+			"need_know": [
+				"anomaly_south_forest"
+			],
+			"listener_not_know": [
+				"anomaly_south_forest"
+			],
+			"weight": 3.0,
+			"lines": [
+				[
+					"keine",
+					"阿求，村口南邊出現毛玉，先跟妳說一聲。"
+				],
+				[
+					"akyuu",
+					"毛玉嗎……時間與地點我會記進緣起。"
+				],
+				[
+					"keine",
+					"妳身體不好，這幾天就別往村口走了。"
+				],
+				[
+					"akyuu",
+					"放心，我只用筆去。"
+				]
+			],
+			"outcome": {
+				"teach": [
+					"anomaly_south_forest"
+				]
+			}
+		},
+		{
+			"id": "reimu_marisa_anomaly",
+			"pair": [
+				"reimu",
+				"marisa"
+			],
+			"initiator": "reimu",
+			"need_know": [
+				"anomaly_south_forest"
+			],
+			"weight": 5.0,
+			"lines": [
+				[
+					"reimu",
+					"果然是妳。這邊的妖氣是妳招來的？"
+				],
+				[
+					"marisa",
+					"才不是！我也是聽慧音說才來的。",
+					"talk_twohands"
+				],
+				[
+					"reimu",
+					"……毛玉而已嘛。喂，快回森林去。"
+				],
+				[
+					"marisa",
+					"嘖，被妳搶先了。這次算妳的。"
+				]
+			],
+			"outcome": {
+				"kedama_flee": true,
+				"set_world": {
+					"anomaly_resolved": 300
+				},
+				"clear_world": [
+					"anomaly_south_forest"
+				]
+			}
+		},
+		{
+			"id": "mr_banter",
+			"pair": [
+				"marisa",
+				"reimu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"marisa",
+					"喲，靈夢！難得在人里看到妳。"
+				],
+				[
+					"reimu",
+					"神社沒人來，我只好自己出來找點事做。"
+				],
+				[
+					"marisa",
+					"說穿了就是來蹭點心的吧？"
+				],
+				[
+					"reimu",
+					"……妳請客的話我就不否認。"
+				]
+			],
+			"voice": {
+				"ja": [
+					"よう、霊夢！人里で会うなんて珍しいな。",
+					"神社に誰も来ないから、自分で用事を探しに来たのよ。",
+					"要するにお菓子をたかりに来たんだろ？",
+					"……あんたのおごりなら否定しないわ。"
+				],
+				"en": [
+					"Hey, Reimu! Fancy seeing you in the village.",
+					"Nobody comes to the shrine, so I came looking for something to do.",
+					"In other words, you came to mooch some sweets?",
+					"...If you're paying, I won't deny it."
+				]
+			}
+		},
+		{
+			"id": "mr_donation",
+			"pair": [
+				"marisa",
+				"reimu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"reimu",
+					"魔理沙，妳的賽錢呢？"
+				],
+				[
+					"marisa",
+					"我又沒參拜，哪來的賽錢！"
+				],
+				[
+					"reimu",
+					"站在巫女面前就算參拜了。"
+				]
+			]
+		},
+		{
+			"id": "mz_books",
+			"pair": [
+				"marisa",
+				"kosuzu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"marisa",
+					"小鈴，有沒有新的魔導書？"
+				],
+				[
+					"kosuzu",
+					"有是有……可是上次借的還沒還哦！"
+				],
+				[
+					"marisa",
+					"我只是借久一點而已啦，死了就還。"
+				],
+				[
+					"kosuzu",
+					"那是不還的意思吧！"
+				]
+			]
+		},
+		{
+			"id": "mz_youkai",
+			"pair": [
+				"marisa",
+				"kosuzu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"kosuzu",
+					"魔理沙小姐，妳見過真正的妖怪嗎？"
+				],
+				[
+					"marisa",
+					"多到數不清。怎麼，想聽故事？"
+				],
+				[
+					"kosuzu",
+					"想！最好是很可怕的那種！"
+				]
+			]
+		},
+		{
+			"id": "ma_memento",
+			"pair": [
+				"marisa",
+				"akyuu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"marisa",
+					"阿求，緣起裡把我寫成小偷那段，能不能改改？"
+				],
+				[
+					"akyuu",
+					"我只寫看見的事實哦。"
+				],
+				[
+					"marisa",
+					"……那下次妳別看。"
+				]
+			]
+		},
+		{
+			"id": "ka_history",
+			"pair": [
+				"keine",
+				"akyuu"
+			],
+			"weight": 1.2,
+			"lines": [
+				[
+					"keine",
+					"阿求，上次說的那段人里舊事，查到了嗎？"
+				],
+				[
+					"akyuu",
+					"查到了。稗田家的舊紀錄裡寫得很清楚。"
+				],
+				[
+					"keine",
+					"太好了，下堂課就講這個。"
+				],
+				[
+					"akyuu",
+					"孩子們會喜歡的，那段有妖怪出場呢。"
+				]
+			]
+		},
+		{
+			"id": "ka_health",
+			"pair": [
+				"keine",
+				"akyuu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"keine",
+					"最近身體還好嗎？別熬夜寫東西。"
+				],
+				[
+					"akyuu",
+					"多謝關心。今天精神不錯。"
+				],
+				[
+					"keine",
+					"那就好。有什麼要查的，儘管找我。"
+				]
+			]
+		},
+		{
+			"id": "kz_warning",
+			"pair": [
+				"keine",
+				"kosuzu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"keine",
+					"小鈴，聽說妳又在讀奇怪的書？"
+				],
+				[
+					"kosuzu",
+					"沒、沒有啦！只是普通的外來本……"
+				],
+				[
+					"keine",
+					"妖魔本不是玩具。出了事就晚了。"
+				],
+				[
+					"kosuzu",
+					"是……我會小心的。"
+				]
+			]
+		},
+		{
+			"id": "kz_return",
+			"pair": [
+				"keine",
+				"kosuzu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"kosuzu",
+					"慧音老師！寺子屋借的書可以還了嗎？"
+				],
+				[
+					"keine",
+					"啊，抱歉，孩子們還在看。再借我幾天。"
+				],
+				[
+					"kosuzu",
+					"好～那我記在帳上囉。"
+				]
+			]
+		},
+		{
+			"id": "zr_greet",
+			"pair": [
+				"kosuzu",
+				"reimu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"kosuzu",
+					"靈夢小姐！今天要借書嗎？"
+				],
+				[
+					"reimu",
+					"不借。我只是路過……順便看看妳有沒有亂來。"
+				],
+				[
+					"kosuzu",
+					"我、我才沒有亂來呢！"
+				]
+			]
+		},
+		{
+			"id": "reimu_scold_book",
+			"pair": [
+				"reimu",
+				"kosuzu"
+			],
+			"initiator": "reimu",
+			"need_world": [
+				"new_youkai_book"
+			],
+			"weight": 5.0,
+			"lines": [
+				[
+					"reimu",
+					"小鈴。妳店裡是不是進了什麼不該進的書？"
+				],
+				[
+					"kosuzu",
+					"欸！？妳、妳怎麼知道的？"
+				],
+				[
+					"reimu",
+					"直覺。那本先交給我保管。"
+				],
+				[
+					"kosuzu",
+					"嗚……才剛拆開而已……",
+					"bashful"
+				]
+			],
+			"outcome": {
+				"clear_world": [
+					"new_youkai_book"
+				],
+				"teach": [
+					"reimu_took_book"
+				]
+			}
+		},
+		{
+			"id": "za_friends",
+			"pair": [
+				"kosuzu",
+				"akyuu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"akyuu",
+					"小鈴，我來了。"
+				],
+				[
+					"kosuzu",
+					"阿求！剛好，我有東西要給妳看！"
+				],
+				[
+					"akyuu",
+					"……又是妖魔本吧。"
+				],
+				[
+					"kosuzu",
+					"嘿嘿，被發現了。"
+				]
+			]
+		},
+		{
+			"id": "akyuu_kosuzu_book",
+			"pair": [
+				"akyuu",
+				"kosuzu"
+			],
+			"listener_know": [
+				"new_youkai_book"
+			],
+			"weight": 5.0,
+			"lines": [
+				[
+					"kosuzu",
+					"阿求阿求！新進的書裡有一本妖魔本！"
+				],
+				[
+					"akyuu",
+					"給我看看……這是記載妖怪的古書呢。"
+				],
+				[
+					"kosuzu",
+					"我讀得懂哦！上面說——"
+				],
+				[
+					"akyuu",
+					"別在這裡唸出來！先收好，我們晚點一起研究。"
+				]
+			],
+			"outcome": {
+				"teach": [
+					"new_youkai_book"
+				]
+			}
+		},
+		{
+			"id": "ra_interview",
+			"pair": [
+				"reimu",
+				"akyuu"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"akyuu",
+					"靈夢小姐，最近有退治什麼妖怪嗎？想記進緣起。"
+				],
+				[
+					"reimu",
+					"記得寫上『博麗神社歡迎參拜』。"
+				],
+				[
+					"akyuu",
+					"……我會考慮的。"
+				]
+			]
+		},
+		{
+			"id": "rk_greet",
+			"pair": [
+				"reimu",
+				"keine"
+			],
+			"weight": 1.0,
+			"lines": [
+				[
+					"keine",
+					"靈夢，難得見妳來人里。"
+				],
+				[
+					"reimu",
+					"神社的米快吃完了。"
+				],
+				[
+					"keine",
+					"……妳也真是辛苦。"
+				]
+			]
+		}
+	]
+}

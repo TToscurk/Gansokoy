@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_actor.gd" id="1_act"]
+[ext_resource type="PackedScene" path="res://characters/reimu/reimu.tscn" id="2_rei"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rei"]
+radius = 0.22
+height = 1.55
+
+[node name="ReimuNPC" type="Node3D"]
+metadata/life_revision = "NPC Living World r1（2026-10-20）：靈夢以訪客身分進人里（村口小祠旁開場；傍晚 17:30 後回神社＝離村），由 NpcLife director 排程"
+
+[node name="R1_reimu" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.0338, 0, -0.9994, 0, 1, 0, 0.9994, 0, 0.0338, 246, 0.32, 99.6)
+sync_to_physics = false
+script = ExtResource("1_act")
+hero_id = "reimu"
+mode = "idle"
+seed_i = 200101
+metadata/model = "reimu"
+metadata/zone = "entrance"
+
+[node name="Body" type="CollisionShape3D" parent="R1_reimu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775, 0)
+shape = SubResource("CapsuleShape3D_rei")
+
+[node name="NPC" parent="R1_reimu" instance=ExtResource("2_rei")]
