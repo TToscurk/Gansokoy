@@ -1,0 +1,17 @@
+{
+  "building_id": "s01_torii_a",
+  "style": "japanese_shrine",
+  "frame": {"origin": [0, 0, 0], "front": "-Y"},
+  "components": {
+    "torii": {"object": "s01_torii_a", "type": "gate", "role": "structure"},
+    "base": {"object": "s01_torii_a_base", "type": "plinth", "role": "support"}
+  },
+  "constraints": [
+    {"id": "torii_on_base", "type": "SUPPORT", "a": "torii", "b": "base", "embed_max": 0.03, "min_contact": 0.6},
+    {"id": "torii_centered_on_base", "type": "COAXIAL", "a": "base", "b": "torii", "axis": "frame:up", "tol": 0.02},
+    {"id": "torii_self_symmetric", "type": "SYMMETRIC", "a": "torii", "b": "torii",
+     "plane": {"point": "torii", "normal": "x"}, "tol": 0.02},
+    {"id": "base_self_symmetric", "type": "SYMMETRIC", "a": "base", "b": "base",
+     "plane": {"point": "base", "normal": "x"}, "tol": 0.02}
+  ]
+}
