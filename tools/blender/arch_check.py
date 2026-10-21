@@ -43,6 +43,12 @@ def main():
             if o.parent is None:
                 o.matrix_world = __import__("mathutils").Matrix.Scale(s, 4) @ o.matrix_world
     bpy.context.view_layer.update()
+    if a.get("godot-expect"):
+        rep = A.godot_expect(front_node=a.get("front-node") or None)
+        with open(a["godot-expect"], "w", encoding="utf-8") as f:
+            json.dump(rep, f, ensure_ascii=False, indent=1)
+        print(f"[ARCH] godot expect {len(rep['nodes'])} nodes → {a['godot-expect']}")
+        return 0
     if a.get("transforms"):
         names = a["objects"].split(",") if a.get("objects") else [o.name for o in bpy.context.scene.objects if o.type == "MESH"]
         rep = {"transforms": [A.transform_info(bpy.data.objects[n]) for n in names],
@@ -55,11 +61,39 @@ def main():
     if a.get("map"):
         with open(a["map"], encoding="utf-8") as f:
             spec = json.load(f)
-        rep = A.evaluate(spec, a.get("cache") or None, undeclared=a.get("undeclared", "warn"),
-                         detached=spec.get("check_detached", True))
+        want_graph = bool(a.get("graph") or a.get("query") or a.get("fix-preview"))
+        res = A.evaluate(spec, a.get("cache") or None, undeclared=a.get("undeclared", "warn"),
+                         detached=spec.get("check_detached", True), return_graph=want_graph)
+        rep, graph = res if want_graph else (res, None)
+        if a.get("graph"):
+            with open(a["graph"], "w", encoding="utf-8") as f:
+                json.dump(graph.to_json(), f, ensure_ascii=False, indent=1, default=A._jsonable)
+            print(f"[ARCH] graph {len(graph.nodes)} nodes / {len(graph.edges)} edges → {a['graph']}")
+        if a.get("query"):
+            for q in str(a["query"]).split(";"):
+                ans = A.run_query(graph, q)
+                print(f"[ARCH-Q] {q}\n" + (ans if isinstance(ans, str) else json.dumps(ans, ensure_ascii=False, indent=1, default=A._jsonable)))
+        if a.get("fix-preview"):
+            fp = A.fix_preview(spec, rep, graph, carry=a.get("carry", "dependents"))
+            with open(a["fix-preview"], "w", encoding="utf-8") as f:
+                json.dump(fp, f, ensure_ascii=False, indent=1, default=A._jsonable)
+            for p in fp["previews"]:
+                print(f"[ARCH-FIX] {p['verdict']:9} {p['rule_id']}: 移 {p['moved']} {p['fix']['translate']} "
+                      f"新 FAIL {p['new_failures']} {p['note']}")
+            print(f"[ARCH-FIX] scene_restored={fp['scene_restored']} written={fp['written']}")
+        rep.pop("graph", None)
     elif a.get("scan"):
         rep = A.scan(building_id=a.get("id", os.path.basename(a.get("glb", "") or bpy.data.filepath) or "scan"),
                      split=bool(a.get("split")), undeclared=a.get("undeclared", "warn"))
+        if a.get("graph"):  # 沒有連接表：每個網格物件一個不透明節點（內部構件無法辨識）
+            gs = [A.SceneGraph.opaque(rep["building_id"], o, len(A.split_islands(A.geom_from_object(o))) if a.get("split") else None)
+                  for o in bpy.context.scene.objects if o.type == "MESH" and o.visible_get()]
+            out = {"building_id": rep["building_id"], "nodes": {k: v for g in gs for k, v in g.nodes.items()},
+                   "edges": [], "limits": [x for g in gs for x in g.limits]}
+            with open(a["graph"], "w", encoding="utf-8") as f:
+                json.dump(out, f, ensure_ascii=False, indent=1, default=A._jsonable)
+            for x in out["limits"]:
+                print("[ARCH] LIMIT", x)
     else:
         print(__doc__)
         return 2

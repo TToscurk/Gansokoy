@@ -43,6 +43,7 @@ DEFAULT_TOL = {
     "COAXIAL": 0.01,
     "CONTINUOUS": 0.01,
     "EVEN_SPACING": 0.05,  # 相對值（間距偏差／平均間距）
+    "FACING": 10.0,        # 度：a 的正面軸對 b 的水平方向
 }
 CONSTRAINT_TYPES = tuple(DEFAULT_TOL.keys())
 
@@ -121,8 +122,9 @@ def geom_from_object(obj, depsgraph=None) -> Geom:
     return Geom(obj.name, verts, tris, det)
 
 
-def split_islands(g: Geom, min_tris=1) -> list:
-    """把單一網格拆成連通島（Tripo 單網格建築用）。"""
+def split_islands(g: Geom, min_tris=1, weld=1e-5) -> list:
+    """把單一網格拆成「實體」連通島（Tripo 單網格建築用）。
+    weld>0：先依位置焊接頂點（glTF 在 UV／法線接縫會複製頂點，只看索引會把同一張連續表面切成很多假島）。"""
     parent = list(range(len(g.verts)))
 
     def find(i):
@@ -131,6 +133,13 @@ def split_islands(g: Geom, min_tris=1) -> list:
             i = parent[i]
         return i
 
+    if weld > 0:
+        first = {}
+        for i, v in enumerate(g.verts):
+            k = (round(v.x / weld), round(v.y / weld), round(v.z / weld))
+            j = first.setdefault(k, i)
+            if j != i:
+                parent[find(i)] = find(j)
     for a, b, c in g.tris:
         ra, rb, rc = find(a), find(b), find(c)
         parent[rb] = ra
@@ -158,6 +167,34 @@ def blender_to_godot(v):
 
 def godot_to_blender(v):
     return Vector((v[0], -v[2], v[1]))
+
+
+_C = Matrix(((1, 0, 0, 0), (0, 0, 1, 0), (0, -1, 0, 0), (0, 0, 0, 1)))  # Blender → Godot（列向量左乘）
+
+
+def matrix_to_godot(mw):
+    """Blender 世界矩陣 → Godot 座標下的同一個變換：C · M · C⁻¹。"""
+    return _C @ mw @ _C.inverted()
+
+
+def godot_expect(objects=None, front_node=None, depsgraph=None) -> dict:
+    """Phase 7 期望值：每個網格物件在 Godot 座標的緊 AABB 與世界矩陣（4x4 列優先）。
+    GLB 由這個 .blend 匯出時，Godot 匯入結果必須逐節點等於這些值（godot/tools/arch_spatial_lib.gd 比對）。"""
+    if depsgraph is None:
+        depsgraph = bpy.context.evaluated_depsgraph_get()
+    objs = objects if objects is not None else [o for o in bpy.context.scene.objects if o.type == "MESH" and o.visible_get()]
+    nodes = {}
+    for o in objs:
+        g = geom_from_object(o, depsgraph)
+        pts = [blender_to_godot(v) for v in g.verts]
+        m = matrix_to_godot(o.matrix_world)
+        nodes[o.name] = {"min": [min(p[i] for p in pts) for i in range(3)], "max": [max(p[i] for p in pts) for i in range(3)],
+                         "xform": [list(m[r]) for r in range(4)], "det": m.to_3x3().determinant(),
+                         "parent": o.parent.name if o.parent else None}
+    out = {"tool": VERSION, "space": "godot_model_local", "nodes": nodes}
+    if front_node:
+        out["front_node"] = front_node
+    return out
 
 
 def transform_info(obj) -> dict:
@@ -483,15 +520,50 @@ def overlap_pairs(ga: Geom, gb: Geom):
     return pairs, cop
 
 
+def surface_crossing(ga: Geom, gb: Geom, pairs, cap=4000, graze=1e-3) -> dict:
+    """相交三角形對的「表面交錯量」：每對取 min(A 跨過 B 平面的量, B 跨過 A 平面的量)。
+    只是貼合／擦邊的對 ≈ 0；真的互相穿過的對兩邊都明顯跨過。量的是表面交錯（受三角形大小限制），
+    不是體積穿透深度——開口網格沒有「內外」，這個值不能當穿透深度用。"""
+    if not pairs:
+        return {"pairs_checked": 0, "crossing_pairs": 0, "touching_pairs": 0, "max_extent": 0.0}
+    stride = max(1, len(pairs) // cap)
+    sel = pairs[::stride]
+    crossing = touching = 0
+    ext_max = 0.0
+    worst = None
+    for i, j in sel:
+        ta = [ga.verts[k] for k in ga.tris[i]]
+        tb = [gb.verts[k] for k in gb.tris[j]]
+        na, nb = ga.normals[i], gb.normals[j]
+        if not na.length or not nb.length:
+            continue
+        da = [(v - tb[0]).dot(nb) for v in ta]
+        db = [(v - ta[0]).dot(na) for v in tb]
+        sa = min(max(max(da), 0.0), max(-min(da), 0.0))
+        sb = min(max(max(db), 0.0), max(-min(db), 0.0))
+        e = min(sa, sb)
+        if e <= graze:
+            touching += 1
+        else:
+            crossing += 1
+            if e > ext_max:
+                ext_max = e
+                worst = list(sum(ta, Vector((0.0, 0.0, 0.0))) / 3)
+    return {"pairs_checked": len(sel), "crossing_pairs": crossing, "touching_pairs": touching,
+            "max_extent": ext_max, "worst_at": worst, "graze_tol": graze, "sampled": stride > 1}
+
+
 def penetration(ga: Geom, gb: Geom, step=None, keep_points=200) -> dict:
     """穿透量測。depth = 一方表面取樣點落在另一方封閉體內時，到其表面的最大距離（解析度 ≈ step）。
 
-    BVH overlap 只證明三角形相交；深度需要封閉網格做內外判斷，兩邊都不封閉時 depth=None（UNKNOWN）。
+    BVH overlap 只證明三角形相交；深度需要封閉網格做內外判斷，兩邊都不封閉時 depth=None，
+    並用 surface_crossing 分類原因：COPLANAR_CONTACT／SURFACE_CONTACT（量得到：只是貼合）／
+    SURFACE_CROSSING（表面真的交錯，但沒有封閉體積 → 穿透深度 UNKNOWN）。
     """
     step = step or default_step(ga, gb)
     pairs, cop = overlap_pairs(ga, gb)
     res = {"intersects": bool(pairs), "tri_pairs": len(pairs), "coplanar_pairs": cop,
-           "depth": 0.0, "inside_points": [], "method": "bvh_overlap", "resolution": step}
+           "depth": 0.0, "inside_points": [], "method": "bvh_overlap", "resolution": step, "reason": None}
     box = aabb_overlap(ga, gb, margin=step)
     contained = False
     if box is None:
@@ -520,9 +592,27 @@ def penetration(ga: Geom, gb: Geom, step=None, keep_points=200) -> dict:
     res["intersects"] = True
     if not known:
         res["depth"] = None
-        res["method"] += "+depth_unknown(non_manifold)"
+        if cop == len(pairs):
+            res["reason"] = "COPLANAR_CONTACT"
+            res["method"] += "+coplanar_only"
+            return res
+        sc = surface_crossing(ga, gb, pairs)
+        res["surface"] = sc
+        if sc["crossing_pairs"] == 0:
+            res["reason"] = "SURFACE_CONTACT"
+            res["method"] += "+surface_crossing(all_pairs≤graze)"
+        else:
+            res["reason"] = "SURFACE_CROSSING_NO_VOLUME"
+            res["method"] += "+surface_crossing(depth_unknown:no_closed_volume)"
         return res
     res["method"] += "+ray_parity_inside+find_nearest"
+    if not pts_inside and pairs and cop < len(pairs):
+        sc = surface_crossing(ga, gb, pairs)
+        res["surface"] = sc
+        if sc["crossing_pairs"] and sc["max_extent"] > step:
+            res["reason"] = "BELOW_SAMPLING_RESOLUTION"  # 表面明顯交錯但取樣點沒落進體內：解析度不足
+            res["depth"] = None
+            return res
     pts_inside.sort(key=lambda t: -t[0])
     res["depth"] = depth
     res["inside_points"] = [(list(p), d, s) for d, p, s in pts_inside[:keep_points]]
@@ -645,6 +735,20 @@ def support_lowest(ga: Geom, gb: Geom, up=UP, band=None, search=0.5) -> dict:
 
 # ───────────────────────── Phase 3：約束評估 ─────────────────────────
 
+CONTACT_REASONS = ("COPLANAR_CONTACT", "SURFACE_CONTACT")  # 量得到：只是貼合，不是 UNKNOWN
+REASON_TEXT = {
+    "SURFACE_CROSSING_NO_VOLUME": "兩邊都不是封閉網格：表面確實交錯（最大交錯 {ext:.1f} mm，{n} 對三角形），"
+                                  "但沒有封閉體積，量不出穿透深度；補封閉碰撞體或看近照",
+    "BELOW_SAMPLING_RESOLUTION": "表面交錯 {ext:.1f} mm，但取樣解析度 {res:.1f} mm 沒有點落進體內；調小 sample_step 重量",
+}
+
+
+def _reason_text(pen):
+    sc = pen.get("surface") or {}
+    return REASON_TEXT.get(pen.get("reason"), "無法量測（{r}）").format(
+        ext=sc.get("max_extent", 0.0) * 1000, n=sc.get("crossing_pairs", 0), res=pen.get("resolution", 0) * 1000,
+        r=pen.get("reason"))
+
 def _row(c, status, building_id, objs, expected, actual, deviation, tol, method, suggestion="", evidence=None, fix=None):
     pri = c.get("priority", "hard")
     if status == "FAIL" and pri == "soft":
@@ -689,9 +793,12 @@ def _c_contact(c, A, B, ctx):
     md = min_distance(A, B, ctx["step"], search=max(1.0, 10 * tol))
     if md["intersects"]:
         pen = penetration(A, B, ctx["step"])
+        if pen["depth"] is None and pen["reason"] in CONTACT_REASONS:
+            return _row(c, "PASS", ctx["bid"], [A.name, B.name], f"gap<={tol}, depth<={allow}", {"gap": 0.0, "contact": pen["reason"]},
+                        0.0, tol, pen["method"], "", {"penetration": _slim(pen)})
         if pen["depth"] is None:
-            return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], f"depth<={allow}", None, None, tol,
-                        pen["method"], "網格不封閉，無法量穿透深度；請檢視近照或補封閉碰撞體", {"penetration": _slim(pen)})
+            return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], f"depth<={allow}", {"reason": pen["reason"]}, None, tol,
+                        pen["method"], _reason_text(pen), {"penetration": _slim(pen)})
         ok = pen["depth"] <= allow
         return _row(c, "PASS" if ok else "FAIL", ctx["bid"], [A.name, B.name], f"gap<={tol}, depth<={allow}",
                     {"gap": 0.0, "depth": pen["depth"]}, max(0.0, pen["depth"] - allow), tol, pen["method"],
@@ -713,11 +820,11 @@ def _c_no_intersection(c, A, B, ctx):
     if not pen["intersects"]:
         return _row(c, "PASS", ctx["bid"], [A.name, B.name], "no penetration", {"depth": 0.0}, 0.0, tol, pen["method"])
     if pen["depth"] is None:
-        if pen["coplanar_pairs"] == pen["tri_pairs"]:
-            return _row(c, "PASS", ctx["bid"], [A.name, B.name], "no penetration", {"coplanar_only": True}, 0.0, tol,
-                        pen["method"] + "+coplanar")
-        return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], "no penetration", None, None, tol, pen["method"],
-                    "網格不封閉，三角形相交但無法判定是接觸還是穿透", {"penetration": _slim(pen)})
+        if pen["reason"] in CONTACT_REASONS:
+            return _row(c, "PASS", ctx["bid"], [A.name, B.name], "no penetration", {"contact": pen["reason"]}, 0.0, tol,
+                        pen["method"], "", {"penetration": _slim(pen)})
+        return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], "no penetration", {"reason": pen["reason"]}, None, tol,
+                    pen["method"], _reason_text(pen), {"penetration": _slim(pen)})
     ok = pen["depth"] <= tol
     return _row(c, "PASS" if ok else "FAIL", ctx["bid"], [A.name, B.name], f"depth<={tol}", {"depth": pen["depth"]},
                 max(0.0, pen["depth"] - tol), tol, pen["method"],
@@ -752,9 +859,12 @@ def _c_overlap_allowed(c, A, B, ctx):
         return _row(c, "PASS" if ok else "FAIL", ctx["bid"], [A.name, B.name], f"overlap or gap<={tol}",
                     {"gap": md["distance"]}, max(0.0, md["distance"] - tol), tol, "bvh_find_nearest",
                     "" if ok else f"應搭接／接觸，實際分離 {md['distance']*1000:.1f} mm", md)
+    if pen["depth"] is None and pen["reason"] in CONTACT_REASONS:
+        return _row(c, "PASS", ctx["bid"], [A.name, B.name], "allowed overlap", {"contact": pen["reason"]}, 0.0, tol,
+                    pen["method"], "", {"penetration": _slim(pen)})
     if pen["depth"] is None:
-        return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], "allowed overlap", None, None, tol, pen["method"],
-                    "網格不封閉，搭接深度與範圍無法量測", {"penetration": _slim(pen)})
+        return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], "allowed overlap", {"reason": pen["reason"]}, None, tol,
+                    pen["method"], _reason_text(pen) + "（搭接深度與範圍無法量測）", {"penetration": _slim(pen)})
     issues = []
     if max_depth is not None and pen["depth"] > max_depth + tol:
         issues.append(f"搭接深度 {pen['depth']*1000:.1f} mm > 上限 {max_depth*1000:.1f} mm")
@@ -972,12 +1082,32 @@ def _c_even_spacing(c, geoms, ctx):
                 "" if ok else f"間距不均：{[round(s, 3) for s in sp]} m")
 
 
+def _c_facing(c, A, B, ctx):
+    """a 的正面（axis_a，預設 local:-Y＝Blender 正面＝Godot +Z）水平投影，對 a→b 的水平方向。"""
+    tol = _tol(c, A, B)
+    fr = ctx["frame"]
+    fa = _axis_of(A, ctx["objs"].get(A.name), c.get("axis_a", "local:-Y"), fr)
+    up = fr.up
+    fa = fa - up * fa.dot(up)
+    d = B.centroid() - A.centroid()
+    d = d - up * d.dot(up)
+    if fa.length < 1e-9 or d.length < 1e-9:
+        return _row(c, "UNKNOWN", ctx["bid"], [A.name, B.name], "horizontal front", None, None, tol, "-",
+                    "正面軸或兩者水平距離為 0，無法判斷朝向")
+    ang = math.degrees(fa.angle(d))
+    ok = ang <= tol
+    return _row(c, "PASS" if ok else "FAIL", ctx["bid"], [A.name, B.name], f"front→target ≤ {tol}°", {"angle_deg": ang},
+                max(0.0, ang - tol), tol, "front_axis·(centroid_b−centroid_a) horizontal",
+                "" if ok else f"{A.name} 正面偏離 {B.name} {ang:.1f}°", {"front": list(fa.normalized()), "to_target": list(d.normalized())})
+
+
 PAIR_FUNCS = {
     "CONTACT": _c_contact, "NO_INTERSECTION": _c_no_intersection, "OVERLAP_ALLOWED": _c_overlap_allowed,
     "CLEARANCE_REQUIRED": _c_clearance, "SUPPORT": _c_support, "SNAP": _c_snap, "SYMMETRIC": _c_symmetric,
     "PARALLEL": lambda c, A, B, x: _c_angle(c, A, B, x, "PARALLEL"),
     "PERPENDICULAR": lambda c, A, B, x: _c_angle(c, A, B, x, "PERPENDICULAR"),
     "COAXIAL": _c_coaxial,
+    "FACING": _c_facing,
 }
 LIST_FUNCS = {"CONTINUOUS": _c_continuous, "EVEN_SPACING": _c_even_spacing}
 
@@ -1036,6 +1166,17 @@ class Cache:
 
 # ───────────────────────── 主流程 ─────────────────────────
 
+def _find_object(cid, entry):
+    """穩定識別：components 給 arch_id → 找自訂屬性 arch_id 相同的物件（改名不受影響）；否則用 object 名，最後才用 id 本身。"""
+    if isinstance(entry, dict) and entry.get("arch_id"):
+        for o in bpy.data.objects:
+            if o.get("arch_id") == entry["arch_id"]:
+                return o
+        return None
+    on = entry.get("object", cid) if isinstance(entry, dict) else cid
+    return bpy.data.objects.get(on)
+
+
 def _resolve_components(spec):
     comps = spec.get("components") or {}
     objs, geoms, missing = {}, {}, []
@@ -1048,8 +1189,7 @@ def _resolve_components(spec):
         names.update(c.get("components", []))
     names.update(comps.keys())
     for cid in sorted(names):
-        on = comps.get(cid, {}).get("object", cid) if isinstance(comps.get(cid), dict) else cid
-        ob = bpy.data.objects.get(on)
+        ob = _find_object(cid, comps.get(cid))
         if ob is None or ob.type != "MESH":
             missing.append(cid)
             continue
@@ -1060,9 +1200,12 @@ def _resolve_components(spec):
     return objs, geoms, missing
 
 
-def evaluate(spec, cache_path=None, undeclared="warn", detached=True) -> dict:
-    """依連接表／約束 spec 驗證。spec 格式見 docs/arch_spatial/README.md。"""
+def evaluate(spec, cache_path=None, undeclared="warn", detached=True, return_graph=False):
+    """依連接表／約束 spec 驗證。spec 格式見 docs/arch_spatial/README.md。
+    return_graph=True → (report, SceneGraph)；report["graph"] 另有 JSON 版。"""
     t0 = time.time()
+    _structure_scan.last_stats = {}
+    _structure_scan.last_adj = {}
     bid = spec.get("building_id", "?")
     frame = frame_from_spec(spec.get("frame"))
     objs, geoms, missing = _resolve_components(spec)
@@ -1094,43 +1237,65 @@ def evaluate(spec, cache_path=None, undeclared="warn", detached=True) -> dict:
     if undeclared != "off" or detached:
         rows += _structure_scan(list(geoms.values()), bid, declared, undeclared, detached, spec.get("ground_z"), ctx["step"])
     cache.save()
-    return _report(bid, rows, missing, time.time() - t0, cache, frame)
+    rep = _report(bid, rows, missing, time.time() - t0, cache, frame)
+    if not return_graph:
+        return rep
+    g = SceneGraph.build(spec, rep, objs, geoms, frame, getattr(_structure_scan, "last_adj", {}))
+    rep["graph"] = g.to_json()
+    return rep, g
 
 
 def _structure_scan(gs, bid, declared, undeclared, detached, ground_z, step):
-    """未宣告穿插 + 懸空零件（接觸圖中與地面不連通的島）。AABB 只做候選，精確判定用 BVH。"""
+    """未宣告穿插 + 懸空零件（接觸圖中與地面不連通的島）。AABB 只做候選，精確判定用 BVH。
+    非封閉網格的相交依原因分類彙總（每種原因一列），表面交錯量最大的排前面，真正的 FAIL 不會被淹沒。"""
     rows = []
-    unknown_pairs = []
+    by_reason = {}
     tol = DEFAULT_TOL["CONTACT"]
     adj = {g.name: set() for g in gs}
+    stats = {"aabb_candidates": 0, "intersecting_pairs": 0, "measured_depth": 0, "contact_by_reason": {}}
     for i in range(len(gs)):
         for j in range(i + 1, len(gs)):
             A, B = gs[i], gs[j]
             if aabb_overlap(A, B, margin=tol) is None:
                 continue
+            stats["aabb_candidates"] += 1
             md = min_distance(A, B, step, search=tol * 2)
             if md["distance"] <= tol:
                 adj[A.name].add(B.name)
                 adj[B.name].add(A.name)
             if md["intersects"] and undeclared != "off" and frozenset((A.name, B.name)) not in declared:
+                stats["intersecting_pairs"] += 1
                 pen = penetration(A, B, step)
                 if pen["depth"] is None:
-                    if pen["coplanar_pairs"] < pen["tri_pairs"]:
-                        unknown_pairs.append([A.name, B.name])
+                    if pen["reason"] in CONTACT_REASONS:
+                        stats["contact_by_reason"][pen["reason"]] = stats["contact_by_reason"].get(pen["reason"], 0) + 1
+                        continue
+                    sc = pen.get("surface") or {}
+                    by_reason.setdefault(pen["reason"], []).append(
+                        (sc.get("max_extent", 0.0), A.name, B.name, sc.get("crossing_pairs", 0), sc.get("worst_at")))
                     continue
+                stats["measured_depth"] += 1
                 if pen["depth"] > 0.005:
                     c = {"id": f"UNDECLARED:{A.name}|{B.name}", "type": "NO_INTERSECTION",
                          "priority": "hard" if undeclared == "fail" else "soft"}
                     rows.append(_row(c, "FAIL", bid, [A.name, B.name], "declared or no penetration", {"depth": pen["depth"]},
                                      pen["depth"], 0.005, pen["method"],
                                      "未宣告的穿插：若是榫接／搭接請在連接表宣告 OVERLAP_ALLOWED", {"penetration": _slim(pen)}))
-    if unknown_pairs:  # 非封閉網格的相交：彙總成一列，不逐對洗版
-        c = {"id": "UNDECLARED_UNMEASURABLE", "type": "NO_INTERSECTION", "priority": "soft"}
-        rows.append(_row(c, "UNKNOWN", bid, sorted({n for p in unknown_pairs for n in p})[:50],
-                         "measurable penetration", {"pairs": len(unknown_pairs)}, None, 0.005,
-                         "bvh_overlap(non_manifold→depth_unknown)",
-                         f"{len(unknown_pairs)} 對三角形相交，但兩邊都不是封閉網格，量不出是接觸還是穿透；"
-                         "請補封閉碰撞體或改看近照", {"first_pairs": unknown_pairs[:20]}))
+    for reason, items in sorted(by_reason.items()):  # 非封閉網格：每種原因一列（統計＋最大交錯的前 20 對）
+        items.sort(key=lambda t: -t[0])
+        exts = [t[0] for t in items]
+        hist = {"<=5mm": sum(1 for e in exts if e <= 0.005), "5-20mm": sum(1 for e in exts if 0.005 < e <= 0.02),
+                "20-50mm": sum(1 for e in exts if 0.02 < e <= 0.05), ">50mm": sum(1 for e in exts if e > 0.05)}
+        c = {"id": f"UNDECLARED_UNMEASURABLE:{reason}", "type": "NO_INTERSECTION", "priority": "soft"}
+        rows.append(_row(c, "UNKNOWN", bid, sorted({n for t in items for n in t[1:3]})[:50],
+                         "measurable penetration", {"reason": reason, "pairs": len(items), "max_surface_crossing_m": exts[0],
+                                                    "crossing_histogram": hist}, None, 0.005,
+                         "bvh_overlap+surface_crossing",
+                         f"{len(items)} 對 {REASON_TEXT.get(reason, reason).split('：')[0]}：表面交錯最大 {exts[0]*1000:.1f} mm"
+                         f"（>50 mm 有 {hist['>50mm']} 對，先看這些）；沒有封閉體積，不能換算成穿透深度",
+                         {"top_pairs": [{"a": t[1], "b": t[2], "surface_crossing_m": t[0], "crossing_tri_pairs": t[3], "at": t[4]}
+                                        for t in items[:20]]}))
+    stats["unknown_by_reason"] = {r: len(v) for r, v in by_reason.items()}
     if detached and gs:
         gz = ground_z if ground_z is not None else min(g.bmin.z for g in gs)
         seen, stack = set(), [g.name for g in gs if g.bmin.z <= gz + tol]
@@ -1147,6 +1312,8 @@ def _structure_scan(gs, bid, declared, undeclared, detached, ground_z, step):
                          {"floating_parts": floating, "parts": len(gs), "contact_edges": sum(len(v) for v in adj.values()) // 2},
                          len(floating), tol, "contact_graph(bvh_min_distance<=tol)+ground_flood",
                          f"{len(floating)} 個零件與地面不連通（懸空）" if floating else ""))
+    _structure_scan.last_stats = stats
+    _structure_scan.last_adj = adj
     return rows
 
 
@@ -1161,14 +1328,39 @@ def _jsonable(o):
 def _report(bid, rows, missing, secs, cache, frame):
     rows = json.loads(json.dumps(rows, default=_jsonable).replace("Infinity", '"inf"'))
     counts = {s: sum(1 for r in rows if r["status"] == s) for s in ("PASS", "WARN", "FAIL", "UNKNOWN")}
-    return {"tool": VERSION, "building_id": bid, "summary": counts, "missing_components": missing,
+    unk = {}
+    for r in rows:
+        if r["status"] == "UNKNOWN":
+            reason = (r.get("actual") or {}).get("reason") if isinstance(r.get("actual"), dict) else None
+            k = reason or r["type"]
+            unk[k] = unk.get(k, 0) + ((r.get("actual") or {}).get("pairs", 1) if isinstance(r.get("actual"), dict) else 1)
+    return {"tool": VERSION, "building_id": bid, "summary": counts, "unknown_reasons": unk,
+            "scan_stats": getattr(_structure_scan, "last_stats", {}), "missing_components": missing,
             "seconds": round(secs, 3), "cache": {"hits": cache.hits, "misses": cache.misses},
             "frame": frame.as_dict(), "results": rows}
 
 
-def scan(objects=None, building_id="scan", split=False, ground_z=None, undeclared="warn", step=None) -> dict:
-    """無連接表模式：可見網格（或拆島）→ 懸空零件 + 未宣告穿插。"""
+def self_crossing(g: Geom, weld=1e-5, cap=20000, graze=1e-3) -> dict:
+    """單一網格自身的表面交錯（Tripo 單網格唯一能查的「穿插」）：BVH 自我 overlap，
+    排除共用（焊接後）頂點的相鄰三角形，再用 surface_crossing 分成擦邊／交錯。不是體積穿透深度。"""
+    if g.bvh is None:
+        return {"pairs": 0}
+    wid = {}
+    key = []
+    for v in g.verts:
+        k = (round(v.x / weld), round(v.y / weld), round(v.z / weld))
+        key.append(wid.setdefault(k, len(wid)))
+    tv = [{key[a], key[b], key[c]} for a, b, c in g.tris]
+    pairs = [(i, j) for i, j in g.bvh.overlap(g.bvh) if i < j and not (tv[i] & tv[j])]
+    sc = surface_crossing(g, g, pairs, cap=cap, graze=graze)
+    sc["pairs"] = len(pairs)
+    return sc
+
+
+def scan(objects=None, building_id="scan", split=False, ground_z=None, undeclared="warn", step=None, self_check=True) -> dict:
+    """無連接表模式：可見網格（或拆島）→ 懸空零件 + 未宣告穿插 + 單一網格自身表面交錯。"""
     t0 = time.time()
+    _structure_scan.last_stats = {}
     dg = bpy.context.evaluated_depsgraph_get()
     objs = objects if objects is not None else [o for o in bpy.context.scene.objects if o.type == "MESH" and o.visible_get()]
     gs = []
@@ -1176,6 +1368,22 @@ def scan(objects=None, building_id="scan", split=False, ground_z=None, undeclare
         g = geom_from_object(o, dg)
         gs += split_islands(g) if split else [g]
     rows = _structure_scan(gs, building_id, set(), undeclared, True, ground_z, step)
+    if self_check:
+        for g in gs:
+            sc = self_crossing(g)
+            if not sc.get("pairs"):
+                continue
+            c = {"id": f"SELF_CROSSING:{g.name}", "type": "NO_INTERSECTION", "priority": "soft"}
+            crossing = sc["crossing_pairs"]
+            st = "UNKNOWN" if crossing else "PASS"
+            rows.append(_row(c, st, building_id, [g.name], "no self surface crossing",
+                             {"reason": "SELF_SURFACE_CROSSING" if crossing else "SELF_CONTACT_ONLY",
+                              "pairs": crossing, "non_adjacent_touching_pairs": sc["pairs"] - crossing if not sc["sampled"] else None,
+                              "max_surface_crossing_m": sc["max_extent"], "sampled": sc["sampled"]},
+                             None, 0.001, "bvh_self_overlap(welded, non-adjacent)+surface_crossing",
+                             (f"網格自身有 {crossing} 對三角形表面交錯（最大 {sc['max_extent']*1000:.1f} mm，位置 {sc['worst_at']}）："
+                              "單一網格分不出是設計上的嵌合還是穿模，看近照判斷") if crossing else "",
+                             {"surface": sc}))
     rep = _report(building_id, rows, [], time.time() - t0, Cache(None), Frame())
     rep["parts"] = len(gs)
     return rep
@@ -1189,3 +1397,256 @@ def summary_text(rep) -> str:
         if r["status"] != "PASS":
             lines.append(f"  {r['status']:7} {r['rule_id']}: {r['suggestion'] or r['actual']}")
     return "\n".join(lines)
+
+
+# ───────────────────────── Phase 4：Scene Graph（建築結構關係圖） ─────────────────────────
+# 宣告的邊＝連接表約束（帶實測結果）；觀察到的邊＝結構掃描的接觸圖（declared=False）。
+# 構件用途（type／role）只取連接表 components 或物件自訂屬性 arch_type／arch_role，不從名稱猜。
+
+RELATION_OF = {
+    "SUPPORT": "SUPPORTS",          # 方向：b（支撐者）→ a（被支撐）
+    "CONTACT": "CONNECTED", "SNAP": "CONNECTED", "OVERLAP_ALLOWED": "CONNECTED",
+    "COAXIAL": "ALIGNED_WITH", "PARALLEL": "ALIGNED_WITH", "PERPENDICULAR": "PERPENDICULAR_TO",
+    "SYMMETRIC": "MIRRORS", "FACING": "FACING",
+    "CLEARANCE_REQUIRED": "SEPARATED_FROM", "NO_INTERSECTION": "SEPARATED_FROM",
+}
+ATTACH_ROLES = ("decor", "ornament", "attachment", "fixture")
+
+
+class SceneGraph:
+    def __init__(self, building_id, frame, nodes, edges, limits=None):
+        self.building_id = building_id
+        self.frame = frame
+        self.nodes = nodes      # {id: {...}}
+        self.edges = edges      # [{rel, src, dst, declared, rule_id, status, measure, method}]
+        self.limits = limits or []
+
+    # ── 建圖
+    @staticmethod
+    def _node(cid, ob, g, comp, frame):
+        comp = comp if isinstance(comp, dict) else {}
+        lo = [math.inf] * 3
+        hi = [-math.inf] * 3
+        for v in g.verts:
+            p = frame.to_local(v)
+            for i in range(3):
+                lo[i] = min(lo[i], p[i])
+                hi[i] = max(hi[i], p[i])
+        typ = comp.get("type") or (ob.get("arch_type") if ob is not None else None)
+        role = comp.get("role") or (ob.get("arch_role") if ob is not None else None)
+        return {"id": cid, "object": ob.name if ob is not None else g.name,
+                "arch_id": (ob.get("arch_id") if ob is not None else None) or comp.get("arch_id"),
+                "type": typ, "role": role, "classified_by": "map" if comp.get("type") else ("custom_prop" if typ else None),
+                "bounds_frame_rfu": {"min": lo, "max": hi}, "centroid": list(g.centroid()),
+                "manifold": g.manifold, "tris": len(g.tris), "geom_key": g.key[:16]}
+
+    @classmethod
+    def build(cls, spec, rep, objs, geoms, frame, adj=None):
+        comps = spec.get("components") or {}
+        nodes = {cid: cls._node(cid, objs.get(cid), g, comps.get(cid), frame) for cid, g in geoms.items()}
+        edges = []
+        cons = {c.get("id", c.get("type")): c for c in spec.get("constraints", [])}
+        for r in rep["results"]:
+            c = cons.get(r["rule_id"])
+            if c is None or c.get("type") not in RELATION_OF:
+                continue
+            rel = c.get("relation") or RELATION_OF[c["type"]]
+            a, b = c.get("a"), c.get("b")
+            if rel == "SUPPORTS":
+                src, dst = b, a
+            else:
+                src, dst = a, b
+                if rel == "CONNECTED" and (nodes.get(a, {}).get("role") in ATTACH_ROLES):
+                    rel = "ATTACHED_TO"
+            edges.append({"rel": rel, "src": src, "dst": dst, "declared": True, "rule_id": r["rule_id"],
+                          "status": r["status"], "measure": r["actual"], "method": r["method"], "suggestion": r["suggestion"]})
+        declared_pairs = {frozenset((e["src"], e["dst"])) for e in edges}
+        for a, nbrs in (adj or {}).items():
+            for b in nbrs:
+                if a < b and frozenset((a, b)) not in declared_pairs:
+                    edges.append({"rel": "CONNECTED", "src": a, "dst": b, "declared": False, "rule_id": None,
+                                  "status": "OBSERVED", "measure": {"min_distance_le_m": DEFAULT_TOL["CONTACT"]},
+                                  "method": "structure_scan contact graph", "suggestion": ""})
+        limits = []
+        unclassified = [n for n, d in nodes.items() if not d["type"]]
+        if unclassified:
+            limits.append(f"{len(unclassified)} 個構件沒有 type（連接表或 arch_type 都沒寫）：查詢依類型時不會出現，不從名稱猜")
+        return cls(rep.get("building_id"), frame, nodes, edges, limits)
+
+    @classmethod
+    def opaque(cls, building_id, ob, islands=None):
+        """Tripo 單網格：只能是一個不透明節點；內部構件無法辨識（明確保留限制，不強制拆解）。"""
+        g = geom_from_object(ob)
+        n = cls._node(ob.name, ob, g, {}, Frame())
+        n["opaque"] = True
+        n["islands"] = islands
+        lim = [f"{ob.name} 是單一網格（{len(g.tris)} 三角形、{'封閉' if g.manifold else '非封閉'}"
+               f"{f'、{islands} 個連通島' if islands else ''}）：沒有構件分件，柱／梁／屋頂等內部關係無法辨識；"
+               "只能做整體尺寸、懸空島（--scan --split）與表面交錯統計"]
+        return cls(building_id, Frame(), {ob.name: n}, [], lim)
+
+    # ── 查詢
+    def nodes_of(self, type=None, role=None):
+        return [n for n in self.nodes.values() if (type is None or n["type"] == type) and (role is None or n["role"] == role)]
+
+    def query(self, rel=None, src=None, dst=None, status=None, src_type=None, dst_type=None, declared=None):
+        out = []
+        for e in self.edges:
+            if rel and e["rel"] != rel and not (isinstance(rel, (list, tuple)) and e["rel"] in rel):
+                continue
+            if src and e["src"] != src or dst and e["dst"] != dst or status and e["status"] != status:
+                continue
+            if src_type and self.nodes.get(e["src"], {}).get("type") != src_type:
+                continue
+            if dst_type and self.nodes.get(e["dst"], {}).get("type") != dst_type:
+                continue
+            if declared is not None and e["declared"] != declared:
+                continue
+            out.append(dict(e, src_object=self.nodes.get(e["src"], {}).get("object"),
+                            dst_object=self.nodes.get(e["dst"], {}).get("object")))
+        return out
+
+    def unsatisfied(self, a_type, b_type, rels=("SUPPORTS", "CONNECTED")):
+        """「哪一根 a_type 沒有（PASS 的）連到 b_type？」不分方向；回傳構件與失敗邊的實測值。"""
+        out = []
+        for n in self.nodes_of(type=a_type):
+            es = [e for e in self.edges if e["rel"] in rels and n["id"] in (e["src"], e["dst"])
+                  and self.nodes.get(e["dst"] if e["src"] == n["id"] else e["src"], {}).get("type") == b_type]
+            ok = [e for e in es if e["status"] == "PASS"]
+            if not ok:
+                out.append({"component": n["id"], "object": n["object"],
+                            "edges": [{"rule_id": e["rule_id"], "status": e["status"], "measure": e["measure"],
+                                       "suggestion": e["suggestion"]} for e in es] or "沒有宣告任何連接"})
+        return out
+
+    def supporters(self, cid):
+        return [e["src"] for e in self.edges if e["rel"] == "SUPPORTS" and e["dst"] == cid]
+
+    def dependents(self, cid):
+        """被 cid 支撐（SUPPORTS 傳遞）或附著在其上（ATTACHED_TO）的構件：修正 cid 時要一起考慮。"""
+        seen, stack = set(), [cid]
+        while stack:
+            x = stack.pop()
+            for e in self.edges:
+                if not e["declared"]:
+                    continue
+                nxt = e["dst"] if (e["rel"] == "SUPPORTS" and e["src"] == x) else (
+                    e["src"] if (e["rel"] == "ATTACHED_TO" and e["dst"] == x) else None)
+                if nxt and nxt not in seen and nxt != cid:
+                    seen.add(nxt)
+                    stack.append(nxt)
+        return sorted(seen)
+
+    def relation(self, a, b, adjacent=0.05):
+        """a 相對 b 的方向關係（建築座標 right/front/up），加上宣告／觀察到的邊。"""
+        A, B = self.nodes[a]["bounds_frame_rfu"], self.nodes[b]["bounds_frame_rfu"]
+        rels = []
+        names = (("RIGHT_OF", "LEFT_OF"), ("IN_FRONT_OF", "BEHIND"), ("ABOVE", "BELOW"))
+        for i, (pos, neg) in enumerate(names):
+            if A["min"][i] >= B["max"][i] - 1e-6:
+                rels.append(pos)
+            elif A["max"][i] <= B["min"][i] + 1e-6:
+                rels.append(neg)
+        if all(A["min"][i] >= B["min"][i] - 1e-6 and A["max"][i] <= B["max"][i] + 1e-6 for i in range(3)):
+            rels.append("INSIDE(frame_aabb)")
+        edges = [e for e in self.edges if {e["src"], e["dst"]} == {a, b}]
+        if not edges and not rels:
+            rels.append("OVERLAPPING_BOUNDS")
+        return {"a": a, "b": b, "directional": rels, "edges": edges,
+                "frame": "building right/front/up（不是世界 X/Y）"}
+
+    def to_json(self):
+        return {"building_id": self.building_id, "frame": self.frame.as_dict(), "nodes": self.nodes,
+                "edges": self.edges, "limits": self.limits}
+
+    def symbolic(self):
+        """給 AI 讀的符號化摘要（每行一條邊）。"""
+        lines = []
+        for e in self.edges:
+            m = e["measure"]
+            ms = ""
+            if isinstance(m, dict):
+                ms = ", ".join(f"{k}={v:.4g}" if isinstance(v, float) else f"{k}={v}" for k, v in list(m.items())[:3])
+            lines.append(f"{e['src']} —{e['rel']}→ {e['dst']} [{e['status']}{'' if e['declared'] else ' observed'}] {ms}")
+        return "\n".join(lines + [f"LIMIT: {x}" for x in self.limits])
+
+
+def run_query(g, q):
+    """CLI 查詢語法：nodes:<type> | edges:<REL> | unsatisfied:<a_type>><b_type> | dependents:<id> | relation:<a>,<b> | supporters:<id>"""
+    kind, _, arg = q.partition(":")
+    if kind == "nodes":
+        return g.nodes_of(type=arg or None)
+    if kind == "edges":
+        return g.query(rel=arg or None)
+    if kind == "unsatisfied":
+        a, _, b = arg.partition(">")
+        return g.unsatisfied(a, b)
+    if kind == "dependents":
+        return {"component": arg, "dependents": g.dependents(arg)}
+    if kind == "supporters":
+        return {"component": arg, "supporters": g.supporters(arg)}
+    if kind == "relation":
+        a, _, b = arg.partition(",")
+        return g.relation(a, b)
+    if kind == "symbolic":
+        return g.symbolic()
+    raise ValueError(f"未知查詢 {q}")
+
+
+# ───────────────────────── Phase 10：修正預覽（不寫檔） ─────────────────────────
+
+def fix_preview(spec, rep, graph, carry="dependents", only=None):
+    """對每個帶 fix 的 FAIL：在記憶體裡平移（含依賴構件）→ 重驗受影響的約束 → 還原 → 報告前後狀態。
+    不存 .blend、不改正式場景；還原後以世界網格雜湊確認場景與預覽前完全相同。
+    carry="dependents"：被支撐／附著的構件一起移（修柱子不會把梁屋頂留在原地）；"none"：只移目標（看連鎖破壞）。"""
+    objs = {cid: _find_object(cid, (spec.get("components") or {}).get(cid)) for cid in graph.nodes}
+    before_status = {r["rule_id"]: r["status"] for r in rep["results"]}
+    dg = bpy.context.evaluated_depsgraph_get()
+    key0 = {cid: geom_from_object(o, dg).key for cid, o in objs.items() if o is not None}
+    out = []
+    for r in rep["results"]:
+        fx = r.get("fix")
+        if r["status"] != "FAIL" or not isinstance(fx, dict) or "translate" not in fx:
+            continue
+        if only and r["rule_id"] not in only:
+            continue
+        target = fx["object"]
+        moving = [target] + (graph.dependents(target) if carry == "dependents" else [])
+        mobjs = [objs[c] for c in moving if objs.get(c) is not None]
+        mset = set(mobjs)
+        roots = [o for o in mobjs if not any(p in mset for p in _ancestors(o))]
+        saved = {o.name: o.matrix_world.copy() for o in roots}
+        v = Vector(fx["translate"])
+        affected_ids = set(moving)
+        cons = [c for c in spec.get("constraints", [])
+                if affected_ids & ({c.get("a"), c.get("b")} | set(c.get("components", [])))]
+        try:
+            for o in roots:
+                o.matrix_world.translation += v
+            bpy.context.view_layer.update()
+            sub = dict(spec, constraints=cons)
+            after = evaluate(sub, None, undeclared="off", detached=False)
+        finally:
+            for o in roots:
+                o.matrix_world = saved[o.name]
+            bpy.context.view_layer.update()
+        aft = {x["rule_id"]: x["status"] for x in after["results"]}
+        bef = {k: before_status.get(k) for k in aft}
+        new_fail = [k for k in aft if aft[k] == "FAIL" and bef.get(k) != "FAIL"]
+        fixed = aft.get(r["rule_id"]) == "PASS"
+        verdict = "BREAKS" if new_fail else ("OK" if fixed else "NOT_FIXED")
+        out.append({"rule_id": r["rule_id"], "fix": fx, "carry": carry, "moved": [o.name for o in roots],
+                    "dependents_moved": [c for c in moving if c != target], "before": bef, "after": aft,
+                    "fixed": fixed, "new_failures": new_fail, "verdict": verdict,
+                    "note": "連鎖問題：停止自動修正，交給人決定" if new_fail else ""})
+    dg = bpy.context.evaluated_depsgraph_get()
+    key1 = {cid: geom_from_object(o, dg).key for cid, o in objs.items() if o is not None}
+    return {"previews": out, "scene_restored": key0 == key1, "written": False,
+            "apply": "預覽只回報；正式套用需另外明確指定物件白名單（P1 未啟用寫入）"}
+
+
+def _ancestors(o):
+    p = o.parent
+    while p is not None:
+        yield p
+        p = p.parent

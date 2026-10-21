@@ -1,65 +1,47 @@
 extends SceneTree
-## Blender↔Godot 座標實測（唯讀）：用 GLTFDocument 直接讀 GLB（不經專案匯入、不寫檔），
-## 由節點 xform 鏈＋ImporterMesh 頂點算每個網格節點的「緊」世界 AABB，與 Blender 端換算的預期值比對。
-## 用法：godot --headless --script res://tools/arch_glb_probe.gd -- --glb=<abs.glb> [--expect=<abs.json>] [--tol=0.0005]
-##   無 --expect：只印 JSON。有 --expect：逐節點比 min/max，任何超差 exit 1。
+## Blender↔Godot 座標實測（唯讀）：GLTFDocument 直接讀 GLB（不經專案匯入、不寫檔），逐節點與
+## Blender 端 arch_check.py --godot-expect（或 test_arch_spatial.py --glb-out）的期望值比對：
+## 緊 AABB、原點、旋轉、每軸縮放、行列式（負縮放）＋正面標記在 +Z 側。比對邏輯在 arch_spatial_lib.gd。
+## 用法：godot --headless --path godot --script res://tools/arch_glb_probe.gd -- --glb=<abs.glb> [--expect=<abs.json>] [--out=<json>]
+##   無 --expect：只印 JSON。有 --expect：任何 FAIL／缺節點 exit 1。
 ##   headless 讀 ImporterMesh（CPU 端陣列）可靠；不要改用 MeshInstance3D.mesh（dummy RenderingServer 會是空的）。
+const ARCH := preload("res://tools/arch_spatial_lib.gd")
+
 
 func _initialize() -> void:
 	var glb := ""
 	var expect := ""
-	var tol := 0.0005
+	var outp := ""
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--glb="): glb = a.trim_prefix("--glb=")
 		elif a.begins_with("--expect="): expect = a.trim_prefix("--expect=")
-		elif a.begins_with("--tol="): tol = float(a.trim_prefix("--tol="))
-	var doc := GLTFDocument.new()
-	var st := GLTFState.new()
-	var err := doc.append_from_file(glb, st)
-	if err != OK:
-		printerr("[ARCH-GLB] 讀取失敗 ", glb, " err=", err)
+		elif a.begins_with("--out="): outp = a.trim_prefix("--out=")
+	var got := ARCH.gltf_mesh_nodes(glb)
+	if got.has("_error"):
+		printerr("[ARCH-GLB] ", got["_error"], " ", glb)
 		quit(2)
 		return
-	var nodes: Array = st.get_nodes()
-	var meshes: Array = st.get_meshes()
-	var out := {}
-	for i in nodes.size():
-		var n: GLTFNode = nodes[i]
-		if n.mesh < 0:
-			continue
-		var xf := Transform3D.IDENTITY
-		var k := i
-		while k >= 0:
-			xf = (nodes[k] as GLTFNode).xform * xf
-			k = (nodes[k] as GLTFNode).parent
-		var im: ImporterMesh = (meshes[n.mesh] as GLTFMesh).mesh
-		var lo := Vector3(INF, INF, INF)
-		var hi := -lo
-		for s in im.get_surface_count():
-			var verts: PackedVector3Array = im.get_surface_arrays(s)[Mesh.ARRAY_VERTEX]
-			for v in verts:
-				var w := xf * v
-				lo = lo.min(w)
-				hi = hi.max(w)
-		var nm := n.original_name if n.original_name != "" else String(n.resource_name)
-		out[nm] = {"min": [lo.x, lo.y, lo.z], "max": [hi.x, hi.y, hi.z], "det": xf.basis.determinant()}
-	print("[ARCH-GLB] ", JSON.stringify(out))
 	if expect == "":
+		var dump := {}
+		for nm: String in got.keys():
+			dump[nm] = {"min": ARCH._v(got[nm]["lo"]), "max": ARCH._v(got[nm]["hi"]), "det": (got[nm]["xform"] as Transform3D).basis.determinant()}
+		print("[ARCH-GLB] ", JSON.stringify(dump))
 		quit(0)
 		return
-	var exp: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(expect))
-	var bad := 0
-	for nm in exp.keys():
-		if not out.has(nm):
-			print("[ARCH-GLB] MISSING ", nm)
-			bad += 1
-			continue
-		var dev := 0.0
-		for key in ["min", "max"]:
-			for ax in 3:
-				dev = maxf(dev, absf(float(exp[nm][key][ax]) - float(out[nm][key][ax])))
-		var ok := dev <= tol
-		if not ok: bad += 1
-		print("[ARCH-GLB] %s %s max_dev=%.6f m det=%.3f" % ["PASS" if ok else "FAIL", nm, dev, out[nm]["det"]])
-	print("[ARCH-GLB] %d/%d nodes within %.4f m" % [exp.size() - bad, exp.size(), tol])
-	quit(1 if bad else 0)
+	var ref := ARCH.load_expect(expect)
+	if ref.has("_error"):
+		printerr("[ARCH-GLB] ", ref["_error"])
+		quit(2)
+		return
+	var rows := ARCH.compare_nodes(glb.get_file(), ref, got, "blender_vs_glb")
+	if ref.has("_front_node"):
+		rows.append(ARCH.front_check(glb.get_file(), got, ref["_front_node"], "glb"))
+	for r: Dictionary in rows:
+		print("[ARCH-GLB] %s %s %s %s" % [r["status"], r["rule_id"], JSON.stringify(r["actual"]), r["suggestion"]])
+	var s := ARCH.summarize(rows)
+	print("[ARCH-GLB] PASS %d / WARN %d / FAIL %d / UNKNOWN %d" % [s["PASS"], s["WARN"], s["FAIL"], s["UNKNOWN"]])
+	if outp != "":
+		var f := FileAccess.open(outp, FileAccess.WRITE)
+		f.store_string(JSON.stringify({"tool": ARCH.TOOL, "summary": s, "results": rows}, " "))
+		f.close()
+	quit(1 if s["FAIL"] > 0 else 0)

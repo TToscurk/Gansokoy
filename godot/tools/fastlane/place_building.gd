@@ -19,21 +19,30 @@ extends SceneTree
 ##   --force                有穿插（FAIL）也照樣寫入
 ##   --remove               從場景移除 FastLane/<id>（資產檔保留）
 ##   --editor-ok            Godot 編輯器開著也寫（預設拒絕，避免互相覆蓋）
+##   --layout=organic|structured|landmark|off  第 4 項道路排列的模式（預設 organic）
+##   --setback=m [--setback-tol=m]  structured 的指定退縮（腳印到路緣）
+##   --axis-target=x,z | --sando=<道路名>    landmark 的主軸參考（沒給 → UNKNOWN，不猜）
+##   --front=+z|-z|+x|-x  --entrance=lx,lz   模型正面與入口（模型局部；預設 +Z 與正面中點）
+##   --expect=<abs.json>    Blender 端 arch_check.py --godot-expect 的期望值（另比 Blender→GLB→匯入、正面標記）
 ## 產出：assets/village_v2/fastlane/<id>/<id>.tscn（可單獨開啟編輯）＋ <id>_collision.res；
-##       docs/fastlane/<id>/sheet.jpg（4 張玩家視角）＋ result.json。
-## 檢查只有三項：接地（腳印內地形起伏）、穿插（與既有碰撞體 > 0.05 m）、可達（外圍一圈玩家膠囊站得下的比例）。
+##       docs/fastlane/<id>/sheet.jpg（4 張玩家視角）＋ result.json（arch：結構化結果列，欄位同 tools/blender/arch_spatial.py）。
+## 檢查：接地、穿插、可達、layout（道路排列，arch_spatial_lib.gd），外加 consistency（GLB 原始資料 vs 匯入 vs 放置後的 Parent 鏈）。
 ## 這不是美術驗收；看圖後由使用者決定（ART_REVIEW → ART_APPROVED）。
 
 const DEFAULT_SCENE := "res://maps/village_v2/village_v2.tscn"
 const ROOT_DIR := "res://assets/village_v2/fastlane/"
 const NL := "\r\n"
 const EDITOR_EXE := "Godot_v4.7.2-stable_win64.exe"
+const ARCH := preload("res://tools/arch_spatial_lib.gd")
 
 var A := {}
 var id := ""
 var scene_path := DEFAULT_SCENE
 var result := {"checks": {}}
 var t0 := 0
+var gltf_ref := {}            # GLB 原始資料（GLTFDocument，模型局部）
+var arch_rows: Array = []     # Phase 7／Phase 5 的結構化結果列（arch_spatial 同一份欄位）
+var consistency_check := {}   # 匯入一致性 → 併入每個候選位置的 checks
 
 
 func _init() -> void:
@@ -143,6 +152,9 @@ func _main() -> void:
 	await physics_frame
 	result.merge(best, true)
 	result["xform"] = var_to_str(best["xform"])
+	arch_rows += best.get("layout_rows", [])
+	result.erase("layout_rows")
+	_placed_consistency(inst, wrapper["mx"])
 	_log("位置 (%.2f, %.2f, %.2f) yaw %.1f°" % [best["xform"].origin.x, best["xform"].origin.y, best["xform"].origin.z, yaw])
 	for k: String in result["checks"]:
 		var ck: Dictionary = result["checks"][k]
@@ -153,7 +165,7 @@ func _main() -> void:
 	else:
 		result["shots"] = "skipped（headless）"
 	# ── 5. 寫入
-	var failed := not _passes(best)
+	var failed := not _passes(result)
 	result["written"] = false
 	if writes and (not failed or A.has("force")):
 		if _mount(best["xform"]):
@@ -178,6 +190,7 @@ func _build_wrapper(src: PackedScene, dir: String) -> Dictionary:
 	if meshes.is_empty():
 		_die("GLB 裡沒有 MeshInstance3D")
 		return {}
+	_import_consistency(model, dir + id + ".glb")
 	var box := AABB()
 	var first := true
 	for mi: MeshInstance3D in meshes:
@@ -298,7 +311,75 @@ func _build_wrapper(src: PackedScene, dir: String) -> Dictionary:
 		"collision": mode, "collision_tris": faces.size() / 3}
 	_log("模型 %.2f × %.2f × %.2f m（寬×高×深），縮放 %.4f，碰撞 %s %d 三角形" % [size.x, size.y, size.z, s, mode, faces.size() / 3])
 	return {"footprint": Rect2(lo.x, lo.z, hi.x - lo.x, hi.z - lo.z), "height": hi.y,
-		"base": Rect2(blo.x, blo.y, bhi.x - blo.x, bhi.y - blo.y), "sink": sink}
+		"base": Rect2(blo.x, blo.y, bhi.x - blo.x, bhi.y - blo.y), "sink": sink, "mx": mx}
+
+
+# ─────────────────────────── Phase 7：匯入一致性 ───────────────────────────
+
+## GLB 原始資料（GLTFDocument 讀檔，不經匯入器）vs Godot 匯入後的節點：尺寸、原點、旋轉、每軸縮放、負縮放。
+## --expect=<json>（Blender 端 arch_check.py --godot-expect）另外比 Blender→GLB 與 Blender→匯入；有 front_node 時查正面。
+## 找不到對應節點一律 FAIL，參考資料是空的 → UNKNOWN（不當 PASS）。
+func _import_consistency(model: Node3D, glb: String) -> void:
+	var rows: Array = []
+	gltf_ref = ARCH.gltf_mesh_nodes(glb)
+	var got := ARCH.scene_mesh_nodes(model)
+	if gltf_ref.has("_error") or gltf_ref.is_empty():
+		rows.append(ARCH.row("glb_vs_import", "IMPORT_CONSISTENCY", id, [], "UNKNOWN", "GLB mesh nodes",
+			gltf_ref.get("_error", "GLB 沒有網格節點"), null, null, "gltf_document", "讀不到 GLB 原始資料，無法比對"))
+		gltf_ref = {}
+	else:
+		rows += ARCH.compare_nodes(id, gltf_ref, got, "glb_vs_import")
+	if A.has("expect"):
+		var ref := ARCH.load_expect(String(A["expect"]))
+		if ref.has("_error"):
+			rows.append(ARCH.row("blender_expect", "IMPORT_CONSISTENCY", id, [], "UNKNOWN", "expect json", ref["_error"],
+				null, null, "load_expect", "--expect 讀不到"))
+		else:
+			if not gltf_ref.is_empty():
+				rows += ARCH.compare_nodes(id, ref, gltf_ref, "blender_vs_glb")
+			rows += ARCH.compare_nodes(id, ref, got, "blender_vs_import")
+			if ref.has("_front_node"):
+				rows.append(ARCH.front_check(id, got, ref["_front_node"], "import"))
+	arch_rows += rows
+	var w := ARCH.worst(rows)
+	var bad: Array = rows.filter(func(r): return r["status"] != "PASS")
+	var detail := "匯入一致性 %d 項（%s）" % [rows.size(), JSON.stringify(ARCH.summarize(rows))]
+	if not bad.is_empty():
+		detail += "：" + "；".join(bad.slice(0, 4).map(func(r): return "%s %s" % [r["rule_id"], r["suggestion"]]))
+	consistency_check = {"result": w, "detail": detail}
+	_log(detail)
+
+
+## 放置後：整條 Parent 鏈（FastLane/<id> → Model → GLB 節點）的世界 Transform 必須 = 放置 × 包裝 × GLB 節點；
+## 包裝根局部的 AABB（只有縮放＋平移，沒有旋轉）必須 = 包裝 × GLB 的 AABB。
+func _placed_consistency(inst: Node3D, mx: Transform3D) -> void:
+	if gltf_ref.is_empty():
+		return
+	var model := inst.get_node("Model") as Node3D
+	var local_ref := {}
+	var world_ref := {}
+	for nm: String in gltf_ref.keys():
+		var r: Dictionary = gltf_ref[nm]
+		var box := mx * AABB(r["lo"], (r["hi"] as Vector3) - (r["lo"] as Vector3))
+		local_ref[nm] = {"lo": box.position, "hi": box.end, "xform": mx * (r["xform"] as Transform3D)}
+		world_ref[nm] = {"lo": Vector3.ZERO, "hi": Vector3.ZERO, "xform": inst.global_transform * mx * (r["xform"] as Transform3D)}
+	var got_local := ARCH.scene_mesh_nodes(model)
+	for nm: String in got_local.keys():
+		got_local[nm]["xform"] = model.transform * (got_local[nm]["xform"] as Transform3D)
+		var b := model.transform * AABB(got_local[nm]["lo"], (got_local[nm]["hi"] as Vector3) - (got_local[nm]["lo"] as Vector3))
+		got_local[nm]["lo"] = b.position
+		got_local[nm]["hi"] = b.end
+	var got_world := {}
+	for mi: MeshInstance3D in model.find_children("*", "MeshInstance3D", true, false):
+		got_world[String(mi.name)] = {"lo": Vector3.ZERO, "hi": Vector3.ZERO, "xform": mi.global_transform}
+	var rows: Array = ARCH.compare_nodes(id, local_ref, got_local, "wrapper_local")
+	rows += ARCH.compare_nodes(id, world_ref, got_world, "placed_world")
+	arch_rows += rows
+	var w := ARCH.worst(rows + [{"status": consistency_check.get("result", "PASS")}])
+	if w != consistency_check.get("result", "PASS"):
+		consistency_check["result"] = w
+	consistency_check["detail"] += "；放置鏈 %d 項 %s" % [rows.size(), JSON.stringify(ARCH.summarize(rows))]
+	result["checks"]["consistency"] = consistency_check
 
 
 func _rel_xform(n: Node3D, anc: Node) -> Transform3D:
@@ -433,7 +514,81 @@ func _evaluate(inst: Node3D, at: Vector2, yaw: float, fp: Rect2, base_r: Rect2, 
 		"relief_m": snappedf(relief, 0.01)}
 	r["checks"]["overlap"] = _overlap(inst, space, terrain)
 	r["checks"]["access"] = _access(inst, fp, basis, at, space, terrain)
+	if String(A.get("layout", "organic")) != "off":
+		var lr := _layout_check(inst, fp, basis, at)
+		r["layout_rows"] = lr
+		var bad: Array = lr.filter(func(x): return x["status"] != "PASS")
+		r["checks"]["layout"] = {"result": ARCH.worst(lr),
+			"detail": "%s 排列 %d 項 %s%s" % [String(A.get("layout", "organic")), lr.size(), JSON.stringify(ARCH.summarize(lr)),
+				("：" + "；".join(bad.slice(0, 3).map(func(x): return "%s %s" % [x["rule_id"], x["suggestion"]]))) if not bad.is_empty() else ""]}
+	if not consistency_check.is_empty():
+		r["checks"]["consistency"] = consistency_check.duplicate()
 	return r
+
+
+# ─────────────────────────── Phase 5：道路排列（第 4 項） ───────────────────────────
+const LAYOUT_FILE := "res://maps/village_v2/layout_v2.json"
+var _road_lines: Array = []
+var _neighbour_cache: Array = []
+
+
+## 正面＝模型 +Z（--front=-z|+x|-x 可改）；入口＝正面那一邊腳印的中點（--entrance=lx,lz 可改，模型局部）。
+func _layout_check(inst: Node3D, fp: Rect2, basis: Basis, at: Vector2) -> Array:
+	if _road_lines.is_empty():
+		_road_lines = ARCH.road_lines(String(A.get("layout-file", LAYOUT_FILE)))
+	var fl := {"+z": Vector3(0, 0, 1), "-z": Vector3(0, 0, -1), "+x": Vector3(1, 0, 0), "-x": Vector3(-1, 0, 0)}
+	var f3: Vector3 = fl.get(String(A.get("front", "+z")), Vector3(0, 0, 1))
+	var c3 := Vector3(fp.get_center().x, 0, fp.get_center().y)
+	var e3 := c3 + Vector3(f3.x * fp.size.x * 0.5, 0, f3.z * fp.size.y * 0.5)
+	if A.has("entrance"):
+		var ep := String(A["entrance"]).split(",")
+		e3 = Vector3(float(ep[0]), 0, float(ep[1]))
+	var off := Vector3(at.x, 0, at.y)
+	var poly := PackedVector2Array()
+	for p in [fp.position, Vector2(fp.end.x, fp.position.y), fp.end, Vector2(fp.position.x, fp.end.y)]:
+		var w := basis * Vector3(p.x, 0, p.y) + off
+		poly.append(Vector2(w.x, w.z))
+	var fw := basis * f3
+	var cw := basis * c3 + off
+	var ew := basis * e3 + off
+	var b := {"center": Vector2(cw.x, cw.z), "front": Vector2(fw.x, fw.z), "entrance": Vector2(ew.x, ew.z), "poly": poly}
+	var mode := String(A.get("layout", "organic"))
+	if mode == "structured":
+		b["neighbors"] = _neighbours(inst, Vector2(cw.x, cw.z), 40.0)
+	var opts := {"mode": mode}
+	if A.has("setback"):
+		opts["setback"] = float(A["setback"])
+	if A.has("setback-tol"):
+		opts["setback_tol"] = float(A["setback-tol"])
+	if A.has("axis-target"):
+		var tp := String(A["axis-target"]).split(",")
+		opts["axis_target"] = Vector2(float(tp[0]), float(tp[1]))
+	if A.has("sando"):
+		opts["sando"] = String(A["sando"])
+	return ARCH.road_alignment(id, _road_lines, b, opts)
+
+
+## 鄰棟腳印（保留 yaw）：FastLane/*、Districts/**/B_*、Landmarks/*/Hero，第一次呼叫時收集一次。
+func _neighbours(inst: Node3D, c: Vector2, radius: float) -> Array:
+	var world := inst.get_parent()
+	if _neighbour_cache.is_empty():
+		var cands: Array = []
+		var fl := world.get_node_or_null("FastLane")
+		if fl:
+			cands += fl.get_children()
+		var ds := world.get_node_or_null("Districts")
+		if ds:
+			cands += ds.find_children("B_*", "", true, false)
+		var lm := world.get_node_or_null("Landmarks")
+		if lm:
+			cands += lm.find_children("Hero", "", true, false)
+		for n in cands:
+			if n == inst or not (n is Node3D) or (n as Node3D).has_meta("retired_by_hero") or not (n as Node3D).is_visible_in_tree():
+				continue
+			var poly := ARCH.footprint_xz(n as Node3D)
+			if poly.size() >= 3:
+				_neighbour_cache.append({"name": String(world.get_path_to(n)), "poly": poly})
+	return _neighbour_cache.filter(func(x): return ARCH._centroid(x["poly"]).distance_to(c) <= radius)
 
 
 func _terrain_y(space: PhysicsDirectSpaceState3D, terrain: CollisionObject3D, wp: Vector3) -> Variant:
@@ -550,7 +705,7 @@ func _score(r: Dictionary) -> float:
 		return -1e9
 	var s := 0.0
 	for k: String in r["checks"]:
-		s += {"PASS": 2.0, "REVIEW": 1.0, "FAIL": 0.0}[r["checks"][k]["result"]]
+		s += {"PASS": 2.0, "WARN": 1.5, "REVIEW": 1.0, "UNKNOWN": 1.0, "FAIL": 0.0}[r["checks"][k]["result"]]
 	return s - float(r["checks"]["ground"]["relief_m"]) * 0.1
 
 
@@ -793,6 +948,7 @@ func _save_result() -> void:
 	result["id"] = id
 	result["scene"] = scene_path
 	result["seconds"] = snappedf((Time.get_ticks_msec() - t0) / 1000.0, 0.1)
+	result["arch"] = {"tool": ARCH.TOOL, "summary": ARCH.summarize(arch_rows), "results": arch_rows}
 	var f := FileAccess.open(out_dir.path_join("result.json"), FileAccess.WRITE)
 	f.store_string(JSON.stringify(result, " "))
 	f.close()

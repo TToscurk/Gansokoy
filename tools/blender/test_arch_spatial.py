@@ -355,8 +355,160 @@ def case_support_embed():
     plane("sheet", 1.6, (0, 0, 0.5), (0, 90, 0))
     upd()
     rep = A.scan(building_id="u")
-    st, r = status(rep, "UNDECLARED_UNMEASURABLE")
-    check("emb", "scan：非封閉相交彙總成一列 UNKNOWN", (st, r["actual"]["pairs"] if r else None), ("UNKNOWN", 1))
+    st, r = status(rep, "UNDECLARED_UNMEASURABLE:SURFACE_CROSSING_NO_VOLUME")
+    check("emb", "scan：非封閉相交依原因彙總成一列 UNKNOWN", (st, r["actual"]["pairs"] if r else None), ("UNKNOWN", 1))
+
+
+def case_unknown_reasons():
+    """第三節：開口網格的相交要分得出「貼合」和「交錯」，不能全部丟 UNKNOWN，也不能拿交錯量冒充穿透深度。"""
+    def sheet_vs_cup(loc, rot, size):
+        reset()
+        box("cup", (1, 1, 1), (0, 0, 0.5), open_top=True)
+        plane("sheet", size, loc, rot)
+        return run([{"id": "n", "type": "NO_INTERSECTION", "a": "sheet", "b": "cup"}])
+    rep = sheet_vs_cup((0, -0.5, 0.5), (90, 0, 0), 0.6)  # 貼在杯壁上（共面）
+    st, r = status(rep, "n")
+    check("unk", "開口網格共面貼合 → PASS（BVH 不回報共面三角形，或標 COPLANAR_CONTACT）",
+          (st, r["actual"].get("contact") in (None, "COPLANAR_CONTACT"), r["actual"].get("depth", 0.0)), ("PASS", True, 0.0))
+    rep = sheet_vs_cup((0, -0.8, 0.5), (0, 0, 0), 0.6)  # 水平板邊緣剛好頂到杯壁（擦邊）
+    st, r = status(rep, "n")
+    check("unk", "開口網格擦邊 → PASS（SURFACE_CONTACT）", (st, r["actual"].get("contact")), ("PASS", "SURFACE_CONTACT"),
+          str(r["evidence"].get("penetration", {}).get("surface")))
+    rep = sheet_vs_cup((0, -0.5, 0.5), (0, 0, 0), 0.6)  # 水平板穿過杯壁 0.3 m
+    st, r = status(rep, "n")
+    sc = r["evidence"]["penetration"].get("surface", {})
+    check("unk", "開口網格真的交錯 → UNKNOWN（SURFACE_CROSSING_NO_VOLUME）", (st, r["actual"].get("reason")),
+          ("UNKNOWN", "SURFACE_CROSSING_NO_VOLUME"), r["suggestion"])
+    check("unk", "  交錯量有量到（> 5 cm）且不冒充 depth", (sc.get("max_extent", 0) > 0.05, r["actual"].get("depth")), (True, None),
+          f"extent={sc.get('max_extent')}")
+    reset()
+    box("cup", (1, 1, 1), (0, 0, 0.5), open_top=True)
+    for k in range(5):
+        plane(f"cross{k}", 0.4 + 0.1 * k, (0.0, -0.5, 0.2 + 0.12 * k), (0, 0, 0))
+    plane("touch", 0.6, (0, 0.5, 0.5), (90, 0, 0))  # 貼在對面杯壁（共面），不碰任何交錯板
+    plane("graze", 0.6, (0, 0.8, 0.5), (0, 0, 0))   # 邊緣頂到對面杯壁（擦邊）
+    upd()
+    rep = A.scan(building_id="u")
+    st, r = status(rep, "UNDECLARED_UNMEASURABLE:SURFACE_CROSSING_NO_VOLUME")
+    tops = [t["surface_crossing_m"] for t in r["evidence"]["top_pairs"]] if r else []
+    check("unk", "scan：5 塊交錯板彙總 1 列、依交錯量由大到小", (st, r["actual"]["pairs"] if r else None, tops == sorted(tops, reverse=True)),
+          ("UNKNOWN", 5, True), str(rep.get("unknown_reasons")))
+    check("unk", "scan：貼合／擦邊的不進 UNKNOWN", ("touch" in r["object_ids"], "graze" in r["object_ids"],
+                                                rep["scan_stats"]["contact_by_reason"].get("SURFACE_CONTACT", 0) >= 1),
+          (False, False, True), str(rep["scan_stats"]))
+    check("unk", "report.unknown_reasons 統計", rep["unknown_reasons"].get("SURFACE_CROSSING_NO_VOLUME"), 5)
+
+
+def shrine_like(post_e_short=0.0):
+    root = empty("root")
+    box("ground", (8, 6, 0.2), (0, 0, -0.1), parent=root)
+    pw = box("pillar_west_renamed", (0.24, 0.24, 3.0), (-1.5, 0, 1.5), parent=root)
+    pw["arch_id"] = "P-001"
+    box("post_E", (0.24, 0.24, 3.0 - post_e_short), (1.5, 0, 1.5 - post_e_short / 2), parent=root)
+    box("beam", (4.0, 0.3, 0.3), (0, 0, 3.15), parent=root)
+    roof = box("roof", (5.0, 3.0, 0.4), (0, 0, 3.5), parent=root)
+    roof["arch_type"] = "roof"  # 用自訂屬性分類（不是名稱）
+    box("ornament", (0.3, 0.3, 0.3), (0, 0, 3.85), parent=root)
+    box("sign", (0.6, 0.1, 0.4), (0, -1.0, 2.0), parent=root)
+    box("torii", (0.4, 0.4, 3), (0, -10, 1.5), parent=root)
+    box("mystery", (0.2, 0.2, 0.2), (3.5, 2.5, 0.1), parent=root)
+    box("plaque", (0.05, 0.2, 0.2), (-1.5 - 0.12 - 0.025, 0, 2.0), parent=root)  # 貼在西柱側面、沒宣告約束
+    return {
+        "building_id": "shrine_like", "frame": {"origin": [0, 0, 0], "front": "-Y"},
+        "components": {"post_W": {"arch_id": "P-001", "type": "post"}, "post_E": {"type": "post"},
+                       "beam": {"type": "beam"}, "roof": {}, "ornament": {"type": "ornament", "role": "decor"},
+                       "ground": {"type": "ground"}, "sign": {"type": "sign"}, "torii": {"type": "gate"}, "mystery": {},
+                       "plaque": {"type": "plaque"}},
+        "constraints": [
+            {"id": "pw_ground", "type": "SUPPORT", "a": "post_W", "b": "ground"},
+            {"id": "pe_ground", "type": "SUPPORT", "a": "post_E", "b": "ground"},
+            {"id": "beam_on_pw", "type": "SUPPORT", "a": "beam", "b": "post_W"},
+            {"id": "beam_on_pe", "type": "SUPPORT", "a": "beam", "b": "post_E"},
+            {"id": "roof_on_beam", "type": "SUPPORT", "a": "roof", "b": "beam"},
+            {"id": "ornament_on_roof", "type": "CONTACT", "a": "ornament", "b": "roof"},
+            {"id": "sign_faces_torii", "type": "FACING", "a": "sign", "b": "torii"},
+            {"id": "roof_centered", "type": "COAXIAL", "a": "beam", "b": "roof", "axis": "frame:up"},
+            {"id": "mystery_ground", "type": "SUPPORT", "a": "mystery", "b": "ground"},
+        ]}
+
+
+def case_graph():
+    reset()
+    spec = shrine_like(post_e_short=0.005)
+    upd()
+    rep, g = A.evaluate(spec, None, undeclared="off", detached=True, return_graph=True)
+    check("graph", "arch_id 穩定識別（物件已改名）", (g.nodes["post_W"]["object"], g.nodes["post_W"]["arch_id"]),
+          ("pillar_west_renamed", "P-001"))
+    check("graph", "type 來自自訂屬性 arch_type（不是名稱）", (g.nodes["roof"]["type"], g.nodes["roof"]["classified_by"]), ("roof", "custom_prop"))
+    check("graph", "沒分類的構件列入限制", any("沒有 type" in x for x in g.limits), True, str(g.limits))
+    un = A.run_query(g, "unsatisfied:post>beam")
+    check("graph", "查詢：哪根柱子沒接到梁 → post_E", [u["component"] for u in un], ["post_E"],
+          json.dumps(un[0]["edges"][0]["measure"] if un else None, default=str))
+    sup = A.run_query(g, "edges:SUPPORTS")
+    check("graph", "SUPPORTS 方向：支撐者 → 被支撐", any(e["src"] == "post_W" and e["dst"] == "beam" for e in sup), True)
+    check("graph", "ATTACHED_TO：裝飾 → 屋頂", [(e["src"], e["dst"]) for e in g.query(rel="ATTACHED_TO")], [("ornament", "roof")])
+    check("graph", "FACING 招牌 → 鳥居", [e["status"] for e in g.query(rel="FACING")], ["PASS"])
+    check("graph", "ALIGNED_WITH 屋頂對梁", [e["status"] for e in g.query(rel="ALIGNED_WITH")], ["PASS"])
+    check("graph", "dependents(beam) = 屋頂＋裝飾", A.run_query(g, "dependents:beam")["dependents"], ["ornament", "roof"])
+    rel = A.run_query(g, "relation:roof,beam")
+    check("graph", "relation：屋頂在梁 ABOVE", "ABOVE" in rel["directional"], True, str(rel["directional"]))
+    rel = A.run_query(g, "relation:post_W,post_E")
+    check("graph", "relation 用建築座標：面朝 -Y 時 西柱是建築的 RIGHT_OF", "RIGHT_OF" in rel["directional"], True, str(rel["directional"]))
+    check("graph", "觀察到的接觸邊（未宣告）也進圖", [(e["src"], e["dst"]) for e in g.edges if not e["declared"]], [("plaque", "post_W")])
+    sym = g.symbolic()
+    check("graph", "符號化摘要", "post_W —SUPPORTS→ beam [PASS]" in sym, True, sym.splitlines()[0])
+    # Phase 10 修正預覽
+    snap0 = {o.name: o.matrix_world.copy() for o in bpy.data.objects}
+    fp = A.fix_preview(spec, rep, g, carry="dependents", only=["beam_on_pe"])
+    p = fp["previews"][0] if fp["previews"] else {}
+    check("fix", "梁浮 5 mm：連同屋頂裝飾一起降 → OK", (p.get("verdict"), p.get("dependents_moved")), ("OK", ["ornament", "roof"]),
+          str(p.get("after")))
+    fp2 = A.fix_preview(spec, rep, g, carry="none", only=["beam_on_pe"])
+    p2 = fp2["previews"][0] if fp2["previews"] else {}
+    check("fix", "只降梁不帶屋頂 → BREAKS（屋頂變懸空），停止連鎖", (p2.get("verdict"), p2.get("new_failures")), ("BREAKS", ["roof_on_beam"]))
+    snap1 = {o.name: o.matrix_world.copy() for o in bpy.data.objects}
+    check("fix", "預覽後場景完全還原（雜湊＋矩陣）", (fp["scene_restored"], fp2["scene_restored"], snap0 == snap1, fp["written"]),
+          (True, True, True, False))
+    check("fix", "梁浮 5 mm 被 SUPPORT 抓到", status(rep, "beam_on_pe")[0], "FAIL")
+    reset()
+    box("tripo_like", (2, 2, 2), (0, 0, 1))
+    upd()
+    og = A.SceneGraph.opaque("t", bpy.data.objects["tripo_like"], islands=1815)
+    check("graph", "單一網格 → 不透明節點＋明確限制", (len(og.nodes), og.nodes["tripo_like"]["opaque"], "無法辨識" in og.limits[0]),
+          (1, True, True))
+
+
+def case_islands_weld():
+    """回歸：glTF 在 UV 接縫複製頂點；拆島必須先焊接，否則一張連續表面會被拆成假島、相交全部變成假的『穿插』。"""
+    reset()
+    me = bpy.data.meshes.new("seamed")
+    # 兩個三角形共用一條邊，但頂點各自複製（模擬 UV 接縫）
+    vs = [(0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0)]
+    me.from_pydata(vs, [], [(0, 1, 2), (3, 4, 5)])
+    ob = bpy.data.objects.new("seamed", me)
+    bpy.context.scene.collection.objects.link(ob)
+    upd()
+    g = A.geom_from_object(ob)
+    check("weld", "接縫複製頂點：焊接後 1 個實體島", (len(A.split_islands(g, weld=0)), len(A.split_islands(g))), (2, 1))
+    reset()
+    me = bpy.data.meshes.new("selfx")
+    bm = bmesh.new()
+    a = bmesh.ops.create_cube(bm, size=1.0)["verts"]
+    b = bmesh.ops.create_cube(bm, size=0.6)["verts"]
+    bmesh.ops.translate(bm, vec=(0.5, 0, 0), verts=b)  # 同一網格內兩個盒子互穿（Tripo 式單網格穿模）
+    bm.to_mesh(me); bm.free()
+    ob = bpy.data.objects.new("selfx", me)
+    bpy.context.scene.collection.objects.link(ob)
+    upd()
+    rep = A.scan(building_id="sx")
+    st, r = status(rep, "SELF_CROSSING:selfx")
+    check("weld", "單一網格自身互穿 → SELF_SURFACE_CROSSING（UNKNOWN，不冒充深度）", (st, (r or {}).get("actual", {}).get("reason")),
+          ("UNKNOWN", "SELF_SURFACE_CROSSING"), (r or {}).get("suggestion", "")[:120])
+    reset()
+    box("clean", (1, 1, 1), (0, 0, 0.5))
+    upd()
+    rep = A.scan(building_id="c")
+    check("weld", "乾淨盒子沒有自身交錯列（相鄰三角形已排除）", status(rep, "SELF_CROSSING:clean")[0] in (None, "PASS"), True)
 
 
 def case_detached():
@@ -446,16 +598,13 @@ def export_glb(out_dir):
     box("mirror", (0.5, 0.3, 0.2), (-1, -1, 0.1), scale=(-1, 1, 1), parent=root)
     box("front_marker", (0.1, 0.1, 0.1), (0, -2, 0.05), parent=root)  # 建築正面（Blender -Y）
     upd()
-    exp = {}
-    for nm in ("post", "beam", "mirror", "front_marker"):
-        g = A.geom_from_object(bpy.data.objects[nm])
-        pts = [A.blender_to_godot(v) for v in g.verts]
-        exp[nm] = {"min": [min(p[i] for p in pts) for i in range(3)], "max": [max(p[i] for p in pts) for i in range(3)]}
+    exp = A.godot_expect(front_node="front_marker")
     os.makedirs(out_dir, exist_ok=True)
     glb = os.path.join(out_dir, "arch_axis_test.glb")
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", export_yup=True, export_apply=True)
     with open(os.path.join(out_dir, "arch_axis_test.expect.json"), "w", encoding="utf-8") as f:
         json.dump(exp, f, indent=1)
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out_dir, "arch_axis_test.blend"), copy=True)
     print("[GLB]", glb)
 
 
@@ -466,7 +615,7 @@ def main():
     t = time.time()
     for fn in (case_01_aligned, case_02_gap5mm, case_03_penetration, case_04_tenon, case_05_tiles, case_06_roof_offset,
                case_07_rotated_module, case_08_nonuniform, case_09_negative, case_10_parent, case_19_coplanar,
-               case_20_nonmanifold, case_support_embed, case_sym_cont, case_detached, case_frame):
+               case_20_nonmanifold, case_support_embed, case_unknown_reasons, case_islands_weld, case_graph, case_sym_cont, case_detached, case_frame):
         fn()
     case_22_cache(tmp)
     if "--no-perf" not in argv:
