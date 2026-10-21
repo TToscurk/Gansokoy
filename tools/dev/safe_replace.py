@@ -202,6 +202,40 @@ def _selftest() -> int:
         case("dry-run 不寫檔", get() == b"k=1\n")
         put(b"\xff\xfe bad")
         case("非 UTF-8 → 報錯", expect_err(lambda: replace_exact(p, "bad", "good")))
+
+        # --- 跳脫字元原樣保留 ---
+        # Hermes 的 patch 工具會把 new_string 裡的「反斜線+t／r」轉成真正的 TAB／CR（條件：被匹配的區段本來就含 TAB／CR）。
+        # 這支工具不做任何跳脫解讀；下面用 chr() 組字串，避免這個測試檔本身被任何工具轉換。
+        BS, TAB, CR, LF = chr(92), chr(9), chr(13), chr(10)
+
+        def exact(name: str, start: str, old: str, new: str, expected: str) -> None:
+            put(start.encode("utf-8"))
+            try:
+                replace_exact(p, old, new)
+                case(name, get() == expected.encode("utf-8"))
+            except ReplaceError as e:
+                case(name + f"（意外報錯 {e}）", False)
+
+        gd_old = TAB + 'print("old")'
+        exact("TAB 縮排 LF 檔：new 內的 反斜線+t 原樣保留（patch 工具會轉成 TAB）",
+              "f():" + LF + gd_old + LF + TAB + "pass" + LF, gd_old, TAB + 'print("a' + BS + 'tb")',
+              "f():" + LF + TAB + 'print("a' + BS + 'tb")' + LF + TAB + "pass" + LF)
+        exact("TAB 縮排 CRLF 檔：反斜線+t 原樣保留、行尾仍是 CRLF",
+              "f():" + CR + LF + gd_old + CR + LF + TAB + "pass" + CR + LF, gd_old, TAB + 'print("a' + BS + 'tb")',
+              "f():" + CR + LF + TAB + 'print("a' + BS + 'tb")' + CR + LF + TAB + "pass" + CR + LF)
+        exact("兩個反斜線+t（正規表示式／路徑常見）原樣保留（patch 工具會變成『反斜線＋TAB』）",
+              "f():" + LF + gd_old + LF, gd_old, TAB + 'print("a' + BS + BS + 'tb")',
+              "f():" + LF + TAB + 'print("a' + BS + BS + 'tb")' + LF)
+        exact("CRLF 檔多行區段：反斜線+r+反斜線+n 原樣保留（patch 工具會產生裸 CR 並拆行）",
+              '[node name="N"]' + CR + LF + 'text = "old"' + CR + LF, '[node name="N"]' + LF + 'text = "old"',
+              '[node name="N"]' + LF + 'text = "a' + BS + 'r' + BS + 'nb"',
+              '[node name="N"]' + CR + LF + 'text = "a' + BS + 'r' + BS + 'nb"' + CR + LF)
+        exact("Unicode（中文、emoji、é）與 反斜線+n 原樣保留",
+              "f():" + LF + gd_old + LF, gd_old, TAB + 'print("中文' + BS + 'n🔥é")',
+              "f():" + LF + TAB + 'print("中文' + BS + 'n🔥é")' + LF)
+        exact("真正的 TAB 與『反斜線+t』同時存在：各自原樣",
+              "f():" + LF + gd_old + LF, gd_old, TAB + TAB + 'print("x' + BS + 'ty")',
+              "f():" + LF + TAB + TAB + 'print("x' + BS + 'ty")' + LF)
     print("selftest:", "ALL PASS" if ok else "FAILED")
     return 0 if ok else 1
 
