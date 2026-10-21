@@ -4,83 +4,62 @@ build_w9r2_arch.py が P6_BUILDERS の直後でこのファイルを exec する
 使用者 2026-10-16「Transition to MCP-First 3D Production」：Godot MCP で 4 棟を調べ、正常 TPS で改善量の大きい 1–2 棟を選び、Blender MCP で形を詰めて、
 既存の決定論的 pipeline（この builder → GLB → prefab → bake）へ永続化する。Blender の live セッションは試作の場で、正本はこのファイル。
 選定（Phase 6 最終の正常 TPS 24 視点の ID パス：候補 4 棟の画面占有の合計）：018 77 %・017 58 %・002 35 %・007 27 %。
-  017 は南入口で対の 002 とほぼ鏡写しの平入二階（vision）・両隣に家がなく妻が両方とも丸見え → 本卯建の造り酒屋（入口の目印）。
+  017 は南入口で対の 002 とほぼ鏡写しの平入二階（vision）・両隣に家がなく妻が両方とも丸見え → 酒屋（入口の目印）。r2 の本卯建の造り酒屋は高すぎ（頂 9.49 m）→ r3（2026-10-21）で厨子二階の町家に下げた。
   018 は井戸の辻に南の妻を向ける低い厨子二階、妻が無地の大きな板に読める → 表低奥高の非対称の切妻（辻から見える妻の輪郭を変える）。
   002 は 017 を変えれば鏡写しが解ける。007 は S100 以外で画面占有が小さい。→ 本回は見送り。
 制約（実測、body 局部座標）：footprint・入口・body 碰撞（017 頂 5.40 m／018 頂 3.90 m）は不変、見える壁・軒はその上。屋根の碰撞は足さない。
-  017：前に W9 杉玉（x 1.17–2.30・y 2.24–3.26・z 4.98–6.42）と P10 酒の幟（x 2.25–2.88・y ≤ 3.79・z 5.53–5.88）→ 下屋は x ≤ 2.12 で止め袖卯建で納める。
+  017：前に W9 杉玉（x 1.17–2.30・y 2.24–3.26・z 4.98–6.42）と P10 酒の幟（x 2.25–2.88・y ≤ 3.79・z 5.53–5.88）→ r3：下屋は x ≤ 1.05（杉玉の手前）で止め、両端を袖卯建で納める。
        両側 2 m 以内に建物なし（−x に P10 干し物 y ≤ 1.88）。
   018：+x は 019（ART_REVIEW）の壁まで 0.204 m・019 の螻羽 0.08 m → 018 の +x の螻羽は 0.06 m に詰める。−x は井戸（壁から 1.85 m・y ≤ 2.25）。
        前に P10 桶山（x 1.76–3.14・y ≤ 1.28）・W9 鉢（y ≤ 0.57）。
 """
 
 
-def _udatsu(W, R, sx, w, zf, ze, YE, H, p, t_in=0.18, t_out=0.28, udh=0.95, below=0.45):
-    """本卯建：妻壁（x＝sx·w/2 の内 t_in・外 t_out）を屋面より udh 上へ立ち上げ、屋面に沿って軒先 z＝±ze まで。上端に瓦の笠と冠瓦、棟上に合掌塊。"""
-    xa, xb = sx * (w / 2 - t_in), sx * (w / 2 + t_out)
-    xo, xi = (xb, xa)
-    yr = lambda z: H - p * abs(z)
-    for sg in (1.0, -1.0):
-        z1 = sg * ze
-        top0, top1, bot0, bot1 = yr(0.0) + udh, yr(z1) + udh, yr(0.0) - below, yr(z1) - below
-        polyo(W, [(xo, bot0, 0.0), (xo, bot1, z1), (xo, top1, z1), (xo, top0, 0.0)], 'V2_Plaster', PL, out=(sx, 0.0, 0.0), grain=Z)     # 外面
-        polyo(W, [(xi, bot0, 0.0), (xi, bot1, z1), (xi, top1, z1), (xi, top0, 0.0)], 'V2_Plaster', PL * 0.94, out=(-sx, 0.0, 0.0), grain=Z)  # 内面（屋面の上が見える）
-        polyo(W, [(xa, bot1, z1), (xb, bot1, z1), (xb, top1, z1), (xa, top1, z1)], 'V2_Plaster', PL * 0.9, out=(0.0, 0.0, sg), grain=Y)   # 軒先の木口
-        zw = sg * zf                                                                                                      # 壁より外（軒の下）の下面
-        polyo(W, [(xa, yr(zw) - below, zw), (xb, yr(zw) - below, zw), (xb, bot1, z1), (xa, bot1, z1)], 'V2_Plaster', PL * 0.8, out=(0.0, -1.0, 0.0), grain=Z)
-        xm = (xa + xb) / 2
-        R.beam((xm, top0 + 0.05, 0.0), (xm, top1 + 0.05, z1 + sg * 0.12), abs(xb - xa) + 0.24, 0.10, 'V2_Kawara', 0.66)            # 瓦の笠（両側へ 0.12 張り出す）
-        R.cyl((xm, top0 + 0.14, 0.0), (xm, top1 + 0.14, z1 + sg * 0.12), 0.055, 0.055, 8, 'V2_Kawara', 0.58, caps=(False, True))     # 冠瓦
-        put(R, cached(('oni',), lambda: NS['oni']()), off=(xm, top1 + 0.06, z1 + sg * 0.10), sx=0.7, sy=0.7, sz=0.7, rot=-sg * math.pi * 0.5)   # 笠の軒先の小鬼
-    W.box((min(xa, xb) - 0.02, yr(0.0) - below, -0.22), (max(xa, xb) + 0.02, yr(0.0) + udh + 0.12, 0.22), 'V2_Plaster', PL, grain=Y)  # 棟上の合掌塊
-    R.box((min(xa, xb) - 0.05, yr(0.0) + udh + 0.12, -0.26), (max(xa, xb) + 0.05, yr(0.0) + udh + 0.19, 0.26), 'V2_Kawara', 0.66, grain=Z)
-
-
 def build_mkt017():
-    """B_P_MKT_017 酒屋（Phase 7・南入口の西）：本卯建の造り酒屋。壁 5.6 m・勾配 0.55 の切妻平入（棟 約 8.35 m＝向かいの 002 より 0.9 m 高い）、
-    両妻を屋面より 0.95 m 上へ立ち上げ、妻面より 0.28 m 出した本卯建（瓦の笠・軒先に小鬼）、二階は白漆喰の塗籠に虫籠窓 3、両妻に蔵窓・焼杉の腰板・二階床の水切り瓦。
-    一階は酒格子・戸口（Kit と同じ x −0.8665..0.8665）・店台＋瓦の下屋（杉玉の上・酒の幟の手前 x ≤ 2.12 で止め、袖卯建で納める）。白漆喰＋銀鼠（FIN 2）。"""
-    B = Bld('B_P_MKT_017', 5.2, 10.01, 5.6, fin=2, tone=0)
+    """B_P_MKT_017 酒屋（Phase 7 r3・2026-10-21 使用者「外觀很突兀」で作り直し）：厨子二階の町家の酒屋。
+    r2（壁 5.6 m・勾配 0.55・棟 8.35 m・高さ 0.95 m／厚さ 0.46 m の本卯建＝実測頂 9.49 m、周り 30 m の棟は 4.5–7.6 m）が
+    細い間口 5.2 m に対して塔のように突き出ていた → 町の Kit と同じ勾配 0.45・壁 4.55 m（棟 6.80 m）に下げ、本卯建を外して
+    両妻は Kit の螻羽（出 0.30）・鬼瓦・妻壁の束貫で納める（隣の町家と同じ屋根の言葉）。
+    一階は酒格子・戸口（Kit と同じ x −0.8665..0.8665）・店台。瓦の下屋は戸口と格子の上だけ（x ≤ 1.05）：右の間口の前には
+    W9 杉玉（x 1.17–2.30・腕木 y 2.95）と P10 酒の幟（x 2.25–2.88・y ≤ 3.79）が立つので、杉玉は二階の床下の差し鴨居から吊る。
+    下屋の両端は Kit の袖卯建（庇上の小さな防火袖壁）。二階は白漆喰の虫籠窓 3。両妻の一階は焼杉の板張り＋水切り瓦、二階は漆喰に蔵窓 2。
+    白漆喰＋銀鼠（FIN 2）。"""
+    B = Bld('B_P_MKT_017', 5.2, 10.01, 4.55, fin=2, tone=0)
     w, zf = B.w, B.zf
-    YE, P, OVE = 5.6, 0.55, 0.55
-    H = YE + P * zf
+    YE, P, OVE, OVG = 4.55, 0.45, 0.55, 0.30
     bays1 = [('koshi', 1.7335), ('shop_o', 1.733), ('shop_k', 1.7335)]
     bays2 = [('mushi', 1.7335), ('mushi', 1.733), ('mushi', 1.7335)]
-    X1 = 2.12                                                                # 下屋の右端（P10 酒の幟 x ≥ 2.25 の手前）
+    X1 = 1.05                                                                # 下屋の右端（杉玉 x ≥ 1.17 の手前）
+    YH = 3.30                                                                # 下屋の壁際の屋面線（胴差 2.94–3.12＝差し鴨居と同じ高さ）
     for lod in (0, 1):
         W, R, PR = B.W[lod], B.R[lod], B.P[lod]
         tm = tmp()
-        gable_roof(tm, lod, w, zf, YE, P, OVE, 0.0, tsuma=False)            # 螻羽の出 0＝屋面の端が卯建の内側に入る
+        gable_roof(tm, lod, w, zf, YE, P, OVE, OVG, tsuma=False)
         put(R, tm)
-        eave_roof(R, lod, -w / 2 + 0.02, X1, 4.05, zf, 0.80, p=0.30, style='tile')          # r2：出 1.0→0.80（杉玉が庇の影に沈んだ）。壁際 4.05：庇の桁の下端 ≈3.45 m を杉玉の吊り木（≤ 3.30 m）より上へ（3.80 だと交差 16）
-        for sx in (-1.0, 1.0):
-            _udatsu(W, R, sx, w, zf, zf + OVE - 0.06, YE, H, P)
+        eave_roof(R, lod, -w / 2 + 0.02, X1, YH, zf, 0.85, p=0.30, style='tile')
         if lod == 1:
             W.box((-w / 2, FL, -zf), (w / 2, YE, zf), 'V2_Plaster', PL, grain=Y)
             continue
         assert abs(row1p(B, W, -w / 2, bays1) - w / 2) < 0.02
         _shell(B, W, YE)
-        W.box((-w / 2, 2.9, zf - 0.10), (w / 2, 3.08, zf + 0.02), 'V2_Wood', DARK * 0.9, grain=X)          # 差し鴨居
-        W.box((-w / 2, 3.08, zf - 0.10), (w / 2, 4.20, zf), 'V2_Plaster', PL, grain=X)                     # 下屋の上の小壁
-        assert abs(row2p(B, W, -w / 2, bays2, 4.20, YE - 0.18) - w / 2) < 0.02
+        W.box((-w / 2, 2.9, zf - 0.10), (w / 2, 3.08, zf + 0.02), 'V2_Wood', DARK * 0.9, grain=X)          # 差し鴨居（杉玉の腕木 y 2.95 がここに取り付く）
+        W.box((-w / 2, 3.08, zf - 0.10), (w / 2, 3.50, zf), 'V2_Plaster', PL, grain=X)                     # 下屋の上の小壁
+        assert abs(row2p(B, W, -w / 2, bays2, 3.50, YE - 0.18) - w / 2) < 0.02
         W.box((-w / 2, YE - 0.18, zf - 0.10), (w / 2, YE, zf + 0.06), 'V2_Plaster', PL, grain=X)          # 軒下の塗り込め
-        # 袖卯建（下屋の右端・幟の手前 z ≤ zf+0.50）：下端は下屋の屋面に埋める
-        W.box((X1 - 0.02, 3.80, zf), (X1 + 0.20, 5.20, zf + 0.50), 'V2_Plaster', PL, grain=Y)
-        R.box((X1 - 0.05, 5.20, zf - 0.02), (X1 + 0.23, 5.26, zf + 0.53), 'V2_Kawara', 0.70, grain=Z)
-        # 両妻：Kit の妻壁（束・貫）を平らな白漆喰で塗り込める＋焼杉の腰板・二階床の水切り瓦・蔵窓
+        for xu in (-w / 2 + 0.13, X1 - 0.12):                                                            # 袖卯建（下屋の両端・Kit の構件）
+            put(W, cached(('ud62',), lambda: NS['udatsu'](0.62)), off=(xu, YH, zf))
+        # 両妻：一階＝焼杉の板張り（台基〜2.85）＋水切り瓦、二階＝漆喰（Kit の妻壁の束・貫はそのまま見せる）＋蔵窓 2
         for sx in (-1.0, 1.0):
             x0 = sx * w / 2
-            xg = sx * (w / 2 + 0.07)                                                                       # r2：0.012 では Kit の束・貫が透けた → 0.07 出した一枚の塗籠
-            polyo(W, [(xg, 3.36, -zf + 0.02), (xg, 3.36, zf - 0.02), (xg, YE - 0.02, zf - 0.02), (xg, H - 0.30, 0.0), (xg, YE - 0.02, -zf + 0.02)],
-                  'V2_Plaster', PL, out=(sx, 0.0, 0.0), grain=Y)
-            for zz in (-zf + 0.02, zf - 0.02):                                                             # 塗籠の小口（前後）
-                polyo(W, [(x0, 3.36, zz), (xg, 3.36, zz), (xg, YE - 0.02, zz), (x0, YE - 0.02, zz)], 'V2_Plaster', PL * 0.92, out=(0.0, 0.0, 1.0 if zz > 0 else -1.0), grain=Y)
-            W.box((min(x0, x0 + sx * 0.035), FL, -zf), (max(x0, x0 + sx * 0.035), 1.75, zf), 'V2_Wood', DARK * 0.75, grain=Y)
-            R.box((min(x0, x0 + sx * 0.16), 3.28, -zf), (max(x0, x0 + sx * 0.16), 3.36, zf), 'V2_Kawara', 0.62, grain=Z)
-            for zc in (-2.2, 2.2):
-                kura_window_side(W, xg, sx, zc, 4.15, 4.90)
+            W.box((min(x0, x0 + sx * 0.035), FL, -zf), (max(x0, x0 + sx * 0.035), 2.85, zf), 'V2_Wood', DARK * 0.62, grain=Y)
+            nb_ = int(round(2 * zf / 0.45))
+            for i in range(1, nb_):                                                                        # 板張りの押縁（0.45 m 毎）
+                zb_ = -zf + 2 * zf * i / nb_
+                W.box((min(x0, x0 + sx * 0.06), FL, zb_ - 0.018), (max(x0, x0 + sx * 0.06), 2.85, zb_ + 0.018), 'V2_Wood', DARK * 0.5, grain=Y)
+            R.box((min(x0, x0 + sx * 0.15), 2.85, -zf), (max(x0, x0 + sx * 0.15), 2.93, zf), 'V2_Kawara', 0.62, grain=Z)
+            for zc in (-2.2, 2.2):                                                                         # r3b：蔵窓（灰色の塊に読めた）→ 町家の連子窓
+                side_window(W, x0, sx, zc, 3.50, 4.10, ww=0.9)
         W.box((-w / 2 - 0.02, YE - 0.16, -zf - 0.04), (w / 2 + 0.02, YE, -zf + 0.02), 'V2_Wood', DARK, grain=X)   # 背面の軒桁
-        W.box((1.62, 3.27, zf), (1.85, 3.42, zf + 0.09), 'V2_Wood', DARK, grain=X)                          # 杉玉の吊り木の受け（吊り木の端は壁から 0.065 m：上に被せて取り付きを見せる。gate 箱 y ≤ 3.26 の上）
         cloth(W, -0.8665 + 0.10, 0.8665 - 0.10, 2.30, 1.55, zf + 0.04, 'noren_a', seg_w=0.8, billow=0.03, rod=True)
     B.finish()
     return B

@@ -32,8 +32,8 @@
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_013_L1.res": "fe3f4e8472ff9262701c0bd8bd158348cd41d20c4ddfbe38fd871a2c1c5ca7f2",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_015_L0.res": "ec4b9494a345a6eda9009eb6d11067e158c6ac8f6c1110a22404370de56838c4",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_015_L1.res": "7c87dc915dc6c203d55501647b5b0739c33f110f53847ccfbb187e3bd56b862d",
-  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L0.res": "4d352b41a1a01b6a31792742f8cea8549cfe9d3a020748ecc52e7214cad4019c",
-  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L1.res": "78e53ba8239dec5b09d60d677310ed301c6c140efed849e0cece32a0569c4841",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L0.res": "bf4efabe9a72577bc1fec7644278d68218faa7c9d760982eba40629d9fd8d27d",
+  "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_017_L1.res": "9c2cd58c10fd241ffb1d8f6c7fdeaa666c531472ff03679087f87aed536dcdca",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_018_L0.res": "ebae04a75a0ddb4580c80c81da360c50f0b4a078231c4cdbcb2b49d1c3f919d8",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_018_L1.res": "a4e20c03f37f0f49e5093abad5db41a557cef75cf20e31764aaa6ff5beaf676a",
   "res://assets/village_v2/w9r2_arch/mesh/B_P_MKT_019_L0.res": "35f19a01c8b099d241d55960da638a08f4b2aada77c1f2ea6b548fb64fde4536",
@@ -105,5 +105,5 @@
  },
  "mesh_dir": "res://assets/village_v2/w9r2_arch/mesh",
  "modules": 94,
- "tris_total": 700370
+ "tris_total": 701108
 }

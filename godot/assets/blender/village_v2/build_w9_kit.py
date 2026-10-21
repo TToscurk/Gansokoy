@@ -550,24 +550,42 @@ def sugidama(lod):
     m.beam((0.0, 2.95, 0.0), (0.0, 2.95, 0.9), 0.075, 0.07, WD, OLD)
     m.beam((0.0, 2.7, 0.04), (0.0, 2.95, 0.55), 0.045, 0.04, WD, OLD)
     cy(m, (0.0, 2.95, 0.85), (0.0, 2.72, 0.85), 0.012, 0.012, 4, 'nawa', caps=(False, False))
-    C = (0.0, 2.3, 0.85)
-    ball(m, C, 0.33, 'take_ao', 10 if not lod else 6, 0.9)                     # 核（球の輪郭を決める）
-    lat = 6 if not lod else 4
-    lon = 12 if not lod else 8
+    # r2（2026-10-21 使用者「看不懂是什麼菱形的東西」）：旧版は 6 角の双角錐（ball＝菱形）の塊 40 個＋棘を若緑・黄緑・柿渋の 3 色で
+    # 散らしていた → 遠目に多面体の宝石に読めた。実物の杉玉は刈り込んだ丸い杉葉の球で色はほぼ一色。
+    # → 経緯の細かい球（半径 0.40・頂点を ±4 % 揺らして葉の凸凹）を深い杉緑（daikon_leaf × 0.70–0.78）一色で。下半球は少し暗く（陰）。
+    #   LOD0 は表面に短い杉葉の毛羽 90 本（同じ緑・長さ 3.5 cm）で輪郭を柔らかくする（大きい塊や色の斑は作らない）。
+    C, RB = (0.0, 2.3, 0.85), 0.40
+    lat, lon = (14, 24) if not lod else (7, 12)
+    grid = []
+    for a in range(lat + 1):
+        th = math.pi * a / lat
+        row = []
+        for b in range(lon):
+            ph = 2 * math.pi * (b + (0.5 if a % 2 else 0.0)) / lon
+            r = RB * (1.0 + (rng.uniform(-0.04, 0.04) if 0 < a < lat else 0.0))
+            row.append(K.add(C, (r * math.sin(th) * math.cos(ph), r * math.cos(th), r * math.sin(th) * math.sin(ph))))
+        grid.append(row)
     for a in range(lat):
-        th = math.pi * (a + 0.5) / lat
-        n_lon = max(3, int(round(lon * math.sin(th))))                          # 緯度ごとに塊の数を変え、極に固まらない
-        for b in range(n_lon):
-            ph = 2 * math.pi * (b + (0.5 if a % 2 else 0.0)) / n_lon
-            d = (math.sin(th) * math.cos(ph), math.cos(th), math.sin(th) * math.sin(ph))
-            under = 1.0 - (d[1] * 0.5 + 0.5)                                   # 下側ほど 1
-            dry = rng.random() < (0.10 + 0.6 * under)
-            key = 'kakishibu' if dry else ('kyabetsu' if rng.random() < 0.5 else 'take_ao')
-            cc = K.add(C, K.mul(d, 0.31))
-            ball(m, cc, 0.115 * rng.uniform(0.9, 1.12), key, 5 if not lod else 4, rng.uniform(0.85, 1.0))
-            if not lod:
-                tip = K.add(C, K.mul(d, 0.43))                                 # 短い毛羽（杉葉の先）
-                cy(m, K.add(C, K.mul(d, 0.36)), tip, 0.03, 0.004, 3, key, caps=(False, False), col=rng.uniform(0.85, 1.0))
+        up = math.cos(math.pi * (a + 0.5) / lat)                                # 1＝上・−1＝下
+        for b in range(lon):
+            col = rng.uniform(0.70, 0.78) * (0.90 + 0.10 * up)
+            p00, p01 = grid[a][b], grid[a][(b + 1) % lon]
+            p10, p11 = grid[a + 1][b], grid[a + 1][(b + 1) % lon]
+            if a == 0:
+                stpo(m, [p00, p10, p11], 'daikon_leaf', col, ctr=C)
+            elif a == lat - 1:
+                stpo(m, [p00, p01, p10], 'daikon_leaf', col, ctr=C)
+            else:
+                stpo(m, [p00, p01, p11, p10], 'daikon_leaf', col, ctr=C)
+    if not lod:
+        n_t = 90
+        for i in range(n_t):                                                    # 毛羽：黄金角の螺旋で球面に均等
+            yy = 1.0 - 2.0 * (i + 0.5) / n_t
+            rr = math.sqrt(max(0.0, 1.0 - yy * yy))
+            ph = i * 2.399963
+            d = (rr * math.cos(ph), yy, rr * math.sin(ph))
+            cy(m, K.add(C, K.mul(d, RB * 0.96)), K.add(C, K.mul(d, RB + 0.035)), 0.026, 0.004, 3, 'daikon_leaf',
+               caps=(False, False), col=rng.uniform(0.62, 0.72) * (0.90 + 0.10 * yy))
     return m
 
 

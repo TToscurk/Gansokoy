@@ -40,8 +40,8 @@
   "res://assets/village_v2/w9_kit/mesh/w9_shita_wood_m_l1.res": "6d0b93b4ebc48a59e8cb47afea2c7c7002b9a9c819910d6a3a6684877446740d",
   "res://assets/village_v2/w9_kit/mesh/w9_sudare.res": "4d3406c7c9f6ae2ee92ff61c24daa2f1d4674545186ea47e15246b7eb8745dd2",
   "res://assets/village_v2/w9_kit/mesh/w9_sudare_l1.res": "f917bcfc92c0fa105e513b2671159b66972efa60550a764fb0c3b987fc273258",
-  "res://assets/village_v2/w9_kit/mesh/w9_sugidama.res": "72b506c7550db6a275352bf991f7b4aa054e3525f7a28c42fcd0fc4ed0578a05",
-  "res://assets/village_v2/w9_kit/mesh/w9_sugidama_l1.res": "0d4f258ea7ad04f73551f0b5c642cc06912c5e5e334bf13b6f7cd5ee1900cdcf",
+  "res://assets/village_v2/w9_kit/mesh/w9_sugidama.res": "c88569c7167d321f3f89965290ff974b5d94d8568ee80bed4c9e43ceb5993793",
+  "res://assets/village_v2/w9_kit/mesh/w9_sugidama_l1.res": "a972bac96d44587baa52f15114b134f3efa28bde9869ec27069c89026e98cbc4",
   "res://assets/village_v2/w9_kit/mesh/w9_takegaki.res": "a05235c357e194a7d5ae6a2fadb19166b8d41ab73cc90d42cfd43cf9520f03f3",
   "res://assets/village_v2/w9_kit/mesh/w9_takegaki_l1.res": "18a03ff349161eba7ff416629a53207d08d72d62d1765dbd10f2f15843b2e3ea",
   "res://assets/village_v2/w9_kit/mesh/w9_tsurushi_kaki.res": "200efe24c95e6ea3d9f9939f3c67e95fee35c0ca4d42fe52f1608a6a791fc663",
@@ -54,10 +54,10 @@
   "res://assets/village_v2/w9_kit/mesh/w9_zaru_kake_l1.res": "684bff06929c99b126bdbfe51890684cc43552fb191fd641ca6ad1471a4994d7",
   "res://assets/village_v2/w9_kit/mesh/w9_zori_kake.res": "3dc137f8d1a81a584cd5e8f1a6fbb9121af6b16a866840a8b20d8b4ab3173567",
   "res://assets/village_v2/w9_kit/mesh/w9_zori_kake_l1.res": "a7f315c44aed49739f3ab1c32f6fc145b48929429cdb02c3ad1aa6aa5fe4d1c4",
-  "res://assets/village_v2/w9_kit/src/modules_blender.json": "096b4e423d39e1005a6c9be065af60ca381628f1042a9f63ac1fecd1223eb997",
-  "res://assets/village_v2/w9_kit/src/w9_kit.glb": "04afd4f8adde808968b8e271de77bcf1b22eb8fe6983b8f3d278efe2a530f525"
+  "res://assets/village_v2/w9_kit/src/modules_blender.json": "1f1f2377f92621ec446fafe4e0efd8d1a945c1d9ba3bc0249d2d5ac3e1780ef3",
+  "res://assets/village_v2/w9_kit/src/w9_kit.glb": "1120fa598281ad17175ae094c8ca38f18a1bcfc8c9227f87f382b16e6ee3ef05"
  },
  "mesh_dir": "res://assets/village_v2/w9_kit/mesh",
  "modules": 50,
- "tris_total": 16750
+ "tris_total": 17130
 }
