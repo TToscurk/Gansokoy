@@ -1,0 +1,12 @@
+# Visual QA 證據輕量（.hermes.md 效率規則 3）：只進版控報告與總表圖；原始渲染／ID 遮罩可隨時重拍。
+*/capture/*
+!*/capture/views_sheet.jpg
+!*/capture/focus_sheet.jpg
+!*/capture/fix_sheet.jpg
+!*/capture/player_sheet.jpg
+!*/capture/map_top_overlay.png
+*/blender.log
+*/geometry.json
+*/graph.json
+*/targets.json
+*/fix_preview.json

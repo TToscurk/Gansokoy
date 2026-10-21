@@ -1,0 +1,51 @@
+{
+ "images": [
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\front.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\back.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\left.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\right.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\top.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\oblique.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\corner0.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\corner1.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\corner2.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\temizuya\\capture\\corner3.png"
+ ],
+ "profile": "japanese_shrine",
+ "checklist": [
+  "柱子與橫梁視覺上是否連接（看特寫，不看遠景）",
+  "屋頂是否相對建築主軸偏移（看 top 正交）",
+  "左右立面是否異常（left vs right）",
+  "入口／樓梯是否接到入口",
+  "建築是否與地面融合（柱腳、基壇）",
+  "比例是否合理（以公尺量測為準，不以單張透視圖判斷）",
+  "是否有不自然的懸浮或遮擋構件"
+ ],
+ "geometry_facts": [
+  "DETACHED PASS dev=0",
+  "SELF_CROSSING:stone water basin 3d model#island0 PASS dev=None"
+ ],
+ "open_items": [
+  "STYLE:roof_overhang_ratio UNKNOWN: 沒有可辨識的屋頂與柱牆構件（單網格或未分類），無法量出挑",
+  "STRUCT:opaque UNKNOWN: 單一網格（Tripo）：內部構件無法辨識，柱梁屋頂關係無法驗證；不為此重建資產"
+ ],
+ "graph": [
+  "japanese shrine 3d model 是單一網格（186899 三角形、非封閉、1 個連通島）：沒有構件分件，柱／梁／屋頂等內部關係無法辨識；只能做整體尺寸、懸空島（--scan --split）與表面交錯統計",
+  "stone water basin 3d model 是單一網格（94258 三角形、非封閉、1 個連通島）：沒有構件分件，柱／梁／屋頂等內部關係無法辨識；只能做整體尺寸、懸空島（--scan --split）與表面交錯統計"
+ ],
+ "format": {
+  "items": [
+   {
+    "image": "front.png",
+    "px": [
+     640,
+     300
+    ],
+    "object": "(可省略，會用 ID 遮罩定位)",
+    "concern": "offset|floating|gap|scale|penetration|style|other",
+    "observation": "..."
+   }
+  ]
+ },
+ "rules": "每一項只描述看到什麼與在哪裡；不要估精確公尺數；系統會用 ID 遮罩定位物件並查幾何。"
+}

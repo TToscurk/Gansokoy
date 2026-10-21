@@ -100,6 +100,16 @@ def main():
     if a.get("out"):
         with open(a["out"], "w", encoding="utf-8") as f:
             json.dump(rep, f, ensure_ascii=False, indent=1, default=A._jsonable)
+    if a.get("targets"):  # P2 Visual QA：非 PASS 結果 → 特寫目標＋每個網格物件的 Blender 世界 AABB
+        cmap = {}
+        if a.get("map"):
+            for cid, ent in (spec.get("components") or {}).items():
+                ob = A._find_object(cid, ent)
+                cmap[cid] = ob.name if ob is not None else cid
+        vt = A.visual_targets(rep, cid_map=cmap)
+        with open(a["targets"], "w", encoding="utf-8") as f:
+            json.dump(vt, f, ensure_ascii=False, indent=1, default=A._jsonable)
+        print(f"[ARCH] visual targets {len(vt['targets'])} → {a['targets']}")
     print(A.summary_text(rep))
     s = rep["summary"]
     return 1 if s["FAIL"] else (3 if s["UNKNOWN"] and not s["PASS"] else 0)

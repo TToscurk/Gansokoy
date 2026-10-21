@@ -1,0 +1,50 @@
+{
+ "images": [
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\front.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\back.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\left.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\right.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\top.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\oblique.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\corner0.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\corner1.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\corner2.png",
+  "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\capture\\corner3.png"
+ ],
+ "profile": "japanese_gate",
+ "checklist": [
+  "柱子與橫梁視覺上是否連接（看特寫，不看遠景）",
+  "屋頂是否相對建築主軸偏移（看 top 正交）",
+  "左右立面是否異常（left vs right）",
+  "入口／樓梯是否接到入口",
+  "建築是否與地面融合（柱腳、基壇）",
+  "比例是否合理（以公尺量測為準，不以單張透視圖判斷）",
+  "是否有不自然的懸浮或遮擋構件"
+ ],
+ "geometry_facts": [
+  "torii_on_base PASS dev=0.0",
+  "torii_centered_on_base PASS dev=0.0",
+  "torii_self_symmetric PASS dev=0.0",
+  "base_self_symmetric PASS dev=0.0",
+  "DETACHED PASS dev=0"
+ ],
+ "open_items": [
+  "VIS_GROUND WARN: 最低點在地面下 0.322 m（埋入）：若是基座設計，在連接表宣告 ground_embed_max；否則檢查原點"
+ ],
+ "graph": [],
+ "format": {
+  "items": [
+   {
+    "image": "front.png",
+    "px": [
+     640,
+     300
+    ],
+    "object": "(可省略，會用 ID 遮罩定位)",
+    "concern": "offset|floating|gap|scale|penetration|style|other",
+    "observation": "..."
+   }
+  ]
+ },
+ "rules": "每一項只描述看到什麼與在哪裡；不要估精確公尺數；系統會用 ID 遮罩定位物件並查幾何。"
+}

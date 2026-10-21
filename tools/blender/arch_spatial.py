@@ -1645,6 +1645,76 @@ def fix_preview(spec, rep, graph, carry="dependents", only=None):
             "apply": "預覽只回報；正式套用需另外明確指定物件白名單（P1 未啟用寫入）"}
 
 
+VIEW_HINT = {"SUPPORT": ["front", "right"], "COAXIAL": ["top", "front"], "SYMMETRIC": ["front", "top"],
+             "PARALLEL": ["top", "front"], "PERPENDICULAR": ["top", "front"], "FACING": ["top"],
+             "EVEN_SPACING": ["front", "top"], "CONTINUOUS": ["right", "front"]}
+
+
+def visual_targets(rep, include=("FAIL", "WARN", "UNKNOWN"), cid_map=None):
+    """P2 Visual QA：把非 PASS 的結果列轉成特寫目標（不重算幾何，只取物件邊界定位）。
+    錨點用「錨點物件世界 AABB 內的正規化座標 uvw」表示：對平移與每軸縮放不變，Godot 端用同名節點的
+    AABB 還原（Blender (u,v,w) → Godot (u, w, 1−v)），所以建築被搬到村莊、旋轉、縮放後仍指向同一處。
+    cid_map：連接表的構件 id → Blender 物件名（map 模式的結果列 object_ids 是構件 id，不是物件名）。"""
+    cid_map = cid_map or {}
+    dg = bpy.context.evaluated_depsgraph_get()
+    bb = {}
+
+    def box(o):
+        if o.name not in bb:
+            g = geom_from_object(o, dg)
+            bb[o.name] = (g.bmin.copy(), g.bmax.copy())
+        return bb[o.name]
+
+    out = []
+    for r in rep.get("results", []):
+        if r["status"] not in include:
+            continue
+        names = [n for n in (r.get("object_ids") or []) if isinstance(n, str)]
+        obs = []
+        for n in names:
+            n = cid_map.get(n, n)
+            o = bpy.data.objects.get(n) or bpy.data.objects.get(n.split("#")[0])
+            if o is not None and o.type == "MESH" and o not in obs:
+                obs.append(o)
+        base = {"rule_id": r["rule_id"], "type": r["type"], "status": r["status"], "deviation": r.get("deviation"),
+                "actual": r.get("actual"), "suggestion": r.get("suggestion", ""), "fix": r.get("fix"),
+                "reason": (r.get("actual") or {}).get("reason") if isinstance(r.get("actual"), dict) else None}
+        if not obs:
+            out.append(dict(base, anchor_object=None, note="結果列沒有可定位的網格物件"))
+            continue
+        lo, hi = box(obs[0])
+        t = r["type"]
+        if t == "SUPPORT":
+            p = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, lo.z))
+            kind, radius = "contact_gap", max(0.25, 0.6 * max(hi.x - lo.x, hi.y - lo.y))
+        elif len(obs) > 1 and t in ("CONTACT", "SNAP", "NO_INTERSECTION", "OVERLAP_ALLOWED", "CLEARANCE_REQUIRED",
+                                     "UNDECLARED_INTERSECTION", "SCAN_INTERSECTION"):
+            lo2, hi2 = box(obs[1])
+            ilo = Vector([max(lo[i], lo2[i]) for i in range(3)])
+            ihi = Vector([min(hi[i], hi2[i]) for i in range(3)])
+            p = (ilo + ihi) * 0.5  # 重疊區中心；分開的軸取兩者之間的縫中點
+            kind, radius = "interface", max(0.25, 0.75 * max(abs(ihi[i] - ilo[i]) for i in range(3)))
+        elif t in VIEW_HINT and len(obs) >= 1:
+            ulo = Vector([min(box(o)[0][i] for o in obs) for i in range(3)])
+            uhi = Vector([max(box(o)[1][i] for o in obs) for i in range(3)])
+            p = (ulo + uhi) * 0.5
+            kind, radius = "alignment", max(0.3, 0.55 * max(uhi - ulo))
+        else:
+            p = (lo + hi) * 0.5
+            kind, radius = "object", max(0.25, 0.6 * max(hi - lo))
+        size = hi - lo
+        uvw = [(p[i] - lo[i]) / size[i] if size[i] > 1e-9 else 0.5 for i in range(3)]
+        out.append(dict(base, object_ids=[o.name for o in obs], component_ids=names, anchor_object=obs[0].name, uvw=uvw,
+                        point_blender=list(p), radius=radius, kind=kind, views=VIEW_HINT.get(t, ["front", "right"])))
+    bounds = {}
+    for o in bpy.context.scene.objects:
+        if o.type == "MESH" and o.visible_get():
+            lo, hi = box(o)
+            bounds[o.name] = {"min": list(lo), "max": list(hi)}
+    return {"targets": out, "bounds_blender": bounds, "cid_map": cid_map, "axis_map": "godot=(x, z, -y); uvw_godot=(u, w, 1-v)",
+            "source": bpy.data.filepath or "(unsaved)"}
+
+
 def _ancestors(o):
     p = o.parent
     while p is not None:

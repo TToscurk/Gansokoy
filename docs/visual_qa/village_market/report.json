@@ -1,0 +1,4352 @@
+{
+ "name": "map 190,-90,330,110",
+ "meta": {
+  "mode": "map",
+  "region": [
+   190.0,
+   -90.0,
+   330.0,
+   110.0
+  ],
+  "version": {
+   "git_head": "c4be7e64",
+   "branch": "yoriichi-combat-and-village-routing",
+   "time": "2026-10-22 04:29:52",
+   "inputs": {
+    "res://maps/village_v2/village_v2.tscn": {
+     "sha": "9251e4a92abab678",
+     "dirty": true
+    },
+    "res://maps/village_v2/layout_v2.json": {
+     "sha": "5cb5daa1ca0ce12e",
+     "dirty": false
+    }
+   },
+   "tools": {
+    "tools/visual_qa/vqa.py": {
+     "sha": "921565c951025248",
+     "dirty": true
+    },
+    "tools/visual_qa/vqa_analyze.py": {
+     "sha": "7ead2cd1d732ad86",
+     "dirty": true
+    },
+    "tools/visual_qa/profiles.json": {
+     "sha": "8fd3fd0fcd9e9671",
+     "dirty": true
+    },
+    "godot/tools/visual_qa/vqa_capture.gd": {
+     "sha": "7b9cb7af38e0bc2f",
+     "dirty": true
+    },
+    "tools/blender/arch_spatial.py": {
+     "sha": "811e1d9b737b5738",
+     "dirty": true
+    },
+    "tools/blender/arch_check.py": {
+     "sha": "c70e8206c5b10800",
+     "dirty": true
+    },
+    "godot/tools/arch_spatial_lib.gd": {
+     "sha": "3fd72df262c6c7c5",
+     "dirty": false
+    }
+   },
+   "godot_bin": "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+   "blender_bin": "D:/Blender/blender-5.2.1-windows-x64/blender.exe"
+  },
+  "godot": "4.7.2-stable (official)",
+  "renderer": "forward_plus",
+  "adapter": "NVIDIA GeForce GTX 1070",
+  "secs_capture": 88.01499605178833,
+  "secs_analyze": 2.0894217491149902,
+  "coverage": "83 棟（FastLane/*、Landmarks/*/Hero、Districts/**/B_*，中心在區域內）",
+  "limits": [
+   "只量路面侵入；朝向／退縮／立面線在快速通道 layout 檢查（逐棟）",
+   "沒有碰撞形狀的建築腳印未知（UNKNOWN）"
+  ]
+ },
+ "summary": {
+  "map": {
+   "PASS": 99,
+   "WARN": 0,
+   "FAIL": 0,
+   "UNKNOWN": 0,
+   "REVIEW": 8
+  }
+ },
+ "totals": {
+  "PASS": 99,
+  "WARN": 0,
+  "FAIL": 0,
+  "UNKNOWN": 0,
+  "REVIEW": 8
+ },
+ "final": {
+  "overall": "REVIEW",
+  "per_rule": [
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_TOWER/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_SUZUNAAN/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_GEIDONTEI/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_KIRISAME/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_WATERWHEEL_2/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Landmarks/LANDMARK_WATERWHEEL_3/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_001",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_002",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_003",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_004",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_005",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_006",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_007",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_008",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_009",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_010",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_011",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_012",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_013",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_014",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_015",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_017",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_018",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_019",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_020",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_021",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_022",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_023",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_024",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_025",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_026",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_027",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_028",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_029",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_030",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_032",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_033",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_034",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_035",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_036",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_037",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_038",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_039",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_040",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_041",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_042",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_043",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_044",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_045",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_046",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_047",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_048",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_049",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_050",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_051",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_052",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_053",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_054",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_055",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_056",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_057",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_058",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_059",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_001",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_002",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_003",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_004",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_007",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_010",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_011",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_012",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_013",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_014",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_015",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_016",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_017",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_018",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_024",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_025",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_026",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_071",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_072",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_VIEW:EntranceRoad×MainStreet",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_TOWER/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_SUZUNAAN/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_KIRISAME/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_GEIDONTEI/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_VIEW:MainStreet×CrossStreetMid",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_TOWER/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_SUZUNAAN/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_KIRISAME/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_GEIDONTEI/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_VIEW:MainStreet×CrossStreetSouth",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_TOWER/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_SUZUNAAN/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_KIRISAME/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_GEIDONTEI/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_VIEW:CrossStreetMid×WestAlley",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_TOWER/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_SUZUNAAN/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_KIRISAME/Hero",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_GEIDONTEI/Hero",
+    "geometry": "REVIEW",
+    "priority": "hard",
+    "evidence": [],
+    "final": "REVIEW",
+    "locked": false
+   }
+  ],
+  "unlinked": [],
+  "rule": "幾何／放置 FAIL 不可被視覺降級；視覺只能補證據或提升為 REVIEW；UNKNOWN／REVIEW 不計入 PASS"
+ },
+ "note": "UNKNOWN 與 REVIEW 不計入 PASS；PASS 只代表在列出的檢查範圍內沒有發現問題",
+ "results": [
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SOUTH_GATE/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.133,
+    "road": "MainStreet",
+    "at": [
+     238.15,
+     99.15
+    ],
+    "label": "大鳥居",
+    "footprint_method": "collision_shapes",
+    "shapes": 4
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_TOWER/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_TOWER/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 4.58,
+    "road": "MainStreet",
+    "at": [
+     246.85,
+     62.85
+    ],
+    "label": "樓閣（火見櫓候補）",
+    "footprint_method": "collision_shapes",
+    "shapes": 5
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_SUZUNAAN/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SUZUNAAN/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.38,
+    "road": "MainStreet",
+    "at": [
+     250.64,
+     -1.68
+    ],
+    "label": "鈴奈庵（候補）",
+    "footprint_method": "collision_shapes",
+    "shapes": 6
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_GEIDONTEI/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_GEIDONTEI/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.75,
+    "road": "MainStreet",
+    "at": [
+     278.3,
+     -59.19
+    ],
+    "label": "鯢吞亭（候補）",
+    "footprint_method": "collision_shapes",
+    "shapes": 5
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_KIRISAME/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_KIRISAME/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.79,
+    "road": "MainStreet",
+    "at": [
+     234.29,
+     61.83
+    ],
+    "label": "霧雨店（候補）",
+    "footprint_method": "collision_shapes",
+    "shapes": 6
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_WATERWHEEL_2/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_WATERWHEEL_2/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 6.824,
+    "road": "FarmPath_4",
+    "at": [
+     331.99,
+     0.39
+    ],
+    "label": "水車",
+    "footprint_method": "collision_shapes",
+    "shapes": 5
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Landmarks/LANDMARK_WATERWHEEL_3/Hero",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_WATERWHEEL_3/Hero"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 10.24,
+    "road": "CrossStreetSouth",
+    "at": [
+     308.34,
+     56.03
+    ],
+    "label": "水車",
+    "footprint_method": "collision_shapes",
+    "shapes": 5
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_001",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_001"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.007,
+    "road": "MainStreet",
+    "at": [
+     238.59,
+     92.34
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 108
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_002",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_002"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.493,
+    "road": "MainStreet",
+    "at": [
+     240.06,
+     80.51
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_003",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_003"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.011,
+    "road": "MainStreet",
+    "at": [
+     248.07,
+     33.21
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 107
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_004",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_004"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.008,
+    "road": "MainStreet",
+    "at": [
+     250.93,
+     24.64
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 104
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_005",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_005"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.005,
+    "road": "MainStreet",
+    "at": [
+     254.09,
+     15.15
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 121
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_006",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_006"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.495,
+    "road": "MainStreet",
+    "at": [
+     254.58,
+     15.21
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_007",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_007"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.498,
+    "road": "MainStreet",
+    "at": [
+     258.38,
+     3.82
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_008",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_008"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.498,
+    "road": "MainStreet",
+    "at": [
+     258.44,
+     3.64
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_009",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_009"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.505,
+    "road": "MainStreet",
+    "at": [
+     261.42,
+     -5.28
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_010",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_010"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.501,
+    "road": "MainStreet",
+    "at": [
+     265.12,
+     -16.39
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_011",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_011"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "MainStreet",
+    "at": [
+     269.69,
+     -31.37
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_012",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_012"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.498,
+    "road": "MainStreet",
+    "at": [
+     273.25,
+     -43.24
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_013",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_013"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.01,
+    "road": "MainStreet",
+    "at": [
+     273.1,
+     -44.44
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 104
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_014",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_014"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "MainStreet",
+    "at": [
+     285.35,
+     -82.34
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_015",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_015"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.006,
+    "road": "MainStreet",
+    "at": [
+     286.25,
+     -85.9
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 128
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_017",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_017"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.006,
+    "road": "MainStreet",
+    "at": [
+     232.43,
+     79.46
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 96
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_018",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_018"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.501,
+    "road": "MainStreet",
+    "at": [
+     240.07,
+     32.82
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_019",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_019"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.008,
+    "road": "MainStreet",
+    "at": [
+     242.84,
+     26.06
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 90
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_020",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_020"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.495,
+    "road": "MainStreet",
+    "at": [
+     242.73,
+     24.86
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_021",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_021"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.008,
+    "road": "MainStreet",
+    "at": [
+     245.61,
+     17.76
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 112
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_022",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_022"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.495,
+    "road": "MainStreet",
+    "at": [
+     247.03,
+     11.96
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_023",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_023"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.006,
+    "road": "MainStreet",
+    "at": [
+     260.96,
+     -29.08
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 91
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_024",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_024"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.501,
+    "road": "MainStreet",
+    "at": [
+     263.07,
+     -37.84
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_025",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_025"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.01,
+    "road": "MainStreet",
+    "at": [
+     265.38,
+     -43.83
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 96
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_026",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_026"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.005,
+    "road": "MainStreet",
+    "at": [
+     265.53,
+     -44.31
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 103
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_027",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_027"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.501,
+    "road": "MainStreet",
+    "at": [
+     267.67,
+     -53.17
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_028",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_028"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "MainStreet",
+    "at": [
+     269.51,
+     -59.3
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_029",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_029"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.009,
+    "road": "MainStreet",
+    "at": [
+     273.83,
+     -71.99
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 96
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_030",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_030"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.009,
+    "road": "MainStreet",
+    "at": [
+     275.41,
+     -77.26
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 81
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_032",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_032"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     216.4,
+     -16.5
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_033",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_033"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     224.6,
+     -16.5
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_034",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_034"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     229.6,
+     -16.5
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_035",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_035"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     286.33,
+     -21.04
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_036",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_036"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     286.53,
+     -21.08
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_037",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_037"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.496,
+    "road": "CrossStreetMid",
+    "at": [
+     300.58,
+     -23.74
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_038",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_038"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.496,
+    "road": "CrossStreetMid",
+    "at": [
+     300.78,
+     -23.78
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_039",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_039"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "CrossStreetMid",
+    "at": [
+     239.7,
+     -23.5
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_040",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_040"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "CrossStreetMid",
+    "at": [
+     299.96,
+     -30.74
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_041",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_041"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "CrossStreetMid",
+    "at": [
+     307.14,
+     -32.1
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_042",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_042"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "CrossStreetMid",
+    "at": [
+     307.34,
+     -32.14
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_043",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_043"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "CrossStreetMid",
+    "at": [
+     314.9,
+     -33.57
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_044",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_044"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "CrossStreetSouth",
+    "at": [
+     216.78,
+     52.18
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_045",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_045"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "CrossStreetSouth",
+    "at": [
+     223.08,
+     52.0
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_046",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_046"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "CrossStreetSouth",
+    "at": [
+     264.1,
+     49.71
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_047",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_047"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "CrossStreetSouth",
+    "at": [
+     265.34,
+     49.61
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_048",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_048"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.504,
+    "road": "CrossStreetSouth",
+    "at": [
+     276.76,
+     48.73
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_049",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_049"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.503,
+    "road": "CrossStreetSouth",
+    "at": [
+     283.94,
+     48.17
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_050",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_050"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "CrossStreetSouth",
+    "at": [
+     210.99,
+     45.35
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_051",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_051"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.499,
+    "road": "CrossStreetSouth",
+    "at": [
+     270.94,
+     42.16
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_052",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_052"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.501,
+    "road": "CrossStreetSouth",
+    "at": [
+     272.13,
+     42.06
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_053",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_053"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.502,
+    "road": "CrossStreetSouth",
+    "at": [
+     278.41,
+     41.57
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_054",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_054"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.495,
+    "road": "CrossStreetSouth",
+    "at": [
+     290.88,
+     40.61
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_055",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_055"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.495,
+    "road": "CrossStreetSouth",
+    "at": [
+     291.08,
+     40.59
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_056",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_056"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.5,
+    "road": "WestAlley",
+    "at": [
+     221.12,
+     83.81
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_057",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_057"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.497,
+    "road": "WestAlley",
+    "at": [
+     225.61,
+     86.8
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_058",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_058"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.504,
+    "road": "WestAlley",
+    "at": [
+     208.37,
+     4.64
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/Market/Buildings/B_P_MKT_059",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/Market/Buildings/B_P_MKT_059"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.496,
+    "road": "WestAlley",
+    "at": [
+     210.16,
+     12.13
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_001",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_001"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.41,
+    "road": "CrossStreetMid",
+    "at": [
+     207.45,
+     -15.59
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_002",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_002"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.41,
+    "road": "CrossStreetMid",
+    "at": [
+     206.95,
+     -24.41
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_003",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_003"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.41,
+    "road": "CrossStreetMid",
+    "at": [
+     218.05,
+     -24.41
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_004",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_004"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.41,
+    "road": "CrossStreetMid",
+    "at": [
+     226.35,
+     -24.41
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_007",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_007"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.406,
+    "road": "CrossStreetSouth",
+    "at": [
+     195.37,
+     53.69
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_010",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_010"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.408,
+    "road": "WestAlley",
+    "at": [
+     195.38,
+     -87.24
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_011",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_011"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.409,
+    "road": "WestAlley",
+    "at": [
+     199.58,
+     -67.59
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_012",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_012"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.412,
+    "road": "WestAlley",
+    "at": [
+     199.11,
+     -63.71
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_013",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_013"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.407,
+    "road": "WestAlley",
+    "at": [
+     198.02,
+     -54.58
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_014",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_014"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.008,
+    "road": "WestAlley",
+    "at": [
+     197.43,
+     -37.88
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 121
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_015",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_015"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.411,
+    "road": "WestAlley",
+    "at": [
+     195.68,
+     -35.12
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_016",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_016"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.313,
+    "road": "CrossStreetMid",
+    "at": [
+     195.27,
+     -24.25
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_017",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_017"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.15,
+    "road": "CrossStreetMid",
+    "at": [
+     198.4,
+     -15.85
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_018",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_018"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.409,
+    "road": "WestAlley",
+    "at": [
+     202.02,
+     -0.79
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_024",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_024"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.006,
+    "road": "WestAlley",
+    "at": [
+     204.3,
+     -69.89
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 111
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_025",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_025"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.407,
+    "road": "WestAlley",
+    "at": [
+     204.81,
+     -62.33
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_026",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_026"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 0.006,
+    "road": "WestAlley",
+    "at": [
+     203.18,
+     -60.56
+    ],
+    "label": "",
+    "footprint_method": "mesh_aabb",
+    "shapes": 93
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "沒有碰撞形狀：用可見網格 AABB 量（偏保守）",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_071",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_071"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.409,
+    "road": "MidLane",
+    "at": [
+     236.65,
+     -84.6
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_ROAD:Districts/ResidentialWest/Buildings/B_P_RSW_072",
+   "type": "ROAD_INTRUSION",
+   "status": "PASS",
+   "object_ids": [
+    "Districts/ResidentialWest/Buildings/B_P_RSW_072"
+   ],
+   "expected": {
+    "edge_dist": ">=-0.05"
+   },
+   "actual": {
+    "edge_dist": 1.411,
+    "road": "MidLane",
+    "at": [
+     239.96,
+     -83.77
+    ],
+    "label": "",
+    "footprint_method": "collision_shapes",
+    "shapes": 1
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "arch_spatial_lib.road_intrusion（逐碰撞形狀；無碰撞→網格 AABB）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "map_top_overlay.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_VIEW:EntranceRoad×MainStreet",
+   "type": "PLAYER_VIEW",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": null,
+   "actual": {
+    "mean": 127.2324685329861
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "玩家眼高 1.7 m、60°",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": {
+    "far": 1500.0,
+    "fov": 60.0,
+    "keep_aspect": "height",
+    "near": 0.100000001490116,
+    "origin": [
+     232.41788,
+     1.92534,
+     112.85985
+    ],
+    "projection": "perspective",
+    "size": 200.0,
+    "x": [
+     0.98443,
+     0.0,
+     0.17579
+    ],
+    "y": [
+     -0.00102,
+     0.99998,
+     0.00571
+    ],
+    "z": [
+     -0.17579,
+     -0.0058,
+     0.98441
+    ]
+   }
+  },
+  {
+   "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SOUTH_GATE/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.956,
+    "in_view_px": 66433
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_TOWER/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_TOWER/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.543,
+    "in_view_px": 11179
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_SUZUNAAN/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_SUZUNAAN/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.07,
+    "in_view_px": 1484
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 7%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_KIRISAME/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_KIRISAME/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.086,
+    "in_view_px": 8755
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 9%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:EntranceRoad×MainStreet:Landmarks/LANDMARK_GEIDONTEI/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_GEIDONTEI/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.131,
+    "in_view_px": 655
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 13%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_EntranceRoad×MainStreet.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_VIEW:MainStreet×CrossStreetMid",
+   "type": "PLAYER_VIEW",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": null,
+   "actual": {
+    "mean": 99.12639576099536
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "玩家眼高 1.7 m、60°",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_MainStreet×CrossStreetMid.png"
+   ],
+   "camera": {
+    "far": 1500.0,
+    "fov": 60.0,
+    "keep_aspect": "height",
+    "near": 0.100000001490116,
+    "origin": [
+     259.15396,
+     2.66875,
+     -11.46185
+    ],
+    "projection": "perspective",
+    "size": 200.0,
+    "x": [
+     0.94868,
+     0.0,
+     0.31623
+    ],
+    "y": [
+     -0.00181,
+     0.99998,
+     0.00543
+    ],
+    "z": [
+     -0.31622,
+     -0.00573,
+     0.94867
+    ]
+   }
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SOUTH_GATE/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_TOWER/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_TOWER/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_SUZUNAAN/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SUZUNAAN/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_KIRISAME/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_KIRISAME/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetMid:Landmarks/LANDMARK_GEIDONTEI/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_GEIDONTEI/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.033,
+    "in_view_px": 8696
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 3%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_MainStreet×CrossStreetMid.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_VIEW:MainStreet×CrossStreetSouth",
+   "type": "PLAYER_VIEW",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": null,
+   "actual": {
+    "mean": 124.76275643807871
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "玩家眼高 1.7 m、60°",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_MainStreet×CrossStreetSouth.png"
+   ],
+   "camera": {
+    "far": 1500.0,
+    "fov": 60.0,
+    "keep_aspect": "height",
+    "near": 0.100000001490116,
+    "origin": [
+     239.46408,
+     2.25853,
+     56.90609
+    ],
+    "projection": "perspective",
+    "size": 200.0,
+    "x": [
+     0.98894,
+     0.0,
+     0.14834
+    ],
+    "y": [
+     -0.00086,
+     0.99998,
+     0.00573
+    ],
+    "z": [
+     -0.14834,
+     -0.0058,
+     0.98892
+    ]
+   }
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SOUTH_GATE/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_TOWER/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_TOWER/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_SUZUNAAN/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_SUZUNAAN/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.048,
+    "in_view_px": 5460
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 5%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_MainStreet×CrossStreetSouth.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_KIRISAME/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_KIRISAME/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:MainStreet×CrossStreetSouth:Landmarks/LANDMARK_GEIDONTEI/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_GEIDONTEI/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.005,
+    "in_view_px": 1550
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 1%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_MainStreet×CrossStreetSouth.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_VIEW:CrossStreetMid×WestAlley",
+   "type": "PLAYER_VIEW",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": null,
+   "actual": {
+    "mean": 110.77724500868055
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "玩家眼高 1.7 m、60°",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_CrossStreetMid×WestAlley.png"
+   ],
+   "camera": {
+    "far": 1500.0,
+    "fov": 60.0,
+    "keep_aspect": "height",
+    "near": 0.100000001490116,
+    "origin": [
+     191.39999,
+     2.71086,
+     -20.0
+    ],
+    "projection": "perspective",
+    "size": 200.0,
+    "x": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "y": [
+     -0.00032,
+     1.0,
+     0.0
+    ],
+    "z": [
+     -1.0,
+     -0.00032,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_SOUTH_GATE/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_SOUTH_GATE/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_TOWER/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_TOWER/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_SUZUNAAN/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_SUZUNAAN/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.0,
+    "in_view_px": 8246
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 0%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_CrossStreetMid×WestAlley.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_KIRISAME/Hero",
+   "type": "LANDMARK",
+   "status": "PASS",
+   "object_ids": [
+    "Landmarks/LANDMARK_KIRISAME/Hero"
+   ],
+   "expected": null,
+   "actual": {
+    "in_view_px": 0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "不在此視角視野內（只記錄）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "MAP_LANDMARK:CrossStreetMid×WestAlley:Landmarks/LANDMARK_GEIDONTEI/Hero",
+   "type": "LANDMARK",
+   "status": "REVIEW",
+   "object_ids": [
+    "Landmarks/LANDMARK_GEIDONTEI/Hero"
+   ],
+   "expected": {
+    "visible_ratio": ">=0.3"
+   },
+   "actual": {
+    "visible_ratio": 0.0,
+    "in_view_px": 4335
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "地標隱藏差分 ∩ 地標 ID 遮罩",
+   "suggestion": "地標在視野內但只看得到 0%：確認遮擋物是否合理",
+   "evidence": {},
+   "error_class": null,
+   "section": "map",
+   "images": [
+    "player_CrossStreetMid×WestAlley.png"
+   ],
+   "camera": null
+  }
+ ]
+}

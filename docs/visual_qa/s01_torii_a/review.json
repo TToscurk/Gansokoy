@@ -1,0 +1,8 @@
+{
+  "reviewer": "Visual Reviewer（同一 Claude、獨立階段；輸入只有 capture/views_sheet.jpg 與 review_request.json 的量測事實）",
+  "summary": "兩柱與笠木／島木、貫在正背正交與透視圖都可見相連；柱腳落在兩塊獨立基座上、看不到縫；笠木置中、兩端上翹對稱；側視與俯視有重疊，部分接點無法單獨確認。",
+  "items": [
+    {"image": "corner3.png", "px": [804, 352], "concern": "floating",
+     "observation": "corner3 透視：右側貫的外伸端亮面與暗邊交界很強，乍看像分離的方塊，但看不到背景縫"}
+  ]
+}

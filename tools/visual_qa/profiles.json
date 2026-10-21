@@ -1,0 +1,108 @@
+{
+  "_doc": "建築風格 Profile（P2-D）。只產生 WARN／REVIEW／INFO，永遠不產生 FAIL：FAIL 只來自可量測的幾何規則。比例範圍來自一般日式建築經驗值，是『提醒人看』的門檻，不是設計規格；專案已確認的原作設定（project_canon）優先。",
+  "version": 1,
+  "error_classes": {
+    "GEOMETRY_ERROR": "可量測的幾何違反（來自 arch_spatial / 快速通道，FAIL）",
+    "STRUCTURAL_ERROR": "預期的構件關係不存在或失敗（如柱沒接到梁）",
+    "STYLE_DEVIATION": "比例或形式超出風格常見範圍（WARN，需人看）",
+    "INTENTIONAL": "連接表或 canon 宣告的刻意設計（INFO，不扣分）",
+    "VISUAL_SUSPECT": "視覺上可疑但沒有幾何證據（REVIEW）"
+  },
+  "profiles": {
+    "japanese_shrine": {
+      "label": "Japanese Shrine 社殿／拜殿",
+      "structure": "柱梁木構；基壇或礎石上立柱；屋頂由梁／桁承載",
+      "roof_forms": ["kirizuma 切妻", "irimoya 入母屋", "nagare 流造（前坡延長）"],
+      "entrance": "正面中央（妻入或平入）；參道軸線對準入口",
+      "foundation": "基壇／礎石；柱腳必須落在支撐面上",
+      "proportions": {"height_to_width": [0.55, 1.6], "depth_to_width": [0.5, 1.5], "roof_overhang_ratio": [1.05, 1.6]},
+      "symmetry": {"expected": "bilateral", "silhouette_iou_min": 0.90},
+      "allowed_asymmetry": ["nagare 流造的前後不對稱（前坡長）", "向拝 kōhai", "側面附屬建物"],
+      "expected_relations": [["plinth", "post", "SUPPORTS"], ["post", "beam", "SUPPORTS|CONNECTED"], ["beam", "roof", "SUPPORTS"]],
+      "common_ornaments": ["shimenawa 注連繩", "鈴", "千木／鰹木", "破風"],
+      "suggested_elements": ["賽錢箱", "注連繩"]
+    },
+    "japanese_gate": {
+      "label": "Japanese Gate 鳥居／門（擴充 profile）",
+      "structure": "兩柱＋笠木／島木＋貫；柱腳落在基座或礎石",
+      "roof_forms": ["無屋頂（笠木）", "門的切妻屋根"],
+      "entrance": "通道中心＝參道軸",
+      "foundation": "基座／礎石，可設計成部分埋入（連接表 ground_embed_max 宣告）",
+      "proportions": {"height_to_width": [0.55, 1.6], "depth_to_width": [0.05, 0.45]},
+      "symmetry": {"expected": "bilateral", "silhouette_iou_min": 0.95},
+      "allowed_asymmetry": ["扁額", "破損（廢墟鳥居）"],
+      "expected_relations": [["plinth", "gate", "SUPPORTS"]],
+      "common_ornaments": ["扁額", "注連繩"],
+      "suggested_elements": []
+    },
+    "japanese_house": {
+      "label": "Japanese Traditional House 町家／民家",
+      "structure": "柱梁木構＋土壁／板壁；可有下屋（片流れ）",
+      "roof_forms": ["kirizuma 切妻", "irimoya 入母屋", "下屋 lean-to"],
+      "entrance": "常偏一側（通り土間）；不要求在中軸",
+      "foundation": "礎石或土台；牆底必須接地",
+      "proportions": {"height_to_width": [0.4, 1.4], "depth_to_width": [0.4, 3.0], "roof_overhang_ratio": [1.0, 1.5]},
+      "symmetry": {"expected": "free", "silhouette_iou_min": 0.0},
+      "allowed_asymmetry": ["下屋", "偏側入口", "增建", "卯建"],
+      "expected_relations": [["plinth", "wall", "SUPPORTS"], ["wall", "roof", "SUPPORTS|CONNECTED"]],
+      "common_ornaments": ["暖簾", "格子", "看板"],
+      "suggested_elements": []
+    },
+    "rural_building": {
+      "label": "Rural Building 農舍／倉／小屋",
+      "structure": "簡單木構或土藏；常見歪斜與修補",
+      "roof_forms": ["茅葺", "切妻", "片流れ"],
+      "entrance": "任意",
+      "foundation": "礎石、土台或直接落地",
+      "proportions": {"height_to_width": [0.35, 1.5], "depth_to_width": [0.3, 3.0], "roof_overhang_ratio": [1.0, 1.7]},
+      "symmetry": {"expected": "free", "silhouette_iou_min": 0.0},
+      "allowed_asymmetry": ["增建", "傾斜", "破損", "堆放物"],
+      "expected_relations": [],
+      "common_ornaments": [],
+      "suggested_elements": []
+    },
+    "fantasy_building": {
+      "label": "Fantasy Building 幻想鄉奇幻建築",
+      "structure": "可以不合現實結構；懸浮、傾斜必須是刻意宣告的",
+      "roof_forms": ["任意"],
+      "entrance": "任意",
+      "foundation": "宣告懸浮者免接地；其餘照常量測",
+      "proportions": {"height_to_width": [0.2, 4.0], "depth_to_width": [0.2, 4.0], "roof_overhang_ratio": [0.8, 2.5]},
+      "symmetry": {"expected": "free", "silhouette_iou_min": 0.0},
+      "allowed_asymmetry": ["全部（需在連接表宣告 intentional_asymmetry 或 canon）"],
+      "expected_relations": [],
+      "common_ornaments": [],
+      "suggested_elements": []
+    },
+    "generic_modular": {
+      "label": "Generic Modular Building 模組化建築",
+      "structure": "格網模組；對接面必須貼合",
+      "roof_forms": ["任意"],
+      "entrance": "任意",
+      "foundation": "模組底面接地",
+      "proportions": {"height_to_width": [0.1, 5.0], "depth_to_width": [0.05, 10.0], "roof_overhang_ratio": [0.8, 2.0]},
+      "symmetry": {"expected": "free", "silhouette_iou_min": 0.0},
+      "allowed_asymmetry": ["全部"],
+      "expected_relations": [],
+      "common_ornaments": [],
+      "suggested_elements": []
+    }
+  },
+  "project_canon": {
+    "_doc": "《幻想鄉緣一》已確認設定優先於一般建築規範：match 命中 building_id 或資產路徑時套用。不得因為屬於某風格就自動要求新增未確認的建築或構件。",
+    "hakurei_shrine": {
+      "match": ["博麗", "hakurei", "reimu"],
+      "profile": "japanese_shrine",
+      "disable_suggestions": true,
+      "allow_weathered": true,
+      "notes": "博麗神社以已確認的場景設定為準：不自動要求本殿、池塘或其他未確認建築；古舊、修補、輕微歪斜屬美術意圖（記 INFO）。"
+    },
+    "gensokyo_village": {
+      "match": ["village_v2", "人間之里", "machiya", "町家"],
+      "profile": "japanese_house",
+      "disable_suggestions": true,
+      "allow_weathered": true,
+      "notes": "人間之里建築允許古舊與不規則；比例偏差只記 WARN 給人看。"
+    }
+  }
+}

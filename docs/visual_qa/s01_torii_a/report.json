@@ -1,0 +1,1581 @@
+{
+ "name": "s01_torii_a",
+ "meta": {
+  "mode": "full",
+  "profile": "japanese_gate",
+  "canon": null,
+  "canon_notes": null,
+  "scale": 1,
+  "scale_source": "GLB 原尺寸",
+  "secs_geometry": 1.18532395362854,
+  "secs_capture": 10.2931489944458,
+  "godot": "4.7.2-stable (official)",
+  "renderer": "forward_plus",
+  "adapter": "NVIDIA GeForce GTX 1070",
+  "frame": {
+   "box_rfu_max": [
+    3.66,
+    5.035,
+    0.46644
+   ],
+   "box_rfu_min": [
+    -3.66,
+    -0.3223,
+    -0.46527
+   ],
+   "front": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "right": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "size_rfu": [
+    7.32,
+    5.3573,
+    0.93171
+   ],
+   "target_scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "target_yaw_deg": 0.0,
+   "up": [
+    0.0,
+    1.0,
+    0.0
+   ]
+  },
+  "secs_analyze": 2.8756721019744873,
+  "review_request": "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\review_request.json",
+  "version": {
+   "git_head": "c4be7e64",
+   "branch": "yoriichi-combat-and-village-routing",
+   "time": "2026-10-22 04:21:08",
+   "inputs": {
+    "godot/assets/beast_path/s01_kit/src/s01_shrine.blend": {
+     "sha": "b922c6211e930e4f",
+     "dirty": null
+    },
+    "docs/arch_spatial/examples/s01_torii.arch.json": {
+     "sha": "c6c0edcb9fe48236",
+     "dirty": null
+    },
+    "godot/assets/beast_path/s01_kit/glb/s01_torii_a.glb": {
+     "sha": "50275a103515fe90",
+     "dirty": null
+    },
+    "godot/assets/beast_path/s01_kit/glb/s01_torii_a_base.glb": {
+     "sha": "308d175f53287517",
+     "dirty": null
+    }
+   },
+   "tools": {
+    "tools/visual_qa/vqa.py": {
+     "sha": "921565c951025248",
+     "dirty": true
+    },
+    "tools/visual_qa/vqa_analyze.py": {
+     "sha": "7ead2cd1d732ad86",
+     "dirty": true
+    },
+    "tools/visual_qa/profiles.json": {
+     "sha": "8fd3fd0fcd9e9671",
+     "dirty": true
+    },
+    "godot/tools/visual_qa/vqa_capture.gd": {
+     "sha": "7b9cb7af38e0bc2f",
+     "dirty": true
+    },
+    "tools/blender/arch_spatial.py": {
+     "sha": "811e1d9b737b5738",
+     "dirty": true
+    },
+    "tools/blender/arch_check.py": {
+     "sha": "c70e8206c5b10800",
+     "dirty": true
+    },
+    "godot/tools/arch_spatial_lib.gd": {
+     "sha": "3fd72df262c6c7c5",
+     "dirty": false
+    }
+   },
+   "godot_bin": "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
+   "blender_bin": "D:/Blender/blender-5.2.1-windows-x64/blender.exe"
+  },
+  "secs_total": 14.632326126098633
+ },
+ "summary": {
+  "geometry": {
+   "PASS": 5,
+   "WARN": 0,
+   "FAIL": 0,
+   "UNKNOWN": 0,
+   "REVIEW": 0
+  },
+  "visual": {
+   "PASS": 19,
+   "WARN": 1,
+   "FAIL": 0,
+   "UNKNOWN": 0,
+   "REVIEW": 0
+  },
+  "style": {
+   "PASS": 3,
+   "WARN": 0,
+   "FAIL": 0,
+   "UNKNOWN": 0,
+   "REVIEW": 0
+  },
+  "review": {
+   "PASS": 0,
+   "WARN": 0,
+   "FAIL": 0,
+   "UNKNOWN": 0,
+   "REVIEW": 1
+  }
+ },
+ "totals": {
+  "PASS": 27,
+  "WARN": 1,
+  "FAIL": 0,
+  "UNKNOWN": 0,
+  "REVIEW": 1
+ },
+ "final": {
+  "overall": "REVIEW",
+  "per_rule": [
+   {
+    "rule_id": "torii_on_base",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [
+     "REVIEW:0:REVIEW"
+    ],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "torii_centered_on_base",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [
+     "VIS_OFFSET:torii_centered_on_base:PASS",
+     "REVIEW:0:REVIEW"
+    ],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "torii_self_symmetric",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [
+     "VIS_SYMMETRY:PASS",
+     "REVIEW:0:REVIEW"
+    ],
+    "final": "REVIEW",
+    "locked": false
+   },
+   {
+    "rule_id": "base_self_symmetric",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [
+     "VIS_SYMMETRY:PASS"
+    ],
+    "final": "PASS",
+    "locked": false
+   },
+   {
+    "rule_id": "DETACHED",
+    "geometry": "PASS",
+    "priority": "hard",
+    "evidence": [],
+    "final": "PASS",
+    "locked": false
+   }
+  ],
+  "unlinked": [
+   {
+    "rule_id": "VIS_RELIABLE:front",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_SCALE:front",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:back",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_SCALE:back",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:left",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_SCALE:left",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:right",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_SCALE:right",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:top",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_SCALE:top",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:oblique",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:corner0",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:corner1",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:corner2",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_RELIABLE:corner3",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_REPEAT:front",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_MAPPING",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "VIS_GROUND",
+    "final": "WARN"
+   },
+   {
+    "rule_id": "STYLE:height_to_width",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "STYLE:depth_to_width",
+    "final": "PASS"
+   },
+   {
+    "rule_id": "STRUCT:plinth>torii",
+    "final": "PASS"
+   }
+  ],
+  "rule": "幾何／放置 FAIL 不可被視覺降級；視覺只能補證據或提升為 REVIEW；UNKNOWN／REVIEW 不計入 PASS"
+ },
+ "note": "UNKNOWN 與 REVIEW 不計入 PASS；PASS 只代表在列出的檢查範圍內沒有發現問題",
+ "results": [
+  {
+   "rule_id": "torii_on_base",
+   "type": "SUPPORT",
+   "building_id": "s01_torii_a",
+   "object_ids": [
+    "torii",
+    "base"
+   ],
+   "status": "PASS",
+   "priority": "hard",
+   "severity": "high",
+   "expected": "contact>=60%, gap in [-0.03,0.003]",
+   "actual": {
+    "coverage": 1.0,
+    "median_gap": -0.0009539849124848843
+   },
+   "deviation": 0.0,
+   "tolerance": 0.003,
+   "method": "lowest_vertex_vertical_nearest(non_manifold: 不依賴面法線)",
+   "suggestion": "",
+   "evidence": {
+    "band": 0.09509999692440033,
+    "samples": 72,
+    "hits": 72,
+    "ambiguous": 0,
+    "min_gap": -0.020986812189221382,
+    "median_gap": -0.0009539849124848843,
+    "max_gap": 0.0004623688873834908,
+    "manifold": {
+     "a": false,
+     "b": false
+    }
+   },
+   "fix": null,
+   "cached": false,
+   "section": "geometry"
+  },
+  {
+   "rule_id": "torii_centered_on_base",
+   "type": "COAXIAL",
+   "building_id": "s01_torii_a",
+   "object_ids": [
+    "base",
+    "torii"
+   ],
+   "status": "PASS",
+   "priority": "hard",
+   "severity": "high",
+   "expected": "axis offset<=0.02, angle<=0.5°",
+   "actual": {
+    "offset": 0.001583646197266819,
+    "angle_deg": 0.0,
+    "offset_frame_rfu": [
+     -0.0014729499816894531,
+     -0.0005816817283630371,
+     0.0
+    ]
+   },
+   "deviation": 0.0,
+   "tolerance": 0.02,
+   "method": "aabb_center_to_axis_line",
+   "suggestion": "",
+   "evidence": {},
+   "fix": null,
+   "cached": false,
+   "section": "geometry"
+  },
+  {
+   "rule_id": "torii_self_symmetric",
+   "type": "SYMMETRIC",
+   "building_id": "s01_torii_a",
+   "object_ids": [
+    "torii",
+    "torii"
+   ],
+   "status": "PASS",
+   "priority": "hard",
+   "severity": "high",
+   "expected": "mirror deviation p95<=0.02",
+   "actual": {
+    "p95": 2.3888378564151935e-07,
+    "max": 0.0011112989159300923,
+    "centroid_dev": 3.473087971688198e-07
+   },
+   "deviation": 0.0,
+   "tolerance": 0.02,
+   "method": "mirror_samples+find_nearest",
+   "suggestion": "",
+   "evidence": {
+    "plane_point": [
+     0.0,
+     0.0,
+     2.6575000286102295
+    ],
+    "plane_normal": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "fix": null,
+   "cached": false,
+   "section": "geometry"
+  },
+  {
+   "rule_id": "base_self_symmetric",
+   "type": "SYMMETRIC",
+   "building_id": "s01_torii_a",
+   "object_ids": [
+    "base",
+    "base"
+   ],
+   "status": "PASS",
+   "priority": "hard",
+   "severity": "high",
+   "expected": "mirror deviation p95<=0.02",
+   "actual": {
+    "p95": 0.005561612080782652,
+    "max": 0.00898195244371891,
+    "centroid_dev": 0.008500565627670506
+   },
+   "deviation": 0.0,
+   "tolerance": 0.02,
+   "method": "mirror_samples+find_nearest",
+   "suggestion": "",
+   "evidence": {
+    "plane_point": [
+     -0.0014729499816894531,
+     -0.0005816817283630371,
+     -0.01013253629207611
+    ],
+    "plane_normal": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   },
+   "fix": null,
+   "cached": false,
+   "section": "geometry"
+  },
+  {
+   "rule_id": "DETACHED",
+   "type": "SUPPORT",
+   "building_id": "s01_torii_a",
+   "object_ids": [],
+   "status": "PASS",
+   "priority": "hard",
+   "severity": "high",
+   "expected": "all parts connected to ground",
+   "actual": {
+    "floating_parts": [],
+    "parts": 2,
+    "contact_edges": 1
+   },
+   "deviation": 0,
+   "tolerance": 0.002,
+   "method": "contact_graph(bvh_min_distance<=tol)+ground_flood",
+   "suggestion": "",
+   "evidence": {},
+   "fix": null,
+   "section": "geometry"
+  },
+  {
+   "rule_id": "VIS_RELIABLE:front",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 150761,
+    "frac": 0.1636,
+    "clipped": false,
+    "visible_ratio_diff": 0.9933,
+    "visible_ratio_depth": 1.0,
+    "visible_ratio": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "front.png",
+    "front_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     2.35635,
+     19.1193
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_SCALE:front",
+   "type": "VIS_SCALE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "width_m": 7.32,
+    "height_m": 5.3573
+   },
+   "actual": {
+    "width_m": 7.3169,
+    "height_m": 5.3502
+   },
+   "deviation": {
+    "width": -0.0031,
+    "height": -0.0071
+   },
+   "tolerance": {
+    "width": 0.08986714790132311,
+    "height": 0.0702401479013231
+   },
+   "method": "ortho silhouette bbox × 8.33 mm/px vs geometry box (right×up)",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "front_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     2.35635,
+     19.1193
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:back",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 150761,
+    "frac": 0.1636,
+    "clipped": false,
+    "visible_ratio_diff": 0.9992,
+    "visible_ratio_depth": 1.0,
+    "visible_ratio": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "back.png",
+    "back_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     2.35635,
+     -19.11814
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     0.0,
+     0.0,
+     -1.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_SCALE:back",
+   "type": "VIS_SCALE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "width_m": 7.32,
+    "height_m": 5.3573
+   },
+   "actual": {
+    "width_m": 7.3169,
+    "height_m": 5.3502
+   },
+   "deviation": {
+    "width": -0.0031,
+    "height": -0.0071
+   },
+   "tolerance": {
+    "width": 0.08986714790132311,
+    "height": 0.0702401479013231
+   },
+   "method": "ortho silhouette bbox × 8.33 mm/px vs geometry box (right×up)",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "back_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     2.35635,
+     -19.11814
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     0.0,
+     0.0,
+     -1.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:left",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 36957,
+    "frac": 0.0401,
+    "clipped": false,
+    "visible_ratio_diff": 0.9742,
+    "visible_ratio_depth": 1.0,
+    "visible_ratio": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "left.png",
+    "left_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     19.11872,
+     2.35635,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_SCALE:left",
+   "type": "VIS_SCALE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "width_m": 0.93171,
+    "height_m": 5.3573
+   },
+   "actual": {
+    "width_m": 0.9334,
+    "height_m": 5.3502
+   },
+   "deviation": {
+    "width": 0.0017,
+    "height": -0.0071
+   },
+   "tolerance": {
+    "width": 0.0259842479013231,
+    "height": 0.0702401479013231
+   },
+   "method": "ortho silhouette bbox × 8.33 mm/px vs geometry box (front×up)",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "left_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     19.11872,
+     2.35635,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:right",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 36957,
+    "frac": 0.0401,
+    "clipped": false,
+    "visible_ratio_diff": 0.9811,
+    "visible_ratio_depth": 1.0,
+    "visible_ratio": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "right.png",
+    "right_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     -19.11872,
+     2.35635,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     -1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_SCALE:right",
+   "type": "VIS_SCALE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "width_m": 0.93171,
+    "height_m": 5.3573
+   },
+   "actual": {
+    "width_m": 0.9334,
+    "height_m": 5.3502
+   },
+   "deviation": {
+    "width": 0.0017,
+    "height": -0.0071
+   },
+   "tolerance": {
+    "width": 0.0259842479013231,
+    "height": 0.0702401479013231
+   },
+   "method": "ortho silhouette bbox × 8.33 mm/px vs geometry box (front×up)",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "right_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     -19.11872,
+     2.35635,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 6.00017309188843,
+    "x": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "y": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "z": [
+     -1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:top",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 98931,
+    "frac": 0.1073,
+    "clipped": false,
+    "visible_ratio_diff": 1.0,
+    "visible_ratio_depth": 0.9995,
+    "visible_ratio": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "top.png",
+    "top_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     21.47507,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 4.61159992218018,
+    "x": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "z": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_SCALE:top",
+   "type": "VIS_SCALE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "width_m": 7.32,
+    "height_m": 0.93171
+   },
+   "actual": {
+    "width_m": 7.3145,
+    "height_m": 0.9351
+   },
+   "deviation": {
+    "width": -0.0055,
+    "height": 0.0034
+   },
+   "tolerance": {
+    "width": 0.08601000030040742,
+    "height": 0.022127100300407418
+   },
+   "method": "ortho silhouette bbox × 6.41 mm/px vs geometry box (right×front)",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "top_id.png"
+   ],
+   "camera": {
+    "far": 86.4748916625977,
+    "fov": 75.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     0.0,
+     21.47507,
+     0.00058
+    ],
+    "projection": "ortho",
+    "size": 4.61159992218018,
+    "x": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "z": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:oblique",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 57419,
+    "frac": 0.0623,
+    "clipped": false,
+    "visible_ratio_diff": 0.951,
+    "visible_ratio_depth": 0.9497,
+    "visible_ratio": 0.951
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "oblique.png",
+    "oblique_id.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     -7.90812,
+     10.31651,
+     11.29455
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     0.81915,
+     0.0,
+     0.57358
+    ],
+    "y": [
+     0.28679,
+     0.86603,
+     -0.40958
+    ],
+    "z": [
+     -0.49673,
+     0.5,
+     0.70941
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:corner0",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 54343,
+    "frac": 0.059,
+    "clipped": false,
+    "visible_ratio_diff": 0.9414,
+    "visible_ratio_depth": 0.9402,
+    "visible_ratio": 0.9414
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "corner0.png",
+    "corner0_id.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     -10.20263,
+     9.08457,
+     10.20321
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     0.70711,
+     0.0,
+     0.70711
+    ],
+    "y": [
+     0.29884,
+     0.90631,
+     -0.29884
+    ],
+    "z": [
+     -0.64086,
+     0.42262,
+     0.64086
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:corner1",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 54372,
+    "frac": 0.059,
+    "clipped": false,
+    "visible_ratio_diff": 0.9493,
+    "visible_ratio_depth": 0.9399,
+    "visible_ratio": 0.9495
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "corner1.png",
+    "corner1_id.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     -10.20263,
+     9.08457,
+     -10.20205
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     -0.70711,
+     0.0,
+     0.70711
+    ],
+    "y": [
+     0.29884,
+     0.90631,
+     0.29884
+    ],
+    "z": [
+     -0.64086,
+     0.42262,
+     -0.64086
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:corner2",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 54339,
+    "frac": 0.059,
+    "clipped": false,
+    "visible_ratio_diff": 0.9711,
+    "visible_ratio_depth": 0.9401,
+    "visible_ratio": 0.9711
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "corner2.png",
+    "corner2_id.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     10.20263,
+     9.08457,
+     -10.20205
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     -0.70711,
+     0.0,
+     -0.70711
+    ],
+    "y": [
+     -0.29884,
+     0.90631,
+     0.29884
+    ],
+    "z": [
+     0.64086,
+     0.42262,
+     -0.64086
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_RELIABLE:corner3",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "visible_ratio": ">=0.5",
+    "clipped": false
+   },
+   "actual": {
+    "solo_px": 54355,
+    "frac": 0.059,
+    "clipped": false,
+    "visible_ratio_diff": 0.9461,
+    "visible_ratio_depth": 0.9398,
+    "visible_ratio": 0.9461
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "id mask ∩（隱藏目標色差 ∪ 深度正確可見遮罩）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "corner3.png",
+    "corner3_id.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     10.20263,
+     9.08457,
+     10.20321
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     0.70711,
+     0.0,
+     -0.70711
+    ],
+    "y": [
+     -0.29884,
+     0.90631,
+     -0.29884
+    ],
+    "z": [
+     0.64086,
+     0.42262,
+     0.64086
+    ]
+   }
+  },
+  {
+   "rule_id": "VIS_REPEAT:front",
+   "type": "CAPTURE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": {
+    "changed_pixels": "<0.05%（TAA 關閉時實測 0）"
+   },
+   "actual": {
+    "mean_abs": 0.032,
+    "changed_pixels": 0.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "同相機重拍逐像素差",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "front.png",
+    "front_repeat.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "VIS_MAPPING",
+   "type": "MAPPING",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": "Blender 物件尺寸＝GLB 節點尺寸",
+   "actual": {
+    "matched": 2,
+    "size_mismatch": [],
+    "same_position": 2
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "Blender 世界 AABB (x,z,y)÷Blender 端縮放 vs Godot 目標局部 AABB（都是 GLB 未縮放座標）",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "VIS_GROUND",
+   "type": "GROUND",
+   "status": "WARN",
+   "object_ids": [],
+   "expected": {
+    "lowest_y": 0.0,
+    "embed_max": 0.0
+   },
+   "actual": {
+    "lowest_y": -0.3223
+   },
+   "deviation": -0.3223,
+   "tolerance": 0.02,
+   "method": "Godot 實際網格最低點（建築座標）vs 審查地面",
+   "suggestion": "最低點在地面下 0.322 m（埋入）：若是基座設計，在連接表宣告 ground_embed_max；否則檢查原點",
+   "evidence": {},
+   "error_class": null,
+   "section": "visual",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "VIS_SYMMETRY",
+   "type": "SYMMETRY",
+   "status": "PASS",
+   "object_ids": [
+    "torii",
+    "base"
+   ],
+   "expected": {
+    "iou": ">=0.95"
+   },
+   "actual": {
+    "iou": 0.9822,
+    "centroid_offset_m": -0.0046,
+    "extent_left_m": 3.6584,
+    "extent_right_m": 3.6501,
+    "left_right_elevation_iou": 1.0
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "正交正視剪影對建築原點中軸鏡射 IoU＋幾何 SYMMETRIC",
+   "suggestion": "幾何與正視剪影一致：對稱",
+   "evidence": {
+    "geometry": [
+     "torii_self_symmetric:PASS",
+     "base_self_symmetric:PASS"
+    ]
+   },
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "front.png",
+    "front_id.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "STYLE:height_to_width",
+   "type": "STYLE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": [
+    0.55,
+    1.6
+   ],
+   "actual": 0.732,
+   "deviation": null,
+   "tolerance": null,
+   "method": "Godot 實測緊貼盒 寬7.32×高5.36×深0.93 m；profile=japanese_gate",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "style",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "STYLE:depth_to_width",
+   "type": "STYLE",
+   "status": "PASS",
+   "object_ids": [],
+   "expected": [
+    0.05,
+    0.45
+   ],
+   "actual": 0.127,
+   "deviation": null,
+   "tolerance": null,
+   "method": "Godot 實測緊貼盒 寬7.32×高5.36×深0.93 m；profile=japanese_gate",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "style",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "STRUCT:plinth>torii",
+   "type": "STRUCTURE",
+   "status": "PASS",
+   "object_ids": [
+    "s01_torii_a"
+   ],
+   "expected": "plinth SUPPORTS gate",
+   "actual": [
+    "base:PASS"
+   ],
+   "deviation": null,
+   "tolerance": null,
+   "method": "Scene Graph 查詢",
+   "suggestion": "",
+   "evidence": {},
+   "error_class": null,
+   "section": "style",
+   "images": [],
+   "camera": null
+  },
+  {
+   "rule_id": "VIS_OFFSET:torii_centered_on_base",
+   "type": "OFFSET",
+   "status": "PASS",
+   "object_ids": [
+    "s01_torii_a_base",
+    "s01_torii_a"
+   ],
+   "expected": {
+    "geometry_m": 0.001583646197266819
+   },
+   "actual": {
+    "visual_m": 0.0117,
+    "right_m": -0.0116,
+    "front_m": -0.0013
+   },
+   "deviation": 0.0101,
+   "tolerance": 0.012968364920134102,
+   "method": "top ortho 逐構件單獨 id 遮罩重心（投影面積重心，非體積重心）",
+   "suggestion": "",
+   "evidence": {
+    "geometry_rule": "torii_centered_on_base",
+    "geometry_status": "PASS"
+   },
+   "error_class": null,
+   "section": "visual",
+   "images": [
+    "top.png",
+    "top_id.png"
+   ],
+   "camera": null
+  },
+  {
+   "rule_id": "REVIEW:0",
+   "type": "VISUAL_REVIEW",
+   "status": "REVIEW",
+   "object_ids": [
+    "s01_torii_a"
+   ],
+   "expected": null,
+   "actual": {
+    "image": "corner3.png",
+    "px": [
+     804,
+     352
+    ],
+    "concern": "floating",
+    "observation": "corner3 透視：右側貫的外伸端亮面與暗邊交界很強，乍看像分離的方塊，但看不到背景縫"
+   },
+   "deviation": null,
+   "tolerance": null,
+   "method": "located by id_mask(pixel) → geometry PASS",
+   "suggestion": "幾何與視覺不一致（透視視角，先用正交視圖確認）；不修改模型，交給人確認",
+   "evidence": {
+    "geometry_pass": [
+     "torii_on_base",
+     "torii_centered_on_base",
+     "torii_self_symmetric"
+    ]
+   },
+   "error_class": "VISUAL_SUSPECT",
+   "section": "review",
+   "images": [
+    "corner3.png"
+   ],
+   "camera": {
+    "far": 84.1577529907227,
+    "fov": 35.0,
+    "keep_aspect": "height",
+    "near": 0.0500000007450581,
+    "origin": [
+     10.20263,
+     9.08457,
+     10.20321
+    ],
+    "projection": "perspective",
+    "size": 4.61159992218018,
+    "x": [
+     0.70711,
+     0.0,
+     -0.70711
+    ],
+    "y": [
+     -0.29884,
+     0.90631,
+     -0.29884
+    ],
+    "z": [
+     0.64086,
+     0.42262,
+     0.64086
+    ]
+   }
+  }
+ ]
+}

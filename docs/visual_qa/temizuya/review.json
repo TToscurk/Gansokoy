@@ -1,0 +1,7 @@
+{
+  "reviewer": "Visual Reviewer（同一 Claude、獨立階段；輸入只有 capture/views_sheet.jpg 與 review_request.json 的量測事實）",
+  "summary": "屋頂經梁與斗栱接到四柱；柱立在石礎上、手水鉢坐在低石台上，透視圖看不到縫；屋頂在正視與側視都置中；左右立面一致。龍口台座偏一側是手水鉢本身的設計（正視剪影 IoU 0.917 與此一致），不是屋頂偏移。沒有需要標註的缺陷。",
+  "notes": ["left ortho (245–258, 330)／(384–395, 330) 的背景縫是石台與柱礎之間的水平間隔，不是柱底懸空",
+            "corner2 perspective 下半部陰影重，接地細節以其他視角為準"],
+  "items": []
+}
