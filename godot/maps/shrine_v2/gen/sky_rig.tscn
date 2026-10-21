@@ -1,0 +1,96 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/sky_system.gd" id="1_r0bd2"]
+[ext_resource type="Texture2D" path="res://assets/textures/skybox_jinri.png" id="2_obf3y"]
+[ext_resource type="Shader" path="res://shaders/sky_daynight.gdshader" id="3_hocda"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yxmn7"]
+shader = ExtResource("3_hocda")
+shader_parameter/sun_dir = Vector3(-0.8843774, 0.45936635, 0.082819685)
+shader_parameter/moon_dir = Vector3(0.8843774, -0.45936635, -0.082819685)
+shader_parameter/day_amount = 1.0
+shader_parameter/golden = 0.0
+shader_parameter/cloud_cover = 0.1
+shader_parameter/overcast = 0.0
+shader_parameter/star_density = 0.35
+shader_parameter/milkyway = 0.35
+shader_parameter/moon_visible = 1.0
+shader_parameter/zenith_day = Color(0.18, 0.38, 0.72, 1)
+shader_parameter/horizon_day = Color(0.68, 0.8, 0.92, 1)
+shader_parameter/zenith_night = Color(0.012, 0.022, 0.055, 1)
+shader_parameter/horizon_night = Color(0.045, 0.06, 0.11, 1)
+shader_parameter/golden_tint = Color(1, 0.52, 0.24, 1)
+shader_parameter/cloud_lit = Color(1, 0.97, 0.93, 1)
+shader_parameter/cloud_shadow = Color(0.42, 0.46, 0.55, 1)
+shader_parameter/painted_clouds = ExtResource("2_obf3y")
+shader_parameter/painted_mix = 1.0
+shader_parameter/painted_yaw = 50.0
+shader_parameter/painted_drift = 0.0025
+shader_parameter/painted_base = 1.0
+
+[sub_resource type="Sky" id="Sky_1ecu7"]
+sky_material = SubResource("ShaderMaterial_yxmn7")
+process_mode = 3
+
+[sub_resource type="Environment" id="Environment_ygx8a"]
+background_mode = 2
+sky = SubResource("Sky_1ecu7")
+ambient_light_source = 3
+ambient_light_energy = 0.7657541
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 0.98
+ssao_enabled = true
+ssao_intensity = 1.6
+glow_enabled = true
+glow_intensity = 0.55
+glow_bloom = 0.05
+glow_hdr_threshold = 1.1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.7, 0.78, 0.86, 1)
+fog_sun_scatter = 0.28
+fog_density = 0.000546
+fog_sky_affect = 0.25
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0023400001
+volumetric_fog_albedo = Color(0.7, 0.78, 0.86, 1)
+volumetric_fog_gi_inject = 0.4
+volumetric_fog_length = 320.0
+adjustment_enabled = true
+adjustment_saturation = 1.05
+
+[node name="天象系統" type="Node3D" unique_id=1073713660]
+script = ExtResource("1_r0bd2")
+"時刻" = 8.09
+"一日長度分鐘" = 60.0
+"方位角" = -26.0
+"星星密度" = 0.35
+"概念圖雲層" = ExtResource("2_obf3y")
+"概念圖雲層方位" = 50.0
+"概念圖雲層晴天濃度" = 1.0
+"陰影距離" = 120.0
+
+[node name="太陽" type="DirectionalLight3D" parent="." unique_id=1280194952]
+transform = Transform3D(0.09323953, 0.4573652, -0.8843775, 0, 0.88824683, 0.45936638, 0.99564373, -0.0428311, 0.08281972, -88.437744, 45.936634, 8.281968)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 1.2434587
+light_angular_distance = 0.6
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.4
+directional_shadow_split_1 = 0.06
+directional_shadow_split_2 = 0.16
+directional_shadow_split_3 = 0.42
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 260.0
+
+[node name="月亮" type="DirectionalLight3D" parent="." unique_id=461393195]
+transform = Transform3D(-0.0932395, 0.4573652, 0.8843775, 0, 0.88824683, -0.45936638, -0.99564373, -0.04283109, -0.0828197, 88.437744, -45.936634, -8.281968)
+visible = false
+light_color = Color(0.62, 0.72, 0.95, 1)
+light_energy = 0.0
+light_angular_distance = 1.2
+
+[node name="天空環境" type="WorldEnvironment" parent="." unique_id=1519838539]
+environment = SubResource("Environment_ygx8a")

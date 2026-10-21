@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/shrine/博麗鳥居.glb" id="1_bdr6e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b57yd"]
+size = Vector3(1.040625, 0.6166667, 1.3104167)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v2s8k"]
+height = 3.5458333
+radius = 0.38541666
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3frsa"]
+size = Vector3(1.040625, 0.6166667, 1.3104167)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o5g1e"]
+height = 3.5458333
+radius = 0.38541666
+
+[node name="Torii" type="Node3D" unique_id=1152951205]
+metadata/aabb_size = Vector3(7.3852005, 5.5278, 1.4282)
+metadata/scale = 7.4
+
+[node name="Model" type="Node3D" parent="." unique_id=1606992181 instance=ExtResource("1_bdr6e")]
+transform = Transform3D(7.4, 0, 0, 0, 7.4, 0, 0, 0, 7.4, 0, 0, 0)
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=93329153]
+
+[node name="柱腳_L" type="CollisionShape3D" parent="Collision" unique_id=1206718249]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1349, 0.30833334, 0)
+shape = SubResource("BoxShape3D_b57yd")
+
+[node name="柱身_L" type="CollisionShape3D" parent="Collision" unique_id=842726804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1349, 2.3895833, 0)
+shape = SubResource("CylinderShape3D_v2s8k")
+
+[node name="柱腳_R" type="CollisionShape3D" parent="Collision" unique_id=415700767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1349, 0.30833334, 0)
+shape = SubResource("BoxShape3D_3frsa")
+
+[node name="柱身_R" type="CollisionShape3D" parent="Collision" unique_id=2070134048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1349, 2.3895833, 0)
+shape = SubResource("CylinderShape3D_o5g1e")

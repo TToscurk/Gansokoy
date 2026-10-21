@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_diff.jpg" id="1_4m8bt"]
+
+[resource]
+resource_name = "komainu_stone"
+albedo_color = Color(0.86, 0.84, 0.79, 1)
+albedo_texture = ExtResource("1_4m8bt")
+roughness = 0.96
+uv1_scale = Vector3(1.1, 1.1, 1.1)
+uv1_triplanar = true

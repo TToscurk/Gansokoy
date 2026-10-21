@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/stone_wall_diff.jpg" id="1_wpbdl"]
+
+[resource]
+resource_name = "stone_foot"
+albedo_color = Color(0.8, 0.78, 0.74, 1)
+albedo_texture = ExtResource("1_wpbdl")
+roughness = 0.95
+uv1_scale = Vector3(0.7, 0.7, 1)

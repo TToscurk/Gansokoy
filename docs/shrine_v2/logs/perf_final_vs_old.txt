@@ -1,0 +1,49 @@
+=== base (rc=0)
+[PERF] court_N        gpu 10.50 ms  cpu 1.70 ms  wall 11.54 ms (87 fps)  draw_calls 1505  prims 3.70 M  objects 3098
+[PERF] stairtop_N     gpu 11.15 ms  cpu 2.07 ms  wall 12.13 ms (82 fps)  draw_calls 1835  prims 3.64 M  objects 4455
+[PERF] stairmid_S     gpu 11.75 ms  cpu 1.65 ms  wall 12.82 ms (78 fps)  draw_calls 1431  prims 6.19 M  objects 4851
+[PERF] forest_W       gpu 9.69 ms  cpu 0.99 ms  wall 10.70 ms (93 fps)  draw_calls 751  prims 2.42 M  objects 1515
+[PERF] aerial         gpu 9.30 ms  cpu 2.48 ms  wall 10.31 ms (97 fps)  draw_calls 1442  prims 7.25 M  objects 7444
+[PERF] video_mem 686 MB  texture_mem 452 MB
+  (相機警告數: 0)
+=== old (rc=0)
+[PERF] court_N        gpu 9.70 ms  cpu 1.90 ms  wall 10.73 ms (93 fps)  draw_calls 1003  prims 15.25 M  objects 4418
+[PERF] stairtop_N     gpu 15.02 ms  cpu 3.56 ms  wall 15.99 ms (63 fps)  draw_calls 1565  prims 31.63 M  objects 12896
+[PERF] stairmid_S     gpu 8.92 ms  cpu 2.36 ms  wall 9.95 ms (101 fps)  draw_calls 1097  prims 15.38 M  objects 8078
+[PERF] forest_W       gpu 6.58 ms  cpu 1.43 ms  wall 7.60 ms (132 fps)  draw_calls 602  prims 6.58 M  objects 4278
+[PERF] aerial         gpu 20.24 ms  cpu 5.91 ms  wall 21.14 ms (47 fps)  draw_calls 943  prims 44.55 M  objects 29693
+[PERF] video_mem 1046 MB  texture_mem 732 MB
+  (相機警告數: 0)
+=== hide_trees (rc=0)
+[PERF] court_N        gpu 5.06 ms  cpu 0.95 ms  wall 6.05 ms (165 fps)  draw_calls 575  prims 1.78 M  objects 916
+[PERF] stairtop_N     gpu 5.00 ms  cpu 1.09 ms  wall 5.99 ms (167 fps)  draw_calls 751  prims 1.53 M  objects 1524
+[PERF] stairmid_S     gpu 5.80 ms  cpu 0.80 ms  wall 6.68 ms (150 fps)  draw_calls 326  prims 3.11 M  objects 1777
+[PERF] forest_W       gpu 3.74 ms  cpu 0.48 ms  wall 4.65 ms (215 fps)  draw_calls 53  prims 0.56 M  objects 107
+[PERF] aerial         gpu 6.25 ms  cpu 1.18 ms  wall 7.24 ms (138 fps)  draw_calls 721  prims 5.78 M  objects 1878
+[PERF] video_mem 685 MB  texture_mem 452 MB
+  (相機警告數: 0)
+=== noshadow_trees (rc=0)
+[PERF] court_N        gpu 7.81 ms  cpu 1.21 ms  wall 8.73 ms (115 fps)  draw_calls 537  prims 2.20 M  objects 1160
+[PERF] stairtop_N     gpu 8.13 ms  cpu 1.38 ms  wall 9.14 ms (109 fps)  draw_calls 705  prims 2.02 M  objects 1808
+[PERF] stairmid_S     gpu 9.04 ms  cpu 0.95 ms  wall 10.03 ms (100 fps)  draw_calls 227  prims 3.65 M  objects 1497
+[PERF] forest_W       gpu 7.03 ms  cpu 0.71 ms  wall 8.00 ms (125 fps)  draw_calls 110  prims 1.00 M  objects 381
+[PERF] aerial         gpu 8.38 ms  cpu 1.89 ms  wall 9.29 ms (108 fps)  draw_calls 813  prims 6.26 M  objects 3748
+[PERF] video_mem 685 MB  texture_mem 452 MB
+  (相機警告數: 0)
+=== lod075 (rc=0)
+[PERF] court_N        gpu 9.48 ms  cpu 1.62 ms  wall 10.50 ms (95 fps)  draw_calls 1454  prims 3.13 M  objects 2857
+[PERF] stairtop_N     gpu 9.77 ms  cpu 1.89 ms  wall 10.75 ms (93 fps)  draw_calls 1717  prims 2.86 M  objects 3793
+[PERF] stairmid_S     gpu 10.84 ms  cpu 1.60 ms  wall 11.84 ms (84 fps)  draw_calls 1377  prims 5.29 M  objects 4368
+[PERF] forest_W       gpu 9.14 ms  cpu 1.00 ms  wall 10.18 ms (98 fps)  draw_calls 764  prims 2.02 M  objects 1491
+[PERF] aerial         gpu 8.31 ms  cpu 2.30 ms  wall 9.33 ms (107 fps)  draw_calls 1273  prims 6.67 M  objects 6696
+[PERF] video_mem 686 MB  texture_mem 452 MB
+  (相機警告數: 0)
+=== lod060 (rc=0)
+[PERF] court_N        gpu 8.95 ms  cpu 1.68 ms  wall 9.99 ms (100 fps)  draw_calls 1451  prims 2.83 M  objects 2790
+[PERF] stairtop_N     gpu 9.41 ms  cpu 2.14 ms  wall 10.45 ms (96 fps)  draw_calls 1745  prims 2.61 M  objects 3783
+[PERF] stairmid_S     gpu 10.22 ms  cpu 1.59 ms  wall 11.24 ms (89 fps)  draw_calls 1384  prims 4.74 M  objects 4135
+[PERF] forest_W       gpu 8.40 ms  cpu 1.01 ms  wall 9.39 ms (107 fps)  draw_calls 721  prims 1.63 M  objects 1358
+[PERF] aerial         gpu 8.09 ms  cpu 2.37 ms  wall 9.00 ms (111 fps)  draw_calls 1225  prims 6.52 M  objects 6448
+[PERF] video_mem 686 MB  texture_mem 452 MB
+  (相機警告數: 0)
+DONE

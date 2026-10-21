@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v2/props/storehouse_mesh.res" id="1_e8ueg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2mv47"]
+size = Vector3(3.6, 2.95, 2.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83tft"]
+size = Vector3(1.8, 0.2, 0.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1vbqw"]
+size = Vector3(1.6, 0.41, 0.42)
+
+[node name="Storehouse" type="Node3D" unique_id=1140279108]
+metadata/aabb_size = Vector3(4.54, 3.8678594, 4.1750536)
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=30611191]
+mesh = ExtResource("1_e8ueg")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=1520018147]
+
+[node name="Body" type="CollisionShape3D" parent="Collision" unique_id=936109403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.475, 0)
+shape = SubResource("BoxShape3D_2mv47")
+
+[node name="Step1" type="CollisionShape3D" parent="Collision" unique_id=1125618962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 1.95)
+shape = SubResource("BoxShape3D_83tft")
+
+[node name="Step2" type="CollisionShape3D" parent="Collision" unique_id=165600968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.205, 1.6)
+shape = SubResource("BoxShape3D_1vbqw")

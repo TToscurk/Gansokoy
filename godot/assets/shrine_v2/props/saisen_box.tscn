@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v2/props/saisen_box_mesh.res" id="1_08nu1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4qg2j"]
+size = Vector3(1.7, 0.86, 0.78)
+
+[node name="SaisenBox" type="Node3D" unique_id=1827399661]
+metadata/aabb_size = Vector3(1.736, 0.884, 0.804)
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=282302124]
+mesh = ExtResource("1_08nu1")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=405182080]
+
+[node name="Box" type="CollisionShape3D" parent="Collision" unique_id=607023043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
+shape = SubResource("BoxShape3D_4qg2j")

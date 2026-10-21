@@ -1,0 +1,48 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Wind] V1 debug；preset=breeze enabled=true  dir=38°  base=0.55  eff=0.55
+[Wind] F9 開 Wind Debug 面板（滑桿＋1–4 預設、G 陣風、H 熱圖、0 開關風、[ ] 方向、- = 強度）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] shrine_v2 → res://maps/shrine_v2/shrine_v2.tscn
+[map] Terrain override=(res://maps/shrine_v2/shrine_v2.tscn::ShaderMaterial_fq6eh):<ShaderMaterial#-9223371803903127264>
+[map] shrine_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[STORY2] PASS S1 載入候選圖 shrine_v2
+[STORY2] PASS S1 Player 存在且在 group player
+[STORY2] PASS S1 出生後站在地面（on_floor）
+[STORY2]   出生點 (-3.8, -1.7, 72.0)
+[STORY2] PASS S1 出生在南側入口（z>60）
+[STORY2] PASS S2 MQ04 啟動
+[STORY2] PASS S2 MQ04 第一格＝REACH hakurei_shrine_approach
+[STORY2] PASS S2 指路：指向參道 (0,40)「山上的建築」：{ "pos": (0.0, 40.0), "label": "山上的建築", "via_portal": false }
+[STORY2] PASS S3 REACH 後 MQ04 仍 active、等待靈夢
+[STORY2] PASS S3 指路改指拜殿 (0,-21)：{ "pos": (0.0, -21.0), "label": "拜殿", "via_portal": false }
+[STORY2] PASS S4 靠近拜殿出現「[E] 拜訪」
+[STORY2] PASS S4 離開範圍提示消失
+[STORY2] PASS S4 再進提示重新出現
+[STORY2] PASS S5 按 E 對話開始
+[STORY2] PASS S5 玩家鎖定 input_locked
+[STORY2] PASS S5 鎖定時按前進不移動（水平位移 0.00 m）
+[STORY2] PASS S6 DialogueUI 存在且顯示
+[STORY2] PASS S6 名字＝博麗靈夢
+[STORY2] PASS S6 第一句＝「……你誰？」
+[STORY2] PASS S7 對話逐句推進至結束（25 步）
+[STORY2] PASS S8 met_reimu 旗標
+[STORY2] PASS S8 一場初見完成 MQ04
+[STORY2] PASS S8 下一任務 MQ07 開始
+[STORY2] PASS S9 對話結束解鎖
+[STORY2] PASS S9 對話後提示回來
+[STORY2] PASS S10 再拜訪進 repeat 對話「又來了？」
+[STORY2] PASS S11 重複進出拜殿區不動任務進度
+[STORY2] PASS S12 候選圖有通往獸道的傳送點：(-4.0, 76.0)
+[map] trail → res://maps/trail/trail.tscn
+[map] Terrain override=(res://maps/trail/trail.tscn::ShaderMaterial_m3m6g):<ShaderMaterial#-9223371606401731627>
+[map] trail 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[STORY2] PASS S12 換圖到獸道
+[map] shrine_v2 → res://maps/shrine_v2/shrine_v2.tscn
+[map] Terrain override=(res://maps/shrine_v2/shrine_v2.tscn::ShaderMaterial_fq6eh):<ShaderMaterial#-9223370930380599842>
+[map] shrine_v2 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[STORY2] PASS S12 從獸道回候選圖並站在地面
+[STORY2] failures=0

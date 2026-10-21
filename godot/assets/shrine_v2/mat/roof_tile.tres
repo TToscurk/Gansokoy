@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/roof_kawara_diff.jpg" id="1_0ebik"]
+
+[resource]
+resource_name = "roof_tile"
+albedo_color = Color(0.7, 0.72, 0.74, 1)
+albedo_texture = ExtResource("1_0ebik")
+roughness = 0.82
+uv1_scale = Vector3(0.62, 0.62, 1)

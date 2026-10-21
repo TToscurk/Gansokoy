@@ -1,0 +1,67 @@
+閉包檔案數 228 （缺檔 0）
+  assets/village_v2/veg_kit                        126
+  assets/village_v2/garden_kit                     12
+  assets/shrine_v2/mat                             11
+  assets/shrine_v2/props                           10
+  maps/shrine_v2/gen                               10
+  assets/shrine_v2/bld                             4
+  assets/shrine_v2/kit                             4
+  assets/village_v2/_matlib                        3
+  assets/_lod/平台石_Baked_BaseColor.png              1
+  assets/_lod/平台石_Baked_MetallicRoughness.png      1
+  assets/_lod/收頭石_Baked_BaseColor.png              1
+  assets/_lod/收頭石_Baked_MetallicRoughness.png      1
+  assets/_lod/袖石垣_Baked_BaseColor.png              1
+  assets/_lod/袖石垣_Baked_MetallicRoughness.png      1
+  assets/_lod/踏石_Baked_BaseColor.png               1
+  assets/_lod/踏石_Baked_MetallicRoughness.png       1
+  assets/lowpoly_scene/Barrel.gltf                 1
+  assets/lowpoly_scene/Ladder.gltf                 1
+  assets/lowpoly_scene/LogStorage.gltf             1
+  assets/lowpoly_scene/Log_Cluster.gltf            1
+  assets/lowpoly_scene/WoodenBox.gltf              1
+  assets/nature/Clover_1.gltf                      1
+  assets/nature/Clover_2.gltf                      1
+  assets/nature/Rock_Medium_1.gltf                 1
+  assets/nature/Rock_Medium_2.gltf                 1
+  assets/nature/Rock_Medium_3.gltf                 1
+  assets/shaders/shrine_terrain.gdshader           1
+  assets/shaders/shrine_vista.gdshader             1
+  assets/shaders/water.gdshader                    1
+  assets/shaders/water_field.gdshaderinc           1
+  assets/shaders/wind_field.gdshaderinc            1
+  assets/shrine/博麗鳥居.glb                           1
+  assets/shrine/手水舍.glb                            1
+  assets/shrine/拜殿.glb                             1
+  assets/shrine/陰陽玉.glb                            1
+  assets/sky/人里_clouds.png                         1
+  assets/textures/dark_wood_diff.jpg               1
+  assets/textures/dark_wood_nor_gl.jpg             1
+  assets/textures/dark_wood_rough.jpg              1
+  assets/textures/planks_diff.jpg                  1
+  assets/textures/planks_nor_gl.jpg                1
+  assets/textures/planks_rough.jpg                 1
+  assets/textures/roof_kawara_diff.jpg             1
+  assets/textures/skybox_jinri.png                 1
+  assets/textures/stone_wall_diff.jpg              1
+  assets/textures/street_earth_diff.png            1
+  assets/textures/terrain_forest_diff.jpg          1
+  assets/textures/terrain_forest_nor_gl.jpg        1
+  assets/textures/terrain_grass_diff.jpg           1
+  assets/textures/terrain_grass_nor_gl.jpg         1
+  assets/textures/terrain_path_diff.jpg            1
+  assets/textures/terrain_path_nor_gl.jpg          1
+  components/interaction/world_interaction.gd      1
+  maps/shrine_v2/shrine_v2.tscn                    1
+  scripts/sky_system.gd                            1
+  shaders/sky_daynight.gdshader                    1
+
+禁用目錄命中（排除已知非樹例外）：0
+
+D:/資產glb 檔案 267（相異雜湊 264）
+閉包內與 D 庫位元相同的檔案：4
+   assets/shrine/博麗鳥居.glb == D:/資產glb\博麗神社\博麗鳥居.glb
+   assets/shrine/手水舍.glb == D:/資產glb\博麗神社\水手舍.glb
+   assets/shrine/拜殿.glb == D:/資產glb\博麗神社\拜殿.glb
+   assets/shrine/陰陽玉.glb == D:/資產glb\博麗神社\陰陽玉.glb
+內文含「資產glb」字串的檔案：0

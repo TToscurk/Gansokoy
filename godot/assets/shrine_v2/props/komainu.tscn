@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v2/props/komainu_mesh.res" id="1_mf6ge"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uu0hq"]
+size = Vector3(0.55615443, 1.15, 0.623161)
+
+[node name="Komainu" type="Node3D" unique_id=1213285757]
+metadata/aabb_pos = Vector3(0, 0, 0)
+metadata/aabb_size = Vector3(0.695193, 1.15, 0.7789512)
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1582609182]
+transform = Transform3D(0.41879097, 0, 0, 0, 0.41879097, 0, 0, 0, 0.41879097, 0, 0, 0)
+mesh = ExtResource("1_mf6ge")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=948354607]
+
+[node name="Box" type="CollisionShape3D" parent="Collision" unique_id=1026087080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.575, 0)
+shape = SubResource("BoxShape3D_uu0hq")

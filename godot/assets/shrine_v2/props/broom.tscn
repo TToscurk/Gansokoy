@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v2/props/broom_mesh.res" id="1_tf0t2"]
+
+[node name="Broom" type="Node3D" unique_id=478893562]
+metadata/aabb_size = Vector3(0.23149447, 1.3846287, 0.23689257)
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1142933853]
+mesh = ExtResource("1_tf0t2")

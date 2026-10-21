@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Wind] V1 debug；preset=breeze enabled=true  dir=38°  base=0.55  eff=0.55
+[Wind] F9 開 Wind Debug 面板（滑桿＋1–4 預設、G 陣風、H 熱圖、0 開關風、[ ] 方向、- = 強度）
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+[map] shrine → res://maps/shrine/shrine.tscn
+[map] Terrain override=(res://maps/shrine/shrine.tscn::ShaderMaterial_bnyri):<ShaderMaterial#-9223371814724431598>
+[map] shrine 自帶天象，main 的 WorldEnvironment 與 Sun 讓位
+[map] trimesh 碰撞 1 個（own_colliders=true）
+[CAM2] 地圖 shrine；範圍 [-45.0, 45.0, -48.0, 48.0]；取樣 300
+[CAM2] 有效取樣 300；彈簧臂被擋住而縮短（<8 m）188（63%）
+[CAM2] RATE inside=10/300 (3.3%)  under_ground=1 (0.3%)  los=0 (0.0%)  collapsed=1 (0.3%)
+[CAM2] FAIL C2 鏡頭不會跑到地面下（1/300）
+[CAM2] PASS C3 鏡頭到頭部視線無遮擋（0/300）
+[CAM2] FAIL C4 彈簧臂沒縮成 0（1/300）
+[CAM2] PASS C5 有取樣到被碰撞體擋住的情況（188）
+[CAM2]   ✗ (-4.6,-14.0) yaw6° 鏡頭在 Shrine 內
+[CAM2]   ✗ (12.4,-33.3) yaw209° 鏡頭在 Shrine 內
+[CAM2]   ✗ (0.4,-45.1) yaw164° 鏡頭在 Terrain 內
+[CAM2]   ✗ (0.4,-45.1) yaw164° 鏡頭在地面下（cam y=6.21，上方地面 無，差 - m）
+[CAM2]   ✗ (42.8,-38.2) yaw157° 鏡頭離頭部僅 0.33 m
+[CAM2]   ✗ (-14.9,-31.2) yaw157° 鏡頭在 Shrine 內
+[CAM2]   ✗ (7.6,-23.7) yaw66° 鏡頭在 建築 內
+[CAM2]   ✗ (-15.6,-27.3) yaw31° 鏡頭在 建築 內
+[CAM2] failures=2
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
