@@ -1,0 +1,3 @@
+# gen_terrain.py 的中間檔（build_terrain.gd 讀；可重生），不進版控
+*.bin
+*.rgba

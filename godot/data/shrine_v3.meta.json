@@ -1,0 +1,26 @@
+{
+  "_note": "博麗神社 v3 全面重製（候選場景，--map=shrine_v3）。由 tools/shrine_v3/build_scene.gd 寫出，勿手改。",
+  "colliders": [],
+  "connections": [
+    "trail"
+  ],
+  "id": "shrine_v3",
+  "mobTheme": null,
+  "playSize": [
+    96.0,
+    188.0
+  ],
+  "portals": [
+    {
+      "_note": "南端獸道口 → 獸道。y＝傳送點地面高；arrival_ground_y＝內縮 4 m 落點的地面高。",
+      "arrival_ground_y": 4.952,
+      "arrival_y_offset": 1.2,
+      "arrival_yaw": -0.385,
+      "target": "trail",
+      "x": -18.0,
+      "y": 4.61,
+      "z": 94.6000000000001
+    }
+  ],
+  "safe": true
+}
