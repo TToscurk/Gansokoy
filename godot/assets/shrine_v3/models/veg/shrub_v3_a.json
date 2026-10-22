@@ -1,8 +1,10 @@
 {
  "height": 1.5,
- "crown_w": 1.8,
+ "crown_w": 2.14,
  "trunk_r": 0.0,
  "trunk_h": 0.0,
+ "crown_w_param": 1.8,
+ "crown_base": -0.03,
  "name": "shrub_v3_a",
  "tris": 220,
  "tris_leaf": 100,

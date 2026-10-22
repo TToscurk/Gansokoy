@@ -1,8 +1,14 @@
 {
  "height": 4.2,
- "crown_w": 4.0,
+ "crown_w": 5.09,
  "trunk_r": 0.08,
  "trunk_h": 1.0,
+ "lean": [
+  0.0,
+  0.0
+ ],
+ "crown_w_param": 4.0,
+ "crown_base": 1.82,
  "name": "momiji_v3_b",
  "tris": 2200,
  "tris_leaf": 700,

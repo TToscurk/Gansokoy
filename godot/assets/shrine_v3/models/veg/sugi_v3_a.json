@@ -1,8 +1,10 @@
 {
  "height": 22.0,
- "crown_w": 6.0,
+ "crown_w": 5.13,
  "trunk_r": 0.33,
  "trunk_h": 6.0,
+ "crown_w_param": 6.0,
+ "crown_base": 5.64,
  "name": "sugi_v3_a",
  "tris": 3492,
  "tris_leaf": 1644,

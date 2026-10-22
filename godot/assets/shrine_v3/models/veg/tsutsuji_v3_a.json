@@ -1,8 +1,10 @@
 {
  "height": 1.2,
- "crown_w": 1.6,
+ "crown_w": 1.96,
  "trunk_r": 0.0,
  "trunk_h": 0.0,
+ "crown_w_param": 1.6,
+ "crown_base": 0.02,
  "name": "tsutsuji_v3_a",
  "tris": 208,
  "tris_leaf": 88,

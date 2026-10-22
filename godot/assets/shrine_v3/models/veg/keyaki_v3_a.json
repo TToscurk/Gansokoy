@@ -1,8 +1,14 @@
 {
  "height": 16.0,
- "crown_w": 11.0,
+ "crown_w": 6.33,
  "trunk_r": 0.34,
  "trunk_h": 3.6,
+ "lean": [
+  0.0,
+  0.0
+ ],
+ "crown_w_param": 11.0,
+ "crown_base": 8.59,
  "name": "keyaki_v3_a",
  "tris": 2624,
  "tris_leaf": 1088,

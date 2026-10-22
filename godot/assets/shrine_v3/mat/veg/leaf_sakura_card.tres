@@ -21,3 +21,4 @@ shader_parameter/alpha_cut = 0.45
 shader_parameter/alpha_mip_boost = null
 shader_parameter/translucency = 0.2
 shader_parameter/crown_normal = null
+shader_parameter/shadow_alpha_lod = null

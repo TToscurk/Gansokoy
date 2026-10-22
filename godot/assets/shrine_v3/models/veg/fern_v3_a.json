@@ -1,8 +1,10 @@
 {
  "height": 0.5249999999999999,
- "crown_w": 1.5,
+ "crown_w": 1.43,
  "trunk_r": 0.0,
  "trunk_h": 0.0,
+ "crown_w_param": 1.5,
+ "crown_base": 0.02,
  "name": "fern_v3_a",
  "tris": 36,
  "tris_leaf": 36,

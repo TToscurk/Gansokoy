@@ -81,8 +81,8 @@ class Tree:
                 self.F.append((a, c, d, mat))
         return P
 
-    def card(self, base, up, side, w, h, crown_c, crown_r, w2, phase, mat='leaf', ao_axis=False, uvrect=(0, 0, 1, 1)):
-        """葉卡：下緣中央在 base，往 up 長 h，寬 w（沿 side）。"""
+    def card(self, base, up, side, w, h, crown_c, crown_r, w2, phase, mat='leaf', ao_axis=False, uvrect=(0, 0, 1, 1), tint=(1.0, 1.0, 1.0)):
+        """葉卡：下緣中央在 base，往 up 長 h，寬 w（沿 side）。tint＝乘進頂點色（葉 shader 的 COLOR.rgb 乘在反照率上；同一材質、不加 draw call）。"""
         up = nrm(up)
         side = nrm(side)
         q = [base - side * w / 2, base + side * w / 2, base + side * w / 2 + up * h, base - side * w / 2 + up * h]
@@ -98,7 +98,7 @@ class Tree:
             dist = float(np.linalg.norm(rel)) / max(crown_r, 0.1)
             ao = 0.50 + 0.50 * min(max(dist, 0.0), 1.0)
             t = 1.0 + self.rng.uniform(-0.07, 0.07)
-            ids.append(self.vert(p, n, uv, (min(1.0, w2), phase), (ao * t, ao * t, ao * t, 1.0)))
+            ids.append(self.vert(p, n, uv, (min(1.0, w2), phase), (ao * t * tint[0], ao * t * tint[1], ao * t * tint[2], 1.0)))
         self.F.append((ids[0], ids[1], ids[2], mat))
         self.F.append((ids[0], ids[2], ids[3], mat))
 
@@ -117,17 +117,23 @@ def bend_path(p0, d, L, n, droop=0.0, wobble=0.15, rng=None):
     return pts
 
 
-def broadleaf(name, seed, H, trunk_h, r0, n_main, elev, main_len, crown_w, card_w, n_cards_per, spread_up=0.25, droop=0.05, multi_stem=1, card_rect=(0, 0, 1, 1)):
+def broadleaf(name, seed, H, trunk_h, r0, n_main, elev, main_len, crown_w, card_w, n_cards_per, spread_up=0.25, droop=0.05, multi_stem=1, card_rect=(0, 0, 1, 1),
+              lean=(0.0, 0.0), az_bias=None, long_limbs=0, tints=None, bare=0.0):
+    """闊葉樹。外形控制（2026-10-23 多樣性）：
+    lean＝主幹傾斜（局部 x、z；每公尺高的水平位移）→ 林緣樹往光的方向傾；擺放時轉 yaw 讓 +x 朝空曠處。
+    az_bias＝(方位角, 強度 0–1)：主枝往一側偏、該側較長（單側樹冠）。long_limbs＝最低的幾根主枝加長 45 %、壓低（老櫻的橫展大枝）。
+    tints＝[(機率, (r, g, b))]：以次枝為單位整簇染色（山櫻花葉同出的紅褐新葉）。bare＝次枝不長葉的機率（稀疏、有空隙）。"""
     t = Tree(name, seed)
     rng = t.rng
-    crown_c = np.array([0.0, trunk_h + (H - trunk_h) * 0.5, 0.0])
+    lx, lz = lean
+    crown_c = np.array([lx * H * 0.55, trunk_h + (H - trunk_h) * 0.5, lz * H * 0.55])
     crown_r = max(crown_w * 0.5, (H - trunk_h) * 0.5)
     stems = []
     for si in range(multi_stem):
-        lean = np.array([rng.uniform(-0.12, 0.12), 1.0, rng.uniform(-0.12, 0.12)]) if multi_stem > 1 else np.array([rng.uniform(-0.04, 0.04), 1.0, rng.uniform(-0.04, 0.04)])
+        lean = np.array([rng.uniform(-0.12, 0.12), 1.0, rng.uniform(-0.12, 0.12)]) if multi_stem > 1 else np.array([rng.uniform(-0.04, 0.04) + lx, 1.0, rng.uniform(-0.04, 0.04) + lz])
         if multi_stem > 1:
             ang = 2 * math.pi * si / multi_stem + rng.uniform(-0.4, 0.4)
-            lean = nrm(np.array([math.cos(ang) * 0.35, 1.0, math.sin(ang) * 0.35]))
+            lean = nrm(np.array([math.cos(ang) * 0.35 + lx, 1.0, math.sin(ang) * 0.35 + lz]))
         top_h = H * (0.62 if multi_stem == 1 else 0.55)
         pts = bend_path([0, -0.15, 0], lean, top_h + 0.15, 9, 0.0, 0.05, rng)
         rr = [r0 * (1.35 if i == 0 else 1.0) * (1.0 - 0.72 * i / 9) / (1.0 if multi_stem == 1 else 1.4) for i in range(10)]
@@ -145,8 +151,16 @@ def broadleaf(name, seed, H, trunk_h, r0, n_main, elev, main_len, crown_w, card_
             base = pts[idx]
             az = k * 2.39996 + rng.uniform(-0.3, 0.3)
             el = math.radians(rng.uniform(*elev))
-            d = nrm(np.array([math.cos(az) * math.cos(el), math.sin(el), math.sin(az) * math.cos(el)]))
             L = main_len * rng.uniform(0.8, 1.15) * (1.0 - 0.35 * f)
+            if az_bias is not None:
+                ba, bs = az_bias
+                hv = nrm(np.array([math.cos(az), 0.0, math.sin(az)]) + bs * np.array([math.cos(ba), 0.0, math.sin(ba)]))
+                L *= 1.0 + 0.35 * bs * math.cos(az - ba)
+                az = math.atan2(hv[2], hv[0])
+            if k <= long_limbs:
+                L *= 1.45
+                el *= 0.55
+            d = nrm(np.array([math.cos(az) * math.cos(el), math.sin(el), math.sin(az) * math.cos(el)]))
             bp = bend_path(base, d, L, 5, droop, 0.18, rng)
             br0 = rr[idx] * 0.55
             ph = rng.random()
@@ -162,6 +176,13 @@ def broadleaf(name, seed, H, trunk_h, r0, n_main, elev, main_len, crown_w, card_
                 bp2 = bend_path(b2, dd, L2, 3, droop * 0.5, 0.25, rng)
                 ph2 = (ph + rng.uniform(-0.15, 0.15)) % 1.0
                 t.tube(bp2, [br0 * 0.45 * (1.0 - 0.8 * i / 3) for i in range(4)], 4, 0.42, 0.62, ph2, 'bark')
+                tint = (1.0, 1.0, 1.0)
+                for pr, tc in (tints or []):
+                    if rng.random() < pr:
+                        tint = tc
+                        break
+                if bare > 0.0 and rng.random() < bare:
+                    continue
                 for c in range(n_cards_per):
                     s2 = rng.uniform(0.25, 1.0)
                     p = bp2[0] + (bp2[-1] - bp2[0]) * s2
@@ -170,11 +191,12 @@ def broadleaf(name, seed, H, trunk_h, r0, n_main, elev, main_len, crown_w, card_
                     rot = rng.uniform(0, math.pi)
                     side = nrm(side * math.cos(rot) + np.cross(up, side) * math.sin(rot))
                     cw = card_w * rng.uniform(0.75, 1.2)
-                    t.card(p, up, side, cw, cw, crown_c, crown_r, 0.78 + 0.22 * s2, ph2, 'leaf', uvrect=card_rect)
-    return t, {'height': H, 'crown_w': crown_w, 'trunk_r': r0, 'trunk_h': trunk_h}
+                    t.card(p, up, side, cw, cw, crown_c, crown_r, 0.78 + 0.22 * s2, ph2, 'leaf', uvrect=card_rect, tint=tint)
+    return t, {'height': H, 'crown_w': crown_w, 'trunk_r': r0, 'trunk_h': trunk_h, 'lean': [lx, lz]}
 
 
-def conifer(name, seed, H, r0, crown_base, n_whorl, max_len, card_w, cards_per, droop=0.25, crooked=0.0, flat_top=False):
+def conifer(name, seed, H, r0, crown_base, n_whorl, max_len, card_w, cards_per, droop=0.25, crooked=0.0, flat_top=False, gaps=0.0):
+    """針葉樹。gaps＝每根輪生枝缺掉的機率（老杉：樹冠高、有斷枝空隙，輪廓不再是整齊圓錐）。"""
     t = Tree(name, seed)
     rng = t.rng
     pts = bend_path([0, -0.15, 0], [rng.uniform(-0.02, 0.02) + crooked, 1.0, rng.uniform(-0.02, 0.02)], H + 0.15, 12, 0.0, 0.02 + crooked * 0.4, rng)
@@ -193,6 +215,8 @@ def conifer(name, seed, H, r0, crown_base, n_whorl, max_len, card_w, cards_per, 
             L = max_len * (0.5 + 0.5 * math.sin(f * math.pi)) * rng.uniform(0.7, 1.2)
         nb = 4 if L > 1.0 else 3
         for bi in range(nb):
+            if gaps > 0.0 and 0.1 < f < 0.85 and rng.random() < gaps:
+                continue
             az = wi * 1.1 + bi * 2 * math.pi / nb + rng.uniform(-0.3, 0.3)
             el = rng.uniform(-0.25, 0.15) - droop * (1 - f) * 0.5
             d = nrm(np.array([math.cos(az) * math.cos(el), math.sin(el), math.sin(az) * math.cos(el)]))
@@ -305,21 +329,38 @@ def main():
         m.diffuse_color = (c[0], c[1], c[2], 1.0)
         mats[k] = m
     defs = [
-        # 山櫻：寬展樹冠
-        lambda: broadleaf('sakura_yama_v3_a', 101, 9.5, 2.4, 0.24, 7, (22, 48), 4.4, 9.0, 1.45, 16, 0.15, 0.10),
-        lambda: broadleaf('sakura_yama_v3_b', 102, 7.5, 1.9, 0.19, 6, (25, 52), 3.6, 7.0, 1.30, 16, 0.15, 0.10),
-        lambda: broadleaf('sakura_yama_v3_c', 103, 11.5, 2.8, 0.28, 8, (28, 55), 5.0, 10.0, 1.55, 16, 0.18, 0.08),
-        # 枹櫟／欅：新綠，往上展開
+        # 山櫻 5 型（2026-10-23 多樣性：舊 a／b／c 是同一組參數的等比例縮小版，高寬比都 ≈1.1，遠看是同一個剪影）
+        #   a 古木傘形：低而橫展、兩根加長大枝、花密      b 若木：細高、枝角陡、花疏、有空隙
+        #   c 御神木：最大、三根橫展大枝、少量紅褐新葉     d 林緣偏冠：主幹往 +x 傾、樹冠單側（擺放時 +x 朝空曠處）
+        #   e 雙幹：低分叉兩主幹、花葉同出（四成次枝帶紅褐新葉）
+        lambda: broadleaf('sakura_yama_v3_a', 201, 9.0, 2.0, 0.30, 8, (8, 30), 5.2, 11.0, 1.5, 15, 0.08, 0.17, long_limbs=2),
+        lambda: broadleaf('sakura_yama_v3_b', 202, 7.6, 2.0, 0.15, 7, (45, 70), 2.9, 5.5, 1.25, 13, 0.35, 0.04, bare=0.08),
+        lambda: broadleaf('sakura_yama_v3_c', 203, 12.0, 3.0, 0.38, 9, (18, 46), 5.2, 11.0, 1.55, 15, 0.16, 0.10, long_limbs=3,
+                          tints=[(0.2, (0.88, 0.70, 0.64))]),
+        lambda: broadleaf('sakura_yama_v3_d', 204, 9.0, 2.6, 0.22, 7, (24, 52), 4.6, 8.0, 1.4, 14, 0.18, 0.08, lean=(0.22, 0.04), az_bias=(0.0, 0.8)),
+        lambda: broadleaf('sakura_yama_v3_e', 205, 8.4, 1.3, 0.20, 8, (30, 60), 3.5, 8.0, 1.35, 13, 0.25, 0.08, multi_stem=2,
+                          tints=[(0.4, (0.80, 0.62, 0.55))]),
+        # 枹櫟 3 型：a 卵形（原）／b 高幹窄冠的林內木／c 林緣傾斜單側冠
         lambda: broadleaf('konara_v3_a', 111, 13.0, 4.0, 0.25, 8, (45, 70), 4.2, 8.0, 1.5, 16, 0.35, 0.02),
-        lambda: broadleaf('konara_v3_b', 112, 15.5, 4.8, 0.30, 9, (48, 72), 4.8, 9.0, 1.6, 16, 0.35, 0.02),
+        lambda: broadleaf('konara_v3_b', 212, 16.0, 6.5, 0.30, 9, (55, 78), 3.6, 6.5, 1.55, 15, 0.40, 0.02),
+        lambda: broadleaf('konara_v3_c', 213, 11.0, 3.0, 0.22, 7, (32, 60), 4.4, 8.0, 1.45, 15, 0.30, 0.03, lean=(0.25, 0.0), az_bias=(0.0, 0.7)),
+        # 欅 2 型：a 掃帚形（原）／b 老木圓頂、橫展
         lambda: broadleaf('keyaki_v3_a', 113, 16.0, 3.6, 0.34, 9, (52, 75), 6.0, 11.0, 1.6, 16, 0.45, 0.0),
-        # 野村楓：低、多幹、傘形
+        lambda: broadleaf('keyaki_v3_b', 214, 14.0, 3.0, 0.42, 10, (32, 60), 6.2, 13.0, 1.55, 14, 0.25, 0.05, long_limbs=2),
+        # 椎（常綠闊葉，鎮守之森的主角；用既有 broad_dark 葉卡）：a 單幹圓頂／b 根際分叉
+        lambda: broadleaf('shii_v3_a', 221, 13.0, 2.6, 0.36, 10, (25, 55), 5.2, 12.0, 1.7, 17, 0.20, 0.06),
+        lambda: broadleaf('shii_v3_b', 222, 10.5, 1.6, 0.26, 9, (30, 60), 4.4, 10.0, 1.6, 16, 0.25, 0.06, multi_stem=2),
+        # 野村楓（紅，只當點綴）：低、多幹、傘形
         lambda: broadleaf('momiji_v3_a', 121, 5.2, 1.2, 0.10, 6, (15, 40), 2.6, 5.0, 1.05, 14, 0.10, 0.12, multi_stem=2),
         lambda: broadleaf('momiji_v3_b', 122, 4.2, 1.0, 0.08, 5, (18, 42), 2.2, 4.0, 0.95, 14, 0.10, 0.12, multi_stem=3),
-        # 杉：高直、圓錐形樹冠
+        # 伊呂波楓（春季新綠，momiji_ao 葉卡）：a 層狀雙幹／b 單幹微傾
+        lambda: broadleaf('momiji_ao_v3_a', 231, 6.2, 1.5, 0.12, 7, (10, 32), 3.2, 6.5, 1.1, 13, 0.06, 0.14, multi_stem=2),
+        lambda: broadleaf('momiji_ao_v3_b', 232, 4.8, 1.2, 0.09, 6, (25, 50), 2.4, 4.6, 1.0, 13, 0.15, 0.10, lean=(0.15, 0.0)),
+        # 杉：高直、圓錐形樹冠；d＝老杉（樹冠高、輪生枝三成缺損）
         lambda: conifer('sugi_v3_a', 131, 22.0, 0.33, 6.0, 18, 3.0, 1.5, 12, 0.25),
         lambda: conifer('sugi_v3_b', 132, 26.0, 0.38, 8.0, 20, 3.3, 1.6, 12, 0.25),
-        lambda: conifer('sugi_v3_c', 133, 17.0, 0.26, 4.5, 15, 2.6, 1.4, 12, 0.25),
+        lambda: conifer('sugi_v3_c', 233, 17.0, 0.26, 4.5, 15, 2.8, 1.4, 12, 0.32, crooked=0.06, gaps=0.15),     # 林緣小杉：梢略彎、枝較垂、少數缺枝
+        lambda: conifer('sugi_v3_d', 134, 24.0, 0.46, 8.5, 16, 3.4, 1.6, 12, 0.22, gaps=0.3),
         # 崖松（赤松）：彎幹、平頂
         lambda: conifer('akamatsu_v3_a', 141, 7.0, 0.20, 3.4, 8, 2.4, 1.2, 14, 0.05, crooked=0.35, flat_top=True),
         lambda: conifer('akamatsu_v3_b', 142, 5.5, 0.17, 2.6, 7, 2.0, 1.1, 14, 0.05, crooked=-0.30, flat_top=True),
@@ -342,6 +383,13 @@ def main():
                                   export_image_format='NONE', export_vertex_color='ACTIVE', export_yup=True,
                                   export_normals=True, export_texcoords=True)
         P = np.array([v[0] for v in t.V])
+        # 實際冠幅（葉卡頂點到樹幹軸的水平距離 90 百分位 ×2）：擺放間距用它，不用參數值
+        LV = sorted({i for f in t.F if f[3] == 'leaf' for i in f[:3]})
+        if LV:
+            hd = np.hypot(P[LV, 0], P[LV, 2])
+            info['crown_w_param'] = info['crown_w']
+            info['crown_w'] = round(float(np.percentile(hd, 90)) * 2.0, 2)
+            info['crown_base'] = round(float(np.percentile(P[LV, 1], 5)), 2)
         info.update({'name': t.name, 'tris': len(t.F), 'tris_leaf': t.tris('leaf'), 'tris_bark': t.tris('bark'),
                      'aabb_min': P.min(0).tolist(), 'aabb_max': P.max(0).tolist()})
         json.dump(info, open(os.path.join(OUT, t.name + '.json'), 'w', encoding='utf-8'), indent=1)

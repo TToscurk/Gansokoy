@@ -1,8 +1,10 @@
 {
  "height": 7.0,
- "crown_w": 4.8,
+ "crown_w": 8.21,
  "trunk_r": 0.2,
  "trunk_h": 3.4,
+ "crown_w_param": 4.8,
+ "crown_base": 2.55,
  "name": "akamatsu_v3_a",
  "tris": 1892,
  "tris_leaf": 908,
