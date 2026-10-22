@@ -39,6 +39,7 @@ godot --path godot -- --map=shrine_v3      # 直接開候選圖（出生在南�
 | 腳本檢查（`tools/dev/gd_check.py`） | 本次 10 個 .gd 全 PASS。全專案模式 461 檔有 1 個 FAIL：`tools/p11r2/_patched/yoriichi_character.gd`，不是這次的檔案，沒動。 |
 | 風力接線（`Wind.veg_stats()`） | broad_tall 292、broad_small 28、conifer 153、bush 291、grass 236 個實例／分塊，未知物種 0。 |
 | 效能（GTX 1070、1600×900） | 前庭／石段 60 FPS（垂直同步上限），櫻林 54 FPS、獸道口 50 FPS（20.2 ms）、鳥瞰 57 FPS；每幀 4.4–6.2 M 三角形（含陰影）、376–598 draw calls。 |
+| 實錄影片（`--record`，Movie Maker 60 fps＝原速） | `_review/shrine_v3/video/shrine_v3_walk_56s.mp4`（不入版控，55.7 s，1152×648）：獸道口→石段→鳥居→前庭→拜殿前→倉庫側→櫻林→池塘北岸，6 段全到達。有渲染的這次鏡頭在碰撞體內 4／535 次取樣（倉庫側 1、櫻林 1、池北 2）；無頭實走為 0。 |
 
 ## 檔案
 
@@ -81,6 +82,7 @@ godot --path . --resolution 1600x900 --script res://tools/shrine_v3/shots.gd -- 
 5. 石段石材紋理逐階重複；鳥居漆面比周圍乾淨。
 6. 樹沒有 LOD（每棵 3–7 k 三角形、可見距離 600 m）：獸道口 50 FPS。要再省就做遠景樹的公告板替身。
 7. 平台邊緣規劃的低矮野面石垣沒做：南緣改用散置岩塊與灌木收邊，西緣用木柵。
+8. 鏡頭：有渲染的實錄裡，倉庫與拜殿之間、林徑、池北各有一瞬間鏡頭貼進碰撞體（4／535 次取樣），沒做鏡頭避讓調整。
 
 ## 切換正式與回退
 

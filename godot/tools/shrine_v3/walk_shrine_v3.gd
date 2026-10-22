@@ -4,6 +4,7 @@ extends SceneTree
 ## 路線（使用者規格 17-C）：獸道入口 → 石段 → 鳥居 → 前庭 → 拜殿前 → 倉庫側 → 櫻林邊緣 → 池塘周邊。
 ## 每腿記錄：到達與否、實走距離、最大上升、穿地次數（腳下射線地面高於玩家 0.3 m 以上）、鏡頭在碰撞體內的幀數。
 ## 另測：導航網格路徑（NavigationServer3D.map_get_path）在各關鍵點之間是否連續；互動區是否涵蓋玩家站位。
+## 錄影（原速、第三人稱）：godot --path godot --resolution 1280x720 --write-movie <out.avi> --fixed-fps 60 --script res://tools/shrine_v3/walk_shrine_v3.gd -- --map=shrine_v3 --record
 
 const S3 := preload("res://tools/shrine_v3/s3lib.gd")
 
@@ -21,16 +22,19 @@ func _initialize() -> void:
 func _go() -> void:
 	var out := ""
 	var scale := 3.0
+	var record := false
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--out="):
 			out = a.trim_prefix("--out=")
 		elif a.begins_with("--scale="):
 			scale = float(a.trim_prefix("--scale="))
+		elif a == "--record":
+			record = true
 	L = S3.load_layout()
 	main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
 	root.add_child(main)
 	current_scene = main
-	Engine.time_scale = scale
+	Engine.time_scale = 1.0 if record else scale
 	var t0 := Time.get_ticks_msec()
 	while true:
 		await physics_frame
@@ -75,6 +79,13 @@ func _go() -> void:
 	# 6) 櫻林林徑 → 池塘北岸（林徑沿池北繞到東北岸）
 	var leg6 := _resample(grove.slice(2), 4.0)
 	fails += 0 if (await _walk("6_櫻林→池塘北岸", leg6, 1.1))["arrived_all"] else 1
+	if record:
+		# 錄影版（原速）：只走去程 1–6 段（不瞬移），停 1.5 秒收尾
+		for i in 90:
+			await physics_frame
+		print("[REC] done fails=%d" % fails)
+		quit(0 if fails == 0 else 1)
+		return
 	# 6b) 池畔西徑：平台東北角 → 池塘西岸
 	var pond_w: Array = []
 	for p in L["paths"]["pond_w"]:
