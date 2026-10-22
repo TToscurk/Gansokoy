@@ -287,6 +287,10 @@ func add_sky() -> void:
 	sky.set("方位角", 0.0)
 	sky.set("陰影距離", 160.0)
 	add(sroot, sky, "天象系統")
+	# 白天天空補光（本圖專用；每幀在天象系統之後寫環境光，見該檔開頭的實測說明）
+	var lp := Node.new()
+	lp.set_script(load("res://maps/shrine_v3/s3_light_profile.gd"))
+	add(sky, lp, "天空補光")
 
 
 ## 隱形牆：沿可走範圍多邊形，每段一塊薄牆（外推 0.6 m），高 80 m。
@@ -655,6 +659,10 @@ func put_tree(g: Node, nm: String, x: float, z: float, idx: int, with_col: bool)
 	mi.visibility_range_end = 600.0     # 近景區內的樹一律可見（鳥瞰／遠望時近景地面不會露出無樹的林床）
 	mi.visibility_range_end_margin = 30.0
 	mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+	if nm.begins_with("momiji"):
+		# 紅楓降飽和（2026-10-23 光照校正）：葉卡反照率 (0.30, 0.015, 0.011)，G/R＝0.05 幾乎是純紅，
+		# 在 ACES 下比櫻與鳥居還搶。用共用葉 shader 的每棵樹色彩變體 leaf_sat（往亮度灰混 25 %）
+		mi.set_instance_shader_parameter("leaf_sat", 0.75)
 	add(g, mi, "%s_%03d" % [nm, idx])
 	var tr := tree_r(nm) * s
 	if with_col and tr > 0.06:

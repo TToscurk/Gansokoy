@@ -9,7 +9,7 @@ const MAT := "res://assets/shrine_v3/mat/veg/"
 const PH := "res://assets/shrine_v3/tex/ph/"
 const CARDS := "res://assets/shrine_v3/tex/veg/"
 const SH_BARK := "res://assets/village_v2/veg_kit/veg_bark.gdshader"
-const SH_LEAF := "res://assets/village_v2/veg_kit/veg_leaf.gdshader"
+const SH_LEAF := "res://assets/shrine_v3/shaders/veg_leaf.gdshader"   # v3 版：陰影 pass 保留葉隙（見該檔開頭）
 
 ## 物種前綴 → [樹皮貼圖 id, 葉卡, 葉色乘數]
 const SPEC := {
@@ -22,6 +22,15 @@ const SPEC := {
 	"tsutsuji": ["japanese_zelkova_bark", "tsutsuji_card", Color(1.0, 1.0, 1.0)],
 	"shrub": ["japanese_zelkova_bark", "broad_dark_card", Color(0.95, 1.0, 0.95)],
 	"fern": ["japanese_zelkova_bark", "fern_card", Color(1.0, 1.0, 1.0)],
+}
+
+## 個別葉卡的材質校正（2026-10-23 光照診斷，docs/shrine_v3/02_植被光照診斷.md）
+## sakura_card：貼圖不透明處的線性反照率平均 0.72（R 0.88）＝接近白紙；遊戲內（含冠內 AO）0.62，
+##   是周圍地面 0.16–0.22、岩石 0.23、建築 0.08 的 3–8 倍 → 背陰面仍比陰影中的地面亮 3–7 倍。
+##   albedo_mul 0.72 → 遊戲內 0.45。translucency 0.35 → 0.2：Godot 的 BACKLIGHT 不看視線方向，
+##   背向太陽的葉卡從任何角度看都多亮 19–30 %（實測關掉背光的差值）；保留一點給逆光時的花瓣透光。
+const CARD_TUNE := {
+	"sakura_card": {"albedo_mul": 0.72, "translucency": 0.2},
 }
 
 
@@ -56,11 +65,12 @@ func _leaf(card: String, mul: Color) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
 	m.shader = load(SH_LEAF)
 	m.set_shader_parameter("albedo_tex", load(CARDS + card + ".png"))
-	m.set_shader_parameter("albedo_mul", 1.0)
+	var tune: Dictionary = CARD_TUNE.get(card, {})
+	m.set_shader_parameter("albedo_mul", float(tune.get("albedo_mul", 1.0)))
 	m.set_shader_parameter("roughness", 0.85)
 	m.set_shader_parameter("specular", 0.25)
 	m.set_shader_parameter("alpha_cut", 0.45)
-	m.set_shader_parameter("translucency", 0.35)
+	m.set_shader_parameter("translucency", float(tune.get("translucency", 0.35)))
 	m.resource_name = "s3_leaf_" + key
 	ResourceSaver.save(m, p)
 	var mm: ShaderMaterial = load(p)
